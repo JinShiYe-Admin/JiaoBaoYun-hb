@@ -189,5 +189,117 @@
 				}
 			}
 		}
+	},
+	"dependencies": {
+		"pages": {
+			"html/index.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/utils/Statusbar.js",
+					"html/tab_zone.html",
+					"css/utils/common.css",
+					"js/index.js",
+					"js/main/slide_navigation.js"
+				],
+				"refer": [
+					"html/tab_knowledge.html",
+					"html/tab_cloud.html",
+					"html/tab_clip.html",
+					"html/index-menu.html"
+				],
+				"priority": 0
+			},
+			"html/tab_zone.html": {
+				"resources": [
+					"js/utils/events.js",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"js/main/slide_navigation.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"html/index-menu.html"
+				],
+				"priority": 0
+			},
+			"html/tab_cloud.html": {
+				"resources": [
+					"js/main/slide_navigation.js",
+					"js/mui.min.js",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"html/index-menu.html"
+				],
+				"priority": 0
+			},
+			"html/tab_knowledge.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"js/utils/events.js",
+					"js/main/slide_navigation.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"html/index-menu.html"
+				],
+				"priority": 0
+			},
+			"html/tab_clip.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"js/utils/events.js",
+					"js/main/slide_navigation.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"html/index-menu.html"
+				],
+				"priority": 0
+			},
+			"html/index-menu.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"image/slide_navigation/img3.jpg"
+				],
+				"refer": [],
+				"priority": 0
+			}
+		},
+		"idle": {
+			"resources": [
+				"image/zone.png",
+				"js/utils/grideControl.js",
+				"image/knowledge_sel.png",
+				"image/knowledgr.png",
+				"js/utils/constantScreen.js",
+				"image/zone_sel.png",
+				"js/utils/textarea.js",
+				"css/utils/imgeControl.css",
+				"js/utils/carouselControl.js",
+				"css/mui.css",
+				"css/utils/textarea.css",
+				"css/utils/documents.css",
+				"image/clip_sel.png",
+				"css/utils/mui.indexedlist.css",
+				"image/cloud_sel.png",
+				"css/utils/searchbar.css",
+				"js/mui.js",
+				"image/cloud.png",
+				"image/clip.png"
+			]
+		}
 	}
 }

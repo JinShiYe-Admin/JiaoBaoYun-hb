@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="../css/mine/mine.css" />
 		<script type="text/javascript" src="../js/mui.min.js"></script>
 		<script type="text/javascript" src="../js/utils/events.js"></script>
+		<script src="../js/main/slide_navigation.js"> </script>
 	</head>
 
 	<body>
@@ -18,5 +19,9 @@
 			<h1 class="mui-title common-color-white common-font-family-Regular">求知</h1>
 		</header>
 	</body>
-
+	<script>
+		mui.plusReady(function(){
+			slideNavigation.add('index-menu.html',200);
+		})
+	</script>
 </html>

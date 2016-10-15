@@ -167,6 +167,7 @@ var events=(function($){
 		preLoad:preLoad,//预加载
 		fireToNewPage:fireToNewPage,//传递数据到新界面
 		clearChild:clearChild//清空子元素
+	
 	}
 
 })(mui);
