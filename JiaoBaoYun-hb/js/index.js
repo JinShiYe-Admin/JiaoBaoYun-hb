@@ -7,11 +7,18 @@
 mui.init();
 
 mui.plusReady(function() {
+		Statusbar.barHeight();//设置距离顶部的高度
+	var header = document.querySelector(".mui-bar-nav"); //顶部导航
+	//设置顶部导航高度（状态栏）
+	header.style.height = localStorage.getItem('$Statusbar');
+
+	//设置默认打开首页显示的子页序号；
+	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
 	var subpages = ['tab_zone.html', 'tab_knowledge.html', 'tab_clip.html', 'tab_cloud.html'];
 
 	var subpage_style = {
-				top: '45px',
+				top: localStorage.getItem('$Statusbar'), //设置距离顶部的距离
 				bottom: '51px'
 			};
 			
