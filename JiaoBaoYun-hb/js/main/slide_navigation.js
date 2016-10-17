@@ -9,8 +9,11 @@ var slideNavigation=(function($){
 		setCondition()
 		//预加载侧滑界面
 		preloadSlideNag(tarpage,interval);
+		//加载界面监听
+		addSystemEvents()
 		//图标加载监听事件
 		iconAddEvent();
+	
 		getBack();
 	}
 	/**
@@ -25,6 +28,8 @@ var slideNavigation=(function($){
 	 * 打开侧滑
 	 */
 	var openMenu=function(){
+		console.log('openMenu'+isInTransition);
+		console.log("show:"+showMenu)
 		if (isInTransition) {
 					return;
 				}
@@ -57,6 +62,12 @@ var slideNavigation=(function($){
 	 * 关闭侧滑
 	 */
 	var closeMenu=function(){
+		console.log("closeMenu:"+isInTransition);
+		
+		if(arguments[0]){
+			showMenu=true
+		}
+		console.log("show:"+showMenu)
 		if (isInTransition) {
 					return;
 				}
@@ -105,6 +116,7 @@ var slideNavigation=(function($){
 		window.addEventListener("menu:open", openMenu);
 		//重写mui.menu方法，Android版本menu按键按下可自动打开、关闭侧滑菜单；
 		$.menu = function() {
+			console.log('menu事件:'+showMenu)
 				if (showMenu) {
 					closeMenu();
 				} else {
@@ -125,7 +137,7 @@ var slideNavigation=(function($){
 						styles: {
 							left: 0,
 							width: '70%',
-							zindex: 1,
+							zindex: 0,
 						},
 						show: {
 							aniShow: 'none'
@@ -147,8 +159,9 @@ var slideNavigation=(function($){
 		//首页返回键处理
 			//1、若侧滑菜单显示，则关闭侧滑菜单
 			//2、否则，执行mui框架默认的关闭首页功能
-			var _back = mui.back;
+			var _back =$.back;		
 			$.back = function() {
+				console.log('back:'+showMenu)
 				if (showMenu) {
 					closeMenu();
 				} else {

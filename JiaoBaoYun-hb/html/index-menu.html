@@ -7,6 +7,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../css/mui.min.css">
+	
 		<style type="text/css">
 			body,.mui-content{
 			  	background-color: #333;
@@ -121,11 +122,13 @@
 			 * 关闭侧滑菜单
 			 */
 			function close() {
-				mui.fire(mui.currentWebview.opener(),"menu:close");
+				mui.fire(mui.currentWebview.opener(),"menu:close",{
+					isShow:true
+				});
 			}
 			
 			//点击“关闭侧滑菜单”按钮处理逻辑
-			document.getElementById("close-btn").addEventListener("tap",close);
+//			document.getElementById("close-btn").addEventListener("tap",close);
 			//在android4.4.2中的swipe事件，需要preventDefault一下，否则触发不正常
 			window.addEventListener('dragstart',function(e){
 				mui.gestures.touch.lockDirection = true; //锁定方向
@@ -138,6 +141,7 @@
 			});
 			//监听左滑事件，若菜单已展开，左滑要关闭菜单；
 			window.addEventListener("swipeleft",function (e) {
+				console.log(e.detail.angle)
 				if(Math.abs(e.detail.angle)>170){
 					close();						
 				}
