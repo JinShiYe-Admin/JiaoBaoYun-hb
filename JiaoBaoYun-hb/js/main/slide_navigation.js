@@ -4,13 +4,13 @@ var slideNavigation=(function($){
 	var showMenu = false;
 	var isInTransition = false;
 	var add=function(tarpage,interval){
-		addSlideIcon()
+		addSlideIcon();
 		//设置设备
-		setCondition()
+		setCondition();
 		//预加载侧滑界面
 		preloadSlideNag(tarpage,interval);
 		//加载界面监听
-		addSystemEvents()
+		addSystemEvents();
 		//图标加载监听事件
 		iconAddEvent();
 	
@@ -137,7 +137,7 @@ var slideNavigation=(function($){
 						styles: {
 							left: 0,
 							width: '70%',
-							zindex: 0,
+							zindex: 100,
 						},
 						show: {
 							aniShow: 'none'

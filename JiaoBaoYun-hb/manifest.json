@@ -201,11 +201,11 @@
 					"html/tab_zone.html",
 					"css/utils/common.css",
 					"js/index.js",
-					"js/main/slide_navigation.js"
+					"js/main/slide_navigation.js",
+					"html/tab_cloud.html"
 				],
 				"refer": [
 					"html/tab_knowledge.html",
-					"html/tab_cloud.html",
 					"html/tab_clip.html",
 					"html/index-menu.html"
 				],
@@ -232,7 +232,8 @@
 					"js/utils/events.js",
 					"css/mui.min.css",
 					"css/utils/common.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					null
 				],
 				"refer": [
 					"html/index-menu.html"
