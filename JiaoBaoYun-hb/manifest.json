@@ -274,7 +274,10 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"image/slide_navigation/img3.jpg",
-					"js/main/slide_navigation.js"
+					"js/main/slide_navigation.js",
+					"css/home/index-menu.css",
+					"css/iconfont/iconfont.css",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -303,5 +306,5 @@
 				"image/clip.png"
 			]
 		}
-	}
+	},"fullscreen":false
 }
