@@ -7,38 +7,33 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
 		<!--引入系统样式-->
 		<link rel="stylesheet" href="../../css/mui.min.css" />
-		<!--引入图片轮播-->
+		<script type="text/javascript" src="../../js/mui.min.js" ></script>
+		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script type="text/javascript" src="../../js/utils/carouselControl.js" ></script>
+		
 		
 	</head>
 
 	<body>
 		<!--下拉刷新容器-->
-		<!--<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
-			<div class="mui-scroll">-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--轮播控件-->
+					<div id="slider" class="mui-slider">
+						<div class="mui-slider-group mui-slider-loop">
+						</div>
+						<div class="mui-slider-indicator mui-text-right">
+						</div>
+					</div>
 				<!--数据列表-->
-				<!--<ul class="mui-table-view mui-table-view-chevron">
+				<ul class="mui-table-view mui-table-view-chevron">
 					
 				</ul>
 			</div>
-		</div> -->
-		
-		<!--滑动区域、弹簧效果-->
-		<div class="mui-scroll-wrapper" style="margin-top: 45px;">
-			<div class="mui-scroll">
-				<div class="mui-content">
-					<!--轮播控件-->
-					<div id="slider" class="mui-slider">
-						<div class="mui-slider-group mui-slider-loop"></div>
-						<div class="mui-slider-indicator mui-text-right"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<script src="js/mui.min.js"></script>
+		</div> 
 		<script>
 			mui.init({
 				pullRefresh: {
@@ -54,20 +49,17 @@
 			});
 			
 			mui.plusReady(function() {
-			slideNavigation.add('index-menu.html', 200);
-			//图片轮播
-			var titles = ["幸福是可以一起睡觉", "幸福是可以一起吃饭", "幸福是可以一起拉屎"]
+				var titles = ["幸福是可以一起睡觉", "幸福是可以一起吃饭", "幸福是可以一起拉屎"];
 				//加黑条
-			addStrip(getImgArray())
+				addStrip(getImgArray());
 				//加图片
-			addImg(getImgArray(), titles)
-			var slider = mui("#slider");
-			//轮播开始
-			slider.slider({
-				interval: 5000
+				addImg(getImgArray(), titles);
+				var slider = mui("#slider");
+				//轮播开始
+				slider.slider({
+					interval: 5000
+				});
 			});
-		});
-		
 			/**
 			 * 下拉刷新具体业务实现
 			 */
