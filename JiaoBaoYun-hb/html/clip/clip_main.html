@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--引入系统样式-->
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<!--引入共用样式-->
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<!--<script type="text/javascript" src="../../js/main/slide_navigation.js" ></script>-->
+		<script type="text/javascript" src="../../js/main/slide_navigation.js" ></script>
+		<script type="text/javascript" src="../../js/utils/events.js" ></script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav common-background-bar">
+			<h1 class="mui-title common-color-white common-font-family-Regular">剪辑</h1>
+		</header>
+		<div class="mui-content"></div>
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script type="text/javascript">
+		//启用双击监听
+		mui.init({
+//			gestureConfig:{
+//				doubletap:true
+//			},
+			subpages:[{ 
+				url:'clip_sub.html',
+				id:'clip_sub.html',
+				styles:{
+					top: '95px',
+					bottom: localStorage.getItem('$Statusbar'),
+				}
+			}] 
+		});
+		
+		mui.plusReady(function(){
+			slideNavigation.add('index-menu.html',100);
+		});
+	
+//		var contentWebview = null;
+//		document.querySelector('header').addEventListener('doubletap',function () {
+//			if(contentWebview==null){
+//				contentWebview = plus.webview.currentWebview().children()[0];
+//			}
+//			contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
+//		});
+	</script>
+
+</html>

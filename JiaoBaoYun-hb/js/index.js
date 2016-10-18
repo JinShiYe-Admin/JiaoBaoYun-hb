@@ -15,7 +15,7 @@ mui.plusReady(function() {
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
-	var subpages = ['tab_zone.html', 'tab_knowledge.html', 'tab_clip.html', 'tab_cloud.html'];
+	var subpages = ['tab_zone.html', 'tab_knowledge.html', 'clip/clip_main.html', 'tab_cloud.html'];
 
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
 	//获取当前页面所属的Webview窗口对象

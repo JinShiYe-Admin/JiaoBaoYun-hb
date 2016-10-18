@@ -11,16 +11,45 @@
 		<script type="text/javascript" src="../js/mui.min.js"></script>
 		<script type="text/javascript" src="../js/utils/events.js"></script>
 		<script src="../js/main/slide_navigation.js"></script>
+		<!--图片轮播-->
+		<script type="text/javascript" src="../js/utils/carouselControl.js"></script>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav common-background-bar">
 			<h1 class="mui-title common-color-white common-font-family-Regular">剪辑</h1>
 		</header>
+		<!--滑动区域、弹簧效果-->
+		<div class="mui-scroll-wrapper" style="margin-top: 45px;">
+			<div class="mui-scroll">
+				<div class="mui-content">
+					<!--轮播控件-->
+					<div id="slider" class="mui-slider">
+						<div class="mui-slider-group mui-slider-loop"></div>
+						<div class="mui-slider-indicator mui-text-right"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
 	<script>
-		mui.plusReady(function(){
-			slideNavigation.add('index-menu.html',200);
+		mui('.mui-scroll-wrapper').scroll({
+			indicators: true, //是否显示滚动条
+		});
+		mui.plusReady(function() {
+			slideNavigation.add('index-menu.html', 200);
+			//图片轮播
+			var titles = ["幸福是可以一起睡觉", "幸福是可以一起吃饭", "幸福是可以一起拉屎"]
+				//加黑条
+			addStrip(getImgArray())
+				//加图片
+			addImg(getImgArray(), titles)
+			var slider = mui("#slider");
+			//轮播开始
+			slider.slider({
+				interval: 5000
+			});
 		})
 	</script>
+
 </html>

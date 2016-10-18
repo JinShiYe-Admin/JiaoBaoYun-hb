@@ -52,8 +52,8 @@ var addDiv=function(imgUrl,title,group){
  */
 var getImgArray=function(){
 	var imgArray=new Array();
-	imgArray.push("../image/home/u292.png")
-	imgArray.push("../image/home/u296.png")
-	imgArray.push("../image/home/u298.png")
+	imgArray.push("../image/clip/u292.png")
+	imgArray.push("../image/clip/u296.png")
+	imgArray.push("../image/clip/u298.png")
 	return imgArray;
 }
