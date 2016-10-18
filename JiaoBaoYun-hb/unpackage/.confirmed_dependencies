@@ -8,7 +8,8 @@
 			"html/tab_zone.html",
 			"css/utils/common.css",
 			"js/index.js",
-			"js/main/slide_navigation.js"
+			"js/main/slide_navigation.js",
+			"html/tab_cloud.html"
 		],
 		"refer": [
 			"html/tab_knowledge.html",
@@ -76,7 +77,10 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"image/slide_navigation/img3.jpg",
-			"js/main/slide_navigation.js"
+			"js/main/slide_navigation.js",
+			"css/home/index-menu.css",
+			"css/iconfont/iconfont.css",
+			"fonts/iconfont.ttf"
 		]
 	}
 }

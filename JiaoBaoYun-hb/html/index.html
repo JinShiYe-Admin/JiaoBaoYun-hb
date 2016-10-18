@@ -1,46 +1,36 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../css/utils/common.css" />
-
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript" src="../js/utils/Statusbar.js" ></script>
 		<script type="text/javascript" src="../js/index.js"></script>
-
-		<style type="text/css">
-			.mui-bar-tab .mui-tab-item {
-				/*按钮颜色*/
-				color: gray;
-			}
-
-			.mui-bar-tab .mui-tab-item.mui-active {
-				/*按钮点击后的颜色*/
-				color: rgb(70,195,250);
-			}
+		<script src="../js/main/slide_navigation.js"></script>
 		</style>
 	</head>
 
 	<body>
+		
 		<header class="mui-bar mui-bar-nav common-background-bar">
+			<h1 id="title" class="mui-title">家校圈</h1>
 		</header>
 		<!--底部选项卡（.mui-bar-tab）-->
-		<nav class="mui-bar mui-bar-tab common-background-bar">
+		<nav  class="mui-bar mui-bar-tab common-background-bar">
 			<a id="defaultTab" class="mui-tab-item mui-active" href="tab_zone.html">
 				<span class="mui-icon mui-icon-star"><span class="mui-badge">1</span></span>
-				<span class="mui-tab-label">空间</span>
+				<span class="mui-tab-label">家校圈</span>
 			</a>
 			<a id="tabclass" class="mui-tab-item" href="tab_knowledge.html">
 				<span class="mui-icon mui-icon-help"></span>
-				<span class="mui-tab-label">求知</span>
+				<span class="mui-tab-label">问答</span>
 			</a>
 			<a class="mui-tab-item" href="clip/clip_main.html">
 				<span class="mui-icon mui-icon-chatboxes"></span>
-				<span class="mui-tab-label">剪辑</span>
+				<span class="mui-tab-label">视频</span>
 			</a>
 			<a class="mui-tab-item" href="tab_cloud.html">
 				<span class="mui-icon mui-icon-chatbubble"></span>
@@ -49,5 +39,11 @@
 
 		</nav>
 	</body>
-
+		<script src="../js/mui.min.js"></script>
+	<script>
+	mui.plusReady(function(){
+		slideNavigation.add('index-menu.html',200)
+})
+		
+	</script>
 </html>
