@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<script src="../../js/mui.min.js"></script>
+		<style>
+			.cloud-color {
+				/*图标颜色*/
+				color: #ABB9B9;
+			}
+
+			img {
+				margin-top: 10px;
+				width: 30px;
+				height: 25px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<header class="mui-bar mui-bar-nav " style="background: white;">
+			<img class=" mui-pull-left" id="upload" src="../../image/cloud/cloud_upload.gif">
+			<h1 class="mui-title"><img  id="download" src="../../image/cloud/cloud_download.gif"></span></h1>
+			<img class=" mui-pull-right" id="add" src="../../image/cloud/cloud_add.png">
+		</header>
+		<div class="mui-content"></div>
+	</body>
+
+	<script type="text/javascript">
+		//启用双击监听
+		mui.init({
+			subpages: [{
+				url: 'cloud_sub.html',
+				id: 'cloud_sub.html',
+				styles: {
+					top: '45px',
+					bottom: '0px',
+				}
+			}]
+		});
+
+		mui.plusReady(function() {
+			mui('.mui-bar').on('tap', 'img', function() {
+				var id = this.getAttribute('id');
+
+				switch(id) {
+					case 'upload':
+						mui.toast('upload');
+						break;
+					case 'download':
+						mui.toast('download');
+						break;
+					case 'add':
+						mui.toast('add');
+						break;
+				}
+			});
+		})
+	</script>
+
+</html>
