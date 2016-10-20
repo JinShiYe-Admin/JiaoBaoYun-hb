@@ -79,7 +79,8 @@
 									//新建文件夹
 									var tab = plus.webview.getWebviewById('cloud_sub.html');
 									mui.fire(tab, "addFolder", {
-										folderName: e.value
+										folderName: e.value,
+										folderUrl: 'newFloder'
 									});
 								}
 							} else {

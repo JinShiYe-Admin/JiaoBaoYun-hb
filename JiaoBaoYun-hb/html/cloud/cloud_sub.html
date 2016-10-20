@@ -264,7 +264,7 @@
 				mui('#File').on('tap', '.mui-table-view-cell', function() {
 					fileInfo.Name = this.getAttribute('name');
 					fileInfo.Id = this.getAttribute('id');
-//					console.log(JSON.stringify(fileInfo));
+					//					console.log(JSON.stringify(fileInfo));
 				});
 
 				//监听文件点击
@@ -305,9 +305,10 @@
 				window.addEventListener("addFolder", function(e) {
 					//获得事件参数
 					var folderName = e.detail.folderName;
+					var folderUrl = e.detail.folderUrl;
 					var folderTable = document.getElementById("Folder");
 					cloud.addFolders(folderTable, [
-						[folderName, 'newFloder']
+						[folderName, folderUrl]
 					]);
 					mui.toast('新建文件夹成功');
 				});
