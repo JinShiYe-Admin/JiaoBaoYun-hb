@@ -14,11 +14,17 @@
 		<script src="../js/main/slide_navigation.js">
 		</script>
 		<style type="text/css">
+			.mui-segmented-control.mui-segmented-control-inverted {
+				width: 60%;
+				border: 0;
+				border-radius: 0
+			}
+			
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
-	color: #007aff;
-	border-bottom: 0px solid red;
-	background: 0 0
-}
+				color: #007aff;
+				border-bottom: 0px solid red;
+				background: 0 0
+			}
 		</style>
 	</head>
 
@@ -54,13 +60,16 @@
 				<h4>
 					<img  src="../image/tab_zone/u131.png" />
 					<span  class="parent">家长圈</span>
-					<div style="padding: 10px 10px 10px 150px;margin-top: -45px;">
+					<hr class="vertical-line" />
+					<div style="padding: 10px 10px 10px 100px;margin-top: -45px;">
+						
 				<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted">
+					
 					<a class="mui-control-item mui-active" href="#item1">
-				1001班
+				1001班<span class="mui-badge mui-badge-danger custom-badge1"  >3</span>
 			</a>
 					<a class="mui-control-item" href="#item2">
-				1002班
+				1002班<span class="mui-badge mui-badge-danger custom-badge1"  >1</span>
 			</a>
 
 				</div>
@@ -74,105 +83,101 @@
 				</h4>
 				<!--第二个列表-->
 				<div>
-							<div id="item1" class="mui-control-content mui-active">
-				
-				<ul class="mui-table-view">
-					<li class="mui-table-view-cell mui-media">
+					<div id="item1" class="mui-control-content mui-active">
 
-						<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
-						<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
-						<p class="time">10月19</p>
-						<div class="mui-media-body" ;>
-							张雨欣
-							<p class='mui-ellipsis'>期末成绩出来了，热烈庆祝我们排全校第二<img src="../image/tab_zone/u91.png"></p>
-						</div>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell mui-media">
 
-					</li>
-					<li class="mui-table-view-cell mui-media">
+								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
+								<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
+								<p class="time">10月19</p>
+								<div class="mui-media-body" ;>
+									张雨欣
+									<p class='mui-ellipsis'>期末成绩出来了，热烈庆祝我们排全校第二<img src="../image/tab_zone/u91.png"></p>
+								</div>
 
-						<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
-						<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
-						<p class="time">10月18</p>
-						<div class="mui-media-body">
-							李芸
-							<p class='mui-ellipsis'>在今天的全校演讲比赛中，我班有6名同学获奖...</p>
-						</div>
+							</li>
+							<li class="mui-table-view-cell mui-media">
 
-					</li>
-					<li class="mui-table-view-cell mui-media">
+								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
+								<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
+								<p class="time">10月18</p>
+								<div class="mui-media-body">
+									李芸
+									<p class='mui-ellipsis'>在今天的全校演讲比赛中，我班有6名同学获奖...</p>
+								</div>
 
-						<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
-						<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
-						<p class="time">10月19</p>
-						<div class="mui-media-body" ;>
-							张雨欣
-							<p class='mui-ellipsis'>期末成绩出来了，热烈庆祝我们排全校第二<img src="../image/tab_zone/u91.png"></p>
-						</div>
+							</li>
+							<li class="mui-table-view-cell mui-media">
 
-					</li>
-					<li class="mui-table-view-cell mui-media">
+								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
+								<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
+								<p class="time">10月19</p>
+								<div class="mui-media-body" ;>
+									张雨欣
+									<p class='mui-ellipsis'>期末成绩出来了，热烈庆祝我们排全校第二<img src="../image/tab_zone/u91.png"></p>
+								</div>
 
-						<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
-						<p class="time">10月18</p>
-						<div class="mui-media-body">
-							李芸
-							<p class='mui-ellipsis'>在今天的全校演讲比赛中，我班有6名同学获奖...</p>
-						</div>
+							</li>
+							<li class="mui-table-view-cell mui-media">
 
+								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
+								<p class="time">10月18</p>
+								<div class="mui-media-body">
+									李芸
+									<p class='mui-ellipsis'>在今天的全校演讲比赛中，我班有6名同学获奖...</p>
+								</div>
 
+						</ul>
+					</div>
+					<div id="item2" class="mui-control-content">
 
-				</ul>
-</div>
-							<div id="item2" class="mui-control-content">
-				
-				<ul class="mui-table-view">
-					<li class="mui-table-view-cell mui-media">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell mui-media">
 
-						<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
-						<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
-						<p class="time">10月20</p>
-						<div class="mui-media-body" ;>
-							张雨欣
-							<p class='mui-ellipsis'>期末成绩出来了，热烈庆祝我们排全校第二<img src="../image/tab_zone/u91.png"></p>
-						</div>
+								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
+								<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
+								<p class="time">10月20</p>
+								<div class="mui-media-body" ;>
+									张雨欣
+									<p class='mui-ellipsis'>期末成绩出来了，热烈庆祝我们排全校第二<img src="../image/tab_zone/u91.png"></p>
+								</div>
 
-					</li>
-					<li class="mui-table-view-cell mui-media">
+							</li>
+							<li class="mui-table-view-cell mui-media">
 
-						<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
-						<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
-						<p class="time">10月18</p>
-						<div class="mui-media-body">
-							李芸
-							<p class='mui-ellipsis'>在今天的全校演讲比赛中，我班有6名同学获奖...</p>
-						</div>
+								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
+								<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
+								<p class="time">10月18</p>
+								<div class="mui-media-body">
+									李芸
+									<p class='mui-ellipsis'>在今天的全校演讲比赛中，我班有6名同学获奖...</p>
+								</div>
 
-					</li>
-					<li class="mui-table-view-cell mui-media">
+							</li>
+							<li class="mui-table-view-cell mui-media">
 
-						<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
-						<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
-						<p class="time">10月19</p>
-						<div class="mui-media-body" ;>
-							张雨欣
-							<p class='mui-ellipsis'>期末成绩出来了，热烈庆祝我们排全校第二<img src="../image/tab_zone/u91.png"></p>
-						</div>
+								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
+								<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
+								<p class="time">10月19</p>
+								<div class="mui-media-body" ;>
+									张雨欣
+									<p class='mui-ellipsis'>期末成绩出来了，热烈庆祝我们排全校第二<img src="../image/tab_zone/u91.png"></p>
+								</div>
 
-					</li>
-					<li class="mui-table-view-cell mui-media">
+							</li>
+							<li class="mui-table-view-cell mui-media">
 
-						<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
-						<p class="time">10月18</p>
-						<div class="mui-media-body">
-							李芸
-							<p class='mui-ellipsis'>在今天的全校演讲比赛中，我班有6名同学获奖...</p>
-						</div>
+								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
+								<p class="time">10月18</p>
+								<div class="mui-media-body">
+									李芸
+									<p class='mui-ellipsis'>在今天的全校演讲比赛中，我班有6名同学获奖...</p>
+								</div>
 
-
-
-				</ul>
-</div>
-</div>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -205,7 +210,7 @@
 			}
 			var firstbtn = function(e) {
 				e.style.color = 'cornflowerblue'
-				var btn2 = document.getElementById('btn2'); 
+				var btn2 = document.getElementById('btn2');
 				btn2.style.color = 'black';
 			}
 			var secondbtn = function(e) {
