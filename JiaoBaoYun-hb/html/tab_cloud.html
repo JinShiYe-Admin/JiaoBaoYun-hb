@@ -1,21 +1,38 @@
+
 <!doctype html>
 <html>
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>云盘</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../css/utils/common.css" />
-		<link rel="stylesheet" href="../css/mine/mine.css" />
 		<script type="text/javascript" src="../js/mui.min.js"></script>
 		<script type="text/javascript" src="../js/utils/events.js"></script>
-		<script src="../js/main/slide_navigation.js"> </script>
+		<script type="text/javascript" src="../js/main/slide_navigation.js"></script>
 	</head>
 
 	<body>
+
 	</body>
 	<script>
+		//加载云盘页面
+		mui.init();
+		mui.plusReady(function() {
+			var cloud_main = plus.webview.currentWebview();
+			var cloud_sub = null;
+			console.log('cloud_main-plusReady');
+			//当云盘界面显示在最前端时再加载数据
+			window.addEventListener("isVisible", function(e) {
+				//获得事件参数
+				var isVisible = e.detail.isVisible;
+				if(isVisible == true && cloud_sub == null) {
+					cloud_sub = plus.webview.create('cloud/cloud_main.html', 'cloud/cloud_main.html');
+					cloud_main.append(cloud_sub);
+				}
+			});
+		});
 	</script>
 
 </html>

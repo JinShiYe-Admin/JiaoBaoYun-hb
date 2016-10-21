@@ -7,14 +7,36 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<link rel="stylesheet" href="css/mui.min.css">
 		<!--引入系统样式-->
 		<link rel="stylesheet" href="../../css/mui.min.css" />
-		<script type="text/javascript" src="../../js/mui.min.js" ></script>
-		<link rel="stylesheet" href="../../css/utils/common.css" />
-		<script type="text/javascript" src="../../js/utils/carouselControl.js" ></script>
-		
-		
+		<script type="text/javascript" src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/carouselControl.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../css/utils/common.css" />
+		<style type="text/css">
+			.mui-scroll .mui-btn {
+				/*按钮颜色*/
+				background: transparent;
+			}
+			
+			.mui-scroll .mui-btn.mui-active {
+				/*按钮点击后的颜色*/
+				background: gray;
+			}
+			
+			.notice-content {
+				/*设置多于3行省略号*/
+				overflow: hidden;
+				/*设置多于3行省略号*/
+				text-overflow: ellipsis;
+				/*设置多于3行省略号*/
+				display: -webkit-box;
+				/*设置多于3行省略号*/
+				-webkit-line-clamp: 2;
+				/*设置多于3行省略号*/
+				-webkit-box-orient: vertical;
+				/*设置多于3行省略号*/
+			}
+		</style>
 	</head>
 
 	<body>
@@ -22,18 +44,77 @@
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
 				<!--轮播控件-->
-					<div id="slider" class="mui-slider">
-						<div class="mui-slider-group mui-slider-loop">
-						</div>
-						<div class="mui-slider-indicator mui-text-right">
+				<div id="slider11" class="mui-slider">
+					<div class="mui-slider-group mui-slider-loop">
+					</div>
+					<div class="mui-slider-indicator mui-text-right">
+					</div>
+				</div>
+				<!--分割线-->
+				<div style="height: 10px;"></div>
+				<!--数据列表-->
+				<div id="slider" class="mui-slider">
+					<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div class="mui-scroll">
+							<a class="mui-control-item mui-active" href="#item1mobile">
+								推荐
+							</a>
+							<a class="mui-control-item" href="#item2mobile">
+								热点
+							</a>
 						</div>
 					</div>
-				<!--数据列表-->
-				<ul class="mui-table-view mui-table-view-chevron">
-					
-				</ul>
+					<div class="mui-slider-group">
+						<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+							<ul class="mui-table-view mui-grid-view mui-grid-9">
+								<!--mui-col-xs-6,将一行设置为12等份，mui-col-xs-6是占6/12-->
+								<li class="mui-table-view-cell mui-media mui-col-xs-6" style="padding: 10px;">
+									<img class="mui-icon-image" src="../../image/clip/u292.png" style="top: 20px;left: 20px;right: 20px;height: 80px;padding: 0px;" />
+									<div class="notice-content" style="font-size: 13px;">纸上谈兵：纸上谈兵是指在纸面上谈论打战纸上谈兵是指在纸面上谈论打战纸上谈兵是指在纸面上谈论打战</div>
+
+								</li>
+								<li class="mui-table-view-cell mui-media mui-col-xs-6" style="padding: 10px;">
+									<img class="mui-icon-image" src="../../image/clip/u292.png" style="top: 20px;left: 20px;right: 20px;height: 80px;padding: 0px;" />
+									<div class="notice-content" style="font-size: 13px;">纸上谈兵：纸上谈兵是指在纸面上谈论打战纸上谈兵是指在纸面上谈论打战纸上谈兵是指在纸面上谈论打战</div>
+
+								</li>
+								<li class="mui-table-view-cell mui-media mui-col-xs-6" style="padding: 10px;">
+									<img class="mui-icon-image" src="../../image/clip/u292.png" style="top: 20px;left: 20px;right: 20px;height: 80px;padding: 0px;" />
+									<div class="notice-content" style="font-size: 13px;">纸上谈兵：纸上谈兵是指在纸面上谈论打战纸上谈兵是指在纸面上谈论打战纸上谈兵是指在纸面上谈论打战</div>
+
+								</li>
+								<li class="mui-table-view-cell mui-media mui-col-xs-6" style="padding: 10px;">
+									<img class="mui-icon-image" src="../../image/clip/u292.png" style="top: 20px;left: 20px;right: 20px;height: 80px;padding: 0px;" />
+									<div class="notice-content" style="font-size: 13px;">纸上谈兵：纸上谈兵是指在纸面上谈论打战纸上谈兵是指在纸面上谈论打战纸上谈兵是指在纸面上谈论打战</div>
+
+								</li>
+								<li class="mui-table-view-cell mui-media mui-col-xs-6" style="padding: 10px;">
+									<img class="mui-icon-image" src="../../image/clip/u292.png" style="top: 20px;left: 20px;right: 20px;height: 80px;padding: 0px;" />
+									<div class="notice-content" style="font-size: 13px;">纸上谈兵：纸上谈兵是指在纸面上谈论打战纸上谈兵是指在纸面上谈论打战纸上谈兵是指在纸面上谈论打战</div>
+								</li>
+							</ul>
+						</div>
+						<div id="item2mobile" class="mui-slider-item mui-control-content">
+							<ul class="mui-table-view">
+								<li class="mui-table-view-cell">
+									第3个选项卡子项-1
+								</li>
+								<li class="mui-table-view-cell">
+									第3个选项卡子项-2
+								</li>
+								<li class="mui-table-view-cell">
+									第3个选项卡子项-3
+								</li>
+								<li class="mui-table-view-cell">
+									第3个选项卡子项-1
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div> 
+		</div>
+
 		<script>
 			mui.init({
 				pullRefresh: {
@@ -49,12 +130,12 @@
 			});
 			
 			mui.plusReady(function() {
-				var titles = ["幸福是可以一起睡觉", "幸福是可以一起吃饭", "幸福是可以一起拉屎"];
+				var titles = ["幸福是可以一起睡觉", "幸福是可以一起吃饭", "幸福是可以一起"];
 				//加黑条
 				addStrip(getImgArray());
 				//加图片
 				addImg(getImgArray(), titles);
-				var slider = mui("#slider");
+				var slider = mui("#slider11");
 				//轮播开始
 				slider.slider({
 					interval: 5000
@@ -67,10 +148,12 @@
 				setTimeout(function() {
 					var table = document.body.querySelector('.mui-table-view');
 					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					for (var i = cells.length, len = i + 3; i < len; i++) {
+					for(var i = cells.length, len = i + 3; i < len; i++) {
 						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
-						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+						li.className = 'mui-table-view-cell mui-media mui-col-xs-6';
+						li.style.padding = '10px';
+						li.innerHTML = '<img class="mui-icon-image" src="../../image/clip/u292.png" style="top: 20px;left: 20px;right: 20px;height: 80px;padding: 0px;" />\
+									<div class="notice-content" style="font-size: 13px;">纸上谈兵：纸上谈兵是指在纸面上谈论打战纸上谈兵是指在纸面上谈论打战纸上谈兵是指在纸面上谈论打战</div>';
 						//下拉刷新，新纪录插到最前面；
 						table.insertBefore(li, table.firstChild);
 					}
@@ -86,15 +169,19 @@
 					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
 					var table = document.body.querySelector('.mui-table-view');
 					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					for (var i = cells.length, len = i + 20; i < len; i++) {
+					for(var i = cells.length, len = i + 20; i < len; i++) {
 						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
-						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+//						li.className = 'mui-table-view-cell';
+//						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+						li.className = 'mui-table-view-cell mui-media mui-col-xs-6';
+						li.style.padding = '10px';
+						li.innerHTML = '<img class="mui-icon-image" src="../../image/clip/u292.png" style="top: 20px;left: 20px;right: 20px;height: 80px;padding: 0px;" />\
+									<div class="notice-content" style="font-size: 13px;">纸上谈兵：纸上谈兵是指在纸面上谈论打战纸上谈兵是指在纸面上谈论打战纸上谈兵是指在纸面上谈论打战</div>';
 						table.appendChild(li);
 					}
 				}, 1500);
 			}
-			if (mui.os.plus) {
+			if(mui.os.plus) {
 				mui.plusReady(function() {
 					setTimeout(function() {
 						mui('#pullrefresh').pullRefresh().pullupLoading();
