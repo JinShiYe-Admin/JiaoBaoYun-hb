@@ -1,9 +1,14 @@
+<!--
+	作者：444811716@qq.com
+	时间：2016-10-20
+	描述：云盘父页面
+-->
 <!DOCTYPE html>
 <html>
 
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>云盘</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -35,7 +40,7 @@
 	</body>
 
 	<script type="text/javascript">
-		//启用双击监听
+		//云盘子页面
 		mui.init({
 			subpages: [{
 				url: 'cloud_sub.html',
@@ -48,18 +53,40 @@
 		});
 
 		mui.plusReady(function() {
-			mui('.mui-bar').on('tap', 'img', function() {
+			//显示等待窗口
+			plus.nativeUI.showWaiting('正在加载中');
+			//上传，下载，增加文件夹的监听
+			mui('.mui-bar').on('tap', 'img', function(e) {
 				var id = this.getAttribute('id');
-
 				switch(id) {
-					case 'upload':
+					case 'upload'://上传
 						mui.toast('upload');
 						break;
-					case 'download':
+					case 'download'://下载
 						mui.toast('download');
 						break;
-					case 'add':
-						mui.toast('add');
+					case 'add'://新建文件夹
+						e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+						var btnArray = ['取消', '确定'];
+						mui.prompt('请输入新文件夹的名称：', '新文件夹', '新建文件夹', btnArray, function(e) {
+							if(e.index == 1) {
+								//点击确定
+								console.log(e.value);
+								if(e.value == '') {
+									mui.toast('文件夹名字不能为空');
+								} else {
+									//向服务器发送数据并获得成功的回调
+									//新建文件夹
+									var tab = plus.webview.getWebviewById('cloud_sub.html');
+									mui.fire(tab, "addFolder", {
+										folderName: e.value,
+										folderUrl: 'newFloder'
+									});
+								}
+							} else {
+								//点击取消
+							}
+						});
 						break;
 				}
 			});

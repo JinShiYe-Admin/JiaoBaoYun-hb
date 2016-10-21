@@ -1,14 +1,21 @@
+<!--
+	作者：444811716@qq.com
+	时间：2016-10-20
+	描述：云盘子页面
+-->
 <!DOCTYPE html>
 <html>
 
 	<head>
 		<meta charset="utf-8">
-		<title>Hello MUI</title>
+		<title>云盘</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<script src="../../js/mui.min.js "></script>
+		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
 		<style>
 			.mui-table-view:before,
 			.mui-table-view:after,
@@ -42,8 +49,8 @@
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
 				<!--数据列表-->
-				<ul class="mui-table-view">
-					<li class="mui-table-view-cell mui-media" data-type="Folder">
+				<ul class="mui-table-view" id="Folder">
+					<!--<li class="mui-table-view-cell mui-media">
 						<a>
 							<span class="mui-navigate-right mui-media-object mui-pull-right"></span>
 							<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_folder.png">
@@ -54,7 +61,7 @@
 							</div>
 						</a>
 					</li>
-					<li class="mui-table-view-cell mui-media" data-type="Folder">
+					<li class="mui-table-view-cell mui-media">
 						<a>
 							<span class="mui-navigate-right mui-media-object mui-pull-right"></span>
 							<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_folder.png">
@@ -65,7 +72,8 @@
 							</div>
 						</a>
 					</li>
-					<li class="mui-table-view-cell mui-media" data-type="Folder">
+
+					<li class="mui-table-view-cell mui-media">
 						<a>
 							<span class="mui-navigate-right mui-media-object mui-pull-right"></span>
 							<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_folder.png">
@@ -76,7 +84,7 @@
 							</div>
 						</a>
 					</li>
-					<li class="mui-table-view-cell mui-media" data-type="Folder">
+					<li class="mui-table-view-cell mui-media">
 						<a>
 							<span class="mui-navigate-right mui-media-object mui-pull-right"></span>
 							<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_folder.png">
@@ -86,8 +94,10 @@
 								</p>
 							</div>
 						</a>
-					</li>
-					<li class="mui-table-view-cell mui-media" data-type="File">
+					</li>-->
+				</ul>
+				<ul class="mui-table-view" id="File">
+					<!--<li class="mui-table-view-cell mui-media">
 						<a>
 							<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_doc.png">
 							<span class="mui-icon mui-icon-trash mui-media-object mui-pull-right"></span>
@@ -99,7 +109,7 @@
 							</div>
 						</a>
 					</li>
-					<li class="mui-table-view-cell mui-media" data-type="File">
+					<li class="mui-table-view-cell mui-media">
 						<a>
 							<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_xls.png">
 							<span class="mui-icon mui-icon-trash mui-media-object mui-pull-right"></span>
@@ -111,7 +121,7 @@
 							</div>
 						</a>
 					</li>
-					<li class="mui-table-view-cell mui-media" data-type="File">
+					<li class="mui-table-view-cell mui-media">
 						<a>
 							<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_txt.png">
 							<span class="mui-icon mui-icon-trash mui-media-object mui-pull-right"></span>
@@ -123,7 +133,7 @@
 							</div>
 						</a>
 					</li>
-					<li class="mui-table-view-cell mui-media" data-type="File">
+					<li class="mui-table-view-cell mui-media">
 						<a>
 							<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_zip.png">
 							<span class="mui-icon mui-icon-trash mui-media-object mui-pull-right"></span>
@@ -135,7 +145,7 @@
 							</div>
 						</a>
 					</li>
-					<li class="mui-table-view-cell mui-media" data-type="File">
+					<li class="mui-table-view-cell mui-media">
 						<a>
 							<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_video.png">
 							<span class="mui-icon mui-icon-trash mui-media-object mui-pull-right"></span>
@@ -147,7 +157,7 @@
 							</div>
 						</a>
 					</li>
-					<li class="mui-table-view-cell mui-media" data-type="File">
+					<li class="mui-table-view-cell mui-media">
 						<a>
 							<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_audio.png">
 							<span class="mui-icon mui-icon-trash mui-media-object mui-pull-right"></span>
@@ -159,10 +169,22 @@
 							</div>
 						</a>
 					</li>
+					<li class="mui-table-view-cell mui-media">
+						<a>
+							<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_file.png">
+							<span class="mui-icon mui-icon-trash mui-media-object mui-pull-right"></span>
+							<span class="mui-icon mui-icon-download mui-media-object mui-pull-right"></span>
+							<div class="mui-media-body">
+								<p class="mui-ellipsis">
+									我的文件
+								</p>
+							</div>
+						</a>
+					</li>-->
 				</ul>
 			</div>
 		</div>
-		<script src="../../js/mui.min.js "></script>
+
 		<script>
 			mui.init({
 				pullRefresh: {
@@ -181,39 +203,166 @@
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
-					var table = document.body.querySelector('.mui-table-view');
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					for(var i = cells.length, len = i + 3; i < len; i++) {
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
-						li.innerHTML = '<a class="mui-navigate-right ">Item ' + (i + 1) + '</a>';
-						//下拉刷新，新纪录插到最前面；
-						table.insertBefore(li, table.firstChild);
-					}
+					var folderData = FolderData();
+					var fileData = FileData();
+					var folderTable = document.getElementById("Folder");
+					var fileTable = document.getElementById("File");
+					folderTable.innerHTML = '';
+					fileTable.innerHTML = '';
+					cloud.addFolders(folderTable, folderData);
+					cloud.addFiles(fileTable, fileData);
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 1500);
 			}
-			var count = 0;
+
 			/**
 			 * 上拉加载具体业务实现
 			 */
 			function pullupRefresh() {
 				setTimeout(function() {
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
-					var table = document.body.querySelector('.mui-table-view');
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					for(var i = cells.length, len = i + 20; i < len; i++) {
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
-						li.innerHTML = '<a class="mui-navigate-right ">Item ' + (i + 1) + '</a>';
-						table.appendChild(li);
-					}
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+					var folderData = FolderData();
+					var fileData = FileData();
+					var folderTable = document.getElementById("Folder");
+					var fileTable = document.getElementById("File");
+
+					cloud.addFolders(folderTable, folderData);
+					cloud.addFiles(fileTable, fileData);
 				}, 1500);
 			}
 
 			mui.plusReady(function() {
+				//------------假数据start
+				var folderData = FolderData();
+				var fileData = FileData();
+				var folderTable = document.getElementById("Folder");
+				var fileTable = document.getElementById("File");
+				cloud.addFolders(folderTable, folderData);
+				cloud.addFiles(fileTable, fileData);
+				//------------假数据end
+
+				plus.nativeUI.closeWaiting(); //关闭等待窗口
+				var fileInfo = {
+					Name: '', //文件名
+					Id: '' //文件id
+				}; //记录被点击的文件信息
+
+				//文件夹监听
+				mui('#Folder').on('tap', '.mui-table-view-cell', function() {
+					var id = this.getAttribute('id');
+					console.log(id);
+					var fileData = FileData();
+					var folderTable = document.getElementById("Folder");
+					var fileTable = document.getElementById("File");
+					folderTable.innerHTML = '';
+					fileTable.innerHTML = '';
+					//将界面清空后再添加文件
+					cloud.addFiles(fileTable, fileData);
+				});
+
+				//文件监听，并记录属性
+				mui('#File').on('tap', '.mui-table-view-cell', function() {
+					fileInfo.Name = this.getAttribute('data-name');
+					fileInfo.Id = this.getAttribute('id');
+					console.log(JSON.stringify(fileInfo));
+				});
+
+				//监听文件点击
+				mui('#File').on('tap', '.mui-media-body,img', function() {
+					setTimeout(function() {
+						mui.toast('下载或者打开文件：' + fileInfo.Name);
+					}, 500); //设置延迟，以为点击li设置fileInfo的属性有延迟
+				});
+
+				//监听删除按钮
+				mui('.mui-table-view').on('tap', '.mui-icon-trash', function() {
+					var btnArray = ['否', '是'];
+					mui.confirm('确认删除？', '提示', btnArray, function(e) {
+						if(e.index == 1) {
+							//确定删除
+							document.getElementById("File").removeChild(document.getElementById(fileInfo.Id));
+							mui.toast('删除成功');
+						} else {
+							//不删除
+						}
+					})
+				});
+
+				//监听下载按钮
+				mui('.mui-table-view').on('tap', '.mui-icon-download', function() {
+					var btnArray = ['否', '是'];
+					mui.confirm('确认下载？', '提示', btnArray, function(e) {
+						if(e.index == 1) {
+							//确定下载
+							mui.toast('下载文件：' + fileInfo.Name);
+						} else {
+							//不下载
+						}
+					})
+				});
+
+				//新建文件夹
+				window.addEventListener("addFolder", function(e) {
+					//获得事件参数
+					var folderName = e.detail.folderName;
+					var folderUrl = e.detail.folderUrl;
+					var folderTable = document.getElementById("Folder");
+					cloud.addFolders(folderTable, [
+						[folderName, folderUrl]
+					]);
+					mui.toast('新建文件夹成功');
+				});
 
 			});
+
+			/**
+			 * 返回一组文件夹数据
+			 */
+			function FolderData() {
+				//[FolderInfoList] 文件夹数组
+				//FolderInfoList:[FolderInfo] 文件夹信息数组
+				//FolderInfo：[FolderName,FolderUrl]
+				//FolderName 文件夹名字
+				//FolderUrl 文件夹路径
+				var FolderInfoList = []; //文件夹数组
+				var FolderInfo1 = ['李云（孩子档案）', 'Folder1']; //文件夹信息数组
+				var FolderInfo2 = ['泰国旅游', 'Folder2'];
+				var FolderInfo3 = ['素材图片展示', 'Folder3'];
+				var FolderInfo4 = ['喜欢的音乐备份', 'Folder4'];
+				FolderInfoList.push(FolderInfo1);
+				FolderInfoList.push(FolderInfo2);
+				FolderInfoList.push(FolderInfo3);
+				FolderInfoList.push(FolderInfo4);
+
+				return FolderInfoList;
+			}
+
+			/**
+			 * 返回一组文件数据
+			 */
+			function FileData() {
+				//[FilesInfoList] 文件数组
+				//FilesInfoList:[FilesInfo] 文件夹信息数组
+				//FilesInfo：[FilesName,FilesUrl]
+				//FilesName 文件名字
+				//FilesUrl 文件路径
+				var FilesInfoList = []; //文件数组
+				var FilesInfo1 = ['03一head中常用标记_高.doc', 'File1']; //文件信息数组
+				var FilesInfo2 = ['办公室人员电话.xls', 'File2'];
+				var FilesInfo3 = ['03一head中常用标记_高清_转.txt', 'File3'];
+				var FilesInfo4 = ['好听的音乐.zip', 'File4'];
+				var FilesInfo5 = ['蹦蹦的坚果故事.mp4', 'File5'];
+				var FilesInfo6 = ['我的音频.mp3', 'File6'];
+				var FilesInfo7 = ['我的文件', 'File7'];
+				FilesInfoList.push(FilesInfo1);
+				FilesInfoList.push(FilesInfo2);
+				FilesInfoList.push(FilesInfo3);
+				FilesInfoList.push(FilesInfo4);
+				FilesInfoList.push(FilesInfo5);
+				FilesInfoList.push(FilesInfo6);
+				FilesInfoList.push(FilesInfo7);
+				return FilesInfoList;
+			}
 		</script>
 	</body>
 
