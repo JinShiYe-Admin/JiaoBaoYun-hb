@@ -262,9 +262,9 @@
 
 				//文件监听，并记录属性
 				mui('#File').on('tap', '.mui-table-view-cell', function() {
-					fileInfo.Name = this.getAttribute('name');
+					fileInfo.Name = this.getAttribute('data-name');
 					fileInfo.Id = this.getAttribute('id');
-					//					console.log(JSON.stringify(fileInfo));
+					console.log(JSON.stringify(fileInfo));
 				});
 
 				//监听文件点击

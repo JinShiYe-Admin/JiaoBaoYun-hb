@@ -57,7 +57,7 @@ var cloud = (function($, mod) {
 			html = html1 + html2 + html3 + html4;
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell mui-media';
-			li.setAttribute('name', item[0]); //记录文件名字
+			li.setAttribute('data-name', item[0]); //记录文件名字
 			li.id = item[1]; //记录文件路径
 			li.innerHTML = html;
 			table.appendChild(li);
