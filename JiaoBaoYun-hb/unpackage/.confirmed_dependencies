@@ -16,7 +16,8 @@
 			"html/tab_cloud.html",
 			"html/tab_zone.html",
 			"html/tab_clip.html",
-			"html/index-menu.html"
+			"html/index-menu.html",
+			"html/clip/clip_main.html"
 		]
 	},
 	"html/tab_zone.html": {
@@ -81,6 +82,20 @@
 			"css/home/index-menu.css",
 			"css/iconfont/iconfont.css",
 			"fonts/iconfont.ttf"
+		]
+	},
+	"html/clip/clip_main.html": {
+		"resources": [
+			"js/mui.js",
+			"html/clip/clip_sub.html"
+		],
+		"refer": [
+			"html/clip/clip_sub.html"
+		]
+	},
+	"html/clip/clip_sub.html": {
+		"resources": [
+			"js/utils/carouselControl.js"
 		]
 	}
 }
