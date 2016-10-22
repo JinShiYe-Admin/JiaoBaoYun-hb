@@ -202,7 +202,9 @@
 					"css/utils/common.css",
 					"js/index.js",
 					"js/main/slide_navigation.js",
-					"html/tab_cloud.html"
+					"html/tab_cloud.html",
+					"css/iconfont/iconfont.css",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"html/tab_knowledge.html",
@@ -219,7 +221,9 @@
 					"css/mui.min.css",
 					"css/utils/common.css",
 					"js/main/slide_navigation.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"css/home/zone.css",
+					"html/zone_sub.html"
 				],
 				"refer": [
 					"html/index-menu.html"
@@ -293,7 +297,21 @@
 			},
 			"html/clip/clip_sub.html": {
 				"resources": [
-					"js/utils/carouselControl.js"
+					"js/utils/carouselControl.js",
+					"image/clip/u296.png",
+					"image/clip/u292.png",
+					"image/clip/u298.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/zone_sub.html": {
+				"resources": [
+					"image/tab_zone/u34.png",
+					"image/tab_zone/u85.png",
+					"image/tab_zone/u131.png",
+					"image/tab_zone/u91.png",
+					"image/tab_zone/u72.png"
 				],
 				"refer": [],
 				"priority": 0
