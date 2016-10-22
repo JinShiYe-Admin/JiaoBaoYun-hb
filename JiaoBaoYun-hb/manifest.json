@@ -224,7 +224,8 @@
 					"js/main/slide_navigation.js",
 					"fonts/mui.ttf",
 					"css/home/zone.css",
-					"html/zone_sub.html"
+					"html/zone_sub.html",
+					"js/utils/Statusbar.js"
 				],
 				"refer": [
 					"html/index-menu.html"
@@ -313,7 +314,11 @@
 					"image/tab_zone/u85.png",
 					"image/tab_zone/u131.png",
 					"image/tab_zone/u91.png",
-					"image/tab_zone/u72.png"
+					"image/tab_zone/u72.png",
+					"css/home/zone.css",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0

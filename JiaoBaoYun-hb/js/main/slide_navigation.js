@@ -3,6 +3,11 @@ var slideNavigation=(function($){
 	main = null;
 	var showMenu = false;
 	var isInTransition = false;
+	/**
+	 * 
+	 * @param {Object} tarpage 目标页面Url
+	 * @param {Object} interval 时间间隔
+	 */
 	var add=function(tarpage,interval){
 		addSlideIcon();
 		//设置设备
