@@ -210,7 +210,8 @@
 					"html/tab_knowledge.html",
 					"html/tab_clip.html",
 					"html/index-menu.html",
-					"html/clip/clip_main.html"
+					"html/clip/clip_main.html",
+					"html/clip/clip_sub.html"
 				],
 				"priority": 0
 			},
@@ -238,7 +239,8 @@
 					"css/mui.min.css",
 					"css/utils/common.css",
 					"fonts/mui.ttf",
-					null
+					null,
+					"html/cloud/cloud_main.html"
 				],
 				"refer": [
 					"html/index-menu.html"
@@ -312,6 +314,31 @@
 					"image/tab_zone/u131.png",
 					"image/tab_zone/u91.png",
 					"image/tab_zone/u72.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/cloud/cloud_main.html": {
+				"resources": [
+					"image/cloud/cloud_download.gif",
+					"image/cloud/cloud_upload.gif",
+					"html/cloud/cloud_sub.html",
+					"image/cloud/cloud_add.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/cloud/cloud_sub.html": {
+				"resources": [
+					"image/cloud/cloud_audio.png",
+					"image/cloud/cloud_doc.png",
+					"image/cloud/cloud_file.png",
+					"image/cloud/cloud_txt.png",
+					"image/cloud/cloud_folder.png",
+					"js/cloud/cloud.js",
+					"image/cloud/cloud_video.png",
+					"image/cloud/cloud_zip.png",
+					"image/cloud/cloud_xls.png"
 				],
 				"refer": [],
 				"priority": 0
