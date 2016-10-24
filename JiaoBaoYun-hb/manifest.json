@@ -406,7 +406,31 @@
 					"js/utils/events.js",
 					"css/mui.min.css",
 					"fonts/iconfont.ttf",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"html/quan/classSpace-sub.html",
+					"image/clip.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/classSpace-sub.html": {
+				"resources": [
+					"css/utils/bubble.css",
+					"js/quan/class_space.js",
+					"js/mui.min.js",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"image/quan/img1.jpeg",
+					"image/quan/img4.jpg",
+					"image/quan/img2.jpg",
+					"image/quan/img3.jpg",
+					"image/quan/img0.jpeg",
+					"image/quan/u84.jpg",
+					"image/quan/u98.jpg",
+					"image/quan/u100.png",
+					"image/quan/u114.png",
+					"image/quan/u108.jpg",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -429,8 +453,7 @@
 				"css/utils/mui.indexedlist.css",
 				"image/cloud_sel.png",
 				"css/utils/searchbar.css",
-				"image/cloud.png",
-				"image/clip.png"
+				"image/cloud.png"
 			]
 		}
 	},"fullscreen":false

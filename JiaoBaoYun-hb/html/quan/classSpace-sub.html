@@ -21,18 +21,24 @@
 		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
 		  <div class="mui-scroll">
 		    <!--数据列表-->
-		    <ul id="classSpace_list" class="mui-table-view mui-table-view-chevron">
+		    <ul id="classSpace_list" class="mui-table-view">
 		    </ul>
-		    <p>你好</p>
 		  </div>
 		</div>
 		
 		
 	</body>
 	<script >
+		events.initRefresh('classSpace_list',
+		function(){
+			class_space.createListView(class_space.createList(class_space.createData(),5));
+		},
+		function(){
+			class_space.createListView(class_space.createList(class_space.createData(),5));
+		});
 		mui.plusReady(function(){
 			console.log("出啥问题啦")
-			class_space.createListView(class_space.createList(class_space.data(),5));
+			class_space.createListView(class_space.createList(class_space.createData(),5));
 		})
 		
 	</script>
