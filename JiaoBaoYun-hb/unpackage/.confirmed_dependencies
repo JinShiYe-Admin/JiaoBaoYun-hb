@@ -129,7 +129,8 @@
 		],
 		"refer": [
 			"html/quan/class-space.html",
-			"html/quan/zone_main.html"
+			"html/quan/zone_main.html",
+			"html/quan/class_space.html"
 		]
 	},
 	"html/cloud/cloud_main.html": {
@@ -193,6 +194,17 @@
 			"js/quan/dynamiclistitem.js",
 			"image/dynamic/icon_Level39.png",
 			"image/dynamic/u101.png"
+		]
+	},
+	"html/quan/class_space.html": {
+		"resources": [
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"css/utils/common.css"
 		]
 	}
 }

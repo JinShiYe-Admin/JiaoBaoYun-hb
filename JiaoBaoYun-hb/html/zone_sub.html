@@ -194,19 +194,6 @@
 					}
 				}
 			});
-			mui.plusReady(function(){
-				var zhang=document.getElementById('zhang');
-				zhang.addEventListener('tap',  function() {
-
-					mui.openWindow({
-						id: 'quan/zone_main.html',
-						url: 'quan/zone_main.html',
-						show: {
-							aniShow: 'pop-in'
-						}
-					});
-				});
-			})
 				
 
 			function pulldownRefresh() {
@@ -251,8 +238,11 @@
 	</body>
 	<script>
 	mui.plusReady(function(){
+		var zhang=document.getElementById('zhang');
+		events.jumpPage(zhang,'quan/zone_main.html');
 		var tar=document.getElementById('tarClass');
-		events.jumpPage(tar,'html/quan/class_space.html');
+		events.jumpPage(tar,'quan/class_space.html');
+		console.log(localStorage.getItem('$Statusbar'))
 	})
 		
 	</script>
