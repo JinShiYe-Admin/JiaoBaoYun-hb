@@ -155,7 +155,7 @@
 								</div>
 
 							</li>
-							<li class="mui-table-view-cell mui-media">
+							<li id="zhang" class="mui-table-view-cell mui-media">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
 								<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
@@ -194,8 +194,9 @@
 					}
 				}
 			});
-			
-				mui(".mui-table-view").on('tap', '.mui-table-view-cell', function() {
+			mui.plusReady(function(){
+				var zhang=document.getElementById('zhang');
+				zhang.addEventListener('tap',  function() {
 
 					mui.openWindow({
 						id: 'quan/zone_main.html',
@@ -205,6 +206,8 @@
 						}
 					});
 				});
+			})
+				
 
 			function pulldownRefresh() {
 				setTimeout(function() {
@@ -249,7 +252,7 @@
 	<script>
 	mui.plusReady(function(){
 		var tar=document.getElementById('tarClass');
-		events.jumpPage(tar,'/html/quan/class-space.html');
+		events.jumpPage(tar,'html/quan/class_space.html');
 	})
 		
 	</script>

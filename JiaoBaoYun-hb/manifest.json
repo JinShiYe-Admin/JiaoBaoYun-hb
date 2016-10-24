@@ -325,7 +325,8 @@
 					"js/main/slide_navigation.js"
 				],
 				"refer": [
-					"html/quan/class-space.html"
+					"html/quan/class-space.html",
+					"html/quan/zone_main.html"
 				],
 				"priority": 0
 			},
@@ -368,6 +369,30 @@
 					"fonts/iconfont.ttf",
 					"css/utils/common.css",
 					"js/utils/events.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/zone_main.html": {
+				"resources": [
+					"html/quan/zonep_sub.html",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/utils/common.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/zonep_sub.html": {
+				"resources": [
+					"image/dynamic/icon_praise.png",
+					"image/dynamic/icon_praise_small.png",
+					"image/dynamic/icon_comment.png",
+					"image/dynamic/icon_forward.png",
+					"js/quan/dynamiclistitem.js",
+					"image/dynamic/icon_Level39.png",
+					"image/dynamic/u101.png"
 				],
 				"refer": [],
 				"priority": 0
