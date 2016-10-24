@@ -194,6 +194,17 @@
 					}
 				}
 			});
+			
+				mui(".mui-table-view").on('tap', '.mui-table-view-cell', function() {
+
+					mui.openWindow({
+						id: 'quan/zone_main.html',
+						url: 'quan/zone_main.html',
+						show: {
+							aniShow: 'pop-in'
+						}
+					});
+				});
 
 			function pulldownRefresh() {
 				setTimeout(function() {
