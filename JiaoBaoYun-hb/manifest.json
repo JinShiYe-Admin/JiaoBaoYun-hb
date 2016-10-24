@@ -305,7 +305,11 @@
 					"js/utils/carouselControl.js",
 					"image/clip/u296.png",
 					"image/clip/u292.png",
-					"image/clip/u298.png"
+					"image/clip/u298.png",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -355,7 +359,10 @@
 					"image/cloud/cloud_video.png",
 					"image/cloud/cloud_zip.png",
 					"image/cloud/cloud_xls.png",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"css/utils/common.css",
+					"js/mui.min.js",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -430,7 +437,8 @@
 					"image/quan/u100.png",
 					"image/quan/u114.png",
 					"image/quan/u108.jpg",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"css/quan/class_space.css"
 				],
 				"refer": [],
 				"priority": 0

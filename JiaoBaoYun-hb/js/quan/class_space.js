@@ -22,7 +22,6 @@
 		var container=document.getElementById('classSpace_list');
 		list.forEach(function(cell,index,list){
 			var li=document.createElement('li');
-			li.className='mui-table-view-cell';
 			li.innerHTML=createInnerHtml(cell);
 			container.appendChild(li);
 		})
