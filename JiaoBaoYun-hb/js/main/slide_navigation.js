@@ -177,7 +177,7 @@ var slideNavigation = (function($) {
 //		span.innerHTML = '3'
 //		a.appendChild(span)
 //
-//		header.insertBefore(a, header.firstChild);
+		header.insertBefore(a, header.firstChild);
 	}
 	var getBack = function() {
 		//首页返回键处理
