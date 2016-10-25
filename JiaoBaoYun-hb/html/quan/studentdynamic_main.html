@@ -100,8 +100,8 @@
 				//属性类型为String[]，若不支持此属性则返回空数组对象
 				var fmt = cmr.supportedImageFormats[0];
 
-				//console.log('支持的拍照分辨率:' + JSON.stringify(cmr.supportedImageResolutions));
-				//console.log('支持的拍照文件格式:' + JSON.stringify(cmr.supportedImageFormats));
+				console.log('支持的拍照分辨率:' + JSON.stringify(cmr.supportedImageResolutions));
+				console.log('支持的拍照文件格式:' + JSON.stringify(cmr.supportedImageFormats));
 				console.log("选择的拍照分辨率: " + res + ", 选择的文件格式: " + fmt);
 
 				//进行拍照操作cmr.captureImage( successCB, errorCB, option );
@@ -131,8 +131,8 @@
 							console.log('未拍取图片');
 						}
 					}, {
-						resolution: res,
-						format: fmt
+//						resolution: res,
+//						format: fmt
 					}
 				);
 			}
