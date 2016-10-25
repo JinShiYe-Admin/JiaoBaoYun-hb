@@ -220,7 +220,8 @@
 		],
 		"refer": [
 			"html/quan/classSpace-sub.html",
-			"html/quan/class-dynamic.html"
+			"html/quan/class-dynamic.html",
+			"html/quan/class-group.html"
 		]
 	},
 	"html/quan/classSpace-sub.html": {
@@ -286,6 +287,36 @@
 			"js/utils/events.js",
 			"js/utils/files.js",
 			"js/utils/ASFiles.js"
+		]
+	},
+	"html/quan/class-group.html": {
+		"resources": [
+			"image/quan/group/u227.png",
+			"js/utils/grideControl.js",
+			"image/quan/group/u165.png",
+			"image/quan/group/u237.png",
+			"image/quan/group/u217.png",
+			"image/quan/group/u173.png",
+			"image/quan/group/u213.png",
+			"image/quan/group/u241.png",
+			"image/quan/group/u177.png",
+			"image/quan/group/u191.png",
+			"image/quan/group/u219.png",
+			"image/quan/group/u233.png",
+			"image/quan/group/u231.png",
+			"image/quan/group/u189.png",
+			"js/mui.min.js",
+			"image/quan/group/u205.png",
+			"image/quan/group/u201.png",
+			"image/quan/group/u209.png",
+			"image/quan/group/u169.png",
+			"image/quan/group/u181.png",
+			"image/quan/group/u223.png",
+			"image/quan/group/u195.gif",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/quan/class_space.css"
 		]
 	}
 }
