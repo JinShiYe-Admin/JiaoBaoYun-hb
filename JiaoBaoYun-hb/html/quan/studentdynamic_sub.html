@@ -1,0 +1,270 @@
+<!--
+	作者：444811716@qq.com
+	时间：2016-10-22
+	描述：学生动态子页面
+-->
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/quan/studentdynamic.js"></script>
+		<style>
+			.mui-table-view:before,
+			.mui-table-view:after,
+			.mui-table-view-cell:after {
+				height: 0px;
+			}
+
+			.mui-table-view {
+				background: transparent;
+			}
+
+			.mui-table-view-cell {
+				margin-top: 8px;
+			}
+
+			.mui-media-body {
+				background: #D8D8D8;
+				padding: 3px;
+			}
+
+			.dynamic-ellipsis-2 {
+				/*设置多于2行省略号*/
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				/*设置多于2行省略号*/
+				-webkit-box-orient: vertical;
+				color: black;
+			}
+
+			.dynamic-date {
+				/*日期*/
+				text-align: left;
+				/*居中*/
+				font-weight: bold;
+				/*加粗*/
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul class="mui-table-view">
+					<!--<li class="mui-table-view-cell ">
+						<div class="mui-row">
+							<div class="mui-col-sm-2 mui-col-xs-2">
+								<div class="dynamic-date">
+									<font style="font-size: 150%;">今天</font>
+								</div>
+							</div>
+							<div class="mui-col-sm-10 mui-col-xs-10">
+								<div class="mui-media-body">
+									<img class="mui-media-object mui-pull-left" src="../../image/clip/u292.png">
+									<div class="dynamic-ellipsis-2">
+										今天上课表现积极回答问题,继续努力
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="mui-table-view-cell ">
+						<div class="mui-row">
+							<div class="mui-col-sm-2 mui-col-xs-2">
+								<div class="dynamic-date">
+									<font style="font-size: 150%;">10</font><font style="font-size: 80%;">12月</font>
+								</div>
+							</div>
+							<div class="mui-col-sm-10 mui-col-xs-10">
+								<div class="mui-media-body">
+									<div class="dynamic-ellipsis-2">
+										迟到：由于赖床，起晚了，迟到了5分钟
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="mui-table-view-cell ">
+						<div class="mui-row">
+							<div class="mui-col-sm-2 mui-col-xs-2">
+								<div class="dynamic-date">
+									<font style="font-size: 150%;">08</font><font style="font-size: 80%;">10月</font>
+								</div>
+							</div>
+							<div class="mui-col-sm-10 mui-col-xs-10">
+								<div class="mui-media-body">
+									<div class="dynamic-ellipsis-2">
+										旷课：生病了忘记请假
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="mui-table-view-cell ">
+						<div class="mui-row">
+							<div class="mui-col-sm-2 mui-col-xs-2">
+								<div class="dynamic-date">
+									<font style="font-size: 150%;">20</font><font style="font-size: 80%;">9月</font>
+								</div>
+							</div>
+							<div class="mui-col-sm-10 mui-col-xs-10">
+								<div class="mui-media-body">
+									<img class="mui-media-object mui-pull-left" src="http://d2t44wh9rnwl5y.cloudfront.net/gsc/X7XYST/a9/1e/82/a91e82e04531487985ce6d46d2fcb347/images/%E5%AD%A6%E7%94%9F%E5%8A%A8%E6%80%81/u123.png?token=9f52ae41be1f2aa3c95a8d5062a3b303">
+									<div class="dynamic-ellipsis-2">
+										期末考试成绩优秀，下次继续再接再厉考个好成绩，加油！
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="mui-table-view-cell ">
+						<div class="mui-row">
+							<div class="mui-col-sm-2 mui-col-xs-2">
+								<div class="dynamic-date">
+									<font style="font-size: 150%;">02</font><font style="font-size: 80%;">9月</font>
+								</div>
+							</div>
+							<div class="mui-col-sm-10 mui-col-xs-10">
+								<div class="mui-media-body">
+									<img class="mui-media-object mui-pull-left" src="http://d2t44wh9rnwl5y.cloudfront.net/gsc/X7XYST/a9/1e/82/a91e82e04531487985ce6d46d2fcb347/images/%E5%AD%A6%E7%94%9F%E5%8A%A8%E6%80%81/u77.png?token=04aed683758cddac4ae104fdac992128">
+									<div class="dynamic-ellipsis-2">
+										体育课不爱与同学互动，希望家长做好孩子的思想工作
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>-->
+				</ul>
+			</div>
+		</div>
+		<script>
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					var table = document.body.querySelector('.mui-table-view');
+					table.innerHTML = '';
+					//-----假数据start
+					data();
+					//-----假数据end
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+			}
+
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+					//-----假数据start
+					data();
+					//-----假数据end
+				}, 1500);
+			}
+
+			mui.plusReady(function() {
+				//向服务器获取数据
+
+				//-----假数据start
+				data();
+				//-----假数据end
+
+				//关闭等待窗口
+				plus.nativeUI.closeWaiting();
+				mui('.mui-table-view').on('tap', 'li', function() {
+					mui.toast('跳到详情页' + this.id);
+				});
+			});
+
+			var id = 0;
+
+			function data() {
+				//-----假数据start
+				var table = document.body.querySelector('.mui-table-view');
+				var mData1 = data1();
+				var mData2 = data2();
+				var mData3 = data3();
+				var mData4 = data4();
+				var mData5 = data5();
+				//生成界面
+				studentdynamic.additem(table, mData1, 'li' + id);
+				id = id + 1;
+				studentdynamic.additem(table, mData2, 'li' + id);
+				id = id + 1;
+				studentdynamic.additem(table, mData3, 'li' + id);
+				id = id + 1;
+				studentdynamic.additem(table, mData4, 'li' + id);
+				id = id + 1;
+				studentdynamic.additem(table, mData5, 'li' + id);
+				id = id + 1;
+				//-----假数据end
+			}
+
+			//假数据
+			function data1() {
+				var date = '今天';
+				var content = '今天上课表现积极回答问题,继续努力';
+				var imageUrl = '../../image/quan/u125.png';
+				var data = [date, content, imageUrl];
+				return data;
+			}
+
+			function data2() {
+				var date = ['10', '12月'];
+				var content = '迟到：由于赖床，起晚了，迟到了5分钟';
+				var data = [date, content];
+				return data;
+			}
+
+			function data3() {
+				var date = ['08', '10月'];
+				var content = '旷课：生病了忘记请假生病了忘记请假生病了忘记请假生病了忘记请假生病了忘记请假生病了忘记请假';
+				var data = [date, content];
+				return data;
+			}
+
+			function data4() {
+				var date = ['20', '9月'];
+				var content = '期末考试成绩优秀，下次继续再接再厉考个好成绩，加油！';
+				var imageUrl = '../../image/quan/u123.png';
+				var data = [date, content, imageUrl];
+				return data;
+			}
+
+			function data5() {
+				var date = ['02', '9月'];
+				var content = '体育课不爱与同学互动，希望家长做好孩子的思想工作';
+				var imageUrl = '../../image/quan/u77.png';
+				var data = [date, content, imageUrl];
+				return data;
+			}
+		</script>
+	</body>
+
+</html>
