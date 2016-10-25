@@ -1,8 +1,32 @@
-.iconfont:before{
+.iconfont.mui-pull-right:before{
 	margin-left: 10px;	
 }
+
 textarea{
 	margin: 10px;
 	border-radius: 5px;
 	width: 96%;
+	height: 300px;
 }
+.take_pic,.add_file{
+	width: 100px;
+	height: 100px;
+	border: solid;
+	border-width: thin;
+	border-radius: 8px;
+	border-color: #929292;
+	padding: 10px;
+	text-align: center;
+	position: absolute;
+}
+.take_pic{
+	top: 255px;
+	left: 10px;
+	z-index: 1;
+}
+.add_file{
+	top: 255px;
+	left: 110px;
+	z-index: 1;
+}
+

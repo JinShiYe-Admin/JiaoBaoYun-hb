@@ -486,7 +486,8 @@
 					"css/mui.min.css",
 					"css/utils/common.css",
 					"css/quan/class_space.css",
-					"css/iconfont/iconfont.css"
+					"css/iconfont/iconfont.css",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [],
 				"priority": 0
