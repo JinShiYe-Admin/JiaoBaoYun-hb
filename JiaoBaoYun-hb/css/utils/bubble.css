@@ -3,13 +3,13 @@
         float: left;
         background: #fff;
         position: relative;
-        width: 70%;
+        width: 75%;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
         display: inline-block;
         border-radius: 5px;
-        padding: 0.5rem;
-        margin: 2.0rem;
+        padding:2.5%;
+        margin:2.5%;
         border: 1px solid #ccc;
     }
     /*上角汽泡*/

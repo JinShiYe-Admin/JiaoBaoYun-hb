@@ -487,7 +487,11 @@
 					"css/utils/common.css",
 					"css/quan/class_space.css",
 					"css/iconfont/iconfont.css",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/utils/camera.js",
+					"js/utils/events.js",
+					"js/utils/files.js",
+					"js/utils/ASFiles.js"
 				],
 				"refer": [],
 				"priority": 0

@@ -3,6 +3,15 @@
  */
 var events=(function($){
 	/**
+	 * 绑定监听
+	 * @param {Object} id 绑定dom的Id
+	 * @param {Object} event 绑定的监听事件
+	 */
+	var addTap=function(id,event){
+		var item=document.getElementById(id);
+		item.addEventListener('tap',event);
+	}
+	/**
 	 * 加载跳转界面监听的公用方法 
 	 * @param {Object} item 加载监听的控件
 	 * @param {Object} targetHTML 目标Url
@@ -166,7 +175,8 @@ var events=(function($){
 		initRefresh:initRefresh,//刷新
 		preLoad:preLoad,//预加载
 		fireToNewPage:fireToNewPage,//传递数据到新界面
-		clearChild:clearChild//清空子元素
+		clearChild:clearChild,//清空子元素
+		addTap:addTap
 	
 	}
 
