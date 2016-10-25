@@ -134,7 +134,8 @@
 		"refer": [
 			"html/quan/class-space.html",
 			"html/quan/zone_main.html",
-			"html/quan/class_space.html"
+			"html/quan/class_space.html",
+			"html/quan/studentdynamic_main.html"
 		]
 	},
 	"html/cloud/cloud_main.html": {
@@ -213,10 +214,13 @@
 			"fonts/iconfont.ttf",
 			"css/utils/common.css",
 			"html/quan/classSpace-sub.html",
-			"image/clip.png"
+			"image/clip.png",
+			"css/quan/class_space.css",
+			"html/quan/class-dynamic.html"
 		],
 		"refer": [
-			"html/quan/classSpace-sub.html"
+			"html/quan/classSpace-sub.html",
+			"html/quan/class-dynamic.html"
 		]
 	},
 	"html/quan/classSpace-sub.html": {
@@ -238,6 +242,45 @@
 			"image/quan/u108.jpg",
 			"fonts/mui.ttf",
 			"css/quan/class_space.css"
+		]
+	},
+	"html/quan/studentdynamic_main.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"html/quan/studentdynamic_sub.html"
+		],
+		"refer": [
+			"html/quan/studentdynamic_sub.html",
+			"html/quan/studentpersonalimge.html"
+		]
+	},
+	"html/quan/studentdynamic_sub.html": {
+		"resources": [
+			"js/quan/studentdynamic.js",
+			"image/quan/u125.png",
+			"image/quan/u77.png",
+			"image/quan/u123.png"
+		]
+	},
+	"html/quan/studentpersonalimge.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/quan/class-dynamic.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/quan/class_space.css",
+			"css/iconfont/iconfont.css"
 		]
 	}
 }
