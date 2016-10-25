@@ -11,7 +11,8 @@
 			"js/main/slide_navigation.js",
 			"html/tab_cloud.html",
 			"css/iconfont/iconfont.css",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"html/zone_sub.html"
 		],
 		"refer": [
 			"html/tab_knowledge.html",
@@ -20,7 +21,9 @@
 			"html/tab_clip.html",
 			"html/index-menu.html",
 			"html/clip/clip_main.html",
-			"html/clip/clip_sub.html"
+			"html/clip/clip_sub.html",
+			"html/zone_sub.html",
+			"html/cloud/cloud_sub.html"
 		]
 	},
 	"html/tab_zone.html": {
@@ -107,7 +110,11 @@
 			"js/utils/carouselControl.js",
 			"image/clip/u296.png",
 			"image/clip/u292.png",
-			"image/clip/u298.png"
+			"image/clip/u298.png",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/zone_sub.html": {
@@ -120,7 +127,14 @@
 			"css/home/zone.css",
 			"js/mui.min.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/utils/events.js",
+			"js/main/slide_navigation.js"
+		],
+		"refer": [
+			"html/quan/class-space.html",
+			"html/quan/zone_main.html",
+			"html/quan/class_space.html"
 		]
 	},
 	"html/cloud/cloud_main.html": {
@@ -128,7 +142,10 @@
 			"image/cloud/cloud_download.gif",
 			"image/cloud/cloud_upload.gif",
 			"html/cloud/cloud_sub.html",
-			"image/cloud/cloud_add.png"
+			"image/cloud/cloud_add.png",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/cloud/cloud_sub.html"
@@ -144,7 +161,83 @@
 			"js/cloud/cloud.js",
 			"image/cloud/cloud_video.png",
 			"image/cloud/cloud_zip.png",
-			"image/cloud/cloud_xls.png"
+			"image/cloud/cloud_xls.png",
+			"fonts/mui.ttf",
+			"css/utils/common.css",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
+	},
+	"html/quan/class-space.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"css/quan/class_space.css",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"css/utils/common.css",
+			"js/utils/events.js"
+		]
+	},
+	"html/quan/zone_main.html": {
+		"resources": [
+			"html/quan/zonep_sub.html",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/quan/zonep_sub.html"
+		]
+	},
+	"html/quan/zonep_sub.html": {
+		"resources": [
+			"image/dynamic/icon_praise.png",
+			"image/dynamic/icon_praise_small.png",
+			"image/dynamic/icon_comment.png",
+			"image/dynamic/icon_forward.png",
+			"js/quan/dynamiclistitem.js",
+			"image/dynamic/icon_Level39.png",
+			"image/dynamic/u101.png"
+		]
+	},
+	"html/quan/class_space.html": {
+		"resources": [
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"css/utils/common.css",
+			"html/quan/classSpace-sub.html",
+			"image/clip.png"
+		],
+		"refer": [
+			"html/quan/classSpace-sub.html"
+		]
+	},
+	"html/quan/classSpace-sub.html": {
+		"resources": [
+			"css/utils/bubble.css",
+			"js/quan/class_space.js",
+			"js/mui.min.js",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"image/quan/img1.jpeg",
+			"image/quan/img4.jpg",
+			"image/quan/img2.jpg",
+			"image/quan/img3.jpg",
+			"image/quan/img0.jpeg",
+			"image/quan/u84.jpg",
+			"image/quan/u98.jpg",
+			"image/quan/u100.png",
+			"image/quan/u114.png",
+			"image/quan/u108.jpg",
+			"fonts/mui.ttf",
+			"css/quan/class_space.css"
 		]
 	}
 }

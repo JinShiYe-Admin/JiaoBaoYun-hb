@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/bubble.css" rel="stylesheet"  />
+		<link href="../../css/quan/class_space.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/quan/class_space.js"></script>
+	</head>
+
+	<body>
+		
+		<!--下拉刷新容器-->
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		  <div class="mui-scroll">
+		    <!--数据列表-->
+		    <ul id="classSpace_list" class="mui-table-view">
+		    </ul>
+		  </div>
+		</div>
+		
+		
+	</body>
+	<script >
+		events.initRefresh('classSpace_list',
+		function(){
+			class_space.createListView(class_space.createList(class_space.createData(),5));
+		},
+		function(){
+			class_space.createListView(class_space.createList(class_space.createData(),5));
+		});
+		mui.plusReady(function(){
+			console.log("出啥问题啦")
+			class_space.createListView(class_space.createList(class_space.createData(),5));
+		})
+		
+	</script>
+</html>
