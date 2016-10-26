@@ -69,7 +69,11 @@
 			"css/utils/common.css",
 			"js/utils/events.js",
 			"js/main/slide_navigation.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"js/utils/carouselControl.js",
+			"image/clip/u296.png",
+			"image/clip/u292.png",
+			"image/clip/u298.png"
 		],
 		"refer": [
 			"html/index-menu.html"
@@ -334,7 +338,8 @@
 			"image/tab_zone/u72.png"
 		],
 		"refer": [
-			"html/quan/studentdynamic_main.html"
+			"html/quan/studentdynamic_main.html",
+			"html/quan/class_space.html"
 		]
 	},
 	"html/cloud/cloud_home.html": {

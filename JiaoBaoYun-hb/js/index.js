@@ -20,7 +20,7 @@ mui.plusReady(function() {
 
 	var subpage_style = {
 		top: (localStorage.getItem('StatusHeightNo')+45)+'px', //设置距离顶部的距离
-		bottom: '51px'
+		bottom: '50px'
 	};
 
 	var aniShow = {};
