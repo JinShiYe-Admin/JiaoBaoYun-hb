@@ -8,6 +8,7 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<link href="../../css/quan/class_space.css" rel="stylesheet" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init()
@@ -19,13 +20,20 @@
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">1002班</h1>
-		    <img src="../../image/clip.png" style="width: ;" />
-		    <a  class="mui-icon iconfont icon-xie1 mui-pull-right" ></a>
-		    <a class="mui-icon iconfont icon-renren  mui-pull-right"></a>
+		    <a id="write" class="mui-icon iconfont icon-xie1 mui-pull-right" ></a>
+		    <a id="group" class="mui-icon iconfont icon-renren  mui-pull-right"></a>
 		</header>
 		
 		<script>
 			events.initSubPage('classSpace-sub.html')
+			mui.plusReady(function(){
+				var write=document.getElementById('write');
+				events.jumpPage(write,'class-dynamic.html');
+				var group=document.getElementById('group');
+				events.jumpPage(group,'class-group.html');
+			})
+			
+
 		</script>
 			
 	</body>

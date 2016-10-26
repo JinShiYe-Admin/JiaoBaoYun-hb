@@ -27,8 +27,8 @@
 		})
 	}
 	var createInnerHtml=function(item){
-		var inner='<div class="mui-pull-left" style="width: 20%; text-align: center;" >'
-		   			+'<img src="'+item.headImg+'" style="width: 100%"/>'
+		var inner='<div class="mui-pull-left head-img" >'
+		   			+'<img src="'+item.headImg+'"/>'
 		   			+'<p>'+item.name+'</p>'
 		   			+'</div>'
 		   			+'<div class="chat_content_left mui-pull-right">'

@@ -1,0 +1,105 @@
+/**
+ * 班级空间icon样式
+ */
+.iconfont.mui-pull-right:before{
+	margin-left: 10px;	
+}
+/**
+ * 输入内容父控件div
+ */
+.input-content{
+	position: absolute;
+	top: 45px;
+	width: 100%;
+	height: 25rem;
+}
+/**
+ * 输入内容样式
+ */
+textarea{
+	margin: 0.7rem;
+	border-radius: 5px;
+	width: 96%;
+	height: 25rem;
+}
+/**
+ * 拍照、添加文件样式
+ */
+.take_pic,.add_file{
+	width: 6rem;
+	height: 6rem;
+	border: solid;
+	border-width: thin;
+	border-radius: 5px;
+	border-color: #929292;
+	padding: 0.7rem;
+	text-align: center;
+	position: absolute;
+}
+/**
+ * 样式
+ */
+div>.icon-jia:before,.icon-xiangji:before{
+	font-size: 4.0rem;
+}
+/**
+ * 班级动态
+ * 拍照按钮
+ */
+.take_pic{
+	top: 19.6rem;
+	left: 0.8rem;
+	z-index: 1;
+}
+/**
+ * 班级动态
+ * 添加文件按钮
+ */
+.add_file{
+	top: 19.6rem;
+	left: 6.9rem;
+	z-index: 1;
+}
+/**
+ * 气泡宽度
+ */
+.chat_content_left .mui-pull-right{
+	width:75%;
+}
+.head-img{
+	margin-top: 1rem;
+	text-align: center;
+	width: 20%;
+}
+/**
+ * 班级空间列表样式
+ */
+ul{
+	margin: 5px;
+}
+/**
+ * 班级群 
+ * 退群button样式
+ */
+.group-button{
+	margin: 10%;
+	width: 80%;
+	height: 4rem;
+	border-radius: 1.8rem;
+	font-size: 2rem;
+	letter-spacing: 1rem;
+}
+/**
+ * 班级群头像样式
+ */
+.mui-grid-view img{
+	border-radius: 50%;
+	width: 100%;
+}
+/**
+ * 班级空间 头像样式
+ */
+.head-img>img{
+	width: 80%;
+	border-radius: 50%;
+}
