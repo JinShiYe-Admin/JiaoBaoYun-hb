@@ -86,7 +86,7 @@
     .chat_content_left:before,
     .chat_content_left:after {
         position: absolute;
-        top: 8px;
+        top: 2rem;
         left: -8px;
         width: 0;
         height: 0;
