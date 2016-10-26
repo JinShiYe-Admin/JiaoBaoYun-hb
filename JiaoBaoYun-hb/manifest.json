@@ -205,7 +205,8 @@
 					"html/tab_cloud.html",
 					"css/iconfont/iconfont.css",
 					"fonts/iconfont.ttf",
-					"html/zone_sub.html"
+					"html/zone_sub.html",
+					"html/tab-zone.html"
 				],
 				"refer": [
 					"html/tab_knowledge.html",
@@ -213,7 +214,8 @@
 					"html/index-menu.html",
 					"html/clip/clip_main.html",
 					"html/clip/clip_sub.html",
-					"html/cloud/cloud_sub.html"
+					"html/cloud/cloud_sub.html",
+					"html/cloud/cloud_main.html"
 				],
 				"priority": 0
 			},
@@ -530,6 +532,21 @@
 					"css/quan/class_space.css"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"html/tab-zone.html": {
+				"resources": [
+					"image/tab_zone/u34.png",
+					"image/tab_zone/u85.png",
+					"css/home/zone.css",
+					"js/utils/events.js",
+					"image/tab_zone/u131.png",
+					"image/tab_zone/u91.png",
+					"image/tab_zone/u72.png"
+				],
+				"refer": [
+					"html/quan/studentdynamic_main.html"
+				],
 				"priority": 0
 			}
 		},
