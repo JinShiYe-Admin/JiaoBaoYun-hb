@@ -26,7 +26,8 @@
 			"html/zone_sub.html",
 			"html/cloud/cloud_sub.html",
 			"html/cloud/cloud_main.html",
-			"html/tab-zone.html"
+			"html/tab-zone.html",
+			"html/cloud/cloud_home.html"
 		]
 	},
 	"html/tab_zone.html": {
@@ -334,6 +335,22 @@
 		],
 		"refer": [
 			"html/quan/studentdynamic_main.html"
+		]
+	},
+	"html/cloud/cloud_home.html": {
+		"resources": [
+			"image/cloud/cloud_personalimage.png",
+			"image/cloud/cloud_bg.png",
+			"image/cloud/cloud_yuan.gif",
+			"image/cloud/cloud_notes.png",
+			"image/cloud/cloud_learningpath.png",
+			"image/cloud/cloud_keeprecord.png",
+			"image/cloud/cloud_gift.png",
+			"image/cloud/cloud_record.png",
+			"image/cloud/rightarrow.png",
+			"image/cloud/cloud_homework.png",
+			"image/cloud/cloud_pay.png",
+			"image/cloud/cloud_folder.png"
 		]
 	}
 }

@@ -215,7 +215,8 @@
 					"html/clip/clip_main.html",
 					"html/clip/clip_sub.html",
 					"html/cloud/cloud_sub.html",
-					"html/cloud/cloud_main.html"
+					"html/cloud/cloud_main.html",
+					"html/cloud/cloud_home.html"
 				],
 				"priority": 0
 			},
@@ -547,6 +548,24 @@
 				"refer": [
 					"html/quan/studentdynamic_main.html"
 				],
+				"priority": 0
+			},
+			"html/cloud/cloud_home.html": {
+				"resources": [
+					"image/cloud/cloud_personalimage.png",
+					"image/cloud/cloud_bg.png",
+					"image/cloud/cloud_yuan.gif",
+					"image/cloud/cloud_notes.png",
+					"image/cloud/cloud_learningpath.png",
+					"image/cloud/cloud_keeprecord.png",
+					"image/cloud/cloud_gift.png",
+					"image/cloud/cloud_record.png",
+					"image/cloud/rightarrow.png",
+					"image/cloud/cloud_homework.png",
+					"image/cloud/cloud_pay.png",
+					"image/cloud/cloud_folder.png"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},
