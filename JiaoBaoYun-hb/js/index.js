@@ -15,7 +15,7 @@ mui.plusReady(function() {
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
-	var subpages = ['zone_sub.html', 'tab_knowledge.html', 'clip/clip_sub.html', 'cloud/cloud_sub.html'];
+	var subpages = ['zone_sub.html', 'tab_knowledge.html', 'clip/clip_sub.html', 'cloud/cloud_home.html'];
 
 	var subpage_style = {
 		top: (localStorage.getItem('StatusHeightNo')+45)+'px', //设置距离顶部的距离
