@@ -326,7 +326,8 @@
 					"css/mui.min.css",
 					"css/utils/common.css",
 					"js/utils/events.js",
-					"js/main/slide_navigation.js"
+					"js/main/slide_navigation.js",
+					null
 				],
 				"refer": [
 					"html/quan/class-space.html",
@@ -443,7 +444,8 @@
 					"image/quan/u114.png",
 					"image/quan/u108.jpg",
 					"fonts/mui.ttf",
-					"css/quan/class_space.css"
+					"css/quan/class_space.css",
+					null
 				],
 				"refer": [],
 				"priority": 0
