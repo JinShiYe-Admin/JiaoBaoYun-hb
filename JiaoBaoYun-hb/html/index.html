@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -28,6 +29,7 @@
 				<span class="mui-icon mui-icon-help"></span>
 				<span class="mui-tab-label">问答</span>
 			</a>
+
 			<a class="mui-tab-item" href="clip/clip_sub.html">
 				<span class="mui-icon mui-icon-chatboxes"></span>
 				<span class="mui-tab-label">视频</span>
@@ -39,11 +41,22 @@
 
 		</nav>
 	</body>
-		<script src="../js/mui.min.js"></script>
+	<script src="../js/mui.min.js"></script>
 	<script>
-	mui.plusReady(function(){
-		slideNavigation.add('index-menu.html',200)
-})
-
+		mui.plusReady(function() {
+			slideNavigation.add('index-menu.html', 200)
+//			document.getElementById('aboutme').addEventListener('tap', function() {
+//				mui.openWindow({
+//					url: 'quan/aboutme.html',
+//					id: 'quan/aboutme.html',
+//					styles: {
+//						top: '0px', //设置距离顶部的距离
+//						bottom: '0px'
+//					}
+//				});
+//			})
+		})
 	</script>
+
+
 </html>

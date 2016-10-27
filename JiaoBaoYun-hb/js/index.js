@@ -10,7 +10,7 @@ mui.plusReady(function() {
 	Statusbar.barHeight(); //设置距离顶部的高度
 	var header = document.querySelector(".mui-bar-nav"); //顶部导航
 	//设置顶部导航高度（状态栏）
-	header.style.height = localStorage.getItem('StatusHeightNo')+45+'px';
+	header.style.height = localStorage.getItem('StatusHeightNo') + 45 + 'px';
 
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
@@ -49,6 +49,22 @@ mui.plusReady(function() {
 		if(targetTab == activeTab) {
 			return;
 		}
+		if(targetTab == 'tab-zone.html') {
+
+			var header = document.querySelector(".mui-bar-nav");
+			var a = document.getElementById('aboutme');
+			a.style.visibility = 'visible';
+			var a = document.getElementById('leave');
+			a.style.visibility = 'visible';
+
+			header.insertBefore(a, header.firstChild);
+		} else {
+			var header = document.querySelector(".mui-bar-nav");
+			var a = document.getElementById('aboutme');
+			a.style.visibility = 'hidden';
+			var a = document.getElementById('leave');
+			a.style.visibility = 'hidden';
+		}
 		//更换标题
 		title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
 		//显示目标选项卡
@@ -64,12 +80,13 @@ mui.plusReady(function() {
 		}
 		//当切换到云盘界面时
 		if(targetTab == 'tab_cloud.html') {
-			console.log('targetTab:'+targetTab);
+			console.log('targetTab:' + targetTab);
 			var tab = plus.webview.getWebviewById(targetTab);
 			mui.fire(tab, "isVisible", {
 				isVisible: true
 			});
 		}
+
 		//隐藏当前;
 		plus.webview.hide(activeTab);
 		//更改当前活跃的选项卡
@@ -87,4 +104,6 @@ mui.plusReady(function() {
 			defaultTab.classList.add('mui-active');
 		}
 	});
+
 });
+
