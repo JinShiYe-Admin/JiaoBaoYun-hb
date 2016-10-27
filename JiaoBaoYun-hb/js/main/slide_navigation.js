@@ -169,20 +169,22 @@ var slideNavigation = (function($) {
 		var header = document.querySelector(".mui-bar-nav");
 		var a = document.createElement('a');
 		a.className = 'mui-icon  mui-pull-right mui-plus-visible';
+		a.id = 'aboutme'
+
 		a.innerHTML = '@与我相关'
 		a.style.fontSize = '16px'
 		a.style.paddingTop = '15px'
+		var span = document.createElement('span');
+		span.className = 'mui-badge mui-badge-danger custom-badge1'
+		span.innerHTML = '3'
+		a.appendChild(span)
 		header.insertBefore(a, header.firstChild);
 		//初始化，给家校圈默认显示----右图标
 		var header = document.querySelector(".mui-bar-nav");
 		var a = document.createElement('a');
+		a.id = 'leave'
 		a.className = 'mui-icon mui-icon-compose  mui-pull-right mui-plus-visible';
-		a.style.paddingLeft = '15px'
-			//		var span = document.createElement('span');
-			//		span.className = 'mui-badge mui-badge-danger custom-badge1'
-			//		span.innerHTML = '3'
-			//		a.appendChild(span)
-			//
+		a.style.paddingLeft = '20px'
 		header.insertBefore(a, header.firstChild);
 	}
 	
