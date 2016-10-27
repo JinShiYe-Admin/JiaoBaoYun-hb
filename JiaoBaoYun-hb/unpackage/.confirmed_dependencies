@@ -347,7 +347,11 @@
 			"js/utils/events.js",
 			"image/tab_zone/u131.png",
 			"image/tab_zone/u91.png",
-			"image/tab_zone/u72.png"
+			"image/tab_zone/u72.png",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/main/slide_navigation.js",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/quan/studentdynamic_main.html",
@@ -367,7 +371,10 @@
 			"image/cloud/rightarrow.png",
 			"image/cloud/cloud_homework.png",
 			"image/cloud/cloud_pay.png",
-			"image/cloud/cloud_folder.png"
+			"image/cloud/cloud_folder.png",
+			"css/utils/common.css",
+			"js/mui.min.js",
+			"css/mui.min.css"
 		]
 	}
 }

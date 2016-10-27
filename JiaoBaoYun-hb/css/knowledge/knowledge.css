@@ -1,7 +1,10 @@
-.head-img{
+.item-head{
 	width: 20%;
 	float: left;
  	text-align: center;
+}
+.head-img{
+	width: 60%;
 }
 .question-answer{
 	margin-left: 20%;
@@ -24,4 +27,24 @@
 .answer-answer{
 	float: right;
 	width: 90%;
+}
+.knowledge-list-cell{
+	margin-top:0.5rem;
+}
+.mui-table-view-cell {
+	position: relative;
+	overflow: hidden;
+	padding: 11px 15px;
+	-webkit-touch-callout: none
+}
+.mui-table-view-cell:after {
+	position: absolute;
+	margin-left: -15px;
+	right: 0;
+	bottom: 0;
+	height: 1rem;
+	content: '';
+	-webkit-transform: scaleY(.5);
+	transform: scaleY(.5);
+	background-color: gainsboro;
 }

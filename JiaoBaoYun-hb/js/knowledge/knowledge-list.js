@@ -28,8 +28,8 @@ var list=(function(mod){
 		})
 	}
 	var createInner=function(item){
-		var inner='<div class="head-img" >'
-		   			+'<img src="'+item.headImg+'"/>'
+		var inner='<div class="item-head" >'
+		   			+'<img class="head-img" src="'+item.headImg+'"/>'
 		   			+'<p>'+item.name+'</p>'
 	   			+'</div>'
 	   			+'<div class="question-answer">'
