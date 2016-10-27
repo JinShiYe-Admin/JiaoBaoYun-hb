@@ -61,7 +61,6 @@ var dynamiclistitem = (function($, mod) {
 		liElement.appendChild(div);
 
 		mod.addImage(ulElement, liElement, data); //增加动态的图片
-		console.log(document.body.innerHTML)
 	};
 
 	/**

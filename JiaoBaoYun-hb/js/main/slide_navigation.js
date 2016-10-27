@@ -176,6 +176,7 @@ var slideNavigation = (function($) {
 
 		var header = document.querySelector(".mui-bar-nav");
 		var a = document.createElement('a');
+		a.id = 'leave'
 		a.className = 'mui-icon mui-icon-compose  mui-pull-right mui-plus-visible';
 		a.style.paddingLeft = '20px'
 
