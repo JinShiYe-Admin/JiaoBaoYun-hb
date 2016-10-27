@@ -12,6 +12,7 @@
 		<script type="text/javascript" src="../js/utils/events.js"></script>
 		<script src="../js/main/slide_navigation.js"> </script>
 		<script src="../js/utils/carouselControl.js"></script>
+		<script src="../js/knowledge/knowledge-list.js"></script>
 	</head>
 
 	<body>
@@ -19,27 +20,61 @@
 		  <div class="mui-slider-group mui-slider-loop">		   
 		  </div>
 		  <div class="mui-slider-indicator">
-		 
 		  </div>
 		</div>
+		<ul class="mui-table-view">
+		</ul>
 	</body>
 	<script>
 		mui.plusReady(function(){
 			var titles = ["咋让孩子远离坏朋友？", "为什么一定要让孩子做家务", "健康专家：孩子更爱吃零食不爱吃主食"]
 			var imgUrls=['../image/knowledge/0.png','../image/knowledge/1.png','../image/knowledge/2.png'];
 			var words=['我的女儿是刚上一年级的小豆包,总有淘气的孩子给她起外号','小学一年级该不该让孩子做些洗袜子之类的家务','孩子总是吃零食，这种习惯肯定不好，你们怎么看待小孩子吃零食']
-//					//加黑条
+			//加黑条
 			carousel.createView(carousel.createList(imgUrls,titles,words))
 			carousel.addStrip(imgUrls)
-//				addStrip(getImgArray())
-//					//加图片
-//				addImg(getImgArray(), titles)
-				var slider = mui("#slider");
-				//轮播开始
-				slider.slider({
-					interval: 5000
-				});
+			var slider = mui("#slider");
+			//轮播开始
+			slider.slider({
+				interval: 5000
+			});
+			createKnowledgeList();
 		})
-	
+		var createKnowledgeList=function(){
+			var headImgs=['../image/knowledge/u212.png','../image/knowledge/u214.png','../image/knowledge/u236.png','../image/knowledge/u236.png'];
+			var names=['赵','宋','莫','王']
+			var questions=['史上最严重的毁书事件曾造成哪些名著失传？','漫画素描的头发怎么画顺？','英语口语怎样快速提高','为什么有些人明明看起来友善，却总是独来独往'];
+			var questionsImgs=[,,['../image/knowledge/u70.png']]
+			var questionsData=createQuestions(questions,questionsImgs);
+			var answers=[['王莽之乱：《后汉书：儒林传》：“昔王莽、更始之际，天下大乱,礼乐分崩，典文残落。”牛弘对此的描述是：“及王莽之末，天下大乱，听说是山东人',
+			'秦始皇焚书：始皇三十四年，李斯建议“史书非秦记皆烧之'],['先要把画头发的区域确定好，要想好高光和阴影的地方，这样画出来的头发才有层次感。'],
+			['针对国内大部分成年大学生，有了高考基础的人，练习口语的方法和材料都十分简单，通过英语演讲来学习，这个是我个人认为最快速有效的方法'],
+			['我也希望自己因为太有思想而不合群，但其实我不是。我不是想装逼，也不是觉得自己高明所以不想同流合污，我只是不知道怎么跟大家打成一片，因为嘴笨，很难通过交流？']]
+			var answerNames=[['蔡豪','黎明'],['梦泽'],['释然'],['虎哥']]
+			var answerImgs=[];
+			var answersData=createAnswers(answerNames,answers,answerImgs);
+		 	 list.createView(list.createList(headImgs,names,questionsData,answersData);)	
+		}
+		var createQuestions=function(words,imgUrls){
+			var questons=new Array()
+			words.forEach(function(word,i){
+				var item=new Object();
+				item.words=word;
+				item.imgs=imgUrls[i];
+				questons.push(item);
+			})
+			return questons;
+		}
+		var createAnswers=function(names,words,imgUrls){
+			var answers=new Array()
+			names.forEach(function(name,i){
+				var item=new Object();
+				item.name=name;
+				item.words=words[i];
+				item.imgs=imgUrls[i];
+				answers.push(item);
+			})
+			return answers;
+		}
 	</script>
 </html>
