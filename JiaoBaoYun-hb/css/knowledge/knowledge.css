@@ -48,3 +48,9 @@
 	transform: scaleY(.5);
 	background-color: gainsboro;
 }
+.chat_content_top{
+	background:gainsboro ;
+}
+.chat_content_top:after {
+     border-bottom-color:gainsboro;   
+}

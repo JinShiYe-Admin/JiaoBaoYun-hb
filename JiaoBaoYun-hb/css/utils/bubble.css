@@ -13,7 +13,7 @@
         border: 1px solid #ccc;
     }
     .chat_content_top{
-    	width: 95%;
+    	width: 90%;
     }
     /*上角汽泡*/
     .chat_content_top:before,
