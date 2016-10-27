@@ -12,7 +12,8 @@
 			"html/tab_cloud.html",
 			"css/iconfont/iconfont.css",
 			"fonts/iconfont.ttf",
-			"html/zone_sub.html"
+			"html/zone_sub.html",
+			"html/tab-zone.html"
 		],
 		"refer": [
 			"html/tab_knowledge.html",
@@ -23,7 +24,10 @@
 			"html/clip/clip_main.html",
 			"html/clip/clip_sub.html",
 			"html/zone_sub.html",
-			"html/cloud/cloud_sub.html"
+			"html/cloud/cloud_sub.html",
+			"html/cloud/cloud_main.html",
+			"html/tab-zone.html",
+			"html/cloud/cloud_home.html"
 		]
 	},
 	"html/tab_zone.html": {
@@ -65,7 +69,15 @@
 			"css/utils/common.css",
 			"js/utils/events.js",
 			"js/main/slide_navigation.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"js/utils/carouselControl.js",
+			"image/clip/u296.png",
+			"image/clip/u292.png",
+			"image/clip/u298.png",
+			"image/knowledge/0.png",
+			"image/knowledge/2.png",
+			"image/knowledge/1.png",
+			"css/utils/carousel.css"
 		],
 		"refer": [
 			"html/index-menu.html"
@@ -93,7 +105,8 @@
 			"js/main/slide_navigation.js",
 			"css/home/index-menu.css",
 			"css/iconfont/iconfont.css",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"image/knowledge/0.png"
 		]
 	},
 	"html/clip/clip_main.html": {
@@ -317,6 +330,37 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"css/quan/class_space.css"
+		]
+	},
+	"html/tab-zone.html": {
+		"resources": [
+			"image/tab_zone/u34.png",
+			"image/tab_zone/u85.png",
+			"css/home/zone.css",
+			"js/utils/events.js",
+			"image/tab_zone/u131.png",
+			"image/tab_zone/u91.png",
+			"image/tab_zone/u72.png"
+		],
+		"refer": [
+			"html/quan/studentdynamic_main.html",
+			"html/quan/class_space.html"
+		]
+	},
+	"html/cloud/cloud_home.html": {
+		"resources": [
+			"image/cloud/cloud_personalimage.png",
+			"image/cloud/cloud_bg.png",
+			"image/cloud/cloud_yuan.gif",
+			"image/cloud/cloud_notes.png",
+			"image/cloud/cloud_learningpath.png",
+			"image/cloud/cloud_keeprecord.png",
+			"image/cloud/cloud_gift.png",
+			"image/cloud/cloud_record.png",
+			"image/cloud/rightarrow.png",
+			"image/cloud/cloud_homework.png",
+			"image/cloud/cloud_pay.png",
+			"image/cloud/cloud_folder.png"
 		]
 	}
 }

@@ -24,7 +24,7 @@
 			var li=document.createElement('li');
 			li.innerHTML=createInnerHtml(cell);
 			container.appendChild(li);
-		})
+		}) 
 	}
 	var createInnerHtml=function(item){
 		var inner='<div class="mui-pull-left head-img" >'

@@ -131,10 +131,11 @@
 			
 			mui.plusReady(function() {
 				var titles = ["幸福是可以一起睡觉", "幸福是可以一起吃饭", "幸福是可以一起"];
+				var imgUrls=["../../image/clip/u292.png","../../image/clip/u296.png","../../image/clip/u298.png"]
 				//加黑条
-				addStrip(getImgArray());
+				carousel.addStrip(imgUrls);
 				//加图片
-				addImg(getImgArray(), titles);
+				carousel.createView(carousel.createList(imgUrls,titles))
 				var slider = mui("#slider11");
 				//轮播开始
 				slider.slider({
@@ -171,8 +172,6 @@
 					var cells = document.body.querySelectorAll('.mui-table-view-cell');
 					for(var i = cells.length, len = i + 20; i < len; i++) {
 						var li = document.createElement('li');
-//						li.className = 'mui-table-view-cell';
-//						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
 						li.className = 'mui-table-view-cell mui-media mui-col-xs-6';
 						li.style.padding = '10px';
 						li.innerHTML = '<img class="mui-icon-image" src="../../image/clip/u292.png" style="top: 20px;left: 20px;right: 20px;height: 80px;padding: 0px;" />\
