@@ -1,7 +1,9 @@
+/*头像圆角、宽度*/
 .head-portrait{
 	border-radius: 50%;
 	width: 30%;
 }
+/*四个cell钟，图标的颜色*/
 .app-icon{
 	color:lightskyblue;
 }
