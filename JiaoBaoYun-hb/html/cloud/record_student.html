@@ -1,0 +1,56 @@
+<!--
+	作者：444811716@qq.com
+	时间：2016-10-27
+	描述：云盘-我的档案
+-->
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的档案</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<script src="../../js/mui.min.js"></script>
+
+		<style>
+			.mui-table-view:before,
+			.mui-table-view:after {
+				height: 0px;
+			}
+
+			.mui-content> .mui-table-view:first-child {
+				margin-top: 0px;
+			}
+
+			.mui-ellipsis {
+				/*列表文字*/
+				margin-top: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">云盘—我的档案</a>
+		</header>
+		<div class="mui-content common-color-white">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media">
+					<p class="mui-icon mui-icon-arrowdown mui-media-object mui-pull-right"></p>
+					<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_folder.png">
+					<div class="mui-media-body">
+						<p class="mui-ellipsis">
+							李云档案
+						</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+	</body>
+
+</html>
