@@ -77,7 +77,14 @@
 			"image/knowledge/0.png",
 			"image/knowledge/2.png",
 			"image/knowledge/1.png",
-			"css/utils/carousel.css"
+			"css/utils/carousel.css",
+			"js/knowledge/knowledge-list.js",
+			"image/knowledge/u236.png",
+			"image/knowledge/u214.png",
+			"image/knowledge/u212.png",
+			"image/knowledge/u270.png",
+			"css/utils/bubble.css",
+			"css/knowledge/knowledge.css"
 		],
 		"refer": [
 			"html/index-menu.html"
@@ -340,7 +347,11 @@
 			"js/utils/events.js",
 			"image/tab_zone/u131.png",
 			"image/tab_zone/u91.png",
-			"image/tab_zone/u72.png"
+			"image/tab_zone/u72.png",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/main/slide_navigation.js",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/quan/studentdynamic_main.html",
@@ -360,7 +371,10 @@
 			"image/cloud/rightarrow.png",
 			"image/cloud/cloud_homework.png",
 			"image/cloud/cloud_pay.png",
-			"image/cloud/cloud_folder.png"
+			"image/cloud/cloud_folder.png",
+			"css/utils/common.css",
+			"js/mui.min.js",
+			"css/mui.min.css"
 		]
 	}
 }

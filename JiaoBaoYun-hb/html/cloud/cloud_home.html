@@ -13,6 +13,7 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<style>
 			.cloud-top {
 				/*界面顶部区域*/
@@ -84,7 +85,6 @@
 
 			.mui-table-view-cell {
 				background: white;
-				margin-top: 10px;
 			}
 
 			.cloud-bottom-imge {
@@ -162,7 +162,7 @@
 						</div>
 					</div>
 					<!--云存储-->
-					<ul id="cloudstorage" class="mui-table-view mui-grid-view cloud-padding-margin-0" style="background:white;padding: 10px;margin: 0;margin-top: 10px;">
+					<ul id="cloudstorage" class="mui-table-view mui-grid-view " style="background:white;padding: 10px;margin: 0;margin-top: 11px;padding-top: 7px;padding-bottom: 7px;">
 						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;margin: 0;">
 							<div style="font-weight: bold;">
 								<div>云</div>
@@ -192,7 +192,7 @@
 						</li>
 					</ul>
 					<!--云档案-->
-					<ul id="cloudrecord" class="mui-table-view mui-grid-view cloud-padding-margin-0" style="background:white;padding: 10px;margin: 0;margin-top: 10px;padding-top: 15px;padding-bottom: 15px;">
+					<ul id="cloudrecord" class="mui-table-view mui-grid-view" style="background:white;padding: 10px;margin: 0;margin-top: 10px;padding-top: 10px;padding-bottom: 10px;">
 						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;margin: 0;">
 							<div style="font-weight: bold;">
 								<div>云</div>
@@ -219,7 +219,7 @@
 						</li>
 					</ul>
 					<!--云应用-->
-					<ul id="cloudapps" class="mui-table-view mui-grid-view cloud-padding-margin-0" style="background:white;padding: 10px;margin: 0;margin-top: 10px;padding-top: 15px;padding-bottom: 15px;">
+					<ul id="cloudapps" class="mui-table-view mui-grid-view" style="background:white;padding: 10px;margin: 0;margin-top: 10px;padding-top: 10px;padding-bottom: 10px;">
 						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;margin: 0;">
 							<div style="font-weight: bold;">
 								<div>云</div>
@@ -249,7 +249,9 @@
 									<p class="mui-ellipsis">充值</p>
 								</div>
 								<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="3">
-									<img class="cloud-bottom-imge2-bg" src="../../image/cloud/cloud_homework.png" />
+									<div class="cloud-bottom-imge2-bg" style="background: #31C27C;">
+										<img class="cloud-bottom-imge2-bg" src="../../image/cloud/cloud_homework.png" />
+									</div>
 									<p class="mui-ellipsis">作业批改</p>
 								</div>
 							</div>
@@ -274,15 +276,15 @@
 
 				//设置档案名称
 				var record = document.getElementById("record");
-				record.innerText = '小熊猫档案';
+				//record.innerText = '小熊猫档案';
 
 				//云存储显示的文件
 				mui('#cloudstorage').on('tap', '.mui-col-sm-4', function() {
-					console.log(this.innerText);
+					events.openNewWindow('storage_main.html');
 				});
 				//云存储右侧按钮
 				mui('#cloudstorage').on('tap', '.cloud-bottom-icon', function() {
-					console.log('打开云盘');
+					events.openNewWindow('storage_main.html');
 				});
 
 				//云档案
@@ -290,8 +292,10 @@
 					var value = this.getAttribute("value");
 					switch(value) {
 						case "0": //XX档案
+							events.openNewWindow('record_student.html');
 							break;
 						case "1": //学习轨迹
+							events.openNewWindow('record_learningpath_main.html');
 							break;
 					}
 				});
@@ -300,8 +304,10 @@
 					var value = this.getAttribute("value");
 					switch(value) {
 						case "0": //笔记
+							events.openNewWindow('app_notes_main.html');
 							break;
 						case "1": //记事
+							events.openNewWindow('app_keeprecord_main.html');
 							break;
 						case "2": //充值
 							break;

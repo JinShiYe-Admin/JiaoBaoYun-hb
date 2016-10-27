@@ -1,16 +1,17 @@
 var slideNavigation = (function($) {
-	var menu = null,
-		main = null;
-	var showMenu = false;
-	var isInTransition = false;
+	var menu = null, //预加载界面设置
+		main = null; //主界面
+	var showMenu = false; //是否显示主界面界面
+	var isInTransition = false; //是否显示侧滑界面
 	/**
 	 * 
 	 * @param {Object} tarpage 目标页面Url
 	 * @param {Object} interval 时间间隔
 	 */
 	var add = function(tarpage, interval) {
+			//加载主界面左上角图标
 			addSlideIcon();
-			//设置设备
+			//设置显示方向，添加监听，关闭侧滑
 			setCondition();
 			//预加载侧滑界面
 			preloadSlideNag(tarpage, interval);
@@ -18,14 +19,16 @@ var slideNavigation = (function($) {
 			addSystemEvents();
 			//图标加载监听事件
 			iconAddEvent();
+			//安卓系统返回按钮
 			getBack();
 		}
 		/**
-		 * 设置环境
+		 * 设置显示方向，添加监听，关闭侧滑
 		 */
 	var setCondition = function() {
 			//仅支持竖屏显示
 			plus.screen.lockOrientation("portrait-primary");
+			//点击主界面时，关闭侧滑
 			main = plus.webview.currentWebview();
 			main.addEventListener('maskClick', closeMenu);
 		}
@@ -135,6 +138,7 @@ var slideNavigation = (function($) {
 		 * @param {Object} interval 延迟加载时间间隔
 		 */
 	var preloadSlideNag = function(tarpage, interval) {
+			//延迟加载
 			setTimeout(function() {
 				menu = mui.preload({
 					id: tarpage,
@@ -152,14 +156,16 @@ var slideNavigation = (function($) {
 			console.log('加载了吗？')
 		}
 		/**
-		 * 加载图标
+		 * 加载主界面左上角图标
 		 */
 	var addSlideIcon = function() {
 		var header = document.querySelector(".mui-bar-nav");
 		var a = document.createElement('a');
 		a.className = 'mui-icon mui-icon-bars mui-pull-left mui-plus-visible';
+		//在第一个位置中插入元素
 		header.insertBefore(a, header.firstChild);
 
+		//初始化，给家校圈默认显示----与我相关
 		var header = document.querySelector(".mui-bar-nav");
 		var a = document.createElement('a');
 		a.className = 'mui-icon  mui-pull-right mui-plus-visible';
@@ -175,16 +181,16 @@ var slideNavigation = (function($) {
 		span.innerHTML = '4'
 		a.appendChild(span)
 		header.insertBefore(a, header.firstChild);
-
+		//初始化，给家校圈默认显示----右图标
 		var header = document.querySelector(".mui-bar-nav");
 		var a = document.createElement('a');
 		a.id = 'leave'
 		a.className = 'mui-icon mui-icon-compose  mui-pull-right mui-plus-visible';
 		a.style.paddingLeft = '20px'
-
-
 		header.insertBefore(a, header.firstChild);
 	}
+	
+	//安卓系统返回按钮
 	var getBack = function() {
 		//首页返回键处理
 		//1、若侧滑菜单显示，则关闭侧滑菜单

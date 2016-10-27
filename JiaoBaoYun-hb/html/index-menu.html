@@ -7,7 +7,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../css/mui.min.css">
-		<link rel="stylesheet" href="../css/home/index-menu.css" /><br />
+		<link rel="stylesheet" href="../css/home/index-menu.css" />
 		<link rel="stylesheet" href="../css/iconfont/iconfont.css"/>
 	
 		<style type="text/css">
@@ -69,15 +69,19 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
+		//根据不同的手机，设置不同动画
 			var aniShow = "slide-in-right";
 			//关于backbutton和menubutton两个按键的说明，在iOS平台不存在，故需隐藏
 			if(!mui.os.android){
-				var span = document.getElementById("android-only")
+				//获取安卓系统的两个按钮
+				var span = document.getElementById("android-only");
 				if(span){
 					span.style.display = "none";
 				}
+				//动画
 				aniShow = "pop-in";
 			}
+			//
 			var subWebview=null,template=null,index=null;
 			mui.plusReady(function () {
 				//获得主页面webview引用；
@@ -105,6 +109,7 @@
 				}else{
 					var href = this.href;
 					var title = this.innerText;
+					//获取共用父窗体
 					template = plus.webview.getWebviewById("default-main");
 					//获得共用子webview
 					subWebview = template.children()[0];
@@ -131,6 +136,7 @@
 			
 			//点击“关闭侧滑菜单”按钮处理逻辑
 //			document.getElementById("close-btn").addEventListener("tap",close);
+			
 			//在android4.4.2中的swipe事件，需要preventDefault一下，否则触发不正常
 			window.addEventListener('dragstart',function(e){
 				mui.gestures.touch.lockDirection = true; //锁定方向
@@ -138,12 +144,14 @@
 			});
 			window.addEventListener('dragleft', function(e) {
 				if(!mui.isScrolling){
+					//preventDefault，该方法将通知 Web 浏览器不要执行与事件关联的默认动作(如果存在这样的动作)
 					e.detail.gesture.preventDefault();	
 				}
 			});
 			//监听左滑事件，若菜单已展开，左滑要关闭菜单；
 			window.addEventListener("swipeleft",function (e) {
-				console.log(e.detail.angle)
+				console.log(e.detail.angle);
+				//界面从最左侧滑动到右侧的距离
 				if(Math.abs(e.detail.angle)>170){
 					close();						
 				}
