@@ -33,7 +33,8 @@ var list=(function(mod){
 		   			+'<p>'+item.name+'</p>'
 	   			+'</div>'
 	   			+'<div class="question-answer">'
-		   			+'<p class="title">'+item.question.words+'<span class="detail">详情</span></p>'
+		   			+'<p class="title">'+item.question.words+'</p>'
+		   			+'<span class="detail">详情</span>'
 		   			+createImgInner(item.question.imgs)+''
 		   			+createAnswersInner(item.answerDetail)
 	   			+'</div>';
