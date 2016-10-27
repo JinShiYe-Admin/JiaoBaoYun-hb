@@ -1,62 +1,81 @@
 var list=(function(mod){
 	mod.createList=function(headImgs,names,questions,answers){
 		var data=new Array();
-		headImgs.forEach(function(img,i,imgs){
-			data.push(img,names[i%names.length],questions[i%questions.length],answers[i%answers.length])
+		headImgs.forEach(function(img,index,imgs){
+			console.log(i)
+			data.push(createItem(img,names[index],questions[index],answers[index]))
 		})
+		console.log(JSON.stringify(data))
 		return data;
 	}
-	var item=new Object();
+	
 	var createItem=function(img,name,question,answer){
+		var item=new Object();
 		item.headImg=img;
 		item.name=name;
 		item.question=question;
 		item.answerDetail=answer;
 		return item;
 	}
-	mod.createView=function(list){
-		var list=mui('.mui-table-view');
-		data.forEach(function(item,i,list){
-			var li=document.createItem('li');
+	mod.createView=function(data){
+		var list=document.getElementById('knowledge_list')
+		console.log(JSON.stringify(data))
+		data.forEach(function(item,i,data){
+			var li=document.createElement('li');
 			li.className='mui-table-view-cell';
 			li.innerHTML=createInner(item);
 			list.appendChild(li);
 		})
 	}
 	var createInner=function(item){
-		 return '<div class="mui-pull-left head-img" >'
+		var inner='<div class="head-img" >'
 		   			+'<img src="'+item.headImg+'"/>'
 		   			+'<p>'+item.name+'</p>'
 	   			+'</div>'
-	   			+'<div class="mui-pull-right">'
-		   			+item.question.words;
-		   			+createImgInner(item.question.imgs)
-		   			+createAnswersInner(item.answerDetail);
-	   			+'</div>'
-		   			
+	   			+'<div class="question-answer">'
+		   			+'<p class="title">'+item.question.words+'<span class="detail">详情</span></p>'
+		   			+createImgInner(item.question.imgs)+''
+		   			+createAnswersInner(item.answerDetail)
+	   			+'</div>';
+		   	console.log("inner:"+inner)
+		   	return inner;
 	}
 	var createImgInner=function(imgs){
 		var imgInner='';
-		imgs.forEach(function(img,i,imgs){
-			if(imgs.length>3){
-				imgInner+='<img style="width:33.333333333%;" src="'+img+'"/>'
-			}else{
-				imgInner+='<img style="width:'+100/imgs.length+'%;" src="'+img+'"/>';
-			}
-			
-		})
+		if(imgs){
+			imgs.forEach(function(img,i,imgs){
+				if(imgs.length>3){
+					imgInner+='<img style="width:33.333333333%;" src="'+img+'"/>'
+				}else{
+					imgInner+='<img style="width:'+100/imgs.length+'%;" src="'+img+'"/>';
+				}
+			})
+		
+		}
+		console.log('imginner'+imgInner);
 		return imgInner;
 	}
 	var createAnswersInner=function(answerDetail){
 		var answer=''
-		answerDetail.forEach(function(answer,i,detail){
-			answer+='<div class="chat_content_top">'
-			   			+'<div class="chat-body">'
-			   			+answer.name+"：回答"+answer.words+'<br/>'
-			   			+createImgsInner(answer.imgs)
-			   			+'</div>'
+		answerDetail.name.forEach(function(na,i,words){
+			if(answerDetail.imgs){
+				answer+='<div class="chat_content_top">'
+				   			+'<div class="chat-body">'
+					   			+na+"回答:"+answerDetail.words[i]+'<br/>'
+					   			+createImgsInner(answerDetail.imgs)
+				   			+'</div>'
 		   				+'</div>';
+			}else{
+				answer+='<div class="chat_content_top">'
+				   			+'<div class="chat-body">'
+					   			+'<div class="answer-name">'+na+'</div>'
+					   			+'<div class="answer-answer">'+"回答:"+answerDetail.words[i]+'<br/></div>'
+				   			+'</div>'
+		   				+'</div>';
+			}   				
 		})
+		console.log("answer"+answer)
+		return answer
 	}
 	return mod;
 })(window.list||{})

@@ -1,0 +1,27 @@
+.head-img{
+	width: 20%;
+	float: left;
+ 	text-align: center;
+}
+.question-answer{
+	margin-left: 20%;
+}
+.title{
+	font-size: 1.5rem;
+	color: black;
+}
+.detail{
+	text-align: center;
+	float: right;
+	color: deepskyblue;
+	font-size: 1.2rem;
+}
+.answer-name{
+	color: blue;
+	width: 10%;
+	float: left;
+}
+.answer-answer{
+	float: right;
+	width: 90%;
+}

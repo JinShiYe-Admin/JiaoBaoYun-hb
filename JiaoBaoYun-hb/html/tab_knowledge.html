@@ -7,25 +7,40 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../css/utils/common.css" />
+		<link rel="stylesheet" href="../css/utils/bubble.css" />
 		<link rel="stylesheet" href="../css/utils/carousel.css" />
+		<link rel="stylesheet" href="../css/knowledge/knowledge.css" />
 		<script type="text/javascript" src="../js/mui.min.js"></script>
 		<script type="text/javascript" src="../js/utils/events.js"></script>
 		<script src="../js/main/slide_navigation.js"> </script>
+		<script src="../js/utils/events.js"></script>
 		<script src="../js/utils/carouselControl.js"></script>
 		<script src="../js/knowledge/knowledge-list.js"></script>
 	</head>
 
 	<body>
-		<div id="slider" class="mui-slider" >
-		  <div class="mui-slider-group mui-slider-loop">		   
-		  </div>
-		  <div class="mui-slider-indicator">
+		<!--下拉刷新容器-->
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		  <div class="mui-scroll">
+		    <!--数据列表-->
+		  	<div id="slider" class="mui-slider" >
+			  	<div class="mui-slider-group mui-slider-loop">		   
+			  	</div>
+				<div class="mui-slider-indicator">
+				</div>
+			</div>
+			<ul id="knowledge_list" class="mui-table-view">
+			</ul>
 		  </div>
 		</div>
-		<ul class="mui-table-view">
-		</ul>
+		
 	</body>
 	<script>
+		events.initRefresh('knowledge_list',function(){
+			createKnowledgeList();
+		},function(){
+			createKnowledgeList();
+		})
 		mui.plusReady(function(){
 			var titles = ["咋让孩子远离坏朋友？", "为什么一定要让孩子做家务", "健康专家：孩子更爱吃零食不爱吃主食"]
 			var imgUrls=['../image/knowledge/0.png','../image/knowledge/1.png','../image/knowledge/2.png'];
@@ -44,7 +59,7 @@
 			var headImgs=['../image/knowledge/u212.png','../image/knowledge/u214.png','../image/knowledge/u236.png','../image/knowledge/u236.png'];
 			var names=['赵','宋','莫','王']
 			var questions=['史上最严重的毁书事件曾造成哪些名著失传？','漫画素描的头发怎么画顺？','英语口语怎样快速提高','为什么有些人明明看起来友善，却总是独来独往'];
-			var questionsImgs=[,,['../image/knowledge/u70.png']]
+			var questionsImgs=[,['../image/knowledge/u270.png']]
 			var questionsData=createQuestions(questions,questionsImgs);
 			var answers=[['王莽之乱：《后汉书：儒林传》：“昔王莽、更始之际，天下大乱,礼乐分崩，典文残落。”牛弘对此的描述是：“及王莽之末，天下大乱，听说是山东人',
 			'秦始皇焚书：始皇三十四年，李斯建议“史书非秦记皆烧之'],['先要把画头发的区域确定好，要想好高光和阴影的地方，这样画出来的头发才有层次感。'],
@@ -53,7 +68,7 @@
 			var answerNames=[['蔡豪','黎明'],['梦泽'],['释然'],['虎哥']]
 			var answerImgs=[];
 			var answersData=createAnswers(answerNames,answers,answerImgs);
-		 	 list.createView(list.createList(headImgs,names,questionsData,answersData);)	
+		 	 list.createView(list.createList(headImgs,names,questionsData,answersData))	
 		}
 		var createQuestions=function(words,imgUrls){
 			var questons=new Array()

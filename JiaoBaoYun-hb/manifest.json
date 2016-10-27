@@ -268,7 +268,14 @@
 					"image/knowledge/0.png",
 					"image/knowledge/2.png",
 					"image/knowledge/1.png",
-					"css/utils/carousel.css"
+					"css/utils/carousel.css",
+					"js/knowledge/knowledge-list.js",
+					"image/knowledge/u236.png",
+					"image/knowledge/u214.png",
+					"image/knowledge/u212.png",
+					"image/knowledge/u270.png",
+					"css/utils/bubble.css",
+					"css/knowledge/knowledge.css"
 				],
 				"refer": [
 					"html/index-menu.html"
