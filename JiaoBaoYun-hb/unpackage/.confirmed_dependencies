@@ -73,7 +73,11 @@
 			"js/utils/carouselControl.js",
 			"image/clip/u296.png",
 			"image/clip/u292.png",
-			"image/clip/u298.png"
+			"image/clip/u298.png",
+			"image/knowledge/0.png",
+			"image/knowledge/2.png",
+			"image/knowledge/1.png",
+			"css/utils/carousel.css"
 		],
 		"refer": [
 			"html/index-menu.html"
@@ -101,7 +105,8 @@
 			"js/main/slide_navigation.js",
 			"css/home/index-menu.css",
 			"css/iconfont/iconfont.css",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"image/knowledge/0.png"
 		]
 	},
 	"html/clip/clip_main.html": {

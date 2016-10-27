@@ -56,12 +56,21 @@ var  carousel=(function(mod){
 			      +'</a>';
 		return innerHTML;		      
 	}
+// <a href="javascript:;">
+//			            <img class="mui-media-object mui-pull-left" src="../image/knowledge/0.png">
+//			            <div class="mui-media-body">
+//			                幸福
+//			                <p class="mui-ellipsis">能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+//			            </div>
+//			        </a>
 	var createWordsInner=function(item){
-	return	'<a href="#">'
-			        +'<img src="'+item.imgUrl+'" class="mui-pull-right">'
-			        +item.title
-			        +'<p>'+item.word+'</p>'
-			      +'</a>';
+	return	'<div class="words-inner">'
+			        +'<img class="mui-pull-left" style="width:30%"  src="'+item.imgUrl+'"/>'
+			        +'<div class="">'
+				        +'<h4 class="title">'+item.title+'</h4>'
+				        +'<p >'+item.word+'</p>'
+			        +'</div>'
+			      +'</div>';
 	}
 	/**
    * 加载底部条状物
@@ -81,35 +90,6 @@ var  carousel=(function(mod){
 	}
 	return mod;
 })(window.carousel||{})
-//var addImg=function(imgUrls,titles){
-//	var group=document.body.querySelector(".mui-slider-group,.mui-slider-loop")
-//	addDiv(imgUrls[imgUrls.length-1],titles[titles.length-1],group)
-//	imgUrls.forEach(function(imgUrl,index,imgUrls){
-//		var div=document.createElement('div');
-//		div.className="mui-slider-item"
-//		div.innerHTML=createImgInner(imgUrl,titles[index])
-//		group.appendChild(div);
-//	})
-//	addDiv(imgUrls[0],titles[0],group)
-//}
-//var createImgInner=function(imgUrl,title){
-//	var innerHTML='<a href="#">'
-//		        +'<img src="'+imgUrl+'">'
-//		        +'<p class="mui-slider-title">'+title+'</p>'
-//		      +'</a>';
-//	return innerHTML;		      
-//}
 
-///**
-// * 加载第一条和最后一条数据
-// * @param {Object} imgUrl
-// * @param {Object} group
-// */
-//var addDiv=function(imgUrl,title,group){
-//	var div=document.createElement('div');
-//	div.className="mui-slider-item mui-slider-item-duplicate"
-//	div.innerHTML=createImgInner(imgUrl,title);
-//	group.appendChild(div);
-//}
 
 

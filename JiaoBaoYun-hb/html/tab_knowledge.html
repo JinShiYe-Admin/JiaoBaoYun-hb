@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../css/utils/common.css" />
+		<link rel="stylesheet" href="../css/utils/carousel.css" />
 		<script type="text/javascript" src="../js/mui.min.js"></script>
 		<script type="text/javascript" src="../js/utils/events.js"></script>
 		<script src="../js/main/slide_navigation.js"> </script>
@@ -24,12 +25,12 @@
 	</body>
 	<script>
 		mui.plusReady(function(){
-			var titles = ["咋让孩子远离坏朋友？", "为什么一定要让孩子做家务", "健康专家：孩子更爱吃零食不爱吃主食","为什么没有第四个？"]
-			var imgUrls=['../image/knowledge/1.png','../image/knowledge/2.png','../image/knowledge/3.png','../image/knowledge/1.png'];
+			var titles = ["咋让孩子远离坏朋友？", "为什么一定要让孩子做家务", "健康专家：孩子更爱吃零食不爱吃主食"]
+			var imgUrls=['../image/knowledge/0.png','../image/knowledge/1.png','../image/knowledge/2.png'];
 			var words=['我的女儿是刚上一年级的小豆包,总有淘气的孩子给她起外号','小学一年级该不该让孩子做些洗袜子之类的家务','孩子总是吃零食，这种习惯肯定不好，你们怎么看待小孩子吃零食']
 //					//加黑条
 			carousel.createView(carousel.createList(imgUrls,titles,words))
-		
+			carousel.addStrip(imgUrls)
 //				addStrip(getImgArray())
 //					//加图片
 //				addImg(getImgArray(), titles)
