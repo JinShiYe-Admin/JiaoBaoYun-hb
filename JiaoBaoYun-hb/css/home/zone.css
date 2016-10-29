@@ -57,6 +57,12 @@
 	/*垂直距离*/
 	vertical-align: 90%;
 }
+.custom-badge3 {
+	/*/*做外边距*/
+	margin-left: -50px;
+	/*垂直距离*/
+	vertical-align: 120%;*/
+}
 
 
 /*班级之间的竖线*/
