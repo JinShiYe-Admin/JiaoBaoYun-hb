@@ -355,7 +355,8 @@
 		],
 		"refer": [
 			"html/quan/studentdynamic_main.html",
-			"html/quan/class_space.html"
+			"html/quan/class_space.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/cloud/cloud_home.html": {
