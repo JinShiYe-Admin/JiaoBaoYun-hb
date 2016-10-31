@@ -16,9 +16,18 @@
 		var jsonStr = plus.storage.getItem(k.toString());
 		return jsonStr ? JSON.parse(jsonStr).data : null;
 	};
+	/**
+	 * 获取数据
+	 * @param {Object} k
+	 */
 	myStorage.getItem = function(k) {
 		return getItem(k) || getItemPlus(k);
 	};
+	/**
+	 * 设置数据
+	 * @param {Object} k key 
+	 * @param {Object} value value
+	 */
 	myStorage.setItem = function(k, value) {
 		value = JSON.stringify({
 			data: value
@@ -52,10 +61,17 @@
 	function removeItemPlus(k) {
 		return plus.storage.removeItem(k);
 	};
+	/**
+	 * 删除数据
+	 * @param {Object} k
+	 */
 	myStorage.removeItem = function(k) {
 		window.localStorage.removeItem(k);
 		return plus.storage.removeItem(k);
 	}
+	/**
+	 * 清空数据
+	 */
 	myStorage.clear = function() {
 		window.localStorage.clear();
 		return plus.storage.clear();
