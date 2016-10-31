@@ -29,20 +29,67 @@
 		</div>
 		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script src="../../js/utils/rsa/Barrett.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/rsa/BigInt.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/rsa/jQuery.md5.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/rsa/MD5.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/rsa/RSA.js" type="text/javascript" charset="utf-8"></script>
+		
+		
 		<script type="text/javascript">
-			
 			mui.init();
 			mui.plusReady(function() {
 				events.preLoad('yanZhengMa.html');
 				var phoneNum = document.getElementById("phoneNumber");
-				events.addTap('register',function(){
-					events.fireToPage('yanZhengMa.html','yanzhengma',function(){
-					return phoneNum.value
+				events.addTap('register', function() {
+					events.fireToPage('yanZhengMa.html', 'yanzhengma', function() {
+						return phoneNum.value
 					})
 				});
-		});
-			
-		
+
+				document.getElementById('register').addEventListener('tap', function() {
+					mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetCode', {
+						data: {
+							uuid: plus.device.uuid,
+							shaketype: 'reg',
+							appid: '5',
+							uid: document.getElementById("phoneNumber").value
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						success: function(data) {
+							console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + data.RspData + ',RspTxt:' + data.RspTxt);
+						},
+						error: function(xhr, type, errorThrown) {
+							//异常处理；
+							console.log('111111error:' + type);
+						}
+					});
+				});
+				mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetShakeHand', {
+					data: {
+						uuid: plus.device.uuid,
+						shaketype: 'reg',
+						appid: '5'
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					success: function(data) {
+						console.log('0000success:RspCode:' + data.RspCode + ',RspData:' + data.RspData + ',RspTxt:' + data.RspTxt);
+						console.log('11122success:Exponent:' + data.RspData.Exponent + ',Modulus:' + data.RspData.Modulus);
+						setMaxDigits(129);
+						var key00 = new RSAKeyPair(data.RspData.Exponent, '', data.RspData.Modulus);
+						
+						var temp11 = encryptedString(key00, 'qwert12345');
+						console.log('key为： ,加密后的值为：' + temp11);
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log('0000error:' + type);
+					}
+				});
+			});
 		</script>
 	</body>
 

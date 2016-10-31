@@ -24,7 +24,7 @@
 				</div>
 				<div class="mui-input-row">
 					<label>验证码</label>
-					<input type="text" placeholder="请输入验证码">
+					<input type="text" id="yanzheng" placeholder="请输入验证码">
 				</div>
 			</form>
 			<div class="mui-content-padded">
@@ -37,13 +37,34 @@
 					var temp = event.detail.data;
 					console.log('传值的电话号码为：'+JSON.stringify(event.detail));
 					var phoneNum = document.getElementById("phoneNumber");
-					phoneNum.textContent = temp;
+					phoneNum.value = temp;
 				});
 			mui.init();
 			mui.plusReady(function() {
 				document.getElementById('register').addEventListener('tap', function() {
-					console.log('点击注册按钮');
+					console.log('点击提交按钮');
+					
+					mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetReg', {
+					data: {
+						uuid: plus.device.uuid,
+						shaketype: 'reg',
+						appid: '5',
+						uid:document.getElementById("phoneNumber").value,
+						code:document.getElementById("yanzheng").value
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					success: function(data) {
+						console.log('success:RspCode:' + data.RspCode+',RspData:'+data.RspData+',RspTxt:'+data.RspTxt);
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log('error:' + type);
+					}
 				});
+				});
+				
+				
 			});
 			
 		</script>
