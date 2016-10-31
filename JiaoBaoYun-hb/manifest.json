@@ -10,7 +10,7 @@
 	"icons": {
 		"72": "icon.png"
 	},
-	"launch_path": "html/index.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+	"launch_path": "html/register/login.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
 	"developer": {
 		"name": "",/*开发者名称*/
 		"email": "",/*开发者邮箱地址*/
@@ -606,6 +606,39 @@
 					"js/libs/crypto-js/require.js",
 					"js/libs/crypto-js/mui.js",
 					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/register/register_phoneNumber.html": {
+				"resources": [
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/mui.min.js",
+					"css/mui.min.css"
+				],
+				"refer": [
+					"html/register/yanZhengMa.html"
+				],
+				"priority": 0
+			},
+			"html/register/login.html": {
+				"resources": [
+					"html/register/js/mui.enterfocus.js",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"html/register/js/app.js"
+				],
+				"refer": [
+					"html/register/register_phoneNumber.html"
+				],
+				"priority": 0
+			},
+			"html/register/yanZhengMa.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0

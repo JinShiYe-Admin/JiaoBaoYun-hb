@@ -140,7 +140,7 @@ var events=(function($){
 	 * @param {Object} item 绑定控件
 	 * @param {Object} datas
 	 */
-	var fireToNewPage=function(tarPage,listener,item,datas){
+	var fireToNewPage=function(tarPage,listener,item,inputItem){
 		
 		console.log('tarPage:'+tarPage);
 		var targetPage = null;
@@ -152,7 +152,7 @@ var events=(function($){
 		  }
 		  //触发目标页面的listener事件
 		  $.fire(targetPage,listener,{
-		    data:datas
+		    data:inputItem.value
 		  });
 		//打开m目标页面          
 		 openNewWindow(tarPage)
