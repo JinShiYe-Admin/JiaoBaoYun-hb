@@ -16,12 +16,9 @@ mui.plusReady(function() {
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
 	var subpages = ['tab-zone.html', 'tab_knowledge.html', 'clip/clip_sub.html', 'cloud/cloud_home.html'];
-<<<<<<< HEAD
 	var titles=['家校圈','问答','视频','云盘'];
-=======
-
 	//设置子页面距离顶部的位置
->>>>>>> branch 'master' of https://github.com/JinShiYe/JiaoBaoYun-hb.git
+
 
 	var subpage_style = {
 		top: (localStorage.getItem('StatusHeightNo')+45)+'px', //设置距离顶部的距离

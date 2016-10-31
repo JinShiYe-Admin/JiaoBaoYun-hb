@@ -21,7 +21,10 @@
 			})
 			
 			require(["crypto-js"], function (CryptoJS) {
-				  console.log(CryptoJS.HmacSHA1("Message", "123"));
+				var encrypted=CryptoJS.HmacSHA1("Message", "94545gdfsgfdgdfdgdfg123")
+			  	console.log(encrypted+"长度:"+encrypted.toString().length);
+//				var decryted=CryptoJS.HmacSHA1.decrypt(encrypted,"94545123");
+//				console.log(decryted);
 			});
 		</script>
 	</body>
