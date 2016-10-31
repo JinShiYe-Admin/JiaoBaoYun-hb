@@ -49,25 +49,11 @@ mui.plusReady(function() {
 	//选项卡点击事件
 	mui('.mui-bar-tab').on('tap', 'a', function(e) {
 		var targetTab = this.getAttribute('href');
+		console.log(activeTab)
 		if(targetTab == activeTab) {
 			return;
 		}
-//		if(targetTab == 'tab-zone.html') {
-//
-//			var header = document.querySelector(".mui-bar-nav");
-//			var a = document.getElementById('aboutme');
-//			a.style.visibility = 'visible';
-//			var a = document.getElementById('leave');
-//			a.style.visibility = 'visible';
-//
-//			header.insertBefore(a, header.firstChild);
-//		} else {
-//			var header = document.querySelector(".mui-bar-nav");
-//			var a = document.getElementById('aboutme');
-//			a.style.visibility = 'hidden';
-//			var a = document.getElementById('leave');
-//			a.style.visibility = 'hidden';
-//		}
+
 		//更换标题
 		title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
 		changRightIcons(title.innerHTML)
@@ -102,6 +88,7 @@ mui.plusReady(function() {
 		while(iconContainer.firstElementChild){
 			iconContainer.removeChild(iconContainer.firstElementChild);
 		}
+
 		switch(title){
 			case '家校圈':
 				addZoneIcon(iconContainer);
@@ -117,9 +104,13 @@ mui.plusReady(function() {
 		
 	}
 	var addZoneIcon=function(container){
-		
+				var a = document.createElement('a');
+		a.id = 'leave'
+		a.className = 'mui-icon mui-icon-compose  mui-pull-right mui-plus-visible';
+		a.style.paddingLeft = '20px'
+		container.appendChild(a)
 		var a = document.createElement('a');
-		a.className = 'mui-icon mui-plus-visible';
+		a.className = 'mui-icon  mui-pull-right mui-plus-visible';
 		a.id = 'aboutme'
 		a.innerHTML = '@与我相关'
 		a.style.fontSize = '16px'
@@ -129,12 +120,9 @@ mui.plusReady(function() {
 		span.innerHTML = '3'
 		a.appendChild(span)
 		container.appendChild(a);
-		var a = document.createElement('a');
-		a.id = 'leave'
-		a.className = 'mui-icon mui-icon-compose  mui-pull-right mui-plus-visible';
-		a.style.paddingLeft = '20px'
-		container.appendChild(a)
+
 	}
+
 	//自定义事件，模拟点击“首页选项卡”
 	document.addEventListener('gohome', function() {
 		var defaultTab = document.getElementById("defaultTab");
