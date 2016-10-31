@@ -133,30 +133,48 @@ var events=(function($){
 		
 		});
 	}
+//	/**
+//	 * 传递数据到指定页面
+//	 * @param {Object} tarPage 目标页面
+//	 * @param {Object} listener 事件名称
+//	 * @param {Object} item 绑定控件
+//	 * @param {Object} datas
+//	 */
+//	var fireToNewPage=function(tarPage,listener,item,datas){
+//		
+//		console.log('tarPage:'+tarPage);
+//		var targetPage = null;
+//		//添加列表项的点击事件
+//		item.addEventListener('tap',function() {
+//		  //获得目标页面
+//		  if(!targetPage){
+//		    targetPage = plus.webview.getWebviewById(tarPage);
+//		  }
+//		  //触发目标页面的listener事件
+//		  $.fire(targetPage,listener,{
+//		    data:datas
+//		  });
+//		//打开m目标页面          
+//		 openNewWindow(tarPage)
+//		});  
+//	}
 	/**
-	 * 传递数据到指定页面
-	 * @param {Object} tarPage 目标页面
-	 * @param {Object} listener 事件名称
-	 * @param {Object} item 绑定控件
-	 * @param {Object} datas
+	 * 传递数值到指定页面
+	 * @param {Object} tarpage 目标页面路径
+	 * @param {Object} listener 监听事件
+	 * @param {Object} getDatas 获取数据的方法  return somthing
 	 */
-	var fireToNewPage=function(tarPage,listener,item,inputItem){
-		
+	var fireToPage=function(tarPage,listener,getDatas){
 		console.log('tarPage:'+tarPage);
 		var targetPage = null;
-		//添加列表项的点击事件
-		item.addEventListener('tap',function() {
 		  //获得目标页面
 		  if(!targetPage){
 		    targetPage = plus.webview.getWebviewById(tarPage);
 		  }
 		  //触发目标页面的listener事件
 		  $.fire(targetPage,listener,{
-		    data:inputItem.value
+		    data:getDatas()
 		  });
-		//打开m目标页面          
-		 openNewWindow(tarPage)
-		});  
 	}
 	/**
 	 * 清空子元素
@@ -174,9 +192,10 @@ var events=(function($){
 		initSubPage:initSubPage,//加载子页面
 		initRefresh:initRefresh,//刷新
 		preLoad:preLoad,//预加载
-		fireToNewPage:fireToNewPage,//传递数据到新界面
+//		fireToNewPage:fireToNewPage,//传递数据到新界面
 		clearChild:clearChild,//清空子元素
-		addTap:addTap
+		addTap:addTap,//
+		fireToPage:fireToPage//
 	
 	}
 

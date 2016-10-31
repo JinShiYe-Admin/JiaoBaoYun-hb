@@ -34,27 +34,15 @@
 			mui.init();
 			mui.plusReady(function() {
 				events.preLoad('yanZhengMa.html');
-				var button0 = document.getElementById("register");
 				var phoneNum = document.getElementById("phoneNumber");
-//				var temp = {
-//						phone: phoneNum.value
-//					};
-//				console.log('当前的电话号码为：'+ phoneNum.value);
-				events.fireToNewPage('yanZhengMa.html','yanzhengma',button0,phoneNum);
-//				document.getElementById('register').addEventListener('tap', function(event) {
-//					
-//		
-//				});
-			});
-			//			document.getElementById('register').addEventListener('tap',function () {
-			//			    var button0 = document.getElementById("register");
-			//				var phoneNum = document.getElementById("phoneNumber");
-			//				var temp = {phone:phoneNum.value};
-			//				console.log('当前的电话号码为：'+temp+','+phoneNum.value);
-			//				events.preLoad('yanZhengMa.html');
-			////				events.fireToNewPage('yanZhengMa.html','yanzhengma',button0,temp);
-			//				mui.fire('yanZhengMa.html','yanzhengma',temp);
-			//			});
+				events.addTap('register',function(){
+					events.fireToPage('yanZhengMa.html','yanzhengma',function(){
+					return phoneNum.value
+					})
+				});
+		});
+			
+		
 		</script>
 	</body>
 

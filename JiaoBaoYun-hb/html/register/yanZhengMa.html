@@ -34,7 +34,7 @@
 		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			window.addEventListener('yanzhengma',function (event) {
-					var temp = event.detail.data.phone;
+					var temp = event.detail.data;
 					console.log('传值的电话号码为：'+JSON.stringify(event.detail));
 					var phoneNum = document.getElementById("phoneNumber");
 					phoneNum.textContent = temp;
