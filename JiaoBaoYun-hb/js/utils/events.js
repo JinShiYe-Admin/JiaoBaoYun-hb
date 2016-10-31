@@ -175,6 +175,7 @@ var events=(function($){
 		  $.fire(targetPage,listener,{
 		    data:getDatas()
 		  });
+		  openNewWindow(tarPage)
 	}
 	/**
 	 * 清空子元素
