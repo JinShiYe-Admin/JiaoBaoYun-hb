@@ -16,8 +16,9 @@ mui.plusReady(function() {
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
 	var subpages = ['tab-zone.html', 'tab_knowledge.html', 'clip/clip_sub.html', 'cloud/cloud_home.html'];
-
+	var titles=['家校圈','问答','视频','云盘'];
 	//设置子页面距离顶部的位置
+
 
 	var subpage_style = {
 		top: (localStorage.getItem('StatusHeightNo')+45)+'px', //设置距离顶部的距离
@@ -48,27 +49,14 @@ mui.plusReady(function() {
 	//选项卡点击事件
 	mui('.mui-bar-tab').on('tap', 'a', function(e) {
 		var targetTab = this.getAttribute('href');
+		console.log(activeTab)
 		if(targetTab == activeTab) {
 			return;
 		}
-		if(targetTab == 'tab-zone.html') {
 
-			var header = document.querySelector(".mui-bar-nav");
-			var a = document.getElementById('aboutme');
-			a.style.visibility = 'visible';
-			var a = document.getElementById('leave');
-			a.style.visibility = 'visible';
-
-			header.insertBefore(a, header.firstChild);
-		} else {
-			var header = document.querySelector(".mui-bar-nav");
-			var a = document.getElementById('aboutme');
-			a.style.visibility = 'hidden';
-			var a = document.getElementById('leave');
-			a.style.visibility = 'hidden';
-		}
 		//更换标题
 		title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
+		changRightIcons(title.innerHTML)
 		//显示目标选项卡
 		//若为iOS平台或非首次显示，则直接显示
 		if(mui.os.ios || aniShow[targetTab]) {
@@ -93,6 +81,60 @@ mui.plusReady(function() {
 		plus.webview.hide(activeTab);
 		//更改当前活跃的选项卡
 		activeTab = targetTab;
+
 	});
+	var changRightIcons=function(title){
+		var iconContainer=document.getElementById('random_icon');
+		while(iconContainer.firstElementChild){
+			iconContainer.removeChild(iconContainer.firstElementChild);
+		}
+
+		switch(title){
+			case '家校圈':
+				addZoneIcon(iconContainer);
+			break;
+			case '问答':
+			break;
+			case '视频':
+			break;
+			case '云盘':
+			break;
+			default:break;
+		}
+		
+	}
+	var addZoneIcon=function(container){
+				var a = document.createElement('a');
+		a.id = 'leave'
+		a.className = 'mui-icon mui-icon-compose  mui-pull-right mui-plus-visible';
+		a.style.paddingLeft = '20px'
+		container.appendChild(a)
+		var a = document.createElement('a');
+		a.className = 'mui-icon  mui-pull-right mui-plus-visible';
+		a.id = 'aboutme'
+		a.innerHTML = '@与我相关'
+		a.style.fontSize = '16px'
+		a.style.paddingTop = '15px'
+		var span = document.createElement('span');
+		span.className = 'mui-badge mui-badge-danger custom-badge1'
+		span.innerHTML = '3'
+		a.appendChild(span)
+		container.appendChild(a);
+
+	}
+
+	//自定义事件，模拟点击“首页选项卡”
+	document.addEventListener('gohome', function() {
+		var defaultTab = document.getElementById("defaultTab");
+		//模拟首页点击
+		mui.trigger(defaultTab, 'tap');
+		//切换选项卡高亮
+		var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
+		if(defaultTab !== current) {
+			current.classList.remove('mui-active');
+			defaultTab.classList.add('mui-active');
+		}
+	});
+
 });
 

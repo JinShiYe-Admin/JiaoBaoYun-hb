@@ -9,12 +9,12 @@ var camera=(function(mod){
 		var fmt = cmr.supportedImageFormats[0];
 		cmr.captureImage(function(path){
 			console.log( "Capture image success: " + path );
-			mod.getPicPath(path)
+			mod.getPicPath(path);
 		},
 		function(err){
 			console.log( "Capture image failed: " + err.message );  
 		},
-		{resolution:res,format:fmt})
+		{format:fmt})
 	}
 	mod.getPicPath=function(path){
 	 var picPath=plus.io.convertLocalFileSystemURL(path);
