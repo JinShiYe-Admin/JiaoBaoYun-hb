@@ -114,7 +114,8 @@
       "css/iconfont/iconfont.css",
       "fonts/iconfont.ttf",
       "image/knowledge/0.png"
-    ]
+    ],
+    "refer": []
   },
   "html/clip/clip_main.html": {
     "resources": [
@@ -135,7 +136,8 @@
       "fonts/mui.ttf",
       "css/mui.min.css",
       "css/utils/common.css"
-    ]
+    ],
+    "refer": []
   },
   "html/zone_sub.html": {
     "resources": [
@@ -187,7 +189,8 @@
       "css/utils/common.css",
       "js/mui.min.js",
       "css/mui.min.css"
-    ]
+    ],
+    "refer": []
   },
   "html/quan/class-space.html": {
     "resources": [
@@ -199,7 +202,8 @@
       "fonts/iconfont.ttf",
       "css/utils/common.css",
       "js/utils/events.js"
-    ]
+    ],
+    "refer": []
   },
   "html/quan/zone_main.html": {
     "resources": [
@@ -222,7 +226,8 @@
       "js/quan/dynamiclistitem.js",
       "image/dynamic/icon_Level39.png",
       "image/dynamic/u101.png"
-    ]
+    ],
+    "refer": []
   },
   "html/quan/class_space.html": {
     "resources": [
@@ -263,7 +268,8 @@
       "image/quan/u108.jpg",
       "fonts/mui.ttf",
       "css/quan/class_space.css"
-    ]
+    ],
+    "refer": []
   },
   "html/quan/studentdynamic_main.html": {
     "resources": [
@@ -284,7 +290,8 @@
       "image/quan/u125.png",
       "image/quan/u77.png",
       "image/quan/u123.png"
-    ]
+    ],
+    "refer": []
   },
   "html/quan/studentpersonalimge.html": {
     "resources": [
@@ -292,7 +299,8 @@
       "fonts/mui.ttf",
       "css/mui.min.css",
       "css/utils/common.css"
-    ]
+    ],
+    "refer": []
   },
   "html/quan/class-dynamic.html": {
     "resources": [
@@ -307,7 +315,8 @@
       "js/utils/events.js",
       "js/utils/files.js",
       "js/utils/ASFiles.js"
-    ]
+    ],
+    "refer": []
   },
   "html/quan/class-group.html": {
     "resources": [
@@ -337,7 +346,8 @@
       "css/mui.min.css",
       "css/utils/common.css",
       "css/quan/class_space.css"
-    ]
+    ],
+    "refer": []
   },
   "html/tab-zone.html": {
     "resources": [
@@ -375,8 +385,10 @@
       "image/cloud/cloud_folder.png",
       "css/utils/common.css",
       "js/mui.min.js",
-      "css/mui.min.css"
-    ]
+      "css/mui.min.css",
+      "js/utils/events.js"
+    ],
+    "refer": []
   },
   "html/knowledge/test.html": {
     "resources": [
@@ -390,6 +402,7 @@
       "js/libs/crypto-js/require.js",
       "js/libs/crypto-js/mui.js",
       "js/libs/crypto-js/crypto-js.js"
-    ]
+    ],
+    "refer": []
   }
 }
