@@ -16,12 +16,11 @@ mui.plusReady(function() {
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
 	var subpages = ['tab-zone.html', 'tab_knowledge.html', 'clip/clip_sub.html', 'cloud/cloud_home.html'];
-	var titles=['家校圈','问答','视频','云盘'];
+	var titles = ['家校圈', '问答', '视频', '云盘'];
 	//设置子页面距离顶部的位置
 
-
 	var subpage_style = {
-		top: (localStorage.getItem('StatusHeightNo')+45)+'px', //设置距离顶部的距离
+		top: (localStorage.getItem('StatusHeightNo') + 45) + 'px', //设置距离顶部的距离
 		bottom: '50px'
 	};
 
@@ -57,8 +56,8 @@ mui.plusReady(function() {
 		//更换标题
 		title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
 		changRightIcons(title.innerHTML)
-		//显示目标选项卡
-		//若为iOS平台或非首次显示，则直接显示
+			//显示目标选项卡
+			//若为iOS平台或非首次显示，则直接显示
 		if(mui.os.ios || aniShow[targetTab]) {
 			plus.webview.show(targetTab);
 		} else {
@@ -83,28 +82,30 @@ mui.plusReady(function() {
 		activeTab = targetTab;
 
 	});
-	var changRightIcons=function(title){
-		var iconContainer=document.getElementById('random_icon');
-		while(iconContainer.firstElementChild){
+	var changRightIcons = function(title) {
+		var iconContainer = document.getElementById('random_icon');
+		while(iconContainer.firstElementChild) {
 			iconContainer.removeChild(iconContainer.firstElementChild);
 		}
 
-		switch(title){
+		switch(title) {
 			case '家校圈':
 				addZoneIcon(iconContainer);
-			break;
+				break;
 			case '问答':
-			break;
+				break;
 			case '视频':
-			break;
+				break;
 			case '云盘':
-			break;
-			default:break;
+				addCloudIcon(iconContainer);
+				break;
+			default:
+				break;
 		}
-		
+
 	}
-	var addZoneIcon=function(container){
-				var a = document.createElement('a');
+	var addZoneIcon = function(container) {
+		var a = document.createElement('a');
 		a.id = 'leave'
 		a.className = 'mui-icon mui-icon-compose  mui-pull-right mui-plus-visible';
 		a.style.paddingLeft = '20px'
@@ -120,7 +121,15 @@ mui.plusReady(function() {
 		span.innerHTML = '3'
 		a.appendChild(span)
 		container.appendChild(a);
+	}
 
+	var addCloudIcon = function(container) {
+		var a = document.createElement('a');
+		a.className = 'mui-icon mui-icon-upload mui-pull-right';
+		a.addEventListener('tap',function(){
+			mui.toast("上传");
+		});
+		container.appendChild(a)
 	}
 
 	//自定义事件，模拟点击“首页选项卡”
@@ -137,4 +146,3 @@ mui.plusReady(function() {
 	});
 
 });
-
