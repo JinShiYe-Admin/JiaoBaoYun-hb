@@ -1,4 +1,4 @@
-(function(win,com, mui) {
+(function(win, mui) {
 	/**
  	* @author 1020450921@qq.com
  	* @link http://www.cnblogs.com/phillyx
@@ -180,6 +180,5 @@
 		})
 		cb && cb();
 	};
-	com.myStorage = myStorage;
 	win.myStorage = myStorage;
-}(window,common, mui));
+}(window, mui));

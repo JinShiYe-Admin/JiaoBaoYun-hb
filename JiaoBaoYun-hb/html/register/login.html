@@ -132,6 +132,8 @@
 		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.enterfocus.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
+		
 		<script>
 			(function($, doc) {
 				$.init({
@@ -142,14 +144,14 @@
 					var settings = app.getSettings();
 					var state = app.getState();
 					var mainPage = $.preload({
-						"id": 'main',
-						"url": 'main.html'
+						"id": 'index.html',
+						"url": 'index.html'
 					});
 					var toMain = function() {
 						$.fire(mainPage, 'show', null);
 						setTimeout(function() {
 							$.openWindow({
-								id: 'main',
+								id: 'index.html',
 								show: {
 									aniShow: 'pop-in'
 								},
@@ -159,74 +161,39 @@
 							});
 						}, 0);
 					};
-					//检查 "登录状态/锁屏状态" 开始
-//					if (settings.autoLogin && state.token && settings.gestures) {
-//						$.openWindow({
-//							url: 'unlock.html',
-//							id: 'unlock',
-//							show: {
-//								aniShow: 'pop-in'
-//							},
-//							waiting: {
-//								autoShow: false
-//							}
-//						});
-//					} else if (settings.autoLogin && state.token) {
-//						toMain();
-//					} else {
-//						app.setState(null);
-//						//第三方登录
-//						var authBtns = ['qihoo', 'weixin', 'sinaweibo', 'qq']; //配置业务支持的第三方登录
-//						var auths = {};
-//						var oauthArea = doc.querySelector('.oauth-area');
-//						plus.oauth.getServices(function(services) {
-//							for (var i in services) {
-//								var service = services[i];
-//								auths[service.id] = service;
-//								if (~authBtns.indexOf(service.id)) {
-//									var isInstalled = app.isInstalled(service.id);
-//									var btn = document.createElement('div');
-//									//如果微信未安装，则为不启用状态
-//									btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
-//									btn.authId = service.id;
-//									btn.style.backgroundImage = 'url("images/' + service.id + '.png")'
-//									oauthArea.appendChild(btn);
-//								}
-//							}
-//							$(oauthArea).on('tap', '.oauth-btn', function() {
-//								if (this.classList.contains('disabled')) {
-//									plus.nativeUI.toast('您尚未安装微信客户端');
-//									return;
-//								}
-//								var auth = auths[this.authId];
-//								var waiting = plus.nativeUI.showWaiting();
-//								auth.login(function() {
-//									waiting.close();
-//									plus.nativeUI.toast("登录认证成功");
-//									auth.getUserInfo(function() {
-//										plus.nativeUI.toast("获取用户信息成功");
-//										var name = auth.userInfo.nickname || auth.userInfo.name;
-//										app.createState(name, function() {
-//											toMain();
-//										});
-//									}, function(e) {
-//										plus.nativeUI.toast("获取用户信息失败：" + e.message);
-//									});
-//								}, function(e) {
-//									waiting.close();
-//									plus.nativeUI.toast("登录认证失败：" + e.message);
-//								});
-//							});
-//						}, function(e) {
-//							oauthArea.style.display = 'none';
-//							plus.nativeUI.toast("获取登录认证失败：" + e.message);
-//						});
-//					}
 					// close splash
 					setTimeout(function() {
 						//关闭 splash
 						plus.navigator.closeSplashscreen();
 					}, 600);
+					
+					//握手
+					console.log('djflskjdlsjd');
+					var tempData;
+					mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetShakeHand', {
+						data: {
+							uuid: plus.device.uuid,
+							shaketype: 'reg',
+							appid: '5'
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						success: function(data) {
+							tempData = data;
+							console.log('0000success:RspCode:' + data.RspCode + ',RspData:' + data.RspData + ',RspTxt:' + data.RspTxt);
+							console.log('11122success:Exponent:' + data.RspData.Exponent + ',Modulus:' + data.RspData.Modulus);
+							var ShakeHand = {
+								Exponent: data.RspData.Exponent,
+								Modulus: data.RspData.Modulus
+							};
+							window.myStorage.setItem('ShakeHand',ShakeHand);
+						},
+						error: function(xhr, type, errorThrown) {
+							//异常处理；
+							console.log('0000error:' + type);
+						}
+					});
+					
 					//检查 "登录状态/锁屏状态" 结束
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');
@@ -239,6 +206,25 @@
 							account: accountBox.value,
 							password: passwordBox.value
 						};
+						//发送登录请求
+						mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetLogin', {
+						data: {
+							uuid: plus.device.uuid,
+							shaketype: 'reg',
+							appid: '5',
+							uid: loginInfo.account,
+							pw:loginInfo.password
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						success: function(data) {
+							console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + data.RspData + ',RspTxt:' + data.RspTxt);
+						},
+						error: function(xhr, type, errorThrown) {
+							//异常处理；
+							console.log('111111error:' + type);
+						}
+					});
 						app.login(loginInfo, function(err) {
 							if (err) {
 								plus.nativeUI.toast(err);

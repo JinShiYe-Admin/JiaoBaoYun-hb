@@ -32,6 +32,16 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--界面中用到的事件-->
+		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
+		<!--加密-->
+		<script src="../../js/utils/rsa/Barrett.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/rsa/BigInt.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/rsa/jQuery.md5.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/rsa/MD5.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/rsa/RSA.js" type="text/javascript" charset="utf-8"></script>
+		<!--本地存储-->
+		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			window.addEventListener('yanzhengma',function (event) {
 					var temp = event.detail.data;
@@ -43,23 +53,31 @@
 			mui.plusReady(function() {
 				document.getElementById('register').addEventListener('tap', function() {
 					console.log('点击提交按钮');
-					
+					//获取到本地存储的公钥
+					var tempValue = window.myStorage.getItem('ShakeHand');
+					console.log('秘钥：' + tempValue.Exponent + ',' + tempValue.Modulus);
+					//加密电话号码
+					setMaxDigits(129);
+					var key00 = new RSAKeyPair(tempValue.Exponent, '', tempValue.Modulus);
+					var temp11 = encryptedString(key00, document.getElementById("phoneNumber").value);
+					var temp22 = encryptedString(key00, document.getElementById("yanzheng").value);
+					console.log('加密后为：' + temp11);
 					mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetReg', {
 					data: {
 						uuid: plus.device.uuid,
 						shaketype: 'reg',
 						appid: '5',
-						uid:document.getElementById("phoneNumber").value,
-						code:document.getElementById("yanzheng").value
+						uid:temp11,
+						code:temp22
 					},
 					dataType: 'json', //服务器返回json格式数据
 					type: 'get', //HTTP请求类型
 					success: function(data) {
-						console.log('success:RspCode:' + data.RspCode+',RspData:'+data.RspData+',RspTxt:'+data.RspTxt);
+						console.log('2222success:RspCode:' + data.RspCode+',RspData:'+data.RspData+',RspTxt:'+data.RspTxt+',data:'+data);
 					},
 					error: function(xhr, type, errorThrown) {
 						//异常处理；
-						console.log('error:' + type);
+						console.log('22222error:' + type);
 					}
 				});
 				});
