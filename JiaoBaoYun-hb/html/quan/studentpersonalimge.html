@@ -13,14 +13,13 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/TouchMove.js"></script>
 		<style>
 			.personal-imge {
 				/*图片*/
-				width: 80%;
-				/*height: auto;*/
-				/*margin: 20%;*/
-				margin-top: 10%;
-				margin-left: 10%;
+				position: absolute;
+				width: 50%;
+				left: 10%;
 			}
 
 			.mui-btn {
@@ -42,7 +41,11 @@
 			<img id="image" class="personal-imge">
 		</div>
 		<script type="text/javascript">
-			mui.init();
+			mui.init({
+				gestureConfig: {
+					doubletap: true, //开启双击监听
+				}
+			});
 			mui.plusReady(function() {
 				var ws = plus.webview.currentWebview();
 				var path = ws.path; //获取路径
@@ -53,9 +56,10 @@
 				//console.log('图片宽度:' + width);
 				//console.log('图片高度:' + height);
 				img.src = path; //显示图片
-
-				//关闭等待窗口
-				plus.nativeUI.closeWaiting();
+				img.onload = function() {
+					TouchMove.addTouchListener(img); //关闭等待窗口
+					plus.nativeUI.closeWaiting();
+				}
 
 				mui('.mui-bar-tab').on('tap', '.mui-btn', function() {
 					mui.toast('确定');

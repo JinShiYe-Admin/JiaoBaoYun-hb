@@ -7,6 +7,10 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<script src="../../js/libs/crypto-js/require.js"></script>
+		<script src="test.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/libs/myStorage/myStorage.js"></script>
+		
 		
 	</head>
 
@@ -19,12 +23,15 @@
 					"crypto-js":"../../js/libs/crypto-js/crypto-js"
 				}
 			})
+			mui.plusReady(function(){
+				
+				window.myStorage.setItem("1","5");
+				console.log(window.myStorage.getItem("1"))
+			})
 			
 			require(["crypto-js"], function (CryptoJS) {
-				var encrypted=CryptoJS.HmacSHA1("Message", "94545gdfsgfdgdfdgdfg123")
-			  	console.log(encrypted+"长度:"+encrypted.toString().length);
-//				var decryted=CryptoJS.HmacSHA1.decrypt(encrypted,"94545123");
-//				console.log(decryted);
+				var encrypted=CryptoJS.HmacSHA1("jsy309","jsy309").toString(CryptoJS.enc.Base64)
+				console.log(encrypted);
 			});
 		</script>
 	</body>

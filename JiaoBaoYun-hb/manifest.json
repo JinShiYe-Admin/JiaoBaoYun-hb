@@ -10,7 +10,7 @@
 	"icons": {
 		"72": "icon.png"
 	},
-	"launch_path": "html/register/login.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+	"launch_path": "html/knowledge/test.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
 	"developer": {
 		"name": "",/*开发者名称*/
 		"email": "",/*开发者邮箱地址*/
@@ -605,7 +605,9 @@
 					"js/mui.js",
 					"js/libs/crypto-js/require.js",
 					"js/libs/crypto-js/mui.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"html/knowledge/test.js",
+					"js/libs/myStorage/myStorage.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -615,7 +617,12 @@
 					"fonts/mui.ttf",
 					"js/utils/events.js",
 					"js/mui.min.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/utils/rsa/MD5.js",
+					"js/utils/rsa/BigInt.js",
+					"js/utils/rsa/jQuery.md5.js",
+					"js/utils/rsa/Barrett.js",
+					"js/utils/rsa/RSA.js"
 				],
 				"refer": [
 					"html/register/yanZhengMa.html"

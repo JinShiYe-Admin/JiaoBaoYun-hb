@@ -81,6 +81,7 @@
 
 			.mui-table-view {
 				background: transparent;
+				min-height: 90px;
 			}
 
 			.mui-table-view-cell {
@@ -127,6 +128,25 @@
 				background: #A9A9A9;
 				height: 50px;
 			}
+
+			#cloudstorage {
+				background-color: white;
+				padding: 10px;
+				margin: 0;
+				margin-top: 11px;
+				padding-top: 7px;
+				padding-bottom: 7px;
+			}
+
+			#cloudrecord,
+			#cloudapps {
+				background: white;
+				padding: 10px;
+				margin: 0;
+				margin-top: 10px;
+				padding-top: 10px;
+				padding-bottom: 10px;
+			}
 		</style>
 	</head>
 
@@ -162,7 +182,7 @@
 						</div>
 					</div>
 					<!--云存储-->
-					<ul id="cloudstorage" class="mui-table-view mui-grid-view " style="background:white;padding: 10px;margin: 0;margin-top: 11px;padding-top: 7px;padding-bottom: 7px;">
+					<ul id="cloudstorage" class="mui-table-view mui-grid-view ">
 						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;position: absolute;">
 							<div style="font-weight: bold;">
 								<div>存</div>
@@ -171,8 +191,8 @@
 							</div>
 						</li>
 						<li class="mui-table-view-cell mui-media mui-col-sm-9 mui-col-xs-9 " style="padding: 5px;margin: 0;margin-left: 10%;">
-							<div class="mui-row">
-								<div class="mui-col-sm-4 mui-col-xs-4 cloud-text-align-center">
+							<div class="mui-row" id="cloudstoragefile">
+								<!--<div class="mui-col-sm-4 mui-col-xs-4 cloud-text-align-center">
 									<img class="cloud-bottom-imge" src="../../image/cloud/cloud_folder.png" />
 									<p class="mui-ellipsis">泰国旅游照片泰国旅游照片</p>
 								</div>
@@ -180,19 +200,17 @@
 									<img class="cloud-bottom-imge" src="../../image/cloud/cloud_folder.png" />
 									<p class="mui-ellipsis">H5基础视频</p>
 								</div>
-								<div class="mui-col-sm-4 mui-col-xs-4 cloud-text-align-center">
-									<p class="mui-icon mui-icon-plusempty"style="font-size: 50px;margin-top: 4px;"></p>
-									<!--<img class="cloud-bottom-imge" src="../../image/cloud/cloud_folder.png" />
-									<p class="mui-ellipsis">林俊杰Music</p>-->
-								</div>
+								<div class="mui-col-sm-4 mui-col-xs-4 " id="addFolder">
+									<p class="mui-icon mui-icon-plusempty" style="font-size: 50px;margin-top: 4px;"></p>
+								</div>-->
 							</div>
 						</li>
-						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1 " style="padding: 0;margin: 0;margin-left: 5%;">
+						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1 " style="padding: 0;">
 							<img class="cloud-bottom-icon" src="../../image/cloud/rightarrow.png" />
 						</li>
 					</ul>
 					<!--云档案-->
-					<ul id="cloudrecord" class="mui-table-view mui-grid-view" style="background:white;padding: 10px;margin: 0;margin-top: 10px;padding-top: 10px;padding-bottom: 10px;">
+					<ul id="cloudrecord" class="mui-table-view mui-grid-view">
 						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;position: absolute;">
 							<div style="font-weight: bold;">
 								<div>档</div>
@@ -218,7 +236,7 @@
 						</li>
 					</ul>
 					<!--云应用-->
-					<ul id="cloudapps" class="mui-table-view mui-grid-view" style="background:white;padding: 10px;margin: 0;margin-top: 10px;padding-top: 10px;padding-bottom: 10px;">
+					<ul id="cloudapps" class="mui-table-view mui-grid-view">
 						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;position: absolute;">
 							<div style="font-weight: bold;">
 								<div>应</div>
@@ -272,38 +290,68 @@
 					indicators: true, //是否显示滚动条
 					bounce: false, //是否启用回弹
 				});
-
+				//-----------设置数据start---------------
 				//设置进度条进度
 				mui('.mui-progressbar').progressbar({
 					progress: 80
 				}).show();
 
-				//设置档案名称
-				var record = document.getElementById("record");
-				//record.innerText = '小熊猫档案';
+				//增加存储文件
+				addStorageFolder('泰国旅游照片泰国旅游照片', 0);
+				//				addStorageFolder('H5教程');
+				//增加加号
+				addStorageIcon();
 
+				//设置档案名称
+				//var record = document.getElementById("record");
+				//record.innerText = '小熊猫档案';
+				//-----------设置数据end-----------------
+
+				//-----------设置监听start---------------
+				//---存储start---
 				//云存储显示的文件
-				mui('#cloudstorage').on('tap', '.mui-col-sm-4', function() {
+				mui('#cloudstorage').on('tap', '.cloud-text-align-center', function() {
 					events.openNewWindow('storage_main.html');
+				});
+				//增加文件夹
+				mui('#cloudstorage').on('tap', '#addFolder', function(e) {
+					e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+					var btnArray = ['取消', '确定'];
+					mui.prompt('请输入新文件夹的名称：', '新文件夹', '新建文件夹', btnArray, function(e) {
+						if(e.index == 1) { //点击确定
+							if(e.value == '') {
+								mui.toast('文件夹名字不能为空');
+							} else {
+								var table = document.getElementById("cloudstoragefile");
+								var num = table.getElementsByClassName('cloud-text-align-center');
+								if(num.length == 2) {
+									document.getElementById("addFolder").style.display = "none";
+								}
+								addStorageFolder(e.value, 1);
+							}
+						} else {
+							//点击取消
+						}
+					});
 				});
 				//云存储右侧按钮
 				mui('#cloudstorage').on('tap', '.cloud-bottom-icon', function() {
 					events.openNewWindow('storage_main.html');
 				});
-
-				//云档案
+				//---存储end---
+				//---档案---
 				mui('#cloudrecord').on('tap', '.mui-col-sm-3', function() {
 					var value = this.getAttribute("value");
 					switch(value) {
 						case "0": //XX档案
-							events.openNewWindow('record_student.html');
+							events.openNewWindow('record_student_main.html');
 							break;
 						case "1": //学习轨迹
 							events.openNewWindow('record_learningpath_main.html');
 							break;
 					}
 				});
-				//云应用
+				//---应用---
 				mui('#cloudapps').on('tap', '.mui-col-sm-3', function() {
 					var value = this.getAttribute("value");
 					switch(value) {
@@ -319,7 +367,41 @@
 							break;
 					}
 				});
-			})
+				//-----------设置监听end---------------
+
+				/**
+				 * 增加存储的文件夹
+				 * @param {Object} data 文件夹名字
+				 * @param {Object} type 增加文件夹的方式,0-获取数据后添加，1-通过加号添加
+				 */
+				function addStorageFolder(data, type) {
+					var table = document.getElementById("cloudstoragefile");
+					var div = document.createElement("div");
+					div.className = 'mui-col-sm-4 mui-col-xs-4 cloud-text-align-center';
+					var html1 = '<img class="cloud-bottom-imge" src="../../image/cloud/cloud_folder.png" />';
+					var html2 = '<p class="mui-ellipsis">' + data + '</p>';
+					div.innerHTML = html1 + html2;
+					if(type == 0) {
+						table.appendChild(div);
+					} else {
+						var addFolder = document.getElementById("addFolder");
+						table.insertBefore(div, addFolder);
+					}
+
+				}
+
+				/**
+				 * 增加文件夹的按钮（加号按钮）
+				 */
+				function addStorageIcon() {
+					var table = document.getElementById("cloudstoragefile");
+					var div = document.createElement('div');
+					div.id = 'addFolder';
+					div.className = 'mui-col-sm-4 mui-col-xs-4';
+					div.innerHTML = '<p class="mui-icon mui-icon-plusempty" style="font-size: 50px;margin-top: 4px;"></p>';
+					table.appendChild(div);
+				}
+			});
 		</script>
 	</body>
 
