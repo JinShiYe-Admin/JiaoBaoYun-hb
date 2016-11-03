@@ -35,13 +35,14 @@
 		<!--界面中用到的事件-->
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
 		<!--加密-->
-		<script src="../../js/utils/rsa/Barrett.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/utils/rsa/BigInt.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/utils/rsa/jQuery.md5.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/utils/rsa/MD5.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/utils/rsa/RSA.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/RSA/Barrett.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/RSA/BigInt.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/RSA/jQuery.md5.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/RSA/MD5.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/RSA/RSA.js" type="text/javascript" charset="utf-8"></script>
 		<!--本地存储-->
 		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/tempName.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			window.addEventListener('yanzhengma',function (event) {
 					var temp = event.detail.data;
@@ -73,7 +74,9 @@
 					dataType: 'json', //服务器返回json格式数据
 					type: 'get', //HTTP请求类型
 					success: function(data) {
-						console.log('2222success:RspCode:' + data.RspCode+',RspData:'+data.RspData+',RspTxt:'+data.RspTxt+',data:'+data);
+						console.log('2222success:RspCode:' + data.RspCode+',RspData:'+JSON.stringify(data.RspData)+',RspTxt:'+data.RspTxt+',data:'+data);
+//						{"UTID":"2","Token":"5zZFcClE0zBJlQlSwBGD8hhghAM=","UserPhone":"111111","UserName":"test70C72521-2CD6-45DD-AF6E-375654EB734A","UserNick":"","UserSex":"0","UserTxt":"","UserImg":""}
+						window.myStorage.setItem(PERSONALINFO,)
 					},
 					error: function(xhr, type, errorThrown) {
 						//异常处理；

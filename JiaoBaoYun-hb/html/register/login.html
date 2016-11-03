@@ -133,7 +133,13 @@
 		<script src="js/mui.enterfocus.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
-		
+		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
+		<!--加密-->
+		<script src="../../js/libs/RSA/Barrett.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/RSA/BigInt.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/RSA/jQuery.md5.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/RSA/MD5.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/RSA/RSA.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			(function($, doc) {
 				$.init({
@@ -186,7 +192,9 @@
 								Exponent: data.RspData.Exponent,
 								Modulus: data.RspData.Modulus
 							};
-							window.myStorage.setItem('ShakeHand',ShakeHand);
+							
+							window.myStorage.setItem(window.storageKeyName.storage_ShakeHand,ShakeHand);
+							console.log('0000error:' + window.myStorage.getItem(window.storageKeyName.storage_ShakeHand));
 						},
 						error: function(xhr, type, errorThrown) {
 							//异常处理；
@@ -206,14 +214,23 @@
 							account: accountBox.value,
 							password: passwordBox.value
 						};
+						//对账号和密码加密
+						var tempValue = window.myStorage.getItem('ShakeHand');
+									console.log('秘钥：' + tempValue.Exponent + ',' + tempValue.Modulus);
+									//加密
+									setMaxDigits(129);
+									var key00 = new RSAKeyPair(tempValue.Exponent, '', tempValue.Modulus);
+									var tempUid = encryptedString(key00, loginInfo.account);
+									var tempPW = encryptedString(key00, loginInfo.password);
+									console.log('加密后为：' + tempUid+','+tempPW);
 						//发送登录请求
 						mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetLogin', {
 						data: {
 							uuid: plus.device.uuid,
 							shaketype: 'reg',
 							appid: '5',
-							uid: loginInfo.account,
-							pw:loginInfo.password
+							uid: tempUid,
+							pw: tempPW
 						},
 						dataType: 'json', //服务器返回json格式数据
 						type: 'get', //HTTP请求类型
