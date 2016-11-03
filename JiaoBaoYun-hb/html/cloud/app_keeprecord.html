@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<script src="../../js/mui.min.js"></script>
+		<style>
+			.mui-table-view:before,
+			.mui-table-view:after,
+			.mui-table-view-cell:after {
+				height: 0px;
+			}
+
+			.mui-fullscreen {
+				background-color: white;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~ .mui-slider-group .mui-slider-item {
+				border-top: 0px solid #c8c7cc;
+				border-bottom: 0px solid #c8c7cc;
+			}
+
+			.mui-segmented-control.mui-scroll-wrapper .mui-control-item {
+				padding-left: 10px;
+				padding-right: 10px;
+			}
+
+			#sliderSegmentedControl {
+				margin-top: 10px;
+				background-color: #F2F2F2;
+				margin-left: 5px;
+			}
+
+			.keep-line-blue {
+				position: absolute;
+				height: 38px;
+				width: 5px;
+				top: 54px;
+				background-color: #64A1EB;
+				z-index: 999;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<p class="mui-title common-color-white" style="text-align: left;">云盘—记事</p>
+			<a class="mui-icon mui-icon-plus mui-pull-right"></a>
+			<a class="mui-icon iconfont icon-links mui-pull-right" style="margin-right: 5px;margin-top: 2px;"></a>
+		</header>
+		<div class="mui-content">
+			<div class="keep-line-blue"></div>
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-scroll">
+						<a class="mui-control-item mui-active" href="#item1mobile">
+							1001班
+						</a>
+						<a class="mui-control-item" href="#item2mobile">
+							1002班
+						</a>
+						<a class="mui-control-item" style="width: 40px;">
+						</a>
+						<div id="addiconplus" class="mui-icon mui-icon-plus" style="position: absolute; border: 0px solid #ddd;font-size:25px;color: #C7C7CC;right:0px;"></div>
+					</div>
+				</div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									<div class="mui-row" style="margin-top: 8px;">
+										<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" style="text-align: center;">
+											<div style="box-shadow: 1px 1px 1px #888888;border:1px solid #F2F2F2;padding: 3px;">
+												<img src="../../image/knowledge/1.png" style="border-radius: 50%;height: 40px;width: 40px;" />
+												<p class="mui-ellipsis">李伟</p>
+											</div>
+										</li>
+										<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" style="text-align: center;">
+											<div style="box-shadow: 1px 1px 1px #888888;border:1px solid #F2F2F2;padding: 3px;">
+												<img src="../../image/knowledge/1.png" style="border-radius: 50%;height: 40px;width: 40px;" />
+												<input type="text" class="mui-input-clear" style="height: 20px;font-size: 10px;">
+											</div>
+										</li>
+										<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" style="text-align: center;">
+											<div style="box-shadow: 1px 1px 1px #888888;border:1px solid #F2F2F2;padding: 3px;">
+												<img src="../../image/cloud/record_add.png" style="height: 30px;width: 30px;margin-top: 18px;" />
+											</div>
+										</li>
+									</div>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-1
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-2
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-3
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-4
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-5
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-6
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-7
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-8
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-9
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-10
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-11
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-12
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-13
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-14
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-15
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-16
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-17
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-18
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-19
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-20
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		mui.init();
+		mui.plusReady(function() {
+			mui('.mui-scroll-wrapper').scroll({
+				indicators: true, //是否显示滚动条
+			});
+		})
+	</script>
+
+</html>
