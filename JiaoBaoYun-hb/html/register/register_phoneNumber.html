@@ -43,79 +43,79 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
-
-				require.config({
-					baseUrl: "",
-					waitSeconds: 5,
-					paths: {
-						"crypto-js": "../../js/libs/crypto-js/crypto-js"
-					}
-				});
-				var temp = 'keytest=123&shaketype=reg&uuid=123423423';
-				var encrypted;
-				require(["crypto-js"], function(CryptoJS) {
-					encrypted = CryptoJS.HmacSHA1(temp, "jsy309").toString(CryptoJS.enc.Base64)
-					console.log(encrypted);
-					
-					mui.ajax('http://192.168.0.224:8511/api/CloudApi/PostKeyTest', {
-										data: {
-											uuid: '123423423',
-											shaketype: 'reg',
-											keytest: '123',
-											sign:encrypted
-										},
-										dataType: 'json', //服务器返回json格式数据
-										type: 'post', //HTTP请求类型
-										timeout: 1000000, //超时时间设置为10秒；
-										headers: {
-											'Content-Type': 'application/json'
-										},
-										success: function(data) {
-											//服务器返回响应，根据响应结果，分析是否登录成功；
-											console.log(data);
-										},
-										error: function(xhr, type, errorThrown) {
-											//异常处理；
-											console.log(type);
-										}
-									});
-				}); 
-									
-
-				//				events.preLoad('yanZhengMa.html');
-				//				var phoneNum = document.getElementById("phoneNumber");
-				//				events.addTap('register', function() {
-				//					events.fireToPage('yanZhengMa.html', 'yanzhengma', function() {
-				//						return phoneNum.value;
-				//					})
+				events.preLoad('yanZhengMa.html');
+				//签名
+				//				require.config({
+				//					baseUrl: "",
+				//					waitSeconds: 5,
+				//					paths: {
+				//						"crypto-js": "../../js/libs/crypto-js/crypto-js"
+				//					}
 				//				});
-
-				//				document.getElementById('register').addEventListener('tap', function() {
-				//					var tempValue = window.myStorage.getItem('ShakeHand');
-				//					console.log('秘钥：' + tempValue.Exponent + ',' + tempValue.Modulus);
-				//					//加密电话号码
-				//					setMaxDigits(129);
-				//					var key00 = new RSAKeyPair(tempValue.Exponent, '', tempValue.Modulus);
-				//					var temp11 = encryptedString(key00, document.getElementById("phoneNumber").value);
-				//					console.log('加密后为：' + temp11);
-				//					mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetCode', {
+				//				var temp = 'shaketype=reg&uuid=123423423';
+				//				var encrypted;
+				//				require(["crypto-js"], function(CryptoJS) {
+				//					encrypted = CryptoJS.HmacSHA1(temp, "jsy309").toString(CryptoJS.enc.Base64)
+				//					console.log(encrypted);
+				//
+				//					mui.ajax('http://192.168.0.224:8511/api/CloudApi/PostKeyTest', {
 				//						data: {
-				//							uuid: plus.device.uuid,
+				//							uuid: '123423423',
 				//							shaketype: 'reg',
-				//							appid: '5',
-				//							uid: temp11
+				//							sign: encrypted
 				//						},
 				//						dataType: 'json', //服务器返回json格式数据
-				//						type: 'get', //HTTP请求类型
+				//						type: 'post', //HTTP请求类型
+				//						timeout: 1000000, //超时时间设置为10秒；
+				//						headers: {
+				//							'Content-Type': 'application/json'
+				//						},
 				//						success: function(data) {
-				//							console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + data.RspData + ',RspTxt:' + data.RspTxt);
+				//							//服务器返回响应，根据响应结果，分析是否登录成功；
+				//							console.log('data:' + JSON.stringify(data));
 				//						},
 				//						error: function(xhr, type, errorThrown) {
 				//							//异常处理；
-				//							console.log('111111error:' + type);
+				//							console.log(type);
 				//						}
 				//					});
 				//				});
+
+				document.getElementById('register').addEventListener('tap', function() {
+					//获取验证码
+					var tempValue = window.myStorage.getItem('ShakeHand');
+					console.log('秘钥：' + tempValue.Exponent + ',' + tempValue.Modulus);
+					//加密电话号码
+					setMaxDigits(129);
+					var key00 = new RSAKeyPair(tempValue.Exponent, '', tempValue.Modulus);
+					var temp11 = encryptedString(key00, document.getElementById("phoneNumber").value);
+					console.log('加密后为：' + temp11);
+					mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetCode', {
+						data: {
+							uuid: plus.device.uuid,
+							shaketype: 'reg',
+							appid: '5',
+							uid: temp11
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						success: function(data) {
+							console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + data.RspData + ',RspTxt:' + data.RspTxt);
+							
+							
+							var phoneNum = document.getElementById("phoneNumber");
+							events.addTap('register', function() {
+								events.fireToPage('yanZhengMa.html', 'yanzhengma', function() {
+									return phoneNum.value;
+								});
+							});
+						},
+						error: function(xhr, type, errorThrown) {
+							//异常处理；
+							console.log('111111error:' + type);
+						}
+					});
+				});
 
 			});
 		</script>

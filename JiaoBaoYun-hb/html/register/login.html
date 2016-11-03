@@ -5,7 +5,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
 		<style>
 			.ui-page-login,
 			body {
@@ -14,7 +14,11 @@
 				margin: 0px;
 				padding: 0px;
 			}
-			.mui-content{height: 100%;}
+			
+			.mui-content {
+				height: 100%;
+			}
+			
 			.area {
 				margin: 20px auto 0px auto;
 			}
@@ -122,7 +126,9 @@
 			</form>
 			<div class="mui-content-padded">
 				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
-				<div class="link-area"><a id='reg'>注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
+				<div class="link-area">
+					<a id='reg'>注册账号</a> <span class="spliter">|</span>
+					<a id='forgetPassword'>忘记密码</a>
 				</div>
 			</div>
 			<!--<div class="mui-content-padded oauth-area">
@@ -172,7 +178,7 @@
 						//关闭 splash
 						plus.navigator.closeSplashscreen();
 					}, 600);
-					
+
 					//握手
 					console.log('djflskjdlsjd');
 					var tempData;
@@ -192,8 +198,8 @@
 								Exponent: data.RspData.Exponent,
 								Modulus: data.RspData.Modulus
 							};
-							
-							window.myStorage.setItem(window.storageKeyName.storage_ShakeHand,ShakeHand);
+
+							window.myStorage.setItem(window.storageKeyName.storage_ShakeHand, ShakeHand);
 							console.log('0000error:' + window.myStorage.getItem(window.storageKeyName.storage_ShakeHand));
 						},
 						error: function(xhr, type, errorThrown) {
@@ -201,7 +207,7 @@
 							console.log('0000error:' + type);
 						}
 					});
-					
+
 					//检查 "登录状态/锁屏状态" 结束
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');
@@ -215,35 +221,37 @@
 							password: passwordBox.value
 						};
 						//对账号和密码加密
-						var tempValue = window.myStorage.getItem('ShakeHand');
-									console.log('秘钥：' + tempValue.Exponent + ',' + tempValue.Modulus);
-									//加密
-									setMaxDigits(129);
-									var key00 = new RSAKeyPair(tempValue.Exponent, '', tempValue.Modulus);
-									var tempUid = encryptedString(key00, loginInfo.account);
-									var tempPW = encryptedString(key00, loginInfo.password);
-									console.log('加密后为：' + tempUid+','+tempPW);
-						//发送登录请求
-						mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetLogin', {
-						data: {
-							uuid: plus.device.uuid,
-							shaketype: 'reg',
-							appid: '5',
-							uid: tempUid,
-							pw: tempPW
-						},
-						dataType: 'json', //服务器返回json格式数据
-						type: 'get', //HTTP请求类型
-						success: function(data) {
-							console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + data.RspData + ',RspTxt:' + data.RspTxt);
-						},
-						error: function(xhr, type, errorThrown) {
-							//异常处理；
-							console.log('111111error:' + type);
-						}
-					});
+//						var tempValue = window.myStorage.getItem('ShakeHand');
+//						console.log('秘钥：' + tempValue.Exponent + ',' + tempValue.Modulus);
+//						//加密
+//						setMaxDigits(129);
+//						var key00 = new RSAKeyPair(tempValue.Exponent, '', tempValue.Modulus);
+//						var tempUid = encryptedString(key00, loginInfo.account);
+//						var tempPW = encryptedString(key00, loginInfo.password);
+//						console.log('加密后为：' + tempUid + ',' + tempPW);
+//						//发送登录请求
+//						mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetLogin', {
+//							data: {
+//								uuid: plus.device.uuid,
+//								shaketype: 'reg',
+//								appid: '5',
+//								uid: tempUid,
+//								pw: tempPW
+//							},
+//							dataType: 'json', //服务器返回json格式数据
+//							type: 'get', //HTTP请求类型
+//							success: function(data) {
+//								console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + data.RspData + ',RspTxt:' + data.RspTxt);
+//							},
+//							error: function(xhr, type, errorThrown) {
+//								//异常处理；
+//								console.log('111111error:' + type);
+//							}
+//						});
+
+						
 						app.login(loginInfo, function(err) {
-							if (err) {
+							if(err) {
 								plus.nativeUI.toast(err);
 								return;
 							}
@@ -301,7 +309,7 @@
 					var backButtonPress = 0;
 					$.back = function(event) {
 						backButtonPress++;
-						if (backButtonPress > 1) {
+						if(backButtonPress > 1) {
 							plus.runtime.quit();
 						} else {
 							plus.nativeUI.toast('再按一次退出应用');
