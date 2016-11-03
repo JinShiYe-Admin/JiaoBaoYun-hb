@@ -28,6 +28,7 @@ var cloud = (function($, mod) {
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell mui-media';
 			li.id = item[1];
+			li.setAttribute("data-name",item[0]);
 			li.innerHTML = html;
 			table.appendChild(li);
 		});

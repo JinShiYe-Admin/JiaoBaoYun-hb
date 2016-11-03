@@ -250,7 +250,8 @@
 				//文件夹监听
 				mui('#Folder').on('tap', '.mui-table-view-cell', function() {
 					var id = this.getAttribute('id');
-					console.log(id);
+					var name = this.getAttribute('data-name');
+					console.log(id + "-" + name);
 					var fileData = FileData();
 					var folderTable = document.getElementById("Folder");
 					var fileTable = document.getElementById("File");
@@ -258,6 +259,12 @@
 					fileTable.innerHTML = '';
 					//将界面清空后再添加文件
 					cloud.addFiles(fileTable, fileData);
+					//获取父页面对象
+					var main = plus.webview.currentWebview().opener();
+					//将路径传给父页面
+					mui.fire(main, "addPath", {
+						path: name
+					});
 				});
 
 				//文件监听，并记录属性
@@ -311,6 +318,21 @@
 						[folderName, folderUrl]
 					]);
 					mui.toast('新建文件夹成功');
+				});
+
+				//返回上一级
+				window.addEventListener("comeBack", function(e) {
+					//获得事件参数
+					var getPath = e.detail.path;
+
+					var folderData = FolderData();
+					var fileData = FileData();
+					var folderTable = document.getElementById("Folder");
+					var fileTable = document.getElementById("File");
+					folderTable.innerHTML = '';
+					fileTable.innerHTML = '';
+					cloud.addFolders(folderTable, folderData);
+					cloud.addFiles(fileTable, fileData);
 				});
 
 			});
