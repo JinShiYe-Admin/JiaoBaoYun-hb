@@ -6,7 +6,7 @@ var sortUrls=(function(mod){
 		return Urls;
 	}
 	mod.sortIt=function(urls){
-		var joined=urls.sort().join('')
+		var joined=urls.sort().join('&')
 		console.log(joined);
 		return joined;
 	}

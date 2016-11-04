@@ -136,7 +136,6 @@
 			</div>-->
 		</div>
 		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/mui.enterfocus.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
@@ -146,6 +145,13 @@
 		<script src="../../js/libs/RSA/jQuery.md5.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/MD5.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/RSA.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.enterfocus.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/crypto-js/require.js"></script>
+		<script src="../knowledge/test.js" type="text/javascript" charset="utf-8"></script>
+		<!--网络请求-->
+		<script src="../../js/utils/postData.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/signHmacSHA1.js" type="text/javascript" charset="utf-8"></script>
+
 		<script>
 			(function($, doc) {
 				$.init({
@@ -180,33 +186,54 @@
 					}, 600);
 
 					//握手
-					console.log('djflskjdlsjd');
-					var tempData;
-					mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetShakeHand', {
-						data: {
+					//生成签名
+					var signTemp = sortUrls.sortIt(['uuid=' + plus.device.uuid, 'shaketype=reg', 'appid=' + plus.runtime.appid]);
+//					var templjljl = sortUrlsTTTTT.sign(sign,'jsy309');
+					signHmacSHA1.sign(signTemp,'jsy309',function (sign) {
+						console.log('templhljkjk=='+sign);
+						var tempData = {
 							uuid: plus.device.uuid,
 							shaketype: 'reg',
-							appid: '5'
-						},
-						dataType: 'json', //服务器返回json格式数据
-						type: 'get', //HTTP请求类型
-						success: function(data) {
-							tempData = data;
+							appid: plus.runtime.appid,
+							sign: sign
+						};
+						console.log('tempdata==' + JSON.toString(tempData));
+						// 显示一个等待的对话框  
+  						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						postData(storageKeyName.MAINURL+'PostShakeHand', tempData, function(data) {
+							wd.close();
+							console.log('huidiao lai la ');
 							console.log('0000success:RspCode:' + data.RspCode + ',RspData:' + data.RspData + ',RspTxt:' + data.RspTxt);
 							console.log('11122success:Exponent:' + data.RspData.Exponent + ',Modulus:' + data.RspData.Modulus);
 							var ShakeHand = {
 								Exponent: data.RspData.Exponent,
 								Modulus: data.RspData.Modulus
 							};
-
 							window.myStorage.setItem(window.storageKeyName.storage_ShakeHand, ShakeHand);
 							console.log('0000error:' + window.myStorage.getItem(window.storageKeyName.storage_ShakeHand));
-						},
-						error: function(xhr, type, errorThrown) {
-							//异常处理；
-							console.log('0000error:' + type);
-						}
+						}, 'wd');
 					});
+					
+//					var templhljkjk = signHamcSHA1(sign);
+					console.log('templhljkjk=='+templjljl);
+//					var tempSign =  window.signHmacSHA1.RequireJSfunction('crypto-js','../libs/crypto-js/crypto-js',sign,'jsy309');
+					//签名
+//					require.config({
+//						baseUrl: "",
+//						waitSeconds: 5,
+//						paths: {
+//							"crypto-js": "../../js/libs/crypto-js/crypto-js"
+//						}
+//					});
+//					var encrypted;
+//					require(["crypto-js"], function(CryptoJS) {
+//						encrypted = CryptoJS.HmacSHA1(sign, "jsy309").toString(CryptoJS.enc.Base64);
+//						
+//					});
+//						console.log(encrypted);
+//						console.log('encrypted==' + encrypted + ',sign=' + sign);
+						
+					
 
 					//检查 "登录状态/锁屏状态" 结束
 					var loginButton = doc.getElementById('login');
@@ -249,7 +276,6 @@
 							}
 						});
 
-						
 						app.login(loginInfo, function(err) {
 							if(err) {
 								plus.nativeUI.toast(err);
@@ -258,9 +284,9 @@
 							toMain();
 						});
 					});
-					$.enterfocus('#login-form input', function() {
-						$.trigger(loginButton, 'tap');
-					});
+										$.enterfocus('#login-form input', function() {
+											$.trigger(loginButton, 'tap');
+										});
 					autoLoginButton.classList[settings.autoLogin ? 'add' : 'remove']('mui-active')
 					autoLoginButton.addEventListener('toggle', function(event) {
 						setTimeout(function() {
