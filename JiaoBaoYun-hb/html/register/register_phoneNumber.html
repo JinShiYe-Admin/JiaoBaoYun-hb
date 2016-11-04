@@ -81,7 +81,7 @@
 				//					});
 				//				});
 
-				document.getElementById('register').addEventListener('tap', function() {
+				events.addTap('register', function() {
 					//获取验证码
 					var tempValue = window.myStorage.getItem('ShakeHand');
 					console.log('秘钥：' + tempValue.Exponent + ',' + tempValue.Modulus);
@@ -104,11 +104,10 @@
 							
 							
 							var phoneNum = document.getElementById("phoneNumber");
-							events.addTap('register', function() {
+							
 								events.fireToPage('yanZhengMa.html', 'yanzhengma', function() {
 									return phoneNum.value;
 								});
-							});
 						},
 						error: function(xhr, type, errorThrown) {
 							//异常处理；
