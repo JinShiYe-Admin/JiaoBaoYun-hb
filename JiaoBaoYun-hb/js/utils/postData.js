@@ -8,7 +8,7 @@ function postData(url, data, callback, waitingDialog) {
 		dataType: 'json',
 		type: 'post',
 		contentType: "application/json",
-		timeout: 60000,
+		timeout: 1000,
 		success: callback,
 		error: function(xhr, type, errorThrown) {
 			waitingDialog.close();

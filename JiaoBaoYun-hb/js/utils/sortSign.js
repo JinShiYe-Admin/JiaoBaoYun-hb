@@ -1,3 +1,4 @@
+//排序，签名时用
 var sortUrls=(function(mod){
 	mod.createDatas=function(){
 		var Urls=["https://www.google.com/","https://www.baidu.com/",

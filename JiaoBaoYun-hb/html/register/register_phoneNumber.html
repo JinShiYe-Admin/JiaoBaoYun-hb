@@ -30,89 +30,60 @@
 		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<!--界面中用到的事件-->
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
+		<!--本地存储-->
+		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<!--加密-->
 		<script src="../../js/libs/RSA/Barrett.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/BigInt.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/jQuery.md5.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/MD5.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/RSA.js" type="text/javascript" charset="utf-8"></script>
-		<!--本地存储-->
-		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/libs/crypto-js/require.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../knowledge/test.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/RSAEncrypt.js" type="text/javascript" charset="utf-8"></script>
+		<!---->
+		<script src="js/mui.enterfocus.js" type="text/javascript" charset="utf-8"></script>
+		<!--网络请求-->
+		<script src="../../js/utils/postData.js" type="text/javascript" charset="utf-8"></script>
+		<!--签名-->
+		<script src="../../js/libs/crypto-js/require.js"></script>
+		<script src="../../js/utils/sortSign.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/signHmacSHA1.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
 				events.preLoad('yanZhengMa.html');
-				//签名
-				//				require.config({
-				//					baseUrl: "",
-				//					waitSeconds: 5,
-				//					paths: {
-				//						"crypto-js": "../../js/libs/crypto-js/crypto-js"
-				//					}
-				//				});
-				//				var temp = 'shaketype=reg&uuid=123423423';
-				//				var encrypted;
-				//				require(["crypto-js"], function(CryptoJS) {
-				//					encrypted = CryptoJS.HmacSHA1(temp, "jsy309").toString(CryptoJS.enc.Base64)
-				//					console.log(encrypted);
-				//
-				//					mui.ajax('http://192.168.0.224:8511/api/CloudApi/PostKeyTest', {
-				//						data: {
-				//							uuid: '123423423',
-				//							shaketype: 'reg',
-				//							sign: encrypted
-				//						},
-				//						dataType: 'json', //服务器返回json格式数据
-				//						type: 'post', //HTTP请求类型
-				//						timeout: 1000000, //超时时间设置为10秒；
-				//						headers: {
-				//							'Content-Type': 'application/json'
-				//						},
-				//						success: function(data) {
-				//							//服务器返回响应，根据响应结果，分析是否登录成功；
-				//							console.log('data:' + JSON.stringify(data));
-				//						},
-				//						error: function(xhr, type, errorThrown) {
-				//							//异常处理；
-				//							console.log(type);
-				//						}
-				//					});
-				//				});
-
 				events.addTap('register', function() {
-					//获取验证码
-					var tempValue = window.myStorage.getItem('ShakeHand');
-					console.log('秘钥：' + tempValue.Exponent + ',' + tempValue.Modulus);
-					//加密电话号码
-					setMaxDigits(129);
-					var key00 = new RSAKeyPair(tempValue.Exponent, '', tempValue.Modulus);
-					var temp11 = encryptedString(key00, document.getElementById("phoneNumber").value);
-					console.log('加密后为：' + temp11);
-					mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetCode', {
-						data: {
+					//获取验证码协议
+					//对账号加密
+					var encryptNumb = RSAEncrypt.enctype(document.getElementById("phoneNumber").value);
+					//拼接登录需要的签名
+					var signTemp = sortUrls.sortIt(['uuid=' + plus.device.uuid, 'shaketype=reg', 'appid=' + plus.runtime.appid, 'uid=' + encryptNumb]);
+					//生成签名，返回值sign则为签名
+					signHmacSHA1.sign(signTemp, 'jsy309', function(sign) {
+						//组装发送握手协议需要的data
+						var tempData = {
 							uuid: plus.device.uuid,
 							shaketype: 'reg',
-							appid: '5',
-							uid: temp11
-						},
-						dataType: 'json', //服务器返回json格式数据
-						type: 'get', //HTTP请求类型
-						success: function(data) {
-							console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + data.RspData + ',RspTxt:' + data.RspTxt);
-							
-							
+							appid: plus.runtime.appid,
+							uid: encryptNumb,
+							sign: sign
+						};
+						// 等待的对话框
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						//发送握手协议
+						postData(storageKeyName.MAINURL + 'PostCode', tempData, function(data) {
+							//成功，关闭等待框
+							wd.close();
+							//获取到手机号
 							var phoneNum = document.getElementById("phoneNumber");
-							
-								events.fireToPage('yanZhengMa.html', 'yanzhengma', function() {
-									return phoneNum.value;
-								});
-						},
-						error: function(xhr, type, errorThrown) {
-							//异常处理；
-							console.log('111111error:' + type);
-						}
+							//将输入的手机号，传到验证码界面
+							events.fireToPage('yanZhengMa.html', 'yanzhengma', function() {
+								return phoneNum.value;
+							});
+							console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							//存储到手机本地
+							//							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+						}, wd);
 					});
 				});
 

@@ -35,16 +35,24 @@
 		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<!--界面中用到的事件-->
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
+		<!--本地存储-->
+		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<!--加密-->
 		<script src="../../js/libs/RSA/Barrett.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/BigInt.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/jQuery.md5.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/MD5.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/RSA.js" type="text/javascript" charset="utf-8"></script>
-		<!--本地存储-->
-		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
-		<!--共用-->
-		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/RSAEncrypt.js" type="text/javascript" charset="utf-8"></script>
+		<!---->
+		<script src="js/mui.enterfocus.js" type="text/javascript" charset="utf-8"></script>
+		<!--网络请求-->
+		<script src="../../js/utils/postData.js" type="text/javascript" charset="utf-8"></script>
+		<!--签名-->
+		<script src="../../js/libs/crypto-js/require.js"></script>
+		<script src="../../js/utils/sortSign.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/signHmacSHA1.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
@@ -54,69 +62,46 @@
 					var phoneNum = document.getElementById("phoneNumber");
 					phoneNum.value = temp;
 				});
-				document.getElementById('register').addEventListener('tap', function() {
-					console.log('点击提交按钮');
-					//获取到本地存储的公钥
-					var tempValue = window.myStorage.getItem('ShakeHand');
-					console.log('秘钥：' + tempValue.Exponent + ',' + tempValue.Modulus);
-					//加密电话号码
-					setMaxDigits(129);
-					var key00 = new RSAKeyPair(tempValue.Exponent, '', tempValue.Modulus);
-					var temp11 = encryptedString(key00, document.getElementById("phoneNumber").value);
-					var temp22 = encryptedString(key00, document.getElementById("yanzheng").value);
-					console.log('加密后为：' + temp11);
-					//发送注册请求
-					//					mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetReg', {
-					//验证码模式登录
-					mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetCodeLogin', {
-						data: {
+				var flag = 1;
+				events.addTap('register', function() {
+					//对账号加密
+					var encryptNumb = RSAEncrypt.enctype(document.getElementById("phoneNumber").value);
+					//对验证码加密
+					var encryptCode = RSAEncrypt.enctype(document.getElementById("yanzheng").value);
+					//拼接需要的签名
+					var signTemp = sortUrls.sortIt(['uuid=' + plus.device.uuid, 'shaketype=reg', 'appid=' + plus.runtime.appid, 'uid=' + encryptNumb, 'code=' + encryptCode]);
+					//生成签名，返回值sign则为签名
+					signHmacSHA1.sign(signTemp, 'jsy309', function(sign) {
+						//组装发送握手协议需要的data
+						var tempData = {
 							uuid: plus.device.uuid,
 							shaketype: 'reg',
-							appid: '5',
-							uid: temp11,
-							code: temp22
-						},
-						dataType: 'json', //服务器返回json格式数据
-						type: 'get', //HTTP请求类型
-						success: function(data) {
-							console.log('2222success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							//						{"UTID":"2","Token":"5zZFcClE0zBJlQlSwBGD8hhghAM=","UserPhone":"111111","UserName":"test70C72521-2CD6-45DD-AF6E-375654EB734A","UserNick":"","UserSex":"0","UserTxt":"","UserImg":""}
-							window.storageKeyName.storage_tempModel000 =  data.RspData;
-//							window.storageKeyName.storage_tempModel.Token =  data.RspData.Token;
-							console.log('ge ren xinxi:'+data.RspData.UTID+','+window.storageKeyName.storage_tempModel000.Token);
-//							window.myStorage.setItem(window.storageKeyName.storage_personalInfo, JSON.stringify(data.RspData));
-//							console.log('ge ren xin xi :'+JSON.stringify(data.RspData).utid+','+window.storageKeyName.storage_tempModel.UTID);
-							//修改密码
-							var temp0101 = '123456';
-							var temp2211 = encryptedString(key00, temp0101);
-							var temp2222 = encryptedString(key00, data.RspData.UTID);
-							mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetRePW', {
-								data: {
-									uuid: plus.device.uuid,
-									shaketype: 'reg',
-									appid: '5',
-									utid: temp2222,
-									pw: temp2211,
-									token: data.RspData.Token
-								},
-								dataType: 'json', //服务器返回json格式数据
-								type: 'get', //HTTP请求类型
-								success: function(data) {
-									console.log('2212121success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-									//						{"UTID":"2","Token":"5zZFcClE0zBJlQlSwBGD8hhghAM=","UserPhone":"111111","UserName":"test70C72521-2CD6-45DD-AF6E-375654EB734A","UserNick":"","UserSex":"0","UserTxt":"","UserImg":""}
-									window.myStorage.setItem(window.storageKeyName.storage_personalInfo, JSON.stringify(data.RspData));
-									//修改密码
-
-								},
-								error: function(xhr, type, errorThrown) {
-									//异常处理；
-									console.log('2221212error:' + type);
-								}
-							});
-						},
-						error: function(xhr, type, errorThrown) {
-							//异常处理；
-							console.log('22222error:' + type);
+							appid: plus.runtime.appid,
+							uid: encryptNumb,
+							code: encryptCode,
+							sign: sign
+						};
+						// 等待的对话框
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						//判断是注册0，还是验证码模式登录1
+						if(flag == 0) { //注册0
+							//发送注册协议
+							postData(storageKeyName.MAINURL + 'PostReg', tempData, function(data) {
+								//成功，关闭等待框
+								wd.close();
+								console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								//存储到手机本地
+								//							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+							}, wd);
+						} else { //验证码模式登录1
+							//发送验证码登录协议
+							postData(storageKeyName.MAINURL + 'PostCodeLogin', tempData, function(data) {
+								//成功，关闭等待框
+								wd.close();
+								console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								//存储到手机本地
+								//							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+							}, wd);
 						}
 					});
 				});
