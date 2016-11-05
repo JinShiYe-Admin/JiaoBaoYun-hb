@@ -589,9 +589,12 @@
 					"css/utils/common.css",
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"fonts/mui.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"html/homework/homework-tea.html"
+				],
 				"priority": 0
 			},
 			"html/knowledge/test.html": {
@@ -668,6 +671,28 @@
 					"js/libs/RSA/RSA.js",
 					"js/libs/RSA/MD5.js",
 					"js/libs/myStorage/myStorage.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/homework/homework-tea-sub.html": {
+				"resources": [
+					"js/mui.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/homework/homework-tea.html": {
+				"resources": [
+					"css/homework/homework.css",
+					"html/homework/homework-tea-sub.html",
+					"js/mui.min.js",
+					"js/utils/events.js",
+					"css/iconfont/iconfont.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"fonts/iconfont.ttf",
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0
