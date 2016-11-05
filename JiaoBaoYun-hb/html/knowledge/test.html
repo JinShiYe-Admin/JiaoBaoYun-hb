@@ -16,8 +16,19 @@
 
 	<body>
 		<script type="text/javascript">
-			sortUrls.config('crypto-js','../../js/libs/crypto-js/crypto-js')
-			sortUrls.sign('crypto-js','message','key')
+
+			require.config({
+				baseUrl:"",
+				waitSeconds:5,
+				paths:{
+					"crypto-js":"../../js/libs/crypto-js/crypto-js"
+				}
+			})
+			require(["crypto-js"], function (CryptoJS) {
+				var encrypted=CryptoJS.HmacSHA1("gkjhkjh","jsy309").toString(CryptoJS.enc.Base64)
+				console.log(encrypted);
+			});
+
 		</script>
 	</body>
 

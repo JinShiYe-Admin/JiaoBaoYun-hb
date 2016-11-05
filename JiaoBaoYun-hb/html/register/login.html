@@ -136,8 +136,8 @@
 			</div>-->
 		</div>
 		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/mui.enterfocus.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+		<!--本地存储-->
 		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<!--加密-->
@@ -146,6 +146,16 @@
 		<script src="../../js/libs/RSA/jQuery.md5.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/MD5.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/RSA.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/RSAEncrypt.js" type="text/javascript" charset="utf-8"></script>
+		<!---->
+		<script src="js/mui.enterfocus.js" type="text/javascript" charset="utf-8"></script>
+		<!--网络请求-->
+		<script src="../../js/utils/postData.js" type="text/javascript" charset="utf-8"></script>
+		<!--签名-->
+		<script src="../../js/libs/crypto-js/require.js"></script>
+		<script src="../../js/utils/sortSign.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/signHmacSHA1.js" type="text/javascript" charset="utf-8"></script>
+
 		<script>
 			(function($, doc) {
 				$.init({
@@ -179,33 +189,27 @@
 						plus.navigator.closeSplashscreen();
 					}, 600);
 
-					//握手
-					console.log('djflskjdlsjd');
-					var tempData;
-					mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetShakeHand', {
-						data: {
+					//握手协议
+					//拼接握手需要的签名
+					var signTemp = sortUrls.sortIt(['uuid=' + plus.device.uuid, 'shaketype=reg', 'appid=' + plus.runtime.appid]);
+					//生成签名，返回值sign则为签名
+					signHmacSHA1.sign(signTemp, 'jsy309', function(sign) {
+						//组装发送握手协议需要的data
+						var tempData = {
 							uuid: plus.device.uuid,
 							shaketype: 'reg',
-							appid: '5'
-						},
-						dataType: 'json', //服务器返回json格式数据
-						type: 'get', //HTTP请求类型
-						success: function(data) {
-							tempData = data;
-							console.log('0000success:RspCode:' + data.RspCode + ',RspData:' + data.RspData + ',RspTxt:' + data.RspTxt);
-							console.log('11122success:Exponent:' + data.RspData.Exponent + ',Modulus:' + data.RspData.Modulus);
-							var ShakeHand = {
-								Exponent: data.RspData.Exponent,
-								Modulus: data.RspData.Modulus
-							};
-
-							window.myStorage.setItem(window.storageKeyName.storage_ShakeHand, ShakeHand);
-							console.log('0000error:' + window.myStorage.getItem(window.storageKeyName.storage_ShakeHand));
-						},
-						error: function(xhr, type, errorThrown) {
-							//异常处理；
-							console.log('0000error:' + type);
-						}
+							appid: plus.runtime.appid,
+							sign: sign
+						};
+						// 等待的对话框
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						//发送握手协议
+						postData(storageKeyName.MAINURL + 'PostShakeHand', tempData, function(data) {
+							//成功，关闭等待框
+							wd.close();
+							//存储到手机本地
+							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+						}, wd);
 					});
 
 					//检查 "登录状态/锁屏状态" 结束
@@ -220,36 +224,37 @@
 							account: accountBox.value,
 							password: passwordBox.value
 						};
-						//对账号和密码加密
-//						var tempValue = window.myStorage.getItem('ShakeHand');
-//						console.log('秘钥：' + tempValue.Exponent + ',' + tempValue.Modulus);
-//						//加密
-//						setMaxDigits(129);
-//						var key00 = new RSAKeyPair(tempValue.Exponent, '', tempValue.Modulus);
-//						var tempUid = encryptedString(key00, loginInfo.account);
-//						var tempPW = encryptedString(key00, loginInfo.password);
-//						console.log('加密后为：' + tempUid + ',' + tempPW);
-//						//发送登录请求
-//						mui.ajax('http://192.168.0.224:8511/api/CloudApi/GetLogin', {
-//							data: {
-//								uuid: plus.device.uuid,
-//								shaketype: 'reg',
-//								appid: '5',
-//								uid: tempUid,
-//								pw: tempPW
-//							},
-//							dataType: 'json', //服务器返回json格式数据
-//							type: 'get', //HTTP请求类型
-//							success: function(data) {
-//								console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + data.RspData + ',RspTxt:' + data.RspTxt);
-//							},
-//							error: function(xhr, type, errorThrown) {
-//								//异常处理；
-//								console.log('111111error:' + type);
-//							}
-//						});
 
-						
+						//账号密码登录协议
+						//对账号加密
+						var encryptNumb = RSAEncrypt.enctype(loginInfo.account);
+						//对密码加密
+						var encryptPW = RSAEncrypt.enctype(loginInfo.password);
+						//拼接登录需要的签名
+						var signTemp = sortUrls.sortIt(['uuid=' + plus.device.uuid, 'shaketype=reg', 'appid=' + plus.runtime.appid, 'uid=' + encryptNumb, 'pw=' + encryptPW]);
+						//生成签名，返回值sign则为签名
+						signHmacSHA1.sign(signTemp, 'jsy309', function(sign) {
+							//组装发送握手协议需要的data
+							var tempData = {
+								uuid: plus.device.uuid,
+								shaketype: 'reg',
+								appid: plus.runtime.appid,
+								uid: encryptNumb,
+								pw: encryptPW,
+								sign: sign
+							};
+							// 等待的对话框
+							var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+							//发送握手协议
+							postData(storageKeyName.MAINURL + 'PostLogin', tempData, function(data) {
+								//成功，关闭等待框
+								wd.close();
+								console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								//存储到手机本地
+								//							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+							}, wd);
+						});
+
 						app.login(loginInfo, function(err) {
 							if(err) {
 								plus.nativeUI.toast(err);
