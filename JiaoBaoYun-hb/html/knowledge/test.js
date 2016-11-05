@@ -1,15 +1,24 @@
 var sortUrls=(function(mod){
-	mod.createDatas=function(){
-		var Urls=["https://www.google.com/","https://www.baidu.com/",
-		"http://www.dcloud.io/mui.html","http://www.163.com/"];
-		console.log(Urls)
-		return Urls;
+	mod.config=function(name,url){
+		require.config({
+				baseUrl:"",
+				waitSeconds:5,
+				paths:{
+					'crypto-js':"../../js/libs/crypto-js/crypto-js"
+				}
+			})
 	}
-	mod.sortIt=function(urls){
-		var joined=urls.sort().join('')
-		console.log(joined);
-		return joined;
+	mod.sign=function(name,message,value){
+		
+
+			var encrypted=''
+			require([name], function (CryptoJS) {
+				encrypted=CryptoJS.HmacSHA1(message,value).toString(CryptoJS.enc.Base64)
+				console.log(encrypted);
+				
+			});
+			return encrypted;
 	}
-	
+		
 	return mod;
 })(sortUrls||{})

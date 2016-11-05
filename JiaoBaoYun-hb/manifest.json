@@ -10,7 +10,7 @@
 	"icons": {
 		"72": "icon.png"
 	},
-	"launch_path": "html/register/login.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+	"launch_path": "html/index.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
 	"developer": {
 		"name": "",/*开发者名称*/
 		"email": "",/*开发者邮箱地址*/
@@ -622,7 +622,15 @@
 					"js/utils/rsa/BigInt.js",
 					"js/utils/rsa/jQuery.md5.js",
 					"js/utils/rsa/Barrett.js",
-					"js/utils/rsa/RSA.js"
+					"js/utils/rsa/RSA.js",
+					"html/knowledge/test.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/RSA/jQuery.md5.js",
+					"js/libs/RSA/BigInt.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/RSA/RSA.js",
+					"js/libs/RSA/MD5.js",
+					"js/libs/myStorage/myStorage.js"
 				],
 				"refer": [
 					"html/register/yanZhengMa.html"
@@ -634,7 +642,14 @@
 					"html/register/js/mui.enterfocus.js",
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"html/register/js/app.js"
+					"html/register/js/app.js",
+					"js/libs/RSA/jQuery.md5.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/BigInt.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/RSA/RSA.js",
+					"js/libs/RSA/MD5.js",
+					"js/libs/myStorage/myStorage.js"
 				],
 				"refer": [
 					"html/register/register_phoneNumber.html"
@@ -645,7 +660,14 @@
 				"resources": [
 					"js/mui.min.js",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/libs/RSA/jQuery.md5.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/RSA/RSA.js",
+					"js/libs/RSA/MD5.js",
+					"js/libs/myStorage/myStorage.js"
 				],
 				"refer": [],
 				"priority": 0

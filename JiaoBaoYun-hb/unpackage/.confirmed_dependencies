@@ -417,7 +417,15 @@
       "js/utils/rsa/BigInt.js",
       "js/utils/rsa/jQuery.md5.js",
       "js/utils/rsa/Barrett.js",
-      "js/utils/rsa/RSA.js"
+      "js/utils/rsa/RSA.js",
+      "html/knowledge/test.js",
+      "js/libs/crypto-js/require.js",
+      "js/libs/RSA/jQuery.md5.js",
+      "js/libs/RSA/BigInt.js",
+      "js/libs/RSA/Barrett.js",
+      "js/libs/RSA/RSA.js",
+      "js/libs/RSA/MD5.js",
+      "js/libs/myStorage/myStorage.js"
     ],
     "refer": [
       "html/register/yanZhengMa.html"
@@ -428,7 +436,14 @@
       "html/register/js/mui.enterfocus.js",
       "js/mui.min.js",
       "css/mui.min.css",
-      "html/register/js/app.js"
+      "html/register/js/app.js",
+      "js/libs/RSA/jQuery.md5.js",
+      "js/storageKeyName.js",
+      "js/libs/RSA/BigInt.js",
+      "js/libs/RSA/Barrett.js",
+      "js/libs/RSA/RSA.js",
+      "js/libs/RSA/MD5.js",
+      "js/libs/myStorage/myStorage.js"
     ],
     "refer": [
       "html/register/register_phoneNumber.html"
@@ -438,7 +453,14 @@
     "resources": [
       "js/mui.min.js",
       "fonts/mui.ttf",
-      "css/mui.min.css"
+      "css/mui.min.css",
+      "js/libs/RSA/jQuery.md5.js",
+      "js/libs/RSA/BigInt.js",
+      "js/utils/events.js",
+      "js/libs/RSA/Barrett.js",
+      "js/libs/RSA/RSA.js",
+      "js/libs/RSA/MD5.js",
+      "js/libs/myStorage/myStorage.js"
     ],
     "refer": []
   }

@@ -79,7 +79,7 @@
 						success: function(data) {
 							console.log('2222success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + ',data:' + data);
 							//						{"UTID":"2","Token":"5zZFcClE0zBJlQlSwBGD8hhghAM=","UserPhone":"111111","UserName":"test70C72521-2CD6-45DD-AF6E-375654EB734A","UserNick":"","UserSex":"0","UserTxt":"","UserImg":""}
-							window.myStorage.setItem(PERSONALINFO, )
+							window.myStorage.setItem(PERSONALINFO, data.RspCode)
 						},
 						error: function(xhr, type, errorThrown) {
 							//异常处理；

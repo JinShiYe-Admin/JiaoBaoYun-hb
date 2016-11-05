@@ -16,23 +16,8 @@
 
 	<body>
 		<script type="text/javascript">
-			require.config({
-				baseUrl:"",
-				waitSeconds:5,
-				paths:{
-					"crypto-js":"../../js/libs/crypto-js/crypto-js"
-				}
-			})
-//			mui.plusReady(function(){
-//				
-//				window.myStorage.setItem("1","5");
-//				console.log(window.myStorage.getItem("1"))
-//			}) 
-			
-			require(["crypto-js"], function (CryptoJS) {
-				var encrypted=CryptoJS.HmacSHA1("gkjhkjh","jsy309").toString(CryptoJS.enc.Base64)
-				console.log(encrypted);
-			});
+			sortUrls.config('crypto-js','../../js/libs/crypto-js/crypto-js')
+			sortUrls.sign('crypto-js','message','key')
 		</script>
 	</body>
 
