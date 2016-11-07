@@ -1,3 +1,7 @@
+<!--作业老师界面子界面-->
+<!--
+	@author an
+-->
 <!doctype html>
 <html>
 
@@ -11,6 +15,7 @@
 	</head>
 
 	<body>
+		<!--下拉菜单-->
 		  <div id="popover" class="mui-popover">
 				<ul class=" mui-table-view">
 			    	  <li class="mui-table-view-cell"><a class="mui-icon iconfont icon-shubendisc" href="">错题本</a></li>
@@ -26,6 +31,7 @@
 		    </ul>
 		  </div>
 		</div>
+		<!--发布作业按钮-->
 		<a id="iconPublish" class="mui-icon iconfont icon-jia" ></a>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
@@ -34,10 +40,10 @@
 			mui.plusReady(function(){
 				/**监听父页面的图标事件*/
 				window.addEventListener('togglePop',function(e){
-					mui("#popover").popover('toggle')
+					mui("#popover").popover('toggle');
 				})
 				events.addTap('iconPublish',function(){
-					events.fireToPageNone('../homework/homework-tea.html','publish')
+					events.openNewWindow('homework-publish.html')
 				})
 //				events.createListView('listContainer',data,createInner())
 			})

@@ -1,3 +1,7 @@
+<!--作业老师主界面-->
+<!--
+	@author an
+-->
 <!doctype html>
 <html>
 
@@ -7,7 +11,9 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<!--alibaba字库-->
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<!--本页面应有样式-->
 		<link href="../../css/homework/homework.css" rel="stylesheet" />
 	</head>
 
@@ -15,11 +21,14 @@
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">作业</h1>
+		    <!--更多按钮-->
 		   	<a id="more" class="mui-icon  mui-icon-bars mui-pull-right" href="#popover"></a>
+		   	<!--相机按钮-->
 		    <a class="mui-icon iconfont icon-xiangji mui-pull-right"></a>
 		</header>
 		
 		<script src="../../js/mui.min.js"></script>
+		<!--公共事件方法库-->
 		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
 			//加载子页面
@@ -30,14 +39,7 @@
 					//通知子页面，显示、关闭菜单
 					events.fireToPageNone('homework-tea-sub.html','togglePop')
 				})
-				/**
-				 * 传递事件的监听
-				 * 打开发布作业界面
-				 */
-				window.addEventListener('publish',function(){
-					//打开作业布置页面
-					events.openNewWindow('homework-publish.html')
-				})
+				
 			})
 		</script>
 	</body>

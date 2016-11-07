@@ -13,3 +13,9 @@
 	font-size: 2rem;
 	width: 20%;
 }
+/**
+ * 提交字体大小
+ */
+.header-publish:last-of-type{
+	font-size: 1.2rem;
+}

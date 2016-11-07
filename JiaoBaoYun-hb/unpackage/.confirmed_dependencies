@@ -390,7 +390,8 @@
 			"fonts/mui.ttf"
 		],
 		"refer": [
-			"html/homework/homework-tea.html"
+			"html/homework/homework-tea.html",
+			"html/homework/homework-stu.html"
 		]
 	},
 	"html/knowledge/test.html": {
@@ -507,6 +508,33 @@
 			"css/mui.min.css",
 			"fonts/iconfont.ttf",
 			"css/utils/common.css"
+		]
+	},
+	"html/homework/homework-stu.html": {
+		"resources": [
+			"css/homework/homework.css",
+			"css/iconfont/iconfont.css",
+			"html/homework/homework-stu-sub.html",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/homework/homework-stu-sub.html"
+		]
+	},
+	"html/homework/homework-stu-sub.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf",
+			"css/homework/homework.css",
+			"css/iconfont/iconfont.css",
+			"fonts/iconfont.ttf",
+			"js/utils/events.js"
 		]
 	}
 }

@@ -1,3 +1,7 @@
+<!--学生作业界面子页面-->
+<!--
+	@anthor an
+-->
 <!doctype html>
 <html>
 
@@ -6,12 +10,31 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!--alibaba字库-->
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<!--本页面应用样式-->
+		<link href="../../css/homework/homework.css" rel="stylesheet" />
 	</head>
 
 	<body>
+		<!--下拉菜单-->
+		 <div id="popover" class="mui-popover">
+				<ul class=" mui-table-view">
+			    	  <li class="mui-table-view-cell"><a class="mui-icon iconfont icon-shubendisc" href="">错题本</a></li>
+			    	  <li class="mui-table-view-cell"><a class="mui-icon iconfont icon-shezhi1" href="">作业记录</a></li>
+			    </ul>
+	    	</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
 			mui.init()
+			mui.plusReady(function(){
+				//加载父页面传递事件的监听
+				window.addEventListener('togglePop',function(){
+					//控件打开、隐藏
+					mui('#popover').popover('toggle');
+			})
+				});
 		</script>
 	</body>
 

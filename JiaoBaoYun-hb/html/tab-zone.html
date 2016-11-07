@@ -31,6 +31,9 @@
 				border-bottom: 0px solid red;
 				background: 0 0
 			}
+			.parent-zone{
+				
+			}
 		</style>
 	</head>
 
@@ -95,8 +98,8 @@
 				<div style="margin-top: -10px;">
 					<div id="item1" class="mui-control-content mui-active">
 
-						<ul class="mui-table-view">
-							<li class="mui-table-view-cell mui-media">
+						<ul class="mui-table-view ">
+							<li class="mui-table-view-cell mui-media parent-zone">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
 								<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
@@ -107,7 +110,7 @@
 								</div>
 
 							</li>
-							<li class="mui-table-view-cell mui-media">
+							<li class="mui-table-view-cell mui-media parent-zone">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
 								<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
@@ -118,7 +121,7 @@
 								</div>
 
 							</li>
-							<li class="mui-table-view-cell mui-media">
+							<li class="mui-table-view-cell mui-media parent-zone">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
 								<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
@@ -129,7 +132,7 @@
 								</div>
 
 							</li>
-							<li class="mui-table-view-cell mui-media">
+							<li class="mui-table-view-cell mui-media parent-zone">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
 								<p class="time">10月18</p>
@@ -143,7 +146,7 @@
 					<div id="item2" class="mui-control-content">
 
 						<ul class="mui-table-view">
-							<li class="mui-table-view-cell mui-media">
+							<li class="mui-table-view-cell mui-media parent-zone">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
 								<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
@@ -154,7 +157,7 @@
 								</div>
 
 							</li>
-							<li class="mui-table-view-cell mui-media">
+							<li class="mui-table-view-cell mui-media parent-zone">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
 								<p class="time">10月18</p>
@@ -164,7 +167,7 @@
 								</div>
 
 							</li>
-							<li id="zhang" class="mui-table-view-cell mui-media">
+							<li id="zhang" class="mui-table-view-cell mui-media parent-zone">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
 								<p class="time">10月19</p>
@@ -174,7 +177,7 @@
 								</div>
 
 							</li>
-							<li class="mui-table-view-cell mui-media">
+							<li class="mui-table-view-cell mui-media parent-zone">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
 								<p class="time">10月18</p>
@@ -256,6 +259,18 @@
 				mui.openWindow({
 					url: 'quan/studentdynamic_main.html',
 					id: 'quan/studentdynamic_main.html',
+					styles: {
+						top: '0px', //设置距离顶部的距离
+						bottom: '0px'
+					}
+				});
+			});
+			
+						//跳转到家长空间界面
+			mui('.mui-table-view').on('tap', '.parent-zone', function() {
+				mui.openWindow({
+					url: 'quan/zone_main.html',
+					id: 'quan/zone_main.html',
 					styles: {
 						top: '0px', //设置距离顶部的距离
 						bottom: '0px'
