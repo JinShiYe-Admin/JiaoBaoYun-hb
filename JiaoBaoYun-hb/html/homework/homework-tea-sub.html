@@ -6,21 +6,63 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<link href="../../css/homework/homework.css" rel="stylesheet" />
 	</head>
 
 	<body>
+		  <div id="popover" class="mui-popover">
+				<ul class=" mui-table-view">
+			    	  <li class="mui-table-view-cell"><a class="mui-icon iconfont icon-shubendisc" href="">错题本</a></li>
+			    	  <li class="mui-table-view-cell"><a class="mui-icon iconfont icon-shezhi1" href="">作业记录</a></li>
+			    </ul>
+	    	</div>
 		<!--下拉刷新容器-->
 		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
 		  <div class="mui-scroll">
 		    <!--数据列表-->
-		    <ul class="mui-table-view mui-table-view-chevron">
+		    <ul id="list-container" class="mui-table-view">
 		      
 		    </ul>
 		  </div>
 		</div>
+		<a id="iconPublish" class="mui-icon iconfont icon-jia" ></a>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
 			mui.init()
+			mui.plusReady(function(){
+				/**监听父页面的图标事件*/
+				window.addEventListener('togglePop',function(e){
+					mui("#popover").popover('toggle')
+				})
+				events.addTap('iconPublish',function(){
+					events.fireToPageNone('../homework/homework-tea.html','publish')
+				})
+//				events.createListView('listContainer',data,createInner())
+			})
+			/**
+			 * 创建innerHTML
+			 * @param {Object} cell
+			 */
+			var createInner=function(cell){
+				return '<div>'
+							+'<p>'+cell.time+'</p>'
+							+'<div>'
+								+'<img src="'+cell.imgUrl+'"/>'
+								+'<h4 class="title">'+cell.title+'</h4>'
+								+'<p class="">'+cell.words+'</p>'
+							+'</div>'
+							+'<div>'
+								+'<p>未改数('+cell.weigaiNo+')</p>'
+								+'<p>已上传数('+cell.chuanNo+')</p>'
+							+'</div>'
+							+'<div>'
+								+cell.imgs
+							+'</div>'
+							+'<p>已上传试卷人数('+cell.stuWorkNo+')</p>'
+							
+			}
 		</script>
 	</body>
 
