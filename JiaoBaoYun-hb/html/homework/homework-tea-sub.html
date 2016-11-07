@@ -6,14 +6,22 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<link href="../../css/homework/homework.css" rel="stylesheet" />
 	</head>
 
 	<body>
+		  <div id="popover" class="mui-popover">
+				<ul class=" mui-table-view">
+			    	  <li class="mui-table-view-cell"><a class="mui-icon iconfont icon-shubendisc" href="">错题本</a></li>
+			    	  <li class="mui-table-view-cell"><a class="mui-icon iconfont icon-shezhi1" href="">作业记录</a></li>
+			    </ul>
+	    	</div>
 		<!--下拉刷新容器-->
 		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
 		  <div class="mui-scroll">
 		    <!--数据列表-->
-		    <ul class="mui-table-view mui-table-view-chevron">
+		    <ul id="list-container" class="mui-table-view">
 		      
 		    </ul>
 		  </div>
@@ -21,6 +29,11 @@
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init()
+			mui.plusReady(function(){
+				window.addEventListener('togglePop',function(e){
+					mui("#popover").popover('toggle')
+				})
+			})
 		</script>
 	</body>
 

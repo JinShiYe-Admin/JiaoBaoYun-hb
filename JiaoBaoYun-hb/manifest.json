@@ -677,7 +677,11 @@
 			},
 			"html/homework/homework-tea-sub.html": {
 				"resources": [
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"css/homework/homework.css",
+					"css/iconfont/iconfont.css",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [],
 				"priority": 0
