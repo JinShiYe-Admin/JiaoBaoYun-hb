@@ -741,7 +741,8 @@
 					"fonts/mui.ttf",
 					"css/homework/homework.css",
 					"css/iconfont/iconfont.css",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/utils/events.js"
 				],
 				"refer": [],
 				"priority": 0
