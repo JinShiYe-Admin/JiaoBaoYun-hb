@@ -54,50 +54,44 @@
 				var regFlag;
 				window.addEventListener('registerFlag', function(event) {
 					regFlag = event.detail.data;
-					console.log('fa song yanzhengma1211 flag='+regFlag);
+					console.log('fa song yanzhengma1211 flag=' + regFlag);
 				});
-				console.log('fa song yanzhengma flag='+regFlag);
+				console.log('fa song yanzhengma flag=' + regFlag);
 				events.preLoad('yanZhengMa.html');
 				events.addTap('register', function() {
 					//获取验证码协议
-					//对账号加密
-					var encryptNumb = RSAEncrypt.enctype(document.getElementById("phoneNumber").value);
-					//拼接登录需要的签名
-					var signTemp = sortUrls.sortIt(['uuid=' + plus.device.uuid, 'shaketype=reg', 'appid=' + plus.runtime.appid, 'uid=' + encryptNumb]);
-					//生成签名，返回值sign则为签名
-					signHmacSHA1.sign(signTemp, storageKeyName.SIGNKEY, function(sign) {
-						//组装发送握手协议需要的data
-						var tempData = {
-							uuid: plus.device.uuid,
-							shaketype: 'reg',
-							appid: plus.runtime.appid,
-							uid: encryptNumb,
-							sign: sign
-						};
-						// 等待的对话框
-						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-						//发送握手协议
-						postData(storageKeyName.MAINURL + 'PostCode', tempData, function(data) {
-							//成功，关闭等待框
-							wd.close();
-							//获取到手机号
-							var phoneNum = document.getElementById("phoneNumber");
+					//需要加密的数据
+					var enData = {
+						uid: document.getElementById("phoneNumber").value
+					};
+					//不需要加密的数据
+					var comData = {
+						uuid: plus.device.uuid,
+						shaketype: 'reg',
+						appid: plus.runtime.appid
+					};
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					//发送网络请求，data为网络返回值
+					postDataEncry(storageKeyName.MAINURL + 'PostCode', enData, comData, wd, function(data) {
+						//成功，关闭等待框
+						wd.close();
+						//获取到手机号
+						var phoneNum = document.getElementById("phoneNumber");
 
-							//将输入的手机号，传到验证码界面
-							var tempValue = {
-								phone: phoneNum.value,
-								flag: regFlag
-							};
-							events.fireToPage('yanZhengMa.html', 'yanzhengma', function() {
-								return tempValue;
-							});
-							console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							//存储到手机本地
-							//							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
-						}, wd);
+						//将输入的手机号，传到验证码界面
+						var tempValue = {
+							phone: phoneNum.value,
+							flag: regFlag
+						};
+						events.fireToPage('yanZhengMa.html', 'yanzhengma', function() {
+							return tempValue;
+						});
+						console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						//存储到手机本地
+						//							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
 					});
 				});
-
 			});
 		</script>
 	</body>
