@@ -7,19 +7,25 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../css/utils/common.css" />
-		<link rel="stylesheet" href="../css/home/zone.css" />
+		<!--本页面样式表-->
 		<link rel="stylesheet" href="../css/home/zone.css" />
 		<script type="text/javascript" src="../js/mui.min.js"></script>
+		<!--公用事件js文件-->
 		<script type="text/javascript" src="../js/utils/events.js"></script>
+		<!--侧滑-->
 		<script src="../js/main/slide_navigation.js">
 		</script>
 		<style type="text/css">
+			/*自定义系统segmentcontrol控件*/
+			/*整体控件样式*/
+			
 			.mui-segmented-control.mui-segmented-control-inverted {
 				width: 60%;
 				border: 0;
 				border-radius: 0
 			}
-
+			/*选择的item样式*/
+			
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				color: #007aff;
 				border-bottom: 0px solid red;
@@ -197,7 +203,6 @@
 				}
 			});
 
-
 			function pulldownRefresh() {
 				setTimeout(function() {
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
@@ -239,29 +244,26 @@
 		</script>
 	</body>
 	<script>
-	mui.plusReady(function(){
-		var zhang=document.getElementById('zhang');
-		events.jumpPage(zhang,'quan/zone_main.html');
-		var tar=document.getElementById('tarClass');
-		events.jumpPage(tar,'quan/class_space.html');
-		console.log(localStorage.getItem('$Statusbar'));
-	
-		//跳转到学生动态界面
-		mui('.mui-table-view').on('tap','.studentsdynamic',function(){
-		    mui.openWindow({
-				url: 'quan/studentdynamic_main.html',
-				id: 'quan/studentdynamic_main.html',
-				styles: {
-					top: '0px', //设置距离顶部的距离
-					bottom: '0px'
-				}
+		mui.plusReady(function() {
+			var zhang = document.getElementById('zhang');
+			events.jumpPage(zhang, 'quan/zone_main.html');
+			var tar = document.getElementById('tarClass');
+			events.jumpPage(tar, 'quan/class_space.html');
+			console.log(localStorage.getItem('$Statusbar'));
+
+			//跳转到学生动态界面
+			mui('.mui-table-view').on('tap', '.studentsdynamic', function() {
+				mui.openWindow({
+					url: 'quan/studentdynamic_main.html',
+					id: 'quan/studentdynamic_main.html',
+					styles: {
+						top: '0px', //设置距离顶部的距离
+						bottom: '0px'
+					}
+				});
 			});
-		});
 
-
-
-	})
-
+		})
 	</script>
 
 </html>
