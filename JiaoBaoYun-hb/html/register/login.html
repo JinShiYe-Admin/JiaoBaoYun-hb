@@ -172,14 +172,14 @@
 					var settings = app.getSettings();
 					var state = app.getState();
 					var mainPage = $.preload({
-						"id": 'index.html',
-						"url": 'index.html'
+						"id": '../../html/index.html',
+						"url": '../../html/index.html'
 					});
 					var toMain = function() {
 						$.fire(mainPage, 'show', null);
 						setTimeout(function() {
 							$.openWindow({
-								id: 'index.html',
+								id: '../../html/index.html',
 								show: {
 									aniShow: 'pop-in'
 								},
@@ -248,15 +248,16 @@
 							console.log('111111190909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							//存储到手机本地
 							window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
-						});
-
-						app.login(loginInfo, function(err) {
-							if(err) {
-								plus.nativeUI.toast(err);
-								return;
-							}
 							toMain();
 						});
+
+//						app.login(loginInfo, function(err) {
+//							if(err) {
+//								plus.nativeUI.toast(err);
+//								return;
+//							}
+//							toMain();
+//						});
 					});
 					//遇到登录问题
 					moreButton.addEventListener('tap', function(event) {
