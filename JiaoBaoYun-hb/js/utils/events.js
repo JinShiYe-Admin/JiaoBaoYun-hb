@@ -18,7 +18,7 @@ var events=(function($,mod){
 	 */
 	mod.jumpPage=function(item,targetHTML){
 		item.addEventListener('tap',function(){
-			openNewWindow(targetHTML);
+			mod.openNewWindow(targetHTML);
 		})
 	}
 	/**
@@ -178,7 +178,7 @@ var events=(function($,mod){
 		  $.fire(targetPage,listener,{
 		    data:getDatas()
 		  });
-		  openNewWindow(tarPage)
+		  mod.openNewWindow(tarPage)
 	}
 	/**
 	 * 清空子元素
@@ -203,7 +203,7 @@ var events=(function($,mod){
 			li.innerHTML=createInner(cell);
 			list.appendChild(li);
 		})
-		
+
 	}
 	return mod;
 
