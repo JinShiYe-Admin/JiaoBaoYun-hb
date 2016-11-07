@@ -26,7 +26,7 @@
 		    </ul>
 		  </div>
 		</div>
-		<a class="mui-icon iconfont icon-jia" href=""></a>
+		<a id="iconPublish" class="mui-icon iconfont icon-jia" ></a>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
@@ -36,7 +36,10 @@
 				window.addEventListener('togglePop',function(e){
 					mui("#popover").popover('toggle')
 				})
-				events.createListView('listContainer',data,createInner())
+				events.addTap('iconPublish',function(){
+					events.fireToPageNone('../homework/homework-tea.html','publish')
+				})
+//				events.createListView('listContainer',data,createInner())
 			})
 			/**
 			 * 创建innerHTML

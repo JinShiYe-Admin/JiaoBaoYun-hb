@@ -10,10 +10,10 @@
 }
 .icon-jia{
 	position: fixed;
-	bottom: 5rem;
-	right: 5rem;
+	bottom: 2rem;
+	right: 2rem;
 	z-index: 666;
-	font-size: 5rem;
+	font-size: 2rem;
 	color: saddlebrown;
 	background-color: orange;
 	border-radius: 50%;

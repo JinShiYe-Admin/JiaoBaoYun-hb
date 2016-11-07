@@ -162,7 +162,7 @@ var events=(function($,mod){
 
 	/**
 	 * 如果目标页面未加载,需要先预加载页面
-	 * 传递数值到指定页面
+	 * 传递数值到指定页面并打开页面
 	 * @param {Object} tarpage 目标页面路径
 	 * @param {Object} listener 监听事件
 	 * @param {Object} getDatas 获取数据的方法  return somthing
@@ -179,6 +179,23 @@ var events=(function($,mod){
 		    data:getDatas()
 		  });
 		  mod.openNewWindow(tarPage)
+	}
+	/**
+	 * 事件传递 不传数据 常用于 父子页面间
+	 * @param {Object} tarPage 目标页面
+	 * @param {Object} listener 事件
+	 */
+	mod.fireToPageNone=function(tarPage,listener){
+		console.log('tarPage:'+tarPage);
+		var targetPage = null;
+		  //获得目标页面
+		  if(!targetPage){
+		    targetPage = plus.webview.getWebviewById(tarPage);
+		  }
+		  //触发目标页面的listener事件
+		  $.fire(targetPage,listener,{
+		    data:null
+		  });
 	}
 	/**
 	 * 清空子元素

@@ -474,7 +474,11 @@
 			"css/homework/homework.css",
 			"css/iconfont/iconfont.css",
 			"fonts/iconfont.ttf",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"html/homework/homework-publish.html"
+		],
+		"refer": [
+			"html/homework/homework-publish.html"
 		]
 	},
 	"html/homework/homework-tea.html": {
@@ -490,7 +494,19 @@
 			"css/utils/common.css"
 		],
 		"refer": [
-			"html/homework/homework-tea-sub.html"
+			"html/homework/homework-tea-sub.html",
+			"html/homework/homework-publish.html"
+		]
+	},
+	"html/homework/homework-publish.html": {
+		"resources": [
+			"css/homework/publish-work.css",
+			"fonts/mui.ttf",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"css/utils/common.css"
 		]
 	}
 }

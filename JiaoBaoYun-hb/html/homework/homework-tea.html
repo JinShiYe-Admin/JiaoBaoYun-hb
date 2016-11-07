@@ -19,7 +19,6 @@
 		    <a class="mui-icon iconfont icon-xiangji mui-pull-right"></a>
 		</header>
 		
-		
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
@@ -29,9 +28,15 @@
 				//三道杠的点击事件
 				events.addTap('more',function(){
 					//通知子页面，显示、关闭菜单
-					events.fireToPage('homework-tea-sub.html','togglePop',function(){
-						return null
-					})
+					events.fireToPageNone('homework-tea-sub.html','togglePop')
+				})
+				/**
+				 * 传递事件的监听
+				 * 打开发布作业界面
+				 */
+				window.addEventListener('publish',function(){
+					//打开作业布置页面
+					events.openNewWindow('homework-publish.html')
 				})
 			})
 		</script>
