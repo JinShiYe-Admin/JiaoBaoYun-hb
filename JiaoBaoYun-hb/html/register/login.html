@@ -196,27 +196,21 @@
 					}, 600);
 
 					//握手协议
-					//拼接握手需要的签名
-					var signTemp = sortUrls.sortIt(['uuid=' + plus.device.uuid, 'shaketype=reg', 'appid=' + plus.runtime.appid]);
-					//生成签名，返回值sign则为签名
-					signHmacSHA1.sign(signTemp, storageKeyName.SIGNKEY, function(sign) {
-						//组装发送握手协议需要的data
-						var tempData = {
-							uuid: plus.device.uuid,
-							shaketype: 'reg',
-							appid: plus.runtime.appid,
-							sign: sign
-						};
-						// 等待的对话框
-						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-						//发送握手协议
-						postData(storageKeyName.MAINURL + 'PostShakeHand', tempData, function(data) {
-							//成功，关闭等待框
-							wd.close();
-							console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							//存储到手机本地
-							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
-						}, wd);
+					//需要加密的数据
+					var enData = {};
+					//不需要加密的数据
+					var comData = {
+						uuid: plus.device.uuid,
+						shaketype: 'reg',
+						appid: plus.runtime.appid
+					};
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					//发送网络请求，data为网络返回值
+					postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData, comData, wd, function(data) {
+						wd.close();
+						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
 					});
 
 					//检查 "登录状态/锁屏状态" 结束
@@ -235,33 +229,25 @@
 						};
 
 						//账号密码登录协议
-						//对账号加密
-						var encryptNumb = RSAEncrypt.enctype(loginInfo.account);
-						//对密码加密
-						var encryptPW = RSAEncrypt.enctype(loginInfo.password);
-						//拼接登录需要的签名
-						var signTemp = sortUrls.sortIt(['uuid=' + plus.device.uuid, 'shaketype=reg', 'appid=' + plus.runtime.appid, 'uid=' + encryptNumb, 'pw=' + encryptPW]);
-						//生成签名，返回值sign则为签名
-						signHmacSHA1.sign(signTemp, 'jsy309', function(sign) {
-							//组装发送握手协议需要的data
-							var tempData = {
-								uuid: plus.device.uuid,
-								shaketype: 'reg',
-								appid: plus.runtime.appid,
-								uid: encryptNumb,
-								pw: encryptPW,
-								sign: sign
-							};
-							// 等待的对话框
-							var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-							//发送握手协议
-							postData(storageKeyName.MAINURL + 'PostLogin', tempData, function(data) {
-								//成功，关闭等待框
-								wd.close();
-								console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-								//存储到手机本地
-								//							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
-							}, wd);
+						//需要加密的数据
+						var enData = {
+							uid: loginInfo.account,
+							pw: loginInfo.password,
+						};
+						//不需要加密的数据
+						var comData = {
+							uuid: plus.device.uuid,
+							shaketype: 'reg',
+							appid: plus.runtime.appid
+						};
+						// 等待的对话框
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						//发送网络请求，data为网络返回值
+						postDataEncry(storageKeyName.MAINURL + 'PostLogin', enData, comData, wd, function(data) {
+							wd.close();
+							console.log('111111190909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							//存储到手机本地
+							window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 						});
 
 						app.login(loginInfo, function(err) {
@@ -319,10 +305,10 @@
 					}, false);
 					forgetButton.addEventListener('tap', function(event) {
 						$.openWindow({
-//							url: 'forget_password.html',
-//							id: 'forget_password',
-							url:'modify_password.html',
-							id:'modify_password.html',
+							//							url: 'forget_password.html',
+							//							id: 'forget_password',
+							url: 'modify_password.html',
+							id: 'modify_password.html',
 							preload: true,
 							show: {
 								aniShow: 'pop-in'
