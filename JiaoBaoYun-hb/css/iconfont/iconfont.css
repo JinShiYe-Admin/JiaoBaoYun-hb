@@ -12,6 +12,8 @@
 }
 .icon-xiangji:before { content: "\e60c"; }
 
+.icon-shexiangji:before { content: "\e60e"; }
+
 .icon-xie:before { content: "\e604"; }
 
 .icon-fenxiang:before { content: "\e600"; }
@@ -41,18 +43,3 @@
 .icon-renren:before { content: "\e609"; }
 
 .icon-liaotian1:before { content: "\e601"; }
-
-/*.icon-xiangji:before { content: "\e60c"; }
-.icon-xie:before { content: "\e604"; }
-.icon-fenxiang:before { content: "\e600"; }
-.icon-jia:before { content: "\e60a"; }
-.icon-shezhi:before { content: "\e606"; }
-.icon-about:before { content: "\e605"; }
-.icon-zanzan:before { content: "\e60b"; }
-.icon-zanzan1:before { content: "\e602"; }
-.icon-liaotian:before { content: "\e603"; }
-.icon-xie1:before { content: "\e608"; }
-.icon-links:before { content: "\e60d"; }
-.icon-yunpan:before { content: "\e607"; }
-.icon-renren:before { content: "\e609"; }
-.icon-liaotian1:before { content: "\e601"; }*/

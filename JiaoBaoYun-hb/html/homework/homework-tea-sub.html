@@ -26,14 +26,40 @@
 		    </ul>
 		  </div>
 		</div>
+		<a class="mui-icon iconfont icon-jia" href=""></a>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function(){
+				/**监听父页面的图标事件*/
 				window.addEventListener('togglePop',function(e){
 					mui("#popover").popover('toggle')
 				})
+				events.createListView('listContainer',data,createInner())
 			})
+			/**
+			 * 创建innerHTML
+			 * @param {Object} cell
+			 */
+			var createInner=function(cell){
+				return '<div>'
+							+'<p>'+cell.time+'</p>'
+							+'<div>'
+								+'<img src="'+cell.imgUrl+'"/>'
+								+'<h4 class="title">'+cell.title+'</h4>'
+								+'<p class="">'+cell.words+'</p>'
+							+'</div>'
+							+'<div>'
+								+'<p>未改数('+cell.weigaiNo+')</p>'
+								+'<p>已上传数('+cell.chuanNo+')</p>'
+							+'</div>'
+							+'<div>'
+								+cell.imgs
+							+'</div>'
+							+'<p>已上传试卷人数('+cell.stuWorkNo+')</p>'
+							
+			}
 		</script>
 	</body>
 

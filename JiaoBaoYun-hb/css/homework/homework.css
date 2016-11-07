@@ -1,7 +1,21 @@
+/**
+ * 弹出菜单样式
+ */
 .mui-popover{
 	position: fixed;
 	top:0.5rem;
 	right: 0.5rem;
-	z-index: 1000;
+	z-index: 999;
 	width: 8rem;
+}
+.icon-jia{
+	position: fixed;
+	bottom: 5rem;
+	right: 5rem;
+	z-index: 666;
+	font-size: 5rem;
+	color: saddlebrown;
+	background-color: orange;
+	border-radius: 50%;
+	padding: .5rem;
 }
