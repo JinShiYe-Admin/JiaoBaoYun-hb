@@ -117,7 +117,9 @@ mui.plusReady(function() {
 		a.style.fontSize = '16px'
 		a.style.paddingTop = '15px'
 		var span = document.createElement('span');
-		span.className = 'mui-badge mui-badge-danger custom-badge1'
+		span.className = 'mui-badge mui-badge-danger'
+		span.style.marginLeft ="-15px";
+		span.style.marginTop = "4px";
 		span.innerHTML = '3'
 		a.appendChild(span)
 		container.appendChild(a);
