@@ -1,3 +1,7 @@
+<!--发布作业界面-->
+<!--
+	@anthor an
+-->
 <!doctype html>
 <html>
 
@@ -6,48 +10,54 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!--共用样式-->
 		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<!--alibaba字库-->
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<!--本页面应用样式表-->
 		<link rel="stylesheet" href="../../css/homework/publish-work.css" />
 	</head>
 
 	<body>
+		<!--标题栏-->
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">发布</h1>
-		    <a class="mui-icon mui-pull-right">提交</a>
+		    <!--发布作业按钮-->
+		    <a class="mui-icon mui-pull-right header-publish">提交</a>
 		</header>
+		<!--content-->
 		<div class="mui-content">
+			<!--表单-->
 		    <form class="mui-input-group">
-		    <div class="mui-input-row">
-		        <label>科目:</label>
-		        <input type="text" class="mui-input-clear" placeholder="input">
-		    </div>
-		    <div class="mui-input-row">
-		        <label>接收人</label>
-		        <input type="text" placeholder="普通输入框">
-		    </div>
-		    <div>
-		    <textarea style="" placeholder="输入你要布置的作业内容">
-		    
-		    </textarea>
-		    <div class="publish-extras">
-		    	<a class="mui-icon mui-icon-mic" ></a>
-		    	<a class="mui-icon iconfont icon-xiangji"></a>
-		    	<a class="mui-icon iconfont icon-shexiangji"></a>
-		    	<a class="mui-icon mui-icon-location"></a>
-		    </div>
-		    </div>
-		    <div class="mui-input-row">
-		        <label>需学生在线提交</label>
-		        <div class="mui-switch mui-active mui-switch-green">
-		            <div class="mui-switch-handle"></div>
-		        </div>
-		    </div>
-		    
-		</form>
+			    <div class="mui-input-row">
+			        <label>科目:</label>
+			        <input type="text" class="mui-input-clear" placeholder="input">
+			    </div>
+			    <div class="mui-input-row">
+			        <label>接收人</label>
+			        <input type="text" placeholder="普通输入框">
+			    </div>
+			    <div>
+			    <textarea style="" placeholder="输入你要布置的作业内容">
+			    
+			    </textarea>
+			    <div class="publish-extras">
+			    	<a class="mui-icon mui-icon-mic" ></a>
+			    	<a class="mui-icon iconfont icon-xiangji"></a>
+			    	<a class="mui-icon iconfont icon-shexiangji"></a>
+			    	<a class="mui-icon mui-icon-location"></a>
+			    </div>
+			    </div>
+			    <div class="mui-input-row">
+			        <label>需学生在线提交</label>
+			        <div class="mui-switch mui-active mui-switch-green">
+			            <div class="mui-switch-handle"></div>
+			        </div>
+			    </div>
+			</form>
 		</div>
-		
+		<!--mui库-->
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init()

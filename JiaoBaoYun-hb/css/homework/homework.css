@@ -1,3 +1,6 @@
+header .icon-xiangji:before{
+	margin-right: .5rem;
+}
 /**
  * 弹出菜单样式
  */
@@ -8,6 +11,9 @@
 	z-index: 999;
 	width: 8rem;
 }
+/**
+ * 发布作业按钮
+ */
 .icon-jia{
 	position: fixed;
 	bottom: 2rem;
