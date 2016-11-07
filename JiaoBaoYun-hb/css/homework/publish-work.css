@@ -1,0 +1,15 @@
+/**
+ * 发布作业附件图标区域
+ */
+.publish-extras{
+	text-align: center;
+	padding: 1rem 0;
+	background-color: #DDDDDD;
+}
+/**
+ * 发布作业附件 图标
+ */
+.publish-extras a{
+	font-size: 2rem;
+	width: 20%;
+}
