@@ -66,6 +66,10 @@
 				});
 				console.log('regFlag=' + regFlag);
 				events.addTap('register', function() {
+					var code = document.getElementById("yanzheng").value;
+					//					if(code !=123456){
+					//						mui.toast('验证码错误');
+					//					}
 					//需要加密的数据
 					var enData = {
 						uid: document.getElementById("phoneNumber").value,
@@ -90,7 +94,7 @@
 							window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 							//跳转到主界面
 							var temp;
-							events.openNewWindowWithData('../../html/index.html',temp);
+							events.openNewWindowWithData('../../html/index.html', temp);
 						});
 					} else { //验证码模式登录1
 						console.log('yanzhengma denglu');
@@ -99,11 +103,17 @@
 							//成功，关闭等待框
 							wd.close();
 							console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode != 0000) {
+								mui.toast(data.RspTxt);
+								return;
+							} else {
 							//存储到手机本地
 							window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 							//跳转到主界面
 							var temp;
-							events.openNewWindowWithData('../../html/index.html',temp);
+							events.openNewWindowWithData('../../html/index.html', temp);
+							}
+
 						});
 					}
 				});
