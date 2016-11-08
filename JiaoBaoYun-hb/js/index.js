@@ -133,7 +133,8 @@ mui.plusReady(function() {
 		});
 		container.appendChild(a)
 	}
-
+//			var aboutme = document.getElementById('aboutme');
+//			events.jumpPage(aboutme, 'quan/aboutme.html');
 	//自定义事件，模拟点击“首页选项卡”
 	document.addEventListener('gohome', function() {
 		var defaultTab = document.getElementById("defaultTab");
