@@ -43,6 +43,7 @@
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
+				<button type="button" id="testBtn" class="mui-btn mui-btn-blue mui-btn-block">按钮</button>
 				<!--轮播控件-->
 				<div id="slider11" class="mui-slider">
 					<div class="mui-slider-group mui-slider-loop">
@@ -114,6 +115,26 @@
 				</div>
 			</div>
 		</div>
+		
+		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
+		<!--本地存储-->
+		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
+		<!--加密-->
+		<script src="../../js/libs/RSA/Barrett.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script src="../../js/libs/RSA/BigInt.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/RSA/RSA.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/RSAEncrypt.js" type="text/javascript" charset="utf-8"></script>
+		<!---->
+		<script src="js/mui.enterfocus.js" type="text/javascript" charset="utf-8"></script>
+		<!--网络请求-->
+		<script src="../../js/utils/postData.js" type="text/javascript" charset="utf-8"></script>
+		<!--签名-->
+		<script src="../../js/libs/crypto-js/require.js"></script>
+		<script src="../../js/utils/sortSign.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/signHmacSHA1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/jquery.js" type="text/javascript" charset="utf-8"></script>
 
 		<script>
 			mui.init({
@@ -141,6 +162,12 @@
 				slider.slider({
 					interval: 5000
 				});
+				
+				//test
+				document.getElementById('testBtn').addEventListener('tap',function () {
+				        console.log('testBtn');
+				})
+				
 			});
 			/**
 			 * 下拉刷新具体业务实现

@@ -44,7 +44,8 @@ function postDataEncry(url, encryData, commonData, waitingDialog, callback) {
 	signHmacSHA1.sign(signTemp, storageKeyName.SIGNKEY, function(sign) {
 		//组装发送握手协议需要的data
 		//合并对象
-		var tempData = Object.assign(encryData, commonData);
+//		var tempData = Object.assign(encryData, commonData);
+		var tempData = $.extend(encryData, commonData);
 		//添加签名
 		tempData.sign = sign;
 		// 等待的对话框
@@ -58,6 +59,7 @@ function postDataEncry(url, encryData, commonData, waitingDialog, callback) {
 			timeout: 6000,
 			success:callback,
 			error: function(xhr, type, errorThrown) {
+				console.log('wang luo cuowu:'+JSON.stringify(xhr)+','+type+','+errorThrown);
 				waitingDialog.close();
 				mui.alert("网络连接失败，请重新尝试一下", "错误", "OK", null);
 			}
