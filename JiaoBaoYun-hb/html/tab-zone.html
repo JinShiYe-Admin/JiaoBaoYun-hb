@@ -31,9 +31,14 @@
 				border-bottom: 0px solid red;
 				background: 0 0
 			}
-			.parent-zone{
-				
-			}
+			
+			.parent-table1 {}
+			
+			.parent-cell1 {}
+			
+			.parent-table2 {}
+			
+			.parent-cell2 {}
 		</style>
 	</head>
 
@@ -98,8 +103,8 @@
 				<div style="margin-top: -10px;">
 					<div id="item1" class="mui-control-content mui-active">
 
-						<ul class="mui-table-view ">
-							<li class="mui-table-view-cell mui-media parent-zone">
+						<ul class="mui-table-view parent-table1">
+							<li class="mui-table-view-cell mui-media parent-cell1">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
 								<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
@@ -110,7 +115,7 @@
 								</div>
 
 							</li>
-							<li class="mui-table-view-cell mui-media parent-zone">
+							<li class="mui-table-view-cell mui-media parent-cell1">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
 								<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
@@ -121,7 +126,7 @@
 								</div>
 
 							</li>
-							<li class="mui-table-view-cell mui-media parent-zone">
+							<li class="mui-table-view-cell mui-media parent-cell1">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
 								<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
@@ -132,7 +137,7 @@
 								</div>
 
 							</li>
-							<li class="mui-table-view-cell mui-media parent-zone">
+							<li class="mui-table-view-cell mui-media parent-cell1">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
 								<p class="time">10月18</p>
@@ -145,8 +150,8 @@
 					</div>
 					<div id="item2" class="mui-control-content">
 
-						<ul class="mui-table-view">
-							<li class="mui-table-view-cell mui-media parent-zone">
+						<ul class="mui-table-view parent-table2">
+							<li class="mui-table-view-cell mui-media parent-cell2">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
 								<span style="float: left;"><img src="../image/tab_zone/u85.png" class="red-point" /></span>
@@ -157,7 +162,7 @@
 								</div>
 
 							</li>
-							<li class="mui-table-view-cell mui-media parent-zone">
+							<li class="mui-table-view-cell mui-media parent-cell2">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
 								<p class="time">10月18</p>
@@ -167,7 +172,7 @@
 								</div>
 
 							</li>
-							<li id="zhang" class="mui-table-view-cell mui-media parent-zone">
+							<li id="zhang" class="mui-table-view-cell mui-media parent-cell2">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u72.png" />
 								<p class="time">10月19</p>
@@ -177,7 +182,7 @@
 								</div>
 
 							</li>
-							<li class="mui-table-view-cell mui-media parent-zone">
+							<li class="mui-table-view-cell mui-media parent-cell2">
 
 								<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">
 								<p class="time">10月18</p>
@@ -208,6 +213,25 @@
 
 			function pulldownRefresh() {
 				setTimeout(function() {
+					var itemId = getActiveControl();
+					console.log(itemId);
+					var table;
+					var cells;
+					if(itemId == '#item1'){
+						table = document.body.querySelector('.parent-table1');
+					    cells = document.body.querySelectorAll('.parent-cell1');
+					}else{
+						table = document.body.querySelector('.parent-table2');
+					    cells = document.body.querySelectorAll('.parent-cell2');
+					}
+
+					for(var i = cells.length, len = i + 3; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell mui-media parent-cell';
+						li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">\<p class="time">10月18</p>\<div class="mui-media-body">张曦曦<p class="mui - ellipsis">\在今天的全校演讲比赛中，我班有6名同学获奖...</p>\</div>';
+						//下拉刷新，新纪录插到最前面；
+						table.insertBefore(li, table.firstChild);
+					}
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 1500);
 			}
@@ -265,9 +289,20 @@
 					}
 				});
 			});
-			
-						//跳转到家长空间界面
-			mui('.mui-table-view').on('tap', '.parent-zone', function() {
+
+			//跳转到家长空间界面
+			mui('.mui-table-view').on('tap', '.parent-cell1', function() {
+				mui.openWindow({
+					url: 'quan/zone_main.html',
+					id: 'quan/zone_main.html',
+					styles: {
+						top: '0px', //设置距离顶部的距离
+						bottom: '0px'
+					}
+				});
+			});
+			//跳转到家长空间界面
+			mui('.mui-table-view').on('tap', '.parent-cell2', function() {
 				mui.openWindow({
 					url: 'quan/zone_main.html',
 					id: 'quan/zone_main.html',
@@ -279,6 +314,17 @@
 			});
 
 		})
+
+		function getActiveControl() {
+			var segmentedControl = document.getElementById("segmentedControl");
+			var links = segmentedControl.getElementsByTagName('a');
+			for(var i = 0; i < links.length; i++) {
+				if(links[i].getAttribute('class').indexOf('mui-active') > 0) {
+					var id = links[i].getAttribute('href');
+					return id;
+				}
+			}
+		}
 	</script>
 
 </html>
