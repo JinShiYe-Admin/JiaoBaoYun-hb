@@ -1,5 +1,8 @@
 <!--老师查看学生作业界面-->
 <!--学生查看评语界面-->
+<!--
+	@anthor an
+-->
 <!doctype html>
 <html>
 
@@ -23,6 +26,13 @@
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init()
+			mui.plusReady(function(){
+				window.addEventListener('stuWorkDetails',function(e){
+					if(e.detail.data){
+						
+					}
+				})
+			})
 		</script>
 	</body>
 

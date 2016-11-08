@@ -458,7 +458,8 @@
 		],
 		"refer": [
 			"html/register/register_phoneNumber.html",
-			"html/register/modify_password.html"
+			"html/register/modify_password.html",
+			"html/index.html"
 		]
 	},
 	"html/register/yanZhengMa.html": {
