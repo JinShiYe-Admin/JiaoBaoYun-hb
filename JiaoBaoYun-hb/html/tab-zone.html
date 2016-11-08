@@ -19,14 +19,21 @@
 			/*自定义系统segmentcontrol控件*/
 			/*整体控件样式*/
 			
-			.mui-segmented-control.mui-segmented-control-inverted {
-				width: 60%;
-				border: 0;
-				border-radius: 0
+			.mui-segmented-control {
+				font-size: 14px;
+				width: 50%;
+				border: 0px solid gray;
+				background-color: transparent;
+			}
+			
+			.mui-segmented-control .mui-control-item {
+				line-height: 20px;
+				color: black;
+				border-left: 1px solid gray
 			}
 			/*选择的item样式*/
 			
-			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+			.mui-segmented-control.mui-segmented-control .mui-control-item.mui-active {
 				color: #007aff;
 				border-bottom: 0px solid red;
 				background: 0 0
@@ -84,10 +91,10 @@
 				<h4>
 					<img  src="../image/tab_zone/u131.png" />
 					<span  class="parent">家长圈</span>
-					<hr class="vertical-line" />
+					<!--<hr class="vertical-line" />-->
 					<div style="padding: 10px 10px 10px 100px;margin-top: -45px;">
 
-				<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted">
+				<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-primary">
 
 					<a class="mui-control-item mui-active" href="#item1">
 				1001班<span class="mui-badge mui-badge-danger custom-badge1"  >3</span>
@@ -217,12 +224,12 @@
 					console.log(itemId);
 					var table;
 					var cells;
-					if(itemId == '#item1'){
+					if(itemId == '#item1') {
 						table = document.body.querySelector('.parent-table1');
-					    cells = document.body.querySelectorAll('.parent-cell1');
-					}else{
+						cells = document.body.querySelectorAll('.parent-cell1');
+					} else {
 						table = document.body.querySelector('.parent-table2');
-					    cells = document.body.querySelectorAll('.parent-cell2');
+						cells = document.body.querySelectorAll('.parent-cell2');
 					}
 
 					for(var i = cells.length, len = i + 3; i < len; i++) {
