@@ -10,7 +10,7 @@
 	"icons": {
 		"72": "icon.png"
 	},
-	"launch_path": "html/index.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+	"launch_path": "html/register/login.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
 	"developer": {
 		"name": "",/*开发者名称*/
 		"email": "",/*开发者邮箱地址*/
@@ -634,7 +634,8 @@
 					"js/libs/RSA/Barrett.js",
 					"js/libs/RSA/RSA.js",
 					"js/libs/RSA/MD5.js",
-					"js/libs/myStorage/myStorage.js"
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [
 					"html/register/yanZhengMa.html"
@@ -660,11 +661,13 @@
 					"js/utils/sortSign.js",
 					"js/utils/signHmacSHA1.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/libs/jquery.js"
 				],
 				"refer": [
 					"html/register/register_phoneNumber.html",
-					"html/register/modify_password.html"
+					"html/register/modify_password.html",
+					"html/index.html"
 				],
 				"priority": 0
 			},
