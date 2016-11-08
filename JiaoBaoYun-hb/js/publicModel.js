@@ -18,7 +18,16 @@ var publicModel = (function($, mod) {
 		token:''//用户令牌
 	};
 	
-	//
+	//11.通过用户账号和手机号搜索用户
+	mod.model_searchPeople = {
+		utid:'',//用户表ID
+		uid:'',//用户手机号
+		uname:'',//用户名
+		unick:'',//用户昵称
+		usex:'',//性别
+		utxt:'',//签名
+		uimg:''//用户头像地址
+	}
 
 	return mod;
 

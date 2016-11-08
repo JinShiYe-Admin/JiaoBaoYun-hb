@@ -135,6 +135,9 @@
 		<script src="../../js/utils/sortSign.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/utils/signHmacSHA1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/jquery.js" type="text/javascript" charset="utf-8"></script>
+		
+		<!--testPro-->
+		<script src="../../js/testPro.js" type="text/javascript" charset="utf-8"></script>
 
 		<script>
 			mui.init({
@@ -166,6 +169,8 @@
 				//test
 				document.getElementById('testBtn').addEventListener('tap',function () {
 				        console.log('testBtn');
+				        var tempData = {};
+				        testPro(tempData);
 				})
 				
 			});
