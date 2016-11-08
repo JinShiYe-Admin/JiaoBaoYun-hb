@@ -147,6 +147,7 @@
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<!--加密-->
 		<script src="../../js/libs/RSA/Barrett.js" type="text/javascript" charset="utf-8"></script>
+		
 		<script src="../../js/libs/RSA/BigInt.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/RSA.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/utils/RSAEncrypt.js" type="text/javascript" charset="utf-8"></script>
@@ -174,20 +175,20 @@
 						"id": '../../html/index.html',
 						"url": '../../html/index.html'
 					});
-//					var toMain = function() {
-//						$.fire(mainPage, 'show', null);
-//						setTimeout(function() {
-//							$.openWindow({
-//								id: '../../html/index.html',
-//								show: {
-//									aniShow: 'pop-in'
-//								},
-//								waiting: {
-//									autoShow: false
-//								}
-//							});
-//						}, 0);
-//					};
+					var toMain = function() {
+						$.fire(mainPage, 'show', null);
+						setTimeout(function() {
+							$.openWindow({
+								id: '../../html/index.html',
+								show: {
+									aniShow: 'pop-in'
+								},
+								waiting: {
+									autoShow: false
+								}
+							});
+						}, 0);
+					};
 					// close splash
 					setTimeout(function() {
 						//关闭 splash
@@ -212,7 +213,7 @@
 						window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
 					});
 
-					//需要加密的数据
+					//需要加密的数据---test wang yonghui
 //					var enData = {};
 //					//不需要加密的数据
 //					var comData = {
@@ -222,7 +223,7 @@
 //					// 等待的对话框
 //					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 //					//发送网络请求，data为网络返回值
-//					postDataEncry('http://192.168.0.206:8080/JiaoBaoColudDiskapi/test', enData, comData, wd, function(data) {
+//					postDataEncry('http://192.168.0.206:8080/JiaoBaoColudDiskapi/Test/test', enData, comData, wd, function(data) {
 //						wd.close();
 //						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 //						window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
