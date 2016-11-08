@@ -55,7 +55,7 @@ function postDataEncry(url, encryData, commonData, waitingDialog, callback) {
 			dataType: 'json',
 			type: 'post',
 			contentType: "application/json",
-			timeout: 60000,
+			timeout: 6000,
 			success:callback,
 			error: function(xhr, type, errorThrown) {
 				waitingDialog.close();

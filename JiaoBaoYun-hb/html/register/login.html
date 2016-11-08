@@ -166,7 +166,7 @@
 				$.init({
 					statusBarBackground: '#f7f7f7'
 				});
-				events.preLoad('register_phoneNumber.html');
+//				events.preLoad('register_phoneNumber.html');
 				$.plusReady(function() {
 					plus.screen.lockOrientation("portrait-primary");
 					var settings = app.getSettings();
@@ -175,20 +175,20 @@
 						"id": '../../html/index.html',
 						"url": '../../html/index.html'
 					});
-					var toMain = function() {
-						$.fire(mainPage, 'show', null);
-						setTimeout(function() {
-							$.openWindow({
-								id: '../../html/index.html',
-								show: {
-									aniShow: 'pop-in'
-								},
-								waiting: {
-									autoShow: false
-								}
-							});
-						}, 0);
-					};
+//					var toMain = function() {
+//						$.fire(mainPage, 'show', null);
+//						setTimeout(function() {
+//							$.openWindow({
+//								id: '../../html/index.html',
+//								show: {
+//									aniShow: 'pop-in'
+//								},
+//								waiting: {
+//									autoShow: false
+//								}
+//							});
+//						}, 0);
+//					};
 					// close splash
 					setTimeout(function() {
 						//关闭 splash
@@ -212,6 +212,22 @@
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
 					});
+
+					//需要加密的数据
+//					var enData = {};
+//					//不需要加密的数据
+//					var comData = {
+//						uuid: plus.device.uuid,
+//						shaketype: 'reg'
+//					};
+//					// 等待的对话框
+//					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+//					//发送网络请求，data为网络返回值
+//					postDataEncry('http://192.168.0.206:8080/JiaoBaoColudDiskapi/test', enData, comData, wd, function(data) {
+//						wd.close();
+//						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//						window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+//					});
 
 					//检查 "登录状态/锁屏状态" 结束
 					var loginButton = doc.getElementById('login');
