@@ -147,7 +147,7 @@
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<!--加密-->
 		<script src="../../js/libs/RSA/Barrett.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script src="../../js/libs/RSA/BigInt.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/RSA.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/utils/RSAEncrypt.js" type="text/javascript" charset="utf-8"></script>
@@ -166,7 +166,7 @@
 				mui.init({
 					statusBarBackground: '#f7f7f7'
 				});
-//				events.preLoad('register_phoneNumber.html');
+				//				events.preLoad('register_phoneNumber.html');
 				$.plusReady(function() {
 					plus.screen.lockOrientation("portrait-primary");
 					var settings = app.getSettings();
@@ -207,27 +207,16 @@
 					// 等待的对话框
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					//发送网络请求，data为网络返回值
-					postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData, comData, wd, function(data) {
+					postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData, comData, 0, wd, function(data) {
 						wd.close();
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-						window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+						if(data.RspCode == 0) {
+							//存储到手机本地
+							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+						} else {
+							mui.toast(data.RspTxt);
+						}
 					});
-
-					//需要加密的数据---test wang yonghui
-//					var enData = {};
-//					//不需要加密的数据
-//					var comData = {
-//						uuid: plus.device.uuid,
-//						shaketype: 'reg'
-//					};
-//					// 等待的对话框
-//					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-//					//发送网络请求，data为网络返回值
-//					postDataEncry('http://192.168.0.206:8080/JiaoBaoColudDiskapi/Test/test', enData, comData, wd, function(data) {
-//						wd.close();
-//						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-//						window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
-//					});
 
 					//检查 "登录状态/锁屏状态" 结束
 					var loginButton = doc.getElementById('login');
@@ -239,11 +228,11 @@
 					var moreButton = doc.getElementById('more');
 					//登录按钮
 					loginButton.addEventListener('tap', function(event) {
-						if(!accountBox.value){
+						if(!accountBox.value) {
 							mui.toast('请输入账号')
 							return;
 						}
-						if(!passwordBox.value){
+						if(!passwordBox.value) {
 							mui.toast('请输入密码')
 							return;
 						}
@@ -267,28 +256,27 @@
 						// 等待的对话框
 						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 						//发送网络请求，data为网络返回值
-						postDataEncry(storageKeyName.MAINURL + 'PostLogin', enData, comData, wd, function(data) {
+						postDataEncry(storageKeyName.MAINURL + 'PostLogin', enData, comData, 0, wd, function(data) {
 							wd.close();
 							console.log('111111190909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							if(data.RspCode !=0000)
-							{
+							if(data.RspCode != 0000) {
 								mui.toast(data.RspTxt);
 								return;
-							}else{
+							} else {
 								mui.toast(data.RspTxt);
+								//存储到手机本地
+								window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
+								toMain();
 							}
-							//存储到手机本地
-							window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
-							toMain();
 						});
 
-//						app.login(loginInfo, function(err) {
-//							if(err) {
-//								plus.nativeUI.toast(err);
-//								return;
-//							}
-//							toMain();
-//						});
+						//						app.login(loginInfo, function(err) {
+						//							if(err) {
+						//								plus.nativeUI.toast(err);
+						//								return;
+						//							}
+						//							toMain();
+						//						});
 					});
 					//遇到登录问题
 					moreButton.addEventListener('tap', function(event) {

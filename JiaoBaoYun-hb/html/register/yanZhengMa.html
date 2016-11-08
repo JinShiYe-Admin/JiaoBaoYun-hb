@@ -82,7 +82,7 @@
 					//判断是注册0，还是验证码模式登录1
 					if(regFlag == 0) { //注册0
 						//发送网络请求，data为网络返回值
-						postDataEncry(storageKeyName.MAINURL + 'PostReg', enData, comData, wd, function(data) {
+						postDataEncry(storageKeyName.MAINURL + 'PostReg', enData, comData, 0, wd, function(data) {
 							//成功，关闭等待框
 							wd.close();
 							console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
@@ -95,7 +95,7 @@
 					} else { //验证码模式登录1
 						console.log('yanzhengma denglu');
 						//发送网络请求，data为网络返回值
-						postDataEncry(storageKeyName.MAINURL + 'PostCodeLogin', enData, comData, wd, function(data) {
+						postDataEncry(storageKeyName.MAINURL + 'PostCodeLogin', enData, comData, 0, wd, function(data) {
 							//成功，关闭等待框
 							wd.close();
 							console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);

@@ -72,7 +72,7 @@
 					// 等待的对话框
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					//发送网络请求，data为网络返回值
-					postDataEncry(storageKeyName.MAINURL + 'PostCode', enData, comData, wd, function(data) {
+					postDataEncry(storageKeyName.MAINURL + 'PostCode', enData, comData, 0, wd, function(data) {
 						//成功，关闭等待框
 						wd.close();
 						//获取到手机号
