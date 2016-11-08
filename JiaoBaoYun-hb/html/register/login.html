@@ -214,7 +214,7 @@
 							//存储到手机本地
 							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
 						} else {
-							mui.alert(data.RspTxt, "错误", "OK", null);
+							mui.toast(data.RspTxt);
 						}
 					});
 
@@ -228,6 +228,14 @@
 					var moreButton = doc.getElementById('more');
 					//登录按钮
 					loginButton.addEventListener('tap', function(event) {
+						if(!accountBox.value) {
+							mui.toast('请输入账号')
+							return;
+						}
+						if(!passwordBox.value) {
+							mui.toast('请输入密码')
+							return;
+						}
 						var loginInfo = {
 							account: accountBox.value,
 							password: passwordBox.value
@@ -251,12 +259,14 @@
 						postDataEncry(storageKeyName.MAINURL + 'PostLogin', enData, comData, 0, wd, function(data) {
 							wd.close();
 							console.log('111111190909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							if(data.RspCode == 0) {
+							if(data.RspCode != 0000) {
+								mui.toast(data.RspTxt);
+								return;
+							} else {
+								mui.toast(data.RspTxt);
 								//存储到手机本地
 								window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 								toMain();
-							} else {
-								mui.alert(data.RspTxt, "错误", "OK", null);
 							}
 						});
 

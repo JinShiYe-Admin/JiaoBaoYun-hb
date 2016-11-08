@@ -430,7 +430,14 @@
 			"js/libs/RSA/RSA.js",
 			"js/libs/RSA/MD5.js",
 			"js/libs/myStorage/myStorage.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/storageKeyName.js",
+			"html/register/js/mui.enterfocus.js",
+			"js/libs/jquery.js",
+			"js/utils/sortSign.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/register/yanZhengMa.html"
@@ -475,7 +482,15 @@
 			"js/libs/RSA/Barrett.js",
 			"js/libs/RSA/RSA.js",
 			"js/libs/RSA/MD5.js",
-			"js/libs/myStorage/myStorage.js"
+			"js/libs/myStorage/myStorage.js",
+			"js/storageKeyName.js",
+			"js/libs/crypto-js/require.js",
+			"html/register/js/mui.enterfocus.js",
+			"js/utils/sortSign.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
 	},

@@ -71,10 +71,6 @@ var slideNavigation = (function($) {
 		 */
 	var closeMenu = function() {
 			console.log("closeMenu:" + isInTransition);
-
-			//		if(arguments[0]){
-			//			showMenu=true
-			//		}
 			console.log("show:" + showMenu)
 			if(isInTransition) {
 				return;
@@ -90,12 +86,13 @@ var slideNavigation = (function($) {
 						duration: 200
 					}
 				});
-				showMenu = false;
+			
 				//等动画结束后，隐藏菜单webview，节省资源；
-				$.later(function() {
+				setTimeout(function() {
 					isInTransition = false;
 					menu.hide();
-				}, 300);
+				}, 200);
+				showMenu = false;
 			}
 		}
 		/**
@@ -146,7 +143,7 @@ var slideNavigation = (function($) {
 					styles: {
 						left: 0,
 						width: '70%',
-						zindex: -1,
+						zindex: 99,
 					},
 					show: {
 						aniShow: 'none'
@@ -169,6 +166,7 @@ var slideNavigation = (function($) {
 	
 	//安卓系统返回按钮
 	var getBack = function() {
+		console.log("show:" + showMenu)
 		//首页返回键处理
 		//1、若侧滑菜单显示，则关闭侧滑菜单
 		//2、否则，执行mui框架默认的关闭首页功能
