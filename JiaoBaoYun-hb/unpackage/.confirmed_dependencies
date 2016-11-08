@@ -447,10 +447,18 @@
 			"js/libs/RSA/Barrett.js",
 			"js/libs/RSA/RSA.js",
 			"js/libs/RSA/MD5.js",
-			"js/libs/myStorage/myStorage.js"
+			"js/libs/myStorage/myStorage.js",
+			"js/utils/events.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/sortSign.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
-			"html/register/register_phoneNumber.html"
+			"html/register/register_phoneNumber.html",
+			"html/register/modify_password.html"
 		]
 	},
 	"html/register/yanZhengMa.html": {
@@ -534,7 +542,28 @@
 			"css/homework/homework.css",
 			"css/iconfont/iconfont.css",
 			"fonts/iconfont.ttf",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"html/homework/workstu-err.html"
+		],
+		"refer": [
+			"html/homework/workstu-err.html",
+			"html/homework/homework-record.html"
+		]
+	},
+	"html/homework/workstu-err.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/homework/homework-record.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"css/utils/common.css",
+			"js/mui.min.js",
+			"css/mui.min.css"
 		]
 	}
 }

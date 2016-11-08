@@ -20,8 +20,8 @@
 		<!--下拉菜单-->
 		 <div id="popover" class="mui-popover">
 				<ul class=" mui-table-view">
-			    	  <li class="mui-table-view-cell"><a class="mui-icon iconfont icon-shubendisc" href="">错题本</a></li>
-			    	  <li class="mui-table-view-cell"><a class="mui-icon iconfont icon-shezhi1" href="">作业记录</a></li>
+			    	  <li id="err" class="mui-table-view-cell"><a class="mui-icon iconfont icon-shubendisc">错题本</a></li>
+			    	  <li id="record" class="mui-table-view-cell"><a class="mui-icon iconfont icon-shezhi1" >作业记录</a></li>
 			    </ul>
 	    	</div>
 		<script src="../../js/mui.min.js"></script>
@@ -33,8 +33,16 @@
 				window.addEventListener('togglePop',function(){
 					//控件打开、隐藏
 					mui('#popover').popover('toggle');
-			})
-				});
+				})
+				//错题本按钮监听事件
+				events.addTap('err',function(){
+					events.openNewWindow('workstu-err.html')
+				})
+				//作业记录按钮监听事件
+				events.addTap('record',function(){
+					events.openNewWindow('homework-record.html')
+				})
+			});
 		</script>
 	</body>
 
