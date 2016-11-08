@@ -78,6 +78,16 @@
 						wd.close();
 						//获取到手机号
 						var phoneNum = document.getElementById("phoneNumber");
+						if(!phoneNum.value){
+							mui.toast('请输入手机号码');
+							return;
+						}
+						var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/
+						
+						if(!myreg.test(phoneNum.value)) {
+							mui.toast('请输入有效的手机号码！');
+							return false;
+						}
 
 						//将输入的手机号，传到验证码界面
 						var tempValue = {
