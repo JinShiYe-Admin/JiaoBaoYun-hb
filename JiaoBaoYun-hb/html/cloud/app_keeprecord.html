@@ -11,6 +11,8 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
+
 		<style>
 			.mui-table-view:before,
 			.mui-table-view:after,
@@ -89,8 +91,8 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<p class="mui-title common-color-white" style="text-align: left;">云盘—记事</p>
-			<a class="mui-icon mui-icon-plus mui-pull-right"></a>
-			<a class="mui-icon iconfont icon-links mui-pull-right" style="margin-right: 5px;margin-top: 2px;"></a>
+			<img id="history" class="mui-icon mui-pull-right" src="../../image/cloud/record_history.gif" style="height: 40px;width: 40px;" />
+			<img id="link" class="mui-icon mui-pull-right" src="../../image/cloud/record_link.gif" style="height: 40px;width: 40px;margin-right: 10px;" />
 		</header>
 		<div class="mui-content">
 			<div class="mui-popover" style="width: 100%;top: 150px;height: 200px;">
@@ -167,11 +169,12 @@
 		mui.init();
 		mui.plusReady(function() {
 			var classNameList = []; //记录所有班级的名称
+			var historyClass = ''; //记录选择的班级名称，用于显示历史记录
 			var content = document.body.querySelector('.mui-content');
 			var classlist = document.getElementById("classlist"); //班级栏
 			var controladd = document.getElementById("controladd"); //班级栏添加班级按钮前一个item
 			var classmemberlist = document.getElementById("classmemberlist"); //成员列表
-			classNameList = ['123', '321'];
+			classNameList = ['000', '001', '010', '011', '100', '101', '110', '111'];
 			if(classNameList.length == 0) {
 				//没有班级
 				document.getElementById("noclass").style.display = 'inline';
@@ -213,7 +216,10 @@
 
 			});
 			//---创建班级popover---end---
-
+			//滑动组件监听
+			document.querySelector('.mui-slider').addEventListener('slide', function(event) {
+				historyClass = classNameList[event.detail.slideNumber];
+			});
 			//所有的添加班级按钮监听
 			mui('.mui-content').on('tap', '.addclass', function() {
 				mui('.mui-popover').popover('show');
@@ -240,6 +246,29 @@
 						//点击取消
 					}
 				});
+			});
+			//顶部导航关联，历史按钮
+			document.getElementById('link').addEventListener('tap', function() {
+				events.openNewWindow('keeprecord_link.html');
+			});
+			document.getElementById('history').addEventListener('tap', function() {
+				var passData = historyClass;
+				if(passData == '') {
+					passData = classNameList[0];
+				}
+				console.log('passData:' + passData);
+
+				events.openNewWindow('keeprecord_history_main.html');
+
+				setTimeout(function() {
+					var main = plus.webview.getWebviewById('keeprecord_history_sub.html');
+					if(main !== null) {
+						mui.fire(main, "passData", {
+							className: passData
+						});
+					}
+				}, 1000);
+
 			});
 
 			/**
