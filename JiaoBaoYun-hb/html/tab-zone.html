@@ -27,8 +27,11 @@
 			}
 			
 			.mui-segmented-control .mui-control-item {
+				/*行高*/
 				line-height: 20px;
+				/*字体颜色*/
 				color: black;
+				/*中间竖线颜色*/
 				border-left: 1px solid gray
 			}
 			/*选择的item样式*/
@@ -38,14 +41,15 @@
 				border-bottom: 0px solid red;
 				background: 0 0
 			}
-			
-			.parent-table1 {}
-			
-			.parent-cell1 {}
-			
-			.parent-table2 {}
-			
-			.parent-cell2 {}
+			/*通过下面的class名区分列表*/
+			/*第一个班级列表*/
+			/*.parent-table1 {}*/
+			/*第一个班级列表cell*/
+			/*.parent-cell1 {}*/
+			/*第二个班级列表*/
+			/*.parent-table2 {}*/
+			/*第二个班级列表cell*/
+			/*.parent-cell2 {}*/
 		</style>
 	</head>
 
@@ -224,18 +228,21 @@
 					console.log(itemId);
 					var table;
 					var cells;
+					var parentCell;
 					if(itemId == '#item1') {
+						parentCell= 'parent-cell1';
 						table = document.body.querySelector('.parent-table1');
 						cells = document.body.querySelectorAll('.parent-cell1');
 					} else {
+						parentCell= 'parent-cell2';
 						table = document.body.querySelector('.parent-table2');
 						cells = document.body.querySelectorAll('.parent-cell2');
 					}
 
 					for(var i = cells.length, len = i + 3; i < len; i++) {
 						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell mui-media parent-cell';
-						li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">\<p class="time">10月18</p>\<div class="mui-media-body">张曦曦<p class="mui - ellipsis">\在今天的全校演讲比赛中，我班有6名同学获奖...</p>\</div>';
+						li.className = 'mui-table-view-cell mui-media '+parentCell;
+						li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">\<p class="time">10月18</p>\<div class="mui-media-body">张曦曦<p class="mui-ellipsis">\在今天的全校演讲比赛中，我班有6名同学获奖...</p>\</div>';
 						//下拉刷新，新纪录插到最前面；
 						table.insertBefore(li, table.firstChild);
 					}
@@ -246,8 +253,27 @@
 
 			function pullupRefresh() {
 				setTimeout(function() {
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
-
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+					var itemId = getActiveControl();
+					console.log(itemId);
+					var table;
+					var cells;
+					if(itemId == '#item1') {
+						parentCell= 'parent-cell1';
+						table = document.body.querySelector('.parent-table1');
+						cells = document.body.querySelectorAll('.parent-cell1');
+					} else {
+						parentCell= 'parent-cell2';
+						table = document.body.querySelector('.parent-table2');
+						cells = document.body.querySelectorAll('.parent-cell2');
+					}
+					for(var i = cells.length, len = i + 20; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell mui-media '+parentCell;
+						li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">\<p class="time">10月18</p>\<div class="mui-media-body">张曦曦<p class="mui-ellipsis">\在今天的全校演讲比赛中，我班有6名同学获奖...</p>\</div>';
+						//下拉刷新，新纪录插到最前面；
+						table.appendChild(li);
+					}
 				}, 1500);
 			}
 			var firstbtn = function(e) {

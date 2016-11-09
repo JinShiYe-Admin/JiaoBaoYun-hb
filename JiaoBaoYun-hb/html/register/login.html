@@ -263,7 +263,7 @@
 								mui.toast(data.RspTxt);
 								return;
 							} else {
-								mui.toast(data.RspTxt);
+								mui.toast('登录成功')
 								//存储到手机本地
 								window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 								toMain();

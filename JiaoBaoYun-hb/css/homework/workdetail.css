@@ -1,0 +1,9 @@
+.mui-control-content {
+	background-color: white;
+	min-height: 512px;
+}
+.mui-control-content .mui-loading {
+	margin-top: 50px;
+}
+
+
