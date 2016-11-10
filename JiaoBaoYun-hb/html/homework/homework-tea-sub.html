@@ -25,29 +25,10 @@
 			    </ul>
 	    </div>
 	    <div class="mui-content">
+	    	<!--班级选择状态条-->
 	        <div id="tabs-class" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-			    <div class="mui-scroll">
-			        <a class="mui-control-item mui-active">
-			    16级1班
-			        </a>
-			        <a class="mui-control-item">
-			    16级2班
-			        </a>
-			        <a class="mui-control-item">
-			    16级3班
-			        </a>
-			        <a class="mui-control-item">
-			    16级4班
-			        </a>
-			        <a class="mui-control-item">
-			    16级5班
-			        </a>
-			        <a class="mui-control-item">
-	           	16级6班
-			        </a>
-			        <a class="mui-control-item">
-			    16级7班
-			        </a>
+			    <div id="scroll-class" class="mui-scroll">
+
 			    </div>
 			</div>
 	    </div>
@@ -55,7 +36,7 @@
 		<!--<div id="refreshContainer" class="mui-scroll-wrapper">-->
 		  <div class="mui-scroll">
 		    <!--数据列表-->
-		    <ul id="list" class="mui-table-view">
+		    <ul id="list-container" class="mui-table-view">
 		      
 		    </ul>
 		  </div>
@@ -64,18 +45,24 @@
 		<a id="iconPublish" class="mui-icon iconfont icon-jia" ></a>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/homework/homework-tea.js"></script>
 		<script type="text/javascript">
+			h5fresh.addRefresh('list-container');
 			mui.init();
 			mui.plusReady(function(){
-				mui('#tabs-class').scroll();
-//				mui('#refreshContainer').scroll()
+				
 				/**监听父页面的图标事件*/
 				window.addEventListener('togglePop',function(e){
 					mui("#popover").popover('toggle');
 				})
+				//发布作业界面
 				events.addTap('iconPublish',function(){
 					events.openNewWindow('homework-publish.html')
 				})
+				//班级数据
+				var classes=['16级1班','16级2班','16级3班','16级4班','16级5班','16级6班','16级7班','16级8班','16级9班']
+				//控件加载班级
+				teaWork.addClasses(classes);
 //				events.createListView('listContainer',data,createInner())
 			})
 			/**

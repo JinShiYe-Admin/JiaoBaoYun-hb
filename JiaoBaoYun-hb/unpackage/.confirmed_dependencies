@@ -504,7 +504,8 @@
 			"js/utils/events.js",
 			"html/homework/homework-publish.html",
 			"fonts/mui.ttf",
-			"js/utils/h5fresh.js"
+			"js/utils/h5fresh.js",
+			"js/homework/homework-tea.js"
 		],
 		"refer": [
 			"html/homework/homework-publish.html"
@@ -524,7 +525,8 @@
 		],
 		"refer": [
 			"html/homework/homework-tea-sub.html",
-			"html/homework/homework-publish.html"
+			"html/homework/homework-publish.html",
+			"html/homework/publish-answer.html"
 		]
 	},
 	"html/homework/homework-publish.html": {
@@ -598,6 +600,21 @@
 			"css/homework/workdetail.css",
 			"fonts/mui.ttf",
 			"css/utils/common.css"
+		],
+		"refer": []
+	},
+	"html/homework/publish-answer.html": {
+		"resources": [
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"css/utils/common.css",
+			"css/homework/publish-answer.css",
+			"js/utils/camera.js",
+			"js/utils/events.js",
+			"js/utils/load.js"
 		],
 		"refer": []
 	}

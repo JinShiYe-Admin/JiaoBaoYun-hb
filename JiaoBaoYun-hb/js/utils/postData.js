@@ -39,7 +39,8 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 		var comData = {
 			uuid: plus.device.uuid,
 			utid: personalUTID,
-			token: personalToken
+			token: personalToken,
+			appid: plus.runtime.appid
 		};
 		commonData = $.extend(commonData, comData);
 	}

@@ -11,6 +11,5 @@ var sortUrls=(function(mod){
 		console.log(joined);
 		return joined;
 	}
-	
 	return mod;
 })(sortUrls||{})

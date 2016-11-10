@@ -28,6 +28,14 @@ var publicModel = (function($, mod) {
 		utxt:'',//签名
 		uimg:''//用户头像地址
 	}
+	
+	//16.通过群ID获取群学生
+	mod.model_groupStus = {
+		gid:'',//群ID
+		stuid:'',//学生资料id
+		stuname:'',//学生名称
+		stuimg:''//学生头像
+	}
 
 	return mod;
 
