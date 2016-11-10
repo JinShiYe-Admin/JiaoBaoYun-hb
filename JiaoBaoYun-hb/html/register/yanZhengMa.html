@@ -75,47 +75,71 @@
 						uid: document.getElementById("phoneNumber").value,
 						code: document.getElementById("yanzheng").value
 					};
-					//不需要加密的数据
-					var comData = {
-						uuid: plus.device.uuid,
-						shaketype: 'reg',
-						appid: plus.runtime.appid
-					};
 					// 等待的对话框
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-					//判断是注册0，还是验证码模式登录1
-					if(regFlag == 0) { //注册0
-						//发送网络请求，data为网络返回值
-						postDataEncry(storageKeyName.MAINURL + 'PostReg', enData, comData, 0, wd, function(data) {
-							//成功，关闭等待框
-							wd.close();
-							console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							//存储到手机本地
-							window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
-							//跳转到主界面
-							var temp;
-							events.openNewWindowWithData('../../html/index.html', temp);
-						});
-					} else { //验证码模式登录1
-						console.log('yanzhengma denglu');
-						//发送网络请求，data为网络返回值
-						postDataEncry(storageKeyName.MAINURL + 'PostCodeLogin', enData, comData, 0, wd, function(data) {
-							//成功，关闭等待框
-							wd.close();
-							console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							if(data.RspCode != 0000) {
-								mui.toast(data.RspTxt);
-								return;
-							} else {
-							//存储到手机本地
-							window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
-							//跳转到主界面
-							var temp;
-							events.openNewWindowWithData('../../html/index.html', temp);
-							}
-
-						});
+					//握手协议
+					//需要加密的数据
+					var enData0 = {};
+					//不需要加密的数据
+					var comData;
+					if(regFlag == 0) { //注册
+						comData = {
+							uuid: plus.device.uuid,
+							shaketype: 'reg',
+							appid: plus.runtime.appid
+						};
+					} else { //验证码登录1
+						comData = {
+							uuid: plus.device.uuid,
+							shaketype: 'login',
+							appid: plus.runtime.appid
+						};
 					}
+					//发送网络请求，data为网络返回值
+					postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData0, comData, 0, wd, function(data) {
+						wd.close();
+						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							//存储到手机本地
+							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+							//判断是注册0，还是验证码模式登录1
+							if(regFlag == 0) { //注册0
+								//发送网络请求，data为网络返回值
+								postDataEncry(storageKeyName.MAINURL + 'PostReg', enData, comData, 0, wd, function(data) {
+									//成功，关闭等待框
+									wd.close();
+									console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+									//存储到手机本地
+									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
+									//跳转到主界面
+									var temp;
+									events.openNewWindowWithData('../../html/index.html', temp);
+								});
+							} else { //验证码模式登录1
+								console.log('yanzhengma denglu');
+								//发送网络请求，data为网络返回值
+								postDataEncry(storageKeyName.MAINURL + 'PostCodeLogin', enData, comData, 0, wd, function(data) {
+									//成功，关闭等待框
+									wd.close();
+									console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+									if(data.RspCode != 0000) {
+										mui.toast(data.RspTxt);
+										return;
+									} else {
+										//存储到手机本地
+										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
+										//跳转到主界面
+										var temp;
+										events.openNewWindowWithData('../../html/index.html', temp);
+									}
+
+								});
+							}
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					});
+
 				});
 			});
 		</script>

@@ -1,5 +1,21 @@
 //本页面存放界面中需要的协议，接口作用、需要传值内容、调用的方法
 
+//本地存储
+document.write('<script src="../../js/libs/myStorage/myStorage.js"><\/script>');
+document.write('<script src="../../js/storageKeyName.js"><\/script>');
+//加密
+document.write('<script src="../../js/libs/RSA/Barrett.js"><\/script>');
+document.write('<script src="../../js/libs/RSA/BigInt.js"><\/script>');
+document.write('<script src="../../js/libs/RSA/RSA.js"><\/script>');
+document.write('<script src="../../js/utils/RSAEncrypt.js"><\/script>');
+//网络请求
+document.write('<script src="../../js/utils/postData.js"><\/script>');
+//签名
+document.write('<script src="../../js/libs/crypto-js/require.js"><\/script>');
+document.write('<script src="../../js/utils/sortSign.js"><\/script>');
+document.write('<script src="../../js/utils/signHmacSHA1.js"><\/script>');
+document.write('<script src="../../js/libs/jquery.js"><\/script>');
+
 //6.用户修改各项用户信息
 //调用方法
 //var comData = {
@@ -134,8 +150,7 @@ function postData_jiaobaoYunPro_PostGusers(commonData, wd, callback) {
 //		var personalToken = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token;
 //		//需要参数
 //		var comData = {
-//			token: personalToken,
-//          appid: plus.runtime.appid
+//			token: personalToken
 //		};
 function postData_jiaobaoYunPro_PostVerifyToken(commonData, wd, callback) {
 	//需要加密的数据

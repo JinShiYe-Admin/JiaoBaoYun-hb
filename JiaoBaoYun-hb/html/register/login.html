@@ -147,11 +147,10 @@
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<!--加密-->
 		<script src="../../js/libs/RSA/Barrett.js" type="text/javascript" charset="utf-8"></script>
-
 		<script src="../../js/libs/RSA/BigInt.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/RSA.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/utils/RSAEncrypt.js" type="text/javascript" charset="utf-8"></script>
-		<!---->
+		
 		<script src="js/mui.enterfocus.js" type="text/javascript" charset="utf-8"></script>
 		<!--网络请求-->
 		<script src="../../js/utils/postData.js" type="text/javascript" charset="utf-8"></script>
@@ -166,7 +165,7 @@
 				mui.init({
 					statusBarBackground: '#f7f7f7'
 				});
-				//				events.preLoad('register_phoneNumber.html');
+				events.preLoad('register_phoneNumber.html');
 				$.plusReady(function() {
 					plus.screen.lockOrientation("portrait-primary");
 					var settings = app.getSettings();
@@ -195,29 +194,6 @@
 						plus.navigator.closeSplashscreen();
 					}, 600);
 
-					//握手协议
-					//需要加密的数据
-					var enData = {};
-					//不需要加密的数据
-					var comData = {
-						uuid: plus.device.uuid,
-						shaketype: 'reg',
-						appid: plus.runtime.appid
-					};
-					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-					//发送网络请求，data为网络返回值
-					postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData, comData, 0, wd, function(data) {
-						wd.close();
-						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-						if(data.RspCode == 0) {
-							//存储到手机本地
-							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
-						} else {
-							mui.toast(data.RspTxt);
-						}
-					});
-
 					//检查 "登录状态/锁屏状态" 结束
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');
@@ -241,42 +217,56 @@
 							password: passwordBox.value
 						};
 
-						//账号密码登录协议
+						//先发送握手协议
 						//需要加密的数据
-						var enData = {
-							uid: loginInfo.account,
-							pw: loginInfo.password,
-						};
+						var enData0 = {};
 						//不需要加密的数据
-						var comData = {
+						var comData0 = {
 							uuid: plus.device.uuid,
-							shaketype: 'reg',
+							shaketype: 'login',
 							appid: plus.runtime.appid
 						};
 						// 等待的对话框
 						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 						//发送网络请求，data为网络返回值
-						postDataEncry(storageKeyName.MAINURL + 'PostLogin', enData, comData, 0, wd, function(data) {
+						postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData0, comData0, 0, wd, function(data) {
 							wd.close();
-							console.log('111111190909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							if(data.RspCode != 0000) {
-								mui.toast(data.RspTxt);
-								return;
-							} else {
-								mui.toast('登录成功')
+							console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode == 0) {
 								//存储到手机本地
-								window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
-								toMain();
+								window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+								//账号密码登录协议
+								//需要加密的数据
+								var enData = {
+									uid: loginInfo.account,
+									pw: loginInfo.password,
+								};
+								//不需要加密的数据
+								var comData = {
+									uuid: plus.device.uuid,
+									shaketype: 'login',
+									appid: plus.runtime.appid
+								};
+								console.log('endata:' + JSON.stringify(enData) + 'comdata:' + JSON.stringify(comData));
+								//发送网络请求，data为网络返回值
+								postDataEncry(storageKeyName.MAINURL + 'PostLogin', enData, comData, 0, wd, function(data) {
+									wd.close();
+									console.log('111111190909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+									if(data.RspCode != 0000) {
+										mui.toast(data.RspTxt);
+										return;
+									} else {
+										mui.toast('登录成功')
+											//存储到手机本地
+										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
+										toMain();
+									}
+								});
+							} else {
+								mui.toast(data.RspTxt);
 							}
 						});
 
-						//						app.login(loginInfo, function(err) {
-						//							if(err) {
-						//								plus.nativeUI.toast(err);
-						//								return;
-						//							}
-						//							toMain();
-						//						});
 					});
 					//遇到登录问题
 					moreButton.addEventListener('tap', function(event) {

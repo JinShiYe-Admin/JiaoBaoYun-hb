@@ -70,42 +70,64 @@
 						mui.toast('请输入有效的手机号码！');
 						return false;
 					}
-					//获取验证码协议
+					//握手协议
 					//需要加密的数据
-					var enData = {
-						uid: document.getElementById("phoneNumber").value
-					};
+					var enData0 = {};
 					//不需要加密的数据
-					var comData = {
-						uuid: plus.device.uuid,
-						shaketype: 'reg',
-						appid: plus.runtime.appid
-					};
+					var comData;
+					if(regFlag == 0) { //注册
+						comData = {
+							uuid: plus.device.uuid,
+							shaketype: 'reg',
+							appid: plus.runtime.appid
+						};
+					} else { //验证码登录1
+						comData = {
+							uuid: plus.device.uuid,
+							shaketype: 'login',
+							appid: plus.runtime.appid
+						};
+					}
 					// 等待的对话框
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					//发送网络请求，data为网络返回值
-					postDataEncry(storageKeyName.MAINURL + 'PostCode', enData, comData, 0, wd, function(data) {
-						//成功，关闭等待框
+					postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData0, comData, 0, wd, function(data) {
 						wd.close();
+						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							//存储到手机本地
+							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+							//获取验证码协议
+							//需要加密的数据
+							var enData = {
+								uid: document.getElementById("phoneNumber").value
+							};
+							//发送网络请求，data为网络返回值
+							postDataEncry(storageKeyName.MAINURL + 'PostCode', enData, comData, 0, wd, function(data) {
+								//成功，关闭等待框
+								wd.close();
 
-						//将输入的手机号，传到验证码界面
-						var tempValue = {
-							phone: phoneNum.value,
-							flag: regFlag
-						};
-						events.fireToPage('yanZhengMa.html', 'yanzhengma', function() {
-							return tempValue;
-						});
-						console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-						if(data.RspCode != 0000) {
-							mui.toast(data.RspTxt);
-							return;
+								//将输入的手机号，传到验证码界面
+								var tempValue = {
+									phone: phoneNum.value,
+									flag: regFlag
+								};
+								events.fireToPage('yanZhengMa.html', 'yanzhengma', function() {
+									return tempValue;
+								});
+								console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								if(data.RspCode != 0000) {
+									mui.toast(data.RspTxt);
+									return;
+								} else {
+
+								}
+							});
 						} else {
-
+							mui.toast(data.RspTxt);
 						}
-						//存储到手机本地
-						//							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
 					});
+
 				});
 			});
 		</script>

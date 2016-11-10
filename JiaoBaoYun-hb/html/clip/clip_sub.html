@@ -117,27 +117,9 @@
 		</div>
 
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
-		<!--本地存储-->
-		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
-		<!--加密-->
-		<script src="../../js/libs/RSA/Barrett.js" type="text/javascript" charset="utf-8"></script>
 
-		<script src="../../js/libs/RSA/BigInt.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/libs/RSA/RSA.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/utils/RSAEncrypt.js" type="text/javascript" charset="utf-8"></script>
-		<!---->
-		<script src="js/mui.enterfocus.js" type="text/javascript" charset="utf-8"></script>
-		<!--网络请求-->
-		<script src="../../js/utils/postData.js" type="text/javascript" charset="utf-8"></script>
-		<!--签名-->
-		<script src="../../js/libs/crypto-js/require.js"></script>
-		<script src="../../js/utils/sortSign.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/utils/signHmacSHA1.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/libs/jquery.js" type="text/javascript" charset="utf-8"></script>
-
-		<!--testPro-->
-		<script src="../../js/testPro.js" type="text/javascript" charset="utf-8"></script>
+		<!--publicProtocol-->
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 
 		<script>
 			mui.init({
@@ -169,6 +151,7 @@
 				//test
 				document.getElementById('testBtn').addEventListener('tap', function() {
 					console.log('testBtn');
+
 					var comData = {
 						vtp: 'unick', //uimg(头像),utxt(签名),unick(昵)称,usex(性别),uemail(邮件)
 						vvl: '测试修改昵称', //对应的值
