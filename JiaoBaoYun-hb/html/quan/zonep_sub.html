@@ -11,6 +11,9 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
+		<script type="text/javascript" src="../../js/testPro.js"></script>
+		<script type="text/javascript" src="../../js/publicModel.js"></script>
+		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
 		<style>
 			.mui-table-view {
 				background: transparent;
@@ -132,7 +135,7 @@
 			<div class="mui-scroll">
 				<!--数据列表-->
 				<ul class="mui-table-view">
-					<li id="0" class="mui-table-view-cell">
+					<!--<li id="0" class="mui-table-view-cell">
 						<div class="mui-row mui-row-padding-8px">
 							<div class="mui-col-sm-12 mui-col-xs-12">
 								<div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="../../image/dynamic/u101.png"></div>
@@ -201,13 +204,14 @@
 							</div>
 							<div class="mui-col-sm-12 mui-col-xs-12"><button type="button" class="mui-btn dynamic-comment-btn"><p class="mui-pull-left">评论</p></button></div>
 						</div>
-					</li>
+					</li>-->
 
 				</ul>
 			</div>
 		</div>
 	</body>
-	<!--<script>
+	<script>
+
 		mui.init({
 			pullRefresh: {
 				container: '#pullrefresh',
@@ -248,6 +252,7 @@
 		}
 		var id = 0;
 		mui.plusReady(function() {
+
 			var table = document.body.querySelector('.mui-table-view');
 			var data = addData();
 			dynamiclistitem.addItem(table, data, id);
@@ -373,6 +378,6 @@
 			Data = [InfoList, ImageList, InteractionList]
 			return Data;
 		}
-	</script>-->
+	</script>
 
 </html>

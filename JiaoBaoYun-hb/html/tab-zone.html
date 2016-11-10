@@ -10,8 +10,33 @@
 		<!--本页面样式表-->
 		<link rel="stylesheet" href="../css/home/zone.css" />
 		<script type="text/javascript" src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/quan/tab-zone.js" ></script>
 		<!--公用事件js文件-->
 		<script type="text/javascript" src="../js/utils/events.js"></script>
+		<script type="text/javascript" src="../js/testPro.js"></script>
+				<!--本地存储-->
+		<script src="../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
+		<!--加密-->
+		<script src="../js/libs/RSA/Barrett.js" type="text/javascript" charset="utf-8"></script>
+
+		<script src="../js/libs/RSA/BigInt.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/libs/RSA/RSA.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/utils/RSAEncrypt.js" type="text/javascript" charset="utf-8"></script>
+		<!---->
+		<!--网络请求-->
+		<script src="../js/utils/postData.js" type="text/javascript" charset="utf-8"></script>
+		<!--签名-->
+		<script src="../js/libs/crypto-js/require.js"></script>
+		<script src="../js/utils/sortSign.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/utils/signHmacSHA1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/libs/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+
+
+		<!--本地存储-->
+		<script src="../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<!--侧滑-->
 		<script src="../js/main/slide_navigation.js">
 		</script>
@@ -21,7 +46,7 @@
 			
 			.mui-segmented-control {
 				font-size: 14px;
-				width: 50%;
+				width: 65%;
 				border: 0px solid gray;
 				background-color: transparent;
 			}
@@ -32,7 +57,7 @@
 				/*字体颜色*/
 				color: black;
 				/*中间竖线颜色*/
-				border-left: 1px solid gray
+				border-left: 1px solid gray;
 			}
 			/*选择的item样式*/
 			
@@ -207,157 +232,5 @@
 				</div>
 			</div>
 		</div>
-
-		<script>
-			mui.init({
-				pullRefresh: {
-					container: '#pullrefresh',
-					down: {
-						callback: pulldownRefresh
-					},
-					up: {
-						contentrefresh: '正在加载...',
-						callback: pullupRefresh
-					}
-				}
-			});
-
-			function pulldownRefresh() {
-				setTimeout(function() {
-					var itemId = getActiveControl();
-					console.log(itemId);
-					var table;
-					var cells;
-					var parentCell;
-					if(itemId == '#item1') {
-						parentCell= 'parent-cell1';
-						table = document.body.querySelector('.parent-table1');
-						cells = document.body.querySelectorAll('.parent-cell1');
-					} else {
-						parentCell= 'parent-cell2';
-						table = document.body.querySelector('.parent-table2');
-						cells = document.body.querySelectorAll('.parent-cell2');
-					}
-
-					for(var i = cells.length, len = i + 3; i < len; i++) {
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell mui-media '+parentCell;
-						li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">\<p class="time">10月18</p>\<div class="mui-media-body">张曦曦<p class="mui-ellipsis">\在今天的全校演讲比赛中，我班有6名同学获奖...</p>\</div>';
-						//下拉刷新，新纪录插到最前面；
-						table.insertBefore(li, table.firstChild);
-					}
-					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-				}, 1500);
-			}
-			var count = 0;
-
-			function pullupRefresh() {
-				setTimeout(function() {
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
-					var itemId = getActiveControl();
-					console.log(itemId);
-					var table;
-					var cells;
-					if(itemId == '#item1') {
-						parentCell= 'parent-cell1';
-						table = document.body.querySelector('.parent-table1');
-						cells = document.body.querySelectorAll('.parent-cell1');
-					} else {
-						parentCell= 'parent-cell2';
-						table = document.body.querySelector('.parent-table2');
-						cells = document.body.querySelectorAll('.parent-cell2');
-					}
-					for(var i = cells.length, len = i + 20; i < len; i++) {
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell mui-media '+parentCell;
-						li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">\<p class="time">10月18</p>\<div class="mui-media-body">张曦曦<p class="mui-ellipsis">\在今天的全校演讲比赛中，我班有6名同学获奖...</p>\</div>';
-						//下拉刷新，新纪录插到最前面；
-						table.appendChild(li);
-					}
-				}, 1500);
-			}
-			var firstbtn = function(e) {
-				e.style.color = 'cornflowerblue'
-				var btn2 = document.getElementById('btn2');
-				btn2.style.color = 'black';
-			}
-			var secondbtn = function(e) {
-				e.style.color = 'cornflowerblue'
-				var btn1 = document.getElementById('btn1');
-				btn1.style.color = 'black';
-				var ps = document.getElementsByClassName('time');
-				for(var i = 0; i < ps.length; i++) {
-					ps[i].innerText = '10月20'
-				}
-				var contentnodes = document.getElementsByClassName('mui-ellipsis')
-				for(var i = 0; i < contentnodes.length; i++) {
-					contentnodes[i].innerText = '在今天的全校演讲比赛中，我班有6名同学获奖...'
-
-				}
-				var namenodes = document.getElementsByClassName('mui-media-body')
-				for(var i = 0; i < namenodes.length; i++) {
-					namenodes[i].innerHTML = '张雨欣' + '\<p class="mui-ellipsis ">' + contentnodes[i].innerHTML + '</p>'
-
-				}
-
-			}
-		</script>
-	</body>
-	<script>
-		mui.plusReady(function() {
-			var zhang = document.getElementById('zhang');
-			events.jumpPage(zhang, 'quan/zone_main.html');
-			var tar = document.getElementById('tarClass');
-			events.jumpPage(tar, 'quan/class_space.html');
-			console.log(localStorage.getItem('$Statusbar'));
-
-			//跳转到学生动态界面
-			mui('.mui-table-view').on('tap', '.studentsdynamic', function() {
-				mui.openWindow({
-					url: 'quan/studentdynamic_main.html',
-					id: 'quan/studentdynamic_main.html',
-					styles: {
-						top: '0px', //设置距离顶部的距离
-						bottom: '0px'
-					}
-				});
-			});
-
-			//跳转到家长空间界面
-			mui('.mui-table-view').on('tap', '.parent-cell1', function() {
-				mui.openWindow({
-					url: 'quan/zone_main.html',
-					id: 'quan/zone_main.html',
-					styles: {
-						top: '0px', //设置距离顶部的距离
-						bottom: '0px'
-					}
-				});
-			});
-			//跳转到家长空间界面
-			mui('.mui-table-view').on('tap', '.parent-cell2', function() {
-				mui.openWindow({
-					url: 'quan/zone_main.html',
-					id: 'quan/zone_main.html',
-					styles: {
-						top: '0px', //设置距离顶部的距离
-						bottom: '0px'
-					}
-				});
-			});
-
-		})
-
-		function getActiveControl() {
-			var segmentedControl = document.getElementById("segmentedControl");
-			var links = segmentedControl.getElementsByTagName('a');
-			for(var i = 0; i < links.length; i++) {
-				if(links[i].getAttribute('class').indexOf('mui-active') > 0) {
-					var id = links[i].getAttribute('href');
-					return id;
-				}
-			}
-		}
-	</script>
 
 </html>
