@@ -10,7 +10,7 @@
 	"icons": {
 		"72": "icon.png"
 	},
-	"launch_path": "html/homework/workdetail-tea-sub.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+	"launch_path": "html/homework/homework-tea.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
 	"developer": {
 		"name": "",/*开发者名称*/
 		"email": "",/*开发者邮箱地址*/
@@ -711,7 +711,9 @@
 					"css/iconfont/iconfont.css",
 					"fonts/iconfont.ttf",
 					"js/utils/events.js",
-					"html/homework/homework-publish.html"
+					"html/homework/homework-publish.html",
+					"fonts/mui.ttf",
+					"js/utils/h5fresh.js"
 				],
 				"refer": [],
 				"priority": 0
