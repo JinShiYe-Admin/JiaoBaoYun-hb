@@ -32,7 +32,7 @@ var dynamiclistitem = (function($, mod) {
 		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body mui-pull-left">';
 		//头像
 		var html2 = '<img class=" dynamic-personal-image" src="' + InfoList[0] + '"></div>';
-		var html3 = '<div class="mui-media-body dynamic-padding-left-10px"><span class="mui-icon mui-icon-arrowdown mui-pull-right"></span>';
+		var html3 = '<div class="mui-media-body dynamic-padding-left-10px"><a class="mui-icon mui-icon-arrowdown mui-pull-right" href="#popover"></a>';
 		//姓名
 		var html4 = '<h4>' + InfoList[1] + '<img src="../../image/dynamic/icon_Level39.png" class=" dynamic-icon-Level" /></h4>';
 		//时间
