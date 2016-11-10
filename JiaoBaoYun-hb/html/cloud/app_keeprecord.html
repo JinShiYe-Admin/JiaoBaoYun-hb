@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
-
+		<script type="text/javascript" src="../../js/publicProtocol.js" ></script>
 		<style>
 			.mui-table-view:before,
 			.mui-table-view:after,
@@ -24,7 +24,7 @@
 				background-color: white;
 			}
 
-			.keep-noclass {
+			.keep-noqun {
 				/*无班级*/
 				text-align: center;
 				margin-top: 20px;
@@ -77,7 +77,7 @@
 				padding: 3px;
 			}
 
-			.addclass {
+			.addqun {
 				/*添加班级的元素*/
 			}
 
@@ -98,20 +98,20 @@
 			<div class="mui-popover" style="width: 100%;top: 150px;height: 200px;">
 				<ul class="mui-table-view">
 					<img id="closepop" src="../../image/cloud/record_addclassclose.png" style="height: 30px;float: right;margin: 10px;" />
-					<input id="inputclassname" type="text" class="mui-input-clear" placeholder="请输入班级名称" style="width:80% ;margin-left: 10%;text-align: center;border-radius: 50px;">
+					<input id="inputqunname" type="text" class="mui-input-clear" placeholder="请输入班级名称" style="width:80% ;margin-left: 10%;text-align: center;border-radius: 50px;">
 					<button id="createclass" type="button" class="mui-btn mui-btn-blue mui-btn-block" style="border-radius: 50px;height: 40px;width: 80%;left: 10%;padding: 0;">创建</button>
 				</ul>
 			</div>
-			<div id="noclass" class="keep-noclass" style="display: none;">
+			<div id="noqun" class="keep-noqun" style="display: none;">
 				<h5>现在没有班级请点击一下按钮创建班级</h5>
 				<div>
-					<img class="addclass" src="../../image/cloud/record_addclass.gif" />
+					<img class="addqun" src="../../image/cloud/record_addclass.gif" />
 				</div>
 			</div>
 			<div id="line" class="keep-line-blue" style="display: none;"></div>
 			<div id="slider" class="mui-slider mui-fullscreen" style="display: none;">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div id="classlist" class="mui-scroll">
+					<div id="qunlist" class="mui-scroll">
 						<!--<a class="mui-control-item" href="#1001班">
 							1001班
 						</a>
@@ -120,10 +120,10 @@
 						</a>-->
 						<a id="controladd" class="mui-control-item" style="width: 40px;">
 						</a>
-						<div class="mui-icon mui-icon-plus addclass addclass-icon" style="position: absolute;border: 0px solid #ddd;font-size: 25px;color: #C7C7CC;right: 0px;"></div>
+						<div class="mui-icon mui-icon-plus addqun" style="position: absolute;border: 0px solid #ddd;font-size: 25px;color: #C7C7CC;right: 0px;"></div>
 					</div>
 				</div>
-				<div id="classmemberlist" class="mui-slider-group">
+				<div id="qunmemberlist" class="mui-slider-group">
 					<!--<div id="1001班" class="mui-slider-item mui-control-content mui-active">
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
@@ -168,25 +168,50 @@
 	<script type="text/javascript">
 		mui.init();
 		mui.plusReady(function() {
-			var classNameList = []; //记录所有班级的名称
-			var historyClass = ''; //记录选择的班级名称，用于显示历史记录
+			var qunList = []; //记录所有班级的名称
+			var historyQun = null; //记录选择的班级，用于显示历史记录
 			var content = document.body.querySelector('.mui-content');
-			var classlist = document.getElementById("classlist"); //班级栏
+			var qunlist = document.getElementById("qunlist"); //班级栏
 			var controladd = document.getElementById("controladd"); //班级栏添加班级按钮前一个item
-			var classmemberlist = document.getElementById("classmemberlist"); //成员列表
-			classNameList = ['000', '001', '010', '011', '100', '101', '110', '111'];
-			if(classNameList.length == 0) {
-				//没有班级
-				document.getElementById("noclass").style.display = 'inline';
-				document.getElementById("noclass").style.textAlign = "center";
-			} else {
-				//有班级
-				document.getElementById("line").style.display = 'inline';
-				document.getElementById("slider").style.display = 'inline';
-				mui.each(classNameList, function(index, item) {
-					addClass(item);
-				});
-			}
+			var qunmemberlist = document.getElementById("qunmemberlist"); //成员列表
+
+			//---获取群数据---start---
+			//9.获取用户群
+			//获取个人信息
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+			//需要参数
+			var comData = {
+				vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
+				vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postData_jiaobaoYunPro_PostGList(comData, wd, function(data) {
+				wd.close();
+				console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+					//获取到数据
+					console.log('获取群数据成功');
+					document.getElementById("line").style.display = 'inline';
+					document.getElementById("slider").style.display = 'inline';
+					mui.each(data.RspData, function(index, item) {
+						console.log('data.RspData:' + item.gname);
+						var qun = {
+							gid: item.gid,
+							gname: item.gname,
+							gimg: item.gimg
+						}
+						qunList.push(qun);
+						addQun(qun);
+					});
+				} else {
+					mui.toast(data.RspTxt);
+					//未获取到数据
+					document.getElementById("noqun").style.display = 'inline';
+					document.getElementById("noqun").style.textAlign = "center";
+				}
+			});
+			//---获取群数据---end---
 
 			//---创建班级popover---start---
 			//关闭创建班级界面
@@ -196,32 +221,53 @@
 
 			//创建班级
 			document.getElementById('createclass').addEventListener('tap', function() {
-				var inputclass = document.getElementById("inputclassname");
-				var name = inputclass.value; //创建的班级名称
+				var inputqun = document.getElementById("inputqunname");
+				var name = inputqun.value; //创建的班级名称
 				if(name == '') {
 					mui.toast('不允许为空');
 				} else {
-					//发送数据并获得成功创建的回调后
-					if(classNameList.length == 0) {
-						//移除没有班级的界面
-						document.getElementById("noclass").style.display = 'none';
-						document.getElementById("line").style.display = 'inline';
-						document.getElementById("slider").style.display = 'inline';
-					}
-					classNameList.push(name);
-					addClass(name);
-					mui('.mui-popover').popover('hide');
-					inputclass.value = '';
+					//7.用户创建群
+					//需要参数
+					var comData = {
+						gname: name, //群名
+						gimg: '1abc', //群头像
+					};
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postData_jiaobaoYunPro_PostCrGrp(comData, wd, function(data) {
+						wd.close();
+						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							console.log('创建群成功');
+							if(qunList.length == 0) {
+								//移除没有班级的界面
+								document.getElementById("noqun").style.display = 'none';
+								document.getElementById("line").style.display = 'inline';
+								document.getElementById("slider").style.display = 'inline';
+							}
+							var qun = {
+								gid: data.RspData,
+								gname: name,
+								gimg: ''
+							}
+							qunList.push(qun);
+							addQun(qun);
+							mui('.mui-popover').popover('hide');
+							inputqun.value = '';
+						} else {
+							mui.toast(data.RspTxt);
+							console.log('创建群失败：' + data.RspTxt);
+						}
+					});
 				}
-
 			});
 			//---创建班级popover---end---
 			//滑动组件监听
 			document.querySelector('.mui-slider').addEventListener('slide', function(event) {
-				historyClass = classNameList[event.detail.slideNumber];
+				historyQun = qunList[event.detail.slideNumber];
 			});
 			//所有的添加班级按钮监听
-			mui('.mui-content').on('tap', '.addclass', function() {
+			mui('.mui-content').on('tap', '.addqun', function() {
 				mui('.mui-popover').popover('show');
 			});
 
@@ -252,11 +298,11 @@
 				events.openNewWindow('keeprecord_link.html');
 			});
 			document.getElementById('history').addEventListener('tap', function() {
-				var passData = historyClass;
-				if(passData == '') {
-					passData = classNameList[0];
+				var passData = historyQun;
+				if(passData == null) {
+					passData = qunList[0];
 				}
-				console.log('passData:' + passData);
+				console.log('passData:' + JSON.stringify(passData));
 
 				events.openNewWindow('keeprecord_history_main.html');
 
@@ -264,7 +310,7 @@
 					var main = plus.webview.getWebviewById('keeprecord_history_sub.html');
 					if(main !== null) {
 						mui.fire(main, "passData", {
-							className: passData
+							qun: passData
 						});
 					}
 				}, 1000);
@@ -274,28 +320,29 @@
 			/**
 			 * 班级栏添加一个班级，对应的成员栏添加默认界面
 			 */
-			function addClass(name) {
+			function addQun(qun) {
 				//班级栏添加班级
+				console.log('addQun-qun:' + JSON.stringify(qun));
 				var a = document.createElement('a');
-				a.innerText = name;
-				if(classNameList[0] == name) {
+				a.innerText = qun.gname;
+				if(qunList[0].gid == qun.gid) {
 					a.className = 'mui-control-item mui-active';
 				} else {
 					a.className = 'mui-control-item';
 				}
-				a.setAttribute('href', '#' + name);
-				classlist.insertBefore(a, controladd);
+				a.setAttribute('href', '#' + qun.gid);
+				qunlist.insertBefore(a, controladd);
 
 				//成员栏添加默认元素
 				var div = document.createElement('div');
-				div.id = name;
+				div.id = qun.gid;
 				div.className = 'mui-slider-item mui-control-content';
 				div.innerHTML = '<div class="mui-scroll-wrapper">\
 								<div class="mui-scroll">\
 									<ul class="mui-table-view">\
 										<div class="mui-row" style="margin-top: 8px;">\
-											<li id="addmember_' + name + '" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">\
-												<div class="keep-box-shadow-border keep-member addmember" data-id="' + name + '">\
+											<li id="addmember_' + qun.gid + '" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">\
+												<div class="keep-box-shadow-border keep-member addmember" data-id="' + qun.gid + '">\
 													<img src="../../image/cloud/record_add.png" style="height: 30px;width: 30px;margin-top: 18px;" />\
 												</div>\
 											</li>\
@@ -303,7 +350,7 @@
 									</ul>\
 								</div>\
 							</div>';
-				classmemberlist.appendChild(div);
+				qunmemberlist.appendChild(div);
 				mui(".mui-slider").slider().refresh();
 			}
 
