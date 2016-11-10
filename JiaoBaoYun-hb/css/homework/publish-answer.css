@@ -1,0 +1,13 @@
+.btn-publish{
+	position: absolute;
+	bottom: 2rem;
+	left: 25%;
+	right: 25%;
+	width: 50%;
+	height: 4rem;
+	font-size: 2rem;
+	border-radius:2rem ;
+}
+#pictures img{
+	width: 25%;
+}

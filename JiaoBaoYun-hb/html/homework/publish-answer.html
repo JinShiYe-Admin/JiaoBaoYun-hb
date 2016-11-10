@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<link href="../../css/homework/publish-answer.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">上传答案||作业</h1>
+		    <a id="getAnswer" class="mui-icon iconfont icon-xiangji mui-pull-right"></a>
+		</header>
+		<div class="mui-content">
+		    <form class="mui-input-group">
+		        <div class="mui-input-row">
+		            <label>科目:</label>
+		            <select>
+		            	<option>语文</option>
+		            	<option>数学</option>
+		            	<option>英语</option>
+		            	<option>历史</option>
+		            	<option>政治</option>
+		            	<option>地理</option>
+		            	<option>物理</option>
+		            	<option>化学</option>
+		            	<option>生物</option>
+		            	<option>其他</option>
+		            </select>
+		        </div>
+		        <div id="pictures">
+		        	
+		        </div>
+		        <p style="text-align: center;">请上传答案图片，以供学生参考</p>
+		    </form>
+		    <button  id='post-imgs' class="mui-btn mui-btn-blue btn-publish">上传作业</button>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/utils/camera.js"></script>
+		<script src="../../js/utils/load.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				//手势事件配置
+				gestureConfig:{
+					longtap:true//长按事件 可监听
+				}
+			})
+			mui.plusReady(function(){
+				var pictures=document.getElementById('pictures');
+				events.addTap('getAnswer',function(){
+					camera.getPic(camera.getCamera(),function(picPath){
+						var div=document.createElement('div');
+						div.className='img-div';
+						div.innerHTML='<img src="'+picPath+'"/>'
+										+'<a class="mui-icon mui-icon-add" id="delete"></a>'
+						img.src=picPath;
+						img.className='post-img';
+						pictures.appendChild(img);
+					})
+				})
+				mui('#pictures').on('longtap','post-img',function(){
+					
+				})
+				var server="http://demo.dcloud.net.cn/helloh5/uploader/upload.php";
+				events.addTap('post-imgs',function(){
+					if(camera.imgPaths.length>0){
+						load.createUpload(server,camera.imgPaths);
+					}else{
+						mui.toast('请拍照后上传')
+					}
+				})
+			})
+			
+		</script>
+	</body>
+
+</html>
