@@ -12,7 +12,6 @@ mui.init({
 			});
 
 mui.plusReady(function() {
-//			console.log(window.storageKeyName.PERSONALINFO)
 //			var personalUTID = (window.myStorage.getItem(window.storageKeyName.PERSONALINFO)).utid;
 //			var comData = {
 //				vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
@@ -22,24 +21,31 @@ mui.plusReady(function() {
 //			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 //			postData_jiaobaoYunPro_PostGList(comData, wd, function(data) {
 //				wd.close();
-//				mui.toast('postData_jiaobaoYunPro_PostGListsuccess:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//				console.log('postData_jiaobaoYunPro_PostGListsuccess:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 //				if(data.RspCode == 0) {
 //
 //				} else {
 //					mui.toast(data.RspTxt);
 //				}
 //			});
-			var zhang = document.getElementById('zhang');
-			events.jumpPage(zhang, 'quan/zone_main.html');
-			var tar = document.getElementById('tarClass');
-			events.jumpPage(tar, 'quan/class_space.html');
-			console.log(localStorage.getItem('$Statusbar'));
+
 
 			//跳转到学生动态界面
 			mui('.mui-table-view').on('tap', '.studentsdynamic', function() {
 				mui.openWindow({
-					url: 'quan/studentdynamic_main.html',
-					id: 'quan/studentdynamic_main.html',
+					url: 'studentdynamic_main.html',
+					id: 'studentdynamic_main.html',
+					styles: {
+						top: '0px', //设置距离顶部的距离
+						bottom: '0px'
+					}
+				});
+			});
+						//跳转到班级动态界面
+			mui('.mui-table-view').on('tap', '.tarClass', function() {
+				mui.openWindow({
+					url: 'class_space.html',
+					id: 'class_space.html',
 					styles: {
 						top: '0px', //设置距离顶部的距离
 						bottom: '0px'
@@ -47,11 +53,12 @@ mui.plusReady(function() {
 				});
 			});
 
+
 			//跳转到家长空间界面
 			mui('.mui-table-view').on('tap', '.parent-cell1', function() {
 				mui.openWindow({
-					url: 'quan/zone_main.html',
-					id: 'quan/zone_main.html',
+					url: 'zone_main.html',
+					id: 'zone_main.html',
 					styles: {
 						top: '0px', //设置距离顶部的距离
 						bottom: '0px'
@@ -61,8 +68,8 @@ mui.plusReady(function() {
 			//跳转到家长空间界面
 			mui('.mui-table-view').on('tap', '.parent-cell2', function() {
 				mui.openWindow({
-					url: 'quan/zone_main.html',
-					id: 'quan/zone_main.html',
+					url: 'zone_main.html',
+					id: 'zone_main.html',
 					styles: {
 						top: '0px', //设置距离顶部的距离
 						bottom: '0px'

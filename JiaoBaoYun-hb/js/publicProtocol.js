@@ -16,6 +16,7 @@ document.write('<script src="../../js/utils/sortSign.js"><\/script>');
 document.write('<script src="../../js/utils/signHmacSHA1.js"><\/script>');
 document.write('<script src="../../js/libs/jquery.js"><\/script>');
 
+
 //6.用户修改各项用户信息
 //调用方法
 //var comData = {
