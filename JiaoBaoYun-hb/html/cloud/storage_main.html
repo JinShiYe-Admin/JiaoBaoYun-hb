@@ -75,7 +75,7 @@
 			document.getElementById('download').addEventListener('tap', function() {
 				mui.toast('download');
 			});
-			document.getElementById('add').addEventListener('tap', function() {
+			document.getElementById('add').addEventListener('tap', function(e) {
 				e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
 				var btnArray = ['取消', '确定'];
 				mui.prompt('请输入新文件夹的名称：', '新文件夹', '新建文件夹', btnArray, function(e) {
