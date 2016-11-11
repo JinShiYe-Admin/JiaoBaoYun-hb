@@ -13,44 +13,106 @@
 			mui.init()
 		</script>
 		<script src="../../js/utils/grideControl.js"></script>
+		<style type="text/css">
+			.mui-segmented-control {
+				font-size: 14px;
+				width: 50%;
+				border: 0px solid gray;
+				background-color: transparent;
+			}
+			
+			.mui-segmented-control .mui-control-item {
+				/*行高*/
+				line-height: 30px;
+				/*字体颜色*/
+				color: black;
+				/*中间竖线颜色*/
+				border-left: 1px solid gray;
+			}
+			/*选择的item样式*/
+			
+			.mui-segmented-control.mui-segmented-control .mui-control-item.mui-active {
+				color: #007aff;
+				border-bottom: 0px solid red;
+				background: 0 0
+			}
+		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">1002班</h1>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">1002班</h1>
 		</header>
-		
-			<div class="mui-content mui-scroll-wrapper">
-			    <div class="mui-scroll">
-			        <!--这里放置真实显示的DOM内容-->
-			         <ul id="gride" class="mui-table-view mui-grid-view mui-grid-9"></ul>
-			         <button type="button" class="mui-btn mui-btn-danger group-button">退群</button>
-			    </div>
-			    
-			</div> 
-			
-		
+		<div class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div style="background-color:lightgray">
+					<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-primary">
+
+						<a class="mui-control-item mui-active" href="#item1">
+							学生
+						</a>
+						<a class="mui-control-item" href="#item2">
+							老师
+						</a>
+						<a class="mui-control-item" href="#item3">
+							家长
+						</a>
+
+					</div>
+				</div>
+				<div id="item1" class="mui-control-content mui-active">
+					<!--这里放置真实显示的DOM内容-->
+					<ul id="gride1" class="mui-table-view mui-grid-view mui-grid-9"></ul>
+					<button type="button" class="mui-btn mui-btn-danger group-button">退群</button>
+
+				</div>
+				<div id="item2" class="mui-control-content mui-active">
+					<!--这里放置真实显示的DOM内容-->
+					<ul id="gride2" class="mui-table-view mui-grid-view mui-grid-9"></ul>
+					<button type="button" class="mui-btn mui-btn-danger group-button">退群</button>
+
+				</div>
+				<div id="item3" class="mui-control-content mui-active">
+					<!--这里放置真实显示的DOM内容-->
+					<ul id="gride3" class="mui-table-view mui-grid-view mui-grid-9"></ul>
+					<button type="button" class="mui-btn mui-btn-danger group-button">退群</button>
+
+				</div>
+
+			</div>
+
+		</div>
+
 	</body>
 	<script>
 		mui('.mui-scroll-wrapper').scroll({
 			indicators: true, //是否显示滚动条
 		})
-		mui.plusReady(function(){
+		mui.plusReady(function() {
 			setGride()
 		})
-		var setGride=function(){
-			var names=['许仙','程颐','风萧萧','袁生','陈楚生','东一','陈云','萝莉','舒颜','王默',
-			'菲林','兰兰','黄小仙','祖云','杨洋','李煜','张云','徐凡','徐凡飞'];
-			var imgs=['../../image/quan/group/u165.png','../../image/quan/group/u169.png','../../image/quan/group/u173.png','../../image/quan/group/u177.png','../../image/quan/group/u181.png','../../image/quan/group/u189.png',
-			'../../image/quan/group/u191.png','../../image/quan/group/u201.png','../../image/quan/group/u205.png','../../image/quan/group/u209.png','../../image/quan/group/u213.png','../../image/quan/group/u217.png',
-			'../../image/quan/group/u219.png','../../image/quan/group/u223.png','../../image/quan/group/u227.png','../../image/quan/group/u231.png','../../image/quan/group/u233.png','../../image/quan/group/u237.png',
-			'../../image/quan/group/u241.png',]
+		var setGride = function() {
+			var names = ['许仙', '程颐', '风萧萧', '袁生', '陈楚生', '东一', '陈云', '萝莉', '舒颜', '王默',
+				'菲林', '兰兰', '黄小仙', '祖云', '杨洋', '李煜', '张云', '徐凡', '徐凡飞'
+			];
+			var imgs = ['../../image/quan/group/u165.png', '../../image/quan/group/u169.png', '../../image/quan/group/u173.png', '../../image/quan/group/u177.png', '../../image/quan/group/u181.png', '../../image/quan/group/u189.png',
+				'../../image/quan/group/u191.png', '../../image/quan/group/u201.png', '../../image/quan/group/u205.png', '../../image/quan/group/u209.png', '../../image/quan/group/u213.png', '../../image/quan/group/u217.png',
+				'../../image/quan/group/u219.png', '../../image/quan/group/u223.png', '../../image/quan/group/u227.png', '../../image/quan/group/u231.png', '../../image/quan/group/u233.png', '../../image/quan/group/u237.png',
+				'../../image/quan/group/u241.png',
+			]
 			names.push('添加');
 			imgs.push('../../image/quan/group/u195.gif')
-			var urls=[];
-			var gride=document.getElementById('gride')
-			createGirde(gride,createArray(names,imgs,urls))
+			var urls = [];
+			var gride = document.getElementById('gride1')
+
+			createGirde(gride, createArray(names, imgs, urls))
+			var gride = document.getElementById('gride2')
+
+			createGirde(gride, createArray(names, imgs, urls))
+			var gride = document.getElementById('gride3')
+
+			createGirde(gride, createArray(names, imgs, urls))
 		}
 	</script>
 
