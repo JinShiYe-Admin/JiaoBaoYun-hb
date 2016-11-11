@@ -12,6 +12,8 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/homework/homework.css" rel="stylesheet" />
+		<!--h5下拉刷新-->
+		<script src="../../js/utils/h5fresh.js"></script>
 	</head>
 
 	<body>
@@ -21,30 +23,46 @@
 			    	  <li class="mui-table-view-cell"><a class="mui-icon iconfont icon-shubendisc" href="">错题本</a></li>
 			    	  <li class="mui-table-view-cell"><a class="mui-icon iconfont icon-shezhi1" href="">作业记录</a></li>
 			    </ul>
-	    	</div>
+	    </div>
+	    <div class="mui-content">
+	    	<!--班级选择状态条-->
+	        <div id="tabs-class" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+			    <div id="scroll-class" class="mui-scroll">
+
+			    </div>
+			</div>
+	    </div>
 		<!--下拉刷新容器-->
-		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		<!--<div id="refreshContainer" class="mui-scroll-wrapper">-->
 		  <div class="mui-scroll">
 		    <!--数据列表-->
 		    <ul id="list-container" class="mui-table-view">
 		      
 		    </ul>
 		  </div>
-		</div>
+	<!--</div>-->
 		<!--发布作业按钮-->
 		<a id="iconPublish" class="mui-icon iconfont icon-jia" ></a>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/homework/homework-tea.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			h5fresh.addRefresh('list-container');
+			mui.init();
 			mui.plusReady(function(){
+				
 				/**监听父页面的图标事件*/
 				window.addEventListener('togglePop',function(e){
 					mui("#popover").popover('toggle');
 				})
+				//发布作业界面
 				events.addTap('iconPublish',function(){
 					events.openNewWindow('homework-publish.html')
 				})
+				//班级数据
+				var classes=['16级1班','16级2班','16级3班','16级4班','16级5班','16级6班','16级7班','16级8班','16级9班']
+				//控件加载班级
+				teaWork.addClasses(classes);
 //				events.createListView('listContainer',data,createInner())
 			})
 			/**
@@ -67,8 +85,7 @@
 								+cell.imgs
 							+'</div>'
 							+'<p>已上传试卷人数('+cell.stuWorkNo+')</p>'
-						+'</div>'
-							
+						+'</div>'	
 			}
 		</script>
 	</body>

@@ -10,7 +10,7 @@
 	"icons": {
 		"72": "icon.png"
 	},
-	"launch_path": "html/register/login.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+	"launch_path": "html/homework/homework-tea.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
 	"developer": {
 		"name": "",/*开发者名称*/
 		"email": "",/*开发者邮箱地址*/
@@ -711,7 +711,10 @@
 					"css/iconfont/iconfont.css",
 					"fonts/iconfont.ttf",
 					"js/utils/events.js",
-					"html/homework/homework-publish.html"
+					"html/homework/homework-publish.html",
+					"fonts/mui.ttf",
+					"js/utils/h5fresh.js",
+					"js/homework/homework-tea.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -729,7 +732,8 @@
 					"css/utils/common.css"
 				],
 				"refer": [
-					"html/homework/homework-publish.html"
+					"html/homework/homework-publish.html",
+					"html/homework/publish-answer.html"
 				],
 				"priority": 0
 			},
@@ -806,6 +810,26 @@
 					"css/homework/workdetail.css",
 					"fonts/mui.ttf",
 					"css/utils/common.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/homework/publish-answer.html": {
+				"resources": [
+					"css/iconfont/iconfont.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"fonts/iconfont.ttf",
+					"css/utils/common.css",
+					"css/homework/publish-answer.css",
+					"js/utils/camera.js",
+					"js/utils/events.js",
+					"js/utils/load.js",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js",
+					"js/libs/jquery.js",
+					null
 				],
 				"refer": [],
 				"priority": 0

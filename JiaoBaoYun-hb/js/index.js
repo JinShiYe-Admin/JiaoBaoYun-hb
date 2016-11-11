@@ -15,7 +15,7 @@ mui.plusReady(function() {
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
-	var subpages = ['tab-zone.html', 'tab_knowledge.html', 'clip/clip_sub.html', 'cloud/cloud_home.html'];
+	var subpages = ['quan/tab-zone.html', 'tab_knowledge.html', 'clip/clip_sub.html', 'cloud/cloud_home.html'];
 	var titles = ['家校圈', '问答', '视频', '云盘'];
 	//设置子页面距离顶部的位置
 
@@ -135,6 +135,8 @@ mui.plusReady(function() {
 	}
 			var aboutme = document.getElementById('aboutme');
 			events.jumpPage(aboutme, 'quan/aboutme.html');
+			var zone = document.getElementById('leave');
+			events.jumpPage(zone, 'quan/leave.html');
 	//自定义事件，模拟点击“首页选项卡”
 	document.addEventListener('gohome', function() {
 		var defaultTab = document.getElementById("defaultTab");
