@@ -58,6 +58,34 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 	//拼接登录需要的签名
 	var signTemp = sortUrls.sortIt(signArr);
 
+	//将对象转为数组
+//	var arr0 = [];
+//	for(var item in encryData) {
+//		arr0.push(item);
+//	};
+//	var arr1 = [];
+//	for(var item in commonData) {
+//		arr1.push(item);
+//	};
+//	//合并数组
+//	var signArr = arr0.concat(arr1);
+//	//拼接登录需要的签名
+//	var signTemp0 = sortUrls.sortIt(signArr);
+//	//将拼接好的签名，拆为数组
+//	var signTempArr = signTemp0.split('&');
+//	//合并对象
+//	var tempData0 = $.extend(encryData, commonData);
+//	//循环遍历，找对应的值，然后拼接
+//	var signTemp = '';
+//	for (var tempSign in signTempArr) {
+//		for(var item in tempData0) {
+//			if (signTempArr[tempSign] == item) {
+//				signTemp = signTemp+item + '=' + tempData0[item]+'&';
+//			}
+//		};
+//	}
+//	signTemp = signTemp.substring(0,signTemp.length-1);
+	
 	//生成签名，返回值sign则为签名
 	signHmacSHA1.sign(signTemp, storageKeyName.SIGNKEY, function(sign) {
 		//组装发送握手协议需要的data
