@@ -10,7 +10,7 @@
 	"icons": {
 		"72": "icon.png"
 	},
-	"launch_path": "html/homework/homework-tea.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+	"launch_path": "html/register/login.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
 	"developer": {
 		"name": "",/*开发者名称*/
 		"email": "",/*开发者邮箱地址*/
@@ -206,7 +206,8 @@
 					"css/iconfont/iconfont.css",
 					"fonts/iconfont.ttf",
 					"html/zone_sub.html",
-					"html/tab-zone.html"
+					"html/tab-zone.html",
+					"html/quan/tab-zone.html"
 				],
 				"refer": [
 					"html/tab_knowledge.html",
@@ -700,7 +701,9 @@
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/index.html"
+				],
 				"priority": 0
 			},
 			"html/homework/homework-tea-sub.html": {
@@ -745,7 +748,12 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"fonts/iconfont.ttf",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"js/utils/camera.js",
+					"js/utils/events.js",
+					"css/homework/homework-publish.css",
+					"js/utils/audio.js",
+					"js/common.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -833,6 +841,35 @@
 				],
 				"refer": [],
 				"priority": 0
+			},
+			"html/homework/homework-commit.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"css/homework/homework-commit.css",
+					"js/utils/events.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/tab-zone.html": {
+				"resources": [
+					"image/tab_zone/u34.png",
+					"js/publicProtocol.js",
+					"js/quan/tab-zone.js",
+					"css/home/zone.css",
+					"image/tab_zone/u127.png",
+					"css/mui.css",
+					"image/tab_zone/u91.png",
+					"image/tab_zone/u72.png"
+				],
+				"refer": [
+					"html/quan/studentdynamic_main.html",
+					"html/quan/class_space.html"
+				],
+				"priority": 0
 			}
 		},
 		"idle": {
@@ -844,7 +881,6 @@
 				"image/zone_sel.png",
 				"js/utils/textarea.js",
 				"css/utils/imgeControl.css",
-				"css/mui.css",
 				"css/utils/textarea.css",
 				"css/utils/documents.css",
 				"image/clip_sel.png",
