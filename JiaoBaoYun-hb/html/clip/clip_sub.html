@@ -151,14 +151,13 @@
 				//test
 				document.getElementById('testBtn').addEventListener('tap', function() {
 					console.log('testBtn');
-
+					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					var comData = {
-						vtp: 'unick', //uimg(头像),utxt(签名),unick(昵)称,usex(性别),uemail(邮件)
-						vvl: '测试修改昵称', //对应的值
+						userId: personalUTID //用户ID
 					};
 					// 等待的对话框
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-					postData_jiaobaoYunPro_PostReUinf(comData, wd, function(data) {
+					postData_jiaobaoYunPro_getNoReadNotesCntByUser(comData, wd, function(data) {
 						wd.close();
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
