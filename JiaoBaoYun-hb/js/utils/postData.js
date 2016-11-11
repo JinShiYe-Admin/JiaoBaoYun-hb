@@ -19,7 +19,7 @@ function postData(url, data, callback, waitingDialog) {
 //url,
 //encryData,需要加密的字段
 //commonData,不需要加密的对象
-//flag,0表示不需要合并共用数据，1为添加uuid、utid、token普通参数，
+//flag,0表示不需要合并共用数据，1为添加uuid、utid、token、appid普通参数，2为uuid、appid、token
 //waitingDialog,等待框
 //callback,返回值
 function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback) {
@@ -43,6 +43,15 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 			appid: plus.runtime.appid
 		};
 		commonData = $.extend(commonData, comData);
+	}else if(flag == 2){
+		//获取个人信息
+		var personalToken = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token;
+		var comData = {
+			uuid: plus.device.uuid,
+			token: personalToken,
+			appid: plus.runtime.appid
+		};
+		commonData = $.extend(commonData, comData);
 	}
 	//将对象转为数组
 	var arr0 = [];
@@ -57,7 +66,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 	var signArr = arr0.concat(arr1);
 	//拼接登录需要的签名
 	var signTemp = sortUrls.sortIt(signArr);
-
+	console.log('sign:'+signTemp);
 	//将对象转为数组
 //	var arr0 = [];
 //	for(var item in encryData) {
@@ -103,7 +112,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 			dataType: 'json',
 			type: 'post',
 			contentType: "application/json",
-			timeout: 6000,
+			timeout: 60000,
 			success: callback,
 			error: function(xhr, type, errorThrown) {
 				//				console.log('wang luo cuowu:'+JSON.stringify(xhr)+','+type+','+errorThrown);
