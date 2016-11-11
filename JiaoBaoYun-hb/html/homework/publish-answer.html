@@ -35,10 +35,11 @@
 		            	<option>其他</option>
 		            </select>
 		        </div>
+		         <p style="text-align: center;">请上传答案图片，以供学生参考</p>
 		        <div id="pictures">
 		        	
 		        </div>
-		        <p style="text-align: center;">请上传答案图片，以供学生参考</p>
+		       
 		    </form>
 		    <button  id='post-imgs' class="mui-btn mui-btn-blue btn-publish">上传作业</button>
 		</div>
@@ -46,6 +47,8 @@
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/utils/camera.js"></script>
 		<script src="../../js/utils/load.js"></script>
+		<script src="../../js/mui.zoom.js"></script>
+		<script src="../../js/mui.previewimage.js"></script>
 		<script type="text/javascript">
 			mui.init({
 				//手势事件配置
@@ -54,22 +57,39 @@
 				}
 			})
 			mui.plusReady(function(){
+				mui.previewImage();
 				var pictures=document.getElementById('pictures');
+				//获取图片
 				events.addTap('getAnswer',function(){
 					camera.getPic(camera.getCamera(),function(picPath){
 						var div=document.createElement('div');
 						div.className='img-div';
-						div.innerHTML='<img src="'+picPath+'"/>'
-										+'<a class="mui-icon mui-icon-add" id="delete"></a>'
-						img.src=picPath;
-						img.className='post-img';
-						pictures.appendChild(img);
+						div.innerHTML='<img src="'+picPath+'" data-preview-src="" data-preview-group="1"/>'
+										+'<a class="mui-icon iconfont icon-guanbi"></a>'
+						pictures.appendChild(div);
 					})
 				})
-				mui('#pictures').on('longtap','post-img',function(){
-					
+				//获取图片显示控件
+				var pictures=document.getElementById('pictures');
+				//图片长按事件
+				mui('#pictures').on('longtap','.img-div',function(){
+					mui.each(document.querySelectorAll('.icon-guanbi'),function(index,item){
+						//显示图标
+						item.style.display='block';
+					})
 				})
+				//删除图标的点击事件
+				mui('#pictures').on('tap','.icon-guanbi',function(){
+					//删除图片
+					pictures.removeChild(this.parentElement)
+					//获取路径
+					var path=this.parentElement.querySelector('img').src;
+					//在数组中删除图片路径
+					camera.imgPaths.splice(camera.imgPaths.indexOf(path));
+				})
+				//上传路径
 				var server="http://demo.dcloud.net.cn/helloh5/uploader/upload.php";
+				//上传按钮点击事件
 				events.addTap('post-imgs',function(){
 					if(camera.imgPaths.length>0){
 						load.createUpload(server,camera.imgPaths);

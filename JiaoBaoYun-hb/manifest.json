@@ -825,7 +825,11 @@
 					"css/homework/publish-answer.css",
 					"js/utils/camera.js",
 					"js/utils/events.js",
-					"js/utils/load.js"
+					"js/utils/load.js",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js",
+					"js/libs/jquery.js",
+					null
 				],
 				"refer": [],
 				"priority": 0
