@@ -131,8 +131,8 @@
 					<img class="addqun" src="../../image/cloud/record_addclass.gif" />
 				</div>
 			</div>
-			<div id="line" class="keep-line-blue" style=""></div>
-			<div id="slider" class="mui-slider mui-fullscreen" style="">
+			<div id="line" class="keep-line-blue" style="display: none;"></div>
+			<div id="slider" class="mui-slider mui-fullscreen" style="display: none;">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div id="qunlist" class="mui-scroll">
 						<!--<a class="mui-control-item" href="#1001班" style="margin-left: 10px;">
@@ -434,11 +434,12 @@
 					if(e.index == 1) {
 						console.log('删除');
 						//向服务器发送删除成员的请求成功后
-						var memId = 'addmember_' + utid;
+						var memId = 'member_' + utid;
 						var memTable = document.getElementById(memId);
-						var gidTable = document.getElementById(gid);
-						console.log(gidTable.innerHTML);
-						gidTable.removeChild(memTable);
+						var rowId = 'row_' + gid;
+						var rowTable = document.getElementById(rowId);
+						rowTable.removeChild(memTable); //删除成功
+						mui.toast('删除成功');
 					} else {
 						console.log('不删除');
 					}
@@ -460,13 +461,12 @@
 			 */
 			function addQun(qun) {
 				//班级栏添加班级
-				console.log('addQun-qun:' + JSON.stringify(qun));
-
 				var a = document.createElement('a');
 				a.innerText = qun.gname;
 				if(qunList[0].gid == qun.gid) {
 					//第一个群
 					a.className = 'mui-control-item mui-active';
+//					a.className = 'mui-control-item ';
 				} else {
 					var font = document.createElement('font');
 					font.className = 'keep-line-black';
@@ -481,7 +481,13 @@
 				//成员栏添加默认元素
 				var div = document.createElement('div');
 				div.id = qun.gid;
-				div.className = 'mui-slider-item mui-control-content';
+				if(qunList[0].gid == qun.gid) {
+					//第一个群
+					div.className = 'mui-slider-item mui-control-content mui-active';
+				} else {
+					div.className = 'mui-slider-item mui-control-content';
+				}
+
 				div.innerHTML = '<div class="mui-scroll-wrapper">\
 								<div class="mui-scroll">\
 									<ul class="mui-table-view">\
@@ -497,6 +503,10 @@
 							</div>';
 				qunmemberlist.appendChild(div);
 				mui(".mui-slider").slider().refresh();
+//				if(qunList[qunList.length-1].gid == qun.gid) {
+//					//第一个群
+//					mui(".mui-slider").slider().gotoItem(1);
+//				}
 			}
 
 			/**
