@@ -13,9 +13,8 @@ mui.init({
 
 mui.plusReady(function() {
 //			var personalUTID = (window.myStorage.getItem(window.storageKeyName.PERSONALINFO)).utid;
-//			console.log('pppp'+personalUTID)
 //			var comData = {
-//			userId: '111111'//用户ID
+//			userId: '1'//用户ID
 //			};
 //			// 等待的对话框
 //			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
