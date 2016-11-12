@@ -1,6 +1,7 @@
 /**
  * @author an
  */
+
 var events = (function($, mod) {
 	/**
 	 * 绑定监听

@@ -251,7 +251,7 @@
 								//发送网络请求，data为网络返回值
 								postDataEncry(storageKeyName.MAINURL + 'PostLogin', enData, comData, 0, wd, function(data) {
 									wd.close();
-									console.log('111111190909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+									console.log('success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 									if(data.RspCode != 0000) {
 										mui.toast(data.RspTxt);
 										return;

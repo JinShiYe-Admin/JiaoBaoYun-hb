@@ -1,3 +1,5 @@
+<!--上传答案||作业界面-->
+<!--@anthor an-->
 <!doctype html>
 <html>
 
@@ -5,21 +7,28 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<!--mui样式表-->
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!--通用样式-->
 		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<!--alibaba字库-->
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<!--本页样式表-->
 		<link href="../../css/homework/publish-answer.css" rel="stylesheet" />
-		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+	
 	</head>
 
 	<body>
+		<!--标题栏-->
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">上传答案||作业</h1>
 		    <a id="getAnswer" class="mui-icon iconfont icon-xiangji mui-pull-right"></a>
 		</header>
 		<div class="mui-content">
+			<!--表单-->
 		    <form class="mui-input-group">
+		    	<!--科目选项-->
 		        <div class="mui-input-row">
 		            <label>科目:</label>
 		            <select>
@@ -36,7 +45,7 @@
 		            </select>
 		        </div>
 		         <p style="text-align: center;">请上传答案图片，以供学生参考</p>
-		        <div id="pictures">
+		        <div id="pictures" class="img-container">
 		        	
 		        </div>
 		       
@@ -44,10 +53,15 @@
 		    <button  id='post-imgs' class="mui-btn mui-btn-blue btn-publish">上传作业</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<!--公共事件-->
 		<script src="../../js/utils/events.js"></script>
+		<!--相机-->
 		<script src="../../js/utils/camera.js"></script>
+		<!--下载-->
 		<script src="../../js/utils/load.js"></script>
+		<!--图片预览-->
 		<script src="../../js/mui.zoom.js"></script>
+		<!--图片预览-->
 		<script src="../../js/mui.previewimage.js"></script>
 		<script type="text/javascript">
 			mui.init({
@@ -59,7 +73,10 @@
 			mui.plusReady(function(){
 				mui.previewImage();
 				var pictures=document.getElementById('pictures');
-				//获取图片
+				/**
+				 * 通过系统相机获取图片
+				 * 并显示在界面上
+				 */
 				events.addTap('getAnswer',function(){
 					camera.getPic(camera.getCamera(),function(picPath){
 						var div=document.createElement('div');
@@ -85,16 +102,16 @@
 					//获取路径
 					var path=this.parentElement.querySelector('img').src;
 					//在数组中删除图片路径
-					camera.imgPaths.splice(camera.imgPaths.indexOf(path));
+					camera.filePaths.splice(camera.filePaths.indexOf(path));
 				})
 				//上传路径
 				var server="http://demo.dcloud.net.cn/helloh5/uploader/upload.php";
 				//上传按钮点击事件
 				events.addTap('post-imgs',function(){
-					if(camera.imgPaths.length>0){
-						load.createUpload(server,camera.imgPaths);
+					if(camera.filePaths.length>0){
+						load.createUpload(server,camera.filePaths);
 					}else{
-						mui.toast('请拍照后上传')
+						mui.toast('请拍照后上传');
 					}
 				})
 			})

@@ -15,7 +15,7 @@
 		<!--alibaba字库-->
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<!--本页面应用样式表-->
-		<link rel="stylesheet" href="../../css/homework/publish-work.css" />
+		<link rel="stylesheet" href="../../css/homework/homework-publish.css" />
 	</head>
 
 	<body>
@@ -56,12 +56,15 @@
 			    <textarea type="text" style="min-height: 10rem;" placeholder="输入你要布置的作业内容">
 			    </textarea>
 			    <div class="publish-extras">
-			    	<a class="mui-icon mui-icon-mic" ></a>
-			    	<a class="mui-icon iconfont icon-xiangji"></a>
-			    	<a class="mui-icon iconfont icon-shexiangji"></a>
+			    	<a id="getRecord" class="mui-icon mui-icon-mic"></a>
+			    	<a id="getImg" class="mui-icon iconfont icon-xiangji"></a>
+			    	<a id="getVideo" class="mui-icon iconfont icon-shexiangji"></a>
 			   <!-- 	<a class="mui-icon mui-icon-location"></a>-->
 			    </div>
-			    </div>
+			   <!-- History list -->
+				<ul id="history" class="dlist" style="text-align:left;">
+					<li id="empty" class="ditem-empty">无历史记录</li>
+				</ul>
 			    <div class="mui-input-row">
 			        <label>需学生在线提交</label>
 			        <div class="mui-switch mui-active mui-switch-green">
@@ -71,10 +74,52 @@
 			    <p><span class="mui-icon mui-icon-info"></span>开启在线提交后，学生需提交语音，图片或文字等反馈</p>
 			</form>
 		</div>
+		<div id="play" class="rp">
+			<div id="ptime" class="ptime">00:00:00/00:00:00</div><br/>
+			<div id="progress" class="progress"><div id="schedule" class="schedule"></div></div>
+			<br/>
+			<div class="stop" onclick="stopPlay()">
+				<a class="mui-icon iconfont icon-tingzhi"></a>
+			</div>
+		</div>
+		<div id="record" class="rp">
+			<div style="width:100%;height:20%;"></div>
+			<div class="rprogress"><div class="rschedule"></div></div>
+			<br/>
+			<div id="rtime" class="rtime">00:00:00</div><br/>
+			<div class="stop" onclick="stopRecord();">
+				<a class="mui-icon iconfont icon-tingzhi"></a>
+			</div>
+		</div>
 		<!--mui库-->
 		<script src="../../js/mui.min.js"></script>
+		<!--公共事件模块-->
+		<script src="../../js/utils/events.js"></script>
+		<!--摄像头模块-->
+		<script src="../../js/utils/camera.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/utils/audio.js"></script>
 		<script type="text/javascript">
 			mui.init()
+			mui.plusReady(function(){
+				//录音键
+				events.addTap('getRecord',function(){
+					startRecord()
+				})
+				//相机按钮
+				events.addTap('getImg',function(){
+					camera.getPic(camera.getCamera(),function(picPath){
+						console.log("picPath:"+picPath);
+					})
+				})
+				//录像按钮
+				events.addTap('getVideo',function(){
+					camera.getVideo(camera.getCamera(),function(videoPath){
+						console.log("videoPath:"+videoPath)
+					})
+				})
+				
+			})
 		</script>
 	</body>
 

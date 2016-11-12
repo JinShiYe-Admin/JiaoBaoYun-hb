@@ -206,7 +206,8 @@
 					"css/iconfont/iconfont.css",
 					"fonts/iconfont.ttf",
 					"html/zone_sub.html",
-					"html/tab-zone.html"
+					"html/tab-zone.html",
+					"html/quan/tab-zone.html"
 				],
 				"refer": [
 					"html/tab_knowledge.html",
@@ -329,7 +330,20 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/sortSign.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -670,7 +684,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/jquery.js"
+					"js/libs/jquery.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"html/register/register_phoneNumber.html",
@@ -700,7 +715,9 @@
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/index.html"
+				],
 				"priority": 0
 			},
 			"html/homework/homework-tea-sub.html": {
@@ -745,7 +762,12 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"fonts/iconfont.ttf",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"js/utils/camera.js",
+					"js/utils/events.js",
+					"css/homework/homework-publish.css",
+					"js/utils/audio.js",
+					"js/common.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -833,6 +855,47 @@
 				],
 				"refer": [],
 				"priority": 0
+			},
+			"html/homework/homework-commit.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"css/homework/homework-commit.css",
+					"js/utils/events.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/tab-zone.html": {
+				"resources": [
+					"image/tab_zone/u34.png",
+					"js/publicProtocol.js",
+					"js/quan/tab-zone.js",
+					"css/home/zone.css",
+					"image/tab_zone/u127.png",
+					"css/mui.css",
+					"image/tab_zone/u91.png",
+					"image/tab_zone/u72.png",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/main/slide_navigation.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/sortSign.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
+				],
+				"refer": [
+					"html/quan/studentdynamic_main.html",
+					"html/quan/class_space.html"
+				],
+				"priority": 0
 			}
 		},
 		"idle": {
@@ -844,7 +907,6 @@
 				"image/zone_sel.png",
 				"js/utils/textarea.js",
 				"css/utils/imgeControl.css",
-				"css/mui.css",
 				"css/utils/textarea.css",
 				"css/utils/documents.css",
 				"image/clip_sel.png",
