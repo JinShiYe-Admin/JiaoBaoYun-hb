@@ -595,7 +595,7 @@ var postDataPro_getIsLikeUserSpaceByUser=function(commonData, wd, callback) {
 //		var comData = {
 //			userSpaceId: ''//用户空间ID
 //		};
-var postDataPro_getUserSpaceCommentsCntById-=function(commonData, wd, callback) {
+var postDataPro_getUserSpaceCommentsCntById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
