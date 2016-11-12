@@ -17,7 +17,6 @@ document.write('<script src="../../js/utils/signHmacSHA1.js"><\/script>');
 document.write('<script src="../../js/libs/jquery.js"><\/script>');
 
 
-var postData=(function(mod){
 	//6.用户修改各项用户信息
 //调用方法
 //var comData = {
@@ -26,7 +25,7 @@ var postData=(function(mod){
 //};
 //// 等待的对话框
 //var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-//postData_jiaobaoYunPro_PostReUinf(comData, wd, function(data) {
+//var postDataPro_jiaobaoYunPro_PostReUinf(comData, wd, function(data) {
 //	wd.close();
 //	console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 //	if(data.RspCode == 0) {
@@ -35,8 +34,8 @@ var postData=(function(mod){
 //		mui.toast(data.RspTxt);
 //	}
 //});
-mod.jiaobaoYunPro={};
-mod.jiaobaoYunPro.PostReUinf=function(commonData, wd, callback) {
+
+var postDataPro_PostReUinf=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -49,7 +48,7 @@ mod.jiaobaoYunPro.PostReUinf=function(commonData, wd, callback) {
 //		gname: '测试群名', //群名
 //		gimg: 'jjjjjjj', //群头像
 //	};
-mod.jiaobaoYunPro.PostCrGrp=function(commonData, wd, callback) {
+var postDataPro_PostCrGrp=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -63,7 +62,7 @@ mod.jiaobaoYunPro.PostCrGrp=function(commonData, wd, callback) {
 //		vvl: '测试修改群名',//要修改成的值
 //		rid: '3'//要修改的群id
 //	};
-mod.jiaobaoYunPro.PostReGinfo=function(commonData, wd, callback) {
+var postDataPro_PostReGinfo=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -78,7 +77,7 @@ mod.jiaobaoYunPro.PostReGinfo=function(commonData, wd, callback) {
 //		vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
 //		vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
 //	};
-mod.jiaobaoYunPro.PostGList=function(commonData, wd, callback) {
+var postDataPro_PostGList=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -96,7 +95,7 @@ mod.jiaobaoYunPro.PostGList=function(commonData, wd, callback) {
 //		};
 //修改本地存储中的值，返回值
 //window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data.RspData;
-mod.jiaobaoYunPro.PostTokenRenew=function(commonData, wd, callback) {
+var postDataPro_PostTokenRenew=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -109,7 +108,7 @@ mod.jiaobaoYunPro.PostTokenRenew=function(commonData, wd, callback) {
 //			vvl: '111111'//查询的值
 //		};
 //返回值model：model_searchPeople
-mod.jiaobaoYunPro.PostUList=function(commonData, wd, callback) {
+var postDataPro_PostUList=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -125,7 +124,7 @@ mod.jiaobaoYunPro.PostUList=function(commonData, wd, callback) {
 //			invtp:'',//被邀请人类型,0家长,2老师,3学生
 //			vtp:''//更改项,0老师邀请家长,1个人申请入群
 //		};
-mod.jiaobaoYunPro.PostInvGuser=function(commonData, wd, callback) {
+var postDataPro_PostInvGuser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -141,7 +140,7 @@ mod.jiaobaoYunPro.PostInvGuser=function(commonData, wd, callback) {
 //			invtp:'',//被邀请人类型,0家长,2老师,3学生
 //			vtp:''//更改项,0老师邀请家长,1个人申请入群
 //		};
-mod.jiaobaoYunPro.PostGusers=function(commonData, wd, callback) {
+var postDataPro_PostGusers=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -155,7 +154,7 @@ mod.jiaobaoYunPro.PostGusers=function(commonData, wd, callback) {
 //		var comData = {
 //			token: personalToken
 //		};
-mod.jiaobaoYunPro.PostVerifyToken=function(commonData, wd, callback) {
+var postDataPro_PostVerifyToken=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -169,7 +168,7 @@ mod.jiaobaoYunPro.PostVerifyToken=function(commonData, wd, callback) {
 //			gname:'',//学生名
 //			gimg:''//学生头像
 //		};
-mod.jiaobaoYunPro.PostGStu=function(commonData, wd, callback) {
+var postDataPro_PostGStu=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -182,7 +181,7 @@ mod.jiaobaoYunPro.PostGStu=function(commonData, wd, callback) {
 //			top: '',//选择条数,-1为全部
 //			vvl:''//群ID,查询的值
 //		};
-mod.jiaobaoYunPro.PostGStus=function(commonData, wd, callback) {
+var postDataPro_PostGStus=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -198,7 +197,7 @@ mod.jiaobaoYunPro.PostGStus=function(commonData, wd, callback) {
 //		var comData = {
 //			userId: ''//用户ID
 //		};
-mod.jiaobaoYunPro.getNoReadNotesCntByUser=function(commonData, wd, callback) {
+var postDataPro_getNoReadNotesCntByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -213,7 +212,7 @@ mod.jiaobaoYunPro.getNoReadNotesCntByUser=function(commonData, wd, callback) {
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList,model_userNoteInfo
-mod.jiaobaoYunPro.getNoReadNotesByUser=function(commonData, wd, callback) {
+var postDataPro_getNoReadNotesByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -226,7 +225,7 @@ mod.jiaobaoYunPro.getNoReadNotesByUser=function(commonData, wd, callback) {
 //			userId: ''//用户ID
 //			studentId:''//学生ID
 //		};
-mod.jiaobaoYunPro.getNoReadNotesCntByUserForStudent=function(commonData, wd, callback) {
+var postDataPro_getNoReadNotesCntByUserForStudent=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -242,7 +241,7 @@ mod.jiaobaoYunPro.getNoReadNotesCntByUserForStudent=function(commonData, wd, cal
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList,model_userNoteInfo
-mod.jiaobaoYunPro.getNoReadNotesByUserForStudent=function(commonData, wd, callback) {
+var postDataPro_getNoReadNotesByUserForStudent=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -254,7 +253,7 @@ mod.jiaobaoYunPro.getNoReadNotesByUserForStudent=function(commonData, wd, callba
 //		var comData = {
 //			studentId: ''//学生ID
 //		};
-mod.jiaobaoYunPro.getNotesCntByStudent=function(commonData, wd, callback) {
+var postDataPro_getNotesCntByStudent=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -269,7 +268,7 @@ mod.jiaobaoYunPro.getNotesCntByStudent=function(commonData, wd, callback) {
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList,model_userNoteInfo
-mod.jiaobaoYunPro.getNotesByStudent=function(commonData, wd, callback) {
+var postDataPro_getNotesByStudent=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -282,7 +281,7 @@ mod.jiaobaoYunPro.getNotesByStudent=function(commonData, wd, callback) {
 //			noteId: ''//点到记事ID
 //		};
 //返回model：model_homeSchoolList,model_userNoteInfo
-mod.jiaobaoYunPro.getNoteById=function(commonData, wd, callback) {
+var postDataPro_getNoteById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -301,7 +300,7 @@ mod.jiaobaoYunPro.getNoteById=function(commonData, wd, callback) {
 //			noteType: '',//点到记事类型1点到2记事
 //			checkType: ''//点到类型,1 正常2 旷课3 迟到4 早退5 其他
 //		};
-mod.jiaobaoYunPro.addNote=function(commonData, wd, callback) {
+var postDataPro_addNote=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -314,7 +313,7 @@ mod.jiaobaoYunPro.addNote=function(commonData, wd, callback) {
 //			userId: ''//用户ID
 //			noteId:''//点到记事ID
 //		};
-mod.jiaobaoYunPro.addNoteForUser=function(commonData, wd, callback) {
+var postDataPro_addNoteForUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -327,7 +326,7 @@ mod.jiaobaoYunPro.addNoteForUser=function(commonData, wd, callback) {
 //			userId: ''//用户ID
 //			noteId:''//点到记事ID
 //		};
-mod.jiaobaoYunPro.setNoteReadByUser=function(commonData, wd, callback) {
+var postDataPro_setNoteReadByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -339,7 +338,7 @@ mod.jiaobaoYunPro.setNoteReadByUser=function(commonData, wd, callback) {
 //		var comData = {
 //			noteId: ''//点到记事ID
 //		};
-function postData_jiaobaoYunPro_setOffNoteById(commonData, wd, callback) {
+var postDataPro_setOffNoteById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -351,7 +350,7 @@ function postData_jiaobaoYunPro_setOffNoteById(commonData, wd, callback) {
 //		var comData = {
 //			noteId: ''//点到记事ID
 //		};
-mod.jiaobaoYunPro.delNoteById=function(commonData, wd, callback) {
+var postDataPro_delNoteById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -363,7 +362,7 @@ mod.jiaobaoYunPro.delNoteById=function(commonData, wd, callback) {
 //		var comData = {
 //			userId: ''//用户ID
 //		};
-mod.jiaobaoYunPro.getNoReadClassSpacesCntByUser=function(commonData, wd, callback) {
+var postDataPro_getNoReadClassSpacesCntByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -378,7 +377,7 @@ mod.jiaobaoYunPro.getNoReadClassSpacesCntByUser=function(commonData, wd, callbac
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList，model_userNoteInfo
-mod.jiaobaoYunPro.getNoReadClassSpacesByUser=function(commonData, wd, callback) {
+var postDataPro_getNoReadClassSpacesByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -391,7 +390,7 @@ mod.jiaobaoYunPro.getNoReadClassSpacesByUser=function(commonData, wd, callback) 
 //			userId: ''//用户ID
 //			classId:''//班级ID
 //		};
-mod.jiaobaoYunPro.getNoReadClassSpacesCntByUserForClass=function(commonData, wd, callback) {
+var postDataPro_getNoReadClassSpacesCntByUserForClass=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -407,7 +406,7 @@ mod.jiaobaoYunPro.getNoReadClassSpacesCntByUserForClass=function(commonData, wd,
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList，model_userNoteInfo
-mod.jiaobaoYunPro.getNoReadClassSpacesByUserForClass=function(commonData, wd, callback) {
+var postDataPro_getNoReadClassSpacesByUserForClass=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -419,7 +418,7 @@ mod.jiaobaoYunPro.getNoReadClassSpacesByUserForClass=function(commonData, wd, ca
 //		var comData = {
 //			classId: ''//班级ID
 //		};
-mod.jiaobaoYunPro.getClassSpacesCntByClass=function(commonData, wd, callback) {
+var postDataPro_getClassSpacesCntByClass=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -434,7 +433,7 @@ mod.jiaobaoYunPro.getClassSpacesCntByClass=function(commonData, wd, callback) {
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList，model_userNoteInfo
-mod.jiaobaoYunPro.getClassSpacesByClass=function(commonData, wd, callback) {
+var postDataPro_getClassSpacesByClass=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -447,7 +446,7 @@ mod.jiaobaoYunPro.getClassSpacesByClass=function(commonData, wd, callback) {
 //			classSpaceId: ''//班级空间ID
 //		};
 //返回model：model_userNoteInfo
-mod.jiaobaoYunPro.getClassSpaceById=function(commonData, wd, callback) {
+var postDataPro_getClassSpaceById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -464,7 +463,7 @@ mod.jiaobaoYunPro.getClassSpaceById=function(commonData, wd, callback) {
 //			encImg: '',//附件缩略图地址
 //			teacherId: ''//发布教师ID
 //		};
-mod.jiaobaoYunPro.addClassSpace=function(commonData, wd, callback) {
+var postDataPro_addClassSpace=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -477,7 +476,7 @@ mod.jiaobaoYunPro.addClassSpace=function(commonData, wd, callback) {
 //			userId: ''//用户ID
 //			classSpaceId:''//班级空间ID
 //		};
-mod.jiaobaoYunPro.addClassSpaceForUser=function(commonData, wd, callback) {
+var postDataPro_addClassSpaceForUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -490,7 +489,7 @@ mod.jiaobaoYunPro.addClassSpaceForUser=function(commonData, wd, callback) {
 //			userId: ''//用户ID
 //			classSpaceId:''//班级空间ID
 //		};
-mod.jiaobaoYunPro.setClassSpaceReadByUser=function(commonData, wd, callback) {
+var postDataPro_setClassSpaceReadByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -502,7 +501,7 @@ mod.jiaobaoYunPro.setClassSpaceReadByUser=function(commonData, wd, callback) {
 //		var comData = {
 //			classSpaceId: ''//班级空间ID
 //		};
-mod.jiaobaoYunPro.setOffClassSpaceById=function(commonData, wd, callback) {
+var postDataPro_setOffClassSpaceById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -514,7 +513,7 @@ mod.jiaobaoYunPro.setOffClassSpaceById=function(commonData, wd, callback) {
 //		var comData = {
 //			classSpaceId: ''//班级空间ID
 //		};
-mod.jiaobaoYunPro.delClassSpaceById=function(commonData, wd, callback) {
+var postDataPro_delClassSpaceById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -526,7 +525,7 @@ mod.jiaobaoYunPro.delClassSpaceById=function(commonData, wd, callback) {
 //		var comData = {
 //			userId: ''//用户ID
 //		};
-mod.jiaobaoYunPro.getNoReadUserSpacesCntByUser=function(commonData, wd, callback) {
+var postDataPro_getNoReadUserSpacesCntByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -541,7 +540,7 @@ mod.jiaobaoYunPro.getNoReadUserSpacesCntByUser=function(commonData, wd, callback
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList,model_userNoteInfo
-mod.jiaobaoYunPro.getNoReadUserSpacesByUser=function(commonData, wd, callback) {
+var postDataPro_getNoReadUserSpacesByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -554,7 +553,7 @@ mod.jiaobaoYunPro.getNoReadUserSpacesByUser=function(commonData, wd, callback) {
 //			userId: '',//用户ID
 //			publisherId:''//发布用户ID
 //		};
-mod.jiaobaoYunPro.getNoReadUserSpacesCntByUserForPublisher=function(commonData, wd, callback) {
+var postDataPro_getNoReadUserSpacesCntByUserForPublisher=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -570,7 +569,7 @@ mod.jiaobaoYunPro.getNoReadUserSpacesCntByUserForPublisher=function(commonData, 
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList,model_userNoteInfo
-mod.jiaobaoYunPro.getNoReadUserSpacesByUserForPublisher=function(commonData, wd, callback) {
+var postDataPro_getNoReadUserSpacesByUserForPublisher=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -584,7 +583,7 @@ mod.jiaobaoYunPro.getNoReadUserSpacesByUserForPublisher=function(commonData, wd,
 //			publisherId:''//发布用户ID
 //		};
 //data:非0为已点赞
-mod.jiaobaoYunPro.getIsLikeUserSpaceByUser=function(commonData, wd, callback) {
+var postDataPro_getIsLikeUserSpaceByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -596,7 +595,7 @@ mod.jiaobaoYunPro.getIsLikeUserSpaceByUser=function(commonData, wd, callback) {
 //		var comData = {
 //			userSpaceId: ''//用户空间ID
 //		};
-mod.jiaobaoYunPro.getUserSpaceCommentsCntById-=function(commonData, wd, callback) {
+var postDataPro_getUserSpaceCommentsCntById-=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -611,7 +610,7 @@ mod.jiaobaoYunPro.getUserSpaceCommentsCntById-=function(commonData, wd, callback
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList,model_userSpaceInfo
-mod.jiaobaoYunPro.getUserSpaceCommentsById=function(commonData, wd, callback) {
+var postDataPro_getUserSpaceCommentsById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -624,7 +623,7 @@ mod.jiaobaoYunPro.getUserSpaceCommentsById=function(commonData, wd, callback) {
 //			userSpaceId: ''//用户空间ID
 //		};
 //返回值：数组、UserId--用户ID
-mod.jiaobaoYunPro.getIsLikeUsersById=function(commonData, wd, callback) {
+var postDataPro_getIsLikeUsersById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -636,7 +635,7 @@ mod.jiaobaoYunPro.getIsLikeUsersById=function(commonData, wd, callback) {
 //		var comData = {
 //			userId: ''//用户ID
 //		};
-mod.jiaobaoYunPro.getUserSpaceCommentReplysCntByUser=function(commonData, wd, callback) {
+var postDataPro_getUserSpaceCommentReplysCntByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -651,7 +650,7 @@ mod.jiaobaoYunPro.getUserSpaceCommentReplysCntByUser=function(commonData, wd, ca
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList，model_userSpaceInfo
-mod.jiaobaoYunPro.getUserSpaceCommentReplysByUser=function(commonData, wd, callback) {
+var postDataPro_getUserSpaceCommentReplysByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -663,7 +662,7 @@ mod.jiaobaoYunPro.getUserSpaceCommentReplysByUser=function(commonData, wd, callb
 //		var comData = {
 //			userId: ''//用户ID
 //		};
-mod.jiaobaoYunPro.getUserSpacesCntByUser=function(commonData, wd, callback) {
+var postDataPro_getUserSpacesCntByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -678,7 +677,7 @@ mod.jiaobaoYunPro.getUserSpacesCntByUser=function(commonData, wd, callback) {
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList，model_userNoteInfo
-mod.jiaobaoYunPro.getUserSpacesByUser=function(commonData, wd, callback) {
+var postDataPro_getUserSpacesByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -691,7 +690,7 @@ mod.jiaobaoYunPro.getUserSpacesByUser=function(commonData, wd, callback) {
 //			userSpaceId: ''//用户空间ID
 //		};
 //返回model：model_homeSchoolList，model_userNoteInfo
-mod.jiaobaoYunPro.getUserSpaceByIdr=function(commonData, wd, callback) {
+var postDataPro_getUserSpaceByIdr=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -708,7 +707,7 @@ mod.jiaobaoYunPro.getUserSpaceByIdr=function(commonData, wd, callback) {
 //			encImg:''//附件缩略图地址
 //			encIntro:'',//附件简介
 //		};
-mod.jiaobaoYunPro.addUserSpace=function(commonData, wd, callback) {
+var postDataPro_addUserSpace=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -721,7 +720,7 @@ mod.jiaobaoYunPro.addUserSpace=function(commonData, wd, callback) {
 //			userId: ''//用户ID
 //			userSpaceId:'',//用户空间ID
 //		};
-mod.jiaobaoYunPro.addUserSpaceForUser=function(commonData, wd, callback) {
+var postDataPro_addUserSpaceForUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -735,7 +734,7 @@ mod.jiaobaoYunPro.addUserSpaceForUser=function(commonData, wd, callback) {
 //			userSpaceId:'',//用户空间ID
 //			commentContent:''//评论内容
 //		};
-mod.jiaobaoYunPro.addUserSpaceComment=function(commonData, wd, callback) {
+var postDataPro_addUserSpaceComment=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -751,7 +750,7 @@ mod.jiaobaoYunPro.addUserSpaceComment=function(commonData, wd, callback) {
 //			userSpaceId:'',//用户空间ID
 //			commentContent:''//回复内容
 //		};
-mod.jiaobaoYunPro.addUserSpaceCommentReply=function(commonData, wd, callback) {
+var postDataPro_addUserSpaceCommentReply=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -764,7 +763,7 @@ mod.jiaobaoYunPro.addUserSpaceCommentReply=function(commonData, wd, callback) {
 //			userId: ''//用户ID
 //			userSpaceId:'',//用户空间ID
 //		};
-mod.jiaobaoYunPro.setUserSpaceReadByUser=function(commonData, wd, callback) {
+var postDataPro_setUserSpaceReadByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -777,7 +776,7 @@ mod.jiaobaoYunPro.setUserSpaceReadByUser=function(commonData, wd, callback) {
 //			userId: ''//用户ID
 //			userSpaceId:'',//用户空间ID
 //		};
-mod.jiaobaoYunPro.setUserSpaceLikeByUser=function(commonData, wd, callback) {
+var postDataPro_setUserSpaceLikeByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -789,7 +788,7 @@ mod.jiaobaoYunPro.setUserSpaceLikeByUser=function(commonData, wd, callback) {
 //		var comData = {
 //			userSpaceCommentId: ''//用户空间评论ID
 //		};
-mod.jiaobaoYunPro.setUserSpaceCommentReplyById=function(commonData, wd, callback) {
+var postDataPro_setUserSpaceCommentReplyById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -801,7 +800,7 @@ mod.jiaobaoYunPro.setUserSpaceCommentReplyById=function(commonData, wd, callback
 //		var comData = {
 //			userSpaceId: ''//用户空间ID
 //		};
-mod.jiaobaoYunPro.setOffUserSpaceById=function(commonData, wd, callback) {
+var postDataPro_setOffUserSpaceById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -813,7 +812,7 @@ mod.jiaobaoYunPro.setOffUserSpaceById=function(commonData, wd, callback) {
 //		var comData = {
 //			userSpaceId: ''//用户空间ID
 //		};
-mod.jiaobaoYunPro.delUserSpaceById=function(commonData, wd, callback) {
+var postDataPro_delUserSpaceById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -825,7 +824,7 @@ mod.jiaobaoYunPro.delUserSpaceById=function(commonData, wd, callback) {
 //		var comData = {
 //			userSpaceCommentId: ''//用户空间评论ID
 //		};
-mod.jiaobaoYunPro.delUserSpaceCommentById=function(commonData, wd, callback) {
+var postDataPro_delUserSpaceCommentById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -837,7 +836,7 @@ mod.jiaobaoYunPro.delUserSpaceCommentById=function(commonData, wd, callback) {
 //		var comData = {
 //			userSpaceId: ''//用户空间ID
 //		};
-mod.jiaobaoYunPro.getUserSpaceMsgsCntById=function(commonData, wd, callback) {
+var postDataPro_getUserSpaceMsgsCntById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -852,7 +851,7 @@ mod.jiaobaoYunPro.getUserSpaceMsgsCntById=function(commonData, wd, callback) {
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList，model_userSpaceInfo
-mod.jiaobaoYunPro.getUserSpaceMsgsById=function(commonData, wd, callback) {
+var postDataPro_getUserSpaceMsgsById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -865,7 +864,7 @@ mod.jiaobaoYunPro.getUserSpaceMsgsById=function(commonData, wd, callback) {
 //			userId: ''//用户ID
 //		};
 //返回：未读回复条数
-mod.jiaobaoYunPro.getUserSpaceMsgReplysCntByUser=function(commonData, wd, callback) {
+var postDataPro_getUserSpaceMsgReplysCntByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -880,7 +879,7 @@ mod.jiaobaoYunPro.getUserSpaceMsgReplysCntByUser=function(commonData, wd, callba
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList，model_userSpaceInfo
-mod.jiaobaoYunPro.getUserSpaceMsgReplysByUser=function(commonData, wd, callback) {
+var postDataPro_getUserSpaceMsgReplysByUser=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -894,7 +893,7 @@ mod.jiaobaoYunPro.getUserSpaceMsgReplysByUser=function(commonData, wd, callback)
 //			userSpaceId:'',//用户空间ID
 //			msgContent:''//留言内容
 //		};
-mod.jiaobaoYunPro.addUserSpaceMsg=function(commonData, wd, callback) {
+var postDataPro_addUserSpaceMsg=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -910,7 +909,7 @@ mod.jiaobaoYunPro.addUserSpaceMsg=function(commonData, wd, callback) {
 //			userSpaceId:'',//用户空间ID
 //			msgContent:''//回复内容
 //		};
-mod.jiaobaoYunPro.addUserSpaceMsgReply=function(commonData, wd, callback) {
+var postDataPro_addUserSpaceMsgReply=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -922,7 +921,7 @@ mod.jiaobaoYunPro.addUserSpaceMsgReply=function(commonData, wd, callback) {
 //		var comData = {
 //			userSpaceMsgId: ''//用户空间留言ID
 //		};
-mod.jiaobaoYunPro.setUserSpaceMsgReplyById=function(commonData, wd, callback) {
+var postDataPro_setUserSpaceMsgReplyById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -934,7 +933,7 @@ mod.jiaobaoYunPro.setUserSpaceMsgReplyById=function(commonData, wd, callback) {
 //		var comData = {
 //			userSpaceMsgId: ''//用户空间留言ID
 //		};
-mod.jiaobaoYunPro.delUserSpaceMsgById=function(commonData, wd, callback) {
+var postDataPro_delUserSpaceMsgById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -949,11 +948,10 @@ mod.jiaobaoYunPro.delUserSpaceMsgById=function(commonData, wd, callback) {
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList，model_userSpaceAboutMe
-mod.jiaobaoYunPro.getAboutMe=function(commonData, wd, callback) {
+var postDataPro_getAboutMe=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getAboutMe', enData, commonData, 2, wd, callback);
 	}
-return mod;
-})(postData||{})
+

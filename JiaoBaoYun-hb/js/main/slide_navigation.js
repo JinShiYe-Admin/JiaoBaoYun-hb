@@ -150,7 +150,7 @@ var slideNavigation = (function($) {
 					}
 				});
 			}, interval);
-			console.log('加载了吗？')
+//			console.log('加载了吗？')
 		}
 		/**
 		 * 加载主界面左上角图标
@@ -166,7 +166,7 @@ var slideNavigation = (function($) {
 	
 	//安卓系统返回按钮
 	var getBack = function() {
-		console.log("show:" + showMenu)
+//		console.log("show:" + showMenu)
 		//首页返回键处理
 		//1、若侧滑菜单显示，则关闭侧滑菜单
 		//2、否则，执行mui框架默认的关闭首页功能

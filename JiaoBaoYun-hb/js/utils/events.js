@@ -168,7 +168,7 @@ var events = (function($, mod) {
 	 * @param {Object} getDatas 获取数据的方法  return somthing
 	 */
 	mod.fireToPage = function(tarPage, listener, getDatas) {
-			console.log('tarPage:' + tarPage);
+//			console.log('tarPage:' + tarPage);
 			var targetPage = null;
 			//获得目标页面
 			if(!targetPage) {
