@@ -12,13 +12,16 @@ mui.init({
 			});
 
 mui.plusReady(function() {
-//			var personalUTID = (window.myStorage.getItem(window.storageKeyName.PERSONALINFO)).utid;
-//			var comData = {
-//			userId: '1'//用户ID
-//			};
+////获取个人信息
+//	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+////	//需要参数
+//	var comData = {
+//		vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
+//		vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
+//	};
 //			// 等待的对话框
 //			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-//			postData_jiaobaoYunPro_getNoReadNotesCntByUser(comData, wd, function(data) {
+//			postData_jiaobaoYunPro_PostGList(comData, wd, function(data) {
 //				wd.close();
 //				console.log('postData_jiaobaoYunPro_PostGListsuccess:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 //				if(data.RspCode == 0) {
