@@ -66,7 +66,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 	var signArr = arr0.concat(arr1);
 	//拼接登录需要的签名
 	var signTemp = sortUrls.sortIt(signArr);
-	console.log('sign:'+signTemp);
+//	console.log('sign:'+signTemp);
 	//将对象转为数组
 //	var arr0 = [];
 //	for(var item in encryData) {
@@ -105,7 +105,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 		tempData.sign = sign;
 		// 等待的对话框
 		//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		console.log('tempdata:' + JSON.stringify(tempData));
+//		console.log('tempdata:' + JSON.stringify(tempData));
 		//发送协议
 		mui.ajax(url, {
 			data: JSON.stringify(tempData),

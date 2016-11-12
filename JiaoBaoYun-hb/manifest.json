@@ -207,7 +207,8 @@
 					"fonts/iconfont.ttf",
 					"html/zone_sub.html",
 					"html/tab-zone.html",
-					"html/quan/tab-zone.html"
+					"html/quan/tab-zone.html",
+					"js/utils/events.js"
 				],
 				"refer": [
 					"html/tab_knowledge.html",
@@ -713,7 +714,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/libs/jquery.js"
 				],
 				"refer": [
 					"html/index.html"
@@ -895,6 +897,13 @@
 					"html/quan/studentdynamic_main.html",
 					"html/quan/class_space.html"
 				],
+				"priority": 0
+			},
+			"html/register/modify_password.html": {
+				"resources": [
+					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},

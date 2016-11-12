@@ -53,9 +53,9 @@
 				var regFlag;
 				window.addEventListener('registerFlag', function(event) {
 					regFlag = event.detail.data;
-					console.log('fa song yanzhengma1211 flag=' + regFlag);
+//					console.log('fa song yanzhengma1211 flag=' + regFlag);
 				});
-				console.log('fa song yanzhengma flag=' + regFlag);
+//				console.log('fa song yanzhengma flag=' + regFlag);
 				events.preLoad('yanZhengMa.html');
 				events.addTap('register', function() {
 					//获取到手机号
@@ -115,7 +115,7 @@
 								events.fireToPage('yanZhengMa.html', 'yanzhengma', function() {
 									return tempValue;
 								});
-								console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//								console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 								if(data.RspCode != 0000) {
 									mui.toast(data.RspTxt);
 									return;

@@ -8,7 +8,7 @@ var sortUrls=(function(mod){
 	}
 	mod.sortIt=function(urls){
 		var joined=urls.sort().join('&')
-		console.log(joined);
+//		console.log(joined);
 		return joined;
 	}
 	return mod;
