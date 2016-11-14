@@ -9,6 +9,8 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="HandheldFriendly" content="true"/>
+		<meta name="MobileOptimized" content="320"/>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<!--共用样式-->
 		<link rel="stylesheet" href="../../css/utils/common.css" />
@@ -63,7 +65,7 @@
 			    </div>
 			   <!-- History list -->
 				<ul id="history" class="dlist" style="text-align:left;">
-					<li id="empty" class="ditem-empty">无历史记录</li>
+					<li id="empty" class="ditem-empty">无记录</li>
 				</ul>
 			    <div class="mui-input-row">
 			        <label>需学生在线提交</label>
@@ -87,7 +89,7 @@
 			<div class="rprogress"><div class="rschedule"></div></div>
 			<br/>
 			<div id="rtime" class="rtime">00:00:00</div><br/>
-			<div class="stop" onclick="stopRecord();">
+			<div class="stop" onclick="stopRecord()">
 				<a class="mui-icon iconfont icon-tingzhi"></a>
 			</div>
 		</div>
@@ -98,6 +100,7 @@
 		<!--摄像头模块-->
 		<script src="../../js/utils/camera.js"></script>
 		<script src="../../js/common.js"></script>
+		<!--录音模块-->
 		<script src="../../js/utils/audio.js"></script>
 		<script type="text/javascript">
 			mui.init()
@@ -115,11 +118,12 @@
 				//录像按钮
 				events.addTap('getVideo',function(){
 					camera.getVideo(camera.getCamera(),function(videoPath){
-						console.log("videoPath:"+videoPath)
+						console.log("videoPath:"+videoPath);
 					})
 				})
 				
 			})
+			
 		</script>
 	</body>
 
