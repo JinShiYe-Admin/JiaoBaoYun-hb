@@ -8,6 +8,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
 	</head>
 
@@ -17,7 +18,7 @@
 			<div class="mui-scroll">
 				<!--数据列表-->
 				<ul class="mui-table-view mui-table-view-chevron">
-
+					点到记事
 				</ul>
 			</div>
 		</div>
@@ -42,7 +43,7 @@
 				setTimeout(function() {
 					var table = document.body.querySelector('.mui-table-view');
 					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					for (var i = cells.length, len = i + 3; i < len; i++) {
+					for(var i = cells.length, len = i + 3; i < len; i++) {
 						var li = document.createElement('li');
 						li.className = 'mui-table-view-cell';
 						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
@@ -61,7 +62,7 @@
 					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
 					var table = document.body.querySelector('.mui-table-view');
 					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					for (var i = cells.length, len = i + 20; i < len; i++) {
+					for(var i = cells.length, len = i + 20; i < len; i++) {
 						var li = document.createElement('li');
 						li.className = 'mui-table-view-cell';
 						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
@@ -69,18 +70,18 @@
 					}
 				}, 1500);
 			}
-			if (mui.os.plus) {
-				mui.plusReady(function() {
-					setTimeout(function() {
-						mui('#pullrefresh').pullRefresh().pullupLoading();
-					}, 1000);
 
-				});
-			} else {
-				mui.ready(function() {
-					mui('#pullrefresh').pullRefresh().pullupLoading();
-				});
-			}
+			mui.plusReady(function() {
+				//				//获取成员utid
+				//				window.addEventListener("utid", function(e) {
+				//					//获得事件参数
+				//					var utid = e.detail.utid;
+				//					console.log('sub-utid:' + JSON.stringify(utid));
+				//				});
+				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				var data = main.data; //接收页面传入的参数值
+				console.log('sub-utid:' + JSON.stringify(data));
+			});
 		</script>
 	</body>
 
