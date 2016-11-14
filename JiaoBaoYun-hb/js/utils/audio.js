@@ -87,6 +87,7 @@ var getLocalRecord=function(){
 				entry.getDirectory( "audio", {create:true}, function ( dir ) {
 					gentry = dir;
 		//			updateHistory();
+					cleanHistory()
 			}, function ( e ) {
 				outSet( "Get directory \"audio\" failed: "+e.message );
 			} );
@@ -99,7 +100,7 @@ function cleanHistory() {
 	hl.innerHTML = '<li id="empty" class="ditem-empty">无历史记录</li>';
 	le = document.getElementById( "empty" );
 	// 删除音频文件
-	console( "清空录音历史记录：" );
+//	console( "清空录音历史记录：" );
 	gentry.removeRecursively( function () {
 		// Success
 		console.log( "操作成功！" );
@@ -214,11 +215,10 @@ mui.plusReady(function(){
 			console.log('recording')
 			stopRecord();
 		}else{
-			console.log('back');
+//			console.log('back');
 			//获取本地录音文件
+			//并删除
 			getLocalRecord();
-			//删除本地文件
-			cleanHistory();
 			//系统返回方法
 			_back();
 		}

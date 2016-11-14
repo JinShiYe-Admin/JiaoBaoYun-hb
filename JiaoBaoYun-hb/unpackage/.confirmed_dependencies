@@ -271,7 +271,14 @@
 	"html/homework/homework-tea.html": {
 		"resources": [
 			"css/homework/homework.css",
-			"html/homework/homework-tea-sub.html"
+			"html/homework/homework-tea-sub.html",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/homework/homework-tea-sub.html",
