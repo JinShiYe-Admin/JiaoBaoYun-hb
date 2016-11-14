@@ -11,7 +11,7 @@ function plusReady(){
 	ws=plus.webview.currentWebview();
 	// Android处理返回键
 	plus.key.addEventListener('backbutton',function(){
-		back();
+//		back();
 	},false);
 	compatibleAdjust();
 }
@@ -29,20 +29,20 @@ document.addEventListener('DOMContentLoaded',function(){
 	compatibleAdjust();
 },false);
 // 处理返回事件
-w.back=function(hide){
-	if(w.plus){
-		ws||(ws=plus.webview.currentWebview());
-		if(hide||ws.preate){
-			ws.hide('auto');
-		}else{
-			ws.close('auto');
-		}
-	}else if(history.length>1){
-		history.back();
-	}else{
-		w.close();
-	}
-};
+//w.back=function(hide){
+//	if(w.plus){
+//		ws||(ws=plus.webview.currentWebview());
+//		if(hide||ws.preate){
+//			ws.hide('auto');
+//		}else{
+//			ws.close('auto');
+//		}
+//	}else if(history.length>1){
+//		history.back();
+//	}else{
+//		w.close();
+//	}
+//};
 // 处理点击事件
 var openw=null,waiting=null;
 /**

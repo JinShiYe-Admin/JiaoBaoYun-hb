@@ -3,17 +3,9 @@ var er=null,ep=null;
 // H5 plus事件处理
 function plusReady(){
 	// 获取音频目录对象
-	plus.io.resolveLocalFileSystemURL( "_doc/", function ( entry ) {
-		entry.getDirectory( "audio", {create:true}, function ( dir ) {
-			gentry = dir;
-			updateHistory();
-		}, function ( e ) {
-			outSet( "Get directory \"audio\" failed: "+e.message );
-		} );
-	}, function ( e ) {
-		outSet( "Resolve \"_doc/\" failed: "+e.message );
-	} );
-}
+	
+	}
+	
 if(window.plus){
 	plusReady();
 }else{
@@ -88,15 +80,29 @@ function stopRecord(){
 	r = null;
 	t = 0;
 }
+//获取本地录音文件记录
+var getLocalRecord=function(){
+	plus.io.resolveLocalFileSystemURL( "_doc/", 
+			function ( entry ) {
+				entry.getDirectory( "audio", {create:true}, function ( dir ) {
+					gentry = dir;
+		//			updateHistory();
+			}, function ( e ) {
+				outSet( "Get directory \"audio\" failed: "+e.message );
+			} );
+		}, function ( e ) {
+			outSet( "Resolve \"_doc/\" failed: "+e.message );
+		} );
+	}
 // 清除历史记录
 function cleanHistory() {
 	hl.innerHTML = '<li id="empty" class="ditem-empty">无历史记录</li>';
 	le = document.getElementById( "empty" );
 	// 删除音频文件
-	outSet( "清空录音历史记录：" );
+	console( "清空录音历史记录：" );
 	gentry.removeRecursively( function () {
 		// Success
-		outLine( "操作成功！" );
+		console.log( "操作成功！" );
 	}, function ( e ) {
 		console.log( "操作失败："+e.message );
 	});
@@ -194,16 +200,31 @@ function resetPlay() {
 	ps.style.webkitTransition = "all 1s linear";
 	pt.innerText = "00:00:00/00:00:00";	
 }
-// 重写关闭
-var _back=window.back;
-function resetback(){
-	// 停止播放
-	if(ep.style.display == "block"){
-		stopPlay();
-	}else if(er.style.display == "block"){
-		stopRecord();
-	}else{
-		_back();
+mui.plusReady(function(){
+	// 重写关闭
+	var _back=mui.back;
+	function resetback(){
+		console.log("ep display:"+ep.style.display+";er display:"+er.style.display);
+		// 停止播放
+		if(ep.style.display == "block"){
+			console.log('playing');
+			stopPlay();
+		//停止录音
+		}else if(er.style.display == "block"){
+			console.log('recording')
+			stopRecord();
+		}else{
+			console.log('back');
+			//获取本地录音文件
+			getLocalRecord();
+			//删除本地文件
+			cleanHistory();
+			//系统返回方法
+			_back();
+		}
 	}
-}
-window.back=resetback;
+	mui.back=resetback
+})
+
+
+

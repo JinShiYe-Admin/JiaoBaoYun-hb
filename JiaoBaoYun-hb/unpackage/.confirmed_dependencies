@@ -1,250 +1,296 @@
 {
-  "html/register/register_phoneNumber.html": {
-    "resources": [
-      "fonts/mui.ttf",
-      "js/libs/crypto-js/crypto-js.js",
-      "js/storageKeyName.js",
-      "js/utils/events.js",
-      "js/libs/RSA/Barrett.js",
-      "js/libs/crypto-js/require.js",
-      "js/libs/myStorage/myStorage.js",
-      "html/register/js/mui.enterfocus.js",
-      "js/libs/jquery.js",
-      "js/mui.min.js",
-      "js/libs/RSA/BigInt.js",
-      "js/utils/sortSign.js",
-      "css/mui.min.css",
-      "js/utils/signHmacSHA1.js",
-      "js/libs/RSA/RSA.js",
-      "js/utils/postData.js",
-      "js/utils/RSAEncrypt.js"
-    ],
-    "refer": [
-      "html/register/yanZhengMa.html"
-    ]
-  },
-  "html/register/login.html": {
-    "resources": [
-      "js/storageKeyName.js",
-      "js/utils/events.js",
-      "js/libs/RSA/Barrett.js",
-      "js/libs/crypto-js/require.js",
-      "html/register/js/app.js",
-      "js/libs/myStorage/myStorage.js",
-      "html/register/js/mui.enterfocus.js",
-      "js/libs/jquery.js",
-      "js/mui.min.js",
-      "js/libs/RSA/BigInt.js",
-      "js/utils/sortSign.js",
-      "css/mui.min.css",
-      "js/utils/signHmacSHA1.js",
-      "js/libs/RSA/RSA.js",
-      "js/utils/postData.js",
-      "js/utils/RSAEncrypt.js",
-      "js/libs/crypto-js/crypto-js.js",
-      "fonts/mui.ttf"
-    ],
-    "refer": [
-      "html/register/register_phoneNumber.html",
-      "html/register/modify_password.html"
-    ]
-  },
-  "html/cloud/cloud_home.html": {
-    "resources": [
-      "image/cloud/cloud_personalimage.png",
-      "image/cloud/cloud_bg.png",
-      "image/cloud/cloud_yuan.gif",
-      "image/cloud/cloud_notes.png",
-      "image/cloud/cloud_learningpath.png",
-      "image/cloud/cloud_keeprecord.png",
-      "image/cloud/cloud_gift.png",
-      "image/cloud/cloud_record.png",
-      "image/cloud/rightarrow.png",
-      "image/cloud/cloud_homework.png",
-      "image/cloud/cloud_pay.png",
-      "image/cloud/cloud_folder.png",
-      "js/utils/events.js",
-      "css/utils/common.css",
-      "js/mui.min.js",
-      "css/mui.min.css",
-      "fonts/mui.ttf"
-    ],
-    "refer": []
-  },
-  "html/quan/tab-zone.html": {
-    "resources": [
-      "image/tab_zone/u34.png",
-      "js/publicProtocol.js",
-      "js/quan/tab-zone.js",
-      "css/home/zone.css",
-      "image/tab_zone/u127.png",
-      "css/mui.css",
-      "image/tab_zone/u91.png",
-      "image/tab_zone/u72.png",
-      "js/storageKeyName.js",
-      "js/libs/RSA/Barrett.js",
-      "js/libs/crypto-js/require.js",
-      "js/main/slide_navigation.js",
-      "js/libs/myStorage/myStorage.js",
-      "js/libs/jquery.js",
-      "js/libs/RSA/BigInt.js",
-      "js/utils/sortSign.js",
-      "js/utils/signHmacSHA1.js",
-      "js/libs/RSA/RSA.js",
-      "js/utils/postData.js",
-      "js/utils/RSAEncrypt.js"
-    ],
-    "refer": [
-      "html/quan/studentdynamic_main.html",
-      "html/quan/class_space.html"
-    ]
-  },
-  "html/index.html": {
-    "resources": [
-      "css/iconfont/iconfont.css",
-      "html/quan/tab-zone.html",
-      "fonts/iconfont.ttf",
-      "js/main/slide_navigation.js",
-      "js/utils/Statusbar.js",
-      "css/utils/common.css",
-      "js/index.js",
-      "js/mui.min.js",
-      "js/utils/events.js",
-      "css/mui.min.css",
-      "fonts/mui.ttf"
-    ],
-    "refer": [
-      "html/cloud/cloud_home.html",
-      "html/quan/tab-zone.html",
-      "html/index-menu.html",
-      "html/tab_knowledge.html",
-      "html/clip/clip_sub.html"
-    ]
-  },
-  "html/index-menu.html": {
-    "resources": [
-      "css/home/index-menu.css",
-      "image/slide_navigation/img3.jpg"
-    ],
-    "refer": []
-  },
-  "html/tab_knowledge.html": {
-    "resources": [
-      "image/knowledge/u214.png",
-      "image/knowledge/0.png",
-      "css/utils/carousel.css",
-      "image/knowledge/u236.png",
-      "css/utils/bubble.css",
-      "image/knowledge/u270.png",
-      "css/knowledge/knowledge.css",
-      "image/knowledge/u212.png",
-      "image/knowledge/2.png",
-      "image/knowledge/1.png",
-      "js/knowledge/knowledge-list.js",
-      "js/utils/carouselControl.js",
-      "js/mui.min.js",
-      "js/utils/events.js",
-      "css/mui.min.css",
-      "js/main/slide_navigation.js",
-      "css/utils/common.css"
-    ],
-    "refer": []
-  },
-  "html/register/yanZhengMa.html": {
-    "refer": [
-      "html/index.html"
-    ],
-    "resources": [
-      "js/libs/crypto-js/crypto-js.js",
-      "js/storageKeyName.js",
-      "fonts/mui.ttf",
-      "js/libs/RSA/Barrett.js",
-      "js/libs/crypto-js/require.js",
-      "js/libs/myStorage/myStorage.js",
-      "html/register/js/mui.enterfocus.js",
-      "js/libs/jquery.js",
-      "js/libs/RSA/BigInt.js",
-      "js/utils/sortSign.js",
-      "js/libs/RSA/RSA.js",
-      "js/utils/signHmacSHA1.js",
-      "js/utils/postData.js",
-      "js/utils/RSAEncrypt.js",
-      "js/utils/events.js",
-      "js/mui.min.js",
-      "css/mui.min.css"
-    ]
-  },
-  "html/clip/clip_sub.html": {
-    "resources": [
-      "image/clip/u296.png",
-      "image/clip/u292.png",
-      "image/clip/u298.png",
-      "js/storageKeyName.js",
-      "js/utils/events.js",
-      "js/libs/RSA/Barrett.js",
-      "js/libs/crypto-js/require.js",
-      "js/utils/carouselControl.js",
-      "css/utils/common.css",
-      "js/libs/myStorage/myStorage.js",
-      "js/publicProtocol.js",
-      "js/libs/jquery.js",
-      "js/mui.min.js",
-      "js/libs/RSA/BigInt.js",
-      "js/utils/sortSign.js",
-      "css/mui.min.css",
-      "js/utils/signHmacSHA1.js",
-      "js/libs/RSA/RSA.js",
-      "js/utils/postData.js",
-      "js/utils/RSAEncrypt.js"
-    ],
-    "refer": []
-  },
-  "html/quan/studentdynamic_main.html": {
-    "resources": [
-      "fonts/mui.ttf",
-      "html/quan/studentdynamic_sub.html"
-    ],
-    "refer": [
-      "html/quan/studentdynamic_sub.html"
-    ]
-  },
-  "html/quan/studentdynamic_sub.html": {
-    "resources": [
-      "js/quan/studentdynamic.js",
-      "image/quan/u125.png",
-      "image/quan/u77.png",
-      "image/quan/u123.png"
-    ],
-    "refer": []
-  },
-  "html/register/modify_password.html": {
-    "resources": [
-      "js/libs/crypto-js/crypto-js.js"
-    ],
-    "refer": []
-  },
-  "html/quan/class_space.html": {
-    "resources": [
-      "html/quan/classSpace-sub.html",
-      "css/quan/class_space.css"
-    ],
-    "refer": [
-      "html/quan/classSpace-sub.html"
-    ]
-  },
-  "html/quan/classSpace-sub.html": {
-    "resources": [
-      "image/quan/u84.jpg",
-      "image/quan/img1.jpeg",
-      "image/quan/img4.jpg",
-      "image/quan/img2.jpg",
-      "js/quan/class_space.js",
-      "image/quan/img3.jpg",
-      "image/quan/img0.jpeg",
-      "image/quan/u98.jpg",
-      "image/quan/u114.png",
-      "image/quan/u108.jpg"
-    ],
-    "refer": []
-  }
+	"html/register/register_phoneNumber.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"html/register/js/mui.enterfocus.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/sortSign.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		],
+		"refer": [
+			"html/register/yanZhengMa.html"
+		]
+	},
+	"html/register/login.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"html/register/js/app.js",
+			"js/libs/myStorage/myStorage.js",
+			"html/register/js/mui.enterfocus.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/sortSign.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"html/register/register_phoneNumber.html",
+			"html/register/modify_password.html"
+		]
+	},
+	"html/cloud/cloud_home.html": {
+		"resources": [
+			"image/cloud/cloud_personalimage.png",
+			"image/cloud/cloud_bg.png",
+			"image/cloud/cloud_yuan.gif",
+			"image/cloud/cloud_notes.png",
+			"image/cloud/cloud_learningpath.png",
+			"image/cloud/cloud_keeprecord.png",
+			"image/cloud/cloud_gift.png",
+			"image/cloud/cloud_record.png",
+			"image/cloud/rightarrow.png",
+			"image/cloud/cloud_homework.png",
+			"image/cloud/cloud_pay.png",
+			"image/cloud/cloud_folder.png",
+			"js/utils/events.js",
+			"css/utils/common.css",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"html/homework/homework-tea.html"
+		]
+	},
+	"html/quan/tab-zone.html": {
+		"resources": [
+			"image/tab_zone/u34.png",
+			"js/publicProtocol.js",
+			"js/quan/tab-zone.js",
+			"css/home/zone.css",
+			"image/tab_zone/u127.png",
+			"css/mui.css",
+			"image/tab_zone/u91.png",
+			"image/tab_zone/u72.png",
+			"js/storageKeyName.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/main/slide_navigation.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/sortSign.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		],
+		"refer": [
+			"html/quan/studentdynamic_main.html",
+			"html/quan/class_space.html"
+		]
+	},
+	"html/index.html": {
+		"resources": [
+			"css/iconfont/iconfont.css",
+			"html/quan/tab-zone.html",
+			"fonts/iconfont.ttf",
+			"js/main/slide_navigation.js",
+			"js/utils/Statusbar.js",
+			"css/utils/common.css",
+			"js/index.js",
+			"js/mui.min.js",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"html/cloud/cloud_home.html",
+			"html/quan/tab-zone.html",
+			"html/index-menu.html",
+			"html/tab_knowledge.html",
+			"html/clip/clip_sub.html"
+		]
+	},
+	"html/index-menu.html": {
+		"resources": [
+			"css/home/index-menu.css",
+			"image/slide_navigation/img3.jpg"
+		],
+		"refer": []
+	},
+	"html/tab_knowledge.html": {
+		"resources": [
+			"image/knowledge/u214.png",
+			"image/knowledge/0.png",
+			"css/utils/carousel.css",
+			"image/knowledge/u236.png",
+			"css/utils/bubble.css",
+			"image/knowledge/u270.png",
+			"css/knowledge/knowledge.css",
+			"image/knowledge/u212.png",
+			"image/knowledge/2.png",
+			"image/knowledge/1.png",
+			"js/knowledge/knowledge-list.js",
+			"js/utils/carouselControl.js",
+			"js/mui.min.js",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"js/main/slide_navigation.js",
+			"css/utils/common.css"
+		],
+		"refer": []
+	},
+	"html/register/yanZhengMa.html": {
+		"refer": [
+			"html/index.html"
+		],
+		"resources": [
+			"js/libs/crypto-js/crypto-js.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"html/register/js/mui.enterfocus.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/sortSign.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/utils/events.js",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
+	},
+	"html/clip/clip_sub.html": {
+		"resources": [
+			"image/clip/u296.png",
+			"image/clip/u292.png",
+			"image/clip/u298.png",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/utils/carouselControl.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/sortSign.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		],
+		"refer": []
+	},
+	"html/quan/studentdynamic_main.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"html/quan/studentdynamic_sub.html"
+		],
+		"refer": [
+			"html/quan/studentdynamic_sub.html"
+		]
+	},
+	"html/quan/studentdynamic_sub.html": {
+		"resources": [
+			"js/quan/studentdynamic.js",
+			"image/quan/u125.png",
+			"image/quan/u77.png",
+			"image/quan/u123.png"
+		],
+		"refer": []
+	},
+	"html/register/modify_password.html": {
+		"resources": [
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": []
+	},
+	"html/quan/class_space.html": {
+		"resources": [
+			"html/quan/classSpace-sub.html",
+			"css/quan/class_space.css"
+		],
+		"refer": [
+			"html/quan/classSpace-sub.html"
+		]
+	},
+	"html/quan/classSpace-sub.html": {
+		"resources": [
+			"image/quan/u84.jpg",
+			"image/quan/img1.jpeg",
+			"image/quan/img4.jpg",
+			"image/quan/img2.jpg",
+			"js/quan/class_space.js",
+			"image/quan/img3.jpg",
+			"image/quan/img0.jpeg",
+			"image/quan/u98.jpg",
+			"image/quan/u114.png",
+			"image/quan/u108.jpg"
+		],
+		"refer": []
+	},
+	"html/homework/homework-tea-sub.html": {
+		"resources": [
+			"js/homework/homework-tea.js",
+			"js/utils/h5fresh.js"
+		],
+		"refer": [
+			"html/homework/homework-publish.html"
+		]
+	},
+	"html/homework/publish-answer.html": {
+		"resources": [
+			"css/homework/publish-answer.css",
+			"js/mui.zoom.js",
+			"js/utils/load.js",
+			"js/utils/camera.js",
+			"js/mui.previewimage.js"
+		],
+		"refer": []
+	},
+	"html/homework/homework-tea.html": {
+		"resources": [
+			"css/homework/homework.css",
+			"html/homework/homework-tea-sub.html"
+		],
+		"refer": [
+			"html/homework/homework-tea-sub.html",
+			"html/homework/publish-answer.html"
+		]
+	},
+	"html/homework/homework-publish.html": {
+		"resources": [
+			"js/common.js",
+			"css/homework/homework-publish.css",
+			"js/utils/camera.js",
+			"js/utils/audio.js",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"css/utils/common.css"
+		]
+	}
 }
