@@ -29,7 +29,7 @@ function createItem( entry ) {
 	li.className = "ditem";
 	li.innerHTML = '<span class="iplay"><font class="aname"></font><br/><font class="ainf"></font></span>';
 	li.setAttribute( "onclick", "playAudio(this);" );
-	hl.insertBefore( li, le.nextSibling );
+//	hl.insertBefore( li, le.nextSibling );
 	li.querySelector(".aname").innerText = entry.name;
 	li.querySelector(".ainf").innerText = "...";
 	li.entry = entry;
@@ -87,7 +87,6 @@ var getLocalRecord=function(){
 				entry.getDirectory( "audio", {create:true}, function ( dir ) {
 					gentry = dir;
 		//			updateHistory();
-					cleanHistory()
 			}, function ( e ) {
 				outSet( "Get directory \"audio\" failed: "+e.message );
 			} );
@@ -100,7 +99,7 @@ function cleanHistory() {
 	hl.innerHTML = '<li id="empty" class="ditem-empty">无历史记录</li>';
 	le = document.getElementById( "empty" );
 	// 删除音频文件
-//	console( "清空录音历史记录：" );
+	console( "清空录音历史记录：" );
 	gentry.removeRecursively( function () {
 		// Success
 		console.log( "操作成功！" );
@@ -125,7 +124,7 @@ function updateHistory() {
   	} );
 }
 // 获取录音文件信息
-function updateInformation( li ) {
+function updateInformation( li ,range) {
 	if ( !li || !li.entry ) {
 		return;
 	}
@@ -215,10 +214,11 @@ mui.plusReady(function(){
 			console.log('recording')
 			stopRecord();
 		}else{
-//			console.log('back');
+			console.log('back')
 			//获取本地录音文件
-			//并删除
 			getLocalRecord();
+			//删除本地文件
+			cleanHistory();
 			//系统返回方法
 			_back();
 		}

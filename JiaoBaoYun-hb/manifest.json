@@ -218,7 +218,8 @@
 					"html/clip/clip_sub.html",
 					"html/cloud/cloud_sub.html",
 					"html/cloud/cloud_main.html",
-					"html/cloud/cloud_home.html"
+					"html/cloud/cloud_home.html",
+					"html/mine.html"
 				],
 				"priority": 0
 			},
@@ -309,7 +310,9 @@
 					"css/home/index-menu.css",
 					"css/iconfont/iconfont.css",
 					"fonts/iconfont.ttf",
-					"image/knowledge/0.png"
+					"image/knowledge/0.png",
+					"js/libs/myStorage/myStorage.js",
+					"js/storageKeyName.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -902,6 +905,21 @@
 			"html/register/modify_password.html": {
 				"resources": [
 					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/mine.html": {
+				"resources": [
+					"css/iconfont/iconfont.css",
+					"js/mui.min.js",
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"css/home/index-menu.css",
+					"css/mui.min.css",
+					"fonts/iconfont.ttf",
+					"image/slide_navigation/img3.jpg",
+					"js/libs/myStorage/myStorage.js"
 				],
 				"refer": [],
 				"priority": 0

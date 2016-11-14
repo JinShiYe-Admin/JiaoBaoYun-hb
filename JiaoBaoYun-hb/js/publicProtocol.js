@@ -22,7 +22,7 @@ document.write('<script src="../../js/libs/jquery.js"><\/script>');
 //var comData = {
 //	vtp: 'unick', //uimg(头像),utxt(签名),unick(昵)称,usex(性别),uemail(邮件)
 //	vvl: '测试修改昵称', //对应的值
-//};
+//}; 
 //// 等待的对话框
 //var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 //var postDataPro_jiaobaoYunPro_PostReUinf(comData, wd, function(data) {

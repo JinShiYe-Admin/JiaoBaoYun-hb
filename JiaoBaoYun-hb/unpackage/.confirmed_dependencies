@@ -120,13 +120,21 @@
 			"html/quan/tab-zone.html",
 			"html/index-menu.html",
 			"html/tab_knowledge.html",
-			"html/clip/clip_sub.html"
+			"html/clip/clip_sub.html",
+			"html/mine.html"
 		]
 	},
 	"html/index-menu.html": {
 		"resources": [
 			"css/home/index-menu.css",
-			"image/slide_navigation/img3.jpg"
+			"image/slide_navigation/img3.jpg",
+			"fonts/mui.ttf",
+			"fonts/iconfont.ttf",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/storageKeyName.js"
 		],
 		"refer": []
 	},
@@ -298,6 +306,19 @@
 			"css/mui.min.css",
 			"fonts/iconfont.ttf",
 			"css/utils/common.css"
+		]
+	},
+	"html/mine.html": {
+		"resources": [
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"css/home/index-menu.css",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"image/slide_navigation/img3.jpg",
+			"js/libs/myStorage/myStorage.js"
 		]
 	}
 }
