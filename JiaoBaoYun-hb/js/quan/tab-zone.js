@@ -17,7 +17,7 @@ mui.plusReady(function() {
 	//	//需要参数
 	var comData = {
 		vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
-		vvl: '1', //查询的各项，对应人的utid，可以是查询的任何人
+		vvl: '4', //查询的各项，对应人的utid，可以是查询的任何人
 	};
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);

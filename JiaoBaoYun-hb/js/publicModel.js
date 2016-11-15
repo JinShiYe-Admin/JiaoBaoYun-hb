@@ -18,8 +18,16 @@ var publicModel = (function($, mod) {
 		token:''//用户令牌
 	};
 	
+	//9.获取用户群
+	mod.model_groupList = {
+		gid:'',//群ID
+		gname:'',//群名
+		gimg:'',//群头像,群头像的链接
+		mstype:''//用户管理角色,0家长,1管理员,2老师,3学生
+	}
+	
 	//11.通过用户账号和手机号搜索用户
-	mod.model_searchPeople = {
+	mod.model_userInfo = {
 		utid:'',//用户表ID
 		uid:'',//用户手机号
 		uname:'',//用户名
@@ -29,13 +37,36 @@ var publicModel = (function($, mod) {
 		uimg:''//用户头像地址
 	}
 	
-	//16.通过群ID获取群学生
+	//13.通过群ID获取群的正常用户
+	mod.model_groupNormalUser = {
+		gid:'',//群ID
+		utid:'',//用户tid
+		ugname:'',//用户在群昵称，用户在群里的备注名称
+		ugnick:'',//用户昵称，用户资料昵称
+		uimg:'',//用户头像，用户头像
+		mstype:''//资料类型,0家长,1管理员,2老师,3学生
+	}
+	
+	//16.通过群ID获取群对象资料
 	mod.model_groupStus = {
 		gid:'',//群ID
-		stuid:'',//学生资料id
-		stuname:'',//学生名称
-		stuimg:''//学生头像
+		stuid:'',//资料id
+		stuname:'',//名称
+		stuimg:'',//头像,头像地址
+		mstype:''//资料类型,0家长,1管理员,2老师,3学生
 	}
+	
+	//17.通过审批者ID获取相应的入群邀请或申请
+	mod.model_groupRequestUser = {
+		gutid:'',//邀请记录ID
+		gname:'',//群名
+		invname:'',//邀请人姓名
+		mstype:'',//邀请成为类型，0家长,1管理员,2老师,3学生
+		stuname:'',//关联学生姓名
+		aptime:'',//申请时间
+		appnote:''//申请备注
+	}
+	
 	
 	//家校圈
 	//2.（点到记事）获取用户未读点到记事列表

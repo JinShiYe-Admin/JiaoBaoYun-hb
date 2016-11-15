@@ -74,9 +74,10 @@ var postDataPro_PostReGinfo=function(commonData, wd, callback) {
 //	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 //	//需要参数
 //	var comData = {
-//		vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
+//		vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群),ig(群信息vvl对应群ID)
 //		vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
 //	};
+//返回值model：model_groupList
 var postDataPro_PostGList=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
@@ -107,7 +108,7 @@ var postDataPro_PostTokenRenew=function(commonData, wd, callback) {
 //		var comData = {
 //			vvl: '111111'//查询的值
 //		};
-//返回值model：model_searchPeople
+//返回值model：model_userInfo
 var postDataPro_PostUList=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
@@ -121,8 +122,11 @@ var postDataPro_PostUList=function(commonData, wd, callback) {
 //			gid: '111111',//群ID
 //			beinvutid:'',//被邀请人ID
 //			beinvnick:'',//被邀请人昵称
-//			invtp:'',//被邀请人类型,0家长,2老师,3学生
-//			vtp:''//更改项,0老师邀请家长,1个人申请入群
+//			mstype:'',//被邀请人类型,0家长,2老师,3学生
+//			stat:'',//入群状态,0待审,1同意
+//			lnkinfid:''//关联资料ID,无资料关联填写0
+//			urel:'',//与资料关系,与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
+//			vtp:''//邀请类型,0老师邀请家长,1个人申请入群,2群员邀请群员
 //		};
 var postDataPro_PostInvGuser=function(commonData, wd, callback) {
 	//需要加密的数据
@@ -138,6 +142,7 @@ var postDataPro_PostInvGuser=function(commonData, wd, callback) {
 //			vvl:'',//群ID，查询的值
 //			vvl1:'',//群员类型，0家长,1管理员,2老师,3学生,-1取全部
 //		};
+//返回值model：model_groupNormalUser
 var postDataPro_PostGusers=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
@@ -159,12 +164,14 @@ var postDataPro_PostVerifyToken=function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINURL + 'PostVerifyToken', enData, commonData, 0, wd, callback);
 }
 
-//15.用户添加学生
+//15.用户添加资料
 //		//所需参数
 //		var comData = {
 //			gid: '',//群ID
 //			gname:'',//学生名
 //			gimg:''//学生头像
+//			mstype:'',//资料类型，0家长,2老师,3学生
+//			guid:''//关联的群账号ID，用户在群里的账号ID,无则为0
 //		};
 var postDataPro_PostGStu=function(commonData, wd, callback) {
 	//需要加密的数据
@@ -173,17 +180,89 @@ var postDataPro_PostGStu=function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINURL + 'PostGStu', enData, commonData, 1, wd, callback);
 }
 
-//16.通过群ID获取群学生
+//16.通过群ID获取群对象资料
 //所需参数
 //		var comData = {
 //			top: '',//选择条数,-1为全部
 //			vvl:''//群ID,查询的值
+//			vvl1:''//类型,0家长,1管理员,2老师,3学生,-1全部
 //		};
+//返回值model：model_groupStus
 var postDataPro_PostGStus=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINURL + 'PostGStus', enData, commonData, 1, wd, callback);
+}
+
+//17.通过审批者ID获取相应的入群邀请或申请
+//所需参数
+//		var comData = { 
+//			vtp: '',//获取项，要获取的项:inv(入群邀请),app(入群申请)
+//		};
+//返回值model：model_groupRequestUser
+var postDataPro_PostGrInv=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostGrInv', enData, commonData, 1, wd, callback);
+}
+
+//18.管理员审批用户入群
+//所需参数
+//		var comData = {
+//			gutid: '',//申请记录ID，
+//			stat:''//入群状态，0拒绝,后面的字段填0即可,1通过
+//			mstype:''//审批用户类型，0家长,2老师,3学生
+//			lnkinfid:''//关联资料ID，无资料关联填写0
+//			urel:''//与资料关系，与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
+//		};
+var postDataPro_PostJoinDo=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostJoinDo', enData, commonData, 1, wd, callback);
+}
+
+//19.用户申请入群
+//所需参数
+//		var comData = {
+//			gid: '',//群ID
+//			beinvnick:''//申请人昵称
+//			mstype:''//申请成为，0家长,2老师,3学生
+//			urel:''//备注，与资料关系，与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
+//		};
+var postDataPro_PostJoinGuser=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostJoinGuser', enData, commonData, 1, wd, callback);
+}
+
+//20.用户审批申请
+//所需参数
+//		var comData = {
+//			gutid: '',//申请ID
+//			stat:''//状态,0拒绝,1同意
+//		};
+var postDataPro_PostInvDo=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostInvDo', enData, commonData, 1, wd, callback);
+}
+
+//21.通过用户ID获取用户资料
+//所需参数
+//		var comData = {
+//			vvl:''//群ID,查询的值
+//		};
+//返回值model：model_userInfo
+var postDataPro_PostUinf=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostUinf', enData, commonData, 1, wd, callback);
 }
 
 
