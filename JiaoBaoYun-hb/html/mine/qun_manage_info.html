@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/camera.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<style>
+			body,
+			.mui-content {
+				background: white;
+			}
+
+			#qunimage {
+				height: 100px;
+			}
+
+			.qun-image {
+				border: 2px solid #F2F2F2;
+				border-radius: 50%;
+				height: 100px;
+				width: 100px;
+				text-align: center;
+				margin-top: 20px;
+			}
+
+			.mui-input-row label {
+				text-align: center;
+				width: 25%;
+				padding: 11px 0px;
+				font-size: 15px;
+			}
+
+			.mui-input-group {
+				margin-top: 20px;
+			}
+
+			.mui-input-group:before,
+			.mui-input-group:after {
+				height: 0px;
+			}
+
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 75%;
+				font-size: 15px;
+				padding-right: 10px;
+			}
+
+			.mui-input-group .mui-input-row:after {
+				width: 100%;
+				left: 0;
+			}
+
+			.mui-btn-block {
+				border-radius: 50px;
+				margin-top: 50px;
+				width: 80%;
+				margin-left: 10%;
+				height: 40px;
+				padding: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<p class="mui-title common-color-white" style="text-align: left;">填写群信息</p>
+		</header>
+		<div class="mui-content">
+			<div id="qunimage">
+				<!--<div style="margin-left: 110px;" class="qun-image">
+				<a class="mui-icon iconfont icon-xiangji" style="color: #BBBBBB;font-size: 30px;margin-top: 20px;">
+					<p style="font-size: 10px;margin-top: 10px;">
+						请上传群图标!
+					</p>
+				</a>
+				</div>-->
+				<!--<img style="margin-left: 110px;" src="../../image/clip/u292.png" class="qun-image" />-->
+			</div>
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>群名称：</label>
+					<input id="qunname" type="text" class="mui-input-clear" placeholder="请为你们的群起一个给力的名字吧！">
+				</div>
+				<div class="mui-input-row">
+					<label>群说明：</label>
+					<input id="qunintroduce" type="text" class="mui-input-clear" placeholder="请简单介绍一下本群！">
+				</div>
+				<div class="mui-input-row">
+					<label>群备注：</label>
+					<input id="qunremark" type="text" class="mui-input-clear">
+				</div>
+			</form>
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block">提交</button>
+		</div>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var qunImgPath = '';
+				var Width = plus.screen.resolutionWidth;
+				var marginLeft = (Width - 100) / 2 + 'px';
+				addQunImg();
+				document.getElementById('qunimage').addEventListener('tap', function() {
+					console.log('选择群图标');
+					var btnArray = [{
+						title: "拍照"
+					}, {
+						title: "相册"
+					}];
+					plus.nativeUI.actionSheet({
+						title: "选择上传群图标的方式",
+						cancel: "取消",
+						buttons: btnArray
+					}, function(e) {
+						var index = e.index;
+						switch(index) {
+							case 0: //取消
+								break;
+							case 1: //拍照
+								fromCamera();
+								break;
+							case 2: //相册
+								fromPic();
+								break;
+						}
+					});
+				});
+				document.body.querySelector('.mui-btn-block').addEventListener('tap', function() {
+					var qunName = document.getElementById("qunname");
+					var qunIntroduce = document.getElementById("qunintroduce");
+					var qunRemark = document.getElementById("qunremark");
+					console.log('提交');
+					if('' == qunName.value) {
+						mui.toast('群名称不能为空');
+					} else {
+						//7.用户创建群
+						//需要参数
+						var comData = {
+							gname: qunName.value, //群名
+							gimg: '', //群头像
+						};
+						// 等待的对话框
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						postDataPro_PostCrGrp(comData, wd, function(data) {
+							wd.close();
+							console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode == 0) {
+								mui.toast('创建群成功');
+								console.log('创建群成功');
+							} else {
+								mui.toast(data.RspTxt);
+								console.log('创建群失败：' + data.RspTxt);
+							}
+						});
+					}
+				});
+
+				/**
+				 * 上传群图标区域
+				 */
+				function addQunImg() {
+					var div = document.getElementById("qunimage");
+					div.innerHTML = '<div style="margin-left: ' + marginLeft + ';" class="qun-image">\
+									<a class="mui-icon iconfont icon-xiangji" style="color: #BBBBBB;font-size: 30px;margin-top: 20px;">\
+										<p style="font-size: 10px;margin-top: 10px;">\
+											请上传群图标!\
+										</p>\
+									</a>\
+								</div>';
+					//div.innerHTML = '<img style="margin-left: ' + marginLeft + ';" src="../../image/clip/u292.png" class="qun-image" />';
+					var table = document.body.querySelector('.mui-content');
+					table.insertBefore(div, table.firstChild);
+				}
+
+				/**
+				 * 从相册选择图片
+				 */
+				function fromPic() {
+					plus.gallery.pick(function(file) {
+							//从相册选取图片成功的回调
+							//file: ( String ) 必选 选择的图片或视频文件路径
+
+							console.log('从相册选取图片成功,图片的路径为：' + file);
+
+							var div = document.getElementById("qunimage");
+							div.innerHTML = '';
+							div.innerHTML = '<img style="margin-left:  ' + marginLeft + ';" src="' + file + '" class="qun-image"/>';
+						}, function(error) {
+							//从相册选取图片失败的回调
+							var code = error.code; // 错误编码
+							var message = error.message; // 错误描述信息
+							if(code != 12) {
+								mui.toast('从相册选取图片失败！' + '错误编码：' + code + '描述信息：' + message);
+								console.log('从相册选取图片失败！' + JSON.stringify(error));
+							} else {
+								console.log('未选取图片');
+							}
+						}
+						//, option
+						//设置选择文件的参数
+						//animation: (Boolean 类型 )是否显示系统相册文件选择界面的动画
+						//filename: (String 类型 )选择文件保存的路径
+						//filter: (GalleryFilter 类型 )相册中选择文件类型过滤器
+						//系统相册选择器中可选择的文件类型，可设置为仅选择图片文件（“image”）、视频文件（“video”）或所有文件（“none”），默认值为“image”。
+					);
+				}
+
+				/**
+				 * 通过相机拍照
+				 */
+				function fromCamera() {
+					camera.getPic(camera.getCamera(), function(path) {
+						var div = document.getElementById("qunimage");
+						div.innerHTML = '';
+						div.innerHTML = '<img style="margin-left:  ' + marginLeft + ';" src="' + path + '" class="qun-image"/>';
+					}, function(error) {
+						var code = error.code; // error.code（Number类型）获取错误编码
+						var message = error.message; // error.message（String类型）获取错误描述信息。
+						if(code !== 11) {
+							mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
+							console.log('拍照失败！' + JSON.stringify(error));
+						} else {
+							console.log('未拍取图片');
+						}
+					});
+				}
+			});
+		</script>
+	</body>
+
+</html>

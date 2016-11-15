@@ -36,8 +36,8 @@ var slideNavigation = (function($) {
 		 * 打开侧滑
 		 */
 	var openMenu = function() {
-			console.log('openMenu' + isInTransition);
-			console.log("show:" + showMenu)
+//			console.log('openMenu' + isInTransition);
+//			console.log("show:" + showMenu)
 			if(isInTransition) {
 				return;
 			}
@@ -70,8 +70,8 @@ var slideNavigation = (function($) {
 		 * 关闭侧滑
 		 */
 	var closeMenu = function() {
-			console.log("closeMenu:" + isInTransition);
-			console.log("show:" + showMenu)
+//			console.log("closeMenu:" + isInTransition);
+//			console.log("show:" + showMenu)
 			if(isInTransition) {
 				return;
 			}

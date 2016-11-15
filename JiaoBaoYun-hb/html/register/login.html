@@ -150,7 +150,7 @@
 		<script src="../../js/libs/RSA/BigInt.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/RSA/RSA.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/utils/RSAEncrypt.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script src="js/mui.enterfocus.js" type="text/javascript" charset="utf-8"></script>
 		<!--网络请求-->
 		<script src="../../js/utils/postData.js" type="text/javascript" charset="utf-8"></script>
@@ -170,24 +170,24 @@
 					plus.screen.lockOrientation("portrait-primary");
 					var settings = app.getSettings();
 					var state = app.getState();
-//					var mainPage = $.preload({
-//						"id": '../../html/index.html',
-//						"url": '../../html/index.html'
-//					});
-//					var toMain = function() {
-//						$.fire(mainPage, 'show', null);
-//						setTimeout(function() {
-//							$.openWindow({
-//								id: '../../html/index.html',
-//								show: {
-//									aniShow: 'pop-in'
-//								},
-//								waiting: {
-//									autoShow: false
-//								}
-//							});
-//						}, 0);
-//					};
+					//					var mainPage = $.preload({
+					//						"id": '../../html/index.html',
+					//						"url": '../../html/index.html'
+					//					});
+					//					var toMain = function() {
+					//						$.fire(mainPage, 'show', null);
+					//						setTimeout(function() {
+					//							$.openWindow({
+					//								id: '../../html/index.html',
+					//								show: {
+					//									aniShow: 'pop-in'
+					//								},
+					//								waiting: {
+					//									autoShow: false
+					//								}
+					//							});
+					//						}, 0);
+					//					};
 					// close splash
 					setTimeout(function() {
 						//关闭 splash
@@ -259,8 +259,8 @@
 										mui.toast('登录成功')
 											//存储到手机本地
 										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
-//										toMain();
-										events.openNewWindowWithData('../../html/index.html','');
+										//										toMain();
+										events.openNewWindowWithData('../../html/index.html', '');
 									}
 								});
 							} else {
@@ -316,10 +316,10 @@
 					}, false);
 					forgetButton.addEventListener('tap', function(event) {
 						$.openWindow({
-							//							url: 'forget_password.html',
-							//							id: 'forget_password',
-							url: 'modify_password.html',
-							id: 'modify_password.html',
+							url: 'forget_password.html',
+							id: 'forget_password',
+//							url: 'modify_password.html',
+//							id: 'modify_password.html',
 							preload: true,
 							show: {
 								aniShow: 'pop-in'

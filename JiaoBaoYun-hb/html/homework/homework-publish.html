@@ -55,7 +55,7 @@
 			       	
 			    </div>
 			    <div>
-			    <textarea type="text" style="min-height: 10rem;" placeholder="输入你要布置的作业内容">
+			    <textarea id="publish-container" type="text" style="min-height: 10rem;" placeholder="输入你要布置的作业内容">
 			    </textarea>
 			    <div class="publish-extras">
 			    	<a id="getRecord" class="mui-icon mui-icon-mic"></a>
@@ -105,6 +105,16 @@
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function(){
+				var lastEditRange=null;
+				var publish_container=document.getElementById('publish-container');
+				publish_container.addEventListener('tap',function(){
+					var sction=getSelection();
+					lastEditRange=sction.getRangeAt(0);
+				})
+				publish_container.addEventListener('release',function(){
+					var sction=getSelection();
+					lastEditRange=sction.getRangeAt(0);
+				})
 				//录音键
 				events.addTap('getRecord',function(){
 					startRecord()
