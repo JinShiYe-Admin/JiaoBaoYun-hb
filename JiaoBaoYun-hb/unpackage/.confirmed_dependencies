@@ -253,7 +253,14 @@
 	"html/quan/class_space.html": {
 		"resources": [
 			"html/quan/classSpace-sub.html",
-			"css/quan/class_space.css"
+			"css/quan/class_space.css",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/quan/classSpace-sub.html"
@@ -270,7 +277,8 @@
 			"image/quan/img0.jpeg",
 			"image/quan/u98.jpg",
 			"image/quan/u114.png",
-			"image/quan/u108.jpg"
+			"image/quan/u108.jpg",
+			"css/utils/bubble.css"
 		],
 		"refer": []
 	},
@@ -340,7 +348,9 @@
 		],
 		"refer": [
 			"html/mine/account-info.html",
-			"html/mine/group-info.html"
+			"html/mine/group-info.html",
+			"html/mine/qun_manage.html",
+			"html/mine/qun_data.html"
 		]
 	},
 	"html/mine/edit-info.html": {
@@ -522,7 +532,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/quan/zone_main.html": {
@@ -558,6 +569,31 @@
 			"js/utils/signHmacSHA1.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/mine/qun_manage_info.html": {
+		"resources": [
+			"js/utils/camera.js"
+		]
+	},
+	"html/mine/qun_manage.html": {
+		"refer": [
+			"html/mine/qun_manage_info.html"
+		],
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/mine/qun_data.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	}
 }

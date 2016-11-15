@@ -56,7 +56,8 @@
 			mui.plusReady(function(){
 				var personalInfo=window.myStorage.getItem(storageKeyName.PERSONALINFO);
 				var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				postDataPro_PostGList({vtp: 'ag',vvl: personalInfo.utid},wd,function(data){
+				console.log(personalInfo.utid);
+				postDataPro_PostGList({vtp:'ag',vvl: personalInfo.utid+''},wd,function(data){
 					wd.close();
 					console.log(JSON.stringify(data))
 				})

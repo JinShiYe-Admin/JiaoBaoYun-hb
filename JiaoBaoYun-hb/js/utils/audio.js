@@ -87,6 +87,7 @@ var getLocalRecord=function(){
 				entry.getDirectory( "audio", {create:true}, function ( dir ) {
 					gentry = dir;
 		//			updateHistory();
+					cleanHistory()
 			}, function ( e ) {
 				outSet( "Get directory \"audio\" failed: "+e.message );
 			} );
@@ -214,11 +215,9 @@ mui.plusReady(function(){
 			console.log('recording')
 			stopRecord();
 		}else{
-			console.log('back')
+//			console.log('back')
 			//获取本地录音文件
 			getLocalRecord();
-			//删除本地文件
-			cleanHistory();
 			//系统返回方法
 			_back();
 		}
