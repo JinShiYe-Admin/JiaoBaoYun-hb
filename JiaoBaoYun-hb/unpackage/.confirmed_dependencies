@@ -46,7 +46,8 @@
 		],
 		"refer": [
 			"html/register/register_phoneNumber.html",
-			"html/register/modify_password.html"
+			"html/register/modify_password.html",
+			"html/index.html"
 		]
 	},
 	"html/cloud/cloud_home.html": {
@@ -70,7 +71,8 @@
 			"fonts/mui.ttf"
 		],
 		"refer": [
-			"html/homework/homework-tea.html"
+			"html/homework/homework-tea.html",
+			"html/cloud/app_keeprecord.html"
 		]
 	},
 	"html/quan/tab-zone.html": {
@@ -318,7 +320,81 @@
 			"css/mui.min.css",
 			"fonts/iconfont.ttf",
 			"image/slide_navigation/img3.jpg",
-			"js/libs/myStorage/myStorage.js"
+			"js/libs/myStorage/myStorage.js",
+			"js/utils/events.js"
+		],
+		"refer": [
+			"html/mine/account-info.html"
+		]
+	},
+	"html/mine/edit-info.html": {
+		"resources": [
+			"css/mine/edit-info.css",
+			"image/slide_navigation/img3.jpg",
+			"html/mine/account-info.html",
+			"js/mine/edit-info.js",
+			"html/mine/edit-info.html",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/sortSign.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		],
+		"refer": [
+			"html/mine/account-info.html",
+			"html/mine/edit-info.html"
+		]
+	},
+	"html/mine/account-info.html": {
+		"resources": [
+			"html/mine/edit-info.html",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/mine/edit-info.html"
+		]
+	},
+	"html/cloud/app_keeprecord.html": {
+		"resources": [
+			"image/utils/default_personalimage.png",
+			"image/cloud/record_addclass.gif",
+			"image/cloud/record_add.png",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"image/cloud/record_addclassclose.png",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/sortSign.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"image/cloud/record_history.gif",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"image/cloud/record_link.gif"
 		]
 	}
 }

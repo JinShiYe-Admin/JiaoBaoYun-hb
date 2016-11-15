@@ -34,45 +34,57 @@
 	<body>
 		<div class="mui-content">
 			
-			<div class="title" style="margin-bottom: 25px; text-align: center;">
+			<div id="title" class="title" style="margin-bottom: 25px; text-align: center;">
 				<img id="uimg" src="../image/slide_navigation/img3.jpg" class="head-portrait"/><br />
 				<h4 id="uname">姓名</h4>
 				<sub id="utext">暂无信息</sub>
 			</div>
 			<ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted" style="color: #ddd;">
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" open-type="common" href="examples/pullrefresh_main.html">
+				<li class="mui-table-view-cell" position='0'>
+					<a class="mui-navigate-right" open-type="common" >
 						<span class="mui-icon iconfont icon-qun app-icon"></span>
-						群列表
+						群
 					</a>
 				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" open-type="common" href="examples/offcanvas-drag-left.html">
+				<li class="mui-table-view-cell" position='1'>
+					<a class="mui-navigate-right" open-type="common">
+						<span class="mui-icon iconfont icon-qun app-icon"></span>
+						群资料
+					</a>
+				</li>
+				<li class="mui-table-view-cell" position='2'>
+					<a class="mui-navigate-right" open-type="common">
 						<span class="mui-icon iconfont icon-ruqun record-icon"></span>
 						申请加入群
 					</a>
 				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" href="examples/switches.html">
+				<li class="mui-table-view-cell" position='3'>
+					<a class="mui-navigate-right">
 						<span class="mui-icon iconfont icon-xinxiaoxi set-icon"></span>
 						新消息
 					</a>
 				</li>
 			
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" href="examples/tab-with-viewpagerindicator.html">
+				<li class="mui-table-view-cell" position='4'>
+					<a class="mui-navigate-right">
 						<span class="mui-icon iconfont icon-kongjian about-icon"></span>
-						空间
+						我的空间
 					</a>
 				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" href="examples/tab-with-viewpagerindicator.html">
+					<li class="mui-table-view-cell" position='5'>
+					<a class="mui-navigate-right">
+						<span class="mui-icon iconfont icon-kongjian about-icon"></span>
+						积分
+					</a>
+				</li>
+				<li class="mui-table-view-cell" position='6'>
+					<a class="mui-navigate-right" >
 						<span class="mui-icon iconfont icon-shezhi about-icon"></span>
 						设置
 					</a>
 				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" href="examples/tab-with-viewpagerindicator.html">
+				<li class="mui-table-view-cell" position='7'>
+					<a class="mui-navigate-right">
 						<span class="mui-icon iconfont icon-about about-icon"></span>
 						关于
 					</a>
@@ -98,11 +110,47 @@
 				//获取个人信息
 				personalInfo=window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				console.log(JSON.stringify(personalInfo))
+					
 				//展示个人信息
 				setInfo(personalInfo)
+//				events.jumpPage(document.getElementById('title'),'mine/account-info.html');
+				//点击title跳转到账号信息界面
 				events.addTap('title',function(){
-					events.openNewWindowWithData('',personalInfo)
+					closeMenu()
+					events.openNewWindow('mine/account-info.html')
 				})
+				mui('.mui-table-view').on('tap','.mui-table-view-cell',function(){
+					console.log('click position:'+this.getAttribute('position'))
+					switch(parseInt(this.getAttribute('position'))){
+						//群
+						case 0:
+						events.openNewWindow('something');
+						break;
+						//群资料
+						case 1:
+						break;
+						//申请加入群
+						case 2:
+						break;
+						//新消息
+						case 3:
+						break;
+						//我的空间
+						case 4:
+						break;
+						//积分
+						case 5:
+						break;
+						//设置
+						case 6:
+						break;
+						//关于
+						case 7:
+						break;
+						default:
+						break;
+					}
+				});
 			})
 			/**
 			 * @param {Object} info
