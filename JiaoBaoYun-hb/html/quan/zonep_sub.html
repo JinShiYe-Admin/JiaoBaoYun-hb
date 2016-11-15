@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<style>
 			.mui-table-view {
@@ -124,10 +125,12 @@
 				text-align: center;
 				background-color: rgba(0, 0, 0, 0.3);
 			}
+
 			.mui-popover {
-	height: 60px;
-	width: 60px;
-}
+								position: fixed;
+				height: 45px;
+				width: 60px;
+			}
 		</style>
 	</head>
 
@@ -136,7 +139,6 @@
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-
 				<!--数据列表-->
 				<ul class="mui-table-view">
 					<!--<li id="0" class="mui-table-view-cell">
@@ -214,14 +216,22 @@
 			</div>
 
 		</div>
-
-<!--<div id="popover" class="mui-popover ">
-	<h5 style="text-align: center;color: #1277C7;">删除</h5>
-	<hr style="height:1px;border:none;border-top:1px solid #555555;padding-left: 2px;" />
-	<h5 style="text-align: center;color: #1277C7;">屏蔽</h5>
-	</div>-->
+		<!--下拉菜单-->
+		<div id="popover" class="mui-popover">
+			<ul class=" mui-table-view">
+				<li class="mui-table-view-cell"   style="text-align: center;">
+					删除
+				</li>
+				<li class="mui-table-view-cell" style="text-align: center;">
+					屏蔽
+				</li>
+				<li class="mui-table-view-cell" style="text-align: center;">
+					收藏
+			</ul>
+		</div>
 
 	</body>
+
 	<script>
 		mui.init({
 			pullRefresh: {
@@ -263,27 +273,27 @@
 		}
 		var id = 0;
 		mui.plusReady(function() {
-				//获取个人信息
-//	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-//	console.log(personalUTID)
-////所需参数
-//		var comData = {
-//			userId: personalUTID,//用户ID
-//			publisherId:'1',//发布用户ID
-//			pageIndex:'0',//当前页数
-//			pageSize:'10'//每页记录数
-//		};
-//	// 等待的对话框
-//	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-//	postDataPro_getNoReadUserSpacesByUserForPublisher(comData, wd, function(data) {
-//		wd.close();
-//		console.log('postDataPro_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-//		if(data.RspCode == 0) {
-//			
-//		}else{
-//			mui.toast(data.RspTxt);
-//		}
-//		});
+			//获取个人信息
+			//	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+			//	console.log(personalUTID)
+			////所需参数
+			//		var comData = {
+			//			userId: personalUTID,//用户ID
+			//			publisherId:'1',//发布用户ID
+			//			pageIndex:'0',//当前页数
+			//			pageSize:'10'//每页记录数
+			//		};
+			//	// 等待的对话框
+			//	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//	postDataPro_getNoReadUserSpacesByUserForPublisher(comData, wd, function(data) {
+			//		wd.close();
+			//		console.log('postDataPro_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//		if(data.RspCode == 0) {
+			//			
+			//		}else{
+			//			mui.toast(data.RspTxt);
+			//		}
+			//		});
 
 			var table = document.body.querySelector('.mui-table-view');
 			var data = addData();
@@ -308,6 +318,7 @@
 				click.push('姓名');
 			});
 			mui('.mui-table-view').on('tap', '.mui-icon-arrowdown', function() {
+
 				click.push('向下按钮');
 			});
 			mui('.mui-table-view').on('tap', '.dynamic-contenttext', function() {

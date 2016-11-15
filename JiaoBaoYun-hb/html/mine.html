@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<title></title>
@@ -8,85 +9,81 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../css/mui.min.css">
 		<link rel="stylesheet" href="../css/home/index-menu.css" />
-		<link rel="stylesheet" href="../css/iconfont/iconfont.css"/>
-	
+		<link rel="stylesheet" href="../css/iconfont/iconfont.css" />
+
 		<style type="text/css">
-			body,.mui-content{
-			  	background-color: #333;
-			  	color:#fff;
-			  }
-			  .title{
-			  	margin: 35px 15px 10px;
-			  }
-			  .title+.content{
-			  	margin: 10px 15px 35px;
-			  	color: #bbb;
-			  	text-indent: 1em;
-			  	font-size: 14px;
-			  	line-height: 24px;
-			  }
-			  .mui-table-view{
-			  	margin-bottom: 35px;
-			  }
+			body,
+			.mui-content {
+				background-color: #333;
+				color: #fff;
+			}
+
+			.title {
+				margin: 35px 15px 10px;
+			}
+
+			.title+.content {
+				margin: 10px 15px 35px;
+				color: #bbb;
+				text-indent: 1em;
+				font-size: 14px;
+				line-height: 24px;
+			}
+
+			.mui-table-view {
+				margin-bottom: 35px;
+			}
 		</style>
 	</head>
 
 	<body>
 		<div class="mui-content">
-			
+
 			<div id="title" class="title" style="margin-bottom: 25px; text-align: center;">
-				<img id="uimg" src="../image/slide_navigation/img3.jpg" class="head-portrait"/><br />
+				<img id="uimg" src="../image/slide_navigation/img3.jpg" class="head-portrait" /><br />
 				<h4 id="uname">姓名</h4>
 				<sub id="utext">暂无信息</sub>
 			</div>
 			<ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted" style="color: #ddd;">
 				<li class="mui-table-view-cell" position='0'>
-					<a class="mui-navigate-right" open-type="common" >
-						<span class="mui-icon iconfont icon-qun app-icon"></span>
-						群
+					<a class="mui-navigate-right" open-type="common">
+						<span class="mui-icon iconfont icon-qun app-icon"></span> 群
 					</a>
 				</li>
 				<li class="mui-table-view-cell" position='1'>
 					<a class="mui-navigate-right" open-type="common">
-						<span class="mui-icon iconfont icon-qun app-icon"></span>
-						群资料
+						<span class="mui-icon iconfont icon-qun app-icon"></span> 群资料
 					</a>
 				</li>
 				<li class="mui-table-view-cell" position='2'>
 					<a class="mui-navigate-right" open-type="common">
-						<span class="mui-icon iconfont icon-ruqun record-icon"></span>
-						申请加入群
+						<span class="mui-icon iconfont icon-ruqun record-icon"></span> 申请加入群
 					</a>
 				</li>
 				<li class="mui-table-view-cell" position='3'>
 					<a class="mui-navigate-right">
-						<span class="mui-icon iconfont icon-xinxiaoxi set-icon"></span>
-						新消息
+						<span class="mui-icon iconfont icon-xinxiaoxi set-icon"></span> 新消息
 					</a>
 				</li>
-			
+
 				<li class="mui-table-view-cell" position='4'>
 					<a class="mui-navigate-right">
-						<span class="mui-icon iconfont icon-kongjian about-icon"></span>
-						我的空间
+						<span class="mui-icon iconfont icon-kongjian about-icon"></span> 我的空间
 					</a>
 				</li>
-					<li class="mui-table-view-cell" position='5'>
+				<li class="mui-table-view-cell" position='5'>
 					<a class="mui-navigate-right">
-						<span class="mui-icon iconfont icon-kongjian about-icon"></span>
-						积分
+						<span class="mui-icon iconfont icon-kongjian about-icon"></span> 积分
 					</a>
 				</li>
 				<li class="mui-table-view-cell" position='6'>
-					<a class="mui-navigate-right" >
-						<span class="mui-icon iconfont icon-shezhi about-icon"></span>
-						设置
+					<a class="mui-navigate-right">
+						<span class="mui-icon iconfont icon-shezhi about-icon"></span> 设置
 					</a>
 				</li>
 				<li class="mui-table-view-cell" position='7'>
 					<a class="mui-navigate-right">
-						<span class="mui-icon iconfont icon-about about-icon"></span>
-						关于
+						<span class="mui-icon iconfont icon-about about-icon"></span> 关于
 					</a>
 				</li>
 			</ul>
@@ -104,55 +101,60 @@
 			});
 			//获得侧滑主窗口webview对象
 			var main = null;
-			var personalInfo=null;
-			mui.plusReady(function () {
+			var personalInfo = null;
+			mui.plusReady(function() {
 				main = plus.webview.currentWebview().opener();
 				//获取个人信息
-				personalInfo=window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+				personalInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				console.log(JSON.stringify(personalInfo))
-					
+
 				//展示个人信息
 				setInfo(personalInfo)
-//				events.jumpPage(document.getElementById('title'),'mine/account-info.html');
-				//点击title跳转到账号信息界面
-				events.addTap('title',function(){
+					//				events.jumpPage(document.getElementById('title'),'mine/account-info.html');
+					//点击title跳转到账号信息界面
+				events.addTap('title', function() {
 					closeMenu()
 					events.openNewWindow('mine/account-info.html')
 				})
-				mui('.mui-table-view').on('tap','.mui-table-view-cell',function(){
+
+				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+					console.log('click position:' + this.getAttribute('position'))
 					closeMenu();
-					switch(parseInt(this.getAttribute('position'))){
+					switch(parseInt(this.getAttribute('position'))) {
 						//群
 						case 0:
-						events.openNewWindow('something');
-						break;
-						//群资料
+							events.openNewWindow('/html/mine/qun_manage.html');
+							break;
+							//群资料
 						case 1:
-						break;
-						//申请加入群
+							events.openNewWindow('/html/mine/qun_data.html');
+							break;
+							//申请加入群
 						case 2:
-						break;
-						//新消息
+							break;
+							//新消息
 						case 3:
-						break;
-						//我的空间
+							break;
+							//我的空间
 						case 4:
-						break;
-						//积分
+							break;
+							//积分
 						case 5:
-						break;
-						//设置
+							break;
+							//设置
 						case 6:
-						break;
-						//关于
+							break;
+							//关于
 						case 7:
 						events.openNewWindow('mine/group-info.html')
 						break;
+
 						default:
-						break;
+							break;
 					}
 				});
 			})
+
 			/**
 			 * @param {Object} info
 			 * "utid":"3",
@@ -164,28 +166,28 @@
 			 * "utxt":"",
 			 * "uimg":""}
 			 */
-			function setInfo(info){
-				if(info.uimg){
-					document.getElementById('uimg').src=info.uimg;
+			function setInfo(info) {
+				if(info.uimg) {
+					document.getElementById('uimg').src = info.uimg;
 				}
-				if(info.uname){
-					document.getElementById('uname').innerText=info.uname;
+				if(info.uname) {
+					document.getElementById('uname').innerText = info.uname;
 				}
-				if(info.utext){
-					document.getElementById('utext').innerText=info.utext;
+				if(info.utext) {
+					document.getElementById('utext').innerText = info.utext;
 				}
-				
+
 			}
-			
-			function closeMenu () {
-				mui.fire(main,"menu:close");
+
+			function closeMenu() {
+				mui.fire(main, "menu:close");
 			}
 			//优化显示出来的侧滑菜单，只需监听该菜单的左滑事件，然后将其关闭即可；在菜单上右滑，不做任何操作；
-			window.addEventListener("swipeleft",closeMenu);  
+			window.addEventListener("swipeleft", closeMenu);
 			//android菜单按钮
 			mui.menu = closeMenu;
 			//android系统返回键
-			mui.back=closeMenu;
+			mui.back = closeMenu;
 		</script>
 	</body>
 
