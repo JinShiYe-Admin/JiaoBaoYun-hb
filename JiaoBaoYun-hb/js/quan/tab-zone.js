@@ -21,13 +21,13 @@ mui.plusReady(function() {
 	};
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-//	获取用户群
+	//	获取用户群
 	postDataPro_PostGList(comData, wd, function(data) {
 		//wd.close();
 		console.log('postDataPro_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			datasource = data.RspData;
-			var flag = datasource.length;//记录请求次数
+			var flag = datasource.length; //记录请求次数
 			var userList = [];
 			for(var i = 0; i < datasource.length; i++) {
 				//需要参数
@@ -44,8 +44,8 @@ mui.plusReady(function() {
 					if(data.RspCode == 0) {
 						userList.push(data.RspData);
 						flag--;
-						if(flag == 0) {//全部请求完毕
-//							把用户信息添加到数据model中
+						if(flag == 0) { //全部请求完毕
+							//							把用户信息添加到数据model中
 							for(var i = 0; i < datasource.length; i++) {
 								for(var j = 0; j < userList.length; j++) {
 									if(userList[j][0].gid == datasource[i].gid) {
@@ -99,7 +99,7 @@ function refreshUI() {
 	var userTable = document.getElementById('userList');
 
 	for(var i = datasource.length - 1; i >= 0; i--) {
-		var userList = datasource[i].userList;//用户列表数据
+		var userList = datasource[i].userList; //用户列表数据
 		var segitem = document.createElement('a');
 		var userItem = document.createElement('div');
 		if(i == 0) {
@@ -111,11 +111,12 @@ function refreshUI() {
 		}
 
 		segitem.href = '#item' + i;
-		segitem.innerHTML = datasource[i].gname;
-		//		var span = document.createElement('span');
-		//		span.className = 'mui-badge mui-badge-danger;
-		//		span.innerHTML = '3'
-		//			segitem.insertBefore(span,segitem.firstChild);
+				var span = document.createElement('span');
+		span.className = 'mui-badge mui-badge-danger custom-badge1';
+		span.innerHTML = '3'
+		segitem.insertBefore(span, segitem.firstChild);
+		segitem.innerHTML = datasource[i].gname+segitem.innerHTML;
+
 		//在第一个位置中插入元素
 		seg.insertBefore(segitem, seg.firstChild);
 		userItem.id = 'item' + i;
