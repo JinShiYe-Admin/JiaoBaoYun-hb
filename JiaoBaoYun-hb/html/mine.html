@@ -118,6 +118,7 @@
 				})
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					console.log('click position:' + this.getAttribute('position'))
+					closeMenu();
 					switch(parseInt(this.getAttribute('position'))) {
 						//群
 						case 0:
