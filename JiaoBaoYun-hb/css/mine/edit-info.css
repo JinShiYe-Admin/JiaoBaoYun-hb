@@ -1,0 +1,46 @@
+/**
+ * fieldset取消边框
+ */
+fieldset {
+	border-left: none;
+	border-top: none;
+	border-right: none;
+	margin-bottom: 12px;
+	overflow: hidden;
+	padding: 0 .625em;
+}
+/**
+ * 性别选择样式表
+ */
+.sex-field{
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+	background-color: transparent;
+	position: relative;
+	margin-bottom: 0;
+}
+/**
+ * 性别：样式
+ */
+.sex-field legend{
+	position: absolute;
+	width: 6rem;
+}
+/**
+ * radios样式
+ */
+.sex-field .sex-choice{
+	margin-left: 10rem;
+	margin-right: 5px;
+	vertical-align: middle;
+	width: auto;
+}
+/*提交按钮样式*/
+.btn-submit{
+	margin-left: 35%;
+	width: 15%;
+}
+/*取消按钮样式*/
+.btn-cancel{
+	width: 15%;
+}

@@ -29,7 +29,7 @@ function createItem( entry ) {
 	li.className = "ditem";
 	li.innerHTML = '<span class="iplay"><font class="aname"></font><br/><font class="ainf"></font></span>';
 	li.setAttribute( "onclick", "playAudio(this);" );
-	hl.insertBefore( li, le.nextSibling );
+//	hl.insertBefore( li, le.nextSibling );
 	li.querySelector(".aname").innerText = entry.name;
 	li.querySelector(".ainf").innerText = "...";
 	li.entry = entry;
@@ -124,7 +124,7 @@ function updateHistory() {
   	} );
 }
 // 获取录音文件信息
-function updateInformation( li ) {
+function updateInformation( li ,range) {
 	if ( !li || !li.entry ) {
 		return;
 	}
@@ -214,7 +214,7 @@ mui.plusReady(function(){
 			console.log('recording')
 			stopRecord();
 		}else{
-			console.log('back');
+			console.log('back')
 			//获取本地录音文件
 			getLocalRecord();
 			//删除本地文件

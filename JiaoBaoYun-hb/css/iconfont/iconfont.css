@@ -10,6 +10,8 @@
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: 0.2px;
 }
+.icon-bianji:before { content: "\3486"; }
+
 .icon-close:before { content: "\e646"; }
 
 .icon-xiangji:before { content: "\e60c"; }
@@ -24,9 +26,13 @@
 
 .icon-jia:before { content: "\e60a"; }
 
+.icon-kongjian:before { content: "\e669"; }
+
 .icon-shezhi:before { content: "\e606"; }
 
 .icon-shezhi1:before { content: "\e631"; }
+
+.icon-jiaqun:before { content: "\e60d"; }
 
 .icon-about:before { content: "\e605"; }
 
@@ -34,7 +40,11 @@
 
 .icon-zanzan1:before { content: "\e602"; }
 
+.icon-ruqun:before { content: "\e66e"; }
+
 .icon-liaotian:before { content: "\e603"; }
+
+.icon-qun:before { content: "\e60f"; }
 
 .icon-shubendisc:before { content: "\e682"; }
 
@@ -46,5 +56,6 @@
 
 .icon-liaotian1:before { content: "\e601"; }
 
-.icon-tingzhi:before { content: "\e62f"; }
+.icon-xinxiaoxi:before { content: "\e673"; }
 
+.icon-tingzhi:before { content: "\e62f"; }
