@@ -126,7 +126,7 @@ function refreshUI() {
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell mui-media parent-cell' + i;
 			li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png" />' +
-				'<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge1">' + userList[0].gid + '</span></span>' + '<p class="time">' + '10月19' + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
+				'<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[0].gid + '</span></span>' + '<p class="time">' + '10月19' + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 				userList[j].ugname + '<p class="mui-ellipsis">' + '期末成绩出来了，热烈庆祝我们排全校第二' + '</p>';
 			ul.insertBefore(li, ul.firstChild);
 
