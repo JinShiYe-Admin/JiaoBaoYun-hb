@@ -34,5 +34,13 @@ var files=(function(mod){
 			} );
 			
 	}
+	mod.getFileByPath=function(path){
+		
+		plus.io.resolveLocalFileSystemURL(path,function(entry){
+			console.log(JSON.stringify(entry))
+		},function(){
+			
+		})
+	}
 	return mod;
 })(window.files||{})

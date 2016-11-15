@@ -41,8 +41,26 @@ var camera=(function(mod){
 	mod.getAbsolutePath=function(path){
 	 var abPath=plus.io.convertLocalFileSystemURL(path);
 	 abPath="file://"+abPath;
-	 console.log('file path='+abPath);
+//	 console.log('file path='+abPath);
 	 return abPath;
 	}
 	return mod;
 })(window.camera||{});
+/**
+ * 相册模块
+ */
+var gallery=(function(mod){
+	/**
+	 * 获取单张图片的方法
+	 * @param {Object} callback 为获取图片的回调函数
+	 */
+	mod.getSinglePic=function(callback){
+	 plus.gallery.pick( function(path){
+    	console.log('图片路径为：'+path);
+    	callback(path);
+	    }, function ( e ) {
+	    	console.log( "取消选择图片" );
+	    }, {filter:"image"} );
+	}
+	return mod;
+})(window.gallery||{})

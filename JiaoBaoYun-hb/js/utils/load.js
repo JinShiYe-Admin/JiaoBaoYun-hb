@@ -25,6 +25,8 @@ var load=(function(mod){
 					mui.toast('上传失败,请重新上传');
 				}
 			});
+			task.addData('scope',paths);
+			task.addData('deadline',3600)
 		//加载所有文件
 		paths.forEach(function(path,i){
 			task.addFile(path,{key:new Date().getTime()+i});

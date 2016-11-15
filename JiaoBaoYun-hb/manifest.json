@@ -219,7 +219,9 @@
 					"html/cloud/cloud_sub.html",
 					"html/cloud/cloud_main.html",
 					"html/cloud/cloud_home.html",
-					"html/mine.html"
+					"html/mine.html",
+					"html/quan/aboutme.html",
+					"html/quan/leave.html"
 				],
 				"priority": 0
 			},
@@ -440,7 +442,19 @@
 					"image/dynamic/icon_forward.png",
 					"js/quan/dynamiclistitem.js",
 					"image/dynamic/icon_Level39.png",
-					"image/dynamic/u101.png"
+					"image/dynamic/u101.png",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/sortSign.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/signHmacSHA1.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -614,7 +628,8 @@
 				"refer": [
 					"html/homework/homework-tea.html",
 					"html/homework/homework-stu.html",
-					"html/cloud/app_keeprecord.html"
+					"html/cloud/app_keeprecord.html",
+					"html/cloud/storage_main.html"
 				],
 				"priority": 0
 			},
@@ -722,7 +737,8 @@
 					"js/libs/jquery.js"
 				],
 				"refer": [
-					"html/index.html"
+					"html/index.html",
+					"html/register/modify_password.html"
 				],
 				"priority": 0
 			},
@@ -895,11 +911,17 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/utils/events.js",
+					"css/utils/common.css",
+					"js/mui.min.js",
+					"css/mui.min.css"
 				],
 				"refer": [
 					"html/quan/studentdynamic_main.html",
-					"html/quan/class_space.html"
+					"html/quan/class_space.html",
+					"html/quan/zone_main.html"
 				],
 				"priority": 0
 			},
@@ -907,7 +929,9 @@
 				"resources": [
 					"js/libs/crypto-js/crypto-js.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/index.html"
+				],
 				"priority": 0
 			},
 			"html/mine.html": {
@@ -924,7 +948,8 @@
 					"js/utils/events.js"
 				],
 				"refer": [
-					"html/mine/account-info.html"
+					"html/mine/account-info.html",
+					"html/mine/group-info.html"
 				],
 				"priority": 0
 			},
@@ -948,7 +973,12 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"css/iconfont/iconfont.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -961,7 +991,24 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"fonts/iconfont.ttf",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"js/mine/account-info.js",
+					"js/utils/events.js",
+					"image/slide_navigation/img3.jpg",
+					"js/storageKeyName.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/utils/camera.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/sortSign.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -993,6 +1040,101 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"image/cloud/record_link.gif"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/aboutme.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"html/quan/aboutme_sub.html",
+					"css/utils/common.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/aboutme_sub.html": {
+				"resources": [
+					"js/quan/aboutme.js",
+					"image/dynamic/u101.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/leave.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"html/quan/leave-sub.html"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/leave-sub.html": {
+				"resources": [
+					"js/quan/aboutme.js",
+					"image/quan/leave-bg.png",
+					"image/dynamic/u101.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/cloud/storage_sub.html": {
+				"resources": [
+					"image/cloud/cloud_audio.png",
+					"image/cloud/cloud_doc.png",
+					"image/cloud/cloud_file.png",
+					"image/cloud/cloud_txt.png",
+					"image/cloud/cloud_folder.png",
+					"js/cloud/cloud.js",
+					"image/cloud/cloud_video.png",
+					"image/cloud/cloud_zip.png",
+					"image/cloud/cloud_xls.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/cloud/storage_main.html": {
+				"resources": [
+					"js/qiniu/plupload.full.min.js",
+					"image/cloud/cloud_download.gif",
+					"html/cloud/storage_sub.html",
+					"js/mui.min.js",
+					"image/cloud/cloud_upload.gif",
+					"js/utils/QiNiuUtil.js",
+					"fonts/mui.ttf",
+					"js/qiniu/qiniu.js",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"image/cloud/cloud_add.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/mine/group-info.html": {
+				"resources": [
+					"css/mine/group-info.css",
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"image/slide_navigation/img3.jpg",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/sortSign.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0

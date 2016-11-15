@@ -25,6 +25,7 @@ mui.plusReady(function() {
 	postDataPro_PostGList(comData, wd, function(data) {
 		wd.close();
 		console.log('postDataPro_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+
 		if(data.RspCode == 0) {
 			datasource = data.RspData;
 			var flag = datasource.length; //记录请求次数
