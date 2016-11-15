@@ -387,6 +387,10 @@
 
 				//切换显示选中的群
 				mui('#qunlist').on('tap', 'a', function() {
+					var close = mui('.icon-close');
+					mui.each(close, function(index, item) {
+						item.style.display = 'none';
+					});
 					document.getElementById('bot_' + show).style.display = 'none';
 					console.log('qun:' + this.getAttribute('data-value'));
 					document.getElementById("bot_" + this.getAttribute('data-value')).style.display = 'inline';
@@ -484,11 +488,11 @@
 						if(e.index == 1) {
 							console.log('删除');
 							//向服务器发送删除成员的请求成功后
-							//							var memId = 'member_' + utid;
-							//							var memTable = document.getElementById(memId);
-							//							var rowId = 'row_' + gid;
-							//							var rowTable = document.getElementById(rowId);
-							//							rowTable.removeChild(memTable); //删除成功
+							var memId = 'member_' + utid;
+							var memTable = document.getElementById(memId);
+							var botTable = 'bot_' + gid;
+							var rowTable = document.getElementById(botTable).querySelector('.mui-row');
+							rowTable.removeChild(memTable); //删除成功
 							mui.toast('删除成功');
 						} else {
 							console.log('不删除');
