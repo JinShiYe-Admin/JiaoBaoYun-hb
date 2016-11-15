@@ -116,6 +116,7 @@
 					closeMenu()
 					events.openNewWindow('mine/account-info.html')
 				})
+
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					console.log('click position:' + this.getAttribute('position'))
 					closeMenu();
@@ -145,7 +146,9 @@
 							break;
 							//关于
 						case 7:
-							break;
+						events.openNewWindow('mine/group-info.html')
+						break;
+
 						default:
 							break;
 					}

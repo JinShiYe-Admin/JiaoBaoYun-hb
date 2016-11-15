@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 id="title" class="mui-title">标题</h1>
+		    <button id="save" class="mui-btn mui-btn-green mui-pull-right">保存</button>
+		</header>
+		<div class="mui-content">
+			<input id="input-content" type="text" class="mui-input-clear" placeholder="带清除按钮的输入框">
+		</div>
+		
+		
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/storageKeyName.js"></script>
+		<script src="../../js/libs/myStorage/myStorage.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				var pInfo=myStorage.getItem(storageKeyName.PERSONALINFO);
+				var curPage=plus.webview.currentWebview();
+				var title=document.getElementById('title');
+				var btn_save=document.getElementById('save');
+				var inText=document.getElementById('input-content')
+				setContents(curPage.data,title,inText,pInfo)
+				var save=document.getElementById('save');
+				save.addEventListener('tap',function(){
+					postInfo(curPage.data,inText,pInfo,curPage);
+				})
+			})
+			var postInfo=function(no,inText,pInfo,curpage){
+				var vtpKey='';
+				switch (no){
+					case 0:
+					vtpKey='unick'
+						break;
+					case 1:
+						vtpKey='uphone'
+					break;
+					case 2:
+						vtpKey='utxt'
+					break;
+					default:
+						break;
+				}
+				console.log(vtpKey)
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);		
+				postDataPro_PostReUinf({vtp:vtpKey,vvl:inText.value},wd,function(data){
+					wd.close()
+					console.log(JSON.stringify(data))
+					if(data.RspCode=='0000'){
+						pInfo[vtpKey]=inText.value;
+						window.myStorage.setItem(storageKeyName.PERSONALINFO,pInfo)
+						console.log('更改后信息:'+JSON.stringify(pInfo));
+						mui.fire(curpage.opener(),'infoChanged')
+						mui.back()
+					}else{
+						mui.toast(data.RspTxt);
+					}
+				})
+			}
+			var setContents=function(no,title,inText,pInfo){
+				console.log(no)
+				switch(no){
+					case 0:
+						
+						if(pInfo.unick){
+							title.innerText='更改昵称'
+							inText.value=pInfo.unick;
+						}else{
+							title.innerText='填写昵称'
+						}
+						inText.placeholder='请输入昵称'
+					break;
+					case 1:
+						inText.type='tel';
+						if(pInfo.uphone){
+							title.innerText='更改电话号';
+							inText.value=pInfo.uphone
+						}else{
+							title.innerText='填写电话号'
+						}
+						inText.placeholder='请输入电话号'
+					break;
+					case 2:
+						
+						if(pInfo.utxt){
+							title.innerText='更改签名';
+							inText.value=pInfo.utxt;
+						}else{
+							title.innerText='填写签名'
+						}
+						inText.placeholder='请输入签名'
+					break;
+					default:break;
+				}
+			}
+		</script>
+	</body>
+
+</html>
