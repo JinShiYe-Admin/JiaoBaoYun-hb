@@ -17,13 +17,13 @@ mui.plusReady(function() {
 	//	//需要参数
 	var comData = {
 		vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
-		vvl: '1', //查询的各项，对应人的utid，可以是查询的任何人
+		vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
 	};
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//	获取用户群
 	postDataPro_PostGList(comData, wd, function(data) {
-		//wd.close();
+		wd.close();
 		console.log('postDataPro_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			datasource = data.RspData;
@@ -114,8 +114,9 @@ function refreshUI() {
 				var span = document.createElement('span');
 		span.className = 'mui-badge mui-badge-danger custom-badge1';
 		span.innerHTML = '3'
+
 		segitem.insertBefore(span, segitem.firstChild);
-		segitem.innerHTML = datasource[i].gname+segitem.innerHTML;
+		segitem.innerHTML = datasource[i].gname+segitem.innerHTML+'<span class="spliter">|</span>';
 
 		//在第一个位置中插入元素
 		seg.insertBefore(segitem, seg.firstChild);
