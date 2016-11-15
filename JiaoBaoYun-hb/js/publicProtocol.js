@@ -137,8 +137,6 @@ var postDataPro_PostInvGuser=function(commonData, wd, callback) {
 //			top: '',//选择条数
 //			vvl:'',//群ID，查询的值
 //			vvl1:'',//群员类型，0家长,1管理员,2老师,3学生,-1取全部
-//			invtp:'',//被邀请人类型,0家长,2老师,3学生
-//			vtp:''//更改项,0老师邀请家长,1个人申请入群
 //		};
 var postDataPro_PostGusers=function(commonData, wd, callback) {
 	//需要加密的数据

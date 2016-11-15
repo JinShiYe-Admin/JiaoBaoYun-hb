@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<style>
+			.mui-content {
+				text-align: center;
+				margin-top: 10px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">群</h1>
+			<a class="mui-icon mui-pull-right"><font style="font-size: 17px;">邀请</font></a>
+		</header>
+		<div class="mui-content">
+			<span class="mui-icon mui-icon-plus">新增群按钮</span>
+		</div>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				document.body.querySelector('.mui-icon-plus').addEventListener('tap', function() {
+					events.openNewWindow('qun_create_writeinfo.html');
+				});
+			})
+		</script>
+	</body>
+
+</html>

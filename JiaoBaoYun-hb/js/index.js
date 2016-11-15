@@ -105,38 +105,40 @@ mui.plusReady(function() {
 
 	}
 	var addZoneIcon = function(container) {
-		var a = document.createElement('a');
-		a.id = 'leave'
-		a.className = 'mui-icon mui-icon-compose  mui-pull-right mui-plus-visible';
-		a.style.paddingLeft = '20px'
-		container.appendChild(a)
-		var a = document.createElement('a');
-		a.className = 'mui-icon  mui-pull-right mui-plus-visible';
-		a.id = 'aboutme'
-		a.innerHTML = '@与我相关'
-		a.style.fontSize = '16px'
-		a.style.paddingTop = '15px'
+		var leave = document.createElement('a');
+		leave.id = 'leave'
+		leave.className = 'mui-icon mui-icon-compose  mui-pull-right mui-plus-visible';
+		leave.style.paddingLeft = '20px'
+		container.appendChild(leave)
+		var aboutme = document.createElement('a');
+		aboutme.className = 'mui-icon  mui-pull-right mui-plus-visible';
+		aboutme.id = 'aboutme'
+		aboutme.innerHTML = '@与我相关'
+		aboutme.style.fontSize = '16px'
+		aboutme.style.paddingTop = '15px'
 		var span = document.createElement('span');
 		span.className = 'mui-badge mui-badge-danger'
-		span.style.marginLeft ="-15px";
+		span.style.marginLeft = "-15px";
 		span.style.marginTop = "4px";
 		span.innerHTML = '3'
-		a.appendChild(span)
-		container.appendChild(a);
+		aboutme.appendChild(span)
+		container.appendChild(aboutme);
+		events.jumpPage(aboutme, 'quan/aboutme.html');
+		events.jumpPage(leave, 'quan/leave.html');
 	}
 
 	var addCloudIcon = function(container) {
 		var a = document.createElement('a');
 		a.className = 'mui-icon mui-icon-upload mui-pull-right';
-		a.addEventListener('tap',function(){
+		a.addEventListener('tap', function() {
 			mui.toast("上传");
 		});
 		container.appendChild(a)
 	}
-			var aboutme = document.getElementById('aboutme');
-			events.jumpPage(aboutme, 'quan/aboutme.html');
-			var zone = document.getElementById('leave');
-			events.jumpPage(zone, 'quan/leave.html');
+	var aboutme = document.getElementById('aboutme');
+	events.jumpPage(aboutme, 'quan/aboutme.html');
+	var leave = document.getElementById('leave');
+	events.jumpPage(leave, 'quan/leave.html');
 	//自定义事件，模拟点击“首页选项卡”
 	document.addEventListener('gohome', function() {
 		var defaultTab = document.getElementById("defaultTab");
