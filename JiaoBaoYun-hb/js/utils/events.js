@@ -163,7 +163,7 @@ var events = (function($, mod) {
 	/**
 	 * 如果目标页面未加载,需要先预加载页面
 	 * 传递数值到指定页面并打开页面
-	 * @param {Object} tarpage 目标页面路径
+	 * @param {Object} tarpage 目标页面Id
 	 * @param {Object} listener 监听事件
 	 * @param {Object} getDatas 获取数据的方法  return somthing
 	 */
@@ -176,7 +176,7 @@ var events = (function($, mod) {
 			}
 			//触发目标页面的listener事件
 			$.fire(targetPage, listener, {
-				data: getDatas()
+				data: getDatas
 			});
 			mod.openNewWindow(tarPage)
 		}
