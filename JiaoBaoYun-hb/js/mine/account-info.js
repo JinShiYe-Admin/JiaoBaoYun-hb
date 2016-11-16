@@ -1,16 +1,15 @@
 mui.init();
 mui.plusReady(function(){
 	//获取个人信息
-	var pInfo=myStorage.getItem(storageKeyName.PERSONALINFO);
-	console.log(JSON.stringify(pInfo))
-		var usex=document.getElementById('sex');
+	var pInfo=myStorage.getItem(storageKeyName.PERSONALINFO);	
 	changeInfo(pInfo);
-	
+	var usex=document.getElementById('sex');
 	document.getElementById('sex-container').addEventListener('tap', function(){
 //			console.log( "User pressed: "+e.index );
+
 		plus.nativeUI.actionSheet( {title:"请选择性别",cancel:"取消",buttons:[{title:"男"},{title:"女"}]}, function(e){
 			console.log( "User pressed: "+e.index );
-			if(e.index>1){
+			if(e.index>0){
 				postSex(e.index-1,function(data){//回调函数
 					if(data.RspCode=='0000'){//成功
 						if(e.index==1){
@@ -67,10 +66,10 @@ var changeInfo=function(pInfo){
 	var account=document.getElementById('account')
 	var uimg=document.getElementById('img');
 	var unick=document.getElementById('nick');
-	var usex=document.getElementById('sex');
 	var utxt=document.getElementById('txt');
 	var uemail=document.getElementById('email');
 	var uphone=document.getElementById('phone'); 
+	var usex=document.getElementById('sex');
 		if(pInfo.uimg){
 			uimg.src=pInfo.uimg
 		}

@@ -56,6 +56,12 @@ var slideNavigation = (function($) {
 							duration: 150
 						}
 					});
+					menu.setStyle({
+						left:'0',
+						transition:{
+							duration:150
+						}
+					})
 					mui.later(function() {
 						isInTransition = false;
 						menu.setStyle({
@@ -86,6 +92,12 @@ var slideNavigation = (function($) {
 						duration: 200
 					}
 				});
+				menu.setStyle({
+					left:'-70%',
+					transition:{
+						duration:200
+					}
+				})
 			
 				//等动画结束后，隐藏菜单webview，节省资源；
 				setTimeout(function() {
