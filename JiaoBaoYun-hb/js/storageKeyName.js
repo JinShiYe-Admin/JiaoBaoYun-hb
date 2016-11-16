@@ -9,7 +9,6 @@ var storageKeyName = (function($, mod) {
 	mod.MAINJIAOXIAOURL = 'http://192.168.0.100:8080/JiaoBaoCloudService/';//家校圈url
 	mod.WAITING = '加载中...';//加载提示
 	mod.SIGNKEY = 'jsy309';//签名密钥
-
 	return mod;
 
 })(mui, storageKeyName || {});
