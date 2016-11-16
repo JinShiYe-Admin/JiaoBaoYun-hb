@@ -225,7 +225,10 @@
 
 				//邀请进群
 				document.getElementById('invite').addEventListener('tap', function() {
-					events.openNewWindow('qun_manage_invite.html');
+					events.openNewWindowWithData('qun_manage_invite.html', {
+						gid: show,
+						invtp: type
+					});
 				});
 
 				//切换显示选中的群
@@ -304,7 +307,7 @@
 				 * @param {Object} qun 群信息
 				 */
 				function addQun(qun) {
-					//群栏添加班级
+					//群栏添加群
 					var a = document.createElement('a');
 					a.innerText = qun.gname;
 					if(qunList[0].gid == qun.gid) {
@@ -359,15 +362,19 @@
 				 */
 				function getMember(qun, type2) {
 					var vvl1 = '';
+					var type3 = '';
 					switch(type2) {
 						case 'student':
 							vvl1 = '3';
+							type3 = '学生';
 							break;
 						case 'teacher':
 							vvl1 = '2';
+							type3 = '老师';
 							break;
 						case 'parents':
 							vvl1 = '0';
+							type3 = '家长';
 							break;
 						default:
 							console.log('获取群的正常用户type类型不正确');
@@ -396,15 +403,21 @@
 						if(data.RspCode == 0) {
 							mui.each(data.RspData, function(index, item) {
 								console.log('getMemData:' + JSON.stringify(item));
-								var qunBot = document.getElementById("bot_" + item.gid).querySelector('.mui-row');
+								var qunBot = document.getElementById("bot_" + type2 + '_' + qun.gid).querySelector('.mui-row');
 								addMember(qunBot, item);
 							});
+						} else if(data.RspCode == 9) {
+							//查询为空
+							var qunBot = document.getElementById("bot_" + type2 + '_' + qun.gid).querySelector('.mui-row');
+							var div = document.createElement('div');
+							div.innerText = data.RspTxt + '(' + qun.gname + ' ' + type3 + ')';
+							qunBot.appendChild(div);
+
 						} else {
 							mui.toast(data.RspTxt);
 						}
 						mui.each(qunList, function(index, item) {
 							if(item.gid == qun.gid) {
-
 								switch(type2) {
 									case 'student':
 										item.hasGetStu = true; //获得了学生
@@ -426,8 +439,7 @@
 				/**
 				 * 添加成员
 				 * @param {Object} qunBot 对应的群页面
-				 * @param {Object} addTable 对应的群页面中的添加成员按钮
-				 * @param {Object} value 成员信息
+				 * @param {Object} member 成员信息
 				 */
 				function addMember(qunBot, member) {
 					var li = document.createElement('li');
@@ -468,12 +480,16 @@
 								show = qunId;
 								type = item.showType;
 							} else {
+								document.getElementById('bot_' + type + '_' + show).style.display = 'none';
 								addBot(item, 'student');
 								document.getElementById(type).setAttribute('class', 'mui-control-item');
 								document.getElementById('student').setAttribute('class', 'mui-control-item mui-active');
 								show = qunId;
 								type = 'student';
+								item.showBotId='bot_student_' + qunId;
+								item.showType='student';
 							}
+
 							return;
 						}
 					});
@@ -485,40 +501,45 @@
 				 * @param {Object} type2
 				 */
 				function showType(type2) {
-					mui.each(qunList, function(index, item) {
-						if(item.gid == show) {
-							console.log('showType:' + JSON.stringify(item));
-							console.log('show:' + show);
-							document.getElementById('bot_' + type + '_' + show).style.display = 'none';
-							switch(type2) {
-								case 'student':
-									if(item.hasGetStu) { //已经获得了学生
-										document.getElementById('bot_student_' + show).style.display = 'inline';
-									} else {
-										addBot(item, type2);
-									}
-									break;
-								case 'teacher':
-									if(item.hasGetTea) { //已经获得了老师
-										document.getElementById('bot_teacher_' + show).style.display = 'inline';
-									} else {
-										addBot(item, type2);
-									}
-									break;
-								case 'parents':
-									if(item.hasGetPar) { //已经获得了家长
-										document.getElementById('bot_parents_' + show).style.display = 'inline';
-									} else {
-										addBot(item, type2);
-									}
-									break;
+					if(type != type2) {
+						mui.each(qunList, function(index, item) {
+							if(item.gid == show) {
+								console.log('showType:' + JSON.stringify(item));
+								console.log('show:' + show);
+								document.getElementById('bot_' + type + '_' + show).style.display = 'none';
+								switch(type2) {
+									case 'student':
+										if(item.hasGetStu) { //已经获得了学生
+											document.getElementById('bot_student_' + show).style.display = 'inline';
+										} else {
+											addBot(item, type2);
+										}
+										break;
+									case 'teacher':
+										if(item.hasGetTea) { //已经获得了老师
+											document.getElementById('bot_teacher_' + show).style.display = 'inline';
+										} else {
+											addBot(item, type2);
+										}
+										break;
+									case 'parents':
+										if(item.hasGetPar) { //已经获得了家长
+											document.getElementById('bot_parents_' + show).style.display = 'inline';
+										} else {
+											addBot(item, type2);
+										}
+										break;
+									default:
+										console.log('切换成员类型出错');
+										break;
+								}
+								item.showBotId = 'bot_' + type2 + "_" + show;
+								item.showType = type2;
+								type = type2;
+								return;
 							}
-							item.showBotId = 'bot_' + type2 + "_" + show;
-							item.showType = type2;
-							return;
-						}
-					});
-					type = type2;
+						});
+					}
 				}
 			})
 		</script>
