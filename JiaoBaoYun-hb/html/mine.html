@@ -118,8 +118,8 @@
 				})
 
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-					console.log('click position:' + this.getAttribute('position'))
-//					closeMenu();
+					console.log('click position:' + this.getAttribute('position'))		
+					closeMenu();
 					switch(parseInt(this.getAttribute('position'))) {
 						//群
 						case 0:
@@ -152,6 +152,7 @@
 						default:
 							break;
 					}
+				
 				});
 			})
 
@@ -173,12 +174,12 @@
 				if(info.uname) {
 					document.getElementById('uname').innerText = info.uname;
 				}
-				if(info.utext) {
-					document.getElementById('utext').innerText = info.utext;
+				if(info.utxt) {
+					document.getElementById('utext').innerText = info.utxt;
 				}
 
 			}
-
+			//关闭
 			function closeMenu() {
 				mui.fire(main, "menu:close");
 			}

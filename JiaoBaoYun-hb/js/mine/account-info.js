@@ -57,7 +57,6 @@ var postSex=function(index,callback){
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataPro_PostReUinf({vtp:"usex",vvl:index+''},wd,function(data){
 		wd.close()
-		console.log(data.toString())
 		console.log(JSON.stringify(data));
 		callback(data);
 	})

@@ -1061,7 +1061,20 @@
 			"html/quan/aboutme_sub.html": {
 				"resources": [
 					"js/quan/aboutme.js",
-					"image/dynamic/u101.png"
+					"image/dynamic/u101.png",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/sortSign.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/signHmacSHA1.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1176,7 +1189,8 @@
 					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
-					"html/mine/qun_manage_info.html"
+					"html/mine/qun_manage_info.html",
+					"html/mine/qun_manage_invite.html"
 				],
 				"priority": 0
 			},
