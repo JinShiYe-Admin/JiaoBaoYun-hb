@@ -454,7 +454,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/signHmacSHA1.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/utils/events.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1137,9 +1138,13 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/utils/events.js",
+					"js/utils/camera.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/mine/edit-groupInfo.html"
+				],
 				"priority": 0
 			},
 			"html/mine/qun_manage_info.html": {
@@ -1168,6 +1173,29 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"css/utils/common.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/mine/edit-groupInfo.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/sortSign.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
