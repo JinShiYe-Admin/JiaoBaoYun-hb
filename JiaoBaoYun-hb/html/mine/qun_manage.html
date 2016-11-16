@@ -230,11 +230,13 @@
 
 				//切换显示选中的群
 				mui('#qunlist').on('tap', 'a', function() {
+					console.log('qunlist：' + this.getAttribute('data-value'));
 					showQun(this.getAttribute('data-value'));
 				});
 
 				//切换显示选中的成员类型
 				mui('#type').on('tap', 'a', function() {
+					console.log('type：' + this.getAttribute('id'));
 					showType(this.getAttribute('id'));
 				});
 
@@ -281,7 +283,7 @@
 							qunList.push(qun);
 							addQun(qun);
 						});
-						getMember(qunList[0], type); //获取群的正常用户
+						//getMember(qunList[0], type); //获取群的正常用户
 					} else {
 						mui.toast(data.RspTxt);
 						//未获取到数据
@@ -320,9 +322,10 @@
 					}
 					a.setAttribute('data-value', qun.gid);
 					qunlist.insertBefore(a, controladd);
-					//					if(qunList[0].gid == qun.gid) {
-					//						addBot(qun, type);
-					//					}
+					if(qunList[0].gid == qun.gid) {
+						addBot(qun, type);
+						qunList[0].showBotId = 'bot_student_' + qunList[0].gid;
+					}
 				}
 
 				/**
@@ -341,6 +344,7 @@
 										<div class="mui-scroll">\
 											<ul class="mui-table-view">\
 												<div class="mui-row" style="margin-top: 8px;">\
+												<div>' + 'bot_' + memberType + '_' + qun.gid + '</div>\
 												</div>\
 											</ul>\
 										</div>\
@@ -377,7 +381,7 @@
 						vvl: qun.gid, //群ID，查询的值
 						vvl1: vvl1, //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 					};
-					console.log('getMemData:' + JSON.stringify(getMemData));
+					//console.log('getMemData:' + JSON.stringify(getMemData));
 					// 等待的对话框
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					postDataPro_PostGusers(getMemData, wd, function(data) {
@@ -395,26 +399,26 @@
 								var qunBot = document.getElementById("bot_" + item.gid).querySelector('.mui-row');
 								addMember(qunBot, item);
 							});
-							mui.each(qunList, function(index, item) {
-								if(item.gid == qunId) {
-									switch(type) {
-										case 'student':
-											item.hasGetStu = true; //获得了学生
-											break;
-										case 'teacher':
-											item.hasGetTea = true; //获得了老师
-											break;
-										case 'parents':
-											item.hasGetPar = true; //获得了家长
-											break;
-									}
-									return;
-								}
-							});
 						} else {
-
 							mui.toast(data.RspTxt);
 						}
+						mui.each(qunList, function(index, item) {
+							if(item.gid == qun.gid) {
+
+								switch(type2) {
+									case 'student':
+										item.hasGetStu = true; //获得了学生
+										break;
+									case 'teacher':
+										item.hasGetTea = true; //获得了老师
+										break;
+									case 'parents':
+										item.hasGetPar = true; //获得了家长
+										break;
+								}
+								return;
+							}
+						});
 						wd.close();
 					});
 				}
@@ -454,7 +458,6 @@
 				 * @param {Object} qunId
 				 */
 				function showQun(qunId) {
-
 					mui.each(qunList, function(index, item) {
 						if(item.gid == qunId) {
 							if(item.showBotId != '') {
@@ -484,36 +487,36 @@
 				function showType(type2) {
 					mui.each(qunList, function(index, item) {
 						if(item.gid == show) {
+							console.log('showType:' + JSON.stringify(item));
+							console.log('show:' + show);
+							document.getElementById('bot_' + type + '_' + show).style.display = 'none';
 							switch(type2) {
 								case 'student':
 									if(item.hasGetStu) { //已经获得了学生
-										document.getElementById('bot_student' + show).style.display = 'none';
-										document.getElementById("bot_student" + qunId).style.display = 'inline';
+										document.getElementById('bot_student_' + show).style.display = 'inline';
 									} else {
 										addBot(item, type2);
 									}
 									break;
 								case 'teacher':
 									if(item.hasGetTea) { //已经获得了老师
-										document.getElementById('bot_teacher' + show).style.display = 'none';
-										document.getElementById("bot_teacher" + qunId).style.display = 'inline';
+										document.getElementById('bot_teacher_' + show).style.display = 'inline';
 									} else {
 										addBot(item, type2);
 									}
 									break;
 								case 'parents':
 									if(item.hasGetPar) { //已经获得了家长
-										document.getElementById('bot_parent' + show).style.display = 'none';
-										document.getElementById("bot_parent" + qunId).style.display = 'inline';
+										document.getElementById('bot_parents_' + show).style.display = 'inline';
 									} else {
 										addBot(item, type2);
 									}
 									break;
 							}
 							item.showBotId = 'bot_' + type2 + "_" + show;
+							item.showType = type2;
 							return;
 						}
-						item.showType = type2;
 					});
 					type = type2;
 				}
