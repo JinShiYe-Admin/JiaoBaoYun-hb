@@ -112,12 +112,16 @@ function refreshUI() {
 		}
 
 		segitem.href = '#item' + i;
-				var span = document.createElement('span');
+		var span = document.createElement('span');
 		span.className = 'mui-badge mui-badge-danger custom-badge1';
 		span.innerHTML = '3'
 
 		segitem.insertBefore(span, segitem.firstChild);
-		segitem.innerHTML = datasource[i].gname+segitem.innerHTML+'<span class="spliter">|</span>';
+		if(i == datasource.length - 1) {
+			segitem.innerHTML = datasource[i].gname + segitem.innerHTML;
+		} else {
+			segitem.innerHTML = datasource[i].gname + segitem.innerHTML + '<span class="spliter">|</span>';
+		}
 
 		//在第一个位置中插入元素
 		seg.insertBefore(segitem, seg.firstChild);

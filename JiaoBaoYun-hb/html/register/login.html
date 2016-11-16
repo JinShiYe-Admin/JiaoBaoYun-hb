@@ -114,7 +114,7 @@
 					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
 				</div>
 			</form>
-			<form class="mui-input-group">
+			<!--<form class="mui-input-group">
 				<ul class="mui-table-view mui-table-view-chevron">
 					<li class="mui-table-view-cell">
 						自动登录
@@ -123,12 +123,13 @@
 						</div>
 					</li>
 				</ul>
-			</form>
+			</form>-->
 			<div class="mui-content-padded">
 				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
 				<div class="link-area">
-					<a id='reg'>注册账号</a> <span class="spliter">|</span>
-					<a id='forgetPassword'>忘记密码</a>
+					<a id='reg'>注册账号</a>
+					<!--<span class="spliter">|</span>
+					<a id='forgetPassword'>忘记密码</a>-->
 				</div>
 			</div>
 			<div class="link-area oauth-area">
@@ -198,10 +199,22 @@
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');
 					var passwordBox = doc.getElementById('password');
-					var autoLoginButton = doc.getElementById("autoLogin");
+					//					var autoLoginButton = doc.getElementById("autoLogin");
 					var regButton = doc.getElementById('reg');
-					var forgetButton = doc.getElementById('forgetPassword');
+					//					var forgetButton = doc.getElementById('forgetPassword');
 					var moreButton = doc.getElementById('more');
+					//判断是否记住密码
+					var tempAuto = window.myStorage.getItem(window.storageKeyName.AUTOLOGIN);
+					if(tempAuto) {
+						if(tempAuto.auto == 1) {
+							var loginInfo = {
+								account: window.myStorage.getItem(window.storageKeyName.AUTOLOGIN).account,
+								password: window.myStorage.getItem(window.storageKeyName.AUTOLOGIN).password
+							};
+							loginBtn(loginInfo);
+						}
+					}
+
 					//登录按钮
 					loginButton.addEventListener('tap', function(event) {
 						if(!accountBox.value) {
@@ -216,58 +229,8 @@
 							account: accountBox.value,
 							password: passwordBox.value
 						};
-
-						//先发送握手协议
-						//需要加密的数据
-						var enData0 = {};
-						//不需要加密的数据
-						var comData0 = {
-							uuid: plus.device.uuid,
-							shaketype: 'login',
-							appid: plus.runtime.appid
-						};
-						// 等待的对话框
-						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-						//发送网络请求，data为网络返回值
-						postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData0, comData0, 0, wd, function(data) {
-							wd.close();
-							console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							if(data.RspCode == 0) {
-								//存储到手机本地
-								window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
-								//账号密码登录协议
-								//需要加密的数据
-								var enData = {
-									uid: loginInfo.account,
-									pw: loginInfo.password,
-								};
-								//不需要加密的数据
-								var comData = {
-									uuid: plus.device.uuid,
-									shaketype: 'login',
-									appid: plus.runtime.appid
-								};
-								console.log('endata:' + JSON.stringify(enData) + 'comdata:' + JSON.stringify(comData));
-								//发送网络请求，data为网络返回值
-								postDataEncry(storageKeyName.MAINURL + 'PostLogin', enData, comData, 0, wd, function(data) {
-									wd.close();
-									console.log('success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-									if(data.RspCode != 0000) {
-										mui.toast(data.RspTxt);
-										return;
-									} else {
-										mui.toast('登录成功')
-											//存储到手机本地
-										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
-										//										toMain();
-										events.openNewWindowWithData('../../html/index.html', '');
-									}
-								});
-							} else {
-								mui.toast(data.RspTxt);
-							}
-						});
-
+						//登录
+						loginBtn(loginInfo);
 					});
 					//遇到登录问题
 					moreButton.addEventListener('tap', function(event) {
@@ -299,14 +262,14 @@
 					$.enterfocus('#login-form input', function() {
 						$.trigger(loginButton, 'tap');
 					});
-					autoLoginButton.classList[settings.autoLogin ? 'add' : 'remove']('mui-active')
-					autoLoginButton.addEventListener('toggle', function(event) {
-						setTimeout(function() {
-							var isActive = event.detail.isActive;
-							settings.autoLogin = isActive;
-							app.setSettings(settings);
-						}, 50);
-					}, false);
+					//					autoLoginButton.classList[settings.autoLogin ? 'add' : 'remove']('mui-active')
+					//					autoLoginButton.addEventListener('toggle', function(event) {
+					//						setTimeout(function() {
+					//							var isActive = event.detail.isActive;
+					//							settings.autoLogin = isActive;
+					//							app.setSettings(settings);
+					//						}, 50);
+					//					}, false);
 					//注册账号
 					regButton.addEventListener('tap', function(event) {
 						//flag为0，表示是注册账号
@@ -314,24 +277,22 @@
 							return 0;
 						});
 					}, false);
-					forgetButton.addEventListener('tap', function(event) {
-						$.openWindow({
-							url: 'forget_password.html',
-							id: 'forget_password',
-//							url: 'modify_password.html',
-//							id: 'modify_password.html',
-							preload: true,
-							show: {
-								aniShow: 'pop-in'
-							},
-							styles: {
-								popGesture: 'hide'
-							},
-							waiting: {
-								autoShow: false
-							}
-						});
-					}, false);
+					//					forgetButton.addEventListener('tap', function(event) {
+					//						$.openWindow({
+					//							url: 'forget_password.html',
+					//							id: 'forget_password',
+					//							preload: true,
+					//							show: {
+					//								aniShow: 'pop-in'
+					//							},
+					//							styles: {
+					//								popGesture: 'hide'
+					//							},
+					//							waiting: {
+					//								autoShow: false
+					//							}
+					//						});
+					//					}, false);
 					//
 					window.addEventListener('resize', function() {
 						oauthArea.style.display = document.body.clientHeight > 400 ? 'block' : 'none';
@@ -351,6 +312,61 @@
 						return false;
 					};
 				});
+
+				function loginBtn(loginInfo) {
+					//先发送握手协议
+					//需要加密的数据
+					var enData0 = {};
+					//不需要加密的数据
+					var comData0 = {
+						uuid: plus.device.uuid,
+						shaketype: 'login',
+						appid: plus.runtime.appid
+					};
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					//发送网络请求，data为网络返回值
+					postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData0, comData0, 0, wd, function(data) {
+						wd.close();
+						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							//存储到手机本地
+							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+							//账号密码登录协议
+							//需要加密的数据
+							var enData = {
+								uid: loginInfo.account,
+								pw: loginInfo.password,
+							};
+							//不需要加密的数据
+							var comData = {
+								uuid: plus.device.uuid,
+								shaketype: 'login',
+								appid: plus.runtime.appid
+							};
+							console.log('endata:' + JSON.stringify(enData) + 'comdata:' + JSON.stringify(comData));
+							//发送网络请求，data为网络返回值
+							postDataEncry(storageKeyName.MAINURL + 'PostLogin', enData, comData, 0, wd, function(data) {
+								wd.close();
+								console.log('success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								if(data.RspCode != 0000) {
+									mui.toast(data.RspTxt);
+									return;
+								} else {
+									mui.toast('登录成功')
+										//存储到手机本地
+									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
+									//存储自动登录
+									loginInfo.auto = 1;
+									window.myStorage.setItem(window.storageKeyName.AUTOLOGIN, loginInfo);
+									events.openNewWindowWithData('../../html/index.html', '');
+								}
+							});
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					});
+				}
 			}(mui, document));
 		</script>
 	</body>
