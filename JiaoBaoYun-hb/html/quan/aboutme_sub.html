@@ -10,7 +10,11 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/quan/aboutme.js"></script>
+		<!--<script type="text/javascript" src="../../js/quan/aboutme.js"></script>-->
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/libs/myStorage/myStorage.js"></script>
+		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
+
 		<style>
 			.mui-table-view {
 				background: transparent;
@@ -149,10 +153,10 @@
 						</div>
 
 						<div style="padding:0px 10px 10px 10px">
-									<font class="common-font-family-Regular dynamic-comment-name">孟祥菊</font>
-									<font class="common-font-family-Regular">回复</font>
-									<font class="common-font-family-Regular dynamic-comment-name">陪你上演地老天荒</font>
-									<font class="common-font-family-Regular">一二三四五六七八九十</font>
+							<font class="common-font-family-Regular dynamic-comment-name">孟祥菊</font>
+							<font class="common-font-family-Regular">回复</font>
+							<font class="common-font-family-Regular dynamic-comment-name">陪你上演地老天荒</font>
+							<font class="common-font-family-Regular">一二三四五六七八九十</font>
 						</div>
 					</li>
 
@@ -163,7 +167,7 @@
 									<img class=" dynamic-personal-image" src="../../image/dynamic/u101.png">
 								</div>
 								<div class="mui-media-body dynamic-padding-left-10px">
-									<span class=" mui-pull-right dynamic-comment-name" >回复</span>
+									<span class=" mui-pull-right dynamic-comment-name">回复</span>
 									<h4>李媛媛赞了我</h4>
 									<p>昨天 10:55</p>
 								</div>
@@ -182,43 +186,58 @@
 
 					<li id="2" class="mui-table-view-cell">
 						<div class="mui-row-padding-8px background-color: white;">
-								<div class="mui-media-body mui-pull-left">
-									<img class=" dynamic-personal-image" src="../../image/dynamic/u101.png">
-								</div>
-								<div class="mui-media-body dynamic-padding-left-10px">
-									<span class=" mui-pull-right dynamic-comment-name">回复</span>
-									<h4>李媛媛</h4>
-									<p>昨天 10:55</p>
-								</div>
-							</div>
-							<div style="background-color: white;padding: 0px 10px 10px 10px">
-								<font>有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。</font>
-							</div>
-							<div style="margin-left: 10px;margin-bottom:5px;padding:5px;background-color: rgb(242,242,242);">
+							<div class="mui-media-body mui-pull-left">
 								<img class=" dynamic-personal-image" src="../../image/dynamic/u101.png">
-								<font style="color:#1277C7 ;vertical-align: 80%;font-size: 16px;padding-left: 10px;">刘阳：<span style="color: black;">今天自己做的面包，孩子..</span></font>
-								</img>
 							</div>
-							<div style="padding: 10px;">
-								<div class="mui-media-body">
-									<font class="common-font-family-Regular dynamic-comment-name">陪你上演地老天荒</font>
-									<font class="common-font-family-Regular">：嘚瑟呵呵</font>
-								</div>
-								<div class="mui-media-body">
-									<font class="common-font-family-Regular dynamic-comment-name">孟祥菊</font>
-									<font class="common-font-family-Regular">回复</font>
-									<font class="common-font-family-Regular dynamic-comment-name">陪你上演地老天荒</font>
-									<font class="common-font-family-Regular">一二三四五六七八九十</font>
-								</div>
+							<div class="mui-media-body dynamic-padding-left-10px">
+								<span class=" mui-pull-right dynamic-comment-name">回复</span>
+								<h4>李媛媛</h4>
+								<p>昨天 10:55</p>
 							</div>
 						</div>
-
-					</li>
-				</ul>
+						<div style="background-color: white;padding: 0px 10px 10px 10px">
+							<font>有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。</font>
+						</div>
+						<div style="margin-left: 10px;margin-bottom:5px;padding:5px;background-color: rgb(242,242,242);">
+							<img class=" dynamic-personal-image" src="../../image/dynamic/u101.png">
+							<font style="color:#1277C7 ;vertical-align: 80%;font-size: 16px;padding-left: 10px;">刘阳：<span style="color: black;">今天自己做的面包，孩子..</span></font>
+							</img>
+						</div>
+						<div style="padding: 10px;">
+							<div class="mui-media-body">
+								<font class="common-font-family-Regular dynamic-comment-name">陪你上演地老天荒</font>
+								<font class="common-font-family-Regular">：嘚瑟呵呵</font>
+							</div>
+							<div class="mui-media-body">
+								<font class="common-font-family-Regular dynamic-comment-name">孟祥菊</font>
+								<font class="common-font-family-Regular">回复</font>
+								<font class="common-font-family-Regular dynamic-comment-name">陪你上演地老天荒</font>
+								<font class="common-font-family-Regular">一二三四五六七八九十</font>
+							</div>
+						</div>
 			</div>
+
+			</li>
+			</ul>
+		</div>
 		</div>
 	</body>
 	<script>
+	mui.plusReady(function() {
+		//所需参数
+		var comData = {
+			vtp: 'inv', //获取项，要获取的项:inv(入群邀请),app(入群申请)
+		};
+
+		////返回值model：model_groupRequestUser
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		postDataPro_PostGrInv(comData, wd, function(data) {
+			wd.close();
+			console.log('17--postDataPro_PostGrInv:{RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt+'}');
+		})
+	})
+
+
 		//		mui.init({
 		//			pullRefresh: {
 		//				container: '#pullrefresh',
