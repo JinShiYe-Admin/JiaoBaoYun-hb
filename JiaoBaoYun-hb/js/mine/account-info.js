@@ -5,8 +5,7 @@ mui.plusReady(function(){
 	changeInfo(pInfo);
 	var usex=document.getElementById('sex');
 	document.getElementById('sex-container').addEventListener('tap', function(){
-//			console.log( "User pressed: "+e.index );
-
+//		console.log( "User pressed: "+e.index );
 		plus.nativeUI.actionSheet( {title:"请选择性别",cancel:"取消",buttons:[{title:"男"},{title:"女"}]}, function(e){
 			console.log( "User pressed: "+e.index );
 			if(e.index>0){
