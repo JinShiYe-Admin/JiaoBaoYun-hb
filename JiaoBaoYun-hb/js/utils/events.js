@@ -145,16 +145,19 @@ var events = (function($, mod) {
 	/**
 	 * 预加载单个页面 在mui.plusReady里调用
 	 * @param {Object} tarPage 页面路径
-	 * @param {Object} interval 延迟加载时间间隔 单位毫秒
+	 * @param {Object} interval 延迟加载时间间隔 单位毫秒 ，不输入默认为0
 	 */
 	mod.preLoad = function(tarPage,interval) {
+			if(!interval){
+				interval=0;
+			}
 			//初始化预加载详情页面
 			setTimeout(function(){
 				$.preload({
 					 url:tarPage,
 				    id:tarPage,//默认使用当前页面的url作为id
 				    styles:{//窗口参数
-				    	top:myStorage.getItem('$Statusbar');
+				    	top:localStorage.getItem('$Statusbar')
 				    }
 				})
 			},interval)
