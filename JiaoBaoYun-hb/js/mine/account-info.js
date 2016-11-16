@@ -10,14 +10,21 @@ mui.plusReady(function(){
 //			console.log( "User pressed: "+e.index );
 		plus.nativeUI.actionSheet( {title:"请选择性别",cancel:"取消",buttons:[{title:"男"},{title:"女"}]}, function(e){
 			console.log( "User pressed: "+e.index );
-			postSex(e.index-1,function(data){
+			if(e.index>1){
+				postSex(e.index-1,function(data){//回调函数
+					if(data.RspCode=='0000'){//成功
+						if(e.index==1){
+							usex.innerText='男'
+						}else{
+							usex.innerText='女'
+						}		
+					}else{
+						mui.toast(data.RspTxt)
+					}
+				})
+			}
+			
 				
-			})
-			if(e.index==1){
-				usex.innerText='男'
-			}else{
-				usex.innerText='女'
-			}			
 		} );
 	})
 		/**
@@ -37,16 +44,9 @@ mui.plusReady(function(){
 				getFileByPath(picPath)
 			})
 		})
-		mui('.mui-table-view').on('tap','.mui-table-view-cell',function(){
-			switch (parseInt(this.getAttribute('pos'))){
-				case 0:
-				case 1:
-				case 2:
-					events.openNewWindowWithData('edit-info.html',parseInt(this.getAttribute('pos')))
-					break;
-				default:
-					break;
-			}
+		//监听事件 传值 打开新页面 
+		mui('.mui-table-view').on('tap','.open-newPage',function(){
+			events.openNewWindowWithData('edit-info.html',parseInt(this.getAttribute('pos')))
 		})
 		window.addEventListener('infoChanged',function(){
 			pInfo=myStorage.getItem(storageKeyName.PERSONALINFO);
