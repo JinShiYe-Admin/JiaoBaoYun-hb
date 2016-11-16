@@ -9,10 +9,129 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+
 		<style>
+			body,
+			.mui-content {
+				background: white;
+			}
+
 			.mui-content {
 				text-align: center;
 				margin-top: 10px;
+			}
+
+			.mui-table-view:before,
+			.mui-table-view:after,
+			.mui-table-view-cell:after {
+				height: 0px;
+			}
+
+			.mui-fullscreen {
+				background-color: white;
+			}
+
+			.keep-noqun {
+				/*无班级*/
+				text-align: center;
+				margin-top: 20px;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~ .mui-slider-group .mui-slider-item {
+				border-top: 0px solid #c8c7cc;
+				border-bottom: 0px solid #c8c7cc;
+			}
+
+			.mui-segmented-control.mui-scroll-wrapper .mui-control-item {
+				padding-left: 10px;
+				padding-right: 10px;
+				margin-left: 10px;
+			}
+
+			.mui-slider-group {
+				/*background: black;*/
+				/*position: absolute;*/
+				/*width: 100%;*/
+				top: 55px;
+			}
+
+			.mui-slider {
+				/*background: black;*/
+				/*position: absolute;*/
+				/*width: 100%;*/
+				/*top: 5px;*/
+			}
+
+			.mui-slider {
+				background: #F2F2F2;
+			}
+
+			.keep-line-blue {
+				/*群栏蓝竖线*/
+				position: absolute;
+				height: 38px;
+				width: 5px;
+				top: 54px;
+				background-color: #64A1EB;
+				z-index: 3;
+				left: 0;
+			}
+
+			.keep-line-black {
+				/*群栏黑竖线*/
+				position: absolute;
+				top: 10px;
+			}
+
+			.mui-table-view-cell {
+				padding: 10px 8px;
+			}
+
+			.keep-member {
+				/*群成员*/
+				text-align: center;
+				height: 75px;
+			}
+
+			.keep-member2 {
+				/*添加成员按钮*/
+				text-align: center;
+				height: 75px;
+			}
+
+			.keep-member img {
+				/*添加成员按钮图标*/
+				border-radius: 50%;
+				height: 40px;
+				width: 40px;
+				max-width: 40px;
+			}
+
+			.keep-box-shadow-border {
+				/*边框和阴影*/
+				box-shadow: 1px 1px 1px #888888;
+				border: 1px solid #F2F2F2;
+				padding: 3px;
+			}
+
+			.icon-close {
+				/*删除成员按钮*/
+				position: absolute;
+				right: 6px;
+				color: #BBBBBB;
+			}
+
+			.addqun {
+				/*添加班级的元素*/
+			}
+
+			.addmember {
+				/*添加成员的元素*/
+			}
+
+			.bot {
+				/*底部成员区域*/
 			}
 		</style>
 
@@ -27,17 +146,380 @@
 			</a>
 		</header>
 		<div class="mui-content">
-			<span class="mui-icon mui-icon-plus">新增群按钮</span>
+			<span id="noqun" class="mui-icon mui-icon-plus addqun" style="display: none;">新增群按钮</span>
+
+			<div id="lineblue" class="keep-line-blue" style="display: none;"></div>
+			<div id="slider" class="mui-slider" style="display: none;">
+				<div id="sliderSegmentedControl" style="background: #F2F2F2;" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div id="qunlist" class="mui-scroll">
+						<!--<a class="mui-control-item mui-active" style="margin-left: 10px;">
+							1001班
+						</a>
+						<font class="keep-line-black">丨</font>
+						<a class="mui-control-item" style="margin-left: 10px;">
+							1002班222
+						</a>-->
+						<a id="controladd" class="mui-control-item" style="width: 40px;">
+						</a>
+						<div class="mui-icon mui-icon-plus addqun" style="position: absolute;border: 0px solid #ddd;font-size: 25px;color: #C7C7CC;right: 0px;top: 4px;"></div>
+					</div>
+				</div>
+			</div>
+			<div id="slider2" class="mui-slider" style="display: none;">
+				<div id="sliderSegmentedControl2" style="background: #F2F2F2;" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div id="type" class="mui-scroll">
+						<a class="mui-control-item mui-active" id="student">
+							学生
+						</a>
+						<font class="keep-line-black">丨</font>
+						<a class="mui-control-item" id="teacher">
+							老师
+						</a>
+						<font class="keep-line-black">丨</font>
+						<a class="mui-control-item" id="parents">
+							家长
+						</a>
+					</div>
+				</div>
+			</div>
+			<!--<div id="bot_1002班" data-value="1002班" class="bot" style="display: none;">
+				<div class="mui-scroll-wrapper" style="background: white;top: 135px;">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<div class="mui-row" style="margin-top: 8px;">
+								<li id="member__memid" data-gid="1002班" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+									<div class="mui-icon iconfont icon-close" style="display: none;"></div>
+									<div class="keep-box-shadow-border keep-member">
+										<img src="../../image/quan/u108.jpg" />
+										<p class="mui-ellipsis">李伟</p>
+									</div>
+								</li>
+							</div>
+						</ul>
+					</div>
+				</div>
+			</div>-->
 		</div>
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
-				document.body.querySelector('.mui-icon-plus').addEventListener('tap', function() {
+				var show = ''; //记录当前展示的群id
+				var qunList = []; //记录所有群的信息
+				var type = 'student'; //记录当前展示的成员身份类型
+				var content = document.body.querySelector('.mui-content');
+				var qunlist = document.getElementById("qunlist"); //群名称显示栏
+				var controladd = document.getElementById("controladd"); //群名称显示栏添加群按钮前一个item
+
+				mui(".mui-scroll-wrapper").scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false, //是否横向滚动
+					indicators: true, //是否显示滚动条
+					deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+					bounce: true, //是否启用回弹
+				});
+
+				//添加群
+				mui('.mui-content').on('tap', '.addqun', function() {
 					events.openNewWindow('qun_manage_info.html');
 				});
+
+				//邀请进群
 				document.getElementById('invite').addEventListener('tap', function() {
 					events.openNewWindow('qun_manage_invite.html');
-				})
+				});
+
+				//切换显示选中的群
+				mui('#qunlist').on('tap', 'a', function() {
+					console.log('qunlist：' + this.getAttribute('data-value'));
+					showQun(this.getAttribute('data-value'));
+				});
+
+				//切换显示选中的成员类型
+				mui('#type').on('tap', 'a', function() {
+					console.log('type：' + this.getAttribute('id'));
+					showType(this.getAttribute('id'));
+				});
+
+				//---获取群数据---start---
+				//9.获取用户群
+				//获取个人信息
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				//需要参数
+				var getQunData = {
+					vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
+					vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_PostGList(getQunData, wd, function(data) {
+					console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						//获取到数据
+						console.log('获取群数据成功');
+						document.getElementById("noqun").style.display = 'none';
+						document.getElementById("lineblue").style.display = 'inline';
+						document.body.querySelector('#slider').style.display = 'inline';
+						document.body.querySelector('#slider2').style.display = 'inline';
+
+						//参数名	名称	参数类型	长度	是否加密	备注
+						//gid	群ID	int		否
+						//gname	群名	string		否	群名称
+						//gimg	群头像	string		否	群头像的链接
+						mui.each(data.RspData, function(index, item) {
+							console.log('data.RspData:' + item.gname);
+							var qun = {
+								gid: item.gid,
+								gname: item.gname,
+								gimg: item.gimg
+							}
+							var hasGetMember = {
+								hasGetStu: false, //记录是否已获得学生
+								hasGetTea: false, //记录是否已获得老师
+								hasGetPar: false, //记录是否已获得家长
+								showBotId: '', //记录当前展示的成员区域id
+								showType: 'student', //记录当前展示的成员类型
+							};
+							mui.extend(qun, hasGetMember); //合并两个对象
+							qunList.push(qun);
+							addQun(qun);
+						});
+						//getMember(qunList[0], type); //获取群的正常用户
+					} else {
+						mui.toast(data.RspTxt);
+						//未获取到数据
+						document.getElementById("noqun").style.display = 'inline';
+						document.getElementById("noqun").style.textAlign = "center";
+						document.getElementById("lineblue").style.display = 'none';
+						document.body.querySelector('#slider').style.display = 'none';
+						document.body.querySelector('#slider2').style.display = 'none';
+					}
+					wd.close();
+				});
+				//---获取群数据---end---
+
+				//---方法---start---
+
+				/**
+				 * 群栏添加一个群
+				 * @param {Object} qun 群信息
+				 */
+				function addQun(qun) {
+					//群栏添加班级
+					var a = document.createElement('a');
+					a.innerText = qun.gname;
+					if(qunList[0].gid == qun.gid) {
+						//第一个群
+						show = qun.gid;
+						type = 'student';
+						a.className = 'mui-control-item mui-active';
+					} else {
+						var font = document.createElement('font');
+						font.className = 'keep-line-black';
+						font.innerText = '丨';
+						qunlist.insertBefore(font, controladd);
+						a.className = 'mui-control-item';
+						a.style.marginLeft = '10px';
+					}
+					a.setAttribute('data-value', qun.gid);
+					qunlist.insertBefore(a, controladd);
+					if(qunList[0].gid == qun.gid) {
+						addBot(qun, type);
+						qunList[0].showBotId = 'bot_student_' + qunList[0].gid;
+					}
+				}
+
+				/**
+				 * 成员栏添加默认界面
+				 * @param {Object} qun 群
+				 * @param {Object} memberType 成员类型
+				 */
+				function addBot(qun, memberType) {
+					var div = document.createElement('div');
+					var divId = 'bot_' + memberType + '_' + qun.gid;
+					div.id = divId;
+					div.className = 'bot';
+					div.setAttribute('data-value', qun.gid);
+					div.style.display = "inline";
+					div.innerHTML = '<div class="mui-scroll-wrapper" style="background: white;top: 135px;">\
+										<div class="mui-scroll">\
+											<ul class="mui-table-view">\
+												<div class="mui-row" style="margin-top: 8px;">\
+												<div>' + 'bot_' + memberType + '_' + qun.gid + '</div>\
+												</div>\
+											</ul>\
+										</div>\
+									</div>';
+					document.body.querySelector('.mui-content').appendChild(div);
+					getMember(qun, memberType);
+				}
+
+				/**
+				 * 获取群的正常用户
+				 * @param {Object} qun 群
+				 */
+				function getMember(qun, type2) {
+					var vvl1 = '';
+					switch(type2) {
+						case 'student':
+							vvl1 = '3';
+							break;
+						case 'teacher':
+							vvl1 = '2';
+							break;
+						case 'parents':
+							vvl1 = '0';
+							break;
+						default:
+							console.log('获取群的正常用户type类型不正确');
+							break;
+					}
+
+					//13.通过群ID获取群的正常用户
+					//需要参数
+					var getMemData = {
+						top: '-1', //选择条数,-1取全部
+						vvl: qun.gid, //群ID，查询的值
+						vvl1: vvl1, //群员类型，0家长,1管理员,2老师,3学生,-1取全部
+					};
+					//console.log('getMemData:' + JSON.stringify(getMemData));
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_PostGusers(getMemData, wd, function(data) {
+						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						//参数名	名称	参数类型	长度	是否加密	备注
+						//gid	群ID	int
+						//utid	用户tid	int
+						//ugname	用户在群昵称	string			用户在群里的备注名称
+						//ugnick	用户昵称	string			用户资料昵称
+						//uimg	用户头像	string			用户头像
+						//ugtp	用户在群类型	int			0家长,1管理员,2老师,3学生
+						if(data.RspCode == 0) {
+							mui.each(data.RspData, function(index, item) {
+								console.log('getMemData:' + JSON.stringify(item));
+								var qunBot = document.getElementById("bot_" + item.gid).querySelector('.mui-row');
+								addMember(qunBot, item);
+							});
+						} else {
+							mui.toast(data.RspTxt);
+						}
+						mui.each(qunList, function(index, item) {
+							if(item.gid == qun.gid) {
+
+								switch(type2) {
+									case 'student':
+										item.hasGetStu = true; //获得了学生
+										break;
+									case 'teacher':
+										item.hasGetTea = true; //获得了老师
+										break;
+									case 'parents':
+										item.hasGetPar = true; //获得了家长
+										break;
+								}
+								return;
+							}
+						});
+						wd.close();
+					});
+				}
+
+				/**
+				 * 添加成员
+				 * @param {Object} qunBot 对应的群页面
+				 * @param {Object} addTable 对应的群页面中的添加成员按钮
+				 * @param {Object} value 成员信息
+				 */
+				function addMember(qunBot, member) {
+					var li = document.createElement('li');
+					var memId = 'member_' + member.utid; //
+					li.id = memId;
+					li.setAttribute('data-utid', member.utid);
+					li.setAttribute('data-ugnick', member.ugnick);
+					li.className = 'mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3';
+					//删除按钮
+					var html1 = '<div class="mui-icon iconfont icon-close" data-utid="' + member.utid + '" data-gid="' + member.gid + '" style="display: none;"></div>';
+					//成员,
+					var html2 = '<div class="keep-box-shadow-border keep-member" data-utid="' + member.utid + '" data-gid="' + member.gid + '" data-ugnick="' + member.ugnick + '">';
+					//头像
+					var html3 = '';
+					if(member.uimg != null && member.uimg != '') {
+						html3 = '<img src="' + member.uimg + '" />';
+					} else {
+						html3 = '<img src="../../image/utils/default_personalimage.png" />';
+					}
+					//名称
+					var html4 = '<p class="mui-ellipsis">' + member.ugnick + '</p></div>';
+					li.innerHTML = html1 + html2 + html3 + html4;
+					qunBot.appendChild(li);
+				}
+
+				/**
+				 * 切换群
+				 * @param {Object} qunId
+				 */
+				function showQun(qunId) {
+					mui.each(qunList, function(index, item) {
+						if(item.gid == qunId) {
+							if(item.showBotId != '') {
+								document.getElementById('bot_' + type + '_' + show).style.display = 'none';
+								document.getElementById(item.showBotId).style.display = 'inline';
+								document.getElementById(type).setAttribute('class', 'mui-control-item');
+								document.getElementById(item.showType).setAttribute('class', 'mui-control-item mui-active');
+								show = qunId;
+								type = item.showType;
+							} else {
+								addBot(item, 'student');
+								document.getElementById(type).setAttribute('class', 'mui-control-item');
+								document.getElementById('student').setAttribute('class', 'mui-control-item mui-active');
+								show = qunId;
+								type = 'student';
+							}
+							return;
+						}
+					});
+
+				}
+
+				/**
+				 * 切换成员类型
+				 * @param {Object} type2
+				 */
+				function showType(type2) {
+					mui.each(qunList, function(index, item) {
+						if(item.gid == show) {
+							console.log('showType:' + JSON.stringify(item));
+							console.log('show:' + show);
+							document.getElementById('bot_' + type + '_' + show).style.display = 'none';
+							switch(type2) {
+								case 'student':
+									if(item.hasGetStu) { //已经获得了学生
+										document.getElementById('bot_student_' + show).style.display = 'inline';
+									} else {
+										addBot(item, type2);
+									}
+									break;
+								case 'teacher':
+									if(item.hasGetTea) { //已经获得了老师
+										document.getElementById('bot_teacher_' + show).style.display = 'inline';
+									} else {
+										addBot(item, type2);
+									}
+									break;
+								case 'parents':
+									if(item.hasGetPar) { //已经获得了家长
+										document.getElementById('bot_parents_' + show).style.display = 'inline';
+									} else {
+										addBot(item, type2);
+									}
+									break;
+							}
+							item.showBotId = 'bot_' + type2 + "_" + show;
+							item.showType = type2;
+							return;
+						}
+					});
+					type = type2;
+				}
 			})
 		</script>
 	</body>
