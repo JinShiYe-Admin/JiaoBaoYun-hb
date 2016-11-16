@@ -223,19 +223,19 @@
 		</div>
 	</body>
 	<script>
-	mui.plusReady(function() {
-		//所需参数
-		var comData = {
-			vtp: 'inv', //获取项，要获取的项:inv(入群邀请),app(入群申请)
-		};
+		mui.plusReady(function() {
+			//所需参数
+			var comData = {
+				vtp: 'inv', //获取项，要获取的项:inv(入群邀请),app(入群申请)
+			};
 
-		////返回值model：model_groupRequestUser
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		postDataPro_PostGrInv(comData, wd, function(data) {
-			wd.close();
-			console.log('17--postDataPro_PostGrInv:{RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt+'}');
+			////返回值model：model_groupRequestUser
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_PostGrInv(comData, wd, function(data) {
+				wd.close();
+				console.log('17--postDataPro_PostGrInv:{RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
+			})
 		})
-	})
 
 
 		//		mui.init({
