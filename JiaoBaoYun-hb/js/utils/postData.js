@@ -65,7 +65,9 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 	//合并数组
 	var signArr = arr0.concat(arr1);
 	//拼接登录需要的签名
-	var signTemp = sortUrls.sortIt(signArr);
+	var signTemp = signArr.sort().join('&');
+//	var signTemp = sortUrls.sortIt(signArr);
+	
 //	console.log('sign:'+signTemp);
 	//将对象转为数组
 //	var arr0 = [];
