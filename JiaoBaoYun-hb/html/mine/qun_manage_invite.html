@@ -8,6 +8,67 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<style>
+			body,
+			.mui-content {
+				background: white;
+			}
+
+			.mui-table-view:before,
+			.mui-table-view:after,
+			.mui-table-view-cell:after {
+				height: 0px;
+			}
+
+			.mui-input-group:before,
+			.mui-input-group .mui-input-row:after,
+			.mui-input-group:after {
+				height: 0px;
+			}
+
+			.mui-checkbox input[type=checkbox]:checked:before,
+			.mui-radio input[type=radio]:checked:before {
+				color: #4CD964;
+			}
+
+			.mui-checkbox input[type=checkbox]:before,
+			.mui-radio input[type=radio]:before {
+				/*font-size: 15px;*/
+			}
+
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 10%;
+			}
+
+			.keep-box-shadow-border {
+				/*边框和阴影*/
+				box-shadow: 1px 1px 1px #888888;
+				border: 1px solid #F2F2F2;
+				padding: 3px;
+			}
+
+			.keep-box-shadow-click {
+				/*点击时的边框和阴影*/
+				box-shadow: 1px 1px 1px #4CD964;
+				border: 1px solid #4CD964;
+			}
+
+			.keep-member {
+				/*群成员*/
+				text-align: center;
+				height: 75px;
+			}
+
+			.keep-member img {
+				/*添加成员按钮图标*/
+				border-radius: 50%;
+				height: 40px;
+				width: 40px;
+				max-width: 40px;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -15,13 +76,248 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<p class="mui-title common-color-white" style="text-align: left;">邀请群成员</p>
 		</header>
+		<div class="mui-content" style="margin: 10px;">
+			<div>
+				<div class="mui-input-row mui-search" style="width: 75%;position: absolute;">
+					<input id="input_search" style="" type="search" class="mui-input-clear mui-pull-left" placeholder="请输入账号或手机号">
+				</div>
+				<button id="btn_search" style="position: absolute;right: 5px;width: 20%; border:1px solid white ;" type="button" class="mui-btn mui-btn-green mui-btn-outlined mui-pull-right">搜索</button>
+			</div>
+
+			<div id="bot" style="display: none;">
+				<ul class="mui-table-view" style="margin-top: 50px;">
+					<div>
+						选择被邀请成员
+					</div>
+					<li class="mui-table-view-cell mui-media">
+						<img id="uimg" class="mui-media-object mui-pull-left" style="border-radius:50% ;height: 42px;width: 42px;" src="../../image/utils/default_personalimage.png">
+						<div class="mui-media-body">
+							<div id="unick" class="mui-ellipsis"></div>
+							<font id="qunName">
+
+							</font>
+							<font id="type">
+
+							</font>
+							<!--<div>
+									<form class="mui-input-group" style="position:absolute;width: 23%;right:23%;background: transparent;top: 24px;">
+										<div class="mui-input-row mui-checkbox">
+											<label style="padding:11px 0px;">老师</label>
+											<input style="right: 20%;" name="checkbox1" value="teacher" type="checkbox">
+										</div>
+
+									</form>
+									<form class="mui-input-group" style="position:absolute;width: 23%;right:0px;background: transparent;top: 24px;">
+										<div class="mui-input-row mui-checkbox">
+											<label style="padding:11px 0px;">家长</label>
+											<input style="right: 20%;" name="checkbox1" value="parents" type="checkbox" checked>
+										</div>
+									</form>
+								</div>-->
+						</div>
+					</li>
+					<div>请选择现有成员资料</div>
+				</ul>
+				<div class="mui-scroll-wrapper" style="margin-top: 210px;">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<div id="row_data" class="mui-row">
+								<!--<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">无资料</li>-->
+								<!--<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+									<div id="date_1" data-stuid="1" class="keep-box-shadow-border keep-member">
+										<img src="../../image/quan/u108.jpg" />
+										<p class="mui-ellipsis">李伟</p>
+									</div>
+								</li>
+								<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+									<div id="date_2" data-stuid="2" class="keep-box-shadow-border keep-member">
+										<img src="../../image/quan/u108.jpg" />
+										<p class="mui-ellipsis">李伟</p>
+									</div>
+								</li>
+								<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+									<div id="date_3" data-stuid="3" class="keep-box-shadow-border keep-member">
+										<img src="../../image/quan/u108.jpg" />
+										<p class="mui-ellipsis">李伟</p>
+									</div>
+								</li>
+								<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+									<div id="date_4" data-stuid="4" class="keep-box-shadow-border keep-member">
+										<img src="../../image/quan/u108.jpg" />
+										<p class="mui-ellipsis">李伟</p>
+									</div>
+								</li>-->
+								<li class="mui-table-view-cell mui-col-xs-12 mui-col-sm-12" style="margin-top: 20px;height: 40px;">
+									<button id="commit" type="button" class="mui-btn mui-btn-red mui-btn-block" style="left: 10%;right: 0px;width: 80%;">确认</button>
+								</li>
+							</div>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
+				var dataList = []; //记录获取的资料
+				var chooseData = ''; //记录选择的资料
+				var userData = null; //当前搜索的成员
+				var gid = ''; //群ID
+				var mstype = ''; //被邀请成为类型（0家长,2老师,3学生）
+				//---从群管理界面获得的数据---start---
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var data = main.data; //接收传入参数值
 				console.log('main-data:' + JSON.stringify(data));
-			})
+				document.getElementById("qunName").innerText = '[' + data.gname + ']'; //显示群名
+				var type = ''; //记录显示的成员类型
+				switch(data.mstype) {
+					case 'student':
+						type = '学生';
+						mstype = '3';
+						break;
+					case 'teacher':
+						type = '老师';
+						mstype = '2';
+						break;
+					case 'parents':
+						type = '家长';
+						mstype = '0';
+						break;
+					default:
+						console.log('邀请群成员设置成员类型出错');
+						break;
+				}
+				document.getElementById("type").innerText = '[' + type + ']'; //显示成员类型
+				gid = data.gid; //记录群ID
+				//---从群管理界面获得的数据---end---
+
+				mui(".mui-scroll-wrapper").scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false, //是否横向滚动
+					indicators: true, //是否显示滚动条
+					deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+					bounce: true, //是否启用回弹
+				});
+
+				//---搜索---start---
+				var input_search = document.getElementById("input_search");
+				var btn_search = document.getElementById("btn_search");
+				//input_search.setAttribute('value', '18853113151');
+				input_search.addEventListener('search', function() {
+					searchUser();
+				});
+
+				btn_search.addEventListener('tap', function() {
+					searchUser();
+				});
+				//---搜索---end---
+
+				//成员点击监听
+				mui('.mui-content').on('tap', '.keep-member', function() {
+					console.log('member:' + this.getAttribute('id') + '|' + this.getAttribute('data-stuid'));
+					if(chooseData != '') {
+						document.getElementById(chooseData).setAttribute('class', 'keep-box-shadow-border keep-member');
+						this.setAttribute('class', 'keep-box-shadow-border keep-member keep-box-shadow-click');
+						chooseData = this.getAttribute('id');
+					} else {
+						this.setAttribute('class', 'keep-box-shadow-border keep-member keep-box-shadow-click');
+						chooseData = this.getAttribute('id');
+					}
+				});
+
+				document.getElementById('commit').addEventListener('tap', function() {
+					console.log('commit' + JSON.stringify(userData));
+				})
+
+				//---方法---
+
+				/**
+				 * 通过用户账号和手机号搜索用户
+				 */
+				function searchUser() {
+					var searchValue = input_search.value;
+					console.log('searchValue:' + searchValue);
+					if(searchValue == '') {
+						mui.toast('搜索不能为空');
+					} else {
+						//11.通过用户账号和手机号搜索用户
+						//需要参数
+						var comData2 = {
+							vvl: searchValue //查询的值
+						};
+						//返回值model：model_userInfo
+						//mod.model_userInfo = {
+						//	utid:'',//用户表ID
+						//	uid:'',//用户手机号
+						//	uname:'',//用户名
+						//	unick:'',//用户昵称
+						//	usex:'',//性别
+						//	utxt:'',//签名
+						//	uimg:''//用户头像地址
+						//}
+						// 等待的对话框
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						postDataPro_PostUList(comData2, wd, function(data) {
+							console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode == 0) {
+								userData = null;
+								userData = data.RspData[0];
+								console.log('userData:' + JSON.stringify(userData));
+
+								if(userData.unick == null) {
+									document.getElementById("unick").innerText = userData.uid;
+								} else {
+									document.getElementById("unick").innerText = userData.unick;
+								}
+
+								if(userData.uimg != null) {
+									document.getElementById("uimg").src = userData.uimg;
+								} else {
+									document.getElementById("uimg").src = '../../image/utils/default_personalimage.png';
+								}
+								document.getElementById("bot").style.display = 'inline';
+								getUserData();
+							} else if(data.RspCode == 9999) {
+								document.getElementById("bot").style.display = 'none';
+								document.getElementById("unick").innerText = '';
+								document.getElementById("uimg").src = '../../image/utils/default_personalimage.png';
+								userData = null;
+								console.log('该用户不存在-userData:' + JSON.stringify(userData));
+								mui.toast('该用户不存在');
+							} else {
+								mui.toast(data.RspTxt);
+								console.log('搜索:' + data.RspTxt);
+							}
+							wd.close();
+						});
+
+					}
+				}
+
+				function getUserData() {
+
+					//16.通过群ID获取群对象资料
+					//所需参数
+					var comData2 = {
+						top: '-1', //选择条数,-1为全部
+						vvl: gid, //群ID,查询的值
+						vvl1: mstype //类型,0家长,1管理员,2老师,3学生,-1全部
+					};
+
+					//返回值model：model_groupStus
+					//等待的对话框
+					var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_PostGStus(comData2, wd2, function(data) {
+						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+
+						} else {
+							mui.toast(data.RspTxt);
+						}
+						wd2.close();
+					});
+				}
+			});
 		</script>
 	</body>
 
