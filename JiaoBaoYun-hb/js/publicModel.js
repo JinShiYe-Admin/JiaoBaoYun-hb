@@ -11,11 +11,14 @@ var publicModel = (function($, mod) {
 	//注册后，或者登录后，返回用户的信息
 	mod.model_personalInfo = {
 		utid:'',//用户表ID
+		uid:'',//电话号码
+		uname:'',//姓名
 		uimg:'',//用户头像地址
 		unick:'',//用户昵称
 		usex:'',//用户性别
 		utxt:'',//用户签名
-		token:''//用户令牌
+		token:'',//用户令牌
+		ispw:''//0无密码，1有密码
 	};
 	
 	//9.获取用户群
@@ -73,6 +76,7 @@ var publicModel = (function($, mod) {
 	mod.model_homeSchoolList = {
 		TotalPage:'',//总页数
 		TotalCnt:'',//总记录数
+		NoReadCnt:'',//未读条数
 		Data:[//列表数据
 			
 		]]
@@ -81,11 +85,11 @@ var publicModel = (function($, mod) {
 	//家校圈用户记事信息
 	mod.model_userNoteInfo = {
 		//共用
-		TabId:'',//记事ID
+		TabId:'',//点到记事ID，16班级空间id,28用户空间id，
 		PublisherId:'',//发布者ID
 		PublishDate:'',//发布时间
 		MsgContent:'',//记事内容
-		NoteType:'',//点到记事类型
+		NoteType:'',//点到记事类型，1云笔记2个人空间动态
 		CheckType:'',//点到情况
 		EncType:'',//附件类型
 		EncAddr:'',//附件地址
@@ -98,8 +102,17 @@ var publicModel = (function($, mod) {
 		ClassId:'',//班级ID
 		
 		//个人空间----26,28，37
-		UserId:'',//用户ID
-		EncIntro:''//附件简介
+		UserId:'',//用户ID，发消息用户ID
+		EncIntro:'',//附件简介
+		
+		//16.（班级空间）获取用户针对某班级的空间列表，28
+		ReadCnt:'',//浏览次数
+		LikeCnt:''//点赞次数
+		//28
+		LikeUsers:'',//点赞列表
+		Comments:'',//评论列表
+		//36
+		NoReadCnt:'',//未读条数
 	}
 	
 	//用户空间，用户列表
@@ -121,10 +134,14 @@ var publicModel = (function($, mod) {
 	
 	//56.（用户空间）获取与我相关
 	mod.model_userSpaceAboutMe = {
-		TabId:'',//留言ID
+		TabId:'',//留言ID,56消息ID
 		UserId:'',//留言用户ID
 		MsgType:'',//消息类型,1为其他用户评论2为评论的回复3为其他用户点赞4为其他用户留言5为留言的回复
-		MsgDate:''//消息时间
+		MsgDate:'',//消息时间
+		MsgArray:'',//消息数组
+		MsgFrom:'',//发消息者,从属MsgArray
+		MsgTo:'',//接消息者,从属MsgArray
+		MsgContent:'',//消息内容,从属MsgArray
 	}
 
 	return mod;

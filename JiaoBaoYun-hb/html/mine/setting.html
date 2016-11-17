@@ -7,45 +7,77 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
+
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">设置</h1>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">设置</h1>
 		</header>
 		<div class="mui-content">
 			<ul class="mui-table-view">
-			        <li class="mui-table-view-cell">
-			            <a class="mui-navigate-right" href="privacy.html">
-			                隐私
-			            </a>
-			        </li>
-			        <li class="mui-table-view-cell">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" id="yinsi">
+						隐私
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
 			            <a id="change-passwords" class="mui-navigate-right">
 			                 修改密码
 			            </a>
 			        </li>
-			        <li class="mui-table-view-cell">
-			            <a class="mui-navigate-right">
-			                 退出
-			            </a>
-			        </li>
-			    </ul>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" id="quit">
+						退出
+					</a>
+				</li>
+			</ul>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/utils/events.js"></script>
+		<!--共用事件-->
+		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
+		<!--本地存储-->
+		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			mui.init()
-			mui.plusReady(function(){
+			mui.init();
+			mui.plusReady(function() {
+				//隐私
+				events.addTap('yinsi', function() {
+					console.log('xiu gai mi ma ');
+				});
+				//修改密码
 				events.preload('../register/modify_password.html',100);
-				
 				events.addTap('change-passwords',function(){
 					events.fireToPageNone('../register/modify_password.html','changePasswords')
 					events.openNewWindow('../register/modify_password.html');
 				})
-				
-			})
+				//退出
+				events.addTap('quit', function() {
+					console.log('2222');
+					var btnArray = [{
+						title: "确定"
+					}];
+					plus.nativeUI.actionSheet({
+						title: "确定退出？",
+						cancel: "取消",
+						buttons: btnArray
+					}, function(e) {
+						var index = e.index;
+						switch(index) {
+							case 0: //取消
+								break;
+							case 1: //退出登录
+								//修改自动登录值
+								window.myStorage.setItem(window.storageKeyName.PERSONALINFO,null);
+								//跳转到登录界面
+								events.openNewWindowWithData('../../html/register/login.html', '');
+								break;
+						}
+					});
+				});
+			});
 		</script>
 	</body>
 
