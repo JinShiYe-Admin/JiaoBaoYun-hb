@@ -196,9 +196,7 @@ var events = (function($, mod) {
 				targetPage = plus.webview.getWebviewById(tarPage);
 			}
 			//触发目标页面的listener事件
-			$.fire(targetPage, listener, {
-				data: null
-			});
+			$.fire(targetPage, listener);
 		}
 		/**
 		 * 清空子元素

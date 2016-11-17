@@ -205,7 +205,7 @@ mui.plusReady(function(){
 	// 重写关闭
 	var _back=mui.back;
 	function resetback(){
-		console.log("ep display:"+ep.style.display+";er display:"+er.style.display);
+//		console.log("ep display:"+ep.style.display+";er display:"+er.style.display);
 		// 停止播放
 		if(ep.style.display == "block"){
 			console.log('playing');
