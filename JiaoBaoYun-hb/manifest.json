@@ -1267,7 +1267,8 @@
 			},
 			"html/mine/privacy.html": {
 				"resources": [
-					"html/mine/setting.html"
+					"html/mine/setting.html",
+					"css/mine/edit-info.css"
 				],
 				"refer": [],
 				"priority": 0
