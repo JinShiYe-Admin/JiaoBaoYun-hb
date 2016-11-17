@@ -1254,11 +1254,19 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"css/utils/common.css",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"html/mine/privacy.html"
 				],
 				"refer": [
 					"html/register/modify_password.html"
 				],
+				"priority": 0
+			},
+			"html/mine/privacy.html": {
+				"resources": [
+					"html/mine/setting.html"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},
