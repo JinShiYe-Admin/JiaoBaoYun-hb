@@ -142,28 +142,31 @@ var events = (function($, mod) {
 				}, 1500);
 			}
 		}
-		/**
-		 * 预加载页面
-		 * @param {Object} tarPage 目标页面
-		 */
-	mod.preLoad = function(tarPage) {
-		//初始化预加载详情页面
-		$.init({
-			preloadPages: [{
-				id: tarPage,
-					url: tarPage,
-				styles: {
-					top: localStorage.getItem('$Statusbar'),
-				}
-			}]
-
-		});
+	/**
+	 * 预加载单个页面 在mui.plusReady里调用
+	 * @param {Object} tarPage 页面路径
+	 * @param {Object} interval 延迟加载时间间隔 单位毫秒 ，不输入默认为0
+	 */
+	mod.preload = function(tarPage,interval) {
+			if(!interval){
+				interval=10;
+			}
+			//初始化预加载详情页面
+			setTimeout(function(){
+				$.preload({
+					 url:tarPage,
+				    id:tarPage,//默认使用当前页面的url作为id
+				    styles:{//窗口参数
+				    	top:localStorage.getItem('$Statusbar')
+				    }
+				})
+			},interval)
 	}
 
 	/**
 	 * 如果目标页面未加载,需要先预加载页面
 	 * 传递数值到指定页面并打开页面
-	 * @param {Object} tarpage 目标页面路径
+	 * @param {Object} tarpage 目标页面Id
 	 * @param {Object} listener 监听事件
 	 * @param {Object} getDatas 获取数据的方法  return somthing
 	 */
