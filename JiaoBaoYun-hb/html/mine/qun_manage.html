@@ -141,7 +141,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">群</h1>
-			<a id="invite" class="mui-icon mui-pull-right">
+			<a id="invite" class="mui-icon mui-pull-right" style="display: none;">
 				<font style="font-size: 17px;">邀请</font>
 			</a>
 		</header>
@@ -225,9 +225,19 @@
 
 				//邀请进群
 				document.getElementById('invite').addEventListener('tap', function() {
-					events.openNewWindowWithData('qun_manage_invite.html', {
-						gid: show,
-						invtp: type
+					mui.each(qunList, function(index, item) {
+						console.log('index：' + index + '|' + 'item:' + item.gid);
+						if(item.gid == show) {
+							console.log('show：' + show + '|' + 'type:' + type);
+							events.openNewWindowWithData('qun_manage_invite.html', {
+								gid: show, //群ID
+								gname: item.gname, //群名
+								mstype: type, //被邀请成为的类型
+								vtp: item.mstype //邀请人的类型（用户管理角色,0家长,1管理员,2老师,3学生）
+							});
+							return false;
+						}
+
 					});
 				});
 
@@ -263,7 +273,7 @@
 						document.getElementById("lineblue").style.display = 'inline';
 						document.body.querySelector('#slider').style.display = 'inline';
 						document.body.querySelector('#slider2').style.display = 'inline';
-
+						document.body.querySelector('#invite').style.display = 'inline';
 						//参数名	名称	参数类型	长度	是否加密	备注
 						//gid	群ID	int		否
 						//gname	群名	string		否	群名称
@@ -271,9 +281,10 @@
 						mui.each(data.RspData, function(index, item) {
 							console.log('data.RspData:' + item.gname);
 							var qun = {
-								gid: item.gid,
-								gname: item.gname,
-								gimg: item.gimg
+								gid: item.gid, //群ID
+								gname: item.gname, //群名
+								gimg: item.gimg, //群头像,群头像的链接
+								mstype: item.mstype //用户管理角色,0家长,1管理员,2老师,3学生
 							}
 							var hasGetMember = {
 								hasGetStu: false, //记录是否已获得学生
@@ -287,14 +298,16 @@
 							addQun(qun);
 						});
 						//getMember(qunList[0], type); //获取群的正常用户
-					} else {
-						mui.toast(data.RspTxt);
+					} else if(data.RspCode == 9) {
 						//未获取到数据
 						document.getElementById("noqun").style.display = 'inline';
 						document.getElementById("noqun").style.textAlign = "center";
 						document.getElementById("lineblue").style.display = 'none';
 						document.body.querySelector('#slider').style.display = 'none';
 						document.body.querySelector('#slider2').style.display = 'none';
+						document.body.querySelector('#invite').style.display = 'none';
+					} else {
+						mui.toast(data.RspTxt);
 					}
 					wd.close();
 				});
@@ -361,8 +374,8 @@
 				 * @param {Object} qun 群
 				 */
 				function getMember(qun, type2) {
-					var vvl1 = '';
-					var type3 = '';
+					var vvl1 = ''; //群员类型（查询时使用）
+					var type3 = ''; //群员类型（界面显示时使用）
 					switch(type2) {
 						case 'student':
 							vvl1 = '3';
@@ -420,13 +433,13 @@
 							if(item.gid == qun.gid) {
 								switch(type2) {
 									case 'student':
-										item.hasGetStu = true; //获得了学生
+										item.hasGetStu = true; //查询了学生
 										break;
 									case 'teacher':
-										item.hasGetTea = true; //获得了老师
+										item.hasGetTea = true; //查询了老师
 										break;
 									case 'parents':
-										item.hasGetPar = true; //获得了家长
+										item.hasGetPar = true; //查询了家长
 										break;
 								}
 								return;
@@ -460,7 +473,13 @@
 						html3 = '<img src="../../image/utils/default_personalimage.png" />';
 					}
 					//名称
-					var html4 = '<p class="mui-ellipsis">' + member.ugnick + '</p></div>';
+					var html4 = '';
+					if(member.ugname == null) { //没有群昵称
+						html4 = '<p class="mui-ellipsis">' + member.ugnick + '</p></div>';
+					} else {
+						html4 = '<p class="mui-ellipsis">' + member.ugname + '</p></div>';
+					}
+
 					li.innerHTML = html1 + html2 + html3 + html4;
 					qunBot.appendChild(li);
 				}
@@ -486,8 +505,8 @@
 								document.getElementById('student').setAttribute('class', 'mui-control-item mui-active');
 								show = qunId;
 								type = 'student';
-								item.showBotId='bot_student_' + qunId;
-								item.showType='student';
+								item.showBotId = 'bot_student_' + qunId;
+								item.showType = 'student';
 							}
 
 							return;
