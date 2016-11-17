@@ -47,7 +47,7 @@
 					vtpKey='unick'
 						break;
 					case 1:
-						vtpKey='uphone'
+						vtpKey='uemail'
 					break;
 					case 2:
 						vtpKey='utxt'
@@ -85,14 +85,14 @@
 						inText.placeholder='请输入昵称'
 					break;
 					case 1:
-						inText.type='tel';
+						inText.type='email';
 						if(pInfo.uphone){
-							title.innerText='更改电话号';
+							title.innerText='更改电子邮箱';
 							inText.value=pInfo.uphone
 						}else{
-							title.innerText='填写电话号'
+							title.innerText='填写电子邮箱'
 						}
-						inText.placeholder='请输入电话号'
+						inText.placeholder='请输入电子邮箱地址'
 					break;
 					case 2:
 						

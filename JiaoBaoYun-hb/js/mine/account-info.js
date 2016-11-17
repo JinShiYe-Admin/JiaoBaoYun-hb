@@ -1,8 +1,13 @@
+/**
+ * 账户信息js
+ */
 mui.init();
 mui.plusReady(function(){
 	//获取个人信息
-	var pInfo=myStorage.getItem(storageKeyName.PERSONALINFO);	
+	var pInfo=myStorage.getItem(storageKeyName.PERSONALINFO);
+	//展示个人信息
 	changeInfo(pInfo);
+	//性别
 	var usex=document.getElementById('sex');
 	document.getElementById('sex-container').addEventListener('tap', function(){
 //		console.log( "User pressed: "+e.index );
@@ -12,9 +17,9 @@ mui.plusReady(function(){
 				postSex(e.index-1,function(data){//回调函数
 					if(data.RspCode=='0000'){//成功
 						if(e.index==1){
-							usex.innerText='男'
+							usex.innerText='男';
 						}else{
-							usex.innerText='女'
+							usex.innerText='女';
 						}		
 					}else{
 						mui.toast(data.RspTxt)
@@ -60,13 +65,17 @@ var postSex=function(index,callback){
 		callback(data);
 	})
 }
+/**
+ * 界面显示个人信息
+ * @param {Object} pInfo
+ */
 var changeInfo=function(pInfo){
 	var account=document.getElementById('account')
 	var uimg=document.getElementById('img');
 	var unick=document.getElementById('nick');
 	var utxt=document.getElementById('txt');
 	var uemail=document.getElementById('email');
-	var uphone=document.getElementById('phone'); 
+//	var uphone=document.getElementById('phone'); 
 	var usex=document.getElementById('sex');
 		if(pInfo.uimg){
 			uimg.src=pInfo.uimg
@@ -85,7 +94,7 @@ var changeInfo=function(pInfo){
 		if(pInfo.utxt){
 			utxt.innerText=pInfo.utxt;
 		}
-		if(pInfo.uemail&&pInfo.uemail!=''){
+		if(pInfo.uemail){
 			uemail.innerText=pInfo.uemail;
 		}
 		
