@@ -35,7 +35,7 @@
 			   			+'<div class="chat-body">'
 			   			+item.word+'<br/>'
 			   			+createImgsInner(item.extra)
-			   			+'</div>'
+			   			+'</div>'+'<div>'+'<p>'+'2016-11-17'+'<font style ="padding:20px">'+'浏览(10人)'+'</font>'+'点赞(20人)'+'</p>'+'</div/>'
 		   			+'</div>';
 		return inner;
 	}
