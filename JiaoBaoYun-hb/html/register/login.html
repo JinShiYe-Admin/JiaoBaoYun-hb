@@ -227,7 +227,7 @@
 								};
 								postDataPro_PostUinf(comData1, wd, function(data) {
 									wd.close();
-//									console.log('获取个人信息success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+									console.log('获取个人信息success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 									if(data.RspCode == 0) {
 										var tepI0000 = data.RspData[0];
 										//存储个人信息
@@ -235,9 +235,9 @@
 										tempInfo.token = data0.RspData;
 										tempInfo.uname = tepI0000.uname;
 										tempInfo.unick = tepI0000.unick;
-										tempInfo.usex = data.RspData.usex;
-										tempInfo.utxt = data.RspData.utxt;
-										tempInfo.uimg = data.RspData.uimg;
+										tempInfo.usex = tepI0000.usex;
+										tempInfo.utxt = tepI0000.utxt;
+										tempInfo.uimg = tepI0000.uimg;
 										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
 										console.log('登录保存的个人信息：'+JSON.stringify(tempInfo))
 										//跳到主界面
