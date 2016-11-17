@@ -754,7 +754,9 @@
 					"html/homework/homework-publish.html",
 					"fonts/mui.ttf",
 					"js/utils/h5fresh.js",
-					"js/homework/homework-tea.js"
+					"js/homework/homework-tea.js",
+					"image/homework/其他.png",
+					"image/homework/other.png"
 				],
 				"refer": [],
 				"priority": 0
