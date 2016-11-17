@@ -307,7 +307,7 @@
 					//返回值model：model_groupStus
 					//等待的对话框
 					var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-					postDataPro_PostGStus(comData2, wd2, function(data) {
+					postDataPro_PostGUInf(comData2, wd2, function(data) {
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 

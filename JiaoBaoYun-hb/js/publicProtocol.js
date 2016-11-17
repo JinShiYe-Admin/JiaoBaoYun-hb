@@ -188,11 +188,11 @@ var postDataPro_PostGStu=function(commonData, wd, callback) {
 //			vvl1:''//类型,0家长,1管理员,2老师,3学生,-1全部
 //		};
 //返回值model：model_groupStus
-var postDataPro_PostGStus=function(commonData, wd, callback) {
+var postDataPro_PostGUInf=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINURL + 'PostGStus', enData, commonData, 1, wd, callback);
+	postDataEncry(storageKeyName.MAINURL + 'PostGUInf', enData, commonData, 1, wd, callback);
 }
 
 //17.通过审批者ID获取相应的入群邀请或申请
