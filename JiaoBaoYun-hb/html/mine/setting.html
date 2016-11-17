@@ -17,12 +17,12 @@
 		<div class="mui-content">
 			<ul class="mui-table-view">
 			        <li class="mui-table-view-cell">
-			            <a class="mui-navigate-right">
+			            <a class="mui-navigate-right" href="privacy.html">
 			                隐私
 			            </a>
 			        </li>
 			        <li class="mui-table-view-cell">
-			            <a class="mui-navigate-right">
+			            <a id="change-passwords" class="mui-navigate-right">
 			                 修改密码
 			            </a>
 			        </li>
@@ -34,8 +34,18 @@
 			    </ul>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
 			mui.init()
+			mui.plusReady(function(){
+				events.preload('../register/modify_password.html',100);
+				
+				events.addTap('change-passwords',function(){
+					events.fireToPageNone('../register/modify_password.html','changePasswords')
+					events.openNewWindow('../register/modify_password.html');
+				})
+				
+			})
 		</script>
 	</body>
 
