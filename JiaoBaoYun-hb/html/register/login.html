@@ -155,6 +155,7 @@
 		<script src="js/mui.enterfocus.js" type="text/javascript" charset="utf-8"></script>
 		<!--网络请求-->
 		<script src="../../js/utils/postData.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<!--签名-->
 		<script src="../../js/libs/crypto-js/require.js"></script>
 		<script src="../../js/utils/sortSign.js" type="text/javascript" charset="utf-8"></script>
@@ -203,16 +204,51 @@
 					var regButton = doc.getElementById('reg');
 					//					var forgetButton = doc.getElementById('forgetPassword');
 					var moreButton = doc.getElementById('more');
-					//判断是否记住密码
-					var tempAuto = window.myStorage.getItem(window.storageKeyName.AUTOLOGIN);
-					if(tempAuto) {
-						if(tempAuto.auto == 1) {
-							var loginInfo = {
-								account: window.myStorage.getItem(window.storageKeyName.AUTOLOGIN).account,
-								password: window.myStorage.getItem(window.storageKeyName.AUTOLOGIN).password
-							};
-							loginBtn(loginInfo);
-						}
+					//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
+					var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+					if(personal) {
+						//需要参数
+						var comData = {
+							uuid: plus.device.uuid,
+							utid: personal.utid,
+							appid: plus.runtime.appid
+						};
+						// 等待的对话框
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						//token续订
+						postDataPro_PostTokenRenew(comData, wd, function(data0) {
+							wd.close();
+							console.log('token续订success:RspCode:' + data0.RspCode + ',RspData:' + JSON.stringify(data0.RspData) + ',RspTxt:' + data0.RspTxt);
+							if(data0.RspCode == 0) {
+//								window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data0.RspData;
+								//获取个人信息
+								var comData1 = {
+									vvl: personal.utid //群ID,查询的值
+								};
+								postDataPro_PostUinf(comData1, wd, function(data) {
+									wd.close();
+									console.log('获取个人信息success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+									if(data.RspCode == 0) {
+										var tepI0000 = data.RspData[0];
+										//存储个人信息
+										var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+										tempInfo.token = data0.RspData;
+										tempInfo.uname = tepI0000.uname;
+										tempInfo.unick = tepI0000.unick;
+										tempInfo.usex = data.RspData.usex;
+										tempInfo.utxt = data.RspData.utxt;
+										tempInfo.uimg = data.RspData.uimg;
+										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
+										//跳到主界面
+										events.openNewWindowWithData('../../html/index.html', '');
+									} else {
+										mui.toast(data.RspTxt);
+									}
+								});
+							} else {
+								mui.toast(data0.RspTxt);
+							}
+						});
 					}
 
 					//登录按钮
@@ -348,17 +384,18 @@
 							//发送网络请求，data为网络返回值
 							postDataEncry(storageKeyName.MAINURL + 'PostLogin', enData, comData, 0, wd, function(data) {
 								wd.close();
-								console.log('success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								console.log('账号密码登录success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 								if(data.RspCode != 0000) {
 									mui.toast(data.RspTxt);
 									return;
 								} else {
 									mui.toast('登录成功')
 										//存储到手机本地
+										data.RspData.ispw = '1';
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 									//存储自动登录
-									loginInfo.auto = 1;
-									window.myStorage.setItem(window.storageKeyName.AUTOLOGIN, loginInfo);
+//									loginInfo.auto = 1;
+//									window.myStorage.setItem(window.storageKeyName.AUTOLOGIN, loginInfo);
 									events.openNewWindowWithData('../../html/index.html', '');
 								}
 							});
