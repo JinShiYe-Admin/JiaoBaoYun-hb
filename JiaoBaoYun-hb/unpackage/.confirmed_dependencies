@@ -281,7 +281,8 @@
 			"css/utils/common.css"
 		],
 		"refer": [
-			"html/quan/classSpace-sub.html"
+			"html/quan/classSpace-sub.html",
+			"html/quan/class-dynamic.html"
 		]
 	},
 	"html/quan/classSpace-sub.html": {
@@ -732,6 +733,13 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/quan/class-dynamic.html": {
+		"resources": [
+			"js/utils/ASFiles.js",
+			"js/utils/camera.js",
+			"js/utils/files.js"
 		]
 	}
 }

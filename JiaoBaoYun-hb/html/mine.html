@@ -11,20 +11,16 @@
 		<link rel="stylesheet" href="../css/mui.min.css">
 		<link rel="stylesheet" href="../css/home/index-menu.css" />
 		<link rel="stylesheet" href="../css/iconfont/iconfont.css" />
-
-	
 	</head>
 
 	<body>
 		<div class="mui-content">
-			
 			<div id="title" class="title">
 				<img id="uimg" src="../image/slide_navigation/img3.jpg" class="head-portrait" /><br />
 				<h4 id="uname">姓名</h4>
 				<p id="utext">暂无信息</p>
 			</div>
-			
-			
+			<!--各项-->
 			<ul class="mui-table-view mui-table-view-chevron" >
 				<li class="mui-table-view-cell" position='0'>
 					<a class="mui-navigate-right" open-type="common">
@@ -100,11 +96,11 @@
 					switch(parseInt(this.getAttribute('position'))) {
 						//群资料
 						case 0:
-							events.openNewWindow('/html/mine/qun_manage.html');
+							events.openNewWindow('/html/mine/qun_data.html');
 							break;
 							//群管理
 						case 1:
-							events.openNewWindow('/html/mine/qun_data.html');
+							events.openNewWindow('/html/mine/qun_manage.html');
 							break;
 							//申请加入群
 						case 2:
