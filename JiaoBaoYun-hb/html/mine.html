@@ -88,8 +88,8 @@
 			mui.plusReady(function() {
 				main = plus.webview.currentWebview().opener();
 				//获取个人信息
-				personalInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-				console.log(JSON.stringify(personalInfo))
+				personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
+				console.log('我的界面：'+JSON.stringify(personalInfo))
 
 				//展示个人信息
 				setInfo(personalInfo)
@@ -104,11 +104,11 @@
 					console.log('click position:' + this.getAttribute('position'))		
 					closeMenu();
 					switch(parseInt(this.getAttribute('position'))) {
-						//群
+						//群资料
 						case 0:
 							events.openNewWindow('/html/mine/qun_manage.html');
 							break;
-							//群资料
+							//群管理
 						case 1:
 							events.openNewWindow('/html/mine/qun_data.html');
 							break;
