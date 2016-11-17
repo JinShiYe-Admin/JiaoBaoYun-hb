@@ -7,15 +7,64 @@
 	width: 30%;
 }
 /*四个cell钟，图标的颜色*/
-.app-icon{
-	color:lightskyblue;
+.icon-qunziliao{
+	color: #f69e94;
 }
-.record-icon{
-	color: mediumspringgreen;
+.icon-group{
+	color: #35b67f;
 }
-.set-icon{
-	color:lightskyblue;
+.icon-jiaqun{
+	color: #ffcf7b;
 }
-.about-icon{
-	color: orange;
+.icon-newmessage{
+	color: #5b99ee;
 }
+.icon-zone{
+	color: #ffc869;
+}
+.icon-jifen{
+	color: #f26d5f;
+}
+.icon-shezhi{
+	color: #6ea5f0;
+}
+.icon-about{
+	color: #62c89c;
+}
+/*li a{
+	font-size: 2rem;
+}*/
+li span:last-of-type{
+	font-size: 2rem;
+}
+/*h4{
+	font-size: 2.4rem;
+}*/
+.mui-table-view-divider{
+	height: 2rem;
+	background-color: #EBEBEB;
+}
+/*.mui-content>.mui-table-view:first-child{
+	margin-top: 0;
+}*/
+	body,
+	.mui-content {
+		background-color: #EBEBEB;
+	}
+
+	.title {
+		margin: 35px 15px 10px;
+	}
+
+	.title+.content {
+		margin: 10px 15px 35px;
+		color: #bbb;
+		text-indent: 1em;
+		font-size: 14px;
+		line-height: 24px;
+	}
+
+	.mui-table-view {
+		margin-bottom: 35px;
+	}
+

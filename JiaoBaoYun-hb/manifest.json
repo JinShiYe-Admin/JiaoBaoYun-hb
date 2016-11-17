@@ -965,7 +965,8 @@
 					"fonts/iconfont.ttf",
 					"image/slide_navigation/img3.jpg",
 					"js/libs/myStorage/myStorage.js",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"css/utils/common.css"
 				],
 				"refer": [
 					"html/mine/account-info.html",
