@@ -12,60 +12,7 @@ mui.init({
 });
 
 mui.plusReady(function() {
-	//获取个人信息
-	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-	//	//需要参数
-	var comData = {
-		vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
-		vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
-	};
-	// 等待的对话框
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	//	获取用户群
-	postDataPro_PostGList(comData, wd, function(data) {
-		wd.close();
-		console.log('postDataPro_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-
-		if(data.RspCode == 0) {
-			datasource = data.RspData;
-			var flag = datasource.length; //记录请求次数
-			var userList = [];
-			for(var i = 0; i < datasource.length; i++) {
-				//需要参数
-				var comData = {
-					top: '10', //选择条数
-					vvl: datasource[i].gid, //群ID，查询的值
-					vvl1: '-1', //群员类型，0家长,1管理员,2老师,3学生,-1取全部
-
-				};
-				// 通过群ID获取群的正常用户
-				postDataPro_PostGusers(comData, wd, function(data) {
-					wd.close();
-					console.log('postDataPro_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					if(data.RspCode == 0) {
-						userList.push(data.RspData);
-						flag--;
-						if(flag == 0) { //全部请求完毕
-							//							把用户信息添加到数据model中
-							for(var i = 0; i < datasource.length; i++) {
-								for(var j = 0; j < userList.length; j++) {
-									if(userList[j][0].gid == datasource[i].gid) {
-										datasource[i].userList = userList[j];
-									}
-								}
-							}
-							refreshUI();
-						}
-					} else {
-						mui.toast(data.RspTxt);
-					}
-				});
-			}
-
-		} else {
-			mui.toast(data.RspTxt);
-		}
-	});
+	getGroupList();
 
 	//跳转到学生动态界面
 	mui('.mui-table-view').on('tap', '.studentsdynamic', function() {
@@ -92,10 +39,131 @@ mui.plusReady(function() {
 
 })
 
+function getGroupList() {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+
+	//	//需要参数
+	var comData = {
+		vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
+		vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
+	};
+	// 等待的对话框
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//	获取用户群
+	postDataPro_PostGList(comData, wd, function(data) {
+		wd.close();
+		console.log('postDataPro_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+
+		if(data.RspCode == 0) {
+			datasource = data.RspData;
+			var flag = datasource.length; //记录请求次数
+			var userList = [];
+			for(var i = 0; i < datasource.length; i++) {
+				getTopList(i);
+
+				//需要参数
+				var comData = {
+					top: '10', //选择条数
+					vvl: datasource[i].gid, //群ID，查询的值
+					vvl1: '-1', //群员类型，0家长,1管理员,2老师,3学生,-1取全部
+
+				};
+				// 通过群ID获取群的正常用户
+				postDataPro_PostGusers(comData, wd, function(data) {
+					wd.close();
+					console.log('postDataPro_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+
+						userList.push(data.RspData);
+
+						flag--;
+						if(flag == 0) { //全部请求完毕
+							//							把用户信息添加到数据model中
+							for(var i = 0; i < datasource.length; i++) {
+								for(var j = 0; j < userList.length; j++) {
+									if(userList[j][0].gid == datasource[i].gid) {
+										datasource[i].userList = userList[j];
+									}
+								}
+							}
+//							for(var i = 0; i < datasource.length; i++) {
+//								var userList = datasource[i].userList;
+//								for(var z = 0; z < userList.length; z++) {
+//									var comData = {
+//										userId: personalUTID, //用户ID
+//										publisherId: userList[z].utid, //发布用户ID
+//										noteType: '2', //信息类型,1云笔记,2个人空间动态
+//										pageIndex: '1', //当前页数
+//										pageSize: '10' //每页记录数
+//									};
+//									postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
+//										wd.close();
+//										console.log('postDataPro_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//										if(data.RspCode == 0) {
+//											//										userList[z].MsgContent = data.RspData.Data[0].MsgContent;
+//										} else {
+//											mui.toast(data.RspTxt);
+//										}
+//									})
+//								}
+//
+//							}
+							refreshUI();
+						}
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+			}
+
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+
+}
+
+function getTopList(i) {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+
+	//获取个人信息
+	var comData = {
+		userId: personalUTID, //用户ID----utid
+		classId: datasource[i].gid, //班级ID----cid
+		pageIndex: '1', //当前页数
+		pageSize: '10' //每页记录数
+	};
+	// 等待的对话框
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	postDataPro_getClassSpacesByUserForClass(comData, wd, function(data) {
+		wd.close();
+		console.log('postDataPro_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
+		if(data.RspCode == 0) {
+			model_homeSchoolList = data.RspData.Data;
+			var ul = document.getElementById('top-list');
+			for(var i = 0; i < model_homeSchoolList.length; i++) {
+				console.log(model_homeSchoolList[0].MsgContent)
+				var li = document.createElement('li');
+				li.className = 'mui-table-view-cell mui-media tarClass';
+				li.innerHTML = '<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">' + '<p class="time">' + model_homeSchoolList[0].PublishDate +
+					'</p>' +
+					'<div class="mui-media-body">' +
+					datasource[i].gname +
+					'<p class="mui-ellipsis">' + model_homeSchoolList[0].MsgContent + '</p></div>';
+				ul.appendChild(li);
+			}
+
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	})
+}
+
 function refreshUI() {
 	if(datasource.length == 0) {
 		return;
 	}
+
 	var seg = document.getElementById('segmentedControl');
 	var userTable = document.getElementById('userList');
 
@@ -133,7 +201,7 @@ function refreshUI() {
 			li.className = 'mui-table-view-cell mui-media parent-cell' + i;
 			li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png" />' +
 				'<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[0].gid + '</span></span>' + '<p class="time">' + '10月19' + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
-				userList[j].ugname + '<p class="mui-ellipsis">' + '期末成绩出来了，热烈庆祝我们排全校第二' + '</p>';
+				userList[j].ugname + '<p class="mui-ellipsis">' + 'bbb' + '</p>';
 			ul.insertBefore(li, ul.firstChild);
 
 		}

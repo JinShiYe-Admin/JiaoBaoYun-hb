@@ -147,10 +147,10 @@
 										<p class="mui-ellipsis">李伟</p>
 									</div>
 								</li>-->
-								<li class="mui-table-view-cell mui-col-xs-12 mui-col-sm-12" style="margin-top: 20px;height: 40px;">
-									<button id="commit" type="button" class="mui-btn mui-btn-red mui-btn-block" style="left: 10%;right: 0px;width: 80%;">确认</button>
-								</li>
 							</div>
+							<li class="mui-table-view-cell mui-col-xs-12 mui-col-sm-12" style="margin-top: 20px;height: 40px;">
+								<button id="commit" type="button" class="mui-btn mui-btn-red mui-btn-block" style="left: 10%;right: 0px;width: 80%;">确认</button>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -160,14 +160,15 @@
 			mui.init();
 			mui.plusReady(function() {
 				var dataList = []; //记录获取的资料
-				var chooseData = ''; //记录选择的资料
+				var chooseInfo = '0'; //记录选择的资料
+				var chooseInfoElementId = ''; //记录选择的资料元素Id
 				var userData = null; //当前搜索的成员
 				var gid = ''; //群ID
 				var mstype = ''; //被邀请成为类型（0家长,2老师,3学生）
 				//---从群管理界面获得的数据---start---
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var data = main.data; //接收传入参数值
-				console.log('main-data:' + JSON.stringify(data));
+				console.log('邀请群成员获得的数据:' + JSON.stringify(data));
 				document.getElementById("qunName").innerText = '[' + data.gname + ']'; //显示群名
 				var type = ''; //记录显示的成员类型
 				switch(data.mstype) {
@@ -189,6 +190,7 @@
 				}
 				document.getElementById("type").innerText = '[' + type + ']'; //显示成员类型
 				gid = data.gid; //记录群ID
+
 				//---从群管理界面获得的数据---end---
 
 				mui(".mui-scroll-wrapper").scroll({
@@ -215,19 +217,72 @@
 				//成员点击监听
 				mui('.mui-content').on('tap', '.keep-member', function() {
 					console.log('member:' + this.getAttribute('id') + '|' + this.getAttribute('data-stuid'));
-					if(chooseData != '') {
-						document.getElementById(chooseData).setAttribute('class', 'keep-box-shadow-border keep-member');
+					if(chooseInfoElementId != '') {
+						document.getElementById(chooseInfoElementId).setAttribute('class', 'keep-box-shadow-border keep-member');
+						if(chooseInfoElementId == this.getAttribute('id')) { //点击同一个成员资料
+							chooseInfoElementId = '';
+							chooseInfo = '0';
+						} else { //点击不同的成员资料
+							this.setAttribute('class', 'keep-box-shadow-border keep-member keep-box-shadow-click');
+							chooseInfoElementId = this.getAttribute('id');
+							chooseInfo = this.getAttribute('data-stuid');
+						}
+					} else { //第一次点击成员资料
 						this.setAttribute('class', 'keep-box-shadow-border keep-member keep-box-shadow-click');
-						chooseData = this.getAttribute('id');
-					} else {
-						this.setAttribute('class', 'keep-box-shadow-border keep-member keep-box-shadow-click');
-						chooseData = this.getAttribute('id');
+						chooseInfoElementId = this.getAttribute('id');
+						chooseInfo = this.getAttribute('data-stuid');
 					}
+
 				});
 
+				//确认邀请监听
 				document.getElementById('commit').addEventListener('tap', function() {
-					console.log('commit' + JSON.stringify(userData));
-				})
+					console.log('确认邀请-用户信息:' + JSON.stringify(userData));
+					console.log('确认邀请-资料ID:' + chooseInfo);
+					//判断与资料关系
+					var urel = ''; //与资料关系
+					if(chooseInfo != '0') { //关联了资料
+						if(mstype == '0') { //被邀请人类型为家长
+							urel = '爸爸'; //与资料关系
+						}
+					}
+					console.log('与资料关系：' + urel);
+					//判断邀请类型
+					var vtp = ''; //邀请类型
+					if(data.vtp == 1 || data.vtp == 2) { //邀请人为老师都设为0
+						vtp = '0';
+					} else {
+						vtp = '2';
+					}
+					console.log('邀请人类型：' + data.vtp + '|邀请类型：' + vtp);
+					//12.邀请用户入群
+					//需要参数
+					var comData = {
+						gid: gid, //群ID
+						beinvutid: userData.utid, //被邀请人ID
+						beinvnick: userData.unick, //被邀请人昵称
+						mstype: mstype, //被邀请人类型,0家长,2老师,3学生
+						stat: '0', //入群状态,0待审,1同意
+						lnkinfid: chooseInfo, //关联资料ID,无资料关联填写0
+						urel: urel, //与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
+						vtp: vtp //邀请类型,0老师邀请家长,1个人申请入群,2群员邀请群员
+					};
+					//console.log('comData:' + JSON.stringify(comData));
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_PostInvGuser(comData, wd, function(data) {
+						wd.close();
+						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							mui.toast('邀请成功');
+						} else if(data.RspCode == 9) {
+							mui.toast('已经被邀请');
+						} else {
+							mui.toast('邀请失败');
+							console.log('邀请用户入群:' + data.RspTxt);
+						}
+					});
+				});
 
 				//---方法---
 
@@ -262,21 +317,23 @@
 							if(data.RspCode == 0) {
 								userData = null;
 								userData = data.RspData[0];
-								console.log('userData:' + JSON.stringify(userData));
+								console.log('搜索结果:' + JSON.stringify(userData));
 
-								if(userData.unick == null) {
-									document.getElementById("unick").innerText = userData.uid;
-								} else {
-									document.getElementById("unick").innerText = userData.unick;
-								}
+								//if(userData.unick == null) {
+								//document.getElementById("unick").innerText = userData.uid;
+								//} else {
+								document.getElementById("unick").innerText = userData.unick; //昵称
+								//}
 
-								if(userData.uimg != null) {
+								if(userData.uimg != null) { //头像
 									document.getElementById("uimg").src = userData.uimg;
 								} else {
 									document.getElementById("uimg").src = '../../image/utils/default_personalimage.png';
 								}
 								document.getElementById("bot").style.display = 'inline';
-								getUserData();
+								if(dataList.length == 0) {
+									getUserInfo(); //查询资料
+								}
 							} else if(data.RspCode == 9999) {
 								document.getElementById("bot").style.display = 'none';
 								document.getElementById("unick").innerText = '';
@@ -294,7 +351,10 @@
 					}
 				}
 
-				function getUserData() {
+				/**
+				 * 获取群成员资料
+				 */
+				function getUserInfo() {
 
 					//16.通过群ID获取群对象资料
 					//所需参数
@@ -310,12 +370,37 @@
 					postDataPro_PostGUInf(comData2, wd2, function(data) {
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
-
+							mui.each(data.RspData, function(index, item) {
+								console.log('成员资料：' + JSON.stringify(item));
+								dataList.push(item);
+								createUserInfo(item);
+							});
+						} else if(data.RspCode == 9) { //查询为空
+							document.getElementById("row_data").innerHTML = '<li class="mui-table-view-cell mui-media mui-col-xs-12 mui-col-sm-12">成员资料查询记录为空</li>';
+							mui.toast('成员资料：' + data.RspTxt);
 						} else {
 							mui.toast(data.RspTxt);
 						}
 						wd2.close();
 					});
+				}
+
+				/**
+				 * 生成群成员资料界面
+				 */
+				function createUserInfo(data) {
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3';
+					var html1 = '<div id="date_' + data.stuid + '" data-stuid="' + data.stuid + '" class="keep-box-shadow-border keep-member">'
+					var html2 = '';
+					if(data.stuimg != null) {
+						html2 = '<img src="' + data.stuimg + '" />';
+					} else {
+						html2 = '<img src="../../image/utils/default_personalimage.png" />';
+					}
+					var html3 = '<p class="mui-ellipsis">' + data.stuname + '</p></div>';
+					li.innerHTML = html1 + html2 + html3;
+					document.getElementById("row_data").appendChild(li);
 				}
 			});
 		</script>
