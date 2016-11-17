@@ -12,20 +12,18 @@
 		<link rel="stylesheet" href="../css/home/index-menu.css" />
 		<link rel="stylesheet" href="../css/iconfont/iconfont.css" />
 
-	
 	</head>
 
 	<body>
 		<div class="mui-content">
-			
+
 			<div id="title" class="title">
 				<img id="uimg" src="../image/slide_navigation/img3.jpg" class="head-portrait" /><br />
 				<h4 id="uname">姓名</h4>
 				<p id="utext">暂无信息</p>
 			</div>
-			
-			
-			<ul class="mui-table-view mui-table-view-chevron" >
+
+			<ul class="mui-table-view mui-table-view-chevron">
 				<li class="mui-table-view-cell" position='0'>
 					<a class="mui-navigate-right" open-type="common">
 						<span class="mui-icon iconfont icon-qunziliao"></span> 群资料
@@ -84,10 +82,16 @@
 			});
 			//获得侧滑主窗口webview对象
 			var main = null;
+			var personalInfo = null;
 			mui.plusReady(function() {
 				main = plus.webview.currentWebview().opener();
+				//获取个人信息
+				personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
+				console.log('我的界面：' + JSON.stringify(personalInfo))
+
 				//展示个人信息
-				setInfo()
+				setInfo(personalInfo)
+					//				events.jumpPage(document.getElementById('title'),'mine/account-info.html');
 					//点击title跳转到账号信息界面
 				events.addTap('title', function() {
 					closeMenu()
@@ -95,16 +99,16 @@
 				})
 
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-					console.log('click position:' + this.getAttribute('position'))		
+					console.log('click position:' + this.getAttribute('position'))
 					closeMenu();
 					switch(parseInt(this.getAttribute('position'))) {
 						//群资料
 						case 0:
-							events.openNewWindow('/html/mine/qun_manage.html');
+							events.openNewWindow('/html/mine/qun_data.html');
 							break;
 							//群管理
 						case 1:
-							events.openNewWindow('/html/mine/qun_data.html');
+							events.openNewWindow('/html/mine/qun_manage.html');
 							break;
 							//申请加入群
 						case 2:
@@ -120,22 +124,18 @@
 							break;
 							//设置
 						case 6:
-						events.openNewWindow('mine/setting.html')
+							events.openNewWindow('mine/setting.html')
 							break;
 							//关于
 						case 7:
-						events.openNewWindow('mine/group-info.html')
-						break;
+							events.openNewWindow('mine/group-info.html')
+							break;
 
 						default:
 							break;
 					}
-				
+
 				});
-				//加载数据监听
-				window.addEventListener('infoChanged',function(){
-					setInfo();
-				})
 			})
 
 			/**
@@ -149,9 +149,7 @@
 			 * "utxt":"",
 			 * "uimg":""}
 			 */
-			function setInfo() {
-				var info= myStorage.getItem(storageKeyName.PERSONALINFO);
-				console.log('我的界面：'+JSON.stringify(info))
+			function setInfo(info) {
 				if(info.uimg) {
 					document.getElementById('uimg').src = info.uimg;
 				}
