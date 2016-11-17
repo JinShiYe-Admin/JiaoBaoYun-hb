@@ -171,56 +171,81 @@ function getActiveControl() {
 }
 
 function pulldownRefresh() {
+
 	setTimeout(function() {
 		var itemId = getActiveControl();
-		console.log(itemId);
-		var table;
-		var cells;
-		var parentCell;
-		if(itemId == '#item1') {
-			parentCell = 'parent-cell1';
-			table = document.body.querySelector('.parent-table1');
-			cells = document.body.querySelectorAll('.parent-cell1');
-		} else {
-			parentCell = 'parent-cell2';
-			table = document.body.querySelector('.parent-table2');
-			cells = document.body.querySelectorAll('.parent-cell2');
-		}
+		var tableFlag = itemId.replace('#item', '');
+		var flagInt = parseInt(tableFlag);
+		console.log(tableFlag)
+		var comData = {
+			top: '10', //选择条数
+			vvl: datasource[flagInt].gid, //群ID，查询的值
+			vvl1: '-1', //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 
-		for(var i = cells.length, len = i + 3; i < len; i++) {
-			var li = document.createElement('li');
-			li.className = 'mui-table-view-cell mui-media ' + parentCell;
-			li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">\<p class="time">10月18</p>\<div class="mui-media-body">张曦曦<p class="mui-ellipsis">\在今天的全校演讲比赛中，我班有6名同学获奖...</p>\</div>';
-			//下拉刷新，新纪录插到最前面；
-			table.insertBefore(li, table.firstChild);
-		}
+		};
+		// 等待的对话框
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		// 通过群ID获取群的正常用户
+		postDataPro_PostGusers(comData, wd, function(data) {
+			wd.close();
+			console.log('postDataPro_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			if(data.RspCode == 0) {
+				datasource[flagInt].userList = data.RspData;
+				var parentCell = 'parent-cell' + tableFlag;
+				var item = document.getElementById('item' + tableFlag);
+				item.removeChild(item.firstChild);
+				var ul = document.createElement('ul');
+				ul.className = 'mui-table-view parent-table' + tableFlag;
+				var userList = datasource[flagInt].userList;
+				for(var j = 0; j < userList.length; j++) {
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell mui-media parent-cell' + tableFlag;
+					li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png" />' +
+						'<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[0].gid + '</span></span>' + '<p class="time">' + '10月19' + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
+						userList[j].ugname + '<p class="mui-ellipsis">' + '期末成绩出来了，热烈庆祝我们排全校第二' + '</p>';
+					ul.insertBefore(li, ul.firstChild);
+
+				}
+				item.insertBefore(ul, item.firstChild);
+			} else {
+				mui.toast(data.RspTxt);
+			}
+		})
+
+		//		for(var i = datasource[flagInt].userList; i < len; i++) {
+		//			var li = document.createElement('li');
+		//			li.className = 'mui-table-view-cell mui-media ' + parentCell;
+		//			li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">\<p class="time">10月18</p>\<div class="mui-media-body">张曦曦<p class="mui-ellipsis">\在今天的全校演讲比赛中，我班有6名同学获奖...</p>\</div>';
+		//			//下拉刷新，新纪录插到最前面；
+		//			table.insertBefore(li, table.firstChild);
+		//		}
 		mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 	}, 1500);
 }
 var count = 0;
 
 function pullupRefresh() {
-	setTimeout(function() {
-		mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
-		var itemId = getActiveControl();
-		console.log(itemId);
-		var table;
-		var cells;
-		if(itemId == '#item1') {
-			parentCell = 'parent-cell1';
-			table = document.body.querySelector('.parent-table1');
-			cells = document.body.querySelectorAll('.parent-cell1');
-		} else {
-			parentCell = 'parent-cell2';
-			table = document.body.querySelector('.parent-table2');
-			cells = document.body.querySelectorAll('.parent-cell2');
-		}
-		for(var i = cells.length, len = i + 20; i < len; i++) {
-			var li = document.createElement('li');
-			li.className = 'mui-table-view-cell mui-media ' + parentCell;
-			li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">\<p class="time">10月18</p>\<div class="mui-media-body">张曦曦<p class="mui-ellipsis">\在今天的全校演讲比赛中，我班有6名同学获奖...</p>\</div>';
-			//下拉刷新，新纪录插到最前面；
-			table.appendChild(li);
-		}
-	}, 1500);
+	//	setTimeout(function() {
+	mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+	//		var itemId = getActiveControl();
+	//		console.log(itemId);
+	//		var table;
+	//		var cells;
+	//		if(itemId == '#item1') {
+	//			parentCell = 'parent-cell1';
+	//			table = document.body.querySelector('.parent-table1');
+	//			cells = document.body.querySelectorAll('.parent-cell1');
+	//		} else {
+	//			parentCell = 'parent-cell2';
+	//			table = document.body.querySelector('.parent-table2');
+	//			cells = document.body.querySelectorAll('.parent-cell2');
+	//		}
+	//		for(var i = cells.length, len = i + 20; i < len; i++) {
+	//			var li = document.createElement('li');
+	//			li.className = 'mui-table-view-cell mui-media ' + parentCell;
+	//			li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../image/tab_zone/u34.png">\<p class="time">10月18</p>\<div class="mui-media-body">张曦曦<p class="mui-ellipsis">\在今天的全校演讲比赛中，我班有6名同学获奖...</p>\</div>';
+	//			//下拉刷新，新纪录插到最前面；
+	//			table.appendChild(li);
+	//		}
+	//	}, 1500);
 }
