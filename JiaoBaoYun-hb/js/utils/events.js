@@ -147,9 +147,9 @@ var events = (function($, mod) {
 	 * @param {Object} tarPage 页面路径
 	 * @param {Object} interval 延迟加载时间间隔 单位毫秒 ，不输入默认为0
 	 */
-	mod.preLoad = function(tarPage,interval) {
+	mod.preload = function(tarPage,interval) {
 			if(!interval){
-				interval=0;
+				interval=10;
 			}
 			//初始化预加载详情页面
 			setTimeout(function(){
@@ -179,7 +179,7 @@ var events = (function($, mod) {
 			}
 			//触发目标页面的listener事件
 			$.fire(targetPage, listener, {
-				data: getDatas
+				data: getDatas()
 			});
 			mod.openNewWindow(tarPage)
 		}

@@ -930,7 +930,24 @@
 			},
 			"html/register/modify_password.html": {
 				"resources": [
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"html/register/js/mui.enterfocus.js",
+					"js/libs/jquery.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/sortSign.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/myStorage/myStorage.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"css/utils/common.css",
+					"js/mui.min.js",
+					"css/mui.min.css"
 				],
 				"refer": [
 					"html/index.html"
@@ -954,7 +971,8 @@
 					"html/mine/account-info.html",
 					"html/mine/group-info.html",
 					"html/mine/qun_manage.html",
-					"html/mine/qun_data.html"
+					"html/mine/qun_data.html",
+					"html/mine/setting.html"
 				],
 				"priority": 0
 			},
@@ -1227,6 +1245,19 @@
 					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"html/mine/setting.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"js/utils/events.js"
+				],
+				"refer": [
+					"html/register/modify_password.html"
+				],
 				"priority": 0
 			}
 		},
