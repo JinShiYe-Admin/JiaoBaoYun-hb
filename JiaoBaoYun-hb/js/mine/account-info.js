@@ -7,7 +7,7 @@ mui.plusReady(function(){
 	var pInfo=myStorage.getItem(storageKeyName.PERSONALINFO);
 	//展示个人信息
 	changeInfo(pInfo);
-	//性别
+	//获取性别控件
 	var usex=document.getElementById('sex');
 	document.getElementById('sex-container').addEventListener('tap', function(){
 //		console.log( "User pressed: "+e.index );
