@@ -9,31 +9,36 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/quan/class_space.css" rel="stylesheet" />
-		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript">
-			mui.init()
-		</script>
-		<script src="../../js/utils/events.js"></script>
+		
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">1002班</h1>
+		    <h1 class="mui-title">Everything is going well</h1>
 		    <a id="write" class="mui-icon iconfont icon-xie1 mui-pull-right" ></a>
 		    <a id="group" class="mui-icon iconfont icon-renren  mui-pull-right"></a>
 		</header>
-		
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
 		<script>
-			events.initSubPage('classSpace-sub.html',plus.webview.currentWebview().data);
-			mui.plusReady(function(){
-				var write=document.getElementById('write');
-				events.jumpPage(write,'class-dynamic.html');
-				var group=document.getElementById('group');
-				events.jumpPage(group,'class-group.html');
-			})
+			/*预加载界面*/
 			
-
+			mui.plusReady(function(){
+				events.preload('class-dynamic.html',100);
+				events.preload('class-group.html',120);
+				var data=plus.webview.currentWebview().data;
+				console.log('班级空间：'+JSON.stringify(data))
+				events.initSubPage('classSpace-sub.html',data);
+				events.addTap('write',function(){
+					events.fireToPageWithData('class-dynamic.html','postGroupInfo',data)
+				})
+				events.addTap('group',function(){
+					events.fireToPageWithData('class-group.html','postGroupInfo',data)
+				})
+//				var group=document.getElementById('group');
+//				events.jumpPage(group,'class-group.html');
+			})
 		</script>
 			
 	</body>

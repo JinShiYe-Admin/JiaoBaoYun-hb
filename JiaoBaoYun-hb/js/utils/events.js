@@ -167,7 +167,7 @@ var events = (function($, mod) {
 			//初始化预加载详情页面
 			setTimeout(function(){
 				$.preload({
-					 url:tarPage,
+					url:tarPage,
 				    id:tarPage,//默认使用当前页面的url作为id
 				    styles:{//窗口参数
 				    	top:localStorage.getItem('$Statusbar')
@@ -202,6 +202,27 @@ var events = (function($, mod) {
 				data: getDatas()
 			});
 			console.log('要传的值是：'+JSON.stringify(getDatas()))
+			targetPage.show()
+		}
+		/**
+	 * 如果目标页面未加载,需要先预加载页面
+	 * 传递数值到指定页面并打开页面
+	 * @param {Object} tarpage 目标页面Id
+	 * @param {Object} listener 监听事件
+	 * @param {Object} datas 要传递的数据
+	 */
+	mod.fireToPageWithData = function(tarPage, listener, datas) {
+//			console.log('tarPage:' + tarPage);
+			var targetPage = null;
+			//获得目标页面
+			if(!targetPage) {
+				targetPage = plus.webview.getWebviewById(tarPage);
+				console.log(typeof(targetPage))
+			}
+			//触发目标页面的listener事件
+			$.fire(targetPage, listener, {
+				data: datas
+			});
 			targetPage.show()
 		}
 		/**

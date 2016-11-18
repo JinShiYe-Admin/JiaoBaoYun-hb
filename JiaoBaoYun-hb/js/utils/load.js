@@ -7,7 +7,7 @@ var load=(function(mod){
 	 * @param {Object} url 上传接口
 	 * @param {Object} paths 需上传文件的路径
 	 */
-	mod.createUpload=function(url,paths){
+	mod.createUpload=function(url,paths,savePath,getToken){
 		//等待框
 		var wt=plus.nativeUI.showWaiting();
 		//创建上传方法
@@ -25,14 +25,15 @@ var load=(function(mod){
 					mui.toast('上传失败,请重新上传');
 				}
 			});
-			task.addData('scope',paths);
-			task.addData('deadline',3600)
+			task.addData('key',savePath);
+			task.addData('token',getToken)
 		//加载所有文件
 		paths.forEach(function(path,i){
 			task.addFile(path,{key:new Date().getTime()+i});
 		})
 		//开始上传
 		task.start();
+		console.log('start')
 	}
 	return mod
 })(load||{})
