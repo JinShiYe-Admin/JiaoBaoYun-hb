@@ -202,7 +202,7 @@ var events = (function($, mod) {
 				data: getDatas()
 			});
 			console.log('要传的值是：'+JSON.stringify(getDatas()))
-			mod.openNewWindow(tarPage)
+			targetPage.show()
 		}
 		/**
 		 * 事件传递 不传数据 常用于 父子页面间
