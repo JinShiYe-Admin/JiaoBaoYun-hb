@@ -59,7 +59,7 @@
 				var regFlag;
 				window.addEventListener('yanzhengma', function(event) {
 					var temp = event.detail.data;
-//					console.log('传值的电话号码为：' + JSON.stringify(event.detail));
+					console.log('传值的电话号码为：' + JSON.stringify(event.detail));
 					var phoneNum = document.getElementById("phoneNumber");
 					phoneNum.value = temp.phone;
 					regFlag = temp.flag;
