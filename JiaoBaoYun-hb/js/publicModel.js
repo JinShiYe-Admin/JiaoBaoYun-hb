@@ -70,6 +70,28 @@ var publicModel = (function($, mod) {
 		appnote:''//申请备注
 	}
 	
+	//22.通过用户资料ID获取用户各项资料
+	mod.model_userDataInfo = {
+		gid:'',//群ID
+		gname:'',//群名称
+		gimg:'',//群头像
+		utid:'',//用户账号表ID
+		ugname:'',//用户在群昵称
+		umstype:'',//用户在群类型
+		stat:'',//用户在群状态
+		urel:'',//用户与资料关系
+		stuname:'',//资料名称
+		stuimg:'',//资料头像
+		stumstype:'',//资料在群类型
+		job:'',//职位
+		title:'',//职称
+		expsch:'',//教龄
+		sub:'',//科目
+		stuid:'',//资料ID
+		gutid:'',//账号在群ID
+		ustuid:''//关联ID
+	}
+	
 	
 	//家校圈
 	//2.（点到记事）获取用户未读点到记事列表
