@@ -9,15 +9,145 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/mui.picker.min.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/mui.picker.min.js"></script>
+		<style>
+			body,
+			.mui-content {
+				background: white;
+			}
+
+			.mui-input-group:before,
+			.mui-input-group .mui-input-row:after,
+			.mui-input-group:after {
+				height: 0px;
+			}
+
+			.mui-checkbox input[type=checkbox]:checked:before,
+			.mui-radio input[type=radio]:checked:before {
+				color: #86BE49;
+			}
+
+			.mui-col-sm-4,
+			.mui-col-xs-8 {
+				height: 36px;
+			}
+
+			.mui-checkbox.mui-left input[type=checkbox],
+			.mui-radio.mui-left input[type=radio] {
+				left: 0px;
+			}
+
+			.mui-checkbox.mui-left label,
+			.mui-radio.mui-left label {
+				padding-left: 50%;
+				padding-right: 0px;
+			}
+
+			input[type=color],
+			input[type=date],
+			input[type=datetime-local],
+			input[type=datetime],
+			input[type=email],
+			input[type=month],
+			input[type=number],
+			input[type=password],
+			input[type=search],
+			input[type=tel],
+			input[type=text],
+			input[type=time],
+			input[type=url],
+			input[type=week],
+			select,
+			textarea {
+				margin-bottom: 0px;
+			}
+
+			.mui-checkbox input[type=checkbox]:before,
+			.mui-radio input[type=radio]:before {
+				/*font-size: 20px;*/
+			}
+		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title"></h1>
+			<a class="mui-icon mui-icon-checkmarkempty mui-pull-right"></a>
 		</header>
-		<div class="mui-content"></div>
+
+		<div class="mui-content">
+			<div style="position: absolute;width: 100%;bottom: 0px;">
+				<div class="mui-row">
+					<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
+						<span class="mui-icon iconfont icon-date" style="color: deepskyblue;margin-right: 10px;"></span>
+						<font style="margin-right: 10px;">时间</font>
+					</div>
+					<div class="mui-col-sm-8 mui-col-xs-8" style="line-height: 36px;">
+						<font id="time" style="color: #AAAAAA;">2016年11月18日11:31</font>
+					</div>
+					<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
+						<span class="mui-icon iconfont icon-xie" style="color: #86BE49;margin-right: 10px;"></span>
+						<font style="margin-right: 10px;">类型</font>
+					</div>
+					<div class="mui-col-sm-3 mui-col-xs-3">
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label>点到</label>
+							<input name="checkbox" value="0" type="checkbox" checked>
+						</div>
+					</div>
+					<div class="mui-col-sm-3 mui-col-xs-3">
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label>记事</label>
+							<input name="checkbox" value="1" type="checkbox">
+						</div>
+					</div>
+				</div>
+				<div id="call" style="display: inline;background: green;">
+					<div style="width: 20%;float: left;">
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label>正常</label>
+							<input name="checkbox" value="2" type="checkbox" checked>
+						</div>
+					</div>
+					<div style="width: 20%;float: left;">
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label>旷课</label>
+							<input name="checkbox" value="3" type="checkbox">
+						</div>
+					</div>
+					<div style="width: 20%;float: left;">
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label>迟到</label>
+							<input name="checkbox" value="4" type="checkbox">
+						</div>
+					</div>
+					<div style="width: 20%;float: left;">
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label>早退</label>
+							<input name="checkbox" value="5" type="checkbox">
+						</div>
+					</div>
+					<div style="width: 20%;float: left;">
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label>其他</label>
+							<input name="checkbox" value="6" type="checkbox">
+						</div>
+					</div>
+					<div class="mui-input-row" style="margin: 0px 5px;" style="">
+						<textarea id="textarea_call" rows="4" placeholder="点到："></textarea>
+					</div>
+				</div>
+				<div id="record" style="display: none;">
+					<div class="mui-input-row" style="margin: 0px 5px;">
+						<textarea id="textarea_record" rows="4" placeholder="记事："></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
 
 	<script type="text/javascript">
@@ -45,11 +175,12 @@
 		});
 
 		mui.plusReady(function() {
+			//---获取数据并传递数据---start---
 			var main = plus.webview.currentWebview(); //获取当前窗体对象
 			var data = main.data; //接收A页面传入参数值
 			console.log('main-data:' + JSON.stringify(data));
 
-			document.body.querySelector('.mui-title').innerText=data.ugnick;
+			//document.body.querySelector('.mui-title').innerText = data.ugnick;
 			//			var sub = plus.webview.getWebviewById('keeprecord_callorrecord_sub.html');
 			//			sub.addEventListener("loaded", function(e) {
 			//				mui.fire(sub, 'utid', {
@@ -59,13 +190,53 @@
 			//创建子页面
 			var sub = plus.webview.create('keeprecord_callorrecord_sub.html', 'keeprecord_callorrecord_sub.html', {
 				top: '45px',
-				bottom: '0px',
+				bottom: '220px',
 			}, {
 				data: data
 			});
-//			sub.addEventListener('loaded', function() {
+			sub.addEventListener('loaded', function() {
 				main.append(sub);
-//			});
+			});
+			//---获取数据并传递数据---end---
+
+			//底部
+			var time = document.getElementById("time");
+			var myDate = new Date();
+			time.innerText = myDate.getFullYear() + '年' + (myDate.getMonth() + 1) + '月' + myDate.getDate() + '日' + myDate.getHours() + ':' + myDate.getMinutes();
+
+			time.addEventListener('tap', function() {
+				/*
+				 * 首次显示时实例化组件
+				 * 示例为了简洁，将 options 放在了按钮的 dom 上
+				 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+				 */
+				var picker = new mui.DtPicker();
+				picker.show(function(rs) {
+					/*
+					 * rs.value 拼合后的 value
+					 * rs.text 拼合后的 text
+					 * rs.y 年，可以通过 rs.y.value 和 rs.y.text 获取值和文本
+					 * rs.m 月，用法同年
+					 * rs.d 日，用法同年
+					 * rs.h 时，用法同年
+					 * rs.i 分（minutes 的第二个字母），用法同年
+					 */
+					console.log('选择结果: ' + rs.text);
+					time.innerText = rs.y.text + '年' + rs.m.text + '月' + rs.d.text + '日' + rs.h.text + ':' + rs.i.text;
+					/*
+					 * 返回 false 可以阻止选择框的关闭
+					 * return false;
+					 */
+
+					/*
+					 * 释放组件资源，释放后将将不能再操作组件
+					 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+					 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+					 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+					 */
+					picker.dispose();
+				});
+			}, false);
 		});
 	</script>
 

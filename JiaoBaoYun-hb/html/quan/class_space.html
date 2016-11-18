@@ -25,7 +25,7 @@
 		</header>
 		
 		<script>
-			events.initSubPage('classSpace-sub.html')
+			events.initSubPage('classSpace-sub.html',plus.webview.currentWebview().data);
 			mui.plusReady(function(){
 				var write=document.getElementById('write');
 				events.jumpPage(write,'class-dynamic.html');

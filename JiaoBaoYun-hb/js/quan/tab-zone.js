@@ -12,8 +12,41 @@ mui.init({
 });
 
 mui.plusReady(function() {
-	//获取个人信息
-	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+	getGroupList();
+
+	//跳转到学生动态界面
+	mui('.mui-table-view').on('tap', '.studentsdynamic', function() {
+
+		mui.openWindow({
+			url: 'studentdynamic_main.html',
+			id: 'studentdynamic_main.html',
+			styles: {
+				top: '0px', //设置距离顶部的距离
+				bottom: '0px'
+			}
+		});
+	});
+	//跳转到班级动态界面
+	mui('.mui-table-view').on('tap', '.tarClass', function() {
+		var index = this.id.replace('tarClass', '');
+		console.log('index：'+index)
+		mui.openWindow({
+			url: 'class_space.html',
+			id: 'class_space.html',
+			styles: {
+				top: '0px', //设置距离顶部的距离
+				bottom: '0px'
+			},
+			extras: {
+				data: {userId:personalUTID,classId:datasource[index].gid}
+			},
+		});
+	});
+
+})
+
+function getGroupList() {
+
 	//	//需要参数
 	var comData = {
 		vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
@@ -31,6 +64,8 @@ mui.plusReady(function() {
 			var flag = datasource.length; //记录请求次数
 			var userList = [];
 			for(var i = 0; i < datasource.length; i++) {
+				getTopList(i);
+
 				//需要参数
 				var comData = {
 					top: '10', //选择条数
@@ -43,7 +78,9 @@ mui.plusReady(function() {
 					wd.close();
 					console.log('postDataPro_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
+
 						userList.push(data.RspData);
+
 						flag--;
 						if(flag == 0) { //全部请求完毕
 							//							把用户信息添加到数据model中
@@ -54,6 +91,28 @@ mui.plusReady(function() {
 									}
 								}
 							}
+//							for(var i = 0; i < datasource.length; i++) {
+//								var userList = datasource[i].userList;
+//								for(var z = 0; z < userList.length; z++) {
+//									var comData = {
+//										userId: personalUTID, //用户ID
+//										publisherId: userList[z].utid, //发布用户ID
+//										noteType: '2', //信息类型,1云笔记,2个人空间动态
+//										pageIndex: '1', //当前页数
+//										pageSize: '10' //每页记录数
+//									};
+//									postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
+//										wd.close();
+//										console.log('postDataPro_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//										if(data.RspCode == 0) {
+//											//										userList[z].MsgContent = data.RspData.Data[0].MsgContent;
+//										} else {
+//											mui.toast(data.RspTxt);
+//										}
+//									})
+//								}
+//
+//							}
 							refreshUI();
 						}
 					} else {
@@ -67,35 +126,58 @@ mui.plusReady(function() {
 		}
 	});
 
-	//跳转到学生动态界面
-	mui('.mui-table-view').on('tap', '.studentsdynamic', function() {
-		mui.openWindow({
-			url: 'studentdynamic_main.html',
-			id: 'studentdynamic_main.html',
-			styles: {
-				top: '0px', //设置距离顶部的距离
-				bottom: '0px'
-			}
-		});
-	});
-	//跳转到班级动态界面
-	mui('.mui-table-view').on('tap', '.tarClass', function() {
-		mui.openWindow({
-			url: 'class_space.html',
-			id: 'class_space.html',
-			styles: {
-				top: '0px', //设置距离顶部的距离
-				bottom: '0px'
-			}
-		});
-	});
+}
 
-})
+function getTopList(i) {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+
+	//获取个人信息
+	var comData = {
+		userId: personalUTID, //用户ID----utid
+		classId: datasource[i].gid, //班级ID----cid
+		pageIndex: '1', //当前页数
+		pageSize: '1' //每页记录数
+	};
+	console.log('datasource[i].gid'+datasource[i].gid)
+	// 等待的对话框
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	postDataPro_getClassSpacesByUserForClass(comData, wd, function(data) {
+		wd.close();
+		console.log('postDataPro_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
+		if(data.RspCode == 0) {
+			model_homeSchoolList = data.RspData.Data;
+			var ul = document.getElementById('top-list');
+//			for(var i = 0; i < model_homeSchoolList.length; i++) {
+	if(model_homeSchoolList.length==0){
+		var temp = {
+			MsgContent:'暂无动态',
+			PublishDate:'2016-11-17'
+		}
+		model_homeSchoolList.push(temp);
+	}
+				console.log(model_homeSchoolList[0].MsgContent)
+				var li = document.createElement('li');
+				li.id = 'tarClass'+i;
+				li.className = 'mui-table-view-cell mui-media tarClass';
+				li.innerHTML = '<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">' + '<p class="time">' + model_homeSchoolList[0].PublishDate +
+					'</p>' +
+					'<div class="mui-media-body">' +
+					datasource[i].gname +
+					'<p class="mui-ellipsis">' + model_homeSchoolList[0].MsgContent + '</p></div>';
+				ul.appendChild(li);
+//			}
+
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	})
+}
 
 function refreshUI() {
 	if(datasource.length == 0) {
 		return;
 	}
+
 	var seg = document.getElementById('segmentedControl');
 	var userTable = document.getElementById('userList');
 
@@ -133,7 +215,7 @@ function refreshUI() {
 			li.className = 'mui-table-view-cell mui-media parent-cell' + i;
 			li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png" />' +
 				'<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[0].gid + '</span></span>' + '<p class="time">' + '10月19' + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
-				userList[j].ugname + '<p class="mui-ellipsis">' + '期末成绩出来了，热烈庆祝我们排全校第二' + '</p>';
+				userList[j].ugname + '<p class="mui-ellipsis">' + 'bbb' + '</p>';
 			ul.insertBefore(li, ul.firstChild);
 
 		}

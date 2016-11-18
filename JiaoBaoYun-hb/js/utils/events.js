@@ -68,9 +68,13 @@ var events = (function($, mod) {
 	};
 	/**
 	 * 加载子页面
-	 * @param {Object} subPage 子页面
+	 * @param {Object} subPage 子页面路径
+	 * @param {Object} datas 向子页面加载的数据，可选参数
 	 */
-	mod.initSubPage = function(subPage) {
+	mod.initSubPage = function(subPage,datas) {
+		if(!datas){
+			datas=null;
+		}
 		$.init({
 			gestureConfig: {
 				doubletap: true //启用双击监听
@@ -81,6 +85,9 @@ var events = (function($, mod) {
 				styles: {
 					top: '45px',
 					bottom: localStorage.getItem('$Statusbar'),
+				},
+				extras:{
+					data:datas
 				}
 			}]
 		});
@@ -95,12 +102,18 @@ var events = (function($, mod) {
 	}
 
 	/**
-	 * 刷新
-	 * @param {Object} id 刷新的list控件
+	 * 
+	 * @param {Object} id 刷新的list控件id
 	 * @param {Object} fresh 下拉刷新加载数据的方法
 	 * @param {Object} addMore 上拉刷新加载数据的方法
+	 * @param {Object} curPageCount 当前页码
+	 * @param {Object} totalPageCount 总页码
 	 */
-	mod.initRefresh = function(id, fresh, addMore) {
+	mod.initRefresh = function(id, fresh,addMore,curPageCount,totalPageCount) {
+		if(!curPageCount){
+			curPageCount=0;
+			totalPageCount=0;
+		}
 			$.init({
 				pullRefresh: {
 					container: '#refreshContainer',
@@ -134,7 +147,7 @@ var events = (function($, mod) {
 			 */
 			function pullupRefresh() {
 				setTimeout(function() {
-					$('#refreshContainer').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+					$('#refreshContainer').pullRefresh().endPullupToRefresh(curpageCount>=totalPageCount); //参数为true代表没有更多数据了。
 					var item = document.getElementById(id)
 					var cells = document.body.querySelectorAll('.mui-table-view-cell');
 					//加载更多数据
@@ -149,7 +162,7 @@ var events = (function($, mod) {
 	 */
 	mod.preload = function(tarPage,interval) {
 			if(!interval){
-				interval=10;
+				interval=0;
 			}
 			//初始化预加载详情页面
 			setTimeout(function(){
@@ -158,7 +171,13 @@ var events = (function($, mod) {
 				    id:tarPage,//默认使用当前页面的url作为id
 				    styles:{//窗口参数
 				    	top:localStorage.getItem('$Statusbar')
-				    }
+				    },
+					show: {
+						anishow: 'slide-in-right'
+					},
+					waiting: {
+						title: '正在加载...'
+					}
 				})
 			},interval)
 	}
@@ -176,12 +195,14 @@ var events = (function($, mod) {
 			//获得目标页面
 			if(!targetPage) {
 				targetPage = plus.webview.getWebviewById(tarPage);
+				console.log(typeof(targetPage))
 			}
 			//触发目标页面的listener事件
 			$.fire(targetPage, listener, {
 				data: getDatas()
 			});
-			mod.openNewWindow(tarPage)
+			console.log('要传的值是：'+JSON.stringify(getDatas()))
+			targetPage.show()
 		}
 		/**
 		 * 事件传递 不传数据 常用于 父子页面间
