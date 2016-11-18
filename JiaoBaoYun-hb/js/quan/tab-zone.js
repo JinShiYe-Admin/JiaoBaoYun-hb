@@ -16,6 +16,7 @@ mui.plusReady(function() {
 
 	//跳转到学生动态界面
 	mui('.mui-table-view').on('tap', '.studentsdynamic', function() {
+
 		mui.openWindow({
 			url: 'studentdynamic_main.html',
 			id: 'studentdynamic_main.html',
@@ -27,20 +28,24 @@ mui.plusReady(function() {
 	});
 	//跳转到班级动态界面
 	mui('.mui-table-view').on('tap', '.tarClass', function() {
+		var index = this.id.replace('tarClass', '');
+		console.log('index：'+index)
 		mui.openWindow({
 			url: 'class_space.html',
 			id: 'class_space.html',
 			styles: {
 				top: '0px', //设置距离顶部的距离
 				bottom: '0px'
-			}
+			},
+			extras: {
+				data: {userId:personalUTID,classId:datasource[index].gid}
+			},
 		});
 	});
 
 })
 
 function getGroupList() {
-	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 
 	//	//需要参数
 	var comData = {
@@ -131,8 +136,9 @@ function getTopList(i) {
 		userId: personalUTID, //用户ID----utid
 		classId: datasource[i].gid, //班级ID----cid
 		pageIndex: '1', //当前页数
-		pageSize: '10' //每页记录数
+		pageSize: '1' //每页记录数
 	};
+	console.log('datasource[i].gid'+datasource[i].gid)
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataPro_getClassSpacesByUserForClass(comData, wd, function(data) {
@@ -141,9 +147,17 @@ function getTopList(i) {
 		if(data.RspCode == 0) {
 			model_homeSchoolList = data.RspData.Data;
 			var ul = document.getElementById('top-list');
-			for(var i = 0; i < model_homeSchoolList.length; i++) {
+//			for(var i = 0; i < model_homeSchoolList.length; i++) {
+	if(model_homeSchoolList.length==0){
+		var temp = {
+			MsgContent:'暂无动态',
+			PublishDate:'2016-11-17'
+		}
+		model_homeSchoolList.push(temp);
+	}
 				console.log(model_homeSchoolList[0].MsgContent)
 				var li = document.createElement('li');
+				li.id = 'tarClass'+i;
 				li.className = 'mui-table-view-cell mui-media tarClass';
 				li.innerHTML = '<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">' + '<p class="time">' + model_homeSchoolList[0].PublishDate +
 					'</p>' +
@@ -151,7 +165,7 @@ function getTopList(i) {
 					datasource[i].gname +
 					'<p class="mui-ellipsis">' + model_homeSchoolList[0].MsgContent + '</p></div>';
 				ul.appendChild(li);
-			}
+//			}
 
 		} else {
 			mui.toast(data.RspTxt);
