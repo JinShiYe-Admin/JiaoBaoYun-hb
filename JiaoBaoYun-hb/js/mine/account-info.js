@@ -114,8 +114,8 @@ var getFileByPath=function(path){
 					success: function(data) {
 						//服务器返回响应，根据响应结果，分析是否登录成功；
 						uptoken = data.uptoken;
-						console.log('获取七牛上传token成功');
-						load.createUpload('o9u2jsxjm.bkt.clouddn.com',[path],'text/text.img',uptoken)
+						console.log('获取七牛上传token成功：'+uptoken);
+						load.createUpload('http://o9u2jsxjm.bkt.clouddn.com/',[path],'text.jpg',uptoken)
 					},
 					error: function(xhr, type, errorThrown) {
 						//异常处理；

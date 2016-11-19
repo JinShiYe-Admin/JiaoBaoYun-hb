@@ -12,10 +12,13 @@ var load=(function(mod){
 		var wt=plus.nativeUI.showWaiting();
 		//创建上传方法
 		var task=plus.uploader.createUpload(url,
-			{method:"POST"},
+			{method:"POST",
+			blocksize: 204800,  
+			priority: 100},
 			function(t,status){
 				//关闭对话框
 				wt.close();
+				console.log('当前状态：'+status);
 				//上传完成
 				//上传成功
 				if(status==200){
@@ -25,11 +28,13 @@ var load=(function(mod){
 					mui.toast('上传失败,请重新上传');
 				}
 			});
-			task.addData('key',savePath);
+			
 			task.addData('token',getToken)
 		//加载所有文件
 		paths.forEach(function(path,i){
-			task.addFile(path,{key:new Date().getTime()+i});
+			task.addData('key',path);
+			task.addFile(path,{key:path});
+			console.log(path);
 		})
 		//开始上传
 		task.start();
