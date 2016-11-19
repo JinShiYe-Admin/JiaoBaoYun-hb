@@ -12,7 +12,7 @@ mui.init({
 });
 
 mui.plusReady(function() {
-	getGroupList();
+	getGroupList();//获取所有的群
 
 	//跳转到学生动态界面
 	mui('.mui-table-view').on('tap', '.studentsdynamic', function() {
@@ -29,7 +29,7 @@ mui.plusReady(function() {
 	//跳转到班级动态界面
 	mui('.mui-table-view').on('tap', '.tarClass', function() {
 		var index = this.id.replace('tarClass', '');
-		console.log('index：'+index)
+		console.log('index：' + index)
 		mui.openWindow({
 			url: 'class_space.html',
 			id: 'class_space.html',
@@ -38,18 +38,22 @@ mui.plusReady(function() {
 				bottom: '0px'
 			},
 			extras: {
-				data: {userId:personalUTID,classId:datasource[index].gid}
+				data: {
+					userId: personalUTID,
+					classId: datasource[index].gid
+				},
+				className: datasource[index].gname
 			},
 		});
 	});
 
 })
-
+//获取所有的群
 function getGroupList() {
 
 	//	//需要参数
 	var comData = {
-		vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
+		vtp: 'ag', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
 		vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
 	};
 	// 等待的对话框
@@ -61,64 +65,13 @@ function getGroupList() {
 
 		if(data.RspCode == 0) {
 			datasource = data.RspData;
-			var flag = datasource.length; //记录请求次数
+			requestTimes = datasource.length;//记录请求次数
+			requestTimes2 = datasource.length;//记录请求次数
 			var userList = [];
 			for(var i = 0; i < datasource.length; i++) {
 				getTopList(i);
+				getBottomList(i, userList);
 
-				//需要参数
-				var comData = {
-					top: '10', //选择条数
-					vvl: datasource[i].gid, //群ID，查询的值
-					vvl1: '-1', //群员类型，0家长,1管理员,2老师,3学生,-1取全部
-
-				};
-				// 通过群ID获取群的正常用户
-				postDataPro_PostGusers(comData, wd, function(data) {
-					wd.close();
-					console.log('postDataPro_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					if(data.RspCode == 0) {
-
-						userList.push(data.RspData);
-
-						flag--;
-						if(flag == 0) { //全部请求完毕
-							//							把用户信息添加到数据model中
-							for(var i = 0; i < datasource.length; i++) {
-								for(var j = 0; j < userList.length; j++) {
-									if(userList[j][0].gid == datasource[i].gid) {
-										datasource[i].userList = userList[j];
-									}
-								}
-							}
-//							for(var i = 0; i < datasource.length; i++) {
-//								var userList = datasource[i].userList;
-//								for(var z = 0; z < userList.length; z++) {
-//									var comData = {
-//										userId: personalUTID, //用户ID
-//										publisherId: userList[z].utid, //发布用户ID
-//										noteType: '2', //信息类型,1云笔记,2个人空间动态
-//										pageIndex: '1', //当前页数
-//										pageSize: '10' //每页记录数
-//									};
-//									postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
-//										wd.close();
-//										console.log('postDataPro_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-//										if(data.RspCode == 0) {
-//											//										userList[z].MsgContent = data.RspData.Data[0].MsgContent;
-//										} else {
-//											mui.toast(data.RspTxt);
-//										}
-//									})
-//								}
-//
-//							}
-							refreshUI();
-						}
-					} else {
-						mui.toast(data.RspTxt);
-					}
-				});
 			}
 
 		} else {
@@ -127,9 +80,8 @@ function getGroupList() {
 	});
 
 }
-
+//获取顶部列表
 function getTopList(i) {
-	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 
 	//获取个人信息
 	var comData = {
@@ -138,40 +90,140 @@ function getTopList(i) {
 		pageIndex: '1', //当前页数
 		pageSize: '1' //每页记录数
 	};
-	console.log('datasource[i].gid'+datasource[i].gid)
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataPro_getClassSpacesByUserForClass(comData, wd, function(data) {
 		wd.close();
 		console.log('postDataPro_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
 		if(data.RspCode == 0) {
-			model_homeSchoolList = data.RspData.Data;
-			var ul = document.getElementById('top-list');
-//			for(var i = 0; i < model_homeSchoolList.length; i++) {
-	if(model_homeSchoolList.length==0){
-		var temp = {
-			MsgContent:'暂无动态',
-			PublishDate:'2016-11-17'
-		}
-		model_homeSchoolList.push(temp);
-	}
-				console.log(model_homeSchoolList[0].MsgContent)
-				var li = document.createElement('li');
-				li.id = 'tarClass'+i;
-				li.className = 'mui-table-view-cell mui-media tarClass';
-				li.innerHTML = '<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">' + '<p class="time">' + model_homeSchoolList[0].PublishDate +
-					'</p>' +
-					'<div class="mui-media-body">' +
-					datasource[i].gname +
-					'<p class="mui-ellipsis">' + model_homeSchoolList[0].MsgContent + '</p></div>';
-				ul.appendChild(li);
-//			}
+			if(data.RspData.Data.length == 0) {
+				var temp = {
+					index: i,
+					MsgContent: '暂无动态',
+					PublishDate: '2016-11-17'
+				}
+				topArray.push(temp);
+			} else {
+				data.RspData.Data[0].index = i;
+				topArray.push(data.RspData.Data[0]);
+			}
+
+			requestTimes--;
+			if(requestTimes == 0) {
+				topArray.sort(function(a, b) {
+					return a.index - b.index
+				})
+				var ul = document.getElementById('top-list');
+				for(var i = 0; i < topArray.length; i++) {
+					var li = document.createElement('li');
+					li.id = 'tarClass' + i;
+					li.className = 'mui-table-view-cell mui-media tarClass';
+					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">' + '<p class="time">' + topArray[i].PublishDate +
+						'</p>' +
+						'<div class="mui-media-body">' +
+						datasource[i].gname +
+						'<p class="mui-ellipsis">' + topArray[i].MsgContent + '</p></div>';
+					ul.appendChild(li);
+				}
+
+			}
 
 		} else {
 			mui.toast(data.RspTxt);
 		}
 	})
 }
+// 通过群ID获取群的正常用户
+function getBottomList(i, userList) {
+	//需要参数
+	var comData = {
+		top: '10', //选择条数
+		vvl: datasource[i].gid, //群ID，查询的值
+		vvl1: '-1', //群员类型，0家长,1管理员,2老师,3学生,-1取全部
+
+	};
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	// 通过群ID获取群的正常用户
+	postDataPro_PostGusers(comData, wd, function(data) {
+		wd.close();
+		console.log('postDataPro_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+			var tepDic = {
+				index: i,
+				data: data.RspData
+			}
+			userList.push(tepDic);
+
+			requestTimes2--;
+			if(requestTimes2 == 0) { //全部请求完毕0
+				userList.sort(function(a, b) {
+					return a.index - b.index
+				})
+				for(var i = 0; i < datasource.length; i++) {
+					datasource[i].userList = userList[i].data;
+				}
+				userIds = [];
+//for(var i=0;i<datasource[0].userList;i++){
+//	userIds.push(datasource[0].userList.utid)
+//}
+//console.log('dddddddd'+JSON.stringify(userIds));
+				getUserSpaces(0);
+
+			}
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+}
+
+function getUserSpaces(classFlag) {
+	var List = datasource[classFlag].userList;
+	classFlag++;
+
+	var flag2 = List.length;
+	for(var z = 0; z < List.length; z++) {
+		var comData = {
+			userId: personalUTID, //用户ID
+			publisherId: List[z].utid, //发布用户ID
+			noteType: '2', //信息类型,1云笔记,2个人空间动态
+			pageIndex: '1', //当前页数
+			pageSize: '1' //每页记录数
+		};
+		// 等待的对话框
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
+			wd.close();
+			console.log('postDataPro_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			if(data.RspCode == 0) {
+				flag2--;
+				if(flag2 == 0) {
+					var tempResult = data.RspData.Data;
+					for(var i = 0; i < tempResult.length; i++) {
+						for(var j = 0; j < List.length; j++) {
+							if(List[j].utid == tempResult[i].PublisherId) {
+								List[j].PublishDate = tempResult[i].PublishDate;
+								List[j].MsgContent = tempResult[i].MsgContent;
+							}
+						}
+					}
+
+					if(classFlag < datasource.length) {
+
+						getUserSpaces(classFlag);
+					} else {
+						refreshUI();
+
+					}
+
+				}
+			} else {
+				mui.toast(data.RspTxt);
+			}
+		})
+	}
+}
+
+
 
 function refreshUI() {
 	if(datasource.length == 0) {
@@ -214,8 +266,8 @@ function refreshUI() {
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell mui-media parent-cell' + i;
 			li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png" />' +
-				'<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[0].gid + '</span></span>' + '<p class="time">' + '10月19' + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
-				userList[j].ugname + '<p class="mui-ellipsis">' + 'bbb' + '</p>';
+				'<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[0].gid + '</span></span>' + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
+				userList[j].ugname + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
 			ul.insertBefore(li, ul.firstChild);
 
 		}
@@ -225,7 +277,6 @@ function refreshUI() {
 	}
 	//跳转到家长空间界面
 	for(var i = 0; i < datasource.length; i++) {
-		console.log('999999=====' + i)
 			//跳转到家长空间界面
 		mui('.mui-table-view').on('tap', '.parent-cell' + i, function() {
 			mui.openWindow({
@@ -258,7 +309,6 @@ function pulldownRefresh() {
 		var itemId = getActiveControl();
 		var tableFlag = itemId.replace('#item', '');
 		var flagInt = parseInt(tableFlag);
-		console.log(tableFlag)
 		var comData = {
 			top: '10', //选择条数
 			vvl: datasource[flagInt].gid, //群ID，查询的值
@@ -273,22 +323,22 @@ function pulldownRefresh() {
 			console.log('postDataPro_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				datasource[flagInt].userList = data.RspData;
-				var parentCell = 'parent-cell' + tableFlag;
-				var item = document.getElementById('item' + tableFlag);
-				item.removeChild(item.firstChild);
-				var ul = document.createElement('ul');
-				ul.className = 'mui-table-view parent-table' + tableFlag;
-				var userList = datasource[flagInt].userList;
-				for(var j = 0; j < userList.length; j++) {
-					var li = document.createElement('li');
-					li.className = 'mui-table-view-cell mui-media parent-cell' + tableFlag;
-					li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png" />' +
-						'<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[0].gid + '</span></span>' + '<p class="time">' + '10月19' + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
-						userList[j].ugname + '<p class="mui-ellipsis">' + '期末成绩出来了，热烈庆祝我们排全校第二' + '</p>';
-					ul.insertBefore(li, ul.firstChild);
-
-				}
-				item.insertBefore(ul, item.firstChild);
+//				var parentCell = 'parent-cell' + tableFlag;
+//				var item = document.getElementById('item' + tableFlag);
+//				item.removeChild(item.firstChild);
+//				var ul = document.createElement('ul');
+//				ul.className = 'mui-table-view parent-table' + tableFlag;
+//				var userList = datasource[flagInt].userList;
+//				for(var j = 0; j < userList.length; j++) {
+//					var li = document.createElement('li');
+//					li.className = 'mui-table-view-cell mui-media parent-cell' + tableFlag;
+//					li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png" />' +
+//						'<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[0].gid + '</span></span>' + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
+//						userList[j].ugname + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
+//					ul.insertBefore(li, ul.firstChild);
+//
+//				}
+//				item.insertBefore(ul, item.firstChild);
 			} else {
 				mui.toast(data.RspTxt);
 			}
