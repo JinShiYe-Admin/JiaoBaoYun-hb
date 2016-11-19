@@ -19,7 +19,7 @@ function postData(url, data, callback, waitingDialog) {
 //url,
 //encryData,需要加密的字段
 //commonData,不需要加密的对象
-//flag,0表示不需要合并共用数据，1为添加uuid、utid、token、appid普通参数，2为uuid、appid、token
+//flag,0表示不需要合并共用数据，1为添加uuid、utid、token、appid普通参数，2为uuid、appid、token，3为token
 //waitingDialog,等待框
 //callback,返回值
 function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback) {
@@ -50,6 +50,13 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 			uuid: plus.device.uuid,
 			token: personalToken,
 			appid: plus.runtime.appid
+		};
+		commonData = $.extend(commonData, comData);
+	}else if(flag == 3){
+		//获取个人信息
+		var personalToken = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token;
+		var comData = {
+			token: personalToken
 		};
 		commonData = $.extend(commonData, comData);
 	}
@@ -117,7 +124,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 			timeout: 60000,
 			success: callback,
 			error: function(xhr, type, errorThrown) {
-				//				console.log('wang luo cuowu:'+JSON.stringify(xhr)+','+type+','+errorThrown);
+				console.log('wang luo cuowu:'+JSON.stringify(xhr)+','+type+','+errorThrown);
 				waitingDialog.close();
 				mui.alert("网络连接失败，请重新尝试一下", "错误", "OK", null);
 			}

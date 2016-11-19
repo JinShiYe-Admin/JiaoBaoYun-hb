@@ -168,16 +168,20 @@ var postDataPro_PostVerifyToken=function(commonData, wd, callback) {
 //		//所需参数
 //		var comData = {
 //			gid: '',//群ID
-//			gname:'',//学生名
-//			gimg:'',//学生头像
+//			stuname:'',//资料名
+//			stuimg:'',//资料头像
 //			mstype:'',//资料类型，0家长,2老师,3学生
-//			guid:''//关联的群账号ID，用户在群里的账号ID,无则为0
+//			job:'',//职位，老师用,其他填0
+//			title:'',//职称，老师用,其他填0
+//			expsch:'',//教龄，老师用,其他填0
+//			sub:'',//科目，老师用,其他填0
+//			gutid:''//关联的群账号ID，用户在群里的账号ID,无则为0
 //		};
-var postDataPro_PostGStu=function(commonData, wd, callback) {
+var postDataPro_PostGAddUInf=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINURL + 'PostGStu', enData, commonData, 1, wd, callback);
+	postDataEncry(storageKeyName.MAINURL + 'PostGAddUInf', enData, commonData, 1, wd, callback);
 }
 
 //16.通过群ID获取群对象资料
@@ -264,6 +268,67 @@ var postDataPro_PostUinf=function(commonData, wd, callback) {
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINURL + 'PostUinf', enData, commonData, 1, wd, callback);
 }
+
+//22.通过用户资料ID获取用户各项资料
+//所需参数
+//		var comData = {
+//			vvl:''//查询的用户资料ID
+//		};
+//返回值model：model_userDataInfo
+var postDataPro_PostUuinf=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostUuinf', enData, commonData, 1, wd, callback);
+}
+
+
+//23.通过用户资料ID或关联ID更改各类型资料
+//所需参数
+//		var comData = {
+//			vtp:'',//更新资料类型,stu:学生,tec:老师,gen:家长关系
+//			stuid:'',//资料ID,更新学生老师必填,关系留0
+//			stuname:'',//资料名称
+//			stuimg:''//资料头像,学生必填,其他留0
+//			job:'',//职位,老师必填,其他留空
+//			title:'',//职称,老师必填,其他留空
+//			expsch:'',//教龄,老师必填,其他留空
+//			sub:'',//科目,老师必填,其他留空
+//			ustuid:'',//关联ID,更新与家长关系必填,其他留空
+//			urel:''//关系,更新与家长关系必填,其他留空
+//		};
+var postDataPro_PostReStu=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostReStu', enData, commonData, 1, wd, callback);
+}
+
+
+//24.通过用户表ID获取用户关联的学生
+//所需参数
+//		var comData = {
+//		};
+//返回值model：model_userDataInfo
+var postDataPro_PostUstu=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostUstu', enData, commonData, 1, wd, callback);
+}
+
+
+//25.用户注销
+//所需参数
+//		var comData = {
+//		};
+var postDataPro_PostLoginOut=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostLoginOut', enData, commonData, 1, wd, callback);
+}
+
 
 
 //家校圈接口
