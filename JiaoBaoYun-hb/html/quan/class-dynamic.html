@@ -70,8 +70,15 @@
 			console.log(JSON.stringify(postData));
 			var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING)
 			postDataPro_addClassSpace(postData,wd,function(data){
-				wd.close()
-				console.log(JSON.stringify(data))
+				wd.close();
+				console.log(JSON.stringify(data));
+				if(data.RspCode='0000'){
+					mui.toast('发布成功！');
+//					mui.fire('classSpace-sub.html','refershData');
+					mui.back();
+				}else{
+					mui.toast(data.RspTxt);
+				}
 			})
 		})
 	})

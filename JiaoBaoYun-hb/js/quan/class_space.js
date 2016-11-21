@@ -42,38 +42,61 @@
 	}
 	var createInnerHtml=function(item){
 		var inner='<div class="mui-pull-left head-img" >'
-		   			+'<img src="'+item.PublisherId+'"/>'
-		   			+'<p>'+item.name+'</p>'
+		   			+'<img src="'+item.publisherImg+'"/>'
+		   			+'<p>'+item.publisherName+'</p>'
 		   			+'</div>'
 		   			+'<div class="chat_content_left mui-pull-right">'
 			   			+'<div class="chat-body">'
 			   			+item.MsgContent+'<br/>'
 			   			+createImgsInner(item)
-			   			+'</div>'+'<div>'+'<p>'+item.PublishDate+'<font style ="padding:20px">浏览('+item.ReadCnt+'人)</font>点赞('+item.LikeCnt+'人)</p>'+'</div/>'
+			   			+'</div>'
+			   			+'<p>'+item.PublishDate+'<font>浏览('+item.ReadCnt+'人)</font>点赞('+item.LikeCnt+'人)</p>'
 		   			+'</div>';
 		return inner;
+	}
+	var changeDate=function(pDate){
+		var noDate=pDate.split('-');
+		 console.log(noDate);	
+		if(parseInt(noDate[0]) ==new Date().getFullYear()){
+			noDate.splice(0,1);
+		}
+		noDate=noDate.join('-')
+		noDate=noDate.split(':');
+		noDate.splice(2,1);
+		return noDate.join(':')
 	}
 	var getPersonalImg=function(cell,li,container){
 		var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING)
 		postDataPro_PostUinf({vvl:cell.PublisherId},wd,function(pInfo){
 			wd.close();
-			cell.publisherImg=pInfo.uimg;
-			cell.publisherName=pInfo.uname;
-			li.innerHTML=createInnerHtml(cell);
-			container.appendChild(li);
+			if(pInfo.RspCode='0000'){
+				var personalInfo=pInfo.RspData[0];
+				console.log('获取的个人信息：'+JSON.stringify(personalInfo));
+				cell.publisherImg=personalInfo.uimg;
+				cell.publisherName=personalInfo.unick;
+				cell.PublishDate=changeDate(cell.PublishDate);
+				li.innerHTML=createInnerHtml(cell);
+				container.appendChild(li);
+			}else{
+				console.log(pInfo.RspTxt);
+			}
+			
 		})
 	}
 	var createImgsInner=function(cell){
 		var imgInner='';
 		var percent=0.00;
-		cell.EncImgAddr.split('|').forEach(function(img,ind,extras){
-			if(extras.length<=3&&extras.length>0){
-				percent=100/(extras.length)
-			imgInner+='<img src="'+img+'" style="width:'+percent+'%;padding:2px"/>'
-				}else{
-			imgInner+='<img src="'+img+'" style="width:33.33333333%; padding:2px"/>'
-			}
-		});
+		if(cell.EncImgAddr){
+			cell.EncImgAddr.split('|').forEach(function(img,ind,extras){
+				if(extras.length<=3&&extras.length>0){
+					percent=100/(extras.length)
+				imgInner+='<img src="'+img+'" style="width:'+percent+'%;padding:2px"/>'
+					}else{
+				imgInner+='<img src="'+img+'" style="width:33.33333333%; padding:2px"/>'
+				}
+			});
+		}
+		
 //		console.log(imgInner) 
 		return imgInner;
 	}
