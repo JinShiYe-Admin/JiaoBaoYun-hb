@@ -13,7 +13,7 @@ mui.init({
 
 mui.plusReady(function() {
 
-//		getStuList(); //获取学生列表
+		getStuList(); //获取学生列表
 		getGroupList(); //获取所有的群
 		//跳转到学生动态界面
 		mui('.mui-table-view').on('tap', '.studentsdynamic', function() {
@@ -400,7 +400,11 @@ function refreshUI() {
 				styles: {
 					top: '0px', //设置距离顶部的距离
 					bottom: '0px'
-				}
+				},
+				extras: {
+					data: {
+					},
+				},
 			});
 		});
 	}
