@@ -9,25 +9,17 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/quan/class_space.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
-		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript">
-			mui.init()
-		</script>
-		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/utils/camera.js"></script>
-		<script src="../../js/utils/files.js"></script>
-		<script src="../../js/utils/ASFiles.js"></script>
 	</head>
 	
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">班级动态</h1>
-		    <a class="mui-icon iconfont icon-jia mui-pull-right"></a>
+		    <a id="publish" class="mui-pull-right">发布</a>
 		</header>
 		<div class="mui-content">
 			<div  class="input-content">
-				<textarea placeholder="请输入内容">
+				<textarea id="input-content" placeholder="请输入内容">
 			    </textarea>
 			    <div id="take_pic" class="take_pic">
 				    <a class="mui-icon iconfont icon-xiangji"></a>
@@ -38,13 +30,56 @@
 			</div>
 		</div>
 	</body>
+	<script src="../../js/mui.min.js"></script>
+	
+	<script src="../../js/utils/events.js"></script>
+	<script src="../../js/utils/camera.js"></script>
+	<script src="../../js/utils/files.js"></script>
+	<script src="../../js/utils/ASFiles.js"></script>
+	<script src="../../js/publicProtocol.js"></script>
+	<script type="text/javascript">
+		mui.init()
+	</script>
 	<script>
+	
 	mui.plusReady(function(){
+		var groupInfo;
+		//界面监听传值
+		window.addEventListener('postGroupInfo',function(e){
+		
+			groupInfo=e.detail.data;
+			console.log('发布动态页面获取的值：'+JSON.stringify(groupInfo));
+		});
 		events.addTap('take_pic',function(){
 			camera.getPic(camera.getCamera());
 		})
 		events.addTap('add_file',function(){
 			asFiles.openASFiles()
+		})
+		//发布按钮
+		events.addTap('publish',function(){
+//			postDataPro_addClassSpace({classId},)
+			console.log(''+JSON.stringify(groupInfo));
+			var postData=new Object();
+			postData.classId=groupInfo.classId;
+			postData.msgContent=document.getElementById('input-content').value;
+			postData.encType=0;
+			postData.encAddr='';
+			postData.encImg='';
+			postData.teacherId=parseInt(groupInfo.userId);
+			console.log(JSON.stringify(postData));
+			var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING)
+			postDataPro_addClassSpace(postData,wd,function(data){
+				wd.close();
+				console.log(JSON.stringify(data));
+				if(data.RspCode='0000'){
+					mui.toast('发布成功！');
+//					mui.fire('classSpace-sub.html','refershData');
+					mui.back();
+				}else{
+					mui.toast(data.RspTxt);
+				}
+			})
 		})
 	})
 		

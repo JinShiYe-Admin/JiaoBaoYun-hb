@@ -100,7 +100,29 @@ var changeInfo=function(pInfo){
 		
 	}
 var getFileByPath=function(path){
-	load.createUpload('o9u2jsxjm.bkt.clouddn.com',path)
+//	mui.ajax('http://192.168.0.178:8507/QiuToken.ashx')
+
+	mui.ajax("http://192.168.0.178:8507/QiuToken.ashx", {
+					async: false,
+//					data: getUpTokenData,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					success: function(data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						uptoken = data.uptoken;
+						console.log('获取七牛上传token成功：'+uptoken);
+						load.createUpload('http://o9u2jsxjm.bkt.clouddn.com/',[path],'text.jpg',uptoken)
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log('获取七牛上传token失败：' + type);
+					}
+				});
+	
 //		plus.io.resolveLocalFileSystemURL(path,function(entry){
 //			console.log(entry.name)
 //			console.log(entry.isFile)

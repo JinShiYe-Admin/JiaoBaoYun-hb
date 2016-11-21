@@ -17,15 +17,15 @@
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/libs/myStorage/myStorage.js"></script>
 		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
-		
-
 		<!--侧滑-->
 		<script type="text/javascript" src="../../js/main/slide_navigation.js"></script>
 		<script>
-		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-
-		var datasource;
-		var model_homeSchoolList;
+		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;//用户id
+		var datasource=[];//底部列表数据
+		var topArray=[];//顶部班级列表数据
+		var requestTimes;//记录班级空间请求次数--等于0时，请求完毕，刷新界面
+		var requestTimes2;//记录群用户列表请求次数--等于0时，请求完毕，刷新界面
+		var isRefresh=0;//是否下拉刷新--1：下拉刷新 0：不是下拉刷新
 		</script>
 		<style type="text/css">/*自定义系统segmentcontrol控件*/
 

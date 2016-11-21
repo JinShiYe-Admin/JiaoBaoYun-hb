@@ -122,13 +122,20 @@
 					}, wd, function(data) {
 						wd.close();
 						console.log(JSON.stringify(data))
-						//获取群信息
-						groupInfo = data.RspData[0];
-						console.log('获取的群信息:' + JSON.stringify(groupInfo))
-						//填充群信息
-						setContent(groupInfo)
-						//加载监听
-						cellEventlistner(groupId,groupInfo);
+						//判断是否有值
+						if(data.RspCode=='0000'){
+							//获取群信息
+							groupInfo = data.RspData[0];
+							console.log('获取的群信息:' + JSON.stringify(groupInfo))
+							//填充群信息
+							setContent(groupInfo)
+							//加载监听
+							cellEventlistner(groupId,groupInfo);
+						}else{
+							mui.toast(data.RspTxt);
+							mui.back()
+						}
+						
 					})
 			}
 			/**

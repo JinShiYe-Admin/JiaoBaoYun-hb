@@ -7,15 +7,18 @@ var load=(function(mod){
 	 * @param {Object} url 上传接口
 	 * @param {Object} paths 需上传文件的路径
 	 */
-	mod.createUpload=function(url,paths){
+	mod.createUpload=function(url,paths,savePath,getToken){
 		//等待框
 		var wt=plus.nativeUI.showWaiting();
 		//创建上传方法
 		var task=plus.uploader.createUpload(url,
-			{method:"POST"},
+			{method:"POST",
+			blocksize: 409600,  
+			priority: 100},
 			function(t,status){
 				//关闭对话框
 				wt.close();
+				console.log('当前状态：'+status);
 				//上传完成
 				//上传成功
 				if(status==200){
@@ -25,14 +28,27 @@ var load=(function(mod){
 					mui.toast('上传失败,请重新上传');
 				}
 			});
-			task.addData('scope',paths);
-			task.addData('deadline',3600)
+			
+			task.addData('token',getToken)
 		//加载所有文件
 		paths.forEach(function(path,i){
-			task.addFile(path,{key:new Date().getTime()+i});
+			task.addData('key',path);
+			task.addFile(path,{key:'path'});
+			console.log(path);
 		})
+		task.setRequestHeader('token',getToken);
+		task.addEventListener( "statechanged", onStateChanged, false );
 		//开始上传
 		task.start();
+		console.log('start')
+	}
+	// 监听上传任务状态
+	function onStateChanged( upload, status ) {
+		console.log('mui上传状态：'+upload.state)
+		if ( upload.state == 4 && status == 200 ) {
+			// 上传完成
+			console.log( "Upload success: " + upload.getFileName() );
+		}
 	}
 	return mod
 })(load||{})

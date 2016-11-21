@@ -109,11 +109,8 @@ var events = (function($, mod) {
 	 * @param {Object} curPageCount 当前页码
 	 * @param {Object} totalPageCount 总页码
 	 */
-	mod.initRefresh = function(id, fresh,addMore,curPageCount,totalPageCount) {
-		if(!curPageCount){
-			curPageCount=0;
-			totalPageCount=0;
-		}
+	mod.initRefresh = function(id, fresh,addMore) {
+
 			$.init({
 				pullRefresh: {
 					container: '#refreshContainer',
@@ -131,6 +128,7 @@ var events = (function($, mod) {
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
+					$('#refreshContainer').pullRefresh().refresh(true);
 					var item = document.getElementById(id)
 						//清除所有数据
 					while(item.firstChild != null) {
@@ -147,11 +145,17 @@ var events = (function($, mod) {
 			 */
 			function pullupRefresh() {
 				setTimeout(function() {
-					$('#refreshContainer').pullRefresh().endPullupToRefresh(curpageCount>=totalPageCount); //参数为true代表没有更多数据了。
-					var item = document.getElementById(id)
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					//加载更多数据
-					addMore();
+//					console.log('当前页面：'+curPageCount+';总页码：'+totalPageCount)
+					
+//					if(curPageCount<totalPageCount){
+//						curPageCount++;
+//						var item = document.getElementById(id)
+//						var cells = document.body.querySelectorAll('.mui-table-view-cell');
+//						//加载更多数据
+						addMore();
+//					}
+					
+				
 				}, 1500);
 			}
 		}
@@ -167,7 +171,7 @@ var events = (function($, mod) {
 			//初始化预加载详情页面
 			setTimeout(function(){
 				$.preload({
-					 url:tarPage,
+					url:tarPage,
 				    id:tarPage,//默认使用当前页面的url作为id
 				    styles:{//窗口参数
 				    	top:localStorage.getItem('$Statusbar')
@@ -202,6 +206,27 @@ var events = (function($, mod) {
 				data: getDatas()
 			});
 			console.log('要传的值是：'+JSON.stringify(getDatas()))
+			targetPage.show()
+		}
+		/**
+	 * 如果目标页面未加载,需要先预加载页面
+	 * 传递数值到指定页面并打开页面
+	 * @param {Object} tarpage 目标页面Id
+	 * @param {Object} listener 监听事件
+	 * @param {Object} datas 要传递的数据
+	 */
+	mod.fireToPageWithData = function(tarPage, listener, datas) {
+//			console.log('tarPage:' + tarPage);
+			var targetPage = null;
+			//获得目标页面
+			if(!targetPage) {
+				targetPage = plus.webview.getWebviewById(tarPage);
+				console.log(typeof(targetPage))
+			}
+			//触发目标页面的listener事件
+			$.fire(targetPage, listener, {
+				data: datas
+			});
 			targetPage.show()
 		}
 		/**

@@ -1,3 +1,5 @@
+<!--我的界面-->
+<!--@anthor an-->
 <!DOCTYPE html>
 <html>
 
@@ -84,15 +86,15 @@
 			});
 			//获得侧滑主窗口webview对象
 			var main = null;
-			var personalInfo = null;
+//			var personalInfo = null;
 			mui.plusReady(function() {
 				main = plus.webview.currentWebview().opener();
 				//获取个人信息
-				personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
-				console.log('我的界面：' + JSON.stringify(personalInfo))
+//				personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
+			
 
 				//展示个人信息
-				setInfo(personalInfo)
+				getInfo();
 					//				events.jumpPage(document.getElementById('title'),'mine/account-info.html');
 					//点击title跳转到账号信息界面
 				events.addTap('title', function() {
@@ -139,7 +141,9 @@
 
 				});
 			})
-
+			window.addEventListener('infoChanged',function(){
+				getInfo()
+			})
 			/**
 			 * @param {Object} info
 			 * "utid":"3",
@@ -151,7 +155,9 @@
 			 * "utxt":"",
 			 * "uimg":""}
 			 */
-			function setInfo(info) {
+			function getInfo() {
+				var info = myStorage.getItem(storageKeyName.PERSONALINFO);
+					console.log('我的界面获取的个人信息：' + JSON.stringify(info))
 				if(info.uimg) {
 					document.getElementById('uimg').src = info.uimg;
 				}
