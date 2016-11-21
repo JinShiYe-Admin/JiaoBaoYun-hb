@@ -241,7 +241,7 @@ function getUserSpaces(upString, index) {
 		if(data.RspCode == 0) {
 				requestTimes2--; //全部请求完毕
 				datasource[index].NoReadCnt = 0;
-				for(var i = 0; i < datasource[index].userList.length; i++) {
+				for(var i = 0; i < data.RspData.Data.length; i++) {
 					datasource[index].NoReadCnt = datasource[index].NoReadCnt + data.RspData.Data[i].NoReadCnt;
 					mui.extend(datasource[index].userList[i], data.RspData.Data[i])
 				}
@@ -336,7 +336,7 @@ function refreshUI() {
 			var userItem = document.createElement('div');
 			if(i == flagInt) {
 				segitem.className = 'mui-control-item mui-active';
-				userItem.className = 'mui-control-content mui-active'
+				userItem.className = 'mui-control-content mui-active';
 			} else {
 				segitem.className = 'mui-control-item';
 				userItem.className = 'mui-control-content'
