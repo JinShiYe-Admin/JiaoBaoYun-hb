@@ -13,7 +13,7 @@ var load=(function(mod){
 		//创建上传方法
 		var task=plus.uploader.createUpload(url,
 			{method:"POST",
-			blocksize: 204800,  
+			blocksize: 409600,  
 			priority: 100},
 			function(t,status){
 				//关闭对话框
@@ -33,12 +33,22 @@ var load=(function(mod){
 		//加载所有文件
 		paths.forEach(function(path,i){
 			task.addData('key',path);
-			task.addFile(path,{key:path});
+			task.addFile(path,{key:'path'});
 			console.log(path);
 		})
+		task.setRequestHeader('token',getToken);
+		task.addEventListener( "statechanged", onStateChanged, false );
 		//开始上传
 		task.start();
 		console.log('start')
+	}
+	// 监听上传任务状态
+	function onStateChanged( upload, status ) {
+		console.log('mui上传状态：'+upload.state)
+		if ( upload.state == 4 && status == 200 ) {
+			// 上传完成
+			console.log( "Upload success: " + upload.getFileName() );
+		}
 	}
 	return mod
 })(load||{})

@@ -109,11 +109,8 @@ var events = (function($, mod) {
 	 * @param {Object} curPageCount 当前页码
 	 * @param {Object} totalPageCount 总页码
 	 */
-	mod.initRefresh = function(id, fresh,addMore,curPageCount,totalPageCount) {
-		if(!curPageCount){
-			curPageCount=0;
-			totalPageCount=0;
-		}
+	mod.initRefresh = function(id, fresh,addMore) {
+
 			$.init({
 				pullRefresh: {
 					container: '#refreshContainer',
@@ -131,6 +128,7 @@ var events = (function($, mod) {
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
+					$('#refreshContainer').pullRefresh().refresh(true);
 					var item = document.getElementById(id)
 						//清除所有数据
 					while(item.firstChild != null) {
@@ -147,11 +145,17 @@ var events = (function($, mod) {
 			 */
 			function pullupRefresh() {
 				setTimeout(function() {
-					$('#refreshContainer').pullRefresh().endPullupToRefresh(curpageCount>=totalPageCount); //参数为true代表没有更多数据了。
-					var item = document.getElementById(id)
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					//加载更多数据
-					addMore();
+//					console.log('当前页面：'+curPageCount+';总页码：'+totalPageCount)
+					
+//					if(curPageCount<totalPageCount){
+//						curPageCount++;
+//						var item = document.getElementById(id)
+//						var cells = document.body.querySelectorAll('.mui-table-view-cell');
+//						//加载更多数据
+						addMore();
+//					}
+					
+				
 				}, 1500);
 			}
 		}
