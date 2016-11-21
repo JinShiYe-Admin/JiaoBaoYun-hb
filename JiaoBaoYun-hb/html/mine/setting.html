@@ -23,10 +23,10 @@
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
-			            <a id="change-passwords" class="mui-navigate-right">
-			                 修改密码
-			            </a>
-			        </li>
+					<a id="change-passwords" class="mui-navigate-right">
+						修改密码
+					</a>
+				</li>
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right" id="quit">
 						退出登录
@@ -48,12 +48,12 @@
 					console.log('xiu gai mi ma ');
 				});
 				//修改密码
-				events.preload('../register/modify_password.html',100);
-				events.addTap('change-passwords',function(){
-					events.fireToPageNone('../register/modify_password.html','changePasswords');
-					events.openNewWindow('../register/modify_password.html');
-				})
-				//退出
+				events.preload('../register/modify_password.html', 100);
+				events.addTap('change-passwords', function() {
+						events.fireToPageNone('../register/modify_password.html', 'changePasswords');
+						events.openNewWindow('../register/modify_password.html');
+					})
+					//退出
 				events.addTap('quit', function() {
 					console.log('2222');
 					var btnArray = [{
@@ -72,16 +72,33 @@
 								//判断是否设置了密码
 								//存储个人信息
 								var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-								if (Number(tempInfo.ispw) == 1) {//有密码
-									//修改自动登录值
-									window.myStorage.setItem(window.storageKeyName.PERSONALINFO,null);
-									//跳转到登录界面
-									events.openNewWindowWithData('../../html/register/login.html', '');
-								} else{//无密码
-									events.fireToPageNone('../register/modify_password.html','settingPW');
+								if(Number(tempInfo.ispw) == 1) { //有密码
+									//发送注销协议
+									//25.用户注销
+									//需要参数
+									var comData = {
+
+									};
+									// 等待的对话框
+									var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+									postDataPro_PostLoginOut(comData, wd, function(data) {
+										wd.close();
+										console.log('注销success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+										if(data.RspCode == 0) {
+											//修改自动登录值
+											window.myStorage.setItem(window.storageKeyName.PERSONALINFO, null);
+											//跳转到登录界面
+											events.openNewWindowWithData('../../html/register/login.html', '');
+										} else {
+											mui.toast(data.RspTxt);
+										}
+									});
+
+								} else { //无密码
+									events.fireToPageNone('../register/modify_password.html', 'settingPW');
 									events.openNewWindow('../register/modify_password.html');
 								}
-								
+
 								break;
 						}
 					});

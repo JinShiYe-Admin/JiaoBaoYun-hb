@@ -1008,7 +1008,7 @@ var postDataPro_delUserSpaceCommentById=function(commonData, wd, callback) {
 //49.（用户空间）获取用户空间所有留言
 //所需参数
 //		var comData = {
-//			userSpaceId: '',//用户空间ID
+//			userId: '',//用户空间ID
 //			pageIndex:'',//当前页数
 //			pageSize:''//每页记录数
 //		};
