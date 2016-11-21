@@ -13,7 +13,14 @@
 		var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING)
 		postDataPro_getClassSpacesByUserForClass(postData,wd,function(pagedata){
 			wd.close();
-			callback(pagedata);
+			if(pagedata.RspCode=='0000'){
+				console.log('获取的班级动态：'+JSON.stringify(pagedata));
+				mod.totalPagNo=pagedata.RspData.TotalPage;
+				callback(pagedata);
+			}else{
+				mui.toast(pagedata.RspTxt);                                                                                
+			}
+			
 		})
 	}
 	/**
@@ -21,11 +28,11 @@
 	 * @param {Object} list
 	 */
 	mod.createListView=function(list){
-		if(list.Data){
-			mod.totalPagNo=list.TotalPage;
-			console.log(JSON.stringify(list))
+		if(list.RspData.Data){
+		
+			console.log('总页码：'+mod.totalPagNo);
 			var container=document.getElementById('classSpace_list');
-			list.Data.forEach(function(cell,index,data){
+			list.RspData.Data.forEach(function(cell,index,data){
 				var li=document.createElement('li');
 				getPersonalImg(cell,li,container);
 			}) 
@@ -33,16 +40,16 @@
 			
 		}
 	}
-	mod.createInnerHtml=function(item){
+	var createInnerHtml=function(item){
 		var inner='<div class="mui-pull-left head-img" >'
 		   			+'<img src="'+item.PublisherId+'"/>'
 		   			+'<p>'+item.name+'</p>'
 		   			+'</div>'
 		   			+'<div class="chat_content_left mui-pull-right">'
 			   			+'<div class="chat-body">'
-			   			+item.word+'<br/>'
+			   			+item.MsgContent+'<br/>'
 			   			+createImgsInner(item)
-			   			+'</div>'+'<div>'+'<p>'+item.PublishDate+'<font style ="padding:20px">'+'浏览(10人)'+'</font>'+'点赞(20人)'+'</p>'+'</div/>'
+			   			+'</div>'+'<div>'+'<p>'+item.PublishDate+'<font style ="padding:20px">浏览('+item.ReadCnt+'人)</font>点赞('+item.LikeCnt+'人)</p>'+'</div/>'
 		   			+'</div>';
 		return inner;
 	}
@@ -67,34 +74,34 @@
 			imgInner+='<img src="'+img+'" style="width:33.33333333%; padding:2px"/>'
 			}
 		});
-		console.log(imgInner) 
+//		console.log(imgInner) 
 		return imgInner;
 	}
 	return mod;
 })(class_space||{});
-var pageIndex=0;
+var pageIndex=1;
 var pageSize=10;
-events.initRefresh('classSpace_list',
-		function(){
-			pageIndex=0;
-//			class_space.createListView(class_space.createList(class_space.createData(),5));
-		},
-		function(){
-			if(pageIndex>=class_space.totalPagNo){
-				
-			}else{
-				pageIndex++;
-//				class_space.createListView(class_space.createList(class_space.createData(),5));
-			}
-		});
-//		mui.plusReady(function(){
-//			console.log("出啥问题啦")
-//			class_space.createListView(class_space.createList(class_space.createData(),5));
-//		})
-		
+
 mui.plusReady(function(){
 	var postData=plus.webview.currentWebview().data;
 	console.log('班级空间获取值：'+JSON.stringify(postData))
 	class_space.getList(postData,pageIndex,pageSize,class_space.createListView);
-	
+	events.initRefresh('classSpace_list',
+		function(){
+			pageIndex=1;
+			class_space.getList(postData,pageIndex,pageSize,class_space.createListView);
+//			class_space.createListView(class_space.createList(class_space.createData(),5));
+		},
+		function(){
+			console.log('请求页面：page'+pageIndex);
+				mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex>=class_space.totalPagNo);
+				if(pageIndex<class_space.totalPagNo){
+					pageIndex++;
+//					class_space.createListView(class_space.createList(class_space.createData(),5));
+				class_space.getList(postData,pageIndex,pageSize,class_space.createListView);
+				}
+		});
 });
+
+
+
