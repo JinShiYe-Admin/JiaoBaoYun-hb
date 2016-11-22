@@ -16,6 +16,8 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/quan/studentdynamic.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+
 		<style>
 			.mui-table-view:before,
 			.mui-table-view:after,
@@ -41,7 +43,7 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 				display: -webkit-box;
-				-webkit-line-clamp: 2;
+				/*-webkit-line-clamp: 2;*/
 				/*设置多于2行省略号*/
 				-webkit-box-orient: vertical;
 				color: black;
@@ -62,7 +64,7 @@
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
 				<!--数据列表-->
-				<ul class="mui-table-view">
+				<ul class="mui-table-view" id="ul_table">
 					<!--<li class="mui-table-view-cell ">
 						<div class="mui-row">
 							<div class="mui-col-sm-2 mui-col-xs-2">
@@ -167,10 +169,15 @@
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
+					console.log('下拉刷新');
 					var table = document.body.querySelector('.mui-table-view');
 					table.innerHTML = '';
+					TotalPage = 1;
+					NotesList = null; //记录获取的数据
+					lastDate = ''; //上一条记录的日期
+					getNotes(TotalPage, 10);
 					//-----假数据start
-					data();
+					//Data();
 					//-----假数据end
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 1500);
@@ -183,87 +190,202 @@
 				setTimeout(function() {
 					mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
 					//-----假数据start
-					data();
+					//Data();
 					//-----假数据end
 				}, 1500);
 			}
-
+			var TotalPage = 1; //总页数
+			var TotalCnt = 0; //总记录数
+			var data = null; //接收页面传入的参数值
+			var NotesList = null; //记录获取的数据
+			var lastDate = ''; //上一条记录的日期
+			var today = ''; //记录今天日期
+			var table = null; //
 			mui.plusReady(function() {
+
+				//---从父页面获取数据---start---
+				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				data = main.data; //接收页面传入的参数值
+				console.log('sub-utid:' + JSON.stringify(data));
+				//---从父页面获取数据---end---
+
 				//向服务器获取数据
-
+				getNotes(1, 10);
 				//-----假数据start
-				data();
+				//Data();
 				//-----假数据end
-
+				//---初始化界面---start---
+				var myDate = new Date();
+				today = myDate.getFullYear() + '' + (myDate.getMonth() + 1) + myDate.getDate();
+				table = document.getElementById("ul_table");
+				//---初始化界面---end---
 				//关闭等待窗口
 				plus.nativeUI.closeWaiting();
 				mui('.mui-table-view').on('tap', 'li', function() {
-					mui.toast('跳到详情页' + this.id);
+					//mui.toast('跳到详情页' + this.id);
 				});
 			});
 
-			var id = 0;
+			/**
+			 * 获取用户针对某学生的点到记事列表
+			 * @param {Object} pageIndex 当前页数
+			 * @param {Object} pageSize 每页记录数
+			 */
+			function getNotes(pageIndex, pageSize) {
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				var userId = personalUTID; //发布教师ID
+				//4.（点到记事）获取用户针对某学生的点到记事列表
+				//所需参数
+				var comData = {
+					userId: userId, //用户ID----utid
+					studentId: data.studentId, //学生ID----stuid
+					pageIndex: pageIndex, //当前页数
+					pageSize: pageSize //每页记录数
+				};
+				//返回model：model_homeSchoolList,model_userNoteInfo
+				console.log('获取列表发送的数据:' + JSON.stringify(comData));
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
+					console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						if(NotesList == null) {
+							NotesList = data.RspData;
+							NotesList.Data == [];
+							TotalPage = data.RspData.TotalPage; //总页数
+							TotalCnt = data.RspData.TotalCnt; //总记录数
+						}
+						mui.each(data.RspData.Data, function(index, item) {
+							NotesList.Data.push(item);
+							console.log(index + '|' + JSON.stringify(item));
+							createNotes(item);
+						});
+						if(data.RspData.Data.length == 0) {
+							mui.toast('获取数据为空');
+						}
+						//mui('.mui-scroll-wrapper').scroll().scrollToBottom(100); //滚动到底部-----有BUG
+					} else {
+						mui.toast('获取点到记事列表:' + data.RspTxt);
+						console.log('获取用户针对某学生的点到记事列表:' + data.RspTxt);
+					}
+					wd.close();
+				});
+			}
 
-			function data() {
-				//-----假数据start
-				var table = document.body.querySelector('.mui-table-view');
-				var mData1 = data1();
-				var mData2 = data2();
-				var mData3 = data3();
-				var mData4 = data4();
-				var mData5 = data5();
+			/**
+			 * 界面中创建一条记录
+			 * @param {Object} item
+			 */
+			function createNotes(item) {
+				//将时间参数分隔，结果为["2016","11","21"]
+				var PublishDate = item.PublishDate.split(' ')[0].split('-');
+				//console.log('PublishDate:' + JSON.stringify(PublishDate));
+				//console.log('today:' + today);
+				var time = PublishDate[0] + PublishDate[1] + PublishDate[2];
+				//console.log('time:' + time);
+
+				var itemData = [
+					[PublishDate[2], PublishDate[1] + '月'], item.MsgContent
+				];
+				//设置时间
+				if(time == today) { //日期和今天相同
+					itemData[0] = '今天';
+				}
+				if(lastDate == time) { //上一个记录的日期和本记录的日期相同
+					itemData[0] = '';
+				}
+				//点到
+				if(item.NoteType == 1) { //1点到,2记事
+					var checkType = '';
+					switch(item.CheckType) { //1 正常2 旷课3 迟到4 早退5 其他
+						case 1:
+							checkType = '正常：';
+							break;
+						case 2:
+							checkType = '旷课：';
+							break;
+						case 3:
+							checkType = '迟到：';
+							break;
+						case 4:
+							checkType = '早退：';
+							break;
+						case 5:
+							checkType = '其他：';
+							break;
+						default:
+							console.log('点到类型出错！！！')
+							break;
+					}
+					itemData[1] = checkType + itemData[1];
+				}
 				//生成界面
-				studentdynamic.additem(table, mData1, 'li' + id);
-				id = id + 1;
-				studentdynamic.additem(table, mData2, 'li' + id);
-				id = id + 1;
-				studentdynamic.additem(table, mData3, 'li' + id);
-				id = id + 1;
-				studentdynamic.additem(table, mData4, 'li' + id);
-				id = id + 1;
-				studentdynamic.additem(table, mData5, 'li' + id);
-				id = id + 1;
-				//-----假数据end
+				studentdynamic.additem(table, itemData, 'TabId' + item.TabId);
+				lastDate = time;
 			}
 
-			//假数据
-			function data1() {
-				var date = '今天';
-				var content = '今天上课表现积极回答问题,继续努力';
-				var imageUrl = '../../image/quan/u125.png';
-				var data = [date, content, imageUrl];
-				return data;
-			}
-
-			function data2() {
-				var date = ['10', '12月'];
-				var content = '迟到：由于赖床，起晚了，迟到了5分钟';
-				var data = [date, content];
-				return data;
-			}
-
-			function data3() {
-				var date = ['08', '10月'];
-				var content = '旷课：生病了忘记请假生病了忘记请假生病了忘记请假生病了忘记请假生病了忘记请假生病了忘记请假';
-				var data = [date, content];
-				return data;
-			}
-
-			function data4() {
-				var date = ['20', '9月'];
-				var content = '期末考试成绩优秀，下次继续再接再厉考个好成绩，加油！';
-				var imageUrl = '../../image/quan/u123.png';
-				var data = [date, content, imageUrl];
-				return data;
-			}
-
-			function data5() {
-				var date = ['02', '9月'];
-				var content = '体育课不爱与同学互动，希望家长做好孩子的思想工作';
-				var imageUrl = '../../image/quan/u77.png';
-				var data = [date, content, imageUrl];
-				return data;
-			}
+			//			var id = 0;
+			//
+			//			function Data() {
+			//				//-----假数据start
+			//				var table = document.body.querySelector('.mui-table-view');
+			//				var mData1 = data1();
+			//				var mData2 = data2();
+			//				var mData3 = data3();
+			//				var mData4 = data4();
+			//				var mData5 = data5();
+			//				//生成界面
+			//				studentdynamic.additem(table, mData1, 'li' + id);
+			//				id = id + 1;
+			//				studentdynamic.additem(table, mData2, 'li' + id);
+			//				id = id + 1;
+			//				studentdynamic.additem(table, mData3, 'li' + id);
+			//				id = id + 1;
+			//				studentdynamic.additem(table, mData4, 'li' + id);
+			//				id = id + 1;
+			//				studentdynamic.additem(table, mData5, 'li' + id);
+			//				id = id + 1;
+			//				//-----假数据end
+			//			}
+			//
+			//			//假数据
+			//			function data1() {
+			//				var date = '今天';
+			//				var content = '今天上课表现积极回答问题,继续努力';
+			//				var imageUrl = '../../image/quan/u125.png';
+			//				var data = [date, content, imageUrl];
+			//				return data;
+			//			}
+			//
+			//			function data2() {
+			//				var date = ['10', '12月'];
+			//				var content = '迟到：由于赖床，起晚了，迟到了5分钟';
+			//				var data = [date, content];
+			//				return data;
+			//			}
+			//
+			//			function data3() {
+			//				var date = ['08', '10月'];
+			//				var content = '旷课：生病了忘记请假生病了忘记请假生病了忘记请假生病了忘记请假生病了忘记请假生病了忘记请假';
+			//				var data = [date, content];
+			//				return data;
+			//			}
+			//
+			//			function data4() {
+			//				var date = ['20', '9月'];
+			//				var content = '期末考试成绩优秀，下次继续再接再厉考个好成绩，加油！';
+			//				var imageUrl = '../../image/quan/u123.png';
+			//				var data = [date, content, imageUrl];
+			//				return data;
+			//			}
+			//
+			//			function data5() {
+			//				var date = ['02', '9月'];
+			//				var content = '体育课不爱与同学互动，希望家长做好孩子的思想工作';
+			//				var imageUrl = '../../image/quan/u77.png';
+			//				var data = [date, content, imageUrl];
+			//				return data;
+			//			}
 		</script>
 	</body>
 
