@@ -305,16 +305,17 @@ var postDataPro_PostReStu=function(commonData, wd, callback) {
 }
 
 
-//24.通过用户表ID获取用户关联的学生1
+//24.通过用户表ID获取用户关联的学生
 //所需参数
 //		var comData = {
+//			utid:''//用户表ID,用户utid
 //		};
 //返回值model：model_userDataInfo
 var postDataPro_PostUstu=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINURL + 'PostUstu', enData, commonData, 1, wd, callback);
+	postDataEncry(storageKeyName.MAINURL + 'PostUstu', enData, commonData, 2, wd, callback);
 }
 
 
