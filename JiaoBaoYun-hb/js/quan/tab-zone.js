@@ -12,7 +12,6 @@ mui.init({
 });
 
 mui.plusReady(function() {
-
 		getStuList(); //获取学生列表
 		getGroupList(); //获取所有的群
 		//跳转到学生动态界面
@@ -239,17 +238,17 @@ function getUserSpaces(upString, index) {
 		wd.close();
 		console.log('postDataPro_getUserSpacesByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
-				requestTimes2--; //全部请求完毕
-				datasource[index].NoReadCnt = 0;
-				for(var i = 0; i < data.RspData.Data.length; i++) {
-					datasource[index].NoReadCnt = datasource[index].NoReadCnt + data.RspData.Data[i].NoReadCnt;
-					mui.extend(datasource[index].userList[i], data.RspData.Data[i])
-				}
-				console.log('datasource===' + JSON.stringify(datasource));
+			requestTimes2--; //全部请求完毕
+			datasource[index].NoReadCnt = 0;
+			for(var i = 0; i < data.RspData.Data.length; i++) {
+				datasource[index].NoReadCnt = datasource[index].NoReadCnt + data.RspData.Data[i].NoReadCnt;
+				mui.extend(datasource[index].userList[i], data.RspData.Data[i])
+			}
+			console.log('datasource===' + JSON.stringify(datasource));
 
-				if(requestTimes2 == 0) {
-					refreshUI();
-				}
+			if(requestTimes2 == 0) {
+				refreshUI();
+			}
 
 		}
 
@@ -401,10 +400,10 @@ function refreshUI() {
 					top: '0px', //设置距离顶部的距离
 					bottom: '0px'
 				},
-				extras: {
-					data: {
-					},
-				},
+				//				extras: {
+				//					data: {
+				//					},
+				//				},
 			});
 		});
 	}
