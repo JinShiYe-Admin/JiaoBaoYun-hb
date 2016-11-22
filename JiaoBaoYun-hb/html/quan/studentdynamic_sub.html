@@ -189,6 +189,8 @@
 			function pullupRefresh() {
 				setTimeout(function() {
 					mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+					TotalPage++;
+					getNotes(TotalPage, 10);
 					//-----假数据start
 					//Data();
 					//-----假数据end
