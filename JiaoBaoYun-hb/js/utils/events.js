@@ -216,12 +216,12 @@ var events = (function($, mod) {
 	 * @param {Object} datas 要传递的数据
 	 */
 	mod.fireToPageWithData = function(tarPage, listener, datas) {
-//			console.log('tarPage:' + tarPage);
+			console.log('tarPage:' + tarPage);
 			var targetPage = null;
 			//获得目标页面
 			if(!targetPage) {
 				targetPage = plus.webview.getWebviewById(tarPage);
-				console.log(typeof(targetPage))
+//				console.log(typeof(targetPage));
 			}
 			//触发目标页面的listener事件
 			$.fire(targetPage, listener, {

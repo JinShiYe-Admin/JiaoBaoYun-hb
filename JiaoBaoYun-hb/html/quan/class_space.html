@@ -33,13 +33,12 @@
 				events.addTap('write',function(){
 					events.fireToPageWithData('class-dynamic.html','postGroupInfo',data)
 				})
-				events.addTap('group',function(){
-					events.fireToPageWithData('class-group.html','postGroupInfo',data)
-				})
+				
 				var className=plus.webview.currentWebview().className;
 				document.getElementById('title').innerText=className;
-//				var group=document.getElementById('group');
-//				events.jumpPage(group,'class-group.html');
+				events.addTap('group',function(){
+					events.fireToPageWithData('class-group.html','postGroupInfo',{classId:data.classId,className:className});
+				})
 			})
 		</script>
 			

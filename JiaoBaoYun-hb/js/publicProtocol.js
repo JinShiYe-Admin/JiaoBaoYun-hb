@@ -305,7 +305,7 @@ var postDataPro_PostReStu=function(commonData, wd, callback) {
 }
 
 
-//24.通过用户表ID获取用户关联的学生1
+//24.通过用户表ID获取用户关联的学生
 //所需参数
 //		var comData = {
 //		};

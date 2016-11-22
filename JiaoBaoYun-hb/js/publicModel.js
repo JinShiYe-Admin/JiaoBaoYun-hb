@@ -61,13 +61,17 @@ var publicModel = (function($, mod) {
 	
 	//17.通过审批者ID获取相应的入群邀请或申请
 	mod.model_groupRequestUser = {
-		gutid:'',//邀请记录ID
-		gname:'',//群名
-		invname:'',//邀请人姓名
-		mstype:'',//邀请成为类型，0家长,1管理员,2老师,3学生
-		stuname:'',//关联学生姓名
-		aptime:'',//申请时间
-		appnote:''//申请备注
+//		gutid	邀请记录ID	int		否	
+//		gid	群ID	int		否	
+//		gname	群名	string		否	
+//		invname	邀请人姓名	string		否	申请人
+//		invimg	邀请人头像	string		否	申请人
+//		gimg	群头像	string		否	
+//		beinvname	被邀请人姓名	string		否	
+//		mstype	邀请成为类型	int		否	0家长,1管理员,2老师,3学生
+//		stuname	关联学生姓名	string		否	
+//		aptime	申请时间	string		否	
+//		appnote	申请备注	string		否	
 	}
 	
 	//22.通过用户资料ID获取用户各项资料
