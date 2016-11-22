@@ -27,7 +27,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">李欣芸</h1>
+			<h1 id="title" class="mui-title"></h1>
 			<a class=" mui-icon mui-icon-contact mui-pull-right"></a>
 		</header>
 		<div class="mui-content"></div>
@@ -60,6 +60,31 @@
 		mui.plusReady(function() {
 			//显示等待窗口
 			plus.nativeUI.showWaiting('正在加载中');
+			//---获取数据并传递数据---start---
+			var main = plus.webview.currentWebview(); //获取当前窗体对象
+			var data = main.data; //接收A页面传入参数值
+			console.log('main-data:' + JSON.stringify(data));
+			//---假数据---start---
+			data={
+				userId:'5',
+				studentId:'5',
+				studentName:'BugHunter'
+			}
+			//---假数据---end---
+			document.getElementById("title").innerText='BugHunter';
+			//创建子页面
+			var sub = plus.webview.create('studentdynamic_sub.html', 'studentdynamic_sub.html', {
+				top: '45px',
+				bottom: '0px',
+			}, {
+				data: data
+			});
+			sub.addEventListener('loaded', function() {
+				main.append(sub);
+			});
+			//---获取数据并传递数据---end---
+
+
 			//修改学生头像
 			mui('.mui-bar-nav').on('tap', '.mui-icon-contact', function() {
 				var btnArray = [{
