@@ -249,53 +249,95 @@
 		 * 下拉刷新具体业务实现
 		 */
 		function pulldownRefresh() {
-			id = id + 1;
-			setTimeout(function() {
-				var table = document.body.querySelector('.mui-table-view');
-				table.innerHTML = '';
-				var data = addData();
-				dynamiclistitem.addItem(table, data, id);
-				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-			}, 1500);
+			//			id = id + 1;
+			//			setTimeout(function() {
+			//				var table = document.body.querySelector('.mui-table-view');
+			//				table.innerHTML = '';
+			//				var data = addData();
+			//				dynamiclistitem.addItem(table, data, id);
+			//				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+			//			}, 1500);
+
+			//刷新时将页码归1
+			
+			totalCnt = 0;
+			var comData = {
+				userId: personalUTID, //用户ID
+				publisherId: '', //发布用户ID
+				noteType: '2', //信息类型,1云笔记,2个人空间动态
+				pageIndex: (tempPage).toString(), //当前页数
+				pageSize: '10' //每页记录数
+			};
+			//请求数据
+			requestData(comData);
 		}
 
 		/**
 		 * 上拉加载具体业务实现
 		 */
 		function pullupRefresh() {
-			id = id + 1;
-			setTimeout(function() {
-				mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
-				var table = document.body.querySelector('.mui-table-view');
-				var data = addData();
-				dynamiclistitem.addItem(table, data, id);
-			}, 1500);
+			//			id = id + 1;
+			//			setTimeout(function() {
+			//				mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+			//				var table = document.body.querySelector('.mui-table-view');
+			//				var data = addData();
+			//				dynamiclistitem.addItem(table, data, id);
+			//			}, 1500);
+
+			if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
+				mui.toast('没有更多了...');
+			} else {
+				tempPage++;
+				var comData = {
+					userId: personalUTID, //用户ID
+					publisherId: '', //发布用户ID
+					noteType: '2', //信息类型,1云笔记,2个人空间动态
+					pageIndex: (tempPage).toString(), //当前页数
+					pageSize: '10' //每页记录数
+				};
+				//请求数据
+				requestData(comData);
+			}
 		}
-		var id = 0;
-		mui.plusReady(function() {
-			//			获取个人信息
-			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-			console.log(personalUTID)
-				//所需参数
-			var comData = {
-				userId: personalUTID, //用户ID
-				publisherId: '1', //发布用户ID
-				noteType: '2', //信息类型,1云笔记,2个人空间动态
-				pageIndex: '1', //当前页数
-				pageSize: '10' //每页记录数
-			};
+
+		//页码，请求第几页数据
+		var tempPage = 1;
+		//当前留言的总条数
+		var totalCnt = 0;
+		//获取个人信息
+		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+		//判断是加载更多1，还是刷新2
+		var flag = 2;
+		//页码请求到要显示的数据，array[model_userNoteInfo]
+		var zonepArray = [];
+		//请求数据
+		function requestData(comData) {
 			// 等待的对话框
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			//返回model：model_homeSchoolList,model_userNoteInfo
+			//28.（用户空间）获取用户针对某用户的空间列表
 			postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
 				wd.close();
-				console.log('postDataPro_getNoReadUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
-
+					//判断是加载更多1，还是刷新2
+					if (flag == 1) {
+						//合并数组
+						zonepArray = zonepArray.concat(data.RspData.Data);
+					} else{
+						tempPage = 1;
+						//合并数组
+						zonepArray = data.RspData.Data;
+					}
+					//留言总条数
+					totalCnt = data.RspData.TotalCnt;
 				} else {
 					mui.toast(data.RspTxt);
 				}
 			});
+		}
+
+		var id = 0;
+		mui.plusReady(function() {
 
 			var table = document.body.querySelector('.mui-table-view');
 			var data = addData();

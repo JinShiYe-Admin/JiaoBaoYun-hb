@@ -40,6 +40,8 @@
 		<!--本地存储-->
 		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
+		<!--共用协议-->
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
@@ -72,6 +74,7 @@
 								//判断是否设置了密码
 								//存储个人信息
 								var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+								console.log('tempinfo:'+JSON.toString(tempInfo));
 								if(Number(tempInfo.ispw) == 1) { //有密码
 									//发送注销协议
 									//25.用户注销
