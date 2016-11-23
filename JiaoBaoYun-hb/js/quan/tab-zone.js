@@ -12,54 +12,79 @@ mui.init({
 });
 
 mui.plusReady(function() {
-
-//		getStuList(); //获取学生列表
-		getGroupList(); //获取所有的群
-		//跳转到学生动态界面
-		mui('.mui-table-view').on('tap', '.studentsdynamic', function() {
-
-			mui.openWindow({
-				url: 'studentdynamic_main.html',
-				id: 'studentdynamic_main.html',
-				styles: {
-					top: '0px', //设置距离顶部的距离
-					bottom: '0px'
-				},
-				extras: {
-					data: {
-						userId: personalUTID,
-						classId: datasource[index].gid
-					},
-					className: datasource[index].gname
-				},
-			});
+	getStuList(); //获取学生列表
+	getGroupList(); //获取所有的群
+	//跳转到学生动态界面
+	mui('.mui-table-view').on('tap', '.studentsdynamic', function() {
+		var index = this.id.replace('studentsdynamic', '');
+		mui.openWindow({
+			url: 'studentdynamic_main.html',
+			id: 'studentdynamic_main.html',
+			styles: {
+				top: '0px', //设置距离顶部的距离
+				bottom: '0px'
+			},
+			extras: {
+				data: ''
+			},
 		});
-		//跳转到班级动态界面
-		mui('.mui-table-view').on('tap', '.tarClass', function() {
-			var index = this.id.replace('tarClass', '');
-			console.log('index：' + index)
-			mui.openWindow({
-				url: 'class_space.html',
-				id: 'class_space.html',
-				styles: {
-					top: '0px', //设置距离顶部的距离
-					bottom: '0px'
+	});
+	//跳转到班级动态界面
+	mui('.mui-table-view').on('tap', '.tarClass', function() {
+		var index = this.id.replace('tarClass', '');
+		console.log('index：' + index)
+		mui.openWindow({
+			url: 'class_space.html',
+			id: 'class_space.html',
+			styles: {
+				top: '0px', //设置距离顶部的距离
+				bottom: '0px'
+			},
+			extras: {
+				data: {
+					userId: personalUTID,
+					classId: datasource[index].gid
 				},
-				extras: {
-					data: {
-						userId: personalUTID,
-						classId: datasource[index].gid
-					},
-					className: datasource[index].gname
-				},
-			});
+				className: datasource[index].gname
+			},
 		});
+	});
 
-	})
-	//获取学生列表
+})
+
+function addUInf() {
+	//15.用户添加资料
+	//所需参数
+	var comData = {
+		gid: '', //群ID
+		stuname: '', //资料名
+		stuimg: '', //资料头像
+		mstype: '', //资料类型，0家长,2老师,3学生
+		job: '', //职位，老师用,其他填0
+		title: '', //职称，老师用,其他填0
+		expsch: '', //教龄，老师用,其他填0
+		sub: '', //科目，老师用,其他填0
+		gutid: '' //关联的群账号ID，用户在群里的账号ID,无则为0
+	};
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//24.通过用户表ID获取用户关联的学生
+	postDataPro_PostGAddUInf(comData, wd, function(data) {
+		wd.close();
+		console.log('postDataPro_PostGAddUInf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+
+		if(data.RspCode == 0) {
+
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+}
+//获取学生列表
 function getStuList() {
 	//所需参数
-	var comData = {};
+	var comData = {
+		utid: personalUTID
+	};
 	//返回值model：model_userDataInfo
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -239,17 +264,17 @@ function getUserSpaces(upString, index) {
 		wd.close();
 		console.log('postDataPro_getUserSpacesByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
-				requestTimes2--; //全部请求完毕
-				datasource[index].NoReadCnt = 0;
-				for(var i = 0; i < datasource[index].userList.length; i++) {
-					datasource[index].NoReadCnt = datasource[index].NoReadCnt + data.RspData.Data[i].NoReadCnt;
-					mui.extend(datasource[index].userList[i], data.RspData.Data[i])
-				}
-				console.log('datasource===' + JSON.stringify(datasource));
+			requestTimes2--; //全部请求完毕
+			datasource[index].NoReadCnt = 0;
+			for(var i = 0; i < data.RspData.Data.length; i++) {
+				datasource[index].NoReadCnt = datasource[index].NoReadCnt + data.RspData.Data[i].NoReadCnt;
+				mui.extend(datasource[index].userList[i], data.RspData.Data[i])
+			}
+			console.log('datasource===' + JSON.stringify(datasource));
 
-				if(requestTimes2 == 0) {
-					refreshUI();
-				}
+			if(requestTimes2 == 0) {
+				refreshUI();
+			}
 
 		}
 
@@ -336,7 +361,7 @@ function refreshUI() {
 			var userItem = document.createElement('div');
 			if(i == flagInt) {
 				segitem.className = 'mui-control-item mui-active';
-				userItem.className = 'mui-control-content mui-active'
+				userItem.className = 'mui-control-content mui-active';
 			} else {
 				segitem.className = 'mui-control-item';
 				userItem.className = 'mui-control-content'
@@ -392,19 +417,31 @@ function refreshUI() {
 
 	//跳转到家长空间界面
 	for(var i = 0; i < datasource.length; i++) {
-		//跳转到家长空间界面
-		mui('.mui-table-view').on('tap', '.parent-cell' + i, function() {
-			mui.openWindow({
-				url: 'zone_main.html',
-				id: 'zone_main.html',
-				styles: {
-					top: '0px', //设置距离顶部的距离
-					bottom: '0px'
-				}
-			});
-		});
+		for(var j = 0; j < datasource[i].userList.length; j++) {
+			addBottomTap(i, j);
+		}
 	}
 
+}
+
+function addBottomTap(tableIndex, cellIndex) {
+	//	跳转到家长空间界面
+	mui('.mui-table-view').on('tap', '.parent-cell' + tableIndex, function() {
+		console.log(datasource[tableIndex].userList[cellIndex].utid);
+		mui.openWindow({
+			url: 'zone_main.html',
+			id: 'zone_main.html',
+			styles: {
+				top: '0px', //设置距离顶部的距离
+				bottom: '0px'
+			},
+			extras: {
+				data: datasource[tableIndex].userList[cellIndex].utid
+
+			}
+
+		});
+	});
 }
 
 function pulldownRefresh() {

@@ -7,6 +7,8 @@
 mui.init();
 
 mui.plusReady(function() {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+	getAboutMe(); //获取与我相关未读数
 	Statusbar.barHeight(); //设置距离顶部的高度
 	var header = document.querySelector(".mui-bar-nav"); //顶部导航
 	//设置顶部导航高度（状态栏）
@@ -15,7 +17,7 @@ mui.plusReady(function() {
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
-	var subpages = ['quan/tab-zone.html', 'tab_knowledge.html', 'clip/clip_sub.html', 'cloud/cloud_home.html'];
+	var subpages = ['../quan/tab-zone.html', '../tab_knowledge.html', '../clip/clip_sub.html', '../cloud/cloud_home.html'];
 	var titles = ['家校圈', '问答', '视频', '云盘'];
 	//设置子页面距离顶部的位置
 
@@ -68,7 +70,7 @@ mui.plusReady(function() {
 			plus.webview.show(targetTab, "fade-in", 300);
 		}
 		//当切换到云盘界面时
-		if(targetTab == 'tab_cloud.html') {
+		if(targetTab == '../tab_cloud.html') {
 			console.log('targetTab:' + targetTab);
 			var tab = plus.webview.getWebviewById(targetTab);
 			mui.fire(tab, "isVisible", {
@@ -82,6 +84,39 @@ mui.plusReady(function() {
 		activeTab = targetTab;
 
 	});
+
+	function getAboutMe() {
+		//56.（用户空间）获取与我相关
+		//所需参数
+		var comData = {
+			userId: personalUTID, //用户ID
+			pageIndex: '1', //当前页数
+			pageSize: '1' //每页记录数
+		};
+		//返回model：model_homeSchoolList，model_userSpaceAboutMe
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		//24.通过用户表ID获取用户关联的学生
+		postDataPro_getAboutMe(comData, wd, function(data) {
+			wd.close();
+			console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+
+			if(data.RspCode == 0) {
+				var leave = document.getElementById('leave_noRead');
+				if(data.RspData.NoReadCnt == 0) {
+					leave.innerHTML = data.RspData.NoReadCnt;
+					leave.style.visibility = 'hidden';
+//					leave.parentNode.removeChild(leave);
+				} else {
+					leave.style.hidden = 'dispaly';
+					leave.innerHTML = data.RspData.NoReadCnt;
+
+				}
+
+			} else {
+				mui.toast(data.RspTxt);
+			}
+		});
+	}
 	var changRightIcons = function(title) {
 		var iconContainer = document.getElementById('random_icon');
 		while(iconContainer.firstElementChild) {
@@ -117,14 +152,16 @@ mui.plusReady(function() {
 		aboutme.style.fontSize = '16px'
 		aboutme.style.paddingTop = '15px'
 		var span = document.createElement('span');
+		span.id = id = 'leave_noRead';
 		span.className = 'mui-badge mui-badge-danger'
 		span.style.marginLeft = "-15px";
 		span.style.marginTop = "4px";
+		span.style.visibility = 'hidden'
 		span.innerHTML = '3'
 		aboutme.appendChild(span)
 		container.appendChild(aboutme);
-		events.jumpPage(aboutme, 'quan/aboutme.html');
-		events.jumpPage(leave, 'quan/leave.html');
+		events.jumpPage(aboutme, '../quan/aboutme.html');
+		events.jumpPage(leave, '../quan/leave.html');
 	}
 
 	var addCloudIcon = function(container) {
@@ -136,9 +173,9 @@ mui.plusReady(function() {
 		container.appendChild(a)
 	}
 	var aboutme = document.getElementById('aboutme');
-	events.jumpPage(aboutme, 'quan/aboutme.html');
+	events.jumpPage(aboutme, '../quan/aboutme.html');
 	var leave = document.getElementById('leave');
-	events.jumpPage(leave, 'quan/leave.html');
+	events.jumpPage(leave, '../quan/leave.html');
 	//自定义事件，模拟点击“首页选项卡”
 	document.addEventListener('gohome', function() {
 		var defaultTab = document.getElementById("defaultTab");

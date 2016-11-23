@@ -308,13 +308,14 @@ var postDataPro_PostReStu=function(commonData, wd, callback) {
 //24.通过用户表ID获取用户关联的学生
 //所需参数
 //		var comData = {
+//			utid:''//用户表ID,用户utid
 //		};
 //返回值model：model_userDataInfo
 var postDataPro_PostUstu=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINURL + 'PostUstu', enData, commonData, 1, wd, callback);
+	postDataEncry(storageKeyName.MAINURL + 'PostUstu', enData, commonData, 2, wd, callback);
 }
 
 
@@ -1008,7 +1009,7 @@ var postDataPro_delUserSpaceCommentById=function(commonData, wd, callback) {
 //49.（用户空间）获取用户空间所有留言
 //所需参数
 //		var comData = {
-//			userSpaceId: '',//用户空间ID
+//			userId: '',//用户空间ID
 //			pageIndex:'',//当前页数
 //			pageSize:''//每页记录数
 //		};

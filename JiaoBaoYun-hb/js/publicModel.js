@@ -105,7 +105,7 @@ var publicModel = (function($, mod) {
 		NoReadCnt:'',//未读条数
 		Data:[//列表数据
 			
-		]]
+		]
 	}
 	
 	//家校圈用户记事信息
@@ -149,6 +149,7 @@ var publicModel = (function($, mod) {
 		CommentContent:'',//评论或回复内容
 		CommentDate:'',//评论或回复时间
 		UpperId:'',//上级ID
+		Replys:[],//回复数组
 		
 		//31,49，
 		ReplyId:'',//回复用户ID

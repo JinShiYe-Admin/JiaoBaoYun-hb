@@ -10,7 +10,9 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/quan/aboutme.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+
 		<style>
 			.mui-table-view {
 				background: transparent;
@@ -32,12 +34,6 @@
 				/*去掉横线*/
 			}
 			
-			.mui-row-padding-8px {
-				padding: 8px;
-				/*内边距为8px*/
-				padding: 12px;
-			}
-			
 			.dynamic-personal-image {
 				/*个人头像圆形*/
 				border-radius: 50%;
@@ -45,83 +41,14 @@
 				height: 50px;
 			}
 			
-			.dynamic-image-div {
-				/*内容中图片之间的内边距*/
-				padding: 1px;
-			}
-			
-			.dynamic-image {
-				/*内容的图片占全部空间*/
-				width: 100%;
-				height: 100%;
-			}
-			
-			.dynamic-icon,
-			.dynamic-icon-praise,
-			.dynamic-icon-comment,
-			.dynamic-icon-forward {
-				/*点赞，评论，分享的图标*/
-				height: 20px;
-				width: 20px;
-				margin-left: 20px;
-			}
-			
-			.dynamic-icon-Level {
-				/*等级图标*/
-				height: 20px;
-				margin-left: 10px;
-			}
-			
-			.dynamic-icon-praise-small {
-				/*点赞列表的小图标*/
-				height: 15px;
-				width: 15px;
-				margin-right: 5px;
-				margin-bottom: 0px;
-			}
-			
-			.dynamic-margin-top-10px {
-				margin-top: 10px;
-			}
-			
 			.dynamic-padding-left-10px {
 				padding-left: 10px;
-			}
-			
-			.dynamic-line {
-				/*点赞列表上面的横线*/
-				height: 1px;
-				width: 100%;
-				background: #CCCCCC;
-			}
-			
-			.dynamic-contenttext {
-				/*动态内容*/
-				font-family: '微软雅黑 Regular', '微软雅黑';
-				/*字体样式*/
 			}
 			
 			.dynamic-praise-name,
 			.dynamic-comment-name {
 				/*点赞者和评论者的名字*/
 				color: #1277C7;
-			}
-			
-			.dynamic-comment-btn {
-				/*底部的评论按钮*/
-				width: 100%;
-				margin-top: 10px;
-			}
-			
-			.dynamic-image-more {
-				/*更多图片*/
-				position: absolute;
-				width: 99%;
-				height: 99%;
-				font-size: 40px;
-				color: white;
-				text-align: center;
-				background-color: rgba(0, 0, 0, 0.3);
 			}
 		</style>
 	</head>
@@ -131,247 +58,137 @@
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
 				<div style="height: 120px;;background-image:url(../../image/quan/leave-bg.png) ;"><br/><br/>
-					<h4 style="text-align: center;">主人寄语:雁过留声，人过留名！！</h1>
+					<h4 id="leaveTitle" style="text-align: center;">主人寄语:雁过留声，人过留名！！</h1>
 					
 				</div>
-				<div style="background-color: gainsboro;height: 30px;padding: 5px;font-size: 15px;">
-					留言(61)
+				<div id="leaveNum" style="background-color: gainsboro;height: 30px;padding: 5px;font-size: 15px;">
 				</div>
 				<!--数据列表-->
-				<ul class="mui-table-view">
-					<li id="0" class="mui-table-view-cell">
-						<div style="padding:12px">
-							<div class="mui-media-body mui-pull-left">
-								<img class=" dynamic-personal-image" src="../../image/dynamic/u101.png">
-							</div>
-							<div class="mui-media-body dynamic-padding-left-10px">
-								<span class=" mui-pull-right dynamic-comment-name">回复</span>
-								<h4>刘阳</h4>
-								<p>昨天 10:55</p>
-							</div>
+				<ul id="leaveList" class="mui-table-view">
 
-						</div>
-						<div style="padding: 5px 10px 10px 10px;">
-							有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。
-						</div>
-
-						<div style="padding:0px 10px 10px 10px">
-									<font class="common-font-family-Regular dynamic-comment-name">孟祥菊</font>
-									<font class="common-font-family-Regular">回复</font>
-									<font class="common-font-family-Regular dynamic-comment-name">陪你上演地老天荒</font>
-									<font class="common-font-family-Regular">一二三四五六七八九十</font>
-						</div>
-					</li>
-
-										<li id="0" class="mui-table-view-cell">
-						<div style="padding:12px">
-							<div class="mui-media-body mui-pull-left">
-								<img class=" dynamic-personal-image" src="../../image/dynamic/u101.png">
-							</div>
-							<div class="mui-media-body dynamic-padding-left-10px">
-								<span class=" mui-pull-right dynamic-comment-name">回复</span>
-								<h4>刘阳</h4>
-								<p>昨天 10:55</p>
-							</div>
-
-						</div>
-						<div style="padding: 5px 10px 10px 10px;">
-							有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。
-						</div>
-
-						<div style="padding:0px 10px 10px 10px">
-									<font class="common-font-family-Regular dynamic-comment-name">孟祥菊</font>
-									<font class="common-font-family-Regular">回复</font>
-									<font class="common-font-family-Regular dynamic-comment-name">陪你上演地老天荒</font>
-									<font class="common-font-family-Regular">一二三四五六七八九十</font>
-						</div>
-					</li>
-
-										<li id="0" class="mui-table-view-cell">
-						<div style="padding:12px">
-							<div class="mui-media-body mui-pull-left">
-								<img class=" dynamic-personal-image" src="../../image/dynamic/u101.png">
-							</div>
-							<div class="mui-media-body dynamic-padding-left-10px">
-								<span class=" mui-pull-right dynamic-comment-name">回复</span>
-								<h4>刘阳</h4>
-								<p>昨天 10:55</p>
-							</div>
-
-						</div>
-						<div style="padding: 5px 10px 10px 10px;">
-							有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。
-						</div>
-
-						<div style="padding:0px 10px 10px 10px">
-									<font class="common-font-family-Regular dynamic-comment-name">孟祥菊</font>
-									<font class="common-font-family-Regular">回复</font>
-									<font class="common-font-family-Regular dynamic-comment-name">陪你上演地老天荒</font>
-									<font class="common-font-family-Regular">一二三四五六七八九十</font>
-						</div>
-					</li>
-				</ul>
-			</div>
+			</ul>
+		</div>
 		</div>
 	</body>
 	<script>
-		//		mui.init({
-		//			pullRefresh: {
-		//				container: '#pullrefresh',
-		//				down: {
-		//					callback: pulldownRefresh
-		//				},
-		//				up: {
-		//					contentrefresh: '正在加载...',
-		//					callback: pullupRefresh
-		//				}
-		//			}
-		//		});
-		//		/**
-		//		 * 下拉刷新具体业务实现
-		//		 */
-		//		function pulldownRefresh() {
-		//			id = id + 1;
-		//			setTimeout(function() {
-		//				var table = document.body.querySelector('.mui-table-view');
-		//				table.innerHTML = '';
-		//				var data = addData();
-		//				dynamiclistitem.addItem(table, data, id);
-		//				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-		//			}, 1500);
-		//		}
-		//
-		//		/**
-		//		 * 上拉加载具体业务实现
-		//		 */
-		//		function pullupRefresh() {
-		//			id = id + 1;
-		//			setTimeout(function() {
-		//				mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
-		//				var table = document.body.querySelector('.mui-table-view');
-		//				var data = addData();
-		//				dynamiclistitem.addItem(table, data, id);
-		//			}, 1500);
-		//		}
-		//		var id = 0;
-		//		mui.plusReady(function() {
-		//			var table = document.body.querySelector('.mui-table-view');
-		//			var data = addData();
-		//			dynamiclistitem.addItem(table, data, id);
-		//			var click = []; //记录被点击的li的id和被点击元素
-		//
-		//			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-		//				var toast = '';
-		//				mui.each(click, function(index, element) {
-		//					toast = toast + element;
-		//				});
-		//				var id = this.getAttribute('id');
-		//				click.push(id);
-		//				mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
-		//				click = [];
-		//			});
-		//
-		//			mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
-		//				click.push('头像');
-		//			});
-		//			mui('.mui-table-view').on('tap', 'h4', function() {
-		//				click.push('姓名');
-		//			});
-		//			mui('.mui-table-view').on('tap', '.mui-icon-arrowdown', function() {
-		//				click.push('向下按钮');
-		//			});
-		//			mui('.mui-table-view').on('tap', '.dynamic-contenttext', function() {
-		//				click.push('动态文字');
-		//			});
-		//			mui('.mui-table-view').on('tap', '.dynamic-image', function() {
-		//				click.push('图片' + this.getAttribute('src'));
-		//			});
-		//			mui('.mui-table-view').on('tap', '.dynamic-image-more', function() {
-		//				click.push('更多图片');
-		//			});
-		//			mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
-		//				click.push('点赞');
-		//			});
-		//			mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
-		//				click.push('评论');
-		//			});
-		//			mui('.mui-table-view').on('tap', '.dynamic-icon-forward', function() {
-		//				click.push('分享');
-		//			});
-		//			mui('.mui-table-view').on('tap', '.dynamic-praise-name', function() {
-		//				click.push('点赞者：' + this.innerText);
-		//			});
-		//			mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
-		//				click.push('评论者：' + this.innerText);
-		//			});
-		//			mui('.mui-table-view').on('tap', '.dynamic-comment-btn', function() {
-		//				click.push('评论按钮');
-		//			});
-		//		});
-		//
-		//		//加载数据
-		//		function addData() {
-		//			//[[InfoList],[ImageList],[InteractionList]]动态的信息
-		//			var Data = [];
-		//			var InfoList = []; //头部和内容
-		//			var ImageList = []; //内容的图片
-		//			var InteractionList = []; //底部内容
-		//
-		//			//个人信息和内容
-		//			//[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
-		//			var personalImage = '../../image/dynamic/u101.png';
-		//			var personalName = '李媛媛';
-		//			var time = '10月12日 10:55';
-		//			var contentText = '哎吆，几天不见都成艺术家了';
-		//			InfoList.push(personalImage);
-		//			InfoList.push(personalName);
-		//			InfoList.push(time);
-		//			InfoList.push(contentText);
-		//
-		//			//内容的图片
-		//			//[[ImageUrlList],ImageNum],动态内容的图片路径数组,图片总数量
-		//			var ImageUrlList = [];
-		//			if(id == 0) {
-		//				ImageUrlList = [
-		//				];
-		//			} else if(id == 1) {
-		//				ImageUrlList = [
-		//				];
-		//			} else if(id == 2) {
-		//				ImageUrlList = [
-		//				];
-		//			} else if(id == 3) {
-		//				ImageUrlList = [];
-		//			} else if(id == 4) {
-		//				ImageUrlList = [];
-		//			} else if(id == 5) {
-		//				ImageUrlList = [];
-		//			}
-		//			var ImageNum = ImageUrlList.length;
-		//			ImageList.push(ImageUrlList);
-		//			ImageList.push(ImageNum);
-		//
-		//			//底部
-		//			//[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
-		//			var introduce = '';
-		//			var viewCount = 30;
-		//			var praiseList = [];
-		//
-		//			//[commentList]:评论列表
-		//			//1.评论[commenter,content]，评论者，评论内容
-		//			//2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
-		//			var commentList = [];
-		//			var replyer1 = ['赵雨欣', '李媛媛', '艺术源于生活'];
-		//			commentList.push(replyer1);
-		//
-		//			InteractionList.push(introduce);
-		//			InteractionList.push(viewCount);
-		//			InteractionList.push(praiseList);
-		//			InteractionList.push(commentList);
-		//
-		//			Data = [InfoList, ImageList, InteractionList]
-		//			return Data;
-		//		}
+		mui.init({
+			pullRefresh: {
+				container: '#pullrefresh',
+				down: {
+					callback: pulldownRefresh
+				},
+				up: {
+					contentrefresh: '正在加载...',
+					callback: pullupRefresh
+				}
+			}
+		});
+		mui.plusReady(function() {
+				var comData = {
+					userId: '1', //用户空间ID
+					pageIndex: (tempPage).toString(), //当前页数
+					pageSize: '10' //每页记录数
+				};
+				//请求数据
+				requestData(comData);
+			})
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+		function pulldownRefresh() {
+			setTimeout(function() {
+				//刷新时将页码归1
+				totalCnt = 0;
+				flag = 1;
+				var comData = {
+					userId: '1', //用户空间ID
+					pageIndex: (1).toString(), //当前页数
+					pageSize: '10' //每页记录数
+				};
+				//请求数据
+				requestData(comData);
+				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+			}, 1500);
+
+		}
+var count = 0;
+		/**
+		 * 上拉加载具体业务实现
+		 */
+		function pullupRefresh() {
+			setTimeout(function() {
+				flag = 2;
+				mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+				if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
+					mui.toast('没有更多了...');
+				} else {
+					tempPage++;
+					var comData = {
+						userId: '1', //用户空间ID
+						pageIndex: (tempPage).toString(), //当前页数
+						pageSize: '10' //每页记录数
+					};
+					//请求数据
+					requestData(comData);
+				}
+			}, 1500);
+
+		}
+
+		//页码，请求第几页数据
+		var tempPage = 1;
+		//当前留言的总条数
+		var totalCnt = 0;
+		//判断是加载更多2，还是刷新1
+		var flag = 1;
+		//页码请求到要显示的数据，array[model_userSpaceInfo]
+		var leaveArray = [];
+		//请求数据
+		function requestData(comData) {
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//49.（用户空间）获取用户空间所有留言，model_userSpaceInfo
+			postDataPro_getUserSpaceMsgsById(comData, wd, function(data) {
+				wd.close();
+				console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+					//判断是加载更多2，还是刷新1
+					if(flag == 1) {
+						tempPage = 1;
+						leaveArray = data.RspData.Data;
+					} else {
+						//合并数组
+						leaveArray = leaveArray.concat(data.RspData.Data);
+					}
+					//留言总条数
+					totalCnt = data.RspData.TotalCnt;
+					var leaveNum = document.getElementById("leaveNum");
+					console.log('leaveNum.innerHTML=='+leaveNum.innerHTML )
+					leaveNum.innerHTML = '留言('+data.RspData.TotalCnt+')';
+					refreshUI();
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		}
+
+		function refreshUI() {
+
+			var ul = document.getElementById('leaveList');
+			ul.innerHTML = '';
+			for(var i = 0; i < leaveArray.length; i++) {
+				var li = document.createElement('li');
+				li.className = 'mui-table-view-cell';
+				li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="../../image/dynamic/u101.png"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply" class=" mui-pull-right dynamic-comment-name">' + '回复' +
+					'</span><h4>' + leaveArray[i].UserId + '</h4><p>' + leaveArray[i].MsgDate + '</p></div></div><div style="padding: 5px 10px 10px 10px;">' + leaveArray[i].MsgContent + '</div><div style="padding:0px 10px 10px 10px"><font class="common-font-family-Regular">' + leaveArray[i].MsgDate +
+					'</font></div>';
+					ul.insertBefore(li,ul.lastChild);
+			}
+						mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
+
+				console.log(123)
+			});
+		}
 	</script>
 
 </html>
