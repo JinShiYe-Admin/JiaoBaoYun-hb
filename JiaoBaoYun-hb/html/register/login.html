@@ -225,8 +225,10 @@
 //								window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data0.RspData;
 								//获取个人信息
 								var comData1 = {
-									vvl: personal.utid //群ID,查询的值
+									vvl: personal.utid, //用户id，查询的值,p传个人ID,g传ID串
+									vtp:'p'//查询类型,p(个人)g(id串)
 								};
+								//21.通过用户ID获取用户资料
 								postDataPro_PostUinf(comData1, wd, function(data) {
 									wd.close();
 									console.log('获取个人信息success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
