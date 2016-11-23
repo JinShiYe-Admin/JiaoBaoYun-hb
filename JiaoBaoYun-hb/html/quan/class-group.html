@@ -8,11 +8,7 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/quan/class_space.css" rel="stylesheet" />
-		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript">
-			mui.init()
-		</script>
-		<script src="../../js/utils/grideControl.js"></script>
+		
 		<style type="text/css">
 			.mui-segmented-control {
 				font-size: 14px;
@@ -42,7 +38,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">1002班</h1>
+			<h1 id="title" class="mui-title">1002班</h1>
 		</header>
 		<div class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
@@ -85,35 +81,61 @@
 		</div>
 
 	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script type="text/javascript">
+		mui.init()
+	</script>
+	<script src="../../js/utils/grideControl.js"></script>
+	<script src="../../js/publicProtocol.js"></script>
 	<script>
+		var groupId=null;
+			var groupName=null;
 		mui('.mui-scroll-wrapper').scroll({
 			indicators: true, //是否显示滚动条
 		})
 		mui.plusReady(function() {
-			setGride()
+			
+			window.addEventListener('postGroupInfo',function(e){
+				console.log(JSON.stringify(e.detail.data));
+				if(e.detail.data){
+					groupId=e.detail.data.classId;
+					groupName=e.detail.data.className;
+					document.getElementById('title').innerText=groupName;
+					setGride()
+				}
+			})
+		
 		})
 		var setGride = function() {
-			var names = ['许仙', '程颐', '风萧萧', '袁生', '陈楚生', '东一', '陈云', '萝莉', '舒颜', '王默',
-				'菲林', '兰兰', '黄小仙', '祖云', '杨洋', '李煜', '张云', '徐凡', '徐凡飞'
-			];
-			var imgs = ['../../image/quan/group/u165.png', '../../image/quan/group/u169.png', '../../image/quan/group/u173.png', '../../image/quan/group/u177.png', '../../image/quan/group/u181.png', '../../image/quan/group/u189.png',
-				'../../image/quan/group/u191.png', '../../image/quan/group/u201.png', '../../image/quan/group/u205.png', '../../image/quan/group/u209.png', '../../image/quan/group/u213.png', '../../image/quan/group/u217.png',
-				'../../image/quan/group/u219.png', '../../image/quan/group/u223.png', '../../image/quan/group/u227.png', '../../image/quan/group/u231.png', '../../image/quan/group/u233.png', '../../image/quan/group/u237.png',
-				'../../image/quan/group/u241.png',
-			]
-			names.push('添加');
-			imgs.push('../../image/quan/group/u195.gif')
-			var urls = [];
-			var gride = document.getElementById('gride1')
-
-			createGirde(gride, createArray(names, imgs, urls))
-			var gride = document.getElementById('gride2')
-
-			createGirde(gride, createArray(names, imgs, urls))
-			var gride = document.getElementById('gride3')
-
-			createGirde(gride, createArray(names, imgs, urls))
+//top: '',//选择条数
+//			vvl:'',//群ID，查询的值
+//			vvl1:''//群员类型，0家长,1管理员,2老师,3学生,-1取全部
+			var gride1 = document.getElementById('gride1')
+			console.log('传送的groupId:'+groupId)
+			getGroupInfo(3,gride1);
+			var gride2 = document.getElementById('gride2')
+			getGroupInfo(2,gride2)
+			var gride3 = document.getElementById('gride3')
+			getGroupInfo(0,gride3)
+//
+//			createGirde(gride2, createArray(names, imgs, urls))
+//		
+//			
+//			createGirde(gride3, createArray(names, imgs, urls))
 		}
+		var getGroupInfo=function(vvl,item){
+			var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING)
+			postDataPro_PostGusers({top:-1,vvl:groupId,vvl1:vvl},wd,function(data){
+					wd.close();
+					console.log('获取群组成员：'+vvl+JSON.stringify(data))
+					if(data.RspCode=='0000'){
+						createGirde(item, data.RspData.data);
+					}else{
+						mui.toast(data.RspTxt);
+					}
+				});
+		}
+		
 	</script>
 
 </html>

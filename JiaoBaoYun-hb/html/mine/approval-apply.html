@@ -1,0 +1,62 @@
+<!--审核申请-->
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<style>
+			html,
+			body {
+				height: 100%;
+				overflow: hidden;
+			}
+			.mui-bar {
+				-webkit-box-shadow: none;
+				box-shadow: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">审批入群</h1>
+		</header>
+		<div class="mui-content">
+		    <!--<div class="mui-scroll-wrapper">
+		        <div class="mui-scroll">-->
+		            <!--这里放置真实显示的DOM内容-->
+		            <!--<ul id="list-container" class="mui-table-view">
+		            </ul>
+		        </div>
+		    </div>-->
+		    <a href="#popover" id="openPopover" class="mui-btn mui-btn-primary mui-btn-block">接受</a>
+		</div>	
+		<div id="popover" class="mui-popover">
+		<h4>选择身份</h4>
+		<form class="mui-input-group">
+				<div class="mui-input-row mui-checkbox">
+					<label>家长</label>
+					<input id="check-parents" name="checkbox1" value="0" type="checkbox" >
+				</div>
+				<div class="mui-input-row mui-checkbox">
+					<label>老师</label>
+					<input id="check-tea"  name="checkbox1" value="2" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-checkbox ">
+					<label>学生</label>
+					<input id="check-stu" name="checkbox1" value="3" type="checkbox">
+				</div>
+			</form>
+			<button id="btn-submit" type="submit" class="mui-btn mui-btn-green">确认</button>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/mine/approval-apply.js"></script>
+	</body>
+</html>

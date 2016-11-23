@@ -86,7 +86,7 @@
 			});
 			//获得侧滑主窗口webview对象
 			var main = null;
-//			var personalInfo = null;
+			var info = null;
 			mui.plusReady(function() {
 				main = plus.webview.currentWebview().opener();
 				//获取个人信息
@@ -119,6 +119,7 @@
 							break;
 							//新消息
 						case 3:
+							events.openNewWindow('mine/approval-apply.html');
 							break;
 							//我的空间
 						case 4:
@@ -156,7 +157,7 @@
 			 * "uimg":""}
 			 */
 			function getInfo() {
-				var info = myStorage.getItem(storageKeyName.PERSONALINFO);
+				 info = myStorage.getItem(storageKeyName.PERSONALINFO);
 					console.log('我的界面获取的个人信息：' + JSON.stringify(info))
 				if(info.uimg) {
 					document.getElementById('uimg').src = info.uimg;
