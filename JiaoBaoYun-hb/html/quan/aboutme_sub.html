@@ -225,43 +225,43 @@
 	<script>
 		mui.plusReady(function() {
 			//12.邀请用户入群
-//		//需要参数
-//		var comData = {
-//			gid: '1',//群ID
-//			beinvutid:'1',//被邀请人ID
-//			beinvnick:'遥不可及',//被邀请人昵称
-//			mstype:'0',//被邀请人类型,0家长,2老师,3学生
-//			stat:'0',//入群状态,0待审,1同意
-//			lnkinfid:'0'//关联资料ID,无资料关联填写0
-//			urel:'',//与资料关系,与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
-//			vtp:'1'//邀请类型,0老师邀请家长,1个人申请入群,2群员邀请群员
-//		};
-//		// 等待的对话框
-//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-//postDataPro_PostInvGuser(comData, wd, function(data) {
-//				wd.close();
-//				console.log('123');
-//				if(data.RspCode == 0) {
-//
-//				} else {
-//					mui.toast(data.RspTxt);
-//				}
-//			});
-//			var comData = {
-//				vvl: '15264122518' //查询的值
-//			};
-//			// 等待的对话框
-//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-//			//返回值model：model_userInfo
-//			postDataPro_PostUList(comData, wd, function(data) {
-//				wd.close();
-//				console.log('postDataPro_PostUList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-//				if(data.RspCode == 0) {
-//
-//				} else {
-//					mui.toast(data.RspTxt);
-//				}
-//			});
+			//		//需要参数
+			//		var comData = {
+			//			gid: '1',//群ID
+			//			beinvutid:'1',//被邀请人ID
+			//			beinvnick:'遥不可及',//被邀请人昵称
+			//			mstype:'0',//被邀请人类型,0家长,2老师,3学生
+			//			stat:'0',//入群状态,0待审,1同意
+			//			lnkinfid:'0'//关联资料ID,无资料关联填写0
+			//			urel:'',//与资料关系,与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
+			//			vtp:'1'//邀请类型,0老师邀请家长,1个人申请入群,2群员邀请群员
+			//		};
+			//		// 等待的对话框
+			//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//postDataPro_PostInvGuser(comData, wd, function(data) {
+			//				wd.close();
+			//				console.log('123');
+			//				if(data.RspCode == 0) {
+			//
+			//				} else {
+			//					mui.toast(data.RspTxt);
+			//				}
+			//			});
+			//			var comData = {
+			//				vvl: '15264122518' //查询的值
+			//			};
+			//			// 等待的对话框
+			//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//			//返回值model：model_userInfo
+			//			postDataPro_PostUList(comData, wd, function(data) {
+			//				wd.close();
+			//				console.log('postDataPro_PostUList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			//				if(data.RspCode == 0) {
+			//
+			//				} else {
+			//					mui.toast(data.RspTxt);
+			//				}
+			//			});
 			//			//所需参数
 			//			var comData = {
 			//				vtp: 'inv', //获取项，要获取的项:inv(入群邀请),app(入群申请)
@@ -275,44 +275,104 @@
 			//			})
 		})
 
-		//		mui.init({
-		//			pullRefresh: {
-		//				container: '#pullrefresh',
-		//				down: {
-		//					callback: pulldownRefresh
-		//				},
-		//				up: {
-		//					contentrefresh: '正在加载...',
-		//					callback: pullupRefresh
-		//				}
-		//			}
-		//		});
-		//		/**
-		//		 * 下拉刷新具体业务实现
-		//		 */
-		//		function pulldownRefresh() {
-		//			id = id + 1;
-		//			setTimeout(function() {
-		//				var table = document.body.querySelector('.mui-table-view');
-		//				table.innerHTML = '';
-		//				var data = addData();
-		//				dynamiclistitem.addItem(table, data, id);
-		//				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-		//			}, 1500);
-		//		}
-		//
-		//		/**
-		//		 * 上拉加载具体业务实现
-		//		 */
-		//		function pullupRefresh() {
-		//			id = id + 1;
-		//			setTimeout(function() {
-		//				mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
-		//				var table = document.body.querySelector('.mui-table-view');
-		//				var data = addData();
-		//				dynamiclistitem.addItem(table, data, id);
-		//			}, 1500);
-		//		}
+		//页码，请求第几页数据
+		var tempPage = 1;
+		//当前留言的总条数
+		var totalCnt = 0;
+		//获取个人信息
+		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+		//判断是加载更多1，还是刷新2
+		var flag = 2;
+		//页码请求到要显示的数据，array[model_userSpaceAboutMe]
+		var aboutMeArray = [];
+		//请求数据
+		function requestData(comData) {
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//56.（用户空间）获取与我相关
+			postDataPro_getAboutMe(comData, wd, function(data) {
+				wd.close();
+				console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+					//判断是加载更多1，还是刷新2
+					if(flag == 1) {
+						//合并数组
+						aboutMeArray = aboutMeArray.concat(data.RspData.Data);
+					} else {
+						tempPage = 1;
+						//合并数组
+						aboutMeArray = data.RspData.Data;
+					}
+					//留言总条数
+					totalCnt = data.RspData.TotalCnt;
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		}
+
+		mui.init({
+			pullRefresh: {
+				container: '#pullrefresh',
+				down: {
+					callback: pulldownRefresh
+				},
+				up: {
+					contentrefresh: '正在加载...',
+					callback: pullupRefresh
+				}
+			}
+		});
+		/**
+		 * 下拉刷新具体业务实现
+		 */
+		function pulldownRefresh() {
+			//			id = id + 1;
+			//			setTimeout(function() {
+			//				var table = document.body.querySelector('.mui-table-view');
+			//				table.innerHTML = '';
+			//				var data = addData();
+			//				dynamiclistitem.addItem(table, data, id);
+			//				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+			//			}, 1500);
+
+			totalCnt = 0;
+			flag = 2; //刷新
+			var comData = {
+				userId: '', //用户ID
+				pageIndex: '1', //当前页数
+				pageSize: '10' //每页记录数
+			};
+			//请求数据
+			requestData(comData);
+		}
+
+		/**
+		 * 上拉加载具体业务实现
+		 */
+		function pullupRefresh() {
+			//					id = id + 1;
+			//					setTimeout(function() {
+			//						mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+			//						var table = document.body.querySelector('.mui-table-view');
+			//						var data = addData();
+			//						dynamiclistitem.addItem(table, data, id);
+			//					}, 1500);
+
+			if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
+				mui.toast('没有更多了...');
+			} else {
+				flag = 1; //加载更多
+				tempPage++;
+				var comData = {
+					userId: '', //用户ID
+					pageIndex: (tempPage).toString(), //当前页数
+					pageSize: '10' //每页记录数
+				};
+				//请求数据
+				requestData(comData);
+			}
+		}
 		//		var id = 0;
 		//		mui.plusReady(function() {
 		//			var table = document.body.querySelector('.mui-table-view');
