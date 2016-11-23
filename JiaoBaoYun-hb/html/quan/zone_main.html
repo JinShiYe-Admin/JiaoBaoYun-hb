@@ -10,12 +10,15 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
+
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav common-background-bar ">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left common-color-white"></a>
 			<h1 class="mui-title common-color-white common-font-family-Regular">空间</h1>
+			<a id="leave" class="mui-icon mui-icon-compose  mui-pull-right mui-plus-visible" style="padding-left: 20px;"></a>
 		</header>
 		<div class="mui-content"></div>
 	</body>
@@ -35,6 +38,12 @@
 				}
 			}]
 		});
+		mui.plusReady(function() {
+			events.addTap('leave', function() {
+				events.openNewWindowWithData('../quan/leave.html',{});
+			})
+
+		})
 
 		var contentWebview = null;
 		document.querySelector('header').addEventListener('doubletap', function() {

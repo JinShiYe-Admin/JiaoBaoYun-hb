@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 
 		<style>
@@ -61,81 +62,10 @@
 					
 				</div>
 				<div id="leaveNum" style="background-color: gainsboro;height: 30px;padding: 5px;font-size: 15px;">
-					留言(61)
 				</div>
 				<!--数据列表-->
 				<ul id="leaveList" class="mui-table-view">
-					<!--<li id="0" class="mui-table-view-cell">
-						<div style="padding:12px">
-							<div class="mui-media-body mui-pull-left">
-								<img class=" dynamic-personal-image" src="../../image/dynamic/u101.png">
-							</div>
-							<div class="mui-media-body dynamic-padding-left-10px">
-								<span class=" mui-pull-right dynamic-comment-name">回复</span>
-								<h4>刘阳</h4>
-					<p>昨天 10:55</p>
-				</div>
 
-			</div>
-			<div style="padding: 5px 10px 10px 10px;">
-				有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。
-			</div>
-
-			<div style="padding:0px 10px 10px 10px">
-				<font class="common-font-family-Regular dynamic-comment-name">孟祥菊</font>
-				<font class="common-font-family-Regular">回复</font>
-				<font class="common-font-family-Regular dynamic-comment-name">陪你上演地老天荒</font>
-				<font class="common-font-family-Regular">一二三四五六七八九十</font>
-			</div>
-			</li>
-
-			<li id="0" class="mui-table-view-cell">
-				<div style="padding:12px">
-					<div class="mui-media-body mui-pull-left">
-						<img class=" dynamic-personal-image" src="../../image/dynamic/u101.png">
-					</div>
-					<div class="mui-media-body dynamic-padding-left-10px">
-						<span class=" mui-pull-right dynamic-comment-name">回复</span>
-						<h4>刘阳</h4>
-						<p>昨天 10:55</p>
-					</div>
-
-				</div>
-				<div style="padding: 5px 10px 10px 10px;">
-					有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。
-				</div>
-
-				<div style="padding:0px 10px 10px 10px">
-					<font class="common-font-family-Regular dynamic-comment-name">孟祥菊</font>
-					<font class="common-font-family-Regular">回复</font>
-					<font class="common-font-family-Regular dynamic-comment-name">陪你上演地老天荒</font>
-					<font class="common-font-family-Regular">一二三四五六七八九十</font>
-				</div>
-			</li>
-
-			<li id="0" class="mui-table-view-cell">
-				<div style="padding:12px">
-					<div class="mui-media-body mui-pull-left">
-						<img class=" dynamic-personal-image" src="../../image/dynamic/u101.png">
-					</div>
-					<div class="mui-media-body dynamic-padding-left-10px">
-						<span class=" mui-pull-right dynamic-comment-name">回复</span>
-						<h4>刘阳</h4>
-						<p>昨天 10:55</p>
-					</div>
-
-				</div>
-				<div style="padding: 5px 10px 10px 10px;">
-					有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。有你的陪伴，人生才多姿多彩。
-				</div>
-
-				<div style="padding:0px 10px 10px 10px">
-					<font class="common-font-family-Regular dynamic-comment-name">孟祥菊</font>
-					<font class="common-font-family-Regular">回复</font>
-					<font class="common-font-family-Regular dynamic-comment-name">陪你上演地老天荒</font>
-					<font class="common-font-family-Regular">一二三四五六七八九十</font>
-				</div>
-			</li>-->
 			</ul>
 		</div>
 		</div>
@@ -232,6 +162,9 @@ var count = 0;
 					}
 					//留言总条数
 					totalCnt = data.RspData.TotalCnt;
+					var leaveNum = document.getElementById("leaveNum");
+					console.log('leaveNum.innerHTML=='+leaveNum.innerHTML )
+					leaveNum.innerHTML = '留言('+data.RspData.TotalCnt+')';
 					refreshUI();
 				} else {
 					mui.toast(data.RspTxt);
@@ -240,16 +173,21 @@ var count = 0;
 		}
 
 		function refreshUI() {
+
 			var ul = document.getElementById('leaveList');
 			ul.innerHTML = '';
 			for(var i = 0; i < leaveArray.length; i++) {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
-				li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="../../image/dynamic/u101.png"></div><div class="mui-media-body dynamic-padding-left-10px"><span class=" mui-pull-right dynamic-comment-name">' + '回复' +
+				li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="../../image/dynamic/u101.png"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply" class=" mui-pull-right dynamic-comment-name">' + '回复' +
 					'</span><h4>' + leaveArray[i].UserId + '</h4><p>' + leaveArray[i].MsgDate + '</p></div></div><div style="padding: 5px 10px 10px 10px;">' + leaveArray[i].MsgContent + '</div><div style="padding:0px 10px 10px 10px"><font class="common-font-family-Regular">' + leaveArray[i].MsgDate +
 					'</font></div>';
 					ul.insertBefore(li,ul.lastChild);
 			}
+						mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
+
+				console.log(123)
+			});
 		}
 	</script>
 

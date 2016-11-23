@@ -233,6 +233,9 @@
 	</body>
 
 	<script>
+		var publisherId;
+		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+
 		mui.init({
 			pullRefresh: {
 				container: '#pullrefresh',
@@ -245,71 +248,70 @@
 				}
 			}
 		});
+
+		function refreshUI() {
+
+		}
 		/**
 		 * 下拉刷新具体业务实现
 		 */
 		function pulldownRefresh() {
-			//			id = id + 1;
-			//			setTimeout(function() {
-			//				var table = document.body.querySelector('.mui-table-view');
-			//				table.innerHTML = '';
-			//				var data = addData();
-			//				dynamiclistitem.addItem(table, data, id);
-			//				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-			//			}, 1500);
-
-			//刷新时将页码归1
-			
-			totalCnt = 0;
-			var comData = {
-				userId: personalUTID, //用户ID
-				publisherId: '', //发布用户ID
-				noteType: '2', //信息类型,1云笔记,2个人空间动态
-				pageIndex: (tempPage).toString(), //当前页数
-				pageSize: '10' //每页记录数
-			};
-			//请求数据
-			requestData(comData);
-		}
-
-		/**
-		 * 上拉加载具体业务实现
-		 */
-		function pullupRefresh() {
-			//			id = id + 1;
-			//			setTimeout(function() {
-			//				mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
-			//				var table = document.body.querySelector('.mui-table-view');
-			//				var data = addData();
-			//				dynamiclistitem.addItem(table, data, id);
-			//			}, 1500);
-
-			if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
-				mui.toast('没有更多了...');
-			} else {
-				tempPage++;
+			setTimeout(function() {
+				flag = 2; //下拉刷新
+				totalCnt = 0; //总页数
+				tempPage = 1; //刷新时将页码归1
 				var comData = {
 					userId: personalUTID, //用户ID
-					publisherId: '', //发布用户ID
+					publisherId: '1', //发布用户ID
 					noteType: '2', //信息类型,1云笔记,2个人空间动态
 					pageIndex: (tempPage).toString(), //当前页数
 					pageSize: '10' //每页记录数
 				};
 				//请求数据
 				requestData(comData);
-			}
+				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				//				var table = document.body.querySelector('.mui-table-view');
+				//				table.innerHTML = '';
+				//				var data = addData();
+				//				dynamiclistitem.addItem(table, data, id);
+
+			}, 1500);
 		}
 
-		//页码，请求第几页数据
-		var tempPage = 1;
-		//当前留言的总条数
-		var totalCnt = 0;
-		//获取个人信息
-		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-		//判断是加载更多1，还是刷新2
-		var flag = 2;
-		//页码请求到要显示的数据，array[model_userNoteInfo]
-		var zonepArray = [];
+		/**
+		 * 上拉加载具体业务实现
+		 */
+		function pullupRefresh() {
+			setTimeout(function() {
+				flag = 1; //上拉加载更多
+				if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
+					mui.toast('没有更多了...');
+				} else {
+					tempPage++;
+					var comData = {
+						userId: personalUTID, //用户ID
+						publisherId: '1', //发布用户ID
+						noteType: '2', //信息类型,1云笔记,2个人空间动态
+						pageIndex: (tempPage).toString(), //当前页数
+						pageSize: '10' //每页记录数
+					};
+					//请求数据
+					requestData(comData);
+
+				}
+				mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+
+				//							var table = document.body.querySelector('.mui-table-view');
+				//							var data = addData();
+				//							dynamiclistitem.addItem(table, data, id);
+			}, 1500);
+
+		}
+		var tempPage = 1; //页码，请求第几页数据
+		var totalCnt = 0; //当前留言的总条数
+		var flag = 2; //判断是加载更多1，还是刷新2
+		var zonepArray = []; //页码请求到要显示的数据，array[model_userNoteInfo]
+
 		//请求数据
 		function requestData(comData) {
 			// 等待的对话框
@@ -317,19 +319,26 @@
 			//28.（用户空间）获取用户针对某用户的空间列表
 			postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
 				wd.close();
-				console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				console.log('postDataPro_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					//判断是加载更多1，还是刷新2
-					if (flag == 1) {
+					if(flag == 1) {
 						//合并数组
 						zonepArray = zonepArray.concat(data.RspData.Data);
-					} else{
+					} else {
 						tempPage = 1;
 						//合并数组
 						zonepArray = data.RspData.Data;
 					}
 					//留言总条数
 					totalCnt = data.RspData.TotalCnt;
+					var table = document.body.querySelector('.mui-table-view');
+					for(var i = 0; i < zonepArray.length; i++) {
+						id=i;
+						var data = addData(i);
+						dynamiclistitem.addItem(table, data, id);
+					}
+
 				} else {
 					mui.toast(data.RspTxt);
 				}
@@ -338,22 +347,33 @@
 
 		var id = 0;
 		mui.plusReady(function() {
+			//		publisherId = plus.webview.currentWebview().data; //发布者id
+			console.log(plus.webview.currentWebview().data);
+			tempPage = 1; //页码，请求第几页数据
+			totalCnt = 0; //当前留言的总条数
+			flag = 2; //判断是加载更多1，还是刷新2
+			var comData = {
+				userId: personalUTID, //用户ID
+				publisherId: '1', //发布用户ID
+				noteType: '2', //信息类型,1云笔记,2个人空间动态
+				pageIndex: (tempPage).toString(), //当前页数
+				pageSize: '10' //每页记录数
+			};
+			console.log(JSON.stringify(comData));
+			requestData(comData);
 
-			var table = document.body.querySelector('.mui-table-view');
-			var data = addData();
-			dynamiclistitem.addItem(table, data, id);
-			var click = []; //记录被点击的li的id和被点击元素
+						var click = []; //记录被点击的li的id和被点击元素
 
-			//			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-			//				var toast = '';
-			//				mui.each(click, function(index, element) {
-			//					toast = toast + element;
-			//				});
-			//				var id = this.getAttribute('id');
-			//				click.push(id);
-			//				mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
-			//				click = [];
-			//			});
+						mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+							var toast = '';
+							mui.each(click, function(index, element) {
+								toast = toast + element;
+							});
+							var id = this.getAttribute('id');
+							click.push(id);
+							mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
+							click = [];
+						});
 
 			mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
 				click.push('头像');
@@ -395,7 +415,7 @@
 		});
 
 		//加载数据
-		function addData() {
+		function addData(index) {
 			//[[InfoList],[ImageList],[InteractionList]]动态的信息
 			var Data = [];
 			var InfoList = []; //头部和内容
@@ -406,8 +426,8 @@
 			//[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
 			var personalImage = '../../image/dynamic/u101.png';
 			var personalName = '大熊猫';
-			var time = '2016-10-12 10:55';
-			var contentText = '一二三四二二三四三二三四四二三四';
+			var time = zonepArray[index].PublishDate;
+			var contentText = zonepArray[index].MsgContent;
 			InfoList.push(personalImage);
 			InfoList.push(personalName);
 			InfoList.push(time);
@@ -416,28 +436,12 @@
 			//内容的图片
 			//[[ImageUrlList],ImageNum],动态内容的图片路径数组,图片总数量
 			var ImageUrlList = [];
-			if(id == 0) {
-				ImageUrlList = ['../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png',
-					'../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png',
-					'../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png'
-				];
-			} else if(id == 1) {
-				ImageUrlList = ['../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png',
-					'../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png',
-					'../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png'
-				];
-			} else if(id == 2) {
-				ImageUrlList = ['../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png',
-					'../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png',
-					'../../image/dynamic/u101.png', '../../image/dynamic/u101.png'
-				];
-			} else if(id == 3) {
-				ImageUrlList = ['../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png'];
-			} else if(id == 4) {
-				ImageUrlList = ['../../image/dynamic/u101.png', '../../image/dynamic/u101.png'];
-			} else if(id == 5) {
-				ImageUrlList = ['../../image/dynamic/u101.png'];
-			}
+			//					if(id == 0) {
+			//						ImageUrlList = ['../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png',
+			//							'../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png',
+			//							'../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png'
+			//						];
+			//					} 
 			var ImageNum = ImageUrlList.length;
 			ImageList.push(ImageUrlList);
 			ImageList.push(ImageNum);
@@ -445,8 +449,8 @@
 			//底部
 			//[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
 			var introduce = '上传了' + ImageNum + '张图片到相册《手机相册》';
-			var viewCount = 30;
-			var praiseList = ['一', '一二', '一二三', '一二三四', '一二三四五', '一二三四五六', '一二三四五六七'];
+			var viewCount = zonepArray[index].ReadCnt;
+			var praiseList = zonepArray[index].LikeUsers;
 
 			//[commentList]:评论列表
 			//1.评论[commenter,content]，评论者，评论内容
