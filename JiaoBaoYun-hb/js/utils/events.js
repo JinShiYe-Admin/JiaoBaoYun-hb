@@ -185,7 +185,19 @@ var events = (function($, mod) {
 				})
 			},interval)
 	}
-
+	/**
+	 * 加载不需要传值的预加载页面
+	 * @param {Object} tarpge
+	 */
+	mui.showPreloadPage=function(tarpge){
+		var  targetPage = null;
+			//获得目标页面
+			if(!targetPage) {
+				targetPage = plus.webview.getWebviewById(tarPage);
+				
+			}
+			targetPage.show();
+	}
 	/**
 	 * 如果目标页面未加载,需要先预加载页面
 	 * 传递数值到指定页面并打开页面
@@ -207,7 +219,7 @@ var events = (function($, mod) {
 			});
 			console.log('要传的值是：'+JSON.stringify(getDatas()))
 			targetPage.show()
-		}
+	}
 		/**
 	 * 如果目标页面未加载,需要先预加载页面
 	 * 传递数值到指定页面并打开页面
