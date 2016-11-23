@@ -17,6 +17,19 @@ document.write('<script src="../../js/utils/signHmacSHA1.js"><\/script>');
 document.write('<script src="../../js/libs/jquery.js"><\/script>');
 
 
+//给数组去重
+var arrayDupRemoval = function(array) {
+	var res = [];
+	var json = {};
+	for(var i = 0; i < array.length; i++) {
+		if(!json[array[i]]) {
+			res.push(array[i]);
+			json[array[i]] = 1;
+		}
+	}
+	return res;
+}
+
 	//6.用户修改各项用户信息
 //调用方法
 //var comData = {
@@ -259,7 +272,7 @@ var postDataPro_PostInvDo=function(commonData, wd, callback) {
 //21.通过用户ID获取用户资料
 //所需参数
 //		var comData = {
-//			vvl:'',//用户id
+//			vvl:'',//用户id，查询的值,p传个人ID,g传ID串
 //			vtp:''//查询类型,p(个人)g(id串)
 //		};
 //返回值model：model_userInfo
