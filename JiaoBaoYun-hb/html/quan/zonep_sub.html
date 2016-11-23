@@ -321,6 +321,7 @@
 				wd.close();
 				console.log('postDataPro_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
+
 					var table = document.body.querySelector('.mui-table-view');
 					//判断是加载更多1，还是刷新2
 					if(flag == 1) {

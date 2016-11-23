@@ -27,10 +27,9 @@
 		mui.plusReady(function() {
 			var data = plus.webview.currentWebview().data;
 			events.initSubPage('zonep_sub.html', data);
-			var tempview =  plus.webview.getWebviewById('zonep_sub.html');
+//			var tempview =  plus.webview.getWebviewById('zonep_sub.html');
 			events.addTap('leave', function() {
-				
-				events.openNewWindowWithData('../quan/leave.html', {});
+				events.openNewWindowWithData('../quan/leave.html', data);
 			})
 
 		})
