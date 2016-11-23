@@ -101,14 +101,13 @@ mui.plusReady(function() {
 			console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 			if(data.RspCode == 0) {
-				var leave = document.getElementById('leave_noRead');
+				var noRead = document.getElementById('aboutme_noRead');
 				if(data.RspData.NoReadCnt == 0) {
-					leave.innerHTML = data.RspData.NoReadCnt;
-					leave.style.visibility = 'hidden';
-//					leave.parentNode.removeChild(leave);
+					noRead.innerHTML = data.RspData.NoReadCnt;
+					noRead.style.visibility = 'hidden';
 				} else {
-					leave.style.hidden = 'dispaly';
-					leave.innerHTML = data.RspData.NoReadCnt;
+					noRead.style.hidden = 'dispaly';
+					noRead.innerHTML = data.RspData.NoReadCnt;
 
 				}
 
@@ -140,11 +139,11 @@ mui.plusReady(function() {
 
 	}
 	var addZoneIcon = function(container) {
-		var leave = document.createElement('a');
-		leave.id = 'leave'
-		leave.className = 'mui-icon mui-icon-compose  mui-pull-right mui-plus-visible';
-		leave.style.paddingLeft = '20px'
-		container.appendChild(leave)
+		var pubDynamic = document.createElement('a');
+		pubDynamic.id = 'pubDynamic'
+		pubDynamic.className = 'mui-icon mui-icon-compose  mui-pull-right mui-plus-visible';
+		pubDynamic.style.paddingLeft = '20px'
+		container.appendChild(pubDynamic)
 		var aboutme = document.createElement('a');
 		aboutme.className = 'mui-icon  mui-pull-right mui-plus-visible';
 		aboutme.id = 'aboutme'
@@ -152,7 +151,7 @@ mui.plusReady(function() {
 		aboutme.style.fontSize = '16px'
 		aboutme.style.paddingTop = '15px'
 		var span = document.createElement('span');
-		span.id = id = 'leave_noRead';
+		span.id = id = 'aboutme_noRead';
 		span.className = 'mui-badge mui-badge-danger'
 		span.style.marginLeft = "-15px";
 		span.style.marginTop = "4px";
@@ -161,7 +160,7 @@ mui.plusReady(function() {
 		aboutme.appendChild(span)
 		container.appendChild(aboutme);
 		events.jumpPage(aboutme, '../quan/aboutme.html');
-		events.jumpPage(leave, '../quan/leave.html');
+		events.jumpPage(pubDynamic, '../quan/class-dynamic.html');
 	}
 
 	var addCloudIcon = function(container) {
@@ -174,8 +173,8 @@ mui.plusReady(function() {
 	}
 	var aboutme = document.getElementById('aboutme');
 	events.jumpPage(aboutme, '../quan/aboutme.html');
-	var leave = document.getElementById('leave');
-	events.jumpPage(leave, '../quan/leave.html');
+	var pubDynamic = document.getElementById('pubDynamic');
+	events.jumpPage(pubDynamic, '../quan/class-dynamic.html');
 	//自定义事件，模拟点击“首页选项卡”
 	document.addEventListener('gohome', function() {
 		var defaultTab = document.getElementById("defaultTab");
