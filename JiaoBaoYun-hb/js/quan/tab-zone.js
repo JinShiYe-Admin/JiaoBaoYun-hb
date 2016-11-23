@@ -232,14 +232,8 @@ function getBottomList(index, userLists) {
 
 						userIds.push(datasource[i].userList[j].utid)
 					}
-					var upString = '['
-					for(var z = 0; z < userIds.length; z++) {
-						upString = upString + userIds[z] + ',';
-						if(z == userIds.length - 1) {
-							upString = upString + ']';
-						}
-					}
-					upString = upString.replace(',]', ']');
+					userIds.join(',');
+					var upString = '['+userIds.join()+']';
 					getUserSpaces(upString, i);
 
 				}
@@ -427,7 +421,7 @@ function refreshUI() {
 function addBottomTap(tableIndex, cellIndex) {
 	//	跳转到家长空间界面
 	mui('.mui-table-view').on('tap', '.parent-cell' + tableIndex, function() {
-		console.log(datasource[tableIndex].userList[cellIndex].utid);
+		var publisherId = datasource[tableIndex].userList[cellIndex].utid
 		mui.openWindow({
 			url: 'zone_main.html',
 			id: 'zone_main.html',
@@ -436,8 +430,7 @@ function addBottomTap(tableIndex, cellIndex) {
 				bottom: '0px'
 			},
 			extras: {
-				data: datasource[tableIndex].userList[cellIndex].utid
-
+				data: publisherId
 			}
 
 		});

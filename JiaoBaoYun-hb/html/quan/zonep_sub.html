@@ -262,7 +262,7 @@
 				tempPage = 1; //刷新时将页码归1
 				var comData = {
 					userId: personalUTID, //用户ID
-					publisherId: '1', //发布用户ID
+					publisherId: publisherId, //发布用户ID
 					noteType: '2', //信息类型,1云笔记,2个人空间动态
 					pageIndex: (tempPage).toString(), //当前页数
 					pageSize: '10' //每页记录数
@@ -290,7 +290,7 @@
 					tempPage++;
 					var comData = {
 						userId: personalUTID, //用户ID
-						publisherId: '1', //发布用户ID
+						publisherId: publisherId, //发布用户ID
 						noteType: '2', //信息类型,1云笔记,2个人空间动态
 						pageIndex: (tempPage).toString(), //当前页数
 						pageSize: '10' //每页记录数
@@ -321,22 +321,31 @@
 				wd.close();
 				console.log('postDataPro_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
+					var table = document.body.querySelector('.mui-table-view');
 					//判断是加载更多1，还是刷新2
 					if(flag == 1) {
 						//合并数组
-						zonepArray = zonepArray.concat(data.RspData.Data);
+						zonepArray = zonepArray.concat(data.RspData.TotalCnt);
+						//留言总条数
+						totalCnt = data.RspData.TotalCnt;
+						for(var i = zonepArray.length; i < zonepArray.length; i++) {
+							id = i;
+							var data = addData(i);
+							dynamiclistitem.addItem(table, data, id);
+						}
+
 					} else {
 						tempPage = 1;
-						//合并数组
 						zonepArray = data.RspData.Data;
-					}
-					//留言总条数
-					totalCnt = data.RspData.TotalCnt;
-					var table = document.body.querySelector('.mui-table-view');
-					for(var i = 0; i < zonepArray.length; i++) {
-						id=i;
-						var data = addData(i);
-						dynamiclistitem.addItem(table, data, id);
+						//留言总条数
+						totalCnt = data.RspData.TotalCnt;
+						table.innerHTML = '';
+						for(var i = 0; i < zonepArray.length; i++) {
+							id = i;
+							var data = addData(i);
+							dynamiclistitem.addItem(table, data, id);
+						}
+
 					}
 
 				} else {
@@ -347,14 +356,13 @@
 
 		var id = 0;
 		mui.plusReady(function() {
-			//		publisherId = plus.webview.currentWebview().data; //发布者id
-			console.log(plus.webview.currentWebview().data);
+			publisherId = plus.webview.currentWebview().data; //发布者id
 			tempPage = 1; //页码，请求第几页数据
 			totalCnt = 0; //当前留言的总条数
 			flag = 2; //判断是加载更多1，还是刷新2
 			var comData = {
 				userId: personalUTID, //用户ID
-				publisherId: '1', //发布用户ID
+				publisherId: publisherId, //发布用户ID
 				noteType: '2', //信息类型,1云笔记,2个人空间动态
 				pageIndex: (tempPage).toString(), //当前页数
 				pageSize: '10' //每页记录数
@@ -362,18 +370,18 @@
 			console.log(JSON.stringify(comData));
 			requestData(comData);
 
-						var click = []; //记录被点击的li的id和被点击元素
+			var click = []; //记录被点击的li的id和被点击元素
 
-						mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-							var toast = '';
-							mui.each(click, function(index, element) {
-								toast = toast + element;
-							});
-							var id = this.getAttribute('id');
-							click.push(id);
-							mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
-							click = [];
-						});
+			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+				var toast = '';
+				mui.each(click, function(index, element) {
+					toast = toast + element;
+				});
+				var id = this.getAttribute('id');
+				click.push(id);
+				mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
+				click = [];
+			});
 
 			mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
 				click.push('头像');
