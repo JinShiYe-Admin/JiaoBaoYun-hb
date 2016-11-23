@@ -321,34 +321,98 @@
 				wd.close();
 				console.log('postDataPro_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
-
-					var table = document.body.querySelector('.mui-table-view');
-					//判断是加载更多1，还是刷新2
-					if(flag == 1) {
-						//合并数组
-						zonepArray = zonepArray.concat(data.RspData.TotalCnt);
-						//留言总条数
-						totalCnt = data.RspData.TotalCnt;
-						for(var i = zonepArray.length; i < zonepArray.length; i++) {
-							id = i;
-							var data = addData(i);
-							dynamiclistitem.addItem(table, data, id);
+					totalCnt = data.RspData.TotalCnt;
+					var tempRspData = data.RspData.Data;
+					//获取当前回调留言的个人信息，主要是头像、昵称
+					var tempArray = [];
+					//先遍历回调数组，获取
+					for(var item in tempRspData) {
+						//当前循环的model
+						var tempModel0 = tempRspData[item];
+						//将当前model中id塞到数组
+						tempArray.push(tempModel0.PublisherId);
+						//循环当前model中的回复数组
+						for(var item1 in tempModel0.Replys) {
+							//回复中的model
+							var tempModel1 = tempModel0.Replys[item];
+							//将回复中的id塞到数组
+							tempArray.push(tempModel1.UserId);
+							tempArray.push(tempModel1.ReplyId);
 						}
-
-					} else {
-						tempPage = 1;
-						zonepArray = data.RspData.Data;
-						//留言总条数
-						totalCnt = data.RspData.TotalCnt;
-						table.innerHTML = '';
-						for(var i = 0; i < zonepArray.length; i++) {
-							id = i;
-							var data = addData(i);
-							dynamiclistitem.addItem(table, data, id);
-						}
-
 					}
+					//给数组去重
+					tempArray = arrayDupRemoval(tempArray);
+					//发送获取用户资料申请
+					var tempData = {
+						vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
+						vtp: 'g' //查询类型,p(个人)g(id串)
+					}
+					console.log('tempData:' + JSON.stringify(tempData));
 
+					//21.通过用户ID获取用户资料
+					postDataPro_PostUinf(tempData, wd, function(data1) {
+						wd.close();
+						console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+						if(data1.RspCode == 0) {
+							//循环当前的个人信息返回值数组
+							for(var i in data1.RspData) {
+								//当前model
+								var tempModel = data1.RspData[i];
+								//循环留言数组
+								for(var item in tempRspData) {
+									//当前循环的model
+									var tempModel0 = tempRspData[item];
+									//对比id是否一致
+									if(tempModel0.utid == tempModel.UserId) {
+										//合并
+										tempModel0 = $.extend(tempModel0, tempModel);
+									}
+									//循环当前model中的回复数组
+									for(var item1 in tempModel0.Comments) {
+										//回复中的model
+										var tempModel1 = tempModel0.Comments[item1];
+										//对比id是否一致
+										if(tempModel.utid == tempModel1.UserId) {
+											//添加参数
+											tempModel1.ReplyIdName = tempModel.unick;
+										}
+										if(tempModel.utid == tempModel1.ReplyId) {
+											//添加参数
+											tempModel1.ReplyIdName = tempModel.unick;
+										}
+									}
+								}
+							}
+						}
+						console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+
+						var table = document.body.querySelector('.mui-table-view');
+						//判断是加载更多1，还是刷新2
+						if(flag == 1) {
+							//合并数组
+							zonepArray = zonepArray.concat(tempRspData);
+							//留言总条数,写到了协议开始
+//							totalCnt = data.RspData.TotalCnt;
+							for(var i = zonepArray.length; i < zonepArray.length; i++) {
+								id = i;
+								var data = addData(i);
+								dynamiclistitem.addItem(table, data, id);
+							}
+
+						} else {
+							tempPage = 1;
+							zonepArray = tempRspData;
+							//留言总条数
+							
+							table.innerHTML = '';
+							for(var i = 0; i < zonepArray.length; i++) {
+								id = i;
+								var data = addData(i);
+								dynamiclistitem.addItem(table, data, id);
+							}
+
+						}
+					});
 				} else {
 					mui.toast(data.RspTxt);
 				}
