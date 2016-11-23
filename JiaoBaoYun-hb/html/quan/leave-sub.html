@@ -184,6 +184,7 @@
 						wd.close();
 						console.log('获取个人资料success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
+
 							//循环当前的个人信息返回值数组
 							for (var i in data.RspData) {
 								//当前model
