@@ -112,7 +112,7 @@
 			}, 1500);
 
 		}
-var count = 0;
+		var count = 0;
 		/**
 		 * 上拉加载具体业务实现
 		 */
@@ -159,8 +159,17 @@ var count = 0;
 					var tempArray = [];
 					//先遍历回调数组，获取
 					for (var item in tempRspData) {
-						tempArray.push((tempRspData[item]).UserId);
-						tempArray.push((tempRspData[item]).ReplyId);
+						//当前循环的model
+						var tempModel0 = tempRspData[item];
+						//将当前model中id塞到数组
+						tempArray.push(tempModel0.UserId);
+						//循环当前model中的回复数组
+						for (var item1 in tempModel0.Replys) {
+							//回复中的model
+							var tempModel1 = tempModel0.Replys[item];
+							//将回复中的id塞到数组
+							tempArray.push(tempModel1.UserId);
+						}
 					}
 					//给数组去重
 					tempArray = arrayDupRemoval(tempArray);
@@ -175,12 +184,35 @@ var count = 0;
 						wd.close();
 						console.log('获取个人资料success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
-//							for (var i in ) {
-//								
-//							}
+
+							//循环当前的个人信息返回值数组
+							for (var i in data.RspData) {
+								//当前model
+								var tempModel = data.RspData[i];
+								//循环留言数组
+								for (var item in tempRspData) {
+									//当前循环的model
+									var tempModel0 = tempRspData[item];
+									//对比id是否一致
+									if (tempModel0.utid == tempModel.UserId) {
+										//合并
+										tempModel0 = $.extend(tempModel0, tempModel);
+									}
+									//循环当前model中的回复数组
+									for (var item1 in tempModel0.Replys) {
+										//回复中的model
+										var tempModel1 = tempModel0.Replys[item1];
+										//对比id是否一致
+										if (tempModel.utid == tempModel1.UserId) {
+											//合并
+											tempModel1 = $.extend(tempModel1, tempModel);
+										}
+									}
+								}
+							}
 						}
-					});
-					//判断是加载更多2，还是刷新1
+						console.log('循环遍历后的值：'+JSON.stringify(tempRspData));
+						//判断是加载更多2，还是刷新1
 					if(flag == 1) {
 						tempPage = 1;
 						leaveArray = tempRspData;
@@ -194,12 +226,26 @@ var count = 0;
 					console.log('leaveNum.innerHTML=='+leaveNum.innerHTML )
 					leaveNum.innerHTML = '留言('+data.RspData.TotalCnt+')';
 					refreshUI();
+					});
+					
 				} else {
 					mui.toast(data.RspTxt);
 				}
 			});
 		}
-
+//				"TabId": 6,
+//              "MsgContent": "我也谢谢",
+//              "ReplyId": 3,
+//              "UserId": 1,
+//              "UpperId": 4,
+//              "MsgDate": "2016-11-22 13:58:33",
+//              "utid": 1,
+//              "uid": "15264122518",
+//              "uname": "testC42C9FF8-4B18-44B5-9265-C9CEA1037070",
+//              "unick": "遥不可及",
+//              "usex": null,
+//              "utxt": null,
+//              "uimg": null
 		function refreshUI() {
 
 			var ul = document.getElementById('leaveList');
@@ -208,15 +254,12 @@ var count = 0;
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
 				li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="../../image/dynamic/u101.png"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply" class=" mui-pull-right dynamic-comment-name">' + '回复' +
-					'</span><h4>' + leaveArray[i].UserId + '</h4><p>' + leaveArray[i].MsgDate + '</p></div></div><div style="padding: 5px 10px 10px 10px;">' + leaveArray[i].MsgContent + '</div><div style="padding:0px 10px 10px 10px"><font class="common-font-family-Regular">' + leaveArray[i].MsgDate +
-					'</font></div>';
-					ul.insertBefore(li,ul.lastChild);
-			}
-						mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
-
-				console.log(123)
-			});
+					'</span><h4>' + leaveArray[i].UserId + '</h4><p>' + leaveArray[i].MsgDate + '</p></div></div><div style="padding: 5px 10px 10px 10px;">' +leaveArray[i].MsgContent + '</div><div style="padding:0px 10px 10px 10px"><font class="common-font-family-Regular">' + leaveArray[i].MsgDate +
+					'</font></div>'; 
+					ul.insertBefore(li,ul.lastChild); }
+					mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() { 
+						console.log(123) }); 
 		}
-	</script>
+			</script>
 
 </html>
