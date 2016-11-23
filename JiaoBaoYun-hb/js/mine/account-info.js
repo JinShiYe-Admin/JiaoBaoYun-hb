@@ -68,7 +68,7 @@ mui.plusReady(function() {
 	//---七牛上传头像---start---
 	//获取个人信息
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-	var pickButtonId = 'open-album';
+	var pickButtonId = 'img';
 	var getUpTokenUrl = 'http://192.168.0.178:8507/QiuToken.ashx';
 	var filePath = 'headimge' + personalUTID + '.png';
 	var getUpTokenData = {
