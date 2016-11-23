@@ -91,6 +91,7 @@
 				};
 				//请求数据
 				requestData(comData);
+				
 			})
 			/**
 			 * 下拉刷新具体业务实现
@@ -134,7 +135,8 @@ var count = 0;
 			}, 1500);
 
 		}
-
+		
+		
 		//页码，请求第几页数据
 		var tempPage = 1;
 		//当前留言的总条数
@@ -152,13 +154,39 @@ var count = 0;
 				wd.close();
 				console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
+					var tempRspData = data.RspData.Data;
+					//获取当前回调留言的个人信息，主要是头像、昵称
+					var tempArray = [];
+					//先遍历回调数组，获取
+					for (var item in tempRspData) {
+						tempArray.push((tempRspData[item]).UserId);
+						tempArray.push((tempRspData[item]).ReplyId);
+					}
+					//给数组去重
+					tempArray = arrayDupRemoval(tempArray);
+					//发送获取用户资料申请
+					var tempData = {
+						vvl:tempArray.join(),//用户id，查询的值,p传个人ID,g传ID串
+						vtp:'g'//查询类型,p(个人)g(id串)
+					}
+					console.log('tempData:'+JSON.stringify(tempData));
+					//21.通过用户ID获取用户资料
+					postDataPro_PostUinf(tempData, wd, function(data) {
+						wd.close();
+						console.log('获取个人资料success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+//							for (var i in ) {
+//								
+//							}
+						}
+					});
 					//判断是加载更多2，还是刷新1
 					if(flag == 1) {
 						tempPage = 1;
-						leaveArray = data.RspData.Data;
+						leaveArray = tempRspData;
 					} else {
 						//合并数组
-						leaveArray = leaveArray.concat(data.RspData.Data);
+						leaveArray = leaveArray.concat(tempRspData);
 					}
 					//留言总条数
 					totalCnt = data.RspData.TotalCnt;
