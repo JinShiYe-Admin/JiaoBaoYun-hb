@@ -516,6 +516,7 @@ var postDataPro_getNoReadNotesCntByUserForStudent=function(commonData, wd, callb
 //		var comData = {
 //			userId: '',//用户ID----utid
 //			studentId:'',//学生ID----stuid
+//			classId:'',//班级ID----
 //			pageIndex:'',//当前页数
 //			pageSize:''//每页记录数
 //		};
@@ -571,6 +572,7 @@ var postDataPro_getNotesByUserForStudent=function(commonData, wd, callback) {
 //所需参数
 //		var comData = {
 //			studentId: '',//用户ID----stuid
+//			classId:'',//班级ID----
 //			msgContent: '',//记事内容
 //			encType: '',//附件类型,1图片2音视频
 //			encAddr: '',//附件地址

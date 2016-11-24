@@ -142,10 +142,10 @@ var publicModel = (function($, mod) {
 		NoteType:'',//点到记事类型，1云笔记2个人空间动态
 		CheckType:'',//点到情况
 		EncType:'',//附件类型
-		EncAddr:'',//附件地址
+		EncAddr:'',//附件地址，多个的情况例如：1.jpg|2.jpg
 		EncImgAddr:'',//附件缩略图
 		
-		//个人信息,2,4,7,
+		//个人信息,2,7,
 		StudentId:'',//学生ID
 		
 		//班级信息，14，16，19，
