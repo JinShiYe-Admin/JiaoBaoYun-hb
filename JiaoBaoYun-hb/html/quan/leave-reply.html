@@ -20,25 +20,41 @@
 		<header class="mui-bar mui-bar-nav common-background-bar ">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left common-color-white"></a>
 			<h1 class="mui-title common-color-white common-font-family-Regular">留言</h1>
-			<a id="leave" class="mui-icon mui-icon-compose  mui-pull-right mui-plus-visible" style="padding-left: 20px;"></a>
+			<a id="publish" class="mui-pull-right mui-plus-visible">发表</a>
 		</header>
+		<div class="mui-content mo-background-color">
+			<div class="mui-input-row">
+				<p></p>
+				<textarea id='content' class="mui-input-clear question" placeholder="留言"></textarea>
+			</div>
+		</div>
 	</body>
 	<script>
 		mui.plusReady(function() {
 			var httpData = plus.webview.currentWebview().data;
-			console.log('httpData === ' + JSON.stringify(httpData));
-			// 等待的对话框
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_addUserSpaceMsgReply(httpData, wd, function(data) {
-				wd.close();
-				console.log('postDataPro_addUserSpaceMsgReply:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt+data.RspData.TotalCnt);
-				if(data.RspCode == 0) {
-					
-				}else{
-					mui.toast(data.RspTxt);
+			var leaveContent = document.getElementById('content');
+			events.addTap('publish', function() {
+				if(!leaveContent.value) {
+					mui.toast('请输入留言');
+					return;
 				}
+				httpData.msgContent = leaveContent.value;
+				console.log('httpData === ' + JSON.stringify(httpData));
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_addUserSpaceMsgReply(httpData, wd, function(data) {
+					wd.close();
+					console.log('postDataPro_addUserSpaceMsgReply:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
+					if(data.RspCode == 0) {
+						mui.toast('成功')
+						leaveContent.value = '';
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				})
 			})
+
 		})
-	</script>>
+	</script>
 
 	</html>

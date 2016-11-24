@@ -282,10 +282,9 @@
 //						var msgContent = '今天天气真好';//回复内容
 						var data = {
 							userId:leaveArray[cellIndex].UserId,
-							upperId:leaveArray[cellIndex].UpperId,
+							upperId:leaveArray[cellIndex].TabId,
 							replyUserId:leaveArray[cellIndex].ReplyId,
 							userOwnerId:userId,
-							msgContent:'今天天气真好'
 						}
 						events.openNewWindowWithData('leave-reply.html',data);
 						});
