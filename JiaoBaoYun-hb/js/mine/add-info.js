@@ -1,18 +1,19 @@
 var gutid; //申请记录id
 var roles = [];
 var gid; //群id
-//var choseId = 0;
+var choseId = 0;
 var mstype;//类型信息
 var list = document.getElementById('list-container');
 mui.init();
 mui.plusReady(function() {
 		//获取传值
 		window.addEventListener('postRoles', function(e) {
-			console.log(e.detail.data);
+			console.log(JSON.stringify(e.detail.data));
 			//获取申请记录id
 			gutid = e.detail.data.gutid;
 			//获取申请角色
 			roles = e.detail.data.groupRoles;
+			mstype=roles[0];
 			//获取申请群id
 			gid = e.detail.data.gid;
 			//根据不同身份,请求数据，并保存至界面
@@ -29,9 +30,9 @@ var diffRoles = function(roles) {
 		 * 角色为老师兼家长
 		 */
 		if(roles.length > 1) {
-			getData(3, setData);
+			getData(0, setData);
 		} else {
-			getData(roles[0], setData());
+			getData(roles[0], setData);
 		}
 	}
 	/**
@@ -48,6 +49,7 @@ var getData = function(role, callback) {
 			}, wd,
 			function(data) {
 				wd.close();
+				console.log('角色'+role+'获取的班级资料'+JSON.stringify(data))
 				if(data.RspCode == '0000') {
 					callback(role, data.RspData);
 				} else {
@@ -62,9 +64,12 @@ var getData = function(role, callback) {
 	 */
 var setData = function(type, data) {
 		createFirstChild(type);
+		console.log('放置数据'+JSON.stringify(data));
 		data.forEach(function(item) {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
+				li.stuid=item.stuid;
+				li.mstype=item.mstype;
 				li.innerHTML = createInner(type, item);
 				list.appendChild(li);
 			})
@@ -80,8 +85,11 @@ var setData = function(type, data) {
 	 */
 var createInner = function(type, item) {
 		return '<a class="mui-navigate-right" stuid="' + item.stuid + 'mstype="' + type + '"><img src="' +
-			item.stuimg + '" />' + item.stuname + '</a>';
+			getStuimg(item)+ '" />' + item.stuname + '</a>';
 	}
+var getStuimg = function(cell) {
+	return cell.stuimg ? cell.stuimg : '../../image/utils/default_personalimage.png';
+}
 	/**
 	 * 
 	 * @param {Object} type
@@ -110,8 +118,8 @@ var addListener = function() {
 	document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected', function(e) {
 		console.log("当前选中的为：" + e.detail.el.innerText);
 		console.log("当前选中的资料id为：" + e.detail.el.stuid);
-		choseId =parseInt(e.detail.el.stuid);
-		mstype=parseInt(e.detail.el.mstype);
+		choseId =e.detail.el.stuid?e.detail.el.stuid:0;
+		mstype=e.detail.el.mstype?e.detail.el.mstype:roles[0];
 	});
 	//保存按钮
 	//		var comData = {
@@ -126,7 +134,7 @@ var addListener = function() {
 		postDataPro_PostJoinDo({
 				gutid: gutid,
 				stat: 1,
-				mstype: mstype,
+				mstype: mstype+'',
 				lnkinfid: choseId,
 				urel: ''
 			},

@@ -28,8 +28,8 @@ mui.plusReady(function() {
 			}
 		})
 	})
-	setListListner();
-	setButtonsLisener();
+	setListListener();
+	setButtonsListener();
 })
 var setData = function(data) {
 	console.log('界面显示Data:' + JSON.stringify(data));
@@ -42,13 +42,13 @@ var setData = function(data) {
 		list.appendChild(li);
 	})
 }
-var setListListner = function() {
+var setListListener = function() {
 	mui('.mui-table-view').on('tap', '.apply-group', function() {
 		choseGroupId = parseInt(this.getAttribute('gid'));
 		console.log('选中的申请的群id：' + choseGroupId);
 	})
 }
-var setButtonsLisener=function() {
+var setButtonsListener=function() {
 	var btn_sure = document.getElementById('btn-sure');
 	var btn_cancel = document.getElementById('btn-cancle');
 	btn_sure.addEventListener('tap', function() {

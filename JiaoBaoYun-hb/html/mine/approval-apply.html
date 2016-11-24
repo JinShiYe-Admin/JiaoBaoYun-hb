@@ -8,6 +8,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/mine/apply.css" rel="stylesheet" />
 		<style>
 			html,
 			body {
@@ -26,33 +27,39 @@
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">审批入群</h1>
 		</header>
-		<div class="mui-content">
-		    <!--<div class="mui-scroll-wrapper">
-		        <div class="mui-scroll">-->
+	
+		   <div class="mui-content mui-scroll-wrapper">
+		        <div class="mui-scroll">
 		            <!--这里放置真实显示的DOM内容-->
-		            <!--<ul id="list-container" class="mui-table-view">
+		            <ul id="list-container" class="mui-table-view">
 		            </ul>
 		        </div>
-		    </div>-->
-		    <a href="#popover" id="openPopover" class="mui-btn mui-btn-primary mui-btn-block">接受</a>
-		</div>	
-		<div id="popover" class="mui-popover">
-		<h4>选择身份</h4>
-		<form class="mui-input-group">
-				<div class="mui-input-row mui-checkbox">
-					<label>家长</label>
-					<input id="check-parents" name="checkbox1" value="0" type="checkbox" >
-				</div>
-				<div class="mui-input-row mui-checkbox">
-					<label>老师</label>
-					<input id="check-tea"  name="checkbox1" value="2" type="checkbox">
-				</div>
-				<div class="mui-input-row mui-checkbox ">
-					<label>学生</label>
-					<input id="check-stu" name="checkbox1" value="3" type="checkbox">
-				</div>
+		   </div>
+		<div id="chose-roles" class="mui-popover">
+			<!--<div class="mui-popover-arrow"></div>-->
+			<form class="mui-input-group">
+				<fieldset id="">
+					<legend>选择身份:</legend>
+					<div class="div-chose">
+				      <input id="check-parents" name="checkbox1" type="checkbox" value="0" >
+				      <label>家长</label>
+				    </div>
+				    <div class="div-chose">
+				      <input id="check-tea" name="checkbox1" type="checkbox" value="2">
+				       <label>老师</label>
+				    </div>
+				    <div class="div-chose">
+				      
+				      <input id="check-stu" name="checkbox1" type="checkbox" value="3" >
+				      <label>学生</label>
+			 	   </div>
+			 	   <div class="buttons">
+			 	   	<button id="btn-sure" type="button" class="mui-btn mui-btn-green btn-sure">确认</button>
+			 	   	<button id="btn-cancle" type="button" class="mui-btn mui-btn-green btn-cancel">取消</button>
+			 	   </div>
+					
+				</fieldset>
 			</form>
-			<button id="btn-submit" type="submit" class="mui-btn mui-btn-green">确认</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/publicProtocol.js"></script>

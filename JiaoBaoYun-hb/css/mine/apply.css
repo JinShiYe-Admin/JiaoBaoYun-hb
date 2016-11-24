@@ -34,7 +34,7 @@ legend{
 .mui-popover{
 	width: 90%;
 }
-a p{
+a>p{
 	display: inline-block;
 	float: right;
 }

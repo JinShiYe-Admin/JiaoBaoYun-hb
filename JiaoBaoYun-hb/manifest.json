@@ -429,7 +429,8 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"js/utils/events.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -455,7 +456,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1368,7 +1370,9 @@
 					"js/utils/RSAEncrypt.js",
 					"js/mui.indexedlist.js",
 					"js/mine/approval-apply.js",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"image/utils/default_personalimage.png",
+					"css/mine/apply.css"
 				],
 				"refer": [
 					"html/mine/add-info.html"
@@ -1405,13 +1409,33 @@
 					"html/cloud/cloud_home.html",
 					"html/mine.html",
 					"html/tab_knowledge.html",
-					"html/clip/clip_sub.html"
+					"html/clip/clip_sub.html",
+					"html/quan/class-dynamic.html"
 				],
 				"priority": 0
 			},
 			"html/mine/add-info.html": {
 				"resources": [
-					"image/cloud/cloud_personalimage.png"
+					"image/cloud/cloud_personalimage.png",
+					"js/mine/add-info.js",
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"css/mine/apply.css"
 				],
 				"refer": [],
 				"priority": 0
