@@ -83,9 +83,11 @@
 				}
 			}
 		});
+		var userId;
 		mui.plusReady(function() {
+			userId = plus.webview.currentWebview().data;
 				var comData = {
-					userId: '1', //用户空间ID
+					userId: userId, //用户ID
 					pageIndex: (tempPage).toString(), //当前页数
 					pageSize: '10' //每页记录数
 				};
@@ -102,7 +104,7 @@
 				totalCnt = 0;
 				flag = 1;
 				var comData = {
-					userId: '1', //用户空间ID
+					userId: userId, //用户ID
 					pageIndex: (1).toString(), //当前页数
 					pageSize: '10' //每页记录数
 				};
@@ -125,7 +127,7 @@
 				} else {
 					tempPage++;
 					var comData = {
-						userId: '1', //用户空间ID
+						userId: userId, //用户ID
 						pageIndex: (tempPage).toString(), //当前页数
 						pageSize: '10' //每页记录数
 					};
@@ -152,7 +154,7 @@
 			//49.（用户空间）获取用户空间所有留言，model_userSpaceInfo
 			postDataPro_getUserSpaceMsgsById(comData, wd, function(data) {
 				wd.close();
-				console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				console.log('postDataPro_getUserSpaceMsgsById:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt+data.RspData.TotalCnt);
 				if(data.RspCode == 0) {
 					var tempRspData = data.RspData.Data;
 					//获取当前回调留言的个人信息，主要是头像、昵称
@@ -166,7 +168,7 @@
 						//循环当前model中的回复数组
 						for (var item1 in tempModel0.Replys) {
 							//回复中的model
-							var tempModel1 = tempModel0.Replys[item];
+							var tempModel1 = tempModel0.Replys[item1];
 							//将回复中的id塞到数组
 							tempArray.push(tempModel1.UserId);
 						}
@@ -180,15 +182,15 @@
 					}
 					console.log('tempData:'+JSON.stringify(tempData));
 					//21.通过用户ID获取用户资料
-					postDataPro_PostUinf(tempData, wd, function(data) {
+					postDataPro_PostUinf(tempData, wd, function(data1) {
 						wd.close();
-						console.log('获取个人资料success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-						if(data.RspCode == 0) {
+						console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+						if(data1.RspCode == 0) {
 
 							//循环当前的个人信息返回值数组
-							for (var i in data.RspData) {
+							for (var i in data1.RspData) {
 								//当前model
-								var tempModel = data.RspData[i];
+								var tempModel = data1.RspData[i];
 								//循环留言数组
 								for (var item in tempRspData) {
 									//当前循环的model
@@ -223,7 +225,6 @@
 					//留言总条数
 					totalCnt = data.RspData.TotalCnt;
 					var leaveNum = document.getElementById("leaveNum");
-					console.log('leaveNum.innerHTML=='+leaveNum.innerHTML )
 					leaveNum.innerHTML = '留言('+data.RspData.TotalCnt+')';
 					refreshUI();
 					});
@@ -253,12 +254,41 @@
 			for(var i = 0; i < leaveArray.length; i++) {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
-				li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="../../image/dynamic/u101.png"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply" class=" mui-pull-right dynamic-comment-name">' + '回复' +
-					'</span><h4>' + leaveArray[i].UserId + '</h4><p>' + leaveArray[i].MsgDate + '</p></div></div><div style="padding: 5px 10px 10px 10px;">' +leaveArray[i].MsgContent + '</div><div style="padding:0px 10px 10px 10px"><font class="common-font-family-Regular">' + leaveArray[i].MsgDate +
-					'</font></div>'; 
-					ul.insertBefore(li,ul.lastChild); }
-					mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() { 
-						console.log(123) }); 
+				var commentArr = leaveArray[i].Replys;
+				var commentHTML = '';
+				for(var j=0;j<commentArr.length;j++){
+					commentHTML =commentHTML + '<div style="padding:0px 10px 10px 10px"><span id="reply" class=" dynamic-comment-name">'+commentArr[j].unick +':</span><font class="common-font-family-Regular">' + commentArr[j].MsgContent +
+					'</font></div>';
+				}
+				if(!leaveArray[i].uimg){
+					li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="../../image/dynamic/u101.png"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply'
+					+i+'"class=" mui-pull-right dynamic-comment-name leaveReply">回复' +
+					'</span><h4>' + leaveArray[i].unick + '</h4><p>' + leaveArray[i].MsgDate + '</p></div></div><div style="padding:0px 10px 10px 10px"><font>'+leaveArray[i].MsgContent+'</font></div>'+commentHTML; 
+				}else{
+					li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="../../image/dynamic/u101.png"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply'
+					+i+'"class=" mui-pull-right dynamic-comment-name leaveReply">回复' +
+					'</span><h4>' + leaveArray[i].unick + '</h4><p>' + leaveArray[i].MsgDate + '</p></div></div><div style="padding:0px 10px 10px 10px"><font>'+leaveArray[i].MsgContent+'</font></div>'+commentHTML; 					
+				}
+
+					ul.insertBefore(li,ul.lastChild);
+			}
+					mui('.mui-table-view').on('tap', '.leaveReply', function() {
+						var cellIndex = this.id.replace('reply','');
+						console.log(cellIndex)
+//						var userserId = leaveArray[cellIndex].UserId;//留言用户ID
+//						var upperId = leaveArray[cellIndex].UpperId;//上级留言ID
+//						var replyUserId = leaveArray[cellIndex].ReplyId;//回复ID
+//						var userOwnerId = publisherId;//用户ID
+//						var msgContent = '今天天气真好';//回复内容
+						var data = {
+							userId:leaveArray[cellIndex].UserId,
+							upperId:leaveArray[cellIndex].UpperId,
+							replyUserId:leaveArray[cellIndex].ReplyId,
+							userOwnerId:userId,
+							msgContent:'今天天气真好'
+						}
+						events.openNewWindowWithData('leave-reply.html',data);
+						});
 		}
 			</script>
 
