@@ -358,6 +358,13 @@
 							for(var i in data1.RspData) {
 								//当前model
 								var tempModel = data1.RspData[i];
+								//判断img是否为null，或者空
+								if (tempModel.uimg==''||tempModel.uimg==null) {//赋值
+									tempModel.uimg = '../image/utils/default_personalimage.png';
+								}else{//修改值
+									var myDate = new Date();
+									tempModel.uimg = tempModel.uimg + '?' + myDate.getTime();
+								}
 								//循环留言数组
 								for(var item in tempRspData) {
 									//当前循环的model
