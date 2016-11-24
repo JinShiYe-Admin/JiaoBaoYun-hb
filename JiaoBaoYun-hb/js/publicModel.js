@@ -148,10 +148,10 @@ var publicModel = (function($, mod) {
 		//个人信息,2,7,
 		StudentId:'',//学生ID
 		
-		//班级信息，14，16，19，
+		//班级信息，14，19，
 		ClassId:'',//班级ID
 		
-		//个人空间----26,28，37
+		//个人空间----26，37
 		UserId:'',//用户ID，发消息用户ID
 		EncIntro:'',//附件简介
 		
@@ -179,6 +179,8 @@ var publicModel = (function($, mod) {
 		ReplyId:'',//回复用户ID
 		//51,
 		MsgContent:'',//留言或回复内容
+		//49
+		Replys:'',//回复的数组
 		
 		MsgDate:''//留言或回复时间，49，
 	}
