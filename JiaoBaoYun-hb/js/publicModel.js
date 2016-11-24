@@ -73,6 +73,7 @@ var publicModel = (function($, mod) {
 		stuname:'',//	关联学生姓名	string		否	
 		aptime:'',//	申请时间	string		否	
 		appnote:'',//	申请备注	string		否	
+		stat:''//状态，0待审,1通过,2被拒绝
 	}
 	
 	//22.通过用户资料ID获取用户各项资料
@@ -109,6 +110,14 @@ var publicModel = (function($, mod) {
 		fsize:'',//	文件大小	int			文件用
 		utid	:'',//所属人ID	int			
 		fdate:''//	上传时间	string			
+	}
+	
+	//32.通过群ID,类型获取用户自身在群的信息
+	mod.model_postGuInfo = {
+		gutid:'',//	用户在群ID
+		utid	:'',//用户表ID
+		ugname:'',//	用户在群昵称
+		mstype:'',//	类型,0家长,1管理员,2老师,3学生
 	}
 	
 	

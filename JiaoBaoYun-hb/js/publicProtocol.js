@@ -401,6 +401,72 @@ var postDataPro_PostDiFiE=function(commonData, wd, callback) {
 }
 
 
+//30.通过学生资料ID获取关联的家长
+//所需参数
+//		var comData = {
+//			vvl:'',//群成员群ID，stuid
+//		};
+//返回值model：model_userDataInfo
+var postDataPro_PostStuU=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostStuU', enData, commonData, 1, wd, callback);
+}
+
+
+//31.群成员退出群或者剔除群成员
+//所需参数
+//		var comData = {
+//			vvl:'',//群成员群ID，gutid
+//		};
+var postDataPro_PostGuD=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostGuD', enData, commonData, 1, wd, callback);
+}
+
+
+//32.通过群ID,类型获取用户自身在群的信息
+//所需参数
+//		var comData = {
+//			vvl:'',//群成员群ID，gutid
+//			vtp:''//类型，0家长,1管理员,2老师,3学生,-1全部
+//		};
+//返回值model：model_postGuInfo
+var postDataPro_PostGuI=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostGuI', enData, commonData, 1, wd, callback);
+}
+
+//33.根据资料表ID删除资料
+//所需参数
+//		var comData = {
+//			vvl:'',//资料ID，stuid
+//		};
+var postDataPro_PostStuD=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostStuD', enData, commonData, 1, wd, callback);
+}
+
+//34.通过个人用户表ID获取我的入群申请
+//所需参数
+//		var comData = {
+//		};
+//返回值model：model_groupRequestUser
+var postDataPro_PostMJoin=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostMJoin', enData, commonData, 1, wd, callback);
+}
+
+
 //---------------------------------------家校圈-----------------------------------------------------------------------------------------------------------
 //家校圈接口
 
