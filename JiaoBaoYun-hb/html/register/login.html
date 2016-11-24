@@ -163,12 +163,11 @@
 		<script src="../../js/libs/jquery.js" type="text/javascript" charset="utf-8"></script>
 
 		<script>
-		
 			(function($, doc) {
 				mui.init({
 					statusBarBackground: '#f7f7f7'
 				});
-				
+
 				$.plusReady(function() {
 					events.preload('register_phoneNumber.html');
 					plus.screen.lockOrientation("portrait-primary");
@@ -222,11 +221,13 @@
 							wd.close();
 							console.log('token续订success:RspCode:' + data0.RspCode + ',RspData:' + JSON.stringify(data0.RspData) + ',RspTxt:' + data0.RspTxt);
 							if(data0.RspCode == 0) {
-//								window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data0.RspData;
+								//								window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data0.RspData;
 								//获取个人信息
 								var comData1 = {
-									vvl: personal.utid //群ID,查询的值
+									vvl: personal.utid, //用户id，查询的值,p传个人ID,g传ID串
+									vtp: 'p' //查询类型,p(个人)g(id串)
 								};
+								//21.通过用户ID获取用户资料
 								postDataPro_PostUinf(comData1, wd, function(data) {
 									wd.close();
 									console.log('获取个人信息success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
@@ -241,8 +242,8 @@
 										tempInfo.utxt = tepI0000.utxt;
 										tempInfo.uimg = tepI0000.uimg;
 										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
-										console.log('登录保存的个人信息：'+JSON.stringify(tempInfo))
-										//跳到主界面
+										console.log('登录保存的个人信息：' + JSON.stringify(tempInfo))
+											//跳到主界面
 										events.openNewWindowWithData('../index/index.html', '');
 									} else {
 										mui.toast(data.RspTxt);
@@ -394,12 +395,12 @@
 								} else {
 									mui.toast('登录成功')
 										//存储到手机本地
-										data.RspData.ispw = '1';
+									data.RspData.ispw = '1';
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 									//存储自动登录
-//									loginInfo.auto = 1;
-//									window.myStorage.setItem(window.storageKeyName.AUTOLOGIN, loginInfo);
-									events.openNewWindowWithData('../../html/index.html', '');
+									//									loginInfo.auto = 1;
+									//									window.myStorage.setItem(window.storageKeyName.AUTOLOGIN, loginInfo);
+									events.openNewWindowWithData('../index/index.html', '');
 								}
 							});
 						} else {

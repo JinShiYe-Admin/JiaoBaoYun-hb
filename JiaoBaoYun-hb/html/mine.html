@@ -18,15 +18,14 @@
 	<body>
 		<div class="mui-content">
 
-
 			<div id="title" class="title">
-				<img id="uimg" src="../image/slide_navigation/img3.jpg" class="head-portrait" /><br />
+				<img id="uimg" style="height: 60px;width: 60px;" src="../image/utils/default_personalimage.png" class="head-portrait" /><br />
 				<h4 id="uname">姓名</h4>
 				<p id="utext">暂无信息</p>
 			</div>
 
 			<!--各项-->
-			<ul class="mui-table-view mui-table-view-chevron" >
+			<ul class="mui-table-view mui-table-view-chevron">
 
 				<li class="mui-table-view-cell" position='0'>
 					<a class="mui-navigate-right" open-type="common">
@@ -90,13 +89,12 @@
 			mui.plusReady(function() {
 				main = plus.webview.currentWebview().opener();
 				//获取个人信息
-//				personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
-			
+				//				personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
 
 				//展示个人信息
 				getInfo();
-					//				events.jumpPage(document.getElementById('title'),'mine/account-info.html');
-					//点击title跳转到账号信息界面
+				//				events.jumpPage(document.getElementById('title'),'mine/account-info.html');
+				//点击title跳转到账号信息界面
 				events.addTap('title', function() {
 					closeMenu()
 					events.openNewWindow('mine/account-info.html')
@@ -142,25 +140,26 @@
 
 				});
 			})
-			window.addEventListener('infoChanged',function(){
-				getInfo()
-			})
-			/**
-			 * @param {Object} info
-			 * "utid":"3",
-			 * "token":"Pc7Grc0gP7SacraGNpYpdDMrI9w=",
-			 * "uid":"18906444490","uname":
-			 * "testA0000055B6AE73",
-			 * "unick":"",
-			 * "usex":"0",
-			 * "utxt":"",
-			 * "uimg":""}
-			 */
+			window.addEventListener('infoChanged', function() {
+					getInfo()
+				})
+				/**
+				 * @param {Object} info
+				 * "utid":"3",
+				 * "token":"Pc7Grc0gP7SacraGNpYpdDMrI9w=",
+				 * "uid":"18906444490","uname":
+				 * "testA0000055B6AE73",
+				 * "unick":"",
+				 * "usex":"0",
+				 * "utxt":"",
+				 * "uimg":""}
+				 */
 			function getInfo() {
-				 info = myStorage.getItem(storageKeyName.PERSONALINFO);
-					console.log('我的界面获取的个人信息：' + JSON.stringify(info))
+				info = myStorage.getItem(storageKeyName.PERSONALINFO);
+				console.log('我的界面获取的个人信息：' + JSON.stringify(info))
 				if(info.uimg) {
-					document.getElementById('uimg').src = info.uimg;
+					var myDate = new Date();
+					document.getElementById('uimg').src = info.uimg + '?' + myDate.getTime();
 				}
 				if(info.uname) {
 					document.getElementById('uname').innerText = info.uname;

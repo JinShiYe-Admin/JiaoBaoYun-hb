@@ -43,6 +43,7 @@ var publicModel = (function($, mod) {
 	//13.通过群ID获取群的正常用户
 	mod.model_groupNormalUser = {
 		gid:'',//群ID
+		gutid:'',//用户在群ID
 		utid:'',//用户tid
 		ugname:'',//用户在群昵称，用户在群里的备注名称
 		ugnick:'',//用户昵称，用户资料昵称
@@ -61,17 +62,18 @@ var publicModel = (function($, mod) {
 	
 	//17.通过审批者ID获取相应的入群邀请或申请
 	mod.model_groupRequestUser = {
-//		gutid	邀请记录ID	int		否	
-//		gid	群ID	int		否	
-//		gname	群名	string		否	
-//		invname	邀请人姓名	string		否	申请人
-//		invimg	邀请人头像	string		否	申请人
-//		gimg	群头像	string		否	
-//		beinvname	被邀请人姓名	string		否	
-//		mstype	邀请成为类型	int		否	0家长,1管理员,2老师,3学生
-//		stuname	关联学生姓名	string		否	
-//		aptime	申请时间	string		否	
-//		appnote	申请备注	string		否	
+		gutid:'',//	邀请记录ID	int		否	
+		gid:'',//	群ID	int		否	
+		gname:'',//	群名	string		否	
+		invname:'',//	邀请人姓名	string		否	申请人
+		invimg:'',//	邀请人头像	string		否	申请人
+		gimg	:'',//群头像	string		否	
+		beinvname:'',//	被邀请人姓名	string		否	
+		mstype:'',//	邀请成为类型	int		否	0家长,1管理员,2老师,3学生
+		stuname:'',//	关联学生姓名	string		否	
+		aptime:'',//	申请时间	string		否	
+		appnote:'',//	申请备注	string		否	
+		stat:''//状态，0待审,1通过,2被拒绝
 	}
 	
 	//22.通过用户资料ID获取用户各项资料
@@ -94,6 +96,28 @@ var publicModel = (function($, mod) {
 		stuid:'',//资料ID
 		gutid:'',//账号在群ID
 		ustuid:''//关联ID
+	}
+	
+	//云盘
+	
+	//26.用户云盘顶层文件及文件夹获取
+	mod.model_PostDiFi = {
+		pid:'',//父ID	int			该文件的上层ID
+		fid:'',//文件ID	int			该文件ID
+		fname:'',//	文件名称	string			文件名称
+		ftype:'',//	文件类型	string			存文件的扩展名,如.file为文件夹
+		fpath:'',//	文件路径	string			文件路径,为文件用
+		fsize:'',//	文件大小	int			文件用
+		utid	:'',//所属人ID	int			
+		fdate:''//	上传时间	string			
+	}
+	
+	//32.通过群ID,类型获取用户自身在群的信息
+	mod.model_postGuInfo = {
+		gutid:'',//	用户在群ID
+		utid	:'',//用户表ID
+		ugname:'',//	用户在群昵称
+		mstype:'',//	类型,0家长,1管理员,2老师,3学生
 	}
 	
 	

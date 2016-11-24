@@ -24,34 +24,15 @@
 	</body>
 
 	<script type="text/javascript">
-		//启用双击监听
-		mui.init({
-			gestureConfig: {
-				doubletap: true
-			},
-			subpages: [{
-				url: 'zonep_sub.html',
-				id: 'zonep_sub.html',
-				styles: {
-					top: '45px',
-					bottom: localStorage.getItem('$Statusbar'),
-				}
-			}]
-		});
 		mui.plusReady(function() {
+			var data = plus.webview.currentWebview().data;
+			events.initSubPage('zonep_sub.html', data);
+//			var tempview =  plus.webview.getWebviewById('zonep_sub.html');
 			events.addTap('leave', function() {
-				events.openNewWindowWithData('../quan/leave.html',{});
+				events.openNewWindowWithData('../quan/leave.html', data);
 			})
 
 		})
-
-		var contentWebview = null;
-		document.querySelector('header').addEventListener('doubletap', function() {
-			if(contentWebview == null) {
-				contentWebview = plus.webview.currentWebview().children()[0];
-			}
-			contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
-		});
 	</script>
 
 </html>

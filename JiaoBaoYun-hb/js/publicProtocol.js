@@ -17,6 +17,19 @@ document.write('<script src="../../js/utils/signHmacSHA1.js"><\/script>');
 document.write('<script src="../../js/libs/jquery.js"><\/script>');
 
 
+//给数组去重
+var arrayDupRemoval = function(array) {
+	var res = [];
+	var json = {};
+	for(var i = 0; i < array.length; i++) {
+		if(!json[array[i]]) {
+			res.push(array[i]);
+			json[array[i]] = 1;
+		}
+	}
+	return res;
+}
+
 	//6.用户修改各项用户信息
 //调用方法
 //var comData = {
@@ -259,7 +272,8 @@ var postDataPro_PostInvDo=function(commonData, wd, callback) {
 //21.通过用户ID获取用户资料
 //所需参数
 //		var comData = {
-//			vvl:''//用户id
+//			vvl:'',//用户id，查询的值,p传个人ID,g传ID串
+//			vtp:''//查询类型,p(个人)g(id串)
 //		};
 //返回值model：model_userInfo
 var postDataPro_PostUinf=function(commonData, wd, callback) {
@@ -330,8 +344,130 @@ var postDataPro_PostLoginOut=function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINURL + 'PostLoginOut', enData, commonData, 1, wd, callback);
 }
 
+//---------------------------------------云盘-----------------------------------------------------------------------------------------------------------
+
+//26.用户云盘顶层文件及文件夹获取
+//所需参数
+//		var comData = {
+//		};
+var postDataPro_PostDiFi=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostDiFi', enData, commonData, 1, wd, callback);
+}
+
+//27.用户云盘文件上传
+//所需参数
+//		var comData = {
+//			pid:'',//	父ID，该文件的上层ID
+//			fname:'',//	文件名称，文件或文件夹名称,文件存扩展名之前的名称
+//			ftype:'',//	文件类型，存文件的扩展名,如.file为文件夹
+//			fpath:'',//	文件路径，文件路径,为文件用
+//			fsize:''//	文件大小，文件用
+//		};
+var postDataPro_PostDiFiA=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostDiFiA', enData, commonData, 1, wd, callback);
+}
 
 
+//28.用户修改文件或文件夹名称
+//所需参数
+//		var comData = {
+//			vvl:'',//文件ID
+//			vvl1:''//文件名称
+//		};
+var postDataPro_PostDiFiE=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostDiFiE', enData, commonData, 1, wd, callback);
+}
+
+//29.用户修改群昵称
+//所需参数
+//		var comData = {
+//			vvl:'',//群成员群ID，gutid
+//			vvl1:''//群昵称
+//		};
+var postDataPro_PostDiFiE=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostDiFiE', enData, commonData, 1, wd, callback);
+}
+
+
+//30.通过学生资料ID获取关联的家长
+//所需参数
+//		var comData = {
+//			vvl:'',//群成员群ID，stuid
+//		};
+//返回值model：model_userDataInfo
+var postDataPro_PostStuU=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostStuU', enData, commonData, 1, wd, callback);
+}
+
+
+//31.群成员退出群或者剔除群成员
+//所需参数
+//		var comData = {
+//			vvl:'',//群成员群ID，gutid
+//		};
+var postDataPro_PostGuD=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostGuD', enData, commonData, 1, wd, callback);
+}
+
+
+//32.通过群ID,类型获取用户自身在群的信息
+//所需参数
+//		var comData = {
+//			vvl:'',//群成员群ID，gutid
+//			vtp:''//类型，0家长,1管理员,2老师,3学生,-1全部
+//		};
+//返回值model：model_postGuInfo
+var postDataPro_PostGuI=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostGuI', enData, commonData, 1, wd, callback);
+}
+
+//33.根据资料表ID删除资料
+//所需参数
+//		var comData = {
+//			vvl:'',//资料ID，stuid
+//		};
+var postDataPro_PostStuD=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostStuD', enData, commonData, 1, wd, callback);
+}
+
+//34.通过个人用户表ID获取我的入群申请
+//所需参数
+//		var comData = {
+//		};
+//返回值model：model_groupRequestUser
+var postDataPro_PostMJoin=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostMJoin', enData, commonData, 1, wd, callback);
+}
+
+
+//---------------------------------------家校圈-----------------------------------------------------------------------------------------------------------
 //家校圈接口
 
 
