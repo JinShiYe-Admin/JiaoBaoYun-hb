@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/mui.css" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<script type="text/javascript" src="../../js/mui.min.js"></script>
+		<!--公用事件js文件-->
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav common-background-bar ">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left common-color-white"></a>
+			<h1 class="mui-title common-color-white common-font-family-Regular">留言</h1>
+			<a id="publish" class="mui-pull-right mui-plus-visible">发表</a>
+		</header>
+		<div class="mui-content mo-background-color">
+			<div class="mui-input-row">
+				<p></p>
+				<textarea id='content' class="mui-input-clear question" placeholder="留言"></textarea>
+			</div>
+		</div>
+	</body>
+	<script>
+		mui.plusReady(function() {
+			var httpData = plus.webview.currentWebview().data;
+			var leaveContent = document.getElementById('content');
+			events.addTap('publish', function() {
+				if(!leaveContent.value) {
+					mui.toast('请输入留言');
+					return;
+				}
+				httpData.msgContent = leaveContent.value;
+				console.log('httpData === ' + JSON.stringify(httpData));
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_addUserSpaceMsgReply(httpData, wd, function(data) {
+					wd.close();
+					console.log('postDataPro_addUserSpaceMsgReply:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
+					if(data.RspCode == 0) {
+						mui.toast('成功')
+						leaveContent.value = '';
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				})
+			})
+
+		})
+	</script>
+
+	</html>
