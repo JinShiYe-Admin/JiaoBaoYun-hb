@@ -129,6 +129,13 @@ function getGroupList() {
 			requestTimes2 = datasource.length; //记录请求次数
 			var userList = [];
 			for(var i = 0; i < datasource.length; i++) {
+				//判断img是否为null，或者空
+				if(datasource[i].gimg == '' || datasource[i].gimg == null) { //赋值
+					datasource[i].gimg = '../../image/utils/default_personalimage.png';
+				} else { //修改值
+					var myDate = new Date();
+					datasource[i].uimg = datasource[i].uimg[i] + '?' + myDate.getTime();
+				}
 				getTopList(i);
 				getBottomList(i, userList);
 
@@ -179,7 +186,7 @@ function getTopList(i) {
 					var li = document.createElement('li');
 					li.id = 'tarClass' + i;
 					li.className = 'mui-table-view-cell mui-media tarClass';
-					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">' + '<p class="time">' + topArray[i].PublishDate +
+					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="'+datasource[i].gimg+'">' + '<p class="time">' + topArray[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
 						datasource[i].gname +
@@ -229,11 +236,18 @@ function getBottomList(index, userLists) {
 				for(var i = 0; i < datasource.length; i++) {
 					var userIds = [];
 					for(var j = 0; j < datasource[i].userList.length; j++) {
-
-						userIds.push(datasource[i].userList[j].utid)
+						tempModel = datasource[i].userList[j];
+								//判断img是否为null，或者空
+								if (tempModel.uimg==''||tempModel.uimg==null) {//赋值
+									tempModel.uimg = '../../image/utils/default_personalimage.png';
+								}else{//修改值
+									var myDate = new Date();
+									tempModel.uimg = tempModel.uimg + '?' + myDate.getTime();
+								}
+						userIds.push(tempModel.utid)
 					}
 					userIds.join(',');
-					var upString = '['+userIds.join()+']';
+					var upString = '[' + userIds.join() + ']';
 					getUserSpaces(upString, i);
 
 				}
@@ -325,12 +339,12 @@ function refreshUI() {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell mui-media parent-cell' + i;
 				if(userList[j].NoReadCnt != 0) {
-					li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png" />' +
+					li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="'+userList[j].uimg+'" />' +
 						'<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[j].NoReadCnt + '</span></span>' + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 						userList[j].ugname + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
 					ul.insertBefore(li, ul.firstChild);
 				} else {
-					li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png" />' +
+					li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="'+userList[j].uimg+'" />' +
 						'<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 						userList[j].ugname + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
 					ul.insertBefore(li, ul.firstChild);
@@ -390,12 +404,12 @@ function refreshUI() {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell mui-media parent-cell' + i;
 				if(userList[j].NoReadCnt != 0) {
-					li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png" />' +
+					li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="'+userList[j].uimg+'" />' +
 						'<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[j].NoReadCnt + '</span></span>' + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 						userList[j].ugname + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
 					ul.insertBefore(li, ul.firstChild);
 				} else {
-					li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png" />' +
+					li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="'+userList[j].uimg+'" />' +
 						'<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 						userList[j].ugname + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
 					ul.insertBefore(li, ul.firstChild);
