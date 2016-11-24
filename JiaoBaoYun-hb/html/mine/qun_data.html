@@ -1,9 +1,14 @@
+<!--
+	作者：444811716@qq.com
+	时间：2016-11-24
+	描述：群资料（资料只有学生和老师两种类型，家长类型等同于学生类型）
+-->
 <!doctype html>
 <html>
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>群资料</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
@@ -143,11 +148,10 @@
 		<body>
 			<header class="mui-bar mui-bar-nav">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h1 class="mui-title">群</h1>
+				<h1 class="mui-title" style="text-align: left;">群资料</h1>
 			</header>
 			<div class="mui-content">
 				<span id="noqun" class="mui-icon mui-icon-plus addqun" style="display: none;">新增群按钮</span>
-
 				<div id="lineblue" class="keep-line-blue" style="display: none;"></div>
 				<div id="slider" class="mui-slider" style="display: none;">
 					<div id="sliderSegmentedControl" style="background: #F2F2F2;" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
@@ -233,6 +237,54 @@
 					mui('#type').on('tap', 'a', function() {
 						console.log('type：' + this.getAttribute('id'));
 						showType(this.getAttribute('id'));
+					});
+
+					//点击资料
+					mui('.mui-content').on('tap', '.keep-member', function() {
+						console.log('keep-member：群id：' + this.getAttribute('data-gid'));
+						console.log('keep-member：资料id：' + this.getAttribute('data-stuid'));
+						console.log('keep-member：资料名：' + this.getAttribute('data-stuname'));
+						var gid = this.getAttribute('data-gid'); //群id
+						var gname = ''; //群名称
+						var stuid = this.getAttribute('data-stuid'); //资料id
+						var stuname = this.getAttribute('data-stuname') //资料名称
+						var mstype = ''; //用户管理角色
+						mui.each(qunList, function(index, item) {
+							if(item.gid == gid) {
+								gname = item.gname;
+								mstype = item.mstype;
+								return false;
+							}
+						});
+						var passData = {
+							gid: gid, //群id
+							gname: gname, //群名称
+							mstype: mstype, //用户管理角色,0家长,1管理员,2老师,3学生
+							stuid: stuid, //资料id
+							stuname: stuname, //资料名称
+							type: type, //资料类型
+						}
+						events.openNewWindowWithData('qun_data_details.html', passData);
+					});
+
+					//点击创建资料
+					mui('.mui-content').on('tap', '.keep-member2', function() {
+						console.log('keep-member2：群id' + this.getAttribute('data-gid'));
+						console.log('keep-member2：资料类型:' + type);
+						var gid = this.getAttribute('data-gid');
+						var gname = '';
+						mui.each(qunList, function(index, item) {
+							if(item.gid == gid) {
+								gname = item.gname;
+								return false;
+							}
+						});
+						var passData = {
+							gid: gid, //群id
+							gname: gname, //群名称
+							type: type, //资料类型
+						}
+						events.openNewWindowWithData('qun_data_create.html', passData);
 					});
 
 					//---获取群数据---start---
@@ -346,8 +398,8 @@
 							   		<div class="keep-box-shadow-border keep-member2 addmember" data-gid="' + qun.gid + '">\
 										<img src="../../image/cloud/record_add.png" style="height: 30px;width: 30px;margin-top: 18px;" />\
 									</div></li>';
-						if(qun.mstype!='1'){
-							html2='<li id="addData_' + memberType + '_' + qun.gid + '" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3 ">\
+						if(qun.mstype != '1') { //0家长,1管理员,2老师,3学生
+							html2 = '<li id="addData_' + memberType + '_' + qun.gid + '" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3 ">\
 							   	   </li>';
 						}
 						var html3 = '</div></ul></div></div>';
@@ -373,7 +425,8 @@
 								type3 = '老师';
 								break;
 							case 'parents':
-								vvl1 = '0';
+								//vvl1 = '0';
+								vvl1 = '3';
 								type3 = '家长';
 								break;
 							default:
@@ -404,7 +457,7 @@
 									console.log('getMemData:' + JSON.stringify(item));
 									var qunBot = document.getElementById("bot_" + type2 + '_' + qun.gid).querySelector('.mui-row');
 									var table = document.getElementById("addData_" + type2 + '_' + qun.gid);
-									addData(qunBot, item,table);
+									addData(qunBot, item, table);
 								});
 							} else if(data.RspCode == 9) {
 								//查询为空
@@ -452,7 +505,7 @@
 						//删除按钮
 						var html1 = '<div class="mui-icon iconfont icon-close" data-stuid="' + member.stuid + '" data-gid="' + member.gid + '" style="display: none;"></div>';
 						//成员,
-						var html2 = '<div class="keep-box-shadow-border keep-member" data-stuid="' + member.stuid + '" data-gid="' + member.gid + '" data-ugnick="' + member.ugnick + '">';
+						var html2 = '<div class="keep-box-shadow-border keep-member" data-stuid="' + member.stuid + '" data-gid="' + member.gid + '" data-stuname="' + member.stuname + '">';
 						//头像
 						var html3 = '';
 						if(member.stuimg != null && member.stuimg != '') {
