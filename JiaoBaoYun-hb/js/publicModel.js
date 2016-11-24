@@ -73,6 +73,7 @@ var publicModel = (function($, mod) {
 		stuname:'',//	关联学生姓名	string		否	
 		aptime:'',//	申请时间	string		否	
 		appnote:'',//	申请备注	string		否	
+		stat:''//状态，0待审,1通过,2被拒绝
 	}
 	
 	//22.通过用户资料ID获取用户各项资料
@@ -111,6 +112,14 @@ var publicModel = (function($, mod) {
 		fdate:''//	上传时间	string			
 	}
 	
+	//32.通过群ID,类型获取用户自身在群的信息
+	mod.model_postGuInfo = {
+		gutid:'',//	用户在群ID
+		utid	:'',//用户表ID
+		ugname:'',//	用户在群昵称
+		mstype:'',//	类型,0家长,1管理员,2老师,3学生
+	}
+	
 	
 	//家校圈
 	//2.（点到记事）获取用户未读点到记事列表
@@ -133,16 +142,16 @@ var publicModel = (function($, mod) {
 		NoteType:'',//点到记事类型，1云笔记2个人空间动态
 		CheckType:'',//点到情况
 		EncType:'',//附件类型
-		EncAddr:'',//附件地址
+		EncAddr:'',//附件地址，多个的情况例如：1.jpg|2.jpg
 		EncImgAddr:'',//附件缩略图
 		
-		//个人信息,2,4,7,
+		//个人信息,2,7,
 		StudentId:'',//学生ID
 		
-		//班级信息，14，16，19，
+		//班级信息，14，19，
 		ClassId:'',//班级ID
 		
-		//个人空间----26,28，37
+		//个人空间----26，37
 		UserId:'',//用户ID，发消息用户ID
 		EncIntro:'',//附件简介
 		
@@ -170,6 +179,8 @@ var publicModel = (function($, mod) {
 		ReplyId:'',//回复用户ID
 		//51,
 		MsgContent:'',//留言或回复内容
+		//49
+		Replys:'',//回复的数组
 		
 		MsgDate:''//留言或回复时间，49，
 	}

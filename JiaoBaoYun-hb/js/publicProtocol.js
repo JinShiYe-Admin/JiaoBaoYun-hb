@@ -401,6 +401,115 @@ var postDataPro_PostDiFiE=function(commonData, wd, callback) {
 }
 
 
+//30.通过学生资料ID获取关联的家长
+//所需参数
+//		var comData = {
+//			vvl:'',//群成员群ID，stuid
+//		};
+//返回值model：model_userDataInfo
+var postDataPro_PostStuU=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostStuU', enData, commonData, 1, wd, callback);
+}
+
+
+//31.群成员退出群或者剔除群成员
+//所需参数
+//		var comData = {
+//			vvl:'',//群成员群ID，gutid
+//		};
+var postDataPro_PostGuD=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostGuD', enData, commonData, 1, wd, callback);
+}
+
+
+//32.通过群ID,类型获取用户自身在群的信息
+//所需参数
+//		var comData = {
+//			vvl:'',//群成员群ID，gutid
+//			vtp:''//类型，0家长,1管理员,2老师,3学生,-1全部
+//		};
+//返回值model：model_postGuInfo
+var postDataPro_PostGuI=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostGuI', enData, commonData, 1, wd, callback);
+}
+
+//33.根据资料表ID删除资料
+//所需参数
+//		var comData = {
+//			vvl:'',//资料ID，stuid
+//		};
+var postDataPro_PostStuD=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostStuD', enData, commonData, 1, wd, callback);
+}
+
+//34.通过个人用户表ID获取我的入群申请
+//所需参数
+//		var comData = {
+//		};
+//返回值model：model_groupRequestUser
+var postDataPro_PostMJoin=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostMJoin', enData, commonData, 1, wd, callback);
+}
+
+
+//35.个人获取对某人或一群人的备注
+//所需参数
+//		var comData = {
+//			vvl:''//被备注用户ID,utid或utid串
+//		};
+//返回值
+var postDataPro_PostUmk=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostUmk', enData, commonData, 1, wd, callback);
+}
+
+
+//36.用户修改或添加对个人备注
+//所需参数
+//		var comData = {
+//			vvl:''//被备注人ID,butid
+//			vvl1:''//备注昵称,
+//		};
+//返回值
+var postDataPro_PostUmkA=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostUmkA', enData, commonData, 1, wd, callback);
+}
+
+
+//37.用户删除对个人备注
+//所需参数
+//		var comData = {
+//			vvl:''//被备注人ID,butid
+//		};
+//返回值
+var postDataPro_PostUmkD=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostUmkD', enData, commonData, 1, wd, callback);
+}
+
+
 //---------------------------------------家校圈-----------------------------------------------------------------------------------------------------------
 //家校圈接口
 
@@ -450,6 +559,7 @@ var postDataPro_getNoReadNotesCntByUserForStudent=function(commonData, wd, callb
 //		var comData = {
 //			userId: '',//用户ID----utid
 //			studentId:'',//学生ID----stuid
+//			classId:'',//班级ID----
 //			pageIndex:'',//当前页数
 //			pageSize:''//每页记录数
 //		};
@@ -505,12 +615,13 @@ var postDataPro_getNotesByUserForStudent=function(commonData, wd, callback) {
 //所需参数
 //		var comData = {
 //			studentId: '',//用户ID----stuid
+//			classId:'',//班级ID----
 //			msgContent: '',//记事内容
 //			encType: '',//附件类型,1图片2音视频
 //			encAddr: '',//附件地址
 //			encImg: '',//附件缩略图地址
 //			teacherId: '',//发布教师ID
-//			noteType: '',//点到记事类型1点到2记事
+//			noteType: '',//点到记事类型1点到2记事3仅文字
 //			checkType: ''//点到类型,1 正常2 旷课3 迟到4 早退5 其他
 //		};
 //返回值：RspData，新增ID，非0为正确
@@ -539,6 +650,7 @@ var postDataPro_addNoteForMutiUsers=function(commonData, wd, callback) {
 //所需参数
 //		var comData = {
 //			userId: '',//用户ID----utid
+//			classId:'',//班级ID----
 //			studentId:''//学生ID----stuid
 //		};
 //1为正确
@@ -676,7 +788,7 @@ var postDataPro_getClassSpacesByUserForClass=function(commonData, wd, callback) 
 //		var comData = {
 //			classId: '',//班级ID
 //			msgContent: '',//记事内容
-//			encType: '',//附件类型,1图片2音视频
+//			encType: '',//附件类型,1图片2音视频3仅文字
 //			encAddr: '',//附件地址
 //			encImg: '',//附件缩略图地址
 //			teacherId: ''//发布教师ID
@@ -925,7 +1037,7 @@ var postDataPro_getUserSpacesByUser=function(commonData, wd, callback) {
 //		var comData = {
 //			userId: '',//用户ID
 //			msgContent:'',//记事内容
-//			encType:'',//附件类型，1图片2音视频
+//			encType:'',//附件类型，1图片2音视频3仅文字
 //			encAddr:'',//附件地址
 //			encImg:'',//附件缩略图地址
 //			encIntro:'',//附件简介
@@ -1079,7 +1191,7 @@ var postDataPro_delUserSpaceCommentById=function(commonData, wd, callback) {
 //49.（用户空间）获取用户空间所有留言
 //所需参数
 //		var comData = {
-//			userId: '',//用户空间ID
+//			userId: '',//用户空间ID，留言板所有者
 //			pageIndex:'',//当前页数
 //			pageSize:''//每页记录数
 //		};
@@ -1122,8 +1234,8 @@ var postDataPro_getUserSpaceMsgReplysByUser=function(commonData, wd, callback) {
 //52.（用户空间）新增某用户某用户空间留言
 //所需参数
 //		var comData = {
-//			userId: '',//用户ID
-//			userSpaceId:'',//用户空间ID
+//			userId: '',//留言用户ID
+//			userOwnerId:'',//用户ID，留言板所有者
 //			msgContent:''//留言内容
 //		};
 //1为正确
@@ -1232,3 +1344,126 @@ var postDataPro_setCommentMsgReadByUser=function(commonData, wd, callback) {
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/setCommentMsgReadByUser', enData, commonData, 2, wd, callback);
 }
+
+
+//60.（用户空间）修改留言板备注
+//所需参数
+//		var comData = {
+//			userId: '',//用户ID
+//			note:''//备注，即主人寄语
+//		};
+//返回1为正确
+var postDataPro_setMsgNoteByUser=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/setMsgNoteByUser', enData, commonData, 2, wd, callback);
+}
+
+//61.（用户空间）新增留言板
+//所需参数
+//		var comData = {
+//			userId: ''//用户ID，用户注册时调用
+//		};
+//返回1为正确
+var postDataPro_addNewUserMsgInfo=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/addNewUserMsgInfo', enData, commonData, 2, wd, callback);
+}
+
+//62.（用户空间）新增用户空间
+//所需参数
+//		var comData = {
+//			userId: ''//用户ID，用户注册时调用
+//		};
+//返回1为正确
+var postDataPro_setCommentMsgReadByUser=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/setCommentMsgReadByUser', enData, commonData, 2, wd, callback);
+}
+
+//63.（点到记事）新增学生点到记事空间
+//所需参数
+//		var comData = {
+//			studentId: '',//学生ID，添加学生时调用
+//			classId:''//班级ID，
+//		};
+//返回1为正确
+var postDataPro_addNewNoteInfo=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/addNewNoteInfo', enData, commonData, 2, wd, callback);
+}
+
+//64.（班级空间）新增班级空间
+//所需参数
+//		var comData = {
+//			classId: ''//班级ID，新建班级时调用
+//		};
+//返回1为正确
+var postDataPro_addNewClassInfo=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/addNewClassInfo', enData, commonData, 2, wd, callback);
+}
+
+//65.（用户空间）获取用户空间所有已读用户
+//所需参数
+//		var comData = {
+//			classId: ''//班级ID，新建班级时调用
+//		};
+//返回Users，列表数据	Array
+var postDataPro_getReadUserBySpaceId=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getReadUserBySpaceId', enData, commonData, 2, wd, callback);
+}
+
+//66.（点到记事）获取针对某班的点到记事列表
+//所需参数
+//		var comData = {
+//			classId: '',//班级ID
+//			pageIndex:'',//当前页数
+//			pageSize:''//每页记录数
+//		};
+//返回model_userNoteInfo
+var postDataPro_getNotesForClass=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getNotesForClass', enData, commonData, 2, wd, callback);
+}
+
+//67.（班级空间）获取班级空间所有已读用户
+//所需参数
+//		var comData = {
+//			classSpaceId: ''//班级空间ID
+//		};
+//返回Users，列表数据	Array
+var postDataPro_getReadUserBySpaceId=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getReadUserBySpaceId', enData, commonData, 2, wd, callback);
+}
+
+//68.（班级空间）获取班级空间所有点赞用户
+//所需参数
+//		var comData = {
+//			classSpaceId: ''//班级空间ID
+//		};
+//返回Users，列表数据	Array
+var postDataPro_getIsLikeUsersById=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getIsLikeUsersById', enData, commonData, 2, wd, callback);
+}
+
