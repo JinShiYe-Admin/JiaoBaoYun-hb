@@ -8,24 +8,105 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<link href="../../css/mine/apply.css" rel="stylesheet" />
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">申请记录</h1>
-		    <a id="btn-apply" class="mui-icon iconfont icon-jia mui-pull-right"></a>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">申请记录</h1>
+			<a id="btn-apply" class="mui-icon iconfont icon-jia mui-pull-right"></a>
 		</header>
+		<div class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--这里放置真实显示的DOM内容-->
+				<ul id="list-container" class="mui-table-view">
+				</ul>
+			</div>
+		</div>
+
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript">
 			mui.init()
-			mui.plusReady(function(){
-				events.preload('apply-group.html',100);
-				events.addTap('btn-apply',function(){
+			mui.plusReady(function() {
+				events.preload('apply-group.html');
+				events.addTap('btn-apply', function() {
 					events.showPreloadPage('apply-group.html');
 				})
+				getListData();
 			})
+			var getListData = function() {
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_PostMJoin({}, wd, function(data) {
+					wd.close();
+					console.log('获取的我的群申请记录：' + JSON.stringify(data));
+					if(data.RspCode == '0000') {
+						setListData(data.RspData);
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				})
+			}
+			var setListData = function(data) {
+				var list = document.getElementById('list-container');
+				data.forEach(function(cell, i, data) {
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell';
+					li.innerHTML = createInner(cell);
+					list.appendChild(li);
+				})
+			}
+
+			/**
+			 * 
+			 * @param {Object} cell	
+			 *		gutid:'',//	邀请记录ID	int		否
+			 *		gid:'',//	群ID	int		否	
+			 *	    gname:'',//	群名	string		否	
+			 *		invname:'',//	邀请人姓名	string		否	申请人
+			 *		invimg:'',//	邀请人头像	string		否	申请人
+			 *		gimg	:'',//群头像	string		否	
+			 *		beinvname:'',//	被邀请人姓名	string		否	
+			 *		mstype:'',//	邀请成为类型	int		否	0家长,1管理员,2老师,3学生
+			 *		stuname:'',//	关联学生姓名	string		否	
+			 *		aptime:'',//	申请时间	string		否	
+			 *		appnote:'',//	申请备注	string		否	
+			 *		stat:''//状态，0待审,1通过,2被拒绝
+			 */
+			var createInner = function(cell) {
+				var inner = '<a href="#chose-roles" class="" gid="' + cell.gid + '">' +
+					'<img src="' + getGimg(cell) + '"/>'
+					//							+ cell.gname + '</a>';
+				if(cell.invname!=cell.beinvname) {
+					inner += cell.invaname + '邀请你加入群：' + cell.gname;
+				} else {
+					inner += '你已申请加入群：' + cell.gname;
+				}
+				inner += '<p>' + setApplyState(cell.stat) + '</p></a>'
+				return inner;
+			}
+			var setApplyState = function(type) {
+				var applyState = '';
+				switch(type) {
+					case 0:
+						applyState = '待审';
+						break;
+					case 1:
+						applyState = '通过';
+						break;
+					case 2:
+						applyState = '拒绝';
+						break;
+					default:
+						break;
+				}
+				return applyState;
+			}
+			var getGimg = function(cell) {
+				return cell.gimg ? cell.gimg : '../../image/utils/default_personalimage.png';
+			}
 		</script>
 	</body>
 

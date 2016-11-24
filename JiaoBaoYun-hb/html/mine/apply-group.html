@@ -9,6 +9,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/mine/apply.css" rel="stylesheet" />
 	</head>
 
 	<body>
@@ -20,20 +21,49 @@
 		    	<div class="mui-scroll">
 		        <!--这里放置真实显示的DOM内容-->
 			        <div class="mui-input-row mui-search">
-						<input id="search-group" type="search" class="mui-input-clear" pattern="^1[34578]\d{9}$" placeholder="通过群成员手机号获取想要加入的群">
+						<input id="search-group" type="search" class="mui-input-clear" placeholder="通过群成员手机号获取想要加入的群">
 					</div>
-					<ul id="groups-container" class="mui-table-view mui-table-view-radio">
+					<ul id="groups-container" class="mui-table-view">
 					    <li class="mui-table-view-cell">
-					        <a class="mui-navigate-right">Item 1</a>
+					        <a class="">Item 1</a>
 					    </li>
-					    <li class="mui-table-view-cell mui-selected">
-					        <a class="mui-navigate-right">Item 2</a>
+					    <li class="mui-table-view-cell ">
+					        <a class="">Item 2</a>
 					    </li>
 					    <li class="mui-table-view-cell">
-					        <a class="mui-navigate-right">Item 3</a>
+					        <a class="" href="#chose-roles">Item 3</a>
 					    </li>
 					</ul>
 		    </div>
+		</div>
+		<div id="chose-roles" class="mui-popover">
+			<!--<div class="mui-popover-arrow"></div>-->
+			<form class="mui-input-group">
+				<fieldset id="">
+					<legend>选择身份:</legend>
+					<div class="div-chose">
+				      <input id="check-parents" name="checkbox1" type="checkbox" value="0" >
+				      <label>家长</label>
+				    </div>
+				    <div class="div-chose">
+				      <input id="check-tea" name="checkbox1" type="checkbox" value="2">
+				       <label>老师</label>
+				    </div>
+				    <div class="div-chose">
+				      
+				      <input id="check-stu" name="checkbox1" type="checkbox" value="3" >
+				      <label>学生</label>
+			 	   </div>
+			 	   <div class="buttons">
+			 	   	<button id="btn-sure" type="button" class="mui-btn mui-btn-green btn-sure">确认</button>
+			 	   	<button id="btn-cancle" type="button" class="mui-btn mui-btn-green btn-cancel">取消</button>
+			 	   </div>
+					
+				</fieldset>
+			    
+			    
+			</form>
+
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/publicProtocol.js"></script>

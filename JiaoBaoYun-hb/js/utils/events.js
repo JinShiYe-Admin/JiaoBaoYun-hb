@@ -189,7 +189,7 @@ var events = (function($, mod) {
 	 * 加载不需要传值的预加载页面
 	 * @param {Object} tarpge
 	 */
-	mui.showPreloadPage=function(tarpge){
+	mod.showPreloadPage=function(tarPage){
 		var  targetPage = null;
 			//获得目标页面
 			if(!targetPage) {
