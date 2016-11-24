@@ -52,33 +52,6 @@ mui.plusReady(function() {
 
 })
 
-function addUInf() {
-	//15.用户添加资料
-	//所需参数
-	var comData = {
-		gid: '', //群ID
-		stuname: '', //资料名
-		stuimg: '', //资料头像
-		mstype: '', //资料类型，0家长,2老师,3学生
-		job: '', //职位，老师用,其他填0
-		title: '', //职称，老师用,其他填0
-		expsch: '', //教龄，老师用,其他填0
-		sub: '', //科目，老师用,其他填0
-		gutid: '' //关联的群账号ID，用户在群里的账号ID,无则为0
-	};
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	//24.通过用户表ID获取用户关联的学生
-	postDataPro_PostGAddUInf(comData, wd, function(data) {
-		wd.close();
-		console.log('postDataPro_PostGAddUInf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-
-		if(data.RspCode == 0) {
-
-		} else {
-			mui.toast(data.RspTxt);
-		}
-	});
-}
 //获取学生列表
 function getStuList() {
 	//所需参数
@@ -94,15 +67,6 @@ function getStuList() {
 		console.log('postDataPro_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0) {
-			//			datasource = data.RspData;
-			//			requestTimes = datasource.length; //记录请求次数
-			//			requestTimes2 = datasource.length; //记录请求次数
-			//			var userList = [];
-			//			for(var i = 0; i < datasource.length; i++) {
-			//				getTopList(i);
-			//				getBottomList(i, userList);
-			//
-			//			}
 
 		} else {
 			mui.toast(data.RspTxt);
@@ -124,13 +88,20 @@ function getGroupList() {
 		console.log('postDataPro_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0) {
-			datasource = data.RspData;
-			requestTimes = datasource.length; //记录请求次数
-			requestTimes2 = datasource.length; //记录请求次数
-			var userList = [];
+			datasource = data.RspData; //底部列表数据
+			requestTimes = datasource.length; //记录顶部 班级动态请求次数
+			requestTimes2 = datasource.length; //记录底部 通过循环请求群用户列表请求次数
+			var userList = []; //临时用户列表
 			for(var i = 0; i < datasource.length; i++) {
-				getTopList(i);
-				getBottomList(i, userList);
+				//判断img是否为null，或者空
+				if(datasource[i].gimg == '' || datasource[i].gimg == null) { //赋值
+					datasource[i].gimg = '../../image/utils/default_personalimage.png';
+				} else { //修改值
+					var myDate = new Date();
+					datasource[i].uimg = datasource[i].uimg[i] + '?' + myDate.getTime();
+				}
+				getTopList(i); //获取顶部列表
+				getBottomList(i, userList); //获取底部列表
 
 			}
 
@@ -142,8 +113,6 @@ function getGroupList() {
 }
 //获取顶部列表
 function getTopList(i) {
-
-	//获取个人信息
 	var comData = {
 		userId: personalUTID, //用户ID----utid
 		classId: datasource[i].gid, //班级ID----cid
@@ -152,34 +121,37 @@ function getTopList(i) {
 	};
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//	16.（班级空间）获取用户针对某班级的空间列表
 	postDataPro_getClassSpacesByUserForClass(comData, wd, function(data) {
 		wd.close();
 		console.log('postDataPro_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
 		if(data.RspCode == 0) {
-			if(data.RspData.Data.length == 0) {
+			if(data.RspData.Data.length == 0) { //数据为空时 添加默认数据
 				var temp = {
-					index: i,
+					index: i, //排序索引
 					MsgContent: '暂无动态',
 					PublishDate: '2016-11-17'
 				}
 				topArray.push(temp);
-			} else {
-				data.RspData.Data[0].index = i;
+			} else { //取班级空间的第一条数据
+				data.RspData.Data[0].index = i; //排序索引
 				topArray.push(data.RspData.Data[0]);
 			}
 
 			requestTimes--;
-			if(requestTimes == 0) {
+			if(requestTimes == 0) { //循环请求班级空间完毕
+				//排序
 				topArray.sort(function(a, b) {
-					return a.index - b.index
-				})
+						return a.index - b.index
+					})
+					//				顶部列表添加cell
 				var ul = document.getElementById('top-list');
 				ul.innerHTML = '';
 				for(var i = 0; i < topArray.length; i++) {
 					var li = document.createElement('li');
 					li.id = 'tarClass' + i;
 					li.className = 'mui-table-view-cell mui-media tarClass';
-					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">' + '<p class="time">' + topArray[i].PublishDate +
+					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + datasource[i].gimg + '">' + '<p class="time">' + topArray[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
 						datasource[i].gname +
@@ -210,31 +182,40 @@ function getBottomList(index, userLists) {
 		console.log('postDataPro_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			var tepDic = {
-				index: index,
+				index: index, //排序索引
 				data: data.RspData
 			}
 			userLists.push(tepDic);
 
 			requestTimes2--;
-			if(requestTimes2 == 0) { //全部请求完毕0
-				requestTimes2 = datasource.length;
+			if(requestTimes2 == 0) { //全部请求完毕
+				requestTimes2 = datasource.length; //重置请求次数为群的个数
+				//				排序
 				userLists.sort(function(a, b) {
-					return a.index - b.index
-				})
+						return a.index - b.index
+					})
+					//把用户列表添加到数据源中
 				for(var i = 0; i < datasource.length; i++) {
 					datasource[i].userList = userLists[i].data;
 
 				}
 
 				for(var i = 0; i < datasource.length; i++) {
-					var userIds = [];
+					var userIds = []; //群用户id数组
 					for(var j = 0; j < datasource[i].userList.length; j++) {
-
-						userIds.push(datasource[i].userList[j].utid)
+						tempModel = datasource[i].userList[j];
+						//判断img是否为null，或者空
+						if(tempModel.uimg == '' || tempModel.uimg == null) { //赋值
+							tempModel.uimg = '../../image/utils/default_personalimage.png';
+						} else { //修改值
+							var myDate = new Date();
+							tempModel.uimg = tempModel.uimg + '?' + myDate.getTime();
+						}
+						userIds.push(tempModel.utid)
 					}
 					userIds.join(',');
-					var upString = '['+userIds.join()+']';
-					getUserSpaces(upString, i);
+					var upString = '[' + userIds.join() + ']';
+					getUserSpaces(upString, i); //获取多用户空间列表
 
 				}
 
@@ -258,15 +239,24 @@ function getUserSpaces(upString, index) {
 		wd.close();
 		console.log('postDataPro_getUserSpacesByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
+			var userList = data.RspData.Data;//某群用户列表
 			requestTimes2--; //全部请求完毕
-			datasource[index].NoReadCnt = 0;
-			for(var i = 0; i < data.RspData.Data.length; i++) {
-				datasource[index].NoReadCnt = datasource[index].NoReadCnt + data.RspData.Data[i].NoReadCnt;
-				mui.extend(datasource[index].userList[i], data.RspData.Data[i])
+			datasource[index].NoReadCnt = 0; //群未读信息条数
+			//			计算群未读总数并加到数据源中
+			for(var i = 0; i < userList.length; i++) {
+				if(!userList[i].NoReadCnt){
+					userList[i].NoReadCnt=0;
+				}
+				if(!userList[i].MsgContent){
+					userList[i].MsgContent='暂无空间';
+				}
+				console.log('3333333333333===='+JSON.stringify(userList[i]));
+				datasource[index].NoReadCnt = datasource[index].NoReadCnt + userList[i].NoReadCnt;
+				mui.extend(datasource[index].userList[i], userList[i])
 			}
 			console.log('datasource===' + JSON.stringify(datasource));
 
-			if(requestTimes2 == 0) {
+			if(requestTimes2 == 0) { //请求完毕刷新界面
 				refreshUI();
 			}
 
@@ -275,13 +265,13 @@ function getUserSpaces(upString, index) {
 	})
 
 }
-
+//刷新界面
 function refreshUI() {
 	if(datasource.length == 0) {
 		return;
 	}
 
-	if(isRefresh == 0) {
+	if(isRefresh == 0) { //不是上拉刷新
 		var seg = document.getElementById('segmentedControl');
 		var userTable = document.getElementById('userList');
 		for(var i = datasource.length - 1; i >= 0; i--) {
@@ -325,23 +315,21 @@ function refreshUI() {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell mui-media parent-cell' + i;
 				if(userList[j].NoReadCnt != 0) {
-					li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png" />' +
-						'<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[j].NoReadCnt + '</span></span>' + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
-						userList[j].ugname + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
-					ul.insertBefore(li, ul.firstChild);
+					noReadHTML = '<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[j].NoReadCnt + '</span></span>';
 				} else {
-					li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png" />' +
-						'<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
-						userList[j].ugname + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
-					ul.insertBefore(li, ul.firstChild);
+					noReadHTML = '';
 				}
+				li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="' + userList[j].uimg + '" />' +
+					noReadHTML + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
+					userList[j].ugname + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
+					ul.appendChild(li);
 
 			}
 			userItem.insertBefore(ul, userItem.firstChild);
 			userTable.insertBefore(userItem, userTable.firstChild)
 
 		}
-	} else {
+	} else { //下拉刷新
 		var itemId = getActiveControl();
 		var tableFlag = itemId.replace('#item', '');
 		var flagInt = parseInt(tableFlag);
@@ -390,16 +378,14 @@ function refreshUI() {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell mui-media parent-cell' + i;
 				if(userList[j].NoReadCnt != 0) {
-					li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png" />' +
-						'<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[j].NoReadCnt + '</span></span>' + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
-						userList[j].ugname + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
-					ul.insertBefore(li, ul.firstChild);
+					noReadHTML = '<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[j].NoReadCnt + '</span></span>';
 				} else {
-					li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png" />' +
-						'<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
-						userList[j].ugname + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
-					ul.insertBefore(li, ul.firstChild);
+					noReadHTML = ''
 				}
+				li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="' + userList[j].uimg + '" />' +
+					noReadHTML + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
+					userList[j].ugname + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
+				ul.appendChild(li);
 
 			}
 			userItem.insertBefore(ul, userItem.firstChild);
@@ -417,11 +403,11 @@ function refreshUI() {
 	}
 
 }
-
+//点击底部列表cell 跳转到家长圈空间界面
 function addBottomTap(tableIndex, cellIndex) {
-	//	跳转到家长空间界面
+	//	跳转到家长圈空间界面
 	mui('.mui-table-view').on('tap', '.parent-cell' + tableIndex, function() {
-		var publisherId = datasource[tableIndex].userList[cellIndex].utid
+		var publisherId = datasource[tableIndex].userList[cellIndex].utid //空间用户id
 		mui.openWindow({
 			url: 'zone_main.html',
 			id: 'zone_main.html',
@@ -436,14 +422,14 @@ function addBottomTap(tableIndex, cellIndex) {
 		});
 	});
 }
-
+//下拉刷新
 function pulldownRefresh() {
 
 	setTimeout(function() {
-		isRefresh = 1;
-		datasource = [];
-		topArray = [];
-		var itemId = getActiveControl();
+		isRefresh = 1; //下拉刷新
+		datasource = []; //重置数据源
+		topArray = []; //重置底部列表数据
+		var itemId = getActiveControl(); //获取当前所选群的id
 		var tableFlag = itemId.replace('#item', '');
 		var flagInt = parseInt(tableFlag);
 		getGroupList();
@@ -547,7 +533,7 @@ function pullupRefresh() {
 	//		}
 	//	}, 1500);
 }
-
+//获取所选群的id
 function getActiveControl() {
 	var segmentedControl = document.getElementById("segmentedControl");
 	var links = segmentedControl.getElementsByTagName('a');

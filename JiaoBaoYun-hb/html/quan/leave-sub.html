@@ -193,7 +193,7 @@
 								var tempModel = data1.RspData[i];
 								//判断img是否为null，或者空
 								if (tempModel.uimg==''||tempModel.uimg==null) {//赋值
-									tempModel.uimg = '../image/utils/default_personalimage.png';
+									tempModel.uimg = '../../image/utils/default_personalimage.png';
 								}else{//修改值
 									var myDate = new Date();
 									tempModel.uimg = tempModel.uimg + '?' + myDate.getTime();
@@ -267,17 +267,12 @@
 					commentHTML =commentHTML + '<div style="padding:0px 10px 10px 10px"><span id="reply" class=" dynamic-comment-name">'+commentArr[j].unick +':</span><font class="common-font-family-Regular">' + commentArr[j].MsgContent +
 					'</font></div>';
 				}
-				if(!leaveArray[i].uimg){
-					li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="../../image/dynamic/u101.png"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply'
+					li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="'+leaveArray[i].uimg+'../../image/dynamic/u101.png"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply'
 					+i+'"class=" mui-pull-right dynamic-comment-name leaveReply">回复' +
 					'</span><h4>' + leaveArray[i].unick + '</h4><p>' + leaveArray[i].MsgDate + '</p></div></div><div style="padding:0px 10px 10px 10px"><font>'+leaveArray[i].MsgContent+'</font></div>'+commentHTML; 
-				}else{
-					li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="../../image/dynamic/u101.png"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply'
-					+i+'"class=" mui-pull-right dynamic-comment-name leaveReply">回复' +
-					'</span><h4>' + leaveArray[i].unick + '</h4><p>' + leaveArray[i].MsgDate + '</p></div></div><div style="padding:0px 10px 10px 10px"><font>'+leaveArray[i].MsgContent+'</font></div>'+commentHTML; 					
-				}
 
-					ul.insertBefore(li,ul.lastChild);
+
+					ul.appendChild(li);
 			}
 					mui('.mui-table-view').on('tap', '.leaveReply', function() {
 						var cellIndex = this.id.replace('reply','');
