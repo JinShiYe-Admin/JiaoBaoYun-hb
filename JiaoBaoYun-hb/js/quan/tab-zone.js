@@ -239,18 +239,18 @@ function getUserSpaces(upString, index) {
 		wd.close();
 		console.log('postDataPro_getUserSpacesByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
-			var userList = data.RspData.Data;//某群用户列表
+			var userList = data.RspData.Data; //某群用户列表
 			requestTimes2--; //全部请求完毕
 			datasource[index].NoReadCnt = 0; //群未读信息条数
 			//			计算群未读总数并加到数据源中
 			for(var i = 0; i < userList.length; i++) {
-				if(!userList[i].NoReadCnt){
-					userList[i].NoReadCnt=0;
+				if(!userList[i].NoReadCnt) {
+					userList[i].NoReadCnt = 0;
 				}
-				if(!userList[i].MsgContent){
-					userList[i].MsgContent='暂无空间';
+				if(!userList[i].MsgContent) {
+					userList[i].MsgContent = '暂无空间';
 				}
-				console.log('3333333333333===='+JSON.stringify(userList[i]));
+				console.log('3333333333333====' + JSON.stringify(userList[i]));
 				datasource[index].NoReadCnt = datasource[index].NoReadCnt + userList[i].NoReadCnt;
 				mui.extend(datasource[index].userList[i], userList[i])
 			}
@@ -272,12 +272,13 @@ function refreshUI() {
 	}
 
 	if(isRefresh == 0) { //不是上拉刷新
-		var seg = document.getElementById('segmentedControl');
-		var userTable = document.getElementById('userList');
-		for(var i = datasource.length - 1; i >= 0; i--) {
+		var seg = document.getElementById('segmentedControl'); //群名称segmentedControl
+		var userTable = document.getElementById('userList'); //多个放置用户列表
+		for(var i = 0; i < datasource.length; i++) {
+			console.log('i=====' + i)
 			var userList = datasource[i].userList; //用户列表数据
 			var segitem = document.createElement('a');
-			var userItem = document.createElement('div');
+			var userItem = document.createElement('div'); //单个用户列表
 			if(i == 0) {
 				segitem.className = 'mui-control-item mui-active';
 				userItem.className = 'mui-control-content mui-active'
@@ -291,7 +292,7 @@ function refreshUI() {
 				span.className = 'mui-badge mui-badge-danger custom-badge1';
 				span.innerHTML = datasource[i].NoReadCnt;
 
-				segitem.insertBefore(span, segitem.firstChild);
+				segitem.appendChild(span);
 				if(i == datasource.length - 1) {
 					segitem.innerHTML = datasource[i].gname + segitem.innerHTML;
 				} else {
@@ -307,13 +308,22 @@ function refreshUI() {
 			}
 
 			//在第一个位置中插入元素
-			seg.insertBefore(segitem, seg.firstChild);
+			seg.appendChild(segitem);
 			userItem.id = 'item' + i;
 			var ul = document.createElement('ul');
 			ul.className = 'mui-table-view parent-table' + i;
 			for(var j = 0; j < userList.length; j++) {
+				if(!userList[j].NoReadCnt) {
+					userList[j].NoReadCnt = 0;
+				}
+				if(!userList[j].MsgContent) {
+					userList[j].MsgContent = '暂无成员动态';
+				}
+				if(!userList[j].PublishDate) {
+					userList[j].PublishDate = '';
+				}
 				var li = document.createElement('li');
-				li.className = 'mui-table-view-cell mui-media parent-cell' + i;
+				li.className = 'mui-table-view-cell mui-media parent-cell' + j;
 				if(userList[j].NoReadCnt != 0) {
 					noReadHTML = '<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[j].NoReadCnt + '</span></span>';
 				} else {
@@ -322,11 +332,11 @@ function refreshUI() {
 				li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="' + userList[j].uimg + '" />' +
 					noReadHTML + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 					userList[j].ugname + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
-					ul.appendChild(li);
+				ul.appendChild(li);
 
 			}
-			userItem.insertBefore(ul, userItem.firstChild);
-			userTable.insertBefore(userItem, userTable.firstChild)
+			userItem.appendChild(ul);
+			userTable.appendChild(userItem);
 
 		}
 	} else { //下拉刷新
@@ -337,7 +347,8 @@ function refreshUI() {
 		var userTable = document.getElementById('userList');
 		seg.innerHTML = '';
 		userTable.innerHTML = '';
-		for(var i = datasource.length - 1; i >= 0; i--) {
+		for(var i = 0; i < datasource.length; i++) {
+
 			var userList = datasource[i].userList; //用户列表数据
 			var segitem = document.createElement('a');
 			var userItem = document.createElement('div');
@@ -370,13 +381,22 @@ function refreshUI() {
 			}
 
 			//在第一个位置中插入元素
-			seg.insertBefore(segitem, seg.firstChild);
+			seg.appendChild(segitem);
 			userItem.id = 'item' + i;
 			var ul = document.createElement('ul');
 			ul.className = 'mui-table-view parent-table' + i;
 			for(var j = 0; j < userList.length; j++) {
+				if(!userList[j].NoReadCnt) {
+					userList[j].NoReadCnt = 0;
+				}
+				if(!userList[j].MsgContent) {
+					userList[j].MsgContent = '暂无成员动态';
+				}
+				if(!userList[j].PublishDate) {
+					userList[j].PublishDate = '';
+				}
 				var li = document.createElement('li');
-				li.className = 'mui-table-view-cell mui-media parent-cell' + i;
+				li.className = 'mui-table-view-cell mui-media parent-cell' + j;
 				if(userList[j].NoReadCnt != 0) {
 					noReadHTML = '<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + userList[j].NoReadCnt + '</span></span>';
 				} else {
@@ -388,8 +408,8 @@ function refreshUI() {
 				ul.appendChild(li);
 
 			}
-			userItem.insertBefore(ul, userItem.firstChild);
-			userTable.insertBefore(userItem, userTable.firstChild)
+			userItem.appendChild(ul);
+			userTable.appendChild(userItem);
 
 		}
 
@@ -405,8 +425,10 @@ function refreshUI() {
 }
 //点击底部列表cell 跳转到家长圈空间界面
 function addBottomTap(tableIndex, cellIndex) {
+	var test = tableIndex;
+
 	//	跳转到家长圈空间界面
-	mui('.mui-table-view').on('tap', '.parent-cell' + tableIndex, function() {
+	mui('.parent-table' + tableIndex).on('tap', '.parent-cell' + cellIndex, function() {
 		var publisherId = datasource[tableIndex].userList[cellIndex].utid //空间用户id
 		mui.openWindow({
 			url: 'zone_main.html',

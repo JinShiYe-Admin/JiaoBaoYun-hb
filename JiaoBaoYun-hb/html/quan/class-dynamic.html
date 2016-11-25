@@ -41,48 +41,47 @@
 		mui.init()
 	</script>
 	<script>
-	
-	mui.plusReady(function(){
-		var groupInfo;
-		//界面监听传值
-		window.addEventListener('postGroupInfo',function(e){
-		
-			groupInfo=e.detail.data;
-			console.log('发布动态页面获取的值：'+JSON.stringify(groupInfo));
-		});
-		events.addTap('take_pic',function(){
-			camera.getPic(camera.getCamera());
-		})
-		events.addTap('add_file',function(){
-			asFiles.openASFiles()
-		})
-		//发布按钮
-		events.addTap('publish',function(){
-//			postDataPro_addClassSpace({classId},)
-			console.log(''+JSON.stringify(groupInfo));
-			var postData=new Object();
-			postData.classId=groupInfo.classId;
-			postData.msgContent=document.getElementById('input-content').value;
-			postData.encType=0;
-			postData.encAddr='';
-			postData.encImg='';
-			postData.teacherId=parseInt(groupInfo.userId);
-			console.log(JSON.stringify(postData));
-			var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING)
-			postDataPro_addClassSpace(postData,wd,function(data){
-				wd.close();
-				console.log(JSON.stringify(data));
-				if(data.RspCode='0000'){
-					mui.toast('发布成功！');
-//					mui.fire('classSpace-sub.html','refershData');
-					mui.back();
-				}else{
-					mui.toast(data.RspTxt);
-				}
+		mui.plusReady(function() {
+			var groupInfo;
+			//界面监听传值
+			window.addEventListener('postGroupInfo', function(e) {
+
+				groupInfo = e.detail.data;
+				console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
+			});
+			events.addTap('take_pic', function() {
+				camera.getPic(camera.getCamera());
+			})
+			events.addTap('add_file', function() {
+					asFiles.openASFiles()
+				})
+				//发布按钮
+			events.addTap('publish', function() {
+				
+//								postDataPro_addClassSpace({classId},)
+				console.log('' + JSON.stringify(groupInfo));
+				var postData = new Object();
+				postData.classId = groupInfo.classId;
+				postData.msgContent = document.getElementById('input-content').value;
+				postData.encType = 0;
+				postData.encAddr = '';
+				postData.encImg = '';
+				postData.teacherId = parseInt(groupInfo.userId);
+				console.log(JSON.stringify(postData));
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
+				postDataPro_addClassSpace(postData, wd, function(data) {
+					wd.close();
+					console.log(JSON.stringify(data));
+					if(data.RspCode = '0000') {
+						mui.toast('发布成功！');
+						//					mui.fire('classSpace-sub.html','refershData');
+						mui.back();
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				})
 			})
 		})
-	})
-		
 	</script>
 
 </html>

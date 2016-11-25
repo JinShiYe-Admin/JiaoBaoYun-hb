@@ -359,9 +359,9 @@
 								//当前model
 								var tempModel = data1.RspData[i];
 								//判断img是否为null，或者空
-								if (tempModel.uimg==''||tempModel.uimg==null) {//赋值
+								if(tempModel.uimg == '' || tempModel.uimg == null) { //赋值
 									tempModel.uimg = '../image/utils/default_personalimage.png';
-								}else{//修改值
+								} else { //修改值
 									var myDate = new Date();
 									tempModel.uimg = tempModel.uimg + '?' + myDate.getTime();
 								}
@@ -399,7 +399,7 @@
 							//合并数组
 							zonepArray = zonepArray.concat(tempRspData);
 							//留言总条数,写到了协议开始
-//							totalCnt = data.RspData.TotalCnt;
+							//							totalCnt = data.RspData.TotalCnt;
 							for(var i = zonepArray.length; i < zonepArray.length; i++) {
 								id = i;
 								var data = addData(i);
@@ -410,7 +410,7 @@
 							tempPage = 1;
 							zonepArray = tempRspData;
 							//留言总条数
-							
+
 							table.innerHTML = '';
 							for(var i = 0; i < zonepArray.length; i++) {
 								id = i;
@@ -429,6 +429,7 @@
 		var id = 0;
 		mui.plusReady(function() {
 			publisherId = plus.webview.currentWebview().data; //发布者id
+			console.log('publisherId======' + publisherId);
 			tempPage = 1; //页码，请求第几页数据
 			totalCnt = 0; //当前留言的总条数
 			flag = 2; //判断是加载更多1，还是刷新2
@@ -504,10 +505,18 @@
 
 			//个人信息和内容
 			//[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
-			var personalImage = '../../image/dynamic/u101.png';
-			var personalName = '大熊猫';
-			var time = zonepArray[index].PublishDate;
-			var contentText = zonepArray[index].MsgContent;
+			//判断img是否为null，或者空
+			var tempModel = zonepArray[index];
+			if(tempModel.uimg == '' || tempModel.uimg == null) { //赋值
+				tempModel.uimg = '../../image/utils/default_personalimage.png';
+			} else { //修改值
+				var myDate = new Date();
+				tempModel.uimg = tempModel.uimg + '?' + myDate.getTime();
+			}
+			var personalImage = tempModel.uimg;
+			var personalName = tempModel.unick;
+			var time = tempModel.PublishDate;
+			var contentText = tempModel.MsgContent;
 			InfoList.push(personalImage);
 			InfoList.push(personalName);
 			InfoList.push(time);
@@ -529,17 +538,20 @@
 			//底部
 			//[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
 			var introduce = '上传了' + ImageNum + '张图片到相册《手机相册》';
-			var viewCount = zonepArray[index].ReadCnt;
-			var praiseList = zonepArray[index].LikeUsers;
+			var viewCount = tempModel.ReadCnt;
+			var praiseList = tempModel.LikeUsers;
 
 			//[commentList]:评论列表
 			//1.评论[commenter,content]，评论者，评论内容
 			//2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
 			var commentList = [];
-			var commenter1 = ['陪你上演地老天荒', '嘚瑟呵呵'];
-			var replyer1 = ['孟祥菊', '陪你上演地老天荒', '一二三四五六七八九十'];
-			commentList.push(commenter1);
-			commentList.push(replyer1);
+			for(var i=0;i<tempModel.Comments.length;i++){
+				var tempComment = tempModel.Comments[i];
+				var tempArr =[tempComment.ReplyIdName,tempComment.CommentContent];
+				commentList.push(tempArr);
+			}
+//			var replyer1 = ['孟祥菊', '陪你上演地老天荒', '一二三四五六七八九十'];
+//			commentList.push(replyer1);
 
 			InteractionList.push(introduce);
 			InteractionList.push(viewCount);
