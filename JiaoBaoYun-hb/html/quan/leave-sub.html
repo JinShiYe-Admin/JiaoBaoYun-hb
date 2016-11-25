@@ -121,7 +121,7 @@
 		function pullupRefresh() {
 			setTimeout(function() {
 				flag = 2;
-				mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+				mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
 				if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
 					mui.toast('没有更多了...');
 				} else {
