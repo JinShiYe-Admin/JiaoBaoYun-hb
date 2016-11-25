@@ -16,7 +16,6 @@ document.write('<script src="../../js/libs/crypto-js/require.js"><\/script>');
 document.write('<script src="../../js/utils/signHmacSHA1.js"><\/script>');
 document.write('<script src="../../js/libs/jquery.js"><\/script>');
 
-
 //给数组去重
 var arrayDupRemoval = function(array) {
 	var res = [];
@@ -30,7 +29,20 @@ var arrayDupRemoval = function(array) {
 	return res;
 }
 
-	//6.用户修改各项用户信息
+//给头像添加默认值，或者添加？+数字
+var updateHeadImg = function(string) {
+	var tempStr = '';
+	//判断img是否为null，或者空
+	if(string == '' || string == null) { //赋值
+		tempStr = '../image/utils/default_personalimage.png';
+	} else { //修改值
+		var myDate = new Date();
+		tempStr = string + '?' + myDate.getTime();
+	}
+	return tempStr;
+}
+
+//6.用户修改各项用户信息
 //调用方法
 //var comData = {
 //	vtp: 'unick', //uimg(头像),utxt(签名),unick(昵)称,usex(性别),uemail(邮件)
@@ -48,7 +60,7 @@ var arrayDupRemoval = function(array) {
 //	}
 //});
 
-var postDataPro_PostReUinf=function(commonData, wd, callback) {
+var postDataPro_PostReUinf = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -61,7 +73,7 @@ var postDataPro_PostReUinf=function(commonData, wd, callback) {
 //		gname: '测试群名',//群名
 //		gimg: 'jjjjjjj',//群头像
 //	};
-var postDataPro_PostCrGrp=function(commonData, wd, callback) {
+var postDataPro_PostCrGrp = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -75,7 +87,7 @@ var postDataPro_PostCrGrp=function(commonData, wd, callback) {
 //		vvl: '测试修改群名',//要修改成的值
 //		rid: '3'//要修改的群id
 //	};
-var postDataPro_PostReGinfo=function(commonData, wd, callback) {
+var postDataPro_PostReGinfo = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -91,7 +103,7 @@ var postDataPro_PostReGinfo=function(commonData, wd, callback) {
 //		vvl: personalUTID//查询的各项，对应人的utid，可以是查询的任何人
 //	};
 //返回值model：model_groupList
-var postDataPro_PostGList=function(commonData, wd, callback) {
+var postDataPro_PostGList = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -109,7 +121,7 @@ var postDataPro_PostGList=function(commonData, wd, callback) {
 //		};
 //修改本地存储中的值，返回值
 //window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data.RspData;
-var postDataPro_PostTokenRenew=function(commonData, wd, callback) {
+var postDataPro_PostTokenRenew = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -122,7 +134,7 @@ var postDataPro_PostTokenRenew=function(commonData, wd, callback) {
 //			vvl: '111111'//查询的值
 //		};
 //返回值model：model_userInfo
-var postDataPro_PostUList=function(commonData, wd, callback) {
+var postDataPro_PostUList = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -141,7 +153,7 @@ var postDataPro_PostUList=function(commonData, wd, callback) {
 //			urel:'',//与资料关系,与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
 //			vtp:''//邀请类型,0老师邀请家长,1个人申请入群,2群员邀请群员
 //		};
-var postDataPro_PostInvGuser=function(commonData, wd, callback) {
+var postDataPro_PostInvGuser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -156,7 +168,7 @@ var postDataPro_PostInvGuser=function(commonData, wd, callback) {
 //			vvl1:''//群员类型，0家长,1管理员,2老师,3学生,-1取全部
 //		};
 //返回值model：model_groupNormalUser
-var postDataPro_PostGusers=function(commonData, wd, callback) {
+var postDataPro_PostGusers = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -170,7 +182,7 @@ var postDataPro_PostGusers=function(commonData, wd, callback) {
 //		var comData = {
 //			token: personalToken
 //		};
-var postDataPro_PostVerifyToken=function(commonData, wd, callback) {
+var postDataPro_PostVerifyToken = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -190,7 +202,7 @@ var postDataPro_PostVerifyToken=function(commonData, wd, callback) {
 //			sub:'',//科目，老师用,其他填0
 //			gutid:''//关联的群账号ID，用户在群里的账号ID,无则为0
 //		};
-var postDataPro_PostGAddUInf=function(commonData, wd, callback) {
+var postDataPro_PostGAddUInf = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -205,7 +217,7 @@ var postDataPro_PostGAddUInf=function(commonData, wd, callback) {
 //			vvl1:''//类型,0家长,1管理员,2老师,3学生,-1全部
 //		};
 //返回值model：model_groupStus
-var postDataPro_PostGUInf=function(commonData, wd, callback) {
+var postDataPro_PostGUInf = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -218,7 +230,7 @@ var postDataPro_PostGUInf=function(commonData, wd, callback) {
 //			vtp: ''//获取项，要获取的项:inv(入群邀请),app(入群申请)
 //		};
 //返回值model：model_groupRequestUser
-var postDataPro_PostGrInv=function(commonData, wd, callback) {
+var postDataPro_PostGrInv = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -234,7 +246,7 @@ var postDataPro_PostGrInv=function(commonData, wd, callback) {
 //			lnkinfid:'',//关联资料ID，无资料关联填写0
 //			urel:''//与资料关系，与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
 //		};
-var postDataPro_PostJoinDo=function(commonData, wd, callback) {
+var postDataPro_PostJoinDo = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -249,7 +261,7 @@ var postDataPro_PostJoinDo=function(commonData, wd, callback) {
 //			mstype:'',//申请成为，0家长,2老师,3学生
 //			urel:''//备注，与资料关系，与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
 //		};
-var postDataPro_PostJoinGuser=function(commonData, wd, callback) {
+var postDataPro_PostJoinGuser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -262,7 +274,7 @@ var postDataPro_PostJoinGuser=function(commonData, wd, callback) {
 //			gutid: '',//申请ID
 //			stat:''//状态,0拒绝,1同意
 //		};
-var postDataPro_PostInvDo=function(commonData, wd, callback) {
+var postDataPro_PostInvDo = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -276,7 +288,7 @@ var postDataPro_PostInvDo=function(commonData, wd, callback) {
 //			vtp:''//查询类型,p(个人)g(id串)
 //		};
 //返回值model：model_userInfo
-var postDataPro_PostUinf=function(commonData, wd, callback) {
+var postDataPro_PostUinf = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -289,13 +301,12 @@ var postDataPro_PostUinf=function(commonData, wd, callback) {
 //			vvl:''//查询的用户资料ID
 //		};
 //返回值model：model_userDataInfo
-var postDataPro_PostUuinf=function(commonData, wd, callback) {
+var postDataPro_PostUuinf = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINURL + 'PostUuinf', enData, commonData, 1, wd, callback);
 }
-
 
 //23.通过用户资料ID或关联ID更改各类型资料
 //所需参数
@@ -311,13 +322,12 @@ var postDataPro_PostUuinf=function(commonData, wd, callback) {
 //			ustuid:'',//关联ID,更新与家长关系必填,其他留空
 //			urel:''//关系,更新与家长关系必填,其他留空
 //		};
-var postDataPro_PostReStu=function(commonData, wd, callback) {
+var postDataPro_PostReStu = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINURL + 'PostReStu', enData, commonData, 1, wd, callback);
 }
-
 
 //24.通过用户表ID获取用户关联的学生
 //所需参数
@@ -325,19 +335,18 @@ var postDataPro_PostReStu=function(commonData, wd, callback) {
 //			utid:''//用户表ID,用户utid
 //		};
 //返回值model：model_userDataInfo
-var postDataPro_PostUstu=function(commonData, wd, callback) {
+var postDataPro_PostUstu = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINURL + 'PostUstu', enData, commonData, 2, wd, callback);
 }
 
-
 //25.用户注销
 //所需参数
 //		var comData = {
 //		};
-var postDataPro_PostLoginOut=function(commonData, wd, callback) {
+var postDataPro_PostLoginOut = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -350,7 +359,7 @@ var postDataPro_PostLoginOut=function(commonData, wd, callback) {
 //所需参数
 //		var comData = {
 //		};
-var postDataPro_PostDiFi=function(commonData, wd, callback) {
+var postDataPro_PostDiFi = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -366,13 +375,12 @@ var postDataPro_PostDiFi=function(commonData, wd, callback) {
 //			fpath:'',//	文件路径，文件路径,为文件用
 //			fsize:''//	文件大小，文件用
 //		};
-var postDataPro_PostDiFiA=function(commonData, wd, callback) {
+var postDataPro_PostDiFiA = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINURL + 'PostDiFiA', enData, commonData, 1, wd, callback);
 }
-
 
 //28.用户修改文件或文件夹名称
 //所需参数
@@ -380,7 +388,7 @@ var postDataPro_PostDiFiA=function(commonData, wd, callback) {
 //			vvl:'',//文件ID
 //			vvl1:''//文件名称
 //		};
-var postDataPro_PostDiFiE=function(commonData, wd, callback) {
+var postDataPro_PostDiFiE = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -393,13 +401,12 @@ var postDataPro_PostDiFiE=function(commonData, wd, callback) {
 //			vvl:'',//群成员群ID，gutid
 //			vvl1:''//群昵称
 //		};
-var postDataPro_PostDiFiE=function(commonData, wd, callback) {
+var postDataPro_PostDiFiE = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINURL + 'PostDiFiE', enData, commonData, 1, wd, callback);
 }
-
 
 //30.通过学生资料ID获取关联的家长
 //所需参数
@@ -407,26 +414,24 @@ var postDataPro_PostDiFiE=function(commonData, wd, callback) {
 //			vvl:'',//群成员群ID，stuid
 //		};
 //返回值model：model_userDataInfo
-var postDataPro_PostStuU=function(commonData, wd, callback) {
+var postDataPro_PostStuU = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINURL + 'PostStuU', enData, commonData, 1, wd, callback);
 }
 
-
 //31.群成员退出群或者剔除群成员
 //所需参数
 //		var comData = {
 //			vvl:'',//群成员群ID，gutid
 //		};
-var postDataPro_PostGuD=function(commonData, wd, callback) {
+var postDataPro_PostGuD = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINURL + 'PostGuD', enData, commonData, 1, wd, callback);
 }
-
 
 //32.通过群ID,类型获取用户自身在群的信息
 //所需参数
@@ -435,7 +440,7 @@ var postDataPro_PostGuD=function(commonData, wd, callback) {
 //			vtp:''//类型，0家长,1管理员,2老师,3学生,-1全部
 //		};
 //返回值model：model_postGuInfo
-var postDataPro_PostGuI=function(commonData, wd, callback) {
+var postDataPro_PostGuI = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -447,7 +452,7 @@ var postDataPro_PostGuI=function(commonData, wd, callback) {
 //		var comData = {
 //			vvl:'',//资料ID，stuid
 //		};
-var postDataPro_PostStuD=function(commonData, wd, callback) {
+var postDataPro_PostStuD = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -459,13 +464,12 @@ var postDataPro_PostStuD=function(commonData, wd, callback) {
 //		var comData = {
 //		};
 //返回值model：model_groupRequestUser
-var postDataPro_PostMJoin=function(commonData, wd, callback) {
+var postDataPro_PostMJoin = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINURL + 'PostMJoin', enData, commonData, 1, wd, callback);
 }
-
 
 //35.个人获取对某人或一群人的备注
 //所需参数
@@ -473,13 +477,12 @@ var postDataPro_PostMJoin=function(commonData, wd, callback) {
 //			vvl:''//被备注用户ID,utid或utid串
 //		};
 //返回值
-var postDataPro_PostUmk=function(commonData, wd, callback) {
+var postDataPro_PostUmk = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINURL + 'PostUmk', enData, commonData, 1, wd, callback);
 }
-
 
 //36.用户修改或添加对个人备注
 //所需参数
@@ -488,13 +491,12 @@ var postDataPro_PostUmk=function(commonData, wd, callback) {
 //			vvl1:''//备注昵称,
 //		};
 //返回值
-var postDataPro_PostUmkA=function(commonData, wd, callback) {
+var postDataPro_PostUmkA = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINURL + 'PostUmkA', enData, commonData, 1, wd, callback);
 }
-
 
 //37.用户删除对个人备注
 //所需参数
@@ -502,17 +504,15 @@ var postDataPro_PostUmkA=function(commonData, wd, callback) {
 //			vvl:''//被备注人ID,butid
 //		};
 //返回值
-var postDataPro_PostUmkD=function(commonData, wd, callback) {
+var postDataPro_PostUmkD = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINURL + 'PostUmkD', enData, commonData, 1, wd, callback);
 }
 
-
 //---------------------------------------家校圈-----------------------------------------------------------------------------------------------------------
 //家校圈接口
-
 
 //1.（点到记事）获取用户未读点到记事条数
 //所需参数
@@ -547,7 +547,7 @@ var postDataPro_PostUmkD=function(commonData, wd, callback) {
 //			userId: '',//用户ID--utid
 //			studentId:''//学生ID----stuid
 //		};
-var postDataPro_getNoReadNotesCntByUserForStudent=function(commonData, wd, callback) {
+var postDataPro_getNoReadNotesCntByUserForStudent = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -564,7 +564,7 @@ var postDataPro_getNoReadNotesCntByUserForStudent=function(commonData, wd, callb
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList,model_userNoteInfo
-var postDataPro_getNotesByUserForStudent=function(commonData, wd, callback) {
+var postDataPro_getNotesByUserForStudent = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -625,7 +625,7 @@ var postDataPro_getNotesByUserForStudent=function(commonData, wd, callback) {
 //			checkType: ''//点到类型,1 正常2 旷课3 迟到4 早退5 其他
 //		};
 //返回值：RspData，新增ID，非0为正确
-var postDataPro_addNote=function(commonData, wd, callback) {
+var postDataPro_addNote = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -639,7 +639,7 @@ var postDataPro_addNote=function(commonData, wd, callback) {
 //			noteId:''//点到记事ID
 //		};
 //1为正确
-var postDataPro_addNoteForMutiUsers=function(commonData, wd, callback) {
+var postDataPro_addNoteForMutiUsers = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -654,7 +654,7 @@ var postDataPro_addNoteForMutiUsers=function(commonData, wd, callback) {
 //			studentId:''//学生ID----stuid
 //		};
 //1为正确
-var postDataPro_setNoteReadByUser=function(commonData, wd, callback) {
+var postDataPro_setNoteReadByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -667,7 +667,7 @@ var postDataPro_setNoteReadByUser=function(commonData, wd, callback) {
 //			noteId: ''//点到记事ID
 //		};
 //1为正确
-var postDataPro_setOffNoteById=function(commonData, wd, callback) {
+var postDataPro_setOffNoteById = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -680,7 +680,7 @@ var postDataPro_setOffNoteById=function(commonData, wd, callback) {
 //			noteId: ''//点到记事ID
 //		};
 //1为正确
-var postDataPro_delNoteById=function(commonData, wd, callback) {
+var postDataPro_delNoteById = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -720,7 +720,7 @@ var postDataPro_delNoteById=function(commonData, wd, callback) {
 //			userId: '',//用户ID----utid
 //			classId:''//班级ID----cid
 //		};
-var postDataPro_getNoReadClassSpacesCntByUserForClass=function(commonData, wd, callback) {
+var postDataPro_getNoReadClassSpacesCntByUserForClass = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -736,7 +736,7 @@ var postDataPro_getNoReadClassSpacesCntByUserForClass=function(commonData, wd, c
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList，model_userNoteInfo
-var postDataPro_getClassSpacesByUserForClass=function(commonData, wd, callback) {
+var postDataPro_getClassSpacesByUserForClass = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -794,7 +794,7 @@ var postDataPro_getClassSpacesByUserForClass=function(commonData, wd, callback) 
 //			teacherId: ''//发布教师ID
 //		};
 //非0为正确
-var postDataPro_addClassSpace=function(commonData, wd, callback) {
+var postDataPro_addClassSpace = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -808,7 +808,7 @@ var postDataPro_addClassSpace=function(commonData, wd, callback) {
 //			classSpaceId:''//班级空间ID
 //		};
 //1为正确
-var postDataPro_addClassSpaceForMutiUsers=function(commonData, wd, callback) {
+var postDataPro_addClassSpaceForMutiUsers = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -822,7 +822,7 @@ var postDataPro_addClassSpaceForMutiUsers=function(commonData, wd, callback) {
 //			classId:''//班级ID
 //		};
 //1为正确
-var postDataPro_setClassSpaceReadByUser=function(commonData, wd, callback) {
+var postDataPro_setClassSpaceReadByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -835,7 +835,7 @@ var postDataPro_setClassSpaceReadByUser=function(commonData, wd, callback) {
 //			classSpaceId: ''//班级空间ID
 //		};
 //1为正确
-var postDataPro_setOffClassSpaceById=function(commonData, wd, callback) {
+var postDataPro_setOffClassSpaceById = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -848,7 +848,7 @@ var postDataPro_setOffClassSpaceById=function(commonData, wd, callback) {
 //			classSpaceId: ''//班级空间ID
 //		};
 //1为正确
-var postDataPro_delClassSpaceById=function(commonData, wd, callback) {
+var postDataPro_delClassSpaceById = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -905,7 +905,7 @@ var postDataPro_delClassSpaceById=function(commonData, wd, callback) {
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList,model_userNoteInfo
-var postDataPro_getUserSpacesByUserForPublisher=function(commonData, wd, callback) {
+var postDataPro_getUserSpacesByUserForPublisher = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -919,7 +919,7 @@ var postDataPro_getUserSpacesByUserForPublisher=function(commonData, wd, callbac
 //			publisherId:''//发布用户ID
 //		};
 //data:非0为已点赞
-var postDataPro_getIsLikeUserSpaceByUser=function(commonData, wd, callback) {
+var postDataPro_getIsLikeUserSpaceByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -971,7 +971,7 @@ var postDataPro_getIsLikeUserSpaceByUser=function(commonData, wd, callback) {
 //		var comData = {
 //			userId: ''//用户ID
 //		};
-var postDataPro_getUserSpaceCommentReplysCntByUser=function(commonData, wd, callback) {
+var postDataPro_getUserSpaceCommentReplysCntByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -986,7 +986,7 @@ var postDataPro_getUserSpaceCommentReplysCntByUser=function(commonData, wd, call
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList，model_userSpaceInfo
-var postDataPro_getUserSpaceCommentReplysByUser=function(commonData, wd, callback) {
+var postDataPro_getUserSpaceCommentReplysByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1012,7 +1012,7 @@ var postDataPro_getUserSpaceCommentReplysByUser=function(commonData, wd, callbac
 //			publisherIds:''//发布者ID，例如[1,2,3]
 //		};
 //返回model：model_homeSchoolList，model_userNoteInfo
-var postDataPro_getUserSpacesByUser=function(commonData, wd, callback) {
+var postDataPro_getUserSpacesByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1044,7 +1044,7 @@ var postDataPro_getUserSpacesByUser=function(commonData, wd, callback) {
 //			noteType:''//信息类型,1云笔记2个人空间
 //		};
 //非0为正确
-var postDataPro_addUserSpace=function(commonData, wd, callback) {
+var postDataPro_addUserSpace = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1058,7 +1058,7 @@ var postDataPro_addUserSpace=function(commonData, wd, callback) {
 //			userSpaceId:'',//用户空间ID
 //		};
 //1为正确
-var postDataPro_addUserSpaceForMutiUsers=function(commonData, wd, callback) {
+var postDataPro_addUserSpaceForMutiUsers = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1073,7 +1073,7 @@ var postDataPro_addUserSpaceForMutiUsers=function(commonData, wd, callback) {
 //			commentContent:''//评论内容
 //		};
 //1为正确
-var postDataPro_addUserSpaceComment=function(commonData, wd, callback) {
+var postDataPro_addUserSpaceComment = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1090,7 +1090,7 @@ var postDataPro_addUserSpaceComment=function(commonData, wd, callback) {
 //			commentContent:''//回复内容
 //		};
 //1为正确
-var postDataPro_addUserSpaceCommentReply=function(commonData, wd, callback) {
+var postDataPro_addUserSpaceCommentReply = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1104,7 +1104,7 @@ var postDataPro_addUserSpaceCommentReply=function(commonData, wd, callback) {
 //			publisherId:'',//发布用户ID
 //		};
 //1为正确
-var postDataPro_setUserSpaceReadByUser=function(commonData, wd, callback) {
+var postDataPro_setUserSpaceReadByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1118,7 +1118,7 @@ var postDataPro_setUserSpaceReadByUser=function(commonData, wd, callback) {
 //			userSpaceId:'',//用户空间ID
 //		};
 //1为正确
-var postDataPro_setUserSpaceLikeByUser=function(commonData, wd, callback) {
+var postDataPro_setUserSpaceLikeByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1143,7 +1143,7 @@ var postDataPro_setUserSpaceLikeByUser=function(commonData, wd, callback) {
 //			userSpaceId: ''//用户空间ID
 //		};
 //1为正确
-var postDataPro_setOffUserSpaceById=function(commonData, wd, callback) {
+var postDataPro_setOffUserSpaceById = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1156,7 +1156,7 @@ var postDataPro_setOffUserSpaceById=function(commonData, wd, callback) {
 //			userSpaceId: ''//用户空间ID
 //		};
 //1为正确
-var postDataPro_delUserSpaceById=function(commonData, wd, callback) {
+var postDataPro_delUserSpaceById = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1169,7 +1169,7 @@ var postDataPro_delUserSpaceById=function(commonData, wd, callback) {
 //			userSpaceCommentId: ''//用户空间评论ID
 //		};
 //1为正确
-var postDataPro_delUserSpaceCommentById=function(commonData, wd, callback) {
+var postDataPro_delUserSpaceCommentById = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1196,7 +1196,7 @@ var postDataPro_delUserSpaceCommentById=function(commonData, wd, callback) {
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList，model_userSpaceInfo
-var postDataPro_getUserSpaceMsgsById=function(commonData, wd, callback) {
+var postDataPro_getUserSpaceMsgsById = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1224,7 +1224,7 @@ var postDataPro_getUserSpaceMsgsById=function(commonData, wd, callback) {
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList，model_userSpaceInfo
-var postDataPro_getUserSpaceMsgReplysByUser=function(commonData, wd, callback) {
+var postDataPro_getUserSpaceMsgReplysByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1239,7 +1239,7 @@ var postDataPro_getUserSpaceMsgReplysByUser=function(commonData, wd, callback) {
 //			msgContent:''//留言内容
 //		};
 //1为正确
-var postDataPro_addUserSpaceMsg=function(commonData, wd, callback) {
+var postDataPro_addUserSpaceMsg = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1256,7 +1256,7 @@ var postDataPro_addUserSpaceMsg=function(commonData, wd, callback) {
 //			msgContent:''//回复内容
 //		};
 //1为正确
-var postDataPro_addUserSpaceMsgReply=function(commonData, wd, callback) {
+var postDataPro_addUserSpaceMsgReply = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1281,7 +1281,7 @@ var postDataPro_addUserSpaceMsgReply=function(commonData, wd, callback) {
 //			userSpaceMsgId: ''//用户空间留言ID
 //		};
 //1为正确
-var postDataPro_delUserSpaceMsgById=function(commonData, wd, callback) {
+var postDataPro_delUserSpaceMsgById = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1296,7 +1296,7 @@ var postDataPro_delUserSpaceMsgById=function(commonData, wd, callback) {
 //			pageSize:''//每页记录数
 //		};
 //返回model：model_homeSchoolList，model_userSpaceAboutMe
-var postDataPro_getAboutMe=function(commonData, wd, callback) {
+var postDataPro_getAboutMe = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1310,7 +1310,7 @@ var postDataPro_getAboutMe=function(commonData, wd, callback) {
 //			classSpaceId:''//班级空间ID
 //		};
 //返回非0为已点赞
-var postDataPro_getIsLikeClassSpaceByUser=function(commonData, wd, callback) {
+var postDataPro_getIsLikeClassSpaceByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1324,7 +1324,7 @@ var postDataPro_getIsLikeClassSpaceByUser=function(commonData, wd, callback) {
 //			classSpaceId:''//班级空间ID
 //		};
 //返回1为正确
-var postDataPro_setClassSpaceLikeByUser=function(commonData, wd, callback) {
+var postDataPro_setClassSpaceLikeByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1338,13 +1338,12 @@ var postDataPro_setClassSpaceLikeByUser=function(commonData, wd, callback) {
 //			spaceType:''//信息类型,4评论5评论回复6点赞7留言8留言回复另：打开与我相关时自动调用设为已读。打开本人空间时，请调用4、5、6设为已读，打开本人留言板时，请调用7、8设为已读。
 //		};
 //返回1为正确
-var postDataPro_setCommentMsgReadByUser=function(commonData, wd, callback) {
+var postDataPro_setCommentMsgReadByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/setCommentMsgReadByUser', enData, commonData, 2, wd, callback);
 }
-
 
 //60.（用户空间）修改留言板备注
 //所需参数
@@ -1353,7 +1352,7 @@ var postDataPro_setCommentMsgReadByUser=function(commonData, wd, callback) {
 //			note:''//备注，即主人寄语
 //		};
 //返回1为正确
-var postDataPro_setMsgNoteByUser=function(commonData, wd, callback) {
+var postDataPro_setMsgNoteByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1366,7 +1365,7 @@ var postDataPro_setMsgNoteByUser=function(commonData, wd, callback) {
 //			userId: ''//用户ID，用户注册时调用
 //		};
 //返回1为正确
-var postDataPro_addNewUserMsgInfo=function(commonData, wd, callback) {
+var postDataPro_addNewUserMsgInfo = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1379,7 +1378,7 @@ var postDataPro_addNewUserMsgInfo=function(commonData, wd, callback) {
 //			userId: ''//用户ID，用户注册时调用
 //		};
 //返回1为正确
-var postDataPro_setCommentMsgReadByUser=function(commonData, wd, callback) {
+var postDataPro_setCommentMsgReadByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1393,7 +1392,7 @@ var postDataPro_setCommentMsgReadByUser=function(commonData, wd, callback) {
 //			classId:''//班级ID，
 //		};
 //返回1为正确
-var postDataPro_addNewNoteInfo=function(commonData, wd, callback) {
+var postDataPro_addNewNoteInfo = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1406,7 +1405,7 @@ var postDataPro_addNewNoteInfo=function(commonData, wd, callback) {
 //			classId: ''//班级ID，新建班级时调用
 //		};
 //返回1为正确
-var postDataPro_addNewClassInfo=function(commonData, wd, callback) {
+var postDataPro_addNewClassInfo = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1419,7 +1418,7 @@ var postDataPro_addNewClassInfo=function(commonData, wd, callback) {
 //			classId: ''//班级ID，新建班级时调用
 //		};
 //返回Users，列表数据	Array
-var postDataPro_getReadUserBySpaceId=function(commonData, wd, callback) {
+var postDataPro_getReadUserBySpaceId = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1434,7 +1433,7 @@ var postDataPro_getReadUserBySpaceId=function(commonData, wd, callback) {
 //			pageSize:''//每页记录数
 //		};
 //返回model_userNoteInfo
-var postDataPro_getNotesForClass=function(commonData, wd, callback) {
+var postDataPro_getNotesForClass = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1447,7 +1446,7 @@ var postDataPro_getNotesForClass=function(commonData, wd, callback) {
 //			classSpaceId: ''//班级空间ID
 //		};
 //返回Users，列表数据	Array
-var postDataPro_getReadUserBySpaceId=function(commonData, wd, callback) {
+var postDataPro_getReadUserBySpaceId = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -1460,10 +1459,9 @@ var postDataPro_getReadUserBySpaceId=function(commonData, wd, callback) {
 //			classSpaceId: ''//班级空间ID
 //		};
 //返回Users，列表数据	Array
-var postDataPro_getIsLikeUsersById=function(commonData, wd, callback) {
+var postDataPro_getIsLikeUsersById = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getIsLikeUsersById', enData, commonData, 2, wd, callback);
 }
-

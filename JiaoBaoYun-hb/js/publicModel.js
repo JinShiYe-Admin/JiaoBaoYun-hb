@@ -117,7 +117,7 @@ var publicModel = (function($, mod) {
 		gutid:'',//	用户在群ID
 		utid	:'',//用户表ID
 		ugname:'',//	用户在群昵称
-		mstype:'',//	类型,0家长,1管理员,2老师,3学生
+		mstype:''//	类型,0家长,1管理员,2老师,3学生
 	}
 	
 	
@@ -157,12 +157,12 @@ var publicModel = (function($, mod) {
 		
 		//16.（班级空间）获取用户针对某班级的空间列表，28
 		ReadCnt:'',//浏览次数
-		LikeCnt:''//点赞次数
+		LikeCnt:'',//点赞次数
 		//28
 		LikeUsers:'',//点赞列表
 		Comments:'',//评论列表
 		//36
-		NoReadCnt:'',//未读条数
+		NoReadCnt:''//未读条数
 	}
 	
 	//用户空间，用户列表
@@ -194,7 +194,13 @@ var publicModel = (function($, mod) {
 		MsgArray:'',//消息数组
 		MsgFrom:'',//发消息者,从属MsgArray
 		MsgTo:'',//接消息者,从属MsgArray
-		MsgContent:'',//消息内容,从属MsgArray
+		MsgContent:''//消息内容,从属MsgArray
+	}
+	
+	mod.model_msgArray = {
+		MsgFrom:'',//发消息者
+		MsgTo:'',//接消息者
+		MsgContent:''//消息内容
 	}
 
 	return mod;
