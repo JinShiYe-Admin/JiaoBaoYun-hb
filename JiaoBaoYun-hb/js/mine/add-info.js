@@ -148,28 +148,29 @@ var createFirstChild = function(type) {
 	 * 加载保存按钮的监听
 	 */
 var addListener = function() {
-	document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected', function(e) {
-		console.log("当前选中的为：" + e.detail.el.innerText);
-		console.log("当前选中的资料id为：" + e.detail.el.stuid);
-		choseId = e.detail.el.stuid ? e.detail.el.stuid : 0;
-		getMstype(e.detail.el.mstype);
-	});
-}
-/**
- * 获取身份
- * @param {Object} dataMstype
- */
-var getMstype = function(dataMstype) {
-	if(dataMstype){
-		if( dataMstype == 3 && roles.length > 1) {
-			mstype = 0;
-		} else {
-			mstype=dataMstype;
-		}
-	}else{
-		mstype = roles[0];
+		document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected', function(e) {
+			console.log("当前选中的为：" + e.detail.el.innerText);
+			console.log("当前选中的资料id为：" + e.detail.el.stuid);
+			choseId = e.detail.el.stuid ? e.detail.el.stuid : 0;
+			getMstype(e.detail.el.mstype);
+		});
 	}
-		
+	/**
+	 * 获取身份
+	 * @param {Object} dataMstype
+	 */
+var getMstype = function(dataMstype) {
+		if(dataMstype) {
+			//资料为学生且身份为家长
+			if(dataMstype == 3 && roles.indexOf(0)>=0) {
+				//身份为家长
+				mstype = 0;
+			} else {
+				mstype = dataMstype;
+			}
+		} else {
+			mstype = roles[0];
+		}
 
 	}
 	//保存按钮
