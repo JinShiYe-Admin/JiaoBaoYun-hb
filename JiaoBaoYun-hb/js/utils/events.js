@@ -253,8 +253,13 @@ var events = (function($, mod) {
 			if(!targetPage) {
 				targetPage = plus.webview.getWebviewById(tarPage);
 			}
-			//触发目标页面的listener事件
-			$.fire(targetPage, listener);
+			if(targetPage){
+				//触发目标页面的listener事件
+				$.fire(targetPage, listener);
+			}else{
+				console.log('目标页面不存在');
+			}
+			
 		}
 		/**
 		 * 清空子元素

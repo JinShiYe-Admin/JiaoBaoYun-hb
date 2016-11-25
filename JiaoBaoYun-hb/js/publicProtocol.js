@@ -29,12 +29,22 @@ var arrayDupRemoval = function(array) {
 	return res;
 }
 
-//给头像添加默认值，或者添加？+数字
-var updateHeadImg = function(string) {
+//给头像添加默认值，或者添加？+数字,
+//string为传过来的头像url，flag表示当前调用界面对于默认头像的层级关系
+var updateHeadImg = function(string,flag) {
 	var tempStr = '';
 	//判断img是否为null，或者空
 	if(string == '' || string == null) { //赋值
-		tempStr = '../image/utils/default_personalimage.png';
+		if (flag == 1) {
+			tempStr = '../image/utils/default_personalimage.png';
+		} else if (flag == 2) {
+			tempStr = '../../image/utils/default_personalimage.png';
+		}else if (flag == 3) {
+			tempStr = '../../../image/utils/default_personalimage.png';
+		}else if (flag == 0) {
+			tempStr = 'image/utils/default_personalimage.png';
+		}
+		
 	} else { //修改值
 		var myDate = new Date();
 		tempStr = string + '?' + myDate.getTime();

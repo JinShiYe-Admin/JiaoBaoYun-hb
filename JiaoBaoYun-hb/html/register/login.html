@@ -242,6 +242,8 @@
 										tempInfo.utxt = tepI0000.utxt;
 										tempInfo.uimg = tepI0000.uimg;
 										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
+										//
+										events.fireToPageNone('mine.html','infoChanged');
 										console.log('登录保存的个人信息：' + JSON.stringify(tempInfo))
 											//跳到主界面
 										events.openNewWindowWithData('../index/index.html', '');
@@ -397,6 +399,8 @@
 										//存储到手机本地
 									data.RspData.ispw = '1';
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
+									//
+									events.fireToPageNone('mine.html','infoChanged');
 									//存储自动登录
 									//									loginInfo.auto = 1;
 									//									window.myStorage.setItem(window.storageKeyName.AUTOLOGIN, loginInfo);

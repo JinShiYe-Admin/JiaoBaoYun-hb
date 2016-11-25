@@ -330,7 +330,7 @@
 								//当前model
 								var tempModel = data1.RspData[i];
 								//更新头像
-								tempModel.uimg = updateHeadImg(tempModel.uimg)
+								tempModel.uimg = updateHeadImg(tempModel.uimg, 1);
 								//循环留言数组
 								for(var item in tempRspData) {
 									//当前循环的model
@@ -360,19 +360,19 @@
 							}
 						}
 						console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
-					});
 
-					//判断是加载更多1，还是刷新2
-					if(flag == 1) {
-						//合并数组
-						aboutMeArray = aboutMeArray.concat(data.RspData.Data);
-					} else {
-						tempPage = 1;
-						//合并数组
-						aboutMeArray = data.RspData.Data;
-					}
-					//留言总条数
-					totalCnt = data.RspData.TotalCnt;
+						//判断是加载更多1，还是刷新2
+						if(flag == 1) {
+							//合并数组
+							aboutMeArray = aboutMeArray.concat(data.RspData.Data);
+						} else {
+							tempPage = 1;
+							//合并数组
+							aboutMeArray = data.RspData.Data;
+						}
+						//留言总条数
+						totalCnt = data.RspData.TotalCnt;
+					});
 				} else {
 					mui.toast(data.RspTxt);
 				}
