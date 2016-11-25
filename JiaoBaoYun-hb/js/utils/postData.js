@@ -19,7 +19,7 @@ function postData(url, data, callback, waitingDialog) {
 //url,
 //encryData,需要加密的字段
 //commonData,不需要加密的对象
-//flag,0表示不需要合并共用数据，1为添加uuid、utid、token、appid普通参数，2为uuid、appid、token，3为token
+//flag,0表示不需要合并共用数据，1为添加uuid、utid、token、appid普通参数，2为uuid、appid、token
 //waitingDialog,等待框
 //callback,返回值
 function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback) {
