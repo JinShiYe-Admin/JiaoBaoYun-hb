@@ -141,76 +141,6 @@
 			<div class="mui-scroll">
 				<!--数据列表-->
 				<ul class="mui-table-view">
-					<!--<li id="0" class="mui-table-view-cell">
-						<div class="mui-row mui-row-padding-8px">
-							<div class="mui-col-sm-12 mui-col-xs-12">
-								<div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="../../image/dynamic/u101.png"></div>
-								<div class="mui-media-body dynamic-padding-left-10px"><span class="mui-icon mui-icon-arrowdown mui-pull-right"></span>
-									<h4>大熊猫<img src="../../image/dynamic/icon_Level39.png" class=" dynamic-icon-Level"></h4>
-									<p>2016-10-12 10:55</p>
-								</div>
-							</div>
-							<div class="mui-col-sm-12 mui-col-xs-12">
-								<div class="mui-media-body dynamic-contenttext">
-									<font>一二三四二二三四三二三四四二三四</font>
-								</div>
-							</div>
-						</div>
-						<div class="mui-row ">
-							<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: 125px;"><img class="dynamic-image" src="../../image/dynamic/u101.png"></div>
-							<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: 125px;"><img class="dynamic-image" src="../../image/dynamic/u101.png"></div>
-							<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: 125px;"><img class="dynamic-image" src="../../image/dynamic/u101.png"></div>
-							<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: 125px;"><img class="dynamic-image" src="../../image/dynamic/u101.png"></div>
-							<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: 125px;"><img class="dynamic-image" src="../../image/dynamic/u101.png"></div>
-							<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: 125px;"><img class="dynamic-image" src="../../image/dynamic/u101.png"></div>
-							<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: 125px;"><img class="dynamic-image" src="../../image/dynamic/u101.png"></div>
-							<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: 125px;"><img class="dynamic-image" src="../../image/dynamic/u101.png"></div>
-							<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: 125px;">
-								<div class="dynamic-image-more">
-									<font style="line-height: 125px;">+1</font>
-								</div><img class="dynamic-image" src="../../image/dynamic/u101.png"></div>
-						</div>
-						<div class="mui-row mui-row-padding-8px">
-							<div class="mui-col-sm-12 mui-col-xs-12">
-								<div class="mui-media-body">
-									<p><span class="mui-icon mui-icon-image"></span>上传了10张图片到相册《手机相册》</p>
-								</div>
-							</div>
-							<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px">
-								<div class="mui-media-body mui-pull-right"><img src="../../image/dynamic/icon_praise.png" class="dynamic-icon-praise"><img src="../../image/dynamic/icon_comment.png" class="dynamic-icon-comment"><img src="../../image/dynamic/icon_forward.png" class="dynamic-icon-forward"></div>
-								<div class="mui-media-body">
-									<p>浏览30次</p>
-								</div>
-							</div>
-							<div class="mui-col-sm-12 mui-col-xs-12 ">
-								<div class="mui-media-body dynamic-line"></div>
-							</div>
-							<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px">
-								<div class="mui-media-body"><img src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left">
-									<font class="common-font-family-Regular dynamic-praise-name">一</font>
-									<font class="common-font-family-Regular dynamic-praise-name">、一二</font>
-									<font class="common-font-family-Regular dynamic-praise-name">、一二三</font>
-									<font class="common-font-family-Regular dynamic-praise-name">、一二三四</font>
-									<font class="common-font-family-Regular dynamic-praise-name">、一二三四五</font>
-									<font class="common-font-family-Regular dynamic-praise-name">、一二三四五六</font>
-									<font class="common-font-family-Regular dynamic-praise-name">、一二三四五六七</font>
-								</div>
-							</div>
-							<div class="mui-col-sm-12 mui-col-xs-12">
-								<div class="mui-media-body">
-									<font class="common-font-family-Regular dynamic-comment-name">陪你上演地老天荒</font>
-									<font class="common-font-family-Regular">：嘚瑟呵呵</font>
-								</div>
-								<div class="mui-media-body">
-									<font class="common-font-family-Regular dynamic-comment-name">孟祥菊</font>
-									<font class="common-font-family-Regular">回复</font>
-									<font class="common-font-family-Regular dynamic-comment-name">陪你上演地老天荒</font>
-									<font class="common-font-family-Regular">一二三四五六七八九十</font>
-								</div>
-							</div>
-							<div class="mui-col-sm-12 mui-col-xs-12"><button type="button" class="mui-btn dynamic-comment-btn"><p class="mui-pull-left">评论</p></button></div>
-						</div>
-					</li>-->
 
 				</ul>
 			</div>
@@ -334,9 +264,9 @@
 						//合并数组,点赞的人
 						tempArray = tempArray.concat(tempModel0.LikeUsers);
 						//循环当前model中的回复数组
-						for(var item1 in tempModel0.Replys) {
+						for(var item1 in tempModel0.Comments) {
 							//回复中的model
-							var tempModel1 = tempModel0.Replys[item];
+							var tempModel1 = tempModel0.Comments[item];
 							//将回复中的id塞到数组
 							tempArray.push(tempModel1.UserId);
 							tempArray.push(tempModel1.ReplyId);
@@ -373,12 +303,12 @@
 									var tempModel0 = tempRspData[item];
 									//遍历点赞的人
 									for(var item2 in tempModel0.LikeUsers) {
-										console.log('item2;;;;;=='+tempModel.utid+','+tempModel0.LikeUsers[item2]);
+										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
 										if(tempModel.utid == tempModel0.LikeUsers[item2]) {
-											tempModel0.LikeUsers.splice(item2,1,tempModel);
+											tempModel0.LikeUsers.splice(item2, 1, tempModel);
 										}
 									}
-									
+
 									//对比id是否一致
 									if(tempModel0.utid == tempModel.UserId) {
 										//合并
@@ -391,7 +321,7 @@
 										//对比id是否一致
 										if(tempModel.utid == tempModel1.UserId) {
 											//添加参数
-											tempModel1.ReplyIdName = tempModel.unick;
+											tempModel1.UserIdName = tempModel.unick;
 										}
 										if(tempModel.utid == tempModel1.ReplyId) {
 											//添加参数
@@ -438,6 +368,26 @@
 
 		var id = 0;
 		mui.plusReady(function() {
+			//			var comData = {
+			//				userId: '2', //用户ID
+			//				userSpaceId: '1', //用户空间ID
+			//				commentContent: '好好学习' //回复内容
+			//			};
+			//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//			postDataPro_addUserSpaceComment(comData, wd, function(data) {
+			//					console.log('6666666=====' + JSON.stringify(data));
+			//				})
+			//					var comData = {
+			//			userId: '2',//用户ID
+			//			upperId:'2',//上级评论ID
+			//			replyUserId:'1',//回复ID
+			//			userSpaceId:'1',//用户空间ID
+			//			commentContent:'好好学习'//回复内容
+			//		};
+			//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//			postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
+			//				console.log('6666666====='+JSON.stringify(data));
+			//			})
 			publisherId = plus.webview.currentWebview().data; //发布者id
 			console.log('publisherId======' + publisherId);
 			tempPage = 1; //页码，请求第几页数据
@@ -549,19 +499,28 @@
 			//[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
 			var introduce = '上传了' + ImageNum + '张图片到相册《手机相册》';
 			var viewCount = tempModel.ReadCnt;
-			var praiseList = tempModel.LikeUsers;
+			var praiseList = [];
+			if(tempModel.LikeUsers.length != 0) {
+				for(var i = 0; i < tempModel.LikeUsers.length; i++)
+					praiseList.push(tempModel.LikeUsers[i].unick);
+			}
 
 			//[commentList]:评论列表
 			//1.评论[commenter,content]，评论者，评论内容
 			//2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
 			var commentList = [];
-			for(var i=0;i<tempModel.Comments.length;i++){
+			for(var i = 0; i < tempModel.Comments.length; i++) {
+
 				var tempComment = tempModel.Comments[i];
-				var tempArr =[tempComment.ReplyIdName,tempComment.CommentContent];
-				commentList.push(tempArr);
+				if(tempComment.ReplyId == 0) {
+					var tempArr = [tempComment.UserIdName, tempComment.CommentContent];
+					commentList.push(tempArr);
+				} else {
+					var replyer1 = [tempComment.ReplyIdName, tempComment.UserIdName, tempComment.CommentContent];
+					commentList.push(replyer1);
+				}
+
 			}
-//			var replyer1 = ['孟祥菊', '陪你上演地老天荒', '一二三四五六七八九十'];
-//			commentList.push(replyer1);
 
 			InteractionList.push(introduce);
 			InteractionList.push(viewCount);
