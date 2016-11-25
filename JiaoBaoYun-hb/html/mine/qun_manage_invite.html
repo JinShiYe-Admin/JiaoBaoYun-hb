@@ -326,7 +326,8 @@
 								//}
 
 								if(userData.uimg != null) { //头像
-									document.getElementById("uimg").src = userData.uimg;
+									var myDate = new Date();
+									document.getElementById("uimg").src = userData.uimg + '?' + myDate.getTime();
 								} else {
 									document.getElementById("uimg").src = '../../image/utils/default_personalimage.png';
 								}
@@ -355,13 +356,28 @@
 				 * 获取群成员资料
 				 */
 				function getUserInfo() {
+					var vvl1 = '';
+					switch(mstype) {
+						case '0':
+							vvl1 = '3';
+							break;
+						case '2':
+							vvl1 = '2';
+							break;
+						case '3':
+							vvl1 = '3';
+							break;
+						default:
+							console.log('获取群成员资料类型选择出错');
+							break;
+					}
 
 					//16.通过群ID获取群对象资料
 					//所需参数
 					var comData2 = {
 						top: '-1', //选择条数,-1为全部
 						vvl: gid, //群ID,查询的值
-						vvl1: mstype //类型,0家长,1管理员,2老师,3学生,-1全部
+						vvl1: vvl1 //类型,0家长,1管理员,2老师,3学生,-1全部
 					};
 
 					//返回值model：model_groupStus
@@ -393,7 +409,7 @@
 					li.className = 'mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3';
 					var html1 = '<div id="date_' + data.stuid + '" data-stuid="' + data.stuid + '" class="keep-box-shadow-border keep-member">'
 					var html2 = '';
-					if(data.stuimg != null) {
+					if(data.stuimg != '') {
 						html2 = '<img src="' + data.stuimg + '" />';
 					} else {
 						html2 = '<img src="../../image/utils/default_personalimage.png" />';
