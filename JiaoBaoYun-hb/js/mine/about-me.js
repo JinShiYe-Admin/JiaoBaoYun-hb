@@ -15,16 +15,16 @@ mui.plusReady(function(){
 //请求数据
 function requestData() {
 	// 等待的对话框
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	var comData = {
 		userId: personalUTID, //用户ID
 		pageIndex: '1', //当前页数
 		pageSize: '10' //每页记录数
 	};
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//56.（用户空间）获取与我相关
 	postDataPro_getAboutMe(comData, wd, function(data) {
 		wd.close();
-		console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		console.log('获取的与我相关的数据：'+JSON.stringify(data));
 		if(data.RspCode == 0) {
 			var tempRspData = data.RspData.Data;
 			//获取当前回调的个人信息，主要是头像、昵称
@@ -55,7 +55,7 @@ function requestData() {
 			//21.通过用户ID获取用户资料
 			postDataPro_PostUinf(tempData, wd, function(data1) {
 				wd.close();
-				console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+				console.log('获取个人资料success:RspCode:'+JSON.stringify(data1));
 				if(data1.RspCode == 0) {
 					//循环当前的个人信息返回值数组
 					for(var i in data1.RspData) {

@@ -188,7 +188,7 @@ events.addTap('btn-save', function() {
 			stat: 1,
 			mstype: mstype + '',
 			lnkinfid: choseId,
-			urel: ''
+			urel: mstype==0?'爸爸':''
 		},
 		wd,
 		function(data) {
@@ -203,4 +203,3 @@ events.addTap('btn-save', function() {
 			}
 		})
 })
-}
