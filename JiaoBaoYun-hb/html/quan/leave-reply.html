@@ -34,7 +34,7 @@
 			var httpData = plus.webview.currentWebview().data;
 			var leaveContent = document.getElementById('content');
 			events.addTap('publish', function() {
-				if(!leaveContent.value) {
+				if(!leaveContent.value||leaveContent.value=='') {
 					mui.toast('请输入留言');
 					return;
 				}
