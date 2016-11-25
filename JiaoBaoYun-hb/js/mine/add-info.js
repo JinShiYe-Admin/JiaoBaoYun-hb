@@ -2,7 +2,7 @@ var gutid; //申请记录id
 var roles = [];
 var gid; //群id
 var choseId = 0;
-var mstype;//类型信息
+var mstype; //类型信息
 var list = document.getElementById('list-container');
 mui.init();
 mui('.mui-scroll-wrapper').scroll({
@@ -16,7 +16,7 @@ mui.plusReady(function() {
 			gutid = e.detail.data.gutid;
 			//获取申请角色
 			roles = e.detail.data.groupRoles;
-			mstype=roles[0];
+			mstype = roles[0];
 			//获取申请群id
 			gid = e.detail.data.gid;
 			//清空所有子元素
@@ -28,19 +28,19 @@ mui.plusReady(function() {
 			addListener();
 		});
 	})
-/**
- * 加载无资料选项
- */
-var addNoData=function(){
-	var li=document.createElement('li');
-	li.className="mui-table-view-divider";
-	li.innerText='无资料';
-	list.appendChild(li);
-	var li1=document.createElement('li');
-	li1.className="mui-table-view-cell mui-selected";
-	li1.innerHTML='<a class="mui-navigate-right">无可绑定资料</a>';
-	list.appendChild(li1);
-}
+	/**
+	 * 加载无资料选项
+	 */
+var addNoData = function() {
+		var li = document.createElement('li');
+		li.className = "mui-table-view-divider";
+		li.innerText = '无资料';
+		list.appendChild(li);
+		var li1 = document.createElement('li');
+		li1.className = "mui-table-view-cell mui-selected";
+		li1.innerHTML = '<a class="mui-navigate-right">无可绑定资料</a>';
+		list.appendChild(li1);
+	}
 	/**
 	 * 根据不同身份，放置不同数据
 	 * @param {Object} roles 身份数组
@@ -65,11 +65,11 @@ var getData = function(role, callback) {
 		postDataPro_PostGUInf({
 				top: -1, //选择条数,-1为全部
 				vvl: gid, //群ID,查询的值
-				vvl1: role==2?2:3//如果是老师 获取2其他获取3学生资料
+				vvl1: role == 2 ? 2 : 3 //如果是老师 获取2其他获取3学生资料
 			}, wd,
 			function(data) {
 				wd.close();
-				console.log('角色'+role+'获取的班级资料'+JSON.stringify(data))
+				console.log('角色' + role + '获取的班级资料' + JSON.stringify(data))
 				if(data.RspCode == '0000') {
 					callback(role, data.RspData);
 				} else {
@@ -85,12 +85,12 @@ var getData = function(role, callback) {
 	 */
 var setData = function(type, data) {
 		createFirstChild(type);
-		console.log('放置数据'+JSON.stringify(data));
+		console.log('放置数据' + JSON.stringify(data));
 		data.forEach(function(item) {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
-				li.stuid=item.stuid;
-				li.mstype=item.mstype;
+				li.stuid = item.stuid;
+				li.mstype = item.mstype;
 				li.innerHTML = createInner(type, item);
 				list.appendChild(li);
 			})
@@ -104,23 +104,23 @@ var setData = function(type, data) {
 	 * 
 	 * @param {Object} item
 	 */
-/**
- * 根据数据创建li的innnerHTML
- * @param {Object} type 类型
- * @param {Object} item 单元数据
- */
+	/**
+	 * 根据数据创建li的innnerHTML
+	 * @param {Object} type 类型
+	 * @param {Object} item 单元数据
+	 */
 var createInner = function(type, item) {
-		return '<a class="mui-navigate-right" stuid="' + item.stuid + 'mstype="' + type + '"><img src="' +
-			getStuimg(item)+ '" />' + item.stuname + '</a>';
-	}
+	return '<a class="mui-navigate-right" stuid="' + item.stuid + 'mstype="' + type + '"><img src="' +
+		getStuimg(item) + '" />' + item.stuname + '</a>';
+}
 
 /**
  * 获取头像
  * @param {Object} cell 单元数据
  */
 var getStuimg = function(cell) {
-	return cell.stuimg ? cell.stuimg : '../../image/utils/default_personalimage.png';
-}
+		return cell.stuimg ? cell.stuimg : '../../image/utils/default_personalimage.png';
+	}
 	/**
 	 * 
 	 * @param {Object} type 身份类型
@@ -143,17 +143,36 @@ var createFirstChild = function(type) {
 		}
 		list.appendChild(li);
 	}
-/**
- * 加载列表选择监听
- * 加载保存按钮的监听
- */
+	/**
+	 * 加载列表选择监听
+	 * 加载保存按钮的监听
+	 */
 var addListener = function() {
-	document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected', function(e) {
-		console.log("当前选中的为：" + e.detail.el.innerText);
-		console.log("当前选中的资料id为：" + e.detail.el.stuid);
-		choseId =e.detail.el.stuid?e.detail.el.stuid:0;
-		mstype=e.detail.el.mstype?e.detail.el.mstype:roles[0];
-	});
+		document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected', function(e) {
+			console.log("当前选中的为：" + e.detail.el.innerText);
+			console.log("当前选中的资料id为：" + e.detail.el.stuid);
+			choseId = e.detail.el.stuid ? e.detail.el.stuid : 0;
+			getMstype(e.detail.el.mstype);
+		});
+	}
+	/**
+	 * 获取身份
+	 * @param {Object} dataMstype
+	 */
+var getMstype = function(dataMstype) {
+		if(dataMstype) {
+			//资料为学生且身份为家长
+			if(dataMstype == 3 && roles.indexOf(0)>=0) {
+				//身份为家长
+				mstype = 0;
+			} else {
+				mstype = dataMstype;
+			}
+		} else {
+			mstype = roles[0];
+		}
+
+	}
 	//保存按钮
 	//		var comData = {
 	//			gutid: '',//申请记录ID，
@@ -162,26 +181,25 @@ var addListener = function() {
 	//			lnkinfid:'',//关联资料ID，无资料关联填写0
 	//			urel:''//与资料关系，与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
 	//		};
-	events.addTap('btn-save', function() {
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
-		postDataPro_PostJoinDo({
-				gutid: gutid,
-				stat: 1,
-				mstype: mstype+'',
-				lnkinfid: choseId,
-				urel: ''
-			},
-			wd,
-			function(data) {
-				wd.close();
-				console.log(JSON.stringify(data));
-				if(data.RspCode == '0000') {
-					mui.toast('申请通过!');
-					mui.fire('mine/approval-apply.html', 'appPassed', gutid);
-					mui.back();
-				} else {
-					mui.toast(data.RspTxt);
-				}
-			})
-	})
-}
+events.addTap('btn-save', function() {
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
+	postDataPro_PostJoinDo({
+			gutid: gutid,
+			stat: 1,
+			mstype: mstype + '',
+			lnkinfid: choseId,
+			urel: mstype==0?'爸爸':''
+		},
+		wd,
+		function(data) {
+			wd.close();
+			console.log(JSON.stringify(data));
+			if(data.RspCode == '0000') {
+				mui.toast('申请通过!');
+				mui.fire('mine/approval-apply.html', 'appPassed', gutid);
+				mui.back();
+			} else {
+				mui.toast(data.RspTxt);
+			}
+		})
+})

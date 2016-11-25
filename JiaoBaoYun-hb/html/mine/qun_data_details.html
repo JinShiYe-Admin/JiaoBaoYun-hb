@@ -77,7 +77,7 @@
 		<div class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
 				<ul class="mui-table-view">
-					<div id="stu_show" style="display:;">
+					<div id="stu_show" style="display:none;">
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>学生姓名:</label>
@@ -121,7 +121,7 @@
 							</div>
 						</li>
 					</div>
-					<div id="tea_show" style="display:none ;">
+					<div id="tea_show" style="display: ;">
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>姓名:</label>
@@ -281,6 +281,14 @@
 				});
 				//---性别选择监听---end---
 
+				//保存按钮
+				document.getElementById('finish').addEventListener('tap', function() {
+					if(mstype == 2) {
+						//老师
+						console.log('finish' + mstype);
+					}
+				})
+
 				//展示老师资料
 				function showTea() {
 					tea_name.value = data.stuname; //姓名
@@ -380,7 +388,6 @@
 							if(type == 3) { //学生
 								mui.each(data.RspData, function(index, item) {
 									stuData.push(item);
-									stuData.push([123]);
 								});
 								console.log('stuData:' + JSON.stringify(stuData));
 							}
