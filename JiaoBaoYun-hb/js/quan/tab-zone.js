@@ -13,10 +13,11 @@ mui.init({
 
 mui.plusReady(function() {
 	getStuList(); //获取学生列表
-	getGroupList(); //获取所有的群
+	//	getGroupList(); //获取所有的群
 	//跳转到学生动态界面
 	mui('.mui-table-view').on('tap', '.studentsdynamic', function() {
 		var index = this.id.replace('studentsdynamic', '');
+		console.log('studentsdynamic===='+index)
 		mui.openWindow({
 			url: 'studentdynamic_main.html',
 			id: 'studentdynamic_main.html',
@@ -25,7 +26,12 @@ mui.plusReady(function() {
 				bottom: '0px'
 			},
 			extras: {
-				data: ''
+				data: {
+					studentId:topStudentArr[index].utid,
+					classId:topStudentArr[index].gid,
+					studentName:topStudentArr[index].ugname
+				}
+				
 			},
 		});
 	});
@@ -67,10 +73,85 @@ function getStuList() {
 		console.log('postDataPro_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0) {
-
+			topStudentArr = data.RspData;
+			requestTimes3 = topStudentArr.length;
+			var StuDyArr=[];
+			if(topStudentArr==0){
+				getGroupList();
+			}
+			for(var i = 0; i < topStudentArr.length; i++) {
+				getNotes(i,StuDyArr);
+			}
 		} else {
 			mui.toast(data.RspTxt);
 		}
+	});
+}
+/**
+ * 获取用户针对某学生的点到记事列表
+ * @param {Object} pageIndex 当前页数
+ * @param {Object} pageSize 每页记录数
+ */
+function getNotes(index,StuDyArr) {
+	//4.（点到记事）获取用户针对某学生的点到记事列表
+	//所需参数
+	var comData = {
+		userId: personalUTID, //用户ID----utid
+		studentId: topStudentArr[index].utid, //学生ID----stuid
+		classId:topStudentArr[index].gid,
+		pageIndex: '1', //当前页数
+		pageSize: '1' //每页记录数
+	};
+	//返回model：model_homeSchoolList,model_userNoteInfo
+	console.log('获取列表发送的数据:' + JSON.stringify(comData));
+	// 等待的对话框
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
+		console.log('postDataPro_getNotesByUserForStudent:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+			var tempArr = data.RspData.Data;
+			if(tempArr.length == 0) { //数据为空时 添加默认数据
+				var temp = {
+					index: i, //排序索引
+					MsgContent: '暂无学生动态',
+					PublishDate: ''
+				}
+				StuDyArr.push(temp);
+			} else { //取班级空间的第一条数据
+				tempArr[0].index = i; //排序索引
+				StuDyArr.push(tempArr[0]);
+			}
+console.log('requestTimes3===='+requestTimes3);
+			requestTimes3--;
+			if(requestTimes3 == 0) { //循环请求班级空间完毕
+				//排序
+				StuDyArr.sort(function(a, b) {
+						return a.index - b.index
+					})
+				console.log('tempArr==='+JSON.stringify(tempArr));
+					//				顶部列表添加cell
+				var ul = document.getElementById('top-list');
+				ul.innerHTML = '';
+				for(var i = 0; i < topStudentArr.length; i++) {
+					var li = document.createElement('li');
+					li.id = 'studentsdynamic' + i;
+					li.className = 'mui-table-view-cell mui-media studentsdynamic';
+					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(topStudentArr[i].stuimg,2) + '">' + '<p class="time">' + StuDyArr[i].PublishDate +
+						'</p>' +
+						'<div class="mui-media-body">' +
+						topStudentArr[i].ugname +
+						'<p class="mui-ellipsis">' + StuDyArr[i].MsgContent + '</p></div>';
+					ul.appendChild(li);
+				}
+				getGroupList();
+
+			}
+
+		} else {
+			mui.toast('获取点到记事列表:' + data.RspTxt);
+			console.log('获取用户针对某学生的点到记事列表:' + data.RspTxt);
+		}
+		wd.close();
 	});
 }
 //获取所有的群
@@ -146,7 +227,9 @@ function getTopList(i) {
 					})
 					//				顶部列表添加cell
 				var ul = document.getElementById('top-list');
-				ul.innerHTML = '';
+				if(topStudentArr.length==0){
+					ul.innerHTML = '';
+				}
 				for(var i = 0; i < topArray.length; i++) {
 					var li = document.createElement('li');
 					li.id = 'tarClass' + i;
@@ -250,11 +333,10 @@ function getUserSpaces(upString, index) {
 				if(!userList[i].MsgContent) {
 					userList[i].MsgContent = '暂无空间';
 				}
-				console.log('3333333333333====' + JSON.stringify(userList[i]));
 				datasource[index].NoReadCnt = datasource[index].NoReadCnt + userList[i].NoReadCnt;
 				mui.extend(datasource[index].userList[i], userList[i])
 			}
-			console.log('datasource===' + JSON.stringify(datasource));
+//			console.log('datasource===' + JSON.stringify(datasource));
 
 			if(requestTimes2 == 0) { //请求完毕刷新界面
 				refreshUI();
