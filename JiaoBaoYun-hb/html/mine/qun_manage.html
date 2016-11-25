@@ -259,7 +259,7 @@
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 				//需要参数
 				var getQunData = {
-					vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
+					vtp: 'ag', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
 					vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
 				};
 				// 等待的对话框
@@ -279,23 +279,34 @@
 						//gname	群名	string		否	群名称
 						//gimg	群头像	string		否	群头像的链接
 						mui.each(data.RspData, function(index, item) {
-							console.log('data.RspData:' + item.gname);
-							var qun = {
-								gid: item.gid, //群ID
-								gname: item.gname, //群名
-								gimg: item.gimg, //群头像,群头像的链接
-								mstype: item.mstype //用户管理角色,0家长,1管理员,2老师,3学生
+							//剔除同一个群身份不同
+							var same = false;
+							mui.each(qunList, function(index, qitem) {
+								if(qitem.gid == item.gid) {
+									same = true;
+									return false;
+								}
+							});
+							//不相同的群和身份
+							if(!same) {
+								console.log('data.RspData:群id:' + item.gid + '|群名：' + item.gname + '|管理角色：' + item.mstype);
+								var qun = {
+									gid: item.gid, //群ID
+									gname: item.gname, //群名
+									gimg: item.gimg, //群头像,群头像的链接
+									mstype: item.mstype //用户管理角色,0家长,1管理员,2老师,3学生
+								}
+								var hasGetMember = {
+									hasGetStu: false, //记录是否已获得学生
+									hasGetTea: false, //记录是否已获得老师
+									hasGetPar: false, //记录是否已获得家长
+									showBotId: '', //记录当前展示的成员区域id
+									showType: 'student', //记录当前展示的成员类型
+								};
+								mui.extend(qun, hasGetMember); //合并两个对象
+								qunList.push(qun);
+								addQun(qun);
 							}
-							var hasGetMember = {
-								hasGetStu: false, //记录是否已获得学生
-								hasGetTea: false, //记录是否已获得老师
-								hasGetPar: false, //记录是否已获得家长
-								showBotId: '', //记录当前展示的成员区域id
-								showType: 'student', //记录当前展示的成员类型
-							};
-							mui.extend(qun, hasGetMember); //合并两个对象
-							qunList.push(qun);
-							addQun(qun);
 						});
 						//getMember(qunList[0], type); //获取群的正常用户
 					} else if(data.RspCode == 9) {
@@ -466,18 +477,19 @@
 					var html2 = '<div class="keep-box-shadow-border keep-member" data-utid="' + member.utid + '" data-gid="' + member.gid + '" data-ugnick="' + member.ugnick + '">';
 					//头像
 					var html3 = '';
-					if(member.uimg != null && member.uimg != '') {
-						html3 = '<img src="' + member.uimg + '" />';
+					if(member.uimg != null) {
+						var myDate = new Date();
+						html3 = '<img src="' + member.uimg + '?' + myDate.getTime() + '" />';
 					} else {
 						html3 = '<img src="../../image/utils/default_personalimage.png" />';
 					}
 					//名称
 					var html4 = '';
-					if(member.ugname == null) { //没有群昵称
-						html4 = '<p class="mui-ellipsis">' + member.ugnick + '</p></div>';
-					} else {
-						html4 = '<p class="mui-ellipsis">' + member.ugname + '</p></div>';
-					}
+					//if(member.ugname == null) { //没有群昵称
+					//html4 = '<p class="mui-ellipsis">' + member.ugnick + '</p></div>';
+					//} else {
+					html4 = '<p class="mui-ellipsis">' + member.ugname + '</p></div>';
+					//}
 
 					li.innerHTML = html1 + html2 + html3 + html4;
 					qunBot.appendChild(li);
