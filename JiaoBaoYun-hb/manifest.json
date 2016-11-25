@@ -959,7 +959,8 @@
 					"js/utils/events.js",
 					"css/utils/common.css",
 					"js/mui.min.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [
 					"html/quan/studentdynamic_main.html",

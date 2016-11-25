@@ -5,6 +5,9 @@ var choseId = 0;
 var mstype;//类型信息
 var list = document.getElementById('list-container');
 mui.init();
+mui('.mui-scroll-wrapper').scroll({
+	indicators: true, //是否显示滚动条
+})
 mui.plusReady(function() {
 		//获取传值
 		window.addEventListener('postRoles', function(e) {
@@ -16,11 +19,28 @@ mui.plusReady(function() {
 			mstype=roles[0];
 			//获取申请群id
 			gid = e.detail.data.gid;
+			//清空所有子元素
+			events.clearChild(list);
+			//加载元素无可用资料
+			addNoData();
 			//根据不同身份,请求数据，并保存至界面
 			diffRoles(roles)
 			addListener();
 		});
 	})
+/**
+ * 加载无资料选项
+ */
+var addNoData=function(){
+	var li=document.createElement('li');
+	li.className="mui-table-view-divider";
+	li.innerText='无资料';
+	list.appendChild(li);
+	var li1=document.createElement('li');
+	li1.className="mui-table-view-cell mui-selected";
+	li1.innerHTML='<a class="mui-navigate-right">无可绑定资料</a>';
+	list.appendChild(li1);
+}
 	/**
 	 * 根据不同身份，放置不同数据
 	 * @param {Object} roles 身份数组
@@ -36,16 +56,16 @@ var diffRoles = function(roles) {
 		}
 	}
 	/**
-	 * 
-	 * @param {Object} role
-	 * @param {Object} callback
+	 * 获取数据
+	 * @param {Object} role 角色
+	 * @param {Object} callback 返回成功后的回调函数
 	 */
 var getData = function(role, callback) {
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		postDataPro_PostGUInf({
 				top: -1, //选择条数,-1为全部
 				vvl: gid, //群ID,查询的值
-				vvl1: role
+				vvl1: role==2?2:3//如果是老师 获取2其他获取3学生资料
 			}, wd,
 			function(data) {
 				wd.close();
@@ -58,9 +78,10 @@ var getData = function(role, callback) {
 			})
 	}
 	/**
-	 * 
-	 * @param {Object} type
-	 * @param {Object} data
+	 * 获取数据成功后的回调函数
+	 * 放置数据
+	 * @param {Object} type 类型
+	 * @param {Object} data 数据
 	 */
 var setData = function(type, data) {
 		createFirstChild(type);
@@ -83,16 +104,26 @@ var setData = function(type, data) {
 	 * 
 	 * @param {Object} item
 	 */
+/**
+ * 根据数据创建li的innnerHTML
+ * @param {Object} type 类型
+ * @param {Object} item 单元数据
+ */
 var createInner = function(type, item) {
 		return '<a class="mui-navigate-right" stuid="' + item.stuid + 'mstype="' + type + '"><img src="' +
 			getStuimg(item)+ '" />' + item.stuname + '</a>';
 	}
+
+/**
+ * 获取头像
+ * @param {Object} cell 单元数据
+ */
 var getStuimg = function(cell) {
 	return cell.stuimg ? cell.stuimg : '../../image/utils/default_personalimage.png';
 }
 	/**
 	 * 
-	 * @param {Object} type
+	 * @param {Object} type 身份类型
 	 */
 var createFirstChild = function(type) {
 		var li = document.createElement('li');
@@ -103,6 +134,7 @@ var createFirstChild = function(type) {
 				li.innerText = '老师资料';
 				break;
 				//学生资料	
+			case 0:
 			case 3:
 				li.innerText = '学生资料';
 				break;
@@ -111,9 +143,10 @@ var createFirstChild = function(type) {
 		}
 		list.appendChild(li);
 	}
-	/**
-	 * 
-	 */
+/**
+ * 加载列表选择监听
+ * 加载保存按钮的监听
+ */
 var addListener = function() {
 	document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected', function(e) {
 		console.log("当前选中的为：" + e.detail.el.innerText);
