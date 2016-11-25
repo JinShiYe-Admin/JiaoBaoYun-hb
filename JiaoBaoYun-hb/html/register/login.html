@@ -14,57 +14,57 @@
 				margin: 0px;
 				padding: 0px;
 			}
-			
+
 			.mui-content {
 				height: 100%;
 			}
-			
+
 			.area {
 				margin: 20px auto 0px auto;
 			}
-			
+
 			.mui-input-group {
 				margin-top: 10px;
 			}
-			
+
 			.mui-input-group:first-child {
 				margin-top: 20px;
 			}
-			
+
 			.mui-input-group label {
 				width: 22%;
 			}
-			
+
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				width: 78%;
 			}
-			
+
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
 				top: 6px;
 			}
-			
+
 			.mui-content-padded {
 				margin-top: 25px;
 			}
-			
+
 			.mui-btn {
 				padding: 10px;
 			}
-			
+
 			.link-area {
 				display: block;
 				margin-top: 25px;
 				text-align: center;
 			}
-			
+
 			.spliter {
 				color: #bbb;
 				padding: 0px 8px;
 			}
-			
+
 			.oauth-area {
 				position: absolute;
 				bottom: 20px;
@@ -74,7 +74,7 @@
 				padding: 0px;
 				margin: 0px;
 			}
-			
+
 			.oauth-area .oauth-btn {
 				display: inline-block;
 				width: 50px;
@@ -87,11 +87,11 @@
 				border: solid 1px #ddd;
 				border-radius: 25px;
 			}
-			
+
 			.oauth-area .oauth-btn:active {
 				border: solid 1px #aaa;
 			}
-			
+
 			.oauth-area .oauth-btn.disabled {
 				background-color: #ddd;
 			}
@@ -243,7 +243,7 @@
 										tempInfo.uimg = tepI0000.uimg;
 										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
 										//
-										events.fireToPageNone('mine.html','infoChanged');
+										events.fireToPageNone('../mine.html','infoChanged');
 										console.log('登录保存的个人信息：' + JSON.stringify(tempInfo))
 											//跳到主界面
 										events.openNewWindowWithData('../index/index.html', '');
@@ -400,7 +400,7 @@
 									data.RspData.ispw = '1';
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 									//
-									events.fireToPageNone('mine.html','infoChanged');
+									events.fireToPageNone('../mine.html','infoChanged');
 									//存储自动登录
 									//									loginInfo.auto = 1;
 									//									window.myStorage.setItem(window.storageKeyName.AUTOLOGIN, loginInfo);
