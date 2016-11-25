@@ -16,7 +16,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav common-background-bar ">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left common-color-white"></a>
-			<a class=" mui-icon mui-icon-compose  mui-pull-right mui-plus-visible common-color-white"></a>
+			<a id="pubLeave" class=" mui-icon mui-icon-compose  mui-pull-right mui-plus-visible common-color-white"></a>
 			<h1 class="mui-title common-color-white common-font-family-Regular">留言板</h1>
 		</header>
 		<div class="mui-content"></div>
@@ -26,6 +26,9 @@
 		mui.plusReady(function() {
 			var data = plus.webview.currentWebview().data;
 			events.initSubPage('leave-sub.html', data);
+			events.addTap('pubLeave', function() {
+				events.openNewWindowWithData('../quan/pub-leave.html', data);
+			})
 		})
 	</script>
 

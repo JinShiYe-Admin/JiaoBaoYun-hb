@@ -1,0 +1,396 @@
+<!--
+	作者：444811716@qq.com
+	时间：2016-11-24
+	描述：资料详情
+-->
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>资料详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/mui.picker.min.css" />
+		<link rel="stylesheet" href="../../css/mui.poppicker.css" />
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+
+		<style>
+			body,
+			.mui-content {
+				background: white;
+			}
+
+			.mui-content>.mui-table-view:first-child {
+				margin-top: 0px
+			}
+
+			.mui-table-view:before,
+			.mui-table-view:after {
+				height: 0px;
+			}
+
+			.mui-table-view-cell {
+				padding: 5px 15px;
+			}
+
+			.mui-table-view-cell:after {
+				left: 0px;
+			}
+
+			.mui-input-row label {
+				width: 20%;
+				padding: 11px 0px
+			}
+
+			.mui-input-row label~input {
+				width: 80%;
+			}
+
+			.gender {
+				/*性别选择*/
+				float: right;
+				width: 80%;
+				height: 40px;
+				padding: 10px 15px;
+				padding-left: 0px;
+				line-height: 21px;
+				-webkit-user-select: text;
+				border-radius: 3px;
+				outline: 0;
+				-webkit-appearance: none;
+				font-size: 17px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="text-align: left;">资料详情</h1>
+			<a id="finish" class="mui-pull-right" style="display: none;">保存</a>
+		</header>
+
+		<div class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view">
+					<div id="stu_show" style="display:;">
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>学生姓名:</label>
+								<input id="stu_name" type="text" class="mui-input-clear">
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>学生账号:</label>
+								<input id="stu_utid" type="text" class="mui-input-clear" disabled>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>学生电话:</label>
+								<input id="stu_phone" type="text" class="mui-input-clear">
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row ">
+								<label>性别:</label>
+								<div id="stu_gender" class="gender"></div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>昵称:</label>
+								<input id="stu_ugname" type="text" class="mui-input-clear">
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>所属群:</label>
+								<input id="stu_gname" type="text" class="mui-input-clear" disabled>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>简介:</label>
+								<input id="stu_introduction" type="text" class="mui-input-clear">
+							</div>
+						</li>
+					</div>
+					<div id="tea_show" style="display:none ;">
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>姓名:</label>
+								<input id="tea_name" type="text" class="mui-input-clear">
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>账号:</label>
+								<input id="tea_utid" type="text" class="mui-input-clear" disabled>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>昵称:</label>
+								<input id="tea_ugname" type="text" class="mui-input-clear">
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>性别:</label>
+								<div id="tea_gender" class="gender"></div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>所属群:</label>
+								<input id="tea_gname" type="text" class="mui-input-clear" disabled>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>职位:</label>
+								<input id="tea_job" type="text" class="mui-input-clear">
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>科目:</label>
+								<input id="tea_sub" type="text" class="mui-input-clear">
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>职称:</label>
+								<input id="tea_title" type="text" class="mui-input-clear">
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>教龄:</label>
+								<input id="tea_expsch" type="number" class="mui-input-clear">
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>简介:</label>
+								<input id="tea_introduction" type="text" class="mui-input-clear">
+							</div>
+						</li>
+					</div>
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var mstype = ''; //查询的资料类型0家长,2老师,3学生
+				var role = ''; //用户管理角色0家长,1管理员,2老师,3学生
+				var teaData = null; //记录获取的老师的资料
+				var stuData = []; //记录获取的学生资料
+
+				//---学生界面中相关的元素---start---
+				var stu_name = document.getElementById("stu_name"); //学生姓名
+				var stu_utid = document.getElementById("stu_utid"); //学生账号
+				var stu_phone = document.getElementById("stu_phone"); //学生电话
+				var stu_gender = document.getElementById("stu_gender"); //学生性别
+				var stu_ugname = document.getElementById("stu_ugname"); //学生群昵称
+				var stu_gname = document.getElementById("stu_gname"); //学生所属群
+				var stu_introduction = document.getElementById("stu_introduction"); //学生简介
+				//---学生界面中相关的元素---end---
+
+				//---老师界面中相关的元素---start---
+				var tea_name = document.getElementById("tea_name"); //老师姓名
+				var tea_utid = document.getElementById("tea_utid"); //老师账号
+				var tea_ugname = document.getElementById("tea_ugname"); //老师群昵称
+				var tea_gender = document.getElementById("tea_gender"); //老师性别
+				var tea_gname = document.getElementById("tea_gname"); //老师所属群
+				var tea_job = document.getElementById("tea_job"); //老师职位
+				var tea_sub = document.getElementById("tea_sub"); //老师科目
+				var tea_title = document.getElementById("tea_title"); //老师职称
+				var tea_expsch = document.getElementById("tea_expsch"); //老师教龄
+				var tea_introduction = document.getElementById("tea_introduction"); //老师简介
+				//---老师界面中相关的元素---end---
+
+				//---从父页面获取数据---start---
+				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				var data = main.data; //接收页面传入的参数值
+				//var data = {
+				//	gid: gid, //群id
+				//	gname: gname, //群名称
+				//	mstype: mstype, //用户管理角色,0家长,1管理员,2老师,3学生
+				//	stuid: stuid, //资料id
+				//	type: type, //资料类型
+				//}
+				console.log('从群资料页面获取的数据:' + JSON.stringify(data));
+				role = data.mstype;
+				if(role == 1) { //管理员才显示保存按钮
+					document.getElementById("finish").style.display = 'inline';
+				}
+				switch(data.type) {
+					case 'student': //学生
+						mstype = 3;
+						showStu();
+						break;
+					case 'teacher': //老师
+						mstype = 2;
+						showTea();
+						break;
+					case 'parents': //家长
+						//mstype = 0;
+						//createPar();
+						mstype = 3;
+						showStu();
+						break;
+					default:
+						console.log('资料类型选择出错');
+						break;
+				}
+				//---从父页面获取数据---end---
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true, //是否竖向滚动
+					bounce: true, //是否启用回弹
+				});
+				//---性别选择监听---start---
+				var genderPicker = new mui.PopPicker();
+				genderPicker.setData([{
+					value: '男',
+					text: '男'
+				}, {
+					value: '女',
+					text: '女'
+				}]);
+
+				//性别监听
+				mui('.mui-content').on('tap', '.gender', function() {
+					if(role == 1) {
+						console.log('gender:' + this.getAttribute('id'));
+						document.activeElement.blur(); //强制隐藏软键盘
+						var id = this.getAttribute('id')
+						genderPicker.show(function(items) {
+							document.getElementById(id).innerText = items[0].value;
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}
+				});
+				//---性别选择监听---end---
+
+				//展示老师资料
+				function showTea() {
+					tea_name.value = data.stuname; //姓名
+					tea_gname.value = data.gname; //所属群名称
+					document.getElementById("tea_show").style.display = 'inline';
+					if(role != 1) {
+						tea_name.setAttribute('disabled', 'disabled'); //老师姓名
+						//tea_utid.setAttribute('disabled', 'disabled');//老师账号
+						tea_ugname.setAttribute('disabled', 'disabled'); //老师群昵称
+						tea_gender.setAttribute('disabled', 'disabled'); //老师性别
+						//tea_gname.setAttribute('disabled', 'disabled');//老师所属群
+						tea_job.setAttribute('disabled', 'disabled'); //老师职位
+						tea_sub.setAttribute('disabled', 'disabled'); //老师科目
+						tea_title.setAttribute('disabled', 'disabled'); //老师职称
+						tea_expsch.setAttribute('disabled', 'disabled'); //老师教龄
+						tea_introduction.setAttribute('disabled', 'disabled'); //老师简介
+					}
+					getData(2);
+				}
+
+				//展示学生资料
+				function showStu() {
+					stu_name.value = data.stuname; //姓名
+					stu_gname.value = data.gname; //所属群名称
+					document.getElementById("stu_show").style.display = 'inline';
+					if(role != 1) {
+						stu_name.setAttribute('disabled', 'disabled'); //学生姓名
+						//stu_utid.setAttribute('disabled', 'disabled'); //学生账号
+						stu_phone.setAttribute('disabled', 'disabled'); //学生电话
+						stu_gender.setAttribute('disabled', 'disabled'); //学生性别
+						stu_ugname.setAttribute('disabled', 'disabled'); //学生群昵称
+						//stu_gname.setAttribute('disabled', 'disabled'); //学生所属群
+						stu_introduction.setAttribute('disabled', 'disabled'); //学生简介
+					}
+					getData(3);
+				}
+
+				/**
+				 * 通过用户资料ID获取用户各项资料
+				 * @param {Object} type 资料类型2老师,3学生
+				 */
+				function getData(type) {
+					console.log('type:' + type);
+					//22.通过用户资料ID获取用户各项资料
+					//所需参数
+					var comData = {
+						vvl: data.stuid //查询的用户资料ID
+					};
+					//返回值model：model_userDataInfo
+					//参数名	名称
+					//gid	群ID
+					//gname	群名称
+					//gimg	群头像
+					//utid	用户账号表ID
+					//ugname	用户在群昵称
+					//umstype	用户在群类型
+					//stat	用户在群状态
+					//urel	用户与资料关系
+					//stuname	资料名称
+					//stuimg	资料头像
+					//stumstype	资料在群类型
+					//job	职位
+					//title	职称
+					//expsch	教龄
+					//sub	科目
+					//stuid	资料ID
+					//gutid	账号在群ID
+					//ustuid	关联ID
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_PostUuinf(comData, wd, function(data) {
+						wd.close();
+						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							if(type == 2) { //老师
+								teaData = data.RspData[0];
+								console.log('teaData:' + JSON.stringify(teaData));
+								if(teaData.utid != null) { //账号
+									tea_utid.value = teaData.utid;
+								}
+								if(teaData.ugname != null) { //昵称
+									tea_ugname.value = teaData.ugname;
+								}
+								if(teaData.job != null) { //职位
+									tea_job.value = teaData.job;
+								}
+								if(teaData.sub != null) { //科目
+									tea_sub.value = teaData.sub;
+								}
+								if(teaData.title != null) { //职称
+									tea_title.value = teaData.title;
+								}
+								if(teaData.expsch != null) { //教龄
+									tea_expsch.value = teaData.expsch;
+								}
+							}
+							if(type == 3) { //学生
+								mui.each(data.RspData, function(index, item) {
+									stuData.push(item);
+									stuData.push([123]);
+								});
+								console.log('stuData:' + JSON.stringify(stuData));
+							}
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					});
+				}
+			})
+		</script>
+	</body>
+
+</html>
