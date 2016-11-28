@@ -55,7 +55,7 @@ var updateHeadImg = function(string,flag) {
 //6.用户修改各项用户信息
 //调用方法
 //var comData = {
-//	vtp: 'unick', //uimg(头像),utxt(签名),unick(昵)称,usex(性别),uemail(邮件)
+//	vtp: 'unick', //uimg(头像),utxt(签名),unick(昵)称,usex(性别),uemail(邮件),uname(账号,只能修改一次,且只能字母开头,字母与数字,定了就不能修改)
 //	vvl: '测试修改昵称'//对应的值
 //}; 
 //// 等待的对话框
@@ -143,7 +143,8 @@ var postDataPro_PostTokenRenew = function(commonData, wd, callback) {
 //11.通过用户账号和手机号搜索用户
 //		//需要参数
 //		var comData = {
-//			vvl: '111111'//查询的值
+//			vvl: '111111',//查询的值
+//			vtp: '111111'//获取类型,nm(用户名),mb(手机号)
 //		};
 //返回值model：model_userInfo
 var postDataPro_PostUList = function(commonData, wd, callback) {
