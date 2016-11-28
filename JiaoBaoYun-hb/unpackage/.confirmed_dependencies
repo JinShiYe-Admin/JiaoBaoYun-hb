@@ -544,7 +544,10 @@
 			"css/utils/common.css",
 			"js/mui.min.js",
 			"css/mui.min.css",
-			"js/mine/about-me.js"
+			"js/mine/about-me.js",
+			"css/quan/about-me.css",
+			"js/quan/about-me.js",
+			"js/utils/events.js"
 		],
 		"refer": []
 	},
@@ -663,11 +666,7 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/utils/events.js",
-			"js/libs/crypto-js/crypto-js.js",
-			"fonts/mui.ttf",
-			"css/utils/common.css",
-			"js/mui.min.js",
-			"css/mui.min.css"
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
 	},

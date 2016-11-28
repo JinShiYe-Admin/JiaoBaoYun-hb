@@ -1153,7 +1153,10 @@
 					"css/utils/common.css",
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"js/mine/about-me.js"
+					"js/mine/about-me.js",
+					"css/quan/about-me.css",
+					"js/quan/about-me.js",
+					"js/utils/events.js"
 				],
 				"refer": [],
 				"priority": 0

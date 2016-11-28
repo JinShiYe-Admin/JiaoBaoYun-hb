@@ -48,7 +48,7 @@ var postDataPro_GetHomeworkList=function(commonData, wd, callback) {
 }
 
 
-//3.	获取教师发布作业详情；
+//3.获取教师发布作业详情；
 //所需参数
 //		var comData = {
 //			teacherId: '',//教师Id

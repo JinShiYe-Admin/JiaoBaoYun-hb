@@ -1,0 +1,11 @@
+.title-img{
+	float: left;
+	width: 20%;
+	padding-right: 1rem;
+}
+.title-words{
+	width: 70%;
+}
+p span{
+	color: dodgerblue;
+}
