@@ -148,7 +148,7 @@
 
 		</div>
 		<!--下拉菜单-->
-		<div id="popover" class="mui-popover">
+		<!--<div id="popover" class="mui-popover">
 			<ul class=" mui-table-view">
 				<li class="mui-table-view-cell" style="text-align: center;">
 					删除
@@ -159,7 +159,7 @@
 				<li class="mui-table-view-cell" style="text-align: center;">
 					收藏
 			</ul>
-		</div>
+		</div>-->
 
 		<div id="comment-popover" class="mui-popover" style="width: 100%;top: 150px;height: 200px;">
 			<ul class="mui-table-view">
@@ -172,6 +172,7 @@
 
 	<script>
 		var publisherId;
+		var tempIndex;
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 
 		mui.init({
@@ -271,10 +272,13 @@
 						tempArray.push(tempModel0.PublisherId);
 						//合并数组,点赞的人
 						tempArray = tempArray.concat(tempModel0.LikeUsers);
+						tempArray = arrayDupRemoval(tempArray)
+						console.log(JSON.stringify(tempArray));
+						tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
 						//循环当前model中的回复数组
 						for(var item1 in tempModel0.Comments) {
 							//回复中的model
-							var tempModel1 = tempModel0.Comments[item];
+							var tempModel1 = tempModel0.Comments[item1];
 							//将回复中的id塞到数组
 							tempArray.push(tempModel1.UserId);
 							tempArray.push(tempModel1.ReplyId);
@@ -311,7 +315,7 @@
 									var tempModel0 = tempRspData[item];
 									//遍历点赞的人
 									for(var item2 in tempModel0.LikeUsers) {
-										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
+//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
 										if(tempModel.utid == tempModel0.LikeUsers[item2]) {
 											tempModel0.LikeUsers.splice(item2, 1, tempModel);
 										}
@@ -394,7 +398,6 @@
 			//				console.log('6666666====='+JSON.stringify(data));
 			//			})
 			publisherId = plus.webview.currentWebview().data; //发布者id
-			console.log('publisherId======' + publisherId);
 			tempPage = 1; //页码，请求第几页数据
 			totalCnt = 0; //当前留言的总条数
 			flag = 2; //判断是加载更多1，还是刷新2
@@ -416,8 +419,9 @@
 					toast = toast + element;
 				});
 				var id = this.getAttribute('id');
+
 				click.push(id);
-				//				mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
+				//								mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
 				click = [];
 			});
 
@@ -442,26 +446,32 @@
 			});
 			mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
 				click.push('点赞');
-				//				var comData = {
-				//					userId: personalUTID, //用户ID
-				//					userSpaceId: '1', //用户空间ID
-				//				};
-				//				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				//				postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
-				//					console.log('555555=====' + JSON.stringify(data));
-				//				})
-				//				var comData = {
-				//					userId: personalUTID, //用户ID
-				//					userSpaceId: '1', //用户空间ID
-				//				};
+				var index = this.id.replace('praise', '');
+				var color = this.style.color;
+				if(color == 'rgb(143, 143, 148)') {
+					var comData = {
+						userId: personalUTID, //用户ID
+						userSpaceId: zonepArray[index].TabId, //用户空间ID
+					};
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
+						wd.close();
+						if(data.RspCode == 0) {
+							var a = document.getElementById("praise"+index);
+							a.style.color = 'rgb(17, 183, 245)'
+							mui.toast('成功');
+						} else {
+							mui.toast(data.RspTxt);
+						}
+
+					})
+
+				}
 
 			});
 			mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
-				console.log(999)
 				click.push('评论');
-				//所有的添加群按钮监听
-
-				//				showPrompt();
+				tempIndex = this.id.replace('comment', '');
 
 			});
 			mui('.mui-table-view').on('tap', '.dynamic-icon-forward', function() {
@@ -553,27 +563,7 @@
 			Data = [InfoList, ImageList, InteractionList]
 			return Data;
 		}
-		mui(".mui-content").on("tap", "a", function() {
-			if(this.id == 'like') {
-				var color = this.style.color;
-				if(color == 'rgb(143, 143, 148)') {
-
-					var comData = {
-						userId: personalUTID, //用户ID
-						userSpaceId: '1', //用户空间ID
-					};
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-					postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
-						console.log('555555=====' + JSON.stringify(data));
-						this.style.color = 'rgb(17, 183, 245)'
-					})
-
-				} else {
-					//					this.style.color = 'rgb(143, 143, 148)';
-				}
-			}
-
-		});
+		//		mui(".mui-content").on("tap", "a", function() {});
 		//关闭创建群界面
 		document.getElementById('closepop').addEventListener('tap', function() {
 			mui('.mui-popover').popover('hide');
@@ -587,7 +577,7 @@
 			} else {
 				var comData = {
 					userId: personalUTID, //用户ID
-					userSpaceId: zonepArray[0].TabId, //用户空间ID
+					userSpaceId: zonepArray[tempIndex].TabId, //用户空间ID
 					commentContent: inputComment.value //回复内容
 				};
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
