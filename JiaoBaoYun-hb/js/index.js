@@ -160,7 +160,7 @@ mui.plusReady(function() {
 		aboutme.appendChild(span)
 		container.appendChild(aboutme);
 		events.jumpPage(aboutme, '../quan/aboutme.html');
-		events.jumpPage(pubDynamic, '../quan/class-dynamic.html');
+		events.jumpPage(pubDynamic, '../quan/pub-dynamic.html');
 	}
 
 	var addCloudIcon = function(container) {
@@ -174,7 +174,7 @@ mui.plusReady(function() {
 	var aboutme = document.getElementById('aboutme');
 	events.jumpPage(aboutme, '../quan/aboutme.html');
 	var pubDynamic = document.getElementById('pubDynamic');
-	events.jumpPage(pubDynamic, '../quan/class-dynamic.html');
+	events.jumpPage(pubDynamic, '../quan/pub-dynamic.html');
 	//自定义事件，模拟点击“首页选项卡”
 	document.addEventListener('gohome', function() {
 		var defaultTab = document.getElementById("defaultTab");

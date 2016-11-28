@@ -161,6 +161,11 @@ var publicModel = (function($, mod) {
 		//28
 		LikeUsers:'',//点赞列表
 		Comments:'',//评论列表
+		
+		EncTypeStr:'',//附件类型说明，
+		NoteTypeStr:'',//点到记事类型说明,信息类型说明
+		CheckTypeStr:'',//点到情况说明
+		
 		//36
 		NoReadCnt:''//未读条数
 	}
@@ -194,13 +199,32 @@ var publicModel = (function($, mod) {
 		MsgArray:'',//消息数组
 		MsgFrom:'',//发消息者,从属MsgArray
 		MsgTo:'',//接消息者,从属MsgArray
-		MsgContent:''//消息内容,从属MsgArray
+		MsgContent:'',//消息内容,从属MsgArray
+		MsgTypeStr:''//消息类型说明
 	}
 	
 	mod.model_msgArray = {
 		MsgFrom:'',//发消息者
 		MsgTo:'',//接消息者
 		MsgContent:''//消息内容
+	}
+	
+	//69.（云档案）按家长获取学生档案
+	mod.model_getStudentFile = {
+		TabId:'',//档案记事ID
+		StudentName:'',//学生姓名
+		ClassName:'',//	班级信息
+		PublisherName:'',//发布者姓名
+		PublishDate:'',//发布时间
+		MsgContent:'',//	记事内容
+		NoteType:'',//点到记事类型
+		CheckType:'',//点到情况
+		EncType:'',//附件类型
+		EncAddr:'',//附件地址,多个的情况例如：1.jpg|2.jpg
+		EncImgAddr:'',//	附件缩略图
+		EncTypeStr:'',//	附件类型说明
+		CheckTypeStr:'',//点到情况说明
+		NoteTypeStr:''//	点到记事类型说明
 	}
 
 	return mod;
