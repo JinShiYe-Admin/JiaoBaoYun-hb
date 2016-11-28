@@ -14,6 +14,7 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<style>
 			.cloud-top {
 				/*界面顶部区域*/
@@ -28,7 +29,7 @@
 				padding: 10px;
 			}
 
-			.cloud-prsonalimge {
+			#cloud_prsonalimge {
 				/*个人头像*/
 				border-radius: 50%;
 				height: 70px;
@@ -38,7 +39,7 @@
 				margin-right: 10px;
 			}
 
-			.cloud-name {
+			#cloud_name {
 				/*名字*/
 				color: white;
 				margin-bottom: 5px;
@@ -159,18 +160,18 @@
 						<div class="cloud-info">
 							<div class="mui-row">
 								<div class="mui-col-sm-3 mui-col-xs-3">
-									<img class="cloud-prsonalimge" src="../../image/cloud/cloud_personalimage.png">
+									<img id="cloud_prsonalimge" src="../../image/utils/default_personalimage.png">
 								</div>
-								<div class="mui-col-sm-9 mui-col-xs-9">
-									<div class="cloud-name common-font-family-Bold mui-ellipsis">
-										一二三四五六七八九十一二三四五六七八九十
+								<div class="mui-col-sm-9 mui-col-xs-9" style="margin-top: 15px;">
+									<div id="cloud_name" class="common-font-family-Bold mui-ellipsis">
+
 									</div>
-									<font>
+									<!--<font>
 										<img class="cloud-top-icon" src="../../image/cloud/cloud_gift.png" />
 										<font id="gift">1000</font>
 										<img class="cloud-top-icon" src="../../image/cloud/cloud_yuan.gif" />
 										<font id="yuan">50元</font>
-									</font>
+									</font>-->
 									<div class="mui-progressbar mui-progressbar-in">
 										<span></span>
 									</div>
@@ -258,12 +259,12 @@
 									</div>
 									<p class="mui-ellipsis">记事</p>
 								</div>
-								<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="2">
+								<!--<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="2">
 									<div class="cloud-bottom-imge2-bg" style="background: #FF9861;">
 										<img class="cloud-bottom-imge2" src="../../image/cloud/cloud_pay.png" />
 									</div>
 									<p class="mui-ellipsis">充值</p>
-								</div>
+								</div>-->
 								<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="3">
 									<div class="cloud-bottom-imge2-bg" style="background: #31C27C;">
 										<img class="cloud-bottom-imge2-bg" src="../../image/cloud/cloud_homework.png" />
@@ -302,9 +303,9 @@
 				//增加加号
 				addStorageIcon();
 
-				//设置档案名称
-				//var record = document.getElementById("record");
-				//record.innerText = '小熊猫档案';
+				//设置页面信息
+				document.getElementById("cloud_name").innerText = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
+				document.getElementById("cloud_prsonalimge").src = updateHeadImg(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uimg, 2);
 				//-----------设置数据end-----------------
 
 				//-----------设置监听start---------------
@@ -362,10 +363,10 @@
 							events.openNewWindow('app_keeprecord.html');
 							break;
 						case "2": //充值
-						    events.openNewWindow('../quan/studentdynamic_main.html');
+							events.openNewWindow('../quan/studentdynamic_main.html');
 							break;
 						case "3": //作业批改
-						events.openNewWindow('../homework/homework-tea.html')
+							events.openNewWindow('../homework/homework-tea.html')
 							break;
 					}
 				});

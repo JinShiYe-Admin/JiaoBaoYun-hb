@@ -52,6 +52,14 @@ var updateHeadImg = function(string,flag) {
 	return tempStr;
 }
 
+//修改数组，改变格式
+var arrayToStr = function(array) {
+	var tempStr = '';
+	tempStr = array.join(',');
+	tempStr = '['+tempStr+']';
+	return tempStr;
+}
+
 //6.用户修改各项用户信息
 //调用方法
 //var comData = {
