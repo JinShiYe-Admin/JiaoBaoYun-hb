@@ -266,7 +266,7 @@
 						//循环当前model中的回复数组
 						for(var item1 in tempModel0.Comments) {
 							//回复中的model
-							var tempModel1 = tempModel0.Comments[item];
+							var tempModel1 = tempModel0.Comments[item1];
 							//将回复中的id塞到数组
 							tempArray.push(tempModel1.UserId);
 							tempArray.push(tempModel1.ReplyId);
@@ -290,13 +290,8 @@
 							for(var i in data1.RspData) {
 								//当前model
 								var tempModel = data1.RspData[i];
-								//判断img是否为null，或者空
-								if(tempModel.uimg == '' || tempModel.uimg == null) { //赋值
-									tempModel.uimg = '../image/utils/default_personalimage.png';
-								} else { //修改值
-									var myDate = new Date();
-									tempModel.uimg = tempModel.uimg + '?' + myDate.getTime();
-								}
+								//更新头像
+								tempModel.uimg = updateHeadImg(tempModel.uimg, 1);
 								//循环留言数组
 								for(var item in tempRspData) {
 									//当前循环的model
