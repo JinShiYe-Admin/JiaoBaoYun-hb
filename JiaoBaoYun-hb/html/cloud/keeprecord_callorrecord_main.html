@@ -100,7 +100,7 @@
 			var data = main.data; //接收A页面传入参数值
 			console.log('main-data:' + JSON.stringify(data));
 
-			document.body.querySelector('.mui-title').innerText = data.ugnick;
+			document.body.querySelector('.mui-title').innerText = data.stuname;
 
 			//创建子页面
 			var sub = plus.webview.create('keeprecord_callorrecord_sub.html', 'keeprecord_callorrecord_sub.html', {

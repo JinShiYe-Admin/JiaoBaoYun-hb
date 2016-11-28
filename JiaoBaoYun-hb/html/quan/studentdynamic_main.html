@@ -64,14 +64,8 @@
 			var main = plus.webview.currentWebview(); //获取当前窗体对象
 			var data = main.data; //接收A页面传入参数值
 			console.log('main-data:' + JSON.stringify(data));
-			//---假数据---start---
-//			data={
-//				userId:'5',
-//				studentId:'5',
-//				studentName:'BugHunter'
-//			}
-			//---假数据---end---
-			document.getElementById("title").innerText='BugHunter';
+
+			document.getElementById("title").innerText = data.studentName;
 			//创建子页面
 			var sub = plus.webview.create('studentdynamic_sub.html', 'studentdynamic_sub.html', {
 				top: '45px',
@@ -83,7 +77,6 @@
 				main.append(sub);
 			});
 			//---获取数据并传递数据---end---
-
 
 			//修改学生头像
 			mui('.mui-bar-nav').on('tap', '.mui-icon-contact', function() {
@@ -156,8 +149,8 @@
 							console.log('未拍取图片');
 						}
 					}, {
-//						resolution: res,
-//						format: fmt
+						//						resolution: res,
+						//						format: fmt
 					}
 				);
 			}
@@ -208,7 +201,7 @@
 				plus.zip.compressImage({
 						src: filepath,
 						dst: filepath,
-						overwrite:true
+						overwrite: true
 					},
 					function(event) {
 						//图片压缩成功
