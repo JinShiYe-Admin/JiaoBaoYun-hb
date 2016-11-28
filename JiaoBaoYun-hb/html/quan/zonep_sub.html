@@ -457,6 +457,7 @@
 
 			});
 			mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
+				console.log(999)
 				click.push('评论');
 				//所有的添加群按钮监听
 
@@ -556,9 +557,19 @@
 			if(this.id == 'like') {
 				var color = this.style.color;
 				if(color == 'rgb(143, 143, 148)') {
-					this.style.color = 'rgb(17, 183, 245)'
+
+					var comData = {
+						userId: personalUTID, //用户ID
+						userSpaceId: '1', //用户空间ID
+					};
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
+						console.log('555555=====' + JSON.stringify(data));
+						this.style.color = 'rgb(17, 183, 245)'
+					})
+
 				} else {
-					this.style.color = 'rgb(143, 143, 148)';
+					//					this.style.color = 'rgb(143, 143, 148)';
 				}
 			}
 
