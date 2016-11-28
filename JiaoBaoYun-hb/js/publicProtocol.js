@@ -124,7 +124,6 @@ var postDataPro_PostReGinfo = function(commonData, wd, callback) {
 //	};
 //返回值model：model_groupList
 var postDataPro_PostGList = function(commonData, wd, callback) {
-	temptttt(wd);
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
