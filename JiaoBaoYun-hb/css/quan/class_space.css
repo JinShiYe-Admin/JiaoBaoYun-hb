@@ -63,11 +63,11 @@ div>.icon-jia:before,.icon-xiangji:before{
 /**
  * 气泡宽度
  */
-.chat_content_left .mui-pull-right{
-	width:75%;
+.chat_content_left{
+	width:75%; 
 }
 .head-img{
-	margin-top: 1rem;
+	margin-top: .5rem;
 	text-align: center;
 	width: 20%;
 }
@@ -99,11 +99,33 @@ ul{
 /**
  * 班级空间 头像样式
  */
-.head-img>img{
-	width: 80%;
+.head-portrait{
+	width: 4rem;
+	height: 4rem;
 	border-radius: 50%;
 }
 p font{
 	padding-left: 1.2rem;
 	padding-right: 1.2rem;
+}
+.mui-table-view-cell {
+	position: relative;
+	overflow: hidden;
+	-webkit-touch-callout: none
+}
+
+.mui-table-view-cell:after {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0px;
+	height: 0px;
+	content: '';
+	-webkit-transform: scaleY(0);
+	transform: scaleY(0);
+	background-color: transparent
+}
+.mui-table-view{
+	background-color: transparent;
+	border-bottom: none;
 }

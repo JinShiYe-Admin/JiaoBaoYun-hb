@@ -32,6 +32,7 @@ var class_space = (function(mod) {
 			var container = document.getElementById('classSpace_list');
 			list.RspData.Data.forEach(function(cell, index, data) {
 				var li = document.createElement('li');
+				li.className="mui-table-view-cell"
 				getPersonalImg(cell, li, container);
 			})
 		} else {
@@ -39,17 +40,17 @@ var class_space = (function(mod) {
 		}
 	}
 	var createInnerHtml = function(item) {
-		var inner = '<div class="mui-pull-left head-img" >' +
-			'<img src="' + item.publisherImg + '"/>' +
+		var inner = '<a><div class="mui-pull-left head-img" >' +
+			'<img class="head-portrait" src="' + item.publisherImg + '"/>' +
 			'<p>' + item.publisherName + '</p>' +
 			'</div>' +
-			'<div class="chat_content_left mui-pull-right">' +
-			'<div class="chat-body">' +
-			item.MsgContent + '<br/>' +
-			createImgsInner(item) +
-			'</div>' +
-			'<p>' + item.PublishDate + '<font>浏览(' + item.ReadCnt + '人)</font>点赞(' + item.LikeCnt + '人)</p>' +
-			'</div>';
+			'<div class="chat_content_left ">' +
+				'<div class="chat-body">' +
+				item.MsgContent + '<br/>' +
+				createImgsInner(item) +
+				'</div>' +
+				'<p>' + item.PublishDate + '<font>浏览(' + item.ReadCnt + '人)</font>点赞(' + item.LikeCnt + '人)</p>' +
+			'</div></a>';
 		return inner;
 	}
 	var changeDate = function(pDate) {
@@ -66,10 +67,12 @@ var class_space = (function(mod) {
 	var getPersonalImg = function(cell, li, container) {
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
 		postDataPro_PostUinf({
-			vvl: cell.PublisherId
+			vvl: cell.PublisherId,
+			vtp:'p'
 		}, wd, function(pInfo) {
+			console.log('获取的个人信息:'+JSON.stringify(pInfo))
 			wd.close();
-			if(pInfo.RspCode = '0000') {
+			if(pInfo.RspCode == '0000') {
 				var personalInfo = pInfo.RspData[0];
 				console.log('获取的个人信息：' + JSON.stringify(personalInfo));
 				cell.publisherImg = personalInfo.uimg;
@@ -109,18 +112,19 @@ mui.plusReady(function() {
 	var postData = plus.webview.currentWebview().data;
 	console.log('班级空间获取值：' + JSON.stringify(postData))
 	class_space.getList(postData, pageIndex, pageSize, class_space.createListView);
+	/***
+	 * 加载刷新
+	 */
 	events.initRefresh('classSpace_list',
 		function() {
 			pageIndex = 1;
 			class_space.getList(postData, pageIndex, pageSize, class_space.createListView);
-			//			class_space.createListView(class_space.createList(class_space.createData(),5));
 		},
 		function() {
 			console.log('请求页面：page' + pageIndex);
 			mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
 			if(pageIndex < class_space.totalPagNo) {
 				pageIndex++;
-				//					class_space.createListView(class_space.createList(class_space.createData(),5));
 				class_space.getList(postData, pageIndex, pageSize, class_space.createListView);
 			}
 		});
