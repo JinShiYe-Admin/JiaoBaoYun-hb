@@ -14,7 +14,7 @@ mui.plusReady(function() {
 		search_group.addEventListener('search', function() {
 			console.log('search监听开始')
 			var searchType = 'mb'; //搜索数据类型
-			if(isNaN(search_group.value)) {
+			if(search_group.value.length!=11||isNaN(search_group.value)) {
 				searchType = 'nm'; //通过用户名搜索账号
 			} else {
 				searchType = 'mb'; //通过手机号搜索账号
