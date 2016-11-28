@@ -189,7 +189,7 @@
 			}
 			var TotalPage = 0; //总页数
 			var TotalCnt = 0; //总记录数
-			var data = null; //接收页面传入的参数值
+			var subData = null; //接收页面传入的参数值
 			var NotesList = null; //记录获取的数据
 			mui.plusReady(function() {
 				//				mui('.mui-scroll-wrapper').scroll({
@@ -199,8 +199,8 @@
 				//				});
 				//---从父页面获取数据---start---
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				data = main.data; //接收页面传入的参数值
-				console.log('sub-utid:' + JSON.stringify(data));
+				subData = main.data; //接收页面传入的参数值
+				console.log('从父页面获取的数据:' + JSON.stringify(subData));
 				//---从父页面获取数据---end---
 				//var time = document.getElementById("time"); //时间选择元素
 				//var myDate = new Date();
@@ -295,7 +295,10 @@
 				 */
 				window.addEventListener("addNote", function() {
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+					var personalUNICK = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
+
 					var teacherId = personalUTID; //发布教师ID
+					var publisherName = personalUNICK //发布者姓名
 					var noteType = 1; //点到记事类型1点到2记事
 					var checkType = 1; //点到类型
 					var msgContent = ''; //记事内容
@@ -313,20 +316,25 @@
 						//8.（点到记事）新增某学生点到记事信息
 						//所需参数
 						var comData = {
-							studentId: data.utid, //用户ID----stuid
+							studentId: subData.stuid, //用户ID----stuid
+							classId: subData.gid, //班级id
 							msgContent: msgContent, //记事内容
-							encType: '1', //附件类型,1图片2音视频
+							encType: '3', //附件类型,1图片2音视频3仅文字
 							encAddr: '', //附件地址
 							encImg: '', //附件缩略图地址
 							teacherId: teacherId, //发布教师ID
 							noteType: noteType, //点到记事类型1点到2记事
-							checkType: checkType //点到类型,1 正常2 旷课3 迟到4 早退5 其他
+							checkType: checkType, //点到类型,1 正常2 旷课3 迟到4 早退5 其他
+							studentName: subData.stuname, //学生姓名
+							publisherName: publisherName, //发布者姓名
+							parentIds: [], //家长列表
+							className: subData.gname //班级名称
 						};
-						console.log('addNote:' + JSON.stringify(comData));
+						console.log('新增记事发送的数据:' + JSON.stringify(comData));
 						// 等待的对话框
 						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 						postDataPro_addNote(comData, wd, function(data) {
-							console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							console.log('8.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) {
 								console.log('新增成功：' + JSON.stringify(data.RspData.Result));
 								mui.toast('发送成功');
@@ -355,16 +363,17 @@
 				//所需参数
 				var comData = {
 					userId: userId, //用户ID----utid
-					studentId: data.utid, //学生ID----stuid
+					studentId: subData.stuid, //学生ID----stuid
+					classId: subData.gid, //班级ID
 					pageIndex: pageIndex, //当前页数
 					pageSize: pageSize //每页记录数
 				};
 				//返回model：model_homeSchoolList,model_userNoteInfo
-				console.log('getNotes:' + JSON.stringify(comData));
+				console.log('发送获取记事列表请求的数据:' + JSON.stringify(comData));
 				// 等待的对话框
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
-					console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					console.log('4.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						if(NotesList == null) {
 							NotesList = data.RspData;
@@ -377,14 +386,14 @@
 							console.log(index + '|' + JSON.stringify(item));
 							createNotes(item);
 						});
-						if(data.RspData.Data.length==0){
+						if(data.RspData.Data.length == 0) {
 							mui.toast('获取数据为空');
 						}
-						//mui('.mui-scroll-wrapper').scroll().scrollToBottom(100); //滚动到底部-----有BUG
 					} else {
 						mui.toast('获取点到记事列表:' + data.RspTxt);
 						console.log('获取用户针对某学生的点到记事列表:' + data.RspTxt);
 					}
+					//mui('.mui-scroll-wrapper').scroll().scrollToBottom(100); //滚动到底部-----有BUG
 					wd.close();
 				});
 			}
