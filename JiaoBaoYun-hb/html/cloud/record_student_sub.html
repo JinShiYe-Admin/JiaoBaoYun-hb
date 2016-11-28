@@ -13,7 +13,7 @@
 				/*档案文件夹文字*/
 				margin-top: 10px;
 			}
-
+			
 			.record-file {
 				/*档案文件*/
 				margin-top: 5px;
@@ -56,6 +56,9 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init({
 				pullRefresh: {
@@ -74,12 +77,24 @@
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
+					//					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+					//					var table = document.getElementById("recordfile");
+					//					table.innerHTML = '';
+					//					for(var i = 0; i < 5; i++) {
+					//						addRecordFile();
+					//					}
+
+					//刷新时将页码归1
+					totalCnt = 0;
+					flag = 1;
+					var comData = {
+						parentId: userId, //家长ID
+						pageIndex: (1).toString(), //当前页数
+						pageSize: '10' //每页记录数
+					};
+					//请求数据
+					requestData(comData);
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-					var table = document.getElementById("recordfile");
-					table.innerHTML = '';
-					for(var i = 0; i < 5; i++) {
-						addRecordFile();
-					}
 				}, 1500);
 			}
 
@@ -88,11 +103,60 @@
 			 */
 			function pullupRefresh() {
 				setTimeout(function() {
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
-					for(var i = 0; i < 5; i++) {
-						addRecordFile();
+					//					mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+					//					for(var i = 0; i < 5; i++) {
+					//						addRecordFile();
+					//					}
+
+					flag = 2;
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
+						mui.toast('没有更多了...');
+					} else {
+						tempPage++;
+						var comData = {
+							parentId: userId, //家长ID
+							pageIndex: (tempPage).toString(), //当前页数
+							pageSize: '10' //每页记录数
+						};
+						//请求数据
+						requestData(comData);
 					}
 				}, 1500);
+			}
+
+			//页码，请求第几页数据
+			var tempPage = 1;
+			//当前档案的总条数
+			var totalCnt = 0;
+			//判断是加载更多2，还是刷新1
+			var flag = 1;
+			//页码请求到要显示的数据，array[model_getStudentFile]
+			var recordArray = [];
+			var userId = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+			//请求数据
+			function requestData(comData) {
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//69.（云档案）按家长获取学生档案
+				postDataPro_getStudentFile(comData, wd, function(data) {
+					wd.close();
+					console.log('postDataPro_getStudentFile:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
+					if(data.RspCode == 0) {
+						//判断是加载更多2，还是刷新1
+					if(flag == 1) {
+						tempPage = 1;
+						recordArray = tempRspData;
+					} else {
+						//合并数组
+						recordArray = recordArray.concat(tempRspData);
+					}
+					//留言总条数
+					totalCnt = data.RspData.TotalCnt;
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
 			}
 
 			mui.plusReady(function() {

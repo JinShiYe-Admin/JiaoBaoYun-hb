@@ -198,7 +198,7 @@
 			}
 			var TotalPage = 1; //总页数
 			var TotalCnt = 0; //总记录数
-			var data = null; //接收页面传入的参数值
+			var subData = null; //接收页面传入的参数值
 			var NotesList = null; //记录获取的数据
 			var lastDate = ''; //上一条记录的日期
 			var today = ''; //记录今天日期
@@ -207,8 +207,8 @@
 
 				//---从父页面获取数据---start---
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				data = main.data; //接收页面传入的参数值
-				console.log('sub-utid:' + JSON.stringify(data));
+				subData = main.data; //接收页面传入的参数值
+				console.log('sub-utid:' + JSON.stringify(subData));
 				//---从父页面获取数据---end---
 
 				//向服务器获取数据
@@ -235,13 +235,13 @@
 			 */
 			function getNotes(pageIndex, pageSize) {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-				var userId = personalUTID; //发布教师ID
+				var userId = personalUTID; //用户ID
 				//4.（点到记事）获取用户针对某学生的点到记事列表
 				//所需参数
 				var comData = {
 					userId: userId, //用户ID----utid
-					classId:data.classId,
-					studentId: data.studentId, //学生ID----stuid
+					classId: subData.classId, //班级id
+					studentId: subData.studentId, //学生ID----stuid
 					pageIndex: pageIndex, //当前页数
 					pageSize: pageSize //每页记录数
 				};
@@ -250,13 +250,27 @@
 				// 等待的对话框
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
-					console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					console.log('4.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						if(NotesList == null) {
 							NotesList = data.RspData;
 							NotesList.Data == [];
 							TotalPage = data.RspData.TotalPage; //总页数
 							TotalCnt = data.RspData.TotalCnt; //总记录数
+							//10.（点到记事）修改某用户针对某学生所有点到记事阅读状态为已读
+							//所需参数
+							var comData2 = {
+								userId: userId, //用户ID----utid
+								classId: subData.classId, //班级ID----
+								studentId: subData.studentId //学生ID----stuid
+							};
+							var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+							postDataPro_setNoteReadByUser(comData2, wd2, function(data2) {
+								console.log('10.90909090success:RspCode:' + data2.RspCode + ',RspData:' + JSON.stringify(data2.RspData) + ',RspTxt:' + data2.RspTxt);
+								if(data.RspCode == 0) {
+								}
+							});
+							wd2.close();
 						}
 						mui.each(data.RspData.Data, function(index, item) {
 							NotesList.Data.push(item);
