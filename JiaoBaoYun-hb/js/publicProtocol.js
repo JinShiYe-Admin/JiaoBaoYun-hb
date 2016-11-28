@@ -52,6 +52,14 @@ var updateHeadImg = function(string,flag) {
 	return tempStr;
 }
 
+//修改数组，改变格式
+var arrayToStr = function(array) {
+	var tempStr = '';
+	tempStr = array.join(',');
+	tempStr = '['+tempStr+']';
+	return tempStr;
+}
+
 //6.用户修改各项用户信息
 //调用方法
 //var comData = {
@@ -116,6 +124,7 @@ var postDataPro_PostReGinfo = function(commonData, wd, callback) {
 //	};
 //返回值model：model_groupList
 var postDataPro_PostGList = function(commonData, wd, callback) {
+	temptttt(wd);
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
