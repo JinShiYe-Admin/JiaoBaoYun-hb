@@ -13,11 +13,18 @@ mui.plusReady(function() {
 		getChecked();
 		search_group.addEventListener('search', function() {
 			console.log('search监听开始')
-				//清空子数据
+			var searchType = 'mb'; //搜索数据类型
+			if(isNaN(search_group.value)) {
+				searchType = 'nm'; //通过用户名搜索账号
+			} else {
+				searchType = 'mb'; //通过手机号搜索账号
+			}
+			//清空子数据
 			clearChildren();
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 			postDataPro_PostUList({
-				vvl: search_group.value
+				vvl: search_group.value,
+				vtp: searchType //通过
 			}, wd, function(data) {
 				wd.close();
 				console.log('通过手机号获取个人信息：' + JSON.stringify(data));
