@@ -9,6 +9,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/icons-extra.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
@@ -158,6 +159,13 @@
 				<li class="mui-table-view-cell" style="text-align: center;">
 					收藏
 			</ul>
+		</div>
+
+		<div id="comment-popover" class="mui-popover" style="width: 100%;top: 150px;height: 200px;">
+			<ul class="mui-table-view">
+				<img id="closepop" src="../../image/cloud/record_addclassclose.png" style="height: 30px;float: right;margin: 10px;" />
+				<input id="inputComment" type="text" class="mui-input-clear" placeholder="请输入评论内容" style="width:80% ;margin-left: 10%;text-align: center;border-radius: 50px;">
+				<button id="addComment" type="button" class="mui-btn mui-btn-blue mui-btn-block" style="border-radius: 50px;height: 40px;width: 80%;left: 10%;padding: 0;">评论</button>
 		</div>
 
 	</body>
@@ -368,15 +376,12 @@
 
 		var id = 0;
 		mui.plusReady(function() {
-			//			var comData = {
-			//				userId: '2', //用户ID
-			//				userSpaceId: '1', //用户空间ID
-			//				commentContent: '好好学习' //回复内容
-			//			};
+
 			//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			//			postDataPro_addUserSpaceComment(comData, wd, function(data) {
-			//					console.log('6666666=====' + JSON.stringify(data));
-			//				})
+			//			postDataPro_getIsLikeUserSpaceByUser(comData, wd, function(data) {
+			//				console.log('6666666=====' + JSON.stringify(data));
+			//			})
+
 			//					var comData = {
 			//			userId: '2',//用户ID
 			//			upperId:'2',//上级评论ID
@@ -412,7 +417,7 @@
 				});
 				var id = this.getAttribute('id');
 				click.push(id);
-				mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
+				//				mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
 				click = [];
 			});
 
@@ -437,9 +442,26 @@
 			});
 			mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
 				click.push('点赞');
+				//				var comData = {
+				//					userId: personalUTID, //用户ID
+				//					userSpaceId: '1', //用户空间ID
+				//				};
+				//				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//				postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
+				//					console.log('555555=====' + JSON.stringify(data));
+				//				})
+				//				var comData = {
+				//					userId: personalUTID, //用户ID
+				//					userSpaceId: '1', //用户空间ID
+				//				};
+
 			});
 			mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
 				click.push('评论');
+				//所有的添加群按钮监听
+
+				//				showPrompt();
+
 			});
 			mui('.mui-table-view').on('tap', '.dynamic-icon-forward', function() {
 				click.push('分享');
@@ -530,6 +552,42 @@
 			Data = [InfoList, ImageList, InteractionList]
 			return Data;
 		}
+		mui(".mui-content").on("tap", "a", function() {
+			if(this.id == 'like') {
+				var color = this.style.color;
+				if(color == 'rgb(143, 143, 148)') {
+					this.style.color = 'rgb(17, 183, 245)'
+				} else {
+					this.style.color = 'rgb(143, 143, 148)';
+				}
+			}
+
+		});
+		//关闭创建群界面
+		document.getElementById('closepop').addEventListener('tap', function() {
+			mui('.mui-popover').popover('hide');
+		});
+		//创建群
+		document.getElementById('addComment').addEventListener('tap', function() {
+			var inputComment = document.getElementById("inputComment");
+			var name = inputComment.value; //创建的群名称
+			if(name == '') {
+				mui.toast('不允许为空');
+			} else {
+				var comData = {
+					userId: personalUTID, //用户ID
+					userSpaceId: zonepArray[0].TabId, //用户空间ID
+					commentContent: inputComment.value //回复内容
+				};
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_addUserSpaceComment(comData, wd, function(data) {
+					wd.close();
+					console.log('6666666=====' + JSON.stringify(data));
+					mui('.mui-popover').popover('hide');
+					inputComment.value = '';
+				})
+			}
+		});
 	</script>
 
 </html>

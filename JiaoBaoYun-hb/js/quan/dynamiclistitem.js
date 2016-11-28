@@ -128,10 +128,12 @@ var dynamiclistitem = (function($, mod) {
 		var htmlCommentList = ''; //评论列表
 
 		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body">';
-		var html2 = '<p><span class="mui-icon mui-icon-image"></span>' + introduce + '</p></div></div>';
+		var html2 = '</div></div>'
+//		var html2 = '<p><span class="mui-icon mui-icon-image"></span>' + introduce + '</p></div></div>';
 		var html3 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div class="mui-media-body mui-pull-right">';
-		var html4 = '<img src="../../image/dynamic/icon_praise.png" class="dynamic-icon-praise" />';
-		var html5 = '<img src="../../image/dynamic/icon_comment.png" class="dynamic-icon-comment" />';
+		var html4 = '<a id="like" style = "color: #8F8F94"  class="mui-icon-extra mui-icon-extra-like dynamic-icon-comment"></a>';
+		
+		var html5 = '<a  style = "color: #8F8F94" href="#comment-popover"><span class="mui-icon-extra mui-icon-extra-comment dynamic-icon-comment" href="comment-popover"></span></a>';
 		var html6 = '<img src="../../image/dynamic/icon_forward.png" class="dynamic-icon-forward" />';
 		var html7 = '</div><div class="mui-media-body"><p>浏览' + viewCount + '次</p></div></div>';
 		var html8 = '<div class="mui-col-sm-12 mui-col-xs-12 "><div class="mui-media-body dynamic-line"></div></div>';
