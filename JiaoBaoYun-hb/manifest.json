@@ -796,7 +796,19 @@
 					"js/utils/h5fresh.js",
 					"js/homework/homework-tea.js",
 					"image/homework/其他.png",
-					"image/homework/other.png"
+					"image/homework/other.png",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/publicHomeworkProtocol.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
