@@ -292,13 +292,20 @@
 				function searchUser() {
 					var searchValue = input_search.value;
 					console.log('searchValue:' + searchValue);
-					if(searchValue == '') {
+					if(searchValue.replace(/(^\s*)|(\s*$)/g, "") == "") {
 						mui.toast('搜索不能为空');
 					} else {
+						var vtp = 'nm';
+						var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/
+
+						if(myreg.test(searchValue)) {
+							vtp = 'mb';
+						}
 						//11.通过用户账号和手机号搜索用户
 						//需要参数
 						var comData2 = {
-							vvl: searchValue //查询的值
+							vvl: searchValue, //查询的值
+							vtp: vtp //获取类型,nm(用户名),mb(手机号)
 						};
 						//返回值model：model_userInfo
 						//mod.model_userInfo = {
@@ -313,7 +320,7 @@
 						// 等待的对话框
 						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 						postDataPro_PostUList(comData2, wd, function(data) {
-							console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							console.log('11.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) {
 								userData = null;
 								userData = data.RspData[0];
@@ -384,7 +391,7 @@
 					//等待的对话框
 					var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					postDataPro_PostGUInf(comData2, wd2, function(data) {
-						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						console.log('16.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							mui.each(data.RspData, function(index, item) {
 								console.log('成员资料：' + JSON.stringify(item));
@@ -409,7 +416,7 @@
 					li.className = 'mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3';
 					var html1 = '<div id="date_' + data.stuid + '" data-stuid="' + data.stuid + '" class="keep-box-shadow-border keep-member">'
 					var html2 = '';
-					if(data.stuimg != '') {
+					if(data.stuimg != '' && data.stuimg != null) {
 						html2 = '<img src="' + data.stuimg + '" />';
 					} else {
 						html2 = '<img src="../../image/utils/default_personalimage.png" />';
