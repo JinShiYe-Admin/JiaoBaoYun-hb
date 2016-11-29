@@ -166,6 +166,8 @@ var publicModel = (function($, mod) {
 		NoteTypeStr:'',//点到记事类型说明,信息类型说明
 		CheckTypeStr:'',//点到情况说明
 		
+		IsLike:'',//是否点赞
+		
 		//36
 		NoReadCnt:''//未读条数
 	}
@@ -200,7 +202,14 @@ var publicModel = (function($, mod) {
 		MsgFrom:'',//发消息者,从属MsgArray
 		MsgTo:'',//接消息者,从属MsgArray
 		MsgContent:'',//消息内容,从属MsgArray
-		MsgTypeStr:''//消息类型说明
+		MsgTypeStr:'',//消息类型说明
+		Content:'',//消息内容	String		否	从属Data
+		SpaceId:'',//空间动态ID	int		否	从属Data
+		MsgContent:'',//	动态内容	String		否	从属Data
+		EncType:'',//附件类型	int		否	从属Data
+		EncAddr:'',//附件地址	String		否	从属Data
+		EncImgAddr:''//附件缩略图地址	String		否	从属Data
+
 	}
 	
 	mod.model_msgArray = {

@@ -258,7 +258,7 @@
 			//28.（用户空间）获取用户针对某用户的空间列表
 			postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
 				wd.close();
-				console.log('postDataPro_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				console.log('获取个人空间列表_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					totalCnt = data.RspData.TotalCnt;
 					var tempRspData = data.RspData.Data;
@@ -273,7 +273,6 @@
 						//合并数组,点赞的人
 						tempArray = tempArray.concat(tempModel0.LikeUsers);
 						tempArray = arrayDupRemoval(tempArray)
-						console.log(JSON.stringify(tempArray));
 						tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
 						//循环当前model中的回复数组
 						for(var item1 in tempModel0.Comments) {
@@ -291,7 +290,6 @@
 						vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
 						vtp: 'g' //查询类型,p(个人)g(id串)
 					}
-					console.log('tempData:' + JSON.stringify(tempData));
 
 					//21.通过用户ID获取用户资料
 					postDataPro_PostUinf(tempData, wd, function(data1) {
@@ -310,7 +308,7 @@
 									var tempModel0 = tempRspData[item];
 									//遍历点赞的人
 									for(var item2 in tempModel0.LikeUsers) {
-//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
+										//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
 										if(tempModel.utid == tempModel0.LikeUsers[item2]) {
 											tempModel0.LikeUsers.splice(item2, 1, tempModel);
 										}
@@ -376,23 +374,23 @@
 		var id = 0;
 		mui.plusReady(function() {
 
-			//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			//			postDataPro_getIsLikeUserSpaceByUser(comData, wd, function(data) {
-			//				console.log('6666666=====' + JSON.stringify(data));
-			//			})
-
-			//					var comData = {
-			//			userId: '2',//用户ID
-			//			upperId:'2',//上级评论ID
-			//			replyUserId:'1',//回复ID
-			//			userSpaceId:'1',//用户空间ID
-			//			commentContent:'好好学习'//回复内容
-			//		};
-			//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			//			postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
-			//				console.log('6666666====='+JSON.stringify(data));
-			//			})
 			publisherId = plus.webview.currentWebview().data; //发布者id
+			var comData = {
+				userId: personalUTID, //用户ID
+				publisherId: publisherId
+			};
+
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_setUserSpaceReadByUser(comData, wd, function(data) {
+				wd.close();
+				console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
+				if(data.RspCode == 0) {
+					//					events.preload('tab-zone.html', 100);
+
+					//						events.fireToPageNone('tab-zone.html','setRead',data)
+				}
+
+			})
 			tempPage = 1; //页码，请求第几页数据
 			totalCnt = 0; //当前留言的总条数
 			flag = 2; //判断是加载更多1，还是刷新2
@@ -403,7 +401,6 @@
 				pageIndex: (tempPage).toString(), //当前页数
 				pageSize: '10' //每页记录数
 			};
-			console.log(JSON.stringify(comData));
 			requestData(comData);
 
 			var click = []; //记录被点击的li的id和被点击元素
@@ -452,7 +449,7 @@
 					postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
 						wd.close();
 						if(data.RspCode == 0) {
-							var a = document.getElementById("praise"+index);
+							var a = document.getElementById("praise" + index);
 							a.style.color = 'rgb(17, 183, 245)'
 							mui.toast('成功');
 						} else {
@@ -467,6 +464,14 @@
 			mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
 				click.push('评论');
 				tempIndex = this.id.replace('comment', '');
+
+			});
+			mui('.mui-table-view').on('tap', '.replyComment', function() {
+				click.push('评论回复');
+				tempIndex = this.id.replace('replyComment', '');
+				mui('.mui-popover').popover('show');
+				//				var id_Index = this.id.replace('replyComment', '');
+				//				console.log('id_Index===' + id_Index)
 
 			});
 			mui('.mui-table-view').on('tap', '.dynamic-icon-forward', function() {
@@ -565,23 +570,45 @@
 		});
 		//创建群
 		document.getElementById('addComment').addEventListener('tap', function() {
+			console.log('tempIndex===='+tempIndex)
 			var inputComment = document.getElementById("inputComment");
 			var name = inputComment.value; //创建的群名称
 			if(name == '') {
 				mui.toast('不允许为空');
 			} else {
-				var comData = {
-					userId: personalUTID, //用户ID
-					userSpaceId: zonepArray[tempIndex].TabId, //用户空间ID
-					commentContent: inputComment.value //回复内容
-				};
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				postDataPro_addUserSpaceComment(comData, wd, function(data) {
-					wd.close();
-					console.log('6666666=====' + JSON.stringify(data));
-					mui('.mui-popover').popover('hide');
-					inputComment.value = '';
-				})
+				if(tempIndex.indexOf('-')>=0) {
+					var indexArr = tempIndex.split('-');
+					var cellIndex = indexArr[0];
+					var commentIndex = indexArr[1];
+					var comData = {
+						userId: personalUTID, //用户ID
+						upperId: zonepArray[cellIndex].Comments[commentIndex].UpperId, //上级评论ID
+						replyUserId: zonepArray[cellIndex].Comments[commentIndex].ReplyId, //回复ID
+						userSpaceId: zonepArray[cellIndex].TabId, //用户空间ID
+						commentContent: inputComment.value //回复内容
+					};
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
+						wd.close();
+						console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
+						mui('.mui-popover').popover('hide');
+						inputComment.value = '';
+					})
+				} else {
+					var comData = {
+						userId: personalUTID, //用户ID
+						userSpaceId: zonepArray[tempIndex].TabId, //用户空间ID
+						commentContent: inputComment.value //回复内容
+					};
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_addUserSpaceComment(comData, wd, function(data) {
+						wd.close();
+						console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
+						mui('.mui-popover').popover('hide');
+						inputComment.value = '';
+					})
+				}
+
 			}
 		});
 	</script>

@@ -13,7 +13,7 @@
 				/*档案文件夹文字*/
 				margin-top: 10px;
 			}
-			
+
 			.record-file {
 				/*档案文件*/
 				margin-top: 5px;
@@ -141,18 +141,19 @@
 				//69.（云档案）按家长获取学生档案
 				postDataPro_getStudentFile(comData, wd, function(data) {
 					wd.close();
-					console.log('postDataPro_getStudentFile:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
+					console.log('69.postDataPro_getStudentFile:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
 					if(data.RspCode == 0) {
+						var tempRspData = data.RspData.Data;
 						//判断是加载更多2，还是刷新1
-					if(flag == 1) {
-						tempPage = 1;
-						recordArray = tempRspData;
-					} else {
-						//合并数组
-						recordArray = recordArray.concat(tempRspData);
-					}
-					//留言总条数
-					totalCnt = data.RspData.TotalCnt;
+						if(flag == 1) {
+							tempPage = 1;
+							recordArray = tempRspData;
+						} else {
+							//合并数组
+							recordArray = recordArray.concat(tempRspData);
+						}
+						//留言总条数
+						totalCnt = data.RspData.TotalCnt;
 					} else {
 						mui.toast(data.RspTxt);
 					}
@@ -163,6 +164,13 @@
 				for(var i = 0; i < 5; i++) {
 					addRecordFile();
 				}
+				var comData = {
+					parentId: userId, //家长ID
+					pageIndex: (tempPage).toString(), //当前页数
+					pageSize: '10' //每页记录数
+				};
+				//请求数据
+				requestData(comData);
 			});
 
 			function addRecordFile() {

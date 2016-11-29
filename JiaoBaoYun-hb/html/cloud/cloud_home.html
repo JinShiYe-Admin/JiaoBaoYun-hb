@@ -97,9 +97,9 @@
 
 			.cloud-bottom-imge2 {
 				/*云档案，云应用的图片*/
-				height: 30px;
-				width: 30px;
-				margin-top: 10px;
+				height: 50px;
+				width: 50px;
+				/*margin-top: 10px;*/
 			}
 
 			.cloud-bottom-imge2-bg {
@@ -223,13 +223,13 @@
 							<div class="mui-row">
 								<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="0">
 									<div class="cloud-bottom-imge2-bg" style="background: #6C7CC9;">
-										<img class="cloud-bottom-imge2" src="../../image/cloud/cloud_record.png" />
+										<img class="cloud-bottom-imge2" src="../../image/cloud/archives.png" />
 									</div>
-									<p class="mui-ellipsis" id="record">李云档案</p>
+									<p class="mui-ellipsis" id="record">档案</p>
 								</div>
 								<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="1">
 									<div class="cloud-bottom-imge2-bg" style="background: #96D956;">
-										<img class="cloud-bottom-imge2" src="../../image/cloud/cloud_learningpath.png" />
+										<img class="cloud-bottom-imge2" src="../../image/cloud/Trajectory.png" />
 									</div>
 									<p class="mui-ellipsis">学习轨迹</p>
 								</div>
@@ -249,13 +249,13 @@
 							<div class="mui-row">
 								<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="0">
 									<div class="cloud-bottom-imge2-bg" style="background: #5CAAE8;">
-										<img class="cloud-bottom-imge2" src="../../image/cloud/cloud_notes.png" />
+										<img class="cloud-bottom-imge2" src="../../image/cloud/notes.png" />
 									</div>
 									<p class="mui-ellipsis">笔记</p>
 								</div>
 								<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="1">
 									<div class="cloud-bottom-imge2-bg" style="background: #E17D7D;">
-										<img class="cloud-bottom-imge2" src="../../image/cloud/cloud_keeprecord.png" />
+										<img class="cloud-bottom-imge2" src="../../image/cloud/note.png" />
 									</div>
 									<p class="mui-ellipsis">记事</p>
 								</div>
@@ -267,9 +267,9 @@
 								</div>-->
 								<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="3">
 									<div class="cloud-bottom-imge2-bg" style="background: #31C27C;">
-										<img class="cloud-bottom-imge2-bg" src="../../image/cloud/cloud_homework.png" />
+										<img class="cloud-bottom-imge2-bg" src="../../image/cloud/operation.png" />
 									</div>
-									<p class="mui-ellipsis">作业批改</p>
+									<p class="mui-ellipsis">作业</p>
 								</div>
 								<!--<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="3">
 									<div class="cloud-bottom-imge2-bg" style="background: #31C27C;">
@@ -302,10 +302,13 @@
 				//				addStorageFolder('H5教程');
 				//增加加号
 				addStorageIcon();
+				changeInfo();
+				//重新登录或者自动登录后获取的信息
+				window.addEventListener('infoChanged', function() {
+					//设置页面信息
+					changeInfo();
+				});
 
-				//设置页面信息
-				document.getElementById("cloud_name").innerText = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
-				document.getElementById("cloud_prsonalimge").src = updateHeadImg(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uimg, 2);
 				//-----------设置数据end-----------------
 
 				//-----------设置监听start---------------
@@ -403,6 +406,11 @@
 					div.className = 'mui-col-sm-4 mui-col-xs-4';
 					div.innerHTML = '<p class="mui-icon mui-icon-plusempty" style="font-size: 50px;margin-top: 4px;"></p>';
 					table.appendChild(div);
+				}
+
+				function changeInfo() {
+					document.getElementById("cloud_name").innerText = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
+					document.getElementById("cloud_prsonalimge").src = updateHeadImg(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uimg, 2);
 				}
 			});
 		</script>

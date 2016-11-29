@@ -163,12 +163,12 @@ var dynamiclistitem = (function($, mod) {
 		$.each(commentList, function(index, element) {
 			var htmlComment = '';
 			if(element.length == 2) {
-				var html1 = '<div class="mui-media-body">';
-				var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + element[0] + '</font>';
+				var html1 = '<div id="replyComment'+id+'-'+index+'" class="mui-media-body replyComment">';
+				var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + element[0] + '</font>';
 				var html3 = '<font class="common-font-family-Regular">：' + element[1] + '</font></div>';
 				htmlComment = html1 + html2 + html3;
 			} else if(element.length == 3) {
-				var html1 = '<div class="mui-media-body">';
+				var html1 = '<div id="replyComment'+id+'-'+index+'" class="mui-media-body replyComment">';
 				var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + element[0] + '</font>';
 				var html3 = '<font class="common-font-family-Regular">回复</font>';
 				var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + element[1] + '</font>';
