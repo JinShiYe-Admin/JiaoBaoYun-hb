@@ -206,13 +206,12 @@
 						tempArray = arrayDupRemoval(tempArray);
 						//发送获取用户资料申请
 						var tempData = {
-							vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
-							vtp: 'g' //查询类型,p(个人)g(id串)
+							vvl: tempArray.join() //查询的用户资料ID
 						}
 						console.log('tempData:' + JSON.stringify(tempData));
 
-						//21.通过用户ID获取用户资料
-						postDataPro_PostUinf(tempData, wd, function(data1) {
+						//22.通过用户资料ID获取用户各项资料
+						postDataPro_PostUuinf(tempData, wd, function(data1) {
 							wd.close();
 							console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 							if(data1.RspCode == 0) {
@@ -221,16 +220,19 @@
 								for(var i in data1.RspData) {
 									//当前model
 									var tempModel = data1.RspData[i];
-									//更新头像
-									tempModel.uimg = updateHeadImg(tempModel.uimg, 1);
-									//循环留言数组
-									for(var item in tempRspData) {
-										//当前循环的model
-										var tempModel0 = tempRspData[item];
-										//对比id是否一致
-										if(tempModel0.StudentId == tempModel.utid) {
-											//合并
-											tempModel0 = $.extend(tempModel0, tempModel);
+									//判断类型是否为3，学生
+									if(tempModel.umstype == 3) {
+										//更新头像
+										tempModel.uimg = updateHeadImg(tempModel.uimg, 1);
+										//循环留言数组
+										for(var item in tempRspData) {
+											//当前循环的model
+											var tempModel0 = tempRspData[item];
+											//对比id是否一致
+											if(tempModel0.StudentId == tempModel.stuid) {
+												//合并
+												tempModel0 = $.extend(tempModel0, tempModel);
+											}
 										}
 									}
 								}
@@ -314,7 +316,7 @@
 					var html4 = '<div class="mui-media-body">\
 										<div class="mui-pull-right class-item-time">' + date1[0] + ':' + date1[1] + '</div>';
 					var html5 = '';
-					var unick = data.unick; //学生姓名
+					var unick = data.ugname; //学生姓名
 					if(data.NoteType == 1) { //点到
 						html5 = '<h4 style="">' + unick + data.CheckTypeStr + '</h4>\
 								 <div>说明：' + data.MsgContent + '</div>';
