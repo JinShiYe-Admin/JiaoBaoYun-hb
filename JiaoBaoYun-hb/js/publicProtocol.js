@@ -1542,3 +1542,31 @@ var postDataPro_addStudentFile = function(commonData, wd, callback) {
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'file/addStudentFile', enData, commonData, 2, wd, callback);
 }
+
+//71.（班级空间）删除某用户某班级空间点赞
+//所需参数
+//		var comData = {
+//			classSpaceId: '',//班级空间ID
+//			userId:''//用户ID
+//		};
+//返回1为正确
+var postDataPro_delClassSpaceLikeByUser = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'classSpace/delClassSpaceLikeByUser', enData, commonData, 2, wd, callback);
+}
+
+//72.（用户空间）删除某用户某用户空间点赞
+//所需参数
+//		var comData = {
+//			userSpaceId: '',//用户空间ID
+//			userId:''//用户ID
+//		};
+//返回1为正确
+var postDataPro_delUserSpaceLikeByUser = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/delUserSpaceLikeByUser', enData, commonData, 2, wd, callback);
+}
