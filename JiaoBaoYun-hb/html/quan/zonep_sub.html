@@ -385,6 +385,10 @@
 				wd.close();
 				console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
 				if(data.RspCode == 0) {
+					//获得主页面的webview
+		var main = plus.webview.getWebviewById('../quan/tab-zone.html');
+		//触发tab-zone页面的setRead事件
+		mui.fire(main, 'setRead');
 					//					events.preload('tab-zone.html', 100);
 
 					//						events.fireToPageNone('tab-zone.html','setRead',data)

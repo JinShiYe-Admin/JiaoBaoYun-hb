@@ -12,7 +12,17 @@ mui.init({
 });
 
 mui.plusReady(function() {
-	window.addEventListener('setRead', function(e) {
+	document.addEventListener('setRead', function(e) {
+		var tableIndex = selectCell.tableIndex;
+		var cellIndex = selectCell.cellIndex;
+		var cellNoReadCnt = selectCell.NoReadCnt
+		datasource[tableIndex].NoReadCnt = datasource[tableIndex].NoReadCnt-cellNoReadCnt;
+		var currentTable = document.getElementsByClassName('parent-table' + tableIndex);
+		var ul = currentTable[0];
+		var li = ul.children[cellIndex];
+		var tempModel = datasource[tableIndex].userList[cellIndex];
+		li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="' + tempModel.uimg + '" />'  + '<p class="time">' + tempModel.PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
+			tempModel.ugname + '<p class="mui-ellipsis">' + tempModel.MsgContent + '</p>';
 	});
 	getStuList(); //获取学生列表
 	//	getGroupList(); //获取所有的群
@@ -125,7 +135,6 @@ function getNotes(index, StuDyArr) {
 				tempArr[0].index = i; //排序索引
 				StuDyArr.push(tempArr[0]);
 			}
-			console.log('requestTimes3====' + requestTimes3);
 			requestTimes3--;
 			if(requestTimes3 == 0) { //循环请求班级空间完毕
 				//排序
@@ -177,13 +186,10 @@ function getGroupList() {
 			requestTimes2 = datasource.length; //记录底部 通过循环请求群用户列表请求次数
 			var userList = []; //临时用户列表
 			for(var i = 0; i < datasource.length; i++) {
+								console.log('datasource[' + i + '].gimg===' + datasource[i].gimg);
+
 				//判断img是否为null，或者空
-				if(datasource[i].gimg == '' || datasource[i].gimg == null) { //赋值
-					datasource[i].gimg = '../../image/utils/default_personalimage.png';
-				} else { //修改值
-					var myDate = new Date();
-					datasource[i].uimg = datasource[i].uimg[i] + '?' + myDate.getTime();
-				}
+				datasource[i].gimg=updateHeadImg(datasource[i].gimg,2)
 				getTopList(i); //获取顶部列表
 				getBottomList(i, userList); //获取底部列表
 
@@ -231,6 +237,7 @@ function getTopList(i) {
 					//				顶部列表添加cell
 				var ul = document.getElementById('top-list');
 				for(var i = 0; i < topArray.length; i++) {
+//					console.log('datasource[' + i + '].gimg===' + datasource[i].gimg);
 					var li = document.createElement('li');
 					li.id = 'tarClass' + i;
 					li.className = 'mui-table-view-cell mui-media tarClass';
@@ -280,7 +287,6 @@ function getBottomList(index, userLists) {
 					//把用户列表添加到数据源中
 				for(var i = 0; i < datasource.length; i++) {
 					datasource[i].userList = userLists[i].data;
-
 				}
 
 				for(var i = 0; i < datasource.length; i++) {
@@ -320,7 +326,7 @@ function getUserSpaces(upString, index) {
 	//36.（用户空间）获取多用户空间列表
 	postDataPro_getUserSpacesByUser(comData, wd, function(data) {
 		wd.close();
-				console.log('获取多用户空间列表_getUserSpacesByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		console.log('获取多用户空间列表_getUserSpacesByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			var userList = data.RspData.Data; //某群用户列表
 			requestTimes2--; //全部请求完毕
@@ -453,6 +459,11 @@ function addBottomTap(tableIndex, cellIndex) {
 
 	//	跳转到家长圈空间界面
 	mui('.parent-table' + tableIndex).on('tap', '.parent-cell' + cellIndex, function() {
+		selectCell = {
+			tableIndex: tableIndex,
+			cellIndex: cellIndex,
+			NoReadCnt:datasource[tableIndex].userList[cellIndex].NoReadCnt
+		}
 		var publisherId = datasource[tableIndex].userList[cellIndex].utid //空间用户id
 		console.log('tableIndex==' + tableIndex + 'cellIndex==' + cellIndex + 'publisherId==' + publisherId);
 		mui.openWindow({
