@@ -211,6 +211,27 @@
 				var div_record = document.getElementById("record"); //记事区域
 				var call_type = '1'; //记录最后点击的点到类型
 
+				//---开通记事---start---
+				//63.（点到记事）新增学生点到记事空间
+//				//所需参数
+//				var addNewNoteInfo = {
+//					studentId: subData.stuid, //学生ID，添加学生时调用
+//					classId: subData.gid //班级ID，
+//				};
+//				//返回1为正确
+//				// 等待的对话框
+//				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+//				postDataPro_addNewNoteInfo(addNewNoteInfo, wd, function(data) {
+//					console.log('63.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//					if(data.RspCode == 0) {
+//
+//					} else {
+//
+//					}
+//					wd.close();
+//				});
+				//---开通记事---end---
+
 				//---获取数据---start---
 
 				getNotes(1, 10);
@@ -302,6 +323,7 @@
 					var noteType = 1; //点到记事类型1点到2记事
 					var checkType = 1; //点到类型
 					var msgContent = ''; //记事内容
+					var parentIds = new Array();
 					if(checkbox_1.checked) { //点到
 						noteType = 1;
 						checkType = call_type;
@@ -327,7 +349,7 @@
 							checkType: checkType, //点到类型,1 正常2 旷课3 迟到4 早退5 其他
 							studentName: subData.stuname, //学生姓名
 							publisherName: publisherName, //发布者姓名
-							parentIds: [], //家长列表
+							parentIds: '[]', //家长列表
 							className: subData.gname //班级名称
 						};
 						console.log('新增记事发送的数据:' + JSON.stringify(comData));
@@ -387,7 +409,7 @@
 							createNotes(item);
 						});
 						if(data.RspData.Data.length == 0) {
-							mui.toast('获取数据为空');
+							mui.toast('没有更多数据了');
 						}
 					} else {
 						mui.toast('获取点到记事列表:' + data.RspTxt);

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<title></title>
@@ -14,8 +15,8 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">历史记录</h1>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">历史记录</h1>
 		</header>
 		<div class="mui-content"></div>
 	</body>
@@ -23,25 +24,36 @@
 	<script type="text/javascript">
 		//启用双击监听
 		mui.init({
-			gestureConfig:{
-				doubletap:true
-			},
-			subpages:[{
-				url:'keeprecord_history_sub.html',
-				id:'keeprecord_history_sub.html',
-				styles:{
-					top: '45px',
-					bottom: '0px',
-				}
-			}]
+			gestureConfig: {
+				doubletap: true
+			}
 		});
 
 		var contentWebview = null;
-		document.querySelector('header').addEventListener('doubletap',function () {
-			if(contentWebview==null){
+		document.querySelector('header').addEventListener('doubletap', function() {
+			if(contentWebview == null) {
 				contentWebview = plus.webview.currentWebview().children()[0];
 			}
 			contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
+		});
+
+		mui.plusReady(function() {
+			//---获取数据并传递数据---start---
+			var main = plus.webview.currentWebview(); //获取当前窗体对象
+			var data = main.data; //接收A页面传入参数值
+			console.log('main-data:' + JSON.stringify(data));
+
+			//创建子页面
+			var sub = plus.webview.create('keeprecord_history_sub.html', 'keeprecord_history_sub.html', {
+				top: '45px',
+				bottom: localStorage.getItem('$Statusbar'),
+			}, {
+				data: data
+			});
+			sub.addEventListener('loaded', function() {
+				main.append(sub);
+			});
+			//---获取数据并传递数据---end---
 		});
 	</script>
 
