@@ -12,8 +12,6 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/homework/homework.css" rel="stylesheet" />
-		<!--h5下拉刷新-->
-		<script src="../../js/utils/h5fresh.js"></script>
 	</head>
 
 	<body>
@@ -46,49 +44,10 @@
 		<a id="iconPublish" class="mui-icon iconfont icon-jia" ></a>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicHomeworkProtocol.js"></script>
+		<!--h5下拉刷新-->
+		<script src="../../js/utils/h5fresh.js"></script>
 		<script src="../../js/homework/homework-tea.js"></script>
-		<script type="text/javascript">
-			h5fresh.addRefresh('list-container');
-			mui.init();
-			mui.plusReady(function(){
-				
-				/**监听父页面的图标事件*/
-				window.addEventListener('togglePop',function(e){
-					mui("#popover").popover('toggle');
-				})
-				//发布作业界面
-				events.addTap('iconPublish',function(){
-					events.openNewWindow('homework-publish.html')
-				})
-				//班级数据
-				var classes=['16级1班','16级2班','16级3班','16级4班','16级5班','16级6班','16级7班','16级8班','16级9班']
-				//控件加载班级
-				teaWork.addClasses(classes);
-//				events.createListView('listContainer',data,createInner())
-			})
-			/**
-			 * 创建innerHTML
-			 * @param {Object} cell
-			 */
-			var createInner=function(cell){
-				return '<div>'
-							+'<p>'+cell.time+'</p>'
-							+'<div>'
-								+'<img src="'+cell.imgUrl+'"/>'
-								+'<h4 class="title">'+cell.title+'</h4>'
-								+'<p class="">'+cell.words+'</p>'
-							+'</div>'
-							+'<div>'
-								+'<p>未改数('+cell.weigaiNo+')</p>'
-								+'<p>已上传数('+cell.chuanNo+')</p>'
-							+'</div>'
-							+'<div>'
-								+cell.imgs
-							+'</div>'
-							+'<p>已上传试卷人数('+cell.stuWorkNo+')</p>'
-						+'</div>'	
-			}
-		</script>
 	</body>
 
 </html>

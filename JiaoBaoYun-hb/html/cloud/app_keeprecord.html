@@ -131,7 +131,7 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<p class="mui-title common-color-white" style="text-align: left;">云盘—记事</p>
 			<img id="history" class="mui-icon mui-pull-right" src="../../image/cloud/record_history.gif" style="height: 40px;width: 40px;" />
-			<img id="link" class="mui-icon mui-pull-right" src="../../image/cloud/record_link.gif" style="height: 40px;width: 40px;margin-right: 10px;" />
+			<!--<img id="link" class="mui-icon mui-pull-right" src="../../image/cloud/record_link.gif" style="height: 40px;width: 40px;margin-right: 10px;" />-->
 		</header>
 		<div class="mui-content">
 			<div class="mui-popover" style="width: 100%;top: 150px;height: 200px;">
@@ -367,25 +367,17 @@
 				//---创建群popover---end---
 
 				//顶部导航关联按钮
-				document.getElementById('link').addEventListener('tap', function() {
-					events.openNewWindow('keeprecord_link.html');
-				});
+				//				document.getElementById('link').addEventListener('tap', function() {
+				//					events.openNewWindow('keeprecord_link.html');
+				//				});
 				//顶部导航历史按钮
 				document.getElementById('history').addEventListener('tap', function() {
 					var passData = show; //群id
-					if(passData == '') {
-						passData = null;
-					}
 					console.log('passData:' + JSON.stringify(passData));
-
-					events.openNewWindow('keeprecord_history_main.html');
-
-					setTimeout(function() {
-						var main = plus.webview.getWebviewById('keeprecord_history_sub.html');
-						mui.fire(main, "passData", {
-							qun: passData
-						});
-					}, 1000);
+					//跳到历史记录
+					events.openNewWindowWithData('keeprecord_history_main.html', {
+						data: passData,
+					});
 				});
 
 				//切换显示选中的群
@@ -502,19 +494,15 @@
 						} else {
 							console.log('不删除');
 						}
-
 					});
-
 				});
 
 				//点击界面隐藏删除按钮
 				document.body.querySelector('.mui-content').addEventListener('tap', function() {
-
 					var close = mui('.icon-close');
 					mui.each(close, function(index, item) {
 						item.style.display = 'none';
 					});
-
 				});
 
 				//---方法---start---

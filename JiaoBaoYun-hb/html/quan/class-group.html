@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
-		<link href="../../css/quan/class_space.css" rel="stylesheet" />
+	
 		
 		<style type="text/css">
 			.mui-segmented-control {
@@ -33,6 +33,7 @@
 				background: 0 0
 			}
 		</style>
+			<link href="../../css/quan/class_space.css" rel="stylesheet" />
 	</head>
 
 	<body>
@@ -117,19 +118,14 @@
 			getGroupInfo(2,gride2)
 			var gride3 = document.getElementById('gride3')
 			getGroupInfo(0,gride3)
-//
-//			createGirde(gride2, createArray(names, imgs, urls))
-//		
-//			
-//			createGirde(gride3, createArray(names, imgs, urls))
 		}
 		var getGroupInfo=function(vvl,item){
 			var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING)
 			postDataPro_PostGusers({top:-1,vvl:groupId,vvl1:vvl},wd,function(data){
 					wd.close();
 					console.log('获取群组成员：'+vvl+JSON.stringify(data))
-					if(data.RspCode=='0000'){
-						createGirde(item, data.RspData.data);
+					if(data.RspCode=='0000'&&data.RspData!=null){
+						createGride(item, data.RspData);
 					}else{
 						mui.toast(data.RspTxt);
 					}
