@@ -9,6 +9,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/icons-extra.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
@@ -147,7 +148,7 @@
 
 		</div>
 		<!--下拉菜单-->
-		<div id="popover" class="mui-popover">
+		<!--<div id="popover" class="mui-popover">
 			<ul class=" mui-table-view">
 				<li class="mui-table-view-cell" style="text-align: center;">
 					删除
@@ -158,12 +159,20 @@
 				<li class="mui-table-view-cell" style="text-align: center;">
 					收藏
 			</ul>
+		</div>-->
+
+		<div id="comment-popover" class="mui-popover" style="width: 100%;top: 150px;height: 200px;">
+			<ul class="mui-table-view">
+				<img id="closepop" src="../../image/cloud/record_addclassclose.png" style="height: 30px;float: right;margin: 10px;" />
+				<input id="inputComment" type="text" class="mui-input-clear" placeholder="请输入评论内容" style="width:80% ;margin-left: 10%;text-align: center;border-radius: 50px;">
+				<button id="addComment" type="button" class="mui-btn mui-btn-blue mui-btn-block" style="border-radius: 50px;height: 40px;width: 80%;left: 10%;padding: 0;">评论</button>
 		</div>
 
 	</body>
 
 	<script>
 		var publisherId;
+		var tempIndex;
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 
 		mui.init({
@@ -249,7 +258,7 @@
 			//28.（用户空间）获取用户针对某用户的空间列表
 			postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
 				wd.close();
-				console.log('postDataPro_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				console.log('获取个人空间列表_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					totalCnt = data.RspData.TotalCnt;
 					var tempRspData = data.RspData.Data;
@@ -263,6 +272,8 @@
 						tempArray.push(tempModel0.PublisherId);
 						//合并数组,点赞的人
 						tempArray = tempArray.concat(tempModel0.LikeUsers);
+						tempArray = arrayDupRemoval(tempArray)
+						tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
 						//循环当前model中的回复数组
 						for(var item1 in tempModel0.Comments) {
 							//回复中的model
@@ -279,7 +290,6 @@
 						vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
 						vtp: 'g' //查询类型,p(个人)g(id串)
 					}
-					console.log('tempData:' + JSON.stringify(tempData));
 
 					//21.通过用户ID获取用户资料
 					postDataPro_PostUinf(tempData, wd, function(data1) {
@@ -298,7 +308,7 @@
 									var tempModel0 = tempRspData[item];
 									//遍历点赞的人
 									for(var item2 in tempModel0.LikeUsers) {
-										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
+										//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
 										if(tempModel.utid == tempModel0.LikeUsers[item2]) {
 											tempModel0.LikeUsers.splice(item2, 1, tempModel);
 										}
@@ -363,28 +373,24 @@
 
 		var id = 0;
 		mui.plusReady(function() {
-			//			var comData = {
-			//				userId: '2', //用户ID
-			//				userSpaceId: '1', //用户空间ID
-			//				commentContent: '好好学习' //回复内容
-			//			};
-			//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			//			postDataPro_addUserSpaceComment(comData, wd, function(data) {
-			//					console.log('6666666=====' + JSON.stringify(data));
-			//				})
-			//					var comData = {
-			//			userId: '2',//用户ID
-			//			upperId:'2',//上级评论ID
-			//			replyUserId:'1',//回复ID
-			//			userSpaceId:'1',//用户空间ID
-			//			commentContent:'好好学习'//回复内容
-			//		};
-			//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			//			postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
-			//				console.log('6666666====='+JSON.stringify(data));
-			//			})
+
 			publisherId = plus.webview.currentWebview().data; //发布者id
-			console.log('publisherId======' + publisherId);
+			var comData = {
+				userId: personalUTID, //用户ID
+				publisherId: publisherId
+			};
+
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_setUserSpaceReadByUser(comData, wd, function(data) {
+				wd.close();
+				console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
+				if(data.RspCode == 0) {
+					//					events.preload('tab-zone.html', 100);
+
+					//						events.fireToPageNone('tab-zone.html','setRead',data)
+				}
+
+			})
 			tempPage = 1; //页码，请求第几页数据
 			totalCnt = 0; //当前留言的总条数
 			flag = 2; //判断是加载更多1，还是刷新2
@@ -395,7 +401,6 @@
 				pageIndex: (tempPage).toString(), //当前页数
 				pageSize: '10' //每页记录数
 			};
-			console.log(JSON.stringify(comData));
 			requestData(comData);
 
 			var click = []; //记录被点击的li的id和被点击元素
@@ -406,8 +411,9 @@
 					toast = toast + element;
 				});
 				var id = this.getAttribute('id');
+
 				click.push(id);
-				mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
+				//								mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
 				click = [];
 			});
 
@@ -432,9 +438,41 @@
 			});
 			mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
 				click.push('点赞');
+				var index = this.id.replace('praise', '');
+				var color = this.style.color;
+				if(color == 'rgb(143, 143, 148)') {
+					var comData = {
+						userId: personalUTID, //用户ID
+						userSpaceId: zonepArray[index].TabId, //用户空间ID
+					};
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
+						wd.close();
+						if(data.RspCode == 0) {
+							var a = document.getElementById("praise" + index);
+							a.style.color = 'rgb(17, 183, 245)'
+							mui.toast('成功');
+						} else {
+							mui.toast(data.RspTxt);
+						}
+
+					})
+
+				}
+
 			});
 			mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
 				click.push('评论');
+				tempIndex = this.id.replace('comment', '');
+
+			});
+			mui('.mui-table-view').on('tap', '.replyComment', function() {
+				click.push('评论回复');
+				tempIndex = this.id.replace('replyComment', '');
+				mui('.mui-popover').popover('show');
+				//				var id_Index = this.id.replace('replyComment', '');
+				//				console.log('id_Index===' + id_Index)
+
 			});
 			mui('.mui-table-view').on('tap', '.dynamic-icon-forward', function() {
 				click.push('分享');
@@ -525,6 +563,54 @@
 			Data = [InfoList, ImageList, InteractionList]
 			return Data;
 		}
+		//		mui(".mui-content").on("tap", "a", function() {});
+		//关闭创建群界面
+		document.getElementById('closepop').addEventListener('tap', function() {
+			mui('.mui-popover').popover('hide');
+		});
+		//创建群
+		document.getElementById('addComment').addEventListener('tap', function() {
+			console.log('tempIndex===='+tempIndex)
+			var inputComment = document.getElementById("inputComment");
+			var name = inputComment.value; //创建的群名称
+			if(name == '') {
+				mui.toast('不允许为空');
+			} else {
+				if(tempIndex.indexOf('-')>=0) {
+					var indexArr = tempIndex.split('-');
+					var cellIndex = indexArr[0];
+					var commentIndex = indexArr[1];
+					var comData = {
+						userId: personalUTID, //用户ID
+						upperId: zonepArray[cellIndex].Comments[commentIndex].UpperId, //上级评论ID
+						replyUserId: zonepArray[cellIndex].Comments[commentIndex].ReplyId, //回复ID
+						userSpaceId: zonepArray[cellIndex].TabId, //用户空间ID
+						commentContent: inputComment.value //回复内容
+					};
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
+						wd.close();
+						console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
+						mui('.mui-popover').popover('hide');
+						inputComment.value = '';
+					})
+				} else {
+					var comData = {
+						userId: personalUTID, //用户ID
+						userSpaceId: zonepArray[tempIndex].TabId, //用户空间ID
+						commentContent: inputComment.value //回复内容
+					};
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_addUserSpaceComment(comData, wd, function(data) {
+						wd.close();
+						console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
+						mui('.mui-popover').popover('hide');
+						inputComment.value = '';
+					})
+				}
+
+			}
+		});
 	</script>
 
 </html>

@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<style>
 			body,
 			.mui-content {
@@ -22,9 +23,39 @@
 				height: 0px;
 			}
 
+			.mui-table-view-cell {
+				padding: 0px 15px;
+			}
+
 			.mui-media-body {
 				background: #F2F2F2;
 				padding: 10px;
+			}
+
+			.mui-col-sm-3 {
+				text-align: center;
+				margin-top: 9px;
+			}
+
+			.class-type-div {
+				width: 25%;
+				text-align: center;
+				margin-top: 5px;
+			}
+
+			.class-type {
+				width: 48px;
+				height: 48px;
+				border-radius: 50%;
+			}
+
+			.class-item-time {
+				margin: 6px;
+			}
+
+			.class-content {
+				width: 75%;
+				margin-top: 5px;
 			}
 		</style>
 	</head>
@@ -35,16 +66,23 @@
 			<div class="mui-scroll">
 				<!--数据列表-->
 				<ul class="mui-table-view">
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell">
-							<h3 style="color: black;">2016-11-22</h3>
-							<div class="mui-row">
-								<div class="mui-col-sm-3 mui-col-xs-3" style="text-align: center;margin-top: 9px;">
-									<img style="width: 48px;height: 48px;border-radius:50% ;" src="../../image/clip/u292.png" />
+					<ul id="ul_table" class="mui-table-view">
+						<!--<li class="mui-table-view-cell">
+							<h3>2016-11-22</h3>
+							<div id="time_call">
+								<div class="mui-pull-left class-type-div">
+									<img class="class-type" src="../../image/cloud/history_call.png" />
 								</div>
-								<div class="mui-col-sm-9 mui-col-xs-9">
+								<div class="mui-pull-right class-content">
 									<div class="mui-media-body">
-										<div class="mui-pull-right"style="margin: 6px;">8:30</div>
+										<div class="mui-pull-right class-item-time">8:30</div>
+										<h4 style="">艾叶子迟到</h4>
+										<div>说明：路上堵车</div>
+									</div>
+								</div>
+								<div class="mui-pull-right class-content">
+									<div class="mui-media-body">
+										<div class="mui-pull-right class-item-time">8:30</div>
 										<h4 style="">艾叶子迟到</h4>
 										<div>说明：路上堵车</div>
 									</div>
@@ -52,50 +90,26 @@
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
-							<h3 style="color: black;"></h3>
-							<div class="mui-row">
-								<div class="mui-col-sm-3 mui-col-xs-3" style="text-align: center;margin-top: 9px;">
-									<!--<img style="width: 48px;height: 48px;border-radius:50% ;" src="../../image/clip/u292.png" />-->
+							<div id="time_record" style="position: relative;">
+								<div class="mui-pull-left class-type-div">
+									<img class="class-type" src="../../image/cloud/history_record.png" />
 								</div>
-								<div class="mui-col-sm-9 mui-col-xs-9">
+								<div class="mui-pull-right class-content">
 									<div class="mui-media-body">
-										<div class="mui-pull-right"style="margin: 6px;">8:30</div>
-										<h4 style="">艾叶子迟到</h4>
-										<div>说明：路上堵车</div>
+										<div class="mui-pull-right class-item-time">8:30</div>
+										<h4 style="">艾叶子</h4>
+										<div>路上堵车</div>
+									</div>
+								</div>
+								<div class="mui-pull-right class-content">
+									<div class="mui-media-body">
+										<div class="mui-pull-right class-item-time">8:30</div>
+										<h4 style="">艾叶子</h4>
+										<div>路上堵车</div>
 									</div>
 								</div>
 							</div>
-						</li>
-						<li class="mui-table-view-cell">
-							<h3 style="color: black;">2016-11-21</h3>
-							<div class="mui-row">
-								<div class="mui-col-sm-3 mui-col-xs-3" style="text-align: center;margin-top: 9px;">
-									<img style="width: 48px;height: 48px;border-radius:50% ;" src="../../image/clip/u292.png" />
-								</div>
-								<div class="mui-col-sm-9 mui-col-xs-9">
-									<div class="mui-media-body">
-										<div class="mui-pull-right"style="margin: 6px;">8:30</div>
-										<h4 style="">艾叶子迟到</h4>
-										<div>说明：路上堵车</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="mui-table-view-cell">
-							<h3 style="color: black;"></h3>
-							<div class="mui-row">
-								<div class="mui-col-sm-3 mui-col-xs-3" style="text-align: center;margin-top: 9px;">
-									<!--<img style="width: 48px;height: 48px;border-radius:50% ;" src="../../image/clip/u292.png" />-->
-								</div>
-								<div class="mui-col-sm-9 mui-col-xs-9">
-									<div class="mui-media-body">
-										<div class="mui-pull-right"style="margin: 6px;">8:30</div>
-										<h4 style="">艾叶子迟到</h4>
-										<div>说明：路上堵车</div>
-									</div>
-								</div>
-							</div>
-						</li>
+						</li>-->
 					</ul>
 				</ul>
 			</div>
@@ -119,44 +133,160 @@
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
-					var table = document.body.querySelector('.mui-table-view');
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					for(var i = cells.length, len = i + 3; i < len; i++) {
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
-						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
-						//下拉刷新，新纪录插到最前面；
-						table.insertBefore(li, table.firstChild);
-					}
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+					TotalPage = 1; //总页数
+					TotalCnt = 0; //总记录数
+					hisData = []; //记录所有的历史数据
+					beforeItemData = null; //生成界面时记录上一条记录
+					showCall = true;
+					showRecord = true;
+					document.getElementById("ul_table").innerHTML = '';
+					getClassHistory(1, 10);
 				}, 1500);
 			}
-			var count = 0;
+
 			/**
 			 * 上拉加载具体业务实现
 			 */
 			function pullupRefresh() {
 				setTimeout(function() {
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
-					var table = document.body.querySelector('.mui-table-view');
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					for(var i = cells.length, len = i + 20; i < len; i++) {
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
-						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
-						table.appendChild(li);
-					}
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+					TotalPage++;
+					getClassHistory(TotalPage, 10);
 				}, 1500);
 			}
 
+			var subData = ''; //记录班级ID
+			var TotalPage = 1; //总页数
+			var TotalCnt = 0; //总记录数
+			var hisData = []; //记录所有的历史数据
+			var beforeItemData = null; //生成界面时记录上一条记录
+			var showCall = true;
+			var showRecord = true;
 			mui.plusReady(function() {
-				//获取班级名称
-				window.addEventListener("passData", function(e) {
-					//获得事件参数
-					var qun = e.detail.qun;
-					console.log('qun:' + JSON.stringify(qun));
-				});
+				//---从父页面获取数据---start---
+				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				subData = main.data; //接收页面传入的参数值
+				console.log('从父页面获取的数据:' + JSON.stringify(subData));
+				//---从父页面获取数据---end---
+				getClassHistory(1, 10); //从服务器获取10条数据
 			});
+
+			/**
+			 * 获取针对某班的点到记事列表
+			 * @param {Object} pageIndex 当前页数
+			 * @param {Object} pageSize 每页记录数
+			 */
+			function getClassHistory(pageIndex, pageSize) {
+				//66.（点到记事）获取针对某班的点到记事列表
+				//所需参数
+				var comData = {
+					classId: subData.data, //班级ID
+					pageIndex: pageIndex, //当前页数
+					pageSize: pageSize //每页记录数
+				};
+				//返回model_userNoteInfo
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_getNotesForClass(comData, wd, function(data) {
+					wd.close();
+					console.log('66.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						if(hisData.length == 0) {
+
+						}
+						mui.each(data.RspData.Data, function(index, item) {
+							//console.log(index + '|' + JSON.stringify(item));
+							hisData.push(item);
+							if(hisData.length == 1) {
+								createNotesItem(item);
+							}
+							createNotesItem(item);
+						});
+						if(data.RspData.Data.length == 0) {
+							if(hisData.length != 0) {
+								mui.toast('没有更多了');
+							} else {
+								mui.toast('获取数据为空');
+							}
+						}
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+			}
+
+			/**
+			 * 创建界面
+			 * @param {Object} data
+			 */
+			function createNotesItem(data) {
+				if(beforeItemData == null) {
+					beforeItemData = data;
+				} else {
+					var PublishDate = data.PublishDate.split(' ');
+					var PublishDate2 = beforeItemData.PublishDate.split(' ')[0];
+					var date0 = PublishDate[0];
+					var date1 = PublishDate[1].split(':');
+					//console.log('date0:' + JSON.stringify(date0));
+					//console.log('date1:' + JSON.stringify(date1));
+					var li1 = document.createElement('li');
+					li1.className = 'mui-table-view-cell';
+					var li2 = document.createElement('li');
+					li2.className = 'mui-table-view-cell';
+					var html1 = ''; //日期
+					var html2 = ''; //点到
+					var html3 = ''; //记事
+					if(date0 != PublishDate2 || hisData.length == 1) { //创建框架
+						html1 = '<h3>' + date0 + '</h3>';
+						showCall = true;
+						showRecord = true;
+						html2 = '<div id="' + date0 + '_call"></div>';
+						html3 = '<div id="' + date0 + '_record"></div>';
+					}
+					li1.innerHTML = html1 + html2;
+					li2.innerHTML = html3;
+					document.getElementById("ul_table").appendChild(li1);
+					document.getElementById("ul_table").appendChild(li2);
+					if(data.NoteType == 1) { //点到
+						if(showCall) { //显示图标
+							var div = document.createElement('div');
+							div.className = 'mui-pull-left class-type-div';
+							div.innerHTML = '<img class="class-type" src="../../image/cloud/history_call.png" />';
+							document.getElementById(date0 + "_call").appendChild(div);
+							showCall = false;
+						}
+					} else if(data.NoteType == 2) { //记事
+						if(showRecord) {
+							var div = document.createElement('div');
+							div.className = 'mui-pull-left class-type-div';
+							div.innerHTML = '<img class="class-type" src="../../image/cloud/history_record.png" />';
+							document.getElementById(date0 + "_record").appendChild(div);
+							showRecord = false;
+						}
+					}
+					var div2 = document.createElement('div');
+					div2.className = 'mui-pull-right class-content';
+					//时间
+					var html4 = '<div class="mui-media-body">\
+										<div class="mui-pull-right class-item-time">' + date1[0] + ':' + date1[1] + '</div>';
+					var html5 = '';
+					var unick = '学生姓名'; //学生姓名
+					if(data.NoteType == 1) { //点到
+						html5 = '<h4 style="">' + unick + data.CheckTypeStr + '</h4>\
+								 <div>说明：' + data.MsgContent + '</div>';
+					} else if(data.NoteType == 2) { //记事
+						html5 = '<h4 style="">' + unick + '</h4>\
+							 	 <div>' + data.MsgContent + '</div>';
+					}
+					div2.innerHTML = html4 + html5;
+					if(data.NoteType == 1) { //点到
+						document.getElementById(date0 + "_call").appendChild(div2);
+					} else if(data.NoteType == 2) { //记事
+						document.getElementById(date0 + "_record").appendChild(div2);
+					}
+					beforeItemData = data;
+				}
+			}
 		</script>
 	</body>
 
