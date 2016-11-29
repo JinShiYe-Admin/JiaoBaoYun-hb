@@ -455,13 +455,34 @@
 						if(data.RspCode == 0) {
 							var a = document.getElementById("praise" + index);
 							a.style.color = 'rgb(17, 183, 245)'
-							mui.toast('成功');
+							mui.toast('点赞成功');
 						} else {
 							mui.toast(data.RspTxt);
 						}
 
 					})
 
+				}else{
+					
+					var comData = {
+						userId: personalUTID, //用户ID
+						userSpaceId: zonepArray[index].TabId, //用户空间ID
+					};
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_delUserSpaceLikeByUser(comData, wd, function(data) {
+						wd.close();
+						if(data.RspCode == 0) {
+							var a = document.getElementById("praise" + index);
+							a.style.color = 'rgb(143, 143, 148)'
+							mui.toast('取消点赞成功');
+						} else {
+							mui.toast(data.RspTxt);
+						}
+
+					})
+
+				
+					
 				}
 
 			});
