@@ -17,52 +17,79 @@ var flag = 2;
 var aboutMeArray = [];
 mui.init();
 mui.plusReady(function() {
-	//页码1
-	tempPage = 1;
-	//请求并放置数据
-	requestData(setData);
-})
-/**
- * 界面放置数据
- * @param {Object} data 请求成功后返回的数据
- */
-var setData = function(data) {
-	var list = document.getElementById('list-container');
-	data.forEach(function(cell, i) {
-		var li = document.createElement('li');
-		li.className = 'mui-table-view-cell';
-		li.innerHTML = createInner(cell);
-		list.appendChild(li);
+		//页码1
+		tempPage = 1;
+		//请求并放置数据
+		requestData(setData);
 	})
-}
-/**
- * 创建Inner
- * @param {Object} cell
- */
+	/**
+	 * 界面放置数据
+	 * @param {Object} data 请求成功后返回的数据
+	 */
+var setData = function(data) {
+		var list = document.getElementById('list-container');
+		data.forEach(function(cell, i) {
+			var li = document.createElement('li');
+			li.className = 'mui-table-view-cell';
+			li.innerHTML = createInner(cell);
+			list.appendChild(li);
+		})
+	}
+	/**
+	 * 创建Inner
+	 * @param {Object} cell
+	 */
 var createInner = function(cell) {
-	var cellData = getCellData(cell);
-	var inner = '<a>' +
-		'<div class="cell-title">' +
-		'<img class="title-img"src="' + cellData.headImg + '"/>' +
-		'<div class="title-words">' +
-		'<h4 class="title-title">' + cellData.title + '</h4>' +
-		'<p class="title-words">' + cellData.time + '</p>' +
-		'</div>' +
-		'</div>' +
-		'<div class="relation-content">' + '</div>' +
-		'<div class="extras">' + cellData.messages + '</div>'
-	'</a>';
-	console.log('每个cell的内容：' + inner)
-	return inner;
-}
-/**
- * 根据获取信息 设置
- * @param {Object} cell 单个cell数据
- */
+		var cellData = getCellData(cell);
+		var inner = '<a>' +
+			'<div class="cell-title">' +
+			'<img class="title-img"src="' + cellData.headImg + '"/>' +
+			'<div class="title-words">' +
+			'<h4 class="title-title">' + cellData.title + '</h4>' +
+			'<p class="title-words">' + cellData.time + '</p>' +
+			'</div>' +
+			'</div>' +
+			'<div class="relation-content">' + '</div>' +
+			'<div class="extras">' + cellData.messages + '</div>'
+		'</a>';
+		console.log('每个cell的内容：' + inner)
+		return inner;
+	}
+	/**
+	 * 根据获取信息 设置
+	 * @param {Object} cell 单个cell数据
+	 */
 var getCellData = function(cell) {
 	var cellData = new Object();
-	cellData.headImg = cell.MsgArray[0].MsgFromImg;
-	cellData.content = cell.MsgArray[0].MsgContent;
+	if(cell.MsgArray.length > 0) {
+		cellData.headImg = cell.MsgArray[0].MsgFromImg;
+		cellData.content = cell.MsgArray[0].MsgContent;
+		switch(cell.MsgType) {
+			//其他用户评论
+			case 1:
+				cellData.title = cell.MsgArray[0].MsgFromName;
+
+				break;
+				//评论的回复
+			case 2:
+				cellData.title = cell.MsgArray[0].MsgFromName + " 回复";
+				break;
+				//其他用户点赞
+			case 3:
+				cellData.title = cell.MsgArray[0].MsgFromName + " 赞了我";
+				break;
+				//其他用户留言
+			case 4:
+				cellData.title = cell.MsgArray[0].MsgFromName + " 给我留言";
+				break;
+				//留言的回复
+			case 5:
+				cellData.title = cell.MsgArray[0].MsgFromName + " 给我留言的回复";
+				break;
+			default:
+				break;
+		}
+	}
 	cellData.time = cell.MsgDate;
 	var messages = new Array();
 	cell.MsgArray.forEach(function(msg, i, msgArray) {
@@ -77,31 +104,7 @@ var getCellData = function(cell) {
 	});
 	cellData.messages = messages.join('');
 	console.log('获取的额外数据：' + cellData.messages);
-	switch(cell.MsgType) {
-		//其他用户评论
-		case 1:
-			cellData.title = cell.MsgArray[0].MsgFromName;
 
-			break;
-			//评论的回复
-		case 2:
-			cellData.title = cell.MsgArray[0].MsgFromName + " 回复";
-			break;
-			//其他用户点赞
-		case 3:
-			cellData.title = cell.MsgArray[0].MsgFromName + " 赞了我";
-			break;
-			//其他用户留言
-		case 4:
-			cellData.title = cell.MsgArray[0].MsgFromName + " 给我留言";
-			break;
-			//留言的回复
-		case 5:
-			cellData.title = cell.MsgArray[0].MsgFromName + " 给我留言的回复";
-			break;
-		default:
-			break;
-	}
 	console.log('获取的cellData：' + JSON.stringify(cellData));
 	return cellData;
 }

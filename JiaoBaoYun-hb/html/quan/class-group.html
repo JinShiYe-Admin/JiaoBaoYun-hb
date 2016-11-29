@@ -61,19 +61,19 @@
 				<div id="item1" class="mui-control-content mui-active">
 					<!--这里放置真实显示的DOM内容-->
 					<ul id="gride1" class="mui-table-view mui-grid-view mui-grid-9"></ul>
-					<button type="button" class="mui-btn mui-btn-danger group-button">退群</button>
+					<button id="quit-group1" type="button" class="mui-btn mui-btn-danger group-button">退群</button>
 
 				</div>
 				<div id="item2" class="mui-control-content">
 					<!--这里放置真实显示的DOM内容-->
 					<ul id="gride2" class="mui-table-view mui-grid-view mui-grid-9"></ul>
-					<button type="button" class="mui-btn mui-btn-danger group-button">退群</button>
+					<button id="quit-group2" type="button" class="mui-btn mui-btn-danger group-button">退群</button>
 
 				</div>
 				<div id="item3" class="mui-control-content">
 					<!--这里放置真实显示的DOM内容-->
 					<ul id="gride3" class="mui-table-view mui-grid-view mui-grid-9"></ul>
-					<button type="button" class="mui-btn mui-btn-danger group-button">退群</button>
+					<button id="quit-group3" type="button" class="mui-btn mui-btn-danger group-button">退群</button>
 
 				</div>
 
@@ -88,25 +88,67 @@
 	</script>
 	<script src="../../js/utils/grideControl.js"></script>
 	<script src="../../js/publicProtocol.js"></script>
+	<script type="text/javascript" src="../../js/utils/events.js" ></script>
 	<script>
+		events.preload('group-pInfo.html',200);
 		var groupId=null;
 			var groupName=null;
 		mui('.mui-scroll-wrapper').scroll({
 			indicators: true, //是否显示滚动条
 		})
 		mui.plusReady(function() {
-			
 			window.addEventListener('postGroupInfo',function(e){
 				console.log(JSON.stringify(e.detail.data));
 				if(e.detail.data){
 					groupId=e.detail.data.classId;
 					groupName=e.detail.data.className;
 					document.getElementById('title').innerText=groupName;
-					setGride()
+					setGride();
 				}
 			})
-		
+			mui('#gride1').on('tap','.mui-table-view-cell',function(){
+				getUserInGroup(groupId,3);
+//				events.fireToPageWithData('group-pInfo.html','postPInfo',data);
+			})
+			mui('#gride2').on('tap','.mui-table-view-cell',function(){
+				events.fireToPageWithData('group-pInfo.html','postPInfo',data);
+			})
+			mui('#gride3').on('tap','.mui-table-view-cell',function(){
+				events.fireToPageWithData('group-pInfo.html','postPInfo',data);
+			})
+			events.addTap('quit-group1',function(){
+				
+			})
+			events.addTap('quit-group2',function(){
+				
+			})
+			events.addTap('quit-group3',function(){
+				
+			})
 		})
+		var getUserInGroup=function(groupId,mstype){
+			var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_PostGuI({vvl:groupId,vtp:mstype},wd,function(data){
+				wd.close()
+				console.log('用户在群的身份'+JSON.stringify(data));
+				if(data.RspCode=='0000'){
+					
+				}else{
+					mui.toast('您未以当前身份加入该群！');
+				}
+			})
+		}
+		var quitGroup=function(gutid){
+			var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_PostGuD({vvl:gutid},wd,function(data){
+				console.log('退群返回值：'+JSON.stringify(data));
+				if(data.RspCode=='0000'){
+					
+				}else{
+					
+				}
+			})
+		}
 		var setGride = function() {
 //top: '',//选择条数
 //			vvl:'',//群ID，查询的值

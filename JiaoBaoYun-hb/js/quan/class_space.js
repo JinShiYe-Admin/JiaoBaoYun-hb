@@ -1,6 +1,7 @@
 var class_space = (function(mod) {
 
 	/**
+	 * 
 	 * @param {Object} postData
 	 * @param {Object} pageIndex
 	 * @param {Object} pageSize
@@ -15,30 +16,55 @@ var class_space = (function(mod) {
 				if(pagedata.RspCode == '0000') {
 					console.log('获取的班级动态：' + JSON.stringify(pagedata));
 					mod.totalPagNo = pagedata.RspData.TotalPage;
-					callback(pagedata);
+					callback(pagedata.RspData.Data);
 				} else {
 					mui.toast(pagedata.RspTxt);
 				}
 
 			})
 		}
+	/**
+	 * 更换url 然后创建listView
+	 * @param {Object} list
+	 */
+	mod.replaceUrl=function(list){
+		var i=0;
+		getUrlBrief();	
+		createListView(list);
+	}
+	/**
+	 * 获取Url信息
+	 */
+	var getUrlBrief=function(){
+		if(i<list.length){
+			urlBrief.getUrlFromMessage(list[i].MsgContent,function(message){
+				list[i].MsgContent=message;
+				i++;
+				getUrlBrief();
+			})
+		}
+	}
 		/**
 		 * 
 		 * @param {Object} list
 		 */
-	mod.createListView = function(list) {
-		if(list.RspData.Data) {
+	var createListView = function(list) {
+		if(list.length>0) {
 			console.log('总页码：' + mod.totalPagNo);
 			var container = document.getElementById('classSpace_list');
-			list.RspData.Data.forEach(function(cell, index, data) {
+			list.forEach(function(cell, index, data) {
 				var li = document.createElement('li');
-				li.className="mui-table-view-cell"
+				li.className="mui-table-view-cell";
 				getPersonalImg(cell, li, container);
 			})
 		} else {
-			console.log('暂无数据')
+			console.log('暂无数据');
 		}
 	}
+	/**
+	 * 
+	 * @param {Object} item
+	 */
 	var createInnerHtml = function(item) {
 		var inner = '<a><div class="mui-pull-left head-img" >' +
 			'<img class="head-portrait" src="' + item.publisherImg + '"/>' +
@@ -53,6 +79,10 @@ var class_space = (function(mod) {
 			'</div></a>';
 		return inner;
 	}
+	/**
+	 * 
+	 * @param {Object} pDate
+	 */
 	var changeDate = function(pDate) {
 		var noDate = pDate.split('-');
 		console.log(noDate);
@@ -64,6 +94,12 @@ var class_space = (function(mod) {
 		noDate.splice(2, 1);
 		return noDate.join(':')
 	}
+	/**
+	 * 
+	 * @param {Object} cell
+	 * @param {Object} li
+	 * @param {Object} container
+	 */
 	var getPersonalImg = function(cell, li, container) {
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
 		postDataPro_PostUinf({
@@ -86,6 +122,10 @@ var class_space = (function(mod) {
 
 		})
 	}
+	/**
+	 * 
+	 * @param {Object} cell
+	 */
 	var createImgsInner = function(cell) {
 		var imgInner = '';
 		var percent = 0.00;
@@ -111,21 +151,21 @@ var pageSize = 10;
 mui.plusReady(function() {
 	var postData = plus.webview.currentWebview().data;
 	console.log('班级空间获取值：' + JSON.stringify(postData))
-	class_space.getList(postData, pageIndex, pageSize, class_space.createListView);
+	class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 	/***
 	 * 加载刷新
 	 */
 	events.initRefresh('classSpace_list',
 		function() {
 			pageIndex = 1;
-			class_space.getList(postData, pageIndex, pageSize, class_space.createListView);
+			class_space.getList(postData, pageIndex, pageSize,class_space.replaceUrl);
 		},
 		function() {
 			console.log('请求页面：page' + pageIndex);
 			mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
 			if(pageIndex < class_space.totalPagNo) {
 				pageIndex++;
-				class_space.getList(postData, pageIndex, pageSize, class_space.createListView);
+				class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 			}
 		});
 });
