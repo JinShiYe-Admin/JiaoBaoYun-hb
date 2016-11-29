@@ -461,7 +461,10 @@
 					"fonts/mui.ttf",
 					"css/utils/common.css",
 					"js/mui.min.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"css/icons-extra.css",
+					"fonts/mui-icons-extra.ttf",
+					"image/cloud/record_addclassclose.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -478,7 +481,8 @@
 					"html/quan/classSpace-sub.html",
 					"image/clip.png",
 					"css/quan/class_space.css",
-					"html/quan/class-dynamic.html"
+					"html/quan/class-dynamic.html",
+					"js/utils/urlBrief.js"
 				],
 				"refer": [
 					"html/quan/class-group.html"
@@ -516,7 +520,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/utils/urlBrief.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -666,7 +671,8 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"js/utils/events.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
