@@ -544,7 +544,19 @@
 					"js/quan/studentdynamic.js",
 					"image/quan/u125.png",
 					"image/quan/u77.png",
-					"image/quan/u123.png"
+					"image/quan/u123.png",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/BigInt.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0

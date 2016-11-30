@@ -61,49 +61,49 @@ var createInner = function(cell) {
 	 */
 var getCellData = function(cell) {
 	var cellData = new Object();
-	if(cell.MsgArray.length > 0) {
-		cellData.headImg = cell.MsgArray[0].MsgFromImg;
-		cellData.content = cell.MsgArray[0].MsgContent;
-		switch(cell.MsgType) {
-			//其他用户评论
-			case 1:
-				cellData.title = cell.MsgArray[0].MsgFromName;
+	cellData.headImg = cell.uimg;
+	cellData.content = cell.MsgContent;
+	switch(cell.MsgType) {
+		//其他用户评论
+		case 1:
+			cellData.title = cell.unick;
 
-				break;
-				//评论的回复
-			case 2:
-				cellData.title = cell.MsgArray[0].MsgFromName + " 回复";
-				break;
-				//其他用户点赞
-			case 3:
-				cellData.title = cell.MsgArray[0].MsgFromName + " 赞了我";
-				break;
-				//其他用户留言
-			case 4:
-				cellData.title = cell.MsgArray[0].MsgFromName + " 给我留言";
-				break;
-				//留言的回复
-			case 5:
-				cellData.title = cell.MsgArray[0].MsgFromName + " 给我留言的回复";
-				break;
-			default:
-				break;
-		}
+			break;
+			//评论的回复
+		case 2:
+			cellData.title = cell.unick + " 回复";
+			break;
+			//其他用户点赞
+		case 3:
+			cellData.title = cell.unick + " 赞了我";
+			break;
+			//其他用户留言
+		case 4:
+			cellData.title = cell.unick + " 给我留言";
+			break;
+			//留言的回复
+		case 5:
+			cellData.title = cell.unick + " 给我留言的回复";
+			break;
+		default:
+			break;
 	}
 	cellData.time = cell.MsgDate;
-	var messages = new Array();
-	cell.MsgArray.forEach(function(msg, i, msgArray) {
-		if(msg.MsgContent) {
-			if(msg.MsgToName) {
-				messages.push('<p><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>');
-			} else {
-				messages.push('<p><span>' + msg.MsgFromName + ':</span>' + msg.MsgContent + '</p>');
+	if(cell.MsgArray.length > 0) {
+		var messages = new Array();
+		cell.MsgArray.forEach(function(msg, i, msgArray) {
+			if(msg.MsgContent) {
+				if(msg.MsgToName) {
+					messages.push('<p><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>');
+				} else {
+					messages.push('<p><span>' + msg.MsgFromName + ':</span>' + msg.MsgContent + '</p>');
+				}
 			}
-		}
 
-	});
-	cellData.messages = messages.join('');
-	console.log('获取的额外数据：' + cellData.messages);
+		});
+		cellData.messages = messages.join('');
+		console.log('获取的额外数据：' + cellData.messages);
+	}
 
 	console.log('获取的cellData：' + JSON.stringify(cellData));
 	return cellData;
@@ -168,7 +168,7 @@ function requestData(callback) {
 								//当前循环的model
 								var tempModel0 = tempRspData[item];
 								//对比id是否一致
-								if(tempModel0.utid == tempModel.UserId) {
+								if(tempModel0.UserId == tempModel.utid) {
 									//合并
 									tempModel0 = $.extend(tempModel0, tempModel);
 								}
