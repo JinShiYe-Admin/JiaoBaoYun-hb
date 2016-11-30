@@ -495,9 +495,9 @@
 						if(data.RspCode == 0) {
 							var uData = data.RspData[0];
 							if(dataType == 3) { //学生
-								if(uData.usex == 0) {
+								if(uData.usex == 1) {
 									stu_gender.innerText = '女';
-								} else if(uData.usex == 1) {
+								} else if(uData.usex == 0) {
 									stu_gender.innerText = '男';
 								}
 								stu_phone.value = uData.uid;
@@ -505,9 +505,9 @@
 							} else if(dataType == 0) { //家长
 								document.getElementById("par_phone_" + uData.utid).value = uData.uid;
 							} else if(dataType == 2) { //教师
-								if(uData.usex == 0) {
+								if(uData.usex == 1) {
 									tea_gender.innerText = '女';
-								} else if(uData.usex == 1) {
+								} else if(uData.usex == 0) {
 									tea_gender.innerText = '男';
 								}
 								tea_introduction.value = uData.utxt;
