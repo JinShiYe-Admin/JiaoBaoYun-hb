@@ -10,7 +10,7 @@
 	"icons": {
 		"72": "icon.png"
 	},
-	"launch_path": "html/register/login.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+    "launch_path": "html/register/login.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
 	"developer": {
 		"name": "",/*开发者名称*/
 		"email": "",/*开发者邮箱地址*/
@@ -544,7 +544,19 @@
 					"js/quan/studentdynamic.js",
 					"image/quan/u125.png",
 					"image/quan/u77.png",
-					"image/quan/u123.png"
+					"image/quan/u123.png",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/BigInt.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -627,9 +639,14 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"image/utils/default_personalimage.png",
+					"js/utils/events.js",
+					"js/quan/class-group.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/quan/group-pInfo.html"
+				],
 				"priority": 0
 			},
 			"html/tab-zone.html": {
@@ -672,7 +689,23 @@
 					"css/mui.min.css",
 					"js/utils/events.js",
 					"fonts/mui.ttf",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"image/cloud/archives.png",
+					"image/cloud/notes.png",
+					"js/libs/myStorage/myStorage.js",
+					"image/cloud/operation.png",
+					"image/cloud/Trajectory.png",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"image/cloud/note.png",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -1320,7 +1353,10 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/mine/qun_data_create.html",
+					"html/mine/qun_data_details.html"
+				],
 				"priority": 0
 			},
 			"html/mine/edit-groupInfo.html": {
@@ -1535,6 +1571,65 @@
 					"css/mui.min.css",
 					"image/utils/default_personalimage.png",
 					"css/mine/apply.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/group-pInfo.html": {
+				"resources": [
+					"css/quan/group-pInfo.css",
+					"image/utils/default_personalimage.png",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/utils/common.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/mine/qun_data_create.html": {
+				"resources": [
+					"js/mui.picker.min.js",
+					"css/mui.poppicker.css",
+					"css/mui.picker.min.css",
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/mine/qun_data_details.html": {
+				"resources": [
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0

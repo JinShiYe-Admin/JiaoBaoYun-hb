@@ -1,0 +1,378 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/qiniu/plupload.full.min.js"></script>
+		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
+		<script type="text/javascript" src="../../js/utils/QiNiuUtil.js"></script>
+		<style>
+			body,
+			.mui-content {
+				background: white;
+			}
+
+			#qunimage {
+				height: 100px;
+			}
+
+			.qun-image {
+				border: 2px solid #F2F2F2;
+				border-radius: 50%;
+				height: 100px;
+				width: 100px;
+				text-align: center;
+				margin-top: 20px;
+			}
+
+			.mui-input-row label {
+				text-align: center;
+				width: 25%;
+				padding: 11px 0px;
+				font-size: 15px;
+			}
+
+			.mui-input-group {
+				margin-top: 20px;
+			}
+
+			.mui-input-group:before,
+			.mui-input-group:after {
+				height: 0px;
+			}
+
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 75%;
+				font-size: 15px;
+				padding-right: 10px;
+			}
+
+			.mui-input-group .mui-input-row:after {
+				width: 100%;
+				left: 0;
+			}
+
+			.mui-btn-block {
+				border-radius: 50px;
+				margin-top: 50px;
+				width: 80%;
+				margin-left: 10%;
+				height: 40px;
+				padding: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="text-align: left;">群信息</h1>
+		</header>
+		<div class="mui-content">
+			<div id="qunimage">
+				<!--<div style="margin-left: 110px;" class="qun-image">
+				<a class="mui-icon iconfont icon-xiangji" style="color: #BBBBBB;font-size: 30px;margin-top: 20px;">
+					<p style="font-size: 10px;margin-top: 10px;">
+						请上传群图标!
+					</p>
+				</a>
+				</div>-->
+				<!--<img style="margin-left: 110px;" src="../../image/clip/u292.png" class="qun-image" />-->
+			</div>
+			<form class="mui-input-group">
+				<div class="mui-input-row" data-value='gname'>
+					<label>群名称：</label>
+					<!--<div id="qunname" class="gender" style="background: red;"></div>-->
+					<input id="gname" type="text" class="mui-input-clear">
+				</div>
+				<div class="mui-input-row" data-value='gnote'>
+					<label>群说明：</label>
+					<!--<div id="qunintroduce"></div>-->
+					<input id="gnote" type="text" class="mui-input-clear">
+				</div>
+				<div class="mui-input-row" data-value='qunremark'>
+					<label>群备注：</label>
+					<!--<div id="qunremark"></div>-->
+					<input id="qunremark" type="text" class="mui-input-clear">
+				</div>
+			</form>
+		</div>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var qunImgPath = '';
+				var Width = plus.screen.resolutionWidth;
+				var marginLeft = (Width - 100) / 2 + 'px';
+				addQunImg(); //显示上传群头像的图标
+				var qname = document.getElementById("gname"); //群名称
+				var qnote = document.getElementById("gnote"); //群说明
+				var qremark = document.getElementById("qunremark"); //群备注
+				//---从父页面获取数据---start---
+				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				var subData = main.data; //接收页面传入的参数值
+				console.log('从父页面获取的数据:' + JSON.stringify(subData));
+				//---从父页面获取数据---end---
+
+				//9.获取用户群
+				//获取个人信息
+				//var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				//需要参数
+				var comData = {
+					vtp: 'ig', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群),ig(群信息vvl对应群ID)
+					vvl: subData.gid //查询的各项，对应人的utid，可以是查询的任何人
+				};
+				//返回值model：model_groupList
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_PostGList(comData, wd, function(data) {
+					wd.close();
+					console.log('9.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						qname.value = data.RspData[0].gname;
+						qnote.value = data.RspData[0].gnote;
+						//qremark.value=data.RspData[0].;
+						if(data.RspData[0].gimg != '' && data.RspData[0].gimg != null) {
+							document.getElementById("qunimage").innerHTML = '<img style="margin-left: ' + marginLeft + ';" src="' + updateHeadImg(data.RspData[0].gimg) + '" class="qun-image" />';
+							qunImgPath = data.RspData[0].gimg;
+						}
+						upQN();
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+
+				mui('.mui-input-group').on('tap', '.mui-input-row', function() {
+					var id = this.getAttribute('data-value');
+					var type = '';
+					var value = '';
+					console.log('row:' + id);
+					switch(id) {
+						case 'gname': //名称
+							type = 'gname';
+							value = qname.value;
+							break;
+						case 'gnote': //群说明
+							type = 'gnote';
+							value = qnote.value;
+							break;
+						case 'qunremark': //群备注
+							//type='gname';
+							type = '';
+							value = '';
+							break;
+						default:
+							console.log('修改群资料的类型选择出错');
+							break;
+					}
+					if(type !== '') {
+						events.openNewWindowWithData('qun_manage_info_change_post.html', {
+							gid: subData.gid, //群id
+							type: type, //修改的类型
+							value: value //修改的值
+						});
+					}
+				});
+
+				//修改群信息成功后修改界面的值
+				window.addEventListener('valueChange', function(e) {
+					var data = e.detail;
+					document.getElementById(data.type).value = data.value;
+				});
+
+				/**
+				 * 上传群图标区域
+				 */
+				function addQunImg() {
+					var div = document.getElementById("qunimage");
+					div.innerHTML = '<div style="margin-left: ' + marginLeft + ';" class="qun-image">\
+										<a class="mui-icon iconfont icon-xiangji" style="color: #BBBBBB;font-size: 30px;margin-top: 20px;">\
+											<p style="font-size: 10px;margin-top: 10px;">\
+												请上传群图标!\
+											</p>\
+										</a>\
+									</div>';
+					//div.innerHTML = '<img style="margin-left: ' + marginLeft + ';" src="../../image/clip/u292.png" class="qun-image" />';
+					var table = document.body.querySelector('.mui-content');
+					table.insertBefore(div, table.firstChild);
+				}
+
+				function upQN() {
+					//---七牛上传头像---start---
+					//获取个人信息
+					//				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+					var pickButtonId = 'qunimage';
+					var getUpTokenUrl = 'http://192.168.0.178:8507/GetTokenProfilePhoto.ashx'; //'http://192.168.0.178:8507/QiuToken.ashx';
+					var myDate = new Date();
+					var filePath = '';
+					if(qunImgPath == '') {
+						filePath = 'qun' + myDate.getTime() + (Math.floor(Math.random() * 10000) + 1) + '.png';
+					} else {
+						var str = qunImgPath.split('/');
+						filePath = str[str.length - 1];
+						//console.log(filePath);
+					}
+					var domain = 'http://oh2zmummr.bkt.clouddn.com/'; //'http://o9u2jsxjm.bkt.clouddn.com/';
+					// 设置上传的参数
+					// 等待的对话框
+					var wdQN = null;
+					var uploader = Qiniu.uploader({
+						runtimes: 'html5,flash,html4', // 上传模式，依次退化
+						browse_button: pickButtonId, // 上传选择的点选按钮，必需
+						// 在初始化时，uptoken，uptoken_url，uptoken_func三个参数中必须有一个被设置
+						// 切如果提供了多个，其优先级为uptoken > uptoken_url > uptoken_func
+						// 其中uptoken是直接提供上传凭证，uptoken_url是提供了获取上传凭证的地址，如果需要定制获取uptoken的过程则可以设置uptoken_func
+						// uptoken : '<Your upload token>', // uptoken是上传凭证，由其他程序生成
+						// uptoken_url: '/uptoken',         // Ajax请求uptoken的Url，强烈建议设置（服务端提供）
+						uptoken_func: function(file) { // 在需要获取uptoken时，该方法会被调用
+							wdQN = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+							var uptoken = '';
+							mui.ajax(getUpTokenUrl, {
+								async: false,
+								data: {
+									Key: filePath
+								},
+								dataType: 'json', //服务器返回json格式数据
+								type: 'post', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								//							headers: {
+								//								'Content-Type': 'application/json'
+								//							},
+								success: function(data) {
+									//服务器返回响应，根据响应结果，分析是否登录成功；
+									uptoken = data.uptoken;
+									console.log('获取七牛上传token成功:' + uptoken);
+								},
+								error: function(xhr, type, errorThrown) {
+									//异常处理；
+									console.log('获取七牛上传token失败：' + type);
+									mui.toast('上传出错');
+									wdQN.close();
+								}
+							});
+							return uptoken;
+						},
+						get_new_uptoken: true, // 设置上传文件的时候是否每次都重新获取新的uptoken
+						// downtoken_url: '/downtoken',
+						// Ajax请求downToken的Url，私有空间时使用，JS-SDK将向该地址POST文件的key和domain，服务端返回的JSON必须包含url字段，url值为该文件的下载地址
+						// unique_names: true,              // 默认false，key为文件名。若开启该选项，JS-SDK会为每个文件自动生成key（文件名）
+						//save_key: true, // 默认false。若在服务端生成uptoken的上传策略中指定了sava_key，则开启，SDK在前端将不对key进行任何处理
+						domain: domain, // bucket域名，下载资源时用到，必需
+						//container: 'container',             // 上传区域DOM ID，默认是browser_button的父元素
+						max_file_size: '100mb', // 最大文件体积限制
+						flash_swf_url: 'js/qiniu/Moxie.swf', //引入flash，相对路径
+						max_retries: 0, // 上传失败最大重试次数
+						dragdrop: false, // 开启可拖曳上传
+						//drop_element: 'container',          // 拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
+						chunk_size: '4mb', // 分块上传时，每块的体积
+						auto_start: true, // 选择文件后自动上传，若关闭需要自己绑定事件触发上传
+						//					resize: {
+						//						width: 100,
+						//						height: 100,
+						//						crop: false,
+						//						quality: 90,
+						//						preserve_headers: true
+						//					},
+						//x_vars : {
+						//    查看自定义变量
+						//    'time' : function(up,file) {
+						//        var time = (new Date()).getTime();
+						// do something with 'time'
+						//        return time;
+						//    },
+						//    'size' : function(up,file) {
+						//        var size = file.size;
+						// do something with 'size'
+						//        return size;
+						//    }
+						//},
+						init: {
+							'FilesAdded': function(up, files) {
+								plupload.each(files, function(file) {
+									// 文件添加进队列后，处理相关的事情
+									console.log('---文件添加进队列后---' + JSON.stringify(file));
+									// 等待的对话框
+								});
+							},
+							'BeforeUpload': function(up, file) {
+								// 每个文件上传前，处理相关的事情
+								console.log('---每个文件上传前---');
+							},
+							'UploadProgress': function(up, file) {
+								// 每个文件上传时，处理相关的事情
+								console.log('文件上传时：' + JSON.stringify(file));
+								console.log('上传进度：' + file.percent);
+							},
+							'FileUploaded': function(up, file, info) {
+								console.log('---上传成功---');
+								console.log('file:' + JSON.stringify(file));
+								console.log('info:' + info);
+								if(qunImgPath == '') {
+									qunImgPath = domain + JSON.parse(info).key; //群头像
+									document.getElementById("qunimage").innerHTML = '<img style="margin-left: ' + marginLeft + ';" src="' + updateHeadImg(qunImgPath) + '" class="qun-image" />';
+									console.log('qunImgPath:' + qunImgPath);
+									//8.用户修改群各项信息
+									//需要参数
+									var comData2 = {
+										rid: subData.gid, //要修改的群id
+										vtp: 'gimg', //更改项，指更改用户信息的相应项,对应后面的vvl值,gimg(头像),gname(群名),gnote(群说明)
+										vvl: qunImgPath, //要修改成的值
+
+									};
+									//返回值model：model_groupList
+									// 等待的对话框
+									var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+									postDataPro_PostReGinfo(comData2, wd2, function(data) {
+										wd2.close();
+										console.log('8.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+										if(data.RspCode == 0) {
+											console.log('修改群头像成功');
+											document.getElementById("qunimage").innerHTML = '<img style="margin-left: ' + marginLeft + ';" src="' + updateHeadImg(qunImgPath) + '" class="qun-image" />';
+											mui.toast('修改群头像成功');
+										} else {
+											mui.toast(data.RspTxt);
+										}
+									});
+								} else {
+									document.getElementById("qunimage").innerHTML = '<img style="margin-left: ' + marginLeft + ';" src="' + updateHeadImg(qunImgPath) + '" class="qun-image" />';
+								}
+								wdQN.close();
+							},
+							'Error': function(up, err, errTip) {
+								//上传出错时，处理相关的事情
+								console.log('---上传出错---');
+								console.log('err' + JSON.stringify(err));
+								console.log('errTip' + JSON.stringify(errTip));
+								mui.toast('上传出错');
+								wdQN.close();
+							},
+							'UploadComplete': function() {
+								//队列文件处理完毕后，处理相关的事情
+								console.log('---队列文件处理完毕后---');
+							},
+							'Key': function(up, file) {
+								// 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+								// 该配置必须要在unique_names: false，save_key: false时才生效
+								console.log('---Key---');
+								var key = filePath;
+								// do something with key here
+								return key
+							}
+						}
+					});
+					//---七牛上传头像---end---
+				}
+			});
+		</script>
+	</body>
+
+</html>

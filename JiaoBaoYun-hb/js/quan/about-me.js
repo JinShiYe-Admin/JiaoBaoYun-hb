@@ -13,6 +13,7 @@ var totalCnt = 0;
 var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 //判断是加载更多1，还是刷新2
 var flag = 2;
+var pNick=myStorage.getItem(storageKeyName.PERSONALINFO).unick;
 //页码请求到要显示的数据，array[model_userSpaceAboutMe]
 var aboutMeArray = [];
 mui.init();
@@ -43,68 +44,79 @@ var createInner = function(cell) {
 		var cellData = getCellData(cell);
 		var inner = '<a>' +
 			'<div class="cell-title">' +
-			'<img class="title-img"src="' + cellData.headImg + '"/>' +
+			'<img class="title-img"src="' + ifHaveImg(cellData.headImg) + '"/>' +
 			'<div class="title-words">' +
 			'<h4 class="title-title">' + cellData.title + '</h4>' +
 			'<p class="title-words">' + cellData.time + '</p>' +
 			'</div>' +
 			'</div>' +
-			'<div class="relation-content">' + '</div>' +
-			'<div class="extras">' + cellData.messages + '</div>'
+			'<p class="comment-content">' + ifHave(cellData.content) + '</p>' +
+			'<div class="refer-content">'+'<span>'+pNick+':</span>' +ifHave(cellData.referContent)+'</div>' +
+			'<div class="extras">' + ifHave(cellData.messages)  + '</div>'
 		'</a>';
 		console.log('每个cell的内容：' + inner)
 		return inner;
 	}
+var ifHave=function(data){
+	return data?data:'';
+}
+var ifHaveImg=function(img){
+	return img?img:'../../image/utils/default_personalimage.png'
+}
 	/**
 	 * 根据获取信息 设置
 	 * @param {Object} cell 单个cell数据
 	 */
 var getCellData = function(cell) {
 	var cellData = new Object();
-	if(cell.MsgArray.length > 0) {
-		cellData.headImg = cell.MsgArray[0].MsgFromImg;
-		cellData.content = cell.MsgArray[0].MsgContent;
-		switch(cell.MsgType) {
-			//其他用户评论
-			case 1:
-				cellData.title = cell.MsgArray[0].MsgFromName;
+	cellData.headImg = cell.uimg;
+	cellData.content = cell.MsgContent;
+	cellData.referContent=cell.Content;
+	switch(cell.MsgType) {
+		//其他用户评论
+		case 1:
+			cellData.title = cell.unick+' 評論了你';
 
-				break;
-				//评论的回复
-			case 2:
-				cellData.title = cell.MsgArray[0].MsgFromName + " 回复";
-				break;
-				//其他用户点赞
-			case 3:
-				cellData.title = cell.MsgArray[0].MsgFromName + " 赞了我";
-				break;
-				//其他用户留言
-			case 4:
-				cellData.title = cell.MsgArray[0].MsgFromName + " 给我留言";
-				break;
-				//留言的回复
-			case 5:
-				cellData.title = cell.MsgArray[0].MsgFromName + " 给我留言的回复";
-				break;
-			default:
-				break;
-		}
+			break;
+			//评论的回复
+		case 2:
+			cellData.title = cell.unick + " 回复";
+			break;
+			//其他用户点赞
+		case 3:
+			cellData.title = cell.unick + " 赞了我";
+			break;
+			//其他用户留言
+		case 4:
+			cellData.title = cell.unick + " 给我留言";
+			break;
+			//留言的回复
+		case 5:
+			cellData.title = cell.unick + " 给我留言的回复";
+			break;
+		default:
+			break;
 	}
 	cellData.time = cell.MsgDate;
 	var messages = new Array();
-	cell.MsgArray.forEach(function(msg, i, msgArray) {
-		if(msg.MsgContent) {
-			if(msg.MsgToName) {
-				messages.push('<p><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>');
-			} else {
-				messages.push('<p><span>' + msg.MsgFromName + ':</span>' + msg.MsgContent + '</p>');
+	if(cell.MsgArray.length > 0) {
+		
+		cell.MsgArray.forEach(function(msg, i, msgArray) {
+			if(msg.MsgContent) {
+				if(msg.MsgToName) {
+					messages.push('<p><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>');
+				} else {
+					messages.push('<p><span>' + msg.MsgFromName + ':</span>' + msg.MsgContent + '</p>');
+				}
 			}
-		}
 
-	});
+		});
+		
+	}else{
+		messages.push('<p><span>' + cell.unick + ':</span>' + cell.MsgContent+ '</p>')
+	}
 	cellData.messages = messages.join('');
 	console.log('获取的额外数据：' + cellData.messages);
-
 	console.log('获取的cellData：' + JSON.stringify(cellData));
 	return cellData;
 }
@@ -168,7 +180,7 @@ function requestData(callback) {
 								//当前循环的model
 								var tempModel0 = tempRspData[item];
 								//对比id是否一致
-								if(tempModel0.utid == tempModel.UserId) {
+								if(tempModel0.UserId == tempModel.utid) {
 									//合并
 									tempModel0 = $.extend(tempModel0, tempModel);
 								}

@@ -62,8 +62,8 @@
 				//发布按钮
 			events.addTap('publish', function() {
 				var textView = document.getElementById('input-content');
-				console.log('textView.value==='+textView.value)
-				if(!textView.value||textView.value==''){
+				console.log('textView.value===' + textView.value)
+				if(!textView.value || textView.value == '') {
 					mui.toast('请输入内容');
 					return;
 				}
@@ -84,7 +84,14 @@
 					if(data.RspCode = '0000') {
 						mui.toast('发布成功！');
 						textView.value = '';
-						
+						//获得主页面的webview
+						var main = plus.webview.getWebviewById('../quan/tab-zone.html');
+						//触发tab-zone页面的addUserSpaceForMutiUsers事件
+						console.log('userSpaceId===='+data.RspData.Result);
+						mui.fire(main, 'addUserSpaceForMutiUsers', {
+							userSpaceId: data.RspData.Result
+						});
+
 					} else {
 						mui.toast(data.RspTxt);
 					}

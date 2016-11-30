@@ -11,12 +11,12 @@ var dynamiclistitem = (function($, mod) {
 	 * [commentList]:评论列表1.评论[commenter,content]，评论者，评论内容
 	 * 						2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
 	 */
-	mod.addItem = function( ulElement, data,id) {
+	mod.addItem = function(ulElement, data, id) {
 		var li = document.createElement('li');
 		li.id = id;
 		li.className = 'mui-table-view-cell';
 
-		mod.addInfo(ulElement, li, data,id); //增加动态的个人信息和内容
+		mod.addInfo(ulElement, li, data, id); //增加动态的个人信息和内容
 	};
 
 	/**
@@ -25,7 +25,7 @@ var dynamiclistitem = (function($, mod) {
 	 * @param {Object} liElement
 	 * @param {Object} data
 	 */
-	mod.addInfo = function(ulElement, liElement, data,id) {
+	mod.addInfo = function(ulElement, liElement, data, id) {
 		var InfoList = data[0]; //[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
 		var html = '';
 
@@ -49,7 +49,7 @@ var dynamiclistitem = (function($, mod) {
 		div.innerHTML = html;
 		liElement.appendChild(div);
 
-		mod.addImage(ulElement, liElement, data,id); //增加动态的图片
+		mod.addImage(ulElement, liElement, data, id); //增加动态的图片
 	};
 
 	/**
@@ -58,7 +58,7 @@ var dynamiclistitem = (function($, mod) {
 	 * @param {Object} liElement
 	 * @param {Object} data
 	 */
-	mod.addImage = function(ulElement, liElement, data,id) {
+	mod.addImage = function(ulElement, liElement, data, id) {
 		var SCREEN_WIDTH = plus.screen.resolutionWidth; //获取设备屏幕宽度分辨率
 		var imageData = data[1]; //[[ImageUrlList],ImageNum]动态内容的图片路径数组,图片总数量
 		var ImageUrlList = imageData[0]; //图片路径数组
@@ -104,7 +104,7 @@ var dynamiclistitem = (function($, mod) {
 		div.innerHTML = html;
 		liElement.appendChild(div);
 
-		mod.addInteraction(ulElement, liElement, data,id); //增加动态的互动
+		mod.addInteraction(ulElement, liElement, data, id); //增加动态的互动
 	};
 
 	/**
@@ -113,7 +113,7 @@ var dynamiclistitem = (function($, mod) {
 	 * @param {Object} liElement
 	 * @param {Object} data
 	 */
-	mod.addInteraction = function(ulElement, liElement, data,id) {
+	mod.addInteraction = function(ulElement, liElement, data, id) {
 		var SCREEN_WIDTH = plus.screen.resolutionWidth; //获取设备屏幕宽度分辨率
 		var InteractionData = data[2]; //[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
 		var introduce = InteractionData[0]; //信息说明
@@ -129,11 +129,17 @@ var dynamiclistitem = (function($, mod) {
 
 		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body">';
 		var html2 = '</div></div>'
-//		var html2 = '<p><span class="mui-icon mui-icon-image"></span>' + introduce + '</p></div></div>';
+			//		var html2 = '<p><span class="mui-icon mui-icon-image"></span>' + introduce + '</p></div></div>';
 		var html3 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div class="mui-media-body mui-pull-right">';
-		var html4 = '<a id="praise'+id+'" style = "color: #8F8F94"  class="mui-icon-extra mui-icon-extra-like dynamic-icon-praise"></a>';
-		
-		var html5 = '<a id="comment'+id+'" style = "color: #8F8F94" href="#comment-popover" class="mui-icon-extra mui-icon-extra-comment dynamic-icon-comment" href="comment-popover"></a>';
+		var html4;
+		if(zonepArray[id].IsLike == 1) {
+			html4 = '<a id="praise' + id + '" style = "color: rgb(17,183,245)"  class="mui-icon-extra mui-icon-extra-like dynamic-icon-praise"></a>';
+
+		} else {
+			html4 = '<a id="praise' + id + '" style = "color: #8F8F94"  class="mui-icon-extra mui-icon-extra-like dynamic-icon-praise"></a>';
+		}
+
+		var html5 = '<a id="comment' + id + '" style = "color: #8F8F94" href="#comment-popover" class="mui-icon-extra mui-icon-extra-comment dynamic-icon-comment" href="comment-popover"></a>';
 		var html6 = '<img src="../../image/dynamic/icon_forward.png" class="dynamic-icon-forward" />';
 		var html7 = '</div><div class="mui-media-body"><p>浏览' + viewCount + '次</p></div></div>';
 		var html8 = '<div class="mui-col-sm-12 mui-col-xs-12 "><div class="mui-media-body dynamic-line"></div></div>';
@@ -163,16 +169,16 @@ var dynamiclistitem = (function($, mod) {
 		$.each(commentList, function(index, element) {
 			var htmlComment = '';
 			if(element.length == 2) {
-				var html1 = '<div id="replyComment'+id+'-'+index+'" class="mui-media-body replyComment">';
+				var html1 = '<div id="replyComment' + id + '-' + index + '" class="mui-media-body replyComment">';
 				var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + element[0] + '</font>';
 				var html3 = '<font class="common-font-family-Regular">：' + element[1] + '</font></div>';
 				htmlComment = html1 + html2 + html3;
 			} else if(element.length == 3) {
-				var html1 = '<div id="replyComment'+id+'-'+index+'" class="mui-media-body replyComment">';
+				var html1 = '<div id="replyComment' + id + '-' + index + '" class="mui-media-body replyComment">';
 				var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + element[0] + '</font>';
 				var html3 = '<font class="common-font-family-Regular">回复</font>';
 				var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + element[1] + '</font>';
-				var html5 = '<font class="common-font-family-Regular">' + element[2] + '</font></div>';
+				var html5 = '<font class="common-font-family-Regular">：' + element[2] + '</font></div>';
 				htmlComment = html1 + html2 + html3 + html4 + html5;
 			}
 			htmlCommentList2 = htmlCommentList2 + htmlComment;

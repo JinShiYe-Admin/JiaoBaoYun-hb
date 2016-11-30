@@ -99,6 +99,8 @@ var addListener = function() {
 					wd.close();
 					if(data.RspCode='0000'){
 						mui.toast('您已同意入群');
+						events.clearChild(list);
+						getData('inv', setData);
 					}else{
 						mui.toast(data.RspTxt);
 					}
@@ -202,7 +204,7 @@ var getInnerHTML = function(type, item) {
 			'<div class = "mui-media-body"' +
 			'style = "margin-right: 4rem;" >' +
 			item.gname +
-			'<p class="mui-ellipsis">' + item.invname + '邀请你加入群:' + item.gname + '</p>' +
+			'<p class="mui-ellipsis">' + item.invname + '邀请你以'+getRole(item.mstype)+'身份加入群:' + item.gname + '</p>' +
 			'</div>' +
 			'<a class = "mui-btn btn-green btn-apply" ' +
 			' gutid="' + item.gutid + '" mstype="' + item.mstype + '" gid="' + item.gid + '" >接受</a></a>'
@@ -213,12 +215,32 @@ var getInnerHTML = function(type, item) {
 			'<div class = "mui-media-body"' +
 			'style = "margin-right: 4rem;" >' +
 			item.gname +
-			'<p class="mui-ellipsis">' + item.invname + '申请加入你的群:' + item.gname + '</p>' +
+			'<p class="mui-ellipsis">' + item.invname + '申请以'+getRole(item.mstype)+'身份加入你的群:' + item.gname + '</p>' +
 			'</div>' +
 			'<a href="#chose-roles" class = "mui-btn mui-btn-green btn-openPopover" ' +
 			' gutid="' + item.gutid + '" mstype="' + item.mstype + '" gid="' + item.gid + '" stuname="' + item.stuname + '">接受</a></a>'
 	}
 	return inner;
+}
+var getRole=function(mstype){
+	var role='';
+	switch (mstype){
+		case 0:
+		role='家長';
+			break;
+		case 1:
+		role='管理員';
+			break
+		case 2:
+		role='老師';
+		break;
+		case 3:
+		role='學生';
+		break;
+		default:
+			break;
+	}
+	return role;
 }
 var getGimg = function(cell) {
 		return cell.gimg ? cell.gimg : '../../image/utils/default_personalimage.png';
