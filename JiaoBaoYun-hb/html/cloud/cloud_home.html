@@ -23,12 +23,12 @@
 				background-size: 100%;
 				/*宽度占100%*/
 			}
-
+			
 			.cloud-info {
 				/*顶部信息*/
 				padding: 10px;
 			}
-
+			
 			#cloud_prsonalimge {
 				/*个人头像*/
 				border-radius: 50%;
@@ -38,19 +38,19 @@
 				float: right;
 				margin-right: 10px;
 			}
-
+			
 			#cloud_name {
 				/*名字*/
 				color: white;
 				margin-bottom: 5px;
 			}
-
+			
 			.cloud-top-icon {
 				/*图标*/
 				width: 20px;
 				height: 20px;
 			}
-
+			
 			#gift,
 			#yuan {
 				/*积分和钱*/
@@ -59,7 +59,7 @@
 				font-weight: 900;
 				margin-left: 5px;
 			}
-
+			
 			.mui-progressbar {
 				/*进度条*/
 				margin-top: 5px;
@@ -67,41 +67,41 @@
 				height: 10px;
 				width: 70%;
 			}
-
+			
 			.cloud-capacity {
 				/*容量*/
 				margin-top: 3px;
 				color: white;
 			}
-
+			
 			.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-
+			
 			.mui-table-view {
 				background: transparent;
 				min-height: 90px;
 			}
-
+			
 			.mui-table-view-cell {
 				background: white;
 			}
-
+			
 			.cloud-bottom-imge {
 				/*云存储的文件图片*/
 				height: 40px;
 				width: 40px;
 			}
-
+			
 			.cloud-bottom-imge2 {
 				/*云档案，云应用的图片*/
 				height: 50px;
 				width: 50px;
 				/*margin-top: 10px;*/
 			}
-
+			
 			.cloud-bottom-imge2-bg {
 				/*云档案，云应用的图片背景*/
 				height: 50px;
@@ -109,17 +109,17 @@
 				border-radius: 50%;
 				margin: auto;
 			}
-
+			
 			.cloud-bottom-icon {
 				/*云存储右侧按钮*/
 				height: 20px;
 				width: 20px;
 			}
-
+			
 			.cloud-text-align-center {
 				text-align: center;
 			}
-
+			
 			.cloud-line {
 				/*功能名字右侧树竖线*/
 				position: absolute;
@@ -129,7 +129,7 @@
 				background: #A9A9A9;
 				height: 50px;
 			}
-
+			
 			#cloudstorage {
 				background-color: white;
 				padding: 10px;
@@ -138,7 +138,7 @@
 				padding-top: 7px;
 				padding-bottom: 7px;
 			}
-
+			
 			#cloudrecord,
 			#cloudapps {
 				background: white;
@@ -285,6 +285,13 @@
 		</div>
 		<script type="text/javascript">
 			mui.init();
+			
+			//声明变量
+			//存储数组
+			var fileArray = [];
+			//档案数组
+			var studentArray = [];
+			
 			mui.plusReady(function() {
 				//初始化滚动条
 				mui('.mui-scroll-wrapper').scroll({
@@ -297,12 +304,17 @@
 					progress: 80
 				}).show();
 
-				//增加存储文件
-				addStorageFolder('泰国旅游照片泰国旅游照片', 0);
+				//增加存储文件，获取顶层文件夹
+				//26.用户云盘顶层文件及文件夹获取
+				postFirstFile();
+				//				addStorageFolder('泰国旅游照片泰国旅游照片', 0);
 				//				addStorageFolder('H5教程');
-				//增加加号
-				addStorageIcon();
+				
 				changeInfo();
+				
+				//24.通过用户表ID获取用户关联的学生,档案显示
+				postUserStudent();
+				
 				//重新登录或者自动登录后获取的信息
 				window.addEventListener('infoChanged', function() {
 					//设置页面信息
@@ -331,7 +343,28 @@
 								if(num.length == 2) {
 									document.getElementById("addFolder").style.display = "none";
 								}
-								addStorageFolder(e.value, 1);
+								//																addStorageFolder(e.value, 1);
+								//27.用户云盘文件上传或创建文件夹
+								//所需参数
+								var comData = {
+									pid: '0', //	父ID，该文件的上层ID
+									fname: e.value, //	文件名称，文件或文件夹名称,文件存扩展名之前的名称
+									ftype: '.file', //	文件类型，存文件的扩展名,如.file为文件夹
+									fpath: '', //	文件路径，文件路径,为文件用
+									fsize: '0' //	文件大小，文件用
+								};
+								// 等待的对话框
+								var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+								postDataPro_PostDiFiA(comData, wd, function(data) {
+									wd.close();
+									console.log('27.postDataPro_PostDiFiA:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+									if(data.RspCode == 0) {
+										//26.用户云盘顶层文件及文件夹获取
+										postFirstFile();
+									} else {
+										mui.toast(data.RspTxt);
+									}
+								});
 							}
 						} else {
 							//点击取消
@@ -373,6 +406,59 @@
 							break;
 					}
 				});
+
+				//
+				//26.用户云盘顶层文件及文件夹获取
+				function postFirstFile() {
+					//所需参数
+					var comData = {
+						vvl: '0' //	节点ID，顶层为0
+					};
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_PostDiFi(comData, wd, function(data) {
+						wd.close();
+						console.log('26.postDataPro_PostDiFi:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							//给存储数组赋值
+							fileArray = data.RspData;
+							//清掉所有文件夹
+							
+							//循环将获取到的值塞入界面
+							for (var i in data.RspData) {
+								var tempModel = data.RspData[i];
+								addStorageFolder(tempModel.fname, 0);
+							}
+							//增加加号
+							addStorageIcon();
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					});
+				}
+				//24.通过用户表ID获取用户关联的学生
+				function postUserStudent() {
+					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+					//所需参数
+					var comData = {
+						utid:personalUTID//用户表ID,用户utid
+					};
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_PostUstu(comData, wd, function(data) {
+						wd.close();
+						console.log('24.postDataPro_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							//给存储数组赋值
+							studentArray = data.RspData;
+							//设置页面显示
+							
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					});
+				}
+
 				//-----------设置监听end---------------
 
 				/**

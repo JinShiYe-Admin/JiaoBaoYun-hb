@@ -132,7 +132,7 @@ var publicModel = (function($, mod) {
 		]
 	}
 	
-	//家校圈用户记事信息
+	//家校圈用户记事信息---看实际model
 	mod.model_userNoteInfo = {
 		//共用
 		TabId:'',//点到记事ID，16班级空间id,28用户空间id，

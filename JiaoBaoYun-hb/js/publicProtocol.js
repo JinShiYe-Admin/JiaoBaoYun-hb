@@ -63,7 +63,7 @@ var arrayToStr = function(array) {
 //6.用户修改各项用户信息
 //调用方法
 //var comData = {
-//	vtp: 'unick', //uimg(头像),utxt(签名),unick(昵)称,usex(性别),uemail(邮件),uname(账号,只能修改一次,且只能字母开头,字母与数字,定了就不能修改)
+//	vtp: 'unick', //uimg(头像),utxt(签名),unick(昵)称,usex(性别),uemail(邮件),uphone(手机绑定)uphoneq(手机解绑),uemailq(邮件解绑),uname(账号,只能修改一次,且只能字母开头,字母与数字,定了就不能修改)
 //	vvl: '测试修改昵称'//对应的值
 //}; 
 //// 等待的对话框
@@ -152,7 +152,7 @@ var postDataPro_PostTokenRenew = function(commonData, wd, callback) {
 //		//需要参数
 //		var comData = {
 //			vvl: '111111',//查询的值
-//			vtp: '111111'//获取类型,nm(用户名),mb(手机号)
+//			vtp: '111111'//nm(用户名),mb(手机号),em(邮箱)
 //		};
 //返回值model：model_userInfo
 var postDataPro_PostUList = function(commonData, wd, callback) {
@@ -388,7 +388,7 @@ var postDataPro_PostDiFi = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINURL + 'PostDiFi', enData, commonData, 1, wd, callback);
 }
 
-//27.用户云盘文件上传
+//27.用户云盘文件上传或创建文件夹
 //所需参数
 //		var comData = {
 //			pid:'',//	父ID，该文件的上层ID
@@ -534,6 +534,19 @@ var postDataPro_PostUmkD = function(commonData, wd, callback) {
 }
 
 //38.用户云盘文件及文件夹删除
+//所需参数
+//		var comData = {
+//			vvl:''//节点ID，
+//		};
+//返回值model_PostDiFi
+var postDataPro_PostGrInv = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostGrInv', enData, commonData, 1, wd, callback);
+}
+
+//39.通过审批者ID获取相应的入群邀请或申请数
 //所需参数
 //		var comData = {
 //			vvl:''//节点ID，
@@ -1509,6 +1522,7 @@ var postDataPro_getIsLikeUsersById = function(commonData, wd, callback) {
 //所需参数
 //		var comData = {
 //			parentId: '',//家长ID
+//			studentName:'',//学生ID
 //			pageIndex:'',//当前页数
 //			pageSize:''//每页记录数
 //		};
@@ -1569,4 +1583,17 @@ var postDataPro_delUserSpaceLikeByUser = function(commonData, wd, callback) {
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/delUserSpaceLikeByUser', enData, commonData, 2, wd, callback);
+}
+
+//73.（云档案）按家长获取学生档案姓名
+//所需参数
+//		var comData = {
+//			parentId:''//家长ID
+//		};
+//返回学生姓名数组
+var postDataPro_getStudentName = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'file/getStudentName', enData, commonData, 2, wd, callback);
 }
