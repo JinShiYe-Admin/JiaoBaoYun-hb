@@ -201,7 +201,11 @@
 			</div>-->
 		</div>
 		<script type="text/javascript">
-			mui.init();
+			mui.init({
+				gestureConfig: {
+					longtap: true, //默认为false
+				}
+			});
 			mui.plusReady(function() {
 				var show = ''; //记录当前展示的群id
 				var qunList = []; //记录所有群的信息
@@ -237,7 +241,6 @@
 							});
 							return false;
 						}
-
 					});
 				});
 
@@ -245,6 +248,24 @@
 				mui('#qunlist').on('tap', 'a', function() {
 					console.log('qunlist：' + this.getAttribute('data-value'));
 					showQun(this.getAttribute('data-value'));
+				});
+
+				//长按修改群信息
+				mui('#qunlist').on('longtap', 'a', function() {
+					var gid = this.getAttribute('data-value');
+					console.log('longtap-qunlist：' + gid);
+					mui.each(qunList, function(index, item) {
+						console.log('index：' + index + '|群id:' + item.gid + '|群名:' + item.gname);
+						if(item.gid == gid && item.mstype == '1') {
+							events.openNewWindowWithData('qun_manage_info_change.html', {
+								gid: item.gid, //群ID
+								//gname: item.gname, //群名
+								//gimg: item.gimg, //群头像
+								//mstype: item.mstype //用户管理角色0家长,1管理员,2老师,3学生
+							});
+							return false;
+						}
+					});
 				});
 
 				//切换显示选中的成员类型
@@ -289,7 +310,7 @@
 							});
 							//不相同的群和身份
 							if(!same) {
-								console.log('data.RspData:群id:' + item.gid + '|群名：' + item.gname + '|管理角色：' + item.mstype);
+								console.log('data.RspData:群id:' + item.gid + '|群名：' + item.gname + '|管理角色：' + item.mstype + '|群头像：' + item.gimg);
 								var qun = {
 									gid: item.gid, //群ID
 									gname: item.gname, //群名
