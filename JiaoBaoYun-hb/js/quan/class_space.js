@@ -29,14 +29,14 @@ var class_space = (function(mod) {
 	 */
 	var i=0;
 	mod.replaceUrl=function(list){
-		
-		getUrlBrief();	
+		list=getUrlBrief(list);	
+		i=0;
 		createListView(list);
 	}
 	/**
 	 * 获取Url信息
 	 */
-	var getUrlBrief=function(){
+	var getUrlBrief=function(list){
 		if(i<list.length){
 			urlBrief.getUrlFromMessage(list[i].MsgContent,function(message){
 				list[i].MsgContent=message;
@@ -44,6 +44,7 @@ var class_space = (function(mod) {
 				getUrlBrief();
 			})
 		}
+		return list;
 	}
 		/**
 		 * 

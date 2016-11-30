@@ -152,7 +152,7 @@
 					vtp: mstype
 				}, wd, function(data) {
 					wd.close()
-					console.log('用户在群的身份' + JSON.stringify(data));
+					console.log('用户在群的身份 ' + JSON.stringify(data));
 					if(data.RspCode == '0000') {
 						//					quitGroup(data.RspData[0].gutid, mstype);
 						callback(data.RspData);
@@ -210,7 +210,7 @@
 			 */
 		var allCallback = function(roleInfo) {
 				allcount++;
-				if(allcount > 0 && allcount == groupRoles) {
+				if(allcount > 0 && allcount == groupRoles.length) {
 					events.fireToPageNone('../quan/tab-zone.html', 'quitGroup');
 					groupRoles = [];
 					allcount = 0;
@@ -218,6 +218,8 @@
 						var curpage = plus.webview.currentWebview();
 						curpage.opener().close();
 						curpage.close();
+					}else{
+						setGride();
 					}
 				}
 			}
@@ -226,7 +228,15 @@
 			 * @param {Object} roleInfo
 			 */
 		var quitSquad = function(roleInfo) {
-				groupRoles=groupRoles.splice(groupRoles.indexOf(roleInfo), 1);
+			console.log('退群的groupInfo:'+Array.isArray(groupRoles)+ JSON.stringify(roleInfo)+groupRoles.indexOf(roleInfo));
+				groupRoles.forEach(function(groupRole,i){
+					if(groupRole.gutid==roleInfo.gutid){
+						groupRoles.splice(i,1);
+						return false;
+					}
+				})
+				groupRoles.splice(groupRoles.indexOf(roleInfo), 1);
+				console.log('退组后的身份信息：'+JSON.stringify(groupRoles));
 				getGroupInfo(roleInfo.mstype);
 				events.fireToPageNone('../quan/tab-zone.html', 'quitGroup');
 			}
