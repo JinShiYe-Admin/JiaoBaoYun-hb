@@ -16,6 +16,26 @@ mui.plusReady(function() {
 		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 		getStuList();
 	})
+	window.addEventListener('addUserSpaceForMutiUsers', function(data) {
+		for(var i = 0; i < datasource.length; i++) {
+			var tempUserList = datasource[i].userList;
+			var userIdArr = [];
+			for(var j=0;j<tempUserList.length;j++){
+				var userId = tempUserList[j].utid;
+				userIdArr.push(userId);
+			}
+			var userIds = arrayToStr(userIdArr);
+			var postData = {
+				userIds: userIds,
+				userSpaceId: data.detail.userSpaceId
+			}
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_addUserSpaceForMutiUsers(postData, wd, function(data) {
+				wd.close()
+				console.log('推送个人空间成功'+JSON.stringify(data));
+			})
+		}
+	})
 
 	document.addEventListener('setRead', function(e) {
 		var tableIndex = selectCell.tableIndex;
@@ -66,7 +86,8 @@ mui.plusReady(function() {
 				data: {
 					studentId: topStudentArr[index].utid,
 					classId: topStudentArr[index].gid,
-					studentName: topStudentArr[index].ugname
+					studentName: topStudentArr[index].ugname,
+					stuimg:topStudentArr[index].stuimg
 				}
 
 			},
@@ -176,7 +197,7 @@ function getNotes(index, StuDyArr) {
 					li.className = 'mui-table-view-cell mui-media studentsdynamic';
 
 					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' +
-						 '<p class="time">' + StuDyArr[i].PublishDate +
+						'<p class="time">' + StuDyArr[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
 						topStudentArr[i].ugname +
