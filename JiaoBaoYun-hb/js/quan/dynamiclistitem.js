@@ -132,7 +132,6 @@ var dynamiclistitem = (function($, mod) {
 			//		var html2 = '<p><span class="mui-icon mui-icon-image"></span>' + introduce + '</p></div></div>';
 		var html3 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div class="mui-media-body mui-pull-right">';
 		var html4;
-		console.log('IsLike==='+zonepArray[id].IsLike);
 		if(zonepArray[id].IsLike == 1) {
 			html4 = '<a id="praise' + id + '" style = "color: rgb(17,183,245)"  class="mui-icon-extra mui-icon-extra-like dynamic-icon-praise"></a>';
 
@@ -179,7 +178,7 @@ var dynamiclistitem = (function($, mod) {
 				var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + element[0] + '</font>';
 				var html3 = '<font class="common-font-family-Regular">回复</font>';
 				var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + element[1] + '</font>';
-				var html5 = '<font class="common-font-family-Regular">' + element[2] + '</font></div>';
+				var html5 = '<font class="common-font-family-Regular">：' + element[2] + '</font></div>';
 				htmlComment = html1 + html2 + html3 + html4 + html5;
 			}
 			htmlCommentList2 = htmlCommentList2 + htmlComment;
