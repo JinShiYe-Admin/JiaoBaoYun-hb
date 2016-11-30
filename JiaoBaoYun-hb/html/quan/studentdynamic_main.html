@@ -16,6 +16,10 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/qiniu/plupload.full.min.js"></script>
+		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
+		<script type="text/javascript" src="../../js/utils/QiNiuUtil.js"></script>
 		<style>
 			.mui-title {
 				/*标题居左*/
@@ -28,7 +32,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 id="title" class="mui-title"></h1>
-			<a class=" mui-icon mui-icon-contact mui-pull-right"></a>
+			<a id="stuImage" class="mui-icon mui-icon-contact mui-pull-right"></a>
 		</header>
 		<div class="mui-content"></div>
 	</body>
@@ -39,14 +43,14 @@
 			gestureConfig: {
 				doubletap: true
 			},
-			subpages: [{
-				url: 'studentdynamic_sub.html',
-				id: 'studentdynamic_sub.html',
-				styles: {
-					top: '45px',
-					bottom: '0px',
-				}
-			}]
+			//			subpages: [{
+			//				url: 'studentdynamic_sub.html',
+			//				id: 'studentdynamic_sub.html',
+			//				styles: {
+			//					top: '45px',
+			//					bottom: '0px',
+			//				}
+			//			}]
 		});
 
 		var contentWebview = null;
@@ -78,31 +82,191 @@
 			});
 			//---获取数据并传递数据---end---
 
-			//修改学生头像
-			mui('.mui-bar-nav').on('tap', '.mui-icon-contact', function() {
-				var btnArray = [{
-					title: "拍照"
-				}, {
-					title: "相册"
-				}];
-				plus.nativeUI.actionSheet({
-					title: "选择修改学生头像的方式",
-					cancel: "取消",
-					buttons: btnArray
-				}, function(e) {
-					var index = e.index;
-					switch(index) {
-						case 0: //取消
-							break;
-						case 1: //拍照
-							camera();
-							break;
-						case 2: //相册
-							pick();
-							break;
+			//---七牛上传头像---start---
+			//获取个人信息
+			//var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+			var pickButtonId = 'stuImage';
+			var getUpTokenUrl = 'http://192.168.0.178:8507/GetTokenProfilePhoto.ashx'; //'http://192.168.0.178:8507/QiuToken.ashx';
+			var myDate = new Date();
+			var filePath = 'stuimg' + data.studentId + '.png';
+
+			console.log('filePath:' + filePath);
+			var domain = 'http://oh2zmummr.bkt.clouddn.com/'; //'http://o9u2jsxjm.bkt.clouddn.com/';
+			// 设置上传的参数
+			// 等待的对话框
+			var wdQN = null;
+			var uploader = Qiniu.uploader({
+				runtimes: 'html5,flash,html4', // 上传模式，依次退化
+				browse_button: pickButtonId, // 上传选择的点选按钮，必需
+				// 在初始化时，uptoken，uptoken_url，uptoken_func三个参数中必须有一个被设置
+				// 切如果提供了多个，其优先级为uptoken > uptoken_url > uptoken_func
+				// 其中uptoken是直接提供上传凭证，uptoken_url是提供了获取上传凭证的地址，如果需要定制获取uptoken的过程则可以设置uptoken_func
+				// uptoken : '<Your upload token>', // uptoken是上传凭证，由其他程序生成
+				// uptoken_url: '/uptoken',         // Ajax请求uptoken的Url，强烈建议设置（服务端提供）
+				uptoken_func: function(file) { // 在需要获取uptoken时，该方法会被调用
+					wdQN = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var uptoken = '';
+					mui.ajax(getUpTokenUrl, {
+						async: false,
+						data: {
+							Key: filePath
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						//							headers: {
+						//								'Content-Type': 'application/json'
+						//							},
+						success: function(data) {
+							//服务器返回响应，根据响应结果，分析是否登录成功；
+							uptoken = data.uptoken;
+							console.log('获取七牛上传token成功:' + uptoken);
+						},
+						error: function(xhr, type, errorThrown) {
+							//异常处理；
+							console.log('获取七牛上传token失败：' + type);
+							mui.toast('上传出错');
+							wdQN.close();
+						}
+					});
+					return uptoken;
+				},
+				get_new_uptoken: true, // 设置上传文件的时候是否每次都重新获取新的uptoken
+				// downtoken_url: '/downtoken',
+				// Ajax请求downToken的Url，私有空间时使用，JS-SDK将向该地址POST文件的key和domain，服务端返回的JSON必须包含url字段，url值为该文件的下载地址
+				// unique_names: true,              // 默认false，key为文件名。若开启该选项，JS-SDK会为每个文件自动生成key（文件名）
+				//save_key: true, // 默认false。若在服务端生成uptoken的上传策略中指定了sava_key，则开启，SDK在前端将不对key进行任何处理
+				domain: domain, // bucket域名，下载资源时用到，必需
+				//container: 'container',             // 上传区域DOM ID，默认是browser_button的父元素
+				max_file_size: '100mb', // 最大文件体积限制
+				flash_swf_url: 'js/qiniu/Moxie.swf', //引入flash，相对路径
+				max_retries: 0, // 上传失败最大重试次数
+				dragdrop: false, // 开启可拖曳上传
+				//drop_element: 'container',          // 拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
+				chunk_size: '4mb', // 分块上传时，每块的体积
+				auto_start: true, // 选择文件后自动上传，若关闭需要自己绑定事件触发上传
+				//					resize: {
+				//						width: 100,
+				//						height: 100,
+				//						crop: false,
+				//						quality: 90,
+				//						preserve_headers: true
+				//					},
+				//x_vars : {
+				//    查看自定义变量
+				//    'time' : function(up,file) {
+				//        var time = (new Date()).getTime();
+				// do something with 'time'
+				//        return time;
+				//    },
+				//    'size' : function(up,file) {
+				//        var size = file.size;
+				// do something with 'size'
+				//        return size;
+				//    }
+				//},
+				init: {
+					'FilesAdded': function(up, files) {
+						plupload.each(files, function(file) {
+							// 文件添加进队列后，处理相关的事情
+							console.log('---文件添加进队列后---' + JSON.stringify(file));
+							// 等待的对话框
+						});
+					},
+					'BeforeUpload': function(up, file) {
+						// 每个文件上传前，处理相关的事情
+						console.log('---每个文件上传前---');
+					},
+					'UploadProgress': function(up, file) {
+						// 每个文件上传时，处理相关的事情
+						console.log('文件上传时：' + JSON.stringify(file));
+						console.log('上传进度：' + file.percent);
+					},
+					'FileUploaded': function(up, file, info) {
+						console.log('---上传成功---');
+						console.log('file:' + JSON.stringify(file));
+						console.log('info:' + info);
+
+						var stuImgePath = domain + JSON.parse(info).key; //群头像
+						console.log('stuImgePath:' + stuImgePath);
+						//23.通过用户资料ID或关联ID更改各类型资料
+						//所需参数
+						var comData = {
+							vtp: 'stu', //更新资料类型,stu:学生,tec:老师,gen:家长关系
+							stuid: data.studentId, //资料ID,更新学生老师必填,关系留0
+							stuname: data.studentName, //资料名称
+							stuimg: stuImgePath, //资料头像,学生必填,其他留0
+							job: '', //职位,老师必填,其他留空
+							title: '', //职称,老师必填,其他留空
+							expsch: '', //教龄,老师必填,其他留空
+							sub: '', //科目,老师必填,其他留空
+							ustuid: '', //关联ID,更新与家长关系必填,其他留空
+							urel: '' //关系,更新与家长关系必填,其他留空
+						};
+						//返回值model：model_groupList
+						// 等待的对话框
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						postDataPro_PostReStu(comData, wd, function(data) {
+							wd.close();
+							console.log('8.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode == 0) {
+								console.log('修改资料头像成功');
+								mui.toast('修改资料头像成功');
+							} else {
+								mui.toast(data.RspTxt);
+							}
+						});
+						wdQN.close();
+					},
+					'Error': function(up, err, errTip) {
+						//上传出错时，处理相关的事情
+						console.log('---上传出错---');
+						console.log('err' + JSON.stringify(err));
+						console.log('errTip' + JSON.stringify(errTip));
+						mui.toast('上传出错');
+						wdQN.close();
+					},
+					'UploadComplete': function() {
+						//队列文件处理完毕后，处理相关的事情
+						console.log('---队列文件处理完毕后---');
+					},
+					'Key': function(up, file) {
+						// 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+						// 该配置必须要在unique_names: false，save_key: false时才生效
+						console.log('---Key---');
+						var key = filePath;
+						// do something with key here
+						return key
 					}
-				});
+				}
 			});
+			//---七牛上传头像---end---
+
+			//修改学生头像
+			//			mui('.mui-bar-nav').on('tap', '.mui-icon-contact', function() {
+			//				var btnArray = [{
+			//					title: "拍照"
+			//				}, {
+			//					title: "相册"
+			//				}];
+			//				plus.nativeUI.actionSheet({
+			//					title: "选择修改学生头像的方式",
+			//					cancel: "取消",
+			//					buttons: btnArray
+			//				}, function(e) {
+			//					var index = e.index;
+			//					switch(index) {
+			//						case 0: //取消
+			//							break;
+			//						case 1: //拍照
+			//							camera();
+			//							break;
+			//						case 2: //相册
+			//							pick();
+			//							break;
+			//					}
+			//				});
+			//			});
 
 			//拍照
 			function camera() {

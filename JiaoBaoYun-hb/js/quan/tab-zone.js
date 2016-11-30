@@ -20,7 +20,7 @@ mui.plusReady(function() {
 		for(var i = 0; i < datasource.length; i++) {
 			var tempUserList = datasource[i].userList;
 			var userIdArr = [];
-			for(var j=0;j<tempUserList.length;j++){
+			for(var j = 0; j < tempUserList.length; j++) {
 				var userId = tempUserList[j].utid;
 				userIdArr.push(userId);
 			}
@@ -32,7 +32,7 @@ mui.plusReady(function() {
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 			postDataPro_addUserSpaceForMutiUsers(postData, wd, function(data) {
 				wd.close()
-				console.log('推送个人空间成功'+JSON.stringify(data));
+				console.log('推送个人空间成功' + JSON.stringify(data));
 			})
 		}
 	})
@@ -84,10 +84,10 @@ mui.plusReady(function() {
 			},
 			extras: {
 				data: {
-					studentId: topStudentArr[index].utid,
+					studentId: topStudentArr[index].stuid,
 					classId: topStudentArr[index].gid,
-					studentName: topStudentArr[index].ugname,
-					stuimg:topStudentArr[index].stuimg
+					studentName: topStudentArr[index].stuname,
+					stuimg: topStudentArr[index].stuimg
 				}
 
 			},
@@ -130,16 +130,18 @@ function getStuList() {
 		wd.close();
 		console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
-		if(data.RspCode == 0) {
+		if(data.RspCode == 0 || data.RspCode == 9) {
 			topStudentArr = data.RspData;
-			requestTimes3 = topStudentArr.length;
-			var StuDyArr = [];
-			if(topStudentArr == 0) {
+			if(!topStudentArr|| topStudentArr.length == 0) {
 				var ul = document.getElementById('top-list');
 				ul.innerHTML = '';
 				getGroupList();
 				return;
 			}
+			requestTimes3 = topStudentArr.length;
+			var StuDyArr = [];
+			console.log('topStudentArr===' + JSON.stringify(topStudentArr));
+
 			for(var i = 0; i < topStudentArr.length; i++) {
 				getNotes(i, StuDyArr);
 			}
@@ -535,9 +537,6 @@ function pulldownRefresh() {
 		isRefresh = 1; //下拉刷新
 		datasource = []; //重置数据源
 		topArray = []; //重置底部列表数据
-		var itemId = getActiveControl(); //获取当前所选群的id
-		var tableFlag = itemId.replace('#item', '');
-		var flagInt = parseInt(tableFlag);
 		getStuList();
 		mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 	}, 1500);
