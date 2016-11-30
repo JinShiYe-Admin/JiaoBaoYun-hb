@@ -22,21 +22,21 @@
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-
+			
 			.mui-table-view {
 				background: transparent;
 			}
-
+			
 			.mui-table-view-cell {
 				margin-top: 10px;
 				background: white;
 			}
-
+			
 			.mui-ellipsis {
 				/*列表文字*/
 				margin-top: 10px;
 			}
-
+			
 			.mui-pull-left {
 				/*列表中左侧图片*/
 				width: 42px;
@@ -184,7 +184,9 @@
 				</ul>
 			</div>
 		</div>
-
+		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init({
 				pullRefresh: {
@@ -198,20 +200,55 @@
 					}
 				}
 			});
+
+			//设置变量
+			var storageModel;
+			//页码请求到要显示的数据，array[]
+			var storageArray = [];
+
+			//请求数据
+			function requestData(comData) {
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//26.用户云盘顶层文件及文件夹获取
+				postDataPro_PostDiFi(comData, wd, function(data) {
+					wd.close();
+					console.log('26.postDataPro_PostDiFi:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						var tempRspData = data.RspData.Data;
+						//给值
+						storageArray = tempRspData;
+						//刷新界面
+
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+			}
+
 			/**
 			 * 下拉刷新具体业务实现
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
-					var folderData = FolderData();
-					var fileData = FileData();
-					var folderTable = document.getElementById("Folder");
-					var fileTable = document.getElementById("File");
-					folderTable.innerHTML = '';
-					fileTable.innerHTML = '';
-					cloud.addFolders(folderTable, folderData);
-					cloud.addFiles(fileTable, fileData);
+					//					var folderData = FolderData();
+					//					var fileData = FileData();
+					//					var folderTable = document.getElementById("Folder");
+					//					var fileTable = document.getElementById("File");
+					//					folderTable.innerHTML = '';
+					//					fileTable.innerHTML = '';
+					//					cloud.addFolders(folderTable, folderData);
+					//					cloud.addFiles(fileTable, fileData);
+					//					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+
+					//所需参数
+					var comData = {
+						vvl: '1' //	节点ID，顶层为0
+					};
+					//请求数据
+					requestData(comData);
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+
 				}, 1500);
 			}
 
@@ -220,18 +257,29 @@
 			 */
 			function pullupRefresh() {
 				setTimeout(function() {
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
-					var folderData = FolderData();
-					var fileData = FileData();
-					var folderTable = document.getElementById("Folder");
-					var fileTable = document.getElementById("File");
+					//					mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+					//					var folderData = FolderData();
+					//					var fileData = FileData();
+					//					var folderTable = document.getElementById("Folder");
+					//					var fileTable = document.getElementById("File");
+					//
+					//					cloud.addFolders(folderTable, folderData);
+					//					cloud.addFiles(fileTable, fileData);
 
-					cloud.addFolders(folderTable, folderData);
-					cloud.addFiles(fileTable, fileData);
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					//所需参数
+					var comData = {
+						vvl: '1' //	节点ID，顶层为0
+					};
+					//请求数据
+					requestData(comData);
+
 				}, 1500);
 			}
 
 			mui.plusReady(function() {
+
+				pulldownRefresh();
 				//------------假数据start
 				var folderData = FolderData();
 				var fileData = FileData();
@@ -311,13 +359,35 @@
 				//新建文件夹
 				window.addEventListener("addFolder", function(e) {
 					//获得事件参数
-					var folderName = e.detail.folderName;
-					var folderUrl = e.detail.folderUrl;
-					var folderTable = document.getElementById("Folder");
-					cloud.addFolders(folderTable, [
-						[folderName, folderUrl]
-					]);
-					mui.toast('新建文件夹成功');
+										var folderName = e.detail.folderName;
+										var folderUrl = e.detail.folderUrl;
+										var folderTable = document.getElementById("Folder");
+					//					cloud.addFolders(folderTable, [
+					//						[folderName, folderUrl]
+					//					]);
+					//					mui.toast('新建文件夹成功');
+
+					//27.用户云盘文件上传或创建文件夹
+					//所需参数
+					var comData = {
+						pid: '1', //	父ID，该文件的上层ID
+						fname: folderName, //	文件名称，文件或文件夹名称,文件存扩展名之前的名称
+						ftype: '.file', //	文件类型，存文件的扩展名,如.file为文件夹
+						fpath: '', //	文件路径，文件路径,为文件用
+						fsize: '0' //	文件大小，文件用
+					};
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_PostDiFiA(comData, wd, function(data) {
+						wd.close();
+						console.log('27.postDataPro_PostDiFiA:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							//
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					});
+
 				});
 
 				//返回上一级

@@ -379,15 +379,15 @@
 							//账号密码登录协议
 							//需要加密的数据
 							var enData = {
-								uid: loginInfo.account,
+								uid: loginInfo.account,//用户手机号或账号或email
 								pw: loginInfo.password,
 							};
 							//不需要加密的数据
 							var comData = {
 								uuid: plus.device.uuid,
-								shaketype: 'login',
+								shaketype: 'login',//注册(reg),登录(login),修改密码(repw)
 								appid: plus.runtime.appid,
-								vtp:'mb'
+								vtp:'mb'//mb(手机号),nm(账号或邮箱)
 							};
 							console.log('endata:' + JSON.stringify(enData) + 'comdata:' + JSON.stringify(comData));
 							//发送网络请求，data为网络返回值

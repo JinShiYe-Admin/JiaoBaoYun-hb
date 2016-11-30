@@ -918,7 +918,8 @@
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js",
 			"image/utils/default_personalimage.png",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"js/quan/class-group.js"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html"
@@ -1068,7 +1069,11 @@
 	"html/quan/group-pInfo.html": {
 		"resources": [
 			"css/quan/group-pInfo.css",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/mine/qun_data_create.html": {

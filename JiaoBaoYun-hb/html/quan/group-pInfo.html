@@ -27,7 +27,6 @@
 		            <li class="mui-table-view-cell">
 		                <a class="mui-navigate-right">
 		                    账号信息
-		              <!--   <p class="mui-pull-right">123456789</p>-->
 		                </a>
 		                
 		            </li>
@@ -51,6 +50,10 @@
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init()
+			window.addEventListener('postPInfo',function(e){
+				var pInfo=e.detail.data;
+				console.log('獲取的個人信息：'+JSON.stringify(pInfo));
+			})
 		</script>
 	</body>
 
