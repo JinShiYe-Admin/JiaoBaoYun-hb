@@ -130,16 +130,18 @@ function getStuList() {
 		wd.close();
 		console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
-		if(data.RspCode == 0) {
+		if(data.RspCode == 0 || data.RspCode == 9) {
 			topStudentArr = data.RspData;
-			requestTimes3 = topStudentArr.length;
-			var StuDyArr = [];
-			if(topStudentArr == 0) {
+			if(!topStudentArr|| topStudentArr.length == 0) {
 				var ul = document.getElementById('top-list');
 				ul.innerHTML = '';
 				getGroupList();
 				return;
 			}
+			requestTimes3 = topStudentArr.length;
+			var StuDyArr = [];
+			console.log('topStudentArr===' + JSON.stringify(topStudentArr));
+
 			for(var i = 0; i < topStudentArr.length; i++) {
 				getNotes(i, StuDyArr);
 			}
