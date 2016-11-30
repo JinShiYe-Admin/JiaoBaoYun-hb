@@ -99,6 +99,8 @@ var addListener = function() {
 					wd.close();
 					if(data.RspCode='0000'){
 						mui.toast('您已同意入群');
+						events.clearChild(list);
+						getData('inv', setData);
 					}else{
 						mui.toast(data.RspTxt);
 					}
