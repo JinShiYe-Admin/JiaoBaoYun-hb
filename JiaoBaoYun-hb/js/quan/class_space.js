@@ -27,8 +27,9 @@ var class_space = (function(mod) {
 	 * 更换url 然后创建listView
 	 * @param {Object} list
 	 */
+	var i=0;
 	mod.replaceUrl=function(list){
-		var i=0;
+		
 		getUrlBrief();	
 		createListView(list);
 	}

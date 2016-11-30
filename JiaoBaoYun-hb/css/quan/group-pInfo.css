@@ -1,0 +1,13 @@
+.info-headImg{
+	float: left;
+	width: 6rem;
+	height: 6rem;
+	margin: 1rem;
+}
+.info-main{
+	height: 8rem;
+	background-color: white;
+}
+.info-briefIntro{
+	padding:1.5rem
+}

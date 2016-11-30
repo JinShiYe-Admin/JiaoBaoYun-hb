@@ -627,9 +627,13 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"image/utils/default_personalimage.png",
+					"js/utils/events.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/quan/group-pInfo.html"
+				],
 				"priority": 0
 			},
 			"html/tab-zone.html": {
@@ -672,7 +676,23 @@
 					"css/mui.min.css",
 					"js/utils/events.js",
 					"fonts/mui.ttf",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"image/cloud/archives.png",
+					"image/cloud/notes.png",
+					"js/libs/myStorage/myStorage.js",
+					"image/cloud/operation.png",
+					"image/cloud/Trajectory.png",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"image/cloud/note.png",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -1535,6 +1555,14 @@
 					"css/mui.min.css",
 					"image/utils/default_personalimage.png",
 					"css/mine/apply.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/group-pInfo.html": {
+				"resources": [
+					"css/quan/group-pInfo.css",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [],
 				"priority": 0
