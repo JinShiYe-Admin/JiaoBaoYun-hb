@@ -385,6 +385,10 @@
 				wd.close();
 				console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
 				if(data.RspCode == 0) {
+					//获得主页面的webview
+		var main = plus.webview.getWebviewById('../quan/tab-zone.html');
+		//触发tab-zone页面的setRead事件
+		mui.fire(main, 'setRead');
 					//					events.preload('tab-zone.html', 100);
 
 					//						events.fireToPageNone('tab-zone.html','setRead',data)
@@ -451,13 +455,34 @@
 						if(data.RspCode == 0) {
 							var a = document.getElementById("praise" + index);
 							a.style.color = 'rgb(17, 183, 245)'
-							mui.toast('成功');
+							mui.toast('点赞成功');
 						} else {
 							mui.toast(data.RspTxt);
 						}
 
 					})
 
+				}else{
+					
+					var comData = {
+						userId: personalUTID, //用户ID
+						userSpaceId: zonepArray[index].TabId, //用户空间ID
+					};
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_delUserSpaceLikeByUser(comData, wd, function(data) {
+						wd.close();
+						if(data.RspCode == 0) {
+							var a = document.getElementById("praise" + index);
+							a.style.color = 'rgb(143, 143, 148)'
+							mui.toast('取消点赞成功');
+						} else {
+							mui.toast(data.RspTxt);
+						}
+
+					})
+
+				
+					
 				}
 
 			});
