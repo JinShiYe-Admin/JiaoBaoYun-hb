@@ -20,7 +20,7 @@ mui.plusReady(function() {
 		for(var i = 0; i < datasource.length; i++) {
 			var tempUserList = datasource[i].userList;
 			var userIdArr = [];
-			for(var j=0;j<tempUserList.length;j++){
+			for(var j = 0; j < tempUserList.length; j++) {
 				var userId = tempUserList[j].utid;
 				userIdArr.push(userId);
 			}
@@ -32,7 +32,7 @@ mui.plusReady(function() {
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 			postDataPro_addUserSpaceForMutiUsers(postData, wd, function(data) {
 				wd.close()
-				console.log('推送个人空间成功'+JSON.stringify(data));
+				console.log('推送个人空间成功' + JSON.stringify(data));
 			})
 		}
 	})
@@ -84,10 +84,10 @@ mui.plusReady(function() {
 			},
 			extras: {
 				data: {
-					studentId: topStudentArr[index].utid,
+					studentId: topStudentArr[index].stuid,
 					classId: topStudentArr[index].gid,
-					studentName: topStudentArr[index].ugname,
-					stuimg:topStudentArr[index].stuimg
+					studentName: topStudentArr[index].stuname,
+					stuimg: topStudentArr[index].stuimg
 				}
 
 			},
@@ -535,9 +535,6 @@ function pulldownRefresh() {
 		isRefresh = 1; //下拉刷新
 		datasource = []; //重置数据源
 		topArray = []; //重置底部列表数据
-		var itemId = getActiveControl(); //获取当前所选群的id
-		var tableFlag = itemId.replace('#item', '');
-		var flagInt = parseInt(tableFlag);
 		getStuList();
 		mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 	}, 1500);
