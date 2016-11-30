@@ -386,9 +386,9 @@
 				console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					//获得主页面的webview
-		var main = plus.webview.getWebviewById('../quan/tab-zone.html');
-		//触发tab-zone页面的setRead事件
-		mui.fire(main, 'setRead');
+					var main = plus.webview.getWebviewById('../quan/tab-zone.html');
+					//触发tab-zone页面的setRead事件
+					mui.fire(main, 'setRead');
 					//					events.preload('tab-zone.html', 100);
 
 					//						events.fireToPageNone('tab-zone.html','setRead',data)
@@ -462,8 +462,8 @@
 
 					})
 
-				}else{
-					
+				} else {
+
 					var comData = {
 						userId: personalUTID, //用户ID
 						userSpaceId: zonepArray[index].TabId, //用户空间ID
@@ -481,8 +481,6 @@
 
 					})
 
-				
-					
 				}
 
 			});
@@ -574,7 +572,7 @@
 					var tempArr = [tempComment.UserIdName, tempComment.CommentContent];
 					commentList.push(tempArr);
 				} else {
-					var replyer1 = [tempComment.ReplyIdName, tempComment.UserIdName, tempComment.CommentContent];
+					var replyer1 = [tempComment.UserIdName, tempComment.ReplyIdName, tempComment.CommentContent];
 					commentList.push(replyer1);
 				}
 
@@ -593,22 +591,27 @@
 		document.getElementById('closepop').addEventListener('tap', function() {
 			mui('.mui-popover').popover('hide');
 		});
-		//创建群
+		//添加评论
 		document.getElementById('addComment').addEventListener('tap', function() {
-			console.log('tempIndex===='+tempIndex)
+			console.log('tempIndex====' + tempIndex)
+			var replyName = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick
 			var inputComment = document.getElementById("inputComment");
-			var name = inputComment.value; //创建的群名称
+			var name = inputComment.value; //评论内容
 			if(name == '') {
 				mui.toast('不允许为空');
 			} else {
-				if(tempIndex.indexOf('-')>=0) {
+				if(tempIndex.indexOf('-') >= 0) {
 					var indexArr = tempIndex.split('-');
 					var cellIndex = indexArr[0];
 					var commentIndex = indexArr[1];
+					var upperId = zonepArray[cellIndex].Comments[commentIndex].UpperId;
+					if(upperId==0){
+						upperId = zonepArray[cellIndex].Comments[commentIndex].TabId;
+					}
 					var comData = {
 						userId: personalUTID, //用户ID
-						upperId: zonepArray[cellIndex].Comments[commentIndex].UpperId, //上级评论ID
-						replyUserId: zonepArray[cellIndex].Comments[commentIndex].ReplyId, //回复ID
+						upperId: upperId, //上级评论ID
+						replyUserId: zonepArray[cellIndex].Comments[commentIndex].UserId, //回复ID
 						userSpaceId: zonepArray[cellIndex].TabId, //用户空间ID
 						commentContent: inputComment.value //回复内容
 					};
@@ -617,7 +620,17 @@
 						wd.close();
 						console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
 						mui('.mui-popover').popover('hide');
-						inputComment.value = '';
+
+//						var replyComment = document.getElementById('replyComment' + tempIndex);
+//						var nextReplyComment = document.createElement('div');
+//						var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + replyName + '</font>';
+//						var html3 = '<font class="common-font-family-Regular">回复</font>';
+//						var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + zonepArray[cellIndex].Comments[commentIndex].UserIdName + '</font>';
+//						var html5 = '<font class="common-font-family-Regular">:' + inputComment.value + '</font>'
+//						nextReplyComment.innerHTML = html2 + html3 + html4 + html5;
+//						replyComment.parentNode.appendChild(nextReplyComment);
+						//						inputComment.value = '';
+
 					})
 				} else {
 					var comData = {
@@ -630,7 +643,18 @@
 						wd.close();
 						console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
 						mui('.mui-popover').popover('hide');
+//						var commentArr = zonepArray[tempIndex].Comments;
+//						if(commentArr.length==0){
+//							
+//						}
+//						var addComment = document.getElementById('replyComment' + zonepArray[tempIndex].Comments);
+//						var nextComment = document.createElement('div');
+//						var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + replyName + '</font>';
+//						var html3 = '<font class="common-font-family-Regular">：' + inputComment.value + '</font>'
+//						nextComment.innerHTML = html2 + html3;
+//						addComment.parentNode.appendChild(nextComment);
 						inputComment.value = '';
+						
 					})
 				}
 
