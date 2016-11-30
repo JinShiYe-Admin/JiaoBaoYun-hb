@@ -16,43 +16,43 @@
 			.mui-content {
 				background: white;
 			}
-			
+
 			.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-			
+
 			.mui-table-view-cell {
 				padding: 0px 15px;
 			}
-			
+
 			.mui-media-body {
 				background: #F2F2F2;
 				padding: 10px;
 			}
-			
+
 			.mui-col-sm-3 {
 				text-align: center;
 				margin-top: 9px;
 			}
-			
+
 			.class-type-div {
 				width: 25%;
 				text-align: center;
 				margin-top: 5px;
 			}
-			
+
 			.class-type {
 				width: 48px;
 				height: 48px;
 				border-radius: 50%;
 			}
-			
+
 			.class-item-time {
 				margin: 6px;
 			}
-			
+
 			.class-content {
 				width: 75%;
 				margin-top: 5px;
@@ -239,14 +239,15 @@
 							}
 							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 
-							mui.each(data.RspData.Data, function(index, item) {
+							mui.each(tempRspData, function(index, item) {
+								console.log('tempRspData：' + index + '|' + JSON.stringify(item));
 								hisData.push(item);
 								if(hisData.length == 1) {
 									createNotesItem(item);
 								}
 								createNotesItem(item);
 							});
-							if(data.RspData.Data.length == 0) {
+							if(tempRspData.length == 0) {
 								if(hisData.length != 0) {
 									mui.toast('没有更多了');
 								} else {

@@ -69,12 +69,12 @@ mui.plusReady(function() {
 	//获取个人信息
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 	var pickButtonId = 'img';
-	var getUpTokenUrl = 'http://192.168.0.178:8507/QiuToken.ashx';
+	var getUpTokenUrl = 'http://192.168.0.178:8507/GetTokenProfilePhoto.ashx'; //'http://192.168.0.178:8507/QiuToken.ashx';
 	var filePath = 'headimge' + personalUTID + '.png';
 	var getUpTokenData = {
 		Key: filePath
 	};
-	var domain = 'http://o9u2jsxjm.bkt.clouddn.com/';
+	var domain = 'http://oh2zmummr.bkt.clouddn.com/'; //'http://o9u2jsxjm.bkt.clouddn.com/';
 
 	var auto = true;
 	//设置上传的参数
@@ -130,13 +130,13 @@ mui.plusReady(function() {
 		//drop_element: 'container',          // 拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
 		chunk_size: '4mb', // 分块上传时，每块的体积
 		auto_start: true, // 选择文件后自动上传，若关闭需要自己绑定事件触发上传
-		resize: {
-			width: 100,
-			height: 100,
-			crop: false,
-			quality: 90,
-			preserve_headers: true
-		},
+//		resize: {
+//			width: 100,
+//			height: 100,
+//			crop: false,
+//			quality: 90,
+//			preserve_headers: true
+//		},
 		//x_vars : {
 		//    查看自定义变量
 		//    'time' : function(up,file) {
