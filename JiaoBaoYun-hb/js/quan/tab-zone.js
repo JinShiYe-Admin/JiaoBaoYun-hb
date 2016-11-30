@@ -12,12 +12,16 @@ mui.init({
 });
 
 mui.plusReady(function() {
+	window.addEventListener('infoChanged', function() {
+		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+		getStuList();
+	})
+
 	document.addEventListener('setRead', function(e) {
 		var tableIndex = selectCell.tableIndex;
 		var cellIndex = selectCell.cellIndex;
 		var cellNoReadCnt = selectCell.NoReadCnt
 		datasource[tableIndex].NoReadCnt = datasource[tableIndex].NoReadCnt - cellNoReadCnt;
-		
 		var currentTable = document.getElementsByClassName('parent-table' + tableIndex);
 		var ul = currentTable[0];
 		var li = ul.children[cellIndex];
@@ -41,9 +45,8 @@ mui.plusReady(function() {
 			a.innerHTML = datasource[tableIndex].gname + a.innerHTML + lineHTML;
 
 		} else {
-			a.innerHTML = datasource[tableIndex].gname + lineHTML ;
+			a.innerHTML = datasource[tableIndex].gname + lineHTML;
 		}
-		console.log(a.innerHTML)
 
 	});
 	getStuList(); //获取学生列表
@@ -171,7 +174,9 @@ function getNotes(index, StuDyArr) {
 					var li = document.createElement('li');
 					li.id = 'studentsdynamic' + i;
 					li.className = 'mui-table-view-cell mui-media studentsdynamic';
-					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' + '<p class="time">' + StuDyArr[i].PublishDate +
+
+					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' +
+						 '<p class="time">' + StuDyArr[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
 						topStudentArr[i].ugname +

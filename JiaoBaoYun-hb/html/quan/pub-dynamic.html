@@ -84,6 +84,15 @@
 					if(data.RspCode = '0000') {
 						mui.toast('发布成功！');
 						textView.value = '';
+//						var postData = {
+//							userIds:'[1,2,3]',
+//							userSpaceId:data.RspData.Result
+//						}
+//						postDataPro_addUserSpaceForMutiUsers(postData, wd, function(data) {
+//							console.log(JSON.stringify(data));
+//						})
+
+						
 						
 					} else {
 						mui.toast(data.RspTxt);
