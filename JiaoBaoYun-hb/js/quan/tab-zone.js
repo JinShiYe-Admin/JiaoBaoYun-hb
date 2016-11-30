@@ -12,12 +12,36 @@ mui.init({
 });
 
 mui.plusReady(function() {
+	window.addEventListener('infoChanged', function() {
+		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+		getStuList();
+	})
+	window.addEventListener('addUserSpaceForMutiUsers', function(data) {
+		for(var i = 0; i < datasource.length; i++) {
+			var tempUserList = datasource[i].userList;
+			var userIdArr = [];
+			for(var j=0;j<tempUserList.length;j++){
+				var userId = tempUserList[j].utid;
+				userIdArr.push(userId);
+			}
+			var userIds = arrayToStr(userIdArr);
+			var postData = {
+				userIds: userIds,
+				userSpaceId: data.detail.userSpaceId
+			}
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_addUserSpaceForMutiUsers(postData, wd, function(data) {
+				wd.close()
+				console.log('推送个人空间成功'+JSON.stringify(data));
+			})
+		}
+	})
+
 	document.addEventListener('setRead', function(e) {
 		var tableIndex = selectCell.tableIndex;
 		var cellIndex = selectCell.cellIndex;
 		var cellNoReadCnt = selectCell.NoReadCnt
 		datasource[tableIndex].NoReadCnt = datasource[tableIndex].NoReadCnt - cellNoReadCnt;
-		
 		var currentTable = document.getElementsByClassName('parent-table' + tableIndex);
 		var ul = currentTable[0];
 		var li = ul.children[cellIndex];
@@ -41,9 +65,8 @@ mui.plusReady(function() {
 			a.innerHTML = datasource[tableIndex].gname + a.innerHTML + lineHTML;
 
 		} else {
-			a.innerHTML = datasource[tableIndex].gname + lineHTML ;
+			a.innerHTML = datasource[tableIndex].gname + lineHTML;
 		}
-		console.log(a.innerHTML)
 
 	});
 	getStuList(); //获取学生列表
@@ -63,7 +86,8 @@ mui.plusReady(function() {
 				data: {
 					studentId: topStudentArr[index].utid,
 					classId: topStudentArr[index].gid,
-					studentName: topStudentArr[index].ugname
+					studentName: topStudentArr[index].ugname,
+					stuimg:topStudentArr[index].stuimg
 				}
 
 			},
@@ -171,7 +195,9 @@ function getNotes(index, StuDyArr) {
 					var li = document.createElement('li');
 					li.id = 'studentsdynamic' + i;
 					li.className = 'mui-table-view-cell mui-media studentsdynamic';
-					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' + '<p class="time">' + StuDyArr[i].PublishDate +
+
+					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' +
+						'<p class="time">' + StuDyArr[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
 						topStudentArr[i].ugname +
