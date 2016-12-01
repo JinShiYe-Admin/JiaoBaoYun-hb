@@ -707,7 +707,9 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/cloud/cloud.js",
+					"image/cloud/A_folder.png"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",

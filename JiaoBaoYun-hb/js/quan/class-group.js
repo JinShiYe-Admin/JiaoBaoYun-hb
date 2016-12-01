@@ -265,6 +265,7 @@ var createGride = function(gride, array) {
 			} else { //数组大于3，每行四个图标
 				li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
 			}
+			map.gname=groupName;
 			li.info = map;
 			//子控件的innerHTML
 			li.innerHTML = '<a href="#">' +
