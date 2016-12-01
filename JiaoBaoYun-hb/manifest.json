@@ -534,7 +534,21 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"css/utils/common.css",
-					"html/quan/studentdynamic_sub.html"
+					"html/quan/studentdynamic_sub.html",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/qiniu/plupload.full.min.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/utils/QiNiuUtil.js",
+					"js/libs/RSA/BigInt.js",
+					"js/qiniu/qiniu.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
 					"html/quan/studentpersonalimge.html"
@@ -1693,7 +1707,8 @@
 				],
 				"refer": [
 					"html/mine/approval-apply.html",
-					"html/mine/apply-record.html"
+					"html/mine/apply-record.html",
+					"html/mine/account-info.html"
 				],
 				"priority": 0
 			}
