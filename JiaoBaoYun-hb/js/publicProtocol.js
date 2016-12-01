@@ -550,7 +550,6 @@ var postDataPro_PostDiFiD = function(commonData, wd, callback) {
 //39.通过审批者ID获取相应的入群邀请或申请数
 //所需参数
 //		var comData = {
-//			vvl:''//节点ID，
 //		};
 //返回值model_PostDiFi
 var postDataPro_PostGrInv = function(commonData, wd, callback) {
