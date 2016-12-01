@@ -390,9 +390,9 @@
 						case "1": //记事
 							events.openNewWindow('app_keeprecord.html');
 							break;
-						case "2": //充值
-							events.openNewWindow('../quan/studentdynamic_main.html');
-							break;
+							//						case "2": //充值
+							//							events.openNewWindow('../quan/studentdynamic_main.html');
+							//							break;
 						case "3": //作业批改
 							events.openNewWindow('../homework/homework-tea.html')
 							break;
@@ -511,13 +511,18 @@
 				 */
 				function addRecord(data) {
 					var div = document.createElement('div');
-					div.setAttribute('data-value', data);
+					div.setAttribute('data-studentName', data);
 					div.className = 'mui-col-sm-3 mui-col-xs-3 cloud-text-align-center';
 					div.innerHTML = '<div class="cloud-bottom-imge2-bg">\
 										<img class="cloud-bottom-imge2" src="../../image/cloud/archives.png" />\
 									</div>\
 									<p class="mui-ellipsis">' + data + '档案</p>';
 					document.getElementById("record_row").insertBefore(div, document.getElementById("learningpath"));
+					div.addEventListener('tap', function() {
+						events.openNewWindowWithData('record_student_main.html', {
+							StudentNames: data //学生姓名
+						});
+					});
 				}
 
 				/**

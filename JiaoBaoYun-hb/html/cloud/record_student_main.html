@@ -10,12 +10,14 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js" ></script>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<p class="mui-title common-color-white"style="text-align: left;">云盘—我的档案</p>
+			<h1 id="title" class="mui-title" style="text-align: left;"></h1>
+			<a id="add" class="mui-icon mui-icon-plus mui-pull-right"></a>
 		</header>
 		<div class="mui-content"></div>
 	</body>
@@ -26,14 +28,14 @@
 			gestureConfig: {
 				doubletap: true
 			},
-			subpages: [{
-				url: 'record_student_sub.html',
-				id: 'record_student_sub.html',
-				styles: {
-					top: '45px',
-					bottom: '0px',
-				}
-			}]
+			//			subpages: [{
+			//				url: 'record_student_sub.html',
+			//				id: 'record_student_sub.html',
+			//				styles: {
+			//					top: '45px',
+			//					bottom: localStorage.getItem('$Statusbar'),
+			//				}
+			//			}]
 		});
 
 		var contentWebview = null;
@@ -43,6 +45,31 @@
 			}
 			contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
 		});
+		mui.plusReady(function() {
+			//---获取数据并传递数据---start---
+			var main = plus.webview.currentWebview(); //获取当前窗体对象
+			var data = main.data; //接收A页面传入参数值
+			console.log('main-data:' + JSON.stringify(data));
+
+			document.body.querySelector('.mui-title').innerText = '云盘--' + data.StudentNames + '档案';
+
+			//创建子页面
+			var sub = plus.webview.create('record_student_sub.html', 'record_student_sub.html', {
+				top: '45px',
+				bottom: localStorage.getItem('$Statusbar'),
+			}, {
+				data: data
+			});
+			sub.addEventListener('loaded', function() {
+				main.append(sub);
+			});
+			//---获取数据并传递数据---end---
+			document.getElementById('add').addEventListener('tap', function() {
+				events.openNewWindowWithData('record_student_add.html', {
+					data: data,
+				});
+			})
+		})
 	</script>
 
 </html>
