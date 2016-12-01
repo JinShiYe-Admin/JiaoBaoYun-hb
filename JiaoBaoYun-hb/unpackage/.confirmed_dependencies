@@ -87,7 +87,9 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/cloud/cloud.js",
+			"image/cloud/A_folder.png"
 		],
 		"refer": [
 			"html/homework/homework-tea.html",
@@ -247,7 +249,21 @@
 			"html/quan/studentdynamic_sub.html",
 			"js/mui.min.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/storageKeyName.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/qiniu/plupload.full.min.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/utils/QiNiuUtil.js",
+			"js/libs/RSA/BigInt.js",
+			"js/qiniu/qiniu.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/quan/studentdynamic_sub.html"
@@ -444,7 +460,18 @@
 			"js/libs/myStorage/myStorage.js",
 			"js/utils/events.js",
 			"css/utils/common.css",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"js/publicHomeworkProtocol.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/RSA/jsencrypt.js",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/crypto-js/hmac-sha1.js",
+			"js/libs/jquery.js",
+			"js/utils/signHmacSHA1.js",
+			"js/publicProtocol.js"
 		],
 		"refer": [
 			"html/mine/account-info.html",
@@ -713,7 +740,10 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"css/icons-extra.css",
 			"fonts/mui-icons-extra.ttf",
-			"image/cloud/record_addclassclose.png"
+			"image/cloud/record_addclassclose.png",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": []
 	},
@@ -729,7 +759,8 @@
 	"html/mine/qun_manage.html": {
 		"refer": [
 			"html/mine/qun_manage_info.html",
-			"html/mine/qun_manage_invite.html"
+			"html/mine/qun_manage_invite.html",
+			"html/mine/qun_manage_info_change.html"
 		],
 		"resources": [
 			"js/mui.min.js",
@@ -987,7 +1018,8 @@
 			"html/tab_knowledge.html",
 			"html/clip/clip_sub.html",
 			"html/quan/class-dynamic.html",
-			"html/quan/aboutme.html"
+			"html/quan/aboutme.html",
+			"html/index/mine.html"
 		]
 	},
 	"html/mine/add-info.html": {
@@ -1063,7 +1095,8 @@
 			"js/mui.min.js",
 			"css/mui.min.css",
 			"image/utils/default_personalimage.png",
-			"css/mine/apply.css"
+			"css/mine/apply.css",
+			"js/utils/events.js"
 		],
 		"refer": []
 	},
@@ -1136,6 +1169,67 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/index/mine.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"css/home/index-menu.css",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/mine/approval-apply.html",
+			"html/mine/apply-record.html",
+			"html/mine/account-info.html",
+			"html/mine/qun_data.html",
+			"html/mine/qun_manage.html",
+			"html/mine/group-info.html"
+		]
+	},
+	"html/mine/qun_manage_info_change.html": {
+		"resources": [
+			"js/qiniu/plupload.full.min.js",
+			"css/iconfont/iconfont.css",
+			"js/utils/QiNiuUtil.js",
+			"js/qiniu/qiniu.js",
+			"fonts/iconfont.ttf",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		],
+		"refer": [
+			"html/mine/qun_manage_info_change_post.html"
 		]
 	}
 }

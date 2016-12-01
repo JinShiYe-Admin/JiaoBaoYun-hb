@@ -1,3 +1,7 @@
+/**
+ * 批准入群關聯資料界面邏輯
+ * @anthor an
+ */
 var gutid; //申请记录id
 var roles = [];
 var gid; //群id
@@ -196,7 +200,8 @@ events.addTap('btn-save', function() {
 			console.log(JSON.stringify(data));
 			if(data.RspCode == '0000') {
 				mui.toast('申请通过!');
-				mui.fire('mine/approval-apply.html', 'appPassed', gutid);
+				mui.fire('/html/mine/approval-apply.html', 'appPassed', gutid);
+				mui.fireToPageNone('/html/mine/approval-apply.html', 'newsChanged');
 				mui.back();
 			} else {
 				mui.toast(data.RspTxt);
