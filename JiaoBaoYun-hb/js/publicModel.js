@@ -83,6 +83,7 @@ var publicModel = (function($, mod) {
 		gimg:'',//群头像
 		utid:'',//用户账号表ID
 		ugname:'',//用户在群昵称
+		uimg:'',//用户头像
 		umstype:'',//用户在群类型
 		stat:'',//用户在群状态
 		urel:'',//用户与资料关系
