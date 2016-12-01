@@ -9,10 +9,10 @@
 		<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<link rel="stylesheet" href="../css/utils/common.css" />
-		<link rel="stylesheet" href="../css/mui.min.css">
-		<link rel="stylesheet" href="../css/home/index-menu.css" />
-		<link rel="stylesheet" href="../css/iconfont/iconfont.css" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/home/index-menu.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 	</head>
 
 	<body>
@@ -46,7 +46,7 @@
 				<li class="mui-table-view-cell" position='3'>
 					<a class="mui-navigate-right">
 						<span class="mui-icon iconfont icon-newmessage"></span> 新消息
-						<span class="mui-badge mui-badge-red">数字</span>
+						<span id="news-amount" class="mui-badge mui-badge-red">数字</span>
 					</a>
 				</li>
 
@@ -73,10 +73,9 @@
 				</li>
 			</ul>
 		</div>
-		<script src="../js/mui.min.js"></script>
-		<script src="../js/libs/myStorage/myStorage.js"></script>
-		<script src="../js/storageKeyName.js"></script>
-		<script src="../js/utils/events.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			mui.init({
 				keyEventBind: {
@@ -115,11 +114,11 @@
 							break;
 							//申请加入群
 						case 2:
-							events.openNewWindow('mine/apply-record.html');
+							events.openNewWindow('/html/mine/apply-record.html');
 							break;
 							//新消息
 						case 3:
-							events.openNewWindow('mine/approval-apply.html');
+							events.openNewWindow('/html/mine/approval-apply.html');
 							break;
 							//我的空间
 						case 4:
@@ -173,7 +172,21 @@
 				}else{
 					document.getElementById('utext').innerText = "暂无信息";
 				}
-
+				getNewsAmount();
+			}
+			var getNewsAmount=function(){
+				var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_PostGrInvC({},wd,function(data){
+					wd.close();
+					console.log('我的界面获取的新消息数目：'+JSON.stringify(data));
+					var num=document.getElementById('news-amount');
+					if(data.RspCode=='0000'){
+						num.style.display='inline';
+						num.innerText=data.RspData[0].pc;
+					}else{
+						num.style.display='none';
+					}
+				});
 			}
 			//关闭
 			function closeMenu() {

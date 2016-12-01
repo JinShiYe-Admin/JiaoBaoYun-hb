@@ -1065,7 +1065,18 @@
 					"js/libs/myStorage/myStorage.js",
 					"js/utils/events.js",
 					"css/utils/common.css",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"js/publicHomeworkProtocol.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/RSA/jsencrypt.js",
+					"js/libs/RSA/BigInt.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/crypto-js/hmac-sha1.js",
+					"js/libs/jquery.js",
+					"js/utils/signHmacSHA1.js",
+					"js/publicProtocol.js"
 				],
 				"refer": [
 					"html/mine/account-info.html",
@@ -1493,7 +1504,8 @@
 					"html/tab_knowledge.html",
 					"html/clip/clip_sub.html",
 					"html/quan/class-dynamic.html",
-					"html/quan/aboutme.html"
+					"html/quan/aboutme.html",
+					"html/index/mine.html"
 				],
 				"priority": 0
 			},
@@ -1651,6 +1663,34 @@
 					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"html/index/mine.html": {
+				"resources": [
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"css/iconfont/iconfont.css",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"css/home/index-menu.css",
+					"fonts/iconfont.ttf",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
+				],
+				"refer": [
+					"html/mine/approval-apply.html",
+					"html/mine/apply-record.html"
+				],
 				"priority": 0
 			}
 		},
