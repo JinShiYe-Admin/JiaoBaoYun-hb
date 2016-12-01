@@ -89,6 +89,8 @@
 			var info = null;
 			mui.plusReady(function() {
 				main = plus.webview.currentWebview().opener();
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+
 				//获取个人信息
 				//personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
 
@@ -123,6 +125,7 @@
 							break;
 							//我的空间
 						case 4:
+						events.openNewWindowWithData('quan/zone_main.html',personalUTID);
 							break;
 							//积分
 						case 5:

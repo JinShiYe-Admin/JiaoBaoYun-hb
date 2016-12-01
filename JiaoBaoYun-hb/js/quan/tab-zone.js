@@ -1,19 +1,41 @@
 mui.init({
-	pullRefresh: {
-		container: '#pullrefresh',
-		down: {
-			callback: pulldownRefresh
-		},
-		up: {
-			contentrefresh: '正在加载...',
-			callback: pullupRefresh
-		}
-	}
+//	pullRefresh: {
+//		container: '#pullrefresh',
+//		down: {
+//			callback: pulldownRefresh
+//		},
+//		up: {
+//			contentrefresh: '正在加载...',
+//			callback: pullupRefresh
+//		}
+//	}
 });
 
 mui.plusReady(function() {
+		var	ws=plus.webview.currentWebview();
+		ws.setPullToRefresh({
+			support:true,//是否开启Webview窗口的下拉刷新功能
+			height:"50px",//窗口的下拉刷新控件高度
+			range:"200px",//)窗口可下拉拖拽的范围
+			contentdown:{
+				caption:"下拉可以刷新"
+			},
+			contentover:{
+				caption:"释放立即刷新"
+			},
+			contentrefresh:{
+				caption:"正在刷新..."
+			}
+		},pulldownRefresh);//刷新
+	//	plus.nativeUI.toast("下拉可以刷新");
 	window.addEventListener('infoChanged', function() {
 		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+		var ul = document.getElementById('top-list');
+		ul.innerHTML = '';
+		var seg = document.getElementById('segmentedControl'); //群名称segmentedControl
+		var userTable = document.getElementById('userList'); //多个放置用户列表
+		seg.innerHTML = '';
+		userTable.innerHTML = '';
 		getStuList();
 	})
 	window.addEventListener('addUserSpaceForMutiUsers', function(data) {
@@ -132,7 +154,7 @@ function getStuList() {
 
 		if(data.RspCode == 0 || data.RspCode == 9) {
 			topStudentArr = data.RspData;
-			if(!topStudentArr|| topStudentArr.length == 0) {
+			if(!topStudentArr || topStudentArr.length == 0) {
 				var ul = document.getElementById('top-list');
 				ul.innerHTML = '';
 				getGroupList();
@@ -231,6 +253,14 @@ function getGroupList() {
 		console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0) {
+			var leftImg = document.getElementById('leftImg');
+			var parent = document.getElementById('parent');
+			leftImg.style.visibility = 'visible';
+			parent.style.visibility = 'visible';
+			var addGroup = document.getElementById('addGroup');
+			if(addGroup){
+				addGroup.style.visibility = 'hidden';
+			}
 			datasource = data.RspData; //底部列表数据
 			requestTimes = datasource.length; //记录顶部 班级动态请求次数
 			requestTimes2 = datasource.length; //记录底部 通过循环请求群用户列表请求次数
@@ -244,6 +274,27 @@ function getGroupList() {
 				getBottomList(i, userList); //获取底部列表
 
 			}
+
+		} else if(data.RspCode == 9) {
+			var leftImg = document.getElementById('leftImg');
+			var parent = document.getElementById('parent');
+			leftImg.style.visibility = 'hidden';
+			parent.style.visibility = 'hidden';
+			var h = document.createElement('h1');
+			h.style.color = 'darkgray';
+			h.id = 'addGroup'
+			h.innerHTML = '请申请加入班级';
+			var plusImg = document.createElement('img');
+			plusImg.src = '../../image/quan/u90.gif';
+			plusImg.id = 'add';
+			h.style.visibility = 'visible'
+			h.appendChild(plusImg);
+			var body = document.getElementById('pullrefresh');
+			body.insertBefore(h, body.firstChild);
+			console.log(body.innerHTML)
+			events.addTap('add', function() {
+				events.openNewWindow('../mine/qun_manage_info.html');
+			})
 
 		} else {
 			mui.toast(data.RspTxt);
@@ -538,7 +589,8 @@ function pulldownRefresh() {
 		datasource = []; //重置数据源
 		topArray = []; //重置底部列表数据
 		getStuList();
-		mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+		var	ws=plus.webview.currentWebview();
+		ws.endPullToRefresh(); //refresh completed
 	}, 1500);
 }
 var count = 0;

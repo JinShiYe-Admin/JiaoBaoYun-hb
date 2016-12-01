@@ -95,7 +95,7 @@ mui.plusReady(function() {
 		};
 		//返回model：model_homeSchoolList，model_userSpaceAboutMe
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		//24.通过用户表ID获取用户关联的学生
+		//24.获取与我相关
 		postDataPro_getAboutMe(comData, wd, function(data) {
 			wd.close();
 			console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
@@ -106,7 +106,7 @@ mui.plusReady(function() {
 					noRead.innerHTML = data.RspData.NoReadCnt;
 					noRead.style.visibility = 'hidden';
 				} else {
-					noRead.style.hidden = 'dispaly';
+					noRead.style.visibility = 'visible';
 					noRead.innerHTML = data.RspData.NoReadCnt;
 
 				}

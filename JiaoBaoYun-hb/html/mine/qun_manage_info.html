@@ -14,6 +14,7 @@
 		<script type="text/javascript" src="../../js/qiniu/plupload.full.min.js"></script>
 		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
 		<script type="text/javascript" src="../../js/utils/QiNiuUtil.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<style>
 			body,
 			.mui-content {
@@ -367,6 +368,7 @@
 						console.log('7.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							mui.toast('创建群成功');
+							events.fireToPageNone('../quan/tab-zone.html','infoChanged',);
 							console.log('创建群成功');
 						} else {
 							mui.toast(data.RspTxt);
