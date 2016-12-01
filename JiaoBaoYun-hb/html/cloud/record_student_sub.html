@@ -89,6 +89,7 @@
 					flag = 1;
 					var comData = {
 						parentId: userId, //家长ID
+						studentName:studentName,//学生ID
 						pageIndex: (1).toString(), //当前页数
 						pageSize: '10' //每页记录数
 					};
@@ -116,6 +117,7 @@
 						tempPage++;
 						var comData = {
 							parentId: userId, //家长ID
+							studentName:studentName,//学生ID
 							pageIndex: (tempPage).toString(), //当前页数
 							pageSize: '10' //每页记录数
 						};
@@ -133,6 +135,9 @@
 			var flag = 1;
 			//页码请求到要显示的数据，array[model_getStudentFile]
 			var recordArray = [];
+			//从主界面传值学生姓名
+			var studentName = '';
+			//
 			var userId = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 			//请求数据
 			function requestData(comData) {
@@ -166,6 +171,7 @@
 				}
 				var comData = {
 					parentId: userId, //家长ID
+					studentName:studentName,//学生ID
 					pageIndex: (tempPage).toString(), //当前页数
 					pageSize: '10' //每页记录数
 				};
