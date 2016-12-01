@@ -251,6 +251,25 @@
 						showStu();
 						break;
 					default:
+						switch(data.stumstype) {
+							case 3: //学生
+								mstype = 3;
+								showStu();
+								break;
+							case 2: //老师
+								mstype = 2;
+								showTea();
+								break;
+							case 3: //家长
+								//mstype = 0;
+								//createPar();
+								mstype = 3;
+								showStu();
+								break;
+							default:
+								console.log('资料类型选择出错2');
+								break;
+						}
 						console.log('资料类型选择出错');
 						break;
 				}
@@ -315,7 +334,7 @@
 					document.getElementById("tea_show").style.display = 'inline';
 					if(role != 1) {
 						tea_name.setAttribute('disabled', 'disabled'); //老师姓名
-						tea_utid.setAttribute('disabled', 'disabled');//老师账号
+						tea_utid.setAttribute('disabled', 'disabled'); //老师账号
 						tea_ugname.setAttribute('disabled', 'disabled'); //老师群昵称
 						tea_gender.setAttribute('disabled', 'disabled'); //老师性别
 						//tea_gname.setAttribute('disabled', 'disabled');//老师所属群
