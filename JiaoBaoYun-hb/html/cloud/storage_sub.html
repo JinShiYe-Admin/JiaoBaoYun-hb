@@ -349,7 +349,8 @@
 								wd.close();
 								console.log('38.postDataPro_PostDiFiD:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 								if(data.RspCode == 0) {
-									//
+									//删除成功后，去七牛上删除对应的文件
+									
 								} else {
 									mui.toast(data.RspTxt);
 								}
