@@ -31,7 +31,10 @@
 			events.addTap('leave', function() {
 				events.openNewWindowWithData('../quan/leave.html', data);
 			})
-
+			window.addEventListener('postUTID',function(e){
+				var utid=e.detail.data;
+				events.initSubPage('zonep_sub.html', utid);
+			})
 		})
 	</script>
 

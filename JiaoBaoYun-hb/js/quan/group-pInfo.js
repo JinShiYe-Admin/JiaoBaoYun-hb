@@ -4,13 +4,13 @@ var pInfo; //{"gid":1,"gutid":9,"utid":5,
 //"uimg":"http://oh2zmummr.bkt.clouddn.com/headimge5.png","mstype":3}
 var accountInfo;
 mui.plusReady(function() {
-		events.preload('zonep_sub.html',100);
+		events.preload('zone_main.html',100);
 		window.addEventListener('postPInfo', function(e) {
 			pInfo = e.detail.data;
 			console.log('獲取的個人信息：' + JSON.stringify(pInfo));
 			getAccountInfo(manageAccountInfo);
 		})
-		
+		addListener();
 	})
 	/**
 	 * 獲取個人賬號信息
@@ -42,6 +42,6 @@ var manageAccountInfo = function(data) {
 }
 var addListener=function(){
 	events.addTap('personal-space',function(){
-		events.fireToPageWithData('zonep_sub.html','postUTID',pInfo.utid);
+		events.fireToPageWithData('zone_main.html','postUTID',pInfo.utid);
 	})
 }
