@@ -51,8 +51,8 @@ var getData = function(type, callback) {
 				callback(type, data.RspData);
 			} else if(data.RspCode = '0009' && type == 'inv') {
 				getData('app', setData)
-			} else {
-				mui.toast(data.RspTxt);
+//			} else {
+//				mui.toast(data.RspTxt);
 			}
 		})
 	}
@@ -101,6 +101,7 @@ var addListener = function() {
 						mui.toast('您已同意入群');
 						events.clearChild(list);
 						getData('inv', setData);
+						events.fireToPageNone('mine.html','newsChanged');
 					}else{
 						mui.toast(data.RspTxt);
 					}
