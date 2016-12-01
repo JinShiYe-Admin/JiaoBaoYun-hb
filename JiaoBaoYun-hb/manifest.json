@@ -1586,7 +1586,8 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"image/utils/default_personalimage.png",
-					"css/mine/apply.css"
+					"css/mine/apply.css",
+					"js/utils/events.js"
 				],
 				"refer": [],
 				"priority": 0

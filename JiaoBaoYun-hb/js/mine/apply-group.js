@@ -82,6 +82,7 @@ var setButtonsListener = function() {
 					wd.close();
 					if(data.RspCode == '0000') {
 						mui.toast('申请成功！');
+						events.fireToPageNone('/html/mine/apply-record.html','applied')
 					} else {
 						mui.toast("申请失败:" + data.RspTxt)
 					}
