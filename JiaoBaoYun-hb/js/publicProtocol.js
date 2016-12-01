@@ -539,11 +539,11 @@ var postDataPro_PostUmkD = function(commonData, wd, callback) {
 //			vvl:''//节点ID，
 //		};
 //返回值model_PostDiFi
-var postDataPro_PostGrInv = function(commonData, wd, callback) {
+var postDataPro_PostDiFiD = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINURL + 'PostGrInv', enData, commonData, 1, wd, callback);
+	postDataEncry(storageKeyName.MAINURL + 'PostDiFiD', enData, commonData, 1, wd, callback);
 }
 
 //39.通过审批者ID获取相应的入群邀请或申请数
@@ -552,11 +552,11 @@ var postDataPro_PostGrInv = function(commonData, wd, callback) {
 //			vvl:''//节点ID，
 //		};
 //返回值model_PostDiFi
-var postDataPro_PostDiFiD = function(commonData, wd, callback) {
+var postDataPro_PostGrInv = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINURL + 'PostDiFiD', enData, commonData, 1, wd, callback);
+	postDataEncry(storageKeyName.MAINURL + 'PostGrInv', enData, commonData, 1, wd, callback);
 }
 
 //40.通过用户ID获取用户各项资料
