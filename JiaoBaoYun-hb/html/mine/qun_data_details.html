@@ -315,7 +315,7 @@
 					document.getElementById("tea_show").style.display = 'inline';
 					if(role != 1) {
 						tea_name.setAttribute('disabled', 'disabled'); //老师姓名
-						//tea_utid.setAttribute('disabled', 'disabled');//老师账号
+						tea_utid.setAttribute('disabled', 'disabled');//老师账号
 						tea_ugname.setAttribute('disabled', 'disabled'); //老师群昵称
 						tea_gender.setAttribute('disabled', 'disabled'); //老师性别
 						//tea_gname.setAttribute('disabled', 'disabled');//老师所属群
@@ -408,21 +408,25 @@
 								}
 							} else if(type == 3) { //学生
 								mui.each(data.RspData, function(index, item) {
-									console.log('获取学生详细信息:' + JSON.stringify(item));
-									stuData.push(item);
-									if(item.umstype == 3) { //关联了学生账号
-										stu_utid.value = item.utid;
-										stu_ugname.value = item.ugname;
-										getUserData(item.utid, 3);
-									} else {
-										parData.push(item);
-										addParents(item);
+									if(item.utid != null && item.utid != '') {
+										console.log('获取学生详细信息:' + JSON.stringify(item));
+										stuData.push(item);
+										if(item.umstype == 3) {
+											//关联了学生账号
+											stu_utid.value = item.utid;
+											stu_ugname.value = item.ugname;
+											getUserData(item.utid, 3);
+										} else {
+											parData.push(item);
+											addParents(item);
+										}
 									}
 								});
-
 							}
 						} else {
-							mui.toast(data.RspTxt);
+							if(data.RspCode != 9) {
+								mui.toast(data.RspTxt);
+							}
 						}
 					});
 				}
