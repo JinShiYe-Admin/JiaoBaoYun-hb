@@ -5,9 +5,11 @@ var pInfo; //{"gid":1,"gutid":9,"utid":5,
 var accountInfo;
 mui.plusReady(function() {
 		events.preload('zone_main.html',100);
+		events.preload('../mine/qun_data_details.html',200);
 		window.addEventListener('postPInfo', function(e) {
 			pInfo = e.detail.data;
 			console.log('獲取的個人信息：' + JSON.stringify(pInfo));
+			getGroupPersonData(manageGroupPersonData);
 			getAccountInfo(manageAccountInfo);
 		})
 		addListener();
@@ -40,8 +42,35 @@ var manageAccountInfo = function(data) {
 	document.getElementById('info-name').innerText=data.uname;
 	document.getElementById('info-nick').innerText=data.unick;
 }
+/**
+ *40.通过用户ID获取用户各项资料
+ * @param {Object} callback
+ */
+var getGroupPersonData = function(callback) {
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	postDataPro_PostGusinf({
+		vvl: pInfo.gutid,
+	}, wd, function(data) {
+		wd.close();
+		console.log('获取的用户群资料：' + JSON.stringify(data));
+		if(data.RspCode == '0000') {
+			callback(data.RspData[0]);
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	})
+}
+var manageGroupPersonData = function(data) {
+	accountInfo=data;
+	console.log('获取的用户群资料：' + JSON.stringify(data));
+	$.extend(pInfo,data);
+	console.log('得到后的参数'+JSON.stringify(pInfo));
+}
 var addListener=function(){
 	events.addTap('personal-space',function(){
 		events.fireToPageWithData('zone_main.html','postUTID',pInfo.utid);
+	})
+	events.addTap('person-gData',function(){
+		events.fireToPageWithData('../mine/qun_data_details.html','postPGData',pInfo);
 	})
 }

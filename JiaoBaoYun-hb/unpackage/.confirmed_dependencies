@@ -1091,7 +1091,8 @@
 		],
 		"refer": [
 			"html/quan/zonep_sub.html",
-			"html/quan/zone_main.html"
+			"html/quan/zone_main.html",
+			"html/mine/qun_data_details.html"
 		]
 	},
 	"html/mine/qun_data_create.html": {
