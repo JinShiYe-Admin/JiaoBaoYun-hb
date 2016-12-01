@@ -1,3 +1,7 @@
+/**
+ * 班級群組界面邏輯
+ * @anthor an
+ */
 mui.init()
 var groupId = null;
 var groupName = null;
@@ -35,7 +39,7 @@ mui.plusReady(function() {
 				});
 			}
 		})
-
+		//群組頭像點擊事件
 		mui('#gride1').on('tap', '.mui-table-view-cell', function() {
 			events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
 		})
@@ -45,24 +49,19 @@ mui.plusReady(function() {
 		mui('#gride3').on('tap', '.mui-table-view-cell', function() {
 			events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
 		})
+		//退出按鈕點擊事件
 		quit_group1.addEventListener('tap', function() {
 				getUserInGroup(3, showChoices);
 			})
-			//		events.addTap('quit-group1', function() {
-			//			getUserInGroup(3, showChoices);
-			//		})
+		//退出按鈕點擊事件
 		quit_group2.addEventListener('tap', function() {
 				getUserInGroup(2, showChoices);
 			})
-			//		events.addTap('quit-group2', function() {
-			//			getUserInGroup(2, showChoices);
-			//		})
+		//退出按鈕點擊事件
 		quit_group3.addEventListener('tap', function() {
 				getUserInGroup(0, showChoices);
 			})
-			//		events.addTap('quit-group3', function() {
-			//			
-			//		})
+		
 	})
 	/**
 	 * 获取用户在群组中的信息
@@ -88,6 +87,11 @@ var getUserInGroup = function(mstype, callback) {
 		}
 	})
 }
+/**
+ * 是否顯示退出按鈕
+ * @param {Object} mstype
+ * @param {Object} b
+ */
 var isShowQuit = function(mstype, b) {
 		switch(mstype) {
 			case 0:
@@ -202,6 +206,9 @@ var quitGroup = function(roleInfo, callback) {
 		}
 	})
 }
+/**
+ * 界面加載數據初始化
+ */
 var setGride = function() {
 	console.log('传送的groupId:' + groupId)
 	getGroupInfo(3);
@@ -211,6 +218,10 @@ var setGride = function() {
 	getUserInGroup(2);
 	getUserInGroup(0);
 }
+/**
+ * 不同群組加載數據
+ * @param {Object} vvl 群組類型 0：家長2老師3家長
+ */
 var getGroupInfo = function(vvl) {
 		var item;
 		switch(vvl) {
@@ -226,8 +237,10 @@ var getGroupInfo = function(vvl) {
 			default:
 				break;
 		}
+		//清空歷史數據
 		events.clearChild(item);
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
+		//請求群組成員數據
 		postDataPro_PostGusers({
 			top: -1,
 			vvl: groupId,
@@ -235,6 +248,7 @@ var getGroupInfo = function(vvl) {
 		}, wd, function(data) {
 			wd.close();
 			console.log('获取群组成员：' + vvl + JSON.stringify(data))
+			//成功囘調
 			if(data.RspCode == '0000' && data.RspData != null) {
 				createGride(item, data.RspData);
 //			} else {
@@ -243,7 +257,7 @@ var getGroupInfo = function(vvl) {
 		});
 	}
 	/**
-	 * 
+	 * 加載九宮格數據
 	 * @param {Object} gride 九宫格父控件
 	 * @param {Object} array 元素数组，包括图标和标题
 	 */
@@ -272,16 +286,10 @@ var createGride = function(gride, array) {
 				'<img class="circular-square" src="' + getImg(map.uimg) + '"/></br>' +
 				'<small class="">' + map.ugname + '</small>' +
 				'</a>';
-			/**
-			 * 子控件加载点击监听事件
-			 */
-			//			li.addEventListener('tap', function() {
-			//					openTarWindow(map.tarUrl, map, index, array);
-			//				})
-			//父控件加载子控件
 			gride.appendChild(li);
 		})
 }
+//頭像設置
 var getImg = function(img) {
 	return img == null ? "../../image/utils/default_personalimage.png" : img
 }

@@ -1,3 +1,7 @@
+/**
+ * 批准入群關聯資料界面邏輯
+ * @anthor an
+ */
 var gutid; //申请记录id
 var roles = [];
 var gid; //群id

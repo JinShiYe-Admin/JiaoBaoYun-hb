@@ -1,3 +1,7 @@
+/**
+ * 審核入群界面邏輯
+ * @anthor an
+ */
 mui.init();
 mui('.mui-scroll-wrapper').scroll({
 	indicators: true, //是否显示滚动条
@@ -223,6 +227,10 @@ var getInnerHTML = function(type, item) {
 	}
 	return inner;
 }
+/**
+ * 獲取角色
+ * @param {Object} mstype
+ */
 var getRole=function(mstype){
 	var role='';
 	switch (mstype){
@@ -243,6 +251,10 @@ var getRole=function(mstype){
 	}
 	return role;
 }
+/**
+ * 群頭像
+ * @param {Object} cell
+ */
 var getGimg = function(cell) {
 		return cell.gimg ? cell.gimg : '../../image/utils/default_personalimage.png';
 	}
@@ -261,9 +273,15 @@ var createFirst = function(type) {
 	}
 	list.appendChild(li);
 }
+/**
+ * 按鍵監聽
+ */
 var setButtonsListener = function() {
+	//獲取確定按鈕
 	var btn_sure = document.getElementById('btn-sure');
+	//獲取取消按鈕
 	var btn_cancel = document.getElementById('btn-cancle');
+	//確定按鈕加載監聽
 	btn_sure.addEventListener('tap', function() {
 		if(groupRoles.length>0){
 			events.fireToPageWithData('add-info.html', 'postRoles', {
@@ -276,6 +294,7 @@ var setButtonsListener = function() {
 			mui.toast('请选择身份');
 		}
 	});
+	//取消按鈕加載監聽
 	btn_cancel.addEventListener('tap', function() {
 		mui('.mui-popover').popover('toggle');
 	});

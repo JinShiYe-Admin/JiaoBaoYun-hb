@@ -759,7 +759,8 @@
 	"html/mine/qun_manage.html": {
 		"refer": [
 			"html/mine/qun_manage_info.html",
-			"html/mine/qun_manage_invite.html"
+			"html/mine/qun_manage_invite.html",
+			"html/mine/qun_manage_info_change.html"
 		],
 		"resources": [
 			"js/mui.min.js",
@@ -1196,7 +1197,39 @@
 		"refer": [
 			"html/mine/approval-apply.html",
 			"html/mine/apply-record.html",
-			"html/mine/account-info.html"
+			"html/mine/account-info.html",
+			"html/mine/qun_data.html",
+			"html/mine/qun_manage.html",
+			"html/mine/group-info.html"
+		]
+	},
+	"html/mine/qun_manage_info_change.html": {
+		"resources": [
+			"js/qiniu/plupload.full.min.js",
+			"css/iconfont/iconfont.css",
+			"js/utils/QiNiuUtil.js",
+			"js/qiniu/qiniu.js",
+			"fonts/iconfont.ttf",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		],
+		"refer": [
+			"html/mine/qun_manage_info_change_post.html"
 		]
 	}
 }
