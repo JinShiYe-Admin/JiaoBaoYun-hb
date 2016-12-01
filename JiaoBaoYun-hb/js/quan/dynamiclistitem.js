@@ -168,17 +168,17 @@ var dynamiclistitem = (function($, mod) {
 
 		$.each(commentList, function(index, element) {
 			var htmlComment = '';
-			if(element.length == 2) {
-				var html1 = '<div id="replyComment' + id + '-' + index + '" class="mui-media-body replyComment">';
-				var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + element[0] + '</font>';
-				var html3 = '<font class="common-font-family-Regular">：' + element[1] + '</font></div>';
+			if(element.UpperId == 0) {
+				var html1 = '<div id="replyComment' +id+ '-' + element.TabId + '-' + element.UserId + '" class="mui-media-body replyComment">';
+				var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + element.UserIdName + '</font>';
+				var html3 = '<font class="common-font-family-Regular">：' + element.CommentContent + '</font></div>';
 				htmlComment = html1 + html2 + html3;
-			} else if(element.length == 3) {
-				var html1 = '<div id="replyComment' + id + '-' + index + '" class="mui-media-body replyComment">';
-				var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + element[0] + '</font>';
+			} else {
+				var html1 = '<div id="replyComment' +id+ '-' + element.UpperId + '-' + element.UserId + '" class="mui-media-body replyComment">';
+				var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + element.UserIdName + '</font>';
 				var html3 = '<font class="common-font-family-Regular">回复</font>';
-				var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + element[1] + '</font>';
-				var html5 = '<font class="common-font-family-Regular">：' + element[2] + '</font></div>';
+				var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + element.ReplyIdName + '</font>';
+				var html5 = '<font class="common-font-family-Regular">：' + element.CommentContent + '</font></div>';
 				htmlComment = html1 + html2 + html3 + html4 + html5;
 			}
 			htmlCommentList2 = htmlCommentList2 + htmlComment;
