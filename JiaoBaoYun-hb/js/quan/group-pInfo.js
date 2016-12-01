@@ -4,8 +4,8 @@ var pInfo; //{"gid":1,"gutid":9,"utid":5,
 //"uimg":"http://oh2zmummr.bkt.clouddn.com/headimge5.png","mstype":3}
 var accountInfo;
 mui.plusReady(function() {
-		events.preload('zone_main.html',100);
-		events.preload('../mine/qun_data_details.html',200);
+//		events.preload('zone_main.html',100);
+//		events.preload('../mine/qun_data_details.html',200);
 		window.addEventListener('postPInfo', function(e) {
 			pInfo = e.detail.data;
 			console.log('獲取的個人信息：' + JSON.stringify(pInfo));
@@ -68,9 +68,10 @@ var manageGroupPersonData = function(data) {
 }
 var addListener=function(){
 	events.addTap('personal-space',function(){
-		events.fireToPageWithData('zone_main.html','postUTID',pInfo.utid);
-	})
+		events.openNewWindowWithData('zone_main.html',pInfo.utid);
+	});
+	
 	events.addTap('person-gData',function(){
-		events.fireToPageWithData('../mine/qun_data_details.html','postPGData',pInfo);
+		events.openNewWindowWithData('../mine/qun_data_details.html',pInfo);
 	})
 }

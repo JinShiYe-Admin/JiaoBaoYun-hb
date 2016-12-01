@@ -26,14 +26,11 @@
 	<script type="text/javascript">
 		mui.plusReady(function() {
 			var data = plus.webview.currentWebview().data;
+			console.log('我的空间获取的数据'+data)
 			events.initSubPage('zonep_sub.html', data);
 //			var tempview =  plus.webview.getWebviewById('zonep_sub.html');
 			events.addTap('leave', function() {
 				events.openNewWindowWithData('../quan/leave.html', data);
-			})
-			window.addEventListener('postUTID',function(e){
-				var utid=e.detail.data;
-				events.initSubPage('zonep_sub.html', utid);
 			})
 		})
 	</script>
