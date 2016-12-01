@@ -684,7 +684,8 @@
 			"js/utils/events.js"
 		],
 		"refer": [
-			"html/quan/zonep_sub.html"
+			"html/quan/zonep_sub.html",
+			"html/quan/leave.html"
 		]
 	},
 	"html/quan/zonep_sub.html": {
@@ -1073,7 +1074,25 @@
 			"js/mui.min.js",
 			"fonts/mui.ttf",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/quan/group-pInfo.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/utils/events.js"
+		],
+		"refer": [
+			"html/quan/zonep_sub.html",
+			"html/quan/zone_main.html",
+			"html/mine/qun_data_details.html"
 		]
 	},
 	"html/mine/qun_data_create.html": {

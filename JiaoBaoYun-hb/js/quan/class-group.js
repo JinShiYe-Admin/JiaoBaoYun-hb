@@ -11,9 +11,13 @@ var groupRoles = []; //本人在群里的身份信息
 var gride1 = document.getElementById('gride1');
 var gride2 = document.getElementById('gride2');
 var gride3 = document.getElementById('gride3');
+var quit_group1 = document.getElementById('quit-group1');
+var quit_group2 = document.getElementById('quit-group2');
+var quit_group3 = document.getElementById('quit-group3');
 mui.plusReady(function() {
 		events.preload('group-pInfo.html', 200);
 		window.addEventListener('postGroupInfo', function(e) {
+
 			console.log(JSON.stringify(e.detail.data));
 			if(e.detail.data) {
 				groupId = e.detail.data.classId;
@@ -33,7 +37,7 @@ mui.plusReady(function() {
 		})
 
 		mui('#gride1').on('tap', '.mui-table-view-cell', function() {
-			events.fireToPageWithData('group-pInfo.html','postPInfo',this.info);
+			events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
 		})
 		mui('#gride2').on('tap', '.mui-table-view-cell', function() {
 			events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
@@ -41,15 +45,24 @@ mui.plusReady(function() {
 		mui('#gride3').on('tap', '.mui-table-view-cell', function() {
 			events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
 		})
-		events.addTap('quit-group1', function() {
-			getUserInGroup(3, showChoices);
-		})
-		events.addTap('quit-group2', function() {
-			getUserInGroup(2, showChoices);
-		})
-		events.addTap('quit-group3', function() {
-			getUserInGroup(0, showChoices);
-		})
+		quit_group1.addEventListener('tap', function() {
+				getUserInGroup(3, showChoices);
+			})
+			//		events.addTap('quit-group1', function() {
+			//			getUserInGroup(3, showChoices);
+			//		})
+		quit_group2.addEventListener('tap', function() {
+				getUserInGroup(2, showChoices);
+			})
+			//		events.addTap('quit-group2', function() {
+			//			getUserInGroup(2, showChoices);
+			//		})
+		quit_group3.addEventListener('tap', function() {
+				getUserInGroup(0, showChoices);
+			})
+			//		events.addTap('quit-group3', function() {
+			//			
+			//		})
 	})
 	/**
 	 * 获取用户在群组中的信息
@@ -57,20 +70,38 @@ mui.plusReady(function() {
 	 * @param {Object} callback
 	 */
 var getUserInGroup = function(mstype, callback) {
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		postDataPro_PostGuI({
-			vvl: groupId,
-			vtp: mstype
-		}, wd, function(data) {
-			wd.close()
-			console.log('用户在群的身份 ' + JSON.stringify(data));
-			if(data.RspCode == '0000') {
-				//					quitGroup(data.RspData[0].gutid, mstype);
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	postDataPro_PostGuI({
+		vvl: groupId,
+		vtp: mstype
+	}, wd, function(data) {
+		wd.close()
+		console.log('用户在群的身份 ' + JSON.stringify(data));
+		if(data.RspCode == '0000') {
+			if(callback) {
 				callback(data.RspData);
-			} else {
-				mui.toast('您未以当前身份加入该群！');
 			}
-		})
+			isShowQuit(mstype, true);
+		} else {
+			isShowQuit(mstype, false);
+			//			mui.toast('您未以当前身份加入该群！');
+		}
+	})
+}
+var isShowQuit = function(mstype, b) {
+		switch(mstype) {
+			case 0:
+				b ? quit_group3.style.display = 'block' : quit_group3.style.display = 'none'
+				break;
+			case 2:
+				b ? quit_group2.style.display = 'block' : quit_group2.style.display = 'none'
+				break;
+			case 3:
+				b ? quit_group1.style.display = 'block' : quit_group1.style.display = 'none'
+				break;
+			default:
+				break;
+		}
 	}
 	/**
 	 * 根据角色数量 显示不同选择
@@ -176,6 +207,9 @@ var setGride = function() {
 	getGroupInfo(3);
 	getGroupInfo(2);
 	getGroupInfo(0);
+	getUserInGroup(3);
+	getUserInGroup(2);
+	getUserInGroup(0);
 }
 var getGroupInfo = function(vvl) {
 		var item;
@@ -203,8 +237,8 @@ var getGroupInfo = function(vvl) {
 			console.log('获取群组成员：' + vvl + JSON.stringify(data))
 			if(data.RspCode == '0000' && data.RspData != null) {
 				createGride(item, data.RspData);
-			} else {
-				mui.toast(data.RspTxt);
+//			} else {
+//				mui.toast(data.RspTxt);
 			}
 		});
 	}
@@ -231,7 +265,7 @@ var createGride = function(gride, array) {
 			} else { //数组大于3，每行四个图标
 				li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
 			}
-			li.info=map;
+			li.info = map;
 			//子控件的innerHTML
 			li.innerHTML = '<a href="#">' +
 				'<img class="circular-square" src="' + getImg(map.uimg) + '"/></br>' +
@@ -240,10 +274,10 @@ var createGride = function(gride, array) {
 			/**
 			 * 子控件加载点击监听事件
 			 */
-//			li.addEventListener('tap', function() {
-//					openTarWindow(map.tarUrl, map, index, array);
-//				})
-				//父控件加载子控件
+			//			li.addEventListener('tap', function() {
+			//					openTarWindow(map.tarUrl, map, index, array);
+			//				})
+			//父控件加载子控件
 			gride.appendChild(li);
 		})
 }

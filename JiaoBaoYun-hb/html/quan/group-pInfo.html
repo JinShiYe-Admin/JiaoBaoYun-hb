@@ -17,20 +17,20 @@
 		</header>
 		<div class="mui-content">
 		    <div class="info-main">
-		    	<img src="../../image/utils/default_personalimage.png" class="info-headImg"/>
+		    	<img id="info-headImg" src="../../image/utils/default_personalimage.png" class="info-headImg"/>
 		    	<div class="info-briefIntro">
-		    		<h5 class="info-name">个人姓名</h5>
-		    		<p class="info-nick">个人昵称</p>
+		    		<h5 id="info-name" class="info-name">个人姓名</h5>
+		    		<p  id="info-nick" class="info-nick">个人昵称</p>
 		    	</div>
 		    </div>
 		    <ul class="mui-table-view">
-		            <li class="mui-table-view-cell">
+		            <li id="person-gData" class="mui-table-view-cell">
 		                <a class="mui-navigate-right">
-		                    账号信息
+		                    資料信息
 		                </a>
 		                
 		            </li>
-		            <li class="mui-table-view-cell">
+		            <li id="personal-space" class="mui-table-view-cell">
 		                <a class="mui-navigate-right">
 		                    空间
 		                </a>
@@ -48,13 +48,9 @@
 		        </ul>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript">
-			mui.init()
-			window.addEventListener('postPInfo',function(e){
-				var pInfo=e.detail.data;
-				console.log('獲取的個人信息：'+JSON.stringify(pInfo));
-			})
-		</script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/quan/group-pInfo.js"></script>
 	</body>
 
 </html>
