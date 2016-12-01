@@ -120,6 +120,22 @@ var publicModel = (function($, mod) {
 		mstype:''//	类型,0家长,1管理员,2老师,3学生
 	}
 	
+	//40.通过用户ID获取用户各项资料
+	mod.model_PostGusinf = {
+		utid	:'',//用户账号表ID
+		urel	:'',//用户与资料关系
+		stuname:'',//	资料名称
+		stuimg:'',//	资料头像
+		stumstype:'',//	资料在群类型
+		job:'',//	职位
+		title:'',//	职称
+		expsch:'',//	教龄
+		sub:'',//	科目
+		stuid:'',//	资料ID
+		gutid:'',//	账号在群ID
+		ustuid:''//	关联ID
+	}
+	
 	
 	//家校圈
 	//2.（点到记事）获取用户未读点到记事列表

@@ -559,6 +559,19 @@ var postDataPro_PostDiFiD = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINURL + 'PostDiFiD', enData, commonData, 1, wd, callback);
 }
 
+//40.通过用户ID获取用户各项资料
+//所需参数
+//		var comData = {
+//			vvl:''//查询的用户群ID，gutid
+//		};
+//返回值：model_PostGusinf
+var postDataPro_PostGusinf = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostGusinf', enData, commonData, 1, wd, callback);
+}
+
 //---------------------------------------家校圈-----------------------------------------------------------------------------------------------------------
 //家校圈接口
 
