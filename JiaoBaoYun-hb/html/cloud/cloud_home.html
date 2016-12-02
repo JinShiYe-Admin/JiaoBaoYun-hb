@@ -231,13 +231,14 @@
 										<img class="cloud-bottom-imge2" src="../../image/cloud/archives.png" />
 									</div>
 									<p class="mui-ellipsis">档案</p>
-								</div>-->
+								</div>
 								<div id="learningpath" class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="1">
 									<div class="cloud-bottom-imge2-bg">
 										<img class="cloud-bottom-imge2" src="../../image/cloud/Trajectory.png" />
 									</div>
 									<p class="mui-ellipsis">学习轨迹</p>
 								</div>
+								-->
 							</div>
 						</li>
 					</ul>
@@ -309,12 +310,12 @@
 
 				//增加存储文件，获取顶层文件夹
 				//26.用户云盘顶层文件及文件夹获取
-				postFirstFile();
+				//postFirstFile();
 
 				changeInfo();
 
 				//73.73.（云档案）按家长获取学生档案姓名
-				postUserStudent();
+				//postUserStudent();
 
 				//重新登录或者自动登录后获取的信息
 				window.addEventListener('infoChanged', function() {
@@ -372,14 +373,6 @@
 				});
 				//---存储end---
 
-				//---档案start---
-				//学习轨迹监听
-				document.getElementById('learningpath').addEventListener('tap', function() {
-					events.openNewWindow('record_learningpath_main.html');
-				});
-
-				//---end---
-
 				//---应用---
 				mui('#cloudapps').on('tap', '.mui-col-sm-3', function() {
 					var value = this.getAttribute("value");
@@ -410,7 +403,7 @@
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					postDataPro_PostDiFi(comData, wd, function(data) {
 						wd.close();
-						console.log('26.postDataPro_PostDiFi:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						console.log('26.postDataPro_PostDiFi_用户云盘顶层文件及文件夹获取_RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							//给存储数组赋值
 							fileArray = data.RspData;
@@ -457,14 +450,16 @@
 						console.log('24.postDataPro_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							//设置页面显示
+							document.getElementById("record_row").innerHTML = '';
+							addLeaningPath(); //学习轨迹
 							mui.each(data.RspData.StudentNames, function(index, item) {
 								console.log('学生档案：' + index + '|' + JSON.stringify(item));
 								addRecord(item);
 							});
+						} else if(data.RspCode == 9) {
+							addLeaningPath(); //学习轨迹
 						} else {
-							if(data.RspCode != 9) {
-								mui.toast(data.RspTxt);
-							}
+							mui.toast(data.RspTxt);
 						}
 					});
 				}
@@ -526,11 +521,34 @@
 				}
 
 				/**
+				 * 学习轨迹
+				 */
+				function addLeaningPath() {
+					var div = document.createElement('div');
+					div.setAttribute('id', 'learningpath');
+					div.className = 'mui-col-sm-3 mui-col-xs-3 cloud-text-align-center';
+					div.innerHTML = '<div class="cloud-bottom-imge2-bg">\
+										<img class="cloud-bottom-imge2" src="../../image/cloud/Trajectory.png" />\
+									</div>\
+									<p class="mui-ellipsis">学习轨迹</p>';
+					document.getElementById("record_row").appendChild(div);
+					//学习轨迹监听
+					div.addEventListener('tap', function() {
+						events.openNewWindow('record_learningpath_main.html');
+					});
+				}
+
+				/**
 				 * 修改账号资料
 				 */
 				function changeInfo() {
 					document.getElementById("cloud_name").innerText = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
+					document.getElementById("cloud_prsonalimge").src = updateHeadImg('', 2);
 					document.getElementById("cloud_prsonalimge").src = updateHeadImg(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uimg, 2);
+					//26.用户云盘顶层文件及文件夹获取
+					postFirstFile();
+					//73.（云档案）按家长获取学生档案姓名
+					postUserStudent();
 				}
 			});
 		</script>

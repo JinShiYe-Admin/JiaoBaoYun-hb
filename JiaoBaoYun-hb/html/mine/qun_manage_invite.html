@@ -349,16 +349,20 @@
 				 * 获取群成员资料
 				 */
 				function getUserInfo() {
-					var vvl1 = '';
+					var vvl1 = ''; //类型
+					var vtp = ''; //获取类型
 					switch(mstype) {
-						case '0':
+						case '0': //家长
 							vvl1 = '3';
+							vtp = '0';
 							break;
-						case '2':
+						case '2': //老师
 							vvl1 = '2';
+							vtp = '1';
 							break;
-						case '3':
+						case '3': //学生
 							vvl1 = '3';
+							vtp = '1';
 							break;
 						default:
 							console.log('获取群成员资料类型选择出错');
@@ -368,7 +372,7 @@
 					//16.通过群ID获取群对象资料
 					//所需参数
 					var comData2 = {
-						vtp: '1', //获取类型,0普通资料获取,1邀请排除(主老师用)
+						vtp: vtp, //获取类型,0普通资料获取,1邀请排除(主老师用)
 						top: '-1', //选择条数,-1为全部
 						vvl: gid, //群ID,查询的值
 						vvl1: vvl1 //类型,0家长,1管理员,2老师,3学生,-1全部
