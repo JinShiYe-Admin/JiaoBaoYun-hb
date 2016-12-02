@@ -39,6 +39,9 @@ mui.plusReady(function() {
 				});
 			}
 		})
+		window.addEventListener('remarkChanged',function(){
+			setGride();
+		})
 		//群組頭像點擊事件
 		mui('#gride1').on('tap', '.mui-table-view-cell', function() {
 			events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
@@ -250,11 +253,46 @@ var getGroupInfo = function(vvl) {
 			console.log('获取群组成员：' + vvl + JSON.stringify(data))
 			//成功囘調
 			if(data.RspCode == '0000' && data.RspData != null) {
-				createGride(item, data.RspData);
-//			} else {
-//				mui.toast(data.RspTxt);
+//				createGride(item, data.RspData);
+				data.RspData.forEach(function(cell,i,list){
+						getRemark(cell,function(remarkData){
+						if(remarkData.RspCode=='0000'){
+							data.RspData[i].bunick=remarkData.RspData[0].bunick;
+						}else{
+							data.RspData[i].bunick=cell.ugname;
+						}
+						if(i==list.length-1){
+							console.log('获取添加备注的信息：'+JSON.stringify(data.RspData))
+							createGride(item, data.RspData);
+						}
+					})
+						
+				})
 			}
 		});
+	}
+/**
+ * 获取备注
+ */
+var getRemark = function(cell,callback) {
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		postDataPro_PostUmk({
+			vvl: cell.utid
+		}, wd, function(data) {
+			wd.close();
+			console.log('获取的备注信息：'+JSON.stringify(data));
+			var remark=document.getElementById('person-remark');
+			callback(data);
+//			if(data.RspCode=='0000'){
+//				
+//				remark.innerText=data.RspData[0].bunick;
+//				premark=data.RspData[0];
+//			}else{
+//				remark.innerText=pInfo.ugnick;
+//				premark.butid=pInfo.utid;
+//				premark.bunick=pInfo.ugnick;
+//			}
+		})
 	}
 	/**
 	 * 加載九宮格數據
@@ -284,7 +322,7 @@ var createGride = function(gride, array) {
 			//子控件的innerHTML
 			li.innerHTML = '<a href="#">' +
 				'<img class="circular-square" src="' + getImg(map.uimg) + '"/></br>' +
-				'<small class="">' + map.ugname + '</small>' +
+				'<small class="">' + map.bunick + '</small>' +
 				'</a>';
 			gride.appendChild(li);
 		})

@@ -1628,12 +1628,14 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [
 					"html/quan/zonep_sub.html",
 					"html/quan/zone_main.html",
-					"html/mine/qun_data_details.html"
+					"html/mine/qun_data_details.html",
+					"html/quan/edit-remark.html"
 				],
 				"priority": 0
 			},
@@ -1746,6 +1748,29 @@
 				"refer": [
 					"html/mine/qun_manage_info_change_post.html"
 				],
+				"priority": 0
+			},
+			"html/quan/edit-remark.html": {
+				"resources": [
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/utils/events.js",
+					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},
