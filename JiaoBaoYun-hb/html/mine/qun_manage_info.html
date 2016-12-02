@@ -367,8 +367,10 @@
 						wd.close();
 						console.log('7.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
+							events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
+							events.fireToPageNone('/html/mine/qun_manage.html', 'refresh');
+							events.fireToPageNone('/html/mine/qun_data.html', 'refresh');
 							mui.toast('创建群成功');
-							events.fireToPageNone('../quan/tab-zone.html','infoChanged',);
 							console.log('创建群成功');
 						} else {
 							mui.toast(data.RspTxt);

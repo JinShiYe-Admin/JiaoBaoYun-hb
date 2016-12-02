@@ -186,6 +186,9 @@
 						</div>
 					</div>
 				</div>
+				<div id="all_mem">
+
+				</div>
 				<!--<div id="bot_1002班" data-value="1002班" class="bot" style="display: none;">
 				<div class="mui-scroll-wrapper" style="background: white;top: 135px;">
 					<div class="mui-scroll">
@@ -291,78 +294,96 @@
 					});
 
 					//---获取群数据---start---
-					//9.获取用户群
-					//获取个人信息
-					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-					//需要参数
-					var getQunData = {
-						vtp: 'ag', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
-						vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
-					};
-					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-					postDataPro_PostGList(getQunData, wd, function(data) {
-						console.log('9_PostGList_获取用户群.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-						if(data.RspCode == 0) {
-							//获取到数据
-
-							document.getElementById("noqun").style.display = 'none';
-							document.getElementById("lineblue").style.display = 'inline';
-							document.body.querySelector('#slider').style.display = 'inline';
-							document.body.querySelector('#slider2').style.display = 'inline';
-							//参数名	名称	参数类型	长度	是否加密	备注
-							//gid	群ID	int		否
-							//gname	群名	string		否	群名称
-							//gimg	群头像	string		否	群头像的链接
-							mui.each(data.RspData, function(index, item) {
-								//剔除同一个群身份不同
-								var same = false;
-								mui.each(qunList, function(index, qitem) {
-									if(qitem.gid == item.gid) {
-										same = true;
-										return false;
-									}
-								});
-								//不相同的群和身份
-								if(!same) {
-									console.log('不同群和身份：群id:' + item.gid + '|群名：' + item.gname + '|管理角色：' + item.mstype);
-									var qun = {
-										gid: item.gid, //群ID
-										gname: item.gname, //群名
-										gimg: item.gimg, //群头像,群头像的链接
-										mstype: item.mstype //用户管理角色,0家长,1管理员,2老师,3学生
-									}
-									var hasGetMember = {
-										hasGetStu: false, //记录是否已获得学生
-										hasGetTea: false, //记录是否已获得老师
-										hasGetPar: false, //记录是否已获得家长
-										showBotId: '', //记录当前展示的成员区域id
-										showType: 'student', //记录当前展示的成员类型
-									};
-									mui.extend(qun, hasGetMember); //合并两个对象
-									qunList.push(qun);
-									addQun(qun);
-								} else {
-									console.log('相同的群和身份:群id:' + item.gid + '|群名：' + item.gname + '|管理角色：' + item.mstype);
-
-								}
-							});
-							//getMember(qunList[0], type); //获取群的正常用户
-						} else if(data.RspCode == 9) {
-							//未获取到数据
-							document.getElementById("noqun").style.display = 'inline';
-							document.getElementById("noqun").style.textAlign = "center";
-							document.getElementById("lineblue").style.display = 'none';
-							document.body.querySelector('#slider').style.display = 'none';
-							document.body.querySelector('#slider2').style.display = 'none';
-						} else {
-							mui.toast(data.RspTxt);
-						}
-						wd.close();
-					});
+					getQunMenAG();
 					//---获取群数据---end---
 
+					window.addEventListener('refresh', function() {
+
+						document.getElementById("qunlist").innerHTML = '\
+						<a id="controladd" class="mui-control-item" style="width: 40px;">\
+						</a>\
+						<div class="mui-icon mui-icon-plus addqun" style="position: absolute;border: 0px solid #ddd;font-size: 25px;color: #C7C7CC;right: 0px;top: 4px;"></div>';
+						document.getElementById("all_mem").innerHTML = '';
+						show = ''; //记录当前展示的群id
+						qunList = []; //记录所有群的信息
+						type = 'student'; //记录当前展示的成员身份类型
+						content = document.body.querySelector('.mui-content');
+						qunlist = document.getElementById("qunlist"); //群名称显示栏
+						controladd = document.getElementById("controladd"); //群名称显示栏添加群按钮前一个item
+						getQunMenAG();
+					});
+
 					//---方法---start---
+
+					function getQunMenAG() {
+						//9.获取用户群
+						//获取个人信息
+						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+						//需要参数
+						var getQunData = {
+							vtp: 'ag', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
+							vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
+						};
+						// 等待的对话框
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						postDataPro_PostGList(getQunData, wd, function(data) {
+							console.log('9_PostGList_获取用户群.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode == 0) {
+								//获取到数据
+								document.getElementById("noqun").style.display = 'none';
+								document.getElementById("lineblue").style.display = 'inline';
+								document.body.querySelector('#slider').style.display = 'inline';
+								document.body.querySelector('#slider2').style.display = 'inline';
+								//参数名	名称	参数类型	长度	是否加密	备注
+								//gid	群ID	int		否
+								//gname	群名	string		否	群名称
+								//gimg	群头像	string		否	群头像的链接
+								mui.each(data.RspData, function(index, item) {
+									//剔除同一个群身份不同
+									var same = false;
+									mui.each(qunList, function(index, qitem) {
+										if(qitem.gid == item.gid) {
+											same = true;
+											return false;
+										}
+									});
+									//不相同的群和身份
+									if(!same) {
+										console.log('不同群和身份：群id:' + item.gid + '|群名：' + item.gname + '|管理角色：' + item.mstype);
+										var qun = {
+											gid: item.gid, //群ID
+											gname: item.gname, //群名
+											gimg: item.gimg, //群头像,群头像的链接
+											mstype: item.mstype //用户管理角色,0家长,1管理员,2老师,3学生
+										}
+										var hasGetMember = {
+											hasGetStu: false, //记录是否已获得学生
+											hasGetTea: false, //记录是否已获得老师
+											hasGetPar: false, //记录是否已获得家长
+											showBotId: '', //记录当前展示的成员区域id
+											showType: 'student', //记录当前展示的成员类型
+										};
+										mui.extend(qun, hasGetMember); //合并两个对象
+										qunList.push(qun);
+										addQun(qun);
+									} else {
+										console.log('相同的群和身份:群id:' + item.gid + '|群名：' + item.gname + '|管理角色：' + item.mstype);
+									}
+								});
+								//getMember(qunList[0], type); //获取群的正常用户
+							} else if(data.RspCode == 9) {
+								//未获取到数据
+								document.getElementById("noqun").style.display = 'inline';
+								document.getElementById("noqun").style.textAlign = "center";
+								document.getElementById("lineblue").style.display = 'none';
+								document.body.querySelector('#slider').style.display = 'none';
+								document.body.querySelector('#slider2').style.display = 'none';
+							} else {
+								mui.toast(data.RspTxt);
+							}
+							wd.close();
+						});
+					}
 
 					/**
 					 * 群栏添加一个群
@@ -421,12 +442,13 @@
 						}
 						var html3 = '</div></ul></div></div>';
 						div.innerHTML = html1 + html2 + html3;
-						document.body.querySelector('.mui-content').appendChild(div);
+						document.getElementById("all_mem").appendChild(div);
+						//document.body.querySelector('.mui-content').appendChild(div);
 						getMember(qun, memberType);
 					}
 
 					/**
-					 * 获取群的正常用户
+					 * 通过群ID获取群对象资料
 					 * @param {Object} qun 群
 					 */
 					function getMember(qun, type2) {
@@ -527,13 +549,12 @@
 											item.hasGetPar = true; //查询了家长
 											break;
 									}
-									return;
+									return false;
 								}
 							});
 							wd.close();
 						});
 					}
-
 					/**
 					 * 添加成员
 					 * @param {Object} qunBot 对应的群页面
@@ -583,8 +604,7 @@
 									item.showBotId = 'bot_student_' + qunId;
 									item.showType = 'student';
 								}
-
-								return;
+								return false;
 							}
 						});
 
@@ -630,7 +650,7 @@
 									item.showBotId = 'bot_' + type2 + "_" + show;
 									item.showType = type2;
 									type = type2;
-									return;
+									return false;
 								}
 							});
 						}

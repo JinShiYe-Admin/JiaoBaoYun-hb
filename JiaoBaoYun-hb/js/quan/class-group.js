@@ -39,6 +39,9 @@ mui.plusReady(function() {
 				});
 			}
 		})
+		window.addEventListener('groupInfoChanged',function(){
+			setGride();
+		})
 		//群組頭像點擊事件
 		mui('#gride1').on('tap', '.mui-table-view-cell', function() {
 			events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
@@ -245,16 +248,75 @@ var getGroupInfo = function(vvl) {
 			top: -1,
 			vvl: groupId,
 			vvl1: vvl
-		}, wd, function(data) {
+		}, wd, function(groupData) {
 			wd.close();
-			console.log('获取群组成员：' + vvl + JSON.stringify(data))
+			console.log('获取群组成员：' + vvl + JSON.stringify(groupData))
 			//成功囘調
-			if(data.RspCode == '0000' && data.RspData != null) {
-				createGride(item, data.RspData);
-//			} else {
-//				mui.toast(data.RspTxt);
+			if(groupData.RspCode == '0000' && groupData.RspData != null) {
+//				createGride(item, data.RspData);
+				getRemarkData(groupData.RspData,function(Remarkdata){
+					var list=[];
+					if(Remarkdata.RspCode=='0000'){
+						list=addRemarkData(groupData.RspData,Remarkdata.RspData);
+					}else{
+						list=addRemarkData(groupData.RspData)
+					}
+					events.clearChild(item);
+					console.log('最终呈现的数据：'+vvl+JSON.stringify(list));
+					createGride(item, list);
+				})
+
 			}
 		});
+	}
+var addRemarkData=function(list,remarkList){
+	if(remarkList){
+		for(var i in list){
+			for(var j in remarkList){
+				if(list[i].utid==remarkList[j].butid){
+					list[i].bunick=remarkList[j].bunick;
+					break;
+				}else{
+					list[i].bunick=list[i].gname;
+				}
+			}
+		}
+//		list.forEach(function(cell,j,tolist){
+//			remarkList.forEach(function(remark,i,relist){
+//				console.log('对比值：'+JSON.stringify(cell)+':'+JSON.stringify(remark));
+//				if(cell.utid==remark.butid){
+//					list[j].bunick=remark.bunick;
+//					return false;
+//				}else{
+//					list[j].bunick=cell.ugname;
+//				}
+//			})
+//		})
+	}else{
+		list.forEach(function(cell,i){
+			list[i].bunick=cell.ugname;
+		})
+	}
+	return list;
+}
+/**
+ * 获取备注
+ */
+var getRemarkData = function(list,callback) {
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		var utids=[];
+		list.forEach(function(cell){
+			utids.push(cell.utid);
+		})
+		console.log('传的字符串：'+utids.toString())
+		postDataPro_PostUmk({
+			vvl: utids.toString()
+		}, wd, function(data) {
+			wd.close();
+			console.log('获取的备注信息：'+JSON.stringify(data));
+			var remark=document.getElementById('person-remark');
+			callback(data);
+		})
 	}
 	/**
 	 * 加載九宮格數據
@@ -271,7 +333,7 @@ var createGride = function(gride, array) {
 		 * @param {Object} index 数组序号
 		 * @param {Object} array 数组
 		 */
-		function(map, index, array) {
+		function(cell, index, array) {
 			var li = document.createElement('li'); //子元素
 			//			var bgColor=getRandomColor();//获取背景色
 			if(array.length <= 3) { //数组小于等于3，每行3个图标
@@ -279,12 +341,12 @@ var createGride = function(gride, array) {
 			} else { //数组大于3，每行四个图标
 				li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
 			}
-			map.gname=groupName;
-			li.info = map;
+			cell.gname=groupName;
+			li.info = cell;
 			//子控件的innerHTML
 			li.innerHTML = '<a href="#">' +
-				'<img class="circular-square" src="' + getImg(map.uimg) + '"/></br>' +
-				'<small class="">' + map.ugname + '</small>' +
+				'<img class="circular-square" src="' + getImg(cell.uimg) + '"/></br>' +
+				'<small class="">' + cell.bunick + '</small>' +
 				'</a>';
 			gride.appendChild(li);
 		})

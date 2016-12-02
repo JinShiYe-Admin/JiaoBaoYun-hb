@@ -68,17 +68,17 @@ var class_space = (function(mod) {
 	 * @param {Object} item
 	 */
 	var createInnerHtml = function(item) {
-		var inner = '<a><div class="mui-pull-left head-img" >' +
+		var inner = '<div><div class="mui-pull-left head-img" >' +
 			'<img class="head-portrait" src="' + item.publisherImg + '"/>' +
 			'<p>' + item.publisherName + '</p>' +
 			'</div>' +
 			'<div class="chat_content_left ">' +
-				'<div class="chat-body">' +
-				item.MsgContent + '<br/>' +
+				'<div class="chat-body"><p class="chat-words">' +
+				item.MsgContent + '</p>' +
 				createImgsInner(item) +
 				'</div>' +
-				'<p>' + item.PublishDate + '<font>浏览(' + item.ReadCnt + '人)</font>点赞(' + item.LikeCnt + '人)</p>' +
-			'</div></a>';
+				'<p class="chat-bottom">' + item.PublishDate + '<font>浏览(' + item.ReadCnt + '人)</font>点赞(' + item.LikeCnt + '人)</p>' +
+			'</div></div>';
 		return inner;
 	}
 	/**

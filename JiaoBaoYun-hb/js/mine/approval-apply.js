@@ -31,11 +31,13 @@ mui.plusReady(function() {
 			 * 申请通过后传递的事件
 			 */
 		window.addEventListener('appPassed', function(e) {
-			var passedGutid = e.detail.data;
-			//获取通过的cell中的按钮
-			var btn_passed = document.querySelector('[gtuid=' + passedGutid + ']');
-			btn_passed.className = 'apply-passed';
-			btn_passed.innerText = '已添加';
+			events.clearChild(list);
+			getData('inv', setData);
+//			var passedGutid = e.detail.data;
+//			//获取通过的cell中的按钮
+//			var btn_passed = document.querySelector('[gtuid=' + passedGutid + ']');
+//			btn_passed.className = 'apply-passed';
+//			btn_passed.innerText = '已添加';
 		})
 	})
 	/**

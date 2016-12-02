@@ -844,7 +844,16 @@
 			"js/utils/events.js",
 			"html/mine/privacy.html",
 			"js/storageKeyName.js",
-			"js/libs/myStorage/myStorage.js"
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/register/modify_password.html",
@@ -1020,7 +1029,8 @@
 			"html/clip/clip_sub.html",
 			"html/quan/class-dynamic.html",
 			"html/quan/aboutme.html",
-			"html/index/mine.html"
+			"html/index/mine.html",
+			"html/quan/pub-dynamic.html"
 		]
 	},
 	"html/mine/add-info.html": {
@@ -1121,12 +1131,14 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/quan/zonep_sub.html",
 			"html/quan/zone_main.html",
-			"html/mine/qun_data_details.html"
+			"html/mine/qun_data_details.html",
+			"html/quan/edit-remark.html"
 		]
 	},
 	"html/mine/qun_data_create.html": {
@@ -1193,7 +1205,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/mine/approval-apply.html",
@@ -1202,7 +1215,8 @@
 			"html/mine/qun_data.html",
 			"html/mine/qun_manage.html",
 			"html/mine/group-info.html",
-			"html/mine/setting.html"
+			"html/mine/setting.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/mine/qun_manage_info_change.html": {
@@ -1232,6 +1246,54 @@
 		],
 		"refer": [
 			"html/mine/qun_manage_info_change_post.html"
+		]
+	},
+	"html/quan/edit-remark.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/utils/events.js",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/quan/pub-dynamic.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/utils/files.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/utils/ASFiles.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/camera.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"css/quan/class_space.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }
