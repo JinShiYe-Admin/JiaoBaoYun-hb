@@ -723,7 +723,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/cloud/cloud.js",
-					"image/cloud/A_folder.png"
+					"image/cloud/A_folder.png",
+					"image/cloud/A_addfolder.png"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
