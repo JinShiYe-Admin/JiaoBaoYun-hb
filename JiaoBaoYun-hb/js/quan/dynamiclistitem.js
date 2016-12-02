@@ -163,32 +163,37 @@ var dynamiclistitem = (function($, mod) {
 		htmlPraiseList = htmlPraiseList + '</div></div>';
 
 		//评论列表
-		var htmlCommentList1 = '<div class="mui-col-sm-12 mui-col-xs-12">';
+		var htmlCommentList1 = '<div id="commentList' + id + '" class="mui-col-sm-12 mui-col-xs-12">';
 		var htmlCommentList2 = '';
 
 		$.each(commentList, function(index, element) {
-			var htmlComment = '';
-			if(element.UpperId == 0) {
-				var html1 = '<div id="replyComment' +id+ '-' + element.TabId + '-' + element.UserId + '" class="mui-media-body replyComment">';
-				var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + element.UserIdName + '</font>';
-				var html3 = '<font class="common-font-family-Regular">：' + element.CommentContent + '</font></div>';
-				htmlComment = html1 + html2 + html3;
-			} else {
-				var html1 = '<div id="replyComment' +id+ '-' + element.UpperId + '-' + element.UserId + '" class="mui-media-body replyComment">';
-				var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + element.UserIdName + '</font>';
-				var html3 = '<font class="common-font-family-Regular">回复</font>';
-				var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + element.ReplyIdName + '</font>';
-				var html5 = '<font class="common-font-family-Regular">：' + element.CommentContent + '</font></div>';
-				htmlComment = html1 + html2 + html3 + html4 + html5;
+			var firstComment = '';
+			var replyComment = '';
+			var html1 = '<div id="replyComment' + id + '-' + index + '-' + '评论' + '" class="mui-media-body replyComment">';
+			var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + element.UserIdName + '</font>';
+			var html3 = '<font class="common-font-family-Regular">：' + element.CommentContent + '</font>';
+			firstComment = html1 + html2 + html3;
+			if(element.Replys.length != 0)  {
+				for(var i = 0; i < element.Replys.length; i++) {
+					var tempModel = element.Replys;
+					var html1 = '<div id="replyComment' + id + '-' + index + '-' + i + '" class="mui-media-body replyComment">';
+					var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].UserIdName + '</font>';
+					var html3 = '<font class="common-font-family-Regular">回复</font>';
+					var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].ReplyIdName + '</font>';
+					var html5 = '<font class="common-font-family-Regular">：' + tempModel[i].CommentContent + '</font></div>';
+					replyComment = replyComment+ html1 + html2 + html3 + html4 + html5;
+				}
+				replyComment = replyComment +'</div>'
 			}
-			htmlCommentList2 = htmlCommentList2 + htmlComment;
+
+			htmlCommentList2 = htmlCommentList2 + firstComment+replyComment;
 		});
 
 		htmlCommentList = htmlCommentList1 + htmlCommentList2 + '</div>';
 
-		var htmlCommentBtn = '<div class="mui-col-sm-12 mui-col-xs-12"><button type="button" class="mui-btn dynamic-comment-btn"><p class="mui-pull-left">评论</p></button></div>';
+//		var htmlCommentBtn = '<div class="mui-col-sm-12 mui-col-xs-12"><button type="button" class="mui-btn dynamic-comment-btn"><p class="mui-pull-left">评论</p></button></div>';
 
-		html = html + htmlPraiseList + htmlCommentList + htmlCommentBtn;
+		html = html + htmlPraiseList + htmlCommentList;
 
 		var div = document.createElement('div');
 		div.className = 'mui-row mui-row-padding-8px';

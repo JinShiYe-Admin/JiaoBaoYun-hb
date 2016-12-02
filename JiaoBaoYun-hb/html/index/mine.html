@@ -88,8 +88,6 @@
 			var info = null;
 			mui.plusReady(function() {
 				main = plus.webview.currentWebview().opener();
-				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
-
 				//获取个人信息
 				//personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
 
@@ -103,6 +101,8 @@
 				})
 
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+
 					console.log('click position:' + this.getAttribute('position'))
 					closeMenu();
 					switch(parseInt(this.getAttribute('position'))) {
@@ -124,7 +124,7 @@
 							break;
 							//我的空间
 						case 4:
-						events.openNewWindowWithData('quan/zone_main.html',personalUTID);
+						events.openNewWindowWithData('/html/quan/zone_main.html',personalUTID);
 							break;
 							//积分
 						case 5:

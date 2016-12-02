@@ -219,7 +219,7 @@ function getNotes(index, StuDyArr) {
 						'<p class="time">' + StuDyArr[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
-						topStudentArr[i].ugname +
+						topStudentArr[i].stuname +
 						'<p class="mui-ellipsis">' + StuDyArr[i].MsgContent + '</p></div>';
 					ul.appendChild(li);
 				}
