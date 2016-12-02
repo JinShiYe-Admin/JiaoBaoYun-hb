@@ -428,6 +428,8 @@
 							if(fileArray.length < 3) {
 								addStorageIcon();
 							}
+						} else if(data.RspCode == 9) {
+							addStorageIcon();
 						} else {
 							mui.toast(data.RspTxt);
 						}
@@ -452,7 +454,7 @@
 							//设置页面显示
 							document.getElementById("record_row").innerHTML = '';
 							addLeaningPath(); //学习轨迹
-							mui.each(data.RspData.StudentNames, function(index, item) {
+							mui.each(data.RspData.Students, function(index, item) {
 								console.log('学生档案：' + index + '|' + JSON.stringify(item));
 								addRecord(item);
 							});
@@ -496,7 +498,7 @@
 					var div = document.createElement('div');
 					div.id = 'addFolder';
 					div.className = 'mui-col-sm-4 mui-col-xs-4';
-					div.innerHTML = '<img class="cloud-bottom-imge" style="margin-top: 4px;" src="../../image/cloud/A_addfolder.png" />';
+					div.innerHTML = '<img class="cloud-bottom-imge" style="margin-top: 4px;" src="../../image/cloud/A_addfolder.png" /><p class="mui-ellipsis"> </p>';
 					table.appendChild(div);
 				}
 
@@ -511,11 +513,12 @@
 					div.innerHTML = '<div class="cloud-bottom-imge2-bg">\
 										<img class="cloud-bottom-imge2" src="../../image/cloud/archives.png" />\
 									</div>\
-									<p class="mui-ellipsis">' + data + '档案</p>';
+									<p class="mui-ellipsis">' + data.StudentName + '档案</p>';
 					document.getElementById("record_row").insertBefore(div, document.getElementById("learningpath"));
 					div.addEventListener('tap', function() {
 						events.openNewWindowWithData('record_student_main.html', {
-							StudentNames: data //学生姓名
+							StudentId: data.StudentId, //学生ID
+							StudentName: data.StudentName //学生姓名
 						});
 					});
 				}
@@ -545,6 +548,8 @@
 					document.getElementById("cloud_name").innerText = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
 					document.getElementById("cloud_prsonalimge").src = updateHeadImg('', 2);
 					document.getElementById("cloud_prsonalimge").src = updateHeadImg(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uimg, 2);
+					document.getElementById("cloudstoragefile").innerHTML = '';
+					document.getElementById("record_row").innerHTML = '';
 					//26.用户云盘顶层文件及文件夹获取
 					postFirstFile();
 					//73.（云档案）按家长获取学生档案姓名

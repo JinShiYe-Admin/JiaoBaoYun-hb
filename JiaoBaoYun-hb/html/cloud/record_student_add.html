@@ -7,19 +7,171 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<style>
+			body,
+			.mui-content {
+				background: white;
+			}
+
+			.mui-table-view:before,
+			.mui-table-view:after,
+			.mui-table-view-cell:after {
+				height: 0px;
+			}
+
+			.mui-input-group:before,
+			.mui-input-group .mui-input-row:after,
+			.mui-input-group:after {
+				height: 0px;
+			}
+
+			.mui-checkbox input[type=checkbox]:checked:before,
+			.mui-radio input[type=radio]:checked:before {
+				color: #86BE49;
+			}
+
+			.mui-col-sm-4,
+			.mui-col-xs-8 {
+				height: 36px;
+			}
+
+			.mui-checkbox.mui-left input[type=checkbox],
+			.mui-radio.mui-left input[type=radio] {
+				left: 0px;
+			}
+
+			.mui-checkbox.mui-left label,
+			.mui-radio.mui-left label {
+				padding-left: 50%;
+				padding-right: 0px;
+			}
+
+			input[type=color],
+			input[type=date],
+			input[type=datetime-local],
+			input[type=datetime],
+			input[type=email],
+			input[type=month],
+			input[type=number],
+			input[type=password],
+			input[type=search],
+			input[type=tel],
+			input[type=text],
+			input[type=time],
+			input[type=url],
+			input[type=week],
+			select,
+			textarea {
+				margin-bottom: 0px;
+			}
+
+			.mui-checkbox input[type=checkbox]:before,
+			.mui-radio input[type=radio]:before {
+				/*font-size: 20px;*/
+			}
+
+			.call-type {
+				width: 20%;
+				float: left;
+			}
+
+			.mui-media-body {
+				background: #D8D8D8;
+				padding: 3px;
+			}
+		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title"></h1>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title"></h1>
+			<a id="commit" class="mui-icon mui-icon-checkmarkempty mui-pull-right"></a>
 		</header>
 		<div class="mui-content">
-		    记事
+			<ul class="mui-table-view" id="ul_table">
+				<div style="width: 100%;">
+					<div class="mui-row">
+						<!--<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
+								<span class="mui-icon iconfont icon-date" style="color: deepskyblue;margin-right: 10px;"></span>
+								<font style="margin-right: 10px;">时间</font>
+							</div>
+							<div class="mui-col-sm-8 mui-col-xs-8" style="line-height: 36px;">
+								<font id="time" style="color: #AAAAAA;">2016年11月18日11:31</font>
+							</div>-->
+						<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
+							<span class="mui-icon iconfont icon-xie" style="color: #86BE49;margin-right: 10px;"></span>
+							<font style="margin-right: 10px;">类型</font>
+						</div>
+						<div class="mui-col-sm-3 mui-col-xs-3" value="2">
+							<div class="mui-input-row mui-checkbox mui-left">
+								<label>记事</label>
+								<input id="cb_2" name="checkbox" type="checkbox" checked="true" disabled="disabled">
+							</div>
+						</div>
+					</div>
+					<div id="record">
+						<div class="mui-input-row" style="margin: 0px 5px;">
+							<textarea id="textarea_record" rows="4" placeholder="记事："></textarea>
+						</div>
+					</div>
+				</div>
+			</ul>
 		</div>
 		<script type="text/javascript">
-			mui.init()
+			mui.init();
+			mui.plusReady(function() {
+				//---从父页面获取数据---start---
+				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				var subData = main.data; //接收页面传入的参数值
+				console.log('从父页面获取的数据:' + JSON.stringify(subData));
+				document.getElementById("title").innerText = subData.data.StudentName;
+				//---从父页面获取数据---end---
+
+				document.getElementById('commit').addEventListener('tap', function() {
+					var msgContent = document.getElementById("textarea_record").value;
+					if(msgContent.replace(/(^\s*)|(\s*$)/g, "") == "") {
+						mui.toast('请输入文字');
+					} else {
+						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+						var personalUNICK = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
+
+						//70.（云档案）新增某学生档案
+						//所需参数
+						var comData = {
+							parentId: personalUTID, //家长ID,
+							studentId: subData.data.StudentId, //	学生ID,
+							studentName: subData.data.StudentName, //学生姓名,
+							className: '', //	班级名称,
+							msgContent: msgContent, //记事内容,
+							encType: '3', //附件类型,1图片2音视频3仅文字
+							encAddr: '', //附件地址,多个的情况例如：1.jpg|2.jpg
+							encImg: '', //附件缩略图地址,
+							publisherName: personalUNICK, //	发布者姓名,
+							noteType: '2', //点到记事类型,1点到2记事
+							checkType: '1' //点到类型,1 正常2 旷课3 迟到4 早退5 其他
+						};
+						//返回	非0为正确
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						postDataPro_addStudentFile(comData, wd, function(data) {
+							console.log('70_addStudentFile_新增某学生档案.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode == 0) {
+								console.log('新增成功：' + JSON.stringify(data.RspData.Result));
+								mui.toast('发送成功');
+								mui.back();
+							} else {
+								if(data.RspCode != 9) {
+									mui.toast(data.RspTxt);
+								}
+							}
+							wd.close();
+						});
+					}
+				});
+			})
 		</script>
 	</body>
 

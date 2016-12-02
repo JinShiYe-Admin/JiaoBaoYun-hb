@@ -325,9 +325,8 @@
 									document.getElementById("uimg").src = '../../image/utils/default_personalimage.png';
 								}
 								document.getElementById("bot").style.display = 'inline';
-								if(dataList.length == 0) {
-									getUserInfo(); //查询资料
-								}
+								document.getElementById("row_data").innerHTML = '';
+								getUserInfo(); //查询资料
 							} else if(data.RspCode == 9999) {
 								document.getElementById("bot").style.display = 'none';
 								document.getElementById("unick").innerText = '';
