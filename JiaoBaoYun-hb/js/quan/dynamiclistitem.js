@@ -184,6 +184,8 @@ var dynamiclistitem = (function($, mod) {
 					replyComment = replyComment+ html1 + html2 + html3 + html4 + html5;
 				}
 				replyComment = replyComment +'</div>'
+			}else{
+				replyComment = '</div>'
 			}
 
 			htmlCommentList2 = htmlCommentList2 + firstComment+replyComment;
@@ -191,9 +193,9 @@ var dynamiclistitem = (function($, mod) {
 
 		htmlCommentList = htmlCommentList1 + htmlCommentList2 + '</div>';
 
-//		var htmlCommentBtn = '<div class="mui-col-sm-12 mui-col-xs-12"><button type="button" class="mui-btn dynamic-comment-btn"><p class="mui-pull-left">评论</p></button></div>';
+		var htmlCommentBtn = '<div  class="mui-col-sm-12 mui-col-xs-12"><button id="bottomComment' + id + '" type="button" class="mui-btn dynamic-comment-btn"><p class="mui-pull-left">评论</p></button></div>';
 
-		html = html + htmlPraiseList + htmlCommentList;
+		html = html + htmlPraiseList + htmlCommentList+htmlCommentBtn;
 
 		var div = document.createElement('div');
 		div.className = 'mui-row mui-row-padding-8px';

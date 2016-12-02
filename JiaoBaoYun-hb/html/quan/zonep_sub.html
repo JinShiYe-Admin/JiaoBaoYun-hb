@@ -531,6 +531,10 @@
 			});
 			mui('.mui-table-view').on('tap', '.dynamic-comment-btn', function() {
 				click.push('评论按钮');
+				tempIndex = this.id.replace('bottomComment', '');
+				console.log('tempIndex====' + tempIndex)
+				mui('.mui-popover').popover('show');
+				window.event.stopPropagation()
 			});
 		});
 
