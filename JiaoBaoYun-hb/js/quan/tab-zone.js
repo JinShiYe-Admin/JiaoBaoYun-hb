@@ -1,33 +1,55 @@
 mui.init({
-//	pullRefresh: {
-//		container: '#pullrefresh',
-//		down: {
-//			callback: pulldownRefresh
-//		},
-//		up: {
-//			contentrefresh: '正在加载...',
-//			callback: pullupRefresh
-//		}
-//	}
-});
 
+});
 mui.plusReady(function() {
-		var	ws=plus.webview.currentWebview();
-		ws.setPullToRefresh({
-			support:true,//是否开启Webview窗口的下拉刷新功能
-			height:"50px",//窗口的下拉刷新控件高度
-			range:"200px",//)窗口可下拉拖拽的范围
-			contentdown:{
-				caption:"下拉可以刷新"
+	getStuList(); //获取学生列表
+	addSomeEvent();
+
+})
+
+function addSomeEvent() {
+	//跳转到学生动态界面
+	mui('.mui-table-view').on('tap', '.studentsdynamic', function() {
+		var index = this.id.replace('studentsdynamic', '');
+		console.log('studentsdynamic====' + index)
+		mui.openWindow({
+			url: 'studentdynamic_main.html',
+			id: 'studentdynamic_main.html',
+			styles: {
+				top: '0px', //设置距离顶部的距离
+				bottom: '0px'
 			},
-			contentover:{
-				caption:"释放立即刷新"
+			extras: {
+				data: {
+					studentId: topStudentArr[index].stuid,
+					classId: topStudentArr[index].gid,
+					studentName: topStudentArr[index].stuname,
+					stuimg: topStudentArr[index].stuimg
+				}
+
 			},
-			contentrefresh:{
-				caption:"正在刷新..."
-			}
-		},pulldownRefresh);//刷新
-	//	plus.nativeUI.toast("下拉可以刷新");
+		});
+	});
+	//跳转到班级动态界面
+	mui('.mui-table-view').on('tap', '.tarClass', function() {
+		var index = this.id.replace('tarClass', '');
+		console.log('index：' + index)
+		mui.openWindow({
+			url: 'class_space.html',
+			id: 'class_space.html',
+			styles: {
+				top: '0px', //设置距离顶部的距离
+				bottom: '0px'
+			},
+			extras: {
+				data: {
+					userId: personalUTID,
+					classId: datasource[index].gid
+				},
+				className: datasource[index].gname
+			},
+		});
+	});
 	window.addEventListener('infoChanged', function() {
 		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 		var ul = document.getElementById('top-list');
@@ -91,52 +113,23 @@ mui.plusReady(function() {
 		}
 
 	});
-	getStuList(); //获取学生列表
-	//	getGroupList(); //获取所有的群
-	//跳转到学生动态界面
-	mui('.mui-table-view').on('tap', '.studentsdynamic', function() {
-		var index = this.id.replace('studentsdynamic', '');
-		console.log('studentsdynamic====' + index)
-		mui.openWindow({
-			url: 'studentdynamic_main.html',
-			id: 'studentdynamic_main.html',
-			styles: {
-				top: '0px', //设置距离顶部的距离
-				bottom: '0px'
-			},
-			extras: {
-				data: {
-					studentId: topStudentArr[index].stuid,
-					classId: topStudentArr[index].gid,
-					studentName: topStudentArr[index].stuname,
-					stuimg: topStudentArr[index].stuimg
-				}
-
-			},
-		});
-	});
-	//跳转到班级动态界面
-	mui('.mui-table-view').on('tap', '.tarClass', function() {
-		var index = this.id.replace('tarClass', '');
-		console.log('index：' + index)
-		mui.openWindow({
-			url: 'class_space.html',
-			id: 'class_space.html',
-			styles: {
-				top: '0px', //设置距离顶部的距离
-				bottom: '0px'
-			},
-			extras: {
-				data: {
-					userId: personalUTID,
-					classId: datasource[index].gid
-				},
-				className: datasource[index].gname
-			},
-		});
-	});
-
-})
+	var ws = plus.webview.currentWebview();
+	ws.setPullToRefresh({
+		support: true, //是否开启Webview窗口的下拉刷新功能
+		height: "50px", //窗口的下拉刷新控件高度
+		range: "200px", //)窗口可下拉拖拽的范围
+		contentdown: {
+			caption: "下拉可以刷新"
+		},
+		contentover: {
+			caption: "释放立即刷新"
+		},
+		contentrefresh: {
+			caption: "正在刷新..."
+		}
+	}, pulldownRefresh); //刷新
+	//	plus.nativeUI.toast("下拉可以刷新");
+}
 
 //获取学生列表
 function getStuList() {
@@ -253,14 +246,8 @@ function getGroupList() {
 		console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0) {
-			var leftImg = document.getElementById('leftImg');
-			var parent = document.getElementById('parent');
-			leftImg.style.visibility = 'visible';
-			parent.style.visibility = 'visible';
-			var addGroup = document.getElementById('addGroup');
-			if(addGroup){
-				addGroup.style.visibility = 'hidden';
-			}
+			showBlankPage(false);
+
 			datasource = data.RspData; //底部列表数据
 			requestTimes = datasource.length; //记录顶部 班级动态请求次数
 			requestTimes2 = datasource.length; //记录底部 通过循环请求群用户列表请求次数
@@ -275,26 +262,8 @@ function getGroupList() {
 
 			}
 
-		} else if(data.RspCode == 9) {
-			var leftImg = document.getElementById('leftImg');
-			var parent = document.getElementById('parent');
-			leftImg.style.visibility = 'hidden';
-			parent.style.visibility = 'hidden';
-			var h = document.createElement('h1');
-			h.style.color = 'darkgray';
-			h.id = 'addGroup'
-			h.innerHTML = '请申请加入班级';
-			var plusImg = document.createElement('img');
-			plusImg.src = '../../image/quan/u90.gif';
-			plusImg.id = 'add';
-			h.style.visibility = 'visible'
-			h.appendChild(plusImg);
-			var body = document.getElementById('pullrefresh');
-			body.insertBefore(h, body.firstChild);
-			console.log(body.innerHTML)
-			events.addTap('add', function() {
-				events.openNewWindow('../mine/qun_manage_info.html');
-			})
+		} else if(data.RspCode == 9) { //没有群
+			showBlankPage(true);
 
 		} else {
 			mui.toast(data.RspTxt);
@@ -581,6 +550,47 @@ function addBottomTap(tableIndex, cellIndex) {
 		});
 	});
 }
+
+function showBlankPage(isBlank) {
+	if(isBlank == true) {
+		//	隐藏家长圈
+		var leftImg = document.getElementById('leftImg');
+		var parent = document.getElementById('parent');
+		leftImg.style.visibility = 'hidden';
+		parent.style.visibility = 'hidden';
+		//	显示加号
+		var div = document.createElement('div');
+		div.id = 'plusDIv';
+		div.style.height = '1000px'
+		div.style.marginTop = '50px'
+		div.style.textAlign = 'center'
+		div.style.fontSize = '18px'
+		
+		div.innerHTML = '请申请加入班级';
+		var plusImg = document.createElement('img');
+		plusImg.src = '../../image/quan/u90.gif';
+		plusImg.id = 'add'
+		plusImg.style.marginLeft = '20px'
+		plusImg.style.verticalAlign = '-20px'
+		div.appendChild(plusImg);
+		div.style.visibility = 'visible'
+		var content = document.getElementsByClassName('mui-content');
+		content[0].insertBefore(div, content[0].firstChild);
+		events.addTap('add', function() {
+			events.openNewWindow('../mine/qun_manage_info.html');
+		})
+	} else {
+		var leftImg = document.getElementById('leftImg');
+		var parent = document.getElementById('parent');
+		leftImg.style.visibility = 'visible';
+		parent.style.visibility = 'visible';
+		var plusDIv = document.getElementById('plusDIv');
+		if(plusDIv) {
+			plusDIv.style.visibility = 'hidden';
+		}
+	}
+
+}
 //下拉刷新
 function pulldownRefresh() {
 
@@ -589,7 +599,7 @@ function pulldownRefresh() {
 		datasource = []; //重置数据源
 		topArray = []; //重置底部列表数据
 		getStuList();
-		var	ws=plus.webview.currentWebview();
+		var ws = plus.webview.currentWebview();
 		ws.endPullToRefresh(); //refresh completed
 	}, 1500);
 }
