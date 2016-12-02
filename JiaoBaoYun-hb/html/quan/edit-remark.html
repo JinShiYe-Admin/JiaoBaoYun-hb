@@ -15,7 +15,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">编辑备注</h1>
-			<a id="save" class="mui-pull-right">保存</a>
+			<a id="save-remark" class="mui-pull-right">保存</a>
 		</header>
 		<div class="mui-content">
 			<input id="remark-input" type="text" placeholder="请输入备注" />
@@ -25,19 +25,21 @@
 		<script src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript">
 			mui.init()
+			var remarkInfo;
 			mui.plusReady(function() {
 				window.addEventListener('editRemark', function(e) {
-					var info = e.detail.data;
-					document.getElementById('remark-input').value=info.bunick;
-					var save = document.getElementById('save');
-				
-					save.addEventListener('tap',
+					 remarkInfo = e.detail.data;
+					console.log('备注传过来的值'+JSON.stringify(remarkInfo));
+					document.getElementById('remark-input').value=remarkInfo.bunick;
+				})
+				var save = document.getElementById('save-remark');
+				save.addEventListener('tap',
 						function() {
 							var inputValue=getInputValue();
 							if(inputValue && inputValue.length > 0) {
-									var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+								var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 								postDataPro_PostUmkA({
-									vvl: info.butid,
+									vvl: remarkInfo.butid,
 									vvl1: inputValue
 								}, wd, function(data) {
 									wd.close();
@@ -45,8 +47,7 @@
 									if(data.RspCode == '0000') {
 										events.fireToPageNone('group-pInfo.html','remarkChanged');
 										mui.toast('修改备注成功！');
-//										setTimeout()
-//										mui.back();
+										mui.back();
 									} else {
 										mui.toast('修改失败，请重新来过');
 									}
@@ -56,7 +57,6 @@
 							}
 
 						})
-				})
 
 			})
 			var getInputValue = function() {

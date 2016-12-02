@@ -32,7 +32,6 @@ var getRemark = function() {
 			console.log('获取的备注信息：'+JSON.stringify(data));
 			var remark=document.getElementById('person-remark');
 			if(data.RspCode=='0000'){
-				
 				remark.innerText=data.RspData[0].bunick;
 				premark=data.RspData[0];
 			}else{
