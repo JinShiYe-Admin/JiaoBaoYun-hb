@@ -71,7 +71,7 @@ var getData = function(role, callback) {
 				top: -1, //选择条数,-1为全部
 				vvl: gid, //群ID,查询的值
 				vvl1: role == 2 ? 2 : 3,//如果是老师 获取2其他获取3学生资料
-				vtp:role==2?1:0
+				vtp:role==0?0:1
 			}, wd,
 			function(data) {
 				wd.close();

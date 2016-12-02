@@ -17,6 +17,7 @@ mui.plusReady(function() {
 	addListener();
 	window.addEventListener('remarkChanged',function(){
 		getRemark();
+		events.fireToPageNone('class-group.html','groupInfoChanged');
 	})
 })
 /**

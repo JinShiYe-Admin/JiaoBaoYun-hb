@@ -44,9 +44,9 @@
 									console.log('修改群备注的返回值：'+JSON.stringify(data))
 									if(data.RspCode == '0000') {
 										events.fireToPageNone('group-pInfo.html','remarkChanged');
-										events.fireToPageNone('class-group.html','remarkChanged');
 										mui.toast('修改备注成功！');
-										mui.back();
+//										setTimeout()
+//										mui.back();
 									} else {
 										mui.toast('修改失败，请重新来过');
 									}
