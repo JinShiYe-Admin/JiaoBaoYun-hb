@@ -1033,7 +1033,8 @@
 					"css/utils/common.css",
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"js/utils/h5fresh.js"
 				],
 				"refer": [
 					"html/quan/studentdynamic_main.html",
@@ -1712,7 +1713,8 @@
 					"html/mine/account-info.html",
 					"html/mine/qun_data.html",
 					"html/mine/qun_manage.html",
-					"html/mine/group-info.html"
+					"html/mine/group-info.html",
+					"html/mine/setting.html"
 				],
 				"priority": 0
 			},

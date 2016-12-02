@@ -66,10 +66,12 @@ var diffRoles = function(roles) {
 	 */
 var getData = function(role, callback) {
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		//16号接口
 		postDataPro_PostGUInf({
 				top: -1, //选择条数,-1为全部
 				vvl: gid, //群ID,查询的值
-				vvl1: role == 2 ? 2 : 3 //如果是老师 获取2其他获取3学生资料
+				vvl1: role == 2 ? 2 : 3,//如果是老师 获取2其他获取3学生资料
+				vtp:role==2?1:0
 			}, wd,
 			function(data) {
 				wd.close();

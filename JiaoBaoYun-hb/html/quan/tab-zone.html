@@ -16,20 +16,18 @@
 		<!--公用事件js文件-->
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
-		<!--h5下拉刷新-->
-		<script src="../../js/utils/h5fresh.js"></script>
 		<!--侧滑-->
 		<script type="text/javascript" src="../../js/main/slide_navigation.js"></script>
 		<script>
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 			var datasource = []; //底部列表数据
-			var topStudentArr = [];
+			var topStudentArr=[];
 			var topArray = []; //顶部班级列表数据
-			var requestTimes = 0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
-			var requestTimes2 = 0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
-			var requestTimes3 = 0;
+			var requestTimes=0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
+			var requestTimes2=0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
+			var requestTimes3=0;
 			var isRefresh = 0; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
-			var selectCell = {}; //选择的cell
+			var selectCell = {};//选择的cell
 		</script>
 		<style type="text/css">
 			/*自定义系统segmentcontrol控件*/
@@ -77,12 +75,12 @@
 	</head>
 
 	<body>
-		<div class="mui-content">
-
-			<!--第一个列表-->
-			<ul id="top-list" class="mui-table-view ">
-				<!--学生动态入口start-->
-				<!--<li class="mui-table-view-cell mui-media studentsdynamic">
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--第一个列表-->
+				<ul id="top-list" class="mui-table-view ">
+					<!--学生动态入口start-->
+					<!--<li class="mui-table-view-cell mui-media studentsdynamic">
 						<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">
 						<p class="time">10月19</p>
 						<div class="mui-media-body">
@@ -90,8 +88,8 @@
 							<p class='mui-ellipsis'>今天上课表现良好</p>
 						</div>
 					</li>-->
-				<!--学生动态入口end-->
-				<!--<li class="mui-table-view-cell mui-media tarClass">
+					<!--学生动态入口end-->
+					<!--<li class="mui-table-view-cell mui-media tarClass">
 
 						<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">
 						<p class="time">10月19</p>
@@ -112,12 +110,12 @@
 
 					</li>-->
 
-			</ul>
-			<!--标题栏-->
-			<h4>
+				</ul>
+				<!--标题栏-->
+				<h4>
 					<!--家长圈标题左边的图片-->
-					<img id="leftImg" style="height: 30px;visibility: hidden;"  src="../../image/tab_zone/u127.png" /  >
-					<span id="parent" style="visibility: hidden;" class="parent">家长圈</span>
+					<img style="height: 30px;"  src="../../image/tab_zone/u127.png" / >
+					<span  class="parent">家长圈</span>
 					<!--群组-->
 					<div style="padding-left: 90px;padding-bottom: 20px; margin-top: -35px;">
 				<div  class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-primary">
@@ -127,8 +125,7 @@
 				</div>
 			</div>
 				</h4>
-			<!--第二个列表-->
-			<div class="mui-scroll">
+				<!--第二个列表-->
 				<div id="userList" style="margin-top: -20px;">
 					<!--<div id="item1" class="mui-control-content mui-active">
 
@@ -156,9 +153,9 @@
 
 						</ul>
 					</div>-->
+
 				</div>
 			</div>
-
 		</div>
 
 </html>
