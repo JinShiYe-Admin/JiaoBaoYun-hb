@@ -154,6 +154,13 @@ mui.plusReady(function() {
 	var postData = plus.webview.currentWebview().data;
 	console.log('班级空间获取值：' + JSON.stringify(postData))
 	class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+	//更改个人信息，更新界面
+	window.addEventListener('infoChanged',function(){
+		pageIndex = 1;
+		var container = document.getElementById('classSpace_list');
+		events.clearChild(container);
+		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+	})
 	/***
 	 * 加载刷新
 	 */
