@@ -61,24 +61,26 @@ function addSomeEvent() {
 		getStuList();
 	})
 	window.addEventListener('addUserSpaceForMutiUsers', function(data) {
+		var userIdArr = [];
 		for(var i = 0; i < datasource.length; i++) {
 			var tempUserList = datasource[i].userList;
-			var userIdArr = [];
+			
 			for(var j = 0; j < tempUserList.length; j++) {
 				var userId = tempUserList[j].utid;
 				userIdArr.push(userId);
 			}
-			var userIds = arrayToStr(userIdArr);
-			var postData = {
-				userIds: userIds,
-				userSpaceId: data.detail.userSpaceId
-			}
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_addUserSpaceForMutiUsers(postData, wd, function(data) {
-				wd.close()
-				console.log('推送个人空间成功' + JSON.stringify(data));
-			})
 		}
+		userIdArr = arrayDupRemoval(userIdArr)
+		var userIds = arrayToStr(userIdArr);
+		var postData = {
+			userIds: userIds,
+			userSpaceId: data.detail.userSpaceId
+		}
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		postDataPro_addUserSpaceForMutiUsers(postData, wd, function(data) {
+			wd.close()
+			console.log('推送个人空间成功' + JSON.stringify(data));
+		})
 	})
 
 	document.addEventListener('setRead', function(e) {
@@ -253,10 +255,11 @@ function getGroupList() {
 			requestTimes2 = datasource.length; //记录底部 通过循环请求群用户列表请求次数
 			var userList = []; //临时用户列表
 			for(var i = 0; i < datasource.length; i++) {
-				console.log('datasource[' + i + '].gimg===' + datasource[i].gimg);
 
 				//判断img是否为null，或者空
 				datasource[i].gimg = updateHeadImg(datasource[i].gimg, 2)
+				console.log('datasource[' + i + '].gimg===' + datasource[i].gimg);
+
 				getTopList(i); //获取顶部列表
 				getBottomList(i, userList); //获取底部列表
 
@@ -565,7 +568,7 @@ function showBlankPage(isBlank) {
 		div.style.marginTop = '50px'
 		div.style.textAlign = 'center'
 		div.style.fontSize = '18px'
-		
+
 		div.innerHTML = '请申请加入班级';
 		var plusImg = document.createElement('img');
 		plusImg.src = '../../image/quan/u90.gif';
