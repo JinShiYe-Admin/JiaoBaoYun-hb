@@ -202,8 +202,8 @@ events.addTap('btn-save', function() {
 			console.log(JSON.stringify(data));
 			if(data.RspCode == '0000') {
 				mui.toast('申请通过!');
-				mui.fire('/html/mine/approval-apply.html', 'appPassed', gutid);
-				mui.fireToPageNone('/html/mine/approval-apply.html', 'newsChanged');
+				events.fireToPageNone('/html/mine/approval-apply.html','appPassed');
+				events.fireToPageNone('mine.html', 'newsChanged');
 				mui.back();
 			} else {
 				mui.toast(data.RspTxt);
