@@ -65,7 +65,7 @@ var manageAccountInfo = function(data) {
 		//{"utid":5,"uid":"18853113151","uname":"test867830028690115",
 		//"unick":"BugHunter","usex":0,"utxt":null,
 		//"uimg":"http://oh2zmummr.bkt.clouddn.com/headimge5.png"}
-		document.getElementById('info-headImg').src = data.uimg;
+		document.getElementById('info-headImg').src = data.uimg?data.uimg:'../../image/utils/default_personalimage.png';
 		document.getElementById('info-name').innerText = data.uname;
 		document.getElementById('info-nick').innerText = data.unick;
 		document.getElementById('data-info').innerText = data.uid;

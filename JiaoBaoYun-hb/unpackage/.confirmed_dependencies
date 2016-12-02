@@ -844,7 +844,16 @@
 			"js/utils/events.js",
 			"html/mine/privacy.html",
 			"js/storageKeyName.js",
-			"js/libs/myStorage/myStorage.js"
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/register/modify_password.html",
@@ -1195,7 +1204,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/mine/approval-apply.html",

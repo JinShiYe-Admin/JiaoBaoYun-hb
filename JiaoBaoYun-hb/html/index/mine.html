@@ -19,7 +19,7 @@
 		<div class="mui-content">
 
 			<div id="title" class="title">
-				<img id="uimg" style="height: 60px;width: 60px;" src="../image/utils/default_personalimage.png" class="head-portrait" /><br />
+				<img id="uimg" style="height: 60px;width: 60px;" src="../../image/utils/default_personalimage.png" class="head-portrait" /><br />
 				<h4 id="uname">姓名</h4>
 				<p id="utext">暂无信息</p>
 			</div>
@@ -162,7 +162,7 @@
 					var myDate = new Date();
 					document.getElementById('uimg').src = info.uimg + '?' + myDate.getTime();
 				}else{
-					document.getElementById('uimg').src ='../image/utils/default_personalimage.png';
+					document.getElementById('uimg').src ='../../image/utils/default_personalimage.png';
 				}
 				if(info.uname) {
 					document.getElementById('uname').innerText = info.uname;
