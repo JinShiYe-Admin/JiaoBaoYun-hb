@@ -1204,7 +1204,8 @@
 			"html/mine/qun_data.html",
 			"html/mine/qun_manage.html",
 			"html/mine/group-info.html",
-			"html/mine/setting.html"
+			"html/mine/setting.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/mine/qun_manage_info_change.html": {
