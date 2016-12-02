@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -36,7 +35,7 @@
 						<div id="scroll1" class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul id="finished-list" class="mui-table-view">
-									
+
 								</ul>
 							</div>
 						</div>
@@ -58,6 +57,53 @@
 		<script src="../../js/mui.min.js"></script>
 		<!--加载选项按钮-->
 		<script src="../../js/homework/homework_detail.js"></script>
+		<script src="../../js/publicHomeworkProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
+
+		<script type="text/javascript">
+			mui.init();
+			
+			//从主页传值到这个界面的model
+			var homeworkModel = {
+                    "Contents": "Test",
+                    "HomeworkId": 28,
+                    "HomeworkTitle": "2016年12月2日星期五数学作业",
+                    "Remain": 1,
+                    "Subject": "语文",
+                    "Upload": 0
+               };
+            var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+			
+			mui.plusReady(function() {
+				
+				//获取作业详情
+				requestHomeworkDetail();
+			});
+
+			//获取作业详情
+			function requestHomeworkDetail() {
+				//所需参数
+				var comData = {
+					teacherId: personalUTID, //教师Id
+					homeworkId: homeworkModel.HomeworkId //作业id；
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//2.获取教师发布作业详情；
+				postDataPro_GetHomework(comData, wd, function(data) {
+					wd.close();
+					console.log('2.postDataPro_GetHomework:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+			}
+		</script>
+
 	</body>
 
 </html>
