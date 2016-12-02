@@ -1029,7 +1029,8 @@
 			"html/clip/clip_sub.html",
 			"html/quan/class-dynamic.html",
 			"html/quan/aboutme.html",
-			"html/index/mine.html"
+			"html/index/mine.html",
+			"html/quan/pub-dynamic.html"
 		]
 	},
 	"html/mine/add-info.html": {
@@ -1265,6 +1266,33 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/utils/events.js",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/quan/pub-dynamic.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/utils/files.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/utils/ASFiles.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/camera.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"css/quan/class_space.css",
 			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
