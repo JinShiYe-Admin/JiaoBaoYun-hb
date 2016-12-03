@@ -243,7 +243,7 @@
 										tempInfo.uimg = tepI0000.uimg;
 										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
 										//
-										events.fireToPageNone('../mine.html','infoChanged');
+										events.fireToPageNone('mine.html','infoChanged');
 										events.fireToPageNone('../cloud/cloud_home.html','infoChanged');
 										events.fireToPageNone('../quan/tab-zone.html','infoChanged');
 										console.log('登录保存的个人信息：' + JSON.stringify(tempInfo))
@@ -403,7 +403,7 @@
 									data.RspData.ispw = '1';
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 									//
-									events.fireToPageNone('../mine.html','infoChanged');
+									events.fireToPageNone('mine.html','infoChanged');
 									events.fireToPageNone('../cloud/cloud_home.html','infoChanged');
 									events.fireToPageNone('../quan/tab-zone.html','infoChanged')
 									//存储自动登录

@@ -68,17 +68,18 @@ var class_space = (function(mod) {
 	 * @param {Object} item
 	 */
 	var createInnerHtml = function(item) {
-		var inner = '<a><div class="mui-pull-left head-img" >' +
+		var inner = '<div><div class="mui-pull-left head-img" >' +
 			'<img class="head-portrait" src="' + item.publisherImg + '"/>' +
 			'<p>' + item.publisherName + '</p>' +
 			'</div>' +
-			'<div class="chat_content_left ">' +
-				'<div class="chat-body">' +
-				item.MsgContent + '<br/>' +
+			'<div class="chat_content_left">' +
+				'<div class="chat-body"><p class="chat-words">' +
+				item.MsgContent + '</p>' +
 				createImgsInner(item) +
 				'</div>' +
-				'<p>' + item.PublishDate + '<font>浏览(' + item.ReadCnt + '人)</font>点赞(' + item.LikeCnt + '人)</p>' +
-			'</div></a>';
+				'<p class="chat-bottom">' + item.PublishDate + 
+				'<span class="mui-icon iconfont icon-support">(' + item.LikeCnt + ')</span><span class="mui-icon iconfont icon-xianshi">(' + item.ReadCnt + ')</span></p>' +
+			'</div></div>';
 		return inner;
 	}
 	/**
@@ -154,6 +155,13 @@ mui.plusReady(function() {
 	var postData = plus.webview.currentWebview().data;
 	console.log('班级空间获取值：' + JSON.stringify(postData))
 	class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+	//更改个人信息，更新界面
+	window.addEventListener('infoChanged',function(){
+		pageIndex = 1;
+		var container = document.getElementById('classSpace_list');
+		events.clearChild(container);
+		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+	})
 	/***
 	 * 加载刷新
 	 */

@@ -1,3 +1,7 @@
+/**
+ * 申請入群界面邏輯
+ * @anthor an
+ */
 mui.init()
 mui('.mui-scroll-wrapper').scroll({
 	indicators: true, //是否显示滚动条
@@ -54,6 +58,9 @@ var setData = function(data) {
 		list.appendChild(li);
 	})
 }
+/**
+ * 設置列表監聽
+ */
 var setListListener = function() {
 		mui('.mui-table-view').on('tap', '.apply-group', function() {
 			choseGroupId = parseInt(this.getAttribute('gid'));
@@ -82,6 +89,7 @@ var setButtonsListener = function() {
 					wd.close();
 					if(data.RspCode == '0000') {
 						mui.toast('申请成功！');
+						events.fireToPageNone('/html/mine/apply-record.html','applied')
 					} else {
 						mui.toast("申请失败:" + data.RspTxt)
 					}

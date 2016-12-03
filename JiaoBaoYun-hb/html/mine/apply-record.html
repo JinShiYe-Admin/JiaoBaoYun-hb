@@ -1,3 +1,5 @@
+<!--申請界面記錄-->
+<!--@anthor an-->
 <!doctype html>
 <html>
 
@@ -30,13 +32,22 @@
 		<script src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript">
 			mui.init()
+			mui('.mui-scroll-wrapper').scroll({
+				indicators: true, //是否显示滚动条
+			})
 			mui.plusReady(function() {
 				events.preload('apply-group.html');
 				events.addTap('btn-apply', function() {
 					events.showPreloadPage('apply-group.html');
 				})
 				getListData();
+				window.addEventListener('applied',function(){
+					getListData();
+				})
 			})
+			/**
+			 * 獲取申請數據
+			 */
 			var getListData = function() {
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_PostMJoin({}, wd, function(data) {
@@ -49,6 +60,10 @@
 					}
 				})
 			}
+			/**
+			 * 放置申請數據
+			 * @param {Object} data 獲取的數據
+			 */
 			var setListData = function(data) {
 				var list = document.getElementById('list-container');
 				data.forEach(function(cell, i, data) {
@@ -60,7 +75,7 @@
 			}
 
 			/**
-			 * 
+			 * inner數據
 			 * @param {Object} cell	
 			 *		gutid:'',//	邀请记录ID	int		否
 			 *		gid:'',//	群ID	int		否	

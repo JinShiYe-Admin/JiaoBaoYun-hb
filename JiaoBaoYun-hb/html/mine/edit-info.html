@@ -38,6 +38,7 @@
 				setContents(curPage.data,title,inText,pInfo)
 				var save=document.getElementById('save');
 				save.addEventListener('tap',function(){
+					console.log('save is clicked');
 					postInfo(curPage.data,inText,pInfo,curPage);
 				})
 			})
@@ -67,6 +68,7 @@
 						console.log('更改后信息:'+JSON.stringify(pInfo));
 						mui.fire(curpage.opener(),'infoChanged');
 						events.fireToPageNone('mine.html','infoChanged');
+						events.fireToPageNone('classSpace-sub.html','infoChanged');
 						mui.back()
 					}else{
 						mui.toast(data.RspTxt);

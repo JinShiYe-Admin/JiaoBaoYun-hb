@@ -1,0 +1,68 @@
+<!--编辑备注-->
+<!--@anthor an-->
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">编辑备注</h1>
+			<a id="save-remark" class="mui-pull-right">保存</a>
+		</header>
+		<div class="mui-content">
+			<input id="remark-input" type="text" placeholder="请输入备注" />
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			var remarkInfo;
+			mui.plusReady(function() {
+				window.addEventListener('editRemark', function(e) {
+					 remarkInfo = e.detail.data;
+					console.log('备注传过来的值'+JSON.stringify(remarkInfo));
+					document.getElementById('remark-input').value=remarkInfo.bunick;
+				})
+				var save = document.getElementById('save-remark');
+				save.addEventListener('tap',
+						function() {
+							var inputValue=getInputValue();
+							if(inputValue && inputValue.length > 0) {
+								var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+								postDataPro_PostUmkA({
+									vvl: remarkInfo.butid,
+									vvl1: inputValue
+								}, wd, function(data) {
+									wd.close();
+									console.log('修改群备注的返回值：'+JSON.stringify(data))
+									if(data.RspCode == '0000') {
+										events.fireToPageNone('group-pInfo.html','remarkChanged');
+										mui.toast('修改备注成功！');
+										mui.back();
+									} else {
+										mui.toast('修改失败，请重新来过');
+									}
+								})
+							}else{
+								mui.toast('请输入备注！');
+							}
+
+						})
+
+			})
+			var getInputValue = function() {
+				return document.getElementById('remark-input').value;
+			}
+		</script>
+	</body>
+
+</html>

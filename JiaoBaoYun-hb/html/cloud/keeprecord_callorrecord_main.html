@@ -105,7 +105,7 @@
 			//创建子页面
 			var sub = plus.webview.create('keeprecord_callorrecord_sub.html', 'keeprecord_callorrecord_sub.html', {
 				top: '45px',
-				bottom: '0px',
+				bottom: localStorage.getItem('$Statusbar'),
 			}, {
 				data: data
 			});
@@ -117,8 +117,7 @@
 			//新增点到或记事
 			document.getElementById('commit').addEventListener('tap', function() {
 				var main = plus.webview.getWebviewById('keeprecord_callorrecord_sub.html');
-				mui.fire(main, "addNote", {
-				});
+				mui.fire(main, "addNote", {});
 			})
 		});
 	</script>

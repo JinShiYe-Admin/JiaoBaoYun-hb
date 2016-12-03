@@ -109,7 +109,9 @@
 				/*点赞者和评论者的名字*/
 				color: #1277C7;
 			}
-			
+			.replyComment{
+				padding-top: 5px;
+			}
 			.dynamic-comment-btn {
 				/*底部的评论按钮*/
 				width: 100%;
@@ -174,7 +176,7 @@
 		var publisherId;
 		var tempIndex;
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
-
+		var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户id 
 		mui.init({
 			pullRefresh: {
 				container: '#pullrefresh',
@@ -320,14 +322,11 @@
 											tempModel0.LikeUsers.splice(item2, 1, tempModel);
 										}
 									}
-console.log('tempModel===='+JSON.stringify(tempModel));
-console.log('tempModel0===='+JSON.stringify(tempModel0));
 									//对比id是否一致
 									if(tempModel0.PublisherId == tempModel.utid) {
 										//合并
 										tempModel0 = $.extend(tempModel0, tempModel);
 									}
-									console.log('9999999999===='+JSON.stringify(tempModel0));
 									//循环当前model中的回复数组
 									for(var item1 in tempModel0.Comments) {
 										//回复中的model
@@ -513,7 +512,10 @@ console.log('tempModel0===='+JSON.stringify(tempModel0));
 			mui('.mui-table-view').on('tap', '.replyComment', function() {
 				click.push('评论回复');
 				tempIndex = this.id.replace('replyComment', '');
+				console.log('tempIndex====' + tempIndex)
 				mui('.mui-popover').popover('show');
+				window.event.stopPropagation()
+
 				//				var id_Index = this.id.replace('replyComment', '');
 				//				console.log('id_Index===' + id_Index)
 
@@ -529,6 +531,10 @@ console.log('tempModel0===='+JSON.stringify(tempModel0));
 			});
 			mui('.mui-table-view').on('tap', '.dynamic-comment-btn', function() {
 				click.push('评论按钮');
+				tempIndex = this.id.replace('bottomComment', '');
+				console.log('tempIndex====' + tempIndex)
+				mui('.mui-popover').popover('show');
+				window.event.stopPropagation()
 			});
 		});
 
@@ -591,14 +597,14 @@ console.log('tempModel0===='+JSON.stringify(tempModel0));
 
 				var tempComment = tempModel.Comments[i];
 				commentList.push(tempComment);
-				if(tempComment.Replys.length != 0) {
-					var replys = tempComment.Replys
-					for(var j = 0; j < replys.length; j++) {
-						var replyModel = replys[j];
-						commentList.push(replyModel);
-					}
-
-				}
+//				if(tempComment.Replys.length != 0) {
+//					var replys = tempComment.Replys
+//					for(var j = 0; j < replys.length; j++) {
+//						var replyModel = replys[j];
+//						commentList.push(replyModel);
+//					}
+//
+//				}
 
 			}
 			console.log(JSON.stringify(commentList))
@@ -618,7 +624,7 @@ console.log('tempModel0===='+JSON.stringify(tempModel0));
 		});
 		//添加评论
 		document.getElementById('addComment').addEventListener('tap', function() {
-			console.log('tempIndex====' + tempIndex)
+			
 			var replyName = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick
 			var inputComment = document.getElementById("inputComment");
 			var name = inputComment.value; //评论内容
@@ -628,8 +634,21 @@ console.log('tempModel0===='+JSON.stringify(tempModel0));
 				if(tempIndex.indexOf('-') >= 0) {
 					var indexArr = tempIndex.split('-');
 					var id = indexArr[0];
-					var upperId = indexArr[1];
-					var replyUserId = indexArr[2];
+					var commentId = indexArr[1];
+					var replyId = indexArr[2];
+					
+					var tempModel = zonepArray[id].Comments[commentId];
+					var upperId = tempModel.TabId;
+					var replyUserId;
+					var ReplyIdName;
+					if(replyId == '评论'){
+						replyUserId = tempModel.UserId
+						ReplyIdName = tempModel.UserIdName
+					}else{
+						replyUserId = tempModel.Replys[replyId].UserId;
+						ReplyIdName = tempModel.Replys[replyId].UserIdName;
+					}
+					
 					var comData = {
 						userId: personalUTID, //用户ID
 						upperId: upperId, //上级评论ID
@@ -637,21 +656,22 @@ console.log('tempModel0===='+JSON.stringify(tempModel0));
 						userSpaceId: zonepArray[id].TabId, //用户空间ID
 						commentContent: inputComment.value //回复内容
 					};
+					console.log('comData====='+JSON.stringify(comData))
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
 						wd.close();
 						console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
 						mui('.mui-popover').popover('hide');
 
-						//						var replyComment = document.getElementById('replyComment' + tempIndex);
-						//						var nextReplyComment = document.createElement('div');
-						//						var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + replyName + '</font>';
-						//						var html3 = '<font class="common-font-family-Regular">回复</font>';
-						//						var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + zonepArray[cellIndex].Comments[commentIndex].UserIdName + '</font>';
-						//						var html5 = '<font class="common-font-family-Regular">:' + inputComment.value + '</font>'
-						//						nextReplyComment.innerHTML = html2 + html3 + html4 + html5;
-						//						replyComment.parentNode.appendChild(nextReplyComment);
-						//						inputComment.value = '';
+												var replyComment = document.getElementById('replyComment'+id+'-'+commentId+'-'+'评论');
+												var nextReplyComment = document.createElement('div');
+												var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + personalunick + '</font>';
+												var html3 = '<font class="common-font-family-Regular">回复</font>';
+												var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + ReplyIdName + '</font>';
+												var html5 = '<font class="common-font-family-Regular">:' + inputComment.value + '</font>'
+												nextReplyComment.innerHTML = html2 + html3 + html4 + html5;
+												replyComment.appendChild(nextReplyComment);
+												inputComment.value = '';
 
 					})
 				} else {
@@ -665,16 +685,14 @@ console.log('tempModel0===='+JSON.stringify(tempModel0));
 						wd.close();
 						console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
 						mui('.mui-popover').popover('hide');
-						//						var commentArr = zonepArray[tempIndex].Comments;
-						//						if(commentArr.length==0){
-						//							
-						//						}
-						//						var addComment = document.getElementById('replyComment' + zonepArray[tempIndex].Comments);
-						//						var nextComment = document.createElement('div');
-						//						var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + replyName + '</font>';
-						//						var html3 = '<font class="common-font-family-Regular">：' + inputComment.value + '</font>'
-						//						nextComment.innerHTML = html2 + html3;
-						//						addComment.parentNode.appendChild(nextComment);
+						var commentArr = zonepArray[tempIndex].Comments;
+						console.log("commentList"+tempIndex);
+							var commentList = document.getElementById("commentList"+tempIndex);
+							var html1 = '<div id="replyComment' + tempIndex + '-' + commentArr.length + '-' + '评论' + '" class="mui-media-body replyComment">';
+							var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + personalunick + '</font>';
+							var html3 = '<font class="common-font-family-Regular">：' + inputComment.value + '</font></div>';
+							var htmlComment = html1 + html2 + html3;
+							commentList.innerHTML = commentList.innerHTML+htmlComment
 						inputComment.value = '';
 
 					})

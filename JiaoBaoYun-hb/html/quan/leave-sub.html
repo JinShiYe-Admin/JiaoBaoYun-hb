@@ -84,8 +84,14 @@
 			}
 		});
 		var userId;
+		var personalUTID;
 		mui.plusReady(function() {
+			window.addEventListener('refreshLeaveList',function(){
+				requestData(comData)
+			})
 			userId = plus.webview.currentWebview().data;
+		    personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+
 				var comData = {
 					userId: userId, //用户ID
 					pageIndex: (tempPage).toString(), //当前页数
@@ -257,13 +263,19 @@
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
 				var commentArr = leaveArray[i].Replys;
+				replyHTML = '';
 				var commentHTML = '';
+				if(userId==personalUTID){
+					replyHTML = '回复'
+				}else{
+					replyHTML = '';
+				}
 				for(var j=0;j<commentArr.length;j++){
 					commentHTML =commentHTML + '<div style="padding:0px 10px 10px 10px"><span id="reply" class=" dynamic-comment-name">'+commentArr[j].unick +':</span><font class="common-font-family-Regular">' + commentArr[j].MsgContent +
 					'</font></div>';
 				}
 					li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="'+leaveArray[i].uimg+'../../image/dynamic/u101.png"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply'
-					+i+'"class=" mui-pull-right dynamic-comment-name leaveReply">回复' +
+					+i+'"class=" mui-pull-right dynamic-comment-name leaveReply">'+replyHTML +
 					'</span><h4>' + leaveArray[i].unick + '</h4><p>' + leaveArray[i].MsgDate + '</p></div></div><div style="padding:0px 10px 10px 10px"><font>'+leaveArray[i].MsgContent+'</font></div>'+commentHTML; 
 
 

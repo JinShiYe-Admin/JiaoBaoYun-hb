@@ -12,10 +12,10 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
-		<link rel="stylesheet" href="../../css/mui.picker.min.css" />
-		<link rel="stylesheet" href="../../css/mui.poppicker.css" />
+		<!--<link rel="stylesheet" href="../../css/mui.picker.min.css" />-->
+		<!--<link rel="stylesheet" href="../../css/mui.poppicker.css" />-->
 		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/mui.picker.min.js"></script>
+		<!--<script type="text/javascript" src="../../js/mui.picker.min.js"></script>-->
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<style>
 			body,
@@ -85,7 +85,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>学生账号:</label>
-								<input id="stu_utid" type="text" class="mui-input-clear">
+								<input id="stu_utid" type="text" class="mui-input-clear" disabled="disabled">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
@@ -103,19 +103,19 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>昵称:</label>
-								<input type="text" class="mui-input-clear">
+								<input type="text" class="mui-input-clear" disabled="disabled">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>所属群:</label>
-								<input id="stu_gname" type="text" class="mui-input-clear">
+								<input id="stu_gname" type="text" class="mui-input-clear" disabled="disabled">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>简介:</label>
-								<input type="text" class="mui-input-clear">
+								<input type="text" class="mui-input-clear" disabled="disabled">
 							</div>
 						</li>
 					</div>
@@ -167,13 +167,13 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>账号:</label>
-								<input id="tea_utid" type="text" class="mui-input-clear">
+								<input id="tea_utid" type="text" class="mui-input-clear" disabled="disabled">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>昵称:</label>
-								<input type="text" class="mui-input-clear">
+								<input type="text" class="mui-input-clear" disabled="disabled">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
@@ -185,7 +185,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>所属群:</label>
-								<input id="tea_gname" type="text" class="mui-input-clear">
+								<input id="tea_gname" type="text" class="mui-input-clear" disabled="disabled">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
@@ -215,7 +215,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>简介:</label>
-								<input id="tea_introduction" type="text" class="mui-input-clear">
+								<input id="tea_introduction" type="text" class="mui-input-clear" disabled="disabled">
 							</div>
 						</li>
 					</div>
@@ -280,26 +280,26 @@
 					document.getElementById("par_gname").value = data.gname;
 					document.getElementById("par_create").style.display = 'inline';
 				}
-				var genderPicker = new mui.PopPicker();
-				genderPicker.setData([{
-					value: '男',
-					text: '男'
-				}, {
-					value: '女',
-					text: '女'
-				}]);
-
-				//性别监听
-				mui('.mui-content').on('tap', '.gender', function() {
-					console.log('gender:' + this.getAttribute('id'));
-					document.activeElement.blur(); //强制隐藏软键盘
-					var id = this.getAttribute('id')
-					genderPicker.show(function(items) {
-						document.getElementById(id).innerText = items[0].value;
-						//返回 false 可以阻止选择框的关闭
-						//return false;
-					});
-				});
+				//				var genderPicker = new mui.PopPicker();
+				//				genderPicker.setData([{
+				//					value: '男',
+				//					text: '男'
+				//				}, {
+				//					value: '女',
+				//					text: '女'
+				//				}]);
+				//
+				//				//性别监听
+				//				mui('.mui-content').on('tap', '.gender', function() {
+				//					console.log('gender:' + this.getAttribute('id'));
+				//					document.activeElement.blur(); //强制隐藏软键盘
+				//					var id = this.getAttribute('id')
+				//					genderPicker.show(function(items) {
+				//						document.getElementById(id).innerText = items[0].value;
+				//						//返回 false 可以阻止选择框的关闭
+				//						//return false;
+				//					});
+				//				});
 
 				//完成按钮监听
 				document.getElementById('finish').addEventListener('tap', function() {
