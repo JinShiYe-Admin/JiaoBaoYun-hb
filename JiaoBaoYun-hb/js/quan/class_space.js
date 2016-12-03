@@ -72,7 +72,7 @@ var class_space = (function(mod) {
 			'<img class="head-portrait" src="' + item.publisherImg + '"/>' +
 			'<p>' + item.publisherName + '</p>' +
 			'</div>' +
-			'<div class="chat_content_left ">' +
+			'<div class="chat_content_left">' +
 				'<div class="chat-body"><p class="chat-words">' +
 				item.MsgContent + '</p>' +
 				createImgsInner(item) +

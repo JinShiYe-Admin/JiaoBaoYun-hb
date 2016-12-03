@@ -65,6 +65,8 @@ div>.icon-jia:before,.icon-xiangji:before{
  */
 .chat_content_left{
 	width:75%; 
+	margin-right: 0;
+	padding-right: 0;
 }
 .head-img{
 	margin-top: .5rem;
