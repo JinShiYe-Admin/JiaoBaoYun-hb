@@ -9,8 +9,8 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<meta name="HandheldFriendly" content="true"/>
-		<meta name="MobileOptimized" content="320"/>
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<!--共用样式-->
 		<link rel="stylesheet" href="../../css/utils/common.css" />
@@ -23,118 +23,252 @@
 	<body>
 		<!--标题栏-->
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">发布</h1>
-		    <!--发布作业按钮-->
-		    <a class="mui-icon mui-pull-right header-publish">提交</a>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">发布</h1>
+			<!--发布作业按钮-->
+			<a id="submitBtn" class="mui-icon mui-pull-right header-publish">提交</a>
 		</header>
 		<!--content-->
 		<div class="mui-content">
 			<!--表单-->
-		    <form class="mui-input-group">
-			    <div class="mui-input-row">
-			        <label>科目:</label>
-			        <select >
-			        	<option>语文</option>
-			        	<option>数学</option>
-			        	<option>英语</option>
-			        	<option>政治</option>
-			        	<option>历史</option>
-			        	<option>地理</option>
-			        	<option>化学</option>
-			        	<option>生物</option>
-			        	<option>物理</option>
-			        	<option>其他</option>
-			        </select>
-			    </div>
-			    <div class="mui-input-row">
-			        <label>接收人</label>
-			    	<ul>
-			    	
-			    	</ul>
-			       	
-			    </div>
-			    <div>
-			    <textarea id="publish-container" type="text" style="min-height: 10rem;" placeholder="输入你要布置的作业内容">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>科目:</label>
+					<select>
+						<option>语文</option>
+						<option>数学</option>
+						<option>英语</option>
+						<option>政治</option>
+						<option>历史</option>
+						<option>地理</option>
+						<option>化学</option>
+						<option>生物</option>
+						<option>物理</option>
+						<option>其他</option>
+					</select>
+				</div>
+				<div class="mui-input-row">
+					<label>接收人</label>
+					<ul>
+
+					</ul>
+
+				</div>
+				<div>
+					<textarea id="publish-container" type="text" style="min-height: 10rem;" placeholder="输入你要布置的作业内容">
 			    </textarea>
-			    <div class="publish-extras">
-			    	<a id="getRecord" class="mui-icon mui-icon-mic"></a>
-			    	<a id="getImg" class="mui-icon iconfont icon-xiangji"></a>
-			    	<a id="getVideo" class="mui-icon iconfont icon-shexiangji"></a>
-			   <!-- 	<a class="mui-icon mui-icon-location"></a>-->
-			    </div>
-			   <!-- History list -->
-				<ul id="history" class="dlist" style="text-align:left;">
-					<li id="empty" class="ditem-empty">无记录</li>
-				</ul>
-			    <div class="mui-input-row">
-			        <label>需学生在线提交</label>
-			        <div class="mui-switch mui-active mui-switch-green">
-			            <div class="mui-switch-handle"></div>
-			        </div>
-			    </div>
-			    <p><span class="mui-icon mui-icon-info"></span>开启在线提交后，学生需提交语音，图片或文字等反馈</p>
+					<div class="publish-extras">
+						<a id="getRecord" class="mui-icon mui-icon-mic"></a>
+						<a id="getImg" class="mui-icon iconfont icon-xiangji"></a>
+						<a id="getVideo" class="mui-icon iconfont icon-shexiangji"></a>
+						<!-- 	<a class="mui-icon mui-icon-location"></a>-->
+					</div>
+					<!-- History list -->
+					<ul id="history" class="dlist" style="text-align:left;">
+						<li id="empty" class="ditem-empty">无记录</li>
+					</ul>
+					<div class="mui-input-row">
+						<label>需学生在线提交</label>
+						<div class="mui-switch mui-active mui-switch-green">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</div>
+					<p><span class="mui-icon mui-icon-info"></span>开启在线提交后，学生需提交语音，图片或文字等反馈</p>
 			</form>
-		</div>
-		<div id="play" class="rp">
-			<div id="ptime" class="ptime">00:00:00/00:00:00</div><br/>
-			<div id="progress" class="progress"><div id="schedule" class="schedule"></div></div>
-			<br/>
-			<div class="stop" onclick="stopPlay()">
-				<a class="mui-icon iconfont icon-tingzhi"></a>
 			</div>
-		</div>
-		<div id="record" class="rp">
-			<div style="width:100%;height:20%;"></div>
-			<div class="rprogress"><div class="rschedule"></div></div>
-			<br/>
-			<div id="rtime" class="rtime">00:00:00</div><br/>
-			<div class="stop" onclick="stopRecord()">
-				<a class="mui-icon iconfont icon-tingzhi"></a>
+			<div id="play" class="rp">
+				<div id="ptime" class="ptime">00:00:00/00:00:00</div><br/>
+				<div id="progress" class="progress">
+					<div id="schedule" class="schedule"></div>
+				</div>
+				<br/>
+				<div class="stop" onclick="stopPlay()">
+					<a class="mui-icon iconfont icon-tingzhi"></a>
+				</div>
 			</div>
-		</div>
-		<!--mui库-->
-		<script src="../../js/mui.min.js"></script>
-		<!--公共事件模块-->
-		<script src="../../js/utils/events.js"></script>
-		<!--摄像头模块-->
-		<script src="../../js/utils/camera.js"></script>
-		<script src="../../js/common.js"></script>
-		<!--录音模块-->
-		<script src="../../js/utils/audio.js"></script>
-		<script type="text/javascript">
-			mui.init()
-			mui.plusReady(function(){
-				var lastEditRange=null;
-				var publish_container=document.getElementById('publish-container');
-				publish_container.addEventListener('tap',function(){
-					var sction=getSelection();
-					lastEditRange=sction.getRangeAt(0);
-				})
-				publish_container.addEventListener('release',function(){
-					var sction=getSelection();
-					lastEditRange=sction.getRangeAt(0);
-				})
-				//录音键
-				events.addTap('getRecord',function(){
-					startRecord()
-				})
-				//相机按钮
-				events.addTap('getImg',function(){
-					camera.getPic(camera.getCamera(),function(picPath){
-						console.log("picPath:"+picPath);
+			<div id="record" class="rp">
+				<div style="width:100%;height:20%;"></div>
+				<div class="rprogress">
+					<div class="rschedule"></div>
+				</div>
+				<br/>
+				<div id="rtime" class="rtime">00:00:00</div><br/>
+				<div class="stop" onclick="stopRecord()">
+					<a class="mui-icon iconfont icon-tingzhi"></a>
+				</div>
+			</div>
+			<!--mui库-->
+			<script src="../../js/mui.min.js"></script>
+			<!--公共事件模块-->
+			<script src="../../js/utils/events.js"></script>
+			<!--摄像头模块-->
+			<script src="../../js/utils/camera.js"></script>
+			<script src="../../js/common.js"></script>
+			<!--录音模块-->
+			<script src="../../js/utils/audio.js"></script>
+			<!--协议-->
+			<script src="../../js/publicHomeworkProtocol.js" type="text/javascript" charset="utf-8"></script>
+			<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+			<!--共用参数-->
+			<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
+			<script type="text/javascript">
+				mui.init()
+				mui.plusReady(function() {
+					var lastEditRange = null;
+					var publish_container = document.getElementById('publish-container');
+					publish_container.addEventListener('tap', function() {
+						var sction = getSelection();
+						lastEditRange = sction.getRangeAt(0);
 					})
+					publish_container.addEventListener('release', function() {
+							var sction = getSelection();
+							lastEditRange = sction.getRangeAt(0);
+						})
+						//录音键
+					events.addTap('getRecord', function() {
+							startRecord()
+						})
+						//相机按钮
+					events.addTap('getImg', function() {
+							camera.getPic(camera.getCamera(), function(picPath) {
+								console.log("picPath:" + picPath);
+							})
+						})
+						//录像按钮
+					events.addTap('getVideo', function() {
+						camera.getVideo(camera.getCamera(), function(videoPath) {
+							console.log("videoPath:" + videoPath);
+						})
+					});
+
+					//17.获取所有科目列表
+					requestSubjectList();
+					//获取班级中的学生资料
+					requestClassPeople();
+
 				})
-				//录像按钮
-				events.addTap('getVideo',function(){
-					camera.getVideo(camera.getCamera(),function(videoPath){
-						console.log("videoPath:"+videoPath);
-					})
-				})
-				
-			})
-			
-		</script>
+
+				//从老师的作业列表界面，将身份为老师的群，传到这个界面，总群数组
+				var classArray = [{
+					"gid": 14,
+					"gname": "10群",
+					"gimg": "",
+					"mstype": 2
+				}]; //{"gid":14,"gname":"10群","gimg":"","mstype":2}
+				//老师发布作业时，选择的群
+				var selectClassArray = [];
+				//个人id
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				//科目数组
+				var subjectArray = [];
+				//选择的科目id
+				var selectSubjectID = 0;
+
+				//提交按钮
+				events.addTap('submitBtn', function() {
+					//判断是否有科目
+
+					//判断是否选择了班级
+
+					//判断是否有发送内容
+
+					//发送协议
+					//12.发布作业
+					requestPublishHomework();
+				});
+
+				//17.获取所有科目列表
+				function requestSubjectList() {
+					//所需参数
+					var comData = {};
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					//17.获取所有科目列表
+					postDataPro_GetSubjectList(comData, wd, function(data) {
+						wd.close();
+						console.log('17.postDataPro_GetSubjectList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							//给科目数组赋值
+							subjectArray = data.RspData.List;
+							//给选择的科目id取第一个值
+							selectSubjectID = subjectArray[0].Value;
+							//		    "Default": true,
+							//          "Order": 1,
+							//          "Text": "语文",
+							//          "Value": 1
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					});
+				}
+
+				//获取班级里面的人
+				function requestClassPeople() {
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					for(var i in classArray) {
+						var tempModel = classArray[i];
+						//所需参数
+						var comData = {
+							vtp: '0', //获取类型,0普通资料获取,1邀请排除(主老师用)
+							top: '-1', //选择条数,-1为全部
+							vvl: tempModel.gid, //群ID,查询的值
+							vvl1: '3' //类型,0家长,1管理员,2老师,3学生,-1全部
+						};
+						//16.通过群ID获取群对象资料【model_groupStus】
+						postDataPro_PostGUInf(comData, wd, function(data) {
+							wd.close();
+							console.log('16.postDataPro_PostGUInf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode == 0) {
+								var tempData = data.RspData; //[{"stuid":19,"gid":14,"stuname":"10群学1","stuimg":"","mstype":3}]
+								tempModel.studentArray = tempData;
+							} else {
+								mui.toast(data.RspTxt);
+							}
+						});
+					}
+					//刚进入界面，将两个数组相等，即默认选择全部群
+					selectClassArray = classArray;
+				}
+
+				//12.发布作业
+				function requestPublishHomework() {
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					
+					//组装学生数组串，
+					var tempStuArray = [];
+					//循环选择的群
+					for (var i in selectClassArray) {
+						var tempClassModel = selectClassArray[i];
+						//循环群里面的学生
+						for (var m in tempClassModel.studentArray) {
+							var tempStuModel =  tempClassModel.studentArray[m];
+							tempStuArray.push(tempClassModel.gid+'|'+tempStuModel.stuid);
+						}
+					}
+					//所需参数
+					var comData = {
+						teacherId: personalUTID, //教师Id
+						subjectId: selectSubjectID, //科目Id， 见（一）.17. GetSubjectList()；
+						studentIds: tempStuArray.join(','), //班级Id+学生Id串，班级Id和学生Id以“|“分割，如“班级Id|学生Id”，每对id之间逗号分隔，例如“1|1,1|2”；
+						content: document.getElementById('publish-container').value, //作业内容
+						submitOnLine: '1', //是否需要在线提交；
+						fileIds: '' //上传文件的id串，例如“1,2”；
+					};
+					//12.发布作业,逻辑：作业标题生成标准，时间+星期几+科目+“作业”，比如“11月11日星期一语文作业”
+					postDataPro_PublishHomework(comData, wd, function(data) {
+						wd.close();
+						console.log('12.postDataPro_PublishHomework:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							//提示成功，清空界面数据
+							
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					});
+				}
+			</script>
 	</body>
 
 </html>

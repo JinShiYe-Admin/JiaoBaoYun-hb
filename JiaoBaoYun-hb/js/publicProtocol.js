@@ -233,7 +233,7 @@ var postDataPro_PostGAddUInf = function(commonData, wd, callback) {
 //16.通过群ID获取群对象资料
 //所需参数
 //		var comData = {
-//			vtp: '',//获取类型,0普通资料获取,1邀请排除(主老师用)
+//			vtp: '',//0普通资料获取(vvl1传要获取的身份),1邀请关联资料(主老师用,vvl1传邀请的身份)
 //			top: '',//选择条数,-1为全部
 //			vvl:'',//群ID,查询的值
 //			vvl1:''//类型,0家长,1管理员,2老师,3学生,-1全部
@@ -431,10 +431,11 @@ var postDataPro_PostDiFiE = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINURL + 'PostDiFiE', enData, commonData, 1, wd, callback);
 }
 
-//30.通过学生资料ID获取关联的家长
+//30.通过资料ID获取关联的人员
 //所需参数
 //		var comData = {
-//			vvl:'',//群成员群ID，stuid
+//			vvl:'',//群成员群ID，Stuid或ID串
+//			vtp:''//资料ID类型,Id:单个ID,ids:ID串
 //		};
 //返回值model：model_userDataInfo
 var postDataPro_PostStuU = function(commonData, wd, callback) {
