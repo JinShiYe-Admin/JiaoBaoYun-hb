@@ -53,8 +53,18 @@ function addSomeEvent() {
 	});
 	window.addEventListener('infoChanged', function() {
 		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+			datasource = []; //底部列表数据
+			topStudentArr=[];
+			topArray = []; //顶部班级列表数据
+			requestTimes=0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
+			requestTimes2=0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
+			requestTimes3=0;
+			isRefresh = 0; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
+			selectCell = {};//选择的cell
 		var ul = document.getElementById('top-list');
 		ul.innerHTML = '';
+		
+		
 		var seg = document.getElementById('segmentedControl'); //群名称segmentedControl
 		var userTable = document.getElementById('userList'); //多个放置用户列表
 		seg.innerHTML = '';
@@ -309,7 +319,9 @@ function getTopList(i) {
 					})
 					//				顶部列表添加cell
 				var ul = document.getElementById('top-list');
+				console.log('topArray===='+JSON.stringify(topArray))
 				for(var i = 0; i < topArray.length; i++) {
+					console.log('datasource[i]===='+JSON.stringify(datasource[i]))
 					var li = document.createElement('li');
 					li.id = 'tarClass' + i;
 					li.className = 'mui-table-view-cell mui-media tarClass';
