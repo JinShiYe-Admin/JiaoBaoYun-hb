@@ -372,6 +372,7 @@
 							events.fireToPageNone('/html/mine/qun_data.html', 'refresh');
 							mui.toast('创建群成功');
 							console.log('创建群成功');
+							mui.back();
 						} else {
 							mui.toast(data.RspTxt);
 							console.log('创建群失败：' + data.RspTxt);
