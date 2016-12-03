@@ -77,7 +77,7 @@ var class_space = (function(mod) {
 				item.MsgContent + '</p>' +
 				createImgsInner(item) +
 				'</div>' +
-				'<p class="chat-bottom">' + item.PublishDate + '<font>浏览(' + item.ReadCnt + '人)</font>点赞(' + item.LikeCnt + '人)</p>' +
+				'<p class="chat-bottom">' + item.PublishDate + '<a class="mui-icon iconfont icon-xianshi"></a>(' + item.ReadCnt + '人)点赞(' + item.LikeCnt + '人)</p>' +
 			'</div></div>';
 		return inner;
 	}
