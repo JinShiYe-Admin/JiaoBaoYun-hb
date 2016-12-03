@@ -65,6 +65,8 @@ div>.icon-jia:before,.icon-xiangji:before{
  */
 .chat_content_left{
 	width:75%; 
+	margin-right: 0;
+	padding-right: 0;
 }
 .head-img{
 	margin-top: .5rem;
@@ -104,10 +106,14 @@ div>.icon-jia:before,.icon-xiangji:before{
 	height: 3rem;
 	border-radius: 50%;
 }
-p font{
-	padding-left: 1.2rem;
-	padding-right: 1.2rem;
+.icon-xianshi{
+	float: right;
 }
+
+.icon-support{
+	float: right;
+}
+
 .mui-table-view-cell {
 	/*position: relative;*/
 	overflow: hidden;

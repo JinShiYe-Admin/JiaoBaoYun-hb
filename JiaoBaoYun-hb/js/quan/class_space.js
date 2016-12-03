@@ -72,12 +72,13 @@ var class_space = (function(mod) {
 			'<img class="head-portrait" src="' + item.publisherImg + '"/>' +
 			'<p>' + item.publisherName + '</p>' +
 			'</div>' +
-			'<div class="chat_content_left ">' +
+			'<div class="chat_content_left">' +
 				'<div class="chat-body"><p class="chat-words">' +
 				item.MsgContent + '</p>' +
 				createImgsInner(item) +
 				'</div>' +
-				'<p class="chat-bottom">' + item.PublishDate + '<font>浏览(' + item.ReadCnt + '人)</font>点赞(' + item.LikeCnt + '人)</p>' +
+				'<p class="chat-bottom">' + item.PublishDate + 
+				'<span class="mui-icon iconfont icon-support">(' + item.LikeCnt + ')</span><span class="mui-icon iconfont icon-xianshi">(' + item.ReadCnt + ')</span></p>' +
 			'</div></div>';
 		return inner;
 	}
