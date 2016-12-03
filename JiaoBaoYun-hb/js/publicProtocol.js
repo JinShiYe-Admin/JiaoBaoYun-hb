@@ -431,10 +431,11 @@ var postDataPro_PostDiFiE = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINURL + 'PostDiFiE', enData, commonData, 1, wd, callback);
 }
 
-//30.通过学生资料ID获取关联的家长
+//30.通过资料ID获取关联的人员
 //所需参数
 //		var comData = {
-//			vvl:'',//群成员群ID，stuid
+//			vvl:'',//群成员群ID，Stuid或ID串
+//			vtp:''//资料ID类型,Id:单个ID,ids:ID串
 //		};
 //返回值model：model_userDataInfo
 var postDataPro_PostStuU = function(commonData, wd, callback) {

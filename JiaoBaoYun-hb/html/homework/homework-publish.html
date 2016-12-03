@@ -261,6 +261,7 @@
 						wd.close();
 						console.log('12.postDataPro_PublishHomework:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
+							//提示成功，清空界面数据
 							
 						} else {
 							mui.toast(data.RspTxt);

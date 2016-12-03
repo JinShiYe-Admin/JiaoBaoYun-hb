@@ -64,22 +64,34 @@
 
 		<script type="text/javascript">
 			mui.init();
-			
+
 			//从主页传值到这个界面的model
 			var homeworkModel = {
-                    "Contents": "Test",
-                    "HomeworkId": 28,
-                    "HomeworkTitle": "2016年12月2日星期五数学作业",
-                    "Remain": 1,
-                    "Subject": "语文",
-                    "Upload": 0
-               };
-            var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-			
+				"Contents": "Test",
+				"HomeworkId": 28,
+				"HomeworkTitle": "2016年12月2日星期五数学作业",
+				"Remain": 1,
+				"Subject": "语文",
+				"Upload": 0
+			};
+			//从主界面传值到此界面群id
+			var classID = 14;
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+			//作业详情model
+			var homeworkDetailModel;
+			//已完成学生列表
+			var uploadArray = [];
+			//未完成学生列表
+			var remainArray = [];
+
 			mui.plusReady(function() {
-				
+
 				//获取作业详情
 				requestHomeworkDetail();
+
+				//3.	获取作业对应学生列表
+				requestHomeworkStuList();
+
 			});
 
 			//获取作业详情
@@ -96,7 +108,89 @@
 					wd.close();
 					console.log('2.postDataPro_GetHomework:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
-						
+						homeworkDetailModel = data.RspData;
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+			}
+
+			//3.	获取作业对应学生列表
+			function requestHomeworkStuList() {
+				//所需参数
+				var comData = {
+					teacherId: personalUTID, //教师Id
+					classId: classID, //班级群Id；
+					homeworkId: homeworkModel.HomeworkId //作业id；
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//3.	获取作业对应学生列表
+				postDataPro_GetStudentList(comData, wd, function(data) {
+					wd.close();
+					console.log('3.postDataPro_GetStudentList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						//赋值
+						remainArray = data.RspData.Remain.List;
+						uploadArray = data.RspData.Upload.List;
+						//将学生id，塞入数组，获取学生信息
+						var tempStuArray = [];
+						for(var i in remainArray) {
+							var tempModel = remainArray[i];
+							tempModel.ClassId = data.RspData.ClassId;
+							tempModel.HomeworkId = data.RspData.HomeworkId;
+							tempStuArray.push(tempModel.StudentId);
+						}
+						for(var i in uploadArray) {
+							var tempModel = uploadArray[i];
+							tempModel.ClassId = data.RspData.ClassId;
+							tempModel.HomeworkId = data.RspData.HomeworkId;
+							tempStuArray.push(tempModel.StudentId);
+						}
+						//给数组去重
+						tempStuArray = arrayDupRemoval(tempStuArray);
+						//发送获取用户资料申请
+						var tempData = {
+							vvl: tempStuArray.join(), //用户id，查询的值,p传个人ID,g传ID串
+							vtp: 'g' //查询类型,p(个人)g(id串)
+						}
+						console.log('tempData:' + JSON.stringify(tempData));
+						//21.通过用户ID获取用户资料
+						postDataPro_PostUinf(tempData, wd, function(data1) {
+							wd.close();
+							console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+							if(data1.RspCode == 0) {
+								//循环当前的个人信息返回值数组
+								for(var i in data1.RspData) {
+									//当前model
+									var tempModel = data1.RspData[i];
+									//更新头像
+									tempModel.uimg = updateHeadImg(tempModel.uimg, 1);
+									//循环未完成
+									for(var m in remainArray) {
+										var tempModel9 = remainArray[m];
+										if (tempModel9.StudentId == tempModel.utid) {
+											//合并
+											tempModel9 = $.extend(tempModel9, tempModel);
+										}
+									}
+									//已完成
+									for(var m in uploadArray) {
+										var tempModel9 = uploadArray[m];
+										if (tempModel9.StudentId == tempModel.utid) {
+											//合并
+											tempModel9 = $.extend(tempModel9, tempModel);
+										}
+									}
+								}
+							}
+
+							//将群id、作业id，塞入返回的各自列表
+
+							console.log('未完成列表：' + JSON.stringify(remainArray));
+							console.log('已完成列表：' + JSON.stringify(uploadArray));
+						});
+
 					} else {
 						mui.toast(data.RspTxt);
 					}
