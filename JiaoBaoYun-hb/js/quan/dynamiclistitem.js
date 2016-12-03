@@ -140,7 +140,8 @@ var dynamiclistitem = (function($, mod) {
 		}
 
 		var html5 = '<a id="comment' + id + '" style = "color: #8F8F94" href="#comment-popover" class="mui-icon-extra mui-icon-extra-comment dynamic-icon-comment" href="comment-popover"></a>';
-		var html6 = '<img src="../../image/dynamic/icon_forward.png" class="dynamic-icon-forward" />';
+//				var html6 = '<img src="../../image/dynamic/icon_forward.png" class="dynamic-icon-forward" />';
+		var html6 = '<font style="padding-right:7px"></font>';
 		var html7 = '</div><div class="mui-media-body"><p>浏览' + viewCount + '次</p></div></div>';
 		var html8 = '<div class="mui-col-sm-12 mui-col-xs-12 "><div class="mui-media-body dynamic-line"></div></div>';
 
@@ -173,7 +174,7 @@ var dynamiclistitem = (function($, mod) {
 			var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + element.UserIdName + '</font>';
 			var html3 = '<font class="common-font-family-Regular">：' + element.CommentContent + '</font>';
 			firstComment = html1 + html2 + html3;
-			if(element.Replys.length != 0)  {
+			if(element.Replys.length != 0) {
 				for(var i = 0; i < element.Replys.length; i++) {
 					var tempModel = element.Replys;
 					var html1 = '<div id="replyComment' + id + '-' + index + '-' + i + '" class="mui-media-body replyComment">';
@@ -181,21 +182,21 @@ var dynamiclistitem = (function($, mod) {
 					var html3 = '<font class="common-font-family-Regular">回复</font>';
 					var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].ReplyIdName + '</font>';
 					var html5 = '<font class="common-font-family-Regular">：' + tempModel[i].CommentContent + '</font></div>';
-					replyComment = replyComment+ html1 + html2 + html3 + html4 + html5;
+					replyComment = replyComment + html1 + html2 + html3 + html4 + html5;
 				}
-				replyComment = replyComment +'</div>'
-			}else{
+				replyComment = replyComment + '</div>'
+			} else {
 				replyComment = '</div>'
 			}
 
-			htmlCommentList2 = htmlCommentList2 + firstComment+replyComment;
+			htmlCommentList2 = htmlCommentList2 + firstComment + replyComment;
 		});
 
 		htmlCommentList = htmlCommentList1 + htmlCommentList2 + '</div>';
 
 		var htmlCommentBtn = '<div  class="mui-col-sm-12 mui-col-xs-12"><button id="bottomComment' + id + '" type="button" class="mui-btn dynamic-comment-btn"><p class="mui-pull-left">评论</p></button></div>';
 
-		html = html + htmlPraiseList + htmlCommentList+htmlCommentBtn;
+		html = html + htmlPraiseList + htmlCommentList + htmlCommentBtn;
 
 		var div = document.createElement('div');
 		div.className = 'mui-row mui-row-padding-8px';

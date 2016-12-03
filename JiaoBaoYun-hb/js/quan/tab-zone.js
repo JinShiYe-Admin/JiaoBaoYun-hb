@@ -4,6 +4,7 @@ mui.init({
 mui.plusReady(function() {
 	getStuList(); //获取学生列表
 	addSomeEvent();
+	
 
 })
 
@@ -177,7 +178,7 @@ function getNotes(index, StuDyArr) {
 	//所需参数
 	var comData = {
 		userId: personalUTID, //用户ID----utid
-		studentId: topStudentArr[index].utid, //学生ID----stuid
+		studentId: topStudentArr[index].stuid, //学生ID----stuid
 		classId: topStudentArr[index].gid,
 		pageIndex: '1', //当前页数
 		pageSize: '1' //每页记录数
@@ -191,13 +192,13 @@ function getNotes(index, StuDyArr) {
 			var tempArr = data.RspData.Data;
 			if(tempArr.length == 0) { //数据为空时 添加默认数据
 				var temp = {
-					index: i, //排序索引
+					index: index, //排序索引
 					MsgContent: '暂无学生动态',
 					PublishDate: ''
 				}
 				StuDyArr.push(temp);
 			} else { //取班级空间的第一条数据
-				tempArr[0].index = i; //排序索引
+				tempArr[0].index = index; //排序索引
 				StuDyArr.push(tempArr[0]);
 			}
 			requestTimes3--;
@@ -258,7 +259,6 @@ function getGroupList() {
 
 				//判断img是否为null，或者空
 				datasource[i].gimg = updateHeadImg(datasource[i].gimg, 2)
-				console.log('datasource[' + i + '].gimg===' + datasource[i].gimg);
 
 				getTopList(i); //获取顶部列表
 				getBottomList(i, userList); //获取底部列表
@@ -310,7 +310,6 @@ function getTopList(i) {
 					//				顶部列表添加cell
 				var ul = document.getElementById('top-list');
 				for(var i = 0; i < topArray.length; i++) {
-					//					console.log('datasource[' + i + '].gimg===' + datasource[i].gimg);
 					var li = document.createElement('li');
 					li.id = 'tarClass' + i;
 					li.className = 'mui-table-view-cell mui-media tarClass';
