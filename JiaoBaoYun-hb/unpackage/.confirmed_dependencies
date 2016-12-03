@@ -366,7 +366,9 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/utils/urlBrief.js"
+			"js/utils/urlBrief.js",
+			"css/iconfont/iconfont.css",
+			"fonts/iconfont.ttf"
 		],
 		"refer": []
 	},
