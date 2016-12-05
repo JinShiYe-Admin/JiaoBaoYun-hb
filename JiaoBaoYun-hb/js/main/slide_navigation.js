@@ -171,7 +171,9 @@ var slideNavigation = (function($) {
 		var header = document.querySelector(".mui-bar-nav");
 		var a = document.createElement('img');
 		a.className = 'mui-pull-left mui-plus-visible img-icon';
-		a.src=myStorage.getItem(storageKeyName.PERSONALINFO).uimg?myStorage.getItem(storageKeyName.PERSONALINFO).uimg:'../../image/utils/default-personalimage.png';
+		console.log('第一次加載的圖片地址：'+myStorage.getItem(storageKeyName.PERSONALINFO).uimg);
+		var imgPath=myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
+		a.src=updateHeadImg(imgPath,2);
 		//在第一个位置中插入元素
 		header.insertBefore(a, header.firstChild);
 	}
