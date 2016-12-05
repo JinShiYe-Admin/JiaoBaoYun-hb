@@ -175,6 +175,7 @@ mui.plusReady(function() {
 		 */
 	events.initRefresh('classSpace_list',
 		function() {
+			setReaded(postData.userId, postData.classId);
 			pageIndex = 1;
 			class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 		},
