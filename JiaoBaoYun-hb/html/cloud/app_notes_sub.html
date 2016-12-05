@@ -8,7 +8,70 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
+		<!--<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />-->
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/quan/studentdynamic.js"></script>
+		<style>
+			body,
+			.mui-content {
+				background: white;
+			}
+
+			.mui-table-view:after {
+				height: 0px;
+			}
+
+			#add {
+				background: white;
+				position: absolute;
+				top: 85px;
+				width: 96%;
+				min-height: 40px;
+				line-height: 40px;
+				border-radius: 5px;
+				left: 2%;
+			}
+
+			.mui-table-view:before,
+			.mui-table-view:after,
+			.mui-table-view-cell:after {
+				height: 0px;
+			}
+
+			.mui-table-view {
+				background: transparent;
+			}
+
+			.mui-table-view-cell {
+				margin-top: 8px;
+			}
+
+			.mui-media-body {
+				background: #D8D8D8;
+				padding: 3px;
+			}
+
+			.dynamic-ellipsis-2 {
+				/*设置多于2行省略号*/
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				/*-webkit-line-clamp: 2;*/
+				/*设置多于2行省略号*/
+				-webkit-box-orient: vertical;
+				color: black;
+			}
+
+			.dynamic-date {
+				/*日期*/
+				text-align: left;
+				/*居中*/
+				font-weight: bold;
+				/*加粗*/
+			}
+		</style>
 	</head>
 
 	<body>
@@ -16,72 +79,206 @@
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
 				<!--数据列表-->
-				<ul class="mui-table-view mui-table-view-chevron">
-
+				<ul class="mui-table-view">
+					<div id="top">
+						<div id="add">
+							<font style="margin-left: 5%;">
+								<span class="mui-icon mui-icon-camera" style="color: #A9A9A9;">
+							</font>
+							<font style="margin-left: 2px;color:#007AFF ;">
+								丨
+							</font>
+							<font style="margin-left: 2px;color: #A9A9A9;">
+								记录生活，留下美好...
+							</font>
+						</div>
+						<img src="../../image/cloud/notes_bg2.jpg" style="width: 100%;" />
+					</div>
+					<div id="list">
+					</div>
 				</ul>
+				</div>
 			</div>
-		</div>
 
-		<script>
-			mui.init({
-				pullRefresh: {
-					container: '#pullrefresh',
-					down: {
-						callback: pulldownRefresh
-					},
-					up: {
-						contentrefresh: '正在加载...',
-						callback: pullupRefresh
+			<script>
+				mui.init({
+					pullRefresh: {
+						container: '#pullrefresh',
+						down: {
+							callback: pulldownRefresh
+						},
+						up: {
+							contentrefresh: '正在加载...',
+							callback: pullupRefresh
+						}
+					}
+				});
+
+				/**
+				 * 下拉刷新具体业务实现
+				 */
+				function pulldownRefresh() {
+					setTimeout(function() {
+						//					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+						//					var table = document.getElementById("recordfile");
+						//					table.innerHTML = '';
+						//					for(var i = 0; i < 5; i++) {
+						//						addRecordFile();
+						//					}
+
+						//刷新时将页码归1
+						totalCnt = 0;
+						flag = 1;
+						var comData = {
+							userId: userId, //用户ID
+							publisherId: userId, //发布用户ID
+							noteType: '1', //信息类型,1云笔记,2个人空间动态
+							pageIndex: (1).toString(), //当前页数
+							pageSize: '10' //每页记录数
+						};
+						//请求数据
+						requestData(comData);
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+						mui('#pullrefresh').pullRefresh().enablePullupToRefresh();
+					}, 1500);
+				}
+
+				/**
+				 * 上拉加载具体业务实现
+				 */
+				function pullupRefresh() {
+					setTimeout(function() {
+						//					mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+						//					for(var i = 0; i < 5; i++) {
+						//						addRecordFile();
+						//					}
+
+						flag = 2;
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+						if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
+							mui.toast('没有更多了...');
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+						} else {
+							tempPage++;
+							var comData = {
+								userId: userId, //用户ID
+								publisherId: userId, //发布用户ID
+								noteType: '1', //信息类型,1云笔记,2个人空间动态
+								pageIndex: (tempPage).toString(), //当前页数
+								pageSize: '10' //每页记录数
+							};
+							//请求数据
+							requestData(comData);
+						}
+					}, 1500);
+				}
+
+				//页码，请求第几页数据
+				var tempPage = 1;
+				//当前档案的总条数
+				var totalCnt = 0;
+				//判断是加载更多2，还是刷新1
+				var flag = 1;
+				//页码请求到要显示的数据
+				var recordArray = [];
+				var userId = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+
+				var table=null;
+				var lastDate = ''; //上一条记录的日期
+				var today = ''; //记录今天日期
+
+				mui.plusReady(function() {
+
+					//---初始化界面---start---
+					var myDate = new Date();
+					today = myDate.getFullYear() + '' + (myDate.getMonth() + 1) + myDate.getDate();
+					table = document.getElementById("ul_table");
+					table=document.getElementById("list");
+
+					//---初始化界面---end---
+
+					var comData = {
+						userId: userId, //用户ID
+						publisherId: userId, //发布用户ID
+						noteType: '1', //信息类型,1云笔记,2个人空间动态
+						pageIndex: (tempPage).toString(), //当前页数
+						pageSize: '10' //每页记录数
+					};
+					//请求数据
+					requestData(comData);
+					document.getElementById('add').addEventListener('tap', function() {
+						events.openNewWindow('app_notes_create.html');
+					});
+
+
+				});
+
+				//请求数据
+				function requestData(comData) {
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					//28.（用户空间）获取用户针对某用户的空间列表
+					postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
+						wd.close();
+						console.log('28.postDataPro_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
+						if(data.RspCode == 0) {
+							var tempRspData = data.RspData.Data;
+							//判断是加载更多2，还是刷新1
+							if(flag == 1) {
+								tempPage = 1;
+								recordArray = tempRspData;
+								table.innerHTML='';//情况界面的列表
+								lastDate = '';
+							} else {
+								//合并数组
+								recordArray = recordArray.concat(tempRspData);
+							}
+
+							mui.each(tempRspData, function(index, item) {
+								console.log(index + '|' + JSON.stringify(item));
+								createNotes(item);
+							});
+
+							//档案总条数
+							totalCnt = data.RspData.TotalCnt;
+							mui.each(tempRspData, function(index, item) {
+								console.log('tempRspData:' + JSON.stringify(item));
+
+							});
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					});
+
+					/**
+					 * 界面中创建一条记录
+					 * @param {Object} item
+					 */
+					function createNotes(item) {
+						//将时间参数分隔，结果为["2016","11","21"]
+						var PublishDate = item.PublishDate.split(' ')[0].split('-');
+						//console.log('PublishDate:' + JSON.stringify(PublishDate));
+						//console.log('today:' + today);
+						var time = PublishDate[0] + PublishDate[1] + PublishDate[2];
+						//console.log('time:' + time);
+
+						var itemData = [
+							[PublishDate[1]+'.', PublishDate[2]], item.MsgContent
+						];
+						//设置时间
+						if(time == today) { //日期和今天相同
+							itemData[0] = '今天';
+						}
+						if(lastDate == time) { //上一个记录的日期和本记录的日期相同
+							itemData[0] = '';
+						}
+
+						//生成界面
+						studentdynamic.additem3(table, itemData, 'TabId' + item.TabId);
+						lastDate = time;
 					}
 				}
-			});
-			/**
-			 * 下拉刷新具体业务实现
-			 */
-			function pulldownRefresh() {
-				setTimeout(function() {
-					var table = document.body.querySelector('.mui-table-view');
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					for (var i = cells.length, len = i + 3; i < len; i++) {
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
-						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
-						//下拉刷新，新纪录插到最前面；
-						table.insertBefore(li, table.firstChild);
-					}
-					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-				}, 1500);
-			}
-			var count = 0;
-			/**
-			 * 上拉加载具体业务实现
-			 */
-			function pullupRefresh() {
-				setTimeout(function() {
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
-					var table = document.body.querySelector('.mui-table-view');
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					for (var i = cells.length, len = i + 20; i < len; i++) {
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
-						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
-						table.appendChild(li);
-					}
-				}, 1500);
-			}
-			if (mui.os.plus) {
-				mui.plusReady(function() {
-					setTimeout(function() {
-						mui('#pullrefresh').pullRefresh().pullupLoading();
-					}, 1000);
-
-				});
-			} else {
-				mui.ready(function() {
-					mui('#pullrefresh').pullRefresh().pullupLoading();
-				});
-			}
-		</script>
+			</script>
 	</body>
 
 </html>

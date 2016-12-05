@@ -103,6 +103,7 @@
 					//请求数据
 					requestData(comData);
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+					mui('#pullrefresh').pullRefresh().enablePullupToRefresh();
 				}, 1500);
 			}
 
@@ -117,9 +118,10 @@
 					//					}
 
 					flag = 2;
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
 					if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
 						mui.toast('没有更多了...');
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
 					} else {
 						tempPage++;
 						var comData = {

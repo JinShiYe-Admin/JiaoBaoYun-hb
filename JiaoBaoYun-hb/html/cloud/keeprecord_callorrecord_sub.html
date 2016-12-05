@@ -325,8 +325,9 @@
 					if(msgContent.replace(/(^\s*)|(\s*$)/g, "") == "") { //为空不允许发送
 						mui.toast('请输入文字');
 					} else {
-						var parentIds = [];
-						//30.通过学生资料ID获取关联的家长
+						var parentIds = []; //家长列表
+						var userIds = []; //推送用户ID
+						//30.通过资料ID获取关联的人员
 						//所需参数
 						var comData = {
 							vtp: 'Id',
@@ -337,15 +338,16 @@
 						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 						postDataPro_PostStuU(comData, wd, function(data) {
 							wd.close();
-							console.log('30_PostStuU通过学生资料ID获取关联的家长.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							console.log('30_PostStuU通过资料ID获取关联的人员.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0 || data.RspCode == 9) {
 								mui.each(data.RspData, function(index, item) {
 									console.log('_PostStuU:' + JSON.stringify(item));
+									userIds.push(item.utid); //推送
 									if(item.umstype == 0) { //家长
 										parentIds.push(item.utid);
 									}
 								});
-								addNotes(arrayToStr(parentIds));
+								addNotes(arrayToStr(parentIds), arrayToStr(userIds));
 							} else {
 								if(data.RspCode != 9) {
 									mui.toast(data.RspTxt);
@@ -357,8 +359,10 @@
 
 				/**
 				 * 增加点到记事
+				 * @param {Object} parentIds 家长列表，用于学生档案记录
+				 * @param {Object} userIds 推送用户ID
 				 */
-				function addNotes(parentIds) {
+				function addNotes(parentIds, userIds) {
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					var personalUNICK = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
 					var teacherId = personalUTID; //发布教师ID
@@ -389,7 +393,8 @@
 						studentName: subData.stuname, //学生姓名
 						publisherName: publisherName, //发布者姓名
 						parentIds: parentIds, //家长列表
-						className: subData.gname //班级名称
+						className: subData.gname, //班级名称
+						userIds: userIds //推送用户ID
 					};
 					console.log('新增记事发送的数据:' + JSON.stringify(comData));
 					// 等待的对话框
