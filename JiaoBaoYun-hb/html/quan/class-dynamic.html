@@ -42,15 +42,14 @@
 		mui.init()
 	</script>
 	<script>
+		var personIds=[];
 		mui.plusReady(function() {
 			var groupInfo;
-			var personIds=[];
 			//界面监听传值
 			window.addEventListener('postGroupInfo', function(e) {
-
 				groupInfo = e.detail.data;
 				console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
-				getGroupPersons(groupInfo.groupId);
+				getGroupPersons(groupInfo.classId);
 			});
 			events.addTap('take_pic', function() {
 				camera.getPic(camera.getCamera());
@@ -71,7 +70,7 @@
 				postData.encImg = '';
 				postData.teacherId = parseInt(groupInfo.userId);
 				postData.userIds=arrayToStr(personIds);
-				console.log(JSON.stringify(postData));
+				console.log('传值：'+JSON.stringify(postData));
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
 				postDataPro_addClassSpace(postData, wd, function(data) {
 					wd.close();
@@ -98,7 +97,9 @@
 				wd.close();
 				if(data.RspCode=='0000'){
 					data.RspData.forEach(function(person){
-						personIds.push(person.utid);
+						if(personIds.indexOf(person.utid)<0){
+							personIds.push(person.utid);
+						}
 					})				
 				}
 				
