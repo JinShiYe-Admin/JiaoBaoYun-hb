@@ -21,8 +21,7 @@
 		</header>
 		<div class="mui-content">
 			<div  class="input-content">
-				<textarea id="input-content" placeholder="请输入内容">
-			    </textarea>
+				<textarea id="input-content" placeholder="请输入内容" value=""></textarea>
 			    <div id="take_pic" class="take_pic">
 				    <a class="mui-icon iconfont icon-xiangji"></a>
 			    </div>
@@ -76,6 +75,7 @@
 					console.log(JSON.stringify(data));
 					if(data.RspCode = '0000') {
 						mui.toast('发布成功！');
+						document.getElementById('input-content').value='';
 						//					mui.fire('classSpace-sub.html','refershData');
 						mui.back();
 					} else {
