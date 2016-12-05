@@ -112,7 +112,7 @@ var slideNavigation = (function($) {
 		 */
 	var iconAddEvent = function() {
 			//点击左上角侧滑图标，打开侧滑菜单；
-			document.querySelector('.mui-icon-bars').addEventListener('tap', function(e) {
+			document.querySelector('.img-icon').addEventListener('tap', function(e) {
 				if(showMenu) {
 					closeMenu();
 				} else {
@@ -169,8 +169,9 @@ var slideNavigation = (function($) {
 		 */
 	var addSlideIcon = function() {
 		var header = document.querySelector(".mui-bar-nav");
-		var a = document.createElement('a');
-		a.className = 'mui-icon mui-icon-bars mui-pull-left mui-plus-visible';
+		var a = document.createElement('img');
+		a.className = 'mui-pull-left mui-plus-visible img-icon';
+		a.src=myStorage.getItem(storageKeyName.PERSONALINFO).uimg?myStorage.getItem(storageKeyName.PERSONALINFO).uimg:'../../image/utils/default-personalimage.png';
 		//在第一个位置中插入元素
 		header.insertBefore(a, header.firstChild);
 	}

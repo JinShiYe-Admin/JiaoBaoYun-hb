@@ -6,15 +6,9 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
-		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
-		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/utils/Statusbar.js"></script>
-		<script type="text/javascript" src="../../js/index.js"></script>
-		<script src="../../js/main/slide_navigation.js"></script>
-		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="../../css/home/index.css" />
 	</head>
 
 	<body>
@@ -46,11 +40,20 @@
 			</a>
 		</nav>
 	</body>
-	<script src="../js/mui.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/Statusbar.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/index.js"></script>
+		<script src="../../js/main/slide_navigation.js"></script>
 	<script>
 		mui.init();
 		mui.plusReady(function() {
 			slideNavigation.add('mine.html', 200)
+		})
+		window.addEventListener('infoChanged',function(){
+			console.log('監聽：infoChanged')
+			document.querySelector('.img-icon').src=myStorage.getItem(storageKeyName.PERSONALINFO).uimg?myStorage.getItem(storageKeyName.PERSONALINFO).uimg:'../../image/utils/default-personalimage.png';
 		})
 	</script>
 
