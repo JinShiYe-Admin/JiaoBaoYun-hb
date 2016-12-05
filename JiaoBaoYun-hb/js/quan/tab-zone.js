@@ -84,13 +84,12 @@ function addSomeEvent() {
 		}
 		userIdArr = arrayDupRemoval(userIdArr)
 		var userIds = arrayToStr(userIdArr);
-		var postData = {
-			userIds: userIds,
-			userSpaceId: data.detail.userSpaceId
-		}
+		
+		data.detail.postData.userIds = userIds
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		postDataPro_addUserSpaceForMutiUsers(postData, wd, function(data) {
+		postDataPro_addUserSpace(data.detail.postData, wd, function(data) {
 			wd.close()
+			mui.toast('发布成功！');
 			console.log('推送个人空间成功' + JSON.stringify(data));
 			getStuList();
 		})
