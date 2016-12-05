@@ -26,15 +26,22 @@ var dynamiclistitem = (function($, mod) {
 	 * @param {Object} data
 	 */
 	mod.addInfo = function(ulElement, liElement, data, id) {
+		var closeempty;
+		if(personalUTID==publisherId){
+			closeempty = '<a id ="delete'+id+'" class="mui-icon mui-icon-closeempty mui-pull-right" ></a>';
+			
+		}else{
+			closeempty = '';
+		}
 		var InfoList = data[0]; //[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
 		var html = '';
 
 		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body mui-pull-left">';
 		//头像
 		var html2 = '<img class=" dynamic-personal-image" src="' + InfoList[0] + '"></div>';
-		var html3 = '<div class="mui-media-body dynamic-padding-left-10px"><a class="mui-icon mui-icon-arrowdown mui-pull-right" href="#popover"></a>';
+		var html3 = '<div class="mui-media-body dynamic-padding-left-10px">'+closeempty;
 		//姓名
-		var html4 = '<h4>' + InfoList[1] + '<img src="../../image/dynamic/icon_Level39.png" class=" dynamic-icon-Level" /></h4>';
+		var html4 = '<h4>' + InfoList[1] + '</h4>';
 		//时间
 		var html5 = '<p>' + InfoList[2] + '</p></div></div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext">';

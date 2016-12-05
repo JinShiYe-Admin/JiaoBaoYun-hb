@@ -305,14 +305,7 @@
 			} 
 			mui('.mui-table-view').on('tap', '.leaveReply', function() {
 				var cellIndex = this.id.replace('reply',''); console.log(cellIndex)
-				//
-//				var userserId = leaveArray[cellIndex].UserId;
-//				//留言用户ID
-//				//
-//				var upperId = leaveArray[cellIndex].UpperId;//上级留言ID // 
-//				var replyUserId = leaveArray[cellIndex].ReplyId;//回复ID // 
-//				var userOwnerId = publisherId;//用户ID // 
-//				var msgContent = '今天天气真好';//回复内容 
+
 				var data = {
 					userId:personalUTID,
 					upperId:leaveArray[cellIndex].TabId,

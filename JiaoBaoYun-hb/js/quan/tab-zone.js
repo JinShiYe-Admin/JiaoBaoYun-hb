@@ -84,7 +84,7 @@ function addSomeEvent() {
 		}
 		userIdArr = arrayDupRemoval(userIdArr)
 		var userIds = arrayToStr(userIdArr);
-		
+
 		data.detail.postData.userIds = userIds
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		postDataPro_addUserSpace(data.detail.postData, wd, function(data) {
@@ -261,8 +261,21 @@ function getGroupList() {
 
 		if(data.RspCode == 0) {
 			showBlankPage(false);
-
 			datasource = data.RspData; //底部列表数据
+			var tempArr = [];
+			var tempDatasource = [];
+			for(var i = 0; i < datasource.length; i++) {
+				if(tempArr.indexOf(datasource[i].gid) > -1) {
+//					console.log(i+'已存在'+datasource[i].gid);
+				} else {
+//					console.log(i+'不存在'+datasource[i].gid);
+					tempArr.push(datasource[i].gid);
+					tempDatasource.push(datasource[i]);
+				}
+
+			}
+			datasource = tempDatasource;
+
 			requestTimes = datasource.length; //记录顶部 班级动态请求次数
 			requestTimes2 = datasource.length; //记录底部 通过循环请求群用户列表请求次数
 			var userList = []; //临时用户列表
@@ -521,9 +534,19 @@ function refreshUI() {
 			} else {
 				noReadHTML = '';
 			}
-			li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="' + userList[j].uimg + '" />' +
+			var name;
+			if(userList[j].mstype==0){//0家长,1管理员,2老师,3学生
+				name = userList[j].ugname+'[家长]';
+			}else if(userList[j].mstype==1){
+				name = userList[j].ugname+'[管理员]';
+			}else if(userList[j].mstype==2){
+				name = userList[j].ugname+'[老师]';
+			}else{
+				name = userList[j].ugname+'[学生]';
+			}
+			li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + userList[j].uimg + '" />' +
 				noReadHTML + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
-				userList[j].ugname + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
+				name + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
 			ul.appendChild(li);
 
 		}
