@@ -688,7 +688,8 @@ var postDataPro_getNotesByUserForStudent = function(commonData, wd, callback) {
 //			studentName: '',//学生姓名
 //			publisherName: '',//发布者姓名
 //			parentIds: '',//家长列表
-//			className: ''//班级名称
+//			className: '',//班级名称
+//			userIds: ''//推送用户ID,例如：[1,2,3]
 //		};
 //返回值：RspData，新增ID，非0为正确
 var postDataPro_addNote = function(commonData, wd, callback) {
@@ -705,12 +706,12 @@ var postDataPro_addNote = function(commonData, wd, callback) {
 //			noteId:''//点到记事ID
 //		};
 //1为正确
-var postDataPro_addNoteForMutiUsers = function(commonData, wd, callback) {
-	//需要加密的数据
-	var enData = {};
-	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'note/addNoteForMutiUsers', enData, commonData, 2, wd, callback);
-}
+//var postDataPro_addNoteForMutiUsers = function(commonData, wd, callback) {
+//	//需要加密的数据
+//	var enData = {};
+//	//发送网络请求，data为网络返回值
+//	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'note/addNoteForMutiUsers', enData, commonData, 2, wd, callback);
+//}
 
 //10.（点到记事）修改某用户针对某学生所有点到记事阅读状态为已读
 //所需参数
@@ -857,7 +858,8 @@ var postDataPro_getClassSpacesByUserForClass = function(commonData, wd, callback
 //			encType: '',//附件类型,1图片2音视频3仅文字
 //			encAddr: '',//附件地址
 //			encImg: '',//附件缩略图地址
-//			teacherId: ''//发布教师ID
+//			teacherId: '',//发布教师ID
+//			userIds: ''//推送用户ID,例如：[1,2,3]
 //		};
 //非0为正确
 var postDataPro_addClassSpace = function(commonData, wd, callback) {
@@ -874,12 +876,12 @@ var postDataPro_addClassSpace = function(commonData, wd, callback) {
 //			classSpaceId:''//班级空间ID
 //		};
 //1为正确
-var postDataPro_addClassSpaceForMutiUsers = function(commonData, wd, callback) {
-	//需要加密的数据
-	var enData = {};
-	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'classSpace/addClassSpaceForMutiUsers', enData, commonData, 2, wd, callback);
-}
+//var postDataPro_addClassSpaceForMutiUsers = function(commonData, wd, callback) {
+//	//需要加密的数据
+//	var enData = {};
+//	//发送网络请求，data为网络返回值
+//	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'classSpace/addClassSpaceForMutiUsers', enData, commonData, 2, wd, callback);
+//}
 
 //22.（班级空间）修改某用户针对某班级所有空间阅读状态为已读
 //所需参数
@@ -1107,7 +1109,8 @@ var postDataPro_getUserSpacesByUser = function(commonData, wd, callback) {
 //			encAddr:'',//附件地址
 //			encImg:'',//附件缩略图地址
 //			encIntro:'',//附件简介
-//			noteType:''//信息类型,1云笔记2个人空间
+//			noteType:'',//信息类型,1云笔记2个人空间
+//			userIds: ''//推送用户ID,例如：[1,2,3]
 //		};
 //非0为正确
 var postDataPro_addUserSpace = function(commonData, wd, callback) {
@@ -1124,12 +1127,12 @@ var postDataPro_addUserSpace = function(commonData, wd, callback) {
 //			userSpaceId:'',//用户空间ID
 //		};
 //1为正确
-var postDataPro_addUserSpaceForMutiUsers = function(commonData, wd, callback) {
-	//需要加密的数据
-	var enData = {};
-	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/addUserSpaceForMutiUsers', enData, commonData, 2, wd, callback);
-}
+//var postDataPro_addUserSpaceForMutiUsers = function(commonData, wd, callback) {
+//	//需要加密的数据
+//	var enData = {};
+//	//发送网络请求，data为网络返回值
+//	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/addUserSpaceForMutiUsers', enData, commonData, 2, wd, callback);
+//}
 
 //40.（用户空间）新增某用户某用户空间评论
 //所需参数
