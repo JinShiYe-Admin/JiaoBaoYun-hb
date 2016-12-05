@@ -248,10 +248,8 @@ var changeInfo = function(pInfo) {
 	var uemail = document.getElementById('email');
 	//	var uphone=document.getElementById('phone');
 	var usex = document.getElementById('sex');
-	if(pInfo.uimg) {
-		var myDate = new Date();
-		uimg.src = pInfo.uimg + '?' + myDate.getTime();
-	}
+	uimg.src = pInfo.uimg ;
+	
 	if(pInfo.uid) {
 		account.innerText = pInfo.uid;
 	}
