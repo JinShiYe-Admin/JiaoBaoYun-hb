@@ -114,7 +114,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 		tempData.sign = sign;
 		// 等待的对话框
 		//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		console.log('tempdata:' + JSON.stringify(tempData));
+		console.log('tempdata:' +url+ JSON.stringify(tempData));
 		//发送协议
 		mui.ajax(url, {
 			data: JSON.stringify(tempData),

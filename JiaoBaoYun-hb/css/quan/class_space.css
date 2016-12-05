@@ -113,6 +113,9 @@ div>.icon-jia:before,.icon-xiangji:before{
 .icon-support{
 	float: right;
 }
+.icon-xianshi,.icon-support{
+	padding-right: .5rem;
+}
 
 .mui-table-view-cell {
 	/*position: relative;*/
@@ -147,4 +150,7 @@ div>.icon-jia:before,.icon-xiangji:before{
 }
 .chat-bottom{
 	white-space: nowrap;
+}
+.isLike{
+	color: lightgray;
 }
