@@ -321,6 +321,7 @@
 											console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 											if(data.RspCode == 0) {
 												document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+												document.getElementById(id).parentNode.removeChild(document.getElementById(id));
 												mui.toast('删除成功');
 											} else {
 												mui.toast(data.RspTxt);
@@ -345,6 +346,18 @@
 						<a id="controladd" class="mui-control-item" style="width: 40px;">\
 						</a>\
 						<div class="mui-icon mui-icon-plus addqun" style="position: absolute;border: 0px solid #ddd;font-size: 25px;color: #C7C7CC;right: 0px;top: 4px;"></div>';
+						document.getElementById("type").innerHTML = '\
+							<a class="mui-control-item mui-active" id="student">\
+								学生\
+							</a>\
+							<font class="keep-line-black">丨</font>\
+							<a class="mui-control-item" id="teacher">\
+								老师\
+							</a>\
+							<font class="keep-line-black">丨</font>\
+							<a class="mui-control-item" id="parents">\
+								家长\
+							</a>';
 						document.getElementById("all_mem").innerHTML = '';
 						show = ''; //记录当前展示的群id
 						qunList = []; //记录所有群的信息
