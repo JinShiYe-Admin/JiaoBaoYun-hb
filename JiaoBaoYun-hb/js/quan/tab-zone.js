@@ -4,7 +4,6 @@ mui.init({
 mui.plusReady(function() {
 	getStuList(); //获取学生列表
 	addSomeEvent();
-	
 
 })
 
@@ -52,30 +51,32 @@ function addSomeEvent() {
 		});
 	});
 	window.addEventListener('infoChanged', function() {
-		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-			datasource = []; //底部列表数据
-			topStudentArr=[];
-			topArray = []; //顶部班级列表数据
-			requestTimes=0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
-			requestTimes2=0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
-			requestTimes3=0;
-			isRefresh = 0; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
-			selectCell = {};//选择的cell
-		var ul = document.getElementById('top-list');
-		ul.innerHTML = '';
-		
-		
-		var seg = document.getElementById('segmentedControl'); //群名称segmentedControl
-		var userTable = document.getElementById('userList'); //多个放置用户列表
-		seg.innerHTML = '';
-		userTable.innerHTML = '';
-		getStuList();
+		var wobj = plus.webview.currentWebview();
+		wobj.reload(true);
+		//		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+		//
+		//		datasource = []; //底部列表数据
+		//		topStudentArr = [];
+		//		topArray = []; //顶部班级列表数据
+		//		requestTimes = 0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
+		//		requestTimes2 = 0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
+		//		requestTimes3 = 0;
+		//		isRefresh = 0; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
+		//		selectCell = {}; //选择的cell
+		//		var ul = document.getElementById('top-list');
+		//		ul.innerHTML = '';
+		//
+		//		var seg = document.getElementById('segmentedControl'); //群名称segmentedControl
+		//		var userTable = document.getElementById('userList'); //多个放置用户列表
+		//		seg.innerHTML = '';
+		//		userTable.innerHTML = '';
+		//		getStuList();
 	})
 	window.addEventListener('addUserSpaceForMutiUsers', function(data) {
 		var userIdArr = [];
 		for(var i = 0; i < datasource.length; i++) {
 			var tempUserList = datasource[i].userList;
-			
+
 			for(var j = 0; j < tempUserList.length; j++) {
 				var userId = tempUserList[j].utid;
 				userIdArr.push(userId);
@@ -91,6 +92,7 @@ function addSomeEvent() {
 		postDataPro_addUserSpaceForMutiUsers(postData, wd, function(data) {
 			wd.close()
 			console.log('推送个人空间成功' + JSON.stringify(data));
+			getStuList();
 		})
 	})
 
@@ -319,9 +321,9 @@ function getTopList(i) {
 					})
 					//				顶部列表添加cell
 				var ul = document.getElementById('top-list');
-				console.log('topArray===='+JSON.stringify(topArray))
+				console.log('topArray====' + JSON.stringify(topArray))
 				for(var i = 0; i < topArray.length; i++) {
-					console.log('datasource[i]===='+JSON.stringify(datasource[i]))
+					console.log('datasource[i]====' + JSON.stringify(datasource[i]))
 					var li = document.createElement('li');
 					li.id = 'tarClass' + i;
 					li.className = 'mui-table-view-cell mui-media tarClass';
@@ -451,12 +453,13 @@ function getUserSpaces(upString, index) {
 }
 //刷新界面
 function refreshUI() {
+	console.log(datasource.length);
 	if(datasource.length == 0) {
 		return;
 	}
 
 	var activeId = 0;
-	if(isRefresh == 1) { //不是上拉刷新
+	if(isRefresh == 1) { //下拉刷新
 		var itemId = getActiveControl();
 		var activeId = itemId.replace('#item', '');
 	}
@@ -609,9 +612,14 @@ function showBlankPage(isBlank) {
 function pulldownRefresh() {
 
 	setTimeout(function() {
-		isRefresh = 1; //下拉刷新
-		datasource = []; //重置数据源
-		topArray = []; //重置底部列表数据
+		datasource = []; //底部列表数据
+		topStudentArr = [];
+		topArray = []; //顶部班级列表数据
+		requestTimes = 0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
+		requestTimes2 = 0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
+		requestTimes3 = 0;
+		isRefresh = 1; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
+		selectCell = {}; //选择的cell
 		getStuList();
 		var ws = plus.webview.currentWebview();
 		ws.endPullToRefresh(); //refresh completed
