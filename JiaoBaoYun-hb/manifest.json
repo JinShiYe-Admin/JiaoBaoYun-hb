@@ -1172,7 +1172,8 @@
 					"js/qiniu/plupload.full.min.js",
 					"js/utils/QiNiuUtil.js",
 					"js/qiniu/qiniu.js",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					null
 				],
 				"refer": [],
 				"priority": 0
