@@ -393,39 +393,44 @@
 								//gid	群ID	int		否
 								//gname	群名	string		否	群名称
 								//gimg	群头像	string		否	群头像的链接
+								var tempQunList = [];
 								mui.each(data.RspData, function(index, item) {
-									//剔除同一个群身份不同
 									var same = false;
-									mui.each(qunList, function(index, qitem) {
+									console.log('data:|index:' + index + '|item:' + JSON.stringify(item));
+									//剔除同一个群身份不同，保留管理员身份
+									mui.each(tempQunList, function(qindex, qitem) {
 										if(qitem.gid == item.gid) {
 											same = true;
-											return false;
+											if(item.mstype == 1) {
+												tempQunList[index] = item;
+												return false;
+											}
 										}
 									});
-									//不相同的群和身份
 									if(!same) {
-										//console.log('不同群和身份：群id:' + item.gid + '|群名：' + item.gname + '|管理角色：' + item.mstype);
-										var qun = {
-											gid: item.gid, //群ID
-											gname: item.gname, //群名
-											gimg: item.gimg, //群头像,群头像的链接
-											mstype: item.mstype //用户管理角色,0家长,1管理员,2老师,3学生
-										}
-										var hasGetMember = {
-											hasGetStu: false, //记录是否已获得学生
-											hasGetTea: false, //记录是否已获得老师
-											hasGetPar: false, //记录是否已获得家长
-											showBotId: '', //记录当前展示的成员区域id
-											showType: 'student', //记录当前展示的成员类型
-										};
-										mui.extend(qun, hasGetMember); //合并两个对象
-										qunList.push(qun);
-										addQun(qun);
-									} else {
-										//console.log('相同的群和身份:群id:' + item.gid + '|群名：' + item.gname + '|管理角色：' + item.mstype);
+										tempQunList.push(item);
 									}
 								});
-								//getMember(qunList[0], type); //获取群的正常用户
+
+								mui.each(tempQunList, function(index, item) {
+									console.log('qunList:|index:' + index + '|item:' + JSON.stringify(item));
+									var qun = {
+										gid: item.gid, //群ID
+										gname: item.gname, //群名
+										gimg: item.gimg, //群头像,群头像的链接
+										mstype: item.mstype //用户管理角色,0家长,1管理员,2老师,3学生
+									}
+									var hasGetMember = {
+										hasGetStu: false, //记录是否已获得学生
+										hasGetTea: false, //记录是否已获得老师
+										hasGetPar: false, //记录是否已获得家长
+										showBotId: '', //记录当前展示的成员区域id
+										showType: 'student', //记录当前展示的成员类型
+									};
+									mui.extend(qun, hasGetMember); //合并两个对象
+									qunList.push(qun);
+									addQun(qun);
+								});
 							} else if(data.RspCode == 9) {
 								//未获取到数据
 								document.getElementById("noqun").style.display = 'inline';
