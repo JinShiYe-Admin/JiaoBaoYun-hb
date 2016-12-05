@@ -726,7 +726,8 @@
 					"js/utils/RSAEncrypt.js",
 					"js/cloud/cloud.js",
 					"image/cloud/A_folder.png",
-					"image/cloud/A_addfolder.png"
+					"image/cloud/A_addfolder.png",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -1359,12 +1360,14 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"css/iconfont/iconfont.css"
 				],
 				"refer": [
 					"html/mine/qun_manage_info.html",
 					"html/mine/qun_manage_invite.html",
-					"html/mine/qun_manage_info_change.html"
+					"html/mine/qun_manage_info_change.html",
+					"html/quan/group-pInfo.html"
 				],
 				"priority": 0
 			},

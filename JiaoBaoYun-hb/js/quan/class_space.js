@@ -166,6 +166,7 @@ mui.plusReady(function() {
 	//更改个人信息，更新界面
 	window.addEventListener('infoChanged', function() {
 			pageIndex = 1;
+			setReaded(postData.userId, postData.classId);
 			var container = document.getElementById('classSpace_list');
 			events.clearChild(container);
 			class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
