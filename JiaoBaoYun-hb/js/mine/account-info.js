@@ -182,15 +182,15 @@ mui.plusReady(function() {
 					if(data.RspCode == "0000") {
 						mui.toast('上传成功');
 						var myDate = new Date();
-						document.getElementById("img").src = domain + JSON.parse(info).key + '?' + myDate.getTime();
-						console.log('用户修改各项用户信息---成功');
-						console.log('更改頭像前頭像地址：'+myStorage.getItem(storageKeyName.PERSONALINFO).uimg);
-						pInfo.uimg=domain + JSON.parse(info).key+'?' + myDate.getTime();
-						myStorage.setItem(storageKeyName.PERSONALINFO,pInfo);
-						console.log('更改頭像后頭像地址：'+myStorage.getItem(storageKeyName.PERSONALINFO).uimg);
-						events.fireToPageNone('mine.html','infoChanged');
-						events.fireToPageNone('../index/index.html','infoChanged');
-						events.fireToPageNone('classSpace-sub.html','infoChanged');
+						setTimeout(function(){
+							pInfo.uimg=domain + JSON.parse(info).key+'?' + myDate.getTime();
+							myStorage.setItem(storageKeyName.PERSONALINFO,pInfo);
+							document.getElementById("img").src = domain + JSON.parse(info).key + '?' + myDate.getTime();
+							events.fireToPageNone('mine.html','infoChanged');
+							events.fireToPageNone('../index/index.html','infoChanged');
+							events.fireToPageNone('classSpace-sub.html','infoChanged');
+						},2000);
+						
 					} else {
 						mui.toast(data.RspTxt);
 						console.log('用户修改各项用户信息---失败');
