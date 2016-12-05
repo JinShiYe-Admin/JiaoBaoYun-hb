@@ -300,13 +300,28 @@
 				}
 					li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="'+leaveArray[i].uimg+'../../image/dynamic/u101.png"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply'
 					+i+'"class=" mui-pull-right dynamic-comment-name leaveReply">'+replyHTML +
-					'</span><h4>' + leaveArray[i].unick + '</h4>
-					<p>' + leaveArray[i].MsgDate + '</p>
-				</div>
-			</div>
-			<div style="padding:0px 10px 10px 10px">
-				<font>'+leaveArray[i].MsgContent+'</font>
-			</div>'+commentHTML; ul.appendChild(li); } mui('.mui-table-view').on('tap', '.leaveReply', function() { var cellIndex = this.id.replace('reply',''); console.log(cellIndex) // var userserId = leaveArray[cellIndex].UserId;//留言用户ID // var upperId = leaveArray[cellIndex].UpperId;//上级留言ID // var replyUserId = leaveArray[cellIndex].ReplyId;//回复ID // var userOwnerId = publisherId;//用户ID // var msgContent = '今天天气真好';//回复内容 var data = { userId:leaveArray[cellIndex].UserId, upperId:leaveArray[cellIndex].TabId, replyUserId:leaveArray[cellIndex].ReplyId, userOwnerId:userId, } events.openNewWindowWithData('leave-reply.html',data); }); }
+					'</span><h4>' + leaveArray[i].unick + '</h4><p>' + leaveArray[i].MsgDate + '</p></div></div><div style="padding:0px 10px 10px 10px"><font>'+leaveArray[i].MsgContent+'</font></div>'+commentHTML;
+			ul.appendChild(li);
+			} 
+			mui('.mui-table-view').on('tap', '.leaveReply', function() {
+				var cellIndex = this.id.replace('reply',''); console.log(cellIndex)
+				//
+				var userserId = leaveArray[cellIndex].UserId;
+				//留言用户ID
+				//
+				var upperId = leaveArray[cellIndex].UpperId;//上级留言ID // 
+				var replyUserId = leaveArray[cellIndex].ReplyId;//回复ID // 
+				var userOwnerId = publisherId;//用户ID // 
+				var msgContent = '今天天气真好';//回复内容 
+				var data = {
+					userId:leaveArray[cellIndex].UserId,
+					upperId:leaveArray[cellIndex].TabId,
+					replyUserId:leaveArray[cellIndex].ReplyId,
+					userOwnerId:userId,
+				}
+				events.openNewWindowWithData('leave-reply.html',data); 
+			});
+		}
 			</script>
 
 </html>
