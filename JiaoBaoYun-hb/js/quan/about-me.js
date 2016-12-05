@@ -69,6 +69,7 @@ var addReplyView = function() {
 		replyContainer.style.display = 'block';
 		msgType=this.cell.MsgType;
 		comData.ueserId=this.cell.UserId;
+		document.getElementById('msg-content').value='';
 //		comData.
 	})
 }
