@@ -44,11 +44,13 @@
 	<script>
 		mui.plusReady(function() {
 			var groupInfo;
+			var personIds=[];
 			//界面监听传值
 			window.addEventListener('postGroupInfo', function(e) {
 
 				groupInfo = e.detail.data;
 				console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
+				getGroupPersons(groupInfo.groupId);
 			});
 			events.addTap('take_pic', function() {
 				camera.getPic(camera.getCamera());
@@ -68,6 +70,7 @@
 				postData.encAddr = '';
 				postData.encImg = '';
 				postData.teacherId = parseInt(groupInfo.userId);
+				postData.userIds=arrayToStr(personIds);
 				console.log(JSON.stringify(postData));
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
 				postDataPro_addClassSpace(postData, wd, function(data) {
@@ -84,6 +87,23 @@
 				})
 			})
 		})
+		var getGroupPersons=function(groupId){
+			 personIds=[];
+			 var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING)
+			postDataPro_PostGusers({top: -1,//选择条数
+			vvl:groupId,//群ID，查询的值
+			vvl1:-1//群员类型，0家长,1管理员,2老师,3学生,-1取全部)
+			},wd,function(data){
+				console.log('獲取的群成員信息：'+JSON.stringify(data));
+				wd.close();
+				if(data.RspCode=='0000'){
+					data.RspData.forEach(function(person){
+						personIds.push(person.utid);
+					})				
+				}
+				
+			})
+		}
 	</script>
 
 </html>
