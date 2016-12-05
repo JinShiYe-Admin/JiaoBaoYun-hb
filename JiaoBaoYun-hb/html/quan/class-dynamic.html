@@ -78,6 +78,7 @@
 					if(data.RspCode = '0000') {
 						mui.toast('发布成功！');
 						document.getElementById('input-content').value='';
+						events.fireToPageNone('classSpace-sub.html','infoChanged');
 						//					mui.fire('classSpace-sub.html','refershData');
 						mui.back();
 					} else {

@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js" ></script>
 		<style>
 			body,
 			.mui-content {
@@ -89,7 +90,7 @@
 					<div>
 						选择被邀请成员
 					</div>
-					<li class="mui-table-view-cell mui-media">
+					<li id="person" class="mui-table-view-cell mui-media">
 						<img id="uimg" class="mui-media-object mui-pull-left" style="border-radius:50% ;height: 42px;width: 42px;" src="../../image/utils/default_personalimage.png">
 						<div class="mui-media-body">
 							<div id="unick" class="mui-ellipsis"></div>
@@ -270,6 +271,14 @@
 
 				});
 
+				document.getElementById('person').addEventListener('tap', function() {
+					console.log('person:' + JSON.stringify(userData));
+					//跳到详情
+					events.openNewWindowWithData('qun_manage_invite_info.html', {
+						userData: userData //用户信息
+					});
+				});
+
 				//---方法---
 
 				/**
@@ -334,7 +343,9 @@
 								userData = null;
 								console.log('该用户不存在-userData:' + JSON.stringify(userData));
 								mui.toast('该用户不存在');
+
 							} else {
+								userData = null;
 								mui.toast(data.RspTxt);
 								console.log('搜索:' + data.RspTxt);
 							}
