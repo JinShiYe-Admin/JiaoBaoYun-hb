@@ -50,10 +50,11 @@
 					console.log('xiu gai mi ma ');
 				});
 				//修改密码
-				events.preload('../register/modify_password.html', 100);
+				events.preload('../register/modify_password.html');
 				events.addTap('change-passwords', function() {
 						events.fireToPageNone('../register/modify_password.html', 'changePasswords');
-						events.openNewWindow('../register/modify_password.html');
+						plus.webview.getWebviewById('../register/modify_password.html').show();
+//						events.openNewWindow('../register/modify_password.html');
 					})
 					//退出
 				events.addTap('quit', function() {
@@ -74,7 +75,7 @@
 								//判断是否设置了密码
 								//存储个人信息
 								var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-								console.log('tempinfo:'+JSON.toString(tempInfo));
+								console.log('tempinfo:' + JSON.toString(tempInfo));
 								if(Number(tempInfo.ispw) == 1) { //有密码
 									//发送注销协议
 									//25.用户注销

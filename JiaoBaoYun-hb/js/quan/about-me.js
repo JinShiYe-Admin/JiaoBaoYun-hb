@@ -45,6 +45,7 @@ var createInner = function(cell) {
 		var inner = '<a>' +
 			'<div class="cell-title">' +
 			'<img class="title-img"src="' + ifHaveImg(cellData.headImg) + '"/>' +
+			'<span class="reply">回复</span>'+
 			'<div class="title-words">' +
 			'<h4 class="title-title">' + cellData.title + '</h4>' +
 			'<p class="title-words">' + cellData.time + '</p>' +
