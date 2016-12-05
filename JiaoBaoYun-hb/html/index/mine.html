@@ -168,12 +168,12 @@
 					document.getElementById('uimg').src = '../../image/utils/default_personalimage.png';
 				}
 				if(info.uname) {
-					document.getElementById('uname').innerText = info.uname;
+					document.getElementById('uname').innerText = info.unick?info.unick:info.uname;
 				}
 				if(info.utxt) {
 					document.getElementById('utext').innerText = info.utxt;
 				} else {
-					document.getElementById('utext').innerText = "暂无信息";
+					document.getElementById('utext').innerText = "暂无签名";
 				}
 				getNewsAmount();
 			}
