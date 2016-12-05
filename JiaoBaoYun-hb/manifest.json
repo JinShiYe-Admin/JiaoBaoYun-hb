@@ -1213,7 +1213,8 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"html/quan/aboutme_sub.html",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"css/quan/about-me.css"
 				],
 				"refer": [],
 				"priority": 0

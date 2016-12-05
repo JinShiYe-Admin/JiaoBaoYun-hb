@@ -29,12 +29,12 @@
 		<div class="mui-content">
 			<div class="input-content">
 				<textarea id="input-content" placeholder="请输入内容"></textarea>
-				<div id="take_pic" class="take_pic">
+				<!--<div id="take_pic" class="take_pic">
 					<a class="mui-icon iconfont icon-xiangji"></a>
 				</div>
 				<div id="add_file" class="add_file">
 					<a class="mui-icon iconfont icon-jia"></a>
-				</div>
+				</div>-->
 			</div>
 		</div>
 	</body>
@@ -53,12 +53,12 @@
 			//			});
 			var title = document.getElementById('title');
 			title.innerText = userInfo.unick;
-			events.addTap('take_pic', function() {
-				camera.getPic(camera.getCamera());
-			})
-			events.addTap('add_file', function() {
-					asFiles.openASFiles()
-				})
+//			events.addTap('take_pic', function() {
+//				camera.getPic(camera.getCamera());
+//			})
+//			events.addTap('add_file', function() {
+//					asFiles.openASFiles()
+//				})
 				//发布按钮
 			events.addTap('publish', function() {
 				var textView = document.getElementById('input-content');

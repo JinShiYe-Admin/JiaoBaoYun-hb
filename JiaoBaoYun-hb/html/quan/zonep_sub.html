@@ -65,7 +65,7 @@
 			.dynamic-icon-forward {
 				/*点赞，评论，分享的图标*/
 				height: 20px;
-				width: 20px;
+				width: 30px;
 				margin-left: 20px;
 			}
 			
@@ -507,6 +507,9 @@
 			mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
 				click.push('评论');
 				tempIndex = this.id.replace('comment', '');
+				console.log('tempIndex====' + tempIndex)
+				mui('.mui-popover').popover('show');
+				window.event.stopPropagation()
 
 			});
 			mui('.mui-table-view').on('tap', '.replyComment', function() {

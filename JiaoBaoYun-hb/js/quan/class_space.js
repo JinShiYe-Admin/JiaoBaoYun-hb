@@ -199,6 +199,7 @@ var setReaded = function(userId, classId) {
 }
 var setListener = function(userId) {
 	mui('.mui-table-view').on('tap', '.isNotLike', function() {
+		var span=this;
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		postDataPro_setClassSpaceLikeByUser({
 			userId:userId,
@@ -207,7 +208,9 @@ var setListener = function(userId) {
 			wd.close();
 			console.log("点赞后返回数据："+JSON.stringify(data));
 			if(data.RspData.Result==1){
-				this.className='mui-icon iconfont icon-support isLike';
+				span.className="mui-icon iconfont icon-support isLike";
+				console.log('更改是否已点赞状态'+span.className)
+				span.innerText='('+(parseInt(span.innerText.replace('(','').replace(')',''))+1)+')'
 			}else{
 				mui.toast('点赞失败！')
 			}

@@ -27,4 +27,7 @@ p span{
 .extras{
 	padding: .5rem;
 }
-
+.reply{
+	float: right;
+	color: dodgerblue;
+}
