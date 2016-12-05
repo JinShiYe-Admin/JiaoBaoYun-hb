@@ -88,7 +88,7 @@ function addSomeEvent() {
 		data.detail.postData.userIds = userIds
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		postDataPro_addUserSpace(data.detail.postData, wd, function(data) {
-			wd.close()
+			wd.close();
 			mui.toast('发布成功！');
 			console.log('推送个人空间成功' + JSON.stringify(data));
 			getStuList();
