@@ -17,8 +17,8 @@ mui.plusReady(function() {
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
-	var subpages = ['../quan/tab-zone.html', '../tab_knowledge.html', '../clip/clip_sub.html', '../cloud/cloud_home.html'];
-	var titles = ['家校圈', '问答', '视频', '云盘'];
+	var subpages = ['../quan/tab-zone.html', '../tab_knowledge.html',  '../cloud/cloud_home.html'];
+	var titles = ['家校圈', '问答',  '云盘'];
 	//设置子页面距离顶部的位置
 
 	var subpage_style = {
@@ -31,7 +31,7 @@ mui.plusReady(function() {
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
 	mui.plusReady(function() {
 		var self = plus.webview.currentWebview();
-		for(var i = 0; i < 4; i++) {
+		for(var i = 0; i < 3; i++) {
 			var temp = {};
 			var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
 			if(i > 0) {
@@ -47,6 +47,7 @@ mui.plusReady(function() {
 	//当前激活选项
 	var activeTab = subpages[0];
 	var title = document.getElementById("title");
+	
 	//选项卡点击事件
 	mui('.mui-bar-tab').on('tap', 'a', function(e) {
 		var targetTab = this.getAttribute('href');
@@ -57,6 +58,10 @@ mui.plusReady(function() {
 
 		//更换标题
 		title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
+		if(title.innerHTML=='家校圈'){
+			title.innerHTML='';
+
+		}
 		changRightIcons(title.innerHTML)
 			//显示目标选项卡
 			//若为iOS平台或非首次显示，则直接显示
@@ -123,7 +128,7 @@ mui.plusReady(function() {
 		}
 
 		switch(title) {
-			case '家校圈':
+			case '':
 				addZoneIcon(iconContainer);
 				break;
 			case '问答':
@@ -141,8 +146,11 @@ mui.plusReady(function() {
 	var addZoneIcon = function(container) {
 		var pubDynamic = document.createElement('a');
 		pubDynamic.id = 'pubDynamic'
-		pubDynamic.className = 'mui-icon mui-icon-compose  mui-pull-right mui-plus-visible';
+		pubDynamic.className = 'mui-pull-right mui-plus-visible';
 		pubDynamic.style.paddingLeft = '20px'
+		pubDynamic.style.paddingTop = '10px'
+		pubDynamic.style.fontSize = '14px'
+		pubDynamic.innerHTML = '晒一晒'
 		container.appendChild(pubDynamic)
 		var aboutme = document.createElement('a');
 		aboutme.className = 'mui-icon  mui-pull-right mui-plus-visible';
