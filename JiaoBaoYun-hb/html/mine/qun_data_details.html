@@ -373,7 +373,7 @@
 					//22.通过用户资料ID获取用户各项资料
 					//所需参数
 					var comData = {
-//						vtp:'Id',
+						//						vtp:'Id',
 						vvl: data.stuid //查询的用户资料ID
 					};
 					//返回值model：model_userDataInfo
@@ -405,9 +405,9 @@
 							if(type == 2) { //老师
 								teaData = data.RspData[0];
 								console.log('teaData:' + JSON.stringify(teaData));
-								if(teaData.utid != null) { //账号
-									tea_utid.value = teaData.utid;
-								}
+								//								if(teaData.utid != null) { //账号
+								//									tea_utid.value = teaData.utid;
+								//								}
 								if(teaData.ugname != null) { //昵称
 									tea_ugname.value = teaData.ugname;
 								}
@@ -433,7 +433,7 @@
 										stuData.push(item);
 										if(item.umstype == 3) {
 											//关联了学生账号
-											stu_utid.value = item.utid;
+											//stu_utid.value = item.utid;
 											stu_ugname.value = item.ugname;
 											getUserData(item.utid, 3);
 										} else {
@@ -467,7 +467,7 @@
 								<li class="mui-table-view-cell">\
 									<div class="mui-input-row">\
 										<label>家长账号:</label>\
-										<input type="text" class="mui-input-clear" value="' + data.utid + '" disabled="disabled">\
+										<input id="par_uname_' + data.utid + '" type="text" class="mui-input-clear" disabled="disabled">\
 									</div>\
 								</li>';
 					var html2 = '';
@@ -524,9 +524,11 @@
 								} else if(uData.usex == 0) {
 									stu_gender.innerText = '男';
 								}
+								stu_utid.value = uData.uname;
 								stu_phone.value = uData.uid;
 								stu_introduction.value = uData.utxt;
 							} else if(dataType == 0) { //家长
+								document.getElementById("par_uname_" + uData.utid).value = uData.uname;
 								document.getElementById("par_phone_" + uData.utid).value = uData.uid;
 							} else if(dataType == 2) { //教师
 								if(uData.usex == 1) {
@@ -534,6 +536,7 @@
 								} else if(uData.usex == 0) {
 									tea_gender.innerText = '男';
 								}
+								tea_utid.value = uData.uname;
 								tea_introduction.value = uData.utxt;
 							}
 						} else {
