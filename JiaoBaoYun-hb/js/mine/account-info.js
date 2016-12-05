@@ -179,11 +179,18 @@ mui.plusReady(function() {
 				};
 				postDataPro_PostReUinf(comData, wd, function(data) {
 					console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					if(data.RspCode == 0) {
+					if(data.RspCode == "0000") {
 						mui.toast('上传成功');
 						var myDate = new Date();
-						document.getElementById("img").src = domain + JSON.parse(info).key + '?' + myDate.getTime();
-						console.log('用户修改各项用户信息---成功');
+						setTimeout(function(){
+							pInfo.uimg=domain + JSON.parse(info).key+'?' + myDate.getTime();
+							myStorage.setItem(storageKeyName.PERSONALINFO,pInfo);
+							document.getElementById("img").src = domain + JSON.parse(info).key + '?' + myDate.getTime();
+							events.fireToPageNone('mine.html','infoChanged');
+							events.fireToPageNone('../index/index.html','infoChanged');
+							events.fireToPageNone('classSpace-sub.html','infoChanged');
+						},2000);
+						
 					} else {
 						mui.toast(data.RspTxt);
 						console.log('用户修改各项用户信息---失败');
