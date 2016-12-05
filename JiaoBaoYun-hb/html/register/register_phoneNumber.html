@@ -56,10 +56,12 @@
 					console.log('验证码 flag=' + regFlag);
 				});
 //				console.log('fa song yanzhengma flag=' + regFlag);
+				//获取到手机号
+				var phoneNum = document.getElementById("phoneNumber");
+				phoneNum.value = '';
 				events.preload('yanZhengMa.html');
 				events.addTap('register', function() {
-					//获取到手机号
-					var phoneNum = document.getElementById("phoneNumber");
+					
 					if(!phoneNum.value) {
 						mui.toast('请输入手机号码');
 						return;

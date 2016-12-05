@@ -57,19 +57,18 @@
 			mui.plusReady(function() {
 				//				events.preLoad('index.html');
 				var regFlag;
+				var phoneNumBox = document.getElementById("phoneNumber");
+				phoneNumBox.value = '';
+				var codeBox = document.getElementById("yanzheng").value;
+				codeBox.value = '';
 				window.addEventListener('yanzhengma', function(event) {
 					var temp = event.detail.data;
 					console.log('传值的电话号码为：' + JSON.stringify(event.detail));
-					var phoneNum = document.getElementById("phoneNumber");
-					phoneNum.value = temp.phone;
+					
+					phoneNumBox.value = temp.phone;
 					regFlag = temp.flag;
 				});
-//				console.log('regFlag=' + regFlag);
 				events.addTap('register', function() {
-					var code = document.getElementById("yanzheng").value;
-					//					if(code !=123456){
-					//						mui.toast('验证码错误');
-					//					}
 					//需要加密的数据
 					var enData = {
 						uid: document.getElementById("phoneNumber").value,
@@ -113,8 +112,8 @@
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 									//跳转到主界面
 									var temp;
-//									events.openNewWindowWithData('../../html/index.html', temp);
 									events.openNewWindowWithData('modify_password.html', temp);
+									events.fireToPageNone('modify_password.html', 'registerPW');
 									events.fireToPageNone('../quan/tab-zone.html','infoChanged');
 								});
 							} else { //验证码模式登录1
@@ -132,8 +131,8 @@
 										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 										//跳转到主界面
 										var temp;
-//										events.openNewWindowWithData('../../html/index.html', temp);
 										events.openNewWindowWithData('modify_password.html', temp);
+										events.fireToPageNone('modify_password.html', 'registerPW');
 										events.fireToPageNone('../quan/tab-zone.html','infoChanged');
 									}
 

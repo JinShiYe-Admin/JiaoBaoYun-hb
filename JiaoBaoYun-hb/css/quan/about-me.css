@@ -31,3 +31,36 @@ p span{
 	float: right;
 	color: dodgerblue;
 }
+html{
+	height: 100%;
+}
+footer{
+	height: 70px;
+	width: 100%;
+	background-color: lightgray;
+	position: fixed;
+	bottom: 0;	
+}
+.btn-commit{
+	position: absolute;
+	top:10px;
+	right: 10px;
+	display: inline-block;
+	width: 20%;
+}
+.footer-center{
+	display: inline-block;
+	width: 75%;
+	padding: 5px;
+	height: 100%;
+}
+.footer-center .input-text {
+			background: #fff;
+			border: solid 1px #ddd;
+			padding: 10px !important;
+			font-size: 16px !important;
+			line-height: 18px !important;
+			font-family: verdana !important;
+			overflow: hidden;
+		}
+

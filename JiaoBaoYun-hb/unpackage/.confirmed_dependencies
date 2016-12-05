@@ -623,7 +623,8 @@
 			"js/mine/about-me.js",
 			"css/quan/about-me.css",
 			"js/quan/about-me.js",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"fonts/mui.ttf"
 		],
 		"refer": []
 	},

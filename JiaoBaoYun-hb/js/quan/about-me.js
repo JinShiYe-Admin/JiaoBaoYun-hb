@@ -33,6 +33,7 @@ var setData = function(data) {
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell';
 			li.innerHTML = createInner(cell);
+			li.querySelector('.reply').cell=cell;
 			list.appendChild(li);
 		})
 	}
@@ -58,6 +59,11 @@ var createInner = function(cell) {
 		console.log('每个cell的内容：' + inner)
 		return inner;
 	}
+var addReply=function(){
+	mui('.mui-table-view').on('tap','.reply',function(){
+//		if(this.cell.MsgType)
+	})
+}
 var ifHave=function(data){
 	return data?data:'';
 }
