@@ -175,7 +175,6 @@ var slideNavigation = (function($) {
 		//在第一个位置中插入元素
 		header.insertBefore(a, header.firstChild);
 	}
-	
 	//安卓系统返回按钮
 	var getBack = function() {
 //		console.log("show:" + showMenu)

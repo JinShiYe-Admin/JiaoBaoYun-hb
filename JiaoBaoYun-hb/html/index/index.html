@@ -50,11 +50,13 @@
 		mui.init();
 		mui.plusReady(function() {
 			slideNavigation.add('mine.html', 200)
+			window.addEventListener('infoChanged',function(){
+				console.log('監聽：infoChanged:'+myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
+				
+				document.querySelector('img').src=myStorage.getItem(storageKeyName.PERSONALINFO).uimg?myStorage.getItem(storageKeyName.PERSONALINFO).uimg:'../../image/utils/default-personalimage.png';
+			})
 		})
-		window.addEventListener('infoChanged',function(){
-			console.log('監聽：infoChanged')
-			document.querySelector('.img-icon').src=myStorage.getItem(storageKeyName.PERSONALINFO).uimg?myStorage.getItem(storageKeyName.PERSONALINFO).uimg:'../../image/utils/default-personalimage.png';
-		})
+		
 	</script>
 
 </html>

@@ -184,8 +184,10 @@ mui.plusReady(function() {
 						var myDate = new Date();
 						document.getElementById("img").src = domain + JSON.parse(info).key + '?' + myDate.getTime();
 						console.log('用户修改各项用户信息---成功');
-						pInfo.uimg=domain + JSON.parse(info).key;
+						console.log('更改頭像前頭像地址：'+myStorage.getItem(storageKeyName.PERSONALINFO).uimg);
+						pInfo.uimg=domain + JSON.parse(info).key+'?' + myDate.getTime();
 						myStorage.setItem(storageKeyName.PERSONALINFO,pInfo);
+						console.log('更改頭像后頭像地址：'+myStorage.getItem(storageKeyName.PERSONALINFO).uimg);
 						events.fireToPageNone('mine.html','infoChanged');
 						events.fireToPageNone('../index/index.html','infoChanged');
 						events.fireToPageNone('classSpace-sub.html','infoChanged');
