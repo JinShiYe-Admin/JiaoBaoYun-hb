@@ -208,10 +208,15 @@
 			</div>-->
 			</div>
 			<script type="text/javascript">
-				mui.init();
+				mui.init({
+					gestureConfig: {
+						longtap: true, //默认为false
+					}
+				});
 				mui.plusReady(function() {
 					var show = ''; //记录当前展示的群id
 					var qunList = []; //记录所有群的信息
+					var qunMem = []; //记录所有群成员的信息
 					var type = 'student'; //记录当前展示的成员身份类型
 					var content = document.body.querySelector('.mui-content');
 					var qunlist = document.getElementById("qunlist"); //群名称显示栏
@@ -293,6 +298,44 @@
 						events.openNewWindowWithData('qun_data_create.html', passData);
 					});
 
+					//长按资料
+					mui('#all_mem').on('longtap', '.mui-table-view-cell', function(e) {
+						console.log('成员：id:' + this.getAttribute('id') + '|gid:' + this.getAttribute('data-gid') + '|stuid:' + this.getAttribute('data-stuid'));
+						var id = this.getAttribute('id');
+						var gid = this.getAttribute('data-gid');
+						var gutid = this.getAttribute('data-stuid');
+						mui.each(qunList, function(index, item) {
+							if(item.mstype == 1 && item.gid == gid) { //群主
+								var btnArray = ['否', '是'];
+								mui.confirm('确认删除？', '删除群成员', btnArray, function(e) {
+									if(e.index == 1) {
+										//33.根据资料表ID删除资料
+										//所需参数
+										var comData = {
+											vvl: gutid, ////资料ID，stuid
+										};
+										// 等待的对话框
+										var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+										postDataPro_PostStuD(comData, wd, function(data) {
+											wd.close();
+											console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+											if(data.RspCode == 0) {
+												document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+												document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+												mui.toast('删除成功');
+											} else {
+												mui.toast(data.RspTxt);
+											}
+										});
+
+									} else {
+										console.log('不删除');
+									}
+								});
+							}
+						});
+					});
+
 					//---获取群数据---start---
 					getQunMenAG();
 					//---获取群数据---end---
@@ -303,6 +346,18 @@
 						<a id="controladd" class="mui-control-item" style="width: 40px;">\
 						</a>\
 						<div class="mui-icon mui-icon-plus addqun" style="position: absolute;border: 0px solid #ddd;font-size: 25px;color: #C7C7CC;right: 0px;top: 4px;"></div>';
+						document.getElementById("type").innerHTML = '\
+							<a class="mui-control-item mui-active" id="student">\
+								学生\
+							</a>\
+							<font class="keep-line-black">丨</font>\
+							<a class="mui-control-item" id="teacher">\
+								老师\
+							</a>\
+							<font class="keep-line-black">丨</font>\
+							<a class="mui-control-item" id="parents">\
+								家长\
+							</a>';
 						document.getElementById("all_mem").innerHTML = '';
 						show = ''; //记录当前展示的群id
 						qunList = []; //记录所有群的信息
@@ -349,7 +404,7 @@
 									});
 									//不相同的群和身份
 									if(!same) {
-										console.log('不同群和身份：群id:' + item.gid + '|群名：' + item.gname + '|管理角色：' + item.mstype);
+										//console.log('不同群和身份：群id:' + item.gid + '|群名：' + item.gname + '|管理角色：' + item.mstype);
 										var qun = {
 											gid: item.gid, //群ID
 											gname: item.gname, //群名
@@ -367,7 +422,7 @@
 										qunList.push(qun);
 										addQun(qun);
 									} else {
-										console.log('相同的群和身份:群id:' + item.gid + '|群名：' + item.gname + '|管理角色：' + item.mstype);
+										//console.log('相同的群和身份:群id:' + item.gid + '|群名：' + item.gname + '|管理角色：' + item.mstype);
 									}
 								});
 								//getMember(qunList[0], type); //获取群的正常用户
@@ -521,7 +576,7 @@
 								}
 
 								mui.each(tempData, function(index, item) {
-									console.log('群对象资料:' + JSON.stringify(item));
+									//console.log('群对象资料:' + JSON.stringify(item));
 									var qunBot = document.getElementById("bot_" + type2 + '_' + qun.gid).querySelector('.mui-row');
 									var table = document.getElementById("addData_" + type2 + '_' + qun.gid);
 									addData(qunBot, item, table);
@@ -565,6 +620,7 @@
 						var li = document.createElement('li');
 						var memId = 'member_' + member.stuid; //
 						li.id = memId;
+						li.setAttribute('data-gid', member.gid);
 						li.setAttribute('data-stuid', member.stuid);
 						li.setAttribute('data-stuname', member.stuname);
 						li.className = 'mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3';
