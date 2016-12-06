@@ -390,12 +390,7 @@ function getBottomList(index, userLists) {
 					for(var j = 0; j < datasource[i].userList.length; j++) {
 						tempModel = datasource[i].userList[j];
 						//判断img是否为null，或者空
-						if(tempModel.uimg == '' || tempModel.uimg == null) { //赋值
-							tempModel.uimg = '../../image/utils/default_personalimage.png';
-						} else { //修改值
-							var myDate = new Date();
-							tempModel.uimg = tempModel.uimg + '?' + myDate.getTime();
-						}
+						tempModel.uimg = updateHeadImg(tempModel.uimg,2);
 						userIds.push(tempModel.utid)
 					}
 					userIds.join(',');
@@ -541,7 +536,7 @@ function refreshUI() {
 			}else{
 				name = userList[j].ugname+'[学生]';
 			}
-			li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + userList[j].uimg + '" />' +
+			li.innerHTML = '	<img class=" mui-pull-left dynamic-personal-image " src="' + userList[j].uimg + '" />' +
 				noReadHTML + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 				name + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
 			ul.appendChild(li);
