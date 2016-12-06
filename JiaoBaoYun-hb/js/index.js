@@ -47,7 +47,7 @@ mui.plusReady(function() {
 	//当前激活选项
 	var activeTab = subpages[0];
 	var title = document.getElementById("title");
-	
+
 	//选项卡点击事件
 	mui('.mui-bar-tab').on('tap', 'a', function(e) {
 		var targetTab = this.getAttribute('href');
@@ -173,7 +173,7 @@ mui.plusReady(function() {
 
 	var addCloudIcon = function(container) {
 		var a = document.createElement('a');
-		a.className = 'mui-icon mui-icon-upload mui-pull-right';
+		a.className = 'mui-icon iconfont icon-upload mui-pull-right';
 		a.addEventListener('tap', function() {
 			mui.toast("上传");
 		});

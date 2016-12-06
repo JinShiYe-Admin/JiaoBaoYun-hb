@@ -104,7 +104,7 @@ function addSomeEvent() {
 		var ul = currentTable[0];
 		var li = ul.children[cellIndex];
 		var tempModel = datasource[tableIndex].userList[cellIndex];
-		li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="' + tempModel.uimg + '" />' + '<p class="time">' + tempModel.PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
+		li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image" src="' + tempModel.uimg + '" />' + '<p class="time">' + tempModel.PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 			tempModel.ugname + '<p class="mui-ellipsis">' + tempModel.MsgContent + '</p>';
 
 		var seg = document.getElementById('segmentedControl');
@@ -227,7 +227,7 @@ function getNotes(index, StuDyArr) {
 					li.id = 'studentsdynamic' + i;
 					li.className = 'mui-table-view-cell mui-media studentsdynamic';
 
-					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' +
+					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' +
 						'<p class="time">' + StuDyArr[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
@@ -266,9 +266,9 @@ function getGroupList() {
 			var tempDatasource = [];
 			for(var i = 0; i < datasource.length; i++) {
 				if(tempArr.indexOf(datasource[i].gid) > -1) {
-//					console.log(i+'已存在'+datasource[i].gid);
+					//					console.log(i+'已存在'+datasource[i].gid);
 				} else {
-//					console.log(i+'不存在'+datasource[i].gid);
+					//					console.log(i+'不存在'+datasource[i].gid);
 					tempArr.push(datasource[i].gid);
 					tempDatasource.push(datasource[i]);
 				}
@@ -338,7 +338,7 @@ function getTopList(i) {
 					var li = document.createElement('li');
 					li.id = 'tarClass' + i;
 					li.className = 'mui-table-view-cell mui-media tarClass';
-					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + datasource[i].gimg + '">' + '<p class="time">' + topArray[i].PublishDate +
+					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">' + '<p class="time">' + topArray[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
 						datasource[i].gname +
@@ -390,12 +390,7 @@ function getBottomList(index, userLists) {
 					for(var j = 0; j < datasource[i].userList.length; j++) {
 						tempModel = datasource[i].userList[j];
 						//判断img是否为null，或者空
-						if(tempModel.uimg == '' || tempModel.uimg == null) { //赋值
-							tempModel.uimg = '../../image/utils/default_personalimage.png';
-						} else { //修改值
-							var myDate = new Date();
-							tempModel.uimg = tempModel.uimg + '?' + myDate.getTime();
-						}
+						tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
 						userIds.push(tempModel.utid)
 					}
 					userIds.join(',');
@@ -442,7 +437,7 @@ function getUserSpaces(upString, index) {
 				for(var j = 0; j < tempUserList.length; j++) {
 					if((tempUserList[j].utid == userList[i].PublisherId)) {
 						mui.extend(userList[i], tempUserList[j])
-						tempUserList.splice(j,1);
+						tempUserList.splice(j, 1);
 						break;
 
 					}
@@ -532,14 +527,14 @@ function refreshUI() {
 				noReadHTML = '';
 			}
 			var name;
-			if(userList[j].mstype==0){//0家长,1管理员,2老师,3学生
-				name = userList[j].ugname+'[家长]';
-			}else if(userList[j].mstype==1){
-				name = userList[j].ugname+'[管理员]';
-			}else if(userList[j].mstype==2){
-				name = userList[j].ugname+'[老师]';
-			}else{
-				name = userList[j].ugname+'[学生]';
+			if(userList[j].mstype == 0) { //0家长,1管理员,2老师,3学生
+				name = userList[j].ugname + '[家长]';
+			} else if(userList[j].mstype == 1) {
+				name = userList[j].ugname + '[管理员]';
+			} else if(userList[j].mstype == 2) {
+				name = userList[j].ugname + '[老师]';
+			} else {
+				name = userList[j].ugname + '[学生]';
 			}
 			li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + userList[j].uimg + '" />' +
 				noReadHTML + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
@@ -650,6 +645,7 @@ function pullupRefresh() {
 	mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
 
 }
+
 //获取所选群的id
 function getActiveControl() {
 	var segmentedControl = document.getElementById("segmentedControl");
