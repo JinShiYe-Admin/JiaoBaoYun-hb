@@ -130,13 +130,13 @@ mui.plusReady(function() {
 		//drop_element: 'container',          // 拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
 		chunk_size: '4mb', // 分块上传时，每块的体积
 		auto_start: true, // 选择文件后自动上传，若关闭需要自己绑定事件触发上传
-//		resize: {
-//			width: 100,
-//			height: 100,
-//			crop: false,
-//			quality: 90,
-//			preserve_headers: true
-//		},
+		//		resize: {
+		//			width: 100,
+		//			height: 100,
+		//			crop: false,
+		//			quality: 90,
+		//			preserve_headers: true
+		//		},
 		//x_vars : {
 		//    查看自定义变量
 		//    'time' : function(up,file) {
@@ -171,26 +171,27 @@ mui.plusReady(function() {
 				console.log('file:' + JSON.stringify(file));
 				console.log('info:' + info);
 
+				var myDate = new Date();
+				var imgeURL = domain + JSON.parse(info).key + '?' + myDate.getTime();//存放到服务器的地址
+
 				//6.用户修改各项用户信息
 				//调用方法
 				var comData = {
 					vtp: 'uimg', //uimg(头像),utxt(签名),unick(昵)称,usex(性别),uemail(邮件)
-					vvl: domain + JSON.parse(info).key //对应的值
+					vvl: imgeURL //对应的值
 				};
 				postDataPro_PostReUinf(comData, wd, function(data) {
 					console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == "0000") {
 						mui.toast('上传成功');
-						var myDate = new Date();
-						setTimeout(function(){
-							pInfo.uimg=domain + JSON.parse(info).key+'?' + myDate.getTime();
-							myStorage.setItem(storageKeyName.PERSONALINFO,pInfo);
-							document.getElementById("img").src = domain + JSON.parse(info).key + '?' + myDate.getTime();
-							events.fireToPageNone('mine.html','infoChanged');
-							events.fireToPageNone('../index/index.html','infoChanged');
-							events.fireToPageNone('classSpace-sub.html','infoChanged');
-						},2000);
-						
+						setTimeout(function() {
+							pInfo.uimg =imgeURL;
+							myStorage.setItem(storageKeyName.PERSONALINFO, pInfo);
+							document.getElementById("img").src = imgeURL;
+							events.fireToPageNone('mine.html', 'infoChanged');
+							events.fireToPageNone('../index/index.html', 'infoChanged');
+							events.fireToPageNone('classSpace-sub.html', 'infoChanged');
+						}, 2000);
 					} else {
 						mui.toast(data.RspTxt);
 						console.log('用户修改各项用户信息---失败');
