@@ -9,7 +9,14 @@ function postData(url, data, callback, waitingDialog) {
 		type: 'post',
 		contentType: "application/json",
 		timeout: 60000,
-		success: callback,
+		success: function(data) {
+//			console.log('data.RspCode:' + data.RspCode + 'data.data:' + data.data);
+			if(data.RspCode == 6) {
+				renewToken();
+			} else {
+				callback(data);
+			}
+		},
 		error: function(xhr, type, errorThrown) {
 			waitingDialog.close();
 			mui.alert("网络连接失败，请重新尝试一下", "错误", "OK", null);
@@ -23,6 +30,10 @@ function postData(url, data, callback, waitingDialog) {
 //waitingDialog,等待框
 //callback,返回值
 function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback) {
+	//	if (plus.networkinfo.getCurrentType(==plus.networkinfo.CONNECTION_NONE)) {
+	//		mui.toast("网络异常，请检查网络设置！");
+	//		return;
+	//	}
 	//循环
 	var tempStr = '';
 	for(var tempData in encryData) {
@@ -43,7 +54,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 			appid: plus.runtime.appid
 		};
 		commonData = $.extend(commonData, comData);
-	}else if(flag == 2){
+	} else if(flag == 2) {
 		//获取个人信息
 		var personalToken = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token;
 		var comData = {
@@ -52,7 +63,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 			appid: plus.runtime.appid
 		};
 		commonData = $.extend(commonData, comData);
-	}else if(flag == 3){
+	} else if(flag == 3) {
 		//获取个人信息
 		var personalToken = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token;
 		var comData = {
@@ -73,37 +84,37 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 	var signArr = arr0.concat(arr1);
 	//拼接登录需要的签名
 	var signTemp = signArr.sort().join('&');
-//	var signTemp = sortUrls.sortIt(signArr);
-	
-//	console.log('sign:'+signTemp);
+	//	var signTemp = sortUrls.sortIt(signArr);
+
+	//	console.log('sign:'+signTemp);
 	//将对象转为数组
-//	var arr0 = [];
-//	for(var item in encryData) {
-//		arr0.push(item);
-//	};
-//	var arr1 = [];
-//	for(var item in commonData) {
-//		arr1.push(item);
-//	};
-//	//合并数组
-//	var signArr = arr0.concat(arr1);
-//	//拼接登录需要的签名
-//	var signTemp0 = sortUrls.sortIt(signArr);
-//	//将拼接好的签名，拆为数组
-//	var signTempArr = signTemp0.split('&');
-//	//合并对象
-//	var tempData0 = $.extend(encryData, commonData);
-//	//循环遍历，找对应的值，然后拼接
-//	var signTemp = '';
-//	for (var tempSign in signTempArr) {
-//		for(var item in tempData0) {
-//			if (signTempArr[tempSign] == item) {
-//				signTemp = signTemp+item + '=' + tempData0[item]+'&';
-//			}
-//		};
-//	}
-//	signTemp = signTemp.substring(0,signTemp.length-1);
-	
+	//	var arr0 = [];
+	//	for(var item in encryData) {
+	//		arr0.push(item);
+	//	};
+	//	var arr1 = [];
+	//	for(var item in commonData) {
+	//		arr1.push(item);
+	//	};
+	//	//合并数组
+	//	var signArr = arr0.concat(arr1);
+	//	//拼接登录需要的签名
+	//	var signTemp0 = sortUrls.sortIt(signArr);
+	//	//将拼接好的签名，拆为数组
+	//	var signTempArr = signTemp0.split('&');
+	//	//合并对象
+	//	var tempData0 = $.extend(encryData, commonData);
+	//	//循环遍历，找对应的值，然后拼接
+	//	var signTemp = '';
+	//	for (var tempSign in signTempArr) {
+	//		for(var item in tempData0) {
+	//			if (signTempArr[tempSign] == item) {
+	//				signTemp = signTemp+item + '=' + tempData0[item]+'&';
+	//			}
+	//		};
+	//	}
+	//	signTemp = signTemp.substring(0,signTemp.length-1);
+
 	//生成签名，返回值sign则为签名
 	signHmacSHA1.sign(signTemp, storageKeyName.SIGNKEY, function(sign) {
 		//组装发送握手协议需要的data
@@ -114,7 +125,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 		tempData.sign = sign;
 		// 等待的对话框
 		//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		console.log('tempdata:' +url+ JSON.stringify(tempData));
+		console.log('tempdata:' + url + JSON.stringify(tempData));
 		//发送协议
 		mui.ajax(url, {
 			data: JSON.stringify(tempData),
@@ -122,9 +133,17 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 			type: 'post',
 			contentType: "application/json",
 			timeout: 60000,
-			success: callback,
+			//			success: callback,
+			success: function(data) {
+//				console.log('data.RspCode:' + data.RspCode + 'data.data:' + data.data);
+				if(data.RspCode == 6) {
+					renewToken();
+				} else {
+					callback(data);
+				}
+			},
 			error: function(xhr, type, errorThrown) {
-				console.log('wang luo cuowu:'+JSON.stringify(xhr)+','+type+','+errorThrown);
+				console.log('wang luo cuowu:' + JSON.stringify(xhr) + ',' + type + ',' + errorThrown);
 				waitingDialog.close();
 				mui.alert("网络连接失败，请重新尝试一下", "错误", "OK", null);
 			}

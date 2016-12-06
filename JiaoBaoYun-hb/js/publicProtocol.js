@@ -31,23 +31,23 @@ var arrayDupRemoval = function(array) {
 
 //给头像添加默认值，或者添加？+数字,
 //string为传过来的头像url，flag表示当前调用界面对于默认头像的层级关系
-var updateHeadImg = function(string,flag) {
+var updateHeadImg = function(string, flag) {
 	var tempStr = '';
 	//判断img是否为null，或者空
 	if(string == '' || string == null) { //赋值
-		if (flag == 1) {
+		if(flag == 1) {
 			tempStr = '../image/utils/default_personalimage.png';
-		} else if (flag == 2) {
+		} else if(flag == 2) {
 			tempStr = '../../image/utils/default_personalimage.png';
-		}else if (flag == 3) {
+		} else if(flag == 3) {
 			tempStr = '../../../image/utils/default_personalimage.png';
-		}else if (flag == 0) {
+		} else if(flag == 0) {
 			tempStr = 'image/utils/default_personalimage.png';
 		}
-		
 	} else { //修改值
-		var myDate = new Date();
-		tempStr = string + '?' + myDate.getTime();
+//		var myDate = new Date();
+//		tempStr = string + '?' + myDate.getTime();
+		tempStr = string;
 	}
 	return tempStr;
 }
@@ -56,8 +56,32 @@ var updateHeadImg = function(string,flag) {
 var arrayToStr = function(array) {
 	var tempStr = '';
 	tempStr = array.join(',');
-	tempStr = '['+tempStr+']';
+	tempStr = '[' + tempStr + ']';
 	return tempStr;
+}
+
+//10.Token续订(之前有过相同登陆数据的才能续订成功)
+//修改本地存储中的值，返回值
+//window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data.RspData;
+var renewToken = function() {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+	//需要加密的数据
+	var enData = {};
+	var comData = {
+		uuid: plus.device.uuid,
+		utid: personalUTID,
+		appid: plus.runtime.appid
+	};
+	// 等待的对话框
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	postDataPro_PostTokenRenew(comData,wd,function(data) {
+		wd.close();
+		if(data.RspCode == 0) {
+			window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data.RspData;
+		}else{
+			mui.toast(data.RspTxt);
+		}
+	});
 }
 
 //6.用户修改各项用户信息

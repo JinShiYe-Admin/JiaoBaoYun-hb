@@ -317,7 +317,8 @@
 								console.log('file:' + JSON.stringify(file));
 								console.log('info:' + info);
 								if(qunImgPath == '') {
-									qunImgPath = domain + JSON.parse(info).key; //群头像
+									var myDate = new Date();
+									qunImgPath = domain + JSON.parse(info).key + '?' + myDate.getTime();; //群头像
 									document.getElementById("qunimage").innerHTML = '<img style="margin-left: ' + marginLeft + ';" src="' + updateHeadImg(qunImgPath) + '" class="qun-image" />';
 									console.log('qunImgPath:' + qunImgPath);
 									//8.用户修改群各项信息

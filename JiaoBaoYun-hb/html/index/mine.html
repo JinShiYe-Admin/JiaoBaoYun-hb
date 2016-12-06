@@ -96,7 +96,13 @@
 				//				events.jumpPage(document.getElementById('title'),'mine/account-info.html');
 				//点击title跳转到账号信息界面
 				events.addTap('title', function() {
-					closeMenu()
+					if(plus.os.name == 'Android') {
+						setTimeout(function() {
+							closeMenu();
+						}, 1500);
+					} else {
+						closeMenu();
+					}
 					events.openNewWindow('/html/mine/account-info.html')
 				})
 
@@ -162,8 +168,8 @@
 				info = myStorage.getItem(storageKeyName.PERSONALINFO);
 				console.log('我的界面获取的个人信息：' + JSON.stringify(info))
 				if(info.uimg) {
-					var myDate = new Date();
-					document.getElementById('uimg').src = info.uimg + '?' + myDate.getTime();
+//					var myDate = new Date();
+					document.getElementById('uimg').src = info.uimg;
 				} else {
 					document.getElementById('uimg').src = '../../image/utils/default_personalimage.png';
 				}
