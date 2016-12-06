@@ -199,7 +199,7 @@
 								//当前model
 								var tempModel = data1.RspData[i];
 								//更新头像
-								tempModel.uimg = updateHeadImg(tempModel.uimg, 1);
+								tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
 								//循环留言数组
 								for (var item in tempRspData) {
 									//当前循环的model
@@ -298,11 +298,12 @@
 					commentHTML =commentHTML + '<div style="padding:0px 10px 10px 10px"><span id="reply" class=" dynamic-comment-name">'+commentArr[j].unick +':</span><font class="common-font-family-Regular">' + commentArr[j].MsgContent +
 					'</font></div>';
 				}
-					li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="'+leaveArray[i].uimg+'../../image/dynamic/u101.png"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply'
+					li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="'+leaveArray[i].uimg+'"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply'
 					+i+'"class=" mui-pull-right dynamic-comment-name leaveReply">'+replyHTML +
 					'</span><h4>' + leaveArray[i].unick + '</h4><p>' + leaveArray[i].MsgDate + '</p></div></div><div style="padding:0px 10px 10px 10px"><font>'+leaveArray[i].MsgContent+'</font></div>'+commentHTML;
 			ul.appendChild(li);
 			} 
+			console.log(ul.innerHTML);
 			mui('.mui-table-view').on('tap', '.leaveReply', function() {
 				var cellIndex = this.id.replace('reply',''); console.log(cellIndex)
 
