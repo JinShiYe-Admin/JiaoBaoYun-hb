@@ -248,7 +248,7 @@ var changeInfo = function(pInfo) {
 	var uemail = document.getElementById('email');
 	//	var uphone=document.getElementById('phone');
 	var usex = document.getElementById('sex');
-	uimg.src = pInfo.uimg ;
+	uimg.src = pInfo.uimg? pInfo.uimg:"../../image/utils/default_personalimage.png";
 	
 	if(pInfo.uid) {
 		account.innerText = pInfo.uid;
