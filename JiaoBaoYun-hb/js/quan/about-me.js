@@ -13,7 +13,9 @@ var totalCnt = 0;
 var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 //判断是加载更多1，还是刷新2
 var flag = 2;
-var pNick=myStorage.getItem(storageKeyName.PERSONALINFO).unick;
+var pNick = myStorage.getItem(storageKeyName.PERSONALINFO).unick;
+var msgType=0;//消息类型
+var comData={};//回复传值
 //页码请求到要显示的数据，array[model_userSpaceAboutMe]
 var aboutMeArray = [];
 mui.init();
@@ -22,6 +24,8 @@ mui.plusReady(function() {
 		tempPage = 1;
 		//请求并放置数据
 		requestData(setData);
+		addReplyView();
+		addReplyLisetner()
 	})
 	/**
 	 * 界面放置数据
@@ -33,6 +37,7 @@ var setData = function(data) {
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell';
 			li.innerHTML = createInner(cell);
+			li.querySelector('.reply').cell = cell;
 			list.appendChild(li);
 		})
 	}
@@ -41,29 +46,91 @@ var setData = function(data) {
 	 * @param {Object} cell
 	 */
 var createInner = function(cell) {
-		var cellData = getCellData(cell);
-		var inner = '<a>' +
-			'<div class="cell-title">' +
-			'<img class="title-img"src="' + ifHaveImg(cellData.headImg) + '"/>' +
-			'<span class="reply">回复</span>'+
-			'<div class="title-words">' +
-			'<h4 class="title-title">' + cellData.title + '</h4>' +
-			'<p class="title-words">' + cellData.time + '</p>' +
-			'</div>' +
-			'</div>' +
-			'<p class="comment-content">' + ifHave(cellData.content) + '</p>' +
-			'<div class="refer-content">'+'<span>'+pNick+':</span>' +ifHave(cellData.referContent)+'</div>' +
-			'<div class="extras">' + ifHave(cellData.messages)  + '</div>'
-		'</a>';
-		console.log('每个cell的内容：' + inner)
-		return inner;
+	var cellData = getCellData(cell);
+	var inner = '<a>' +
+		'<div class="cell-title">' +
+		'<img class="title-img"src="' + ifHaveImg(cellData.headImg) + '"/>' +
+		'<span class="reply">回复</span>' +
+		'<div class="title-words">' +
+		'<h4 class="title-title">' + cellData.title + '</h4>' +
+		'<p class="title-words">' + cellData.time + '</p>' +
+		'</div>' +
+		'</div>' +
+		'<p class="comment-content">' + ifHave(cellData.content) + '</p>' +
+		'<div class="refer-content">' + '<span>' + pNick + ':</span>' + ifHave(cellData.referContent) + '</div>' +
+		'<div class="extras">' + ifHave(cellData.messages) + '</div>'
+	'</a>';
+	console.log('每个cell的内容：' + inner)
+	return inner;
+}
+var addReplyView = function() {
+	mui('.mui-table-view').on('tap', '.reply', function() {
+		var replyContainer = document.getElementById('footer');
+		replyContainer.style.display = 'block';
+		msgType=this.cell.MsgType;
+		comData.ueserId=this.cell.UserId;
+		document.getElementById('msg-content').value='';
+//		comData.
+	})
+}
+var addReplyLisetner = function() {
+	events.addTap('btn-commit', function() {
+		var replyValue = document.getElementById('msg-content').value;
+		if(replyValue) {
+			document.getElementById('footer').style.display='none';
+		}else{
+			mui.toast('请输入回复内容！')
+		}
+	})
+}
+var postReply = function() {
+	switch(msgType) {
+			//1为其他用户评论
+		case 1:
+			//2为评论的回复
+		case 2:
+			//3为其他用户点赞
+		case 3:
+//		var comData = {
+//			userId: '',//用户ID
+//			upperId:'',//上级评论ID
+//			replyUserId:'',//回复ID
+//			userSpaceId:'',//用户空间ID
+//			commentContent:''//回复内容
+//		};
+		var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		postDataPro_addUserSpaceMsgReply({},wd,function(data){
+			wd.close();
+		})
+			break;
+	
+			//4为其他用户留言
+		case 4:
+			//5为留言的回复
+		case 5:
+//			var comData = {
+//			userId: '',//用户ID
+//			upperId:'',//上级留言ID
+//			replyUserId:'',//回复ID
+//			userSpaceId:'',//用户空间ID
+//			msgContent:''//回复内容
+//		};
+			var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_addUserSpaceCommentReply({},wd,function(data){
+				wd.close();
+			})
+			break;
+		default:
+			break;
 	}
-var ifHave=function(data){
-	return data?data:'';
 }
-var ifHaveImg=function(img){
-	return img?img:'../../image/utils/default_personalimage.png'
+
+var ifHave = function(data) {
+	return data ? data : '';
 }
+var ifHaveImg = function(img) {
+		return img ? img : '../../image/utils/default_personalimage.png'
+	}
 	/**
 	 * 根据获取信息 设置
 	 * @param {Object} cell 单个cell数据
@@ -72,11 +139,11 @@ var getCellData = function(cell) {
 	var cellData = new Object();
 	cellData.headImg = cell.uimg;
 	cellData.content = cell.MsgContent;
-	cellData.referContent=cell.Content;
+	cellData.referContent = cell.Content;
 	switch(cell.MsgType) {
 		//其他用户评论
 		case 1:
-			cellData.title = cell.unick+' 評論了你';
+			cellData.title = cell.unick + ' 評論了你';
 
 			break;
 			//评论的回复
@@ -101,7 +168,7 @@ var getCellData = function(cell) {
 	cellData.time = cell.MsgDate;
 	var messages = new Array();
 	if(cell.MsgArray.length > 0) {
-		
+
 		cell.MsgArray.forEach(function(msg, i, msgArray) {
 			if(msg.MsgContent) {
 				if(msg.MsgToName) {
@@ -112,9 +179,9 @@ var getCellData = function(cell) {
 			}
 
 		});
-		
-	}else{
-		messages.push('<p><span>' + cell.unick + ':</span>' + cell.MsgContent+ '</p>')
+
+	} else {
+		messages.push('<p><span>' + cell.unick + ':</span>' + cell.MsgContent + '</p>')
 	}
 	cellData.messages = messages.join('');
 	console.log('获取的额外数据：' + cellData.messages);

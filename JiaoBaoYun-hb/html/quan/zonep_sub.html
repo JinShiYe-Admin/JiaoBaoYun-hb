@@ -109,9 +109,11 @@
 				/*点赞者和评论者的名字*/
 				color: #1277C7;
 			}
-			.replyComment{
+			
+			.replyComment {
 				padding-top: 5px;
 			}
+			
 			.dynamic-comment-btn {
 				/*底部的评论按钮*/
 				width: 100%;
@@ -447,8 +449,29 @@
 			mui('.mui-table-view').on('tap', 'h4', function() {
 				click.push('姓名');
 			});
-			mui('.mui-table-view').on('tap', '.mui-icon-arrowdown', function() {
+			mui('.mui-table-view').on('tap', '.mui-icon-closeempty', function() {
+				var index = this.id.replace('delete', '');
+				console.log(this.id);
+				var comData = {
+					userSpaceId: zonepArray[index].TabId, //用户空间ID
+				};
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_delUserSpaceById(comData, wd, function(data) {
+					wd.close();
+					if(data.RspCode == 0) {
+						mui.toast('已删除');
+						//						var wobj = plus.webview.currentWebview();
+						//						wobj.reload(true);
+						var deleteNode = document.getElementById(index);
+						console.log(deleteNode.parentNode.innerHTML);
+						deleteNode.parentNode.removeChild(deleteNode);
+						console.log(deleteNode.parentNode);
+						zonepArray.splice(index, 1)
+					} else {
+						mui.toast(data.RspTxt);
+					}
 
+				})
 				click.push('向下按钮');
 			});
 			mui('.mui-table-view').on('tap', '.dynamic-contenttext', function() {
@@ -600,14 +623,14 @@
 
 				var tempComment = tempModel.Comments[i];
 				commentList.push(tempComment);
-//				if(tempComment.Replys.length != 0) {
-//					var replys = tempComment.Replys
-//					for(var j = 0; j < replys.length; j++) {
-//						var replyModel = replys[j];
-//						commentList.push(replyModel);
-//					}
-//
-//				}
+				//				if(tempComment.Replys.length != 0) {
+				//					var replys = tempComment.Replys
+				//					for(var j = 0; j < replys.length; j++) {
+				//						var replyModel = replys[j];
+				//						commentList.push(replyModel);
+				//					}
+				//
+				//				}
 
 			}
 			console.log(JSON.stringify(commentList))
@@ -627,7 +650,7 @@
 		});
 		//添加评论
 		document.getElementById('addComment').addEventListener('tap', function() {
-			
+
 			var replyName = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick
 			var inputComment = document.getElementById("inputComment");
 			var name = inputComment.value; //评论内容
@@ -639,19 +662,19 @@
 					var id = indexArr[0];
 					var commentId = indexArr[1];
 					var replyId = indexArr[2];
-					
+
 					var tempModel = zonepArray[id].Comments[commentId];
 					var upperId = tempModel.TabId;
 					var replyUserId;
 					var ReplyIdName;
-					if(replyId == '评论'){
+					if(replyId == '评论') {
 						replyUserId = tempModel.UserId
 						ReplyIdName = tempModel.UserIdName
-					}else{
+					} else {
 						replyUserId = tempModel.Replys[replyId].UserId;
 						ReplyIdName = tempModel.Replys[replyId].UserIdName;
 					}
-					
+
 					var comData = {
 						userId: personalUTID, //用户ID
 						upperId: upperId, //上级评论ID
@@ -659,22 +682,22 @@
 						userSpaceId: zonepArray[id].TabId, //用户空间ID
 						commentContent: inputComment.value //回复内容
 					};
-					console.log('comData====='+JSON.stringify(comData))
+					console.log('comData=====' + JSON.stringify(comData))
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
 						wd.close();
 						console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
 						mui('.mui-popover').popover('hide');
 
-												var replyComment = document.getElementById('replyComment'+id+'-'+commentId+'-'+'评论');
-												var nextReplyComment = document.createElement('div');
-												var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + personalunick + '</font>';
-												var html3 = '<font class="common-font-family-Regular">回复</font>';
-												var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + ReplyIdName + '</font>';
-												var html5 = '<font class="common-font-family-Regular">:' + inputComment.value + '</font>'
-												nextReplyComment.innerHTML = html2 + html3 + html4 + html5;
-												replyComment.appendChild(nextReplyComment);
-												inputComment.value = '';
+						var replyComment = document.getElementById('replyComment' + id + '-' + commentId + '-' + '评论');
+						var nextReplyComment = document.createElement('div');
+						var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + personalunick + '</font>';
+						var html3 = '<font class="common-font-family-Regular">回复</font>';
+						var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + ReplyIdName + '</font>';
+						var html5 = '<font class="common-font-family-Regular">:' + inputComment.value + '</font>'
+						nextReplyComment.innerHTML = html2 + html3 + html4 + html5;
+						replyComment.appendChild(nextReplyComment);
+						inputComment.value = '';
 
 					})
 				} else {
@@ -689,13 +712,13 @@
 						console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
 						mui('.mui-popover').popover('hide');
 						var commentArr = zonepArray[tempIndex].Comments;
-						console.log("commentList"+tempIndex);
-							var commentList = document.getElementById("commentList"+tempIndex);
-							var html1 = '<div id="replyComment' + tempIndex + '-' + commentArr.length + '-' + '评论' + '" class="mui-media-body replyComment">';
-							var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + personalunick + '</font>';
-							var html3 = '<font class="common-font-family-Regular">：' + inputComment.value + '</font></div>';
-							var htmlComment = html1 + html2 + html3;
-							commentList.innerHTML = commentList.innerHTML+htmlComment
+						console.log("commentList" + tempIndex);
+						var commentList = document.getElementById("commentList" + tempIndex);
+						var html1 = '<div id="replyComment' + tempIndex + '-' + commentArr.length + '-' + '评论' + '" class="mui-media-body replyComment">';
+						var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + personalunick + '</font>';
+						var html3 = '<font class="common-font-family-Regular">：' + inputComment.value + '</font></div>';
+						var htmlComment = html1 + html2 + html3;
+						commentList.innerHTML = commentList.innerHTML + htmlComment
 						inputComment.value = '';
 
 					})

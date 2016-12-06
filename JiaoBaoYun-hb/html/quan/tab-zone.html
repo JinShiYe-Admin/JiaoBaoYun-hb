@@ -21,13 +21,13 @@
 		<script>
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 			var datasource = []; //底部列表数据
-			var topStudentArr=[];
+			var topStudentArr = [];
 			var topArray = []; //顶部班级列表数据
-			var requestTimes=0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
-			var requestTimes2=0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
-			var requestTimes3=0;
+			var requestTimes = 0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
+			var requestTimes2 = 0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
+			var requestTimes3 = 0;
 			var isRefresh = 0; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
-			var selectCell = {};//选择的cell
+			var selectCell = {}; //选择的cell
 		</script>
 		<style type="text/css">
 			/*自定义系统segmentcontrol控件*/
@@ -62,6 +62,13 @@
 				color: #bbb;
 				margin-right: -15px;
 			}
+			
+			.dynamic-personal-image {
+				/*个人头像圆形*/
+				border-radius: 50%;
+				width: 50px;
+				height: 50px;
+			}
 			/*通过下面的class名区分列表*/
 			/*第一个班级列表*/
 			/*.parent-table1 {}*/
@@ -76,11 +83,11 @@
 
 	<body>
 		<div class="mui-content">
-			
-				<!--第一个列表-->
-				<ul id="top-list" class="mui-table-view ">
-					<!--学生动态入口start-->
-					<!--<li class="mui-table-view-cell mui-media studentsdynamic">
+
+			<!--第一个列表-->
+			<ul id="top-list" class="mui-table-view ">
+				<!--学生动态入口start-->
+				<!--<li class="mui-table-view-cell mui-media studentsdynamic">
 						<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">
 						<p class="time">10月19</p>
 						<div class="mui-media-body">
@@ -88,8 +95,8 @@
 							<p class='mui-ellipsis'>今天上课表现良好</p>
 						</div>
 					</li>-->
-					<!--学生动态入口end-->
-					<!--<li class="mui-table-view-cell mui-media tarClass">
+				<!--学生动态入口end-->
+				<!--<li class="mui-table-view-cell mui-media tarClass">
 
 						<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">
 						<p class="time">10月19</p>
@@ -110,9 +117,9 @@
 
 					</li>-->
 
-				</ul>
-				<!--标题栏-->
-				<h4>
+			</ul>
+			<!--标题栏-->
+			<h4>
 					<!--家长圈标题左边的图片-->
 					<img id="leftImg" style="height: 30px;"  src="../../image/tab_zone/u127.png" / >
 					<span id="parent"  class="parent">家长圈</span>
@@ -125,8 +132,8 @@
 				</div>
 			</div>
 				</h4>
-				<!--第二个列表-->
-				<div class="mui-scroll">
+			<!--第二个列表-->
+			<div class="mui-scroll">
 				<div id="userList" style="margin-top: -20px;">
 					<!--<div id="item1" class="mui-control-content mui-active">
 

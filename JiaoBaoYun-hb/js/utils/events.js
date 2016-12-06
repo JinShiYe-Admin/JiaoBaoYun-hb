@@ -259,7 +259,7 @@ var events = (function($, mod) {
 				//触发目标页面的listener事件
 				$.fire(targetPage, listener);
 			} else {
-				console.log('目标页面不存在');
+				console.log('目标页面不存在'+tarPage);
 			}
 
 		}

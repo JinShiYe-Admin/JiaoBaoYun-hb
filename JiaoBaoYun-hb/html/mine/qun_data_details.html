@@ -136,6 +136,12 @@
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
+								<label>手机号:</label>
+								<input id="tea_uid" type="text" class="mui-input-clear" disabled>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
 								<label>昵称:</label>
 								<input id="tea_ugname" type="text" class="mui-input-clear" disabled>
 							</div>
@@ -208,6 +214,7 @@
 				//---老师界面中相关的元素---start---
 				var tea_name = document.getElementById("tea_name"); //老师姓名
 				var tea_utid = document.getElementById("tea_utid"); //老师账号
+				var tea_uid = document.getElementById("tea_uid"); //老师手机号
 				var tea_ugname = document.getElementById("tea_ugname"); //老师群昵称
 				var tea_gender = document.getElementById("tea_gender"); //老师性别
 				var tea_gname = document.getElementById("tea_gname"); //老师所属群
@@ -335,6 +342,7 @@
 					if(role != 1) {
 						tea_name.setAttribute('disabled', 'disabled'); //老师姓名
 						tea_utid.setAttribute('disabled', 'disabled'); //老师账号
+						tea_uid.setAttribute('disabled', 'disabled'); //老师手机号
 						tea_ugname.setAttribute('disabled', 'disabled'); //老师群昵称
 						tea_gender.setAttribute('disabled', 'disabled'); //老师性别
 						//tea_gname.setAttribute('disabled', 'disabled');//老师所属群
@@ -373,7 +381,7 @@
 					//22.通过用户资料ID获取用户各项资料
 					//所需参数
 					var comData = {
-//						vtp:'Id',
+						//						vtp:'Id',
 						vvl: data.stuid //查询的用户资料ID
 					};
 					//返回值model：model_userDataInfo
@@ -405,9 +413,9 @@
 							if(type == 2) { //老师
 								teaData = data.RspData[0];
 								console.log('teaData:' + JSON.stringify(teaData));
-								if(teaData.utid != null) { //账号
-									tea_utid.value = teaData.utid;
-								}
+								//								if(teaData.utid != null) { //账号
+								//									tea_utid.value = teaData.utid;
+								//								}
 								if(teaData.ugname != null) { //昵称
 									tea_ugname.value = teaData.ugname;
 								}
@@ -433,7 +441,7 @@
 										stuData.push(item);
 										if(item.umstype == 3) {
 											//关联了学生账号
-											stu_utid.value = item.utid;
+											//stu_utid.value = item.utid;
 											stu_ugname.value = item.ugname;
 											getUserData(item.utid, 3);
 										} else {
@@ -467,7 +475,7 @@
 								<li class="mui-table-view-cell">\
 									<div class="mui-input-row">\
 										<label>家长账号:</label>\
-										<input type="text" class="mui-input-clear" value="' + data.utid + '" disabled="disabled">\
+										<input id="par_uname_' + data.utid + '" type="text" class="mui-input-clear" disabled="disabled">\
 									</div>\
 								</li>';
 					var html2 = '';
@@ -524,9 +532,11 @@
 								} else if(uData.usex == 0) {
 									stu_gender.innerText = '男';
 								}
+								stu_utid.value = uData.uname;
 								stu_phone.value = uData.uid;
 								stu_introduction.value = uData.utxt;
 							} else if(dataType == 0) { //家长
+								document.getElementById("par_uname_" + uData.utid).value = uData.uname;
 								document.getElementById("par_phone_" + uData.utid).value = uData.uid;
 							} else if(dataType == 2) { //教师
 								if(uData.usex == 1) {
@@ -534,6 +544,8 @@
 								} else if(uData.usex == 0) {
 									tea_gender.innerText = '男';
 								}
+								tea_uid.value = uData.uid;
+								tea_utid.value = uData.uname;
 								tea_introduction.value = uData.utxt;
 							}
 						} else {

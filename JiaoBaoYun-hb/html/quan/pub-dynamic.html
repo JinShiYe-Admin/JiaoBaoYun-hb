@@ -53,13 +53,13 @@
 			//			});
 			var title = document.getElementById('title');
 			title.innerText = userInfo.unick;
-//			events.addTap('take_pic', function() {
-//				camera.getPic(camera.getCamera());
-//			})
-//			events.addTap('add_file', function() {
-//					asFiles.openASFiles()
-//				})
-				//发布按钮
+			//			events.addTap('take_pic', function() {
+			//				camera.getPic(camera.getCamera());
+			//			})
+			//			events.addTap('add_file', function() {
+			//					asFiles.openASFiles()
+			//				})
+			//发布按钮
 			events.addTap('publish', function() {
 				var textView = document.getElementById('input-content');
 				console.log('textView.value===' + textView.value)
@@ -77,25 +77,10 @@
 					encIntro: ''
 				}
 				console.log(JSON.stringify(postData));
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
-				postDataPro_addUserSpace(postData, wd, function(data) {
-					wd.close();
-					console.log(JSON.stringify(data));
-					if(data.RspCode = '0000') {
-						mui.toast('发布成功！');
-						textView.value = '';
-						//获得主页面的webview
-						var main = plus.webview.getWebviewById('../quan/tab-zone.html');
-						//触发tab-zone页面的addUserSpaceForMutiUsers事件
-						console.log('userSpaceId===='+data.RspData.Result);
-						mui.fire(main, 'addUserSpaceForMutiUsers', {
-							userSpaceId: data.RspData.Result
-						});
-
-					} else {
-						mui.toast(data.RspTxt);
-					}
-				})
+				var main = plus.webview.getWebviewById('../quan/tab-zone.html');
+				mui.fire(main, 'addUserSpaceForMutiUsers', {
+					postData: postData
+				});
 			})
 		})
 	</script>

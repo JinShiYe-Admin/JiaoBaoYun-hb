@@ -6,20 +6,14 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
-		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
-		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/utils/Statusbar.js"></script>
-		<script type="text/javascript" src="../../js/index.js"></script>
-		<script src="../../js/main/slide_navigation.js"></script>
-		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="../../css/home/index.css" />
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav common-background-bar">
-			<h1 id="title" class="mui-title">家校圈</h1>
+			<h1 id="title" class="mui-title"></h1>
 			<div id="random_icon">
 				<a id="pubDynamic" class="mui-pull-right mui-plus-visible" style="padding-left: 20px;padding-top: 10px;font-size: 14px;">晒一晒</a>
 				<a id="aboutme" class="mui-icon  mui-pull-right mui-plus-visible" style="font-size: 14px;padding-top: 15px;">@与我相关<span id="aboutme_noRead" style="margin-left: -15px;margin-top: 4px;visibility:hidden;" class="mui-badge mui-badge-danger">4</span></a>
@@ -46,12 +40,23 @@
 			</a>
 		</nav>
 	</body>
-	<script src="../js/mui.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/Statusbar.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/index.js"></script>
+		<script src="../../js/main/slide_navigation.js"></script>
 	<script>
 		mui.init();
 		mui.plusReady(function() {
 			slideNavigation.add('mine.html', 200)
+			window.addEventListener('infoChanged',function(){
+				console.log('監聽：infoChanged:'+myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
+				
+				document.querySelector('img').src=myStorage.getItem(storageKeyName.PERSONALINFO).uimg?myStorage.getItem(storageKeyName.PERSONALINFO).uimg:'../../image/utils/default-personalimage.png';
+			})
 		})
+		
 	</script>
 
 </html>

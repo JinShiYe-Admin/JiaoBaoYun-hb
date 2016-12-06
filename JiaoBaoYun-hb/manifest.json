@@ -726,7 +726,8 @@
 					"js/utils/RSAEncrypt.js",
 					"js/cloud/cloud.js",
 					"image/cloud/A_folder.png",
-					"image/cloud/A_addfolder.png"
+					"image/cloud/A_addfolder.png",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -1171,7 +1172,8 @@
 					"js/qiniu/plupload.full.min.js",
 					"js/utils/QiNiuUtil.js",
 					"js/qiniu/qiniu.js",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					null
 				],
 				"refer": [],
 				"priority": 0
@@ -1242,7 +1244,8 @@
 					"js/mine/about-me.js",
 					"css/quan/about-me.css",
 					"js/quan/about-me.js",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -1358,12 +1361,14 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"css/iconfont/iconfont.css"
 				],
 				"refer": [
 					"html/mine/qun_manage_info.html",
 					"html/mine/qun_manage_invite.html",
-					"html/mine/qun_manage_info_change.html"
+					"html/mine/qun_manage_info_change.html",
+					"html/quan/group-pInfo.html"
 				],
 				"priority": 0
 			},
@@ -1528,7 +1533,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"css/home/index.css"
 				],
 				"refer": [
 					"html/cloud/cloud_home.html",
