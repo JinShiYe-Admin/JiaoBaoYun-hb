@@ -309,12 +309,12 @@ var postDataPro_GetSubjectList=function(commonData, wd, callback) {
 //			classId: '',//班级群Id；
 //			pageIndex:''//当前页码，默认1；
 //		};
-var postDataPro_GetHomeworkList=function(commonData, wd, callback) {
-	//需要加密的数据
-	var enData = {};
-	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetHomeworkList', enData, commonData, 2, wd, callback);
-}
+//var postDataPro_GetHomeworkList=function(commonData, wd, callback) {
+//	//需要加密的数据
+//	var enData = {};
+//	//发送网络请求，data为网络返回值
+//	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetHomeworkList', enData, commonData, 2, wd, callback);
+//}
 
 
 //2.	获取教师发布作业详情，不包括学生提交的答案；
