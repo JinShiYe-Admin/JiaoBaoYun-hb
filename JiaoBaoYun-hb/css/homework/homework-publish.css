@@ -16,9 +16,9 @@
 /**
  * 提交字体大小
  */
-.header-publish:last-of-type{
+/*.header-publish:last-of-type{
 	font-size: 1.2rem;
-}
+}*/
 
 .rp {
 	width: 100%;
@@ -118,4 +118,7 @@
 }
 .icon-tingzhi{
 	font-size: 4rem;
+}
+.select-classes{
+	padding: 1rem;
 }

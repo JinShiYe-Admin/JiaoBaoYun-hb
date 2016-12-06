@@ -116,7 +116,7 @@ function requestClassData() {
 	//9.获取用户群
 	postDataPro_PostGList(comData, wd, function(data) {
 		wd.close();
-		console.log('9.postDataPro_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		console.log('作业主界面获取的群信息：'+JSON.stringify(data) );
 		if(data.RspCode == 0) {
 //			var tempModel = data.RspData;
 			//			gid:'14',//群ID
@@ -125,29 +125,29 @@ function requestClassData() {
 			//			mstype:'2'//用户角色,0家长,1管理员,2老师,3学生
 			//然后检索身份为老师的
 
-			for(var i in tempModel) {
-				var tempModel1 = tempModel[i];
+			for(var i in data.RspData) {
+				var tempModel = data.RspData[i];
 				//2老师
-				if(tempModel1.mstype == 2) {
+				if(tempModel.mstype == 2) {
 					//作业列表
-					tempModel1.homeworkArray = [];
-					tempModel1.index = 1;
+					tempModel.homeworkArray = [];
+					tempModel.index = 1;
 					teacherArray.push(tempModel1);
 				}
 				//家长
-				if(tempModel1.mstype == 0) {
+				if(tempModel.mstype == 0) {
 					//作业列表
-					tempModel1.homeworkArray = [];
-					tempModel1.index = 1;
-					studentArray.push(tempModel1);
+					tempModel.homeworkArray = [];
+					tempModel.index = 1;
+					studentArray.push(tempModel);
 					return;
 				}
 				//学生
-				if(tempModel1.mstype == 3) {
+				if(tempModel.mstype == 3) {
 					//作业列表
-					tempModel1.homeworkArray = [];
-					tempModel1.index = 1;
-					studentArray.push(tempModel1);
+					tempModel.homeworkArray = [];
+					tempModel.index = 1;
+					studentArray.push(tempModel);
 				}
 			}
 			//控件加载班级，根据数组里面是否有数据，做界面显示
