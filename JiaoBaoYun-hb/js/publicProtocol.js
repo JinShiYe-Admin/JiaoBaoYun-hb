@@ -63,26 +63,26 @@ var arrayToStr = function(array) {
 //10.Token续订(之前有过相同登陆数据的才能续订成功)
 //修改本地存储中的值，返回值
 //window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data.RspData;
-//var renewToken = function() {
-//	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-//	//需要加密的数据
-//	var enData = {};
-//	var comData = {
-//		uuid: plus.device.uuid,
-//		utid: personalUTID,
-//		appid: plus.runtime.appid
-//	};
-//	// 等待的对话框
-//	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-//	postDataPro_PostTokenRenew(comData,wd,function(data0) {
-//		wd.close();
-//		if(data.RspCode == 0) {
-//			window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data.RspData;
-//		}else{
-//			mui.toast(data.RspTxt);
-//		}
-//	});
-//}
+var renewToken = function() {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+	//需要加密的数据
+	var enData = {};
+	var comData = {
+		uuid: plus.device.uuid,
+		utid: personalUTID,
+		appid: plus.runtime.appid
+	};
+	// 等待的对话框
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	postDataPro_PostTokenRenew(comData,wd,function(data) {
+		wd.close();
+		if(data.RspCode == 0) {
+			window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data.RspData;
+		}else{
+			mui.toast(data.RspTxt);
+		}
+	});
+}
 
 //6.用户修改各项用户信息
 //调用方法
