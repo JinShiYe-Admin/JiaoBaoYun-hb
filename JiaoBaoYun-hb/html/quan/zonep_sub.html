@@ -576,12 +576,13 @@
 			//[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
 			//判断img是否为null，或者空
 			var tempModel = zonepArray[index];
-			if(tempModel.uimg == '' || tempModel.uimg == null) { //赋值
-				tempModel.uimg = '../../image/utils/default_personalimage.png';
-			} else { //修改值
-				var myDate = new Date();
-				tempModel.uimg = tempModel.uimg + '?' + myDate.getTime();
-			}
+			tempModel.uimg = updateHeadImg(tempModel.uimg)
+//			if(tempModel.uimg == '' || tempModel.uimg == null) { //赋值
+//				tempModel.uimg = '../../image/utils/default_personalimage.png';
+//			} else { //修改值
+//				var myDate = new Date();
+//				tempModel.uimg = tempModel.uimg + '?' + myDate.getTime();
+//			}
 			var personalImage = tempModel.uimg;
 			var personalName = tempModel.unick;
 			var time = tempModel.PublishDate;
