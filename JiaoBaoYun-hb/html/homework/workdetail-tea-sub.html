@@ -72,10 +72,9 @@
 				"HomeworkTitle": "2016年12月2日星期五数学作业",
 				"Remain": 1,
 				"Subject": "语文",
-				"Upload": 0
+				"Upload": 0,
+				'classId':1//人为赋值
 			};
-			//从主界面传值到此界面群id
-			var classID = 14;
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 			//作业详情model
 			var homeworkDetailModel;
@@ -120,7 +119,7 @@
 				//所需参数
 				var comData = {
 					teacherId: personalUTID, //教师Id
-					classId: classID, //班级群Id；
+					classId: homeworkModel.classId, //班级群Id；
 					homeworkId: homeworkModel.HomeworkId //作业id；
 				};
 				// 等待的对话框

@@ -229,6 +229,13 @@ function requestData(comData) {
 			for(var i in tempArray) {
 				//当前群
 				var classModel = tempArray[i];
+				//当前得到的数据
+				var tempRspData = data.RspData.Dates;
+				//将群id塞到数据model中
+				for (var i in tempRspData) {
+					var tempRspModel = tempRspData[i];
+					tempRspModel.classId = data.RspData.ClassId;
+				}
 				//找到和返回作业列表一直的群号
 				if(classModel.gid == data.RspData.ClassId) {
 					//判断是刷新还是加载更多
@@ -236,12 +243,12 @@ function requestData(comData) {
 						//将群里面的加载索引加1
 						classModel.index = 1;
 						//赋值
-						classModel.homeworkArray = data.RspData.Dates;
+						classModel.homeworkArray = tempRspData;
 					} else { //加载更多2
 						//将群里面的加载索引加1
 						classModel.index++;
 						//合并作业列表
-						classModel.homeworkArray = classModel.homeworkArray.concat(data.RspData.Dates);
+						classModel.homeworkArray = classModel.homeworkArray.concat(tempRspData);
 					}
 				}
 			}
