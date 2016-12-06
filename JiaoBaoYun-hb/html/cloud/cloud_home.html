@@ -313,12 +313,18 @@
 				//postFirstFile();
 
 				changeInfo();
-
+				changeData();
 				//73.73.（云档案）按家长获取学生档案姓名
 				//postUserStudent();
 
 				//重新登录或者自动登录后获取的信息
 				window.addEventListener('infoChanged', function() {
+					//设置页面信息
+					changeInfo();
+					changeData();
+				});
+
+				window.addEventListener('personChanged', function() {
 					//设置页面信息
 					changeInfo();
 				});
@@ -547,8 +553,13 @@
 				 */
 				function changeInfo() {
 					document.getElementById("cloud_name").innerText = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
-					document.getElementById("cloud_prsonalimge").src = updateHeadImg('', 2);
 					document.getElementById("cloud_prsonalimge").src = updateHeadImg(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uimg, 2);
+				}
+
+				/**
+				 * 修改云盘的文件，档案数据
+				 */
+				function changeData() {
 					document.getElementById("cloudstoragefile").innerHTML = '';
 					document.getElementById("record_row").innerHTML = '';
 					//26.用户云盘顶层文件及文件夹获取

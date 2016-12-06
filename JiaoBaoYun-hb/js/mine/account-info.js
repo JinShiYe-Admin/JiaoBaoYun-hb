@@ -191,6 +191,7 @@ mui.plusReady(function() {
 							events.fireToPageNone('mine.html', 'infoChanged');
 							events.fireToPageNone('../index/index.html', 'infoChanged');
 							events.fireToPageNone('classSpace-sub.html', 'infoChanged');
+							events.fireToPageNone('../cloud/cloud_home.html', 'personChanged');
 						}, 2000);
 					} else {
 						mui.toast(data.RspTxt);
@@ -250,7 +251,7 @@ var changeInfo = function(pInfo) {
 	//	var uphone=document.getElementById('phone');
 	var usex = document.getElementById('sex');
 	uimg.src = pInfo.uimg? pInfo.uimg:"../../image/utils/default_personalimage.png";
-	
+
 	if(pInfo.uid) {
 		account.innerText = pInfo.uid;
 	}
