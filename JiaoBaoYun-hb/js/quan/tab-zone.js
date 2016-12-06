@@ -104,7 +104,7 @@ function addSomeEvent() {
 		var ul = currentTable[0];
 		var li = ul.children[cellIndex];
 		var tempModel = datasource[tableIndex].userList[cellIndex];
-		li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="' + tempModel.uimg + '" />' + '<p class="time">' + tempModel.PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
+		li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image" src="' + tempModel.uimg + '" />' + '<p class="time">' + tempModel.PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 			tempModel.ugname + '<p class="mui-ellipsis">' + tempModel.MsgContent + '</p>';
 
 		var seg = document.getElementById('segmentedControl');
@@ -227,7 +227,7 @@ function getNotes(index, StuDyArr) {
 					li.id = 'studentsdynamic' + i;
 					li.className = 'mui-table-view-cell mui-media studentsdynamic';
 
-					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' +
+					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' +
 						'<p class="time">' + StuDyArr[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
@@ -338,7 +338,7 @@ function getTopList(i) {
 					var li = document.createElement('li');
 					li.id = 'tarClass' + i;
 					li.className = 'mui-table-view-cell mui-media tarClass';
-					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + datasource[i].gimg + '">' + '<p class="time">' + topArray[i].PublishDate +
+					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">' + '<p class="time">' + topArray[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
 						datasource[i].gname +
@@ -536,7 +536,7 @@ function refreshUI() {
 			}else{
 				name = userList[j].ugname+'[学生]';
 			}
-			li.innerHTML = '	<img class=" mui-pull-left dynamic-personal-image " src="' + userList[j].uimg + '" />' +
+			li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + userList[j].uimg + '" />' +
 				noReadHTML + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 				name + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
 			ul.appendChild(li);
