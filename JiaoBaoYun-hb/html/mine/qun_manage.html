@@ -1,9 +1,14 @@
+<!--
+	作者：444811716@qq.com
+	时间：2016-12-06
+	描述：群管理
+-->
 <!doctype html>
 <html>
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>群管理</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
@@ -648,14 +653,7 @@
 						//成员,
 						var html2 = '<div class="keep-box-shadow-border keep-member" data-gutid="' + member.gutid + '" data-gid="' + member.gid + '">';
 						//头像
-						var html3 = '';
-
-						if(member.uimg != null) {
-							var myDate = new Date();
-							html3 = '<img src="' + member.uimg + '?' + myDate.getTime() + '" />';
-						} else {
-							html3 = '<img src="../../image/utils/default_personalimage.png" />';
-						}
+						var html3 = '<img src="' + updateHeadImg(member.uimg, 2) + '" />';
 						//名称
 						var html4 = '';
 						if(member.ugname == null || member.ugname == '') { //没有群昵称
@@ -664,7 +662,6 @@
 						} else {
 							html4 = '<p id="member_name_' + member.utid + '" class="mui-ellipsis">' + member.ugname + '</p></div>';
 						}
-
 						li.innerHTML = html1 + html2 + html3 + html4;
 						qunBot.appendChild(li);
 					}

@@ -1,3 +1,8 @@
+<!--
+	作者：444811716@qq.com
+	时间：2016-12-06
+	描述：创建群
+-->
 <!doctype html>
 <html>
 
@@ -216,7 +221,8 @@
 							console.log('---上传成功---');
 							console.log('file:' + JSON.stringify(file));
 							console.log('info:' + info);
-							qunImgPath = domain + JSON.parse(info).key; //群头像
+							var myDate = new Date();
+							qunImgPath = domain + JSON.parse(info).key + '?' + myDate.getTime(); //群头像
 							document.getElementById("qunimage").innerHTML = '<img style="margin-left: ' + marginLeft + ';" src="' + updateHeadImg(qunImgPath) + '" class="qun-image" />';
 							console.log('qunImgPath:' + qunImgPath);
 							wdQN.close();
