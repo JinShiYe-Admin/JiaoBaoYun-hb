@@ -172,7 +172,8 @@ var slideNavigation = (function($) {
 		var a = document.createElement('img');
 		a.className = 'mui-pull-left mui-plus-visible img-icon';
 		console.log('第一次加載的圖片地址：'+myStorage.getItem(storageKeyName.PERSONALINFO).uimg);
-		a.src=myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
+		var path=myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
+		a.src=path?path:"../../image/utils/default_personalimage.png";
 		//在第一个位置中插入元素
 		header.insertBefore(a, header.firstChild);
 	}

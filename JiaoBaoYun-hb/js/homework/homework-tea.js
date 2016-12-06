@@ -35,6 +35,7 @@ mui.plusReady(function() {
 		events.openNewWindow('workdetail-tea.html')
 	});
 
+
 	//获取当前账号，所在的群
 	//需要参数
 	var comData = {
@@ -103,7 +104,13 @@ var teacherArray = []; //老师身份
 var studentArray = []; //家长、学生身份
 
 //请求班级数据
-function requestClassData(comData) {
+function requestClassData() {
+	//获取当前账号，所在的群
+	//需要参数
+	var comData = {
+		vtp: 'ag', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群),ig(群信息vvl对应群ID)
+		vvl: personalUTID //查询的各项，对应人的utid，可以是查询的任何人
+	};
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//9.获取用户群
@@ -111,12 +118,13 @@ function requestClassData(comData) {
 		wd.close();
 		console.log('9.postDataPro_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
-			var tempModel = data.RspData;
+//			var tempModel = data.RspData;
 			//			gid:'14',//群ID
 			//			gname:'10群',//群名
 			//			gimg:'',//群头像,群头像的链接
-			//			mstype:'2'//用户管理角色,0家长,1管理员,2老师,3学生
+			//			mstype:'2'//用户角色,0家长,1管理员,2老师,3学生
 			//然后检索身份为老师的
+
 			for(var i in tempModel) {
 				var tempModel1 = tempModel[i];
 				//2老师
@@ -151,12 +159,13 @@ function requestClassData(comData) {
 				var tempModel1 = teacherArray[0];
 				//获取数据
 				//所需参数
-				var comData1 = {
+				var comData = {
 					teacherId: personalUTID, //教师Id
-					classId: tempModel1.gid, //班级群Id
-					pageIndex: tempModel1.index //当前页码，默认1；
+					classId: tempModel.gid, //班级群Id
+					pageIndex: tempModel.index //当前页码，默认1；
 				};
 				//获取作业列表
+
 				requestData(comData1);
 			} else { //判断家长、学生身份的数据
 				if(studentArray.length > 0) {
@@ -181,7 +190,7 @@ function requestClassData(comData) {
 }
 
 //获取老师作业列表
-function requestData(comData) {
+function requestData() {
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//1.根据教师Id和班级Id获取作业列表；逻辑：获取有效的、未毕业的、教师Id在群中的角色是老师的群列表；
