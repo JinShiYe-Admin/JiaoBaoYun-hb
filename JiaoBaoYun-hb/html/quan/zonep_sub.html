@@ -139,7 +139,7 @@
 		</style>
 	</head>
 
-	<body>
+	<body >
 
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
@@ -168,7 +168,7 @@
 		<div id="comment-popover" class="mui-popover" style="width: 100%;top: 150px;height: 200px;">
 			<ul class="mui-table-view">
 				<img id="closepop" src="../../image/cloud/record_addclassclose.png" style="height: 30px;float: right;margin: 10px;" />
-				<input id="inputComment" type="text" class="mui-input-clear" placeholder="请输入评论内容" style="width:80% ;margin-left: 10%;text-align: center;border-radius: 50px;">
+				<input onblur="inputOnblur(this)" id="inputComment" type="text" class="mui-input-clear" placeholder="请输入评论内容" style="width:80% ;margin-left: 10%;text-align: center;border-radius: 50px;">
 				<button id="addComment" type="button" class="mui-btn mui-btn-blue mui-btn-block" style="border-radius: 50px;height: 40px;width: 80%;left: 10%;padding: 0;">评论</button>
 		</div>
 
@@ -191,6 +191,11 @@
 				}
 			}
 		});
+
+		function inputOnblur(input) { //失去焦点事件
+			mui('.mui-popover').popover('hide');
+
+		}
 
 		function refreshUI() {
 
@@ -532,6 +537,7 @@
 				tempIndex = this.id.replace('comment', '');
 				console.log('tempIndex====' + tempIndex)
 				mui('.mui-popover').popover('show');
+				document.getElementById("inputComment").focus();
 				window.event.stopPropagation()
 
 			});
@@ -560,6 +566,7 @@
 				tempIndex = this.id.replace('bottomComment', '');
 				console.log('tempIndex====' + tempIndex)
 				mui('.mui-popover').popover('show');
+				document.getElementById("inputComment").focus();
 				window.event.stopPropagation()
 			});
 		});
@@ -576,12 +583,13 @@
 			//[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
 			//判断img是否为null，或者空
 			var tempModel = zonepArray[index];
-			if(tempModel.uimg == '' || tempModel.uimg == null) { //赋值
-				tempModel.uimg = '../../image/utils/default_personalimage.png';
-			} else { //修改值
-				var myDate = new Date();
-				tempModel.uimg = tempModel.uimg + '?' + myDate.getTime();
-			}
+			tempModel.uimg = updateHeadImg(tempModel.uimg)
+				//			if(tempModel.uimg == '' || tempModel.uimg == null) { //赋值
+				//				tempModel.uimg = '../../image/utils/default_personalimage.png';
+				//			} else { //修改值
+				//				var myDate = new Date();
+				//				tempModel.uimg = tempModel.uimg + '?' + myDate.getTime();
+				//			}
 			var personalImage = tempModel.uimg;
 			var personalName = tempModel.unick;
 			var time = tempModel.PublishDate;
