@@ -247,6 +247,7 @@
 										events.fireToPageNone('mine.html','infoChanged');
 										events.fireToPageNone('../cloud/cloud_home.html','infoChanged');
 										events.fireToPageNone('../quan/tab-zone.html','infoChanged');
+										events.fireToPageNone('../index/index.html', 'infoChanged');
 										console.log('登录保存的个人信息：' + JSON.stringify(tempInfo))
 											//跳到主界面
 										events.openNewWindowWithData('../index/index.html', '');
@@ -407,6 +408,7 @@
 									events.fireToPageNone('mine.html','infoChanged');
 									events.fireToPageNone('../cloud/cloud_home.html','infoChanged');
 									events.fireToPageNone('../quan/tab-zone.html','infoChanged');
+									events.fireToPageNone('../index/index.html', 'infoChanged');
 									//存储自动登录
 									//									loginInfo.auto = 1;
 									//									window.myStorage.setItem(window.storageKeyName.AUTOLOGIN, loginInfo);

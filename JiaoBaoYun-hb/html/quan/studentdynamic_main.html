@@ -186,8 +186,8 @@
 						console.log('---上传成功---');
 						console.log('file:' + JSON.stringify(file));
 						console.log('info:' + info);
-
-						var stuImgePath = domain + JSON.parse(info).key; //群头像
+						var myDate = new Date();
+						var stuImgePath = domain + JSON.parse(info).key + '?' + myDate.getTime(); //群头像
 						console.log('stuImgePath:' + stuImgePath);
 						//23.通过用户资料ID或关联ID更改各类型资料
 						//所需参数
