@@ -10,9 +10,8 @@ function postData(url, data, callback, waitingDialog) {
 		contentType: "application/json",
 		timeout: 60000,
 		success: function(data) {
-			console.log('data.RspCode:' + data.RspCode + 'data.data:' + data.data);
+//			console.log('data.RspCode:' + data.RspCode + 'data.data:' + data.data);
 			if(data.RspCode == 6) {
-
 				renewToken();
 			} else {
 				callback(data);
@@ -136,9 +135,8 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 			timeout: 60000,
 			//			success: callback,
 			success: function(data) {
-				console.log('data.RspCode:' + data.RspCode + 'data.data:' + data.data);
+//				console.log('data.RspCode:' + data.RspCode + 'data.data:' + data.data);
 				if(data.RspCode == 6) {
-
 					renewToken();
 				} else {
 					callback(data);
