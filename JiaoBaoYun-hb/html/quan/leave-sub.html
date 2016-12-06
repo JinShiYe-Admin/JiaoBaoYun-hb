@@ -57,8 +57,9 @@
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<div style="height: 120px;;background-image:url(../../image/quan/leave-bg.png) ;"><br/><br/>
-					<h4 id="leaveTitle" style="text-align: center;">主人寄语:雁过留声，人过留名！！</h1>
+				<div style="height: 120px;;background-image:url(../../image/quan/leave-bg.png) ;"><br/>
+					<h4 style="padding-left: 8%;">主人寄语:</h1>
+				<textarea id='leaveTitle' onblur="inputOnblur(this)"  class="mui-input-clear question" placeholder="请填写主人寄语"  style="height: 44px;background-color: transparent;text-align: center;border-color:transparent ;font-size: 18px;font-weight: 600;"></textarea>
 					
 				</div>
 				<div id="leaveNum" style="background-color: gainsboro;height: 30px;padding: 5px;font-size: 15px;">
@@ -85,6 +86,7 @@
 		});
 		var userId;
 		var personalUTID;
+		var note;
 		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 		mui.plusReady(function() {
 			window.addEventListener('refreshLeaveList',function(){
@@ -102,6 +104,16 @@
 				requestData(comData);
 				
 			})
+		document.getElementById('leaveTitle').addEventListener('input',function(){//监听textarea值得变化
+			console.log(this.value)
+		})
+		function inputOnblur(input) {//失去焦点事件
+			if(input.value == ''||input.value==null){
+//				mui.toast('主人寄语不能为空');
+			}else if(input.value!=note){
+ 				modifyMaster(input.value);
+ 			}
+}
 			/**
 			 * 下拉刷新具体业务实现
 			 */
@@ -235,6 +247,9 @@
 					totalCnt = data.RspData.TotalCnt;
 					var leaveNum = document.getElementById("leaveNum");
 					leaveNum.innerHTML = '留言('+data.RspData.TotalCnt+')';
+					var leaveTitle = document.getElementById('leaveTitle');
+			        leaveTitle.value = data.RspData.Note;
+			        note = data.RspData.Note;
 					refreshUI();
 					});
 					
@@ -245,11 +260,11 @@
 		}
 		
 		//修改主人寄语
-		function modifyMaster() {
+		function modifyMaster(note) {
 			//需要加密的数据
 			var tempData = {
 				userId: personalUTID,//用户ID
-				note:''//备注，即主人寄语
+				note:note//备注，即主人寄语
 			}
 			// 等待的对话框
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -258,7 +273,7 @@
 				wd.close();
 				console.log('60.postDataPro_setMsgNoteByUsersuccess:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
-					//修改界面寄语
+					mui.toast('修改成功')
 					
 				}else{
 					mui.toast(data.RspTxt);
@@ -266,21 +281,8 @@
 			});
 		};
 		
-//				"TabId": 6,
-//              "MsgContent": "我也谢谢",
-//              "ReplyId": 3,
-//              "UserId": 1,
-//              "UpperId": 4,
-//              "MsgDate": "2016-11-22 13:58:33",
-//              "utid": 1,
-//              "uid": "15264122518",
-//              "uname": "testC42C9FF8-4B18-44B5-9265-C9CEA1037070",
-//              "unick": "遥不可及",
-//              "usex": null,
-//              "utxt": null,
-//              "uimg": null
-		function refreshUI() {
 
+		function refreshUI() {
 			var ul = document.getElementById('leaveList');
 			ul.innerHTML = '';
 			for(var i = 0; i < leaveArray.length; i++) {
