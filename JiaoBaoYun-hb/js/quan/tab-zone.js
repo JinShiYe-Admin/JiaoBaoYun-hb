@@ -335,7 +335,6 @@ function getTopList(i) {
 				var ul = document.getElementById('top-list');
 				console.log('topArray====' + JSON.stringify(topArray))
 				for(var i = 0; i < topArray.length; i++) {
-					console.log('datasource[i]====' + JSON.stringify(datasource[i]))
 					var li = document.createElement('li');
 					li.id = 'tarClass' + i;
 					li.className = 'mui-table-view-cell mui-media tarClass';
@@ -386,7 +385,6 @@ function getBottomList(index, userLists) {
 				for(var i = 0; i < datasource.length; i++) {
 					datasource[i].userList = userLists[i].data;
 				}
-
 				for(var i = 0; i < datasource.length; i++) {
 					var userIds = []; //群用户id数组
 					for(var j = 0; j < datasource[i].userList.length; j++) {
@@ -439,15 +437,14 @@ function getUserSpaces(upString, index) {
 					userList[i].MsgContent = '暂无空间';
 				}
 				datasource[index].NoReadCnt = datasource[index].NoReadCnt + userList[i].NoReadCnt;
-				//				mui.extend(tempUserList[i], userList[i])
 			}
-			//			console.log('datasource===' + JSON.stringify(datasource));
 			for(var i = 0; i < userList.length; i++) {
-				//				console.log(JSON.stringify(userList[i]))
 				for(var j = 0; j < tempUserList.length; j++) {
-					if(tempUserList[j].utid == userList[i].PublisherId) {
+					if((tempUserList[j].utid == userList[i].PublisherId)) {
 						mui.extend(userList[i], tempUserList[j])
-							//						console.log('userList[i]==='+JSON.stringify(userList[i]));
+						tempUserList.splice(j,1);
+						break;
+
 					}
 				}
 
