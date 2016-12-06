@@ -104,7 +104,7 @@ function addSomeEvent() {
 		var ul = currentTable[0];
 		var li = ul.children[cellIndex];
 		var tempModel = datasource[tableIndex].userList[cellIndex];
-		li.innerHTML = '	<img class="mui-media-object mui-pull-left" src="' + tempModel.uimg + '" />' + '<p class="time">' + tempModel.PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
+		li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image" src="' + tempModel.uimg + '" />' + '<p class="time">' + tempModel.PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 			tempModel.ugname + '<p class="mui-ellipsis">' + tempModel.MsgContent + '</p>';
 
 		var seg = document.getElementById('segmentedControl');
@@ -227,7 +227,7 @@ function getNotes(index, StuDyArr) {
 					li.id = 'studentsdynamic' + i;
 					li.className = 'mui-table-view-cell mui-media studentsdynamic';
 
-					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' +
+					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' +
 						'<p class="time">' + StuDyArr[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
@@ -335,11 +335,10 @@ function getTopList(i) {
 				var ul = document.getElementById('top-list');
 				console.log('topArray====' + JSON.stringify(topArray))
 				for(var i = 0; i < topArray.length; i++) {
-					console.log('datasource[i]====' + JSON.stringify(datasource[i]))
 					var li = document.createElement('li');
 					li.id = 'tarClass' + i;
 					li.className = 'mui-table-view-cell mui-media tarClass';
-					li.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + datasource[i].gimg + '">' + '<p class="time">' + topArray[i].PublishDate +
+					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">' + '<p class="time">' + topArray[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
 						datasource[i].gname +
@@ -386,18 +385,12 @@ function getBottomList(index, userLists) {
 				for(var i = 0; i < datasource.length; i++) {
 					datasource[i].userList = userLists[i].data;
 				}
-
 				for(var i = 0; i < datasource.length; i++) {
 					var userIds = []; //群用户id数组
 					for(var j = 0; j < datasource[i].userList.length; j++) {
 						tempModel = datasource[i].userList[j];
 						//判断img是否为null，或者空
-						if(tempModel.uimg == '' || tempModel.uimg == null) { //赋值
-							tempModel.uimg = '../../image/utils/default_personalimage.png';
-						} else { //修改值
-							var myDate = new Date();
-							tempModel.uimg = tempModel.uimg + '?' + myDate.getTime();
-						}
+						tempModel.uimg = updateHeadImg(tempModel.uimg,2);
 						userIds.push(tempModel.utid)
 					}
 					userIds.join(',');
@@ -439,15 +432,14 @@ function getUserSpaces(upString, index) {
 					userList[i].MsgContent = '暂无空间';
 				}
 				datasource[index].NoReadCnt = datasource[index].NoReadCnt + userList[i].NoReadCnt;
-				//				mui.extend(tempUserList[i], userList[i])
 			}
-			//			console.log('datasource===' + JSON.stringify(datasource));
 			for(var i = 0; i < userList.length; i++) {
-				//				console.log(JSON.stringify(userList[i]))
 				for(var j = 0; j < tempUserList.length; j++) {
-					if(tempUserList[j].utid == userList[i].PublisherId) {
+					if((tempUserList[j].utid == userList[i].PublisherId)) {
 						mui.extend(userList[i], tempUserList[j])
-							//						console.log('userList[i]==='+JSON.stringify(userList[i]));
+						tempUserList.splice(j,1);
+						break;
+
 					}
 				}
 

@@ -1,3 +1,8 @@
+<!--
+	作者：444811716@qq.com
+	时间：2016-12-06
+	描述：邀请进群
+-->
 <!doctype html>
 <html>
 
@@ -9,7 +14,7 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
-		<script type="text/javascript" src="../../js/utils/events.js" ></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<style>
 			body,
 			.mui-content {
@@ -327,12 +332,8 @@
 								document.getElementById("unick").innerText = userData.unick; //昵称
 								//}
 
-								if(userData.uimg != null) { //头像
-									var myDate = new Date();
-									document.getElementById("uimg").src = userData.uimg + '?' + myDate.getTime();
-								} else {
-									document.getElementById("uimg").src = '../../image/utils/default_personalimage.png';
-								}
+								document.getElementById("uimg").src = updateHeadImg(userData.uimg, 2);
+
 								document.getElementById("bot").style.display = 'inline';
 								document.getElementById("row_data").innerHTML = '';
 								getUserInfo(); //查询资料

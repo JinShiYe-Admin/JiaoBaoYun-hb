@@ -218,8 +218,9 @@
 						filePath = 'qun' + myDate.getTime() + (Math.floor(Math.random() * 10000) + 1) + '.png';
 					} else {
 						var str = qunImgPath.split('/');
-						filePath = str[str.length - 1];
-						//console.log(filePath);
+						var str2 = str[str.length - 1].split('?');
+						filePath = str2[0];
+						console.log(filePath);
 					}
 					var domain = 'http://oh2zmummr.bkt.clouddn.com/'; //'http://o9u2jsxjm.bkt.clouddn.com/';
 					// 设置上传的参数
@@ -316,36 +317,34 @@
 								console.log('---上传成功---');
 								console.log('file:' + JSON.stringify(file));
 								console.log('info:' + info);
-								if(qunImgPath == '') {
-									var myDate = new Date();
-									qunImgPath = domain + JSON.parse(info).key + '?' + myDate.getTime();; //群头像
-									document.getElementById("qunimage").innerHTML = '<img style="margin-left: ' + marginLeft + ';" src="' + updateHeadImg(qunImgPath) + '" class="qun-image" />';
-									console.log('qunImgPath:' + qunImgPath);
-									//8.用户修改群各项信息
-									//需要参数
-									var comData2 = {
-										rid: subData.gid, //要修改的群id
-										vtp: 'gimg', //更改项，指更改用户信息的相应项,对应后面的vvl值,gimg(头像),gname(群名),gnote(群说明)
-										vvl: qunImgPath, //要修改成的值
 
-									};
-									//返回值model：model_groupList
-									// 等待的对话框
-									var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-									postDataPro_PostReGinfo(comData2, wd2, function(data) {
-										wd2.close();
-										console.log('8.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-										if(data.RspCode == 0) {
+								var myDate = new Date();
+								qunImgPath = domain + JSON.parse(info).key + '?' + myDate.getTime(); //群头像
+								console.log('qunImgPath:' + qunImgPath);
+								//8.用户修改群各项信息
+								//需要参数
+								var comData2 = {
+									rid: subData.gid, //要修改的群id
+									vtp: 'gimg', //更改项，指更改用户信息的相应项,对应后面的vvl值,gimg(头像),gname(群名),gnote(群说明)
+									vvl: qunImgPath, //要修改成的值
+
+								};
+								//返回值model：model_groupList
+								// 等待的对话框
+								var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+								postDataPro_PostReGinfo(comData2, wd2, function(data) {
+									wd2.close();
+									console.log('8.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+									if(data.RspCode == 0) {
+										setTimeout(function() {
 											console.log('修改群头像成功');
 											document.getElementById("qunimage").innerHTML = '<img style="margin-left: ' + marginLeft + ';" src="' + updateHeadImg(qunImgPath) + '" class="qun-image" />';
 											mui.toast('修改群头像成功');
-										} else {
-											mui.toast(data.RspTxt);
-										}
-									});
-								} else {
-									document.getElementById("qunimage").innerHTML = '<img style="margin-left: ' + marginLeft + ';" src="' + updateHeadImg(qunImgPath) + '" class="qun-image" />';
-								}
+										}, 2000)
+									} else {
+										mui.toast(data.RspTxt);
+									}
+								});
 								wdQN.close();
 							},
 							'Error': function(up, err, errTip) {
