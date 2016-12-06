@@ -23,6 +23,10 @@ function postData(url, data, callback, waitingDialog) {
 //waitingDialog,等待框
 //callback,返回值
 function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback) {
+//	if (plus.networkinfo.getCurrentType(==plus.networkinfo.CONNECTION_NONE)) {
+//		mui.toast("网络异常，请检查网络设置！");
+//		return;
+//	}
 	//循环
 	var tempStr = '';
 	for(var tempData in encryData) {
@@ -122,7 +126,14 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 			type: 'post',
 			contentType: "application/json",
 			timeout: 60000,
-			success: callback,
+//			success: callback,
+			success: function(data) {
+				if(data.RspCode == 6) {
+					renewToken();
+				}else{
+					callback(data);
+				}
+			},
 			error: function(xhr, type, errorThrown) {
 				console.log('wang luo cuowu:'+JSON.stringify(xhr)+','+type+','+errorThrown);
 				waitingDialog.close();
