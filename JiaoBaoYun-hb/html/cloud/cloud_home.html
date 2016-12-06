@@ -335,8 +335,19 @@
 				//---存储start---
 				//云存储显示的文件
 				mui('#cloudstorage').on('tap', '.cloud-text-align-center', function() {
-					events.openNewWindow('storage_main.html');
+					//events.openNewWindow('storage_main.html');
+					console.log('tap:' + this.getAttribute("data-fid"));
+
+					mui.each(fileArray, function(index, item) {
+						console.log('fileArray:' + index + '|' + JSON.stringify(item));
+					});
 				});
+
+				//云存储右侧按钮
+				mui('#cloudstorage').on('tap', '.cloud-bottom-icon', function() {
+					//events.openNewWindow('storage_main.html');
+				});
+
 				//增加文件夹
 				mui('#cloudstorage').on('tap', '#addFolder', function(e) {
 					e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
@@ -363,6 +374,8 @@
 									if(data.RspCode == 0) {
 										//26.用户云盘顶层文件及文件夹获取
 										postFirstFile();
+									} else if(data.RspCode == 8) {
+										mui.toast('操作失败！已存在相同的名字');
 									} else {
 										mui.toast(data.RspTxt);
 									}
@@ -373,10 +386,7 @@
 						}
 					});
 				});
-				//云存储右侧按钮
-				mui('#cloudstorage').on('tap', '.cloud-bottom-icon', function() {
-					events.openNewWindow('storage_main.html');
-				});
+
 				//---存储end---
 
 				//---应用---
@@ -422,13 +432,7 @@
 									return false;
 								}
 								var tempModel = data.RspData[i];
-								//console.log('云盘顶层：' + i + '|' + JSON.stringify(tempModel));
-								if(tempModel.ftype == '.file') {
-									addStorageFolder(tempModel.fname, 0); //文件夹
-								} else {
-									addStorageFolder(tempModel.fname, 1); //文件
-								}
-
+								addStorageFolder(tempModel);
 							}
 							//增加加号
 							if(fileArray.length < 3) {
@@ -476,22 +480,22 @@
 
 				/**
 				 * 增加存储的文件夹或文件
-				 * @param {Object} data 名字
-				 * @param {Object} type 0-文件夹，1-文件
+				 * @param {Object} data
 				 */
-				function addStorageFolder(data, type) {
+				function addStorageFolder(data) {
 					var table = document.getElementById("cloudstoragefile");
 					var div = document.createElement("div");
+					div.setAttribute('data-fid', data.fid);
 					div.className = 'mui-col-sm-4 mui-col-xs-4 cloud-text-align-center';
 					var html1 = '';
 
-					if(type == 0) { //文件夹
+					if(data.ftype == '.file') { //文件夹
 						html1 = '<img class="cloud-bottom-imge" src="../../image/cloud/A_folder.png" />';
-					} else if(type == 1) { //文件
-						var type = cloud.classify(data);
+					} else { //文件
+						var type = cloud.classify(data.ftype);
 						html1 = '<img class="cloud-bottom-imge" src="../../image/cloud/cloud_' + type + '.png" />';
 					}
-					var html2 = '<p class="mui-ellipsis">' + data + '</p>';
+					var html2 = '<p class="mui-ellipsis">' + data.fname + '</p>';
 					div.innerHTML = html1 + html2;
 					table.appendChild(div);
 				}
