@@ -342,17 +342,22 @@
 				//---存储start---
 				//云存储显示的文件
 				mui('#cloudstorage').on('tap', '.cloud-text-align-center', function() {
-					//events.openNewWindow('storage_main.html');
 					console.log('tap:' + this.getAttribute("data-fid"));
-
 					mui.each(fileArray, function(index, item) {
 						console.log('fileArray:' + index + '|' + JSON.stringify(item));
+					});
+					events.openNewWindowWithData('storage_main.html', {
+						fid: this.getAttribute("data-fid"), //fid
+						top: fileArray //顶层文件和文件夹的数据
 					});
 				});
 
 				//云存储右侧按钮
 				mui('#cloudstorage').on('tap', '.cloud-bottom-icon', function() {
-					//events.openNewWindow('storage_main.html');
+					events.openNewWindowWithData('storage_main.html', {
+						fid: '0', //fid
+						top: fileArray //顶层文件和文件夹的数据
+					});
 				});
 
 				//增加文件夹
@@ -502,8 +507,8 @@
 						var type = cloud.classify(data.ftype);
 						if(type != '') {
 							html1 = '<span class="mui-icon iconfont ' + type + '"></span>';
-						} else {
-							html1 = '<img class="cloud-bottom-imge" src="../../image/cloud/A_folder.png" />';
+						} else { //七牛能生成缩略图的图片或视频
+							html1 = '<img class="cloud-bottom-imge" src="' + data.fpath + '" />';
 						}
 					}
 					var html2 = '<p class="mui-ellipsis">' + data.fname + '</p>';

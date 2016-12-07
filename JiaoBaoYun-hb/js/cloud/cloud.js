@@ -78,16 +78,21 @@ var cloud = (function($, mod) {
 		type = type.toLowerCase(); //转换为小写
 		switch(type) {
 			case 'doc': //文档类型
+			case 'docx':
 				return 'icon-word';
 				break;
 			case 'xls': //文档类型
+			case 'xlsx':
 				return 'icon-excel';
 				break;
 			case 'txt': //文档类型
 				return 'icon-txt';
 				break;
-			case 'zip': //文档类型
+			case 'zip': //压缩包类型
 				return 'icon-zip';
+				break;
+			case 'pdf': //文档类型
+				return 'icon-pdf';
 				break;
 			case 'avi': //七牛能生成片缩略图的视频类型
 			case 'mp4':
@@ -147,7 +152,7 @@ var cloud = (function($, mod) {
 		//获得没有后缀的文件名
 		var fileName = fileNameList2.split('.')[0];
 		return fileName;
-	});
+	}
 
-return mod;
+	return mod;
 })(mui, window.cloud || {})

@@ -13,7 +13,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
-<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<script src="../../js/mui.min.js"></script>
 		<style>
@@ -21,9 +21,13 @@
 				line-height: 45px;
 				color: #333333;
 			}
-
-			.mui-bar-nav~ .mui-content .mui-pull-top-pocket {
+			/*.mui-bar-nav~ .mui-content .mui-pull-top-pocket {
 				top: 90px !important;
+			}*/
+
+			body,
+			.mui-content {
+				background: white;
 			}
 		</style>
 	</head>
@@ -38,31 +42,78 @@
 				<span class="mui-icon iconfont icon-upload mui-pull-left" style="margin-left: 15px;"> 上传</span>
 				<span class="mui-icon iconfont icon-chuanshu"> 传输列表</span>
 				<span id="addfolder" class="mui-icon iconfont icon-newfolder mui-pull-right" style="margin-right: 15px;"> 文件夹</span>
+				<div style="height: 1px;width: 100%;background: black;"></div>
 			</div>
+			<div id="all">
+				<div id="fid" style="display: inline;">
+					<div class="mui-scroll-wrapper" style="top: 90px;">
+						<div class="mui-scroll">
+							<ul class="mui-table-view">
+								<li class="mui-table-view-cell mui-media">
+									<a href="javascript:;">
+										<img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">
+										<div class="mui-media-body">
+											幸福
+											<p class="mui-ellipsis">能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+										</div>
+									</a>
+								</li>
+								<li class="mui-table-view-cell mui-media">
+									<a href="javascript:;">
+										<img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">
+										<div class="mui-media-body">
+											木屋
+											<p class="mui-ellipsis">想要这样一间小木屋，夏天挫冰吃瓜，冬天围炉取暖.</p>
+										</div>
+									</a>
+								</li>
+								<li class="mui-table-view-cell mui-media">
+									<a href="javascript:;">
+										<img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">
+										<div class="mui-media-body">
+											CBD
+											<p class="mui-ellipsis">烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
 
+				</div>
+			</div>
+		</div>
 		</div>
 	</body>
 
 	<script type="text/javascript">
 		//云盘子页面
 		mui.init({
-			subpages: [{
-				url: 'storage_sub.html',
-				id: 'storage_sub.html',
-				styles: {
-					top: '90px',
-					bottom: localStorage.getItem('$Statusbar'),
-				}
-			}]
+			//			subpages: [{
+			//				url: 'storage_sub.html',
+			//				id: 'storage_sub.html',
+			//				styles: {
+			//					top: '90px',
+			//					bottom: localStorage.getItem('$Statusbar'),
+			//				}
+			//			}]
 		});
 
 		mui.plusReady(function() {
 			var path = [];
 			path.push('云盘—云存储');
-			//显示等待窗口
-			plus.nativeUI.showWaiting('正在加载中');
-			//下载，增加文件夹的监听
 
+			//---从父页面获取数据---start---
+			var main = plus.webview.currentWebview(); //获取当前窗体对象
+			var subData = main.data; //接收页面传入的参数值
+			//			var subData = {
+			//				fid: this.getAttribute("data-fid"), //fid，如果是0则显示顶层文件和文件夹
+			//				top: fileArray //顶层文件和文件夹的数据
+			//			}
+			console.log('subData:' + JSON.stringify(subData));
+			//---从父页面获取数据---end---
+
+			//下载，增加文件夹的监听
 			document.getElementById('addfolder').addEventListener('tap', function(e) {
 				e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
 				var btnArray = ['取消', '确定'];
