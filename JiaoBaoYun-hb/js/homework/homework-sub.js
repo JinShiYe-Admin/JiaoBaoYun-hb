@@ -9,26 +9,26 @@
 mui.init();
 //mui的plusready监听
 mui.plusReady(function() {
-
 	/**监听父页面的图标事件*/
 	window.addEventListener('togglePop', function(e) {
 		mui("#popover").popover('toggle');
 	});
+	var publish=document.getElementById('iconPublish');
+	window.addEventListener('canPublish',function(e){
+		if(e.detail.data==2){
+			publish.style.display='block';
+		}else{
+			publish.style.display='none';
+		}
+	})
 	//发布作业界面
-	events.addTap('iconPublish', function() {
+	publish.addEventListener('tap',function(){
 		events.openNewWindow('homework-publish.html')
-	});
+	})
 
 	events.addTap('tempDetail', function() {
 		events.openNewWindow('workdetail-tea.html')
 	});
-
-	//获取当前账号，所在的群
-//	requestClassData();
-
-	//	getClasses();
-	//获取老师所在班级
-
 })
 
 /**
@@ -234,5 +234,6 @@ var newHashMap = function() {
 //		cell.imgs +
 //		'</div>' +
 //		'<p>已上传试卷人数(' + cell.stuWorkNo + ')</p>' +
-//		'</div>'
+//		'<
+///div>'
 //}
