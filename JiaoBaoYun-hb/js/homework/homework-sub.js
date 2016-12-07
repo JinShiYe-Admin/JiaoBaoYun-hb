@@ -15,6 +15,7 @@ var studentHash;
 mui.init();
 //mui的plusready监听
 mui.plusReady(function() {
+	events.preload('homework-publish.html',500);
 	personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	/**监听父页面的图标事件*/
 	window.addEventListener('togglePop', function(e) {
@@ -34,8 +35,9 @@ mui.plusReady(function() {
 		studentHash = newHashMap();
 		setClasses(role);
 	});
-	window.addEventListener('roleChanged', function() {
+	window.addEventListener('roleChanged', function(e) {
 			role = e.detail.data;
+			console.log('作业子页面获取的角色变换值roleChanged：'+role);
 			if(role == 2) {
 				publish.style.display = 'block';
 			} else {
@@ -45,7 +47,7 @@ mui.plusReady(function() {
 		})
 		//发布作业界面
 	publish.addEventListener('tap', function() {
-		events.openNewWindow('homework-publish.html')
+		events.fireToPageWithData('homework-publish.html','postClasses',teacherClasses);
 	})
 
 	events.addTap('tempDetail', function() {
@@ -54,6 +56,7 @@ mui.plusReady(function() {
 })
 var setClasses = function(role) {
 		var tabs = document.getElementById('scroll-class');
+		events.clearChild(tabs);
 		var classes;
 		if(role == 2) {
 			classes = teacherClasses;
@@ -149,7 +152,10 @@ var getAnswerImgs=function(thumbUrls){
 	return imgsInner;
 }
 var createStuHomeworkInner = function(homework) {
-
+	return '<a><div class="stuHomework-header"><a class="mui-icon iconfont subject-icon' +
+		getHomeworkIcon(homework.Subject) + '"></a><div class="header-words"><h5 class="header-title">' +
+		homework.HomeworkTitle + '</h5><p class="header-content">' + homework.Contents + '</p></div></div>' +
+		'<div class="stuHomework-bottom"></div></a>';
 }
 var createStuAnswerResultInner = function(answerResult) {
 
