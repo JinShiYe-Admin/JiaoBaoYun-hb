@@ -59,7 +59,7 @@
 			<div class="mui-scroll">
 				<div style="height: 120px;;background-image:url(../../image/quan/leave-bg.png) ;"><br/>
 					<h4 style="padding-left: 8%;">主人寄语:</h1>
-				<textarea id='leaveTitle' onblur="inputOnblur(this)"  class="mui-input-clear question" placeholder="请填写主人寄语"  style="height: 44px;background-color: transparent;text-align: center;border-color:transparent ;font-size: 18px;font-weight: 600;"></textarea>
+				<textarea id='leaveTitle' readonly="readonly" onblur="inputOnblur(this)"  class="mui-input-clear question" placeholder=""  style="height: 44px;background-color: transparent;text-align: center;border-color:transparent ;font-size: 18px;font-weight: 600;"></textarea>
 					
 				</div>
 				<div id="leaveNum" style="background-color: gainsboro;height: 30px;padding: 5px;font-size: 15px;">
@@ -89,11 +89,18 @@
 		var note;
 		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 		mui.plusReady(function() {
+			
 			window.addEventListener('refreshLeaveList',function(){
 				requestData(comData)
 			})
 			userId = plus.webview.currentWebview().data;
-		    
+			var leaveTitle = document.getElementById('leaveTitle');
+		    if(userId==personalUTID){
+		    		leaveTitle.removeAttribute("readOnly");
+		    		
+		    }else{
+		    		leaveTitle.readOnly = 'readonly'
+		    }
 
 				var comData = {
 					userId: userId, //用户ID
@@ -248,7 +255,16 @@
 					var leaveNum = document.getElementById("leaveNum");
 					leaveNum.innerHTML = '留言('+data.RspData.TotalCnt+')';
 					var leaveTitle = document.getElementById('leaveTitle');
-			        leaveTitle.value = data.RspData.Note;
+					if(data.RspData.Note==''||data.RspData.Note == null){
+						if(userId==personalUTID){
+							leaveTitle.placeholder = '请填写主人寄语';
+						}else{
+							leaveTitle.value = ''
+						}
+						
+					}else{
+						leaveTitle.value = data.RspData.Note;
+					}
 			        note = data.RspData.Note;
 					refreshUI();
 					});

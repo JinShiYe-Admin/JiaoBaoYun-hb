@@ -131,10 +131,22 @@ var setPublishedData = function() {
 	})
 }
 var createHomeworkInner = function(homework) {
-
+	return '<a><div class="homework-header"><a class="mui-icon iconfont subject-icon' +
+		getHomeworkIcon(homework.Subject) + '"></a><div class="header-words"><h5 class="header-title">' +
+		homework.HomeworkTitle + '</h5><p class="header-content">' + homework.Contents + '</p></div></div>' +
+		'<div class="homework-bottom"><p>未提交数(' + homework.Remain +
+		')</p><p>已提交数(' + homework.Upload + ')</p></div></a>';
 }
 var createAnswerResultInner = function(answerResult) {
-
+	return '<a><div class="answerResult-header">'+getAnswerImgs(answerResult.ThumbUrls)+
+	'</div><p class="answerResult-bottom">已提交数('+answerResult.Upload+')</p></a>'
+}
+var getAnswerImgs=function(thumbUrls){
+	var imgsInner='';
+	thumbUrls.forEach(function(thumbUrl){
+		imgsInner+='<img class="answerResult-pic" src="'+thumbUrl+'"/>';
+	})
+	return imgsInner;
 }
 var createStuHomeworkInner = function(homework) {
 
@@ -143,28 +155,40 @@ var createStuAnswerResultInner = function(answerResult) {
 
 }
 var getHomeworkIcon = function(subject) {
+		var subjectIcon = '';
 		switch(subject) {
 			case '语文':
+				subjectIcon = 'icon-yuwen';
 				break;
 			case '数学':
+				subjectIcon = 'icon-shuxue';
 				break;
 			case '英语':
+				subjectIcon = 'icon-yingyu';
 				break;
 			case '政治':
+				subjectIcon = 'icon-zhengzhi';
 				break;
 			case '历史':
+				subjectIcon = 'icon-lishi';
 				break;
 			case '地理':
+				subjectIcon = 'icon-dili';
 				break;
 			case '物理':
+				subjectIcon = 'icon-wuli';
 				break;
 			case '化学':
+				subjectIcon = 'icon-huaxue';
 				break;
 			case '生物':
+				subjectIcon = 'icon-shengwu';
 				break;
 			default:
+				subjectIcon = 'icon-qita';
 				break;
 		}
+		return subjectIcon;
 	}
 	/**
 	 * 要区分家长和学生作业界面
