@@ -108,6 +108,10 @@
 	<script type="text/javascript">
 		//云盘子页面
 		mui.init({
+			gestureConfig: {
+				longtap: true, //默认为false
+			}
+
 			//			subpages: [{
 			//				url: 'storage_sub.html',
 			//				id: 'storage_sub.html',
@@ -166,7 +170,7 @@
 					vvl: subData.fid //	节点ID，顶层为0
 				};
 				//请求数据
-				requestData(comData, '云盘—云存储');
+				requestData(comData, subData.title);
 			}
 
 			//---初始化---end---
@@ -232,27 +236,52 @@
 
 			//返回按钮监听
 			document.getElementById('back').addEventListener('tap', function() {
-				showPidList.pop();
+				mui.each(showPidList, function(index, item) {
+					console.log('backshowPidList:' + JSON.stringify(item));
+				});
+				mui.each(allData, function(index, item) {
+					console.log('back:allData' + JSON.stringify(item));
+				});
+				showPidList.pop(); //清除最后一个历史记录
+				allData.pop(); //清除最后一个数据
+				console.log('------------------------');
+				mui.each(showPidList, function(index, item) {
+					console.log('backshowPidList:' + JSON.stringify(item));
+				});
+				mui.each(allData, function(index, item) {
+					console.log('back:allData' + JSON.stringify(item));
+				});
 				if(showPidList.length == 0) {
 					mui.back();
 				} else {
 					//隐藏当前界面
 					document.getElementById("pid_" + showPid).style.display = 'none';
 					//显示上一个历史界面
-					var show = showPidList[0];
+					var show = showPidList[showPidList.length - 1];
 					document.getElementById("pid_" + show.pid).style.display = 'inline';
 					document.getElementById("title").innerText = show.pname;
 					showPid = show.pid;
 				}
 			});
 
+			/**
+			 * 点击文件或文件夹
+			 */
 			mui('#all').on('tap', '.mui-table-view-cell', function() {
 				var id = this.getAttribute('id'); //元素id
 				var fid = this.getAttribute('data-fid'); //文件id
 				var fname = this.getAttribute('data-fname'); //文件或文件夹名字
 				var ftype = this.getAttribute('data-ftype'); //文件类型
 				console.log('点击文件或文件夹' + id + '|' + fid + "|" + fname + '|' + ftype);
-				if(ftype == '.file') {
+				if(ftype == '.file') { //点击文件夹
+					document.getElementById("title").innerText = fname;
+					if(document.getElementById("pid_" + fid) != null) {
+						console.log('点击文件夹pid_' + fid + '!=null');
+						document.getElementById("pid_" + fid).parentNode.removeChild(document.getElementById("pid_" + fid));
+					} else {
+						console.log('点击文件夹pid_' + fid + '==null');
+					}
+
 					//所需参数
 					var comData = {
 						vvl: fid //	节点ID，顶层为0
@@ -260,17 +289,34 @@
 					//请求数据
 					requestData(comData, fname);
 				}
-
 			});
 
-			//			//打开新文件夹
-			//			window.addEventListener("addPath", function(e) {
-			//				//获得事件参数
-			//				var getPath = e.detail.path;
-			//				path.push(getPath);
-			//				var title = document.body.querySelector('.mui-title');
-			//				title.innerHTML = getPath;
-			//			});
+			/**
+			 * 长按文件或文件夹
+			 */
+			mui('#all').on('longtap', '.mui-table-view-cell', function() {
+				var id = this.getAttribute('id'); //元素id
+				var fid = this.getAttribute('data-fid'); //文件id
+				var fname = this.getAttribute('data-fname'); //文件或文件夹名字
+				var ftype = this.getAttribute('data-ftype'); //文件类型
+				console.log('长按文件或文件夹' + id + '|' + fid + "|" + fname + '|' + ftype);
+			});
+
+			/**
+			 * 点击文件或文件夹的下载
+			 */
+			mui('#all').on('tap', '.icon-download', function(e) {
+				console.log('下载');
+				if(e && e.stopPropagation) {
+					//因此它支持W3C的stopPropagation()方法
+					e.stopPropagation();
+					console.log('if');
+				} else {
+					console.log('else');
+					//否则，我们需要使用IE的方式来取消事件冒泡
+					window.event.cancelBubble = true;
+				}
+			});
 
 			/**
 			 * 新增一个空的文件夹
@@ -358,7 +404,7 @@
 						}
 						var pid = comData.vvl;
 						if(document.getElementById("pid_" + pid) == null) {
-							console.log('pid_' + pid + '==null');
+							console.log('获取数据pid_' + pid + '==null');
 							addbot(pid); //增加对应的文件夹
 							var fData2 = {
 								pid: pid, //上层id
@@ -369,7 +415,7 @@
 								additem(item);
 							});
 						} else {
-							console.log('pid_' + pid + '!=null');
+							console.log('获取数据pid_' + pid + '!=null');
 						}
 						//---滑动start---
 						mui(".mui-scroll-wrapper").scroll({
@@ -380,7 +426,7 @@
 							bounce: true, //是否启用回弹
 						});
 						//---滑动end---
-						console.log('requestData_showPid:' + showPid);
+						console.log('上一个界面的showPid:' + showPid);
 						document.getElementById("pid_" + showPid).style.display = 'none';
 						document.getElementById("pid_" + pid).style.display = 'inline';
 						showPid = pid;
