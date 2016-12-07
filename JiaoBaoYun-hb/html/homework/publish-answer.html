@@ -109,7 +109,46 @@
 				//上传按钮点击事件
 				events.addTap('post-imgs', function() {
 					if(camera.filePaths.length > 0) {
-						load.createUpload(server, camera.filePaths);
+						//						load.createUpload(server, camera.filePaths);
+
+						//判断当前显示的是老师身份0，还是家长、学生身份1
+						if(identityFlag == 0) {
+							//14.发布答案,只能上传图片；
+							//所需参数
+							var comData = {
+								teacherId: personalUTID, //教师Id
+								subjectId: selectSubjectID, //科目Id， 见（一）.17. GetSubjectList()；
+								fileIds: '' //上传文件的id串，例如“1,2”；
+							};
+							requestPublishAnswer(comData);
+						} else {
+							//判断是要学生提交答案0，还是修改答案1
+							if(uploadFalg == 0) {
+								//6.	提交答案结果
+								//所需参数
+								var comData = {
+									userId: personalUTID, //学生/家长id，
+									classId: '', //班级id
+									studentId: personalUTID, //学生Id；
+									fileIds: '', //文件id数组；
+									teacherId: '', //老师Id；
+									teacherName: '' //老师名字；
+								};
+								requestSubmitAnswer(comData);
+							} else {
+								//8.修改答案结果；
+								//所需参数
+								var comData = {
+									userId: personalUTID, //学生/家长id，
+									studentId: personalUTID, //学生Id；
+									answerResultId: '', //要修改的答案id；
+									fileIds: '', //文件id数组；
+									teacherId: '', //老师Id；
+									teacherName: '' //老师名字；
+								};
+								requestModifyAnswer(comData);
+							}
+						}
 					} else {
 						mui.toast('请拍照后上传');
 					}
@@ -122,6 +161,12 @@
 			var subjectArray = [];
 			//选择的科目id
 			var selectSubjectID = 0;
+			//判断当前显示的是老师身份0，还是家长、学生身份1
+			var identityFlag = 0;
+			//判断是要学生提交答案0，还是修改答案1
+			var uploadFalg = 0;
+			//将主界面的老师数组传到此界面
+			var teacherArray = []; 
 
 			//17.获取所有科目列表
 			function requestSubjectList() {
@@ -178,12 +223,6 @@
 				});
 			}
 
-			//所需参数
-			//				var comData = {
-			//					teacherId: personalUTID, //教师Id
-			//					subjectId: selectSubjectID, //科目Id， 见（一）.17. GetSubjectList()；
-			//					fileIds: '' //上传文件的id串，例如“1,2”；
-			//				};
 			//14.发布答案,只能上传图片；
 			function requestPublishAnswer(comData) {
 				// 等待的对话框
@@ -200,15 +239,6 @@
 				});
 			}
 
-			//所需参数
-			//				var comData = {
-			//					userId: personalUTID, //学生/家长id，
-			//					classId: '',//班级id
-			//					studentId: personalUTID, //学生Id；
-			//					fileIds: '', //文件id数组；
-			//					teacherId: '', //老师Id；
-			//					teacherName: '' //老师名字；
-			//				};
 			//6.	提交答案结果
 			function requestSubmitAnswer(comData) {
 				// 等待的对话框
@@ -225,15 +255,6 @@
 				});
 			}
 
-			//所需参数
-//			var comData = {
-//				userId: personalUTID, //学生/家长id，
-//				studentId: personalUTID, //学生Id；
-//				answerResultId: '', //要修改的答案id；
-//				fileIds: '', //文件id数组；
-//				teacherId: '', //老师Id；
-//				teacherName: '' //老师名字；
-//			};
 			//8.修改答案结果；
 			function requestModifyAnswer(comData) {
 				// 等待的对话框

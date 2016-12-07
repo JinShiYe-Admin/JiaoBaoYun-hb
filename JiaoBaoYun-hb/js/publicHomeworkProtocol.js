@@ -147,6 +147,7 @@ var postDataPro_CommentHomeworkResult=function(commonData, wd, callback) {
 //所需参数
 //		var comData = {
 //			teacherId: '',//教师Id
+//			answerResultId: '',//
 //			studentId: '',//学生Id；
 //			classId:'',//班级群Id；
 //			comment:''//评价

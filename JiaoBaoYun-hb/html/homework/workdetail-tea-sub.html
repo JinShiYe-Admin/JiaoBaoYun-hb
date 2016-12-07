@@ -108,6 +108,8 @@
 					console.log('2.postDataPro_GetHomework:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						homeworkDetailModel = data.RspData;
+						//修改界面
+						
 					} else {
 						mui.toast(data.RspTxt);
 					}
@@ -183,11 +185,10 @@
 									}
 								}
 							}
-
-							//将群id、作业id，塞入返回的各自列表
-
 							console.log('未完成列表：' + JSON.stringify(remainArray));
 							console.log('已完成列表：' + JSON.stringify(uploadArray));
+							//刷新界面
+							
 						});
 
 					} else {
