@@ -140,7 +140,7 @@ function requestClassData() {
 	//9.获取用户群
 	postDataPro_PostGList(comData, wd, function(data) {
 		wd.close();
-		console.log('9.postDataPro_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		console.log('作业主界面获取的群信息：'+JSON.stringify(data) );
 		if(data.RspCode == 0) {
 			var tempArray = data.RspData;
 			//			gid:'14',//群ID
@@ -148,22 +148,21 @@ function requestClassData() {
 			//			gimg:'',//群头像,群头像的链接
 			//			mstype:'2'//用户角色,0家长,1管理员,2老师,3学生
 			//然后检索身份为老师的
-
 			for(var i in tempArray) {
 				var tempModel1 = tempArray[i];
 				//2老师
 				if(tempModel1.mstype == 2 || tempModel1.mstype == 1) {
 					//作业列表
-					tempModel1.homeworkArray = [];
-					tempModel1.index = 1;
+					tempModel.homeworkArray = [];
+					tempModel.index = 1;
 					teacherArray.push(tempModel1);
 				}
 				//家长、学生
 				if(tempModel1.mstype == 0 || tempModel1.mstype == 3) {
 					//作业列表
-					tempModel1.homeworkArray = [];
-					tempModel1.index = 1;
-					studentArray.push(tempModel1);
+					tempModel.homeworkArray = [];
+					tempModel.index = 1;
+					studentArray.push(tempModel);
 				}
 			}
 			//控件加载班级，根据数组里面是否有数据，做界面显示
@@ -229,6 +228,13 @@ function requestData(comData) {
 			for(var i in tempArray) {
 				//当前群
 				var classModel = tempArray[i];
+				//当前得到的数据
+				var tempRspData = data.RspData.Dates;
+				//将群id塞到数据model中
+				for (var i in tempRspData) {
+					var tempRspModel = tempRspData[i];
+					tempRspModel.classId = data.RspData.ClassId;
+				}
 				//找到和返回作业列表一直的群号
 				if(classModel.gid == data.RspData.ClassId) {
 					//判断是刷新还是加载更多
@@ -236,12 +242,12 @@ function requestData(comData) {
 						//将群里面的加载索引加1
 						classModel.index = 1;
 						//赋值
-						classModel.homeworkArray = data.RspData.Dates;
+						classModel.homeworkArray = tempRspData;
 					} else { //加载更多2
 						//将群里面的加载索引加1
 						classModel.index++;
 						//合并作业列表
-						classModel.homeworkArray = classModel.homeworkArray.concat(data.RspData.Dates);
+						classModel.homeworkArray = classModel.homeworkArray.concat(tempRspData);
 					}
 				}
 			}

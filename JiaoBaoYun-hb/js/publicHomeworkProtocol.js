@@ -149,7 +149,6 @@ var postDataPro_CommentHomeworkResult=function(commonData, wd, callback) {
 //			teacherId: '',//教师Id
 //			studentId: '',//学生Id；
 //			classId:'',//班级群Id；
-//			homeworkId:'',//作业id；
 //			comment:''//评价
 //		};
 //返回值：{“r”：true}
@@ -274,7 +273,6 @@ var postDataPro_ModifyHomeworkResultComment=function(commonData, wd, callback) {
 //			answerResultId: '',//要修改的答案评价的id；
 //			studentId: '',//学生Id；
 //			classId: '',//班级群Id；
-//			homeworkId: '',//作业id；
 //			comment:''//评价；
 //		};
 //{“r”：true}
@@ -324,12 +322,12 @@ var postDataPro_GetSubjectList=function(commonData, wd, callback) {
 //			classId: '',//班级群Id；
 //			homeworkId:''//作业id；
 //		};
-var postDataPro_GetHomework=function(commonData, wd, callback) {
-	//需要加密的数据
-	var enData = {};
-	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetHomework', enData, commonData, 2, wd, callback);
-}
+//var postDataPro_GetHomework=function(commonData, wd, callback) {
+//	//需要加密的数据
+//	var enData = {};
+//	//发送网络请求，data为网络返回值
+//	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetHomework', enData, commonData, 2, wd, callback);
+//}
 
 
 //3.	获取作业结果；
@@ -382,6 +380,7 @@ var postDataPro_UploadFile=function(commonData, wd, callback) {
 //所需参数
 //		var comData = {
 //			userId: '',//学生/家长id，
+//			classId: '',//班级id
 //			studentId: '',//学生Id；
 //			fileIds: '',//文件id数组；
 //			teacherId: '',//老师Id；

@@ -576,6 +576,7 @@
 				tempIndex = this.id.replace('bottomComment', '');
 				console.log('tempIndex====' + tempIndex)
 				mui('.mui-popover').popover('show');
+				document.getElementById("inputComment").focus();
 				window.event.stopPropagation()
 			});
 		});

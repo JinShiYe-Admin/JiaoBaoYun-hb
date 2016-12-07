@@ -12,6 +12,8 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<link rel="stylesheet" href="../../css/cloud.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
@@ -153,6 +155,10 @@
 			.mui-progressbar {
 				border-radius: 5px;
 			}
+
+			.iconfont{
+				font-size: 45px;
+			}
 		</style>
 	</head>
 
@@ -198,8 +204,9 @@
 						</li>
 						<li class="mui-table-view-cell mui-media mui-col-sm-9 mui-col-xs-9 " style="padding: 5px;margin: 0;margin-left: 10%;">
 							<div class="mui-row" id="cloudstoragefile">
-								<!--<div class="mui-col-sm-4 mui-col-xs-4 cloud-text-align-center">
-									<img class="cloud-bottom-imge" src="../../image/cloud/cloud_doc.png" />
+								<div class="mui-col-sm-4 mui-col-xs-4 cloud-text-align-center">
+									<!--<img class="cloud-bottom-imge" src="../../image/cloud/cloud_doc.png" />-->
+									<span class="mui-icon iconfont icon-txt"></span>
 									<p class="mui-ellipsis">泰国旅游照片泰国旅游照片</p>
 								</div>
 								<div class="mui-col-sm-4 mui-col-xs-4 cloud-text-align-center">
@@ -208,7 +215,7 @@
 								</div>
 								<div class="mui-col-sm-4 mui-col-xs-4 " id="addFolder">
 									<img class="cloud-bottom-imge" style="margin-top: 4px;" src="../../image/cloud/A_addfolder.png" />
-								</div>-->
+								</div>
 							</div>
 						</li>
 						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1 " style="padding: 0;">
@@ -335,8 +342,19 @@
 				//---存储start---
 				//云存储显示的文件
 				mui('#cloudstorage').on('tap', '.cloud-text-align-center', function() {
-					events.openNewWindow('storage_main.html');
+					//events.openNewWindow('storage_main.html');
+					console.log('tap:' + this.getAttribute("data-fid"));
+
+					mui.each(fileArray, function(index, item) {
+						console.log('fileArray:' + index + '|' + JSON.stringify(item));
+					});
 				});
+
+				//云存储右侧按钮
+				mui('#cloudstorage').on('tap', '.cloud-bottom-icon', function() {
+					//events.openNewWindow('storage_main.html');
+				});
+
 				//增加文件夹
 				mui('#cloudstorage').on('tap', '#addFolder', function(e) {
 					e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
@@ -363,6 +381,8 @@
 									if(data.RspCode == 0) {
 										//26.用户云盘顶层文件及文件夹获取
 										postFirstFile();
+									} else if(data.RspCode == 8) {
+										mui.toast('操作失败！已存在相同的名字');
 									} else {
 										mui.toast(data.RspTxt);
 									}
@@ -373,10 +393,7 @@
 						}
 					});
 				});
-				//云存储右侧按钮
-				mui('#cloudstorage').on('tap', '.cloud-bottom-icon', function() {
-					events.openNewWindow('storage_main.html');
-				});
+
 				//---存储end---
 
 				//---应用---
@@ -422,13 +439,7 @@
 									return false;
 								}
 								var tempModel = data.RspData[i];
-								//console.log('云盘顶层：' + i + '|' + JSON.stringify(tempModel));
-								if(tempModel.ftype == '.file') {
-									addStorageFolder(tempModel.fname, 0); //文件夹
-								} else {
-									addStorageFolder(tempModel.fname, 1); //文件
-								}
-
+								addStorageFolder(tempModel);
 							}
 							//增加加号
 							if(fileArray.length < 3) {
@@ -476,22 +487,22 @@
 
 				/**
 				 * 增加存储的文件夹或文件
-				 * @param {Object} data 名字
-				 * @param {Object} type 0-文件夹，1-文件
+				 * @param {Object} data
 				 */
-				function addStorageFolder(data, type) {
+				function addStorageFolder(data) {
 					var table = document.getElementById("cloudstoragefile");
 					var div = document.createElement("div");
+					div.setAttribute('data-fid', data.fid);
 					div.className = 'mui-col-sm-4 mui-col-xs-4 cloud-text-align-center';
 					var html1 = '';
 
-					if(type == 0) { //文件夹
+					if(data.ftype == '.file') { //文件夹
 						html1 = '<img class="cloud-bottom-imge" src="../../image/cloud/A_folder.png" />';
-					} else if(type == 1) { //文件
-						var type = cloud.classify(data);
+					} else { //文件
+						var type = cloud.classify(data.ftype);
 						html1 = '<img class="cloud-bottom-imge" src="../../image/cloud/cloud_' + type + '.png" />';
 					}
-					var html2 = '<p class="mui-ellipsis">' + data + '</p>';
+					var html2 = '<p class="mui-ellipsis">' + data.fname + '</p>';
 					div.innerHTML = html1 + html2;
 					table.appendChild(div);
 				}
