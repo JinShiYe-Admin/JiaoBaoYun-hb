@@ -26,12 +26,12 @@
 				background-size: 100%;
 				/*宽度占100%*/
 			}
-
+			
 			.cloud-info {
 				/*顶部信息*/
 				padding: 10px;
 			}
-
+			
 			#cloud_prsonalimge {
 				/*个人头像*/
 				border-radius: 50%;
@@ -41,19 +41,19 @@
 				float: right;
 				margin-right: 10px;
 			}
-
+			
 			#cloud_name {
 				/*名字*/
 				color: white;
 				margin-bottom: 5px;
 			}
-
+			
 			.cloud-top-icon {
 				/*图标*/
 				width: 20px;
 				height: 20px;
 			}
-
+			
 			#gift,
 			#yuan {
 				/*积分和钱*/
@@ -62,7 +62,7 @@
 				font-weight: 900;
 				margin-left: 5px;
 			}
-
+			
 			.mui-progressbar {
 				/*进度条*/
 				margin-top: 5px;
@@ -70,41 +70,41 @@
 				height: 10px;
 				width: 70%;
 			}
-
+			
 			.cloud-capacity {
 				/*容量*/
 				margin-top: 3px;
 				color: white;
 			}
-
+			
 			.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-
+			
 			.mui-table-view {
 				background: transparent;
 				min-height: 90px;
 			}
-
+			
 			.mui-table-view-cell {
 				background: white;
 			}
-
+			
 			.cloud-bottom-imge {
 				/*云存储的文件夹图片*/
 				height: 40px;
 				width: 50px;
 			}
-
+			
 			.cloud-bottom-imge2 {
 				/*云档案，云应用的图片*/
 				height: 50px;
 				width: 50px;
 				/*margin-top: 10px;*/
 			}
-
+			
 			.cloud-bottom-imge2-bg {
 				/*云档案，云应用的图片背景*/
 				height: 50px;
@@ -112,17 +112,17 @@
 				border-radius: 50%;
 				margin: auto;
 			}
-
+			
 			.cloud-bottom-icon {
 				/*云存储右侧按钮*/
 				height: 20px;
 				width: 20px;
 			}
-
+			
 			.cloud-text-align-center {
 				text-align: center;
 			}
-
+			
 			.cloud-line {
 				/*功能名字右侧树竖线*/
 				position: absolute;
@@ -132,7 +132,7 @@
 				background: #A9A9A9;
 				height: 50px;
 			}
-
+			
 			#cloudstorage {
 				background-color: white;
 				padding: 10px;
@@ -141,7 +141,7 @@
 				padding-top: 7px;
 				padding-bottom: 7px;
 			}
-
+			
 			#cloudrecord,
 			#cloudapps {
 				background: white;
@@ -151,11 +151,11 @@
 				padding-top: 10px;
 				padding-bottom: 10px;
 			}
-
+			
 			.mui-progressbar {
 				border-radius: 5px;
 			}
-
+			
 			.iconfont {
 				font-size: 45px;
 			}
@@ -304,6 +304,7 @@
 			var fileArray = [];
 
 			mui.plusReady(function() {
+				events.preload("../homework/homework-tea.html",300);
 				//初始化滚动条
 				mui('.mui-scroll-wrapper').scroll({
 					indicators: true, //是否显示滚动条
@@ -415,10 +416,58 @@
 							//							events.openNewWindow('../quan/studentdynamic_main.html');
 							//							break;
 						case "3": //作业批改
-							events.openNewWindow('../homework/homework-tea.html')
+							requestClassData();
 							break;
 					}
 				});
+				
+				function requestClassData() {
+					var teacherClasses = [];
+					var studentClasses = [];
+					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+					//获取当前账号，所在的群
+					//需要参数
+					var comData = {
+						vtp: 'ag', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群),ig(群信息vvl对应群ID)
+						vvl: personalUTID //查询的各项，对应人的utid，可以是查询的任何人
+					};
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					//9.获取用户群
+					postDataPro_PostGList(comData, wd, function(data) {
+						wd.close();
+						console.log('作业主界面获取的群信息：' + JSON.stringify(data));
+						if(data.RspCode == 0) {
+							var tempArray = data.RspData;
+							//			gid:'14',//群ID
+							//			gname:'10群',//群名
+							//			gimg:'',//群头像,群头像的链接
+							//			mstype:'2'//用户角色,0家长,1管理员,2老师,3学生
+							//然后检索身份为老师的
+							for(var i in tempArray) {
+								var tempModel = tempArray[i];
+								//2老师
+								if(tempModel.mstype == 2 || tempModel.mstype == 1) {
+									teacherClasses.push(tempArray[i]);
+								}
+								//家长、学生
+								if(tempModel.mstype == 0 || tempModel.mstype == 3) {
+									studentClasses.push(tempArray[i]);
+								}
+							}
+							if(teacherClasses.length > 0 || studentClasses.length > 0) {
+								events.fireToPageWithData('../homework/homework-tea.html', 'postClasses', {
+									teacherClasses: teacherClasses,
+									studentClasses: studentClasses
+								})
+							}else{
+								mui.toast('您还未加入班级');
+							}
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					});
+				}
 				//
 				//26.用户云盘顶层文件及文件夹获取
 				function postFirstFile() {
