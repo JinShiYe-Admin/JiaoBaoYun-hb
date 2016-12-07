@@ -12,6 +12,7 @@
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 
 	</head>
 
@@ -22,7 +23,7 @@
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left common-color-white"></a>
 
 				<a id="leave" class="mui-icon iconfont icon-jiujiajingicon02-copy mui-pull-right" style="padding-left: 20px;"></a>
-				<a id="pub-dynamic" class="mui-icon iconfont icon-fabu mui-pull-right"></a>
+				<a id="pub-dynamic" style="visibility:hidden" class="mui-icon iconfont icon-fabu mui-pull-right"></a>
 				<!--<a id="pub-dynamic" class="mui-icon mui-icon-compose  mui-pull-right mui-plus-visible" style="padding-left: 20px;"></a>-->
 			</div>
 		</header>
@@ -32,8 +33,12 @@
 
 	<script type="text/javascript">
 		mui.plusReady(function() {
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 			var data = plus.webview.currentWebview().data;
 			console.log('我的空间获取的数据' + data)
+			if(data ==personalUTID ){
+				document.getElementById('pub-dynamic').style.visibility = 'visible';
+			}
 			events.initSubPage('zonep_sub.html', data);
 			//			var tempview =  plus.webview.getWebviewById('zonep_sub.html');
 			events.addTap('leave', function() {

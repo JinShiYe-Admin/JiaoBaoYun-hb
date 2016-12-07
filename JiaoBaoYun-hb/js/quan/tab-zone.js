@@ -100,6 +100,7 @@ function addSomeEvent() {
 		var tableIndex = selectCell.tableIndex;
 		var cellIndex = selectCell.cellIndex;
 		var cellNoReadCnt = selectCell.NoReadCnt
+		datasource[tableIndex].userList[selectCell.cellIndex].NoReadCnt = 0;
 		datasource[tableIndex].NoReadCnt = datasource[tableIndex].NoReadCnt - cellNoReadCnt;
 		var currentTable = document.getElementsByClassName('parent-table' + tableIndex);
 		var ul = currentTable[0];
@@ -432,7 +433,7 @@ function getUserSpaces(upString, index) {
 				if(!userList[i].MsgContent) {
 					userList[i].MsgContent = '暂无空间';
 				}
-				datasource[index].NoReadCnt = datasource[index].NoReadCnt + userList[i].NoReadCnt;
+				
 			}
 			for(var i = 0; i < userList.length; i++) {
 				for(var j = 0; j < tempUserList.length; j++) {
@@ -446,6 +447,35 @@ function getUserSpaces(upString, index) {
 
 			}
 			datasource[index].userList = userList;
+			var groupUserList = datasource[index].userList;
+			var tempUtidArr=[];
+			var tempUserArr=[];
+			for(var i=0;i<groupUserList.length;i++){
+							if(groupUserList[i].mstype == 0) { //0家长,1管理员,2老师,3学生
+				groupUserList[i].mstypeStr =  '[家长]';
+			} else if(groupUserList[i].mstype == 1) {
+				groupUserList[i].mstypeStr =  '[管理员]';
+			} else if(groupUserList[i].mstype == 2) {
+				groupUserList[i].mstypeStr =  '[老师]';
+			} else {
+				groupUserList[i].mstypeStr =  '[学生]';
+			}
+				var Arrindex = tempUtidArr.indexOf(groupUserList[i].utid);
+				console.log('Arrindex=='+Arrindex)
+				if(Arrindex>-1){
+					tempUserArr[Arrindex].ugname = tempUserArr[Arrindex].ugname+groupUserList[i].mstypeStr;
+				}else{
+					groupUserList[i].ugname = groupUserList[i].ugname+groupUserList[i].mstypeStr;
+					tempUtidArr.push(groupUserList[i].utid);
+					tempUserArr.push(groupUserList[i]);
+					
+				}
+			}
+			datasource[index].userList = tempUserArr;
+			for(var i=0;i<tempUserArr.length;i++){
+				datasource[index].NoReadCnt = datasource[index].NoReadCnt + tempUserArr[i].NoReadCnt;
+			}
+//			console.log('datasource[index].userList==='+datasource[index].userList);
 			if(requestTimes2 == 0) { //请求完毕刷新界面
 				console.log('底部列表全部数据' + JSON.stringify(datasource));
 				refreshUI();
@@ -527,16 +557,7 @@ function refreshUI() {
 			} else {
 				noReadHTML = '';
 			}
-			var name;
-			if(userList[j].mstype == 0) { //0家长,1管理员,2老师,3学生
-				name = userList[j].ugname + '[家长]';
-			} else if(userList[j].mstype == 1) {
-				name = userList[j].ugname + '[管理员]';
-			} else if(userList[j].mstype == 2) {
-				name = userList[j].ugname + '[老师]';
-			} else {
-				name = userList[j].ugname + '[学生]';
-			}
+			var name= userList[j].ugname;
 			li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + userList[j].uimg + '" />' +
 				noReadHTML + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 				name + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
@@ -576,7 +597,8 @@ function addBottomTap(tableIndex, cellIndex) {
 				bottom: '0px'
 			},
 			extras: {
-				data: publisherId
+				data: publisherId,
+				NoReadCnt:selectCell.NoReadCnt
 			}
 
 		});

@@ -140,7 +140,7 @@
 		</style>
 	</head>
 
-	<body >
+	<body>
 
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
@@ -197,14 +197,14 @@
 			mui('.mui-popover').popover('hide');
 
 		}
-					mui('body').on('shown', '.mui-popover', function(e) {
-				console.log('shown', e.detail.id);//detail为当前popover元素
-				
-			});
-			mui('body').on('hidden', '.mui-popover', function(e) {
-				console.log('hidden', e.detail.id);//detail为当前popover元素
-				document.getElementById("inputComment").blur();
-			});
+		mui('body').on('shown', '.mui-popover', function(e) {
+			console.log('shown', e.detail.id); //detail为当前popover元素
+
+		});
+		mui('body').on('hidden', '.mui-popover', function(e) {
+			console.log('hidden', e.detail.id); //detail为当前popover元素
+			document.getElementById("inputComment").blur();
+		});
 
 		function refreshUI() {
 
@@ -413,24 +413,28 @@
 		mui.plusReady(function() {
 
 			publisherId = plus.webview.currentWebview().data; //发布者id
-			var comData = {
-				userId: personalUTID, //用户ID
-				publisherId: publisherId
-			};
+			var NoReadCnt = plus.webview.currentWebview().NoReadCnt
+			if(NoReadCnt != 0) {
+				var comData = {
+					userId: personalUTID, //用户ID
+					publisherId: publisherId
+				};
 
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_setUserSpaceReadByUser(comData, wd, function(data) {
-				wd.close();
-				console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
-				if(data.RspCode == 0) {
-					//获得主页面的webview
-					var main = plus.webview.getWebviewById('../quan/tab-zone.html');
-					//触发tab-zone页面的setRead事件
-					mui.fire(main, 'setRead');
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_setUserSpaceReadByUser(comData, wd, function(data) {
+					wd.close();
+					console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						//获得主页面的webview
+						var main = plus.webview.getWebviewById('../quan/tab-zone.html');
+						//触发tab-zone页面的setRead事件
+						mui.fire(main, 'setRead');
 
-				}
+					}
 
-			})
+				})
+			}
+
 			tempPage = 1; //页码，请求第几页数据
 			totalCnt = 0; //当前留言的总条数
 			flag = 2; //判断是加载更多1，还是刷新2
