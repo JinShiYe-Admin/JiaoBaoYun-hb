@@ -461,7 +461,6 @@ function getUserSpaces(upString, index) {
 				groupUserList[i].mstypeStr =  '[学生]';
 			}
 				var Arrindex = tempUtidArr.indexOf(groupUserList[i].utid);
-				console.log('Arrindex=='+Arrindex)
 				if(Arrindex>-1){
 					tempUserArr[Arrindex].ugname = tempUserArr[Arrindex].ugname+groupUserList[i].mstypeStr;
 				}else{
