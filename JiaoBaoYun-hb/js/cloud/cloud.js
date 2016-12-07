@@ -6,66 +6,6 @@
 var cloud = (function($, mod) {
 
 	/**
-	 * 增加文件夹
-	 * @param {Object} table 父元素
-	 * @param {Object} data [FolderInfoList] 文件夹数组
-	 * FolderInfoList:[FolderInfo] 文件夹信息数组
-	 * FolderInfo：[FolderName,FolderUrl]
-	 * FolderName 文件夹名字
-	 * FolderUrl 文件夹路径
-	 */
-	mod.addFolders = function(table, data) {
-		$.each(data, function(index, item) {
-			var html = '';
-			//右侧向右图标
-			var html1 = '<a><span class="mui-navigate-right mui-media-object mui-pull-right"></span>';
-			//左侧文件夹图片
-			var html2 = '<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_folder.png">';
-			//文件夹名字
-			var html3 = '<div class="mui-media-body"><p class="mui-ellipsis">' + item[0] + '</p></div></a>';
-
-			html = html1 + html2 + html3;
-			var li = document.createElement('li');
-			li.className = 'mui-table-view-cell mui-media';
-			li.id = item[1];
-			li.setAttribute("data-name", item[0]);
-			li.innerHTML = html;
-			table.appendChild(li);
-		});
-	}
-
-	/**
-	 * 增加文件
-	 * @param {Object} table 父元素
-	 * @param {Object} data [FilesInfoList] 文件数组
-	 * FilesInfoList:[FilesInfo] 文件夹信息数组
-	 * FilesInfo：[FilesName,FilesUrl]
-	 * FilesName 文件名字
-	 * FilesUrl 文件路径
-	 */
-	mod.addFiles = function(table, data) {
-		$.each(data, function(index, item) {
-			var classify = mod.classify(item[0]);
-			var html = '';
-			//文件标识
-			var html1 = '<a><img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_' + classify + '.png">';
-			//右侧删除图标
-			var html2 = '<span class="mui-icon mui-icon-trash mui-media-object mui-pull-right"></span>';
-			//右侧下载图标
-			var html3 = '<span class="mui-icon mui-icon-download mui-media-object mui-pull-right"></span>';
-			//文件名
-			var html4 = '<div class="mui-media-body"><p class="mui-ellipsis">' + item[0] + '</p></div></a>';
-			html = html1 + html2 + html3 + html4;
-			var li = document.createElement('li');
-			li.className = 'mui-table-view-cell mui-media';
-			li.setAttribute('data-name', item[0]); //记录文件名字
-			li.id = item[1]; //记录文件路径
-			li.innerHTML = html;
-			table.appendChild(li);
-		});
-	}
-
-	/**
 	 * 通过文件名后缀将文件分类
 	 * @param {Object} filename 文件名
 	 */
