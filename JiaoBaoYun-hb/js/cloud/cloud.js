@@ -28,7 +28,7 @@ var cloud = (function($, mod) {
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell mui-media';
 			li.id = item[1];
-			li.setAttribute("data-name",item[0]);
+			li.setAttribute("data-name", item[0]);
 			li.innerHTML = html;
 			table.appendChild(li);
 		});
@@ -77,22 +77,38 @@ var cloud = (function($, mod) {
 		//转换为小写
 		type = type.toLowerCase(); //转换为小写
 		switch(type) {
-			case 'doc':
-			case 'xls':
-			case 'txt':
-			case 'zip':
-				return type; //文档类型
+			case 'doc': //文档类型
+				return 'icon-word';
 				break;
-			case 'avi':
+			case 'xls': //文档类型
+				return 'icon-excel';
+				break;
+			case 'txt': //文档类型
+				return 'icon-txt';
+				break;
+			case 'zip': //文档类型
+				return 'icon-zip';
+				break;
+			case 'avi': //视频类型
 			case 'wma':
 			case 'asf':
 			case 'wmv':
 			case 'rmvb':
 			case 'mp4':
 			case 'swf':
-				return 'video'; //视频类型
+				return '';
 				break;
-			case 'cda':
+			case 'psd': //七牛能生成的图片类型
+			case 'jpeg':
+			case 'jpg':
+			case 'png':
+			case 'gif':
+			case 'webp':
+			case 'tiff':
+			case 'bmp':
+				return '';
+				break;
+			case 'cda': //音频类型
 			case 'wav':
 			case 'cda':
 			case 'aif':
@@ -106,10 +122,10 @@ var cloud = (function($, mod) {
 			case 'ram':
 			case 'mid':
 			case 'Rmi':
-				return 'audio'; //音频类型
+				return 'icon-mp3';
 				break;
 			default:
-				return 'file'; //未识别的文件类型
+				return 'icon-file'; //未识别的文件类型
 				break;
 		}
 	}
