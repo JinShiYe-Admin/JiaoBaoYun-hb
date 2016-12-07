@@ -140,7 +140,7 @@ var dynamiclistitem = (function($, mod) {
 		var html3 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div class="mui-media-body mui-pull-right">';
 		var html4;
 		if(zonepArray[id].IsLike == 1) {
-			html4 = '<a id="praise' + id + '" style = "color: rgb(17,183,245)"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
+			html4 = '<a id="praise' + id + '" style = "color: rgb(0,165,224)"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
 
 		} else {
 			html4 = '<a id="praise' + id + '" style = "color: #8F8F94"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
