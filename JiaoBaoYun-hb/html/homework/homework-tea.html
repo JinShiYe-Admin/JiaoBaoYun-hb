@@ -20,7 +20,10 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">作业|答案</h1>
+		    <div class="mui-title">
+		    	<button id="btn-published" type="button" class="mui-btn mui-btn-green">我发布的</button>
+		    	<button id="btn-homework" type="button" class="mui-btn mui-btn-green mui-btn-outlined">学生作业</button>
+		    </div>
 		    <!--更多按钮-->
 		   	<a id="more" class="mui-icon  mui-icon-bars mui-pull-right" href="#popover"></a>
 		   	<!--相机按钮-->
@@ -30,11 +33,13 @@
 		<script src="../../js/mui.min.js"></script>
 		<!--公共事件方法库-->
 		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/homework/homework-sub.js"></script>
 		<script type="text/javascript">
-		
 			//加载子页面
 			events.initSubPage('homework-tea-sub.html')
 			mui.plusReady(function(){
+				var role=2;
 				mui('.mui-scrollbar-horizontal').scroll();
 				//三道杠的点击事件
 				events.addTap('more',function(){
@@ -42,9 +47,18 @@
 					events.fireToPageNone('homework-tea-sub.html','togglePop');
 				})
 				events.addTap('icon-camero',function(){
-					events.openNewWindow('publish-answer.html')
+					events.openNewWindow('publish-answer.html');
 				})
-				
+				var btn_published=document.getElementById('btn-published');
+				var btn_homework=document.getElementById('btn-homework');
+				btn_published.addEventListener('tap',function(){
+					btn_published.className='mui-btn mui-btn-green'
+					btn_homework.className='mui-btn mui-btn-green mui-btn-outlined'
+				});
+				btn_homework.addEventListener('tap',function(){
+					btn_published.className='mui-btn mui-btn-green mui-btn-outlined';
+					btn_homework.className='mui-btn mui-btn-green';
+				})
 			})
 		</script>
 	</body>

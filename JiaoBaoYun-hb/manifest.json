@@ -873,7 +873,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/publicProtocol.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -909,9 +910,24 @@
 					"js/utils/events.js",
 					"css/homework/homework-publish.css",
 					"js/utils/audio.js",
-					"js/common.js"
+					"js/common.js",
+					"js/homework/homework-publish.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/publicHomeworkProtocol.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/homework/classes-select.html"
+				],
 				"priority": 0
 			},
 			"html/homework/homework-stu.html": {

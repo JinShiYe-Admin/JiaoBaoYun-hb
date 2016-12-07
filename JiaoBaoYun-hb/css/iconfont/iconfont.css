@@ -1,15 +1,16 @@
-/*@author an*/
-@font-face {font-family: "iconfont";
-  src: url('../../fonts/iconfont.ttf') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+
+ @font-face {font-family: "iconfont";
+  src:url('../../fonts/iconfont.ttf') format('truetype'); /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
 }
 
 .iconfont {
-  font-family:"iconfont" !important;
-  font-size:16px;
-  font-style:normal;
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke-width: 0.2px;
+	font-family:"iconfont" !important;
+	font-size:16px;
+	font-style:normal;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-stroke-width: 0.2px;
 }
+
 .icon-bianji:before { content: "\3486"; }
 
 .icon-close:before { content: "\e646"; }
@@ -34,6 +35,8 @@
 
 .icon-shezhi:before { content: "\e606"; }
 
+.icon-yunpan1:before { content: "\e694"; }
+
 .icon-shezhi1:before { content: "\e631"; }
 
 .icon-group:before { content: "\e753"; }
@@ -50,6 +53,8 @@
 
 .icon-zanzan1:before { content: "\e602"; }
 
+.icon-tianjia:before { content: "\e7f7"; }
+
 .icon-ruqun:before { content: "\e66e"; }
 
 .icon-liaotian:before { content: "\e603"; }
@@ -57,6 +62,8 @@
 .icon-qun:before { content: "\e60f"; }
 
 .icon-shubendisc:before { content: "\e682"; }
+
+.icon-xiaoxizhongxin:before { content: "\e611"; }
 
 .icon-xie1:before { content: "\e608"; }
 
@@ -72,6 +79,8 @@
 
 .icon-liaotian1:before { content: "\e601"; }
 
+.icon-imge:before { content: "\e650"; }
+
 .icon-xinxiaoxi:before { content: "\e673"; }
 
 .icon-tingzhi:before { content: "\e62f"; }
@@ -80,17 +89,27 @@
 
 .icon-chuanshu:before { content: "\e61d"; }
 
-.icon-word:before { content: "\e7e7"; }
+.icon-wenda:before { content: "\e655"; }
+
+.icon-jiaoxiaoquan:before { content: "\e8fe"; }
+
+.icon-word:before { content: "\e7e8"; }
 
 .icon-xianshi:before { content: "\e861"; }
 
+.icon-fabu:before { content: "\e863"; }
+
 .icon-support:before { content: "\e905"; }
+
+.icon-jiujiajingicon02-copy:before { content: "\e907"; }
 
 .icon-jiaobaoyuntubiao:before { content: "\e610"; }
 
 .icon-excel:before { content: "\e8aa"; }
 
 .icon-mp3:before { content: "\e8ab"; }
+
+.icon-video:before { content: "\e8ac"; }
 
 .icon-txt:before { content: "\e8ad"; }
 
@@ -99,3 +118,4 @@
 .icon-file:before { content: "\e8af"; }
 
 .icon-pdf:before { content: "\e8e2"; }
+

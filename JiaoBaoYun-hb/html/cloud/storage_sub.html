@@ -22,21 +22,21 @@
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-			
+
 			.mui-table-view {
 				background: transparent;
 			}
-			
+
 			.mui-table-view-cell {
 				margin-top: 10px;
 				background: white;
 			}
-			
+
 			.mui-ellipsis {
 				/*列表文字*/
 				margin-top: 10px;
 			}
-			
+
 			.mui-pull-left {
 				/*列表中左侧图片*/
 				width: 42px;
@@ -247,7 +247,6 @@
 					};
 					//请求数据
 					requestData(comData);
-					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 
 				}, 1500);
 			}
@@ -350,7 +349,7 @@
 								console.log('38.postDataPro_PostDiFiD:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 								if(data.RspCode == 0) {
 									//删除成功后，去七牛上删除对应的文件
-									
+
 								} else {
 									mui.toast(data.RspTxt);
 								}
