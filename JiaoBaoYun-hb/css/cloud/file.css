@@ -20,10 +20,18 @@
 	color: #FF9779;
 }
 
-.icon-txt{
+.icon-txt {
 	color: #4867B3;
 }
 
-.icon-mp3{
+.icon-mp3 {
 	color: #FFA70F;
+}
+
+.icon-imge {
+	color: #FF8F00;
+}
+
+.icon-video {
+	color: #057599;
 }
