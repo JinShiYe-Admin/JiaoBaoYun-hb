@@ -92,13 +92,13 @@ var events = (function($, mod) {
 			}]
 		});
 
-		var contentWebview = null;
-		document.querySelector('header').addEventListener('doubletap', function() {
-			if(contentWebview == null) {
-				contentWebview = plus.webview.currentWebview().children()[0];
-			}
-			contentWebview.evalJS("$('#refreshContainer').pullRefresh().scrollTo(0,0,100)");
-		});
+//		var contentWebview = null;
+//		document.querySelector('header').addEventListener('doubletap', function() {
+//			if(contentWebview == null) {
+//				contentWebview = plus.webview.currentWebview().children()[0];
+//			}
+//			contentWebview.evalJS("$('#refreshContainer').pullRefresh().scrollTo(0,0,100)");
+//		});
 	}
 
 	/**

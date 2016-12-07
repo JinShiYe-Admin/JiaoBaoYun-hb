@@ -140,13 +140,13 @@ var dynamiclistitem = (function($, mod) {
 		var html3 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div class="mui-media-body mui-pull-right">';
 		var html4;
 		if(zonepArray[id].IsLike == 1) {
-			html4 = '<a id="praise' + id + '" style = "color: rgb(17,183,245)"  class="mui-icon-extra mui-icon-extra-like dynamic-icon-praise"></a>';
+			html4 = '<a id="praise' + id + '" style = "color: rgb(17,183,245)"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
 
 		} else {
-			html4 = '<a id="praise' + id + '" style = "color: #8F8F94"  class="mui-icon-extra mui-icon-extra-like dynamic-icon-praise"></a>';
+			html4 = '<a id="praise' + id + '" style = "color: #8F8F94"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
 		}
 
-		var html5 = '<a id="comment' + id + '" style = "color: #8F8F94" class="mui-icon-extra mui-icon-extra-comment dynamic-icon-comment"></a>';
+		var html5 = '<a id="comment' + id + '" style = "color: #8F8F94" class="mui-icon iconfont icon-xiaoxizhongxin dynamic-icon-comment"></a>';
 //				var html6 = '<img src="../../image/dynamic/icon_forward.png" class="dynamic-icon-forward" />';
 		var html6 = '<font style="padding-right:7px"></font>';
 		var html7 = '</div><div class="mui-media-body"><p>浏览' + viewCount + '次</p></div></div>';

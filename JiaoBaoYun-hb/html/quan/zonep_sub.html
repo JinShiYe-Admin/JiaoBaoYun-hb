@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/icons-extra.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
@@ -65,8 +66,8 @@
 			.dynamic-icon-forward {
 				/*点赞，评论，分享的图标*/
 				height: 20px;
-				width: 30px;
-				margin-left: 20px;
+				width: 20px;
+				margin-left: 10px;
 			}
 			
 			.dynamic-icon-Level {
@@ -196,6 +197,14 @@
 			mui('.mui-popover').popover('hide');
 
 		}
+					mui('body').on('shown', '.mui-popover', function(e) {
+				console.log('shown', e.detail.id);//detail为当前popover元素
+				
+			});
+			mui('body').on('hidden', '.mui-popover', function(e) {
+				console.log('hidden', e.detail.id);//detail为当前popover元素
+				document.getElementById("inputComment").blur();
+			});
 
 		function refreshUI() {
 
@@ -546,6 +555,7 @@
 				tempIndex = this.id.replace('replyComment', '');
 				console.log('tempIndex====' + tempIndex)
 				mui('.mui-popover').popover('show');
+				document.getElementById("inputComment").focus();
 				window.event.stopPropagation()
 
 				//				var id_Index = this.id.replace('replyComment', '');
@@ -566,7 +576,6 @@
 				tempIndex = this.id.replace('bottomComment', '');
 				console.log('tempIndex====' + tempIndex)
 				mui('.mui-popover').popover('show');
-				document.getElementById("inputComment").focus();
 				window.event.stopPropagation()
 			});
 		});

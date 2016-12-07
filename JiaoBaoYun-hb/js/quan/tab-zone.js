@@ -91,7 +91,8 @@ function addSomeEvent() {
 			wd.close();
 			mui.toast('发布成功！');
 			console.log('推送个人空间成功' + JSON.stringify(data));
-			getStuList();
+			var wobj = plus.webview.currentWebview();
+			wobj.reload(true);
 		})
 	})
 
