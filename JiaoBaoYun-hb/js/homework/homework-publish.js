@@ -12,11 +12,11 @@ mui.plusReady(function() {
 		events.preload('classes-select.html',200);
 		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 		window.addEventListener('postClasses', function(e) {
-			console.log('发布作业界面获取的班级数据：'+e.detail.data);
+			console.log('发布作业界面获取的班级数据：'+JSON.stringify(e.detail.data));
 			//选中班级为全部班级
 			selectClassArray=e.detail.data;
 			//请求所有班级学生数据
-			requestClassStudents(setClasses());
+			requestClassStudents(setClasses);
 			//科目
 			requestSubjectList(setSubjects);
 		})
@@ -86,7 +86,7 @@ function requestSubjectList(callback) {
  * @param {Object} subjectList
  */
 var setSubjects = function(subjectList) {
-
+		events.clearChild(subjectsContainer);
 		subjectList.forEach(function(subject, i) {
 			var op = document.createElement('option');
 			op.value = subject.Value;
@@ -106,12 +106,14 @@ var setSubjects = function(subjectList) {
 	 */
 var setClasses = function(classes) {
 		var classesContainer = document.getElementById('classes');
+		events.clearChild(classesContainer)
 		for(var i in classes) {
 			if(classes[i].isSelected){
+				
 				var p = document.createElement('p');
 				p.className = classes[i].gid;
-				p.innerText = classes[i].className;
-				p.innerHTML = '<sup class="mui-badge mui-badge-inverted mui-badge-danger class-del">x</sup>'
+//				p.innerText = classes[i].gname;
+				p.innerHTML = classes[i].gname+'<sup class="mui-badge mui-badge-inverted mui-badge-danger class-del">x</sup>'
 				p.querySelector('.class-del').bindClass = classes[i];
 				classesContainer.appendChild(p);
 			}

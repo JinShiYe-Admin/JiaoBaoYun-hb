@@ -477,7 +477,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/homework/classes-select.html"
@@ -1334,6 +1335,15 @@
 			"js/utils/RSAEncrypt.js",
 			"css/quan/class_space.css",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/homework/classes-select.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/utils/events.js"
 		]
 	}
 }
