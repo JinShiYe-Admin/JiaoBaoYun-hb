@@ -248,7 +248,10 @@ var events = (function($, mod) {
 		 * @param {Object} tarPage 目标页面
 		 * @param {Object} listener 事件
 		 */
-	mod.fireToPageNone = function(tarPage, listener) {
+	mod.fireToPageNone = function(tarPage, listener, datas) {
+			if(!datas) {
+				datas = null;
+			}
 			console.log('tarPage:' + tarPage);
 			var targetPage = null;
 			//获得目标页面
@@ -257,9 +260,11 @@ var events = (function($, mod) {
 			}
 			if(targetPage) {
 				//触发目标页面的listener事件
-				$.fire(targetPage, listener);
+				$.fire(targetPage, listener, {
+					data: datas
+				});
 			} else {
-				console.log('目标页面不存在'+tarPage);
+				console.log('目标页面不存在' + tarPage);
 			}
 
 		}
