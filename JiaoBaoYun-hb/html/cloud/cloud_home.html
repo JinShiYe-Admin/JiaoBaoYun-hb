@@ -13,7 +13,7 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
-		<link rel="stylesheet" href="../../css/cloud.css" />
+		<link rel="stylesheet" href="../../css/cloud/file.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
@@ -156,7 +156,7 @@
 				border-radius: 5px;
 			}
 
-			.iconfont{
+			.iconfont {
 				font-size: 45px;
 			}
 		</style>
@@ -204,8 +204,8 @@
 						</li>
 						<li class="mui-table-view-cell mui-media mui-col-sm-9 mui-col-xs-9 " style="padding: 5px;margin: 0;margin-left: 10%;">
 							<div class="mui-row" id="cloudstoragefile">
-								<div class="mui-col-sm-4 mui-col-xs-4 cloud-text-align-center">
-									<!--<img class="cloud-bottom-imge" src="../../image/cloud/cloud_doc.png" />-->
+								<!--<div class="mui-col-sm-4 mui-col-xs-4 cloud-text-align-center">
+									<img class="cloud-bottom-imge" src="../../image/cloud/cloud_doc.png" />
 									<span class="mui-icon iconfont icon-txt"></span>
 									<p class="mui-ellipsis">泰国旅游照片泰国旅游照片</p>
 								</div>
@@ -215,7 +215,7 @@
 								</div>
 								<div class="mui-col-sm-4 mui-col-xs-4 " id="addFolder">
 									<img class="cloud-bottom-imge" style="margin-top: 4px;" src="../../image/cloud/A_addfolder.png" />
-								</div>
+								</div>-->
 							</div>
 						</li>
 						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1 " style="padding: 0;">
@@ -342,17 +342,22 @@
 				//---存储start---
 				//云存储显示的文件
 				mui('#cloudstorage').on('tap', '.cloud-text-align-center', function() {
-					//events.openNewWindow('storage_main.html');
 					console.log('tap:' + this.getAttribute("data-fid"));
-
 					mui.each(fileArray, function(index, item) {
 						console.log('fileArray:' + index + '|' + JSON.stringify(item));
+					});
+					events.openNewWindowWithData('storage_main.html', {
+						fid: this.getAttribute("data-fid"), //fid
+						top: fileArray //顶层文件和文件夹的数据
 					});
 				});
 
 				//云存储右侧按钮
 				mui('#cloudstorage').on('tap', '.cloud-bottom-icon', function() {
-					//events.openNewWindow('storage_main.html');
+					events.openNewWindowWithData('storage_main.html', {
+						fid: '0', //fid
+						top: fileArray //顶层文件和文件夹的数据
+					});
 				});
 
 				//增加文件夹
@@ -414,7 +419,6 @@
 							break;
 					}
 				});
-
 				//
 				//26.用户云盘顶层文件及文件夹获取
 				function postFirstFile() {
@@ -500,7 +504,11 @@
 						html1 = '<img class="cloud-bottom-imge" src="../../image/cloud/A_folder.png" />';
 					} else { //文件
 						var type = cloud.classify(data.ftype);
-						html1 = '<img class="cloud-bottom-imge" src="../../image/cloud/cloud_' + type + '.png" />';
+						if(type != '') {
+							html1 = '<span class="mui-icon iconfont ' + type + '"></span>';
+						} else { //七牛能生成缩略图的图片或视频
+							html1 = '<img class="cloud-bottom-imge" src="' + data.fpath + '" />';
+						}
 					}
 					var html2 = '<p class="mui-ellipsis">' + data.fname + '</p>';
 					div.innerHTML = html1 + html2;
