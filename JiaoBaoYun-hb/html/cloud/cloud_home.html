@@ -441,7 +441,9 @@
 							break;
 					}
 				});
-
+				/**
+				 * 获取用户所在群数据
+				 */
 				function requestClassData() {
 					var teacherClasses = [];
 					var studentClasses = [];
@@ -467,9 +469,19 @@
 							//然后检索身份为老师的
 							for(var i in tempArray) {
 								var tempModel = tempArray[i];
-								//2老师
-								if(tempModel.mstype == 2) {
-									teacherClasses.push(tempArray[i]);
+								
+								var isHave=false;
+								//2老师或者管理员
+								if(tempModel.mstype == 2||tempModel.mstype==1) {
+									for(var i in teacherClasses){
+										if(tempModel.gid==teacherClasses[i].gid){
+											isHave=true;
+											break;
+										}
+									}
+									if(!isHave){
+										teacherClasses.push(tempModel);
+									}
 								}
 								//家长、学生
 								if(tempModel.mstype == 0 || tempModel.mstype == 3) {
@@ -646,7 +658,7 @@
 				 */
 				function changeInfo() {
 					document.getElementById("cloud_name").innerText = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
-					document.getElementById("cloud_prsonalimge").src = updateHeadImg(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uimg, 2);
+//					document.getElementById("cloud_prsonalimge").src = updateHeadImg(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uimg, 2);
 				}
 
 				/**
