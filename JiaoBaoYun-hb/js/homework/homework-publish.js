@@ -160,6 +160,7 @@ var setSubmitEvent = function() {
 	});
 }
 
+
 //获取班级里面的人
 function requestClassStudents() {
 	// 等待的对话框
@@ -204,6 +205,10 @@ function requestPublishHomework() {
 				tempStuArray.push(tempClassModel.gid + '|' + tempStuModel.stuid);
 			}
 		}
+	}
+	if(tempStuArray.length==0){
+		mui.toast('无发布作业的学生对象！');
+		return;
 	}
 	//所需参数
 	var comData = {
