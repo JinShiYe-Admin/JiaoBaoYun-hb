@@ -26,14 +26,14 @@
 				background-size: 100%;
 				/*宽度占100%*/
 			}
-
+			
 			.cloud-info {
 				/*顶部信息*/
 				padding: 10px;
 				float: right;
 				margin-right: 10px;
 			}
-
+			
 			#cloud_prsonalimge {
 				/*个人头像*/
 				border-radius: 50%;
@@ -43,19 +43,19 @@
 				float: right;
 				margin-right: 10px;
 			}
-
+			
 			#cloud_name {
 				/*名字*/
 				color: white;
 				margin-bottom: 5px;
 			}
-
+			
 			.cloud-top-icon {
 				/*图标*/
 				width: 20px;
 				height: 20px;
 			}
-
+			
 			#gift,
 			#yuan {
 				/*积分和钱*/
@@ -64,7 +64,7 @@
 				font-weight: 900;
 				margin-left: 5px;
 			}
-
+			
 			.mui-progressbar {
 				/*进度条*/
 				margin-top: 5px;
@@ -72,45 +72,45 @@
 				height: 10px;
 				width: 70%;
 			}
-
+			
 			.cloud-capacity {
 				/*容量*/
 				margin-top: 3px;
 				color: white;
 			}
-
+			
 			.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-
+			
 			.mui-table-view {
 				background: transparent;
 				min-height: 90px;
 			}
-
+			
 			.mui-table-view-cell {
 				background: white;
 			}
-
+			
 			.mui-table-view.mui-grid-view .mui-table-view-cell {
 				margin-right: 0px;
 			}
-
+			
 			.cloud-bottom-imge {
 				/*云存储的文件夹图片*/
 				height: 40px;
 				width: 50px;
 			}
-
+			
 			.cloud-bottom-imge2 {
 				/*云档案，云应用的图片*/
 				height: 50px;
 				width: 50px;
 				/*margin-top: 10px;*/
 			}
-
+			
 			.cloud-bottom-imge2-bg {
 				/*云档案，云应用的图片背景*/
 				height: 50px;
@@ -118,17 +118,17 @@
 				border-radius: 50%;
 				margin: auto;
 			}
-
+			
 			.cloud-bottom-icon {
 				/*云存储右侧按钮*/
 				height: 20px;
 				width: 20px;
 			}
-
+			
 			.cloud-text-align-center {
 				text-align: center;
 			}
-
+			
 			.cloud-line {
 				/*功能名字右侧树竖线*/
 				position: absolute;
@@ -138,7 +138,7 @@
 				background: #D9D9D9;
 				height: 100%;
 			}
-
+			
 			#cloudstorage {
 				background-color: white;
 				padding: 10px;
@@ -147,7 +147,7 @@
 				padding-top: 7px;
 				padding-bottom: 7px;
 			}
-
+			
 			#cloudrecord,
 			#cloudapps {
 				background: white;
@@ -157,11 +157,11 @@
 				padding-top: 10px;
 				padding-bottom: 10px;
 			}
-
+			
 			.mui-progressbar {
 				border-radius: 5px;
 			}
-
+			
 			.iconfont {
 				font-size: 45px;
 			}
@@ -446,6 +446,7 @@
 				 */
 				function requestClassData() {
 					var teacherClasses = [];
+					var studentClassesTemp = [];
 					var studentClasses = [];
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					//获取当前账号，所在的群
@@ -466,36 +467,83 @@
 							//			gname:'10群',//群名
 							//			gimg:'',//群头像,群头像的链接
 							//			mstype:'2'//用户角色,0家长,1管理员,2老师,3学生
-							//然后检索身份为老师的
+							//然后检索身份为老师或者家长、学生的
 							for(var i in tempArray) {
 								var tempModel = tempArray[i];
-								
-								var isHave=false;
+
+								var isHave = true;
 								//2老师或者管理员
-								if(tempModel.mstype == 2||tempModel.mstype==1) {
-									for(var i in teacherClasses){
-										if(tempModel.gid==teacherClasses[i].gid){
-											isHave=true;
+								if(tempModel.mstype == 2 || tempModel.mstype == 1) {
+									for(var m in teacherClasses) {
+										if(tempModel.gid == teacherClasses[m].gid) {
+											isHave = false;
 											break;
 										}
 									}
-									if(!isHave){
+									if(isHave) {
 										teacherClasses.push(tempModel);
 									}
 								}
+								var isHave1 = true;
 								//家长、学生
 								if(tempModel.mstype == 0 || tempModel.mstype == 3) {
-									studentClasses.push(tempArray[i]);
+									for(var m in studentClassesTemp) {
+										if(tempModel.gid == studentClassesTemp[m].gid) {
+											isHave = false;
+											break;
+										}
+									}
+									if(isHave) {
+										studentClassesTemp.push(tempModel);
+									}
 								}
 							}
-							if(teacherClasses.length > 0 || studentClasses.length > 0) {
-								events.fireToPageWithData('../homework/homework-tea.html', 'postClasses', {
-									teacherClasses: teacherClasses,
-									studentClasses: studentClasses
-								})
-							} else {
-								mui.toast('您还未加入班级');
-							}
+							//然后判断家长、学生身份时，是否有绑定资料,如果有才有作业，否则为空
+							//24.通过用户表ID获取用户关联的学生
+							//所需参数
+							var comData1 = {
+								utid: personalUTID //用户表ID,用户utid
+							};
+							//24.通过用户表ID获取用户关联的学生
+							postDataPro_PostUstu(comData1, wd, function(data1) {
+								wd.close();
+								console.log('24.postDataPro_PostUstu:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+								if(data1.RspCode == 0) {
+									var tempArray1 = data1.RspData;
+									//循环获取到的学生资料
+									for(var a in tempArray1) {
+										var tempModel1 = tempArray1[a];
+										//循环老师、学生的临时数组
+										for(var b in studentClassesTemp) {
+											var tempModel2 = studentClassesTemp[b];
+											//判断群号是否一致，
+											if(tempModel1.gid == tempModel2.gid) {
+												var isHave = true;
+												for(var m in studentClasses) {
+													if(tempModel1.gid == studentClasses[m].gid) {
+														isHave = false;
+														break;
+													}
+												}
+												if(isHave) {
+													studentClasses.push(tempModel1);
+												}
+											}
+										}
+									}
+								} else {
+									mui.toast(data.RspTxt);
+								}
+								if(teacherClasses.length > 0 || studentClasses.length > 0) {
+									events.fireToPageWithData('../homework/homework-tea.html', 'postClasses', {
+										teacherClasses: teacherClasses,
+										studentClasses: studentClasses
+									})
+								} else {
+									mui.toast('您还未加入班级');
+								}
+							});
+
 						} else {
 							mui.toast(data.RspTxt);
 						}
@@ -658,7 +706,7 @@
 				 */
 				function changeInfo() {
 					document.getElementById("cloud_name").innerText = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
-//					document.getElementById("cloud_prsonalimge").src = updateHeadImg(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uimg, 2);
+					//					document.getElementById("cloud_prsonalimge").src = updateHeadImg(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uimg, 2);
 				}
 
 				/**
