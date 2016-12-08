@@ -99,7 +99,9 @@
 		"refer": [
 			"html/homework/homework-tea.html",
 			"html/cloud/app_keeprecord.html",
-			"html/cloud/storage_main.html"
+			"html/cloud/storage_main.html",
+			"html/cloud/storage_upload.html",
+			"html/cloud/app_notes_main.html"
 		]
 	},
 	"html/quan/tab-zone.html": {
@@ -403,10 +405,12 @@
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js",
 			"js/publicProtocol.js",
-			"js/homework/homework-sub.js"
+			"js/homework/homework-sub.js",
+			"css/utils/common.css"
 		],
 		"refer": [
-			"html/homework/homework-publish.html"
+			"html/homework/homework-publish.html",
+			"html/homework/workdetail-tea.html"
 		]
 	},
 	"html/homework/publish-answer.html": {
@@ -709,7 +713,10 @@
 			"js/qiniu/qiniu.js",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"image/cloud/cloud_add.png"
+			"image/cloud/cloud_add.png",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/utils/events.js"
 		],
 		"refer": [
 			"html/cloud/storage_sub.html"
@@ -1352,6 +1359,60 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/utils/events.js"
+		]
+	},
+	"html/cloud/storage_upload.html": {
+		"resources": [
+			"js/mui.min.js",
+			"image/cloud/A_folder.png",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/cloud/app_notes_sub.html": {
+		"resources": [
+			"image/cloud/notes_bg2.jpg",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/quan/studentdynamic.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/cloud/app_notes_main.html": {
+		"resources": [
+			"html/cloud/app_notes_sub.html",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/cloud/app_notes_sub.html"
+		]
+	},
+	"html/homework/workdetail-tea.html": {
+		"resources": [
+			"html/homework/workdetail-tea-sub.html"
+		],
+		"refer": [
+			"html/homework/workdetail-tea-sub.html"
+		]
+	},
+	"html/homework/workdetail-tea-sub.html": {
+		"resources": [
+			"js/homework/homework_detail.js",
+			"image/homework/math.png",
+			"css/homework/workdetail.css"
 		]
 	}
 }
