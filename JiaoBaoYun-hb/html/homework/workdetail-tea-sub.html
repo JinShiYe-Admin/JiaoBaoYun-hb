@@ -28,13 +28,13 @@
 		<div class="mui-content">
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell mui-media ">
-					<img class="mui-media-object mui-pull-left" src="../../image/homework/math.png">
+					<img id="img" class="mui-media-object mui-pull-left" src="">
 					<div class="mui-media-body">
-						<h4>数学作业</h6>
-						<p class='mui-ellipsis'>发布时间：2016-12-07</p>
+						<h4 id="homeworkTitle"></h6>
+						<p id="publishDate" class='mui-ellipsis'>发布时间：</p>
 					</div>
 					<div class="mui-media-body">
-						<font>1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ?</font> 
+						<font id="homeWorkContent"></font> 
 						<button id="checkDetail" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 40%;left:25%;margin-top:10px ;">查看详情</button>
 					</div>
 
@@ -142,7 +142,13 @@
 
 		<script type="text/javascript">
 			mui.init();
-
+			var	homeworkDetailNodes = {
+				img:document.getElementById("img"),//作业类型图像
+				title:document.getElementById("homeworkTitle"),//作业类型标题
+				publishDate:document.getElementById("publishDate"),//发布日期
+				content:document.getElementById("homeWorkContent"),//作业内容
+				checkDetailBtn:document.getElementById("checkDetail"),//查看详情按钮
+			}
 			//从主页传值到这个界面的model
 			var homeworkModel = {
 				"Contents": "Test",
@@ -267,13 +273,20 @@
 							console.log('未完成列表：' + JSON.stringify(remainArray));
 							console.log('已完成列表：' + JSON.stringify(uploadArray));
 							//刷新界面
-
+							refreshUI();
 						});
 
 					} else {
 						mui.toast(data.RspTxt);
 					}
 				});
+			}
+			function refreshUI(){
+				homeworkDetailNodes.img.src = '../../image/homework/math.png';
+				homeworkDetailNodes.title.value = '数学作业';
+				homeworkDetailNodes.publishDate = '2016-12-07';
+				homeworkDetailNodes.content = '1+1+?'
+				
 			}
 		</script>
 
