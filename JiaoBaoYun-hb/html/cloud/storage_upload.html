@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<script src="../../js/mui.min.js"></script>
+		<style>
+			.mui-control-item {
+				background: #F5F5F5;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">选择上传的文件</h1>
+		</header>
+		<nav class="mui-bar mui-bar-tab" style="background: #383E4E;">
+			<div style="margin: 5px;">
+				<div id="choose" class="mui-pull-left" style="width: 45%;">
+					<div style="color: white;margin-left: 10%;">选择上传的位置</div>
+					<button type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 20px;margin-left: 5%;background: #7F8594;border-color: #7F8594;height: 40px;">
+						<img class="mui-pull-left" src="../../image/cloud/A_folder.png"style="width: 20%;height: 20px;" />
+						<div id="yunpath" class="mui-ellipsis mui-pull-right"style="width: 80%;">教宝云盘</div>
+					</button>
+				</div>
+				<div id="upload" class="mui-pull-right" style="width: 45%;">
+					<br />
+					<button type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 20px;margin-left: -5%;background: #636770;border-color: #636770;height: 40px;">上传</button>
+				</div>
+			</div>
+		</nav>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider" style="">
+				<div id="sliderSegmentedControl" style="background: #E8E9E9;" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div id="qunlist" class="mui-scroll">
+						<a class="mui-control-item">
+							手机
+						</a>
+						<a class="mui-control-item">
+							手机1
+						</a>
+						<a class="mui-control-item">
+							手机2
+						</a>
+						<a class="mui-control-item">
+							手机3
+						</a>
+						<a class="mui-control-item">
+							手机4
+						</a>
+						<a class="mui-control-item">
+							手机5
+						</a>
+						<a class="mui-control-item">
+							手机6
+						</a>
+						<a class="mui-control-item">
+							手机7
+						</a>
+					</div>
+				</div>
+			</div>
+			<div id="bottom">
+				<div class="mui-scroll-wrapper" style="margin-top: 83px;margin-bottom: 91px;">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									Item 1
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									Item 2
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									Item 3
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									Item 1
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									Item 2
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									Item 3
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									Item 1
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									Item 2
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									Item 3
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									Item 1
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									Item 2
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									Item 3
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									Item 1
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									Item 2
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									Item 3
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				console.log('选择上传的文件');
+				mui.back = function() {
+					plus.webview.hide(main, 'pop-out');
+				}
+
+				//---滑动start---
+				mui(".mui-scroll-wrapper").scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false, //是否横向滚动
+					indicators: true, //是否显示滚动条
+					deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+					bounce: true, //是否启用回弹
+				});
+				//---滑动end---
+
+				//初始化
+				window.addEventListener('init', function(e) {
+					subData = e.detail.data; //接收页面传入的参数值
+					console.log('subData:' + JSON.stringify(subData));
+//					showTop = subData.showTop;
+//					init(subData);
+				});
+			})
+		</script>
+	</body>
+
+</html>
