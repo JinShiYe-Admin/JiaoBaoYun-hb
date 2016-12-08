@@ -8,6 +8,7 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<style>
 			.mui-control-item {
 				background: #F5F5F5;
@@ -24,14 +25,14 @@
 			<div style="margin: 5px;">
 				<div id="choose" class="mui-pull-left" style="width: 45%;">
 					<div style="color: white;margin-left: 10%;">选择上传的位置</div>
-					<button type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 20px;margin-left: 5%;background: #7F8594;border-color: #7F8594;height: 40px;">
+					<button type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 15px;margin-left: 5%;background: #7F8594;border-color: #7F8594;height: 40px;">
 						<img class="mui-pull-left" src="../../image/cloud/A_folder.png"style="width: 20%;height: 20px;" />
-						<div id="yunpath" class="mui-ellipsis mui-pull-right"style="width: 80%;">教宝云盘</div>
+						<div id="yunpath" class="mui-ellipsis mui-pull-right"style="width: 80%;"></div>
 					</button>
 				</div>
 				<div id="upload" class="mui-pull-right" style="width: 45%;">
 					<br />
-					<button type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 20px;margin-left: -5%;background: #636770;border-color: #636770;height: 40px;">上传</button>
+					<button type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 15px;margin-left: -5%;background: #636770;border-color: #636770;height: 40px;">上传</button>
 				</div>
 			</div>
 		</nav>
@@ -155,7 +156,9 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
+				events.preload('storage_main_choose.html'); //预加载选择云存储的文件
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				var subData = null;
 				console.log('选择上传的文件');
 				mui.back = function() {
 					plus.webview.hide(main, 'pop-out');
@@ -175,8 +178,18 @@
 				window.addEventListener('init', function(e) {
 					subData = e.detail.data; //接收页面传入的参数值
 					console.log('subData:' + JSON.stringify(subData));
-//					showTop = subData.showTop;
-//					init(subData);
+					document.getElementById("yunpath").innerHTML = subData.title;
+					//					showTop = subData.showTop;
+					//					init(subData);
+				});
+
+				document.getElementById('choose').addEventListener('tap', function() {
+					events.fireToPageWithData('storage_main_choose.html', 'init', {
+						fid: subData.fid, //文件id,顶层0
+						showTop: subData.showTop, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
+						title: subData.title, //标题名
+						top: subData.top //顶层文件和文件夹的数据
+					});
 				});
 			})
 		</script>
