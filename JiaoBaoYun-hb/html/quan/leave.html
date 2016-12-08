@@ -25,7 +25,7 @@
 
 	<script type="text/javascript">
 		mui.plusReady(function() {
-			var data = plus.webview.currentWebview().data;
+			var data = plus.webview.currentWebview().data;//留言板拥有者id
 			events.initSubPage('leave-sub.html', data);
 			events.addTap('pubLeave', function() {
 				events.openNewWindowWithData('../quan/pub-leave.html', data);

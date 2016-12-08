@@ -141,7 +141,6 @@
 	</head>
 
 	<body>
-
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
@@ -176,10 +175,10 @@
 	</body>
 
 	<script>
-		var publisherId;
-		var tempIndex;
+		var publisherId; //发布者id
+		var tempIndex; //节点对象id
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
-		var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户id 
+		var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
 		mui.init({
 			pullRefresh: {
 				container: '#pullrefresh',
@@ -192,15 +191,17 @@
 				}
 			}
 		});
-
-		function inputOnblur(input) { //失去焦点事件
+		//失去焦点事件
+		function inputOnblur(input) {
 			mui('.mui-popover').popover('hide');
 
 		}
+		//mui-popover显示时执行
 		mui('body').on('shown', '.mui-popover', function(e) {
 			console.log('shown', e.detail.id); //detail为当前popover元素
 
 		});
+		//mui-popover隐藏时执行
 		mui('body').on('hidden', '.mui-popover', function(e) {
 			console.log('hidden', e.detail.id); //detail为当前popover元素
 			document.getElementById("inputComment").blur();
@@ -393,7 +394,6 @@
 							tempPage = 1;
 							zonepArray = tempRspData;
 							//留言总条数
-							console.log(JSON.stringify(zonepArray))
 							table.innerHTML = '';
 							for(var i = 0; i < zonepArray.length; i++) {
 								id = i;
@@ -409,12 +409,11 @@
 			});
 		}
 
-		var id = 0;
+		var id = 0;//cell的id
 		mui.plusReady(function() {
-
 			publisherId = plus.webview.currentWebview().data; //发布者id
-			var NoReadCnt = plus.webview.currentWebview().NoReadCnt
-			if(NoReadCnt != 0) {
+			var NoReadCnt = plus.webview.currentWebview().NoReadCnt//未读条数
+			if(NoReadCnt != 0) {//如果未读条数不为0，则设置空间状态为已读
 				var comData = {
 					userId: personalUTID, //用户ID
 					publisherId: publisherId
@@ -467,6 +466,7 @@
 			mui('.mui-table-view').on('tap', 'h4', function() {
 				click.push('姓名');
 			});
+			//删除动态
 			mui('.mui-table-view').on('tap', '.mui-icon-closeempty', function() {
 				var index = this.id.replace('delete', '');
 				console.log(this.id);
@@ -501,6 +501,7 @@
 			mui('.mui-table-view').on('tap', '.dynamic-image-more', function() {
 				click.push('更多图片');
 			});
+			//点赞和取消点赞
 			mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
 				click.push('点赞');
 				var index = this.id.replace('praise', '');
@@ -545,6 +546,7 @@
 				}
 
 			});
+//			评论
 			mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
 				click.push('评论');
 				tempIndex = this.id.replace('comment', '');
@@ -554,6 +556,7 @@
 				window.event.stopPropagation()
 
 			});
+//			回复评论
 			mui('.mui-table-view').on('tap', '.replyComment', function() {
 				click.push('评论回复');
 				tempIndex = this.id.replace('replyComment', '');
@@ -575,6 +578,7 @@
 			mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
 				click.push('评论者：' + this.innerText);
 			});
+			//底部评论按钮
 			mui('.mui-table-view').on('tap', '.dynamic-comment-btn', function() {
 				click.push('评论按钮');
 				tempIndex = this.id.replace('bottomComment', '');
@@ -655,7 +659,6 @@
 				//				}
 
 			}
-			console.log(JSON.stringify(commentList))
 
 			InteractionList.push(introduce);
 			InteractionList.push(viewCount);

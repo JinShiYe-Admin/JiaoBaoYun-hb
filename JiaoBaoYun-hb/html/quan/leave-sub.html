@@ -84,13 +84,12 @@
 				}
 			}
 		});
-		var userId;
-		var personalUTID;
-		var note;
-		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+		var userId;//留言板拥有者id
+		var personalUTID;//当前登录账号utid
+		var note;//留言寄语
+		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 		mui.plusReady(function() {
-			
-			window.addEventListener('refreshLeaveList',function(){
+			window.addEventListener('refreshLeaveList',function(){//发布留言成功后的回调
 				requestData(comData)
 			})
 			userId = plus.webview.currentWebview().data;
@@ -130,7 +129,7 @@
 				totalCnt = 0;
 				flag = 1;
 				var comData = {
-					userId: userId, //用户ID
+					userId: userId, ////留言板拥有者id
 					pageIndex: (1).toString(), //当前页数
 					pageSize: '10' //每页记录数
 				};
@@ -153,7 +152,7 @@
 				} else {
 					tempPage++;
 					var comData = {
-						userId: userId, //用户ID
+						userId: userId, ////留言板拥有者id
 						pageIndex: (tempPage).toString(), //当前页数
 						pageSize: '10' //每页记录数
 					};
@@ -254,6 +253,7 @@
 					totalCnt = data.RspData.TotalCnt;
 					var leaveNum = document.getElementById("leaveNum");
 					leaveNum.innerHTML = '留言('+data.RspData.TotalCnt+')';
+					//主人寄语
 					var leaveTitle = document.getElementById('leaveTitle');
 					if(data.RspData.Note==''||data.RspData.Note == null){
 						if(userId==personalUTID){
@@ -322,6 +322,7 @@
 			ul.appendChild(li);
 			} 
 			console.log(ul.innerHTML);
+			//点击回复
 			mui('.mui-table-view').on('tap', '.leaveReply', function() {
 				var cellIndex = this.id.replace('reply',''); console.log(cellIndex)
 

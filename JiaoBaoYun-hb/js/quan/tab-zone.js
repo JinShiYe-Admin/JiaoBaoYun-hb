@@ -96,7 +96,7 @@ function addSomeEvent() {
 		})
 	})
 
-	document.addEventListener('setRead', function(e) {
+	window.addEventListener('setRead', function(e) {
 		var tableIndex = selectCell.tableIndex;
 		var cellIndex = selectCell.cellIndex;
 		var cellNoReadCnt = selectCell.NoReadCnt
@@ -161,12 +161,12 @@ function getStuList() {
 		wd.close();
 		console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
-		if(data.RspCode == 0 || data.RspCode == 9) {
+		if(data.RspCode == 0 || data.RspCode == 9) {//9为查询记录为空
 			topStudentArr = data.RspData;
-			if(!topStudentArr || topStudentArr.length == 0) {
+			if(!topStudentArr || topStudentArr.length == 0) {//如果查询记录为空
 				var ul = document.getElementById('top-list');
 				ul.innerHTML = '';
-				getGroupList();
+				getGroupList();//获取所有群
 				return;
 			}
 			requestTimes3 = topStudentArr.length;
@@ -174,7 +174,7 @@ function getStuList() {
 			console.log('topStudentArr===' + JSON.stringify(topStudentArr));
 
 			for(var i = 0; i < topStudentArr.length; i++) {
-				getNotes(i, StuDyArr);
+				getNotes(i, StuDyArr);//获取点到记事
 			}
 		} else {
 			mui.toast(data.RspTxt);
@@ -266,6 +266,7 @@ function getGroupList() {
 			datasource = data.RspData; //底部列表数据
 			var tempArr = [];
 			var tempDatasource = [];
+//			群去重
 			for(var i = 0; i < datasource.length; i++) {
 				if(tempArr.indexOf(datasource[i].gid) > -1) {
 					//					console.log(i+'已存在'+datasource[i].gid);
@@ -292,7 +293,7 @@ function getGroupList() {
 			}
 
 		} else if(data.RspCode == 9) { //没有群
-			showBlankPage(true);
+			showBlankPage(true);//显示空白页
 
 		} else {
 			mui.toast(data.RspTxt);
@@ -301,10 +302,11 @@ function getGroupList() {
 
 }
 //获取顶部列表
-function getTopList(i) {
+function getTopList(index) {
+	
 	var comData = {
 		userId: personalUTID, //用户ID----utid
-		classId: datasource[i].gid, //班级ID----cid
+		classId: datasource[index].gid, //班级ID----cid
 		pageIndex: '1', //当前页数
 		pageSize: '1' //每页记录数
 	};
@@ -317,13 +319,13 @@ function getTopList(i) {
 		if(data.RspCode == 0) {
 			if(data.RspData.Data.length == 0) { //数据为空时 添加默认数据
 				var temp = {
-					index: i, //排序索引
+					index: index, //排序索引
 					MsgContent: '暂无动态',
 					PublishDate: '2016-11-17'
 				}
 				topArray.push(temp);
 			} else { //取班级空间的第一条数据
-				data.RspData.Data[0].index = i; //排序索引
+				data.RspData.Data[0].index = index; //排序索引
 				topArray.push(data.RspData.Data[0]);
 			}
 
@@ -435,6 +437,7 @@ function getUserSpaces(upString, index) {
 				}
 				
 			}
+			
 			for(var i = 0; i < userList.length; i++) {
 				for(var j = 0; j < tempUserList.length; j++) {
 					if((tempUserList[j].utid == userList[i].PublisherId)) {
@@ -448,23 +451,25 @@ function getUserSpaces(upString, index) {
 			}
 			datasource[index].userList = userList;
 			var groupUserList = datasource[index].userList;
+			//			群用户去重
 			var tempUtidArr=[];
 			var tempUserArr=[];
+
 			for(var i=0;i<groupUserList.length;i++){
 							if(groupUserList[i].mstype == 0) { //0家长,1管理员,2老师,3学生
-				groupUserList[i].mstypeStr =  '[家长]';
+				groupUserList[i].mstypeName =  '[家长]';
 			} else if(groupUserList[i].mstype == 1) {
-				groupUserList[i].mstypeStr =  '[管理员]';
+				groupUserList[i].mstypeName =  '[管理员]';
 			} else if(groupUserList[i].mstype == 2) {
-				groupUserList[i].mstypeStr =  '[老师]';
+				groupUserList[i].mstypeName =  '[老师]';
 			} else {
-				groupUserList[i].mstypeStr =  '[学生]';
+				groupUserList[i].mstypeName =  '[学生]';
 			}
 				var Arrindex = tempUtidArr.indexOf(groupUserList[i].utid);
 				if(Arrindex>-1){
-					tempUserArr[Arrindex].ugname = tempUserArr[Arrindex].ugname+groupUserList[i].mstypeStr;
+					tempUserArr[Arrindex].ugname = tempUserArr[Arrindex].ugname+groupUserList[i].mstypeName;
 				}else{
-					groupUserList[i].ugname = groupUserList[i].ugname+groupUserList[i].mstypeStr;
+					groupUserList[i].ugname = groupUserList[i].ugname+groupUserList[i].mstypeName;
 					tempUtidArr.push(groupUserList[i].utid);
 					tempUserArr.push(groupUserList[i]);
 					
