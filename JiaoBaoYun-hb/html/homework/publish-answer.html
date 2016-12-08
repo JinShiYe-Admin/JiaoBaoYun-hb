@@ -72,6 +72,15 @@
 			})
 			mui.plusReady(function() {
 				mui.previewImage();
+
+				//判断当前显示的是老师身份0，还是家长、学生身份1
+				if(identityFlag == 0) {
+					//17.获取所有科目列表
+					requestSubjectList();
+				} else {
+					//循环遍历老师数组，将群和老师身份的拼接
+					requestUploadFile();
+				}
 				var pictures = document.getElementById('pictures');
 				/**
 				 * 通过系统相机获取图片
@@ -215,15 +224,15 @@
 						if(data.RspCode == 0) {
 							var tempArray = data.RspData; //[{"stuid":19,"gid":14,"stuname":"10群学1","stuimg":"","mstype":3}]
 							//循环得到的资料数组，
-							for (var m in tempArray) {
+							for(var m in tempArray) {
 								var tempModel0 = tempArray[m];
 								//找到当前的老师
-								if (tempModel0.mstype == 1 || tempModel0.mstype == 2) {
+								if(tempModel0.mstype == 1 || tempModel0.mstype == 2) {
 									//将班级信息，添加到老师model
 									for(var n in teacherArray) {
 										var tempModel1 = teacherArray[n];
 										//群号相同
-										if (tempModel1.gid == tempModel0.gid) {
+										if(tempModel1.gid == tempModel0.gid) {
 											//将群名添加到群资料model中
 											tempModel0.gname = tempModel1.gname;
 											//添加到数组中
@@ -233,11 +242,11 @@
 								}
 							}
 							//如果此数组>0，将第一个值，赋给当前显示
-							if (classTeacherArray.length>0) {
+							if(classTeacherArray.length > 0) {
 								uploadTeacherModel = classTeacherArray[0];
 							}
 							//刷新老师下拉列表
-							
+
 						} else {
 							mui.toast(data.RspTxt);
 						}
