@@ -41,6 +41,7 @@
 					classes=e.detail.data;
 					setClasses(classes)
 				})
+				setSelectedListener();
 			})
 			var setClasses=function(classes){
 				var classesContainer=document.getElementById('classes-container');
@@ -49,8 +50,9 @@
 					var div=document.createElement('div');
 					div.className='mui-input-row mui-checkbox';
 					div.innerHTML=createInner(classInfo);
-					div.querySelector('input').classInfo=classInfo;
+					
 					classesContainer.appendChild(div);
+					div.querySelector('input').classInfo=classInfo;
 				});
 			}
 			var createInner=function(classInfo){
@@ -65,12 +67,12 @@
 			var setSelectedListener=function(){
 				mui('.mui-input-group').on('change', 'input', function() {
 					var value = this.checked?true:false;
-					this.previousElementSibling.innerText = "checked："+value;
 					classes[classes.indexOf(this.classInfo)].isSelected=value;
 					this.classInfo.isSelected=value;
 				});
 				events.addTap('btn-selected',function(){
-					events.fireToPageWithData('homework-publish.html','selectedClasses',classes);
+					events.fireToPageNone('homework-publish.html','selectedClasses',classes);
+					mui.back();
 				})
 			}
 		</script>

@@ -178,7 +178,7 @@ var requirePostGUInfo=function(i,wd,callback){
 		if(data.RspCode==0){
 			selectClassArray[i].studentArray=data.RspData;	
 		}
-		if(i<selectClassArray.length-2){
+		if(i<selectClassArray.length-1){
 			requirePostGUInfo(i+1,wd);
 		}else{
 			console.log('学生资料群信息数据：'+JSON.stringify(selectClassArray))
