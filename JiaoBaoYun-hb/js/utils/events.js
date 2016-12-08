@@ -13,7 +13,7 @@ var events = (function($, mod) {
 			item.addEventListener('tap', event);
 		}
 		/**
-		 * 加载跳转界面监听的公用方法 
+		 * 加载跳转界面监听的公用方法
 		 * @param {Object} item 加载监听的控件
 		 * @param {Object} targetHTML 目标Url
 		 */
@@ -31,7 +31,8 @@ var events = (function($, mod) {
 				url: targetHTML,
 				id: targetHTML,
 				show: {
-					anishow: 'slide-in-right'
+					anishow: 'slide-in-right',
+					duration: 250
 				},
 				waiting: {
 					title: '正在加载...'
@@ -56,7 +57,8 @@ var events = (function($, mod) {
 				data: passData
 			},
 			show: {
-				anishow: 'slide-in-right'
+				anishow: 'slide-in-right',
+				duration: 250
 			},
 			waiting: {
 				title: '正在加载...'
@@ -92,17 +94,17 @@ var events = (function($, mod) {
 			}]
 		});
 
-//		var contentWebview = null;
-//		document.querySelector('header').addEventListener('doubletap', function() {
-//			if(contentWebview == null) {
-//				contentWebview = plus.webview.currentWebview().children()[0];
-//			}
-//			contentWebview.evalJS("$('#refreshContainer').pullRefresh().scrollTo(0,0,100)");
-//		});
+		//		var contentWebview = null;
+		//		document.querySelector('header').addEventListener('doubletap', function() {
+		//			if(contentWebview == null) {
+		//				contentWebview = plus.webview.currentWebview().children()[0];
+		//			}
+		//			contentWebview.evalJS("$('#refreshContainer').pullRefresh().scrollTo(0,0,100)");
+		//		});
 	}
 
 	/**
-	 * 
+	 *
 	 * @param {Object} id 刷新的list控件id
 	 * @param {Object} fresh 下拉刷新加载数据的方法
 	 * @param {Object} addMore 上拉刷新加载数据的方法
@@ -177,7 +179,8 @@ var events = (function($, mod) {
 							top: localStorage.getItem('$Statusbar')
 						},
 						show: {
-							anishow: 'slide-in-right'
+							anishow: 'slide-in-right',
+							duration:250
 						},
 						waiting: {
 							title: '正在加载...'
@@ -198,7 +201,7 @@ var events = (function($, mod) {
 				targetPage = plus.webview.getWebviewById(tarPage);
 
 			}
-			targetPage.show();
+			targetPage.show('slide-in-right', 250);
 		}
 		/**
 		 * 如果目标页面未加载,需要先预加载页面
@@ -220,7 +223,7 @@ var events = (function($, mod) {
 				data: getDatas()
 			});
 			console.log('要传的值是：' + JSON.stringify(getDatas()))
-			targetPage.show()
+			targetPage.show('slide-in-right', 250)
 		}
 		/**
 		 * 如果目标页面未加载,需要先预加载页面
@@ -241,7 +244,7 @@ var events = (function($, mod) {
 			$.fire(targetPage, listener, {
 				data: datas
 			});
-			targetPage.show()
+			targetPage.show('slide-in-right', 250)
 		}
 		/**
 		 * 事件传递 不传数据 常用于 父子页面间

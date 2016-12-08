@@ -24,6 +24,9 @@
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
+			window.addEventListener('workDetail',function(e){
+				console.log('作业主界面传送的值：'+JSON.stringify(e.detail.data));
+			})
 			events.initSubPage('workdetail-tea-sub.html');
 		</script>
 	</body>

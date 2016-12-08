@@ -17,8 +17,8 @@ mui.plusReady(function() {
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
-	var subpages = ['../quan/tab-zone.html', '../tab_knowledge.html',  '../cloud/cloud_home.html'];
-	var titles = ['家校圈', '问答',  '云盘'];
+	var subpages = ['../quan/tab-zone.html', '../tab_knowledge.html', '../cloud/cloud_home.html'];
+	var titles = ['家校圈', '问答', '云盘'];
 	//设置子页面距离顶部的位置
 
 	var subpage_style = {
@@ -58,8 +58,8 @@ mui.plusReady(function() {
 
 		//更换标题
 		title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
-		if(title.innerHTML=='家校圈'){
-			title.innerHTML='';
+		if(title.innerHTML == '家校圈') {
+			title.innerHTML = '';
 
 		}
 		changRightIcons(title.innerHTML)
@@ -175,7 +175,7 @@ mui.plusReady(function() {
 		var a = document.createElement('a');
 		a.className = 'mui-icon iconfont icon-upload mui-pull-right';
 		a.addEventListener('tap', function() {
-			mui.toast("上传");
+			events.fireToPageNone('../cloud/cloud_home.html','upload');
 		});
 		container.appendChild(a)
 	}
