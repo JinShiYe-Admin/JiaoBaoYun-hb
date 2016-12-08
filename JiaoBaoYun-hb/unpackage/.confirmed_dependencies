@@ -92,7 +92,9 @@
 			"image/cloud/A_folder.png",
 			"image/cloud/A_addfolder.png",
 			"js/libs/crypto-js/crypto-js.js",
-			"css/cloud/file.css"
+			"css/cloud/file.css",
+			"image/cloud/cloud_bg2.png",
+			"css/iconfont/iconfont.css"
 		],
 		"refer": [
 			"html/homework/homework-tea.html",
@@ -128,7 +130,8 @@
 			"js/mui.min.js",
 			"css/mui.min.css",
 			"image/utils/default_personalimage.png",
-			"js/utils/h5fresh.js"
+			"js/utils/h5fresh.js",
+			"css/iconfont/iconfont.css"
 		],
 		"refer": [
 			"html/quan/studentdynamic_main.html",
@@ -477,7 +480,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/homework/classes-select.html"
@@ -790,7 +794,10 @@
 			"js/utils/camera.js",
 			"css/iconfont/iconfont.css",
 			"fonts/iconfont.ttf",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/qiniu/plupload.full.min.js",
+			"js/utils/QiNiuUtil.js",
+			"js/qiniu/qiniu.js"
 		],
 		"refer": []
 	},
@@ -848,7 +855,8 @@
 		],
 		"refer": [
 			"html/mine/qun_data_create.html",
-			"html/mine/qun_data_details.html"
+			"html/mine/qun_data_details.html",
+			"html/mine/qun_manage_info.html"
 		]
 	},
 	"html/mine/edit-groupInfo.html": {
@@ -1059,7 +1067,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"css/home/index.css"
+			"css/home/index.css",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",
@@ -1334,6 +1343,15 @@
 			"js/utils/RSAEncrypt.js",
 			"css/quan/class_space.css",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/homework/classes-select.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/utils/events.js"
 		]
 	}
 }

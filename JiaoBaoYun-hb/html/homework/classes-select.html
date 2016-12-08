@@ -16,7 +16,7 @@
 		    <a id="btn-selected" class="mui-pull-right header-publish">确定</a>
 		</header>
 		<div class="mui-content">
-			<form  id=" classes-container" class="mui-input-group">
+			<form  id="classes-container" class="mui-input-group">
 			     <div class="mui-input-row mui-checkbox ">
 			        <label>Checkbox</label>
 			        <input name="Checkbox" type="checkbox" checked>
@@ -31,23 +31,28 @@
 		    
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
 			var classes;
 			mui.init()
 			mui.plusReady(function(){
 				window.addEventListener('postClasses',function(e){
-					console.log('班级选择界面获取的班级数据：'+e.detail.data);
+					console.log('班级选择界面获取的班级数据：'+JSON.stringify(e.detail.data));
 					classes=e.detail.data;
+					setClasses(classes)
 				})
+				setSelectedListener();
 			})
 			var setClasses=function(classes){
 				var classesContainer=document.getElementById('classes-container');
+				events.clearChild(classesContainer);
 				classes.forEach(function(classInfo,i){
 					var div=document.createElement('div');
 					div.className='mui-input-row mui-checkbox';
 					div.innerHTML=createInner(classInfo);
-					div.querySelector('input').classInfo=classInfo;
+					
 					classesContainer.appendChild(div);
+					div.querySelector('input').classInfo=classInfo;
 				});
 			}
 			var createInner=function(classInfo){
@@ -62,12 +67,12 @@
 			var setSelectedListener=function(){
 				mui('.mui-input-group').on('change', 'input', function() {
 					var value = this.checked?true:false;
-					this.previousElementSibling.innerText = "checked："+value;
 					classes[classes.indexOf(this.classInfo)].isSelected=value;
 					this.classInfo.isSelected=value;
 				});
 				events.addTap('btn-selected',function(){
-					events.fireToPageWithData('homework-publish.html','selectedClasses',classes);
+					events.fireToPageNone('homework-publish.html','selectedClasses',classes);
+					mui.back();
 				})
 			}
 		</script>
