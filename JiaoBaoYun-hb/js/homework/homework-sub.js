@@ -45,6 +45,9 @@ mui.plusReady(function() {
 			}
 			setClasses(role);
 		})
+	window.addEventListener('homeworkPublished',function(){
+		
+	})
 		//发布作业界面
 	publish.addEventListener('tap', function() {
 		events.fireToPageWithData('homework-publish.html','postClasses',teacherClasses);
