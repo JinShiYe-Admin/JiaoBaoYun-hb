@@ -143,9 +143,9 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 				}
 			},
 			error: function(xhr, type, errorThrown) {
-				console.log('wang luo cuowu:' + JSON.stringify(xhr) + ',' + type + ',' + errorThrown);
+				console.log('url==='+url+'wang luo cuow:' + JSON.stringify(xhr) + ',' + type + ',' + errorThrown);
 				waitingDialog.close();
-				mui.alert("网络连接失败，请重新尝试一下", "错误", "OK", null);
+				mui.toast("网络连接失败，请重新尝试一下");
 			}
 		});
 	});

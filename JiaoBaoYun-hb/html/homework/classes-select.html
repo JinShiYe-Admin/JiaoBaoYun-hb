@@ -16,7 +16,7 @@
 		    <a id="btn-selected" class="mui-pull-right header-publish">确定</a>
 		</header>
 		<div class="mui-content">
-			<form  id=" classes-container" class="mui-input-group">
+			<form  id="classes-container" class="mui-input-group">
 			     <div class="mui-input-row mui-checkbox ">
 			        <label>Checkbox</label>
 			        <input name="Checkbox" type="checkbox" checked>
@@ -31,17 +31,20 @@
 		    
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
 			var classes;
 			mui.init()
 			mui.plusReady(function(){
 				window.addEventListener('postClasses',function(e){
-					console.log('班级选择界面获取的班级数据：'+e.detail.data);
+					console.log('班级选择界面获取的班级数据：'+JSON.stringify(e.detail.data));
 					classes=e.detail.data;
+					setClasses(classes)
 				})
 			})
 			var setClasses=function(classes){
 				var classesContainer=document.getElementById('classes-container');
+				events.clearChild(classesContainer);
 				classes.forEach(function(classInfo,i){
 					var div=document.createElement('div');
 					div.className='mui-input-row mui-checkbox';

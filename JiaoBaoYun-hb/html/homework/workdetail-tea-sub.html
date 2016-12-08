@@ -12,20 +12,45 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/homework/workdetail.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<style type="text/css">
+			.mui-table-view:before,
+			.mui-table-view:after,
+			.mui-table-view-cell:after {
+				height: 0px;
+				/*去掉横线*/
+			}
+		</style>
+
 	</head>
 
 	<body>
 		<div class="mui-content">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media ">
+					<img class="mui-media-object mui-pull-left" src="../../image/homework/math.png">
+					<div class="mui-media-body">
+						<h4>数学作业</h6>
+						<p class='mui-ellipsis'>发布时间：2016-12-07</p>
+					</div>
+					<div class="mui-media-body">
+						<font>1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ? 1+1 = ?</font> 
+						<button id="checkDetail" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 40%;left:25%;margin-top:10px ;">查看详情</button>
+					</div>
+
+				</li>
+			</ul>
+			<!--<div><img src="../../image/homework/math.png"></img>数学作业</div>-->
 			<!--滑动组件-->
 			<div id="slider" class="mui-slider">
 				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-positive">
 					<!--已完成选项卡-->
 					<a class="mui-control-item mui-active" href="#div-finished">
-						已完成
+						已完成(10)
 					</a>
 					<!--未完成选项卡-->
 					<a class="mui-control-item" href="#div-unfinish">
-						未完成
+						未完成(5)
 					</a>
 				</div>
 				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
@@ -35,7 +60,33 @@
 						<div id="scroll1" class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul id="finished-list" class="mui-table-view">
+									<li class="mui-table-view-cell  ">
+										<div class="mui-media-body">
+											安琪
+											<p class="mui-media-body" style="float: right;">
+												正确率：0%
+											</p>
+										</div>
 
+									</li>
+									<li class="mui-table-view-cell  ">
+										<div class="mui-media-body">
+											莫尚霖
+											<p class="mui-media-body" style="float: right;">
+												正确率：50%
+											</p>
+										</div>
+
+									</li>
+									<li class="mui-table-view-cell  ">
+										<div class="mui-media-body">
+											宋艳明
+											<p class="mui-media-body" style="float: right;">
+												正确率：100%
+											</p>
+										</div>
+
+									</li>
 								</ul>
 							</div>
 						</div>
@@ -43,10 +94,37 @@
 					<div id="div-unfinish" class="mui-slider-item mui-control-content">
 						<div id="scroll2" class="mui-scroll-wrapper">
 							<div class="mui-scroll">
-								<div class="mui-loading">
-									<div class="mui-spinner">
-									</div>
-								</div>
+								
+										<ul id="unfinished-list" class="mui-table-view">
+									<li class="mui-table-view-cell  ">
+										<div class="mui-media-body">
+											安琪2
+											<p class="mui-media-body" style="float: right;">
+												提醒
+											</p>
+										</div>
+
+									</li>
+									<li class="mui-table-view-cell  ">
+										<div class="mui-media-body">
+											莫尚霖2
+											<p class="mui-media-body" style="float: right;">
+												提醒
+											</p>
+										</div>
+
+									</li>
+									<li class="mui-table-view-cell  ">
+										<div class="mui-media-body">
+											宋艳明2
+											<p class="mui-media-body" style="float: right;">
+												提醒
+											</p>
+										</div>
+
+									</li>
+								</ul>
+									
 							</div>
 						</div>
 					</div>
@@ -73,7 +151,7 @@
 				"Remain": 1,
 				"Subject": "语文",
 				"Upload": 0,
-				'classId':1//人为赋值
+				'classId': 1 //人为赋值
 			};
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 			//作业详情model
@@ -84,8 +162,9 @@
 			var remainArray = [];
 
 			mui.plusReady(function() {
-
-				//获取作业详情
+				events.addTap('checkDetail', function() {
+					console.log('点击查看详情')
+				})//获取作业详情
 				requestHomeworkDetail();
 
 				//3.	获取作业对应学生列表
@@ -109,7 +188,7 @@
 					if(data.RspCode == 0) {
 						homeworkDetailModel = data.RspData;
 						//修改界面
-						
+
 					} else {
 						mui.toast(data.RspTxt);
 					}
@@ -170,7 +249,7 @@
 									//循环未完成
 									for(var m in remainArray) {
 										var tempModel9 = remainArray[m];
-										if (tempModel9.StudentId == tempModel.utid) {
+										if(tempModel9.StudentId == tempModel.utid) {
 											//合并
 											tempModel9 = $.extend(tempModel9, tempModel);
 										}
@@ -178,7 +257,7 @@
 									//已完成
 									for(var m in uploadArray) {
 										var tempModel9 = uploadArray[m];
-										if (tempModel9.StudentId == tempModel.utid) {
+										if(tempModel9.StudentId == tempModel.utid) {
 											//合并
 											tempModel9 = $.extend(tempModel9, tempModel);
 										}
@@ -188,7 +267,7 @@
 							console.log('未完成列表：' + JSON.stringify(remainArray));
 							console.log('已完成列表：' + JSON.stringify(uploadArray));
 							//刷新界面
-							
+
 						});
 
 					} else {

@@ -461,7 +461,6 @@ function getUserSpaces(upString, index) {
 				groupUserList[i].mstypeStr =  '[学生]';
 			}
 				var Arrindex = tempUtidArr.indexOf(groupUserList[i].utid);
-				console.log('Arrindex=='+Arrindex)
 				if(Arrindex>-1){
 					tempUserArr[Arrindex].ugname = tempUserArr[Arrindex].ugname+groupUserList[i].mstypeStr;
 				}else{
@@ -615,18 +614,23 @@ function showBlankPage(isBlank) {
 		//	显示加号
 		var div = document.createElement('div');
 		div.id = 'plusDIv';
+		var p = document.createElement('p')
 		div.style.height = '1000px'
 		div.style.marginTop = '50px'
-		div.style.textAlign = 'center'
-		div.style.fontSize = '18px'
-
-		div.innerHTML = '请申请加入班级';
-		var plusImg = document.createElement('img');
-		plusImg.src = '../../image/quan/u90.gif';
-		plusImg.id = 'add'
-		plusImg.style.marginLeft = '20px'
-		plusImg.style.verticalAlign = '-20px'
-		div.appendChild(plusImg);
+		p.style.textAlign = 'center'
+		p.style.fontSize = '18px'
+		div.appendChild(p)
+		p.innerHTML = '您还没有创建班级，请点击下方按钮创建班级';
+		var a = document.createElement('img');
+//		a.className = 'mui-icon iconfont icon-tianjia ';
+//		a.style.display='block'
+		a.style.width = '80px';
+		a.style.height = '80px';
+		a.src = '../../image/quan/add.png';
+		a.id = 'add'
+		a.style.marginLeft = '40%'
+		a.style.verticalAlign = '-15px'
+		div.appendChild(a);
 		div.style.visibility = 'visible'
 		var content = document.getElementsByClassName('mui-content');
 		content[0].insertBefore(div, content[0].firstChild);

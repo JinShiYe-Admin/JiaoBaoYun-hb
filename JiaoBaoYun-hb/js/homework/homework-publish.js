@@ -1,6 +1,6 @@
 //从老师的作业列表界面，将身份为老师的群，传到这个界面，总群数组
 //var classArray = []; //{"gid":14,"gname":"10群","gimg":"","mstype":2}
-var subjectId;
+var selectSubjectID;
 //老师发布作业时，选择的群
 var selectClassArray = [];
 var submitOnLine = true;
@@ -12,11 +12,11 @@ mui.plusReady(function() {
 		events.preload('classes-select.html',200);
 		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 		window.addEventListener('postClasses', function(e) {
-			console.log('发布作业界面获取的班级数据：'+e.detail.data);
+			console.log('发布作业界面获取的班级数据：'+JSON.stringify(e.detail.data));
 			//选中班级为全部班级
 			selectClassArray=e.detail.data;
 			//请求所有班级学生数据
-			requestClassStudents(setClasses());
+			requestClassStudents(setClasses);
 			//科目
 			requestSubjectList(setSubjects);
 		})
@@ -38,14 +38,14 @@ mui.plusReady(function() {
 		setSubmitEvent();
 		var lastEditRange = null;
 		var publish_container = document.getElementById('publish-content');
-		publish_container.addEventListener('tap', function() {
-			var sction = getSelection();
-			lastEditRange = sction.getRangeAt(0);
-		})
-		publish_container.addEventListener('release', function() {
-				var sction = getSelection();
-				lastEditRange = sction.getRangeAt(0);
-			})
+//		publish_container.addEventListener('tap', function() {
+//			var sction = getSelection();
+//			lastEditRange = sction.getRangeAt(0);
+//		})
+//		publish_container.addEventListener('release', function() {
+//				var sction = getSelection();
+//				lastEditRange = sction.getRangeAt(0);
+//			})
 			//录音键
 		events.addTap('getRecord', function() {
 				startRecord()
@@ -86,7 +86,7 @@ function requestSubjectList(callback) {
  * @param {Object} subjectList
  */
 var setSubjects = function(subjectList) {
-
+		events.clearChild(subjectsContainer);
 		subjectList.forEach(function(subject, i) {
 			var op = document.createElement('option');
 			op.value = subject.Value;
@@ -98,7 +98,7 @@ var setSubjects = function(subjectList) {
 //	 * 选中科目的监听
 //	 */
 //var getSelectSubject = function() {
-//		subjectId = subjectsContainer[subjectsContainer.selectedIndex].value;
+//		selectSubjectID = subjectsContainer[subjectsContainer.selectedIndex].value;
 //	}
 	/**
 	 * 放置班级列表
@@ -106,14 +106,16 @@ var setSubjects = function(subjectList) {
 	 */
 var setClasses = function(classes) {
 		var classesContainer = document.getElementById('classes');
+		events.clearChild(classesContainer)
 		for(var i in classes) {
 			if(classes[i].isSelected){
+				
 				var p = document.createElement('p');
-				p.className = classes[i].gid;
-				p.innerText = classes[i].className;
-				p.innerHTML = '<sup class="mui-badge mui-badge-inverted mui-badge-danger class-del">x</sup>'
-				p.querySelector('.class-del').bindClass = classes[i];
+				p.className ='gid'+classes[i].gid;
+//				p.innerText = classes[i].gname;
+				p.innerHTML = classes[i].gname+'<sup class="mui-badge mui-badge-inverted mui-badge-danger class-del">x</sup>'
 				classesContainer.appendChild(p);
+				p.querySelector('.class-del').bindClass = classes[i];
 			}
 			
 		}
@@ -124,8 +126,10 @@ var setClasses = function(classes) {
 var setRemoveClassListener = function() {
 	mui('.receive-classes').on('tap', '.class-del', function() {
 		var classes = document.getElementById('classes');
-		classes.removeChild(classes.querySelector('.' + this.bandClass.gid));
-		selectClassArray[selectClassArray.indexOf(this.bandClass)].isSelected=false;
+		classes.removeChild(classes.querySelector('.gid' + this.bindClass.gid));
+		console.log('删除的班级数据：'+JSON.stringify(this.bindClass));
+		selectClassArray[selectClassArray.indexOf(this.bindClass)].isSelected=false;
+		console.log('删除班级后所有班级数据：'+JSON.stringify(selectClassArray));
 	})
 }
 var setIsOnline = function() {
@@ -142,9 +146,9 @@ var setIsOnline = function() {
 var setSubmitEvent = function() {
 	//提交按钮
 	events.addTap('submitBtn', function() {
-		subjectId = subjectsContainer[subjectsContainer.selectedIndex].value;
+		selectSubjectID = subjectsContainer[subjectsContainer.selectedIndex].value;
 		//判断是否有科目
-		if(subjectId) {
+		if(selectSubjectID) {
 			//判断是否选择了班级
 			if(selectClassArray.length > 0) {
 				var content = document.getElementById('publish-content').value;
@@ -217,7 +221,7 @@ function requestPublishHomework() {
 		teacherId: personalUTID, //教师Id
 		subjectId: selectSubjectID, //科目Id， 见（一）.17. GetSubjectList()；
 		studentIds: tempStuArray.toString(), //班级Id+学生Id串，班级Id和学生Id以“|“分割，如“班级Id|学生Id”，每对id之间逗号分隔，例如“1|1,1|2”；
-		content: document.getElementById('publish-container').value, //作业内容
+		content: document.getElementById('publish-content').value, //作业内容
 		submitOnLine: submitOnLine, //是否需要在线提交；
 		fileIds: '' //上传文件的id串，例如“1,2”；
 	};
@@ -234,6 +238,7 @@ function requestPublishHomework() {
 			events.clearChild(subjectsContainer);
 			events.clearChild(document.getElementById('classes'));
 			events.fireToPageNone('homework-tea-sub.html','homeworkPublished');
+			mui.toast('发布作业成功！');
 			mui.back();
 		} else {
 			mui.toast(data.RspTxt);

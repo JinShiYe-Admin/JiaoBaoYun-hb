@@ -91,7 +91,8 @@
 			"js/cloud/cloud.js",
 			"image/cloud/A_folder.png",
 			"image/cloud/A_addfolder.png",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/cloud/file.css"
 		],
 		"refer": [
 			"html/homework/homework-tea.html",
@@ -398,7 +399,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js",
-			"js/publicProtocol.js"
+			"js/publicProtocol.js",
+			"js/homework/homework-sub.js"
 		],
 		"refer": [
 			"html/homework/homework-publish.html"
@@ -431,7 +433,19 @@
 			"js/utils/events.js",
 			"css/mui.min.css",
 			"fonts/iconfont.ttf",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/homework/homework.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/homework/homework-tea-sub.html",
@@ -463,7 +477,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/homework/classes-select.html"
@@ -1320,6 +1335,15 @@
 			"js/utils/RSAEncrypt.js",
 			"css/quan/class_space.css",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/homework/classes-select.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/utils/events.js"
 		]
 	}
 }

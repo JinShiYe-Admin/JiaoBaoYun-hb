@@ -304,6 +304,7 @@
 			var fileArray = [];
 
 			mui.plusReady(function() {
+				events.preload("../homework/homework-tea.html", 300);
 				//初始化滚动条
 				mui('.mui-scroll-wrapper').scroll({
 					indicators: true, //是否显示滚动条
@@ -343,20 +344,30 @@
 				//云存储显示的文件
 				mui('#cloudstorage').on('tap', '.cloud-text-align-center', function() {
 					console.log('tap:' + this.getAttribute("data-fid"));
+					var fid = this.getAttribute("data-fid"); //文件id
+					var title = '';
 					mui.each(fileArray, function(index, item) {
 						console.log('fileArray:' + index + '|' + JSON.stringify(item));
+						if(fid == item.fid) {
+							title = item.fname;
+							return false;
+						}
 					});
 					events.openNewWindowWithData('storage_main.html', {
-						fid: this.getAttribute("data-fid"), //fid
+						fid: fid, //文件id
+						title: title, //标题名
 						top: fileArray //顶层文件和文件夹的数据
+
 					});
 				});
 
 				//云存储右侧按钮
 				mui('#cloudstorage').on('tap', '.cloud-bottom-icon', function() {
 					events.openNewWindowWithData('storage_main.html', {
-						fid: '0', //fid
+						fid: '0', //文件id,顶层0
+						title: '云盘—云存储', //标题名
 						top: fileArray //顶层文件和文件夹的数据
+
 					});
 				});
 
@@ -415,10 +426,58 @@
 							//							events.openNewWindow('../quan/studentdynamic_main.html');
 							//							break;
 						case "3": //作业批改
-							events.openNewWindow('../homework/homework-tea.html')
+							requestClassData();
 							break;
 					}
 				});
+
+				function requestClassData() {
+					var teacherClasses = [];
+					var studentClasses = [];
+					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+					//获取当前账号，所在的群
+					//需要参数
+					var comData = {
+						vtp: 'ag', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群),ig(群信息vvl对应群ID)
+						vvl: personalUTID //查询的各项，对应人的utid，可以是查询的任何人
+					};
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					//9.获取用户群
+					postDataPro_PostGList(comData, wd, function(data) {
+						wd.close();
+						console.log('作业主界面获取的群信息：' + JSON.stringify(data));
+						if(data.RspCode == 0) {
+							var tempArray = data.RspData;
+							//			gid:'14',//群ID
+							//			gname:'10群',//群名
+							//			gimg:'',//群头像,群头像的链接
+							//			mstype:'2'//用户角色,0家长,1管理员,2老师,3学生
+							//然后检索身份为老师的
+							for(var i in tempArray) {
+								var tempModel = tempArray[i];
+								//2老师
+								if(tempModel.mstype == 2) {
+									teacherClasses.push(tempArray[i]);
+								}
+								//家长、学生
+								if(tempModel.mstype == 0 || tempModel.mstype == 3) {
+									studentClasses.push(tempArray[i]);
+								}
+							}
+							if(teacherClasses.length > 0 || studentClasses.length > 0) {
+								events.fireToPageWithData('../homework/homework-tea.html', 'postClasses', {
+									teacherClasses: teacherClasses,
+									studentClasses: studentClasses
+								})
+							} else {
+								mui.toast('您还未加入班级');
+							}
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					});
+				}
 				//
 				//26.用户云盘顶层文件及文件夹获取
 				function postFirstFile() {
@@ -433,7 +492,11 @@
 						console.log('26.postDataPro_PostDiFi_用户云盘顶层文件及文件夹获取_RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							//给存储数组赋值
-							fileArray = data.RspData;
+							if(data.RspData != null && data.RspData != '') {
+								fileArray = data.RspData;
+							} else {
+								fileArray = [];
+							}
 							//清掉所有文件夹
 							var table = document.getElementById("cloudstoragefile");
 							table.innerHTML = '';
