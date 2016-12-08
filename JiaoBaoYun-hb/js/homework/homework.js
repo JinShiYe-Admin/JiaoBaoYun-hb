@@ -9,6 +9,7 @@ mui.plusReady(function() {
 	var btn_homework = document.getElementById('btn-homework');
 	window.addEventListener('postClasses', function(e) {
 			var data = e.detail.data;
+			console.log('作业主界面获取信息：'+JSON.stringify(e.detail.data));
 			studentClasses = data.studentClasses;
 			teacherClasses = data.teacherClasses;
 			setChoices(btn_published, btn_homework);
@@ -26,13 +27,13 @@ mui.plusReady(function() {
 		btn_published.className = 'mui-btn mui-btn-green'
 		btn_homework.className = 'mui-btn mui-btn-green mui-btn-outlined'
 		role = 2;
-		events.fireToPageNone("homework-tea-sub.html", 'roleChanged',role)
+		events.fireToPageNone('homework-tea-sub.html', 'roleChanged',role)
 	});
 	btn_homework.addEventListener('tap', function() {
 		btn_published.className = 'mui-btn mui-btn-green mui-btn-outlined';
 		btn_homework.className = 'mui-btn mui-btn-green';
 		role = 30;
-		events.fireToPageNone("homework-tea-sub.html", 'roleChanged',role)
+		events.fireToPageNone('homework-tea-sub.html', 'roleChanged',role)
 	})
 })
 var sendMsgToSub = function() {
