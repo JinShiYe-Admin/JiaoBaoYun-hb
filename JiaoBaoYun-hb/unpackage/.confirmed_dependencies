@@ -1067,7 +1067,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"css/home/index.css"
+			"css/home/index.css",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",

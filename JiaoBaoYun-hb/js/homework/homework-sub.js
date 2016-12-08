@@ -2,10 +2,6 @@
  * @anthor an
  * 教师作业模块
  */
-
-//加载h5刷新
-//h5fresh.addRefresh('list-container');
-//加载mui
 var personalUTID;
 var role;
 var teacherClasses = []; //老师身份关联班级
@@ -34,6 +30,11 @@ mui.plusReady(function() {
 		teacherHash = newHashMap();
 		studentHash = newHashMap();
 		setClasses(role);
+		if(role==2){
+			requireHomeWork(teacherClasses[0],setData);
+		}else{
+			requireHomeWork(studentClasses[0],setData);
+		}
 	});
 	window.addEventListener('roleChanged', function(e) {
 			role = e.detail.data;
@@ -256,7 +257,9 @@ function requestData(comData) {
 		}
 	});
 }
-
+/**
+ * 仿HashMap
+ */
 var newHashMap = function() {
 	var HashMap = {
 		put: function(key, value) {

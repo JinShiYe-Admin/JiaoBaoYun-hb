@@ -16,7 +16,7 @@ mui.plusReady(function() {
 			//选中班级为全部班级
 			selectClassArray=e.detail.data;
 			//请求所有班级学生数据
-			requestClassStudents(setClasses);
+			requestClassStudents();
 			//科目
 			requestSubjectList(setSubjects);
 		})
@@ -38,14 +38,6 @@ mui.plusReady(function() {
 		setSubmitEvent();
 		var lastEditRange = null;
 		var publish_container = document.getElementById('publish-content');
-//		publish_container.addEventListener('tap', function() {
-//			var sction = getSelection();
-//			lastEditRange = sction.getRangeAt(0);
-//		})
-//		publish_container.addEventListener('release', function() {
-//				var sction = getSelection();
-//				lastEditRange = sction.getRangeAt(0);
-//			})
 			//录音键
 		events.addTap('getRecord', function() {
 				startRecord()
@@ -104,18 +96,17 @@ var setSubjects = function(subjectList) {
 	 * 放置班级列表
 	 * @param {Object} classes
 	 */
-var setClasses = function(classes) {
+var setClasses = function() {
 		var classesContainer = document.getElementById('classes');
 		events.clearChild(classesContainer)
-		for(var i in classes) {
-			if(classes[i].isSelected){
-				
+		for(var i in selectClassArray) {
+			if(selectClassArray[i].isSelected){
 				var p = document.createElement('p');
-				p.className ='gid'+classes[i].gid;
+				p.className ='gid'+selectClassArray[i].gid;
 //				p.innerText = classes[i].gname;
-				p.innerHTML = classes[i].gname+'<sup class="mui-badge mui-badge-inverted mui-badge-danger class-del">x</sup>'
+				p.innerHTML = selectClassArray[i].gname+'<sup class="mui-badge mui-badge-inverted mui-badge-danger class-del">x</sup>'
 				classesContainer.appendChild(p);
-				p.querySelector('.class-del').bindClass = classes[i];
+				p.querySelector('.class-del').bindClass = selectClassArray[i];
 			}
 			
 		}
@@ -155,7 +146,7 @@ var setSubmitEvent = function() {
 				//判断是否有发送内容
 				if(content) {
 					//12.发布作业
-					requestClassStudents(requestPublishHomework);
+					requestPublishHomework()
 				} else {
 					mui.toast('请输入作业内容')
 				}
@@ -170,34 +161,32 @@ var setSubmitEvent = function() {
 }
 
 //获取班级里面的人
-function requestClassStudents(callback) {
+function requestClassStudents() {
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	for(var i in selectClassArray) {
-		var tempModel = selectClassArray[i];
-		tempModel.isSelected=true;
-		//所需参数
-		var comData = {
+	requirePostGUInfo(0,wd);	
+}
+var requirePostGUInfo=function(i,wd,callback){
+	selectClassArray[i].isSelected=true;
+	var comData = {
 			vtp: '0', //获取类型,0普通资料获取,1邀请排除(主老师用)
 			top: '-1', //选择条数,-1为全部
-			vvl: tempModel.gid, //群ID,查询的值
+			vvl: selectClassArray[i].gid, //群ID,查询的值
 			vvl1: '3' //类型,0家长,1管理员,2老师,3学生,-1全部
 		};
-		//16.通过群ID获取群对象资料【model_groupStus】
-		postDataPro_PostGUInf(comData, wd, function(data) {
-			if(data.RspCode == 0) {
-				var tempData = data.RspData; //[{"stuid":19,"gid":14,"stuname":"10群学1","stuimg":"","mstype":3}]
-				tempModel.studentArray = tempData;
-			} else {
-				mui.toast(data.RspTxt);
-			}
-			if(i==selectClassArray.length-1){
-				wd.close();
-				callback(selectClassArray);
-			}
-		});
-	}
-	
+	postDataPro_PostGUInf(comData,wd,function(data){
+		if(data.RspCode==0){
+			selectClassArray[i].studentArray=data.RspData;	
+		}
+		if(i<selectClassArray.length-2){
+			requirePostGUInfo(i+1,wd);
+		}else{
+			console.log('学生资料群信息数据：'+JSON.stringify(selectClassArray))
+			setClasses();
+			wd.close();
+		}
+		
+	})
 }
 
 //12.发布作业
@@ -205,6 +194,7 @@ function requestPublishHomework() {
 	//组装学生数组串，
 	var tempStuArray = [];
 	//循环选择的群
+	console.log('发布作业前数据：'+JSON.stringify(selectClassArray));
 	for(var i in selectClassArray) {
 		var tempClassModel = selectClassArray[i];
 		if(tempClassModel.isSelected){
@@ -214,7 +204,6 @@ function requestPublishHomework() {
 				tempStuArray.push(tempClassModel.gid + '|' + tempStuModel.stuid);
 			}
 		}
-		
 	}
 	//所需参数
 	var comData = {
