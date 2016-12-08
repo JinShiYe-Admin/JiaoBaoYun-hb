@@ -58,6 +58,13 @@
 			.mui-scroll-wrapper {
 				top: 90px;
 			}
+
+			.icon-download,
+			.icon-trash {
+				/*background: red;*/
+				text-align: center;
+				min-width: 40px;
+			}
 		</style>
 	</head>
 
@@ -306,7 +313,25 @@
 			 * 点击文件或文件夹的下载
 			 */
 			mui('#all').on('tap', '.icon-download', function(e) {
+				mui.toast('下载');
 				console.log('下载');
+				if(e && e.stopPropagation) {
+					//因此它支持W3C的stopPropagation()方法
+					e.stopPropagation();
+					console.log('if');
+				} else {
+					console.log('else');
+					//否则，我们需要使用IE的方式来取消事件冒泡
+					window.event.cancelBubble = true;
+				}
+			});
+
+			/**
+			 * 点击文件或文件夹的下载
+			 */
+			mui('#all').on('tap', '.icon-trash', function(e) {
+				mui.toast('删除');
+				console.log('删除');
 				if(e && e.stopPropagation) {
 					//因此它支持W3C的stopPropagation()方法
 					e.stopPropagation();
@@ -352,8 +377,8 @@
 				//文件夹右侧箭头
 				var html1 = '';
 				//删除和下载按钮
-				var html2 = '<span class="mui-icon iconfont iconfont-color icon-trash mui-media-object mui-pull-right" style="margin-right: 15px;"></span>\
-							 <span class="mui-icon iconfont iconfont-color icon-download mui-media-object mui-pull-right" style="margin-right: 15px;"></span>';
+				var html2 = '<span class="mui-icon iconfont iconfont-color icon-trash mui-media-object mui-pull-right"></span>\
+							 <span class="mui-icon iconfont iconfont-color icon-download mui-media-object mui-pull-right"></span>';
 
 				//文件或文件图标
 				var html3 = '';

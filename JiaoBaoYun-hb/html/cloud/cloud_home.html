@@ -30,6 +30,8 @@
 			.cloud-info {
 				/*顶部信息*/
 				padding: 10px;
+				float: right;
+				margin-right: 10px;
 			}
 
 			#cloud_prsonalimge {
@@ -92,6 +94,10 @@
 				background: white;
 			}
 
+			.mui-table-view.mui-grid-view .mui-table-view-cell {
+				margin-right: 0px;
+			}
+
 			.cloud-bottom-imge {
 				/*云存储的文件夹图片*/
 				height: 40px;
@@ -129,8 +135,8 @@
 				right: 0;
 				top: 1%;
 				width: 1px;
-				background: #A9A9A9;
-				height: 50px;
+				background: #D9D9D9;
+				height: 100%;
 			}
 
 			#cloudstorage {
@@ -167,42 +173,47 @@
 			<div class="mui-scroll-wrapper">
 				<div class="mui-scroll">
 					<!--顶部-->
-					<div class="cloud-top" style="background-image: url(../../image/cloud/cloud_bg.png); ">
+					<div class="cloud-top" style="background-image: url(../../image/cloud/cloud_bg2.png); height: 110px;max-height: 110px;">
+						<!--<img src="../../image/cloud/cloud_bg2.png" />-->
 						<div class="cloud-info">
-							<div class="mui-row">
-								<div class="mui-col-sm-3 mui-col-xs-3">
+							<!--<div class="mui-row" style="">-->
+							<!--<div class="mui-col-sm-3 mui-col-xs-3">
 									<img id="cloud_prsonalimge" src="../../image/utils/default_personalimage.png">
-								</div>
-								<div class="mui-col-sm-9 mui-col-xs-9" style="margin-top: 15px;">
-									<div id="cloud_name" class="common-font-family-Bold mui-ellipsis">
+								</div>-->
+							<!--<div class="mui-col-sm-12 mui-col-xs-12" style="margin-top: 15px;">-->
+							<div id="cloud_name" class="common-font-family-Bold mui-ellipsis" style="float: right;">
 
-									</div>
-									<!--<font>
+							</div>
+							<!--<font>
 										<img class="cloud-top-icon" src="../../image/cloud/cloud_gift.png" />
 										<font id="gift">1000</font>
 										<img class="cloud-top-icon" src="../../image/cloud/cloud_yuan.gif" />
 										<font id="yuan">50元</font>
 									</font>-->
-									<div class="mui-progressbar mui-progressbar-in">
-										<span></span>
-									</div>
-									<div class="cloud-capacity">
-										总容量:1000G 已用800G 剩余:200G
-									</div>
-								</div>
+							<div class="mui-progressbar mui-progressbar-in" style="float: right;">
+								<span></span>
 							</div>
+							<div class="cloud-capacity" style="float: right;">
+								总容量:1000G
+							</div>
+							<br />
+							<div class="cloud-capacity" style="float: right;">
+								已用800G 剩余:200G
+							</div>
+							<!--</div>-->
+							<!--</div>-->
 						</div>
 					</div>
 					<!--云存储-->
-					<ul id="cloudstorage" class="mui-table-view mui-grid-view ">
-						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;position: absolute;">
+					<ul id="cloudstorage" class="mui-table-view mui-grid-view " style="padding-right: 0px;">
+						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;">
 							<div style="font-weight: bold;">
 								<div>存</div>
 								<div>储</div>
-								<div class="cloud-line"></div>
 							</div>
 						</li>
-						<li class="mui-table-view-cell mui-media mui-col-sm-9 mui-col-xs-9 " style="padding: 5px;margin: 0;margin-left: 10%;">
+						<li class="mui-table-view-cell mui-media mui-col-sm-9 mui-col-xs-9 " style="padding: 5px;margin: 0;">
+							<div class="cloud-line" style="left: 0px;"></div>
 							<div class="mui-row" id="cloudstoragefile">
 								<!--<div class="mui-col-sm-4 mui-col-xs-4 cloud-text-align-center">
 									<img class="cloud-bottom-imge" src="../../image/cloud/cloud_doc.png" />
@@ -218,20 +229,20 @@
 								</div>-->
 							</div>
 						</li>
-						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1 " style="padding: 0;">
+						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;">
 							<img class="cloud-bottom-icon" src="../../image/cloud/rightarrow.png" />
 						</li>
 					</ul>
 					<!--云档案-->
 					<ul id="cloudrecord" class="mui-table-view mui-grid-view">
-						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;position: absolute;">
+						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;">
 							<div style="font-weight: bold;">
 								<div>档</div>
 								<div>案</div>
-								<div class="cloud-line"></div>
 							</div>
 						</li>
-						<li class="mui-table-view-cell mui-media mui-col-sm-11 mui-col-xs-11 " style="padding: 5px;margin: 0;margin-left: 8%;">
+						<li class="mui-table-view-cell mui-media mui-col-sm-11 mui-col-xs-11 " style="padding: 5px;margin: 0;">
+							<div class="cloud-line" style="left: 0px;"></div>
 							<div id="record_row" class="mui-row">
 								<!--<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center">
 									<div class="cloud-bottom-imge2-bg">
@@ -251,14 +262,14 @@
 					</ul>
 					<!--云应用-->
 					<ul id="cloudapps" class="mui-table-view mui-grid-view">
-						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;position: absolute;">
+						<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;">
 							<div style="font-weight: bold;">
 								<div>应</div>
 								<div>用</div>
-								<div class="cloud-line"></div>
 							</div>
 						</li>
-						<li class="mui-table-view-cell mui-media mui-col-sm-11 mui-col-xs-11 " style="padding: 5px;margin: 0;margin-left: 8%;">
+						<li class="mui-table-view-cell mui-media mui-col-sm-11 mui-col-xs-11 " style="padding: 5px;margin: 0;">
+							<div class="cloud-line" style="left: 0px;"></div>
 							<div class="mui-row">
 								<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="0">
 									<div class="cloud-bottom-imge2-bg">
