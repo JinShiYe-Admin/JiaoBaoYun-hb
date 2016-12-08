@@ -28,7 +28,7 @@
 		<div class="mui-content">
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell mui-media ">
-					<img id="img" class="mui-media-object mui-pull-left" src="">
+					<img id="img" class="mui-media-object mui-pull-left" src="../../image/homework/math.png" />
 					<div class="mui-media-body">
 						<h4 id="homeworkTitle"></h6>
 						<p id="publishDate" class='mui-ellipsis'>发布时间：</p>
@@ -45,11 +45,11 @@
 			<div id="slider" class="mui-slider">
 				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-positive">
 					<!--已完成选项卡-->
-					<a class="mui-control-item mui-active" href="#div-finished">
+					<a id="item1" class="mui-control-item mui-active" href="#div-finished">
 						已完成(10)
 					</a>
 					<!--未完成选项卡-->
-					<a class="mui-control-item" href="#div-unfinish">
+					<a id="item2" class="mui-control-item" href="#div-unfinish">
 						未完成(5)
 					</a>
 				</div>
@@ -60,33 +60,6 @@
 						<div id="scroll1" class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul id="finished-list" class="mui-table-view">
-									<li class="mui-table-view-cell  ">
-										<div class="mui-media-body">
-											安琪
-											<p class="mui-media-body" style="float: right;">
-												正确率：0%
-											</p>
-										</div>
-
-									</li>
-									<li class="mui-table-view-cell  ">
-										<div class="mui-media-body">
-											莫尚霖
-											<p class="mui-media-body" style="float: right;">
-												正确率：50%
-											</p>
-										</div>
-
-									</li>
-									<li class="mui-table-view-cell  ">
-										<div class="mui-media-body">
-											宋艳明
-											<p class="mui-media-body" style="float: right;">
-												正确率：100%
-											</p>
-										</div>
-
-									</li>
 								</ul>
 							</div>
 						</div>
@@ -94,35 +67,8 @@
 					<div id="div-unfinish" class="mui-slider-item mui-control-content">
 						<div id="scroll2" class="mui-scroll-wrapper">
 							<div class="mui-scroll">
-								
-										<ul id="unfinished-list" class="mui-table-view">
-									<li class="mui-table-view-cell  ">
-										<div class="mui-media-body">
-											安琪2
-											<p class="mui-media-body" style="float: right;">
-												提醒
-											</p>
-										</div>
-
-									</li>
-									<li class="mui-table-view-cell  ">
-										<div class="mui-media-body">
-											莫尚霖2
-											<p class="mui-media-body" style="float: right;">
-												提醒
-											</p>
-										</div>
-
-									</li>
-									<li class="mui-table-view-cell  ">
-										<div class="mui-media-body">
-											宋艳明2
-											<p class="mui-media-body" style="float: right;">
-												提醒
-											</p>
-										</div>
-
-									</li>
+								<ul id="unfinished-list" class="mui-table-view">
+									
 								</ul>
 									
 							</div>
@@ -148,6 +94,10 @@
 				publishDate:document.getElementById("publishDate"),//发布日期
 				content:document.getElementById("homeWorkContent"),//作业内容
 				checkDetailBtn:document.getElementById("checkDetail"),//查看详情按钮
+				segItem1:document.getElementById("item1"),
+				segItem2:document.getElementById("item2"),
+				finishedList:document.getElementById("finished-list"),
+				unfinishedList:document.getElementById("unfinished-list"),
 			}
 			//从主页传值到这个界面的model
 			var homeworkModel = {
@@ -194,6 +144,7 @@
 					if(data.RspCode == 0) {
 						homeworkDetailModel = data.RspData;
 						//修改界面
+						refreshhomeworkDetail();
 
 					} else {
 						mui.toast(data.RspTxt);
@@ -273,21 +224,57 @@
 							console.log('未完成列表：' + JSON.stringify(remainArray));
 							console.log('已完成列表：' + JSON.stringify(uploadArray));
 							//刷新界面
-							refreshUI();
+							refreshStuList();
 						});
 
 					} else {
+						refreshStuList();
 						mui.toast(data.RspTxt);
 					}
 				});
 			}
-			function refreshUI(){
+			function refreshhomeworkDetail(){
+				console.log(123)
 				homeworkDetailNodes.img.src = '../../image/homework/math.png';
-				homeworkDetailNodes.title.value = '数学作业';
-				homeworkDetailNodes.publishDate = '2016-12-07';
-				homeworkDetailNodes.content = '1+1+?'
+				homeworkDetailNodes.title.innerText = '数学作业';
+				homeworkDetailNodes.publishDate.innerText = '2016-12-07';
+				homeworkDetailNodes.content.innerText = '1+1=?'
+				
 				
 			}
+			function refreshStuList(){
+				console.log(456)
+				homeworkDetailNodes.segItem1.innerHTML = '已完成(20)';
+				homeworkDetailNodes.segItem2.innerHTML = '已完成(20)';
+				var li = document.createElement('li');
+				li.innerHTML = '<li class="mui-table-view-cell  ">'+
+										'<div class="mui-media-body">'+
+											'安琪'+
+											'<p class="mui-media-body" style="float: right;">'+
+												'已评价'+
+											'</p>'+
+										'</div>'+
+									'</li>';
+				homeworkDetailNodes.finishedList.appendChild(li)	;
+				var li = document.createElement('li');
+				li.innerHTML = '<li class="mui-table-view-cell  ">'+
+										'<div class="mui-media-body">'+
+											'莫尚林'+
+											'<p class="mui-media-body" style="float: right;">'+
+												'未评价'+
+											'</p>'+
+										'</div>'+
+									'</li>';
+				homeworkDetailNodes.unfinishedList.appendChild(li)	;	
+			}
+				document.getElementById('slider').addEventListener('slide', function(e) {
+					if (e.detail.slideNumber === 0) {
+						console.log(666)
+					} else if (e.detail.slideNumber === 1) {
+
+					}
+				});
+
 		</script>
 
 	</body>
