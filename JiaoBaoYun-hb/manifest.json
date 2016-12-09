@@ -484,7 +484,19 @@
 					"image/clip.png",
 					"css/quan/class_space.css",
 					"html/quan/class-dynamic.html",
-					"js/utils/urlBrief.js"
+					"js/utils/urlBrief.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [
 					"html/quan/class-group.html"
@@ -1892,7 +1904,9 @@
 					"css/mui.min.css",
 					"css/utils/common.css"
 				],
-				"refer": [],
+				"refer": [
+					"html/cloud/storage_main_choose.html"
+				],
 				"priority": 0
 			},
 			"html/cloud/app_notes_sub.html": {

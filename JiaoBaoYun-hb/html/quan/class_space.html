@@ -11,39 +11,75 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/quan/class_space.css" rel="stylesheet" />
-		
+
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 id="title" class="mui-title">群组名称</h1>
-		    <a id="write" class="mui-icon iconfont icon-xie1 mui-pull-right" ></a>
-		    <a id="group" class="mui-icon iconfont icon-renren  mui-pull-right"></a>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title">群组名称</h1>
+			<a id="write" class="mui-icon iconfont icon-xie1 mui-pull-right"></a>
+			<a id="group" class="mui-icon iconfont icon-renren  mui-pull-right"></a>
 		</header>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
 		<script>
 			/*预加载界面*/
-			
-			mui.plusReady(function(){
-				events.preload('class-dynamic.html',100);
-				events.preload('class-group.html',120);
-				var data=plus.webview.currentWebview().data;
-				console.log('班级空间：'+JSON.stringify(data))
-				events.initSubPage('classSpace-sub.html',data);
-				events.addTap('write',function(){
-					events.fireToPageWithData('class-dynamic.html','postGroupInfo',data)
+			mui.init();
+			mui.plusReady(function() {
+					events.preload('class-dynamic.html', 100);
+					events.preload('class-group.html', 120);
+					var write=document.getElementById('write');
+					var data = plus.webview.currentWebview().data;
+					console.log('班级空间：' + JSON.stringify(data));
+					events.initSubPage('classSpace-sub.html', data);
+					getUserInGroup(-1, data.classId,function(data) {
+						groupRoles = data;
+						write.style.display='none';
+						console.log('获取本人在群的所有信息：' + JSON.stringify(data));
+						for(var i in groupRoles){
+							if(groupRoles[i].mstype==2||groupRoles[i].mstype==1){
+								write.style.display='inline-block';
+								break;
+							}
+						}
+					});
+					events.addTap('write', function() {
+						events.fireToPageWithData('class-dynamic.html', 'postGroupInfo', data)
+					})
+
+					var className = plus.webview.currentWebview().className;
+					document.getElementById('title').innerText = className;
+					events.addTap('group', function() {
+						events.fireToPageWithData('class-group.html', 'postGroupInfo', {
+							classId: data.classId,
+							className: className
+						});
+					})
 				})
-				
-				var className=plus.webview.currentWebview().className;
-				document.getElementById('title').innerText=className;
-				events.addTap('group',function(){
-					events.fireToPageWithData('class-group.html','postGroupInfo',{classId:data.classId,className:className});
+				/**
+				 * 获取用户在群组中的信息
+				 * @param {Object} mstype
+				 * @param {Object} callback
+				 */
+			var getUserInGroup = function(mstype,groupId, callback) {
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_PostGuI({
+					vvl: groupId,
+					vtp: mstype
+				}, wd, function(data) {
+					wd.close()
+					console.log('用户在群的身份 ' + JSON.stringify(data));
+					if(data.RspCode == '0000') {
+						callback(data.RspData);
+					} else {
+						mui.toast(data.RspTxt);
+					}
 				})
-			})
+			}
 		</script>
-			
+
 	</body>
 
 </html>
