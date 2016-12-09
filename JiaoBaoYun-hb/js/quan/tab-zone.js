@@ -84,6 +84,13 @@ function addSomeEvent() {
 		}
 		userIdArr = arrayDupRemoval(userIdArr)
 		var userIds = arrayToStr(userIdArr);
+		for(var z=0;z<userIds.length;z++){
+			if(userIds[z]==personalUTID){
+				userIds.slice(z,1);
+				break;
+			}
+		}
+		
 
 		data.detail.postData.userIds = userIds
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
