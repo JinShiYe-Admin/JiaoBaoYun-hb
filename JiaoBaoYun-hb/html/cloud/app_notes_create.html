@@ -54,6 +54,7 @@
 							wd.close();
 							console.log('38postDataPro_addUserSpace（用户空间）新增某用户空间信息 （云笔记）.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) {
+								events.fireToPageNone('app_notes_sub.html','refresh');
 								mui.back();
 							} else {
 								if(data.RspCode != 9) {
