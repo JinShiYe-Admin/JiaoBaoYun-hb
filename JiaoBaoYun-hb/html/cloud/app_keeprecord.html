@@ -235,6 +235,7 @@
 			mui.plusReady(function() {
 				var show = ''; //记录当前展示的群id
 				var qunList = []; //记录所有群的信息
+				var qunMemList = []; //记录所有的群成员
 				var closeShow = false; //删除按钮是否显示
 				var content = document.body.querySelector('.mui-content');
 				var qunlist = document.getElementById("qunlist"); //群名称显示栏
@@ -255,65 +256,65 @@
 				//---获取群数据---end---
 
 				//---创建群popover---start---
-				//关闭创建群界面
-				document.getElementById('closepop').addEventListener('tap', function() {
-					mui('.mui-popover').popover('hide');
-				});
+				//				//关闭创建群界面
+				//				document.getElementById('closepop').addEventListener('tap', function() {
+				//					mui('.mui-popover').popover('hide');
+				//				});
+				//
+				//				//创建群
+				//				document.getElementById('createqun').addEventListener('tap', function() {
+				//					var inputqun = document.getElementById("inputqunname");
+				//					var name = inputqun.value; //创建的群名称
+				//					if(name == '') {
+				//						mui.toast('不允许为空');
+				//					} else {
+				//						//7.用户创建群
+				//						//需要参数
+				//						var comData = {
+				//							gname: name, //群名
+				//							gimg: '', //群头像
+				//						};
+				//						// 等待的对话框
+				//						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//						postDataPro_PostCrGrp(comData, wd, function(data) {
+				//							wd.close();
+				//							console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//							if(data.RspCode == 0) {
+				//								mui.toast('创建群成功');
+				//								console.log('创建群成功');
+				//								if(qunList.length == 0) {
+				//									//移除没有班级的界面
+				//									document.getElementById("noqun").style.display = 'none';
+				//									document.getElementById("linewhite").style.display = 'inline';
+				//									document.getElementById("lineblue").style.display = 'inline';
+				//									document.body.querySelector('.mui-slider').style.display = 'inline';
+				//								}
+				//								//群头像未设定
+				//								var qun = {
+				//									gid: data.RspData,
+				//									gname: name,
+				//									gimg: ''
+				//								}
+				//								var hasGetMember = {
+				//									hasGetMem: false //记录是否已获得群成员
+				//								};
+				//								mui.extend(qun, hasGetMember); //合并两个对象
+				//								qunList.push(qun);
+				//								addQun(qun);
+				//								mui('.mui-popover').popover('hide');
+				//								inputqun.value = '';
+				//							} else {
+				//								mui.toast(data.RspTxt);
+				//								console.log('创建群失败：' + data.RspTxt);
+				//							}
+				//						});
+				//					}
+				//				});
 
-				//创建群
-				document.getElementById('createqun').addEventListener('tap', function() {
-					var inputqun = document.getElementById("inputqunname");
-					var name = inputqun.value; //创建的群名称
-					if(name == '') {
-						mui.toast('不允许为空');
-					} else {
-						//7.用户创建群
-						//需要参数
-						var comData = {
-							gname: name, //群名
-							gimg: '', //群头像
-						};
-						// 等待的对话框
-						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-						postDataPro_PostCrGrp(comData, wd, function(data) {
-							wd.close();
-							console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							if(data.RspCode == 0) {
-								mui.toast('创建群成功');
-								console.log('创建群成功');
-								if(qunList.length == 0) {
-									//移除没有班级的界面
-									document.getElementById("noqun").style.display = 'none';
-									document.getElementById("linewhite").style.display = 'inline';
-									document.getElementById("lineblue").style.display = 'inline';
-									document.body.querySelector('.mui-slider').style.display = 'inline';
-								}
-								//群头像未设定
-								var qun = {
-									gid: data.RspData,
-									gname: name,
-									gimg: ''
-								}
-								var hasGetMember = {
-									hasGetMem: false //记录是否已获得群成员
-								};
-								mui.extend(qun, hasGetMember); //合并两个对象
-								qunList.push(qun);
-								addQun(qun);
-								mui('.mui-popover').popover('hide');
-								inputqun.value = '';
-							} else {
-								mui.toast(data.RspTxt);
-								console.log('创建群失败：' + data.RspTxt);
-							}
-						});
-					}
-				});
-
-				//所有的添加群按钮监听
-				mui('.mui-content').on('tap', '.addqun', function() {
-					mui('.mui-popover').popover('show');
-				});
+				//				//所有的添加群按钮监听
+				//				mui('.mui-content').on('tap', '.addqun', function() {
+				//					mui('.mui-popover').popover('show');
+				//				});
 				//---创建群popover---end---
 
 				//顶部导航关联按钮
@@ -323,10 +324,19 @@
 				//顶部导航历史按钮
 				document.getElementById('history').addEventListener('tap', function() {
 					var passData = show; //群id
+					var memList = [];
 					console.log('passData:' + JSON.stringify(passData));
+					mui.each(qunMemList, function(index, item) {
+						console.log('qunMemList:' + JSON.stringify(item));
+						if(item.gid == show) {
+							memList = item.mem;
+							return false;
+						}
+					});
 					//跳到历史记录
 					events.openNewWindowWithData('keeprecord_history_main.html', {
-						data: passData,
+						data: passData, //群id
+						mem: memList //群成员
 					});
 				});
 
@@ -376,85 +386,85 @@
 					});
 				});
 
-				//监听添加成员按钮班级
-				mui('.mui-content').on('tap', '.addmember', function(e) {
-					var id = this.getAttribute('data-id');
-					var addTable = document.getElementById('addmember_' + id);
-					e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
-					var btnArray = ['取消', '确定'];
-					mui.prompt('请输入添加的新成员：', '添加新成员', '新成员', btnArray, function(e) {
-						if(e.index == 1) {
-							//点击确定
-							if(e.value == '') {
-								mui.toast('不能为空');
-							} else {
-								//向服务器发送数据并获得成功的回调
-								var qunBot = document.getElementById("bot_" + id).querySelector('.mui-row');
-								//假数据
-								console.log('添加成员时设置的是假数据');
-								var mem = {
-									gid: id,
-									utid: '用户tid',
-									ugname: '用户在群昵称',
-									ugnick: e.value,
-									uimg: null,
-									ugtp: ''
-								}
-								addMember(qunBot, addTable, mem);
-							}
-						} else {
-							//点击取消
-						}
-					});
-				});
-
-				//长按成员显示删除成员按钮
-				mui('.mui-content').on('longtap', '.keep-member', function() {
-					var gid = this.getAttribute('data-gid'); //群id
-					var div = document.getElementById('bot_' + gid); //获得当前群的slider
-					var close = div.querySelectorAll('.icon-close'); //获得当前slider的删除按钮
-					mui.each(close, function(index, item) {
-						item.style.display = 'inline';
-					});
-				});
-
-				//删除按钮监听
-				mui('.mui-content').on('tap', '.icon-close', function(event) {
-
-					event.stopPropagation();
-					var gid = this.getAttribute('data-gid'); //群id
-					var utid = this.getAttribute('data-utid'); //成员id
-
-					var div = document.getElementById('bot_' + gid); //获得当前群的slider
-					var close = div.querySelectorAll('.icon-close'); //获得当前slider的删除按钮
-					mui.each(close, function(index, item) {
-						item.style.display = 'inline';
-					});
-
-					var btnArray = ['否', '是'];
-					mui.confirm('删除该成员，确认？', '删除群成员', btnArray, function(e) {
-						if(e.index == 1) {
-							console.log('删除');
-							//向服务器发送删除成员的请求成功后
-							var memId = 'member_' + utid;
-							var memTable = document.getElementById(memId);
-							var botTable = 'bot_' + gid;
-							var rowTable = document.getElementById(botTable).querySelector('.mui-row');
-							rowTable.removeChild(memTable); //删除成功
-							mui.toast('删除成功');
-						} else {
-							console.log('不删除');
-						}
-					});
-				});
-
-				//点击界面隐藏删除按钮
-				document.body.querySelector('.mui-content').addEventListener('tap', function() {
-					var close = mui('.icon-close');
-					mui.each(close, function(index, item) {
-						item.style.display = 'none';
-					});
-				});
+				//				//监听添加成员按钮班级
+				//				mui('.mui-content').on('tap', '.addmember', function(e) {
+				//					var id = this.getAttribute('data-id');
+				//					var addTable = document.getElementById('addmember_' + id);
+				//					e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+				//					var btnArray = ['取消', '确定'];
+				//					mui.prompt('请输入添加的新成员：', '添加新成员', '新成员', btnArray, function(e) {
+				//						if(e.index == 1) {
+				//							//点击确定
+				//							if(e.value == '') {
+				//								mui.toast('不能为空');
+				//							} else {
+				//								//向服务器发送数据并获得成功的回调
+				//								var qunBot = document.getElementById("bot_" + id).querySelector('.mui-row');
+				//								//假数据
+				//								console.log('添加成员时设置的是假数据');
+				//								var mem = {
+				//									gid: id,
+				//									utid: '用户tid',
+				//									ugname: '用户在群昵称',
+				//									ugnick: e.value,
+				//									uimg: null,
+				//									ugtp: ''
+				//								}
+				//								addMember(qunBot, addTable, mem);
+				//							}
+				//						} else {
+				//							//点击取消
+				//						}
+				//					});
+				//				});
+				//
+				//				//长按成员显示删除成员按钮
+				//				mui('.mui-content').on('longtap', '.keep-member', function() {
+				//					var gid = this.getAttribute('data-gid'); //群id
+				//					var div = document.getElementById('bot_' + gid); //获得当前群的slider
+				//					var close = div.querySelectorAll('.icon-close'); //获得当前slider的删除按钮
+				//					mui.each(close, function(index, item) {
+				//						item.style.display = 'inline';
+				//					});
+				//				});
+				//
+				//				//删除按钮监听
+				//				mui('.mui-content').on('tap', '.icon-close', function(event) {
+				//
+				//					event.stopPropagation();
+				//					var gid = this.getAttribute('data-gid'); //群id
+				//					var utid = this.getAttribute('data-utid'); //成员id
+				//
+				//					var div = document.getElementById('bot_' + gid); //获得当前群的slider
+				//					var close = div.querySelectorAll('.icon-close'); //获得当前slider的删除按钮
+				//					mui.each(close, function(index, item) {
+				//						item.style.display = 'inline';
+				//					});
+				//
+				//					var btnArray = ['否', '是'];
+				//					mui.confirm('删除该成员，确认？', '删除群成员', btnArray, function(e) {
+				//						if(e.index == 1) {
+				//							console.log('删除');
+				//							//向服务器发送删除成员的请求成功后
+				//							var memId = 'member_' + utid;
+				//							var memTable = document.getElementById(memId);
+				//							var botTable = 'bot_' + gid;
+				//							var rowTable = document.getElementById(botTable).querySelector('.mui-row');
+				//							rowTable.removeChild(memTable); //删除成功
+				//							mui.toast('删除成功');
+				//						} else {
+				//							console.log('不删除');
+				//						}
+				//					});
+				//				});
+				//
+				//				//点击界面隐藏删除按钮
+				//				document.body.querySelector('.mui-content').addEventListener('tap', function() {
+				//					var close = mui('.icon-close');
+				//					mui.each(close, function(index, item) {
+				//						item.style.display = 'none';
+				//					});
+				//				});
 
 				//---方法---start---
 
@@ -660,8 +670,8 @@
 					var html2 = '<div class="keep-box-shadow-border keep-member" data-stuid="' + member.stuid + '" data-gid="' + member.gid + '" data-stuname="' + member.stuname + '">';
 					//头像
 					var html3 = '';
-					if(member.uimg != null && member.uimg != '') {
-						html3 = '<img src="' + updateHeadImg(member.uimg, 2) + '" />';
+					if(member.stuimg != null && member.stuimg != '') {
+						html3 = '<img src="' + updateHeadImg(member.stuimg, 2) + '" />';
 					} else {
 						html3 = '<img src="../../image/utils/default_personalimage.png" />';
 					}
@@ -677,6 +687,7 @@
 				 * @param {Object} qunId 群ID
 				 */
 				function getMember(qunId) {
+					var tempAllMem = [];
 					//16.通过群ID获取群对象资料
 					//所需参数
 					var getMemData = {
@@ -699,6 +710,7 @@
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							mui.each(data.RspData, function(index, item) {
+								tempAllMem.push(item);
 								console.log('getMemData:' + JSON.stringify(item));
 								var addTable = document.getElementById('addmember_' + item.gid);
 								var qunBot = document.getElementById("bot_" + item.gid).querySelector('.mui-row');
@@ -714,6 +726,10 @@
 							mui.toast(data.RspTxt);
 						}
 						wd.close();
+					});
+					qunMemList.push({
+						gid: qunId, //群id
+						mem: tempAllMem //成员
 					});
 				}
 
