@@ -675,7 +675,8 @@
 			"css/quan/about-me.css",
 			"js/quan/about-me.js",
 			"js/utils/events.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": []
 	},

@@ -13,9 +13,10 @@ var totalCnt = 0;
 var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 //判断是加载更多1，还是刷新2
 var flag = 2;
-var pNick = myStorage.getItem(storageKeyName.PERSONALINFO).unick;
-var msgType=0;//消息类型
-var comData={};//回复传值
+var pId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+var msgType = 0; //消息类型
+var comData = {}; //回复传值
+var repliedCell;
 //页码请求到要显示的数据，array[model_userSpaceAboutMe]
 var aboutMeArray = [];
 mui.init();
@@ -57,7 +58,7 @@ var createInner = function(cell) {
 		'</div>' +
 		'</div>' +
 		'<p class="comment-content">' + ifHave(cellData.content) + '</p>' +
-		'<div class="refer-content">' + '<span>' + pNick + ':</span>' + ifHave(cellData.referContent) + '</div>' +
+		'<div class="refer-content">' + '<span>' + cellData.UserOwnerNick + ':</span>' + ifHave(cellData.referContent) + '</div>' +
 		'<div class="extras">' + ifHave(cellData.messages) + '</div>'
 	'</a>';
 	console.log('每个cell的内容：' + inner)
@@ -67,57 +68,68 @@ var addReplyView = function() {
 	mui('.mui-table-view').on('tap', '.reply', function() {
 		var replyContainer = document.getElementById('footer');
 		replyContainer.style.display = 'block';
-		msgType=this.cell.MsgType;
-		comData.ueserId=this.cell.UserId;
-		document.getElementById('msg-content').value='';
-//		comData.
+		repliedCell=this.cell;
+		msgType = this.cell.MsgType;
+//		comData.ueserId = this.cell.UserId;
+		document.getElementById('msg-content').value = '';
 	})
 }
 var addReplyLisetner = function() {
-	events.addTap('btn-commit', function() {
+	events.addTap('btn-reply', function() {
+		
 		var replyValue = document.getElementById('msg-content').value;
+		console.log('监听没反应'+replyValue)
 		if(replyValue) {
-			document.getElementById('footer').style.display='none';
-		}else{
+			postReply(function(){
+				document.getElementById('footer').style.display = 'none';
+			})
+		} else {
 			mui.toast('请输入回复内容！')
 		}
 	})
 }
-var postReply = function() {
+var postReply = function(callback) {
+	var msgContent=document.getElementById('msg-content');
 	switch(msgType) {
-			//1为其他用户评论
+		//1为其他用户评论
 		case 1:
 			//2为评论的回复
 		case 2:
 			//3为其他用户点赞
 		case 3:
-//		var comData = {
-//			userId: '',//用户ID
-//			upperId:'',//上级评论ID
-//			replyUserId:'',//回复ID
-//			userSpaceId:'',//用户空间ID
-//			commentContent:''//回复内容
-//		};
-		var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		postDataPro_addUserSpaceMsgReply({},wd,function(data){
-			wd.close();
-		})
+			var comData = {
+				userId: pId, //用户ID
+				upperId: repliedCell.TabId, //上级评论ID
+				replyUserId: repliedCell.MaxUser, //回复ID
+				userSpaceId: repliedCell.SpaceId, //用户空间ID
+				commentContent: msgContent.value //回复内容
+			};
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_addUserSpaceMsgReply(comData, wd, function(data) {
+				wd.close();
+				if(data.RspCode==0){
+					callback();
+				}
+			})
 			break;
-	
+
 			//4为其他用户留言
 		case 4:
 			//5为留言的回复
 		case 5:
-//			var comData = {
-//			userId: '',//用户ID
-//			upperId:'',//上级留言ID
-//			replyUserId:'',//回复ID
-//			userSpaceId:'',//用户空间ID
-//			msgContent:''//回复内容
-//		};
-			var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_addUserSpaceCommentReply({},wd,function(data){
+			var comData = {
+				userId: pId, //用户ID
+				upperId: repliedCell.TabId, //上级评论ID
+				replyUserId: repliedCell.MaxUser, //回复ID
+				userSpaceId: repliedCell.UserOwnerId, //用户空间ID
+				commentContent: msgContent.value //回复内容
+			};
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
 				wd.close();
+				if(data.RspCode==0){
+					callback();
+				}
 			})
 			break;
 		default:
@@ -137,38 +149,41 @@ var ifHaveImg = function(img) {
 	 */
 var getCellData = function(cell) {
 	var cellData = new Object();
-	cellData.headImg = cell.uimg;
-	cellData.content = cell.MsgContent;
-	cellData.referContent = cell.Content;
+	cellData.headImg = cell.MaxUserImg;
+	cellData.content = cell.MaxContent;
+	cellData.referContent = cell.MsgContent;
+	cellData.UserOwnerNick = cell.UserOwnerNick;
 	switch(cell.MsgType) {
 		//其他用户评论
 		case 1:
-			cellData.title = cell.unick + ' 評論了你';
+			cellData.title = cell.MaxUserName + ' 评论了你';
 
 			break;
 			//评论的回复
 		case 2:
-			cellData.title = cell.unick + " 回复";
+			cellData.title = cell.MaxUserName + " 回复";
 			break;
 			//其他用户点赞
 		case 3:
-			cellData.title = cell.unick + " 赞了我";
+			cellData.title = cell.MaxUserName + " 赞了我";
 			break;
 			//其他用户留言
 		case 4:
-			cellData.title = cell.unick + " 给我留言";
+			cellData.title = cell.MaxUserName + " 给我留言";
 			break;
 			//留言的回复
 		case 5:
-			cellData.title = cell.unick + " 给我留言的回复";
+			cellData.title = cell.MaxUserName + " 给我留言的回复";
 			break;
 		default:
 			break;
 	}
 	cellData.time = cell.MsgDate;
 	var messages = new Array();
+	if(cell.Content) {
+		messages.push('<p><span>' + cell.UserName + ':</span>' + cell.Content + '</p>')
+	}
 	if(cell.MsgArray.length > 0) {
-
 		cell.MsgArray.forEach(function(msg, i, msgArray) {
 			if(msg.MsgContent) {
 				if(msg.MsgToName) {
@@ -206,84 +221,64 @@ function requestData(callback) {
 		console.log('获取的与我相关的数据：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			var tempRspData = data.RspData.Data;
-			if(data.RspData.TotalCnt > 0) {
-				//获取当前回调的个人信息，主要是头像、昵称
-				var tempArray = [];
-				//先遍历回调数组，获取
-				for(var item in tempRspData) {
-					//当前循环的model
-					var tempModel0 = tempRspData[item];
-					//将当前model中id塞到数组
-					tempArray.push(tempModel0.UserId);
-					//循环当前model中的回复数组
-					for(var item1 in tempModel0.MsgArray) {
-						//回复中的model
-						var tempModel1 = tempModel0.MsgArray[item1];
-						//将回复中的id塞到数组
-						tempArray.push(tempModel1.MsgFrom);
-						tempArray.push(tempModel1.MsgTo);
-					}
-				}
-				//给数组去重
-				tempArray = arrayDupRemoval(tempArray);
-				//发送获取用户资料申请
-				var tempData = {
-					vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
-					vtp: 'g' //查询类型,p(个人)g(id串)
-				}
-				console.log('tempData:' + JSON.stringify(tempData));
-				//21.通过用户ID获取用户资料
-				postDataPro_PostUinf(tempData, wd, function(data1) {
-					wd.close();
-					console.log('获取个人资料success:RspCode:' + JSON.stringify(data1));
-					if(data1.RspCode == 0) {
-						//循环当前的个人信息返回值数组
-						for(var i in data1.RspData) {
-							//当前model
-							var tempModel = data1.RspData[i];
-							//更新头像
-							tempModel.uimg = updateHeadImg(tempModel.uimg, 1);
-							//循环留言数组
-							for(var item in tempRspData) {
-								//当前循环的model
-								var tempModel0 = tempRspData[item];
-								//对比id是否一致
-								if(tempModel0.UserId == tempModel.utid) {
-									//合并
-									tempModel0 = $.extend(tempModel0, tempModel);
-								}
-								//循环当前model中的回复数组
-								for(var item1 in tempModel0.MsgArray) {
-									//回复中的model
-									var tempModel1 = tempModel0.MsgArray[item1];
-									//对比id是否一致
-									if(tempModel.utid == tempModel1.MsgFrom) {
-										//添加参数
-										tempModel1.MsgFromName = tempModel.unick;
-										tempModel1.MsgFromImg = tempModel.uimg;
-									}
-									if(tempModel.utid == tempModel1.MsgTo) {
-										//添加参数
-										tempModel1.MsgToName = tempModel.unick;
-										tempModel1.MsgToImg = tempModel.uimg;
-									}
-								}
-							}
-						}
-					}
+			var idsArray = [];
 
-					console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
-					totalCnt = data.RspData.TotalCnt;
-					setData(tempRspData);
-				});
-			} else {
-				mui.toast('暂时无数据');
+			for(var i in tempRspData) {
+				idsArray.push(tempRspData[i].UserId);
+				idsArray.push(tempRspData[i].MaxUser);
+				idsArray.push(tempRspData[i].UserOwnerId);
+				for(var j in tempRspData[i].MsgArray) {
+					idsArray.push(tempRspData[i].MsgArray[j].MsgFrom);
+					idsArray.push(tempRspData[i].MsgArray[j].MsgTo);
+				}
 			}
+			console.log('身份数组：' + idsArray);
+			idsArray = events.arraySingleItem(idsArray)
+				//发送获取用户资料申请
+			var tempData = {
+				vvl: idsArray.toString(), //用户id，查询的值,p传个人ID,g传ID串
+				vtp: 'g' //查询类型,p(个人)g(id串)
+			}
+			console.log('tempData:' + JSON.stringify(tempData));
+			//21.通过用户ID获取用户资料
+			postDataPro_PostUinf(tempData, wd, function(infos) {
+				wd.close();
+				console.log('获取个人资料success:RspCode:' + JSON.stringify(data));
+				if(infos.RspCode == 0) {
+					var rechargedData = replenishData(tempRspData, infos.RspData);
+					console.log('最终数据：' + JSON.stringify(rechargedData));
+					callback(rechargedData);
+				}
+
+			});
 		} else {
 			mui.toast(data.RspTxt);
 		}
 	});
 }
+var replenishData = function(data, infos) {
+	var hashInfos = rechargeArraysToHash(infos);
+	for(var i in data) {
+		data[i].UserName = hashInfos[data[i].UserId].unick;
+		data[i].MaxUserName = hashInfos[data[i].MaxUser].unick;
+		data[i].MaxUserImg = hashInfos[data[i].MaxUser].uimg;
+		data[i].UserOwnerNick = hashInfos[data[i].UserOwnerId].unick;
+		//		idsArray.push(tempRspData[i].MaxUser);
+		for(var j in data[i].MsgArray) {
+			data[i].MsgArray[j].MsgFromName = hashInfos[data[i].MsgArray[j].MsgFrom] ? hashInfos[data[i].MsgArray[j].MsgFrom].unick : '数据错误'
+			data[i].MsgArray[j].MsgToName = hashInfos[data[i].MsgArray[j].MsgTo] ? hashInfos[data[i].MsgArray[j].MsgTo].unick : '数据错误'
+		}
+	}
+	return data;
+}
+var rechargeArraysToHash = function(infos) {
+	var hash = new Object();
+	infos.forEach(function(info) {
+		hash[info.utid] = info;
+	});
+	return hash;
+}
+
 /**
  * 加载刷新
  */

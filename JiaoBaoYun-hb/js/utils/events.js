@@ -180,7 +180,7 @@ var events = (function($, mod) {
 						},
 						show: {
 							anishow: 'slide-in-right',
-							duration:250
+							duration: 250
 						},
 						waiting: {
 							title: '正在加载...'
@@ -295,6 +295,17 @@ var events = (function($, mod) {
 			list.appendChild(li);
 		})
 
+	}
+	mod.arraySingleItem = function(array) {
+		var r = [];
+		for(var i = 0, l = array.length; i < l; i++) {
+			for(var j = i + 1; j < l; j++)
+				if(array[i] === array[j]) {
+					j = ++i;
+				}
+			r.push(array[i]);
+		}
+		return r;
 	}
 	return mod;
 
