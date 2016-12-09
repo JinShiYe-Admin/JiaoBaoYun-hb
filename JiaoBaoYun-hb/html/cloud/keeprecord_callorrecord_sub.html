@@ -368,7 +368,7 @@
 					var teacherId = personalUTID; //发布教师ID
 					var publisherName = personalUNICK //发布者姓名
 					var noteType = 1; //点到记事类型1点到2记事
-					var checkType = '1'; //点到类型
+					var checkType = ''; //点到类型
 					var msgContent = ''; //记事内容
 					if(checkbox_1.checked) { //点到
 						noteType = 1;
@@ -376,6 +376,7 @@
 						msgContent = document.getElementById("textarea_call").value;
 					} else { //记事
 						noteType = 2;
+						checkType = '0';
 						msgContent = document.getElementById("textarea_record").value;
 					}
 					//8.（点到记事）新增某学生点到记事信息
@@ -446,7 +447,7 @@
 						}
 						mui.each(data.RspData.Data, function(index, item) {
 							NotesList.Data.push(item);
-							console.log(index + '|' + JSON.stringify(item));
+							//console.log(index + '|' + JSON.stringify(item));
 							createNotes(item);
 						});
 						if(data.RspData.Data.length == 0) {
@@ -466,12 +467,17 @@
 			 * @param {Object} data
 			 */
 			function createNotes(data) {
+				console.log('createNotes:' + JSON.stringify(data));
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
+				var type = '';
+				if(data.NoteType == 1) {
+					type = data.CheckTypeStr + ':';
+				}
 				li.innerHTML = '<div style="text-align: center;">\
 									<font style="background: #AAAAAA;border-radius: 5px;padding: 4px;">' + data.PublishDate + '</font>\
 									</div>\
-									<div style="margin-top: 10px;">' + data.MsgContent + '</div>';
+									<div style="margin-top: 10px;">' + type + data.MsgContent + '</div>';
 				ul_table.insertBefore(li, ul_table.firstChild);
 			}
 		</script>
