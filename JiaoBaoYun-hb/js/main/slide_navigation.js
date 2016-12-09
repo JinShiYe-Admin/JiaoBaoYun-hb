@@ -36,8 +36,8 @@ var slideNavigation = (function($) {
 		 * 打开侧滑
 		 */
 	var openMenu = function() {
-//			console.log('openMenu' + isInTransition);
-//			console.log("show:" + showMenu)
+			//			console.log('openMenu' + isInTransition);
+			//			console.log("show:" + showMenu)
 			if(isInTransition) {
 				return;
 			}
@@ -57,9 +57,9 @@ var slideNavigation = (function($) {
 						}
 					});
 					menu.setStyle({
-						left:'0',
-						transition:{
-							duration:150
+						left: '0',
+						transition: {
+							duration: 150
 						}
 					})
 					mui.later(function() {
@@ -76,8 +76,8 @@ var slideNavigation = (function($) {
 		 * 关闭侧滑
 		 */
 	var closeMenu = function() {
-//			console.log("closeMenu:" + isInTransition);
-//			console.log("show:" + showMenu)
+			//			console.log("closeMenu:" + isInTransition);
+			//			console.log("show:" + showMenu)
 			if(isInTransition) {
 				return;
 			}
@@ -93,12 +93,12 @@ var slideNavigation = (function($) {
 					}
 				});
 				menu.setStyle({
-					left:'-70%',
-					transition:{
-						duration:200
+					left: '-70%',
+					transition: {
+						duration: 200
 					}
 				})
-			
+
 				//等动画结束后，隐藏菜单webview，节省资源；
 				setTimeout(function() {
 					isInTransition = false;
@@ -162,24 +162,25 @@ var slideNavigation = (function($) {
 					}
 				});
 			}, interval);
-//			console.log('加载了吗？')
+			//			console.log('加载了吗？')
 		}
 		/**
 		 * 加载主界面左上角图标
 		 */
 	var addSlideIcon = function() {
-		var header = document.querySelector(".mui-bar-nav");
-		var a = document.createElement('img');
-		a.className = 'mui-pull-left mui-plus-visible img-icon';
-		console.log('第一次加載的圖片地址：'+myStorage.getItem(storageKeyName.PERSONALINFO).uimg);
-		var path=myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
-		a.src=path?path:"../../image/utils/default_personalimage.png";
-		//在第一个位置中插入元素
-		header.insertBefore(a, header.firstChild);
-	}
-	//安卓系统返回按钮
+			var header = document.querySelector(".mui-bar-nav");
+			var a = document.createElement('img');
+			a.className = 'mui-pull-left mui-plus-visible img-icon';
+			console.log('第一次加載的圖片地址：' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg);
+			var path = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
+			a.src = path ? path : "../../image/utils/default_personalimage.png";
+			console.log('9999999999999999a.src==' + a.src);
+			//在第一个位置中插入元素
+			header.insertBefore(a, header.firstChild);
+		}
+		//安卓系统返回按钮
 	var getBack = function() {
-//		console.log("show:" + showMenu)
+		//		console.log("show:" + showMenu)
 		//首页返回键处理
 		//1、若侧滑菜单显示，则关闭侧滑菜单
 		//2、否则，执行mui框架默认的关闭首页功能

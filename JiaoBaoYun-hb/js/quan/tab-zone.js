@@ -84,12 +84,12 @@ function addSomeEvent() {
 		}
 		userIdArr = arrayDupRemoval(userIdArr)
 		var userIds = arrayToStr(userIdArr);
-		for(var z=0;z<userIds.length;z++){
-			if(userIds[z]==personalUTID){
-				userIds.slice(z,1);
-				break;
-			}
-		}
+//		for(var z=0;z<userIds.length;z++){
+//			if(userIds[z]==personalUTID){
+//				userIds = userIds.slice(z,1);
+//				break;
+//			}
+//		}
 		
 
 		data.detail.postData.userIds = userIds
@@ -166,7 +166,7 @@ function getStuList() {
 	//24.通过用户表ID获取用户关联的学生
 	postDataPro_PostUstu(comData, wd, function(data) {
 		wd.close();
-		console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//		console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0 || data.RspCode == 9) {//9为查询记录为空
 			topStudentArr = data.RspData;
@@ -266,7 +266,7 @@ function getGroupList() {
 	//	获取用户群
 	postDataPro_PostGList(comData, wd, function(data) {
 		wd.close();
-		console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//		console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0) {
 			showBlankPage(false);
@@ -322,7 +322,7 @@ function getTopList(index) {
 	//	16.（班级空间）获取用户针对某班级的空间列表
 	postDataPro_getClassSpacesByUserForClass(comData, wd, function(data) {
 		wd.close();
-		console.log('某班级的空间列表_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
+//		console.log('某班级的空间列表_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
 		if(data.RspCode == 0) {
 			if(data.RspData.Data.length == 0) { //数据为空时 添加默认数据
 				var temp = {
@@ -377,7 +377,7 @@ function getBottomList(index, userLists) {
 	// 通过群ID获取群的正常用户
 	postDataPro_PostGusers(comData, wd, function(data) {
 		wd.close();
-		console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//		console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			var tepDic = {
 				index: index, //排序索引
@@ -428,7 +428,7 @@ function getUserSpaces(upString, index) {
 	//36.（用户空间）获取多用户空间列表
 	postDataPro_getUserSpacesByUser(comData, wd, function(data) {
 		wd.close();
-		console.log('获取多用户空间列表_getUserSpacesByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//		console.log('获取多用户空间列表_getUserSpacesByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			var userList = data.RspData.Data; //某群用户列表
 			requestTimes2--; //全部请求完毕

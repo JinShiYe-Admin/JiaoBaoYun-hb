@@ -58,8 +58,8 @@
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
 				<div style="height: 120px;;background-image:url(../../image/quan/leave-bg.png) ;"><br/>
-					<h4 style="padding-left: 8%;">主人寄语:</h1>
-				<textarea id='leaveTitle' readonly="readonly" onblur="inputOnblur(this)"  class="mui-input-clear question" placeholder=""  style="height: 44px;background-color: transparent;text-align: center;border-color:transparent ;font-size: 18px;font-weight: 600;"></textarea>
+					<h4 style="padding-left: 10px;margin-top: -10px;">主人寄语:</h4>
+				<textarea id='leaveTitle' readonly="readonly" onblur="inputOnblur(this)"  class="mui-input-clear question" placeholder=""  style="height: 80px;width: 80%;margin-left: 80px;margin-top: -5px;background-color: transparent;text-align: left;font-size: 15px;font-weight: 600;border-color:transparent ;"></textarea>
 					
 				</div>
 				<div id="leaveNum" style="background-color: gainsboro;height: 30px;padding: 5px;font-size: 15px;">
@@ -112,12 +112,21 @@
 			})
 		document.getElementById('leaveTitle').addEventListener('input',function(){//监听textarea值得变化
 			console.log(this.value)
+			if(this.value.length>50){
+				mui.toast('不能超过50字')
+				this.value=this.value.substr(0,50)
+			} 
 		})
 		function inputOnblur(input) {//失去焦点事件
 			if(input.value == ''||input.value==null){
 //				mui.toast('主人寄语不能为空');
+			}else if(input.value.length>50){
+				mui.toast('不能超过50字');
+				input.scrollTop = 0 
+				
 			}else if(input.value!=note){
  				modifyMaster(input.value);
+ 				input.scrollTop = 0 
  			}
 }
 			/**
