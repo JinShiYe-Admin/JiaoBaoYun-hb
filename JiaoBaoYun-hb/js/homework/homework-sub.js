@@ -87,7 +87,8 @@ var setListener = function() {
 		}
 	})
 	mui('.mui-table-view').on('tap','.mui-table-view-cell',function(){
-		events.fireToPageWithData('workdetail-tea.html','workDetail',this.homeworkInfo);
+		events.fireToPageNone('workdetail-tea-sub.html','workDetail',this.homeworkInfo);
+		plus.webview.getWebviewById("workdetail-tea.html").show();
 	})
 }
 /**
