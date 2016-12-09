@@ -46,11 +46,11 @@
 				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-positive">
 					<!--已完成选项卡-->
 					<a id="item1" class="mui-control-item mui-active" href="#div-finished">
-						已完成(10)
+						已完成(0)
 					</a>
 					<!--未完成选项卡-->
 					<a id="item2" class="mui-control-item" href="#div-unfinish">
-						未完成(5)
+						未完成(0)
 					</a>
 				</div>
 				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
@@ -99,6 +99,19 @@
 				finishedList:document.getElementById("finished-list"),
 				unfinishedList:document.getElementById("unfinished-list"),
 			}
+			var imgType ={
+				chineseImg:'../../image/homework/chinese.png',
+				mathImg:'../../image/homework/math.png',
+				biologyImg:'../../image/homework/biology.png',
+				chemistryImg:'../../image/homework/chemistry.png',
+				englishImg:'../../image/homework/english.png',
+				otherImg:'../../image/homework/other.png',
+				physicsImg:'../../image/homework/physics.png',
+				politicalImg:'../../image/homework/political.png',
+				historyImg:'../../image/homework/history.png',
+				yuwenImg:'../../image/homework/yuwen.png',
+				geographyImg:'../../image/homework/geography.png'
+			}
 			//从主页传值到这个界面的model
 			var homeworkModel = {
 				"Contents": "Test",
@@ -120,11 +133,20 @@
 			mui.plusReady(function() {
 				events.addTap('checkDetail', function() {
 					console.log('点击查看详情')
-				})//获取作业详情
+				})
+							window.addEventListener('workDetail',function(e){
+				console.log('作业主界面传送的值：'+JSON.stringify(e.detail.data));
+				homeworkModel = e.detail.data;
+				uploadArray = [];
+				remainArray = [];
+				homeworkDetailModel = {};
+								//获取作业详情
 				requestHomeworkDetail();
 
 				//3.	获取作业对应学生列表
 				requestHomeworkStuList();
+			})
+
 
 			});
 
@@ -227,51 +249,89 @@
 							refreshStuList();
 						});
 
-					} else {
-						refreshStuList();
+					} else if(data.RspCode == 9){
+						
+					}else {
 						mui.toast(data.RspTxt);
 					}
 				});
 			}
 			function refreshhomeworkDetail(){
-				console.log(123)
-				homeworkDetailNodes.img.src = '../../image/homework/math.png';
-				homeworkDetailNodes.title.innerText = '数学作业';
-				homeworkDetailNodes.publishDate.innerText = '2016-12-07';
-				homeworkDetailNodes.content.innerText = '1+1=?'
+				console.log(homeworkDetailModel.Subject);
+				switch (homeworkDetailModel.Subject){
+					case '语文':
+					    homeworkDetailNodes.img.src = imgType.yuwenImg;
+						break;
+					case '数学':
+					    homeworkDetailNodes.img.src = imgType.mathImg;
+						break;
+					case '英语':
+					    homeworkDetailNodes.img.src = imgType.englishImg;
+						break;
+					case '历史':
+					    homeworkDetailNodes.img.src = imgType.historyImg;
+						break;
+					case '政治':
+					    homeworkDetailNodes.img.src = imgType.politicalImg;
+						break;
+					case '地理':
+					    homeworkDetailNodes.img.src = imgType.geographyImg;
+						break;
+					case '物理':
+					    homeworkDetailNodes.img.src = imgType.physicsImg;
+						break;
+					case '化学':
+					    homeworkDetailNodes.img.src = imgType.chemistryImg;
+						break;	
+					case '生物':
+					    homeworkDetailNodes.img.src = imgType.biologyImg;
+						break;	
+						
+						
+					default:
+						break;
+				}
+				homeworkDetailNodes.title.innerText = homeworkDetailModel.Subject;
+				homeworkDetailNodes.publishDate.innerText = homeworkDetailModel.HomeworkTitle;
+				homeworkDetailNodes.content.innerText = homeworkDetailModel.Contents
 				
 				
 			}
 			function refreshStuList(){
-				console.log(456)
-				homeworkDetailNodes.segItem1.innerHTML = '已完成(20)';
-				homeworkDetailNodes.segItem2.innerHTML = '未完成(20)';
-				var li = document.createElement('li');
+				console.log('学生列表')
+				homeworkDetailNodes.segItem1.innerHTML = '已完成('+uploadArray.length+')';
+				homeworkDetailNodes.segItem2.innerHTML = '未完成('+remainArray.length+')';
+				for(var i=0;i<uploadArray.length;i++){
+									var li = document.createElement('li');
 				li.innerHTML = '<li class="mui-table-view-cell  ">'+
 										'<div class="mui-media-body">'+
-											'安琪'+
+											uploadArray[i].unick+
 											'<p class="mui-media-body" style="float: right;">'+
-												'已评价'+
+												uploadArray[i].IsCommented+
 											'</p>'+
 										'</div>'+
 									'</li>';
 				homeworkDetailNodes.finishedList.appendChild(li)	;
-				var li = document.createElement('li');
+				}
+
+				for(var i=0;i<remainArray.length;i++){
+									var li = document.createElement('li');
 				li.innerHTML = '<li class="mui-table-view-cell  ">'+
 										'<div class="mui-media-body">'+
-											'莫尚林'+
+											remainArray[i].unick+
 											'<p class="mui-media-body" style="float: right;">'+
-												'未评价'+
+												remainArray[i].IsAlertChecked+
 											'</p>'+
 										'</div>'+
 									'</li>';
-				homeworkDetailNodes.unfinishedList.appendChild(li)	;	
+				homeworkDetailNodes.unfinishedList.appendChild(li)	;
+				}	
 			}
 				document.getElementById('slider').addEventListener('slide', function(e) {
 					if (e.detail.slideNumber === 0) {
-						console.log(666)
+						console.log('已完成');
 					} else if (e.detail.slideNumber === 1) {
-
+						console.log('未完成');
 					}
 				});
 
