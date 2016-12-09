@@ -1217,8 +1217,7 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/libs/crypto-js/crypto-js.js",
-			"js/utils/events.js"
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/mine/qun_data_details.html": {
