@@ -13,7 +13,7 @@ var list;
 mui.init();
 //mui的plusready监听
 mui.plusReady(function() {
-		events.preload('workdetail-tea.html',200);
+		events.preload('workdetail-tea.html', 200);
 		events.preload('homework-publish.html', 500);
 		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 		list = document.getElementById('list-container');
@@ -45,12 +45,17 @@ mui.plusReady(function() {
 		window.addEventListener('roleChanged', function(e) {
 			role = e.detail.data;
 			console.log('作业子页面获取的角色变换值roleChanged：' + role);
+			setClasses(role);
 			if(role == 2) {
 				publish.style.display = 'block';
+				selectGId = teacherClasses[0].gid;
+				requireHomeWork(teacherClasses[0], setData);
 			} else {
 				publish.style.display = 'none';
+				selectGId = studentClasses[0].gid;
+				requireHomeWork(studentClasses[0], setData);
 			}
-			setClasses(role);
+			
 		})
 		window.addEventListener('homeworkPublished', function() {
 
@@ -69,32 +74,32 @@ mui.plusReady(function() {
 	 * 设置监听
 	 */
 var setListener = function() {
-	mui('.tabs-classes').on('tap', '.mui-control-item', function() {
-		selectGId = this.classInfo.gid;
-		console.log('被点击的班级数据：' + JSON.stringify(this.classInfo));
-		if(role == 2) {
-			if(teacherHash.get(selectGId)) {
-				setPublishedData();
+		mui('.tabs-classes').on('tap', '.mui-control-item', function() {
+			selectGId = this.classInfo.gid;
+			console.log('被点击的班级数据：' + JSON.stringify(this.classInfo));
+			if(role == 2) {
+				if(teacherHash.get(selectGId)) {
+					setPublishedData();
+				} else {
+					requireHomeWork(this.classInfo, setData);
+				}
 			} else {
-				requireHomeWork(this.classInfo, setData);
+				if(studentHash.get(selectGId)) {
+					setHomeworkData()
+				} else {
+					requireHomeWork(this.classInfo, setData);
+				}
 			}
-		} else {
-			if(studentHash.get(selectGId)) {
-				setHomeworkData()
-			} else {
-				requireHomeWork(this.classInfo, setData);
-			}
-		}
-	})
-	mui('.mui-table-view').on('tap','.mui-table-view-cell',function(){
-		events.fireToPageNone('workdetail-tea-sub.html','workDetail',this.homeworkInfo);
-		plus.webview.getWebviewById("workdetail-tea.html").show();
-	})
-}
-/**
- * 放置班级列表数据
- * @param {Object} role 角色
- */
+		})
+		mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+			events.fireToPageNone('workdetail-tea-sub.html', 'workDetail', this.homeworkInfo);
+			plus.webview.getWebviewById("workdetail-tea.html").show();
+		})
+	}
+	/**
+	 * 放置班级列表数据
+	 * @param {Object} role 角色
+	 */
 var setClasses = function(role) {
 		var tabs = document.getElementById('scroll-class');
 		events.clearChild(tabs);
@@ -130,7 +135,7 @@ var requireHomeWork = function(classModel, callback) {
 	if(role == 2) {
 		comData.teacherId = personalUTID;
 	} else {
-		comData.studentId = personalUTID;
+		comData.studentId = classModel.stuid;
 	}
 	comData.classId = classModel.gid;
 	comData.pageIndex = classModel.pageIndex;
@@ -150,56 +155,54 @@ var setData = function() {
 		//老师角色
 		if(role == 2) {
 			setPublishedData();
-		//家长和学生
+			//家长和学生
 		} else {
-			setHomworkData();
+			setHomeworkData();
 		}
 	}
-/**
- * 放置我发布的数据
- */
+	/**
+	 * 放置我发布的数据
+	 */
 var setPublishedData = function() {
+		events.clearChild(list);
+		var publishedData = teacherHash.get(selectGId);
+		console.log('发布作业的Id：' + selectGId + ';老师作业的数据：' + JSON.stringify(publishedData));
+		if(publishedData) {
+			publishedData.forEach(function(DateHM, i) {
+				var divider = document.createElement('li');
+				divider.className = 'mui-table-view-divider';
+				divider.innerText = DateHM.Date;
+				list.appendChild(divider);
+				if(DateHM.Homeworks && DateHM.Homeworks.length > 0) {
+					DateHM.Homeworks.forEach(function(homework, i) {
+						homework.classId = selectGId;
+						var li = document.createElement('li');
+						li.homeworkInfo = homework;
+						li.className = 'mui-table-view-cell';
+						li.innerHTML = createHomeworkInner(homework);
+						list.appendChild(li);
+					})
+				}
+				if(DateHM.AnswerResultIds && DateHM.AnswerResultIds.length > 0) {
+					DateHM.AnswerResultIds.forEach(function(answerResult, i) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell';
+						li.innerHTML = createAnswerResultInner(answerResult);
+						list.appendChild(li);
+					})
+				}
+			})
+		}
 
-	events.clearChild(list);
-	
-	var publishedData = teacherHash.get(selectGId);
-	console.log('发布作业的Id：' + selectGId + ';老师作业的数据：' + JSON.stringify(publishedData));
-	if(publishedData) {
-		publishedData.forEach(function(DateHM, i) {
-			var divider = document.createElement('li');
-			divider.className = 'mui-table-view-divider';
-			divider.innerText = DateHM.Date;
-			list.appendChild(divider);
-			if(DateHM.Homeworks && DateHM.Homeworks.length > 0) {
-				DateHM.Homeworks.forEach(function(homework, i) {
-					homework.classId=selectGId;
-					var li = document.createElement('li');
-					li.homeworkInfo=homework;
-					li.className = 'mui-table-view-cell';
-					li.innerHTML = createHomeworkInner(homework);
-					list.appendChild(li);
-				})
-			}
-			if(DateHM.AnswerResultIds && DateHM.AnswerResultIds.length > 0) {
-				DateHM.AnswerResultIds.forEach(function(answerResult, i) {
-					var li = document.createElement('li');
-					li.className = 'mui-table-view-cell';
-					li.innerHTML = createAnswerResultInner(answerResult);
-					list.appendChild(li);
-				})
-			}
-		})
 	}
-
-}
-/**
- * 
- * @param {Object} homework 
- * "Contents":"1+1=？","HomeworkId":109,
- * "HomeworkTitle":"2016年12月8日星期四语文作业",
- * "Remain":11,"Subject":"语文","Upload":0
- * 
- */
+	/**
+	 * 
+	 * @param {Object} homework 
+	 * "Contents":"1+1=？","HomeworkId":109,
+	 * "HomeworkTitle":"2016年12月8日星期四语文作业",
+	 * "Remain":11,"Subject":"语文","Upload":0
+	 * 
+	 */
 var createHomeworkInner = function(homework) {
 	return '<a><div class="homework-header"><span class=" iconfont subject-icon ' +
 		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words"><h5 class="header-title">' +
@@ -268,26 +271,32 @@ var getHomeworkIcon = function(subject) {
 	 */
 var setHomeworkData = function() {
 	var homeworkData = studentHash.get(selectGId);
-	homeworkData.forEach(function(DateHM, i) {
-		var divider = document.createElement('li');
-		divider.className = 'mui-table-view-divider';
-		divider.innerText = DateHM.Date;
-		list.appendChild(divider);
-		if(DateHM.Homeworks && DateHM.Homeworks.length > 0) {
-			DateHM.Homeworks.forEach(function(homework, i) {
-				var li = document.createElement('li');
-				li.innerHTML = createStuHomeworkInner(homework);
-				list.appendChild(li);
-			})
-		}
-		if(DateHM.AnswerResultIds && DateHM.AnswerResultIds.length > 0) {
-			DateHM.AnswerResultIds.forEach(function(answerResult, i) {
-				var li = document.createElement('li');
-				li.innerHTML = createStuAnswerResultInner(answerResult);
-				list.appendChild(li);
-			})
-		}
-	})
+	events.clearChild(list);
+	if(homeworkData) {
+		homeworkData.forEach(function(DateHM, i) {
+			var divider = document.createElement('li');
+			divider.className = 'mui-table-view-divider';
+			divider.innerText = DateHM.Date;
+			list.appendChild(divider);
+			if(DateHM.Homeworks && DateHM.Homeworks.length > 0) {
+				DateHM.Homeworks.forEach(function(homework, i) {
+					var li = document.createElement('li');
+					li.className='mui-table-view-cell';
+					li.innerHTML = createStuHomeworkInner(homework);
+					list.appendChild(li);
+				})
+			}
+			if(DateHM.AnswerResultIds && DateHM.AnswerResultIds.length > 0) {
+				DateHM.AnswerResultIds.forEach(function(answerResult, i) {
+					var li = document.createElement('li');
+					li.className='mui-table-view-cell';
+					li.innerHTML = createStuAnswerResultInner(answerResult);
+					list.appendChild(li);
+				})
+			}
+		})
+	}
+
 }
 var setHashData = function(comData, data) {
 	if(comData.pageIndex == 1) {
