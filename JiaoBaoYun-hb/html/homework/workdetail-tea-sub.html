@@ -35,7 +35,7 @@
 					</div>
 					<div class="mui-media-body">
 						<font id="homeWorkContent"></font> 
-						<button id="checkDetail" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 40%;left:25%;margin-top:10px ;">查看详情</button>
+<!--						<button id="checkDetail" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 40%;left:25%;margin-top:10px ;">查看详情</button>-->
 					</div>
 
 				</li>
@@ -93,7 +93,7 @@
 				title:document.getElementById("homeworkTitle"),//作业类型标题
 				publishDate:document.getElementById("publishDate"),//发布日期
 				content:document.getElementById("homeWorkContent"),//作业内容
-				checkDetailBtn:document.getElementById("checkDetail"),//查看详情按钮
+//				checkDetailBtn:document.getElementById("checkDetail"),//查看详情按钮
 				segItem1:document.getElementById("item1"),
 				segItem2:document.getElementById("item2"),
 				finishedList:document.getElementById("finished-list"),
@@ -131,9 +131,9 @@
 			var remainArray = [];
 
 			mui.plusReady(function() {
-				events.addTap('checkDetail', function() {
-					console.log('点击查看详情')
-				})
+//				events.addTap('checkDetail', function() {
+//					console.log('点击查看详情')
+//				})
 							window.addEventListener('workDetail',function(e){
 				console.log('作业主界面传送的值：'+JSON.stringify(e.detail.data));
 				homeworkModel = e.detail.data;
