@@ -31,7 +31,7 @@ var postDataPro_GetHomeworkList=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetHomeworkList', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'GetHomeworkList', enData, commonData, 2, wd, callback);
 }
 
 
@@ -45,7 +45,7 @@ var postDataPro_GetHomework=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetHomework', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'GetHomework', enData, commonData, 2, wd, callback);
 }
 
 
@@ -60,7 +60,7 @@ var postDataPro_GetStudentList=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetStudentList', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'GetStudentList', enData, commonData, 2, wd, callback);
 }
 
 
@@ -75,7 +75,7 @@ var postDataPro_GetAnswerResultList=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetAnswerResultList', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'GetAnswerResultList', enData, commonData, 2, wd, callback);
 }
 
 
@@ -91,7 +91,7 @@ var postDataPro_GetHomeworkResult=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetHomeworkResult', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'GetHomeworkResult', enData, commonData, 2, wd, callback);
 }
 
 
@@ -107,7 +107,7 @@ var postDataPro_GetAnswerResult=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetAnswerResult', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'GetAnswerResult', enData, commonData, 2, wd, callback);
 }
 
 
@@ -121,7 +121,7 @@ var postDataPro_GetAnswer=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetAnswer', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'GetAnswer', enData, commonData, 2, wd, callback);
 }
 
 
@@ -139,7 +139,7 @@ var postDataPro_CommentHomeworkResult=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'CommentHomeworkResult', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'CommentHomeworkResult', enData, commonData, 2, wd, callback);
 }
 
 
@@ -157,7 +157,7 @@ var postDataPro_CommentAnswerResult=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'CommentAnswerResult', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'CommentAnswerResult', enData, commonData, 2, wd, callback);
 }
 
 //10.作业提交提醒
@@ -172,7 +172,7 @@ var postDataPro_HomeworkAlert=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'HomeworkAlert', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'HomeworkAlert', enData, commonData, 2, wd, callback);
 }
 
 
@@ -189,7 +189,7 @@ var postDataPro_UploadFile=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'UploadFile', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'UploadFile', enData, commonData, 2, wd, callback);
 }
 
 
@@ -208,7 +208,7 @@ var postDataPro_PublishHomework=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'PublishHomework', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'PublishHomework', enData, commonData, 2, wd, callback);
 }
 
 
@@ -228,7 +228,7 @@ var postDataPro_ModifyHomework=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'ModifyHomework', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'ModifyHomework', enData, commonData, 2, wd, callback);
 }
 
 
@@ -244,7 +244,7 @@ var postDataPro_PublishAnswer=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'PublishAnswer', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'PublishAnswer', enData, commonData, 2, wd, callback);
 }
 
 
@@ -263,7 +263,7 @@ var postDataPro_ModifyHomeworkResultComment=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'ModifyHomeworkResultComment', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'ModifyHomeworkResultComment', enData, commonData, 2, wd, callback);
 }
 
 
@@ -281,7 +281,7 @@ var postDataPro_ModifyAnswerResultComment=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'ModifyAnswerResultComment', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'ModifyAnswerResultComment', enData, commonData, 2, wd, callback);
 }
 
 
@@ -293,7 +293,7 @@ var postDataPro_GetSubjectList=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetSubjectList', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'GetSubjectList', enData, commonData, 2, wd, callback);
 }
 
 
@@ -308,12 +308,12 @@ var postDataPro_GetSubjectList=function(commonData, wd, callback) {
 //			classId: '',//班级群Id；
 //			pageIndex:''//当前页码，默认1；
 //		};
-//var postDataPro_GetHomeworkList=function(commonData, wd, callback) {
-//	//需要加密的数据
-//	var enData = {};
-//	//发送网络请求，data为网络返回值
-//	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetHomeworkList', enData, commonData, 2, wd, callback);
-//}
+var postDataPro_GetHomeworkListStu=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'GetHomeworkList', enData, commonData, 2, wd, callback);
+}
 
 
 //2.	获取教师发布作业详情，不包括学生提交的答案；
@@ -323,12 +323,12 @@ var postDataPro_GetSubjectList=function(commonData, wd, callback) {
 //			classId: '',//班级群Id；
 //			homeworkId:''//作业id；
 //		};
-//var postDataPro_GetHomework=function(commonData, wd, callback) {
-//	//需要加密的数据
-//	var enData = {};
-//	//发送网络请求，data为网络返回值
-//	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetHomework', enData, commonData, 2, wd, callback);
-//}
+var postDataPro_GetHomeworkStu=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'GetHomework', enData, commonData, 2, wd, callback);
+}
 
 
 //3.	获取作业结果；
@@ -342,7 +342,7 @@ var postDataPro_GetHomeworkResult=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetHomeworkResult', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'GetHomeworkResult', enData, commonData, 2, wd, callback);
 }
 
 
@@ -357,7 +357,7 @@ var postDataPro_GetAnswerResult=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetAnswerResult', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'GetAnswerResult', enData, commonData, 2, wd, callback);
 }
 
 //5.	上传文件；逻辑：如果是图片类型，同时生成缩略图
@@ -373,7 +373,7 @@ var postDataPro_UploadFile=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'UploadFile', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'UploadFile', enData, commonData, 2, wd, callback);
 }
 
 
@@ -392,7 +392,7 @@ var postDataPro_SubmitAnswerResult=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'SubmitAnswerResult', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'SubmitAnswerResult', enData, commonData, 2, wd, callback);
 }
 
 
@@ -410,7 +410,7 @@ var postDataPro_SubmitHomeworkResult=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'SubmitHomeworkResult', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'SubmitHomeworkResult', enData, commonData, 2, wd, callback);
 }
 
 
@@ -429,7 +429,7 @@ var postDataPro_ModifyAnswerResult=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'ModifyAnswerResult', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'ModifyAnswerResult', enData, commonData, 2, wd, callback);
 }
 
 
@@ -447,7 +447,7 @@ var postDataPro_ModifyHomeworkResult=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'ModifyHomeworkResult', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'ModifyHomeworkResult', enData, commonData, 2, wd, callback);
 }
 
 
@@ -461,7 +461,7 @@ var postDataPro_GetAnswer=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetAnswer', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'GetAnswer', enData, commonData, 2, wd, callback);
 }
 
 
@@ -474,7 +474,7 @@ var postDataPro_GetErrorList=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetErrorList', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'GetErrorList', enData, commonData, 2, wd, callback);
 }
 
 
@@ -488,7 +488,7 @@ var postDataPro_GetError=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetError', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'GetError', enData, commonData, 2, wd, callback);
 }
 
 
@@ -501,7 +501,7 @@ var postDataPro_GetHomeworkRecord=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetHomeworkRecord', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'GetHomeworkRecord', enData, commonData, 2, wd, callback);
 }
 
 //14.获取学生作业记录；逻辑：不区分班级，默认近1周数据，每次多加载1周数据；
@@ -515,7 +515,7 @@ var postDataPro_GetHomeworkAlert=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'GetHomeworkAlert', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'GetHomeworkAlert', enData, commonData, 2, wd, callback);
 }
 
 //15.更新我的提醒查看时间；逻辑：不保存是谁看的，保留最后查看时间；
@@ -527,5 +527,5 @@ var postDataPro_ModifyAlertCheck=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINHOMEWORKURL + 'ModifyAlertCheck', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'ModifyAlertCheck', enData, commonData, 2, wd, callback);
 }
