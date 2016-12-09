@@ -252,7 +252,6 @@
 										createNotesItem(item);
 									}
 									createNotesItem(item);
-									return false;
 								}
 							});
 
@@ -336,6 +335,7 @@
 							 	 <div>' + data.MsgContent + '</div>';
 					}
 					div2.innerHTML = html4 + html5;
+
 					if(data.NoteType == 1) { //点到
 						document.getElementById(date0 + "_call").appendChild(div2);
 					} else if(data.NoteType == 2) { //记事

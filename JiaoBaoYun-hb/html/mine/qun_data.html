@@ -300,15 +300,17 @@
 
 					//长按资料
 					mui('#all_mem').on('longtap', '.mui-table-view-cell', function(e) {
-						console.log('成员：id:' + this.getAttribute('id') + '|gid:' + this.getAttribute('data-gid') + '|stuid:' + this.getAttribute('data-stuid'));
+						console.log('资料：id:' + this.getAttribute('id') + '|gid:' + this.getAttribute('data-gid') + '|stuid:' + this.getAttribute('data-stuid'));
 						var id = this.getAttribute('id');
 						var gid = this.getAttribute('data-gid');
 						var gutid = this.getAttribute('data-stuid');
 						mui.each(qunList, function(index, item) {
 							if(item.mstype == 1 && item.gid == gid) { //群主
 								var btnArray = ['否', '是'];
-								mui.confirm('确认删除？', '删除群成员', btnArray, function(e) {
+								mui.confirm('您确定要删除吗？删除后记事将被清空哦', '删除资料', btnArray, function(e) {
 									if(e.index == 1) {
+										//先删除家校圈的点到记事记录，再删除资料
+
 										//33.根据资料表ID删除资料
 										//所需参数
 										var comData = {
