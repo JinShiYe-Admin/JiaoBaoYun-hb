@@ -728,7 +728,17 @@
 			"image/cloud/cloud_add.png",
 			"css/iconfont/iconfont.css",
 			"js/publicProtocol.js",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/Barrett.js",
+			"css/cloud/file.css",
+			"js/libs/crypto-js/require.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/myStorage/myStorage.js"
 		],
 		"refer": [
 			"html/cloud/storage_sub.html"
@@ -1391,7 +1401,8 @@
 			"js/mui.min.js",
 			"image/cloud/A_folder.png",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/cloud/storage_main_choose.html"

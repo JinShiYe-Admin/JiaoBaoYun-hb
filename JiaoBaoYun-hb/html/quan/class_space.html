@@ -50,7 +50,8 @@
 					})
 
 					var className = plus.webview.currentWebview().className;
-					document.getElementById('title').innerText = className;
+					document.getElementById('title').innerText =getHeadText(className);
+					
 					events.addTap('group', function() {
 						events.fireToPageWithData('class-group.html', 'postGroupInfo', {
 							classId: data.classId,
@@ -58,6 +59,12 @@
 						});
 					})
 				})
+			var getHeadText=function(className){
+				if(className.length>8){
+					className=className.substring(0,10)+'...'
+				}
+				return className;
+			}
 				/**
 				 * 获取用户在群组中的信息
 				 * @param {Object} mstype
