@@ -33,7 +33,7 @@
 				padding: 10px;
 				float: right;
 				right: 0px;
-				margin-right: 10px;
+				margin-right: 50px;
 			}
 
 			#cloud_prsonalimge {
@@ -192,9 +192,11 @@
 										<img class="cloud-top-icon" src="../../image/cloud/cloud_yuan.gif" />
 										<font id="yuan">50元</font>
 									</font>-->
+							<br />
 							<div class="mui-progressbar mui-progressbar-in" style="float: right;">
 								<span></span>
 							</div>
+							<br />
 							<div class="cloud-capacity" style="float: right;">
 								总容量:1000G
 							</div>
@@ -412,8 +414,12 @@
 					var btnArray = ['取消', '确定'];
 					mui.prompt('请输入新文件夹的名称：', '新文件夹', '新建文件夹', btnArray, function(e) {
 						if(e.index == 1) { //点击确定
+							var reg = new RegExp('^[^\\\\\\/:*?\\"<>|]+$'); //特殊字符过滤的正则表达式
 							if(e.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
 								mui.toast('文件夹名字不能为空');
+							} else if(!reg.test(e.value)) {
+								//特殊字符
+								mui.toast('名字中不能包含这些字符 \ / : * ? " < > | ');
 							} else {
 								//27.用户云盘文件上传或创建文件夹
 								//所需参数
