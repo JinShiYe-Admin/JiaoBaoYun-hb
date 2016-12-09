@@ -118,7 +118,7 @@ var class_space = (function(mod) {
 				if(pInfo.RspCode == '0000') {
 					var personalInfo = pInfo.RspData[0];
 					console.log('获取的个人信息：' + JSON.stringify(personalInfo));
-					cell.publisherImg = personalInfo.uimg;
+					cell.publisherImg =getUImg(personalInfo.uimg);
 					cell.publisherName = personalInfo.unick;
 					cell.PublishDate = changeDate(cell.PublishDate);
 					li.innerHTML = createInnerHtml(cell);
@@ -129,6 +129,12 @@ var class_space = (function(mod) {
 
 			})
 		}
+	var getUImg=function(uimg){
+		if(!uimg||uimg==null){
+			uimg='../../image/utils/default_personalimage.png'
+		}
+		return uimg;
+	}
 		/**
 		 * 
 		 * @param {Object} cell
