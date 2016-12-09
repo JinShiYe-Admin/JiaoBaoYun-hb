@@ -21,7 +21,7 @@ var quit_group3 = document.getElementById('quit-group3');
 mui.plusReady(function() {
 		events.preload('group-pInfo.html', 200);
 		window.addEventListener('postGroupInfo', function(e) {
-
+			isMaster=false;
 			console.log(JSON.stringify(e.detail.data));
 			if(e.detail.data) {
 				groupId = e.detail.data.classId;
@@ -36,6 +36,11 @@ mui.plusReady(function() {
 				getUserInGroup(-1, function(data) {
 					groupRoles = data;
 					console.log('获取本人在群的所有信息：' + JSON.stringify(data));
+					groupRoles.forEach(function(groupRole){
+						if(groupRole==1){
+							isMaster=true;
+						}
+					})
 				});
 			}
 		})
@@ -146,12 +151,15 @@ var showChoices = function(data) {
 var quitGroupAll = function() {
 		groupRoles.forEach(function(groupRole, i) {
 			if(groupRole.mstype == 1) {
-				isMaster = true;
 				allcount++;
-			} else {
-				quitGroup(groupRole, allCallback);
+			}else{
+				//班主任不能退出老师身份
+				if(isMaster&&groupRole.mstype == 2){
+					allcount++;
+				} else {
+					quitGroup(groupRole, allCallback);
+				}
 			}
-
 		})
 	}
 	/**
