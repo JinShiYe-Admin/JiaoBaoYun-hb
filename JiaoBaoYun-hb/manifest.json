@@ -1037,7 +1037,11 @@
 					"css/homework/workdetail.css",
 					"fonts/mui.ttf",
 					"css/utils/common.css",
-					"image/homework/math.png"
+					"image/homework/math.png",
+					"css/iconfont/iconfont.css",
+					"js/publicProtocol.js",
+					"js/storageKeyName.js",
+					"js/publicHomeworkProtocol.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1955,7 +1959,8 @@
 			},
 			"html/homework/workdetail-tea.html": {
 				"resources": [
-					"html/homework/workdetail-tea-sub.html"
+					"html/homework/workdetail-tea-sub.html",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0

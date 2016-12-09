@@ -59,7 +59,7 @@ mui.plusReady(function() {
 		})
 		//退出按鈕點擊事件
 		quit_group1.addEventListener('tap', function() {
-				getUserInGroup(3, showChoices);
+				getUserInGroup(0, showChoices);
 			})
 		//退出按鈕點擊事件
 		quit_group2.addEventListener('tap', function() {
@@ -67,7 +67,7 @@ mui.plusReady(function() {
 			})
 		//退出按鈕點擊事件
 		quit_group3.addEventListener('tap', function() {
-				getUserInGroup(0, showChoices);
+				getUserInGroup(3, showChoices);
 			})
 		
 	})
@@ -102,13 +102,13 @@ var getUserInGroup = function(mstype, callback) {
  */
 var isShowQuit = function(mstype, b) {
 		switch(mstype) {
-			case 0:
+			case 3:
 				b ? quit_group3.style.display = 'block' : quit_group3.style.display = 'none'
 				break;
 			case 2:
 				b ? quit_group2.style.display = 'block' : quit_group2.style.display = 'none'
 				break;
-			case 3:
+			case 0:
 				b ? quit_group1.style.display = 'block' : quit_group1.style.display = 'none'
 				break;
 			default:
@@ -236,13 +236,13 @@ var setGride = function() {
 var getGroupInfo = function(vvl) {
 		var item;
 		switch(vvl) {
-			case 0:
+			case 3:
 				item = gride3;
 				break;
 			case 2:
 				item = gride2;
 				break;
-			case 3:
+			case 0:
 				item = gride1;
 				break;
 			default:

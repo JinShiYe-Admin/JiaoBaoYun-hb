@@ -1430,7 +1430,8 @@
 	},
 	"html/homework/workdetail-tea.html": {
 		"resources": [
-			"html/homework/workdetail-tea-sub.html"
+			"html/homework/workdetail-tea-sub.html",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/homework/workdetail-tea-sub.html"
@@ -1440,7 +1441,15 @@
 		"resources": [
 			"js/homework/homework_detail.js",
 			"image/homework/math.png",
-			"css/homework/workdetail.css"
+			"css/homework/workdetail.css",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/mui.min.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"js/publicHomeworkProtocol.js",
+			"css/utils/common.css"
 		]
 	}
 }
