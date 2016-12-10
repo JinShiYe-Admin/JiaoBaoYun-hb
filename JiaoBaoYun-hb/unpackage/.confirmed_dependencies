@@ -1461,7 +1461,8 @@
 			"js/utils/events.js",
 			"css/mui.min.css",
 			"js/publicHomeworkProtocol.js",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"image/homework/english.png"
 		]
 	}
 }

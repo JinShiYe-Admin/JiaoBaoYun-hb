@@ -1041,7 +1041,8 @@
 					"css/iconfont/iconfont.css",
 					"js/publicProtocol.js",
 					"js/storageKeyName.js",
-					"js/publicHomeworkProtocol.js"
+					"js/publicHomeworkProtocol.js",
+					"image/homework/english.png"
 				],
 				"refer": [],
 				"priority": 0
