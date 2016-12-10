@@ -8,12 +8,12 @@ var pageIndex = 1;
 //每页条数
 var pageCount = 10;
 //当前留言的总条数
-var totalCnt = 0;
+var totalPage = 0;
 //获取个人信息                                                        
 var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 //判断是加载更多1，还是刷新2
 var flag = 2;
-var pId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+var pId =parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 var msgType = 0; //消息类型
 var comData = {}; //回复传值
 var repliedCell;
@@ -69,6 +69,7 @@ var addReplyView = function() {
 		var replyContainer = document.getElementById('footer');
 		replyContainer.style.display = 'block';
 		repliedCell=this.cell;
+		console.log('点击的回复包含数据：'+JSON.stringify(repliedCell));
 		msgType = this.cell.MsgType;
 //		comData.ueserId = this.cell.UserId;
 		document.getElementById('msg-content').value = '';
@@ -90,6 +91,7 @@ var addReplyLisetner = function() {
 }
 var postReply = function(callback) {
 	var msgContent=document.getElementById('msg-content');
+	console.log('类型:'+msgType)
 	switch(msgType) {
 		//1为其他用户评论
 		case 1:
@@ -97,6 +99,7 @@ var postReply = function(callback) {
 		case 2:
 			//3为其他用户点赞
 		case 3:
+		
 			var comData = {
 				userId: pId, //用户ID
 				upperId: repliedCell.TabId, //上级评论ID
@@ -104,8 +107,10 @@ var postReply = function(callback) {
 				userSpaceId: repliedCell.SpaceId, //用户空间ID
 				commentContent: msgContent.value //回复内容
 			};
+			console.log('开始post回复数据'+JSON.stringify(comData));
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_addUserSpaceMsgReply(comData, wd, function(data) {
+			postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
+				console.log('发布回复后返回的数据：'+JSON.stringify(data))
 				wd.close();
 				if(data.RspCode==0){
 					callback();
@@ -125,7 +130,7 @@ var postReply = function(callback) {
 				commentContent: msgContent.value //回复内容
 			};
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
+			postDataPro_addUserSpaceMsgReply(comData, wd, function(data) {
 				wd.close();
 				if(data.RspCode==0){
 					callback();
@@ -220,6 +225,7 @@ function requestData(callback) {
 		wd.close();
 		console.log('获取的与我相关的数据：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
+			totalPage=data.RspData.TotalPage;
 			var tempRspData = data.RspData.Data;
 			var idsArray = [];
 
@@ -289,8 +295,8 @@ events.initRefresh('list-container',
 	},
 	function() {
 		console.log('请求页面：page' + pageIndex);
-		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex * pageCount >= totalCnt);
-		if(pageIndex * pageCount < totalCnt) {
+		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex  >= totalPage);
+		if(pageIndex < totalPage) {
 			pageIndex++;
 			requestData(setData);
 		}
