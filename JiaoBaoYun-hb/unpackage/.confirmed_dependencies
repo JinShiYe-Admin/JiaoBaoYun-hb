@@ -1462,7 +1462,9 @@
 			"css/mui.min.css",
 			"js/publicHomeworkProtocol.js",
 			"css/utils/common.css",
-			"image/homework/english.png"
+			"image/homework/english.png",
+			"image/homework/history.png",
+			"image/homework/yuwen.png"
 		]
 	}
 }
