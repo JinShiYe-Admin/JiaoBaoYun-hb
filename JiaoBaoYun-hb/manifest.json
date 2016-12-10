@@ -1110,7 +1110,8 @@
 					"css/mui.min.css",
 					"image/utils/default_personalimage.png",
 					"js/utils/h5fresh.js",
-					"css/iconfont/iconfont.css"
+					"css/iconfont/iconfont.css",
+					"image/quan/add.png"
 				],
 				"refer": [
 					"html/quan/studentdynamic_main.html",
@@ -1142,7 +1143,8 @@
 					"js/publicProtocol.js"
 				],
 				"refer": [
-					"html/index.html"
+					"html/index.html",
+					"html/index/index.html"
 				],
 				"priority": 0
 			},
