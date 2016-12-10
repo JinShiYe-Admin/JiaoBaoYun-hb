@@ -1,5 +1,5 @@
 var class_space = (function(mod) {
-
+	var list;
 	/**
 	 * 
 	 * @param {Object} postData
@@ -16,7 +16,8 @@ var class_space = (function(mod) {
 				if(pagedata.RspCode == '0000') {
 					console.log('获取的班级动态：' + JSON.stringify(pagedata));
 					mod.totalPagNo = pagedata.RspData.TotalPage;
-					callback(pagedata.RspData.Data);
+					list = pagedata.RspData.Data;
+					callback();
 				} else {
 					mui.toast(pagedata.RspTxt);
 				}
@@ -28,15 +29,15 @@ var class_space = (function(mod) {
 		 * @param {Object} list
 		 */
 	var i = 0;
-	mod.replaceUrl = function(list) {
-			list = getUrlBrief(list);
+	mod.replaceUrl = function() {
+			getUrlBrief();
 			i = 0;
-			createListView(list);
+			createListView();
 		}
 		/**
 		 * 获取Url信息
 		 */
-	var getUrlBrief = function(list) {
+	var getUrlBrief = function() {
 			if(i < list.length) {
 				urlBrief.getUrlFromMessage(list[i].MsgContent, function(message) {
 					list[i].MsgContent = message;
@@ -44,21 +45,23 @@ var class_space = (function(mod) {
 					getUrlBrief();
 				})
 			}
-			return list;
+
 		}
 		/**
 		 * 
 		 * @param {Object} list
 		 */
-	var createListView = function(list) {
+	var createListView = function() {
 			if(list.length > 0) {
 				console.log('总页码：' + mod.totalPagNo);
-				var container = document.getElementById('classSpace_list');
-				list.forEach(function(cell, index, data) {
-					var li = document.createElement('li');
-					li.className = "mui-table-view-cell";
-					getPersonalImg(cell, li, container);
-				})
+				imgsize = 0;
+				var utids = [];
+				for(var i in list) {
+					utids.push(list[i].PublisherId);
+				}
+				console.log('')
+				getPersonalImg(utids.toString());
+				//				
 			} else {
 				console.log('暂无数据');
 			}
@@ -69,8 +72,8 @@ var class_space = (function(mod) {
 		 */
 	var createInnerHtml = function(item) {
 		var inner = '<div><div class="mui-pull-left head-img" >' +
-			'<img class="head-portrait" src="' + item.publisherImg + '"/>' +
-			'<p>' + item.publisherName + '</p>' +
+			'<img class="head-portrait" src="' + item.uimg + '"/>' +
+			'<p>' + item.unick + '</p>' +
 			'</div>' +
 			'<div class="chat_content_left">' +
 			'<div class="chat-body"><p class="chat-words">' +
@@ -78,7 +81,7 @@ var class_space = (function(mod) {
 			createImgsInner(item) +
 			'</div>' +
 			'<p class="chat-bottom">' + item.PublishDate +
-			'<span tabId="'+item.TabId+'" class="mui-icon iconfont icon-support ' + setIsLike(item.IsLike) + '">(' + item.LikeCnt + ')</span><span class="mui-icon iconfont icon-xianshi">(' + item.ReadCnt + ')</span></p>' +
+			'<span tabId="' + item.TabId + '" class="mui-icon iconfont icon-support ' + setIsLike(item.IsLike) + '">(' + item.LikeCnt + ')</span><span class="mui-icon iconfont icon-xianshi">(' + item.ReadCnt + ')</span></p>' +
 			'</div></div>';
 		return inner;
 	}
@@ -107,34 +110,47 @@ var class_space = (function(mod) {
 		 * @param {Object} li
 		 * @param {Object} container
 		 */
-	var getPersonalImg = function(cell, li, container) {
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
-			postDataPro_PostUinf({
-				vvl: cell.PublisherId,
-				vtp: 'p'
-			}, wd, function(pInfo) {
-				console.log('获取的个人信息:' + JSON.stringify(pInfo))
-				wd.close();
-				if(pInfo.RspCode == '0000') {
-					var personalInfo = pInfo.RspData[0];
-					console.log('获取的个人信息：' + JSON.stringify(personalInfo));
-					cell.publisherImg =getUImg(personalInfo.uimg);
-					cell.publisherName = personalInfo.unick;
-					cell.PublishDate = changeDate(cell.PublishDate);
-					li.innerHTML = createInnerHtml(cell);
-					container.appendChild(li);
-				} else {
-					console.log(pInfo.RspTxt);
+	var imgsize = 0;
+	var getPersonalImg = function(ids) {
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
+		postDataPro_PostUinf({
+			vvl: ids,
+			vtp: 'g'
+		}, wd, function(pInfo) {
+			console.log('获取的个人信息:' + JSON.stringify(pInfo))
+			wd.close();
+			if(pInfo.RspCode == '0000') {
+				var personalData = pInfo.RspData;
+				for(var i in list) {
+					for(var j in personalData) {
+						if(list[i].PublisherId == personalData[j].utid) {
+							jQuery.extend(list[i], personalData[j]);
+							break;
+						}
+					}
 				}
+				setData();
+			} else {
+				console.log(pInfo.RspTxt);
+			}
 
-			})
-		}
-	var getUImg=function(uimg){
-		if(!uimg||uimg==null){
-			uimg='../../image/utils/default_personalimage.png'
-		}
-		return uimg;
+		})
 	}
+	var setData = function() {
+		var container = document.getElementById('classSpace_list');
+		for(var i in list) {
+			var li = document.createElement('li');
+			li.className = 'mui-table-view-cell';
+			li.innerHTML = createInnerHtml(list[i]);
+			container.appendChild(li);
+		}
+	}
+	var getUImg = function(uimg) {
+			if(!uimg || uimg == null) {
+				uimg = '../../image/utils/default_personalimage.png'
+			}
+			return uimg;
+		}
 		/**
 		 * 
 		 * @param {Object} cell
@@ -207,22 +223,22 @@ var setReaded = function(userId, classId) {
 }
 var setListener = function(userId) {
 	mui('.mui-table-view').on('tap', '.isNotLike', function() {
-		var span=this;
+		var span = this;
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		postDataPro_setClassSpaceLikeByUser({
-			userId:userId,
-			classSpaceId:parseInt(this.getAttribute('tabId'))
-		},wd,function(data){
+			userId: userId,
+			classSpaceId: parseInt(this.getAttribute('tabId'))
+		}, wd, function(data) {
 			wd.close();
-			console.log("点赞后返回数据："+JSON.stringify(data));
-			if(data.RspData.Result==1){
-				span.className="mui-icon iconfont icon-support isLike";
-				console.log('更改是否已点赞状态'+span.className)
-				span.innerText='('+(parseInt(span.innerText.replace('(','').replace(')',''))+1)+')'
-			}else{
+			console.log("点赞后返回数据：" + JSON.stringify(data));
+			if(data.RspData.Result == 1) {
+				span.className = "mui-icon iconfont icon-support isLike";
+				console.log('更改是否已点赞状态' + span.className)
+				span.innerText = '(' + (parseInt(span.innerText.replace('(', '').replace(')', '')) + 1) + ')'
+			} else {
 				mui.toast('点赞失败！')
 			}
-//			if(data.Rs)
+			//			if(data.Rs)
 		})
 	})
 }

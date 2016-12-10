@@ -247,6 +247,9 @@
 								console.log('tempRspData:' + JSON.stringify(item));
 
 							});
+							if(recordArray.length==0&&tempRspData.length==0){
+								mui.toast('笔记为空');
+							}
 						} else {
 							mui.toast(data.RspTxt);
 						}
