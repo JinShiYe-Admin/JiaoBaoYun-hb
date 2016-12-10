@@ -287,13 +287,23 @@
 				}
 			});
 
+			//取消
 			document.getElementById('cancel').addEventListener('tap', function() {
 				console.log('取消');
 				plus.webview.hide(main, 'pop-out');
 			});
 
+			//选定
 			document.getElementById('choose').addEventListener('tap', function() {
-				console.log('选定');
+
+				var fnameList = document.getElementById("folder").innerText.split('：');
+				var fname = fnameList[fnameList.length - 1];
+				console.log('选定' + JSON.stringify(fnameList) + '|' + fname);
+				events.fireToPageNone('storage_upload.html', 'chooseFolder', {
+					fid: showPid, //文件id,顶层0
+					title: fname //标题名
+				});
+				plus.webview.hide(main, 'pop-out');
 			});
 
 			/**
