@@ -55,7 +55,7 @@ mui.plusReady(function() {
 				selectGId = studentClasses[0].gid;
 				requireHomeWork(studentClasses[0], setData);
 			}
-			
+
 		})
 		window.addEventListener('homeworkPublished', function() {
 
@@ -140,16 +140,30 @@ var requireHomeWork = function(classModel, callback) {
 	comData.classId = classModel.gid;
 	comData.pageIndex = classModel.pageIndex;
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	postDataPro_GetHomeworkList(comData, wd, function(data) {
-		wd.close();
-		console.log('作业主界面获取的作业列表：' + JSON.stringify(data));
-		if(data.RspCode == 0) {
-			setHashData(comData, data);
-		} else {
-			mui.toast(data.RspTxt);
-		}
-		callback()
-	})
+	if(role == 2) {
+		postDataPro_GetHomeworkList(comData, wd, function(data) {
+			wd.close();
+			console.log('作业主界面获取的作业列表：' + JSON.stringify(data));
+			if(data.RspCode == 0) {
+				setHashData(comData, data);
+			} else {
+				mui.toast(data.RspTxt);
+			}
+			callback()
+		})
+	}else{
+		postDataPro_GetHomeworkListStu(comData, wd, function(data) {
+			wd.close();
+			console.log('作业主界面获取的作业列表：' + JSON.stringify(data));
+			if(data.RspCode == 0) {
+				setHashData(comData, data);
+			} else {
+				mui.toast(data.RspTxt);
+			}
+			callback()
+		})
+	}
+
 }
 var setData = function() {
 		//老师角色
@@ -176,6 +190,7 @@ var setPublishedData = function() {
 				if(DateHM.Homeworks && DateHM.Homeworks.length > 0) {
 					DateHM.Homeworks.forEach(function(homework, i) {
 						homework.classId = selectGId;
+						homework.Date=DateHM.Date;
 						var li = document.createElement('li');
 						li.homeworkInfo = homework;
 						li.className = 'mui-table-view-cell';
@@ -222,8 +237,8 @@ var getAnswerImgs = function(thumbUrls) {
 	return imgsInner;
 }
 var createStuHomeworkInner = function(homework) {
-	return '<a><div class="stuHomework-header"><a class="mui-icon iconfont subject-icon' +
-		getHomeworkIcon(homework.Subject) + '"></a><div class="header-words"><h5 class="header-title">' +
+	return '<a><div class="stuHomework-header"><span class="mui-icon iconfont subject-icon ' +
+		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words"><h5 class="header-title">' +
 		homework.HomeworkTitle + '</h5><p class="header-content">' + homework.Contents + '</p></div></div>' +
 		'<div class="stuHomework-bottom"></div></a>';
 }
@@ -281,7 +296,7 @@ var setHomeworkData = function() {
 			if(DateHM.Homeworks && DateHM.Homeworks.length > 0) {
 				DateHM.Homeworks.forEach(function(homework, i) {
 					var li = document.createElement('li');
-					li.className='mui-table-view-cell';
+					li.className = 'mui-table-view-cell';
 					li.innerHTML = createStuHomeworkInner(homework);
 					list.appendChild(li);
 				})
@@ -289,7 +304,7 @@ var setHomeworkData = function() {
 			if(DateHM.AnswerResultIds && DateHM.AnswerResultIds.length > 0) {
 				DateHM.AnswerResultIds.forEach(function(answerResult, i) {
 					var li = document.createElement('li');
-					li.className='mui-table-view-cell';
+					li.className = 'mui-table-view-cell';
 					li.innerHTML = createStuAnswerResultInner(answerResult);
 					list.appendChild(li);
 				})
