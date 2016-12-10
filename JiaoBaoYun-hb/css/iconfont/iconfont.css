@@ -131,6 +131,8 @@
 
 .icon-pdf:before { content: "\e8e2"; }
 
+.icon-yunnofile:before { content: "\e8e3"; }
+
 .icon-yingyu:before { content: "\e617"; }
 
 .icon-lishi:before { content: "\e613"; }
@@ -140,6 +142,8 @@
 .icon-qita:before { content: "\e612"; }
 
 .icon-yuwen:before { content: "\e616"; }
+
+.icon-yasuobao:before { content: "\e8e4"; }
 
 .icon-huaxue:before { content: "\e618"; }
 
