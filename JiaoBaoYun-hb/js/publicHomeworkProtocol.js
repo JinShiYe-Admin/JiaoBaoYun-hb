@@ -495,7 +495,8 @@ var postDataPro_GetError=function(commonData, wd, callback) {
 //13.获取作业记录；逻辑：不区分班级，默认近1周数据，每次多加载1周数据；
 //所需参数
 //		var comData = {
-//			studentId:''//学生Id
+//			studentId:'',//学生Id
+//			pageIndex:''//当前页码，默认1；
 //		};
 var postDataPro_GetHomeworkRecord=function(commonData, wd, callback) {
 	//需要加密的数据
