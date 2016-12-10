@@ -31,6 +31,21 @@ var cloud = (function($, mod) {
 			case 'zip': //压缩包类型
 				return 'icon-zip';
 				break;
+			case 'rar': //压缩包类型
+			case 'cab':
+			case 'iso':
+			case 'jar':
+			case 'ace':
+			case '7z':
+			case 'tar':
+			case 'gz':
+			case 'arj':
+			case 'lzh':
+			case 'uue':
+			case 'bz2':
+			case 'z':
+				return 'icon-yasuobao';
+				break;
 			case 'pdf': //文档类型
 				return 'icon-pdf';
 				break;
