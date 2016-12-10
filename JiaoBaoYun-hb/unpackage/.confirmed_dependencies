@@ -133,7 +133,8 @@
 			"css/mui.min.css",
 			"image/utils/default_personalimage.png",
 			"js/utils/h5fresh.js",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"image/quan/add.png"
 		],
 		"refer": [
 			"html/quan/studentdynamic_main.html",
@@ -322,7 +323,8 @@
 			"js/publicProtocol.js"
 		],
 		"refer": [
-			"html/index.html"
+			"html/index.html",
+			"html/index/index.html"
 		]
 	},
 	"html/quan/class_space.html": {
@@ -675,7 +677,8 @@
 			"css/quan/about-me.css",
 			"js/quan/about-me.js",
 			"js/utils/events.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": []
 	},
@@ -728,7 +731,17 @@
 			"image/cloud/cloud_add.png",
 			"css/iconfont/iconfont.css",
 			"js/publicProtocol.js",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/Barrett.js",
+			"css/cloud/file.css",
+			"js/libs/crypto-js/require.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/myStorage/myStorage.js"
 		],
 		"refer": [
 			"html/cloud/storage_sub.html"
@@ -1391,7 +1404,8 @@
 			"js/mui.min.js",
 			"image/cloud/A_folder.png",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/cloud/storage_main_choose.html"
@@ -1430,7 +1444,8 @@
 	},
 	"html/homework/workdetail-tea.html": {
 		"resources": [
-			"html/homework/workdetail-tea-sub.html"
+			"html/homework/workdetail-tea-sub.html",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/homework/workdetail-tea-sub.html"
@@ -1440,7 +1455,18 @@
 		"resources": [
 			"js/homework/homework_detail.js",
 			"image/homework/math.png",
-			"css/homework/workdetail.css"
+			"css/homework/workdetail.css",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/mui.min.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"js/publicHomeworkProtocol.js",
+			"css/utils/common.css",
+			"image/homework/english.png",
+			"image/homework/history.png",
+			"image/homework/yuwen.png"
 		]
 	}
 }

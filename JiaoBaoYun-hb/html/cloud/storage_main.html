@@ -19,6 +19,7 @@
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
 		<style>
 			.iconfont {
 				line-height: 42px;
@@ -72,7 +73,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a id="back" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<p id="title" class="mui-title common-color-white" style="text-align: left;"></p>
 		</header>
 		<div class="mui-content">
@@ -182,9 +183,13 @@
 				mui.prompt('请输入新文件夹的名称：', '新文件夹', '新建文件夹', btnArray, function(e) {
 					if(e.index == 1) {
 						//点击确定
+						var reg = new RegExp('^[^\\\\\\/:*?\\"<>|]+$'); //特殊字符过滤的正则表达式
 						console.log(e.value);
 						if(e.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
 							mui.toast('文件夹名字不能为空');
+						} else if(!reg.test(e.value)) {
+							//特殊字符
+							mui.toast('名字中不能包含这些字符 \ / : * ? " < > | ');
 						} else {
 							//27.用户云盘文件上传或创建文件夹
 							//所需参数
@@ -224,7 +229,7 @@
 			});
 
 			//返回按钮监听
-			document.getElementById('back').addEventListener('tap', function() {
+			mui.back = function() {
 				//				mui.each(showPidList, function(index, item) {
 				//					console.log('backshowPidList:' + JSON.stringify(item));
 				//				});
@@ -252,7 +257,7 @@
 					document.getElementById("title").innerText = show.pname;
 					showPid = show.pid;
 				}
-			});
+			}
 
 			/**
 			 * 点击文件或文件夹
@@ -294,9 +299,13 @@
 				var btnArray = ['取消', '确定'];
 				mui.prompt('请输入新的名字', '', '重命名', btnArray, function(e) {
 					if(e.index == 1) { //确定
+						var reg = new RegExp('^[^\\\\\\/:*?\\"<>|]+$'); //特殊字符过滤的正则表达式
 						var vvl1 = e.value;
 						if(vvl1.replace(/(^\s*)|(\s*$)/g, "") == "") {
 							mui.toast('名字不能为空');
+						} else if(!reg.test(e.value)) {
+							//特殊字符
+							mui.toast('名字中不能包含这些字符 \ / : * ? " < > | ');
 						} else {
 							//28.用户修改文件或文件夹名称
 							//所需参数
@@ -501,7 +510,7 @@
 							html3 = '<img class="cloud-bottom-imge" src="' + data.fpath + '" />';
 						}
 						html4 = '<div class="mui-media-body">\
-								<font id="fname_' + data.fid + '" class="mui-ellipsis">' + data.fname + data.ftype + '</font><font class="mui-ellipsis">' + data.ftype + '</font>\
+								<font id="fname_' + data.fid + '" class="mui-ellipsis">' + data.fname + '</font><font class="mui-ellipsis">' + data.ftype + '</font>\
 							</div>';
 					}
 				}
