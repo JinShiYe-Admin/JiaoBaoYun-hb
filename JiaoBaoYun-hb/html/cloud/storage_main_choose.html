@@ -236,8 +236,8 @@
 				showTopId = id; //顶部文件夹显示的文件夹id
 				var tempList = []; //记录保留下来的数据
 				mui.each(showPidList, function(index, item) {
-					if(item.pid <= fid) {
-						console.log('showPidList保留:' + JSON.stringify(item));
+					if(item.pid * 1 < fid * 1 || item.pid == fid) {
+						console.log('showPidList保留:' + JSON.stringify(item) + '|fid：' + fid);
 						tempList.push(item);
 					} else {
 						console.log('showPidList删除:' + JSON.stringify(item));

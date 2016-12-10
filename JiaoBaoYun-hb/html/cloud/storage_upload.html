@@ -180,7 +180,7 @@
 					console.log('subData:' + JSON.stringify(subData));
 					document.getElementById("yunpath").innerHTML = subData.title;
 					pid = subData.fid;
-					//					init(subData);
+					init();
 				});
 
 				window.addEventListener('chooseFolder', function(e) {
@@ -208,6 +208,23 @@
 					//						plus.webview.getWebviewById('storage_main_choose.html').show('slide-in-right', 250);
 					//					}
 				});
+
+				//界面初始化
+				function init() {
+					if(mui.os.ios) {//iOS系统
+						initIOS();
+					} else if(mui.os.android) {//android系统
+						initANDROID();
+					}
+				}
+
+				function initIOS(){
+
+				}
+
+				function initANDROID(){
+
+				}
 			})
 		</script>
 	</body>
