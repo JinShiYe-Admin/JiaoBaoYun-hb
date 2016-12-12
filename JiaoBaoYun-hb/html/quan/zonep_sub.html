@@ -244,7 +244,7 @@
 			flag = 1; //上拉加载更多
 			if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
 				mui.toast('没有更多了...');
-				mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+				mui('#pullrefresh').pullRefresh().endPullupToRefresh();
 			} else {
 				tempPage++;
 				var comData = {
@@ -387,7 +387,7 @@
 									//留言总条数,写到了协议开始
 									//							totalCnt = data.RspData.TotalCnt;
 //									setTimeout(function() {
-											mui('#pullrefresh').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
+											mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
 											for(var i = tempLength; i < zonepArray.length; i++) {
 												id = i;
 												var data = addData(i);
