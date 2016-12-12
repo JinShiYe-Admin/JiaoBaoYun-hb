@@ -1468,5 +1468,10 @@
 			"image/homework/history.png",
 			"image/homework/yuwen.png"
 		]
+	},
+	"html/cloud/storage_main_choose.html": {
+		"resources": [
+			"css/cloud/file.css"
+		]
 	}
 }
