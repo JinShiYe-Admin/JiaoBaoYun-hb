@@ -13,6 +13,7 @@
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
 		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<style>
 			.mui-control-item {
 				background: #F5F5F5;
@@ -339,14 +340,33 @@
 						console.log("请求文件系统成功");
 						console.log("文件系统的名称:" + succesCB.name);
 						console.log("文件系统中的目录对象:" + succesCB.root.fullPath);
-						getMetadata(succesCB.root); //获取目录的属性
-						directoryReader(url, succesCB.root); //读取对象
+						//						getMetadata(succesCB.root); //获取目录的属性
+						//						directoryReader(url, succesCB.root); //读取对象
 						var LocalURL = succesCB.root.toLocalURL();
 						var URL = succesCB.root.toURL();
 						console.log("root: " + LocalURL + '|' + URL);
-						initElement(LocalURL);
+						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+						succesCB.root.getDirectory(personalUTID, {
+							create: true,
+							exclusive: false
+						}, function(succesCB2) {
+							console.log("创建或打开子目录成功");
+							console.log("文件系统的名称:" + succesCB2.name);
+							console.log("文件系统中的目录对象:" + succesCB2.root.fullPath);
+							//						getMetadata(succesCB.root); //获取目录的属性
+							//						directoryReader(url, succesCB.root); //读取对象
+							var LocalURL2 = succesCB2.root.toLocalURL();
+							var URL2 = succesCB2.root.toURL();
+							console.log("root2: " + LocalURL2 + '|' + URL2);
+							initElement(LocalURL2);
+						}, function(errorCB2) {
+							mui.toast("创建或打开子目录失败: " + JSON.stringify(errorCB2));
+							console.log("创建或打开子目录: " + JSON.stringify(errorCB2));
+						});
+						//						initElement(LocalURL);
 					}, function(errorCB) {
 						//请求失败的的回调
+						mui.toast("请求文件系统失败: " + JSON.stringify(errorCB));
 						console.log("请求文件系统失败: " + JSON.stringify(errorCB));
 					});
 				}
