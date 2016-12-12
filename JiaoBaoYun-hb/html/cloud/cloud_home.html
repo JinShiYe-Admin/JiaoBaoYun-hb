@@ -358,9 +358,16 @@
 					changeData();
 				});
 
+				//修改用户信息
 				window.addEventListener('personChanged', function() {
 					//设置页面信息
 					changeInfo();
+				});
+
+				//修改云存储信息
+				window.addEventListener('cloudDataChange', function() {
+					//设置页面信息
+					changeCloudData();
 				});
 
 				//-----------设置数据end-----------------
@@ -749,6 +756,15 @@
 					postFirstFile();
 					//73.（云档案）按家长获取学生档案姓名
 					postUserStudent();
+				}
+
+				/**
+				 * 修改云盘的文件
+				 */
+				function changeCloudData() {
+					document.getElementById("cloudstoragefile").innerHTML = '';
+					//26.用户云盘顶层文件及文件夹获取
+					postFirstFile();
 				}
 			});
 		</script>

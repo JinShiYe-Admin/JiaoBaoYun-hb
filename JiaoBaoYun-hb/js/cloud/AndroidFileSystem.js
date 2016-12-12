@@ -43,6 +43,26 @@ var AndroidFileSystem = (function($, mod) {
 	}
 
 	/**
+	 * 读文件大小
+	 * @param {Object} size
+	 */
+	mod.readSize = function(size) {
+		var fileSizeString;
+		if(size == 0) {
+			fileSizeString = "0B";
+		} else if(size < 1024) {
+			fileSizeString = size + "B";
+		} else if(size < (1024 * 1024)) {
+			fileSizeString = (size / (1024)).toFixed(2) + "KB";
+		} else if(size < (1024 * 1024 * 1024)) {
+			fileSizeString = (size / (1024 * 1024)).toFixed(2) + "MB";
+		} else {
+			fileSizeString = (size / (1024 * 1024 * 1024)).toFixed(2) + "GB";
+		}
+		return fileSizeString;
+	}
+
+	/**
 	 * 读取文件夹下子文件夹及子文件数目
 	 * @param {Object} file
 	 */

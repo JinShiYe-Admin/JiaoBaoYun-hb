@@ -247,6 +247,7 @@
 				//				});
 				if(showPidList.length == 0) {
 					//mui.back();
+					events.fireToPageNone('../cloud/cloud_home.html', 'cloudDataChange')
 					plus.webview.hide(main, 'pop-out');
 				} else {
 					//隐藏当前界面
@@ -317,7 +318,11 @@
 							postDataPro_PostDiFiE(comData, wd, function(data) {
 								console.log('28.postDataPro_PostDiFiE_用户修改文件或文件夹名称:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 								if(data.RspCode == 0) {
-									document.getElementById("fname_" + fid).innerText = vvl1;
+									if(ftype == '.file') {
+										document.getElementById("fname_" + fid).innerText = vvl1;
+									} else {
+										document.getElementById("fname_" + fid).innerText = vvl1 + ftype;
+									}
 									document.getElementById(id).setAttribute('data-fname', vvl1);
 									mui.toast('修改成功');
 								} else if(data.RspCode == 8) {
@@ -498,7 +503,7 @@
 					html1 = '<span class="mui-navigate-right mui-media-object mui-pull-right"></span>';
 					html3 = '<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">';
 					html4 = '<div class="mui-media-body">\
-								<font id="fname_' + data.fid + '" class="mui-ellipsis">' + data.fname + '</font>\
+								<div id="fname_' + data.fid + '" class="mui-ellipsis">' + data.fname + '</div>\
 							</div>';
 				} else {
 					if(showTop) {
@@ -507,10 +512,10 @@
 						if(type != '') {
 							html3 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
 						} else { //七牛能生成缩略图的图片或视频
-							html3 = '<img class="cloud-bottom-imge" src="' + data.fpath + '" />';
+							html3 = '<img class="mui-media-object cloud-bottom-imge mui-pull-left" src="' + data.fpath + '" />';
 						}
 						html4 = '<div class="mui-media-body">\
-								<font id="fname_' + data.fid + '" class="mui-ellipsis">' + data.fname + '</font><font class="mui-ellipsis">' + data.ftype + '</font>\
+								<div id="fname_' + data.fid + '" class="mui-ellipsis">' + data.fname + '</div>\
 							</div>';
 					}
 				}
