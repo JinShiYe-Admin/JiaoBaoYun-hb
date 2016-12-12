@@ -906,10 +906,13 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"js/publicProtocol.js",
 					"js/homework/homework-sub.js",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"image/homework/need-submit.png"
 				],
 				"refer": [
-					"html/homework/workdetail-tea.html"
+					"html/homework/workdetail-tea.html",
+					"html/homework/workdetail-stu.html",
+					"html/homework/workdetailTea-temporary.html"
 				],
 				"priority": 0
 			},
@@ -1978,6 +1981,37 @@
 				"resources": [
 					"html/homework/workdetail-tea-sub.html",
 					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/cloud/storage_main_choose.html": {
+				"resources": [
+					"css/cloud/file.css",
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"css/iconfont/iconfont.css",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/homework/workdetailTea-temporary.html": {
+				"resources": [
+					"html/homework/workdetailTea-temSub.html"
 				],
 				"refer": [],
 				"priority": 0

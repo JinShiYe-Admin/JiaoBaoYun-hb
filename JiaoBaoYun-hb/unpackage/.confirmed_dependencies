@@ -420,11 +420,14 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"js/publicProtocol.js",
 			"js/homework/homework-sub.js",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"image/homework/need-submit.png"
 		],
 		"refer": [
 			"html/homework/homework-publish.html",
-			"html/homework/workdetail-tea.html"
+			"html/homework/workdetail-tea.html",
+			"html/homework/workdetail-stu.html",
+			"html/homework/workdetailTea-temporary.html"
 		]
 	},
 	"html/homework/publish-answer.html": {
@@ -1467,6 +1470,36 @@
 			"image/homework/english.png",
 			"image/homework/history.png",
 			"image/homework/yuwen.png"
+		]
+	},
+	"html/cloud/storage_main_choose.html": {
+		"resources": [
+			"css/cloud/file.css",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/homework/workdetailTea-temporary.html": {
+		"resources": [
+			"html/homework/workdetailTea-temSub.html"
+		],
+		"refer": [
+			"html/homework/workdetailTea-temSub.html"
 		]
 	}
 }

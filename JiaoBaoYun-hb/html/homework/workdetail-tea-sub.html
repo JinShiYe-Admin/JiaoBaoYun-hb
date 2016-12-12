@@ -221,14 +221,14 @@
 						tempStuArray = arrayDupRemoval(tempStuArray);
 						//发送获取用户资料申请
 						var tempData = {
-							vvl: tempStuArray.join(), //用户id，查询的值,p传个人ID,g传ID串
-							vtp: 'g' //查询类型,p(个人)g(id串)
-						}
+							vvl:tempStuArray.join(),//群成员群ID，Stuid或ID串
+							vtp:'ids'//资料ID类型,Id:单个ID,ids:ID串
+						};
 						console.log('tempData:' + JSON.stringify(tempData));
-						//21.通过用户ID获取用户资料
-						postDataPro_PostUinf(tempData, wd, function(data1) {
+						//30.通过资料ID获取关联的人员
+						postDataPro_PostStuU(tempData, wd, function(data1) {
 							wd.close();
-							console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+							console.log('30.获取关联的人员:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 							if(data1.RspCode == 0) {
 								//循环当前的个人信息返回值数组
 								for(var i in data1.RspData) {
@@ -239,7 +239,7 @@
 									//循环未完成
 									for(var m in remainArray) {
 										var tempModel9 = remainArray[m];
-										if(tempModel9.StudentId == tempModel.utid) {
+										if(tempModel9.StudentId == tempModel.stuid) {
 											//合并
 											tempModel9 = $.extend(tempModel9, tempModel);
 										}
@@ -247,7 +247,7 @@
 									//已完成
 									for(var m in uploadArray) {
 										var tempModel9 = uploadArray[m];
-										if(tempModel9.StudentId == tempModel.utid) {
+										if(tempModel9.StudentId == tempModel.stuid) {
 											//合并
 											tempModel9 = $.extend(tempModel9, tempModel);
 										}
@@ -325,7 +325,7 @@
 									var li = document.createElement('li');
 				li.innerHTML = '<li class="mui-table-view-cell  ">'+
 										'<div class="mui-media-body">'+
-											uploadArray[i].unick+
+											uploadArray[i].stuname+
 											'<button class="mui-media-body" style="float: right;">'+
 												IsCommented+
 											'</button>'+
@@ -347,7 +347,7 @@
 									var li = document.createElement('li');
 				li.innerHTML = '<li class="mui-table-view-cell">'+
 										'<div class="mui-media-body">'+
-											remainArray[i].unick+
+											remainArray[i].stuname+
 											'<button id="alert'+i+'" class="mui-media-body" style="float: right;" onclick="alertStu(this)">'+
 												alert+
 											'</button>'+
