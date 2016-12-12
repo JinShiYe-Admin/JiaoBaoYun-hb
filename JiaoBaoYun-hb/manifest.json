@@ -906,7 +906,8 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"js/publicProtocol.js",
 					"js/homework/homework-sub.js",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"image/homework/need-submit.png"
 				],
 				"refer": [
 					"html/homework/workdetail-tea.html"

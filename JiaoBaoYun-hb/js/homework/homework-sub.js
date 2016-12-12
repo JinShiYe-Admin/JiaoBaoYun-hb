@@ -319,10 +319,31 @@ var getAnswerImgs = function(thumbUrls) {
 	return imgsInner;
 }
 var createStuHomeworkInner = function(homework) {
-	return '<a><div class="stuHomework-header"><span class="mui-icon iconfont subject-icon ' +
+	return '<a><div class="stuHomework-header '+getBackGround(homework)+'"><span class="mui-icon iconfont subject-icon ' +
 		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words"><h5 class="header-title">' +
 		homework.HomeworkTitle + '</h5><p class="header-content">' + homework.Contents + '</p></div></div>' +
 		'<div class="stuHomework-bottom"></div></a>';
+}
+var getBackGround=function(homework){
+	var backClassName=''
+	//已评论
+	if(homework.IsCommented){
+		backClassName='isCommentedBG'
+	}else{
+		//已提交
+		if(homework.IsSubmitted){
+			backClassName='isSubmitted';
+		//未提交
+		}else{
+			//需在线提交
+			if(homework.SubmitOnline){
+				backClassName='submitOnline';
+			}else{
+				
+			}
+		}
+	}
+	return backClassName;
 }
 var createStuAnswerResultInner = function(answerResult) {
 
