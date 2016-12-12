@@ -348,12 +348,15 @@
 						var pathList = succesCB.root.fullPath.split('/');
 						var path2 = '';
 						mui.each(pathList, function(index, item) {
-							if(index = pathList.length - 2) {
+							console.log("pathList"+item);
+							if(index = pathList.length - 3) {
 								path2 = path2 + '/';
 								return false;
 							}
 							path2 = path2 + '/' + item;
+							console.log("path2"+path2);
 						});
+						console.log("path2"+path2);
 						initElement(path2);
 					}, function(errorCB) {
 						//请求失败的的回调
