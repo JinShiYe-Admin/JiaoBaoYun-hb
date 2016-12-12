@@ -42,6 +42,7 @@
 				})
 				getListData();
 				window.addEventListener('applied',function(){
+					events.clearChild(document.getElementById('list-container'));
 					getListData();
 				})
 			})

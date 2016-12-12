@@ -3,7 +3,8 @@
 var selectSubjectID;
 //老师发布作业时，选择的群
 var selectClassArray = [];
-var submitOnLine = true;
+var submitOnLine = true;//是否在线提交 默认为是
+//科目控件
 var subjectsContainer = document.getElementById('subjects');
 //个人id
 var personalUTID;
@@ -97,7 +98,9 @@ var setSubjects = function(subjectList) {
 	 * @param {Object} classes
 	 */
 var setClasses = function() {
+		//班级数据列表控件
 		var classesContainer = document.getElementById('classes');
+		//清空班级数据
 		events.clearChild(classesContainer)
 		for(var i in selectClassArray) {
 			if(selectClassArray[i].isSelected){
@@ -123,6 +126,9 @@ var setRemoveClassListener = function() {
 		console.log('删除班级后所有班级数据：'+JSON.stringify(selectClassArray));
 	})
 }
+/**
+ * 是否在线提交
+ */
 var setIsOnline = function() {
 	document.getElementById("onlineSwitch").addEventListener("toggle", function(event) {
 		if(event.detail.isActive) {
@@ -134,6 +140,9 @@ var setIsOnline = function() {
 		}
 	})
 }
+/**
+ * 提交按钮的监听
+ */
 var setSubmitEvent = function() {
 	//提交按钮
 	events.addTap('submitBtn', function() {
@@ -167,6 +176,12 @@ function requestClassStudents() {
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	requirePostGUInfo(0,wd);	
 }
+/**
+ * 获取班级内所有学生资料
+ * @param {Object} i 班级索引
+ * @param {Object} wd 等待框
+ * @param {Object} callback 回调函数
+ */
 var requirePostGUInfo=function(i,wd,callback){
 	selectClassArray[i].isSelected=true;
 	var comData = {
@@ -179,8 +194,10 @@ var requirePostGUInfo=function(i,wd,callback){
 		if(data.RspCode==0){
 			selectClassArray[i].studentArray=data.RspData;	
 		}
+		//请求完成后，请求下一个班级
 		if(i<selectClassArray.length-1){
 			requirePostGUInfo(i+1,wd);
+		//所有班级请求完成
 		}else{
 			console.log('学生资料群信息数据：'+JSON.stringify(selectClassArray))
 			setClasses();
