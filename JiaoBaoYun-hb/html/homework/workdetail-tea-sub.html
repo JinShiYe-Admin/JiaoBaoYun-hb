@@ -25,6 +25,11 @@
 	</head>
 
 	<body>
+		<nav id="alertBar" class="mui-bar mui-bar-tab" style="visibility:hidden;">
+			<div align="center">
+						<button id="alertAll" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 200px; ;">一键提醒</button>
+					</div>
+		</nav>
 		<div class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
 				<ul class="mui-table-view">
@@ -96,6 +101,8 @@
 				segItem2:document.getElementById("item2"),
 				finishedList:document.getElementById("finished-list"),
 				unfinishedList:document.getElementById("unfinished-list"),
+				alertBar:document.getElementById("alertBar"),
+				alertAllBtn:document.getElementById("alertAll")
 			}
 			var imgType ={
 				chineseImg:'../../image/homework/chinese.png',
@@ -131,6 +138,11 @@
 			mui.plusReady(function() {
 				events.addTap('checkDetail', function() {
 					console.log('点击查看详情')
+				})
+				events.addTap('alertBar', function() {
+					console.log('一键提醒');
+					alertStu(homeworkDetailNodes.alertAllBtn);
+					
 				})
 							window.addEventListener('workDetail',function(e){
 								resetData();
@@ -322,8 +334,9 @@
 				}else{
 					IsCommented = '未评';
 				}
+				var headImg = updateHeadImg(uploadArray[i].stuimg,2)
 									var li = document.createElement('li');
-				li.innerHTML = '<li class="mui-table-view-cell  ">'+
+				li.innerHTML = '<li class="mui-table-view-cell mui-media ">'+'<img  class="mui-media-object mui-pull-left" src="'+headImg +'" />'
 										'<div class="mui-media-body">'+
 											uploadArray[i].stuname+
 											'<button class="mui-media-body" style="float: right;">'+
@@ -343,9 +356,9 @@
 					}else{
 						alert = '已提醒';
 					}
-					
+					var headImg = updateHeadImg(remainArray[i].stuimg,2)
 									var li = document.createElement('li');
-				li.innerHTML = '<li class="mui-table-view-cell">'+
+				li.innerHTML = '<li class="mui-table-view-cell mui-media">'+'<img  class="mui-media-object mui-pull-left" src="'+headImg +'" />'+
 										'<div class="mui-media-body">'+
 											remainArray[i].stuname+
 											'<button id="alert'+i+'" class="mui-media-body" style="float: right;" onclick="alertStu(this)">'+
@@ -360,26 +373,49 @@
 				document.getElementById('slider').addEventListener('slide', function(e) {
 					if (e.detail.slideNumber === 0) {
 						console.log('已完成');
+						homeworkDetailNodes.alertBar.style.visibility = 'hidden';
 					} else if (e.detail.slideNumber === 1) {
 						console.log('未完成');
+						if(remainArray.length==0){
+							homeworkDetailNodes.alertBar.style.visibility = 'hidden';
+						}else{
+							homeworkDetailNodes.alertBar.style.visibility = 'visible';
+						}
+						
 					}
 				});
+				
 function alertStu(alertBtn){
 	console.log(alertBtn.id);
+	var userIds;
+	var userIdArr=[];
+	if(alertBtn.id=='alertAll'){
+		for(var i=0;i<remainArray.length;i++){
+			var userId = remainArray[i].stuid+'|'+remainArray[i].ustuid;
+			userIdArr.push(userId);
+		}
+		userIds = userIdArr.join(',')
+	}else{
+		var index = alertBtn.id.replace('alert','');
+		userIds = remainArray[index].stuid+'|'+remainArray[index].ustuid;
+	}
+	console.log('userIds==='+userIds);
+	
+
 				//所需参数
 				var comData = {
 					teacherId: personalUTID, //教师Id
-					userIds:'1',
+					userIds:userIds,
 					homeworkId: homeworkModel.HomeworkId //作业id；
 				};
 				// 等待的对话框
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				//2.获取教师发布作业详情；
-				postDataPro_GetHomeworkAlert(comData, wd, function(data) {
+				postDataPro_HomeworkAlert(comData, wd, function(data) {
 					wd.close();
-					console.log('10.postDataPro_GetHomeworkAlert:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					console.log('10.postDataPro_HomeworkAlert:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
-						homeworkDetailModel = data.RspData;
+						alertBtn.innerHTML = '已提醒'
 
 
 					} else {
