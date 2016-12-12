@@ -1981,6 +1981,13 @@
 				],
 				"refer": [],
 				"priority": 0
+			},
+			"html/cloud/storage_main_choose.html": {
+				"resources": [
+					"css/cloud/file.css"
+				],
+				"refer": [],
+				"priority": 0
 			}
 		},
 		"idle": {

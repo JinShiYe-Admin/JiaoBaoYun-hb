@@ -10,7 +10,7 @@ var personalUTID;
 mui.init();
 mui.plusReady(function() {
 		events.preload('classes-select.html',200);
-		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+		personalUTID =parseInt(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid);
 		window.addEventListener('postClasses', function(e) {
 			console.log('发布作业界面获取的班级数据：'+JSON.stringify(e.detail.data));
 			//选中班级为全部班级
@@ -137,7 +137,7 @@ var setIsOnline = function() {
 var setSubmitEvent = function() {
 	//提交按钮
 	events.addTap('submitBtn', function() {
-		selectSubjectID = subjectsContainer[subjectsContainer.selectedIndex].value;
+		selectSubjectID = parseInt(subjectsContainer[subjectsContainer.selectedIndex].value);
 		//判断是否有科目
 		if(selectSubjectID) {
 			//判断是否选择了班级
