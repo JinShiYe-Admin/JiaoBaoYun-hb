@@ -133,7 +133,8 @@
 			"css/mui.min.css",
 			"image/utils/default_personalimage.png",
 			"js/utils/h5fresh.js",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"image/quan/add.png"
 		],
 		"refer": [
 			"html/quan/studentdynamic_main.html",
@@ -322,7 +323,8 @@
 			"js/publicProtocol.js"
 		],
 		"refer": [
-			"html/index.html"
+			"html/index.html",
+			"html/index/index.html"
 		]
 	},
 	"html/quan/class_space.html": {
@@ -1461,7 +1463,10 @@
 			"js/utils/events.js",
 			"css/mui.min.css",
 			"js/publicHomeworkProtocol.js",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"image/homework/english.png",
+			"image/homework/history.png",
+			"image/homework/yuwen.png"
 		]
 	}
 }

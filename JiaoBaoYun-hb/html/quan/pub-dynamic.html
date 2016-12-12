@@ -78,11 +78,13 @@
 				}
 				console.log(JSON.stringify(postData));
 				var main = plus.webview.getWebviewById('../quan/tab-zone.html');
+				
 				mui.fire(main, 'addUserSpaceForMutiUsers', {
 					postData: postData
 				});
 				textView.value='';
 				mui.back();
+				
 			})
 		})
 	</script>

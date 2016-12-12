@@ -1041,7 +1041,10 @@
 					"css/iconfont/iconfont.css",
 					"js/publicProtocol.js",
 					"js/storageKeyName.js",
-					"js/publicHomeworkProtocol.js"
+					"js/publicHomeworkProtocol.js",
+					"image/homework/english.png",
+					"image/homework/history.png",
+					"image/homework/yuwen.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -1107,7 +1110,8 @@
 					"css/mui.min.css",
 					"image/utils/default_personalimage.png",
 					"js/utils/h5fresh.js",
-					"css/iconfont/iconfont.css"
+					"css/iconfont/iconfont.css",
+					"image/quan/add.png"
 				],
 				"refer": [
 					"html/quan/studentdynamic_main.html",
@@ -1139,7 +1143,8 @@
 					"js/publicProtocol.js"
 				],
 				"refer": [
-					"html/index.html"
+					"html/index.html",
+					"html/index/index.html"
 				],
 				"priority": 0
 			},

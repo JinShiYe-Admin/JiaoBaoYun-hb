@@ -47,6 +47,8 @@ var setChoices = function(btn_p, btn_h) {
 	if(teacherClasses.length > 0 && studentClasses.length > 0) {
 		btn_p.style.display = 'inline-block';
 		btn_h.style.display = 'inline-block';
+		btn_p.className = 'mui-btn mui-btn-green';
+		btn_h.className = 'mui-btn mui-btn-green mui-btn-outlined';
 		role = 2;
 	} else if(teacherClasses.length > 0) {
 		btn_p.style.display = 'inline-block';

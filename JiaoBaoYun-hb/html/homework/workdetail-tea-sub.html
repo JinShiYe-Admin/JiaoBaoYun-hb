@@ -25,12 +25,13 @@
 	</head>
 
 	<body>
-		<div class="mui-content">
-			<ul class="mui-table-view">
-				<li class="mui-table-view-cell mui-media ">
-					<img id="img" class="mui-media-object mui-pull-left" src="../../image/homework/math.png" />
-					<div class="mui-media-body">
-						<h4 id="homeworkTitle"></h6>
+		<div class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-media ">
+						<img id="img" class="mui-media-object mui-pull-left" src="../../image/homework/math.png" />
+						<div class="mui-media-body">
+							<h4 id="homeworkTitle"></h6>
 						<p id="publishDate" class='mui-ellipsis'>发布时间：</p>
 					</div>
 					<div class="mui-media-body">
@@ -57,21 +58,15 @@
 				<!--滑动内容-->
 				<div class="mui-slider-group">
 					<div id="div-finished" class="mui-slider-item mui-control-content mui-active">
-						<div id="scroll1" class="mui-scroll-wrapper">
-							<div class="mui-scroll">
 								<ul id="finished-list" class="mui-table-view">
 								</ul>
-							</div>
-						</div>
 					</div>
 					<div id="div-unfinish" class="mui-slider-item mui-control-content">
-						<div id="scroll2" class="mui-scroll-wrapper">
-							<div class="mui-scroll">
+
 								<ul id="unfinished-list" class="mui-table-view">
 									
 								</ul>
 									
-							</div>
 						</div>
 					</div>
 				</div>
@@ -94,6 +89,7 @@
 				publishDate:document.getElementById("publishDate"),//发布日期
 				content:document.getElementById("homeWorkContent"),//作业内容
 //				checkDetailBtn:document.getElementById("checkDetail"),//查看详情按钮
+				slider:document.getElementById("slider"),
 				segItem1:document.getElementById("item1"),
 				segItem2:document.getElementById("item2"),
 				finishedList:document.getElementById("finished-list"),
@@ -135,11 +131,12 @@
 //					console.log('点击查看详情')
 //				})
 							window.addEventListener('workDetail',function(e){
+								resetData();
 				console.log('作业主界面传送的值：'+JSON.stringify(e.detail.data));
 				homeworkModel = e.detail.data;
-				uploadArray = [];
-				remainArray = [];
-				homeworkDetailModel = {};
+
+				
+
 								//获取作业详情
 				requestHomeworkDetail();
 
@@ -149,7 +146,19 @@
 
 
 			});
+			function resetData(){
+				homeworkDetailNodes.unfinishedList.innerHTML = '';
+//				var gallery = mui('#slider');
+//				gallery.slider().gotoItem(0);
+				uploadArray = [];
+				remainArray = [];
+				homeworkDetailModel = {};
 
+//				homeworkDetailNodes.segItem1.className = 'mui-control-item mui-active';
+//				homeworkDetailNodes.segItem2.className = 'mui-control-item';
+
+				
+			};
 			//获取作业详情
 			function requestHomeworkDetail() {
 				//所需参数
@@ -301,27 +310,44 @@
 				console.log('学生列表')
 				homeworkDetailNodes.segItem1.innerHTML = '已完成('+uploadArray.length+')';
 				homeworkDetailNodes.segItem2.innerHTML = '未完成('+remainArray.length+')';
+				homeworkDetailNodes.finishedList.innerHTML = '';
+				homeworkDetailNodes.unfinishedList.innerHTML = '';
+
 				for(var i=0;i<uploadArray.length;i++){
+									var IsCommented;
+				if(uploadArray[i].IsCommented==true){
+					IsCommented = '已评';
+				}else{
+					IsCommented = '未评';
+				}
 									var li = document.createElement('li');
 				li.innerHTML = '<li class="mui-table-view-cell  ">'+
 										'<div class="mui-media-body">'+
 											uploadArray[i].unick+
-											'<p class="mui-media-body" style="float: right;">'+
-												uploadArray[i].IsCommented+
-											'</p>'+
+											'<button class="mui-media-body" style="float: right;">'+
+												IsCommented+
+											'</button>'+
 										'</div>'+
 									'</li>';
 				homeworkDetailNodes.finishedList.appendChild(li)	;
 				}
 
 				for(var i=0;i<remainArray.length;i++){
+					var alert;
+					if(remainArray[i].IsAlertChecked==true){
+							alert = '已查阅('+remainArray[i].AlertCheckTime+')';
+					}else if(remainArray[i].IsAlerted==false){
+						alert = '提醒';
+					}else{
+						alert = '已提醒';
+					}
 									var li = document.createElement('li');
-				li.innerHTML = '<li class="mui-table-view-cell  ">'+
+				li.innerHTML = '<li class="mui-table-view-cell">'+
 										'<div class="mui-media-body">'+
 											remainArray[i].unick+
-											'<p class="mui-media-body" style="float: right;">'+
-												remainArray[i].IsAlertChecked+
-											'</p>'+
+											'<button class="mui-media-body" style="float: right;">'+
+												alert+
+											'</button>'+
 										'</div>'+
 									'</li>';
 				homeworkDetailNodes.unfinishedList.appendChild(li)	;
