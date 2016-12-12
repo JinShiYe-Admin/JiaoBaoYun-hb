@@ -62,6 +62,7 @@
 			//发布按钮
 			events.addTap('publish', function() {
 				var textView = document.getElementById('input-content');
+				textView.value =  Trim(textView.value);
 				console.log('textView.value===' + textView.value)
 				if(!textView.value || textView.value == '') {
 					mui.toast('请输入内容');
@@ -87,6 +88,11 @@
 				
 			})
 		})
+		//去除前后空格
+	 function Trim(str)
+     { 
+             return str.replace(/(^\s*)|(\s*$)/g, ""); 
+     }
 	</script>
 
 </html>

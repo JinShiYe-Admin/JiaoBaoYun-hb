@@ -46,21 +46,6 @@
 	<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" src="../../js/index.js"></script>
 	<script src="../../js/main/slide_navigation.js"></script>
-	<script>
-		mui.init();
-		mui.plusReady(function() {
-			slideNavigation.add('mine.html', 200)
-			window.addEventListener('infoChanged', function() {
-				console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 
-				document.querySelector('img').src = myStorage.getItem(storageKeyName.PERSONALINFO).uimg ? myStorage.getItem(storageKeyName.PERSONALINFO).uimg : '../../image/utils/default-personalimage.png';
-//				if(plus.os.name == 'iOS') {
-//					var wobj = plus.webview.currentWebview();
-//					wobj.reload(true);
-//				}
-
-			})
-		})
-	</script>
 
 </html>

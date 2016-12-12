@@ -7,7 +7,18 @@
 mui.init();
 
 mui.plusReady(function() {
-	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+	slideNavigation.add('mine.html', 200)
+	window.addEventListener('infoChanged', function() {
+		getAboutMe();
+		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
+
+		document.querySelector('img').src = myStorage.getItem(storageKeyName.PERSONALINFO).uimg ? myStorage.getItem(storageKeyName.PERSONALINFO).uimg : '../../image/utils/default-personalimage.png';
+		//				if(plus.os.name == 'iOS') {
+		//					var wobj = plus.webview.currentWebview();
+		//					wobj.reload(true);
+		//				}
+
+	})
 	getAboutMe(); //获取与我相关未读数
 	Statusbar.barHeight(); //设置距离顶部的高度
 	var header = document.querySelector(".mui-bar-nav"); //顶部导航
@@ -29,21 +40,19 @@ mui.plusReady(function() {
 	var aniShow = {};
 
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
-	mui.plusReady(function() {
-		var self = plus.webview.currentWebview();
-		for(var i = 0; i < 3; i++) {
-			var temp = {};
-			var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
-			if(i > 0) {
-				sub.hide();
-			} else {
-				temp[subpages[i]] = "true";
-				mui.extend(aniShow, temp);
-			}
-			//append,在被选元素的结尾(仍然在内部)插入指定内容
-			self.append(sub);
+	var self = plus.webview.currentWebview();
+	for(var i = 0; i < 3; i++) {
+		var temp = {};
+		var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
+		if(i > 0) {
+			sub.hide();
+		} else {
+			temp[subpages[i]] = "true";
+			mui.extend(aniShow, temp);
 		}
-	});
+		//append,在被选元素的结尾(仍然在内部)插入指定内容
+		self.append(sub);
+	}
 	//当前激活选项
 	var activeTab = subpages[0];
 	var title = document.getElementById("title");
@@ -91,6 +100,7 @@ mui.plusReady(function() {
 	});
 
 	function getAboutMe() {
+		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 		//56.（用户空间）获取与我相关
 		//所需参数
 		var comData = {
@@ -104,7 +114,6 @@ mui.plusReady(function() {
 		postDataPro_getAboutMe(comData, wd, function(data) {
 			wd.close();
 			console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-
 			if(data.RspCode == 0) {
 				var noRead = document.getElementById('aboutme_noRead');
 				if(data.RspData.NoReadCnt == 0) {
@@ -167,7 +176,13 @@ mui.plusReady(function() {
 		span.innerHTML = '3'
 		aboutme.appendChild(span)
 		container.appendChild(aboutme);
-		events.jumpPage(aboutme, '../quan/aboutme.html');
+		events.addTap('aboutme', function() {
+			events.openNewWindow('../quan/aboutme.html')
+			var noRead = document.getElementById('aboutme_noRead');
+			noRead.style.visibility = 'hidden';
+
+		})
+
 		events.jumpPage(pubDynamic, '../quan/pub-dynamic.html');
 	}
 
@@ -175,12 +190,17 @@ mui.plusReady(function() {
 		var a = document.createElement('a');
 		a.className = 'mui-icon iconfont icon-upload mui-pull-right';
 		a.addEventListener('tap', function() {
-			events.fireToPageNone('../cloud/cloud_home.html','upload');
+			events.fireToPageNone('../cloud/cloud_home.html', 'upload');
 		});
 		container.appendChild(a)
 	}
 	var aboutme = document.getElementById('aboutme');
-	events.jumpPage(aboutme, '../quan/aboutme.html');
+	events.addTap('aboutme', function() {
+			events.openNewWindow('../quan/aboutme.html')
+			var noRead = document.getElementById('aboutme_noRead');
+			noRead.style.visibility = 'hidden';
+
+		})
 	var pubDynamic = document.getElementById('pubDynamic');
 	events.jumpPage(pubDynamic, '../quan/pub-dynamic.html');
 	//自定义事件，模拟点击“首页选项卡”

@@ -51,26 +51,30 @@ function addSomeEvent() {
 		});
 	});
 	window.addEventListener('infoChanged', function() {
-		var wobj = plus.webview.currentWebview();
-		wobj.reload(true);
-		//		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-		//
-		//		datasource = []; //底部列表数据
-		//		topStudentArr = [];
-		//		topArray = []; //顶部班级列表数据
-		//		requestTimes = 0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
-		//		requestTimes2 = 0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
-		//		requestTimes3 = 0;
-		//		isRefresh = 0; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
-		//		selectCell = {}; //选择的cell
-		//		var ul = document.getElementById('top-list');
-		//		ul.innerHTML = '';
-		//
-		//		var seg = document.getElementById('segmentedControl'); //群名称segmentedControl
-		//		var userTable = document.getElementById('userList'); //多个放置用户列表
-		//		seg.innerHTML = '';
-		//		userTable.innerHTML = '';
-		//		getStuList();
+		if(datasource.length ==0){
+			var wobj = plus.webview.currentWebview();
+		    wobj.reload(true);
+		}else{
+				personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				datasource = []; //底部列表数据
+				topStudentArr = [];
+				topArray = []; //顶部班级列表数据
+				requestTimes = 0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
+				requestTimes2 = 0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
+				requestTimes3 = 0;
+				isRefresh = 0; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
+				selectCell = {}; //选择的cell
+				var ul = document.getElementById('top-list');
+				ul.innerHTML = '';
+		
+				var seg = document.getElementById('segmentedControl'); //群名称segmentedControl
+				var userTable = document.getElementById('userList'); //多个放置用户列表
+				seg.innerHTML = '';
+				userTable.innerHTML = '';
+				getStuList();
+		}
+		
+
 	})
 	window.addEventListener('addUserSpaceForMutiUsers', function(data) {
 		var userIdArr = [];
@@ -200,6 +204,7 @@ function getNotes(index, StuDyArr) {
 		userId: personalUTID, //用户ID----utid
 		studentId: topStudentArr[index].stuid, //学生ID----stuid
 		classId: topStudentArr[index].gid,
+		publisherId:personalUTID,
 		pageIndex: '1', //当前页数
 		pageSize: '1' //每页记录数
 	};
@@ -674,8 +679,10 @@ function pulldownRefresh() {
 		isRefresh = 1; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
 		selectCell = {}; //选择的cell
 		getStuList();
+		events.fireToPageNone('../index/index.html', 'infoChanged');
 		var ws = plus.webview.currentWebview();
 		ws.endPullToRefresh(); //refresh completed
+		
 	}, 1500);
 }
 var count = 0;
