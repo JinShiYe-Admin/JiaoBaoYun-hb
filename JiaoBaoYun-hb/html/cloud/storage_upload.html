@@ -322,6 +322,10 @@
 
 				function initIOS() {
 					var url = plus.io.PUBLIC_DOCUMENTS;
+					//  PRIVATE_WWW: 应用运行资源目录常量
+					//  PRIVATE_DOC: 应用私有文档目录常量
+					//  PUBLIC_DOCUMENTS: 程序公用文档目录常量
+					//  PUBLIC_DOWNLOADS: 程序公用下载目录常量
 					var path = plus.io.convertLocalFileSystemURL(url);
 					var newurl = plus.io.convertAbsoluteFileSystem(path);
 					console.log("initIOS: " + path + '|' + newurl);
