@@ -326,9 +326,9 @@
 					//  PRIVATE_DOC: 应用私有文档目录常量
 					//  PUBLIC_DOCUMENTS: 程序公用文档目录常量
 					//  PUBLIC_DOWNLOADS: 程序公用下载目录常量
-					var path = plus.io.convertLocalFileSystemURL(url);
-					var newurl = plus.io.convertAbsoluteFileSystem(path);
-					console.log("initIOS: " + path + '|' + newurl);
+					//var path = plus.io.convertLocalFileSystemURL(url);
+					//var newurl = plus.io.convertAbsoluteFileSystem(path);
+					//console.log("initIOS: " + path + '|' + newurl);
 					//					addTop(path, '手机'); //顶部
 					//					addbot(path); //底部
 					//					folderList.push(path);
@@ -344,12 +344,16 @@
 						console.log("请求文件系统成功");
 						console.log("文件系统的名称:" + succesCB.name);
 						console.log("文件系统中的目录对象:" + succesCB.root.fullPath);
-						addTop(succesCB.root.fullPath, '手机'); //顶部
-						addbot(succesCB.root.fullPath); //底部
-						folderList.push(succesCB.root.fullPath);
-						showFolderId = succesCB.root.fullPath;
-						document.getElementById("folder_" + succesCB.root.fullPath).style.display = 'inline';
-						resolveLocalFileSystemURL(succesCB.root.fullPath);
+						var pathList = succesCB.root.fullPath.split('/');
+						var path2 = '';
+						mui.each(pathList, function(index, item) {
+							if(index = pathList.length - 2) {
+								path2 = path2 + '/';
+								return false;
+							}
+							path2 = path2 + '/' + item;
+						});
+						initElement(path)
 					}, function(errorCB) {
 						//请求失败的的回调
 						console.log("请求文件系统失败: " + JSON.stringify(errorCB));
@@ -357,12 +361,17 @@
 				}
 
 				function initANDROID() {
-					addTop('/storage/', '手机'); //顶部
-					addbot('/storage/'); //底部
-					folderList.push('/storage/');
-					showFolderId = '/storage/';
-					document.getElementById("folder_/storage/").style.display = 'inline';
-					resolveLocalFileSystemURL('/storage/');
+					initElement('/storage/');
+				}
+
+				function initElement(path) {
+					console.log('initElement:' + path);
+					addTop(path, '手机'); //顶部
+					addbot(path); //底部
+					folderList.push(path);
+					showFolderId = path;
+					document.getElementById("folder_" + path).style.display = 'inline';
+					resolveLocalFileSystemURL(path);
 				}
 
 				//通过URL参数获取目录对象或文件对象
