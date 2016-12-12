@@ -36,7 +36,9 @@
 					</div>
 					<div class="mui-media-body">
 						<font id="homeWorkContent"></font> 
-<!--						<button id="checkDetail" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 40%;left:25%;margin-top:10px ;">查看详情</button>-->
+					</div>
+					<div align="center">
+						<button id="checkDetail" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 100px;margin-top:15px ;">查看详情</button>
 					</div>
 
 				</li>
@@ -62,7 +64,6 @@
 								</ul>
 					</div>
 					<div id="div-unfinish" class="mui-slider-item mui-control-content">
-
 								<ul id="unfinished-list" class="mui-table-view">
 									
 								</ul>
@@ -82,13 +83,14 @@
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
 
 		<script type="text/javascript">
+		
 			mui.init();
 			var	homeworkDetailNodes = {
 				img:document.getElementById("img"),//作业类型图像
 				title:document.getElementById("homeworkTitle"),//作业类型标题
 				publishDate:document.getElementById("publishDate"),//发布日期
 				content:document.getElementById("homeWorkContent"),//作业内容
-//				checkDetailBtn:document.getElementById("checkDetail"),//查看详情按钮
+				checkDetailBtn:document.getElementById("checkDetail"),//查看详情按钮
 				slider:document.getElementById("slider"),
 				segItem1:document.getElementById("item1"),
 				segItem2:document.getElementById("item2"),
@@ -127,9 +129,9 @@
 			var remainArray = [];
 
 			mui.plusReady(function() {
-//				events.addTap('checkDetail', function() {
-//					console.log('点击查看详情')
-//				})
+				events.addTap('checkDetail', function() {
+					console.log('点击查看详情')
+				})
 							window.addEventListener('workDetail',function(e){
 								resetData();
 				console.log('作业主界面传送的值：'+JSON.stringify(e.detail.data));
@@ -341,16 +343,18 @@
 					}else{
 						alert = '已提醒';
 					}
+					
 									var li = document.createElement('li');
 				li.innerHTML = '<li class="mui-table-view-cell">'+
 										'<div class="mui-media-body">'+
 											remainArray[i].unick+
-											'<button class="mui-media-body" style="float: right;">'+
+											'<button id="alert'+i+'" class="mui-media-body" style="float: right;" onclick="alertStu(this)">'+
 												alert+
 											'</button>'+
 										'</div>'+
 									'</li>';
-				homeworkDetailNodes.unfinishedList.appendChild(li)	;
+				homeworkDetailNodes.unfinishedList.appendChild(li);
+				
 				}	
 			}
 				document.getElementById('slider').addEventListener('slide', function(e) {
@@ -360,7 +364,30 @@
 						console.log('未完成');
 					}
 				});
+function alertStu(alertBtn){
+	console.log(alertBtn.id);
+				//所需参数
+				var comData = {
+					teacherId: personalUTID, //教师Id
+					userIds:'1',
+					homeworkId: homeworkModel.HomeworkId //作业id；
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//2.获取教师发布作业详情；
+				postDataPro_GetHomeworkAlert(comData, wd, function(data) {
+					wd.close();
+					console.log('10.postDataPro_GetHomeworkAlert:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						homeworkDetailModel = data.RspData;
 
+
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+			
+}
 		</script>
 
 	</body>
