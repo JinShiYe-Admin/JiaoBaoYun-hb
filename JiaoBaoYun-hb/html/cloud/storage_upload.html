@@ -321,6 +321,7 @@
 				}
 
 				function initIOS() {
+					console.log('initIOS()');
 					var url = plus.io.PUBLIC_DOCUMENTS;
 					//  PRIVATE_WWW: 应用运行资源目录常量
 					//  PRIVATE_DOC: 应用私有文档目录常量
@@ -353,7 +354,7 @@
 							}
 							path2 = path2 + '/' + item;
 						});
-						initElement(path)
+						initElement(path2);
 					}, function(errorCB) {
 						//请求失败的的回调
 						console.log("请求文件系统失败: " + JSON.stringify(errorCB));
