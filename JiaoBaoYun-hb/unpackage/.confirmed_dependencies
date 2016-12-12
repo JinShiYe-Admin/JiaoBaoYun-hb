@@ -425,7 +425,9 @@
 		],
 		"refer": [
 			"html/homework/homework-publish.html",
-			"html/homework/workdetail-tea.html"
+			"html/homework/workdetail-tea.html",
+			"html/homework/workdetail-stu.html",
+			"html/homework/workdetailTea-temporary.html"
 		]
 	},
 	"html/homework/publish-answer.html": {
@@ -1490,6 +1492,14 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/homework/workdetailTea-temporary.html": {
+		"resources": [
+			"html/homework/workdetailTea-temSub.html"
+		],
+		"refer": [
+			"html/homework/workdetailTea-temSub.html"
 		]
 	}
 }

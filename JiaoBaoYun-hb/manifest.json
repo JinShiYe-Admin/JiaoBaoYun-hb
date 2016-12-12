@@ -910,7 +910,9 @@
 					"image/homework/need-submit.png"
 				],
 				"refer": [
-					"html/homework/workdetail-tea.html"
+					"html/homework/workdetail-tea.html",
+					"html/homework/workdetail-stu.html",
+					"html/homework/workdetailTea-temporary.html"
 				],
 				"priority": 0
 			},
@@ -2003,6 +2005,13 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/homework/workdetailTea-temporary.html": {
+				"resources": [
+					"html/homework/workdetailTea-temSub.html"
 				],
 				"refer": [],
 				"priority": 0

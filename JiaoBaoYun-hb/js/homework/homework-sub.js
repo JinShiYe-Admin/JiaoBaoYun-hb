@@ -18,6 +18,8 @@ mui.plusReady(function() {
 		//预加载
 		events.preload('workdetail-tea.html', 200);
 		events.preload('homework-publish.html', 500);
+		events.preload('workdetailTea-temporary.html', 300);
+		events.preload('workdetail-stu.html', 800);
 		//个人UTID
 		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 		//赋值
@@ -126,10 +128,6 @@ var pullUpRefresh = function() {
 			mui.toast('注意，您已到达我的底线');	
 		}
 	}, false);
-	//	requireHomeWork(selectGContainer.classInfo,setData);
-	//	setTimeout(function(){
-	//		this.endPullupToRefresh(false);
-	//	},1000);
 }
 
 /**
@@ -155,18 +153,24 @@ var setListener = function() {
 			}
 		})
 		var publish = document.getElementById('iconPublish');
-		mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+		//常规作业点击事件
+		mui('.mui-table-view').on('tap', '.publishedHomework', function() {
 				events.fireToPageNone('workdetail-tea-sub.html', 'workDetail', this.homeworkInfo);
 				plus.webview.getWebviewById("workdetail-tea.html").show();
 			})
+		//临时作业点击事件
+		mui('.mui-table-view').on('tap', '.publishedAnswer', function() {
+			events.fireToPageNone('workdetailTea-temSub.html', 'workDetail', this.homeworkInfo);
+			plus.webview.getWebviewById("workdetailTea-temporary.html").show();
+		})
+		//学生作业在线提交点击事件
+		mui('.mui-table-view').on('tap', '.stuHomework', function() {
+			events.fireToPageWithData('workdetail-stu.html', 'workDetail', this.homeworkInfo);
+		})
 			//发布作业界面
 		publish.addEventListener('tap', function() {
 			events.fireToPageWithData('homework-publish.html', 'postClasses', teacherClasses);
 		})
-
-		//		events.addTap('tempDetail', function() {
-		//			events.openNewWindow('workdetail-tea.html')
-		//		});
 	}
 	/**
 	 * 放置班级列表数据
@@ -276,7 +280,7 @@ var setPublishedData = function() {
 						homework.Date = DateHM.Date;
 						var li = document.createElement('li');
 						li.homeworkInfo = homework;
-						li.className = 'mui-table-view-cell';
+						li.className = 'mui-table-view-cell publishedHomework';
 						li.innerHTML = createHomeworkInner(homework);
 						list.appendChild(li);
 					})
@@ -284,7 +288,7 @@ var setPublishedData = function() {
 				if(DateHM.AnswerResultIds && DateHM.AnswerResultIds.length > 0) {
 					DateHM.AnswerResultIds.forEach(function(answerResult, i) {
 						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
+						li.className = 'mui-table-view-cell publishedAnswer';
 						li.innerHTML = createAnswerResultInner(answerResult);
 						list.appendChild(li);
 					})
@@ -398,7 +402,7 @@ var setHomeworkData = function() {
 				if(DateHM.Homeworks && DateHM.Homeworks.length > 0) {
 					DateHM.Homeworks.forEach(function(homework, i) {
 						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
+						li.className = 'mui-table-view-cell stuHomework';
 						li.innerHTML = createStuHomeworkInner(homework);
 						list.appendChild(li);
 					})
@@ -406,7 +410,7 @@ var setHomeworkData = function() {
 				if(DateHM.AnswerResultIds && DateHM.AnswerResultIds.length > 0) {
 					DateHM.AnswerResultIds.forEach(function(answerResult, i) {
 						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
+						li.className = 'mui-table-view-cell stuAnswer';
 						li.innerHTML = createStuAnswerResultInner(answerResult);
 						list.appendChild(li);
 					})
