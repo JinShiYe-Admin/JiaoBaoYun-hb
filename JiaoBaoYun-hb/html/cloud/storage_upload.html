@@ -327,9 +327,9 @@
 					//  PRIVATE_DOC: 应用私有文档目录常量
 					//  PUBLIC_DOCUMENTS: 程序公用文档目录常量
 					//  PUBLIC_DOWNLOADS: 程序公用下载目录常量
-					//var path = plus.io.convertLocalFileSystemURL(url);
-					//var newurl = plus.io.convertAbsoluteFileSystem(path);
-					//console.log("initIOS: " + path + '|' + newurl);
+//					var path = plus.io.convertLocalFileSystemURL(url);
+//					var newurl = plus.io.convertAbsoluteFileSystem(url);
+//					console.log("initIOS: " + path + '|' + newurl);
 					//					addTop(path, '手机'); //顶部
 					//					addbot(path); //底部
 					//					folderList.push(path);
@@ -345,22 +345,26 @@
 						console.log("请求文件系统成功");
 						console.log("文件系统的名称:" + succesCB.name);
 						console.log("文件系统中的目录对象:" + succesCB.root.fullPath);
-						var pathList = succesCB.root.fullPath.split('/');
-						var path2 = '';
-						console.log("pathList:" + JSON.stringify(pathList));
-						mui.each(pathList, function(index, item) {
-							console.log("pathList:item:" + item);
-							if(item != '') {
-								if(index == pathList.length - 3) {
-									path2 = path2 + '/';
-									return false;
-								}
-								path2 = path2 + '/' + item;
-								console.log("path2:" + path2);
-							}
-						});
-						console.log("path2" + path2);
-						initElement(path2);
+						getMetadata(succesCB.root); //获取目录的属性
+						directoryReader(url, succesCB.root); //读取对象
+//						var pathList = succesCB.root.fullPath.split('/');
+//						var path2 = '';
+//						console.log("pathList:" + JSON.stringify(pathList));
+//						mui.each(pathList, function(index, item) {
+////							console.log("pathList:item:" + item);
+//							if(item != '') {
+//								if(index == pathList.length - 3) {
+//									path2 = path2 + '/';
+//									return false;
+//								}
+//								path2 = path2 + '/' + item;
+////								console.log("path2:" + path2);
+//							}
+//						});
+//						console.log("path2:" + path2);
+//						var newurl = plus.io.convertLocalFileSystemURL(path2);
+//						console.log("newurl:" + newurl);
+						initElement(succesCB.root.fullPath);
 					}, function(errorCB) {
 						//请求失败的的回调
 						console.log("请求文件系统失败: " + JSON.stringify(errorCB));
