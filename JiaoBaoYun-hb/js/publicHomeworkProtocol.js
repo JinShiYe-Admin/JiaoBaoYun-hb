@@ -369,7 +369,7 @@ var postDataPro_GetAnswerResult=function(commonData, wd, callback) {
 //			fileStream:'',//base64格式的文件流；
 //			displayOrder:''//文件显示的顺序
 //		};
-var postDataPro_UploadFile=function(commonData, wd, callback) {
+var postDataPro_UploadFileStu=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
