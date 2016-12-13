@@ -1067,7 +1067,20 @@
 					"js/mui.zoom.js",
 					"js/mui.previewimage.js",
 					"js/libs/jquery.js",
-					null
+					null,
+					"js/homework/publish-answer.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/utils/signHmacSHA1.js",
+					"js/utils/postData.js",
+					"js/storageKeyName.js",
+					"js/libs/crypto-js/require.js",
+					"js/publicProtocol.js",
+					"js/libs/RSA/BigInt.js",
+					"js/publicHomeworkProtocol.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1776,7 +1789,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/utils/events.js"
 				],
 				"refer": [],
 				"priority": 0
