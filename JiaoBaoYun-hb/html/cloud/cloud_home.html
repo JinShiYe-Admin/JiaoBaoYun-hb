@@ -482,6 +482,7 @@
 				 * 获取用户所在群数据
 				 */
 				function requestClassData() {
+					var teacherClassesTemp = [];
 					var teacherClasses = [];
 					var studentClassesTemp = [];
 					var studentClasses = [];
@@ -511,14 +512,14 @@
 								var isHave = true;
 								//2老师或者管理员
 								if(tempModel.mstype == 2 || tempModel.mstype == 1) {
-									for(var m in teacherClasses) {
-										if(tempModel.gid == teacherClasses[m].gid) {
+									for(var m in teacherClassesTemp) {
+										if(tempModel.gid == teacherClassesTemp[m].gid) {
 											isHave = false;
 											break;
 										}
 									}
 									if(isHave) {
-										teacherClasses.push(tempModel);
+										teacherClassesTemp.push(tempModel);
 									}
 								}
 								var isHave1 = true;
@@ -551,6 +552,24 @@
 									for(var a in tempArray1) {
 										var tempModel1 = tempArray1[a];
 										//循环老师、学生的临时数组
+										for(var b in teacherClassesTemp) {
+											var tempModel2 = teacherClassesTemp[b];
+											//判断群号是否一致，
+											if(tempModel1.gid == tempModel2.gid) {
+												var isHave = true;
+												for(var m in teacherClasses) {
+													if(tempModel1.gid == teacherClasses[m].gid) {
+														isHave = false;
+														break;
+													}
+												}
+												if(isHave) {
+													//合并
+													tempModel1 = $.extend(tempModel1, tempModel2);
+													teacherClasses.push(tempModel1);
+												}
+											}
+										}
 										for(var b in studentClassesTemp) {
 											var tempModel2 = studentClassesTemp[b];
 											//判断群号是否一致，
@@ -563,6 +582,8 @@
 													}
 												}
 												if(isHave) {
+													//合并
+													tempModel1 = $.extend(tempModel1, tempModel2);
 													studentClasses.push(tempModel1);
 												}
 											}

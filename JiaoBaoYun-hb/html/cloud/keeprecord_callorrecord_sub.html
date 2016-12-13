@@ -430,7 +430,8 @@
 					studentId: subData.stuid, //学生ID----stuid
 					classId: subData.gid, //班级ID
 					pageIndex: pageIndex, //当前页数
-					pageSize: pageSize //每页记录数
+					pageSize: pageSize, //每页记录数
+					publisherId: userId //发布者ID,0代表全部
 				};
 				//返回model：model_homeSchoolList,model_userNoteInfo
 				console.log('发送获取记事列表请求的数据:' + JSON.stringify(comData));

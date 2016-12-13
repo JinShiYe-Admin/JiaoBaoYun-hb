@@ -243,7 +243,8 @@
 					classId: subData.classId, //班级id
 					studentId: subData.studentId, //学生ID----stuid
 					pageIndex: pageIndex, //当前页数
-					pageSize: pageSize //每页记录数
+					pageSize: pageSize, //每页记录数
+					publisherId: '0' //发布者ID,0代表全部
 				};
 				//返回model：model_homeSchoolList,model_userNoteInfo
 				console.log('获取列表发送的数据:' + JSON.stringify(comData));
@@ -267,8 +268,7 @@
 							var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 							postDataPro_setNoteReadByUser(comData2, wd2, function(data2) {
 								console.log('10.90909090success:RspCode:' + data2.RspCode + ',RspData:' + JSON.stringify(data2.RspData) + ',RspTxt:' + data2.RspTxt);
-								if(data.RspCode == 0) {
-								}
+								if(data.RspCode == 0) {}
 							});
 							wd2.close();
 						}
