@@ -98,7 +98,7 @@
 			</div>
 		</nav>
 		<div class="mui-content">
-			<div id="slider" class="mui-slider" style="">
+			<div id="slider" class="mui-slider">
 				<div id="sliderSegmentedControl" style="background: #E8E9E9;" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div id="folderlist" class="mui-scroll">
 						<!--<div class="mui-control-item mui-active">
@@ -271,6 +271,7 @@
 						addTop(fid, fname); //顶部
 						addbot(fid); //底部
 						folderList.push(fid);
+
 						//顶部处理
 						document.getElementById('top_' + showFolderId).className = 'mui-control-item';
 						document.getElementById('top_' + fid).className = 'mui-control-item mui-active';
@@ -313,16 +314,13 @@
 				function init() {
 					document.getElementById("folderlist").innerHTML = '';
 					document.getElementById("all").innerHTML = '';
-					if(mui.os.ios) { //iOS系统
-						initIOS();
-					} else if(mui.os.android) { //android系统
-						initANDROID();
-						//initIOS();
-					}
+					createFolder();
 				}
 
-				function initIOS() {
-					console.log('initIOS()');
+				/**
+				 * 在程序中创建utid的文件夹
+				 */
+				function createFolder() {
 					var url = plus.io.PUBLIC_DOCUMENTS;
 					//  PRIVATE_WWW: 应用运行资源目录常量
 					//  PRIVATE_DOC: 应用私有文档目录常量
@@ -340,36 +338,33 @@
 						console.log("请求文件系统成功");
 						console.log("文件系统的名称:" + succesCB.name);
 						console.log("文件系统中的目录对象:" + succesCB.root.fullPath);
-						//						getMetadata(succesCB.root); //获取目录的属性
-						//						directoryReader(url, succesCB.root); //读取对象
 						var LocalURL = succesCB.root.toLocalURL();
 						var URL = succesCB.root.toURL();
 						console.log("root: " + LocalURL + '|' + URL);
 						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-						console.log("getDirectory: " + LocalURL+personalUTID+"/");
+						console.log("getDirectory: " + LocalURL + personalUTID + "/");
 						succesCB.root.getDirectory(personalUTID, {
 							create: true,
 							exclusive: false
 						}, function(succesCB2) {
 							console.log("创建或打开子目录成功");
 							console.log("文件系统的名称:" + succesCB2.name);
-							console.log("文件系统中的目录对象:" + succesCB2.root.fullPath);
-							//						getMetadata(succesCB.root); //获取目录的属性
-							//						directoryReader(url, succesCB.root); //读取对象
-							var LocalURL2 = succesCB2.root.toLocalURL();
-							var URL2 = succesCB2.root.toURL();
-							console.log("root2: " + LocalURL2 + '|' + URL2);
-							initElement(LocalURL2);
+							console.log("文件系统中的目录对象:" + succesCB2.fullPath);
+							if(mui.os.ios) { //iOS系统
+								initElement(succesCB2.fullPath);
+							}
 						}, function(errorCB2) {
 							mui.toast("创建或打开子目录失败: " + JSON.stringify(errorCB2));
 							console.log("创建或打开子目录失败: " + JSON.stringify(errorCB2));
 						});
-						//						initElement(LocalURL);
 					}, function(errorCB) {
 						//请求失败的的回调
 						mui.toast("请求文件系统失败: " + JSON.stringify(errorCB));
 						console.log("请求文件系统失败: " + JSON.stringify(errorCB));
 					});
+					if(mui.os.android) { //android系统
+						initANDROID();
+					}
 				}
 
 				function initANDROID() {
@@ -392,37 +387,11 @@
 						//请求成功的回调
 						//succesCB:DirectoryEntry:请求到的目录或文件对象
 						//console.log("请求文件系统成功");
-						getMetadata(succesCB); //获取目录的属性
 						directoryReader(URL, succesCB); //读取对象
 					}, function(errorCB) {
 						//请求失败的的回调
 						mui.toast('请求文件系统失败' + JSON.stringify(errorCB));
 						console.log("请求文件系统失败: " + JSON.stringify(errorCB));
-					});
-				}
-
-				//获取目录的属性
-				function getMetadata(entry) {
-					//entry.getMetadata( successCB, errorCB, recursive );
-					//用于获取文件或目录的属性信息
-					//succesCB: ( MetadataSuccessCallback ) 必选 获取文件或目录属性信息成功的回调
-					//errorCB: ( FileErrorCallback ) 必选 获取文件或目录属性信息失败的回调
-					//recursive: ( Boolean ) 必选 是否递归计算目录信息
-					//true为递归计算获取信息，false不递归计算获取，默认值为false。
-					entry.getMetadata(function(succesCB) {
-						//succesCB：文件或目录的状态信息
-						//JSON对象，保存文件或目录的状态信息对象
-						//说明：
-						//可通过DirectoryEntry或FileEntry对象的getMetaData方法获取
-						//属性：
-						//modificationTime: (Date 类型 )文件或目录的最后修改时间
-						//size: (Number 类型 )文件的大小，若获取的是目录对象的属性则值为0。
-						//directoryCount: (Number 类型 )包含的子目录数，若自身是文件则其值为0。
-						//fileCount: (Number 类型 )目录的文件数，若自身是文件则其值为0。
-						console.log("获取目录或文件的属性成功");
-						console.log("getMetadata:" + JSON.stringify(succesCB));
-					}, function(errorCB) {
-						console.log("获取目录或文件的属性失败: " + JSON.stringify(errorCB));
 					});
 				}
 
@@ -442,7 +411,7 @@
 					var directoryReader = entry.createReader();
 					directoryReader.readEntries(function(succesCB) {
 						//succesCB:文件或目录对象的引用,可指向文件或目录对象（DirectoryEntry|FileEntry）
-						console.log("获取当前目录中的所有文件和子目录成功" + JSON.stringify(succesCB));
+						console.log("获取当前目录中的所有文件和子目录成功");
 						mui.each(succesCB, function(index, element) {
 							//console.log("directoryReader:" + JSON.stringify(element));
 							additem(URL, element)
@@ -471,18 +440,18 @@
 				 * @param {Object} pid 父id
 				 */
 				function addbot(path) {
-					//console.log('addbot:' + path);
+					console.log('addbot:' + path);
 					var top = 45 + 38 + localStorage.getItem('StatusHeightNo') * 1;
 					var div = document.createElement('div');
 					div.setAttribute('id', 'folder_' + path);
 					div.innerHTML = '<div class="mui-scroll-wrapper"style="top:' + top + 'px;margin-bottom: 91px;">\
-									<div class="mui-scroll">\
-										<ul id="ul_' + path + '" class="mui-table-view">\
-										<div id="ul_folder_' + path + '"></div>\
-										<div id="ul_file_' + path + '"></div>\
-										</ul>\
-									</div>\
-								</div>';
+										<div class="mui-scroll">\
+											<ul id="ul_' + path + '" class="mui-table-view">\
+											<div id="ul_folder_' + path + '"></div>\
+											<div id="ul_file_' + path + '"></div>\
+											</ul>\
+										</div>\
+									</div>';
 					div.style.display = 'none';
 					document.getElementById("all").appendChild(div);
 				}
@@ -532,8 +501,8 @@
 						html1 = '<span class="mui-navigate-right mui-media-object mui-pull-right"></span>';
 						html2 = '<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">';
 						html3 = '<div class="mui-media-body">\
-								<div id="fname_' + data.fullPath + '/' + '" class="mui-ellipsis">' + data.name + '</div>\
-							</div>';
+									<div id="fname_' + data.fullPath + '/' + '" class="mui-ellipsis">' + data.name + '</div>\
+								</div>';
 						li.innerHTML = html1 + html2 + html3;
 						document.getElementById("ul_folder_" + URL).appendChild(li);
 					} else if(data.isFile) {
@@ -547,9 +516,7 @@
 						li.innerHTML = html1 + html2 + html3;
 						document.getElementById("ul_file_" + URL).appendChild(li);
 					}
-
 				}
-
 			});
 		</script>
 	</body>

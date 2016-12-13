@@ -301,37 +301,54 @@
 					//长按资料
 					mui('#all_mem').on('longtap', '.mui-table-view-cell', function(e) {
 						console.log('资料：id:' + this.getAttribute('id') + '|gid:' + this.getAttribute('data-gid') + '|stuid:' + this.getAttribute('data-stuid'));
-						var id = this.getAttribute('id');
-						var gid = this.getAttribute('data-gid');
-						var gutid = this.getAttribute('data-stuid');
+						var id = this.getAttribute('id'); //元素id
+						var gid = this.getAttribute('data-gid'); //群id
+						var gutid = this.getAttribute('data-stuid'); //资料id
 						mui.each(qunList, function(index, item) {
 							if(item.mstype == 1 && item.gid == gid) { //群主
 								var btnArray = ['否', '是'];
 								mui.confirm('您确定要删除吗？删除后记事将被清空哦', '删除资料', btnArray, function(e) {
 									if(e.index == 1) {
 										//先删除家校圈的点到记事记录，再删除资料
-
-										//33.根据资料表ID删除资料
+										//75.（点到记事）删除某学生点到记事
 										//所需参数
 										var comData = {
-											vvl: gutid, ////资料ID，stuid
+											studentId: gutid, //学生ID
+											classId: gid //班级ID
 										};
-										// 等待的对话框
+										//返回学生姓名数组
 										var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-										postDataPro_PostStuD(comData, wd, function(data) {
+										postDataPro_delNoteByStudent(comData, wd, function(data) {
 											wd.close();
 											console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 											if(data.RspCode == 0) {
-												document.getElementById(id).parentNode.removeChild(document.getElementById(id));
-												document.getElementById(id).parentNode.removeChild(document.getElementById(id));
-												mui.toast('删除成功');
+												mui.toast('删除记事成功,正在删除资料...');
+												//33.根据资料表ID删除资料
+												//所需参数
+												var comData2 = {
+													vvl: gutid, //资料ID，stuid
+												};
+												// 等待的对话框
+												var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+												postDataPro_PostStuD(comData2, wd2, function(data2) {
+													wd2.close();
+													console.log('90909090success:RspCode:' + data2.RspCode + ',RspData:' + JSON.stringify(data2.RspData) + ',RspTxt:' + data2.RspTxt);
+													if(data2.RspCode == 0) {
+														mui.toast('删除资料成功');
+														document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+														if(document.getElementById(id) != null) {
+															document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+														}
+													} else {
+														mui.toast(data2.RspTxt);
+													}
+												});
 											} else {
 												mui.toast(data.RspTxt);
 											}
 										});
-
 									} else {
-										console.log('不删除');
+										console.log('不删除资料');
 									}
 								});
 							}
@@ -342,8 +359,8 @@
 					getQunMenAG();
 					//---获取群数据---end---
 
+					//刷新界面
 					window.addEventListener('refresh', function() {
-
 						document.getElementById("qunlist").innerHTML = '\
 						<a id="controladd" class="mui-control-item" style="width: 40px;">\
 						</a>\
@@ -398,7 +415,7 @@
 								var tempQunList = [];
 								mui.each(data.RspData, function(index, item) {
 									var same = false;
-									console.log('data:|index:' + index + '|item:' + JSON.stringify(item));
+									//console.log('data:|index:' + index + '|item:' + JSON.stringify(item));
 									//剔除同一个群身份不同，保留管理员身份
 									mui.each(tempQunList, function(qindex, qitem) {
 										if(qitem.gid == item.gid) {
@@ -415,7 +432,7 @@
 								});
 
 								mui.each(tempQunList, function(index, item) {
-									console.log('qunList:|index:' + index + '|item:' + JSON.stringify(item));
+									//console.log('qunList:|index:' + index + '|item:' + JSON.stringify(item));
 									var qun = {
 										gid: item.gid, //群ID
 										gname: item.gname, //群名
