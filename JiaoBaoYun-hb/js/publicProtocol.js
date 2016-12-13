@@ -647,7 +647,8 @@ var postDataPro_getNoReadNotesCntByUserForStudent = function(commonData, wd, cal
 //			studentId:'',//学生ID----stuid
 //			classId:'',//班级ID----
 //			pageIndex:'',//当前页数
-//			pageSize:''//每页记录数
+//			pageSize:'',//每页记录数
+//			publisherId:''//发布者ID,0代表全部
 //		};
 //返回model：model_homeSchoolList,model_userNoteInfo
 var postDataPro_getNotesByUserForStudent = function(commonData, wd, callback) {
@@ -1637,4 +1638,34 @@ var postDataPro_getStudentName = function(commonData, wd, callback) {
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'file/getStudentName', enData, commonData, 2, wd, callback);
+}
+
+//74.(用户空间）获取多用户空间所有用户动态列表
+//所需参数
+//		var comData = {
+//			userId: '',//用户ID,登录用户
+//			publisherIds: '',//发布者ID,例如[1,2,3]
+//			pageIndex: '',//当前页数
+//			pageSize: ''//每页记录数
+//		};
+//返回:model_userNoteInfo
+var postDataPro_getAllUserSpacesByUser = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getAllUserSpacesByUser', enData, commonData, 2, wd, callback);
+}
+
+//75.（点到记事）删除某学生点到记事
+//所需参数
+//		var comData = {
+//			studentId:'',//学生ID
+//			classId:''//班级ID
+//		};
+//返回学生姓名数组
+var postDataPro_delNoteByStudent = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'note/delNoteByStudent', enData, commonData, 2, wd, callback);
 }

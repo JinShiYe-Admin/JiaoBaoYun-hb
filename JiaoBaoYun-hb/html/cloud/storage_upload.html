@@ -346,6 +346,7 @@
 						var URL = succesCB.root.toURL();
 						console.log("root: " + LocalURL + '|' + URL);
 						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+						console.log("getDirectory: " + LocalURL+personalUTID+"/");
 						succesCB.root.getDirectory(personalUTID, {
 							create: true,
 							exclusive: false
@@ -361,7 +362,7 @@
 							initElement(LocalURL2);
 						}, function(errorCB2) {
 							mui.toast("创建或打开子目录失败: " + JSON.stringify(errorCB2));
-							console.log("创建或打开子目录: " + JSON.stringify(errorCB2));
+							console.log("创建或打开子目录失败: " + JSON.stringify(errorCB2));
 						});
 						//						initElement(LocalURL);
 					}, function(errorCB) {
