@@ -102,12 +102,23 @@ function addSomeEvent() {
 			wd.close();
 			mui.toast('发布成功！');
 			console.log('推送个人空间成功' + JSON.stringify(data));
-			var wobj = plus.webview.currentWebview();
-			wobj.reload(true);
+			events.fireToPageNone('zonep_sub.html','refreshZonep');
+			datasource = []; //底部列表数据
+		topStudentArr = [];
+		topArray = []; //顶部班级列表数据
+		requestTimes = 0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
+		requestTimes2 = 0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
+		requestTimes3 = 0;
+		isRefresh = 1; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
+		selectCell = {}; //选择的cell
+		getStuList();
+//			var wobj = plus.webview.currentWebview();
+//			wobj.reload(true);
 		})
 	})
 
 	window.addEventListener('setRead', function(e) {
+		console.log('tableIndex='+tableIndex)
 		var tableIndex = selectCell.tableIndex;
 		var cellIndex = selectCell.cellIndex;
 		var cellNoReadCnt = selectCell.NoReadCnt
@@ -118,8 +129,7 @@ function addSomeEvent() {
 		var li = ul.children[cellIndex];
 		var tempModel = datasource[tableIndex].userList[cellIndex];
 		li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image" src="' + tempModel.uimg + '" />' + '<p class="time">' + tempModel.PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
-			tempModel.ugname + '<p class="mui-ellipsis">' + tempModel.MsgContent + '</p>';
-
+			tempModel.ugnick + '<p class="mui-ellipsis">' + tempModel.MsgContent + '</p>';
 		var seg = document.getElementById('segmentedControl');
 		var a = seg.children[tableIndex];
 		a.innerHTML = '';
@@ -361,7 +371,6 @@ function getTopList(index) {
 						'<p class="mui-ellipsis">' + topArray[i].MsgContent + '</p></div>';
 					ul.appendChild(li);
 				}
-
 			}
 
 		} else {
@@ -414,7 +423,6 @@ function getBottomList(index, userLists) {
 					getUserSpaces(upString, i); //获取多用户空间列表
 
 				}
-
 			}
 		} else {
 			mui.toast(data.RspTxt);
@@ -479,9 +487,9 @@ function getUserSpaces(upString, index) {
 			}
 				var Arrindex = tempUtidArr.indexOf(groupUserList[i].utid);
 				if(Arrindex>-1){
-					tempUserArr[Arrindex].ugname = tempUserArr[Arrindex].ugname+groupUserList[i].mstypeName;
+					tempUserArr[Arrindex].ugnick = tempUserArr[Arrindex].ugnick+groupUserList[i].mstypeName;
 				}else{
-					groupUserList[i].ugname = groupUserList[i].ugname+groupUserList[i].mstypeName;
+					groupUserList[i].ugnick = groupUserList[i].ugnick+groupUserList[i].mstypeName;
 					tempUtidArr.push(groupUserList[i].utid);
 					tempUserArr.push(groupUserList[i]);
 					
@@ -573,7 +581,7 @@ function refreshUI() {
 			} else {
 				noReadHTML = '';
 			}
-			var name= userList[j].ugname;
+			var name= userList[j].ugnick;
 			li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + userList[j].uimg + '" />' +
 				noReadHTML + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 				name + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';

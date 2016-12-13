@@ -182,8 +182,9 @@ mui.plusReady(function() {
 			noRead.style.visibility = 'hidden';
 
 		})
-
-		events.jumpPage(pubDynamic, '../quan/pub-dynamic.html');
+		events.addTap('pubDynamic', function() {
+			events.openNewWindowWithData('../quan/pub-dynamic.html', 'FromIndex');
+		})
 	}
 
 	var addCloudIcon = function(container) {
@@ -196,14 +197,16 @@ mui.plusReady(function() {
 	}
 	var aboutme = document.getElementById('aboutme');
 	events.addTap('aboutme', function() {
-			events.openNewWindow('../quan/aboutme.html')
-			var noRead = document.getElementById('aboutme_noRead');
-			noRead.style.visibility = 'hidden';
+		events.openNewWindow('../quan/aboutme.html')
+		var noRead = document.getElementById('aboutme_noRead');
+		noRead.style.visibility = 'hidden';
 
-		})
+	})
 	var pubDynamic = document.getElementById('pubDynamic');
-	events.jumpPage(pubDynamic, '../quan/pub-dynamic.html');
-	//自定义事件，模拟点击“首页选项卡”
+	events.addTap('pubDynamic', function() {
+			events.openNewWindowWithData('../quan/pub-dynamic.html', 'FromIndex');
+		})
+		//自定义事件，模拟点击“首页选项卡”
 	document.addEventListener('gohome', function() {
 		var defaultTab = document.getElementById("defaultTab");
 		//模拟首页点击

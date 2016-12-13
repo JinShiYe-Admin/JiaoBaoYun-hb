@@ -62,15 +62,18 @@
 			//发布按钮
 			events.addTap('publish', function() {
 				var textView = document.getElementById('input-content');
-				textView.value =  Trim(textView.value);
-				console.log('textView.value===' + textView.value)
-				if(!textView.value || textView.value == '') {
+				var tempText =  Trim(textView.value);
+				 
+				console.log('textView.value===' + tempText)
+				if(!tempText || tempText == '') {
 					mui.toast('请输入内容');
 					return;
+				}else{
+					tempText = tempText.replace('\n','<br />')
 				}
 				var postData = {
 					userId: userInfo.utid,
-					msgContent: textView.value,
+					msgContent: tempText,
 					noteType: '2',
 					encType: '0',
 					encAddr: '',
@@ -78,8 +81,9 @@
 					encIntro: ''
 				}
 				console.log(JSON.stringify(postData));
+				var flag = plus.webview.currentWebview().data; 
+				console.log('flag='+flag)
 				var main = plus.webview.getWebviewById('../quan/tab-zone.html');
-				
 				mui.fire(main, 'addUserSpaceForMutiUsers', {
 					postData: postData
 				});

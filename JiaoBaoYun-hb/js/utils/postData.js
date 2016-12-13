@@ -144,7 +144,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 				}
 			},
 			error: function(xhr, type, errorThrown) {
-				console.log('url==='+url+'wang luo cuow:' + JSON.stringify(xhr) + ',' + type + ',' + errorThrown);
+				console.log(''+url+':'+ type + ',' + JSON.stringify(xhr) + ','  + errorThrown);
 				waitingDialog.close();
 				mui.toast("网络连接失败，请重新尝试一下");
 			}

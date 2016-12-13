@@ -151,19 +151,6 @@
 			</div>
 
 		</div>
-		<!--下拉菜单-->
-		<!--<div id="popover" class="mui-popover">
-			<ul class=" mui-table-view">
-				<li class="mui-table-view-cell" style="text-align: center;">
-					删除
-				</li>
-				<li class="mui-table-view-cell" style="text-align: center;">
-					屏蔽
-				</li>
-				<li class="mui-table-view-cell" style="text-align: center;">
-					收藏
-			</ul>
-		</div>-->
 
 		<div id="comment-popover" class="mui-popover" style="width: 100%;top: 150px;height: 200px;">
 			<ul class="mui-table-view">
@@ -228,11 +215,6 @@
 				//请求数据
 				requestData(comData);
 				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-				//				var table = document.body.querySelector('.mui-table-view');
-				//				table.innerHTML = '';
-				//				var data = addData();
-				//				dynamiclistitem.addItem(table, data, id);
-
 			}, 1500);
 		}
 
@@ -258,166 +240,10 @@
 				requestData(comData);
 
 			}
-			//				mui('#pullrefresh').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
-
-			//							var table = document.body.querySelector('.mui-table-view');
-			//							var data = addData();
-			//							dynamiclistitem.addItem(table, data, id);
-			//			}, 1500);
 
 		}
-		var tempPage = 1; //页码，请求第几页数据
-		var totalCnt = 0; //当前留言的总条数
-		var flag = 2; //判断是加载更多1，还是刷新2
-		var zonepArray = []; //页码请求到要显示的数据，array[model_userNoteInfo]
 
-		//请求数据
-		function requestData(comData) {
-			// 等待的对话框
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			//28.（用户空间）获取用户针对某用户的空间列表
-			postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
-					wd.close();
-					console.log('获取个人空间列表_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					if(data.RspCode == 0) {
-						totalCnt = data.RspData.TotalCnt;
-						var tempRspData = data.RspData.Data;
-						//获取当前回调留言的个人信息，主要是头像、昵称
-						var tempArray = [];
-						//先遍历回调数组，获取
-						for(var item in tempRspData) {
-							//当前循环的model
-							var tempModel0 = tempRspData[item];
-							//将当前model中id塞到数组
-							tempArray.push(tempModel0.PublisherId);
-							//合并数组,点赞的人
-							tempArray = tempArray.concat(tempModel0.LikeUsers);
-							tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
-							//循环当前model中的回复数组
-							for(var item1 in tempModel0.Comments) {
-								//回复中的model
-								var tempModel1 = tempModel0.Comments[item1];
-								//将回复中的id塞到数组
-								tempArray.push(tempModel1.UserId);
-								tempArray.push(tempModel1.ReplyId);
-								//
-								for(var item2 in tempModel1.Replys) {
-									//回复中的model
-									var tempModel2 = tempModel1.Replys[item2];
-									//将回复中的id塞到数组
-									tempArray.push(tempModel2.UserId);
-									tempArray.push(tempModel2.ReplyId);
-								}
-							}
-						}
-						//给数组去重
-						tempArray = arrayDupRemoval(tempArray);
-						//发送获取用户资料申请
-						var tempData = {
-							vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
-							vtp: 'g' //查询类型,p(个人)g(id串)
-						}
-
-						//21.通过用户ID获取用户资料
-						postDataPro_PostUinf(tempData, wd, function(data1) {
-								wd.close();
-								console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
-								if(data1.RspCode == 0) {
-									//循环当前的个人信息返回值数组
-									for(var i in data1.RspData) {
-										//当前model
-										var tempModel = data1.RspData[i];
-										//更新头像
-										tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
-										//循环留言数组
-										for(var item in tempRspData) {
-											//当前循环的model
-											var tempModel0 = tempRspData[item];
-											//遍历点赞的人
-											for(var item2 in tempModel0.LikeUsers) {
-												//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
-												if(tempModel.utid == tempModel0.LikeUsers[item2]) {
-													tempModel0.LikeUsers.splice(item2, 1, tempModel);
-												}
-											}
-											//对比id是否一致
-											if(tempModel0.PublisherId == tempModel.utid) {
-												//合并
-												tempModel0 = $.extend(tempModel0, tempModel);
-											}
-											//循环当前model中的回复数组
-											for(var item1 in tempModel0.Comments) {
-												//回复中的model
-												var tempModel1 = tempModel0.Comments[item1];
-												//对比id是否一致
-												if(tempModel.utid == tempModel1.UserId) {
-													//添加参数
-													tempModel1.UserIdName = tempModel.unick;
-												}
-												if(tempModel.utid == tempModel1.ReplyId) {
-													//添加参数
-													tempModel1.ReplyIdName = tempModel.unick;
-												}
-												//
-												for(var item2 in tempModel1.Replys) {
-													//回复中的model
-													var tempModel2 = tempModel1.Replys[item2];
-													//对比id是否一致
-													if(tempModel.utid == tempModel2.UserId) {
-														//添加参数
-														tempModel2.UserIdName = tempModel.unick;
-													}
-													if(tempModel.utid == tempModel2.ReplyId) {
-														//添加参数
-														tempModel2.ReplyIdName = tempModel.unick;
-													}
-												}
-											}
-										}
-									}
-								}
-								console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
-
-								var table = document.body.querySelector('.mui-table-view');
-								//判断是加载更多1，还是刷新2
-								if(flag == 1) {
-									var tempLength = zonepArray.length;
-									//合并数组
-									zonepArray = zonepArray.concat(tempRspData);
-									//留言总条数,写到了协议开始
-									//							totalCnt = data.RspData.TotalCnt;
-//									setTimeout(function() {
-											mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
-											for(var i = tempLength; i < zonepArray.length; i++) {
-												id = i;
-												var data = addData(i);
-												dynamiclistitem.addItem(table, data, id);
-											} 
-										
-//									}, 1500);
-
-							} else {
-								tempPage = 1;
-								zonepArray = tempRspData;
-								//留言总条数
-								table.innerHTML = '';
-								for(var i = 0; i < zonepArray.length; i++) {
-									id = i;
-									var data = addData(i);
-									dynamiclistitem.addItem(table, data, id);
-								}
-
-							}
-						});
-				} else {
-					mui.toast(data.RspTxt);
-				}
-			});
-		}
-
-		var id = 0; //cell的id
-		mui.plusReady(function() {
-			publisherId = plus.webview.currentWebview().data; //发布者id
+		function setUserSpaceReadByUser() {
 			var NoReadCnt = plus.webview.currentWebview().NoReadCnt //未读条数
 			if(NoReadCnt != 0) { //如果未读条数不为0，则设置空间状态为已读
 				var comData = {
@@ -439,6 +265,153 @@
 
 				})
 			}
+		}
+
+		var tempPage = 1; //页码，请求第几页数据
+		var totalCnt = 0; //当前留言的总条数
+		var flag = 2; //判断是加载更多1，还是刷新2
+		var zonepArray = []; //页码请求到要显示的数据，array[model_userNoteInfo]
+
+		//请求数据
+		function requestData(comData) {
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//28.（用户空间）获取用户针对某用户的空间列表
+			postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
+				wd.close();
+				console.log('获取个人空间列表_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+					setUserSpaceReadByUser();
+					totalCnt = data.RspData.TotalCnt;
+					var tempRspData = data.RspData.Data;
+					//获取当前回调留言的个人信息，主要是头像、昵称
+					var tempArray = [];
+					//先遍历回调数组，获取
+					for(var item in tempRspData) {
+						//当前循环的model
+						var tempModel0 = tempRspData[item];
+						//将当前model中id塞到数组
+						tempArray.push(tempModel0.PublisherId);
+						//合并数组,点赞的人
+						tempArray = tempArray.concat(tempModel0.LikeUsers);
+						tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
+						//循环当前model中的回复数组
+						for(var item1 in tempModel0.Comments) {
+							//回复中的model
+							var tempModel1 = tempModel0.Comments[item1];
+							//将回复中的id塞到数组
+							tempArray.push(tempModel1.UserId);
+							tempArray.push(tempModel1.ReplyId);
+							//
+							for(var item2 in tempModel1.Replys) {
+								//回复中的model
+								var tempModel2 = tempModel1.Replys[item2];
+								//将回复中的id塞到数组
+								tempArray.push(tempModel2.UserId);
+								tempArray.push(tempModel2.ReplyId);
+							}
+						}
+					}
+					//给数组去重
+					tempArray = arrayDupRemoval(tempArray);
+					//发送获取用户资料申请
+					var tempData = {
+						vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
+						vtp: 'g' //查询类型,p(个人)g(id串)
+					}
+
+					//21.通过用户ID获取用户资料
+					postDataPro_PostUinf(tempData, wd, function(data1) {
+						wd.close();
+						console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+						if(data1.RspCode == 0) {
+							//循环当前的个人信息返回值数组
+							for(var i in data1.RspData) {
+								//当前model
+								var tempModel = data1.RspData[i];
+								//更新头像
+								tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
+								//循环留言数组
+								for(var item in tempRspData) {
+									//当前循环的model
+									var tempModel0 = tempRspData[item];
+									//遍历点赞的人
+									for(var item2 in tempModel0.LikeUsers) {
+										//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
+										if(tempModel.utid == tempModel0.LikeUsers[item2]) {
+											tempModel0.LikeUsers.splice(item2, 1, tempModel);
+										}
+									}
+									//对比id是否一致
+									if(tempModel0.PublisherId == tempModel.utid) {
+										//合并
+										tempModel0 = $.extend(tempModel0, tempModel);
+									}
+									//循环当前model中的回复数组
+									for(var item1 in tempModel0.Comments) {
+										//回复中的model
+										var tempModel1 = tempModel0.Comments[item1];
+										//对比id是否一致
+										if(tempModel.utid == tempModel1.UserId) {
+											//添加参数
+											tempModel1.UserIdName = tempModel.unick;
+										}
+										if(tempModel.utid == tempModel1.ReplyId) {
+											//添加参数
+											tempModel1.ReplyIdName = tempModel.unick;
+										}
+										//
+										for(var item2 in tempModel1.Replys) {
+											//回复中的model
+											var tempModel2 = tempModel1.Replys[item2];
+											//对比id是否一致
+											if(tempModel.utid == tempModel2.UserId) {
+												//添加参数
+												tempModel2.UserIdName = tempModel.unick;
+											}
+											if(tempModel.utid == tempModel2.ReplyId) {
+												//添加参数
+												tempModel2.ReplyIdName = tempModel.unick;
+											}
+										}
+									}
+								}
+							}
+						}
+						console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+
+						var table = document.body.querySelector('.mui-table-view');
+						//判断是加载更多1，还是刷新2
+						if(flag == 1) {
+							var tempLength = zonepArray.length;
+							//合并数组
+							zonepArray = zonepArray.concat(tempRspData);
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+							for(var i = tempLength; i < zonepArray.length; i++) {
+								id = i;
+								var data = addData(i);
+								dynamiclistitem.addItem(table, data, id);
+							}
+						} else {
+							tempPage = 1;
+							zonepArray = tempRspData;
+							table.innerHTML = '';
+							for(var i = 0; i < zonepArray.length; i++) {
+								id = i;
+								var data = addData(i);
+								dynamiclistitem.addItem(table, data, id);
+							}
+						}
+					});
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		}
+
+		var id = 0; //cell的id
+		mui.plusReady(function() {
+			publisherId = plus.webview.currentWebview().data; //发布者id
 
 			tempPage = 1; //页码，请求第几页数据
 			totalCnt = 0; //当前留言的总条数
@@ -451,6 +424,10 @@
 				pageSize: '10' //每页记录数
 			};
 			requestData(comData);
+			window.addEventListener('refreshZonep', function(data) {
+				console.log(66666666)
+				requestData(comData)
+			})
 
 			var click = []; //记录被点击的li的id和被点击元素
 
