@@ -12,7 +12,38 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<link rel="stylesheet" href="../../css/cloud/file.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js" ></script>
+		<style>
+			#sliderSegmentedControl {
+				background-color: white;
+			}
+			/*.iconfont {
+				line-height: 42px;
+			}*/
+
+			.iconfont-size {
+				font-size: 42px;
+			}
+
+			.mui-table-view {
+				background-color: transparent;
+			}
+
+			.mui-table-view-cell {
+				background-color: white;
+			}
+
+			.mui-btn {
+				right: 15px;
+			}
+
+			.transport-info {
+				width: 90%;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -20,17 +51,248 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">传输列表</h1>
 		</header>
-		<script type="text/javascript">
-			mui.init()
-			mui.plusReady(function() {
-				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				console.log('传输列表');
-				mui.back = function() {
-					plus.webview.hide(main, 'pop-out');
-					//main.hide();
-				}
-			});
-		</script>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item mui-active" href="#item1mobile">
+						下载列表
+					</a>
+					<a class="mui-control-item" href="#item2mobile">
+						上传列表
+					</a>
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									<div style="margin-top: 5px;background-color: white;">
+										<div id="downloadnum" style="padding:5px;">
+											下载中(2)
+										</div>
+										<div style="height: 1px;width: 100%;background: #c8c7cc;"></div>
+									</div>
+									<div id="download">
+										<li class="mui-table-view-cell mui-media">
+											<div class="mui-media-object mui-pull-right">
+												<button type="button" class="mui-btn mui-btn-outlined">暂停</button>
+											</div>
+											<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">
+											<div class="mui-media-body">
+												<div class="mui-ellipsis transport-info">
+													文件夹名字文件夹名字文件夹名字文件夹名字文件夹名字
+												</div>
+												<div class="transport-info">
+													<div class="mui-progressbar">
+														<span></span>
+													</div>
+													<p class="mui-pull-left">
+														420KB/528KB
+													</p>
+													<p class="mui-pull-right">
+														420KB/s
+													</p>
+												</div>
+											</div>
+										</li>
+										<li class="mui-table-view-cell mui-media">
+											<div class="mui-media-object mui-pull-right">
+												<button type="button" class="mui-btn mui-btn-outlined">取消</button>
+											</div> <span class="mui-media-object mui-icon iconfont iconfont-size icon-excel mui-pull-left"></span>
+											<div class="mui-media-body">
+												<div class="mui-ellipsis transport-info">
+													文件名字文件名字文件名字文件名字文件名字文件名字
+												</div>
+												<div class="transport-info">
+													<div class="mui-progressbar">
+														<span></span>
+													</div>
+													<p class="mui-pull-left">
+														420KB/528KB
+													</p>
+													<p class="mui-pull-right">
+														正在等待...
+													</p>
+												</div>
+											</div>
+										</li>
+									</div>
+									<div style="margin-top: 10px;background-color: white;">
+										<div id="downloadednum" style="padding:5px;">
+											已下载(2)
+										</div>
+										<div style="height: 1px;width: 100%;background: #c8c7cc;"></div>
+									</div>
+									<div id="downloaded">
+										<li class="mui-table-view-cell mui-media">
+											<div class="mui-media-object mui-pull-right">
+												<button type="button" class="mui-btn mui-btn-outlined">打开</button>
+											</div>
+											<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">
+											<div class="mui-media-body">
+												<div class="mui-ellipsis transport-info">
+													文件夹名字文件夹名字文件夹名字文件夹名字
+												</div>
+												<div class="transport-info">
+													<p class="mui-pull-left">
+														528KB&nbsp;&nbsp;2016-12-13 15:25:36
+													</p>
+												</div>
+											</div>
+										</li>
+										<li class="mui-table-view-cell mui-media">
+											<div class="mui-media-object mui-pull-right">
+												<button type="button" class="mui-btn mui-btn-outlined">打开</button>
+											</div> <span class="mui-media-object mui-icon iconfont iconfont-size icon-excel mui-pull-left"></span>
+											<div class="mui-media-body">
+												<div class="mui-ellipsis transport-info">
+													文件名字文件名字文件名字文件名字文件名字
+												</div>
+												<div class="transport-info">
+													<p class="mui-pull-left">
+														528KB&nbsp;&nbsp;2016-12-13 15:25:36
+													</p>
+												</div>
+											</div>
+										</li>
+									</div>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll2" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									<div style="margin-top: 5px;background-color: white;">
+										<div id="uploadnum" style="padding:5px;">
+											上传中
+										</div>
+										<div style="height: 1px;width: 100%;background: #c8c7cc;"></div>
+									</div>
+									<div id="upload">
+										<li class="mui-table-view-cell mui-media">
+											<div class="mui-media-object mui-pull-right">
+												<button type="button" class="mui-btn mui-btn-outlined">暂停</button>
+											</div>
+											<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">
+											<div class="mui-media-body">
+												<div class="mui-ellipsis transport-info">
+													文件夹名字文件夹名字文件夹名字文件夹名字文件夹名字
+												</div>
+												<div class="transport-info">
+													<div class="mui-progressbar">
+														<span></span>
+													</div>
+													<p class="mui-pull-left">
+														420KB/528KB
+													</p>
+													<p class="mui-pull-right">
+														420KB/s
+													</p>
+												</div>
+											</div>
+										</li>
+										<li class="mui-table-view-cell mui-media">
+											<div class="mui-media-object mui-pull-right">
+												<button type="button" class="mui-btn mui-btn-outlined">取消</button>
+											</div> <span class="mui-media-object mui-icon iconfont iconfont-size icon-excel mui-pull-left"></span>
+											<div class="mui-media-body">
+												<div class="mui-ellipsis transport-info">
+													文件名字文件名字文件名字文件名字文件名字文件名字
+												</div>
+												<div class="transport-info">
+													<div class="mui-progressbar">
+														<span></span>
+													</div>
+													<p class="mui-pull-left">
+														420KB/528KB
+													</p>
+													<p class="mui-pull-right">
+														正在等待...
+													</p>
+												</div>
+											</div>
+										</li>
+									</div>
+									<div style="margin-top: 10px;background-color: white;">
+										<div id="uploadednum" style="padding:5px;">
+											已上传
+										</div>
+										<div style="height: 1px;width: 100%;background: #c8c7cc;"></div>
+									</div>
+									<div id="uploaded">
+										<li class="mui-table-view-cell mui-media">
+											<div class="mui-media-object mui-pull-right">
+												<button type="button" class="mui-btn mui-btn-outlined">打开</button>
+											</div>
+											<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">
+											<div class="mui-media-body">
+												<div class="mui-ellipsis transport-info">
+													文件夹名字文件夹名字文件夹名字文件夹名字
+												</div>
+												<div class="transport-info">
+													<p class="mui-pull-left">
+														528KB&nbsp;&nbsp;2016-12-13 15:25:36
+													</p>
+												</div>
+											</div>
+										</li>
+										<li class="mui-table-view-cell mui-media">
+											<div class="mui-media-object mui-pull-right">
+												<button type="button" class="mui-btn mui-btn-outlined">打开</button>
+											</div> <span class="mui-media-object mui-icon iconfont iconfont-size icon-excel mui-pull-left"></span>
+											<div class="mui-media-body">
+												<div class="mui-ellipsis transport-info">
+													文件名字文件名字文件名字文件名字文件名字
+												</div>
+												<div class="transport-info">
+													<p class="mui-pull-left">
+														528KB&nbsp;&nbsp;2016-12-13 15:25:36
+													</p>
+												</div>
+											</div>
+										</li>
+									</div>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<script type="text/javascript">
+					mui.init()
+					mui.plusReady(function() {
+						var main = plus.webview.currentWebview(); //获取当前窗体对象
+
+						console.log('传输列表');
+
+						//---滑动start---
+						mui(".mui-scroll-wrapper").scroll({
+							scrollY: true, //是否竖向滚动
+							scrollX: false, //是否横向滚动
+							indicators: true, //是否显示滚动条
+							deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+							bounce: true, //是否启用回弹
+						});
+						//---滑动end---
+
+						mui.back = function() {
+							plus.webview.hide(main, 'pop-out');
+							//main.hide();
+						}
+
+						//新增一项上传任务
+						window.addEventListener('addUpload', function(e) {
+							var subData = e.detail.data; //接收页面传入的参数值
+							//							var subData = {
+							//								path: fid, //路径
+							//								metadata: succesCB //文件信息
+							//							}
+							console.log('传输列表:' + JSON.stringify(subData));
+						});
+					});
+				</script>
 	</body>
 
 </html>
