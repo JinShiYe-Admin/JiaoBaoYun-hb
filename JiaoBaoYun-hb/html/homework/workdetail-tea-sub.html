@@ -119,13 +119,13 @@
 			}
 			//从主页传值到这个界面的model
 			var homeworkModel = {
-				"Contents": "Test",
-				"HomeworkId": 28,
-				"HomeworkTitle": "2016年12月2日星期五数学作业",
-				"Remain": 1,
-				"Subject": "语文",
-				"Upload": 0,
-				'classId': 1 //人为赋值
+//				"Contents": "Test",
+//				"HomeworkId": 28,
+//				"HomeworkTitle": "2016年12月2日星期五数学作业",
+//				"Remain": 1,
+//				"Subject": "语文",
+//				"Upload": 0,
+//				'classId': 1 //人为赋值
 			};
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 			//作业详情model
@@ -148,6 +148,7 @@
 								resetData();
 				console.log('作业主界面传送的值：'+JSON.stringify(e.detail.data));
 				homeworkModel = e.detail.data;
+				console.log('homeworkModel='+JSON.stringify(homeworkModel));
 
 				
 
