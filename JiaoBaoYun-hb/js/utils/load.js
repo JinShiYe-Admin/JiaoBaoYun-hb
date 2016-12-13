@@ -36,7 +36,6 @@ var load=(function(mod){
 			task.addFile(path,{key:'path'});
 			console.log(path);
 		})
-		task.setRequestHeader('token',getToken);
 		task.addEventListener( "statechanged", onStateChanged, false );
 		//开始上传
 		task.start();
