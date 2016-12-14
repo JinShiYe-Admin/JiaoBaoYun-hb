@@ -114,7 +114,7 @@
 									var temp;
 									events.openNewWindowWithData('modify_password.html', temp);
 									events.fireToPageNone('modify_password.html', 'registerPW');
-									events.fireToPageNone('../quan/tab-zone.html','infoChanged');
+									events.infoChanged();
 								});
 							} else { //验证码模式登录1
 								console.log('yanzhengma denglu');
@@ -133,7 +133,7 @@
 										var temp;
 										events.openNewWindowWithData('modify_password.html', temp);
 										events.fireToPageNone('modify_password.html', 'registerPW');
-										events.fireToPageNone('../quan/tab-zone.html','infoChanged');
+//										events.fireToPageNone('../quan/tab-zone.html','infoChanged');
 									}
 
 								});

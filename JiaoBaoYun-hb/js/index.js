@@ -11,14 +11,18 @@ mui.plusReady(function() {
 	window.addEventListener('infoChanged', function() {
 		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
-
-		document.querySelector('img').src = myStorage.getItem(storageKeyName.PERSONALINFO).uimg ? myStorage.getItem(storageKeyName.PERSONALINFO).uimg : '../../image/utils/default-personalimage.png';
-		//				if(plus.os.name == 'iOS') {
-		//					var wobj = plus.webview.currentWebview();
-		//					wobj.reload(true);
-		//				}
+		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
+		document.querySelector('img').src = img ? img : '../../image/utils/default-personalimage.png'
+		if(plus.os.name == 'iOS') {
+			var wobj = plus.webview.currentWebview();
+			wobj.reload(true);
+		}
 
 	})
+	window.addEventListener('aboutmNoRead', function() {
+		getAboutMe();
+	})
+	
 	getAboutMe(); //获取与我相关未读数
 	Statusbar.barHeight(); //设置距离顶部的高度
 	var header = document.querySelector(".mui-bar-nav"); //顶部导航

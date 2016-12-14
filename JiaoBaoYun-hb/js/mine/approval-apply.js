@@ -31,6 +31,7 @@ mui.plusReady(function() {
 			 * 申请通过后传递的事件
 			 */
 		window.addEventListener('appPassed', function(e) {
+			console.log('接受邀请');
 			events.clearChild(list);
 			getData('inv', setData);
 //			var passedGutid = e.detail.data;
@@ -108,6 +109,8 @@ var addListener = function() {
 						events.clearChild(list);
 						getData('inv', setData);
 						events.fireToPageNone('mine.html','newsChanged');
+						events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
+
 					}else{
 						mui.toast(data.RspTxt);
 					}

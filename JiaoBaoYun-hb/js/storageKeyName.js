@@ -20,6 +20,7 @@ var storageKeyName = (function(mod) {
 	mod.QNGETDOWNTOKENFILE = 'http://192.168.0.178:8517/GetToken.ashx?geturl='; //获取下载文件（云存储）的token的url，url+七牛文件url
 	mod.QNGETTOKENDELETE = 'http://192.168.0.178:8517/BatchDelete.ashx'; //获取批量（或者一个）删除七牛文件的token的url
 
+
 	return mod;
 
 })(storageKeyName || {});
