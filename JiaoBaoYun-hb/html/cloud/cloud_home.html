@@ -535,6 +535,7 @@
 								}
 							}
 							if(teacherClasses.length > 0 || studentClasses.length > 0) {
+								console.log('teacherClasses:'+teacherClasses.length+','+studentClasses.length);
 									events.fireToPageWithData('../homework/homework-tea.html', 'postClasses', {
 										teacherClasses: teacherClasses,
 										studentClasses: studentClasses
