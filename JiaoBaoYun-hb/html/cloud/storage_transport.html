@@ -15,7 +15,9 @@
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<link rel="stylesheet" href="../../css/cloud/file.css" />
 		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/publicProtocol.js" ></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
+		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
 		<style>
 			#sliderSegmentedControl {
 				background-color: white;
@@ -69,12 +71,12 @@
 								<ul class="mui-table-view">
 									<div style="margin-top: 5px;background-color: white;">
 										<div id="downloadnum" style="padding:5px;">
-											下载中(2)
+											下载中
 										</div>
 										<div style="height: 1px;width: 100%;background: #c8c7cc;"></div>
 									</div>
 									<div id="download">
-										<li class="mui-table-view-cell mui-media">
+										<!--<li class="mui-table-view-cell mui-media">
 											<div class="mui-media-object mui-pull-right">
 												<button type="button" class="mui-btn mui-btn-outlined">暂停</button>
 											</div>
@@ -84,7 +86,7 @@
 													文件夹名字文件夹名字文件夹名字文件夹名字文件夹名字
 												</div>
 												<div class="transport-info">
-													<div class="mui-progressbar">
+													<div class="mui-progressbar" style="display: none;">
 														<span></span>
 													</div>
 													<p class="mui-pull-left">
@@ -116,16 +118,16 @@
 													</p>
 												</div>
 											</div>
-										</li>
+										</li>-->
 									</div>
 									<div style="margin-top: 10px;background-color: white;">
 										<div id="downloadednum" style="padding:5px;">
-											已下载(2)
+											已下载
 										</div>
 										<div style="height: 1px;width: 100%;background: #c8c7cc;"></div>
 									</div>
 									<div id="downloaded">
-										<li class="mui-table-view-cell mui-media">
+										<!--<li class="mui-table-view-cell mui-media">
 											<div class="mui-media-object mui-pull-right">
 												<button type="button" class="mui-btn mui-btn-outlined">打开</button>
 											</div>
@@ -155,7 +157,7 @@
 													</p>
 												</div>
 											</div>
-										</li>
+										</li>-->
 									</div>
 								</ul>
 							</div>
@@ -172,7 +174,7 @@
 										<div style="height: 1px;width: 100%;background: #c8c7cc;"></div>
 									</div>
 									<div id="upload">
-										<li class="mui-table-view-cell mui-media">
+										<!--<li class="mui-table-view-cell mui-media">
 											<div class="mui-media-object mui-pull-right">
 												<button type="button" class="mui-btn mui-btn-outlined">暂停</button>
 											</div>
@@ -214,7 +216,7 @@
 													</p>
 												</div>
 											</div>
-										</li>
+										</li>-->
 									</div>
 									<div style="margin-top: 10px;background-color: white;">
 										<div id="uploadednum" style="padding:5px;">
@@ -223,7 +225,7 @@
 										<div style="height: 1px;width: 100%;background: #c8c7cc;"></div>
 									</div>
 									<div id="uploaded">
-										<li class="mui-table-view-cell mui-media">
+										<!--<li class="mui-table-view-cell mui-media">
 											<div class="mui-media-object mui-pull-right">
 												<button type="button" class="mui-btn mui-btn-outlined">打开</button>
 											</div>
@@ -253,46 +255,200 @@
 													</p>
 												</div>
 											</div>
-										</li>
+										</li>-->
 									</div>
 								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
-				<script type="text/javascript">
-					mui.init()
-					mui.plusReady(function() {
-						var main = plus.webview.currentWebview(); //获取当前窗体对象
+			</div>
 
-						console.log('传输列表');
+			<script type="text/javascript">
+				mui.init()
+				mui.plusReady(function() {
+					var main = plus.webview.currentWebview(); //获取当前窗体对象
 
-						//---滑动start---
-						mui(".mui-scroll-wrapper").scroll({
-							scrollY: true, //是否竖向滚动
-							scrollX: false, //是否横向滚动
-							indicators: true, //是否显示滚动条
-							deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
-							bounce: true, //是否启用回弹
-						});
-						//---滑动end---
+					console.log('传输列表');
 
-						mui.back = function() {
-							plus.webview.hide(main, 'pop-out');
-							//main.hide();
-						}
-
-						//新增一项上传任务
-						window.addEventListener('addUpload', function(e) {
-							var subData = e.detail.data; //接收页面传入的参数值
-							//							var subData = {
-							//								path: fid, //路径
-							//								metadata: succesCB //文件信息
-							//							}
-							console.log('传输列表:' + JSON.stringify(subData));
-						});
+					//---滑动start---
+					mui(".mui-scroll-wrapper").scroll({
+						scrollY: true, //是否竖向滚动
+						scrollX: false, //是否横向滚动
+						indicators: true, //是否显示滚动条
+						deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+						bounce: true, //是否启用回弹
 					});
-				</script>
+					//---滑动end---
+
+					mui.back = function() {
+						plus.webview.hide(main, 'pop-out');
+						//main.hide();
+					}
+
+					//新增一项上传任务
+					window.addEventListener('addUpload', function(e) {
+						var subData = e.detail.data; //接收页面传入的参数值
+						//var subData = {
+						//	path: fid, //路径
+						//	fname: fname, //文件名
+						//	metadata: succesCB //文件信息
+						//  pid:pid//云盘文件夹父ID
+						//}
+						if(mui.os.android) { //android系统
+							subData.path = 'file://' + subData.path;
+						}
+						console.log('传输列表新增一项上传任务:' + JSON.stringify(subData));
+						var ftype = '';
+						var ftypeList = subData.fname.split('.');
+						if(ftypeList.length != 1) {
+							ftype = '.' + ftypeList[ftypeList.length - 1];
+						}
+						var myDate = new Date();
+						var QNFileName = myDate.getTime() + (Math.floor(Math.random() * 10000) + 1) + ftype;
+						var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENFILE;
+						console.log('文件类型:' + ftype + '|七牛存储的文件名:' + QNFileName + '|getUpTokenUrl:' + getUpTokenUrl);
+
+						ColudFileUtil.getCurrentType(function(data) {
+							console.log('获取当前网络状态:' + JSON.stringify(data));
+							if(data.code == 3) { //无线WIFI网络
+								getQNUpToken(getUpTokenUrl, QNFileName, subData.path, subData.fname);
+							} else {
+								if(data.code == 1) {
+									mui.toast(data.type);
+								} else {
+									var btnArray = ['否', '是'];
+									mui.confirm('当前不是无线WIFI网络，还继续上传吗？', '提示', btnArray, function(e) {
+										if(e.index == 1) { //是
+											getQNUpToken(getUpTokenUrl, QNFileName, subData.path, subData.fname);
+										} else {
+
+										}
+									});
+								}
+							}
+						});
+
+					});
+
+					/**
+					 * 获取七牛上传token
+					 * @param {Object} getUpTokenUrl 获取uptoken的url
+					 * @param {Object} QNFileName 存放在七牛的文件名
+					 * @param {Object} fPath 上传文件的本地路径
+					 * @param {Object} fname 上传文件的名字
+					 */
+					function getQNUpToken(getUpTokenUrl, QNFileName, fPath, fname) {
+						ColudFileUtil.getQNUpToken(getUpTokenUrl, QNFileName, function(data) {
+								var QNUptoken = data.uptoken;
+								console.log('七牛上传token:' + QNUptoken);
+								ColudFileUtil.upload(fPath, QNUptoken, QNFileName, function(upload, status) {
+									//上传任务完成的监听
+									console.log('上传任务完成:status:' + status + '|upload:' + JSON.stringify(upload))
+								}, function(upload, status) {
+									//上传任务状态监听
+									//上传任务的标识
+									var id = upload.__UUID__;
+									//已完成上传数据的大小
+									var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
+									//上传数据的总大小
+									var totalSize = AndroidFileSystem.readSize(upload.totalSize);
+									//上传任务的状态
+									var uploadState = upload.state;
+									switch(uploadState) {
+										case 0: //上传任务开始调度
+											console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
+											break;
+										case 1: //上传任务开始请求
+											console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
+											addUploadItem(id, fname);
+											break;
+										case 2: //上传任务请求已经建立
+											console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
+											mui("#bar_" + id).progressbar({
+												progress: 0
+											}).show();
+											break;
+										case 3: //上传任务提交数据
+											//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
+											mui("#bar_" + id).progressbar().setProgress(upload.uploadedSize / upload.totalSize * 100);
+											document.getElementById("waiting_" + id).style.display = 'none';
+											document.getElementById("size_" + id).innerText = uploadedSize + '/' + totalSize;
+											break;
+										case 4: //上传任务已完成
+											console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
+											break;
+										case 5: //上传任务已暂停
+											console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
+											break;
+										default:
+											console.log('上传任务状态监听:其他状态');
+											break;
+									}
+								});
+							},
+							function(xhr, type, errorThrown) {
+								mui.toast('获取七牛上传token失败：' + type);
+								console.log('获取七牛上传token失败：' + type);
+							});
+					}
+
+					/**
+					 * 添加一项正在上传
+					 * @param {Object} id
+					 * @param {Object} fname
+					 */
+					function addUploadItem(id, fname) {
+						console.log('addUploadItem:' + id + '|' + fname)
+						var li = document.createElement('li');
+						li.setAttribute('id', id);
+						li.className = 'mui-table-view-cell mui-media';
+						li.innerHTML = '<div class="mui-media-object mui-pull-right">\
+											<button id="btn_' + id + '" type="button" class="mui-btn mui-btn-outlined">取消</button>\
+										</div> <span class="mui-media-object mui-icon iconfont iconfont-size icon-excel mui-pull-left"></span>\
+										<div class="mui-media-body">\
+											<div class="mui-ellipsis transport-info">\
+												' + fname + '\
+											</div>\
+											<div class="transport-info">\
+												<p class="mui-pull-left">\
+													528KB&nbsp;&nbsp;2016-12-13 15:25:36\
+												</p>\
+											</div>\
+										</div>';
+						document.getElementById("upload").appendChild(li);
+					}
+
+					/**
+					 * 添加一项已经上传
+					 * @param {Object} id
+					 * @param {Object} fname
+					 */
+					function addUploadedItem(id, fname) {
+						console.log('addUploadItem:' + id + '|' + fname)
+						var li = document.createElement('li');
+						li.setAttribute('id', id);
+						li.className = 'mui-table-view-cell mui-media';
+						li.innerHTML = '<div class="mui-media-object mui-pull-right">\
+											<button id="btn_' + id + '" type="button" class="mui-btn mui-btn-outlined">取消</button>\
+										</div> <span class="mui-media-object mui-icon iconfont iconfont-size icon-excel mui-pull-left"></span>\
+										<div class="mui-media-body">\
+											<div class="mui-ellipsis transport-info">\
+												' + fname + '\
+											</div>\
+											<div class="transport-info">\
+												<p id="size_' + id + '" class="mui-pull-left">\
+													0B/0B\
+												</p>\
+												<p id="waiting_' + id + '" class="mui-pull-right">\
+															正在等待...\
+												</p>\
+											</div>\
+										</div>';
+						document.getElementById("uploaded").insertBefore(li, document.getElementById("uploaded").firstChild);
+					}
+				});
+			</script>
 	</body>
 
 </html>
