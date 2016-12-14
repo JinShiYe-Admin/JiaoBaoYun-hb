@@ -13,32 +13,163 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">作业评论</h1>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">作业评论</h1>
 		</header>
 		<div class="mui-content">
 			<!--作业详情区-->
-		    <div class="homework-container" style="min-height: 300px;">
-		    	
-		    </div>
-		    <!--评论区-->
-		    <div class="comment-container">
-	    		<h4>作业评语</h4>
-	    		<textarea rows="5" style="border: solid thin lightgray;"></textarea>
-	    		<button id="submit" type="submit" class="mui-btn mui-btn-green btn-submit">提交评论</button>
-		    </div>
-		    
+			<div class="homework-container" style="min-height: 300px;">
+
+			</div>
+			<!--评论区-->
+			<div class="comment-container">
+				<h4>作业评语</h4>
+				<textarea rows="5" style="border: solid thin lightgray;"></textarea>
+				<button id="submit" type="submit" class="mui-btn mui-btn-green btn-submit">提交评论</button>
+			</div>
+
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
 			mui.init()
-			//提交评论按钮
-			events.addTap('submit',function(){
+				//提交评论按钮
+			events.addTap('submit', function() {
 				//上传服务器数据
 				//back
 				mui.back();
-			})
+			});
+
+			//
+
+			//2.	获取教师发布作业详情，不包括学生提交的答案；学生
+			function requestGetHomeworkStu(comData) {
+				//所需参数
+				var comData = {
+					studentId: '', //学生Id
+					classId: '', //班级群Id；
+					homeworkId: '' //作业id；
+				};
+				//2.	获取教师发布作业详情，不包括学生提交的答案；
+				postDataPro_GetHomeworkStu(comData, wd, function(data) {
+					wd.close();
+					console.log('2.postDataPro_GetHomeworkStu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+
+					} else {
+
+					}
+				});
+			}
+
+			//3.	获取作业结果；学生
+			function requestGetHomeworkResultStu(comData) {
+				//所需参数
+				var comData = {
+					studentId: '', //学生Id
+					classId: '', //班级群Id；
+					homeworkId: '' //作业id；
+				};
+				//3.	获取作业结果；
+				postDataPro_GetHomeworkResult(comData, wd, function(data) {
+					wd.close();
+					console.log('3.postDataPro_GetHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+
+					} else {
+
+					}
+				});
+			}
+
+			//8.	评价学生上传作业，作业评价
+			function requestCommentHomeworkResult(comData) {
+				//所需参数
+				var comData = {
+					teacherId: '', //教师Id
+					studentId: '', //学生Id；
+					classId: '', //班级群Id；
+					homeworkId: '', //作业id；
+					comment: '' //评价
+				};
+				//8.	评价学生上传作业，作业评价
+				postDataPro_CommentHomeworkResult(comData, wd, function(data) {
+					wd.close();
+					console.log('8.postDataPro_CommentHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+
+					} else {
+
+					}
+				});
+			}
+
+			//15.修改作业评价
+			function requestModifyHomeworkResultComment(comData) {
+				//所需参数
+				var comData = {
+					teacherId: '', //教师Id
+					homeworkResultId: '', //要修改的作业评价id；
+					studentId: '', //学生Id；
+					classId: '', //班级群Id；
+					homeworkId: '', //作业id；
+					comment: '' //评价；
+				};
+				//15.修改作业评价
+				postDataPro_ModifyHomeworkResultComment(comData, wd, function(data) {
+					wd.close();
+					console.log('15.postDataPro_ModifyHomeworkResultComment:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+
+					} else {
+
+					}
+				});
+			}
+
+			//9.评价学生上传答案，答案评价，老师
+			function requestCommentAnswerResult(comData) {
+				//所需参数
+				var comData = {
+					teacherId: '', //教师Id
+					answerResultId: '', //
+					studentId: '', //学生Id；
+					classId: '', //班级群Id；
+					comment: '' //评价
+				};
+				//9.评价学生上传答案，答案评价
+				postDataPro_CommentAnswerResult(comData, wd, function(data) {
+					wd.close();
+					console.log('9.postDataPro_CommentAnswerResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+
+					} else {
+
+					}
+				});
+			}
+
+			//16.修改答案评价，老师
+			function requestModifyAnswerResultComment(comData) {
+				//所需参数
+				var comData = {
+					teacherId: '', //教师Id
+					answerResultId: '', //要修改的答案评价的id；
+					studentId: '', //学生Id；
+					classId: '', //班级群Id；
+					comment: '' //评价；
+				};
+				//16.修改答案评价
+				postDataPro_ModifyAnswerResultComment(comData, wd, function(data) {
+					wd.close();
+					console.log('16.postDataPro_ModifyAnswerResultComment:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+
+					} else {
+
+					}
+				});
+			}
 		</script>
 	</body>
 

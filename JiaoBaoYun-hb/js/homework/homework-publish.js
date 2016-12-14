@@ -3,35 +3,35 @@
 var selectSubjectID;
 //老师发布作业时，选择的群
 var selectClassArray = [];
-var submitOnLine = true;//是否在线提交 默认为是
+var submitOnLine = true; //是否在线提交 默认为是
 //科目控件
 var subjectsContainer = document.getElementById('subjects');
 //个人id
 var personalUTID;
 mui.init();
 mui.plusReady(function() {
-		events.preload('classes-select.html',200);
-		personalUTID =parseInt(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid);
+		events.preload('classes-select.html', 200);
+		personalUTID = parseInt(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid);
 		window.addEventListener('postClasses', function(e) {
-			console.log('发布作业界面获取的班级数据：'+JSON.stringify(e.detail.data));
+			console.log('发布作业界面获取的班级数据：' + JSON.stringify(e.detail.data));
 			//选中班级为全部班级
-			selectClassArray=e.detail.data;
+			selectClassArray = e.detail.data;
 			//请求所有班级学生数据
 			requestClassStudents();
 			//科目
 			requestSubjectList(setSubjects);
 		})
-		events.addTap('select-classes',function(){
-			events.fireToPageWithData('classes-select.html','postClasses',selectClassArray);
-		})
-		/**
-		 * 监听选择班级后的返回数据
-		 */
-		window.addEventListener('selectedClasses',function(e){
-			selectClassArray=e.detail.data;
-			setClasses(selectClassArray);
-		})
-		//删除班级的监听
+		events.addTap('select-classes', function() {
+				events.fireToPageWithData('classes-select.html', 'postClasses', selectClassArray);
+			})
+			/**
+			 * 监听选择班级后的返回数据
+			 */
+		window.addEventListener('selectedClasses', function(e) {
+				selectClassArray = e.detail.data;
+				setClasses(selectClassArray);
+			})
+			//删除班级的监听
 		setRemoveClassListener();
 		//设置是否在线的监听
 		setIsOnline();
@@ -39,7 +39,7 @@ mui.plusReady(function() {
 		setSubmitEvent();
 		var lastEditRange = null;
 		var publish_container = document.getElementById('publish-content');
-			//录音键
+		//录音键
 		events.addTap('getRecord', function() {
 				startRecord()
 			})
@@ -87,12 +87,12 @@ var setSubjects = function(subjectList) {
 			subjectsContainer.appendChild(op);
 		});
 	}
-//	/**
-//	 * 选中科目的监听
-//	 */
-//var getSelectSubject = function() {
-//		selectSubjectID = subjectsContainer[subjectsContainer.selectedIndex].value;
-//	}
+	//	/**
+	//	 * 选中科目的监听
+	//	 */
+	//var getSelectSubject = function() {
+	//		selectSubjectID = subjectsContainer[subjectsContainer.selectedIndex].value;
+	//	}
 	/**
 	 * 放置班级列表
 	 * @param {Object} classes
@@ -103,46 +103,46 @@ var setClasses = function() {
 		//清空班级数据
 		events.clearChild(classesContainer)
 		for(var i in selectClassArray) {
-			if(selectClassArray[i].isSelected){
+			if(selectClassArray[i].isSelected) {
 				var p = document.createElement('p');
-				p.className ='gid'+selectClassArray[i].gid;
-//				p.innerText = classes[i].gname;
-				p.innerHTML = selectClassArray[i].gname+'<sup class="mui-badge mui-badge-inverted mui-badge-danger class-del">x</sup>'
+				p.className = 'gid' + selectClassArray[i].gid;
+				//				p.innerText = classes[i].gname;
+				p.innerHTML = selectClassArray[i].gname + '<sup class="mui-badge mui-badge-inverted mui-badge-danger class-del">x</sup>'
 				classesContainer.appendChild(p);
 				p.querySelector('.class-del').bindClass = selectClassArray[i];
 			}
-			
+
 		}
 	}
 	/**
 	 * 删除班级的监听
 	 */
 var setRemoveClassListener = function() {
-	mui('.receive-classes').on('tap', '.class-del', function() {
-		var classes = document.getElementById('classes');
-		classes.removeChild(classes.querySelector('.gid' + this.bindClass.gid));
-		console.log('删除的班级数据：'+JSON.stringify(this.bindClass));
-		selectClassArray[selectClassArray.indexOf(this.bindClass)].isSelected=false;
-		console.log('删除班级后所有班级数据：'+JSON.stringify(selectClassArray));
-	})
-}
-/**
- * 是否在线提交
- */
+		mui('.receive-classes').on('tap', '.class-del', function() {
+			var classes = document.getElementById('classes');
+			classes.removeChild(classes.querySelector('.gid' + this.bindClass.gid));
+			console.log('删除的班级数据：' + JSON.stringify(this.bindClass));
+			selectClassArray[selectClassArray.indexOf(this.bindClass)].isSelected = false;
+			console.log('删除班级后所有班级数据：' + JSON.stringify(selectClassArray));
+		})
+	}
+	/**
+	 * 是否在线提交
+	 */
 var setIsOnline = function() {
-	document.getElementById("onlineSwitch").addEventListener("toggle", function(event) {
-		if(event.detail.isActive) {
-			submitOnLine = true;
-			console.log("你启动了开关");
-		} else {
-			submitOnLine = false;
-			console.log("你关闭了开关");
-		}
-	})
-}
-/**
- * 提交按钮的监听
- */
+		document.getElementById("onlineSwitch").addEventListener("toggle", function(event) {
+			if(event.detail.isActive) {
+				submitOnLine = true;
+				console.log("你启动了开关");
+			} else {
+				submitOnLine = false;
+				console.log("你关闭了开关");
+			}
+		})
+	}
+	/**
+	 * 提交按钮的监听
+	 */
 var setSubmitEvent = function() {
 	//提交按钮
 	events.addTap('submitBtn', function() {
@@ -169,42 +169,61 @@ var setSubmitEvent = function() {
 	});
 }
 
-
 //获取班级里面的人
 function requestClassStudents() {
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	requirePostGUInfo(0,wd);	
+	requirePostGUInfo(wd);
 }
 /**
- * 获取班级内所有学生资料
+ * //13.通过群ID获取群的正常用户
  * @param {Object} i 班级索引
  * @param {Object} wd 等待框
  * @param {Object} callback 回调函数
  */
-var requirePostGUInfo=function(i,wd,callback){
-	selectClassArray[i].isSelected=true;
-	var comData = {
-			vtp: '0', //获取类型,0普通资料获取,1邀请排除(主老师用)
-			top: '-1', //选择条数,-1为全部
-			vvl: selectClassArray[i].gid, //群ID,查询的值
-			vvl1: '3' //类型,0家长,1管理员,2老师,3学生,-1全部
+var requirePostGUInfo = function(wd, callback) {
+	var tempFlag = 0;
+	for(var a in selectClassArray) {
+		var tempModel = selectClassArray[a];
+		//所需参数
+		var comData = {
+			top: '-1', //选择条数
+			vvl: tempModel.gid, //群ID，查询的值
+			vvl1: '-1' //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 		};
-	postDataPro_PostGUInf(comData,wd,function(data){
-		if(data.RspCode==0){
-			selectClassArray[i].studentArray=data.RspData;	
-		}
-		//请求完成后，请求下一个班级
-		if(i<selectClassArray.length-1){
-			requirePostGUInfo(i+1,wd);
-		//所有班级请求完成
-		}else{
-			console.log('学生资料群信息数据：'+JSON.stringify(selectClassArray))
-			setClasses();
-			wd.close();
-		}
-		
-	})
+		postDataPro_PostGusers(comData, wd, function(data) {
+			tempFlag++;
+			if(data.RspCode == 0) {
+				console.log('13.postDataPro_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				//通过id，将数据塞到不同的数组
+				var tempArray = data.RspData;
+				for(var m in tempArray) {
+					var tempModel1 = tempArray[m];
+					//判断是否为家长或学生
+					if(tempModel1.mstype == 0 || tempModel1.mstype == 3) {
+						//遍历班级列表，
+						for(var n in selectClassArray) {
+							var tempModel2 = selectClassArray[n];
+							tempModel2.isSelected = true;
+							tempModel2.studentArray = [];
+							//判断群id
+							if(tempModel2.gid == tempModel1.gid) {
+								tempModel2.studentArray.push(tempModel1);
+							}
+						}
+					}
+				}
+			}
+			//请求完成后，请求下一个班级
+			if(tempFlag == selectClassArray.length) {
+				console.log('学生资料群信息数据：' + JSON.stringify(selectClassArray))
+				setClasses();
+				wd.close();
+			}
+		});
+
+	}
+
 }
 
 //12.发布作业
@@ -212,18 +231,18 @@ function requestPublishHomework() {
 	//组装学生数组串，
 	var tempStuArray = [];
 	//循环选择的群
-	console.log('发布作业前数据：'+JSON.stringify(selectClassArray));
+	console.log('发布作业前数据：' + JSON.stringify(selectClassArray));
 	for(var i in selectClassArray) {
 		var tempClassModel = selectClassArray[i];
-		if(tempClassModel.isSelected){
-			//循环群里面的学生
+		if(tempClassModel.isSelected) {
+			//循环群里面的学生、家长
 			for(var m in tempClassModel.studentArray) {
 				var tempStuModel = tempClassModel.studentArray[m];
-				tempStuArray.push(tempClassModel.gid + '|' + tempStuModel.stuid);
+				tempStuArray.push(tempClassModel.gid + '|' + tempStuModel.utid);
 			}
 		}
 	}
-	if(tempStuArray.length==0){
+	if(tempStuArray.length == 0) {
 		mui.toast('无发布作业的学生对象！');
 		return;
 	}
@@ -241,14 +260,14 @@ function requestPublishHomework() {
 	//12.发布作业,逻辑：作业标题生成标准，时间+星期几+科目+“作业”，比如“11月11日星期一语文作业”
 	postDataPro_PublishHomework(comData, wd, function(data) {
 		wd.close();
-		console.log('发布作业界面发布作业回调：'+JSON.stringify(data));
+		console.log('发布作业界面发布作业回调：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			//提示成功，清空界面数据
-			document.getElementById('publish-content').value='';
-			submitOnLine=true;
+			document.getElementById('publish-content').value = '';
+			submitOnLine = true;
 			events.clearChild(subjectsContainer);
 			events.clearChild(document.getElementById('classes'));
-			events.fireToPageNone('homework-tea-sub.html','homeworkPublished');
+			events.fireToPageNone('homework-tea-sub.html', 'homeworkPublished');
 			mui.toast('发布作业成功！');
 			mui.back();
 		} else {
