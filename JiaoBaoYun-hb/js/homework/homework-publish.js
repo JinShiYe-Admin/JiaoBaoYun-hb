@@ -173,7 +173,7 @@ var setSubmitEvent = function() {
 function requestClassStudents() {
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	requirePostGUInfo(0, wd);
+	requirePostGUInfo(wd);
 }
 /**
  * //13.通过群ID获取群的正常用户
@@ -181,7 +181,7 @@ function requestClassStudents() {
  * @param {Object} wd 等待框
  * @param {Object} callback 回调函数
  */
-var requirePostGUInfo = function(i, wd, callback) {
+var requirePostGUInfo = function(wd, callback) {
 	var tempFlag = 0;
 	for(var a in selectClassArray) {
 		var tempModel = selectClassArray[a];
