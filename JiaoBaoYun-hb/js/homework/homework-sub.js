@@ -157,7 +157,7 @@ var setListener = function() {
 		var publish = document.getElementById('iconPublish');
 		//常规作业点击事件
 		mui('.mui-table-view').on('tap', '.publishedHomework', function() {
-				events.fireToPageNone('workdetail-tea-sub.html', 'workDetail', this.homeworkInfo);
+				events.fireToPageNone('workdetail-tea-sub.html', 'workDetail',this.homeworkInfo);
 				plus.webview.getWebviewById("workdetail-tea.html").show();
 			})
 		//临时作业点击事件
@@ -404,6 +404,8 @@ var setHomeworkData = function() {
 				if(DateHM.Homeworks && DateHM.Homeworks.length > 0) {
 					DateHM.Homeworks.forEach(function(homework, i) {
 						var li = document.createElement('li');
+						homework.Date=DateHM.Date;
+						li.homeworkInfo=homework;
 						li.className = 'mui-table-view-cell stuHomework';
 						li.innerHTML = createStuHomeworkInner(homework);
 						list.appendChild(li);

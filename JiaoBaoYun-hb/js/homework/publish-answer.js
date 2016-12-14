@@ -343,7 +343,7 @@ function requestModifyAnswer(comData) {
 		wd.close();
 		console.log('8.postDataPro_ModifyAnswerResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
-
+					
 		} else {
 			mui.toast(data.RspTxt);
 		}

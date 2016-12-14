@@ -8,6 +8,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/homework/workdetail-stu.css" rel="stylesheet"/>
 	</head>
 
 	<body>
@@ -16,40 +17,22 @@
 			<h1 class="mui-title">作业详情</h1>
 			<a class="mui-pull-right">全部作业</a>
 		</header>
+		<div class="mui-content">
+		    <div class="homework-brief">
+		    	<img class="brief-img" src="" />
+		    	<div class="brief-words">
+		    		<h5 class='brief-title'></h5>
+		    		<p class="brief-content"></p>
+		    		<p class="publish-info"></p>
+		    	</div>
+		    </div>
+		    <div class="homework-detail"></div>
+		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicHomeworkProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">
-			mui.init();
-			mui.plusReady(function() {
-				//2.	获取教师发布作业详情，不包括学生提交的答案；
-				//所需参数
-				var comData = {
-					studentId: '', //学生Id
-					classId: '', //班级群Id；
-					homeworkId: '' //作业id；
-				};
-				requestHomeworkDetail(comData);
-
-			});
-
-			//2.	获取教师发布作业详情，不包括学生提交的答案；
-			function requestHomeworkDetail(comData) {
-				// 等待的对话框
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				//2.	获取教师发布作业详情，不包括学生提交的答案；
-				postDataPro_GetHomework(comData, wd, function(data) {
-					wd.close();
-					console.log('2.postDataPro_GetHomework:' + JSON.stringify(data.RspData));
-					if(data.RspCode == 0) {
-
-					} else {
-						mui.toast(data.RspTxt);
-					}
-				});
-			}
-		</script>
+		<script type="text/javascript" src="../../js/homework/workdetail-stu.js"></script>
 	</body>
 
 </html>
