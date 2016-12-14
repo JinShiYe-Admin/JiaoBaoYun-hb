@@ -1959,7 +1959,8 @@
 					"js/cloud/AndroidFileSystem.js"
 				],
 				"refer": [
-					"html/cloud/storage_main_choose.html"
+					"html/cloud/storage_main_choose.html",
+					"html/cloud/storage_transport.html"
 				],
 				"priority": 0
 			},

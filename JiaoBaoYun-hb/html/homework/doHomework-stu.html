@@ -1,0 +1,25 @@
+<!--学生做作业界面-->
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				events.addEventListener('homeworkInfo',function(e){
+					var homeworkInfo=e.detail.data;
+					console.log('学生做作业界面从上级界面获取的做作业数据：'+JSON.stringify(homeworkInfo));
+				})
+			})
+		</script>
+	</body>
+
+</html>

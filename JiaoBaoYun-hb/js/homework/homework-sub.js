@@ -20,17 +20,26 @@ mui.plusReady(function() {
 		events.preload('homework-publish.html', 500);
 		events.preload('workdetailTea-temporary.html', 300);
 		events.preload('workdetail-stu.html', 800);
-		//个人UTID
-		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+
 		//赋值
 		list = document.getElementById('list-container');
 		/**监听父页面的图标事件*/
 		window.addEventListener('togglePop', function(e) {
 			mui("#popover").popover('toggle');
 		});
+		//错题本按钮监听事件
+		events.addTap('err', function() {
+				events.openNewWindow('workstu-err.html')
+		})
+		//作业记录按钮监听事件
+		events.addTap('record', function() {
+			events.openNewWindow('homework-record.html')
+		})
 		var publish = document.getElementById('iconPublish');
 		//加载监听
 		window.addEventListener('workContent', function(e) {
+			//个人UTID
+			personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 			//获取个人身份角色
 			role = e.detail.data.role;
 			//老师
@@ -45,9 +54,9 @@ mui.plusReady(function() {
 			teacherClasses = e.detail.data.teacherClasses;
 			//学生家长的班级数据
 			studentClasses = e.detail.data.studentClasses;
-			console.log('作业主界面获取的teacherClasses:'+JSON.stringify(teacherClasses))
-			console.log('作业主界面获取的studentClasses:'+JSON.stringify(studentClasses))
-			//老师角色的作业数据
+			console.log('作业主界面获取的teacherClasses:' + JSON.stringify(teacherClasses))
+			console.log('作业主界面获取的studentClasses:' + JSON.stringify(studentClasses))
+				//老师角色的作业数据
 			teacherHash = newHashMap();
 			//学生、家长的作业数据
 			studentHash = newHashMap();
@@ -120,14 +129,14 @@ function addPullFresh() {
 	//	plus.nativeUI.toast("下拉可以刷新");
 }
 var pullUpRefresh = function() {
-	
+
 	document.addEventListener("plusscrollbottom", function() {
 		console.log('我在底部');
-		if(selectGContainer.classInfo.pageIndex<totalPageCount){
+		if(selectGContainer.classInfo.pageIndex < totalPageCount) {
 			selectGContainer.classInfo.pageIndex++;
-			requireHomeWork(selectGContainer.classInfo,setData);
-		}else{
-			mui.toast('注意，您已到达我的底线');	
+			requireHomeWork(selectGContainer.classInfo, setData);
+		} else {
+			mui.toast('注意，您已到达我的底线');
 		}
 	}, false);
 }
@@ -139,13 +148,18 @@ var setListener = function() {
 		mui('.tabs-classes').on('tap', '.mui-control-item', function() {
 			selectGContainer = this;
 			selectGId = this.classInfo.gid;
+			events.clearChild(list);
 			console.log('被点击的班级数据：' + JSON.stringify(this.classInfo));
+			//老师角色
 			if(role == 2) {
+				//如果数据已存在
 				if(teacherHash.get(selectGId)) {
 					setPublishedData();
+					//如果数据不存在
 				} else {
 					requireHomeWork(this.classInfo, setData);
 				}
+				//学生家长角色
 			} else {
 				if(studentHash.get(selectGId)) {
 					setHomeworkData()
@@ -157,18 +171,18 @@ var setListener = function() {
 		var publish = document.getElementById('iconPublish');
 		//常规作业点击事件
 		mui('.mui-table-view').on('tap', '.publishedHomework', function() {
-				events.fireToPageNone('workdetail-tea-sub.html', 'workDetail',this.homeworkInfo);
+				events.fireToPageNone('workdetail-tea-sub.html', 'workDetail', this.homeworkInfo);
 				plus.webview.getWebviewById("workdetail-tea.html").show();
 			})
-		//临时作业点击事件
+			//临时作业点击事件
 		mui('.mui-table-view').on('tap', '.publishedAnswer', function() {
-			events.fireToPageNone('workdetailTea-temSub.html', 'workDetail', this.homeworkInfo);
-			plus.webview.getWebviewById("workdetailTea-temporary.html").show();
-		})
-		//学生作业在线提交点击事件
+				events.fireToPageNone('workdetailTea-temSub.html', 'workDetail', this.homeworkInfo);
+				plus.webview.getWebviewById("workdetailTea-temporary.html").show();
+			})
+			//学生作业在线提交点击事件
 		mui('.mui-table-view').on('tap', '.stuHomework', function() {
-			events.fireToPageWithData('workdetail-stu.html', 'workDetail', this.homeworkInfo);
-		})
+				events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+			})
 			//发布作业界面
 		publish.addEventListener('tap', function() {
 			events.fireToPageWithData('homework-publish.html', 'postClasses', teacherClasses);
@@ -219,7 +233,7 @@ var requireHomeWork = function(classModel, callback) {
 		if(role == 2) {
 			comData.teacherId = personalUTID;
 		} else {
-			comData.studentId = classModel.stuid;
+			comData.studentId = personalUTID;
 		}
 		comData.classId = classModel.gid;
 		comData.pageIndex = classModel.pageIndex;
@@ -230,7 +244,7 @@ var requireHomeWork = function(classModel, callback) {
 				console.log('作业主界面获取的作业列表：' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					setHashData(comData, data);
-					totalPage=data.RspData.pageCount;
+					totalPage = data.RspData.pageCount;
 				} else {
 					mui.toast(data.RspTxt);
 				}
@@ -242,7 +256,7 @@ var requireHomeWork = function(classModel, callback) {
 				console.log('作业主界面获取的作业列表：' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					setHashData(comData, data);
-					totalPage=data.RspData.pageCount;
+					totalPage = data.RspData.pageCount;
 				} else {
 					mui.toast(data.RspTxt);
 				}
@@ -267,10 +281,10 @@ var setData = function() {
 	 * 放置我发布的数据
 	 */
 var setPublishedData = function() {
-		events.clearChild(list);
+		//		events.clearChild(list);
 		var publishedData = teacherHash.get(selectGId);
-		console.log('发布作业的Id：' + selectGId + ';老师作业的数据：' + JSON.stringify(publishedData));
 		if(publishedData) {
+			console.log('发布作业的Id：' + selectGId + ';老师作业的数据：' + JSON.stringify(publishedData));
 			publishedData.forEach(function(DateHM, i) {
 				var divider = document.createElement('li');
 				divider.className = 'mui-table-view-divider';
@@ -325,27 +339,27 @@ var getAnswerImgs = function(thumbUrls) {
 	return imgsInner;
 }
 var createStuHomeworkInner = function(homework) {
-	return '<a><div class="stuHomework-header '+getBackGround(homework)+'"><span class="mui-icon iconfont subject-icon ' +
+	return '<a><div class="stuHomework-header ' + getBackGround(homework) + '"><span class="mui-icon iconfont subject-icon ' +
 		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words"><h5 class="header-title">' +
 		homework.HomeworkTitle + '</h5><p class="header-content">' + homework.Contents + '</p></div></div>' +
 		'<div class="stuHomework-bottom"></div></a>';
 }
-var getBackGround=function(homework){
-	var backClassName=''
-	//已评论
-	if(homework.IsCommented){
-		backClassName='isCommentedBG'
-	}else{
+var getBackGround = function(homework) {
+	var backClassName = ''
+		//已评论
+	if(homework.IsCommented) {
+		backClassName = 'isCommentedBG'
+	} else {
 		//已提交
-		if(homework.IsSubmitted){
-			backClassName='isSubmitted';
-		//未提交
-		}else{
+		if(homework.IsSubmitted) {
+			backClassName = 'isSubmitted';
+			//未提交
+		} else {
 			//需在线提交
-			if(homework.SubmitOnline){
-				backClassName='submitOnline';
-			}else{
-				
+			if(homework.SubmitOnline) {
+				backClassName = 'submitOnline';
+			} else {
+
 			}
 		}
 	}
@@ -404,8 +418,8 @@ var setHomeworkData = function() {
 				if(DateHM.Homeworks && DateHM.Homeworks.length > 0) {
 					DateHM.Homeworks.forEach(function(homework, i) {
 						var li = document.createElement('li');
-						homework.Date=DateHM.Date;
-						li.homeworkInfo=homework;
+						homework.Date = DateHM.Date;
+						li.homeworkInfo = homework;
 						li.className = 'mui-table-view-cell stuHomework';
 						li.innerHTML = createStuHomeworkInner(homework);
 						list.appendChild(li);

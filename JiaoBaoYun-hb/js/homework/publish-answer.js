@@ -1,5 +1,5 @@
-var personalUTID;
-var role;
+var personalUTID;//个人id
+var role;//角色
 mui.init({
 	//手势事件配置
 	gestureConfig: {
@@ -134,9 +134,6 @@ var setCondition = function(role, stuClasses) {
 		requestClassTeacherInfo(stuClasses);
 	}
 }
-
-//个人id
-
 //科目数组
 var subjectArray = [];
 //选择的科目id
