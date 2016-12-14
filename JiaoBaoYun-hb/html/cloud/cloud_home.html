@@ -482,9 +482,7 @@
 				 * 获取用户所在群数据
 				 */
 				function requestClassData() {
-					var teacherClassesTemp = [];
 					var teacherClasses = [];
-					var studentClassesTemp = [];
 					var studentClasses = [];
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					//获取当前账号，所在的群
@@ -512,87 +510,31 @@
 								var isHave = true;
 								//2老师或者管理员
 								if(tempModel.mstype == 2 || tempModel.mstype == 1) {
-									for(var m in teacherClassesTemp) {
-										if(tempModel.gid == teacherClassesTemp[m].gid) {
+									for(var m in teacherClasses) {
+										if(tempModel.gid == teacherClasses[m].gid) {
 											isHave = false;
 											break;
 										}
 									}
 									if(isHave) {
-										teacherClassesTemp.push(tempModel);
+										teacherClasses.push(tempModel);
 									}
 								}
 								var isHave1 = true;
 								//家长、学生
 								if(tempModel.mstype == 0 || tempModel.mstype == 3) {
-									for(var m in studentClassesTemp) {
-										if(tempModel.gid == studentClassesTemp[m].gid) {
+									for(var m in studentClasses) {
+										if(tempModel.gid == studentClasses[m].gid) {
 											isHave = false;
 											break;
 										}
 									}
 									if(isHave) {
-										studentClassesTemp.push(tempModel);
+										studentClasses.push(tempModel);
 									}
 								}
 							}
-							//然后判断家长、学生身份时，是否有绑定资料,如果有才有作业，否则为空
-							//24.通过用户表ID获取用户关联的学生
-							//所需参数
-							var comData1 = {
-								utid: personalUTID //用户表ID,用户utid
-							};
-							//24.通过用户表ID获取用户关联的学生
-							postDataPro_PostUstu(comData1, wd, function(data1) {
-								wd.close();
-								console.log('24.postDataPro_PostUstu:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
-								if(data1.RspCode == 0) {
-									var tempArray1 = data1.RspData;
-									//循环获取到的学生资料
-									for(var a in tempArray1) {
-										var tempModel1 = tempArray1[a];
-										//循环老师、学生的临时数组
-										for(var b in teacherClassesTemp) {
-											var tempModel2 = teacherClassesTemp[b];
-											//判断群号是否一致，
-											if(tempModel1.gid == tempModel2.gid) {
-												var isHave = true;
-												for(var m in teacherClasses) {
-													if(tempModel1.gid == teacherClasses[m].gid) {
-														isHave = false;
-														break;
-													}
-												}
-												if(isHave) {
-													//合并
-													tempModel1 = $.extend(tempModel1, tempModel2);
-													teacherClasses.push(tempModel1);
-												}
-											}
-										}
-										for(var b in studentClassesTemp) {
-											var tempModel2 = studentClassesTemp[b];
-											//判断群号是否一致，
-											if(tempModel1.gid == tempModel2.gid) {
-												var isHave = true;
-												for(var m in studentClasses) {
-													if(tempModel1.gid == studentClasses[m].gid) {
-														isHave = false;
-														break;
-													}
-												}
-												if(isHave) {
-													//合并
-													tempModel1 = $.extend(tempModel1, tempModel2);
-													studentClasses.push(tempModel1);
-												}
-											}
-										}
-									}
-								} else {
-									mui.toast(data.RspTxt);
-								}
-								if(teacherClasses.length > 0 || studentClasses.length > 0) {
+							if(teacherClasses.length > 0 || studentClasses.length > 0) {
 									events.fireToPageWithData('../homework/homework-tea.html', 'postClasses', {
 										teacherClasses: teacherClasses,
 										studentClasses: studentClasses
@@ -600,8 +542,6 @@
 								} else {
 									mui.toast('您还未加入班级');
 								}
-							});
-
 						} else {
 							mui.toast(data.RspTxt);
 						}
@@ -649,7 +589,7 @@
 					});
 				}
 
-				//24.通过用户表ID获取用户关联的学生
+				//73.（云档案）按家长获取学生档案姓名
 				function postUserStudent() {
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					//73.（云档案）按家长获取学生档案姓名
@@ -662,7 +602,7 @@
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					postDataPro_getStudentName(comData, wd, function(data) {
 						wd.close();
-						console.log('24.postDataPro_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						console.log('73.postDataPro_getStudentName:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							//设置页面显示
 							document.getElementById("record_row").innerHTML = '';

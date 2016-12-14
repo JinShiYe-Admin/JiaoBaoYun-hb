@@ -11,14 +11,18 @@ mui.plusReady(function() {
 	window.addEventListener('infoChanged', function() {
 		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
-
-		document.querySelector('img').src = myStorage.getItem(storageKeyName.PERSONALINFO).uimg ? myStorage.getItem(storageKeyName.PERSONALINFO).uimg : '../../image/utils/default-personalimage.png';
-		//				if(plus.os.name == 'iOS') {
-		//					var wobj = plus.webview.currentWebview();
-		//					wobj.reload(true);
-		//				}
+		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
+		document.querySelector('img').src = img ? img : '../../image/utils/default-personalimage.png'
+		if(plus.os.name == 'iOS') {
+			var wobj = plus.webview.currentWebview();
+			wobj.reload(true);
+		}
 
 	})
+	window.addEventListener('aboutmNoRead', function() {
+		getAboutMe();
+	})
+	
 	getAboutMe(); //获取与我相关未读数
 	Statusbar.barHeight(); //设置距离顶部的高度
 	var header = document.querySelector(".mui-bar-nav"); //顶部导航
@@ -182,8 +186,9 @@ mui.plusReady(function() {
 			noRead.style.visibility = 'hidden';
 
 		})
-
-		events.jumpPage(pubDynamic, '../quan/pub-dynamic.html');
+		events.addTap('pubDynamic', function() {
+			events.openNewWindowWithData('../quan/pub-dynamic.html', 'FromIndex');
+		})
 	}
 
 	var addCloudIcon = function(container) {
@@ -196,14 +201,16 @@ mui.plusReady(function() {
 	}
 	var aboutme = document.getElementById('aboutme');
 	events.addTap('aboutme', function() {
-			events.openNewWindow('../quan/aboutme.html')
-			var noRead = document.getElementById('aboutme_noRead');
-			noRead.style.visibility = 'hidden';
+		events.openNewWindow('../quan/aboutme.html')
+		var noRead = document.getElementById('aboutme_noRead');
+		noRead.style.visibility = 'hidden';
 
-		})
+	})
 	var pubDynamic = document.getElementById('pubDynamic');
-	events.jumpPage(pubDynamic, '../quan/pub-dynamic.html');
-	//自定义事件，模拟点击“首页选项卡”
+	events.addTap('pubDynamic', function() {
+			events.openNewWindowWithData('../quan/pub-dynamic.html', 'FromIndex');
+		})
+		//自定义事件，模拟点击“首页选项卡”
 	document.addEventListener('gohome', function() {
 		var defaultTab = document.getElementById("defaultTab");
 		//模拟首页点击

@@ -62,9 +62,16 @@
 				
 //								postDataPro_addClassSpace({classId},)
 				console.log('' + JSON.stringify(groupInfo));
+				var tempText = document.getElementById('input-content').value;
+				if(!tempText||tempText=='') {
+					mui.toast('请输入内容');
+					return;
+				}else{
+					tempText = tempText.replace('\n','<br />')
+				}
 				var postData = new Object();
 				postData.classId = groupInfo.classId;
-				postData.msgContent = document.getElementById('input-content').value;
+				postData.msgContent = tempText;
 				postData.encType = 0;
 				postData.encAddr = '';
 				postData.encImg = '';
