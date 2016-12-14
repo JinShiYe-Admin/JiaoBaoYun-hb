@@ -307,6 +307,11 @@ var events = (function($, mod) {
 		}
 		return r;
 	}
+	mod.infoChanged = function(){
+		events.fireToPageNone('mine.html','infoChanged');
+		events.fireToPageNone('../cloud/cloud_home.html','infoChanged');
+		events.fireToPageNone('../index/index.html', 'infoChanged');
+	}
 	return mod;
 
 })(mui, events || {});
