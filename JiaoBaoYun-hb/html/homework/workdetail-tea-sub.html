@@ -27,8 +27,8 @@
 	<body>
 		<nav id="alertBar" class="mui-bar mui-bar-tab" style="visibility:hidden;">
 			<div align="center">
-						<button id="alertAll" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 200px; ;">一键提醒</button>
-					</div>
+				<button id="alertAll" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 200px; ;">一键提醒</button>
+			</div>
 		</nav>
 		<div class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
@@ -152,7 +152,7 @@
 
 				
 
-								//获取作业详情
+				//获取作业详情
 				requestHomeworkDetail();
 
 				//3.	获取作业对应学生列表
@@ -217,42 +217,39 @@
 						remainArray = data.RspData.Remain.List;
 						uploadArray = data.RspData.Upload.List;
 						//将学生id，塞入数组，获取学生信息
-						var tempStuArray = [];
 						for(var i in remainArray) {
 							var tempModel = remainArray[i];
 							tempModel.ClassId = data.RspData.ClassId;
 							tempModel.HomeworkId = data.RspData.HomeworkId;
-							tempStuArray.push(tempModel.StudentId);
 						}
 						for(var i in uploadArray) {
 							var tempModel = uploadArray[i];
 							tempModel.ClassId = data.RspData.ClassId;
 							tempModel.HomeworkId = data.RspData.HomeworkId;
-							tempStuArray.push(tempModel.StudentId);
 						}
-						//给数组去重
-						tempStuArray = arrayDupRemoval(tempStuArray);
-						//发送获取用户资料申请
+						//13.通过群ID获取群的正常用户
+						//所需参数
 						var tempData = {
-							vvl:tempStuArray.join(),//群成员群ID，Stuid或ID串
-							vtp:'ids'//资料ID类型,Id:单个ID,ids:ID串
+							top: '-1', //选择条数
+							vvl: homeworkModel.classId, //群ID，查询的值
+							vvl1: '-1' //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 						};
 						console.log('tempData:' + JSON.stringify(tempData));
-						//30.通过资料ID获取关联的人员
-						postDataPro_PostStuU(tempData, wd, function(data1) {
+						//13.通过群ID获取群的正常用户
+						postDataPro_PostGusers(tempData, wd, function(data1) {
 							wd.close();
-							console.log('30.获取关联的人员:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+							console.log('13.postDataPro_PostGusers:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 							if(data1.RspCode == 0) {
 								//循环当前的个人信息返回值数组
 								for(var i in data1.RspData) {
 									//当前model
 									var tempModel = data1.RspData[i];
 									//更新头像
-									tempModel.uimg = updateHeadImg(tempModel.uimg, 1);
+									tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
 									//循环未完成
 									for(var m in remainArray) {
 										var tempModel9 = remainArray[m];
-										if(tempModel9.StudentId == tempModel.stuid) {
+										if(tempModel9.StudentId == tempModel.utid) {
 											//合并
 											tempModel9 = $.extend(tempModel9, tempModel);
 										}
@@ -260,7 +257,7 @@
 									//已完成
 									for(var m in uploadArray) {
 										var tempModel9 = uploadArray[m];
-										if(tempModel9.StudentId == tempModel.stuid) {
+										if(tempModel9.StudentId == tempModel.utid) {
 											//合并
 											tempModel9 = $.extend(tempModel9, tempModel);
 										}
@@ -335,11 +332,11 @@
 				}else{
 					IsCommented = '未评';
 				}
-				var headImg = updateHeadImg(uploadArray[i].stuimg,2)
+				var headImg = updateHeadImg(uploadArray[i].uimg,2)
 									var li = document.createElement('li');
 				li.innerHTML = '<li class="mui-table-view-cell mui-media ">'+'<img  class="mui-media-object mui-pull-left" src="'+headImg +'" />'
 										'<div class="mui-media-body">'+
-											uploadArray[i].stuname+
+											uploadArray[i].ugnick+
 											'<button class="mui-media-body" style="float: right;">'+
 												IsCommented+
 											'</button>'+
@@ -357,11 +354,11 @@
 					}else{
 						alert = '已提醒';
 					}
-					var headImg = updateHeadImg(remainArray[i].stuimg,2)
+					var headImg = updateHeadImg(remainArray[i].uimg,2)
 									var li = document.createElement('li');
 				li.innerHTML = '<li class="mui-table-view-cell mui-media">'+'<img  class="mui-media-object mui-pull-left" src="'+headImg +'" />'+
 										'<div class="mui-media-body">'+
-											remainArray[i].stuname+
+											remainArray[i].ugnick+
 											'<button id="alert'+i+'" class="mui-media-body" style="float: right;" onclick="alertStu(this)">'+
 												alert+
 											'</button>'+
@@ -392,13 +389,13 @@ function alertStu(alertBtn){
 	var userIdArr=[];
 	if(alertBtn.id=='alertAll'){
 		for(var i=0;i<remainArray.length;i++){
-			var userId = remainArray[i].stuid+'|'+remainArray[i].ustuid;
+			var userId = remainArray[i].utid+'|'+remainArray[i].utid;
 			userIdArr.push(userId);
 		}
 		userIds = userIdArr.join(',')
 	}else{
 		var index = alertBtn.id.replace('alert','');
-		userIds = remainArray[index].stuid+'|'+remainArray[index].ustuid;
+		userIds = remainArray[index].utid+'|'+remainArray[index].utid;
 	}
 	console.log('userIds==='+userIds);
 	

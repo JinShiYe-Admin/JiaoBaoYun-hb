@@ -1,0 +1,79 @@
+<!--学生做作业界面-->
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				window.addEventListener('homeworkInfo',function(e){
+					homeworkModel=e.detail.data;
+					console.log('学生做作业界面从上级界面获取的做作业数据：'+JSON.stringify(homeworkInfo));
+				})
+			});
+			
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+			//作业model
+			var homeworkModel;
+
+			//7.	提交作业结果；逻辑：如果是图片类型，同时生成缩略图
+			function requestSubmitHomeworkResult() {
+				//所需参数
+				var comData = {
+					userId: personalUTID, //学生/家长id，
+					studentId: personalUTID, //学生Id；
+					homeworkId: homeworkModel.HomeworkId, //作业id；
+					content: '', //文本答案；
+					fileIds: '' //文件id数组；
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//7.	提交作业结果；逻辑：如果是图片类型，同时生成缩略图
+				postDataPro_SubmitHomeworkResult(comData, wd, function(data) {
+					wd.close();
+					console.log('7.postDataPro_SubmitHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						//清空输入框
+						
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+			}
+
+			//9.修改作业结果；逻辑：如果是图片类型，同时生成缩略图
+			function requestModifyHomeworkResult() {
+				//所需参数
+				var comData = {
+					userId: personalUTID, //学生/家长id，
+					studentId: personalUTID, //学生Id；
+					homeworkResultId: homeworkModel.HomeworkId, //要修改的作业结果id；
+					content: '', //文本答案；
+					fileIds: '' //文件id串，例如“1,2”；
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//9.修改作业结果；逻辑：如果是图片类型，同时生成缩略图
+				postDataPro_ModifyHomeworkResult(comData, wd, function(data) {
+					wd.close();
+					console.log('9.postDataPro_ModifyHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						//清空输入框
+						
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

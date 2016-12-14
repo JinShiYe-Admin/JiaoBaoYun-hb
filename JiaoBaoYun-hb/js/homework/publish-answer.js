@@ -1,5 +1,5 @@
-var personalUTID;
-var role;
+var personalUTID;//个人id
+var role;//角色
 mui.init({
 	//手势事件配置
 	gestureConfig: {
@@ -8,7 +8,7 @@ mui.init({
 })
 mui.plusReady(function() {
 	mui.previewImage();
-	personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+	personalUTID = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 	window.addEventListener('roleInfo', function(e) {
 		console.log('上传答案||作业界面获取的上级页面传过来的信息：' + JSON.stringify(e.detail));
 		var data = e.detail.data;
@@ -94,6 +94,7 @@ mui.plusReady(function() {
 	})
 })
 var uploadFile = function(picPath,fileStream) {
+	picPath=picPath.replace('/','');
 		var comData = {
 			teacherId: personalUTID, //教师Id
 			fileType: 1, //文件类型，1：图片；2：音频；3：视频；
@@ -134,9 +135,6 @@ var setCondition = function(role, stuClasses) {
 		requestClassTeacherInfo(stuClasses);
 	}
 }
-
-//个人id
-
 //科目数组
 var subjectArray = [];
 //选择的科目id
@@ -343,7 +341,7 @@ function requestModifyAnswer(comData) {
 		wd.close();
 		console.log('8.postDataPro_ModifyAnswerResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
-
+					
 		} else {
 			mui.toast(data.RspTxt);
 		}

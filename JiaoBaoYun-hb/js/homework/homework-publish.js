@@ -185,6 +185,8 @@ var requirePostGUInfo = function(wd, callback) {
 	var tempFlag = 0;
 	for(var a in selectClassArray) {
 		var tempModel = selectClassArray[a];
+		tempModel.isSelected = true;
+		tempModel.studentArray = [];
 		//所需参数
 		var comData = {
 			top: '-1', //选择条数
@@ -195,24 +197,23 @@ var requirePostGUInfo = function(wd, callback) {
 			tempFlag++;
 			if(data.RspCode == 0) {
 				console.log('13.postDataPro_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-				//通过id，将数据塞到不同的数组
-				var tempArray = data.RspData;
-				for(var m in tempArray) {
-					var tempModel1 = tempArray[m];
-					//判断是否为家长或学生
-					if(tempModel1.mstype == 0 || tempModel1.mstype == 3) {
-						//遍历班级列表，
-						for(var n in selectClassArray) {
-							var tempModel2 = selectClassArray[n];
-							tempModel2.isSelected = true;
-							tempModel2.studentArray = [];
-							//判断群id
-							if(tempModel2.gid == tempModel1.gid) {
+				//遍历班级列表，
+				for(var n in selectClassArray) {
+					var tempModel2 = selectClassArray[n];
+					//通过id，将数据塞到不同的数组
+					var tempArray = data.RspData;
+					for(var m in tempArray) {
+						var tempModel1 = tempArray[m];
+						//判断群id
+						if(tempModel2.gid == tempModel1.gid) {
+							//判断是否为家长或学生
+							if(tempModel1.mstype == 0 || tempModel1.mstype == 3) {
 								tempModel2.studentArray.push(tempModel1);
 							}
 						}
 					}
 				}
+
 			}
 			//请求完成后，请求下一个班级
 			if(tempFlag == selectClassArray.length) {

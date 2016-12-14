@@ -301,19 +301,31 @@
 								console.log("获取目录或文件的属性成功");
 								console.log("getMetadata:" + JSON.stringify(succesCB));
 								console.log("readFileSize：" + AndroidFileSystem.readSize(succesCB.size));
-								//跳转到传输列表
-								events.fireToPageWithData('storage_transport.html', 'addUpload', {
-									path: fid, //路径
-									metadata: succesCB //文件信息
-								});
+								//限制50M
+								if(succesCB.size <= (50 * 1024 * 1024)) {
+									//跳转到传输列表
+									events.fireToPageWithData('storage_transport.html', 'addUpload', {
+										path: fid, //路径
+										fname: fname, //文件名
+										metadata: succesCB, //文件信息
+										pid: pid //云盘文件夹父ID
+									});
+								} else {
+									mui.toast('上传文件不得大于50M');
+								}
 							}, function(errorCB) {
 								mui.toast('获取目录或文件的属性失败');
 								console.log("获取目录或文件的属性失败: " + JSON.stringify(errorCB));
 							});
 						}, function(errorCB) {
 							//请求失败的的回调
-							mui.toast('请求文件系统失败');
-							console.log("请求文件系统失败: " + JSON.stringify(errorCB));
+							if(errorCB.code == 12) {
+								mui.toast('请求文件系统失败:文件不存在');
+								console.log("请求文件系统失败: " + JSON.stringify(errorCB));
+							} else {
+								mui.toast('请求文件系统失败:' + JSON.stringify(errorCB));
+								console.log("请求文件系统失败: " + JSON.stringify(errorCB));
+							}
 						});
 					}
 				});
@@ -494,8 +506,8 @@
 						data.fullPath = 'file://' + data.fullPath
 					}
 					var li = document.createElement('li');
-					li.setAttribute('id', 'fid_' + data.fullPath + '/'); //元素id
-					li.setAttribute('data-fid', data.fullPath + '/'); //文件id
+					li.setAttribute('id', 'fid_' + data.fullPath); //元素id
+					li.setAttribute('data-fid', data.fullPath); //文件id
 					li.setAttribute('data-fname', data.name); //文件名
 					li.setAttribute('data-isFile', data.isFile); //类型
 					li.setAttribute('data-isDirectory', data.isDirectory); //类型
