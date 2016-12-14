@@ -8,7 +8,7 @@ mui.init({
 })
 mui.plusReady(function() {
 	mui.previewImage();
-	personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+	personalUTID = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 	window.addEventListener('roleInfo', function(e) {
 		console.log('上传答案||作业界面获取的上级页面传过来的信息：' + JSON.stringify(e.detail));
 		var data = e.detail.data;
@@ -94,6 +94,7 @@ mui.plusReady(function() {
 	})
 })
 var uploadFile = function(picPath,fileStream) {
+	picPath=picPath.replace('/','');
 		var comData = {
 			teacherId: personalUTID, //教师Id
 			fileType: 1, //文件类型，1：图片；2：音频；3：视频；

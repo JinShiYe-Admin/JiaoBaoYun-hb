@@ -5,7 +5,7 @@ mui.plusReady(function() {
 	events.preload('doHomework-stu.html',200);
 	window.addEventListener('workDetail', function(e) {
 		homeworkInfo= e.detail.data;
-		console.log('学生作业详情获取的数据：' + JSON.stringify(honmeworkInfo));
+		console.log('学生作业详情获取的数据：' + JSON.stringify(homeworkInfo));
 		requestTeaInfo(homeworkInfo.TeacherId,homeworkInfo);
 	})
 	//开始答题的监听

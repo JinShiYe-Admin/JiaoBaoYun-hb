@@ -2056,6 +2056,24 @@
 					"js/utils/RSAEncrypt.js",
 					"css/homework/workdetail-stu.css"
 				],
+				"refer": [
+					"html/homework/doHomework-stu.html"
+				],
+				"priority": 0
+			},
+			"html/cloud/storage_transport.html": {
+				"resources": [
+					"js/utils/CloudFileUtil.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/homework/doHomework-stu.html": {
+				"resources": [
+					"js/mui.min.js",
+					"js/utils/events.js",
+					"css/mui.min.css"
+				],
 				"refer": [],
 				"priority": 0
 			}

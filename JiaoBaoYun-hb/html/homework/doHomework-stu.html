@@ -14,7 +14,7 @@
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function(){
-				events.addEventListener('homeworkInfo',function(e){
+				window.addEventListener('homeworkInfo',function(e){
 					var homeworkInfo=e.detail.data;
 					console.log('学生做作业界面从上级界面获取的做作业数据：'+JSON.stringify(homeworkInfo));
 				})
