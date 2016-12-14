@@ -1047,7 +1047,8 @@
 					"js/publicHomeworkProtocol.js",
 					"image/homework/english.png",
 					"image/homework/history.png",
-					"image/homework/yuwen.png"
+					"image/homework/yuwen.png",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -1080,7 +1081,8 @@
 					"js/publicHomeworkProtocol.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/utils/files.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1952,7 +1954,8 @@
 					"image/cloud/A_folder.png",
 					"css/mui.min.css",
 					"css/utils/common.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/cloud/AndroidFileSystem.js"
 				],
 				"refer": [
 					"html/cloud/storage_main_choose.html"

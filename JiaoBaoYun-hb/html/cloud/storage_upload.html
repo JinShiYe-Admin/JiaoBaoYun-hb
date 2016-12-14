@@ -138,9 +138,11 @@
 			mui.plusReady(function() {
 				//---初始化--start---
 				events.preload('storage_main_choose.html'); //预加载选择云存储的文件
+				events.preload('storage_transport.html'); //预加载传输列表
+
+				console.log('选择上传的文件');
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var subData = null; //记录从父页面获取的数据
-				console.log('选择上传的文件');
 				var pid = ''; //文件的上层ID
 				var showFolderId = ''; //当前显示的文件夹id
 				var folderList = []; //目录数组，每打开一个目录，将该目录保存
@@ -165,6 +167,7 @@
 					init();
 				});
 
+				//选择上传的路径
 				window.addEventListener('chooseFolder', function(e) {
 					var folder = e.detail.data; //接收页面传入的参数值
 					console.log('chooseFolder:' + JSON.stringify(folder));
@@ -298,6 +301,11 @@
 								console.log("获取目录或文件的属性成功");
 								console.log("getMetadata:" + JSON.stringify(succesCB));
 								console.log("readFileSize：" + AndroidFileSystem.readSize(succesCB.size));
+								//跳转到传输列表
+								events.fireToPageWithData('storage_transport.html', 'addUpload', {
+									path: fid, //路径
+									metadata: succesCB //文件信息
+								});
 							}, function(errorCB) {
 								mui.toast('获取目录或文件的属性失败');
 								console.log("获取目录或文件的属性失败: " + JSON.stringify(errorCB));
@@ -351,12 +359,12 @@
 							console.log("文件系统的名称:" + succesCB2.name);
 							console.log("文件系统中的目录对象:" + succesCB2.fullPath);
 							if(mui.os.ios) { //iOS系统
-								initElement(succesCB2.toLocalURL());								
+								initElement(succesCB2.toLocalURL());
 							}
 						}, function(errorCB2) {
 							mui.toast("创建或打开子目录失败: " + JSON.stringify(errorCB2));
 							console.log("创建或打开子目录失败: " + JSON.stringify(errorCB2));
-						});						
+						});
 					}, function(errorCB) {
 						//请求失败的的回调
 						mui.toast("请求文件系统失败: " + JSON.stringify(errorCB));
@@ -481,9 +489,9 @@
 				 * @param {Object} data
 				 */
 				function additem(URL, data) {
-					console.log('additem:URL：' + URL + '|data：' + data.fullPath);
+					//console.log('additem:URL：' + URL + '|data：' + data.fullPath);
 					if(mui.os.ios) { //android系统
-						data.fullPath='file://' + data.fullPath
+						data.fullPath = 'file://' + data.fullPath
 					}
 					var li = document.createElement('li');
 					li.setAttribute('id', 'fid_' + data.fullPath + '/'); //元素id

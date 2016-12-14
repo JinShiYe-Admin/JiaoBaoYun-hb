@@ -34,11 +34,14 @@
 			var httpData = plus.webview.currentWebview().data;
 			var leaveContent = document.getElementById('content');
 			events.addTap('publish', function() {
-				if(!leaveContent.value||leaveContent.value=='') {
+				var tempText= leaveContent.value;
+				if(!tempText||tempText=='') {
 					mui.toast('请输入留言');
 					return;
+				}else{
+					tempText = tempText.replace('\n','<br />')
 				}
-				httpData.msgContent = leaveContent.value;
+				httpData.msgContent = tempText;
 				console.log('httpData === ' + JSON.stringify(httpData));
 				// 等待的对话框
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);

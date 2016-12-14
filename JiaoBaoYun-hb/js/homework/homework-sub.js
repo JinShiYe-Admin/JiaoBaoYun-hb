@@ -45,6 +45,8 @@ mui.plusReady(function() {
 			teacherClasses = e.detail.data.teacherClasses;
 			//学生家长的班级数据
 			studentClasses = e.detail.data.studentClasses;
+			console.log('作业主界面获取的teacherClasses:'+JSON.stringify(teacherClasses))
+			console.log('作业主界面获取的studentClasses:'+JSON.stringify(studentClasses))
 			//老师角色的作业数据
 			teacherHash = newHashMap();
 			//学生、家长的作业数据
