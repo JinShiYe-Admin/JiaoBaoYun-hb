@@ -178,94 +178,7 @@
 				}
 			}
 		});
-		//失去焦点事件
-		function inputOnblur(input) {
-			mui('.mui-popover').popover('hide');
 
-		}
-		//mui-popover显示时执行
-		mui('body').on('shown', '.mui-popover', function(e) {
-			console.log('shown', e.detail.id); //detail为当前popover元素
-
-		});
-		//mui-popover隐藏时执行
-		mui('body').on('hidden', '.mui-popover', function(e) {
-			console.log('hidden', e.detail.id); //detail为当前popover元素
-			document.getElementById("inputComment").blur();
-		});
-
-		function refreshUI() {
-
-		}
-		/**
-		 * 下拉刷新具体业务实现
-		 */
-		function pulldownRefresh() {
-			setTimeout(function() {
-				flag = 2; //下拉刷新
-				totalCnt = 0; //总页数
-				tempPage = 1; //刷新时将页码归1
-				var comData = {
-					userId: personalUTID, //用户ID
-					publisherId: publisherId, //发布用户ID
-					noteType: '2', //信息类型,1云笔记,2个人空间动态
-					pageIndex: (tempPage).toString(), //当前页数
-					pageSize: '10' //每页记录数
-				};
-				//请求数据
-				requestData(comData);
-				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-			}, 1500);
-		}
-
-		/**
-		 * 上拉加载具体业务实现
-		 */
-		function pullupRefresh() {
-			//			setTimeout(function() {
-			flag = 1; //上拉加载更多
-			if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
-				mui.toast('没有更多了...');
-				mui('#pullrefresh').pullRefresh().endPullupToRefresh();
-			} else {
-				tempPage++;
-				var comData = {
-					userId: personalUTID, //用户ID
-					publisherId: publisherId, //发布用户ID
-					noteType: '2', //信息类型,1云笔记,2个人空间动态
-					pageIndex: (tempPage).toString(), //当前页数
-					pageSize: '10' //每页记录数
-				};
-				//请求数据
-				requestData(comData);
-
-			}
-
-		}
-
-		function setUserSpaceReadByUser() {
-			var NoReadCnt = plus.webview.currentWebview().NoReadCnt //未读条数
-			if(NoReadCnt != 0) { //如果未读条数不为0，则设置空间状态为已读
-				var comData = {
-					userId: personalUTID, //用户ID
-					publisherId: publisherId
-				};
-
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				postDataPro_setUserSpaceReadByUser(comData, wd, function(data) {
-					wd.close();
-					console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
-					if(data.RspCode == 0) {
-						//获得主页面的webview
-						var main = plus.webview.getWebviewById('../quan/tab-zone.html');
-						//触发tab-zone页面的setRead事件
-						mui.fire(main, 'setRead');
-
-					}
-
-				})
-			}
-		}
 
 		var tempPage = 1; //页码，请求第几页数据
 		var totalCnt = 0; //当前留言的总条数
@@ -742,6 +655,91 @@
 				}
 
 			}
+		});
+		//设置个人空间动态为已读
+		function setUserSpaceReadByUser() {
+			var NoReadCnt = plus.webview.currentWebview().NoReadCnt //未读条数
+			if(NoReadCnt != 0) { //如果未读条数不为0，则设置空间状态为已读
+				var comData = {
+					userId: personalUTID, //用户ID
+					publisherId: publisherId
+				};
+
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_setUserSpaceReadByUser(comData, wd, function(data) {
+					wd.close();
+					console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						//获得主页面的webview
+						var main = plus.webview.getWebviewById('../quan/tab-zone.html');
+						//触发tab-zone页面的setRead事件
+						mui.fire(main, 'setRead');
+
+					}
+
+				})
+			}
+		}
+				/**
+		 * 下拉刷新具体业务实现
+		 */
+		function pulldownRefresh() {
+			setTimeout(function() {
+				flag = 2; //下拉刷新
+				totalCnt = 0; //总页数
+				tempPage = 1; //刷新时将页码归1
+				var comData = {
+					userId: personalUTID, //用户ID
+					publisherId: publisherId, //发布用户ID
+					noteType: '2', //信息类型,1云笔记,2个人空间动态
+					pageIndex: (tempPage).toString(), //当前页数
+					pageSize: '10' //每页记录数
+				};
+				//请求数据
+				requestData(comData);
+				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+			}, 1500);
+		}
+
+		/**
+		 * 上拉加载具体业务实现
+		 */
+		function pullupRefresh() {
+			//			setTimeout(function() {
+			flag = 1; //上拉加载更多
+			if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
+				mui.toast('没有更多了...');
+				mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+			} else {
+				tempPage++;
+				var comData = {
+					userId: personalUTID, //用户ID
+					publisherId: publisherId, //发布用户ID
+					noteType: '2', //信息类型,1云笔记,2个人空间动态
+					pageIndex: (tempPage).toString(), //当前页数
+					pageSize: '10' //每页记录数
+				};
+				//请求数据
+				requestData(comData);
+
+			}
+
+		}
+
+				//失去焦点事件
+		function inputOnblur(input) {
+			mui('.mui-popover').popover('hide');
+
+		}
+		//mui-popover显示时执行
+		mui('body').on('shown', '.mui-popover', function(e) {
+			console.log('shown', e.detail.id); //detail为当前popover元素
+
+		});
+		//mui-popover隐藏时执行
+		mui('body').on('hidden', '.mui-popover', function(e) {
+			console.log('hidden', e.detail.id); //detail为当前popover元素
+			document.getElementById("inputComment").blur();
 		});
 	</script>
 
