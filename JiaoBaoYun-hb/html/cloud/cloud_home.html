@@ -387,22 +387,28 @@
 				//---存储start---
 				//云存储显示的文件
 				mui('#cloudstorage').on('tap', '.cloud-text-align-center', function() {
-					console.log('tap:' + this.getAttribute("data-fid"));
-					var fid = this.getAttribute("data-fid"); //文件id
-					var title = '';
-					mui.each(fileArray, function(index, item) {
-						console.log('fileArray:' + index + '|' + JSON.stringify(item));
-						if(fid == item.fid) {
-							title = item.fname;
-							return false;
-						}
-					});
 					events.fireToPageWithData('storage_main.html', 'init', {
-						fid: fid, //文件id
+						fid: '0', //文件id,顶层0
 						showTop: true, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
-						title: title, //标题名
+						title: '云盘—云存储', //标题名
 						top: fileArray //顶层文件和文件夹的数据
 					});
+//					console.log('tap:' + this.getAttribute("data-fid"));
+//					var fid = this.getAttribute("data-fid"); //文件id
+//					var title = '';
+//					mui.each(fileArray, function(index, item) {
+//						console.log('fileArray:' + index + '|' + JSON.stringify(item));
+//						if(fid == item.fid) {
+//							title = item.fname;
+//							return false;
+//						}
+//					});
+//					events.fireToPageWithData('storage_main.html', 'init', {
+//						fid: fid, //文件id
+//						showTop: true, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
+//						title: title, //标题名
+//						top: fileArray //顶层文件和文件夹的数据
+//					});
 				});
 
 				//云存储右侧按钮
@@ -637,10 +643,14 @@
 						html1 = '<img class="cloud-bottom-imge" src="../../image/cloud/A_folder.png" />';
 					} else { //文件
 						var type = cloud.classify(data.ftype);
+						var pathList = data.fpath.split('/');
+						var pathList2 = pathList[pathList.length - 1].split('.');
+						var fileName = pathList2[0];
+						var path = window.storageKeyName.QNFILEIMGEDOMAIN + fileName + '.PNG';
 						if(type != '') {
 							html1 = '<span class="mui-icon iconfont ' + type + '"></span>';
 						} else { //七牛能生成缩略图的图片或视频
-							html1 = '<img class="cloud-bottom-imge" src="' + data.fpath + '" />';
+							html1 = '<img class="cloud-bottom-imge" src="' + path + '" />';
 						}
 					}
 					var html2 = '<p class="mui-ellipsis">' + data.fname + '</p>';

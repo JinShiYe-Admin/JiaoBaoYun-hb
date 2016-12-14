@@ -74,7 +74,7 @@ var ColudFileUtil = (function($, mod) {
 	 * @param {Object} uploadCompleted 完成时的回调
 	 * @param {Object} onStateChanged 上传任务状态监听
 	 */
-	mod.upload = function(fPath, QNUptoken, QNFileName, uploadCompleted, onStateChanged) {
+	mod.upload = function(fPath, QNUptoken, QNFileName, uploadCompleted, onStateChanged, successCB) {
 		//console.log('upload:' + fPath);
 		var uid = Math.floor(Math.random() * 100000000 + 10000000).toString();
 		var scope = "private";
@@ -109,6 +109,7 @@ var ColudFileUtil = (function($, mod) {
 			}, false);
 		//console.log('upload2:' + fPath + '|' + type + "|" + QNUptoken);
 		task.start();
+		successCB(task);
 	}
 
 	return mod;
