@@ -323,6 +323,9 @@
 
 				document.getElementById("folderlist").innerHTML = ''; //清空界面
 				document.getElementById("all").innerHTML = ''; //清空界面
+				mui.each(data.top, function(index, item) {
+					console.log('data.top' + JSON.stringify(item));
+				});
 
 				//增加空的顶层文件夹
 				addbot('0');
@@ -382,7 +385,7 @@
 			 */
 			function additem(data) {
 				if(data.ftype == '.file') { //文件夹
-					console.log('additem:' + JSON.stringify(data))
+					//console.log('additem:' + JSON.stringify(data))
 					var li = document.createElement('li');
 					li.setAttribute('id', 'fid_' + data.fid); //元素id
 					li.setAttribute('data-fid', data.fid); //文件id
