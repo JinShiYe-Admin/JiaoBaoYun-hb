@@ -13,10 +13,10 @@
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init()
-			mui.plusReady(function() {
-				events.addEventListener('homeworkInfo', function(e) {
-					var homeworkInfo = e.detail.data;
-					console.log('学生做作业界面从上级界面获取的做作业数据：' + JSON.stringify(homeworkInfo));
+			mui.plusReady(function(){
+				window.addEventListener('homeworkInfo',function(e){
+					homeworkModel=e.detail.data;
+					console.log('学生做作业界面从上级界面获取的做作业数据：'+JSON.stringify(homeworkInfo));
 				})
 			});
 			
@@ -30,7 +30,7 @@
 				var comData = {
 					userId: personalUTID, //学生/家长id，
 					studentId: personalUTID, //学生Id；
-					homeworkId: '', //作业id；
+					homeworkId: homeworkModel.HomeworkId, //作业id；
 					content: '', //文本答案；
 					fileIds: '' //文件id数组；
 				};
@@ -55,7 +55,7 @@
 				var comData = {
 					userId: personalUTID, //学生/家长id，
 					studentId: personalUTID, //学生Id；
-					homeworkResultId: '', //要修改的作业结果id；
+					homeworkResultId: homeworkModel.HomeworkId, //要修改的作业结果id；
 					content: '', //文本答案；
 					fileIds: '' //文件id串，例如“1,2”；
 				};

@@ -45,14 +45,14 @@ var files = (function(mod) {
 				reader.onloadend = function(evt) {
 					console.log("Read success:"+evt.target.result);
 					// Get data
-					var fileStream=window.btoa(evt.target.result)
+					var fileStream=evt.target.result
 					
 					console.log(fileStream);
 					
 					callback(fileStream);
 				};
 //				reader.readAsBinaryString(file)
-				reader.readAsText(file,'UTF-8');
+				reader.readAsDataURL(file);
 			}, function(e) {
 				console('获取文件流错误：'+e.message);
 			});
