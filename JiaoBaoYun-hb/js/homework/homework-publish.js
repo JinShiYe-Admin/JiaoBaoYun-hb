@@ -182,6 +182,7 @@ function requestClassStudents() {
  * @param {Object} callback 回调函数
  */
 var requirePostGUInfo = function(i, wd, callback) {
+	var tempFlag = 0;
 	for(var a in selectClassArray) {
 		var tempModel = selectClassArray[a];
 		//所需参数
@@ -191,24 +192,37 @@ var requirePostGUInfo = function(i, wd, callback) {
 			vvl1: '-1' //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 		};
 		postDataPro_PostGusers(comData, wd, function(data) {
+			tempFlag++;
 			if(data.RspCode == 0) {
 				console.log('13.postDataPro_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				//通过id，将数据塞到不同的数组
-				
-//				selectClassArray[i].studentArray = data.RspData;
+				var tempArray = data.RspData;
+				for(var m in tempArray) {
+					var tempModel1 = tempArray[m];
+					//判断是否为家长或学生
+					if(tempModel1.mstype == 0 || tempModel1.mstype == 3) {
+						//遍历班级列表，
+						for(var n in selectClassArray) {
+							var tempModel2 = selectClassArray[n];
+							tempModel2.isSelected = true;
+							tempModel2.studentArray = [];
+							//判断群id
+							if(tempModel2.gid == tempModel1.gid) {
+								tempModel2.studentArray.push(tempModel1);
+							}
+						}
+					}
+				}
+			}
+			//请求完成后，请求下一个班级
+			if(tempFlag == selectClassArray.length) {
+				console.log('学生资料群信息数据：' + JSON.stringify(selectClassArray))
+				setClasses();
+				wd.close();
 			}
 		});
-		//请求完成后，请求下一个班级
-//		if(i < selectClassArray.length - 1) {
-//			requirePostGUInfo(i + 1, wd);
-//			//所有班级请求完成
-//		} else {
-//			console.log('学生资料群信息数据：' + JSON.stringify(selectClassArray))
-//			setClasses();
-//			wd.close();
-//		}
+
 	}
-	selectClassArray[i].isSelected = true;
 
 }
 
@@ -221,10 +235,10 @@ function requestPublishHomework() {
 	for(var i in selectClassArray) {
 		var tempClassModel = selectClassArray[i];
 		if(tempClassModel.isSelected) {
-			//循环群里面的学生
+			//循环群里面的学生、家长
 			for(var m in tempClassModel.studentArray) {
 				var tempStuModel = tempClassModel.studentArray[m];
-				tempStuArray.push(tempClassModel.gid + '|' + tempStuModel.stuid);
+				tempStuArray.push(tempClassModel.gid + '|' + tempStuModel.utid);
 			}
 		}
 	}
