@@ -13,13 +13,12 @@ var storageKeyName = (function(mod) {
 	mod.WAITING = '加载中...'; //加载提示
 	mod.SIGNKEY = 'jsy309'; //签名密钥
 	mod.QNFILEDOMAIN = 'http://ohslrylsb.bkt.clouddn.com/'; //存放在七牛的文件（云存储的文件）的域名，私有的
-	mod.QNFILEIMGEDOMAIN = 'http://ohslz6g52.bkt.clouddn.com/'; //存放在七牛的文件（云存储的图片，视频文件）的缩略图域名，公开的
-	mod.QNHEADIMGEDOMAIN = 'http://ohsixybf6.bkt.clouddn.com/'; //存放在七牛的个人头像，群头像，资料头像的域名，公开的
+	mod.QNFILEIMGEDOMAIN = 'http://ohsixybf6.bkt.clouddn.com/'; //存放在七牛的文件（云存储的图片，视频文件）的缩略图域名，公开的
+	mod.QNHEADIMGEDOMAIN = 'http://ohslz6g52.bkt.clouddn.com/'; //存放在七牛的个人头像，群头像，资料头像的域名，公开的
 	mod.QNGETUPTOKENHEADIMGE = 'http://192.168.0.178:8517/GetTokenProfilePhoto.ashx'; //获取上传个人头像，群头像，资料头像到七牛的token的url
 	mod.QNGETUPTOKENFILE = 'http://192.168.0.178:8517/QiuToken.ashx'; //获取上传文件（云存储）到七牛的token的url
 	mod.QNGETDOWNTOKENFILE = 'http://192.168.0.178:8517/GetToken.ashx?geturl='; //获取下载文件（云存储）的token的url，url+七牛文件url
 	mod.QNGETTOKENDELETE = 'http://192.168.0.178:8517/BatchDelete.ashx'; //获取批量（或者一个）删除七牛文件的token的url
-
 
 	return mod;
 

@@ -16,6 +16,7 @@
 		<link rel="stylesheet" href="../../css/cloud/file.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
 		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
 		<style>
@@ -267,8 +268,9 @@
 			<script type="text/javascript">
 				mui.init()
 				mui.plusReady(function() {
+					var uploadList = []; //记录所有的上传对象
 					var main = plus.webview.currentWebview(); //获取当前窗体对象
-
+					var uploading = false; //是否正在上传
 					console.log('传输列表');
 
 					//---滑动start---
@@ -307,12 +309,11 @@
 						var myDate = new Date();
 						var QNFileName = myDate.getTime() + (Math.floor(Math.random() * 10000) + 1) + ftype;
 						var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENFILE;
-						console.log('文件类型:' + ftype + '|七牛存储的文件名:' + QNFileName + '|getUpTokenUrl:' + getUpTokenUrl);
 
 						ColudFileUtil.getCurrentType(function(data) {
 							console.log('获取当前网络状态:' + JSON.stringify(data));
 							if(data.code == 3) { //无线WIFI网络
-								getQNUpToken(getUpTokenUrl, QNFileName, subData.path, subData.fname);
+								getQNUpToken(getUpTokenUrl, QNFileName, subData.path, subData.fname, subData.pid);
 							} else {
 								if(data.code == 1) {
 									mui.toast(data.type);
@@ -320,7 +321,7 @@
 									var btnArray = ['否', '是'];
 									mui.confirm('当前不是无线WIFI网络，还继续上传吗？', '提示', btnArray, function(e) {
 										if(e.index == 1) { //是
-											getQNUpToken(getUpTokenUrl, QNFileName, subData.path, subData.fname);
+											getQNUpToken(getUpTokenUrl, QNFileName, subData.path, subData.fname, subData.pid);
 										} else {
 
 										}
@@ -331,66 +332,114 @@
 
 					});
 
+					mui('#upload').on('tap', 'button', function() {
+						console.log('button:' + this.getAttribute('id') + '|' + this.getAttribute('value') + '|' + this.getAttribute('data-upid'));
+						var id = this.getAttribute('id'); //元素id
+						var value = this.getAttribute('value'); //元素状态
+						var upid = this.getAttribute('data-upid'); //任务id
+						var task = null;
+						mui.each(uploadList, function(index, item) {
+							console.log('uploadList:' + JSON.stringify(item))
+							if(item.__UUID__ == upid) {
+								task = item;
+								return false;
+							}
+						});
+						if(value == '0') {
+							//task.start();
+						} else if(value == '3') {
+							//task.pause();
+							task.abort();
+						} else if(value == '5') {
+							task.resume();
+						}
+					});
+
 					/**
 					 * 获取七牛上传token
 					 * @param {Object} getUpTokenUrl 获取uptoken的url
 					 * @param {Object} QNFileName 存放在七牛的文件名
 					 * @param {Object} fPath 上传文件的本地路径
 					 * @param {Object} fname 上传文件的名字
+					 * @param {Object} pid 父ID，该文件的上层ID
 					 */
-					function getQNUpToken(getUpTokenUrl, QNFileName, fPath, fname) {
+					function getQNUpToken(getUpTokenUrl, QNFileName, fPath, fname, pid) {
 						ColudFileUtil.getQNUpToken(getUpTokenUrl, QNFileName, function(data) {
-								var QNUptoken = data.uptoken;
-								console.log('七牛上传token:' + QNUptoken);
-								ColudFileUtil.upload(fPath, QNUptoken, QNFileName, function(upload, status) {
-									//上传任务完成的监听
-									console.log('上传任务完成:status:' + status + '|upload:' + JSON.stringify(upload))
-								}, function(upload, status) {
-									//上传任务状态监听
-									//上传任务的标识
-									var id = upload.__UUID__;
-									//已完成上传数据的大小
-									var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
-									//上传数据的总大小
-									var totalSize = AndroidFileSystem.readSize(upload.totalSize);
-									//上传任务的状态
-									var uploadState = upload.state;
-									switch(uploadState) {
-										case 0: //上传任务开始调度
-											console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
-											break;
-										case 1: //上传任务开始请求
-											console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
-											addUploadItem(id, fname);
-											break;
-										case 2: //上传任务请求已经建立
-											console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
-											mui("#bar_" + id).progressbar({
-												progress: 0
-											}).show();
-											break;
-										case 3: //上传任务提交数据
-											//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
-											mui("#bar_" + id).progressbar().setProgress(upload.uploadedSize / upload.totalSize * 100);
-											document.getElementById("waiting_" + id).style.display = 'none';
-											document.getElementById("size_" + id).innerText = uploadedSize + '/' + totalSize;
-											break;
-										case 4: //上传任务已完成
-											console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
-											break;
-										case 5: //上传任务已暂停
-											console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
-											break;
-										default:
-											console.log('上传任务状态监听:其他状态');
-											break;
-									}
-								});
-							},
-							function(xhr, type, errorThrown) {
-								mui.toast('获取七牛上传token失败：' + type);
-								console.log('获取七牛上传token失败：' + type);
+							var QNUptoken = data.uptoken;
+							console.log('七牛上传token:' + QNUptoken);
+							ColudFileUtil.upload(fPath, QNUptoken, QNFileName, function(upload, status) {
+								//上传任务完成的监听
+								console.log('上传任务完成:status:' + status + '|upload:' + JSON.stringify(upload));
+								var fnameList = fname.split('.');
+								var name = '';
+								var type = '';
+								if(fnameList.length == 1) {
+									name = fname;
+									type = '';
+								} else {
+									type = '.' + fnameList[fnameList.length - 1];
+									name = fname.substring(0, (fname.length * 1 - type.length * 1));
+								}
+								var comData = {
+									pid: pid, //父ID，该文件的上层ID
+									fname: name, //文件名称，文件或文件夹名称,文件存扩展名之前的名称
+									ftype: type, //文件类型，存文件的扩展名,如.file为文件夹
+									fpath: window.storageKeyName.QNFILEDOMAIN + QNFileName, //文件路径，文件路径,为文件用
+									fsize: upload.totalSize //文件大小，文件用
+								};
+								addFile(comData);
+							}, function(upload, status) {
+								//上传任务状态监听
+								//上传任务的标识
+								var id = upload.__UUID__;
+								//已完成上传数据的大小
+								var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
+								//上传数据的总大小
+								var totalSize = AndroidFileSystem.readSize(upload.totalSize);
+								//上传任务的状态
+								var uploadState = upload.state;
+								switch(uploadState) {
+									case 0: //上传任务开始调度
+										console.log('上传任务开始调度:|id:' + id + '|uploadState:' + uploadState);
+										break;
+									case 1: //上传任务开始请求
+										console.log('上传任务开始请求:|id:' + id + '|uploadState:' + uploadState);
+										break;
+									case 2: //上传任务请求已经建立
+										console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
+										mui("#up_bar_" + id).progressbar({
+											progress: 0
+										}).show();
+										break;
+									case 3: //上传任务提交数据
+										//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
+										document.getElementById("up_btn_" + id).innerText = '暂停';
+										document.getElementById("up_btn_" + id).value = '3';
+										mui("#up_bar_" + id).progressbar().setProgress(upload.uploadedSize / upload.totalSize * 100);
+										document.getElementById("up_waiting_" + id).style.display = 'none';
+										document.getElementById("up_size_" + id).innerText = uploadedSize + '/' + totalSize;
+										break;
+									case 4: //上传任务已完成
+										console.log('上传任务已完成:|id:' + id + '|uploadState:' + uploadState);
+										break;
+									case 5: //上传任务已暂停
+										document.getElementById("up_btn_" + id).innerText = '继续';
+										document.getElementById("up_btn_" + id).value = '5';
+										console.log('上传任务已暂停:|id:' + id + '|uploadState:' + uploadState);
+										break;
+									default:
+										console.log('上传任务状态监听:其他状态');
+										break;
+								}
+							}, function(task) {
+								addUploadItem(task.__UUID__, fname);
+								console.log('task:' + JSON.stringify(task))
+								uploadList.push(task);
 							});
+						}, function(xhr, type, errorThrown) {
+							mui.toast('获取七牛上传token失败：' + type);
+							console.log('获取七牛上传token失败：' + type);
+						});
 					}
 
 					/**
@@ -400,19 +449,26 @@
 					 */
 					function addUploadItem(id, fname) {
 						console.log('addUploadItem:' + id + '|' + fname)
+						var type = cloud.classify2(fname);
 						var li = document.createElement('li');
 						li.setAttribute('id', id);
 						li.className = 'mui-table-view-cell mui-media';
 						li.innerHTML = '<div class="mui-media-object mui-pull-right">\
-											<button id="btn_' + id + '" type="button" class="mui-btn mui-btn-outlined">取消</button>\
-										</div> <span class="mui-media-object mui-icon iconfont iconfont-size icon-excel mui-pull-left"></span>\
+											<button id="up_btn_' + id + '" type="button" class="mui-btn mui-btn-outlined" value="0" data-upid="' + id + '">开始</button>\
+										</div> <span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>\
 										<div class="mui-media-body">\
 											<div class="mui-ellipsis transport-info">\
 												' + fname + '\
 											</div>\
 											<div class="transport-info">\
-												<p class="mui-pull-left">\
-													528KB&nbsp;&nbsp;2016-12-13 15:25:36\
+												<div id="up_bar_' + id + '" class="mui-progressbar"">\
+													<span></span>\
+												</div>\
+												<p id="up_size_' + id + '" class="mui-pull-left">\
+													0B/0B\
+												</p>\
+												<p id="up_waiting_' + id + '" class="mui-pull-right">\
+													正在等待...\
 												</p>\
 											</div>\
 										</div>';
@@ -437,15 +493,39 @@
 												' + fname + '\
 											</div>\
 											<div class="transport-info">\
-												<p id="size_' + id + '" class="mui-pull-left">\
-													0B/0B\
-												</p>\
-												<p id="waiting_' + id + '" class="mui-pull-right">\
-															正在等待...\
+												<p class="mui-pull-left">\
+													528KB&nbsp;&nbsp;2016-12-13 15:25:36\
 												</p>\
 											</div>\
 										</div>';
 						document.getElementById("uploaded").insertBefore(li, document.getElementById("uploaded").firstChild);
+					}
+
+					/**
+					 * 用户云盘文件上传或创建文件夹
+					 */
+					function addFile(comData) {
+						console.log('addFile:' + JSON.stringify(comData));
+						//27.用户云盘文件上传或创建文件夹
+						//所需参数
+						//var comData = {
+						//	pid: '', //	父ID，该文件的上层ID
+						//	fname: '', //	文件名称，文件或文件夹名称,文件存扩展名之前的名称
+						//	ftype: '', //	文件类型，存文件的扩展名,如.file为文件夹
+						//	fpath: '', //	文件路径，文件路径,为文件用
+						//	fsize: '' //	文件大小，文件用
+						//};
+						// 等待的对话框
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						postDataPro_PostDiFiA(comData, wd, function(data) {
+							wd.close();
+							console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode == 0) {
+
+							} else {
+								mui.toast(data.RspTxt);
+							}
+						});
 					}
 				});
 			</script>
