@@ -1603,5 +1603,33 @@
 		"refer": [
 			"html/homework/homeworkRecord-sub.html"
 		]
+	},
+	"html/homework/homework-commented.html": {
+		"resources": [
+			"js/homework/homework-commented.js"
+		]
+	},
+	"html/homework/workdetailTea-temSub.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/storageKeyName.js",
+			"js/homework/homework_detail.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"css/homework/workdetail.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/publicHomeworkProtocol.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		]
 	}
 }
