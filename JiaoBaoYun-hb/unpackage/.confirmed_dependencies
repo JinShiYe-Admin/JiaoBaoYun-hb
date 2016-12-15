@@ -430,7 +430,8 @@
 			"html/homework/workdetail-tea.html",
 			"html/homework/workdetail-stu.html",
 			"html/homework/workdetailTea-temporary.html",
-			"html/homework/homework-record.html"
+			"html/homework/homework-record.html",
+			"html/homework/homework-commented.html"
 		]
 	},
 	"html/homework/publish-answer.html": {
@@ -1570,7 +1571,8 @@
 			"css/mui.min.css",
 			"js/utils/ASFiles.js",
 			"css/quan/class_space.css",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"js/utils/files.js"
 		]
 	},
 	"html/homework/homeworkRecord-sub.html": {
