@@ -190,6 +190,15 @@
 				wd.close();
 				console.log('postDataPro_getUserSpaceMsgsById:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt+data.RspData.TotalCnt);
 				if(data.RspCode == 0) {
+					if(personalUTID == userId) {
+					var comData = {
+					userId: personalUTID, //用户ID
+					spaceTypes: '[7,8]'
+				}
+				postDataPro_setCommentMsgReadByUser(comData, wd, function(data) {   
+					console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
+				})
+			}
 					var tempRspData = data.RspData.Data;
 					//获取当前回调留言的个人信息，主要是头像、昵称
 					var tempArray = [];

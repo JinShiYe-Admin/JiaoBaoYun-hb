@@ -25,7 +25,7 @@
 	</head>
 
 	<body>
-		<nav id="alertBar" class="mui-bar mui-bar-tab" style="visibility:hidden;">
+		<nav id="alertBar" class="mui-bar mui-bar-tab" style="visibility: hidden;margin-bottom: 50px;">
 			<div align="center" >
 				<button id="alertAll" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 200px;">一键提醒</button>
 			</div>
@@ -42,7 +42,7 @@
 					<div class="mui-media-body">
 						<font id="homeWorkContent"></font> 
 					</div>
-					<div align="center" style="visibility: hidden;">
+					<div align="center"  style="visibility: hidden;">
 						<button id="checkDetail" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 100px;margin-top:15px ;">查看详情</button>
 					</div>
 
@@ -334,14 +334,15 @@
 				}
 				var headImg = updateHeadImg(uploadArray[i].uimg,2)
 									var li = document.createElement('li');
-				li.innerHTML = '<li class="mui-table-view-cell mui-media ">'+'<img  class="mui-media-object mui-pull-left" src="'+headImg +'" />'
+									li.className = 'mui-table-view-cell mui-media'
+				li.innerHTML = '<img  class="mui-media-object mui-pull-left" src="'+headImg +'" />'
 										'<div class="mui-media-body">'+
 											uploadArray[i].ugnick+
 											'<button class="mui-media-body" style="float: right;">'+
 												IsCommented+
 											'</button>'+
-										'</div>'+
-									'</li>';
+										'</div>'
+									
 				homeworkDetailNodes.finishedList.appendChild(li)	;
 				}
 
@@ -356,14 +357,15 @@
 					}
 					var headImg = updateHeadImg(remainArray[i].uimg,2)
 									var li = document.createElement('li');
-				li.innerHTML = '<li class="mui-table-view-cell mui-media">'+'<img  class="mui-media-object mui-pull-left" src="'+headImg +'" />'+
+									li.className = 'mui-table-view-cell mui-media'
+				li.innerHTML = '<img  class="mui-media-object mui-pull-left" src="'+headImg +'" />'+
 										'<div class="mui-media-body">'+
 											remainArray[i].ugnick+
 											'<button id="alert'+i+'" class="mui-media-body" style="float: right;" onclick="alertStu(this)">'+
 												alert+
 											'</button>'+
-										'</div>'+
-									'</li>';
+										'</div>'
+									;
 				homeworkDetailNodes.unfinishedList.appendChild(li);
 				
 				}	
@@ -375,9 +377,11 @@
 					} else if (e.detail.slideNumber === 1) {
 						console.log('未完成');
 						if(remainArray.length==0){
+							console.log(11111)
 							homeworkDetailNodes.alertBar.style.visibility = 'hidden';
 						}else{
 							homeworkDetailNodes.alertBar.style.visibility = 'visible';
+							console.log(homeworkDetailNodes.alertBar.outerHTML)
 						}
 						
 					}

@@ -264,16 +264,15 @@ function requestData(callback) {
 	});
 }
 var setCommentMsgReadByUser = function() {
-	for(var i = 4; i < 9; i++) {
 		var comData = {
 			userId: personalUTID, //用户ID
-			spaceType: i
-		};
+			spaceTypes: '[4,5,6,7,8]'
+		}
 		var wd;
 		postDataPro_setCommentMsgReadByUser(comData, wd, function(data) {
 			console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
 		})
-	}
+	
 
 }
 var replenishData = function(data, infos) {

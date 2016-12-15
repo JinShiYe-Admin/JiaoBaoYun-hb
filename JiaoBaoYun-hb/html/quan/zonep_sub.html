@@ -179,7 +179,6 @@
 			}
 		});
 
-
 		var tempPage = 1; //页码，请求第几页数据
 		var totalCnt = 0; //当前留言的总条数
 		var flag = 2; //判断是加载更多1，还是刷新2
@@ -658,6 +657,17 @@
 		});
 		//设置个人空间动态为已读
 		function setUserSpaceReadByUser() {
+			if(personalUTID == publisherId) {
+				var comData = {
+					userId: personalUTID, //用户ID
+					spaceTypes: '[4,5,6]'
+				}
+				var wd;
+				postDataPro_setCommentMsgReadByUser(comData, wd, function(data) {
+					console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
+				})
+			}
+
 			var NoReadCnt = plus.webview.currentWebview().NoReadCnt //未读条数
 			if(NoReadCnt != 0) { //如果未读条数不为0，则设置空间状态为已读
 				var comData = {
@@ -680,7 +690,7 @@
 				})
 			}
 		}
-				/**
+		/**
 		 * 下拉刷新具体业务实现
 		 */
 		function pulldownRefresh() {
@@ -726,7 +736,7 @@
 
 		}
 
-				//失去焦点事件
+		//失去焦点事件
 		function inputOnblur(input) {
 			mui('.mui-popover').popover('hide');
 
