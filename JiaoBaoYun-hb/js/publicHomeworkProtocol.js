@@ -347,7 +347,7 @@ var postDataPro_GetHomeworkStu=function(commonData, wd, callback) {
 }
 
 
-//3.	获取作业结果；
+//3.	获取作业结果和评价
 //所需参数
 //		var comData = {
 //			studentId: '',//学生Id
