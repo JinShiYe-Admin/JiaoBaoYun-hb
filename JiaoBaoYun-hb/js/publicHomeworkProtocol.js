@@ -296,6 +296,22 @@ var postDataPro_GetSubjectList=function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'GetSubjectList', enData, commonData, 2, wd, callback);
 }
 
+//18.描述：文件上传,逻辑：如果是图片类型，同时生成缩略图
+//所需参数
+//		var comData = {
+//			teacherId:'',//教师Id
+//			fileType:'',//文件类型，1：图片；2：音频；3：视频；
+//			filename:'',//文件名，带后缀；
+//			fileStream:'',//base64格式的文件流；
+//			displayOrder:''//文件显示的顺序
+//		};
+var postDataPro_UploadAnswerFile=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINHOMEWORKURLTEACHER + 'UploadAnswerFile', enData, commonData, 2, wd, callback);
+}
+
 
 //-------------------------------------------------------------学生、家长-----------------------------------------------------------
 
@@ -529,4 +545,20 @@ var postDataPro_ModifyAlertCheck=function(commonData, wd, callback) {
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'ModifyAlertCheck', enData, commonData, 2, wd, callback);
+}
+
+//16.描述：文件上传,逻辑：如果是图片类型，同时生成缩略图
+//所需参数
+//		var comData = {
+//			userId:'',//学生/家长Id；
+//			fileType:'',//文件类型，1：图片；2：音频；3：视频；
+//			filename:'',//文件名，带后缀；
+//			fileStream:'',//base64格式的文件流；
+//			displayOrder:''//文件显示的顺序
+//		};
+var postDataPro_UploadAnswerFileStu=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'UploadAnswerFile', enData, commonData, 2, wd, callback);
 }
