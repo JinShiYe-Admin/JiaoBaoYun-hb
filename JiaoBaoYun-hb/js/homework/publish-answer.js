@@ -1,98 +1,97 @@
 var personalUTID; //个人id
 var role; //角色
 var imgIds;
-var stuSubmitAnswer;
-var answerResultId;
+var stuSubmitAnswer;//true学生提交答案||FALSE学生修改答案
+var answerResultId;//学生答案id
 mui.init();
 mui.plusReady(function() {
-	mui.previewImage();
-	personalUTID = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
-	window.addEventListener('roleInfo', function(e) {
-		imgIds=[];
-		console.log('上传答案||作业界面获取的上级页面传过来的信息：' + JSON.stringify(e.detail));
-		var data = e.detail.data;
-		role = data.role;
-		var studentClasses = data.studentClasses;
-		setCondition(role, studentClasses);
-	})
+		mui.previewImage();
+		personalUTID = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
+		window.addEventListener('roleInfo', function(e) {
+			imgIds = [];
+			console.log('上传答案||作业界面获取的上级页面传过来的信息：' + JSON.stringify(e.detail));
+			var data = e.detail.data;
+			role = data.role;
+			var studentClasses = data.studentClasses;
+			setCondition(role, studentClasses);
+		})
 
-	/**
-	 * 通过系统相机获取图片
-	 * 并显示在界面上
-	 */
-	events.addTap('getAnswer', function() {
+		/**
+		 * 通过系统相机获取图片
+		 * 并显示在界面上
+		 */
+		events.addTap('getAnswer', function() {
+				camera.getPic(camera.getCamera(), function(picPath) {
+					files.getFileByPath(picPath, function(fileStream) {
+						uploadFile(picPath, fileStream);
+					})
 
-			camera.getPic(camera.getCamera(), function(picPath) {
-				files.getFileByPath(picPath, function(fileStream) {
-					uploadFile(picPath, fileStream);
 				})
-
 			})
-		})
-		//删除图标的点击事件
-	mui('#pictures').on('tap', '.icon-guanbi', function() {
-			imgIds.splice(imgIds.indexOf(this.parentElement.imgId),1);
-			//删除图片
-			pictures.removeChild(this.parentElement)
-		})
-		//上传路径
-	var server = "http://demo.dcloud.net.cn/helloh5/uploader/upload.php";
-	//上传按钮点击事件
-	events.addTap('post-imgs', function() {
-		
-		if(imgIds.length > 0) {
-			//选择的科目id
-			var selectSubjectID = jQuery('#subjects').val();
-			//判断当前显示的是老师身份0，还是家长、学生身份1
-			if(role == 2) {
-				//14.发布答案,只能上传图片；
-				//所需参数
-				var comData = {
-					teacherId: personalUTID, //教师Id
-					subjectId: selectSubjectID, //科目Id， 见（一）.17. GetSubjectList()；
-					fileIds: imgIds.toString() //上传文件的id串，例如“1,2”；
-				};
-				requestPublishAnswer(comData);
-			} else {
-				//判断是要学生提交答案0，还是修改答案1
-				if(stuSubmitAnswer) {
-					//6.	提交答案结果
+			//删除图标的点击事件
+		mui('#pictures').on('tap', '.icon-guanbi', function() {
+				imgIds.splice(imgIds.indexOf(this.parentElement.imgId), 1);
+				//删除图片
+				pictures.removeChild(this.parentElement)
+			})
+			//上传路径
+		var server = "http://demo.dcloud.net.cn/helloh5/uploader/upload.php";
+		//上传按钮点击事件
+		events.addTap('post-imgs', function() {
+
+			if(imgIds.length > 0) {
+				//选择的科目id
+				var selectSubjectID = jQuery('#subjects').val();
+				//判断当前显示的是老师身份0，还是家长、学生身份1
+				if(role == 2) {
+					//14.发布答案,只能上传图片；
 					//所需参数
 					var comData = {
-						userId: personalUTID, //学生/家长id，
-						classId: uploadTeacherModel.gid, //班级id
-						studentId: personalUTID, //学生Id；
-						fileIds: imgIds.toString(), //文件id数组；
-						teacherId: jQuery('#receive-teachers').val(), //老师Id；
-						teacherName: jQuery('#receive-teachers').find("option:selected").text() //老师名字；
+						teacherId: personalUTID, //教师Id
+						subjectId: selectSubjectID, //科目Id， 见（一）.17. GetSubjectList()；
+						fileIds: imgIds.toString() //上传文件的id串，例如“1,2”；
 					};
-					requestSubmitAnswer(comData);
+					requestPublishAnswer(comData);
 				} else {
-					//8.修改答案结果；
-					//所需参数
-					var comData = {
-						userId: personalUTID, //学生/家长id，
-						studentId: personalUTID, //学生Id；
-						answerResultId: answerResultId, //要修改的答案id；
-						fileIds: imgIds, //文件id数组；
-						teacherId: jQuery('#receive-teachers').val(), //老师Id；
-						teacherName: jQuery('#receive-teachers').find("option:selected").text() //老师名字；
-					};
-					requestModifyAnswer(comData);
+					//判断是要学生提交答案0，还是修改答案1
+					if(stuSubmitAnswer) {
+						//6.	提交答案结果
+						//所需参数
+						var comData = {
+							userId: personalUTID, //学生/家长id，
+							classId: uploadTeacherModel.gid, //班级id
+							studentId: personalUTID, //学生Id；
+							fileIds: imgIds.toString(), //文件id数组；
+							teacherId: jQuery('#receive-teachers').val(), //老师Id；
+							teacherName: jQuery('#receive-teachers').find("option:selected").text() //老师名字；
+						};
+						requestSubmitAnswer(comData);
+					} else {
+						//8.修改答案结果；
+						//所需参数
+						var comData = {
+							userId: personalUTID, //学生/家长id，
+							studentId: personalUTID, //学生Id；
+							answerResultId: answerResultId, //要修改的答案id；
+							fileIds: imgIds, //文件id数组；
+							teacherId: jQuery('#receive-teachers').val(), //老师Id；
+							teacherName: jQuery('#receive-teachers').find("option:selected").text() //老师名字；
+						};
+						requestModifyAnswer(comData);
+					}
 				}
+			} else {
+				mui.toast('请拍照后上传');
 			}
-		} else {
-			mui.toast('请拍照后上传');
-		}
+		})
 	})
-})
-/**
- * 
- * @param {Object} picPath
- * @param {Object} fileStream
- */
+	/**
+	 * 
+	 * @param {Object} picPath
+	 * @param {Object} fileStream
+	 */
 var uploadFile = function(picPath, fileStream) {
-//		picPath = picPath.replace('/', '');
+		//		picPath = picPath.replace('/', '');
 		var comData = {
 			teacherId: personalUTID, //教师Id
 			fileType: 1, //文件类型，1：图片；2：音频；3：视频；
@@ -100,6 +99,11 @@ var uploadFile = function(picPath, fileStream) {
 			fileStream: fileStream, //base64格式文件流；
 			displayOrder: 1 //图片顺序；
 		};
+		if(role == 2) {
+			uploadFileTeacher(comData, setPic);
+		} else {
+			uploadFileStudent(comData, setPic)
+		}
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		postDataPro_UploadFile(comData, wd, function(data) {
 			wd.close();
@@ -111,50 +115,50 @@ var uploadFile = function(picPath, fileStream) {
 			}
 		})
 	}
-/**
- * 
- * @param {Object} picPath 
- * //“FileId”：1，       //附件id
-	//“FileName”：”xxx.png”,       //附件名
-	//“FileType”：1,       //附件类型
-	//“Url”：“xxx/xxx.png”       //附件url
-	//“ThumbUrl”：”xxxxxxxx/xxx.png”，    //缩略图url
-	//“DisplayOrder”：1                //显示顺序
- */
-var setPic=function(img){
-	imgIds.push(img.FileId);
-//	picPath=camero.getAbsolutePath(picPath);
-	var pictures = document.getElementById('pictures');
-				var div = document.createElement('div');
-				div.imgId=img.FileId;
-				div.className = 'img-div';
-				div.innerHTML = '<img src="' + img.ThumbUrl + '" data-preview-src="" data-preview-group="1"/>' +
-					'<a class="mui-icon iconfont icon-guanbi"></a>'
-	pictures.appendChild(div);
-}
+	/**
+	 * 
+	 * @param {Object} picPath 
+	 * //“FileId”：1，       //附件id
+		//“FileName”：”xxx.png”,       //附件名
+		//“FileType”：1,       //附件类型
+		//“Url”：“xxx/xxx.png”       //附件url
+		//“ThumbUrl”：”xxxxxxxx/xxx.png”，    //缩略图url
+		//“DisplayOrder”：1                //显示顺序
+	 */
+var setPic = function(img) {
+		imgIds.push(img.FileId);
+		//	picPath=camero.getAbsolutePath(picPath);
+		var pictures = document.getElementById('pictures');
+		var div = document.createElement('div');
+		div.imgId = img.FileId;
+		div.className = 'img-div';
+		div.innerHTML = '<img src="' + img.ThumbUrl + '" data-preview-src="" data-preview-group="1"/>' +
+			'<a class="mui-icon iconfont icon-guanbi"></a>'
+		pictures.appendChild(div);
+	}
 	/**
 	 * 设置界面
 	 * @param {Object} role
 	 */
 var setCondition = function(role, stuClasses) {
-		var btn_post = document.getElementById('post-imgs');
-		var title = document.getElementById('title');
-		if(role == 2) {
-			document.querySelector('.subjects-container').style.display = 'block';
-			document.querySelector('.teachers-container').style.display = 'none';
-			btn_post.innerText = '上传答案';
-			title.innerText = '上传答案';
-			requestSubjectList();
-		} else {
-			stuSubmitAnswer=true;
-			document.querySelector('.subjects-container').style.display = 'none';
-			document.querySelector('.teachers-container').style.display = 'block';
-			btn_post.innerText = '上传作业';
-			title.innerText = '上传作业';
-			//循环遍历老师数组，将群和老师身份的拼接
-			requestClassTeacherInfo(stuClasses);
-		}
+	var btn_post = document.getElementById('post-imgs');
+	var title = document.getElementById('title');
+	if(role == 2) {
+		document.querySelector('.subjects-container').style.display = 'block';
+		document.querySelector('.teachers-container').style.display = 'none';
+		btn_post.innerText = '上传答案';
+		title.innerText = '上传答案';
+		requestSubjectList();
+	} else {
+		stuSubmitAnswer = true;
+		document.querySelector('.subjects-container').style.display = 'none';
+		document.querySelector('.teachers-container').style.display = 'block';
+		btn_post.innerText = '上传作业';
+		title.innerText = '上传作业';
+		//循环遍历老师数组，将群和老师身份的拼接
+		requestClassTeacherInfo(stuClasses);
 	}
+}
 
 //17.获取所有科目列表
 function requestSubjectList() {
@@ -237,14 +241,11 @@ var setTeachers = function(teaInfos) {
 	var teaContainer = document.getElementById('receive-teachers');
 	events.clearChild(teaContainer);
 	teaInfos.forEach(function(teaInfo, i) {
-			var op = document.createElement('option');
-			op.value = teaInfo.utid;
-			op.innerText = teaInfo.ugnick;
-			teaContainer.appendChild(op);
-		})
-		//	for(var i in teaInfos){
-		//		
-		//	}
+		var op = document.createElement('option');
+		op.value = teaInfo.utid;
+		op.innerText = teaInfo.ugnick;
+		teaContainer.appendChild(op);
+	})
 }
 
 //所需参数
@@ -257,20 +258,15 @@ var setTeachers = function(teaInfos) {
 //				};
 
 //11.上传文件；逻辑：如果是图片类型，同时生成缩略图
-function requestUploadFileTeacher(comData) {
+function uploadFileTeacher(comData, callback) {
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//11.上传文件；逻辑：如果是图片类型，同时生成缩略图
-	postDataPro_UploadFile(comData, wd, function(data) {
+	postDataPro_UploadAnswerFile(comData, wd, function(data) {
 		wd.close();
-		console.log('11.postDataPro_UploadFile:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		console.log('发布答案||作业界面老师上传答案返回值' + JSON.stringify(data));
 		if(data.RspCode == 0) {
-			//						“FileId”：1，       //文件id
-			//						“FileName”：”xxx.png”,       //文件名
-			//						“FileType”：1,       //文件类型
-			//						“Url”：“xxx/xxx.png”       //文件url
-			//						“ThumbUrl”：”xxxxxxxx/xxx.png”，    //缩略图url
-			//						“DisplayOrder”：1                //显示顺序
+			callback(data.RspData);
 		} else {
 			mui.toast(data.RspTxt);
 		}
@@ -287,20 +283,15 @@ function requestUploadFileTeacher(comData) {
 //				};
 
 //5.	上传文件；逻辑：如果是图片类型，同时生成缩略图，学生
-function UploadFileStudent(comData) {
+function uploadFileStudent(comData, callback) {
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//5.	上传文件；逻辑：如果是图片类型，同时生成缩略图
-	postDataPro_UploadFileStu(comData, wd, function(data) {
+	postDataPro_UploadAnswerFileStu(comData, wd, function(data) {
 		wd.close();
-		console.log('5.postDataPro_UploadFileStu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		console.log('发布答案||作业界面学生上传作业返回值' + JSON.stringify(data));
 		if(data.RspCode == 0) {
-			//						“FileId”：1，       //文件id
-			//						“FileName”：”xxx.png”,       //文件名
-			//						“FileType”：1,       //文件类型
-			//						“Url”：“xxx/xxx.png”       //文件url
-			//						“ThumbUrl”：”xxxxxxxx/xxx.png”，    //缩略图url
-			//						“DisplayOrder”：1                //显示顺序
+			callback(data.RspData);
 		} else {
 			mui.toast(data.RspTxt);
 		}
@@ -314,9 +305,9 @@ function requestPublishAnswer(comData) {
 	//14.发布答案,只能上传图片；
 	postDataPro_PublishAnswer(comData, wd, function(data) {
 		wd.close();
-		console.log('14.postDataPro_PublishAnswer:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		console.log('发布答案||作业界面老师发布答案返回值：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
-
+			mui.toast('上传成功')
 		} else {
 			mui.toast(data.RspTxt);
 		}
@@ -330,11 +321,11 @@ function requestSubmitAnswer(comData) {
 	//6.	提交答案结果
 	postDataPro_SubmitAnswerResult(comData, wd, function(data) {
 		wd.close();
-		console.log('提交答案||作业界面学生提交作业返回值：'+JSON.stringify(data))
+		console.log('提交答案||作业界面学生提交作业返回值：' + JSON.stringify(data))
 		if(data.RspCode == 0) {
-			stuSubmitAnswer=false;
-			answerResultId=data.RspData.AnswerResultId
-			document.getElementById('post-imgs').innerText='修改答案';
+			stuSubmitAnswer = false;
+			answerResultId = data.RspData.AnswerResultId
+			document.getElementById('post-imgs').innerText = '修改答案';
 		} else {
 			mui.toast(data.RspTxt);
 		}
