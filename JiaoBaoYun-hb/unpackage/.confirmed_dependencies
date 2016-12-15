@@ -421,7 +421,8 @@
 			"js/publicProtocol.js",
 			"js/homework/homework-sub.js",
 			"css/utils/common.css",
-			"image/homework/need-submit.png"
+			"image/homework/need-submit.png",
+			"image/homework/submitted.png"
 		],
 		"refer": [
 			"html/homework/homework-publish.html",
@@ -460,7 +461,9 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"js/utils/files.js"
 		],
-		"refer": []
+		"refer": [
+			"html/homework/homework-commented.html"
+		]
 	},
 	"html/homework/homework-tea.html": {
 		"resources": [
@@ -1541,7 +1544,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"css/homework/workdetail-stu.css"
+			"css/homework/workdetail-stu.css",
+			"js/utils/events.js"
 		],
 		"refer": [
 			"html/homework/doHomework-stu.html"
@@ -1556,7 +1560,9 @@
 		"resources": [
 			"js/mui.min.js",
 			"js/utils/events.js",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/utils/ASFiles.js",
+			"css/quan/class_space.css"
 		]
 	}
 }

@@ -1,14 +1,16 @@
 var personalUTID; //个人id
 var role; //角色
-var imgIds;
+var imgIds;//图片数据
 var stuSubmitAnswer;//true学生提交答案||FALSE学生修改答案
 var answerResultId;//学生答案id
 mui.init();
 mui.plusReady(function() {
+		events.preload('homework-commented.html',200);
 		mui.previewImage();
 		personalUTID = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 		window.addEventListener('roleInfo', function(e) {
 			imgIds = [];
+			document.getElementById('checkResult').style.display='none'
 			console.log('上传答案||作业界面获取的上级页面传过来的信息：' + JSON.stringify(e.detail));
 			var data = e.detail.data;
 			role = data.role;
@@ -28,6 +30,9 @@ mui.plusReady(function() {
 
 				})
 			})
+		events.addTap('checkResult',function(){
+			events.fireToPageWithData('homework-commented.html','checkResult',answerResultId);
+		})
 			//删除图标的点击事件
 		mui('#pictures').on('tap', '.icon-guanbi', function() {
 				imgIds.splice(imgIds.indexOf(this.parentElement.imgId), 1);
@@ -41,7 +46,7 @@ mui.plusReady(function() {
 
 			if(imgIds.length > 0) {
 				//选择的科目id
-				var selectSubjectID = jQuery('#subjects').val();
+				var selectSubjectID = jQuery('#publish-subjects').val();
 				//判断当前显示的是老师身份0，还是家长、学生身份1
 				if(role == 2) {
 					//14.发布答案,只能上传图片；
@@ -104,16 +109,6 @@ var uploadFile = function(picPath, fileStream) {
 		} else {
 			uploadFileStudent(comData, setPic)
 		}
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		postDataPro_UploadFile(comData, wd, function(data) {
-			wd.close();
-			console.log('上传答案||作业上传图片的返回值：' + JSON.stringify(data));
-			if(data.RspCode == '0000') {
-				setPic(data.RspData);
-			} else {
-				mui.toast('上传失败，请重新上传')
-			}
-		})
 	}
 	/**
 	 * 
@@ -325,6 +320,7 @@ function requestSubmitAnswer(comData) {
 		if(data.RspCode == 0) {
 			stuSubmitAnswer = false;
 			answerResultId = data.RspData.AnswerResultId
+			document.getElementById('checkResult').style.display='block'
 			document.getElementById('post-imgs').innerText = '修改答案';
 		} else {
 			mui.toast(data.RspTxt);
@@ -341,7 +337,11 @@ function requestModifyAnswer(comData) {
 		wd.close();
 		console.log('8.postDataPro_ModifyAnswerResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
-
+			if(data.RspData.r){
+				mui.toast("修改答案成功！")
+			}else{
+				mui.toast('修改答案失败！')
+			}
 		} else {
 			mui.toast(data.RspTxt);
 		}
