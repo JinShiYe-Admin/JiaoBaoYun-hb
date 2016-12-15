@@ -916,7 +916,8 @@
 					"html/homework/workdetail-stu.html",
 					"html/homework/workdetailTea-temporary.html",
 					"html/homework/homework-record.html",
-					"html/homework/homework-commented.html"
+					"html/homework/homework-commented.html",
+					"html/homework/workstu-err.html"
 				],
 				"priority": 0
 			},
@@ -1020,7 +1021,8 @@
 					"fonts/mui.ttf",
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"html/homework/workstu-errSub.html"
 				],
 				"refer": [],
 				"priority": 0
@@ -2077,7 +2079,16 @@
 				"resources": [
 					"js/utils/CloudFileUtil.js",
 					"js/cloud/AndroidFileSystem.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/myStorage/myStorage.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2090,7 +2101,8 @@
 					"js/utils/ASFiles.js",
 					"css/quan/class_space.css",
 					"fonts/mui.ttf",
-					"js/utils/files.js"
+					"js/utils/files.js",
+					"js/utils/camera.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2117,7 +2129,10 @@
 			},
 			"html/homework/homework-commented.html": {
 				"resources": [
-					"js/homework/homework-commented.js"
+					"js/homework/homework-commented.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -2143,6 +2158,13 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/homework/workstu-errSub.html": {
+				"resources": [
+					"js/homework/homework-err.js"
 				],
 				"refer": [],
 				"priority": 0

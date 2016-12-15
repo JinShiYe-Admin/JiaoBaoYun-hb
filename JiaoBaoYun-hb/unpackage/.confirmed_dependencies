@@ -431,7 +431,8 @@
 			"html/homework/workdetail-stu.html",
 			"html/homework/workdetailTea-temporary.html",
 			"html/homework/homework-record.html",
-			"html/homework/homework-commented.html"
+			"html/homework/homework-commented.html",
+			"html/homework/workstu-err.html"
 		]
 	},
 	"html/homework/publish-answer.html": {
@@ -1561,7 +1562,16 @@
 		"resources": [
 			"js/utils/CloudFileUtil.js",
 			"js/cloud/AndroidFileSystem.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/myStorage/myStorage.js"
 		]
 	},
 	"html/homework/doHomework-stu.html": {
@@ -1572,7 +1582,8 @@
 			"js/utils/ASFiles.js",
 			"css/quan/class_space.css",
 			"fonts/mui.ttf",
-			"js/utils/files.js"
+			"js/utils/files.js",
+			"js/utils/camera.js"
 		]
 	},
 	"html/homework/homeworkRecord-sub.html": {
@@ -1608,7 +1619,10 @@
 	},
 	"html/homework/homework-commented.html": {
 		"resources": [
-			"js/homework/homework-commented.js"
+			"js/homework/homework-commented.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
 		]
 	},
 	"html/homework/workdetailTea-temSub.html": {
@@ -1632,6 +1646,20 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/homework/workstu-errSub.html": {
+		"resources": [
+			"js/homework/homework-err.js"
+		]
+	},
+	"html/homework/workstu-err.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"html/homework/workstu-errSub.html"
+		],
+		"refer": [
+			"html/homework/workstu-errSub.html"
 		]
 	}
 }

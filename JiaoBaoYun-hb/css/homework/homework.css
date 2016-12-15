@@ -9,7 +9,7 @@ header .icon-xiangji:before{
 	top:0.5rem;
 	right: 0.5rem;
 	z-index: 999;
-	width: 8rem;
+	width: 12rem;
 }
 /**
  * 发布作业按钮
@@ -19,7 +19,7 @@ header .icon-xiangji:before{
 	bottom: 2rem;
 	right: 2rem;
 	z-index: 666;
-	font-size: 2rem;
+	font-size: 4rem;
 	color: saddlebrown;
 	background-color: orange;
 	border-radius: 50%;
@@ -32,12 +32,6 @@ header .icon-xiangji:before{
 	background-color: transparent;
 }
 
-.subject-icon{
-	display: inline-block;
-	padding: 1rem;
-	font-size: 4rem;
-	width: 20%;
-}
 .header-words{
 	display: inline-block;
 	width: 76%;
@@ -46,7 +40,7 @@ header .icon-xiangji:before{
 	 display: inline-block;
 	 padding-left: 1rem;
 }
-.stuHomework-header{
+.mui-table-view-cell{
 	background-repeat: no-repeat;
 	background-position: right;
 }

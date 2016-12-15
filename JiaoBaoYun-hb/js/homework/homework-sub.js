@@ -188,11 +188,11 @@ var setListener = function() {
 			})
 			//学生作业已提交点击事件
 		mui('.mui-table-view').on('tap', '.isSubmitted', function() {
-				events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+				events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 			})
 			//学生作业在已评论点击事件
 		mui('.mui-table-view').on('tap', '.isCommentedBG', function() {
-				events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+				events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 			})
 			//发布作业界面
 		publish.addEventListener('tap', function() {
@@ -350,7 +350,7 @@ var getAnswerImgs = function(thumbUrls) {
 	return imgsInner;
 }
 var createStuHomeworkInner = function(homework) {
-	return '<a><div class="stuHomework-header ' + getBackGround(homework) + '"><span class="mui-icon iconfont subject-icon ' +
+	return '<a><div class="stuHomework-header "><span class="mui-icon iconfont subject-icon ' +
 		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words"><h5 class="header-title">' +
 		homework.HomeworkTitle + '</h5><p class="header-content">' + homework.Contents + '</p></div></div>' +
 		'<div class="stuHomework-bottom"></div></a>';

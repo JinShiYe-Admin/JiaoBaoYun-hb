@@ -28,3 +28,9 @@
 .icon-qita{
 	color: #F54D55;
 }
+.subject-icon{
+	display: inline-block;
+	padding: 1rem;
+	font-size: 4rem;
+	width: 20%;
+}
