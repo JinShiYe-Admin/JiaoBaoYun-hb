@@ -422,7 +422,8 @@
 			"js/homework/homework-sub.js",
 			"css/utils/common.css",
 			"image/homework/need-submit.png",
-			"image/homework/submitted.png"
+			"image/homework/submitted.png",
+			"css/homework/subjects-icon.css"
 		],
 		"refer": [
 			"html/homework/homework-publish.html",
@@ -1557,7 +1558,9 @@
 	},
 	"html/cloud/storage_transport.html": {
 		"resources": [
-			"js/utils/CloudFileUtil.js"
+			"js/utils/CloudFileUtil.js",
+			"js/cloud/AndroidFileSystem.js",
+			"fonts/mui.ttf"
 		]
 	},
 	"html/homework/doHomework-stu.html": {
@@ -1566,7 +1569,8 @@
 			"js/utils/events.js",
 			"css/mui.min.css",
 			"js/utils/ASFiles.js",
-			"css/quan/class_space.css"
+			"css/quan/class_space.css",
+			"fonts/mui.ttf"
 		]
 	},
 	"html/homework/homeworkRecord-sub.html": {

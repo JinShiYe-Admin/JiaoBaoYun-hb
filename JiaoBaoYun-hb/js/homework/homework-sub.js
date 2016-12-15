@@ -20,6 +20,7 @@ mui.plusReady(function() {
 		events.preload('homework-publish.html', 500);
 		events.preload('workdetailTea-temporary.html', 300);
 		events.preload('workdetail-stu.html', 800);
+		events.preload('homework-commented.html', 600);
 
 		//赋值
 		list = document.getElementById('list-container');
@@ -180,7 +181,15 @@ var setListener = function() {
 				plus.webview.getWebviewById("workdetailTea-temporary.html").show();
 			})
 			//学生作业在线提交点击事件
-		mui('.mui-table-view').on('tap', '.stuHomework', function() {
+		mui('.mui-table-view').on('tap', '.submitOnline', function() {
+				events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+			})
+			//学生作业已提交点击事件
+		mui('.mui-table-view').on('tap', '.isSubmitted', function() {
+				events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+			})
+			//学生作业在已评论点击事件
+		mui('.mui-table-view').on('tap', '.isCommentedBG', function() {
 				events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 			})
 			//发布作业界面
@@ -420,7 +429,7 @@ var setHomeworkData = function() {
 						var li = document.createElement('li');
 						homework.Date = DateHM.Date;
 						li.homeworkInfo = homework;
-						li.className = 'mui-table-view-cell stuHomework';
+						li.className = 'mui-table-view-cell stuHomework '+getBackGround(homework);
 						li.innerHTML = createStuHomeworkInner(homework);
 						list.appendChild(li);
 					})
