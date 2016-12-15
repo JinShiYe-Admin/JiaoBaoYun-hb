@@ -40,48 +40,6 @@
 				mui.back();
 			});
 
-			//
-
-			//2.	获取教师发布作业详情，不包括学生提交的答案；学生
-			function requestGetHomeworkStu(comData) {
-				//所需参数
-				var comData = {
-					studentId: '', //学生Id
-					classId: '', //班级群Id；
-					homeworkId: '' //作业id；
-				};
-				//2.	获取教师发布作业详情，不包括学生提交的答案；
-				postDataPro_GetHomeworkStu(comData, wd, function(data) {
-					wd.close();
-					console.log('2.postDataPro_GetHomeworkStu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					if(data.RspCode == 0) {
-
-					} else {
-
-					}
-				});
-			}
-
-			//3.	获取作业结果；学生
-			function requestGetHomeworkResultStu(comData) {
-				//所需参数
-				var comData = {
-					studentId: '', //学生Id
-					classId: '', //班级群Id；
-					homeworkId: '' //作业id；
-				};
-				//3.	获取作业结果；
-				postDataPro_GetHomeworkResult(comData, wd, function(data) {
-					wd.close();
-					console.log('3.postDataPro_GetHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					if(data.RspCode == 0) {
-
-					} else {
-
-					}
-				});
-			}
-
 			//8.	评价学生上传作业，作业评价
 			function requestCommentHomeworkResult(comData) {
 				//所需参数

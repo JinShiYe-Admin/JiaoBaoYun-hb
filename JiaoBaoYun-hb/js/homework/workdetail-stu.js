@@ -19,7 +19,7 @@ var requestTeaInfo=function(teaId){
 		wd.close();
 		console.log('学生作业详情界面获取老师信息：'+JSON.stringify(data));
 		if(data.RspCode='0000'){
-			jQuery.extend(homeworkInfo,data.RspData);
+			jQuery.extend(homeworkInfo,data.RspData[0]);
 			setContentView();
 		}else{
 			mui.toast(data.RspTxt);
@@ -28,11 +28,11 @@ var requestTeaInfo=function(teaId){
 }
 var setContentView = function() {
 	console.log('学生作业详情界面获取老师后的信息：'+JSON.stringify(homeworkInfo));
-	document.querySelector('.brief-img').className="brief-img iconfont "+getHomeworkIcon(homeworkInfo.Subject);
+	document.querySelector('.subject-icon').className="subject-icon iconfont "+getHomeworkIcon(homeworkInfo.Subject);
 	document.querySelector('.brief-title').innerText=homeworkInfo.HomeworkTitle;
 	document.querySelector('.brief-content').innerText=homeworkInfo.Contents;
 	document.querySelector('.publisher').innerText="发布人:"+homeworkInfo.unick;
-	document.querySelector('.publish-date').innerText="发布时间:"+homeworkInfo.Date;
+	document.querySelector('.publish-date').innerText="发布时间:"+homeworkInfo.Date.split(' ')[0];
 }
 
 //2.	获取教师发布作业详情，不包括学生提交的答案；

@@ -1552,7 +1552,8 @@
 			"js/utils/events.js",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/iconfont/iconfont.css",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"css/homework/subjects-icon.css"
 		],
 		"refer": [
 			"html/homework/doHomework-stu.html"

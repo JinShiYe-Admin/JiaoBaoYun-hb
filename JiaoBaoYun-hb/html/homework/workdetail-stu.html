@@ -17,21 +17,23 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">作业详情</h1>
-			<a class="mui-pull-right">全部作业</a>
+			<!--<a class="mui-pull-right">全部作业</a>-->
 		</header>
 		<div class="mui-content">
 		    <div class="homework-brief">
-		    	<img class="brief-img" src="" />
+		    	<span class="subject-icon"></span>
 		    	<div class="brief-words">
 		    		<h5 class='brief-title'></h5>
 		    		<p class="brief-content"></p>
 		    		<div class="publish-info">
 		    			<p class="publisher"></p>
-		    			<p class='publish-date'></p>
+		    			<p class='publish-date mui-pull-right'></p>
 		    		</div>
 		    	</div>
 		    </div>
-		    <div><button id="btn-startWork" type="button" class="mui-btn mui-btn-blue mui-pull-right">开始答题</button></div>
+		    <div class="answer-content">
+		    	<button id="btn-startWork" type="button" class="mui-btn mui-btn-blue mui-pull-right btn-startAn">开始答题</button>
+		    </div>
 		    <div class="homework-detail"></div>
 		</div>
 		<script src="../../js/mui.min.js"></script>

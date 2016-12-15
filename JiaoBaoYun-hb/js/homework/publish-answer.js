@@ -58,17 +58,19 @@ mui.plusReady(function() {
 					};
 					requestPublishAnswer(comData);
 				} else {
+					var teachers_container = document.getElementById('receive-teachers'); //selectid
+					var teaInfo=teachers_container.options[teachers_container.selectedIndex].teaInfo;
 					//判断是要学生提交答案0，还是修改答案1
 					if(stuSubmitAnswer) {
 						//6.	提交答案结果
 						//所需参数
 						var comData = {
 							userId: personalUTID, //学生/家长id，
-							classId: uploadTeacherModel.gid, //班级id
+							classId: teaInfo.utid, //班级id
 							studentId: personalUTID, //学生Id；
 							fileIds: imgIds.toString(), //文件id数组；
-							teacherId: jQuery('#receive-teachers').val(), //老师Id；
-							teacherName: jQuery('#receive-teachers').find("option:selected").text() //老师名字；
+							teacherId: teaInfo.utid, //老师Id；
+							teacherName:teaInfo.ugnick+'-'+teaInfo.gname //老师名字；
 						};
 						requestSubmitAnswer(comData);
 					} else {
@@ -79,8 +81,8 @@ mui.plusReady(function() {
 							studentId: personalUTID, //学生Id；
 							answerResultId: answerResultId, //要修改的答案id；
 							fileIds: imgIds, //文件id数组；
-							teacherId: jQuery('#receive-teachers').val(), //老师Id；
-							teacherName: jQuery('#receive-teachers').find("option:selected").text() //老师名字；
+							teacherId: teaInfo.utid, //老师Id；
+							teacherName:teaInfo.ugnick+'-'+teaInfo.gname //老师名字；
 						};
 						requestModifyAnswer(comData);
 					}
@@ -190,6 +192,7 @@ function requestSubjectList() {
 function requestClassTeacherInfo(stuClasses) {
 	//学生身份时，存储班级里的老师数组
 	var classTeacherArray = [];
+	var count=0;
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	for(var i in stuClasses) {
@@ -205,11 +208,12 @@ function requestClassTeacherInfo(stuClasses) {
 			console.log('上传答案||作业界面获取的资料数据：' + JSON.stringify(data))
 			wd.close();
 			if(data.RspCode == 0) {
+				count++;
 				var tempArray = data.RspData; //[{"stuid":19,"gid":14,"stuname":"10群学1","stuimg":"","mstype":3}]
 				//循环得到的资料数组，
 				for(var m in tempArray) {
 					//找到当前的老师
-					if(tempArray[m].mstype == 1 || tempArray[m].mstype == 2) {
+					if(tempArray[m].mstype == 2) {
 						//将班级信息，添加到老师model
 						for(var n in stuClasses) {
 							//群号相同
@@ -225,20 +229,24 @@ function requestClassTeacherInfo(stuClasses) {
 						}
 					}
 				}
-				setTeachers(classTeacherArray);
+				if(count==stuClasses.length){
+					setTeachers(classTeacherArray);
+				}
 			} else {
 				mui.toast(data.RspTxt);
 			}
 		});
 	}
+	
 }
 var setTeachers = function(teaInfos) {
+	console.log('上传答案||作业界面要放置的老师资料：'+JSON.stringify(teaInfos))
 	var teaContainer = document.getElementById('receive-teachers');
 	events.clearChild(teaContainer);
 	teaInfos.forEach(function(teaInfo, i) {
 		var op = document.createElement('option');
-		op.value = teaInfo.utid;
-		op.innerText = teaInfo.ugnick;
+		op.teaInfo= teaInfo;
+		op.innerText = teaInfo.ugnick+'-'+teaInfo.gname;
 		teaContainer.appendChild(op);
 	})
 }
