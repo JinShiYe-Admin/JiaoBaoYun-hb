@@ -32,7 +32,7 @@ var setContentView = function() {
 	document.querySelector('.brief-title').innerText=homeworkInfo.HomeworkTitle;
 	document.querySelector('.brief-content').innerText=homeworkInfo.Contents;
 	document.querySelector('.publisher').innerText="发布人:"+homeworkInfo.unick;
-	document.querySelector('publish-date').innerText="发布时间:"+homeworkInfo.Date;
+	document.querySelector('.publish-date').innerText="发布时间:"+homeworkInfo.Date;
 }
 
 //2.	获取教师发布作业详情，不包括学生提交的答案；
