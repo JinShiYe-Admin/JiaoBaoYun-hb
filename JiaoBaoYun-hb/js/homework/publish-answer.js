@@ -1,4 +1,4 @@
-'var personalUTID; //个人id
+var personalUTID; //个人id
 var role; //角色
 var imgIds;//图片数据
 var stuSubmitAnswer;//true学生提交答案||FALSE学生修改答案
@@ -348,4 +348,4 @@ function requestModifyAnswer(comData) {
 			mui.toast(data.RspTxt);
 		}
 	});
-}'
+}

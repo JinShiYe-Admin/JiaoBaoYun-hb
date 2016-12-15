@@ -2,7 +2,7 @@ var teacherClasses = []; //老师身份关联班级
 var studentClasses = []; //学生身份关联班级
 var role = 2;
 //加载子页面
-events.initSubPage('homework-tea-sub.html')
+events.initSubPage('homework-tea-sub.html');
 mui.plusReady(function() {
 	//预加载发布作业界面
 	events.preload('publish-answer.html', 200);
@@ -28,8 +28,7 @@ mui.plusReady(function() {
 				role: role,
 				studentClasses: studentClasses,
 				teacherClasses: teacherClasses
-			})
-			//		events.openNewWindow('publish-answer.html');
+		})
 	})
 
 	btn_published.addEventListener('tap', function() {
