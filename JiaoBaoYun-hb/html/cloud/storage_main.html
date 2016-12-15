@@ -68,7 +68,8 @@
 				text-align: center;
 				height: 45px;
 			}
-			.mui-media-object{
+
+			.mui-media-object {
 				height: 42px;
 				width: 42px;
 			}
@@ -181,9 +182,9 @@
 			});
 
 			document.getElementById('transport').addEventListener('tap', function() {
-				//				events.openNewWindow('storage_transport.html');
-				//				plus.webview.show('storage_transport.html', 'slide-in-right');
-				events.showPreloadPage('storage_transport.html');
+				var targetPage = plus.webview.getWebviewById('storage_transport.html');
+				mui.fire(targetPage, 'getUpAndDownEntry');
+				targetPage.show('slide-in-right', 250)
 			});
 
 			//增加文件夹的监听
@@ -539,14 +540,14 @@
 				//文件名
 				var html4 = '';
 				if(data.ftype == '.file') { //文件夹
-					html1 = '<span class="mui-navigate-right mui-media-object mui-pull-right"></span>';
+					html1 = '<span class="mui-navigate-right mui-media-object mui-pull-right" style="width:10px;"></span>';
 					html3 = '<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">';
 					html4 = '<div class="mui-media-body">\
 								<div id="fname_' + data.fid + '" class="mui-ellipsis">' + data.fname + '</div>\
 							</div>';
 				} else {
 					if(showTop) {
-						html1 = '<span class="mui-media-object mui-pull-right"></span>';
+						html1 = '<span class="mui-media-object mui-pull-right" style="width:10px;"></span>';
 						var type = cloud.classify(data.ftype);
 						var pathList = data.fpath.split('/');
 						var pathList2 = pathList[pathList.length - 1].split('.');
