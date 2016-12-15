@@ -1,4 +1,4 @@
-var personalUTID; //个人id
+'var personalUTID; //个人id
 var role; //角色
 var imgIds;//图片数据
 var stuSubmitAnswer;//true学生提交答案||FALSE学生修改答案
@@ -209,7 +209,7 @@ function requestClassTeacherInfo(stuClasses) {
 				//循环得到的资料数组，
 				for(var m in tempArray) {
 					//找到当前的老师
-					if(tempArray[m].mstype == 1 || tempArray[m].mstype == 2) {
+					if(tempArray[m].mstype == 2) {
 						//将班级信息，添加到老师model
 						for(var n in stuClasses) {
 							//群号相同
@@ -225,6 +225,7 @@ function requestClassTeacherInfo(stuClasses) {
 						}
 					}
 				}
+				console.log('上传答案||作业界面获取的资料数据：' + JSON.stringify(classTeacherArray))
 				setTeachers(classTeacherArray);
 			} else {
 				mui.toast(data.RspTxt);
@@ -238,7 +239,7 @@ var setTeachers = function(teaInfos) {
 	teaInfos.forEach(function(teaInfo, i) {
 		var op = document.createElement('option');
 		op.value = teaInfo.utid;
-		op.innerText = teaInfo.ugnick;
+		op.innerText = teaInfo.ugnick+'-'+teaInfo.gname;
 		teaContainer.appendChild(op);
 	})
 }
@@ -347,4 +348,4 @@ function requestModifyAnswer(comData) {
 			mui.toast(data.RspTxt);
 		}
 	});
-}
+}'
