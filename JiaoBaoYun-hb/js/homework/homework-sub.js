@@ -81,6 +81,7 @@ mui.plusReady(function() {
 			setClasses(role);
 			events.clearChild(list);
 			if(role == 2) {
+				mui("#popover").popover('hide');
 				publish.style.display = 'block';
 				selectGId = teacherClasses[0].gid;
 				requireHomeWork(teacherClasses[0], setData);
@@ -88,6 +89,7 @@ mui.plusReady(function() {
 				publish.style.display = 'none';
 				selectGId = studentClasses[0].gid;
 				requireHomeWork(studentClasses[0], setData);
+				
 			}
 
 		})
