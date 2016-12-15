@@ -368,7 +368,7 @@
 							//创建下载文件夹
 							getDirectory(succesCB2, 'download', function(succesCB3) {
 								//创建上传文件夹
-								getDirectory(succesCB2, 'upload', function(succesCB3) {
+								getDirectory(succesCB2, 'upload', function(succesCB4) {
 									if(mui.os.ios) { //iOS系统
 										initElement(succesCB2.toLocalURL());
 									}
@@ -427,8 +427,8 @@
 						exclusive: false
 					}, function(succesCB) {
 						console.log("创建或打开子目录" + name + "成功");
-						console.log("文件系统的名称:" + succesCB.name);
-						console.log("文件系统中的目录对象:" + succesCB.fullPath);
+//						console.log("文件系统的名称:" + succesCB.name);
+//						console.log("文件系统中的目录对象:" + succesCB.fullPath);
 						succesCallBack(succesCB);
 					}, function(errorCB) {
 						mui.toast("创建或打开子目录" + name + "失败:" + JSON.stringify(errorCB));

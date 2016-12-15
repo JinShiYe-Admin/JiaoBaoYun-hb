@@ -9,7 +9,7 @@ mui.init({
 	});
 	var unfinish=document.getElementById('div-unfinish');
 	var unfinishInner = '<ul id="unfinish-list" class="mui-table-view"></ul>';
-	document.getElementById('slider').addEventListener('slide', function(e) {
+	document.getElementById('slider').addEventListener('slider', function(e) {
 		if (e.detail.slideNumber === 1) {
 			if (unfinish.querySelector('.mui-loading')) {
 				setTimeout(function() {

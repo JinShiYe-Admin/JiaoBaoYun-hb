@@ -327,7 +327,7 @@ var postDataPro_PostInvDo = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINURL + 'PostInvDo', enData, commonData, 1, wd, callback);
 }
 
-//21.通过用户ID获取用户资料
+//21.通过用户ID或ID串获取用户资料
 //所需参数
 //		var comData = {
 //			vvl:'',//用户id，查询的值,p传个人ID,g传ID串
