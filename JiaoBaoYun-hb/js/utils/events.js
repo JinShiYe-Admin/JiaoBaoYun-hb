@@ -38,7 +38,7 @@ var events = (function(mod) {
 					title: '正在加载...'
 				},
 				styles: {
-					top: localStorage.getItem('muiStatusbar'),
+					top: localStorage.getItem('$Statusbar'),
 				}
 			})
 		}
@@ -64,7 +64,7 @@ var events = (function(mod) {
 				title: '正在加载...'
 			},
 			styles: {
-				top: localStorage.getItem('muiStatusbar')
+				top: localStorage.getItem('$Statusbar')
 			}
 		});
 	};
@@ -86,7 +86,7 @@ var events = (function(mod) {
 				id: subPage,
 				styles: {
 					top: '45px',
-					bottom: localStorage.getItem('muiStatusbar'),
+					bottom: localStorage.getItem('$Statusbar'),
 				},
 				extras: {
 					data: datas
@@ -176,7 +176,7 @@ var events = (function(mod) {
 						url: tarPage,
 						id: tarPage, //默认使用当前页面的url作为id
 						styles: { //窗口参数
-							top: localStorage.getItem('muiStatusbar')
+							top: localStorage.getItem('$Statusbar')
 						},
 						show: {
 							anishow: 'slide-in-right',

@@ -146,6 +146,8 @@
 				var pid = ''; //文件的上层ID
 				var showFolderId = ''; //当前显示的文件夹id
 				var folderList = []; //目录数组，每打开一个目录，将该目录保存
+
+				createFolder(); //在程序中创建utid的文件夹和对应的上传下载文件夹
 				//---初始化--end---
 
 				//---滑动start---
@@ -334,11 +336,16 @@
 				function init() {
 					document.getElementById("folderlist").innerHTML = '';
 					document.getElementById("all").innerHTML = '';
-					createFolder();
+					//createFolder();
+					if(mui.os.ios) { //iOS系统
+						initIOS();
+					} else if(mui.os.android) { //android系统
+						initANDROID();
+					}
 				}
 
 				/**
-				 * 在程序中创建utid的文件夹
+				 * 在程序中创建utid的文件夹和对应的上传下载文件夹
 				 */
 				function createFolder() {
 					var url = plus.io.PUBLIC_DOCUMENTS;
@@ -361,17 +368,16 @@
 						var LocalURL = succesCB.root.toLocalURL();
 						var URL = succesCB.root.toURL();
 						console.log("root: " + LocalURL + '|' + URL);
+						//记录document的地址
+						window.myStorage.setItem(window.storageKeyName.DOCUMENTSPATH, LocalURL);
 						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-						console.log("getDirectory: " + LocalURL + personalUTID + "/");
 						//创建utid文件夹
 						getDirectory(succesCB.root, personalUTID, function(succesCB2) {
 							//创建下载文件夹
 							getDirectory(succesCB2, 'download', function(succesCB3) {
 								//创建上传文件夹
-								getDirectory(succesCB2, 'upload', function(succesCB4) {
-									if(mui.os.ios) { //iOS系统
-										initElement(succesCB2.toLocalURL());
-									}
+								getDirectory(succesCB2, 'upload', function(succesCB3) {
+									console.log("DOCUMENTSPATH: " + window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH));
 								});
 							});
 						});
@@ -381,12 +387,16 @@
 						mui.toast("请求文件系统失败: " + JSON.stringify(errorCB));
 						console.log("请求文件系统失败: " + JSON.stringify(errorCB));
 					});
-					if(mui.os.android) { //android系统
-						initANDROID();
-					}
+				}
+
+				function initIOS() {
+					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+					initElement(window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH) + personalUTID);
 				}
 
 				function initANDROID() {
+					//var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+					//initElement(window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH) + personalUTID);
 					initElement('/storage/');
 				}
 
@@ -409,7 +419,7 @@
 						directoryReader(URL, succesCB); //读取对象
 					}, function(errorCB) {
 						//请求失败的的回调
-						mui.toast('请求文件系统失败' + JSON.stringify(errorCB));
+						mui.toast('请求文件系统失败:' + JSON.stringify(errorCB));
 						console.log("请求文件系统失败: " + JSON.stringify(errorCB));
 					});
 				}
@@ -427,8 +437,8 @@
 						exclusive: false
 					}, function(succesCB) {
 						console.log("创建或打开子目录" + name + "成功");
-//						console.log("文件系统的名称:" + succesCB.name);
-//						console.log("文件系统中的目录对象:" + succesCB.fullPath);
+						console.log("文件系统的名称:" + succesCB.name);
+						console.log("文件系统中的目录对象:" + succesCB.fullPath);
 						succesCallBack(succesCB);
 					}, function(errorCB) {
 						mui.toast("创建或打开子目录" + name + "失败:" + JSON.stringify(errorCB));
@@ -524,7 +534,7 @@
 				 */
 				function additem(URL, data) {
 					//console.log('additem:URL：' + URL + '|data：' + data.fullPath);
-					if(mui.os.ios) { //android系统
+					if(mui.os.ios) { //ios系统
 						data.fullPath = 'file://' + data.fullPath
 					}
 					var li = document.createElement('li');

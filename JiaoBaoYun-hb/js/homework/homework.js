@@ -9,12 +9,13 @@ mui.plusReady(function() {
 	mui('.mui-scrollbar-horizontal').scroll();
 	var btn_published = document.getElementById('btn-published');
 	var btn_homework = document.getElementById('btn-homework');
+	var btn_more=document.getElementById('more');
 	window.addEventListener('postClasses', function(e) {
 			var data = e.detail.data;
 			console.log('作业主界面获取信息：' + JSON.stringify(e.detail.data));
 			studentClasses = data.studentClasses;
 			teacherClasses = data.teacherClasses;
-			setChoices(btn_published, btn_homework);
+			setChoices(btn_published, btn_homework,btn_more);
 		})
 		//三道杠的点击事件
 	events.addTap('more', function() {
@@ -34,12 +35,14 @@ mui.plusReady(function() {
 	btn_published.addEventListener('tap', function() {
 		btn_published.className = 'mui-btn mui-btn-green'
 		btn_homework.className = 'mui-btn mui-btn-green mui-btn-outlined'
+		btn_more.style.display='none';
 		role = 2;
 		events.fireToPageNone('homework-tea-sub.html', 'roleChanged', role)
 	});
 	btn_homework.addEventListener('tap', function() {
 		btn_published.className = 'mui-btn mui-btn-green mui-btn-outlined';
 		btn_homework.className = 'mui-btn mui-btn-green';
+		btn_more.style.display='block';
 		role = 30;
 		events.fireToPageNone('homework-tea-sub.html', 'roleChanged', role)
 	})
@@ -51,7 +54,7 @@ var sendMsgToSub = function() {
 		teacherClasses: teacherClasses
 	});
 }
-var setChoices = function(btn_p, btn_h) {
+var setChoices = function(btn_p, btn_h,btn_m) {
 	if(teacherClasses.length > 0 && studentClasses.length > 0) {
 		btn_p.style.display = 'inline-block';
 		btn_h.style.display = 'inline-block';
@@ -66,6 +69,7 @@ var setChoices = function(btn_p, btn_h) {
 		btn_h.className = 'mui-btn mui-btn-green';
 		btn_h.style.display = 'inline-block';
 		btn_p.style.display = 'none';
+		btn_m.style.display='block'
 		role = 30;
 	}
 	sendMsgToSub();

@@ -269,197 +269,278 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function() {
+				var uploadList = []; //记录所有的上传对象
+				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				var uploading = false; //是否正在上传
+				var upFolderEntry = null; //上传文件夹的目录对象
+				var downFolderEntry = null; //下载文件夹的目录对象
+				console.log('传输列表');
 
-			<script type="text/javascript">
-				mui.init()
-				mui.plusReady(function() {
-					var uploadList = []; //记录所有的上传对象
-					var main = plus.webview.currentWebview(); //获取当前窗体对象
-					var uploading = false; //是否正在上传
-					console.log('传输列表');
+				//---滑动start---
+				mui(".mui-scroll-wrapper").scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false, //是否横向滚动
+					indicators: true, //是否显示滚动条
+					deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+					bounce: true, //是否启用回弹
+				});
+				//---滑动end---
 
-					//---滑动start---
-					mui(".mui-scroll-wrapper").scroll({
-						scrollY: true, //是否竖向滚动
-						scrollX: false, //是否横向滚动
-						indicators: true, //是否显示滚动条
-						deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
-						bounce: true, //是否启用回弹
-					});
-					//---滑动end---
+				mui.back = function() {
+					plus.webview.hide(main, 'pop-out');
+					//main.hide();
+				}
 
-					mui.back = function() {
-						plus.webview.hide(main, 'pop-out');
-						//main.hide();
+				//新增一项上传任务
+				window.addEventListener('addUpload', function(e) {
+					//---数据准备---start---
+					var subData = e.detail.data; //接收页面传入的参数值
+					//var subData = {
+					//	path: fid, //路径
+					//	fname: fname, //文件名
+					//	metadata: succesCB //文件信息
+					//  pid:pid//云盘文件夹父ID
+					//}
+					if(mui.os.android) { //android系统
+						subData.path = 'file://' + subData.path;
 					}
+					console.log('传输列表新增一项上传任务:' + JSON.stringify(subData));
 
-					//新增一项上传任务
-					window.addEventListener('addUpload', function(e) {
-						var subData = e.detail.data; //接收页面传入的参数值
-						//var subData = {
-						//	path: fid, //路径
-						//	fname: fname, //文件名
-						//	metadata: succesCB //文件信息
-						//  pid:pid//云盘文件夹父ID
-						//}
-						if(mui.os.android) { //android系统
-							subData.path = 'file://' + subData.path;
-						}
-						console.log('传输列表新增一项上传任务:' + JSON.stringify(subData));
-						var ftype = '';
-						var ftypeList = subData.fname.split('.');
-						if(ftypeList.length != 1) {
-							ftype = '.' + ftypeList[ftypeList.length - 1];
-						}
-						var myDate = new Date();
-						var QNFileName = myDate.getTime() + (Math.floor(Math.random() * 10000) + 1) + ftype;
-						var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENFILE;
+					//获取上传和下载文件夹的目录对象
+					getUpAndDownEntry()
 
-						ColudFileUtil.getCurrentType(function(data) {
-							console.log('获取当前网络状态:' + JSON.stringify(data));
-							if(data.code == 3) { //无线WIFI网络
-								getQNUpToken(getUpTokenUrl, QNFileName, subData.path, subData.fname, subData.pid);
+					//---数据准备---end---
+					var ftype = '';
+					var ftypeList = subData.fname.split('.');
+					if(ftypeList.length != 1) {
+						ftype = '.' + ftypeList[ftypeList.length - 1];
+					}
+					var myDate = new Date();
+					var QNFileName = myDate.getTime() + (Math.floor(Math.random() * 10000) + 1) + ftype;
+					var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENFILE;
+
+					ColudFileUtil.getCurrentType(function(data) {
+						console.log('获取当前网络状态:' + JSON.stringify(data));
+						if(data.code == 3) { //无线WIFI网络
+							getQNUpToken(getUpTokenUrl, QNFileName, subData.path, subData.fname, subData.pid);
+						} else {
+							if(data.code == 1) {
+								mui.toast(data.type);
 							} else {
-								if(data.code == 1) {
-									mui.toast(data.type);
-								} else {
-									var btnArray = ['否', '是'];
-									mui.confirm('当前不是无线WIFI网络，还继续上传吗？', '提示', btnArray, function(e) {
-										if(e.index == 1) { //是
-											getQNUpToken(getUpTokenUrl, QNFileName, subData.path, subData.fname, subData.pid);
-										} else {
+								var btnArray = ['否', '是'];
+								mui.confirm('当前不是无线WIFI网络，还继续上传吗？', '提示', btnArray, function(e) {
+									if(e.index == 1) { //是
+										getQNUpToken(getUpTokenUrl, QNFileName, subData.path, subData.fname, subData.pid);
+									} else {
 
+									}
+								});
+							}
+						}
+					});
+				});
+
+				/**
+				 * 获取上传和下载文件夹的目录对象
+				 */
+				window.addEventListener('getUpAndDownEntry', function() {
+					getUpAndDownEntry();
+				})
+
+				//上传中列表的按钮
+				mui('#upload').on('tap', 'button', function() {
+					console.log('button:' + this.getAttribute('id') + '|' + this.getAttribute('value') + '|' + this.getAttribute('data-upid'));
+					var id = this.getAttribute('id'); //元素id
+					var value = this.getAttribute('value'); //元素状态
+					var upid = this.getAttribute('data-upid'); //任务id
+					var task = null;
+					var num = '';
+					mui.each(uploadList, function(index, item) {
+						console.log('uploadList:' + JSON.stringify(item))
+						if(item.__UUID__ == upid) {
+							task = item;
+							num = index;
+							return false;
+						}
+					});
+					if(task != null) {
+						if(value == '0') { //开始
+							if(!uploading) { //没有正在上传的任务
+								ColudFileUtil.getCurrentType(function(data) {
+									console.log('获取当前网络状态:' + JSON.stringify(data));
+									if(data.code == 3) { //无线WIFI网络
+										task.start();
+										uploading = true;
+									} else {
+										if(data.code == 1) {
+											mui.toast(data.type);
+										} else {
+											var btnArray = ['否', '是'];
+											mui.confirm('当前不是无线WIFI网络，还继续上传吗？', '提示', btnArray, function(e) {
+												if(e.index == 1) { //是
+													task.start();
+													uploading = true;
+												} else {
+
+												}
+											});
 										}
-									});
+									}
+								});
+							} else {
+								mui.toast('有正在上传的任务');
+							}
+						} else if(value == '3') { //正在上传
+							//task.pause();
+							//task.abort();
+						} else if(value == '5') { //暂停
+							//task.resume();
+						} else if(value == '6') { //取消
+							var btnArray = ['否', '是'];
+							mui.confirm('确认删除任务？', '提示', btnArray, function(e) {
+								if(e.index == 1) { //是
+									if(task.state == undefined) {
+										uploadList.splice(num, 1); //删除一项任务
+										document.getElementById("up_" + upid).parentNode.removeChild(document.getElementById("up_" + upid)); //删除元素
+										mui.toast('删除任务成功');
+									} else {
+										mui.toast('删除失败:任务已经开始上传');
+									}
+								} else {
+
 								}
+							});
+						}
+					} else {
+						mui.toast('未找到对应的上传任务');
+						console.log('未找到对应的上传任务');
+					}
+				});
+
+				//已上传列表的按钮
+				mui('#uploaded').on('tap', 'button', function() {
+					var parentNode = this.parentNode;
+					var parentNode2 = parentNode.parentNode;
+					var id = parentNode2.getAttribute('id');
+					var fpath = parentNode2.getAttribute('data-fpath');
+					console.log('parentNode2:' + id + '|' + fpath);
+					plus.runtime.openFile(fpath);
+				})
+
+				/**
+				 * 获取七牛上传token
+				 * @param {Object} getUpTokenUrl 获取uptoken的url
+				 * @param {Object} QNFileName 存放在七牛的文件名
+				 * @param {Object} fPath 上传文件的本地路径
+				 * @param {Object} fname 上传文件的名字
+				 * @param {Object} pid 父ID，该文件的上层ID
+				 */
+				function getQNUpToken(getUpTokenUrl, QNFileName, fPath, fname, pid) {
+					ColudFileUtil.getQNUpToken(getUpTokenUrl, QNFileName, function(data) {
+						var QNUptoken = data.uptoken;
+						console.log('七牛上传token:' + QNUptoken);
+						ColudFileUtil.upload(fPath, QNUptoken, QNFileName, function(upload, status) {
+							//上传任务完成的监听
+							console.log('上传任务完成');
+							var fnameList = fname.split('.');
+							var name = '';
+							var type = '';
+							if(fnameList.length == 1) {
+								name = fname;
+								type = '';
+							} else {
+								type = '.' + fnameList[fnameList.length - 1];
+								name = fname.substring(0, (fname.length * 1 - type.length * 1));
+							}
+							var comData = {
+								pid: pid, //父ID，该文件的上层ID
+								fname: name, //文件名称，文件或文件夹名称,文件存扩展名之前的名称
+								ftype: type, //文件类型，存文件的扩展名,如.file为文件夹
+								fpath: window.storageKeyName.QNFILEDOMAIN + QNFileName, //文件路径，文件路径,为文件用
+								fsize: upload.totalSize //文件大小，文件用
+							};
+							uploadList.splice(0, 1);
+							if(uploadList[0] != undefined) {
+								uploadList[0].start();
+							}
+							document.getElementById("up_" + upload.__UUID__).parentNode.removeChild(document.getElementById("up_" + upload.__UUID__));
+							addFile(comData, fPath, fname);
+						}, function(upload, status) {
+							//上传任务状态监听
+							//上传任务的标识
+							var id = upload.__UUID__;
+							//已完成上传数据的大小
+							var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
+							//上传数据的总大小
+							var totalSize = AndroidFileSystem.readSize(upload.totalSize);
+							//上传任务的状态
+							var uploadState = upload.state;
+							switch(uploadState) {
+								case 0: //上传任务开始调度
+									console.log('上传任务开始调度:|id:' + id + '|uploadState:' + uploadState);
+									break;
+								case 1: //上传任务开始请求
+									console.log('上传任务开始请求:|id:' + id + '|uploadState:' + uploadState);
+									document.getElementById("up_btn_" + id).style.display = 'none';
+									mui("#up_bar_" + id).progressbar({
+										progress: 0
+									}).show();
+									break;
+								case 2: //上传任务请求已经建立
+									console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
+									break;
+								case 3: //上传任务提交数据
+									//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
+									//document.getElementById("up_btn_" + id).innerText = '暂停';
+									//document.getElementById("up_btn_" + id).value = '3';
+									mui("#up_bar_" + id).progressbar().setProgress(upload.uploadedSize / upload.totalSize * 100);
+									document.getElementById("up_waiting_" + id).style.display = 'none';
+									document.getElementById("up_size_" + id).innerText = uploadedSize + '/' + totalSize;
+									break;
+								case 4: //上传任务已完成
+									console.log('上传任务已完成:|id:' + id + '|uploadState:' + uploadState);
+									break;
+								case 5: //上传任务已暂停
+									//document.getElementById("up_btn_" + id).innerText = '继续';
+									//document.getElementById("up_btn_" + id).value = '5';
+									console.log('上传任务已暂停:|id:' + id + '|uploadState:' + uploadState);
+									break;
+								default:
+									console.log('上传任务状态监听:其他状态');
+									break;
+							}
+						}, function(task) {
+							addUploadItem(task.__UUID__, fname);
+							console.log('task:' + JSON.stringify(task))
+							uploadList.push(task);
+							if(!uploading) {
+								uploading = true;
+								task.start();
 							}
 						});
-
+					}, function(xhr, type, errorThrown) {
+						mui.toast('获取七牛上传token失败：' + type);
+						console.log('获取七牛上传token失败：' + type);
 					});
+				}
 
-					//					mui('#upload').on('tap', 'button', function() {
-					//						console.log('button:' + this.getAttribute('id') + '|' + this.getAttribute('value') + '|' + this.getAttribute('data-upid'));
-					//						var id = this.getAttribute('id'); //元素id
-					//						var value = this.getAttribute('value'); //元素状态
-					//						var upid = this.getAttribute('data-upid'); //任务id
-					//						var task = null;
-					//						mui.each(uploadList, function(index, item) {
-					//							console.log('uploadList:' + JSON.stringify(item))
-					//							if(item.__UUID__ == upid) {
-					//								task = item;
-					//								return false;
-					//							}
-					//						});
-					//						if(value == '0') {
-					//							//task.start();
-					//						} else if(value == '3') {
-					//							//task.pause();
-					//							task.abort();
-					//						} else if(value == '5') {
-					//							task.resume();
-					//						}
-					//					});
-
-					/**
-					 * 获取七牛上传token
-					 * @param {Object} getUpTokenUrl 获取uptoken的url
-					 * @param {Object} QNFileName 存放在七牛的文件名
-					 * @param {Object} fPath 上传文件的本地路径
-					 * @param {Object} fname 上传文件的名字
-					 * @param {Object} pid 父ID，该文件的上层ID
-					 */
-					function getQNUpToken(getUpTokenUrl, QNFileName, fPath, fname, pid) {
-						ColudFileUtil.getQNUpToken(getUpTokenUrl, QNFileName, function(data) {
-							var QNUptoken = data.uptoken;
-							console.log('七牛上传token:' + QNUptoken);
-							ColudFileUtil.upload(fPath, QNUptoken, QNFileName, function(upload, status) {
-								//上传任务完成的监听
-								console.log('上传任务完成:status:' + status + '|upload:' + JSON.stringify(upload));
-								var fnameList = fname.split('.');
-								var name = '';
-								var type = '';
-								if(fnameList.length == 1) {
-									name = fname;
-									type = '';
-								} else {
-									type = '.' + fnameList[fnameList.length - 1];
-									name = fname.substring(0, (fname.length * 1 - type.length * 1));
-								}
-								var comData = {
-									pid: pid, //父ID，该文件的上层ID
-									fname: name, //文件名称，文件或文件夹名称,文件存扩展名之前的名称
-									ftype: type, //文件类型，存文件的扩展名,如.file为文件夹
-									fpath: window.storageKeyName.QNFILEDOMAIN + QNFileName, //文件路径，文件路径,为文件用
-									fsize: upload.totalSize //文件大小，文件用
-								};
-								addFile(comData);
-							}, function(upload, status) {
-								//上传任务状态监听
-								//上传任务的标识
-								var id = upload.__UUID__;
-								//已完成上传数据的大小
-								var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
-								//上传数据的总大小
-								var totalSize = AndroidFileSystem.readSize(upload.totalSize);
-								//上传任务的状态
-								var uploadState = upload.state;
-								switch(uploadState) {
-									case 0: //上传任务开始调度
-										console.log('上传任务开始调度:|id:' + id + '|uploadState:' + uploadState);
-										break;
-									case 1: //上传任务开始请求
-										console.log('上传任务开始请求:|id:' + id + '|uploadState:' + uploadState);
-										break;
-									case 2: //上传任务请求已经建立
-										console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
-										mui("#up_bar_" + id).progressbar({
-											progress: 0
-										}).show();
-										break;
-									case 3: //上传任务提交数据
-										//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
-										document.getElementById("up_btn_" + id).innerText = '暂停';
-										document.getElementById("up_btn_" + id).value = '3';
-										mui("#up_bar_" + id).progressbar().setProgress(upload.uploadedSize / upload.totalSize * 100);
-										document.getElementById("up_waiting_" + id).style.display = 'none';
-										document.getElementById("up_size_" + id).innerText = uploadedSize + '/' + totalSize;
-										break;
-									case 4: //上传任务已完成
-										console.log('上传任务已完成:|id:' + id + '|uploadState:' + uploadState);
-										break;
-									case 5: //上传任务已暂停
-										document.getElementById("up_btn_" + id).innerText = '继续';
-										document.getElementById("up_btn_" + id).value = '5';
-										console.log('上传任务已暂停:|id:' + id + '|uploadState:' + uploadState);
-										break;
-									default:
-										console.log('上传任务状态监听:其他状态');
-										break;
-								}
-							}, function(task) {
-								addUploadItem(task.__UUID__, fname);
-								console.log('task:' + JSON.stringify(task))
-								uploadList.push(task);
-							});
-						}, function(xhr, type, errorThrown) {
-							mui.toast('获取七牛上传token失败：' + type);
-							console.log('获取七牛上传token失败：' + type);
-						});
-					}
-
-					/**
-					 * 添加一项正在上传
-					 * @param {Object} id
-					 * @param {Object} fname
-					 */
-					function addUploadItem(id, fname) {
-						console.log('addUploadItem:' + id + '|' + fname)
-						var type = cloud.classify2(fname);
-						var li = document.createElement('li');
-						li.setAttribute('id', id);
-						li.className = 'mui-table-view-cell mui-media';
-						li.innerHTML = '<div class="mui-media-object mui-pull-right">\
-											<button id="up_btn_' + id + '" type="button" class="mui-btn mui-btn-outlined" value="0" data-upid="' + id + '">开始</button>\
+				/**
+				 * 添加一项正在上传
+				 * @param {Object} id
+				 * @param {Object} fname
+				 */
+				function addUploadItem(id, fname) {
+					console.log('addUploadItem:' + id + '|' + fname)
+					var type = cloud.classify2(fname);
+					var li = document.createElement('li');
+					li.setAttribute('id', 'up_' + id);
+					li.className = 'mui-table-view-cell mui-media';
+					li.innerHTML = '<div class="mui-media-object mui-pull-right">\
+											<button id="up_btn_' + id + '" type="button" class="mui-btn mui-btn-outlined" value="6" data-upid="' + id + '">取消</button>\
 										</div> <span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>\
 										<div class="mui-media-body">\
 											<div class="mui-ellipsis transport-info">\
@@ -470,70 +551,208 @@
 													<span></span>\
 												</div>\
 												<p id="up_size_' + id + '" class="mui-pull-left">\
-													0B/0B\
+													 \
 												</p>\
 												<p id="up_waiting_' + id + '" class="mui-pull-right">\
 													正在等待...\
 												</p>\
 											</div>\
 										</div>';
-						document.getElementById("upload").appendChild(li);
-					}
+					document.getElementById("upload").appendChild(li);
+				}
 
-					/**
-					 * 添加一项已经上传
-					 * @param {Object} id
-					 * @param {Object} fname
-					 */
-					function addUploadedItem(id, fname) {
-						console.log('addUploadItem:' + id + '|' + fname)
-						var li = document.createElement('li');
-						li.setAttribute('id', id);
-						li.className = 'mui-table-view-cell mui-media';
-						li.innerHTML = '<div class="mui-media-object mui-pull-right">\
-											<button id="btn_' + id + '" type="button" class="mui-btn mui-btn-outlined">取消</button>\
-										</div> <span class="mui-media-object mui-icon iconfont iconfont-size icon-excel mui-pull-left"></span>\
+				/**
+				 * 添加一项已经上传
+				 * @param {Object} fpath 本地文件路径
+				 * @param {Object} fname 显示的文件名
+				 * @param {Object} size 文件的大小
+				 * @param {Object} modificationTime 文件或目录的最后修改时间
+				 */
+				function addUploadedItem(fpath, fname, size, modificationTime) {
+					//console.log('addUploadItem:' + fpath + '|' + fname + '|' + size + '|' + modificationTime);
+					var type = cloud.classify2(fname); //图标
+					var fsize = ''; //文件的大小
+					var fmodificationTime = ''; //modificationTime
+					if(size != undefined) {
+						fsize = AndroidFileSystem.readSize(size);
+					}
+					if(modificationTime != undefined) {
+						fmodificationTime = modificationTime;
+					}
+					var li = document.createElement('li');
+					li.setAttribute('id', 'uped_' + fpath);
+					li.setAttribute('data-fpath', fpath);
+					li.className = 'mui-table-view-cell mui-media';
+					li.innerHTML = '<div class="mui-media-object mui-pull-right">\
+											<button id="uped_btn_' + fpath + '" type="button" class="mui-btn mui-btn-outlined">打开</button>\
+										</div> <span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>\
 										<div class="mui-media-body">\
 											<div class="mui-ellipsis transport-info">\
 												' + fname + '\
 											</div>\
 											<div class="transport-info">\
 												<p class="mui-pull-left">\
-													528KB&nbsp;&nbsp;2016-12-13 15:25:36\
+													' + fsize + '&nbsp;&nbsp;' + fmodificationTime + '\
 												</p>\
 											</div>\
 										</div>';
-						document.getElementById("uploaded").insertBefore(li, document.getElementById("uploaded").firstChild);
-					}
+					document.getElementById("uploaded").insertBefore(li, document.getElementById("uploaded").firstChild);
+				}
 
-					/**
-					 * 用户云盘文件上传或创建文件夹
-					 */
-					function addFile(comData) {
-						console.log('addFile:' + JSON.stringify(comData));
-						//27.用户云盘文件上传或创建文件夹
-						//所需参数
-						//var comData = {
-						//	pid: '', //	父ID，该文件的上层ID
-						//	fname: '', //	文件名称，文件或文件夹名称,文件存扩展名之前的名称
-						//	ftype: '', //	文件类型，存文件的扩展名,如.file为文件夹
-						//	fpath: '', //	文件路径，文件路径,为文件用
-						//	fsize: '' //	文件大小，文件用
-						//};
-						// 等待的对话框
-						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-						postDataPro_PostDiFiA(comData, wd, function(data) {
-							wd.close();
-							console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							if(data.RspCode == 0) {
-
+				/**
+				 * 用户云盘文件上传或创建文件夹
+				 * @param {Object} comData 往服务器传的数据
+				 * @param {Object} filePath 本地文件路径
+				 *  @param {Object} filePath 本地文件名
+				 */
+				function addFile(comData, filePath, fname) {
+					console.log('addFile:' + JSON.stringify(comData));
+					//27.用户云盘文件上传或创建文件夹
+					//所需参数
+					//var comData = {
+					//	pid: '', //	父ID，该文件的上层ID
+					//	fname: '', //	文件名称，文件或文件夹名称,文件存扩展名之前的名称
+					//	ftype: '', //	文件类型，存文件的扩展名,如.file为文件夹
+					//	fpath: '', //	文件路径，文件路径,为文件用
+					//	fsize: '' //	文件大小，文件用
+					//};
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_PostDiFiA(comData, wd, function(data) {
+						uploading = false;
+						wd.close();
+						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							mui.toast('上传成功');
+							copyFileToUpload(filePath, fname);
+						} else {
+							if(data.RspCode == 8) {
+								mui.toast('上传失败：' + data.RspTxt);
 							} else {
 								mui.toast(data.RspTxt);
 							}
-						});
+						}
+					});
+				}
+
+				/**
+				 * 获取上传和下载文件夹的目录对象
+				 */
+				function getUpAndDownEntry() {
+					//获取下载文件夹目录对象
+					if(downFolderEntry == null) {
+						getUpOrDownEntry(0);
 					}
-				});
-			</script>
+					//获取上传文件夹目录对象
+					if(upFolderEntry == null) {
+						getUpOrDownEntry(1);
+					}
+				}
+
+				/**
+				 * 获取上传或者下载文件夹的目录对象
+				 * @param {Object} type 下载0上传1
+				 */
+				function getUpOrDownEntry(type) {
+					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+					var utidPath = window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH) + personalUTID;
+					var path = '';
+					if(type == 1) { //上传
+						path = utidPath + '/upload/';
+					} else { //下载
+						path = utidPath + '/download/';
+					}
+					plus.io.resolveLocalFileSystemURL(path, function(succesCB) {
+						if(type == 1) { //上传
+							upFolderEntry = succesCB;
+							console.log("请求上传或者下载文件系统成功: " + upFolderEntry.name);
+							upDirectoryReader(upFolderEntry);
+						} else {
+							downFolderEntry = succesCB;
+							console.log("请求上传或者下载文件系统成功: " + downFolderEntry.name);
+						}
+					}, function(errorCB) {
+						console.log("请求上传或者下载文件系统失败: " + JSON.stringify(errorCB));
+					});
+				}
+
+				/**
+				 * 读取上传文件夹下的文件及子目录
+				 * @param {Object} type 下载0上传1
+				 * @param {Object} entry 文件系统对象
+				 */
+				function upDirectoryReader(entry) {
+					var directoryReader = entry.createReader();
+					directoryReader.readEntries(function(succesCB) {
+						//succesCB:文件或目录对象的引用,可指向文件或目录对象（DirectoryEntry|FileEntry）
+						console.log("获取上传目录中的所有文件和子目录成功");
+						mui.each(succesCB, function(index, element) {
+							console.log("directoryReader:" + element.fullPath);
+
+							var fNameList = element.name.split('_');
+							var fname1 = fNameList[0] + '_';
+							var fname = element.name.replace(fname1, '');
+							//获取文件属性
+							element.getMetadata(function(succesCB2) {
+								console.log("获取上传记录文件属性成功:" + JSON.stringify(succesCB2));
+								//增加一项已上传记录
+								var timeList = JSON.stringify(succesCB2.modificationTime).replace(/"/g, '').split("T");
+								var time1 = timeList[0];
+								var timeList2 = timeList[1].split('.');
+								var time2 = timeList2[0];
+								addUploadedItem(element.toLocalURL(), fname, succesCB2.size, time1 + ' ' + time2);
+							}, function(errorCB2) {
+								console.log("获取上传记录文件属性失败:" + JSON.stringify(errorCB2));
+								//增加一项已上传记录
+								addUploadedItem(element.toLocalURL(), fname);
+							});
+						});
+					}, function(errorCB) {
+						mui.toast("获取上传记录失败:" + JSON.stringify(errorCB));
+						console.log("获取上传记录失败:" + JSON.stringify(errorCB));
+					});
+				}
+
+				/**
+				 * 拷贝一份文件到程序
+				 * @param {Object} filePath 文件路径
+				 * @param {Object} fname 文件名
+				 */
+				function copyFileToUpload(filePath, fname) {
+					console.log("copyFileToUpload:" + filePath + '|' + fname);
+					plus.io.resolveLocalFileSystemURL(filePath, function(succesCB) {
+						console.log("拷贝:请求被文件的文件系统成功: " + JSON.stringify(succesCB));
+						//拷贝
+						var myDate = new Date();
+						var dateName = myDate.getTime() + (Math.floor(Math.random() * 10)) + '_';
+						succesCB.copyTo(upFolderEntry, dateName + fname, function(succesCB2) {
+							console.log("拷贝:成功:" + JSON.stringify(succesCB2));
+							//获取文件属性
+							succesCB2.getMetadata(function(succesCB3) {
+								console.log("拷贝:获取文件属性成功:" + JSON.stringify(succesCB3));
+								//增加一项已上传记录
+								var timeList = JSON.stringify(succesCB3.modificationTime).replace(/"/g, '').split("T");
+								var time1 = timeList[0];
+								var timeList2 = timeList[1].split('.');
+								var time2 = timeList2[0];
+								addUploadedItem(succesCB2.toLocalURL(), fname, succesCB3.size, time1 + ' ' + time2);
+							}, function(errorCB3) {
+								console.log("拷贝:获取文件属性失败:" + JSON.stringify(errorCB3));
+								//增加一项已上传记录
+								addUploadedItem(succesCB2.toLocalURL(), fname);
+							});
+						}, function(errorCB2) {
+							mui.toast('在本地增加上传记录失败:' + JSON.stringify(errorCB2));
+							console.log("拷贝:失败:" + JSON.stringify(errorCB2));
+						});
+					}, function(errorCB) {
+						//请求失败的的回调
+						mui.toast('在本地增加上传记录失败:' + JSON.stringify(errorCB));
+						console.log("请求被拷贝文件的文件系统失败: " + JSON.stringify(errorCB));
+					});
+				}
+			});
+		</script>
 	</body>
 
 </html>
