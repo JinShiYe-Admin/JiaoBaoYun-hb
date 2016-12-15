@@ -126,9 +126,9 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 		// 等待的对话框
 		//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		var urlArr = url.split('/');
-		for(var item in tempData){
-			console.log('postData.tempData:' + urlArr[urlArr.length-1]+' ' + item+':'+tempData[item]);
-		}
+//		for(var item in tempData){
+//			console.log('postData.tempData:' + urlArr[urlArr.length-1]+' ' + item+':'+tempData[item]);
+//		}
 		console.log('postData.tempData:' + urlArr[urlArr.length-1] + JSON.stringify(tempData));
 		//发送协议
 		mui.ajax(url, {

@@ -2,7 +2,7 @@
  * 相机模块
  */
 var camera=(function(mod){
-	mod.filePaths=[];
+//	mod.filePaths=[];
 	//获取相机
 	mod.getCamera=function(){
 		var cmr=plus.camera.getCamera(1);
@@ -15,7 +15,7 @@ var camera=(function(mod){
 		cmr.captureImage(function(path){
 			console.log( "Capture image success: " + path );
 			//数组添加path
-			mod.filePaths.push(path);
+//			mod.filePaths.push(mod.getAbsolutePath(path));
 			//处理图片
 //			managePic(mod.getAbsolutePath(path));
 			managePic(path)
