@@ -907,12 +907,15 @@
 					"js/publicProtocol.js",
 					"js/homework/homework-sub.js",
 					"css/utils/common.css",
-					"image/homework/need-submit.png"
+					"image/homework/need-submit.png",
+					"image/homework/submitted.png",
+					"css/homework/subjects-icon.css"
 				],
 				"refer": [
 					"html/homework/workdetail-tea.html",
 					"html/homework/workdetail-stu.html",
-					"html/homework/workdetailTea-temporary.html"
+					"html/homework/workdetailTea-temporary.html",
+					"html/homework/homework-record.html"
 				],
 				"priority": 0
 			},
@@ -1026,7 +1029,9 @@
 					"fonts/mui.ttf",
 					"css/utils/common.css",
 					"js/mui.min.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"html/homework/homeworkRecord-sub.html",
+					"js/utils/events.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1084,7 +1089,9 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"js/utils/files.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/homework/homework-commented.html"
+				],
 				"priority": 0
 			},
 			"html/homework/homework-commit.html": {
@@ -2054,7 +2061,11 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"css/homework/workdetail-stu.css"
+					"css/homework/workdetail-stu.css",
+					"js/utils/events.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"css/iconfont/iconfont.css",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"html/homework/doHomework-stu.html"
@@ -2063,7 +2074,9 @@
 			},
 			"html/cloud/storage_transport.html": {
 				"resources": [
-					"js/utils/CloudFileUtil.js"
+					"js/utils/CloudFileUtil.js",
+					"js/cloud/AndroidFileSystem.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -2072,7 +2085,62 @@
 				"resources": [
 					"js/mui.min.js",
 					"js/utils/events.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/utils/ASFiles.js",
+					"css/quan/class_space.css",
+					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/homework/homeworkRecord-sub.html": {
+				"resources": [
+					"js/homework/homework-record.js",
+					"css/iconfont/iconfont.css",
+					"js/libs/jquery.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/BigInt.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/publicHomeworkProtocol.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/homework/homework-commented.html": {
+				"resources": [
+					"js/homework/homework-commented.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/homework/workdetailTea-temSub.html": {
+				"resources": [
+					"css/mui.min.css",
+					"js/storageKeyName.js",
+					"js/homework/homework_detail.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"css/homework/workdetail.css",
+					"js/libs/myStorage/myStorage.js",
+					"css/iconfont/iconfont.css",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"js/publicHomeworkProtocol.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0

@@ -2,7 +2,7 @@
  * @author an
  */
 
-var events = (function($, mod) {
+var events = (function(mod) {
 	/**
 	 * 绑定监听
 	 * @param {Object} id 绑定dom的Id
@@ -27,7 +27,7 @@ var events = (function($, mod) {
 		 * @param {Object} targetHTML 目标界面
 		 */
 	mod.openNewWindow = function(targetHTML) {
-			$.openWindow({
+			mui.openWindow({
 				url: targetHTML,
 				id: targetHTML,
 				show: {
@@ -38,7 +38,7 @@ var events = (function($, mod) {
 					title: '正在加载...'
 				},
 				styles: {
-					top: localStorage.getItem('$Statusbar'),
+					top: localStorage.getItem('muiStatusbar'),
 				}
 			})
 		}
@@ -50,7 +50,7 @@ var events = (function($, mod) {
 		 * @param {Object} passData 获取要传的值
 		 */
 	mod.openNewWindowWithData = function(targetHTML, passData) {
-		$.openWindow({
+		mui.openWindow({
 			url: targetHTML,
 			id: targetHTML,
 			extras: {
@@ -64,7 +64,7 @@ var events = (function($, mod) {
 				title: '正在加载...'
 			},
 			styles: {
-				top: localStorage.getItem('$Statusbar')
+				top: localStorage.getItem('muiStatusbar')
 			}
 		});
 	};
@@ -77,7 +77,7 @@ var events = (function($, mod) {
 		if(!datas) {
 			datas = null;
 		}
-		$.init({
+		mui.init({
 			gestureConfig: {
 				doubletap: true //启用双击监听
 			},
@@ -86,7 +86,7 @@ var events = (function($, mod) {
 				id: subPage,
 				styles: {
 					top: '45px',
-					bottom: localStorage.getItem('$Statusbar'),
+					bottom: localStorage.getItem('muiStatusbar'),
 				},
 				extras: {
 					data: datas
@@ -99,7 +99,7 @@ var events = (function($, mod) {
 		//			if(contentWebview == null) {
 		//				contentWebview = plus.webview.currentWebview().children()[0];
 		//			}
-		//			contentWebview.evalJS("$('#refreshContainer').pullRefresh().scrollTo(0,0,100)");
+		//			contentWebview.evalJS("mui('#refreshContainer').pullRefresh().scrollTo(0,0,100)");
 		//		});
 	}
 
@@ -113,7 +113,7 @@ var events = (function($, mod) {
 	 */
 	mod.initRefresh = function(id, fresh, addMore) {
 
-			$.init({
+			mui.init({
 				pullRefresh: {
 					container: '#refreshContainer',
 					down: {
@@ -130,7 +130,7 @@ var events = (function($, mod) {
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
-					$('#refreshContainer').pullRefresh().refresh(true);
+					mui('#refreshContainer').pullRefresh().refresh(true);
 					var item = document.getElementById(id)
 						//清除所有数据
 					while(item.firstChild != null) {
@@ -138,7 +138,7 @@ var events = (function($, mod) {
 					}
 					//加载新控件
 					fresh();
-					$('#refreshContainer').pullRefresh().endPulldownToRefresh(); //refresh completed
+					mui('#refreshContainer').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 150);
 			}
 			var count = 0;
@@ -172,11 +172,11 @@ var events = (function($, mod) {
 			if(!plus.webview.getWebviewById(tarPage)) {
 				//初始化预加载详情页面
 				setTimeout(function() {
-					$.preload({
+					mui.preload({
 						url: tarPage,
 						id: tarPage, //默认使用当前页面的url作为id
 						styles: { //窗口参数
-							top: localStorage.getItem('$Statusbar')
+							top: localStorage.getItem('muiStatusbar')
 						},
 						show: {
 							anishow: 'slide-in-right',
@@ -219,7 +219,7 @@ var events = (function($, mod) {
 				console.log(typeof(targetPage))
 			}
 			//触发目标页面的listener事件
-			$.fire(targetPage, listener, {
+			mui.fire(targetPage, listener, {
 				data: getDatas()
 			});
 			console.log('要传的值是：' + JSON.stringify(getDatas()))
@@ -241,7 +241,7 @@ var events = (function($, mod) {
 				//				console.log(typeof(targetPage));
 			}
 			//触发目标页面的listener事件
-			$.fire(targetPage, listener, {
+			mui.fire(targetPage, listener, {
 				data: datas
 			});
 			targetPage.show('slide-in-right', 250)
@@ -263,7 +263,7 @@ var events = (function($, mod) {
 			}
 			if(targetPage) {
 				//触发目标页面的listener事件
-				$.fire(targetPage, listener, {
+				mui.fire(targetPage, listener, {
 					data: datas
 				});
 			} else {
@@ -314,4 +314,4 @@ var events = (function($, mod) {
 	}
 	return mod;
 
-})(mui, events || {});
+})( events || {});

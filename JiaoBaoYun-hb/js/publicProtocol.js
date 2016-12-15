@@ -1429,7 +1429,7 @@ var postDataPro_setClassSpaceLikeByUser = function(commonData, wd, callback) {
 //所需参数
 //		var comData = {
 //			userId: '',//用户ID
-//			spaceType:''//信息类型,4评论5评论回复6点赞7留言8留言回复另：打开与我相关时自动调用设为已读。打开本人空间时，请调用4、5、6设为已读，打开本人留言板时，请调用7、8设为已读。
+//			spaceTypes:''//信息类型,4评论5评论回复6点赞7留言8留言回复另：打开与我相关时调用[4,5,6,7,8]设为已读。打开本人空间时，请调用[4、5、6]设为已读，打开本人留言板时，请调用[7、8]设为已读。
 //		};
 //返回1为正确
 var postDataPro_setCommentMsgReadByUser = function(commonData, wd, callback) {
