@@ -174,7 +174,7 @@ var quitGroupAll = function() {
 var allCallback = function(roleInfo) {
 		allcount++;
 		if(allcount > 0 && allcount == groupRoles.length) {
-			events.fireToPageNone('../quan/tab-zone.html', 'quitGroup');
+			events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
 			groupRoles = [];
 			allcount = 0;
 			if(!isMaster) {
@@ -217,7 +217,6 @@ var quitGroup = function(roleInfo, callback) {
 			wd.close();
 			if(data.RspCode == '0000') {
 				mui.toast('退群成功');
-				events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
 				callback(roleInfo);
 			} else {
 				mui.toast(data.RspTxt);
