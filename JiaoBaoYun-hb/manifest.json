@@ -913,7 +913,8 @@
 				"refer": [
 					"html/homework/workdetail-tea.html",
 					"html/homework/workdetail-stu.html",
-					"html/homework/workdetailTea-temporary.html"
+					"html/homework/workdetailTea-temporary.html",
+					"html/homework/homework-record.html"
 				],
 				"priority": 0
 			},
@@ -1027,7 +1028,9 @@
 					"fonts/mui.ttf",
 					"css/utils/common.css",
 					"js/mui.min.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"html/homework/homeworkRecord-sub.html",
+					"js/utils/events.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2058,7 +2061,10 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"css/homework/workdetail-stu.css",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"css/iconfont/iconfont.css",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"html/homework/doHomework-stu.html"
@@ -2079,6 +2085,26 @@
 					"css/mui.min.css",
 					"js/utils/ASFiles.js",
 					"css/quan/class_space.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/homework/homeworkRecord-sub.html": {
+				"resources": [
+					"js/homework/homework-record.js",
+					"css/iconfont/iconfont.css",
+					"js/libs/jquery.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/BigInt.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/publicHomeworkProtocol.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0

@@ -96,18 +96,18 @@ mui.plusReady(function() {
 	 * @param {Object} fileStream
 	 */
 var uploadFile = function(picPath, fileStream) {
-		//		picPath = picPath.replace('/', '');
 		var comData = {
-			teacherId: personalUTID, //教师Id
 			fileType: 1, //文件类型，1：图片；2：音频；3：视频；
 			fileName: picPath.split('/')[1], //文件名，带后缀；
 			fileStream: fileStream, //base64格式文件流；
-			displayOrder: 1 //图片顺序；
+			displayOrder: imgIds?imgIds.length:0 //图片顺序；
 		};
 		if(role == 2) {
-			uploadFileTeacher(comData, setPic);
+			comData.teacherId=personalUTID;
+			uploadFileTeacher(picPath,comData, setPic);
 		} else {
-			uploadFileStudent(comData, setPic)
+			comData.userId=personalUTID;
+			uploadFileStudent(picPath,comData, setPic)
 		}
 	}
 	/**
@@ -120,17 +120,17 @@ var uploadFile = function(picPath, fileStream) {
 		//“ThumbUrl”：”xxxxxxxx/xxx.png”，    //缩略图url
 		//“DisplayOrder”：1                //显示顺序
 	 */
-var setPic = function(img) {
+var setPic = function(picPath,img) {
 		imgIds.push(img.FileId);
 		//	picPath=camero.getAbsolutePath(picPath);
 		var pictures = document.getElementById('pictures');
 		var div = document.createElement('div');
 		div.imgId = img.FileId;
 		div.className = 'img-div';
-		div.innerHTML = '<img src="' + img.ThumbUrl + '" data-preview-src="" data-preview-group="1"/>' +
+		div.innerHTML = '<img src="' + camera.getAbsolutePath(picPath) + '" data-preview-src="" data-preview-group="1"/>' +
 			'<a class="mui-icon iconfont icon-guanbi"></a>'
 		pictures.appendChild(div);
-	}
+}
 	/**
 	 * 设置界面
 	 * @param {Object} role
@@ -253,7 +253,7 @@ var setTeachers = function(teaInfos) {
 //				};
 
 //11.上传文件；逻辑：如果是图片类型，同时生成缩略图
-function uploadFileTeacher(comData, callback) {
+function uploadFileTeacher(picPath,comData, callback) {
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//11.上传文件；逻辑：如果是图片类型，同时生成缩略图
@@ -261,7 +261,7 @@ function uploadFileTeacher(comData, callback) {
 		wd.close();
 		console.log('发布答案||作业界面老师上传答案返回值' + JSON.stringify(data));
 		if(data.RspCode == 0) {
-			callback(data.RspData);
+			callback(picPath,data.RspData);
 		} else {
 			mui.toast(data.RspTxt);
 		}
@@ -278,7 +278,7 @@ function uploadFileTeacher(comData, callback) {
 //				};
 
 //5.	上传文件；逻辑：如果是图片类型，同时生成缩略图，学生
-function uploadFileStudent(comData, callback) {
+function uploadFileStudent(picPath,comData, callback) {
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//5.	上传文件；逻辑：如果是图片类型，同时生成缩略图
@@ -286,7 +286,7 @@ function uploadFileStudent(comData, callback) {
 		wd.close();
 		console.log('发布答案||作业界面学生上传作业返回值' + JSON.stringify(data));
 		if(data.RspCode == 0) {
-			callback(data.RspData);
+			callback(picPath,data.RspData);
 		} else {
 			mui.toast(data.RspTxt);
 		}
@@ -303,6 +303,7 @@ function requestPublishAnswer(comData) {
 		console.log('发布答案||作业界面老师发布答案返回值：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			mui.toast('上传成功')
+			events.clearChild(document.getElementById('pictures'));
 		} else {
 			mui.toast(data.RspTxt);
 		}
