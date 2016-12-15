@@ -393,22 +393,22 @@
 						title: '云盘—云存储', //标题名
 						top: fileArray //顶层文件和文件夹的数据
 					});
-//					console.log('tap:' + this.getAttribute("data-fid"));
-//					var fid = this.getAttribute("data-fid"); //文件id
-//					var title = '';
-//					mui.each(fileArray, function(index, item) {
-//						console.log('fileArray:' + index + '|' + JSON.stringify(item));
-//						if(fid == item.fid) {
-//							title = item.fname;
-//							return false;
-//						}
-//					});
-//					events.fireToPageWithData('storage_main.html', 'init', {
-//						fid: fid, //文件id
-//						showTop: true, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
-//						title: title, //标题名
-//						top: fileArray //顶层文件和文件夹的数据
-//					});
+					//					console.log('tap:' + this.getAttribute("data-fid"));
+					//					var fid = this.getAttribute("data-fid"); //文件id
+					//					var title = '';
+					//					mui.each(fileArray, function(index, item) {
+					//						console.log('fileArray:' + index + '|' + JSON.stringify(item));
+					//						if(fid == item.fid) {
+					//							title = item.fname;
+					//							return false;
+					//						}
+					//					});
+					//					events.fireToPageWithData('storage_main.html', 'init', {
+					//						fid: fid, //文件id
+					//						showTop: true, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
+					//						title: title, //标题名
+					//						top: fileArray //顶层文件和文件夹的数据
+					//					});
 				});
 
 				//云存储右侧按钮
@@ -541,14 +541,14 @@
 								}
 							}
 							if(teacherClasses.length > 0 || studentClasses.length > 0) {
-								console.log('teacherClasses:'+teacherClasses.length+','+studentClasses.length);
-									events.fireToPageWithData('../homework/homework-tea.html', 'postClasses', {
-										teacherClasses: teacherClasses,
-										studentClasses: studentClasses
-									})
-								} else {
-									mui.toast('您还未加入班级');
-								}
+								console.log('teacherClasses:' + teacherClasses.length + ',' + studentClasses.length);
+								events.fireToPageWithData('../homework/homework-tea.html', 'postClasses', {
+									teacherClasses: teacherClasses,
+									studentClasses: studentClasses
+								})
+							} else {
+								mui.toast('您还未加入班级');
+							}
 						} else {
 							mui.toast(data.RspTxt);
 						}

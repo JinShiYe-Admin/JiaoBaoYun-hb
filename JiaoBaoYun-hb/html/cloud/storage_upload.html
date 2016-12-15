@@ -363,20 +363,19 @@
 						console.log("root: " + LocalURL + '|' + URL);
 						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 						console.log("getDirectory: " + LocalURL + personalUTID + "/");
-						succesCB.root.getDirectory(personalUTID, {
-							create: true,
-							exclusive: false
-						}, function(succesCB2) {
-							console.log("创建或打开子目录成功");
-							console.log("文件系统的名称:" + succesCB2.name);
-							console.log("文件系统中的目录对象:" + succesCB2.fullPath);
-							if(mui.os.ios) { //iOS系统
-								initElement(succesCB2.toLocalURL());
-							}
-						}, function(errorCB2) {
-							mui.toast("创建或打开子目录失败: " + JSON.stringify(errorCB2));
-							console.log("创建或打开子目录失败: " + JSON.stringify(errorCB2));
+						//创建utid文件夹
+						getDirectory(succesCB.root, personalUTID, function(succesCB2) {
+							//创建下载文件夹
+							getDirectory(succesCB2, 'download', function(succesCB3) {
+								//创建上传文件夹
+								getDirectory(succesCB2, 'upload', function(succesCB3) {
+									if(mui.os.ios) { //iOS系统
+										initElement(succesCB2.toLocalURL());
+									}
+								});
+							});
 						});
+
 					}, function(errorCB) {
 						//请求失败的的回调
 						mui.toast("请求文件系统失败: " + JSON.stringify(errorCB));
@@ -416,7 +415,30 @@
 				}
 
 				/**
-				 * 读取目下的文件及子目录
+				 * 创建或打开子目录
+				 * @param {Object} entry 文件系统中的目录对象
+				 * @param {Object} name 目录名字
+				 * @param {Object} succesCB 成功的回调
+				 * @param {Object} errorCB 失败的回调
+				 */
+				function getDirectory(entry, name, succesCallBack, errorCallBack) {
+					entry.getDirectory(name, {
+						create: true,
+						exclusive: false
+					}, function(succesCB) {
+						console.log("创建或打开子目录" + name + "成功");
+						console.log("文件系统的名称:" + succesCB.name);
+						console.log("文件系统中的目录对象:" + succesCB.fullPath);
+						succesCallBack(succesCB);
+					}, function(errorCB) {
+						mui.toast("创建或打开子目录" + name + "失败:" + JSON.stringify(errorCB));
+						console.log("创建或打开子目录" + name + "失败: " + JSON.stringify(errorCB));
+						errorCallBack(errorCB);
+					});
+				}
+
+				/**
+				 * 读取目录下的文件及子目录
 				 * @param {Object} URL 目录路径
 				 * @param {Object} entry 文件系统对象
 				 */

@@ -108,7 +108,7 @@ var ColudFileUtil = (function($, mod) {
 				onStateChanged(upload, status);
 			}, false);
 		//console.log('upload2:' + fPath + '|' + type + "|" + QNUptoken);
-		task.start();
+		//task.start();
 		successCB(task);
 	}
 

@@ -46,6 +46,11 @@
 			.transport-info {
 				width: 90%;
 			}
+
+			.mui-media-object {
+				height: 42px;
+				width: 42px;
+			}
 		</style>
 	</head>
 
@@ -332,28 +337,28 @@
 
 					});
 
-					mui('#upload').on('tap', 'button', function() {
-						console.log('button:' + this.getAttribute('id') + '|' + this.getAttribute('value') + '|' + this.getAttribute('data-upid'));
-						var id = this.getAttribute('id'); //元素id
-						var value = this.getAttribute('value'); //元素状态
-						var upid = this.getAttribute('data-upid'); //任务id
-						var task = null;
-						mui.each(uploadList, function(index, item) {
-							console.log('uploadList:' + JSON.stringify(item))
-							if(item.__UUID__ == upid) {
-								task = item;
-								return false;
-							}
-						});
-						if(value == '0') {
-							//task.start();
-						} else if(value == '3') {
-							//task.pause();
-							task.abort();
-						} else if(value == '5') {
-							task.resume();
-						}
-					});
+					//					mui('#upload').on('tap', 'button', function() {
+					//						console.log('button:' + this.getAttribute('id') + '|' + this.getAttribute('value') + '|' + this.getAttribute('data-upid'));
+					//						var id = this.getAttribute('id'); //元素id
+					//						var value = this.getAttribute('value'); //元素状态
+					//						var upid = this.getAttribute('data-upid'); //任务id
+					//						var task = null;
+					//						mui.each(uploadList, function(index, item) {
+					//							console.log('uploadList:' + JSON.stringify(item))
+					//							if(item.__UUID__ == upid) {
+					//								task = item;
+					//								return false;
+					//							}
+					//						});
+					//						if(value == '0') {
+					//							//task.start();
+					//						} else if(value == '3') {
+					//							//task.pause();
+					//							task.abort();
+					//						} else if(value == '5') {
+					//							task.resume();
+					//						}
+					//					});
 
 					/**
 					 * 获取七牛上传token
