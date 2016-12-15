@@ -177,3 +177,6 @@ p img {
 	max-width: 100%;
 	height: auto;
 }
+.icon-jixiaofenshuchaxun:before{
+	padding-left: .5rem;
+}

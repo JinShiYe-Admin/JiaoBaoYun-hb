@@ -217,6 +217,7 @@ var quitGroup = function(roleInfo, callback) {
 			wd.close();
 			if(data.RspCode == '0000') {
 				mui.toast('退群成功');
+				events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
 				callback(roleInfo);
 			} else {
 				mui.toast(data.RspTxt);

@@ -313,6 +313,7 @@ function getGroupList() {
 			}
 
 		} else if(data.RspCode == 9) { //没有群
+			console.log('显示空白页')
 			showBlankPage(true);//显示空白页
 
 		} else {

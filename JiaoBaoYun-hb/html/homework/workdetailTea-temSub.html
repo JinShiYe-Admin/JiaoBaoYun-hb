@@ -13,7 +13,14 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/homework/workdetail.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
-
+		<style type="text/css">
+			.dynamic-personal-image {
+				/*个人头像圆形*/
+				border-radius: 50%;
+				width: 50px;
+				height: 50px;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -42,13 +49,19 @@
 					isCommented: document.getElementById('isCommented')
 				}
 				mui.plusReady(function() {
-
+					mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+						events.fireToPageNone('', '', this.homeworkInfo);
+						plus.webview.getWebviewById("").show();
+					})
 					window.addEventListener('workDetail', function(e) {
 						resetData();
 						console.log('作业主界面传送的值：' + JSON.stringify(e.detail.data));
 						homeworkModel = e.detail.data;
 						console.log('homeworkModel=' + JSON.stringify(homeworkModel));
-
+						var tempDate = homeworkModel.Date.replace('/', '-');
+						tempDate = tempDate.replace('/', '-');
+						var date = tempDate.substring(0, tempDate.indexOf(' '));
+						console.log(date);
 						//4.	根据教师Id和班级Id获取学生某个日期上传的答案列表；
 						//所需参数
 						var comData = {
@@ -57,7 +70,7 @@
 							date: '2016-12-14' //查看的日期，不带时间；
 						};
 						requestAnswerList(comData);
-						refeshUI();
+												refeshUI();
 
 					})
 
@@ -105,9 +118,9 @@
 											for(var a in tempModel1.QuestionResults) {
 												var tempResultModel = tempModel1.QuestionResults[a];
 												if(tempResultModel.IsRight) {
-													QuestionResultStr = QuestionResultStr + tempResultModel.QuestionNo + '.' + '正确，';
+													QuestionResultStr = QuestionResultStr + tempResultModel.QuestionNo + '.' + '&#10003,';
 												} else {
-													QuestionResultStr = QuestionResultStr + tempResultModel.QuestionNo + '.' + '错误，';
+													QuestionResultStr = QuestionResultStr + tempResultModel.QuestionNo + '.' + '&#10005,';
 												}
 											}
 											//赋值答案字符串
@@ -122,11 +135,10 @@
 								}
 								console.log('最终的数据为:' + JSON.stringify(answerListArray));
 								//刷新界面
-
+								refeshUI();
 							});
 
 						} else {
-
 							mui.toast(data.RspTxt);
 						}
 					});
@@ -135,10 +147,17 @@
 					for(var i = 0; i < 10; i++) {
 						var li = document.createElement('li');
 						li.className = 'mui-table-view-cell mui-media';
+						//						li.innerHTML = '<img id="img" class="mui-media-object mui-pull-left dynamic-personal-image" src="'++'" />' +
+						//							'<div class="mui-media-body" style="margin-top: 8px;">' +
+						//							'<p id="name" style="font-size: 16px;">'++'<font style="font-size: 12px;">&nbsp&nbsp&nbsp&nbsp'+结果:1、正确 2、错误+'</font></p>' +
+						//							'</div>' +
+						//							'<div class="mui-media-body mui-pull-right" style="margin-top: -25px;">' +
+						//							'<p id="isCommented" style="font-size: 13px;">'++'<span class="mui-icon mui-icon-forward"></span></p>' +
+						//							'</div>'
 						li.innerHTML =
-							'<img id="img" class="mui-media-object mui-pull-left" src="../../image/homework/math.png" />' +
+							'<img id="img" class="mui-media-object mui-pull-left dynamic-personal-image " src="../../image/homework/math.png" />' +
 							'<div class="mui-media-body" style="margin-top: 8px;">' +
-							'<p id="name" style="font-size: 16px;">安琪<font style="font-size: 12px;">&nbsp&nbsp&nbsp&nbsp结果:1、正确 2、错误</font></p>' +
+							'<p id="name" style="font-size: 16px;">安琪<font style="font-size: 12px;">&nbsp&nbsp&nbsp&nbsp结果:1.&#10003, 2.&#10005</font></p>' +
 							'</div>' +
 							'<div class="mui-media-body mui-pull-right" style="margin-top: -25px;">' +
 							'<p id="isCommented" style="font-size: 13px;">未评<span class="mui-icon mui-icon-forward"></span></p>' +
