@@ -1,100 +1,154 @@
-<!--老师查看临时作业详情子页面-->
-<!doctype html>
+<!DOCTYPE html>
 <html>
 
 	<head>
-		<meta charset="UTF-8">
-		<title></title>
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/homework/workdetail.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+
 	</head>
 
 	<body>
-		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/publicHomeworkProtocol.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">
-			mui.init();
-			mui.plusReady(function() {
 
-				//4.	根据教师Id和班级Id获取学生某个日期上传的答案列表；
-				//所需参数
-				var comData = {
-					teacherId: personalUTID, //教师Id
-					classId: classID, //班级群Id；
-					date: '' //查看的日期，不带时间；
-				};
-				requestAnswerList(comData);
+		<div class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul id="list" class="mui-table-view">
+				</ul>
 
-			});
+			</div>
+			<script src="../../js/mui.min.js"></script>
+			<!--加载选项按钮-->
+			<script src="../../js/homework/homework_detail.js"></script>
+			<script src="../../js/publicHomeworkProtocol.js" type="text/javascript" charset="utf-8"></script>
+			<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+			<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
+			<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
 
-			//个人id
-			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-			//答案列表数组
-			var answerListArray = [];
-			//群id
-			var classID;
+			<script type="text/javascript">
+				var homeworkModel = {};
+				var homeworkNodes = {
+					list: document.getElementById('list'),
+					date: document.getElementById('date'),
+					headImg: document.getElementById('img'),
+					name: document.getElementById('name'),
+					isCommented: document.getElementById('isCommented')
+				}
+				mui.plusReady(function() {
 
-			//4.	根据教师Id和班级Id获取学生某个日期上传的答案列表；
-			function requestAnswerList(comData) {
-				// 等待的对话框
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				//11.上传文件；逻辑：如果是图片类型，同时生成缩略图
-				postDataPro_GetAnswerResultList(comData, wd, function(data) {
-					wd.close();
-					console.log('4.postDataPro_GetAnswerResultList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					if(data.RspCode == 0) {
-						//给数组赋值
-						answerListArray = data.RspData;
-						//13.通过群ID获取群的正常用户
+					window.addEventListener('workDetail', function(e) {
+						resetData();
+						console.log('作业主界面传送的值：' + JSON.stringify(e.detail.data));
+						homeworkModel = e.detail.data;
+						console.log('homeworkModel=' + JSON.stringify(homeworkModel));
+
+						//4.	根据教师Id和班级Id获取学生某个日期上传的答案列表；
 						//所需参数
 						var comData = {
-							top: '-1', //选择条数
-							vvl: classID, //群ID，查询的值
-							vvl1: '-1' //群员类型，0家长,1管理员,2老师,3学生,-1取全部
+							teacherId: personalUTID, //教师Id
+							classId: homeworkModel.classId, //班级群Id；
+							date: '2016-12-14' //查看的日期，不带时间；
 						};
-						//13.通过群ID获取群的正常用户
-						postDataPro_PostGusers(comData, wd, function(data1) {
-							wd.close();
-							console.log('13.postDataPro_PostGusers:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
-							if(data1.RspCode == 0) {
-								//循环数组，将对应的信息id，塞入对应值
-								for(var m in data1.RspData) {
-									var tempModel0 = data1.RspData[m];
-									for(var n in answerListArray) {
-										var tempModel1 = answerListArray[n];
-										var QuestionResultStr = '';
-										//遍历里面的答案结果列表，进行数据拼接
-										for(var a in tempModel1.QuestionResults) {
-											var tempResultModel = tempModel1.QuestionResults[a];
-											if(tempResultModel.IsRight) {
-												QuestionResultStr = QuestionResultStr + tempResultModel.QuestionNo + '.' + '正确，';
-											} else {
-												QuestionResultStr = QuestionResultStr + tempResultModel.QuestionNo + '.' + '错误，';
+						requestAnswerList(comData);
+						refeshUI();
+
+					})
+
+				});
+				var resetData = function() {
+						homeworkNodes.list.innerHTML = '';
+					}
+					//个人id
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				//答案列表数组
+				var answerListArray = [];
+				//群id
+				var classID;
+
+				//4.	根据教师Id和班级Id获取学生某个日期上传的答案列表；
+				function requestAnswerList(comData) {
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					//11.上传文件；逻辑：如果是图片类型，同时生成缩略图
+					postDataPro_GetAnswerResultList(comData, wd, function(data) {
+						wd.close();
+						console.log('4.postDataPro_GetAnswerResultList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							//给数组赋值
+							answerListArray = data.RspData;
+							//13.通过群ID获取群的正常用户
+							//所需参数
+							var comData = {
+								top: '-1', //选择条数
+								vvl: classID, //群ID，查询的值
+								vvl1: '-1' //群员类型，0家长,1管理员,2老师,3学生,-1取全部
+							};
+							//13.通过群ID获取群的正常用户
+							postDataPro_PostGusers(comData, wd, function(data1) {
+								wd.close();
+								console.log('13.postDataPro_PostGusers:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+								if(data1.RspCode == 0) {
+									//循环数组，将对应的信息id，塞入对应值
+									for(var m in data1.RspData) {
+										var tempModel0 = data1.RspData[m];
+										for(var n in answerListArray) {
+											var tempModel1 = answerListArray[n];
+											var QuestionResultStr = '';
+											//遍历里面的答案结果列表，进行数据拼接
+											for(var a in tempModel1.QuestionResults) {
+												var tempResultModel = tempModel1.QuestionResults[a];
+												if(tempResultModel.IsRight) {
+													QuestionResultStr = QuestionResultStr + tempResultModel.QuestionNo + '.' + '正确，';
+												} else {
+													QuestionResultStr = QuestionResultStr + tempResultModel.QuestionNo + '.' + '错误，';
+												}
 											}
-										}
-										//赋值答案字符串
-										tempModel1.QuestionResultStr = QuestionResultStr;
-										//判断id是否一致
-										if(tempModel1.StudentId == tempModel0.utid) {
-											//合并
-											tempModel1 = $.extend(tempModel1, tempModel0);
+											//赋值答案字符串
+											tempModel1.QuestionResultStr = QuestionResultStr;
+											//判断id是否一致
+											if(tempModel1.StudentId == tempModel0.utid) {
+												//合并
+												tempModel1 = $.extend(tempModel1, tempModel0);
+											}
 										}
 									}
 								}
-							}
-							console.log('最终的数据为:' + JSON.stringify(answerListArray));
-							//刷新界面
+								console.log('最终的数据为:' + JSON.stringify(answerListArray));
+								//刷新界面
 
-						});
+							});
 
-					} else {
-						mui.toast(data.RspTxt);
+						} else {
+
+							mui.toast(data.RspTxt);
+						}
+					});
+				}
+				var refeshUI = function() {
+					for(var i = 0; i < 10; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell mui-media';
+						li.innerHTML =
+							'<img id="img" class="mui-media-object mui-pull-left" src="../../image/homework/math.png" />' +
+							'<div class="mui-media-body" style="margin-top: 8px;">' +
+							'<p id="name" style="font-size: 16px;">安琪<font style="font-size: 12px;">&nbsp&nbsp&nbsp&nbsp结果:1、正确 2、错误</font></p>' +
+							'</div>' +
+							'<div class="mui-media-body mui-pull-right" style="margin-top: -25px;">' +
+							'<p id="isCommented" style="font-size: 13px;">未评<span class="mui-icon mui-icon-forward"></span></p>' +
+							'</div>'
+						homeworkNodes.list.appendChild(li);
 					}
-				});
-			}
-		</script>
+
+				}
+			</script>
+
 	</body>
 
 </html>

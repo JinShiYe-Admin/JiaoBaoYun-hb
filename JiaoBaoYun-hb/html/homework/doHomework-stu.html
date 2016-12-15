@@ -7,9 +7,37 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/quan/class_space.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/utils/camera.js"></script>
+		<script src="../../js/utils/files.js"></script>
+		<script src="../../js/utils/ASFiles.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script>
+			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
+		</script>
 	</head>
 
 	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title"></h1>
+			<a id="publish" class="mui-pull-right">完成</a>
+		</header>
+		<div class="mui-content">
+			<div class="input-content">
+				<textarea id="input-content" placeholder="请按照老师的要求来完成作业吧"></textarea>
+				<!--<div id="take_pic" class="take_pic">
+					<a class="mui-icon iconfont icon-xiangji"></a>
+				</div>
+				<div id="add_file" class="add_file">
+					<a class="mui-icon iconfont icon-jia"></a>
+				</div>-->
+			</div>
+		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init()
@@ -26,12 +54,22 @@
 
 			//7.	提交作业结果；逻辑：如果是图片类型，同时生成缩略图
 			function requestSubmitHomeworkResult() {
+				var textView = document.getElementById('input-content');
+				var tempText =  Trim(textView.value);
+				 
+				console.log('textView.value===' + tempText)
+				if(!tempText || tempText == '') {
+					mui.toast('请输入作业内容');
+					return;
+				}else{
+					tempText = tempText.replace('\n','<br />')
+				}
 				//所需参数
 				var comData = {
 					userId: personalUTID, //学生/家长id，
 					studentId: personalUTID, //学生Id；
 					homeworkId: homeworkModel.HomeworkId, //作业id；
-					content: '', //文本答案；
+					content: tempText, //文本答案；
 					fileIds: '' //文件id数组；
 				};
 				// 等待的对话框
@@ -42,7 +80,8 @@
 					console.log('7.postDataPro_SubmitHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						//清空输入框
-						
+						textView.value='';
+						mui.back();
 					} else {
 						mui.toast(data.RspTxt);
 					}

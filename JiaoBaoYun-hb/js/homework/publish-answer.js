@@ -98,7 +98,7 @@ var uploadFile = function(picPath,fileStream) {
 		var comData = {
 			teacherId: personalUTID, //教师Id
 			fileType: 1, //文件类型，1：图片；2：音频；3：视频；
-			filename: picPath, //文件名，带后缀；
+			fileName: picPath, //文件名，带后缀；
 			fileStream: fileStream, //base64格式文件流；
 			displayOrder: 1 //图片顺序；
 		};
