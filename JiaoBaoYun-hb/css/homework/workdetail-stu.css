@@ -1,7 +1,26 @@
-.brief-img{
-	width: 4rem;
-	max-width: 20%;
+.homework-brief{
+	padding-top: 1rem;
 }
 .brief-words{
-	max-width: 80%;
+	width: 80%;
+	float: right;
+}
+.btn-startAn{
+	margin-right: 1rem;
+}
+.answer-content{
+	background-color: lightgrey;
+	clear: both;
+	width: 100%;
+	height: 35px;
+}
+.publisher,.publish-date{
+	display: inline-block;
+}
+.publish-date:last-of-type{
+	padding-right: 1rem;
+}
+.subject-icon{
+	font-size: 5rem;
+	margin-top: 1rem;
 }
