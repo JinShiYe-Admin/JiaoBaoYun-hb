@@ -25,7 +25,7 @@
 	</head>
 
 	<body>
-		<nav id="alertBar" class="mui-bar mui-bar-tab" style="visibility: hidden;margin-bottom: 50px;">
+		<nav id="alertBar" class="mui-bar mui-bar-tab" style="visibility: hidden;">
 			<div align="center" >
 				<button id="alertAll" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 200px;">一键提醒</button>
 			</div>
@@ -168,6 +168,7 @@
 				uploadArray = [];
 				remainArray = [];
 				homeworkDetailModel = {};
+				homeworkDetailNodes.alertAllBtn.innerHTML = '一键提醒'
 
 //				homeworkDetailNodes.segItem1.className = 'mui-control-item mui-active';
 //				homeworkDetailNodes.segItem2.className = 'mui-control-item';
@@ -418,6 +419,7 @@ function alertStu(alertBtn){
 					console.log('10.postDataPro_HomeworkAlert:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						alertBtn.innerHTML = '已提醒'
+						homeworkDetailNodes.alertAllBtn.innerHTML = '一键提醒'
 
 
 					} else {
