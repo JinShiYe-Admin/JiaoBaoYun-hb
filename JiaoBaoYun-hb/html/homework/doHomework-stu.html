@@ -16,6 +16,7 @@
 		<script src="../../js/utils/files.js"></script>
 		<script src="../../js/utils/ASFiles.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/publicHomeworkProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
 		</script>
@@ -44,10 +45,12 @@
 			mui.plusReady(function(){
 				window.addEventListener('homeworkInfo',function(e){
 					homeworkModel=e.detail.data;
-					console.log('学生做作业界面从上级界面获取的做作业数据：'+JSON.stringify(homeworkInfo));
+					console.log('学生做作业界面从上级界面获取的做作业数据：'+JSON.stringify(homeworkModel));
 				})
 			});
-			
+			events.addTap('publish', function() {
+				requestSubmitHomeworkResult();
+			})
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 			//作业model
 			var homeworkModel;
@@ -55,7 +58,7 @@
 			//7.	提交作业结果；逻辑：如果是图片类型，同时生成缩略图
 			function requestSubmitHomeworkResult() {
 				var textView = document.getElementById('input-content');
-				var tempText =  Trim(textView.value);
+				var tempText =  textView.value;
 				 
 				console.log('textView.value===' + tempText)
 				if(!tempText || tempText == '') {
