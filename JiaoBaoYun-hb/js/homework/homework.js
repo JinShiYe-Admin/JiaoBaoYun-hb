@@ -60,10 +60,12 @@ var setChoices = function(btn_p, btn_h,btn_m) {
 		btn_p.className = 'mui-btn mui-btn-green';
 		btn_h.className = 'mui-btn mui-btn-green mui-btn-outlined';
 		role = 2;
+		btn_m.style.display='none';
 	} else if(teacherClasses.length > 0) {
 		btn_p.style.display = 'inline-block';
 		btn_h.style.display = 'none';
 		role = 2;
+		btn_m.style.display='none';
 	} else if(studentClasses.length > 0) {
 		btn_h.className = 'mui-btn mui-btn-green';
 		btn_h.style.display = 'inline-block';

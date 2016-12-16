@@ -40,16 +40,5 @@ header .icon-xiangji:before{
 	 display: inline-block;
 	 padding-left: 1rem;
 }
-.mui-table-view-cell{
-	background-repeat: no-repeat;
-	background-position: right;
-}
-.isCommentedBG{
-	background-image: url(../../image/homework/commented.gif);
-}
-.isSubmitted{
-	background-image: url(../../image/homework/submitted.png);
-}
-.submitOnline{
-	background-image: url(../../image/homework/need-submit.png);
-}
+
+

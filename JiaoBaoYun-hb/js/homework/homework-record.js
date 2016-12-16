@@ -4,18 +4,6 @@
 var pageIndex = 1; //请求数据页面
 var totalPageCount; //总页码
 var personalUTID;
-mui.init();
-mui.plusReady(function() {
-	events.preload('homework-commented.html',300);
-	getHomeworkRecord();
-	window.addEventListener('changeInfo', function() {
-		events.clearChild(document.getElementById('list-container'));
-		pageIndex = 1;
-		getHomeworkRecord();
-	});
-	mui('.mui-table-view').on('tap','.mui-table-view-cell',function(){
-		events.fireToPage('homework-commented.html','commentedInfo',this.commentdInfo);
-	})
 	events.initRefresh('list-container',function(){
 		pageIndex=1;
 		getHomeworkRecord();
@@ -26,6 +14,18 @@ mui.plusReady(function() {
 			getHomeworkRecord();
 		}
 	})
+mui.plusReady(function() {
+	events.preload('homework-commented.html',300);
+	getHomeworkRecord();
+	window.addEventListener('changeInfo', function() {
+		events.clearChild(document.getElementById('list-container'));
+		pageIndex = 1;
+		getHomeworkRecord();
+	});
+	mui('.mui-table-view').on('tap','.mui-table-view-cell',function(){
+		events.fireToPageWithData('homework-commented.html','workDetail',this.commentdInfo);
+	})
+
 })
 var getHomeworkRecord = function() {
 	personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
@@ -58,7 +58,7 @@ var createList = function(listContainer, record) {
 		homework.personalUTID=personalUTID;
 		var li0 = document.createElement('li');
 		li0.commentedInfo=homework;
-		li0.className = 'mui-table-view-cell';
+		li0.className = 'mui-table-view-cell '+getBackGround(homework);
 		li0.innerHTML = createHomeworkInner(homework);
 		listContainer.appendChild(li0);
 	})
@@ -72,7 +72,7 @@ var createList = function(listContainer, record) {
 	})
 }
 var createHomeworkInner = function(homework) {
-	return '<a><div class="stuHomework-header ' + getBackGround(homework) + '"><span class="mui-icon iconfont subject-icon ' +
+	return '<a><div class="stuHomework-header"><span class="mui-icon iconfont subject-icon ' +
 		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words"><h5 class="header-title">' +
 		homework.HomeworkTitle + '</h5><p class="header-content">' + homework.Contents + '</p></div></div>' +
 		'<div class="stuHomework-bottom"></div></a>';

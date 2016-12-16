@@ -45,6 +45,7 @@ mui.plusReady(function() {
 			role = e.detail.data.role;
 			//老师
 			if(role == 2) {
+				mui("#popover").popover('hide');
 				//显示发布作业按钮
 				publish.style.display = 'block';
 			} else {
@@ -184,6 +185,10 @@ var setListener = function() {
 			})
 			//学生作业在线提交点击事件
 		mui('.mui-table-view').on('tap', '.submitOnline', function() {
+				events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+			})
+			//学生作业在线提交点击事件
+		mui('.mui-table-view').on('tap', '.noSubmit', function() {
 				events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 			})
 			//学生作业已提交点击事件
@@ -370,7 +375,7 @@ var getBackGround = function(homework) {
 			if(homework.SubmitOnline) {
 				backClassName = 'submitOnline';
 			} else {
-
+				backClassName='noSubmit';
 			}
 		}
 	}

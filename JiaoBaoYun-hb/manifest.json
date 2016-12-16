@@ -1022,7 +1022,8 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"css/utils/common.css",
-					"html/homework/workstu-errSub.html"
+					"html/homework/workstu-errSub.html",
+					"js/utils/events.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1034,7 +1035,8 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"html/homework/homeworkRecord-sub.html",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"css/homework/subjects-icon.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -1056,7 +1058,8 @@
 					"image/homework/english.png",
 					"image/homework/history.png",
 					"image/homework/yuwen.png",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2103,7 +2106,8 @@
 					"css/quan/class_space.css",
 					"fonts/mui.ttf",
 					"js/utils/files.js",
-					"js/utils/camera.js"
+					"js/utils/camera.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2123,7 +2127,16 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/myStorage/myStorage.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"fonts/iconfont.ttf",
+					"css/homework/homework-record.css",
+					"js/mui.min.js",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"css/homework/subjects-icon.css",
+					"css/utils/common.css",
+					"image/homework/submitted.png",
+					"image/homework/need-submit.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -2133,7 +2146,8 @@
 					"js/homework/homework-commented.js",
 					"js/mui.min.js",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0
