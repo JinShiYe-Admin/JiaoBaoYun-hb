@@ -910,7 +910,8 @@
 					"css/utils/common.css",
 					"image/homework/need-submit.png",
 					"image/homework/submitted.png",
-					"css/homework/subjects-icon.css"
+					"css/homework/subjects-icon.css",
+					"image/homework/no-comment.png"
 				],
 				"refer": [
 					"html/homework/workdetail-tea.html",
@@ -2216,7 +2217,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"image/homework/math.png"
 				],
 				"refer": [],
 				"priority": 0

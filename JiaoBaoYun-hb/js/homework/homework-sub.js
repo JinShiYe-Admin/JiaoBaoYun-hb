@@ -199,6 +199,10 @@ var setListener = function() {
 		mui('.mui-table-view').on('tap', '.isCommentedBG', function() {
 				events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 			})
+			//学生作业在未评论临时作业点击事件
+		mui('.mui-table-view').on('tap', '.noCommentedBG', function() {
+				events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+			})
 			//发布作业界面
 		publish.addEventListener('tap', function() {
 			events.fireToPageWithData('homework-publish.html', 'postClasses', teacherClasses);
@@ -361,6 +365,15 @@ var createStuHomeworkInner = function(homework) {
 		homework.HomeworkTitle + '</h5><p class="header-content">' + homework.Contents + '</p></div></div>' +
 		'<div class="stuHomework-bottom"></div></a>';
 }
+var getResultBackground=function(answerResult){
+	var backClassName;
+	if(answerResult.IsCommented){
+		backClassName = 'isCommentedBG'
+	}else{
+		backClassName='noCommentedBG'
+	}
+	return backClassName;
+}
 var getBackGround = function(homework) {
 	var backClassName = ''
 		//已评论
@@ -383,7 +396,12 @@ var getBackGround = function(homework) {
 	return backClassName;
 }
 var createStuAnswerResultInner = function(answerResult) {
-
+	return '<a><div class="answerResult-header">' + getStuAnswerImges(answerResult) +
+		'</div><p class="answerResult-bottom">上传时间:' + answerResult.UploadTime + '</p><p>上传目标老师：'+answerResult.Teachername+'</p></a>';
+}
+var getStuAnswerImges=function(answerResult){
+	
+	return '<img class="answerResult-pic" src="' + storageKeyName.MAINHOMEWORKURL +answerResult.ThumbUrl + '"/>';
 }
 var getHomeworkIcon = function(subject) {
 		var subjectIcon = '';
@@ -442,11 +460,18 @@ var setHomeworkData = function() {
 						list.appendChild(li);
 					})
 				}
-				if(DateHM.AnswerResultIds && DateHM.AnswerResultIds.ThumbUrls.length > 0) {
-					var li = document.createElement('li');
-					li.className = 'mui-table-view-cell stuAnswer';
-					li.innerHTML = createStuAnswerResultInner(DateHM.AnswerResultIds);
-					list.appendChild(li);
+				if(DateHM.AnswerResults && DateHM.AnswerResults.length > 0) {
+					DateHM.AnswerResults.forEach(function(answerResult){
+						if(answerResult.ThumbUrl!=null){
+							answerResult.Date=DateHM.Date;
+							var li = document.createElement('li');
+							li.className = 'mui-table-view-cell stuAnswer '+getResultBackground(answerResult);
+							li.innerHTML = createStuAnswerResultInner(answerResult);
+							list.appendChild(li);
+						}
+						
+					})
+					
 				}
 			})
 		}
