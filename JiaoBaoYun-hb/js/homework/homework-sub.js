@@ -252,7 +252,7 @@ var requireHomeWork = function(classModel, callback) {
 		if(role == 2) {
 			postDataPro_GetHomeworkList(comData, wd, function(data) {
 				wd.close();
-				console.log('作业主界面获取的作业列表：' + JSON.stringify(data));
+				console.log('老师、作业主界面获取的作业列表：' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					setHashData(comData, data);
 					totalPage = data.RspData.pageCount;
@@ -264,7 +264,7 @@ var requireHomeWork = function(classModel, callback) {
 		} else {
 			postDataPro_GetHomeworkListStu(comData, wd, function(data) {
 				wd.close();
-				console.log('作业主界面获取的作业列表：' + JSON.stringify(data));
+				console.log('学生、作业主界面获取的作业列表：' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					setHashData(comData, data);
 					totalPage = data.RspData.pageCount;
