@@ -943,7 +943,9 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/utils/switch-mine.js",
+					null
 				],
 				"refer": [
 					"html/homework/homework-publish.html",
