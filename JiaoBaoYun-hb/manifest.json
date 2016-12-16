@@ -1063,7 +1063,9 @@
 					"image/utils/default_personalimage.png",
 					"js/libs/crypto-js/crypto-js.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/homework/homework-comment.html"
+				],
 				"priority": 0
 			},
 			"html/homework/publish-answer.html": {
@@ -2149,7 +2151,8 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"image/homework/math.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -2182,6 +2185,14 @@
 			"html/homework/workstu-errSub.html": {
 				"resources": [
 					"js/homework/homework-err.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/homework/homework-comment.html": {
+				"resources": [
+					"css/homework/homework-commit.css",
+					"js/homework/homework-comment.js"
 				],
 				"refer": [],
 				"priority": 0

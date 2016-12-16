@@ -34,8 +34,10 @@ mui.plusReady(function() {
 		if(event.detail.isActive) {
 			console.log("你启动了开关");
 			role=30;
+			btn_more.style.display='block';
 		} else {
 			role=2;
+			btn_more.style.display='none';
 			console.log("你关闭了开关");
 		}
 		events.fireToPageNone('homework-tea-sub.html', 'roleChanged', role)
@@ -51,6 +53,9 @@ var sendMsgToSub = function() {
 }
 var setChoices = function(title, roles, btn_m) {
 	if(teacherClasses.length > 0 && studentClasses.length > 0) {
+		if(roles.classList.contains("mui-active")){
+			mui('#workPage-roles').switch().toggle();
+		}
 		title.style.display = 'none';
 		roles.style.display = 'inline-block';
 		btn_m.style.display = 'none';
