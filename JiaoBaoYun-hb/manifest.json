@@ -763,7 +763,8 @@
 					"html/cloud/app_keeprecord.html",
 					"html/cloud/storage_main.html",
 					"html/cloud/storage_upload.html",
-					"html/cloud/app_notes_main.html"
+					"html/cloud/app_notes_main.html",
+					"html/cloud/record_student_main.html"
 				],
 				"priority": 0
 			},
@@ -1061,7 +1062,16 @@
 					"image/homework/history.png",
 					"image/homework/yuwen.png",
 					"image/utils/default_personalimage.png",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
 					"html/homework/homework-comment.html"
@@ -2154,7 +2164,8 @@
 					"css/utils/common.css",
 					"image/homework/math.png",
 					"image/homework/history.png",
-					"image/homework/english.png"
+					"image/homework/english.png",
+					"image/homework/yuwen.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -2195,6 +2206,20 @@
 				"resources": [
 					"css/homework/homework-commit.css",
 					"js/homework/homework-comment.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/cloud/record_student_main.html": {
+				"resources": [
+					"html/cloud/record_student_sub.html"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/cloud/record_student_sub.html": {
+				"resources": [
+					"js/quan/studentdynamic.js"
 				],
 				"refer": [],
 				"priority": 0

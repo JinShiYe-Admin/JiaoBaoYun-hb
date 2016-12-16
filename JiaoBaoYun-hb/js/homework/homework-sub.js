@@ -31,8 +31,8 @@ mui.plusReady(function() {
 		//错题本按钮监听事件
 		events.addTap('err', function() {
 				events.openNewWindow('workstu-err.html')
-		})
-		//作业记录按钮监听事件
+			})
+			//作业记录按钮监听事件
 		events.addTap('record', function() {
 			events.openNewWindow('homework-record.html')
 		})
@@ -90,7 +90,7 @@ mui.plusReady(function() {
 				publish.style.display = 'none';
 				selectGId = studentClasses[0].gid;
 				requireHomeWork(studentClasses[0], setData);
-				
+
 			}
 
 		})
@@ -317,13 +317,11 @@ var setPublishedData = function() {
 						list.appendChild(li);
 					})
 				}
-				if(DateHM.AnswerResultIds && DateHM.AnswerResultIds.length > 0) {
-					DateHM.AnswerResultIds.forEach(function(answerResult, i) {
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell publishedAnswer';
-						li.innerHTML = createAnswerResultInner(answerResult);
-						list.appendChild(li);
-					})
+				if(DateHM.AnswerResultIds && DateHM.AnswerResultIds.ThumbUrls.length > 0) {
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell publishedAnswer';
+					li.innerHTML = createAnswerResultInner(DateHM.AnswerResultIds);
+					list.appendChild(li);
 				}
 			})
 		}
@@ -350,7 +348,7 @@ var createAnswerResultInner = function(answerResult) {
 var getAnswerImgs = function(thumbUrls) {
 	var imgsInner = '';
 	thumbUrls.forEach(function(thumbUrl) {
-		imgsInner += '<img class="answerResult-pic" src="' + thumbUrl + '"/>';
+		imgsInner += '<img class="answerResult-pic" src="' + storageKeyName.MAINHOMEWORKURL + thumbUrl + '"/>';
 	})
 	return imgsInner;
 }
@@ -375,7 +373,7 @@ var getBackGround = function(homework) {
 			if(homework.SubmitOnline) {
 				backClassName = 'submitOnline';
 			} else {
-				backClassName='noSubmit';
+				backClassName = 'noSubmit';
 			}
 		}
 	}
@@ -436,18 +434,16 @@ var setHomeworkData = function() {
 						var li = document.createElement('li');
 						homework.Date = DateHM.Date;
 						li.homeworkInfo = homework;
-						li.className = 'mui-table-view-cell stuHomework '+getBackGround(homework);
+						li.className = 'mui-table-view-cell stuHomework ' + getBackGround(homework);
 						li.innerHTML = createStuHomeworkInner(homework);
 						list.appendChild(li);
 					})
 				}
-				if(DateHM.AnswerResultIds && DateHM.AnswerResultIds.length > 0) {
-					DateHM.AnswerResultIds.forEach(function(answerResult, i) {
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell stuAnswer';
-						li.innerHTML = createStuAnswerResultInner(answerResult);
-						list.appendChild(li);
-					})
+				if(DateHM.AnswerResultIds && DateHM.AnswerResultIds.ThumbUrls.length > 0) {
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell stuAnswer';
+					li.innerHTML = createStuAnswerResultInner(DateHM.AnswerResultIds);
+					list.appendChild(li);
 				}
 			})
 		}
