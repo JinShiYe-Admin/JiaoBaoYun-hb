@@ -30,7 +30,24 @@
 }
 .subject-icon{
 	display: inline-block;
+	float: left;
 	padding: 1rem;
 	font-size: 4rem;
 	width: 20%;
+}
+.isCommentedBG{
+	background-image: url(../../image/homework/commented.gif);
+}
+.isSubmitted{
+	background-image: url(../../image/homework/submitted.png);
+}
+.submitOnline{
+	background-image: url(../../image/homework/need-submit.png);
+}
+.mui-table-view-cell{
+	background-repeat: no-repeat;
+	background-position: right;
+}
+.header-words{
+	width: 80%;
 }

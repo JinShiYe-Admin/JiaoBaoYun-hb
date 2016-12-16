@@ -1496,7 +1496,8 @@
 			"image/homework/english.png",
 			"image/homework/history.png",
 			"image/homework/yuwen.png",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/cloud/storage_main_choose.html": {
@@ -1584,7 +1585,8 @@
 			"css/quan/class_space.css",
 			"fonts/mui.ttf",
 			"js/utils/files.js",
-			"js/utils/camera.js"
+			"js/utils/camera.js",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/homework/homeworkRecord-sub.html": {
@@ -1602,7 +1604,16 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/myStorage/myStorage.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"fonts/iconfont.ttf",
+			"css/homework/homework-record.css",
+			"js/mui.min.js",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"css/homework/subjects-icon.css",
+			"css/utils/common.css",
+			"image/homework/submitted.png",
+			"image/homework/need-submit.png"
 		]
 	},
 	"html/homework/homework-record.html": {
@@ -1612,7 +1623,8 @@
 			"fonts/mui.ttf",
 			"js/utils/events.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"css/homework/subjects-icon.css"
 		],
 		"refer": [
 			"html/homework/homeworkRecord-sub.html"
@@ -1623,7 +1635,8 @@
 			"js/homework/homework-commented.js",
 			"js/mui.min.js",
 			"fonts/mui.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/homework/workdetailTea-temSub.html": {
@@ -1657,7 +1670,11 @@
 	"html/homework/workstu-err.html": {
 		"resources": [
 			"fonts/mui.ttf",
-			"html/homework/workstu-errSub.html"
+			"html/homework/workstu-errSub.html",
+			"js/mui.min.js",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/homework/workstu-errSub.html"

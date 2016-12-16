@@ -45,6 +45,7 @@ mui.plusReady(function() {
 			role = e.detail.data.role;
 			//老师
 			if(role == 2) {
+				mui("#popover").popover('hide');
 				//显示发布作业按钮
 				publish.style.display = 'block';
 			} else {
