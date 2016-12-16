@@ -319,6 +319,8 @@ var setPublishedData = function() {
 				}
 				if(DateHM.AnswerResultIds && DateHM.AnswerResultIds.ThumbUrls.length > 0) {
 					var li = document.createElement('li');
+					DateHM.AnswerResultIds.Date=DateHM.Date;
+					li.homeworkInfo=DateHM.AnswerResultIds;
 					li.className = 'mui-table-view-cell publishedAnswer';
 					li.innerHTML = createAnswerResultInner(DateHM.AnswerResultIds);
 					list.appendChild(li);
