@@ -424,7 +424,8 @@
 			"css/utils/common.css",
 			"image/homework/need-submit.png",
 			"image/homework/submitted.png",
-			"css/homework/subjects-icon.css"
+			"css/homework/subjects-icon.css",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/homework/homework-publish.html",
@@ -1600,7 +1601,21 @@
 			"fonts/mui.ttf",
 			"js/utils/files.js",
 			"js/utils/camera.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/publicHomeworkProtocol.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	},
 	"html/homework/homeworkRecord-sub.html": {
@@ -1654,7 +1669,19 @@
 			"image/homework/math.png",
 			"image/homework/history.png",
 			"image/homework/english.png",
-			"image/homework/yuwen.png"
+			"image/homework/yuwen.png",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/myStorage/myStorage.js"
 		]
 	},
 	"html/homework/workdetailTea-temSub.html": {
