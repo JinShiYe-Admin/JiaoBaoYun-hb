@@ -1641,7 +1641,9 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"image/homework/math.png"
+			"image/homework/math.png",
+			"image/homework/history.png",
+			"image/homework/english.png"
 		]
 	},
 	"html/homework/workdetailTea-temSub.html": {
