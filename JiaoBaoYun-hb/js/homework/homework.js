@@ -34,8 +34,10 @@ mui.plusReady(function() {
 		if(event.detail.isActive) {
 			console.log("你启动了开关");
 			role=30;
+			btn_more.style.display='block';
 		} else {
 			role=2;
+			btn_more.style.display='none';
 			console.log("你关闭了开关");
 		}
 		events.fireToPageNone('homework-tea-sub.html', 'roleChanged', role)
