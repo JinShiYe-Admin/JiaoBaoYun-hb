@@ -23,7 +23,7 @@ mui.plusReady(function() {
 		getHomeworkRecord();
 	});
 	mui('.mui-table-view').on('tap','.mui-table-view-cell',function(){
-		events.fireToPage('homework-commented.html','workDetail',this.commentdInfo);
+		events.fireToPageWithData('homework-commented.html','workDetail',this.commentdInfo);
 	})
 
 })

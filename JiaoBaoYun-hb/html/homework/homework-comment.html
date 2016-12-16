@@ -18,28 +18,20 @@
 		</header>
 		<div class="mui-content">
 			<!--作业详情区-->
-		    <div class="homework-container" style="min-height: 300px;">
+		    <div class="homework-container">
 		    	
 		    </div>
 		    <!--评论区-->
 		    <div class="comment-container">
 	    		<h4>作业评语</h4>
-	    		<textarea rows="5" style="border: solid thin lightgray;"></textarea>
+	    		<textarea class='comment-area' rows="5" placeholder="请输入评语"></textarea>
 	    		<button id="submit" type="submit" class="mui-btn mui-btn-green btn-submit">提交评论</button>
 		    </div>
 		    
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
-		<script type="text/javascript">
-			mui.init()
-			//提交评论按钮
-			events.addTap('submit',function(){
-				//上传服务器数据
-				//back
-				mui.back();
-			})
-		</script>
+		<script src="../../js/homework/homework-comment.js"></script>
 	</body>
 
 </html>

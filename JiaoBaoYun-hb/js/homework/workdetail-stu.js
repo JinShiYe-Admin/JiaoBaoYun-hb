@@ -5,6 +5,11 @@ mui.plusReady(function() {
 	events.preload('doHomework-stu.html',200);
 	window.addEventListener('workDetail', function(e) {
 		homeworkInfo= e.detail.data;
+		if(homeworkInfo.SubmitOnline){
+			document.getElementById('btn-startWork').style.display='inline-block';
+		}else{
+			document.getElementById('btn-startWork').style.display='none'
+		}
 		console.log('学生作业详情获取的数据：' + JSON.stringify(homeworkInfo));
 		requestTeaInfo(homeworkInfo.TeacherId,homeworkInfo);
 	})
