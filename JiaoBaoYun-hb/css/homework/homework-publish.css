@@ -119,6 +119,21 @@
 .icon-tingzhi{
 	font-size: 4rem;
 }
-.select-classes{
+/*.select-classes{
 	padding: 1rem;
+}*/
+.class-container{
+	border: solid thin lightgray;
+	margin: 0.5rem 0.5rem;
+	padding: 0.2rem;
+	display: inline-block;
+}
+.receive-container{
+	padding: 1rem;
+}
+.input-erea{
+	border: solid thin lightgray;
+}
+textarea{
+	min-height: 10rem;
 }

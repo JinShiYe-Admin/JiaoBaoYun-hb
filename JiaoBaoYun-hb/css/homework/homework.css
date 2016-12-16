@@ -1,6 +1,10 @@
+header{
+	text-align: center;
+}
 header .icon-xiangji:before{
 	margin-right: .5rem;
 }
+
 /**
  * 弹出菜单样式
  */
@@ -40,16 +44,77 @@ header .icon-xiangji:before{
 	 display: inline-block;
 	 padding-left: 1rem;
 }
-.mui-table-view-cell{
-	background-repeat: no-repeat;
-	background-position: right;
+.title{
+	border: solid thick white 2rem;
 }
-.isCommentedBG{
-	background-image: url(../../image/homework/commented.gif);
+.switch-mine {
+	margin-top: 7px;
+	position: relative;
+	display: inline-block;
+	width: 15rem;
+	height: 30px;
+	-webkit-transition-timing-function: ease-in-out;
+	transition-timing-function: ease-in-out;
+	-webkit-transition-duration: .2s;
+	transition-duration: .2s;
+	-webkit-transition-property: background-color, border;
+	transition-property: background-color, border;
+	border: 2px solid #ddd;
+	border-radius: 20px;
+	/*background-color: #fff;*/
+	background-clip: padding-box
 }
-.isSubmitted{
-	background-image: url(../../image/homework/submitted.png);
+.switch-handle-mine {
+	position: absolute;
+	z-index: 1;
+	margin: -2px;
+	padding-top: 5px;
+	width: 8rem;
+	height: 30px;
+	-webkit-transition: .2s ease-in-out;
+	transition: .2s ease-in-out;
+	-webkit-transition-property: -webkit-transform, width, left;
+	transition-property: transform, width, left;
+	border-radius: 16px;
+	background-color: #fff;
+	background-clip: padding-box;
 }
-.submitOnline{
-	background-image: url(../../image/homework/need-submit.png);
+.switch-mine:before {
+	font-size: 1.2rem;
+	position: absolute;
+	top: 3px;
+	right: 1rem;
+	content: '学生作业';
+	text-transform: uppercase;
+	/*color: #999*/
 }
+.switch-handle-mine:before{
+	content: '我发布的';
+	font-size: 1.2rem;
+}
+.switch-mine.mui-active .switch-handle-mine:before{
+	font-size: 1.2rem;
+	content: '学生作业';
+	margin-right: -2px;
+	/*color: #fff*/
+}
+.switch-mine.mui-active:before {
+	right: auto;
+	left: 1rem;
+	content: '我发布的';
+	/*color: #fff*/
+}
+.switch-mine input[type=checkbox] {
+	display: none
+}
+.answerResult-pic{
+	padding: 1%;
+	width: 20%;
+}
+.temporary-more{
+	padding-left: 10%;
+	vertical-align: 50%;
+	font-size: 4rem;
+	color: darkgray;
+}
+

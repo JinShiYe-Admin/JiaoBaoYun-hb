@@ -101,7 +101,8 @@
 			"html/cloud/app_keeprecord.html",
 			"html/cloud/storage_main.html",
 			"html/cloud/storage_upload.html",
-			"html/cloud/app_notes_main.html"
+			"html/cloud/app_notes_main.html",
+			"html/cloud/record_student_main.html"
 		]
 	},
 	"html/quan/tab-zone.html": {
@@ -423,7 +424,8 @@
 			"css/utils/common.css",
 			"image/homework/need-submit.png",
 			"image/homework/submitted.png",
-			"css/homework/subjects-icon.css"
+			"css/homework/subjects-icon.css",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/homework/homework-publish.html",
@@ -491,7 +493,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/utils/switch-mine.js"
 		],
 		"refer": [
 			"html/homework/homework-tea-sub.html",
@@ -1496,7 +1499,20 @@
 			"image/homework/english.png",
 			"image/homework/history.png",
 			"image/homework/yuwen.png",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		],
+		"refer": [
+			"html/homework/homework-comment.html"
 		]
 	},
 	"html/cloud/storage_main_choose.html": {
@@ -1584,7 +1600,22 @@
 			"css/quan/class_space.css",
 			"fonts/mui.ttf",
 			"js/utils/files.js",
-			"js/utils/camera.js"
+			"js/utils/camera.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/publicHomeworkProtocol.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	},
 	"html/homework/homeworkRecord-sub.html": {
@@ -1602,7 +1633,16 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/myStorage/myStorage.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"fonts/iconfont.ttf",
+			"css/homework/homework-record.css",
+			"js/mui.min.js",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"css/homework/subjects-icon.css",
+			"css/utils/common.css",
+			"image/homework/submitted.png",
+			"image/homework/need-submit.png"
 		]
 	},
 	"html/homework/homework-record.html": {
@@ -1612,7 +1652,8 @@
 			"fonts/mui.ttf",
 			"js/utils/events.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"css/homework/subjects-icon.css"
 		],
 		"refer": [
 			"html/homework/homeworkRecord-sub.html"
@@ -1623,7 +1664,24 @@
 			"js/homework/homework-commented.js",
 			"js/mui.min.js",
 			"fonts/mui.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"image/homework/math.png",
+			"image/homework/history.png",
+			"image/homework/english.png",
+			"image/homework/yuwen.png",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/myStorage/myStorage.js"
 		]
 	},
 	"html/homework/workdetailTea-temSub.html": {
@@ -1657,10 +1715,33 @@
 	"html/homework/workstu-err.html": {
 		"resources": [
 			"fonts/mui.ttf",
-			"html/homework/workstu-errSub.html"
+			"html/homework/workstu-errSub.html",
+			"js/mui.min.js",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/homework/workstu-errSub.html"
+		]
+	},
+	"html/homework/homework-comment.html": {
+		"resources": [
+			"css/homework/homework-commit.css",
+			"js/homework/homework-comment.js"
+		]
+	},
+	"html/cloud/record_student_main.html": {
+		"resources": [
+			"html/cloud/record_student_sub.html"
+		],
+		"refer": [
+			"html/cloud/record_student_sub.html"
+		]
+	},
+	"html/cloud/record_student_sub.html": {
+		"resources": [
+			"js/quan/studentdynamic.js"
 		]
 	}
 }

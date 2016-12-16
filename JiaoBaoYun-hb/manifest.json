@@ -763,7 +763,8 @@
 					"html/cloud/app_keeprecord.html",
 					"html/cloud/storage_main.html",
 					"html/cloud/storage_upload.html",
-					"html/cloud/app_notes_main.html"
+					"html/cloud/app_notes_main.html",
+					"html/cloud/record_student_main.html"
 				],
 				"priority": 0
 			},
@@ -943,7 +944,9 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/utils/switch-mine.js",
+					null
 				],
 				"refer": [
 					"html/homework/homework-publish.html",
@@ -1022,7 +1025,8 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"css/utils/common.css",
-					"html/homework/workstu-errSub.html"
+					"html/homework/workstu-errSub.html",
+					"js/utils/events.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1034,7 +1038,8 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"html/homework/homeworkRecord-sub.html",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"css/homework/subjects-icon.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -1056,9 +1061,21 @@
 					"image/homework/english.png",
 					"image/homework/history.png",
 					"image/homework/yuwen.png",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/homework/homework-comment.html"
+				],
 				"priority": 0
 			},
 			"html/homework/publish-answer.html": {
@@ -2103,7 +2120,22 @@
 					"css/quan/class_space.css",
 					"fonts/mui.ttf",
 					"js/utils/files.js",
-					"js/utils/camera.js"
+					"js/utils/camera.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"css/iconfont/iconfont.css",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/publicHomeworkProtocol.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2123,7 +2155,16 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/myStorage/myStorage.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"fonts/iconfont.ttf",
+					"css/homework/homework-record.css",
+					"js/mui.min.js",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"css/homework/subjects-icon.css",
+					"css/utils/common.css",
+					"image/homework/submitted.png",
+					"image/homework/need-submit.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -2133,7 +2174,24 @@
 					"js/homework/homework-commented.js",
 					"js/mui.min.js",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"image/homework/math.png",
+					"image/homework/history.png",
+					"image/homework/english.png",
+					"image/homework/yuwen.png",
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/signHmacSHA1.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/myStorage/myStorage.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2166,6 +2224,28 @@
 			"html/homework/workstu-errSub.html": {
 				"resources": [
 					"js/homework/homework-err.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/homework/homework-comment.html": {
+				"resources": [
+					"css/homework/homework-commit.css",
+					"js/homework/homework-comment.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/cloud/record_student_main.html": {
+				"resources": [
+					"html/cloud/record_student_sub.html"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/cloud/record_student_sub.html": {
+				"resources": [
+					"js/quan/studentdynamic.js"
 				],
 				"refer": [],
 				"priority": 0

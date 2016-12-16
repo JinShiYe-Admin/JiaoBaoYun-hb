@@ -20,10 +20,12 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <div class="mui-title">
-		    	<button id="btn-published" type="button" class="mui-btn mui-btn-green">我发布的</button>
-		    	<button id="btn-homework" type="button" class="mui-btn mui-btn-green mui-btn-outlined">学生作业</button>
+		    <h1 id="workPage-title" class="display-none">我的作业</h1>
+		    <div id="workPage-roles" class="switch-mine ">
+		        <div class="switch-handle-mine"></div>
 		    </div>
+		        
+		  
 		    <!--更多按钮-->
 		   	<a id="more" class="mui-icon  mui-icon-bars mui-pull-right display-none" href="#popover"></a>
 		   	<!--相机按钮-->
@@ -31,10 +33,12 @@
 		</header>
 		
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/switch-mine.js"></script>
 		<!--公共事件方法库-->
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/homework/homework.js"></script>
+		
 	</body>
 
 </html>
