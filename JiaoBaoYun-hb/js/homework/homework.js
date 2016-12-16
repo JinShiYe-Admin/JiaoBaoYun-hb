@@ -51,6 +51,9 @@ var sendMsgToSub = function() {
 }
 var setChoices = function(title, roles, btn_m) {
 	if(teacherClasses.length > 0 && studentClasses.length > 0) {
+		if(roles.classList.contains("mui-active")){
+			mui('#workPage-roles').switch().toggle();
+		}
 		title.style.display = 'none';
 		roles.style.display = 'inline-block';
 		btn_m.style.display = 'none';
