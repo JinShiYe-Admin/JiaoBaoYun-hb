@@ -259,8 +259,8 @@ var requireHomeWork = function(classModel, callback) {
 				wd.close();
 				console.log('作业主界面获取的作业列表：' + JSON.stringify(data));
 				if(data.RspCode == 0) {
+					totalPage = data.RspData.PageCount;
 					setHashData(comData, data);
-					totalPage = data.RspData.pageCount;
 				} else {
 					mui.toast(data.RspTxt);
 				}
@@ -271,8 +271,8 @@ var requireHomeWork = function(classModel, callback) {
 				wd.close();
 				console.log('作业主界面获取的作业列表：' + JSON.stringify(data));
 				if(data.RspCode == 0) {
+					totalPage = data.RspData.PageCount;
 					setHashData(comData, data);
-					totalPage = data.RspData.pageCount;
 				} else {
 					mui.toast(data.RspTxt);
 				}

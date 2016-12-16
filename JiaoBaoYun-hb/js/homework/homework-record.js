@@ -22,9 +22,22 @@ mui.plusReady(function() {
 		pageIndex = 1;
 		getHomeworkRecord();
 	});
-	mui('.mui-table-view').on('tap','.mui-table-view-cell',function(){
-		events.fireToPageWithData('homework-commented.html','workDetail',this.commentdInfo);
-	})
+		//学生作业在线提交点击事件
+		mui('.mui-table-view').on('tap', '.submitOnline', function() {
+				events.fireToPageWithData('workdetail-stu.html', 'workDetail',this.homeworkInfo);
+			})
+			//学生作业在线提交点击事件
+		mui('.mui-table-view').on('tap', '.noSubmit', function() {
+				events.fireToPageWithData('workdetail-stu.html', 'workDetail', this.homeworkInfo);
+			})
+			//学生作业已提交点击事件
+		mui('.mui-table-view').on('tap', '.isSubmitted', function() {
+				events.fireToPageWithData('homework-commented.html', 'workDetail', this.homeworkInfo);
+			})
+			//学生作业在已评论点击事件
+		mui('.mui-table-view').on('tap', '.isCommentedBG', function() {
+				events.fireToPageWithData('homework-commented.html', 'workDetail', this.homeworkInfo);
+			})
 
 })
 var getHomeworkRecord = function() {
@@ -37,6 +50,7 @@ var getHomeworkRecord = function() {
 		wd.close();
 		console.log('作业记录界面获取的作业记录数据:' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
+			totalPageCount=data.RspData.PageCount.
 			setHomeworkRecord(data.RspData.Dates);
 		} else {
 			console.log('没啦');
@@ -57,7 +71,7 @@ var createList = function(listContainer, record) {
 	record.Homeworks.forEach(function(homework, i) {
 		homework.personalUTID=personalUTID;
 		var li0 = document.createElement('li');
-		li0.commentedInfo=homework;
+		li0.homeworkInfo=homework;
 		li0.className = 'mui-table-view-cell '+getBackGround(homework);
 		li0.innerHTML = createHomeworkInner(homework);
 		listContainer.appendChild(li0);
@@ -65,8 +79,8 @@ var createList = function(listContainer, record) {
 	record.AnswerResults.forEach(function(answerResult, i) {
 		answerResult.personalUTID=personalUTID;
 		var li0 = document.createElement('li');
-		li0.className = 'mui-table-view-cell';
-		li0.commentedInfo=answerResult;
+		li0.className = 'mui-table-view-cell '+getBackGround(homework);
+		li0.homeworkInfo=answerResult;
 		li0.innerHTML = createAnswerInner(answerResult);
 		listContainer.appendChild(li0);
 	})
@@ -101,7 +115,7 @@ var getBackGround = function(homework) {
 			if(homework.SubmitOnline) {
 				backClassName = 'submitOnline';
 			} else {
-
+				backClassName='noSubmit';
 			}
 		}
 	}

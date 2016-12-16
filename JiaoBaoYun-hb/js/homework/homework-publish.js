@@ -105,9 +105,9 @@ var setClasses = function() {
 		for(var i in selectClassArray) {
 			if(selectClassArray[i].isSelected) {
 				var p = document.createElement('p');
-				p.className = 'gid' + selectClassArray[i].gid;
+				p.className = 'class-container gid' + selectClassArray[i].gid;
 				//				p.innerText = classes[i].gname;
-				p.innerHTML = selectClassArray[i].gname + '<sup class="mui-badge mui-badge-inverted mui-badge-danger class-del">x</sup>'
+				p.innerHTML = selectClassArray[i].gname + '<span class="iconfont icon-close class-del"></span>'
 				classesContainer.appendChild(p);
 				p.querySelector('.class-del').bindClass = selectClassArray[i];
 			}
