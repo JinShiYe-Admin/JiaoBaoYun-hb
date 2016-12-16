@@ -348,7 +348,6 @@
 										'</div>'
 									
 				homeworkDetailNodes.finishedList.appendChild(li)	;
-				console.log(homeworkDetailNodes.finishedList.outerHTML)
 				}
 				for(var i=0;i<remainArray.length;i++){
 					var disabled;
@@ -408,6 +407,10 @@ function alertStu(alertBtn) {
 	var userIdArr = [];
 	if(alertBtn.id =='alertAll'){
 		for(var i=0;i<remainArray.length;i++){
+			var alertButton = document.getElementById("alert"+i);
+			if(alertButton.hasAttribute('disabled')){
+				continue;
+			}
 			var userId = remainArray[i].utid+'|'+remainArray[i].utid;
 			userIdArr.push(userId);
 		}
@@ -417,9 +420,7 @@ function alertStu(alertBtn) {
 		userIds = remainArray[index].utid+'|'+remainArray[index].utid;
 	}
 	console.log('userIds==='+userIds);
-	
-
-				//所需参数
+					//所需参数
 				var comData = {
 					teacherId: personalUTID, //教师Id
 					userIds:userIds,
@@ -432,12 +433,23 @@ function alertStu(alertBtn) {
 					wd.close();
 					console.log('10.postDataPro_HomeworkAlert:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
-						alertBtn.innerHTML = '已提醒'
+						if(alertBtn.id =='alertAll'){
 						homeworkDetailNodes.alertAllBtn.innerHTML = '一键提醒'
-						alertBtn.disabled = 'disabled';
+						alertBtn.setAttribute('disabled','disabled');
+						allAlertFlag=remainArray.length;
+						}else{
+						alertBtn.innerHTML = '已提醒'
+						alertBtn.setAttribute('disabled','disabled');
 						allAlertFlag++;
+						}
 						if(allAlertFlag == remainArray.length){
 							homeworkDetailNodes.alertAllBtn.disabled = 'disabled';
+							for(var i=0;i<remainArray.length;i++){
+								var alertButton = document.getElementById("alert"+i);
+								alertButton.disabled = 'disabled';
+								alertButton.innerHTML = '已提醒';
+								
+							}
 						}
 
 

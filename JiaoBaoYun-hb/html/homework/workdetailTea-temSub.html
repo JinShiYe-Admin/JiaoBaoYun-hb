@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>Hello MUI</title>
+		<title>老师临时作业详情</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -42,22 +42,18 @@
 			<script type="text/javascript">
 				var homeworkModel = {};
 				var homeworkNodes = {
-					list: document.getElementById('list'),
-					date: document.getElementById('date'),
-					headImg: document.getElementById('img'),
-					name: document.getElementById('name'),
-					isCommented: document.getElementById('isCommented')
+					list: document.getElementById('list'), //临时作业列表
+					date: document.getElementById('date'), //日期
 				}
 				mui.plusReady(function() {
 					mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-						events.fireToPageNone('', '', this.homeworkInfo);
-						plus.webview.getWebviewById("").show();
+						events.fireToPageNone('homework-comment.html', 'workInfo', this.homeworkInfo);
+						plus.webview.getWebviewById("homework-comment.html").show();
 					})
 					window.addEventListener('workDetail', function(e) {
 						resetData();
 						console.log('作业主界面传送的值：' + JSON.stringify(e.detail.data));
 						homeworkModel = e.detail.data;
-						console.log('homeworkModel=' + JSON.stringify(homeworkModel));
 						var tempDate = homeworkModel.Date.replace('/', '-');
 						tempDate = tempDate.replace('/', '-');
 						var date = tempDate.substring(0, tempDate.indexOf(' '));
@@ -75,15 +71,12 @@
 					})
 
 				});
-mui('.mui-table-view').on('tap', function() {
-    events.fireToPageNone('homework-comment.html', 'workInfo', homeworkDetailModel);
-				plus.webview.getWebviewById("homework-comment.html").show();
-});
 				var resetData = function() {
 						homeworkNodes.list.innerHTML = '';
+						personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					}
 					//个人id
-				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				var personalUTID;
 				//答案列表数组
 				var answerListArray = [];
 				//群id
