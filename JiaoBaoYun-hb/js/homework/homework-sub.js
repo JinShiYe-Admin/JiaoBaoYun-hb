@@ -175,12 +175,12 @@ var setListener = function() {
 		var publish = document.getElementById('iconPublish');
 		//常规作业点击事件
 		mui('.mui-table-view').on('tap', '.publishedHomework', function() {
-				events.fireToPageNone('workdetail-tea-sub.html', 'workDetail', this.homeworkInfo);
+				events.fireToPageNone('workdetail-tea-sub.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 				plus.webview.getWebviewById("workdetail-tea.html").show();
 			})
 			//临时作业点击事件
 		mui('.mui-table-view').on('tap', '.publishedAnswer', function() {
-				events.fireToPageNone('workdetailTea-temSub.html', 'workDetail', this.homeworkInfo);
+				events.fireToPageNone('workdetailTea-temSub.html', 'workDetail',jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 				plus.webview.getWebviewById("workdetailTea-temporary.html").show();
 			})
 			//学生作业在线提交点击事件
@@ -352,6 +352,7 @@ var getAnswerImgs = function(thumbUrls) {
 	thumbUrls.forEach(function(thumbUrl) {
 		imgsInner += '<img class="answerResult-pic" src="' + storageKeyName.MAINHOMEWORKURL + thumbUrl + '"/>';
 	})
+	imgsInner +='<span class="mui-icon mui-icon-arrowright temporary-more"></span>'
 	return imgsInner;
 }
 var createStuHomeworkInner = function(homework) {

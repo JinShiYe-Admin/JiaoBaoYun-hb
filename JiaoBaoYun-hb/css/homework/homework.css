@@ -107,3 +107,14 @@ header .icon-xiangji:before{
 .switch-mine input[type=checkbox] {
 	display: none
 }
+.answerResult-pic{
+	padding: 1%;
+	width: 20%;
+}
+.temporary-more{
+	padding-left: 10%;
+	vertical-align: 50%;
+	font-size: 4rem;
+	color: darkgray;
+}
+
