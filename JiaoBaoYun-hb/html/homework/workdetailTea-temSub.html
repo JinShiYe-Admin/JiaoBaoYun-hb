@@ -75,8 +75,9 @@
 					})
 
 				});
-				mui('.mui-table-view').on('tap', function() {
-    events.jumpPage(this,'homework-comment.html')
+mui('.mui-table-view').on('tap', function() {
+    events.fireToPageNone('homework-comment.html', 'workInfo', homeworkDetailModel);
+				plus.webview.getWebviewById("homework-comment.html").show();
 });
 				var resetData = function() {
 						homeworkNodes.list.innerHTML = '';
