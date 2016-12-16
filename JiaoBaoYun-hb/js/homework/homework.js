@@ -1,6 +1,6 @@
 var teacherClasses = []; //老师身份关联班级
 var studentClasses = []; //学生身份关联班级
-var role = 2;
+var role = 2;//老师角色 30为家长+学生角色
 //加载子页面
 events.initSubPage('homework-tea-sub.html');
 mui.plusReady(function() {
@@ -30,20 +30,20 @@ mui.plusReady(function() {
 			teacherClasses: teacherClasses
 		})
 	})
+	//角色选择的监听
 	roles.addEventListener("toggle", function(event) {
 		if(event.detail.isActive) {
-			console.log("你启动了开关");
 			role=30;
 			btn_more.style.display='block';
 		} else {
 			role=2;
 			btn_more.style.display='none';
-			console.log("你关闭了开关");
 		}
 		events.fireToPageNone('homework-tea-sub.html', 'roleChanged', role)
 	})
 
 })
+//向子页面传递数据
 var sendMsgToSub = function() {
 	events.fireToPageNone("homework-tea-sub.html", 'workContent', {
 		role: role,
@@ -51,6 +51,12 @@ var sendMsgToSub = function() {
 		teacherClasses: teacherClasses
 	});
 }
+/**
+ * 设置标题栏
+ * @param {Object} title
+ * @param {Object} roles
+ * @param {Object} btn_m
+ */
 var setChoices = function(title, roles, btn_m) {
 	if(teacherClasses.length > 0 && studentClasses.length > 0) {
 		if(roles.classList.contains("mui-active")){
@@ -74,5 +80,6 @@ var setChoices = function(title, roles, btn_m) {
 		btn_m.style.display = 'block'
 		role = 30;
 	}
+	//向子页面传递数据
 	sendMsgToSub();
 }
