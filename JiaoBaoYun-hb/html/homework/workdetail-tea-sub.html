@@ -26,7 +26,7 @@
 
 	<body>
 		<nav id="alertBar" class="mui-bar mui-bar-tab" style="visibility: hidden;">
-			<div align="center" >
+			<div align="center">
 				<button id="alertAll" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 200px;">一键提醒</button>
 			</div>
 		</nav>
@@ -39,6 +39,7 @@
 							<h4 id="homeworkTitle"></h6>
 						<p id="publishDate" class='mui-ellipsis'>发布时间：</p>
 					</div>
+					
 					<div class="mui-media-body">
 						<font id="homeWorkContent"></font> 
 					</div>
@@ -90,6 +91,7 @@
 		<script type="text/javascript">
 		
 			mui.init();
+			var allAlertFlag=0;//标志是否全部提醒
 			var	homeworkDetailNodes = {
 				img:document.getElementById("img"),//作业类型图像
 				title:document.getElementById("homeworkTitle"),//作业类型标题
@@ -127,7 +129,7 @@
 //				"Upload": 0,
 //				'classId': 1 //人为赋值
 			};
-			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+			var personalUTID;
 			//作业详情model
 			var homeworkDetailModel;
 			//已完成学生列表
@@ -136,6 +138,7 @@
 			var remainArray = [];
 
 			mui.plusReady(function() {
+				events.preload('homework-comment.html', 200);
 				events.addTap('checkDetail', function() {
 					console.log('点击查看详情')
 				})
@@ -148,7 +151,6 @@
 								resetData();
 				console.log('作业主界面传送的值：'+JSON.stringify(e.detail.data));
 				homeworkModel = e.detail.data;
-				console.log('homeworkModel='+JSON.stringify(homeworkModel));
 
 				
 
@@ -162,6 +164,8 @@
 
 			});
 			function resetData(){
+				allAlertFlag=0;
+				personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 				homeworkDetailNodes.unfinishedList.innerHTML = '';
 //				var gallery = mui('#slider');
 //				gallery.slider().gotoItem(0);
@@ -169,6 +173,7 @@
 				remainArray = [];
 				homeworkDetailModel = {};
 				homeworkDetailNodes.alertAllBtn.innerHTML = '一键提醒'
+				homeworkDetailNodes.alertAllBtn.disabled = '';
 
 //				homeworkDetailNodes.segItem1.className = 'mui-control-item mui-active';
 //				homeworkDetailNodes.segItem2.className = 'mui-control-item';
@@ -320,7 +325,6 @@
 				
 			}
 			function refreshStuList(){
-				console.log('学生列表')
 				homeworkDetailNodes.segItem1.innerHTML = '已完成('+uploadArray.length+')';
 				homeworkDetailNodes.segItem2.innerHTML = '未完成('+remainArray.length+')';
 				homeworkDetailNodes.finishedList.innerHTML = '';
@@ -333,28 +337,32 @@
 				}else{
 					IsCommented = '未评';
 				}
+				console.log(IsCommented);
 				var headImg = updateHeadImg(uploadArray[i].uimg,2)
 									var li = document.createElement('li');
-									li.className = 'mui-table-view-cell mui-media'
-				li.innerHTML = '<img  class="mui-media-object mui-pull-left" src="'+headImg +'" />'
+									li.className = 'mui-table-view-cell mui-media isCommented'
+				li.innerHTML = '<img  class="mui-media-object mui-pull-left " src="'+headImg +'" />'+
 										'<div class="mui-media-body">'+
-											uploadArray[i].ugnick+
-											'<button class="mui-media-body" style="float: right;">'+
-												IsCommented+
-											'</button>'+
+											uploadArray[i].ugnick+'<div class="mui-media-body mui-pull-right" ' +
+							'<p id="isCommented'+i+'" style="font-size: 13px;">'+IsCommented+'<span class="mui-icon mui-icon-forward"></span></p></div>' +
 										'</div>'
 									
 				homeworkDetailNodes.finishedList.appendChild(li)	;
+				console.log(homeworkDetailNodes.finishedList.outerHTML)
 				}
-
 				for(var i=0;i<remainArray.length;i++){
-					var alert;
+					var disabled;
+					
 					if(remainArray[i].IsAlertChecked==true){
 							alert = '已查阅('+remainArray[i].AlertCheckTime+')';
+							allAlertFlag++;
 					}else if(remainArray[i].IsAlerted==false){
 						alert = '提醒';
+						disabled = '';
 					}else{
 						alert = '已提醒';
+						disabled = 'disabled';
+						allAlertFlag++;
 					}
 					var headImg = updateHeadImg(remainArray[i].uimg,2)
 									var li = document.createElement('li');
@@ -362,14 +370,17 @@
 				li.innerHTML = '<img  class="mui-media-object mui-pull-left" src="'+headImg +'" />'+
 										'<div class="mui-media-body">'+
 											remainArray[i].ugnick+
-											'<button id="alert'+i+'" class="mui-media-body" style="float: right;" onclick="alertStu(this)">'+
+											'<button id="alert'+i+'" class="mui-media-body" style="float: right;" onclick="alertStu(this)"'+ disabled+'>'+
 												alert+
 											'</button>'+
 										'</div>'
 									;
 				homeworkDetailNodes.unfinishedList.appendChild(li);
 				
-				}	
+				}
+				if(allAlertFlag == remainArray.length){
+					homeworkDetailNodes.alertAllBtn.disabled = 'disabled';
+				}
 			}
 				document.getElementById('slider').addEventListener('slide', function(e) {
 					if (e.detail.slideNumber === 0) {
@@ -378,21 +389,24 @@
 					} else if (e.detail.slideNumber === 1) {
 						console.log('未完成');
 						if(remainArray.length==0){
-							console.log(11111)
 							homeworkDetailNodes.alertBar.style.visibility = 'hidden';
 						}else{
 							homeworkDetailNodes.alertBar.style.visibility = 'visible';
-							console.log(homeworkDetailNodes.alertBar.outerHTML)
 						}
 						
 					}
 				});
-				
-function alertStu(alertBtn){
+
+mui('.mui-table-view').on('tap', '.isCommented', function() {
+    events.fireToPageNone('homework-comment.html', 'workDetail', homeworkDetailModel);
+				plus.webview.getWebviewById("homework-comment.html").show();
+});
+
+function alertStu(alertBtn) {
 	console.log(alertBtn.id);
 	var userIds;
-	var userIdArr=[];
-	if(alertBtn.id=='alertAll'){
+	var userIdArr = [];
+	if(alertBtn.id =='alertAll'){
 		for(var i=0;i<remainArray.length;i++){
 			var userId = remainArray[i].utid+'|'+remainArray[i].utid;
 			userIdArr.push(userId);
@@ -420,6 +434,11 @@ function alertStu(alertBtn){
 					if(data.RspCode == 0) {
 						alertBtn.innerHTML = '已提醒'
 						homeworkDetailNodes.alertAllBtn.innerHTML = '一键提醒'
+						alertBtn.disabled = 'disabled';
+						allAlertFlag++;
+						if(allAlertFlag == remainArray.length){
+							homeworkDetailNodes.alertAllBtn.disabled = 'disabled';
+						}
 
 
 					} else {
