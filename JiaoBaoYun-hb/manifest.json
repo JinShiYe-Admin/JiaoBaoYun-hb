@@ -1431,7 +1431,10 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/myStorage/myStorage.js"
+					"js/libs/myStorage/myStorage.js",
+					"js/storageKeyName.js",
+					"js/cloud/cloud.js",
+					"js/utils/CloudFileUtil.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2192,7 +2195,9 @@
 					"js/utils/signHmacSHA1.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/myStorage/myStorage.js"
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/publicHomeworkProtocol.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2218,7 +2223,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"image/homework/math.png"
+					"image/homework/math.png",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0

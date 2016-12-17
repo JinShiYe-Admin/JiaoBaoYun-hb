@@ -465,7 +465,9 @@ var setHomeworkData = function() {
 					DateHM.AnswerResults.forEach(function(answerResult){
 						if(answerResult.ThumbUrl!=null){
 							answerResult.Date=DateHM.Date;
+							answerResult.workType=0;
 							var li = document.createElement('li');
+							li.homeworkInfo=answerResult;
 							li.className = 'mui-table-view-cell stuAnswer '+getResultBackground(answerResult);
 							li.innerHTML = createStuAnswerResultInner(answerResult);
 							list.appendChild(li);
