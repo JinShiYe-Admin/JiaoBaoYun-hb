@@ -770,7 +770,10 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/libs/myStorage/myStorage.js"
+			"js/libs/myStorage/myStorage.js",
+			"js/storageKeyName.js",
+			"js/cloud/cloud.js",
+			"js/utils/CloudFileUtil.js"
 		],
 		"refer": [
 			"html/cloud/storage_sub.html"
@@ -1682,7 +1685,9 @@
 			"js/utils/signHmacSHA1.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/libs/myStorage/myStorage.js"
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicHomeworkProtocol.js"
 		]
 	},
 	"html/homework/workdetailTea-temSub.html": {
@@ -1706,7 +1711,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"image/homework/math.png"
+			"image/homework/math.png",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/homework/workstu-errSub.html": {
