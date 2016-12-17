@@ -110,6 +110,7 @@ header .icon-xiangji:before{
 .answerResult-pic{
 	padding: 1%;
 	width: 20%;
+	max-height: 100px;
 }
 .temporary-more{
 	padding-left: 10%;

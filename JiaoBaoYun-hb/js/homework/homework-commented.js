@@ -1,9 +1,13 @@
 //学生查看老师作业评价
 mui.init();
 mui.plusReady(function() {
-	window.addEventListener('            ', function(e) {
-		var answerResultId = e.detail.data;
+	events.addTap('modifyHomework',function(){
+		events.fireToPageNone('workdetail-tea-sub.html', 'workDetail', homeworkModel);
+				plus.webview.getWebviewById("doHomework.html").show();
 	})
+//	window.addEventListener('            ', function(e) {
+//		var answerResultId = e.detail.data;
+//	})
 	window.addEventListener('workDetail', function(e) {
 		resetData();
 
