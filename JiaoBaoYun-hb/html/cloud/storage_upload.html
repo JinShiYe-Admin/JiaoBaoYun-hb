@@ -362,12 +362,12 @@
 						//属性：
 						//name: 文件系统的名称
 						//root: 文件系统中的目录对象，用于管理特定的本地目录
-						console.log("请求文件系统成功");
-						console.log("文件系统的名称:" + succesCB.name);
-						console.log("文件系统中的目录对象:" + succesCB.root.fullPath);
+						console.log("请求文件系统" + succesCB.name + "成功");
+						//console.log("文件系统的名称:" + succesCB.name);
+						//console.log("文件系统中的目录对象:" + succesCB.root.fullPath);
 						var LocalURL = succesCB.root.toLocalURL();
 						var URL = succesCB.root.toURL();
-						console.log("root: " + LocalURL + '|' + URL);
+						//console.log("root: " + LocalURL + '|' + URL);
 						//记录document的地址
 						window.myStorage.setItem(window.storageKeyName.DOCUMENTSPATH, LocalURL);
 						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
@@ -437,8 +437,8 @@
 						exclusive: false
 					}, function(succesCB) {
 						console.log("创建或打开子目录" + name + "成功");
-						console.log("文件系统的名称:" + succesCB.name);
-						console.log("文件系统中的目录对象:" + succesCB.fullPath);
+						//console.log("文件系统的名称:" + succesCB.name);
+						//console.log("文件系统中的目录对象:" + succesCB.fullPath);
 						succesCallBack(succesCB);
 					}, function(errorCB) {
 						mui.toast("创建或打开子目录" + name + "失败:" + JSON.stringify(errorCB));
@@ -550,9 +550,10 @@
 					var html2 = '';
 					//文件名
 					var html3 = '';
-					if(data.name[0] == '.') { //隐藏的文件夹或文件
-						//console.log('隐藏的文件夹或文件');
-					} else if(data.isDirectory) { //文件夹
+					//					if(data.name[0] == '.') { //隐藏的文件夹或文件
+					//						//console.log('隐藏的文件夹或文件');
+					//					} else
+					if(data.isDirectory) { //文件夹
 						html1 = '<span class="mui-navigate-right mui-media-object mui-pull-right"></span>';
 						html2 = '<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">';
 						html3 = '<div class="mui-media-body">\

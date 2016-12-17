@@ -38,6 +38,9 @@
 .isCommentedBG{
 	background-image: url(../../image/homework/commented.gif);
 }
+.noCommentedBG{
+	background-image: url(../../image/homework/no-comment.png);
+}
 .isSubmitted{
 	background-image: url(../../image/homework/submitted.png);
 }

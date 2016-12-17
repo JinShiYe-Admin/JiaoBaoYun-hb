@@ -20,6 +20,7 @@
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
+		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<style>
 			.iconfont {
 				line-height: 42px;
@@ -371,7 +372,6 @@
 			 * 点击文件或文件夹的下载
 			 */
 			mui('#all').on('tap', '.icon-download', function(e) {
-				console.log('下载');
 				//拦截点击事件的冒泡
 				if(e && e.stopPropagation) {
 					//因此它支持W3C的stopPropagation()方法
@@ -381,6 +381,25 @@
 					console.log('else');
 					//否则，我们需要使用IE的方式来取消事件冒泡
 					window.event.cancelBubble = true;
+				}
+				var par = this.parentNode; //找到父元素
+				var id = par.getAttribute('id'); //元素id
+				var pid = par.getAttribute('data-pid'); //父ID
+				var fid = par.getAttribute('data-fid'); //文件id
+				var fname = par.getAttribute('data-fname'); //文件或文件夹名字
+				var ftype = par.getAttribute('data-ftype'); //文件类型
+				var fpath = par.getAttribute('data-fpath'); //文件路径
+				console.log('下载' + id + '|' + fid + "|" + fname + '|' + ftype + '|' + fpath);
+				if(ftype == '.file') {
+					mui.toast('下载文件夹');
+				} else {
+					events.fireToPageWithData('storage_transport.html', 'addDownload', {
+						pid: pid, //父ID
+						fid: fid, //文件id
+						fname: fname, //文件或文件夹名字
+						ftype: ftype, //文件类型
+						fpath: fpath //文件路径
+					});
 				}
 			});
 
@@ -401,10 +420,29 @@
 				var fid = par.getAttribute('data-fid'); //文件id
 				var fname = par.getAttribute('data-fname'); //文件或文件夹名字
 				var ftype = par.getAttribute('data-ftype'); //文件类型
-				console.log('删除文件或文件夹' + id + '|' + fid + "|" + fname + '|' + ftype);
+				var fpath = par.getAttribute('data-fpath'); //文件路径,为文件用
+				console.log('删除文件或文件夹' + id + '|' + fid + "|" + fname + '|' + ftype + '|' + fpath);
 				var btnArray = ['否', '是'];
-				mui.confirm('删除，确认？', '删除', btnArray, function(e) {
+				mui.confirm('删除，确认？', '提示', btnArray, function(e) {
 					if(e.index == 1) { //删除
+						if(ftype != '.file') {
+							//var fpathList = [];
+							//fpathList.push(fpath);
+							var pathStr = '["' + fpath + '"]'; //arrayToStr(fpathList);
+							console.log('pathStr:' + pathStr);
+
+							/**
+							 * 七牛批量删除
+							 */
+							CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, pathStr, function(data) {
+									console.log('七牛删除成功:' + JSON.stringify(data));
+								},
+								function(xhr, type, errorThrown) {
+									console.log('七牛删除失败:' + JSON.stringify(type));
+								}
+							);
+						}
+
 						//38.用户云盘文件及文件夹删除
 						//所需参数
 						var comData = {
@@ -415,6 +453,7 @@
 						postDataPro_PostDiFiD(comData, wd, function(data) {
 							console.log('38.postDataPro_PostDiFiD_用户云盘文件及文件夹删除:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) {
+								//界面处理
 								par.parentNode.removeChild(par);
 								mui.toast('删除成功');
 								//数据处理
@@ -474,7 +513,15 @@
 				mui.each(data.top, function(index, item) {
 					additem(item);
 				});
-
+				//---滑动start---
+				mui(".mui-scroll-wrapper").scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false, //是否横向滚动
+					indicators: true, //是否显示滚动条
+					deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+					bounce: true, //是否启用回弹
+				});
+				//---滑动end---
 				document.getElementById("title").innerText = data.title;
 				if(data.fid == '0') {
 					showPid = '0'; //当前显示的文件id
@@ -553,7 +600,7 @@
 						var pathList2 = pathList[pathList.length - 1].split('.');
 						var fileName = pathList2[0];
 						var path = window.storageKeyName.QNFILEIMGEDOMAIN + fileName + '.PNG';
-						console.log('path:' + path);
+						//console.log('path:' + path);
 						if(type != '') {
 							html3 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
 						} else { //七牛能生成缩略图的图片或视频
