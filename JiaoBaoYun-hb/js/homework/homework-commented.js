@@ -14,6 +14,7 @@ mui.plusReady(function() {
 		homeworkModel = e.detail.data;
 		console.log('学生查看作业结果界面：' + JSON.stringify(homeworkModel));
 		requestGetHomeworkResultStu();
+		getAnswerResultStu();
 	})
 });
 
@@ -58,9 +59,10 @@ function requestGetHomeworkResultStu() {
 
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//3.	获取作业结果和评价
-	postDataPro_GetHomeworkResult(comData, wd, function(data) {
+	postDataPro_GetHomeworkResultStu(comData, wd, function(data) {
+		
 		wd.close();
-		console.log('3.postDataPro_GetHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		console.log('3.postDataPro_GetHomeworkResultStu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			homeworkResult = data.RspData;
 			refreshUI();
@@ -68,6 +70,30 @@ function requestGetHomeworkResultStu() {
 
 		}
 	});
+	}
+	//3.获取作业结果和评价；学生
+function getAnswerResultStu() {
+	//所需参数
+	var comData = {
+		studentId: personalUTID, //学生Id
+		classId: homeworkModel.gid, //班级群Id；
+		homeworkId: homeworkModel.answerResultId //作业id；
+	};
+
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//4.	获取临时作业结果和评价：学生
+	postDataPro_GetAnswerResultStu(comData, wd, function(data) {
+		
+		wd.close();
+		console.log('3.postDataPro_GetAnswerResultStu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+			homeworkResult = data.RspData;
+			refreshUI();
+		} else {
+
+		}
+	});
+	}
 
 	function refreshUI() {
 		console.log(JSON.stringify(homeworkDetailNodes))
@@ -116,4 +142,3 @@ function requestGetHomeworkResultStu() {
 		homeworkDetailNodes.commentContent.innerText = Comment;
 
 	}
-}
