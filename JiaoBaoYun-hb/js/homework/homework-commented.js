@@ -71,13 +71,13 @@ function requestGetHomeworkResultStu() {
 		}
 	});
 	}
-	//3.获取作业结果和评价；学生
+	//4.获取临时作业结果和评价；学生
 function getAnswerResultStu() {
 	//所需参数
 	var comData = {
 		studentId: personalUTID, //学生Id
 		classId: homeworkModel.gid, //班级群Id；
-		homeworkId: homeworkModel.answerResultId //作业id；
+		answerResultId: homeworkModel.AnswerResultId //作业id；
 	};
 
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
