@@ -84,16 +84,16 @@
 		</header>
 		<nav class="mui-bar mui-bar-tab" style="background: #383E4E;">
 			<div style="margin: 5px;">
-				<div id="choose" class="mui-pull-left" style="width: 45%;">
+				<div class="mui-pull-left" style="width: 45%;">
 					<div style="color: white;margin-left: 10%;">选择上传的位置</div>
-					<button type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 15px;margin-left: 5%;background: #7F8594;border-color: #7F8594;height: 40px;">
+					<button id="choose" type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 15px;margin-left: 5%;background: #7F8594;border-color: #7F8594;height: 40px;">
 						<img class="mui-pull-left" src="../../image/cloud/A_folder.png"style="width: 20%;height: 20px;" />
 						<div id="yunpath" class="mui-ellipsis mui-pull-right"style="width: 80%;text-align: center;"></div>
 					</button>
 				</div>
-				<div id="upload" class="mui-pull-right" style="width: 45%;">
+				<div class="mui-pull-right" style="width: 45%;">
 					<br />
-					<button type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 15px;margin-left: -5%;background: #636770;border-color: #636770;height: 40px;">上传</button>
+					<button id="upload" type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 15px;margin-left: -5%;background: #636770;border-color: #636770;height: 40px;">上传</button>
 				</div>
 			</div>
 		</nav>
@@ -146,6 +146,14 @@
 				var pid = ''; //文件的上层ID
 				var showFolderId = ''; //当前显示的文件夹id
 				var folderList = []; //目录数组，每打开一个目录，将该目录保存
+				var upFile = null; //记录上传的文件
+				//				var upFile = {
+				//					folderid: '', //所属文件夹id
+				//					fileid: '', //文件元素id
+				//					path: '', //本地路径
+				//					fname: '', //本地文件名
+				//					metadata: '', //文件信息
+				//				}
 
 				createFolder(); //在程序中创建utid的文件夹和对应的上传下载文件夹
 				//---初始化--end---
@@ -212,6 +220,25 @@
 					//					}
 				});
 
+				//上传选择的文件
+				document.getElementById('upload').addEventListener('tap', function() {
+					if(upFile != null) {
+						console.log("upload:" + JSON.stringify(upFile));
+						//跳转到传输列表
+						events.fireToPageWithData('storage_transport.html', 'addUpload', {
+							path: upFile.path, //路径
+							fname: upFile.fname, //文件名
+							metadata: upFile.metadata, //文件信息
+							pid: pid //云盘文件夹父ID
+						});
+						document.getElementById(upFile.fileid).style.background = 'white';
+						upFile = null;
+						changeUpBtnColorToDefault();
+					} else {
+						mui.toast('请选择上传的文件');
+					}
+				})
+
 				//点击顶部文件夹列表
 				mui('#folderlist').on('tap', '.mui-control-item', function() {
 					console.log('folderlist:' + this.getAttribute('id') + '|' + this.getAttribute('data-path') + '|' + this.getAttribute('data-name'));
@@ -253,6 +280,13 @@
 						}
 					});
 					folderList = tempList;
+					//选择的文件处理
+					if(document.getElementById(upFile.fileid) != null) {
+						//将上次选择的文件置为未选中状态
+						document.getElementById(upFile.fileid).style.background = 'white';
+					}
+					upFile = null;
+					changeUpBtnColorToDefault();
 				});
 
 				/**
@@ -269,10 +303,9 @@
 						if(document.getElementById("folder_" + fid) != null) {
 							console.log('点击文件夹folder_' + fid + '!=null');
 							document.getElementById("folder_" + fid).parentNode.removeChild(document.getElementById("folder_" + fid));
+						} else {
+							console.log('点击文件夹folder_' + fid + '==null');
 						}
-						//						else {
-						//							console.log('点击文件夹folder_' + fid + '==null');
-						//						}
 						addTop(fid, fname); //顶部
 						addbot(fid); //底部
 						folderList.push(fid);
@@ -283,35 +316,71 @@
 						//底部处理
 						document.getElementById("folder_" + showFolderId).style.display = 'none';
 						document.getElementById("folder_" + fid).style.display = 'inline';
+						//选择的文件处理
+						if(upFile != null) {
+							if(document.getElementById(upFile.fileid) != null) {
+								//将上次选择的文件置为未选中状态
+								document.getElementById(upFile.fileid).style.background = 'white';
+							}
+							upFile == null
+						}
+
+						changeUpBtnColorToDefault();
+						//
 						showFolderId = fid;
 						resolveLocalFileSystemURL(fid);
 					} else if(isFile == 'true') {
 						plus.io.resolveLocalFileSystemURL(fid, function(entry) {
 							//请求成功的回调
-							//succesCB:DirectoryEntry:请求到的目录或文件对象
 							//console.log("请求文件系统成功");
 							entry.getMetadata(function(succesCB) {
-								//succesCB：文件或目录的状态信息
-								//JSON对象，保存文件或目录的状态信息对象
-								//说明：
-								//可通过DirectoryEntry或FileEntry对象的getMetaData方法获取
-								//属性：
-								//modificationTime: (Date 类型 )文件或目录的最后修改时间
-								//size: (Number 类型 )文件的大小，若获取的是目录对象的属性则值为0。
-								//directoryCount: (Number 类型 )包含的子目录数，若自身是文件则其值为0。
-								//fileCount: (Number 类型 )目录的文件数，若自身是文件则其值为0。
+
 								console.log("获取目录或文件的属性成功");
-								console.log("getMetadata:" + JSON.stringify(succesCB));
-								console.log("readFileSize：" + AndroidFileSystem.readSize(succesCB.size));
+								//console.log("getMetadata:" + JSON.stringify(succesCB));
+								//console.log("readFileSize：" + AndroidFileSystem.readSize(succesCB.size));
 								//限制50M
 								if(succesCB.size <= (50 * 1024 * 1024)) {
+									if(upFile == null) { //当前页面没选上传的文件
+										upFile = { //记录上传的文件
+											folderid: showFolderId, //所属文件夹id
+											fileid: id, //文件元素id
+											path: fid, //本地路径
+											fname: fname, //本地文件名
+											metadata: succesCB //文件信息
+										}
+										console.log("upFile0:" + JSON.stringify(upFile));
+										document.getElementById(id).style.background = 'deepskyblue';
+										changeUpBtnColor();
+									} else {
+										console.log("upFile1:" + JSON.stringify(upFile));
+										if(upFile.fileid == id) { //点击相同的文件
+											upFile = null;
+											document.getElementById(id).style.background = 'white';
+											changeUpBtnColorToDefault();
+										} else {
+											if(document.getElementById(upFile.fileid) != null) {
+												//将上次选择的文件置为未选中状态
+												document.getElementById(upFile.fileid).style.background = 'white';
+											}
+											upFile = { //记录上传的文件
+												folderid: showFolderId, //所属文件夹id
+												fileid: id, //文件元素id
+												path: fid, //本地路径
+												fname: fname, //本地文件名
+												metadata: succesCB //文件信息
+											}
+											console.log("upFile2:" + JSON.stringify(upFile));
+											document.getElementById(id).style.background = 'deepskyblue';
+											changeUpBtnColor();
+										}
+									}
 									//跳转到传输列表
-									events.fireToPageWithData('storage_transport.html', 'addUpload', {
-										path: fid, //路径
-										fname: fname, //文件名
-										metadata: succesCB, //文件信息
-										pid: pid //云盘文件夹父ID
-									});
+									//									events.fireToPageWithData('storage_transport.html', 'addUpload', {
+									//										path: fid, //路径
+									//										fname: fname, //文件名
+									//										metadata: succesCB, //文件信息
+									//										pid: pid //云盘文件夹父ID
+									//									});
 								} else {
 									mui.toast('上传文件不得大于50M');
 								}
@@ -331,6 +400,22 @@
 						});
 					}
 				});
+
+				/**
+				 * 将上传按钮颜色设置为默认颜色
+				 */
+				function changeUpBtnColorToDefault() {
+					document.getElementById('upload').style.background = '#636770';
+					document.getElementById('upload').style.border = '#636770';
+				}
+
+				/**
+				 * 将上传按钮颜色设置为蓝色
+				 */
+				function changeUpBtnColor() {
+					document.getElementById('upload').style.background = '#4DA3F5';
+					document.getElementById('upload').style.border = '#4DA3F5';
+				}
 
 				//界面初始化
 				function init() {
