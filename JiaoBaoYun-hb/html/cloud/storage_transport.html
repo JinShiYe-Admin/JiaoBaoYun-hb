@@ -426,7 +426,13 @@
 								if(e.index == 1) { //是
 									if(task.state == undefined) {
 										task.abort();
-										uploadList.splice(num, 1); //删除一项任务
+										//删除对应的任务
+										mui.each(uploadList, function(index, element) {
+											if(element.id == task.id) {
+												uploadList.splice(index, 1);
+												return false;
+											}
+										});
 										document.getElementById("up_" + upid).parentNode.removeChild(document.getElementById("up_" + upid)); //删除元素
 										mui.toast('删除上传任务成功');
 									} else {
@@ -515,7 +521,7 @@
 							downloading = false;
 							document.getElementById("down_btn_" + downid).innerText = '继续';
 							document.getElementById("down_btn_" + downid).value = '5';
-							//开始新的上传任务
+							//开始新的下载任务
 							mui.each(downloadList, function(index, element) {
 								if(element.id !== downid && element.state != 5) {
 									downloading = true;
@@ -577,9 +583,10 @@
 									mui.each(downloadList, function(index, element) {
 										if(element.id == dtask.id) {
 											downloadList.splice(index, 1);
+											return false;
 										}
 									});
-									//开始新的上传任务
+									//开始新的下载任务
 									mui.each(downloadList, function(index, element) {
 										if(element.state != 5) {
 											downloading = true;
@@ -675,13 +682,15 @@
 							mui.each(downloadList, function(index, element) {
 								if(element.id == download.id) {
 									downloadList.splice(index, 1);
+									return false;
 								}
 							});
-							//开始新的上传任务
+							//开始新的下载任务
 							mui.each(downloadList, function(index, element) {
 								if(element.state != 5) {
 									downloading = true;
 									element.start();
+									return false;
 								}
 							});
 							document.getElementById("down_btn_" + download.id).style.display = 'none';
@@ -787,11 +796,13 @@
 								fpath: window.storageKeyName.QNFILEDOMAIN + QNFileName, //文件路径，文件路径,为文件用
 								fsize: upload.totalSize //文件大小，文件用
 							};
-							uploadList.splice(0, 1);
-							if(uploadList[0] != undefined) {
-								uploading = true;
-								uploadList[0].start();
-							}
+							//删除对应的任务
+							mui.each(uploadList, function(index, element) {
+								if(element.id == upload.id) {
+									uploadList.splice(index, 1);
+									return false;
+								}
+							});
 							document.getElementById("up_btn_" + upload.__UUID__).style.display = 'none';
 							document.getElementById("up_" + upload.__UUID__).parentNode.removeChild(document.getElementById("up_" + upload.__UUID__));
 							addFile(comData, fPath, fname);
@@ -811,7 +822,7 @@
 									break;
 								case 1: //上传任务开始请求
 									console.log('上传任务开始请求:|id:' + id + '|uploadState:' + uploadState);
-									//document.getElementById("up_btn_" + id).style.display = 'none';
+									document.getElementById("up_btn_" + id).style.display = 'none';
 									mui("#up_bar_" + id).progressbar({
 										progress: 0
 									}).show();
@@ -824,8 +835,12 @@
 									//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
 									//document.getElementById("up_btn_" + id).innerText = '暂停';
 									//document.getElementById("up_btn_" + id).value = '3';
-									mui("#up_bar_" + id).progressbar().setProgress(upload.uploadedSize / upload.totalSize * 100);
-									document.getElementById("up_size_" + id).innerText = uploadedSize + '/' + totalSize;
+									if(document.getElementById("up_bar_" + id) !== null) {
+										mui("#up_bar_" + id).progressbar().setProgress(upload.uploadedSize / upload.totalSize * 100);
+									}
+									if(document.getElementById("up_size_" + id) !== null) {
+										document.getElementById("up_size_" + id).innerText = uploadedSize + '/' + totalSize;
+									}
 									break;
 								case 4: //上传任务已完成
 									console.log('上传任务已完成:|id:' + id + '|uploadState:' + uploadState);
@@ -983,7 +998,7 @@
 					//if(type == 'icon-imge') {
 					//	html1 = '<img class="mui-media-object mui-pull-left" src="' + fpath + '">'
 					//} else {
-						html1 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
+					html1 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
 					//}
 					var li = document.createElement('li');
 					li.setAttribute('id', 'downed_' + fpath); //文件名
@@ -1008,7 +1023,7 @@
 				 * 用户云盘文件上传或创建文件夹
 				 * @param {Object} comData 往服务器传的数据
 				 * @param {Object} filePath 本地文件路径
-				 *  @param {Object} filePath 本地文件名
+				 *  @param {Object} fname 本地文件名
 				 */
 				function addFile(comData, filePath, fname) {
 					console.log('addFile:' + JSON.stringify(comData));
@@ -1024,7 +1039,6 @@
 					// 等待的对话框
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					postDataPro_PostDiFiA(comData, wd, function(data) {
-						uploading = false;
 						wd.close();
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
@@ -1032,11 +1046,19 @@
 							copyFileToUpload(filePath, fname);
 						} else {
 							if(data.RspCode == 8) {
-								mui.toast('上传失败：' + data.RspTxt);
+								mui.toast('上传失败 ' + fname + ' ' + data.RspTxt);
 							} else {
 								mui.toast(data.RspTxt);
 							}
 						}
+						//开始新的上传任务
+						mui.each(uploadList, function(index, element) {
+							if(element.state != 5) {
+								uploading = true;
+								element.start();
+								return false;
+							}
+						});
 					});
 				}
 
