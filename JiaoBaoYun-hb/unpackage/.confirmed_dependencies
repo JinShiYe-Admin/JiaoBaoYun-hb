@@ -435,7 +435,8 @@
 			"html/homework/workdetailTea-temporary.html",
 			"html/homework/homework-record.html",
 			"html/homework/homework-commented.html",
-			"html/homework/workstu-err.html"
+			"html/homework/workstu-err.html",
+			"html/homework/doHomework-stu.html"
 		]
 	},
 	"html/homework/publish-answer.html": {
@@ -1592,7 +1593,14 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/libs/myStorage/myStorage.js"
+			"js/libs/myStorage/myStorage.js",
+			"css/cloud/file.css",
+			"css/utils/common.css",
+			"js/cloud/cloud.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/mui.min.js",
+			"css/mui.min.css"
 		]
 	},
 	"html/homework/doHomework-stu.html": {
@@ -1736,7 +1744,26 @@
 	"html/homework/homework-comment.html": {
 		"resources": [
 			"css/homework/homework-commit.css",
-			"js/homework/homework-comment.js"
+			"js/homework/homework-comment.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/publicHomeworkProtocol.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	},
 	"html/cloud/record_student_main.html": {

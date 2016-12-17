@@ -13,5 +13,13 @@
 	border: solid thin lightgray;
 }
 .homework-container{
-	min-height: 300px;
+	min-height: 20rem;
+}
+.result-text{
+	min-height: 4rem;
+}
+.stuInfo-img{
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
 }

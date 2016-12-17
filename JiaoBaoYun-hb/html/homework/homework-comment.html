@@ -8,6 +8,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/homework/homework-commit.css" rel="stylesheet" />
 	</head>
 
@@ -19,18 +20,33 @@
 		<div class="mui-content">
 			<!--作业详情区-->
 		    <div class="homework-container">
-		    	
+		    	<div class='student-info'>
+		    		<img id="stu-head" class='stuInfo-img'/>
+		    		<div class='stuInfo-words'>
+		    			<p id='stu-name'></p>
+		    			<p id='submit-time'></p>
+		    		</div>
+		    	</div>
+		    	<div id="homework-info" class="homework-info"></div>
+		    </div>
+		    <div class="result-container">
+		    	<h4>作业结果</h4>
+		    	<p id="result-text" class="result-text">
+		
+		    	</p>
 		    </div>
 		    <!--评论区-->
 		    <div class="comment-container">
 	    		<h4>作业评语</h4>
-	    		<textarea class='comment-area' rows="5" placeholder="请输入评语"></textarea>
-	    		<button id="btn-subComment" type="submit" class="mui-btn mui-btn-green btn-submit">提交评论</button>
+	    		<textarea id="comment-area" class='comment-area' rows="5" placeholder="请输入评语"></textarea>
+	    		<button id="btn-comment" type="submit" class="mui-btn mui-btn-green btn-submit">提交评论</button>
 		    </div>
 		    
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/publicHomeworkProtocol.js"></script>
 		<script src="../../js/homework/homework-comment.js"></script>
 	</body>
 
