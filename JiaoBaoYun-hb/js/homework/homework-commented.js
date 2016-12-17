@@ -13,9 +13,12 @@ mui.plusReady(function() {
 
 		homeworkModel = e.detail.data;
 		console.log('学生查看作业结果界面：' + JSON.stringify(homeworkModel));
-		if(homeworkModel==1){
-			getAnswerResultStu();
+		if(homeworkModel.workType==0){
+			document.getElementById("modifyHomework").hidden = 'hidden'
+			document.getElementById("list").hidden = 'hidden';
+//			getAnswerResultStu();
 		}else{
+			document.getElementById("list").hidden = '';
 			requestGetHomeworkResultStu();
 		}
 		
@@ -143,6 +146,10 @@ function getAnswerResultStu() {
 		var Comment = homeworkResult.HomeworkResult.Comment;
 		if(!Comment){
 			Comment = '无评语';
+			document.getElementById("modifyHomework").hidden = ''
+			
+		}else{
+			document.getElementById("modifyHomework").hidden = 'hidden'
 		}
 		homeworkDetailNodes.commentContent.innerText = Comment;
 
