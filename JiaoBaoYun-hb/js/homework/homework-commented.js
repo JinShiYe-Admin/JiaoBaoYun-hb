@@ -1,6 +1,9 @@
 //学生查看老师作业评价
 mui.init();
 mui.plusReady(function() {
+	events.addTap('modifyHomework',function(){
+		
+	})
 	window.addEventListener('            ', function(e) {
 		var answerResultId = e.detail.data;
 	})
