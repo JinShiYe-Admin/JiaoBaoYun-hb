@@ -2,8 +2,8 @@
 mui.init();
 mui.plusReady(function() {
 	events.addTap('modifyHomework',function(){
-		events.fireToPageNone('workdetail-tea-sub.html', 'workDetail', homeworkModel);
-				plus.webview.getWebviewById("doHomework.html").show();
+		events.fireToPageNone('doHomework-stu.html', 'workDetail', homeworkResult);
+				plus.webview.getWebviewById("doHomework-stu.html").show();
 	})
 //	window.addEventListener('            ', function(e) {
 //		var answerResultId = e.detail.data;

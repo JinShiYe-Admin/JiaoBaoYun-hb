@@ -21,6 +21,7 @@ mui.plusReady(function() {
 		events.preload('workdetailTea-temporary.html', 300);
 		events.preload('workdetail-stu.html', 800);
 		events.preload('homework-commented.html', 600);
+		events.preload('doHomework-stu.html', 600);
 
 		//赋值
 		list = document.getElementById('list-container');

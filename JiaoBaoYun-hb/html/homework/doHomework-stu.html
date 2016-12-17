@@ -26,7 +26,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 id="title" class="mui-title">作业详情</h1>
-			<a id="publis" class="mui-pull-right ">完成</a>
+			<a id="publish" class="mui-pull-right ">完成</a>
 		</header>
 		<div class="mui-content">
 			<div class="input-content">
@@ -40,19 +40,34 @@
 			</div>
 		</div>
 		<script type="text/javascript">
-			mui.init()
+			mui.init();
+			var flag = 0
 			mui.plusReady(function(){
 				window.addEventListener('homeworkInfo',function(e){
 					homeworkModel=e.detail.data;
 					console.log('学生做作业界面从上级界面获取的做作业数据：'+JSON.stringify(homeworkModel));
+					flag = 0;
+				})
+				window.addEventListener('workDetail',function(e){
+					homeworkModel = e.detail.data;
+					console.log('修改作业数据：'+JSON.stringify(homeworkModel))
+					var textView = document.getElementById('input-content');
+					textView.value = homeworkModel.HomeworkResult.Result;
+					
+					flag = 1;
+					
 				})
 				var item = document.getElementById('publis');
 				
 
-				events.addTap('publis', function() {
-				console.log(123);
-				requestSubmitHomeworkResult();
-				window.event.stopPropagation()
+				events.addTap('publish', function() {
+					if(flag == 0){
+						requestSubmitHomeworkResult();
+					}else{
+						requestModifyHomeworkResult();
+					}
+				
+				
 			})
 			});
 
@@ -98,12 +113,22 @@
 
 			//9.修改作业结果；逻辑：如果是图片类型，同时生成缩略图
 			function requestModifyHomeworkResult() {
+				var textView = document.getElementById('input-content');
+				var tempText =  textView.value;
+				 
+				console.log('textView.value===' + tempText)
+				if(!tempText || tempText == '') {
+					mui.toast('请输入作业内容');
+					return;
+				}else{
+					tempText = tempText.replace('\n','<br />')
+				}
 				//所需参数
 				var comData = {
 					userId: personalUTID, //学生/家长id，
 					studentId: personalUTID, //学生Id；
-					homeworkResultId: homeworkModel.HomeworkId, //要修改的作业结果id；
-					content: '', //文本答案；
+					homeworkResultId: homeworkModel.HomeworkResult.HomeworkResultId, //要修改的作业结果id；
+					content: tempText, //文本答案；
 					fileIds: '' //文件id串，例如“1,2”；
 				};
 				// 等待的对话框
@@ -114,6 +139,8 @@
 					console.log('9.postDataPro_ModifyHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						//清空输入框
+						textView.value='';
+						mui.back();
 						
 					} else {
 						mui.toast(data.RspTxt);
