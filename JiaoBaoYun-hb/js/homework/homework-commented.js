@@ -13,8 +13,13 @@ mui.plusReady(function() {
 
 		homeworkModel = e.detail.data;
 		console.log('学生查看作业结果界面：' + JSON.stringify(homeworkModel));
-		requestGetHomeworkResultStu();
-		getAnswerResultStu();
+		if(homeworkModel==1){
+			getAnswerResultStu();
+		}else{
+			requestGetHomeworkResultStu();
+		}
+		
+		
 	})
 });
 
