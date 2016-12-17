@@ -340,6 +340,7 @@
 				console.log(IsCommented);
 				var headImg = updateHeadImg(uploadArray[i].uimg,2)
 									var li = document.createElement('li');
+									li.workInfo = uploadArray[i];
 									li.className = 'mui-table-view-cell mui-media isCommented'
 				li.innerHTML = '<img  class="mui-media-object mui-pull-left " src="'+headImg +'" />'+
 										'<div class="mui-media-body">'+
@@ -366,6 +367,7 @@
 					var headImg = updateHeadImg(remainArray[i].uimg,2)
 									var li = document.createElement('li');
 									li.className = 'mui-table-view-cell mui-media'
+									
 				li.innerHTML = '<img  class="mui-media-object mui-pull-left" src="'+headImg +'" />'+
 										'<div class="mui-media-body">'+
 											remainArray[i].ugnick+
@@ -397,7 +399,7 @@
 				});
 
 mui('.mui-table-view').on('tap', '.isCommented', function() {
-    events.fireToPageNone('homework-comment.html', 'workInfo', homeworkDetailModel);
+    events.fireToPageNone('homework-comment.html', 'workInfo', this.workInfo);
 				plus.webview.getWebviewById("homework-comment.html").show();
 });
 
