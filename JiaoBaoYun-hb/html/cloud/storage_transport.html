@@ -1142,12 +1142,12 @@
 				function copyFileToUpload(filePath, fname) {
 					console.log("copyFileToUpload:" + filePath + '|' + fname);
 					plus.io.resolveLocalFileSystemURL(filePath, function(succesCB) {
-						console.log("拷贝:请求被文件的文件系统成功: " + JSON.stringify(succesCB));
+						console.log("拷贝:请求被文件的文件系统成功: " + JSON.stringify(succesCB.name));
 						//拷贝
 						var myDate = new Date();
 						var dateName = myDate.getTime() + (Math.floor(Math.random() * 10)) + '.';
 						succesCB.copyTo(upFolderEntry, dateName + fname, function(succesCB2) {
-							console.log("拷贝:成功:" + JSON.stringify(succesCB2));
+							console.log("拷贝:成功:" + JSON.stringify(succesCB2.name));
 							//获取文件属性
 							succesCB2.getMetadata(function(succesCB3) {
 								console.log("拷贝:获取文件属性成功:" + JSON.stringify(succesCB3));

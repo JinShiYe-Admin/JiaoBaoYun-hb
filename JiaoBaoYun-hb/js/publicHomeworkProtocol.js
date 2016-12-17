@@ -354,7 +354,7 @@ var postDataPro_GetHomeworkStu=function(commonData, wd, callback) {
 //			classId: '',//班级群Id；
 //			homeworkId:''//作业id；
 //		};
-var postDataPro_GetHomeworkResult=function(commonData, wd, callback) {
+var postDataPro_GetHomeworkResultStu=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -362,14 +362,14 @@ var postDataPro_GetHomeworkResult=function(commonData, wd, callback) {
 }
 
 
-//4.	获取答案结果
+//4.	获取答案结果和评价；
 //所需参数
 //		var comData = {
 //			studentId: '',//学生Id
 //			classId: '',//班级Id；
 //			answerResultId:''//答案结果id；
 //		};
-var postDataPro_GetAnswerResult=function(commonData, wd, callback) {
+var postDataPro_GetAnswerResultStu=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
@@ -473,7 +473,7 @@ var postDataPro_ModifyHomeworkResult=function(commonData, wd, callback) {
 //			studentId: '',//学生Id
 //			answerResultId:''//学生上传答案id；
 //		};
-var postDataPro_GetAnswer=function(commonData, wd, callback) {
+var postDataPro_GetAnswerStu=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值

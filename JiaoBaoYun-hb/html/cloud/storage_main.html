@@ -425,23 +425,6 @@
 				var btnArray = ['否', '是'];
 				mui.confirm('删除，确认？', '提示', btnArray, function(e) {
 					if(e.index == 1) { //删除
-						if(ftype != '.file') {
-							//var fpathList = [];
-							//fpathList.push(fpath);
-							var pathStr = '["' + fpath + '"]'; //arrayToStr(fpathList);
-							console.log('pathStr:' + pathStr);
-
-							/**
-							 * 七牛批量删除
-							 */
-							CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, pathStr, function(data) {
-									console.log('七牛删除成功:' + JSON.stringify(data));
-								},
-								function(xhr, type, errorThrown) {
-									console.log('七牛删除失败:' + JSON.stringify(type));
-								}
-							);
-						}
 
 						//38.用户云盘文件及文件夹删除
 						//所需参数
@@ -463,6 +446,30 @@
 										return false;
 									}
 								});
+								if(ftype != '.file') {
+									//var fpathList = [];
+									//fpathList.push(fpath);
+									var pathStr = '["' + fpath + '"]'; //arrayToStr(fpathList);
+									console.log('pathStr:' + pathStr);
+
+									/**
+									 * 七牛批量删除
+									 */
+									CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, pathStr, function(data) {
+											if(data.RspCode == 0) {
+												//mui.toast('七牛删除成功');
+												console.log('七牛删除成功:' + JSON.stringify(data));
+											} else {
+												mui.toast('七牛删除失败' + JSON.stringify(data));
+												console.log('七牛删除:' + JSON.stringify(data));
+											}
+										},
+										function(xhr, type, errorThrown) {
+											mui.toast('七牛删除失败' + JSON.stringify(data));
+											console.log('七牛删除失败:' + JSON.stringify(type));
+										}
+									);
+								}
 							} else {
 								mui.toast(data.RspTxt);
 							}
