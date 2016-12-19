@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
-		<script type="text/javascript" src="../../js/utils/events.js" ></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
 	</head>
 
 	<body>
@@ -19,11 +19,9 @@
 			<a id="save" class="mui-pull-right">保存</a>
 		</header>
 		<div class="mui-content">
-			<form class="mui-input-group">
-				<div class="mui-input-row">
-					<input id="input" type="text" class="mui-input-clear">
-				</div>
-			</form>
+			<div class="mui-input-row">
+				<input id="input" type="text" class="mui-input-clear">
+			</div>
 		</div>
 		<script type="text/javascript">
 			mui.init();
@@ -55,11 +53,12 @@
 							if(data.RspCode == 0) {
 								console.log('修改成功');
 								mui.toast('修改成功');
-								var main=plus.webview.getWebviewById('qun_manage_info_change.html');
+								var main = plus.webview.getWebviewById('qun_manage_info_change.html');
 								mui.fire(main, 'valueChange', {
 									type: subData.type, //资料类型
 									value: vvl //修改后的值
 								});
+								mui.back();
 							} else {
 								mui.toast(data.RspTxt);
 							}

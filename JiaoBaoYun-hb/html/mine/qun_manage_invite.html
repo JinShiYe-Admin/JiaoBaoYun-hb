@@ -174,6 +174,12 @@
 				//---从群管理界面获得的数据---start---
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var data = main.data; //接收传入参数值
+				//				var data = {
+				//					gid: show, //群ID
+				//					gname: item.gname, //群名
+				//					mstype: type, //被邀请成为的类型
+				//					vtp: item.mstype //邀请人的类型（用户管理角色,0家长,1管理员,2老师,3学生）
+				//				}
 				console.log('邀请群成员获得的数据:' + JSON.stringify(data));
 				document.getElementById("qunName").innerText = '[' + data.gname + ']'; //显示群名
 				var type = ''; //记录显示的成员类型
@@ -292,8 +298,14 @@
 				function searchUser() {
 					var searchValue = input_search.value;
 					console.log('searchValue:' + searchValue);
+					var uid = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uid; //账号电话
+					var uname = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uname; //账号
+
 					if(searchValue.replace(/(^\s*)|(\s*$)/g, "") == "") {
 						mui.toast('搜索不能为空');
+					} else if(mstype == '3' && (searchValue == uid || searchValue == uname)) {
+						//不允许邀请自己成为学生
+						mui.toast('不能邀请自己成为学生');
 					} else {
 						var vtp = 'nm';
 						var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/

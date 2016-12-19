@@ -328,10 +328,10 @@
 					var html5 = '';
 					var unick = data.ugname; //学生姓名
 					if(data.NoteType == 1) { //点到
-						html5 = '<h4 style="">' + unick + data.CheckTypeStr + '</h4>\
-								 <div>说明：' + data.MsgContent + '</div>';
+						html5 = '<h4 style="margin-top:10px;">' + unick + '</h4>\
+								 <div>' + data.CheckTypeStr + '：' + data.MsgContent + '</div>';
 					} else if(data.NoteType == 2) { //记事
-						html5 = '<h4 style="">' + unick + '</h4>\
+						html5 = '<h4 style="margin-top:10px;">' + unick + '</h4>\
 							 	 <div>' + data.MsgContent + '</div>';
 					}
 					div2.innerHTML = html4 + html5;

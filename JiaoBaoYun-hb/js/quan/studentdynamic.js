@@ -115,7 +115,7 @@ var studentdynamic = (function($, mod) {
 		var html2 = '<div class="mui-col-sm-2 mui-col-xs-2">';
 		//日期
 		if(typeof date == 'string') {
-			dateHtml = '<div class="dynamic-date"><font style="font-size: 150%;">' + date + '</font></div></div>';
+			dateHtml = '<div class="dynamic-date"><font style="">' + date + '</font></div></div>';
 		} else {
 			var dateHtml1 = '<div class="dynamic-date">';
 			var dateHtml2 = '<font style="">' + date[0] + '</font><font style="">' + date[1] + '</font></div></div>';
