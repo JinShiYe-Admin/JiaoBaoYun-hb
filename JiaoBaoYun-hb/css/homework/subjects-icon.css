@@ -36,7 +36,7 @@
 	width: 20%;
 }
 .isCommentedBG{
-	background-image: url(../../image/homework/commented.gif);
+	background-image: url(../../image/homework/commented.png);
 }
 .noCommentedBG{
 	background-image: url(../../image/homework/no-comment.png);
