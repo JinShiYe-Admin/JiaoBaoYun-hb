@@ -7,6 +7,7 @@ mui.plusReady(function() {
 		console.log('老师评价页面获取的作业信息：' + JSON.stringify(workInfo))
 		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 		setStuInfo();
+		setCondition();
 		//{"IconUrl":null,"IsCommented":false,"StudentId":1,"StudentName":null,
 		//"ClassId":78,"HomeworkId":165,
 		//"gid":78,"gutid":160,"utid":1,"ugname":"遥不可及","ugnick":"遥不可及",
@@ -17,6 +18,7 @@ mui.plusReady(function() {
 			requireHomeworkResult();
 		}
 	})
+	setListener();
 })
 
 var setStuInfo = function() {
@@ -40,18 +42,19 @@ var setListener = function() {
 			if(commentValue) {
 				if(workInfo.workType == 0) {
 					if(workInfo.IsCommented) {
-						modifyHomeworkComment(commentValue);
-					} else {
-						commentHomework(commentValue);
-					}
-				} else {
-					if(workInfo.IsCommented) {
 						modifyAnswerComment(commentValue);
 					} else {
 						commentAnswer(commentValue);
 					}
+				} else {
+					if(workInfo.IsCommented) {
+						modifyHomeworkComment(commentValue);
+					} else {
+						commentHomework(commentValue);
+					}
+
 				}
-			}else{
+			} else {
 				mui.toast('请输入评论内容');
 			}
 
@@ -92,8 +95,11 @@ var setHomeWorkInfo = function() {
 		events.clearChild(homeworkInfo);
 		var p = document.createElement('p')
 		p.innerText = workInfo.Contents;
+		homeworkInfo.appendChild(p);
 		if(workInfo.IsCommented) {
 			document.getElementById('comment-area').value = workInfo.Comment;
+		} else {
+			document.getElementById('comment-area').value = null;
 		}
 	}
 	/**
@@ -142,6 +148,14 @@ var setAnswerInfo = function() {
 	createAnswerImgs(homeworkInfo, workInfo.stuFiles);
 	ceateAnswerPinfo(homeworkInfo, 2);
 	createAnswerImgs(homeworkInfo, workInfo.teaFiles);
+	if(workInfo.IsCommented) {
+		document.getElementById('comment-area').value = workInfo.Comment;
+	} else {
+		document.getElementById('comment-area').value = null;
+	}
+	if(workInfo.QuestionResultStr) {
+		document.getElementById('result-text').innerText = workInfo.QuestionResultStr;
+	}
 }
 var ceateAnswerPinfo = function(homeworkInfo, type) {
 	var p = document.createElement('p');
@@ -268,10 +282,10 @@ var modifyAnswerComment = function(commentValue) {
 		wd.close();
 		console.log('老师评价页面获取老师更改的评论结果：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
-				mui.toast('修改评论成功！')
-			} else {
-				mui.toast(data.RspTxt);
-			}
+			mui.toast('修改评论成功！')
+		} else {
+			mui.toast(data.RspTxt);
+		}
 	})
 }
 var getHomeworkIcon = function(subject) {
