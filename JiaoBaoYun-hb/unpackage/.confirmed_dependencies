@@ -1441,7 +1441,22 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"fonts/mui.ttf",
-			"js/cloud/AndroidFileSystem.js"
+			"js/cloud/AndroidFileSystem.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"css/cloud/file.css",
+			"js/libs/crypto-js/require.js",
+			"js/cloud/cloud.js",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/cloud/storage_main_choose.html",

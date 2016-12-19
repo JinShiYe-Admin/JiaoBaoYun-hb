@@ -3,18 +3,18 @@ var personalUTID;
 mui.init()
 mui.plusReady(function() {
 	window.addEventListener('workInfo', function(e) {
-	 	workInfo = e.detail.data;
+		workInfo = e.detail.data;
 		console.log('老师评价页面获取的作业信息：' + JSON.stringify(workInfo))
-		personalUTID=myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-		setStuInfo(workInfo);
+		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+		setStuInfo();
 		//{"IconUrl":null,"IsCommented":false,"StudentId":1,"StudentName":null,
 		//"ClassId":78,"HomeworkId":165,
 		//"gid":78,"gutid":160,"utid":1,"ugname":"遥不可及","ugnick":"遥不可及",
 		//"uimg":"http://oh2zmummr.bkt.clouddn.com/headimge1.png?1480991289388","mstype":3} at js/homework/homework-comment.js:5
-		if(workInfo.workType && workInfo.workType == 0) {
-			requireAnswerResult(workInfo);
+		if(workInfo.workType == 0) {
+			requireAnswerResult();
 		} else {
-			requireHomeworkResult(workInfo);
+			requireHomeworkResult();
 		}
 	})
 })
@@ -26,13 +26,36 @@ var setStuInfo = function() {
 	document.getElementById('stu-name').innerText = ugnick;
 }
 var setCondition = function() {
-		var btn_comment = document.getElementById('btn-comment');
-		//是否已评论
-		if(workInfo.IsCommented) {
-			btn_comment.innerText = '更改评论';
-		} else {
-			btn_comment.innerText = '提交评论';
-		}
+	var btn_comment = document.getElementById('btn-comment');
+	//是否已评论
+	if(workInfo.IsCommented) {
+		btn_comment.innerText = '更改评论';
+	} else {
+		btn_comment.innerText = '提交评论';
+	}
+}
+var setListener = function() {
+		events.addTap('btn-comment', function() {
+			var commentValue = document.getElementById('comment-area').value;
+			if(commentValue) {
+				if(workInfo.workType == 0) {
+					if(workInfo.IsCommented) {
+						modifyHomeworkComment(commentValue);
+					} else {
+						commentHomework(commentValue);
+					}
+				} else {
+					if(workInfo.IsCommented) {
+						modifyAnswerComment(commentValue);
+					} else {
+						commentAnswer(commentValue);
+					}
+				}
+			}else{
+				mui.toast('请输入评论内容');
+			}
+
+		})
 	}
 	/**
 	 * 获取普通作业老师评论
@@ -49,8 +72,8 @@ var requireHomeworkResult = function() {
 			wd.close();
 			console.log('老师评价作业界面获取的作业信息：' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
-				HomeworkResultId=data.RspData.HomeworkResultId;
-				setHomeWorkInfo(jQuery.extend(workInfo,data.RspData))
+				HomeworkResultId = data.RspData.HomeworkResultId;
+				setHomeWorkInfo(jQuery.extend(workInfo, data.RspData))
 			} else {
 				mui.toast(data.RspTxt);
 			}
@@ -63,14 +86,14 @@ var requireHomeworkResult = function() {
 	 * "Result":"哦哦哦哦哦哦","StudentId":1,"StudentName":null,"UploadTime":"2016-12-17 11:08:43"
 	 */
 var setHomeWorkInfo = function() {
-		document.getElementById('submit-time').innerText=workInfo.UploadTime;
-		document.getElementById('result-text').innerText=workInfo.Result;
-		var homeworkInfo=document.getElementById('homework-info');
+		document.getElementById('submit-time').innerText = workInfo.UploadTime;
+		document.getElementById('result-text').innerText = workInfo.Result;
+		var homeworkInfo = document.getElementById('homework-info');
 		events.clearChild(homeworkInfo);
-		var p=document.createElement('p')
-		p.innerText=workInfo.Contents;
-		if(workInfo.IsCommented){
-			document.getElementById('comment-area').value=workInfo.Comment;
+		var p = document.createElement('p')
+		p.innerText = workInfo.Contents;
+		if(workInfo.IsCommented) {
+			document.getElementById('comment-area').value = workInfo.Comment;
 		}
 	}
 	/**
@@ -82,26 +105,62 @@ var requireAnswerResult = function() {
 		postDataPro_GetAnswerResult({
 			teacherId: personalUTID,
 			StudentId: workInfo.utid,
-			classId:  workInfo.gid,
+			classId: workInfo.gid,
 			answerResultId: workInfo.AnswerResultId
 		}, wd, function(data) {
 			wd.close();
 			console.log('老师评价页面获取的老师临时作业评价：' + JSON.stringify(data))
 			if(data.RspCode == '0000') {
-				data.RspData.stuFiles=data.RspData.Files;
-				data.RspData.stuUploadTime=data.RspData.UploadTime;
-				data.RspData.Files=null;
-				data.RspData.UploadTime=null;
-				jQuery.extend(workInfo,data.RspData);
-				requireTeachersAnswer(workInfo)
+				data.RspData.stuFiles = data.RspData.Files;
+				data.RspData.stuUploadTime = data.RspData.UploadTime;
+				data.RspData.Files = null;
+				data.RspData.UploadTime = null;
+				jQuery.extend(workInfo, data.RspData);
 			} else {
-				
+				console.log('未获取临时作业评价')
 			}
+			requireTeachersAnswer();
 		})
 	}
-var setAnswerInfo=function(){
-	console.log('要放置的临时作业数据：'+JSON.stringify(workInfo));
+	/**
+	 * "AnswerResultId":13,"IsCommented":"未评","QuestionResults":[],
+	 * "StudentId":0,"ThumbUrl":"Upload/201612/thumb_2_20161216030533.png",
+	 * "QuestionResultStr":"","gid":1,"gutid":133,"utid":4,"ugname":"rockan007",
+	 * "ugnick":"rockan007","uimg":"http://o9u2jsxjm.bkt.clouddn.com/headimge4.png",
+	 * "mstype":0,"workType":0,"Comment":null,"Files":null,"UploadTime":null,
+	 * "stuFiles":["DisplayOrder":1,"ThumbUrl":"Upload/201612/thumb_2_20161216030533.png","Url":"Upload/201612/2_20161216030533.png"}],
+	 * "stuUploadTime":"2016/12/16 15:10:54","TeacherId":1,"teaUploadTime":"2016/12/15 17:20:53",
+	 * "teaFiles":["DisplayOrder":1,"ThumbUrl":"Upload/201612/thumb_1_20161215052053.png","Url":"Upload/201612/1_20161215052053.png"}]}
+	 *	
+	 */
+var setAnswerInfo = function() {
+	console.log('要放置的临时作业数据：' + JSON.stringify(workInfo));
+	document.getElementById('submit-time').innerText = workInfo.stuUploadTime;
+	var homeworkInfo = document.getElementById('homework-info');
+	events.clearChild(homeworkInfo);
+	ceateAnswerPinfo(homeworkInfo, 30);
+	createAnswerImgs(homeworkInfo, workInfo.stuFiles);
+	ceateAnswerPinfo(homeworkInfo, 2);
+	createAnswerImgs(homeworkInfo, workInfo.teaFiles);
 }
+var ceateAnswerPinfo = function(homeworkInfo, type) {
+	var p = document.createElement('p');
+	if(type == 30) {
+		p.innerText = '学生作业:';
+	} else {
+		p.innerText = '老师答案:';
+	}
+	homeworkInfo.appendChild(p);
+}
+var createAnswerImgs = function(homeworkInfo, imgs) {
+		var div = document.createElement('div');
+		var imgsInner = '';
+		for(var i in imgs) {
+			imgsInner += '<img src="' + storageKeyName.MAINHOMEWORKURL + imgs[i].ThumbUrl + '"/>';
+		}
+		div.innerHTML = imgsInner;
+		homeworkInfo.appendChild(div);
+	}
 	/**
 	 * 获取老师的临时作业答案
 	 * @param {Object} workInfo
@@ -119,11 +178,11 @@ var requireTeachersAnswer = function() {
 			wd.close();
 			console.log('老师评价页面获取的老师临时作业答案：' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
-				data.RspData.teaUploadTime=data.RspData.UploadTime;
-				data.RspData.teaFiles=data.RspData.Files;
-				data.RspData.UploadTime=null;
-				data.RspData.Files=null;
-				jQuery.extend(workInfo,data.RspData);
+				data.RspData.teaUploadTime = data.RspData.UploadTime;
+				data.RspData.teaFiles = data.RspData.Files;
+				data.RspData.UploadTime = null;
+				data.RspData.Files = null;
+				jQuery.extend(workInfo, data.RspData);
 			} else {
 
 			}
@@ -133,86 +192,86 @@ var requireTeachersAnswer = function() {
 	/**
 	 * 评论普通作业
 	 */
-var commentHomework = function() {
+var commentHomework = function(commentValue) {
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		postDataPro_CommentHomeworkResult({
-			teacherId: 教师Id,
-			studentId: 学生Id,
-			classId: 班级群Id,
-			homeworkId: 作业id,
-			comment: 评价
+			teacherId: personalUTID,
+			studentId: workInfo.utid,
+			classId: workInfo.gid,
+			homeworkId: workInfo.HomeworkId,
+			comment: commentValue
 		}, wd, function(data) {
 			wd.close();
 			console.log('老师评价页面获取老师评价普通作业的结果:' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
-
+				mui.toast('评论成功！')
 			} else {
-
+				mui.toast(data.RspTxt);
 			}
 		})
 	}
 	/**
 	 * 评论临时作业
 	 */
-var commentAnswer = function() {
+var commentAnswer = function(commentValue) {
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		postDataPro_CommentAnswerResult({
-			teacherId: 教师Id,
-			studentId: 学生Id,
-			classId: 班级群Id,
-			comment: 评价,
-			answerResultId: 答案结果Id
+			teacherId: personalUTID,
+			studentId: workInfo.utid,
+			classId: workInfo.gid,
+			comment: commentValue,
+			answerResultId: workInfo.AnswerResultId
 		}, wd, function(data) {
 			wd.close();
 			console.log('老师评价页面获取的老师评论临时作业的结果：' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
-
+				mui.toast('评论成功！')
 			} else {
-
+				mui.toast(data.RspTxt);
 			}
 		})
 	}
 	/**
 	 * 更改普通作业评论
 	 */
-var modifyHomeworkComment = function() {
+var modifyHomeworkComment = function(commentValue) {
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		postDataPro_ModifyHomeworkResultComment({
-			teacherId: 教师Id,
-			homeworkResultId: 要修改的作业评价id,
-			studentId: 学生Id,
-			classId: 班级群Id,
-			homeworkId: 作业id,
-			comment: 评价
+			teacherId: personalUTID,
+			homeworkResultId: workInfo.HomeworkResultId,
+			studentId: workInfo.utid,
+			classId: workinfo.gid,
+			homeworkId: workInfo.HomeworkId,
+			comment: commentValue
 		}, wd, function(data) {
 			wd.close();
 			console.log('老师评价页面获取老师更改普通作业评论的结果：' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
-
+				mui.toast('修改评论成功！')
 			} else {
-
+				mui.toast(data.RspTxt);
 			}
 		})
 	}
 	/**
 	 * 更改临时作业评论
 	 */
-var modifyAnswerComment = function() {
+var modifyAnswerComment = function(commentValue) {
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataPro_ModifyAnswerResultComment({
-		teacherId: 教师Id,
-		answerResultId: 要修改的答案评价的id,
-		studentId: 学生Id,
-		classId: 班级群Id,
-		comment: 评价
+		teacherId: personalUTID,
+		answerResultId: workInfo.AnswerResultId,
+		studentId: workInfo.utid,
+		classId: workInfo.gid,
+		comment: commentValue
 	}, wd, function(data) {
 		wd.close();
 		console.log('老师评价页面获取老师更改的评论结果：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
-
-		} else {
-
-		}
+				mui.toast('修改评论成功！')
+			} else {
+				mui.toast(data.RspTxt);
+			}
 	})
 }
 var getHomeworkIcon = function(subject) {
