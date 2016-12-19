@@ -213,7 +213,8 @@
 						fid: subData.fid, //文件id,顶层0
 						showTop: subData.showTop, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
 						title: subData.title, //标题名
-						top: subData.top //顶层文件和文件夹的数据
+						top: subData.top, //顶层文件和文件夹的数据
+						type:'1'//选择文件的方式0，从本地文件1
 					});
 					//					} else {
 					//						plus.webview.getWebviewById('storage_main_choose.html').show('slide-in-right', 250);
@@ -237,7 +238,7 @@
 					} else {
 						mui.toast('请选择上传的文件');
 					}
-				})
+				});
 
 				//点击顶部文件夹列表
 				mui('#folderlist').on('tap', '.mui-control-item', function() {

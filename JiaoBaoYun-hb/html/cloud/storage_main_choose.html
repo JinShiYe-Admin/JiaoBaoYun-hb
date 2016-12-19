@@ -299,10 +299,17 @@
 				var fnameList = document.getElementById("folder").innerText.split('：');
 				var fname = fnameList[fnameList.length - 1];
 				console.log('选定' + JSON.stringify(fnameList) + '|' + fname);
-				events.fireToPageNone('storage_upload.html', 'chooseFolder', {
-					fid: showPid, //文件id,顶层0
-					title: fname //标题名
-				});
+				if(subData.type == '0') { //选择文件的方式
+					events.fireToPageNone('storage_upload_choose.html', 'chooseFolder', {
+						fid: showPid, //文件id,顶层0
+						title: fname //标题名
+					});
+				} else if(subData.type == '1') { //从本地文件选择
+					events.fireToPageNone('storage_upload.html', 'chooseFolder', {
+						fid: showPid, //文件id,顶层0
+						title: fname //标题名
+					});
+				}
 				plus.webview.hide(main, 'pop-out');
 			});
 

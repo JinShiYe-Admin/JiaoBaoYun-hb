@@ -324,6 +324,7 @@
 				events.preload("../homework/homework-tea.html", 300);
 				events.preload('storage_main.html'); //预加载云存储
 				events.preload('storage_upload.html'); //预加载上传文件选择
+				events.preload('storage_upload_choose.html'); //预加载选择上传文件的方式
 				//初始化滚动条
 				mui('.mui-scroll-wrapper').scroll({
 					indicators: true, //是否显示滚动条
@@ -376,7 +377,7 @@
 
 				//上传按钮
 				window.addEventListener('upload', function() {
-					events.fireToPageWithData('storage_upload.html', 'init', {
+					events.fireToPageWithData('storage_upload_choose.html', 'init', {
 						fid: '0', //文件id,顶层0
 						showTop: false, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
 						title: '我的教宝云盘', //标题名

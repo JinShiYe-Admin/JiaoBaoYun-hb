@@ -1,0 +1,345 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<link rel="stylesheet" href="../../css/cloud/file.css" />
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
+		<style type="text/css">
+			body,
+			.mui-content {
+				background: white;
+			}
+
+			.mui-media-object {
+				font-size: 42px;
+			}
+
+			.mui-media-object {
+				height: 42px;
+				width: 42px;
+			}
+
+			#file {
+				position: absolute;
+				width: 100%;
+				bottom: 81px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">选择文件的方式</h1>
+		</header>
+		<nav class="mui-bar mui-bar-tab" style="background: #383E4E;">
+			<div style="margin: 5px;">
+				<div class="mui-pull-left" style="width: 45%;">
+					<div style="color: white;margin-left: 10%;">选择上传的位置</div>
+					<button id="choose" type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 15px;margin-left: 5%;background: #7F8594;border-color: #7F8594;height: 40px;">
+						<img class="mui-pull-left" src="../../image/cloud/A_folder.png"style="width: 20%;height: 20px;" />
+						<div id="yunpath" class="mui-ellipsis mui-pull-right"style="width: 80%;text-align: center;"></div>
+					</button>
+				</div>
+				<div class="mui-pull-right" style="width: 45%;">
+					<br />
+					<button id="upload" type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 15px;margin-left: -5%;background: #636770;border-color: #636770;height: 40px;">上传</button>
+				</div>
+			</div>
+		</nav>
+		<div class="mui-content">
+			<div class="mui-scroll-wrapper" style="margin-top: 55px;">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell mui-media" value="0">
+							<span class="mui-media-object mui-icon iconfont icon-imge mui-pull-left" style="color: #26e132;"></span>
+							<div class="mui-media-body">
+								相册
+							</div>
+						</li>
+						<li class="mui-table-view-cell mui-media" value="1">
+							<span class="mui-media-object mui-icon iconfont icon-xiangji mui-pull-left" style="color: #3fcec5;"></span>
+							<div class="mui-media-body">
+								拍照
+							</div>
+						</li>
+						<li class="mui-table-view-cell mui-media" value="2">
+							<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">
+							<div class="mui-media-body">
+								从本地文件
+							</div>
+						</li>
+					</ul>
+				</div>
+				<ul class="mui-table-view" id="file">
+					<!--<li class="mui-table-view-cell mui-media">
+						<span class="mui-media-object mui-pull-right mui-icon mui-icon-closeempty"></span>
+						<span class="mui-media-object mui-icon iconfont icon-imge mui-pull-left"></span>
+						<div class="mui-media-body">
+							<div class="mui-ellipsis">文件名字</div>
+						</div>
+					</li>-->
+				</ul>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				console.log('选择文件的方式');
+				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				var subData = null; //记录从父页面获取的数据
+				var upFile = null; //记录上传的文件
+				var pid = ''; //文件的上层ID
+				//初始化
+				window.addEventListener('init', function(e) {
+					subData = e.detail.data; //接收页面传入的参数值
+					console.log('subData:' + JSON.stringify(subData));
+					document.getElementById("yunpath").innerHTML = subData.title;
+					pid = subData.fid;
+				});
+
+				//选择上传的路径
+				window.addEventListener('chooseFolder', function(e) {
+					var folder = e.detail.data; //接收页面传入的参数值
+					console.log('chooseFolder:' + JSON.stringify(folder));
+					document.getElementById("yunpath").innerHTML = folder.title;
+					pid = folder.fid;
+				});
+
+				//返回按钮
+				mui.back = function() {
+					plus.webview.hide(main, 'pop-out');
+				}
+
+				//相册，拍照，从本地选择
+				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+					var value = this.getAttribute('value');
+					switch(value) {
+						case '0': //相册
+							pick();
+							break;
+						case '1': //拍照
+							camera();
+							break;
+						case '2': //从本地选择
+							events.fireToPageWithData('storage_upload.html', 'init', {
+								fid: '0', //文件id,顶层0
+								showTop: false, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
+								title: '我的教宝云盘', //标题名
+								top: subData.top //顶层文件和文件夹的数据
+							});
+							break;
+					}
+				});
+
+				//修改存储到云盘的路径
+				document.getElementById('choose').addEventListener('tap', function() {
+					//					if(pid == '0') {
+					events.fireToPageWithData('storage_main_choose.html', 'init', {
+						fid: subData.fid, //文件id,顶层0
+						showTop: subData.showTop, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
+						title: subData.title, //标题名
+						top: subData.top, //顶层文件和文件夹的数据
+						type:'0'//选择文件的方式0，从本地文件1
+					});
+					//					} else {
+					//						plus.webview.getWebviewById('storage_main_choose.html').show('slide-in-right', 250);
+					//					}
+				});
+
+				//上传选择的文件
+				document.getElementById('upload').addEventListener('tap', function() {
+					if(upFile != null) {
+						console.log("upload:" + JSON.stringify(upFile));
+						//跳转到传输列表
+						events.fireToPageWithData('storage_transport.html', 'addUpload', {
+							path: upFile.path, //路径
+							fname: upFile.fname, //文件名
+							metadata: upFile.metadata, //文件信息
+							pid: pid //云盘文件夹父ID
+						});
+						upFile = null;
+						document.getElementById("file").innerHTML = '';
+						changeUpBtnColorToDefault();
+					} else {
+						mui.toast('请选择上传的文件');
+					}
+				});
+
+				/**
+				 * 删除从相册或拍照选择的文件
+				 */
+				mui('#file').on('tap', '.mui-icon-closeempty', function() {
+					var btnArray = ['否', '是'];
+					mui.confirm('确认,删除？', '提示', btnArray, function(e) {
+						if(e.index == 1) { //是
+							upFile = null
+							changeUpBtnColorToDefault();
+							document.getElementById("file").innerHTML = '';
+						} else {
+
+						}
+					});
+				})
+
+				/**
+				 * 将上传按钮颜色设置为默认颜色
+				 */
+				function changeUpBtnColorToDefault() {
+					document.getElementById('upload').style.background = '#636770';
+					document.getElementById('upload').style.border = '#636770';
+				}
+
+				/**
+				 * 将上传按钮颜色设置为蓝色
+				 */
+				function changeUpBtnColor() {
+					document.getElementById('upload').style.background = '#4DA3F5';
+					document.getElementById('upload').style.border = '#4DA3F5';
+				}
+
+				//拍照
+				function camera() {
+					var cmr = plus.camera.getCamera();
+					var res = cmr.supportedImageResolutions[0];
+					var fmt = cmr.supportedImageFormats[0];
+					cmr.captureImage(function(capturedFile) {
+							console.log('拍照成功,图片的路径为：' + capturedFile);
+							getFile(capturedFile);
+						},
+						function(error) {
+							// 拍照失败的回调
+							var code = error.code; // error.code（Number类型）获取错误编码
+							var message = error.message; // error.message（String类型）获取错误描述信息。
+							if(code !== 11) {
+								mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message + '拍照失败');
+								console.log('拍照失败！' + JSON.stringify(error));
+							} else {
+								console.log('未拍取图片');
+							}
+						}, {
+							format: fmt
+						}
+					);
+				}
+
+				//相册
+				function pick() {
+					plus.gallery.pick(function(file) {
+						console.log('从相册选取图片成功,图片的路径为：' + file);
+						getFile(file);
+					}, function(error) {
+						//从相册选取图片失败的回调
+						var code = error.code; // 错误编码
+						var message = error.message; // 错误描述信息
+						if(code != 12) {
+							mui.toast('从相册选取图片失败！' + '错误编码：' + code + '描述信息：' + message);
+							console.log('从相册选取图片失败！' + JSON.stringify(error));
+						} else {
+							console.log('未选取图片');
+						}
+					});
+				}
+
+				/**
+				 * 获取文件
+				 * @param {Object} URL 文件路径
+				 */
+				function getFile(URL) {
+					plus.io.resolveLocalFileSystemURL(URL, function(entry) {
+						var filePath = entry.toLocalURL();
+						//请求成功的回调
+						console.log("请求文件系统成功" + JSON.stringify(entry.name));
+						entry.getMetadata(function(succesCB) {
+
+							console.log("获取目文件的属性成功");
+							console.log("getMetadata:" + JSON.stringify(succesCB));
+							console.log("readFileSize：" + AndroidFileSystem.readSize(succesCB.size));
+							//限制50M
+							if(succesCB.size <= (50 * 1024 * 1024)) {
+								if(upFile == null) { //当前页面没选上传的文件
+									upFile = { //记录上传的文件
+										path: filePath, //本地路径
+										fname: entry.name, //本地文件名
+										metadata: succesCB //文件信息
+									}
+									changeUpBtnColor();
+									if(succesCB.size <= (5 * 1024 * 1024)) { //小于5M
+										addUpFile(entry.name, filePath);
+									} else {
+										addUpFile(entry.name);
+									}
+								} else {
+									var btnArray = ['否', '是'];
+									mui.confirm('只能选择一个上传文件，是否覆盖？', '提示', btnArray, function(e) {
+										if(e.index == 1) { //是
+											upFile = { //记录上传的文件
+												path: filePath, //本地路径
+												fname: entry.name, //本地文件名
+												metadata: succesCB //文件信息
+											}
+											changeUpBtnColor();
+											document.getElementById("file").innerHTML = '';
+											if(succesCB.size <= (5 * 1024 * 1024)) { //小于5M
+												addUpFile(entry.name, filePath);
+											} else {
+												addUpFile(entry.name);
+											}
+										} else {
+
+										}
+									});
+								}
+							} else {
+								mui.toast('上传文件不得大于50M');
+							}
+						}, function(errorCB) {
+							mui.toast('获取文件的属性失败');
+							console.log("获取文件的属性失败: " + JSON.stringify(errorCB));
+						});
+					}, function(errorCB) {
+						//请求失败的的回调
+						if(errorCB.code == 12) {
+							mui.toast('请求文件系统失败:文件不存在');
+							console.log("请求文件系统失败: " + JSON.stringify(errorCB));
+						} else {
+							mui.toast('请求文件系统失败:' + JSON.stringify(errorCB));
+							console.log("请求文件系统失败: " + JSON.stringify(errorCB));
+						}
+					});
+				}
+
+				/**
+				 * 增加一项上传的文件
+				 * @param {Object} fName 文件名
+				 * @param {Object} fPath 文件路径
+				 */
+				function addUpFile(fName, fPath) {
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell mui-media';
+					var html1 = '';
+					html1 = '<span class="mui-media-object mui-icon iconfont icon-imge mui-pull-left"></span>';
+					if(fPath != undefined) {
+						html1 = '<img class="mui-media-object mui-pull-left" src="' + fPath + '">';
+					}
+					li.innerHTML = '<span id="closeempty" class="mui-media-object mui-pull-right mui-icon mui-icon-closeempty"></span>\
+									' + html1 + '\
+									<div class="mui-media-body">\
+										<div class="mui-ellipsis">' + fName + '</div>\
+									</div>'
+					document.getElementById("file").appendChild(li);
+				}
+			});
+		</script>
+	</body>
+
+</html>
