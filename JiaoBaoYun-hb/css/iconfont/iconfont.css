@@ -17,8 +17,6 @@
 
 .icon-zone:before { content: "\e64c"; }
 
-.icon-xiangji:before { content: "\e60c"; }
-
 .icon-guanbi:before { content: "\e614"; }
 
 .icon-shexiangji:before { content: "\e60e"; }
@@ -108,6 +106,8 @@
 .icon-fabu:before { content: "\e863"; }
 
 .icon-support:before { content: "\e905"; }
+
+.icon-xiangji:before { content: "\e906"; }
 
 .icon-jiujiajingicon02-copy:before { content: "\e907"; }
 
