@@ -136,7 +136,7 @@ function addPullFresh() {
 var pullUpRefresh = function() {
 
 	document.addEventListener("plusscrollbottom", function() {
-		console.log('我在底部');
+		console.log('我在底部pageIndex:'+selectGContainer.classInfo.pageIndex+'totalPageCount:'+totalPageCount);
 		if(selectGContainer.classInfo.pageIndex < totalPageCount) {
 			selectGContainer.classInfo.pageIndex++;
 			requireHomeWork(selectGContainer.classInfo, setData);
@@ -159,7 +159,7 @@ var setListener = function() {
 			if(role == 2) {
 				//如果数据已存在
 				if(teacherHash.get(selectGId)) {
-					setPublishedData();
+					setPublishedData(teacherHash.get(selectGId));
 					//如果数据不存在
 				} else {
 					requireHomeWork(this.classInfo, setData);
@@ -167,7 +167,7 @@ var setListener = function() {
 				//学生家长角色
 			} else {
 				if(studentHash.get(selectGId)) {
-					setHomeworkData()
+					setHomeworkData(studentHash.get(selectGId));
 				} else {
 					requireHomeWork(this.classInfo, setData);
 				}
@@ -264,20 +264,22 @@ var requireHomeWork = function(classModel, callback) {
 				wd.close();
 				console.log('老师、作业主界面获取的作业列表：' + JSON.stringify(data));
 				if(data.RspCode == 0) {
-					totalPage = data.RspData.PageCount;
-					setHashData(comData, data);
+					totalPageCount = data.RspData.PageCount;
+					setHashData(comData,data);
+					callback(data.RspData.Dates)
 				} else {
 					mui.toast(data.RspTxt);
 				}
-				callback()
+				
 			})
 		} else {
 			postDataPro_GetHomeworkListStu(comData, wd, function(data) {
 				wd.close();
 				console.log('学生、作业主界面获取的作业列表：' + JSON.stringify(data));
 				if(data.RspCode == 0) {
-					totalPage = data.RspData.PageCount;
+					totalPageCount = data.RspData.PageCount;
 					setHashData(comData, data);
+					callback(data.RspData.Dates)
 				} else {
 					mui.toast(data.RspTxt);
 				}
@@ -289,21 +291,21 @@ var requireHomeWork = function(classModel, callback) {
 	/**
 	 * 
 	 */
-var setData = function() {
+var setData = function(data) {
 		//老师角色
 		if(role == 2) {
-			setPublishedData();
+			setPublishedData(data);
 			//家长和学生
 		} else {
-			setHomeworkData();
+			setHomeworkData(data);
 		}
 	}
 	/**
 	 * 放置我发布的数据
 	 */
-var setPublishedData = function() {
+var setPublishedData = function(publishedData) {
 		//		events.clearChild(list);
-		var publishedData = teacherHash.get(selectGId);
+//		var publishedData = teacherHash.get(selectGId);
 		if(publishedData) {
 			console.log('发布作业的Id：' + selectGId + ';老师作业的数据：' + JSON.stringify(publishedData));
 			publishedData.forEach(function(DateHM, i) {
@@ -355,7 +357,9 @@ var createAnswerResultInner = function(answerResult) {
 var getAnswerImgs = function(thumbUrls) {
 	var imgsInner = '';
 	thumbUrls.forEach(function(thumbUrl) {
-		imgsInner += '<img class="answerResult-pic" src="' + storageKeyName.MAINHOMEWORKURL + thumbUrl + '"/>';
+		if(thumbUrl!=null){
+			imgsInner += '<img class="answerResult-pic" src="' + storageKeyName.MAINHOMEWORKURL + thumbUrl + '"/>';
+		}
 	})
 	imgsInner +='<span class="mui-icon mui-icon-arrowright temporary-more"></span>'
 	return imgsInner;
@@ -443,8 +447,8 @@ var getHomeworkIcon = function(subject) {
 	/**
 	 * 要区分家长和学生作业界面
 	 */
-var setHomeworkData = function() {
-		var homeworkData = studentHash.get(selectGId);
+var setHomeworkData = function(homeworkData) {
+//		var homeworkData = studentHash.get(selectGId);
 		if(homeworkData) {
 			homeworkData.forEach(function(DateHM, i) {
 				var divider = document.createElement('li');

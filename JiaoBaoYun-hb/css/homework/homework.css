@@ -113,8 +113,9 @@ header .icon-xiangji:before{
 	max-height: 100px;
 }
 .temporary-more{
+	float:right;
 	padding-left: 10%;
-	vertical-align: 50%;
+	padding-top: 2rem;
 	font-size: 4rem;
 	color: darkgray;
 }
