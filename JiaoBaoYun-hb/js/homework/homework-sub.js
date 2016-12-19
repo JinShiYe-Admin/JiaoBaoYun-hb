@@ -155,6 +155,7 @@ var setListener = function() {
 			selectGId = this.classInfo.gid;
 			events.clearChild(list);
 			console.log('被点击的班级数据：' + JSON.stringify(this.classInfo));
+			totalPageCount=selectGContainer.classInfo.totalPageCount;
 			//老师角色
 			if(role == 2) {
 				//如果数据已存在
@@ -265,6 +266,7 @@ var requireHomeWork = function(classModel, callback) {
 				console.log('老师、作业主界面获取的作业列表：' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					totalPageCount = data.RspData.PageCount;
+					selectGContainer.classInfo.totalPageCount=totalPageCount;
 					setHashData(comData,data);
 					callback(data.RspData.Dates)
 				} else {
@@ -278,6 +280,7 @@ var requireHomeWork = function(classModel, callback) {
 				console.log('学生、作业主界面获取的作业列表：' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					totalPageCount = data.RspData.PageCount;
+					selectGContainer.classInfo.totalPageCount=totalPageCount;
 					setHashData(comData, data);
 					callback(data.RspData.Dates)
 				} else {

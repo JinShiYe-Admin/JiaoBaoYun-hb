@@ -102,7 +102,8 @@
 			"html/cloud/storage_main.html",
 			"html/cloud/storage_upload.html",
 			"html/cloud/app_notes_main.html",
-			"html/cloud/record_student_main.html"
+			"html/cloud/record_student_main.html",
+			"html/cloud/storage_upload_choose.html"
 		]
 	},
 	"html/quan/tab-zone.html": {
