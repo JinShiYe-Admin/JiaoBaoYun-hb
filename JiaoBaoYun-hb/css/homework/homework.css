@@ -53,6 +53,7 @@ header .mui-icon-bars:before{
 	display: inline-block;
 	width: 15rem;
 	height: 30px;
+	color: white;
 	-webkit-transition-timing-function: ease-in-out;
 	transition-timing-function: ease-in-out;
 	-webkit-transition-duration: .2s;
@@ -71,6 +72,7 @@ header .mui-icon-bars:before{
 	padding-top: 5px;
 	width: 8rem;
 	height: 30px;
+	color: dodgerblue;
 	-webkit-transition: .2s ease-in-out;
 	transition: .2s ease-in-out;
 	-webkit-transition-property: -webkit-transform, width, left;
@@ -95,7 +97,6 @@ header .mui-icon-bars:before{
 .switch-mine.mui-active .switch-handle-mine:before{
 	font-size: 1.2rem;
 	content: '学生作业';
-	margin-right: -2px;
 	/*color: #fff*/
 }
 .switch-mine.mui-active:before {
