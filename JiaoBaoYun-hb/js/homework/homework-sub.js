@@ -155,7 +155,7 @@ var setListener = function() {
 			selectGId = this.classInfo.gid;
 			events.clearChild(list);
 			console.log('被点击的班级数据：' + JSON.stringify(this.classInfo));
-			totalPageCount=selectGContainer.classInfo.totalPageCount;
+			totalPageCount=this.classInfo.totalPageCount;
 			//老师角色
 			if(role == 2) {
 				//如果数据已存在
