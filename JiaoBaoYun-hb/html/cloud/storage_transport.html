@@ -301,6 +301,34 @@
 					//main.hide();
 				}
 
+				//清除所有的任务和界面
+				window.addEventListener('removeAllTask', function() {
+					console.log('传输列表:removeAllTask');
+					//上传处理
+					mui.each(uploadList, function(index, element) {
+						element.abort();
+					});
+					uploadList = [];
+					document.getElementById("upload").innerHTML = '';
+					document.getElementById("uploaded").innerHTML = '';
+
+					//下载处理
+					mui.each(downloadList, function(index, element) {
+						element.abort();
+					});
+
+					downloadList = [];
+					document.getElementById("download").innerHTML = '';
+					document.getElementById("downloaded").innerHTML = '';
+					//
+					uploading = false; //是否正在下载
+					downloading = false; //是否正在上传
+					upFolderEntry = null; //上传文件夹的目录对象
+					downFolderEntry = null; //下载文件夹的目录对象
+					plus.uploader.clear();//清除上传任务
+					plus.downloader.clear();//清除下载任务
+				});
+
 				//新增一项下载任务
 				window.addEventListener('addDownload', function(e) {
 					//---数据准备---start---
@@ -339,7 +367,7 @@
 					//  pid:pid//云盘文件夹父ID
 					//}
 					//if(mui.os.android) { //android系统
-						//subData.path = 'file://' + subData.path;
+					//subData.path = 'file://' + subData.path;
 					//}
 					console.log('传输列表新增一项上传任务:' + JSON.stringify(subData));
 
@@ -641,7 +669,7 @@
 								mui.toast(data.type);
 							} else {
 								var btnArray = ['否', '是'];
-								mui.confirm('当前不是无线WIFI网络，还继续上传吗？', '提示', btnArray, function(e) {
+								mui.confirm('当前不是无线WIFI网络，还继续吗？', '提示', btnArray, function(e) {
 									if(e.index == 1) { //是
 										if(type == 1) { //上传
 											getQNUpToken(postData.getUpTokenUrl, postData.QNFileName, postData.fpath, postData.fname, postData.pid);
@@ -649,7 +677,7 @@
 											getQNDownToken(postData.fileUrl, postData.fname, postData.localname);
 										}
 									} else {
-
+										plus.nativeUI.closeWaiting();
 									}
 								});
 							}
@@ -673,6 +701,7 @@
 					console.log('getQNDownToken:fpath:' + fpath);
 					CloudFileUtil.getQNDownToken(fileUrl, function(data) {
 						console.log('七牛下载token:' + data);
+						plus.nativeUI.closeWaiting();
 						CloudFileUtil.download(data, filename, function(download, status) {
 							//下载任务完成的监听
 							mui.toast('下载任务完成');
@@ -726,14 +755,40 @@
 									console.log('下载任务请求已经接收:|id:' + id + '|downloadState:' + downloadState);
 									document.getElementById("down_btn_" + id).innerText = '暂停';
 									document.getElementById("down_btn_" + id).value = '3';
+									document.getElementById("down_waiting_" + id).style.display = 'none';
 									break;
 								case 3: //下载任务接收数据
 									//console.log('下载任务接收数据:|id:' + id + '|downloadSize:' + downloadSize + '|totalSize:' + totalSize + '|uploadState:' + downloadState);
 									//document.getElementById("down_btn_" + id).innerText = '暂停';
 									//document.getElementById("down_btn_" + id).value = '3';
-									mui("#down_bar_" + id).progressbar().setProgress(download.downloadedSize / download.totalSize * 100);
-									document.getElementById("down_waiting_" + id).style.display = 'none';
-									document.getElementById("down_size_" + id).innerText = downloadSize + '/' + totalSize;
+									if(document.getElementById("down_bar_" + id) !== null) {
+										mui("#down_bar_" + id).progressbar().setProgress(download.downloadedSize / download.totalSize * 100);
+									}
+									if(document.getElementById("down_size_" + id) !== null) {
+										document.getElementById("down_size_" + id).innerText = downloadSize + '/' + totalSize;
+									}
+									//									CloudFileUtil.getCurrentType(function(data) {
+									//										console.log('获取当前网络状态:' + JSON.stringify(data));
+									//										if(data.code == 3) { //无线WIFI网络
+									//
+									//										} else {
+									//											download.pause(); //暂停
+									//											document.getElementById("down_btn_" + id).innerText = '继续';
+									//											document.getElementById("down_btn_" + id).value = '5';
+									//											if(data.code == 1) {
+									//												mui.toast(data.type);
+									//											} else {
+									//												var btnArray = ['否', '是'];
+									//												mui.confirm('当前不是无线WIFI网络，还继续下载吗？', '提示', btnArray, function(e) {
+									//													if(e.index == 1) { //是
+									//														download.resume(); //恢复下载
+									//													} else {
+									//
+									//													}
+									//												});
+									//											}
+									//										}
+									//									});
 									break;
 								case 4: //下载任务已完成
 									console.log('下载任务已完成:|id:' + id + '|downloadState:' + downloadState);
@@ -758,6 +813,7 @@
 							}
 						});
 					}, function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
 						mui.toast('获取七牛下载token失败：' + type);
 						console.log('获取七牛下载token失败：' + type);
 					});
@@ -775,6 +831,7 @@
 					CloudFileUtil.getQNUpToken(getUpTokenUrl, QNFileName, function(data) {
 						var QNUptoken = data.uptoken;
 						console.log('七牛上传token:' + QNUptoken);
+						plus.nativeUI.closeWaiting();
 						CloudFileUtil.upload(fPath, QNUptoken, QNFileName, function(upload, status) {
 							//上传任务完成的监听
 							console.log('上传任务完成');
@@ -865,6 +922,7 @@
 							}
 						});
 					}, function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
 						mui.toast('获取七牛上传token失败：' + type);
 						console.log('获取七牛上传token失败：' + type);
 					});
@@ -1089,6 +1147,7 @@
 					} else { //下载
 						path = utidPath + '/download/';
 					}
+					//console.log("getUpOrDownEntry: " + path);
 					plus.io.resolveLocalFileSystemURL(path, function(succesCB) {
 						if(type == 1) { //上传
 							upFolderEntry = succesCB;
@@ -1113,7 +1172,7 @@
 					var directoryReader = entry.createReader();
 					directoryReader.readEntries(function(succesCB) {
 						//succesCB:文件或目录对象的引用,可指向文件或目录对象（DirectoryEntry|FileEntry）
-						console.log("获取上传或下载目录中的所有文件和子目录成功");
+						//console.log("获取上传或下载目录中的所有文件和子目录成功");
 						mui.each(succesCB, function(index, element) {
 							//console.log("directoryReader:" + element.fullPath);
 							//读取上传或下载文件夹下的文件或子目录属性并生成记录

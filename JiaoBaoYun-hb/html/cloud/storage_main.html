@@ -393,6 +393,7 @@
 				if(ftype == '.file') {
 					mui.toast('下载文件夹');
 				} else {
+					plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					events.fireToPageWithData('storage_transport.html', 'addDownload', {
 						pid: pid, //父ID
 						fid: fid, //文件id

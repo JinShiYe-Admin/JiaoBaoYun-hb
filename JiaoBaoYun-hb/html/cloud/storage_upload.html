@@ -168,6 +168,10 @@
 				});
 				//---滑动end---
 
+				//在程序中创建utid的文件夹和对应的上传下载文件夹
+				window.addEventListener('createFolder', function(e) {
+					createFolder();//在程序中创建utid的文件夹和对应的上传下载文件夹
+				});
 				//初始化
 				window.addEventListener('init', function(e) {
 					subData = e.detail.data; //接收页面传入的参数值
@@ -214,7 +218,7 @@
 						showTop: subData.showTop, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
 						title: subData.title, //标题名
 						top: subData.top, //顶层文件和文件夹的数据
-						type:'1'//选择文件的方式0，从本地文件1
+						type: '1' //选择文件的方式0，从本地文件1
 					});
 					//					} else {
 					//						plus.webview.getWebviewById('storage_main_choose.html').show('slide-in-right', 250);
@@ -224,8 +228,9 @@
 				//上传选择的文件
 				document.getElementById('upload').addEventListener('tap', function() {
 					if(upFile != null) {
-						console.log("upload:" + JSON.stringify(upFile));
+						//console.log("upload:" + JSON.stringify(upFile));
 						//跳转到传输列表
+						plus.nativeUI.showWaiting(storageKeyName.WAITING);
 						events.fireToPageWithData('storage_transport.html', 'addUpload', {
 							path: upFile.path, //路径
 							fname: upFile.fname, //文件名
