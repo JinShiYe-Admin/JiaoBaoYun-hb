@@ -107,8 +107,6 @@
 
 .icon-support:before { content: "\e905"; }
 
-.icon-xiangji:before { content: "\e906"; }
-
 .icon-jiujiajingicon02-copy:before { content: "\e907"; }
 
 .icon-dili:before { content: "\e61b"; }
@@ -150,3 +148,5 @@
 .icon-huaxue:before { content: "\e618"; }
 
 .icon-shuxue:before { content: "\e61a"; }
+
+.icon-xiangji:before { content: "\e908"; }
