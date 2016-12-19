@@ -148,10 +148,11 @@
 						li.homeworkInfo = answerListArray[i];
 						mui.extend( this.homeworkInfo, homeworkModel);
 						li.homeworkInfo.workType = 0;
+						var IsCommented;
 if(answerListArray[i].IsCommented==true){
-	answerListArray[i].IsCommented = '已评'
+	IsCommented = '已评'
 }else{
-	answerListArray[i].IsCommented = '未评'
+	IsCommented = '未评'
 }
 						li.innerHTML =
 							'<img id="img" class="mui-media-object mui-pull-left dynamic-personal-image " src="'+updateHeadImg(answerListArray[i].uimg)+'" />' +
@@ -159,7 +160,7 @@ if(answerListArray[i].IsCommented==true){
 							'<p id="name" style="font-size: 16px;">'+answerListArray[i].ugnick+'<font style="font-size: 12px;">&nbsp&nbsp&nbsp&nbsp'+answerListArray[i].QuestionResultStr+'</font></p>' +
 							'</div>' +
 							'<div class="mui-media-body mui-pull-right" style="margin-top: -25px;">' +
-							'<p id="isCommented" style="font-size: 13px;">'+answerListArray[i].IsCommented+'<span class="mui-icon mui-icon-forward"></span></p>' +
+							'<p id="isCommented" style="font-size: 13px;">'+IsCommented+'<span class="mui-icon mui-icon-forward"></span></p>' +
 							'</div>'
 						homeworkNodes.list.appendChild(li);
 					}
