@@ -122,7 +122,7 @@
 			this.handle.style.webkitTransform = 'translate(0,0)';
 		} else {
 			classList.add(CLASS_ACTIVE);
-			this.handle.style.webkitTransform = 'translate(' + this.handleX + 'px,0)';
+			this.handle.style.webkitTransform = 'translate(' + (this.handleX+2) + 'px,0)';
 		}
 		$.trigger(this.element, 'toggle', {
 			isActive: this.classList.contains(CLASS_ACTIVE)
