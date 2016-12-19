@@ -170,7 +170,7 @@ var createAnswerImgs = function(homeworkInfo, imgs) {
 		var div = document.createElement('div');
 		var imgsInner = '';
 		for(var i in imgs) {
-			imgsInner += '<img src="' + storageKeyName.MAINHOMEWORKURL + imgs[i].ThumbUrl + '"/>';
+			imgsInner += '<img class="answer-img" src="' + storageKeyName.MAINHOMEWORKURL + imgs[i].ThumbUrl + '"/>';
 		}
 		div.innerHTML = imgsInner;
 		homeworkInfo.appendChild(div);
