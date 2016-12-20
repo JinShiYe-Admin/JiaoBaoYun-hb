@@ -387,7 +387,7 @@
 								mui.toast('创建群成功');
 								mui.back();
 							} else {
-								plus.nativeUI.showWaiting('正上传群头像');
+								plus.nativeUI.showWaiting('正在加载中');
 								uploadQunHeadImge(data.RspData, qunImgPath, function(successCB) {
 									console.log('创建群成功');
 									events.fireToPageNone('/html/mine/qun_manage.html', 'refresh');
@@ -414,7 +414,7 @@
 				 * @param {Object} error 失败回调
 				 */
 				function uploadQunHeadImge(qunId, qunImge, successCallBack, errorCallBack) {
-					var fileName = 'qunHeadImge' + qunId + '.png';
+					var fileName = 'qunheadimge' + qunId + '.png';
 					plus.zip.compressImage({
 							src: qunImge, //压缩转换原始图片的路径
 							dst: '_documents/' + fileName, //压缩转换目标图片的路径

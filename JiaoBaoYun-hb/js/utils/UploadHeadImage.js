@@ -39,7 +39,7 @@ var UploadHeadImage = (function($, mod) {
 				titleStr = '选择修改学生头像的方式';
 				break;
 			case 2: //群头像
-				fileName = 'qunHeadImge' + headData.id + '.png';
+				fileName = 'qunheadimge' + headData.id + '.png';
 				titleStr = '选择修改群头像的方式';
 				break;
 			default:
