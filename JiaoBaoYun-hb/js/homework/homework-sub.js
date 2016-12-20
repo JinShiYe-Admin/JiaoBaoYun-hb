@@ -136,7 +136,7 @@ function addPullFresh() {
 var pullUpRefresh = function() {
 
 	document.addEventListener("plusscrollbottom", function() {
-		console.log('我在底部pageIndex:'+selectGContainer.classInfo.pageIndex+'totalPageCount:'+totalPageCount);
+		console.log('我在底部pageIndex:'+selectGContainer.classInfo.pageIndex+',totalPageCount:'+totalPageCount);
 		if(selectGContainer.classInfo.pageIndex < totalPageCount) {
 			selectGContainer.classInfo.pageIndex++;
 			requireHomeWork(selectGContainer.classInfo, setData);
@@ -348,8 +348,8 @@ var setPublishedData = function(publishedData) {
 	 */
 var createHomeworkInner = function(homework) {
 	return '<a><div class="homework-header"><span class=" iconfont subject-icon ' +
-		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words"><h5 class="header-title">' +
-		homework.HomeworkTitle + '</h5><p class="header-content">' + homework.Contents + '</p></div></div>' +
+		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words"><h6 class="header-title">' +
+		homework.HomeworkTitle + '</h6><p class="header-content">' + homework.Contents + '</p></div></div>' +
 		'<div class="homework-bottom"><p>未提交数(' + homework.Remain +
 		')</p><p>已提交数(' + homework.Upload + ')</p></div></a>';
 }
@@ -368,9 +368,9 @@ var getAnswerImgs = function(thumbUrls) {
 	return imgsInner;
 }
 var createStuHomeworkInner = function(homework) {
-	return '<a><div class="stuHomework-header "><span class="mui-icon iconfont subject-icon ' +
-		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words"><h5 class="header-title">' +
-		homework.HomeworkTitle + '</h5><p class="header-content">' + homework.Contents + '</p></div></div>' +
+	return '<a><div class="stuHomework-header "><span class=" iconfont subject-icon ' +
+		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words"><h6 class="header-title">' +
+		homework.HomeworkTitle + '</h6><p class="header-content">' + homework.Contents + '</p></div></div>' +
 		'<div class="stuHomework-bottom"></div></a>';
 }
 var getResultBackground=function(answerResult){

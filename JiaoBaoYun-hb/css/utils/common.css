@@ -57,7 +57,7 @@ h4{font-size:1.8rem}
 /*1.7rem为副标题 */
 h5{font-size:1.7rem}
 /*1.6为中间字体大小*/
-h6{font-size:1.6rem}
+h6{font-size:1.5rem}
 
 /*分情况来做,不是所有页面都需要字体随着屏幕大小改变而改变的.*/
 /*三星大屏幕机最低宽度:note2-note3,S2-S4*/
