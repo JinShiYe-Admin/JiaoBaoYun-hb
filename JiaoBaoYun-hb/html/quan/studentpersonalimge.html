@@ -63,63 +63,63 @@
 					plus.nativeUI.closeWaiting(); //关闭等待窗口
 				}
 
-				mui('.mui-bar-tab').on('tap', '.mui-btn', function() {
-					var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENHEADIMGE;
-
-					CloudFileUtil.getQNUpToken(getUpTokenUrl, QNFileName, function(data) {
-						var QNUptoken = data.uptoken;
-						console.log('七牛上传token:' + QNUptoken);
-						plus.nativeUI.closeWaiting();
-						CloudFileUtil.upload(fPath, QNUptoken, QNFileName, function(upload, status) {
-							//上传任务完成的监听
-							console.log('上传任务完成');
-
-						}, function(upload, status) {
-							//上传任务状态监听
-							//上传任务的标识
-							var id = upload.__UUID__;
-							//已完成上传数据的大小
-							var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
-							//上传数据的总大小
-							var totalSize = AndroidFileSystem.readSize(upload.totalSize);
-							//上传任务的状态
-							var uploadState = upload.state;
-							switch(uploadState) {
-								case 0: //上传任务开始调度
-									console.log('上传任务开始调度:|id:' + id + '|uploadState:' + uploadState);
-									break;
-								case 1: //上传任务开始请求
-									console.log('上传任务开始请求:|id:' + id + '|uploadState:' + uploadState);
-									break;
-								case 2: //上传任务请求已经建立
-									console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
-									break;
-								case 3: //上传任务提交数据
-									console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
-
-									break;
-								case 4: //上传任务已完成
-									console.log('上传任务已完成:|id:' + id + '|uploadState:' + uploadState);
-									break;
-								case 5: //上传任务已暂停
-									//document.getElementById("up_btn_" + id).innerText = '继续';
-									//document.getElementById("up_btn_" + id).value = '5';
-									console.log('上传任务已暂停:|id:' + id + '|uploadState:' + uploadState);
-									break;
-								default:
-									console.log('上传任务状态监听:其他状态' + uploadState);
-									break;
-							}
-						}, function(task) {
-							//上传任务创建成功的回调
-							task.start();
-						});
-					}, function(xhr, type, errorThrown) {
-						plus.nativeUI.closeWaiting();
-						mui.toast('获取七牛上传token失败：' + type);
-						console.log('获取七牛上传token失败：' + type);
-					});
-				});
+//				mui('.mui-bar-tab').on('tap', '.mui-btn', function() {
+//					var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENHEADIMGE;
+//
+//					CloudFileUtil.getQNUpToken(getUpTokenUrl, QNFileName, function(data) {
+//						var QNUptoken = data.uptoken;
+//						console.log('七牛上传token:' + QNUptoken);
+//						plus.nativeUI.closeWaiting();
+//						CloudFileUtil.upload(fPath, QNUptoken, QNFileName, function(upload, status) {
+//							//上传任务完成的监听
+//							console.log('上传任务完成');
+//
+//						}, function(upload, status) {
+//							//上传任务状态监听
+//							//上传任务的标识
+//							var id = upload.__UUID__;
+//							//已完成上传数据的大小
+//							var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
+//							//上传数据的总大小
+//							var totalSize = AndroidFileSystem.readSize(upload.totalSize);
+//							//上传任务的状态
+//							var uploadState = upload.state;
+//							switch(uploadState) {
+//								case 0: //上传任务开始调度
+//									console.log('上传任务开始调度:|id:' + id + '|uploadState:' + uploadState);
+//									break;
+//								case 1: //上传任务开始请求
+//									console.log('上传任务开始请求:|id:' + id + '|uploadState:' + uploadState);
+//									break;
+//								case 2: //上传任务请求已经建立
+//									console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
+//									break;
+//								case 3: //上传任务提交数据
+//									console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
+//
+//									break;
+//								case 4: //上传任务已完成
+//									console.log('上传任务已完成:|id:' + id + '|uploadState:' + uploadState);
+//									break;
+//								case 5: //上传任务已暂停
+//									//document.getElementById("up_btn_" + id).innerText = '继续';
+//									//document.getElementById("up_btn_" + id).value = '5';
+//									console.log('上传任务已暂停:|id:' + id + '|uploadState:' + uploadState);
+//									break;
+//								default:
+//									console.log('上传任务状态监听:其他状态' + uploadState);
+//									break;
+//							}
+//						}, function(task) {
+//							//上传任务创建成功的回调
+//							task.start();
+//						});
+//					}, function(xhr, type, errorThrown) {
+//						plus.nativeUI.closeWaiting();
+//						mui.toast('获取七牛上传token失败：' + type);
+//						console.log('获取七牛上传token失败：' + type);
+//					});
+//				});
 				//用于实现图片拖动缩放
 				//				mui('body').on('touchstart', '.mui-content', function() {
 				//					console.log('滑动:touchstart');

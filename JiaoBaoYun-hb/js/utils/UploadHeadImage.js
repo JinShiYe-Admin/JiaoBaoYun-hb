@@ -39,7 +39,7 @@ var UploadHeadImage = (function($, mod) {
 				titleStr = '选择修改学生头像的方式';
 				break;
 			case 2: //群头像
-				fileName = 'qunHeadImge' + headData.id + '.png';
+				fileName = 'qunheadimge' + headData.id + '.png';
 				titleStr = '选择修改群头像的方式';
 				break;
 			default:
@@ -112,11 +112,20 @@ var UploadHeadImage = (function($, mod) {
 				// 拍照失败的回调
 				var code = error.code; // error.code（Number类型）获取错误编码
 				var message = error.message; // error.message（String类型）获取错误描述信息。
-				if(code !== 11) {
-					mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
-					console.log('拍照失败！' + JSON.stringify(error));
-				} else {
-					console.log('未拍取图片');
+				if(mui.os.ios) {
+					if(code !== 2) {
+						mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
+						console.log('拍照失败！' + JSON.stringify(error));
+					} else {
+						console.log('未拍取图片');
+					}
+				} else if(mui.os.android) {
+					if(code !== 11) {
+						mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
+						console.log('拍照失败！' + JSON.stringify(error));
+					} else {
+						console.log('未拍取图片:' + JSON.stringify(error));
+					}
 				}
 			}, {
 				//						resolution: res,
@@ -139,11 +148,20 @@ var UploadHeadImage = (function($, mod) {
 			//从相册选取图片失败的回调
 			var code = error.code; // 错误编码
 			var message = error.message; // 错误描述信息
-			if(code != 12) {
-				mui.toast('从相册选取图片失败！' + '错误编码：' + code + '描述信息：' + message);
-				console.log('从相册选取图片失败！' + JSON.stringify(error));
-			} else {
-				console.log('未选取图片');
+			if(mui.os.ios) {
+				if(code != -2) {
+					mui.toast('从相册选取图片失败！' + '错误编码：' + code + '描述信息：' + message);
+					console.log('从相册选取图片失败！' + JSON.stringify(error));
+				} else {
+					console.log('未选取图片');
+				}
+			} else if(mui.os.android) {
+				if(code != 12) {
+					mui.toast('从相册选取图片失败！' + '错误编码：' + code + '描述信息：' + message);
+					console.log('从相册选取图片失败！' + JSON.stringify(error));
+				} else {
+					console.log('未选取图片:' + JSON.stringify(error));
+				}
 			}
 		});
 	}
