@@ -18,16 +18,14 @@ header .mui-icon-bars:before{
 /**
  * 发布作业按钮
  */
-.icon-jia{
+.icon-tianjia{
 	position: fixed;
 	bottom: 2rem;
 	right: 2rem;
 	z-index: 666;
-	font-size: 4rem;
-	color: saddlebrown;
-	background-color: orange;
+	font-size: 5rem;
+	color: #1296db;
 	border-radius: 50%;
-	padding: .5rem;
 }
 
 .mui-segmented-control {
@@ -35,12 +33,15 @@ header .mui-icon-bars:before{
 	border: 0px solid gray;
 	background-color: transparent;
 }
+.homework-header{
+	height: 5rem;
+}
 
 .header-words{
 	display: inline-block;
-	width: 76%;
+	width: 78%;
 }
-.homework-bottom p{ 
+.homework-bottom>p{ 
 	 display: inline-block;
 	 padding-left: 1rem;
 }
@@ -119,5 +120,22 @@ header .mui-icon-bars:before{
 	padding-top: 2rem;
 	font-size: 4rem;
 	color: darkgray;
+}
+.header-title{
+	color: #404040;
+}
+.header-content{
+	color: #747474;
+}
+.homework-bottom>p{
+	color: #b7b7b7;
+	font-size: 1rem;
+}
+.subject-icon{
+	vertical-align: middle;
+}
+.mui-table-view-divider{
+	background-color: darkgray;
+	color: white;
 }
 

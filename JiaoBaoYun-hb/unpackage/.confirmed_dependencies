@@ -710,7 +710,8 @@
 			"js/quan/about-me.js",
 			"js/utils/events.js",
 			"fonts/mui.ttf",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"js/publicHomeworkProtocol.js"
 		],
 		"refer": []
 	},
@@ -1794,6 +1795,12 @@
 	"html/cloud/record_student_sub.html": {
 		"resources": [
 			"js/quan/studentdynamic.js"
+		]
+	},
+	"html/cloud/storage_upload_choose.html": {
+		"resources": [
+			"image/cloud/A_folder.png",
+			"js/cloud/AndroidFileSystem.js"
 		]
 	}
 }
