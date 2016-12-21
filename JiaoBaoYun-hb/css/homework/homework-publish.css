@@ -1,24 +1,17 @@
-/**
- * 发布作业附件图标区域
- */
-.publish-extras{
-	text-align: center;
-	padding: 1rem 0;
-	background-color: #DDDDDD;
+html{
+	background-color: white;
 }
 /**
  * 发布作业附件 图标
  */
 .publish-extras a{
+	padding: 0 .8rem;
 	font-size: 2rem;
-	width: 30%;
+	color: darkgrey;
 }
-/**
- * 提交字体大小
- */
-/*.header-publish:last-of-type{
-	font-size: 1.2rem;
-}*/
+.extra-info{
+	padding:.5rem 1rem;
+}
 
 .rp {
 	width: 100%;
@@ -129,11 +122,17 @@
 	display: inline-block;
 }
 .receive-container{
-	padding: 1rem;
+	padding:.5rem 1.5rem;
 }
 .input-erea{
 	border: solid thin lightgray;
 }
 textarea{
 	min-height: 10rem;
+}
+.online-switch{
+	height: 2.5rem;
+}
+.mui-switch-handle:last-of-type{
+	height: 2.1rem;
 }

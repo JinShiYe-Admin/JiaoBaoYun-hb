@@ -29,23 +29,26 @@
 		<div class="mui-content">
 			<!--表单-->
 			<form class="mui-input-group">
+
+				<p style="text-align: center; ">请上传答案图片，以供学生参考</p>
+				<div id="pictures" class="img-container"></div>
+			</form>
+			<div class="receive-container">
 				<div class="mui-input-row display-none teachers-container">
 					<label>接收人:</label>
 					<select id="receive-teachers">
 					</select>
+
 				</div>
 				<!--科目选项-->
 				<div class="mui-input-row display-none subjects-container">
 					<label>科目:</label>
 					<select id="publish-subjects">
-					
+
 					</select>
 				</div>
-				
-				<p style="text-align: center; ">请上传答案图片，以供学生参考</p>
-				<div id="pictures" class="img-container"></div>
-			</form>
-			<button id='post-imgs' class="mui-btn mui-btn-blue btn-publish ">上传作业</button>
+				<button id='post-imgs' class="mui-btn mui-btn-blue btn-publish ">上传作业</button>
+			</div>
 		</div>
 		<script src="../../js/mui.min.js "></script>
 		<!--公共事件-->

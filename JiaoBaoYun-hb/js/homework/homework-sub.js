@@ -314,7 +314,7 @@ var setPublishedData = function(publishedData) {
 			publishedData.forEach(function(DateHM, i) {
 				var divider = document.createElement('li');
 				divider.className = 'mui-table-view-divider';
-				divider.innerText = DateHM.Date;
+				divider.innerText = DateHM.Date.split(' ')[0];
 				list.appendChild(divider);
 				if(DateHM.Homeworks && DateHM.Homeworks.length > 0) {
 					DateHM.Homeworks.forEach(function(homework, i) {
@@ -456,7 +456,7 @@ var setHomeworkData = function(homeworkData) {
 			homeworkData.forEach(function(DateHM, i) {
 				var divider = document.createElement('li');
 				divider.className = 'mui-table-view-divider';
-				divider.innerText = DateHM.Date;
+				divider.innerText = DateHM.Date.split(' ')[0];
 				list.appendChild(divider);
 				if(DateHM.Homeworks && DateHM.Homeworks.length > 0) {
 					DateHM.Homeworks.forEach(function(homework, i) {
