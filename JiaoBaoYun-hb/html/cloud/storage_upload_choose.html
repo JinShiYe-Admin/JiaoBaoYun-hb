@@ -33,6 +33,10 @@
 				width: 100%;
 				bottom: 81px;
 			}
+
+			.campion {
+				line-height: 45px;
+			}
 		</style>
 	</head>
 
@@ -56,41 +60,40 @@
 				</div>
 			</div>
 		</nav>
-		<div class="mui-content">
-			<div class="mui-scroll-wrapper" style="margin-top: 55px;">
-				<div class="mui-scroll">
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell mui-media" value="0">
-							<span class="mui-media-object mui-icon iconfont icon-imge mui-pull-left" style="color: #26e132;"></span>
-							<div class="mui-media-body">
-								相册
-							</div>
-						</li>
-						<li class="mui-table-view-cell mui-media" value="1">
-							<span class="mui-media-object mui-icon iconfont icon-xiangji mui-pull-left" style="color: #3fcec5;"></span>
-							<div class="mui-media-body">
-								拍照
-							</div>
-						</li>
-						<li class="mui-table-view-cell mui-media" value="2">
-							<!--<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">-->
-							<span class="mui-media-object mui-icon iconfont icon-allfolder mui-pull-left" style="color: #FFD33C;"></span>
-							<div class="mui-media-body">
-								从本地文件
-							</div>
-						</li>
-					</ul>
-				</div>
-				<ul class="mui-table-view" id="file">
-					<!--<li class="mui-table-view-cell mui-media">
+
+		<div class="mui-content mui-scroll-wrapper ">
+			<div class="mui-scroll">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-media" value="0">
+						<span class="mui-media-object mui-icon iconfont icon-xiangce mui-pull-left" style="color: #35b87f;  font-size:38px; margin-top:4px"></span>
+						<div class="mui-media-body campion">
+							相册
+						</div>
+					</li>
+					<li class="mui-table-view-cell mui-media" value="1">
+						<span class="mui-media-object mui-icon iconfont icon-xiangji mui-pull-left" style="color: #5B99EE;"></span>
+						<div class="mui-media-body campion">
+							拍照
+						</div>
+					</li>
+					<li class="mui-table-view-cell mui-media" value="2">
+						<!--<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">-->
+						<span class="mui-media-object mui-icon iconfont icon-allfolder mui-pull-left" style="color: #FFD33C;"></span>
+						<div class="mui-media-body campion">
+							从本地文件
+						</div>
+					</li>
+				</ul>
+			</div>
+			<ul class="mui-table-view" id="file">
+				<!--<li class="mui-table-view-cell mui-media">
 						<span class="mui-media-object mui-pull-right mui-icon mui-icon-closeempty"></span>
 						<span class="mui-media-object mui-icon iconfont icon-imge mui-pull-left"></span>
 						<div class="mui-media-body">
 							<div class="mui-ellipsis">文件名字</div>
 						</div>
 					</li>-->
-				</ul>
-			</div>
+			</ul>
 		</div>
 
 		<script type="text/javascript">
@@ -145,17 +148,15 @@
 
 				//修改存储到云盘的路径
 				document.getElementById('choose').addEventListener('tap', function() {
-					//					if(pid == '0') {
-					events.fireToPageWithData('storage_main_choose.html', 'init', {
+					var targetPage = plus.webview.getWebviewById('storage_main_choose.html');
+					mui.fire(targetPage, 'init', {
 						fid: subData.fid, //文件id,顶层0
 						showTop: subData.showTop, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
 						title: subData.title, //标题名
 						top: subData.top, //顶层文件和文件夹的数据
 						type: '0' //选择文件的方式0，从本地文件1
 					});
-					//					} else {
-					//						plus.webview.getWebviewById('storage_main_choose.html').show('slide-in-right', 250);
-					//					}
+					targetPage.show('slide-in-bottom', 250);
 				});
 
 				//上传选择的文件

@@ -51,6 +51,10 @@
 				height: 42px;
 				width: 42px;
 			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~ .mui-slider-group .mui-slider-item {
+				border-top: none;
+			}
 		</style>
 	</head>
 
@@ -69,7 +73,7 @@
 						上传列表
 					</a>
 				</div>
-				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="margin-top: -1px;"></div>
 				<div class="mui-slider-group">
 					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
 						<div id="scroll1" class="mui-scroll-wrapper">
@@ -79,7 +83,7 @@
 										<div id="downloadnum" style="padding:5px;">
 											下载中
 										</div>
-										<div style="height: 1px;width: 100%;background: #c8c7cc;"></div>
+										<div style="height: 1px;width: 100%;background: #d9d9d9;"></div>
 									</div>
 									<div id="download">
 										<!--<li class="mui-table-view-cell mui-media">
@@ -130,7 +134,7 @@
 										<div id="downloadednum" style="padding:5px;">
 											已下载
 										</div>
-										<div style="height: 1px;width: 100%;background: #c8c7cc;"></div>
+										<div style="height: 1px;width: 100%;background: #d9d9d9;"></div>
 									</div>
 									<div id="downloaded">
 										<!--<li class="mui-table-view-cell mui-media">
@@ -177,7 +181,7 @@
 										<div id="uploadnum" style="padding:5px;">
 											上传中
 										</div>
-										<div style="height: 1px;width: 100%;background: #c8c7cc;"></div>
+										<div style="height: 1px;width: 100%;background: #d9d9d9;"></div>
 									</div>
 									<div id="upload">
 										<!--<li class="mui-table-view-cell mui-media">
@@ -228,7 +232,7 @@
 										<div id="uploadednum" style="padding:5px;">
 											已上传
 										</div>
-										<div style="height: 1px;width: 100%;background: #c8c7cc;"></div>
+										<div style="height: 1px;width: 100%;background: #d9d9d9;"></div>
 									</div>
 									<div id="uploaded">
 										<!--<li class="mui-table-view-cell mui-media">
@@ -325,8 +329,8 @@
 					downloading = false; //是否正在上传
 					upFolderEntry = null; //上传文件夹的目录对象
 					downFolderEntry = null; //下载文件夹的目录对象
-					plus.uploader.clear();//清除上传任务
-					plus.downloader.clear();//清除下载任务
+					plus.uploader.clear(); //清除上传任务
+					plus.downloader.clear(); //清除下载任务
 				});
 
 				//新增一项下载任务

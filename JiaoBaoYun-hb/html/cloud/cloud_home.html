@@ -30,10 +30,12 @@
 			.cloud-info {
 				position: absolute;
 				/*顶部信息*/
-				padding: 10px;
-				float: right;
-				right: 0px;
-				margin-right: 50px;
+				left:12%;
+				top:20%;
+
+				/*float: right;
+
+				margin-right: 50px;*/
 			}
 
 			#cloud_prsonalimge {
@@ -87,11 +89,6 @@
 				height: 0px;
 			}
 
-			.mui-table-view {
-				background: transparent;
-				min-height: 90px;
-			}
-
 			.mui-table-view-cell {
 				background: white;
 			}
@@ -141,23 +138,19 @@
 				height: 100%;
 			}
 
-			#cloudstorage {
+			#cloudstorage,
+			#cloudapps,
+			#cloudrecord {
 				background-color: white;
 				padding: 10px;
 				margin: 0;
-				margin-top: 11px;
-				padding-top: 7px;
-				padding-bottom: 7px;
 			}
 
-			#cloudrecord,
-			#cloudapps {
-				background: white;
-				padding: 10px;
-				margin: 0;
-				margin-top: 10px;
-				padding-top: 10px;
-				padding-bottom: 10px;
+			.mui-table-view {
+				background: transparent;
+				min-height: 90px;
+				margin: 20px 0 !important;
+				padding: 16px 0 !important;
 			}
 
 			.mui-progressbar {
@@ -166,6 +159,12 @@
 
 			.iconfont {
 				font-size: 45px;
+			}
+
+			.mui-table-view.mui-grid-view .cloud-font {
+				font-weight: bold;
+				width: 16%;
+				padding: 0 12px;
 			}
 		</style>
 	</head>
@@ -183,7 +182,7 @@
 									<img id="cloud_prsonalimge" src="../../image/utils/default_personalimage.png">
 								</div>-->
 							<!--<div class="mui-col-sm-12 mui-col-xs-12" style="margin-top: 15px;">-->
-							<div id="cloud_name" class="common-font-family-Bold mui-ellipsis" style="float: right;">
+							<div id="cloud_name" class="common-font-family-Bold mui-ellipsis" >
 
 							</div>
 							<!--<font>
@@ -192,33 +191,30 @@
 										<img class="cloud-top-icon" src="../../image/cloud/cloud_yuan.gif" />
 										<font id="yuan">50元</font>
 									</font>-->
-							<br />
-							<div class="mui-progressbar mui-progressbar-in" style="float: right;">
+
+
+							<div class="mui-progressbar mui-progressbar-in" style="float: left;">
 								<span></span>
 							</div>
-							<br />
-							<div class="cloud-capacity" style="float: right;">
-								总容量:1000G
+
+							<div class="cloud-capacity" style="float: left;">
+								总容量:1000G&nbsp;&nbsp;&nbsp;
 							</div>
-							<br />
-							<div class="cloud-capacity" style="float: right;">
-								已用800G 剩余:200G
+
+							<div class="cloud-capacity" style="float: left;">
+								已用800G&nbsp;&nbsp;&nbsp;剩余:200G
 							</div>
 							<!--</div>-->
 							<!--</div>-->
 						</div>
 					</div>
-					<div id="bottom" style="position: absolute;width: 100%;margin-top: 10px;">
+					<div id="bottom" style="position: absolute;width: 100%;">
 						<!--云存储-->
 						<ul id="cloudstorage" class="mui-table-view mui-grid-view " style="padding-right: 0px;">
-							<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;">
-								<div style="font-weight: bold;">
-									<div>存</div>
-									<div>储</div>
-								</div>
+							<li class="mui-table-view-cell mui-media cloud-font">
+								存<br/>储
 							</li>
-							<li class="mui-table-view-cell mui-media mui-col-sm-9 mui-col-xs-9 " style="padding: 5px;margin: 0;">
-								<div class="cloud-line" style="left: 0px;"></div>
+							<li class="mui-table-view-cell mui-media " style="padding: 5px;margin: 0;width: 66%;border-left: 1px solid #d9d9d9;">
 								<div class="mui-row" id="cloudstoragefile">
 									<!--<div class="mui-col-sm-4 mui-col-xs-4 cloud-text-align-center">
 									<img class="cloud-bottom-imge" src="../../image/cloud/cloud_doc.png" />
@@ -234,20 +230,16 @@
 								</div>-->
 								</div>
 							</li>
-							<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;">
-								<img class="cloud-bottom-icon" src="../../image/cloud/rightarrow.png" />
+							<li class="mui-table-view-cell mui-media " style="padding: 0;width:18%;">
+								<span class="mui-icon mui-icon-arrowright" style="color: #CCCCCC;"></span>
 							</li>
 						</ul>
 						<!--云档案-->
 						<ul id="cloudrecord" class="mui-table-view mui-grid-view">
-							<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;">
-								<div style="font-weight: bold;">
-									<div>档</div>
-									<div>案</div>
-								</div>
+							<li class="mui-table-view-cell mui-media cloud-font" style="width: 16%;">
+								档<br/>案
 							</li>
-							<li class="mui-table-view-cell mui-media mui-col-sm-11 mui-col-xs-11 " style="padding: 5px;margin: 0;">
-								<div class="cloud-line" style="left: 0px;"></div>
+							<li class="mui-table-view-cell mui-media mui-col-sm-11 mui-col-xs-11 " style="padding: 5px;margin: 0;width:84% ;border-left: 1px solid #d9d9d9;">
 								<div id="record_row" class="mui-row">
 									<!--<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center">
 									<div class="cloud-bottom-imge2-bg">
@@ -267,45 +259,29 @@
 						</ul>
 						<!--云应用-->
 						<ul id="cloudapps" class="mui-table-view mui-grid-view">
-							<li class="mui-table-view-cell mui-media mui-col-sm-1 mui-col-xs-1" style="padding: 0;">
-								<div style="font-weight: bold;">
-									<div>应</div>
-									<div>用</div>
-								</div>
+							<li class="mui-table-view-cell mui-media cloud-font" style="width: 16%;">
+								应<br/>用
 							</li>
-							<li class="mui-table-view-cell mui-media mui-col-sm-11 mui-col-xs-11 " style="padding: 5px;margin: 0;">
-								<div class="cloud-line" style="left: 0px;"></div>
+							<li class="mui-table-view-cell mui-media mui-col-sm-11 mui-col-xs-11 " style="padding: 5px;margin: 0;width: 84%;border-left: 1px solid #d9d9d9;">
 								<div class="mui-row">
 									<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="0">
 										<div class="cloud-bottom-imge2-bg">
 											<img class="cloud-bottom-imge2" src="../../image/cloud/notes.png" />
 										</div>
-										<p class="mui-ellipsis">笔记</p>
+										<p class="mui-ellipsis" style="margin-top:5px;">笔记</p>
 									</div>
 									<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="1">
 										<div class="cloud-bottom-imge2-bg">
 											<img class="cloud-bottom-imge2" src="../../image/cloud/note.png" />
 										</div>
-										<p class="mui-ellipsis">记事</p>
+										<p class="mui-ellipsis" style="margin-top:5px;">记事</p>
 									</div>
-									<!--<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="2">
-									<div class="cloud-bottom-imge2-bg" style="background: #FF9861;">
-										<img class="cloud-bottom-imge2" src="../../image/cloud/cloud_pay.png" />
-									</div>
-									<p class="mui-ellipsis">充值</p>
-								</div>-->
 									<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="3">
 										<div class="cloud-bottom-imge2-bg">
 											<img class="cloud-bottom-imge2-bg" src="../../image/cloud/operation.png" />
 										</div>
-										<p class="mui-ellipsis">作业</p>
+										<p class="mui-ellipsis" style="margin-top:5px;">作业</p>
 									</div>
-									<!--<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="3">
-									<div class="cloud-bottom-imge2-bg" style="background: #31C27C;">
-										<img class="cloud-bottom-imge2-bg" src="../../image/cloud/cloud_homework.png" />
-									</div>
-									<p class="mui-ellipsis">作业批改</p>
-								</div>-->
 								</div>
 							</li>
 						</ul>
@@ -326,17 +302,22 @@
 				events.preload('storage_upload.html'); //预加载上传文件选择
 				events.preload('storage_upload_choose.html'); //预加载选择上传文件的方式
 				//初始化滚动条
-				mui('.mui-scroll-wrapper').scroll({
+				//---滑动start---
+				mui(".mui-scroll-wrapper").scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false, //是否横向滚动
 					indicators: true, //是否显示滚动条
-					bounce: false, //是否启用回弹
+					deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+					bounce: true, //是否启用回弹
 				});
-				var imge_bg = document.getElementById("imge_bg");
-				setTimeout(function() {
-					imge_bg.onload = function() {
-						console.log('onload:' + imge_bg.height + 'px');
-						document.getElementById("bottom").style.top = imge_bg.height + 'px';
-					};
-				}, 1000);
+				//---滑动end---
+				//				var imge_bg = document.getElementById("imge_bg");
+				//				setTimeout(function() {
+				//					imge_bg.onload = function() {
+				//						console.log('onload:' + imge_bg.height + 'px');
+				//						document.getElementById("bottom").style.top = imge_bg.height + 'px';
+				//					};
+				//				}, 1000);
 				//-----------设置数据start---------------
 				//设置进度条进度
 				mui('.mui-progressbar').progressbar({
@@ -388,7 +369,7 @@
 
 				//---存储start---
 				//云存储显示的文件
-				mui('#cloudstorage').on('tap', '.cloud-text-align-center', function() {
+				mui('#cloudstorage').on('tap', '.mui-table-view-cell', function() {
 					events.fireToPageWithData('storage_main.html', 'init', {
 						fid: '0', //文件id,顶层0
 						showTop: true, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
@@ -414,14 +395,14 @@
 				});
 
 				//云存储右侧按钮
-				mui('#cloudstorage').on('tap', '.cloud-bottom-icon', function() {
-					events.fireToPageWithData('storage_main.html', 'init', {
-						fid: '0', //文件id,顶层0
-						showTop: true, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
-						title: '云盘—云存储', //标题名
-						top: fileArray //顶层文件和文件夹的数据
-					});
-				});
+				//				mui('#cloudstorage').on('tap', '.cloud-bottom-icon', function() {
+				//					events.fireToPageWithData('storage_main.html', 'init', {
+				//						fid: '0', //文件id,顶层0
+				//						showTop: true, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
+				//						title: '云盘—云存储', //标题名
+				//						top: fileArray //顶层文件和文件夹的数据
+				//					});
+				//				});
 
 				//增加文件夹
 				mui('#cloudstorage').on('tap', '#addFolder', function(e) {
@@ -684,7 +665,7 @@
 					div.innerHTML = '<div class="cloud-bottom-imge2-bg">\
 										<img class="cloud-bottom-imge2" src="../../image/cloud/archives.png" />\
 									</div>\
-									<p class="mui-ellipsis">' + data.StudentName + '档案</p>';
+									<p class="mui-ellipsis" style="margin-top:5px;">' + data.StudentName + '档案</p>';
 					document.getElementById("record_row").insertBefore(div, document.getElementById("learningpath"));
 					div.addEventListener('tap', function() {
 						events.openNewWindowWithData('record_student_main.html', {
@@ -704,7 +685,7 @@
 					div.innerHTML = '<div class="cloud-bottom-imge2-bg">\
 										<img class="cloud-bottom-imge2" src="../../image/cloud/Trajectory.png" />\
 									</div>\
-									<p class="mui-ellipsis">学习轨迹</p>';
+									<p class="mui-ellipsis" style="margin-top:5px;">学习轨迹</p>';
 					document.getElementById("record_row").appendChild(div);
 					//学习轨迹监听
 					div.addEventListener('tap', function() {
