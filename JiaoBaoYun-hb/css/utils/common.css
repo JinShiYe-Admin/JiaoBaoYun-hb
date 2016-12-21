@@ -80,7 +80,7 @@ h6{font-size:1.5rem}
 	background-color: white;
 }*/
 /*2倍宽度*/
-.p2Height{
+.twice-line{
 	height: 4.8rem;
 	overflow : hidden;
 	text-overflow: ellipsis;
@@ -91,7 +91,7 @@ h6{font-size:1.5rem}
 /**
  * 一行
  */
-.p1Height{
+.single-line{
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;

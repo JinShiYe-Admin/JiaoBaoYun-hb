@@ -34,16 +34,20 @@ header .mui-icon-bars:before{
 	background-color: transparent;
 }
 .homework-header{
-	height: 5rem;
+	height: 6rem;
 }
-
 .header-words{
 	display: inline-block;
-	width: 78%;
+	width: 70%;
 }
+.stuHead-words{
+	width: 50%;
+}
+
 .homework-bottom>p{ 
+	padding-top: .5rem;
+	padding-left: 1rem;
 	 display: inline-block;
-	 padding-left: 1rem;
 }
 .title{
 	border: solid thick white 2rem;
@@ -131,11 +135,11 @@ header .mui-icon-bars:before{
 	color: #b7b7b7;
 	font-size: 1rem;
 }
-.subject-icon{
+/*.subject-icon{
 	vertical-align: middle;
-}
+}*/
 .mui-table-view-divider{
-	background-color: #e9e9eb;
+	background-color: #efeff4;
 	color: #777777;
 }
 .mui-slider-indicator:last-of-type{
@@ -144,4 +148,7 @@ header .mui-icon-bars:before{
 }
 .mui-control-item:last-of-type{
 	height: 4rem;
+}
+.stuHomework-header{
+	height: 6.5rem;
 }

@@ -254,7 +254,7 @@ var modifyHomeworkComment = function(commentValue) {
 			teacherId: personalUTID,
 			homeworkResultId: workInfo.HomeworkResultId,
 			studentId: workInfo.utid,
-			classId: workinfo.gid,
+			classId: workInfo.gid,
 			homeworkId: workInfo.HomeworkId,
 			comment: commentValue
 		}, wd, function(data) {
