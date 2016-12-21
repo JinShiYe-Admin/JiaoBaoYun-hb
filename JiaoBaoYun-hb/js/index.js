@@ -14,8 +14,8 @@ mui.plusReady(function() {
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 		document.querySelector('img').src = img ? img : '../../image/utils/default-personalimage.png'
 		if(plus.os.name == 'iOS') {
-			var wobj = plus.webview.currentWebview();
-			wobj.reload(true);
+//			var wobj = plus.webview.currentWebview();
+//			wobj.reload(true);
 		}
 
 	})
@@ -130,7 +130,7 @@ mui.plusReady(function() {
 				}
 
 			} else {
-				mui.toast(data.RspTxt);
+//				mui.toast(data.RspTxt);
 			}
 		});
 	}

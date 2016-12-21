@@ -85,7 +85,7 @@
 					mui.toast('请输入作业内容');
 					return;
 				}else{
-					tempText = tempText.replace('\n','<br />')
+					tempText = replaceAllBL(tempText);
 				}
 				//所需参数
 				var comData = {
@@ -121,7 +121,7 @@
 					mui.toast('请输入作业内容');
 					return;
 				}else{
-					tempText = tempText.replace('\n','<br />')
+					tempText = replaceAllBL(tempText);
 				}
 				//所需参数
 				var comData = {

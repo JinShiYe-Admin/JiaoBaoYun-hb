@@ -311,6 +311,7 @@ var events = (function(mod) {
 		events.fireToPageNone('mine.html','infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html','infoChanged');
 		events.fireToPageNone('../index/index.html', 'infoChanged');
+		events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
 	}
 	return mod;
 

@@ -52,26 +52,30 @@ function addSomeEvent() {
 	});
 	window.addEventListener('infoChanged', function() {
 		if(datasource.length == 0) {
+			console.log(111111111)
 			var wobj = plus.webview.currentWebview();
 			wobj.reload(true);
 		} else {
-			personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-			datasource = []; //底部列表数据
-			topStudentArr = [];
-			topArray = []; //顶部班级列表数据
-			requestTimes = 0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
-			requestTimes2 = 0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
-			requestTimes3 = 0;
-			isRefresh = 0; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
-			selectCell = {}; //选择的cell
-			var ul = document.getElementById('top-list');
-			ul.innerHTML = '';
-
-			var seg = document.getElementById('segmentedControl'); //群名称segmentedControl
-			var userTable = document.getElementById('userList'); //多个放置用户列表
-			seg.innerHTML = '';
-			userTable.innerHTML = '';
-			getStuList();
+			console.log(2222222)
+			var wobj = plus.webview.currentWebview();
+			wobj.reload(true);
+//			personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+//			datasource = []; //底部列表数据
+//			topStudentArr = [];
+//			topArray = []; //顶部班级列表数据
+//			requestTimes = 0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
+//			requestTimes2 = 0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
+//			requestTimes3 = 0;
+//			isRefresh = 0; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
+//			selectCell = {}; //选择的cell
+//			var ul = document.getElementById('top-list');
+//			ul.innerHTML = '';
+//
+//			var seg = document.getElementById('segmentedControl'); //群名称segmentedControl
+//			var userTable = document.getElementById('userList'); //多个放置用户列表
+//			seg.innerHTML = '';
+//			userTable.innerHTML = '';
+//			getStuList();
 		}
 
 	})
@@ -191,7 +195,7 @@ function getStuList() {
 		wd.close();
 		console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
-		if(data.RspCode == 0 || data.RspCode == 9) { //9为查询记录为空
+		if(data.RspCode == 0 || data.RspCode == 9|| data.RspCode == 7) { //9为查询记录为空
 			topStudentArr = data.RspData;
 			if(!topStudentArr || topStudentArr.length == 0) { //如果查询记录为空
 				var ul = document.getElementById('top-list');
@@ -309,7 +313,6 @@ function getGroupList() {
 
 			}
 			datasource = tempDatasource;
-
 			requestTimes = datasource.length; //记录顶部 班级动态请求次数
 			requestTimes2 = datasource.length; //记录底部 通过循环请求群用户列表请求次数
 			var userList = []; //临时用户列表
