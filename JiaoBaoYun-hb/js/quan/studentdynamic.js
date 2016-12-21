@@ -127,7 +127,7 @@ var studentdynamic = (function($, mod) {
 			imageHtml = '<img class="mui-media-object mui-pull-left" src="' + imageUrl + '">';
 		}
 		//内容
-		var html4 = '<div class="dynamic-ellipsis-2">' + content + '</div></div></div></div>';
+		var html4 = '<div id="content_' + id + '" class="dynamic-ellipsis-2"></div></div></div></div>';
 		html = html1 + html2 + dateHtml + html3 + imageHtml + html4;
 
 		var li = document.createElement('li');
@@ -135,6 +135,7 @@ var studentdynamic = (function($, mod) {
 		li.innerHTML = html;
 		li.id = id;
 		ulElement.appendChild(li);
+		document.getElementById("content_" + id).innerText = content;
 	}
 
 	return mod;
