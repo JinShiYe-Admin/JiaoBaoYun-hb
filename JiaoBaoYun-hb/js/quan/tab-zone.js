@@ -227,7 +227,7 @@ function getNotes(index, StuDyArr) {
 		userId: personalUTID, //用户ID----utid
 		studentId: topStudentArr[index].stuid, //学生ID----stuid
 		classId: topStudentArr[index].gid,
-		publisherId: personalUTID,
+		publisherId: '0',
 		pageIndex: '1', //当前页数
 		pageSize: '1' //每页记录数
 	};
