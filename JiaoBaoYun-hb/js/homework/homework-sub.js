@@ -78,6 +78,7 @@ mui.plusReady(function() {
 			}
 		});
 		window.addEventListener('roleChanged', function(e) {
+			mui('.mui-scroll-wrapper').scroll().scrollTo(0,0,100);
 			role = e.detail.data;
 			console.log('作业子页面获取的角色变换值roleChanged：' + role);
 			setClasses(role);
