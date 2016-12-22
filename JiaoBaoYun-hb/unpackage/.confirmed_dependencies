@@ -724,7 +724,8 @@
 			"html/quan/leave-sub.html"
 		],
 		"refer": [
-			"html/quan/leave-sub.html"
+			"html/quan/leave-sub.html",
+			"html/quan/pub-leave.html"
 		]
 	},
 	"html/quan/leave-sub.html": {

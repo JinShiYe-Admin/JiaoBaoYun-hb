@@ -1383,7 +1383,9 @@
 					"css/utils/common.css",
 					"html/quan/leave-sub.html"
 				],
-				"refer": [],
+				"refer": [
+					"html/quan/pub-leave.html"
+				],
 				"priority": 0
 			},
 			"html/quan/leave-sub.html": {
