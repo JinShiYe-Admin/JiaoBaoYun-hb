@@ -1296,7 +1296,10 @@
 					"js/utils/QiNiuUtil.js",
 					"js/qiniu/qiniu.js",
 					"image/utils/default_personalimage.png",
-					null
+					null,
+					"js/cloud/AndroidFileSystem.js",
+					"js/utils/UploadHeadImage.js",
+					"js/utils/CloudFileUtil.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2309,6 +2312,13 @@
 				"resources": [
 					"image/cloud/A_folder.png",
 					"js/cloud/AndroidFileSystem.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/pub-leave.html": {
+				"resources": [
+					"css/mui.css"
 				],
 				"refer": [],
 				"priority": 0

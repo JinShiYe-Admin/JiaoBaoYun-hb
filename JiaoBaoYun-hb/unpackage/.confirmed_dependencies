@@ -636,7 +636,10 @@
 			"js/qiniu/plupload.full.min.js",
 			"js/utils/QiNiuUtil.js",
 			"js/qiniu/qiniu.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"js/cloud/AndroidFileSystem.js",
+			"js/utils/UploadHeadImage.js",
+			"js/utils/CloudFileUtil.js"
 		],
 		"refer": [
 			"html/mine/edit-info.html"
@@ -1802,6 +1805,11 @@
 		"resources": [
 			"image/cloud/A_folder.png",
 			"js/cloud/AndroidFileSystem.js"
+		]
+	},
+	"html/quan/pub-leave.html": {
+		"resources": [
+			"css/mui.css"
 		]
 	}
 }
