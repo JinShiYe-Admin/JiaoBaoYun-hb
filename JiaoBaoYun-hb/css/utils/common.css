@@ -106,7 +106,7 @@ header>a{
 	padding-top: 1.2rem;
 	font-size: 1.5rem;
 }
-.display-none{
+.display-none:last-of-type{
 	display: none;
 }
 .display-block{

@@ -1,3 +1,4 @@
 *.confirmed_dependencies
 *.confirmed_dependencies
 JiaoBaoYun-hb/unpackage/.confirmed_dependencies
+*.apk
