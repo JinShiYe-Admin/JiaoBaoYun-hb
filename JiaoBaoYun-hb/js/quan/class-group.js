@@ -356,6 +356,9 @@ var createGride = function(gride, array) {
 					li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
 				}
 				cell.gname = groupName;
+				if(!cell.bunick){
+					cell.bunick=cell.ugnick;
+				}
 				li.info = cell;
 				//子控件的innerHTML
 				li.innerHTML = '<a href="#">' +
