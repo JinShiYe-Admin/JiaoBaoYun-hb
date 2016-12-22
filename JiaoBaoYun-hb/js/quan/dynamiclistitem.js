@@ -207,6 +207,7 @@ var dynamiclistitem = (function($, mod) {
 
 		var div = document.createElement('div');
 		div.className = 'mui-row mui-row-padding-8px';
+		div.style.marginTop='-25px'
 		div.innerHTML = html;
 		liElement.appendChild(div);
 
