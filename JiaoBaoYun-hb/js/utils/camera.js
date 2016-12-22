@@ -18,7 +18,7 @@ var camera=(function(mod){
 //			mod.filePaths.push(mod.getAbsolutePath(path));
 			//处理图片
 //			managePic(mod.getAbsolutePath(path));
-			managePic(path)
+			managePic(path);
 		},
 		function(err){
 			console.log( "Capture image failed: " + err.message );  
