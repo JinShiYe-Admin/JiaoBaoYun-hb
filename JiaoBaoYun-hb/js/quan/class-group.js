@@ -10,6 +10,7 @@ mui('.mui-scroll-wrapper').scroll({
 })
 var isMaster = false;
 var allcount = 0;
+var masterInfo;
 //var groupInfos=[];
 var groupRoles = []; //本人在群里的身份信息
 var gride1 = document.getElementById('gride1');
@@ -19,58 +20,74 @@ var quit_group1 = document.getElementById('quit-group1');
 var quit_group2 = document.getElementById('quit-group2');
 var quit_group3 = document.getElementById('quit-group3');
 mui.plusReady(function() {
-		events.preload('group-pInfo.html', 200);
-		window.addEventListener('postGroupInfo', function(e) {
-			isMaster = false;
-			console.log(JSON.stringify(e.detail.data));
-			if(e.detail.data) {
-				groupId = e.detail.data.classId;
-				groupName = e.detail.data.className;
-				document.getElementById('title').innerText =getHeadText(groupName);
-				groupRoles = [];
-				allcount = 0;
-				setGride();
-				/**
-				 *获取个人在群信息 
-				 */
-				getUserInGroup(-1, function(data) {
-					groupRoles = data;
-					console.log('获取本人在群的所有信息：' + JSON.stringify(data));
-					groupRoles.forEach(function(groupRole) {
-						if(groupRole == 1) {
-							isMaster = true;
-						}
-					})
-				});
-			}
-		})
-		window.addEventListener('groupInfoChanged', function() {
-				setGride();
-			})
-			//群組頭像點擊事件
-		mui('#gride1').on('tap', '.mui-table-view-cell', function() {
-			events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
-		})
-		mui('#gride2').on('tap', '.mui-table-view-cell', function() {
-			events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
-		})
-		mui('#gride3').on('tap', '.mui-table-view-cell', function() {
-				events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
-			})
-			//退出按鈕點擊事件
-		quit_group1.addEventListener('tap', function() {
-				getUserInGroup(0, showChoices);
-			})
-			//退出按鈕點擊事件
-		quit_group2.addEventListener('tap', function() {
-				getUserInGroup(2, showChoices);
-			})
-			//退出按鈕點擊事件
-		quit_group3.addEventListener('tap', function() {
-			getUserInGroup(3, showChoices);
-		})
+	events.preload('group-pInfo.html', 200);
+	window.addEventListener('postGroupInfo', function(e) {
+		masterInfo = null;
+		isMaster = false;
+		console.log(JSON.stringify(e.detail.data));
+		if(e.detail.data) {
+			groupId = e.detail.data.classId;
+			groupName = e.detail.data.className;
+			document.getElementById('title').innerText = getHeadText(groupName);
+			groupRoles = [];
+			allcount = 0;
+			setGride();
 
+		}
 	})
+	window.addEventListener('groupInfoChanged', function() {
+			setGride();
+		})
+		//群組頭像點擊事件
+	mui('#gride1').on('tap', '.mui-table-view-cell', function() {
+		events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
+	})
+	mui('#gride2').on('tap', '.mui-table-view-cell', function() {
+		events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
+	})
+	mui('#gride3').on('tap', '.mui-table-view-cell', function() {
+			events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
+		})
+		//退出按鈕點擊事件
+	quit_group1.addEventListener('tap', function() {
+			getUserInGroup(0, showChoices);
+		})
+		//退出按鈕點擊事件
+	quit_group2.addEventListener('tap', function() {
+			getUserInGroup(2, showChoices);
+		})
+		//退出按鈕點擊事件
+	quit_group3.addEventListener('tap', function() {
+		getUserInGroup(3, showChoices);
+	})
+
+})
+var insertMasterInfo = function(cell) {
+		var li = document.createElement('li');
+		if(gride2.firstElementChild) {
+			li.className = gride2.firstElementChild.className;
+		} else {
+			li.className = "mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4";
+		}
+
+		cell.gname = groupName;
+		if(!cell.bunick) {
+			cell.bunick = cell.unick;
+		}
+		li.info = cell;
+		//子控件的innerHTML
+		li.innerHTML = '<a href="#">' +
+			'<img class="circular-square" src="' + getImg(cell.uimg) + '"/></br>' +
+			'<small class="color-gold">' + cell.bunick + '</small>' +
+			'</a>';
+
+		//		if(gride2.firstElementChild) { 
+		//			gride2.insertBefore(gride2.firstElementChild,li);
+		//		} else {
+		gride2.appendChild(li);
+		//		}
+
+	}
 	/**
 	 * 获取用户在群组中的信息
 	 * @param {Object} mstype
@@ -268,20 +285,43 @@ var getGroupInfo = function(vvl) {
 			//成功囘調
 		if(groupData.RspCode == '0000' && groupData.RspData != null) {
 			//				createGride(item, data.RspData);
-			getRemarkData(groupData.RspData, function(Remarkdata) {
-				var list = [];
-				if(Remarkdata.RspCode == '0000') {
-					list = addRemarkData(groupData.RspData, Remarkdata.RspData);
-				} else {
-					list = addRemarkData(groupData.RspData)
-				}
-				events.clearChild(item);
-				console.log('最终呈现的数据：' + vvl + JSON.stringify(list));
-				createGride(item, list);
-			})
-
+			if(vvl == 2) {
+				/**
+				 *获取个人在群信息 
+				 */
+				getUserInGroup(-1, function(data) {
+					groupRoles = data;
+					console.log('获取本人在群的所有信息：' + JSON.stringify(data));
+					groupRoles.forEach(function(groupRole) {
+						if(groupRole.mstype == 1) {
+							console.log('是群主')
+							isMaster = true;
+							masterInfo = groupRole;
+//							insertMasterInfo(masterInfo);
+							groupData.RspData.splice(0,0,masterInfo);
+							getRemarkInfos(groupData.RspData,item);
+						}
+					})
+				});
+			}else{
+				getRemarkInfos(groupData.RspData,item);
+			}
+			
 		}
 	});
+}
+var getRemarkInfos=function(data,item){
+	getRemarkData(data, function(Remarkdata) {
+				var list = [];
+				if(Remarkdata.RspCode == '0000') {
+					list = addRemarkData(data, Remarkdata.RspData);
+				} else {
+					list = addRemarkData(data)
+				}
+				events.clearChild(item);
+				console.log('最终呈现的数据：'  + JSON.stringify(list));
+				createGride(item, list);
+			})
 }
 var addRemarkData = function(list, remarkList) {
 		if(remarkList) {
@@ -295,17 +335,6 @@ var addRemarkData = function(list, remarkList) {
 					}
 				}
 			}
-			//		list.forEach(function(cell,j,tolist){
-			//			remarkList.forEach(function(remark,i,relist){
-			//				console.log('对比值：'+JSON.stringify(cell)+':'+JSON.stringify(remark));
-			//				if(cell.utid==remark.butid){
-			//					list[j].bunick=remark.bunick;
-			//					return false;
-			//				}else{
-			//					list[j].bunick=cell.ugname;
-			//				}
-			//			})
-			//		})
 		} else {
 			list.forEach(function(cell, i) {
 				list[i].bunick = cell.ugname;
@@ -356,18 +385,24 @@ var createGride = function(gride, array) {
 					li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
 				}
 				cell.gname = groupName;
-				if(!cell.bunick){
-					cell.bunick=cell.ugnick;
+				if(!cell.bunick) {
+					cell.bunick = cell.ugnick;
 				}
 				li.info = cell;
 				//子控件的innerHTML
 				li.innerHTML = '<a href="#">' +
 					'<img class="circular-square" src="' + getImg(cell.uimg) + '"/></br>' +
-					'<small class="">' + cell.bunick + '</small>' +
+					'<small class="'+setMasterNameClass(cell)+'">' + cell.bunick + '</small>' +
 					'</a>';
 				gride.appendChild(li);
 			})
 	}
+var setMasterNameClass=function(info){
+	if(info.mstype==1){
+		return 'master-name'
+	}
+	return '';
+}
 	//頭像設置
 var getImg = function(img) {
 	return img == null ? "../../image/utils/default_personalimage.png" : img
