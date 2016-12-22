@@ -148,6 +148,7 @@ html,body{
 }
 .mui-icon-info{
 	color: #00A5E0;
+	background-color: transparent;
 }
 label{
 	font-size: 1.2rem;
