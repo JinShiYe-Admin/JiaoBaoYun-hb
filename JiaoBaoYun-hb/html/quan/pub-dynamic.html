@@ -63,13 +63,12 @@
 			events.addTap('publish', function() {
 				var textView = document.getElementById('input-content');
 				var tempText =  Trim(textView.value);
-				 
 				console.log('textView.value===' + tempText)
 				if(!tempText || tempText == '') {
 					mui.toast('请输入内容');
 					return;
 				}else{
-					tempText = tempText.replace('\n','<br />')
+					tempText = replaceAllBL(tempText)
 				}
 				var postData = {
 					userId: userInfo.utid,

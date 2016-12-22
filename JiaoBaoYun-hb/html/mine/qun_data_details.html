@@ -118,11 +118,12 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>简介:</label>
-								<input id="stu_introduction" type="text" class="mui-input-clear" disabled>
+								<!--<input id="stu_introduction" type="text" class="mui-input-clear" disabled>-->
 							</div>
+							<p id="stu_introduction" style="font-size: 17px;"></p>
 						</li>
 					</div>
-					<div id="tea_show" style="display:none ;">
+					<div id="tea_show" style="display:none;">
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>姓名:</label>
@@ -186,8 +187,9 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>简介:</label>
-								<input id="tea_introduction" type="text" class="mui-input-clear" disabled>
+								<!--<input id="tea_introduction" type="text" class="mui-input-clear" disabled>-->
 							</div>
+							<p id="tea_introduction" style="font-size: 17px;"></p>
 						</li>
 					</div>
 				</ul>
@@ -371,7 +373,7 @@
 						stu_gender.setAttribute('disabled', 'disabled'); //学生性别
 						stu_ugname.setAttribute('disabled', 'disabled'); //学生群昵称
 						//stu_gname.setAttribute('disabled', 'disabled'); //学生所属群
-						stu_introduction.setAttribute('disabled', 'disabled'); //学生简介
+						//stu_introduction.setAttribute('disabled', 'disabled'); //学生简介
 					}
 					getData(3);
 				}
@@ -538,7 +540,7 @@
 								}
 								stu_utid.value = uData.uname;
 								stu_phone.value = uData.uid;
-								stu_introduction.value = uData.utxt;
+								stu_introduction.innerText = uData.utxt;
 							} else if(dataType == 0) { //家长
 								document.getElementById("par_uname_" + uData.utid).value = uData.uname;
 								document.getElementById("par_phone_" + uData.utid).value = uData.uid;
@@ -550,7 +552,7 @@
 								}
 								tea_uid.value = uData.uid;
 								tea_utid.value = uData.uname;
-								tea_introduction.value = uData.utxt;
+								tea_introduction.innerText = uData.utxt;
 							}
 						} else {
 							mui.toast(data.RspTxt);

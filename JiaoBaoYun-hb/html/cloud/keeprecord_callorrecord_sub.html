@@ -124,16 +124,16 @@
 							</div>
 						</div>
 						<div id="call" style="display: inline;" value="0">
-							<div class="call-type" value="1">
+							<!--<div class="call-type" value="1">
 								<div class="mui-input-row mui-checkbox mui-left">
 									<label>正常</label>
 									<input id="cb_call1" name="checkbox" type="checkbox" checked>
 								</div>
-							</div>
-							<div class="call-type" value="2">
+							</div>-->
+							<div class="call-type" value="2" style="margin-left: 10%;">
 								<div class="mui-input-row mui-checkbox mui-left">
 									<label>旷课</label>
-									<input id="cb_call2" name="checkbox" type="checkbox">
+									<input id="cb_call2" name="checkbox" type="checkbox" checked>
 								</div>
 							</div>
 							<div class="call-type" value="3">
@@ -209,7 +209,7 @@
 				var checkbox_2 = document.getElementById("cb_2"); //记事checkbox元素
 				var div_call = document.getElementById("call"); //点到区域
 				var div_record = document.getElementById("record"); //记事区域
-				var call_type = '1'; //记录最后点击的点到类型
+				var call_type = '2'; //记录最后点击的点到类型
 
 				//---开通记事---start---
 				//63.（点到记事）新增学生点到记事空间
@@ -322,7 +322,7 @@
 						msgContent = document.getElementById("textarea_record").value;
 					}
 
-					if(msgContent.replace(/(^\s*)|(\s*$)/g, "") == "") { //为空不允许发送
+					if(msgContent.replace(/(^\s*)|(\s*$)/g, "") == "" && !checkbox_1.checked) { //为空不允许发送
 						mui.toast('请输入文字');
 					} else {
 						var parentIds = []; //家长列表
@@ -452,7 +452,12 @@
 							createNotes(item);
 						});
 						if(data.RspData.Data.length == 0) {
-							mui.toast('没有更多数据了');
+							if(NotesList.length != 0) {
+								mui.toast('没有更多了');
+							} else {
+								mui.toast('无记录');
+							}
+							//mui.toast('没有更多数据了');
 						}
 					} else {
 						mui.toast('获取点到记事列表:' + data.RspTxt);
@@ -476,7 +481,7 @@
 					type = data.CheckTypeStr + ':';
 				}
 				li.innerHTML = '<div style="text-align: center;">\
-									<font style="background: #AAAAAA;border-radius: 5px;padding: 4px;">' + data.PublishDate + '</font>\
+									<font style="background: #d9d9d9;border-radius: 5px;padding: 4px;">' + data.PublishDate + '</font>\
 									</div>\
 									<div style="margin-top: 10px;">' + type + data.MsgContent + '</div>';
 				ul_table.insertBefore(li, ul_table.firstChild);

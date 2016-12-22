@@ -40,7 +40,7 @@
 					mui.toast('请输入留言');
 					return;
 				}else{
-					tempText = tempText.replace('\n','<br />')
+					tempText = replaceAllBL(tempText);
 				}
 				console.log(tempText);
 				var httpData = {

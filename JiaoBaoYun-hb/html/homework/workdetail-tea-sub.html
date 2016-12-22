@@ -13,6 +13,8 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/homework/workdetail.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<script src="../../js/mui.min.js"></script>
+
 		<style type="text/css">
 			.mui-table-view:before,
 			.mui-table-view:after,
@@ -20,13 +22,20 @@
 				height: 0px;
 				/*去掉横线*/
 			}
+				.dynamic-personal-image {
+				/*个人头像圆形*/
+				border-radius: 50%;
+				width: 50px;
+				height: 50px;
+			}
 		</style>
 
 	</head>
 
 	<body>
 		<nav id="alertBar" class="mui-bar mui-bar-tab" style="visibility: hidden;">
-			<div align="center">
+			<hr   style="margin-top: -1px; height:1px;border:none;border-top:1px solid #ededed;" />
+			<div align="center" style="margin-top: -5px;">
 				<button id="alertAll" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 200px;">一键提醒</button>
 			</div>
 		</nav>
@@ -38,6 +47,9 @@
 						<div class="mui-media-body">
 							<h4 id="homeworkTitle"></h6>
 						<p id="publishDate" class='mui-ellipsis'>发布时间：</p>
+					</div>
+					<div>
+						<hr  style="height:1px;border:none;border-top:1px solid #ededed;" />
 					</div>
 					
 					<div class="mui-media-body">
@@ -52,7 +64,7 @@
 			<!--<div><img src="../../image/homework/math.png"></img>数学作业</div>-->
 			<!--滑动组件-->
 			<div id="slider" class="mui-slider">
-				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-positive">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary" sty>
 					<!--已完成选项卡-->
 					<a id="item1" class="mui-control-item mui-active" href="#div-finished">
 						已完成(0)
@@ -80,7 +92,6 @@
 			</div>
 
 		</div>
-		<script src="../../js/mui.min.js"></script>
 		<!--加载选项按钮-->
 		<script src="../../js/homework/homework_detail.js"></script>
 		<script src="../../js/publicHomeworkProtocol.js" type="text/javascript" charset="utf-8"></script>
@@ -91,6 +102,7 @@
 		<script type="text/javascript">
 		
 			mui.init();
+			mui('.mui-scroll-wrapper').scroll();
 			var allAlertFlag=0;//标志是否全部提醒
 			var	homeworkDetailNodes = {
 				img:document.getElementById("img"),//作业类型图像
@@ -344,7 +356,7 @@
 									li.workInfo.workType = 1;
 									mui.extend(li.workInfo,homeworkDetailModel)
 									li.className = 'mui-table-view-cell mui-media isCommented'
-				li.innerHTML = '<img  class="mui-media-object mui-pull-left " src="'+headImg +'" />'+
+				li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" src="'+headImg +'" />'+
 										'<div class="mui-media-body">'+
 											uploadArray[i].ugnick+'<div class="mui-media-body mui-pull-right" ' +
 							'<p id="isCommented'+i+'" style="font-size: 13px;">'+IsCommented+'<span class="mui-icon mui-icon-forward"></span></p></div>' +
@@ -370,12 +382,11 @@
 									var li = document.createElement('li');
 									li.className = 'mui-table-view-cell mui-media'
 									
-				li.innerHTML = '<img  class="mui-media-object mui-pull-left" src="'+headImg +'" />'+
+				li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" src="'+headImg +'" />'+
 										'<div class="mui-media-body">'+
-											remainArray[i].ugnick+
-											'<button id="alert'+i+'" class="mui-media-body" style="float: right;" onclick="alertStu(this)"'+ disabled+'>'+
+											'<div style = "padding-top:10px">'+remainArray[i].ugnick+'<button id="alert'+i+'" style="float: right;width:50px;height:30px;padding:1px 0 0 1px;font-size:12px;margin-top:-7px" onclick="alertStu(this)"'+ disabled+'>'+
 												alert+
-											'</button>'+
+											'</button>'+'</div>'+
 										'</div>'
 									;
 				homeworkDetailNodes.unfinishedList.appendChild(li);

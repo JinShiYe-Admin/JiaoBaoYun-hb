@@ -80,6 +80,7 @@ mui.plusReady(function() {
 			document.getElementById("img").src = successCB;
 			events.fireToPageNone('mine.html', 'infoChanged');
 			events.fireToPageNone('../index/index.html', 'infoChanged');
+			events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
 			events.fireToPageNone('classSpace-sub.html', 'infoChanged');
 			events.fireToPageNone('../cloud/cloud_home.html', 'personChanged');
 		}, 2000);

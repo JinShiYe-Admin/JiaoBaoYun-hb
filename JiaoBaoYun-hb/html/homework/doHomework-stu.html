@@ -42,33 +42,31 @@
 		<script type="text/javascript">
 			mui.init();
 			var flag = 0
-			mui.plusReady(function(){
-				window.addEventListener('homeworkInfo',function(e){
-					homeworkModel=e.detail.data;
-					console.log('学生做作业界面从上级界面获取的做作业数据：'+JSON.stringify(homeworkModel));
+			mui.plusReady(function() {
+				window.addEventListener('homeworkInfo', function(e) {
+					homeworkModel = e.detail.data;
+					console.log('学生做作业界面从上级界面获取的做作业数据：' + JSON.stringify(homeworkModel));
 					flag = 0;
 				})
-				window.addEventListener('workDetail',function(e){
+				window.addEventListener('workDetail', function(e) {
 					homeworkModel = e.detail.data;
-					console.log('修改作业数据：'+JSON.stringify(homeworkModel))
+					console.log('修改作业数据：' + JSON.stringify(homeworkModel))
 					var textView = document.getElementById('input-content');
 					textView.value = homeworkModel.HomeworkResult.Result;
-					
+
 					flag = 1;
-					
+
 				})
 				var item = document.getElementById('publis');
-				
 
 				events.addTap('publish', function() {
-					if(flag == 0){
+					if(flag == 0) {
 						requestSubmitHomeworkResult();
-					}else{
+					} else {
 						requestModifyHomeworkResult();
 					}
-				
-				
-			})
+
+				})
 			});
 
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
@@ -78,14 +76,14 @@
 			//7.	提交作业结果；逻辑：如果是图片类型，同时生成缩略图
 			function requestSubmitHomeworkResult() {
 				var textView = document.getElementById('input-content');
-				var tempText =  textView.value;
-				 
+				var tempText = textView.value;
+
 				console.log('textView.value===' + tempText)
 				if(!tempText || tempText == '') {
 					mui.toast('请输入作业内容');
 					return;
-				}else{
-					tempText = tempText.replace('\n','<br />')
+				} else {
+					tempText = replaceAllBL(tempText);
 				}
 				//所需参数
 				var comData = {
@@ -103,8 +101,9 @@
 					console.log('7.postDataPro_SubmitHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						//清空输入框
-						textView.value='';
+						textView.value = '';
 						mui.back();
+
 					} else {
 						mui.toast(data.RspTxt);
 					}
@@ -114,14 +113,14 @@
 			//9.修改作业结果；逻辑：如果是图片类型，同时生成缩略图
 			function requestModifyHomeworkResult() {
 				var textView = document.getElementById('input-content');
-				var tempText =  textView.value;
-				 
+				var tempText = textView.value;
+
 				console.log('textView.value===' + tempText)
 				if(!tempText || tempText == '') {
 					mui.toast('请输入作业内容');
 					return;
-				}else{
-					tempText = tempText.replace('\n','<br />')
+				} else {
+					tempText = replaceAllBL(tempText);
 				}
 				//所需参数
 				var comData = {
@@ -139,13 +138,19 @@
 					console.log('9.postDataPro_ModifyHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						//清空输入框
-						textView.value='';
+						textView.value = '';
 						mui.back();
-						
+
 					} else {
 						mui.toast(data.RspTxt);
 					}
 				});
+			}
+			var old_back = mui.back;
+			mui.back = function() {
+				var textView = document.getElementById('input-content');
+				textView.blur();
+				old_back()
 			}
 		</script>
 	</body>

@@ -55,23 +55,25 @@ function addSomeEvent() {
 			var wobj = plus.webview.currentWebview();
 			wobj.reload(true);
 		} else {
-			personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-			datasource = []; //底部列表数据
-			topStudentArr = [];
-			topArray = []; //顶部班级列表数据
-			requestTimes = 0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
-			requestTimes2 = 0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
-			requestTimes3 = 0;
-			isRefresh = 0; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
-			selectCell = {}; //选择的cell
-			var ul = document.getElementById('top-list');
-			ul.innerHTML = '';
-
-			var seg = document.getElementById('segmentedControl'); //群名称segmentedControl
-			var userTable = document.getElementById('userList'); //多个放置用户列表
-			seg.innerHTML = '';
-			userTable.innerHTML = '';
-			getStuList();
+			var wobj = plus.webview.currentWebview();
+			wobj.reload(true);
+//			personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+//			datasource = []; //底部列表数据
+//			topStudentArr = [];
+//			topArray = []; //顶部班级列表数据
+//			requestTimes = 0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
+//			requestTimes2 = 0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
+//			requestTimes3 = 0;
+//			isRefresh = 0; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
+//			selectCell = {}; //选择的cell
+//			var ul = document.getElementById('top-list');
+//			ul.innerHTML = '';
+//
+//			var seg = document.getElementById('segmentedControl'); //群名称segmentedControl
+//			var userTable = document.getElementById('userList'); //多个放置用户列表
+//			seg.innerHTML = '';
+//			userTable.innerHTML = '';
+//			getStuList();
 		}
 
 	})
@@ -191,7 +193,7 @@ function getStuList() {
 		wd.close();
 		console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
-		if(data.RspCode == 0 || data.RspCode == 9) { //9为查询记录为空
+		if(data.RspCode == 0 || data.RspCode == 9|| data.RspCode == 7) { //9为查询记录为空
 			topStudentArr = data.RspData;
 			if(!topStudentArr || topStudentArr.length == 0) { //如果查询记录为空
 				var ul = document.getElementById('top-list');
@@ -223,7 +225,7 @@ function getNotes(index, StuDyArr) {
 		userId: personalUTID, //用户ID----utid
 		studentId: topStudentArr[index].stuid, //学生ID----stuid
 		classId: topStudentArr[index].gid,
-		publisherId: personalUTID,
+		publisherId: '0',
 		pageIndex: '1', //当前页数
 		pageSize: '1' //每页记录数
 	};
@@ -309,7 +311,6 @@ function getGroupList() {
 
 			}
 			datasource = tempDatasource;
-
 			requestTimes = datasource.length; //记录顶部 班级动态请求次数
 			requestTimes2 = datasource.length; //记录底部 通过循环请求群用户列表请求次数
 			var userList = []; //临时用户列表
@@ -351,7 +352,8 @@ function getTopList(index) {
 		if(data.RspCode == 0) {
 			if(data.RspData.Data.length == 0) { //数据为空时 添加默认数据
 				var today = new Date();
-				var currentDate = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate() + "  " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+				var month = today.getMonth()+1
+				var currentDate = today.getFullYear() + "-" + month + "-" + today.getDate() + "  " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
 				var temp = {
 					index: index, //排序索引
 					MsgContent: '暂无动态',
@@ -373,7 +375,7 @@ function getTopList(index) {
 				var ul = document.getElementById('top-list');
 				console.log('topArray====' + JSON.stringify(topArray))
 				for(var i = 0; i < topArray.length; i++) {
-					var li = document.createElement('li');
+					var li = document.createElement('li');   
 					li.id = 'tarClass' + i;
 					li.className = 'mui-table-view-cell mui-media tarClass';
 					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">' + '<p class="time">' + topArray[i].PublishDate +

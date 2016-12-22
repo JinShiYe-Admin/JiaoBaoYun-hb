@@ -245,9 +245,9 @@ var getCellData = function(cell) {
  */
 function requestData() {
 	if(pageIndex > 1) {
-		if(pageIndex < totalPage) {
+		if(pageIndex <= totalPage) {
 			requireAboutMe();
-		} else if(pageIndex < alertTotalPage) {
+		} else if(pageIndex <= alertTotalPage) {
 			requireHomeworkAlert();
 		}
 	} else {
@@ -336,7 +336,7 @@ events.initRefresh('list-container',
 		requestData();
 	},
 	function() {
-		console.log('请求页面：page' + pageIndex);
+		console.log('请求页面：page：' + pageIndex+',总页面：'+totalPage+'，作业提醒总页数：'+alertTotalPage);
 		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPage && pageIndex >= alertTotalPage);
 		if(pageIndex < totalPage || pageIndex < alertTotalPage) {
 			pageIndex++;
@@ -357,7 +357,7 @@ var requireAboutMe = function() {
 		if(data.RspCode == '0000') {
 			setCommentMsgReadByUser();
 			totalPage = data.RspData.TotalPage;
-			if(pageIndex == 1 || pageIndex < alertTotalPage) {
+			if(pageIndex == 1 || pageIndex <= alertTotalPage) {
 				requireHomeworkAlert(data.RspData.Data);
 			} else {
 				getRoleInfos(data.RspData.Data)

@@ -1,13 +1,4 @@
-.btn-publish{
-	position: absolute;
-	bottom: 2rem;
-	left: 25%;
-	right: 25%;
-	width: 50%;
-	height: 4rem;
-	font-size: 2rem;
-	border-radius:2rem ;
-}
+
 .img-div{
 	position: relative;
 	width: 25%;
@@ -179,4 +170,16 @@ p img {
 }
 .icon-jixiaofenshuchaxun:before{
 	padding-left: .5rem;
+}
+.teachers-container,.subjects-container{
+	display: inline-block;
+	width: 70%;
+}
+.receive-container{
+	position: relative;
+}
+.btn-publish{
+	position: absolute;
+	top: .2rem;
+	right: .5rem;
 }

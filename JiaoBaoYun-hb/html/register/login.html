@@ -400,6 +400,9 @@
 									mui.toast('登录成功')
 										//存储到手机本地
 									data.RspData.ispw = '1';
+									if(!data.RspData.uimg){
+										data.RspData.uimg = '../../image/utils/default_personalimage.png';
+									}
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 									//
 									events.infoChanged();

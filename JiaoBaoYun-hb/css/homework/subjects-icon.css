@@ -32,9 +32,9 @@
 	display: inline-block;
 	float: left;
 	padding: 1rem;
-	padding-top: 1.5rem;
-	font-size: 4rem;
-	width: 20%;
+	margin-top: 1.5rem;
+	font-size: 6rem;
+	/*width: 20%;*/
 }
 .isCommentedBG{
 	background-image: url(../../image/homework/commented.png);
@@ -53,5 +53,6 @@
 	background-position: right;
 }
 .header-words{
-	width: 80%;
+	/*margin-top: -1.5rem;*/
+	width: 60%;
 }

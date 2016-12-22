@@ -276,9 +276,10 @@
 								plus.nativeUI.showWaiting('正在加载中');
 								uploadQunHeadImge(data.RspData, qunImgPath, function(successCB) {
 									console.log('创建群成功');
+									events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
 									events.fireToPageNone('/html/mine/qun_manage.html', 'refresh');
 									events.fireToPageNone('/html/mine/qun_data.html', 'refresh');
-									events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
+									
 									mui.toast('创建群成功');
 									mui.back();
 								}, function(errorCB) {

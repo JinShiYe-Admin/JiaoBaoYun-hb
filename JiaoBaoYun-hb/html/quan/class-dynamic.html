@@ -67,7 +67,7 @@
 					mui.toast('请输入内容');
 					return;
 				}else{
-					tempText = tempText.replace('\n','<br />')
+					tempText = replaceAllBL(tempText);
 				}
 				var postData = new Object();
 				postData.classId = groupInfo.classId;

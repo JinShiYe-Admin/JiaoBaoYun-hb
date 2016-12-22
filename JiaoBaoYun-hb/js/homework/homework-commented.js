@@ -16,9 +16,8 @@ mui.plusReady(function() {
 
 		})
 	window.addEventListener('workDetail', function(e) {
-		resetData();
-
 		homeworkModel = e.detail.data;
+		resetData();
 		console.log('学生查看作业结果界面：' + JSON.stringify(homeworkModel));
 		if(homeworkModel.workType == 0) {
 			document.getElementById("modifyHomework").hidden = 'hidden'
@@ -34,11 +33,25 @@ mui.plusReady(function() {
 });
 
 function resetData() {
-	personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+
 	var tempNodes = mui('.tempComment');
 	homeworkResult = {};
 	for(var i = 0; i < tempNodes.length; i++) {
 		homeworkDetailNodes.list.removeChild(tempNodes[i]);
+	}
+
+	if(homeworkModel.workType==0){
+		console.log('临时作业')
+	      homeworkDetailNodes.stuHomework.hidden = 'hidden';
+	      homeworkDetailNodes.stuCell.hidden = 'hidden';
+	      homeworkDetailNodes.hr.hidden = 'hidden';
+	}else{
+		console.log('普通作业')
+		homeworkDetailNodes.stuHomework.hidden = '';
+		homeworkDetailNodes.stuCell.hidden = '';
+		homeworkDetailNodes.hr.hidden = '';
+
 	}
 
 };
@@ -52,7 +65,11 @@ var homeworkDetailNodes = {
 	commentContent: document.getElementById("commentContent"),
 	list: document.getElementById("list"), //列表
 	comment: document.getElementById("comment"), //评语
-	tempComment: document.getElementsByClassName('tempComment') //学生临时作业用到的节点元素
+	tempComment: document.getElementsByClassName('tempComment'),
+	stuHomework: document.getElementById('stuHomework'),//学生临时作业用到的节点元素
+	stuResult: document.getElementById('stuResult'),
+	stuCell:document.getElementById('stuCell'),
+	hr:document.getElementById('hr'),
 }
 var imgType = {
 		chineseImg: '../../image/homework/chinese.png',
@@ -198,12 +215,12 @@ function refreshUITemp() {
 	var ResLi = document.createElement('li');
 	ResLi.className = 'mui-table-view-cell mui-media  tempComment';
 	ResLi.innerHTML = '暂无对比结果'
-	homeworkDetailNodes.list.insertBefore(TeaAnsLi, homeworkDetailNodes.comment);
-	homeworkDetailNodes.list.insertBefore(TeaAnsImgLi, homeworkDetailNodes.comment);
-	homeworkDetailNodes.list.insertBefore(stuAnsLi, homeworkDetailNodes.comment);
-	homeworkDetailNodes.list.insertBefore(stuAnsImgLi, homeworkDetailNodes.comment);
-	homeworkDetailNodes.list.insertBefore(compareResLi, homeworkDetailNodes.comment);
-	homeworkDetailNodes.list.insertBefore(ResLi, homeworkDetailNodes.comment);
+	homeworkDetailNodes.list.insertBefore(TeaAnsLi, homeworkDetailNodes.stuHomework);
+	homeworkDetailNodes.list.insertBefore(TeaAnsImgLi, homeworkDetailNodes.stuHomework);
+	homeworkDetailNodes.list.insertBefore(stuAnsLi, homeworkDetailNodes.stuHomework);
+	homeworkDetailNodes.list.insertBefore(stuAnsImgLi, homeworkDetailNodes.stuHomework);
+	homeworkDetailNodes.list.insertBefore(compareResLi, homeworkDetailNodes.stuHomework);
+	homeworkDetailNodes.list.insertBefore(ResLi, homeworkDetailNodes.stuHomework);
 
 	var Comment = homeworkResult.Comment;
 	if(!Comment) {
@@ -252,11 +269,13 @@ function refreshUI() {
 	}
 	homeworkDetailNodes.title.innerText = homeworkModel.Subject;
 	homeworkDetailNodes.publishDate.innerText = homeworkModel.HomeworkTitle;
-	var HomeworkResult = homeworkResult.HomeworkResult.Result;
-	if(!HomeworkResult) {
-		HomeworkResult = '作业内容';
+	var HomeworkContents = homeworkResult.Homework.Contents;
+	if(!HomeworkContents) {
+		HomeworkContents = '作业内容';
 	}
-	homeworkDetailNodes.content.innerText = HomeworkResult;
+	homeworkDetailNodes.content.innerText = HomeworkContents;
+	console.log(homeworkResult.HomeworkResult.Result)
+	homeworkDetailNodes.stuResult.innerText = homeworkResult.HomeworkResult.Result;
 	var Comment = homeworkResult.HomeworkResult.Comment;
 	if(!Comment) {
 		Comment = '无评语';

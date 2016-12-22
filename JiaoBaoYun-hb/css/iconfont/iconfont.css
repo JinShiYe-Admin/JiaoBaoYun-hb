@@ -47,6 +47,8 @@
 
 .icon-jiaqun:before { content: "\e60d"; }
 
+.icon-mic:before { content: "\e666"; }
+
 .icon-date:before { content: "\e6eb"; }
 
 .icon-about:before { content: "\e605"; }
@@ -80,6 +82,8 @@
 .icon-download:before { content: "\e63b"; }
 
 .icon-yunpan:before { content: "\e607"; }
+
+.icon-lishijilu:before { content: "\e621"; }
 
 .icon-renren:before { content: "\e609"; }
 
@@ -152,3 +156,11 @@
 .icon-shuxue:before { content: "\e61a"; }
 
 .icon-xiangji:before { content: "\e60c"; }
+
+.icon-yuyin:before { content: "\e622"; }
+
+.icon-shipin:before { content: "\e623"; }
+
+.icon-xiangji1:before { content: "\e624"; }
+
+.icon-xiangce:before { content: "\e908"; }
