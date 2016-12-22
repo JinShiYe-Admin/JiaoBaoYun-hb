@@ -1804,7 +1804,9 @@
 	"html/cloud/storage_upload_choose.html": {
 		"resources": [
 			"image/cloud/A_folder.png",
-			"js/cloud/AndroidFileSystem.js"
+			"js/cloud/AndroidFileSystem.js",
+			"fonts/mui.ttf",
+			"css/cloud/file.css"
 		]
 	},
 	"html/quan/pub-leave.html": {
