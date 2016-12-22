@@ -173,7 +173,7 @@ p img {
 }
 .teachers-container,.subjects-container{
 	display: inline-block;
-	width: 70%;
+	width: 90%;
 }
 .receive-container{
 	position: relative;
@@ -182,4 +182,30 @@ p img {
 	position: absolute;
 	top: .2rem;
 	right: .5rem;
+}
+.receiver-name:last-of-type{
+	color: ;
+}
+.receiver-class:last-of-type{
+	color: #8f8f94;
+	font-size: 1rem;
+}
+.recerver-:last-of-type{
+	color: #DEDFE0;
+}
+.pAnswer-picContainer{
+	position: relative;
+}
+.pAnswer-pic{
+	position: fixed;
+	width: 30%;
+	padding: 5%;
+	border: solid #13B7F6 5px;
+	border-radius: 50%;
+	left: 35%;
+	margin-top: 2rem;
+}
+.receive-teachers:last-of-type,.publish-subjects:last-of-type{
+	font-size: 1.2rem;
+	color: color: #8F8F94;;
 }

@@ -1,12 +1,10 @@
-html{
-	background-color: white;
-}
+
 /**
  * 发布作业附件 图标
  */
 .publish-extras a{
 	padding: 0 .8rem;
-	font-size: 2rem;
+	font-size: 2.5rem;
 	color: darkgrey;
 }
 .extra-info{
@@ -120,19 +118,42 @@ html{
 	margin: 0.5rem 0.5rem;
 	padding: 0.2rem;
 	display: inline-block;
+	font-size: 1.2rem;
 }
 .receive-container{
 	padding:.5rem 1.5rem;
 }
 .input-erea{
 	border: solid thin lightgray;
-}
+	margin: 1px;
+	margin-bottom: 2rem;
+} 
 textarea{
 	min-height: 10rem;
 }
-.online-switch{
-	height: 2.5rem;
+html,body{
+	background-color: #efefef;
 }
-.mui-switch-handle:last-of-type{
-	height: 2.1rem;
+.mui-input-group{
+	background-color:transparent;
 }
+.mui-input-group *{
+	background-color: white;
+}
+.mui-icon-arrowright{
+	color: #cac7c7;
+}
+.extra-info{
+	background-color: transparent;
+}
+.mui-icon-info{
+	color: #00A5E0;
+}
+label{
+	font-size: 1.2rem;
+}
+.select-subject:last-of-type{
+	color: #8F8F94;
+	font-size: 1.2rem;
+}
+

@@ -1111,7 +1111,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"js/utils/files.js"
+					"js/utils/files.js",
+					"image/homework/xiangji.png"
 				],
 				"refer": [
 					"html/homework/homework-commented.html"

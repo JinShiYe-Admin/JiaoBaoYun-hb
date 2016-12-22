@@ -82,6 +82,7 @@ var setSubjects = function(subjectList) {
 		events.clearChild(subjectsContainer);
 		subjectList.forEach(function(subject, i) {
 			var op = document.createElement('option');
+			op.className="select-subject";
 			op.value = subject.Value;
 			op.innerText = subject.Text;
 			subjectsContainer.appendChild(op);

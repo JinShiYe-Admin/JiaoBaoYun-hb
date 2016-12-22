@@ -140,18 +140,21 @@ var setPic = function(picPath,img) {
 var setCondition = function(role, stuClasses) {
 	var btn_post = document.getElementById('post-imgs');
 	var title = document.getElementById('title');
+	var hint_info=document.getElementById('hint-info');
 	if(role == 2) {
 		document.querySelector('.subjects-container').style.display = 'block';
 		document.querySelector('.teachers-container').style.display = 'none';
-		btn_post.innerText = '上传答案';
+//		btn_post.innerText = '上传答案';
 		title.innerText = '上传答案';
+		hint_info.innerText='请上传答案图片，以供学生参考';
 		requestSubjectList();
 	} else {
 		stuSubmitAnswer = true;
 		document.querySelector('.subjects-container').style.display = 'none';
 		document.querySelector('.teachers-container').style.display = 'block';
-		btn_post.innerText = '上传作业';
+//		btn_post.innerText = '上传作业';
 		title.innerText = '上传作业';
+		hint_info.innerText='请上传作业图片，自动对比结果';
 		//循环遍历老师数组，将群和老师身份的拼接
 		requestClassTeacherInfo(stuClasses);
 	}
@@ -246,7 +249,7 @@ var setTeachers = function(teaInfos) {
 	teaInfos.forEach(function(teaInfo, i) {
 		var op = document.createElement('option');
 		op.teaInfo= teaInfo;
-		op.innerText = teaInfo.ugnick+'-'+teaInfo.gname;
+		op.innerHTML = '<p><span  class="receiver-name">'+teaInfo.ugnick+'</span><span class="recerver-">-</span><span class="receiver-class">'+teaInfo.gname+'</span></p>';
 		teaContainer.appendChild(op);
 	})
 }
