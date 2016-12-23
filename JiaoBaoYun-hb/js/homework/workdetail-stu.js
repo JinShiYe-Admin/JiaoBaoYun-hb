@@ -6,8 +6,10 @@ mui.plusReady(function() {
 	window.addEventListener('workDetail', function(e) {
 		homeworkInfo= e.detail.data;
 		if(homeworkInfo.SubmitOnline){
+			document.querySelector('.homework-brief').className='homework-brief submitOnline';
 			document.getElementById('btn-startWork').style.display='inline-block';
 		}else{
+			document.querySelector('.homework-brief').className='homework-brief';
 			document.getElementById('btn-startWork').style.display='none'
 		}
 		console.log('学生作业详情获取的数据：' + JSON.stringify(homeworkInfo));
@@ -36,8 +38,8 @@ var setContentView = function() {
 	document.querySelector('.subject-icon').className="subject-icon iconfont "+getHomeworkIcon(homeworkInfo.Subject);
 	document.querySelector('.brief-title').innerText=homeworkInfo.HomeworkTitle;
 	document.querySelector('.brief-content').innerText=homeworkInfo.Contents;
-	document.querySelector('.publisher').innerText="发布人:"+homeworkInfo.unick;
-	document.querySelector('.publish-date').innerText="发布时间:"+homeworkInfo.Date.split(' ')[0];
+	document.querySelector('.publisher').innerText=homeworkInfo.unick;
+	document.querySelector('.publish-date').innerText=homeworkInfo.Date.split(' ')[0];
 }
 
 //2.	获取教师发布作业详情，不包括学生提交的答案；

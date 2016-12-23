@@ -1112,7 +1112,9 @@
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
 					"js/utils/files.js",
-					"image/homework/xiangji.png"
+					"image/homework/xiangji.png",
+					"image/homework/temWork-teaHint.png",
+					"image/homework/temWork-stuHint.png"
 				],
 				"refer": [
 					"html/homework/homework-commented.html"
@@ -2116,7 +2118,8 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"css/iconfont/iconfont.css",
 					"fonts/iconfont.ttf",
-					"css/homework/subjects-icon.css"
+					"css/homework/subjects-icon.css",
+					"image/homework/need-submit.png"
 				],
 				"refer": [
 					"html/homework/doHomework-stu.html"

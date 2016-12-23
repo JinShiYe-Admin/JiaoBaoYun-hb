@@ -350,7 +350,7 @@ var setPublishedData = function(publishedData) {
 var createHomeworkInner = function(homework) {
 	return '<a><div class="homework-header"><span class=" iconfont subject-icon ' +
 		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words"><h6 class="header-title single-line">' +
-		homework.HomeworkTitle + '</h6><p class="header-content single-line">' + homework.Contents + '</p></div></div>' +
+		homework.Subject + '作业</h6><p class="header-content single-line">' + homework.Contents + '</p></div></div>' +
 		'<div class="homework-bottom"><p>未提交数(' + homework.Remain +
 		')</p><p>已提交数(' + homework.Upload + ')</p></div></a>';
 }
@@ -371,7 +371,7 @@ var getAnswerImgs = function(thumbUrls) {
 var createStuHomeworkInner = function(homework) {
 	return '<a><div class="stuHomework-header"><span class=" iconfont subject-icon ' +
 		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words stuHead-words"><h6 class="header-title single-line">' +
-		homework.HomeworkTitle + '</h6><p class="header-content single-line">' + homework.Contents + '</p></div></div></a>';
+		homework.Subject + '作业</h6><p class="header-content single-line">' + homework.Contents + '</p></div></div></a>';
 }
 var getResultBackground=function(answerResult){
 	var backClassName;
@@ -405,7 +405,7 @@ var getBackGround = function(homework) {
 }
 var createStuAnswerResultInner = function(answerResult) {
 	return '<a><div class="answerResult-header">' + getStuAnswerImges(answerResult) +
-		'</div><p class="answerResult-bottom">上传时间:' + answerResult.UploadTime + '</p><p>上传目标老师：'+answerResult.Teachername+'</p></a>';
+		'</div><p class="answerResult-bottom"><span>' +answerResult.Teachername+ '</span><span>'+ answerResult.UploadTime+'</span></p></a>';
 }
 var getStuAnswerImges=function(answerResult){
 	

@@ -264,7 +264,6 @@ function requestData() {
 }
 var getRoleInfos = function(tempRspData) {
 	var idsArray = [];
-
 	for(var i in tempRspData) {
 		idsArray.push(tempRspData[i].UserId);
 		if(tempRspData[i].MsgType != 6) {
