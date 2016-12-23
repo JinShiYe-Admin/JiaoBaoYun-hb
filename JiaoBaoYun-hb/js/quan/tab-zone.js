@@ -52,11 +52,9 @@ function addSomeEvent() {
 	});
 	window.addEventListener('infoChanged', function() {
 		if(datasource.length == 0) {
-			console.log(111111111)
 			var wobj = plus.webview.currentWebview();
 			wobj.reload(true);
 		} else {
-			console.log(2222222)
 			var wobj = plus.webview.currentWebview();
 			wobj.reload(true);
 //			personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
@@ -354,7 +352,8 @@ function getTopList(index) {
 		if(data.RspCode == 0) {
 			if(data.RspData.Data.length == 0) { //数据为空时 添加默认数据
 				var today = new Date();
-				var currentDate = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate() + "  " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+				var month = today.getMonth()+1
+				var currentDate = today.getFullYear() + "-" + month + "-" + today.getDate() + "  " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
 				var temp = {
 					index: index, //排序索引
 					MsgContent: '暂无动态',
@@ -376,7 +375,7 @@ function getTopList(index) {
 				var ul = document.getElementById('top-list');
 				console.log('topArray====' + JSON.stringify(topArray))
 				for(var i = 0; i < topArray.length; i++) {
-					var li = document.createElement('li');
+					var li = document.createElement('li');   
 					li.id = 'tarClass' + i;
 					li.className = 'mui-table-view-cell mui-media tarClass';
 					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">' + '<p class="time">' + topArray[i].PublishDate +

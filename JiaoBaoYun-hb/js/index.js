@@ -13,11 +13,6 @@ mui.plusReady(function() {
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 		document.querySelector('img').src = img ? img : '../../image/utils/default-personalimage.png'
-		if(plus.os.name == 'iOS') {
-//			var wobj = plus.webview.currentWebview();
-//			wobj.reload(true);
-		}
-
 	})
 	window.addEventListener('aboutmNoRead', function() {
 		getAboutMe();
