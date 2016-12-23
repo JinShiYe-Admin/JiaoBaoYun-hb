@@ -247,6 +247,8 @@ function requestPublishHomework() {
 		mui.toast('无发布作业的学生对象！');
 		return;
 	}
+	//给学生去重
+	tempStuArray = arrayDupRemoval(tempStuArray);
 	//所需参数
 	var comData = {
 		teacherId: personalUTID, //教师Id

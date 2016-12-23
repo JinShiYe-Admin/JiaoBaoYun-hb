@@ -71,19 +71,7 @@ var homeworkDetailNodes = {
 	stuCell:document.getElementById('stuCell'),
 	hr:document.getElementById('hr'),
 }
-var imgType = {
-		chineseImg: '../../image/homework/chinese.png',
-		mathImg: '../../image/homework/math.png',
-		biologyImg: '../../image/homework/biology.png',
-		chemistryImg: '../../image/homework/chemistry.png',
-		englishImg: '../../image/homework/english.png',
-		otherImg: '../../image/homework/other.png',
-		physicsImg: '../../image/homework/physics.png',
-		politicalImg: '../../image/homework/political.png',
-		historyImg: '../../image/homework/history.png',
-		yuwenImg: '../../image/homework/yuwen.png',
-		geographyImg: '../../image/homework/geography.png'
-	}
+
 	//个人UTID
 	//作业结果model
 var homeworkResult = {};
@@ -236,37 +224,10 @@ function refreshUITemp() {
 
 function refreshUI() {
 	console.log(JSON.stringify(homeworkDetailNodes))
-	switch(homeworkModel.Subject) {
-		case '语文':
-			homeworkDetailNodes.img.src = imgType.yuwenImg;
-			break;
-		case '数学':
-			homeworkDetailNodes.img.src = imgType.mathImg;
-			break;
-		case '英语':
-			homeworkDetailNodes.img.src = imgType.englishImg;
-			break;
-		case '历史':
-			homeworkDetailNodes.img.src = imgType.historyImg;
-			break;
-		case '政治':
-			homeworkDetailNodes.img.src = imgType.politicalImg;
-			break;
-		case '地理':
-			homeworkDetailNodes.img.src = imgType.geographyImg;
-			break;
-		case '物理':
-			homeworkDetailNodes.img.src = imgType.physicsImg;
-			break;
-		case '化学':
-			homeworkDetailNodes.img.src = imgType.chemistryImg;
-			break;
-		case '生物':
-			homeworkDetailNodes.img.src = imgType.biologyImg;
-			break;
-		default:
-			break;
-	}
+	var className = 'iconfont subject-icon ' +getHomeworkIcon(homeworkModel.Subject);
+	console.log('className='+className);
+	homeworkDetailNodes.img.className =  className
+
 	homeworkDetailNodes.title.innerText = homeworkModel.Subject;
 	homeworkDetailNodes.publishDate.innerText = homeworkModel.HomeworkTitle;
 	var HomeworkContents = homeworkResult.Homework.Contents;
@@ -287,3 +248,39 @@ function refreshUI() {
 	homeworkDetailNodes.commentContent.innerText = Comment;
 
 }
+var getHomeworkIcon = function(subject) {
+		var subjectIcon = '';
+		switch(subject) {
+			case '语文':
+				subjectIcon = 'icon-yuwen';
+				break;
+			case '数学':
+				subjectIcon = 'icon-shuxue';
+				break;
+			case '英语':
+				subjectIcon = 'icon-yingyu';
+				break;
+			case '政治':
+				subjectIcon = 'icon-zhengzhi';
+				break;
+			case '历史':
+				subjectIcon = 'icon-lishi';
+				break;
+			case '地理':
+				subjectIcon = 'icon-dili';
+				break;
+			case '物理':
+				subjectIcon = 'icon-wuli';
+				break;
+			case '化学':
+				subjectIcon = 'icon-huaxue';
+				break;
+			case '生物':
+				subjectIcon = 'icon-shengwu';
+				break;
+			default:
+				subjectIcon = 'icon-qita';
+				break;
+		}
+		return subjectIcon;
+	}
