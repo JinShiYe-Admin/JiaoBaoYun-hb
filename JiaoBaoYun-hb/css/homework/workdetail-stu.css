@@ -28,7 +28,22 @@ html,body,.mui-content{
 }
 .homework-detail{
 	padding: 1rem;
-	margin-bottom: 6rem;
+	margin-bottom: 8.8rem;
+}
+.startWork-container{
+	border-top: solid 1px #dedfe0;
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	background-color: #F8F9FB;
+	height: 8.8rem;
+}
+.startWork-hint{
+	padding-top: 1rem;
+	color: #777777;
+	width: 100%;
+	text-align: center;
 }
 .btn-startAn{
 	position: fixed;
