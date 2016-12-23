@@ -62,8 +62,9 @@ var createInner = function(cell) {
 			'<p class="title-words">' + cellData.time + '</p>' +
 			'</div>' +
 			'</div>' +
-			'<p class="comment-content">' + ifHave(cellData.content) + '</p>' +
-			'<div class="refer-content">' + '<span>' + cellData.UserOwnerNick + ':</span>' + ifHave(cellData.referContent) + '</div>' +
+			//最新内容
+			'<p class="comment-content single-line">' + ifHave(cellData.content) + '</p>' +
+			ifHaveReferContent(cellData) +
 			'<div class="extras">' + ifHave(cellData.messages) + '</div>'
 		'</a>';
 	} else {
@@ -83,6 +84,13 @@ var createInner = function(cell) {
 
 //	console.log('每个cell的内容：' + inner)
 	return inner;
+}
+var ifHaveReferContent=function(cellData){
+	if(cellData.referContent){
+		return '<div class="refer-content">' + '<span>' + cellData.UserOwnerNick + ':</span>' + cellData.referContent + '</div>'
+	}else{
+		return '';
+	}
 }
 var addReplyView = function() {
 	mui('.mui-table-view').on('tap', '.reply', function() {
@@ -214,22 +222,22 @@ var getCellData = function(cell) {
 	if(cellData.MsgType != 6) {
 		var messages = new Array();
 		if(cell.Content) {
-			messages.push('<p><span>' + cell.UserName + ':</span>' + cell.Content + '</p>')
+			messages.push('<p class="single-line"><span>' + cell.UserName + ':</span>' + cell.Content + '</p>')
 		}
 		if(cell.MsgArray && cell.MsgArray.length > 0) {
 			cell.MsgArray.forEach(function(msg, i, msgArray) {
 				if(msg.MsgContent) {
 					if(msg.MsgToName) {
-						messages.push('<p><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>');
+						messages.push('<p class="single-line" ><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>');
 					} else {
-						messages.push('<p><span>' + msg.MsgFromName + ':</span>' + msg.MsgContent + '</p>');
+						messages.push('<p class="single-line" ><span>' + msg.MsgFromName + ':</span>' + msg.MsgContent + '</p>');
 					}
 				}
 
 			});
 
-		} else {
-			messages.push('<p><span>' + cell.unick + ':</span>' + cell.MsgContent + '</p>')
+//		} else {
+//			messages.push('<p><span>' + cell.unick + ':</span>' + cell.MsgContent + '</p>')''
 		}
 		cellData.messages = messages.join('');
 		//	console.log('获取的额外数据：' + cellData.messages);

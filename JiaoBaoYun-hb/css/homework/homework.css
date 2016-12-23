@@ -45,7 +45,6 @@ header .mui-icon-bars:before{
 }
 
 .homework-bottom>p{ 
-	padding-top: .5rem;
 	padding-left: 1rem;
 	 display: inline-block;
 }
@@ -139,7 +138,7 @@ header .mui-icon-bars:before{
 	vertical-align: middle;
 }*/
 .mui-table-view-divider{
-	background-color: #efeff4;
+	background-color: #f8f9fb;
 	color: #777777;
 }
 .mui-slider-indicator:last-of-type{
@@ -151,4 +150,7 @@ header .mui-icon-bars:before{
 }
 .stuHomework-header{
 	height: 6.5rem;
+}
+.answerResult-pic{
+	height: 6rem;
 }

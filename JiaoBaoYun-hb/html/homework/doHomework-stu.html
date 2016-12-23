@@ -100,6 +100,7 @@
 					wd.close();
 					console.log('7.postDataPro_SubmitHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
+						mui.toast('提交作业答案成功！')
 						//清空输入框
 						textView.value = '';
 						mui.back();
@@ -137,6 +138,7 @@
 					wd.close();
 					console.log('9.postDataPro_ModifyHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
+						mui.toast('修改作业答案成功！')
 						//清空输入框
 						textView.value = '';
 						mui.back();

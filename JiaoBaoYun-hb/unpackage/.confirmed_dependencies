@@ -469,7 +469,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js",
-			"js/utils/files.js"
+			"js/utils/files.js",
+			"image/homework/xiangji.png"
 		],
 		"refer": [
 			"html/homework/homework-commented.html"
@@ -636,7 +637,10 @@
 			"js/qiniu/plupload.full.min.js",
 			"js/utils/QiNiuUtil.js",
 			"js/qiniu/qiniu.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"js/cloud/AndroidFileSystem.js",
+			"js/utils/UploadHeadImage.js",
+			"js/utils/CloudFileUtil.js"
 		],
 		"refer": [
 			"html/mine/edit-info.html"
@@ -724,7 +728,8 @@
 			"html/quan/leave-sub.html"
 		],
 		"refer": [
-			"html/quan/leave-sub.html"
+			"html/quan/leave-sub.html",
+			"html/quan/pub-leave.html"
 		]
 	},
 	"html/quan/leave-sub.html": {
@@ -985,7 +990,8 @@
 		],
 		"refer": [
 			"html/register/modify_password.html",
-			"html/mine/privacy.html"
+			"html/mine/privacy.html",
+			"html/register/login.html"
 		]
 	},
 	"html/mine/privacy.html": {
@@ -1800,7 +1806,14 @@
 	"html/cloud/storage_upload_choose.html": {
 		"resources": [
 			"image/cloud/A_folder.png",
-			"js/cloud/AndroidFileSystem.js"
+			"js/cloud/AndroidFileSystem.js",
+			"fonts/mui.ttf",
+			"css/cloud/file.css"
+		]
+	},
+	"html/quan/pub-leave.html": {
+		"resources": [
+			"css/mui.css"
 		]
 	}
 }

@@ -1111,7 +1111,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"js/utils/files.js"
+					"js/utils/files.js",
+					"image/homework/xiangji.png"
 				],
 				"refer": [
 					"html/homework/homework-commented.html"
@@ -1296,7 +1297,10 @@
 					"js/utils/QiNiuUtil.js",
 					"js/qiniu/qiniu.js",
 					"image/utils/default_personalimage.png",
-					null
+					null,
+					"js/cloud/AndroidFileSystem.js",
+					"js/utils/UploadHeadImage.js",
+					"js/utils/CloudFileUtil.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1383,7 +1387,9 @@
 					"css/utils/common.css",
 					"html/quan/leave-sub.html"
 				],
-				"refer": [],
+				"refer": [
+					"html/quan/pub-leave.html"
+				],
 				"priority": 0
 			},
 			"html/quan/leave-sub.html": {
@@ -1590,7 +1596,8 @@
 					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
-					"html/register/modify_password.html"
+					"html/register/modify_password.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},
@@ -2306,7 +2313,16 @@
 			"html/cloud/storage_upload_choose.html": {
 				"resources": [
 					"image/cloud/A_folder.png",
-					"js/cloud/AndroidFileSystem.js"
+					"js/cloud/AndroidFileSystem.js",
+					"fonts/mui.ttf",
+					"css/cloud/file.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/pub-leave.html": {
+				"resources": [
+					"css/mui.css"
 				],
 				"refer": [],
 				"priority": 0
