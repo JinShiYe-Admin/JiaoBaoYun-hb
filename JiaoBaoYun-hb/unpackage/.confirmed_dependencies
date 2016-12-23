@@ -990,7 +990,8 @@
 		],
 		"refer": [
 			"html/register/modify_password.html",
-			"html/mine/privacy.html"
+			"html/mine/privacy.html",
+			"html/register/login.html"
 		]
 	},
 	"html/mine/privacy.html": {

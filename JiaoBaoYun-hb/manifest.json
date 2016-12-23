@@ -1596,7 +1596,8 @@
 					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
-					"html/register/modify_password.html"
+					"html/register/modify_password.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},

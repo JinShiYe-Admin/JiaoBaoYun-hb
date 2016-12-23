@@ -9,6 +9,7 @@ var storageKeyName = (function(mod) {
 	mod.MAINJIAOXIAOURL = 'http://192.168.0.100:8081/JiaoBaoCloudService/'; //家校圈url
 //		mod.MAINJIAOXIAOURL = 'http://192.168.0.178:8080/JiaoBaoCloudService/';//家校圈url
 	mod.MAINHOMEWORKURL = 'http://192.168.0.211:802/' //作业主url
+//		mod.MAINHOMEWORKURL = 'http://192.168.0.178:8088/' //作业主url
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url
 	mod.MAINHOMEWORKURLSTUDENT = mod.MAINHOMEWORKURL + 'StudentService.svc/'; //学生作业url
 	mod.WAITING = '加载中...'; //加载提示
