@@ -11,8 +11,8 @@ var personalUTID;
 mui.init();
 mui.plusReady(function() {
 		events.preload('classes-select.html', 200);
-		personalUTID = parseInt(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid);
 		window.addEventListener('postClasses', function(e) {
+			personalUTID = parseInt(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid);
 			console.log('发布作业界面获取的班级数据：' + JSON.stringify(e.detail.data));
 			//选中班级为全部班级
 			selectClassArray = e.detail.data;
