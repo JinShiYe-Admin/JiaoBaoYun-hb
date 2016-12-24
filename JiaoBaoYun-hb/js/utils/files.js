@@ -40,10 +40,13 @@ var files = (function(mod) {
 				// Read data from file
 				var abPath = entry.toLocalURL();
 				var img = new Image();
+				img.onload=function(){
+					var imgData = getBase64Image(img);
+					console.log(imgData);
+					callback(imgData);
+				}
 				img.src = abPath;
-				var imgData = getBase64Image(img);
-				console.log(imgData);
-				callback(imgData);
+				
 				//			var reader = null;
 				//			entry.file(function(file) {
 				//				reader = new plus.io.FileReader();
