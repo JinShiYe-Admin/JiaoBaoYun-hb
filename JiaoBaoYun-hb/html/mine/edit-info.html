@@ -18,7 +18,7 @@
 		    <a id="save" class= "mui-pull-right">保存</a>
 		</header>
 		<div class="mui-content">
-			<input id="input-content" type="text" class="mui-input-clear" placeholder="带清除按钮的输入框">
+			<input id="input-content" type="text" maxlength="10" class="mui-input-clear" placeholder="带清除按钮的输入框">
 		</div>
 		
 		
@@ -81,7 +81,7 @@
 				console.log(no)
 				switch(no){
 					case 0:
-						inText.maxlength=16;
+						jQuery('#input-content').prop("maxLength","16");
 						if(pInfo.unick){
 							title.innerText='更改昵称'
 							inText.value=pInfo.unick;
@@ -92,7 +92,7 @@
 					break;
 					case 1:
 					inText.style.maxlength=100;
-						inText.type='email';
+						jQuery('#input-content').prop("maxLength","100");
 						if(pInfo.uemail){
 							title.innerText='更改电子邮箱';
 							inText.value=pInfo.uemail;
@@ -102,7 +102,7 @@
 						inText.placeholder='请输入电子邮箱地址'
 					break;
 					case 2:
-						inText.maxlength=30;
+						jQuery('#input-content').prop("maxLength","30");
 						if(pInfo.utxt){
 							title.innerText='更改签名';
 							inText.value=pInfo.utxt;
