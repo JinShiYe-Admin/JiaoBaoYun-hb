@@ -78,7 +78,7 @@ mui.plusReady(function() {
 			}
 		});
 		window.addEventListener('roleChanged', function(e) {
-			mui('.mui-scroll-wrapper').scroll().scrollTo(0,0,100);
+			mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
 			role = e.detail.data;
 			console.log('作业子页面获取的角色变换值roleChanged：' + role);
 			setClasses(role);
@@ -137,7 +137,7 @@ function addPullFresh() {
 var pullUpRefresh = function() {
 
 	document.addEventListener("plusscrollbottom", function() {
-		console.log('我在底部pageIndex:'+selectGContainer.classInfo.pageIndex+',totalPageCount:'+totalPageCount);
+		console.log('我在底部pageIndex:' + selectGContainer.classInfo.pageIndex + ',totalPageCount:' + totalPageCount);
 		if(selectGContainer.classInfo.pageIndex < totalPageCount) {
 			selectGContainer.classInfo.pageIndex++;
 			requireHomeWork(selectGContainer.classInfo, setData);
@@ -156,7 +156,7 @@ var setListener = function() {
 			selectGId = this.classInfo.gid;
 			events.clearChild(list);
 			console.log('被点击的班级数据：' + JSON.stringify(this.classInfo));
-			totalPageCount=this.classInfo.totalPageCount;
+			totalPageCount = this.classInfo.totalPageCount;
 			//老师角色
 			if(role == 2) {
 				//如果数据已存在
@@ -183,7 +183,7 @@ var setListener = function() {
 			})
 			//临时作业点击事件
 		mui('.mui-table-view').on('tap', '.publishedAnswer', function() {
-				events.fireToPageNone('workdetailTea-temSub.html', 'workDetail',jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+				events.fireToPageNone('workdetailTea-temSub.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 				plus.webview.getWebviewById("workdetailTea-temporary.html").show();
 			})
 			//学生作业在线提交点击事件
@@ -267,13 +267,13 @@ var requireHomeWork = function(classModel, callback) {
 				console.log('老师、作业主界面获取的作业列表：' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					totalPageCount = data.RspData.PageCount;
-					selectGContainer.classInfo.totalPageCount=totalPageCount;
-					setHashData(comData,data);
+					selectGContainer.classInfo.totalPageCount = totalPageCount;
+					setHashData(comData, data);
 					callback(data.RspData.Dates)
 				} else {
 					mui.toast(data.RspTxt);
 				}
-				
+
 			})
 		} else {
 			postDataPro_GetHomeworkListStu(comData, wd, function(data) {
@@ -281,9 +281,44 @@ var requireHomeWork = function(classModel, callback) {
 				console.log('学生、作业主界面获取的作业列表：' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					totalPageCount = data.RspData.PageCount;
-					selectGContainer.classInfo.totalPageCount=totalPageCount;
-					setHashData(comData, data);
-					callback(data.RspData.Dates)
+					//向作业数组中合并人员信息
+					//获取临时作业，老师id
+					var tempIDs = [];
+					var tempArray = data.RspData.Dates[1].AnswerResults;
+					for(var m in tempArray) {
+						var tempModel = tempArray[m];
+						tempIDs.push(tempModel.TeacherId);
+					}
+					//给老师id数组去重
+					tempIDs = arrayDupRemoval(tempIDs);
+					//21.通过用户ID或ID串获取用户资料
+					//所需参数
+					var comData1 = {
+						vvl: tempIDs.join(), //用户id，查询的值,p传个人ID,g传ID串
+						vtp: 'g' //查询类型,p(个人)g(id串)
+					};
+					//21.通过用户ID或ID串获取用户资料
+					postDataPro_PostUinf(comData1, wd, function(data1) {
+						wd.close();
+						console.log('通过用户ID或ID串获取用户资料：' + JSON.stringify(data1));
+						if(data1.RspCode == 0) {
+							//循环遍历
+							for(var m in tempArray) {
+								var tempModel = tempArray[m];
+								for(var n in data1.RspData) {
+									var tempModel1 = data1.RspData[n];
+									//判断id是否一致，一致则合并
+									if(tempModel1.utid == tempModel.TeacherId) {
+										tempModel = $.extend(tempModel, tempModel1);
+									}
+								}
+							}
+							console.log('合并后的数据为：' + JSON.stringify(data));
+							selectGContainer.classInfo.totalPageCount = totalPageCount;
+							setHashData(comData, data);
+							callback(data.RspData.Dates)
+						}
+					});
 				} else {
 					mui.toast(data.RspTxt);
 				}
@@ -309,7 +344,7 @@ var setData = function(data) {
 	 */
 var setPublishedData = function(publishedData) {
 		//		events.clearChild(list);
-//		var publishedData = teacherHash.get(selectGId);
+		//		var publishedData = teacherHash.get(selectGId);
 		if(publishedData) {
 			console.log('发布作业的Id：' + selectGId + ';老师作业的数据：' + JSON.stringify(publishedData));
 			publishedData.forEach(function(DateHM, i) {
@@ -330,8 +365,8 @@ var setPublishedData = function(publishedData) {
 				}
 				if(DateHM.AnswerResultIds && DateHM.AnswerResultIds.ThumbUrls.length > 0) {
 					var li = document.createElement('li');
-					DateHM.AnswerResultIds.Date=DateHM.Date;
-					li.homeworkInfo=DateHM.AnswerResultIds;
+					DateHM.AnswerResultIds.Date = DateHM.Date;
+					li.homeworkInfo = DateHM.AnswerResultIds;
 					li.className = 'mui-table-view-cell publishedAnswer';
 					li.innerHTML = createAnswerResultInner(DateHM.AnswerResultIds);
 					list.appendChild(li);
@@ -361,11 +396,11 @@ var createAnswerResultInner = function(answerResult) {
 var getAnswerImgs = function(thumbUrls) {
 	var imgsInner = '';
 	thumbUrls.forEach(function(thumbUrl) {
-		if(thumbUrl!=null){
+		if(thumbUrl != null) {
 			imgsInner += '<img class="answerResult-pic" src="' + storageKeyName.MAINHOMEWORKURL + thumbUrl + '"/>';
 		}
 	})
-	imgsInner +='<span class="mui-icon mui-icon-arrowright temporary-more"></span>'
+	imgsInner += '<span class="mui-icon mui-icon-arrowright temporary-more"></span>'
 	return imgsInner;
 }
 var createStuHomeworkInner = function(homework) {
@@ -373,12 +408,12 @@ var createStuHomeworkInner = function(homework) {
 		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words stuHead-words"><h6 class="header-title single-line">' +
 		homework.HomeworkTitle + '</h6><p class="header-content single-line">' + homework.Contents + '</p></div></div></a>';
 }
-var getResultBackground=function(answerResult){
+var getResultBackground = function(answerResult) {
 	var backClassName;
-	if(answerResult.IsCommented){
+	if(answerResult.IsCommented) {
 		backClassName = 'isCommentedBG'
-	}else{
-		backClassName='noCommentedBG'
+	} else {
+		backClassName = 'noCommentedBG'
 	}
 	return backClassName;
 }
@@ -405,11 +440,11 @@ var getBackGround = function(homework) {
 }
 var createStuAnswerResultInner = function(answerResult) {
 	return '<a><div class="answerResult-header">' + getStuAnswerImges(answerResult) +
-		'</div><p class="answerResult-bottom">上传时间:' + answerResult.UploadTime + '</p><p>上传目标老师：'+answerResult.Teachername+'</p></a>';
+		'</div><p class="answerResult-bottom">上传时间:' + answerResult.UploadTime + '</p><p>上传目标老师：' + answerResult.unick + '</p></a>';
 }
-var getStuAnswerImges=function(answerResult){
-	
-	return '<img class="answerResult-pic" src="' + storageKeyName.MAINHOMEWORKURL +answerResult.ThumbUrl + '"/>';
+var getStuAnswerImges = function(answerResult) {
+
+	return '<img class="answerResult-pic" src="' + storageKeyName.MAINHOMEWORKURL + answerResult.ThumbUrl + '"/>';
 }
 var getHomeworkIcon = function(subject) {
 		var subjectIcon = '';
@@ -451,7 +486,7 @@ var getHomeworkIcon = function(subject) {
 	 * 要区分家长和学生作业界面
 	 */
 var setHomeworkData = function(homeworkData) {
-//		var homeworkData = studentHash.get(selectGId);
+		//		var homeworkData = studentHash.get(selectGId);
 		if(homeworkData) {
 			homeworkData.forEach(function(DateHM, i) {
 				var divider = document.createElement('li');
@@ -469,19 +504,19 @@ var setHomeworkData = function(homeworkData) {
 					})
 				}
 				if(DateHM.AnswerResults && DateHM.AnswerResults.length > 0) {
-					DateHM.AnswerResults.forEach(function(answerResult){
-						if(answerResult.ThumbUrl!=null){
-							answerResult.Date=DateHM.Date;
-							answerResult.workType=0;
+					DateHM.AnswerResults.forEach(function(answerResult) {
+						if(answerResult.ThumbUrl != null) {
+							answerResult.Date = DateHM.Date;
+							answerResult.workType = 0;
 							var li = document.createElement('li');
-							li.homeworkInfo=answerResult;
-							li.className = 'mui-table-view-cell stuAnswer '+getResultBackground(answerResult);
+							li.homeworkInfo = answerResult;
+							li.className = 'mui-table-view-cell stuAnswer ' + getResultBackground(answerResult);
 							li.innerHTML = createStuAnswerResultInner(answerResult);
 							list.appendChild(li);
 						}
-						
+
 					})
-					
+
 				}
 			})
 		}
