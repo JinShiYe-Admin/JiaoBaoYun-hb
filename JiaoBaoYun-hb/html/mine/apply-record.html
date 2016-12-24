@@ -36,35 +36,35 @@
 				indicators: true, //是否显示滚动条
 			})
 			mui.plusReady(function() {
-				events.preload('apply-group.html');
-				events.addTap('btn-apply', function() {
-					events.showPreloadPage('apply-group.html');
-				})
-				getListData();
-				window.addEventListener('applied',function(){
-					events.clearChild(document.getElementById('list-container'));
+					events.preload('apply-group.html');
+					events.addTap('btn-apply', function() {
+						events.showPreloadPage('apply-group.html');
+					})
 					getListData();
+					window.addEventListener('applied', function() {
+						events.clearChild(document.getElementById('list-container'));
+						getListData();
+					})
 				})
-			})
-			/**
-			 * 獲取申請數據
-			 */
+				/**
+				 * 獲取申請數據
+				 */
 			var getListData = function() {
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				postDataPro_PostMJoin({}, wd, function(data) {
-					wd.close();
-					console.log('获取的我的群申请记录：' + JSON.stringify(data));
-					if(data.RspCode == '0000') {
-						setListData(data.RspData);
-					} else {
-						mui.toast(data.RspTxt);
-					}
-				})
-			}
-			/**
-			 * 放置申請數據
-			 * @param {Object} data 獲取的數據
-			 */
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_PostMJoin({}, wd, function(data) {
+						wd.close();
+						console.log('获取的我的群申请记录：' + JSON.stringify(data));
+						if(data.RspCode == '0000') {
+							setListData(data.RspData);
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					})
+				}
+				/**
+				 * 放置申請數據
+				 * @param {Object} data 獲取的數據
+				 */
 			var setListData = function(data) {
 				var list = document.getElementById('list-container');
 				data.forEach(function(cell, i, data) {
@@ -95,7 +95,7 @@
 				var inner = '<a href="#chose-roles" class="" gid="' + cell.gid + '">' +
 					'<img src="' + getGimg(cell) + '"/>'
 					//							+ cell.gname + '</a>';
-				if(cell.invname!=cell.beinvname) {
+				if(cell.invname != cell.beinvname) {
 					inner += cell.invaname + '邀请你加入群：' + cell.gname;
 				} else {
 					inner += '你已申请加入群：' + cell.gname;
