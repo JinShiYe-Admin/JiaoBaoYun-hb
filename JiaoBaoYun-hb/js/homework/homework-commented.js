@@ -2,21 +2,22 @@
 mui.init();
 mui.plusReady(function() {
 	events.addTap('modifyHomework', function() {
-			if(homeworkModel.workType == 0) {
-				var modifyAnswerData = mui.extend(homeworkResult, {
-					role: 30
-				}, homeworkModel)
-				console.log(JSON.stringify(modifyAnswerData));
-				events.fireToPageWithData('publish-answer.html', 'modifyAnswer', modifyAnswerData)
+		if(homeworkModel.workType == 0) {
+			var modifyAnswerData = mui.extend(homeworkResult, {
+				role: 30
+			}, homeworkModel)
+			console.log(JSON.stringify(modifyAnswerData));
+			events.fireToPageWithData('publish-answer.html', 'modifyAnswer', modifyAnswerData)
 
-			} else {
-				events.fireToPageNone('doHomework-stu.html', 'workDetail', homeworkResult);
-				plus.webview.getWebviewById("doHomework-stu.html").show();
-			}
+		} else {
+			events.fireToPageNone('doHomework-stu.html', 'workDetail', homeworkResult);
+			plus.webview.getWebviewById("doHomework-stu.html").show();
+		}
 
-		})
+	})
 	window.addEventListener('workDetail', function(e) {
 		homeworkModel = e.detail.data;
+
 		resetData();
 		console.log('学生查看作业结果界面：' + JSON.stringify(homeworkModel));
 		if(homeworkModel.workType == 0) {
@@ -33,24 +34,29 @@ mui.plusReady(function() {
 });
 
 function resetData() {
-		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-
+	personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 	var tempNodes = mui('.tempComment');
 	homeworkResult = {};
 	for(var i = 0; i < tempNodes.length; i++) {
 		homeworkDetailNodes.list.removeChild(tempNodes[i]);
 	}
 
-	if(homeworkModel.workType==0){
+	if(homeworkModel.workType == 0) {
 		console.log('临时作业')
-	      homeworkDetailNodes.stuHomework.hidden = 'hidden';
-	      homeworkDetailNodes.stuCell.hidden = 'hidden';
-	      homeworkDetailNodes.hr.hidden = 'hidden';
-	}else{
+		homeworkDetailNodes.stuHomework.hidden = 'hidden';
+		homeworkDetailNodes.stuCell.hidden = 'hidden';
+		homeworkDetailNodes.hr.hidden = 'hidden';
+		homeworkDetailNodes.headImg.style.display = 'block';
+		homeworkDetailNodes.img.style.display = 'none';
+
+		
+	} else {
 		console.log('普通作业')
 		homeworkDetailNodes.stuHomework.hidden = '';
 		homeworkDetailNodes.stuCell.hidden = '';
 		homeworkDetailNodes.hr.hidden = '';
+		homeworkDetailNodes.headImg.style.display = 'none';
+		homeworkDetailNodes.img.style.display = 'block';
 
 	}
 
@@ -58,6 +64,7 @@ function resetData() {
 //作业model
 var homeworkModel = {};
 var homeworkDetailNodes = {
+	headImg: document.getElementById("headImg"),
 	img: document.getElementById("img"), //作业类型图像
 	title: document.getElementById("homeworkTitle"), //作业类型标题
 	publishDate: document.getElementById("publishDate"), //发布日期
@@ -66,14 +73,14 @@ var homeworkDetailNodes = {
 	list: document.getElementById("list"), //列表
 	comment: document.getElementById("comment"), //评语
 	tempComment: document.getElementsByClassName('tempComment'),
-	stuHomework: document.getElementById('stuHomework'),//学生临时作业用到的节点元素
+	stuHomework: document.getElementById('stuHomework'), //学生临时作业用到的节点元素
 	stuResult: document.getElementById('stuResult'),
-	stuCell:document.getElementById('stuCell'),
-	hr:document.getElementById('hr'),
+	stuCell: document.getElementById('stuCell'),
+	hr: document.getElementById('hr'),
 }
 
-	//个人UTID
-	//作业结果model
+//个人UTID
+//作业结果model
 var homeworkResult = {};
 var personalUTID;
 
@@ -121,6 +128,8 @@ function requestGetHomeworkResultStu() {
 		console.log('3.postDataPro_GetHomeworkResultStu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			homeworkResult = data.RspData;
+			//查找老师info
+			requestTeaInfo(homeworkModel.TeacherId);
 			refreshUI();
 		} else {
 
@@ -139,7 +148,6 @@ function getAnswerResultStu() {
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//4.	获取临时作业结果和评价：学生
 	postDataPro_GetAnswerResultStu(comData, wd, function(data) {
-
 		wd.close();
 		console.log('4.postDataPro_GetAnswerResultStu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
@@ -152,27 +160,53 @@ function getAnswerResultStu() {
 	});
 }
 var requireTeachersAnswer = function() {
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		postDataPro_GetAnswer({
+			teacherId: homeworkResult.teacherId,
+			answerResultId: homeworkModel.AnswerResultId
+		}, wd, function(data) {
+			wd.close();
+			console.log('学生作业页面获取的临时作业答案：' + JSON.stringify(data));
+			if(data.RspCode == '0000') {
+				mui.extend(homeworkResult, data.RspData);
+				requestTeaInfo(homeworkModel.TeacherId);
+				refreshUITemp();
+			} else {
+
+			}
+		})
+	}
+	//查找老师info
+var requestTeaInfo = function(teaId) {
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	postDataPro_GetAnswer({
-		teacherId: homeworkResult.teacherId,
-		answerResultId: homeworkModel.AnswerResultId
+	postDataPro_PostUinf({
+		vvl: teaId,
+		vtp: 'p'
 	}, wd, function(data) {
 		wd.close();
-		console.log('学生作业页面获取的临时作业答案：' + JSON.stringify(data));
-		if(data.RspCode == '0000') {
-			mui.extend(homeworkResult, data.RspData);
-			refreshUITemp();
-		} else {
+		console.log('学生作业详情界面获取老师信息：' + JSON.stringify(data));
+		if(data.RspCode = '0000') {
+			console.log('homeworkResult=' + JSON.stringify(homeworkResult));
 
+			if(homeworkModel.workType == 0) {
+				homeworkDetailNodes.publishDate.innerText = '发布人:' + data.RspData[0].unick + ' 发布时间:' + homeworkResult.UploadTime
+				homeworkDetailNodes.title.innerText = data.RspData[0].unick;
+				homeworkDetailNodes.content.innerText = '';
+				document.getElementById("headImg").src = updateHeadImg(data.RspData[0].uimg);
+
+			} else {
+				homeworkDetailNodes.publishDate.innerText = '发布人:' + data.RspData[0].unick + ' 发布时间:' + homeworkResult.HomeworkResult.UploadTime
+
+			}
+
+		} else {
+			mui.toast(data.RspTxt);
 		}
 	})
 }
 
 function refreshUITemp() {
 
-	homeworkDetailNodes.title.innerText = homeworkModel.ugnick;
-	homeworkDetailNodes.publishDate.innerText = '';
-	homeworkDetailNodes.img.src = homeworkModel.uimg;
 	var TeaAnsLi = document.createElement('li');
 	TeaAnsLi.className = 'mui-table-view-divider tempComment';
 	TeaAnsLi.innerHTML = '老师答案';
@@ -223,11 +257,8 @@ function refreshUITemp() {
 }
 
 function refreshUI() {
-	console.log(JSON.stringify(homeworkDetailNodes))
-	var className = 'iconfont subject-icon ' +getHomeworkIcon(homeworkModel.Subject);
-	console.log('className='+className);
-	homeworkDetailNodes.img.className =  className
-
+	var className = 'iconfont subject-icon ' + getHomeworkIcon(homeworkModel.Subject);
+	homeworkDetailNodes.img.className = className
 	homeworkDetailNodes.title.innerText = homeworkModel.Subject;
 	homeworkDetailNodes.publishDate.innerText = homeworkModel.HomeworkTitle;
 	var HomeworkContents = homeworkResult.Homework.Contents;
@@ -249,38 +280,38 @@ function refreshUI() {
 
 }
 var getHomeworkIcon = function(subject) {
-		var subjectIcon = '';
-		switch(subject) {
-			case '语文':
-				subjectIcon = 'icon-yuwen';
-				break;
-			case '数学':
-				subjectIcon = 'icon-shuxue';
-				break;
-			case '英语':
-				subjectIcon = 'icon-yingyu';
-				break;
-			case '政治':
-				subjectIcon = 'icon-zhengzhi';
-				break;
-			case '历史':
-				subjectIcon = 'icon-lishi';
-				break;
-			case '地理':
-				subjectIcon = 'icon-dili';
-				break;
-			case '物理':
-				subjectIcon = 'icon-wuli';
-				break;
-			case '化学':
-				subjectIcon = 'icon-huaxue';
-				break;
-			case '生物':
-				subjectIcon = 'icon-shengwu';
-				break;
-			default:
-				subjectIcon = 'icon-qita';
-				break;
-		}
-		return subjectIcon;
+	var subjectIcon = '';
+	switch(subject) {
+		case '语文':
+			subjectIcon = 'icon-yuwen';
+			break;
+		case '数学':
+			subjectIcon = 'icon-shuxue';
+			break;
+		case '英语':
+			subjectIcon = 'icon-yingyu';
+			break;
+		case '政治':
+			subjectIcon = 'icon-zhengzhi';
+			break;
+		case '历史':
+			subjectIcon = 'icon-lishi';
+			break;
+		case '地理':
+			subjectIcon = 'icon-dili';
+			break;
+		case '物理':
+			subjectIcon = 'icon-wuli';
+			break;
+		case '化学':
+			subjectIcon = 'icon-huaxue';
+			break;
+		case '生物':
+			subjectIcon = 'icon-shengwu';
+			break;
+		default:
+			subjectIcon = 'icon-qita';
+			break;
 	}
+	return subjectIcon;
+}

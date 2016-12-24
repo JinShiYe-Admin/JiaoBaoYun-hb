@@ -15,12 +15,17 @@
 		<script src="../../js/publicHomeworkProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/utils/events.js" type="text/javascript"></script>
+		<style type="text/css">
+			.subject-icon{
+	font-size: 50px;
+}
+		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">评语</h1>
+			<h1 class="mui-title">作业详情</h1>
 			<a id="modifyHomework" class="mui-pull-right">修改</a>
 		</header>
 
@@ -28,12 +33,12 @@
 			<div class="mui-scroll">
 				<ul id="list" class="mui-table-view">
 					<li class="mui-table-view-cell mui-media">
-						<!--<img id="img" class="mui-media-object mui-pull-left"  />-->
-						<img>
-						<span id="img" class=" iconfont subject-icon" style="margin-left: -10px;"></span>
-						</img>
-						<div class="mui-media-body" style="margin-top: -20px;">
-							<h3 id="homeworkTitle"></h3>
+						<img id="headImg" style="display: none;margin-top: 5px;" class="mui-media-object mui-pull-left" / >
+						<!--<img id="headImg">-->
+						<span id="img" class=" iconfont subject-icon" style="margin-left: -10px;display: none;" hidden="hidden"></span>
+						<!--</img>-->
+						<div class="mui-media-body">
+							<h4 id="homeworkTitle"></h4>
 							<p id="publishDate" class='mui-ellipsis'></p>
 						</div>
 						<div style="margin-top: 10px;">
