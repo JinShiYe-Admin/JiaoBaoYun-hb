@@ -40,7 +40,7 @@ var files = (function(mod) {
 					// Read data from file
 					var abPath = plus.io.convertLocalFileSystemURL(path);
 					var image = new Image();
-					image.src = imgPath;
+					image.src = abPath;
 					callback(getBase64Image(image));
 					//			var reader = null;
 					//			entry.file(function(file) {
@@ -60,10 +60,11 @@ var files = (function(mod) {
 				}, function(e) {
 					console('获取文件流错误：' + e.message);
 				});
-			},
-			function(e) {
-				console.log(e.message);
-			}
+		}
+//			},
+//			function(e) {
+//				console.log(e.message);
+//			}
 	//将图片压缩转成base64 
 	function getBase64Image(img) {
 		var canvas = document.createElement("canvas");
@@ -89,7 +90,7 @@ var files = (function(mod) {
 		return dataURL.replace("data:image/png;base64,", "");
 	}
 	return mod;
-}
+
 
 
 })(window.files || {})
