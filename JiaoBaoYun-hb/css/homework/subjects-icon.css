@@ -38,20 +38,25 @@
 }
 .isCommentedBG{
 	background-image: url(../../image/homework/commented.png);
-}
-.noCommentedBG{
-	background-image: url(../../image/homework/no-comment.png);
-}
-.isSubmitted{
-	background-image: url(../../image/homework/submitted.png);
-}
-.submitOnline{
-	background-image: url(../../image/homework/need-submit.png);
-}
-.mui-table-view-cell{
 	background-repeat: no-repeat;
 	background-position: right;
 }
+.noCommentedBG{
+	background-image: url(../../image/homework/no-comment.png);
+	background-repeat: no-repeat;
+	background-position: right;
+}
+.isSubmitted{
+	background-image: url(../../image/homework/submitted.png);
+	background-repeat: no-repeat;
+	background-position: right;
+}
+.submitOnline{
+	background-image: url(../../image/homework/need-submit.png);
+	background-repeat: no-repeat;
+	background-position: right;
+}
+
 .header-words{
 	/*margin-top: -1.5rem;*/
 	width: 60%;

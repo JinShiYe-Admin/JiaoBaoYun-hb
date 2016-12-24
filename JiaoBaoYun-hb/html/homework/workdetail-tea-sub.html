@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/homework/workdetail.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<link href="../../css/homework/subjects-icon.css" rel="stylesheet" />
 		<script src="../../js/mui.min.js"></script>
 
 		<style type="text/css">
@@ -43,12 +44,14 @@
 			<div class="mui-scroll">
 				<ul class="mui-table-view">
 					<li class="mui-table-view-cell mui-media ">
-						<img id="img" class="mui-media-object mui-pull-left" src="../../image/homework/math.png" />
-						<div class="mui-media-body">
+						<img>
+						<span id="img" class=" iconfont subject-icon" style="margin-left: -10px;"></span>
+						</img>
+						<div class="mui-media-body" style="margin-top: -15px";>
 							<h4 id="homeworkTitle"></h6>
 						<p id="publishDate" class='mui-ellipsis'>发布时间：</p>
 					</div>
-					<div>
+					<div style="margin-top: 10px;">
 						<hr  style="height:1px;border:none;border-top:1px solid #ededed;" />
 					</div>
 					
@@ -297,6 +300,9 @@
 			}
 			function refreshhomeworkDetail(){
 				console.log(homeworkDetailModel.Subject);
+				var className = 'iconfont subject-icon ' +getHomeworkIcon(homeworkModel.Subject);
+	console.log('className='+className);
+	homeworkDetailNodes.img.className =  className;
 				switch (homeworkDetailModel.Subject){
 					case '语文':
 					    homeworkDetailNodes.img.src = imgType.yuwenImg;
@@ -474,6 +480,42 @@ function alertStu(alertBtn) {
 				});
 			
 }
+var getHomeworkIcon = function(subject) {
+		var subjectIcon = '';
+		switch(subject) {
+			case '语文':
+				subjectIcon = 'icon-yuwen';
+				break;
+			case '数学':
+				subjectIcon = 'icon-shuxue';
+				break;
+			case '英语':
+				subjectIcon = 'icon-yingyu';
+				break;
+			case '政治':
+				subjectIcon = 'icon-zhengzhi';
+				break;
+			case '历史':
+				subjectIcon = 'icon-lishi';
+				break;
+			case '地理':
+				subjectIcon = 'icon-dili';
+				break;
+			case '物理':
+				subjectIcon = 'icon-wuli';
+				break;
+			case '化学':
+				subjectIcon = 'icon-huaxue';
+				break;
+			case '生物':
+				subjectIcon = 'icon-shengwu';
+				break;
+			default:
+				subjectIcon = 'icon-qita';
+				break;
+		}
+		return subjectIcon;
+	}
 		</script>
 
 	</body>

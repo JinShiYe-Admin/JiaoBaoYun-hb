@@ -97,7 +97,38 @@ mui.plusReady(function() {
 		activeTab = targetTab;
 
 	});
+function getHomeworkAlert(NoReadCnt){
+		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+		//56.（用户空间）获取与我相关
+		//所需参数
+		var comData = {
+			userId: personalUTID, //用户ID
+			pageIndex: '1', //当前页数
+			pageSize: '1' //每页记录数
+		};
+		//返回model：model_homeSchoolList，model_userSpaceAboutMe
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		//24.获取与我相关
+		postDataPro_GetHomeworkAlert(comData, wd, function(data) {
+			wd.close();
+			console.log('postDataPro_GetHomeworkAlert:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			if(data.RspCode == 0) {
+				var noRead = document.getElementById('aboutme_noRead');
+				NoReadCnt = data.RspData.NoReadCnt+NoReadCnt;
+				if( NoReadCnt == 0) {
+					noRead.innerHTML = NoReadCnt;
+					noRead.style.visibility = 'hidden';
+				} else {
+					noRead.style.visibility = 'visible';
+					noRead.innerHTML = NoReadCnt;
 
+				}
+
+			} else {
+//				mui.toast(data.RspTxt);
+			}
+		});
+	}
 	function getAboutMe() {
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 		//56.（用户空间）获取与我相关
@@ -114,15 +145,16 @@ mui.plusReady(function() {
 			wd.close();
 			console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
-				var noRead = document.getElementById('aboutme_noRead');
-				if(data.RspData.NoReadCnt == 0) {
-					noRead.innerHTML = data.RspData.NoReadCnt;
-					noRead.style.visibility = 'hidden';
-				} else {
-					noRead.style.visibility = 'visible';
-					noRead.innerHTML = data.RspData.NoReadCnt;
-
-				}
+				getHomeworkAlert(data.RspData.NoReadCnt);
+//				var noRead = document.getElementById('aboutme_noRead');
+//				if(data.RspData.NoReadCnt == 0) {
+//					noRead.innerHTML = data.RspData.NoReadCnt;
+//					noRead.style.visibility = 'hidden';
+//				} else {
+//					noRead.style.visibility = 'visible';
+//					noRead.innerHTML = data.RspData.NoReadCnt;
+//
+//				}
 
 			} else {
 //				mui.toast(data.RspTxt);
