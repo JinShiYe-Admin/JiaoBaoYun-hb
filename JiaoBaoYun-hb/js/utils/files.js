@@ -38,10 +38,12 @@ var files = (function(mod) {
 				plus.io.resolveLocalFileSystemURL(path, function(entry) {
 					//			console.log(JSON.stringify(entry.File.fileName))
 					// Read data from file
-					var abPath = plus.io.convertLocalFileSystemURL(path);
-					var image = new Image();
-					image.src = abPath;
-					callback(getBase64Image(image));
+					var abPath  = entry.toLocalURL() + "?version=" + new Date().getTime(); 
+					var img = new Image();
+					img.src = abPath;
+					 var imgData = getBase64Image(img); 
+					 console.log(imgData);
+					callback(imgData);
 					//			var reader = null;
 					//			entry.file(function(file) {
 					//				reader = new plus.io.FileReader();
@@ -90,7 +92,4 @@ var files = (function(mod) {
 		return dataURL.replace("data:image/png;base64,", "");
 	}
 	return mod;
-
-
-
 })(window.files || {})
