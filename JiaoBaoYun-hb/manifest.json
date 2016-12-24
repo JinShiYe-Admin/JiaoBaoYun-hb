@@ -575,7 +575,11 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/utils/events.js",
+					"js/utils/CloudFileUtil.js",
+					"js/cloud/AndroidFileSystem.js",
+					"js/utils/UploadHeadImage.js"
 				],
 				"refer": [
 					"html/quan/studentpersonalimge.html"

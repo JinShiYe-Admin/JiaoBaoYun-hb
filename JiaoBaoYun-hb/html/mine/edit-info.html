@@ -81,16 +81,17 @@
 				console.log(no)
 				switch(no){
 					case 0:
-						
+						inText.maxlength=16;
 						if(pInfo.unick){
 							title.innerText='更改昵称'
 							inText.value=pInfo.unick;
 						}else{
 							title.innerText='填写昵称'
 						}
-						inText.placeholder='请输入昵称'
+						inText.placeholder='请输入昵称,最多16字'
 					break;
 					case 1:
+					inText.style.maxlength=100;
 						inText.type='email';
 						if(pInfo.uemail){
 							title.innerText='更改电子邮箱';
@@ -101,14 +102,14 @@
 						inText.placeholder='请输入电子邮箱地址'
 					break;
 					case 2:
-						
+						inText.maxlength=30;
 						if(pInfo.utxt){
 							title.innerText='更改签名';
 							inText.value=pInfo.utxt;
 						}else{
 							title.innerText='填写签名'
 						}
-						inText.placeholder='请输入签名'
+						inText.placeholder='请输入签名,最多30字'
 					break;
 					default:break;
 				}

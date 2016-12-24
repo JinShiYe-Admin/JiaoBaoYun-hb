@@ -38,7 +38,7 @@ var files = (function(mod) {
 			plus.io.resolveLocalFileSystemURL(path, function(entry) {
 				//			console.log(JSON.stringify(entry.File.fileName))
 				// Read data from file
-				var abPath = entry.toLocalURL() + "?version=" + new Date().getTime();
+				var abPath = entry.toLocalURL();
 				var img = new Image();
 				img.src = abPath;
 				var imgData = getBase64Image(img);
@@ -72,6 +72,7 @@ var files = (function(mod) {
 		var canvas = document.createElement("canvas");
 		var width = img.width;
 		var height = img.height;
+		console.log('img.width:'+img.width+",img.height:"+img.height);
 		// calculate the width and height, constraining the proportions 
 		if(width > height) {
 			if(width > 100) {
