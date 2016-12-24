@@ -23,17 +23,17 @@ mui.plusReady(function() {
 		 * 并显示在界面上
 		 */
 		events.addTap('getAnswer', function() {
-			//				camera.getPic(camera.getCamera(), function(picPath) {
-			//					files.getFileByPath(picPath, function(fileStream) {
-			//						uploadFile(picPath, fileStream);
-			//					})
-			//
-			//				})
-			gallery.getSinglePic(function(picPath) {
-				files.getFileByPath(picPath, function(fileStream) {
-					uploadFile(picPath, fileStream);
-				});
-			});
+			camera.getPic(camera.getCamera(), function(picPath) {
+					files.getFileByPath(picPath, function(fileStream) {
+						uploadFile(picPath, fileStream);
+					})
+
+				})
+				//			gallery.getSinglePic(function(picPath) {
+				//				files.getFileByPath(picPath, function(fileStream) {
+				//					uploadFile(picPath, fileStream);
+				//				});
+				//			});
 		});
 		events.addTap('checkResult', function() {
 				events.fireToPageWithData('homework-commented.html', 'checkResult', answerResultId);

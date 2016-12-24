@@ -43,7 +43,7 @@ var files = (function(mod) {
 				img.onload=function(){
 					var imgData = getBase64Image(img);
 					console.log(imgData);
-					callback(imgData);
+					callback('data:image/png;base64,'+imgData);
 				}
 				img.src = abPath;
 				
