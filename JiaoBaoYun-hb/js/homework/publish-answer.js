@@ -140,13 +140,13 @@ var setPic = function(picPath,img) {
 var setCondition = function(role, stuClasses) {
 	var btn_post = document.getElementById('post-imgs');
 	var title = document.getElementById('title');
-	var hint_info=document.getElementById('hint-info');
+	var pictures=document.getElementById('pictures');
 	if(role == 2) {
 		document.querySelector('.subjects-container').style.display = 'block';
 		document.querySelector('.teachers-container').style.display = 'none';
 //		btn_post.innerText = '上传答案';
 		title.innerText = '上传答案';
-		hint_info.innerText='请上传答案图片，以供学生参考';
+		pictures.className='img-container temWork-teaHint';
 		requestSubjectList();
 	} else {
 		stuSubmitAnswer = true;
@@ -154,7 +154,7 @@ var setCondition = function(role, stuClasses) {
 		document.querySelector('.teachers-container').style.display = 'block';
 //		btn_post.innerText = '上传作业';
 		title.innerText = '上传作业';
-		hint_info.innerText='请上传作业图片，自动对比结果';
+		pictures.className='img-container temWork-stuHint';
 		//循环遍历老师数组，将群和老师身份的拼接
 		requestClassTeacherInfo(stuClasses);
 	}

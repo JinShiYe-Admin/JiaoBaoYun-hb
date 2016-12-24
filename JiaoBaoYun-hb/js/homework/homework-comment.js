@@ -218,7 +218,7 @@ var commentHomework = function(commentValue) {
 			wd.close();
 			console.log('老师评价页面获取老师评价普通作业的结果:' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
-				mui.toast('评论成功！')
+				mui.toast('评论成功！');
 			} else {
 				mui.toast(data.RspTxt);
 			}

@@ -1,20 +1,29 @@
 /**
  * 提交评论按钮样式
  */
+html,body,.mui-content{
+	background-color: white;
+}
 .btn-submit{
 	/*position: absolute;*/
-	margin-left: 25%;
-	width: 50%;
+	margin-left: 5%;
+	width: 90%;
 	height: 4rem;
-	font-size: 2rem;
-	border-radius: 2rem;
-	margin-bottom: 2rem;
+	margin-bottom: 1rem;
+	background-color: #1DB8F1;
+	border-color:  #1DB8F1;
 }
 .comment-area{
 	border: solid thin lightgray;
 }
 .homework-container{
 	min-height: 20rem;
+}
+.comment-item{
+	background-color:#f2f3f5 ;
+	padding: .5rem;
+	margin:-1rem,0 ;
+	color: #383838;
 }
 .result-text{
 	min-height: 4rem;
@@ -40,4 +49,10 @@
 .answer-img{
 	width: 20%;
 	padding: .5rem;
+}
+.homework-info p,.stu-name{
+	color: #404040;
+}
+.student-info{
+	border-bottom: solid 1px #DEDFE0;
 }

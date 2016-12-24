@@ -200,12 +200,31 @@ p img {
 	position: fixed;
 	width: 30%;
 	padding: 5%;
-	border: solid #13B7F6 5px;
+	border: solid #cae4ec 2px;
 	border-radius: 50%;
 	left: 35%;
 	margin-top: 2rem;
+	background-color: white;
 }
 .receive-teachers:last-of-type,.publish-subjects:last-of-type{
 	font-size: 1.2rem;
 	color: color: #8F8F94;;
+}
+.receive-container{
+	background-color: white;
+}
+body,.mui-content{
+	background-color: #eef5f8;
+}
+
+.temWork-teaHint{
+	background-image: url(../../image/homework/temWork-teaHint.png);
+}
+.temWork-stuHint{
+	background-image: url(../../image/homework/temWork-stuHint.png);
+}
+.temWork-stuHint,.temWork-teaHint{
+	background-size: 80%;
+	background-repeat: no-repeat;
+	background-position: center;
 }
