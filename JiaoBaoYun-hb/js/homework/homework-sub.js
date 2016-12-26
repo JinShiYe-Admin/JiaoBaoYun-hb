@@ -284,10 +284,12 @@ var requireHomeWork = function(classModel, callback) {
 					//向作业数组中合并人员信息
 					//获取临时作业，老师id
 					var tempIDs = [];
-					var tempArray = data.RspData.Dates[1].AnswerResults;
-					for(var m in tempArray) {
-						var tempModel = tempArray[m];
-						tempIDs.push(tempModel.TeacherId);
+					for(var i in data.RspData.Dates) {
+						var tempArray = data.RspData.Dates[i].AnswerResults;
+						for(var m in tempArray) {
+							var tempModel = tempArray[m];
+							tempIDs.push(tempModel.TeacherId);
+						}
 					}
 					if(tempIDs.length > 0) {
 						//给老师id数组去重
