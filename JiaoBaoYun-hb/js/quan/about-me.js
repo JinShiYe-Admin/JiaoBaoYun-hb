@@ -82,13 +82,13 @@ var createInner = function(cell) {
 			'</a>';
 	}
 
-//	console.log('每个cell的内容：' + inner)
+	//	console.log('每个cell的内容：' + inner)
 	return inner;
 }
-var ifHaveReferContent=function(cellData){
-	if(cellData.referContent){
+var ifHaveReferContent = function(cellData) {
+	if(cellData.referContent) {
 		return '<div class="refer-content">' + '<span>' + cellData.UserOwnerNick + ':</span>' + cellData.referContent + '</div>'
-	}else{
+	} else {
 		return '';
 	}
 }
@@ -236,8 +236,8 @@ var getCellData = function(cell) {
 
 			});
 
-//		} else {
-//			messages.push('<p><span>' + cell.unick + ':</span>' + cell.MsgContent + '</p>')''
+			//		} else {
+			//			messages.push('<p><span>' + cell.unick + ':</span>' + cell.MsgContent + '</p>')''
 		}
 		cellData.messages = messages.join('');
 		//	console.log('获取的额外数据：' + cellData.messages);
@@ -276,25 +276,27 @@ var getRoleInfos = function(tempRspData) {
 		}
 	}
 	console.log('身份数组：' + idsArray);
-	idsArray = events.arraySingleItem(idsArray)
+	if(idsArray.length>0) {
+		idsArray = events.arraySingleItem(idsArray);
 		//发送获取用户资料申请
-	var tempData = {
-		vvl: idsArray.toString(), //用户id，查询的值,p传个人ID,g传ID串
-		vtp: 'g' //查询类型,p(个人)g(id串)
-	}
-	console.log('tempData:' + JSON.stringify(tempData));
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	//21.通过用户ID获取用户资料
-	postDataPro_PostUinf(tempData, wd, function(infos) {
-		wd.close();
-		console.log('获取个人资料success:RspCode:' + JSON.stringify(infos));
-		if(infos.RspCode == 0) {
-			var rechargedData = replenishData(tempRspData, infos.RspData);
-			console.log('最终数据：' + JSON.stringify(rechargedData));
-			setData(rechargedData);
+		var tempData = {
+			vvl: idsArray.toString(), //用户id，查询的值,p传个人ID,g传ID串
+			vtp: 'g' //查询类型,p(个人)g(id串)
 		}
+		console.log('tempData:' + JSON.stringify(tempData));
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		//21.通过用户ID获取用户资料
+		postDataPro_PostUinf(tempData, wd, function(infos) {
+			wd.close();
+			console.log('获取个人资料success:RspCode:' + JSON.stringify(infos));
+			if(infos.RspCode == 0) {
+				var rechargedData = replenishData(tempRspData, infos.RspData);
+				console.log('最终数据：' + JSON.stringify(rechargedData));
+				setData(rechargedData);
+			}
 
-	});
+		});
+	}
 };
 var setCommentMsgReadByUser = function() {
 	var comData = {
@@ -343,7 +345,7 @@ events.initRefresh('list-container',
 		requestData();
 	},
 	function() {
-		console.log('请求页面：page：' + pageIndex+',总页面：'+totalPage+'，作业提醒总页数：'+alertTotalPage);
+		console.log('请求页面：page：' + pageIndex + ',总页面：' + totalPage + '，作业提醒总页数：' + alertTotalPage);
 		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPage && pageIndex >= alertTotalPage);
 		if(pageIndex < totalPage || pageIndex < alertTotalPage) {
 			pageIndex++;

@@ -383,11 +383,20 @@ var setPublishedData = function(publishedData) {
 	 * "Remain":11,"Subject":"语文","Upload":0
 	 */
 var createHomeworkInner = function(homework) {
-	return '<a><div class="homework-header"><span class=" iconfont subject-icon ' +
+	var inner='<a><div class="homework-header"><span class=" iconfont subject-icon ' +
 		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words"><h6 class="header-title single-line">' +
-		homework.Subject + '作业</h6><p class="header-content single-line">' + homework.Contents + '</p></div></div>' +
-		'<div class="homework-bottom"><p>未提交数(' + homework.Remain +
-		')</p><p>已提交数(' + homework.Upload + ')</p></div></a>';
+		homework.Subject + '作业</h6><p class="header-content single-line">'+ homework.Contents + '</p></div></div>' +
+		submitOnlineCondition(homework)+'</a>';
+	return inner; 
+}
+var submitOnlineCondition=function(homework){
+	if(homework.SubmitOnline){
+		return  '<div class="homework-bottom"><p>未提交数(' + homework.Remain +
+		')</p><p>已提交数(' + homework.Upload + ')</p></div>';
+	}else{
+		return '';
+	}
+	
 }
 var createAnswerResultInner = function(answerResult) {
 	return '<a><div class="answerResult-header">' + getAnswerImgs(answerResult.ThumbUrls) +
