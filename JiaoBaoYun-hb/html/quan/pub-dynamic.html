@@ -67,7 +67,11 @@
 				if(!tempText || tempText == '') {
 					mui.toast('请输入内容');
 					return;
-				}else{
+				}else if(tempText.length>300){
+					mui.toast('不能超过300字');
+					return;
+				}
+				else{
 					tempText = replaceAllBL(tempText)
 				}
 				var postData = {
