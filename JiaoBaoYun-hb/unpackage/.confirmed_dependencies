@@ -846,7 +846,8 @@
 		],
 		"refer": [
 			"html/quan/zonep_sub.html",
-			"html/quan/leave.html"
+			"html/quan/leave.html",
+			"html/quan/pub-dynamic.html"
 		]
 	},
 	"html/quan/zonep_sub.html": {

@@ -34,7 +34,9 @@ mui.plusReady(function() {
 				console.log('通过手机号获取个人信息：' + JSON.stringify(data));
 				if(data.RspCode == '0000') {
 					getAllGroups(data.RspData[0].utid, setData);
-				} else {
+				} else if(data.RspCode==9999) {
+					mui.toast('搜索内容为空，请重新搜索！');
+				}else{
 					mui.toast(data.RspTxt);
 				}
 			})
