@@ -1163,7 +1163,8 @@
 			"js/utils/RSAEncrypt.js",
 			"css/home/index.css",
 			"image/utils/default_personalimage.png",
-			"js/publicHomeworkProtocol.js"
+			"js/publicHomeworkProtocol.js",
+			"html/tab_knowledge.html"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",

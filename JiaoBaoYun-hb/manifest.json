@@ -1695,12 +1695,12 @@
 					"js/utils/RSAEncrypt.js",
 					"css/home/index.css",
 					"image/utils/default_personalimage.png",
-					"js/publicHomeworkProtocol.js"
+					"js/publicHomeworkProtocol.js",
+					"html/tab_knowledge.html"
 				],
 				"refer": [
 					"html/cloud/cloud_home.html",
 					"html/mine.html",
-					"html/tab_knowledge.html",
 					"html/clip/clip_sub.html",
 					"html/quan/class-dynamic.html",
 					"html/quan/aboutme.html",
