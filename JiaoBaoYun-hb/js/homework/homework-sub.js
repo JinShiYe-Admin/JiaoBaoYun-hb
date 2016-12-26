@@ -291,6 +291,7 @@ var requireHomeWork = function(classModel, callback) {
 							tempIDs.push(tempModel.TeacherId);
 						}
 					}
+					//有临时作业
 					if(tempIDs.length > 0) {
 						//给老师id数组去重
 						tempIDs = arrayDupRemoval(tempIDs);
@@ -322,12 +323,14 @@ var requireHomeWork = function(classModel, callback) {
 								callback(data.RspData.Dates)
 							}
 						});
+					}else{//没有临时作业
+						selectGContainer.classInfo.totalPageCount = totalPageCount;
+						setHashData(comData, data);
+						callback(data.RspData.Dates)
 					}
-
 				} else {
 					mui.toast(data.RspTxt);
 				}
-				callback()
 			})
 		}
 
@@ -390,7 +393,7 @@ var setPublishedData = function(publishedData) {
 var createHomeworkInner = function(homework) {
 	var inner = '<a><div class="homework-header"><span class=" iconfont subject-icon ' +
 		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words"><h6 class="header-title single-line">' +
-		homework.Subject + '作业</h6><p class="header-content single-line">' + homework.Contents + '</p></div></div>' +
+		homework.HomeworkTitle + '</h6><p class="header-content single-line">' + homework.Contents + '</p></div></div>' +
 		submitOnlineCondition(homework) + '</a>';
 	return inner;
 }
@@ -420,7 +423,7 @@ var getAnswerImgs = function(thumbUrls) {
 var createStuHomeworkInner = function(homework) {
 	return '<a><div class="stuHomework-header"><span class=" iconfont subject-icon ' +
 		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words stuHead-words"><h6 class="header-title single-line">' +
-		homework.Subject + '作业</h6><p class="header-content single-line">' + homework.Contents + '</p></div></div></a>';
+		homework.HomeworkTitle +'</h6><p class="header-content single-line">' + homework.Contents + '</p></div></div></a>';
 }
 var getResultBackground = function(answerResult) {
 	var backClassName;
