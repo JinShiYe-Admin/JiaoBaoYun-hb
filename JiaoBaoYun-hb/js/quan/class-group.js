@@ -307,7 +307,7 @@ var getGroupInfo = function(vvl) {
 					getRemarkInfos(groupData.RspData, item);
 				});
 			} else {
-				if(data.RspCode==0){
+				if(groupData.RspCode==0){
 					getRemarkInfos(groupData.RspData, item);
 				}
 			}
