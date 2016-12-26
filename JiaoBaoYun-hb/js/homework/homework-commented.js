@@ -208,34 +208,43 @@ var requestTeaInfo = function(teaId) {
 function refreshUITemp() {
 
 	var TeaAnsLi = document.createElement('li');
-	TeaAnsLi.className = 'mui-table-view-divider tempComment';
+	TeaAnsLi.className = 'mui-table-view-divider tempComment divider-color';
 	TeaAnsLi.innerHTML = '老师答案';
 	var TeaAnsImgLi = document.createElement('li');
 	//老师答案图片
-	TeaAnsImgLi.className = 'mui-table-view-cell mui-media  tempComment';
+	TeaAnsImgLi.className = 'mui-table-view-cell mui-media  tempComment cell-color';
+	TeaAnsImgLi.id = 'TeaAnsImgLi';
 	TeaAnsImgLi.innerHTML = ''
 	for(var i = 0; i < homeworkResult.Files.length; i++) {
 		var img = storageKeyName.MAINHOMEWORKURL + homeworkResult.Files[i].ThumbUrl;
 		TeaAnsImgLi.innerHTML = TeaAnsImgLi.innerHTML + '<img class="mui-media-object mui-pull-left" src="' + img + '" />';
+		if(i == homeworkResult.Files.length-1){
+			TeaAnsImgLi.innerHTML = TeaAnsImgLi.innerHTML+'<span class="mui-icon mui-icon-forward mui-pull-right " style = "margin-top:10px"></span>'
+		}
 
 	}
+	
 	var stuAnsLi = document.createElement('li');
-	stuAnsLi.className = 'mui-table-view-divider tempComment';
+	stuAnsLi.className = 'mui-table-view-divider tempComment divider-color';
 	stuAnsLi.innerHTML = '学生作业';
 	//学生答案图片
 	var stuAnsImgLi = document.createElement('li');
-	stuAnsImgLi.className = 'mui-table-view-cell mui-media  tempComment';
+	stuAnsImgLi.id = 'stuAnsImgLi';
+	stuAnsImgLi.className = 'mui-table-view-cell mui-media  tempComment cell-color';
 	stuAnsImgLi.innerHTML = ''
 	for(var i = 0; i < homeworkResult.File.length; i++) {
 		var img = storageKeyName.MAINHOMEWORKURL + homeworkResult.File[i].ThumbUrl;
 		stuAnsImgLi.innerHTML = stuAnsImgLi.innerHTML + '<img class="mui-media-object mui-pull-left" src="' + img + '" />';
+				if(i == homeworkResult.File.length-1){
+			stuAnsImgLi.innerHTML = stuAnsImgLi.innerHTML+'<span class="mui-icon mui-icon-forward mui-pull-right " style = "margin-top:10px"></span>'
+		}
 
 	}
 	var compareResLi = document.createElement('li');
-	compareResLi.className = 'mui-table-view-divider tempComment';
+	compareResLi.className = 'mui-table-view-divider tempComment divider-color';
 	compareResLi.innerHTML = '对比结果';
 	var ResLi = document.createElement('li');
-	ResLi.className = 'mui-table-view-cell mui-media  tempComment';
+	ResLi.className = 'mui-table-view-cell mui-media  tempComment cell-color';
 	ResLi.innerHTML = '暂无对比结果'
 	homeworkDetailNodes.list.insertBefore(TeaAnsLi, homeworkDetailNodes.stuHomework);
 	homeworkDetailNodes.list.insertBefore(TeaAnsImgLi, homeworkDetailNodes.stuHomework);
@@ -315,3 +324,19 @@ var getHomeworkIcon = function(subject) {
 	}
 	return subjectIcon;
 }
+mui('.mui-table-view').on('tap', '.cell-color', function() {
+	if(this.id == 'TeaAnsImgLi' ){
+		console.log('点击图片');
+		var imageArr = homeworkResult.Files;
+		events.openNewWindowWithData('pic-detail.html',{
+			data:imageArr
+		})
+	}else if(this.id == 'stuAnsImgLi'){
+		console.log('点击图片')
+		var imageArr = homeworkResult.File;
+		events.openNewWindowWithData('pic-detail.html',{
+			data:imageArr
+	})
+	}
+	
+})

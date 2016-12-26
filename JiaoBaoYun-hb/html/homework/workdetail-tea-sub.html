@@ -58,7 +58,7 @@
 					<div class="mui-media-body">
 						<font id="homeWorkContent"></font> 
 					</div>
-					<div align="center"  style="visibility: hidden;">
+					<div align="center"  style="visibility: hidden;max-height: 100px;">
 						<button id="checkDetail" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 100px;margin-top:15px ;">查看详情</button>
 					</div>
 
@@ -336,10 +336,14 @@
 					default:
 						break;
 				}
+//				if(homeworkDetailNodes.checkDetailBtn.height=='100px'){
+//					homeworkDetailNodes.checkDetailBtn.style.visibility = 'visible';
+//				}else{
+//					homeworkDetailNodes.checkDetailBtn.style.visibility = 'hidden';
+//				}
 				homeworkDetailNodes.title.innerText = homeworkDetailModel.Subject;
 				homeworkDetailNodes.publishDate.innerText = homeworkDetailModel.HomeworkTitle;
-				homeworkDetailNodes.content.innerText = homeworkDetailModel.Contents
-				
+				homeworkDetailNodes.content.innerText = homeworkDetailModel.Contents;
 				
 			}
 			function refreshStuList(){

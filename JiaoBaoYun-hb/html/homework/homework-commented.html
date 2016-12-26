@@ -19,7 +19,16 @@
 			.subject-icon{
 	font-size: 50px;
 }
+.divider-color{
+	color:#383838 ;
+	background-color: #f2f3f5;
+}
+.cell-color{
+	color:#808080 ;
+	background-color: white;
+}
 		</style>
+		
 	</head>
 
 	<body>
@@ -48,16 +57,16 @@
 							<font id="homeWorkContent"></font>
 						</div>
 					</li>
-					<li id="stuHomework" class="mui-table-view-divider">学生答案</li>
+					<li id="stuHomework" class="mui-table-view-divider divider-color">学生答案</li>
 					<li id="stuCell" class="mui-table-view-cell" >
 						<div class="mui-media-body" >
-							<font id="stuResult"></font>
+							<font id="stuResult" class="cell-color"></font>
 						</div>
 					</li>
-					<li id="comment" class="mui-table-view-divider">作业评语</li>
+					<li id="comment" class="mui-table-view-divider divider-color">作业评语</li>
 					<li class="mui-table-view-cell">
 						<div class="mui-media-body" style="min-height: 50px;">
-							<font id="commentContent"></font>
+							<font id="commentContent" class="cell-color"></font>
 						</div>
 					</li>
 				</ul>
