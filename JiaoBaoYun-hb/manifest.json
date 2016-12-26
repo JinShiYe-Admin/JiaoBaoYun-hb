@@ -446,7 +446,8 @@
 					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
-					"html/quan/leave.html"
+					"html/quan/leave.html",
+					"html/quan/pub-dynamic.html"
 				],
 				"priority": 0
 			},
