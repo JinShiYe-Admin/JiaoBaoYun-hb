@@ -497,8 +497,8 @@
 								var tempModel = tempArray[i];
 
 								var isHave = true;
-								//2老师或者管理员
-								if(tempModel.mstype == 2 || tempModel.mstype == 1) {
+								//2老师
+								if(tempModel.mstype == 2) {
 									for(var m in teacherClasses) {
 										if(tempModel.gid == teacherClasses[m].gid) {
 											isHave = false;

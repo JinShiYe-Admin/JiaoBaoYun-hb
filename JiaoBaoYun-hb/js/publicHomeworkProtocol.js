@@ -562,3 +562,16 @@ var postDataPro_UploadAnswerFileStu=function(commonData, wd, callback) {
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'UploadAnswerFile', enData, commonData, 2, wd, callback);
 }
+
+//17.获取学生作业记录；逻辑：不区分班级，默认近1周数据，每次多加载1周数据；
+//所需参数
+//		var comData = {
+//			userId:'',//学生/家长Id；
+//			pageSize:''//每页记录数；
+//		};
+var postDataPro_GetHomeworkAlertCount=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINHOMEWORKURLSTUDENT + 'GetHomeworkAlertCount', enData, commonData, 2, wd, callback);
+}
