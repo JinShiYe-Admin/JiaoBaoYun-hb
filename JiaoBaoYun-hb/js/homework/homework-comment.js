@@ -219,6 +219,8 @@ var commentHomework = function(commentValue) {
 			console.log('老师评价页面获取老师评价普通作业的结果:' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
 				mui.toast('评论成功！');
+				events.fireToPageNone(plus.webview.currentWebview().opener(),'workCommented')
+				mui.back();
 			} else {
 				mui.toast(data.RspTxt);
 			}
@@ -239,7 +241,9 @@ var commentAnswer = function(commentValue) {
 			wd.close();
 			console.log('老师评价页面获取的老师评论临时作业的结果：' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
-				mui.toast('评论成功！')
+				events.fireToPageNone(plus.webview.currentWebview().opener(),'workCommented')
+				mui.toast('评论成功！');
+				mui.back();
 			} else {
 				mui.toast(data.RspTxt);
 			}
@@ -262,6 +266,7 @@ var modifyHomeworkComment = function(commentValue) {
 			console.log('老师评价页面获取老师更改普通作业评论的结果：' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
 				mui.toast('修改评论成功！')
+				mui.back();
 			} else {
 				mui.toast(data.RspTxt);
 			}
@@ -282,7 +287,8 @@ var modifyAnswerComment = function(commentValue) {
 		wd.close();
 		console.log('老师评价页面获取老师更改的评论结果：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
-			mui.toast('修改评论成功！')
+			mui.toast('修改评论成功！');
+			mui.back();
 		} else {
 			mui.toast(data.RspTxt);
 		}

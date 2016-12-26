@@ -297,47 +297,52 @@ var getGroupInfo = function(vvl) {
 							console.log('是群主')
 							isMaster = true;
 							masterInfo = groupRole;
-//							insertMasterInfo(masterInfo);
-							groupData.RspData.splice(0,0,masterInfo);
-							getRemarkInfos(groupData.RspData,item);
+							//							insertMasterInfo(masterInfo);
+							groupData.RspData.splice(0, 0, masterInfo);
+
 						}
 					})
+					getRemarkInfos(groupData.RspData, item);
 				});
-			}else{
-				getRemarkInfos(groupData.RspData,item);
+
+			} else {
+				getRemarkInfos(groupData.RspData, item);
 			}
-			
+
 		}
 	});
 }
-var getRemarkInfos=function(data,item){
+var getRemarkInfos = function(data, item) {
 	getRemarkData(data, function(Remarkdata) {
-				var list = [];
-				if(Remarkdata.RspCode == '0000') {
-					list = addRemarkData(data, Remarkdata.RspData);
-				} else {
-					list = addRemarkData(data)
-				}
-				events.clearChild(item);
-				console.log('最终呈现的数据：'  + JSON.stringify(list));
-				createGride(item, list);
-			})
+		var list = [];
+		if(Remarkdata.RspCode == '0000') {
+			list = addRemarkData(data, Remarkdata.RspData);
+		} else {
+			list = addRemarkData(data)
+		}
+		events.clearChild(item);
+		console.log('最终呈现的数据：' + JSON.stringify(list));
+		createGride(item, list);
+	})
 }
 var addRemarkData = function(list, remarkList) {
 		if(remarkList) {
 			for(var i in list) {
+				var hasBunick=false;
 				for(var j in remarkList) {
 					if(list[i].utid == remarkList[j].butid) {
+						hasBunick = true;
 						list[i].bunick = remarkList[j].bunick;
 						break;
-					} else {
-						list[i].bunick = list[i].gname;
 					}
+				}
+				if(!hasBunick) {
+					list[i].bunick = list[i].ugnick;
 				}
 			}
 		} else {
 			list.forEach(function(cell, i) {
-				list[i].bunick = cell.ugname;
+				list[i].bunick = cell.ugnick;
 			})
 		}
 		return list;
@@ -368,41 +373,41 @@ var getRemarkData = function(list, callback) {
 	 */
 var createGride = function(gride, array) {
 
-		//数组遍历
-		array.forEach(
-			/**
-			 * 创建子元素
-			 * @param {Object} map 数组元素
-			 * @param {Object} index 数组序号
-			 * @param {Object} array 数组
-			 */
-			function(cell, index, array) {
-				var li = document.createElement('li'); //子元素
-				//			var bgColor=getRandomColor();//获取背景色
-				if(array.length <= 3) { //数组小于等于3，每行3个图标
-					li.className = "mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4";
-				} else { //数组大于3，每行四个图标
-					li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
-				}
-				cell.gname = groupName;
-				if(!cell.bunick) {
-					cell.bunick = cell.ugnick;
-				}
-				li.info = cell;
-				//子控件的innerHTML
-				li.innerHTML = '<a href="#">' +
-					'<img class="circular-square" src="' + getImg(cell.uimg) + '"/></br>' +
-					'<small class="'+setMasterNameClass(cell)+'">' + cell.bunick + '</small>' +
-					'</a>';
-				gride.appendChild(li);
-			})
-	}
-var setMasterNameClass=function(info){
-	if(info.mstype==1){
-		return 'master-name'
-	}
-	return '';
+	//数组遍历
+	array.forEach(
+		/**
+		 * 创建子元素
+		 * @param {Object} map 数组元素
+		 * @param {Object} index 数组序号
+		 * @param {Object} array 数组
+		 */
+		function(cell, index, array) {
+			var li = document.createElement('li'); //子元素
+			//			var bgColor=getRandomColor();//获取背景色
+			if(array.length <= 3) { //数组小于等于3，每行3个图标
+				li.className = "mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4";
+			} else { //数组大于3，每行四个图标
+				li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
+			}
+			cell.gname = groupName;
+			if(!cell.bunick) {
+				cell.bunick = cell.ugnick;
+			}
+			li.info = cell;
+			//子控件的innerHTML
+			li.innerHTML = '<a href="#">' +
+				'<img class="circular-square" src="' + getImg(cell.uimg) + '"/></br>' +
+				'<small class="' + setMasterNameClass(cell) + '">' + cell.bunick + '</small>' +
+				'</a>';
+			gride.appendChild(li);
+		})
 }
+var setMasterNameClass = function(info) {
+		if(info.mstype == 1) {
+			return 'master-name'
+		}
+		return '';
+	}
 	//頭像設置
 var getImg = function(img) {
 	return img == null ? "../../image/utils/default_personalimage.png" : img

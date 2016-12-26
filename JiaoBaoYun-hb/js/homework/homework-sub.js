@@ -284,45 +284,53 @@ var requireHomeWork = function(classModel, callback) {
 					//向作业数组中合并人员信息
 					//获取临时作业，老师id
 					var tempIDs = [];
-					var tempArray = data.RspData.Dates[1].AnswerResults;
-					for(var m in tempArray) {
-						var tempModel = tempArray[m];
-						tempIDs.push(tempModel.TeacherId);
+					for(var i in data.RspData.Dates) {
+						var tempArray = data.RspData.Dates[i].AnswerResults;
+						for(var m in tempArray) {
+							var tempModel = tempArray[m];
+							tempIDs.push(tempModel.TeacherId);
+						}
 					}
-					//给老师id数组去重
-					tempIDs = arrayDupRemoval(tempIDs);
-					//21.通过用户ID或ID串获取用户资料
-					//所需参数
-					var comData1 = {
-						vvl: tempIDs.join(), //用户id，查询的值,p传个人ID,g传ID串
-						vtp: 'g' //查询类型,p(个人)g(id串)
-					};
-					//21.通过用户ID或ID串获取用户资料
-					postDataPro_PostUinf(comData1, wd, function(data1) {
-						wd.close();
-						console.log('通过用户ID或ID串获取用户资料：' + JSON.stringify(data1));
-						if(data1.RspCode == 0) {
-							//循环遍历
-							for(var m in tempArray) {
-								var tempModel = tempArray[m];
-								for(var n in data1.RspData) {
-									var tempModel1 = data1.RspData[n];
-									//判断id是否一致，一致则合并
-									if(tempModel1.utid == tempModel.TeacherId) {
-										tempModel = $.extend(tempModel, tempModel1);
+					//有临时作业
+					if(tempIDs.length > 0) {
+						//给老师id数组去重
+						tempIDs = arrayDupRemoval(tempIDs);
+						//21.通过用户ID或ID串获取用户资料
+						//所需参数
+						var comData1 = {
+							vvl: tempIDs.toString(), //用户id，查询的值,p传个人ID,g传ID串
+							vtp: 'g' //查询类型,p(个人)g(id串)
+						};
+						//21.通过用户ID或ID串获取用户资料
+						postDataPro_PostUinf(comData1, wd, function(data1) {
+							wd.close();
+							console.log('通过用户ID或ID串获取用户资料：' + JSON.stringify(data1));
+							if(data1.RspCode == 0) {
+								//循环遍历
+								for(var m in tempArray) {
+									var tempModel = tempArray[m];
+									for(var n in data1.RspData) {
+										var tempModel1 = data1.RspData[n];
+										//判断id是否一致，一致则合并
+										if(tempModel1.utid == tempModel.TeacherId) {
+											tempModel = $.extend(tempModel, tempModel1);
+										}
 									}
 								}
+								console.log('合并后的数据为：' + JSON.stringify(data));
+								selectGContainer.classInfo.totalPageCount = totalPageCount;
+								setHashData(comData, data);
+								callback(data.RspData.Dates)
 							}
-							console.log('合并后的数据为：' + JSON.stringify(data));
-							selectGContainer.classInfo.totalPageCount = totalPageCount;
-							setHashData(comData, data);
-							callback(data.RspData.Dates)
-						}
-					});
+						});
+					}else{//没有临时作业
+						selectGContainer.classInfo.totalPageCount = totalPageCount;
+						setHashData(comData, data);
+						callback(data.RspData.Dates)
+					}
 				} else {
 					mui.toast(data.RspTxt);
 				}
-				callback()
 			})
 		}
 
@@ -383,11 +391,20 @@ var setPublishedData = function(publishedData) {
 	 * "Remain":11,"Subject":"语文","Upload":0
 	 */
 var createHomeworkInner = function(homework) {
-	return '<a><div class="homework-header"><span class=" iconfont subject-icon ' +
+	var inner = '<a><div class="homework-header"><span class=" iconfont subject-icon ' +
 		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words"><h6 class="header-title single-line">' +
-		homework.Subject + '作业</h6><p class="header-content single-line">' + homework.Contents + '</p></div></div>' +
-		'<div class="homework-bottom"><p>未提交数(' + homework.Remain +
-		')</p><p>已提交数(' + homework.Upload + ')</p></div></a>';
+		homework.HomeworkTitle + '</h6><p class="header-content single-line">' + homework.Contents + '</p></div></div>' +
+		submitOnlineCondition(homework) + '</a>';
+	return inner;
+}
+var submitOnlineCondition = function(homework) {
+	if(homework.SubmitOnline) {
+		return '<div class="homework-bottom"><p>未提交数(' + homework.Remain +
+			')</p><p>已提交数(' + homework.Upload + ')</p></div>';
+	} else {
+		return '';
+	}
+
 }
 var createAnswerResultInner = function(answerResult) {
 	return '<a><div class="answerResult-header">' + getAnswerImgs(answerResult.ThumbUrls) +
@@ -406,7 +423,7 @@ var getAnswerImgs = function(thumbUrls) {
 var createStuHomeworkInner = function(homework) {
 	return '<a><div class="stuHomework-header"><span class=" iconfont subject-icon ' +
 		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words stuHead-words"><h6 class="header-title single-line">' +
-		homework.Subject + '作业</h6><p class="header-content single-line">' + homework.Contents + '</p></div></div></a>';
+		homework.HomeworkTitle +'</h6><p class="header-content single-line">' + homework.Contents + '</p></div></div></a>';
 }
 var getResultBackground = function(answerResult) {
 	var backClassName;
@@ -440,7 +457,7 @@ var getBackGround = function(homework) {
 }
 var createStuAnswerResultInner = function(answerResult) {
 	return '<a><div class="answerResult-header">' + getStuAnswerImges(answerResult) +
-		'</div><p class="answerResult-bottom"><span>' +answerResult.unick+ '</span><span>'+ answerResult.UploadTime+'</span></p></a>';
+		'</div><p class="answerResult-bottom"><span>' + answerResult.unick + '</span><span>' + answerResult.UploadTime + '</span></p></a>';
 }
 var getStuAnswerImges = function(answerResult) {
 

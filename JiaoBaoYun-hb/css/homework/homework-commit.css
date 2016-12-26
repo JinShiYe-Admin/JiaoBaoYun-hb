@@ -56,3 +56,6 @@ html,body,.mui-content{
 .student-info{
 	border-bottom: solid 1px #DEDFE0;
 }
+.homework-info,.result-text{
+	padding: 1rem 0;
+}

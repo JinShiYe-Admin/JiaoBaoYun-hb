@@ -479,7 +479,8 @@
 					"css/mui.min.css",
 					"css/icons-extra.css",
 					"fonts/mui-icons-extra.ttf",
-					"image/cloud/record_addclassclose.png"
+					"image/cloud/record_addclassclose.png",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -1695,12 +1696,12 @@
 					"js/utils/RSAEncrypt.js",
 					"css/home/index.css",
 					"image/utils/default_personalimage.png",
-					"js/publicHomeworkProtocol.js"
+					"js/publicHomeworkProtocol.js",
+					"html/tab_knowledge.html"
 				],
 				"refer": [
 					"html/cloud/cloud_home.html",
 					"html/mine.html",
-					"html/tab_knowledge.html",
 					"html/clip/clip_sub.html",
 					"html/quan/class-dynamic.html",
 					"html/quan/aboutme.html",
@@ -2324,7 +2325,14 @@
 					"image/cloud/A_folder.png",
 					"js/cloud/AndroidFileSystem.js",
 					"fonts/mui.ttf",
-					"css/cloud/file.css"
+					"css/cloud/file.css",
+					"css/iconfont/iconfont.css",
+					"js/mui.min.js",
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"fonts/iconfont.ttf",
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0

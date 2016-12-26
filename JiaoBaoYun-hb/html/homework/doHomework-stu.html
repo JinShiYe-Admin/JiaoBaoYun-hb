@@ -18,7 +18,6 @@
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/publicHomeworkProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script>
-			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
 		</script>
 	</head>
 
@@ -31,34 +30,27 @@
 		<div class="mui-content">
 			<div class="input-content">
 				<textarea id="input-content" placeholder="请按照老师的要求来完成作业吧"></textarea>
-				<!--<div id="take_pic" class="take_pic">
-					<a class="mui-icon iconfont icon-xiangji"></a>
-				</div>
-				<div id="add_file" class="add_file">
-					<a class="mui-icon iconfont icon-jia"></a>
-				</div>-->
 			</div>
 		</div>
 		<script type="text/javascript">
 			mui.init();
+			var personalUTID;
 			var flag = 0
 			mui.plusReady(function() {
 				window.addEventListener('homeworkInfo', function(e) {
+					personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 					homeworkModel = e.detail.data;
 					console.log('学生做作业界面从上级界面获取的做作业数据：' + JSON.stringify(homeworkModel));
 					flag = 0;
 				})
 				window.addEventListener('workDetail', function(e) {
+					personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					homeworkModel = e.detail.data;
 					console.log('修改作业数据：' + JSON.stringify(homeworkModel))
 					var textView = document.getElementById('input-content');
 					textView.value = homeworkModel.HomeworkResult.Result;
-
 					flag = 1;
-
 				})
-				var item = document.getElementById('publis');
-
 				events.addTap('publish', function() {
 					if(flag == 0) {
 						requestSubmitHomeworkResult();
@@ -68,11 +60,8 @@
 
 				})
 			});
-
-			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 			//作业model
 			var homeworkModel;
-
 			//7.	提交作业结果；逻辑：如果是图片类型，同时生成缩略图
 			function requestSubmitHomeworkResult() {
 				var textView = document.getElementById('input-content');
@@ -98,10 +87,11 @@
 				//7.	提交作业结果；逻辑：如果是图片类型，同时生成缩略图
 				postDataPro_SubmitHomeworkResult(comData, wd, function(data) {
 					wd.close();
-					console.log('7.postDataPro_SubmitHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					console.log('做作业界面，提交作业获取的值'+JSON.stringify(data));
 					if(data.RspCode == 0) {
 						mui.toast('提交作业答案成功！')
-						//清空输入框
+						events.fireToPageNone(plus.webview.currentWebview().opener(),'workSubmitted');
+							//清空输入框
 						textView.value = '';
 						mui.back();
 
@@ -139,10 +129,9 @@
 					console.log('9.postDataPro_ModifyHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						mui.toast('修改作业答案成功！')
-						//清空输入框
+							//清空输入框
 						textView.value = '';
 						mui.back();
-
 					} else {
 						mui.toast(data.RspTxt);
 					}
