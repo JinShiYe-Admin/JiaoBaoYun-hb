@@ -208,7 +208,7 @@ var removeItemFromArray = function(item, arrays) {
 var getInnerHTML = function(type, item) {
 	var inner = '';
 	if(type == 'inv') {
-		inner = ' <a href="javascript:;">' +
+		inner = ' <a class="">' +
 			'<img class = "mui-media-object mui-pull-left"' +
 			'src = "' + getGimg(item) + '" >' +
 			'<div class = "mui-media-body"' +
@@ -216,7 +216,7 @@ var getInnerHTML = function(type, item) {
 			item.gname +
 			'<p class="mui-ellipsis">' + item.invname + '邀请你以'+getRole(item.mstype)+'身份加入群</p>' +
 			'</div>' +
-			'<a class = "mui-btn btn-green btn-apply" ' +
+			'<a class = "mui-btn mui-btn-green btn-apply" ' +
 			' gutid="' + item.gutid + '" mstype="' + item.mstype + '" gid="' + item.gid + '" >接受</a></a>'
 	} else {
 		inner = ' <a href="javascript:;">' +

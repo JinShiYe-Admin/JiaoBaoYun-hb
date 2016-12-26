@@ -283,7 +283,7 @@ var getGroupInfo = function(vvl) {
 		wd.close();
 		console.log('获取群组成员：' + vvl + JSON.stringify(groupData))
 			//成功囘調
-		if(groupData.RspCode == '0000' && groupData.RspData != null) {
+//		if(groupData.RspCode == '0000' && groupData.RspData != null) {
 			//				createGride(item, data.RspData);
 			if(vvl == 2) {
 				/**
@@ -297,19 +297,21 @@ var getGroupInfo = function(vvl) {
 							console.log('是群主')
 							isMaster = true;
 							masterInfo = groupRole;
-							//							insertMasterInfo(masterInfo);
-							groupData.RspData.splice(0, 0, masterInfo);
-
+							if(groupData.RspData!=null){
+								groupData.RspData.splice(0, 0, masterInfo);
+							}else{
+								groupData.RspData=[masterInfo];
+							}
 						}
 					})
 					getRemarkInfos(groupData.RspData, item);
 				});
-
 			} else {
-				getRemarkInfos(groupData.RspData, item);
+				if(data.RspCode==0){
+					getRemarkInfos(groupData.RspData, item);
+				}
 			}
 
-		}
 	});
 }
 var getRemarkInfos = function(data, item) {
