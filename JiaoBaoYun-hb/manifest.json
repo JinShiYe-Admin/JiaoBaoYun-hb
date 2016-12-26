@@ -479,7 +479,8 @@
 					"css/mui.min.css",
 					"css/icons-extra.css",
 					"fonts/mui-icons-extra.ttf",
-					"image/cloud/record_addclassclose.png"
+					"image/cloud/record_addclassclose.png",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -2324,7 +2325,14 @@
 					"image/cloud/A_folder.png",
 					"js/cloud/AndroidFileSystem.js",
 					"fonts/mui.ttf",
-					"css/cloud/file.css"
+					"css/cloud/file.css",
+					"css/iconfont/iconfont.css",
+					"js/mui.min.js",
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"fonts/iconfont.ttf",
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0

@@ -15,6 +15,9 @@ mui.plusReady(function() {
 		console.log('学生作业详情获取的数据：' + JSON.stringify(homeworkInfo));
 		requestTeaInfo(homeworkInfo.TeacherId,homeworkInfo);
 	})
+	window.addEventListener('workSubmitted',function(){
+		document.querySelector('.homework-brief').className='homework-brief isSubmitted';
+	})
 	//开始答题的监听
 	events.addTap('btn-startWork',function(){
 		events.fireToPageWithData('doHomework-stu.html','homeworkInfo',homeworkInfo);

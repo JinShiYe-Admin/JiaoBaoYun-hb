@@ -96,6 +96,7 @@ var addReplyView = function() {
 	mui('.mui-table-view').on('tap', '.reply', function() {
 		var replyContainer = document.getElementById('footer');
 		replyContainer.style.display = 'block';
+		jQuery('textarea').focus();	
 		repliedCell = this.cell;
 		console.log('点击的回复包含数据：' + JSON.stringify(repliedCell));
 		msgType = this.cell.MsgType;
@@ -111,6 +112,7 @@ var addReplyLisetner = function() {
 		if(replyValue) {
 			postReply(function() {
 				document.getElementById('footer').style.display = 'none';
+				jQuery('#msg-content').blur();
 			})
 		} else {
 			mui.toast('请输入回复内容！')
