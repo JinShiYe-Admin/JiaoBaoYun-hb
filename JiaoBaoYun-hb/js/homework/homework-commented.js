@@ -329,13 +329,15 @@ mui('.mui-table-view').on('tap', '.cell-color', function() {
 		console.log('点击图片');
 		var imageArr = homeworkResult.Files;
 		events.openNewWindowWithData('pic-detail.html',{
-			data:imageArr
+			data:imageArr,
+			title:'老师答案'
 		})
 	}else if(this.id == 'stuAnsImgLi'){
 		console.log('点击图片')
 		var imageArr = homeworkResult.File;
 		events.openNewWindowWithData('pic-detail.html',{
-			data:imageArr
+			data:imageArr,
+			title:'学生作业'
 	})
 	}
 	

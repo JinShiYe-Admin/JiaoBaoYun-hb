@@ -50,10 +50,13 @@
 		</div>
 		<script type="text/javascript" charset="utf-8">
 			mui.init({
-				swipeBack:true //启用右滑关闭功能
+				swipeBack:true //启用右滑关闭功能1
 			});
 			var slider = mui("#slider");
 			mui.plusReady(function(){
+				var title = plus.webview.currentWebview().data.title;
+				console.log(title);
+				document.getElementsByTagName('h1')[0].innerHTML = title
 			var imgArr = plus.webview.currentWebview().data.data;
 						var div = mui('.mui-slider-item-duplicate');
 						div[0].getElementsByTagName('img').src =window.storageKeyName.MAINHOMEWORKURL+ imgArr[imgArr.length-1].Url

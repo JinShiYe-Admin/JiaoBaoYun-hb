@@ -51,13 +51,14 @@ function addSomeEvent() {
 		});
 	});
 	window.addEventListener('infoChanged', function() {
+		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 		if(datasource.length == 0) {
 			var wobj = plus.webview.currentWebview();
 			wobj.reload(true);
 		} else {
 			var wobj = plus.webview.currentWebview();
 			wobj.reload(true);
-//			personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+
 //			datasource = []; //底部列表数据
 //			topStudentArr = [];
 //			topArray = []; //顶部班级列表数据
@@ -357,7 +358,7 @@ function getTopList(index) {
 				var temp = {
 					index: index, //排序索引
 					MsgContent: '暂无动态',
-					PublishDate: currentDate
+					PublishDate: ''
 				}
 				topArray.push(temp);
 			} else { //取班级空间的第一条数据

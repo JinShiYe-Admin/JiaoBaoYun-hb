@@ -103,15 +103,14 @@ function getHomeworkAlert(NoReadCnt){
 		//所需参数
 		var comData = {
 			userId: personalUTID, //用户ID
-			pageIndex: '1', //当前页数
 			pageSize: '1' //每页记录数
 		};
 		//返回model：model_homeSchoolList，model_userSpaceAboutMe
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		//24.获取与我相关
-		postDataPro_GetHomeworkAlert(comData, wd, function(data) {
+		postDataPro_GetHomeworkAlertCount(comData, wd, function(data) {
 			wd.close();
-			console.log('postDataPro_GetHomeworkAlert:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			console.log('postDataPro_GetHomeworkAlertCount:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				var noRead = document.getElementById('aboutme_noRead');
 				NoReadCnt = data.RspData.NoReadCnt+NoReadCnt;
