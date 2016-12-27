@@ -30,11 +30,11 @@
 			.cloud-info {
 				position: absolute;
 				/*顶部信息*/
-				left: 5%;
+				left: 0;
 				top: 2%;
-				/*float: right;
-
-				margin-right: 50px;*/
+				float: left;
+				text-align: left;
+				margin-left: 55%;
 			}
 
 			#cloud_prsonalimge {
@@ -50,7 +50,7 @@
 			#cloud_name {
 				/*名字*/
 				color: white;
-				margin-bottom: 5px;
+				margin-bottom: 0px;
 				font-size: 18px;
 			}
 
@@ -79,7 +79,7 @@
 
 			.cloud-capacity {
 				/*容量*/
-				margin-top: 6px;
+				margin-top: 0px;
 				color: white;
 			}
 
@@ -180,36 +180,21 @@
 				<div class="mui-scroll">
 					<!--顶部-->
 					<div class="cloud-top" style="min-height: 100px">
-						<img id="imge_bg" src="../../image/cloud/cloud_bg3.png" style="width: 100%;position: absolute;" />
-						<div class="cloud-info">
-							<!--<div class="mui-row" style="">-->
-							<!--<div class="mui-col-sm-3 mui-col-xs-3">
-									<img id="cloud_prsonalimge" src="../../image/utils/default_personalimage.png">
-								</div>-->
-							<!--<div class="mui-col-sm-12 mui-col-xs-12" style="margin-top: 15px;">-->
-							<div id="cloud_name" class="common-font-family-Bold mui-ellipsis">
-
+						<img id="imge_bg" src="../../image/cloud/cloud_bg2.png" style="width: 100%;position: absolute;" />
+						<div class="cloud-info" style="width: 40%;">
+							<div id="cloud_name" class="common-font-family-Bold mui-ellipsis-2" style="float: left;">
 							</div>
-							<!--<font>
-										<img class="cloud-top-icon" src="../../image/cloud/cloud_gift.png" />
-										<font id="gift">1000</font>
-										<img class="cloud-top-icon" src="../../image/cloud/cloud_yuan.gif" />
-										<font id="yuan">50元</font>
-									</font>-->
-
 							<div class="mui-progressbar mui-progressbar-in" style="float: left;">
 								<span></span>
 							</div>
-
+							<br />
 							<div class="cloud-capacity" style="float: left;">
-								总容量:1000G&nbsp;&nbsp;&nbsp;
+								总容量:1000G
 							</div>
-
+							<br />
 							<div class="cloud-capacity" style="float: left;">
 								已用800G&nbsp;&nbsp;&nbsp;剩余:200G
 							</div>
-							<!--</div>-->
-							<!--</div>-->
 						</div>
 					</div>
 					<div id="bottom" style="width: 100%;position: relative;">
@@ -501,29 +486,29 @@
 							for(var i in tempArray) {
 								var tempModel = tempArray[i];
 
-								var isHave = true;
+								var isHave = false;
 								//2老师
-								if(tempModel.mstype == 2) {
+								if(tempModel.mstype == 2||tempModel.mstype==1) {
 									for(var m in teacherClasses) {
 										if(tempModel.gid == teacherClasses[m].gid) {
-											isHave = false;
+											isHave = true;
 											break;
 										}
 									}
-									if(isHave) {
+									if(!isHave) {
 										teacherClasses.push(tempModel);
 									}
 								}
-								var isHave1 = true;
+								var isHave1 = false;
 								//家长、学生
 								if(tempModel.mstype == 0 || tempModel.mstype == 3) {
 									for(var m in studentClasses) {
 										if(tempModel.gid == studentClasses[m].gid) {
-											isHave = false;
+											isHave1 = true;
 											break;
 										}
 									}
-									if(isHave) {
+									if(!isHave1) {
 										studentClasses.push(tempModel);
 									}
 								}
