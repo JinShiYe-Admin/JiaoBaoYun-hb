@@ -119,7 +119,7 @@
 			mui.plusReady(function() {
 				var qunImgPath = '';
 				var Width = plus.screen.resolutionWidth;
-				var marginLeft = (Width - 100) / 2 + 'px';
+				var marginLeft = (Width) / 8 + 'px';
 				addQunImg(); //显示上传群头像的图标
 
 				document.getElementById('qunimage').addEventListener('tap', function() {
@@ -279,7 +279,7 @@
 									events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
 									events.fireToPageNone('/html/mine/qun_manage.html', 'refresh');
 									events.fireToPageNone('/html/mine/qun_data.html', 'refresh');
-									
+
 									mui.toast('创建群成功');
 									mui.back();
 								}, function(errorCB) {

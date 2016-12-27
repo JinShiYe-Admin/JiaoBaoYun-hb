@@ -303,50 +303,44 @@
 						console.log('资料：id:' + this.getAttribute('id') + '|gid:' + this.getAttribute('data-gid') + '|stuid:' + this.getAttribute('data-stuid'));
 						var id = this.getAttribute('id'); //元素id
 						var gid = this.getAttribute('data-gid'); //群id
-						var gutid = this.getAttribute('data-stuid'); //资料id
+						var stuid = this.getAttribute('data-stuid'); //资料id
 						mui.each(qunList, function(index, item) {
 							if(item.mstype == 1 && item.gid == gid) { //群主
 								var btnArray = ['否', '是'];
-								mui.confirm('您确定要删除吗？删除后记事将被清空哦', '删除资料', btnArray, function(e) {
+								var title = '';
+								if(type == 'teacher') {
+									title = '您确定要删除吗？';
+								} else {
+									title = '您确定要删除吗？删除后记事将被清空哦';
+								}
+								mui.confirm(title, '删除资料', btnArray, function(e) {
 									if(e.index == 1) {
-										//先删除家校圈的点到记事记录，再删除资料
-										//75.（点到记事）删除某学生点到记事
-										//所需参数
-										var comData = {
-											studentId: gutid, //学生ID
-											classId: gid //班级ID
-										};
-										//返回学生姓名数组
-										var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-										postDataPro_delNoteByStudent(comData, wd, function(data) {
-											wd.close();
-											console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-											if(data.RspCode == 0) {
-												mui.toast('删除记事成功,正在删除资料...');
-												//33.根据资料表ID删除资料
-												//所需参数
-												var comData2 = {
-													vvl: gutid, //资料ID，stuid
-												};
-												// 等待的对话框
-												var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-												postDataPro_PostStuD(comData2, wd2, function(data2) {
-													wd2.close();
-													console.log('90909090success:RspCode:' + data2.RspCode + ',RspData:' + JSON.stringify(data2.RspData) + ',RspTxt:' + data2.RspTxt);
-													if(data2.RspCode == 0) {
-														mui.toast('删除资料成功');
-														document.getElementById(id).parentNode.removeChild(document.getElementById(id));
-														if(document.getElementById(id) != null) {
-															document.getElementById(id).parentNode.removeChild(document.getElementById(id));
-														}
-													} else {
-														mui.toast(data2.RspTxt);
-													}
-												});
-											} else {
-												mui.toast(data.RspTxt);
-											}
-										});
+										if(type == 'teacher') {
+											//33.根据资料表ID删除资料
+											deleteData(stuid, id);
+										} else {
+											//先删除家校圈的点到记事记录，再删除资料
+											//75.（点到记事）删除某学生点到记事
+											//所需参数
+											var comData = {
+												studentId: stuid, //学生ID
+												classId: gid //班级ID
+											};
+											//返回学生姓名数组
+											var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+											postDataPro_delNoteByStudent(comData, wd, function(data) {
+												wd.close();
+												console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+												if(data.RspCode == 0) {
+													mui.toast('删除记事成功,正在删除资料...');
+													//33.根据资料表ID删除资料
+													deleteData(stuid, id);
+												} else {
+													mui.toast(data.RspTxt);
+												}
+											});
+										}
+
 									} else {
 										console.log('不删除资料');
 									}
@@ -734,6 +728,34 @@
 								}
 							});
 						}
+					}
+
+					/**
+					 * 根据资料表ID删除资料
+					 * @param {Object} stuid 资料id
+					 * @param {Object} id 元素id
+					 */
+					function deleteData(stuid, id) {
+						//33.根据资料表ID删除资料
+						//所需参数
+						var comData2 = {
+							vvl: stuid, //资料ID，stuid
+						};
+						// 等待的对话框
+						var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						postDataPro_PostStuD(comData2, wd2, function(data2) {
+							wd2.close();
+							console.log('90909090success:RspCode:' + data2.RspCode + ',RspData:' + JSON.stringify(data2.RspData) + ',RspTxt:' + data2.RspTxt);
+							if(data2.RspCode == 0) {
+								mui.toast('删除资料成功');
+								document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+								if(document.getElementById(id) != null) {
+									document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+								}
+							} else {
+								mui.toast(data2.RspTxt);
+							}
+						});
 					}
 				})
 			</script>

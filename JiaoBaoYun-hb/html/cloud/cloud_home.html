@@ -179,11 +179,12 @@
 			<div class="mui-scroll-wrapper">
 				<div class="mui-scroll">
 					<!--顶部-->
-					<div class="cloud-top" style="min-height: 100px">
+					<div class="cloud-top" style="min-height: 100px;width:100%;">
 						<img id="imge_bg" src="../../image/cloud/cloud_bg2.png" style="width: 100%;position: absolute;" />
-						<div class="cloud-info" style="width: 40%;">
+						<div class="cloud-info" style="">
 							<div id="cloud_name" class="common-font-family-Bold mui-ellipsis-2" style="float: left;">
 							</div>
+							<br />
 							<div class="mui-progressbar mui-progressbar-in" style="float: left;">
 								<span></span>
 							</div>
@@ -488,7 +489,7 @@
 
 								var isHave = false;
 								//2老师
-								if(tempModel.mstype == 2||tempModel.mstype==1) {
+								if(tempModel.mstype == 2 || tempModel.mstype == 1) {
 									for(var m in teacherClasses) {
 										if(tempModel.gid == teacherClasses[m].gid) {
 											isHave = true;

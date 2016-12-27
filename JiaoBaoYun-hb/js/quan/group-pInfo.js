@@ -60,7 +60,7 @@ var getAccountInfo = function(callback) {
 	})
 }
 var manageAccountInfo = function(data) {
-	
+
 		jQuery.extend(pInfo,data);
 		console.log('獲取的個人賬號信息：' + JSON.stringify(pInfo));
 		//{"utid":5,"uid":"18853113151","uname":"test867830028690115",
@@ -69,9 +69,9 @@ var manageAccountInfo = function(data) {
 		document.getElementById('info-headImg').src = pInfo.uimg?data.uimg:'../../image/utils/default_personalimage.png';
 		document.getElementById('info-name').innerText = pInfo.uname;
 		document.getElementById('info-nick').innerText = pInfo.unick;
-		document.getElementById('person-remark').innerText=pInfo.bunick?pInfo.bunick:pinfo.ugnick
+		document.getElementById('person-remark').innerText=pInfo.bunick?pInfo.bunick:pInfo.ugnick
 		document.getElementById('data-info').innerText = pInfo.uid;
-		document.getElementById('person-space').innerText = pInfo.bunick + '的空间';
+		document.getElementById('person-space').innerText = pInfo.bunick?pInfo.bunick:pInfo.ugnick + '的空间';
 	}
 	/**
 	 *40.通过用户ID获取用户各项资料
