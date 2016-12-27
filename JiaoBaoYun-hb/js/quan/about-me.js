@@ -23,6 +23,7 @@ var repliedCell;
 var aboutMeArray = [];
 mui.init();
 mui.plusReady(function() {
+		initNativeObjects();
 		//页码1
 		pageIndex = 1;
 		//请求并放置数据
@@ -96,9 +97,7 @@ var addReplyView = function() {
 	mui('.mui-table-view').on('tap', '.reply', function() {
 		var replyContainer = document.getElementById('footer');
 		replyContainer.style.display = 'block';
-		setTimeout(function(){
-			jQuery('textarea').focus();	
-		},200)
+		showSoftInput('#msg-content');
 		repliedCell = this.cell;
 		console.log('点击的回复包含数据：' + JSON.stringify(repliedCell));
 		msgType = this.cell.MsgType;
