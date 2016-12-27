@@ -225,7 +225,7 @@ var getInnerHTML = function(type, item) {
 			'<div class = "mui-media-body"' +
 			'style = "margin-right: 4rem;" >' +
 			item.gname +
-			'<p class="mui-ellipsis">' + item.invname + '申请以'+getRole(item.mstype)+'身份加入你的群:' + item.gname + '</p>' +
+			'<p class="mui-ellipsis apply-message">' + item.invname + '申请以'+getRole(item.mstype)+'身份加入你的群:' + item.gname + '</p>' +
 			'</div>' +
 			'<a href="#chose-roles" class = "mui-btn mui-btn-green btn-openPopover" ' +
 			' gutid="' + item.gutid + '" mstype="' + item.mstype + '" gid="' + item.gid + '" stuname="' + item.stuname + '">接受</a></a>'

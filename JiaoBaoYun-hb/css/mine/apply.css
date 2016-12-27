@@ -59,8 +59,7 @@ a>p {
 	display: inline-block;
 	float: right;
 }
-.btn-apply,.btn-openPopover{
-	position: absolute;
-	top:.5rem;
-	right: .5rem;
+
+.apply-message{
+	margin-right: 28px;
 }
