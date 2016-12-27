@@ -325,6 +325,7 @@ var getHomeworkIcon = function(subject) {
 	return subjectIcon;
 }
 mui('.mui-table-view').on('tap', '.cell-color', function() {
+	console.log(11111111111)
 	if(this.id == 'TeaAnsImgLi' ){
 		console.log('点击图片');
 		var imageArr = homeworkResult.Files;
@@ -341,4 +342,8 @@ mui('.mui-table-view').on('tap', '.cell-color', function() {
 	})
 	}
 	
+})
+events.addTap('stuCell',function(){
+		events.fireToPageNone('doHomework-stu.html', 'workDetail', homeworkResult);
+		plus.webview.getWebviewById("doHomework-stu.html").show();
 })
