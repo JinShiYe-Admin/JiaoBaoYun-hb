@@ -18,45 +18,43 @@
 		<script type="text/javascript" src="../../js/quan/studentdynamic.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 
-		<style>
-			.mui-table-view:before,
-			.mui-table-view:after,
-			.mui-table-view-cell:after {
-				height: 0px;
-			}
+		<style>.mui-table-view:before,
+.mui-table-view:after,
+.mui-table-view-cell:after {
+	height: 0px;
+}
 
-			.mui-table-view {
-				background: transparent;
-			}
+.mui-table-view {
+	background: transparent;
+}
 
-			.mui-table-view-cell {
-				margin-top: 8px;
-			}
+.mui-table-view-cell {
+	margin-top: 8px;
+}
 
-			.mui-media-body {
-				background: #D8D8D8;
-				padding: 3px;
-			}
+.mui-media-body {
+	background: #D8D8D8;
+	padding: 3px;
+}
 
-			.dynamic-ellipsis-2 {
-				/*设置多于2行省略号*/
-				overflow: hidden;
-				text-overflow: ellipsis;
-				display: -webkit-box;
-				/*-webkit-line-clamp: 2;*/
-				/*设置多于2行省略号*/
-				-webkit-box-orient: vertical;
-				color: black;
-			}
+.dynamic-ellipsis-2 {
+	/*设置多于2行省略号*/
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	/*-webkit-line-clamp: 2;*/
+	/*设置多于2行省略号*/
+	-webkit-box-orient: vertical;
+	color: black;
+}
 
-			.dynamic-date {
-				/*日期*/
-				text-align: left;
-				/*居中*/
-				font-weight: bold;
-				/*加粗*/
-			}
-		</style>
+.dynamic-date {
+	/*日期*/
+	text-align: left;
+	/*居中*/
+	font-weight: bold;
+	/*加粗*/
+}</style>
 	</head>
 
 	<body>
@@ -151,196 +149,201 @@
 				</ul>
 			</div>
 		</div>
-		<script>
-			mui.init({
-				pullRefresh: {
-					container: '#pullrefresh',
-					down: {
-						callback: pulldownRefresh
-					},
-					up: {
-						contentrefresh: '正在加载...',
-						callback: pullupRefresh
-					}
-				}
-			});
-			/**
-			 * 下拉刷新具体业务实现
-			 */
-			function pulldownRefresh() {
-				setTimeout(function() {
-					console.log('下拉刷新');
-					var table = document.body.querySelector('.mui-table-view');
-					table.innerHTML = '';
-					TotalPage = 1;
-					NotesList = null; //记录获取的数据
-					lastDate = ''; //上一条记录的日期
-					getNotes(TotalPage, 10);
-					//-----假数据start
-					//Data();
-					//-----假数据end
-					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-				}, 1500);
-			}
+		<script>mui.init({
+	pullRefresh: {
+		container: '#pullrefresh',
+		down: {
+			callback: pulldownRefresh
+		},
+		up: {
+			contentrefresh: '正在加载...',
+			callback: pullupRefresh
+		}
+	}
+});
+/**
+ * 下拉刷新具体业务实现
+ */
+function pulldownRefresh() {
+	setTimeout(function() {
+		console.log('下拉刷新');
+		var table = document.body.querySelector('.mui-table-view');
+		table.innerHTML = '';
+		TotalPage = 1;
+		NotesList = null; //记录获取的数据
+		lastDate = ''; //上一条记录的日期
+		getNotes(TotalPage, 10);
+		//-----假数据start
+		//Data();
+		//-----假数据end
+		mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+	}, 1500);
+}
 
-			/**
-			 * 上拉加载具体业务实现
-			 */
-			function pullupRefresh() {
-				setTimeout(function() {
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
-					TotalPage++;
-					getNotes(TotalPage, 10);
-					//-----假数据start
-					//Data();
-					//-----假数据end
-				}, 1500);
-			}
-			var TotalPage = 1; //总页数
-			var TotalCnt = 0; //总记录数
-			var subData = null; //接收页面传入的参数值
-			var NotesList = null; //记录获取的数据
-			var lastDate = ''; //上一条记录的日期
-			var today = ''; //记录今天日期
-			var table = null; //
-			mui.plusReady(function() {
+/**
+ * 上拉加载具体业务实现
+ */
+function pullupRefresh() {
+	setTimeout(function() {
+		mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+		TotalPage++;
+		getNotes(TotalPage, 10);
+		//-----假数据start
+		//Data();
+		//-----假数据end
+	}, 1500);
+}
+var TotalPage = 1; //总页数
+var TotalCnt = 0; //总记录数
+var subData = null; //接收页面传入的参数值
+var NotesList = null; //记录获取的数据
+var lastDate = ''; //上一条记录的日期
+var today = ''; //记录今天日期
+var table = null; //
+mui.plusReady(function() {
 
-				//---从父页面获取数据---start---
-				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				subData = main.data; //接收页面传入的参数值
-				console.log('sub-utid:' + JSON.stringify(subData));
-				//---从父页面获取数据---end---
+	//---从父页面获取数据---start---
+	var main = plus.webview.currentWebview(); //获取当前窗体对象
+	subData = main.data; //接收页面传入的参数值
+	console.log('sub-utid:' + JSON.stringify(subData));
+	//---从父页面获取数据---end---
 
-				//向服务器获取数据
-				getNotes(1, 10);
-				//-----假数据start
-				//Data();
-				//-----假数据end
-				//---初始化界面---start---
-				var myDate = new Date();
-				today = myDate.getFullYear() + '' + (myDate.getMonth() + 1) + myDate.getDate();
-				table = document.getElementById("ul_table");
-				//---初始化界面---end---
-				//关闭等待窗口
-				plus.nativeUI.closeWaiting();
-				mui('.mui-table-view').on('tap', 'li', function() {
-					//mui.toast('跳到详情页' + this.id);
-				});
-			});
+	//向服务器获取数据
+	getNotes(1, 10);
+	//-----假数据start
+	//Data();
+	//-----假数据end
+	//---初始化界面---start---
+	var myDate = new Date();
+	today = myDate.getFullYear() + '' + (myDate.getMonth() + 1) + myDate.getDate();
+	table = document.getElementById("ul_table");
+	//---初始化界面---end---
+	//关闭等待窗口
+	plus.nativeUI.closeWaiting();
+	mui('.mui-table-view').on('tap', 'li', function() {
+		//mui.toast('跳到详情页' + this.id);
+	});
+});
 
-			/**
-			 * 获取用户针对某学生的点到记事列表
-			 * @param {Object} pageIndex 当前页数
-			 * @param {Object} pageSize 每页记录数
-			 */
-			function getNotes(pageIndex, pageSize) {
-				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-				var userId = personalUTID; //用户ID
-				//4.（点到记事）获取用户针对某学生的点到记事列表
+/**
+ * 获取用户针对某学生的点到记事列表
+ * @param {Object} pageIndex 当前页数
+ * @param {Object} pageSize 每页记录数
+ */
+function getNotes(pageIndex, pageSize) {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+	var userId = personalUTID; //用户ID
+	//4.（点到记事）获取用户针对某学生的点到记事列表
+	//所需参数
+	var comData = {
+		userId: userId, //用户ID----utid
+		classId: subData.classId, //班级id
+		studentId: subData.studentId, //学生ID----stuid
+		pageIndex: pageIndex, //当前页数
+		pageSize: pageSize, //每页记录数
+		publisherId: '0' //发布者ID,0代表全部
+	};
+	//返回model：model_homeSchoolList,model_userNoteInfo
+	console.log('获取列表发送的数据:' + JSON.stringify(comData));
+	// 等待的对话框
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
+		console.log('4.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+			if(NotesList == null) {
+				NotesList = data.RspData;
+				NotesList.Data == [];
+				TotalPage = data.RspData.TotalPage; //总页数
+				TotalCnt = data.RspData.TotalCnt; //总记录数
+				//10.（点到记事）修改某用户针对某学生所有点到记事阅读状态为已读
 				//所需参数
-				var comData = {
+				var comData2 = {
 					userId: userId, //用户ID----utid
-					classId: subData.classId, //班级id
-					studentId: subData.studentId, //学生ID----stuid
-					pageIndex: pageIndex, //当前页数
-					pageSize: pageSize, //每页记录数
-					publisherId: '0' //发布者ID,0代表全部
+					classId: subData.classId, //班级ID----
+					studentId: subData.studentId //学生ID----stuid
 				};
-				//返回model：model_homeSchoolList,model_userNoteInfo
-				console.log('获取列表发送的数据:' + JSON.stringify(comData));
-				// 等待的对话框
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
-					console.log('4.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_setNoteReadByUser(comData2, wd2, function(data2) {
+					console.log('10.90909090success:RspCode:' + data2.RspCode + ',RspData:' + JSON.stringify(data2.RspData) + ',RspTxt:' + data2.RspTxt);
 					if(data.RspCode == 0) {
-						if(NotesList == null) {
-							NotesList = data.RspData;
-							NotesList.Data == [];
-							TotalPage = data.RspData.TotalPage; //总页数
-							TotalCnt = data.RspData.TotalCnt; //总记录数
-							//10.（点到记事）修改某用户针对某学生所有点到记事阅读状态为已读
-							//所需参数
-							var comData2 = {
-								userId: userId, //用户ID----utid
-								classId: subData.classId, //班级ID----
-								studentId: subData.studentId //学生ID----stuid
-							};
-							var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-							postDataPro_setNoteReadByUser(comData2, wd2, function(data2) {
-								console.log('10.90909090success:RspCode:' + data2.RspCode + ',RspData:' + JSON.stringify(data2.RspData) + ',RspTxt:' + data2.RspTxt);
-								if(data.RspCode == 0) {}
-							});
-							wd2.close();
-						}
-						mui.each(data.RspData.Data, function(index, item) {
-							NotesList.Data.push(item);
-							console.log(index + '|' + JSON.stringify(item));
-							createNotes(item);
+						//获得主页面的webview
+						var main = plus.webview.getWebviewById('../quan/tab-zone.html');
+						//触发tab-zone页面的setRead事件
+						mui.fire(main, 'setRead',{
+							flag:1
 						});
-						if(data.RspData.Data.length == 0) {
-							mui.toast('无更多动态');
-						}
-						//mui('.mui-scroll-wrapper').scroll().scrollToBottom(100); //滚动到底部-----有BUG
-					} else {
-						mui.toast('获取点到记事列表:' + data.RspTxt);
-						console.log('获取用户针对某学生的点到记事列表:' + data.RspTxt);
 					}
-					wd.close();
 				});
+				wd2.close();
 			}
-
-			/**
-			 * 界面中创建一条记录
-			 * @param {Object} item
-			 */
-			function createNotes(item) {
-				//将时间参数分隔，结果为["2016","11","21"]
-				var PublishDate = item.PublishDate.split(' ')[0].split('-');
-				//console.log('PublishDate:' + JSON.stringify(PublishDate));
-				//console.log('today:' + today);
-				var time = PublishDate[0] + PublishDate[1] + PublishDate[2];
-				//console.log('time:' + time);
-
-				var itemData = [
-					[PublishDate[2], PublishDate[1] + '月'], item.MsgContent
-				];
-				//设置时间
-				if(time == today) { //日期和今天相同
-					itemData[0] = '今天';
-				}
-				if(lastDate == time) { //上一个记录的日期和本记录的日期相同
-					itemData[0] = '';
-				}
-				//点到
-				if(item.NoteType == 1) { //1点到,2记事
-					var checkType = '';
-					switch(item.CheckType) { //1 正常2 旷课3 迟到4 早退5 其他
-						case 1:
-							checkType = '正常：';
-							break;
-						case 2:
-							checkType = '旷课：';
-							break;
-						case 3:
-							checkType = '迟到：';
-							break;
-						case 4:
-							checkType = '早退：';
-							break;
-						case 5:
-							checkType = '其他：';
-							break;
-						default:
-							console.log('点到类型出错！！！')
-							break;
-					}
-					itemData[1] = checkType + itemData[1];
-				}
-				//生成界面
-				studentdynamic.additem(table, itemData, 'TabId' + item.TabId);
-				lastDate = time;
+			mui.each(data.RspData.Data, function(index, item) {
+				NotesList.Data.push(item);
+				console.log(index + '|' + JSON.stringify(item));
+				createNotes(item);
+			});
+			if(data.RspData.Data.length == 0) {
+				mui.toast('无更多动态');
 			}
-		</script>
+			//mui('.mui-scroll-wrapper').scroll().scrollToBottom(100); //滚动到底部-----有BUG
+		} else {
+			mui.toast('获取点到记事列表:' + data.RspTxt);
+			console.log('获取用户针对某学生的点到记事列表:' + data.RspTxt);
+		}
+		wd.close();
+	});
+}
+
+/**
+ * 界面中创建一条记录
+ * @param {Object} item
+ */
+function createNotes(item) {
+	//将时间参数分隔，结果为["2016","11","21"]
+	var PublishDate = item.PublishDate.split(' ')[0].split('-');
+	//console.log('PublishDate:' + JSON.stringify(PublishDate));
+	//console.log('today:' + today);
+	var time = PublishDate[0] + PublishDate[1] + PublishDate[2];
+	//console.log('time:' + time);
+
+	var itemData = [
+		[PublishDate[2], PublishDate[1] + '月'], item.MsgContent
+	];
+	//设置时间
+	if(time == today) { //日期和今天相同
+		itemData[0] = '今天';
+	}
+	if(lastDate == time) { //上一个记录的日期和本记录的日期相同
+		itemData[0] = '';
+	}
+	//点到
+	if(item.NoteType == 1) { //1点到,2记事
+		var checkType = '';
+		switch(item.CheckType) { //1 正常2 旷课3 迟到4 早退5 其他
+			case 1:
+				checkType = '正常：';
+				break;
+			case 2:
+				checkType = '旷课：';
+				break;
+			case 3:
+				checkType = '迟到：';
+				break;
+			case 4:
+				checkType = '早退：';
+				break;
+			case 5:
+				checkType = '其他：';
+				break;
+			default:
+				console.log('点到类型出错！！！')
+				break;
+		}
+		itemData[1] = checkType + itemData[1];
+	}
+	//生成界面
+	studentdynamic.additem(table, itemData, 'TabId' + item.TabId);
+	lastDate = time;
+}</script>
 	</body>
 
 </html>

@@ -86,6 +86,13 @@
 			}, function(successCB) {
 				console.log('上传并修改资料头像，成功的回调' + JSON.stringify(successCB));
 				mui.toast('修改资料头像成功');
+				//获得主页面的webview
+				var zone = plus.webview.getWebviewById('../quan/tab-zone.html');
+				//触发tab-zone页面的setRead事件
+				mui.fire(zone, 'setRead', {
+					flag: 1,
+					img:successCB
+				});
 			}, function(errorCB) {
 				console.log('上传并修改资料头像，失败的回调' + JSON.stringify(errorCB));
 				mui.toast(data.RspTxt);
