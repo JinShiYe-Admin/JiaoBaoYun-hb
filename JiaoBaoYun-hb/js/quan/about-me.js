@@ -97,9 +97,9 @@ var addReplyView = function() {
 	mui('.mui-table-view').on('tap', '.reply', function() {
 		var replyContainer = document.getElementById('footer');
 		replyContainer.style.display = 'block';
-		if(plus.os.name=='Android'){
+//		if(plus.os.name=='Android'){
 			showSoftInput('#msg-content');
-		}
+//		}
 		repliedCell = this.cell;
 		console.log('点击的回复包含数据：' + JSON.stringify(repliedCell));
 		msgType = this.cell.MsgType;
@@ -137,8 +137,8 @@ var postReply = function(callback) {
 				userId: pId, //用户ID
 				upperId: repliedCell.TabId, //上级评论ID
 				replyUserId: repliedCell.MaxUser, //回复ID
-				userSpaceId: repliedCell.SpaceId, //用户空间ID
-				commentContent: msgContent.value //回复内容
+				userOwnerId: repliedCell.SpaceId, //用户空间ID
+				msgContent: msgContent.value //回复内容
 			};
 			console.log('开始post回复数据' + JSON.stringify(comData));
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
