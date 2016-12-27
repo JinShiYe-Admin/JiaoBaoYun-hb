@@ -501,29 +501,29 @@
 							for(var i in tempArray) {
 								var tempModel = tempArray[i];
 
-								var isHave = true;
+								var isHave = false;
 								//2老师
-								if(tempModel.mstype == 2) {
+								if(tempModel.mstype == 2||tempModel.mstype==1) {
 									for(var m in teacherClasses) {
 										if(tempModel.gid == teacherClasses[m].gid) {
-											isHave = false;
+											isHave = true;
 											break;
 										}
 									}
-									if(isHave) {
+									if(!isHave) {
 										teacherClasses.push(tempModel);
 									}
 								}
-								var isHave1 = true;
+								var isHave1 = false;
 								//家长、学生
 								if(tempModel.mstype == 0 || tempModel.mstype == 3) {
 									for(var m in studentClasses) {
 										if(tempModel.gid == studentClasses[m].gid) {
-											isHave = false;
+											isHave1 = true;
 											break;
 										}
 									}
-									if(isHave) {
+									if(!isHave1) {
 										studentClasses.push(tempModel);
 									}
 								}
