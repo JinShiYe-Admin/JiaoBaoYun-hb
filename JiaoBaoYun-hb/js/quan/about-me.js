@@ -56,7 +56,7 @@ var createInner = function(cell) {
 	if(cellData.MsgType != 6) {
 		var inner = '<a>' +
 			'<div class="cell-title">' +
-			'<img class="title-img"src="' + ifHaveImg(cellData.headImg) + '"/>' +
+			'<img class="title-img"src="' + ifHaveImg(cellData) + '"/>' +
 			'<span class="reply">回复</span>' +
 			'<div class="title-words">' +
 			'<h4 class="title-title">' + cellData.title + '</h4>' +
@@ -70,7 +70,7 @@ var createInner = function(cell) {
 		'</a>';
 	} else {
 		var inner = '<div class="cell-title">' +
-			'<img class="title-img"src="' + ifHaveImg(cellData.headImg) + '"/>' +
+			'<img class="title-img"src="' + ifHaveImg(cellData) + '"/>' +
 			//		'<span class="reply">回复</span>' +
 			'<div class="title-words">' +
 			'<h4 class="title-title">' + cellData.title + '</h4>' +
@@ -179,8 +179,15 @@ var postReply = function(callback) {
 var ifHave = function(data) {
 	return data ? data : '';
 }
-var ifHaveImg = function(img) {
-		return img ? img : '../../image/utils/default_personalimage.png'
+var ifHaveImg = function(cellData) {
+		if(cellData.headImg){
+			return cellData.headImg;
+		}else if(cellData.UserImg){
+			return cellData.UserImg;
+		}else{
+			return '../../image/utils/default_personalimage.png'
+		}
+		
 	}
 	/**
 	 * 根据获取信息 设置
