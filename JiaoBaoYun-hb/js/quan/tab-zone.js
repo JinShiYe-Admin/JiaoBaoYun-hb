@@ -29,6 +29,8 @@ function addSomeEvent() {
 
 			},
 		});
+		var span = this.getElementsByTagName('span')[0];
+		span.parentElement.removeChild(span);
 	});
 	//跳转到班级动态界面
 	mui('.mui-table-view').on('tap', '.tarClass', function() {
@@ -49,6 +51,8 @@ function addSomeEvent() {
 				className: datasource[index].gname
 			},
 		});
+		var span = this.getElementsByTagName('span')[0];
+		span.parentElement.removeChild(span);
 	});
 	window.addEventListener('infoChanged', function() {
 		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
@@ -364,7 +368,7 @@ function getTopList(index) {
 	//	16.（班级空间）获取用户针对某班级的空间列表
 	postDataPro_getClassSpacesByUserForClass(comData, wd, function(data) {
 		wd.close();
-		//		console.log('某班级的空间列表_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
+				console.log('某班级的空间列表_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
 		if(data.RspCode == 0) {
 			if(data.RspData.Data.length == 0) { //数据为空时 添加默认数据
 				var today = new Date();
@@ -373,11 +377,13 @@ function getTopList(index) {
 				var temp = {
 					index: index, //排序索引
 					MsgContent: '暂无动态',
-					PublishDate: ''
+					PublishDate: '',
+					NoReadCnt:0
 				}
 				topArray.push(temp);
 			} else { //取班级空间的第一条数据
 				data.RspData.Data[0].index = index; //排序索引
+				data.RspData.Data[0].NoReadCnt = data.RspData.NoReadCnt;
 				topArray.push(data.RspData.Data[0]);
 			}
 
@@ -394,7 +400,13 @@ function getTopList(index) {
 					var li = document.createElement('li');
 					li.id = 'tarClass' + i;
 					li.className = 'mui-table-view-cell mui-media tarClass';
-					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">' + '<p class="time">' + topArray[i].PublishDate +
+					var noReadHTML;
+					if(topArray[i].NoReadCnt != 0) {
+						noReadHTML = '<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + topArray[i].NoReadCnt + '</span></span>';
+					} else {
+						noReadHTML = '';
+					}
+					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">'+noReadHTML + '<p class="time">' + topArray[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
 						datasource[i].gname +
