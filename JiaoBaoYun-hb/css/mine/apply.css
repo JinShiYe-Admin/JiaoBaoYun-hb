@@ -1,40 +1,65 @@
-a img{
+a img {
 	width: 4rem;
 	vertical-align: middle;
 }
-.div-chose{
+
+html,
+body {
+	height: 100%;
+	overflow: hidden;
+}
+
+.mui-bar {
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.div-chose {
 	display: inline-block;
 	width: 32%;
 	text-align: center;
 	font-size: 1.6rem;
 }
+
+
 /*.div-chose input{
 	position: relative;
 	float: left;
 }*/
-.btn-sure{
+
+.btn-sure {
 	margin-left: 30%;
 	width: 20%;
 }
-.btn-cancel{
+
+.btn-cancel {
 	width: 20%;
 }
-fieldset{
+
+fieldset {
 	background: transparent;
 	border: none;
 }
-legend{
+
+legend {
 	font-size: 2rem;
 	padding: 1rem;
 	padding-bottom: 1.5rem;
 }
-.buttons{
+
+.buttons {
 	padding-top: 1.5rem;
 }
-.mui-popover{
+
+.mui-popover {
 	width: 90%;
 }
-a>p{
+
+a>p {
 	display: inline-block;
 	float: right;
+}
+
+.apply-message{
+	margin-right: 28px;
 }

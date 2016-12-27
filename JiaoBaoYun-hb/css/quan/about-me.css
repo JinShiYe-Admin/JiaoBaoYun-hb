@@ -37,6 +37,7 @@ html{
 footer{
 	height: 70px;
 	width: 100%;
+	z-index: 20;
 	background-color: lightgray;
 	position: fixed;
 	bottom: 0;	

@@ -53,9 +53,7 @@
         "Geolocation": {
             "description": "访问位置信息"
         },
-         "Invocation": {
-            "description": "使用Native.js能力"
-        },
+         "Invocation": {},
         "Messaging": {
             "description": "访问通讯能力"
         },
@@ -93,9 +91,7 @@
         "Webview":{
         	"description": "窗口管理"
         },
-        "NativeUI":{
-        	"description": "原生UI控件"
-        },
+        "NativeUI":{},
         "Navigator":{
         	"description": "浏览器信息"
         },
@@ -1382,7 +1378,8 @@
 					"js/utils/events.js",
 					"fonts/mui.ttf",
 					"image/utils/default_personalimage.png",
-					"js/publicHomeworkProtocol.js"
+					"js/publicHomeworkProtocol.js",
+					"js/utils/native.js"
 				],
 				"refer": [],
 				"priority": 0
