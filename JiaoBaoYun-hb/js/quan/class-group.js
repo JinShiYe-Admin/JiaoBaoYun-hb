@@ -108,7 +108,6 @@ var getUserInGroup = function(mstype, callback) {
 			isShowQuit(mstype, true);
 		} else {
 			isShowQuit(mstype, false);
-			//			mui.toast('您未以当前身份加入该群！');
 		}
 	})
 }
