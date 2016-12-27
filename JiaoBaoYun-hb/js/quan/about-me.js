@@ -96,7 +96,9 @@ var addReplyView = function() {
 	mui('.mui-table-view').on('tap', '.reply', function() {
 		var replyContainer = document.getElementById('footer');
 		replyContainer.style.display = 'block';
-		jQuery('textarea').focus();	
+		setTimeout(function(){
+			jQuery('textarea').focus();	
+		},200)
 		repliedCell = this.cell;
 		console.log('点击的回复包含数据：' + JSON.stringify(repliedCell));
 		msgType = this.cell.MsgType;
