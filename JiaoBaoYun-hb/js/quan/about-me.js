@@ -248,17 +248,16 @@ var getCellData = function(cell) {
 				}
 
 			});
-
-			//		} else {
-			//			messages.push('<p><span>' + cell.unick + ':</span>' + cell.MsgContent + '</p>')''
 		}
 		cellData.messages = messages.join('');
-		//	console.log('获取的额外数据：' + cellData.messages);
-		//	console.log('获取的cellData：' + JSON.stringify(cellData));
 	}
 
 	return cellData;
 }
+/**
+ * 缩短显示人名的长度
+ * @param {Object} name 要缩短的字符串
+ */
 var shorterForName=function(name){
 	var shorterName;
 	if(name.length>6){
@@ -373,6 +372,9 @@ events.initRefresh('list-container',
 			requestData();
 		}
 	});
+/**
+ * 获取与我相关
+ */
 var requireAboutMe = function() {
 	var comData = {
 		userId: personalUTID, //用户ID
@@ -398,6 +400,10 @@ var requireAboutMe = function() {
 		}
 	});
 }
+/**
+ * 获取作业提醒并和与我相关的消息合并
+ * @param {Object} aboutMeData 与我相关的数据
+ */
 var requireHomeworkAlert = function(aboutMeData) {
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//	userId，学生/家长Id；
@@ -415,11 +421,14 @@ var requireHomeworkAlert = function(aboutMeData) {
 			if(!aboutMeData) {
 				aboutMeData = [];
 			}
+			//拼接数据
 			var allData = aboutMeData.concat(data.RspData.Data);
+			//数据排序
 			allData.sort(function(a, b) {
 				return -((new Date(a.MsgDate)) - (new Date(b.MsgDate)));
 			})
 			console.log('与我相关界面获取的所有数据:' + JSON.stringify(allData))
+			//获取人员信息
 			getRoleInfos(allData);
 		} else {
 			mui.toast(data.RspTxt);
