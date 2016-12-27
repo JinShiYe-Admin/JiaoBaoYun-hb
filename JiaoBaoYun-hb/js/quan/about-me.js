@@ -88,7 +88,7 @@ var createInner = function(cell) {
 }
 var ifHaveReferContent = function(cellData) {
 	if(cellData.referContent) {
-		return '<div class="refer-content">' + '<span>' + cellData.UserOwnerNick + ':</span>' + cellData.referContent + '</div>'
+		return '<div class="refer-content single-line">' + '<span>' + cellData.UserOwnerNick + ':</span>' + cellData.referContent + '</div>'
 	} else {
 		return '';
 	}
