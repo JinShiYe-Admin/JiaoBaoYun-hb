@@ -283,34 +283,42 @@ var getGroupInfo = function(vvl) {
 		wd.close();
 		console.log('获取群组成员：' + vvl + JSON.stringify(groupData))
 			//成功囘調
-//		if(groupData.RspCode == '0000' && groupData.RspData != null) {
+			//		if(groupData.RspCode == '0000' && groupData.RspData != null) {
 			//				createGride(item, data.RspData);
-			if(vvl == 2) {
-				/**
-				 *获取个人在群信息 
-				 */
-				getUserInGroup(-1, function(data) {
-					groupRoles = data;
-					console.log('获取本人在群的所有信息：' + JSON.stringify(data));
+		if(vvl == 2) {
+			/**
+			 *获取个人在群信息 
+			 */
+			var wd0 = plus.nativeUI.showWaiting(storageKeyName.WAITING)
+			postDataPro_PostGusers({
+				top: -1,
+				vvl: groupId,
+				vvl1: 1
+			}, wd0, function(data) {
+				wd0.close();
+				if(data.RspCode == 0) {
+					groupRoles = data.RspData;
+					console.log('获取群主的所有信息：' + JSON.stringify(data));
 					groupRoles.forEach(function(groupRole) {
 						if(groupRole.mstype == 1) {
-							console.log('是群主')
-							isMaster = true;
 							masterInfo = groupRole;
-							if(groupData.RspData!=null){
+							if(groupData.RspData != null) {
 								groupData.RspData.splice(0, 0, masterInfo);
-							}else{
-								groupData.RspData=[masterInfo];
+							} else {
+								groupData.RspData = [masterInfo];
 							}
 						}
 					})
 					getRemarkInfos(groupData.RspData, item);
-				});
-			} else {
-				if(groupData.RspCode==0){
-					getRemarkInfos(groupData.RspData, item);
+				}else{
+					mui.toast(data.RspTxt);
 				}
+			});
+		} else {
+			if(groupData.RspCode == 0) {
+				getRemarkInfos(groupData.RspData, item);
 			}
+		}
 
 	});
 }
@@ -330,7 +338,7 @@ var getRemarkInfos = function(data, item) {
 var addRemarkData = function(list, remarkList) {
 		if(remarkList) {
 			for(var i in list) {
-				var hasBunick=false;
+				var hasBunick = false;
 				for(var j in remarkList) {
 					if(list[i].utid == remarkList[j].butid) {
 						hasBunick = true;
