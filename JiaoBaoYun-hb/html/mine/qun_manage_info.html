@@ -121,8 +121,11 @@
 				var Width = plus.screen.resolutionWidth;
 				var marginLeft = (Width) / 8 + 'px';
 				addQunImg(); //显示上传群头像的图标
-
-				document.getElementById('qunimage').addEventListener('tap', function() {
+				//输入的字数限制
+				jQuery('#qunname').prop("maxLength", "20");
+				jQuery('#qunintroduce').prop("maxLength", "30");
+				jQuery('#qunremark').prop("maxLength", "30");
+				document.getElementById('choose').addEventListener('tap', function() {
 					//console.log('选择群图标');
 					var btnArray = [{
 						title: "拍照"
@@ -165,7 +168,7 @@
 				 */
 				function addQunImg() {
 					var div = document.getElementById("qunimage");
-					div.innerHTML = '<div style="margin-left: ' + marginLeft + ';" class="qun-image">\
+					div.innerHTML = '<div id="choose" style="margin-left: ' + marginLeft + ';" class="qun-image">\
 									<a class="mui-icon iconfont icon-xiangji" style="color: #BBBBBB;font-size: 30px;margin-top: 20px;">\
 										<p style="font-size: 10px;margin-top: 10px;">\
 											请上传群图标!\
@@ -173,8 +176,8 @@
 									</a>\
 								</div>';
 					//div.innerHTML = '<img style="margin-left: ' + marginLeft + ';" src="../../image/clip/u292.png" class="qun-image" />';
-					var table = document.body.querySelector('.mui-content');
-					table.insertBefore(div, table.firstChild);
+					//var table = document.body.querySelector('.mui-content');
+					//table.insertBefore(div, table.firstChild);
 				}
 
 				/**
