@@ -81,14 +81,14 @@
 				console.log(no)
 				switch(no){
 					case 0:
-						jQuery('#input-content').prop("maxLength","16");
+						jQuery('#input-content').prop("maxLength","20");
 						if(pInfo.unick){
 							title.innerText='更改昵称'
 							inText.value=pInfo.unick;
 						}else{
 							title.innerText='填写昵称'
 						}
-						inText.placeholder='请输入昵称,最多16字'
+						inText.placeholder='请输入昵称,最多20字'
 					break;
 					case 1:
 					inText.style.maxlength=100;
