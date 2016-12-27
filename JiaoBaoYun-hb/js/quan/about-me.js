@@ -211,22 +211,22 @@ var getCellData = function(cell) {
 			break;
 			//评论的回复
 		case 2:
-			cellData.title = cell.MaxUserName + " 回复";
+			cellData.title = shorterForName(cell.MaxUserName) + " 回复";
 			break;
 			//其他用户点赞
 		case 3:
-			cellData.title = cell.MaxUserName + " 赞了我";
+			cellData.title = shorterForName(cell.MaxUserName) + " 赞了我";
 			break;
 			//其他用户留言
 		case 4:
-			cellData.title = cell.MaxUserName + " 给我留言";
+			cellData.title = shorterForName(cell.MaxUserName)+ " 给我留言";
 			break;
 			//留言的回复
 		case 5:
-			cellData.title = cell.MaxUserName + " 给我留言的回复";
+			cellData.title = shorterForName(cell.MaxUserName) + " 给我留言的回复";
 			break;
 		case 6:
-			cellData.title = cell.UserName + ' 的作业提醒';
+			cellData.title = shorterForName(cell.UserName) + ' 的作业提醒';
 			break;
 		default:
 			break;
@@ -259,7 +259,15 @@ var getCellData = function(cell) {
 
 	return cellData;
 }
-
+var shorterForName=function(name){
+	var shorterName;
+	if(name.length>6){
+		shorterName=name.substring(0,4);
+	}else{
+		shorterName=name;
+	}
+	return shorterName;
+}
 /**
  * 请求数据
  * @param {Object} callback 请求数据后的回调
