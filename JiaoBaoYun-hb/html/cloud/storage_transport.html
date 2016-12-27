@@ -671,6 +671,7 @@
 						} else {
 							if(data.code == 1) {
 								mui.toast(data.type);
+								plus.nativeUI.closeWaiting();
 							} else {
 								var btnArray = ['否', '是'];
 								mui.confirm('当前不是无线WIFI网络，还继续吗？', '提示', btnArray, function(e) {

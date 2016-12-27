@@ -171,7 +171,7 @@
 
 			//初始化
 			window.addEventListener('init', function(e) {
-				subData = e.detail.data; //接收页面传入的参数值
+				subData = e.detail; //接收页面传入的参数值
 				console.log('subData:' + JSON.stringify(subData));
 				showTop = subData.showTop;
 				document.getElementById("folder").innerText = '选定：' + subData.title;
