@@ -293,7 +293,7 @@ function getGroupList() {
 	//	获取用户群
 	postDataPro_PostGList(comData, wd, function(data) {
 		wd.close();
-		//		console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0) {
 			showBlankPage(false);
@@ -655,6 +655,10 @@ function showBlankPage(isBlank) {
 		leftImg.style.visibility = 'hidden';
 		parent.style.visibility = 'hidden';
 		//	显示加号
+		var tempDiv = document.getElementById("plusDIv");
+		if(tempDiv){
+			return;
+		}
 		var div = document.createElement('div');
 		div.id = 'plusDIv';
 		var p = document.createElement('p')
@@ -706,6 +710,7 @@ function pulldownRefresh() {
 		selectCell = {}; //选择的cell
 		getStuList();
 		events.fireToPageNone('../index/index.html', 'aboutmNoRead');
+//		events.fireToPageNone('../index/index.html', 'newMessage');
 		var ws = plus.webview.currentWebview();
 		ws.endPullToRefresh(); //refresh completed
 
