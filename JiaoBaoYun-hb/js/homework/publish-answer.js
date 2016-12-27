@@ -221,7 +221,7 @@ function requestClassTeacherInfo(stuClasses) {
 				//循环得到的资料数组，
 				for(var m in tempArray) {
 					//找到当前的老师
-					if(tempArray[m].mstype == 2) {
+					if(tempArray[m].mstype == 2 || tempArray[m].mstype == 1) {
 						//将班级信息，添加到老师model
 						for(var n in stuClasses) {
 							//群号相同
@@ -238,7 +238,7 @@ function requestClassTeacherInfo(stuClasses) {
 					}
 				}
 				if(count == stuClasses.length) {
-					setTeachers(classTeacherArray);
+					setTeachers(arraySingleItem(classTeacherArray));
 				}
 			} else {
 				mui.toast(data.RspTxt);
@@ -247,6 +247,21 @@ function requestClassTeacherInfo(stuClasses) {
 	}
 
 }
+/**
+ * 去重
+ * @param {Object} array
+ */
+var arraySingleItem = function(array) {
+		var r = [];
+		for(var i = 0, l = array.length; i < l; i++) {
+			for(var j = i + 1; j < l; j++)
+				if(array[i].gid == array[j].gid&&array[i].utid == array[j].utid) {
+					j = ++i;
+				}
+			r.push(array[i]);
+		}
+		return r;
+	}
 var setTeachers = function(teaInfos) {
 	console.log('上传答案||作业界面要放置的老师资料：' + JSON.stringify(teaInfos))
 	var teaContainer = document.getElementById('receive-teachers');
