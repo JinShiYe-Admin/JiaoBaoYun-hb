@@ -219,6 +219,13 @@ var setReaded = function(userId, classId) {
 	}, wd, function(data) {
 		console.log('是否已读：' + JSON.stringify(data));
 		wd.close();
+		if(data.RspCode == 0) {
+			var main = plus.webview.getWebviewById('../quan/tab-zone.html');
+			//触发tab-zone页面的setRead事件
+			mui.fire(main, 'setRead', {
+				flag: 2
+			});
+		}
 	})
 }
 var setListener = function(userId) {
