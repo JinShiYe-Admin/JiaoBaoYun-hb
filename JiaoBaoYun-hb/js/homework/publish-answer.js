@@ -17,7 +17,7 @@ mui.plusReady(function() {
 			events.clearChild(document.getElementById('pictures'));
 			document.getElementById('post-imgs').innerText = '上传';
 			imgIds = [];
-//			document.getElementById('checkResult').style.display = 'none';
+			document.getElementById('checkResult').style.display = 'none';
 			console.log('上传答案||作业界面获取的上级页面传过来的信息：' + JSON.stringify(e.detail));
 			var data = e.detail.data;
 			role = data.role;
@@ -404,10 +404,10 @@ function requestSubmitAnswer(comData) {
 		console.log('提交答案||作业界面学生提交作业返回值：' + JSON.stringify(data))
 		if(data.RspCode == 0) {
 			mui.toast('上传成功');
-//			stuSubmitAnswer = false;
+			stuSubmitAnswer = false;
 			answerResultId = data.RspData.AnswerResultId;
 			document.getElementById('checkResult').style.display = 'block'
-//			document.getElementById('post-imgs').innerText = '修改';
+			document.getElementById('post-imgs').innerText = '修改';
 		} else {
 			mui.toast(data.RspTxt);
 		}
