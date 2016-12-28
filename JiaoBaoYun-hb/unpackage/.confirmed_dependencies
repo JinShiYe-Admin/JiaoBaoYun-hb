@@ -1746,7 +1746,9 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"js/publicHomeworkProtocol.js"
 		],
-		"refer": []
+		"refer": [
+			"html/homework/pic-detail.html"
+		]
 	},
 	"html/homework/workdetailTea-temSub.html": {
 		"resources": [
@@ -1854,5 +1856,24 @@
 			"css/mui.css"
 		],
 		"refer": []
+	},
+	"html/homework/pic-detail.html": {
+		"resources": [
+			"js/publicProtocol.js",
+			"js/mui.min.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/Barrett.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/jquery.js",
+			"fonts/mui.ttf",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/crypto-js/require.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		]
 	}
 }

@@ -57,7 +57,9 @@ mui.plusReady(function() {
 
 	//监听事件 传值 打开新页面
 	mui('.mui-table-view').on('tap', '.open-newPage', function() {
-		events.openNewWindowWithData('edit-info.html', parseInt(this.getAttribute('pos')))
+		if(!(parseInt(this.getAttribute('pos'))==10&&pInfo.uname&&pInfo.uname!=null)){
+			events.openNewWindowWithData('edit-info.html', parseInt(this.getAttribute('pos')));
+		}
 	});
 	window.addEventListener('infoChanged', function() {
 		pInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
@@ -116,7 +118,7 @@ var changeInfo = function(pInfo) {
 	var unick = document.getElementById('nick');
 	var utxt = document.getElementById('txt');
 	var uemail = document.getElementById('email');
-	//	var uphone=document.getElementById('phone');
+		var uname=document.getElementById('uname');
 	var usex = document.getElementById('sex');
 	uimg.src = pInfo.uimg ? pInfo.uimg : "../../image/utils/default_personalimage.png";
 
@@ -136,6 +138,9 @@ var changeInfo = function(pInfo) {
 	}
 	if(pInfo.uemail) {
 		uemail.innerText = pInfo.uemail;
+	}
+	if(pInfo.uname){
+		uname.innerText=pInfo.uname;
 	}
 
 }
