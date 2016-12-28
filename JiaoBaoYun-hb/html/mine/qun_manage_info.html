@@ -265,11 +265,10 @@
 					// 等待的对话框
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					postDataPro_PostCrGrp(comData, wd, function(data) {
-						wd.close();
 						console.log('7.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
+							console.log('创建群成功');
 							if(qunImgPath == '') {
-								console.log('创建群成功');
 								events.fireToPageNone('/html/mine/qun_manage.html', 'refresh');
 								events.fireToPageNone('/html/mine/qun_data.html', 'refresh');
 								events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
@@ -278,21 +277,26 @@
 							} else {
 								plus.nativeUI.showWaiting('正在加载中');
 								uploadQunHeadImge(data.RspData, qunImgPath, function(successCB) {
-									console.log('创建群成功');
 									events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
 									events.fireToPageNone('/html/mine/qun_manage.html', 'refresh');
 									events.fireToPageNone('/html/mine/qun_data.html', 'refresh');
-
+									plus.nativeUI.closeWaiting();
 									mui.toast('创建群成功');
 									mui.back();
 								}, function(errorCB) {
-
+									events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
+									events.fireToPageNone('/html/mine/qun_manage.html', 'refresh');
+									events.fireToPageNone('/html/mine/qun_data.html', 'refresh');
+									plus.nativeUI.closeWaiting();
+									mui.toast('创建群成功但是上传群头像失败：' + JSON.stringify(errorCB));
+									mui.back();
 								});
 							}
 						} else {
 							mui.toast(data.RspTxt);
 							console.log('创建群失败：' + data.RspTxt);
 						}
+						wd.close();
 					});
 				}
 
@@ -325,7 +329,7 @@
 								var QNUptoken = data.uptoken;
 								console.log('七牛上传token:' + QNUptoken);
 								//关闭等待窗口
-								plus.nativeUI.closeWaiting();
+								//plus.nativeUI.closeWaiting();
 								CloudFileUtil.upload(target, QNUptoken, fileName, function(upload, status) {
 									//上传任务完成的监听
 									console.log('上传任务完成');

@@ -262,7 +262,7 @@ var UploadHeadImage = (function($, mod) {
 						console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
 						break;
 					case 3: //上传任务提交数据
-						console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
+						//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
 						//var num = parseInt(upload.uploadedSize / upload.totalSize * 100) + '%';
 						//console.log(num);
 						//size.setTitle('正在上传 ' + num);
