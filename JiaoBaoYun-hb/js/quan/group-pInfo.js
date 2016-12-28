@@ -12,7 +12,7 @@ mui.plusReady(function() {
 		console.log('獲取的個人信息：' + JSON.stringify(pInfo));
 		getGroupPersonData(manageGroupPersonData);
 		getAccountInfo(manageAccountInfo);
-//		getRemark();
+		getRemark();
 	})
 	addListener();
 	window.addEventListener('remarkChanged',function(){
@@ -21,26 +21,25 @@ mui.plusReady(function() {
 	})
 })
 /**
- * 获取备注
- */
-//var getRemark = function() {
-//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-//		postDataPro_PostUmk({
-//			vvl: pInfo.utid
-//		}, wd, function(data) {
-//			wd.close();
-//			console.log('获取的备注信息：'+JSON.stringify(data));
-//			var remark=document.getElementById('person-remark');
-//			if(data.RspCode=='0000'){
-//				remark.innerText=data.RspData[0].bunick;
-//				premark=data.RspData[0];
+   * 获取备注
+   */
+var getRemark = function() {
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		postDataPro_PostUmk({
+			vvl: pInfo.utid
+		}, wd, function(data) {
+			wd.close();
+			console.log('获取的备注信息：'+JSON.stringify(data));
+			var remark=document.getElementById('person-remark');
+			if(data.RspCode=='0000'){
+				manageAccountInfo(data.RspData[0]);
 //			}else{
 //				remark.innerText=pInfo.ugnick;
 //				premark.butid=pInfo.utid;
 //				premark.bunick=pInfo.ugnick;
-//			}
-//		})
-//	}
+			}
+		})
+	}
 	/**
 	 * 獲取個人賬號信息
 	 */
@@ -71,7 +70,7 @@ var manageAccountInfo = function(data) {
 		document.getElementById('info-nick').innerText = pInfo.unick;
 		document.getElementById('person-remark').innerText=pInfo.bunick?pInfo.bunick:pInfo.ugnick
 		document.getElementById('data-info').innerText = pInfo.uid;
-		document.getElementById('person-space').innerText = pInfo.bunick?pInfo.bunick:pInfo.ugnick + '的空间';
+		document.getElementById('person-space').innerText = pInfo.bunick?pInfo.bunick+ '的空间':pInfo.ugnick+ '的空间' ;
 	}
 	/**
 	 *40.通过用户ID获取用户各项资料

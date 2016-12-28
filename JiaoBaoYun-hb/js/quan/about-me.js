@@ -82,8 +82,6 @@ var createInner = function(cell) {
 			//		'<div class="extras">' + ifHave(cellData.messages) + '</div>'
 			'</a>';
 	}
-
-	//	console.log('每个cell的内容：' + inner)
 	return inner;
 }
 var ifHaveReferContent = function(cellData) {
@@ -97,14 +95,10 @@ var addReplyView = function() {
 	mui('.mui-table-view').on('tap', '.reply', function() {
 		var replyContainer = document.getElementById('footer');
 		replyContainer.style.display = 'block';
-//		if(plus.os.name=='Android'){
-			showSoftInput('#msg-content');
-//		}
-	
+		showSoftInput('#msg-content');
 		repliedCell = this.cell;
 		console.log('点击的回复包含数据：' + JSON.stringify(repliedCell));
 		msgType = this.cell.MsgType;
-		//		comData.ueserId = this.cell.UserId;
 		document.getElementById('msg-content').value = '';
 	})
 }
@@ -180,100 +174,100 @@ var ifHave = function(data) {
 	return data ? data : '';
 }
 var ifHaveImg = function(cellData) {
-		if(cellData.headImg){
+		if(cellData.headImg) {
 			return cellData.headImg;
-		}else if(cellData.UserImg){
+		} else if(cellData.UserImg) {
 			return cellData.UserImg;
-		}else{
+		} else {
 			return '../../image/utils/default_personalimage.png'
 		}
-		
+
 	}
 	/**
 	 * 根据获取信息 设置
 	 * @param {Object} cell 单个cell数据
 	 */
 var getCellData = function(cell) {
-	var cellData = new Object();
-	cellData.MsgType = cell.MsgType;
-	cellData.UserName = cell.UserName;
-	cellData.UserImg = cell.UserImg;
-	cellData.UserContent = cell.Content;
-	cellData.headImg = cell.MaxUserImg;
-	cellData.content = cell.MaxContent;
-	cellData.referContent = cell.MsgContent;
-	cellData.UserOwnerNick = cell.UserOwnerNick;
-	switch(cell.MsgType) {
-		//其他用户评论
-		case 1:
-			cellData.title = cell.MaxUserName + ' 评论了你';
+		var cellData = new Object();
+		cellData.MsgType = cell.MsgType;
+		cellData.UserName = cell.UserName;
+		cellData.UserImg = cell.UserImg;
+		cellData.UserContent = cell.Content;
+		cellData.headImg = cell.MaxUserImg;
+		cellData.content = cell.MaxContent;
+		cellData.referContent = cell.MsgContent;
+		cellData.UserOwnerNick = cell.UserOwnerNick;
+		switch(cell.MsgType) {
+			//其他用户评论
+			case 1:
+				cellData.title = cell.MaxUserName + ' 评论了你';
 
-			break;
-			//评论的回复
-		case 2:
-			cellData.title = shorterForName(cell.MaxUserName) + " 回复";
-			break;
-			//其他用户点赞
-		case 3:
-			cellData.title = shorterForName(cell.MaxUserName) + " 赞了我";
-			break;
-			//其他用户留言
-		case 4:
-			cellData.title = shorterForName(cell.MaxUserName)+ " 给我留言";
-			break;
-			//留言的回复
-		case 5:
-			cellData.title = shorterForName(cell.MaxUserName) + " 给我留言的回复";
-			break;
-		case 6:
-			cellData.title = shorterForName(cell.UserName) + ' 的作业提醒';
-			break;
-		default:
-			break;
-	}
-	cellData.time = cell.MsgDate;
-	if(cellData.MsgType != 6) {
-		var messages = new Array();
-		if(cellData.MsgType!=4){
-			if(cell.Content) {
-		messages.push('<p class="single-line"><span>' + cell.UserName + ':</span>' + cell.Content + '</p>')
-	}
+				break;
+				//评论的回复
+			case 2:
+				cellData.title = shorterForName(cell.MaxUserName) + " 回复";
+				break;
+				//其他用户点赞
+			case 3:
+				cellData.title = shorterForName(cell.MaxUserName) + " 赞了我";
+				break;
+				//其他用户留言
+			case 4:
+				cellData.title = shorterForName(cell.MaxUserName) + " 给我留言";
+				break;
+				//留言的回复
+			case 5:
+				cellData.title = shorterForName(cell.MaxUserName) + " 给我留言的回复";
+				break;
+			case 6:
+				cellData.title = shorterForName(cell.UserName) + ' 的作业提醒';
+				break;
+			default:
+				break;
 		}
-	
-		if(cell.MsgArray && cell.MsgArray.length > 0) {
-			cell.MsgArray.forEach(function(msg, i, msgArray) {
-				if(msg.MsgContent) {
-					if(msg.MsgToName) {
-						messages.push('<p class="single-line" ><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>');
-					} else {
-						messages.push('<p class="single-line" ><span>' + msg.MsgFromName + ':</span>' + msg.MsgContent + '</p>');
-					}
+		cellData.time = cell.MsgDate;
+		if(cellData.MsgType != 6) {
+			var messages = new Array();
+			if(cellData.MsgType != 4) {
+				if(cell.Content) {
+					messages.push('<p class="single-line"><span>' + cell.UserName + ':</span>' + cell.Content + '</p>')
 				}
+			}
 
-			});
+			if(cell.MsgArray && cell.MsgArray.length > 0) {
+				cell.MsgArray.forEach(function(msg, i, msgArray) {
+					if(msg.MsgContent) {
+						if(msg.MsgToName) {
+							messages.push('<p class="single-line" ><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>');
+						} else {
+							messages.push('<p class="single-line" ><span>' + msg.MsgFromName + ':</span>' + msg.MsgContent + '</p>');
+						}
+					}
+
+				});
+			}
+			cellData.messages = messages.join('');
 		}
-		cellData.messages = messages.join('');
-	}
 
-	return cellData;
-}
-/**
- * 缩短显示人名的长度
- * @param {Object} name 要缩短的字符串
- */
-var shorterForName=function(name){
-	var shorterName;
-	if(name.length>6){
-		shorterName=name.substring(0,4);
-	}else{
-		shorterName=name;
+		return cellData;
 	}
-	return shorterName;
-}
-/**
- * 请求数据
- * @param {Object} callback 请求数据后的回调
- */
+	/**
+	 * 缩短显示人名的长度
+	 * @param {Object} name 要缩短的字符串
+	 */
+var shorterForName = function(name) {
+		var shorterName;
+		if(name.length > 6) {
+			shorterName = name.substring(0, 4);
+		} else {
+			shorterName = name;
+		}
+		return shorterName;
+	}
+	/**
+	 * 请求数据
+	 * @param {Object} callback 请求数据后的回调
+	 */
 function requestData() {
 	if(pageIndex > 1) {
 		if(pageIndex <= totalPage) {
@@ -299,7 +293,7 @@ var getRoleInfos = function(tempRspData) {
 		}
 	}
 	console.log('身份数组：' + idsArray);
-	if(idsArray.length>0) {
+	if(idsArray.length > 0) {
 		idsArray = events.arraySingleItem(idsArray);
 		//发送获取用户资料申请
 		var tempData = {
@@ -379,34 +373,34 @@ events.initRefresh('list-container',
  * 获取与我相关
  */
 var requireAboutMe = function() {
-	var comData = {
-		userId: personalUTID, //用户ID
-		pageIndex: pageIndex + '', //当前页数
-		pageSize: pageCount + '' //每页记录数
-	};
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	//56.（用户空间）获取与我相关
-	postDataPro_getAboutMe(comData, wd, function(data) {
-		wd.close();
-		console.log('获取的与我相关的数据：' + JSON.stringify(data));
-		if(data.RspCode == '0000') {
-			setCommentMsgReadByUser();
-			totalPage = data.RspData.TotalPage;
-			if(pageIndex == 1 || pageIndex <= alertTotalPage) {
-				requireHomeworkAlert(data.RspData.Data);
-			} else {
-				getRoleInfos(data.RspData.Data)
-			}
+		var comData = {
+			userId: personalUTID, //用户ID
+			pageIndex: pageIndex + '', //当前页数
+			pageSize: pageCount + '' //每页记录数
+		};
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		//56.（用户空间）获取与我相关
+		postDataPro_getAboutMe(comData, wd, function(data) {
+			wd.close();
+			console.log('获取的与我相关的数据：' + JSON.stringify(data));
+			if(data.RspCode == '0000') {
+				setCommentMsgReadByUser();
+				totalPage = data.RspData.TotalPage;
+				if(pageIndex == 1 || pageIndex <= alertTotalPage) {
+					requireHomeworkAlert(data.RspData.Data);
+				} else {
+					getRoleInfos(data.RspData.Data)
+				}
 
-		} else {
-			mui.toast(data.RspTxt);
-		}
-	});
-}
-/**
- * 获取作业提醒并和与我相关的消息合并
- * @param {Object} aboutMeData 与我相关的数据
- */
+			} else {
+				mui.toast(data.RspTxt);
+			}
+		});
+	}
+	/**
+	 * 获取作业提醒并和与我相关的消息合并
+	 * @param {Object} aboutMeData 与我相关的数据
+	 */
 var requireHomeworkAlert = function(aboutMeData) {
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//	userId，学生/家长Id；
@@ -431,7 +425,7 @@ var requireHomeworkAlert = function(aboutMeData) {
 				return -((new Date(a.MsgDate)) - (new Date(b.MsgDate)));
 			})
 			console.log('与我相关界面获取的所有数据:' + JSON.stringify(allData))
-			//获取人员信息
+				//获取人员信息
 			getRoleInfos(allData);
 		} else {
 			mui.toast(data.RspTxt);
