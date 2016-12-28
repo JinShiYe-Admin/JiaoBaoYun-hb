@@ -112,6 +112,7 @@
 			})
 		document.getElementById('leaveTitle').addEventListener('input',function(){//监听textarea值得变化
 			console.log(this.value)
+//			jQuery(this).prop("maxLength","30");
 			if(this.value.length>50){
 				mui.toast('不能超过50字')
 				this.value=this.value.substr(0,50)
