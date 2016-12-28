@@ -10,7 +10,8 @@ mui.plusReady(function() {
 			document.getElementById('btn-startWork').style.display='inline-block';
 		}else{
 			document.querySelector('.homework-brief').className='homework-brief';
-			document.getElementById('btn-startWork').style.display='none'
+			document.getElementById('btn-startWork').style.display='none';
+			document.querySelector('.startWork-container').style.display='none';
 		}
 		console.log('学生作业详情获取的数据：' + JSON.stringify(homeworkInfo));
 		requestTeaInfo(homeworkInfo.TeacherId,homeworkInfo);

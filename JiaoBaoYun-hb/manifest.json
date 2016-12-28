@@ -2239,7 +2239,8 @@
 					"js/utils/RSAEncrypt.js",
 					"js/libs/myStorage/myStorage.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"js/publicHomeworkProtocol.js"
+					"js/publicHomeworkProtocol.js",
+					"css/homework/subjects-icon.css"
 				],
 				"refer": [
 					"html/homework/pic-detail.html"
