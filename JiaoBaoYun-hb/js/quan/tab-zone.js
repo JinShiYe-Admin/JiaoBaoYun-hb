@@ -54,34 +54,14 @@ function addSomeEvent() {
 		var span = this.getElementsByTagName('span')[0];
 		span.parentElement.removeChild(span);
 	});
+	//重新登录或者注册的时候重新加载家校圈首页
 	window.addEventListener('infoChanged', function() {
 		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-		if(datasource.length == 0) {
 			var wobj = plus.webview.currentWebview();
 			wobj.reload(true);
-		} else {
-			var wobj = plus.webview.currentWebview();
-			wobj.reload(true);
-
-			//			datasource = []; //底部列表数据
-			//			topStudentArr = [];
-			//			topArray = []; //顶部班级列表数据
-			//			requestTimes = 0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
-			//			requestTimes2 = 0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
-			//			requestTimes3 = 0;
-			//			isRefresh = 0; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
-			//			selectCell = {}; //选择的cell
-			//			var ul = document.getElementById('top-list');
-			//			ul.innerHTML = '';
-			//
-			//			var seg = document.getElementById('segmentedControl'); //群名称segmentedControl
-			//			var userTable = document.getElementById('userList'); //多个放置用户列表
-			//			seg.innerHTML = '';
-			//			userTable.innerHTML = '';
-			//			getStuList();
-		}
 
 	})
+	//发布个人动态
 	window.addEventListener('addUserSpaceForMutiUsers', function(data) {
 		var userIdArr = [];
 		for(var i = 0; i < datasource.length; i++) {
@@ -166,10 +146,10 @@ function addSomeEvent() {
 			} else {
 				a.innerHTML = datasource[tableIndex].gname + lineHTML;
 			}
-		}else if(e.detail.flag == 1){
-			
-		}else if(e.detail.flag == 2){
-			
+		} else if(e.detail.flag == 1) {
+
+		} else if(e.detail.flag == 2) {
+
 		}
 
 	});
@@ -368,7 +348,7 @@ function getTopList(index) {
 	//	16.（班级空间）获取用户针对某班级的空间列表
 	postDataPro_getClassSpacesByUserForClass(comData, wd, function(data) {
 		wd.close();
-				console.log('某班级的空间列表_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
+		console.log('某班级的空间列表_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
 		if(data.RspCode == 0) {
 			if(data.RspData.Data.length == 0) { //数据为空时 添加默认数据
 				var today = new Date();
@@ -378,7 +358,7 @@ function getTopList(index) {
 					index: index, //排序索引
 					MsgContent: '暂无动态',
 					PublishDate: '',
-					NoReadCnt:0
+					NoReadCnt: 0
 				}
 				topArray.push(temp);
 			} else { //取班级空间的第一条数据
@@ -406,7 +386,7 @@ function getTopList(index) {
 					} else {
 						noReadHTML = '';
 					}
-					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">'+noReadHTML + '<p class="time">' + topArray[i].PublishDate +
+					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">' + noReadHTML + '<p class="time">' + topArray[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
 						datasource[i].gname +
@@ -675,12 +655,11 @@ function addBottomTap(tableIndex, cellIndex) {
 }
 
 function showBlankPage(isBlank) {
+	var ws = plus.webview.currentWebview();
+
 	if(isBlank == true) {
-		//	隐藏家长圈
-		var leftImg = document.getElementById('leftImg');
-		var parent = document.getElementById('parent');
-		leftImg.style.visibility = 'hidden';
-		parent.style.visibility = 'hidden';
+		var content = document.getElementsByClassName('mui-content')[0];
+		content.style.visibility = 'hidden';
 		//	显示加号
 		var tempDiv = document.getElementById("plusDIv");
 		if(tempDiv) {
@@ -689,15 +668,14 @@ function showBlankPage(isBlank) {
 		var div = document.createElement('div');
 		div.id = 'plusDIv';
 		var p = document.createElement('p')
-		div.style.height = '1000px'
+		div.style.height = window.height
 		div.style.marginTop = '50px'
 		p.style.textAlign = 'center'
 		p.style.fontSize = '18px'
 		div.appendChild(p)
 		p.innerHTML = '您还没有创建班级，请点击下方按钮创建班级';
 		var a = document.createElement('img');
-		//		a.className = 'mui-icon iconfont icon-tianjia ';
-		//		a.style.display='block'
+
 		a.style.width = '80px';
 		a.style.height = '80px';
 		a.src = '../../image/quan/add.png';
@@ -706,16 +684,15 @@ function showBlankPage(isBlank) {
 		a.style.verticalAlign = '-15px'
 		div.appendChild(a);
 		div.style.visibility = 'visible'
-		var content = document.getElementsByClassName('mui-content');
+		div.style.borderColor = 'transparent'
+		var content = document.getElementsByTagName('body');
 		content[0].insertBefore(div, content[0].firstChild);
 		events.addTap('add', function() {
 			events.openNewWindow('../mine/qun_manage_info.html');
 		})
 	} else {
-		var leftImg = document.getElementById('leftImg');
-		var parent = document.getElementById('parent');
-		leftImg.style.visibility = 'visible';
-		parent.style.visibility = 'visible';
+		var content = document.getElementsByClassName('mui-content')[0];
+		content.style.visibility = 'visible';
 		var plusDIv = document.getElementById('plusDIv');
 		if(plusDIv) {
 			plusDIv.style.visibility = 'hidden';

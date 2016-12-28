@@ -171,10 +171,9 @@ var requireTeachersAnswer = function() {
 			console.log('学生作业页面获取的临时作业答案：' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
 				mui.extend(homeworkResult, data.RspData);
-				requestTeaInfo(homeworkModel.TeacherId);
 				refreshUITemp();
 			} else if(data.RspCode == '9999') {
-				refreshUITemp();
+//				refreshUITemp();
 			}
 		})
 	}
@@ -192,7 +191,7 @@ var requestTeaInfo = function(teaId) {
 			mui.extend(homeworkResult, data.RspData)
 
 			if(homeworkModel.workType == 0) {
-				homeworkDetailNodes.publishDate.innerText = '发布人:' + data.RspData[0].unick + ' 发布时间:' + homeworkResult.UploadTime
+				homeworkDetailNodes.publishDate.innerText = '接受人:' + data.RspData[0].unick + ' 发布时间:' + homeworkModel.UploadTime
 				homeworkDetailNodes.title.innerText = data.RspData[0].unick;
 				homeworkDetailNodes.content.innerText = '';
 				document.getElementById("headImg").src = updateHeadImg(data.RspData[0].uimg);
@@ -219,7 +218,8 @@ function refreshUITemp() {
 	TeaAnsImgLi.className = 'mui-table-view-cell mui-media  tempComment cell-color';
 	TeaAnsImgLi.id = 'TeaAnsImgLi';
 	TeaAnsImgLi.innerHTML = ''
-	if(homeworkResult.Files) {
+	if(homeworkResult.Files.length>0){
+		
 		for(var i = 0; i < homeworkResult.Files.length; i++) {
 			var img = storageKeyName.MAINHOMEWORKURL + homeworkResult.Files[i].ThumbUrl;
 			TeaAnsImgLi.innerHTML = TeaAnsImgLi.innerHTML + '<img class="mui-media-object mui-pull-left" src="' + img + '" />';
@@ -228,6 +228,7 @@ function refreshUITemp() {
 			}
 
 		}
+	
 	}else{
 		TeaAnsImgLi.innerHTML = '暂无答案'
 	}
