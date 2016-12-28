@@ -234,9 +234,12 @@ var getCellData = function(cell) {
 	cellData.time = cell.MsgDate;
 	if(cellData.MsgType != 6) {
 		var messages = new Array();
-		if(cell.Content) {
-			messages.push('<p class="single-line"><span>' + cell.UserName + ':</span>' + cell.Content + '</p>')
+		if(cellData.MsgType!=4){
+			if(cell.Content) {
+		messages.push('<p class="single-line"><span>' + cell.UserName + ':</span>' + cell.Content + '</p>')
+	}
 		}
+	
 		if(cell.MsgArray && cell.MsgArray.length > 0) {
 			cell.MsgArray.forEach(function(msg, i, msgArray) {
 				if(msg.MsgContent) {

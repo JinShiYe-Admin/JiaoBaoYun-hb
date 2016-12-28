@@ -86,8 +86,8 @@ var getGroupPersonData = function(callback) {
 		console.log('获取的用户群资料：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			callback(data.RspData[0]);
-		} else {
-			mui.toast(data.RspTxt);
+//		} else {
+//			mui.toast(data.RspTxt);
 		}
 	})
 }
