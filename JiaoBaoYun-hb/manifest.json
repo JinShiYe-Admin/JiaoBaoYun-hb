@@ -2240,7 +2240,8 @@
 					"js/libs/myStorage/myStorage.js",
 					"js/libs/crypto-js/crypto-js.js",
 					"js/publicHomeworkProtocol.js",
-					"css/homework/subjects-icon.css"
+					"css/homework/subjects-icon.css",
+					"css/iconfont/iconfont.css"
 				],
 				"refer": [
 					"html/homework/pic-detail.html"

@@ -3,6 +3,7 @@ var role; //角色
 var imgIds; //图片数据
 var stuSubmitAnswer; //true学生提交答案||FALSE学生修改答案
 var answerResultId; //学生答案id
+var TeacherId;
 mui.init();
 mui.plusReady(function() {
 	events.preload('homework-commented.html', 200);
@@ -28,12 +29,13 @@ mui.plusReady(function() {
 		 * 更改答案的监听
 		 */
 	window.addEventListener('modifyAnswer', function(e) {
+		 console.log('上个页面传回来的值：'+JSON.stringify(e.detail.data));
 		answerResultId = e.detail.data;
 		imgIds = [];
 		stuSubmitAnswer = false;
 		events.clearChild(document.getElementById('pictures'));
 		document.getElementById('post-imgs').innerText = '修改';
-		getStudentClasses(setCondition(role, studentClasses));
+		getStudentClasses(setCondition);
 	})
 
 	/**
@@ -55,7 +57,7 @@ mui.plusReady(function() {
 	});
 	events.addTap('checkResult', function() {
 		console.log('传递的answerResultId：'+answerResultId);
-			events.fireToPageWithData('homework-commented.html', 'checkResult', answerResultId);
+			events.fireToPageWithData('homework-commented.html', 'workDetail', {AnswerResultId:answerResultId,TeacherId:TeacherId,workType:0});
 		})
 		//删除图标的点击事件
 	mui('#pictures').on('tap', '.icon-guanbi', function() {
@@ -98,6 +100,7 @@ var addPostEventListener = function() {
 						teacherId: teaInfo.utid, //老师Id；
 						teacherName: teaInfo.ugnick + '-' + teaInfo.gname //老师名字；
 					};
+					TeacherId=teaInfo.utid;
 					requestSubmitAnswer(comData);
 				} else {
 					//8.修改答案结果；
@@ -110,6 +113,7 @@ var addPostEventListener = function() {
 						teacherId: teaInfo.utid, //老师Id；
 						teacherName: teaInfo.ugnick + '-' + teaInfo.gname //老师名字；
 					};
+					TeacherId=teaInfo.utid;
 					requestModifyAnswer(comData);
 				}
 			}
@@ -125,12 +129,14 @@ var getStudentClasses = function(callback) {
 		vtp: 'ag', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群),ig(群信息vvl对应群ID)
 		vvl: personalUTID //查询的各项，对应人的utid，可以是查询的任何人
 	}, wd, function(data) {
+		wd.close();
+		console.log('获取的群信息：'+JSON.stringify(data));
 		var studentClasses = [];
 		if(data.RspCode == 0) {
 			for(var i in data.RspData) {
 				//家长、学生
-				if(data.RspData.mstype == 0 || data.RspData.mstype == 3) {
-					studentClasses.push(data.RspData);
+				if(data.RspData[i].mstype == 0 || data.RspData[i].mstype == 3) {
+					studentClasses.push(data.RspData[i]);
 				}
 			}
 			studentClasses = arraySingleItem(studentClasses);
