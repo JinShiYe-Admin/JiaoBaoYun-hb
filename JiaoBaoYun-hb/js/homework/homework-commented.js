@@ -2,6 +2,8 @@
 mui.init();
 mui.plusReady(function() {
 	events.addTap('modifyHomework', function() {
+		console.log('homeworkResult='+JSON.stringify(homeworkResult));
+		console.log('homeworkModel='+JSON.stringify(homeworkModel));
 		if(homeworkModel.workType == 0) {
 			var modifyAnswerData = mui.extend(homeworkResult, {
 				role: 30
@@ -170,7 +172,9 @@ var requireTeachersAnswer = function() {
 			wd.close();
 			console.log('学生作业页面获取的临时作业答案：' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
+				console.log('1111111='+JSON.stringify(homeworkResult));
 				mui.extend(homeworkResult, data.RspData);
+				
 				refreshUITemp();
 			} else if(data.RspCode == '9999') {
 //				refreshUITemp();
@@ -188,16 +192,16 @@ var requestTeaInfo = function(teaId) {
 		console.log('学生作业详情界面获取老师信息：' + JSON.stringify(data));
 		if(data.RspCode = '0000') {
 			console.log('homeworkResult=' + JSON.stringify(homeworkResult));
-			mui.extend(homeworkResult, data.RspData)
+			mui.extend(homeworkResult, data.RspData[0])
 
 			if(homeworkModel.workType == 0) {
-				homeworkDetailNodes.publishDate.innerText = '接受人:' + data.RspData[0].unick + ' 发布时间:' + homeworkModel.UploadTime
+				homeworkDetailNodes.publishDate.innerText = + data.RspData[0].unick   + homeworkResult.UploadTime
 				homeworkDetailNodes.title.innerText = data.RspData[0].unick;
 				homeworkDetailNodes.content.innerText = '';
 				document.getElementById("headImg").src = updateHeadImg(data.RspData[0].uimg);
 
 			} else {
-				homeworkDetailNodes.publishDate.innerText = '发布人:' + data.RspData[0].unick + ' 发布时间:' + homeworkResult.HomeworkResult.UploadTime
+				homeworkDetailNodes.publishDate.innerText =  + data.RspData[0].unick  + homeworkResult.HomeworkResult.UploadTime
 
 			}
 			requireTeachersAnswer();
@@ -277,7 +281,7 @@ function refreshUITemp() {
 function refreshUI() {
 	var className = 'iconfont subject-icon ' + getHomeworkIcon(homeworkModel.Subject);
 	homeworkDetailNodes.img.className = className
-	homeworkDetailNodes.title.innerText = homeworkModel.Subject;
+	homeworkDetailNodes.title.innerText = homeworkModel.HomeworkTitle;
 	homeworkDetailNodes.publishDate.innerText = homeworkModel.HomeworkTitle;
 	var HomeworkContents = homeworkResult.Homework.Contents;
 	if(!HomeworkContents) {
