@@ -183,7 +183,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>教龄:</label>
-								<input id="tea_expsch" type="tel" class="mui-input-clear" value="">
+								<input id="tea_expsch" type="number" oninput="if(value.length>10)value=value.slice(0,10)" class="mui-input-clear" value="">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
@@ -364,7 +364,6 @@
 					jQuery('#tea_job').prop("maxLength", "10");
 					jQuery('#tea_sub').prop("maxLength", "10");
 					jQuery('#tea_title').prop("maxLength", "10");
-					jQuery('#tea_expsch').prop("maxLength", "10");
 					getData(2);
 				}
 
