@@ -124,16 +124,16 @@
 							</div>
 						</div>
 						<div id="call" style="display: inline;" value="0">
-							<!--<div class="call-type" value="1">
+							<div class="call-type" value="1">
 								<div class="mui-input-row mui-checkbox mui-left">
 									<label>正常</label>
 									<input id="cb_call1" name="checkbox" type="checkbox" checked>
 								</div>
-							</div>-->
-							<div class="call-type" value="2" style="margin-left: 10%;">
+							</div>
+							<div class="call-type" value="2">
 								<div class="mui-input-row mui-checkbox mui-left">
 									<label>旷课</label>
-									<input id="cb_call2" name="checkbox" type="checkbox" checked>
+									<input id="cb_call2" name="checkbox" type="checkbox">
 								</div>
 							</div>
 							<div class="call-type" value="3">
@@ -209,7 +209,7 @@
 				var checkbox_2 = document.getElementById("cb_2"); //记事checkbox元素
 				var div_call = document.getElementById("call"); //点到区域
 				var div_record = document.getElementById("record"); //记事区域
-				var call_type = '2'; //记录最后点击的点到类型
+				var call_type = '1'; //记录最后点击的点到类型
 
 				//---开通记事---start---
 				//63.（点到记事）新增学生点到记事空间
