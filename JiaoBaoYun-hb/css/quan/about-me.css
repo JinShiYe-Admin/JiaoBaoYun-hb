@@ -1,68 +1,82 @@
-.title-img{
+.title-img {
 	float: left;
 	width: 4rem;
 	height: 4rem;
 	margin-right: 1rem;
 }
-.title-words{
+
+.title-words {
 	width: 80%;
 }
-p span{
-	color: dodgerblue;
-}
-.refer-content{
+
+.refer-content {
 	width: 100%;
 	height: 4rem;
-	background-color:lightgray;
+	background-color: #fffbff;
 	padding: .5rem;
 }
-.refer-content span{
-	color: dodgerblue;
-}
-.comment-content{
+
+.comment-content {
 	font-size: 1.6rem;
 	color: #000000;
 	padding: .5rem;
 }
-.extras{
+
+.extras {
 	padding: .5rem;
 }
-.reply{
+
+.reply {
 	float: right;
-	color: dodgerblue;
 }
-html{
+
+html {
 	height: 100%;
 }
-footer{
+
+footer {
 	height: 70px;
 	width: 100%;
 	z-index: 20;
 	background-color: lightgray;
 	position: fixed;
-	bottom: 0;	
+	bottom: 0;
 	display: none;
 }
-.btn-commit{
+
+.btn-commit {
 	position: absolute;
-	top:10px;
+	top: 10px;
 	right: 10px;
 	display: inline-block;
 	width: 20%;
 }
-.footer-center{
+
+.footer-center {
 	display: inline-block;
 	width: 75%;
 	padding: 5px;
 	height: 100%;
 }
-.footer-center .input-text {
-			background: #fff;
-			border: solid 1px #ddd;
-			padding: 10px !important;
-			font-size: 16px !important;
-			line-height: 18px !important;
-			font-family: verdana !important;
-			overflow: hidden;
-		}
 
+.footer-center .input-text {
+	background: #fff;
+	border: solid 1px #ddd;
+	padding: 10px !important;
+	font-size: 16px !important;
+	line-height: 18px !important;
+	font-family: verdana !important;
+	overflow: hidden;
+}
+
+.reply,
+.refer-content span,
+p span {
+	color: #3969a5;
+}
+.title-title{
+	color: #292c29;
+}
+.title-words{
+	color: #636563;
+}

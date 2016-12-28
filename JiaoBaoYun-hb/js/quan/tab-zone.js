@@ -29,6 +29,8 @@ function addSomeEvent() {
 
 			},
 		});
+		var span = this.getElementsByTagName('span')[0];
+		span.parentElement.removeChild(span);
 	});
 	//跳转到班级动态界面
 	mui('.mui-table-view').on('tap', '.tarClass', function() {
@@ -49,6 +51,8 @@ function addSomeEvent() {
 				className: datasource[index].gname
 			},
 		});
+		var span = this.getElementsByTagName('span')[0];
+		span.parentElement.removeChild(span);
 	});
 	window.addEventListener('infoChanged', function() {
 		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
@@ -59,22 +63,22 @@ function addSomeEvent() {
 			var wobj = plus.webview.currentWebview();
 			wobj.reload(true);
 
-//			datasource = []; //底部列表数据
-//			topStudentArr = [];
-//			topArray = []; //顶部班级列表数据
-//			requestTimes = 0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
-//			requestTimes2 = 0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
-//			requestTimes3 = 0;
-//			isRefresh = 0; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
-//			selectCell = {}; //选择的cell
-//			var ul = document.getElementById('top-list');
-//			ul.innerHTML = '';
-//
-//			var seg = document.getElementById('segmentedControl'); //群名称segmentedControl
-//			var userTable = document.getElementById('userList'); //多个放置用户列表
-//			seg.innerHTML = '';
-//			userTable.innerHTML = '';
-//			getStuList();
+			//			datasource = []; //底部列表数据
+			//			topStudentArr = [];
+			//			topArray = []; //顶部班级列表数据
+			//			requestTimes = 0; //记录班级空间请求次数--等于0时，请求完毕，刷新界面
+			//			requestTimes2 = 0; //记录群用户列表请求次数--等于0时，请求完毕，刷新界面
+			//			requestTimes3 = 0;
+			//			isRefresh = 0; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
+			//			selectCell = {}; //选择的cell
+			//			var ul = document.getElementById('top-list');
+			//			ul.innerHTML = '';
+			//
+			//			var seg = document.getElementById('segmentedControl'); //群名称segmentedControl
+			//			var userTable = document.getElementById('userList'); //多个放置用户列表
+			//			seg.innerHTML = '';
+			//			userTable.innerHTML = '';
+			//			getStuList();
 		}
 
 	})
@@ -104,19 +108,19 @@ function addSomeEvent() {
 			mui.toast('发布成功！');
 			console.log('推送个人空间成功' + JSON.stringify(data));
 			events.fireToPageNone('zonep_sub.html', 'refreshZonep');
-							var comData = {
-					userId: personalUTID, //用户ID
-					publisherId: personalUTID
-				};
+			var comData = {
+				userId: personalUTID, //用户ID
+				publisherId: personalUTID
+			};
 
-				postDataPro_setUserSpaceReadByUser(comData, wd, function(data) {
-					wd.close();
-					console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
-					if(data.RspCode == 0) {
-						console.log('自己发布的设置成已读')
-					}
+			postDataPro_setUserSpaceReadByUser(comData, wd, function(data) {
+				wd.close();
+				console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
+				if(data.RspCode == 0) {
+					console.log('自己发布的设置成已读')
+				}
 
-				})
+			})
 			datasource = []; //底部列表数据
 			topStudentArr = [];
 			topArray = []; //顶部班级列表数据
@@ -130,35 +134,42 @@ function addSomeEvent() {
 	})
 
 	window.addEventListener('setRead', function(e) {
-		console.log('tableIndex=' + tableIndex)
-		var tableIndex = selectCell.tableIndex;
-		var cellIndex = selectCell.cellIndex;
-		var cellNoReadCnt = selectCell.NoReadCnt
-		datasource[tableIndex].userList[selectCell.cellIndex].NoReadCnt = 0;
-		datasource[tableIndex].NoReadCnt = datasource[tableIndex].NoReadCnt - cellNoReadCnt;
-		var currentTable = document.getElementsByClassName('parent-table' + tableIndex);
-		var ul = currentTable[0];
-		var li = ul.children[cellIndex];
-		var tempModel = datasource[tableIndex].userList[cellIndex];
-		li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image" src="' + tempModel.uimg + '" />' + '<p class="time">' + tempModel.PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
-			tempModel.ugnick + '<p class="mui-ellipsis">' + tempModel.MsgContent + '</p>';
-		var seg = document.getElementById('segmentedControl');
-		var a = seg.children[tableIndex];
-		a.innerHTML = '';
-		var lineHTML = '<span class="spliter">|</span>';
-		if(tableIndex == datasource.length - 1) {
-			lineHTML = '';
-		}
-		if(datasource[tableIndex].NoReadCnt != 0) {
-			var span = document.createElement('span');
-			span.className = 'mui-badge mui-badge-danger custom-badge1';
-			span.innerHTML = datasource[tableIndex].NoReadCnt;
-			a.appendChild(span);
+		console.log('e.detail.flag=' + e.detail.flag);
+		if(e.detail.flag == 3) {
+			console.log('tableIndex=' + tableIndex)
+			var tableIndex = selectCell.tableIndex;
+			var cellIndex = selectCell.cellIndex;
+			var cellNoReadCnt = selectCell.NoReadCnt
+			datasource[tableIndex].userList[selectCell.cellIndex].NoReadCnt = 0;
+			datasource[tableIndex].NoReadCnt = datasource[tableIndex].NoReadCnt - cellNoReadCnt;
+			var currentTable = document.getElementsByClassName('parent-table' + tableIndex);
+			var ul = currentTable[0];
+			var li = ul.children[cellIndex];
+			var tempModel = datasource[tableIndex].userList[cellIndex];
+			li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image" src="' + tempModel.uimg + '" />' + '<p class="time">' + tempModel.PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
+				tempModel.ugnick + '<p class="mui-ellipsis">' + tempModel.MsgContent + '</p>';
+			var seg = document.getElementById('segmentedControl');
+			var a = seg.children[tableIndex];
+			a.innerHTML = '';
+			var lineHTML = '<span class="spliter">|</span>';
+			if(tableIndex == datasource.length - 1) {
+				lineHTML = '';
+			}
+			if(datasource[tableIndex].NoReadCnt != 0) {
+				var span = document.createElement('span');
+				span.className = 'mui-badge mui-badge-danger custom-badge1';
+				span.innerHTML = datasource[tableIndex].NoReadCnt;
+				a.appendChild(span);
 
-			a.innerHTML = datasource[tableIndex].gname + a.innerHTML + lineHTML;
+				a.innerHTML = datasource[tableIndex].gname + a.innerHTML + lineHTML;
 
-		} else {
-			a.innerHTML = datasource[tableIndex].gname + lineHTML;
+			} else {
+				a.innerHTML = datasource[tableIndex].gname + lineHTML;
+			}
+		}else if(e.detail.flag == 1){
+			
+		}else if(e.detail.flag == 2){
+			
 		}
 
 	});
@@ -194,7 +205,7 @@ function getStuList() {
 		wd.close();
 		console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
-		if(data.RspCode == 0 || data.RspCode == 9|| data.RspCode == 7) { //9为查询记录为空
+		if(data.RspCode == 0 || data.RspCode == 9 || data.RspCode == 7) { //9为查询记录为空
 			topStudentArr = data.RspData;
 			if(!topStudentArr || topStudentArr.length == 0) { //如果查询记录为空
 				var ul = document.getElementById('top-list');
@@ -241,11 +252,13 @@ function getNotes(index, StuDyArr) {
 				var temp = {
 					index: index, //排序索引
 					MsgContent: '暂无学生动态',
-					PublishDate: ''
+					PublishDate: '',
+					NoReadCnt: 0
 				}
 				StuDyArr.push(temp);
 			} else { //取班级空间的第一条数据
 				tempArr[0].index = index; //排序索引
+				tempArr[0].NoReadCnt = data.RspData.NoReadCnt;
 				StuDyArr.push(tempArr[0]);
 			}
 			requestTimes3--;
@@ -258,12 +271,18 @@ function getNotes(index, StuDyArr) {
 				//				顶部列表添加cell
 				var ul = document.getElementById('top-list');
 				ul.innerHTML = '';
+				console.log(JSON.stringify(StuDyArr));
 				for(var i = 0; i < topStudentArr.length; i++) {
 					var li = document.createElement('li');
 					li.id = 'studentsdynamic' + i;
 					li.className = 'mui-table-view-cell mui-media studentsdynamic';
-
-					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' +
+					var noReadHTML;
+					if(StuDyArr[i].NoReadCnt != 0) {
+						noReadHTML = '<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + StuDyArr[i].NoReadCnt + '</span></span>';
+					} else {
+						noReadHTML = '';
+					}
+					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image " src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' + noReadHTML +
 						'<p class="time">' + StuDyArr[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
@@ -293,7 +312,7 @@ function getGroupList() {
 	//	获取用户群
 	postDataPro_PostGList(comData, wd, function(data) {
 		wd.close();
-		//		console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0) {
 			showBlankPage(false);
@@ -349,20 +368,22 @@ function getTopList(index) {
 	//	16.（班级空间）获取用户针对某班级的空间列表
 	postDataPro_getClassSpacesByUserForClass(comData, wd, function(data) {
 		wd.close();
-		//		console.log('某班级的空间列表_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
+				console.log('某班级的空间列表_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
 		if(data.RspCode == 0) {
 			if(data.RspData.Data.length == 0) { //数据为空时 添加默认数据
 				var today = new Date();
-				var month = today.getMonth()+1
+				var month = today.getMonth() + 1
 				var currentDate = today.getFullYear() + "-" + month + "-" + today.getDate() + "  " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
 				var temp = {
 					index: index, //排序索引
 					MsgContent: '暂无动态',
-					PublishDate: ''
+					PublishDate: '',
+					NoReadCnt:0
 				}
 				topArray.push(temp);
 			} else { //取班级空间的第一条数据
 				data.RspData.Data[0].index = index; //排序索引
+				data.RspData.Data[0].NoReadCnt = data.RspData.NoReadCnt;
 				topArray.push(data.RspData.Data[0]);
 			}
 
@@ -376,10 +397,16 @@ function getTopList(index) {
 				var ul = document.getElementById('top-list');
 				console.log('topArray====' + JSON.stringify(topArray))
 				for(var i = 0; i < topArray.length; i++) {
-					var li = document.createElement('li');   
+					var li = document.createElement('li');
 					li.id = 'tarClass' + i;
 					li.className = 'mui-table-view-cell mui-media tarClass';
-					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">' + '<p class="time">' + topArray[i].PublishDate +
+					var noReadHTML;
+					if(topArray[i].NoReadCnt != 0) {
+						noReadHTML = '<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + topArray[i].NoReadCnt + '</span></span>';
+					} else {
+						noReadHTML = '';
+					}
+					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">'+noReadHTML + '<p class="time">' + topArray[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
 						datasource[i].gname +
@@ -655,6 +682,10 @@ function showBlankPage(isBlank) {
 		leftImg.style.visibility = 'hidden';
 		parent.style.visibility = 'hidden';
 		//	显示加号
+		var tempDiv = document.getElementById("plusDIv");
+		if(tempDiv) {
+			return;
+		}
 		var div = document.createElement('div');
 		div.id = 'plusDIv';
 		var p = document.createElement('p')
@@ -706,6 +737,7 @@ function pulldownRefresh() {
 		selectCell = {}; //选择的cell
 		getStuList();
 		events.fireToPageNone('../index/index.html', 'aboutmNoRead');
+		//		events.fireToPageNone('../index/index.html', 'newMessage');
 		var ws = plus.webview.currentWebview();
 		ws.endPullToRefresh(); //refresh completed
 

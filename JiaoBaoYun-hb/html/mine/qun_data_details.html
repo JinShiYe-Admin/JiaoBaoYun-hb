@@ -83,6 +83,7 @@
 							<div class="mui-input-row">
 								<label>学生姓名:</label>
 								<input id="stu_name" type="text" class="mui-input-clear">
+								<div style="position: absolute;right: 0px;top: 13px;color: red;font-size: 24px;">*</div>
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
@@ -128,6 +129,7 @@
 							<div class="mui-input-row">
 								<label>姓名:</label>
 								<input id="tea_name" type="text" class="mui-input-clear">
+								<div style="position: absolute;right: 0px;top: 13px;color: red;font-size: 24px;">*</div>
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
@@ -181,7 +183,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>教龄:</label>
-								<input id="tea_expsch" type="number" class="mui-input-clear" value="">
+								<input id="tea_expsch" type="number" oninput="if(value.length>10)value=value.slice(0,10)" class="mui-input-clear" value="">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
@@ -358,6 +360,10 @@
 						tea_expsch.setAttribute('disabled', 'disabled'); //老师教龄
 						//tea_introduction.setAttribute('disabled', 'disabled'); //老师简介
 					}
+					jQuery('#tea_name').prop("maxLength", "10");
+					jQuery('#tea_job').prop("maxLength", "10");
+					jQuery('#tea_sub').prop("maxLength", "10");
+					jQuery('#tea_title').prop("maxLength", "10");
 					getData(2);
 				}
 
@@ -375,6 +381,7 @@
 						//stu_gname.setAttribute('disabled', 'disabled'); //学生所属群
 						//stu_introduction.setAttribute('disabled', 'disabled'); //学生简介
 					}
+					jQuery('#stu_name').prop("maxLength", "10");
 					getData(3);
 				}
 
@@ -454,6 +461,7 @@
 											parData.push(item);
 											addParents(item);
 										}
+										jQuery('.data-parent').prop("maxLength", "10");
 									}
 								});
 							}
@@ -489,14 +497,14 @@
 						html2 = '<li class="mui-table-view-cell">\
 									<div class="mui-input-row">\
 										<label>关系:</label>\
-										<input id="par_urel_' + data.utid + '" type="text" class="mui-input-clear" value="' + data.urel + '">\
+										<input id="par_urel_' + data.utid + '" type="text" class="mui-input-clear data-parent" value="' + data.urel + '">\
 									</div>\
 								</li>';
 					} else {
 						html2 = '<li class="mui-table-view-cell">\
 									<div class="mui-input-row">\
 										<label>关系:</label>\
-										<input type="text" class="mui-input-clear" value="' + data.urel + '" disabled="disabled">\
+										<input type="text" class="mui-input-clear  data-parent" value="' + data.urel + '" disabled="disabled">\
 									</div>\
 								</li>';
 					}

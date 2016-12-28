@@ -81,6 +81,7 @@
 							<div class="mui-input-row">
 								<label>学生姓名:</label>
 								<input id="stu_name" type="text" class="mui-input-clear">
+								<div style="position: absolute;right: 0px;top: 13px;color: red;font-size: 24px;">*</div>
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
@@ -163,6 +164,8 @@
 							<div class="mui-input-row">
 								<label>姓名:</label>
 								<input id="tea_name" type="text" class="mui-input-clear">
+								<div style="position: absolute;right: 0px;top: 13px;color: red;font-size: 24px;">*</div>
+
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
@@ -210,7 +213,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>教龄:</label>
-								<input id="tea_expsch" type="number" class="mui-input-clear">
+								<input id="tea_expsch" type="number" oninput="if(value.length>10)value=value.slice(0,10)" class="mui-input-clear">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
@@ -268,12 +271,17 @@
 				function createStu() {
 					document.getElementById("stu_gname").value = data.gname;
 					document.getElementById("stu_create").style.display = 'inline';
+					jQuery('#stu_name').prop("maxLength", "10");
 				}
 
 				//创建老师资料
 				function createTea() {
 					document.getElementById("tea_gname").value = data.gname;
 					document.getElementById("tea_create").style.display = 'inline';
+					jQuery('#tea_name').prop("maxLength", "10");
+					jQuery('#tea_job').prop("maxLength", "10");
+					jQuery('#tea_sub').prop("maxLength", "10");
+					jQuery('#tea_title').prop("maxLength", "10");
 				}
 
 				//创建家长资料

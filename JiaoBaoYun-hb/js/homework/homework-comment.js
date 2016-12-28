@@ -219,7 +219,7 @@ var commentHomework = function(commentValue) {
 			console.log('老师评价页面获取老师评价普通作业的结果:' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
 				mui.toast('评论成功！');
-				events.fireToPageNone(plus.webview.currentWebview().opener(),'workCommented')
+				events.fireToPageNone(plus.webview.currentWebview().opener().id,'workCommented')
 				mui.back();
 			} else {
 				mui.toast(data.RspTxt);

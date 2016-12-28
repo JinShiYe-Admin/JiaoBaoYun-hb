@@ -374,7 +374,7 @@ var UploadHeadImage = (function($, mod) {
 			console.log('23_PostReStu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				//成功的回调
-				successCallBack(data);
+				successCallBack(stuImgePath);
 			} else {
 				errorCallBack(data);
 			}

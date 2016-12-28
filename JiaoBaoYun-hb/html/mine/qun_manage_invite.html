@@ -481,7 +481,7 @@
 						wd.close();
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
-							mui.toast('邀请成功');
+							mui.toast('已发送邀请');
 						} else if(data.RspCode == 9) {
 							mui.toast('用户已经被邀请');
 						} else {

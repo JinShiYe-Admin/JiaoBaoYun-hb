@@ -17,12 +17,12 @@
 		<script src="../../js/mui.min.js"></script>
 
 		<style type="text/css">
-			.mui-table-view:before,
+			/*.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
 				height: 0px;
 				/*去掉横线*/
-			}
+			}*/
 				.dynamic-personal-image {
 				/*个人头像圆形*/
 				border-radius: 50%;
@@ -37,7 +37,7 @@
 		<nav id="alertBar" class="mui-bar mui-bar-tab" style="visibility: hidden;">
 			<hr   style="margin-top: -1px; height:1px;border:none;border-top:1px solid #ededed;" />
 			<div align="center" style="margin-top: -5px;">
-				<button id="alertAll" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 200px;background-color: #00a5e0;border-color:#00a5e0 ;">一键提醒</button>
+				<button id="alertAll" type="button" class="mui-btn mui-btn-blue " style="border-radius: 5px;width: 300px;background-color: #00a5e0;border-color:#00a5e0 ;">一键提醒</button>
 			</div>
 		</nav>
 		<div class="mui-content mui-scroll-wrapper">
@@ -55,11 +55,11 @@
 						<hr  style="height:1px;border:none;border-top:1px solid #ededed;" />
 					</div>
 					
-					<div class="mui-media-body">
-						<font id="homeWorkContent"></font> 
+					<div id = 'content' class="mui-media-body">
+						<p id="homeWorkContent"></p> 
 					</div>
 					<div align="center"  style="visibility: hidden;max-height: 100px;">
-						<button id="checkDetail" type="button" class="mui-btn mui-btn-blue " style="border-radius: 10px;width: 100px;margin-top:15px ;">查看详情</button>
+						<button id="checkDetail" type="button" class=" " style="border-radius: 10px;width: 100px;margin-top:15px ;">查看详情<span class="mui-icon mui-icon-arrowdown"></span></button>
 					</div>
 
 				</li>
@@ -77,7 +77,7 @@
 						未完成(0)
 					</a>
 				</div>
-				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="background-color: #00a5e0"></div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="background-color: #00a5e0;margin-bottom: -1px;"></div>
 				<!--滑动内容-->
 				<div class="mui-slider-group">
 					<div id="div-finished" class="mui-slider-item mui-control-content mui-active">
@@ -153,11 +153,18 @@
 			var remainArray = [];
 
 			mui.plusReady(function() {
+				
+				window.addEventListener('workCommented',function(e){
+					requestHomeworkStuList();
+				})
 				events.preload('homework-comment.html', 200);
 				events.addTap('checkDetail', function() {
 					console.log('点击查看详情')
+					homeworkDetailNodes.content.removeAttribute('max-height');
+					var arrowdown = homeworkDetailNodes.checkDetailBtn.getElementsByTagName('span')[0];
+					arrowdown.className = 'mui-icon mui-icon-arrowup'
 				})
-				events.addTap('alertBar', function() {
+				events.addTap('alertAll', function() {
 					console.log('一键提醒');
 					alertStu(homeworkDetailNodes.alertAllBtn);
 					
@@ -210,6 +217,11 @@
 					console.log('2.postDataPro_GetHomework:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						homeworkDetailModel = data.RspData;
+						if(homeworkDetailModel.SubmitOnline==true){
+							mui('.mui-slider')[0].style.visibility = 'visible';
+						}else{
+							mui('.mui-slider')[0].style.visibility = 'hidden';
+						}
 						//修改界面
 						refreshhomeworkDetail();
 
@@ -336,6 +348,8 @@
 					default:
 						break;
 				}
+//				var height = document.getElementById('content').offsetHeight
+//				console.log('11111111='+height)
 //				if(homeworkDetailNodes.checkDetailBtn.height=='100px'){
 //					homeworkDetailNodes.checkDetailBtn.style.visibility = 'visible';
 //				}else{
@@ -378,7 +392,7 @@
 					var disabled;
 					
 					if(remainArray[i].IsAlertChecked==true){
-							alert = '已查阅('+remainArray[i].AlertCheckTime+')';
+							alert = '已查阅';
 							allAlertFlag++;
 					}else if(remainArray[i].IsAlerted==false){
 						alert = '提醒';
@@ -394,7 +408,7 @@
 									
 				li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" src="'+headImg +'" />'+
 										'<div class="mui-media-body">'+
-											'<div style = "padding-top:10px">'+remainArray[i].ugnick+'<button id="alert'+i+'" style="float: right;width:50px;height:30px;padding:1px 0 0 1px;font-size:12px;margin-top:-7px" onclick="alertStu(this)"'+ disabled+'>'+
+											'<div style = "padding-top:10px">'+remainArray[i].ugnick+'<button id="alert'+i+'" style="float: right;width:50px;height:30px;padding:1px 0 0 1px;font-size:12px;margin-top:-7px;" onclick="alertStu(this)"'+ disabled+'>'+
 												alert+
 											'</button>'+'</div>'+
 										'</div>'

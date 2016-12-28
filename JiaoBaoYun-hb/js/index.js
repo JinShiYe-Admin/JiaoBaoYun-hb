@@ -188,7 +188,7 @@ function getHomeworkAlert(NoReadCnt){
 		pubDynamic.className = 'mui-pull-right mui-plus-visible';
 		pubDynamic.style.paddingLeft = '20px'
 		pubDynamic.style.paddingTop = '10px'
-		pubDynamic.style.fontSize = '14px'
+		pubDynamic.style.fontSize = '16px'
 		pubDynamic.innerHTML = '晒一晒'
 		container.appendChild(pubDynamic)
 		var aboutme = document.createElement('a');

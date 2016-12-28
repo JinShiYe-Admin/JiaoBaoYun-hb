@@ -115,7 +115,7 @@
 			mui.init();
 			mui.plusReady(function() {
 				var Width = plus.screen.resolutionWidth;
-				var marginLeft = (Width - 100) / 2 + 'px';
+				var marginLeft = (Width) / 8 + 'px';
 				addQunImg(); //显示上传群头像的图标
 				var qname = document.getElementById("gname"); //群名称
 				var qnote = document.getElementById("gnote"); //群说明
@@ -158,7 +158,7 @@
 					var id = this.getAttribute('data-value');
 					var type = '';
 					var value = '';
-					console.log('row:' + id);
+					//console.log('row:' + id);
 					switch(id) {
 						case 'gname': //名称
 							type = 'gname';
@@ -171,19 +171,21 @@
 						case 'qunremark': //群备注
 							//type='gname';
 							type = '';
-							value = '';
+							value = qremark.value;
 							break;
 						default:
 							console.log('修改群资料的类型选择出错');
 							break;
 					}
-					if(type !== '') {
+//					if(type !== '') {
 						events.openNewWindowWithData('qun_manage_info_change_post.html', {
 							gid: subData.gid, //群id
 							type: type, //修改的类型
 							value: value //修改的值
 						});
-					}
+//					}else{
+//						mui.toast('群备注业务不清晰');
+//					}
 				});
 
 				//修改群信息成功后修改界面的值
