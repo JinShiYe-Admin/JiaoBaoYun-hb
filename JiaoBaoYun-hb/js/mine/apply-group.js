@@ -35,7 +35,7 @@ mui.plusReady(function() {
 				if(data.RspCode == '0000') {
 					getAllGroups(data.RspData[0].utid, setData);
 				} else if(data.RspCode==9999) {
-					mui.toast('搜索内容为空，请重新搜索！');
+					mui.toast('您搜索用户无群组！');
 				}else{
 					mui.toast(data.RspTxt);
 				}

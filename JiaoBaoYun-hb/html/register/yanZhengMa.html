@@ -64,11 +64,16 @@
 				window.addEventListener('yanzhengma', function(event) {
 					var temp = event.detail.data;
 					console.log('传值的电话号码为：' + JSON.stringify(event.detail));
-					
+
 					phoneNumBox.value = temp.phone;
 					regFlag = temp.flag;
 				});
 				events.addTap('register', function() {
+					//先本地判断验证码
+					if(document.getElementById("yanzheng").value != '123456') {
+						mui.toast('验证码错误');
+						return;
+					}
 					//需要加密的数据
 					var enData = {
 						uid: document.getElementById("phoneNumber").value,
@@ -110,11 +115,17 @@
 									console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 									//存储到手机本地
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
-									//跳转到主界面
-									var temp;
-									events.openNewWindowWithData('modify_password.html', temp);
-									events.fireToPageNone('modify_password.html', 'registerPW');
-//									events.infoChanged();
+									//判断是否有密码，如果有，直接到主界面，没有，则设置密码
+									if(data.RspData.ispw == 1) {
+										//跳转到主界面
+										events.infoChanged();
+										events.openNewWindowWithData('../index/index.html', '');
+									} else {
+										//跳转到修改密码界面
+										var temp;
+										events.openNewWindowWithData('modify_password.html', temp);
+										events.fireToPageNone('modify_password.html', 'registerPW');
+									}
 								});
 							} else { //验证码模式登录1
 								console.log('yanzhengma denglu');
@@ -122,18 +133,18 @@
 								postDataEncry(storageKeyName.MAINURL + 'PostCodeLogin', enData, comData, 0, wd, function(data) {
 									//成功，关闭等待框
 									wd.close();
-									console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+									console.log('11222success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 									if(data.RspCode != 0000) {
 										mui.toast(data.RspTxt);
 										return;
 									} else {
 										//存储到手机本地
 										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
-										//跳转到主界面
+										//跳转到修改密码界面
 										var temp;
 										events.openNewWindowWithData('modify_password.html', temp);
 										events.fireToPageNone('modify_password.html', 'registerPW');
-//										events.fireToPageNone('../quan/tab-zone.html','infoChanged');
+										//										events.fireToPageNone('../quan/tab-zone.html','infoChanged');
 									}
 
 								});

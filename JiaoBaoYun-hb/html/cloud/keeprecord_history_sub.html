@@ -179,12 +179,14 @@
 			 * @param {Object} pageSize 每页记录数
 			 */
 			function getClassHistory(pageIndex, pageSize) {
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 				//66.（点到记事）获取针对某班的点到记事列表
 				//所需参数
 				var comData = {
 					classId: subData.data, //班级ID
 					pageIndex: pageIndex, //当前页数
-					pageSize: pageSize //每页记录数
+					pageSize: pageSize, //每页记录数
+					publisherId:personalUTID//发布者ID,0代表全部
 				};
 				//返回model_userNoteInfo
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);

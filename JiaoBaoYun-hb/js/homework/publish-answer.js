@@ -5,103 +5,156 @@ var stuSubmitAnswer; //true学生提交答案||FALSE学生修改答案
 var answerResultId; //学生答案id
 mui.init();
 mui.plusReady(function() {
-		events.preload('homework-commented.html', 200);
-		mui.previewImage();
-		personalUTID = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
-		window.addEventListener('roleInfo', function(e) {
+	events.preload('homework-commented.html', 200);
+	mui.previewImage();
+	personalUTID = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
+	/**
+	 * 作业主界面传值的监听
+	 */
+	window.addEventListener('roleInfo', function(e) {
+			answerResultId = null;
+			stuSubmitAnswer = true;
+			events.clearChild(document.getElementById('pictures'));
+			document.getElementById('post-imgs').innerText = '上传';
 			imgIds = [];
-			document.getElementById('checkResult').style.display = 'none'
+			document.getElementById('checkResult').style.display = 'none';
 			console.log('上传答案||作业界面获取的上级页面传过来的信息：' + JSON.stringify(e.detail));
 			var data = e.detail.data;
 			role = data.role;
 			var studentClasses = data.studentClasses;
 			setCondition(role, studentClasses);
 		})
-
 		/**
-		 * 通过系统相机获取图片
-		 * 并显示在界面上
+		 * 更改答案的监听
 		 */
-		events.addTap('getAnswer', function() {
-			camera.getPic(camera.getCamera(), function(picPath) {
-					files.getFileByPath(picPath, function(fileStream) {
-						uploadFile(picPath, fileStream);
-					})
+	window.addEventListener('modifyAnswer', function(e) {
+		answerResultId = e.detail.data;
+		imgIds = [];
+		stuSubmitAnswer = false;
+		events.clearChild(document.getElementById('pictures'));
+		document.getElementById('post-imgs').innerText = '修改';
+		getStudentClasses(setCondition(role, studentClasses));
+	})
 
+	/**
+	 * 通过系统相机获取图片
+	 * 并显示在界面上
+	 */
+	events.addTap('getAnswer', function() {
+		camera.getPic(camera.getCamera(), function(picPath) {
+				files.getFileByPath(picPath, function(fileStream) {
+					uploadFile(picPath, fileStream);
 				})
-				//			gallery.getSinglePic(function(picPath) {
-				//				files.getFileByPath(picPath, function(fileStream) {
-				//					uploadFile(picPath, fileStream);
-				//				});
-				//			});
-		});
-		events.addTap('checkResult', function() {
-				events.fireToPageWithData('homework-commented.html', 'checkResult', answerResultId);
-			})
-			//删除图标的点击事件
-		mui('#pictures').on('tap', '.icon-guanbi', function() {
-				imgIds.splice(imgIds.indexOf(this.parentElement.imgId), 1);
-				//删除图片
-				pictures.removeChild(this.parentElement)
-			})
-			//上传路径
-		var server = "http://demo.dcloud.net.cn/helloh5/uploader/upload.php";
-		//上传按钮点击事件
-		events.addTap('post-imgs', function() {
 
-			if(imgIds.length > 0) {
-				//选择的科目id
-				var selectSubjectID = jQuery('#publish-subjects').val();
-				//判断当前显示的是老师身份0，还是家长、学生身份1
-				if(role == 2) {
-					//14.发布答案,只能上传图片；
+			})
+			//			gallery.getSinglePic(function(picPath) {
+			//				files.getFileByPath(picPath, function(fileStream) {
+			//					uploadFile(picPath, fileStream);
+			//				});
+			//			});
+	});
+	events.addTap('checkResult', function() {
+		console.log('传递的answerResultId：'+answerResultId);
+			events.fireToPageWithData('homework-commented.html', 'checkResult', answerResultId);
+		})
+		//删除图标的点击事件
+	mui('#pictures').on('tap', '.icon-guanbi', function() {
+		imgIds.splice(imgIds.indexOf(this.parentElement.imgId), 1);
+		//删除图片
+		pictures.removeChild(this.parentElement)
+	})
+	addPostEventListener();
+
+})
+var addPostEventListener = function() {
+	//上传按钮点击事件
+	events.addTap('post-imgs', function() {
+		console.log('修改点击事件！')
+		if(imgIds.length > 0) {
+			//选择的科目id
+			var selectSubjectID = jQuery('#publish-subjects').val();
+			//判断当前显示的是老师身份0，还是家长、学生身份1
+			if(role == 2) {
+				//14.发布答案,只能上传图片；
+				//所需参数
+				var comData = {
+					teacherId: personalUTID, //教师Id
+					subjectId: selectSubjectID, //科目Id， 见（一）.17. GetSubjectList()；
+					fileIds: imgIds.toString() //上传文件的id串，例如“1,2”；
+				};
+				requestPublishAnswer(comData);
+			} else {
+				var teachers_container = document.getElementById('receive-teachers'); //selectid
+				var teaInfo = teachers_container.options[teachers_container.selectedIndex].teaInfo;
+				//判断是要学生提交答案0，还是修改答案1
+				if(stuSubmitAnswer) {
+					//6.	提交答案结果
 					//所需参数
 					var comData = {
-						teacherId: personalUTID, //教师Id
-						subjectId: selectSubjectID, //科目Id， 见（一）.17. GetSubjectList()；
-						fileIds: imgIds.toString() //上传文件的id串，例如“1,2”；
+						userId: personalUTID, //学生/家长id，
+						classId: teaInfo.utid, //班级id
+						studentId: personalUTID, //学生Id；
+						fileIds: imgIds.toString(), //文件id数组；
+						teacherId: teaInfo.utid, //老师Id；
+						teacherName: teaInfo.ugnick + '-' + teaInfo.gname //老师名字；
 					};
-					requestPublishAnswer(comData);
+					requestSubmitAnswer(comData);
 				} else {
-					var teachers_container = document.getElementById('receive-teachers'); //selectid
-					var teaInfo = teachers_container.options[teachers_container.selectedIndex].teaInfo;
-					//判断是要学生提交答案0，还是修改答案1
-					if(stuSubmitAnswer) {
-						//6.	提交答案结果
-						//所需参数
-						var comData = {
-							userId: personalUTID, //学生/家长id，
-							classId: teaInfo.utid, //班级id
-							studentId: personalUTID, //学生Id；
-							fileIds: imgIds.toString(), //文件id数组；
-							teacherId: teaInfo.utid, //老师Id；
-							teacherName: teaInfo.ugnick + '-' + teaInfo.gname //老师名字；
-						};
-						requestSubmitAnswer(comData);
-					} else {
-						//8.修改答案结果；
-						//所需参数
-						var comData = {
-							userId: personalUTID, //学生/家长id，
-							studentId: personalUTID, //学生Id；
-							answerResultId: answerResultId, //要修改的答案id；
-							fileIds: imgIds, //文件id数组；
-							teacherId: teaInfo.utid, //老师Id；
-							teacherName: teaInfo.ugnick + '-' + teaInfo.gname //老师名字；
-						};
-						requestModifyAnswer(comData);
-					}
+					//8.修改答案结果；
+					//所需参数
+					var comData = {
+						userId: personalUTID, //学生/家长id，
+						studentId: personalUTID, //学生Id；
+						answerResultId: answerResultId, //要修改的答案id；
+						fileIds: imgIds.toString(), //文件id数组；
+						teacherId: teaInfo.utid, //老师Id；
+						teacherName: teaInfo.ugnick + '-' + teaInfo.gname //老师名字；
+					};
+					requestModifyAnswer(comData);
 				}
-			} else {
-				mui.toast('请拍照后上传');
 			}
-		})
+		} else {
+			mui.toast('请拍照后上传');
+		}
 	})
-	/**
-	 * 
-	 * @param {Object} picPath
-	 * @param {Object} fileStream
-	 */
+}
+var getStudentClasses = function(callback) {
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//9.获取用户群
+	postDataPro_PostGList({
+		vtp: 'ag', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群),ig(群信息vvl对应群ID)
+		vvl: personalUTID //查询的各项，对应人的utid，可以是查询的任何人
+	}, wd, function(data) {
+		var studentClasses = [];
+		if(data.RspCode == 0) {
+			for(var i in data.RspData) {
+				//家长、学生
+				if(data.RspData.mstype == 0 || data.RspData.mstype == 3) {
+					studentClasses.push(data.RspData);
+				}
+			}
+			studentClasses = arraySingleItem(studentClasses);
+			setCondition(30, studentClasses);
+		}
+	})
+}
+var arraySingleItem = function(array) {
+	var r = [];
+	for(var i = 0, l = array.length; i < l; i++) {
+		for(var j = i + 1; j < l; j++)
+			if(array[i].gid == array[j].gid) {
+				j = ++i;
+			}
+		r.push(array[i]);
+	}
+	return r;
+}
+
+/**
+ * 
+ * @param {Object} picPath
+ * @param {Object} fileStream
+ */
 var uploadFile = function(picPath, fileStream) {
 		var comData = {
 			fileType: 1, //文件类型，1：图片；2：音频；3：视频；
@@ -143,7 +196,7 @@ var setPic = function(picPath, img) {
 	 * @param {Object} role
 	 */
 var setCondition = function(role, stuClasses) {
-	var btn_post = document.getElementById('post-imgs');
+	//	var btn_post = document.getElementById('post-imgs');
 	var title = document.getElementById('title');
 	var pictures = document.getElementById('pictures');
 	if(role == 2) {
@@ -252,16 +305,16 @@ function requestClassTeacherInfo(stuClasses) {
  * @param {Object} array
  */
 var arraySingleItem = function(array) {
-		var r = [];
-		for(var i = 0, l = array.length; i < l; i++) {
-			for(var j = i + 1; j < l; j++)
-				if(array[i].gid == array[j].gid&&array[i].utid == array[j].utid) {
-					j = ++i;
-				}
-			r.push(array[i]);
-		}
-		return r;
+	var r = [];
+	for(var i = 0, l = array.length; i < l; i++) {
+		for(var j = i + 1; j < l; j++)
+			if(array[i].gid == array[j].gid && array[i].utid == array[j].utid) {
+				j = ++i;
+			}
+		r.push(array[i]);
 	}
+	return r;
+}
 var setTeachers = function(teaInfos) {
 	console.log('上传答案||作业界面要放置的老师资料：' + JSON.stringify(teaInfos))
 	var teaContainer = document.getElementById('receive-teachers');
@@ -333,7 +386,7 @@ function requestPublishAnswer(comData) {
 		wd.close();
 		console.log('发布答案||作业界面老师发布答案返回值：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
-			mui.toast('上传成功')
+			mui.toast('上传成功');
 			events.clearChild(document.getElementById('pictures'));
 		} else {
 			mui.toast(data.RspTxt);
@@ -343,17 +396,18 @@ function requestPublishAnswer(comData) {
 
 //6.	提交答案结果，学生
 function requestSubmitAnswer(comData) {
-	// 等待的对话框
+	// 等待的对话框 
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//6.	提交答案结果
 	postDataPro_SubmitAnswerResult(comData, wd, function(data) {
 		wd.close();
 		console.log('提交答案||作业界面学生提交作业返回值：' + JSON.stringify(data))
 		if(data.RspCode == 0) {
+			mui.toast('上传成功');
 			stuSubmitAnswer = false;
-			answerResultId = data.RspData.AnswerResultId
+			answerResultId = data.RspData.AnswerResultId;
 			document.getElementById('checkResult').style.display = 'block'
-			document.getElementById('post-imgs').innerText = '修改答案';
+			document.getElementById('post-imgs').innerText = '修改';
 		} else {
 			mui.toast(data.RspTxt);
 		}

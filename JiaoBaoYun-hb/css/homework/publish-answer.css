@@ -169,7 +169,7 @@ p img {
 	height: auto;
 }
 .icon-jixiaofenshuchaxun:before{
-	padding-left: .5rem;
+	padding-left: 1rem;
 }
 .teachers-container,.subjects-container{
 	display: inline-block;

@@ -23,15 +23,14 @@ mui.plusReady(function() {
 			console.log("User pressed: " + e.index);
 			if(e.index > 0) {
 				postSex(e.index - 1, function(data) { //回调函数
-					if(data.RspCode == '0000') { //成功
-						if(e.index == 1) {
-							usex.innerText = '男';
-						} else {
-							usex.innerText = '女';
-						}
+					pInfo.usex=e.index-1;
+					myStorage.setItem(storageKeyName.PERSONALINFO,pInfo);
+					if(e.index == 1) {
+						usex.innerText = '男';
 					} else {
-						mui.toast(data.RspTxt)
+						usex.innerText = '女';
 					}
+
 				})
 			}
 
@@ -58,7 +57,9 @@ mui.plusReady(function() {
 
 	//监听事件 传值 打开新页面
 	mui('.mui-table-view').on('tap', '.open-newPage', function() {
-		events.openNewWindowWithData('edit-info.html', parseInt(this.getAttribute('pos')))
+		if(!(parseInt(this.getAttribute('pos'))==10&&pInfo.uname&&pInfo.uname!=null)){
+			events.openNewWindowWithData('edit-info.html', parseInt(this.getAttribute('pos')));
+		}
 	});
 	window.addEventListener('infoChanged', function() {
 		pInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
@@ -99,7 +100,11 @@ var postSex = function(index, callback) {
 	}, wd, function(data) {
 		wd.close()
 		console.log(JSON.stringify(data));
-		callback(data);
+		if(data.RspCode == 0) {
+			callback(data);
+		} else {
+			mui.toast(data.RspTxt)
+		}
 	})
 }
 
@@ -113,7 +118,7 @@ var changeInfo = function(pInfo) {
 	var unick = document.getElementById('nick');
 	var utxt = document.getElementById('txt');
 	var uemail = document.getElementById('email');
-	//	var uphone=document.getElementById('phone');
+		var uname=document.getElementById('uname');
 	var usex = document.getElementById('sex');
 	uimg.src = pInfo.uimg ? pInfo.uimg : "../../image/utils/default_personalimage.png";
 
@@ -133,6 +138,9 @@ var changeInfo = function(pInfo) {
 	}
 	if(pInfo.uemail) {
 		uemail.innerText = pInfo.uemail;
+	}
+	if(pInfo.uname){
+		uname.innerText=pInfo.uname;
 	}
 
 }

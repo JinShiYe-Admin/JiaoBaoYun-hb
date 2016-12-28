@@ -434,7 +434,7 @@
 								var tempQunList = [];
 								mui.each(data.RspData, function(index, item) {
 									var same = false;
-									console.log('data:|index:' + index + '|item:' + JSON.stringify(item));
+									//console.log('data:|index:' + index + '|item:' + JSON.stringify(item));
 									//剔除同一个群身份不同，保留管理员身份
 									mui.each(tempQunList, function(qindex, qitem) {
 										if(qitem.gid == item.gid) {
@@ -451,7 +451,7 @@
 								});
 
 								mui.each(tempQunList, function(index, item) {
-									console.log('qunList:|index:' + index + '|item:' + JSON.stringify(item));
+									//console.log('qunList:|index:' + index + '|item:' + JSON.stringify(item));
 									var qun = {
 										gid: item.gid, //群ID
 										gname: item.gname, //群名
@@ -663,7 +663,7 @@
 						var html2 = '<div class="keep-box-shadow-border keep-member" data-gutid="' + member.gutid + '" data-gid="' + member.gid + '">';
 						//头像
 						var html3 = '<img src="' + updateHeadImg(member.uimg, 2) + '" />';
-						console.log(updateHeadImg(member.uimg, 2));
+						//console.log(updateHeadImg(member.uimg, 2));
 						//名称
 						var html4 = '';
 						if(member.ugname == null || member.ugname == '') { //没有群昵称

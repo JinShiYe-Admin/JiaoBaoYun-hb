@@ -1527,7 +1527,8 @@ var postDataPro_getReadUserBySpaceId = function(commonData, wd, callback) {
 //		var comData = {
 //			classId: '',//班级ID
 //			pageIndex:'',//当前页数
-//			pageSize:''//每页记录数
+//			pageSize:'',//每页记录数
+//			publisherId:''//发布者ID,0代表全部
 //		};
 //返回model_userNoteInfo
 var postDataPro_getNotesForClass = function(commonData, wd, callback) {
