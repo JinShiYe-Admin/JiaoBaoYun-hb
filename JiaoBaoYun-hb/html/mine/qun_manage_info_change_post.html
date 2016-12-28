@@ -72,6 +72,13 @@
 									type: subData.type, //资料类型
 									value: vvl //修改后的值
 								});
+								if(subData.type == 'gname') {
+									var main2 = plus.webview.getWebviewById('/html/mine/qun_manage.html');
+									mui.fire(main2, 'qunNameChange', {
+										gid: subData.gid, //群id
+										gname: vvl //修改后的值
+									});
+								}
 								mui.back();
 							} else {
 								mui.toast(data.RspTxt);

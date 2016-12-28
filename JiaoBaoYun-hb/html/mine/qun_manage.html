@@ -380,6 +380,7 @@
 					getAllQun();
 					//---获取群数据---end---
 
+					//刷新界面的监听
 					window.addEventListener('refresh', function() {
 						document.getElementById("qunlist").innerHTML = '\
 						<a id="controladd" class="mui-control-item" style="width: 40px;">\
@@ -393,6 +394,12 @@
 						qunlist = document.getElementById("qunlist"); //群名称显示栏
 						controladd = document.getElementById("controladd"); //群名称显示栏添加群按钮前一个item
 						getAllQun();
+					});
+
+					//修改群名称的监听
+					window.addEventListener('qunNameChange', function(e) {
+						var data = e.detail;
+						document.getElementById("top_" + data.gid).innerText = data.gname;
 					});
 					//---方法---start---
 
@@ -499,6 +506,7 @@
 							a.className = 'mui-control-item';
 							a.style.marginLeft = '10px';
 						}
+						a.id = 'top_' + qun.gid;
 						a.setAttribute('data-value', qun.gid);
 						qunlist.insertBefore(a, controladd);
 						if(qunList[0].gid == qun.gid) {
