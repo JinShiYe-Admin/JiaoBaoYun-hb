@@ -428,7 +428,7 @@ var requireHomeworkAlert = function(aboutMeData) {
 			var allData = aboutMeData.concat(data.RspData.Data);
 			//数据排序
 			allData.sort(function(a, b) {
-				return -((new Date(a.MsgDate).getTime()) - (new Date(b.MsgDate).getTime()));
+				return -((new Date(a.MsgDate.replace(/-/g,'/')).getTime()) - (new Date(b.MsgDate.replace(/-/g,'/')).getTime()));
 			})
 			console.log('与我相关界面获取的所有数据:' + JSON.stringify(allData))
 				//获取人员信息
