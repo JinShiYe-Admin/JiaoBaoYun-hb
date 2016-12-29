@@ -33,10 +33,10 @@ mui.plusReady(function() {
 			allcount = 0;
 			getUserInGroup(1,function(data){
 				isMaster=true;
-				setGride();
 			})
 		}
 	})
+	
 	
 	setListener()
 
@@ -113,13 +113,22 @@ var getUserInGroup = function(mstype, callback) {
 			if(callback) {
 				callback(data.RspData);
 			}
-			if(isMaster&&mstype==2){
-				isShowQuit(mstype,false);
+			if(mstype==1){
+				setGride();
 			}else{
-				isShowQuit(mstype, true);
+				if(isMaster&&mstype==2){
+				isShowQuit(mstype,false);
+				}else{
+					isShowQuit(mstype, true);
+				}
 			}
+			
 		} else {
-			isShowQuit(mstype, false);
+			if(mstype==1){
+				setGride();
+			}else{
+				isShowQuit(mstype, false);
+			}
 		}
 	})
 }

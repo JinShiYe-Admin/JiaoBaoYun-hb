@@ -9,7 +9,7 @@ mui.plusReady(function() {
 	//		events.preload('../mine/qun_data_details.html',200);
 	window.addEventListener('postPInfo', function(e) {
 		pInfo = e.detail.data;
-		console.log('獲取的個人信息：' + JSON.stringify(pInfo));
+		console.log('班级群组传过来的个人信息：' + JSON.stringify(pInfo));
 		getGroupPersonData(manageGroupPersonData);
 		getAccountInfo(manageAccountInfo);
 		getRemark();
@@ -65,7 +65,7 @@ var manageAccountInfo = function(data) {
 		//{"utid":5,"uid":"18853113151","uname":"test867830028690115",
 		//"unick":"BugHunter","usex":0,"utxt":null,
 		//"uimg":"http://oh2zmummr.bkt.clouddn.com/headimge5.png"}
-		document.getElementById('info-headImg').src = pInfo.uimg?data.uimg:'../../image/utils/default_personalimage.png';
+		document.getElementById('info-headImg').src = pInfo.uimg?pInfo.uimg:storageKeyName.DEFAULTPERSONALHEADIMAGE;
 		document.getElementById('info-name').innerText = pInfo.uname;
 		document.getElementById('info-nick').innerText = pInfo.unick;
 		document.getElementById('person-remark').innerText=pInfo.bunick?pInfo.bunick:pInfo.ugnick
