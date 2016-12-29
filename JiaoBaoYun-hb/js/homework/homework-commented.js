@@ -1,6 +1,9 @@
 //学生查看老师作业评价
 mui.init();
 mui.plusReady(function() {
+	window.addEventListener('refreshAnswer', function(e) {
+					homeworkDetailNodes.stuCell.innerHTML = e.detail.data.answer;
+				})
 	events.addTap('modifyHomework', function() {
 		console.log('homeworkResult=' + JSON.stringify(homeworkResult));
 		console.log('homeworkModel=' + JSON.stringify(homeworkModel));
