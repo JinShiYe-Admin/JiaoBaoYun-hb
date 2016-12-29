@@ -39,7 +39,7 @@
 					type = 1;
 					remarkInfo = e.detail.data;
 					console.log('备注传过来的值' + JSON.stringify(remarkInfo));
-					document.getElementById('remark-input').value = remarkInfo.ugnick;
+					document.getElementById('remark-input').value = remarkInfo.ugname;
 					document.querySelector('.mui-title').innerText = '编辑群昵称';
 				})
 
@@ -69,7 +69,7 @@
 					wd.close()
 					JSON.stringify('更改群昵称后返回的数据'+JSON.stringify(data));
 					if(data.RspCode == 0) {
-						remarkInfo.gunick=inputValue;
+						remarkInfo.ugname=inputValue;
 						events.fireToPageNone('group-pInfo.html', 'nickChanged',remarkInfo);
 						mui.toast('修改群昵称成功！');
 						mui.back();

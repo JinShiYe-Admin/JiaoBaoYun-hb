@@ -25,11 +25,14 @@ mui.plusReady(function() {
 	})
 	addListener();
 	window.addEventListener('remarkChanged',function(){
+		isSelf=false;
 		getRemark();
 		events.fireToPageNone('class-group.html','groupInfoChanged');
 	})
 	window.addEventListener('nickChanged',function(e){
+		isSelf=true;
 		pInfo=e.detail.data;
+		console.log('修改群昵称后的数据：'+JSON.stringify(pInfo));
 		manageAccountInfo();
 		events.fireToPageNone('class-group.html','groupInfoChanged');
 		
@@ -85,9 +88,9 @@ var manageAccountInfo = function(data) {
 		document.getElementById('info-headImg').src = pInfo.uimg?pInfo.uimg:storageKeyName.DEFAULTPERSONALHEADIMAGE;
 		document.getElementById('info-name').innerText = pInfo.uname;
 		document.getElementById('info-nick').innerText = pInfo.unick;
-		document.getElementById('person-remark').innerText=isSelf?pInfo.ugnick:pInfo.bunick
+		document.getElementById('person-remark').innerText=isSelf?pInfo.ugname:pInfo.bunick;
 		document.getElementById('data-info').innerText = pInfo.uid;
-		document.getElementById('person-space').innerText = isSelf?"我的空间":pInfo.bunick+ '的空间' ;
+		document.getElementById('person-space').innerText = isSelf?"我的空间":pInfo.ugname+ '的空间' ;
 	}
 	/**
 	 *40.通过用户ID获取用户各项资料
