@@ -196,7 +196,7 @@ var requestTeaInfo = function(teaId) {
 			if(homeworkModel.workType == 0) {
 				var dateArr = homeworkModel.UploadTime.split(' ');
 				homeworkModel.UploadTime = dateArr[0];
-				homeworkDetailNodes.publishDate.innerHTML = +data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime+'</span>'
+				homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime+'</span>'
 				homeworkDetailNodes.title.innerText = data.RspData[0].unick;
 				homeworkDetailNodes.content.innerText = '';
 				document.getElementById("headImg").src = updateHeadImg(data.RspData[0].uimg);
