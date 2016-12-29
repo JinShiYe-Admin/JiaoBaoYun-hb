@@ -146,7 +146,7 @@ var dynamiclistitem = (function($, mod) {
 			html4 = '<a id="praise' + id + '" style = "color: #8F8F94"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
 		}
 
-		var html5 = '<a id="comment' + id + '" style = "color: #8F8F94" class="mui-icon iconfont icon-xiaoxizhongxin dynamic-icon-comment"></a>';
+		var html5 = '<a id="comment' + id + '" style = "color: #8F8F94;" class="mui-icon iconfont icon-xiaoxizhongxin dynamic-icon-comment"></a>';
 //				var html6 = '<img src="../../image/dynamic/icon_forward.png" class="dynamic-icon-forward" />';
 		var html6 = '<font style="padding-right:7px"></font>';
 		var html7 = '</div><div class="mui-media-body"><p>浏览' + viewCount + '次</p></div></div>';
