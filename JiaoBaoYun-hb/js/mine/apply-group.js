@@ -2,6 +2,7 @@
  * 申請入群界面邏輯
  * @anthor an
  */
+var firstSearch;
 mui.init()
 mui('.mui-scroll-wrapper').scroll({
 	indicators: true, //是否显示滚动条
@@ -16,30 +17,44 @@ mui.plusReady(function() {
 		var search_group = document.getElementById('search-group');
 		getChecked();
 		search_group.addEventListener('search', function() {
-			console.log('search监听开始')
-			var searchType = 'mb'; //搜索数据类型
-			if(search_group.value.length!=11||isNaN(search_group.value)) {
-				searchType = 'nm'; //通过用户名搜索账号
+			var secondSearch = null;
+			if(!firstSearch) {
+				firstSearch = new Date().getTime();
 			} else {
-				searchType = 'mb'; //通过手机号搜索账号
+				secondSearch = new Date().getTime();
 			}
-			//清空子数据
-			clearChildren();
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_PostUList({
-				vvl: search_group.value,
-				vtp: searchType //通过
-			}, wd, function(data) {
-				wd.close();
-				console.log('通过手机号获取个人信息：' + JSON.stringify(data));
-				if(data.RspCode == '0000') {
-					getAllGroups(data.RspData[0].utid, setData);
-				} else if(data.RspCode==9999) {
-					mui.toast('您搜索用户无群组！');
-				}else{
-					mui.toast(data.RspTxt);
+			setTimeout(function() {
+				firstSearch = null;
+			}, 2000);
+			console.log('search监听开始')
+			if(secondSearch) {
+				mui.toast('请求太频繁，请稍后！')
+			} else {
+				var searchType = 'mb'; //搜索数据类型
+				if(search_group.value.length != 11 || isNaN(search_group.value)) {
+					searchType = 'nm'; //通过用户名搜索账号
+				} else {
+					searchType = 'mb'; //通过手机号搜索账号
 				}
-			})
+				//清空子数据
+				clearChildren();
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_PostUList({
+					vvl: search_group.value,
+					vtp: searchType //通过
+				}, wd, function(data) {
+					wd.close();
+					console.log('通过手机号获取个人信息：' + JSON.stringify(data));
+					if(data.RspCode == '0000') {
+						getAllGroups(data.RspData[0].utid, setData);
+					} else if(data.RspCode == 9999) {
+						mui.toast('您搜索用户无群组！');
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				})
+			}
+
 		})
 		setListListener();
 		setButtonsListener();
@@ -50,19 +65,19 @@ mui.plusReady(function() {
 	 * @param {Object} data 返回数据
 	 */
 var setData = function(data) {
-	console.log('界面显示Data:' + JSON.stringify(data));
-	data.forEach(function(cell, i, data) {
-		var li = document.createElement('li');
-		li.className = 'mui-table-view-cell';
-		li.gid = cell.gid;
-		li.innerHTML = createInner(cell);
-		console.log(i + createInner(cell))
-		list.appendChild(li);
-	})
-}
-/**
- * 設置列表監聽
- */
+		console.log('界面显示Data:' + JSON.stringify(data));
+		data.forEach(function(cell, i, data) {
+			var li = document.createElement('li');
+			li.className = 'mui-table-view-cell';
+			li.gid = cell.gid;
+			li.innerHTML = createInner(cell);
+			console.log(i + createInner(cell))
+			list.appendChild(li);
+		})
+	}
+	/**
+	 * 設置列表監聽
+	 */
 var setListListener = function() {
 		mui('.mui-table-view').on('tap', '.apply-group', function() {
 			choseGroupId = parseInt(this.getAttribute('gid'));
@@ -91,7 +106,7 @@ var setButtonsListener = function() {
 					wd.close();
 					if(data.RspCode == '0000') {
 						mui.toast('申请成功！');
-						events.fireToPageNone('/html/mine/apply-record.html','applied')
+						events.fireToPageNone('/html/mine/apply-record.html', 'applied')
 					} else {
 						mui.toast("申请失败:" + data.RspTxt)
 					}
