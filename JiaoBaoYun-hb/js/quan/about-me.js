@@ -94,6 +94,7 @@ var ifHaveReferContent = function(cellData) {
 var addReplyView = function() {
 	mui('.mui-table-view').on('tap', '.reply', function() {
 		var replyContainer = document.getElementById('footer');
+		document.getElementById('footer').className='mui-bar-tab';
 		replyContainer.style.display = 'block';
 		showSoftInput('#msg-content');
 		repliedCell = this.cell;
@@ -109,6 +110,7 @@ var addReplyLisetner = function() {
 		console.log('监听没反应' + replyValue)
 		if(replyValue) {
 			postReply(function() {
+				document.getElementById('footer').className='';
 				document.getElementById('footer').style.display = 'none';
 				jQuery('#msg-content').blur();
 			})
@@ -117,6 +119,10 @@ var addReplyLisetner = function() {
 		}
 	})
 }
+/**
+ * 
+ * @param {Object} callback
+ */
 var postReply = function(callback) {
 	var msgContent = document.getElementById('msg-content');
 	console.log('类型:' + msgType)
@@ -422,7 +428,7 @@ var requireHomeworkAlert = function(aboutMeData) {
 			var allData = aboutMeData.concat(data.RspData.Data);
 			//数据排序
 			allData.sort(function(a, b) {
-				return -((new Date(a.MsgDate)) - (new Date(b.MsgDate)));
+				return -((new Date(a.MsgDate).getTime()) - (new Date(b.MsgDate).getTime()));
 			})
 			console.log('与我相关界面获取的所有数据:' + JSON.stringify(allData))
 				//获取人员信息

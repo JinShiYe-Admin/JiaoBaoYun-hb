@@ -1171,7 +1171,8 @@
 				"refer": [
 					"html/quan/studentdynamic_main.html",
 					"html/quan/class_space.html",
-					"html/quan/zone_main.html"
+					"html/quan/zone_main.html",
+					"html/mine/qun_manage_info.html"
 				],
 				"priority": 0
 			},
@@ -1492,7 +1493,8 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"js/qiniu/plupload.full.min.js",
 					"js/utils/QiNiuUtil.js",
-					"js/qiniu/qiniu.js"
+					"js/qiniu/qiniu.js",
+					"js/utils/UploadHeadImage.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2240,7 +2242,8 @@
 					"js/libs/myStorage/myStorage.js",
 					"js/libs/crypto-js/crypto-js.js",
 					"js/publicHomeworkProtocol.js",
-					"css/homework/subjects-icon.css"
+					"css/homework/subjects-icon.css",
+					"css/iconfont/iconfont.css"
 				],
 				"refer": [
 					"html/homework/pic-detail.html"
