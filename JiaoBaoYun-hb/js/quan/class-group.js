@@ -373,12 +373,12 @@ var addRemarkData = function(list, remarkList) {
 					}
 				}
 				if(!hasBunick) {
-					list[i].bunick = list[i].ugnick;
+					list[i].bunick = list[i].ugname;
 				}
 			}
 		} else {
 			list.forEach(function(cell, i) {
-				list[i].bunick = cell.ugnick;
+				list[i].bunick = cell.ugname;
 			})
 		}
 		return list;
