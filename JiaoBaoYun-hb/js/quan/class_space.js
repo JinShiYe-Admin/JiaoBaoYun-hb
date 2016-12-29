@@ -147,7 +147,7 @@ var class_space = (function(mod) {
 	}
 	var getUImg = function(uimg) {
 			if(!uimg || uimg == null) {
-				uimg = '../../image/utils/default_personalimage.png'
+				uimg = storageKeyName.DEFAULTPERSONALHEADIMAGE;
 			}
 			return uimg;
 		}
