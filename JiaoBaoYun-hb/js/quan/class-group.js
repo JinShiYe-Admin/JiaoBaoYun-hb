@@ -24,7 +24,7 @@ mui.plusReady(function() {
 	window.addEventListener('postGroupInfo', function(e) {
 		masterInfo = null;
 		isMaster = false;
-		console.log(JSON.stringify(e.detail.data));
+		console.log('班级群组界面获取的数据：'+JSON.stringify(e.detail.data));
 		if(e.detail.data) {
 			groupId = e.detail.data.classId;
 			groupName = e.detail.data.className;
@@ -80,7 +80,7 @@ var insertMasterInfo = function(cell) {
 
 		cell.gname = groupName;
 		if(!cell.bunick) {
-			cell.bunick = cell.unick;
+			cell.bunick = cell.ugname;
 		}
 		li.info = cell;
 		//子控件的innerHTML
