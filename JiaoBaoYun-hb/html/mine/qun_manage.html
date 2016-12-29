@@ -302,21 +302,41 @@
 						console.log('成员：id:' + this.getAttribute('id') + '|gid:' + this.getAttribute('data-gid') + '|gutid:' + this.getAttribute('data-gutid'));
 						var gid = this.getAttribute('data-gid');
 						var gutid = this.getAttribute('data-gutid');
-						mui.each(qunMem, function(index, item) {
-							if(item.gid == gid && item.gutid == gutid) {
-								mui.each(qunList, function(index2, item2) {
-									if(item2.gid = item.gid) {
-										mui.extend(item, {
-											gname: item2.gname
-										});
-										return false;
-									}
-								});
-								//console.log('item:'+JSON.stringify(item));
-								events.fireToPageWithData('../quan/group-pInfo.html', 'postPInfo', item);
-								return false;
-							}
-						});
+						var utid = this.getAttribute('data-utid');
+						if(type == 'teacher' && gutid == '') {
+							mui.each(qunMem, function(index, item) {
+								if(item.gid == gid && item.utid == utid) {
+									mui.each(qunList, function(index2, item2) {
+										if(item2.gid = item.gid) {
+											mui.extend(item, {
+												gname: item2.gname
+											});
+											return false;
+										}
+									});
+									//console.log('item:'+JSON.stringify(item));
+									events.fireToPageWithData('../quan/group-pInfo.html', 'postPInfo', item);
+									return false;
+								}
+							});
+						} else {
+							mui.each(qunMem, function(index, item) {
+								if(item.gid == gid && item.gutid == gutid) {
+									mui.each(qunList, function(index2, item2) {
+										if(item2.gid = item.gid) {
+											mui.extend(item, {
+												gname: item2.gname
+											});
+											return false;
+										}
+									});
+									//console.log('item:'+JSON.stringify(item));
+									events.fireToPageWithData('../quan/group-pInfo.html', 'postPInfo', item);
+									return false;
+								}
+							});
+						}
+
 					});
 
 					//长按成员
@@ -325,35 +345,40 @@
 						var id = this.getAttribute('id');
 						var gid = this.getAttribute('data-gid');
 						var gutid = this.getAttribute('data-gutid');
-						mui.each(qunList, function(index, item) {
-							if(item.mstype == 1 && item.gid == gid) { //群主
-								var btnArray = ['否', '是'];
-								mui.confirm('确认删除？', '删除群成员', btnArray, function(e) {
-									if(e.index == 1) {
-										//31.群成员退出群或者剔除群成员
-										//所需参数
-										var comData = {
-											vvl: gutid, //群成员群ID，gutid
-										};
-										// 等待的对话框
-										var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-										postDataPro_PostGuD(comData, wd, function(data) {
-											wd.close();
-											console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-											if(data.RspCode == 0) {
-												document.getElementById(id).parentNode.removeChild(document.getElementById(id));
-												mui.toast('删除成功');
-											} else {
-												mui.toast(data.RspTxt);
-											}
-										});
+						if(gutid == '') {
+							mui.toast('不能删除群主');
+						} else {
+							mui.each(qunList, function(index, item) {
+								if(item.mstype == 1 && item.gid == gid) { //群主
+									var btnArray = ['否', '是'];
+									mui.confirm('确认删除？', '删除群成员', btnArray, function(e) {
+										if(e.index == 1) {
+											//31.群成员退出群或者剔除群成员
+											//所需参数
+											var comData = {
+												vvl: gutid, //群成员群ID，gutid
+											};
+											// 等待的对话框
+											var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+											postDataPro_PostGuD(comData, wd, function(data) {
+												wd.close();
+												console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+												if(data.RspCode == 0) {
+													document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+													mui.toast('删除成功');
+												} else {
+													mui.toast(data.RspTxt);
+												}
+											});
 
-									} else {
-										console.log('不删除');
-									}
-								});
-							}
-						});
+										} else {
+											console.log('不删除');
+										}
+									});
+								}
+							});
+						}
+
 						//						mui.each(document.getElementById("bot_" + type + '_' + this.getAttribute('data-gid')).querySelectorAll('.icon-close'), function(index, item) {
 						//							item.style.display = 'inline';
 						//						});
@@ -547,6 +572,7 @@
 					function getMember(qun, type2) {
 						var vvl1 = ''; //群员类型（查询时使用）
 						var type3 = ''; //群员类型（界面显示时使用）
+						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 						switch(type2) {
 							case 'student':
 								vvl1 = '3';
@@ -577,8 +603,33 @@
 						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 						postDataPro_PostGusers(getMemData, wd, function(data) {
 							console.log('13_postDataPro_PostGusers_通过群ID获取群的正常用户.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(type2 == 'teacher') {
+								//var same = false;
+								if(data.RspCode == 9) {
+									data.RspData = [];
+									data.RspCode = 0;
+								}
+								//								mui.each(data.RspData, function(index, item) {
+								//									console.log('item:' + JSON.stringify(item));
+								//									if(item.utid == personalUTID) {
+								//										same = true;
+								//									}
+								//								});
+								//								if(!same) {
+								var mem = {
+									gid: qun.gid,
+									gutid: '',
+									utid: personalUTID,
+									ugname: '',
+									ugnick: window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick,
+									uimg: window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uimg,
+									mstype: '2'
+								}
+								console.log('mem:' + JSON.stringify(mem));
+								data.RspData.splice(0, 0, mem);
+								//								}
+							}
 							if(data.RspCode == 0) {
-								//var strUtid = '';
 								mui.each(data.RspData, function(index, item) {
 									//console.log('getMemData:' + JSON.stringify(item));
 									var qunBot = document.getElementById("bot_" + type2 + '_' + qun.gid).querySelector('.mui-row');
@@ -586,7 +637,6 @@
 									qunMem.push(item);
 									//strUtid = strUtid + item.utid;
 								});
-
 							} else if(data.RspCode == 9) {
 								//查询为空
 								var qunBot = document.getElementById("bot_" + type2 + '_' + qun.gid).querySelector('.mui-row');
@@ -656,6 +706,7 @@
 						li.id = memId;
 						li.setAttribute('data-gid', member.gid);
 						li.setAttribute('data-gutid', member.gutid);
+						li.setAttribute('data-utid', member.utid);
 						li.className = 'mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3';
 						//删除按钮
 						var html1 = '<div class="mui-icon iconfont icon-close" data-gutid="' + member.gutid + '" data-gid="' + member.gid + '" style="display: none;"></div>';
@@ -668,7 +719,11 @@
 						var html4 = '';
 						if(member.ugname == null || member.ugname == '') { //没有群昵称
 							//使用用户昵称
-							html4 = '<p id="member_name_' + member.utid + '" class="mui-ellipsis">' + member.ugnick + '</p></div>';
+							if(member.gutid == '') {
+								html4 = '<p id="member_name_' + member.utid + '" class="mui-ellipsis" style="color:red;">' + member.ugnick + '</p></div>';
+							} else {
+								html4 = '<p id="member_name_' + member.utid + '" class="mui-ellipsis">' + member.ugnick + '</p></div>';
+							}
 						} else {
 							html4 = '<p id="member_name_' + member.utid + '" class="mui-ellipsis">' + member.ugname + '</p></div>';
 						}

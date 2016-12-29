@@ -306,7 +306,10 @@
 					} else if(mstype == '3' && (searchValue == uid || searchValue == uname)) {
 						//不允许邀请自己成为学生
 						mui.toast('不能邀请自己成为学生');
-					} else {
+					} else if(mstype == '2' && (searchValue == uid || searchValue == uname)) {
+						//不允许邀请自己成为老师
+						mui.toast('不能邀请自己成为老师');
+					}  else {
 						var vtp = 'nm';
 						var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/
 
