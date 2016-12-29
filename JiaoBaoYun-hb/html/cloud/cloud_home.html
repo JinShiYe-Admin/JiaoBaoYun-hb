@@ -555,12 +555,26 @@
 							var table = document.getElementById("cloudstoragefile");
 							table.innerHTML = '';
 							//循环将获取到的值塞入界面
-							for(var i in data.RspData) {
-								if(i == 3) { //只显示3个文件或文件夹
+							var folder = 0;
+							mui.each(data.RspData, function(index, element) {
+								if(folder == 3) {
 									return false;
 								}
-								var tempModel = data.RspData[i];
-								addStorageFolder(tempModel);
+								if(element.ftype == '.file') {
+									folder++;
+									addStorageFolder(element);
+								}
+							});
+							if(folder < 3) {
+								mui.each(data.RspData, function(index, element) {
+									if(folder == 3) {
+										return false;
+									}
+									if(element.ftype != '.file') {
+										folder++;
+										addStorageFolder(element);
+									}
+								});
 							}
 							//增加加号
 							if(fileArray.length < 3) {
@@ -593,7 +607,7 @@
 							document.getElementById("record_row").innerHTML = '';
 							addLeaningPath(); //学习轨迹
 							mui.each(data.RspData.Students, function(index, item) {
-								console.log('学生档案：' + index + '|' + JSON.stringify(item));
+								//console.log('学生档案：' + index + '|' + JSON.stringify(item));
 								addRecord(item);
 							});
 						} else if(data.RspCode == 9) {
