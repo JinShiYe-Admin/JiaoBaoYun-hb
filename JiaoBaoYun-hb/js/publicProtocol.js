@@ -451,11 +451,11 @@ var postDataPro_PostDiFiE = function(commonData, wd, callback) {
 //			vvl:'',//群成员群ID，gutid
 //			vvl1:''//群昵称
 //		};
-var postDataPro_PostDiFiE = function(commonData, wd, callback) {
+var postDataPro_PostGuNameE = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINURL + 'PostDiFiE', enData, commonData, 1, wd, callback);
+	postDataEncry(storageKeyName.MAINURL + 'PostGuNameE', enData, commonData, 1, wd, callback);
 }
 
 //30.通过资料ID获取关联的人员

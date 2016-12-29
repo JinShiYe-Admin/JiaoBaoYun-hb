@@ -3,13 +3,22 @@ var pInfo; //{"gid":1,"gutid":9,"utid":5,
 //"ugname":"BugHunter","ugnick":"BugHunter",
 //"uimg":"http://oh2zmummr.bkt.clouddn.com/headimge5.png","mstype":3}
 //var accountInfo;
+var isSelf;
 var premark={};
 mui.plusReady(function() {
 	events.preload('edit-remark.html',100);
 	//		events.preload('../mine/qun_data_details.html',200);
 	window.addEventListener('postPInfo', function(e) {
+		isSelf=false;
 		pInfo = e.detail.data;
 		console.log('班级群组传过来的个人信息：' + JSON.stringify(pInfo));
+		var selfInfo=myStorage.getItem(storageKeyName.PERSONALINFO);
+		if(selfInfo.utid==pInfo.utid){
+			isSelf=true;
+			document.querySelector('.info-remark').innerText='群昵称';
+		}else{
+			document.querySelector('.info-remark').innerText='备注';
+		}
 		getGroupPersonData(manageGroupPersonData);
 		getAccountInfo(manageAccountInfo);
 		getRemark();
@@ -18,6 +27,12 @@ mui.plusReady(function() {
 	window.addEventListener('remarkChanged',function(){
 		getRemark();
 		events.fireToPageNone('class-group.html','groupInfoChanged');
+	})
+	window.addEventListener('nickChanged',function(e){
+		pInfo=e.detail.data;
+		manageAccountInfo();
+		events.fireToPageNone('class-group.html','groupInfoChanged');
+		
 	})
 })
 /**
@@ -59,8 +74,10 @@ var getAccountInfo = function(callback) {
 	})
 }
 var manageAccountInfo = function(data) {
-
-		jQuery.extend(pInfo,data);
+		if(data){
+			jQuery.extend(pInfo,data);
+		}
+		pInfo.bunick=pInfo.bunick?pInfo.bunick:pInfo.ugnick;
 		console.log('獲取的個人賬號信息：' + JSON.stringify(pInfo));
 		//{"utid":5,"uid":"18853113151","uname":"test867830028690115",
 		//"unick":"BugHunter","usex":0,"utxt":null,
@@ -68,9 +85,9 @@ var manageAccountInfo = function(data) {
 		document.getElementById('info-headImg').src = pInfo.uimg?pInfo.uimg:storageKeyName.DEFAULTPERSONALHEADIMAGE;
 		document.getElementById('info-name').innerText = pInfo.uname;
 		document.getElementById('info-nick').innerText = pInfo.unick;
-		document.getElementById('person-remark').innerText=pInfo.bunick?pInfo.bunick:pInfo.ugnick
+		document.getElementById('person-remark').innerText=isSelf?pInfo.ugnick:pInfo.bunick
 		document.getElementById('data-info').innerText = pInfo.uid;
-		document.getElementById('person-space').innerText = pInfo.bunick?pInfo.bunick+ '的空间':pInfo.ugnick+ '的空间' ;
+		document.getElementById('person-space').innerText = isSelf?"我的空间":pInfo.bunick+ '的空间' ;
 	}
 	/**
 	 *40.通过用户ID获取用户各项资料
@@ -105,6 +122,10 @@ var addListener = function() {
 		events.openNewWindowWithData('../mine/qun_data_details.html', pInfo);
 	})
 	events.addTap('edit-remark',function(){
-		events.fireToPageWithData('edit-remark.html','editRemark',pInfo)
+		if(isSelf){
+			events.fireToPageWithData('edit-remark.html','editNick',pInfo);
+		}else{
+			events.fireToPageWithData('edit-remark.html','editRemark',pInfo);
+		}
 	})
 }
