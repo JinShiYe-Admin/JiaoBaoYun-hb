@@ -31,13 +31,18 @@ mui.plusReady(function() {
 			document.getElementById('title').innerText = getHeadText(groupName);
 			groupRoles = [];
 			allcount = 0;
-			setGride();
-
+			getUserInGroup(1,function(data){
+				isMaster=true;
+				setGride();
+			})
 		}
 	})
+	
+	setListener()
+
 	window.addEventListener('groupInfoChanged', function() {
 			setGride();
-		})
+	})
 		//群組頭像點擊事件
 	mui('#gride1').on('tap', '.mui-table-view-cell', function() {
 		events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
@@ -48,6 +53,10 @@ mui.plusReady(function() {
 	mui('#gride3').on('tap', '.mui-table-view-cell', function() {
 			events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
 		})
+	
+
+})
+var setListener=function(){
 		//退出按鈕點擊事件
 	quit_group1.addEventListener('tap', function() {
 			getUserInGroup(0, showChoices);
@@ -60,8 +69,7 @@ mui.plusReady(function() {
 	quit_group3.addEventListener('tap', function() {
 		getUserInGroup(3, showChoices);
 	})
-
-})
+}
 var insertMasterInfo = function(cell) {
 		var li = document.createElement('li');
 		if(gride2.firstElementChild) {
@@ -105,7 +113,11 @@ var getUserInGroup = function(mstype, callback) {
 			if(callback) {
 				callback(data.RspData);
 			}
-			isShowQuit(mstype, true);
+			if(isMaster&&mstype==2){
+				isShowQuit(mstype,false);
+			}else{
+				isShowQuit(mstype, true);
+			}
 		} else {
 			isShowQuit(mstype, false);
 		}
@@ -302,6 +314,11 @@ var getGroupInfo = function(vvl) {
 						if(groupRole.mstype == 1) {
 							masterInfo = groupRole;
 							if(groupData.RspData != null) {
+								for(var i in groupData.RspData){
+									if(groupData.RspData[i].utid==masterInfo.utid){
+										groupData.RspData.splice(i,1);
+									}
+								}
 								groupData.RspData.splice(0, 0, masterInfo);
 							} else {
 								groupData.RspData = [masterInfo];
