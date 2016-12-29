@@ -685,7 +685,6 @@
 							document.getElementById('footer').style.display = 'none';
 							jQuery('#msg-content').blur();
 						console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
-						mui('.mui-popover').popover('hide');
 
 						var replyComment = document.getElementById('replyComment' + id + '-' + commentId + '-' + '评论');
 						var nextReplyComment = document.createElement('div');
@@ -707,19 +706,21 @@
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					postDataPro_addUserSpaceComment(comData, wd, function(data) {
 						wd.close();
-							document.getElementById('footer').className = '';
-							document.getElementById('footer').style.display = 'none';
-							jQuery('#msg-content').blur();
+							
 						console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
-						mui('.mui-popover').popover('hide');
 						var commentArr = zonepArray[tempIndex].Comments;
 						console.log("commentList" + tempIndex);
 						var commentList = document.getElementById("commentList" + tempIndex);
+						console.log(commentList.outerHTML);
 						var html1 = '<div id="replyComment' + tempIndex + '-' + commentArr.length + '-' + '评论' + '" class="mui-media-body replyComment">';
 						var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + personalunick + '</font>';
 						var html3 = '<font class="common-font-family-Regular">：' + inputComment.value + '</font></div>';
 						var htmlComment = html1 + html2 + html3;
 						commentList.innerHTML = commentList.innerHTML + htmlComment
+						console.log(commentList.outerHTML);
+						document.getElementById('footer').className = '';
+							document.getElementById('footer').style.display = 'none';
+							jQuery('#msg-content').blur();
 						inputComment.value = '';
 
 					})
