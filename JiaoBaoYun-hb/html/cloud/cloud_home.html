@@ -182,8 +182,9 @@
 					<div class="cloud-top" style="min-height: 100px;width:100%;">
 						<img id="imge_bg" src="../../image/cloud/cloud_bg2.png" style="width: 100%;position: absolute;" />
 						<div class="cloud-info" style="">
-							<div id="cloud_name" class="common-font-family-Bold mui-ellipsis-2" style="float: left;">
-							</div>
+							<p id="cloud_name" class="common-font-family-Bold mui-ellipsis" style="float: left;width: 40%;">
+								<!--一二三四五六七八九十一二三四五六七八九十-->
+							</p>
 							<br />
 							<div class="mui-progressbar mui-progressbar-in" style="float: left;">
 								<span></span>
@@ -435,7 +436,9 @@
 						} else {
 							//点击取消
 						}
-					});
+					}, 'div');
+					document.querySelector('.mui-popup-input input').type = 'text';
+					document.querySelector('.mui-popup-input input').maxLength = '20';
 				});
 
 				//---存储end---
