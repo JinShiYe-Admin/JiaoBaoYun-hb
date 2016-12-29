@@ -18,9 +18,9 @@ var storageKeyName = (function(mod) {
 	//---测试---end---
 
 	//---外网---start---
-	//mod.MAINURL = 'http://114.215.222.186:8002/api/CloudApi/'; //主url
-	//mod.MAINJIAOXIAOURL = 'http://114.215.222.194:8080/JiaoBaoCloudService/'; //家校圈url
-	//mod.MAINHOMEWORKURL = 'http://114.215.222.186:8001/' //作业主url
+//	mod.MAINURL = 'http://114.215.222.186:8002/api/CloudApi/'; //主url
+//	mod.MAINJIAOXIAOURL = 'http://114.215.222.194:8080/JiaoBaoCloudService/'; //家校圈url
+//	mod.MAINHOMEWORKURL = 'http://114.215.222.186:8001/' //作业主url
 	//---外网---end---
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url

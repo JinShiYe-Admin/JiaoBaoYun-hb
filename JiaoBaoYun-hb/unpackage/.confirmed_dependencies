@@ -141,7 +141,8 @@
 		"refer": [
 			"html/quan/studentdynamic_main.html",
 			"html/quan/class_space.html",
-			"html/quan/zone_main.html"
+			"html/quan/zone_main.html",
+			"html/mine/qun_manage_info.html"
 		]
 	},
 	"html/index.html": {
@@ -892,7 +893,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"js/qiniu/plupload.full.min.js",
 			"js/utils/QiNiuUtil.js",
-			"js/qiniu/qiniu.js"
+			"js/qiniu/qiniu.js",
+			"js/utils/UploadHeadImage.js"
 		],
 		"refer": []
 	},

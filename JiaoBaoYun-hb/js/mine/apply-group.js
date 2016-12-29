@@ -178,8 +178,8 @@ var getAllGroups = function(utid, callback) {
 			console.log('申请入群获取的群数据：' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
 				callback(data.RspData);
-			} else {
-				mui.toast(data.RspTxt);
+//			} else {
+//				mui.toast(data.RspTxt);
 			}
 		})
 
