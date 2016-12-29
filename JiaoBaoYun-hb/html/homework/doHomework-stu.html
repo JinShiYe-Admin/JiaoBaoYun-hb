@@ -37,6 +37,8 @@
 			var personalUTID;
 			var flag = 0
 			mui.plusReady(function() {
+				
+				
 				window.addEventListener('homeworkInfo', function(e) {
 					personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 					homeworkModel = e.detail.data;
@@ -129,6 +131,13 @@
 					console.log('9.postDataPro_ModifyHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						mui.toast('修改作业答案成功！')
+						events.fireToPageNone('homework-commented.html','refreshAnswer',{answer: textView.value});
+//						//获得主页面的webview
+//						var main = plus.webview.getWebviewById('../quan/doHomework-stu.html');
+//						//触发tab-zone页面的setRead事件
+//						mui.fire(main, 'refreshAnswer', {
+//							answer: textView.value
+//						});
 							//清空输入框
 						textView.value = '';
 						mui.back();
