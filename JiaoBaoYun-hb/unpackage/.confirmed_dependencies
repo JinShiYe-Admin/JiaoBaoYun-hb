@@ -209,7 +209,8 @@
 	"html/register/yanZhengMa.html": {
 		"refer": [
 			"html/index.html",
-			"html/register/modify_password.html"
+			"html/register/modify_password.html",
+			"html/index/index.html"
 		],
 		"resources": [
 			"js/libs/crypto-js/crypto-js.js",
@@ -881,7 +882,8 @@
 			"js/mui.min.js",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"js/utils/native.js"
 		],
 		"refer": []
 	},
