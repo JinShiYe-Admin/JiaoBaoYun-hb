@@ -336,7 +336,7 @@
 													//33.根据资料表ID删除资料
 													deleteData(stuid, id);
 												} else {
-													mui.toast(data.RspTxt);
+													mui.toast('删除记事失败：' + data.RspTxt);
 												}
 											});
 										}
@@ -753,7 +753,7 @@
 									document.getElementById(id).parentNode.removeChild(document.getElementById(id));
 								}
 							} else {
-								mui.toast(data2.RspTxt);
+								mui.toast('删除资料失败：' + data2.RspTxt);
 							}
 						});
 					}

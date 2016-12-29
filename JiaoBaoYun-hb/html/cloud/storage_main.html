@@ -61,7 +61,7 @@
 			.icon-trash {
 				/*background: red;*/
 				text-align: center;
-				min-width: 40px;
+				/*min-width: 10px;*/
 			}
 
 			#top {
@@ -99,7 +99,7 @@
 									<span class="mui-icon iconfont iconfont-color icon-download mui-media-object mui-pull-right" style="margin-right: 15px;"></span>
 									<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">
 									<div class="mui-media-body">
-										<p class="mui-ellipsis">文件夹名字</p>
+										<p class="mui-ellipsis-2">文件夹名字</p>
 									</div>
 								</li>
 								<li class="mui-table-view-cell mui-media">
@@ -108,7 +108,7 @@
 									<span class="mui-icon iconfont iconfont-color icon-download mui-media-object mui-pull-right" style="margin-right: 15px;"></span>
 									<span class="mui-media-object mui-icon iconfont iconfont-size icon-excel mui-pull-left"></span>
 									<div class="mui-media-body">
-										<p class="mui-ellipsis">文件名字</p>
+										<p class="mui-ellipsis-2">文件名字</p>
 									</div>
 								</li>
 							</ul>
@@ -193,7 +193,7 @@
 				console.log('增加文件夹showPid:' + showPid);
 				e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
 				var btnArray = ['取消', '确定'];
-				mui.prompt('请输入新文件夹的名称：', '新文件夹', '新建文件夹', btnArray, function(e) {
+				mui.prompt('请输入新文件夹的名称', '', '新建文件夹', btnArray, function(e) {
 					if(e.index == 1) {
 						//点击确定
 						var reg = new RegExp('^[^\\\\\\/:*?\\"<>|]+$'); //特殊字符过滤的正则表达式
@@ -242,7 +242,9 @@
 					} else {
 						//点击取消
 					}
-				});
+				}, 'div');
+				document.querySelector('.mui-popup-input input').type = 'text';
+				document.querySelector('.mui-popup-input input').maxLength = '20';
 			});
 
 			//返回按钮监听
@@ -365,7 +367,9 @@
 					} else { //取消
 
 					}
-				})
+				}, 'div');
+				document.querySelector('.mui-popup-input input').type = 'text';
+				document.querySelector('.mui-popup-input input').maxLength = '20';
 			});
 
 			/**
@@ -447,30 +451,34 @@
 										return false;
 									}
 								});
-								if(ftype != '.file') {
-									//var fpathList = [];
-									//fpathList.push(fpath);
-									var pathStr = '["' + fpath + '"]'; //arrayToStr(fpathList);
-									console.log('pathStr:' + pathStr);
 
-									/**
-									 * 七牛批量删除
-									 */
-									CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, pathStr, function(data) {
-											if(data.RspCode == 0) {
-												//mui.toast('七牛删除成功');
-												console.log('七牛删除成功:' + JSON.stringify(data));
-											} else {
-												mui.toast('七牛删除失败' + JSON.stringify(data));
-												console.log('七牛删除:' + JSON.stringify(data));
-											}
-										},
-										function(xhr, type, errorThrown) {
+								var pathList = [];
+								mui.each(data.RspData, function(index, element) {
+									if(element.fpath != '') {
+										pathList.push(element.fpath);
+									}
+								});
+
+								var pathStr = '["' + pathList.join('","') + '"]';
+								//console.log('pathStr:' + pathStr);
+
+								/**
+								 * 七牛批量删除
+								 */
+								CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, pathStr, function(data) {
+										if(data.RspCode == 0) {
+											//mui.toast('七牛删除成功');
+											console.log('七牛删除成功:' + JSON.stringify(data));
+										} else {
 											mui.toast('七牛删除失败' + JSON.stringify(data));
-											console.log('七牛删除失败:' + JSON.stringify(type));
+											console.log('七牛删除:' + JSON.stringify(data));
 										}
-									);
-								}
+									},
+									function(xhr, type, errorThrown) {
+										mui.toast('七牛删除失败' + JSON.stringify(data));
+										console.log('七牛删除失败:' + JSON.stringify(type));
+									}
+								);
 							} else {
 								mui.toast(data.RspTxt);
 							}
@@ -598,7 +606,7 @@
 					html1 = '<span class="mui-navigate-right mui-media-object mui-pull-right" style="width:10px;"></span>';
 					html3 = '<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">';
 					html4 = '<div class="mui-media-body">\
-								<div id="fname_' + data.fid + '" class="mui-ellipsis">' + data.fname + '</div>\
+								<div id="fname_' + data.fid + '" class="mui-ellipsis-2">' + data.fname + '</div>\
 							</div>';
 				} else {
 					if(showTop) {
@@ -615,7 +623,7 @@
 							html3 = '<img class="mui-media-object cloud-bottom-imge mui-pull-left" src="' + path + '" />';
 						}
 						html4 = '<div class="mui-media-body">\
-								<div id="fname_' + data.fid + '" class="mui-ellipsis">' + data.fname + data.ftype + '</div>\
+								<div id="fname_' + data.fid + '" class="mui-ellipsis-2">' + data.fname + data.ftype + '</div>\
 							</div>';
 					}
 				}

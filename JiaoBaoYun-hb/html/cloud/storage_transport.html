@@ -1109,10 +1109,28 @@
 							copyFileToUpload(filePath, fname);
 						} else {
 							if(data.RspCode == 8) {
-								mui.toast('上传失败 ' + fname + ' ' + data.RspTxt);
+								mui.toast('上传失败 ' + fname + ' ' + data.RspTxt + '');
 							} else {
-								mui.toast(data.RspTxt);
+								mui.toast('上传失败 ' + data.RspTxt);
 							}
+							var pathStr = '["' + comData.fpath + '"]';
+							/**
+							 * 七牛批量删除
+							 */
+							CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, pathStr, function(data) {
+									if(data.RspCode == 0) {
+										//mui.toast('七牛删除成功');
+										console.log('七牛删除成功:' + JSON.stringify(data));
+									} else {
+										mui.toast('七牛删除失败' + JSON.stringify(data));
+										console.log('七牛删除:' + JSON.stringify(data));
+									}
+								},
+								function(xhr, type, errorThrown) {
+									mui.toast('七牛删除失败' + JSON.stringify(data));
+									console.log('七牛删除失败:' + JSON.stringify(type));
+								}
+							);
 						}
 						//开始新的上传任务
 						mui.each(uploadList, function(index, element) {
