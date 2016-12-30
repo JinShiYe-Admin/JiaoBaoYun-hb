@@ -59,12 +59,12 @@
 				var regFlag;
 				var phoneNumBox = document.getElementById("phoneNumber");
 				phoneNumBox.value = '';
-				var codeBox = document.getElementById("yanzheng").value;
-				codeBox.value = '';
+				var codeBox = document.getElementById("yanzheng");
+				
 				window.addEventListener('yanzhengma', function(event) {
 					var temp = event.detail.data;
 					console.log('传值的电话号码为：' + JSON.stringify(event.detail));
-
+					codeBox.value = '';
 					phoneNumBox.value = temp.phone;
 					regFlag = temp.flag;
 				});
