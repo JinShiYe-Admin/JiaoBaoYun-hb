@@ -30,7 +30,10 @@ function addSomeEvent() {
 			},
 		});
 		var span = this.getElementsByTagName('span')[0];
-		span.parentElement.removeChild(span);
+		if(span){
+			span.parentElement.removeChild(span);
+		}
+		
 	});
 	//跳转到班级动态界面
 	mui('.mui-table-view').on('tap', '.tarClass', function() {
@@ -52,7 +55,10 @@ function addSomeEvent() {
 			},
 		});
 		var span = this.getElementsByTagName('span')[0];
-		span.parentElement.removeChild(span);
+		if(span){
+			span.parentElement.removeChild(span);
+		}
+		
 	});
 	//重新登录或者注册的时候重新加载家校圈首页
 	window.addEventListener('infoChanged', function() {
@@ -184,7 +190,7 @@ function getStuList() {
 	//24.通过用户表ID获取用户关联的学生
 	postDataPro_PostUstu(comData, wd, function(data) {
 		wd.close();
-		console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//		console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0 || data.RspCode == 9 || data.RspCode == 7) { //9为查询记录为空
 			topStudentArr = data.RspData;
@@ -259,6 +265,7 @@ function getNotes(index, StuDyArr) {
 				ul.innerHTML = '';
 				console.log(JSON.stringify(StuDyArr));
 				for(var i = 0; i < topStudentArr.length; i++) {
+					console.log(JSON.stringify(StuDyArr[i]))
 					var li = document.createElement('li');
 					li.id = 'studentsdynamic' + i;
 					li.className = 'mui-table-view-cell mui-media studentsdynamic';
@@ -272,9 +279,10 @@ function getNotes(index, StuDyArr) {
 						'<p class="time">' + StuDyArr[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
-						topStudentArr[i].stuname + '[' + topStudentArr[i].gname + ']'
+						topStudentArr[i].stuname + '[' + topStudentArr[i].gname + ']'+
 					'<p class="mui-ellipsis">' + StuDyArr[i].MsgContent + '</p></div>';
 					ul.appendChild(li);
+					console.log(li.outerHTML)
 				}
 				getGroupList();
 
@@ -298,7 +306,7 @@ function getGroupList() {
 	//	获取用户群
 	postDataPro_PostGList(comData, wd, function(data) {
 		wd.close();
-		console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//		console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0) {
 			showBlankPage(false);
@@ -354,7 +362,7 @@ function getTopList(index) {
 	//	16.（班级空间）获取用户针对某班级的空间列表
 	postDataPro_getClassSpacesByUserForClass(comData, wd, function(data) {
 		wd.close();
-		console.log('某班级的空间列表_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
+//		console.log('某班级的空间列表_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
 		if(data.RspCode == 0) {
 			if(data.RspData.Data.length == 0) { //数据为空时 添加默认数据
 				var today = new Date();
