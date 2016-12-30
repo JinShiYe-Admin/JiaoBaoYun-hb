@@ -157,4 +157,7 @@ label{
 	color: #8F8F94;
 	font-size: 1.2rem;
 }
+.mui-input-row label{
+	max-width: 50%;
+}
 
