@@ -124,13 +124,13 @@
 							</div>
 						</div>
 						<div id="call" style="display: inline;" value="0">
-							<div class="call-type" value="1">
+							<!--<div class="call-type" value="1">
 								<div class="mui-input-row mui-checkbox mui-left">
 									<label>正常</label>
 									<input id="cb_call1" name="checkbox" type="checkbox" checked>
 								</div>
-							</div>
-							<div class="call-type" value="2">
+							</div>-->
+							<div class="call-type" value="2" style="margin-left: 20%;">
 								<div class="mui-input-row mui-checkbox mui-left">
 									<label>旷课</label>
 									<input id="cb_call2" name="checkbox" type="checkbox">
@@ -148,12 +148,12 @@
 									<input id="cb_call4" name="checkbox" type="checkbox">
 								</div>
 							</div>
-							<div class="call-type" value="5">
+							<!--<div class="call-type" value="5">
 								<div class="mui-input-row mui-checkbox mui-left">
 									<label>其他</label>
 									<input id="cb_call5" name="checkbox" type="checkbox">
 								</div>
-							</div>
+							</div>-->
 							<div class="mui-input-row" style="margin: 0px 5px;" style="">
 								<textarea id="textarea_call" maxlength="500" rows="4" placeholder="点到："></textarea>
 							</div>
@@ -209,7 +209,7 @@
 				var checkbox_2 = document.getElementById("cb_2"); //记事checkbox元素
 				var div_call = document.getElementById("call"); //点到区域
 				var div_record = document.getElementById("record"); //记事区域
-				var call_type = '1'; //记录最后点击的点到类型
+				var call_type = ''; //记录最后点击的点到类型
 
 				//---开通记事---start---
 				//63.（点到记事）新增学生点到记事空间
@@ -298,17 +298,23 @@
 				//点到类型切换监听
 				mui('#call').on('change', '.call-type', function() {
 					var value = this.getAttribute('value');
-					console.log('call-type:call_type:' + call_type); //上次选择的类型
-					console.log('call-type:value:' + value); //本次选择的类型
-					var checkBox = document.getElementById("cb_call" + value);
-					var checkBoxBefore = document.getElementById("cb_call" + call_type);
-					if(call_type == value) { //两次点击都是同一个checkbox
-						checkBox.checked = true;
+					if(call_type == '') {
+						call_type = value;
 					} else {
-						checkBoxBefore.checked = false;
-						checkBox.checked = true;
+						console.log('call-type:call_type:' + call_type); //上次选择的类型
+						console.log('call-type:value:' + value); //本次选择的类型
+						var checkBox = document.getElementById("cb_call" + value);
+						var checkBoxBefore = document.getElementById("cb_call" + call_type);
+						if(call_type == value) { //两次点击都是同一个checkbox
+							//checkBox.checked = true;
+							call_type = '';
+						} else {
+							checkBoxBefore.checked = false;
+							checkBox.checked = true;
+							call_type = value;
+						}
 					}
-					call_type = value;
+
 				});
 
 				/**
@@ -316,13 +322,17 @@
 				 */
 				window.addEventListener("addNote", function() {
 					var msgContent = ''; //记事内容
-					if(checkbox_1.checked) { //点到
+					if(checkbox_1.checked && call_type == '') { //点到
+						msgContent = document.getElementById("textarea_call").value;
+					} else if(checkbox_1.checked) {
 						msgContent = document.getElementById("textarea_call").value;
 					} else { //记事
 						msgContent = document.getElementById("textarea_record").value;
 					}
 
 					if(msgContent.replace(/(^\s*)|(\s*$)/g, "") == "" && !checkbox_1.checked) { //为空不允许发送
+						mui.toast('请输入文字');
+					} else if(checkbox_1.checked && call_type == '' && msgContent.replace(/(^\s*)|(\s*$)/g, "") == "") {
 						mui.toast('请输入文字');
 					} else {
 						var parentIds = []; //家长列表
@@ -370,9 +380,13 @@
 					var noteType = 1; //点到记事类型1点到2记事
 					var checkType = ''; //点到类型
 					var msgContent = ''; //记事内容
-					if(checkbox_1.checked) { //点到
+					if(checkbox_1.checked && call_type != '') { //点到
 						noteType = 1;
 						checkType = call_type;
+						msgContent = document.getElementById("textarea_call").value;
+					} else if(checkbox_1.checked && call_type == '') {
+						noteType = 2;
+						checkType = '0';
 						msgContent = document.getElementById("textarea_call").value;
 					} else { //记事
 						noteType = 2;
@@ -448,7 +462,7 @@
 						}
 						mui.each(data.RspData.Data, function(index, item) {
 							NotesList.Data.push(item);
-							//console.log(index + '|' + JSON.stringify(item));
+							console.log(index + '|' + JSON.stringify(item));
 							createNotes(item);
 						});
 						if(data.RspData.Data.length == 0) {

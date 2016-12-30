@@ -23,17 +23,16 @@
 			.mui-content {
 				background: white;
 			}
-
-			#qunimage {
+			/*#qunimage {
 				height: 100px;
-			}
+			}*/
 
 			.qun-image {
-				border: 2px solid #F2F2F2;
-				border-radius: 50%;
+				/*border: 2px solid #F2F2F2;*/
+				/*border-radius: 50%;*/
 				height: 100px;
 				width: 100px;
-				text-align: center;
+				/*text-align: center;*/
 				margin-top: 20px;
 			}
 
@@ -84,14 +83,13 @@
 		</header>
 		<div class="mui-content" id="content">
 			<div id="qunimage">
-				<!--<div style="margin-left: 110px;" class="qun-image">
-				<a class="mui-icon iconfont icon-xiangji" style="color: #BBBBBB;font-size: 30px;margin-top: 20px;">
-					<p style="font-size: 10px;margin-top: 10px;">
-						请上传群图标!
-					</p>
-				</a>
-				</div>-->
-				<!--<img style="margin-left: 110px;" src="../../image/clip/u292.png" class="qun-image" />-->
+				<div id="choose" class="qun-image" style="text-align: center;margin-left: auto;margin-right: auto;border: 1px solid #F2F2F2;border-radius: 50%;">
+					<a class="mui-icon iconfont icon-xiangji" style="color: #BBBBBB;font-size: 30px;margin-top: 20px;">
+						<p style="font-size: 10px;margin-top: 10px;">
+							请上传群图标!
+						</p>
+					</a>
+				</div>
 			</div>
 			<form class="mui-input-group">
 				<div class="mui-input-row" data-value='gname'>
@@ -114,9 +112,9 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
-				var Width = plus.screen.resolutionWidth;
-				var marginLeft = (Width) / 8 + 'px';
-				addQunImg(); //显示上传群头像的图标
+//				var Width = plus.screen.resolutionWidth;
+//				var marginLeft = (Width) / 8 + 'px';
+				//addQunImg(); //显示上传群头像的图标
 				var qname = document.getElementById("gname"); //群名称
 				var qnote = document.getElementById("gnote"); //群说明
 				var qremark = document.getElementById("qunremark"); //群备注
@@ -145,7 +143,7 @@
 						qnote.value = data.RspData[0].gnote;
 						//qremark.value=data.RspData[0].;
 						if(data.RspData[0].gimg != '' && data.RspData[0].gimg != null) {
-							document.getElementById("qunimage").innerHTML = '<img style="margin-left: ' + marginLeft + ';" src="' + updateHeadImg(data.RspData[0].gimg) + '" class="qun-image" />';
+							document.getElementById("choose").innerHTML = '<img src="' + updateHeadImg(data.RspData[0].gimg) + '" style="margin-top:0px;border: 1px solid #F2F2F2;border-radius: 50%;height: 100px;width: 100px;" />';
 						}
 						//upQN();
 					} else {
@@ -177,15 +175,15 @@
 							console.log('修改群资料的类型选择出错');
 							break;
 					}
-//					if(type !== '') {
-						events.openNewWindowWithData('qun_manage_info_change_post.html', {
-							gid: subData.gid, //群id
-							type: type, //修改的类型
-							value: value //修改的值
-						});
-//					}else{
-//						mui.toast('群备注业务不清晰');
-//					}
+					//					if(type !== '') {
+					events.openNewWindowWithData('qun_manage_info_change_post.html', {
+						gid: subData.gid, //群id
+						type: type, //修改的类型
+						value: value //修改的值
+					});
+					//					}else{
+					//						mui.toast('群备注业务不清晰');
+					//					}
 				});
 
 				//修改群信息成功后修改界面的值
@@ -195,12 +193,12 @@
 				});
 
 				//群头像修改
-				var qunimage = document.getElementById("qunimage");
+				var qunimage = document.getElementById("choose");
 				UploadHeadImage.addListener(qunimage, 2, {
 					id: subData.gid, //资料id
 				}, function(successCB) {
 					console.log('上传并修改资料头像，成功的回调' + JSON.stringify(successCB));
-					document.getElementById("qunimage").innerHTML = '<img style="margin-left: ' + marginLeft + ';" src="' + updateHeadImg(successCB) + '" class="qun-image" />';
+					document.getElementById("choose").innerHTML = '<img src="' + updateHeadImg(successCB) + '" style="margin-top:0px;border: 1px solid #F2F2F2;border-radius: 50%;height: 100px;width: 100px;"/>';
 					mui.toast('修改群头像成功');
 				}, function(errorCB) {
 					console.log('上传并修改资料头像，失败的回调' + JSON.stringify(errorCB));
