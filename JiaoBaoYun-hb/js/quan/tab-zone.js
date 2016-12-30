@@ -154,7 +154,7 @@ function addSomeEvent() {
 			} else {
 				a.innerHTML = datasource[tableIndex].gname + lineHTML;
 			}
-			selectCell.NoReadCnt = 0
+//			selectCell.NoReadCnt = 0
 		} else if(e.detail.flag == 1) {
 			document.getElementById("stuImg").src = updateHeadImg(e.detail.img)
 		} else if(e.detail.flag == 2) {
