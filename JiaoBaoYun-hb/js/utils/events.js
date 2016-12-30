@@ -319,6 +319,11 @@ var events = (function(mod) {
 		}
 		return str;
 	}
+	mod.shortForDate=function(fullDate){
+		var arrDate=fullDate.split(":");
+		arrDate.splice(arrDate.length-1,1);
+		return arrDate.join(':');
+	}
 	return mod;
 
 })(events || {});

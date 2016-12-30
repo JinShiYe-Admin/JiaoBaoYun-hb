@@ -88,13 +88,7 @@ var insertMasterInfo = function(cell) {
 			'<img class="circular-square" src="' + getImg(cell.uimg) + '"/></br>' +
 			'<small class="color-gold">' + cell.bunick + '</small>' +
 			'</a>';
-
-		//		if(gride2.firstElementChild) { 
-		//			gride2.insertBefore(gride2.firstElementChild,li);
-		//		} else {
 		gride2.appendChild(li);
-		//		}
-
 	}
 	/**
 	 * 获取用户在群组中的信息
@@ -134,8 +128,8 @@ var getUserInGroup = function(mstype, callback) {
 	})
 }
 var getHeadText = function(className) {
-		if(className.length > 8) {
-			className = className.substring(0, 10) + '...'
+		if(className.length > 10) {
+			className = className.substring(0, 8) + '...'
 		}
 		return className;
 	}

@@ -80,7 +80,7 @@ var class_space = (function(mod) {
 			item.MsgContent + '</p>' +
 			createImgsInner(item) +
 			'</div>' +
-			'<p class="chat-bottom">' + item.PublishDate +
+			'<p class="chat-bottom">' + events.shortForDate(item.PublishDate)+
 			'<span tabId="' + item.TabId + '" class="mui-icon iconfont icon-support ' + setIsLike(item.IsLike) + '">(' + item.LikeCnt + ')</span><span class="mui-icon iconfont icon-xianshi">(' + item.ReadCnt + ')</span></p>' +
 			'</div></div>';
 		return inner;
