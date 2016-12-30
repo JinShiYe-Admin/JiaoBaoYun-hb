@@ -149,7 +149,7 @@ header .mui-icon-bars:before{
 	height: 4rem;
 }
 .stuHomework-header{
-	height: 5.5rem;
+	height: 6.5rem;
 }
 .answerResult-pic{
 	height: 6rem;
@@ -157,4 +157,8 @@ header .mui-icon-bars:before{
 .answerResult-bottom>span{
 	display: inline-block;
 	padding-right: 2rem;
+}
+.stuHomework-header>.subject-icon{
+	/*padding-top: 2rem;*/
+	margin-top: 1.5rem;
 }
