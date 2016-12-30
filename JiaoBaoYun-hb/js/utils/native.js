@@ -21,5 +21,5 @@ var showSoftInput = function(selector) {
        //此处可写具体逻辑设置获取焦点的input
        var inputElem = document.querySelector(selector);
               inputElem.focus(); 
-    }, 200);
+    }, 0);
 };

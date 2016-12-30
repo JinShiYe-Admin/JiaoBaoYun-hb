@@ -56,12 +56,12 @@ function addSomeEvent() {
 	});
 	//重新登录或者注册的时候重新加载家校圈首页
 	window.addEventListener('infoChanged', function() {
-		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+			personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 			var wobj = plus.webview.currentWebview();
 			wobj.reload(true);
 
-	})
-	//发布个人动态
+		})
+		//发布个人动态
 	window.addEventListener('addUserSpaceForMutiUsers', function(data) {
 		var userIdArr = [];
 		for(var i = 0; i < datasource.length; i++) {
@@ -114,9 +114,10 @@ function addSomeEvent() {
 	})
 
 	window.addEventListener('setRead', function(e) {
-		console.log('e.detail.flag=' + e.detail.flag);
+		console.log('e.detail=' + JSON.stringify(e.detail));
 		if(e.detail.flag == 3) {
-			console.log('tableIndex=' + tableIndex)
+			
+			console.log('tableIndex=' + selectCell.tableIndex)
 			var tableIndex = selectCell.tableIndex;
 			var cellIndex = selectCell.cellIndex;
 			var cellNoReadCnt = selectCell.NoReadCnt
@@ -147,7 +148,7 @@ function addSomeEvent() {
 				a.innerHTML = datasource[tableIndex].gname + lineHTML;
 			}
 		} else if(e.detail.flag == 1) {
-
+			document.getElementById("stuImg").src = updateHeadImg(e.detail.img)
 		} else if(e.detail.flag == 2) {
 
 		}
@@ -228,17 +229,22 @@ function getNotes(index, StuDyArr) {
 		console.log('某学生的点到记事列表_getNotesByUserForStudent:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			var tempArr = data.RspData.Data;
+			var today = new Date();
+			var month = today.getMonth() + 1
+			var currentDate = today.getFullYear() + "-" + month + "-" + today.getDate()
 			if(tempArr.length == 0) { //数据为空时 添加默认数据
 				var temp = {
 					index: index, //排序索引
 					MsgContent: '暂无学生动态',
-					PublishDate: '',
+					PublishDate: currentDate,
 					NoReadCnt: 0
 				}
 				StuDyArr.push(temp);
 			} else { //取班级空间的第一条数据
 				tempArr[0].index = index; //排序索引
 				tempArr[0].NoReadCnt = data.RspData.NoReadCnt;
+				var dateArr = tempArr[0].PublishDate.split(' ');
+				tempArr[0].PublishDate = dateArr[0];
 				StuDyArr.push(tempArr[0]);
 			}
 			requestTimes3--;
@@ -262,12 +268,12 @@ function getNotes(index, StuDyArr) {
 					} else {
 						noReadHTML = '';
 					}
-					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image " src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' + noReadHTML +
+					li.innerHTML = '<img id = "stuImg"  class="mui-media-object mui-pull-left dynamic-personal-image " src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' + noReadHTML +
 						'<p class="time">' + StuDyArr[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
-						topStudentArr[i].stuname +
-						'<p class="mui-ellipsis">' + StuDyArr[i].MsgContent + '</p></div>';
+						topStudentArr[i].stuname + '[' + topStudentArr[i].gname + ']'
+					'<p class="mui-ellipsis">' + StuDyArr[i].MsgContent + '</p></div>';
 					ul.appendChild(li);
 				}
 				getGroupList();
@@ -353,18 +359,22 @@ function getTopList(index) {
 			if(data.RspData.Data.length == 0) { //数据为空时 添加默认数据
 				var today = new Date();
 				var month = today.getMonth() + 1
-				var currentDate = today.getFullYear() + "-" + month + "-" + today.getDate() + "  " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+				var currentDate = today.getFullYear() + "-" + month + "-" + today.getDate() //+ "  " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
 				var temp = {
 					index: index, //排序索引
 					MsgContent: '暂无动态',
-					PublishDate: '',
+					PublishDate: currentDate,
 					NoReadCnt: 0
 				}
 				topArray.push(temp);
 			} else { //取班级空间的第一条数据
-				data.RspData.Data[0].index = index; //排序索引
-				data.RspData.Data[0].NoReadCnt = data.RspData.NoReadCnt;
-				topArray.push(data.RspData.Data[0]);
+				var tempModel = data.RspData.Data[0];
+				tempModel.index = index; //排序索引
+				var dateArr = tempModel.PublishDate.split(' ');
+				tempModel.PublishDate = dateArr[0];
+
+				tempModel.NoReadCnt = data.RspData.NoReadCnt;
+				topArray.push(tempModel);
 			}
 
 			requestTimes--;
@@ -568,6 +578,7 @@ function refreshUI() {
 			var span = document.createElement('span');
 			span.className = 'mui-badge mui-badge-danger custom-badge1';
 			span.innerHTML = datasource[i].NoReadCnt;
+			//			document.getElementById('seg').style.marginTop = '-38px';
 
 			segitem.appendChild(span);
 			if(i == datasource.length - 1) {
@@ -577,6 +588,7 @@ function refreshUI() {
 			}
 
 		} else {
+			//			document.getElementById('seg').style.marginTop = '-30px';
 			if(i == datasource.length - 1) {
 				segitem.innerHTML = datasource[i].gname;
 			} else {
@@ -597,7 +609,10 @@ function refreshUI() {
 				userList[j].MsgContent = '暂无成员动态';
 			}
 			if(!userList[j].PublishDate) {
-				userList[j].PublishDate = '';
+				var today = new Date();
+				var month = today.getMonth() + 1
+				var currentDate = today.getFullYear() + "-" + month + "-" + today.getDate()
+				userList[j].PublishDate = currentDate;
 			}
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell mui-media parent-cell' + j;
@@ -607,6 +622,8 @@ function refreshUI() {
 				noReadHTML = '';
 			}
 			var name = userList[j].ugnick;
+			var dateArr = userList[j].PublishDate.split(' ');
+			userList[j].PublishDate = dateArr[0];
 			li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + userList[j].uimg + '" />' +
 				noReadHTML + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 				name + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';

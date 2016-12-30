@@ -22,7 +22,7 @@ mui.plusReady(function() {
 		}, function(e) {
 			console.log("User pressed: " + e.index);
 			if(e.index > 0) {
-				postSex(e.index - 1, function(data) { //回调函数
+				postSex(e.index, function(data) { //回调函数
 					pInfo.usex=e.index-1;
 					myStorage.setItem(storageKeyName.PERSONALINFO,pInfo);
 					if(e.index == 1) {
@@ -128,10 +128,12 @@ var changeInfo = function(pInfo) {
 	if(pInfo.unick) {
 		unick.innerText = pInfo.unick;
 	}
-	if(pInfo.usex == '0') {
-		usex.innerText = '男'
-	} else {
-		usex.innerText = '女'
+	if(pInfo.usex == 0) {
+		usex.innerText = '未定';
+	} else if(pInfo.usex == 1){
+		usex.innerText = '男';
+	}else{
+		usex.innerText = '女';
 	}
 	if(pInfo.utxt) {
 		utxt.innerText = pInfo.utxt;

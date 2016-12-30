@@ -24,30 +24,25 @@ mui.plusReady(function() {
 	window.addEventListener('postGroupInfo', function(e) {
 		masterInfo = null;
 		isMaster = false;
-		console.log(JSON.stringify(e.detail.data));
+		console.log('班级群组界面获取的数据：'+JSON.stringify(e.detail.data));
 		if(e.detail.data) {
 			groupId = e.detail.data.classId;
 			groupName = e.detail.data.className;
 			document.getElementById('title').innerText = getHeadText(groupName);
 			groupRoles = [];
 			allcount = 0;
-			setGride();
-
+			getUserInGroup(-1,function(data){
+				groupRoles=data;
+				console.log('班级群组界面获取的用户在群中的信息:'+JSON.stringify(groupRoles));
+				for(var i in groupRoles){
+					if(groupRoles[i].mstype==1){
+						isMaster=true;
+						break;
+					}
+				}
+			})
 		}
 	})
-	window.addEventListener('groupInfoChanged', function() {
-			setGride();
-		})
-		//群組頭像點擊事件
-	mui('#gride1').on('tap', '.mui-table-view-cell', function() {
-		events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
-	})
-	mui('#gride2').on('tap', '.mui-table-view-cell', function() {
-		events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
-	})
-	mui('#gride3').on('tap', '.mui-table-view-cell', function() {
-			events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
-		})
 		//退出按鈕點擊事件
 	quit_group1.addEventListener('tap', function() {
 			getUserInGroup(0, showChoices);
@@ -61,6 +56,19 @@ mui.plusReady(function() {
 		getUserInGroup(3, showChoices);
 	})
 
+	window.addEventListener('groupInfoChanged', function() {
+			setGride();
+	})
+		//群組頭像點擊事件
+	mui('#gride1').on('tap', '.mui-table-view-cell', function() {
+		events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
+	})
+	mui('#gride2').on('tap', '.mui-table-view-cell', function() {
+		events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
+	})
+	mui('#gride3').on('tap', '.mui-table-view-cell', function() {
+			events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
+	})
 })
 var insertMasterInfo = function(cell) {
 		var li = document.createElement('li');
@@ -72,7 +80,7 @@ var insertMasterInfo = function(cell) {
 
 		cell.gname = groupName;
 		if(!cell.bunick) {
-			cell.bunick = cell.unick;
+			cell.bunick = cell.ugname;
 		}
 		li.info = cell;
 		//子控件的innerHTML
@@ -105,9 +113,23 @@ var getUserInGroup = function(mstype, callback) {
 			if(callback) {
 				callback(data.RspData);
 			}
-			isShowQuit(mstype, true);
+			if(mstype==-1){
+				setGride();
+			}else{
+				console.log("mstype:"+mstype+",isMaster:"+isMaster);
+				if(isMaster&&mstype==2){
+					isShowQuit(mstype,false);
+				}else{
+					isShowQuit(mstype, true);
+				}
+			}
+			
 		} else {
-			isShowQuit(mstype, false);
+			if(mstype==-1){
+				setGride();
+			}else{
+				isShowQuit(mstype, false);
+			}
 		}
 	})
 }
@@ -142,7 +164,7 @@ var isShowQuit = function(mstype, b) {
 	 * @param {Object} data
 	 */
 var showChoices = function(data) {
-		console.log('showChoices' + JSON.stringify(groupRoles))
+		console.log('showChoices' + JSON.stringify(data))
 		if(groupRoles.length > 1) {
 			plus.nativeUI.actionSheet({
 				title: "请选择退群方式",
@@ -296,12 +318,17 @@ var getGroupInfo = function(vvl) {
 			}, wd0, function(data) {
 				wd0.close();
 				if(data.RspCode == 0) {
-					groupRoles = data.RspData;
+//					groupRoles = data.RspData;
 					console.log('获取群主的所有信息：' + JSON.stringify(data));
-					groupRoles.forEach(function(groupRole) {
+					data.RspData.forEach(function(groupRole) {
 						if(groupRole.mstype == 1) {
 							masterInfo = groupRole;
 							if(groupData.RspData != null) {
+								for(var i in groupData.RspData){
+									if(groupData.RspData[i].utid==masterInfo.utid){
+										groupData.RspData.splice(i,1);
+									}
+								}
 								groupData.RspData.splice(0, 0, masterInfo);
 							} else {
 								groupData.RspData = [masterInfo];
@@ -346,12 +373,12 @@ var addRemarkData = function(list, remarkList) {
 					}
 				}
 				if(!hasBunick) {
-					list[i].bunick = list[i].ugnick;
+					list[i].bunick = list[i].ugname;
 				}
 			}
 		} else {
 			list.forEach(function(cell, i) {
-				list[i].bunick = cell.ugnick;
+				list[i].bunick = cell.ugname;
 			})
 		}
 		return list;

@@ -12,7 +12,7 @@ mui.plusReady(function() {
 		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
-		document.querySelector('img').src = img ? img : '../../image/utils/default-personalimage.png'
+		document.querySelector('img').src = img ? img :storageKeyName.storageKeyName.DEFAULTPERSONALHEADIMAGE;
 	})
 	window.addEventListener('aboutmNoRead', function() {
 		getAboutMe();

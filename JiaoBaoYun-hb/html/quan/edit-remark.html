@@ -18,7 +18,7 @@
 			<a id="save-remark" class="mui-pull-right">保存</a>
 		</header>
 		<div class="mui-content">
-			<input id="remark-input" type="text" placeholder="请输入备注" />
+			<input id="remark-input" type="text" maxlength="20" placeholder="请输入,最多20字!" />
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
@@ -26,39 +26,75 @@
 		<script type="text/javascript">
 			mui.init()
 			var remarkInfo;
+			var type = 0; //修改东西0备注1昵称
 			mui.plusReady(function() {
 				window.addEventListener('editRemark', function(e) {
-					 remarkInfo = e.detail.data;
-					console.log('备注传过来的值'+JSON.stringify(remarkInfo));
-					document.getElementById('remark-input').value=remarkInfo.bunick;
+					type = 0;
+					remarkInfo = e.detail.data;
+					console.log('备注传过来的值' + JSON.stringify(remarkInfo));
+					document.getElementById('remark-input').value = remarkInfo.bunick;
+					document.querySelector('.mui-title').innerText = '编辑备注';
 				})
+				window.addEventListener('editNick', function(e) {
+					type = 1;
+					remarkInfo = e.detail.data;
+					console.log('备注传过来的值' + JSON.stringify(remarkInfo));
+					document.getElementById('remark-input').value = remarkInfo.ugname;
+					document.querySelector('.mui-title').innerText = '编辑群昵称';
+				})
+
 				var save = document.getElementById('save-remark');
 				save.addEventListener('tap',
-						function() {
-							var inputValue=getInputValue();
-							if(inputValue && inputValue.length > 0) {
-								var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-								postDataPro_PostUmkA({
-									vvl: remarkInfo.utid,
-									vvl1: inputValue
-								}, wd, function(data) {
-									wd.close();
-									console.log('修改群备注的返回值：'+JSON.stringify(data))
-									if(data.RspCode == '0000') {
-										events.fireToPageNone('group-pInfo.html','remarkChanged');
-										mui.toast('修改备注成功！');
-										mui.back();
-									} else {
-										mui.toast('修改失败，请重新来过');
-									}
-								})
+					function() {
+						var inputValue = getInputValue();
+						if(inputValue && inputValue.length > 0) {
+							if(type==0){
+								editRemark(inputValue);
 							}else{
-								mui.toast('请输入备注！');
+								editNick(inputValue);
 							}
+						} else {
+							mui.toast('请输入！');
+						}
 
-						})
+					})
 
 			})
+			var editNick = function(inputValue) {
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_PostGuNameE({
+					vvl: remarkInfo.gutid, //群成员群ID，gutid
+					vvl1: inputValue //群昵称
+				}, wd, function(data) {
+					wd.close()
+					JSON.stringify('更改群昵称后返回的数据'+JSON.stringify(data));
+					if(data.RspCode == 0) {
+						remarkInfo.ugname=inputValue;
+						events.fireToPageNone('group-pInfo.html', 'nickChanged',remarkInfo);
+						mui.toast('修改群昵称成功！');
+						mui.back();
+					} else {
+						mui.toast('修改失败，请重新来过');
+					}
+				})
+			}
+			var editRemark = function(inputValue) {
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_PostUmkA({
+					vvl: remarkInfo.utid,
+					vvl1: inputValue
+				}, wd, function(data) {
+					wd.close();
+					console.log('修改群备注的返回值：' + JSON.stringify(data))
+					if(data.RspCode == '0000') {
+						events.fireToPageNone('group-pInfo.html', 'remarkChanged');
+						mui.toast('修改备注成功！');
+						mui.back();
+					} else {
+						mui.toast('修改失败，请重新来过');
+					}
+				})
+			}
 			var getInputValue = function() {
 				return document.getElementById('remark-input').value;
 			}

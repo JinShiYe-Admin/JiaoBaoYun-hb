@@ -477,7 +477,8 @@
 					"css/icons-extra.css",
 					"fonts/mui-icons-extra.ttf",
 					"image/cloud/record_addclassclose.png",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"js/utils/native.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -878,7 +879,8 @@
 				],
 				"refer": [
 					"html/index.html",
-					"html/register/modify_password.html"
+					"html/register/modify_password.html",
+					"html/index/index.html"
 				],
 				"priority": 0
 			},
@@ -1494,7 +1496,25 @@
 					"js/qiniu/plupload.full.min.js",
 					"js/utils/QiNiuUtil.js",
 					"js/qiniu/qiniu.js",
-					"js/utils/UploadHeadImage.js"
+					"js/utils/UploadHeadImage.js",
+					"js/utils/CloudFileUtil.js",
+					"js/cloud/AndroidFileSystem.js",
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1636,7 +1656,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/utils/events.js"
 				],
 				"refer": [],
 				"priority": 0

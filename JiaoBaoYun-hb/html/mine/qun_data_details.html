@@ -542,9 +542,11 @@
 							var uData = data.RspData[0];
 							if(dataType == 3) { //学生
 								if(uData.usex == 1) {
-									stu_gender.innerText = '女';
-								} else if(uData.usex == 0) {
 									stu_gender.innerText = '男';
+								} else if(uData.usex == 2) {
+									stu_gender.innerText = '女';
+								} else {
+									stu_gender.innerText = '';
 								}
 								stu_utid.value = uData.uname;
 								stu_phone.value = uData.uid;
@@ -554,9 +556,11 @@
 								document.getElementById("par_phone_" + uData.utid).value = uData.uid;
 							} else if(dataType == 2) { //教师
 								if(uData.usex == 1) {
-									tea_gender.innerText = '女';
-								} else if(uData.usex == 0) {
 									tea_gender.innerText = '男';
+								} else if(uData.usex == 2) {
+									tea_gender.innerText = '女';
+								} else {
+									tea_gender.innerText = '';
 								}
 								tea_uid.value = uData.uid;
 								tea_utid.value = uData.uname;

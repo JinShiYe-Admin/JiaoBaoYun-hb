@@ -286,10 +286,12 @@ var requireHomeWork = function(classModel, callback) {
 					var tempIDs = [];
 					var tempArray = [];
 					for(var i in data.RspData.Dates) {
-						if(data.RspData.Dates[i].AnswerResults.length > 0) {
+//						if(data.RspData.Dates[i].AnswerResults.length > 0) {
 							tempArray = tempArray.concat(data.RspData.Dates[i].AnswerResults);
-						}
+							tempArray=tempArray.concat(data.RspData.Dates[i].Homeworks);
+//						}
 					}
+					console.log('重组后的学生作业：'+JSON.stringify(tempArray));
 					for(var m in tempArray) {
 						var tempModel = tempArray[m];
 						tempIDs.push(tempModel.TeacherId);
@@ -317,10 +319,20 @@ var requireHomeWork = function(classModel, callback) {
 											//判断id是否一致，一致则合并
 											if(tempModel1.utid == data.RspData.Dates[m].AnswerResults[j].TeacherId) {
 												jQuery.extend(data.RspData.Dates[m].AnswerResults[j], tempModel1);
+												break;
 											}
 										}
 									}
-
+									for(var k in data.RspData.Dates[m].Homeworks) {
+										for(var n in data1.RspData) {
+											var tempModel1 = data1.RspData[n];
+											//判断id是否一致，一致则合并
+											if(tempModel1.utid == data.RspData.Dates[m].Homeworks[k].TeacherId) {
+												jQuery.extend(data.RspData.Dates[m].Homeworks[k], tempModel1);
+												break;
+											}
+										}
+									}
 								}
 								console.log('合并后的数据为：' + JSON.stringify(data));
 								selectGContainer.classInfo.totalPageCount = totalPageCount;
@@ -428,7 +440,7 @@ var getAnswerImgs = function(thumbUrls) {
 var createStuHomeworkInner = function(homework) {
 	return '<a><div class="stuHomework-header"><span class=" iconfont subject-icon ' +
 		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words stuHead-words"><h6 class="header-title single-line">' +
-		homework.HomeworkTitle + '</h6><p class="header-content single-line">' + homework.Contents + '</p></div></div></a>';
+		homework.HomeworkTitle + '</h6><p class="header-content single-line">' + homework.Contents + '</p><p class="publisher-container single-line">发布人 : '+homework.unick+'</p></div></div></a>';
 }
 var getResultBackground = function(answerResult) {
 	var backClassName;

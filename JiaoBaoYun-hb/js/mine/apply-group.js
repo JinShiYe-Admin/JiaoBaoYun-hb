@@ -104,6 +104,7 @@ var setButtonsListener = function() {
 					urel: ''
 				}, wd, function(data) {
 					wd.close();
+					console.log('申请入群获取的数据：'+JSON.stringify(data));
 					if(data.RspCode == '0000') {
 						mui.toast('申请成功！');
 						events.fireToPageNone('/html/mine/apply-record.html', 'applied')
@@ -164,14 +165,14 @@ var clearChildren = function() {
 		}
 	}
 	/**
-	 * 获取用户所有群
+	 * 获取用户创建的群
 	 * @param {Object} utid
 	 * @param {Object} callback
 	 */
 var getAllGroups = function(utid, callback) {
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		postDataPro_PostGList({
-			vtp: 'ag', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群),ig(群信息vvl对应群ID)
+			vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群),ig(群信息vvl对应群ID)
 			vvl: utid
 		}, wd, function(data) {
 			wd.close();

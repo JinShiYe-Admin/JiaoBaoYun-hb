@@ -1,9 +1,12 @@
 //学生查看老师作业评价
 mui.init();
 mui.plusReady(function() {
+	window.addEventListener('refreshAnswer', function(e) {
+					homeworkDetailNodes.stuCell.innerHTML = e.detail.data.answer;
+				})
 	events.addTap('modifyHomework', function() {
-		console.log('homeworkResult='+JSON.stringify(homeworkResult));
-		console.log('homeworkModel='+JSON.stringify(homeworkModel));
+		console.log('homeworkResult=' + JSON.stringify(homeworkResult));
+		console.log('homeworkModel=' + JSON.stringify(homeworkModel));
 		if(homeworkModel.workType == 0) {
 			var modifyAnswerData = mui.extend(homeworkResult, {
 				role: 30
@@ -172,12 +175,12 @@ var requireTeachersAnswer = function() {
 			wd.close();
 			console.log('学生作业页面获取的临时作业答案：' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
-				console.log('1111111='+JSON.stringify(homeworkResult));
+				console.log('1111111=' + JSON.stringify(homeworkResult));
 				mui.extend(homeworkResult, data.RspData);
-				
+
 				refreshUITemp();
 			} else if(data.RspCode == '9999') {
-//				refreshUITemp();
+				//				refreshUITemp();
 			}
 		})
 	}
@@ -191,17 +194,20 @@ var requestTeaInfo = function(teaId) {
 		wd.close();
 		console.log('学生作业详情界面获取老师信息：' + JSON.stringify(data));
 		if(data.RspCode = '0000') {
-			console.log('homeworkResult=' + JSON.stringify(homeworkResult));
 			mui.extend(homeworkResult, data.RspData[0])
 
 			if(homeworkModel.workType == 0) {
-				homeworkDetailNodes.publishDate.innerText = + data.RspData[0].unick   + homeworkResult.UploadTime
+				var dateArr = homeworkModel.UploadTime.split(' ');
+				homeworkModel.UploadTime = dateArr[0];
+				homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime+'</span>'
 				homeworkDetailNodes.title.innerText = data.RspData[0].unick;
 				homeworkDetailNodes.content.innerText = '';
 				document.getElementById("headImg").src = updateHeadImg(data.RspData[0].uimg);
 
 			} else {
-				homeworkDetailNodes.publishDate.innerText =  + data.RspData[0].unick  + homeworkResult.HomeworkResult.UploadTime
+				var dateArr = homeworkResult.HomeworkResult.UploadTime.split(' ');
+				homeworkResult.HomeworkResult.UploadTime = dateArr[0];
+				homeworkDetailNodes.publishDate.innerHTML = +data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkResult.HomeworkResult.UploadTime+'</span>'
 
 			}
 			requireTeachersAnswer();
@@ -222,8 +228,8 @@ function refreshUITemp() {
 	TeaAnsImgLi.className = 'mui-table-view-cell mui-media  tempComment cell-color';
 	TeaAnsImgLi.id = 'TeaAnsImgLi';
 	TeaAnsImgLi.innerHTML = ''
-	if(homeworkResult.Files.length>0){
-		
+	if(homeworkResult.Files.length > 0) {
+
 		for(var i = 0; i < homeworkResult.Files.length; i++) {
 			var img = storageKeyName.MAINHOMEWORKURL + homeworkResult.Files[i].ThumbUrl;
 			TeaAnsImgLi.innerHTML = TeaAnsImgLi.innerHTML + '<img class="mui-media-object mui-pull-left" src="' + img + '" />';
@@ -232,8 +238,8 @@ function refreshUITemp() {
 			}
 
 		}
-	
-	}else{
+
+	} else {
 		TeaAnsImgLi.innerHTML = '暂无答案'
 	}
 

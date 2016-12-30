@@ -72,7 +72,7 @@ var class_space = (function(mod) {
 		 */
 	var createInnerHtml = function(item) {
 		var inner = '<div><div class="mui-pull-left head-img" >' +
-			'<img class="head-portrait" src="' + item.uimg + '"/>' +
+			'<img class="head-portrait" src="' + getUImg(item.uimg) + '"/>' +
 			'<p>' + item.unick + '</p>' +
 			'</div>' +
 			'<div class="chat_content_left">' +
@@ -147,7 +147,7 @@ var class_space = (function(mod) {
 	}
 	var getUImg = function(uimg) {
 			if(!uimg || uimg == null) {
-				uimg = '../../image/utils/default_personalimage.png'
+				uimg = storageKeyName.DEFAULTPERSONALHEADIMAGE;
 			}
 			return uimg;
 		}
