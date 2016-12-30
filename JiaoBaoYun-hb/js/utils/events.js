@@ -307,12 +307,18 @@ var events = (function(mod) {
 		}
 		return r;
 	}
-	mod.infoChanged = function(){
-		events.fireToPageNone('mine.html','infoChanged');
-		events.fireToPageNone('../cloud/cloud_home.html','infoChanged');
+	mod.infoChanged = function() {
+		events.fireToPageNone('mine.html', 'infoChanged');
+		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		events.fireToPageNone('../index/index.html', 'infoChanged');
 		events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
 	}
+	mod.shortForString = function(str, len) {
+		if(str.length > len+2) {
+			return str.substring(0, len)+"...";
+		}
+		return str;
+	}
 	return mod;
 
-})( events || {});
+})(events || {});

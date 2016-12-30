@@ -78,6 +78,7 @@ var setData = function(type, data) {
 				li.innerHTML = getInnerHTML(type, item);
 				//			li.querySelector('button').addEventListener()
 				list.appendChild(li);
+//				li.querySelector('.btn-openPopover').
 			})
 			//先载入被邀请数据，在加载申请数据
 		if(type == 'inv') {
@@ -126,7 +127,7 @@ var addListener = function() {
 			//清空选中身份信息
 			groupRoles = [];
 			//获取默认身份
-			defaultRole = parseInt(this.mstype);
+			defaultRole = parseInt(this.getAttribute('mstype'));
 			//默认身份选中
 			defaultCheck(defaultRole);
 			//获取群申请记录id;
@@ -142,6 +143,7 @@ var addListener = function() {
 	 * @param {Object} type 选中默认身份
 	 */
 var defaultCheck = function(type) {
+	console.log('默认身份:'+type);
 		check_parents.checked = false;
 		check_stu.checked = false;
 		check_tea.checked = false;
@@ -214,7 +216,7 @@ var getInnerHTML = function(type, item) {
 			'<div class = "mui-media-body"' +
 			'style = "margin-right: 4rem;" >' +
 			item.gname +
-			'<p class="mui-ellipsis">' + item.invname + '邀请你以'+getRole(item.mstype)+'身份加入群</p>' +
+			'<p class="mui-ellipsis">' +events.shortForString(item.invname,4) + '邀请你以'+getRole(item.mstype)+'身份加入群</p>' +
 			'</div>' +
 			'<a class = "mui-btn mui-btn-green btn-apply" ' +
 			' gutid="' + item.gutid + '" mstype="' + item.mstype + '" gid="' + item.gid + '" >接受</a></a>'
@@ -225,7 +227,7 @@ var getInnerHTML = function(type, item) {
 			'<div class = "mui-media-body"' +
 			'style = "margin-right: 4rem;" >' +
 			item.gname +
-			'<p class="mui-ellipsis apply-message">' + item.invname + '申请以'+getRole(item.mstype)+'身份加入你的群:' + item.gname + '</p>' +
+			'<p class="mui-ellipsis apply-message">' + events.shortForString(item.invname,4)+ '申请以'+getRole(item.mstype)+'身份加入你的群:' + events.shortForString(item.gname,4)+ '</p>' +
 			'</div>' +
 			'<a href="#chose-roles" class = "mui-btn mui-btn-green btn-openPopover" ' +
 			' gutid="' + item.gutid + '" mstype="' + item.mstype + '" gid="' + item.gid + '" stuname="' + item.stuname + '">接受</a></a>'
@@ -240,16 +242,16 @@ var getRole=function(mstype){
 	var role='';
 	switch (mstype){
 		case 0:
-		role='家長';
+		role='家长';
 			break;
 		case 1:
-		role='管理員';
+		role='管理员';
 			break
 		case 2:
-		role='老師';
+		role='老师';
 		break;
 		case 3:
-		role='學生';
+		role='学生';
 		break;
 		default:
 			break;
