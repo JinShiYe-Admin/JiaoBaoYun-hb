@@ -2556,7 +2556,7 @@ select:focus {
 	font-family: 'Helvetica Neue', Helvetica, sans-serif;
 	line-height: 1.1;
 	float: left;
-	min-width: 35%;
+	width: 35%;
 	padding: 11px 15px
 }
 
