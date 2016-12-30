@@ -51,14 +51,13 @@
 			mui.init();
 			mui.plusReady(function() {
 				var regFlag;
-				window.addEventListener('registerFlag', function(event) {
-					regFlag = event.detail.data;
-					console.log('验证码 flag=' + regFlag);
-				});
-//				console.log('fa song yanzhengma flag=' + regFlag);
 				//获取到手机号
 				var phoneNum = document.getElementById("phoneNumber");
-				phoneNum.value = '';
+				window.addEventListener('registerFlag', function(event) {
+					regFlag = event.detail.data;
+					phoneNum.value = '';
+					console.log('验证码 flag=' + regFlag);
+				});
 				events.preload('yanZhengMa.html');
 				events.addTap('register', function() {
 					
