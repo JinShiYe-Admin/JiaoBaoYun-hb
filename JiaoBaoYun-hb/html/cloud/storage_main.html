@@ -395,7 +395,7 @@
 				var fpath = par.getAttribute('data-fpath'); //文件路径
 				console.log('下载' + id + '|' + fid + "|" + fname + '|' + ftype + '|' + fpath);
 				if(ftype == '.file') {
-					mui.toast('下载文件夹');
+					//mui.toast('下载文件夹');
 				} else {
 					plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					events.fireToPageWithData('storage_transport.html', 'addDownload', {
@@ -604,6 +604,8 @@
 				var html4 = '';
 				if(data.ftype == '.file') { //文件夹
 					html1 = '<span class="mui-navigate-right mui-media-object mui-pull-right" style="width:10px;"></span>';
+					var html2 = '<span class="mui-icon iconfont iconfont-color icon-trash mui-media-object mui-pull-right"></span>';
+
 					html3 = '<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">';
 					html4 = '<div class="mui-media-body">\
 								<div id="fname_' + data.fid + '" class="mui-ellipsis-2">' + data.fname + '</div>\
