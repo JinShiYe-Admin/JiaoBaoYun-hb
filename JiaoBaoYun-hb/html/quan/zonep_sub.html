@@ -744,6 +744,7 @@
 				postDataPro_setCommentMsgReadByUser(comData, wd, function(data) {
 					console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
 				})
+				return;
 			}
 
 			var NoReadCnt = plus.webview.currentWebview().NoReadCnt //未读条数
