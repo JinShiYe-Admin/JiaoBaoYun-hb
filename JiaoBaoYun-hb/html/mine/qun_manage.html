@@ -180,16 +180,16 @@
 			<div id="slider2" class="mui-slider" style="display: none;">
 				<div id="sliderSegmentedControl2" style="background: #F2F2F2;" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div id="type" class="mui-scroll">
-						<a class="mui-control-item mui-active" id="student">
-							学生
+						<a class="mui-control-item mui-active" id="parents">
+							家长
 						</a>
 						<font class="keep-line-black">丨</font>
 						<a class="mui-control-item" id="teacher">
 							老师
 						</a>
 						<font class="keep-line-black">丨</font>
-						<a class="mui-control-item" id="parents">
-							家长
+						<a class="mui-control-item" id="student">
+							学生
 						</a>
 					</div>
 				</div>
@@ -224,7 +224,7 @@
 					var show = ''; //记录当前展示的群id
 					var qunList = []; //记录所有群的信息
 					var qunMem = []; //记录所有群成员的信息
-					var type = 'student'; //记录当前展示的成员身份类型
+					var type = 'parents'; //记录当前展示的成员身份类型
 					var content = document.body.querySelector('.mui-content');
 					var qunlist = document.getElementById("qunlist"); //群名称显示栏
 					var controladd = document.getElementById("controladd"); //群名称显示栏添加群按钮前一个item
@@ -396,7 +396,7 @@
 						document.getElementById("all_mem").innerHTML = '';
 						show = ''; //记录当前展示的群id
 						qunList = []; //记录所有群的信息
-						type = 'student'; //记录当前展示的成员身份类型
+						type = 'parents'; //记录当前展示的成员身份类型
 						content = document.body.querySelector('.mui-content');
 						qunlist = document.getElementById("qunlist"); //群名称显示栏
 						controladd = document.getElementById("controladd"); //群名称显示栏添加群按钮前一个item
@@ -470,7 +470,7 @@
 										hasGetTea: false, //记录是否已获得老师
 										hasGetPar: false, //记录是否已获得家长
 										showBotId: '', //记录当前展示的成员区域id
-										showType: 'student', //记录当前展示的成员类型
+										showType: 'parents', //记录当前展示的成员类型
 									};
 									mui.extend(qun, hasGetMember); //合并两个对象
 									qunList.push(qun);
@@ -503,7 +503,7 @@
 						if(qunList[0].gid == qun.gid) {
 							//第一个群
 							show = qun.gid;
-							type = 'student';
+							type = 'parents';
 							a.className = 'mui-control-item mui-active';
 						} else {
 							var font = document.createElement('font');
@@ -518,7 +518,7 @@
 						qunlist.insertBefore(a, controladd);
 						if(qunList[0].gid == qun.gid) {
 							addBot(qun, type);
-							qunList[0].showBotId = 'bot_student_' + qunList[0].gid;
+							qunList[0].showBotId = 'bot_parents_' + qunList[0].gid;
 						}
 					}
 
@@ -798,13 +798,13 @@
 									type = item.showType;
 								} else {
 									document.getElementById('bot_' + type + '_' + show).style.display = 'none';
-									addBot(item, 'student');
+									addBot(item, 'parents');
 									document.getElementById(type).setAttribute('class', 'mui-control-item');
-									document.getElementById('student').setAttribute('class', 'mui-control-item mui-active');
+									document.getElementById('parents').setAttribute('class', 'mui-control-item mui-active');
 									show = qunId;
-									type = 'student';
-									item.showBotId = 'bot_student_' + qunId;
-									item.showType = 'student';
+									type = 'parents';
+									item.showBotId = 'bot_parents_' + qunId;
+									item.showType = 'parents';
 								}
 								return false;
 							}
