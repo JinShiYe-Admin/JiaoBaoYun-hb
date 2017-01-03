@@ -22,7 +22,6 @@ mui.plusReady(function() {
 	})
 	window.addEventListener('workDetail', function(e) {
 		homeworkModel = e.detail.data;
-
 		resetData();
 		console.log('学生查看作业结果界面：' + JSON.stringify(homeworkModel));
 		if(homeworkModel.workType == 0) {
@@ -198,11 +197,19 @@ var requestTeaInfo = function(teaId) {
 		console.log('学生作业详情界面获取老师信息：' + JSON.stringify(data));
 		if(data.RspCode = '0000') {
 			mui.extend(homeworkResult, data.RspData[0])
-
 			if(homeworkModel.workType == 0) {
-//				var dateArr = homeworkModel.UploadTime.split(' ');
-//				homeworkModel.UploadTime = dateArr[0];
-//				homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime+'</span>'
+				if(homeworkModel.UploadTime){
+									var dateArr = homeworkModel.UploadTime.split(' ');
+				homeworkModel.UploadTime = dateArr[0];
+				homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime+'</span>'
+
+				}else{
+					console.log(homeworkResult.SubmitTime);
+					homeworkModel.UploadTime = homeworkResult.SubmitTime;
+					var dateArr = homeworkModel.UploadTime.split(' ');
+				homeworkModel.UploadTime = dateArr[0];
+				homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime+'</span>'
+				}
 				homeworkDetailNodes.title.innerText = data.RspData[0].unick;
 				homeworkDetailNodes.content.innerText = '';
 				document.getElementById("headImg").src = updateHeadImg(data.RspData[0].uimg,2);
@@ -347,7 +354,6 @@ var getHomeworkIcon = function(subject) {
 	return subjectIcon;
 }
 mui('.mui-table-view').on('tap', '.cell-color', function() {
-	console.log(11111111111)
 	if(this.id == 'TeaAnsImgLi') {
 		console.log('点击图片');
 		var imageArr = homeworkResult.Files;
