@@ -109,7 +109,7 @@ function getStuName() {
 				if(personalUTID == tempModel.utid) {
 
 					homeworkModel = mui.extend(homeworkModel, tempModel);
-					console.log('999999=' + JSON.stringify(homeworkModel));
+					console.log('homeworkModel=' + JSON.stringify(homeworkModel));
 				}
 			}
 		}
@@ -157,6 +157,9 @@ function getAnswerResultStu() {
 		console.log('4.postDataPro_GetAnswerResultStu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			homeworkResult = data.RspData;
+			if(!homeworkModel.TeacherId){
+				homeworkModel.TeacherId = homeworkModel.utid
+			}
 			requestTeaInfo(homeworkModel.TeacherId);
 
 			//			refreshUI();
@@ -175,8 +178,8 @@ var requireTeachersAnswer = function() {
 			wd.close();
 			console.log('学生作业页面获取的临时作业答案：' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
-				console.log('1111111=' + JSON.stringify(homeworkResult));
 				mui.extend(homeworkResult, data.RspData);
+				console.log('homeworkResult=' + JSON.stringify(homeworkResult));
 
 				refreshUITemp();
 			} else if(data.RspCode == '9999') {
@@ -197,12 +200,12 @@ var requestTeaInfo = function(teaId) {
 			mui.extend(homeworkResult, data.RspData[0])
 
 			if(homeworkModel.workType == 0) {
-				var dateArr = homeworkModel.UploadTime.split(' ');
-				homeworkModel.UploadTime = dateArr[0];
-				homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime+'</span>'
+//				var dateArr = homeworkModel.UploadTime.split(' ');
+//				homeworkModel.UploadTime = dateArr[0];
+//				homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime+'</span>'
 				homeworkDetailNodes.title.innerText = data.RspData[0].unick;
 				homeworkDetailNodes.content.innerText = '';
-				document.getElementById("headImg").src = updateHeadImg(data.RspData[0].uimg);
+				document.getElementById("headImg").src = updateHeadImg(data.RspData[0].uimg,2);
 
 			} else {
 				var dateArr = homeworkResult.HomeworkResult.UploadTime.split(' ');
