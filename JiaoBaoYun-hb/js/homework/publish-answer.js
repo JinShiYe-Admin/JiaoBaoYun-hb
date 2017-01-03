@@ -30,7 +30,7 @@ mui.plusReady(function() {
 		 */
 	window.addEventListener('modifyAnswer', function(e) {
 		 console.log('上个页面传回来的值：'+JSON.stringify(e.detail.data));
-		answerResultId = e.detail.data;
+		answerResultId = e.detail.data.AnswerResultId;
 		imgIds = [];
 		stuSubmitAnswer = false;
 		events.clearChild(document.getElementById('pictures'));
@@ -66,6 +66,13 @@ mui.plusReady(function() {
 		pictures.removeChild(this.parentElement)
 	})
 	addPostEventListener();
+	var teachers_container = document.getElementById('receive-teachers'); //selectid
+				
+	teachers_container.onchange=function(){
+		var teaInfo = teachers_container.options[teachers_container.selectedIndex].teaInfo;
+		TeacherId=teaInfo.utid;
+	}
+	
 
 })
 var addPostEventListener = function() {
@@ -331,6 +338,7 @@ var setTeachers = function(teaInfos) {
 		op.innerHTML = '<p><span  class="receiver-name">' + teaInfo.ugnick + '</span><span class="recerver-">-</span><span class="receiver-class">' + teaInfo.gname + '</span></p>';
 		teaContainer.appendChild(op);
 	})
+	TeacherId=teaContainer.firstElementChild.teaInfo.utid;
 }
 
 //所需参数
