@@ -280,6 +280,29 @@
 								showStu();
 								break;
 							default:
+								switch(data.mstype) {
+									case 1: //老师
+										mstype = 2;
+										showTea();
+										break;
+									case 3: //学生
+										mstype = 3;
+										showStu();
+										break;
+									case 2: //老师
+										mstype = 2;
+										showTea();
+										break;
+									case 3: //家长
+										//mstype = 0;
+										//createPar();
+										mstype = 3;
+										showStu();
+										break;
+									default:
+										console.log('资料类型选择出错3');
+										break;
+								}
 								console.log('资料类型选择出错2');
 								break;
 						}
