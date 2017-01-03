@@ -25,7 +25,6 @@
 			.mui-content {
 				background: white;
 			}
-
 			/*#qunimage {
 				height: 100px;
 			}*/
@@ -64,15 +63,18 @@
 			.mui-input-group .mui-input-row:after {
 				width: 100%;
 				left: 0;
+				background: #e4e4e4;
 			}
 
 			.mui-btn-block {
-				border-radius: 50px;
+				/*border-radius: 50px;*/
 				margin-top: 50px;
 				width: 80%;
 				margin-left: 10%;
 				height: 40px;
 				padding: 0;
+				border: 1px solid #1db8f1;
+				background-color: #1db8f1
 			}
 		</style>
 	</head>
@@ -83,8 +85,8 @@
 			<p class="mui-title common-color-white" style="text-align: left;">填写群信息</p>
 		</header>
 		<div class="mui-content">
-			<div id="qunimage"style="text-align: center;margin-left: auto;margin-right: auto;">
-				<div id="choose" class="qun-image"style="text-align: center;margin-left: auto;margin-right: auto;border: 1px solid #F2F2F2;border-radius: 50%;">
+			<div id="qunimage" style="text-align: center;margin-left: auto;margin-right: auto;">
+				<div id="choose" class="qun-image" style="text-align: center;margin-left: auto;margin-right: auto;border: 1px solid #F2F2F2;border-radius: 50%;">
 					<a class="mui-icon iconfont icon-xiangji" style="color: #BBBBBB;font-size: 30px;margin-top: 20px;">
 						<p style="font-size: 10px;margin-top: 10px;">
 							请上传群图标!
@@ -112,13 +114,13 @@
 			mui.init();
 			mui.plusReady(function() {
 				var qunImgPath = '';
-//				var Width = plus.screen.resolutionWidth;
-//				var marginLeft = '';
-//				if(mui.os.ios) {
-//					marginLeft = (Width - 100) / 2 + 'px';
-//				} else {
-//					marginLeft = (Width) / 8 + 'px';
-//				}
+				//				var Width = plus.screen.resolutionWidth;
+				//				var marginLeft = '';
+				//				if(mui.os.ios) {
+				//					marginLeft = (Width - 100) / 2 + 'px';
+				//				} else {
+				//					marginLeft = (Width) / 8 + 'px';
+				//				}
 				//addQunImg(); //显示上传群头像的图标
 				//输入的字数限制
 				jQuery('#qunname').prop("maxLength", "20");
