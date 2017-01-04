@@ -244,7 +244,7 @@ function getNotes(index, StuDyArr) {
 				var temp = {
 					index: index, //排序索引
 					MsgContent: '暂无学生动态',
-					PublishDate: currentDate,
+					PublishDate: '',
 					NoReadCnt: 0
 				}
 				StuDyArr.push(temp);
@@ -373,7 +373,7 @@ function getTopList(index) {
 				var temp = {
 					index: index, //排序索引
 					MsgContent: '暂无动态',
-					PublishDate: currentDate,
+					PublishDate: '',
 					NoReadCnt: 0
 				}
 				topArray.push(temp);
@@ -406,6 +406,7 @@ function getTopList(index) {
 					} else {
 						noReadHTML = '';
 					}
+					topArray[i].MsgContent = topArray[i].MsgContent.replace(new RegExp(/(<br \/>)/g),'\n')
 					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">' + noReadHTML + '<p class="time">' + topArray[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
@@ -622,7 +623,7 @@ function refreshUI() {
 				var today = new Date();
 				var month = today.getMonth() + 1
 				var currentDate = today.getFullYear() + "-" + month + "-" + today.getDate()
-				userList[j].PublishDate = currentDate;
+				userList[j].PublishDate = '';
 			}
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell mui-media parent-cell' + j;
@@ -634,6 +635,7 @@ function refreshUI() {
 			var name = userList[j].ugnick;
 			var dateArr = userList[j].PublishDate.split(' ');
 			userList[j].PublishDate = dateArr[0];
+			userList[j].MsgContent = userList[j].MsgContent.replace(new RegExp(/(<br \/>)/g),'\n')
 			li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + userList[j].uimg + '" />' +
 				noReadHTML + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 				name + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';

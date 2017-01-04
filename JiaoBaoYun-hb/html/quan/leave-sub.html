@@ -9,9 +9,11 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/quan/about-me.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script src="../../js/utils/native.js"></script>
 
 		<style>
 			.mui-table-view {
@@ -54,6 +56,12 @@
 	</head>
 
 	<body>
+		<footer id="footer">
+			<div class="footer-center">
+				<textarea onblur="inputOnblur(this)" id='msg-content' type="text" class='input-text'></textarea>
+			</div>
+			<button id='btn-reply' class="mui-btn mui-btn-green btn-commit">回复</button>
+		</footer>
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
@@ -84,11 +92,13 @@
 				}
 			}
 		});
+		var cellIndex;
 		var userId;//留言板拥有者id
 		var personalUTID;//当前登录账号utid
 		var note;//留言寄语
 		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 		mui.plusReady(function() {
+			initNativeObjects();
 			window.addEventListener('refreshLeaveList',function(){//发布留言成功后的回调
 				requestData(comData)
 			})
@@ -118,9 +128,21 @@
 				this.value=this.value.substr(0,50)
 			} 
 		})
+//				//失去焦点事件
+//		function inputOnblur(input) {
+//			
+//			//			mui('.mui-popover').popover('hide');
+//
+//		}
 		function inputOnblur(input) {//失去焦点事件
-			if(input.value == ''||input.value==null){
-//				mui.toast('主人寄语不能为空');
+			if(input.id =='msg-content' ){
+				var inputComment = document.getElementById("msg-content");
+			inputComment.value = '';
+			document.getElementById('footer').className = '';
+			document.getElementById('footer').style.display = 'none';
+			}else{
+				if(input.value == ''||input.value==null){
+				mui.toast('主人寄语不能为空');
 			}else if(input.value.length>50){
 				mui.toast('不能超过50字');
 				input.scrollTop = 0 
@@ -129,6 +151,9 @@
  				modifyMaster(input.value);
  				input.scrollTop = 0 
  			}
+			}
+			
+
 }
 			/**
 			 * 下拉刷新具体业务实现
@@ -361,17 +386,55 @@
 			console.log(ul.innerHTML);
 			//点击回复
 			mui('.mui-table-view').on('tap', '.leaveReply', function() {
-				var cellIndex = this.id.replace('reply',''); console.log(cellIndex)
+				console.log(777777)
+					var replyContainer = document.getElementById('footer');
+					document.getElementById('footer').className = 'mui-bar-tab';
+					replyContainer.style.display = 'block';
+					showSoftInput('#msg-content');
+				cellIndex = this.id.replace('reply','');
+				console.log(cellIndex);
+				
+//
 
-				var data = {
+//				events.openNewWindowWithData('leave-reply.html',data); 
+			});
+		}
+				
+				events.addTap('btn-reply', function() {
+					console.log(cellIndex);
+					var data = {
 					userId:personalUTID,
 					upperId:leaveArray[cellIndex].TabId,
 					replyUserId:leaveArray[cellIndex].UserId,
 					userOwnerId:userId,
 				}
-				events.openNewWindowWithData('leave-reply.html',data); 
-			});
-		}
+					var leaveContent = document.getElementById('msg-content');
+					var tempText= leaveContent.value;
+				if(!tempText||tempText=='') {
+					mui.toast('请输入留言');
+					return;
+				}else{
+					tempText = replaceAllBL(tempText);
+				}
+				data.msgContent = tempText;
+				console.log('data === ' + JSON.stringify(data));
+								var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_addUserSpaceMsgReply(data, wd, function(data) {
+					wd.close();
+					console.log('postDataPro_addUserSpaceMsgReply:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
+					if(data.RspCode == 0) {
+						mui.toast('成功')
+						document.getElementById('footer').className = '';
+							document.getElementById('footer').style.display = 'none';
+							jQuery('#msg-content').blur();
+						leaveContent.value = '';
+						events.fireToPageNone('leave-sub.html','refreshLeaveList');
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				})
+					console.log('点击回复');
+				})
 			</script>
 
 </html>
