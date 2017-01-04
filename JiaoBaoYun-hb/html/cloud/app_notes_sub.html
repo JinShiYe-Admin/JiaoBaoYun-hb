@@ -132,6 +132,8 @@
 						};
 						//请求数据
 						requestData(comData);
+//						mui('#pullrefresh').pullRefresh().refresh(true);//重置上拉加载
+						mui('#pullup-container').pullRefresh().enablePullupToRefresh();
 					}, 1500);
 				}
 
@@ -218,7 +220,7 @@
 								table.innerHTML='';//情况界面的列表
 								lastDate = '';
 								mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //下拉刷新结束
-								mui('#pullrefresh').pullRefresh().refresh(true);//重置上拉加载
+								
 							} else {
 								//合并数组
 								recordArray = recordArray.concat(tempRspData);
@@ -239,7 +241,7 @@
 								mui.toast('笔记为空');
 								mui('#pullrefresh').pullRefresh().disablePullupToRefresh();//禁用上拉刷新
 							}
-							//获取得到的数据小于10条说明没有下一页
+							获取得到的数据小于10条说明没有下一页
 							if(tempRspData.length < 10 && recordArray.length > 10){
 								console.log(tempRspData.length+'|'+recordArray.length);
 								mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
