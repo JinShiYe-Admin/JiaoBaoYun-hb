@@ -60,7 +60,7 @@ mui.plusReady(function() {
 			var teachers_container = document.getElementById('receive-teachers'); //selectid
 			teaInfo = teachers_container.options[teachers_container.selectedIndex].teaInfo;
 		}
-		jQuery.extend(teaInfo,{AnswerResultId:answerResultId,workType:0});
+		jQuery.extend(teaInfo,{AnswerResultId:answerResultId,workType:0})
 		console.log('传递的answerResultId：'+answerResultId);
 			events.fireToPageWithData('homework-commented.html', 'workDetail', teaInfo);
 		})
