@@ -434,7 +434,7 @@ function getBottomList(index, userLists) {
 	// 通过群ID获取群的正常用户
 	postDataPro_PostGusers(comData, wd, function(data) {
 		wd.close();
-		//		console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			var tepDic = {
 				index: index, //排序索引
