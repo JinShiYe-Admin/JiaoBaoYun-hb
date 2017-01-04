@@ -76,7 +76,7 @@
 							拍照
 						</div>
 					</li>
-					<li class="mui-table-view-cell mui-media" value="2">
+					<li id="local" class="mui-table-view-cell mui-media" value="2">
 						<!--<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">-->
 						<span class="mui-media-object mui-icon iconfont icon-allfolder mui-pull-left" style="color: #FFD33C;"></span>
 						<div class="mui-media-body campion">
@@ -104,6 +104,11 @@
 				var subData = null; //记录从父页面获取的数据
 				var upFile = null; //记录上传的文件
 				var pid = ''; //文件的上层ID
+
+				if(mui.os.ios) {
+					document.getElementById("local").style.display = 'none';
+				}
+
 				//初始化
 				window.addEventListener('init', function(e) {
 					subData = e.detail.data; //接收页面传入的参数值

@@ -16,9 +16,6 @@
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/utils/camera.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
-		<!--<script type="text/javascript" src="../../js/qiniu/plupload.full.min.js"></script>-->
-		<!--<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>-->
-		<!--<script type="text/javascript" src="../../js/utils/QiNiuUtil.js"></script>-->
 		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
@@ -28,17 +25,14 @@
 			.mui-content {
 				background: white;
 			}
-
-			#qunimage {
+			/*#qunimage {
 				height: 100px;
-			}
+			}*/
 
 			.qun-image {
-				border: 2px solid #F2F2F2;
-				border-radius: 50%;
 				height: 100px;
 				width: 100px;
-				text-align: center;
+				/*text-align: center;*/
 				margin-top: 20px;
 			}
 
@@ -69,15 +63,18 @@
 			.mui-input-group .mui-input-row:after {
 				width: 100%;
 				left: 0;
+				background: #e4e4e4;
 			}
 
 			.mui-btn-block {
-				border-radius: 50px;
+				/*border-radius: 50px;*/
 				margin-top: 50px;
 				width: 80%;
 				margin-left: 10%;
 				height: 40px;
 				padding: 0;
+				border: 1px solid #1db8f1;
+				background-color: #1db8f1
 			}
 		</style>
 	</head>
@@ -88,15 +85,14 @@
 			<p class="mui-title common-color-white" style="text-align: left;">填写群信息</p>
 		</header>
 		<div class="mui-content">
-			<div id="qunimage">
-				<!--<div style="margin-left: 110px;" class="qun-image">
-				<a class="mui-icon iconfont icon-xiangji" style="color: #BBBBBB;font-size: 30px;margin-top: 20px;">
-					<p style="font-size: 10px;margin-top: 10px;">
-						请上传群图标!
-					</p>
-				</a>
-				</div>-->
-				<!--<img style="margin-left: 110px;" src="../../image/clip/u292.png" class="qun-image" />-->
+			<div id="qunimage" style="text-align: center;margin-left: auto;margin-right: auto;">
+				<div id="choose" class="qun-image" style="text-align: center;margin-left: auto;margin-right: auto;border: 1px solid #F2F2F2;border-radius: 50%;">
+					<a class="mui-icon iconfont icon-xiangji" style="color: #BBBBBB;font-size: 30px;margin-top: 20px;">
+						<p style="font-size: 10px;margin-top: 10px;">
+							请上传群图标!
+						</p>
+					</a>
+				</div>
 			</div>
 			<form class="mui-input-group">
 				<div class="mui-input-row">
@@ -118,9 +114,14 @@
 			mui.init();
 			mui.plusReady(function() {
 				var qunImgPath = '';
-				var Width = plus.screen.resolutionWidth;
-				var marginLeft = (Width) / 8 + 'px';
-				addQunImg(); //显示上传群头像的图标
+				//				var Width = plus.screen.resolutionWidth;
+				//				var marginLeft = '';
+				//				if(mui.os.ios) {
+				//					marginLeft = (Width - 100) / 2 + 'px';
+				//				} else {
+				//					marginLeft = (Width) / 8 + 'px';
+				//				}
+				//addQunImg(); //显示上传群头像的图标
 				//输入的字数限制
 				jQuery('#qunname').prop("maxLength", "20");
 				jQuery('#qunintroduce').prop("maxLength", "30");
@@ -175,7 +176,6 @@
 										</p>\
 									</a>\
 								</div>';
-					//div.innerHTML = '<img style="margin-left: ' + marginLeft + ';" src="../../image/clip/u292.png" class="qun-image" />';
 					//var table = document.body.querySelector('.mui-content');
 					//table.insertBefore(div, table.firstChild);
 				}
@@ -186,9 +186,8 @@
 				function fromPic() {
 					plus.gallery.pick(function(file) {
 						console.log('从相册选取图片成功,图片的路径为：' + file);
-						var div = document.getElementById("qunimage");
-						div.innerHTML = '';
-						div.innerHTML = '<img style="margin-left:  ' + marginLeft + ';" src="' + file + '" class="qun-image"/>';
+						var div = document.getElementById("choose");
+						div.innerHTML = '<img src="' + file + '"style="margin-top:0px;border: 1px solid #F2F2F2;border-radius: 50%;height: 100px;width: 100px;"/>';
 						qunImgPath = file;
 					}, function(error) {
 						//从相册选取图片失败的回调
@@ -218,9 +217,8 @@
 				function fromCamera() {
 					camera.getPic(camera.getCamera(), function(path) {
 						plus.io.resolveLocalFileSystemURL(path, function(succesCB) {
-							var div = document.getElementById("qunimage");
-							div.innerHTML = '';
-							div.innerHTML = '<img style="margin-left:  ' + marginLeft + ';" src="' + succesCB.toLocalURL() + '" class="qun-image"/>';
+							var div = document.getElementById("choose");
+							div.innerHTML = '<img src="' + succesCB.toLocalURL() + '" style="margin-top:0px;border: 1px solid #F2F2F2;border-radius: 50%;height: 100px;width: 100px;"/>';
 							qunImgPath = succesCB.toLocalURL();
 						}, function(errorCB) {
 							//请求失败的的回调

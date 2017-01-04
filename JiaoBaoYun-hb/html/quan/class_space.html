@@ -26,51 +26,52 @@
 		<script src="../../js/publicProtocol.js"></script>
 		<script>
 			/*预加载界面*/
-//			mui.init();
+			//			mui.init();
 			mui.plusReady(function() {
-					events.preload('class-dynamic.html', 100);
-					events.preload('class-group.html');
-					var write=document.getElementById('write');
-					var data = plus.webview.currentWebview().data;
-					console.log('班级空间：' + JSON.stringify(data));
-					events.initSubPage('classSpace-sub.html', data);
-					getUserInGroup(-1, data.classId,function(data) {
-						groupRoles = data;
-						write.style.display='none';
-						console.log('获取本人在群的所有信息：' + JSON.stringify(data));
-						for(var i in groupRoles){
-							if(groupRoles[i].mstype==2||groupRoles[i].mstype==1){
-								write.style.display='inline-block';
-								break;
-							}
-						}
-					});
-					events.addTap('write', function() {
-						events.fireToPageWithData('class-dynamic.html', 'postGroupInfo', data)
-					})
+				events.preload('class-dynamic.html', 100);
+				events.preload('class-group.html');
 
-					var className = plus.webview.currentWebview().className;
-					document.getElementById('title').innerText =getHeadText(className);
-					
+				var write = document.getElementById('write');
+				var data = plus.webview.currentWebview().data;
+				console.log('班级空间：' + JSON.stringify(data));
+				getUserInGroup(-1, data.classId, function(data) {
+					groupRoles = data;
+					write.style.display = 'none';
+					console.log('获取本人在群的所有信息：' + JSON.stringify(data));
+					for(var i in groupRoles) {
+						if(groupRoles[i].mstype == 2 || groupRoles[i].mstype == 1) {
+							write.style.display = 'inline-block';
+							break;
+						}
+					}
+				});
+				var className = plus.webview.currentWebview().className;
+				document.getElementById('title').innerText = getHeadText(className);
+				setTimeout(function() {
 					events.addTap('group', function() {
 						events.fireToPageWithData('class-group.html', 'postGroupInfo', {
 							classId: data.classId,
 							className: className
 						});
 					})
+				}, 1000);
+				events.addTap('write', function() {
+					events.fireToPageWithData('class-dynamic.html', 'postGroupInfo', data)
 				})
-			var getHeadText=function(className){
-				if(className.length>8){
-					className=className.substring(0,10)+'...'
+				events.initSubPage('classSpace-sub.html', data);
+			})
+			var getHeadText = function(className) {
+					if(className.length > 8) {
+						className = className.substring(0, 10) + '...'
+					}
+					return className;
 				}
-				return className;
-			}
 				/**
 				 * 获取用户在群组中的信息
 				 * @param {Object} mstype
 				 * @param {Object} callback
 				 */
-			var getUserInGroup = function(mstype,groupId, callback) {
+			var getUserInGroup = function(mstype, groupId, callback) {
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_PostGuI({
 					vvl: groupId,

@@ -124,6 +124,7 @@ function addSomeEvent() {
 		if(e.detail.flag == 3) {
 			
 			console.log('tableIndex=' + selectCell.tableIndex)
+			console.log()
 			var tableIndex = selectCell.tableIndex;
 			var cellIndex = selectCell.cellIndex;
 			var cellNoReadCnt = selectCell.NoReadCnt
@@ -153,6 +154,7 @@ function addSomeEvent() {
 			} else {
 				a.innerHTML = datasource[tableIndex].gname + lineHTML;
 			}
+//			selectCell.NoReadCnt = 0
 		} else if(e.detail.flag == 1) {
 			document.getElementById("stuImg").src = updateHeadImg(e.detail.img)
 		} else if(e.detail.flag == 2) {

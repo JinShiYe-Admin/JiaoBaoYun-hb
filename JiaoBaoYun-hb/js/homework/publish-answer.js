@@ -3,7 +3,7 @@ var role; //角色
 var imgIds; //图片数据
 var stuSubmitAnswer; //true学生提交答案||FALSE学生修改答案
 var answerResultId; //学生答案id
-var TeacherId;
+var teaInfo;
 mui.init();
 mui.plusReady(function() {
 	events.preload('homework-commented.html', 200);
@@ -30,7 +30,7 @@ mui.plusReady(function() {
 		 */
 	window.addEventListener('modifyAnswer', function(e) {
 		 console.log('上个页面传回来的值：'+JSON.stringify(e.detail.data));
-		answerResultId = e.detail.data;
+		answerResultId = e.detail.data.AnswerResultId;
 		imgIds = [];
 		stuSubmitAnswer = false;
 		events.clearChild(document.getElementById('pictures'));
@@ -56,8 +56,13 @@ mui.plusReady(function() {
 			//			});
 	});
 	events.addTap('checkResult', function() {
+		if(teaInfo){
+			var teachers_container = document.getElementById('receive-teachers'); //selectid
+			teaInfo = teachers_container.options[teachers_container.selectedIndex].teaInfo;
+		}
+		jQuery.extend(teaInfo,{AnswerResultId:answerResultId,workType:0})
 		console.log('传递的answerResultId：'+answerResultId);
-			events.fireToPageWithData('homework-commented.html', 'workDetail', {AnswerResultId:answerResultId,TeacherId:TeacherId,workType:0});
+			events.fireToPageWithData('homework-commented.html', 'workDetail', teaInfo);
 		})
 		//删除图标的点击事件
 	mui('#pictures').on('tap', '.icon-guanbi', function() {
@@ -66,7 +71,6 @@ mui.plusReady(function() {
 		pictures.removeChild(this.parentElement)
 	})
 	addPostEventListener();
-
 })
 var addPostEventListener = function() {
 	//上传按钮点击事件
@@ -87,7 +91,7 @@ var addPostEventListener = function() {
 				requestPublishAnswer(comData);
 			} else {
 				var teachers_container = document.getElementById('receive-teachers'); //selectid
-				var teaInfo = teachers_container.options[teachers_container.selectedIndex].teaInfo;
+				teaInfo = teachers_container.options[teachers_container.selectedIndex].teaInfo;
 				//判断是要学生提交答案0，还是修改答案1
 				if(stuSubmitAnswer) {
 					//6.	提交答案结果
@@ -100,7 +104,7 @@ var addPostEventListener = function() {
 						teacherId: teaInfo.utid, //老师Id；
 						teacherName: teaInfo.ugnick + '-' + teaInfo.gname //老师名字；
 					};
-					TeacherId=teaInfo.utid;
+//					TeacherId=teaInfo.utid;
 					requestSubmitAnswer(comData);
 				} else {
 					//8.修改答案结果；
@@ -113,7 +117,7 @@ var addPostEventListener = function() {
 						teacherId: teaInfo.utid, //老师Id；
 						teacherName: teaInfo.ugnick + '-' + teaInfo.gname //老师名字；
 					};
-					TeacherId=teaInfo.utid;
+//					TeacherId=teaInfo.utid;
 					requestModifyAnswer(comData);
 				}
 			}
@@ -331,6 +335,7 @@ var setTeachers = function(teaInfos) {
 		op.innerHTML = '<p><span  class="receiver-name">' + teaInfo.ugnick + '</span><span class="recerver-">-</span><span class="receiver-class">' + teaInfo.gname + '</span></p>';
 		teaContainer.appendChild(op);
 	})
+	teaInfo=teaContainer.firstElementChild.teaInfo;
 }
 
 //所需参数

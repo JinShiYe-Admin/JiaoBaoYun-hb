@@ -7,17 +7,30 @@
 mui.init();
 
 mui.plusReady(function() {
+	var backButtonPress = 0;
+	mui.back = function(event) {
+		backButtonPress++;
+		if(backButtonPress > 1) {
+			plus.runtime.quit();
+		} else {
+			plus.nativeUI.toast('再按一次退出应用');
+		}
+		setTimeout(function() {
+			backButtonPress = 0;
+		}, 1000);
+		return false;
+	};
 	slideNavigation.add('mine.html', 200)
 	window.addEventListener('infoChanged', function() {
 		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
-		document.querySelector('img').src = img ? img :storageKeyName.storageKeyName.DEFAULTPERSONALHEADIMAGE;
+		document.querySelector('img').src = img ? img : storageKeyName.storageKeyName.DEFAULTPERSONALHEADIMAGE;
 	})
 	window.addEventListener('aboutmNoRead', function() {
 		getAboutMe();
 	})
-	
+
 	getAboutMe(); //获取与我相关未读数
 	Statusbar.barHeight(); //设置距离顶部的高度
 	var header = document.querySelector(".mui-bar-nav"); //顶部导航
@@ -97,7 +110,8 @@ mui.plusReady(function() {
 		activeTab = targetTab;
 
 	});
-function getHomeworkAlert(NoReadCnt){
+
+	function getHomeworkAlert(NoReadCnt) {
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 		//56.（用户空间）获取与我相关
 		//所需参数
@@ -113,8 +127,8 @@ function getHomeworkAlert(NoReadCnt){
 			console.log('postDataPro_GetHomeworkAlertCount:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				var noRead = document.getElementById('aboutme_noRead');
-				NoReadCnt = data.RspData.NoReadCnt+NoReadCnt;
-				if( NoReadCnt == 0) {
+				NoReadCnt = data.RspData.NoReadCnt + NoReadCnt;
+				if(NoReadCnt == 0) {
 					noRead.innerHTML = NoReadCnt;
 					noRead.style.visibility = 'hidden';
 				} else {
@@ -124,10 +138,11 @@ function getHomeworkAlert(NoReadCnt){
 				}
 
 			} else {
-//				mui.toast(data.RspTxt);
+				//				mui.toast(data.RspTxt);
 			}
 		});
 	}
+
 	function getAboutMe() {
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 		//56.（用户空间）获取与我相关
@@ -145,18 +160,18 @@ function getHomeworkAlert(NoReadCnt){
 			console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				getHomeworkAlert(data.RspData.NoReadCnt);
-//				var noRead = document.getElementById('aboutme_noRead');
-//				if(data.RspData.NoReadCnt == 0) {
-//					noRead.innerHTML = data.RspData.NoReadCnt;
-//					noRead.style.visibility = 'hidden';
-//				} else {
-//					noRead.style.visibility = 'visible';
-//					noRead.innerHTML = data.RspData.NoReadCnt;
-//
-//				}
+				//				var noRead = document.getElementById('aboutme_noRead');
+				//				if(data.RspData.NoReadCnt == 0) {
+				//					noRead.innerHTML = data.RspData.NoReadCnt;
+				//					noRead.style.visibility = 'hidden';
+				//				} else {
+				//					noRead.style.visibility = 'visible';
+				//					noRead.innerHTML = data.RspData.NoReadCnt;
+				//
+				//				}
 
 			} else {
-//				mui.toast(data.RspTxt);
+				//				mui.toast(data.RspTxt);
 			}
 		});
 	}

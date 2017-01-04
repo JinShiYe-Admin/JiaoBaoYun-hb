@@ -172,16 +172,16 @@
 				<div id="slider2" class="mui-slider" style="display: none;">
 					<div id="sliderSegmentedControl2" style="background: #F2F2F2;" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 						<div id="type" class="mui-scroll">
-							<a class="mui-control-item mui-active" id="student">
-								学生
+							<a class="mui-control-item mui-active" id="parents">
+								家长
 							</a>
 							<font class="keep-line-black">丨</font>
 							<a class="mui-control-item" id="teacher">
 								老师
 							</a>
 							<font class="keep-line-black">丨</font>
-							<a class="mui-control-item" id="parents">
-								家长
+							<a class="mui-control-item" id="student">
+								学生
 							</a>
 						</div>
 					</div>
@@ -217,7 +217,7 @@
 					var show = ''; //记录当前展示的群id
 					var qunList = []; //记录所有群的信息
 					var qunMem = []; //记录所有群成员的信息
-					var type = 'student'; //记录当前展示的成员身份类型
+					var type = 'parents'; //记录当前展示的成员身份类型
 					var content = document.body.querySelector('.mui-content');
 					var qunlist = document.getElementById("qunlist"); //群名称显示栏
 					var controladd = document.getElementById("controladd"); //群名称显示栏添加群按钮前一个item
@@ -360,21 +360,21 @@
 						</a>\
 						<div class="mui-icon mui-icon-plus addqun" style="position: absolute;border: 0px solid #ddd;font-size: 25px;color: #C7C7CC;right: 0px;top: 4px;"></div>';
 						document.getElementById("type").innerHTML = '\
-							<a class="mui-control-item mui-active" id="student">\
-								学生\
+							<a class="mui-control-item mui-active" id="parents">\
+								家长\
 							</a>\
 							<font class="keep-line-black">丨</font>\
 							<a class="mui-control-item" id="teacher">\
 								老师\
 							</a>\
 							<font class="keep-line-black">丨</font>\
-							<a class="mui-control-item" id="parents">\
-								家长\
+							<a class="mui-control-item" id="student">\
+								学生\
 							</a>';
 						document.getElementById("all_mem").innerHTML = '';
 						show = ''; //记录当前展示的群id
 						qunList = []; //记录所有群的信息
-						type = 'student'; //记录当前展示的成员身份类型
+						type = 'parents'; //记录当前展示的成员身份类型
 						content = document.body.querySelector('.mui-content');
 						qunlist = document.getElementById("qunlist"); //群名称显示栏
 						controladd = document.getElementById("controladd"); //群名称显示栏添加群按钮前一个item
@@ -438,7 +438,7 @@
 										hasGetTea: false, //记录是否已获得老师
 										hasGetPar: false, //记录是否已获得家长
 										showBotId: '', //记录当前展示的成员区域id
-										showType: 'student', //记录当前展示的成员类型
+										showType: 'parents', //记录当前展示的成员类型
 									};
 									mui.extend(qun, hasGetMember); //合并两个对象
 									qunList.push(qun);
@@ -469,7 +469,7 @@
 						if(qunList[0].gid == qun.gid) {
 							//第一个群
 							show = qun.gid;
-							type = 'student';
+							type = 'parents';
 							a.className = 'mui-control-item mui-active';
 						} else {
 							var font = document.createElement('font');
@@ -483,7 +483,7 @@
 						qunlist.insertBefore(a, controladd);
 						if(qunList[0].gid == qun.gid) {
 							addBot(qun, type);
-							qunList[0].showBotId = 'bot_student_' + qunList[0].gid;
+							qunList[0].showBotId = 'bot_parents_' + qunList[0].gid;
 						}
 					}
 
@@ -565,66 +565,125 @@
 							//stuname	资料名称	string		否
 							//stuimg	资料头像	string		否	头像地址
 							//mstype	资料类型	int		否	0家长,1管理员,2老师,3学生
-							if(data.RspCode == 0) {
-								var tempData = data.RspData;
-								if(vvl1 == '2') { //资料类型是老师
-									mui.each(data.RspData, function(index1, item1) {
-										var dataID = item1.stuid; //资料ID
-										console.log('dataID:' + dataID);
-										//22.通过用户资料ID获取用户各项资料
-										//所需参数
-										var comData2 = {
-											vvl: dataID //查询的用户资料ID
-										};
-										// 等待的对话框
-										var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-										postDataPro_PostUuinf(comData2, wd2, function(data) {
-											console.log('22_PostUuinf_获取用户各项资料.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-											if(data.RspCode == 0) {
-												document.getElementById("stuimg_" + dataID).src = updateHeadImg(data.RspData[0].uimg, 2);
-												console.log("stuimg_" + dataID + '|' + updateHeadImg(data.RspData[0].uimg), 2);
-											} else {
-												if(data.RspCode != 9) {
-													mui.toast(data.RspTxt);
-												}
+							if(vvl1 == '2') { //资料类型是老师
+								//16.通过群ID获取群对象资料
+								//需要参数
+								var getMemData2 = {
+									vtp: '0', //获取类型,0普通资料获取,1邀请排除(主老师用)
+									top: '-1', //选择条数,-1取全部
+									vvl: qun.gid.toString(), //群ID，查询的值
+									vvl1: '1', //类型,0家长,1管理员,2老师,3学生,-1全部
+								};
+								var wd3 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+								postDataPro_PostGUInf(getMemData2, wd3, function(data3) {
+									console.log('16_PostGUInf_通过群ID获取1管理员资料.90909090success:RspCode:' + data3.RspCode + ',RspData:' + JSON.stringify(data3.RspData) + ',RspTxt:' + data3.RspTxt);
+									if(data3.RspCode == 0) {
+										if(data.RspCode == 9) {
+											data.RspCode = 0;
+											data.RspData = [];
+											if(data3.RspData.length == 0) {
+												data.RspCode == 9;
 											}
-											wd2.close();
-										});
-									});
-								}
-
-								mui.each(tempData, function(index, item) {
-									//console.log('群对象资料:' + JSON.stringify(item));
-									var qunBot = document.getElementById("bot_" + type2 + '_' + qun.gid).querySelector('.mui-row');
-									var table = document.getElementById("addData_" + type2 + '_' + qun.gid);
-									addData(qunBot, item, table);
-								});
-							} else if(data.RspCode == 9) {
-								//查询为空
-								//								var qunBot = document.getElementById("bot_" + type2 + '_' + qun.gid).querySelector('.mui-row');
-								//								var div = document.createElement('div');
-								//								div.innerText = data.RspTxt + '(' + qun.gname + ' ' + type3 + ')';
-								//								qunBot.appendChild(div);
-								mui.toast(data.RspTxt + '(' + qun.gname + ' ' + type3 + ')');
-							} else {
-								mui.toast(data.RspTxt);
-							}
-							mui.each(qunList, function(index, item) {
-								if(item.gid == qun.gid) {
-									switch(type2) {
-										case 'student':
-											item.hasGetStu = true; //查询了学生
-											break;
-										case 'teacher':
-											item.hasGetTea = true; //查询了老师
-											break;
-										case 'parents':
-											item.hasGetPar = true; //查询了家长
-											break;
+										}
+										data.RspData.splice(0, 0, data3.RspData[0]);
 									}
-									return false;
+									if(data.RspCode == 0) {
+										var tempData = data.RspData;
+										mui.each(tempData, function(index, item) {
+											//console.log('群对象资料:' + JSON.stringify(item));
+											var qunBot = document.getElementById("bot_" + type2 + '_' + qun.gid).querySelector('.mui-row');
+											var table = document.getElementById("addData_" + type2 + '_' + qun.gid);
+											addData(qunBot, item, table);
+										});
+
+										var dataID = [];
+										mui.each(data.RspData, function(index1, item1) {
+											dataID.push(item1.stuid); //资料ID
+										});
+										if(dataID.length != 0) {
+											var dataIDS = dataID.join(',');
+											console.log('dataIDS:' + JSON.stringify(dataIDS));
+											//30.通过资料ID获取关联的人员
+											//所需参数
+											var comData2 = {
+												vvl: dataIDS, //群成员群ID，Stuid或ID串
+												vtp: 'ids' //资料ID类型,Id:单个ID,ids:ID串
+											};
+											// 等待的对话框
+											var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+											postDataPro_PostStuU(comData2, wd2, function(data2) {
+												console.log('30.通过资料ID获取关联的人员.postDataPro_PostStuU:RspCode:' + data2.RspCode + ',RspData:' + JSON.stringify(data2.RspData) + ',RspTxt:' + data2.RspTxt);
+												if(data2.RspCode == 0) {
+													mui.each(data2.RspData, function(index2, item2) {
+														document.getElementById("stuimg_" + item2.stuid).src = updateHeadImg(item2.uimg, 2);
+														//console.log("stuimg_" + item2.stuid + '|' + updateHeadImg(item2.uimg), 2);
+													});
+												} else {
+													if(data2.RspCode != 9) {
+														mui.toast(data2.RspTxt);
+													}
+												}
+												wd2.close();
+											});
+										} else {
+											mui.toast(data.RspTxt + '(' + qun.gname + ' ' + type3 + ')');
+										}
+									} else if(data.RspCode == 9) {
+										//查询为空
+										mui.toast(data.RspTxt + '(' + qun.gname + ' ' + type3 + ')');
+									} else {
+										mui.toast(data.RspTxt);
+									}
+									mui.each(qunList, function(index, item) {
+										if(item.gid == qun.gid) {
+											switch(type2) {
+												case 'student':
+													item.hasGetStu = true; //查询了学生
+													break;
+												case 'teacher':
+													item.hasGetTea = true; //查询了老师
+													break;
+												case 'parents':
+													item.hasGetPar = true; //查询了家长
+													break;
+											}
+											return false;
+										}
+									});
+									wd3.close();
+								});
+							} else {
+								if(data.RspCode == 0) {
+									var tempData = data.RspData;
+									mui.each(tempData, function(index, item) {
+										//console.log('群对象资料:' + JSON.stringify(item));
+										var qunBot = document.getElementById("bot_" + type2 + '_' + qun.gid).querySelector('.mui-row');
+										var table = document.getElementById("addData_" + type2 + '_' + qun.gid);
+										addData(qunBot, item, table);
+									});
+								} else if(data.RspCode == 9) {
+									//查询为空
+									mui.toast(data.RspTxt + '(' + qun.gname + ' ' + type3 + ')');
+								} else {
+									mui.toast(data.RspTxt);
 								}
-							});
+								mui.each(qunList, function(index, item) {
+									if(item.gid == qun.gid) {
+										switch(type2) {
+											case 'student':
+												item.hasGetStu = true; //查询了学生
+												break;
+											case 'teacher':
+												item.hasGetTea = true; //查询了老师
+												break;
+											case 'parents':
+												item.hasGetPar = true; //查询了家长
+												break;
+										}
+										return false;
+									}
+								});
+							}
 							wd.close();
 						});
 					}
@@ -670,13 +729,13 @@
 									type = item.showType;
 								} else {
 									document.getElementById('bot_' + type + '_' + show).style.display = 'none';
-									addBot(item, 'student');
+									addBot(item, 'parents');
 									document.getElementById(type).setAttribute('class', 'mui-control-item');
-									document.getElementById('student').setAttribute('class', 'mui-control-item mui-active');
+									document.getElementById('parents').setAttribute('class', 'mui-control-item mui-active');
 									show = qunId;
-									type = 'student';
-									item.showBotId = 'bot_student_' + qunId;
-									item.showType = 'student';
+									type = 'parents';
+									item.showBotId = 'bot_parents_' + qunId;
+									item.showType = 'parents';
 								}
 								return false;
 							}

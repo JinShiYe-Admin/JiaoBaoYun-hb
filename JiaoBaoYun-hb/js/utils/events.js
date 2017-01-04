@@ -93,14 +93,6 @@ var events = (function(mod) {
 				}
 			}]
 		});
-
-		//		var contentWebview = null;
-		//		document.querySelector('header').addEventListener('doubletap', function() {
-		//			if(contentWebview == null) {
-		//				contentWebview = plus.webview.currentWebview().children()[0];
-		//			}
-		//			contentWebview.evalJS("mui('#refreshContainer').pullRefresh().scrollTo(0,0,100)");
-		//		});
 	}
 
 	/**
@@ -133,9 +125,10 @@ var events = (function(mod) {
 					mui('#refreshContainer').pullRefresh().refresh(true);
 					var item = document.getElementById(id)
 						//清除所有数据
-					while(item.firstChild != null) {
-						item.removeChild(item.firstChild)
-					}
+					mod.clearChild(item);
+//					while(item.firstChild != null) {
+//						item.removeChild(item.firstChild)
+//					}
 					//加载新控件
 					fresh();
 					mui('#refreshContainer').pullRefresh().endPulldownToRefresh(); //refresh completed
@@ -147,16 +140,7 @@ var events = (function(mod) {
 			 */
 			function pullupRefresh() {
 				setTimeout(function() {
-					//					console.log('当前页面：'+curPageCount+';总页码：'+totalPageCount)
-
-					//					if(curPageCount<totalPageCount){
-					//						curPageCount++;
-					//						var item = document.getElementById(id)
-					//						var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					//						//加载更多数据
 					addMore();
-					//					}
-
 				}, 1500);
 			}
 		}
