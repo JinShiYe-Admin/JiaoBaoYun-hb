@@ -680,7 +680,8 @@
 			"image/cloud/record_history.gif",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"image/cloud/record_link.gif"
+			"image/cloud/record_link.gif",
+			"fonts/iconfont.ttf"
 		],
 		"refer": []
 	},
@@ -791,7 +792,8 @@
 			"js/libs/myStorage/myStorage.js",
 			"js/storageKeyName.js",
 			"js/cloud/cloud.js",
-			"js/utils/CloudFileUtil.js"
+			"js/utils/CloudFileUtil.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/cloud/storage_sub.html"
