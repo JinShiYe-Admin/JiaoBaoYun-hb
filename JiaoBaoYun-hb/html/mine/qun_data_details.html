@@ -72,7 +72,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title" style="text-align: left;">资料详情</h1>
-			<a id="finish" class="mui-pull-right" style="display: none;">保存</a>
+			<a id="finish" class="mui-pull-right" style="display: none;color: gray;">保存</a>
 		</header>
 
 		<div class="mui-content mui-scroll-wrapper">
@@ -206,6 +206,7 @@
 				var stuData = []; //记录获取的学生资料
 				var parData = []; //记录获取的学生资料的家长信息
 				var postNum = 0; //记录发送修改协议的次数
+				var change = false; //判断是否允许保存
 
 				//---学生界面中相关的元素---start---
 				var stu_name = document.getElementById("stu_name"); //学生姓名
@@ -341,27 +342,59 @@
 
 				//保存按钮
 				document.getElementById('finish').addEventListener('tap', function() {
-					console.log('保存：' + mstype);
-					if(mstype == 2) {
-						//老师
-						changeTea(); //修改老师资料
-					} else if(mstype == 3) {
-						//学生
-						var stuName = stu_name.value;
-						//if(stuName != data.stuname) { //判断是否修改了学生姓名
-						console.log('更改学生姓名:' + stuName);
-						changeStuName(stuName); //更改学生姓名
-						//}
-						postNum++;
-						mui.each(parData, function(index, item) {
-							postNum++;
-							console.log('家长信息:' + JSON.stringify(item));
-							var urel = document.getElementById("par_urel_" + item.utid).value;
-							//if(urel != item.urel) { //判断是否修改了学生姓名
-							console.log('更改家长关系:' + item.utid + '|' + urel);
-							changeParUrel(item.ustuid, urel); //更新与家长关系
-							//}
+					console.log('保存：' + mstype + '|change:' + change);
+					if(change) {
+						if(mstype == 2) {
+							//老师
+							changeTea(); //修改老师资料
+						} else if(mstype == 3) {
+							//学生
+							var stuName = stu_name.value;
+							if(stuName != data.stuname) { //判断是否修改了学生姓名
+								console.log('更改学生姓名:' + stuName);
+								postNum++;
+								changeStuName(stuName); //更改学生姓名
+							}
+
+							mui.each(parData, function(index, item) {
+								//console.log('家长信息:' + JSON.stringify(item));
+								var urel = document.getElementById("par_urel_" + item.utid).value;
+								if(urel != item.urel) { //判断是否修改了家长关系
+									console.log('更改家长关系:' + item.utid + '|' + urel);
+									postNum++;
+									changeParUrel(item.ustuid, urel); //更新与家长关系
+								}
+							});
+						}
+					}
+				});
+
+				//输入判断，如果未改变不允许保存
+				mui('.mui-content').on('input', 'input', function() {
+					if(mstype == 2) { //老师
+						if(tea_name.value == teaData.stuname && tea_job.value == teaData.job && tea_title.value == teaData.title && tea_sub.value == teaData.sub && (tea_expsch.value == teaData.expsch || (tea_expsch.value == '' && teaData.expsch == null))) {
+							document.getElementById("finish").style.color = 'gray';
+							change = false;
+						} else {
+							document.getElementById("finish").style.color = 'white';
+							change = true;
+						}
+					} else if(mstype == 3) { //学生
+						var parChange = false; //家长关系是否改变
+						mui.each(parData, function(index, element) {
+							var urel = document.getElementById("par_urel_" + element.utid).value;
+							if(urel != element.urel) {
+								parChange = true;
+							}
 						});
+
+						if(stu_name.value == data.stuname && !parChange) {
+							document.getElementById("finish").style.color = 'gray';
+							change = false;
+						} else {
+							document.getElementById("finish").style.color = 'white';
+							change = true;
+						}
 					}
 				})
 
@@ -444,11 +477,11 @@
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					postDataPro_PostUuinf(comData, wd, function(data) {
 						wd.close();
-						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						console.log('22通过用户资料ID获取用户各项资料postDataPro_PostUuinf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							if(type == 2) { //老师
 								teaData = data.RspData[0];
-								console.log('teaData:' + JSON.stringify(teaData));
+								//console.log('teaData:' + JSON.stringify(teaData));
 								//								if(teaData.utid != null) { //账号
 								//									tea_utid.value = teaData.utid;
 								//								}
@@ -473,7 +506,7 @@
 							} else if(type == 3) { //学生
 								mui.each(data.RspData, function(index, item) {
 									if(item.utid != null && item.utid != '') {
-										console.log('获取学生详细信息:' + JSON.stringify(item));
+										//console.log('获取学生详细信息:' + JSON.stringify(item));
 										stuData.push(item);
 										if(item.umstype == 3) {
 											//关联了学生账号
@@ -560,7 +593,7 @@
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					postDataPro_PostUinf(comData, wd, function(data) {
 						wd.close();
-						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						console.log('21.通过用户ID获取用户资料postDataPro_PostUinf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							var uData = data.RspData[0];
 							if(dataType == 3) { //学生
@@ -621,10 +654,10 @@
 						wd.close();
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
-							mui.toast('修改学生姓名：成功！');
-							console.log('修改学生姓名：成功！');
+							mui.toast('修改学生姓名 ' + stuName + ' 成功');
+							console.log('修改学生姓名 ' + stuName + ' 成功');
 						} else {
-							mui.toast('修改学生姓名：' + data.RspTxt);
+							mui.toast('修改学生姓名 ' + stuName + ' 失败: ' + data.RspTxt);
 						}
 						postNum--;
 						if(postNum == 0) {
@@ -662,10 +695,10 @@
 						wd.close();
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
-							mui.toast('更新与家长关系:成功!');
-							console.log('更新与家长关系:成功!');
+							mui.toast('更新与家长关系 ' + urel + ' 成功');
+							console.log('更新与家长关系 ' + urel + ' 成功');
 						} else {
-							mui.toast('更新与家长关系:' + data.RspTxt);
+							mui.toast('更新与家长关系 ' + urel + ' 失败: ' + data.RspTxt);
 						}
 						postNum--;
 						if(postNum == 0) {
