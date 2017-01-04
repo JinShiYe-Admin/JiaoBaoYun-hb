@@ -128,6 +128,8 @@ var addListener = function() {
 			groupRoles = [];
 			//获取默认身份
 			defaultRole = parseInt(this.getAttribute('mstype'));
+			//添加默认身份
+			groupRoles.push(defaultRole);
 			//默认身份选中
 			defaultCheck(defaultRole);
 			//获取群申请记录id;
@@ -144,6 +146,7 @@ var addListener = function() {
 	 */
 var defaultCheck = function(type) {
 	console.log('默认身份:'+type);
+	
 		check_parents.checked = false;
 		check_stu.checked = false;
 		check_tea.checked = false;

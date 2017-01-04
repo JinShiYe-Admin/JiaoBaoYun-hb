@@ -23,7 +23,7 @@ mui.plusReady(function() {
 			console.log("User pressed: " + e.index);
 			if(e.index > 0) {
 				postSex(e.index, function(data) { //回调函数
-					pInfo.usex=e.index-1;
+					pInfo.usex=e.index;
 					myStorage.setItem(storageKeyName.PERSONALINFO,pInfo);
 					if(e.index == 1) {
 						usex.innerText = '男';

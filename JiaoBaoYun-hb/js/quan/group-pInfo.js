@@ -27,6 +27,7 @@ mui.plusReady(function() {
 	window.addEventListener('remarkChanged',function(){
 		isSelf=false;
 		getRemark();
+		events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
 		events.fireToPageNone('class-group.html','groupInfoChanged');
 	})
 	window.addEventListener('nickChanged',function(e){

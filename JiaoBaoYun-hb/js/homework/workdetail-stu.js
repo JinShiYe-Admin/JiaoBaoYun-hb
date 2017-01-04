@@ -7,10 +7,9 @@ mui.plusReady(function() {
 		homeworkInfo = e.detail.data;
 		if(homeworkInfo.SubmitOnline) {
 			document.querySelector('.homework-brief').className = 'homework-brief submitOnline';
-			document.getElementById('btn-startWork').style.display = 'inline-block';
+			document.querySelector('.startWork-container').style.display = 'block';
 		} else {
 			document.querySelector('.homework-brief').className = 'homework-brief';
-			document.getElementById('btn-startWork').style.display = 'none';
 			document.querySelector('.startWork-container').style.display = 'none';
 		}
 		console.log('学生作业详情获取的数据：' + JSON.stringify(homeworkInfo));
