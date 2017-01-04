@@ -74,6 +74,82 @@
 				height: 42px;
 				width: 42px;
 			}
+
+			.move-out-left {
+				/*从左边移出屏幕*/
+				animation: move-out-left 0.4s;
+				-moz-animation: move-out-left 0.4s;
+				-webkit-animation: move-out-left 0.4s;
+				-o-animation: move-out-left 0.4s;
+				animation-fill-mode: forwards;
+			}
+
+			.move-out-right {
+				/*从右边移出屏幕*/
+				animation: move-out-right 0.4s;
+				-moz-animation: move-out-right 0.4s;
+				-webkit-animation: move-out-right 0.4s;
+				-o-animation: move-out-right 0.4s;
+				animation-fill-mode: forwards;
+			}
+
+			.move-in-left {
+				/*从左边移进屏幕*/
+				animation: move-in-left 0.4s;
+				-moz-animation: move-in-left 0.4s;
+				-webkit-animation: move-in-left 0.4s;
+				-o-animation: move-in-left 0.4s;
+				animation-fill-mode: forwards;
+			}
+
+			.move-in-right {
+				/*从右边移进屏幕*/
+				animation: move-in-right 0.4s;
+				-moz-animation: move-in-right 0.4s;
+				-webkit-animation: move-in-right 0.4s;
+				-o-animation: move-in-right 0.4s;
+				animation-fill-mode: forwards;
+			}
+
+			@keyframes move-out-left {
+				/*从左边移出屏幕*/
+				from {
+					right: 0%;
+				}
+				to {
+					right: 100%;
+				}
+			}
+
+			@keyframes move-out-right {
+				/*从右边移出屏幕*/
+				from {
+					left: 0%;
+				}
+				to {
+					left: 100%;
+				}
+			}
+
+			@keyframes move-in-left {
+				/*从左边移进屏幕*/
+				from {
+					right: 100%;
+				}
+				to {
+					right: 0%;
+				}
+			}
+
+			@keyframes move-in-right {
+				/*从右边移进屏幕*/
+				from {
+					left: 100%;
+				}
+				to {
+					left: 0%;
+				}
+			}
 		</style>
 	</head>
 
@@ -83,7 +159,7 @@
 			<p id="title" class="mui-title common-color-white" style="text-align: left;"></p>
 		</header>
 		<div class="mui-content">
-			<div id="top" style="display: none;">
+			<div id="top" style="display: none;position: absolute;width: 100%;">
 				<span id="upload" class="mui-icon iconfont iconfont-color icon-upload mui-pull-left" style="margin-left: 15px;"> 上传</span>
 				<span id="transport" class="mui-icon iconfont iconfont-color icon-chuanshu"> 传输列表</span>
 				<span id="addfolder" class="mui-icon iconfont iconfont-color icon-newfolder mui-pull-right" style="margin-right: 15px;"> 文件夹</span>
@@ -269,13 +345,24 @@
 					events.fireToPageNone('../cloud/cloud_home.html', 'cloudDataChange')
 					plus.webview.hide(main, 'pop-out');
 				} else {
-					//隐藏当前界面
-					document.getElementById("pid_" + showPid).style.display = 'none';
-					//显示上一个历史界面
+					//从屏幕右边移出当前界面
+					mui('#scroll_' + showPid + ' ul').each(function(index, element) {
+						element.className = 'mui-table-view move-out-right';
+					});
+
+					//从屏幕左边移进显示上一个历史界面
 					var show = showPidList[showPidList.length - 1];
 					document.getElementById("pid_" + show.pid).style.display = 'inline';
-					document.getElementById("title").innerText = show.pname;
-					showPid = show.pid;
+					mui('#scroll_' + show.pid + ' ul').each(function(index, element) {
+						element.className = 'mui-table-view move-in-left';
+					});
+
+					setTimeout(function() { //动画结束后
+						//隐藏当前界面
+						document.getElementById("pid_" + showPid).style.display = 'none';
+						document.getElementById("title").innerText = show.pname;
+						showPid = show.pid;
+					}, 400);
 				}
 			}
 
@@ -568,7 +655,7 @@
 				var div = document.createElement('div');
 				div.setAttribute('id', 'pid_' + pid);
 				div.innerHTML = '<div class="mui-scroll-wrapper"style="top:' + top + 'px;">\
-									<div class="mui-scroll">\
+									<div id="scroll_' + pid + '" class="mui-scroll">\
 										<ul id="ul_folder_' + pid + '" class="mui-table-view">\
 										</ul>\
 										<ul id="ul_file_' + pid + '" class="mui-table-view">\
@@ -689,8 +776,20 @@
 						});
 						//---滑动end---
 						console.log('上一个界面的showPid:' + showPid);
-						document.getElementById("pid_" + showPid).style.display = 'none';
+						//从屏幕左边移出当前界面
+						mui('#scroll_' + showPid + ' ul').each(function(index, element) {
+							element.className = 'mui-table-view move-out-left';
+						});
+						var showPidTimeOut = showPid;
+						setTimeout(function() {
+							document.getElementById("pid_" + showPidTimeOut).style.display = 'none';
+						}, 400);
+
 						document.getElementById("pid_" + pid).style.display = 'inline';
+						//从屏幕右边移进新界面
+						mui('#scroll_' + pid + ' ul').each(function(index, element) {
+							element.className = 'mui-table-view move-in-right';
+						});
 						showPid = pid;
 						//增加文件夹历史
 						var pData2 = {
