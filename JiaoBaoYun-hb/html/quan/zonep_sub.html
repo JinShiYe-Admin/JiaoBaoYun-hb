@@ -99,9 +99,9 @@
 			
 			.dynamic-line {
 				/*点赞列表上面的横线*/
-				height: 0.5px;
+				height: 1px;
 				width: 100%;
-				background: lightgrey;
+				background: #e4e4e4 ;
 			}
 			
 			.dynamic-contenttext {
@@ -124,7 +124,8 @@
 				/*底部的评论按钮*/
 				width: 100%;
 				margin-top: 10px;
-				border-width: 0.5px;
+				border-width: 1px;
+				border-color: #e4e4e4 ;
 			}
 			
 			.dynamic-image-more {
@@ -189,7 +190,7 @@
 			<div class="footer-center">
 				<textarea onblur="inputOnblur(this)" id='msg-content' type="text" class='input-text'></textarea>
 			</div>
-			<button id='btn-reply' class="mui-btn mui-btn-green btn-commit">评论</button>
+			<button id='btn-reply' class="mui-btn mui-btn-green btn-commit" style="background-color: #1db8F1;border-color:#1db8F1 ;">评论</button>
 		</footer>
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
@@ -243,6 +244,10 @@
 				wd.close();
 				console.log('获取个人空间列表_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
+					if(data.RspData.Data.length==0){
+						mui.toast('暂无动态')
+						return;
+					}
 					setUserSpaceReadByUser();
 					totalCnt = data.RspData.TotalCnt;
 					var tempRspData = data.RspData.Data;
@@ -390,7 +395,6 @@
 			};
 			requestData(comData);
 			window.addEventListener('refreshZonep', function(data) {
-				console.log(66666666)
 				requestData(comData)
 			})
 
@@ -472,9 +476,22 @@
 					postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
 						wd.close();
 						if(data.RspCode == 0) {
+							console.log('index='+index)
 							var a = document.getElementById("praise" + index);
 							a.style.color = 'rgb(0, 165, 224)'
 							mui.toast('点赞成功');
+							var PraiseList = document.getElementById("PraiseList"+index);
+							var praiseNameList =  PraiseList.getElementsByTagName("font");
+							if(praiseNameList.length>0){
+								var praiseName = praiseNameList[0];
+								praiseName.innerHTML = praiseName.innerHTML+'、'+personalunick;
+								console.log(praiseName.innerHTML);
+							}else{
+								
+								PraiseList.innerHTML = '<img src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />'+
+				 '<font class="common-font-family-Regular dynamic-praise-name">' + personalunick + '</font>';
+								console.log(PraiseList.outerHTML)
+							}
 						} else {
 							mui.toast(data.RspTxt);
 						}
@@ -494,6 +511,18 @@
 							var a = document.getElementById("praise" + index);
 							a.style.color = 'rgb(143, 143, 148)'
 							mui.toast('取消点赞成功');
+							var PraiseList = document.getElementById("PraiseList"+index);
+							var praiseName =  PraiseList.getElementsByTagName("font")[0];
+							if(praiseName.innerHTML.indexOf('、')>-1){
+								console.log('多个人点赞')
+								praiseName.innerHTML = praiseName.innerHTML.replace('、'+personalunick,'');
+								praiseName.innerHTML = praiseName.innerHTML.replace(personalunick,'');
+							}else{
+								console.log('一个人点赞')
+								
+								console.log(PraiseList.outerHTML);
+								PraiseList.removeChild(praiseName);
+							}
 						} else {
 							mui.toast(data.RspTxt);
 						}
@@ -526,13 +555,7 @@
 					replyContainer.style.display = 'block';
 					showSoftInput('#msg-content');
 					window.event.stopPropagation()
-						//		repliedCell = this.cell;
-						//		console.log('点击的回复包含数据：' + JSON.stringify(repliedCell));
-						//		msgType = this.cell.MsgType;
-						//		document.getElementById('msg-content').value = '';
-						//				mui('.mui-popover').popover('show');
-						//				document.getElementById("inputComment").focus();
-						//				window.event.stopPropagation()
+
 
 				});
 				//底部评论按钮
@@ -555,8 +578,6 @@
 					showSoftInput('#msg-content');
 					window.event.stopPropagation()
 
-					//				var id_Index = this.id.replace('replyComment', '');
-					//				console.log('id_Index===' + id_Index)
 
 				});
 
@@ -640,11 +661,6 @@
 			Data = [InfoList, ImageList, InteractionList]
 			return Data;
 		}
-		//		mui(".mui-content").on("tap", "a", function() {});
-		//关闭创建群界面
-		document.getElementById('closepop').addEventListener('tap', function() {
-			mui('.mui-popover').popover('hide');
-		});
 
 		function addReplyLisetner() {
 			events.addTap('btn-reply', function() {

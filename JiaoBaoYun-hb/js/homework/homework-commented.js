@@ -3,6 +3,7 @@ mui.init();
 mui.plusReady(function() {
 	window.addEventListener('refreshAnswer', function(e) {
 					homeworkDetailNodes.stuCell.innerHTML = e.detail.data.answer;
+					homeworkResult.HomeworkResult.Result = e.detail.data.answer;
 				})
 	events.addTap('modifyHomework', function() {
 		console.log('homeworkResult=' + JSON.stringify(homeworkResult));
@@ -199,7 +200,7 @@ var requestTeaInfo = function(teaId) {
 			mui.extend(homeworkResult, data.RspData[0])
 			if(homeworkModel.workType == 0) {
 				if(homeworkModel.UploadTime){
-									var dateArr = homeworkModel.UploadTime.split(' ');
+				var dateArr = homeworkModel.UploadTime.split(' ');
 				homeworkModel.UploadTime = dateArr[0];
 				homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime+'</span>'
 

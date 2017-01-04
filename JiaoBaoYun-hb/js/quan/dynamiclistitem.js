@@ -41,7 +41,7 @@ var dynamiclistitem = (function($, mod) {
 		var html2 = '<img class=" dynamic-personal-image" src="' + InfoList[0] + '"></div>';
 		var html3 = '<div class="mui-media-body dynamic-padding-left-10px">'+closeempty;
 		//姓名
-		var html4 = '<h4>' + InfoList[1] + '</h4>';
+		var html4 = '<h6 style = "color:black">' + InfoList[1] + '</h6>';
 		//时间
 		var html5 = '<p>' + InfoList[2] + '</p></div></div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext">';
@@ -131,7 +131,7 @@ var dynamiclistitem = (function($, mod) {
 		//						2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
 
 		var html = '';
-		var htmlPraiseList = ''; //点赞列表
+		var htmlPraiseList = '<div  class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div id= "PraiseList'+id+'" class="mui-media-body">'; //点赞列表
 		var htmlCommentList = ''; //评论列表
 
 		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body">';
@@ -150,25 +150,28 @@ var dynamiclistitem = (function($, mod) {
 //				var html6 = '<img src="../../image/dynamic/icon_forward.png" class="dynamic-icon-forward" />';
 		var html6 = '<font style="padding-right:7px"></font>';
 		var html7 = '</div><div class="mui-media-body"><p>浏览' + viewCount + '次</p></div></div>';
-		var html8 = '<div class="mui-col-sm-12 mui-col-xs-12 "><div class="mui-media-body dynamic-line"></div></div>';
+		var html8 = '<div id="line" class="mui-col-sm-12 mui-col-xs-12 "><div class="mui-media-body dynamic-line"></div></div>';
 
 		html = html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8;
+		if(praiseList.length>0){
+			var praiseListStr =  praiseList.join('、');
+			var html3 = '<img src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />'+'<font class="common-font-family-Regular dynamic-praise-name praiseName">' + praiseListStr+'</font>';
+			htmlPraiseList = htmlPraiseList +html3+ '</div></div>';
+		}
 
-		//点赞列表
-		$.each(praiseList, function(index, element) {
-			var html4 = '';
-			var html5 = '';
-			if(index == 0) { //第一个点赞者
-				var html1 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px">';
-				var html2 = '<div class="mui-media-body">';
-				var html3 = '<img src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />';
-				html4 = html1 + html2 + html3 + '<font class="common-font-family-Regular dynamic-praise-name">' + element + '</font>';
-			} else if(index >= 1) {
-				html5 = '<font class="common-font-family-Regular dynamic-praise-name">、' + element + '</font>';
-			}
-			htmlPraiseList = htmlPraiseList + html4 + html5;
-		});
-		htmlPraiseList = htmlPraiseList + '</div></div>';
+//		//点赞列表
+//		$.each(praiseList, function(index, element) {
+//			var html4 = '';
+//			var html5 = '';
+//			if(index == 0) { //第一个点赞者
+//				
+//				
+//			} else if(index >= 1) {
+//				html5 = '、' + element ;
+//			}
+//			htmlPraiseList = htmlPraiseList + html4 + html5;
+//		});
+//		htmlPraiseList = htmlPraiseList +html4+ '</div></div>';
 
 		//评论列表
 		var htmlCommentList1 = '<div id="commentList' + id + '" class="mui-col-sm-12 mui-col-xs-12">';
