@@ -445,10 +445,10 @@ var postDataPro_PostDiFiE = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINURL + 'PostDiFiE', enData, commonData, 1, wd, callback);
 }
 
-//29.用户修改群昵称
+//29.用户修改个人群昵称
 //所需参数
 //		var comData = {
-//			vvl:'',//群成员群ID，gutid
+//			vvl:'',//成员在群ID，gutid
 //			vvl1:''//群昵称
 //		};
 var postDataPro_PostGuNameE = function(commonData, wd, callback) {
