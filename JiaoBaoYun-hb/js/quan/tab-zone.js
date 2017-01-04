@@ -135,7 +135,7 @@ function addSomeEvent() {
 			var li = ul.children[cellIndex];
 			var tempModel = datasource[tableIndex].userList[cellIndex];
 			li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image" src="' + tempModel.uimg + '" />' + '<p class="time">' + tempModel.PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
-				tempModel.ugnick + '<p class="mui-ellipsis">' + tempModel.MsgContent + '</p>';
+				tempModel.ugname + '<p class="mui-ellipsis">' + tempModel.MsgContent + '</p>';
 			var seg = document.getElementById('segmentedControl');
 			var a = seg.children[tableIndex];
 			a.innerHTML = '';
@@ -464,7 +464,11 @@ function getBottomList(index, userLists) {
 					userIds.join(',');
 					var upString = '[' + userIds.join() + ']';
 					getUserSpaces(upString, i); //获取多用户空间列表
-
+// "gid": 1,
+//              "gutid": 259,
+//              "utid": 4,
+//              "ugname": "rockan007",
+//              "ugname": "rockan007[家长]",
 				}
 			}
 		} else {
@@ -530,9 +534,9 @@ function getUserSpaces(upString, index) {
 				}
 				var Arrindex = tempUtidArr.indexOf(groupUserList[i].utid);
 				if(Arrindex > -1) {
-					tempUserArr[Arrindex].ugnick = tempUserArr[Arrindex].ugnick + groupUserList[i].mstypeName;
+					tempUserArr[Arrindex].ugname = tempUserArr[Arrindex].ugname + groupUserList[i].mstypeName;
 				} else {
-					groupUserList[i].ugnick = groupUserList[i].ugnick + groupUserList[i].mstypeName;
+					groupUserList[i].ugname = groupUserList[i].ugname + groupUserList[i].mstypeName;
 					tempUtidArr.push(groupUserList[i].utid);
 					tempUserArr.push(groupUserList[i]);
 
@@ -632,7 +636,7 @@ function refreshUI() {
 			} else {
 				noReadHTML = '';
 			}
-			var name = userList[j].ugnick;
+			var name = userList[j].ugname;
 			var dateArr = userList[j].PublishDate.split(' ');
 			userList[j].PublishDate = dateArr[0];
 			userList[j].MsgContent = userList[j].MsgContent.replace(new RegExp(/(<br \/>)/g),'\n')
