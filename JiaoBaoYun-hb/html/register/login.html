@@ -84,7 +84,7 @@
 				background-repeat: no-repeat;
 				margin: 0px 20px;
 				/*-webkit-filter: grayscale(100%); */
-				border: solid 1px #ddd;
+				border: solid 1px #13b7f6;
 				border-radius: 25px;
 			}
 
@@ -165,7 +165,7 @@
 		<script>
 			(function($, doc) {
 				mui.init({
-					statusBarBackground: '#13b7f6';
+					statusBarBackground: '#13b7f6'
 				});
 
 				$.plusReady(function() {
@@ -357,6 +357,7 @@
 				});
 
 				function loginBtn(loginInfo) {
+					console.log('1221111');
 					//先发送握手协议
 					//需要加密的数据
 					var enData0 = {};
