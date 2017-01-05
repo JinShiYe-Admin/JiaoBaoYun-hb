@@ -118,6 +118,7 @@
 			
 			.replyComment {
 				padding-top: 5px;
+				
 			}
 			
 			.dynamic-comment-btn {
@@ -561,15 +562,18 @@
 				//底部评论按钮
 				mui('.mui-table-view').on('tap', '.dynamic-comment-btn', function() {
 					tempIndex = this.id.replace('bottomComment', '');
-					console.log('tempIndex====' + tempIndex)
+					console.log('tap====' + tempIndex)
 					var replyContainer = document.getElementById('footer');
 					document.getElementById('footer').className = 'mui-bar-tab';
 					replyContainer.style.display = 'block';
 					showSoftInput('#msg-content');
 					window.event.stopPropagation()
 				});
+
+				
 				//			回复评论
 				mui('.mui-table-view').on('tap', '.replyComment', function() {
+					
 					tempIndex = this.id.replace('replyComment', '');
 					console.log('tempIndex====' + tempIndex)
 					var replyContainer = document.getElementById('footer');
@@ -839,20 +843,10 @@
 			inputComment.value = '';
 			document.getElementById('footer').className = '';
 			document.getElementById('footer').style.display = 'none';
-			jQuery('#msg-content').blur();
-			//			mui('.mui-popover').popover('hide');
+
 
 		}
-		//mui-popover显示时执行
-		mui('body').on('shown', '.mui-popover', function(e) {
-			console.log('shown', e.detail.id); //detail为当前popover元素
 
-		});
-		//mui-popover隐藏时执行
-		mui('body').on('hidden', '.mui-popover', function(e) {
-			console.log('hidden', e.detail.id); //detail为当前popover元素
-			document.getElementById("inputComment").blur();
-		});
 	</script>
 
 </html>
