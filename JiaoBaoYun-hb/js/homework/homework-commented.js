@@ -209,6 +209,7 @@ var requestTeaInfo = function(teaId) {
 					homeworkModel.UploadTime = homeworkResult.SubmitTime;
 					var dateArr = homeworkModel.UploadTime.split(' ');
 				homeworkModel.UploadTime = dateArr[0];
+				
 				homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime+'</span>'
 				}
 				homeworkDetailNodes.title.innerText = data.RspData[0].unick;
@@ -218,7 +219,9 @@ var requestTeaInfo = function(teaId) {
 			} else {
 				var dateArr = homeworkResult.HomeworkResult.UploadTime.split(' ');
 				homeworkResult.HomeworkResult.UploadTime = dateArr[0];
-				homeworkDetailNodes.publishDate.innerHTML = +data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkResult.HomeworkResult.UploadTime+'</span>'
+				console.log('1111111==='+data.RspData[0].unick)
+				
+				homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkResult.HomeworkResult.UploadTime+'</span>'
 
 			}
 			requireTeachersAnswer();
