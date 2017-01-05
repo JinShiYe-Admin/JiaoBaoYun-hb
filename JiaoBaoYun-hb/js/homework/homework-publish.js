@@ -246,7 +246,7 @@ function requestPublishHomework() {
 		}
 	}
 	if(tempStuArray.length == 0) {
-		mui.toast('无发布作业的学生对象！');
+		mui.toast('群内无学生或家长，无法发布作业！');
 		return;
 	}
 	//给学生去重

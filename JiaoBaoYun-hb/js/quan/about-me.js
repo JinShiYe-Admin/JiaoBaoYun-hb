@@ -12,17 +12,23 @@ var totalPage = 0;
 //提醒总页码
 var alertTotalPage = 0;
 //获取个人信息                                                        
-var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+var personalUTID;
 //判断是加载更多1，还是刷新2
 var flag = 2;
-var pId = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
+var pId;
+var pName;
 var msgType = 0; //消息类型
 var comData = {}; //回复传值
 var repliedCell;
+var repliedItem; //回复的对象
 //页码请求到要显示的数据，array[model_userSpaceAboutMe]
 var aboutMeArray = [];
 mui.init();
 mui.plusReady(function() {
+		var pInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+		personalUTID = pInfo.utid;
+		pId = parseInt(pInfo.utid);
+		pName = pInfo.unick;
 		initNativeObjects();
 		//页码1
 		pageIndex = 1;
@@ -94,35 +100,41 @@ var ifHaveReferContent = function(cellData) {
 var addReplyView = function() {
 	mui('.mui-table-view').on('tap', '.reply', function() {
 		var replyContainer = document.getElementById('footer');
-		document.getElementById('footer').className='mui-bar-tab';
+		document.getElementById('footer').className = 'mui-bar-tab';
 		replyContainer.style.display = 'block';
 		showSoftInput('#msg-content');
 		repliedCell = this.cell;
+		repliedItem = this.parentElement.parentElement.querySelector(".extras");
 		console.log('点击的回复包含数据：' + JSON.stringify(repliedCell));
 		msgType = this.cell.MsgType;
 		document.getElementById('msg-content').value = '';
 	})
 }
 var addReplyLisetner = function() {
-	events.addTap('btn-reply', function() {
+		events.addTap('btn-reply', function() {
 
-		var replyValue = document.getElementById('msg-content').value;
-		console.log('监听没反应' + replyValue)
-		if(replyValue) {
-			postReply(function() {
-				document.getElementById('footer').className='';
-				document.getElementById('footer').style.display = 'none';
-				jQuery('#msg-content').blur();
-			})
-		} else {
-			mui.toast('请输入回复内容！')
-		}
-	})
-}
-/**
- * 
- * @param {Object} callback
- */
+			var replyValue = document.getElementById('msg-content').value;
+			console.log('监听没反应' + replyValue)
+			if(replyValue) {
+				postReply(function() {
+					document.getElementById('footer').className = '';
+					document.getElementById('footer').style.display = 'none';
+					jQuery('#msg-content').blur();
+					var p = document.createElement('p');
+					p.className = "single-line";
+					p.innerHTML = '<span>'+pName+'</span>回复<span>'+events.shortForString(repliedCell.MaxUserName,4)+':</span>'+replyValue;
+						//				<p class="single-line" ><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>'
+					repliedItem.appendChild(p);
+				})
+			} else {
+				mui.toast('请输入回复内容！')
+			}
+		})
+	}
+	/**
+	 * 
+	 * @param {Object} callback
+	 */
 var postReply = function(callback) {
 	var msgContent = document.getElementById('msg-content');
 	console.log('类型:' + msgType)
@@ -194,86 +206,74 @@ var ifHaveImg = function(cellData) {
 	 * @param {Object} cell 单个cell数据
 	 */
 var getCellData = function(cell) {
-		var cellData = new Object();
-		cellData.MsgType = cell.MsgType;
-		cellData.UserName = cell.UserName;
-		cellData.UserImg = cell.UserImg;
-		cellData.UserContent = cell.Content;
-		cellData.headImg = cell.MaxUserImg;
-		cellData.content = cell.MaxContent;
-		cellData.referContent = cell.MsgContent;
-		cellData.UserOwnerNick = cell.UserOwnerNick;
-		switch(cell.MsgType) {
-			//其他用户评论
-			case 1:
-				cellData.title = cell.MaxUserName + ' 评论了你';
+	var cellData = new Object();
+	cellData.MsgType = cell.MsgType;
+	cellData.UserName = cell.UserName;
+	cellData.UserImg = cell.UserImg;
+	cellData.UserContent = cell.Content;
+	cellData.headImg = cell.MaxUserImg;
+	cellData.content = cell.MaxContent;
+	cellData.referContent = cell.MsgContent;
+	cellData.UserOwnerNick = cell.UserOwnerNick;
+	switch(cell.MsgType) {
+		//其他用户评论
+		case 1:
+			cellData.title = cell.MaxUserName + ' 评论了你';
 
-				break;
-				//评论的回复
-			case 2:
-				cellData.title = shorterForName(cell.MaxUserName) + " 回复";
-				break;
-				//其他用户点赞
-			case 3:
-				cellData.title = shorterForName(cell.MaxUserName) + " 赞了我";
-				break;
-				//其他用户留言
-			case 4:
-				cellData.title = shorterForName(cell.MaxUserName) + " 给我留言";
-				break;
-				//留言的回复
-			case 5:
-				cellData.title = shorterForName(cell.MaxUserName) + " 给我留言的回复";
-				break;
-			case 6:
-				cellData.title = shorterForName(cell.UserName) + ' 的作业提醒';
-				break;
-			default:
-				break;
-		}
-		cellData.time = cell.MsgDate;
-		if(cellData.MsgType != 6) {
-			var messages = new Array();
-			if(cellData.MsgType != 4) {
-				if(cell.Content) {
-					messages.push('<p class="single-line"><span>' + cell.UserName + ':</span>' + cell.Content + '</p>')
-				}
+			break;
+			//评论的回复
+		case 2:
+			cellData.title = events.shortForString(cell.MaxUserName, 4) + " 回复";
+			break;
+			//其他用户点赞
+		case 3:
+			cellData.title = events.shortForString(cell.MaxUserName, 4) + " 赞了我";
+			break;
+			//其他用户留言
+		case 4:
+			cellData.title = events.shortForString(cell.MaxUserName, 4) + " 给我留言";
+			break;
+			//留言的回复
+		case 5:
+			cellData.title = events.shortForString(cell.MaxUserName, 4) + " 给我留言的回复";
+			break;
+		case 6:
+			cellData.title = events.shortForString(cell.UserName, 4) + ' 的作业提醒';
+			break;
+		default:
+			break;
+	}
+	cellData.time = cell.MsgDate;
+	if(cellData.MsgType != 6) {
+		var messages = new Array();
+		if(cellData.MsgType != 4) {
+			if(cell.Content) {
+				messages.push('<p class="single-line"><span>' + cell.UserName + ':</span>' + cell.Content + '</p>')
 			}
+		}
 
-			if(cell.MsgArray && cell.MsgArray.length > 0) {
-				cell.MsgArray.forEach(function(msg, i, msgArray) {
-					if(msg.MsgContent) {
-						if(msg.MsgToName) {
-							messages.push('<p class="single-line" ><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>');
-						} else {
-							messages.push('<p class="single-line" ><span>' + msg.MsgFromName + ':</span>' + msg.MsgContent + '</p>');
-						}
+		if(cell.MsgArray && cell.MsgArray.length > 0) {
+			cell.MsgArray.forEach(function(msg, i, msgArray) {
+				if(msg.MsgContent) {
+					if(msg.MsgToName) {
+						messages.push('<p class="single-line" ><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>');
+					} else {
+						messages.push('<p class="single-line" ><span>' + msg.MsgFromName + ':</span>' + msg.MsgContent + '</p>');
 					}
+				}
 
-				});
-			}
-			cellData.messages = messages.join('');
+			});
 		}
+		cellData.messages = messages.join('');
+	}
 
-		return cellData;
-	}
-	/**
-	 * 缩短显示人名的长度
-	 * @param {Object} name 要缩短的字符串
-	 */
-var shorterForName = function(name) {
-		var shorterName;
-		if(name.length > 6) {
-			shorterName = name.substring(0, 4);
-		} else {
-			shorterName = name;
-		}
-		return shorterName;
-	}
-	/**
-	 * 请求数据
-	 * @param {Object} callback 请求数据后的回调
-	 */
+	return cellData;
+}
+
+/**
+ * 请求数据
+ * @param {Object} callback 请求数据后的回调
+ */
 function requestData() {
 	if(pageIndex > 1) {
 		if(pageIndex <= totalPage) {
@@ -428,7 +428,7 @@ var requireHomeworkAlert = function(aboutMeData) {
 			var allData = aboutMeData.concat(data.RspData.Data);
 			//数据排序
 			allData.sort(function(a, b) {
-				return -((new Date(a.MsgDate.replace(/-/g,'/')).getTime()) - (new Date(b.MsgDate.replace(/-/g,'/')).getTime()));
+				return -((new Date(a.MsgDate.replace(/-/g, '/')).getTime()) - (new Date(b.MsgDate.replace(/-/g, '/')).getTime()));
 			})
 			console.log('与我相关界面获取的所有数据:' + JSON.stringify(allData))
 				//获取人员信息
