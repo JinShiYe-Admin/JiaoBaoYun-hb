@@ -289,6 +289,7 @@
 				var upFolderEntry = null; //上传文件夹的目录对象
 				var downFolderEntry = null; //下载文件夹的目录对象
 				console.log('传输列表');
+				document.querySelector("#slider").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
 
 				//---滑动start---
 				mui(".mui-scroll-wrapper").scroll({

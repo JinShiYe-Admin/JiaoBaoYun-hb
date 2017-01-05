@@ -6,6 +6,7 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
 	</head>
 
 	<body>
@@ -60,7 +61,7 @@
 				});
 				events.preload('yanZhengMa.html');
 				events.addTap('register', function() {
-					
+
 					if(!phoneNum.value) {
 						mui.toast('请输入手机号码');
 						return;
@@ -116,7 +117,7 @@
 								events.fireToPage('yanZhengMa.html', 'yanzhengma', function() {
 									return tempValue;
 								});
-//								console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								//								console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 								if(data.RspCode != 0000) {
 									mui.toast(data.RspTxt);
 									return;

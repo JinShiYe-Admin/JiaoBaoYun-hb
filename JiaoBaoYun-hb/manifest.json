@@ -66,7 +66,7 @@
         "Storage": {
             "description": "管理应用本地数据"
         },
-        
+
         "Uploader": {
             "description": "管理文件上传任务"
         },
@@ -113,13 +113,15 @@
 				"password": "",/*iOS应用打包个人证书导入密码*/
 				"p12": "",/*iOS应用打包个人证书，打包配置文件关联的个人证书*/
 				"devices": "universal",/*iOS应用支持的设备类型，可取值iphone/ipad/universal*/
-				"frameworks": []
+				"frameworks": [],
+				"UIReserveStatusbarOffset": false/*沉浸式状态栏模式*/
 			},
 			"google": {
 				"packagename": "",/*Android应用包名，如io.dcloud.HelloH5*/
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
+				"ImmersedStatusbar": true,/*沉浸式状态栏模式*/
 				"permissions": ["<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>","<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>","<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"]
 			},
 			"orientation": ["portrait-primary"],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
@@ -816,7 +818,8 @@
 					"js/utils/sortSign.js",
 					"js/utils/signHmacSHA1.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"css/utils/common.css"
 				],
 				"refer": [
 					"html/register/yanZhengMa.html"
@@ -845,7 +848,9 @@
 					"js/utils/RSAEncrypt.js",
 					"js/libs/jquery.js",
 					"fonts/mui.ttf",
-					"js/publicProtocol.js"
+					"js/publicProtocol.js",
+					"css/utils/common.css",
+					"js/utils/Statusbar.js"
 				],
 				"refer": [
 					"html/register/register_phoneNumber.html",
@@ -875,7 +880,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"js/libs/jquery.js"
+					"js/libs/jquery.js",
+					"css/utils/common.css"
 				],
 				"refer": [
 					"html/index.html",
@@ -1455,7 +1461,8 @@
 					"js/storageKeyName.js",
 					"js/cloud/cloud.js",
 					"js/utils/CloudFileUtil.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"image/cloud/A_folder.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -2120,7 +2127,8 @@
 			},
 			"html/homework/workdetailTea-temporary.html": {
 				"resources": [
-					"html/homework/workdetailTea-temSub.html"
+					"html/homework/workdetailTea-temSub.html",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -2177,7 +2185,8 @@
 					"css/iconfont/iconfont.css",
 					"js/publicProtocol.js",
 					"js/mui.min.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/storageKeyName.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2336,14 +2345,31 @@
 			},
 			"html/cloud/record_student_main.html": {
 				"resources": [
-					"html/cloud/record_student_sub.html"
+					"html/cloud/record_student_sub.html",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0
 			},
 			"html/cloud/record_student_sub.html": {
 				"resources": [
-					"js/quan/studentdynamic.js"
+					"js/quan/studentdynamic.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/BigInt.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
