@@ -37,7 +37,7 @@ var arrayDupRemoval = function(array) {
 var updateHeadImg = function(string, flag) {
 	var tempStr = '';
 	//判断img是否为null，或者空
-	if(string == '' || string == null) { //赋值
+	if(string == '' || string == null  || string == 'null') { //赋值
 		if(flag == 1) {
 			tempStr = '../image/utils/default_personalimage.png';
 		} else if(flag == 2) {
