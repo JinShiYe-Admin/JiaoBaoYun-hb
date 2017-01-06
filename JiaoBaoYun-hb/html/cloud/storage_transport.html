@@ -336,6 +336,8 @@
 
 				//新增一项下载任务
 				window.addEventListener('addDownload', function(e) {
+					var gallery = mui('.mui-slider');
+					gallery.slider().gotoItem(0);
 					//---数据准备---start---
 					var subData = e.detail.data; //接收页面传入的参数值
 					//var subData = {
@@ -363,6 +365,8 @@
 
 				//新增一项上传任务
 				window.addEventListener('addUpload', function(e) {
+					var gallery = mui('.mui-slider');
+					gallery.slider().gotoItem(1);
 					//---数据准备---start---
 					var subData = e.detail.data; //接收页面传入的参数值
 					//var subData = {
@@ -1106,7 +1110,7 @@
 						wd.close();
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
-							mui.toast('上传成功');
+							mui.toast(comData.fname + comData.ftype + ' 上传成功');
 							copyFileToUpload(filePath, fname);
 						} else {
 							if(data.RspCode == 8) {

@@ -55,8 +55,8 @@
 
 			//创建子页面
 			var sub = plus.webview.create('record_student_sub.html', 'record_student_sub.html', {
-				top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px'
-				//bottom: localStorage.getItem('$Statusbar'),
+				top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px',
+				bottom: '0px'
 			}, {
 				data: data
 			});
