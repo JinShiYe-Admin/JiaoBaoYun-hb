@@ -242,6 +242,9 @@
 				var content = document.body.querySelector('.mui-content');
 				var qunlist = document.getElementById("qunlist"); //群名称显示栏
 				var controladd = document.getElementById("controladd"); //群名称显示栏添加群按钮前一个item
+				document.querySelector(".mui-content").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 5) + 'px';
+				document.querySelector(".keep-line-blue").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 54) + 'px';
+				document.querySelector(".keep-line-white").style.top = (localStorage.getItem('StatusHeightNo') * 1+ 45) + 'px';
 
 				mui(".mui-scroll-wrapper").scroll({
 					scrollY: true, //是否竖向滚动
@@ -640,7 +643,7 @@
 					} else {
 						div.style.display = "none";
 					}
-					var html1 = '<div class="mui-scroll-wrapper" style="background: white;top: 95px;">\
+					var html1 = '<div class="mui-scroll-wrapper" style="background: white;top: ' + (localStorage.getItem('StatusHeightNo') * 1 + 95) + 'px;">\
 									<div class="mui-scroll">\
 										<ul class="mui-table-view">\
 											<div class="mui-row" style="margin-top: 8px;">';

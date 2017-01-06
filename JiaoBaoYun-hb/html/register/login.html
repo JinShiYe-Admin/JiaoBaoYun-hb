@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<style>
 			.ui-page-login,
 			body {
@@ -84,7 +85,7 @@
 				background-repeat: no-repeat;
 				margin: 0px 20px;
 				/*-webkit-filter: grayscale(100%); */
-				border: solid 1px #ddd;
+				border: solid 1px #13b7f6;
 				border-radius: 25px;
 			}
 
@@ -142,6 +143,7 @@
 		</div>
 		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/utils/Statusbar.js"></script>
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
 		<!--本地存储-->
 		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
@@ -165,10 +167,32 @@
 		<script>
 			(function($, doc) {
 				mui.init({
-					statusBarBackground: '#f7f7f7'
+					//statusBarBackground: '#13b7f6'
 				});
 
 				$.plusReady(function() {
+					//---设置沉浸式---start---
+					Statusbar.barHeight(); //设置距离顶部的高度
+					var header = document.querySelector('header');
+					if(header) {
+						if(mui.os.android) {
+							//console.log('window.header');
+							var headerNum = localStorage.getItem('StatusHeightNo') * 1 + 45;
+							//设置顶部导航高度（状态栏）
+							header.style.height = headerNum + 'px';
+							header.style.paddingTop = localStorage.getItem('$Statusbar');
+							//mui.alert(headerNum, 'header-height');
+							//mui.alert(localStorage.getItem('StatusbarStr'), 'header-paddingTop');
+							var content = document.querySelector(".mui-content");
+							//设置顶部导航高度（状态栏）
+							if(content) {
+								//console.log('window.content');
+								content.style.marginTop = localStorage.getItem('$Statusbar');
+							}
+						}
+					}
+					//---设置沉浸式---end---
+
 					events.preload('register_phoneNumber.html');
 					plus.screen.lockOrientation("portrait-primary");
 					var settings = app.getSettings();
@@ -338,7 +362,7 @@
 					//					}, false);
 					//
 					window.addEventListener('resize', function() {
-//						oauthArea.style.display = document.body.clientHeight > 400 ? 'block' : 'none';
+						//						oauthArea.style.display = document.body.clientHeight > 400 ? 'block' : 'none';
 					}, false);
 					//
 					var backButtonPress = 0;
@@ -357,6 +381,7 @@
 				});
 
 				function loginBtn(loginInfo) {
+					console.log('1221111');
 					//先发送握手协议
 					//需要加密的数据
 					var enData0 = {};
@@ -378,15 +403,15 @@
 							//账号密码登录协议
 							//需要加密的数据
 							var enData = {
-								uid: loginInfo.account,//用户手机号或账号或email
+								uid: loginInfo.account, //用户手机号或账号或email
 								pw: loginInfo.password,
 							};
 							//不需要加密的数据
 							var comData = {
 								uuid: plus.device.uuid,
-								shaketype: 'login',//注册(reg),登录(login),修改密码(repw)
+								shaketype: 'login', //注册(reg),登录(login),修改密码(repw)
 								appid: plus.runtime.appid,
-								vtp:'mb'//mb(手机号),nm(账号或邮箱)
+								vtp: 'mb' //mb(手机号),nm(账号或邮箱)
 							};
 							console.log('endata:' + JSON.stringify(enData) + 'comdata:' + JSON.stringify(comData));
 							//发送网络请求，data为网络返回值
@@ -400,7 +425,7 @@
 									mui.toast('登录成功')
 										//存储到手机本地
 									data.RspData.ispw = '1';
-									if(!data.RspData.uimg){
+									if(!data.RspData.uimg) {
 										data.RspData.uimg = '../../image/utils/default_personalimage.png';
 									}
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);

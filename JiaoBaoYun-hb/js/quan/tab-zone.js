@@ -2,6 +2,7 @@ mui.init({
 
 });
 mui.plusReady(function() {
+	
 	getStuList(); //获取学生列表
 	addSomeEvent();
 
@@ -425,7 +426,7 @@ function getTopList(index) {
 function getBottomList(index, userLists) {
 	//需要参数
 	var comData = {
-		top: '10', //选择条数
+		top: '-1', //选择条数
 		vvl: datasource[index].gid, //群ID，查询的值
 		vvl1: '-1', //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 
@@ -478,12 +479,17 @@ function getBottomList(index, userLists) {
 }
 //36.（用户空间）获取多用户空间列表
 function getUserSpaces(upString, index) {
+	var utids = upString.replace('[','');
+		utids = utids.replace(']','');
+	upstrings = upstrings +utids;
+
 	//所需参数
 	var comData = {
 		userId: personalUTID, //用户ID
 		publisherIds: upString //发布者ID，例如[1,2,3]
 	};
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+
 	//返回model：model_homeSchoolList，model_userNoteInfo
 	//36.（用户空间）获取多用户空间列表
 	postDataPro_getUserSpacesByUser(comData, wd, function(data) {
@@ -548,8 +554,36 @@ function getUserSpaces(upString, index) {
 			}
 			//			console.log('datasource[index].userList==='+datasource[index].userList);
 			if(requestTimes2 == 0) { //请求完毕刷新界面
+						//所需参数
+		
+		var postData = {
+			vvl:upstrings//被备注用户ID,utid或utid串
+		};
+	postDataPro_PostUmk(postData, wd, function(data) {
+		wd.close();
+		console.log('获取多用户备注_postDataPro_PostUmk:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
 				console.log('底部列表全部数据' + JSON.stringify(datasource));
+				for(var i=0;i<datasource.length;i++){
+					var userList1 = datasource[i].userList;
+					for(var j=0;j<userList1.length;j++){
+						for(var k=0;k<data.RspData.length;k++){
+								if(userList1[j].utid ==data.RspData[k].butid){
+							var before = userList1[j].ugname.split('[')[0]
+							console.log('before'+before)
+							userList1[j].ugname = userList1[j].ugname.replace(before,data.RspData[k].bunick);
+						}
+							}
+						
+					}
+				}
 				refreshUI();
+		}else{
+			console.log('底部列表全部数据' + JSON.stringify(datasource));
+			refreshUI();
+		}
+	})
+
 			}
 
 		}

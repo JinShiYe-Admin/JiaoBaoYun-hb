@@ -6,6 +6,7 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
 	</head>
 
 	<body>
@@ -60,7 +61,7 @@
 				var phoneNumBox = document.getElementById("phoneNumber");
 				phoneNumBox.value = '';
 				var codeBox = document.getElementById("yanzheng");
-				
+
 				window.addEventListener('yanzhengma', function(event) {
 					var temp = event.detail.data;
 					console.log('传值的电话号码为：' + JSON.stringify(event.detail));

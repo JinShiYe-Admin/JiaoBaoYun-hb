@@ -32,10 +32,6 @@ mui.plusReady(function() {
 	})
 
 	getAboutMe(); //获取与我相关未读数
-	Statusbar.barHeight(); //设置距离顶部的高度
-	var header = document.querySelector(".mui-bar-nav"); //顶部导航
-	//设置顶部导航高度（状态栏）
-	header.style.height = localStorage.getItem('StatusHeightNo') + 45 + 'px';
 
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
@@ -45,7 +41,7 @@ mui.plusReady(function() {
 	//设置子页面距离顶部的位置
 
 	var subpage_style = {
-		top: (localStorage.getItem('StatusHeightNo') + 45) + 'px', //设置距离顶部的距离
+		top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px', //设置距离顶部的距离
 		bottom: '50px'
 	};
 
