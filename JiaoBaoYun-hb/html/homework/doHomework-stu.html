@@ -36,9 +36,9 @@
 			mui.init();
 			var personalUTID;
 			var flag = 0
+			//作业model
+			var homeworkModel;
 			mui.plusReady(function() {
-				
-				
 				window.addEventListener('homeworkInfo', function(e) {
 					personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 					homeworkModel = e.detail.data;
@@ -62,8 +62,7 @@
 
 				})
 			});
-			//作业model
-			var homeworkModel;
+			
 			//7.	提交作业结果；逻辑：如果是图片类型，同时生成缩略图
 			function requestSubmitHomeworkResult() {
 				var textView = document.getElementById('input-content');
@@ -80,6 +79,7 @@
 				var comData = {
 					userId: personalUTID, //学生/家长id，
 					studentId: personalUTID, //学生Id；
+					classId:homeworkModel.gid,
 					homeworkId: homeworkModel.HomeworkId, //作业id；
 					content: tempText, //文本答案；
 					fileIds: '' //文件id数组；
