@@ -70,7 +70,7 @@
 					JSON.stringify('更改群昵称后返回的数据'+JSON.stringify(data));
 					if(data.RspCode == 0) {
 						remarkInfo.ugname=inputValue;
-						events.fireToPageNone('group-pInfo.html', 'nickChanged',remarkInfo);
+						mui.fire(plus.webview.currentWebview().opener(), 'nickChanged',remarkInfo);
 						mui.toast('修改群昵称成功！');
 						mui.back();
 					} else {
@@ -87,7 +87,7 @@
 					wd.close();
 					console.log('修改群备注的返回值：' + JSON.stringify(data))
 					if(data.RspCode == '0000') {
-						events.fireToPageNone('group-pInfo.html', 'remarkChanged');
+						mui.fire(plus.webview.currentWebview().opener(), 'remarkChanged');
 						mui.toast('修改备注成功！');
 						mui.back();
 					} else {

@@ -85,8 +85,8 @@
 			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<p id="title" class="mui-title common-color-white">选择上传位置</p>
 		</header>
-		<nav class="mui-bar mui-bar-tab" style="background: #383E4E;">
-			<div style="margin: 5px;">
+		<nav class="mui-bar mui-bar-tab" style="background: #383E4E;height: 50px;">
+			<div style="margin: 5px;margin-top: 0px;">
 				<div id="cancel" class="mui-pull-left" style="width: 45%;">
 					<button type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 15px;margin-left: 5%;background: #7F8594;border-color: #7F8594;height: 40px;">
 						<div id="yunpath" class="mui-ellipsis">取消</div>
@@ -376,7 +376,7 @@
 				var top = 45 + 38 + localStorage.getItem('StatusHeightNo') * 1;
 				var div = document.createElement('div');
 				div.setAttribute('id', 'pid_' + pid);
-				div.innerHTML = '<div class="mui-scroll-wrapper"style="top:' + top + 'px;margin-bottom: 91px;">\
+				div.innerHTML = '<div class="mui-scroll-wrapper"style="top:' + top + 'px;margin-bottom: 55px;">\
 									<div class="mui-scroll">\
 										<ul id="ul_' + pid + '" class="mui-table-view">\
 										</ul>\
@@ -384,6 +384,15 @@
 								</div>';
 				div.style.display = 'none';
 				document.getElementById("all").appendChild(div);
+				//---滑动start---
+				mui(".mui-scroll-wrapper").scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false, //是否横向滚动
+					indicators: true, //是否显示滚动条
+					deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+					bounce: true, //是否启用回弹
+				});
+				//---滑动end---
 			}
 
 			/**

@@ -121,7 +121,7 @@ var studentdynamic = (function($, mod) {
 			var dateHtml2 = '<font style="">' + date[0] + '</font><font style="">' + date[1] + '</font></div></div>';
 			dateHtml = dateHtml1 + dateHtml2;
 		}
-		var html3 = '<div class="mui-col-sm-10 mui-col-xs-10"><div class="mui-media-body">';
+		var html3 = '<div class="mui-col-sm-10 mui-col-xs-10"><div class="mui-table-view-cell">';
 		//图片
 		if(imageUrl != undefined) {
 			imageHtml = '<img class="mui-media-object mui-pull-left" src="' + imageUrl + '">';
@@ -131,9 +131,9 @@ var studentdynamic = (function($, mod) {
 		html = html1 + html2 + dateHtml + html3 + imageHtml + html4;
 
 		var li = document.createElement('li');
-		li.className = 'mui-table-view-cell';
+		li.className = '';
 		if(date!=''){
-			li.style.marginTop='12px';
+			li.style.marginTop='33px';
 			//li.style.paddingTop='0px';
 		}
 		if(date==''){

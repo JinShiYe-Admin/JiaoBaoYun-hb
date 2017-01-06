@@ -40,17 +40,15 @@
 				height: 0px;
 			}
 
-			.mui-table-view {
-				background: transparent;
-			}
-
 			.mui-table-view-cell {
-				/*margin-top: 8px;*/
+				background: #EEEEEE;
+				padding: 2px;
+				padding-left: 2px;
+				padding-right: 2px;
 			}
 
-			.mui-media-body {
-				background: #ececec;
-				padding: 3px;
+			.mui-table-view-cell.mui-active {
+				background: #D9D9D9;
 			}
 
 			.dynamic-ellipsis-2 {
@@ -62,6 +60,12 @@
 				/*设置多于2行省略号*/
 				-webkit-box-orient: vertical;
 				color: black;
+				margin: 2px;
+				margin-left: 8px;
+				margin-right: 2px;
+				/*margin: 3px;*/
+				/*border:  5px solid #ececec;*/
+				background: transparent;
 			}
 
 			.dynamic-date {
@@ -71,6 +75,10 @@
 				font-weight: bold;
 				/*加粗*/
 				margin-top: 4px;
+			}
+
+			.mui-row {
+				margin: 11px 15px;
 			}
 		</style>
 	</head>
@@ -98,11 +106,16 @@
 					<div id="list">
 					</div>
 				</ul>
-				</div>
 			</div>
+		</div>
 
 			<script>
 				mui.init({
+					gestureConfig:{
+					   longtap: true, //默认为false
+					   hold:true,//默认为false，不监听
+					   release:true//默认为false，不监听
+					  },
 					pullRefresh: {
 						container: '#pullrefresh',
 						down: {
@@ -133,7 +146,7 @@
 						//请求数据
 						requestData(comData);
 //						mui('#pullrefresh').pullRefresh().refresh(true);//重置上拉加载
-						mui('#pullup-container').pullRefresh().enablePullupToRefresh();
+						mui('#pullrefresh').pullRefresh().enablePullupToRefresh();
 					}, 1500);
 				}
 
@@ -180,7 +193,7 @@
 					//---初始化界面---start---
 					var myDate = new Date();
 					today = myDate.getFullYear() + '' + (myDate.getMonth() + 1) + myDate.getDate();
-					table = document.getElementById("ul_table");
+//					table = document.getElementById("ul_table");
 					table=document.getElementById("list");
 
 					//---初始化界面---end---
@@ -199,7 +212,16 @@
 					});
 
 					window.addEventListener('refresh',function () {
-					        pulldownRefresh();
+					       pulldownRefresh();
+					});
+					mui('.mui-content').on('tap','.mui-media-body',function(){
+						console.log('tap-mui-media-body');
+					});
+					mui('.mui-content').on('release','.mui-media-body',function(){
+						console.log('release-mui-media-body');
+					});
+					mui('.mui-content').on('hold','.mui-media-body',function(){
+						console.log('hold-mui-media-body');
 					});
 				});
 
@@ -220,7 +242,7 @@
 								table.innerHTML='';//情况界面的列表
 								lastDate = '';
 								mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //下拉刷新结束
-								
+
 							} else {
 								//合并数组
 								recordArray = recordArray.concat(tempRspData);
@@ -241,7 +263,7 @@
 								mui.toast('笔记为空');
 								mui('#pullrefresh').pullRefresh().disablePullupToRefresh();//禁用上拉刷新
 							}
-							获取得到的数据小于10条说明没有下一页
+							//获取得到的数据小于10条说明没有下一页
 							if(tempRspData.length < 10 && recordArray.length > 10){
 								console.log(tempRspData.length+'|'+recordArray.length);
 								mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
@@ -254,36 +276,36 @@
 							mui.toast(data.RspTxt);
 						}
 					});
-
-					/**
-					 * 界面中创建一条记录
-					 * @param {Object} item
-					 */
-					function createNotes(item) {
-						//将时间参数分隔，结果为["2016","11","21"]
-						var PublishDate = item.PublishDate.split(' ')[0].split('-');
-						//console.log('PublishDate:' + JSON.stringify(PublishDate));
-						//console.log('today:' + today);
-						var time = PublishDate[0] + PublishDate[1] + PublishDate[2];
-						//console.log('time:' + time);
-
-						var itemData = [
-							[PublishDate[1]+'.', PublishDate[2]], item.MsgContent
-						];
-						//设置时间
-						if(time == today) { //日期和今天相同
-							itemData[0] = '今天';
-						}
-						if(lastDate == time) { //上一个记录的日期和本记录的日期相同
-							itemData[0] = '';
-						}
-
-						//生成界面
-						studentdynamic.additem3(table, itemData, 'TabId' + item.TabId);
-						lastDate = time;
-					}
 				}
-			</script>
+
+				/**
+				 * 界面中创建一条记录
+				 * @param {Object} item
+				 */
+				function createNotes(item) {
+					//将时间参数分隔，结果为["2016","11","21"]
+					var PublishDate = item.PublishDate.split(' ')[0].split('-');
+					//console.log('PublishDate:' + JSON.stringify(PublishDate));
+					//console.log('today:' + today);
+					var time = PublishDate[0] + PublishDate[1] + PublishDate[2];
+					//console.log('time:' + time);
+
+					var itemData = [
+						[PublishDate[1]+'.', PublishDate[2]], item.MsgContent
+					];
+					//设置时间
+					if(time == today) { //日期和今天相同
+						itemData[0] = '今天';
+					}
+					if(lastDate == time) { //上一个记录的日期和本记录的日期相同
+						itemData[0] = '';
+					}
+
+					//生成界面
+					studentdynamic.additem3(table, itemData, 'TabId' + item.TabId);
+					lastDate = time;
+				}
+		</script>
 	</body>
 
 </html>
