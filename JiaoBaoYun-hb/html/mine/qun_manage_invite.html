@@ -82,7 +82,7 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<p class="mui-title common-color-white" style="text-align: left;">邀请群成员</p>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content"style="margin-left: 5px;">
 
 			<div class="mui-input-row mui-search" style="width: 75%;position: absolute;">
 				<input id="input_search" style="" type="search" class="mui-input-clear mui-pull-left" placeholder="请输入账号或手机号">
@@ -484,6 +484,8 @@
 						wd.close();
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
+							chooseInfo = '0'; //记录选择的资料
+							chooseInfoElementId = ''; //记录选择的资料元素Id
 							mui.toast('已发送邀请');
 						} else if(data.RspCode == 9) {
 							mui.toast('用户已经被邀请');

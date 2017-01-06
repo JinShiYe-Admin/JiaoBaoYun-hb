@@ -7,30 +7,45 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<style type="text/css">
+			body,
+			.mui-content {
+				background: white;
+			}
+
+			textarea {
+				height: 100%;
+				width: 100%;
+				margin-bottom: 0;
+			}
+		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">笔记</h1>
-			<a id="finish" class="mui-pull-right">完成</a>
+			<h1 class="mui-title" style="color: white;">笔记</h1>
+			<h1 id="finish" class="mui-title" style="text-align: right;right: 10px;">完成</h1>
 		</header>
 		<div class="mui-content">
-			<div>
-				<div class="mui-input-row" style="margin: 5px;">
-					<textarea id="notes" maxlength="2000" rows="10" placeholder="请输入内容" style="border: none;"></textarea>
-				</div>
-			</div>
+			<!--<span class="mui-icon iconfont icon-xie" style="color: gray;position: absolute;"></span>-->
+			<textarea id="notes" maxlength="2000" placeholder="✎ 分享你的学习与生活..." style="border: none;"></textarea>
 		</div>
+
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
-				var note = document.getElementById("notes");
+				var notes = document.getElementById("notes");
+				var height = plus.screen.resolutionHeight - (localStorage.getItem('StatusHeightNo') * 1 + 75); //屏幕高度-状态栏高度-顶部导航高度
+
+				notes.style.height = height + 'px';
+
 				document.getElementById('finish').addEventListener('tap', function() {
-					if(note.value.replace(/(^\s*)|(\s*$)/g, "") == "") { //为空不允许发送
+					if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "") { //为空不允许发送
 						mui.toast('请输入文字');
 					} else {
 						var userId = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
@@ -39,7 +54,7 @@
 						//所需参数
 						var comData = {
 							userId: userId, //用户ID
-							msgContent: note.value, //记事内容
+							msgContent: notes.value, //记事内容
 							encType: '3', //附件类型，1图片2音视频3仅文字
 							encAddr: '', //附件地址
 							encImg: '', //附件缩略图地址
@@ -54,7 +69,7 @@
 							wd.close();
 							console.log('38postDataPro_addUserSpace（用户空间）新增某用户空间信息 （云笔记）.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) {
-								events.fireToPageNone('app_notes_sub.html','refresh');
+								events.fireToPageNone('app_notes_sub.html', 'refresh');
 								mui.back();
 							} else {
 								if(data.RspCode != 9) {
