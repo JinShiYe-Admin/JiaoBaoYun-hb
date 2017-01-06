@@ -82,13 +82,12 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<p class="mui-title common-color-white" style="text-align: left;">邀请群成员</p>
 		</header>
-		<div class="mui-content" style="margin: 10px;">
-			<div>
-				<div class="mui-input-row mui-search" style="width: 75%;position: absolute;">
-					<input id="input_search" style="" type="search" class="mui-input-clear mui-pull-left" placeholder="请输入账号或手机号">
-				</div>
-				<button id="btn_search" style="position: absolute;right: 5px;width: 20%; border:1px solid white ;" type="button" class="mui-btn mui-btn-green mui-btn-outlined mui-pull-right">搜索</button>
+		<div class="mui-content">
+
+			<div class="mui-input-row mui-search" style="width: 75%;position: absolute;">
+				<input id="input_search" style="" type="search" class="mui-input-clear mui-pull-left" placeholder="请输入账号或手机号">
 			</div>
+			<button id="btn_search" style="position: absolute;right: 5px;width: 20%; border:1px solid white ;" type="button" class="mui-btn mui-btn-green mui-btn-outlined mui-pull-right">搜索</button>
 
 			<div id="bot" style="display: none;">
 				<ul class="mui-table-view" style="margin-top: 50px;">
@@ -165,6 +164,7 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
+				document.querySelector(".mui-content").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 5) + 'px';
 				var dataList = []; //记录获取的资料
 				var chooseInfo = '0'; //记录选择的资料
 				var chooseInfoElementId = ''; //记录选择的资料元素Id
@@ -309,7 +309,7 @@
 					} else if(mstype == '2' && (searchValue == uid || searchValue == uname)) {
 						//不允许邀请自己成为老师
 						mui.toast('不能邀请自己成为老师');
-					}  else {
+					} else {
 						var vtp = 'nm';
 						var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/
 

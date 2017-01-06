@@ -38,7 +38,8 @@ var events = (function(mod) {
 					title: '正在加载...'
 				},
 				styles: {
-					top: localStorage.getItem('$Statusbar'),
+					top: '0px',
+					bottom: '0px'
 				}
 			})
 		}
@@ -64,7 +65,8 @@ var events = (function(mod) {
 				title: '正在加载...'
 			},
 			styles: {
-				top: localStorage.getItem('$Statusbar')
+				top: '0px',
+				bottom: '0px'
 			}
 		});
 	};
@@ -85,8 +87,8 @@ var events = (function(mod) {
 				url: subPage,
 				id: subPage,
 				styles: {
-					top: '45px',
-					bottom: localStorage.getItem('$Statusbar'),
+					top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px',
+					bottom: '0px',
 				},
 				extras: {
 					data: datas
@@ -126,9 +128,9 @@ var events = (function(mod) {
 					var item = document.getElementById(id)
 						//清除所有数据
 					mod.clearChild(item);
-//					while(item.firstChild != null) {
-//						item.removeChild(item.firstChild)
-//					}
+					//					while(item.firstChild != null) {
+					//						item.removeChild(item.firstChild)
+					//					}
 					//加载新控件
 					fresh();
 					mui('#refreshContainer').pullRefresh().endPulldownToRefresh(); //refresh completed
@@ -160,7 +162,8 @@ var events = (function(mod) {
 						url: tarPage,
 						id: tarPage, //默认使用当前页面的url作为id
 						styles: { //窗口参数
-							top: localStorage.getItem('$Statusbar')
+							top: '0px',
+							bottom: '0px'
 						},
 						show: {
 							anishow: 'slide-in-right',
@@ -298,14 +301,14 @@ var events = (function(mod) {
 		events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
 	}
 	mod.shortForString = function(str, len) {
-		if(str.length > len+2) {
-			return str.substring(0, len)+"...";
+		if(str.length > len + 2) {
+			return str.substring(0, len) + "...";
 		}
 		return str;
 	}
-	mod.shortForDate=function(fullDate){
-		var arrDate=fullDate.split(":");
-		arrDate.splice(arrDate.length-1,1);
+	mod.shortForDate = function(fullDate) {
+		var arrDate = fullDate.split(":");
+		arrDate.splice(arrDate.length - 1, 1);
 		return arrDate.join(':');
 	}
 	return mod;
