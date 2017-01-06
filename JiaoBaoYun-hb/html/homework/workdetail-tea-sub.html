@@ -17,25 +17,26 @@
 		<script src="../../js/mui.min.js"></script>
 
 		<style type="text/css">
-			/*.mui-table-view:before,
+		/*.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
 				height: 0px;
 				/*去掉横线*/
-			}*/
-				.dynamic-personal-image {
-				/*个人头像圆形*/
-				border-radius: 50%;
-				width: 50px;
-				height: 50px;
-			}
+		}
+		*/ .dynamic-personal-image {
+			/*个人头像圆形*/
+			
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+		}
 		</style>
 
 	</head>
 
 	<body>
 		<nav id="alertBar" class="mui-bar mui-bar-tab" style="visibility: hidden;">
-			<hr   style="margin-top: -1px; height:1px;border:none;border-top:1px solid #ededed;" />
+			<hr style="margin-top: -1px; height:1px;border:none;border-top:1px solid #ededed;" />
 			<div align="center" style="margin-top: -5px;">
 				<button id="alertAll" type="button" class="mui-btn mui-btn-blue " style="border-radius: 5px;width: 300px;background-color: #00a5e0;border-color:#00a5e0 ;">一键提醒</button>
 			</div>
@@ -47,48 +48,48 @@
 						<img>
 						<span id="img" class=" iconfont subject-icon" style="margin-left: -10px;"></span>
 						</img>
-						<div class="mui-media-body" style="margin-top: -20px";>
+						<div class="mui-media-body" style="margin-top: -20px" ;>
 							<h5 id="homeworkTitle" style="color: #404040;"></h5>
-						<p id="publishDate" class='mui-ellipsis' style="color: #747474;">发布时间：</p>
-					</div>
-					<div style="margin-top: 12px;">
-						<hr  style="height:1px;border:none;border-top:1px solid #ededed;" />
-					</div>
-					
-					<div id = 'content' class="mui-media-body">
-						<p id="homeWorkContent"></p> 
-					</div>
-					<div align="center"  style="visibility: hidden;max-height: 100px;">
-						<button id="checkDetail" type="button" class=" " style="border-radius: 10px;width: 100px;margin-top:15px ;">查看详情<span class="mui-icon mui-icon-arrowdown"></span></button>
-					</div>
+							<p id="publishDate" class='mui-ellipsis' style="color: #747474;">发布时间：</p>
+						</div>
+						<div style="margin-top: 12px;">
+							<hr style="height:1px;border:none;border-top:1px solid #ededed;" />
+						</div>
 
-				</li>
-			</ul>
-			<!--<div><img src="../../image/homework/math.png"></img>数学作业</div>-->
-			<!--滑动组件-->
-			<div id="slider" class="mui-slider">
-				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary" >
-					<!--已完成选项卡-->
-					<a id="item1" class="mui-control-item mui-active" href="#div-finished">
-						已完成(0)
-					</a>
-					<!--未完成选项卡-->
-					<a id="item2" class="mui-control-item" href="#div-unfinish">
-						未完成(0)
-					</a>
-				</div>
-				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="background-color: #00a5e0;margin-bottom: -1px;"></div>
-				<!--滑动内容-->
-				<div class="mui-slider-group">
-					<div id="div-finished" class="mui-slider-item mui-control-content mui-active">
-								<ul id="finished-list" class="mui-table-view">
-								</ul>
+						<div id='content' class="mui-media-body">
+							<p id="homeWorkContent"></p>
+						</div>
+						<div align="center" style="visibility: hidden;max-height: 100px;">
+							<button id="checkDetail" type="button" class=" " style="border-radius: 10px;width: 100px;margin-top:15px ;">查看详情<span class="mui-icon mui-icon-arrowdown"></span></button>
+						</div>
+
+					</li>
+				</ul>
+				<!--<div><img src="../../image/homework/math.png"></img>数学作业</div>-->
+				<!--滑动组件-->
+				<div id="slider" class="mui-slider">
+					<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+						<!--已完成选项卡-->
+						<a id="item1" class="mui-control-item mui-active" href="#div-finished">
+							已完成(0)
+						</a>
+						<!--未完成选项卡-->
+						<a id="item2" class="mui-control-item" href="#div-unfinish">
+							未完成(0)
+						</a>
 					</div>
-					<div id="div-unfinish" class="mui-slider-item mui-control-content">
-								<ul id="unfinished-list" class="mui-table-view">
-									
-								</ul>
-									
+					<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="background-color: #00a5e0;margin-bottom: -1px;"></div>
+					<!--滑动内容-->
+					<div class="mui-slider-group">
+						<div id="div-finished" class="mui-slider-item mui-control-content mui-active">
+							<ul id="finished-list" class="mui-table-view">
+							</ul>
+						</div>
+						<div id="div-unfinish" class="mui-slider-item mui-control-content">
+							<ul id="unfinished-list" class="mui-table-view">
+
+							</ul>
+
 						</div>
 					</div>
 				</div>
@@ -103,46 +104,45 @@
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
 
 		<script type="text/javascript">
-		
 			mui.init();
 			mui('.mui-scroll-wrapper').scroll();
-			var allAlertFlag=0;//标志是否全部提醒
-			var	homeworkDetailNodes = {
-				img:document.getElementById("img"),//作业类型图像
-				title:document.getElementById("homeworkTitle"),//作业类型标题
-				publishDate:document.getElementById("publishDate"),//发布日期
-				content:document.getElementById("homeWorkContent"),//作业内容
-				checkDetailBtn:document.getElementById("checkDetail"),//查看详情按钮
-				slider:document.getElementById("slider"),
-				segItem1:document.getElementById("item1"),
-				segItem2:document.getElementById("item2"),
-				finishedList:document.getElementById("finished-list"),
-				unfinishedList:document.getElementById("unfinished-list"),
-				alertBar:document.getElementById("alertBar"),
-				alertAllBtn:document.getElementById("alertAll")
+			var allAlertFlag = 0; //标志是否全部提醒
+			var homeworkDetailNodes = {
+				img: document.getElementById("img"), //作业类型图像
+				title: document.getElementById("homeworkTitle"), //作业类型标题
+				publishDate: document.getElementById("publishDate"), //发布日期
+				content: document.getElementById("homeWorkContent"), //作业内容
+				checkDetailBtn: document.getElementById("checkDetail"), //查看详情按钮
+				slider: document.getElementById("slider"),
+				segItem1: document.getElementById("item1"),
+				segItem2: document.getElementById("item2"),
+				finishedList: document.getElementById("finished-list"),
+				unfinishedList: document.getElementById("unfinished-list"),
+				alertBar: document.getElementById("alertBar"),
+				alertAllBtn: document.getElementById("alertAll")
 			}
-			var imgType ={
-				chineseImg:'../../image/homework/chinese.png',
-				mathImg:'../../image/homework/math.png',
-				biologyImg:'../../image/homework/biology.png',
-				chemistryImg:'../../image/homework/chemistry.png',
-				englishImg:'../../image/homework/english.png',
-				otherImg:'../../image/homework/other.png',
-				physicsImg:'../../image/homework/physics.png',
-				politicalImg:'../../image/homework/political.png',
-				historyImg:'../../image/homework/history.png',
-				yuwenImg:'../../image/homework/yuwen.png',
-				geographyImg:'../../image/homework/geography.png'
-			}
-			//从主页传值到这个界面的model
+			var imgType = {
+					chineseImg: '../../image/homework/chinese.png',
+					mathImg: '../../image/homework/math.png',
+					biologyImg: '../../image/homework/biology.png',
+					chemistryImg: '../../image/homework/chemistry.png',
+					englishImg: '../../image/homework/english.png',
+					otherImg: '../../image/homework/other.png',
+					physicsImg: '../../image/homework/physics.png',
+					politicalImg: '../../image/homework/political.png',
+					historyImg: '../../image/homework/history.png',
+					yuwenImg: '../../image/homework/yuwen.png',
+					geographyImg: '../../image/homework/geography.png'
+				}
+				//从主页传值到这个界面的model
 			var homeworkModel = {
-//				"Contents": "Test",
-//				"HomeworkId": 28,
-//				"HomeworkTitle": "2016年12月2日星期五数学作业",
-//				"Remain": 1,
-//				"Subject": "语文",
-//				"Upload": 0,
-//				'classId': 1 //人为赋值
+				//				"Contents": "Test",
+				//				"HomeworkId": 28,
+				//				"HomeworkTitle": "2016年12月2日星期五数学作业",
+				//				"Remain": 1,
+				//				"Subject": "语文",
+				//				"Upload": 0,
+				//				'classId': 1 //人为赋值
 			};
 			var personalUTID;
 			//作业详情model
@@ -153,8 +153,8 @@
 			var remainArray = [];
 
 			mui.plusReady(function() {
-				
-				window.addEventListener('workCommented',function(e){
+
+				window.addEventListener('workCommented', function(e) {
 					requestHomeworkStuList();
 				})
 				events.preload('homework-comment.html', 200);
@@ -167,40 +167,35 @@
 				events.addTap('alertAll', function() {
 					console.log('一键提醒');
 					alertStu(homeworkDetailNodes.alertAllBtn);
-					
+
 				})
-							window.addEventListener('workDetail',function(e){
-								resetData();
-				console.log('作业主界面传送的值：'+JSON.stringify(e.detail.data));
-				homeworkModel = e.detail.data;
-
-				
-
-				//获取作业详情
-				requestHomeworkDetail();
-
-				//3.	获取作业对应学生列表
-				requestHomeworkStuList();
-			})
-
+				window.addEventListener('workDetail', function(e) {
+					resetData();
+					console.log('作业主界面传送的值：' + JSON.stringify(e.detail.data));
+					homeworkModel = e.detail.data;
+					//获取作业详情
+					requestHomeworkDetail();
+					//3.	获取作业对应学生列表
+					requestHomeworkStuList();
+				})
 
 			});
-			function resetData(){
-				allAlertFlag=0;
+
+			function resetData() {
+				allAlertFlag = 0;
 				personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 				homeworkDetailNodes.unfinishedList.innerHTML = '';
-//				var gallery = mui('#slider');
-//				gallery.slider().gotoItem(0);
+				//				var gallery = mui('#slider');
+				//				gallery.slider().gotoItem(0);
 				uploadArray = [];
 				remainArray = [];
 				homeworkDetailModel = {};
 				homeworkDetailNodes.alertAllBtn.innerHTML = '一键提醒'
 				homeworkDetailNodes.alertAllBtn.disabled = '';
 
-//				homeworkDetailNodes.segItem1.className = 'mui-control-item mui-active';
-//				homeworkDetailNodes.segItem2.className = 'mui-control-item';
+				//				homeworkDetailNodes.segItem1.className = 'mui-control-item mui-active';
+				//				homeworkDetailNodes.segItem2.className = 'mui-control-item';
 
-				
 			};
 			//获取作业详情
 			function requestHomeworkDetail() {
@@ -217,9 +212,9 @@
 					console.log('2.postDataPro_GetHomework:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						homeworkDetailModel = data.RspData;
-						if(homeworkDetailModel.SubmitOnline==true){
+						if(homeworkDetailModel.SubmitOnline == true) {
 							mui('.mui-slider')[0].style.visibility = 'visible';
-						}else{
+						} else {
 							mui('.mui-slider')[0].style.visibility = 'hidden';
 						}
 						//修改界面
@@ -303,170 +298,170 @@
 							refreshStuList();
 						});
 
-					} else if(data.RspCode == 9){
-						
-					}else {
+					} else if(data.RspCode == 9) {
+
+					} else {
 						mui.toast(data.RspTxt);
 					}
 				});
 			}
-			function refreshhomeworkDetail(){
+
+			function refreshhomeworkDetail() {
 				console.log(homeworkDetailModel.Subject);
-				var className = 'iconfont subject-icon ' +getHomeworkIcon(homeworkModel.Subject);
-	console.log('className='+className);
-	homeworkDetailNodes.img.className =  className;
-				switch (homeworkDetailModel.Subject){
+				var className = 'iconfont subject-icon ' + getHomeworkIcon(homeworkModel.Subject);
+				console.log('className=' + className);
+				homeworkDetailNodes.img.className = className;
+				switch(homeworkDetailModel.Subject) {
 					case '语文':
-					    homeworkDetailNodes.img.src = imgType.yuwenImg;
+						homeworkDetailNodes.img.src = imgType.yuwenImg;
 						break;
 					case '数学':
-					    homeworkDetailNodes.img.src = imgType.mathImg;
+						homeworkDetailNodes.img.src = imgType.mathImg;
 						break;
 					case '英语':
-					    homeworkDetailNodes.img.src = imgType.englishImg;
+						homeworkDetailNodes.img.src = imgType.englishImg;
 						break;
 					case '历史':
-					    homeworkDetailNodes.img.src = imgType.historyImg;
+						homeworkDetailNodes.img.src = imgType.historyImg;
 						break;
 					case '政治':
-					    homeworkDetailNodes.img.src = imgType.politicalImg;
+						homeworkDetailNodes.img.src = imgType.politicalImg;
 						break;
 					case '地理':
-					    homeworkDetailNodes.img.src = imgType.geographyImg;
+						homeworkDetailNodes.img.src = imgType.geographyImg;
 						break;
 					case '物理':
-					    homeworkDetailNodes.img.src = imgType.physicsImg;
+						homeworkDetailNodes.img.src = imgType.physicsImg;
 						break;
 					case '化学':
-					    homeworkDetailNodes.img.src = imgType.chemistryImg;
-						break;	
+						homeworkDetailNodes.img.src = imgType.chemistryImg;
+						break;
 					case '生物':
-					    homeworkDetailNodes.img.src = imgType.biologyImg;
-						break;	
-						
-						
+						homeworkDetailNodes.img.src = imgType.biologyImg;
+						break;
+
 					default:
 						break;
 				}
-//				var height = document.getElementById('content').offsetHeight
-//				console.log('11111111='+height)
-//				if(homeworkDetailNodes.checkDetailBtn.height=='100px'){
-//					homeworkDetailNodes.checkDetailBtn.style.visibility = 'visible';
-//				}else{
-//					homeworkDetailNodes.checkDetailBtn.style.visibility = 'hidden';
-//				}
+				//				var height = document.getElementById('content').offsetHeight
+				//				console.log('11111111='+height)
+				//				if(homeworkDetailNodes.checkDetailBtn.height=='100px'){
+				//					homeworkDetailNodes.checkDetailBtn.style.visibility = 'visible';
+				//				}else{
+				//					homeworkDetailNodes.checkDetailBtn.style.visibility = 'hidden';
+				//				}
 				homeworkDetailNodes.title.innerText = homeworkDetailModel.HomeworkTitle;
 				var dateArr = homeworkModel.Date.split(' ');
 				homeworkModel.Date = dateArr[0];
 				var unick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户id
-				homeworkDetailNodes.publishDate.innerHTML = unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.Date+'</span>'
-				
+				homeworkDetailNodes.publishDate.innerHTML = unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.Date + '</span>'
+
 				homeworkDetailNodes.content.innerText = homeworkDetailModel.Contents;
-				
+
 			}
-			function refreshStuList(){
-				homeworkDetailNodes.segItem1.innerHTML = '已完成('+uploadArray.length+')';
-				homeworkDetailNodes.segItem2.innerHTML = '未完成('+remainArray.length+')';
+
+			function refreshStuList() {
+				homeworkDetailNodes.segItem1.innerHTML = '已完成(' + uploadArray.length + ')';
+				homeworkDetailNodes.segItem2.innerHTML = '未完成(' + remainArray.length + ')';
 				homeworkDetailNodes.finishedList.innerHTML = '';
 				homeworkDetailNodes.unfinishedList.innerHTML = '';
 
-				for(var i=0;i<uploadArray.length;i++){
-									var IsCommented;
-				if(uploadArray[i].IsCommented==true){
-					IsCommented = '已评';
-				}else{
-					IsCommented = '未评';
+				for(var i = 0; i < uploadArray.length; i++) {
+					var IsCommented;
+					if(uploadArray[i].IsCommented == true) {
+						IsCommented = '已评';
+					} else {
+						IsCommented = '未评';
+					}
+					console.log(IsCommented);
+					var headImg = updateHeadImg(uploadArray[i].uimg, 2)
+					var li = document.createElement('li');
+					li.workInfo = uploadArray[i];
+					li.workInfo.workType = 1;
+					mui.extend(li.workInfo, homeworkDetailModel)
+					li.className = 'mui-table-view-cell mui-media isCommented'
+					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" src="' + headImg + '" />' +
+						'<div class="mui-media-body">' +
+						uploadArray[i].ugnick + '<div class="mui-media-body mui-pull-right" ' +
+						'<p id="isCommented' + i + '" style="font-size: 13px;">' + IsCommented + '<span class="mui-icon mui-icon-forward"></span></p></div>' +
+						'</div>'
+
+					homeworkDetailNodes.finishedList.appendChild(li);
 				}
-				console.log(IsCommented);
-				var headImg = updateHeadImg(uploadArray[i].uimg,2)
-									var li = document.createElement('li');
-									li.workInfo = uploadArray[i];
-									li.workInfo.workType = 1;
-									mui.extend(li.workInfo,homeworkDetailModel)
-									li.className = 'mui-table-view-cell mui-media isCommented'
-				li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" src="'+headImg +'" />'+
-										'<div class="mui-media-body">'+
-											uploadArray[i].ugnick+'<div class="mui-media-body mui-pull-right" ' +
-							'<p id="isCommented'+i+'" style="font-size: 13px;">'+IsCommented+'<span class="mui-icon mui-icon-forward"></span></p></div>' +
-										'</div>'
-									
-				homeworkDetailNodes.finishedList.appendChild(li)	;
-				}
-				for(var i=0;i<remainArray.length;i++){
+				for(var i = 0; i < remainArray.length; i++) {
 					var disabled;
-					
-					if(remainArray[i].IsAlertChecked==true){
-							alert = '已查阅';
-							allAlertFlag++;
-					}else if(remainArray[i].IsAlerted==false){
+
+					if(remainArray[i].IsAlertChecked == true) {
+						alert = '已查阅';
+						allAlertFlag++;
+					} else if(remainArray[i].IsAlerted == false) {
 						alert = '提醒';
 						disabled = '';
-					}else{
+					} else {
 						alert = '已提醒';
 						disabled = 'disabled';
 						allAlertFlag++;
 					}
-					var headImg = updateHeadImg(remainArray[i].uimg,2)
-									var li = document.createElement('li');
-									li.className = 'mui-table-view-cell mui-media'
-									
-				li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" src="'+headImg +'" />'+
-										'<div class="mui-media-body">'+
-											'<div style = "padding-top:10px">'+remainArray[i].ugnick+'<button id="alert'+i+'" style="float: right;width:50px;height:30px;padding:1px 0 0 1px;font-size:12px;margin-top:-7px;" onclick="alertStu(this)"'+ disabled+'>'+
-												alert+
-											'</button>'+'</div>'+
-										'</div>'
-									;
-				homeworkDetailNodes.unfinishedList.appendChild(li);
-				
+					var headImg = updateHeadImg(remainArray[i].uimg, 2)
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell mui-media'
+
+					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" src="' + headImg + '" />' +
+						'<div class="mui-media-body">' +
+						'<div style = "padding-top:10px">' + remainArray[i].ugnick + '<button id="alert' + i + '" style="float: right;width:50px;height:30px;padding:1px 0 0 1px;font-size:12px;margin-top:-7px;" onclick="alertStu(this)"' + disabled + '>' +
+						alert +
+						'</button>' + '</div>' +
+						'</div>';
+					homeworkDetailNodes.unfinishedList.appendChild(li);
+
 				}
-				if(allAlertFlag == remainArray.length){
+				if(allAlertFlag == remainArray.length) {
 					homeworkDetailNodes.alertAllBtn.disabled = 'disabled';
 				}
 			}
-				document.getElementById('slider').addEventListener('slide', function(e) {
-					if (e.detail.slideNumber === 0) {
-						console.log('已完成');
+			document.getElementById('slider').addEventListener('slide', function(e) {
+				if(e.detail.slideNumber === 0) {
+					console.log('已完成');
+					homeworkDetailNodes.alertBar.style.visibility = 'hidden';
+				} else if(e.detail.slideNumber === 1) {
+					console.log('未完成');
+					if(remainArray.length == 0) {
 						homeworkDetailNodes.alertBar.style.visibility = 'hidden';
-					} else if (e.detail.slideNumber === 1) {
-						console.log('未完成');
-						if(remainArray.length==0){
-							homeworkDetailNodes.alertBar.style.visibility = 'hidden';
-						}else{
-							homeworkDetailNodes.alertBar.style.visibility = 'visible';
-						}
-						
+					} else {
+						homeworkDetailNodes.alertBar.style.visibility = 'visible';
 					}
-				});
 
-mui('.mui-table-view').on('tap', '.isCommented', function() {
-    events.fireToPageNone('homework-comment.html', 'workInfo', this.workInfo);
+				}
+			});
+
+			mui('.mui-table-view').on('tap', '.isCommented', function() {
+				events.fireToPageNone('homework-comment.html', 'workInfo', this.workInfo);
 				plus.webview.getWebviewById("homework-comment.html").show();
-});
+			});
 
-function alertStu(alertBtn) {
-	console.log(alertBtn.id);
-	var userIds;
-	var userIdArr = [];
-	if(alertBtn.id =='alertAll'){
-		for(var i=0;i<remainArray.length;i++){
-			var alertButton = document.getElementById("alert"+i);
-			if(alertButton.hasAttribute('disabled')){
-				continue;
-			}
-			var userId = remainArray[i].utid+'|'+remainArray[i].utid;
-			userIdArr.push(userId);
-		}
-		userIds = userIdArr.join(',')
-	}else{
-		var index = alertBtn.id.replace('alert','');
-		userIds = remainArray[index].utid+'|'+remainArray[index].utid;
-	}
-	console.log('userIds==='+userIds);
-					//所需参数
+			function alertStu(alertBtn) {
+				console.log(alertBtn.id);
+				var userIds;
+				var userIdArr = [];
+				if(alertBtn.id == 'alertAll') {
+					for(var i = 0; i < remainArray.length; i++) {
+						var alertButton = document.getElementById("alert" + i);
+						if(alertButton.hasAttribute('disabled')) {
+							continue;
+						}
+						var userId = remainArray[i].utid + '|' + remainArray[i].utid;
+						userIdArr.push(userId);
+					}
+					userIds = userIdArr.join(',')
+				} else {
+					var index = alertBtn.id.replace('alert', '');
+					userIds = remainArray[index].utid + '|' + remainArray[index].utid;
+				}
+				console.log('userIds===' + userIds);
+				//所需参数
 				var comData = {
 					teacherId: personalUTID, //教师Id
-					userIds:userIds,
+					userIds: userIds,
 					homeworkId: homeworkModel.HomeworkId //作业id；
 				};
 				// 等待的对话框
@@ -476,68 +471,67 @@ function alertStu(alertBtn) {
 					wd.close();
 					console.log('10.postDataPro_HomeworkAlert:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
-						if(alertBtn.id =='alertAll'){
-						homeworkDetailNodes.alertAllBtn.innerHTML = '一键提醒'
-						alertBtn.setAttribute('disabled','disabled');
-						allAlertFlag=remainArray.length;
-						}else{
-						alertBtn.innerHTML = '已提醒'
-						alertBtn.setAttribute('disabled','disabled');
-						allAlertFlag++;
+						if(alertBtn.id == 'alertAll') {
+							homeworkDetailNodes.alertAllBtn.innerHTML = '一键提醒'
+							alertBtn.setAttribute('disabled', 'disabled');
+							allAlertFlag = remainArray.length;
+						} else {
+							alertBtn.innerHTML = '已提醒'
+							alertBtn.setAttribute('disabled', 'disabled');
+							allAlertFlag++;
 						}
-						if(allAlertFlag == remainArray.length){
+						if(allAlertFlag == remainArray.length) {
 							homeworkDetailNodes.alertAllBtn.disabled = 'disabled';
-							for(var i=0;i<remainArray.length;i++){
-								var alertButton = document.getElementById("alert"+i);
+							for(var i = 0; i < remainArray.length; i++) {
+								var alertButton = document.getElementById("alert" + i);
 								alertButton.disabled = 'disabled';
 								alertButton.innerHTML = '已提醒';
-								
+
 							}
 						}
-
 
 					} else {
 						mui.toast(data.RspTxt);
 					}
 				});
-			
-}
-var getHomeworkIcon = function(subject) {
-		var subjectIcon = '';
-		switch(subject) {
-			case '语文':
-				subjectIcon = 'icon-yuwen';
-				break;
-			case '数学':
-				subjectIcon = 'icon-shuxue';
-				break;
-			case '英语':
-				subjectIcon = 'icon-yingyu';
-				break;
-			case '政治':
-				subjectIcon = 'icon-zhengzhi';
-				break;
-			case '历史':
-				subjectIcon = 'icon-lishi';
-				break;
-			case '地理':
-				subjectIcon = 'icon-dili';
-				break;
-			case '物理':
-				subjectIcon = 'icon-wuli';
-				break;
-			case '化学':
-				subjectIcon = 'icon-huaxue';
-				break;
-			case '生物':
-				subjectIcon = 'icon-shengwu';
-				break;
-			default:
-				subjectIcon = 'icon-qita';
-				break;
-		}
-		return subjectIcon;
-	}
+
+			}
+			var getHomeworkIcon = function(subject) {
+				var subjectIcon = '';
+				switch(subject) {
+					case '语文':
+						subjectIcon = 'icon-yuwen';
+						break;
+					case '数学':
+						subjectIcon = 'icon-shuxue';
+						break;
+					case '英语':
+						subjectIcon = 'icon-yingyu';
+						break;
+					case '政治':
+						subjectIcon = 'icon-zhengzhi';
+						break;
+					case '历史':
+						subjectIcon = 'icon-lishi';
+						break;
+					case '地理':
+						subjectIcon = 'icon-dili';
+						break;
+					case '物理':
+						subjectIcon = 'icon-wuli';
+						break;
+					case '化学':
+						subjectIcon = 'icon-huaxue';
+						break;
+					case '生物':
+						subjectIcon = 'icon-shengwu';
+						break;
+					default:
+						subjectIcon = 'icon-qita';
+						break;
+				}
+				return subjectIcon;
+			}
 		</script>
 
 	</body>

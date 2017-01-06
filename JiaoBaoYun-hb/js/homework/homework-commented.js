@@ -1,14 +1,16 @@
 //学生查看老师作业评价
 mui.init();
 mui.plusReady(function() {
+	//修改答案后刷新界面
 	window.addEventListener('refreshAnswer', function(e) {
 					homeworkDetailNodes.stuCell.innerHTML = e.detail.data.answer;
 					homeworkResult.HomeworkResult.Result = e.detail.data.answer;
 				})
+	//跳转到修改作业界面
 	events.addTap('modifyHomework', function() {
 		console.log('homeworkResult=' + JSON.stringify(homeworkResult));
 		console.log('homeworkModel=' + JSON.stringify(homeworkModel));
-		if(homeworkModel.workType == 0) {
+		if(homeworkModel.workType == 0) {//0:临时作业 1：普通作业
 			var modifyAnswerData = mui.extend(homeworkResult, {
 				role: 30
 			}, homeworkModel)
@@ -21,9 +23,10 @@ mui.plusReady(function() {
 		}
 
 	})
+	//上个界面跳转到此界面的监听事件
 	window.addEventListener('workDetail', function(e) {
 		homeworkModel = e.detail.data;
-		resetData();
+		resetData();//数据初始化
 		console.log('学生查看作业结果界面：' + JSON.stringify(homeworkModel));
 		if(homeworkModel.workType == 0) {
 			document.getElementById("modifyHomework").hidden = 'hidden'
@@ -37,7 +40,7 @@ mui.plusReady(function() {
 
 	})
 });
-
+//重置数据
 function resetData() {
 	personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 	var tempNodes = mui('.tempComment');
@@ -46,7 +49,7 @@ function resetData() {
 		homeworkDetailNodes.list.removeChild(tempNodes[i]);
 	}
 
-	if(homeworkModel.workType == 0) {
+	if(homeworkModel.workType == 0) {//0:临时作业 1：普通作业
 		console.log('临时作业')
 		homeworkDetailNodes.stuHomework.hidden = 'hidden';
 		homeworkDetailNodes.stuCell.hidden = 'hidden';
@@ -87,7 +90,7 @@ var homeworkDetailNodes = {
 //作业结果model
 var homeworkResult = {};
 var personalUTID;
-
+//获取学生个人资料
 function getStuName() {
 	var tempData = {
 		top: '-1', //选择条数
@@ -168,6 +171,7 @@ function getAnswerResultStu() {
 		}
 	});
 }
+//请求老师临时作业答案
 var requireTeachersAnswer = function() {
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		console.log('homeworkModel' + JSON.stringify(homeworkModel));
@@ -231,7 +235,7 @@ var requestTeaInfo = function(teaId) {
 		}
 	})
 }
-
+//刷新临时作业界面
 function refreshUITemp() {
 
 	var TeaAnsLi = document.createElement('li');
@@ -297,7 +301,7 @@ function refreshUITemp() {
 	homeworkDetailNodes.commentContent.innerText = Comment;
 
 }
-
+//刷新普通作业界面
 function refreshUI() {
 	var className = 'iconfont subject-icon ' + getHomeworkIcon(homeworkModel.Subject);
 	homeworkDetailNodes.img.className = className
@@ -357,15 +361,16 @@ var getHomeworkIcon = function(subject) {
 	}
 	return subjectIcon;
 }
+//点击图片跳转到图片详情界面
 mui('.mui-table-view').on('tap', '.cell-color', function() {
-	if(this.id == 'TeaAnsImgLi') {
+	if(this.id == 'TeaAnsImgLi') {//老师答案
 		console.log('点击图片');
 		var imageArr = homeworkResult.Files;
 		events.openNewWindowWithData('pic-detail.html', {
 			data: imageArr,
 			title: '老师答案'
 		})
-	} else if(this.id == 'stuAnsImgLi') {
+	} else if(this.id == 'stuAnsImgLi') {//学生答案
 		console.log('点击图片')
 		var imageArr = homeworkResult.File;
 		events.openNewWindowWithData('pic-detail.html', {
@@ -375,6 +380,7 @@ mui('.mui-table-view').on('tap', '.cell-color', function() {
 	}
 
 })
+//打击答案内容跳转到做作业界面
 events.addTap('stuCell', function() {
 	events.fireToPageNone('doHomework-stu.html', 'workDetail', homeworkResult);
 	plus.webview.getWebviewById("doHomework-stu.html").show();
