@@ -1673,3 +1673,17 @@ var postDataPro_delNoteByStudent = function(commonData, wd, callback) {
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'note/delNoteByStudent', enData, commonData, 2, wd, callback);
 }
+
+//76.（班级空间）获取用户针对多班级的空间列表
+//所需参数
+//		var comData = {
+//			userId:'',//用户ID
+//			classIds:''//班级ID，例如[1,2,3]
+//		};
+//返回：model_userNoteInfo
+var postDataPro_getClassSpacesByUserForMutiClass = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'classSpace/getClassSpacesByUserForMutiClass', enData, commonData, 2, wd, callback);
+}
