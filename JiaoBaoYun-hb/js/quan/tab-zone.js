@@ -331,8 +331,10 @@ function getGroupList() {
 			requestTimes = datasource.length; //记录顶部 班级动态请求次数
 			requestTimes2 = datasource.length; //记录底部 通过循环请求群用户列表请求次数
 			var userList = []; //临时用户列表
+			
+			var gids = [];
 			for(var i = 0; i < datasource.length; i++) {
-
+				gids.push(datasource[i].gid);
 				//判断img是否为null，或者空
 				datasource[i].gimg = updateHeadImg(datasource[i].gimg, 2)
 
@@ -340,7 +342,8 @@ function getGroupList() {
 				getBottomList(i, userList); //获取底部列表
 
 			}
-
+//			gids = arrayToStr(gids);
+//			getClassSpacesByUserForMutiClass(gids);
 		} else if(data.RspCode == 9) { //没有群
 			console.log('显示空白页')
 			showBlankPage(true); //显示空白页
@@ -350,6 +353,45 @@ function getGroupList() {
 		}
 	});
 
+}
+function getClassSpacesByUserForMutiClass(classIds){
+			var comData = {
+			userId:personalUTID,//用户ID
+			classIds:classIds//班级ID，例如[1,2,3]
+		};
+		// 等待的对话框
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	postDataPro_getClassSpacesByUserForMutiClass(comData, wd, function(data) {
+		wd.close();
+		console.log('postDataPro_getClassSpacesByUserForMutiClass:{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
+		if(data.RspCode =0){
+				topArray = data.RspCode.Data;
+					//				顶部列表添加cell
+				var ul = document.getElementById('top-list');
+				console.log('topArray====' + JSON.stringify(topArray))
+				for(var i = 0; i < topArray.length; i++) {
+					var li = document.createElement('li');
+					li.id = 'tarClass' + i;
+					li.className = 'mui-table-view-cell mui-media tarClass';
+					var noReadHTML;
+					if(topArray[i].NoReadCnt != 0) {
+						noReadHTML = '<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + topArray[i].NoReadCnt + '</span></span>';
+					} else {
+						noReadHTML = '';
+					}
+					topArray[i].MsgContent = topArray[i].MsgContent.replace(new RegExp(/(<br \/>)/g),'\n')
+					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">' + noReadHTML + '<p class="time">' + topArray[i].PublishDate +
+						'</p>' +
+						'<div class="mui-media-body">' +
+						datasource[i].gname +
+						'<p class="mui-ellipsis">' + topArray[i].MsgContent + '</p></div>';
+					ul.appendChild(li);
+				}
+			
+}else{
+	
+}
+	})
 }
 //获取顶部列表
 function getTopList(index) {
