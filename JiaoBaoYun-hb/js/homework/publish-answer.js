@@ -93,12 +93,13 @@ var addPostEventListener = function() {
 				var teachers_container = document.getElementById('receive-teachers'); //selectid
 				teaInfo = teachers_container.options[teachers_container.selectedIndex].teaInfo;
 				//判断是要学生提交答案0，还是修改答案1
+				console.log('teaInfo:'+JSON.stringify(teaInfo))
 				if(stuSubmitAnswer) {
 					//6.	提交答案结果
 					//所需参数
 					var comData = {
 						userId: personalUTID, //学生/家长id，
-						classId: teaInfo.utid, //班级id
+						classId: teaInfo.gid, //班级id
 						studentId: personalUTID, //学生Id；
 						fileIds: imgIds.toString(), //文件id数组；
 						teacherId: teaInfo.utid, //老师Id；
