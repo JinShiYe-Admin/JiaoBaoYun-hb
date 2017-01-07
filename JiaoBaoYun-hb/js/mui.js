@@ -1,6 +1,6 @@
 /*!
  * =====================================================
- * Mui v3.4.0 (http://dev.dcloud.net.cn/mui)
+ * Mui v3.4.1 (http://dev.dcloud.net.cn/mui)
  * =====================================================
  */
 /**
@@ -17,25 +17,25 @@ var mui = (function(document, undefined) {
 
 	var $ = function(selector, context) {
 		context = context || document;
-		if (!selector)
+		if(!selector)
 			return wrap();
-		if (typeof selector === 'object')
-			if ($.isArrayLike(selector)) {
+		if(typeof selector === 'object')
+			if($.isArrayLike(selector)) {
 				return wrap($.slice.call(selector), null);
 			} else {
 				return wrap([selector], null);
 			}
-		if (typeof selector === 'function')
+		if(typeof selector === 'function')
 			return $.ready(selector);
-		if (typeof selector === 'string') {
+		if(typeof selector === 'string') {
 			try {
 				selector = selector.trim();
-				if (idSelectorRE.test(selector)) {
+				if(idSelectorRE.test(selector)) {
 					var found = document.getElementById(RegExp.$1);
 					return wrap(found ? [found] : []);
 				}
 				return wrap($.qsa(selector, context), selector);
-			} catch (e) {}
+			} catch(e) {}
 		}
 		return wrap();
 	};
@@ -64,34 +64,34 @@ var mui = (function(document, undefined) {
 			length = arguments.length,
 			deep = false;
 
-		if (typeof target === "boolean") {
+		if(typeof target === "boolean") {
 			deep = target;
 
 			target = arguments[i] || {};
 			i++;
 		}
 
-		if (typeof target !== "object" && !$.isFunction(target)) {
+		if(typeof target !== "object" && !$.isFunction(target)) {
 			target = {};
 		}
 
-		if (i === length) {
+		if(i === length) {
 			target = this;
 			i--;
 		}
 
-		for (; i < length; i++) {
-			if ((options = arguments[i]) != null) {
-				for (name in options) {
+		for(; i < length; i++) {
+			if((options = arguments[i]) != null) {
+				for(name in options) {
 					src = target[name];
 					copy = options[name];
 
-					if (target === copy) {
+					if(target === copy) {
 						continue;
 					}
 
-					if (deep && copy && ($.isPlainObject(copy) || (copyIsArray = $.isArray(copy)))) {
-						if (copyIsArray) {
+					if(deep && copy && ($.isPlainObject(copy) || (copyIsArray = $.isArray(copy)))) {
+						if(copyIsArray) {
 							copyIsArray = false;
 							clone = src && $.isArray(src) ? src : [];
 
@@ -101,7 +101,7 @@ var mui = (function(document, undefined) {
 
 						target[name] = $.extend(deep, clone, copy);
 
-					} else if (copy !== undefined) {
+					} else if(copy !== undefined) {
 						target[name] = copy;
 					}
 				}
@@ -134,13 +134,13 @@ var mui = (function(document, undefined) {
 			return object instanceof Array;
 		};
 	/**
-	 * mui isArrayLike 
+	 * mui isArrayLike
 	 * @param {Object} obj
 	 */
 	$.isArrayLike = function(obj) {
 		var length = !!obj && "length" in obj && obj.length;
 		var type = $.type(obj);
-		if (type === "function" || $.isWindow(obj)) {
+		if(type === "function" || $.isWindow(obj)) {
 			return false;
 		}
 		return type === "array" || length === 0 ||
@@ -169,8 +169,8 @@ var mui = (function(document, undefined) {
 	 * @param {Object} o
 	 */
 	$.isEmptyObject = function(o) {
-		for (var p in o) {
-			if (p !== undefined) {
+		for(var p in o) {
+			if(p !== undefined) {
 				return false;
 			}
 		}
@@ -198,7 +198,7 @@ var mui = (function(document, undefined) {
 	 * @returns {_L6.$}
 	 */
 	$.ready = function(callback) {
-		if (readyRE.test(document.readyState)) {
+		if(readyRE.test(document.readyState)) {
 			callback($);
 		} else {
 			document.addEventListener('DOMContentLoaded', function() {
@@ -223,7 +223,7 @@ var mui = (function(document, undefined) {
 		var ms = ms || 150;
 
 		function run() {
-			if (timer) {
+			if(timer) {
 				timer.cancel();
 				timer = 0;
 			}
@@ -233,21 +233,21 @@ var mui = (function(document, undefined) {
 		}
 
 		return $.extend(function() {
-			if (
+			if(
 				(!lastStart) || // 从未运行过
 				(lastEnd >= lastStart && $.now() - lastEnd > ms) || // 上次运行成功后已经超过ms毫秒
 				(lastEnd < lastStart && $.now() - lastStart > ms * 8) // 上次运行或未完成，后8*ms毫秒
 			) {
 				run();
 			} else {
-				if (timer) {
+				if(timer) {
 					timer.cancel();
 				}
 				timer = $.later(run, ms, null, arguments);
 			}
 		}, {
 			stop: function() {
-				if (timer) {
+				if(timer) {
 					timer.cancel();
 					timer = 0;
 				}
@@ -261,28 +261,28 @@ var mui = (function(document, undefined) {
 	 * @returns {_L8.$}
 	 */
 	$.each = function(elements, callback, hasOwnProperty) {
-		if (!elements) {
+		if(!elements) {
 			return this;
 		}
-		if (typeof elements.length === 'number') {
+		if(typeof elements.length === 'number') {
 			[].every.call(elements, function(el, idx) {
 				return callback.call(el, idx, el) !== false;
 			});
 		} else {
-			for (var key in elements) {
-				if (hasOwnProperty) {
-					if (elements.hasOwnProperty(key)) {
-						if (callback.call(elements[key], key, elements[key]) === false) return elements;
+			for(var key in elements) {
+				if(hasOwnProperty) {
+					if(elements.hasOwnProperty(key)) {
+						if(callback.call(elements[key], key, elements[key]) === false) return elements;
 					}
 				} else {
-					if (callback.call(elements[key], key, elements[key]) === false) return elements;
+					if(callback.call(elements[key], key, elements[key]) === false) return elements;
 				}
 			}
 		}
 		return this;
 	};
 	$.focus = function(element) {
-		if ($.os.ios) {
+		if($.os.ios) {
 			setTimeout(function() {
 				element.focus();
 			}, 10);
@@ -313,7 +313,7 @@ var mui = (function(document, undefined) {
 	 */
 	$.getStyles = function(element, property) {
 		var styles = element.ownerDocument.defaultView.getComputedStyle(element, null);
-		if (property) {
+		if(property) {
 			return styles.getPropertyValue(property) || styles[property];
 		}
 		return styles;
@@ -326,7 +326,7 @@ var mui = (function(document, undefined) {
 	 */
 	$.parseTranslate = function(translateString, position) {
 		var result = translateString.match(translateRE || '');
-		if (!result || !result[1]) {
+		if(!result || !result[1]) {
 			result = ['', '0,0,0'];
 		}
 		result = result[1].split(",");
@@ -335,7 +335,7 @@ var mui = (function(document, undefined) {
 			y: parseFloat(result[1]),
 			z: parseFloat(result[2])
 		};
-		if (position && result.hasOwnProperty(position)) {
+		if(position && result.hasOwnProperty(position)) {
 			return result[position];
 		}
 		return result;
@@ -349,9 +349,9 @@ var mui = (function(document, undefined) {
 	$.parseTranslateMatrix = function(translateString, position) {
 		var matrix = translateString.match(translateMatrixRE);
 		var is3D = matrix && matrix[1];
-		if (matrix) {
+		if(matrix) {
 			matrix = matrix[2].split(",");
-			if (is3D === "3d")
+			if(is3D === "3d")
 				matrix = matrix.slice(12, 15);
 			else {
 				matrix.push(0);
@@ -365,7 +365,7 @@ var mui = (function(document, undefined) {
 			y: parseFloat(matrix[1]),
 			z: parseFloat(matrix[2])
 		};
-		if (position && result.hasOwnProperty(position)) {
+		if(position && result.hasOwnProperty(position)) {
 			return result[position];
 		}
 		return result;
@@ -373,7 +373,7 @@ var mui = (function(document, undefined) {
 	$.hooks = {};
 	$.addAction = function(type, hook) {
 		var hooks = $.hooks[type];
-		if (!hooks) {
+		if(!hooks) {
 			hooks = [];
 		}
 		hook.index = hook.index || 1000;
@@ -385,7 +385,7 @@ var mui = (function(document, undefined) {
 		return $.hooks[type];
 	};
 	$.doAction = function(type, callback) {
-		if ($.isFunction(callback)) { //指定了callback
+		if($.isFunction(callback)) { //指定了callback
 			$.each($.hooks[type], callback);
 		} else { //未指定callback，直接执行
 			$.each($.hooks[type], function(index, hook) {
@@ -407,7 +407,7 @@ var mui = (function(document, undefined) {
 		var f;
 		var r;
 
-		if (typeof fn === 'string') {
+		if(typeof fn === 'string') {
 			m = context[fn];
 		}
 
@@ -431,7 +431,7 @@ var mui = (function(document, undefined) {
 	$.each(['Boolean', 'Number', 'String', 'Function', 'Array', 'Date', 'RegExp', 'Object', 'Error'], function(i, name) {
 		class2type["[object " + name + "]"] = name.toLowerCase();
 	});
-	if (window.JSON) {
+	if(window.JSON) {
 		$.parseJSON = JSON.parse;
 	}
 	/**
@@ -449,7 +449,7 @@ var mui = (function(document, undefined) {
 	/**
 	 * 兼容 AMD 模块
 	 **/
-	if (typeof define === 'function' && define.amd) {
+	if(typeof define === 'function' && define.amd) {
 		define('mui', [], function() {
 			return $;
 		});
@@ -471,7 +471,7 @@ var mui = (function(document, undefined) {
 
 			function() { //wechat
 				var wechat = ua.match(/(MicroMessenger)\/([\d\.]+)/i);
-				if (wechat) { //wechat
+				if(wechat) { //wechat
 					this.os.wechat = {
 						version: wechat[2].replace(/_/g, '.')
 					};
@@ -480,7 +480,7 @@ var mui = (function(document, undefined) {
 			},
 			function() { //android
 				var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
-				if (android) {
+				if(android) {
 					this.os.android = true;
 					this.os.version = android[2];
 
@@ -490,12 +490,12 @@ var mui = (function(document, undefined) {
 			},
 			function() { //ios
 				var iphone = ua.match(/(iPhone\sOS)\s([\d_]+)/);
-				if (iphone) { //iphone
+				if(iphone) { //iphone
 					this.os.ios = this.os.iphone = true;
 					this.os.version = iphone[2].replace(/_/g, '.');
 				} else {
 					var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
-					if (ipad) { //ipad
+					if(ipad) { //ipad
 						this.os.ios = this.os.ipad = true;
 						this.os.version = ipad[2].replace(/_/g, '.');
 					}
@@ -518,12 +518,12 @@ var mui = (function(document, undefined) {
 	function detect(ua) {
 		this.os = this.os || {};
 		var plus = ua.match(/Html5Plus/i); //TODO 5\+Browser?
-		if (plus) {
+		if(plus) {
 			this.os.plus = true;
 			$(function() {
 				document.body.classList.add('mui-plus');
 			});
-			if (ua.match(/StreamApp/i)) { //TODO 最好有流应用自己的标识
+			if(ua.match(/StreamApp/i)) { //TODO 最好有流应用自己的标识
 				this.os.stream = true;
 				$(function() {
 					document.body.classList.add('mui-plus-stream');
@@ -538,7 +538,7 @@ var mui = (function(document, undefined) {
  * @param {Object} $
  */
 (function($) {
-	if ('ontouchstart' in window) {
+	if('ontouchstart' in window) {
 		$.isTouchable = true;
 		$.EVENT_START = 'touchstart';
 		$.EVENT_MOVE = 'touchmove';
@@ -570,7 +570,7 @@ var mui = (function(document, undefined) {
 	};
 	//wrap浏览器事件
 	var compatible = function(event, target) {
-		if (!event.detail) {
+		if(!event.detail) {
 			event.detail = {
 				currentTarget: target
 			};
@@ -601,23 +601,23 @@ var mui = (function(document, undefined) {
 			var handlerQueue = [];
 			var target = e.target;
 			var selectorAlls = {};
-			for (; target && target !== document; target = target.parentNode) {
-				if (target === element) {
+			for(; target && target !== document; target = target.parentNode) {
+				if(target === element) {
 					break;
 				}
-				if (~['click', 'tap', 'doubletap', 'longtap', 'hold'].indexOf(event) && (target.disabled || target.classList.contains('mui-disabled'))) {
+				if(~['click', 'tap', 'doubletap', 'longtap', 'hold'].indexOf(event) && (target.disabled || target.classList.contains('mui-disabled'))) {
 					break;
 				}
 				var matches = {};
 				$.each(callbackObjs, function(selector, callbacks) { //same selector
 					selectorAlls[selector] || (selectorAlls[selector] = $.qsa(selector, element));
-					if (selectorAlls[selector] && ~(selectorAlls[selector]).indexOf(target)) {
-						if (!matches[selector]) {
+					if(selectorAlls[selector] && ~(selectorAlls[selector]).indexOf(target)) {
+						if(!matches[selector]) {
 							matches[selector] = callbacks;
 						}
 					}
 				}, true);
-				if (!$.isEmptyObject(matches)) {
+				if(!$.isEmptyObject(matches)) {
 					handlerQueue.push({
 						element: target,
 						handlers: matches
@@ -629,19 +629,19 @@ var mui = (function(document, undefined) {
 			$.each(handlerQueue, function(index, handler) {
 				target = handler.element;
 				var tagName = target.tagName;
-				if (event === 'tap' && (tagName !== 'INPUT' && tagName !== 'TEXTAREA' && tagName !== 'SELECT')) {
+				if(event === 'tap' && (tagName !== 'INPUT' && tagName !== 'TEXTAREA' && tagName !== 'SELECT')) {
 					e.preventDefault();
 					e.detail && e.detail.gesture && e.detail.gesture.preventDefault();
 				}
 				$.each(handler.handlers, function(index, handler) {
 					$.each(handler, function(index, callback) {
-						if (callback.call(target, e) === false) {
+						if(callback.call(target, e) === false) {
 							e.preventDefault();
 							e.stopPropagation();
 						}
 					}, true);
 				}, true)
-				if (e.isPropagationStopped()) {
+				if(e.isPropagationStopped()) {
 					return false;
 				}
 			}, true);
@@ -650,9 +650,9 @@ var mui = (function(document, undefined) {
 	var findDelegateFn = function(element, event) {
 		var delegateCallbacks = delegateFns[mid(element)];
 		var result = [];
-		if (delegateCallbacks) {
+		if(delegateCallbacks) {
 			result = [];
-			if (event) {
+			if(event) {
 				var filterFn = function(fn) {
 					return fn.type === event;
 				}
@@ -679,14 +679,14 @@ var mui = (function(document, undefined) {
 			var isAddEventListener = false;
 			var delegateEvents = delegates[element._mid] || (delegates[element._mid] = {});
 			var delegateCallbackObjs = delegateEvents[event] || ((delegateEvents[event] = {}));
-			if ($.isEmptyObject(delegateCallbackObjs)) {
+			if($.isEmptyObject(delegateCallbackObjs)) {
 				isAddEventListener = true;
 			}
 			var delegateCallbacks = delegateCallbackObjs[selector] || (delegateCallbackObjs[selector] = []);
 			delegateCallbacks.push(callback);
-			if (isAddEventListener) {
+			if(isAddEventListener) {
 				var delegateFnArray = delegateFns[mid(element)];
-				if (!delegateFnArray) {
+				if(!delegateFnArray) {
 					delegateFnArray = [];
 				}
 				var delegateCallback = delegateFn(element, event, selector, callback);
@@ -695,14 +695,14 @@ var mui = (function(document, undefined) {
 				delegateCallback.type = event;
 				delegateFns[mid(element)] = delegateFnArray;
 				element.addEventListener(event, delegateCallback);
-				if (event === 'tap') { //TODO 需要找个更好的解决方案
+				if(event === 'tap') { //TODO 需要找个更好的解决方案
 					element.addEventListener('click', function(e) {
-						if (e.target) {
+						if(e.target) {
 							var tagName = e.target.tagName;
-							if (!preventDefaultException.test(tagName)) {
-								if (tagName === 'A') {
+							if(!preventDefaultException.test(tagName)) {
+								if(tagName === 'A') {
 									var href = e.target.href;
-									if (!(href && ~href.indexOf('tel:'))) {
+									if(!(href && ~href.indexOf('tel:'))) {
 										e.preventDefault();
 									}
 								} else {
@@ -718,24 +718,24 @@ var mui = (function(document, undefined) {
 	$.fn.off = function(event, selector, callback) {
 		return this.each(function() {
 			var _mid = mid(this);
-			if (!event) { //mui(selector).off();
+			if(!event) { //mui(selector).off();
 				delegates[_mid] && delete delegates[_mid];
-			} else if (!selector) { //mui(selector).off(event);
+			} else if(!selector) { //mui(selector).off(event);
 				delegates[_mid] && delete delegates[_mid][event];
-			} else if (!callback) { //mui(selector).off(event,selector);
+			} else if(!callback) { //mui(selector).off(event,selector);
 				delegates[_mid] && delegates[_mid][event] && delete delegates[_mid][event][selector];
 			} else { //mui(selector).off(event,selector,callback);
 				var delegateCallbacks = delegates[_mid] && delegates[_mid][event] && delegates[_mid][event][selector];
 				$.each(delegateCallbacks, function(index, delegateCallback) {
-					if (mid(delegateCallback) === mid(callback)) {
+					if(mid(delegateCallback) === mid(callback)) {
 						delegateCallbacks.splice(index, 1);
 						return false;
 					}
 				}, true);
 			}
-			if (delegates[_mid]) {
+			if(delegates[_mid]) {
 				//如果off掉了所有当前element的指定的event事件，则remove掉当前element的delegate回调
-				if ((!delegates[_mid][event] || $.isEmptyObject(delegates[_mid][event]))) {
+				if((!delegates[_mid][event] || $.isEmptyObject(delegates[_mid][event]))) {
 					findDelegateFn(this, event).forEach(function(fn) {
 						this.removeEventListener(fn.type, fn);
 						delete delegateFns[_mid][fn.i];
@@ -784,26 +784,26 @@ var mui = (function(document, undefined) {
 	window.addEventListener($.EVENT_START, function(event) {
 		var target = event.target;
 		var founds = {};
-		for (; target && target !== document; target = target.parentNode) {
+		for(; target && target !== document; target = target.parentNode) {
 			var isFound = false;
 			$.each($.targetHandles, function(index, targetHandle) {
 				var name = targetHandle.name;
-				if (!isFound && !founds[name] && targetHandle.hasOwnProperty('handle')) {
+				if(!isFound && !founds[name] && targetHandle.hasOwnProperty('handle')) {
 					$.targets[name] = targetHandle.handle(event, target);
-					if ($.targets[name]) {
+					if($.targets[name]) {
 						founds[name] = true;
-						if (targetHandle.isContinue !== true) {
+						if(targetHandle.isContinue !== true) {
 							isFound = true;
 						}
 					}
 				} else {
-					if (!founds[name]) {
-						if (targetHandle.isReset !== false)
+					if(!founds[name]) {
+						if(targetHandle.isReset !== false)
 							$.targets[name] = false;
 					}
 				}
 			});
-			if (isFound) {
+			if(isFound) {
 				break;
 			}
 		}
@@ -811,19 +811,19 @@ var mui = (function(document, undefined) {
 	window.addEventListener('click', function(event) { //解决touch与click的target不一致的问题(比如链接边缘点击时，touch的target为html，而click的target为A)
 		var target = event.target;
 		var isFound = false;
-		for (; target && target !== document; target = target.parentNode) {
-			if (target.tagName === 'A') {
+		for(; target && target !== document; target = target.parentNode) {
+			if(target.tagName === 'A') {
 				$.each($.targetHandles, function(index, targetHandle) {
 					var name = targetHandle.name;
-					if (targetHandle.hasOwnProperty('handle')) {
-						if (targetHandle.handle(event, target)) {
+					if(targetHandle.hasOwnProperty('handle')) {
+						if(targetHandle.handle(event, target)) {
 							isFound = true;
 							event.preventDefault();
 							return false;
 						}
 					}
 				});
-				if (isFound) {
+				if(isFound) {
 					break;
 				}
 			}
@@ -836,7 +836,7 @@ var mui = (function(document, undefined) {
  * @returns {undefined}
  */
 (function(undefined) {
-	if (String.prototype.trim === undefined) { // fix for iOS 3.2
+	if(String.prototype.trim === undefined) { // fix for iOS 3.2
 		String.prototype.trim = function() {
 			return this.replace(/^\s+|\s+$/g, '');
 		};
@@ -851,7 +851,7 @@ var mui = (function(document, undefined) {
  * fixed CustomEvent
  */
 (function() {
-	if (typeof window.CustomEvent === 'undefined') {
+	if(typeof window.CustomEvent === 'undefined') {
 		function CustomEvent(event, params) {
 			params = params || {
 				bubbles: false,
@@ -860,7 +860,7 @@ var mui = (function(document, undefined) {
 			};
 			var evt = document.createEvent('Events');
 			var bubbles = true;
-			for (var name in params) {
+			for(var name in params) {
 				(name === 'bubbles') ? (bubbles = !!params[name]) : (evt[name] = params[name]);
 			}
 			evt.initEvent(event, bubbles, true);
@@ -885,7 +885,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			// Join the already applied arguments to the now called ones (after converting to an array again).
 			var args = partial.concat(Array.prototype.splice.call(arguments, 0));
 			// If not being called as a constructor
-			if (!(this instanceof bound)) {
+			if(!(this instanceof bound)) {
 				// return the result of the function called bound to target and partially applied.
 				return fn.apply(to, args);
 			}
@@ -902,49 +902,50 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @returns {undefined}
  */
 (function(document) {
-    if (!("classList" in document.documentElement) && Object.defineProperty && typeof HTMLElement !== 'undefined') {
+	if(!("classList" in document.documentElement) && Object.defineProperty && typeof HTMLElement !== 'undefined') {
 
-        Object.defineProperty(HTMLElement.prototype, 'classList', {
-            get: function() {
-                var self = this;
-                function update(fn) {
-                    return function(value) {
-                        var classes = self.className.split(/\s+/),
-                                index = classes.indexOf(value);
+		Object.defineProperty(HTMLElement.prototype, 'classList', {
+			get: function() {
+				var self = this;
 
-                        fn(classes, index, value);
-                        self.className = classes.join(" ");
-                    };
-                }
+				function update(fn) {
+					return function(value) {
+						var classes = self.className.split(/\s+/),
+							index = classes.indexOf(value);
 
-                var ret = {
-                    add: update(function(classes, index, value) {
-                        ~index || classes.push(value);
-                    }),
-                    remove: update(function(classes, index) {
-                        ~index && classes.splice(index, 1);
-                    }),
-                    toggle: update(function(classes, index, value) {
-                        ~index ? classes.splice(index, 1) : classes.push(value);
-                    }),
-                    contains: function(value) {
-                        return !!~self.className.split(/\s+/).indexOf(value);
-                    },
-                    item: function(i) {
-                        return self.className.split(/\s+/)[i] || null;
-                    }
-                };
+						fn(classes, index, value);
+						self.className = classes.join(" ");
+					};
+				}
 
-                Object.defineProperty(ret, 'length', {
-                    get: function() {
-                        return self.className.split(/\s+/).length;
-                    }
-                });
+				var ret = {
+					add: update(function(classes, index, value) {
+						~index || classes.push(value);
+					}),
+					remove: update(function(classes, index) {
+						~index && classes.splice(index, 1);
+					}),
+					toggle: update(function(classes, index, value) {
+						~index ? classes.splice(index, 1) : classes.push(value);
+					}),
+					contains: function(value) {
+						return !!~self.className.split(/\s+/).indexOf(value);
+					},
+					item: function(i) {
+						return self.className.split(/\s+/)[i] || null;
+					}
+				};
 
-                return ret;
-            }
-        });
-    }
+				Object.defineProperty(ret, 'length', {
+					get: function() {
+						return self.className.split(/\s+/).length;
+					}
+				});
+
+				return ret;
+			}
+		});
+	}
 })(document);
 
 /**
@@ -953,7 +954,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @returns {undefined}
  */
 (function(window) {
-	if (!window.requestAnimationFrame) {
+	if(!window.requestAnimationFrame) {
 		var lastTime = 0;
 		window.requestAnimationFrame = window.webkitRequestAnimationFrame || function(callback, element) {
 			var currTime = new Date().getTime();
@@ -973,21 +974,21 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * fastclick(only for radio,checkbox)
  */
 (function($, window, name) {
-	if (!$.os.android && !$.os.ios) { //目前仅识别android和ios
+	if(!$.os.android && !$.os.ios) { //目前仅识别android和ios
 		return;
 	}
-	if (window.FastClick) {
+	if(window.FastClick) {
 		return;
 	}
 
 	var handle = function(event, target) {
-		if (target.tagName === 'LABEL') {
-			if (target.parentNode) {
+		if(target.tagName === 'LABEL') {
+			if(target.parentNode) {
 				target = target.parentNode.querySelector('input');
 			}
 		}
-		if (target && (target.type === 'radio' || target.type === 'checkbox')) {
-			if (!target.disabled) { //disabled
+		if(target && (target.type === 'radio' || target.type === 'checkbox')) {
+			if(!target.disabled) { //disabled
 				return target;
 			}
 		}
@@ -1002,10 +1003,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	});
 	var dispatchEvent = function(event) {
 		var targetElement = $.targets.click;
-		if (targetElement) {
+		if(targetElement) {
 			var clickEvent, touch;
 			// On some Android devices activeElement needs to be blurred otherwise the synthetic click will have no effect
-			if (document.activeElement && document.activeElement !== targetElement) {
+			if(document.activeElement && document.activeElement !== targetElement) {
 				document.activeElement.blur();
 			}
 			touch = event.detail.gesture.changedTouches[0];
@@ -1021,9 +1022,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	window.addEventListener('doubletap', dispatchEvent);
 	//捕获
 	window.addEventListener('click', function(event) {
-		if ($.targets.click) {
-			if (!event.forwardedTouchEvent) { //stop click
-				if (event.stopImmediatePropagation) {
+		if($.targets.click) {
+			if(!event.forwardedTouchEvent) { //stop click
+				if(event.stopImmediatePropagation) {
 					event.stopImmediatePropagation();
 				} else {
 					// Part of the hack for browsers that don't support Event#stopImmediatePropagation
@@ -1039,7 +1040,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 })(mui, window, 'click');
 (function($, document) {
 	$(function() {
-		if (!$.os.ios) {
+		if(!$.os.ios) {
 			return;
 		}
 		var CLASS_FOCUSIN = 'mui-focusin';
@@ -1052,29 +1053,29 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		// 	document.body.insertBefore(content, document.body.firstElementChild);
 		// }
 		document.addEventListener('focusin', function(e) {
-			if ($.os.plus) { //在父webview里边不fix
-				if (window.plus) {
-					if (plus.webview.currentWebview().children().length > 0) {
+			if($.os.plus) { //在父webview里边不fix
+				if(window.plus) {
+					if(plus.webview.currentWebview().children().length > 0) {
 						return;
 					}
 				}
 			}
 			var target = e.target;
 			//TODO 需考虑所有键盘弹起的情况
-			if (target.tagName && (target.tagName === 'TEXTAREA' || (target.tagName === 'INPUT' && (target.type === 'text' || target.type === 'search' || target.type === 'number')))) {
-				if (target.disabled || target.readOnly) {
+			if(target.tagName && (target.tagName === 'TEXTAREA' || (target.tagName === 'INPUT' && (target.type === 'text' || target.type === 'search' || target.type === 'number')))) {
+				if(target.disabled || target.readOnly) {
 					return;
 				}
 				document.body.classList.add(CLASS_FOCUSIN);
 				var isFooter = false;
-				for (; target && target !== document; target = target.parentNode) {
+				for(; target && target !== document; target = target.parentNode) {
 					var classList = target.classList;
-					if (classList && classList.contains(CLASS_BAR_TAB) || classList.contains(CLASS_BAR_FOOTER) || classList.contains(CLASS_BAR_FOOTER_SECONDARY) || classList.contains(CLASS_BAR_FOOTER_SECONDARY_TAB)) {
+					if(classList && classList.contains(CLASS_BAR_TAB) || classList.contains(CLASS_BAR_FOOTER) || classList.contains(CLASS_BAR_FOOTER_SECONDARY) || classList.contains(CLASS_BAR_FOOTER_SECONDARY_TAB)) {
 						isFooter = true;
 						break;
 					}
 				}
-				if (isFooter) {
+				if(isFooter) {
 					var scrollTop = document.body.scrollHeight;
 					var scrollLeft = document.body.scrollLeft;
 					setTimeout(function() {
@@ -1085,7 +1086,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		});
 		document.addEventListener('focusout', function(e) {
 			var classList = document.body.classList;
-			if (classList.contains(CLASS_FOCUSIN)) {
+			if(classList.contains(CLASS_FOCUSIN)) {
 				classList.remove(CLASS_FOCUSIN);
 				setTimeout(function() {
 					window.scrollTo(document.body.scrollLeft, document.body.scrollTop);
@@ -1120,13 +1121,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		return classSelector.replace(/\./g, $.classSelectorPrefix);
 	};
 	/**
-         * 返回正确的eventName
-         * @param {type} event
-         * @param {type} module
-         * @returns {String}
-         */
+	 * 返回正确的eventName
+	 * @param {type} event
+	 * @param {type} module
+	 * @returns {String}
+	 */
 	$.eventName = function(event, module) {
-		return event + ($.namespace ? ('.' + $.namespace) : '') + ( module ? ('.' + module) : '');
+		return event + ($.namespace ? ('.' + $.namespace) : '') + (module ? ('.' + module) : '');
 	};
 })(mui);
 
@@ -1179,7 +1180,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @returns {Number}
 	 */
 	var getDistance = function(p1, p2, props) {
-		if (!props) {
+		if(!props) {
 			props = ['x', 'y'];
 		}
 		var x = p2[props[0]] - p1[props[0]];
@@ -1192,7 +1193,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @param {Object} moves
 	 */
 	var getScale = function(starts, moves) {
-		if (starts.length >= 2 && moves.length >= 2) {
+		if(starts.length >= 2 && moves.length >= 2) {
 			var props = ['pageX', 'pageY'];
 			return getDistance(moves[1], moves[0], props) / getDistance(starts[1], starts[0], props);
 		}
@@ -1205,7 +1206,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @returns {Number}
 	 */
 	var getAngle = function(p1, p2, props) {
-		if (!props) {
+		if(!props) {
 			props = ['x', 'y'];
 		}
 		var x = p2[props[0]] - p1[props[0]];
@@ -1218,10 +1219,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @param {Object} y
 	 */
 	var getDirection = function(x, y) {
-		if (x === y) {
+		if(x === y) {
 			return '';
 		}
-		if (abs(x) >= abs(y)) {
+		if(abs(x) >= abs(y)) {
 			return x > 0 ? 'left' : 'right';
 		}
 		return y > 0 ? 'up' : 'down';
@@ -1254,12 +1255,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @returns {undefined}
 	 */
 	var detect = function(event, touch) {
-		if ($.gestures.stoped) {
+		if($.gestures.stoped) {
 			return;
 		}
 		$.doAction('gestures', function(index, gesture) {
-			if (!$.gestures.stoped) {
-				if ($.options.gestureConfig[gesture.name] !== false) {
+			if(!$.gestures.stoped) {
+				if($.options.gestureConfig[gesture.name] !== false) {
 					gesture.handle(event, touch);
 				}
 			}
@@ -1271,8 +1272,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @param {Object} parent
 	 */
 	var hasParent = function(node, parent) {
-		while (node) {
-			if (node == parent) {
+		while(node) {
+			if(node == parent) {
 				return true;
 			}
 			node = node.parentNode;
@@ -1285,17 +1286,17 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var values = [];
 		var i = 0;
 
-		while (i < src.length) {
+		while(i < src.length) {
 			var val = key ? src[i][key] : src[i];
-			if (values.indexOf(val) < 0) {
+			if(values.indexOf(val) < 0) {
 				results.push(src[i]);
 			}
 			values[i] = val;
 			i++;
 		}
 
-		if (sort) {
-			if (!key) {
+		if(sort) {
+			if(!key) {
 				results = results.sort();
 			} else {
 				results = results.sort(function sortUniqueArray(a, b) {
@@ -1308,7 +1309,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 	var getMultiCenter = function(touches) {
 		var touchesLength = touches.length;
-		if (touchesLength === 1) {
+		if(touchesLength === 1) {
 			return {
 				x: round(touches[0].pageX),
 				y: round(touches[0].pageY)
@@ -1318,7 +1319,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var x = 0;
 		var y = 0;
 		var i = 0;
-		while (i < touchesLength) {
+		while(i < touchesLength) {
 			x += touches[i].pageX;
 			y += touches[i].pageY;
 			i++;
@@ -1335,7 +1336,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	var copySimpleTouchData = function(touch) {
 		var touches = [];
 		var i = 0;
-		while (i < touch.touches.length) {
+		while(i < touch.touches.length) {
 			touches[i] = {
 				pageX: round(touch.touches[i].pageX),
 				pageY: round(touch.touches[i].pageY)
@@ -1359,7 +1360,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var prevDelta = session.prevDelta || {};
 		var prevTouch = session.prevTouch || {};
 
-		if (touch.gesture.type === $.EVENT_START || touch.gesture.type === $.EVENT_END) {
+		if(touch.gesture.type === $.EVENT_START || touch.gesture.type === $.EVENT_END) {
 			prevDelta = session.prevDelta = {
 				x: prevTouch.deltaX || 0,
 				y: prevTouch.deltaY || 0
@@ -1378,13 +1379,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var touches = touch.touches;
 		var touchesLength = touches.length;
 
-		if (!session.firstTouch) {
+		if(!session.firstTouch) {
 			session.firstTouch = copySimpleTouchData(touch);
 		}
 
-		if (multiTouch() && touchesLength > 1 && !session.firstMultiTouch) {
+		if(multiTouch() && touchesLength > 1 && !session.firstMultiTouch) {
 			session.firstMultiTouch = copySimpleTouchData(touch);
-		} else if (touchesLength === 1) {
+		} else if(touchesLength === 1) {
 			session.firstMultiTouch = false;
 		}
 
@@ -1419,7 +1420,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var velocityY;
 		var direction;
 
-		if (touch.gesture.type != $.EVENT_CANCEL && (deltaTime > CAL_INTERVAL || last.velocity === undefined)) {
+		if(touch.gesture.type != $.EVENT_CANCEL && (deltaTime > CAL_INTERVAL || last.velocity === undefined)) {
 			var deltaX = last.deltaX - touch.deltaX;
 			var deltaY = last.deltaY - touch.deltaY;
 
@@ -1444,7 +1445,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 	var targetIds = {};
 	var convertTouches = function(touches) {
-		for (var i = 0; i < touches.length; i++) {
+		for(var i = 0; i < touches.length; i++) {
 			!touches['identifier'] && (touches['identifier'] = 0);
 		}
 		return touches;
@@ -1458,7 +1459,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var changedTargetTouches = [];
 
 		//当touchstart或touchmove且touches长度为1，直接获得all和changed
-		if ((type === $.EVENT_START || type === $.EVENT_MOVE) && allTouches.length === 1) {
+		if((type === $.EVENT_START || type === $.EVENT_MOVE) && allTouches.length === 1) {
 			targetIds[allTouches[0].identifier] = true;
 			targetTouches = allTouches;
 			changedTargetTouches = allTouches;
@@ -1475,33 +1476,33 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				return hasParent(touch.target, sessionTarget);
 			});
 
-			if (type === $.EVENT_START) {
+			if(type === $.EVENT_START) {
 				i = 0;
-				while (i < targetTouches.length) {
+				while(i < targetTouches.length) {
 					targetIds[targetTouches[i].identifier] = true;
 					i++;
 				}
 			}
 
 			i = 0;
-			while (i < changedTouches.length) {
-				if (targetIds[changedTouches[i].identifier]) {
+			while(i < changedTouches.length) {
+				if(targetIds[changedTouches[i].identifier]) {
 					changedTargetTouches.push(changedTouches[i]);
 				}
-				if (type === $.EVENT_END || type === $.EVENT_CANCEL) {
+				if(type === $.EVENT_END || type === $.EVENT_CANCEL) {
 					delete targetIds[changedTouches[i].identifier];
 				}
 				i++;
 			}
 
-			if (!changedTargetTouches.length) {
+			if(!changedTargetTouches.length) {
 				return false;
 			}
 		}
 		targetTouches = uniqueArray(targetTouches.concat(changedTargetTouches), 'identifier', true);
 		var touchesLength = targetTouches.length;
 		var changedTouchesLength = changedTargetTouches.length;
-		if (type === $.EVENT_START && touchesLength - changedTouchesLength === 0) { //first
+		if(type === $.EVENT_START && touchesLength - changedTouchesLength === 0) { //first
 			touch.isFirst = true;
 			$.gestures.touch = $.gestures.session = {
 				target: event.target
@@ -1519,13 +1520,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			gesture: event
 		};
 		var touches = getTouches(event, touch);
-		if (!touches) {
+		if(!touches) {
 			return;
 		}
 		calTouchData(touch);
 		detect(event, touch);
 		$.gestures.session.prevTouch = touch;
-		if (event.type === $.EVENT_END && !$.isTouchable) {
+		if(event.type === $.EVENT_END && !$.isTouchable) {
 			$.gestures.touch = $.gestures.session = {};
 		}
 	};
@@ -1536,11 +1537,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	//fixed hashchange(android)
 	window.addEventListener($.EVENT_CLICK, function(e) {
 		//TODO 应该判断当前target是不是在targets.popover内部，而不是非要相等
-		if (($.os.android || $.os.ios) && (($.targets.popover && e.target === $.targets.popover) || ($.targets.tab) || $.targets.offcanvas || $.targets.modal)) {
+		if(($.os.android || $.os.ios) && (($.targets.popover && e.target === $.targets.popover) || ($.targets.tab) || $.targets.offcanvas || $.targets.modal)) {
 			e.preventDefault();
 		}
 	}, true);
-
 
 	//增加原生滚动识别
 	$.isScrolling = false;
@@ -1565,9 +1565,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var session = $.gestures.session;
 		var options = this.options;
 		var now = $.now();
-		switch (event.type) {
+		switch(event.type) {
 			case $.EVENT_MOVE:
-				if (now - flickStartTime > 300) {
+				if(now - flickStartTime > 300) {
 					flickStartTime = now;
 					session.flickStart = touch.center;
 				}
@@ -1575,7 +1575,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			case $.EVENT_END:
 			case $.EVENT_CANCEL:
 				touch.flick = false;
-				if (session.flickStart && options.flickMaxTime > (now - flickStartTime) && touch.distance > options.flickMinDistince) {
+				if(session.flickStart && options.flickMaxTime > (now - flickStartTime) && touch.distance > options.flickMinDistince) {
 					touch.flick = true;
 					touch.flickTime = now - flickStartTime;
 					touch.flickDistanceX = touch.center.x - session.flickStart.x;
@@ -1609,11 +1609,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 (function($, name) {
 	var handle = function(event, touch) {
 		var session = $.gestures.session;
-		if (event.type === $.EVENT_END || event.type === $.EVENT_CANCEL) {
+		if(event.type === $.EVENT_END || event.type === $.EVENT_CANCEL) {
 			var options = this.options;
 			touch.swipe = false;
 			//TODO 后续根据velocity计算
-			if (touch.direction && options.swipeMaxTime > touch.deltaTime && touch.distance > options.swipeMinDistince) {
+			if(touch.direction && options.swipeMaxTime > touch.deltaTime && touch.distance > options.swipeMinDistince) {
 				touch.swipe = true;
 				$.trigger(session.target, name, touch);
 				$.trigger(session.target, name + touch.direction, touch);
@@ -1642,17 +1642,17 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 (function($, name) {
 	var handle = function(event, touch) {
 		var session = $.gestures.session;
-		switch (event.type) {
+		switch(event.type) {
 			case $.EVENT_START:
 				break;
 			case $.EVENT_MOVE:
-				if (!touch.direction || !session.target) {
+				if(!touch.direction || !session.target) {
 					return;
 				}
 				//修正direction,可在session期间自行锁定拖拽方向，方便开发scroll类不同方向拖拽插件嵌套
-				if (session.lockDirection && session.startDirection) {
-					if (session.startDirection && session.startDirection !== touch.direction) {
-						if (session.startDirection === 'up' || session.startDirection === 'down') {
+				if(session.lockDirection && session.startDirection) {
+					if(session.startDirection && session.startDirection !== touch.direction) {
+						if(session.startDirection === 'up' || session.startDirection === 'down') {
 							touch.direction = touch.deltaY < 0 ? 'up' : 'down';
 						} else {
 							touch.direction = touch.deltaX < 0 ? 'left' : 'right';
@@ -1660,7 +1660,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					}
 				}
 
-				if (!session.drag) {
+				if(!session.drag) {
 					session.drag = true;
 					$.trigger(session.target, name + 'start', touch);
 				}
@@ -1669,7 +1669,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				break;
 			case $.EVENT_END:
 			case $.EVENT_CANCEL:
-				if (session.drag && touch.isFinal) {
+				if(session.drag && touch.isFinal) {
 					$.trigger(session.target, name + 'end', touch);
 				}
 				break;
@@ -1699,18 +1699,18 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	var handle = function(event, touch) {
 		var session = $.gestures.session;
 		var options = this.options;
-		switch (event.type) {
+		switch(event.type) {
 			case $.EVENT_END:
-				if (!touch.isFinal) {
+				if(!touch.isFinal) {
 					return;
 				}
 				var target = session.target;
-				if (!target || (target.disabled || (target.classList && target.classList.contains('mui-disabled')))) {
+				if(!target || (target.disabled || (target.classList && target.classList.contains('mui-disabled')))) {
 					return;
 				}
-				if (touch.distance < options.tapMaxDistance && touch.deltaTime < options.tapMaxTime) {
-					if ($.options.gestureConfig.doubletap && lastTarget && (lastTarget === target)) { //same target
-						if (lastTapTime && (touch.timestamp - lastTapTime) < options.tapMaxInterval) {
+				if(touch.distance < options.tapMaxDistance && touch.deltaTime < options.tapMaxTime) {
+					if($.options.gestureConfig.doubletap && lastTarget && (lastTarget === target)) { //same target
+						if(lastTapTime && (touch.timestamp - lastTapTime) < options.tapMaxInterval) {
 							$.trigger(target, 'doubletap', touch);
 							lastTapTime = $.now();
 							lastTarget = target;
@@ -1750,7 +1750,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	var handle = function(event, touch) {
 		var session = $.gestures.session;
 		var options = this.options;
-		switch (event.type) {
+		switch(event.type) {
 			case $.EVENT_START:
 				clearTimeout(timer);
 				timer = setTimeout(function() {
@@ -1758,7 +1758,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				}, options.holdTimeout);
 				break;
 			case $.EVENT_MOVE:
-				if (touch.distance > options.holdThreshold) {
+				if(touch.distance > options.holdThreshold) {
 					clearTimeout(timer);
 				}
 				break;
@@ -1793,9 +1793,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	var handle = function(event, touch) {
 		var session = $.gestures.session;
 		var options = this.options;
-		switch (event.type) {
+		switch(event.type) {
 			case $.EVENT_START:
-				if ($.options.gestureConfig.hold) {
+				if($.options.gestureConfig.hold) {
 					timer && clearTimeout(timer);
 					timer = setTimeout(function() {
 						touch.hold = true;
@@ -1807,7 +1807,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				break;
 			case $.EVENT_END:
 			case $.EVENT_CANCEL:
-				if (timer) {
+				if(timer) {
 					clearTimeout(timer) && (timer = null);
 					$.trigger(session.target, 'release', touch);
 				}
@@ -1837,15 +1837,15 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	var handle = function(event, touch) {
 		var options = this.options;
 		var session = $.gestures.session;
-		switch (event.type) {
+		switch(event.type) {
 			case $.EVENT_START:
 				break;
 			case $.EVENT_MOVE:
-				if ($.options.gestureConfig.pinch) {
-					if (touch.touches.length < 2) {
+				if($.options.gestureConfig.pinch) {
+					if(touch.touches.length < 2) {
 						return;
 					}
-					if (!session.pinch) { //start
+					if(!session.pinch) { //start
 						session.pinch = true;
 						$.trigger(session.target, name + 'start', touch);
 					}
@@ -1854,22 +1854,22 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					var rotation = touch.rotation;
 					var lastScale = typeof touch.lastScale === 'undefined' ? 1 : touch.lastScale;
 					var scaleDiff = 0.000000000001; //防止scale与lastScale相等，不触发事件的情况。
-					if (scale > lastScale) { //out
+					if(scale > lastScale) { //out
 						lastScale = scale - scaleDiff;
 						$.trigger(session.target, name + 'out', touch);
 					} //in
-					else if (scale < lastScale) {
+					else if(scale < lastScale) {
 						lastScale = scale + scaleDiff;
 						$.trigger(session.target, name + 'in', touch);
 					}
-					if (Math.abs(rotation) > options.minRotationAngle) {
+					if(Math.abs(rotation) > options.minRotationAngle) {
 						$.trigger(session.target, 'rotate', touch);
 					}
 				}
 				break;
 			case $.EVENT_END:
 			case $.EVENT_CANCEL:
-				if ($.options.gestureConfig.pinch && session.pinch && touch.touches.length === 2) {
+				if($.options.gestureConfig.pinch && session.pinch && touch.touches.length === 2) {
 					session.pinch = false;
 					$.trigger(session.target, name + 'end', touch);
 				}
@@ -1936,7 +1936,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		$.ready(function() {
 			$.doAction('inits', function(index, init) {
 				var isInit = !!(!inits[init.name] || init.repeat);
-				if (isInit) {
+				if(isInit) {
 					init.handle.call($);
 					inits[init.name] = true;
 				}
@@ -1953,7 +1953,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		return $.addAction('inits', init);
 	};
 	/**
-	 * 处理html5版本subpages 
+	 * 处理html5版本subpages
 	 */
 	$.addInit({
 		name: 'iframe',
@@ -1961,7 +1961,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		handle: function() {
 			var options = $.options;
 			var subpages = options.subpages || [];
-			if (!$.os.plus && subpages.length) {
+			if(!$.os.plus && subpages.length) {
 				//暂时只处理单个subpage。后续可以考虑支持多个subpage
 				createIframe(subpages[0]);
 			}
@@ -1971,10 +1971,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var wrapper = document.createElement('div');
 		wrapper.className = 'mui-iframe-wrapper';
 		var styles = options.styles || {};
-		if (typeof styles.top !== 'string') {
+		if(typeof styles.top !== 'string') {
 			styles.top = '0px';
 		}
-		if (typeof styles.bottom !== 'string') {
+		if(typeof styles.bottom !== 'string') {
 			styles.bottom = '0px';
 		}
 		wrapper.style.top = styles.top;
@@ -1992,7 +1992,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	function handleScroll(wrapper, iframe) {
 		var key = 'MUI_SCROLL_POSITION_' + document.location.href + '_' + iframe.src;
 		var scrollTop = (parseFloat(localStorage.getItem(key)) || 0);
-		if (scrollTop) {
+		if(scrollTop) {
 			(function(y) {
 				iframe.onload = function() {
 					window.scrollTo(0, y);
@@ -2001,7 +2001,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}
 		setInterval(function() {
 			var _scrollTop = window.scrollY;
-			if (scrollTop !== _scrollTop) {
+			if(scrollTop !== _scrollTop) {
 				localStorage.setItem(key, _scrollTop + '');
 				scrollTop = _scrollTop;
 			}
@@ -2010,31 +2010,31 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	$(function() {
 		var classList = document.body.classList;
 		var os = [];
-		if ($.os.ios) {
+		if($.os.ios) {
 			os.push({
 				os: 'ios',
 				version: $.os.version
 			});
 			classList.add('mui-ios');
-		} else if ($.os.android) {
+		} else if($.os.android) {
 			os.push({
 				os: 'android',
 				version: $.os.version
 			});
 			classList.add('mui-android');
 		}
-		if ($.os.wechat) {
+		if($.os.wechat) {
 			os.push({
 				os: 'wechat',
 				version: $.os.wechat.version
 			});
 			classList.add('mui-wechat');
 		}
-		if (os.length) {
+		if(os.length) {
 			$.each(os, function(index, osObj) {
 				var version = '';
 				var classArray = [];
-				if (osObj.version) {
+				if(osObj.version) {
 					$.each(osObj.version.split('.'), function(i, v) {
 						version = version + (version ? '-' : '') + v;
 						classList.add($.className(osObj.os + '-' + version));
@@ -2067,7 +2067,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		aniShow: 'slide-in-right'
 	};
 	//若执行了显示动画初始化操作，则要覆盖默认配置
-	if ($.options.show) {
+	if($.options.show) {
 		defaultShow = $.extend(true, defaultShow, $.options.show);
 	}
 
@@ -2085,7 +2085,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		return $.extend(true, {}, {
 			autoShow: true,
 			title: '',
-			modal:false
+			modal: false
 		}, options);
 	};
 	/**
@@ -2113,7 +2113,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @returns {_L6.$}
 	 */
 	$.plusReady = function(callback) {
-		if (window.plus) {
+		if(window.plus) {
 			setTimeout(function() { //解决callback与plusready事件的执行时机问题(典型案例:showWaiting,closeWaiting)
 				callback();
 			}, 0);
@@ -2132,10 +2132,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @returns {undefined}
 	 */
 	$.fire = function(webview, eventType, data) {
-		if (webview) {
-			if (data !== '') {
+		if(webview) {
+			if(data !== '') {
 				data = data || {};
-				if ($.isPlainObject(data)) {
+				if($.isPlainObject(data)) {
 					data = JSON.stringify(data || {}).replace(/\'/g, "\\u0027").replace(/\\/g, "\\u005c");
 				}
 			}
@@ -2149,31 +2149,31 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @returns {undefined}
 	 */
 	$.receive = function(eventType, data) {
-		if (eventType) {
+		if(eventType) {
 			try {
-				if (data) {
+				if(data) {
 					data = JSON.parse(data);
 				}
-			} catch (e) {}
+			} catch(e) {}
 			$.trigger(document, eventType, data);
 		}
 	};
 	var triggerPreload = function(webview) {
-		if (!webview.preloaded) {
+		if(!webview.preloaded) {
 			$.fire(webview, 'preload');
 			var list = webview.children();
-			for (var i = 0; i < list.length; i++) {
+			for(var i = 0; i < list.length; i++) {
 				$.fire(list[i], 'preload');
 			}
 			webview.preloaded = true;
 		}
 	};
 	var trigger = function(webview, eventType, timeChecked) {
-		if (timeChecked) {
-			if (!webview[eventType + 'ed']) {
+		if(timeChecked) {
+			if(!webview[eventType + 'ed']) {
 				$.fire(webview, eventType);
 				var list = webview.children();
-				for (var i = 0; i < list.length; i++) {
+				for(var i = 0; i < list.length; i++) {
 					$.fire(list[i], eventType);
 				}
 				webview[eventType + 'ed'] = true;
@@ -2181,7 +2181,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		} else {
 			$.fire(webview, eventType);
 			var list = webview.children();
-			for (var i = 0; i < list.length; i++) {
+			for(var i = 0; i < list.length; i++) {
 				$.fire(list[i], eventType);
 			}
 		}
@@ -2194,28 +2194,28 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @param {object} options 可选:参数,等待,窗口,显示配置{params:{},waiting:{},styles:{},show:{}}
 	 */
 	$.openWindow = function(url, id, options) {
-		if (typeof url === 'object') {
+		if(typeof url === 'object') {
 			options = url;
 			url = options.url;
 			id = options.id || url;
 		} else {
-			if (typeof id === 'object') {
+			if(typeof id === 'object') {
 				options = id;
 				id = url;
 			} else {
 				id = id || url;
 			}
 		}
-		if (!$.os.plus) {
+		if(!$.os.plus) {
 			//TODO 先临时这么处理：手机上顶层跳，PC上parent跳
-			if ($.os.ios || $.os.android) {
+			if($.os.ios || $.os.android) {
 				window.top.location.href = url;
 			} else {
 				window.parent.location.href = url;
 			}
 			return;
 		}
-		if (!window.plus) {
+		if(!window.plus) {
 			return;
 		}
 
@@ -2225,15 +2225,15 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			webviewCache = null,
 			nShow, nWaiting;
 
-		if ($.webviews[id]) {
+		if($.webviews[id]) {
 			webviewCache = $.webviews[id];
 			//webview真实存在，才能获取
-			if (plus.webview.getWebviewById(id)) {
+			if(plus.webview.getWebviewById(id)) {
 				webview = webviewCache.webview;
 			}
 		}
 
-		if (webviewCache && webview) { //已缓存
+		if(webviewCache && webview) { //已缓存
 			//每次show都需要传递动画参数；
 			//预加载的动画参数优先级：openWindow配置>preloadPages配置>mui默认配置；
 			nShow = webviewCache.show;
@@ -2246,9 +2246,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			webviewCache.afterShowMethodName && webview.evalJS(webviewCache.afterShowMethodName + '(\'' + JSON.stringify(params) + '\')');
 			return webview;
 		} else { //新窗口
-			if (options.createNew !== true) {
+			if(options.createNew !== true) {
 				webview = plus.webview.getWebviewById(id);
-				if (webview) { //如果已存在
+				if(webview) { //如果已存在
 					nShow = $.showOptions(options.show);
 					nShow.autoShow && webview.show(nShow.aniShow, nShow.duration, function() {
 						triggerPreload(webview);
@@ -2256,14 +2256,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					});
 					return webview;
 				} else {
-					if (!url) {
+					if(!url) {
 						throw new Error('webview[' + id + '] does not exist');
 					}
 				}
 			}
 			//显示waiting
 			var waitingConfig = $.waitingOptions(options.waiting);
-			if (waitingConfig.autoShow) {
+			if(waitingConfig.autoShow) {
 				nWaiting = plus.nativeUI.showWaiting(waitingConfig.title, waitingConfig.options);
 			}
 			//创建页面
@@ -2275,10 +2275,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			webview = $.createWindow(options);
 			//显示
 			nShow = $.showOptions(options.show);
-			if (nShow.autoShow) {
+			if(nShow.autoShow) {
 				var showWebview = function() {
 					//关闭等待框
-					if (nWaiting) {
+					if(nWaiting) {
 						nWaiting.close();
 					}
 					//显示页面
@@ -2291,14 +2291,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					options.afterShowMethodName && webview.evalJS(options.afterShowMethodName + '(\'' + JSON.stringify(params) + '\')');
 				};
 				//TODO 能走到这一步，应该不用判断url了吧？
-				if (!url) {
+				if(!url) {
 					showWebview();
 				} else {
 					// webview.addEventListener("loaded", showWebview, false);
 					//titleUpdate触发时机早于loaded，更换为titleUpdate后，可以更早的显示webview
 					webview.addEventListener("titleUpdate", showWebview, false);
 					//loaded事件发生后，触发预加载和pagebeforeshow事件
-					webview.addEventListener("loaded",function(){
+					webview.addEventListener("loaded", function() {
 						triggerPreload(webview);
 						trigger(webview, 'pagebeforeshow', false);
 					}, false);
@@ -2314,32 +2314,32 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @returns {webview}
 	 */
 	$.createWindow = function(options, isCreate) {
-		if (!window.plus) {
+		if(!window.plus) {
 			return;
 		}
 		var id = options.id || options.url;
 		var webview;
-		if (options.preload) {
-			if ($.webviews[id] && $.webviews[id].webview.getURL()) { //已经cache
+		if(options.preload) {
+			if($.webviews[id] && $.webviews[id].webview.getURL()) { //已经cache
 				webview = $.webviews[id].webview;
 			} else { //新增预加载窗口
 				//preload
 				//判断是否携带createNew参数，默认为false
-				if (options.createNew !== true) {
+				if(options.createNew !== true) {
 					webview = plus.webview.getWebviewById(id);
 				}
 
-				//之前没有，那就新创建	
-				if (!webview) {
+				//之前没有，那就新创建
+				if(!webview) {
 					webview = plus.webview.create(options.url, id, $.windowOptions(options.styles), $.extend({
 						preload: true
 					}, options.extras));
-					if (options.subpages) {
+					if(options.subpages) {
 						$.each(options.subpages, function(index, subpage) {
 							var subpageId = subpage.id || subpage.url;
-							if (subpageId) { //过滤空对象
+							if(subpageId) { //过滤空对象
 								var subWebview = plus.webview.getWebviewById(subpageId);
-								if (!subWebview) { //如果该webview不存在，则创建
+								if(!subWebview) { //如果该webview不存在，则创建
 									subWebview = plus.webview.create(subpage.url, subpageId, $.windowOptions(subpage.styles), $.extend({
 										preload: true
 									}, subpage.extras));
@@ -2361,30 +2361,30 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			//索引该预加载窗口
 			var preloads = $.data.preloads;
 			var index = preloads.indexOf(id);
-			if (~index) { //删除已存在的(变相调整插入位置)
+			if(~index) { //删除已存在的(变相调整插入位置)
 				preloads.splice(index, 1);
 			}
 			preloads.push(id);
-			if (preloads.length > $.options.preloadLimit) {
+			if(preloads.length > $.options.preloadLimit) {
 				//先进先出
 				var first = $.data.preloads.shift();
 				var webviewCache = $.webviews[first];
-				if (webviewCache && webviewCache.webview) {
+				if(webviewCache && webviewCache.webview) {
 					//需要将自己打开的所有页面，全部close；
-					//关闭该预加载webview	
+					//关闭该预加载webview
 					$.closeAll(webviewCache.webview);
 				}
 				//删除缓存
 				delete $.webviews[first];
 			}
 		} else {
-			if (isCreate !== false) { //直接创建非预加载窗口
+			if(isCreate !== false) { //直接创建非预加载窗口
 				webview = plus.webview.create(options.url, id, $.windowOptions(options.styles), options.extras);
-				if (options.subpages) {
+				if(options.subpages) {
 					$.each(options.subpages, function(index, subpage) {
 						var subpageId = subpage.id || subpage.url;
 						var subWebview = plus.webview.getWebviewById(subpageId);
-						if (!subWebview) {
+						if(!subWebview) {
 							subWebview = plus.webview.create(subpage.url, subpageId, $.windowOptions(subpage.styles), subpage.extras);
 						}
 						webview.append(subWebview);
@@ -2400,7 +2400,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 */
 	$.preload = function(options) {
 		//调用预加载函数，不管是否传递preload参数，强制变为true
-		if (!options.preload) {
+		if(!options.preload) {
 			options.preload = true;
 		}
 		return $.createWindow(options);
@@ -2411,18 +2411,18 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 */
 	$.closeOpened = function(webview) {
 		var opened = webview.opened();
-		if (opened) {
-			for (var i = 0, len = opened.length; i < len; i++) {
+		if(opened) {
+			for(var i = 0, len = opened.length; i < len; i++) {
 				var openedWebview = opened[i];
 				var open_open = openedWebview.opened();
-				if (open_open && open_open.length > 0) {
+				if(open_open && open_open.length > 0) {
 					//关闭打开的webview
 					$.closeOpened(openedWebview);
 					//关闭自己
 					openedWebview.close("none");
 				} else {
 					//如果直接孩子节点，就不用关闭了，因为父关闭的时候，会自动关闭子；
-					if (openedWebview.parent() !== webview) {
+					if(openedWebview.parent() !== webview) {
 						openedWebview.close('none');
 					}
 				}
@@ -2431,7 +2431,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 	$.closeAll = function(webview, aniShow) {
 		$.closeOpened(webview);
-		if (aniShow) {
+		if(aniShow) {
 			webview.close(aniShow);
 		} else {
 			webview.close();
@@ -2455,14 +2455,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @returns {webview}
 	 */
 	$.appendWebview = function(options) {
-		if (!window.plus) {
+		if(!window.plus) {
 			return;
 		}
 		var id = options.id || options.url;
 		var webview;
-		if (!$.webviews[id]) { //保证执行一遍
+		if(!$.webviews[id]) { //保证执行一遍
 			//TODO 这里也有隐患，比如某个webview不是作为subpage创建的，而是作为target webview的话；
-			if (!plus.webview.getWebviewById(id)) {
+			if(!plus.webview.getWebviewById(id)) {
 				webview = plus.webview.create(options.url, id, options.styles, options.extras);
 			}
 			//之前的实现方案：子窗口loaded之后再append到父窗口中；
@@ -2493,7 +2493,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		handle: function() {
 			var options = $.options;
 			var subpages = options.subpages || [];
-			if ($.os.plus) {
+			if($.os.plus) {
 				$.plusReady(function() {
 					//TODO  这里需要判断一下，最好等子窗口加载完毕后，再调用主窗口的show方法；
 					//或者：在openwindow方法中，监听实现；
@@ -2501,7 +2501,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 						$.appendWebview(subpage);
 					});
 					//判断是否首页
-					if (plus.webview.currentWebview() === plus.webview.getWebviewById(plus.runtime.appid)) {
+					if(plus.webview.currentWebview() === plus.webview.getWebviewById(plus.runtime.appid)) {
 						$.isHomePage = true;
 						//首页需要自己激活预加载；
 						//timeout因为子页面loaded之后才append的，防止子页面尚未append、从而导致其preload未触发的问题；
@@ -2510,12 +2510,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 						}, 300);
 					}
 					//设置ios顶部状态栏颜色；
-					if ($.os.ios && $.options.statusBarBackground) {
+					if($.os.ios && $.options.statusBarBackground) {
 						plus.navigator.setStatusBarBackground($.options.statusBarBackground);
 					}
-					if ($.os.android && parseFloat($.os.version) < 4.4) {
+					if($.os.android && parseFloat($.os.version) < 4.4) {
 						//解决Android平台4.4版本以下，resume后，父窗体标题延迟渲染的问题；
-						if (plus.webview.currentWebview().parent() == null) {
+						if(plus.webview.currentWebview().parent() == null) {
 							document.addEventListener("resume", function() {
 								var body = document.body;
 								body.style.display = 'none';
@@ -2564,7 +2564,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 	$.ready(function() {
 		//标识当前环境支持statusbar
-		if ($.supportStatusbarOffset()) {
+		if($.supportStatusbarOffset()) {
 			document.body.classList.add('mui-statusbar');
 		}
 	});
@@ -2591,7 +2591,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		name: 'browser',
 		index: 100,
 		handle: function() {
-			if (window.history.length > 1) {
+			if(window.history.length > 1) {
 				window.history.back();
 				return true;
 			}
@@ -2602,8 +2602,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * 后退
 	 */
 	$.back = function() {
-		if (typeof $.options.beforeback === 'function') {
-			if ($.options.beforeback() === false) {
+		if(typeof $.options.beforeback === 'function') {
+			if($.options.beforeback() === false) {
 				return;
 			}
 		}
@@ -2611,14 +2611,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 	window.addEventListener('tap', function(e) {
 		var action = $.targets.action;
-		if (action && action.classList.contains('mui-action-back')) {
+		if(action && action.classList.contains('mui-action-back')) {
 			$.back();
 			$.targets.action = false;
 		}
 	});
 	window.addEventListener('swiperight', function(e) {
 		var detail = e.detail;
-		if ($.options.swipeBack === true && Math.abs(detail.angle) < 3) {
+		if($.options.swipeBack === true && Math.abs(detail.angle) < 3) {
 			$.back();
 		}
 	});
@@ -2631,25 +2631,25 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @returns {undefined}
  */
 (function($, window) {
-	if ($.os.plus && $.os.android) {
+	if($.os.plus && $.os.android) {
 		$.addBack({
 			name: 'mui',
 			index: 5,
 			handle: function() {
 				//后续重新设计此处，将back放到各个空间内部实现
 				//popover
-				if ($.targets._popover && $.targets._popover.classList.contains('mui-active')) {
+				if($.targets._popover && $.targets._popover.classList.contains('mui-active')) {
 					$($.targets._popover).popover('hide');
 					return true;
 				}
 				//offcanvas
 				var offCanvas = document.querySelector('.mui-off-canvas-wrap.mui-active');
-				if (offCanvas) {
+				if(offCanvas) {
 					$(offCanvas).offCanvas('close');
 					return true;
 				}
 				var previewImage = $.isFunction($.getPreviewImage) && $.getPreviewImage();
-				if (previewImage && previewImage.isShown()) {
+				if(previewImage && previewImage.isShown()) {
 					previewImage.close();
 					return true;
 				}
@@ -2667,36 +2667,36 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		name: '5+',
 		index: 10,
 		handle: function() {
-			if (!window.plus) {
+			if(!window.plus) {
 				return false;
 			}
 			var wobj = plus.webview.currentWebview();
 			var parent = wobj.parent();
-			if (parent) {
+			if(parent) {
 				parent.evalJS('mui&&mui.back();');
 			} else {
 				wobj.canBack(function(e) {
 					//by chb 暂时注释，在碰到类似popover之类的锚点的时候，需多次点击才能返回；
-					if (e.canBack) { //webview history back
+					if(e.canBack) { //webview history back
 						window.history.back();
 					} else { //webview close or hide
 						//fixed by fxy 此处不应该用opener判断，因为用户有可能自己close掉当前窗口的opener。这样的话。opener就为空了，导致不能执行close
-						if (wobj.id === plus.runtime.appid) { //首页
+						if(wobj.id === plus.runtime.appid) { //首页
 							//首页不存在opener的情况下，后退实际上应该是退出应用；
 							//首次按键，提示‘再按一次退出应用’
-							if (!$.__back__first) {
+							if(!$.__back__first) {
 								$.__back__first = new Date().getTime();
 								mui.toast('再按一次退出应用');
 								setTimeout(function() {
 									$.__back__first = null;
 								}, 2000);
 							} else {
-								if (new Date().getTime() - $.__back__first < 2000) {
+								if(new Date().getTime() - $.__back__first < 2000) {
 									plus.runtime.quit();
 								}
 							}
 						} else { //其他页面，
-							if (wobj.preload) {
+							if(wobj.preload) {
 								wobj.hide("auto");
 							} else {
 								//关闭页面时，需要将其打开的所有子页面全部关闭；
@@ -2710,17 +2710,16 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}
 	});
 
-
 	$.menu = function() {
 		var menu = document.querySelector('.mui-action-menu');
-		if (menu) {
+		if(menu) {
 			$.trigger(menu, $.EVENT_START); //临时处理menu无touchstart的话，找不到当前targets的问题
 			$.trigger(menu, 'tap');
 		} else { //执行父窗口的menu
-			if (window.plus) {
+			if(window.plus) {
 				var wobj = $.currentWebview;
 				var parent = wobj.parent();
-				if (parent) { //又得evalJS
+				if(parent) { //又得evalJS
 					parent.evalJS('mui&&mui.menu();');
 				}
 			}
@@ -2734,10 +2733,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 	//默认监听
 	$.plusReady(function() {
-		if ($.options.keyEventBind.backbutton) {
+		if($.options.keyEventBind.backbutton) {
 			plus.key.addEventListener('backbutton', __back, false);
 		}
-		if ($.options.keyEventBind.menubutton) {
+		if($.options.keyEventBind.menubutton) {
 			plus.key.addEventListener('menubutton', __menu, false);
 		}
 	});
@@ -2748,10 +2747,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		handle: function() {
 			$.plusReady(function() {
 				//如果不为true，则移除默认监听
-				if (!$.options.keyEventBind.backbutton) {
+				if(!$.options.keyEventBind.backbutton) {
 					plus.key.removeEventListener('backbutton', __back);
 				}
-				if (!$.options.keyEventBind.menubutton) {
+				if(!$.options.keyEventBind.menubutton) {
 					plus.key.removeEventListener('menubutton', __menu);
 				}
 			});
@@ -2772,26 +2771,26 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			var pullRefreshOptions = options.pullRefresh || {};
 			var hasPulldown = pullRefreshOptions.down && pullRefreshOptions.down.hasOwnProperty('callback');
 			var hasPullup = pullRefreshOptions.up && pullRefreshOptions.up.hasOwnProperty('callback');
-			if (hasPulldown || hasPullup) {
+			if(hasPulldown || hasPullup) {
 				var container = pullRefreshOptions.container;
-				if (container) {
+				if(container) {
 					var $container = $(container);
-					if ($container.length === 1) {
-						if ($.os.plus && $.os.android) { //android 5+
+					if($container.length === 1) {
+						if($.os.plus && $.os.android) { //android 5+
 							$.plusReady(function() {
 								var webview = plus.webview.currentWebview();
-								if (hasPullup) {
+								if(hasPullup) {
 									//当前页面初始化pullup
 									var upOptions = {};
 									upOptions.up = pullRefreshOptions.up;
 									upOptions.webviewId = webview.id || webview.getURL();
 									$container.pullRefresh(upOptions);
 								}
-								if (hasPulldown) {
+								if(hasPulldown) {
 									var parent = webview.parent();
 									var id = webview.id || webview.getURL();
-									if (parent) {
-										if (!hasPullup) { //如果没有上拉加载，需要手动初始化一个默认的pullRefresh，以便当前页面容器可以调用endPulldownToRefresh等方法
+									if(parent) {
+										if(!hasPullup) { //如果没有上拉加载，需要手动初始化一个默认的pullRefresh，以便当前页面容器可以调用endPulldownToRefresh等方法
 											$container.pullRefresh({
 												webviewId: id
 											});
@@ -3117,16 +3116,16 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	$.plusReady(function() {
 		$.ajaxSettings = $.extend($.ajaxSettings, {
 			xhr: function(settings) {
-				if (settings.crossDomain) { //强制使用plus跨域
+				if(settings.crossDomain) { //强制使用plus跨域
 					return new plus.net.XMLHttpRequest();
 				}
 				//仅在webview的url为远程文件，且ajax请求的资源不同源下使用plus.net.XMLHttpRequest
-				if (originAnchor.protocol !== 'file:') {
+				if(originAnchor.protocol !== 'file:') {
 					var urlAnchor = document.createElement('a');
 					urlAnchor.href = settings.url;
 					urlAnchor.href = urlAnchor.href;
 					settings.crossDomain = (originAnchor.protocol + '//' + originAnchor.host) !== (urlAnchor.protocol + '//' + urlAnchor.host);
-					if (settings.crossDomain) {
+					if(settings.crossDomain) {
 						return new plus.net.XMLHttpRequest();
 					}
 				}
@@ -3145,18 +3144,18 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 (function($, window, undefined) {
 	$.offset = function(element) {
 		var box = {
-			top : 0,
-			left : 0
+			top: 0,
+			left: 0
 		};
-		if ( typeof element.getBoundingClientRect !== undefined) {
+		if(typeof element.getBoundingClientRect !== undefined) {
 			box = element.getBoundingClientRect();
 		}
 		return {
-			top : box.top + window.pageYOffset - element.clientTop,
-			left : box.left + window.pageXOffset - element.clientLeft
+			top: box.top + window.pageYOffset - element.clientTop,
+			left: box.left + window.pageXOffset - element.clientLeft
 		};
 	};
-})(mui, window); 
+})(mui, window);
 /**
  * mui animation
  */
@@ -3167,7 +3166,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	$.scrollTo = function(scrollTop, duration, callback) {
 		duration = duration || 1000;
 		var scroll = function(duration) {
-			if (duration <= 0) {
+			if(duration <= 0) {
 				window.scrollTo(0, scrollTop);
 				callback && callback();
 				return;
@@ -3185,7 +3184,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		return function() {
 			args = arguments;
 			context = this;
-			if (!isQueued) {
+			if(!isQueued) {
 				isQueued = true;
 				requestAnimationFrame(function() {
 					cb.apply(context, args);
@@ -3208,7 +3207,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		initializing = true;
 		var prototype = new this();
 		initializing = false;
-		for (var name in prop) {
+		for(var name in prop) {
 			prototype[name] = typeof prop[name] == "function" &&
 				typeof _super[name] == "function" && fnTest.test(prop[name]) ?
 				(function(name, fn) {
@@ -3225,8 +3224,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				})(name, prop[name]) :
 				prop[name];
 		}
+
 		function Class() {
-			if (!initializing && this.init)
+			if(!initializing && this.init)
 				this.init.apply(this, arguments);
 		}
 		Class.prototype = prototype;
@@ -3307,18 +3307,18 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		_initPocket: function() {
 			var options = this.options;
-			if (options.down && options.down.hasOwnProperty('callback')) {
+			if(options.down && options.down.hasOwnProperty('callback')) {
 				this.topPocket = this.scroller.querySelector('.' + CLASS_PULL_TOP_POCKET);
-				if (!this.topPocket) {
+				if(!this.topPocket) {
 					this.topPocket = this._createPocket(CLASS_PULL_TOP_POCKET, options.down, CLASS_LOADING_DOWN);
 					this.wrapper.insertBefore(this.topPocket, this.wrapper.firstChild);
 				}
 				this.topLoading = this.topPocket.querySelector('.' + CLASS_PULL_LOADING);
 				this.topCaption = this.topPocket.querySelector('.' + CLASS_PULL_CAPTION);
 			}
-			if (options.up && options.up.hasOwnProperty('callback')) {
+			if(options.up && options.up.hasOwnProperty('callback')) {
 				this.bottomPocket = this.scroller.querySelector('.' + CLASS_PULL_BOTTOM_POCKET);
-				if (!this.bottomPocket) {
+				if(!this.bottomPocket) {
 					this.bottomPocket = this._createPocket(CLASS_PULL_BOTTOM_POCKET, options.up, CLASS_LOADING);
 					this.scroller.appendChild(this.bottomPocket);
 				}
@@ -3336,7 +3336,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		_resetPullDownLoading: function() {
 			var loading = this.pullLoading;
-			if (loading) {
+			if(loading) {
 				this.pullCaption.innerHTML = this.options.down.contentdown;
 				loading.style.webkitTransition = "";
 				loading.style.webkitTransform = "";
@@ -3345,8 +3345,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		},
 		_setCaptionClass: function(isPulldown, caption, title) {
-			if (!isPulldown) {
-				switch (title) {
+			if(!isPulldown) {
+				switch(title) {
 					case this.options.up.contentdown:
 						caption.className = CLASS_PULL_CAPTION + ' ' + CLASS_PULL_CAPTION_DOWN;
 						break;
@@ -3360,7 +3360,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		},
 		_setCaption: function(title, reset) {
-			if (this.loading) {
+			if(this.loading) {
 				return;
 			}
 			var options = this.options;
@@ -3369,11 +3369,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			var loading = this.pullLoading;
 			var isPulldown = this.pulldown;
 			var self = this;
-			if (pocket) {
-				if (reset) {
+			if(pocket) {
+				if(reset) {
 					setTimeout(function() {
 						caption.innerHTML = self.lastTitle = title;
-						if (isPulldown) {
+						if(isPulldown) {
 							loading.className = CLASS_LOADING_DOWN;
 						} else {
 							self._setCaptionClass(false, caption, title);
@@ -3384,23 +3384,23 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 						loading.style.webkitTransform = "";
 					}, 100);
 				} else {
-					if (title !== this.lastTitle) {
+					if(title !== this.lastTitle) {
 						caption.innerHTML = title;
-						if (isPulldown) {
-							if (title === options.down.contentrefresh) {
+						if(isPulldown) {
+							if(title === options.down.contentrefresh) {
 								loading.className = CLASS_LOADING;
 								loading.style.webkitAnimation = "spinner-spin 1s step-end infinite";
-							} else if (title === options.down.contentover) {
+							} else if(title === options.down.contentover) {
 								loading.className = CLASS_LOADING_UP;
 								loading.style.webkitTransition = "-webkit-transform 0.3s ease-in";
 								loading.style.webkitTransform = "rotate(180deg)";
-							} else if (title === options.down.contentdown) {
+							} else if(title === options.down.contentdown) {
 								loading.className = CLASS_LOADING_DOWN;
 								loading.style.webkitTransition = "-webkit-transform 0.3s ease-in";
 								loading.style.webkitTransform = "rotate(0deg)";
 							}
 						} else {
-							if (title === options.up.contentrefresh) {
+							if(title === options.up.contentrefresh) {
 								loading.className = CLASS_LOADING + ' ' + CLASS_VISIBILITY;
 							} else {
 								loading.className = CLASS_LOADING + ' ' + CLASS_HIDDEN;
@@ -3488,7 +3488,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this.translateZ = this.options.hardwareAccelerated ? ' translateZ(0)' : '';
 
 			this._init();
-			if (this.scroller) {
+			if(this.scroller) {
 				this.refresh();
 				//				if (this.options.startX !== 0 || this.options.startY !== 0) { //需要判断吗？后续根据实际情况再看看
 				this.scrollTo(this.options.startX, this.options.startY);
@@ -3501,7 +3501,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this._initEvent();
 		},
 		_initParallax: function() {
-			if (this.options.parallaxElement) {
+			if(this.options.parallaxElement) {
 				this.parallaxElement = document.querySelector(this.options.parallaxElement);
 				this.parallaxStyle = this.parallaxElement.style;
 				this.parallaxHeight = this.parallaxElement.offsetHeight;
@@ -3511,14 +3511,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		_initIndicators: function() {
 			var self = this;
 			self.indicators = [];
-			if (!this.options.indicators) {
+			if(!this.options.indicators) {
 				return;
 			}
 			var indicators = [],
 				indicator;
 
 			// Vertical scrollbar
-			if (self.options.scrollY) {
+			if(self.options.scrollY) {
 				indicator = {
 					el: this._createScrollBar(CLASS_SCROLLBAR_VERTICAL),
 					listenX: false
@@ -3529,7 +3529,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 
 			// Horizontal scrollbar
-			if (this.options.scrollX) {
+			if(this.options.scrollX) {
 				indicator = {
 					el: this._createScrollBar(CLASS_SCROLLBAR_HORIZONTAL),
 					listenY: false
@@ -3539,7 +3539,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				indicators.push(indicator);
 			}
 
-			for (var i = indicators.length; i--;) {
+			for(var i = indicators.length; i--;) {
 				this.indicators.push(new Indicator(this, indicators[i]));
 			}
 
@@ -3555,15 +3555,15 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			var leftX = 0;
 			var rightX = 0;
 			var snapX = 0;
-			for (var i = 0; i < length; i++) {
+			for(var i = 0; i < length; i++) {
 				var snap = snaps[i];
 				var offsetLeft = snap.offsetLeft;
 				var offsetWidth = snap.offsetWidth;
-				if (i === 0 || offsetLeft <= snaps[i - 1].offsetLeft) {
+				if(i === 0 || offsetLeft <= snaps[i - 1].offsetLeft) {
 					m = 0;
 					n++;
 				}
-				if (!this.pages[m]) {
+				if(!this.pages[m]) {
 					this.pages[m] = [];
 				}
 				x = this._getSnapX(offsetLeft);
@@ -3577,10 +3577,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					pageX: m,
 					element: snap
 				}
-				if (snap.classList.contains(CLASS_ACTIVE)) {
+				if(snap.classList.contains(CLASS_ACTIVE)) {
 					this.currentPage = this.pages[m][0];
 				}
-				if (x >= this.maxScrollX) {
+				if(x >= this.maxScrollX) {
 					m++;
 				}
 			}
@@ -3591,8 +3591,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		_gotoPage: function(index) {
 			this.currentPage = this.pages[Math.min(index, this.pages.length - 1)][0];
-			for (var i = 0, len = this.snaps.length; i < len; i++) {
-				if (i === index) {
+			for(var i = 0, len = this.snaps.length; i < len; i++) {
+				if(i === index) {
 					this.snaps[i].classList.add(CLASS_ACTIVE);
 				} else {
 					this.snaps[i].classList.remove(CLASS_ACTIVE);
@@ -3601,7 +3601,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this.scrollTo(this.currentPage.x, 0, this.options.scrollTime);
 		},
 		_nearestSnap: function(x) {
-			if (!this.pages.length) {
+			if(!this.pages.length) {
 				return {
 					x: 0,
 					pageX: 0
@@ -3609,14 +3609,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 			var i = 0;
 			var length = this.pages.length;
-			if (x > 0) {
+			if(x > 0) {
 				x = 0;
-			} else if (x < this.maxScrollX) {
+			} else if(x < this.maxScrollX) {
 				x = this.maxScrollX;
 			}
-			for (; i < length; i++) {
+			for(; i < length; i++) {
 				var nearestX = this.direction === 'left' ? this.pages[i][0].leftX : this.pages[i][0].rightX;
-				if (x >= nearestX) {
+				if(x >= nearestX) {
 					return this.pages[i][0];
 				}
 			}
@@ -3639,11 +3639,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this.wrapper[action]('dragend', this);
 			this.wrapper[action]('flick', this);
 			this.wrapper[action]('scrollend', this);
-			if (this.options.scrollX) {
+			if(this.options.scrollX) {
 				this.wrapper[action]('swiperight', this);
 			}
 			var segmentedControl = this.wrapper.querySelector('.mui-segmented-control');
-			if (segmentedControl) { //靠，这个bug排查了一下午，阻止hash跳转，一旦hash跳转会导致可拖拽选项卡的tab不见
+			if(segmentedControl) { //靠，这个bug排查了一下午，阻止hash跳转，一旦hash跳转会导致可拖拽选项卡的tab不见
 				mui(segmentedControl)[detach ? 'off' : 'on']('click', 'a', $.preventDefault);
 			}
 
@@ -3666,12 +3666,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			});
 		},
 		handleEvent: function(e) {
-			if (this.stopped) {
+			if(this.stopped) {
 				this.resetPosition();
 				return;
 			}
 
-			switch (e.type) {
+			switch(e.type) {
 				case $.EVENT_START:
 					this._start(e);
 					break;
@@ -3716,7 +3716,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		_start: function(e) {
 			this.moved = this.needReset = false;
 			this._transitionTime();
-			if (this.isInTransition) {
+			if(this.isInTransition) {
 				this.needReset = true;
 				this.isInTransition = false;
 				var pos = $.parseTranslateMatrix($.getStyles(this.scroller, 'webkitTransform'));
@@ -3730,13 +3730,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			$.trigger(this.scroller, 'beforescrollstart', this);
 		},
 		_getDirectionByAngle: function(angle) {
-			if (angle < -80 && angle > -100) {
+			if(angle < -80 && angle > -100) {
 				return 'up';
-			} else if (angle >= 80 && angle < 100) {
+			} else if(angle >= 80 && angle < 100) {
 				return 'down';
-			} else if (angle >= 170 || angle <= -170) {
+			} else if(angle >= 170 || angle <= -170) {
 				return 'left';
-			} else if (angle >= -35 && angle <= 10) {
+			} else if(angle >= -35 && angle <= 10) {
 				return 'right';
 			}
 			return null;
@@ -3747,12 +3747,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			//				return;
 			//			}
 			var detail = e.detail;
-			if (this.options.scrollY || detail.direction === 'up' || detail.direction === 'down') { //如果是竖向滚动或手势方向是上或下
+			if(this.options.scrollY || detail.direction === 'up' || detail.direction === 'down') { //如果是竖向滚动或手势方向是上或下
 				//ios8 hack
-				if ($.os.ios && parseFloat($.os.version) >= 8) { //多webview时，离开当前webview会导致后续touch事件不触发
+				if($.os.ios && parseFloat($.os.version) >= 8) { //多webview时，离开当前webview会导致后续touch事件不触发
 					var clientY = detail.gesture.touches[0].clientY;
 					//下拉刷新 or 上拉加载
-					if ((clientY + 10) > window.innerHeight || clientY < 10) {
+					if((clientY + 10) > window.innerHeight || clientY < 10) {
 						this.resetPosition(this.options.bounceTime);
 						return;
 					}
@@ -3760,10 +3760,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 			var isPreventDefault = isReturn = false;
 			var direction = this._getDirectionByAngle(detail.angle);
-			if (detail.direction === 'left' || detail.direction === 'right') {
-				if (this.options.scrollX) {
+			if(detail.direction === 'left' || detail.direction === 'right') {
+				if(this.options.scrollX) {
 					isPreventDefault = true;
-					if (!this.moved) { //识别角度(该角度导致轮播不灵敏)
+					if(!this.moved) { //识别角度(该角度导致轮播不灵敏)
 						//						if (direction !== 'left' && direction !== 'right') {
 						//							isReturn = true;
 						//						} else {
@@ -3771,42 +3771,42 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 						$.gestures.session.startDirection = detail.direction;
 						//						}
 					}
-				} else if (this.options.scrollY && !this.moved) {
+				} else if(this.options.scrollY && !this.moved) {
 					isReturn = true;
 				}
-			} else if (detail.direction === 'up' || detail.direction === 'down') {
-				if (this.options.scrollY) {
+			} else if(detail.direction === 'up' || detail.direction === 'down') {
+				if(this.options.scrollY) {
 					isPreventDefault = true;
 					//					if (!this.moved) { //识别角度,竖向滚动似乎没必要进行小角度验证
 					//						if (direction !== 'up' && direction !== 'down') {
 					//							isReturn = true;
 					//						}
 					//					}
-					if (!this.moved) {
+					if(!this.moved) {
 						$.gestures.session.lockDirection = true; //锁定方向
 						$.gestures.session.startDirection = detail.direction;
 					}
-				} else if (this.options.scrollX && !this.moved) {
+				} else if(this.options.scrollX && !this.moved) {
 					isReturn = true;
 				}
 			} else {
 				isReturn = true;
 			}
-			if (this.moved || isPreventDefault) {
+			if(this.moved || isPreventDefault) {
 				e.stopPropagation(); //阻止冒泡(scroll类嵌套)
 				detail.gesture && detail.gesture.preventDefault();
 			}
-			if (isReturn) { //禁止非法方向滚动
+			if(isReturn) { //禁止非法方向滚动
 				return;
 			}
-			if (!this.moved) {
+			if(!this.moved) {
 				$.trigger(this.scroller, 'scrollstart', this);
 			} else {
 				e.stopPropagation(); //move期间阻止冒泡(scroll嵌套)
 			}
 			var deltaX = 0;
 			var deltaY = 0;
-			if (!this.moved) { //start
+			if(!this.moved) { //start
 				deltaX = detail.deltaX;
 				deltaY = detail.deltaY;
 			} else { //move
@@ -3815,9 +3815,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 			var absDeltaX = Math.abs(detail.deltaX);
 			var absDeltaY = Math.abs(detail.deltaY);
-			if (absDeltaX > absDeltaY + this.options.directionLockThreshold) {
+			if(absDeltaX > absDeltaY + this.options.directionLockThreshold) {
 				deltaY = 0;
-			} else if (absDeltaY >= absDeltaX + this.options.directionLockThreshold) {
+			} else if(absDeltaY >= absDeltaX + this.options.directionLockThreshold) {
 				deltaX = 0;
 			}
 
@@ -3826,14 +3826,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			var newX = this.x + deltaX;
 			var newY = this.y + deltaY;
 			// Slow down if outside of the boundaries
-			if (newX > 0 || newX < this.maxScrollX) {
+			if(newX > 0 || newX < this.maxScrollX) {
 				newX = this.options.bounce ? this.x + deltaX / 3 : newX > 0 ? 0 : this.maxScrollX;
 			}
-			if (newY > 0 || newY < this.maxScrollY) {
+			if(newY > 0 || newY < this.maxScrollY) {
 				newY = this.options.bounce ? this.y + deltaY / 3 : newY > 0 ? 0 : this.maxScrollY;
 			}
 
-			if (!this.requestAnimationFrame) {
+			if(!this.requestAnimationFrame) {
 				this._updateTranslate();
 			}
 			this.direction = detail.deltaX > 0 ? 'right' : 'left';
@@ -3846,13 +3846,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			//			if (!this.moved || this.needReset) {
 			//				return;
 			//			}
-			if (!this.moved) {
+			if(!this.moved) {
 				return;
 			}
 			e.stopPropagation();
 			var detail = e.detail;
 			this._clearRequestAnimationFrame();
-			if (e.type === 'dragend' && detail.flick) { //dragend
+			if(e.type === 'dragend' && detail.flick) { //dragend
 				return;
 			}
 
@@ -3861,20 +3861,20 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 			this.isInTransition = false;
 			// reset if we are outside of the boundaries
-			if (this.resetPosition(this.options.bounceTime)) {
+			if(this.resetPosition(this.options.bounceTime)) {
 				return;
 			}
 
 			this.scrollTo(newX, newY); // ensures that the last position is rounded
 
-			if (e.type === 'dragend') { //dragend
+			if(e.type === 'dragend') { //dragend
 				$.trigger(this.scroller, 'scrollend', this);
 				return;
 			}
 			var time = 0;
 			var easing = '';
 			// start momentum animation if needed
-			if (this.options.momentum && detail.flickTime < 300) {
+			if(this.options.momentum && detail.flickTime < 300) {
 				momentumX = this.hasHorizontalScroll ? this._momentum(this.x, detail.flickDistanceX, detail.flickTime, this.maxScrollX, this.options.bounce ? this.wrapperWidth : 0, this.options.deceleration) : {
 					destination: newX,
 					duration: 0
@@ -3889,8 +3889,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				this.isInTransition = true;
 			}
 
-			if (newX != this.x || newY != this.y) {
-				if (newX > 0 || newX < this.maxScrollX || newY > 0 || newY < this.maxScrollY) {
+			if(newX != this.x || newY != this.y) {
+				if(newX > 0 || newX < this.maxScrollX || newY > 0 || newY < this.maxScrollY) {
 					easing = ease.quadratic;
 				}
 				this.scrollTo(newX, newY, time, easing);
@@ -3902,22 +3902,22 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		_end: function(e) {
 			this.needReset = false;
-			if ((!this.moved && this.needReset) || e.type === $.EVENT_CANCEL) {
+			if((!this.moved && this.needReset) || e.type === $.EVENT_CANCEL) {
 				this.resetPosition();
 			}
 		},
 		_transitionEnd: function(e) {
-			if (e.target != this.scroller || !this.isInTransition) {
+			if(e.target != this.scroller || !this.isInTransition) {
 				return;
 			}
 			this._transitionTime();
-			if (!this.resetPosition(this.options.bounceTime)) {
+			if(!this.resetPosition(this.options.bounceTime)) {
 				this.isInTransition = false;
 				$.trigger(this.scroller, 'scrollend', this);
 			}
 		},
 		_scrollend: function(e) {
-			if ((this.y === 0 && this.maxScrollY === 0) || (Math.abs(this.y) > 0 && this.y <= this.maxScrollY)) {
+			if((this.y === 0 && this.maxScrollY === 0) || (Math.abs(this.y) > 0 && this.y <= this.maxScrollY)) {
 				$.trigger(this.scroller, 'scrollbottom', this);
 			}
 		},
@@ -3931,21 +3931,21 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		_transitionTime: function(time) {
 			time = time || 0;
 			this.scrollerStyle['webkitTransitionDuration'] = time + 'ms';
-			if (this.parallaxElement && this.options.scrollY) { //目前仅支持竖向视差效果
+			if(this.parallaxElement && this.options.scrollY) { //目前仅支持竖向视差效果
 				this.parallaxStyle['webkitTransitionDuration'] = time + 'ms';
 			}
-			if (this.options.fixedBadAndorid && !time && $.os.isBadAndroid) {
+			if(this.options.fixedBadAndorid && !time && $.os.isBadAndroid) {
 				this.scrollerStyle['webkitTransitionDuration'] = '0.001s';
-				if (this.parallaxElement && this.options.scrollY) { //目前仅支持竖向视差效果
+				if(this.parallaxElement && this.options.scrollY) { //目前仅支持竖向视差效果
 					this.parallaxStyle['webkitTransitionDuration'] = '0.001s';
 				}
 			}
-			if (this.indicators) {
-				for (var i = this.indicators.length; i--;) {
+			if(this.indicators) {
+				for(var i = this.indicators.length; i--;) {
 					this.indicators[i].transitionTime(time);
 				}
 			}
-			if (time) { //自定义timer，保证webkitTransitionEnd始终触发
+			if(time) { //自定义timer，保证webkitTransitionEnd始终触发
 				this.transitionTimer && this.transitionTimer.cancel();
 				this.transitionTimer = $.later(function() {
 					$.trigger(this.scroller, 'webkitTransitionEnd');
@@ -3954,11 +3954,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		_transitionTimingFunction: function(easing) {
 			this.scrollerStyle['webkitTransitionTimingFunction'] = easing;
-			if (this.parallaxElement && this.options.scrollY) { //目前仅支持竖向视差效果
+			if(this.parallaxElement && this.options.scrollY) { //目前仅支持竖向视差效果
 				this.parallaxStyle['webkitTransitionDuration'] = easing;
 			}
-			if (this.indicators) {
-				for (var i = this.indicators.length; i--;) {
+			if(this.indicators) {
+				for(var i = this.indicators.length; i--;) {
 					this.indicators[i].transitionTimingFunction(easing);
 				}
 			}
@@ -3968,14 +3968,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this.y = y;
 		},
 		_clearRequestAnimationFrame: function() {
-			if (this.requestAnimationFrame) {
+			if(this.requestAnimationFrame) {
 				cancelAnimationFrame(this.requestAnimationFrame);
 				this.requestAnimationFrame = null;
 			}
 		},
 		_updateTranslate: function() {
 			var self = this;
-			if (self.x !== self.lastX || self.y !== self.lastY) {
+			if(self.x !== self.lastX || self.y !== self.lastY) {
 				self.setTranslate(self.x, self.y);
 			}
 			self.requestAnimationFrame = requestAnimationFrame(function() {
@@ -3988,10 +3988,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			scrollbar.className = CLASS_SCROLLBAR + ' ' + clazz;
 			indicator.className = CLASS_INDICATOR;
 			scrollbar.appendChild(indicator);
-			if (clazz === CLASS_SCROLLBAR_VERTICAL) {
+			if(clazz === CLASS_SCROLLBAR_VERTICAL) {
 				this.scrollbarY = scrollbar;
 				this.scrollbarIndicatorY = indicator;
-			} else if (clazz === CLASS_SCROLLBAR_HORIZONTAL) {
+			} else if(clazz === CLASS_SCROLLBAR_HORIZONTAL) {
 				this.scrollbarX = scrollbar;
 				this.scrollbarIndicatorX = indicator;
 			}
@@ -3999,20 +3999,20 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			return scrollbar;
 		},
 		_preventDefaultException: function(el, exceptions) {
-			for (var i in exceptions) {
-				if (exceptions[i].test(el[i])) {
+			for(var i in exceptions) {
+				if(exceptions[i].test(el[i])) {
 					return true;
 				}
 			}
 			return false;
 		},
 		_reLayout: function() {
-			if (!this.hasHorizontalScroll) {
+			if(!this.hasHorizontalScroll) {
 				this.maxScrollX = 0;
 				this.scrollerWidth = this.wrapperWidth;
 			}
 
-			if (!this.hasVerticalScroll) {
+			if(!this.hasVerticalScroll) {
 				this.maxScrollY = 0;
 				this.scrollerHeight = this.wrapperHeight;
 			}
@@ -4022,13 +4022,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			});
 
 			//以防slider类嵌套使用
-			if (this.options.snap && typeof this.options.snap === 'string') {
+			if(this.options.snap && typeof this.options.snap === 'string') {
 				var items = this.scroller.querySelectorAll(this.options.snap);
 				this.itemLength = 0;
 				this.snaps = [];
-				for (var i = 0, len = items.length; i < len; i++) {
+				for(var i = 0, len = items.length; i < len; i++) {
 					var item = items[i];
-					if (item.parentNode === this.scroller) {
+					if(item.parentNode === this.scroller) {
 						this.itemLength++;
 						this.snaps.push(item);
 					}
@@ -4044,11 +4044,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			deceleration = deceleration === undefined ? 0.0006 : deceleration;
 			destination = current + (speed * speed) / (2 * deceleration) * (distance < 0 ? -1 : 1);
 			duration = speed / deceleration;
-			if (destination < lowerMargin) {
+			if(destination < lowerMargin) {
 				destination = wrapperSize ? lowerMargin - (wrapperSize / 2.5 * (speed / 8)) : lowerMargin;
 				distance = Math.abs(destination - current);
 				duration = distance / speed;
-			} else if (destination > 0) {
+			} else if(destination > 0) {
 				destination = wrapperSize ? wrapperSize / 2.5 * (speed / 8) : 0;
 				distance = Math.abs(current) + destination;
 				duration = distance / speed;
@@ -4060,7 +4060,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			};
 		},
 		_getTranslateStr: function(x, y) {
-			if (this.options.hardwareAccelerated) {
+			if(this.options.hardwareAccelerated) {
 				return 'translate3d(' + x + 'px,' + y + 'px,0px) ' + this.translateZ;
 			}
 			return 'translate(' + x + 'px,' + y + 'px) ';
@@ -4073,10 +4073,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this.x = x;
 			this.y = y;
 			this.scrollerStyle['webkitTransform'] = this._getTranslateStr(x, y);
-			if (this.parallaxElement && this.options.scrollY) { //目前仅支持竖向视差效果
+			if(this.parallaxElement && this.options.scrollY) { //目前仅支持竖向视差效果
 				var parallaxY = y * this.options.parallaxRatio;
 				var scale = 1 + parallaxY / ((this.parallaxHeight - parallaxY) / 2);
-				if (scale > 1) {
+				if(scale > 1) {
 					this.parallaxImgStyle['opacity'] = 1 - parallaxY / 100 * this.options.parallaxRatio;
 					this.parallaxStyle['webkitTransform'] = this._getTranslateStr(0, -parallaxY) + ' scale(' + scale + ',' + scale + ')';
 				} else {
@@ -4084,8 +4084,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					this.parallaxStyle['webkitTransform'] = this._getTranslateStr(0, -1) + ' scale(1,1)';
 				}
 			}
-			if (this.indicators) {
-				for (var i = this.indicators.length; i--;) {
+			if(this.indicators) {
+				for(var i = this.indicators.length; i--;) {
 					this.indicators[i].updatePosition();
 				}
 			}
@@ -4121,19 +4121,19 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				y = this.y;
 
 			time = time || 0;
-			if (!this.hasHorizontalScroll || this.x > 0) {
+			if(!this.hasHorizontalScroll || this.x > 0) {
 				x = 0;
-			} else if (this.x < this.maxScrollX) {
+			} else if(this.x < this.maxScrollX) {
 				x = this.maxScrollX;
 			}
 
-			if (!this.hasVerticalScroll || this.y > 0) {
+			if(!this.hasVerticalScroll || this.y > 0) {
 				y = 0;
-			} else if (this.y < this.maxScrollY) {
+			} else if(this.y < this.maxScrollY) {
 				y = this.maxScrollY;
 			}
 
-			if (x == this.x && y == this.y) {
+			if(x == this.x && y == this.y) {
 				return false;
 			}
 			this.scrollTo(x, y, time, this.options.scrollEasing);
@@ -4142,8 +4142,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		_reInit: function() {
 			var groups = this.wrapper.querySelectorAll('.' + CLASS_SCROLL);
-			for (var i = 0, len = groups.length; i < len; i++) {
-				if (groups[i].parentNode === this.wrapper) {
+			for(var i = 0, len = groups.length; i < len; i++) {
+				if(groups[i].parentNode === this.wrapper) {
 					this.scroller = groups[i];
 					break;
 				}
@@ -4161,7 +4161,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			//			this.isInTransition = time > 0 && (this.lastX != x || this.lastY != y);
 			//暂不严格判断x,y，否则会导致部分版本上不正常触发轮播
 			this.isInTransition = time > 0;
-			if (this.isInTransition) {
+			if(this.isInTransition) {
 				this._clearRequestAnimationFrame();
 				this._transitionTimingFunction(easing.style);
 				this._transitionTime(time);
@@ -4205,7 +4205,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		this.maxPosX = 0;
 		this.maxPosY = 0;
 
-		if (this.options.fade) {
+		if(this.options.fade) {
 			this.wrapperStyle['webkitTransform'] = this.scroller.translateZ;
 			this.wrapperStyle['webkitTransitionDuration'] = this.options.fixedBadAndorid && $.os.isBadAndroid ? '0.001s' : '0ms';
 			this.wrapperStyle.opacity = '0';
@@ -4218,7 +4218,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		transitionTime: function(time) {
 			time = time || 0;
 			this.indicatorStyle['webkitTransitionDuration'] = time + 'ms';
-			if (this.scroller.options.fixedBadAndorid && !time && $.os.isBadAndroid) {
+			if(this.scroller.options.fixedBadAndorid && !time && $.os.isBadAndroid) {
 				this.indicatorStyle['webkitTransitionDuration'] = '0.001s';
 			}
 		},
@@ -4228,9 +4228,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		refresh: function() {
 			this.transitionTime();
 
-			if (this.options.listenX && !this.options.listenY) {
+			if(this.options.listenX && !this.options.listenY) {
 				this.indicatorStyle.display = this.scroller.hasHorizontalScroll ? 'block' : 'none';
-			} else if (this.options.listenY && !this.options.listenX) {
+			} else if(this.options.listenY && !this.options.listenX) {
 				this.indicatorStyle.display = this.scroller.hasVerticalScroll ? 'block' : 'none';
 			} else {
 				this.indicatorStyle.display = this.scroller.hasHorizontalScroll || this.scroller.hasVerticalScroll ? 'block' : 'none';
@@ -4238,7 +4238,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 			this.wrapper.offsetHeight; // force refresh
 
-			if (this.options.listenX) {
+			if(this.options.listenX) {
 				this.wrapperWidth = this.wrapper.clientWidth;
 				this.indicatorWidth = Math.max(Math.round(this.wrapperWidth * this.wrapperWidth / (this.scroller.scrollerWidth || this.wrapperWidth || 1)), 8);
 				this.indicatorStyle.width = this.indicatorWidth + 'px';
@@ -4251,7 +4251,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				this.sizeRatioX = this.options.speedRatioX || (this.scroller.maxScrollX && (this.maxPosX / this.scroller.maxScrollX));
 			}
 
-			if (this.options.listenY) {
+			if(this.options.listenY) {
 				this.wrapperHeight = this.wrapper.clientHeight;
 				this.indicatorHeight = Math.max(Math.round(this.wrapperHeight * this.wrapperHeight / (this.scroller.scrollerHeight || this.wrapperHeight || 1)), 8);
 				this.indicatorStyle.height = this.indicatorHeight + 'px';
@@ -4271,28 +4271,28 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			var x = this.options.listenX && Math.round(this.sizeRatioX * this.scroller.x) || 0,
 				y = this.options.listenY && Math.round(this.sizeRatioY * this.scroller.y) || 0;
 
-			if (x < this.minBoundaryX) {
+			if(x < this.minBoundaryX) {
 				this.width = Math.max(this.indicatorWidth + x, 8);
 				this.indicatorStyle.width = this.width + 'px';
 				x = this.minBoundaryX;
-			} else if (x > this.maxBoundaryX) {
+			} else if(x > this.maxBoundaryX) {
 				this.width = Math.max(this.indicatorWidth - (x - this.maxPosX), 8);
 				this.indicatorStyle.width = this.width + 'px';
 				x = this.maxPosX + this.indicatorWidth - this.width;
-			} else if (this.width != this.indicatorWidth) {
+			} else if(this.width != this.indicatorWidth) {
 				this.width = this.indicatorWidth;
 				this.indicatorStyle.width = this.width + 'px';
 			}
 
-			if (y < this.minBoundaryY) {
+			if(y < this.minBoundaryY) {
 				this.height = Math.max(this.indicatorHeight + y * 3, 8);
 				this.indicatorStyle.height = this.height + 'px';
 				y = this.minBoundaryY;
-			} else if (y > this.maxBoundaryY) {
+			} else if(y > this.maxBoundaryY) {
 				this.height = Math.max(this.indicatorHeight - (y - this.maxPosY) * 3, 8);
 				this.indicatorStyle.height = this.height + 'px';
 				y = this.maxPosY + this.indicatorHeight - this.height;
-			} else if (this.height != this.indicatorHeight) {
+			} else if(this.height != this.indicatorHeight) {
 				this.height = this.indicatorHeight;
 				this.indicatorStyle.height = this.height + 'px';
 			}
@@ -4304,7 +4304,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 		},
 		fade: function(val, hold) {
-			if (hold && !this.visible) {
+			if(hold && !this.visible) {
 				return;
 			}
 
@@ -4333,10 +4333,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			var scrollApi = null;
 			var self = this;
 			var id = self.getAttribute('data-scroll');
-			if (!id) {
+			if(!id) {
 				id = ++$.uuid;
 				var _options = $.extend({}, options);
-				if (self.classList.contains('mui-segmented-control')) {
+				if(self.classList.contains('mui-segmented-control')) {
 					_options = $.extend(_options, {
 						scrollY: false,
 						scrollX: true,
@@ -4362,14 +4362,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	var PullRefresh = $.Scroll.extend($.extend({
 		handleEvent: function(e) {
 			this._super(e);
-			if (e.type === 'scrollbottom') {
-				if (e.target === this.scroller) {
+			if(e.type === 'scrollbottom') {
+				if(e.target === this.scroller) {
 					this._scrollbottom();
 				}
 			}
 		},
 		_scrollbottom: function() {
-			if (!this.pulldown && !this.loading) {
+			if(!this.pulldown && !this.loading) {
 				this.pulldown = false;
 				this._initPullupRefresh();
 				this.pullupLoading();
@@ -4377,20 +4377,20 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		_start: function(e) {
 			//仅下拉刷新在start阻止默认事件
-			if (e.touches && e.touches.length && e.touches[0].clientX > 30) {
+			if(e.touches && e.touches.length && e.touches[0].clientX > 30) {
 				e.target && !this._preventDefaultException(e.target, this.options.preventDefaultException) && e.preventDefault();
 			}
-			if (!this.loading) {
+			if(!this.loading) {
 				this.pulldown = this.pullPocket = this.pullCaption = this.pullLoading = false
 			}
 			this._super(e);
 		},
 		_drag: function(e) {
 			this._super(e);
-			if (!this.pulldown && !this.loading && this.topPocket && e.detail.direction === 'down' && this.y >= 0) {
+			if(!this.pulldown && !this.loading && this.topPocket && e.detail.direction === 'down' && this.y >= 0) {
 				this._initPulldownRefresh();
 			}
-			if (this.pulldown) {
+			if(this.pulldown) {
 				this._setCaption(this.y > this.options.down.height ? this.options.down.contentover : this.options.down.contentdown);
 			}
 		},
@@ -4401,8 +4401,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		//API
 		resetPosition: function(time) {
-			if (this.pulldown) {
-				if (this.y >= this.options.down.height) {
+			if(this.pulldown) {
+				if(this.y >= this.options.down.height) {
 					this.pulldownLoading(undefined, time || 0);
 					return true;
 				} else {
@@ -4414,7 +4414,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		pulldownLoading: function(y, time) {
 			typeof y === 'undefined' && (y = this.options.down.height); //默认高度
 			this.scrollTo(0, y, time, this.options.bounceEasing);
-			if (this.loading) {
+			if(this.loading) {
 				return;
 			}
 			//			if (!this.pulldown) {
@@ -4430,7 +4430,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		endPulldownToRefresh: function() {
 			var self = this;
-			if (self.topPocket && self.loading && this.pulldown) {
+			if(self.topPocket && self.loading && this.pulldown) {
 				self.scrollTo(0, 0, self.options.bounceTime, self.options.bounceEasing);
 				self.loading = false;
 				self._setCaption(self.options.down.contentdown, true);
@@ -4442,7 +4442,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		pullupLoading: function(callback, x, time) {
 			x = x || 0;
 			this.scrollTo(x, this.maxScrollY, time, this.options.bounceEasing);
-			if (this.loading) {
+			if(this.loading) {
 				return;
 			}
 			this._initPullupRefresh();
@@ -4456,9 +4456,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		endPullupToRefresh: function(finished) {
 			var self = this;
-			if (self.bottomPocket) { // && self.loading && !this.pulldown
+			if(self.bottomPocket) { // && self.loading && !this.pulldown
 				self.loading = false;
-				if (finished) {
+				if(finished) {
 					this.finished = true;
 					self._setCaption(self.options.up.contentnomore);
 					//					self.bottomPocket.classList.remove(CLASS_VISIBILITY);
@@ -4484,7 +4484,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this.wrapper.addEventListener('scrollbottom', this);
 		},
 		refresh: function(isReset) {
-			if (isReset && this.finished) {
+			if(isReset && this.finished) {
 				this.enablePullupToRefresh();
 				this.finished = false;
 			}
@@ -4492,24 +4492,24 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 	}, $.PullRefresh));
 	$.fn.pullRefresh = function(options) {
-		if (this.length === 1) {
+		if(this.length === 1) {
 			var self = this[0];
 			var pullRefreshApi = null;
 			options = options || {};
 			var id = self.getAttribute('data-pullrefresh');
-			if (!id) {
+			if(!id) {
 				id = ++$.uuid;
 				$.data[id] = pullRefreshApi = new PullRefresh(self, options);
 				self.setAttribute('data-pullrefresh', id);
 			} else {
 				pullRefreshApi = $.data[id];
 			}
-			if (options.down && options.down.auto) { //如果设置了auto，则自动下拉一次
+			if(options.down && options.down.auto) { //如果设置了auto，则自动下拉一次
 				pullRefreshApi.pulldownLoading(options.down.autoY);
-			} else if (options.up && options.up.auto) { //如果设置了auto，则自动上拉一次
+			} else if(options.up && options.up.auto) { //如果设置了auto，则自动上拉一次
 				pullRefreshApi.pullupLoading();
 			}
-			//暂不提供这种调用方式吧			
+			//暂不提供这种调用方式吧
 			//			if (typeof options === 'string') {
 			//				var methodValue = pullRefreshApi[options].apply(pullRefreshApi, $.slice.call(arguments, 1));
 			//				if (methodValue !== undefined) {
@@ -4553,16 +4553,16 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				slideTime: 0, //滑动动画时间
 				snap: SELECTOR_SLIDER_ITEM
 			}, options));
-			if (this.options.startX) {
+			if(this.options.startX) {
 				//				$.trigger(this.wrapper, 'scrollend', this);
 			}
 		},
 		_init: function() {
 			this._reInit();
-			if (this.scroller) {
+			if(this.scroller) {
 				this.scrollerStyle = this.scroller.style;
 				this.progressBar = this.wrapper.querySelector(SELECTOR_SLIDER_PROGRESS_BAR);
-				if (this.progressBar) {
+				if(this.progressBar) {
 					this.progressBarWidth = this.progressBar.offsetWidth;
 					this.progressBarStyle = this.progressBar.style;
 				}
@@ -4582,14 +4582,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			self.isInTransition = false;
 			var page = self.currentPage;
 			self.slideNumber = self._fixedSlideNumber();
-			if (self.loop) {
-				if (self.slideNumber === 0) {
+			if(self.loop) {
+				if(self.slideNumber === 0) {
 					self.setTranslate(self.pages[1][0].x, 0);
-				} else if (self.slideNumber === self.itemLength - 3) {
+				} else if(self.slideNumber === self.itemLength - 3) {
 					self.setTranslate(self.pages[self.itemLength - 2][0].x, 0);
 				}
 			}
-			if (self.lastSlideNumber != self.slideNumber) {
+			if(self.lastSlideNumber != self.slideNumber) {
 				self.lastSlideNumber = self.slideNumber;
 				self.lastPage = self.currentPage;
 				$.trigger(self.wrapper, 'slide', {
@@ -4600,28 +4600,28 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		_handleSlide: function(e) {
 			var self = this;
-			if (e.target !== self.wrapper) {
+			if(e.target !== self.wrapper) {
 				return;
 			}
 			var detail = e.detail;
 			detail.slideNumber = detail.slideNumber || 0;
 			var temps = self.scroller.querySelectorAll(SELECTOR_SLIDER_ITEM);
 			var items = [];
-			for (var i = 0, len = temps.length; i < len; i++) {
+			for(var i = 0, len = temps.length; i < len; i++) {
 				var item = temps[i];
-				if (item.parentNode === self.scroller) {
+				if(item.parentNode === self.scroller) {
 					items.push(item);
 				}
 			}
 			var _slideNumber = detail.slideNumber;
-			if (self.loop) {
+			if(self.loop) {
 				_slideNumber += 1;
 			}
-			if (!self.wrapper.classList.contains('mui-segmented-control')) {
-				for (var i = 0, len = items.length; i < len; i++) {
+			if(!self.wrapper.classList.contains('mui-segmented-control')) {
+				for(var i = 0, len = items.length; i < len; i++) {
 					var item = items[i];
-					if (item.parentNode === self.scroller) {
-						if (i === _slideNumber) {
+					if(item.parentNode === self.scroller) {
+						if(i === _slideNumber) {
 							item.classList.add(CLASS_ACTIVE);
 						} else {
 							item.classList.remove(CLASS_ACTIVE);
@@ -4630,22 +4630,22 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				}
 			}
 			var indicatorWrap = self.wrapper.querySelector('.mui-slider-indicator');
-			if (indicatorWrap) {
-				if (indicatorWrap.getAttribute('data-scroll')) { //scroll
+			if(indicatorWrap) {
+				if(indicatorWrap.getAttribute('data-scroll')) { //scroll
 					$(indicatorWrap).scroll().gotoPage(detail.slideNumber);
 				}
 				var indicators = indicatorWrap.querySelectorAll('.mui-indicator');
-				if (indicators.length > 0) { //图片轮播
-					for (var i = 0, len = indicators.length; i < len; i++) {
+				if(indicators.length > 0) { //图片轮播
+					for(var i = 0, len = indicators.length; i < len; i++) {
 						indicators[i].classList[i === detail.slideNumber ? 'add' : 'remove'](CLASS_ACTIVE);
 					}
 				} else {
 					var number = indicatorWrap.querySelector('.mui-number span');
-					if (number) { //图文表格
+					if(number) { //图文表格
 						number.innerText = (detail.slideNumber + 1);
 					} else { //segmented controls
 						var controlItems = indicatorWrap.querySelectorAll('.mui-control-item');
-						for (var i = 0, len = controlItems.length; i < len; i++) {
+						for(var i = 0, len = controlItems.length; i < len; i++) {
 							controlItems[i].classList[i === detail.slideNumber ? 'add' : 'remove'](CLASS_ACTIVE);
 						}
 					}
@@ -4660,7 +4660,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		_handleIndicatorTap: function(event) {
 			var self = this;
 			var target = event.target;
-			if (target.classList.contains(CLASS_ACTION_PREVIOUS) || target.classList.contains(CLASS_ACTION_NEXT)) {
+			if(target.classList.contains(CLASS_ACTION_PREVIOUS) || target.classList.contains(CLASS_ACTION_NEXT)) {
 				self[target.classList.contains(CLASS_ACTION_PREVIOUS) ? 'prevItem' : 'nextItem']();
 				event.stopPropagation();
 			}
@@ -4674,12 +4674,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		handleEvent: function(e) {
 			this._super(e);
-			switch (e.type) {
+			switch(e.type) {
 				case 'slide':
 					this._handleSlide(e);
 					break;
 				case $.eventName('shown', 'tab'):
-					if (~this.snaps.indexOf(e.target)) { //避免嵌套监听错误的tab show
+					if(~this.snaps.indexOf(e.target)) { //避免嵌套监听错误的tab show
 						this._handleTabShow(e);
 					}
 					break;
@@ -4692,7 +4692,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		_drag: function(e) {
 			this._super(e);
 			var direction = e.detail.direction;
-			if (direction === 'left' || direction === 'right') {
+			if(direction === 'left' || direction === 'right') {
 				//拖拽期间取消定时
 				var slidershowTimer = this.wrapper.getAttribute('data-slidershowTimer');
 				slidershowTimer && window.clearTimeout(slidershowTimer);
@@ -4706,13 +4706,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			var interval = self.options.interval;
 			var slidershowTimer = slider.getAttribute('data-slidershowTimer');
 			slidershowTimer && window.clearTimeout(slidershowTimer);
-			if (interval) {
+			if(interval) {
 				slidershowTimer = window.setTimeout(function() {
-					if (!slider) {
+					if(!slider) {
 						return;
 					}
 					//仅slider显示状态进行自动轮播
-					if (!!(slider.offsetWidth || slider.offsetHeight)) {
+					if(!!(slider.offsetWidth || slider.offsetHeight)) {
 						self.nextItem(true);
 						//下一个
 					}
@@ -4725,10 +4725,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		_fixedSlideNumber: function(page) {
 			page = page || this.currentPage;
 			var slideNumber = page.pageX;
-			if (this.loop) {
-				if (page.pageX === 0) {
+			if(this.loop) {
+				if(page.pageX === 0) {
 					slideNumber = this.itemLength - 3;
-				} else if (page.pageX === (this.itemLength - 1)) {
+				} else if(page.pageX === (this.itemLength - 1)) {
 					slideNumber = 0;
 				} else {
 					slideNumber = page.pageX - 1;
@@ -4746,7 +4746,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			return result ? result.x : 0;
 		},
 		_transitionEnd: function(e) {
-			if (e.target !== this.scroller || !this.isInTransition) {
+			if(e.target !== this.scroller || !this.isInTransition) {
 				return;
 			}
 			this._transitionTime();
@@ -4754,7 +4754,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			$.trigger(this.wrapper, 'scrollend', this);
 		},
 		_flick: function(e) {
-			if (!this.moved) { //无moved
+			if(!this.moved) { //无moved
 				return;
 			}
 			var detail = e.detail;
@@ -4765,12 +4765,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			//				this.resetPosition(this.options.bounceTime);
 			//				return;
 			//			}
-			if (e.type === 'flick') {
-				if (detail.deltaTime < 200) { //flick，太容易触发，额外校验一下deltaTime
+			if(e.type === 'flick') {
+				if(detail.deltaTime < 200) { //flick，太容易触发，额外校验一下deltaTime
 					this.x = this._getPage((this.slideNumber + (direction === 'right' ? -1 : 1)), true).x;
 				}
 				this.resetPosition(this.options.bounceTime);
-			} else if (e.type === 'dragend' && !detail.flick) {
+			} else if(e.type === 'dragend' && !detail.flick) {
 				this.resetPosition(this.options.bounceTime);
 			}
 			e.stopPropagation();
@@ -4779,11 +4779,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this.scrollerWidth = this.itemLength * this.scrollerWidth;
 			this.maxScrollX = Math.min(this.wrapperWidth - this.scrollerWidth, 0);
 			this._super();
-			if (!this.currentPage.x) {
+			if(!this.currentPage.x) {
 				//当slider处于隐藏状态时，导致snap计算是错误的，临时先这么判断一下，后续要考虑解决所有scroll在隐藏状态下初始化属性不正确的问题
 				var currentPage = this.pages[this.loop ? 1 : 0];
 				currentPage = currentPage || this.pages[0];
-				if (!currentPage) {
+				if(!currentPage) {
 					return;
 				}
 				this.currentPage = currentPage[0];
@@ -4799,22 +4799,22 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			return Math.max(-offsetLeft, this.maxScrollX);
 		},
 		_getPage: function(slideNumber, isFlick) {
-			if (this.loop) {
-				if (slideNumber > (this.itemLength - (isFlick ? 2 : 3))) {
+			if(this.loop) {
+				if(slideNumber > (this.itemLength - (isFlick ? 2 : 3))) {
 					slideNumber = 1;
 					time = 0;
-				} else if (slideNumber < (isFlick ? -1 : 0)) {
+				} else if(slideNumber < (isFlick ? -1 : 0)) {
 					slideNumber = this.itemLength - 2;
 					time = 0;
 				} else {
 					slideNumber += 1;
 				}
 			} else {
-				if (!isFlick) {
-					if (slideNumber > (this.itemLength - 1)) {
+				if(!isFlick) {
+					if(slideNumber > (this.itemLength - 1)) {
 						slideNumber = 0;
 						time = 0;
-					} else if (slideNumber < 0) {
+					} else if(slideNumber < 0) {
 						slideNumber = this.itemLength - 1;
 						time = 0;
 					}
@@ -4826,7 +4826,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		_gotoItem: function(slideNumber, time) {
 			this.currentPage = this._getPage(slideNumber, true); //此处传true。可保证程序切换时，动画与人手操作一致(第一张，最后一张的切换动画)
 			this.scrollTo(this.currentPage.x, 0, time, this.options.scrollEasing);
-			if (time === 0) {
+			if(time === 0) {
 				$.trigger(this.wrapper, 'scrollend', this);
 			}
 		},
@@ -4834,15 +4834,15 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		setTranslate: function(x, y) {
 			this._super(x, y);
 			var progressBar = this.progressBar;
-			if (progressBar) {
+			if(progressBar) {
 				this.progressBarStyle.webkitTransform = this._getTranslateStr((-x * (this.progressBarWidth / this.wrapperWidth)), 0);
 			}
 		},
 		resetPosition: function(time) {
 			time = time || 0;
-			if (this.x > 0) {
+			if(this.x > 0) {
 				this.x = 0;
-			} else if (this.x < this.maxScrollX) {
+			} else if(this.x < this.maxScrollX) {
 				this.x = this.maxScrollX;
 			}
 			this.currentPage = this._nearestSnap(this.x);
@@ -4863,20 +4863,20 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		_reInit: function() {
 			var groups = this.wrapper.querySelectorAll('.' + CLASS_SLIDER_GROUP);
-			for (var i = 0, len = groups.length; i < len; i++) {
-				if (groups[i].parentNode === this.wrapper) {
+			for(var i = 0, len = groups.length; i < len; i++) {
+				if(groups[i].parentNode === this.wrapper) {
 					this.scroller = groups[i];
 					break;
 				}
 			}
 			this.scrollerStyle = this.scroller && this.scroller.style;
-			if (this.progressBar) {
+			if(this.progressBar) {
 				this.progressBarWidth = this.progressBar.offsetWidth;
 				this.progressBarStyle = this.progressBar.style;
 			}
 		},
 		refresh: function(options) {
-			if (options) {
+			if(options) {
 				$.extend(this.options, options);
 				this._super();
 				this._initTimer();
@@ -4894,18 +4894,18 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var slider = null;
 		this.each(function() {
 			var sliderElement = this;
-			if (!this.classList.contains(CLASS_SLIDER)) {
+			if(!this.classList.contains(CLASS_SLIDER)) {
 				sliderElement = this.querySelector('.' + CLASS_SLIDER);
 			}
-			if (sliderElement && sliderElement.querySelector(SELECTOR_SLIDER_ITEM)) {
+			if(sliderElement && sliderElement.querySelector(SELECTOR_SLIDER_ITEM)) {
 				var id = sliderElement.getAttribute('data-slider');
-				if (!id) {
+				if(!id) {
 					id = ++$.uuid;
 					$.data[id] = slider = new Slider(sliderElement, options);
 					sliderElement.setAttribute('data-slider', id);
 				} else {
 					slider = $.data[id];
-					if (slider && options) {
+					if(slider && options) {
 						slider.refresh(options);
 					}
 				}
@@ -4932,289 +4932,289 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @returns {undefined}
  */
 (function($, document) {
-    if (!($.os.plus && $.os.android)) { //仅在5+android支持多webview的使用
-        return;
-    }
-    $.plusReady(function() {
-        if (window.__NWin_Enable__ === false) { //不支持多webview，则不用5+下拉刷新
-            return;
-        }
-        var CLASS_PLUS_PULLREFRESH = 'mui-plus-pullrefresh';
-        var CLASS_VISIBILITY = 'mui-visibility';
-        var CLASS_HIDDEN = 'mui-hidden';
-        var CLASS_BLOCK = 'mui-block';
+	if(!($.os.plus && $.os.android)) { //仅在5+android支持多webview的使用
+		return;
+	}
+	$.plusReady(function() {
+		if(window.__NWin_Enable__ === false) { //不支持多webview，则不用5+下拉刷新
+			return;
+		}
+		var CLASS_PLUS_PULLREFRESH = 'mui-plus-pullrefresh';
+		var CLASS_VISIBILITY = 'mui-visibility';
+		var CLASS_HIDDEN = 'mui-hidden';
+		var CLASS_BLOCK = 'mui-block';
 
-        var CLASS_PULL_CAPTION = 'mui-pull-caption';
-        var CLASS_PULL_CAPTION_DOWN = 'mui-pull-caption-down';
-        var CLASS_PULL_CAPTION_REFRESH = 'mui-pull-caption-refresh';
-        var CLASS_PULL_CAPTION_NOMORE = 'mui-pull-caption-nomore';
+		var CLASS_PULL_CAPTION = 'mui-pull-caption';
+		var CLASS_PULL_CAPTION_DOWN = 'mui-pull-caption-down';
+		var CLASS_PULL_CAPTION_REFRESH = 'mui-pull-caption-refresh';
+		var CLASS_PULL_CAPTION_NOMORE = 'mui-pull-caption-nomore';
 
-        var PlusPullRefresh = $.Class.extend({
-            init: function(element, options) {
-                this.element = element;
-                this.options = options;
-                this.wrapper = this.scroller = element;
-                this._init();
-                this._initPulldownRefreshEvent();
-            },
-            _init: function() {
-                var self = this;
-                //document.addEventListener('plusscrollbottom', this);
-                window.addEventListener('dragup', self);
-                document.addEventListener("plusscrollbottom", self);
-                self.scrollInterval = window.setInterval(function() {
-                    if (self.isScroll && !self.loading) {
-                        if (window.pageYOffset + window.innerHeight + 10 >= document.documentElement.scrollHeight) {
-                            self.isScroll = false; //放在这里是因为快速滚动的话，有可能检测时，还没到底，所以只要有滚动，没到底之前一直检测高度变化
-                            if (self.bottomPocket) {
-                                self.pullupLoading();
-                            }
-                        }
-                    }
-                }, 100);
-            },
-            _initPulldownRefreshEvent: function() {
-                var self = this;
-                if (self.topPocket && self.options.webviewId) {
-                    $.plusReady(function() {
-                        var webview = plus.webview.getWebviewById(self.options.webviewId);
-                        if (!webview) {
-                            return;
-                        }
-                        self.options.webview = webview;
-                        var downOptions = self.options.down;
-                        var height = downOptions.height;
-                        webview.addEventListener('close', function() {
-                            var attrWebviewId = self.options.webviewId && self.options.webviewId.replace(/\//g, "_"); //替换所有"/" 
-                            self.element.removeAttribute('data-pullrefresh-plus-' + attrWebviewId);
-                        });
-                        webview.addEventListener("dragBounce", function(e) {
-                            if (!self.pulldown) {
-                                self._initPulldownRefresh();
-                            } else {
-                                self.pullPocket.classList.add(CLASS_BLOCK);
-                            }
-                            switch (e.status) {
-                                case "beforeChangeOffset": //下拉可刷新状态
-                                    self._setCaption(downOptions.contentdown);
-                                    break;
-                                case "afterChangeOffset": //松开可刷新状态
-                                    self._setCaption(downOptions.contentover);
-                                    break;
-                                case "dragEndAfterChangeOffset": //正在刷新状态
-                                    //执行下拉刷新所在webview的回调函数
-                                    webview.evalJS("mui&&mui.options.pullRefresh.down.callback()");
-                                    self._setCaption(downOptions.contentrefresh);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }, false);
-                        webview.setBounce({
-                            position: {
-                                top: height * 2 + 'px'
-                            },
-                            changeoffset: {
-                                top: height + 'px'
-                            }
-                        });
-                    });
-                }
-            },
-            handleEvent: function(e) {
-                var self = this;
-                if (self.stopped) {
-                    return;
-                }
-                //5+的plusscrollbottom当页面内容较少时，不触发
-                //          if (e.type === 'plusscrollbottom') {
-                //              if (this.bottomPocket) {
-                //                  this.pullupLoading();
-                //              }
-                //          }
-                self.isScroll = false;
-                if (e.type === 'dragup' || e.type === 'plusscrollbottom') {
-                    self.isScroll = true;
-                    setTimeout(function() {
-                        self.isScroll = false;
-                    }, 1000);
-                }
-            }
-        }).extend($.extend({
-            setStopped: function(stopped) { //该方法是子页面调用的
-                this.stopped = !!stopped;
-                //TODO 此处需要设置当前webview的bounce为none,目前5+有BUG
-                var webview = plus.webview.currentWebview();
-                if (this.stopped) {
-                    webview.setStyle({
-                        bounce: 'none'
-                    });
-                    webview.setBounce({
-                        position: {
-                            top: 'none'
-                        }
-                    });
-                } else {
-                    var height = this.options.down.height;
-                    webview.setStyle({
-                        bounce: 'vertical'
-                    });
-                    webview.setBounce({
-                        position: {
-                            top: height * 2 + 'px'
-                        },
-                        changeoffset: {
-                            top: height + 'px'
-                        }
-                    });
-                }
-            },
-            pulldownLoading: function() { //该方法是子页面调用的
-                $.plusReady(function() {
-                    plus.webview.currentWebview().setBounce({
-                        offset: {
-                            top: this.options.down.height + "px"
-                        }
-                    });
-                }.bind(this));
-            },
-            _pulldownLoading: function() { //该方法是父页面调用的
-                var self = this;
-                $.plusReady(function() {
-                    var childWebview = plus.webview.getWebviewById(self.options.webviewId);
-                    childWebview.setBounce({
-                        offset: {
-                            top: self.options.down.height + "px"
-                        }
-                    });
-                });
-            },
-            endPulldownToRefresh: function() { //该方法是子页面调用的
-                var webview = plus.webview.currentWebview();
-                webview.parent().evalJS("mui&&mui(document.querySelector('.mui-content')).pullRefresh('" + JSON.stringify({
-                    webviewId: webview.id
-                }) + "')._endPulldownToRefresh()");
-            },
-            _endPulldownToRefresh: function() { //该方法是父页面调用的
-                var self = this;
-                if (self.topPocket && self.options.webview) {
-                    self.options.webview.endPullToRefresh(); //下拉刷新所在webview回弹
-                    self.loading = false;
-                    self._setCaption(self.options.down.contentdown, true);
-                    setTimeout(function() {
-                        self.loading || self.topPocket.classList.remove(CLASS_BLOCK);
-                    }, 350);
-                }
-            },
-            pullupLoading: function(callback) {
-                var self = this;
-                if (self.isLoading) return;
-                self.isLoading = true;
-                if (self.pulldown !== false) {
-                    self._initPullupRefresh();
-                } else {
-                    this.pullPocket.classList.add(CLASS_BLOCK);
-                }
-                setTimeout(function() {
-                    self.pullLoading.classList.add(CLASS_VISIBILITY);
-                    self.pullLoading.classList.remove(CLASS_HIDDEN);
-                    self.pullCaption.innerHTML = ''; //修正5+里边第一次加载时，文字显示的bug(还会显示出来个“多”,猜测应该是渲染问题导致的)
-                    self.pullCaption.className = CLASS_PULL_CAPTION + ' ' + CLASS_PULL_CAPTION_REFRESH;
-                    self.pullCaption.innerHTML = self.options.up.contentrefresh;
-                    callback = callback || self.options.up.callback;
-                    callback && callback.call(self);
-                }, 300);
-            },
-            endPullupToRefresh: function(finished) {
-                var self = this;
-                if (self.pullLoading) {
-                    self.pullLoading.classList.remove(CLASS_VISIBILITY);
-                    self.pullLoading.classList.add(CLASS_HIDDEN);
-                    self.isLoading = false;
-                    if (finished) {
-                        self.finished = true;
-                        self.pullCaption.className = CLASS_PULL_CAPTION + ' ' + CLASS_PULL_CAPTION_NOMORE;
-                        self.pullCaption.innerHTML = self.options.up.contentnomore;
-                        //                  self.bottomPocket.classList.remove(CLASS_BLOCK);
-                        //                  self.bottomPocket.classList.add(CLASS_HIDDEN);
-                        //取消5+的plusscrollbottom事件
-                        document.removeEventListener('plusscrollbottom', self);
-                        window.removeEventListener('dragup', self);
-                    } else { //初始化时隐藏，后续不再隐藏
-                        self.pullCaption.className = CLASS_PULL_CAPTION + ' ' + CLASS_PULL_CAPTION_DOWN;
-                        self.pullCaption.innerHTML = self.options.up.contentdown;
-                        //                  setTimeout(function() {
-                        //                      self.loading || self.bottomPocket.classList.remove(CLASS_BLOCK);
-                        //                  }, 350);
-                    }
-                }
-            },
-            disablePullupToRefresh: function() {
-                this._initPullupRefresh();
-                this.bottomPocket.className = 'mui-pull-bottom-pocket' + ' ' + CLASS_HIDDEN;
-                window.removeEventListener('dragup', this);
-            },
-            enablePullupToRefresh: function() {
-                this._initPullupRefresh();
-                this.bottomPocket.classList.remove(CLASS_HIDDEN);
-                this.pullCaption.className = CLASS_PULL_CAPTION + ' ' + CLASS_PULL_CAPTION_DOWN;
-                this.pullCaption.innerHTML = this.options.up.contentdown;
-                document.addEventListener("plusscrollbottom", this);
-                window.addEventListener('dragup', this);
-            },
-            scrollTo: function(x, y, time) {
-                $.scrollTo(y, time);
-            },
-            scrollToBottom: function(time) {
-                $.scrollTo(document.documentElement.scrollHeight, time);
-            },
-            refresh: function(isReset) {
-                if (isReset && this.finished) {
-                    this.enablePullupToRefresh();
-                    this.finished = false;
-                }
-            }
-        }, $.PullRefresh));
+		var PlusPullRefresh = $.Class.extend({
+			init: function(element, options) {
+				this.element = element;
+				this.options = options;
+				this.wrapper = this.scroller = element;
+				this._init();
+				this._initPulldownRefreshEvent();
+			},
+			_init: function() {
+				var self = this;
+				//document.addEventListener('plusscrollbottom', this);
+				window.addEventListener('dragup', self);
+				document.addEventListener("plusscrollbottom", self);
+				self.scrollInterval = window.setInterval(function() {
+					if(self.isScroll && !self.loading) {
+						if(window.pageYOffset + window.innerHeight + 10 >= document.documentElement.scrollHeight) {
+							self.isScroll = false; //放在这里是因为快速滚动的话，有可能检测时，还没到底，所以只要有滚动，没到底之前一直检测高度变化
+							if(self.bottomPocket) {
+								self.pullupLoading();
+							}
+						}
+					}
+				}, 100);
+			},
+			_initPulldownRefreshEvent: function() {
+				var self = this;
+				if(self.topPocket && self.options.webviewId) {
+					$.plusReady(function() {
+						var webview = plus.webview.getWebviewById(self.options.webviewId);
+						if(!webview) {
+							return;
+						}
+						self.options.webview = webview;
+						var downOptions = self.options.down;
+						var height = downOptions.height;
+						webview.addEventListener('close', function() {
+							var attrWebviewId = self.options.webviewId && self.options.webviewId.replace(/\//g, "_"); //替换所有"/"
+							self.element.removeAttribute('data-pullrefresh-plus-' + attrWebviewId);
+						});
+						webview.addEventListener("dragBounce", function(e) {
+							if(!self.pulldown) {
+								self._initPulldownRefresh();
+							} else {
+								self.pullPocket.classList.add(CLASS_BLOCK);
+							}
+							switch(e.status) {
+								case "beforeChangeOffset": //下拉可刷新状态
+									self._setCaption(downOptions.contentdown);
+									break;
+								case "afterChangeOffset": //松开可刷新状态
+									self._setCaption(downOptions.contentover);
+									break;
+								case "dragEndAfterChangeOffset": //正在刷新状态
+									//执行下拉刷新所在webview的回调函数
+									webview.evalJS("mui&&mui.options.pullRefresh.down.callback()");
+									self._setCaption(downOptions.contentrefresh);
+									break;
+								default:
+									break;
+							}
+						}, false);
+						webview.setBounce({
+							position: {
+								top: height * 2 + 'px'
+							},
+							changeoffset: {
+								top: height + 'px'
+							}
+						});
+					});
+				}
+			},
+			handleEvent: function(e) {
+				var self = this;
+				if(self.stopped) {
+					return;
+				}
+				//5+的plusscrollbottom当页面内容较少时，不触发
+				//          if (e.type === 'plusscrollbottom') {
+				//              if (this.bottomPocket) {
+				//                  this.pullupLoading();
+				//              }
+				//          }
+				self.isScroll = false;
+				if(e.type === 'dragup' || e.type === 'plusscrollbottom') {
+					self.isScroll = true;
+					setTimeout(function() {
+						self.isScroll = false;
+					}, 1000);
+				}
+			}
+		}).extend($.extend({
+			setStopped: function(stopped) { //该方法是子页面调用的
+				this.stopped = !!stopped;
+				//TODO 此处需要设置当前webview的bounce为none,目前5+有BUG
+				var webview = plus.webview.currentWebview();
+				if(this.stopped) {
+					webview.setStyle({
+						bounce: 'none'
+					});
+					webview.setBounce({
+						position: {
+							top: 'none'
+						}
+					});
+				} else {
+					var height = this.options.down.height;
+					webview.setStyle({
+						bounce: 'vertical'
+					});
+					webview.setBounce({
+						position: {
+							top: height * 2 + 'px'
+						},
+						changeoffset: {
+							top: height + 'px'
+						}
+					});
+				}
+			},
+			pulldownLoading: function() { //该方法是子页面调用的
+				$.plusReady(function() {
+					plus.webview.currentWebview().setBounce({
+						offset: {
+							top: this.options.down.height + "px"
+						}
+					});
+				}.bind(this));
+			},
+			_pulldownLoading: function() { //该方法是父页面调用的
+				var self = this;
+				$.plusReady(function() {
+					var childWebview = plus.webview.getWebviewById(self.options.webviewId);
+					childWebview.setBounce({
+						offset: {
+							top: self.options.down.height + "px"
+						}
+					});
+				});
+			},
+			endPulldownToRefresh: function() { //该方法是子页面调用的
+				var webview = plus.webview.currentWebview();
+				webview.parent().evalJS("mui&&mui(document.querySelector('.mui-content')).pullRefresh('" + JSON.stringify({
+					webviewId: webview.id
+				}) + "')._endPulldownToRefresh()");
+			},
+			_endPulldownToRefresh: function() { //该方法是父页面调用的
+				var self = this;
+				if(self.topPocket && self.options.webview) {
+					self.options.webview.endPullToRefresh(); //下拉刷新所在webview回弹
+					self.loading = false;
+					self._setCaption(self.options.down.contentdown, true);
+					setTimeout(function() {
+						self.loading || self.topPocket.classList.remove(CLASS_BLOCK);
+					}, 350);
+				}
+			},
+			pullupLoading: function(callback) {
+				var self = this;
+				if(self.isLoading) return;
+				self.isLoading = true;
+				if(self.pulldown !== false) {
+					self._initPullupRefresh();
+				} else {
+					this.pullPocket.classList.add(CLASS_BLOCK);
+				}
+				setTimeout(function() {
+					self.pullLoading.classList.add(CLASS_VISIBILITY);
+					self.pullLoading.classList.remove(CLASS_HIDDEN);
+					self.pullCaption.innerHTML = ''; //修正5+里边第一次加载时，文字显示的bug(还会显示出来个“多”,猜测应该是渲染问题导致的)
+					self.pullCaption.className = CLASS_PULL_CAPTION + ' ' + CLASS_PULL_CAPTION_REFRESH;
+					self.pullCaption.innerHTML = self.options.up.contentrefresh;
+					callback = callback || self.options.up.callback;
+					callback && callback.call(self);
+				}, 300);
+			},
+			endPullupToRefresh: function(finished) {
+				var self = this;
+				if(self.pullLoading) {
+					self.pullLoading.classList.remove(CLASS_VISIBILITY);
+					self.pullLoading.classList.add(CLASS_HIDDEN);
+					self.isLoading = false;
+					if(finished) {
+						self.finished = true;
+						self.pullCaption.className = CLASS_PULL_CAPTION + ' ' + CLASS_PULL_CAPTION_NOMORE;
+						self.pullCaption.innerHTML = self.options.up.contentnomore;
+						//                  self.bottomPocket.classList.remove(CLASS_BLOCK);
+						//                  self.bottomPocket.classList.add(CLASS_HIDDEN);
+						//取消5+的plusscrollbottom事件
+						document.removeEventListener('plusscrollbottom', self);
+						window.removeEventListener('dragup', self);
+					} else { //初始化时隐藏，后续不再隐藏
+						self.pullCaption.className = CLASS_PULL_CAPTION + ' ' + CLASS_PULL_CAPTION_DOWN;
+						self.pullCaption.innerHTML = self.options.up.contentdown;
+						//                  setTimeout(function() {
+						//                      self.loading || self.bottomPocket.classList.remove(CLASS_BLOCK);
+						//                  }, 350);
+					}
+				}
+			},
+			disablePullupToRefresh: function() {
+				this._initPullupRefresh();
+				this.bottomPocket.className = 'mui-pull-bottom-pocket' + ' ' + CLASS_HIDDEN;
+				window.removeEventListener('dragup', this);
+			},
+			enablePullupToRefresh: function() {
+				this._initPullupRefresh();
+				this.bottomPocket.classList.remove(CLASS_HIDDEN);
+				this.pullCaption.className = CLASS_PULL_CAPTION + ' ' + CLASS_PULL_CAPTION_DOWN;
+				this.pullCaption.innerHTML = this.options.up.contentdown;
+				document.addEventListener("plusscrollbottom", this);
+				window.addEventListener('dragup', this);
+			},
+			scrollTo: function(x, y, time) {
+				$.scrollTo(y, time);
+			},
+			scrollToBottom: function(time) {
+				$.scrollTo(document.documentElement.scrollHeight, time);
+			},
+			refresh: function(isReset) {
+				if(isReset && this.finished) {
+					this.enablePullupToRefresh();
+					this.finished = false;
+				}
+			}
+		}, $.PullRefresh));
 
-        //override h5 pullRefresh
-        $.fn.pullRefresh = function(options) {
-            var self;
-            if (this.length === 0) {
-                self = document.createElement('div');
-                self.className = 'mui-content';
-                document.body.appendChild(self);
-            } else {
-                self = this[0];
-            }
-            var args = options;
-            //一个父需要支持多个子下拉刷新
-            options = options || {}
-            if (typeof options === 'string') {
-                options = $.parseJSON(options);
-            };
-            !options.webviewId && (options.webviewId = (plus.webview.currentWebview().id || plus.webview.currentWebview().getURL()));
-            var pullRefreshApi = null;
-            var attrWebviewId = options.webviewId && options.webviewId.replace(/\//g, "_"); //替换所有"/"
-            var id = self.getAttribute('data-pullrefresh-plus-' + attrWebviewId);
-            if (!id && typeof args === 'undefined') {
-                return false;
-            }
-            if (!id) { //避免重复初始化5+ pullrefresh
-                id = ++$.uuid;
-                self.setAttribute('data-pullrefresh-plus-' + attrWebviewId, id);
-                document.body.classList.add(CLASS_PLUS_PULLREFRESH);
-                $.data[id] = pullRefreshApi = new PlusPullRefresh(self, options);
-            } else {
-                pullRefreshApi = $.data[id];
-            }
-            if (options.down && options.down.auto) { //如果设置了auto，则自动下拉一次
-                pullRefreshApi._pulldownLoading(); //parent webview
-            } else if (options.up && options.up.auto) { //如果设置了auto，则自动上拉一次
-                pullRefreshApi.pullupLoading();
-            }
-            return pullRefreshApi;
-        };
-    });
+		//override h5 pullRefresh
+		$.fn.pullRefresh = function(options) {
+			var self;
+			if(this.length === 0) {
+				self = document.createElement('div');
+				self.className = 'mui-content';
+				document.body.appendChild(self);
+			} else {
+				self = this[0];
+			}
+			var args = options;
+			//一个父需要支持多个子下拉刷新
+			options = options || {}
+			if(typeof options === 'string') {
+				options = $.parseJSON(options);
+			};
+			!options.webviewId && (options.webviewId = (plus.webview.currentWebview().id || plus.webview.currentWebview().getURL()));
+			var pullRefreshApi = null;
+			var attrWebviewId = options.webviewId && options.webviewId.replace(/\//g, "_"); //替换所有"/"
+			var id = self.getAttribute('data-pullrefresh-plus-' + attrWebviewId);
+			if(!id && typeof args === 'undefined') {
+				return false;
+			}
+			if(!id) { //避免重复初始化5+ pullrefresh
+				id = ++$.uuid;
+				self.setAttribute('data-pullrefresh-plus-' + attrWebviewId, id);
+				document.body.classList.add(CLASS_PLUS_PULLREFRESH);
+				$.data[id] = pullRefreshApi = new PlusPullRefresh(self, options);
+			} else {
+				pullRefreshApi = $.data[id];
+			}
+			if(options.down && options.down.auto) { //如果设置了auto，则自动下拉一次
+				pullRefreshApi._pulldownLoading(); //parent webview
+			} else if(options.up && options.up.auto) { //如果设置了auto，则自动上拉一次
+				pullRefreshApi.pullupLoading();
+			}
+			return pullRefreshApi;
+		};
+	});
 
 })(mui, document);
 /**
@@ -5234,18 +5234,16 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	var CLASS_SLIDE_IN = 'mui-slide-in';
 	var CLASS_ACTIVE = 'mui-active';
 
-
 	var CLASS_TRANSITIONING = 'mui-transitioning';
 
 	var SELECTOR_INNER_WRAP = '.mui-inner-wrap';
-
 
 	var OffCanvas = $.Class.extend({
 		init: function(element, options) {
 			this.wrapper = this.element = element;
 			this.scroller = this.wrapper.querySelector(SELECTOR_INNER_WRAP);
 			this.classList = this.wrapper.classList;
-			if (this.scroller) {
+			if(this.scroller) {
 				this.options = $.extend(true, {
 					dragThresholdX: 10,
 					scale: 0.8,
@@ -5260,8 +5258,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		},
 		_preventDefaultException: function(el, exceptions) {
-			for (var i in exceptions) {
-				if (exceptions[i].test(el[i])) {
+			for(var i in exceptions) {
+				if(exceptions[i].test(el[i])) {
 					return true;
 				}
 			}
@@ -5276,10 +5274,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			//			!offCanvas && this.scroller.setAttribute('style', '');
 			this.offCanvasLefts = this.wrapper.querySelectorAll('.' + CLASS_OFF_CANVAS_LEFT);
 			this.offCanvasRights = this.wrapper.querySelectorAll('.' + CLASS_OFF_CANVAS_RIGHT);
-			if (offCanvas) {
-				if (offCanvas.classList.contains(CLASS_OFF_CANVAS_LEFT)) {
+			if(offCanvas) {
+				if(offCanvas.classList.contains(CLASS_OFF_CANVAS_LEFT)) {
 					this.offCanvasLeft = offCanvas;
-				} else if (offCanvas.classList.contains(CLASS_OFF_CANVAS_RIGHT)) {
+				} else if(offCanvas.classList.contains(CLASS_OFF_CANVAS_RIGHT)) {
 					this.offCanvasRight = offCanvas;
 				}
 			} else {
@@ -5288,14 +5286,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 			this.offCanvasRightWidth = this.offCanvasLeftWidth = 0;
 			this.offCanvasLeftSlideIn = this.offCanvasRightSlideIn = false;
-			if (this.offCanvasRight) {
+			if(this.offCanvasRight) {
 				this.offCanvasRightWidth = this.offCanvasRight.offsetWidth;
 				this.offCanvasRightSlideIn = this.slideIn && (this.offCanvasRight.parentNode === this.wrapper);
 				//				this.offCanvasRight.classList.remove(CLASS_TRANSITIONING);
 				//				this.offCanvasRight.classList.remove(CLASS_ACTIVE);
 				//				this.offCanvasRight.setAttribute('style', '');
 			}
-			if (this.offCanvasLeft) {
+			if(this.offCanvasLeft) {
 				this.offCanvasLeftWidth = this.offCanvasLeft.offsetWidth;
 				this.offCanvasLeftSlideIn = this.slideIn && (this.offCanvasLeft.parentNode === this.wrapper);
 				//				this.offCanvasLeft.classList.remove(CLASS_TRANSITIONING);
@@ -5313,28 +5311,28 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this.lastTranslateX = null;
 		},
 		handleEvent: function(e) {
-			switch (e.type) {
+			switch(e.type) {
 				case $.EVENT_START:
 					e.target && !this._preventDefaultException(e.target, this.options.preventDefaultException) && e.preventDefault();
 					break;
 				case 'webkitTransitionEnd': //有个bug需要处理，需要考虑假设没有触发webkitTransitionEnd的情况
-					if (e.target === this.scroller) {
+					if(e.target === this.scroller) {
 						this._dispatchEvent();
 					}
 					break;
 				case 'drag':
 					var detail = e.detail;
-					if (!this.startX) {
+					if(!this.startX) {
 						this.startX = detail.center.x;
 						this.lastX = this.startX;
 					} else {
 						this.lastX = detail.center.x;
 					}
-					if (!this.isDragging && Math.abs(this.lastX - this.startX) > this.options.dragThresholdX && (detail.direction === 'left' || (detail.direction === 'right'))) {
-						if (this.slideIn) {
+					if(!this.isDragging && Math.abs(this.lastX - this.startX) > this.options.dragThresholdX && (detail.direction === 'left' || (detail.direction === 'right'))) {
+						if(this.slideIn) {
 							this.scroller = this.wrapper.querySelector(SELECTOR_INNER_WRAP);
-							if (this.classList.contains(CLASS_ACTIVE)) {
-								if (this.offCanvasRight && this.offCanvasRight.classList.contains(CLASS_ACTIVE)) {
+							if(this.classList.contains(CLASS_ACTIVE)) {
+								if(this.offCanvasRight && this.offCanvasRight.classList.contains(CLASS_ACTIVE)) {
 									this.offCanvas = this.offCanvasRight;
 									this.offCanvasWidth = this.offCanvasRightWidth;
 								} else {
@@ -5342,10 +5340,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 									this.offCanvasWidth = this.offCanvasLeftWidth;
 								}
 							} else {
-								if (detail.direction === 'left' && this.offCanvasRight) {
+								if(detail.direction === 'left' && this.offCanvasRight) {
 									this.offCanvas = this.offCanvasRight;
 									this.offCanvasWidth = this.offCanvasRightWidth;
-								} else if (detail.direction === 'right' && this.offCanvasLeft) {
+								} else if(detail.direction === 'right' && this.offCanvasLeft) {
 									this.offCanvas = this.offCanvasLeft;
 									this.offCanvasWidth = this.offCanvasLeftWidth;
 								} else {
@@ -5353,8 +5351,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 								}
 							}
 						} else {
-							if (this.classList.contains(CLASS_ACTIVE)) {
-								if (detail.direction === 'left') {
+							if(this.classList.contains(CLASS_ACTIVE)) {
+								if(detail.direction === 'left') {
 									this.offCanvas = this.offCanvasLeft;
 									this.offCanvasWidth = this.offCanvasLeftWidth;
 								} else {
@@ -5362,7 +5360,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 									this.offCanvasWidth = this.offCanvasRightWidth;
 								}
 							} else {
-								if (detail.direction === 'right') {
+								if(detail.direction === 'right') {
 									this.offCanvas = this.offCanvasLeft;
 									this.offCanvasWidth = this.offCanvasLeftWidth;
 								} else {
@@ -5371,7 +5369,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 								}
 							}
 						}
-						if (this.offCanvas && this.scroller) {
+						if(this.offCanvas && this.scroller) {
 							this.startX = this.lastX;
 							this.isDragging = true;
 
@@ -5384,14 +5382,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 							this._initOffCanvasVisible();
 						}
 					}
-					if (this.isDragging) {
+					if(this.isDragging) {
 						this.updateTranslate(this.offsetX + (this.lastX - this.startX));
 						detail.gesture.preventDefault();
 						e.stopPropagation();
 					}
 					break;
 				case 'dragend':
-					if (this.isDragging) {
+					if(this.isDragging) {
 						var detail = e.detail;
 						var direction = detail.direction;
 						this.isDragging = false;
@@ -5399,65 +5397,65 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 						this.scroller.classList.add(CLASS_TRANSITIONING);
 						var ratio = 0;
 						var x = this.getTranslateX();
-						if (!this.slideIn) {
-							if (x >= 0) {
+						if(!this.slideIn) {
+							if(x >= 0) {
 								ratio = (this.offCanvasLeftWidth && (x / this.offCanvasLeftWidth)) || 0;
 							} else {
 								ratio = (this.offCanvasRightWidth && (x / this.offCanvasRightWidth)) || 0;
 							}
-							if (ratio === 0) {
+							if(ratio === 0) {
 								this.openPercentage(0);
 								this._dispatchEvent(); //此处不触发webkitTransitionEnd,所以手动dispatch
 								return;
 							}
-							if (direction === 'right' && ratio >= 0 && (ratio >= 0.5 || detail.swipe)) { //右滑打开
+							if(direction === 'right' && ratio >= 0 && (ratio >= 0.5 || detail.swipe)) { //右滑打开
 								this.openPercentage(100);
-							} else if (direction === 'right' && ratio < 0 && (ratio > -0.5 || detail.swipe)) { //右滑关闭
+							} else if(direction === 'right' && ratio < 0 && (ratio > -0.5 || detail.swipe)) { //右滑关闭
 								this.openPercentage(0);
-							} else if (direction === 'right' && ratio > 0 && ratio < 0.5) { //右滑还原关闭
+							} else if(direction === 'right' && ratio > 0 && ratio < 0.5) { //右滑还原关闭
 								this.openPercentage(0);
-							} else if (direction === 'right' && ratio < 0.5) { //右滑还原打开
+							} else if(direction === 'right' && ratio < 0.5) { //右滑还原打开
 								this.openPercentage(-100);
-							} else if (direction === 'left' && ratio <= 0 && (ratio <= -0.5 || detail.swipe)) { //左滑打开
+							} else if(direction === 'left' && ratio <= 0 && (ratio <= -0.5 || detail.swipe)) { //左滑打开
 								this.openPercentage(-100);
-							} else if (direction === 'left' && ratio > 0 && (ratio <= 0.5 || detail.swipe)) { //左滑关闭
+							} else if(direction === 'left' && ratio > 0 && (ratio <= 0.5 || detail.swipe)) { //左滑关闭
 								this.openPercentage(0);
-							} else if (direction === 'left' && ratio < 0 && ratio >= -0.5) { //左滑还原关闭
+							} else if(direction === 'left' && ratio < 0 && ratio >= -0.5) { //左滑还原关闭
 								this.openPercentage(0);
-							} else if (direction === 'left' && ratio > 0.5) { //左滑还原打开
+							} else if(direction === 'left' && ratio > 0.5) { //左滑还原打开
 								this.openPercentage(100);
 							} else { //默认关闭
 								this.openPercentage(0);
 							}
-							if (ratio === 1 || ratio === -1) { //此处不触发webkitTransitionEnd,所以手动dispatch
+							if(ratio === 1 || ratio === -1) { //此处不触发webkitTransitionEnd,所以手动dispatch
 								this._dispatchEvent();
 							}
 						} else {
-							if (x >= 0) {
+							if(x >= 0) {
 								ratio = (this.offCanvasRightWidth && (x / this.offCanvasRightWidth)) || 0;
 							} else {
 								ratio = (this.offCanvasLeftWidth && (x / this.offCanvasLeftWidth)) || 0;
 							}
-							if (direction === 'right' && ratio <= 0 && (ratio >= -0.5 || detail.swipe)) { //右滑打开
+							if(direction === 'right' && ratio <= 0 && (ratio >= -0.5 || detail.swipe)) { //右滑打开
 								this.openPercentage(100);
-							} else if (direction === 'right' && ratio > 0 && (ratio >= 0.5 || detail.swipe)) { //右滑关闭
+							} else if(direction === 'right' && ratio > 0 && (ratio >= 0.5 || detail.swipe)) { //右滑关闭
 								this.openPercentage(0);
-							} else if (direction === 'right' && ratio <= -0.5) { //右滑还原关闭
+							} else if(direction === 'right' && ratio <= -0.5) { //右滑还原关闭
 								this.openPercentage(0);
-							} else if (direction === 'right' && ratio > 0 && ratio <= 0.5) { //右滑还原打开
+							} else if(direction === 'right' && ratio > 0 && ratio <= 0.5) { //右滑还原打开
 								this.openPercentage(-100);
-							} else if (direction === 'left' && ratio >= 0 && (ratio <= 0.5 || detail.swipe)) { //左滑打开
+							} else if(direction === 'left' && ratio >= 0 && (ratio <= 0.5 || detail.swipe)) { //左滑打开
 								this.openPercentage(-100);
-							} else if (direction === 'left' && ratio < 0 && (ratio <= -0.5 || detail.swipe)) { //左滑关闭
+							} else if(direction === 'left' && ratio < 0 && (ratio <= -0.5 || detail.swipe)) { //左滑关闭
 								this.openPercentage(0);
-							} else if (direction === 'left' && ratio >= 0.5) { //左滑还原关闭
+							} else if(direction === 'left' && ratio >= 0.5) { //左滑还原关闭
 								this.openPercentage(0);
-							} else if (direction === 'left' && ratio >= -0.5 && ratio < 0) { //左滑还原打开
+							} else if(direction === 'left' && ratio >= -0.5 && ratio < 0) { //左滑还原打开
 								this.openPercentage(100);
 							} else {
 								this.openPercentage(0);
 							}
-							if (ratio === 1 || ratio === -1 || ratio === 0) {
+							if(ratio === 1 || ratio === -1 || ratio === 0) {
 								this._dispatchEvent();
 								return;
 							}
@@ -5468,32 +5466,32 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		},
 		_dispatchEvent: function() {
-			if (this.classList.contains(CLASS_ACTIVE)) {
+			if(this.classList.contains(CLASS_ACTIVE)) {
 				$.trigger(this.wrapper, 'shown', this);
 			} else {
 				$.trigger(this.wrapper, 'hidden', this);
 			}
 		},
 		_initOffCanvasVisible: function() {
-			if (!this.visible) {
+			if(!this.visible) {
 				this.visible = true;
-				if (this.offCanvasLeft) {
+				if(this.offCanvasLeft) {
 					this.offCanvasLeft.style.visibility = 'visible';
 				}
-				if (this.offCanvasRight) {
+				if(this.offCanvasRight) {
 					this.offCanvasRight.style.visibility = 'visible';
 				}
 			}
 		},
 		initEvent: function() {
 			var self = this;
-			if (self.backdrop) {
+			if(self.backdrop) {
 				self.backdrop.addEventListener('tap', function(e) {
 					self.close();
 					e.detail.gesture.preventDefault();
 				});
 			}
-			if (this.classList.contains('mui-draggable')) {
+			if(this.classList.contains('mui-draggable')) {
 				this.wrapper.addEventListener($.EVENT_START, this); //临时处理
 				this.wrapper.addEventListener('drag', this);
 				this.wrapper.addEventListener('dragend', this);
@@ -5502,21 +5500,21 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		openPercentage: function(percentage) {
 			var p = percentage / 100;
-			if (!this.slideIn) {
-				if (this.offCanvasLeft && percentage >= 0) {
+			if(!this.slideIn) {
+				if(this.offCanvasLeft && percentage >= 0) {
 					this.updateTranslate(this.offCanvasLeftWidth * p);
 					this.offCanvasLeft.classList[p !== 0 ? 'add' : 'remove'](CLASS_ACTIVE);
-				} else if (this.offCanvasRight && percentage <= 0) {
+				} else if(this.offCanvasRight && percentage <= 0) {
 					this.updateTranslate(this.offCanvasRightWidth * p);
 					this.offCanvasRight.classList[p !== 0 ? 'add' : 'remove'](CLASS_ACTIVE);
 				}
 				this.classList[p !== 0 ? 'add' : 'remove'](CLASS_ACTIVE);
 			} else {
-				if (this.offCanvasLeft && percentage >= 0) {
+				if(this.offCanvasLeft && percentage >= 0) {
 					p = p === 0 ? -1 : 0;
 					this.updateTranslate(this.offCanvasLeftWidth * p);
 					this.offCanvasLeft.classList[percentage !== 0 ? 'add' : 'remove'](CLASS_ACTIVE);
-				} else if (this.offCanvasRight && percentage <= 0) {
+				} else if(this.offCanvasRight && percentage <= 0) {
 					p = p === 0 ? 1 : 0;
 					this.updateTranslate(this.offCanvasRightWidth * p);
 					this.offCanvasRight.classList[percentage !== 0 ? 'add' : 'remove'](CLASS_ACTIVE);
@@ -5525,70 +5523,70 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		},
 		updateTranslate: function(x) {
-			if (x !== this.lastTranslateX) {
-				if (!this.slideIn) {
-					if ((!this.offCanvasLeft && x > 0) || (!this.offCanvasRight && x < 0)) {
+			if(x !== this.lastTranslateX) {
+				if(!this.slideIn) {
+					if((!this.offCanvasLeft && x > 0) || (!this.offCanvasRight && x < 0)) {
 						this.setTranslateX(0);
 						return;
 					}
-					if (this.leftShowing && x > this.offCanvasLeftWidth) {
+					if(this.leftShowing && x > this.offCanvasLeftWidth) {
 						this.setTranslateX(this.offCanvasLeftWidth);
 						return;
 					}
-					if (this.rightShowing && x < -this.offCanvasRightWidth) {
+					if(this.rightShowing && x < -this.offCanvasRightWidth) {
 						this.setTranslateX(-this.offCanvasRightWidth);
 						return;
 					}
 					this.setTranslateX(x);
-					if (x >= 0) {
+					if(x >= 0) {
 						this.leftShowing = true;
 						this.rightShowing = false;
-						if (x > 0) {
-							if (this.offCanvasLeft) {
+						if(x > 0) {
+							if(this.offCanvasLeft) {
 								$.each(this.offCanvasLefts, function(index, offCanvas) {
-									if (offCanvas === this.offCanvasLeft) {
+									if(offCanvas === this.offCanvasLeft) {
 										this.offCanvasLeft.style.zIndex = 0;
 									} else {
 										offCanvas.style.zIndex = -1;
 									}
 								}.bind(this));
 							}
-							if (this.offCanvasRight) {
+							if(this.offCanvasRight) {
 								this.offCanvasRight.style.zIndex = -1;
 							}
 						}
 					} else {
 						this.rightShowing = true;
 						this.leftShowing = false;
-						if (this.offCanvasRight) {
+						if(this.offCanvasRight) {
 							$.each(this.offCanvasRights, function(index, offCanvas) {
-								if (offCanvas === this.offCanvasRight) {
+								if(offCanvas === this.offCanvasRight) {
 									offCanvas.style.zIndex = 0;
 								} else {
 									offCanvas.style.zIndex = -1;
 								}
 							}.bind(this));
 						}
-						if (this.offCanvasLeft) {
+						if(this.offCanvasLeft) {
 							this.offCanvasLeft.style.zIndex = -1;
 						}
 					}
 				} else {
-					if (this.offCanvas.classList.contains(CLASS_OFF_CANVAS_RIGHT)) {
-						if (x < 0) {
+					if(this.offCanvas.classList.contains(CLASS_OFF_CANVAS_RIGHT)) {
+						if(x < 0) {
 							this.setTranslateX(0);
 							return;
 						}
-						if (x > this.offCanvasRightWidth) {
+						if(x > this.offCanvasRightWidth) {
 							this.setTranslateX(this.offCanvasRightWidth);
 							return;
 						}
 					} else {
-						if (x > 0) {
+						if(x > 0) {
 							this.setTranslateX(0);
 							return;
 						}
-						if (x < -this.offCanvasLeftWidth) {
+						if(x < -this.offCanvasLeftWidth) {
 							this.setTranslateX(-this.offCanvasLeftWidth);
 							return;
 						}
@@ -5599,14 +5597,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		},
 		setTranslateX: $.animationFrame(function(x) {
-			if (this.scroller) {
-				if (this.scalable && this.offCanvas.parentNode === this.wrapper) {
+			if(this.scroller) {
+				if(this.scalable && this.offCanvas.parentNode === this.wrapper) {
 					var percent = Math.abs(x) / this.offCanvasWidth;
 					var zoomOutScale = 1 - (1 - this.options.scale) * percent;
 					var zoomInScale = this.options.scale + (1 - this.options.scale) * percent;
 					var zoomOutOpacity = 1 - (1 - this.options.opacity) * percent;
 					var zoomInOpacity = this.options.opacity + (1 - this.options.opacity) * percent;
-					if (this.offCanvas.classList.contains(CLASS_OFF_CANVAS_LEFT)) {
+					if(this.offCanvas.classList.contains(CLASS_OFF_CANVAS_LEFT)) {
 						this.offCanvas.style.webkitTransformOrigin = '-100%';
 						this.scroller.style.webkitTransformOrigin = 'left';
 					} else {
@@ -5617,7 +5615,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					this.offCanvas.style.webkitTransform = 'translate3d(0,0,0) scale(' + zoomInScale + ')';
 					this.scroller.style.webkitTransform = 'translate3d(' + x + 'px,0,0) scale(' + zoomOutScale + ')';
 				} else {
-					if (this.slideIn) {
+					if(this.slideIn) {
 						this.offCanvas.style.webkitTransform = 'translate3d(' + x + 'px,0,0)';
 					} else {
 						this.scroller.style.webkitTransform = 'translate3d(' + x + 'px,0,0)';
@@ -5626,28 +5624,28 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		}),
 		getTranslateX: function() {
-			if (this.offCanvas) {
+			if(this.offCanvas) {
 				var scroller = this.slideIn ? this.offCanvas : this.scroller;
 				var result = $.parseTranslateMatrix($.getStyles(scroller, 'webkitTransform'));
-				return (result && result.x) || 0;
+				return(result && result.x) || 0;
 			}
 			return 0;
 		},
 		isShown: function(direction) {
 			var shown = false;
-			if (!this.slideIn) {
+			if(!this.slideIn) {
 				var x = this.getTranslateX();
-				if (direction === 'right') {
+				if(direction === 'right') {
 					shown = this.classList.contains(CLASS_ACTIVE) && x < 0;
-				} else if (direction === 'left') {
+				} else if(direction === 'left') {
 					shown = this.classList.contains(CLASS_ACTIVE) && x > 0;
 				} else {
 					shown = this.classList.contains(CLASS_ACTIVE) && x !== 0;
 				}
 			} else {
-				if (direction === 'left') {
+				if(direction === 'left') {
 					shown = this.classList.contains(CLASS_ACTIVE) && this.wrapper.querySelector('.' + CLASS_OFF_CANVAS_LEFT + '.' + CLASS_ACTIVE);
-				} else if (direction === 'right') {
+				} else if(direction === 'right') {
 					shown = this.classList.contains(CLASS_ACTIVE) && this.wrapper.querySelector('.' + CLASS_OFF_CANVAS_RIGHT + '.' + CLASS_ACTIVE);
 				} else {
 					shown = this.classList.contains(CLASS_ACTIVE) && (this.wrapper.querySelector('.' + CLASS_OFF_CANVAS_LEFT + '.' + CLASS_ACTIVE) || this.wrapper.querySelector('.' + CLASS_OFF_CANVAS_RIGHT + '.' + CLASS_ACTIVE));
@@ -5659,7 +5657,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this._initOffCanvasVisible();
 			this.offCanvas = this.wrapper.querySelector('.' + CLASS_OFF_CANVAS_RIGHT + '.' + CLASS_ACTIVE) || this.wrapper.querySelector('.' + CLASS_OFF_CANVAS_LEFT + '.' + CLASS_ACTIVE);
 			this.offCanvasWidth = this.offCanvas.offsetWidth;
-			if (this.scroller) {
+			if(this.scroller) {
 				this.offCanvas.offsetHeight;
 				this.offCanvas.classList.add(CLASS_TRANSITIONING);
 				this.scroller.classList.add(CLASS_TRANSITIONING);
@@ -5668,20 +5666,20 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		show: function(direction) {
 			this._initOffCanvasVisible();
-			if (this.isShown(direction)) {
+			if(this.isShown(direction)) {
 				return false;
 			}
-			if (!direction) {
+			if(!direction) {
 				direction = this.wrapper.querySelector('.' + CLASS_OFF_CANVAS_RIGHT) ? 'right' : 'left';
 			}
-			if (direction === 'right') {
+			if(direction === 'right') {
 				this.offCanvas = this.offCanvasRight;
 				this.offCanvasWidth = this.offCanvasRightWidth;
 			} else {
 				this.offCanvas = this.offCanvasLeft;
 				this.offCanvasWidth = this.offCanvasLeftWidth;
 			}
-			if (this.scroller) {
+			if(this.scroller) {
 				this.offCanvas.offsetHeight;
 				this.offCanvas.classList.add(CLASS_TRANSITIONING);
 				this.scroller.classList.add(CLASS_TRANSITIONING);
@@ -5691,11 +5689,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		toggle: function(directionOrOffCanvas) {
 			var direction = directionOrOffCanvas;
-			if (directionOrOffCanvas && directionOrOffCanvas.classList) {
+			if(directionOrOffCanvas && directionOrOffCanvas.classList) {
 				direction = directionOrOffCanvas.classList.contains(CLASS_OFF_CANVAS_LEFT) ? 'left' : 'right';
 				this.refresh(directionOrOffCanvas);
 			}
-			if (!this.show(direction)) {
+			if(!this.show(direction)) {
 				this.close();
 			}
 		}
@@ -5704,23 +5702,23 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	//hash to offcanvas
 	var findOffCanvasContainer = function(target) {
 		parentNode = target.parentNode;
-		if (parentNode) {
-			if (parentNode.classList.contains(CLASS_OFF_CANVAS_WRAP)) {
+		if(parentNode) {
+			if(parentNode.classList.contains(CLASS_OFF_CANVAS_WRAP)) {
 				return parentNode;
 			} else {
 				parentNode = parentNode.parentNode;
-				if (parentNode.classList.contains(CLASS_OFF_CANVAS_WRAP)) {
+				if(parentNode.classList.contains(CLASS_OFF_CANVAS_WRAP)) {
 					return parentNode;
 				}
 			}
 		}
 	};
 	var handle = function(event, target) {
-		if (target.tagName === 'A' && target.hash) {
+		if(target.tagName === 'A' && target.hash) {
 			var offcanvas = document.getElementById(target.hash.replace('#', ''));
-			if (offcanvas) {
+			if(offcanvas) {
 				var container = findOffCanvasContainer(offcanvas);
-				if (container) {
+				if(container) {
 					$.targets._container = container;
 					return offcanvas;
 				}
@@ -5739,13 +5737,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	});
 
 	window.addEventListener('tap', function(e) {
-		if (!$.targets.offcanvas) {
+		if(!$.targets.offcanvas) {
 			return;
 		}
 		//TODO 此处类型的代码后续考虑统一优化(target机制)，现在的实现费力不讨好
 		var target = e.target;
-		for (; target && target !== document; target = target.parentNode) {
-			if (target.tagName === 'A' && target.hash && target.hash === ('#' + $.targets.offcanvas.id)) {
+		for(; target && target !== document; target = target.parentNode) {
+			if(target.tagName === 'A' && target.hash && target.hash === ('#' + $.targets.offcanvas.id)) {
 				e.detail && e.detail.gesture && e.detail.gesture.preventDefault(); //fixed hashchange
 				$($.targets._container).offCanvas().toggle($.targets.offcanvas);
 				$.targets.offcanvas = $.targets._container = null;
@@ -5760,18 +5758,18 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			var offCanvasApi = null;
 			var self = this;
 			//hack old version
-			if (!self.classList.contains(CLASS_OFF_CANVAS_WRAP)) {
+			if(!self.classList.contains(CLASS_OFF_CANVAS_WRAP)) {
 				self = findOffCanvasContainer(self);
 			}
 			var id = self.getAttribute('data-offCanvas');
-			if (!id) {
+			if(!id) {
 				id = ++$.uuid;
 				$.data[id] = offCanvasApi = new OffCanvas(self, options);
 				self.setAttribute('data-offCanvas', id);
 			} else {
 				offCanvasApi = $.data[id];
 			}
-			if (options === 'show' || options === 'close' || options === 'toggle') {
+			if(options === 'show' || options === 'close' || options === 'toggle') {
 				offCanvasApi.toggle();
 			}
 			offCanvasApis.push(offCanvasApi);
@@ -5793,11 +5791,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 	var handle = function(event, target) {
 		var className = target.className || '';
-		if (typeof className !== 'string') { //svg className(SVGAnimatedString)
+		if(typeof className !== 'string') { //svg className(SVGAnimatedString)
 			className = '';
 		}
-		if (className && ~className.indexOf(CLASS_ACTION)) {
-			if (target.classList.contains('mui-action-back')) {
+		if(className && ~className.indexOf(CLASS_ACTION)) {
+			if(target.classList.contains('mui-action-back')) {
 				event.preventDefault();
 			}
 			return target;
@@ -5826,9 +5824,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	var CLASS_MODAL = 'mui-modal';
 
 	var handle = function(event, target) {
-		if (target.tagName === 'A' && target.hash) {
+		if(target.tagName === 'A' && target.hash) {
 			var modal = document.getElementById(target.hash.replace('#', ''));
-			if (modal && modal.classList.contains(CLASS_MODAL)) {
+			if(modal && modal.classList.contains(CLASS_MODAL)) {
 				return modal;
 			}
 		}
@@ -5845,7 +5843,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	});
 
 	window.addEventListener('tap', function(event) {
-		if ($.targets.modal) {
+		if($.targets.modal) {
 			event.detail.gesture.preventDefault(); //fixed hashchange
 			$.targets.modal.classList.toggle('mui-active');
 		}
@@ -5872,12 +5870,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	var CLASS_ACTIVE = 'mui-active';
 	var CLASS_BOTTOM = 'mui-bottom';
 
-
-
 	var handle = function(event, target) {
-		if (target.tagName === 'A' && target.hash) {
+		if(target.tagName === 'A' && target.hash) {
 			$.targets._popover = document.getElementById(target.hash.replace('#', ''));
-			if ($.targets._popover && $.targets._popover.classList.contains(CLASS_POPOVER)) {
+			if($.targets._popover && $.targets._popover.classList.contains(CLASS_POPOVER)) {
 				return target;
 			} else {
 				$.targets._popover = null;
@@ -5921,7 +5917,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		element.addEventListener($.EVENT_MOVE, $.preventDefault);
 		element.addEventListener('tap', function(e) {
 			var popover = $.targets._popover;
-			if (popover) {
+			if(popover) {
 				popover.addEventListener('webkitTransitionEnd', onPopoverHidden);
 				popover.classList.remove(CLASS_ACTIVE);
 				removeBackdrop(popover);
@@ -5936,23 +5932,23 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		backdrop.setAttribute('style', 'opacity:0');
 		$.targets.popover = $.targets._popover = null; //reset
 		removeBackdropTimer = $.later(function() {
-			if (!popover.classList.contains(CLASS_ACTIVE) && backdrop.parentNode && backdrop.parentNode === document.body) {
+			if(!popover.classList.contains(CLASS_ACTIVE) && backdrop.parentNode && backdrop.parentNode === document.body) {
 				document.body.removeChild(backdrop);
 			}
 		}, 350);
 	};
 	window.addEventListener('tap', function(e) {
-		if (!$.targets.popover) {
+		if(!$.targets.popover) {
 			return;
 		}
 		var toggle = false;
 		var target = e.target;
-		for (; target && target !== document; target = target.parentNode) {
-			if (target === $.targets.popover) {
+		for(; target && target !== document; target = target.parentNode) {
+			if(target === $.targets.popover) {
 				toggle = true;
 			}
 		}
-		if (toggle) {
+		if(toggle) {
 			e.detail.gesture.preventDefault(); //fixed hashchange
 			togglePopover($.targets._popover, $.targets.popover);
 		}
@@ -5960,7 +5956,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	});
 
 	var togglePopover = function(popover, anchor, state) {
-		if ((state === 'show' && popover.classList.contains(CLASS_ACTIVE)) || (state === 'hide' && !popover.classList.contains(CLASS_ACTIVE))) {
+		if((state === 'show' && popover.classList.contains(CLASS_ACTIVE)) || (state === 'hide' && !popover.classList.contains(CLASS_ACTIVE))) {
 			return;
 		}
 		removeBackdropTimer && removeBackdropTimer.cancel(); //取消remove的timer
@@ -5970,21 +5966,21 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		backdrop.classList.remove(CLASS_BAR_BACKDROP);
 		backdrop.classList.remove(CLASS_ACTION_BACKDROP);
 		var _popover = document.querySelector('.mui-popover.mui-active');
-		if (_popover) {
+		if(_popover) {
 			//			_popover.setAttribute('style', '');
 			_popover.addEventListener('webkitTransitionEnd', onPopoverHidden);
 			_popover.classList.remove(CLASS_ACTIVE);
 			//			_popover.removeEventListener('webkitTransitionEnd', onPopoverHidden);
 			//			fixedPopoverScroll(false);
 			//同一个弹出则直接返回，解决同一个popover的toggle
-			if (popover === _popover) {
+			if(popover === _popover) {
 				removeBackdrop(_popover);
 				return;
 			}
 		}
 		var isActionSheet = false;
-		if (popover.classList.contains(CLASS_BAR_POPOVER) || popover.classList.contains(CLASS_ACTION_POPOVER)) { //navBar
-			if (popover.classList.contains(CLASS_ACTION_POPOVER)) { //action sheet popover
+		if(popover.classList.contains(CLASS_BAR_POPOVER) || popover.classList.contains(CLASS_ACTION_POPOVER)) { //navBar
+			if(popover.classList.contains(CLASS_ACTION_POPOVER)) { //action sheet popover
 				isActionSheet = true;
 				backdrop.classList.add(CLASS_ACTION_BACKDROP);
 			} else { //bar popover
@@ -6013,19 +6009,19 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 	var setStyle = function(popover, display, top, left) {
 		var style = popover.style;
-		if (typeof display !== 'undefined')
+		if(typeof display !== 'undefined')
 			style.display = display;
-		if (typeof top !== 'undefined')
+		if(typeof top !== 'undefined')
 			style.top = top + 'px';
-		if (typeof left !== 'undefined')
+		if(typeof left !== 'undefined')
 			style.left = left + 'px';
 	};
 	var calPosition = function(popover, anchor, isActionSheet) {
-		if (!popover || !anchor) {
+		if(!popover || !anchor) {
 			return;
 		}
 
-		if (isActionSheet) { //actionsheet
+		if(isActionSheet) { //actionsheet
 			setStyle(popover, 'block')
 			return;
 		}
@@ -6041,14 +6037,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var offset = $.offset(anchor);
 
 		var arrow = popover.querySelector('.' + CLASS_POPOVER_ARROW);
-		if (!arrow) {
+		if(!arrow) {
 			arrow = document.createElement('div');
 			arrow.className = CLASS_POPOVER_ARROW;
 			popover.appendChild(arrow);
 		}
 		var arrowSize = arrow && arrow.offsetWidth / 2 || 0;
-
-
 
 		var pTop = 0;
 		var pLeft = 0;
@@ -6057,9 +6051,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var defaultPadding = popover.classList.contains(CLASS_ACTION_POPOVER) ? 0 : 5;
 
 		var position = 'top';
-		if ((pHeight + arrowSize) < (offset.top - window.pageYOffset)) { //top
+		if((pHeight + arrowSize) < (offset.top - window.pageYOffset)) { //top
 			pTop = offset.top - pHeight - arrowSize;
-		} else if ((pHeight + arrowSize) < (wHeight - (offset.top - window.pageYOffset) - aHeight)) { //bottom
+		} else if((pHeight + arrowSize) < (wHeight - (offset.top - window.pageYOffset) - aHeight)) { //bottom
 			position = 'bottom';
 			pTop = offset.top + aHeight + arrowSize;
 		} else { //middle
@@ -6067,14 +6061,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			pTop = Math.max((wHeight - pHeight) / 2 + window.pageYOffset, 0);
 			pLeft = Math.max((wWidth - pWidth) / 2 + window.pageXOffset, 0);
 		}
-		if (position === 'top' || position === 'bottom') {
+		if(position === 'top' || position === 'bottom') {
 			pLeft = aWidth / 2 + offset.left - pWidth / 2;
 			diff = pLeft;
-			if (pLeft < defaultPadding) pLeft = defaultPadding;
-			if (pLeft + pWidth > wWidth) pLeft = wWidth - pWidth - defaultPadding;
+			if(pLeft < defaultPadding) pLeft = defaultPadding;
+			if(pLeft + pWidth > wWidth) pLeft = wWidth - pWidth - defaultPadding;
 
-			if (arrow) {
-				if (position === 'top') {
+			if(arrow) {
+				if(position === 'top') {
 					arrow.classList.add(CLASS_BOTTOM);
 				} else {
 					arrow.classList.remove(CLASS_BOTTOM);
@@ -6084,7 +6078,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				arrowLeft = Math.max(Math.min(arrowLeft, pWidth - arrowSize * 2 - 6), 6);
 				arrow.setAttribute('style', 'left:' + arrowLeft + 'px');
 			}
-		} else if (position === 'middle') {
+		} else if(position === 'middle') {
 			arrow.setAttribute('style', 'display:none');
 		}
 		setStyle(popover, 'block', pTop, pLeft);
@@ -6106,7 +6100,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			return mask;
 		};
 		mask._remove = function() {
-			if (mask._show) {
+			if(mask._show) {
 				mask._show = false;
 				element.setAttribute('style', 'opacity:0');
 				$.later(function() {
@@ -6117,8 +6111,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			return mask;
 		};
 		mask.close = function() {
-			if (callback) {
-				if (callback() !== false) {
+			if(callback) {
+				if(callback() !== false) {
 					mask._remove();
 				}
 			} else {
@@ -6131,7 +6125,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var args = arguments;
 		this.each(function() {
 			$.targets._popover = this;
-			if (args[0] === 'show' || args[0] === 'hide' || args[0] === 'toggle') {
+			if(args[0] === 'show' || args[0] === 'hide' || args[0] === 'toggle') {
 				togglePopover(this, args[1], args[0]);
 			}
 		});
@@ -6157,11 +6151,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	var CLASS_SLIDER_ITEM = 'mui-slider-item';
 
 	var handle = function(event, target) {
-		if (target.classList && (target.classList.contains(CLASS_CONTROL_ITEM) || target.classList.contains(CLASS_TAB_ITEM))) {
-			if (target.parentNode && target.parentNode.classList && target.parentNode.classList.contains(CLASS_SEGMENTED_CONTROL_VERTICAL)) {
+		if(target.classList && (target.classList.contains(CLASS_CONTROL_ITEM) || target.classList.contains(CLASS_TAB_ITEM))) {
+			if(target.parentNode && target.parentNode.classList && target.parentNode.classList.contains(CLASS_SEGMENTED_CONTROL_VERTICAL)) {
 				//vertical 如果preventDefault会导致无法滚动
 			} else {
-				event.preventDefault(); //stop hash change				
+				event.preventDefault(); //stop hash change
 			}
 			//			if (target.hash) {
 			return target;
@@ -6180,7 +6174,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	window.addEventListener('tap', function(e) {
 
 		var targetTab = $.targets.tab;
-		if (!targetTab) {
+		if(!targetTab) {
 			return;
 		}
 		var activeTab;
@@ -6190,42 +6184,42 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var classSelector = '.' + className;
 		var segmentedControl = targetTab.parentNode;
 
-		for (; segmentedControl && segmentedControl !== document; segmentedControl = segmentedControl.parentNode) {
-			if (segmentedControl.classList.contains(CLASS_SEGMENTED_CONTROL)) {
+		for(; segmentedControl && segmentedControl !== document; segmentedControl = segmentedControl.parentNode) {
+			if(segmentedControl.classList.contains(CLASS_SEGMENTED_CONTROL)) {
 				activeTab = segmentedControl.querySelector(classSelector + '.' + CLASS_CONTROL_ITEM);
 				break;
-			} else if (segmentedControl.classList.contains(CLASS_TAB_BAR)) {
+			} else if(segmentedControl.classList.contains(CLASS_TAB_BAR)) {
 				activeTab = segmentedControl.querySelector(classSelector + '.' + CLASS_TAB_ITEM);
 			}
 		}
 
-		if (activeTab) {
+		if(activeTab) {
 			activeTab.classList.remove(className);
 		}
 
 		var isLastActive = targetTab === activeTab;
-		if (targetTab) {
+		if(targetTab) {
 			targetTab.classList.add(className);
 		}
 
-		if (!targetTab.hash) {
+		if(!targetTab.hash) {
 			return;
 		}
 		targetBody = document.getElementById(targetTab.hash.replace('#', ''));
 
-		if (!targetBody) {
+		if(!targetBody) {
 			return;
 		}
-		if (!targetBody.classList.contains(CLASS_CONTROL_CONTENT)) { //tab bar popover
+		if(!targetBody.classList.contains(CLASS_CONTROL_CONTENT)) { //tab bar popover
 			targetTab.classList[isLastActive ? 'remove' : 'add'](className);
 			return;
 		}
-		if (isLastActive) { //same
+		if(isLastActive) { //same
 			return;
 		}
 		var parentNode = targetBody.parentNode;
 		activeBodies = parentNode.querySelectorAll('.' + CLASS_CONTROL_CONTENT + classSelector);
-		for (var i = 0; i < activeBodies.length; i++) {
+		for(var i = 0; i < activeBodies.length; i++) {
 			var activeBody = activeBodies[i];
 			activeBody.parentNode === parentNode && activeBody.classList.remove(className);
 		}
@@ -6234,7 +6228,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 		var contents = [];
 		var _contents = parentNode.querySelectorAll('.' + CLASS_CONTROL_CONTENT);
-		for (var i = 0; i < _contents.length; i++) { //查找直属子节点
+		for(var i = 0; i < _contents.length; i++) { //查找直属子节点
 			_contents[i].parentNode === parentNode && (contents.push(_contents[i]));
 		}
 		$.trigger(targetBody, $.eventName('shown', name), {
@@ -6263,7 +6257,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	var SELECTOR_SWITCH_HANDLE = '.' + CLASS_SWITCH_HANDLE;
 
 	var handle = function(event, target) {
-		if (target.classList && target.classList.contains(CLASS_SWITCH)) {
+		if(target.classList && target.classList.contains(CLASS_SWITCH)) {
 			return target;
 		}
 		return false;
@@ -6275,7 +6269,6 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		handle: handle,
 		target: false
 	});
-
 
 	var Toggle = function(element) {
 		this.element = element;
@@ -6298,10 +6291,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 	};
 	Toggle.prototype.handleEvent = function(e) {
-		if (this.classList.contains(CLASS_DISABLED)) {
+		if(this.classList.contains(CLASS_DISABLED)) {
 			return;
 		}
-		switch (e.type) {
+		switch(e.type) {
 			case $.EVENT_START:
 				this.start(e);
 				break;
@@ -6320,33 +6313,33 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	Toggle.prototype.start = function(e) {
 		this.handle.style.webkitTransitionDuration = this.element.style.webkitTransitionDuration = '.2s';
 		this.classList.add(CLASS_DRAGGING);
-		if (this.toggleWidth === 0 || this.handleWidth === 0) { //当switch处于隐藏状态时，width为0，需要重新初始化
+		if(this.toggleWidth === 0 || this.handleWidth === 0) { //当switch处于隐藏状态时，width为0，需要重新初始化
 			this.init();
 		}
 	};
 	Toggle.prototype.drag = function(e) {
 		var detail = e.detail;
-		if (!this.isDragging) {
-			if (detail.direction === 'left' || detail.direction === 'right') {
+		if(!this.isDragging) {
+			if(detail.direction === 'left' || detail.direction === 'right') {
 				this.isDragging = true;
 				this.lastChanged = undefined;
 				this.initialState = this.classList.contains(CLASS_ACTIVE);
 			}
 		}
-		if (this.isDragging) {
+		if(this.isDragging) {
 			this.setTranslateX(detail.deltaX);
 			e.stopPropagation();
 			detail.gesture.preventDefault();
 		}
 	};
 	Toggle.prototype.swiperight = function(e) {
-		if (this.isDragging) {
+		if(this.isDragging) {
 			e.stopPropagation();
 		}
 	};
 	Toggle.prototype.end = function(e) {
 		this.classList.remove(CLASS_DRAGGING);
-		if (this.isDragging) {
+		if(this.isDragging) {
 			this.isDragging = false;
 			e.stopPropagation();
 			$.trigger(this.element, 'toggle', {
@@ -6358,12 +6351,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 	Toggle.prototype.toggle = function(animate) {
 		var classList = this.classList;
-		if (animate === false) {
+		if(animate === false) {
 			this.handle.style.webkitTransitionDuration = this.element.style.webkitTransitionDuration = '0s';
 		} else {
 			this.handle.style.webkitTransitionDuration = this.element.style.webkitTransitionDuration = '.2s';
 		}
-		if (classList.contains(CLASS_ACTIVE)) {
+		if(classList.contains(CLASS_ACTIVE)) {
 			classList.remove(CLASS_ACTIVE);
 			this.handle.style.webkitTransform = 'translate(0,0)';
 		} else {
@@ -6375,15 +6368,15 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		});
 	};
 	Toggle.prototype.setTranslateX = $.animationFrame(function(x) {
-		if (!this.isDragging) {
+		if(!this.isDragging) {
 			return;
 		}
 		var isChanged = false;
-		if ((this.initialState && -x > (this.handleX / 2)) || (!this.initialState && x > (this.handleX / 2))) {
+		if((this.initialState && -x > (this.handleX / 2)) || (!this.initialState && x > (this.handleX / 2))) {
 			isChanged = true;
 		}
-		if (this.lastChanged !== isChanged) {
-			if (isChanged) {
+		if(this.lastChanged !== isChanged) {
+			if(isChanged) {
 				this.handle.style.webkitTransform = 'translate(' + (this.initialState ? 0 : this.handleX) + 'px,0)';
 				this.classList[this.initialState ? 'remove' : 'add'](CLASS_ACTIVE);
 			} else {
@@ -6400,7 +6393,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		this.each(function() {
 			var switchApi = null;
 			var id = this.getAttribute('data-switch');
-			if (!id) {
+			if(!id) {
 				id = ++$.uuid;
 				$.data[id] = new Toggle(this);
 				this.setAttribute('data-switch', id);
@@ -6439,7 +6432,6 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	var CLASS_SLIDER_RIGHT = 'mui-slider-right';
 	var CLASS_TRANSITIONING = 'mui-transitioning';
 
-
 	var SELECTOR_SLIDER_HANDLE = '.' + CLASS_SLIDER_HANDLE;
 	var SELECTOR_SLIDER_LEFT = '.' + CLASS_SLIDER_LEFT;
 	var SELECTOR_SLIDER_RIGHT = '.' + CLASS_SLIDER_RIGHT;
@@ -6452,53 +6444,51 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	var sliderHandle = sliderActionLeft = sliderActionRight = buttonsLeft = buttonsRight = sliderDirection = sliderRequestAnimationFrame = false;
 	var timer = translateX = lastTranslateX = sliderActionLeftWidth = sliderActionRightWidth = 0;
 
-
-
 	var toggleActive = function(isActive) {
-		if (isActive) {
-			if (a) {
+		if(isActive) {
+			if(a) {
 				a.classList.add(CLASS_ACTIVE);
-			} else if (cell) {
+			} else if(cell) {
 				cell.classList.add(CLASS_ACTIVE);
 			}
 		} else {
 			timer && timer.cancel();
-			if (a) {
+			if(a) {
 				a.classList.remove(CLASS_ACTIVE);
-			} else if (cell) {
+			} else if(cell) {
 				cell.classList.remove(CLASS_ACTIVE);
 			}
 		}
 	};
 
 	var updateTranslate = function() {
-		if (translateX !== lastTranslateX) {
-			if (buttonsRight && buttonsRight.length > 0) {
+		if(translateX !== lastTranslateX) {
+			if(buttonsRight && buttonsRight.length > 0) {
 				progress = translateX / sliderActionRightWidth;
-				if (translateX < -sliderActionRightWidth) {
+				if(translateX < -sliderActionRightWidth) {
 					translateX = -sliderActionRightWidth - Math.pow(-translateX - sliderActionRightWidth, overFactor);
 				}
-				for (var i = 0, len = buttonsRight.length; i < len; i++) {
+				for(var i = 0, len = buttonsRight.length; i < len; i++) {
 					var buttonRight = buttonsRight[i];
-					if (typeof buttonRight._buttonOffset === 'undefined') {
+					if(typeof buttonRight._buttonOffset === 'undefined') {
 						buttonRight._buttonOffset = buttonRight.offsetLeft;
 					}
 					buttonOffset = buttonRight._buttonOffset;
 					setTranslate(buttonRight, (translateX - buttonOffset * (1 + Math.max(progress, -1))));
 				}
 			}
-			if (buttonsLeft && buttonsLeft.length > 0) {
+			if(buttonsLeft && buttonsLeft.length > 0) {
 				progress = translateX / sliderActionLeftWidth;
-				if (translateX > sliderActionLeftWidth) {
+				if(translateX > sliderActionLeftWidth) {
 					translateX = sliderActionLeftWidth + Math.pow(translateX - sliderActionLeftWidth, overFactor);
 				}
-				for (var i = 0, len = buttonsLeft.length; i < len; i++) {
+				for(var i = 0, len = buttonsLeft.length; i < len; i++) {
 					var buttonLeft = buttonsLeft[i];
-					if (typeof buttonLeft._buttonOffset === 'undefined') {
+					if(typeof buttonLeft._buttonOffset === 'undefined') {
 						buttonLeft._buttonOffset = sliderActionLeftWidth - buttonLeft.offsetLeft - buttonLeft.offsetWidth;
 					}
 					buttonOffset = buttonLeft._buttonOffset;
-					if (buttonsLeft.length > 1) {
+					if(buttonsLeft.length > 1) {
 						buttonLeft.style.zIndex = buttonsLeft.length - i;
 					}
 					setTranslate(buttonLeft, (translateX + buttonOffset * (1 - Math.min(progress, 1))));
@@ -6512,51 +6502,51 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		});
 	};
 	var setTranslate = function(element, x) {
-		if (element) {
+		if(element) {
 			element.style.webkitTransform = 'translate(' + x + 'px,0)';
 		}
 	};
 
 	window.addEventListener($.EVENT_START, function(event) {
-		if (cell) {
+		if(cell) {
 			toggleActive(false);
 		}
 		cell = a = false;
 		isMoved = isOpened = openedActions = false;
 		var target = event.target;
 		var isDisabled = false;
-		for (; target && target !== document; target = target.parentNode) {
-			if (target.classList) {
+		for(; target && target !== document; target = target.parentNode) {
+			if(target.classList) {
 				var classList = target.classList;
-				if ((target.tagName === 'INPUT' && target.type !== 'radio' && target.type !== 'checkbox') || target.tagName === 'BUTTON' || classList.contains(CLASS_TOGGLE) || classList.contains(CLASS_BTN) || classList.contains(CLASS_DISABLED)) {
+				if((target.tagName === 'INPUT' && target.type !== 'radio' && target.type !== 'checkbox') || target.tagName === 'BUTTON' || classList.contains(CLASS_TOGGLE) || classList.contains(CLASS_BTN) || classList.contains(CLASS_DISABLED)) {
 					isDisabled = true;
 				}
-				if (classList.contains(CLASS_COLLAPSE_CONTENT)) { //collapse content
+				if(classList.contains(CLASS_COLLAPSE_CONTENT)) { //collapse content
 					break;
 				}
-				if (classList.contains(CLASS_TABLE_VIEW_CELL)) {
+				if(classList.contains(CLASS_TABLE_VIEW_CELL)) {
 					cell = target;
 					//TODO swipe to delete close
 					var selected = cell.parentNode.querySelector(SELECTOR_SELECTED);
-					if (!cell.parentNode.classList.contains(CLASS_RADIO_VIEW) && selected && selected !== cell) {
+					if(!cell.parentNode.classList.contains(CLASS_RADIO_VIEW) && selected && selected !== cell) {
 						$.swipeoutClose(selected);
 						cell = isDisabled = false;
 						return;
 					}
-					if (!cell.parentNode.classList.contains(CLASS_GRID_VIEW)) {
+					if(!cell.parentNode.classList.contains(CLASS_GRID_VIEW)) {
 						var link = cell.querySelector('a');
-						if (link && link.parentNode === cell) { //li>a
+						if(link && link.parentNode === cell) { //li>a
 							a = link;
 						}
 					}
 					var handle = cell.querySelector(SELECTOR_SLIDER_HANDLE);
-					if (handle) {
+					if(handle) {
 						toggleEvents(cell);
 						event.stopPropagation();
 					}
-					if (!isDisabled) {
-						if (handle) {
-							if (timer) {
+					if(!isDisabled) {
+						if(handle) {
+							if(timer) {
 								timer.cancel();
 							}
 							timer = $.later(function() {
@@ -6577,7 +6567,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 	var handleEvent = {
 		handleEvent: function(event) {
-			switch (event.type) {
+			switch(event.type) {
 				case 'drag':
 					this.drag(event);
 					break;
@@ -6596,26 +6586,26 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		},
 		drag: function(event) {
-			if (!cell) {
+			if(!cell) {
 				return;
 			}
-			if (!isMoved) { //init
+			if(!isMoved) { //init
 				sliderHandle = sliderActionLeft = sliderActionRight = buttonsLeft = buttonsRight = sliderDirection = sliderRequestAnimationFrame = false;
 				sliderHandle = cell.querySelector(SELECTOR_SLIDER_HANDLE);
-				if (sliderHandle) {
+				if(sliderHandle) {
 					sliderActionLeft = cell.querySelector(SELECTOR_SLIDER_LEFT);
 					sliderActionRight = cell.querySelector(SELECTOR_SLIDER_RIGHT);
-					if (sliderActionLeft) {
+					if(sliderActionLeft) {
 						sliderActionLeftWidth = sliderActionLeft.offsetWidth;
 						buttonsLeft = sliderActionLeft.querySelectorAll(SELECTOR_BUTTON);
 					}
-					if (sliderActionRight) {
+					if(sliderActionRight) {
 						sliderActionRightWidth = sliderActionRight.offsetWidth;
 						buttonsRight = sliderActionRight.querySelectorAll(SELECTOR_BUTTON);
 					}
 					cell.classList.remove(CLASS_TRANSITIONING);
 					isOpened = cell.classList.contains(CLASS_SELECTED);
-					if (isOpened) {
+					if(isOpened) {
 						openedActions = cell.querySelector(SELECTOR_SLIDER_LEFT + SELECTOR_SELECTED) ? 'left' : 'right';
 					}
 				}
@@ -6623,68 +6613,68 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			var detail = event.detail;
 			var direction = detail.direction;
 			var angle = detail.angle;
-			if (direction === 'left' && (angle > 150 || angle < -150)) {
-				if (buttonsRight || (buttonsLeft && isOpened)) { //存在右侧按钮或存在左侧按钮且是已打开状态
+			if(direction === 'left' && (angle > 150 || angle < -150)) {
+				if(buttonsRight || (buttonsLeft && isOpened)) { //存在右侧按钮或存在左侧按钮且是已打开状态
 					isMoved = true;
 				}
-			} else if (direction === 'right' && (angle > -30 && angle < 30)) {
-				if (buttonsLeft || (buttonsRight && isOpened)) { //存在左侧按钮或存在右侧按钮且是已打开状态
+			} else if(direction === 'right' && (angle > -30 && angle < 30)) {
+				if(buttonsLeft || (buttonsRight && isOpened)) { //存在左侧按钮或存在右侧按钮且是已打开状态
 					isMoved = true;
 				}
 			}
-			if (isMoved) {
+			if(isMoved) {
 				event.stopPropagation();
 				event.detail.gesture.preventDefault();
 				var translate = event.detail.deltaX;
-				if (isOpened) {
-					if (openedActions === 'right') {
+				if(isOpened) {
+					if(openedActions === 'right') {
 						translate = translate - sliderActionRightWidth;
 					} else {
 						translate = translate + sliderActionLeftWidth;
 					}
 				}
-				if ((translate > 0 && !buttonsLeft) || (translate < 0 && !buttonsRight)) {
-					if (!isOpened) {
+				if((translate > 0 && !buttonsLeft) || (translate < 0 && !buttonsRight)) {
+					if(!isOpened) {
 						return;
 					}
 					translate = 0;
 				}
-				if (translate < 0) {
+				if(translate < 0) {
 					sliderDirection = 'toLeft';
-				} else if (translate > 0) {
+				} else if(translate > 0) {
 					sliderDirection = 'toRight';
 				} else {
-					if (!sliderDirection) {
+					if(!sliderDirection) {
 						sliderDirection = 'toLeft';
 					}
 				}
-				if (!sliderRequestAnimationFrame) {
+				if(!sliderRequestAnimationFrame) {
 					updateTranslate();
 				}
 				translateX = translate;
 			}
 		},
 		flick: function(event) {
-			if (isMoved) {
+			if(isMoved) {
 				event.stopPropagation();
 			}
 		},
 		swipeleft: function(event) {
-			if (isMoved) {
+			if(isMoved) {
 				event.stopPropagation();
 			}
 		},
 		swiperight: function(event) {
-			if (isMoved) {
+			if(isMoved) {
 				event.stopPropagation();
 			}
 		},
 		dragend: function(event) {
-			if (!isMoved) {
+			if(!isMoved) {
 				return;
 			}
 			event.stopPropagation();
-			if (sliderRequestAnimationFrame) {
+			if(sliderRequestAnimationFrame) {
 				cancelAnimationFrame(sliderRequestAnimationFrame);
 				sliderRequestAnimationFrame = null;
 			}
@@ -6693,31 +6683,31 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			var action = 'close';
 			var actionsWidth = sliderDirection === 'toLeft' ? sliderActionRightWidth : sliderActionLeftWidth;
 			var isToggle = detail.swipe || (Math.abs(translateX) > actionsWidth / 2);
-			if (isToggle) {
-				if (!isOpened) {
+			if(isToggle) {
+				if(!isOpened) {
 					action = 'open';
-				} else if (detail.direction === 'left' && openedActions === 'right') {
+				} else if(detail.direction === 'left' && openedActions === 'right') {
 					action = 'open';
-				} else if (detail.direction === 'right' && openedActions === 'left') {
+				} else if(detail.direction === 'right' && openedActions === 'left') {
 					action = 'open';
 				}
 
 			}
 			cell.classList.add(CLASS_TRANSITIONING);
 			var buttons;
-			if (action === 'open') {
+			if(action === 'open') {
 				var newTranslate = sliderDirection === 'toLeft' ? -actionsWidth : actionsWidth;
 				setTranslate(sliderHandle, newTranslate);
 				buttons = sliderDirection === 'toLeft' ? buttonsRight : buttonsLeft;
-				if (typeof buttons !== 'undefined') {
+				if(typeof buttons !== 'undefined') {
 					var button = null;
-					for (var i = 0; i < buttons.length; i++) {
+					for(var i = 0; i < buttons.length; i++) {
 						button = buttons[i];
 						setTranslate(button, newTranslate);
 					}
 					button.parentNode.classList.add(CLASS_SELECTED);
 					cell.classList.add(CLASS_SELECTED);
-					if (!isOpened) {
+					if(!isOpened) {
 						$.trigger(cell, sliderDirection === 'toLeft' ? 'slideleft' : 'slideright');
 					}
 				}
@@ -6728,21 +6718,21 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				cell.classList.remove(CLASS_SELECTED);
 			}
 			var buttonOffset;
-			if (buttonsLeft && buttonsLeft.length > 0 && buttonsLeft !== buttons) {
-				for (var i = 0, len = buttonsLeft.length; i < len; i++) {
+			if(buttonsLeft && buttonsLeft.length > 0 && buttonsLeft !== buttons) {
+				for(var i = 0, len = buttonsLeft.length; i < len; i++) {
 					var buttonLeft = buttonsLeft[i];
 					buttonOffset = buttonLeft._buttonOffset;
-					if (typeof buttonOffset === 'undefined') {
+					if(typeof buttonOffset === 'undefined') {
 						buttonLeft._buttonOffset = sliderActionLeftWidth - buttonLeft.offsetLeft - buttonLeft.offsetWidth;
 					}
 					setTranslate(buttonLeft, buttonOffset);
 				}
 			}
-			if (buttonsRight && buttonsRight.length > 0 && buttonsRight !== buttons) {
-				for (var i = 0, len = buttonsRight.length; i < len; i++) {
+			if(buttonsRight && buttonsRight.length > 0 && buttonsRight !== buttons) {
+				for(var i = 0, len = buttonsRight.length; i < len; i++) {
 					var buttonRight = buttonsRight[i];
 					buttonOffset = buttonRight._buttonOffset;
-					if (typeof buttonOffset === 'undefined') {
+					if(typeof buttonOffset === 'undefined') {
 						buttonRight._buttonOffset = buttonRight.offsetLeft;
 					}
 					setTranslate(buttonRight, -buttonOffset);
@@ -6765,18 +6755,18 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @param {Object} direction
 	 */
 	$.swipeoutOpen = function(el, direction) {
-		if (!el) return;
+		if(!el) return;
 		var classList = el.classList;
-		if (classList.contains(CLASS_SELECTED)) return;
-		if (!direction) {
-			if (el.querySelector(SELECTOR_SLIDER_RIGHT)) {
+		if(classList.contains(CLASS_SELECTED)) return;
+		if(!direction) {
+			if(el.querySelector(SELECTOR_SLIDER_RIGHT)) {
 				direction = 'right';
 			} else {
 				direction = 'left';
 			}
 		}
 		var swipeoutAction = el.querySelector($.classSelector(".slider-" + direction));
-		if (!swipeoutAction) return;
+		if(!swipeoutAction) return;
 		swipeoutAction.classList.add(CLASS_SELECTED);
 		classList.add(CLASS_SELECTED);
 		classList.remove(CLASS_TRANSITIONING);
@@ -6785,16 +6775,16 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var translate = (direction === 'right') ? -swipeoutWidth : swipeoutWidth;
 		var length = buttons.length;
 		var button;
-		for (var i = 0; i < length; i++) {
+		for(var i = 0; i < length; i++) {
 			button = buttons[i];
-			if (direction === 'right') {
+			if(direction === 'right') {
 				setTranslate(button, -button.offsetLeft);
 			} else {
 				setTranslate(button, (swipeoutWidth - button.offsetWidth - button.offsetLeft));
 			}
 		}
 		classList.add(CLASS_TRANSITIONING);
-		for (var i = 0; i < length; i++) {
+		for(var i = 0; i < length; i++) {
 			setTranslate(buttons[i], translate);
 		}
 		setTranslate(el.querySelector(SELECTOR_SLIDER_HANDLE), translate);
@@ -6804,12 +6794,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @param {Object} el
 	 */
 	$.swipeoutClose = function(el) {
-		if (!el) return;
+		if(!el) return;
 		var classList = el.classList;
-		if (!classList.contains(CLASS_SELECTED)) return;
+		if(!classList.contains(CLASS_SELECTED)) return;
 		var direction = el.querySelector(SELECTOR_SLIDER_RIGHT + SELECTOR_SELECTED) ? 'right' : 'left';
 		var swipeoutAction = el.querySelector($.classSelector(".slider-" + direction));
-		if (!swipeoutAction) return;
+		if(!swipeoutAction) return;
 		swipeoutAction.classList.remove(CLASS_SELECTED);
 		classList.remove(CLASS_SELECTED);
 		classList.add(CLASS_TRANSITIONING);
@@ -6818,9 +6808,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var length = buttons.length;
 		var button;
 		setTranslate(el.querySelector(SELECTOR_SLIDER_HANDLE), 0);
-		for (var i = 0; i < length; i++) {
+		for(var i = 0; i < length; i++) {
 			button = buttons[i];
-			if (direction === 'right') {
+			if(direction === 'right') {
 				setTranslate(button, (-button.offsetLeft));
 			} else {
 				setTranslate(button, (swipeoutWidth - button.offsetWidth - button.offsetLeft));
@@ -6829,14 +6819,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 
 	window.addEventListener($.EVENT_END, function(event) { //使用touchend来取消高亮，避免一次点击既不触发tap，doubletap，longtap的事件
-		if (!cell) {
+		if(!cell) {
 			return;
 		}
 		toggleActive(false);
 		sliderHandle && toggleEvents(cell, true);
 	});
 	window.addEventListener($.EVENT_CANCEL, function(event) { //使用touchcancel来取消高亮，避免一次点击既不触发tap，doubletap，longtap的事件
-		if (!cell) {
+		if(!cell) {
 			return;
 		}
 		toggleActive(false);
@@ -6844,24 +6834,24 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	});
 	var radioOrCheckboxClick = function(event) {
 		var type = event.target && event.target.type || '';
-		if (type === 'radio' || type === 'checkbox') {
+		if(type === 'radio' || type === 'checkbox') {
 			return;
 		}
 		var classList = cell.classList;
-		if (classList.contains('mui-radio')) {
+		if(classList.contains('mui-radio')) {
 			var input = cell.querySelector('input[type=radio]');
-			if (input) {
+			if(input) {
 				//				input.click();
-				if (!input.disabled && !input.readOnly) {
+				if(!input.disabled && !input.readOnly) {
 					input.checked = !input.checked;
 					$.trigger(input, 'change');
 				}
 			}
-		} else if (classList.contains('mui-checkbox')) {
+		} else if(classList.contains('mui-checkbox')) {
 			var input = cell.querySelector('input[type=checkbox]');
-			if (input) {
+			if(input) {
 				//				input.click();
-				if (!input.disabled && !input.readOnly) {
+				if(!input.disabled && !input.readOnly) {
 					input.checked = !input.checked;
 					$.trigger(input, 'change');
 				}
@@ -6870,29 +6860,29 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 	//fixed hashchange(android)
 	window.addEventListener($.EVENT_CLICK, function(e) {
-		if (cell && cell.classList.contains('mui-collapse')) {
+		if(cell && cell.classList.contains('mui-collapse')) {
 			e.preventDefault();
 		}
 	});
 	window.addEventListener('doubletap', function(event) {
-		if (cell) {
+		if(cell) {
 			radioOrCheckboxClick(event);
 		}
 	});
 	var preventDefaultException = /^(INPUT|TEXTAREA|BUTTON|SELECT)$/;
 	window.addEventListener('tap', function(event) {
-		if (!cell) {
+		if(!cell) {
 			return;
 		}
 		var isExpand = false;
 		var classList = cell.classList;
 		var ul = cell.parentNode;
-		if (ul && ul.classList.contains(CLASS_RADIO_VIEW)) {
-			if (classList.contains(CLASS_SELECTED)) {
+		if(ul && ul.classList.contains(CLASS_RADIO_VIEW)) {
+			if(classList.contains(CLASS_SELECTED)) {
 				return;
 			}
 			var selected = ul.querySelector('li' + SELECTOR_SELECTED);
-			if (selected) {
+			if(selected) {
 				selected.classList.remove(CLASS_SELECTED);
 			}
 			classList.add(CLASS_SELECTED);
@@ -6901,20 +6891,20 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			});
 			return;
 		}
-		if (classList.contains('mui-collapse') && !cell.parentNode.classList.contains('mui-unfold')) {
-			if (!preventDefaultException.test(event.target.tagName)) {
+		if(classList.contains('mui-collapse') && !cell.parentNode.classList.contains('mui-unfold')) {
+			if(!preventDefaultException.test(event.target.tagName)) {
 				event.detail.gesture.preventDefault();
 			}
 
-			if (!classList.contains(CLASS_ACTIVE)) { //展开时,需要收缩其他同类
+			if(!classList.contains(CLASS_ACTIVE)) { //展开时,需要收缩其他同类
 				var collapse = cell.parentNode.querySelector('.mui-collapse.mui-active');
-				if (collapse) {
+				if(collapse) {
 					collapse.classList.remove(CLASS_ACTIVE);
 				}
 				isExpand = true;
 			}
 			classList.toggle(CLASS_ACTIVE);
-			if (isExpand) {
+			if(isExpand) {
 				//触发展开事件
 				$.trigger(cell, 'expand');
 
@@ -6941,15 +6931,15 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * 警告消息框
 	 */
 	$.alert = function(message, title, btnValue, callback) {
-		if ($.os.plus) {
-			if (typeof message === 'undefined') {
+		if($.os.plus) {
+			if(typeof message === 'undefined') {
 				return;
 			} else {
-				if (typeof title === 'function') {
+				if(typeof title === 'function') {
 					callback = title;
 					title = null;
 					btnValue = '确定';
-				} else if (typeof btnValue === 'function') {
+				} else if(typeof btnValue === 'function') {
 					callback = btnValue;
 					btnValue = null;
 				}
@@ -6970,15 +6960,15 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * 确认消息框
 	 */
 	$.confirm = function(message, title, btnArray, callback) {
-		if ($.os.plus) {
-			if (typeof message === 'undefined') {
+		if($.os.plus) {
+			if(typeof message === 'undefined') {
 				return;
 			} else {
-				if (typeof title === 'function') {
+				if(typeof title === 'function') {
 					callback = title;
 					title = null;
 					btnArray = null;
-				} else if (typeof btnArray === 'function') {
+				} else if(typeof btnArray === 'function') {
 					callback = btnArray;
 					btnArray = null;
 				}
@@ -6989,7 +6979,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 		} else {
 			//H5版本，0为确认，1为取消
-			if (window.confirm(message)) {
+			if(window.confirm(message)) {
 				callback({
 					index: 0
 				});
@@ -7007,21 +6997,21 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * 输入对话框
 	 */
 	$.prompt = function(text, defaultText, title, btnArray, callback) {
-		if ($.os.plus) {
-			if (typeof message === 'undefined') {
+		if($.os.plus) {
+			if(typeof message === 'undefined') {
 				return;
 			} else {
 
-				if (typeof defaultText === 'function') {
+				if(typeof defaultText === 'function') {
 					callback = defaultText;
 					defaultText = null;
 					title = null;
 					btnArray = null;
-				} else if (typeof title === 'function') {
+				} else if(typeof title === 'function') {
 					callback = title;
 					title = null;
 					btnArray = null;
-				} else if (typeof btnArray === 'function') {
+				} else if(typeof btnArray === 'function') {
 					callback = btnArray;
 					btnArray = null;
 				}
@@ -7033,7 +7023,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		} else {
 			//H5版本(确认index为0，取消index为1)
 			var result = window.prompt(text);
-			if (result) {
+			if(result) {
 				callback({
 					index: 0,
 					value: result
@@ -7053,242 +7043,273 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	/**
 	 * 自动消失提示框
 	 */
-	$.toast = function(message) {
-		if ($.os.plus) {
+	$.toast = function(message, options) {
+		var durations = {
+			'long': 3500,
+			'short': 2000
+		};
+
+		//计算显示时间
+		options = $.extend({
+			duration: 'short'
+		}, options || {});
+
+		if($.os.plus && options.type !== 'div') {
 			//默认显示在底部；
 			$.plusReady(function() {
 				plus.nativeUI.toast(message, {
-					verticalAlign: 'bottom'
+					verticalAlign: 'bottom',
+					duration: options.duration
 				});
 			});
 		} else {
+			if(typeof options.duration === 'number') {
+				duration = options.duration > 0 ? options.duration : durations['short'];
+			} else {
+				duration = durations[options.duration];
+			}
+			if(!duration) {
+				duration = durations['short'];
+			}
 			var toast = document.createElement('div');
 			toast.classList.add('mui-toast-container');
 			toast.innerHTML = '<div class="' + 'mui-toast-message' + '">' + message + '</div>';
 			toast.addEventListener('webkitTransitionEnd', function() {
-				if (!toast.classList.contains(CLASS_ACTIVE)) {
+				if(!toast.classList.contains(CLASS_ACTIVE)) {
 					toast.parentNode.removeChild(toast);
+					toast = null;
 				}
+			});
+			//点击则自动消失
+			toast.addEventListener('click', function() {
+				toast.parentNode.removeChild(toast);
+				toast = null;
 			});
 			document.body.appendChild(toast);
 			toast.offsetHeight;
 			toast.classList.add(CLASS_ACTIVE);
 			setTimeout(function() {
-				toast.classList.remove(CLASS_ACTIVE);
-			}, 2000);
+				toast && toast.classList.remove(CLASS_ACTIVE);
+			}, duration);
+
+			return {
+				isVisible: function() {
+					return !!toast;
+				}
+			}
 		}
 	};
 
 })(mui, window);
 /**
- * Popup(alert,confirm,prompt)  
+ * Popup(alert,confirm,prompt)
  * @param {Object} $
  * @param {Object} window
  * @param {Object} document
  */
 (function($, window, document) {
-    var CLASS_POPUP = 'mui-popup';
-    var CLASS_POPUP_BACKDROP = 'mui-popup-backdrop';
-    var CLASS_POPUP_IN = 'mui-popup-in';
-    var CLASS_POPUP_OUT = 'mui-popup-out';
-    var CLASS_POPUP_INNER = 'mui-popup-inner';
-    var CLASS_POPUP_TITLE = 'mui-popup-title';
-    var CLASS_POPUP_TEXT = 'mui-popup-text';
-    var CLASS_POPUP_INPUT = 'mui-popup-input';
-    var CLASS_POPUP_BUTTONS = 'mui-popup-buttons';
-    var CLASS_POPUP_BUTTON = 'mui-popup-button';
-    var CLASS_POPUP_BUTTON_BOLD = 'mui-popup-button-bold';
-    var CLASS_POPUP_BACKDROP = 'mui-popup-backdrop';
-    var CLASS_ACTIVE = 'mui-active';
+	var CLASS_POPUP = 'mui-popup';
+	var CLASS_POPUP_BACKDROP = 'mui-popup-backdrop';
+	var CLASS_POPUP_IN = 'mui-popup-in';
+	var CLASS_POPUP_OUT = 'mui-popup-out';
+	var CLASS_POPUP_INNER = 'mui-popup-inner';
+	var CLASS_POPUP_TITLE = 'mui-popup-title';
+	var CLASS_POPUP_TEXT = 'mui-popup-text';
+	var CLASS_POPUP_INPUT = 'mui-popup-input';
+	var CLASS_POPUP_BUTTONS = 'mui-popup-buttons';
+	var CLASS_POPUP_BUTTON = 'mui-popup-button';
+	var CLASS_POPUP_BUTTON_BOLD = 'mui-popup-button-bold';
+	var CLASS_POPUP_BACKDROP = 'mui-popup-backdrop';
+	var CLASS_ACTIVE = 'mui-active';
 
-    var popupStack = [];
-    var backdrop = (function() {
-        var element = document.createElement('div');
-        element.classList.add(CLASS_POPUP_BACKDROP);
-        element.addEventListener($.EVENT_MOVE, $.preventDefault);
-        element.addEventListener('webkitTransitionEnd', function() {
-            if (!this.classList.contains(CLASS_ACTIVE)) {
-                element.parentNode && element.parentNode.removeChild(element);
-            }
-        });
-        return element;
-    }());
+	var popupStack = [];
+	var backdrop = (function() {
+		var element = document.createElement('div');
+		element.classList.add(CLASS_POPUP_BACKDROP);
+		element.addEventListener($.EVENT_MOVE, $.preventDefault);
+		element.addEventListener('webkitTransitionEnd', function() {
+			if(!this.classList.contains(CLASS_ACTIVE)) {
+				element.parentNode && element.parentNode.removeChild(element);
+			}
+		});
+		return element;
+	}());
 
-    var createInput = function(placeholder) {
-        return '<div class="' + CLASS_POPUP_INPUT + '"><input type="text" autofocus placeholder="' + (placeholder || '') + '"/></div>';
-    };
-    var createInner = function(message, title, extra) {
-        return '<div class="' + CLASS_POPUP_INNER + '"><div class="' + CLASS_POPUP_TITLE + '">' + title + '</div><div class="' + CLASS_POPUP_TEXT + '">' + message.replace(/\r\n/g, "<br/>").replace(/\n/g, "<br/>") + '</div>' + (extra || '') + '</div>';
-    };
-    var createButtons = function(btnArray) {
-        var length = btnArray.length;
-        var btns = [];
-        for (var i = 0; i < length; i++) {
-            btns.push('<span class="' + CLASS_POPUP_BUTTON + (i === length - 1 ? (' ' + CLASS_POPUP_BUTTON_BOLD) : '') + '">' + btnArray[i] + '</span>');
-        }
-        return '<div class="' + CLASS_POPUP_BUTTONS + '">' + btns.join('') + '</div>';
-    };
+	var createInput = function(placeholder) {
+		return '<div class="' + CLASS_POPUP_INPUT + '"><input type="text" autofocus placeholder="' + (placeholder || '') + '"/></div>';
+	};
+	var createInner = function(message, title, extra) {
+		return '<div class="' + CLASS_POPUP_INNER + '"><div class="' + CLASS_POPUP_TITLE + '">' + title + '</div><div class="' + CLASS_POPUP_TEXT + '">' + message.replace(/\r\n/g, "<br/>").replace(/\n/g, "<br/>") + '</div>' + (extra || '') + '</div>';
+	};
+	var createButtons = function(btnArray) {
+		var length = btnArray.length;
+		var btns = [];
+		for(var i = 0; i < length; i++) {
+			btns.push('<span class="' + CLASS_POPUP_BUTTON + (i === length - 1 ? (' ' + CLASS_POPUP_BUTTON_BOLD) : '') + '">' + btnArray[i] + '</span>');
+		}
+		return '<div class="' + CLASS_POPUP_BUTTONS + '">' + btns.join('') + '</div>';
+	};
 
-    var createPopup = function(html, callback) {
-        var popupElement = document.createElement('div');
-        popupElement.className = CLASS_POPUP;
-        popupElement.innerHTML = html;
-        var removePopupElement = function() {
-            popupElement.parentNode && popupElement.parentNode.removeChild(popupElement);
-            popupElement = null;
-        };
-        popupElement.addEventListener($.EVENT_MOVE, $.preventDefault);
-        popupElement.addEventListener('webkitTransitionEnd', function(e) {
-            if (popupElement && e.target === popupElement && popupElement.classList.contains(CLASS_POPUP_OUT)) {
-                removePopupElement();
-            }
-        });
-        popupElement.style.display = 'block';
-        document.body.appendChild(popupElement);
-        popupElement.offsetHeight;
-        popupElement.classList.add(CLASS_POPUP_IN);
+	var createPopup = function(html, callback) {
+		var popupElement = document.createElement('div');
+		popupElement.className = CLASS_POPUP;
+		popupElement.innerHTML = html;
+		var removePopupElement = function() {
+			popupElement.parentNode && popupElement.parentNode.removeChild(popupElement);
+			popupElement = null;
+		};
+		popupElement.addEventListener($.EVENT_MOVE, $.preventDefault);
+		popupElement.addEventListener('webkitTransitionEnd', function(e) {
+			if(popupElement && e.target === popupElement && popupElement.classList.contains(CLASS_POPUP_OUT)) {
+				removePopupElement();
+			}
+		});
+		popupElement.style.display = 'block';
+		document.body.appendChild(popupElement);
+		popupElement.offsetHeight;
+		popupElement.classList.add(CLASS_POPUP_IN);
 
-        if (!backdrop.classList.contains(CLASS_ACTIVE)) {
-            backdrop.style.display = 'block';
-            document.body.appendChild(backdrop);
-            backdrop.offsetHeight;
-            backdrop.classList.add(CLASS_ACTIVE);
-        }
-        var btns = $.qsa('.' + CLASS_POPUP_BUTTON, popupElement);
-        var input = popupElement.querySelector('.' + CLASS_POPUP_INPUT + ' input');
-        var popup = {
-            element: popupElement,
-            close: function(index, animate) {
-                if (popupElement) {
-                    var result = callback && callback({
-                        index: index || 0,
-                        value: input && input.value || ''
-                    });
-                    if (result === false) { //返回false则不关闭当前popup
-                        return;
-                    }
-                    if (animate !== false) {
-                        popupElement.classList.remove(CLASS_POPUP_IN);
-                        popupElement.classList.add(CLASS_POPUP_OUT);
-                    } else {
-                        removePopupElement();
-                    }
-                    popupStack.pop();
-                    //如果还有其他popup，则不remove backdrop
-                    if (popupStack.length) {
-                        popupStack[popupStack.length - 1]['show'](animate);
-                    } else {
-                        backdrop.classList.remove(CLASS_ACTIVE);
-                    }
-                }
-            }
-        };
-        var handleEvent = function(e) {
-            popup.close(btns.indexOf(e.target));
-        };
-        $(popupElement).on('tap', '.' + CLASS_POPUP_BUTTON, handleEvent);
-        if (popupStack.length) {
-            popupStack[popupStack.length - 1]['hide']();
-        }
-        popupStack.push({
-            close: popup.close,
-            show: function(animate) {
-                popupElement.style.display = 'block';
-                popupElement.offsetHeight;
-                popupElement.classList.add(CLASS_POPUP_IN);
-            },
-            hide: function() {
-                popupElement.style.display = 'none';
-                popupElement.classList.remove(CLASS_POPUP_IN);
-            }
-        });
-        return popup;
-    };
-    var createAlert = function(message, title, btnValue, callback, type) {
-        if (typeof message === 'undefined') {
-            return;
-        } else {
-            if (typeof title === 'function') {
-                callback = title;
-                type = btnValue;
-                title = null;
-                btnValue = null;
-            } else if (typeof btnValue === 'function') {
-                type = callback;
-                callback = btnValue;
-                btnValue = null;
-            }
-        }
-        if (!$.os.plus || type === 'div') {
-            return createPopup(createInner(message, title || '提示') + createButtons([btnValue || '确定']), callback);
-        }
-        return plus.nativeUI.alert(message, callback, title || '提示', btnValue || '确定');
-    };
-    var createConfirm = function(message, title, btnArray, callback, type) {
-        if (typeof message === 'undefined') {
-            return;
-        } else {
-            if (typeof title === 'function') {
-                callback = title;
-                type = btnArray;
-                title = null;
-                btnArray = null;
-            } else if (typeof btnArray === 'function') {
-                type = callback;
-                callback = btnArray;
-                btnArray = null;
-            }
-        }
-        if (!$.os.plus || type === 'div') {
-            return createPopup(createInner(message, title || '提示') + createButtons(btnArray || ['取消', '确认']), callback);
-        }
-        return plus.nativeUI.confirm(message, callback, title, btnArray || ['取消', '确认']);
-    };
-    var createPrompt = function(message, placeholder, title, btnArray, callback, type) {
-        if (typeof message === 'undefined') {
-            return;
-        } else {
-            if (typeof placeholder === 'function') {
-                callback = placeholder;
-                type = title;
-                placeholder = null;
-                title = null;
-                btnArray = null;
-            } else if (typeof title === 'function') {
-                callback = title;
-                type = btnArray;
-                title = null;
-                btnArray = null;
-            } else if (typeof btnArray === 'function') {
-                type = callback;
-                callback = btnArray;
-                btnArray = null;
-            }
-        }
-        if (!$.os.plus || type === 'div') {
-            return createPopup(createInner(message, title || '提示', createInput(placeholder)) + createButtons(btnArray || ['取消', '确认']), callback);
-        }
-        return plus.nativeUI.prompt(message, callback, title || '提示', placeholder, btnArray || ['取消', '确认']);
-    };
-    var closePopup = function() {
-        if (popupStack.length) {
-            popupStack[popupStack.length - 1]['close']();
-            return true;
-        } else {
-            return false;
-        }
-    };
-    var closePopups = function() {
-        while (popupStack.length) {
-            popupStack[popupStack.length - 1]['close']();
-        }
-    };
+		if(!backdrop.classList.contains(CLASS_ACTIVE)) {
+			backdrop.style.display = 'block';
+			document.body.appendChild(backdrop);
+			backdrop.offsetHeight;
+			backdrop.classList.add(CLASS_ACTIVE);
+		}
+		var btns = $.qsa('.' + CLASS_POPUP_BUTTON, popupElement);
+		var input = popupElement.querySelector('.' + CLASS_POPUP_INPUT + ' input');
+		var popup = {
+			element: popupElement,
+			close: function(index, animate) {
+				if(popupElement) {
+					var result = callback && callback({
+						index: index || 0,
+						value: input && input.value || ''
+					});
+					if(result === false) { //返回false则不关闭当前popup
+						return;
+					}
+					if(animate !== false) {
+						popupElement.classList.remove(CLASS_POPUP_IN);
+						popupElement.classList.add(CLASS_POPUP_OUT);
+					} else {
+						removePopupElement();
+					}
+					popupStack.pop();
+					//如果还有其他popup，则不remove backdrop
+					if(popupStack.length) {
+						popupStack[popupStack.length - 1]['show'](animate);
+					} else {
+						backdrop.classList.remove(CLASS_ACTIVE);
+					}
+				}
+			}
+		};
+		var handleEvent = function(e) {
+			popup.close(btns.indexOf(e.target));
+		};
+		$(popupElement).on('tap', '.' + CLASS_POPUP_BUTTON, handleEvent);
+		if(popupStack.length) {
+			popupStack[popupStack.length - 1]['hide']();
+		}
+		popupStack.push({
+			close: popup.close,
+			show: function(animate) {
+				popupElement.style.display = 'block';
+				popupElement.offsetHeight;
+				popupElement.classList.add(CLASS_POPUP_IN);
+			},
+			hide: function() {
+				popupElement.style.display = 'none';
+				popupElement.classList.remove(CLASS_POPUP_IN);
+			}
+		});
+		return popup;
+	};
+	var createAlert = function(message, title, btnValue, callback, type) {
+		if(typeof message === 'undefined') {
+			return;
+		} else {
+			if(typeof title === 'function') {
+				callback = title;
+				type = btnValue;
+				title = null;
+				btnValue = null;
+			} else if(typeof btnValue === 'function') {
+				type = callback;
+				callback = btnValue;
+				btnValue = null;
+			}
+		}
+		if(!$.os.plus || type === 'div') {
+			return createPopup(createInner(message, title || '提示') + createButtons([btnValue || '确定']), callback);
+		}
+		return plus.nativeUI.alert(message, callback, title || '提示', btnValue || '确定');
+	};
+	var createConfirm = function(message, title, btnArray, callback, type) {
+		if(typeof message === 'undefined') {
+			return;
+		} else {
+			if(typeof title === 'function') {
+				callback = title;
+				type = btnArray;
+				title = null;
+				btnArray = null;
+			} else if(typeof btnArray === 'function') {
+				type = callback;
+				callback = btnArray;
+				btnArray = null;
+			}
+		}
+		if(!$.os.plus || type === 'div') {
+			return createPopup(createInner(message, title || '提示') + createButtons(btnArray || ['取消', '确认']), callback);
+		}
+		return plus.nativeUI.confirm(message, callback, title, btnArray || ['取消', '确认']);
+	};
+	var createPrompt = function(message, placeholder, title, btnArray, callback, type) {
+		if(typeof message === 'undefined') {
+			return;
+		} else {
+			if(typeof placeholder === 'function') {
+				callback = placeholder;
+				type = title;
+				placeholder = null;
+				title = null;
+				btnArray = null;
+			} else if(typeof title === 'function') {
+				callback = title;
+				type = btnArray;
+				title = null;
+				btnArray = null;
+			} else if(typeof btnArray === 'function') {
+				type = callback;
+				callback = btnArray;
+				btnArray = null;
+			}
+		}
+		if(!$.os.plus || type === 'div') {
+			return createPopup(createInner(message, title || '提示', createInput(placeholder)) + createButtons(btnArray || ['取消', '确认']), callback);
+		}
+		return plus.nativeUI.prompt(message, callback, title || '提示', placeholder, btnArray || ['取消', '确认']);
+	};
+	var closePopup = function() {
+		if(popupStack.length) {
+			popupStack[popupStack.length - 1]['close']();
+			return true;
+		} else {
+			return false;
+		}
+	};
+	var closePopups = function() {
+		while(popupStack.length) {
+			popupStack[popupStack.length - 1]['close']();
+		}
+	};
 
-    $.closePopup = closePopup;
-    $.closePopups = closePopups;
-    $.alert = createAlert;
-    $.confirm = createConfirm;
-    $.prompt = createPrompt;
+	$.closePopup = closePopup;
+	$.closePopups = closePopups;
+	$.alert = createAlert;
+	$.confirm = createConfirm;
+	$.prompt = createPrompt;
 })(mui, window, document);
 (function($, document) {
 	var CLASS_PROGRESSBAR = 'mui-progressbar';
@@ -7300,54 +7321,54 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 	var _findProgressbar = function(container) {
 		container = $(container || 'body');
-		if (container.length === 0) return;
+		if(container.length === 0) return;
 		container = container[0];
-		if (container.classList.contains(CLASS_PROGRESSBAR)) {
+		if(container.classList.contains(CLASS_PROGRESSBAR)) {
 			return container;
 		}
 		var progressbars = container.querySelectorAll(SELECTOR_PROGRESSBAR);
-		if (progressbars) {
-			for (var i = 0, len = progressbars.length; i < len; i++) {
+		if(progressbars) {
+			for(var i = 0, len = progressbars.length; i < len; i++) {
 				var progressbar = progressbars[i];
-				if (progressbar.parentNode === container) {
+				if(progressbar.parentNode === container) {
 					return progressbar;
 				}
 			}
 		}
 	};
 	/**
-	 * 创建并显示进度条 
+	 * 创建并显示进度条
 	 * @param {Object} container  可选，默认body，支持selector,DOM Node,mui wrapper
 	 * @param {Object} progress 可选，undefined表示循环，数字表示具体进度
 	 * @param {Object} color 可选，指定颜色样式(目前暂未提供实际样式，可暂时不暴露此参数)
 	 */
 	var showProgressbar = function(container, progress, color) {
-		if (typeof container === 'number') {
+		if(typeof container === 'number') {
 			color = progress;
 			progress = container;
 			container = 'body';
 		}
 		container = $(container || 'body');
-		if (container.length === 0) return;
+		if(container.length === 0) return;
 		container = container[0];
 		var progressbar;
-		if (container.classList.contains(CLASS_PROGRESSBAR)) {
+		if(container.classList.contains(CLASS_PROGRESSBAR)) {
 			progressbar = container;
 		} else {
 			var progressbars = container.querySelectorAll(SELECTOR_PROGRESSBAR + ':not(.' + CLASS_PROGRESSBAR_OUT + ')');
-			if (progressbars) {
-				for (var i = 0, len = progressbars.length; i < len; i++) {
+			if(progressbars) {
+				for(var i = 0, len = progressbars.length; i < len; i++) {
 					var _progressbar = progressbars[i];
-					if (_progressbar.parentNode === container) {
+					if(_progressbar.parentNode === container) {
 						progressbar = _progressbar;
 						break;
 					}
 				}
 			}
-			if (!progressbar) {
+			if(!progressbar) {
 				progressbar = document.createElement('span');
 				progressbar.className = CLASS_PROGRESSBAR + ' ' + CLASS_PROGRESSBAR_IN + (typeof progress !== 'undefined' ? '' : (' ' + CLASS_PROGRESSBAR_INFINITE)) + (color ? (' ' + CLASS_PROGRESSBAR + '-' + color) : '');
-				if (typeof progress !== 'undefined') {
+				if(typeof progress !== 'undefined') {
 					progressbar.innerHTML = '<span></span>';
 				}
 				container.appendChild(progressbar);
@@ -7355,20 +7376,20 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				progressbar.classList.add(CLASS_PROGRESSBAR_IN);
 			}
 		}
-		if (progress) setProgressbar(container, progress);
+		if(progress) setProgressbar(container, progress);
 		return progressbar;
 	};
 	/**
-	 * 关闭进度条 
+	 * 关闭进度条
 	 * @param {Object} container 可选，默认body，支持selector,DOM Node,mui wrapper
 	 */
 	var hideProgressbar = function(container) {
 		var progressbar = _findProgressbar(container);
-		if (!progressbar) {
+		if(!progressbar) {
 			return;
 		}
 		var classList = progressbar.classList;
-		if (!classList.contains(CLASS_PROGRESSBAR_IN) || classList.contains(CLASS_PROGRESSBAR_OUT)) {
+		if(!classList.contains(CLASS_PROGRESSBAR_IN) || classList.contains(CLASS_PROGRESSBAR_OUT)) {
 			return;
 		}
 		classList.remove(CLASS_PROGRESSBAR_IN);
@@ -7380,28 +7401,28 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		return;
 	};
 	/**
-	 * 设置指定进度条进度 
+	 * 设置指定进度条进度
 	 * @param {Object} container  可选，默认body，支持selector,DOM Node,mui wrapper
 	 * @param {Object} progress 可选，默认0 取值范围[0-100]
 	 * @param {Object} speed 进度条动画时间
 	 */
 	var setProgressbar = function(container, progress, speed) {
-		if (typeof container === 'number') {
+		if(typeof container === 'number') {
 			speed = progress;
 			progress = container;
 			container = false;
 		}
 		var progressbar = _findProgressbar(container);
-		if (!progressbar || progressbar.classList.contains(CLASS_PROGRESSBAR_INFINITE)) {
+		if(!progressbar || progressbar.classList.contains(CLASS_PROGRESSBAR_INFINITE)) {
 			return;
 		}
-		if (progress) progress = Math.min(Math.max(progress, 0), 100);
+		if(progress) progress = Math.min(Math.max(progress, 0), 100);
 		progressbar.offsetHeight;
 		var span = progressbar.querySelector('span');
-		if (span) {
+		if(span) {
 			var style = span.style;
 			style.webkitTransform = 'translate3d(' + (-100 + progress) + '%,0,0)';
-			if (typeof speed !== 'undefined') {
+			if(typeof speed !== 'undefined') {
 				style.webkitTransitionDuration = speed + 'ms';
 			} else {
 				style.webkitTransitionDuration = '';
@@ -7415,7 +7436,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		this.each(function() {
 			var self = this;
 			var progressbarApi = self.mui_plugin_progressbar;
-			if (!progressbarApi) {
+			if(!progressbarApi) {
 				self.mui_plugin_progressbar = progressbarApi = {
 					options: options,
 					setOptions: function(options) {
@@ -7431,7 +7452,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 						return hideProgressbar(self);
 					}
 				};
-			} else if (options) {
+			} else if(options) {
 				progressbarApi.setOptions(options);
 			}
 			progressbarApis.push(progressbarApi);
@@ -7467,8 +7488,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	var SELECTOR_TOOLTIP = '.' + CLASS_TOOLTIP;
 
 	var findRow = function(target) {
-		for (; target && target !== document; target = target.parentNode) {
-			if (target.classList && target.classList.contains(CLASS_INPUT_ROW)) {
+		for(; target && target !== document; target = target.parentNode) {
+			if(target.classList && target.classList.contains(CLASS_INPUT_ROW)) {
 				return target;
 			}
 		}
@@ -7479,23 +7500,23 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		this.options = options || {
 			actions: 'clear'
 		};
-		if (~this.options.actions.indexOf('slider')) { //slider
+		if(~this.options.actions.indexOf('slider')) { //slider
 			this.sliderActionClass = CLASS_TOOLTIP + ' ' + CLASS_HIDDEN;
 			this.sliderActionSelector = SELECTOR_TOOLTIP;
 		} else { //clear,speech,search
-			if (~this.options.actions.indexOf('clear')) {
+			if(~this.options.actions.indexOf('clear')) {
 				this.clearActionClass = CLASS_ICON + ' ' + CLASS_ICON_CLEAR + ' ' + CLASS_HIDDEN;
 				this.clearActionSelector = SELECTOR_ICON_CLOSE;
 			}
-			if (~this.options.actions.indexOf('speech')) { //only for 5+
+			if(~this.options.actions.indexOf('speech')) { //only for 5+
 				this.speechActionClass = CLASS_ICON + ' ' + CLASS_ICON_SPEECH;
 				this.speechActionSelector = SELECTOR_ICON_SPEECH;
 			}
-			if (~this.options.actions.indexOf('search')) {
+			if(~this.options.actions.indexOf('search')) {
 				this.searchActionClass = CLASS_PLACEHOLDER;
 				this.searchActionSelector = SELECTOR_PLACEHOLDER;
 			}
-			if (~this.options.actions.indexOf('password')) {
+			if(~this.options.actions.indexOf('password')) {
 				this.passwordActionClass = CLASS_ICON + ' ' + CLASS_ICON_PASSWORD;
 				this.passwordActionSelector = SELECTOR_ICON_PASSWORD;
 			}
@@ -7510,31 +7531,31 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var self = this;
 
 		var row = self.element.parentNode;
-		if (row) {
-			if (self.sliderActionClass) {
+		if(row) {
+			if(self.sliderActionClass) {
 				self.sliderAction = self.createAction(row, self.sliderActionClass, self.sliderActionSelector);
 			} else {
-				if (self.searchActionClass) {
+				if(self.searchActionClass) {
 					self.searchAction = self.createAction(row, self.searchActionClass, self.searchActionSelector);
 					self.searchAction.addEventListener('tap', function(e) {
 						$.focus(self.element);
 						e.stopPropagation();
 					});
 				}
-				if (self.speechActionClass) {
+				if(self.speechActionClass) {
 					self.speechAction = self.createAction(row, self.speechActionClass, self.speechActionSelector);
 					self.speechAction.addEventListener('click', $.stopPropagation);
 					self.speechAction.addEventListener('tap', function(event) {
 						self.speechActionClick(event);
 					});
 				}
-				if (self.clearActionClass) {
+				if(self.clearActionClass) {
 					self.clearAction = self.createAction(row, self.clearActionClass, self.clearActionSelector);
 					self.clearAction.addEventListener('tap', function(event) {
 						self.clearActionClick(event);
 					});
 				}
-				if (self.passwordActionClass) {
+				if(self.passwordActionClass) {
 					self.passwordAction = self.createAction(row, self.passwordActionClass, self.passwordActionSelector);
 					self.passwordAction.addEventListener('tap', function(event) {
 						self.passwordActionClick(event);
@@ -7545,13 +7566,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 	Input.prototype.createAction = function(row, actionClass, actionSelector) {
 		var action = row.querySelector(actionSelector);
-		if (!action) {
+		if(!action) {
 			var action = document.createElement('span');
 			action.className = actionClass;
-			if (actionClass === this.searchActionClass) {
+			if(actionClass === this.searchActionClass) {
 				action.innerHTML = '<span class="' + CLASS_ICON + ' ' + CLASS_ICON_SEARCH + '"></span><span>' + this.element.getAttribute('placeholder') + '</span>';
 				this.element.setAttribute('placeholder', '');
-				if (this.element.value.trim()) {
+				if(this.element.value.trim()) {
 					row.classList.add('mui-active');
 				}
 			}
@@ -7562,7 +7583,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	Input.prototype.initElementEvent = function() {
 		var element = this.element;
 
-		if (this.sliderActionClass) {
+		if(this.sliderActionClass) {
 			var tooltip = this.sliderAction;
 			var timer = null;
 			var showTip = function() { //每次重新计算是因为控件可能被隐藏，初始化时计算是不正确的
@@ -7574,7 +7595,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				var scaleWidth = (width / distince) * Math.abs(element.value - element.min);
 				tooltip.style.left = (14 + offsetLeft + scaleWidth - tooltipWidth / 2) + 'px';
 				tooltip.innerText = element.value;
-				if (timer) {
+				if(timer) {
 					clearTimeout(timer);
 				}
 				timer = setTimeout(function() {
@@ -7587,9 +7608,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				e.stopPropagation();
 			});
 		} else {
-			if (this.clearActionClass) {
+			if(this.clearActionClass) {
 				var action = this.clearAction;
-				if (!action) {
+				if(!action) {
 					return;
 				}
 				$.each(['keyup', 'change', 'input', 'focus', 'cut', 'paste'], function(index, type) {
@@ -7603,12 +7624,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					action.classList.add(CLASS_HIDDEN);
 				});
 			}
-			if (this.searchActionClass) {
+			if(this.searchActionClass) {
 				element.addEventListener('focus', function() {
 					element.parentNode.classList.add('mui-active');
 				});
 				element.addEventListener('blur', function() {
-					if (!element.value.trim()) {
+					if(!element.value.trim()) {
 						element.parentNode.classList.remove('mui-active');
 					}
 				});
@@ -7616,7 +7637,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}
 	};
 	Input.prototype.setPlaceholder = function(text) {
-		if (this.searchActionClass) {
+		if(this.searchActionClass) {
 			var placeholder = this.element.parentNode.querySelector(SELECTOR_PLACEHOLDER);
 			placeholder && (placeholder.getElementsByTagName('span')[1].innerText = text);
 		} else {
@@ -7624,7 +7645,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}
 	};
 	Input.prototype.passwordActionClick = function(event) {
-		if (this.element.type === 'text') {
+		if(this.element.type === 'text') {
 			this.element.type = 'password';
 		} else {
 			this.element.type = 'text';
@@ -7640,7 +7661,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		event.preventDefault();
 	};
 	Input.prototype.speechActionClick = function(event) {
-		if (window.plus) {
+		if(window.plus) {
 			var self = this;
 			var oldValue = self.element.value;
 			self.element.value = '';
@@ -7654,7 +7675,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				$.trigger(self.element, 'recognized', {
 					value: self.element.value
 				});
-				if (oldValue !== self.element.value) {
+				if(oldValue !== self.element.value) {
 					$.trigger(self.element, 'change');
 					$.trigger(self.element, 'input');
 				}
@@ -7673,30 +7694,30 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			var inputApi = null;
 			var actions = [];
 			var row = findRow(this.parentNode);
-			if (this.type === 'range' && row.classList.contains('mui-input-range')) {
+			if(this.type === 'range' && row.classList.contains('mui-input-range')) {
 				actions.push('slider');
 			} else {
 				var classList = this.classList;
-				if (classList.contains('mui-input-clear')) {
+				if(classList.contains('mui-input-clear')) {
 					actions.push('clear');
 				}
-				if (!($.os.android && $.os.stream) && classList.contains('mui-input-speech')) {
+				if(!($.os.android && $.os.stream) && classList.contains('mui-input-speech')) {
 					actions.push('speech');
 				}
-				if (classList.contains('mui-input-password')) {
+				if(classList.contains('mui-input-password')) {
 					actions.push('password');
 				}
-				if (this.type === 'search' && row.classList.contains('mui-search')) {
+				if(this.type === 'search' && row.classList.contains('mui-search')) {
 					actions.push('search');
 				}
 			}
 			var id = this.getAttribute('data-input-' + actions[0]);
-			if (!id) {
+			if(!id) {
 				id = ++$.uuid;
 				inputApi = $.data[id] = new Input(this, {
 					actions: actions.join(',')
 				});
-				for (var i = 0, len = actions.length; i < len; i++) {
+				for(var i = 0, len = actions.length; i < len; i++) {
 					this.setAttribute('data-input-' + actions[i], id);
 				}
 			} else {
@@ -7714,7 +7735,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	var rgbaRegex = /^rgba\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/;
 	var getColor = function(colorStr) {
 		var matches = colorStr.match(rgbaRegex);
-		if (matches && matches.length === 5) {
+		if(matches && matches.length === 5) {
 			return [
 				matches[1],
 				matches[2],
@@ -7734,7 +7755,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		this._style = this.element.style;
 		this._bgColor = this._style.backgroundColor;
 		var color = getColor(mui.getStyles(this.element, 'backgroundColor'));
-		if (color.length) {
+		if(color.length) {
 			this._R = color[0];
 			this._G = color[1];
 			this._B = color[2];
@@ -7764,17 +7785,17 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		var transparentApis = [];
 		this.each(function() {
 			var transparentApi = this.mui_plugin_transparent;
-			if (!transparentApi) {
+			if(!transparentApi) {
 				var top = this.getAttribute('data-top');
 				var offset = this.getAttribute('data-offset');
 				var duration = this.getAttribute('data-duration');
-				if (top !== null && typeof options.top === 'undefined') {
+				if(top !== null && typeof options.top === 'undefined') {
 					options.top = top;
 				}
-				if (offset !== null && typeof options.offset === 'undefined') {
+				if(offset !== null && typeof options.offset === 'undefined') {
 					options.offset = offset;
 				}
-				if (duration !== null && typeof options.duration === 'undefined') {
+				if(duration !== null && typeof options.duration === 'undefined') {
 					options.duration = duration;
 				}
 				transparentApi = this.mui_plugin_transparent = new Transparent(this, options);
@@ -7796,131 +7817,131 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 (function($) {
 
-    var touchSupport = ('ontouchstart' in document);
-    var tapEventName = touchSupport ? 'tap' : 'click';
-    var changeEventName = 'change';
-    var holderClassName = 'mui-numbox';
-    var plusClassSelector = '.mui-btn-numbox-plus,.mui-numbox-btn-plus';
-    var minusClassSelector = '.mui-btn-numbox-minus,.mui-numbox-btn-minus';
-    var inputClassSelector = '.mui-input-numbox,.mui-numbox-input';
+	var touchSupport = ('ontouchstart' in document);
+	var tapEventName = touchSupport ? 'tap' : 'click';
+	var changeEventName = 'change';
+	var holderClassName = 'mui-numbox';
+	var plusClassSelector = '.mui-btn-numbox-plus,.mui-numbox-btn-plus';
+	var minusClassSelector = '.mui-btn-numbox-minus,.mui-numbox-btn-minus';
+	var inputClassSelector = '.mui-input-numbox,.mui-numbox-input';
 
-    var Numbox = $.Numbox = $.Class.extend({
-        /**
-         * 构造函数
-         **/
-        init: function(holder, options) {
-            var self = this;
-            if (!holder) {
-                throw "构造 numbox 时缺少容器元素";
-            }
-            self.holder = holder;
-            options = options || {};
-            options.step = parseInt(options.step || 1);
-            self.options = options;
-            self.input = $.qsa(inputClassSelector, self.holder)[0];
-            self.plus = $.qsa(plusClassSelector, self.holder)[0];
-            self.minus = $.qsa(minusClassSelector, self.holder)[0];
-            self.checkValue();
-            self.initEvent();
-        },
-        /**
-         * 初始化事件绑定
-         **/
-        initEvent: function() {
-            var self = this;
-            self.plus.addEventListener(tapEventName, function(event) {
-                var val = parseInt(self.input.value) + self.options.step;
-                self.input.value = val.toString();
-                $.trigger(self.input, changeEventName, null);
-            });
-            self.minus.addEventListener(tapEventName, function(event) {
-                var val = parseInt(self.input.value) - self.options.step;
-                self.input.value = val.toString();
-                $.trigger(self.input, changeEventName, null);
-            });
-            self.input.addEventListener(changeEventName, function(event) {
-                self.checkValue();
-                var val = parseInt(self.input.value);
-                //触发顶层容器
-                $.trigger(self.holder, changeEventName, {
-                    value: val
-                });
-            });
-        },
-        /**
-         * 获取当前值
-         **/
-        getValue: function() {
-            var self = this;
-            return parseInt(self.input.value);
-        },
-        /**
-         * 验证当前值是法合法
-         **/
-        checkValue: function() {
-            var self = this;
-            var val = self.input.value;
-            if (val == null || val == '' || isNaN(val)) {
-                self.input.value = self.options.min || 0;
-                self.minus.disabled = self.options.min != null;
-            } else {
-                var val = parseInt(val);
-                if (self.options.max != null && !isNaN(self.options.max) && val >= parseInt(self.options.max)) {
-                    val = self.options.max;
-                    self.plus.disabled = true;
-                } else {
-                    self.plus.disabled = false;
-                }
-                if (self.options.min != null && !isNaN(self.options.min) && val <= parseInt(self.options.min)) {
-                    val = self.options.min;
-                    self.minus.disabled = true;
-                } else {
-                    self.minus.disabled = false;
-                }
-                self.input.value = val;
-            }
-        },
-        /**
-         * 更新选项
-         **/
-        setOption: function(name, value) {
-            var self = this;
-            self.options[name] = value;
-        },
-        /**
-         * 动态设置新值
-         **/
-        setValue: function(value) {
-            this.input.value = value;
-            this.checkValue();
-        }
-    });
+	var Numbox = $.Numbox = $.Class.extend({
+		/**
+		 * 构造函数
+		 **/
+		init: function(holder, options) {
+			var self = this;
+			if(!holder) {
+				throw "构造 numbox 时缺少容器元素";
+			}
+			self.holder = holder;
+			options = options || {};
+			options.step = parseInt(options.step || 1);
+			self.options = options;
+			self.input = $.qsa(inputClassSelector, self.holder)[0];
+			self.plus = $.qsa(plusClassSelector, self.holder)[0];
+			self.minus = $.qsa(minusClassSelector, self.holder)[0];
+			self.checkValue();
+			self.initEvent();
+		},
+		/**
+		 * 初始化事件绑定
+		 **/
+		initEvent: function() {
+			var self = this;
+			self.plus.addEventListener(tapEventName, function(event) {
+				var val = parseInt(self.input.value) + self.options.step;
+				self.input.value = val.toString();
+				$.trigger(self.input, changeEventName, null);
+			});
+			self.minus.addEventListener(tapEventName, function(event) {
+				var val = parseInt(self.input.value) - self.options.step;
+				self.input.value = val.toString();
+				$.trigger(self.input, changeEventName, null);
+			});
+			self.input.addEventListener(changeEventName, function(event) {
+				self.checkValue();
+				var val = parseInt(self.input.value);
+				//触发顶层容器
+				$.trigger(self.holder, changeEventName, {
+					value: val
+				});
+			});
+		},
+		/**
+		 * 获取当前值
+		 **/
+		getValue: function() {
+			var self = this;
+			return parseInt(self.input.value);
+		},
+		/**
+		 * 验证当前值是法合法
+		 **/
+		checkValue: function() {
+			var self = this;
+			var val = self.input.value;
+			if(val == null || val == '' || isNaN(val)) {
+				self.input.value = self.options.min || 0;
+				self.minus.disabled = self.options.min != null;
+			} else {
+				var val = parseInt(val);
+				if(self.options.max != null && !isNaN(self.options.max) && val >= parseInt(self.options.max)) {
+					val = self.options.max;
+					self.plus.disabled = true;
+				} else {
+					self.plus.disabled = false;
+				}
+				if(self.options.min != null && !isNaN(self.options.min) && val <= parseInt(self.options.min)) {
+					val = self.options.min;
+					self.minus.disabled = true;
+				} else {
+					self.minus.disabled = false;
+				}
+				self.input.value = val;
+			}
+		},
+		/**
+		 * 更新选项
+		 **/
+		setOption: function(name, value) {
+			var self = this;
+			self.options[name] = value;
+		},
+		/**
+		 * 动态设置新值
+		 **/
+		setValue: function(value) {
+			this.input.value = value;
+			this.checkValue();
+		}
+	});
 
-    $.fn.numbox = function(options) {
-        var instanceArray = [];
-        //遍历选择的元素
-        this.each(function(i, element) {
-            if (element.numbox) {
-                return;
-            }
-            if (options) {
-                element.numbox = new Numbox(element, options);
-            } else {
-                var optionsText = element.getAttribute('data-numbox-options');
-                var options = optionsText ? JSON.parse(optionsText) : {};
-                options.step = element.getAttribute('data-numbox-step') || options.step;
-                options.min = element.getAttribute('data-numbox-min') || options.min;
-                options.max = element.getAttribute('data-numbox-max') || options.max;
-                element.numbox = new Numbox(element, options);
-            }
-        });
-        return this[0] ? this[0].numbox : null;
-    }
+	$.fn.numbox = function(options) {
+		var instanceArray = [];
+		//遍历选择的元素
+		this.each(function(i, element) {
+			if(element.numbox) {
+				return;
+			}
+			if(options) {
+				element.numbox = new Numbox(element, options);
+			} else {
+				var optionsText = element.getAttribute('data-numbox-options');
+				var options = optionsText ? JSON.parse(optionsText) : {};
+				options.step = element.getAttribute('data-numbox-step') || options.step;
+				options.min = element.getAttribute('data-numbox-min') || options.min;
+				options.max = element.getAttribute('data-numbox-max') || options.max;
+				element.numbox = new Numbox(element, options);
+			}
+		});
+		return this[0] ? this[0].numbox : null;
+	}
 
-    //自动处理 class='mui-locker' 的 dom
-    $.ready(function() {
-        $('.' + holderClassName).numbox();
-    });
+	//自动处理 class='mui-locker' 的 dom
+	$.ready(function() {
+		$('.' + holderClassName).numbox();
+	});
 
 }(mui));
 /**
@@ -7931,89 +7952,89 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @returns {undefined}
  */
 (function($, window, document) {
-    var CLASS_ICON = 'mui-icon';
-    var CLASS_DISABLED = 'mui-disabled';
+	var CLASS_ICON = 'mui-icon';
+	var CLASS_DISABLED = 'mui-disabled';
 
-    var STATE_RESET = 'reset';
-    var STATE_LOADING = 'loading';
+	var STATE_RESET = 'reset';
+	var STATE_LOADING = 'loading';
 
-    var defaultOptions = {
-        loadingText: 'Loading...', //文案
-        loadingIcon: 'mui-spinner' + ' ' + 'mui-spinner-white', //图标，可为空
-        loadingIconPosition: 'left' //图标所处位置，仅支持left|right
-    };
+	var defaultOptions = {
+		loadingText: 'Loading...', //文案
+		loadingIcon: 'mui-spinner' + ' ' + 'mui-spinner-white', //图标，可为空
+		loadingIconPosition: 'left' //图标所处位置，仅支持left|right
+	};
 
-    var Button = function(element, options) {
-        this.element = element;
-        this.options = $.extend({}, defaultOptions, options);
-        if (!this.options.loadingText) {
-            this.options.loadingText = defaultOptions.loadingText;
-        }
-        if (this.options.loadingIcon === null) {
-            this.options.loadingIcon = 'mui-spinner';
-            if ($.getStyles(this.element, 'color') === 'rgb(255, 255, 255)') {
-                this.options.loadingIcon += ' ' + 'mui-spinner-white';
-            }
-        }
-        this.isInput = this.element.tagName === 'INPUT';
-        this.resetHTML = this.isInput ? this.element.value : this.element.innerHTML;
-        this.state = '';
-    };
-    Button.prototype.loading = function() {
-        this.setState(STATE_LOADING);
-    };
-    Button.prototype.reset = function() {
-        this.setState(STATE_RESET);
-    };
-    Button.prototype.setState = function(state) {
-        if (this.state === state) {
-            return false;
-        }
-        this.state = state;
-        if (state === STATE_RESET) {
-            this.element.disabled = false;
-            this.element.classList.remove(CLASS_DISABLED);
-            this.setHtml(this.resetHTML);
-        } else if (state === STATE_LOADING) {
-            this.element.disabled = true;
-            this.element.classList.add(CLASS_DISABLED);
-            var html = this.isInput ? this.options.loadingText : ('<span>' + this.options.loadingText + '</span>');
-            if (this.options.loadingIcon && !this.isInput) {
-                if (this.options.loadingIconPosition === 'right') {
-                    html += '&nbsp;<span class="' + this.options.loadingIcon + '"></span>';
-                } else {
-                    html = '<span class="' + this.options.loadingIcon + '"></span>&nbsp;' + html;
-                }
-            }
-            this.setHtml(html);
-        }
-    };
-    Button.prototype.setHtml = function(html) {
-        if (this.isInput) {
-            this.element.value = html;
-        } else {
-            this.element.innerHTML = html;
-        }
-    }
-    $.fn.button = function(state) {
-        var buttonApis = [];
-        this.each(function() {
-            var buttonApi = this.mui_plugin_button;
-            if (!buttonApi) {
-                var loadingText = this.getAttribute('data-loading-text');
-                var loadingIcon = this.getAttribute('data-loading-icon');
-                var loadingIconPosition = this.getAttribute('data-loading-icon-position');
-                this.mui_plugin_button = buttonApi = new Button(this, {
-                    loadingText: loadingText,
-                    loadingIcon: loadingIcon,
-                    loadingIconPosition: loadingIconPosition
-                });
-            }
-            if (state === STATE_LOADING || state === STATE_RESET) {
-                buttonApi.setState(state);
-            }
-            buttonApis.push(buttonApi);
-        });
-        return buttonApis.length === 1 ? buttonApis[0] : buttonApis;
-    };
+	var Button = function(element, options) {
+		this.element = element;
+		this.options = $.extend({}, defaultOptions, options);
+		if(!this.options.loadingText) {
+			this.options.loadingText = defaultOptions.loadingText;
+		}
+		if(this.options.loadingIcon === null) {
+			this.options.loadingIcon = 'mui-spinner';
+			if($.getStyles(this.element, 'color') === 'rgb(255, 255, 255)') {
+				this.options.loadingIcon += ' ' + 'mui-spinner-white';
+			}
+		}
+		this.isInput = this.element.tagName === 'INPUT';
+		this.resetHTML = this.isInput ? this.element.value : this.element.innerHTML;
+		this.state = '';
+	};
+	Button.prototype.loading = function() {
+		this.setState(STATE_LOADING);
+	};
+	Button.prototype.reset = function() {
+		this.setState(STATE_RESET);
+	};
+	Button.prototype.setState = function(state) {
+		if(this.state === state) {
+			return false;
+		}
+		this.state = state;
+		if(state === STATE_RESET) {
+			this.element.disabled = false;
+			this.element.classList.remove(CLASS_DISABLED);
+			this.setHtml(this.resetHTML);
+		} else if(state === STATE_LOADING) {
+			this.element.disabled = true;
+			this.element.classList.add(CLASS_DISABLED);
+			var html = this.isInput ? this.options.loadingText : ('<span>' + this.options.loadingText + '</span>');
+			if(this.options.loadingIcon && !this.isInput) {
+				if(this.options.loadingIconPosition === 'right') {
+					html += '&nbsp;<span class="' + this.options.loadingIcon + '"></span>';
+				} else {
+					html = '<span class="' + this.options.loadingIcon + '"></span>&nbsp;' + html;
+				}
+			}
+			this.setHtml(html);
+		}
+	};
+	Button.prototype.setHtml = function(html) {
+		if(this.isInput) {
+			this.element.value = html;
+		} else {
+			this.element.innerHTML = html;
+		}
+	}
+	$.fn.button = function(state) {
+		var buttonApis = [];
+		this.each(function() {
+			var buttonApi = this.mui_plugin_button;
+			if(!buttonApi) {
+				var loadingText = this.getAttribute('data-loading-text');
+				var loadingIcon = this.getAttribute('data-loading-icon');
+				var loadingIconPosition = this.getAttribute('data-loading-icon-position');
+				this.mui_plugin_button = buttonApi = new Button(this, {
+					loadingText: loadingText,
+					loadingIcon: loadingIcon,
+					loadingIconPosition: loadingIconPosition
+				});
+			}
+			if(state === STATE_LOADING || state === STATE_RESET) {
+				buttonApi.setState(state);
+			}
+			buttonApis.push(buttonApi);
+		});
+		return buttonApis.length === 1 ? buttonApis[0] : buttonApis;
+	};
 })(mui, window, document);
