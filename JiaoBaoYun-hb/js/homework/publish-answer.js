@@ -8,11 +8,11 @@ mui.init();
 mui.plusReady(function() {
 	events.preload('homework-commented.html', 200);
 	mui.previewImage();
-	personalUTID = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 	/**
 	 * 作业主界面传值的监听
 	 */
 	window.addEventListener('roleInfo', function(e) {
+			personalUTID = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 			answerResultId = null;
 			stuSubmitAnswer = true;
 			events.clearChild(document.getElementById('pictures'));
@@ -29,6 +29,7 @@ mui.plusReady(function() {
 		 * 更改答案的监听
 		 */
 	window.addEventListener('modifyAnswer', function(e) {
+		personalUTID = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 		 console.log('上个页面传回来的值：'+JSON.stringify(e.detail.data));
 		answerResultId = e.detail.data.AnswerResultId;
 		imgIds = [];
@@ -93,16 +94,17 @@ var addPostEventListener = function() {
 				var teachers_container = document.getElementById('receive-teachers'); //selectid
 				teaInfo = teachers_container.options[teachers_container.selectedIndex].teaInfo;
 				//判断是要学生提交答案0，还是修改答案1
+				console.log('teaInfo:'+JSON.stringify(teaInfo))
 				if(stuSubmitAnswer) {
 					//6.	提交答案结果
 					//所需参数
 					var comData = {
 						userId: personalUTID, //学生/家长id，
-						classId: teaInfo.utid, //班级id
+						classId: teaInfo.gid, //班级id
 						studentId: personalUTID, //学生Id；
 						fileIds: imgIds.toString(), //文件id数组；
 						teacherId: teaInfo.utid, //老师Id；
-						teacherName: teaInfo.ugnick + '-' + teaInfo.gname //老师名字；
+						teacherName: "" //老师名字；
 					};
 //					TeacherId=teaInfo.utid;
 					requestSubmitAnswer(comData);
@@ -115,7 +117,7 @@ var addPostEventListener = function() {
 						answerResultId: answerResultId, //要修改的答案id；
 						fileIds: imgIds.toString(), //文件id数组；
 						teacherId: teaInfo.utid, //老师Id；
-						teacherName: teaInfo.ugnick + '-' + teaInfo.gname //老师名字；
+						teacherName: "" //老师名字；
 					};
 //					TeacherId=teaInfo.utid;
 					requestModifyAnswer(comData);

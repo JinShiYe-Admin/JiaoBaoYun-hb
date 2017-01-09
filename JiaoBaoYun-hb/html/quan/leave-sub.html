@@ -137,7 +137,16 @@
 		mui.plusReady(function() {
 			initNativeObjects();
 			window.addEventListener('refreshLeaveList',function(){//发布留言成功后的回调
-				requestData(comData)
+				//刷新时将页码归1
+				totalCnt = 0;
+				flag = 1;
+				var comData = {
+					userId: userId, ////留言板拥有者id
+					pageIndex: (1).toString(), //当前页数
+					pageSize: '10' //每页记录数
+				};
+				//请求数据
+				requestData(comData);
 			})
 			userId = plus.webview.currentWebview().data;
 			var leaveTitle = document.getElementById('leaveTitle');
