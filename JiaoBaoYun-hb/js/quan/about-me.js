@@ -100,7 +100,6 @@ var ifHaveReferContent = function(cellData) {
 var addReplyView = function() {
 	mui('.mui-table-view').on('tap', '.reply', function() {
 		var replyContainer = document.getElementById('footer');
-		document.getElementById('footer').className = 'mui-bar-tab';
 		replyContainer.style.display = 'block';
 		showSoftInput('#msg-content');
 		repliedCell = this.cell;
@@ -111,6 +110,10 @@ var addReplyView = function() {
 	})
 }
 var addReplyLisetner = function() {
+		document.getElementById("msg-content").onblur=function(){
+			document.getElementById('footer').className = '';
+			document.getElementById('footer').style.display = 'none';
+		}
 		events.addTap('btn-reply', function() {
 
 			var replyValue = document.getElementById('msg-content').value;
