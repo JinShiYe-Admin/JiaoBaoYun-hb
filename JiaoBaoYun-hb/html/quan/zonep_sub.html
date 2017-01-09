@@ -187,7 +187,7 @@
 	</head>
 
 	<body>
-		<footer id="footer">
+		<footer id="footer" class="mui-bar-tab">
 			<div class="footer-center">
 				<textarea onblur="inputOnblur(this)" id='msg-content' type="text" class='input-text'></textarea>
 			</div>
@@ -214,6 +214,7 @@
 	</body>
 
 	<script>
+	
 		var publisherId; //发布者id
 		var tempIndex; //节点对象id
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
