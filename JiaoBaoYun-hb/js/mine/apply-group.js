@@ -81,7 +81,8 @@ var setData = function(data) {
 var setListListener = function() {
 		mui('.mui-table-view').on('tap', '.apply-group', function() {
 			choseGroupId = parseInt(this.getAttribute('gid'));
-			console.log('选中的申请的群id：' + choseGroupId);
+			document.querySelector('#search-group').blur();
+			console.log('选中的申请的群id：' + choseGroupId); 
 		})
 	}
 	/**

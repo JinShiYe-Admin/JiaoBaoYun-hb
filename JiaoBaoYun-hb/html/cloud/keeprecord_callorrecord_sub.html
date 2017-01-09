@@ -473,6 +473,10 @@
 							}
 							//mui.toast('没有更多数据了');
 						}
+						if(pageIndex == 1) {
+							//滚动到底部
+							mui.scrollTo(document.body.scrollHeight, 100);
+						}
 					} else {
 						mui.toast('获取点到记事列表:' + data.RspTxt);
 						console.log('获取用户针对某学生的点到记事列表:' + data.RspTxt);
