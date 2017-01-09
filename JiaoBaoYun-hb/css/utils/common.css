@@ -48,6 +48,9 @@ b{
 	font-size: 1.2rem;
 	color: #000000;
 }
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-size: 1.5rem;
+}
 /**段落字体大小*/
 p{font-size: 1.2rem;}
 /**最小字体*/

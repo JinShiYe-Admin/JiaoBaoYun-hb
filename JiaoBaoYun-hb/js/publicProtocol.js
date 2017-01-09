@@ -1692,9 +1692,8 @@ var postDataPro_getClassSpacesByUserForMutiClass = function(commonData, wd, call
 //所需参数
 //		var comData = {
 //			userId:'',//用户ID
-//			students:''//学生数组v
-//			studentIds:'',//学生ID,从属students
-//			classId:''//班级ID,从属students
+//			studentIds:'',//学生ID,Array
+//			classId:''//班级ID,Array
 //		};
 //返回：model_userNoteInfo
 var postDataPro_getNotesByUserForMutiStudent = function(commonData, wd, callback) {

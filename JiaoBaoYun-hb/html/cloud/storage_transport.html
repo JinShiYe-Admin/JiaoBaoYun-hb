@@ -1224,14 +1224,15 @@
 					//获取文件属性
 					element.getMetadata(function(succesCB2) {
 						//console.log("获取上传或下载记录文件属性成功:" + JSON.stringify(succesCB2));
-						var timeList = JSON.stringify(succesCB2.modificationTime).replace(/"/g, '').split("T");
-						var time1 = timeList[0];
-						var timeList2 = timeList[1].split('.');
-						var time2 = timeList2[0];
+						//						var timeList = JSON.stringify(succesCB2.modificationTime).replace(/"/g, '').split("T");
+						//						var time1 = timeList[0];
+						//						var timeList2 = timeList[1].split('.');
+						//						var time2 = timeList2[0];
+
 						if(type == 1) { //增加一项已上传记录
-							addUploadedItem(element.toLocalURL(), fname, succesCB2.size, time1 + ' ' + time2);
+							addUploadedItem(element.toLocalURL(), fname, succesCB2.size, dateToStr(succesCB2.modificationTime));
 						} else { //增加一项已下载记录
-							addDownloadedItem(element.toLocalURL(), fname, succesCB2.size, time1 + ' ' + time2);
+							addDownloadedItem(element.toLocalURL(), fname, succesCB2.size, dateToStr(succesCB2.modificationTime));
 						}
 					}, function(errorCB2) {
 						console.log("获取上传或下载记录文件属性失败:" + JSON.stringify(errorCB2));
@@ -1241,6 +1242,36 @@
 							addDownloadedItem(element.toLocalURL(), fname);
 						}
 					});
+				}
+
+				/**
+				 * data to string
+				 * @param {Object} datetime
+				 */
+				function dateToStr(datetime) {
+					console.log(datetime);
+					var year = datetime.getFullYear(),
+						month = datetime.getMonth() + 1,
+						date = datetime.getDate(),
+						hour = datetime.getHours(),
+						minutes = datetime.getMinutes(),
+						second = datetime.getSeconds();
+					if(month < 10) {
+						month = "0" + month;
+					}
+					if(date < 10) {
+						date = "0" + date;
+					}
+					if(hour < 10) {
+						hour = "0" + hour;
+					}
+					if(minutes < 10) {
+						minutes = "0" + minutes;
+					}
+					if(second < 10) {
+						second = "0" + second;
+					}
+					return(year + "-" + month + "-" + date + " " + hour + ":" + minutes + ":" + second);
 				}
 
 				/**
@@ -1261,11 +1292,11 @@
 							succesCB2.getMetadata(function(succesCB3) {
 								console.log("拷贝:获取文件属性成功:" + JSON.stringify(succesCB3));
 								//增加一项已上传记录
-								var timeList = JSON.stringify(succesCB3.modificationTime).replace(/"/g, '').split("T");
-								var time1 = timeList[0];
-								var timeList2 = timeList[1].split('.');
-								var time2 = timeList2[0];
-								addUploadedItem(succesCB2.toLocalURL(), fname, succesCB3.size, time1 + ' ' + time2);
+								//								var timeList = JSON.stringify(succesCB3.modificationTime).replace(/"/g, '').split("T");
+								//								var time1 = timeList[0];
+								//								var timeList2 = timeList[1].split('.');
+								//								var time2 = timeList2[0];
+								addUploadedItem(succesCB2.toLocalURL(), fname, succesCB3.size, dateToStr(succesCB3.modificationTime));
 							}, function(errorCB3) {
 								console.log("拷贝:获取文件属性失败:" + JSON.stringify(errorCB3));
 								//增加一项已上传记录
