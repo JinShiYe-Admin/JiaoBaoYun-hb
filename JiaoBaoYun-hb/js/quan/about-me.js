@@ -62,11 +62,11 @@ var createInner = function(cell) {
 	if(cellData.MsgType != 6) {
 		var inner = '<a>' +
 			'<div class="cell-title">' +
-			'<img class="title-img"src="' + ifHaveImg(cellData) + '"/>' +
+			'<img class="title-img" headId="' + cellData.headID + '" src="' + ifHaveImg(cellData) + '"/>' +
 			'<span class="reply">回复</span>' +
 			'<div class="title-words">' +
 			'<h4 class="title-title">' + cellData.title + '</h4>' +
-			'<p class="title-words">' + cellData.time + '</p>' +
+			'<p class="title-words">' + events.shortForDate(cellData.time) + '</p>' +
 			'</div>' +
 			'</div>' +
 			//最新内容
@@ -76,11 +76,11 @@ var createInner = function(cell) {
 		'</a>';
 	} else {
 		var inner = '<div class="cell-title">' +
-			'<img class="title-img"src="' + ifHaveImg(cellData) + '"/>' +
+			'<img class="title-img" headId="' + cellData.headID + '" src="' + ifHaveImg(cellData) + '"/>' +
 			//		'<span class="reply">回复</span>' +
 			'<div class="title-words">' +
 			'<h4 class="title-title">' + cellData.title + '</h4>' +
-			'<p class="title-words">' + cellData.time + '</p>' +
+			'<p class="title-words">' + events.shortForDate(cellData.time) + '</p>' +
 			'</div>' +
 			'</div>' +
 			'<p class="comment-content">' + ifHave(cellData.UserContent) + '</p>' +
@@ -108,9 +108,26 @@ var addReplyView = function() {
 		msgType = this.cell.MsgType;
 		document.getElementById('msg-content').value = '';
 	})
+	mui('.mui-table-view').on('tap', '.title-img', function() {
+		var id = this.getAttribute('headId');
+		console.log(id);
+		mui.openWindow({
+			url: 'zone_main.html',
+			id: 'zone_main.html',
+			styles: {
+				top: '0px', //设置距离顶部的距离
+				bottom: '0px'
+			},
+			extras: {
+				data: id,
+				NoReadCnt: 0
+			}
+
+		});
+	})
 }
 var addReplyLisetner = function() {
-		document.getElementById("msg-content").onblur=function(){
+		document.getElementById("msg-content").onblur = function() {
 			document.getElementById('footer').className = '';
 			document.getElementById('footer').style.display = 'none';
 		}
@@ -125,8 +142,8 @@ var addReplyLisetner = function() {
 					jQuery('#msg-content').blur();
 					var p = document.createElement('p');
 					p.className = "single-line";
-					p.innerHTML = '<span>'+pName+'</span>回复<span>'+events.shortForString(repliedCell.MaxUserName,4)+':</span>'+replyValue;
-						//				<p class="single-line" ><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>'
+					p.innerHTML = '<span>' + pName + '</span>回复<span>' + events.shortForString(repliedCell.MaxUserName, 4) + ':</span>' + replyValue;
+					//				<p class="single-line" ><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>'
 					repliedItem.appendChild(p);
 				})
 			} else {
@@ -212,9 +229,15 @@ var getCellData = function(cell) {
 	var cellData = new Object();
 	cellData.MsgType = cell.MsgType;
 	cellData.UserName = cell.UserName;
+	if(cell.MsgType) {
+		cellData.headID = cell.UserId;
+	} else {
+		cellData.headID = cell.MaxUser;
+	}
 	cellData.UserImg = cell.UserImg;
 	cellData.UserContent = cell.Content;
 	cellData.headImg = cell.MaxUserImg;
+
 	cellData.content = cell.MaxContent;
 	cellData.referContent = cell.MsgContent;
 	cellData.UserOwnerNick = cell.UserOwnerNick;
@@ -411,33 +434,63 @@ var requireAboutMe = function() {
 	 * @param {Object} aboutMeData 与我相关的数据
 	 */
 var requireHomeworkAlert = function(aboutMeData) {
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	//	userId，学生/家长Id；
-	//pageIndex，页码，从1开始；
-	//pageSize，每页记录数；
-	postDataPro_GetHomeworkAlert({
-		userId: personalUTID,
-		pageIndex: pageIndex,
-		pageSize: 5
-	}, wd, function(data) {
-		wd.close();
-		console.log('与我相关界面获取的作业提醒：' + JSON.stringify(data));
-		if(data.RspCode == 0) {
-			alertTotalPage = data.RspData.TotalPage;
-			if(!aboutMeData) {
-				aboutMeData = [];
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		//	userId，学生/家长Id；
+		//pageIndex，页码，从1开始；
+		//pageSize，每页记录数；
+		postDataPro_GetHomeworkAlert({
+			userId: personalUTID,
+			pageIndex: pageIndex,
+			pageSize: 5
+		}, wd, function(data) {
+			wd.close();
+			console.log('与我相关界面获取的作业提醒：' + JSON.stringify(data));
+			if(data.RspCode == 0) {
+				alertTotalPage = data.RspData.TotalPage;
+				if(!aboutMeData) {
+					aboutMeData = [];
+				}
+				for(var i in data.RspData.Data) {
+					data.RspData.Data[i].MsgDate = new Date(data.RspData.Data[i].MsgDate).Format('yyyy-MM-dd HH:mm:ss')
+				}
+				//拼接数据
+				var allData = aboutMeData.concat(data.RspData.Data);
+				//数据排序
+				allData.sort(function(a, b) {
+					return -((new Date(a.MsgDate.replace(/-/g, '/')).getTime()) - (new Date(b.MsgDate.replace(/-/g, '/')).getTime()));
+				})
+				console.log('与我相关界面获取的所有数据:' + JSON.stringify(allData))
+					//获取人员信息
+				getRoleInfos(allData);
+			} else {
+				mui.toast(data.RspTxt);
 			}
-			//拼接数据
-			var allData = aboutMeData.concat(data.RspData.Data);
-			//数据排序
-			allData.sort(function(a, b) {
-				return -((new Date(a.MsgDate.replace(/-/g, '/')).getTime()) - (new Date(b.MsgDate.replace(/-/g, '/')).getTime()));
-			})
-			console.log('与我相关界面获取的所有数据:' + JSON.stringify(allData))
-				//获取人员信息
-			getRoleInfos(allData);
-		} else {
-			mui.toast(data.RspTxt);
+		})
+	}
+	//格式化日期
+Date.prototype.Format = function(fmt) {
+	var o = {
+		"y+": this.getFullYear(),
+		"M+": this.getMonth() + 1, //月份
+		"d+": this.getDate(), //日
+		"H+": this.getHours(), //小时
+		"m+": this.getMinutes(), //分
+		"s+": this.getSeconds(), //秒
+		"q+": Math.floor((this.getMonth() + 3) / 3), //季度
+		"S+": this.getMilliseconds() //毫秒
+	};
+	for(var k in o) {
+		if(new RegExp("(" + k + ")").test(fmt)) {
+			if(k == "y+") {
+				fmt = fmt.replace(RegExp.$1, ("" + o[k]).substr(4 - RegExp.$1.length));
+			} else if(k == "S+") {
+				var lens = RegExp.$1.length;
+				lens = lens == 1 ? 3 : lens;
+				fmt = fmt.replace(RegExp.$1, ("00" + o[k]).substr(("" + o[k]).length - 1, lens));
+			} else {
+				fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+			}
 		}
-	})
+	}
+	return fmt;
 }

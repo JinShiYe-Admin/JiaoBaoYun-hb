@@ -1392,7 +1392,9 @@
 					"js/publicHomeworkProtocol.js",
 					"js/utils/native.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/quan/zone_main.html"
+				],
 				"priority": 0
 			},
 			"html/quan/leave.html": {
