@@ -1687,3 +1687,19 @@ var postDataPro_getClassSpacesByUserForMutiClass = function(commonData, wd, call
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'classSpace/getClassSpacesByUserForMutiClass', enData, commonData, 2, wd, callback);
 }
+
+//77.（点到记事）获取用户针对多学生的点到记事列表
+//所需参数
+//		var comData = {
+//			userId:'',//用户ID
+//			students:''//学生数组v
+//			studentIds:'',//学生ID,从属students
+//			classId:''//班级ID,从属students
+//		};
+//返回：model_userNoteInfo
+var postDataPro_getNotesByUserForMutiStudent = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'note/getNotesByUserForMutiStudent', enData, commonData, 2, wd, callback);
+}
