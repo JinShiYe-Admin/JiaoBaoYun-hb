@@ -101,12 +101,14 @@ var UploadHeadImage = (function($, mod) {
 				//拍照成功的回调
 				//capturedFile ：图片的路径
 				//显示等待窗口
-				plus.nativeUI.showWaiting('正在加载中');
+				var wd=plus.nativeUI.showWaiting('正在加载中', {
+					back: 'none'
+				});
 				//console.log('拍照成功,图片的路径为：' + capturedFile);
 				//将本地URL路径转换成平台绝对路径
 				//capturedFile = 'file://' + plus.io.convertLocalFileSystemURL(capturedFile);
 				//console.log('转换成平台绝对路径,图片的路径为：' + capturedFile);
-				compressImage(capturedFile) //压缩图片
+				compressImage(wd,capturedFile) //压缩图片
 			},
 			function(error) {
 				// 拍照失败的回调
@@ -140,10 +142,12 @@ var UploadHeadImage = (function($, mod) {
 		plus.gallery.pick(function(file) {
 
 			//显示等待窗口
-			plus.nativeUI.showWaiting('正在加载中');
+			var wd=plus.nativeUI.showWaiting('加载中...', {
+				back: 'none'
+			});
 			console.log('从相册选取图片成功,图片的路径为：' + file);
 			//openImage(file); //打开新页面查看图片
-			compressImage(file) //压缩图片
+			compressImage(wd,file) //压缩图片
 		}, function(error) {
 			//从相册选取图片失败的回调
 			var code = error.code; // 错误编码
@@ -167,7 +171,7 @@ var UploadHeadImage = (function($, mod) {
 	}
 
 	//压缩图片并且在新页面显示压缩后的图片
-	function compressImage(filepath) {
+	function compressImage(wd,filepath) {
 		//console.log('压缩图片,图片的路径为：' + filepath);
 		plus.zip.compressImage({
 				src: filepath, //压缩转换原始图片的路径
@@ -183,7 +187,7 @@ var UploadHeadImage = (function($, mod) {
 				var height = event.height; // 压缩转换后图片的实际高度，单位为px
 				console.log('压缩图片成功---target:' + target + '|size:' + AndroidFileSystem.readSize(size) + '|width:' + width + '|height:' + height);
 				//openImage(target); //打开新页面查看图片
-				uploadHeadImge(target);
+				uploadHeadImge(wd,target);
 			},
 			function(error) {
 				//图片压缩失败
@@ -192,7 +196,7 @@ var UploadHeadImage = (function($, mod) {
 				mui.toast('图片压缩失败！' + '错误编码：' + code + '描述信息：' + message);
 				console.log('图片压缩失败！' + JSON.stringify(error));
 				//关闭等待窗口
-				plus.nativeUI.closeWaiting();
+				wd.close();
 			}
 		);
 	}
@@ -210,7 +214,7 @@ var UploadHeadImage = (function($, mod) {
 	/**
 	 * 上传资料头像
 	 */
-	function uploadHeadImge(fPath) {
+	function uploadHeadImge(wd,fPath) {
 		CloudFileUtil.getQNUpToken(getUploadTokenUrl, fileName, function(data) {
 			var QNUptoken = data.uptoken;
 			console.log('七牛上传token:' + QNUptoken);
@@ -223,23 +227,24 @@ var UploadHeadImage = (function($, mod) {
 				console.log('上传任务完成:' + status);
 				console.log('上传任务完成:' + JSON.stringify(upload));
 				//size.close();
-				plus.nativeUI.closeWaiting();
+				//plus.nativeUI.closeWaiting();
 				if(status == 200) { //上传任务成功
 					//头像类型,个人头像0，资料头像1，群头像2
 					switch(imageType) {
 						case 0: //个人头像
-							changeHeadImge(fileName);
+							changeHeadImge(wd,fileName);
 							break;
 						case 1: //资料头像
-							changeSutHeadImge(fileName);
+							changeSutHeadImge(wd,fileName);
 							break;
 						case 2: //群头像
-							changeQunHeadImge(fileName);
+							changeQunHeadImge(wd,fileName);
 						default:
 							break;
 					}
 				} else { //上传失败
-					errorCallBack(data.responseText);
+					errorCallBack('上传失败');
+					wd.close();
 				}
 			}, function(upload, status) {
 				//上传任务状态监听
@@ -282,7 +287,7 @@ var UploadHeadImage = (function($, mod) {
 				task.start();
 			});
 		}, function(xhr, type, errorThrown) {
-			plus.nativeUI.closeWaiting();
+			wd.close();
 			mui.toast('获取七牛上传token失败：' + type);
 			console.log('获取七牛上传token失败：' + type);
 		});
@@ -292,7 +297,7 @@ var UploadHeadImage = (function($, mod) {
 	 * 修改群头像
 	 * @param {Object} fileName 头像在七牛上的名称
 	 */
-	function changeQunHeadImge(fileName) {
+	function changeQunHeadImge(wd,fileName) {
 		var myDate = new Date();
 		var imgeURL = domain + fileName + '?' + myDate.getTime();
 		//8.用户修改群各项信息
@@ -305,9 +310,10 @@ var UploadHeadImage = (function($, mod) {
 		};
 		//返回值model：model_groupList
 		// 等待的对话框
-		var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		postDataPro_PostReGinfo(comData2, wd2, function(data) {
-			wd2.close();
+//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING, {
+//			back: 'none'
+//		});
+		postDataPro_PostReGinfo(comData2, wd, function(data) {
 			console.log('8_PostReGinfo:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				//成功的回调
@@ -315,7 +321,7 @@ var UploadHeadImage = (function($, mod) {
 			} else {
 				errorCallBack(data);
 			}
-			wd2.close();
+			wd.close();
 		});
 	}
 
@@ -323,7 +329,7 @@ var UploadHeadImage = (function($, mod) {
 	 * 修改个人头像
 	 * @param {Object} fileName 头像在七牛上的名称
 	 */
-	function changeHeadImge(fileName) {
+	function changeHeadImge(wd,fileName) {
 		var myDate = new Date();
 		var imgeURL = domain + fileName + '?' + myDate.getTime();
 		//6.用户修改各项用户信息
@@ -332,7 +338,9 @@ var UploadHeadImage = (function($, mod) {
 			vtp: 'uimg', //uimg(头像),utxt(签名),unick(昵)称,usex(性别),uemail(邮件)
 			vvl: imgeURL //对应的值
 		};
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING, {
+//			back: 'none'
+//		});
 		postDataPro_PostReUinf(comData, wd, function(data) {
 			console.log('6_PostReUinf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
@@ -349,7 +357,7 @@ var UploadHeadImage = (function($, mod) {
 	 * 修改学生资料头像
 	 * @param {Object} fileName 头像在七牛上的名称
 	 */
-	function changeSutHeadImge(fileName) {
+	function changeSutHeadImge(wd,fileName) {
 		var myDate = new Date();
 		var stuImgePath = domain + fileName + '?' + myDate.getTime();
 		//23.通过用户资料ID或关联ID更改各类型资料
@@ -368,9 +376,11 @@ var UploadHeadImage = (function($, mod) {
 		};
 		//返回值model：model_groupList
 		// 等待的对话框
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING, {
+//			back: 'none'
+//		});
 		postDataPro_PostReStu(comData, wd, function(data) {
-			wd.close();
+
 			console.log('23_PostReStu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				//成功的回调
@@ -378,6 +388,7 @@ var UploadHeadImage = (function($, mod) {
 			} else {
 				errorCallBack(data);
 			}
+			wd.close();
 		});
 	}
 
