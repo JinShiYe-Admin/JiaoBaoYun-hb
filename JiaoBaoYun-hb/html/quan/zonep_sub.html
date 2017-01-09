@@ -383,8 +383,8 @@
 			initNativeObjects();
 			addReplyView();
 			addReplyLisetner()
-			publisherId = plus.webview.currentWebview().data; //发布者id
-
+			publisherId = plus.webview.currentWebview().data.data; //发布者id
+			
 			tempPage = 1; //页码，请求第几页数据
 			totalCnt = 0; //当前留言的总条数
 			flag = 2; //判断是加载更多1，还是刷新2
@@ -767,7 +767,7 @@
 				return;
 			}
 
-			var NoReadCnt = plus.webview.currentWebview().NoReadCnt //未读条数
+			var NoReadCnt = plus.webview.currentWebview().data.NoReadCnt //未读条数
 			if(NoReadCnt != 0) { //如果未读条数不为0，则设置空间状态为已读
 				var comData = {
 					userId: personalUTID, //用户ID
