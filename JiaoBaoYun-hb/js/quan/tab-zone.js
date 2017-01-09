@@ -2,7 +2,7 @@ mui.init({
 
 });
 mui.plusReady(function() {
-	
+
 	getStuList(); //获取学生列表
 	addSomeEvent();
 
@@ -31,10 +31,10 @@ function addSomeEvent() {
 			},
 		});
 		var span = this.getElementsByTagName('span')[0];
-		if(span){
+		if(span) {
 			span.parentElement.removeChild(span);
 		}
-		
+
 	});
 	//跳转到班级动态界面
 	mui('.mui-table-view').on('tap', '.tarClass', function() {
@@ -56,10 +56,10 @@ function addSomeEvent() {
 			},
 		});
 		var span = this.getElementsByTagName('span')[0];
-		if(span){
+		if(span) {
 			span.parentElement.removeChild(span);
 		}
-		
+
 	});
 	//重新登录或者注册的时候重新加载家校圈首页
 	window.addEventListener('infoChanged', function() {
@@ -123,7 +123,7 @@ function addSomeEvent() {
 	window.addEventListener('setRead', function(e) {
 		console.log('e.detail=' + JSON.stringify(e.detail));
 		if(e.detail.flag == 3) {
-			
+
 			console.log('tableIndex=' + selectCell.tableIndex)
 			console.log()
 			var tableIndex = selectCell.tableIndex;
@@ -155,7 +155,7 @@ function addSomeEvent() {
 			} else {
 				a.innerHTML = datasource[tableIndex].gname + lineHTML;
 			}
-//			selectCell.NoReadCnt = 0
+			//			selectCell.NoReadCnt = 0
 		} else if(e.detail.flag == 1) {
 			document.getElementById("stuImg").src = updateHeadImg(e.detail.img)
 		} else if(e.detail.flag == 2) {
@@ -193,7 +193,7 @@ function getStuList() {
 	//24.通过用户表ID获取用户关联的学生
 	postDataPro_PostUstu(comData, wd, function(data) {
 		wd.close();
-//		console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		//		console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0 || data.RspCode == 9 || data.RspCode == 7) { //9为查询记录为空
 			topStudentArr = data.RspData;
@@ -206,7 +206,6 @@ function getStuList() {
 			requestTimes3 = topStudentArr.length;
 			var StuDyArr = [];
 			console.log('topStudentArr===' + JSON.stringify(topStudentArr));
-
 			for(var i = 0; i < topStudentArr.length; i++) {
 				getNotes(i, StuDyArr); //获取点到记事
 			}
@@ -282,10 +281,10 @@ function getNotes(index, StuDyArr) {
 						'<p class="time">' + StuDyArr[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
-						topStudentArr[i].stuname + '[' + topStudentArr[i].gname + ']'+
-					'<p class="mui-ellipsis">' + StuDyArr[i].MsgContent + '</p></div>';
+						topStudentArr[i].stuname + '[' + topStudentArr[i].gname + ']' +
+						'<p class="mui-ellipsis">' + StuDyArr[i].MsgContent + '</p></div>';
 					ul.appendChild(li);
-					console.log(li.outerHTML)
+					//					console.log(li.outerHTML)
 				}
 				getGroupList();
 
@@ -309,7 +308,7 @@ function getGroupList() {
 	//	获取用户群
 	postDataPro_PostGList(comData, wd, function(data) {
 		wd.close();
-//		console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		//		console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0) {
 			showBlankPage(false);
@@ -331,19 +330,19 @@ function getGroupList() {
 			requestTimes = datasource.length; //记录顶部 班级动态请求次数
 			requestTimes2 = datasource.length; //记录底部 通过循环请求群用户列表请求次数
 			var userList = []; //临时用户列表
-			
+
 			var gids = [];
 			for(var i = 0; i < datasource.length; i++) {
 				gids.push(datasource[i].gid);
 				//判断img是否为null，或者空
 				datasource[i].gimg = updateHeadImg(datasource[i].gimg, 2)
 
-				getTopList(i); //获取顶部列表
+				//				getTopList(i); //获取顶部列表
 				getBottomList(i, userList); //获取底部列表
 
 			}
-//			gids = arrayToStr(gids);
-//			getClassSpacesByUserForMutiClass(gids);
+			gids = arrayToStr(gids);
+			getClassSpacesByUserForMutiClass(gids);
 		} else if(data.RspCode == 9) { //没有群
 			console.log('显示空白页')
 			showBlankPage(true); //显示空白页
@@ -354,43 +353,51 @@ function getGroupList() {
 	});
 
 }
-function getClassSpacesByUserForMutiClass(classIds){
-			var comData = {
-			userId:personalUTID,//用户ID
-			classIds:classIds//班级ID，例如[1,2,3]
-		};
-		// 等待的对话框
+
+function getClassSpacesByUserForMutiClass(classIds) {
+	var comData = {
+		userId: personalUTID, //用户ID
+		classIds: classIds //班级ID，例如[1,2,3]
+	};
+	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataPro_getClassSpacesByUserForMutiClass(comData, wd, function(data) {
 		wd.close();
 		console.log('postDataPro_getClassSpacesByUserForMutiClass:{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
-		if(data.RspCode =0){
-				topArray = data.RspCode.Data;
-					//				顶部列表添加cell
-				var ul = document.getElementById('top-list');
-				console.log('topArray====' + JSON.stringify(topArray))
-				for(var i = 0; i < topArray.length; i++) {
-					var li = document.createElement('li');
-					li.id = 'tarClass' + i;
-					li.className = 'mui-table-view-cell mui-media tarClass';
-					var noReadHTML;
-					if(topArray[i].NoReadCnt != 0) {
-						noReadHTML = '<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + topArray[i].NoReadCnt + '</span></span>';
-					} else {
-						noReadHTML = '';
-					}
-					topArray[i].MsgContent = topArray[i].MsgContent.replace(new RegExp(/(<br \/>)/g),'\n')
-					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">' + noReadHTML + '<p class="time">' + topArray[i].PublishDate +
-						'</p>' +
-						'<div class="mui-media-body">' +
-						datasource[i].gname +
-						'<p class="mui-ellipsis">' + topArray[i].MsgContent + '</p></div>';
-					ul.appendChild(li);
+		if(data.RspCode == 0) {
+			topArray = data.RspData.Data;
+			//				顶部列表添加cell
+			var ul = document.getElementById('top-list');
+			console.log('班级空间数据列表topArray====' + JSON.stringify(topArray))
+			for(var i = 0; i < topArray.length; i++) {
+				var li = document.createElement('li');
+				li.id = 'tarClass' + i;
+				li.className = 'mui-table-view-cell mui-media tarClass';
+				var noReadHTML;
+				if(topArray[i].NoReadCnt != 0) {
+					noReadHTML = '<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + topArray[i].NoReadCnt + '</span></span>';
+				} else {
+					noReadHTML = '';
 				}
-			
-}else{
-	
-}
+				if(topArray[i].PublishDate != '') {
+					var dateArr = topArray[i].PublishDate.split(' ');
+					topArray[i].PublishDate = dateArr[0];
+				}
+				if(topArray[i].MsgContent == '') {
+					topArray[i].MsgContent = '暂无班级动态'
+				}
+				topArray[i].MsgContent = topArray[i].MsgContent.replace(new RegExp(/(<br \/>)/g), '\n')
+				li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">' + noReadHTML + '<p class="time">' + topArray[i].PublishDate +
+					'</p>' +
+					'<div class="mui-media-body">' +
+					datasource[i].gname +
+					'<p class="mui-ellipsis">' + topArray[i].MsgContent + '</p></div>';
+				ul.appendChild(li);
+			}
+
+		} else {
+
+		}
 	})
 }
 //获取顶部列表
@@ -407,7 +414,7 @@ function getTopList(index) {
 	//	16.（班级空间）获取用户针对某班级的空间列表
 	postDataPro_getClassSpacesByUserForClass(comData, wd, function(data) {
 		wd.close();
-//		console.log('某班级的空间列表_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
+		//		console.log('某班级的空间列表_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
 		if(data.RspCode == 0) {
 			if(data.RspData.Data.length == 0) { //数据为空时 添加默认数据
 				var today = new Date();
@@ -449,7 +456,7 @@ function getTopList(index) {
 					} else {
 						noReadHTML = '';
 					}
-					topArray[i].MsgContent = topArray[i].MsgContent.replace(new RegExp(/(<br \/>)/g),'\n')
+					topArray[i].MsgContent = topArray[i].MsgContent.replace(new RegExp(/(<br \/>)/g), '\n')
 					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">' + noReadHTML + '<p class="time">' + topArray[i].PublishDate +
 						'</p>' +
 						'<div class="mui-media-body">' +
@@ -477,7 +484,7 @@ function getBottomList(index, userLists) {
 	// 通过群ID获取群的正常用户
 	postDataPro_PostGusers(comData, wd, function(data) {
 		wd.close();
-				console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			var tepDic = {
 				index: index, //排序索引
@@ -507,11 +514,11 @@ function getBottomList(index, userLists) {
 					userIds.join(',');
 					var upString = '[' + userIds.join() + ']';
 					getUserSpaces(upString, i); //获取多用户空间列表
-// "gid": 1,
-//              "gutid": 259,
-//              "utid": 4,
-//              "ugname": "rockan007",
-//              "ugname": "rockan007[家长]",
+					// "gid": 1,
+					//              "gutid": 259,
+					//              "utid": 4,
+					//              "ugname": "rockan007",
+					//              "ugname": "rockan007[家长]",
 				}
 			}
 		} else {
@@ -521,9 +528,9 @@ function getBottomList(index, userLists) {
 }
 //36.（用户空间）获取多用户空间列表
 function getUserSpaces(upString, index) {
-	var utids = upString.replace('[','');
-		utids = utids.replace(']','');
-	upstrings = upstrings +utids;
+	var utids = upString.replace('[', '');
+	utids = utids.replace(']', '');
+	upstrings = upstrings + utids;
 
 	//所需参数
 	var comData = {
@@ -596,35 +603,34 @@ function getUserSpaces(upString, index) {
 			}
 			//			console.log('datasource[index].userList==='+datasource[index].userList);
 			if(requestTimes2 == 0) { //请求完毕刷新界面
-						//所需参数
-		
-		var postData = {
-			vvl:upstrings//被备注用户ID,utid或utid串
-		};
-	postDataPro_PostUmk(postData, wd, function(data) {
-		wd.close();
-		console.log('获取多用户备注_postDataPro_PostUmk:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-		if(data.RspCode == 0) {
-				console.log('底部列表全部数据' + JSON.stringify(datasource));
-				for(var i=0;i<datasource.length;i++){
-					var userList1 = datasource[i].userList;
-					for(var j=0;j<userList1.length;j++){
-						for(var k=0;k<data.RspData.length;k++){
-								if(userList1[j].utid ==data.RspData[k].butid){
-							var before = userList1[j].ugname.split('[')[0]
-							console.log('before'+before)
-							userList1[j].ugname = userList1[j].ugname.replace(before,data.RspData[k].bunick);
-						}
+				//所需参数
+
+				var postData = {
+					vvl: upstrings //被备注用户ID,utid或utid串
+				};
+				postDataPro_PostUmk(postData, wd, function(data) {
+					wd.close();
+					console.log('获取多用户备注_postDataPro_PostUmk:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						console.log('底部列表全部数据' + JSON.stringify(datasource));
+						for(var i = 0; i < datasource.length; i++) {
+							var userList1 = datasource[i].userList;
+							for(var j = 0; j < userList1.length; j++) {
+								for(var k = 0; k < data.RspData.length; k++) {
+									if(userList1[j].utid == data.RspData[k].butid) {
+										var before = userList1[j].ugname.split('[')[0]
+										userList1[j].ugname = userList1[j].ugname.replace(before, data.RspData[k].bunick);
+									}
+								}
+
 							}
-						
+						}
+						refreshUI();
+					} else {
+						console.log('底部列表全部数据' + JSON.stringify(datasource));
+						refreshUI();
 					}
-				}
-				refreshUI();
-		}else{
-			console.log('底部列表全部数据' + JSON.stringify(datasource));
-			refreshUI();
-		}
-	})
+				})
 
 			}
 
@@ -715,7 +721,7 @@ function refreshUI() {
 			var name = userList[j].ugname;
 			var dateArr = userList[j].PublishDate.split(' ');
 			userList[j].PublishDate = dateArr[0];
-			userList[j].MsgContent = userList[j].MsgContent.replace(new RegExp(/(<br \/>)/g),'\n')
+			userList[j].MsgContent = userList[j].MsgContent.replace(new RegExp(/(<br \/>)/g), '\n')
 			li.innerHTML = '	<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + userList[j].uimg + '" />' +
 				noReadHTML + '<p class="time">' + userList[j].PublishDate + '</p><div class="mui-media-body" style="padding-left: 5px;";>' +
 				name + '<p class="mui-ellipsis">' + userList[j].MsgContent + '</p>';
