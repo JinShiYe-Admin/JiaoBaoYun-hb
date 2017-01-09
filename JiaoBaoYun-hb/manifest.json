@@ -2340,7 +2340,9 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/mui.previewimage.js",
+					"js/mui.zoom.js"
 				],
 				"refer": [],
 				"priority": 0

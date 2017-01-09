@@ -1,8 +1,10 @@
 var workInfo;
 var personalUTID;
-mui.init()
+mui.init();
 mui.plusReady(function() {
+	mui.previewImage();
 	window.addEventListener('workInfo', function(e) {
+		
 		workInfo = e.detail.data;
 		console.log('老师评价页面获取的作业信息：' + JSON.stringify(workInfo))
 		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
@@ -145,9 +147,9 @@ var setAnswerInfo = function() {
 	var homeworkInfo = document.getElementById('homework-info');
 	events.clearChild(homeworkInfo);
 	ceateAnswerPinfo(homeworkInfo, 30);
-	createAnswerImgs(homeworkInfo, workInfo.stuFiles);
+	createAnswerImgs(homeworkInfo, workInfo.stuFiles,0);
 	ceateAnswerPinfo(homeworkInfo, 2);
-	createAnswerImgs(homeworkInfo, workInfo.teaFiles);
+	createAnswerImgs(homeworkInfo, workInfo.teaFiles,1);
 	if(workInfo.IsCommented) {
 		document.getElementById('comment-area').value = workInfo.Comment;
 	} else {
@@ -166,11 +168,18 @@ var ceateAnswerPinfo = function(homeworkInfo, type) {
 	}
 	homeworkInfo.appendChild(p);
 }
-var createAnswerImgs = function(homeworkInfo, imgs) {
+/**
+ * 
+ * @param {Object} homeworkInfo
+ * @param {Object} imgs
+ * @param {Object} type 0 学生 1 老师
+ */
+var createAnswerImgs = function(homeworkInfo, imgs,type) {
 		var div = document.createElement('div');
 		var imgsInner = '';
 		for(var i in imgs) {
-			imgsInner += '<img class="answer-img" src="' + storageKeyName.MAINHOMEWORKURL + imgs[i].ThumbUrl + '"/>';
+			imgsInner += '<img class="answer-img" src="' + storageKeyName.MAINHOMEWORKURL + imgs[i].ThumbUrl + 
+			'" data-preview-src="'+storageKeyName.MAINHOMEWORKURL + imgs[i].Url+'" data-preview-group="'+type+'"/>';
 		}
 		div.innerHTML = imgsInner;
 		homeworkInfo.appendChild(div);
