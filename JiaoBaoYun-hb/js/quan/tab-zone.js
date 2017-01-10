@@ -125,7 +125,6 @@ function addSomeEvent() {
 		if(e.detail.flag == 3) {
 
 			console.log('tableIndex=' + selectCell.tableIndex)
-			console.log()
 			var tableIndex = selectCell.tableIndex;
 			var cellIndex = selectCell.cellIndex;
 			var cellNoReadCnt = selectCell.NoReadCnt
@@ -144,7 +143,7 @@ function addSomeEvent() {
 			if(tableIndex == datasource.length - 1) {
 				lineHTML = '';
 			}
-			if(datasource[tableIndex].NoReadCnt != 0) {
+			if(datasource[tableIndex].NoReadCnt > 0) {
 				var span = document.createElement('span');
 				span.className = 'mui-badge mui-badge-danger custom-badge1';
 				span.innerHTML = datasource[tableIndex].NoReadCnt;
@@ -318,10 +317,70 @@ function getGroupList() {
 			}
 			gids = arrayToStr(gids);
 			getClassSpacesByUserForMutiClass(gids);
+			getAllClassMember(gids)
 		} else if(data.RspCode == 9) { //没有群
 			console.log('显示空白页')
 			showBlankPage(true); //显示空白页
 
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+
+}
+function getAllClassMember(gids){
+	var gidStr = gids.replace('[','');
+	gidStr = gidStr.replace(']','');
+	
+	
+	//需要参数
+	var comData = {
+		top: '-1', //选择条数
+		vvl: gidStr, //群ID，查询的值
+		vvl1: '-1', //群员类型，0家长,1管理员,2老师,3学生,-1取全部
+
+	};
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	// 通过群ID获取群的正常用户
+	postDataPro_PostGusers(comData, wd, function(data) {
+		wd.close();
+		console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+			var tepDic = {
+				index: index, //排序索引
+				data: data.RspData
+			}
+			userLists.push(tepDic);
+
+			requestTimes2--;
+			if(requestTimes2 == 0) { //全部请求完毕
+				requestTimes2 = datasource.length; //重置请求次数为群的个数
+				//				排序
+				userLists.sort(function(a, b) {
+						return a.index - b.index
+					})
+					//把用户列表添加到数据源中
+				for(var i = 0; i < datasource.length; i++) {
+					datasource[i].userList = userLists[i].data;
+				}
+				for(var i = 0; i < datasource.length; i++) {
+					var userIds = []; //群用户id数组
+					for(var j = 0; j < datasource[i].userList.length; j++) {
+						tempModel = datasource[i].userList[j];
+						//判断img是否为null，或者空
+						tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
+						userIds.push(tempModel.utid)
+					}
+					userIds.join(',');
+					var upString = '[' + userIds.join() + ']';
+					getUserSpaces(upString, i); //获取多用户空间列表
+					// "gid": 1,
+					//              "gutid": 259,
+					//              "utid": 4,
+					//              "ugname": "rockan007",
+					//              "ugname": "rockan007[家长]",
+				}
+			}
 		} else {
 			mui.toast(data.RspTxt);
 		}

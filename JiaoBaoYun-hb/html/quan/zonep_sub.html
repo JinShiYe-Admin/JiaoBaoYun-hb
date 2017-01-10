@@ -732,17 +732,17 @@
 							userSpaceId: zonepArray[tempIndex].TabId, //用户空间ID
 							commentContent: inputComment.value //回复内容
 						};
+						var tempValue = inputComment.value;
 						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 						postDataPro_addUserSpaceComment(comData, wd, function(data) {
 							wd.close();
-
 							console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
 							var commentArr = zonepArray[tempIndex].Comments;
 							console.log("commentList" + tempIndex);
 							var commentList = document.getElementById("commentList" + tempIndex);
 							var html1 = '<div id="replyComment' + tempIndex + '-' + commentArr.length + '-' + '评论' + '" class="mui-media-body replyComment">';
 							var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + personalunick + '</font>';
-							var html3 = '<font class="common-font-family-Regular">：' + inputComment.value + '</font></div>';
+							var html3 = '<font class="common-font-family-Regular">：' + tempValue + '</font></div>';
 							var htmlComment = html1 + html2 + html3;
 							commentList.innerHTML = commentList.innerHTML + htmlComment
 							document.getElementById('footer').className = '';
