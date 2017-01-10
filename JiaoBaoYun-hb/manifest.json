@@ -1392,7 +1392,9 @@
 					"js/publicHomeworkProtocol.js",
 					"js/utils/native.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/quan/zone_main.html"
+				],
 				"priority": 0
 			},
 			"html/quan/leave.html": {
@@ -2338,7 +2340,9 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/mui.previewimage.js",
+					"js/mui.zoom.js"
 				],
 				"refer": [],
 				"priority": 0

@@ -23,8 +23,8 @@ mui.plusReady(function() {
 			console.log("User pressed: " + e.index);
 			if(e.index > 0) {
 				postSex(e.index, function(data) { //回调函数
-					pInfo.usex=e.index;
-					myStorage.setItem(storageKeyName.PERSONALINFO,pInfo);
+					pInfo.usex = e.index;
+					myStorage.setItem(storageKeyName.PERSONALINFO, pInfo);
 					if(e.index == 1) {
 						usex.innerText = '男';
 					} else {
@@ -57,7 +57,7 @@ mui.plusReady(function() {
 
 	//监听事件 传值 打开新页面
 	mui('.mui-table-view').on('tap', '.open-newPage', function() {
-		if(!(parseInt(this.getAttribute('pos'))==10&&pInfo.uname&&pInfo.uname!=null)){
+		if(!(parseInt(this.getAttribute('pos')) == 10 && pInfo.uname && pInfo.uname != null)) {
 			events.openNewWindowWithData('edit-info.html', parseInt(this.getAttribute('pos')));
 		}
 	});
@@ -73,6 +73,9 @@ mui.plusReady(function() {
 		id: window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid, //utid
 		//name: data.studentName //资料名称
 	}, function(successCB) {
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING, {
+			back: 'none'
+		});
 		console.log('上传并修改个人头像，成功的回调' + JSON.stringify(successCB));
 		mui.toast('个人头像成功');
 		setTimeout(function() {
@@ -83,7 +86,8 @@ mui.plusReady(function() {
 			events.fireToPageNone('../index/index.html', 'infoChanged');
 			events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
 			events.fireToPageNone('classSpace-sub.html', 'infoChanged');
-			events.fireToPageNone('../cloud/cloud_home.html', 'personChanged');
+			//events.fireToPageNone('../cloud/cloud_home.html', 'personChanged');
+			wd.close();
 		}, 2000);
 	}, function(errorCB) {
 		console.log('上传并修改个人头像，失败的回调' + JSON.stringify(errorCB));
@@ -118,7 +122,7 @@ var changeInfo = function(pInfo) {
 	var unick = document.getElementById('nick');
 	var utxt = document.getElementById('txt');
 	var uemail = document.getElementById('email');
-		var uname=document.getElementById('uname');
+	var uname = document.getElementById('uname');
 	var usex = document.getElementById('sex');
 	uimg.src = pInfo.uimg ? pInfo.uimg : "../../image/utils/default_personalimage.png";
 
@@ -130,9 +134,9 @@ var changeInfo = function(pInfo) {
 	}
 	if(pInfo.usex == 0) {
 		usex.innerText = '未定';
-	} else if(pInfo.usex == 1){
+	} else if(pInfo.usex == 1) {
 		usex.innerText = '男';
-	}else{
+	} else {
 		usex.innerText = '女';
 	}
 	if(pInfo.utxt) {
@@ -141,8 +145,8 @@ var changeInfo = function(pInfo) {
 	if(pInfo.uemail) {
 		uemail.innerText = pInfo.uemail;
 	}
-	if(pInfo.uname){
-		uname.innerText=pInfo.uname;
+	if(pInfo.uname) {
+		uname.innerText = pInfo.uname;
 	}
 
 }

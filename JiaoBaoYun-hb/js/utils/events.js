@@ -309,7 +309,12 @@ var events = (function(mod) {
 	mod.shortForDate = function(fullDate) {
 		var arrDate = fullDate.split(":");
 		arrDate.splice(arrDate.length - 1, 1);
-		return arrDate.join(':');
+		var noSecond= arrDate.join(':');
+		var arrSecond=noSecond.split('-');
+		if(new Date().getFullYear()==arrSecond[0]){
+			arrSecond.splice(0,1);
+		}
+		return arrSecond.join('-');
 	}
 	return mod;
 

@@ -193,7 +193,7 @@ function getStuList() {
 	//24.通过用户表ID获取用户关联的学生
 	postDataPro_PostUstu(comData, wd, function(data) {
 		wd.close();
-		//		console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 		if(data.RspCode == 0 || data.RspCode == 9 || data.RspCode == 7) { //9为查询记录为空
 			topStudentArr = data.RspData;
@@ -205,69 +205,39 @@ function getStuList() {
 			}
 			requestTimes3 = topStudentArr.length;
 			var StuDyArr = [];
-			console.log('topStudentArr===' + JSON.stringify(topStudentArr));
+			studentIds = [];
+			classIds = [];
 			for(var i = 0; i < topStudentArr.length; i++) {
-				getNotes(i, StuDyArr); //获取点到记事
+				studentIds.push(topStudentArr[i].stuid);
+				classIds.push(topStudentArr[i].gid);
 			}
+			studentIds = arrayToStr(studentIds);
+			classIds = arrayToStr(classIds);
+			getNotesByUserForMutiStudent(studentIds,classIds);
 		} else {
 			mui.toast(data.RspTxt);
 		}
 	});
 }
-/**
- * 获取用户针对某学生的点到记事列表
- * @param {Object} pageIndex 当前页数
- * @param {Object} pageSize 每页记录数
- */
-function getNotes(index, StuDyArr) {
-	//4.（点到记事）获取用户针对某学生的点到记事列表
+//获取学生资料列表
+function getNotesByUserForMutiStudent(studentIds,classIds){
 	//所需参数
-	var comData = {
-		userId: personalUTID, //用户ID----utid
-		studentId: topStudentArr[index].stuid, //学生ID----stuid
-		classId: topStudentArr[index].gid,
-		publisherId: '0',
-		pageIndex: '1', //当前页数
-		pageSize: '1' //每页记录数
-	};
-	//返回model：model_homeSchoolList,model_userNoteInfo
-	// 等待的对话框
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
-		console.log('某学生的点到记事列表_getNotesByUserForStudent:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		var comData = {
+			userId:personalUTID,//用户ID
+			studentIds:studentIds,//学生数组v
+			classIds:classIds
+		};
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	postDataPro_getNotesByUserForMutiStudent(comData, wd, function(data) {
+		wd.close();
+		console.log('获取多个学生的点到记事_getNotesByUserForMutiStudent:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+
 		if(data.RspCode == 0) {
-			var tempArr = data.RspData.Data;
-			var today = new Date();
-			var month = today.getMonth() + 1
-			var currentDate = today.getFullYear() + "-" + month + "-" + today.getDate()
-			if(tempArr.length == 0) { //数据为空时 添加默认数据
-				var temp = {
-					index: index, //排序索引
-					MsgContent: '暂无学生动态',
-					PublishDate: '',
-					NoReadCnt: 0
-				}
-				StuDyArr.push(temp);
-			} else { //取班级空间的第一条数据
-				tempArr[0].index = index; //排序索引
-				tempArr[0].NoReadCnt = data.RspData.NoReadCnt;
-				var dateArr = tempArr[0].PublishDate.split(' ');
-				tempArr[0].PublishDate = dateArr[0];
-				StuDyArr.push(tempArr[0]);
-			}
-			requestTimes3--;
-			if(requestTimes3 == 0) { //循环请求班级空间完毕
-				//排序
-				StuDyArr.sort(function(a, b) {
-					return a.index - b.index
-				})
-				console.log('tempArr===' + JSON.stringify(tempArr));
+				var StuDyArr = data.RspData.Data;
 				//				顶部列表添加cell
 				var ul = document.getElementById('top-list');
 				ul.innerHTML = '';
-				console.log(JSON.stringify(StuDyArr));
-				for(var i = 0; i < topStudentArr.length; i++) {
-					console.log(JSON.stringify(StuDyArr[i]))
+				for(var i = 0; i < StuDyArr.length; i++) {
 					var li = document.createElement('li');
 					li.id = 'studentsdynamic' + i;
 					li.className = 'mui-table-view-cell mui-media studentsdynamic';
@@ -277,6 +247,13 @@ function getNotes(index, StuDyArr) {
 					} else {
 						noReadHTML = '';
 					}
+					if(StuDyArr[i].PublishDate != '') {
+					var dateArr = StuDyArr[i].PublishDate.split(' ');
+					StuDyArr[i].PublishDate = dateArr[0];
+				}
+				if(StuDyArr[i].MsgContent == '') {
+					StuDyArr[i].MsgContent = '暂无学生动态'
+				}
 					li.innerHTML = '<img id = "stuImg"  class="mui-media-object mui-pull-left dynamic-personal-image " src="' + updateHeadImg(topStudentArr[i].stuimg, 2) + '">' + noReadHTML +
 						'<p class="time">' + StuDyArr[i].PublishDate +
 						'</p>' +
@@ -284,17 +261,16 @@ function getNotes(index, StuDyArr) {
 						topStudentArr[i].stuname + '[' + topStudentArr[i].gname + ']' +
 						'<p class="mui-ellipsis">' + StuDyArr[i].MsgContent + '</p></div>';
 					ul.appendChild(li);
-					//					console.log(li.outerHTML)
 				}
 				getGroupList();
-
-			}
 
 		} else {
 			mui.toast('获取点到记事列表:' + data.RspTxt);
 		}
 		wd.close();
-	});
+	
+		
+	})
 }
 //获取所有的群
 function getGroupList() {
@@ -308,8 +284,7 @@ function getGroupList() {
 	//	获取用户群
 	postDataPro_PostGList(comData, wd, function(data) {
 		wd.close();
-		//		console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-
+		console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			showBlankPage(false);
 			datasource = data.RspData; //底部列表数据
@@ -353,7 +328,7 @@ function getGroupList() {
 	});
 
 }
-
+//获取班级空间列表
 function getClassSpacesByUserForMutiClass(classIds) {
 	var comData = {
 		userId: personalUTID, //用户ID
@@ -363,12 +338,11 @@ function getClassSpacesByUserForMutiClass(classIds) {
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataPro_getClassSpacesByUserForMutiClass(comData, wd, function(data) {
 		wd.close();
-		console.log('postDataPro_getClassSpacesByUserForMutiClass:{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
+		console.log('获取多个班级空间列表_getClassSpacesByUserForMutiClass:{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
 		if(data.RspCode == 0) {
 			topArray = data.RspData.Data;
 			//				顶部列表添加cell
 			var ul = document.getElementById('top-list');
-			console.log('班级空间数据列表topArray====' + JSON.stringify(topArray))
 			for(var i = 0; i < topArray.length; i++) {
 				var li = document.createElement('li');
 				li.id = 'tarClass' + i;
@@ -397,77 +371,6 @@ function getClassSpacesByUserForMutiClass(classIds) {
 
 		} else {
 
-		}
-	})
-}
-//获取顶部列表
-function getTopList(index) {
-
-	var comData = {
-		userId: personalUTID, //用户ID----utid
-		classId: datasource[index].gid, //班级ID----cid
-		pageIndex: '1', //当前页数
-		pageSize: '1' //每页记录数
-	};
-	// 等待的对话框
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	//	16.（班级空间）获取用户针对某班级的空间列表
-	postDataPro_getClassSpacesByUserForClass(comData, wd, function(data) {
-		wd.close();
-		//		console.log('某班级的空间列表_getClassSpacesByUserForClass{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
-		if(data.RspCode == 0) {
-			if(data.RspData.Data.length == 0) { //数据为空时 添加默认数据
-				var today = new Date();
-				var month = today.getMonth() + 1
-				var currentDate = today.getFullYear() + "-" + month + "-" + today.getDate() //+ "  " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
-				var temp = {
-					index: index, //排序索引
-					MsgContent: '暂无动态',
-					PublishDate: '',
-					NoReadCnt: 0
-				}
-				topArray.push(temp);
-			} else { //取班级空间的第一条数据
-				var tempModel = data.RspData.Data[0];
-				tempModel.index = index; //排序索引
-				var dateArr = tempModel.PublishDate.split(' ');
-				tempModel.PublishDate = dateArr[0];
-
-				tempModel.NoReadCnt = data.RspData.NoReadCnt;
-				topArray.push(tempModel);
-			}
-
-			requestTimes--;
-			if(requestTimes == 0) { //循环请求班级空间完毕
-				//排序
-				topArray.sort(function(a, b) {
-						return a.index - b.index
-					})
-					//				顶部列表添加cell
-				var ul = document.getElementById('top-list');
-				console.log('topArray====' + JSON.stringify(topArray))
-				for(var i = 0; i < topArray.length; i++) {
-					var li = document.createElement('li');
-					li.id = 'tarClass' + i;
-					li.className = 'mui-table-view-cell mui-media tarClass';
-					var noReadHTML;
-					if(topArray[i].NoReadCnt != 0) {
-						noReadHTML = '<span style="float: left;" ><span  class="mui-badge mui-badge-danger custom-badge2">' + topArray[i].NoReadCnt + '</span></span>';
-					} else {
-						noReadHTML = '';
-					}
-					topArray[i].MsgContent = topArray[i].MsgContent.replace(new RegExp(/(<br \/>)/g), '\n')
-					li.innerHTML = '<img class="mui-media-object mui-pull-left dynamic-personal-image " src="' + datasource[i].gimg + '">' + noReadHTML + '<p class="time">' + topArray[i].PublishDate +
-						'</p>' +
-						'<div class="mui-media-body">' +
-						datasource[i].gname +
-						'<p class="mui-ellipsis">' + topArray[i].MsgContent + '</p></div>';
-					ul.appendChild(li);
-				}
-			}
-
-		} else {
-			mui.toast(data.RspTxt);
 		}
 	})
 }
@@ -610,7 +513,7 @@ function getUserSpaces(upString, index) {
 				};
 				postDataPro_PostUmk(postData, wd, function(data) {
 					wd.close();
-					console.log('获取多用户备注_postDataPro_PostUmk:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					console.log('获取多用户备注_PostUmk:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						console.log('底部列表全部数据' + JSON.stringify(datasource));
 						for(var i = 0; i < datasource.length; i++) {

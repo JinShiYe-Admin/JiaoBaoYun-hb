@@ -155,9 +155,12 @@ var dynamiclistitem = (function($, mod) {
 		html = html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8;
 		if(praiseList.length>0){
 			var praiseListStr =  praiseList.join('、');
-			var html3 = '<img src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />'+'<font class="common-font-family-Regular dynamic-praise-name praiseName">' + praiseListStr+'</font>';
+			var html3 = '<img id = "praiseImg" src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />'+'<font class="common-font-family-Regular dynamic-praise-name praiseName">' + praiseListStr+'</font>';
 			htmlPraiseList = htmlPraiseList +html3+ '</div></div>';
+		}else{
+			htmlPraiseList= htmlPraiseList+'</div></div>';
 		}
+		
 
 //		//点赞列表
 //		$.each(praiseList, function(index, element) {

@@ -199,7 +199,7 @@ var setPic = function(picPath, img) {
 		var div = document.createElement('div');
 		div.imgId = img.FileId;
 		div.className = 'img-div';
-		div.innerHTML = '<img src="' + camera.getAbsolutePath(picPath) + '" data-preview-src="" data-preview-group="1"/>' +
+		div.innerHTML = '<img src="' +storageKeyName.MAINHOMEWORKURL+img.ThumbUrl + '" data-preview-src="'+storageKeyName.MAINHOMEWORKURL+img.Url+'" data-preview-group="1"/>' +
 			'<a class="mui-icon iconfont icon-guanbi"></a>'
 		pictures.appendChild(div);
 	}

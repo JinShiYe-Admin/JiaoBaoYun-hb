@@ -35,11 +35,12 @@
 		mui.plusReady(function() {
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 			var data = plus.webview.currentWebview().data;
+			var NoReadCnt = plus.webview.currentWebview().NoReadCnt //未读条数
 			console.log('我的空间获取的数据' + data)
 			if(data ==personalUTID ){
 				document.getElementById('pub-dynamic').style.visibility = 'visible';
 			}
-			events.initSubPage('zonep_sub.html', data);
+			events.initSubPage('zonep_sub.html', {data:data,NoReadCnt:NoReadCnt});
 			//			var tempview =  plus.webview.getWebviewById('zonep_sub.html');
 			events.addTap('leave', function() {
 				events.openNewWindowWithData('../quan/leave.html', data);
