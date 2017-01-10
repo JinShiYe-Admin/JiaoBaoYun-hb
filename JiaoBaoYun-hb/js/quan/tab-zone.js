@@ -317,7 +317,7 @@ function getGroupList() {
 			}
 			gids = arrayToStr(gids);
 			getClassSpacesByUserForMutiClass(gids);
-			getAllClassMember(gids)
+//			getAllClassMember(gids)
 		} else if(data.RspCode == 9) { //没有群
 			console.log('显示空白页')
 			showBlankPage(true); //显示空白页
@@ -399,7 +399,15 @@ function getClassSpacesByUserForMutiClass(classIds) {
 		wd.close();
 		console.log('获取多个班级空间列表_getClassSpacesByUserForMutiClass:{:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + '}');
 		if(data.RspCode == 0) {
-			topArray = data.RspData.Data;
+			topArray =[] ;
+			var tempArr = data.RspData.Data;
+			for(var i=0;i<datasource.length;i++){
+				for(var j=0;j<tempArr.length;j++){
+					if(tempArr[j].ClassId == datasource[i].gid){
+						topArray.push(tempArr[j]);
+					}
+				}
+			}
 			//				顶部列表添加cell
 			var ul = document.getElementById('top-list');
 			for(var i = 0; i < topArray.length; i++) {
