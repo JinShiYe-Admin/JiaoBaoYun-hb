@@ -186,8 +186,11 @@
 						</div>
 					</div>
 				</div>
-				<div id="all_mem">
-
+				<div id="scrollwrapper" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div id="all_mem">
+						</div>
+					</div>
 				</div>
 				<!--<div id="bot_1002班" data-value="1002班" class="bot" style="display: none;">
 				<div class="mui-scroll-wrapper" style="background: white;top: 135px;">
@@ -223,7 +226,7 @@
 					var controladd = document.getElementById("controladd"); //群名称显示栏添加群按钮前一个item
 					document.querySelector(".mui-content").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 5) + 'px';
 					document.querySelector(".keep-line-blue").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 50) + 'px';
-					//document.querySelector(".keep-line-white").style.top = (localStorage.getItem('StatusHeightNo') * 1) + 'px';
+					document.querySelector("#scrollwrapper").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 130) + 'px';
 
 					mui(".mui-scroll-wrapper").scroll({
 						scrollY: true, //是否竖向滚动
@@ -240,14 +243,19 @@
 
 					//切换显示选中的群
 					mui('#qunlist').on('tap', 'a', function() {
-						console.log('qunlist：' + this.getAttribute('data-value'));
+						console.log('qunlist-id:' + this.getAttribute('data-value') + '|name:' + this.getAttribute('data-qname'));
 						showQun(this.getAttribute('data-value'));
+						mui('.mui-scroll-wrapper').each(function(index, element) {
+							console.log('index:' + index + '|element:' + element.getAttribute('id'));
+						});
+						mui('#scrollwrapper').scroll().scrollTo(0, 0, 100); //100毫秒滚动到顶
 					});
 
 					//切换显示选中的成员类型
 					mui('#type').on('tap', 'a', function() {
 						console.log('type：' + this.getAttribute('id'));
 						showType(this.getAttribute('id'));
+						mui('#scrollwrapper').scroll().scrollTo(0, 0, 100); //100毫秒滚动到顶
 					});
 
 					//点击资料
@@ -483,6 +491,7 @@
 							a.style.marginLeft = '10px';
 						}
 						a.setAttribute('data-value', qun.gid);
+						a.setAttribute('data-qname', qun.gname);
 						qunlist.insertBefore(a, controladd);
 						if(qunList[0].gid == qun.gid) {
 							addBot(qun, type);
@@ -502,11 +511,8 @@
 						div.className = 'bot';
 						div.setAttribute('data-value', qun.gid);
 						div.style.display = "inline";
-						var html1 = '<div class="mui-scroll-wrapper" style="background: white;top: ' + (localStorage.getItem('StatusHeightNo') * 1 + 135) + 'px;">\
-										<div class="mui-scroll">\
-											<ul class="mui-table-view">\
-												<div class="mui-row" style="margin-top: 8px;">';
-
+						var html1 = '<ul class="mui-table-view">\
+										<div class="mui-row" style="margin-top: 8px;">';
 						//添加资料
 						var html2 = '<li id="addData_' + memberType + '_' + qun.gid + '" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3 ">\
 							   		<div class="keep-box-shadow-border keep-member2 addmember" data-gid="' + qun.gid + '">\
@@ -516,7 +522,7 @@
 							html2 = '<li id="addData_' + memberType + '_' + qun.gid + '" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3 ">\
 							   	   </li>';
 						}
-						var html3 = '</div></ul></div></div>';
+						var html3 = '</div></ul>';
 						div.innerHTML = html1 + html2 + html3;
 						document.getElementById("all_mem").appendChild(div);
 						//document.body.querySelector('.mui-content').appendChild(div);
