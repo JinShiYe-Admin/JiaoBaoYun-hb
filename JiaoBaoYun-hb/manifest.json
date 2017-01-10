@@ -1125,7 +1125,8 @@
 					"js/utils/files.js",
 					"image/homework/xiangji.png",
 					"image/homework/temWork-teaHint.png",
-					"image/homework/temWork-stuHint.png"
+					"image/homework/temWork-stuHint.png",
+					"css/utils/preview.css"
 				],
 				"refer": [
 					"html/homework/homework-commented.html"
@@ -1464,7 +1465,9 @@
 					"js/cloud/cloud.js",
 					"js/utils/CloudFileUtil.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"image/cloud/A_folder.png"
+					"image/cloud/A_folder.png",
+					"js/mui.lazyload.js",
+					"js/mui.lazyload.img.js"
 				],
 				"refer": [],
 				"priority": 0
