@@ -1822,7 +1822,8 @@
 					"css/mui.min.css",
 					"image/utils/default_personalimage.png",
 					"css/mine/apply.css",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"html/mine/apply-group.html"
 				],
 				"refer": [],
 				"priority": 0

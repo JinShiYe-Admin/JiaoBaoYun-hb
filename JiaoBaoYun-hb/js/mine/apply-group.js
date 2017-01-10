@@ -7,58 +7,63 @@ mui.init()
 mui('.mui-scroll-wrapper').scroll({
 	indicators: true, //是否显示滚动条
 })
-var list = document.getElementById('groups-container');
+var list;
 var myGroups = []; //我现所在群信息
 var groupRoles = []; //群角色
 var choseGroupId; //选中申请的群Id
 mui.plusReady(function() {
-		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-		getAllGroups(personalUTID, manageMyGroups);
-		var search_group = document.getElementById('search-group');
-		getChecked();
-		search_group.addEventListener('search', function() {
-			var secondSearch = null;
-			if(!firstSearch) {
-				firstSearch = new Date().getTime();
-			} else {
-				secondSearch = new Date().getTime();
-			}
-			setTimeout(function() {
-				firstSearch = null;
-			}, 2000);
-			console.log('search监听开始')
-			if(secondSearch) {
-				mui.toast('请求太频繁，请稍后！')
-			} else {
-				var searchType = 'mb'; //搜索数据类型
-				if(search_group.value.length != 11 || isNaN(search_group.value)) {
-					searchType = 'nm'; //通过用户名搜索账号
-				} else {
-					searchType = 'mb'; //通过手机号搜索账号
-				}
-				//清空子数据
-				clearChildren();
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				postDataPro_PostUList({
-					vvl: search_group.value,
-					vtp: searchType //通过
-				}, wd, function(data) {
-					wd.close();
-					console.log('通过手机号获取个人信息：' + JSON.stringify(data));
-					if(data.RspCode == '0000') {
-						getAllGroups(data.RspData[0].utid, setData);
-					} else if(data.RspCode == 9999) {
-						mui.toast('您搜索用户无群组！');
-					} else {
-						mui.toast(data.RspTxt);
-					}
-				})
-			}
-
-		})
-		setListListener();
-		setButtonsListener();
+	list = document.getElementById('groups-container');
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+	getAllGroups(personalUTID, manageMyGroups);
+	var search_group = document.getElementById('search-group');
+	getChecked();
+	search_group.addEventListener('search', function() {
+		searchGroup();
 	})
+	setListListener();
+	setButtonsListener();
+});
+var searchGroup = function() {
+		var search_group = document.getElementById('search-group');
+		var secondSearch = null;
+		if(!firstSearch) {
+			firstSearch = new Date().getTime();
+		} else {
+			secondSearch = new Date().getTime();
+		}
+		setTimeout(function() {
+			firstSearch = null;
+		}, 2000);
+		console.log('search监听开始')
+		if(secondSearch) {
+			mui.toast('请求太频繁，请稍后！')
+		} else {
+			var searchType = 'mb'; //搜索数据类型
+			if(search_group.value.length != 11 || isNaN(search_group.value)) {
+				searchType = 'nm'; //通过用户名搜索账号
+			} else {
+				searchType = 'mb'; //通过手机号搜索账号
+			}
+			//清空子数据
+			events.clearChild(list);
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_PostUList({
+				vvl: search_group.value,
+				vtp: searchType //通过
+			}, wd, function(data) {
+				wd.close();
+				console.log('通过手机号获取个人信息：' + JSON.stringify(data));
+				if(data.RspCode == '0000') {
+					getAllGroups(data.RspData[0].utid, setData);
+				} else if(data.RspCode == 9999) {
+					mui.toast('您搜索用户无群组！');
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			})
+		}
+
+	}
 	/**
 	 * 成功返回数据后的回调函数
 	 * 页面加载数据
@@ -82,13 +87,14 @@ var setListListener = function() {
 		mui('.mui-table-view').on('tap', '.apply-group', function() {
 			choseGroupId = parseInt(this.getAttribute('gid'));
 			document.querySelector('#search-group').blur();
-			console.log('选中的申请的群id：' + choseGroupId); 
+			console.log('选中的申请的群id：' + choseGroupId);
 		})
 	}
 	/**
 	 * 设置弹出框的监听事件
 	 */
 var setButtonsListener = function() {
+		document.getElementById('search-btn').addEventListener('tap',searchGroup)
 		//确定按钮
 		var btn_sure = document.getElementById('btn-sure');
 		//取消按钮
@@ -105,7 +111,7 @@ var setButtonsListener = function() {
 					urel: ''
 				}, wd, function(data) {
 					wd.close();
-					console.log('申请入群获取的数据：'+JSON.stringify(data));
+					console.log('申请入群获取的数据：' + JSON.stringify(data));
 					if(data.RspCode == '0000') {
 						mui.toast('申请成功！');
 						events.fireToPageNone('/html/mine/apply-record.html', 'applied')
@@ -160,11 +166,11 @@ var getGimg = function(cell) {
 	/**
 	 * 清空子元素
 	 */
-var clearChildren = function() {
-		while(list.firstElementChild) {
-			list.removeChild(list.firstElementChild);
-		}
-	}
+//var clearChildren = function() {
+//		while(list.firstElementChild) {
+//			list.removeChild(list.firstElementChild);
+//		}
+//	}
 	/**
 	 * 获取用户创建的群
 	 * @param {Object} utid
