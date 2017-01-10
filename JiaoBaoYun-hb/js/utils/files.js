@@ -78,14 +78,14 @@ var files = (function(mod) {
 		console.log('img.width:'+img.width+",img.height:"+img.height);
 		// calculate the width and height, constraining the proportions 
 		if(width > height) {
-			if(width > 100) {
-				height = Math.round(height *= 100 / width);
-				width = 100;
+			if(width > 500) {
+				height = Math.round(height *= 500 / width);
+				width = 500;
 			}
 		} else {
-			if(height > 100) {
-				width = Math.round(width *= 100 / height);
-				height = 100;
+			if(height > 500) {
+				width = Math.round(width *= 500 / height);
+				height = 500;
 			}
 		}
 		canvas.width = width; /*设置新的图片的宽度*/
