@@ -483,14 +483,16 @@
 							a.style.color = 'rgb(0, 165, 224)'
 							mui.toast('点赞成功');
 							var PraiseList = document.getElementById("PraiseList"+index);
+							console.log(PraiseList.innerHTML);
 							var praiseNameList =  PraiseList.getElementsByTagName("font");
+							console.log(praiseNameList.length)
 							if(praiseNameList.length>0){
 								var praiseName = praiseNameList[0];
 								praiseName.innerHTML = praiseName.innerHTML+'、'+personalunick;
 								console.log(praiseName.innerHTML);
 							}else{
 								
-								PraiseList.innerHTML = '<img src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />'+
+								PraiseList.innerHTML = '<img id= "praiseImg" src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />'+
 				 '<font class="common-font-family-Regular dynamic-praise-name">' + personalunick + '</font>';
 							}
 						} else {
@@ -523,6 +525,9 @@
 								
 								console.log(PraiseList.outerHTML);
 								PraiseList.removeChild(praiseName);
+								var praiseImg = document.getElementById("praiseImg");
+								PraiseList.removeChild(praiseImg);
+								
 							}
 						} else {
 							mui.toast(data.RspTxt);
