@@ -82,7 +82,7 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<p class="mui-title common-color-white" style="text-align: left;">邀请群成员</p>
 		</header>
-		<div class="mui-content"style="margin-left: 5px;">
+		<div class="mui-content" style="margin-left: 5px;">
 
 			<div class="mui-input-row mui-search" style="width: 75%;position: absolute;">
 				<input id="input_search" style="" type="search" class="mui-input-clear mui-pull-left" placeholder="请输入账号或手机号">
@@ -105,25 +105,25 @@
 
 							</font>
 							<!--<div>
-									<form class="mui-input-group" style="position:absolute;width: 23%;right:23%;background: transparent;top: 24px;">
-										<div class="mui-input-row mui-checkbox">
-											<label style="padding:11px 0px;">老师</label>
-											<input style="right: 20%;" name="checkbox1" value="teacher" type="checkbox">
-										</div>
+								<form class="mui-input-group" style="position:absolute;width: 23%;right:23%;background: transparent;top: 24px;">
+									<div class="mui-input-row mui-checkbox">
+										<label style="padding:11px 0px;">老师</label>
+										<input style="right: 20%;" name="checkbox1" value="teacher" type="checkbox">
+									</div>
 
-									</form>
-									<form class="mui-input-group" style="position:absolute;width: 23%;right:0px;background: transparent;top: 24px;">
-										<div class="mui-input-row mui-checkbox">
-											<label style="padding:11px 0px;">家长</label>
-											<input style="right: 20%;" name="checkbox1" value="parents" type="checkbox" checked>
-										</div>
-									</form>
-								</div>-->
+								</form>
+								<form class="mui-input-group" style="position:absolute;width: 23%;right:0px;background: transparent;top: 24px;">
+									<div class="mui-input-row mui-checkbox">
+										<label style="padding:11px 0px;">家长</label>
+										<input style="right: 20%;" name="checkbox1" value="parents" type="checkbox" checked>
+									</div>
+								</form>
+							</div>-->
 						</div>
 					</li>
 					<div>请选择现有成员资料</div>
 				</ul>
-				<div class="mui-scroll-wrapper" style="margin-top: 210px;">
+				<div id="sw_data" class="mui-scroll-wrapper">
 					<div class="mui-scroll">
 						<ul class="mui-table-view">
 							<div id="row_data" class="mui-row">
@@ -165,6 +165,7 @@
 			mui.init();
 			mui.plusReady(function() {
 				document.querySelector(".mui-content").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 5) + 'px';
+				document.getElementById("sw_data").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 210) + 'px';
 				var dataList = []; //记录获取的资料
 				var chooseInfo = '0'; //记录选择的资料
 				var chooseInfoElementId = ''; //记录选择的资料元素Id
