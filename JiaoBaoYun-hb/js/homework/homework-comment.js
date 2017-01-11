@@ -250,7 +250,7 @@ var commentAnswer = function(commentValue) {
 			wd.close();
 			console.log('老师评价页面获取的老师评论临时作业的结果：' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
-				events.fireToPageNone(plus.webview.currentWebview().opener(),'workCommented')
+				events.fireToPageNone('workdetailTea-temSub.html','workCommented')
 				mui.toast('评论成功！');
 				mui.back();
 			} else {
