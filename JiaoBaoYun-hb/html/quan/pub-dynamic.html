@@ -9,15 +9,7 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/quan/class_space.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
-		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/utils/camera.js"></script>
-		<script src="../../js/utils/files.js"></script>
-		<script src="../../js/utils/ASFiles.js"></script>
-		<script src="../../js/publicProtocol.js"></script>
-		<script>
-			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
-		</script>
+
 	</head>
 
 	<body>
@@ -29,77 +21,95 @@
 		<div class="mui-content">
 			<div class="input-content">
 				<textarea id="input-content" placeholder="请输入内容"></textarea>
-				<!--<div id="take_pic" class="take_pic">
+				<div id="take_pic" class="take_pic">
 					<a class="mui-icon iconfont icon-xiangji"></a>
 				</div>
-				<div id="add_file" class="add_file">
-					<a class="mui-icon iconfont icon-jia"></a>
-				</div>-->
+				<div id="take_camero" class="take_camero">
+					<a class="mui-icon iconfont icon-shipin"></a>
+				</div>
+				<div id="get_gallery" class="get_gallery">
+					<a class="mui-icon iconfont icon-xiangce"></a>
+				</div>
 			</div>
 		</div>
 	</body>
-
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/utils/events.js"></script>
+	<script src="../../js/utils/camera.js"></script>
+	<script src="../../js/utils/files.js"></script>
+	<script src="../../js/utils/ASFiles.js"></script>
+	<script src="../../js/publicProtocol.js"></script>
+	<script>
+	</script>
 	<script type="text/javascript">
 		mui.init()
 	</script>
 	<script>
 		mui.plusReady(function() {
-			//			var groupInfo;
-			//			//界面监听传值
-			//			window.addEventListener('postGroupInfo', function(e) {
-			//
-			//				groupInfo = e.detail.data;
-			//				console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
-			//			});
-			var title = document.getElementById('title');
-			title.innerText = userInfo.unick;
-			//			events.addTap('take_pic', function() {
-			//				camera.getPic(camera.getCamera());
-			//			})
-			//			events.addTap('add_file', function() {
-			//					asFiles.openASFiles()
-			//				})
-			//发布按钮
-			events.addTap('publish', function() {
-				var textView = document.getElementById('input-content');
-				var tempText =  Trim(textView.value);
-				console.log('textView.value===' + tempText)
-				if(!tempText || tempText == '') {
-					mui.toast('请输入内容');
-					return;
-				}else if(tempText.length>2000){
-					mui.toast('不能超过2000字');
-					return;
-				}
-				else{
-					tempText = replaceAllBL(tempText)
-				}
-				var postData = {
-					userId: userInfo.utid,
-					msgContent: tempText,
-					noteType: '2',
-					encType: '0',
-					encAddr: '',
-					encImg: '',
-					encIntro: ''
-				}
-				console.log(JSON.stringify(postData));
-				var flag = plus.webview.currentWebview().data; 
-				console.log('flag='+flag)
-				var main = plus.webview.getWebviewById('../quan/tab-zone.html');
-				mui.fire(main, 'addUserSpaceForMutiUsers', {
-					postData: postData
-				});
-				textView.value='';
-				mui.back();
+				var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
+				//			var groupInfo;
+				//			//界面监听传值
+				//			window.addEventListener('postGroupInfo', function(e) {
+				//
+				//				groupInfo = e.detail.data;
+				//				console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
+				//			});
+				var title = document.getElementById('title');
+				title.innerText = userInfo.unick;
+				events.addTap('take_pic', function() {
+					camera.getPic(camera.getCamera(),function(path){
 				
+					});
+				});
+				events.addTap('add_file', function() {
+					camera.getVideo(camera.getCamera(),function(path){
+						
+					});
+				});
+				events.addTap('get_gallary', function() {
+					gallery.getMultiplePic(function(paths){
+						
+					});
+				});
+				//发布按钮
+				events.addTap('publish', function() {
+					var textView = document.getElementById('input-content');
+					var tempText = Trim(textView.value);
+					console.log('textView.value===' + tempText)
+					if(!tempText || tempText == '') {
+						mui.toast('请输入内容');
+						return;
+					} else if(tempText.length > 2000) {
+						mui.toast('不能超过2000字');
+						return;
+					} else {
+						tempText = replaceAllBL(tempText)
+					}
+					var postData = {
+						userId: userInfo.utid,
+						msgContent: tempText,
+						noteType: '2',
+						encType: '0',
+						encAddr: '',
+						encImg: '',
+						encIntro: ''
+					}
+					console.log(JSON.stringify(postData));
+					var flag = plus.webview.currentWebview().data;
+					console.log('flag=' + flag)
+					var main = plus.webview.getWebviewById('../quan/tab-zone.html');
+					mui.fire(main, 'addUserSpaceForMutiUsers', {
+						postData: postData
+					});
+					textView.value = '';
+					mui.back();
+
+				})
 			})
-		})
-		//去除前后空格
-	 function Trim(str)
-     { 
-             return str.replace(/(^\s*)|(\s*$)/g, ""); 
-     }
+			//去除前后空格
+		function Trim(str) {
+			return str.replace(/(^\s*)|(\s*$)/g, "");
+		}
 	</script>
 
 </html>

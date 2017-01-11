@@ -65,3 +65,20 @@ a>p {
 .apply-message{
 	margin-right: 28px;
 }
+.search-input{
+	max-width: 80%;
+}
+.search-form{
+	padding:.5rem .5rem;
+}
+.search-btn{
+	height: 33px;
+}
+.mui-search .mui-placeholder {
+	text-align: left;
+	padding-left: .5rem;
+	font-size: 1.5rem;
+}
+.mui-input-row .mui-input-clear~.mui-icon-clear{
+	right: 20%;
+}

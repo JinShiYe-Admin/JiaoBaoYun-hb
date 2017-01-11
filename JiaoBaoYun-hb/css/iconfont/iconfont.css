@@ -35,6 +35,8 @@
 
 .icon-newmessage:before { content: "\e731"; }
 
+.icon-xiaoxi:before { content: "\e64d"; }
+
 .icon-shezhi:before { content: "\e606"; }
 
 .icon-yunpan1:before { content: "\e694"; }
@@ -75,7 +77,7 @@
 
 .icon-xie1:before { content: "\e608"; }
 
-.icon-qunziliao:before { content: "\e615"; }
+.icon-qunziliao2:before { content: "\e615"; }
 
 .icon-upload:before { content: "\e632"; }
 
@@ -164,3 +166,7 @@
 .icon-xiangji1:before { content: "\e624"; }
 
 .icon-xiangce:before { content: "\e908"; }
+
+.icon-wenda-copy:before { content: "\e909"; }
+
+.icon-qunziliao:before { content: "\e626"; }
