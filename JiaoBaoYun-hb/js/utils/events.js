@@ -316,6 +316,13 @@ var events = (function(mod) {
 		}
 		return arrSecond.join('-');
 	}
+	mod.blurBack=function(blurItemId){
+		var oldBack=mui.back;
+		mui.back=function(){
+			document.getElementById(blurItemId).blur();
+			oldBack();
+		}
+	}
 	return mod;
 
 })(events || {});

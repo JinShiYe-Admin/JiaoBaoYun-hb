@@ -15,13 +15,14 @@ mui.plusReady(function() {
 	list = document.getElementById('groups-container');
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 	getAllGroups(personalUTID, manageMyGroups);
-	var search_group = document.getElementById('search-group');
+//	var search_group = document.getElementById('search-group');
 	getChecked();
 	search_group.addEventListener('search', function() {
 		searchGroup();
 	})
 	setListListener();
 	setButtonsListener();
+	events.blurBack('search-group');
 });
 var searchGroup = function() {
 		var search_group = document.getElementById('search-group');
