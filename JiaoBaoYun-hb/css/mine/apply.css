@@ -77,6 +77,7 @@ a>p {
 .mui-search .mui-placeholder {
 	text-align: left;
 	padding-left: .5rem;
+	font-size: 1.5rem;
 }
 .mui-input-row .mui-input-clear~.mui-icon-clear{
 	right: 20%;
