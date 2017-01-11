@@ -15,7 +15,7 @@
 	right: 0;
 }
 .img-container{
-	min-height: 300px;
+	min-height: 200px;
 }
 
 p img {
@@ -52,12 +52,12 @@ p img {
 }
 .pAnswer-pic{
 	position: fixed;
+	bottom: 4rem;
+	left: 35%;
 	width: 30%;
 	padding: 5%;
 	border: solid #cae4ec 2px;
 	border-radius: 50%;
-	left: 35%;
-	margin-top: 2rem;
 	background-color: white;
 }
 .receive-teachers:last-of-type,.publish-subjects:last-of-type{

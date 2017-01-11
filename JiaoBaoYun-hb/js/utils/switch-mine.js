@@ -41,7 +41,7 @@
 	Toggle.prototype.init = function() {
 		this.toggleWidth = this.element.offsetWidth;
 		this.handleWidth = this.handle.offsetWidth;
-		this.handleX = this.toggleWidth - this.handleWidth - 3;
+		this.handleX = this.toggleWidth - this.handleWidth - 1;
 	};
 	Toggle.prototype.initEvent = function() {
 		this.element.addEventListener($.EVENT_START, this);

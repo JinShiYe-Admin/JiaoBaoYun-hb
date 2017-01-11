@@ -12,38 +12,41 @@
 		<link href="../../css/quan/class_space.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 	</head>
-	
+
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">班级动态</h1>
-		    <a id="publish" class="mui-pull-right">发布</a>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">班级动态</h1>
+			<a id="publish" class="mui-pull-right">发布</a>
 		</header>
 		<div class="mui-content">
-			<div  class="input-content">
+			<div class="input-content">
 				<textarea id="input-content" placeholder="请输入内容" value=""></textarea>
 				<!--一期暂时不插入图片-->
-			    <div id="take_pic" class="take_pic display-none">
-				    <a class="mui-icon iconfont icon-xiangji"></a>
-			    </div>
-			    <!--<div id="add_file" class="add_file">
-			    	<a class="mui-icon iconfont icon-jia"></a>
-			    </div>-->
+				<div id="take_pic" class="take_pic">
+					<a class="mui-icon iconfont icon-xiangji"></a>
+				</div>
+				<div id="take_camero" class="take_camero">
+					<a class="mui-icon iconfont icon-shipin"></a>
+				</div>
+				<div id="get_gallery" class="get_gallery">
+					<a class="mui-icon iconfont icon-xiangce"></a>
+				</div>
 			</div>
 		</div>
 	</body>
 	<script src="../../js/mui.min.js"></script>
-	
+
 	<script src="../../js/utils/events.js"></script>
 	<script src="../../js/utils/camera.js"></script>
-	<script src="../../js/utils/files.js"></script>
-	<script src="../../js/utils/ASFiles.js"></script>
+	<!--<script src="../../js/utils/files.js"></script>
+	<script src="../../js/utils/ASFiles.js"></script>-->
 	<script src="../../js/publicProtocol.js"></script>
 	<script type="text/javascript">
 		mui.init()
 	</script>
 	<script>
-		var personIds=[];
+		var personIds = [];
 		mui.plusReady(function() {
 			var groupInfo;
 			//界面监听传值
@@ -53,21 +56,30 @@
 				getGroupPersons(groupInfo.classId);
 			});
 			events.addTap('take_pic', function() {
-				camera.getPic(camera.getCamera());
-			})
-//			events.addTap('add_file', function() {
-//					asFiles.openASFiles()
-//				})
-				//发布按钮
+				camera.getPic(camera.getCamera(), function(path) {
+
+				});
+			});
+			events.addTap('take_camero', function() {
+				camera.getVideo(camera.getCamera(), function(path) {
+
+				});
+			});
+			events.addTap('get_gallery', function() {
+				gallery.getMultiplePic(function(paths) {
+
+				});
+			});
+			//发布按钮
 			events.addTap('publish', function() {
-				
-//								postDataPro_addClassSpace({classId},)
+
+				//								postDataPro_addClassSpace({classId},)
 				console.log('' + JSON.stringify(groupInfo));
 				var tempText = document.getElementById('input-content').value;
-				if(!tempText||tempText=='') {
+				if(!tempText || tempText == '') {
 					mui.toast('请输入内容');
 					return;
-				}else{
+				} else {
 					tempText = replaceAllBL(tempText);
 				}
 				var postData = new Object();
@@ -77,16 +89,16 @@
 				postData.encAddr = '';
 				postData.encImg = '';
 				postData.teacherId = parseInt(groupInfo.userId);
-				postData.userIds=arrayToStr(personIds);
-				console.log('传值：'+JSON.stringify(postData));
+				postData.userIds = arrayToStr(personIds);
+				console.log('传值：' + JSON.stringify(postData));
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
 				postDataPro_addClassSpace(postData, wd, function(data) {
 					wd.close();
 					console.log(JSON.stringify(data));
 					if(data.RspCode = '0000') {
 						mui.toast('发布成功！');
-						document.getElementById('input-content').value='';
-						events.fireToPageNone('classSpace-sub.html','infoChanged');
+						document.getElementById('input-content').value = '';
+						events.fireToPageNone('classSpace-sub.html', 'infoChanged');
 						//					mui.fire('classSpace-sub.html','refershData');
 						mui.back();
 					} else {
@@ -95,23 +107,24 @@
 				})
 			})
 		})
-		var getGroupPersons=function(groupId){
-			 personIds=[];
-			 var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING)
-			postDataPro_PostGusers({top: -1,//选择条数
-			vvl:groupId,//群ID，查询的值
-			vvl1:-1//群员类型，0家长,1管理员,2老师,3学生,-1取全部)
-			},wd,function(data){
-				console.log('獲取的群成員信息：'+JSON.stringify(data));
+		var getGroupPersons = function(groupId) {
+			personIds = [];
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
+			postDataPro_PostGusers({
+				top: -1, //选择条数
+				vvl: groupId, //群ID，查询的值
+				vvl1: -1 //群员类型，0家长,1管理员,2老师,3学生,-1取全部)
+			}, wd, function(data) {
+				console.log('獲取的群成員信息：' + JSON.stringify(data));
 				wd.close();
-				if(data.RspCode=='0000'){
-					data.RspData.forEach(function(person){
-						if(personIds.indexOf(person.utid)<0){
+				if(data.RspCode == '0000') {
+					data.RspData.forEach(function(person) {
+						if(personIds.indexOf(person.utid) < 0) {
 							personIds.push(person.utid);
 						}
-					})				
+					})
 				}
-				
+
 			})
 		}
 	</script>

@@ -25,7 +25,7 @@ textarea{
 /**
  * 拍照、添加文件样式
  */
-.take_pic,.add_file{
+.take_pic,.take_camero,.get_gallery{
 	width: 6rem;
 	height: 6rem;
 	border: solid;
@@ -39,7 +39,7 @@ textarea{
 /**
  * 样式
  */
-div>.icon-jia:before,.icon-xiangji:before{
+div>.icon-xiangce:before,.icon-shipin:before,.icon-xiangji:before{
 	font-size: 4.0rem;
 }
 /**
@@ -55,9 +55,14 @@ div>.icon-jia:before,.icon-xiangji:before{
  * 班级动态
  * 添加文件按钮
  */
-.add_file{
+.take_camero{
 	top: 19.6rem;
 	left: 6.9rem;
+	z-index: 1;
+}
+.get_gallery{
+	top: 19.6rem;
+	left: 13.1rem;
 	z-index: 1;
 }
 /**
