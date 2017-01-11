@@ -739,7 +739,7 @@ var postDataPro_getNotesByUserForStudent = function(commonData, wd, callback) {
 //			encImg: '',//附件缩略图地址
 //			teacherId: '',//发布教师ID
 //			noteType: '',//点到记事类型1点到2记事3仅文字
-//			checkType: '',//点到类型,1 正常2 旷课3 迟到4 早退5 其他
+//			checkType: '',//1 正常2 旷课3 迟到4 早退5 请假6 其他
 //			studentName: '',//学生姓名
 //			publisherName: '',//发布者姓名
 //			parentIds: '',//家长列表
