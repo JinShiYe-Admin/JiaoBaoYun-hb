@@ -409,7 +409,8 @@
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					var personalUNICK = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
 					var teacherId = personalUTID; //发布教师ID
-					var publisherName = personalUNICK //发布者姓名
+					var publisherName = '【' + personalUNICK + '老师】【' + subData.gname + '】' //发布者姓名
+					//var publisherName = personalUNICK; //发布者姓名
 					var noteType = type; //点到记事类型1点到2记事
 					var checkType = ''; //点到类型
 					var msgContent = ''; //内容

@@ -487,8 +487,8 @@
 					//var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					//initElement(window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH) + personalUTID);
 					//console.log('initANDROID:' + window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH));
-					var fileList = window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH).split('/');
-					initElement(fileList[0] + '///');
+					//var fileList = window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH).split('/');
+					initElement('file:///');
 				}
 
 				function initElement(path) {

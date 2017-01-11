@@ -29,7 +29,7 @@ var studentdynamic = (function($, mod) {
 			dateHtml = '<div class="dynamic-date"><font style="font-size: 150%;">' + date + '</font></div></div>';
 		} else {
 			var dateHtml1 = '<div class="dynamic-date">';
-			var dateHtml2 = '<font style="font-size: 150%;">' + date[0] + '</font><font style="font-size: 80%;">' + date[1] + '</font></div></div>';
+			var dateHtml2 = '<font style="font-size: 150%;margin-right:2px;">' + date[0] + '</font><font style="font-size: 80%;">' + date[1] + '</font></div></div>';
 			dateHtml = dateHtml1 + dateHtml2;
 		}
 		var html3 = '<div class="mui-col-sm-10 mui-col-xs-10"><div class="mui-media-body">';
@@ -74,7 +74,7 @@ var studentdynamic = (function($, mod) {
 			dateHtml = '<div class="dynamic-date"><font style="font-size: 150%;">' + date + '</font></div></div>';
 		} else {
 			var dateHtml1 = '<div class="dynamic-date">';
-			var dateHtml2 = '<font style="font-size: 150%;">' + date[0] + '</font><font style="font-size: 80%;">' + date[1] + '</font></div></div>';
+			var dateHtml2 = '<font style="font-size: 150%;margin-right:2px;">' + date[0] + '</font><font style="font-size: 80%;">' + date[1] + '</font></div></div>';
 			dateHtml = dateHtml1 + dateHtml2;
 		}
 		var html3 = '<div class="mui-col-sm-10 mui-col-xs-10"><div class="mui-media-body">';
@@ -132,13 +132,13 @@ var studentdynamic = (function($, mod) {
 
 		var li = document.createElement('li');
 		li.className = '';
-		if(date!=''){
-			li.style.marginTop='33px';
+		if(date != '') {
+			li.style.marginTop = '33px';
 			//li.style.paddingTop='0px';
 		}
-		if(date==''){
-			li.style.marginTop='0px';
-			li.style.paddingTop='0px';
+		if(date == '') {
+			li.style.marginTop = '0px';
+			li.style.paddingTop = '0px';
 		}
 		li.innerHTML = html;
 		li.id = id;
