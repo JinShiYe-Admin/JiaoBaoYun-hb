@@ -17,6 +17,7 @@ var publicModel = (function($, mod) {
 		unick:'',//用户昵称
 		usex:'',//用户性别
 		utxt:'',//用户签名
+		uarea:'',//用户区域,省代码 市代码 区代码|省名称 市名称 区名称
 		token:'',//用户令牌
 		ispw:''//0无密码，1有密码
 	};
@@ -135,6 +136,13 @@ var publicModel = (function($, mod) {
 		stuid:'',//	资料ID
 		gutid:'',//	账号在群ID
 		ustuid:''//	关联ID
+	}
+	
+	//41.获取某个区域下的所有子区域
+	mod.model_area = {
+		acode:'',//节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
+		aname:'',//节点名称
+		atype:''//节点类型,0省1城市2区县
 	}
 	
 	

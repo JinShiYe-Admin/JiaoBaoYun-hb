@@ -40,6 +40,7 @@
 			<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
 
 			<script type="text/javascript">
+			var selectCell;
 				var homeworkModel = {};
 				var homeworkNodes = {
 					list: document.getElementById('list'), //临时作业列表
@@ -49,7 +50,15 @@
 					mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 						events.fireToPageNone('homework-comment.html', 'workInfo', this.homeworkInfo);
 						plus.webview.getWebviewById("homework-comment.html").show();
+						selectCell = this;
 					})
+					window.addEventListener('workCommented', function(e) {
+						console.log(selectCell.innerHTML);
+						selectCell.innerHTML = '<img id="img" class="mui-media-object mui-pull-left dynamic-personal-image " src=""><div class="mui-media-body" style="margin-top: 8px;"><p id="name" style="font-size: 16px;">undefined<font style="font-size: 12px;">&nbsp;&nbsp;&nbsp;&nbsp;</font></p></div><div class="mui-media-body mui-pull-right" style="margin-top: -25px;"><p id="isCommented" class="IsCommented" style="font-size: 13px;">已评<span class="mui-icon mui-icon-forward"></span></p></div>'
+
+						selectCell.homeworkInfo.IsCommented = 'true';
+					})
+					
 					window.addEventListener('workDetail', function(e) {
 						resetData();
 						console.log('作业主界面传送的值：' + JSON.stringify(e.detail.data));
@@ -157,10 +166,10 @@ if(answerListArray[i].IsCommented==true){
 						li.innerHTML =
 							'<img id="img" class="mui-media-object mui-pull-left dynamic-personal-image " src="'+updateHeadImg(answerListArray[i].uimg)+'" />' +
 							'<div class="mui-media-body" style="margin-top: 8px;">' +
-							'<p id="name" style="font-size: 16px;">'+answerListArray[i].ugnick+'<font style="font-size: 12px;">&nbsp&nbsp&nbsp&nbsp'+answerListArray[i].QuestionResultStr+'</font></p>' +
+							'<p id="name"  style="font-size: 16px;">'+answerListArray[i].ugnick+'<font style="font-size: 12px;">&nbsp&nbsp&nbsp&nbsp'+answerListArray[i].QuestionResultStr+'</font></p>' +
 							'</div>' +
 							'<div class="mui-media-body mui-pull-right" style="margin-top: -25px;">' +
-							'<p id="isCommented" style="font-size: 13px;">'+IsCommented+'<span class="mui-icon mui-icon-forward"></span></p>' +
+							'<p id="isCommented" class = "IsCommented" style="font-size: 13px;">'+IsCommented+'<span class="mui-icon mui-icon-forward"></span></p>' +
 							'</div>'
 						homeworkNodes.list.appendChild(li);
 					}

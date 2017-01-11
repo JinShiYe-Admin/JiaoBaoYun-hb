@@ -212,7 +212,7 @@ var postDataPro_PostInvGuser = function(commonData, wd, callback) {
 //		//需要参数
 //		var comData = {
 //			top: '',//选择条数
-//			vvl:'',//群ID，查询的值
+//			vvl:'',//群ID或IDS,查询的值,多个用逗号隔开
 //			vvl1:''//群员类型，0家长,1管理员,2老师,3学生,-1取全部
 //		};
 //返回值model：model_groupNormalUser
@@ -600,6 +600,33 @@ var postDataPro_PostGusinf = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINURL + 'PostGusinf', enData, commonData, 1, wd, callback);
 }
 
+//41.获取某个区域下的所有子区域
+//所需参数
+//		var comData = {
+//			vtp:'',//获取类型，0(获取省份),1(获取城市),2(获取区县)
+//			vvl:''//查询字符串,查询的值,查询所有省份留空(acode节点编码)
+//		};
+//返回值：model_area
+var postDataPro_PostArea = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostArea', enData, commonData, 1, wd, callback);
+}
+
+//42.获取某个区域下的所有子区域
+//所需参数
+//		var comData = {
+//			vvl:''//查询字符串,省名称 市名称 区名称(中间用空格隔开)
+//		};
+//返回值：省市区代码串,省代码 市代码 区代码
+var postDataPro_PostAreaCode = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostAreaCode', enData, commonData, 1, wd, callback);
+}
+
 //---------------------------------------家校圈-----------------------------------------------------------------------------------------------------------
 //家校圈接口
 
@@ -712,7 +739,7 @@ var postDataPro_getNotesByUserForStudent = function(commonData, wd, callback) {
 //			encImg: '',//附件缩略图地址
 //			teacherId: '',//发布教师ID
 //			noteType: '',//点到记事类型1点到2记事3仅文字
-//			checkType: '',//点到类型,1 正常2 旷课3 迟到4 早退5 其他
+//			checkType: '',//1 正常2 旷课3 迟到4 早退5 请假6 其他
 //			studentName: '',//学生姓名
 //			publisherName: '',//发布者姓名
 //			parentIds: '',//家长列表
