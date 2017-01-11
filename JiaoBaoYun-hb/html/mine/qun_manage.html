@@ -192,7 +192,10 @@
 					</div>
 				</div>
 			</div>
-			<div id="all_mem">
+			<div id="scrollwrapper" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<div id="all_mem"></div>
+				</div>
 				<!--<div id="bot_1002班" data-value="1002班" class="bot" style="display: ;">
 					<div class="mui-scroll-wrapper" style="background: white;top: 135px;">
 						<div class="mui-scroll">
@@ -228,7 +231,7 @@
 					var controladd = document.getElementById("controladd"); //群名称显示栏添加群按钮前一个item
 					document.querySelector(".mui-content").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 5) + 'px';
 					document.querySelector(".keep-line-blue").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 50) + 'px';
-					//document.querySelector(".keep-line-white").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 55) + 'px';
+					document.querySelector("#scrollwrapper").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 130) + 'px';
 
 					if(plus.webview.getWebviewById('../quan/group-pInfo.html') == null) {
 						events.preload('../quan/group-pInfo.html', 1000);
@@ -270,6 +273,7 @@
 
 					//切换显示选中的群
 					mui('#qunlist').on('tap', 'a', function() {
+						mui('#scrollwrapper').scroll().scrollTo(0, 0, 100); //100毫秒滚动到顶
 						console.log('qunlist：' + this.getAttribute('data-value'));
 						showQun(this.getAttribute('data-value'));
 					});
@@ -294,6 +298,7 @@
 
 					//切换显示选中的成员类型
 					mui('#type').on('tap', 'a', function() {
+						mui('#scrollwrapper').scroll().scrollTo(0, 0, 100); //100毫秒滚动到顶
 						console.log('type：' + this.getAttribute('id'));
 						showType(this.getAttribute('id'));
 					});
@@ -535,14 +540,10 @@
 						div.className = 'bot';
 						div.setAttribute('data-value', qun.gid);
 						div.style.display = "inline";
-						div.innerHTML = '<div class="mui-scroll-wrapper" style="background: white;top: ' + (localStorage.getItem('StatusHeightNo') * 1 + 135) + 'px;">\
-										<div class="mui-scroll">\
-											<ul class="mui-table-view">\
-												<div class="mui-row" style="margin-top: 8px;">\
-												</div>\
-											</ul>\
-										</div>\
-									</div>';
+						div.innerHTML = '<ul class="mui-table-view">\
+											<div class="mui-row" style="margin-top: 8px;">\
+											</div>\
+										</ul>';
 						document.getElementById("all_mem").appendChild(div);
 						//document.body.querySelector('.mui-content').appendChild(div);
 						getMember(qun, memberType);
@@ -624,7 +625,9 @@
 												mui.each(data.RspData, function(index, item) {
 													//console.log('getMemData:' + JSON.stringify(item));
 													var qunBot = document.getElementById("bot_" + type2 + '_' + qun.gid).querySelector('.mui-row');
+													//for(var i = 0; i <= 20; i++) {
 													addMember(qunBot, item);
+													//}
 													qunMem.push(item);
 													//strUtid = strUtid + item.utid;
 												});
@@ -677,7 +680,9 @@
 										mui.each(data.RspData, function(index, item) {
 											//console.log('getMemData:' + JSON.stringify(item));
 											var qunBot = document.getElementById("bot_" + type2 + '_' + qun.gid).querySelector('.mui-row');
+											//for(var i = 0; i <= 20; i++) {
 											addMember(qunBot, item);
+											//}
 											qunMem.push(item);
 											//strUtid = strUtid + item.utid;
 										});

@@ -22,8 +22,8 @@
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
 		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
-		<script type="text/javascript" src="../../js/mui.lazyload.js"></script>
-		<script type="text/javascript" src="../../js/mui.lazyload.img.js"></script>
+		<!--<script type="text/javascript" src="../../js/mui.lazyload.js"></script>-->
+		<!--<script type="text/javascript" src="../../js/mui.lazyload.img.js"></script>-->
 		<style>
 			.iconfont {
 				line-height: 42px;
@@ -635,10 +635,10 @@
 					}
 					var ul = document.getElementById("ul_file_0");
 					console.log(ul.innerHTML);
-					var lazyLoad = mui('.mui-scroll-wrapper').imageLazyload({
-						placeholder: '../../image/knowledge_sel.png',
-						destroy: false
-					});
+//					var lazyLoad = mui('.mui-scroll-wrapper').imageLazyload({
+//						placeholder: '../../image/utils/loading_128px.png',
+//						destroy: false
+//					});
 				}
 
 				/**
@@ -710,9 +710,9 @@
 							if(type != '') {
 								html3 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
 							} else { //七牛能生成缩略图的图片或视频
-								//							html3 = '<img class="mui-media-object cloud-bottom-imge mui-pull-left" src="' + path + '" />';
+								html3 = '<img class="mui-media-object cloud-bottom-imge mui-pull-left" src="' + path + '" />';
 
-								html3 = '<img class="mui-media-object cloud-bottom-imge mui-pull-left" data-lazyload="' + path + '" />';
+								//html3 = '<img class="mui-media-object cloud-bottom-imge mui-pull-left" data-lazyload="' + path + '"/>';
 								//console.log(html3);
 							}
 							html4 = '<div class="mui-media-body">\
@@ -801,10 +801,10 @@
 								pname: pname //上层文件夹名字
 							}
 							showPidList.push(pData2);
-							var lazyLoad = mui('.mui-scroll-wrapper').imageLazyload({
-								placeholder: '../../image/knowledge_sel.png',
-								destroy: false
-							});
+//							var lazyLoad = mui('.mui-scroll-wrapper').imageLazyload({
+//								placeholder: '../../image/utils/loading_128px.png',
+//								destroy: false
+//							});
 						} else {
 							mui.toast(data.RspTxt);
 						}
