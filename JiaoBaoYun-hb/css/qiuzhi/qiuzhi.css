@@ -1,0 +1,31 @@
+.navigation{
+	position: relative;
+}
+.main-navigation{
+	max-width: 80%;
+}
+.more-navigation{
+	position: absolute;
+	right: 0;
+	top: 0;
+	padding: 10px;
+	border: solid thin #000000 2px;
+}
+.mui-slider-indicator:last-of-type{
+	height: 4rem;
+	background-color: #ffffff;
+}
+.mui-control-item:last-of-type{
+	height: 4rem;
+}
+.icon-bianji{
+	position: fixed;
+	bottom: 2rem;
+	right: 2rem;
+	z-index: 666;
+	font-size: 4rem;
+	color: white;
+	padding: 1rem;
+	background-color: #1296db;
+	border-radius: 50%;
+}

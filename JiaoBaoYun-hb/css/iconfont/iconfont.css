@@ -21,9 +21,13 @@
 
 .icon-shexiangji:before { content: "\e60e"; }
 
+.icon-dangan:before { content: "\e627"; }
+
 .icon-xie:before { content: "\e604"; }
 
 .icon-fanxiangpaixu:before { content: "\e619"; }
+
+.icon-kangfuzuoye:before { content: "\e654"; }
 
 .icon-trash:before { content: "\e620"; }
 
@@ -35,17 +39,23 @@
 
 .icon-newmessage:before { content: "\e731"; }
 
+.icon-tongxunlu:before { content: "\e65b"; }
+
 .icon-xiaoxi:before { content: "\e64d"; }
 
 .icon-shezhi:before { content: "\e606"; }
 
 .icon-yunpan1:before { content: "\e694"; }
 
+.icon-jiaoyu:before { content: "\e7ec"; }
+
 .icon-shezhi1:before { content: "\e631"; }
 
 .icon-group:before { content: "\e753"; }
 
 .icon-jifen:before { content: "\e6db"; }
+
+.icon-biji1:before { content: "\e656"; }
 
 .icon-jiaqun:before { content: "\e60d"; }
 
@@ -71,6 +81,8 @@
 
 .icon-qun:before { content: "\e60f"; }
 
+.icon-biji2:before { content: "\e659"; }
+
 .icon-shubendisc:before { content: "\e682"; }
 
 .icon-xiaoxizhongxin:before { content: "\e611"; }
@@ -88,6 +100,8 @@
 .icon-lishijilu:before { content: "\e621"; }
 
 .icon-renren:before { content: "\e609"; }
+
+.icon-dongtai1:before { content: "\e671"; }
 
 .icon-liaotian1:before { content: "\e601"; }
 
@@ -116,6 +130,8 @@
 .icon-support:before { content: "\e905"; }
 
 .icon-jiujiajingicon02-copy:before { content: "\e907"; }
+
+.icon-tuku:before { content: "\e6b6"; }
 
 .icon-dili:before { content: "\e61b"; }
 
@@ -170,3 +186,5 @@
 .icon-wenda-copy:before { content: "\e909"; }
 
 .icon-qunziliao:before { content: "\e626"; }
+
+.icon-qunguanli:before { content: "\e628"; }

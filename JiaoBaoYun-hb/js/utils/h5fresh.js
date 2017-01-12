@@ -5,9 +5,8 @@
  */
 var h5fresh=(function(mod){
 	var ws=null;//当前webview
-	var list=null;//列表
 	// 扩展API加载完毕，现在可以正常调用扩展API 
-	function plusReady(){
+	mod.addRefresh=function(refresh){
 		ws=plus.webview.currentWebview();
 		ws.setPullToRefresh({
 			support:true,//是否开启Webview窗口的下拉刷新功能
@@ -22,20 +21,13 @@ var h5fresh=(function(mod){
 			contentrefresh:{
 				caption:"正在刷新..."
 			}
-		},onRefresh);//刷新
+		},function(){
+			setTimeout(function(){
+				refresh();
+				ws.endPullToRefresh();
+			},2000)
+		});//刷新
 	//	plus.nativeUI.toast("下拉可以刷新");
-	}
-	mod.addRefresh=function(listId){
-		// 判断扩展API是否准备，否则监听"plusready"事件
-		if(window.plus){
-			plusReady();
-		}else{
-			document.addEventListener("plusready",plusReady,false);
-		}
-		//获取dom
-		document.addEventListener("DOMContentLoaded",function(){
-			list=document.getElementById(listId);
-		})
 	}
 
 	// 刷新页面
