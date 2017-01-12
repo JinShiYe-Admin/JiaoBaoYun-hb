@@ -260,6 +260,113 @@ var publicModel = (function($, mod) {
 		CheckTypeStr:'',//点到情况说明
 		NoteTypeStr:''//	点到记事类型说明
 	}
+	
+	//话题--求知
+	mod.model_Channel = {
+		TabId:'',//话题ID
+		ChannelCode:'',//话题编号
+		ChannelName:''//话题名称
+	}
+	
+	//专家信息--求知
+	mod.model_expert = {
+		TabId:'',//问答用户表ID
+		UserId:'',//	用户ID
+		UserNote	:'',//专家简介
+		ExpertLevel:'',//专家等级
+		ExpertChannels:'',//	专家话题列表,Array,例如[1,2,3]
+		AnswerNum:''//回答数
+	}
+	
+	//用户信息--求知
+	mod.model_QZUserInfo = {
+		TabId:'',//问答用户表ID	int		否	
+		UserId:'',//	用户ID	int		否	
+		IsExpert:'',//是否专家	int		否	
+		UserNote:'',//用户简介	String		否	
+		ExpertLevel:'',//专家等级	int		否	
+		ExpertChannels:'',//	专家话题列表	Array		否	例如[1,2,3]
+		AnswerNum:'',//回答数	int		否	
+		AskNum:'',//	提问数	int		否	
+		CommentNum:'',//	评论数	int		否	
+		IsLikeNum:'',//回答点赞数	int		否	
+		FocusAskNum:'',//关注问题数	int		否	
+		FocusManNum:'',//关注人数	int		否	
+		IsFocusedManNum:''//	被人关注数	int		否	
+	}
+	
+	//符合条件问题--求知
+	mod.model_QZAsk = {
+		TabId:'',//问题表ID
+		AskTitle	:'',//问题标题
+		AskNote:'',//问题说明
+		AskChannelId	:'',//问题所属话题ID
+		AskChannel:'',//	问题所属话题
+		AskMan:'',//	提问人
+		AskTime:'',//提问时间
+		IsAnonym:'',//是否匿名
+		AnswerId	:'',//回答ID
+		AnswerContent:'',//回答内容
+		IsLikeNum:'',//回答点赞数
+		CommentNum:''//回答评论数
+	}
+	
+	//某个问题的详情--求知
+	mod.model_QZAskDetail = {
+		TabId:'',//	问题ID
+		AskTitle:'',//问题标题
+		AskNote:'',//问题说明
+		AskChannel:'',//	问题话题
+		ReadNum:'',//阅读数
+		AnswerNum:'',//回答数
+		FocusNum:'',//关注数
+		AskMan:'',//	提问人
+		AskTime:'',//提问时间
+		IsAnonym	:'',//是否匿名
+		Answers:'',//	回答列表,Array[model_QZAnswer]
+		
+		AskId:''//问题ID
+	}
+	
+	//回答详情--求知
+	mod.model_QZAnswer = {
+		AnswerId	:'',//回答ID
+		AnswerContent:'',//	回答内容
+		AnswerMan:'',//	回答人
+		AnswerTime:'',//	回答时间
+		IsLikeNum:'',//	回答点赞数
+		CommentNum:'',//	回答评论数
+	}
+	
+	//某个回答的详情--求知
+	mod.model_QZAnswersDetail = {
+		TabId:'',//	回答ID
+		AskId:'',//	问题ID
+		AskTitle:'',//	问题标题
+		AnswerContent:'',//	回答内容
+		AnswerMan:'',//	回答人
+		AnswerTime:'',//	回答时间
+		IsLikeNum:'',//	回答点赞数
+		CommentNum:'',//	回答评论数
+		TotalPage:'',//	评论总页数
+		TotalCnt	:'',//评论总记录数,用于分页，结果应该与CommentNum相同
+		Comments	:'',//评论列表,Array[model_QZComment]
+		
+		AnswerId:''//回答ID
+	}
+	
+	//回答详情--求知
+	mod.model_QZComment = {
+		TabId:'',//	评论ID
+		UserId:'',//	评论用户ID
+		ReplyId:'',//	回复用户ID
+		CommentContent:'',//	评论或回复内容
+		CommentDate:'',//	评论或回复时间
+		UpperId:'',//	上级ID
+		Replys:'',//	下级回复列表,Array
+		
+		AnswerId:''//回答ID
+	}
 
 	return mod;
 
