@@ -2470,6 +2470,21 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"fonts/iconfont.ttf",
+					"css/utils/common.css",
+					"html/qiuzhi/qiuzhi-questionSub.html",
+					"js/utils/events.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/qiuzhi-questionSub.html": {
+				"resources": [
+					"js/qiuzhi/qiuzhi-questionSub.js",
+					"css/qiuzhi/qiuzhi-questionSub.css",
+					"css/iconfont/iconfont.css",
+					"js/mui.min.js",
+					"js/utils/events.js",
+					"css/mui.min.css",
 					"css/utils/common.css"
 				],
 				"refer": [],

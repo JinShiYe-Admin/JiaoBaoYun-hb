@@ -44,7 +44,7 @@ var setContentView = function() {
 	document.querySelector('.subject-icon').className = "subject-icon iconfont " + getHomeworkIcon(homeworkInfo.Subject);
 	document.querySelector('.brief-title').innerText = homeworkInfo.HomeworkTitle;
 	document.querySelector('.brief-content').innerText = homeworkInfo.Contents;
-	document.querySelector('.publisher').innerText = homeworkInfo.unick;
+	document.querySelector('.publisher').innerText =events.shortForString(homeworkInfo.unick,6);
 	document.querySelector('.publish-date').innerText = homeworkInfo.Date.split(' ')[0];
 }
 

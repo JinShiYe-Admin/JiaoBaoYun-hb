@@ -73,7 +73,7 @@ var class_space = (function(mod) {
 	var createInnerHtml = function(item) {
 		var inner = '<div><div class="mui-pull-left head-img" >' +
 			'<img class="head-portrait" src="' + getUImg(item.uimg) + '"/>' +
-			'<p>' + item.unick + '</p>' +
+			'<p class="single-line">' + item.unick + '</p>' +
 			'</div>' +
 			'<div class="chat_content_left">' +
 			'<div class="chat-body"><p class="chat-words">' +
