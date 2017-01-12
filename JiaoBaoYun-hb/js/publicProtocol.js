@@ -627,6 +627,47 @@ var postDataPro_PostAreaCode = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINURL + 'PostAreaCode', enData, commonData, 1, wd, callback);
 }
 
+//43.用户修改或添加区域阅读设置
+//所需参数
+//		var comData = {
+//			vvl:'',//定制城市组合，城市代码_城市名称|城市代码_城市名称|.....
+//			vvl1:''//定制城市频道,0科教频道,1展示频道,其他待定
+//		};
+//返回值：
+var postDataPro_PostUTcityA = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostUTcityA', enData, commonData, 1, wd, callback);
+}
+
+//44.获取个人的订制城市
+//所需参数
+//		var comData = {
+//			vvl:''//订制频道,0科教频道,1展示频道,其他待定
+//		};
+//返回值：citys,订制的城市频道,城市代码_城市名称|城市代码_城市名称|.....
+var postDataPro_PostUTcity = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostUTcity', enData, commonData, 1, wd, callback);
+}
+
+//45.通过区域代码获取对应区域的分页新闻
+//所需参数
+//		var comData = {
+//			vvl:'',//查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
+//			vvl1:''//页码,获取第几页
+//		};
+//返回值：
+var postDataPro_PostTnews = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostTnews', enData, commonData, 1, wd, callback);
+}
+
 //---------------------------------------家校圈-----------------------------------------------------------------------------------------------------------
 //家校圈接口
 
