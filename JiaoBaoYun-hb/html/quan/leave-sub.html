@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/quan/about-me.css" />
+		<link rel="stylesheet" href="../../css/utils/bubble.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
@@ -17,16 +18,15 @@
 
 		<style>
 			.mui-table-view {
-				background: transparent;
+				background: white;
 				/*背景色透明*/
 			}
-			
 			.mui-table-view-cell {
 				background: white;
 				/*cell 背景设为白色*/
-				padding: 0;
-				/*内边距为0*/
-				margin-bottom: 10px;
+			/*padding: 0;*/
+			/*内边距为0*/
+			/*margin-bottom: 10px;*/
 			}
 			
 			.mui-table-view:before,
@@ -52,7 +52,8 @@
 				/*点赞者和评论者的名字*/
 				color: #1277C7;
 			}
-						footer {
+			
+			footer {
 				height: 60px;
 				width: 100%;
 				z-index: 20;
@@ -93,27 +94,27 @@
 	</head>
 
 	<body>
-		<footer id="footer">
+		<footer id="footer" class="mui-bar mui-bar-tab" style="display: none;">
 			<div class="footer-center">
-				<textarea onblur="inputOnblur(this)" id='msg-content' type="text" class='input-text'></textarea>
+				<textarea onblur="inputOnblur(this)" id='msg-content' type="text" class='input-text' placeholder="123"></textarea>
 			</div>
 			<button id='btn-reply' class="mui-btn mui-btn-green btn-commit">回复</button>
 		</footer>
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<div style="height: 120px;;background-image:url(../../image/quan/leave-bg.png) ;"><br/>
+				<div hidden="hidden" style="height: 120px;;background-image:url(../../image/quan/leave-bg.png) ;"><br/>
 					<h4 style="padding-left: 10px;margin-top: -10px;">主人寄语:</h4>
-				<textarea id='leaveTitle' readonly="readonly" onblur="inputOnblur(this)"  class="mui-input-clear question" placeholder=""  style="height: 80px;width: 80%;margin-left: 80px;margin-top: -5px;background-color: transparent;text-align: left;font-size: 15px;font-weight: 600;border-color:transparent ;"></textarea>
-					
+					<textarea id='leaveTitle' readonly="readonly" onblur="inputOnblur(this)" class="mui-input-clear question" placeholder="" style="height: 80px;width: 80%;margin-left: 80px;margin-top: -5px;background-color: transparent;text-align: left;font-size: 15px;font-weight: 600;border-color:transparent ;"></textarea>
+
 				</div>
-				<div id="leaveNum" style="background-color: gainsboro;height: 30px;padding: 5px;font-size: 15px;">
+				<div hidden="hidden" id="leaveNum" style="background-color: gainsboro;height: 30px;padding: 5px;font-size: 15px;">
 				</div>
 				<!--数据列表-->
 				<ul id="leaveList" class="mui-table-view">
 
-			</ul>
-		</div>
+				</ul>
+			</div>
 		</div>
 	</body>
 	<script>
@@ -130,13 +131,13 @@
 			}
 		});
 		var cellIndex;
-		var userId;//留言板拥有者id
-		var personalUTID;//当前登录账号utid
-		var note;//留言寄语
+		var userId; //留言板拥有者id
+		var personalUTID; //当前登录账号utid
+		var note; //留言寄语
 		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 		mui.plusReady(function() {
 			initNativeObjects();
-			window.addEventListener('refreshLeaveList',function(){//发布留言成功后的回调
+			window.addEventListener('refreshLeaveList', function() { //发布留言成功后的回调
 				//刷新时将页码归1
 				totalCnt = 0;
 				flag = 1;
@@ -150,60 +151,59 @@
 			})
 			userId = plus.webview.currentWebview().data;
 			var leaveTitle = document.getElementById('leaveTitle');
-		    if(userId==personalUTID){
-		    		leaveTitle.removeAttribute("readOnly");
-		    		
-		    }else{
-		    		leaveTitle.readOnly = 'readonly'
-		    }
+			if(userId == personalUTID) {
+				leaveTitle.removeAttribute("readOnly");
 
-				var comData = {
-					userId: userId, //用户ID
-					pageIndex: (tempPage).toString(), //当前页数
-					pageSize: '10' //每页记录数
-				};
-				//请求数据
-				requestData(comData);
-				
-			})
-		document.getElementById('leaveTitle').addEventListener('input',function(){//监听textarea值得变化
-			console.log(this.value)
-//			jQuery(this).prop("maxLength","30");
-			if(this.value.length>50){
-				mui.toast('不能超过50字')
-				this.value=this.value.substr(0,50)
-			} 
-		})
-//				//失去焦点事件
-//		function inputOnblur(input) {
-//			
-//			//			mui('.mui-popover').popover('hide');
-//
-//		}
-		function inputOnblur(input) {//失去焦点事件
-			if(input.id =='msg-content' ){
-				var inputComment = document.getElementById("msg-content");
-			inputComment.value = '';
-			document.getElementById('footer').className = '';
-			document.getElementById('footer').style.display = 'none';
-			}else{
-				if(input.value == ''||input.value==null){
-				mui.toast('主人寄语不能为空');
-			}else if(input.value.length>50){
-				mui.toast('不能超过50字');
-				input.scrollTop = 0 
-				
-			}else if(input.value!=note){
- 				modifyMaster(input.value);
- 				input.scrollTop = 0 
- 			}
+			} else {
+				leaveTitle.readOnly = 'readonly'
 			}
-			
 
-}
-			/**
-			 * 下拉刷新具体业务实现
-			 */
+			var comData = {
+				userId: userId, //用户ID
+				pageIndex: (tempPage).toString(), //当前页数
+				pageSize: '10' //每页记录数
+			};
+			//请求数据
+			requestData(comData);
+
+		})
+		document.getElementById('leaveTitle').addEventListener('input', function() { //监听textarea值得变化
+				console.log(this.value)
+					//			jQuery(this).prop("maxLength","30");
+				if(this.value.length > 50) {
+					mui.toast('不能超过50字')
+					this.value = this.value.substr(0, 50)
+				}
+			})
+			//				//失去焦点事件
+			//		function inputOnblur(input) {
+			//			
+			//			//			mui('.mui-popover').popover('hide');
+			//
+			//		}
+		function inputOnblur(input) { //失去焦点事件
+			if(input.id == 'msg-content') {
+				var inputComment = document.getElementById("msg-content");
+				inputComment.value = '';
+				document.getElementById('footer').className = '';
+				document.getElementById('footer').style.display = 'none';
+			} else {
+				if(input.value == '' || input.value == null) {
+					mui.toast('主人寄语不能为空');
+				} else if(input.value.length > 50) {
+					mui.toast('不能超过50字');
+					input.scrollTop = 0
+
+				} else if(input.value != note) {
+					modifyMaster(input.value);
+					input.scrollTop = 0
+				}
+			}
+
+		}
+		/**
+		 * 下拉刷新具体业务实现
+		 */
 		function pulldownRefresh() {
 			setTimeout(function() {
 				//刷新时将页码归1
@@ -216,7 +216,7 @@
 				};
 				//请求数据
 				requestData(comData);
-//				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				//				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 			}, 1500);
 
 		}
@@ -225,25 +225,24 @@
 		 * 上拉加载具体业务实现
 		 */
 		function pullupRefresh() {
-				flag = 2;
-				
-				if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
-					mui.toast('没有更多了...');
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
-				} else {
-					tempPage++;
-					var comData = {
-						userId: userId, ////留言板拥有者id
-						pageIndex: (tempPage).toString(), //当前页数
-						pageSize: '10' //每页记录数
-					};
-					//请求数据
-					requestData(comData);
-				}
+			flag = 2;
+
+			if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
+				mui.toast('没有更多了...');
+				mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+			} else {
+				tempPage++;
+				var comData = {
+					userId: userId, ////留言板拥有者id
+					pageIndex: (tempPage).toString(), //当前页数
+					pageSize: '10' //每页记录数
+				};
+				//请求数据
+				requestData(comData);
+			}
 
 		}
-		
-		
+
 		//页码，请求第几页数据
 		var tempPage = 1;
 		//当前留言的总条数
@@ -260,42 +259,43 @@
 			//49.（用户空间）获取用户空间所有留言，model_userSpaceInfo
 			postDataPro_getUserSpaceMsgsById(comData, wd, function(data) {
 				wd.close();
-				console.log('postDataPro_getUserSpaceMsgsById:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt+data.RspData.TotalCnt);
+				console.log('postDataPro_getUserSpaceMsgsById:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
 				if(data.RspCode == 0) {
 					if(personalUTID == userId) {
-					var comData = {
-					userId: personalUTID, //用户ID
-					spaceTypes: '[7,8]'
-				}
-				postDataPro_setCommentMsgReadByUser(comData, wd, function(data) {   
-					console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
-				})
-			}
+						var comData = {
+							userId: personalUTID, //用户ID
+							spaceTypes: '[7,8]'
+						}
+						postDataPro_setCommentMsgReadByUser(comData, wd, function(data) {
+							console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
+						})
+					}
 					var tempRspData = data.RspData.Data;
 					//获取当前回调留言的个人信息，主要是头像、昵称
 					var tempArray = [];
 					//先遍历回调数组，获取
-					for (var item in tempRspData) {
+					for(var item in tempRspData) {
 						//当前循环的model
 						var tempModel0 = tempRspData[item];
 						//将当前model中id塞到数组
 						tempArray.push(tempModel0.UserId);
 						//循环当前model中的回复数组
-						for (var item1 in tempModel0.Replys) {
+						for(var item1 in tempModel0.Replys) {
 							//回复中的model
 							var tempModel1 = tempModel0.Replys[item1];
 							//将回复中的id塞到数组
 							tempArray.push(tempModel1.UserId);
+							tempArray.push(tempModel1.ReplyId);
 						}
 					}
 					//给数组去重
 					tempArray = arrayDupRemoval(tempArray);
 					//发送获取用户资料申请
 					var tempData = {
-						vvl:tempArray.join(),//用户id，查询的值,p传个人ID,g传ID串
-						vtp:'g'//查询类型,p(个人)g(id串)
+						vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
+						vtp: 'g' //查询类型,p(个人)g(id串)
 					}
-					console.log('tempData:'+JSON.stringify(tempData));
+					console.log('tempData:' + JSON.stringify(tempData));
 					//21.通过用户ID获取用户资料
 					postDataPro_PostUinf(tempData, wd, function(data1) {
 						wd.close();
@@ -303,81 +303,85 @@
 						if(data1.RspCode == 0) {
 
 							//循环当前的个人信息返回值数组
-							for (var i in data1.RspData) {
+							for(var i in data1.RspData) {
 								//当前model
 								var tempModel = data1.RspData[i];
 								//更新头像
 								tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
 								//循环留言数组
-								for (var item in tempRspData) {
+								for(var item in tempRspData) {
 									//当前循环的model
 									var tempModel0 = tempRspData[item];
 									//对比id是否一致
-									if (tempModel0.UserId == tempModel.utid) {
+									if(tempModel0.UserId == tempModel.utid) {
 										//合并
 										tempModel0 = $.extend(tempModel0, tempModel);
 									}
 									//循环当前model中的回复数组
-									for (var item1 in tempModel0.Replys) {
+									for(var item1 in tempModel0.Replys) {
 										//回复中的model
 										var tempModel1 = tempModel0.Replys[item1];
 										//对比id是否一致
-										if (tempModel.utid == tempModel1.UserId) {
+										if(tempModel.utid == tempModel1.UserId) {
 											//合并
 											tempModel1 = $.extend(tempModel1, tempModel);
+										}
+										//对比id是否一致
+										if(tempModel.utid == tempModel1.ReplyId) {
+											tempModel1.ReplyIdName = tempModel.unick;
 										}
 									}
 								}
 							}
 						}
-						console.log('循环遍历后的值：'+JSON.stringify(tempRspData));
+						console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 						//判断是加载更多2，还是刷新1
-					if(flag == 1) {
-						tempPage = 1;
-						leaveArray = tempRspData;
-						tempArrayLength = leaveArray.length;
-						console.log('1111111111===='+tempArrayLength);
-					} else {
-						tempArrayLength = leaveArray.length;
-						console.log('2222222222===='+tempArrayLength);
-						//合并数组
-						leaveArray = leaveArray.concat(tempRspData);
-						console.log('33333333333===='+leaveArray.length);
-					}
-					//留言总条数
-					totalCnt = data.RspData.TotalCnt;
-					var leaveNum = document.getElementById("leaveNum");
-					leaveNum.innerHTML = '留言('+data.RspData.TotalCnt+')';
-					//主人寄语
-					var leaveTitle = document.getElementById('leaveTitle');
-					if(data.RspData.Note==''||data.RspData.Note == null){
-						if(userId==personalUTID){
-							leaveTitle.placeholder = '请填写主人寄语';
-						}else{
-							leaveTitle.value = ''
+						if(flag == 1) {
+							tempPage = 1;
+							leaveArray = tempRspData;
+							tempArrayLength = leaveArray.length;
+							console.log('1111111111====' + tempArrayLength);
+						} else {
+							tempArrayLength = leaveArray.length;
+							console.log('2222222222====' + tempArrayLength);
+							//合并数组
+							leaveArray = leaveArray.concat(tempRspData);
+							console.log('33333333333====' + leaveArray.length);
 						}
-						
-					}else{
-						leaveTitle.value = data.RspData.Note;
-					}
-			        note = data.RspData.Note;
-					refreshUI();
+						//留言总条数
+						totalCnt = data.RspData.TotalCnt;
+						var leaveNum = document.getElementById("leaveNum");
+						leaveNum.innerHTML = '留言(' + data.RspData.TotalCnt + ')';
+						//主人寄语
+						var leaveTitle = document.getElementById('leaveTitle');
+						if(data.RspData.Note == '' || data.RspData.Note == null) {
+							if(userId == personalUTID) {
+								leaveTitle.placeholder = '请填写主人寄语';
+							} else {
+								leaveTitle.value = ''
+							}
+
+						} else {
+							leaveTitle.value = data.RspData.Note;
+						}
+						note = data.RspData.Note;
+						refreshUI();
 					});
-					
+
 				} else {
 					mui.toast(data.RspTxt);
 				}
 			});
 		}
-		
+
 		//修改主人寄语
 		function modifyMaster(note) {
 			//需要加密的数据
 			var tempData = {
-				userId: personalUTID,//用户ID
-				note:note//备注，即主人寄语
-			}
-			// 等待的对话框
+					userId: personalUTID, //用户ID
+					note: note //备注，即主人寄语
+				}
+				// 等待的对话框
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 			//60.（用户空间）修改留言板备注
 			postDataPro_setMsgNoteByUser(tempData, wd, function(data) {
@@ -385,102 +389,113 @@
 				console.log('60.postDataPro_setMsgNoteByUsersuccess:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					mui.toast('修改成功')
-					
-				}else{
+
+				} else {
 					mui.toast(data.RspTxt);
 				}
 			});
 		};
-		
 
 		function refreshUI() {
 			var ul = document.getElementById('leaveList');
 			var len;
-			if(flag==1){
+			if(flag == 1) {
 				ul.innerHTML = '';
-				len=0
-			}else{
+				len = 0
+			} else {
 				len = tempArrayLength
 			}
-			console.log('len='+len+'，'+'leaveArray.length=='+leaveArray.length);
+			console.log('len=' + len + '，' + 'leaveArray.length==' + leaveArray.length);
 			for(var i = len; i < leaveArray.length; i++) {
 				var li = document.createElement('li');
-				li.className = 'mui-table-view-cell';
+				li.className = 'mui-table-view-cell ableSelectedCell';
+				li.id = 'reply'+i
 				var commentArr = leaveArray[i].Replys;
-				replyHTML = '';
-				var commentHTML = '';
-				if(userId==personalUTID){
-					replyHTML = '回复'
-				}else{
-					replyHTML = '';
+				li.innerHTML = '<div style="padding:12px">' +
+					'<div class="mui-media-body mui-pull-left">' +
+					'<img class=" dynamic-personal-image" src="' + leaveArray[i].uimg + '">' +
+					'</div>' +
+					'<div class="mui-media-body dynamic-padding-left-10px">' +
+					'<h6>' + leaveArray[i].unick + '</h6>' +
+					'</div></div>' +
+					'<div style= "margin-top:-10px"  class = "chat_content_left">' +
+					leaveArray[i].MsgContent +
+					'<p style="float:right">' + leaveArray[i].MsgDate + '</p></div>'
+				ul.appendChild(li);
+				for(var j = 0; j < commentArr.length; j++) {
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell';
+					li.innerHTML = '<div style="padding:12px">' +
+						'<div class="mui-media-body mui-pull-right">' +
+						'<img class=" dynamic-personal-image" src="' + commentArr[j].uimg + '">' +
+						'</div>' +
+						'<div class="mui-media-body" style = "text-align: right;padding-right:10px">' +
+						'<h6>' + commentArr[j].unick + '</h6>' +
+						'</div></div>' +
+						'<div style= "margin-top:-5px; "  class = "chat_content_right">' +'<div class="chat-body" style = "text-align: right;">'+'<div>'+'<font style = "color:rgb(43,176,238);font-size:14px;text-overflow:ellipsis">'+'@'+commentArr[j].ReplyIdName+'</font> '+
+						commentArr[j].MsgContent+'<p style="float:left">' + leaveArray[i].MsgDate + '</p></div></div></div>';
+					ul.appendChild(li);
+					//					'</font></div>';
 				}
-				for(var j=0;j<commentArr.length;j++){
-					commentHTML =commentHTML + '<div style="padding:0px 10px 10px 10px"><span id="reply" class=" dynamic-comment-name">'+commentArr[j].unick +':</span><font class="common-font-family-Regular">' + commentArr[j].MsgContent +
-					'</font></div>';
-				}
-					li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="'+leaveArray[i].uimg+'"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply'
-					+i+'"class=" mui-pull-right dynamic-comment-name leaveReply">'+replyHTML +
-					'</span><h4>' + leaveArray[i].unick + '</h4><p>' + leaveArray[i].MsgDate + '</p></div></div><div style="padding:0px 10px 10px 10px"><font>'+leaveArray[i].MsgContent+'</font></div>'+commentHTML;
-			ul.appendChild(li);
 			}
-			if(flag==1){
+			if(flag == 1) {
 				mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
-			}else{
+			} else {
 				mui('#pullrefresh').pullRefresh().endPullupToRefresh();
 			}
-			
+
 			console.log(ul.innerHTML);
 			//点击回复
-			mui('.mui-table-view').on('tap', '.leaveReply', function() {
+			mui('.mui-table-view').on('tap','.ableSelectedCell', function() {
 				console.log(777777)
-					var replyContainer = document.getElementById('footer');
-					document.getElementById('footer').className = 'mui-bar-tab';
-					replyContainer.style.display = 'block';
-					showSoftInput('#msg-content');
-				cellIndex = this.id.replace('reply','');
+				var replyContainer = document.getElementById('footer');
+				document.getElementById('footer').className = 'mui-bar-tab';
+				replyContainer.style.display = 'block';
+				var leaveContent = document.getElementById('msg-content');
+			
+				showSoftInput('#msg-content');
+				cellIndex = this.id.replace('reply', '');
+				leaveContent.placeholder = '@'+leaveArray[cellIndex].unick;
 				console.log(cellIndex);
-				
-//
 
-//				events.openNewWindowWithData('leave-reply.html',data); 
 			});
 		}
-				
-				events.addTap('btn-reply', function() {
-					console.log(cellIndex);
-					var data = {
-					userId:personalUTID,
-					upperId:leaveArray[cellIndex].TabId,
-					replyUserId:leaveArray[cellIndex].UserId,
-					userOwnerId:userId,
+
+		events.addTap('btn-reply', function() {
+			console.log('点击回复');
+			console.log(cellIndex);
+			var data = {
+				userId: personalUTID,
+				upperId: leaveArray[cellIndex].TabId,
+				replyUserId: leaveArray[cellIndex].UserId,
+				userOwnerId: userId,
+			}
+			
+			var tempText = leaveContent.value;
+			if(!tempText || tempText == '') {
+				mui.toast('请输入留言');
+				return;
+			} else {
+				tempText = replaceAllBL(tempText);
+			}
+			data.msgContent = tempText;
+			console.log('data === ' + JSON.stringify(data));
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_addUserSpaceMsgReply(data, wd, function(data) {
+				wd.close();
+				console.log('postDataPro_addUserSpaceMsgReply:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
+				if(data.RspCode == 0) {
+					mui.toast('成功')
+					document.getElementById('footer').className = '';
+					document.getElementById('footer').style.display = 'none';
+					leaveContent.value = '';
+					events.fireToPageNone('leave-sub.html', 'refreshLeaveList');
+				} else {
+					mui.toast(data.RspTxt);
 				}
-					var leaveContent = document.getElementById('msg-content');
-					var tempText= leaveContent.value;
-				if(!tempText||tempText=='') {
-					mui.toast('请输入留言');
-					return;
-				}else{
-					tempText = replaceAllBL(tempText);
-				}
-				data.msgContent = tempText;
-				console.log('data === ' + JSON.stringify(data));
-								var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				postDataPro_addUserSpaceMsgReply(data, wd, function(data) {
-					wd.close();
-					console.log('postDataPro_addUserSpaceMsgReply:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
-					if(data.RspCode == 0) {
-						mui.toast('成功')
-						document.getElementById('footer').className = '';
-							document.getElementById('footer').style.display = 'none';
-							jQuery('#msg-content').blur();
-						leaveContent.value = '';
-						events.fireToPageNone('leave-sub.html','refreshLeaveList');
-					} else {
-						mui.toast(data.RspTxt);
-					}
-				})
-					console.log('点击回复');
-				})
-			</script>
+			})
+			
+		})
+	</script>
 
 </html>
