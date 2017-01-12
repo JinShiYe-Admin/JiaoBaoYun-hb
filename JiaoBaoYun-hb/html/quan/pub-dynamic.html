@@ -9,12 +9,6 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/quan/class_space.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
-		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/mui.min.js"></script>
-	<script src="../../js/utils/camera.js"></script>
-	<script src="../../js/utils/files.js"></script>
-	<script src="../../js/utils/ASFiles.js"></script>
-	<script src="../../js/publicProtocol.js"></script>
 
 	</head>
 
@@ -39,7 +33,12 @@
 			</div>
 		</div>
 	</body>
-	
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/utils/events.js"></script>
+	<script src="../../js/utils/camera.js"></script>
+	<script src="../../js/utils/files.js"></script>
+	<script src="../../js/utils/ASFiles.js"></script>
+	<script src="../../js/publicProtocol.js"></script>
 	<script>
 	</script>
 	<script type="text/javascript">
@@ -68,9 +67,9 @@
 					});
 				});
 				events.addTap('get_gallery', function() {
-//					gallery.getMultiplePic(function(paths){
-//						
-//					});
+					gallery.getMultiplePic(function(paths){
+						
+					});
 				});
 				//发布按钮
 				events.addTap('publish', function() {
@@ -90,7 +89,7 @@
 						userId: userInfo.utid,
 						msgContent: tempText,
 						noteType: '2',
-						encType: '3',
+						encType: '0',
 						encAddr: '',
 						encImg: '',
 						encIntro: ''
