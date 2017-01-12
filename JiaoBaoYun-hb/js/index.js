@@ -7,6 +7,7 @@
 mui.init();
 
 mui.plusReady(function() {
+	//安卓的连续点击两次退出程序
 	var backButtonPress = 0;
 	mui.back = function(event) {
 		backButtonPress++;
@@ -20,24 +21,25 @@ mui.plusReady(function() {
 		}, 1000);
 		return false;
 	};
+
 	slideNavigation.add('mine.html', 200)
 	window.addEventListener('infoChanged', function() {
 		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 		document.querySelector('img').src = img ? img : storageKeyName.storageKeyName.DEFAULTPERSONALHEADIMAGE;
-	})
+	});
 	window.addEventListener('aboutmNoRead', function() {
 		getAboutMe();
-	})
+	});
 
 	getAboutMe(); //获取与我相关未读数
 
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
-	var subpages = ['../quan/tab-zone.html', '../tab_knowledge.html', '../cloud/cloud_home.html'];
-	var titles = ['家校圈', '问答', '云盘'];
+	var subpages = ['../cloud/cloud_home.html', '../scienceeducation/scienceeducation_home.html', '../show/show_home.html', '../qiuzhi/qiuzhi_home.html'];
+	var titles = ['首页', '科教', '展现', '求知'];
 	//设置子页面距离顶部的位置
 
 	var subpage_style = {
@@ -49,7 +51,7 @@ mui.plusReady(function() {
 
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
 	var self = plus.webview.currentWebview();
-	for(var i = 0; i < 3; i++) {
+	for(var i = 0; i < 4; i++) {
 		var temp = {};
 		var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
 		if(i > 0) {
@@ -72,12 +74,10 @@ mui.plusReady(function() {
 		if(targetTab == activeTab) {
 			return;
 		}
-
 		//更换标题
 		title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
-		if(title.innerHTML == '家校圈') {
+		if(title.innerHTML == '首页') {
 			title.innerHTML = '';
-
 		}
 		changRightIcons(title.innerHTML)
 			//显示目标选项卡
@@ -90,14 +90,6 @@ mui.plusReady(function() {
 			temp[targetTab] = "true";
 			mui.extend(aniShow, temp);
 			plus.webview.show(targetTab, "fade-in", 300);
-		}
-		//当切换到云盘界面时
-		if(targetTab == '../tab_cloud.html') {
-			console.log('targetTab:' + targetTab);
-			var tab = plus.webview.getWebviewById(targetTab);
-			mui.fire(tab, "isVisible", {
-				isVisible: true
-			});
 		}
 
 		//隐藏当前;
@@ -139,6 +131,7 @@ mui.plusReady(function() {
 		});
 	}
 
+	//获取与我相关
 	function getAboutMe() {
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 		//56.（用户空间）获取与我相关
@@ -171,28 +164,34 @@ mui.plusReady(function() {
 			}
 		});
 	}
+
+	/**
+	 * 修改顶部导航
+	 * @param {Object} title 标题
+	 */
 	var changRightIcons = function(title) {
 		var iconContainer = document.getElementById('random_icon');
 		while(iconContainer.firstElementChild) {
 			iconContainer.removeChild(iconContainer.firstElementChild);
 		}
-
 		switch(title) {
 			case '':
 				addZoneIcon(iconContainer);
+			case '科教':
 				break;
-			case '问答':
+			case '展现':
 				break;
-			case '视频':
-				break;
-			case '云盘':
-				addCloudIcon(iconContainer);
+			case '求知':
 				break;
 			default:
 				break;
 		}
-
 	}
+
+	/**
+	 * 修改首页顶部导航
+	 * @param {Object} container
+	 */
 	var addZoneIcon = function(container) {
 		var pubDynamic = document.createElement('a');
 		pubDynamic.id = 'pubDynamic'
@@ -228,6 +227,10 @@ mui.plusReady(function() {
 		})
 	}
 
+	/**
+	 * 修改云盘顶部导航
+	 * @param {Object} container
+	 */
 	var addCloudIcon = function(container) {
 		var a = document.createElement('a');
 		a.className = 'mui-icon iconfont icon-upload mui-pull-right';
@@ -236,6 +239,7 @@ mui.plusReady(function() {
 		});
 		container.appendChild(a)
 	}
+
 	var aboutme = document.getElementById('aboutme');
 	events.addTap('aboutme', function() {
 		events.openNewWindow('../quan/aboutme.html')
@@ -245,9 +249,10 @@ mui.plusReady(function() {
 	})
 	var pubDynamic = document.getElementById('pubDynamic');
 	events.addTap('pubDynamic', function() {
-			events.openNewWindowWithData('../quan/pub-dynamic.html', 'FromIndex');
-		})
-		//自定义事件，模拟点击“首页选项卡”
+		events.openNewWindowWithData('../quan/pub-dynamic.html', 'FromIndex');
+	});
+
+	//自定义事件，模拟点击“首页选项卡”
 	document.addEventListener('gohome', function() {
 		var defaultTab = document.getElementById("defaultTab");
 		//模拟首页点击
