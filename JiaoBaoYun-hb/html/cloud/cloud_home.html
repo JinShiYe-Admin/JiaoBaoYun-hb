@@ -163,7 +163,15 @@
 			}
 
 			.iconfont {
+				/*存储文件的图标*/
 				font-size: 45px;
+			}
+
+			.cloud-iconfont {
+				/*其他图标*/
+				font-size: 30px;
+				color: white;
+				line-height: 50px;
 			}
 
 			.mui-table-view.mui-grid-view .cloud-font {
@@ -207,7 +215,21 @@
 							<li class="mui-table-view-cell mui-media cloud-font" style="width: 16%;">
 								云<br/>盘
 							</li>
-							<li class="mui-table-view-cell mui-media" style="padding: 5px;margin: 0;width: 84%;border-left: 1px solid #d9d9d9;">
+							<li class="mui-table-view-cell mui-media" style="padding: 5px;margin: 0;width:84%;border-left: 1px solid #d9d9d9;">
+								<div id="cloudstorage_0" class="mui-row">
+									<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center">
+										<div class="cloud-bottom-imge2-bg" style="background: #7F4CE6;">
+											<span class="mui-icon iconfont cloud-iconfont icon-tongxunlu"></span>
+										</div>
+										<p class="mui-ellipsis">手机通讯录</p>
+									</div>
+									<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center">
+										<div class="cloud-bottom-imge2-bg" style="background: #0ABAF5;">
+											<span class="mui-icon iconfont cloud-iconfont icon-tuku"></span>
+										</div>
+										<p class="mui-ellipsis">手机图库</p>
+									</div>
+								</div>
 								<div id="record_row" class="mui-row">
 									<!--<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center">
 									<div class="cloud-bottom-imge2-bg">
@@ -250,14 +272,15 @@
 							<li class="mui-table-view-cell mui-media" style="padding: 5px;margin: 0;width:84% ;border-left: 1px solid #d9d9d9;">
 								<div class="mui-row">
 									<div id="homework" class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center">
-										<div class="cloud-bottom-imge2-bg">
-											<img class="cloud-bottom-imge2-bg" src="../../image/cloud/operation.png" />
+										<div class="cloud-bottom-imge2-bg" style="background: #0ABAF5;">
+											<!--<img class="cloud-bottom-imge2-bg" src="../../image/cloud/operation.png" />-->
+											<span class="mui-icon iconfont cloud-iconfont icon-kangfuzuoye"></span>
 										</div>
 										<p class="mui-ellipsis" style="margin-top:5px;">作业</p>
 									</div>
 									<div id="manage" class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center">
-										<div class="cloud-bottom-imge2-bg">
-											<img class="cloud-bottom-imge2-bg" src="../../image/cloud/operation.png" />
+										<div class="cloud-bottom-imge2-bg" style="background: #FFBA00;">
+											<span class="mui-icon iconfont cloud-iconfont icon-qunguanli"></span>
 										</div>
 										<p class="mui-ellipsis" style="margin-top:5px;">班级管理</p>
 									</div>
@@ -272,14 +295,16 @@
 							<li class="mui-table-view-cell mui-media" style="padding: 5px;margin: 0;width: 84%;border-left: 1px solid #d9d9d9;">
 								<div class="mui-row">
 									<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="0">
-										<div class="cloud-bottom-imge2-bg">
-											<img class="cloud-bottom-imge2" src="../../image/cloud/notes.png" />
+										<div class="cloud-bottom-imge2-bg" style="background: #F73D87;">
+											<!--<img class="cloud-bottom-imge2" src="../../image/cloud/notes.png" />-->
+											<span class="mui-icon iconfont cloud-iconfont icon-biji2"></span>
 										</div>
 										<p class="mui-ellipsis" style="margin-top:5px;">笔记</p>
 									</div>
 									<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="1">
-										<div class="cloud-bottom-imge2-bg">
-											<img class="cloud-bottom-imge2" src="../../image/cloud/note.png" />
+										<div class="cloud-bottom-imge2-bg" style="background: #FF970F;">
+											<!--<img class="cloud-bottom-imge2" src="../../image/cloud/note.png" />-->
+											<span class="mui-icon iconfont cloud-iconfont icon-biji1"></span>
 										</div>
 										<p class="mui-ellipsis" style="margin-top:5px;">记事</p>
 									</div>
@@ -340,7 +365,7 @@
 					//changeInfo();
 					changeData();
 					events.fireToPageNone('storage_upload.html', 'createFolder'); //在程序中创建utid的文件夹和对应的上传下载文件夹
-					fileArray = []
+					fileArray = [];
 				});
 
 				//修改用户信息
@@ -397,14 +422,14 @@
 				});
 
 				//云存储右侧按钮
-//				mui('#cloudstorage').on('tap', '.mui-icon-arrowright', function() {
-//					events.fireToPageWithData('storage_main.html', 'init', {
-//						fid: '0', //文件id,顶层0
-//						showTop: true, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
-//						title: '云盘—云存储', //标题名
-//						top: fileArray //顶层文件和文件夹的数据
-//					});
-//				});
+				//				mui('#cloudstorage').on('tap', '.mui-icon-arrowright', function() {
+				//					events.fireToPageWithData('storage_main.html', 'init', {
+				//						fid: '0', //文件id,顶层0
+				//						showTop: true, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
+				//						title: '云盘—云存储', //标题名
+				//						top: fileArray //顶层文件和文件夹的数据
+				//					});
+				//				});
 
 				//增加文件夹
 				mui('#cloudstorage').on('tap', '#addFolder', function(e) {
@@ -576,7 +601,7 @@
 							});
 							if(folder < 4) {
 								mui.each(data.RspData, function(index, element) {
-									if(folder == 3) {
+									if(folder == 4) {
 										return false;
 									}
 									if(element.ftype != '.file') {
@@ -668,7 +693,7 @@
 					var div = document.createElement('div');
 					div.id = 'addFolder';
 					div.className = 'mui-col-sm-3 mui-col-xs-3';
-					div.innerHTML = '<img class="cloud-bottom-imge" style="margin-top: 4px;" src="../../image/cloud/A_addfolder.png" /><p class="mui-ellipsis"> </p>';
+					div.innerHTML = '<span class="mui-icon iconfont icon-newfolder" style="color: #0ABAF5;"></span><p class="mui-ellipsis">新建文件夹</p>';
 					table.appendChild(div);
 				}
 
@@ -680,8 +705,8 @@
 					var div = document.createElement('div');
 					div.setAttribute('data-studentName', data);
 					div.className = 'mui-col-sm-3 mui-col-xs-3 cloud-text-align-center';
-					div.innerHTML = '<div class="cloud-bottom-imge2-bg">\
-										<img class="cloud-bottom-imge2" src="../../image/cloud/archives.png" />\
+					div.innerHTML = '<div class="cloud-bottom-imge2-bg" style="background: #ff970f;">\
+										<span class="mui-icon iconfont cloud-iconfont icon-dangan"></span>\
 									</div>\
 									<p class="mui-ellipsis" style="margin-top:5px;">' + data.StudentName + '档案</p>';
 					document.getElementById("record_row").insertBefore(div, document.getElementById("learningpath"));
