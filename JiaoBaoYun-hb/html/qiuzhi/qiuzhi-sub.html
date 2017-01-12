@@ -1,54 +1,51 @@
-<!--
-	作者：444811716@qq.com
-	时间：2017-01-12
-	描述：求知首页
--->
 <!doctype html>
 <html>
 
 	<head>
 		<meta charset="UTF-8">
-		<title>求知</title>
+		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/qiuzhi/qiuzhi.css" rel="stylesheet" />
 	</head>
 
 	<body>
 		<div class="mui-content">
-			<div class="navigation" role="navigation">
-				<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted main-navigation">
-					<div class="mui-scroll tabs-classes">
+			<div>
+				<div>
+					<p>专家风采</p>
+				</div>
+				<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-scroll">
 						<a class="mui-control-item mui-active">
-							全部
+							专家0
 						</a>
 						<a class="mui-control-item">
-							教学
+							专家1
 						</a>
 						<a class="mui-control-item">
-							健康
+							专家2
 						</a>
 						<a class="mui-control-item">
-							美食
+							专家3
 						</a>
-						<a class="mui-control-item">
-							其他
-						</a>
+
 					</div>
 				</div>
-				<div class="more-navigation">
-					<a>
-						导航
-					</a>
-				</div>
 			</div>
+			<div class="mui-scroll">
+				<ul class="mui-table-view">
+				</ul>
+			</div>
+			<a id="submit-question" class="mui-icon iconfont icon-bianji"></a>
 		</div>
+		
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/h5fresh.js"></script>
 		<script src="../../js/utils/events.js"></script>
-		<script type="text/javascript">
-			events.initSubPage('qiuzhi-sub.html');
-		</script>
+		<script src="../../js/qiuzhi/qiuzhi-sub.js"></script>
 	</body>
 
 </html>

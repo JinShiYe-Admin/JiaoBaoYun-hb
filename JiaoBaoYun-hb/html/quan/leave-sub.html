@@ -21,12 +21,13 @@
 				background: white;
 				/*背景色透明*/
 			}
+			
 			.mui-table-view-cell {
 				background: white;
 				/*cell 背景设为白色*/
-			/*padding: 0;*/
-			/*内边距为0*/
-			/*margin-bottom: 10px;*/
+				/*padding: 0;*/
+				/*内边距为0*/
+				/*margin-bottom: 10px;*/
 			}
 			
 			.mui-table-view:before,
@@ -89,16 +90,19 @@
 				right: 10px;
 				display: inline-block;
 				width: 20%;
+				background-color: rgb(43, 176, 238);
+				border-color: rgb(43, 176, 238);
+				color: white;
 			}
 		</style>
 	</head>
 
 	<body>
-		<footer id="footer" class="mui-bar mui-bar-tab" style="display: none;">
+		<footer id="footer" class="mui-bar-tab">
 			<div class="footer-center">
-				<textarea onblur="inputOnblur(this)" id='msg-content' type="text" class='input-text' placeholder="123"></textarea>
+				<textarea onblur="inputOnblur(this)" id='msg-content' type="text" class='input-text' placeholder=""></textarea>
 			</div>
-			<button id='btn-reply' class="mui-btn mui-btn-green btn-commit">回复</button>
+			<button id='btn-reply' class="mui-btn btn-commit">发送</button>
 		</footer>
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
@@ -185,8 +189,7 @@
 			if(input.id == 'msg-content') {
 				var inputComment = document.getElementById("msg-content");
 				inputComment.value = '';
-				document.getElementById('footer').className = '';
-				document.getElementById('footer').style.display = 'none';
+				inputComment.placeholder = '';
 			} else {
 				if(input.value == '' || input.value == null) {
 					mui.toast('主人寄语不能为空');
@@ -340,13 +343,10 @@
 							tempPage = 1;
 							leaveArray = tempRspData;
 							tempArrayLength = leaveArray.length;
-							console.log('1111111111====' + tempArrayLength);
 						} else {
 							tempArrayLength = leaveArray.length;
-							console.log('2222222222====' + tempArrayLength);
 							//合并数组
 							leaveArray = leaveArray.concat(tempRspData);
-							console.log('33333333333====' + leaveArray.length);
 						}
 						//留言总条数
 						totalCnt = data.RspData.TotalCnt;
@@ -409,7 +409,7 @@
 			for(var i = len; i < leaveArray.length; i++) {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell ableSelectedCell';
-				li.id = 'reply'+i
+				li.id = 'reply' + i
 				var commentArr = leaveArray[i].Replys;
 				li.innerHTML = '<div style="padding:12px">' +
 					'<div class="mui-media-body mui-pull-left">' +
@@ -424,16 +424,33 @@
 				ul.appendChild(li);
 				for(var j = 0; j < commentArr.length; j++) {
 					var li = document.createElement('li');
-					li.className = 'mui-table-view-cell';
-					li.innerHTML = '<div style="padding:12px">' +
+					li.className = 'mui-table-view-cell ableSelectedCell1';
+					if(commentArr[j].UserId!=userId){
+						li.innerHTML = '<div style="padding:12px">' +
+					'<div class="mui-media-body mui-pull-left">' +
+					'<img class=" dynamic-personal-image" src="' + commentArr[j].uimg + '">' +
+					'</div>' +
+					'<div class="mui-media-body dynamic-padding-left-10px">' +
+					'<h6>' + commentArr[j].unick + '</h6>' +
+					'</div></div>' +
+					'<div style= "margin-top:-10px"  class = "chat_content_left">'+ '<span style = "color:rgb(43,176,238);font-size:14px;" class="mui-ellipsis">' +
+						'@' + commentArr[j].ReplyIdName + '</span> ' +
+					commentArr[j].MsgContent +
+					'<p style="float:right">' + commentArr[j].MsgDate + '</p></div>'
+					}else{
+						li.innerHTML = '<div style="padding:12px">' +
 						'<div class="mui-media-body mui-pull-right">' +
 						'<img class=" dynamic-personal-image" src="' + commentArr[j].uimg + '">' +
 						'</div>' +
 						'<div class="mui-media-body" style = "text-align: right;padding-right:10px">' +
-						'<h6>' + commentArr[j].unick + '</h6>' +
+						'<h6>' + commentArr[j].unick+ '</h6>' +
 						'</div></div>' +
-						'<div style= "margin-top:-5px; "  class = "chat_content_right">' +'<div class="chat-body" style = "text-align: right;">'+'<div>'+'<font style = "color:rgb(43,176,238);font-size:14px;text-overflow:ellipsis">'+'@'+commentArr[j].ReplyIdName+'</font> '+
-						commentArr[j].MsgContent+'<p style="float:left">' + leaveArray[i].MsgDate + '</p></div></div></div>';
+						'<div style= "margin-top:-5px; "  class = "chat_content_right">' + '<div class="chat-body ">' +
+						'<div >' + '<span style = "font-size:14px;" class=" mui-pull-right">' +'<span style = "color:rgb(43,176,238);">'+
+						'@' + commentArr[j].ReplyIdName +'</span>' +'<span>'+" "+
+						commentArr[j].MsgContent+ '</span> '+ '</span> ' + '<p class="mui-pull-left">' + commentArr[j].MsgDate + '</p></div></div></div>';
+					}
+					
 					ul.appendChild(li);
 					//					'</font></div>';
 				}
@@ -444,33 +461,21 @@
 				mui('#pullrefresh').pullRefresh().endPullupToRefresh();
 			}
 
-			console.log(ul.innerHTML);
 			//点击回复
-			mui('.mui-table-view').on('tap','.ableSelectedCell', function() {
-				console.log(777777)
+			mui('.mui-table-view').on('tap', '.ableSelectedCell', function() {
 				var replyContainer = document.getElementById('footer');
-				document.getElementById('footer').className = 'mui-bar-tab';
-				replyContainer.style.display = 'block';
 				var leaveContent = document.getElementById('msg-content');
-			
 				showSoftInput('#msg-content');
 				cellIndex = this.id.replace('reply', '');
-				leaveContent.placeholder = '@'+leaveArray[cellIndex].unick;
+				leaveContent.placeholder = '@' + leaveArray[cellIndex].unick;
 				console.log(cellIndex);
 
 			});
 		}
 
 		events.addTap('btn-reply', function() {
-			console.log('点击回复');
-			console.log(cellIndex);
-			var data = {
-				userId: personalUTID,
-				upperId: leaveArray[cellIndex].TabId,
-				replyUserId: leaveArray[cellIndex].UserId,
-				userOwnerId: userId,
-			}
-			
+			console.log('点击发送');
+			var leaveContent = document.getElementById('msg-content');
 			var tempText = leaveContent.value;
 			if(!tempText || tempText == '') {
 				mui.toast('请输入留言');
@@ -478,23 +483,48 @@
 			} else {
 				tempText = replaceAllBL(tempText);
 			}
-			data.msgContent = tempText;
-			console.log('data === ' + JSON.stringify(data));
+			var data = {};
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_addUserSpaceMsgReply(data, wd, function(data) {
-				wd.close();
-				console.log('postDataPro_addUserSpaceMsgReply:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
-				if(data.RspCode == 0) {
-					mui.toast('成功')
-					document.getElementById('footer').className = '';
-					document.getElementById('footer').style.display = 'none';
-					leaveContent.value = '';
-					events.fireToPageNone('leave-sub.html', 'refreshLeaveList');
-				} else {
-					mui.toast(data.RspTxt);
+
+			if(leaveContent.placeholder == '') {
+				data = {
+					userId: personalUTID,
+					userOwnerId: userId,
+					msgContent: tempText
 				}
-			})
-			
+				postDataPro_addUserSpaceMsg(data, wd, function(data) {
+					wd.close();
+					console.log('addUserSpaceMsg:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
+					if(data.RspCode == 0) {
+						mui.toast('成功')
+						leaveContent.value = '';
+						events.fireToPageNone('leave-sub.html', 'refreshLeaveList');
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				})
+			} else {
+				data = {
+					userId: personalUTID,
+					upperId: leaveArray[cellIndex].TabId,
+					replyUserId: leaveArray[cellIndex].UserId,
+					userOwnerId: userId,
+					msgContent: tempText
+				}
+				postDataPro_addUserSpaceMsgReply(data, wd, function(data) {
+					wd.close();
+					console.log('postDataPro_addUserSpaceMsgReply:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
+					if(data.RspCode == 0) {
+						mui.toast('成功')
+						leaveContent.value = '';
+						leaveContent.placeholder = '';
+						events.fireToPageNone('leave-sub.html', 'refreshLeaveList');
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				})
+			}
+
 		})
 	</script>
 

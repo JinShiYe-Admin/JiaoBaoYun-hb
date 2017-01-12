@@ -1734,16 +1734,19 @@
 					"css/home/index.css",
 					"image/utils/default_personalimage.png",
 					"js/publicHomeworkProtocol.js",
-					"html/tab_knowledge.html"
+					"html/tab_knowledge.html",
+					"html/cloud/cloud_home.html"
 				],
 				"refer": [
-					"html/cloud/cloud_home.html",
 					"html/mine.html",
 					"html/clip/clip_sub.html",
 					"html/quan/class-dynamic.html",
 					"html/quan/aboutme.html",
 					"html/index/mine.html",
-					"html/quan/pub-dynamic.html"
+					"html/quan/pub-dynamic.html",
+					"html/scienceeducation/scienceeducation_home.html",
+					"html/show/show_home.html",
+					"html/qiuzhi/qiuzhi_home.html"
 				],
 				"priority": 0
 			},
@@ -2427,6 +2430,62 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/qiuzhi_home.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"html/qiuzhi/qiuzhi-sub.html",
+					"css/qiuzhi/qiuzhi.css",
+					"js/utils/events.js",
+					"css/utils/common.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/qiuzhi-sub.html": {
+				"resources": [
+					"js/utils/h5fresh.js",
+					"js/mui.min.js",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"css/qiuzhi/qiuzhi.css",
+					"js/qiuzhi/qiuzhi-sub.js",
+					"css/iconfont/iconfont.css",
+					"fonts/iconfont.ttf"
+				],
+				"refer": [
+					"html/qiuzhi/qiuzhi-question.html"
+				],
+				"priority": 0
+			},
+			"html/qiuzhi/qiuzhi-question.html": {
+				"resources": [
+					"css/iconfont/iconfont.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"fonts/iconfont.ttf",
+					"css/utils/common.css",
+					"html/qiuzhi/qiuzhi-questionSub.html",
+					"js/utils/events.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/qiuzhi-questionSub.html": {
+				"resources": [
+					"js/qiuzhi/qiuzhi-questionSub.js",
+					"css/qiuzhi/qiuzhi-questionSub.css",
+					"css/iconfont/iconfont.css",
+					"js/mui.min.js",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0
