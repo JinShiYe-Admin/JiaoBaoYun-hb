@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/quan/about-me.css" />
+		<link rel="stylesheet" href="../../css/utils/bubble.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
@@ -17,17 +18,17 @@
 
 		<style>
 			.mui-table-view {
-				background: transparent;
+				background: white;
 				/*背景色透明*/
 			}
 			
-			.mui-table-view-cell {
+			/*.mui-table-view-cell {
 				background: white;
 				/*cell 背景设为白色*/
-				padding: 0;
+				/*padding: 0;*/
 				/*内边距为0*/
-				margin-bottom: 10px;
-			}
+				/*margin-bottom: 10px;*/
+			/*}*/
 			
 			.mui-table-view:before,
 			.mui-table-view:after,
@@ -410,17 +411,24 @@
 				replyHTML = '';
 				var commentHTML = '';
 				if(userId==personalUTID){
-					replyHTML = '回复'
+					replyHTML = ''
 				}else{
 					replyHTML = '';
 				}
 				for(var j=0;j<commentArr.length;j++){
-					commentHTML =commentHTML + '<div style="padding:0px 10px 10px 10px"><span id="reply" class=" dynamic-comment-name">'+commentArr[j].unick +':</span><font class="common-font-family-Regular">' + commentArr[j].MsgContent +
-					'</font></div>';
+					var li = document.createElement('li');
+				li.className = 'mui-table-view-cell';
+					li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-right"><img class=" dynamic-personal-image" src="'+leaveArray[i].uimg+'"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply'
+					+i+'"class=" mui-pull-right dynamic-comment-name leaveReply">'+replyHTML +
+					'</span><h6>' + commentArr[j].unick + '</h6>' + '</div></div><div style= "margin-top:-10px"  class = "chat_content_right">'+commentArr[j].MsgContent+'</div>';
+			ul.appendChild(li);
+//					commentHTML =commentHTML + '<div style="padding:0px 10px 10px 10px"><span id="reply" class=" dynamic-comment-name">'+commentArr[j].unick +':</span><font class="common-font-family-Regular">' + commentArr[j].MsgContent +
+//					'</font></div>';
 				}
+				commentHTML=''; 
 					li.innerHTML = '<div style="padding:12px"><div class="mui-media-body mui-pull-left"><img class=" dynamic-personal-image" src="'+leaveArray[i].uimg+'"></div><div class="mui-media-body dynamic-padding-left-10px"><span id="reply'
 					+i+'"class=" mui-pull-right dynamic-comment-name leaveReply">'+replyHTML +
-					'</span><h4>' + leaveArray[i].unick + '</h4><p>' + leaveArray[i].MsgDate + '</p></div></div><div style="padding:0px 10px 10px 10px"><font>'+leaveArray[i].MsgContent+'</font></div>'+commentHTML;
+					'</span><h6>' + leaveArray[i].unick + '</h6>' + '</div></div><div style= "margin-top:-10px"  class = "chat_content_left">'+leaveArray[i].MsgContent+'</div>'+commentHTML;
 			ul.appendChild(li);
 			}
 			if(flag==1){
