@@ -75,10 +75,11 @@ var events = (function(mod) {
 	 * @param {Object} subPage 子页面路径
 	 * @param {Object} datas 向子页面加载的数据，可选参数
 	 */
-	mod.initSubPage = function(subPage, datas) {
+	mod.initSubPage = function(subPage, datas,height) {
 		if(!datas) {
 			datas = null;
 		}
+		height=height?height:0;
 		mui.init({
 			gestureConfig: {
 				doubletap: true //启用双击监听
@@ -87,7 +88,7 @@ var events = (function(mod) {
 				url: subPage,
 				id: subPage,
 				styles: {
-					top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px',
+					top: (localStorage.getItem('StatusHeightNo') * 1 + 45+height) + 'px',
 					bottom: '0px',
 				},
 				extras: {
