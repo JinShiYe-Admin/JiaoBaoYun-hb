@@ -316,13 +316,16 @@ var publicModel = (function($, mod) {
 		TabId:'',//	问题ID
 		AskTitle:'',//问题标题
 		AskNote:'',//问题说明
-		AskChannel:'',//	问题话题
+		AskChannelId:'',//问题所属话题ID
+		AskChannel:'',//	问题所属话题
 		ReadNum:'',//阅读数
 		AnswerNum:'',//回答数
 		FocusNum:'',//关注数
 		AskMan:'',//	提问人
 		AskTime:'',//提问时间
 		IsAnonym	:'',//是否匿名
+		TotalPage:'',//评论总页数
+		TotalCnt:'',//评论总记录数,用于分页，结果应该与AnswerNum相同
 		Answers:'',//	回答列表,Array[model_QZAnswer]
 		
 		AskId:''//问题ID
@@ -340,6 +343,7 @@ var publicModel = (function($, mod) {
 	
 	//某个回答的详情--求知
 	mod.model_QZAnswersDetail = {
+		AnswerId:'',//回答ID
 		TabId:'',//	回答ID
 		AskId:'',//	问题ID
 		AskTitle:'',//	问题标题
@@ -350,9 +354,7 @@ var publicModel = (function($, mod) {
 		CommentNum:'',//	回答评论数
 		TotalPage:'',//	评论总页数
 		TotalCnt	:'',//评论总记录数,用于分页，结果应该与CommentNum相同
-		Comments	:'',//评论列表,Array[model_QZComment]
-		
-		AnswerId:''//回答ID
+		Comments	:''//评论列表,Array[model_QZComment]
 	}
 	
 	//回答详情--求知
