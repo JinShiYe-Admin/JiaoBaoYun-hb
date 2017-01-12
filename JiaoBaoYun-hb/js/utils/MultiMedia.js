@@ -18,67 +18,68 @@ var MultiMedia = (function($, mod) {
 		//		});
 
 		document.getElementById('MultiMedia_xiangji').addEventListener('tap', function() {
-			var btnArray = null;
-			switch(mod.MultiMediaType) {
-				case 0:
-					btnArray = [{
-						title: "拍取照片"
-					}, {
-						title: "录制视频(20M)"
-					}, {
-						title: "从相册选取照片"
-					}, {
-						title: "从相册选取视频(20M)"
-					}];
-					break;
-				case 1:
-					btnArray = [{
-						title: "拍取照片"
-					}, {
-						title: "从相册选取照片"
-					}];
-					break;
-				default:
-					console.log('MultiMediaType:' + mod.MultiMediaType);
-					break;
-
-			}
-			plus.nativeUI.actionSheet({
-				title: '选择文件的方式',
-				cancel: "取消",
-				buttons: btnArray
-			}, function(e) {
-				var index = e.index;
-				if(mod.MultiMediaType == 0) { //未选择
-					switch(index) {
-						case 1: //拍取照片
-							break;
-						case 2: //录制视频(20M)
-							break;
-						case 3: //从相册选取照片
-							mod.addPictures();
-							break;
-						case 4: //从相册选取视频(20M)
-							break;
-						default:
-							console.log('选择文件的方式:' + index);
-							break;
-					}
-				} else if(mod.MultiMediaType == 1) { //选择图片
-					switch(index) {
-						case 1: //拍取照片
-							break;
-						case 2: //从相册选取照片
-							mod.addPictures();
-							break;
-						default:
-							console.log('选择文件的方式:' + index);
-							break;
-					}
-				} else {
-					console.log('actionSheet|MultiMediaType:' + mod.MultiMediaType);
-				}
-			});
+			mui.toast('功能暂未开放');
+//			var btnArray = null;
+//			switch(mod.MultiMediaType) {
+//				case 0:
+//					btnArray = [{
+//						title: "拍取照片"
+//					}, {
+//						title: "录制视频(20M)"
+//					}, {
+//						title: "从相册选取照片"
+//					}, {
+//						title: "从相册选取视频(20M)"
+//					}];
+//					break;
+//				case 1:
+//					btnArray = [{
+//						title: "拍取照片"
+//					}, {
+//						title: "从相册选取照片"
+//					}];
+//					break;
+//				default:
+//					console.log('MultiMediaType:' + mod.MultiMediaType);
+//					break;
+//
+//			}
+//			plus.nativeUI.actionSheet({
+//				title: '选择文件的方式',
+//				cancel: "取消",
+//				buttons: btnArray
+//			}, function(e) {
+//				var index = e.index;
+//				if(mod.MultiMediaType == 0) { //未选择
+//					switch(index) {
+//						case 1: //拍取照片
+//							break;
+//						case 2: //录制视频(20M)
+//							break;
+//						case 3: //从相册选取照片
+//							mod.addPictures();
+//							break;
+//						case 4: //从相册选取视频(20M)
+//							break;
+//						default:
+//							console.log('选择文件的方式:' + index);
+//							break;
+//					}
+//				} else if(mod.MultiMediaType == 1) { //选择图片
+//					switch(index) {
+//						case 1: //拍取照片
+//							break;
+//						case 2: //从相册选取照片
+//							mod.addPictures();
+//							break;
+//						default:
+//							console.log('选择文件的方式:' + index);
+//							break;
+//					}
+//				} else {
+//					console.log('actionSheet|MultiMediaType:' + mod.MultiMediaType);
+//				}
+//			});
 		});
 	}
 

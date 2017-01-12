@@ -149,7 +149,7 @@
 			.mui-table-view {
 				background: transparent;
 				min-height: 90px;
-				margin: 20px 0 !important;
+				margin: 5px 0 !important;
 				padding: 16px 0 !important;
 			}
 
@@ -179,7 +179,7 @@
 			<div class="mui-scroll-wrapper">
 				<div class="mui-scroll">
 					<!--顶部-->
-					<div class="cloud-top" style="min-height: 100px;width:100%;">
+					<!--<div class="cloud-top" style="min-height: 100px;width:100%;">
 						<img id="imge_bg" src="../../image/cloud/cloud_bg2.png" style="width: 100%;position: absolute;" />
 						<div class="cloud-info" style="width: 100%;">
 							<div style="width: 45%;">
@@ -200,38 +200,14 @@
 							</div>
 						</div>
 					</div>
+					-->
 					<div id="bottom" style="width: 100%;position: relative;">
-						<!--云存储-->
+						<!--云盘-->
 						<ul id="cloudstorage" class="mui-table-view mui-grid-view " style="padding-right: 0px;">
-							<li class="mui-table-view-cell mui-media cloud-font">
-								存<br/>储
-							</li>
-							<li class="mui-table-view-cell mui-media " style="padding: 5px;margin: 0;width: 66%;border-left: 1px solid #d9d9d9;">
-								<div class="mui-row" id="cloudstoragefile">
-									<!--<div class="mui-col-sm-4 mui-col-xs-4 cloud-text-align-center">
-									<img class="cloud-bottom-imge" src="../../image/cloud/cloud_doc.png" />
-									<span class="mui-icon iconfont icon-txt"></span>
-									<p class="mui-ellipsis">泰国旅游照片泰国旅游照片</p>
-								</div>
-								<div class="mui-col-sm-4 mui-col-xs-4 cloud-text-align-center">
-									<img class="cloud-bottom-imge" src="../../image/cloud/A_folder.png" />
-									<p class="mui-ellipsis">H5基础视频</p>
-								</div>
-								<div class="mui-col-sm-4 mui-col-xs-4 " id="addFolder">
-									<img class="cloud-bottom-imge" style="margin-top: 4px;" src="../../image/cloud/A_addfolder.png" />
-								</div>-->
-								</div>
-							</li>
-							<li class="mui-table-view-cell mui-media " style="padding: 0;width:18%;">
-								<span class="mui-icon mui-icon-arrowright" style="color: #CCCCCC;"></span>
-							</li>
-						</ul>
-						<!--云档案-->
-						<ul id="cloudrecord" class="mui-table-view mui-grid-view">
 							<li class="mui-table-view-cell mui-media cloud-font" style="width: 16%;">
-								档<br/>案
+								云<br/>盘
 							</li>
-							<li class="mui-table-view-cell mui-media mui-col-sm-11 mui-col-xs-11 " style="padding: 5px;margin: 0;width:84% ;border-left: 1px solid #d9d9d9;">
+							<li class="mui-table-view-cell mui-media" style="padding: 5px;margin: 0;width: 84%;border-left: 1px solid #d9d9d9;">
 								<div id="record_row" class="mui-row">
 									<!--<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center">
 									<div class="cloud-bottom-imge2-bg">
@@ -247,6 +223,45 @@
 								</div>
 								-->
 								</div>
+								<div id="cloudstoragefile" class="mui-row" style="margin-top: 10px;">
+									<!--<div class="mui-col-sm-4 mui-col-xs-4 cloud-text-align-center">
+									<img class="cloud-bottom-imge" src="../../image/cloud/cloud_doc.png" />
+									<span class="mui-icon iconfont icon-txt"></span>
+									<p class="mui-ellipsis">泰国旅游照片泰国旅游照片</p>
+								</div>
+								<div class="mui-col-sm-4 mui-col-xs-4 cloud-text-align-center">
+									<img class="cloud-bottom-imge" src="../../image/cloud/A_folder.png" />
+									<p class="mui-ellipsis">H5基础视频</p>
+								</div>
+								<div class="mui-col-sm-4 mui-col-xs-4 " id="addFolder">
+									<img class="cloud-bottom-imge" style="margin-top: 4px;" src="../../image/cloud/A_addfolder.png" />
+								</div>-->
+								</div>
+							</li>
+							<!--<li class="mui-table-view-cell mui-media" style="padding: 0;width:18%;">
+								<span class="mui-icon mui-icon-arrowright" style="color: #CCCCCC;"></span>
+							</li>-->
+						</ul>
+						<!--家校互动-->
+						<ul id="cloudrecord" class="mui-table-view mui-grid-view">
+							<li class="mui-table-view-cell mui-media cloud-font" style="width: 16%;">
+								家<br />校<br />互<br />动
+							</li>
+							<li class="mui-table-view-cell mui-media" style="padding: 5px;margin: 0;width:84% ;border-left: 1px solid #d9d9d9;">
+								<div class="mui-row">
+									<div id="homework" class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center">
+										<div class="cloud-bottom-imge2-bg">
+											<img class="cloud-bottom-imge2-bg" src="../../image/cloud/operation.png" />
+										</div>
+										<p class="mui-ellipsis" style="margin-top:5px;">作业</p>
+									</div>
+									<div id="manage" class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center">
+										<div class="cloud-bottom-imge2-bg">
+											<img class="cloud-bottom-imge2-bg" src="../../image/cloud/operation.png" />
+										</div>
+										<p class="mui-ellipsis" style="margin-top:5px;">班级管理</p>
+									</div>
+								</div>
 							</li>
 						</ul>
 						<!--云应用-->
@@ -254,7 +269,7 @@
 							<li class="mui-table-view-cell mui-media cloud-font" style="width: 16%;">
 								应<br/>用
 							</li>
-							<li class="mui-table-view-cell mui-media mui-col-sm-11 mui-col-xs-11 " style="padding: 5px;margin: 0;width: 84%;border-left: 1px solid #d9d9d9;">
+							<li class="mui-table-view-cell mui-media" style="padding: 5px;margin: 0;width: 84%;border-left: 1px solid #d9d9d9;">
 								<div class="mui-row">
 									<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="0">
 										<div class="cloud-bottom-imge2-bg">
@@ -267,12 +282,6 @@
 											<img class="cloud-bottom-imge2" src="../../image/cloud/note.png" />
 										</div>
 										<p class="mui-ellipsis" style="margin-top:5px;">记事</p>
-									</div>
-									<div class="mui-col-sm-3 mui-col-xs-3 cloud-text-align-center" value="3">
-										<div class="cloud-bottom-imge2-bg">
-											<img class="cloud-bottom-imge2-bg" src="../../image/cloud/operation.png" />
-										</div>
-										<p class="mui-ellipsis" style="margin-top:5px;">作业</p>
 									</div>
 								</div>
 							</li>
@@ -312,15 +321,15 @@
 				//				}, 1000);
 				//-----------设置数据start---------------
 				//设置进度条进度
-				mui('.mui-progressbar').progressbar({
-					progress: 80
-				}).show();
+				//				mui('.mui-progressbar').progressbar({
+				//					progress: 80
+				//				}).show();
 
 				//增加存储文件，获取顶层文件夹
 				//26.用户云盘顶层文件及文件夹获取
 				//postFirstFile();
 
-				changeInfo();
+				//changeInfo();
 				changeData();
 				//73.73.（云档案）按家长获取学生档案姓名
 				//postUserStudent();
@@ -328,7 +337,7 @@
 				//重新登录或者自动登录后获取的信息
 				window.addEventListener('infoChanged', function() {
 					//设置页面信息
-					changeInfo();
+					//changeInfo();
 					changeData();
 					events.fireToPageNone('storage_upload.html', 'createFolder'); //在程序中创建utid的文件夹和对应的上传下载文件夹
 					fileArray = []
@@ -337,7 +346,7 @@
 				//修改用户信息
 				window.addEventListener('personChanged', function() {
 					//设置页面信息
-					changeInfo();
+					//changeInfo();
 				});
 
 				//修改云存储信息
@@ -362,7 +371,7 @@
 
 				//---存储start---
 				//云存储显示的文件
-				mui('#cloudstorage').on('tap', '.cloud-text-align-center', function() {
+				mui('#cloudstoragefile').on('tap', '.cloud-text-align-center', function() {
 					events.fireToPageWithData('storage_main.html', 'init', {
 						fid: '0', //文件id,顶层0
 						showTop: true, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
@@ -388,14 +397,14 @@
 				});
 
 				//云存储右侧按钮
-				mui('#cloudstorage').on('tap', '.mui-icon-arrowright', function() {
-					events.fireToPageWithData('storage_main.html', 'init', {
-						fid: '0', //文件id,顶层0
-						showTop: true, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
-						title: '云盘—云存储', //标题名
-						top: fileArray //顶层文件和文件夹的数据
-					});
-				});
+//				mui('#cloudstorage').on('tap', '.mui-icon-arrowright', function() {
+//					events.fireToPageWithData('storage_main.html', 'init', {
+//						fid: '0', //文件id,顶层0
+//						showTop: true, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
+//						title: '云盘—云存储', //标题名
+//						top: fileArray //顶层文件和文件夹的数据
+//					});
+//				});
 
 				//增加文件夹
 				mui('#cloudstorage').on('tap', '#addFolder', function(e) {
@@ -444,6 +453,11 @@
 
 				//---存储end---
 
+				//作业
+				document.getElementById('homework').addEventListener('tap', function() {
+					requestClassData();
+				});
+
 				//---应用---
 				mui('#cloudapps').on('tap', '.mui-col-sm-3', function() {
 					var value = this.getAttribute("value");
@@ -454,14 +468,9 @@
 						case "1": //记事
 							events.openNewWindow('app_keeprecord.html');
 							break;
-							//						case "2": //充值
-							//							events.openNewWindow('../quan/studentdynamic_main.html');
-							//							break;
-						case "3": //作业批改
-							requestClassData();
-							break;
 					}
 				});
+
 				/**
 				 * 获取用户所在群数据
 				 */
@@ -532,7 +541,7 @@
 						}
 					});
 				}
-				//
+
 				//26.用户云盘顶层文件及文件夹获取
 				function postFirstFile() {
 					//所需参数
@@ -557,7 +566,7 @@
 							//循环将获取到的值塞入界面
 							var folder = 0;
 							mui.each(data.RspData, function(index, element) {
-								if(folder == 3) {
+								if(folder == 4) {
 									return false;
 								}
 								if(element.ftype == '.file') {
@@ -565,7 +574,7 @@
 									addStorageFolder(element);
 								}
 							});
-							if(folder < 3) {
+							if(folder < 4) {
 								mui.each(data.RspData, function(index, element) {
 									if(folder == 3) {
 										return false;
@@ -577,7 +586,7 @@
 								});
 							}
 							//增加加号
-							if(fileArray.length < 3) {
+							if(fileArray.length < 4) {
 								addStorageIcon();
 							}
 						} else if(data.RspCode == 9) {
@@ -605,13 +614,13 @@
 						if(data.RspCode == 0) {
 							//设置页面显示
 							document.getElementById("record_row").innerHTML = '';
-							addLeaningPath(); //学习轨迹
+							//addLeaningPath(); //学习轨迹
 							mui.each(data.RspData.Students, function(index, item) {
 								//console.log('学生档案：' + index + '|' + JSON.stringify(item));
 								addRecord(item);
 							});
 						} else if(data.RspCode == 9) {
-							addLeaningPath(); //学习轨迹
+							//addLeaningPath(); //学习轨迹
 						} else {
 							mui.toast(data.RspTxt);
 						}
@@ -628,7 +637,7 @@
 					var table = document.getElementById("cloudstoragefile");
 					var div = document.createElement("div");
 					div.setAttribute('data-fid', data.fid);
-					div.className = 'mui-col-sm-4 mui-col-xs-4 cloud-text-align-center';
+					div.className = 'mui-col-sm-3 mui-col-xs-3 cloud-text-align-center';
 					var html1 = ''; //图标
 					var html2 = ''; //名字
 					if(data.ftype == '.file') { //文件夹
@@ -658,7 +667,7 @@
 					var table = document.getElementById("cloudstoragefile");
 					var div = document.createElement('div');
 					div.id = 'addFolder';
-					div.className = 'mui-col-sm-4 mui-col-xs-4';
+					div.className = 'mui-col-sm-3 mui-col-xs-3';
 					div.innerHTML = '<img class="cloud-bottom-imge" style="margin-top: 4px;" src="../../image/cloud/A_addfolder.png" /><p class="mui-ellipsis"> </p>';
 					table.appendChild(div);
 				}
