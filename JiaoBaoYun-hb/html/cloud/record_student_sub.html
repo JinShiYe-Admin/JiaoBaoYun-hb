@@ -228,28 +228,7 @@
 				}
 				//点到
 				if(item.NoteType == 1) { //1点到,2记事
-					var checkType = '';
-					switch(item.CheckType) { //1 正常2 旷课3 迟到4 早退5 其他
-						case 1:
-							checkType = '正常：';
-							break;
-						case 2:
-							checkType = '旷课：';
-							break;
-						case 3:
-							checkType = '迟到：';
-							break;
-						case 4:
-							checkType = '早退：';
-							break;
-						case 5:
-							checkType = '其他：';
-							break;
-						default:
-							console.log('点到类型出错！！！')
-							break;
-					}
-					itemData[1] = checkType + itemData[1];
+					itemData[1] = item.CheckTypeStr +' : '+ itemData[1];
 				}
 				//生成界面
 				studentdynamic.additem2(table, itemData, 'TabId' + item.TabId, item.PublisherName);

@@ -14,6 +14,11 @@
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<style>
+			body,
+			.mui-content {
+				/*background: white;*/
+			}
+
 			.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
@@ -28,11 +33,6 @@
 				/*无班级*/
 				text-align: center;
 				margin-top: 20px;
-			}
-
-			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~ .mui-slider-group .mui-slider-item {
-				border-top: 0px solid #c8c7cc;
-				border-bottom: 0px solid #c8c7cc;
 			}
 
 			.mui-segmented-control.mui-scroll-wrapper .mui-control-item {
@@ -58,9 +58,9 @@
 			.keep-line-blue {
 				/*群栏蓝竖线*/
 				position: absolute;
-				height: 41px;
+				height: 48px;
 				width: 5px;
-				top: 54px;
+				top: 50px;
 				background-color: #64A1EB;
 				z-index: 3;
 			}
@@ -129,8 +129,8 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<p class="mui-title common-color-white" >云盘—记事</p>
-			<span id="history" class=" mui-icon iconfont icon-lishijilu mui-pull-right" style="color: white;"></span>
+			<p class="mui-title common-color-white">云盘—记事</p>
+			<span id="history" class=" mui-icon iconfont icon-lishijilu mui-pull-right" style="color: white;display: none;"></span>
 		</header>
 		<div class="mui-content">
 			<div class="mui-popover" style="width: 100%;top: 150px;height: 200px;">
@@ -164,7 +164,7 @@
 			</div>-->
 			<div id="slider" class="mui-slider" style="display: none;">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div id="qunlist" class="mui-scroll">
+					<div id="qunlist" class="mui-scroll" style="background: #efeff4;">
 						<!--<a class="mui-control-item" href="#1001班" style="margin-left: 10px;">
 							1001班
 						</a>
@@ -176,6 +176,11 @@
 						</a>
 						<!--<div class="mui-icon mui-icon-plus addqun" style="position: absolute;border: 0px solid #ddd;font-size: 25px;color: #C7C7CC;right: 0px;"></div>-->
 					</div>
+				</div>
+			</div>
+			<div id="scrollwrapper" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<div id="all_mem"></div>
 				</div>
 			</div>
 			<!--<div id="bot_1001班" data-value="1001班" class=" bot" style="display: none;">
@@ -240,8 +245,9 @@
 				var qunlist = document.getElementById("qunlist"); //群名称显示栏
 				var controladd = document.getElementById("controladd"); //群名称显示栏添加群按钮前一个item
 				document.querySelector(".mui-content").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 5) + 'px';
-				document.querySelector(".keep-line-blue").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 54) + 'px';
-				document.querySelector(".keep-line-white").style.top = (localStorage.getItem('StatusHeightNo') * 1+ 45) + 'px';
+				document.querySelector(".keep-line-blue").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 55) + 'px';
+				document.querySelector(".keep-line-white").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
+				document.querySelector("#scrollwrapper").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 103) + 'px';
 
 				mui(".mui-scroll-wrapper").scroll({
 					scrollY: true, //是否竖向滚动
@@ -257,72 +263,6 @@
 
 				//---获取群数据---end---
 
-				//---创建群popover---start---
-				//				//关闭创建群界面
-				//				document.getElementById('closepop').addEventListener('tap', function() {
-				//					mui('.mui-popover').popover('hide');
-				//				});
-				//
-				//				//创建群
-				//				document.getElementById('createqun').addEventListener('tap', function() {
-				//					var inputqun = document.getElementById("inputqunname");
-				//					var name = inputqun.value; //创建的群名称
-				//					if(name == '') {
-				//						mui.toast('不允许为空');
-				//					} else {
-				//						//7.用户创建群
-				//						//需要参数
-				//						var comData = {
-				//							gname: name, //群名
-				//							gimg: '', //群头像
-				//						};
-				//						// 等待的对话框
-				//						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				//						postDataPro_PostCrGrp(comData, wd, function(data) {
-				//							wd.close();
-				//							console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-				//							if(data.RspCode == 0) {
-				//								mui.toast('创建群成功');
-				//								console.log('创建群成功');
-				//								if(qunList.length == 0) {
-				//									//移除没有班级的界面
-				//									document.getElementById("noqun").style.display = 'none';
-				//									document.getElementById("linewhite").style.display = 'inline';
-				//									document.getElementById("lineblue").style.display = 'inline';
-				//									document.body.querySelector('.mui-slider').style.display = 'inline';
-				//								}
-				//								//群头像未设定
-				//								var qun = {
-				//									gid: data.RspData,
-				//									gname: name,
-				//									gimg: ''
-				//								}
-				//								var hasGetMember = {
-				//									hasGetMem: false //记录是否已获得群成员
-				//								};
-				//								mui.extend(qun, hasGetMember); //合并两个对象
-				//								qunList.push(qun);
-				//								addQun(qun);
-				//								mui('.mui-popover').popover('hide');
-				//								inputqun.value = '';
-				//							} else {
-				//								mui.toast(data.RspTxt);
-				//								console.log('创建群失败：' + data.RspTxt);
-				//							}
-				//						});
-				//					}
-				//				});
-
-				//				//所有的添加群按钮监听
-				//				mui('.mui-content').on('tap', '.addqun', function() {
-				//					mui('.mui-popover').popover('show');
-				//				});
-				//---创建群popover---end---
-
-				//顶部导航关联按钮
-				//				document.getElementById('link').addEventListener('tap', function() {
-				//					events.openNewWindow('keeprecord_link.html');
-				//				});
 				//顶部导航历史按钮
 				document.getElementById('history').addEventListener('tap', function() {
 					var passData = show; //群id
@@ -344,10 +284,7 @@
 
 				//切换显示选中的群
 				mui('#qunlist').on('tap', 'a', function() {
-					//					var close = mui('.icon-close');
-					//					mui.each(close, function(index, item) {
-					//						item.style.display = 'none';
-					//					});
+					mui('#scrollwrapper').scroll().scrollTo(0, 0, 100); //100毫秒滚动到顶
 					document.getElementById('bot_' + show).style.display = 'none';
 					console.log('show:' + show);
 					console.log('qun:' + this.getAttribute('data-value'));
@@ -365,10 +302,10 @@
 
 				//监听点击成员
 				mui('.mui-content').on('tap', '.mui-table-view-cell', function() {
-					console.log('mui-table-view-cell-id:' + this.getAttribute('id'));
-					console.log('mui-table-view-cell-gid:' + this.getAttribute('data-gid'));
-					console.log('mui-table-view-cell-stuid:' + this.getAttribute('data-stuid'));
-					console.log('mui-table-view-cell-stuname:' + this.getAttribute('data-stuname'));
+					//console.log('mui-table-view-cell-id:' + this.getAttribute('id'));
+					//console.log('mui-table-view-cell-gid:' + this.getAttribute('data-gid'));
+					//console.log('mui-table-view-cell-stuid:' + this.getAttribute('data-stuid'));
+					//console.log('mui-table-view-cell-stuname:' + this.getAttribute('data-stuname'));
 					var gid = this.getAttribute('data-gid'); //群id
 					var gname = ''; //群名称
 					var stuid = this.getAttribute('data-stuid'); //资料id
@@ -387,86 +324,6 @@
 						stuname: stuname
 					});
 				});
-
-				//				//监听添加成员按钮班级
-				//				mui('.mui-content').on('tap', '.addmember', function(e) {
-				//					var id = this.getAttribute('data-id');
-				//					var addTable = document.getElementById('addmember_' + id);
-				//					e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
-				//					var btnArray = ['取消', '确定'];
-				//					mui.prompt('请输入添加的新成员：', '添加新成员', '新成员', btnArray, function(e) {
-				//						if(e.index == 1) {
-				//							//点击确定
-				//							if(e.value == '') {
-				//								mui.toast('不能为空');
-				//							} else {
-				//								//向服务器发送数据并获得成功的回调
-				//								var qunBot = document.getElementById("bot_" + id).querySelector('.mui-row');
-				//								//假数据
-				//								console.log('添加成员时设置的是假数据');
-				//								var mem = {
-				//									gid: id,
-				//									utid: '用户tid',
-				//									ugname: '用户在群昵称',
-				//									ugnick: e.value,
-				//									uimg: null,
-				//									ugtp: ''
-				//								}
-				//								addMember(qunBot, addTable, mem);
-				//							}
-				//						} else {
-				//							//点击取消
-				//						}
-				//					});
-				//				});
-				//
-				//				//长按成员显示删除成员按钮
-				//				mui('.mui-content').on('longtap', '.keep-member', function() {
-				//					var gid = this.getAttribute('data-gid'); //群id
-				//					var div = document.getElementById('bot_' + gid); //获得当前群的slider
-				//					var close = div.querySelectorAll('.icon-close'); //获得当前slider的删除按钮
-				//					mui.each(close, function(index, item) {
-				//						item.style.display = 'inline';
-				//					});
-				//				});
-				//
-				//				//删除按钮监听
-				//				mui('.mui-content').on('tap', '.icon-close', function(event) {
-				//
-				//					event.stopPropagation();
-				//					var gid = this.getAttribute('data-gid'); //群id
-				//					var utid = this.getAttribute('data-utid'); //成员id
-				//
-				//					var div = document.getElementById('bot_' + gid); //获得当前群的slider
-				//					var close = div.querySelectorAll('.icon-close'); //获得当前slider的删除按钮
-				//					mui.each(close, function(index, item) {
-				//						item.style.display = 'inline';
-				//					});
-				//
-				//					var btnArray = ['否', '是'];
-				//					mui.confirm('删除该成员，确认？', '删除群成员', btnArray, function(e) {
-				//						if(e.index == 1) {
-				//							console.log('删除');
-				//							//向服务器发送删除成员的请求成功后
-				//							var memId = 'member_' + utid;
-				//							var memTable = document.getElementById(memId);
-				//							var botTable = 'bot_' + gid;
-				//							var rowTable = document.getElementById(botTable).querySelector('.mui-row');
-				//							rowTable.removeChild(memTable); //删除成功
-				//							mui.toast('删除成功');
-				//						} else {
-				//							console.log('不删除');
-				//						}
-				//					});
-				//				});
-				//
-				//				//点击界面隐藏删除按钮
-				//				document.body.querySelector('.mui-content').addEventListener('tap', function() {
-				//					var close = mui('.icon-close');
-				//					mui.each(close, function(index, item) {
-				//						item.style.display = 'none';
-				//					});
-				//				});
 
 				//---方法---start---
 
@@ -587,7 +444,6 @@
 							document.getElementById("lineblue").style.display = 'none';
 							document.getElementById("history").style.display = 'none';
 							document.body.querySelector('.mui-slider').style.display = 'none';
-
 						} else {
 							//获取到数据
 							//document.getElementById("noqun").style.display = 'none';
@@ -595,6 +451,7 @@
 							document.getElementById("linewhite").style.display = 'inline';
 							document.getElementById("lineblue").style.display = 'inline';
 							document.body.querySelector('.mui-slider').style.display = 'inline';
+							document.getElementById("scrollwrapper").style.background = 'white';
 							mui.each(qunList, function(index, item) {
 								console.log('qunList:' + JSON.stringify(item));
 								addQun(item);
@@ -640,19 +497,15 @@
 					} else {
 						div.style.display = "none";
 					}
-					var html1 = '<div class="mui-scroll-wrapper" style="background: white;top: ' + (localStorage.getItem('StatusHeightNo') * 1 + 95) + 'px;">\
-									<div class="mui-scroll">\
-										<ul class="mui-table-view">\
-											<div class="mui-row" style="margin-top: 8px;">';
+					var html1 = '<ul class="mui-table-view">\
+									<div class="mui-row" style="margin-top: 8px;">';
 					//添加学生
 					var html2 = '';
 					html2 = '<li id="addmember_' + qun.gid + '" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3 "></li>';
-					//							   		<div class="keep-box-shadow-border keep-member2 addmember" data-id="' + qun.gid + '">\
-					//										<img src="../../image/cloud/record_add.png" style="height: 30px;width: 30px;margin-top: 18px;" />\
-					//									</div></li>';
-					var html3 = '</div></ul></div></div>';
+
+					var html3 = '</div></ul>';
 					div.innerHTML = html1 + html2 + html3;
-					document.body.querySelector('.mui-content').appendChild(div);
+					document.getElementById("all_mem").appendChild(div);
 				}
 
 				/**
@@ -684,7 +537,7 @@
 					var html4 = '<p class="mui-ellipsis">' + member.stuname + '</p></div>';
 					li.innerHTML = html1 + html2 + html3 + html4;
 					qunBot.insertBefore(li, addTable);
-					console.log('addMember|member:' + JSON.stringify(member));
+					//console.log('addMember|member:' + JSON.stringify(member));
 				}
 
 				/**
@@ -719,7 +572,9 @@
 								console.log('getMemData:' + JSON.stringify(item));
 								var addTable = document.getElementById('addmember_' + item.gid);
 								var qunBot = document.getElementById("bot_" + item.gid).querySelector('.mui-row');
+								//for(var i = 0; i <= 20; i++) {
 								addMember(qunBot, addTable, item);
+								//}
 							});
 							mui.each(qunList, function(index, item) {
 								if(item.gid == qunId) {

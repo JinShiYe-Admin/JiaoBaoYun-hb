@@ -9,17 +9,27 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
-		<link rel="stylesheet" href="../../css/mui.picker.min.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<link rel="stylesheet" href="../../css/utils/MultiMedia.css" />
 
 		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/mui.picker.min.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/utils/MultiMedia.js" ></script>
 
 		<style>
 			body,
 			.mui-content {
+				/*background: transparent;*/
+			}
+
+			.mui-table-view {
+				background: transparent;
+			}
+
+			.mui-table-view-cell {
 				background: white;
+				padding: 5px 15px;
+				margin-bottom: 15px;
 			}
 
 			.mui-table-view:before,
@@ -46,7 +56,7 @@
 
 			.mui-checkbox.mui-left input[type=checkbox],
 			.mui-radio.mui-left input[type=radio] {
-				left: 0px;
+				left: 18%;
 			}
 
 			.mui-checkbox.mui-left label,
@@ -55,38 +65,36 @@
 				padding-right: 0px;
 			}
 
-			input[type=color],
-			input[type=date],
-			input[type=datetime-local],
-			input[type=datetime],
-			input[type=email],
-			input[type=month],
-			input[type=number],
-			input[type=password],
-			input[type=search],
-			input[type=tel],
-			input[type=text],
-			input[type=time],
-			input[type=url],
-			input[type=week],
-			select,
-			textarea {
+			#textarea_record,
+			#input_call {
 				margin-bottom: 0px;
+				border: none;
+				border-radius: 0px;
+				border-bottom: 1px solid #D9D9D9;
+				width: 94%;
+				margin-left: 3%;
+				padding: 10px 5px;
+				/*background: #D9D9D9;*/
 			}
 
-			.mui-checkbox input[type=checkbox]:before,
-			.mui-radio input[type=radio]:before {
-				/*font-size: 20px;*/
+			.mui-checkbox,
+			.mui-checkbox:last-child {
+				width: 25%;
+				background: white;
+				position: absolute;
 			}
 
-			.call-type {
-				width: 20%;
-				float: left;
+			.mui-checkbox input[type=checkbox]:before {
+				font-size: 25px;
 			}
-
 			.mui-media-body {
-				background: #D8D8D8;
-				padding: 3px;
+				margin-top: 10px;
+				margin-bottom: 5px;
+			}
+
+			.time {
+				text-align: center;
+				border-bottom: 1px solid #D9D9D9;
 			}
 		</style>
 	</head>
@@ -95,17 +103,16 @@
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<!--数据列表-->
-				<ul class="mui-table-view" id="ul_table">
+				<!--<ul class="mui-table-view" id="ul_table">
 					<div style="width: 100%;">
 						<div class="mui-row">
-							<!--<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
+							<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
 								<span class="mui-icon iconfont icon-date" style="color: deepskyblue;margin-right: 10px;"></span>
 								<font style="margin-right: 10px;">时间</font>
 							</div>
 							<div class="mui-col-sm-8 mui-col-xs-8" style="line-height: 36px;">
 								<font id="time" style="color: #AAAAAA;">2016年11月18日11:31</font>
-							</div>-->
+							</div>
 							<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
 								<span class="mui-icon iconfont icon-xie" style="color: #86BE49;margin-right: 10px;"></span>
 								<font style="margin-right: 10px;">类型</font>
@@ -124,12 +131,12 @@
 							</div>
 						</div>
 						<div id="call" style="display: inline;" value="0">
-							<!--<div class="call-type" value="1">
+							<div class="call-type" value="1">
 								<div class="mui-input-row mui-checkbox mui-left">
 									<label>正常</label>
 									<input id="cb_call1" name="checkbox" type="checkbox" checked>
 								</div>
-							</div>-->
+							</div>
 							<div class="call-type" value="2" style="margin-left: 20%;">
 								<div class="mui-input-row mui-checkbox mui-left">
 									<label>旷课</label>
@@ -148,12 +155,12 @@
 									<input id="cb_call4" name="checkbox" type="checkbox">
 								</div>
 							</div>
-							<!--<div class="call-type" value="5">
+							<div class="call-type" value="5">
 								<div class="mui-input-row mui-checkbox mui-left">
 									<label>其他</label>
 									<input id="cb_call5" name="checkbox" type="checkbox">
 								</div>
-							</div>-->
+							</div>
 							<div class="mui-input-row" style="margin: 0px 5px;" style="">
 								<textarea id="textarea_call" maxlength="500" rows="4" placeholder="点到："></textarea>
 							</div>
@@ -162,6 +169,52 @@
 							<div class="mui-input-row" style="margin: 0px 5px;">
 								<textarea id="textarea_record" maxlength="500" rows="4" placeholder="记事："></textarea>
 							</div>
+						</div>
+					</div>
+				</ul>-->
+				<ul class="mui-table-view" id="ul_table">
+					<div id="top">
+						<!--<li class="mui-table-view-cell mui-media ">
+							<div class="time">2017-1-10 14:19:56</div>
+							<div class="mui-media-body" style="margin-top: 10px;">
+								能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？
+							</div>
+						</li>
+						<li class="mui-table-view-cell mui-media ">
+							<div class="time">2017-1-10 14:19:56</div>
+							<div class="mui-media-body" style="margin-top: 10px;">
+								能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？
+							</div>
+						</li>-->
+					</div>
+					<div id="call" style="width: 100%;background: white;padding-top: 8px;">
+						<div id="calltype" style="width: 100%;height: 36px;">
+							<div class="mui-input-row mui-checkbox mui-left">
+								<label>旷课</label>
+								<input id="cb_2" value="2" name="checkbox" type="checkbox">
+							</div>
+							<div class="mui-input-row mui-checkbox mui-left" style="left: 25%;">
+								<label>请假</label>
+								<input id="cb_5" value="5" name="checkbox" type="checkbox">
+							</div>
+							<div class="mui-input-row mui-checkbox mui-left" style="left:50%;">
+								<label>迟到</label>
+								<input id="cb_3" value="3" name="checkbox" type="checkbox">
+							</div>
+							<div class="mui-input-row mui-checkbox mui-left" style="left: 70%;">
+								<label>早退</label>
+								<input id="cb_4" value="4" name="checkbox" type="checkbox">
+							</div>
+						</div>
+						<input id="input_call" type="text" class="mui-input-clear" placeholder="备注" maxlength="20" style="margin-bottom: 10px;">
+					</div>
+					<div id="record" style="background: white;margin-top: 10px;padding-top: 10px;padding-bottom: 10px;">
+						<textarea id="textarea_record" rows="4" placeholder="记事" maxlength="500" style="margin-bottom: 4px;"></textarea>
+						<!--<span class="mui-icon iconfont icon-yuyin"></span>-->
+						<!--<span class="mui-icon iconfont icon-xiangji"></span>-->
+						<!--<span class="mui-icon iconfont icon-shipin"></span>-->
+						<div id="MultiMedia">
+
 						</div>
 					</div>
 				</ul>
@@ -181,13 +234,11 @@
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
-					TotalPage++;
-					console.log('TotalPage:' + TotalPage);
 					getNotes(TotalPage, 10);
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 1500);
 			}
-			var TotalPage = 0; //总页数
+			var TotalPage = 1; //总页数
 			var TotalCnt = 0; //总记录数
 			var subData = null; //接收页面传入的参数值
 			var NotesList = null; //记录获取的数据
@@ -202,138 +253,89 @@
 				subData = main.data; //接收页面传入的参数值
 				console.log('从父页面获取的数据:' + JSON.stringify(subData));
 				//---从父页面获取数据---end---
-				//var time = document.getElementById("time"); //时间选择元素
-				//var myDate = new Date();
-				var ul_table = document.getElementById("ul_table");
-				var checkbox_1 = document.getElementById("cb_1"); //点到checkbox元素
-				var checkbox_2 = document.getElementById("cb_2"); //记事checkbox元素
-				var div_call = document.getElementById("call"); //点到区域
-				var div_record = document.getElementById("record"); //记事区域
+				var top = document.getElementById("top");
+				//var checkbox_1 = document.getElementById("cb_1"); //点到checkbox元素
+				//var checkbox_2 = document.getElementById("cb_2"); //记事checkbox元素
+				//var div_call = document.getElementById("call"); //点到区域
+				//var div_record = document.getElementById("record"); //记事区域
 				var call_type = ''; //记录最后点击的点到类型
-
-				//---开通记事---start---
-				//63.（点到记事）新增学生点到记事空间
-				//				//所需参数
-				//				var addNewNoteInfo = {
-				//					studentId: subData.stuid, //学生ID，添加学生时调用
-				//					classId: subData.gid //班级ID，
-				//				};
-				//				//返回1为正确
-				//				// 等待的对话框
-				//				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				//				postDataPro_addNewNoteInfo(addNewNoteInfo, wd, function(data) {
-				//					console.log('63.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-				//					if(data.RspCode == 0) {
-				//
-				//					} else {
-				//
-				//					}
-				//					wd.close();
-				//				});
-				//---开通记事---end---
-
+				var call_input = ''; //记录点到的备注
+				var commit = false; //是否允许提交
+				var commitNum = 0; //记录发布请求的次数
+				MultiMedia.addElement(document.getElementById("MultiMedia"));
 				//---获取数据---start---
 
 				getNotes(1, 10);
 				//---获取数据---end---
-				//---时间选择---start---
-				//time.innerText = myDate.getFullYear() + '年' + (myDate.getMonth() + 1) + '月' + myDate.getDate() + '日' + myDate.getHours() + ':' + myDate.getMinutes();
-				//选择时间的监听
-				//				time.addEventListener('tap', function() {
-				//					/*
-				//					 * 首次显示时实例化组件
-				//					 * 示例为了简洁，将 options 放在了按钮的 dom 上
-				//					 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
-				//					 */
-				//					var picker = new mui.DtPicker();
-				//					picker.show(function(rs) {
-				//
-				//						/*
-				//						 * rs.value 拼合后的 value
-				//						 * rs.text 拼合后的 text
-				//						 * rs.y 年，可以通过 rs.y.value 和 rs.y.text 获取值和文本
-				//						 * rs.m 月，用法同年
-				//						 * rs.d 日，用法同年
-				//						 * rs.h 时，用法同年
-				//						 * rs.i 分（minutes 的第二个字母），用法同年
-				//						 */
-				//						console.log('时间选择结果: ' + rs.text);
-				//						time.innerText = rs.y.text + '年' + rs.m.text + '月' + rs.d.text + '日' + rs.h.text + ':' + rs.i.text;
-				//
-				//						/*
-				//						 * 返回 false 可以阻止选择框的关闭
-				//						 * return false;
-				//						 */
-				//
-				//						/*
-				//						 * 释放组件资源，释放后将将不能再操作组件
-				//						 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
-				//						 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
-				//						 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
-				//						 */
-				//						picker.dispose();
-				//					});
-				//				});
-				//---时间选择---end---
 
-				//监听类型选择
-				mui('.mui-row').on('change', '.mui-col-sm-3', function() {
-					if(this.getAttribute('value') == 1) { //点击点到
-						checkbox_1.checked = true;
-						checkbox_2.checked = false;
-					} else { //点击记事
-						checkbox_1.checked = false;
-						checkbox_2.checked = true;
-					}
-					if(checkbox_1.checked) {
-						div_call.style.display = 'inline';
-						div_record.style.display = 'none';
-					} else {
-						div_call.style.display = 'none';
-						div_record.style.display = 'inline';
-					}
-					//console.log('checkbox_1:' + checkbox_1.checked + '|' + 'checkbox_2:' + checkbox_2.checked);
-				});
+				//				//监听类型选择
+				//				mui('.mui-row').on('change', '.mui-col-sm-3', function() {
+				//					if(this.getAttribute('value') == 1) { //点击点到
+				//						checkbox_1.checked = true;
+				//						checkbox_2.checked = false;
+				//					} else { //点击记事
+				//						checkbox_1.checked = false;
+				//						checkbox_2.checked = true;
+				//					}
+				//					if(checkbox_1.checked) {
+				//						div_call.style.display = 'inline';
+				//						div_record.style.display = 'none';
+				//					} else {
+				//						div_call.style.display = 'none';
+				//						div_record.style.display = 'inline';
+				//					}
+				//					//console.log('checkbox_1:' + checkbox_1.checked + '|' + 'checkbox_2:' + checkbox_2.checked);
+				//				});
 
 				//点到类型切换监听
-				mui('#call').on('change', '.call-type', function() {
+				mui('#calltype').on('change', 'input', function() {
 					var value = this.getAttribute('value');
 					if(call_type == '') {
 						call_type = value;
+						document.getElementById("input_call").style.color = 'black';
 					} else {
-						console.log('call-type:call_type:' + call_type); //上次选择的类型
-						console.log('call-type:value:' + value); //本次选择的类型
-						var checkBox = document.getElementById("cb_call" + value);
-						var checkBoxBefore = document.getElementById("cb_call" + call_type);
+						console.log('checkBoxBefore:' + call_type); //上次选择的类型
+						console.log('checkBox:' + value); //本次选择的类型
+						var checkBox = document.getElementById("cb_" + value);
+						var checkBoxBefore = document.getElementById("cb_" + call_type);
 						if(call_type == value) { //两次点击都是同一个checkbox
 							//checkBox.checked = true;
 							call_type = '';
+							document.getElementById("input_call").style.color = 'gainsboro';
 						} else {
 							checkBoxBefore.checked = false;
 							checkBox.checked = true;
 							call_type = value;
+							document.getElementById("input_call").style.color = 'black';
 						}
 					}
+					console.log('call_type:' + call_type);
+					changeCommit();
+				});
 
+				//监听点到备注的输入
+				document.getElementById('input_call').addEventListener('input', function() {
+					//console.log(this.value);
+					var value = this.value;
+					if(call_type == '') {
+						this.value = call_input;
+						mui.toast('请选择点到类型');
+					} else {
+						call_input = value;
+					}
+				});
+
+				//监听记事的输入
+				document.getElementById('textarea_record').addEventListener('input', function() {
+					changeCommit();
 				});
 
 				/**
 				 * 新增点到记事
 				 */
 				window.addEventListener("addNote", function() {
-					var msgContent = ''; //记事内容
-					if(checkbox_1.checked && call_type == '') { //点到
-						msgContent = document.getElementById("textarea_call").value;
-					} else if(checkbox_1.checked) {
-						msgContent = document.getElementById("textarea_call").value;
-					} else { //记事
-						msgContent = document.getElementById("textarea_record").value;
-					}
-
-					if(msgContent.replace(/(^\s*)|(\s*$)/g, "") == "" && !checkbox_1.checked) { //为空不允许发送
-						mui.toast('请输入文字');
-					} else if(checkbox_1.checked && call_type == '' && msgContent.replace(/(^\s*)|(\s*$)/g, "") == "") {
-						mui.toast('请输入文字');
+					if(!commit) {
+						console.log('不允许发布');
 					} else {
 						var parentIds = []; //家长列表
 						var userIds = []; //推送用户ID
@@ -357,7 +359,19 @@
 										parentIds.push(item.utid);
 									}
 								});
-								addNotes(arrayToStr(parentIds), arrayToStr(userIds));
+								var strParent = arrayToStr(parentIds);
+								var strUser = arrayToStr(userIds);
+								var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+								if(call_type != '') {
+									addNotes(1, strParent, strUser); //增加点到
+								}
+								setTimeout(function() {
+									if(document.getElementById("textarea_record").value.replace(/(^\s*)|(\s*$)/g, "") != "") {
+										addNotes(2, strParent, strUser); //增加记事
+									}
+									wd2.close();
+								}, 500);
+
 							} else {
 								if(data.RspCode != 9) {
 									mui.toast(data.RspTxt);
@@ -368,28 +382,39 @@
 				});
 
 				/**
+				 * 判断是否允许发布
+				 */
+				function changeCommit() {
+					var textarea_record = document.getElementById("textarea_record");
+					var par = main.opener();
+					if(call_type == '' && textarea_record.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
+						par.evalJS('with(document.getElementById("commit")){style.color="gray";}')
+						commit = false;
+					} else {
+						par.evalJS('with(document.getElementById("commit")){style.color="white";}')
+						commit = true;
+					}
+				}
+
+				/**
 				 * 增加点到记事
+				 * @param {Object} type 点到或记事1点到2记事
 				 * @param {Object} parentIds 家长列表，用于学生档案记录
 				 * @param {Object} userIds 推送用户ID
 				 */
-				function addNotes(parentIds, userIds) {
+				function addNotes(type, parentIds, userIds) {
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					var personalUNICK = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
 					var teacherId = personalUTID; //发布教师ID
-					var publisherName = personalUNICK //发布者姓名
-					var noteType = 1; //点到记事类型1点到2记事
+					var publisherName = '【' + personalUNICK + '老师】【' + subData.gname + '】' //发布者姓名
+					//var publisherName = personalUNICK; //发布者姓名
+					var noteType = type; //点到记事类型1点到2记事
 					var checkType = ''; //点到类型
-					var msgContent = ''; //记事内容
-					if(checkbox_1.checked && call_type != '') { //点到
-						noteType = 1;
+					var msgContent = ''; //内容
+					if(noteType == 1) { //点到
 						checkType = call_type;
-						msgContent = document.getElementById("textarea_call").value;
-					} else if(checkbox_1.checked && call_type == '') {
-						noteType = 2;
-						checkType = '0';
-						msgContent = document.getElementById("textarea_call").value;
+						msgContent = document.getElementById("input_call").value;
 					} else { //记事
-						noteType = 2;
 						checkType = '0';
 						msgContent = document.getElementById("textarea_record").value;
 					}
@@ -404,106 +429,129 @@
 						encImg: '', //附件缩略图地址
 						teacherId: teacherId, //发布教师ID
 						noteType: noteType, //点到记事类型1点到2记事
-						checkType: checkType, //点到类型,1 正常2 旷课3 迟到4 早退5 其他
+						checkType: checkType, //点到类型,1 正常2 旷课3 迟到4 早退5请假6 其他
 						studentName: subData.stuname, //学生姓名
 						publisherName: publisherName, //发布者姓名
 						parentIds: parentIds, //家长列表
 						className: subData.gname, //班级名称
 						userIds: userIds //推送用户ID
 					};
-					console.log('新增记事发送的数据:' + JSON.stringify(comData));
+					//console.log('新增记事发送的数据:' + JSON.stringify(comData));
 					// 等待的对话框
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					commitNum++;
 					postDataPro_addNote(comData, wd, function(data) {
-						console.log('8.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						console.log('8.新增某学生点到记事信息:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
-							console.log('新增成功：' + JSON.stringify(data.RspData.Result));
-							mui.toast('发送成功');
-							mui.back();
+							console.log('新增点到记事信息成功：' + JSON.stringify(data.RspData.Result));
+							if(noteType == 1) { //点到
+								mui.toast('点到发布成功');
+								document.getElementById("cb_" + checkType).checked = false;
+								document.getElementById("input_call").value = '';
+								call_type = '';
+								call_input = '';
+							} else {
+								mui.toast('记事发布成功');
+								document.getElementById("textarea_record").value = '';
+							}
+							commitNum--;
+							if(commitNum == 0) {
+								//发送成功
+								TotalPage = 1; //总页数
+								TotalCnt = 0; //总记录数
+								NotesList = null; //记录获取的数据
+								getNotes(1, 10);
+								changeCommit();
+							}
 						} else {
-							mui.toast('新增点到记事信息:' + data.RspTxt);
+							commitNum--;
+							if(noteType == 1) { //点到
+								mui.toast('新增点到失败:' + data.RspTxt);
+							} else {
+								mui.toast('新增记事失败:' + data.RspTxt);
+							}
 							console.log('新增点到记事信息:' + data.RspTxt);
 						}
 						wd.close();
 					});
 				}
-			});
 
-			/**
-			 * 获取用户针对某学生的点到记事列表
-			 * @param {Object} pageIndex 当前页数
-			 * @param {Object} pageSize 每页记录数
-			 */
-			function getNotes(pageIndex, pageSize) {
-				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-				var userId = personalUTID; //发布教师ID
-				//4.（点到记事）获取用户针对某学生的点到记事列表
-				//所需参数
-				var comData = {
-					userId: userId, //用户ID----utid
-					studentId: subData.stuid, //学生ID----stuid
-					classId: subData.gid, //班级ID
-					pageIndex: pageIndex, //当前页数
-					pageSize: pageSize, //每页记录数
-					publisherId: userId //发布者ID,0代表全部
-				};
-				//返回model：model_homeSchoolList,model_userNoteInfo
-				console.log('发送获取记事列表请求的数据:' + JSON.stringify(comData));
-				// 等待的对话框
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
-					console.log('4.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					if(data.RspCode == 0) {
-						if(NotesList == null) {
-							NotesList = data.RspData;
-							NotesList.Data == [];
-							TotalPage = data.RspData.TotalPage; //总页数
-							TotalCnt = data.RspData.TotalCnt; //总记录数
-						}
-						mui.each(data.RspData.Data, function(index, item) {
-							NotesList.Data.push(item);
-							console.log(index + '|' + JSON.stringify(item));
-							createNotes(item);
-						});
-						if(data.RspData.Data.length == 0) {
-							if(NotesList.length != 0) {
-								mui.toast('没有更多了');
-							} else {
-								mui.toast('无记录');
+				/**
+				 * 获取用户针对某学生的点到记事列表
+				 * @param {Object} pageIndex 当前页数
+				 * @param {Object} pageSize 每页记录数
+				 */
+				function getNotes(pageIndex, pageSize) {
+					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+					var userId = personalUTID; //发布教师ID
+					//4.（点到记事）获取用户针对某学生的点到记事列表
+					//所需参数
+					var comData = {
+						userId: userId, //用户ID----utid
+						studentId: subData.stuid, //学生ID----stuid
+						classId: subData.gid, //班级ID
+						pageIndex: pageIndex, //当前页数
+						pageSize: pageSize, //每页记录数
+						publisherId: userId //发布者ID,0代表全部
+					};
+					//返回model：model_homeSchoolList,model_userNoteInfo
+					//console.log('发送获取记事列表请求的数据:' + JSON.stringify(comData));
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
+						console.log('4.取记事列表:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							TotalPage++;
+							if(pageIndex == 1) { //获取第一页的内容
+								top.innerHTML = '';
+								//滚动到底部
+								mui.scrollTo(document.body.scrollHeight, 100);
 							}
-							//mui.toast('没有更多数据了');
+							if(NotesList == null) {
+								NotesList == [];
+								NotesList = data.RspData;
+								//TotalPage = data.RspData.TotalPage; //总页数
+								TotalCnt = data.RspData.TotalCnt; //总记录数
+							}
+							mui.each(data.RspData.Data, function(index, item) {
+								NotesList.Data.push(item);
+								//console.log(index + '|' + JSON.stringify(item));
+								createNotes(item);
+							});
+							if(data.RspData.Data.length == 0) {
+								if(NotesList.length != 0) {
+									mui.toast('没有更多了');
+									TotalPage--;
+								} else {
+									mui.toast('无记录');
+								}
+							}
+						} else {
+							mui.toast('获取点到记事列表:' + data.RspTxt);
+							console.log('获取用户针对某学生的点到记事列表:' + data.RspTxt);
 						}
-						if(pageIndex == 1) {
-							//滚动到底部
-							mui.scrollTo(document.body.scrollHeight, 100);
-						}
-					} else {
-						mui.toast('获取点到记事列表:' + data.RspTxt);
-						console.log('获取用户针对某学生的点到记事列表:' + data.RspTxt);
-					}
-					//mui('.mui-scroll-wrapper').scroll().scrollToBottom(100); //滚动到底部-----有BUG
-					wd.close();
-				});
-			}
-
-			/**
-			 * 界面中创建一条记录
-			 * @param {Object} data
-			 */
-			function createNotes(data) {
-				console.log('createNotes:' + JSON.stringify(data));
-				var li = document.createElement('li');
-				li.className = 'mui-table-view-cell';
-				var type = '';
-				if(data.NoteType == 1) {
-					type = data.CheckTypeStr + ':';
+						//mui('.mui-scroll-wrapper').scroll().scrollToBottom(100); //滚动到底部-----有BUG
+						wd.close();
+					});
 				}
-				li.innerHTML = '<div style="text-align: center;">\
-									<font style="background: #d9d9d9;border-radius: 5px;padding: 4px;">' + data.PublishDate + '</font>\
-									</div>\
-									<div style="margin-top: 10px;">' + type + data.MsgContent + '</div>';
-				ul_table.insertBefore(li, ul_table.firstChild);
-			}
+
+				/**
+				 * 界面中创建一条记录
+				 * @param {Object} data
+				 */
+				function createNotes(data) {
+					//console.log('createNotes:' + JSON.stringify(data));
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell';
+					var type = '';
+					if(data.NoteType == 1) {
+						type = data.CheckTypeStr + ' : ';
+					}
+					li.innerHTML = '<div class="time">' + data.PublishDate + '</div>\
+								<div class="mui-media-body">' + type + data.MsgContent + '</div>';
+					top.insertBefore(li, top.firstChild);
+				}
+			});
 		</script>
 	</body>
 

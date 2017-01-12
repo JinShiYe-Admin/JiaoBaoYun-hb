@@ -10,70 +10,13 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
-		<style>
-			body,
-			.mui-content {
-				background: white;
-			}
-
-			.mui-input-group:before,
-			.mui-input-group .mui-input-row:after,
-			.mui-input-group:after {
-				height: 0px;
-			}
-
-			.mui-checkbox input[type=checkbox]:checked:before,
-			.mui-radio input[type=radio]:checked:before {
-				color: #86BE49;
-			}
-
-			.mui-col-sm-4,
-			.mui-col-xs-8 {
-				height: 36px;
-			}
-
-			.mui-checkbox.mui-left input[type=checkbox],
-			.mui-radio.mui-left input[type=radio] {
-				left: 0px;
-			}
-
-			.mui-checkbox.mui-left label,
-			.mui-radio.mui-left label {
-				padding-left: 50%;
-				padding-right: 0px;
-			}
-
-			input[type=color],
-			input[type=date],
-			input[type=datetime-local],
-			input[type=datetime],
-			input[type=email],
-			input[type=month],
-			input[type=number],
-			input[type=password],
-			input[type=search],
-			input[type=tel],
-			input[type=text],
-			input[type=time],
-			input[type=url],
-			input[type=week],
-			select,
-			textarea {
-				margin-bottom: 0px;
-			}
-
-			.mui-checkbox input[type=checkbox]:before,
-			.mui-radio input[type=radio]:before {
-				/*font-size: 20px;*/
-			}
-		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title"></h1>
-			<a id="commit" class="mui-icon mui-icon-checkmarkempty mui-pull-right" style="font-size: 40px;line-height: 0.6;"></a>
+			<a id="commit" class="mui-icon mui-icon-checkmarkempty mui-pull-right" style="font-size: 40px;line-height: 0.6;color: gray;"></a>
 		</header>
 		<div class="mui-content">
 	</body>
@@ -116,8 +59,8 @@
 
 			//新增点到或记事
 			document.getElementById('commit').addEventListener('tap', function() {
-				var main = plus.webview.getWebviewById('keeprecord_callorrecord_sub.html');
-				mui.fire(main, "addNote", {});
+				var subpage = plus.webview.getWebviewById('keeprecord_callorrecord_sub.html');
+				mui.fire(subpage, "addNote");
 			})
 		});
 	</script>
