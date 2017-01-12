@@ -392,7 +392,7 @@ var postDataQZPro_getAsksByUser = function(commonData, wd, callback) {
 //			pageIndex: '',//当前页数
 //			pageSize:''//每页记录数,传入0，获取总记录数
 //		};
-//返回值：model_Channel
+//返回值：model_QZAskDetail
 var postDataQZPro_getFocusAsksByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
@@ -400,74 +400,80 @@ var postDataQZPro_getFocusAsksByUser = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getFocusAsksByUser', enData, commonData, 2, wd, callback);
 }
 
-//1.获取所有话题
+//27.获取某个用户的关注人列表
 //所需参数
 //		var comData = {
+//			userId: '',//用户ID
 //			pageIndex: '',//当前页数
 //			pageSize:''//每页记录数,传入0，获取总记录数
 //		};
-//返回值：model_Channel
-var postDataQZPro_getAllChannels = function(commonData, wd, callback) {
+//返回值：UserId:用户ID,UserNote:用户简介
+var postDataQZPro_getFocusUsersByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getAllChannels', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getFocusUsersByUser', enData, commonData, 2, wd, callback);
 }
 
-//1.获取所有话题
+//28.获取某个用户的被人关注列表
 //所需参数
 //		var comData = {
+//			userId: '',//用户ID
 //			pageIndex: '',//当前页数
 //			pageSize:''//每页记录数,传入0，获取总记录数
 //		};
-//返回值：model_Channel
-var postDataQZPro_getAllChannels = function(commonData, wd, callback) {
+//返回值：UserId:用户ID,UserNote:用户简介
+var postDataQZPro_getIsFocusedByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getAllChannels', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getIsFocusedByUser', enData, commonData, 2, wd, callback);
 }
 
-//1.获取所有话题
+//29.获取是否已对某条评论点赞
 //所需参数
 //		var comData = {
-//			pageIndex: '',//当前页数
-//			pageSize:''//每页记录数,传入0，获取总记录数
+//			userId: '',//用户ID
+//			commentId: '',//评论ID
+//			answerId:''//回答ID
 //		};
-//返回值：model_Channel
-var postDataQZPro_getAllChannels = function(commonData, wd, callback) {
+//返回值：非0为已点赞
+var postDataQZPro_getCommentLikeByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getAllChannels', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getCommentLikeByUser', enData, commonData, 2, wd, callback);
 }
 
-//1.获取所有话题
+//30.设置某条评论的点赞
 //所需参数
 //		var comData = {
-//			pageIndex: '',//当前页数
-//			pageSize:''//每页记录数,传入0，获取总记录数
+//			commentId: '',//评论ID
+//			userId:'',//点赞用户ID
+//			answerId: '',//回答ID
+//			status:''//点赞状态，0 取消点赞，1 点赞
 //		};
-//返回值：model_Channel
-var postDataQZPro_getAllChannels = function(commonData, wd, callback) {
+//返回值：1为正确
+var postDataQZPro_setCommentLike = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getAllChannels', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/setCommentLike', enData, commonData, 2, wd, callback);
 }
 
-//1.获取所有话题
+//31.消息提醒
 //所需参数
 //		var comData = {
+//			userId: '',//用户ID
 //			pageIndex: '',//当前页数
 //			pageSize:''//每页记录数,传入0，获取总记录数
 //		};
 //返回值：model_Channel
-var postDataQZPro_getAllChannels = function(commonData, wd, callback) {
+var postDataQZPro_getNotification = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getAllChannels', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getNotification', enData, commonData, 2, wd, callback);
 }
 
 //1.获取所有话题
