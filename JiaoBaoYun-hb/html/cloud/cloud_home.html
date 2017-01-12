@@ -730,6 +730,10 @@
 					postFirstFile();
 					//73.（云档案）按家长获取学生档案姓名
 					postUserStudent();
+					//获取学生
+					getStuList();
+					//获取班级
+					getGroupList();
 				}
 
 				/**
@@ -741,6 +745,71 @@
 					postFirstFile();
 				}
 			});
+//获取学生列表
+var topStudentArr = [];
+function getStuList() {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+	//所需参数
+	var comData = {
+		utid: personalUTID
+	};
+	//返回值model：model_userDataInfo
+	// 等待的对话框
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//24.通过用户表ID获取用户关联的学生
+	postDataPro_PostUstu(comData, wd, function(data) {
+		wd.close();
+		console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0 || data.RspCode == 9 || data.RspCode == 7) { //9为查询记录为空
+			topStudentArr = data.RspData;
+			
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+}
+//获取所有的群
+var datasource = [];
+function getGroupList() {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+	//	//需要参数
+	var comData = {
+		vtp: 'ag', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
+		vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
+	};
+	// 等待的对话框
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//	获取用户群
+	postDataPro_PostGList(comData, wd, function(data) {
+		wd.close();
+		console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+//			showBlankPage(false);
+			datasource = data.RspData; //底部列表数据
+			var tempArr = [];
+			var tempDatasource = [];
+			//			群去重
+			for(var i = 0; i < datasource.length; i++) {
+				if(tempArr.indexOf(datasource[i].gid) > -1) {
+					//					console.log(i+'已存在'+datasource[i].gid);
+				} else {
+					//					console.log(i+'不存在'+datasource[i].gid);
+					tempArr.push(datasource[i].gid);
+					tempDatasource.push(datasource[i]);
+				}
+
+			}
+			datasource = tempDatasource;
+		} else if(data.RspCode == 9) { //没有群
+			console.log('显示空白页')
+//			showBlankPage(true); //显示空白页
+
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+
+}
 		</script>
 	</body>
 
