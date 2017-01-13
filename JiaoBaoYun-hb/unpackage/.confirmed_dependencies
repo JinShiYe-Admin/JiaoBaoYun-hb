@@ -2000,5 +2000,30 @@
 			"css/mui.min.css",
 			"css/utils/common.css"
 		]
+	},
+	"html/show/show_home.html": {
+		"resources": [
+			"js/show/show.js",
+			"css/show/show.css",
+			"css/utils/slide_navigatian.css",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"js/main/slide_navigation.js",
+			"js/utils/slide-selector.js",
+			"html/show/show-sub.html"
+		],
+		"refer": [
+			"html/show/show-sub.html"
+		]
+	},
+	"html/show/show-sub.html": {
+		"resources": [
+			"js/show/show-sub.js",
+			"js/utils/sub.js",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
 	}
 }
