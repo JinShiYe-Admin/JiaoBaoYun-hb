@@ -14,7 +14,7 @@
 	</head>
 
 	<body>
-		<div class="mui-content" >
+		<div class="mui-content">
 			<textarea placeholder="写下你的问题" style="height: 40px;"></textarea>
 			<p style="margin-left: 10px;margin-top: -5px;font-size: 14px;">请添加问题的补充说明</p>
 			<div class="input-content" style="margin-top: 30px;">
@@ -33,10 +33,27 @@
 
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
-	<script src="../../js/utils/camera.js"></script>
-	<script src="../../js/utils/files.js"></script>
-	<script src="../../js/utils/ASFiles.js"></script>
-	<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/utils/camera.js"></script>
+		<script src="../../js/utils/files.js"></script>
+		<script src="../../js/utils/ASFiles.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript">
+			events.addTap('take_pic', function() {
+				camera.getPic(camera.getCamera(), function(path) {
+
+				});
+			});
+			events.addTap('take_camero', function() {
+				camera.getVideo(camera.getCamera(), function(path) {
+
+				});
+			});
+			events.addTap('get_gallery', function() {
+				gallery.getMultiplePic(function(paths) {
+
+				});
+			});
+		</script>
 		<!--<script src="../../js/qiuzhi/qiuzhi-questionSub.js"></script>-->
 	</body>
 
