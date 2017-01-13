@@ -15,11 +15,16 @@
 
 	<body>
 		<div class="mui-content">
-		    科教
+			科教
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			mui.init();
+			mui.plusReady(function() {
+				window.addEventListener('tapTitleLeft', function() {
+					console.log('科教-tapTitleLeft');
+				});
+			});
 		</script>
 	</body>
 
