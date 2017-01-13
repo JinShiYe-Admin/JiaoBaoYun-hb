@@ -4,7 +4,7 @@ var slideNavigation = (function($) {
 	var showMenu = false; //是否显示主界面界面
 	var isInTransition = false; //是否显示侧滑界面
 	/**
-	 * 
+	 *
 	 * @param {Object} tarpage 目标页面Url
 	 * @param {Object} interval 时间间隔
 	 */
@@ -168,15 +168,16 @@ var slideNavigation = (function($) {
 		 * 加载主界面左上角图标
 		 */
 	var addSlideIcon = function() {
-			var header = document.querySelector(".mui-bar-nav");
+			var title_left = document.getElementById("title_left");
 			var a = document.createElement('img');
+			a.id = 'headimge';
 			a.className = 'mui-pull-left mui-plus-visible img-icon';
 			console.log('第一次加載的圖片地址：' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg);
 			var path = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 			a.src = path ? path : storageKeyName.DEFAULTPERSONALHEADIMAGE;
-			console.log('9999999999999999a.src==' + a.src);
+			console.log('首页左上角头像:' + a.src);
 			//在第一个位置中插入元素
-			header.insertBefore(a, header.firstChild);
+			title_left.appendChild(a);
 		}
 		//安卓系统返回按钮
 	var getBack = function() {
@@ -196,6 +197,7 @@ var slideNavigation = (function($) {
 	}
 	return {
 		add: add,
-		addSlideIcon: addSlideIcon
+		addSlideIcon: addSlideIcon,
+		iconAddEvent: iconAddEvent
 	};
 })(mui)

@@ -9,6 +9,33 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/quan/class_space.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<style type="text/css">
+.jiaoyu,.dongtai1{
+	width: 6rem;
+	height: 6rem;
+	border: solid;
+	border-width: 0;
+	border-radius: 5px;
+	border-color: #929292;
+	padding: 0.7rem;
+	text-align: center;
+	position: absolute;
+}
+.jiaoyu{
+	top: 320px;
+	left: 10px;
+	z-index: 1;
+}
+.dongtai1{
+	top: 320px;
+	left: 80px;
+	z-index: 1;
+}
+div>.icon-jiaoyu:before,.icon-dongtai1:before{
+	font-size: 4.0rem;
+	color: gray;
+}
+		</style>
 
 	</head>
 
@@ -31,7 +58,18 @@
 					<a class="mui-icon iconfont icon-xiangce"></a>
 				</div>
 			</div>
+			<div class="jiaoyu">
+					<a class="mui-icon iconfont icon-jiaoyu"></a>
+					<p>科教</p>
+				</div>
+				<div class="dongtai1">
+					<a class="mui-icon iconfont icon-dongtai1"></a>
+					<p>展现</p>
+				</div>
+
+
 		</div>
+
 	</body>
 	<script src="../../js/mui.min.js"></script>
 	<script src="../../js/utils/events.js"></script>
