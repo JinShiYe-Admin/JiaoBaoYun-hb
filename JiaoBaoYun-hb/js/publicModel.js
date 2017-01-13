@@ -145,6 +145,16 @@ var publicModel = (function($, mod) {
 		atype:''//节点类型,0省1城市2区县
 	}
 	
+	//45.分页新闻
+	mod.model_new = {
+		title:'',//标题
+		tnote:'',//摘要
+		tips:'',//作者等信息
+		timgs:'',//图片信息，多个中间用|隔开
+		turl	:'',//原文url
+		recdate:''//	记录时间
+	}
+	
 	
 	//家校圈
 	//2.（点到记事）获取用户未读点到记事列表
