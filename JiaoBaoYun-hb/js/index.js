@@ -79,9 +79,10 @@ mui.plusReady(function() {
 		if(title.innerHTML == '首页') {
 			title.innerHTML = '';
 		}
-		changRightIcons(title.innerHTML)
-			//显示目标选项卡
-			//若为iOS平台或非首次显示，则直接显示
+		changRightIcons(targetTab);
+
+		//显示目标选项卡
+		//若为iOS平台或非首次显示，则直接显示
 		if(mui.os.ios || aniShow[targetTab]) {
 			plus.webview.show(targetTab);
 		} else {
@@ -170,18 +171,31 @@ mui.plusReady(function() {
 	 * @param {Object} title 标题
 	 */
 	var changRightIcons = function(title) {
+		//顶部导航右侧区域
 		var iconContainer = document.getElementById('random_icon');
 		while(iconContainer.firstElementChild) {
 			iconContainer.removeChild(iconContainer.firstElementChild);
 		}
+		//顶部导航左侧区域
+		var title_left = document.getElementById("title_left");
+		while(title_left.firstElementChild) {
+			title_left.removeChild(title_left.firstElementChild);
+		}
+
 		switch(title) {
-			case '':
+			case '../cloud/cloud_home.html': //首页
 				addZoneIcon(iconContainer);
-			case '科教':
+				slideNavigation.addSlideIcon();
+				slideNavigation.iconAddEvent();
 				break;
-			case '展现':
+			case '../scienceeducation/scienceeducation_home.html': //科教
+				addListIcon(title_left, '../scienceeducation/scienceeducation_home.html');
 				break;
-			case '求知':
+			case '../show/show_home.html': //展现
+				addListIcon(title_left, '../show/show_home.html');
+				break;
+			case '../qiuzhi/qiuzhi_home.html': //求知
+
 				break;
 			default:
 				break;
@@ -228,14 +242,14 @@ mui.plusReady(function() {
 	}
 
 	/**
-	 * 修改云盘顶部导航
+	 * 修改科教，展现的顶部导航
 	 * @param {Object} container
 	 */
-	var addCloudIcon = function(container) {
+	var addListIcon = function(container, id) {
 		var a = document.createElement('a');
-		a.className = 'mui-icon iconfont icon-upload mui-pull-right';
+		a.className = 'mui-icon mui-icon mui-icon-list mui-pull-left';
 		a.addEventListener('tap', function() {
-			events.fireToPageNone('../cloud/cloud_home.html', 'upload');
+			events.fireToPageNone(id, 'tapTitleLeft');
 		});
 		container.appendChild(a)
 	}

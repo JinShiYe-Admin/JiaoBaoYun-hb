@@ -600,11 +600,11 @@ var postDataPro_PostGusinf = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINURL + 'PostGusinf', enData, commonData, 1, wd, callback);
 }
 
-//41.获取某个区域下的所有子区域
+//41.获取某个区域下的所有子区域或查询城市
 //所需参数
 //		var comData = {
-//			vtp:'',//获取类型，0(获取省份),1(获取城市),2(获取区县)
-//			vvl:''//查询字符串,查询的值,查询所有省份留空(acode节点编码)
+//			vtp:'',//0(获取省份),1(获取城市),2(获取区县),3获取所有城市,4模糊查询城市
+//			vvl:''//查询的值(acode节点编码,查询所有省份或城市留空,模糊查询城市填写查询值)
 //		};
 //返回值：model_area
 var postDataPro_PostArea = function(commonData, wd, callback) {
@@ -657,6 +657,7 @@ var postDataPro_PostUTcity = function(commonData, wd, callback) {
 //45.通过区域代码获取对应区域的分页新闻
 //所需参数
 //		var comData = {
+//			top:'',//每页行数，
 //			vvl:'',//查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
 //			vvl1:''//页码,获取第几页
 //		};

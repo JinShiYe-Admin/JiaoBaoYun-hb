@@ -140,7 +140,7 @@
 				events.preload('storage_main_choose.html'); //预加载选择云存储的文件
 				events.preload('storage_transport.html'); //预加载传输列表
 
-				console.log('选择上传的文件');
+//				console.log('选择上传的文件');
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var subData = null; //记录从父页面获取的数据
 				var pid = ''; //文件的上层ID
@@ -451,7 +451,7 @@
 						//属性：
 						//name: 文件系统的名称
 						//root: 文件系统中的目录对象，用于管理特定的本地目录
-						console.log("请求文件系统" + succesCB.name + "成功");
+//						console.log("请求文件系统" + succesCB.name + "成功");
 						//console.log("文件系统的名称:" + succesCB.name);
 						//console.log("文件系统中的目录对象:" + succesCB.root.fullPath);
 						var LocalURL = succesCB.root.toLocalURL();
@@ -466,7 +466,7 @@
 							getDirectory(succesCB2, 'download', function(succesCB3) {
 								//创建上传文件夹
 								getDirectory(succesCB2, 'upload', function(succesCB3) {
-									console.log("DOCUMENTSPATH: " + window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH));
+//									console.log("DOCUMENTSPATH: " + window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH));
 								});
 							});
 						});
@@ -527,7 +527,7 @@
 						create: true,
 						exclusive: false
 					}, function(succesCB) {
-						console.log("创建或打开子目录" + name + "成功");
+//						console.log("创建或打开子目录" + name + "成功");
 						//console.log("文件系统的名称:" + succesCB.name);
 						//console.log("文件系统中的目录对象:" + succesCB.fullPath);
 						succesCallBack(succesCB);

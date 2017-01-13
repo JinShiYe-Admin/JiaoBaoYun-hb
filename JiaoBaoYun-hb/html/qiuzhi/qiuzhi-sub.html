@@ -41,11 +41,132 @@
 			</div>
 			<a id="submit-question" class="mui-icon iconfont icon-bianji"></a>
 		</div>
-		
+
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/h5fresh.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/qiuzhi/qiuzhi-sub.js"></script>
+
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
+
 	</body>
+
+	<script type="text/javascript">
+		mui.init();
+		mui.plusReady(function() {
+
+			//			requestAllCity();
+			//			requestCitySetting();
+			//			requestUserCity();
+//			requestCityNews();
+		});
+
+		//41.获取某个区域下的所有子区域或查询城市
+		function requestAllCity() {
+			//所需参数
+			var comData = {
+				vtp: '3', //0(获取省份),1(获取城市),2(获取区县),3获取所有城市,4模糊查询城市
+				vvl: '' //查询的值(acode节点编码,查询所有省份或城市留空,模糊查询城市填写查询值)
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//41.获取某个区域下的所有子区域或查询城市
+			postDataPro_PostArea(comData, wd, function(data) {
+				wd.close();
+				console.log('所有子区域或查询城市:' + JSON.stringify(data));
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		}
+
+		//43.用户修改或添加区域阅读设置
+		function requestCitySetting() {
+			//所需参数
+			var comData = {
+				vvl: '370100_济南市|370900_泰安市', //定制城市组合，城市代码_城市名称|城市代码_城市名称|.....
+				vvl1: '0' //定制城市频道,0科教频道,1展示频道,其他待定
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//43.用户修改或添加区域阅读设置
+			postDataPro_PostUTcityA(comData, wd, function(data) {
+				wd.close();
+				console.log('用户修改或添加区域阅读设置:' + JSON.stringify(data));
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		}
+
+		//44.获取个人的订制城市
+		function requestUserCity() {
+			//所需参数
+			var comData = {
+				vvl: '0' //订制频道,0科教频道,1展示频道,其他待定
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//44.获取个人的订制城市
+			postDataPro_PostUTcity(comData, wd, function(data) {
+				wd.close();
+				console.log('获取个人的订制城市:' + JSON.stringify(data));
+				if(data.RspCode == 0) {
+					var tempArray = [];
+					//先通过‘|’将返回值分为数组
+					tempArray = data.RspData[0].citys.split('|');
+					//遍历此数组
+					for(var m in tempArray) {
+						var tempStr = tempArray[m];
+						//初始化model
+						var model_area = {
+							acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
+							aname: '', //节点名称
+							atype: '' //节点类型,0省1城市2区县
+						};
+						console.log('tempStr:' + tempStr);
+						//将分成的每个值，再通过‘_’拆分为model
+						var tempArea = tempStr.split('_');
+						model_area.acode = tempArea[0];
+						model_area.aname = tempArea[1];
+						model_area.atype = '1';
+						//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
+						tempArray.splice(m, 1, model_area);
+					}
+					console.log('修改后的最终值为:' + JSON.stringify(tempArray));
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		}
+
+		
+
+		//1.获取所有话题
+		//		function requestCitySetting() {
+		//			//所需参数
+		//			var comData = {
+		//				vvl: '370100_济南市|370900_泰安市', //定制城市组合，城市代码_城市名称|城市代码_城市名称|.....
+		//				vvl1: '0' //定制城市频道,0科教频道,1展示频道,其他待定
+		//			};
+		//			// 等待的对话框
+		//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		//			//1.获取所有话题
+		//			postDataPro_PostUTcityA(comData, wd, function(data) {
+		//				wd.close();
+		//				console.log('获取所有话题:' + JSON.stringify(data));
+		//				if(data.RspCode == 0) {
+		//
+		//				} else {
+		//					mui.toast(data.RspTxt);
+		//				}
+		//			});
+		//		}
+	</script>
 
 </html>
