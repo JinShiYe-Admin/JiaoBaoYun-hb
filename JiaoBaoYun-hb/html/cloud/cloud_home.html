@@ -46,11 +46,18 @@
 			}
 
 			.cloud-bottom-imge2-bg {
-				/*云档案，云应用的图片背景*/
 				height: 40px;
 				width: 40px;
 				border-radius: 50%;
 				margin: auto;
+			}
+
+			.cloud-bottom-imge3-bg {
+				height: 15px;
+				width: 15px;
+				border-radius: 50%;
+				position: absolute;
+				top: 90%;
 			}
 
 			.cloud-bottom-icon {
@@ -145,7 +152,13 @@
 				/*font-size: 35px;*/
 			}
 
-			.mui-ellipsis {}
+			.cloud-red-point {
+				width: 10px;
+				height: 10px;
+				background: red;
+				border-radius: 50%;
+				position: absolute;
+			}
 		</style>
 	</head>
 
@@ -206,6 +219,12 @@
 								</div>
 								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 80px;padding-left: 5px;padding-right: 5px;">
 									<div id="cloudrecord_1" class="mui-scroll">
+										<!--<a class="mui-control-item">
+											<div class="cloud-red-point"></div>
+											<img class="cloud-bottom-imge3-bg" src="../../image/cloud/cloud_0_class.png" />
+											<img class="cloud-bottom-imge2-bg" src="../../image/cloud/cloud_0_zuoye.png" />
+											<p class="mui-ellipsis">新建文件夹</p>
+										</a>-->
 									</div>
 								</div>
 							</li>
@@ -388,7 +407,17 @@
 				});
 
 				mui('#cloudrecord_1').on('tap', '.mui-control-item', function() {
-					console.log('班级');
+					var id = this.id;
+					if(id == 'noclass') { //没有班级的情况
+						events.openNewWindow('../mine/qun_manage_info.html');
+					} else { //班级
+						var type = this.getAttribute('type');
+						if(type == 0) {
+							console.log('班级');
+						} else {
+							console.log('家校圈');
+						}
+					}
 				});
 				//---家校互动---end---
 
@@ -678,21 +707,6 @@
 					a.setAttribute('StudentId', data.StudentId); //学生ID
 					a.setAttribute('StudentName', data.StudentName); //学生姓名
 					document.getElementById("cloudstorage_0").appendChild(a);
-
-				}
-
-				/**
-				 * 增加班级
-				 */
-				function addcloudrecord_1_0(data) {
-					var a = document.createElement('a');
-					a.className = 'mui-control-item';
-					a.innerHTML = '<img class="cloud-bottom-imge2-bg" src="' + updateHeadImg(data.gimg, 2) + '"/>\
-									   <p class="mui-ellipsis">' + data.gname + '</p>';
-					a.style.width = maxWidth + 'px';
-					a.style.height = '60px';
-					a.style.marginTop = '10px';
-					document.getElementById("cloudrecord_1").appendChild(a);
 				}
 
 				/**
@@ -730,12 +744,52 @@
 				function addcloudrecord_0_1(data) {
 					var a = document.createElement('a');
 					a.className = 'mui-control-item';
-					a.innerHTML = '<img class="cloud-bottom-imge2-bg" src="' + updateHeadImg(data.gimg, 2) + '"/>\
+					var html0 = '<div class="cloud-red-point" style="margin-left:' + maxWidth / 1.5 + 'px' + ';"></div>';
+					a.innerHTML = html0 + '<img class="cloud-bottom-imge2-bg" src="' + updateHeadImg(data.gimg, 2) + '"/>\
 									   <p class="mui-ellipsis">' + data.ugname + '</p>';
 					a.style.width = maxWidth + 'px';
 					a.style.height = '60px';
 					a.style.marginTop = '10px';
 					document.getElementById("cloudrecord_0").appendChild(a);
+				}
+
+				/**
+				 * 增加班级,家校圈入口
+				 * @param {Object} data
+				 * @param {Object} type 班级0,家校圈1
+				 */
+				function addcloudrecord_1_0(data, type) {
+					var a = document.createElement('a');
+					a.className = 'mui-control-item';
+					var html0 = '<div class="cloud-red-point" style="margin-left:' + maxWidth / 1.5 + 'px' + ';"></div>';
+					var html1 = '';
+					if(type == 0) {
+						html1 = html0 + '<img class="cloud-bottom-imge3-bg" src="../../image/cloud/cloud_0_class.png" style="margin-left:' + maxWidth / 2.5 + 'px' + ';"/>';
+					} else {
+						html1 = html0 + '<img class="cloud-bottom-imge3-bg" src="../../image/cloud/cloud_0_zone.png" style="margin-left:' + maxWidth / 2.5 + 'px' + ';"/>';
+					}
+					a.innerHTML = html1 + '<img class="cloud-bottom-imge2-bg" src="' + updateHeadImg(data.gimg, 2) + '"/>\
+									   <p class="mui-ellipsis">' + data.gname + '</p>';
+					a.style.width = maxWidth + 'px';
+					a.style.height = '60px';
+					a.style.marginTop = '10px';
+					a.setAttribute('type', type);
+					document.getElementById("cloudrecord_1").appendChild(a);
+				}
+
+				/**
+				 * 没有班级的情况
+				 */
+				function addcloudrecord_1_noclass() {
+					var a = document.createElement('a');
+					a.className = 'mui-control-item';
+					a.innerHTML = '<img class="cloud-bottom-imge2-bg" src="../../image/quan/add.png"/>\
+									   <p class="mui-ellipsis">创建班级</p>';
+					a.style.width = maxWidth + 'px';
+					a.style.height = '60px';
+					a.style.marginTop = '10px';
+					a.id = 'noclass';
+					document.getElementById("cloudrecord_1").appendChild(a);
 				}
 
 				/**
@@ -787,9 +841,9 @@
 							topStudentArr = data.RspData;
 							//生成学生界面
 							mui.each(topStudentArr, function(index, element) {
-								//console.log('学生:' + index + '|' + JSON.stringify(element));
+								console.log('学生:' + index + '|' + JSON.stringify(element));
 								addcloudrecord_0_1(element);
-							})
+							});
 						} else {
 							mui.toast(data.RspTxt);
 						}
@@ -831,11 +885,17 @@
 							//生成班级界面
 							mui.each(datasource, function(index, element) {
 								//console.log('班级:' + index + '|' + JSON.stringify(element));
-								addcloudrecord_1_0(element);
+								addcloudrecord_1_0(element, 0);
+							});
+							//生成家校圈界面
+							mui.each(datasource, function(index, element) {
+								//console.log('家校圈:' + index + '|' + JSON.stringify(element));
+								addcloudrecord_1_0(element, 1);
 							});
 						} else if(data.RspCode == 9) { //没有群
-							console.log('显示空白页')
-								//			showBlankPage(true); //显示空白页
+							console.log('显示空白页');
+							addcloudrecord_1_noclass();
+							//			showBlankPage(true); //显示空白页
 						} else {
 							mui.toast(data.RspTxt);
 						}
