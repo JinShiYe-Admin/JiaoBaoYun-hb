@@ -54,10 +54,6 @@
 
 	<script type="text/javascript">
 		mui.init();
-		var personalUTID;
-		var flag = 0
-			//作业model
-		var homeworkModel;
 		mui.plusReady(function() {
 
 			//			requestAllCity();
@@ -149,27 +145,7 @@
 			});
 		}
 
-		//45.通过区域代码获取对应区域的分页新闻
-		function requestCityNews() {
-			//所需参数
-			var comData = {
-				top: '10', //每页行数，
-				vvl: '370100', //查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
-				vvl1: '0' //页码,获取第几页
-			};
-			// 等待的对话框
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			//45.通过区域代码获取对应区域的分页新闻
-			postDataPro_PostTnews(comData, wd, function(data) {
-				wd.close();
-				console.log('对应区域的分页新闻:' + JSON.stringify(data));
-				if(data.RspCode == 0) {
-
-				} else {
-					mui.toast(data.RspTxt);
-				}
-			});
-		}
+		
 	</script>
 
 </html>

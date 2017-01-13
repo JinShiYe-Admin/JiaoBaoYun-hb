@@ -20,11 +20,82 @@
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init();
+			//自己定制的城市数组
+			var eduArray = [];
+			//当前显示的第几个城市
+			var eduIndex = 0;
+			
+
 			mui.plusReady(function() {
 				window.addEventListener('tapTitleLeft', function() {
 					console.log('科教-tapTitleLeft');
 				});
+
+				//44.获取个人的订制城市
+				requestUserCity();
 			});
+
+			//44.获取个人的订制城市
+			function requestUserCity() {
+				//所需参数
+				var comData = {
+					vvl: '0' //订制频道,0科教频道,1展示频道,其他待定
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//44.获取个人的订制城市
+				postDataPro_PostUTcity(comData, wd, function(data) {
+					wd.close();
+					console.log('获取个人的订制城市:' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						//先通过‘|’将返回值分为数组
+						eduArray = data.RspData[0].citys.split('|');
+						//遍历此数组
+						for(var m in eduArray) {
+							var tempStr = eduArray[m];
+							//初始化model
+							var model_area = {
+								acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
+								aname: '', //节点名称
+								atype: '' //节点类型,0省1城市2区县
+							};
+							console.log('tempStr:' + tempStr);
+							//将分成的每个值，再通过‘_’拆分为model
+							var tempArea = tempStr.split('_');
+							model_area.acode = tempArea[0];
+							model_area.aname = tempArea[1];
+							model_area.atype = '1';
+							//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
+							eduArray.splice(m, 1, model_area);
+						}
+						console.log('修改后的最终值为:' + JSON.stringify(eduArray));
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+			}
+
+			//45.通过区域代码获取对应区域的分页新闻
+			function requestCityNews() {
+				//所需参数
+				var comData = {
+					top: '10', //每页行数，
+					vvl: '370100', //查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
+					vvl1: '1' //页码,获取第几页
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//45.通过区域代码获取对应区域的分页新闻
+				postDataPro_PostTnews(comData, wd, function(data) {
+					wd.close();
+					console.log('对应区域的分页新闻:' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+			}
 		</script>
 	</body>
 
