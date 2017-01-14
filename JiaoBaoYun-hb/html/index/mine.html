@@ -200,7 +200,7 @@
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_PostGrInvC({}, wd, function(data) {
 					wd.close();
-					console.log('我的界面获取的新消息数目：' + JSON.stringify(data));
+//					console.log('我的界面获取的新消息数目：' + JSON.stringify(data));
 					var num = document.getElementById('news-amount');
 					if(data.RspCode == '0000') {
 						num.style.display = 'inline';

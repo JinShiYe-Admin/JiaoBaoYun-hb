@@ -2489,6 +2489,32 @@
 				],
 				"refer": [],
 				"priority": 0
+			},
+			"html/show/show_home.html": {
+				"resources": [
+					"js/show/show.js",
+					"css/show/show.css",
+					"css/utils/slide_navigatian.css",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"js/main/slide_navigation.js",
+					"js/utils/slide-selector.js",
+					"html/show/show-sub.html"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/show/show-sub.html": {
+				"resources": [
+					"js/show/show-sub.js",
+					"js/utils/sub.js",
+					"js/mui.min.js",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
 			}
 		},
 		"idle": {

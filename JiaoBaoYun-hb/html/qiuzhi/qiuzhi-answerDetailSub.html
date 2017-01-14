@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+
+	</head>
+
+	<body>
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul id="ul" class="mui-table-view">
+					<li class="mui-table-view-cell mui-media ">
+						中小学辅导机构的未来到底名不明朗？
+					</li>
+					<li class="mui-table-view-cell mui-media ">
+						<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">
+						<div class="mui-media-body">
+							李欣芸
+							<p class='mui-ellipsis'>专栏:教育、美食</p>
+							<button class="mui-btn-green mui-pull-right" style="margin-top: -40px;">关注</button>
+						</div>
+					</li>
+					<li class="mui-table-view-cell mui-media ">
+						中小学辅导机构的未来到底名不明朗中小学辅导机构的未来到底名不明朗中小学辅导机构的未来到底名不明朗中小学辅导 机构的未来到底名不明朗中小学辅导机构的未来到底名不明朗中小学辅导机构的未来到底名不明朗中小学辅导机构的未来到底名不明 朗中小学辅导机构的未来到底名不明朗中小学辅导机构的未来到底名不明朗中小学辅导机构的未来到底名不明朗中小学辅导机构的未来到底名不明朗
+					</li>
+				</ul>
+			</div>
+
+		</div>
+
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript">
+		var model = {
+			title:'中小学辅导机构的未来到底名不明朗？',
+			content:	'中小学辅导机构的未来到底名不明朗中小学辅导机构的未来到底名不明朗中小学辅导机构的未来到底名不明朗中小学辅导 机构的未来到底名不明朗中小学辅导机构的未来到底名不明朗中小学辅导机构的未来到底名不明朗中小学辅导机构的未来到底名不明 朗中小学辅导机构的未来到底名不明朗中小学辅导机构的未来到底名不明朗中小学辅导机构的未来到底名不明朗中小学辅导机构的未来到底名不明朗'
+
+		}
+			mui.init(function(){
+				
+			});
+			mui.plusReady(function(){
+				
+			})
+			function refreshUI(){
+				var ul = document.getElementsByClassName('ul');
+				var li_title = document.createElement("li");
+				li.className = 'mui-table-view-cell mui-media';
+				li.innerHTML = model.title;
+				var li_person = document.createElement("li");
+				li.className = 'mui-table-view-cell mui-media';
+//				li.innerHTML = '<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">'+
+//						'<div class="mui-media-body">'+
+//							李欣芸
+//							<p class='mui-ellipsis'>专栏:教育、美食</p>
+//							<button class="mui-btn-green mui-pull-right" style="margin-top: -40px;">关注</button>
+//						</div>'; 
+				
+			}
+		</script>
+
+	</body>
+
+</html>

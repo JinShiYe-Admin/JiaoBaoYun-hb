@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav common-background-bar">
+			<h1 id="title" class="mui-title">空间</h1>
+			<div id="random_icon">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left common-color-white"></a>
+			</div>
+		</header>
+
+		<div class="mui-content"></div>
+	</body>
+
+	<script type="text/javascript">
+		mui.plusReady(function() {
+			var data = plus.webview.currentWebview().data;//留言板拥有者id
+			document.getElementById("title").innerHTML = data.className+'空间'
+			events.initSubPage('parentZone-sub.html',data);
+
+		})
+	</script>
+
+</html>
