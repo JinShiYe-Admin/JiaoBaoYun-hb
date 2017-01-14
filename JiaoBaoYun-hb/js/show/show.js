@@ -7,7 +7,7 @@ mui.plusReady(function() {
 		events.openNewWindowWithData('../utils/customizeCity.html', {
 			id: 'show',
 			webid: '../show/show_home.html', //当前webview的id
-			arry: cities //已经定制的城市数组
+			cities: cities //已经定制的城市数组
 		});
 	});
 })
