@@ -760,7 +760,18 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"css/cloud/file.css",
 					"image/cloud/cloud_bg2.png",
-					"css/iconfont/iconfont.css"
+					"css/iconfont/iconfont.css",
+					"image/cloud/cloud_0_biji.png",
+					"image/cloud/cloud_0_jishi.png",
+					"image/cloud/cloud_0_banjiguanli.png",
+					"image/cloud/cloud_0_zone.png",
+					"image/cloud/cloud_0_class.png",
+					"image/cloud/cloud_0_dangan.png",
+					"image/cloud/cloud_0_tuku.png",
+					"image/cloud/cloud_0_wenjianjia.png",
+					"image/cloud/cloud_0_tongxunlu.png",
+					"image/cloud/cloud_0_zuoye.png",
+					"image/cloud/cloud_0_xinjian.png"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -2456,7 +2467,8 @@
 					"css/qiuzhi/qiuzhi.css",
 					"js/qiuzhi/qiuzhi-sub.js",
 					"css/iconfont/iconfont.css",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/storageKeyName.js"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html"
@@ -2503,7 +2515,9 @@
 					"js/utils/slide-selector.js",
 					"html/show/show-sub.html"
 				],
-				"refer": [],
+				"refer": [
+					"html/show/show-sub1.html"
+				],
 				"priority": 0
 			},
 			"html/show/show-sub.html": {
@@ -2511,7 +2525,18 @@
 					"js/show/show-sub.js",
 					"js/utils/sub.js",
 					"js/mui.min.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/utils/h5fresh.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/show/show-sub1.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"js/show/show-sub.js"
 				],
 				"refer": [],
 				"priority": 0
