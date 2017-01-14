@@ -43,7 +43,15 @@
 		</div>
 	</body>
 	<script type="text/javascript">
-		mui.init();
+		mui.init({
+			pullRefresh: {
+				container: '#pullrefresh',
+				down: {
+					callback: pulldownRefresh
+				},
+
+			}
+		});
 		mui('.mui-scroll-wrapper').scroll();
 		var gid;
 		var className;
@@ -144,8 +152,33 @@
 						}
 					}
 					datasource = tempArr;
+					//所需参数
+					var upstrings = upString.replace('[', '');
+					upstrings = upstrings.replace(']', '');
+					var postData = {
+						vvl: upstrings //被备注用户ID,utid或utid串
+					};
+					postDataPro_PostUmk(postData, wd, function(data) {
+						wd.close();
+						console.log('获取多用户备注_PostUmk:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							for(var j = 0; j < datasource.length; j++) {
+								for(var k = 0; k < data.RspData.length; k++) {
+									if(datasource[j].utid == data.RspData[k].butid) {
+										var before = datasource[j].ugname.split('[')[0]
+										datasource[j].ugname = datasource[j].ugname.replace(before, data.RspData[k].bunick);
+									}
+								}
+
+							}
+							refreshUI();
+						} else {
+							console.log('底部列表全部数据' + JSON.stringify(datasource));
+							refreshUI();
+						}
+					})
+
 					console.log(JSON.stringify(datasource))
-					refreshUI();
 				}
 
 			})
@@ -201,7 +234,17 @@
 				span.parentElement.removeChild(span);
 			}
 		});
-		
+		/**
+		 * 下拉刷新具体业务实现
+		 */
+		function pulldownRefresh() {
+			setTimeout(function() {
+				datasource = [];
+				//请求数据
+				getBottomList();
+				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+			}, 1500);
+		}
 	</script>
 
 </html>

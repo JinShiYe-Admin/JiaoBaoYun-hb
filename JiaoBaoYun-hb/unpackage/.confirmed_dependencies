@@ -1981,7 +1981,8 @@
 			"js/qiuzhi/qiuzhi-sub.js",
 			"css/iconfont/iconfont.css",
 			"fonts/iconfont.ttf",
-			"js/storageKeyName.js"
+			"js/storageKeyName.js",
+			"js/publicQiuzhiProtocol.js"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-question.html"

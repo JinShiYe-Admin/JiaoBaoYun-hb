@@ -60,7 +60,7 @@
 			//			requestAllCity();
 			//			requestCitySetting();
 			//			requestUserCity();
-			requestAskDetail();
+			requestAddUserAsk();
 		});
 
 		//41.获取某个区域下的所有子区域或查询城市
@@ -205,6 +205,28 @@
 			postDataQZPro_getAskById(comData, wd, function(data) {
 				wd.close();
 				console.log('获取某个问题的详情:' + JSON.stringify(data));
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		}
+		
+		//9.新增某个用户回答问题
+		function requestAddUserAsk() {
+			//所需参数
+		var comData = {
+			askId: '1',//问题ID
+			answerContent: 'test回答',//回答内容,4000
+			answerMan:'1'//回答人
+		};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//9.新增某个用户回答问题
+			postDataQZPro_addAnswer(comData, wd, function(data) {
+				wd.close();
+				console.log('9.新增某个用户回答问题:' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 
 				} else {

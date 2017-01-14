@@ -17,17 +17,17 @@
 			.mui-content {
 				background: white;
 			}
-			
+
 			.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-			
+
 			.mui-table-view {
 				text-align: center;
 			}
-			
+
 			.mui-table-view-cell {
 				/*box-shadow: 0px 1px 5px #888888;*/
 				border: 1px solid #D9D9D9;
@@ -35,7 +35,7 @@
 				padding: ;
 				padding: 6px;
 			}
-			
+
 			.city-p {
 				width: 100%;
 				background: #E6E6E6;
@@ -44,7 +44,11 @@
 				color: #9D9D9D;
 				text-align: left;
 			}
-			
+
+			.city-select {
+				border: 1px solid #12B8F6;
+			}
+
 			.mui-col-xs-4 {
 				padding: 5px 10px;
 			}
@@ -63,29 +67,36 @@
 					<div class="city-p">当前城市</div>
 					<div id="beforeCity" class="mui-row">
 						<!--<div class="mui-col-xs-4 mui-col-sm-4">
-							<li class="mui-table-view-cell mui-media ">
+							<li class="mui-table-view-cell mui-media">
 								<div class="mui-media-body mui-ellipsis">济南市济南市济南市济南市济南市</div>
 							</li>
 						</div>
 						<div class="mui-col-xs-4 mui-col-sm-4">
-							<li class="mui-table-view-cell mui-media ">
+							<li class="mui-table-view-cell mui-media">
 								<div class="mui-media-body mui-ellipsis">济南市济南市济南市济南市济南市</div>
 							</li>
 						</div>-->
 					</div>
-					<div class=" city-p">更多城市</div>
-					<div id="allCity" class=" mui-row">
-						<!--<div class="mui-col-xs-4 mui-col-sm-4">
-							<li class="mui-table-view-cell mui-media ">
+					<div id="allCity">
+						<div class="city-p">山东省</div>
+						<div id="City_37" class=" mui-row">
+							<!--<div class="mui-col-xs-4 mui-col-sm-4">
+							<li class="mui-table-view-cell mui-media">
 								<div class="mui-media-body mui-ellipsis">济南市济南市济南市济南市济南市</div>
 							</li>
 						</div>
 						<div class="mui-col-xs-4 mui-col-sm-4">
-							<li class="mui-table-view-cell mui-media ">
+							<li class="mui-table-view-cell mui-media">
 								<div class="mui-media-body mui-ellipsis">济南市济南市济南市济南市济南市</div>
 							</li>
 						</div>-->
-
+						</div>
+						<div class="city-p">湖北省</div>
+						<div id="City_42" class=" mui-row">
+						</div>
+						<div class="city-p">海南省</div>
+						<div id="City_46" class=" mui-row">
+						</div>
 					</div>
 				</ul>
 			</div>
@@ -93,25 +104,80 @@
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
 			mui.init();
-			var arry = []; //传值的当前已经选择的城市
+			var main = null; //获取当前窗体对象
+			var cities = []; //传值的当前已经选择的城市
 			var cityArray = []; //获取到的所有城市
+			var commitCities = []; //提交的城市
+
 			mui.plusReady(function() {
-				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				arry = main.data.arry;
+				//---滑动start---
+				mui(".mui-scroll-wrapper").scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false, //是否横向滚动
+					indicators: true, //是否显示滚动条
+					deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+					bounce: true, //是否启用回弹
+				});
+				//---滑动end---
+				main = plus.webview.currentWebview(); //获取当前窗体对象
+				cities = main.data.cities;
 				console.log('订制城市：' + JSON.stringify(main.data));
-				//				main.data={
-				//					id: 'edu',
-				//					webid: '../scienceeducation/scienceeducation_home.html', //当前webview的id
-				//					arry: eduArray //已经定制的城市数组
-				//				}
+				console.log('订制城市arry：' + JSON.stringify(main.data.cities));
+				//main.data = {
+				//	id: 'edu',//edu-科教，show-展现
+				//	webid: '../scienceeducation/scienceeducation_home.html', //id对应webview的id
+				//	cities: eduArray //已经定制的城市数组
+				//}
+
 				//自己当前手机号对应的城市(可能修改后的)
 				//				addBeforeCity(element);
 
 				//41.获取某个区域下的所有子区域或查询城市
 				requestAllCity();
 
+				//---监听---start---
+
+				//点击城市
+				mui('#allCity').on('tap', '.mui-table-view-cell', function() {
+					var classNameArry = this.getAttribute('class').split(' ');
+					var select = false;
+					mui.each(classNameArry, function(index, element) {
+						if(element == 'city-select') {
+							select = true;
+							return false;
+						}
+					});
+					if(select) {
+						this.className = 'mui-table-view-cell mui-media';
+					} else {
+						this.className = 'mui-table-view-cell mui-media city-select';
+					}
+				});
+
+				//点击提交
+				document.getElementById('commit').addEventListener('tap', function() {
+					var tempCities = []; //选取的城市
+					var tempCityArray = cityArray;
+					//获取被选中的元素
+					mui('.city-select').each(function(index, element) {
+						var elementAcode = element.getAttribute('data-acode'); //城市代码
+						mui.each(tempCityArray, function(index2, element2) {
+							if(elementAcode == element2.acode) {
+								tempCities.push(element2);
+								return false;
+							}
+						});
+					});
+
+					commitCities = tempCities; //设置提交的城市
+					console.log('commitCities:' + JSON.stringify(commitCities));
+
+				});
+
+				//---监听---end---
 			});
 
 			/**
@@ -121,7 +187,7 @@
 			function addBeforeCity(data) {
 				var div = document.createElement('div');
 				div.className = 'mui-col-xs-4 mui-col-sm-4'
-				div.innerHTML = '<li class="mui-table-view-cell mui-media ">\
+				div.innerHTML = '<li class="mui-table-view-cell mui-media">\
 									  <div class="mui-media-body mui-ellipsis">' + data.aname + '</div>\
 								   </li>';
 				document.getElementById("beforeCity").appendChild(div)
@@ -129,21 +195,20 @@
 
 			/**
 			 * 更多城市
-			 * @param {Object} data
+			 * @param {Object} id 省份代码
+			 * @param {Object} data 数据
 			 */
-			function addAllCity(data) {
+			function addAllCity(id, data) {
 				var div = document.createElement('div');
+				var select = '';
+				if(data.select) {
+					select = 'city-select';
+				}
 				div.className = 'mui-col-xs-4 mui-col-sm-4'
-				div.innerHTML = '<li class="mui-table-view-cell mui-media ">\
+				div.innerHTML = '<li class="mui-table-view-cell mui-media ' + select + '" data-acode="' + data.acode + '">\
 									  <div class="mui-media-body mui-ellipsis">' + data.aname + '</div>\
 								   </li>';
-
-				document.getElementById("allCity").appendChild(div)
-				if(data.select) {
-					div.querySelector('li').border = '1px solid red';
-				} else {
-
-				}
+				document.getElementById("City_" + id).appendChild(div)
 			}
 
 			//41.获取某个区域下的所有子区域或查询城市
@@ -161,17 +226,24 @@
 					cityArray = data.RspData;
 					console.log('所有子区域或查询城市:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
+						var tempArry = cities;
 						mui.each(cityArray, function(index, element) {
 							//遍历，然后判断是否是之前选择的城市，修改选中状态
-							for(var m in arry) {
-								var tempModel = arry[m];
-								if(element.acode == tempModel.acode) {
-									element.select = 1; //选中
-								} else {
-									element.select = 0; //默认为不选中
+							var proAcode = element.acode.substring(0, 2); //截取省份代码
+							if(proAcode == '37' || proAcode == '42' || proAcode == '46') {
+								//山东，湖北，海南
+								var select = 0; //默认为不选中
+								for(var m in tempArry) {
+									var tempModel = tempArry[m];
+									if(element.acode == tempModel.acode) {
+										select = 1; //选中
+										tempArry.splice(m, 1); //去掉已选中了的
+									}
 								}
+								element.select = select;
+								//console.log('addAllCity:' + JSON.stringify(element));
+								addAllCity(proAcode, element);
 							}
-							addAllCity(element);
 						});
 					} else {
 						mui.toast(data.RspTxt);
