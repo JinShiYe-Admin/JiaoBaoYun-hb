@@ -1,0 +1,140 @@
+<!--
+	作者：444811716@qq.com
+	时间：2017-01-13
+	描述：订制城市
+-->
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>订制城市</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<style>
+			body,
+			.mui-content {
+				background: white;
+			}
+
+			.mui-table-view:before,
+			.mui-table-view:after,
+			.mui-table-view-cell:after {
+				height: 0px;
+			}
+
+			.mui-table-view {
+				text-align: center;
+			}
+
+			.mui-table-view-cell {
+				/*box-shadow: 0px 1px 5px #888888;*/
+				border: 1px solid #D9D9D9;
+				border-radius: 5px;
+				padding: ;
+				padding: 6px;
+			}
+
+			.city-p {
+				width: 100%;
+				background: #E6E6E6;
+				padding: 5px;
+				margin-bottom: 0px;
+				color: #9D9D9D;
+				text-align: left;
+			}
+
+			.mui-col-xs-4 {
+				padding: 5px 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="color: white;">定制城市</h1>
+			<h1 id="commit" class="mui-title" style="text-align: right;right: 10px;">提交</h1>
+		</header>
+		<div class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view">
+					<div class="city-p">当前城市</div>
+					<div id="beforeCity" class="mui-row">
+						<div class="mui-col-xs-4 mui-col-sm-4">
+							<li class="mui-table-view-cell mui-media ">
+								<div class="mui-media-body mui-ellipsis">济南市济南市济南市济南市济南市</div>
+							</li>
+						</div>
+						<div class="mui-col-xs-4 mui-col-sm-4">
+							<li class="mui-table-view-cell mui-media ">
+								<div class="mui-media-body mui-ellipsis">济南市济南市济南市济南市济南市</div>
+							</li>
+						</div>
+					</div>
+					<div class=" city-p">更多城市</div>
+					<div id="allCity" class=" mui-row">
+						<div class="mui-col-xs-4 mui-col-sm-4">
+							<li class="mui-table-view-cell mui-media ">
+								<div class="mui-media-body mui-ellipsis">济南市济南市济南市济南市济南市</div>
+							</li>
+						</div>
+						<div class="mui-col-xs-4 mui-col-sm-4">
+							<li class="mui-table-view-cell mui-media ">
+								<div class="mui-media-body mui-ellipsis">济南市济南市济南市济南市济南市</div>
+							</li>
+						</div>
+
+					</div>
+				</ul>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				var arry = main.data.arry;
+				console.log('订制城市：' + JSON.stringify(main.data));
+				//				main.data={
+				//					id: 'edu',
+				//					webid: '../scienceeducation/scienceeducation_home.html', //当前webview的id
+				//					arry: eduArray //已经定制的城市数组
+				//				}
+				mui.each(arry, function(index, element) {
+					console.log(index + '|' + JSON.stringify(element));
+					addBeforeCity(element);
+				});
+
+				/**
+				 * 当前城市
+				 * @param {Object} data
+				 */
+				function addBeforeCity(data) {
+					var div = document.createElement('div');
+					div.className = 'mui-col-xs-4 mui-col-sm-4'
+					div.innerHTML = '<li class="mui-table-view-cell mui-media ">\
+									  <div class="mui-media-body mui-ellipsis">' + data.aname + '</div>\
+								   </li>';
+					document.getElementById("beforeCity").appendChild(div)
+				}
+
+				/**
+				 * 更多城市
+				 * @param {Object} data
+				 */
+				function addAllCity(data) {
+					var div = document.createElement('div');
+					div.className = 'mui-col-xs-4 mui-col-sm-4'
+					div.innerHTML = '<li class="mui-table-view-cell mui-media ">\
+									  <div class="mui-media-body mui-ellipsis">' + data.aname + '</div>\
+								   </li>';
+					document.getElementById("allCity").appendChild(div)
+				}
+
+			});
+		</script>
+	</body>
+
+</html>
