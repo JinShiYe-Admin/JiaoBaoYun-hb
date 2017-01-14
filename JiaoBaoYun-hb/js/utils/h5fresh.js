@@ -10,7 +10,7 @@ var h5fresh=(function(mod){
 		ws=plus.webview.currentWebview();
 		ws.setPullToRefresh({
 			support:true,//是否开启Webview窗口的下拉刷新功能
-			height:"50px",//窗口的下拉刷新控件高度
+			height:"100px",//窗口的下拉刷新控件高度
 			range:"200px",//)窗口可下拉拖拽的范围
 			contentdown:{
 				caption:"下拉可以刷新"

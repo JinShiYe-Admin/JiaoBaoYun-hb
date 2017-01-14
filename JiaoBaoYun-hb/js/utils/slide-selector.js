@@ -1,12 +1,14 @@
 /**
- * 城市滑动选择
- * @requires jQuery.js slide_navigatian.css
- */
+   * 城市滑动选择
+   * @requires jQuery.js slide_navigatian.css
+   */
 var slide_selector = (function(mod) {
 	var thisCities; //城市数组
 	var thisPagePath; //对应的界面
 	var citiesIndex = 0; //滑动计数，左滑-1，右滑+1；
 	var curCity; //当前城市
+	var subWvs;
+	var self;
 	/**
 	 * 放置城市数据
 	 * @param {Object} cities //城市数组
@@ -51,33 +53,72 @@ var slide_selector = (function(mod) {
 		 * 获取不同的页面
 		 * @param {Object} pagePath 要加载的html路径
 		 */
-	mod.getPages = function(pagePath) {
-			thisPagePath = pagePath;
-			mod.pages = [];
-			var curPage = plus.webview.currentWebview();
-			var page;
-			for(var i = 0; i < thisCities.length; i++) {
-				if(!plus.webview.getWebviewById(pagePath + i % 3)) {
-					page = plus.webview.create(pagePath, pagePath + i % 3, {
-						top: '100px',
-						bottom: '0'
-					});
-					if(i % 3 != 0) {
-						page.hide(); //隐藏界面
-					}
-					mod.pages.push(page); //将界面放进数组
-					curPage.append(page); //主界面加载此页面
-				}
+	mod.getPages = function(cities,subPage) {
+		thisCities = cities;
+		self=plus.webview.currentWebview();
+		mod.pages=[];
+			// 子窗口样式
+		var subStyles = {
+			top: "0px",
+			bottom: "50px"
+		};
+		// 创建子页面
+		for(var i =0;i<2;i++) {
+			/**
+			 * 创建窗口对象，并将索引做为额外的参数传递；
+			 * http://www.html5plus.org/doc/zh_cn/webview.html#plus.webview.create
+			 */
+			var subWv = plus.webview.create(subPage, subPage+i, subStyles, {
+				index: i
+			});
+			// 窗口对象添加至数组
+			mod.pages.push(subWv);
+			if(i > 0) {
+				/**
+				 * 隐藏非第一页的窗口对象
+				 * http://www.html5plus.org/doc/zh_cn/webview.html#plus.webview.WebviewObject.hide
+				 */
+				subWv.hide("none");
 			}
-			addSwipe(); //加载滑动事件
-			//显示第一个页面
-			curCity = thisCities[0];
-			var showPage = plus.webview.getWebviewById(pagePath + 0);
-			console.log("当前的城市为：" + curCity + ",当前的pageId为：" + showPage.id);
-			//			showPage.show();
-			setTimeout(function() {
-				mui.fire(showPage, 'cityInfo', curCity + 1);
-			}, 1000);
+			/**
+			 * 向父窗口添加子窗口
+			 * http://www.html5plus.org/doc/zh_cn/webview.html#plus.webview.WebviewObject.append
+			 */
+			self.append(subWv);
+			
+		}
+		curCity = thisCities[0];
+		console.log("当前的城市为：" + curCity + ",当前的pageId为：" + mod.pages[0].id);
+		mui.fire(mod.pages[0], 'cityInfo', curCity + 1);
+		addSwipe();
+//			mod.pagePaths = pagePaths;
+//			mod.pages = [];
+//			var curPage = plus.webview.currentWebview();
+//			var page;
+//			for(var i = 0; i < thisCities.length; i++) {
+//				if(!plus.webview.getWebviewById(pagePaths[i % pagePaths.length])) {
+//					page = plus.webview.create(pagePaths[i % pagePaths.length], pagePaths[i % pagePaths.length], {
+//							top: '100px',
+//							bottom: '0'
+//						}
+//
+//					);
+//					if(i % pagePaths.length != 0) {
+//						page.hide(); //隐藏界面
+//					}
+//					mod.pages.push(page); //将界面放进数组
+//					curPage.append(page); //主界面加载此页面
+//				}
+//			}
+//			addSwipe(); //加载滑动事件
+//			//显示第一个页面
+//			curCity = thisCities[0];
+//			thisPagePath =pagePaths[0];
+//			var showPage = plus.webview.getWebviewById(pagePaths[0]);
+//			console.log("当前的城市为：" + curCity + ",当前的pageId为：" + showPage.id);
+//			setTimeout(function() {
+//				mui.fire(showPage, 'cityInfo', curCity + 1);
+//			}, 1000);
 		}
 		/**
 		 * 加载左滑、右滑事件
@@ -93,15 +134,6 @@ var slide_selector = (function(mod) {
 						swipe(0);
 					}
 				})
-//							for(var i in mod.pages) {
-//							var curWindow=mod.pages[i].document
-//								document.addEventListener("swipeleft",function(){
-//						swipe(1, i);
-//								});
-//								window.addEventListener("swiperight", function(){
-//									swipe(0, i);
-//								} );
-//							}
 		}
 		/**
 		 * 滑动事件的实现
@@ -109,29 +141,36 @@ var slide_selector = (function(mod) {
 		 * @param {Object} index 
 		 */
 	var swipe = function(type) {
-			var size = thisCities / 3;
 			var showPage;
-			var curPage = plus.webview.currentWebview();
-			if(citiesIndex>=0){
-				citiesIndex=citiesIndex%3;
-			}else{
-				citiesIndex=citiesIndex%3+3;
+			if(citiesIndex >= 0) {
+				citiesIndex = citiesIndex % thisCities.length;
+			} else {
+				citiesIndex = citiesIndex % thisCities.length + thisCities.length;
 			}
+			var curPage =mod.pages[citiesIndex%2];
 			if(type == 1) { //右滑
-				showPage = plus.webview.getWebviewById(thisPagePath + (citiesIndex + 1) % 3);
+				showPage = mod.pages[(citiesIndex + 1) % 2];
 				citiesIndex++;
 			} else { //左滑
-				showPage = plus.webview.getWebviewById(thisPagePath + (citiesIndex + 2) % 3);
+				showPage = mod.pages[(citiesIndex + 2-1) % 2];
 				citiesIndex--;
 			}
 			getCurrentCity();
-			document.querySelector('#current-city').innerText = curCity;
-			setIndicatorShow(); //点点显示
-			showPage.show("fade-in", 300); //显示要显示的页面;
+//			document.querySelector('#current-city').innerText = curCity;
+//			setIndicatorShow(); //点点显示
+			/**
+			 * 向index页面传递数据
+			 */
+			sendPageChanged();
 			curPage.hide(); //隐藏当前页面
+			showPage.show("fade-in"); //显示要显示的页面;
 			console.log("滑动模式：" + type + ",滑动后的要显示的页面id:" + showPage.id);
 			mui.fire(showPage, 'cityInfo', curCity + 0); //向显示界面传值
 		}
+	var sendPageChanged=function(){
+		getCurrentCity();
+		events.fireToPageNone('../index/index.html','cityInfo',curCity)
+	}
 		/**
 		 * 设置点点的显示
 		 */
