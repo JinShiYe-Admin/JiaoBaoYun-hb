@@ -15,57 +15,57 @@
 				margin: 0px;
 				padding: 0px;
 			}
-
+			
 			.mui-content {
 				height: 100%;
 			}
-
+			
 			.area {
 				margin: 20px auto 0px auto;
 			}
-
+			
 			.mui-input-group {
 				margin-top: 10px;
 			}
-
+			
 			.mui-input-group:first-child {
 				margin-top: 20px;
 			}
-
+			
 			.mui-input-group label {
 				width: 22%;
 			}
-
+			
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				width: 78%;
 			}
-
+			
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
 				top: 6px;
 			}
-
+			
 			.mui-content-padded {
 				margin-top: 25px;
 			}
-
+			
 			.mui-btn {
 				padding: 10px;
 			}
-
+			
 			.link-area {
 				display: block;
 				margin-top: 25px;
 				text-align: center;
 			}
-
+			
 			.spliter {
 				color: #bbb;
 				padding: 0px 8px;
 			}
-
+			
 			.oauth-area {
 				position: absolute;
 				bottom: 20px;
@@ -75,7 +75,7 @@
 				padding: 0px;
 				margin: 0px;
 			}
-
+			
 			.oauth-area .oauth-btn {
 				display: inline-block;
 				width: 50px;
@@ -88,11 +88,11 @@
 				border: solid 1px #13b7f6;
 				border-radius: 25px;
 			}
-
+			
 			.oauth-area .oauth-btn:active {
 				border: solid 1px #aaa;
 			}
-
+			
 			.oauth-area .oauth-btn.disabled {
 				background-color: #ddd;
 			}
@@ -256,7 +256,7 @@
 								//21.通过用户ID获取用户资料
 								postDataPro_PostUinf(comData1, wd, function(data) {
 									wd.close();
-									console.log('获取个人信息success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+									console.log('获取个人信息000:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 									if(data.RspCode == 0) {
 										var tepI0000 = data.RspData[0];
 										//存储个人信息
@@ -303,8 +303,6 @@
 					moreButton.addEventListener('tap', function(event) {
 						var btnArray = [{
 							title: "通过短信验证码登录"
-						}, {
-							title: "选取现有的"
 						}];
 						plus.nativeUI.actionSheet({
 							title: "遇到登录问题？",
@@ -417,7 +415,7 @@
 							//发送网络请求，data为网络返回值
 							postDataEncry(storageKeyName.MAINURL + 'PostLogin', enData, comData, 0, wd, function(data) {
 								wd.close();
-								console.log('账号密码登录success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								console.log('账号密码登录s1111111e:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 								if(data.RspCode != 0000) {
 									mui.toast(data.RspTxt);
 									return;
@@ -428,7 +426,22 @@
 									if(!data.RspData.uimg) {
 										data.RspData.uimg = '../../image/utils/default_personalimage.png';
 									}
+									//解析省市代码
+									var tempArray = data.RspData.uarea.split('|');
+									if(tempArray.length > 0) {
+										var temp0 = tempArray[0].split(' ');
+										var temp1 = tempArray[1].split(' ');
+										var model_area = {
+											procode: temp0[0], //省份code，自己添加的参数
+											proname: temp1[0], //省份名称，自己添加的参数
+											acode: temp0[1], //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
+											aname: temp1[1], //节点名称--城市名称
+											atype: '' //节点类型,0省1城市2区县
+										}
+										data.RspData.uarea = model_area;
+									}
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
+									console.log('登录保存的个人信息：' + JSON.stringify(data.RspData)); 
 									//
 									events.infoChanged();
 									//存储自动登录
