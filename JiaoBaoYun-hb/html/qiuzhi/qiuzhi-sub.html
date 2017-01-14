@@ -49,6 +49,7 @@
 
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
 
 	</body>
 
@@ -59,7 +60,7 @@
 			//			requestAllCity();
 			//			requestCitySetting();
 			//			requestUserCity();
-//			requestCityNews();
+			requestAskDetail();
 		});
 
 		//41.获取某个区域下的所有子区域或查询城市
@@ -145,28 +146,74 @@
 			});
 		}
 
-		
-
 		//1.获取所有话题
-		//		function requestCitySetting() {
-		//			//所需参数
-		//			var comData = {
-		//				vvl: '370100_济南市|370900_泰安市', //定制城市组合，城市代码_城市名称|城市代码_城市名称|.....
-		//				vvl1: '0' //定制城市频道,0科教频道,1展示频道,其他待定
-		//			};
-		//			// 等待的对话框
-		//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		//			//1.获取所有话题
-		//			postDataPro_PostUTcityA(comData, wd, function(data) {
-		//				wd.close();
-		//				console.log('获取所有话题:' + JSON.stringify(data));
-		//				if(data.RspCode == 0) {
-		//
-		//				} else {
-		//					mui.toast(data.RspTxt);
-		//				}
-		//			});
-		//		}
+		function requestAllChannels() {
+			//所需参数
+			var comData = {
+				pageIndex: '1', //当前页数
+				pageSize: '0' //每页记录数,传入0，获取总记录数
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//1.获取所有话题
+			postDataQZPro_getAllChannels(comData, wd, function(data) {
+				wd.close();
+				console.log('获取所有话题:' + JSON.stringify(data));
+				if(data.RspCode == 0) {
+					var temArr = data.RspData.Data;
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		}
+
+		//4.获取所有符合条件问题
+		function requestAskList() {
+			//所需参数
+			var comData = {
+				askTitle: '', //问题标题,用于查找，可输入部分标题
+				channelId: '0', //话题ID,传入0，获取所有话题数据
+				pageIndex: '1', //当前页数
+				pageSize: '10' //每页记录数,传入0，获取总记录数
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//4.获取所有符合条件问题
+			postDataQZPro_getAsksByCondition(comData, wd, function(data) {
+				wd.close();
+				console.log('获取所有符合条件问题:' + JSON.stringify(data));
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		}
+
+		//5.获取某个问题的详情
+		function requestAskDetail() {
+			//所需参数
+			var comData = {
+				askId: '1', //问题ID
+				orderType: '1', //回答排序方式,1 按时间排序,2 按质量排序：点赞数+评论数
+				pageIndex: '1', //当前页数
+				pageSize: '0' //每页记录数,传入0，获取总记录数
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//5.获取某个问题的详情
+			postDataQZPro_getAskById(comData, wd, function(data) {
+				wd.close();
+				console.log('获取某个问题的详情:' + JSON.stringify(data));
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		}
+
+		
 	</script>
 
 </html>

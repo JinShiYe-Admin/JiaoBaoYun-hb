@@ -80,7 +80,7 @@ var postDataQZPro_getAsksByCondition = function(commonData, wd, callback) {
 //所需参数
 //		var comData = {
 //			askId: '',//问题ID
-//			orderType:''//回答排序方式,1 按时间排序,2 按质量排序：点赞数+评论数
+//			orderType:'',//回答排序方式,1 按时间排序,2 按质量排序：点赞数+评论数
 //			pageIndex: '',//当前页数
 //			pageSize:''//每页记录数,传入0，获取总记录数
 //		};

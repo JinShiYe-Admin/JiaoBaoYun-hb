@@ -10,31 +10,36 @@
 		<link href="../../css/quan/class_space.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<style type="text/css">
-.jiaoyu,.dongtai1{
-	width: 6rem;
-	height: 6rem;
-	border: solid;
-	border-width: 0;
-	border-radius: 5px;
-	border-color: #929292;
-	padding: 0.7rem;
-	text-align: center;
-	position: absolute;
-}
-.jiaoyu{
-	top: 320px;
-	left: 10px;
-	z-index: 1;
-}
-.dongtai1{
-	top: 320px;
-	left: 80px;
-	z-index: 1;
-}
-div>.icon-jiaoyu:before,.icon-dongtai1:before{
-	font-size: 4.0rem;
-	color: gray;
-}
+			.jiaoyu,
+			.dongtai1 {
+				width: 6rem;
+				height: 6rem;
+				border: solid;
+				border-width: 0;
+				border-radius: 5px;
+				border-color: #929292;
+				padding: 0.7rem;
+				text-align: center;
+				position: absolute;
+			}
+			
+			.jiaoyu {
+				top: 320px;
+				left: 10px;
+				z-index: 1;
+			}
+			
+			.dongtai1 {
+				top: 320px;
+				left: 80px;
+				z-index: 1;
+			}
+			
+			div>.icon-jiaoyu:before,
+			.icon-dongtai1:before {
+				font-size: 4.0rem;
+				color: gray;
+			}
 		</style>
 
 	</head>
@@ -59,14 +64,13 @@ div>.icon-jiaoyu:before,.icon-dongtai1:before{
 				</div>
 			</div>
 			<div class="jiaoyu">
-					<a class="mui-icon iconfont icon-jiaoyu"></a>
-					<p>科教</p>
-				</div>
-				<div class="dongtai1">
-					<a class="mui-icon iconfont icon-dongtai1"></a>
-					<p>展现</p>
-				</div>
-
+				<a class="mui-icon iconfont icon-jiaoyu"></a>
+				<p>科教</p>
+			</div>
+			<div class="dongtai1">
+				<a class="mui-icon iconfont icon-dongtai1"></a>
+				<p>展现</p>
+			</div>
 
 		</div>
 
@@ -81,73 +85,139 @@ div>.icon-jiaoyu:before,.icon-dongtai1:before{
 	</script>
 	<script type="text/javascript">
 		mui.init()
+		
 	</script>
 	<script>
+	var utids = [];
 		mui.plusReady(function() {
-				var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
-				//			var groupInfo;
-				//			//界面监听传值
-				//			window.addEventListener('postGroupInfo', function(e) {
-				//
-				//				groupInfo = e.detail.data;
-				//				console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
-				//			});
-				var title = document.getElementById('title');
-				title.innerText = userInfo.unick;
-				events.addTap('take_pic', function() {
-					camera.getPic(camera.getCamera(),function(path){
-				
-					});
-				});
-				events.addTap('take_camero', function() {
-					camera.getVideo(camera.getCamera(),function(path){
-						
-					});
-				});
-				events.addTap('get_gallery', function() {
-					gallery.getMultiplePic(function(paths){
-						
-					});
-				});
-				//发布按钮
-				events.addTap('publish', function() {
-					var textView = document.getElementById('input-content');
-					var tempText = Trim(textView.value);
-					console.log('textView.value===' + tempText)
-					if(!tempText || tempText == '') {
-						mui.toast('请输入内容');
-						return;
-					} else if(tempText.length > 2000) {
-						mui.toast('不能超过2000字');
-						return;
-					} else {
-						tempText = replaceAllBL(tempText)
-					}
-					var postData = {
-						userId: userInfo.utid,
-						msgContent: tempText,
-						noteType: '2',
-						encType: '0',
-						encAddr: '',
-						encImg: '',
-						encIntro: ''
-					}
-					console.log(JSON.stringify(postData));
-					var flag = plus.webview.currentWebview().data;
-					console.log('flag=' + flag)
-					var main = plus.webview.getWebviewById('../quan/tab-zone.html');
-					mui.fire(main, 'addUserSpaceForMutiUsers', {
-						postData: postData
-					});
-					textView.value = '';
-					mui.back();
+					var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
+					
+					getGroupList();
+					//			var groupInfo;
+					//			//界面监听传值
+					//			window.addEventListener('postGroupInfo', function(e) {
+					//
+					//				groupInfo = e.detail.data;
+					//				console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
+					//			});
+					var title = document.getElementById('title');
+					title.innerText = userInfo.unick;
+					events.addTap('take_pic', function() {
+						camera.getPic(camera.getCamera(), function(path) {
 
-				})
-			})
-			//去除前后空格
-		function Trim(str) {
-			return str.replace(/(^\s*)|(\s*$)/g, "");
-		}
+						});
+					});
+					events.addTap('take_camero', function() {
+						camera.getVideo(camera.getCamera(), function(path) {
+
+						});
+					});
+					events.addTap('get_gallery', function() {
+						gallery.getMultiplePic(function(paths) {
+
+						});
+					});
+					//发布按钮
+					events.addTap('publish', function() {
+							var textView = document.getElementById('input-content');
+							var tempText = Trim(textView.value);
+							console.log('textView.value===' + tempText)
+							if(!tempText || tempText == '') {
+								mui.toast('请输入内容');
+								return;
+							} else if(tempText.length > 2000) {
+								mui.toast('不能超过2000字');
+								return;
+							} else {
+								tempText = replaceAllBL(tempText)
+							}
+							var postData = {
+								userId: userInfo.utid,
+								msgContent: tempText,
+								noteType: '2',
+								encType: '3',
+								encAddr: '',
+								encImg: '',
+								encIntro: ''
+							}
+							postData.userIds = arrayToStr(utids);
+							console.log(JSON.stringify(postData))
+							var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+							postDataPro_addUserSpace(postData, wd, function(data) {
+								wd.close();
+								mui.toast('发布成功！');
+								console.log('推送个人空间成功' + JSON.stringify(data));
+								textView.value = '';
+								mui.back();
+
+							})
+						})
+					})
+						//去除前后空格
+					function Trim(str) {
+						return str.replace(/(^\s*)|(\s*$)/g, "");
+					}
+					//获取所有的群
+					function getGroupList() {
+						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+						//	//需要参数
+						var comData = {
+							vtp: 'ag', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
+							vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
+						};
+						// 等待的对话框
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						//	获取用户群
+						postDataPro_PostGList(comData, wd, function(data) {
+							wd.close();
+							console.log('获取用户群_PostGList:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode == 0) {
+								datasource = data.RspData; //底部列表数据
+								var gids = [];
+								for(var i = 0; i < datasource.length; i++) {
+									gids.push(datasource[i].gid);
+								}
+								gids = arrayDupRemoval(gids);
+								gids = arrayToStr(gids);
+								getAllClassMember(gids)
+							} else if(data.RspCode == 9) { //没有群
+								console.log('显示空白页')
+
+							} else {
+								mui.toast(data.RspTxt);
+							}
+						});
+
+					}
+
+					function getAllClassMember(gids) {
+						var gidStr = gids.replace('[', '');
+						gidStr = gidStr.replace(']', '');
+
+						//需要参数
+						var comData = {
+							top: '-1', //选择条数
+							vvl: gidStr, //群ID，查询的值
+							vvl1: '-1', //群员类型，0家长,1管理员,2老师,3学生,-1取全部
+
+						};
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						// 通过群ID获取群的正常用户
+						postDataPro_PostGusers(comData, wd, function(data) {
+							wd.close();
+							console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode == 0) {
+								var userList = data.RspData;
+								for(var i = 0; i < data.RspData.length; i++) {
+									utids.push(data.RspData[i].utid);
+								}
+								utids = arrayDupRemoval(utids);
+							} else {
+								mui.toast(data.RspTxt);
+							}
+						});
+
+					}
 	</script>
 
 </html>
