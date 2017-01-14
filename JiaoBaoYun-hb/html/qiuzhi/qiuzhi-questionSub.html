@@ -37,6 +37,10 @@
 		<script src="../../js/utils/files.js"></script>
 		<script src="../../js/utils/ASFiles.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
+		
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			events.addTap('take_pic', function() {
 				camera.getPic(camera.getCamera(), function(path) {
@@ -53,6 +57,31 @@
 
 				});
 			});
+
+			//6.新增某个用户提交问题
+			function requestAddAsk() {
+				//所需参数
+				var comData = {
+					askTitle: '测试标题', //问题标题,200
+					askNote: '没有说明', //问题说明,2000
+					askChannel: 1, //问题话题
+					askMan: 1, //提问人
+					isAnonym: 0, //是否匿名
+					inviteExperts: '[]' //邀请专家,例如[1,2,3]
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//6.新增某个用户提交问题
+				postDataQZPro_addAsk(comData, wd, function(data) {
+					wd.close();
+					console.log('6.新增某个用户提交问题:' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+			}
 		</script>
 		<!--<script src="../../js/qiuzhi/qiuzhi-questionSub.js"></script>-->
 	</body>
