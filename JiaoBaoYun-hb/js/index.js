@@ -37,10 +37,12 @@ mui.plusReady(function() {
 	window.addEventListener('showCity', function(e) {
 		if(cityType){
 			showCity = e.detail.data;
+			console.log('主界面标题获取的城市信息：' + JSON.stringify(showCity));
 		}else{
 			SECity=e.detail.data;
+			console.log('主界面标题获取的城市信息：' + JSON.stringify(SECity));
 		}
-		console.log('主界面标题获取的城市信息：' + JSON.stringify(showCity));
+		
 		setShowCity(cityType);
 	});
 	getAboutMe(); //获取与我相关未读数
@@ -265,7 +267,7 @@ mui.plusReady(function() {
 				console.log('修改后的最终值为:' + JSON.stringify(eduArray));
 			} else {
 				mui.toast(data.RspTxt);
-			}
+			} 
 		});
 	}
 	var setShowCity = function(type) {

@@ -1747,7 +1747,8 @@
 					"image/utils/default_personalimage.png",
 					"js/publicHomeworkProtocol.js",
 					"html/tab_knowledge.html",
-					"html/cloud/cloud_home.html"
+					"html/cloud/cloud_home.html",
+					"css/utils/slide_navigatian.css"
 				],
 				"refer": [
 					"html/mine.html",
