@@ -38,7 +38,7 @@
 			div>.icon-jiaoyu:before,
 			.icon-dongtai1:before {
 				font-size: 4.0rem;
-				color: gray;
+				/*color: gray;*/
 			}
 		</style>
 
@@ -63,12 +63,12 @@
 					<a class="mui-icon iconfont icon-xiangce"></a>
 				</div>
 			</div>
-			<div class="jiaoyu">
-				<a class="mui-icon iconfont icon-jiaoyu"></a>
-				<p>科教</p>
+			<div  class="jiaoyu">
+				<a id="zone" class="mui-icon iconfont icon-jiaoyu" style="color: rgb(0,165,224);"></a>
+				<p>家校圈</p>
 			</div>
-			<div class="dongtai1">
-				<a class="mui-icon iconfont icon-dongtai1"></a>
+			<div  class="dongtai1">
+				<a id="kejiao" class="mui-icon iconfont icon-dongtai1" style="color: gray;"></a>
 				<p>展现</p>
 			</div>
 
@@ -88,7 +88,11 @@
 		
 	</script>
 	<script>
-	var utids = [];
+		var utids = [];
+		var selectedflag ={
+			zone:0,
+			kejiao:0
+		};
 		mui.plusReady(function() {
 					var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
 					
@@ -102,6 +106,26 @@
 					//			});
 					var title = document.getElementById('title');
 					title.innerText = userInfo.unick;
+					events.addTap('zone',function(){
+//						if(this.style.color == 'gray'){
+//							this.style.color = 'rgb(0,165,224)'
+//							selectedflag.zone = 1;
+//						}else{
+//							this.style.color = 'gray'
+//							selectedflag.zone = 0;
+//						}
+						
+					})
+					events.addTap('kejiao',function(){
+						if(this.style.color == 'gray'){
+							this.style.color = 'rgb(0,165,224)'
+							selectedflag.kejiao = 1;
+						}else{
+							this.style.color = 'gray'
+							selectedflag.kejiao = 0;
+						}
+						
+					})
 					events.addTap('take_pic', function() {
 						camera.getPic(camera.getCamera(), function(path) {
 
@@ -131,6 +155,10 @@
 							} else {
 								tempText = replaceAllBL(tempText)
 							}
+//							if(selectedflag.zone==0&&selectedflag.kejiao==0){
+//								mui.toast('家校圈和科教至少选择一项')
+//								return;
+//							}
 							var postData = {
 								userId: userInfo.utid,
 								msgContent: tempText,
