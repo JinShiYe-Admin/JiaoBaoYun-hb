@@ -107,12 +107,12 @@ var getPersonIds = function(data) {
 		}
 	}
 	personIds = events.arraySingleItem(personIds);
-	//如果只有一个id,通过串请求数据会有问题
-	//所以另加一个id,以防不测
-	if(personIds.length == 1) {
-		var extraId=personIds[0]==1?2:personIds[0]-1;
-		personIds.push();
-	}
+//	//如果只有一个id,通过串请求数据会有问题
+//	//所以另加一个id,以防不测
+//	if(personIds.length == 1) {
+//		var extraId=personIds[0]==1?2:personIds[0]-1;
+//		personIds.push();
+//	}
 	getPersonalInfo(data, personIds);
 }
 /**
