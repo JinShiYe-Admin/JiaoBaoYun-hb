@@ -44,7 +44,7 @@ mui.plusReady(function() {
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
 	var subpages = ['../cloud/cloud_home.html', '../scienceeducation/scienceeducation_home.html', '../show/show_home.html', '../qiuzhi/qiuzhi_home.html'];
-	var titles = ['首页', '科教', '展现', '求知'];
+//	var titles = ['首页', '科教', '展现', '求知'];
 	//设置子页面距离顶部的位置
 
 	var subpage_style = {
@@ -79,13 +79,16 @@ mui.plusReady(function() {
 		if(targetTab == activeTab) {
 			return;
 		}
-		//更换标题
-		title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
+		if(showCity&&this.querySelector('.mui-tab-label').innerHTML=='展现'){
+			setShowCity();
+		}else{
+			//更换标题
+			title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
+		}
 		if(title.innerHTML == '首页') {
 			title.innerHTML = '';
 		}
 		changRightIcons(targetTab);
-
 		//显示目标选项卡
 		//若为iOS平台或非首次显示，则直接显示
 		if(mui.os.ios || aniShow[targetTab]) {
@@ -188,7 +191,9 @@ mui.plusReady(function() {
 					break;
 				case '../show/show_home.html': //展现
 					addListIcon(title_left, '../show/show_home.html');
-					requestUserCity(setShowCity);
+					if(!showCity){
+						requestUserCity(setShowCity);
+					}
 					break;
 				case '../qiuzhi/qiuzhi_home.html': //求知
 

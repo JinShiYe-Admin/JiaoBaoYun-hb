@@ -51,14 +51,18 @@ var slide_selector = (function(mod) {
 				/**
 				 * 创建窗口对象
 				 */
-				var subWv = plus.webview.create(subPage, subPage + i, subStyles, {
-					index: i
-				});
+				var subWv = plus.webview.getWebviewById(subPage + i);
+				if(!subWv) {
+					subWv = plus.webview.create(subPage, subPage + i, subStyles, {
+						index: i
+					});
+					if(i > 0) {
+						subWv.hide("none");
+					}
+				}
 				// 窗口对象添加至数组
 				mod.pages.push(subWv);
-				if(i > 0) {
-					subWv.hide("none");
-				}
+
 				self.append(subWv);
 			}
 			curCity = thisCities[0];
@@ -88,7 +92,7 @@ var slide_selector = (function(mod) {
 		 */
 	var swipe = function(type) {
 		var showPage;
-//		getRealCityIndex();
+		//		getRealCityIndex();
 		var curPage = mod.pages[citiesIndex % 2];
 		if(type == 1) { //右滑
 			showPage = mod.pages[(citiesIndex + 1) % 2];
@@ -102,14 +106,14 @@ var slide_selector = (function(mod) {
 		 * 向index页面传递数据
 		 */
 		getRealCityIndex();
-		curCity.index=citiesIndex;
+		curCity.index = citiesIndex;
 		sendPageChanged();
 		curPage.hide(); //隐藏当前页面
 		showPage.show("fade-in"); //显示要显示的页面;
 		console.log("滑动模式：" + type + ",滑动后的要显示的页面id:" + showPage.id);
 		mui.fire(showPage, 'cityInfo', curCity); //向显示界面传值
 	}
-	var getRealCityIndex=function(){
+	var getRealCityIndex = function() {
 		if(citiesIndex >= 0) {
 			citiesIndex = citiesIndex % thisCities.length;
 		} else {
