@@ -67,7 +67,10 @@ var slide_selector = (function(mod) {
 			}
 			curCity = thisCities[0];
 			console.log("当前的城市为：" + curCity.aname + ",当前的pageId为：" + mod.pages[0].id);
-			mui.fire(mod.pages[0], 'cityInfo', curCity);
+			setTimeout(function(){
+				mui.fire(mod.pages[0], 'cityInfo', curCity);
+			},2000)
+			
 			addSwipe();
 		}
 		/**
