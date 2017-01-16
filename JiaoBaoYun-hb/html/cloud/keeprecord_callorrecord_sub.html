@@ -14,7 +14,7 @@
 
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
-		<script type="text/javascript" src="../../js/utils/MultiMedia.js" ></script>
+		<script type="text/javascript" src="../../js/utils/MultiMedia.js"></script>
 
 		<style>
 			body,
@@ -87,6 +87,7 @@
 			.mui-checkbox input[type=checkbox]:before {
 				font-size: 25px;
 			}
+
 			.mui-media-body {
 				margin-top: 10px;
 				margin-bottom: 5px;
@@ -410,7 +411,7 @@
 					var personalUNICK = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
 					var teacherId = personalUTID; //发布教师ID
 					var publisherName = '【' + personalUNICK + '老师】【' + subData.gname + '】' //发布者姓名
-					//var publisherName = personalUNICK; //发布者姓名
+						//var publisherName = personalUNICK; //发布者姓名
 					var noteType = type; //点到记事类型1点到2记事
 					var checkType = ''; //点到类型
 					var msgContent = ''; //内容
@@ -551,7 +552,7 @@
 						type = data.CheckTypeStr + ' : ';
 					}
 					li.innerHTML = '<div class="time">' + data.PublishDate + '</div>\
-								<div class="mui-media-body">' + type + data.MsgContent + '</div>';
+								<div class="mui-media-body" style="word-break:break-all;">' + type + data.MsgContent + '</div>';
 					top.insertBefore(li, top.firstChild);
 				}
 			});

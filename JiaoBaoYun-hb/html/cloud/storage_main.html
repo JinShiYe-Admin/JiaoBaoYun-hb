@@ -205,7 +205,7 @@
 			});
 
 			mui.plusReady(function() {
-//				console.log('云存储');
+				//				console.log('云存储');
 				//---初始化---start---
 				var topFolderData = []; //记录顶层的所有的文件和文件夹
 				var showPid = ''; //当前展示的界面的父id
@@ -406,9 +406,11 @@
 							var vvl1 = e.value;
 							if(vvl1.replace(/(^\s*)|(\s*$)/g, "") == "") {
 								mui.toast('名字不能为空');
+								return false;
 							} else if(!reg.test(e.value)) {
 								//特殊字符
 								mui.toast('名字中不能包含这些字符 \ / : * ? " < > | ');
+								return false;
 							} else {
 								//28.用户修改文件或文件夹名称
 								//所需参数
@@ -635,10 +637,10 @@
 					}
 					var ul = document.getElementById("ul_file_0");
 					console.log(ul.innerHTML);
-//					var lazyLoad = mui('.mui-scroll-wrapper').imageLazyload({
-//						placeholder: '../../image/utils/loading_128px.png',
-//						destroy: false
-//					});
+					//					var lazyLoad = mui('.mui-scroll-wrapper').imageLazyload({
+					//						placeholder: '../../image/utils/loading_128px.png',
+					//						destroy: false
+					//					});
 				}
 
 				/**
@@ -801,10 +803,10 @@
 								pname: pname //上层文件夹名字
 							}
 							showPidList.push(pData2);
-//							var lazyLoad = mui('.mui-scroll-wrapper').imageLazyload({
-//								placeholder: '../../image/utils/loading_128px.png',
-//								destroy: false
-//							});
+							//							var lazyLoad = mui('.mui-scroll-wrapper').imageLazyload({
+							//								placeholder: '../../image/utils/loading_128px.png',
+							//								destroy: false
+							//							});
 						} else {
 							mui.toast(data.RspTxt);
 						}
