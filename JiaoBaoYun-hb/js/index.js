@@ -35,9 +35,9 @@ mui.plusReady(function() {
 		getAboutMe();
 	});
 	window.addEventListener('showCity', function(e) {
-		var curcity;
+		var curCity;
 		if(cityType) {
-			curcity = showCity = e.detail.data;
+			curCity = showCity = e.detail.data;
 			console.log('主界面标题获取的城市信息：' + JSON.stringify(showCity));
 		} else {
 			curCity = SECity = e.detail.data;
@@ -307,9 +307,7 @@ mui.plusReady(function() {
 		 */
 	var setIndicatorShow = function(index) {
 			jQuery(".mine-active").className = "mine-indicator";
-			if(citiesIndex >= 0) {
-				jQuery(".mine-slider-indicator").children().eq(index).className = "mine-indicator mine-active";
-			}
+			jQuery(".mine-slider-indicator").children().eq(index).className = "mine-indicator mine-active";
 		}
 		//44.获取个人的订制城市
 	function requestUserCity(callback) {
