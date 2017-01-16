@@ -7,6 +7,7 @@
 mui.init();
 
 mui.plusReady(function() {
+	var showCity;//当前展示城市信息
 	//安卓的连续点击两次退出程序
 	var backButtonPress = 0;
 	mui.back = function(event) {
@@ -32,7 +33,11 @@ mui.plusReady(function() {
 	window.addEventListener('aboutmNoRead', function() {
 		getAboutMe();
 	});
-
+	window.addEventListener('showCity',function(e){
+		showCity=e.detail.data;
+		console.log('主界面标题获取的城市信息：'+JSON.stringify(showCity));
+		setShowCity();
+	});
 	getAboutMe(); //获取与我相关未读数
 
 	//设置默认打开首页显示的子页序号；
@@ -150,16 +155,6 @@ mui.plusReady(function() {
 			console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				getHomeworkAlert(data.RspData.NoReadCnt);
-				//				var noRead = document.getElementById('aboutme_noRead');
-				//				if(data.RspData.NoReadCnt == 0) {
-				//					noRead.innerHTML = data.RspData.NoReadCnt;
-				//					noRead.style.visibility = 'hidden';
-				//				} else {
-				//					noRead.style.visibility = 'visible';
-				//					noRead.innerHTML = data.RspData.NoReadCnt;
-				//
-				//				}
-
 			} else {
 				//				mui.toast(data.RspTxt);
 			}
@@ -170,36 +165,113 @@ mui.plusReady(function() {
 	 * 修改顶部导航
 	 * @param {Object} title 标题
 	 */
-	var changRightIcons = function(title) {
-		//顶部导航右侧区域
-		var iconContainer = document.getElementById('random_icon');
-		while(iconContainer.firstElementChild) {
-			iconContainer.removeChild(iconContainer.firstElementChild);
-		}
-		//顶部导航左侧区域
-		var title_left = document.getElementById("title_left");
-		while(title_left.firstElementChild) {
-			title_left.removeChild(title_left.firstElementChild);
-		}
+	var changRightIcons = function(targetTab) {
+			//顶部导航右侧区域
+			var iconContainer = document.getElementById('random_icon');
+			while(iconContainer.firstElementChild) {
+				iconContainer.removeChild(iconContainer.firstElementChild);
+			}
+			//顶部导航左侧区域
+			var title_left = document.getElementById("title_left");
+			while(title_left.firstElementChild) {
+				title_left.removeChild(title_left.firstElementChild);
+			}
 
-		switch(title) {
-			case '../cloud/cloud_home.html': //首页
-				addZoneIcon(iconContainer);
-				slideNavigation.addSlideIcon();
-				slideNavigation.iconAddEvent();
-				break;
-			case '../scienceeducation/scienceeducation_home.html': //科教
-				addListIcon(title_left, '../scienceeducation/scienceeducation_home.html');
-				break;
-			case '../show/show_home.html': //展现
-				addListIcon(title_left, '../show/show_home.html');
-				break;
-			case '../qiuzhi/qiuzhi_home.html': //求知
+			switch(targetTab) {
+				case '../cloud/cloud_home.html': //首页
+					addZoneIcon(iconContainer);
+					slideNavigation.addSlideIcon();
+					slideNavigation.iconAddEvent();
+					break;
+				case '../scienceeducation/scienceeducation_home.html': //科教
+					addListIcon(title_left, '../scienceeducation/scienceeducation_home.html');
+					break;
+				case '../show/show_home.html': //展现
+					addListIcon(title_left, '../show/show_home.html');
+					requestUserCity(setShowCity);
+					break;
+				case '../qiuzhi/qiuzhi_home.html': //求知
 
-				break;
-			default:
-				break;
+					break;
+				default:
+					break;
+			}
 		}
+	var setShowCity=function(){
+		if(showCity.totalNo==1){
+			title.innerText=showCity.aname;
+		}else{
+			title.innerHTML=getShowCityInner()
+		}
+		
+	}
+		/**
+		 * 点点点模式
+		 * @param {Object} cities
+		 */
+	var getShowCityInner = function() {
+			var inner = '<p id="current-city" class="current-city">' + showCity.aname + '</p><div class="mine-slider-indicator">';
+			for(var i = 0; i < showCity.totalNo; i++) {
+				if(i == 0) { //第一个
+					inner += '<div class="mine-indicator mine-active"></div>'
+				} else if(i == showCity.totalNo - 1) { //最后一个
+					inner += '<div class="mine-indicator"></div></div>'
+				} else { //中间的
+					inner += '<div class="mine-indicator"></div>'
+				}
+			}
+			return inner;
+		}
+		//44.获取个人的订制城市
+	function requestUserCity(callback) {
+		var showArray=[];
+		//所需参数
+		var comData = {
+			vvl: '1' //订制频道,0科教频道,1展示频道,其他待定
+		};
+		// 等待的对话框
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		//44.获取个人的订制城市
+		postDataPro_PostUTcity(comData, wd, function(data) {
+			wd.close();
+			console.log('获取个人的订制城市:' + JSON.stringify(data));
+			if(data.RspCode == 0) {
+				//先通过‘|’将返回值分为数组
+				showArray = data.RspData[0].citys.split('|');
+				//遍历此数组
+				for(var m in showArray) {
+					var tempStr = showArray[m];
+					//初始化model
+					var model_area = {
+//						acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
+//						aname: '', //节点名称
+//						atype: '', //节点类型,0省1城市2区县
+//						index:'',//当前页码
+//						totalNo:''//总数量
+					};
+					console.log('tempStr:' + tempStr);
+					//将分成的每个值，再通过‘_’拆分为model
+					var tempArea = tempStr.split('_');
+					model_area.acode = tempArea[0];
+					model_area.aname = tempArea[1];
+					model_area.atype = '1';
+					model_area.index=m;
+					model_area.totalNo=showArray.length;
+					//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
+					showArray.splice(m, 1, model_area);
+					//如果有值，默认获取第一个城市的数据
+//					if(m == 0) {
+//						requestCityNews(tempArea[0]);
+//					}
+				}
+				showCity=showArray[0];
+				events.fireToPageNone('../show/show_home.html','citiesInfo',showArray);
+				callback();
+				console.log('修改后的最终值为:' + JSON.stringify(showArray));
+			} else {
+				mui.toast(data.RspTxt);
+			}
+		});
 	}
 
 	/**
