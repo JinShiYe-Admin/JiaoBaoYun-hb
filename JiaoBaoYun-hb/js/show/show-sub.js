@@ -158,7 +158,6 @@ mui.plusReady(function() {
 	mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
 		click.push('评论者：' + this.innerText);
 	});
-	console.log(33333333333)	
 	slide_selector.addSwipeListener();
 });
 
@@ -194,17 +193,23 @@ var getPersonIds = function(data) {
 		var personIds = [];
 		for(var i in data) {
 			personIds.push(data[i].PublisherId);
-			if(data.Comments) {
+			if(data[i].Comments) {
 				for(var j in data[i].Comments) {
 					if(data[i].Comments[j].UserId) {
 						personIds.push(data[i].Comments[j].UserId);
 					}
-					if(data.Comments[j].ReplyId) {
+					if(data[i].Comments[j].ReplyId) {
 						personIds.push(data[i].Comments[j].ReplyId);
+					}
+					for(var k in data[i].Comments[j].Replys){
+						var reply = data[i].Comments[j].Replys[k]
+						personIds.push(reply.UserId);
+						personIds.push(reply.ReplyId);
 					}
 				}
 			}
 		}
+		console.log('personIds='+JSON.stringify(personIds))
 		personIds = events.arraySingleItem(personIds);
 		getPersonalInfo(data, personIds);
 	}
@@ -240,8 +245,6 @@ var getPersonalInfo = function(data, ids) {
 	 * @param {Object} personsData 添加的个人信息
 	 */
 var rechargeData = function(data, personsData) {
-		console.log('要重组的数据:' + JSON.stringify(data));
-		//	console.log('加入的数据：'+JSON.stringfy(personsData));
 		for(var i in data) {
 			for(var j in personsData) {
 				if(data[i].PublisherId == personsData[j].utid) {
@@ -251,17 +254,33 @@ var rechargeData = function(data, personsData) {
 				if(data[i].Comments.length > 0) {
 					for(var m in data[i].Comments) {
 						if(data[i].Comments[m].UserId == personsData[j].utid) {
-							data[i].Comments[m].UserName = personsData[j].unick;
+							
+							data[i].Comments[m].UserIdName = personsData[j].unick;
 						}
 						if(data[i].Comments[m].ReplyId == personsData[j].utid) {
-							data[i].Comments[m].ReplyName = personsData[j].unick;
+							data[i].Comments[m].ReplyIdName = personsData[j].unick;
 						}
+						for(var k in data[i].Comments[m].Replys){
+							console.log()
+							var reply = data[i].Comments[m].Replys[k];
+							console.log('reply='+JSON.stringify(reply));
+							if(reply.UserId == personsData[j].utid ){
+								reply.UserIdName = personsData[j].unick;
+								
+							}
+							if(reply.ReplyId == personsData[j].utid ){
+								reply.ReplyIdName = personsData[j].unick;
+							}
+							
+							
+						}
+						
 					}
 				}
 
 			}
 		}
-
+		console.log(JSON.stringify(data))
 		return data; //返回重组后数据
 	}
 	/**
