@@ -9,20 +9,24 @@
 	</head>
 
 	<body>
-		<!--下拉刷新容器-->
-		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
-		  <div class="mui-scroll">
-		    <!--数据列表-->
-		   <ul id="list-container" class="mui-table-view">
-		       </ul>
-		  </div>
-		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/utils/h5fresh.js"></script>
 		<script src="../../js/utils/slide-selector.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
-		<script src="../../js/show/show-sub.js"></script>
+	
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function() {
+				window.addEventListener('cityInfo', function(e) {
+					SECity = e.detail;//当前显示的科教城市
+					console.log("科教子页面获取的城市信息：" + JSON.stringify(SECity));
+					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+//					pageIndex = 1;
+//					requestData();
+				})
+				slide_selector.addSwipeListener();
+			})
+		</script>
 	</body>
 
 </html>

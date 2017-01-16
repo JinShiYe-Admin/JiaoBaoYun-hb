@@ -67,10 +67,10 @@ var slide_selector = (function(mod) {
 			}
 			curCity = thisCities[0];
 			console.log("当前的城市为：" + curCity.aname + ",当前的pageId为：" + mod.pages[0].id);
-			setTimeout(function(){
+			setTimeout(function() {
 				mui.fire(mod.pages[0], 'cityInfo', curCity);
-			},2000)
-			
+			}, 2000)
+
 			addSwipe();
 		}
 		/**
@@ -147,6 +147,48 @@ var slide_selector = (function(mod) {
 		} else {
 			curCity = thisCities[citiesIndex % thisCities.length + thisCities.length];
 		}
+	}
+	mod.addSwipeListener = function() {
+			var parent = plus.webview.currentWebview().parent();
+			// 左滑事件
+			document.addEventListener("swipeleft", function(event) {
+				var angle = event.detail.angle;
+				angle = Math.abs(angle);
+				console.log('左滑事件：' + angle);
+				/**
+				 * 控制滑动的角度，为避免误操作，可自定义限制滑动角度；
+				 */
+				if(angle > 100 && angle < 185) {
+					parentEvent(parent, "left");
+				}
+			});
+			// 右滑事件
+			document.addEventListener("swiperight", function(event) {
+
+				var angle = event.detail.angle;
+				angle = Math.abs(angle);
+				console.log('右滑事件：' + angle);
+				/**
+				 * 控制滑动的角度，为避免误操作，可自定义限制滑动角度；
+				 */
+				if(angle < 15) {
+					parentEvent(parent, "right");
+				}
+			});
+		}
+		/**
+		 * 触发父窗口自定义事件
+		 * @param {Object} wvobj 目标窗口对象
+		 * @param {Number} index 索引值
+		 * @param {String} direction 方向
+		 */
+	function parentEvent(wvobj, direction) {
+		/**
+		 * 触发自定义事件
+		 */
+		mui.fire(wvobj, "swipe_event", {
+			direction: direction
+		});
 	}
 	return mod;
 })(slide_selector || {})
