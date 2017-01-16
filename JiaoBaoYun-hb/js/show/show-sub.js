@@ -171,6 +171,16 @@ var rechargeData = function(data, personsData) {
  * @param {Object} data
  */
 var setData = function(data) {
+	var infos=[];
+	var InfoList=[];//[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
+	var ImageList=[]
+	var InteractionList=[];
+	for(var i in data){
+		InfoList=[data[i].PublisherImg,data[i].PublisherName,data[i].PublishDate,data[i].MsgContent];
+		var imgs=data[i].EncAddr.split('|');
+		ImageList=[imgs,imgs.length];
+		InteractionList=[]
+	}
 	var list = document.getElementById('list-container');
 	var li = document.createElement('li');
 	li.innerHTML = '<a><div></div></a>'
