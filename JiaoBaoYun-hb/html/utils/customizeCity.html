@@ -58,7 +58,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title" style="color: white;">定制城市</h1>
+			<h1 class="mui-title" style="color: white;">订制城市</h1>
 			<h1 id="commit" class="mui-title" style="text-align: right;right: 10px;">提交</h1>
 		</header>
 		<div class="mui-content mui-scroll-wrapper">
@@ -125,9 +125,8 @@
 				main = plus.webview.currentWebview(); //获取当前窗体对象
 				cities = main.data.cities;
 				console.log('订制城市：' + JSON.stringify(main.data));
-				console.log('订制城市arry：' + JSON.stringify(main.data.cities));
 				//main.data = {
-				//	id: 'edu',//0科教，1展现
+				//	id: '0',//0科教，1展现
 				//	webid: '../scienceeducation/scienceeducation_home.html', //id对应webview的id
 				//	cities: eduArray //已经定制的城市数组
 				//}
@@ -167,20 +166,20 @@
 						mui.each(tempCityArray, function(index2, element2) {
 							if(elementAcode == element2.acode) {
 								tempCities.push(element2);
+								commitCities.push(element2); //设置提交的城市
 								return false;
 							}
 						});
 					});
 
-					commitCities = tempCities; //设置提交的城市
 					console.log('commitCities:' + JSON.stringify(commitCities));
 					//将数组改为字符串
 					var tempStr = '';
-					for (var m in commitCities) {
-						var tempModel = commitCities[m];
-						var tempStr1 = tempModel.acode + '_' +tempModel.aname;
-						commitCities.splice(m, 1, tempStr1);
-						tempStr = commitCities.join('|');
+					for(var m in tempCities) {
+						var tempModel = tempCities[m];
+						var tempStr1 = tempModel.acode + '_' + tempModel.aname;
+						tempCities.splice(m, 1, tempStr1);
+						tempStr = tempCities.join('|');
 					}
 					//43.用户修改或添加区域阅读设置
 					requestCitySetting(tempStr);
@@ -274,7 +273,11 @@
 					wd.close();
 					console.log('用户修改或添加区域阅读设置:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
-
+						events.fireToPage(main.data.webid, 'customizeCity', function() {
+							return commitCities;
+						});
+						mui.toast('订制城市成功');
+						mui.back();
 					} else {
 						mui.toast(data.RspTxt);
 					}

@@ -1207,7 +1207,9 @@ var postDataPro_getUserSpacesByUser = function(commonData, wd, callback) {
 //			encImg:'',//附件缩略图地址
 //			encIntro:'',//附件简介
 //			noteType:'',//信息类型,1云笔记2个人空间
-//			userIds: ''//推送用户ID,例如：[1,2,3]
+//			userIds: '',//推送用户ID,例如：[1,2,3]
+//			pubScopes:'',//发布范围,Array,1 家校圈 必选,2 展现 可选,例如[1,2]
+//			pubArea: ''//发布区域,具体到市级代码
 //		};
 //非0为正确
 var postDataPro_addUserSpace = function(commonData, wd, callback) {
@@ -1770,4 +1772,20 @@ var postDataPro_getNotesByUserForMutiStudent = function(commonData, wd, callback
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'note/getNotesByUserForMutiStudent', enData, commonData, 2, wd, callback);
+}
+
+//78.（用户空间）获取区域用户空间列表
+//所需参数
+//		var comData = {
+//			userId:'',//用户ID
+//			area:'',//区域
+//			pageIndex:'',//当前页数
+//			pageSize:''//每页记录数
+//		};
+//返回：model_userNoteInfo
+var postDataPro_getUserSpacesByArea = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getUserSpacesByArea', enData, commonData, 2, wd, callback);
 }
