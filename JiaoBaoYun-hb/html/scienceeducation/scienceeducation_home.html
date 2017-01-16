@@ -115,7 +115,11 @@
 						//将返回的新闻遍历
 						for(var m in tempArr) {
 							var tempModel = tempArr[m];
-							tempModel.timgs = tempModel.timgs.split('|');
+							if (tempModel.timgs == 'null' || tempModel.timgs == null) {
+								tempModel.timgs = [];
+							}else{
+								tempModel.timgs = tempModel.timgs.split('|');
+							}
 						}
 						console.log('新闻最终值为:' + JSON.stringify(tempArr));
 					} else {
