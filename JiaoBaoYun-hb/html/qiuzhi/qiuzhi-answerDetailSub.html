@@ -53,9 +53,9 @@
 				li_title.innerHTML = datasource.AskTitle;
 				var li_person = document.createElement("li");
 				li_person.className = 'mui-table-view-cell mui-media';
-				li_person.innerHTML = '<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">' +
+				li_person.innerHTML = '<img class="mui-media-object mui-pull-left" src="'+updateHeadImg(datasource.uimg,2)+'">' +
 					'<div class="mui-media-body">' +
-					datasource.AnswerMan +
+					datasource.unick +
 					'<p class="mui-ellipsis">' + '专栏:教育、美食' + '</p>' +
 					'<button class="mui-btn-green mui-pull-right" style="margin-top: -40px;">' + '关注' + '</button>' +
 					'</div>';
@@ -85,7 +85,24 @@
 					console.log('8.获取某个回答的详情:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						datasource = data.RspData;
-						refreshUI();
+						//发送获取用户资料申请
+					var tempData = {
+						vvl: data.RspData.AnswerMan, //用户id，查询的值,p传个人ID,g传ID串
+						vtp: 'p' //查询类型,p(个人)g(id串)
+					}
+						//21.通过用户ID获取用户资料
+					postDataPro_PostUinf(tempData, wd, function(data1) {
+						wd.close();
+						console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+						if(data1.RspCode == 0) {
+							mui.extend(datasource,data1.RspData[0])
+							console.log(JSON.stringify(datasource))
+							refreshUI();
+						}else{
+							
+						}
+						})
+						
 					} else {
 						mui.toast(data.RspTxt);
 					}
