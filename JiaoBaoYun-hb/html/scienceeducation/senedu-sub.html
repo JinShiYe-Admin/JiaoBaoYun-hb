@@ -15,26 +15,128 @@
 		<script src="../../js/publicProtocol.js"></script>
 
 		<script type="text/javascript">
-			mui.init()
+			mui.init();
+			//自己定制的城市数组
+			var eduArray = [];
+			//当前显示的第几个城市
+			var eduIndex = 0;
 			mui.plusReady(function() {
 				window.addEventListener('cityInfo', function(e) {
-					SECity = e.detail; //当前显示的科教城市
-					console.log("科教子页面获取的城市信息：" + JSON.stringify(SECity));
-					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-					//					pageIndex = 1;
-					//					requestData();
-				})
-				//刷新
+						SECity = e.detail; //当前显示的科教城市
+						console.log("科教子页面获取的城市信息：" + JSON.stringify(SECity));
+						personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+						//					pageIndex = 1;
+						//					requestData();
+					})
+					//刷新
 				h5fresh.addRefresh(function() {
 
 				})
 				slide_selector.addSwipeListener();
-			})
+
+				//---订制城市---start---
+				//进入订制城市界面
+				window.addEventListener('tapTitleLeft', function() {
+					events.openNewWindowWithData('../utils/customizeCity.html', {
+						id: '0', //0科教，1展现
+						webid: '../scienceeducation/scienceeducation_home.html', //当前webview的id
+						cities: eduArray //已经定制的城市数组
+					});
+				});
+
+				//退出订制城市界面返回的数据
+				window.addEventListener('customizeCity', function(e) {
+					eduArray = e.detail.data;
+				});
+				//---订制城市---end---
+
+				//44.获取个人的订制城市
+				requestUserCity();
+			});
+
 			//加载更多
 			var pullUpRefresh = function() {
 				document.addEventListener("plusscrollbottom", function() {
-//					console.log('我在底部pageIndex:' + selectGContainer.classInfo.pageIndex + ',totalPageCount:' + totalPageCount);
+					//					console.log('我在底部pageIndex:' + selectGContainer.classInfo.pageIndex + ',totalPageCount:' + totalPageCount);
 				}, false);
+			}
+
+			//44.获取个人的订制城市
+			function requestUserCity() {
+				//所需参数
+				var comData = {
+					vvl: '0' //订制频道,0科教频道,1展示频道,其他待定
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//44.获取个人的订制城市
+				postDataPro_PostUTcity(comData, wd, function(data) {
+					wd.close();
+					console.log('获取个人的订制城市:' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						//先通过‘|’将返回值分为数组
+						eduArray = data.RspData[0].citys.split('|');
+						//遍历此数组
+						for(var m in eduArray) {
+							var tempStr = eduArray[m];
+							//初始化model
+							var model_area = {
+								acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
+								aname: '', //节点名称
+								atype: '', //节点类型,0省1城市2区县
+								dataArray: '', //对应城市的新闻数组
+								index: 0 //获取第几页的新闻数据
+							};
+							console.log('tempStr:' + tempStr);
+							//将分成的每个值，再通过‘_’拆分为model
+							var tempArea = tempStr.split('_');
+							model_area.acode = tempArea[0];
+							model_area.aname = tempArea[1];
+							model_area.atype = '1';
+							//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
+							eduArray.splice(m, 1, model_area);
+							//如果有值，默认获取第一个城市的数据
+							if(m == 0) {
+								requestCityNews(tempArea[0]);
+							}
+						}
+						console.log('修改后的最终值为:' + JSON.stringify(eduArray));
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+			}
+
+			//45.通过区域代码获取对应区域的分页新闻
+			function requestCityNews(cityCode) {
+				//所需参数
+				var comData = {
+					top: '10', //每页行数，
+					vvl: cityCode, //查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
+					vvl1: '1' //页码,获取第几页
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//45.通过区域代码获取对应区域的分页新闻
+				postDataPro_PostTnews(comData, wd, function(data) {
+					wd.close();
+					console.log('对应区域的分页新闻:' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						var tempArr = data.RspData.dt;
+						//将返回的新闻遍历
+						for(var m in tempArr) {
+							var tempModel = tempArr[m];
+							if(tempModel.timgs == 'null' || tempModel.timgs == null) {
+								tempModel.timgs = [];
+							} else {
+								tempModel.timgs = tempModel.timgs.split('|');
+							}
+						}
+						console.log('新闻最终值为:' + JSON.stringify(tempArr));
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
 			}
 		</script>
 	</body>
