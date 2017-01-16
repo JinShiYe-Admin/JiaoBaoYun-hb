@@ -110,7 +110,7 @@ var addListener = function() {
 						events.clearChild(list);
 						getData('inv', setData);
 						events.fireToPageNone('mine.html','newsChanged');
-						events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
+						events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 
 					}else{
 						mui.toast(data.RspTxt);

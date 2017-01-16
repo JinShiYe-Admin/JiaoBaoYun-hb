@@ -206,7 +206,7 @@ var quitGroupAll = function() {
 var allCallback = function(roleInfo) {
 		allcount++;
 		if(allcount > 0 && allcount == groupRoles.length) {
-			events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
+			events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 			groupRoles = [];
 			allcount = 0;
 			if(!isMaster) {

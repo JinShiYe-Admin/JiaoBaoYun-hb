@@ -72,6 +72,28 @@
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 				var askTitle = document.getElementById("askTitle");
 				var askNote = document.getElementById("askNote");
+				var tempText = Trim(askTitle.value);
+				console.log('textView.value===' + tempText)
+				if(!tempText || tempText == '') {
+					mui.toast('请输入问题');
+					return;
+				} else if(tempText.length > 200) {
+					mui.toast('不能超过200字');
+					return;
+				} else {
+					tempText = replaceAllBL(tempText)
+				}
+				tempText = Trim(askNote.value);
+				console.log('textView.value===' + tempText)
+				if(!tempText || tempText == '') {
+					mui.toast('请输入补充说明');
+					return;
+				} else if(tempText.length > 2000) {
+					mui.toast('不能超过2000字');
+					return;
+				} else {
+					tempText = replaceAllBL(tempText)
+				}
 				//所需参数
 				var comData = {
 					askTitle: askTitle.value, //问题标题,200
@@ -88,11 +110,17 @@
 					wd.close();
 					console.log('6.新增某个用户提交问题:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
+						askTitle.value = '';
+						askNote.value = '';
 
 					} else {
 						mui.toast(data.RspTxt);
 					}
 				});
+			}
+			//去除前后空格
+			function Trim(str) {
+				return str.replace(/(^\s*)|(\s*$)/g, "");
 			}
 		</script>
 		<!--<script src="../../js/qiuzhi/qiuzhi-questionSub.js"></script>-->

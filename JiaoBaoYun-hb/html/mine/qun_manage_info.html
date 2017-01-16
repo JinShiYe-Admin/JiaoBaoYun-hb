@@ -28,30 +28,30 @@
 			/*#qunimage {
 				height: 100px;
 			}*/
-
+			
 			.qun-image {
 				height: 100px;
 				width: 100px;
 				/*text-align: center;*/
 				margin-top: 20px;
 			}
-
+			
 			.mui-input-row label {
 				text-align: center;
 				width: 25%;
 				padding: 11px 0px;
 				font-size: 15px;
 			}
-
+			
 			.mui-input-group {
 				margin-top: 20px;
 			}
-
+			
 			.mui-input-group:before,
 			.mui-input-group:after {
 				height: 0px;
 			}
-
+			
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
@@ -59,13 +59,13 @@
 				font-size: 15px;
 				padding-right: 10px;
 			}
-
+			
 			.mui-input-group .mui-input-row:after {
 				width: 100%;
 				left: 0;
 				background: #e4e4e4;
 			}
-
+			
 			.mui-btn-block {
 				/*border-radius: 50px;*/
 				margin-top: 50px;
@@ -275,14 +275,14 @@
 							} else {
 								plus.nativeUI.showWaiting('正在加载中');
 								uploadQunHeadImge(data.RspData, qunImgPath, function(successCB) {
-									events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
+									events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 									events.fireToPageNone('/html/mine/qun_manage.html', 'refresh');
 									events.fireToPageNone('/html/mine/qun_data.html', 'refresh');
 									plus.nativeUI.closeWaiting();
 									mui.toast('创建群成功');
 									mui.back();
 								}, function(errorCB) {
-									events.fireToPageNone('../quan/tab-zone.html', 'infoChanged');
+									events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 									events.fireToPageNone('/html/mine/qun_manage.html', 'refresh');
 									events.fireToPageNone('/html/mine/qun_data.html', 'refresh');
 									plus.nativeUI.closeWaiting();
