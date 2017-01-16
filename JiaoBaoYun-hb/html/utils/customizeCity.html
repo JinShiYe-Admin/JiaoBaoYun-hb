@@ -131,8 +131,9 @@
 				//	cities: eduArray //已经定制的城市数组
 				//}
 
-				//自己当前手机号对应的城市(可能修改后的)
-				//				addBeforeCity(element);
+				//自己当前手机号对应的城市(可能修改后的)，从内存中获取
+				var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+				addBeforeCity(tempInfo.uarea);
 
 				//41.获取某个区域下的所有子区域或查询城市
 				requestAllCity();
