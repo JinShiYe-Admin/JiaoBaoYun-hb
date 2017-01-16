@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/utils/slide-selector.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function() {
+				window.addEventListener('cityInfo', function(e) {
+					SECity = e.detail; //当前显示的科教城市
+					console.log("科教子页面获取的城市信息：" + JSON.stringify(SECity));
+					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+					//					pageIndex = 1;
+					//					requestData();
+				})
+				//刷新
+				h5fresh.addRefresh(function() {
+
+				})
+				slide_selector.addSwipeListener();
+			})
+			//加载更多
+			var pullUpRefresh = function() {
+				document.addEventListener("plusscrollbottom", function() {
+//					console.log('我在底部pageIndex:' + selectGContainer.classInfo.pageIndex + ',totalPageCount:' + totalPageCount);
+				}, false);
+			}
+		</script>
+	</body>
+
+</html>

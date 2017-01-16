@@ -22,6 +22,7 @@ mui.plusReady(function() {
 			pageIndex = 1;
 			requestData();
 		})
+<<<<<<< HEAD
 		// 读取传递过来的参数
 		//  var index = self.index;
 		/**
@@ -189,23 +190,13 @@ mui.plusReady(function() {
 	mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
 		click.push('评论者：' + this.innerText);
 	});
+=======
+		
+	slide_selector.addSwipeListener();
+>>>>>>> 85c6f79a84565d8d682bfb54aeffa87cbd1a0921
 });
 
-/**
- * 触发父窗口自定义事件
- * @param {Object} wvobj 目标窗口对象
- * @param {Number} index 索引值
- * @param {String} direction 方向
- */
-function parentEvent(wvobj, direction) {
-	/**
-	 * 触发自定义事件
-	 * http://dev.dcloud.net.cn/mui/event/#customevent
-	 */
-	mui.fire(wvobj, "swipe_event", {
-		direction: direction
-	});
-}
+
 /**
  * 请求数据
  */
@@ -257,11 +248,28 @@ var getPersonIds = function(data) {
 		}
 		getPersonalInfo(data, personIds);
 	}
+<<<<<<< HEAD
 	/**
 	 * 
 	 * @param {Object} data
 	 * @param {Object} ids
 	 */
+=======
+	personIds = events.arraySingleItem(personIds);
+//	//如果只有一个id,通过串请求数据会有问题
+//	//所以另加一个id,以防不测
+//	if(personIds.length == 1) {
+//		var extraId=personIds[0]==1?2:personIds[0]-1;
+//		personIds.push();
+//	}
+	getPersonalInfo(data, personIds);
+}
+/**
+ * 
+ * @param {Object} data
+ * @param {Object} ids
+ */
+>>>>>>> 85c6f79a84565d8d682bfb54aeffa87cbd1a0921
 var getPersonalInfo = function(data, ids) {
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		postDataPro_PostUinf({
@@ -408,6 +416,7 @@ function addData(index) {
 	datasource = [InfoList, ImageList, InteractionList]
 	return datasource;
 }
+<<<<<<< HEAD
 
 var addReplyView = function() {
 	//			评论
@@ -540,4 +549,24 @@ function inputOnblur(input) {
 	inputComment.value = '';
 	document.getElementById('footer').className = '';
 	document.getElementById('footer').style.display = 'none';
+=======
+/**
+ * 放置数据
+ * @param {Object} data
+ */
+var setData = function(data) {
+	var infos=[];
+	var InfoList=[];//[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
+	var ImageList=[]
+	var InteractionList=[];
+	for(var i in data){
+		InfoList=[data[i].PublisherImg,data[i].PublisherName,data[i].PublishDate,data[i].MsgContent];
+		var imgs=data[i].EncAddr.split('|');
+		ImageList=[imgs,imgs.length];
+		InteractionList=[]
+	}
+	var list = document.getElementById('list-container');
+	var li = document.createElement('li');
+	li.innerHTML = '<a><div></div></a>'
+>>>>>>> 85c6f79a84565d8d682bfb54aeffa87cbd1a0921
 }

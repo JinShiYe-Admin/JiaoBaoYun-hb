@@ -552,7 +552,7 @@
 					var html1 = '<li class="mui-table-view-cell">\
 									<div class="mui-input-row">\
 										<label>家长姓名:</label>\
-										<input type="text" class="mui-input-clear" value="' + data.ugname + '" disabled="disabled">\
+										<input id="par_ugname_' + data.utid + '" type="text" class="mui-input-clear" value="' + data.ugname + '" disabled="disabled">\
 									</div>\
 								</li>\
 								<li class="mui-table-view-cell">\
@@ -624,15 +624,13 @@
 					// 等待的对话框
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					postDataPro_PostUinf(comData, wd, function(data) {
-						wd.close();
 						console.log('21.通过用户ID获取用户资料postDataPro_PostUinf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							var tempData = utidArray;
-							console.log('tempData:' + JSON.stringify(tempData));
+							var tempArry = [];
 							mui.each(data.RspData, function(index, element) {
 								mui.each(tempData, function(index2, element2) {
 									if(element.utid == element2.utid) {
-										console.log('element:' + JSON.stringify(element));
 										var uData = element;
 										if(element2.dataType == '3') { //学生
 											if(uData.usex == 1) {
@@ -660,16 +658,68 @@
 											tea_utid.value = uData.uname;
 											tea_introduction.innerText = uData.utxt;
 										} else {
-											console.log('设置账号类型出错');
+											console.log('账号:设置类型出错');
+										}
+										tempArry.push(element2);
+										tempData.splice(index2, 1);
+									}
+								});
+							});
+							getBeiZhu(tempArry);
+						} else {
+							mui.toast(data.RspTxt);
+						}
+						wd.close();
+					});
+				}
+
+				/**
+				 * 获取备注
+				 * @param {Object} utidArray
+				 */
+				function getBeiZhu(utidArray) {
+					var strUtid = '';
+					if(utidArray.length == 1) {
+						strUtid = utidArray[0].utid
+					} else {
+						var tempUtidArray = [];
+						mui.each(utidArray, function(index, element) {
+							tempUtidArray.push(element.utid);
+						});
+						strUtid = tempUtidArray.join(',');
+					}
+					//获取备注
+					//35.个人获取对某人或一群人的备注
+					//所需参数
+					var comData = {
+						vvl: strUtid //被备注用户ID,utid或utid串
+					};
+					//返回值
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_PostUmk(comData, wd, function(data) {
+						console.log('35_postDataPro_PostUmk_个人获取对某人或一群人的备注.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							var tempData = utidArray;
+							mui.each(data.RspData, function(index, element) {
+								mui.each(tempData, function(index2, element2) {
+									if(element.butid == element2.utid) {
+										var uData = element;
+										if(element2.dataType == '3') { //学生
+											stu_ugname.value = uData.bunick;
+										} else if(element2.dataType == '0') { //家长
+											document.getElementById("par_ugname_" + uData.butid).value = uData.bunick;
+										} else if(element2.dataType == '2') { //教师
+											tea_ugname.value = uData.bunick;
+										} else {
+											console.log('备注:设置类型出错');
 										}
 										tempData.splice(index2, 1);
 									}
 								});
 							});
-
-						} else {
-							mui.toast(data.RspTxt);
-						}
+						} else {}
+						wd.close();
 					});
 				}
 

@@ -5,9 +5,10 @@
  */
 
 mui.init();
-
+var cityType=0;
 mui.plusReady(function() {
-	var showCity;//当前展示城市信息
+	var showCity; //当前展示城市信息
+	var SECity; //当前科教频道城市信息
 	//安卓的连续点击两次退出程序
 	var backButtonPress = 0;
 	mui.back = function(event) {
@@ -33,10 +34,16 @@ mui.plusReady(function() {
 	window.addEventListener('aboutmNoRead', function() {
 		getAboutMe();
 	});
-	window.addEventListener('showCity',function(e){
-		showCity=e.detail.data;
-		console.log('主界面标题获取的城市信息：'+JSON.stringify(showCity));
-		setShowCity();
+	window.addEventListener('showCity', function(e) {
+		if(cityType){
+			showCity = e.detail.data;
+			console.log('主界面标题获取的城市信息：' + JSON.stringify(showCity));
+		}else{
+			SECity=e.detail.data;
+			console.log('主界面标题获取的城市信息：' + JSON.stringify(SECity));
+		}
+		
+		setShowCity(cityType);
 	});
 	getAboutMe(); //获取与我相关未读数
 
@@ -44,7 +51,7 @@ mui.plusReady(function() {
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
 	var subpages = ['../cloud/cloud_home.html', '../scienceeducation/scienceeducation_home.html', '../show/show_home.html', '../qiuzhi/qiuzhi_home.html'];
-//	var titles = ['首页', '科教', '展现', '求知'];
+	//	var titles = ['首页', '科教', '展现', '求知'];
 	//设置子页面距离顶部的位置
 
 	var subpage_style = {
@@ -79,8 +86,17 @@ mui.plusReady(function() {
 		if(targetTab == activeTab) {
 			return;
 		}
-		if(showCity&&this.querySelector('.mui-tab-label').innerHTML=='展现'){
-			setShowCity();
+		if(this.querySelector('.mui-tab-label').innerHTML == '展现') {
+			cityType=1;
+			if(showCity){
+				setShowCity(cityType);
+			}
+			
+		} else if(this.querySelector('.mui-tab-label').innerHTML == '科教'){
+			cityType=0;
+			if(SECity){
+				setShowCity(cityType);
+			}
 		}else{
 			//更换标题
 			title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
@@ -133,7 +149,6 @@ mui.plusReady(function() {
 					noRead.innerHTML = NoReadCnt;
 
 				}
-
 			} else {
 				//				mui.toast(data.RspTxt);
 			}
@@ -188,11 +203,14 @@ mui.plusReady(function() {
 					break;
 				case '../scienceeducation/scienceeducation_home.html': //科教
 					addListIcon(title_left, '../scienceeducation/scienceeducation_home.html');
+					if(!SECity) {
+						requestCustomizationCity();
+					}
 					break;
 				case '../show/show_home.html': //展现
 					addListIcon(title_left, '../show/show_home.html');
-					if(!showCity){
-						requestUserCity(setShowCity);
+					if(!showCity) {
+						requestUserCity();
 					}
 					break;
 				case '../qiuzhi/qiuzhi_home.html': //求知
@@ -202,24 +220,80 @@ mui.plusReady(function() {
 					break;
 			}
 		}
-	var setShowCity=function(){
-		if(showCity.totalNo==1){
-			title.innerText=showCity.aname;
-		}else{
-			title.innerHTML=getShowCityInner()
-		}
-		
+		//44.获取个人的订制城市
+	function requestCustomizationCity() {
+		//所需参数
+		var comData = {
+			vvl: '0' //订制频道,0科教频道,1展示频道,其他待定
+		};
+		// 等待的对话框
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		//44.获取个人的订制城市
+		postDataPro_PostUTcity(comData, wd, function(data) {
+			wd.close();
+			console.log('获取个人的订制城市:' + JSON.stringify(data));
+			if(data.RspCode == 0) {
+				//先通过‘|’将返回值分为数组
+				eduArray = data.RspData[0].citys.split('|');
+				//遍历此数组
+				for(var m in eduArray) {
+					var tempStr = eduArray[m];
+					//初始化model
+					var model_area = {
+						//						acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
+						//						aname: '', //节点名称
+						//						atype: '', //节点类型,0省1城市2区县
+						//						index: '', //在数组位置
+						//						totalNo: 0 //数组大小
+					};
+					console.log('tempStr:' + tempStr);
+					//将分成的每个值，再通过‘_’拆分为model
+					var tempArea = tempStr.split('_');
+					model_area.acode = tempArea[0];
+					model_area.aname = tempArea[1];
+					model_area.atype = '1';
+					model_area.index = m;
+					model_area.totalNo = eduArray.length;
+					//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
+					eduArray.splice(m, 1, model_area);
+					//					//如果有值，默认获取第一个城市的数据
+					//					if(m == 0) {
+					//						requestCityNews(tempArea[0]);
+					//					}
+				}
+				SECity = eduArray[0];
+				events.fireToPageNone('../scienceeducation/scienceeducation_home.html', 'citiesInfo', eduArray);
+				setShowCity(0);
+				console.log('修改后的最终值为:' + JSON.stringify(eduArray));
+			} else {
+				mui.toast(data.RspTxt);
+			} 
+		});
 	}
+	var setShowCity = function(type) {
+			var curCity;
+			if(type) { //1为展现频道
+				curCity = showCity;
+			} else {
+				curCity = SECity;
+			}
+			if(curCity.totalNo == 1) {
+				title.innerText = curCity.aname;
+			} else {
+				title.innerHTML = getShowCityInner(curCity)
+			}
+
+		}
 		/**
 		 * 点点点模式
 		 * @param {Object} cities
 		 */
-	var getShowCityInner = function() {
-			var inner = '<p id="current-city" class="current-city">' + showCity.aname + '</p><div class="mine-slider-indicator">';
-			for(var i = 0; i < showCity.totalNo; i++) {
+	var getShowCityInner = function(curCity) {
+			var inner = '<p id="current-city" class="current-city">' + curCity.aname + '</p><div class="mine-slider-indicator">';
+			for(var i = 0; i < curCity.totalNo; i++) {
 				if(i == 0) { //第一个
 					inner += '<div class="mine-indicator mine-active"></div>'
-				} else if(i == showCity.totalNo - 1) { //最后一个
+				} else if(i == curCity.totalNo - 1) { //最后一个
 					inner += '<div class="mine-indicator"></div></div>'
 				} else { //中间的
 					inner += '<div class="mine-indicator"></div>'
@@ -229,7 +303,7 @@ mui.plusReady(function() {
 		}
 		//44.获取个人的订制城市
 	function requestUserCity(callback) {
-		var showArray=[];
+		var showArray = [];
 		//所需参数
 		var comData = {
 			vvl: '1' //订制频道,0科教频道,1展示频道,其他待定
@@ -248,11 +322,11 @@ mui.plusReady(function() {
 					var tempStr = showArray[m];
 					//初始化model
 					var model_area = {
-//						acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
-//						aname: '', //节点名称
-//						atype: '', //节点类型,0省1城市2区县
-//						index:'',//当前页码
-//						totalNo:''//总数量
+						//						acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
+						//						aname: '', //节点名称
+						//						atype: '', //节点类型,0省1城市2区县
+						//						index:'',//当前页码
+						//						totalNo:''//总数量
 					};
 					console.log('tempStr:' + tempStr);
 					//将分成的每个值，再通过‘_’拆分为model
@@ -260,18 +334,18 @@ mui.plusReady(function() {
 					model_area.acode = tempArea[0];
 					model_area.aname = tempArea[1];
 					model_area.atype = '1';
-					model_area.index=m;
-					model_area.totalNo=showArray.length;
+					model_area.index = m;
+					model_area.totalNo = showArray.length;
 					//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
 					showArray.splice(m, 1, model_area);
 					//如果有值，默认获取第一个城市的数据
-//					if(m == 0) {
-//						requestCityNews(tempArea[0]);
-//					}
+					//					if(m == 0) {
+					//						requestCityNews(tempArea[0]);
+					//					}
 				}
-				showCity=showArray[0];
-				events.fireToPageNone('../show/show_home.html','citiesInfo',showArray);
-				callback();
+				showCity = showArray[0];
+				events.fireToPageNone('../show/show_home.html', 'citiesInfo', showArray);
+				setShowCity(1);
 				console.log('修改后的最终值为:' + JSON.stringify(showArray));
 			} else {
 				mui.toast(data.RspTxt);
