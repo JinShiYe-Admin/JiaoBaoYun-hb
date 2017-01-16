@@ -190,6 +190,7 @@
 						mui.toast('发布成功！');
 						console.log('推送个人空间成功' + JSON.stringify(data));
 						textView.value = '';
+						events.fireToPageNone('zonep_sub.html', 'refreshZonep');
 						mui.back();
 
 					})

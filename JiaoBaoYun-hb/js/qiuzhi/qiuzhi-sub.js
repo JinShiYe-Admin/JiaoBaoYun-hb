@@ -32,6 +32,6 @@ var pullUpFresh=function(){
  */
 var setListener=function(){
 	events.addTap('submit-question',function(){
-		events.openNewWindow('qiuzhi-question.html');
+		events.openNewWindow('qiuzhi-questionSub.html');
 	})
 }

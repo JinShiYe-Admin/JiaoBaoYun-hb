@@ -14,11 +14,16 @@
 	</head>
 
 	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">问题</h1>
+			<a id="publish" class="mui-pull-right">提问</a>
+		</header>
 		<div class="mui-content">
-			<textarea placeholder="写下你的问题" style="height: 40px;"></textarea>
-			<p style="margin-left: 10px;margin-top: -5px;font-size: 14px;">请添加问题的补充说明</p>
-			<div class="input-content" style="margin-top: 30px;">
-				<textarea id="input-content" placeholder="请输入内容"></textarea>
+			<textarea id="askTitle" placeholder="写下你的问题" style="height: 40px;"></textarea>
+			<p style="margin-left: 10px;font-size: 14px;">请添加问题的补充说明</p>
+			<div class="input-content" style="margin-top: 80px;">
+				<textarea id="askNote" placeholder="请输入内容"></textarea>
 				<div id="take_pic" class="take_pic">
 					<a class="mui-icon iconfont icon-xiangji"></a>
 				</div>
@@ -37,7 +42,7 @@
 		<script src="../../js/utils/files.js"></script>
 		<script src="../../js/utils/ASFiles.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
-		
+
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
@@ -57,15 +62,22 @@
 
 				});
 			});
+			events.addTap('publish', function() {
+				console.log(1111111)
+				requestAddAsk();
+			});
 
 			//6.新增某个用户提交问题
 			function requestAddAsk() {
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+				var askTitle = document.getElementById("askTitle");
+				var askNote = document.getElementById("askNote");
 				//所需参数
 				var comData = {
-					askTitle: '测试标题', //问题标题,200
-					askNote: '没有说明', //问题说明,2000
+					askTitle: askTitle.value, //问题标题,200
+					askNote: askNote.value, //问题说明,2000
 					askChannel: 1, //问题话题
-					askMan: 1, //提问人
+					askMan: personalUTID, //提问人
 					isAnonym: 0, //是否匿名
 					inviteExperts: '[]' //邀请专家,例如[1,2,3]
 				};
