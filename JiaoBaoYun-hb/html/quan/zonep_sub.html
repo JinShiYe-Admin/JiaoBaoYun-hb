@@ -17,9 +17,10 @@
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/native.js"></script>
 		<style>
-			.mui-table-view-cell, .mui-table-view-cell:active {
-    background-color: #FFFFFF;
-}
+			.mui-table-view-cell,
+			.mui-table-view-cell:active {
+				background-color: #FFFFFF;
+			}
 			
 			.mui-table-view {
 				background: transparent;
@@ -101,7 +102,7 @@
 				/*点赞列表上面的横线*/
 				height: 1px;
 				width: 100%;
-				background: #e4e4e4 ;
+				background: #e4e4e4;
 			}
 			
 			.dynamic-contenttext {
@@ -118,7 +119,6 @@
 			
 			.replyComment {
 				padding-top: 5px;
-				
 			}
 			
 			.dynamic-comment-btn {
@@ -126,7 +126,7 @@
 				width: 100%;
 				margin-top: 10px;
 				border-width: 1px;
-				border-color: #e4e4e4 ;
+				border-color: #e4e4e4;
 			}
 			
 			.dynamic-image-more {
@@ -188,7 +188,7 @@
 
 	<body>
 		<footer id="footer" class="mui-bar mui-bar-tab" style="display: none;">
-			<div class="footer-center" >
+			<div class="footer-center">
 				<textarea onblur="inputOnblur(this)" id='msg-content' type="text" class='input-text'></textarea>
 			</div>
 			<button id='btn-reply' class="mui-btn mui-btn-green btn-commit" style="background-color: #1db8F1;border-color:#1db8F1 ;">评论</button>
@@ -214,7 +214,7 @@
 	</body>
 
 	<script>
-	
+		var pageFlag = 0;
 		var publisherId; //发布者id
 		var tempIndex; //节点对象id
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
@@ -246,7 +246,7 @@
 				wd.close();
 				console.log('获取个人空间列表_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
-					if(data.RspData.Data.length==0){
+					if(data.RspData.Data.length == 0) {
 						mui.toast('暂无动态')
 						return;
 					}
@@ -384,7 +384,7 @@
 			addReplyView();
 			addReplyLisetner()
 			publisherId = plus.webview.currentWebview().data.data; //发布者id
-			
+
 			tempPage = 1; //页码，请求第几页数据
 			totalCnt = 0; //当前留言的总条数
 			flag = 2; //判断是加载更多1，还是刷新2
@@ -478,22 +478,22 @@
 					postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
 						wd.close();
 						if(data.RspCode == 0) {
-							console.log('index='+index)
+							console.log('index=' + index)
 							var a = document.getElementById("praise" + index);
 							a.style.color = 'rgb(0, 165, 224)'
 							mui.toast('点赞成功');
-							var PraiseList = document.getElementById("PraiseList"+index);
+							var PraiseList = document.getElementById("PraiseList" + index);
 							console.log(PraiseList.innerHTML);
-							var praiseNameList =  PraiseList.getElementsByTagName("font");
+							var praiseNameList = PraiseList.getElementsByTagName("font");
 							console.log(praiseNameList.length)
-							if(praiseNameList.length>0){
+							if(praiseNameList.length > 0) {
 								var praiseName = praiseNameList[0];
-								praiseName.innerHTML = praiseName.innerHTML+'、'+personalunick;
+								praiseName.innerHTML = praiseName.innerHTML + '、' + personalunick;
 								console.log(praiseName.innerHTML);
-							}else{
-								
-								PraiseList.innerHTML = '<img id= "praiseImg" src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />'+
-				 '<font class="common-font-family-Regular dynamic-praise-name">' + personalunick + '</font>';
+							} else {
+
+								PraiseList.innerHTML = '<img id= "praiseImg" src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />' +
+									'<font class="common-font-family-Regular dynamic-praise-name">' + personalunick + '</font>';
 							}
 						} else {
 							mui.toast(data.RspTxt);
@@ -514,20 +514,20 @@
 							var a = document.getElementById("praise" + index);
 							a.style.color = 'rgb(143, 143, 148)'
 							mui.toast('取消点赞成功');
-							var PraiseList = document.getElementById("PraiseList"+index);
-							var praiseName =  PraiseList.getElementsByTagName("font")[0];
-							if(praiseName.innerHTML.indexOf('、')>-1){
+							var PraiseList = document.getElementById("PraiseList" + index);
+							var praiseName = PraiseList.getElementsByTagName("font")[0];
+							if(praiseName.innerHTML.indexOf('、') > -1) {
 								console.log('多个人点赞')
-								praiseName.innerHTML = praiseName.innerHTML.replace('、'+personalunick,'');
-								praiseName.innerHTML = praiseName.innerHTML.replace(personalunick,'');
-							}else{
+								praiseName.innerHTML = praiseName.innerHTML.replace('、' + personalunick, '');
+								praiseName.innerHTML = praiseName.innerHTML.replace(personalunick, '');
+							} else {
 								console.log('一个人点赞')
-								
+
 								console.log(PraiseList.outerHTML);
 								PraiseList.removeChild(praiseName);
 								var praiseImg = document.getElementById("praiseImg");
 								PraiseList.removeChild(praiseImg);
-								
+
 							}
 						} else {
 							mui.toast(data.RspTxt);
@@ -562,7 +562,6 @@
 					showSoftInput('#msg-content');
 					window.event.stopPropagation()
 
-
 				});
 				//底部评论按钮
 				mui('.mui-table-view').on('tap', '.dynamic-comment-btn', function() {
@@ -575,10 +574,9 @@
 					window.event.stopPropagation()
 				});
 
-				
 				//			回复评论
 				mui('.mui-table-view').on('tap', '.replyComment', function() {
-					
+
 					tempIndex = this.id.replace('replyComment', '');
 					console.log('tempIndex====' + tempIndex)
 					var replyContainer = document.getElementById('footer');
@@ -586,7 +584,6 @@
 					replyContainer.style.display = 'block';
 					showSoftInput('#msg-content');
 					window.event.stopPropagation()
-
 
 				});
 
@@ -849,7 +846,6 @@
 			document.getElementById('footer').className = '';
 			document.getElementById('footer').style.display = 'none';
 		}
-
 	</script>
 
 </html>

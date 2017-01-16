@@ -29,8 +29,8 @@ textarea{
 	width: 6rem;
 	height: 6rem;
 	border: solid;
-	border-width: thin;
-	border-radius: 5px;
+	border-width: 0;
+	border-radius: 0px;
 	border-color: #929292;
 	padding: 0.7rem;
 	text-align: center;
@@ -40,14 +40,15 @@ textarea{
  * 样式
  */
 div>.icon-xiangce:before,.icon-shipin:before,.icon-xiangji:before{
-	font-size: 4.0rem;
+	font-size: 3.0rem;
+	color: gray;
 }
 /**
  * 班级动态
  * 拍照按钮
  */
 .take_pic{
-	top: 19.6rem;
+	top: 21rem;
 	left: 0.8rem;
 	z-index: 1;
 }
@@ -56,12 +57,12 @@ div>.icon-xiangce:before,.icon-shipin:before,.icon-xiangji:before{
  * 添加文件按钮
  */
 .take_camero{
-	top: 19.6rem;
+	top: 21rem;
 	left: 6.9rem;
 	z-index: 1;
 }
 .get_gallery{
-	top: 19.6rem;
+	top: 21rem;
 	left: 13.1rem;
 	z-index: 1;
 }
