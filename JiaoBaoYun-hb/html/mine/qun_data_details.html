@@ -121,7 +121,7 @@
 								<label>简介:</label>
 								<!--<input id="stu_introduction" type="text" class="mui-input-clear" disabled>-->
 							</div>
-							<p id="stu_introduction" style="font-size: 17px;"></p>
+							<p id="stu_introduction" style="font-size: 17px;word-break:break-all;"></p>
 						</li>
 					</div>
 					<div id="tea_show" style="display:none;">
@@ -191,7 +191,7 @@
 								<label>简介:</label>
 								<!--<input id="tea_introduction" type="text" class="mui-input-clear" disabled>-->
 							</div>
-							<p id="tea_introduction" style="font-size: 17px;"></p>
+							<p id="tea_introduction" style="font-size: 17px;word-break:break-all;"></p>
 						</li>
 					</div>
 				</ul>
@@ -501,25 +501,38 @@
 									tea_expsch.value = teaData.expsch;
 								}
 								if(teaData.utid != null && teaData.utid != '') {
-									getUserData(teaData.utid, 2); //查找关联的老师账号信息
+									getUserData([{
+										utid: teaData.utid,
+										dataType: '2'
+									}]); //查找关联的老师账号信息
 								}
 							} else if(type == 3) { //学生
+								var utidArray = [];
 								mui.each(data.RspData, function(index, item) {
 									if(item.utid != null && item.utid != '') {
 										//console.log('获取学生详细信息:' + JSON.stringify(item));
-										stuData.push(item);
+										stuData.push(item); //记录获取的学生资料
 										if(item.umstype == 3) {
-											//关联了学生账号
+											//关联的学生账号
 											//stu_utid.value = item.utid;
 											stu_ugname.value = item.ugname;
-											getUserData(item.utid, 3);
+											utidArray.push({
+												utid: item.utid,
+												dataType: '3'
+											});
 										} else {
 											parData.push(item);
 											addParents(item);
+											utidArray.push({
+												utid: item.utid,
+												dataType: '0'
+											});
 										}
-										jQuery('.data-parent').prop("maxLength", "10");
 									}
 								});
+								if(utidArray.length != 0) {
+									getUserData(utidArray);
+								}
 							}
 						} else {
 							if(data.RspCode != 9) {
@@ -553,14 +566,14 @@
 						html2 = '<li class="mui-table-view-cell">\
 									<div class="mui-input-row">\
 										<label>关系:</label>\
-										<input id="par_urel_' + data.utid + '" type="text" class="mui-input-clear data-parent" value="' + data.urel + '">\
+										<input id="par_urel_' + data.utid + '" type="text" class="mui-input-clear" maxLength="10" value="' + data.urel + '">\
 									</div>\
 								</li>';
 					} else {
 						html2 = '<li class="mui-table-view-cell">\
 									<div class="mui-input-row">\
 										<label>关系:</label>\
-										<input type="text" class="mui-input-clear  data-parent" value="' + data.urel + '" disabled="disabled">\
+										<input type="text" class="mui-input-clear" value="' + data.urel + '" disabled="disabled">\
 									</div>\
 								</li>';
 					}
@@ -573,21 +586,40 @@
 								<div style="height:1px;width:100%;"></div>';
 					div.innerHTML = html1 + html2 + html3;
 					document.getElementById("stu_show").appendChild(div);
-					getUserData(data.utid, 0);
 				}
 
 				/**
 				 * 获取账号的信息
-				 * @param {Object} utid 用户id
-				 *  @param {Object} dataType 0家长,2老师,3学生
+				 * @param {Object} utidArray
+				 * utidArray[i]={
+				 * 	utid:'',//用户id
+				 *  dataType:'' //0家长,2老师,3学生
+				 * }
 				 */
-				function getUserData(utid, dataType) {
-					//21.通过用户ID获取用户资料
-					//所需参数
-					var comData = {
-						vvl: utid, //用户id，查询的值,p传个人ID,g传ID串
-						vtp: 'p' //查询类型,p(个人)g(id串)
-					};
+				function getUserData(utidArray) {
+					var comData = null;
+					//					var comData = {
+					//						vvl: utid, //用户id，查询的值,p传个人ID,g传ID串
+					//						vtp: 'p' //查询类型,p(个人)g(id串)
+					//					};
+					if(utidArray.length == 1) {
+						//21.通过用户ID获取用户资料
+						//所需参数
+						comData = {
+							vvl: utidArray[0].utid, //用户id，查询的值,p传个人ID,g传ID串
+							vtp: 'p' //查询类型,p(个人)g(id串)
+						};
+					} else {
+						var tempUtidArray = [];
+						mui.each(utidArray, function(index, element) {
+							tempUtidArray.push(element.utid);
+						});
+						var utidStr = tempUtidArray.join(',');
+						comData = {
+							vvl: utidStr, //用户id，查询的值,p传个人ID,g传ID串
+							vtp: 'g' //查询类型,p(个人)g(id串)
+						};
+					}
 					//返回值model：model_userInfo
 					// 等待的对话框
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -595,33 +627,46 @@
 						wd.close();
 						console.log('21.通过用户ID获取用户资料postDataPro_PostUinf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
-							var uData = data.RspData[0];
-							if(dataType == 3) { //学生
-								if(uData.usex == 1) {
-									stu_gender.innerText = '男';
-								} else if(uData.usex == 2) {
-									stu_gender.innerText = '女';
-								} else {
-									stu_gender.innerText = '';
-								}
-								stu_utid.value = uData.uname;
-								stu_phone.value = uData.uid;
-								stu_introduction.innerText = uData.utxt;
-							} else if(dataType == 0) { //家长
-								document.getElementById("par_uname_" + uData.utid).value = uData.uname;
-								document.getElementById("par_phone_" + uData.utid).value = uData.uid;
-							} else if(dataType == 2) { //教师
-								if(uData.usex == 1) {
-									tea_gender.innerText = '男';
-								} else if(uData.usex == 2) {
-									tea_gender.innerText = '女';
-								} else {
-									tea_gender.innerText = '';
-								}
-								tea_uid.value = uData.uid;
-								tea_utid.value = uData.uname;
-								tea_introduction.innerText = uData.utxt;
-							}
+							var tempData = utidArray;
+							console.log('tempData:' + JSON.stringify(tempData));
+							mui.each(data.RspData, function(index, element) {
+								mui.each(tempData, function(index2, element2) {
+									if(element.utid == element2.utid) {
+										console.log('element:' + JSON.stringify(element));
+										var uData = element;
+										if(element2.dataType == '3') { //学生
+											if(uData.usex == 1) {
+												stu_gender.innerText = '男';
+											} else if(uData.usex == 2) {
+												stu_gender.innerText = '女';
+											} else {
+												stu_gender.innerText = '';
+											}
+											stu_utid.value = uData.uname;
+											stu_phone.value = uData.uid;
+											stu_introduction.innerText = uData.utxt;
+										} else if(element2.dataType == '0') { //家长
+											document.getElementById("par_uname_" + uData.utid).value = uData.uname;
+											document.getElementById("par_phone_" + uData.utid).value = uData.uid;
+										} else if(element2.dataType == '2') { //教师
+											if(uData.usex == 1) {
+												tea_gender.innerText = '男';
+											} else if(uData.usex == 2) {
+												tea_gender.innerText = '女';
+											} else {
+												tea_gender.innerText = '';
+											}
+											tea_uid.value = uData.uid;
+											tea_utid.value = uData.uname;
+											tea_introduction.innerText = uData.utxt;
+										} else {
+											console.log('设置账号类型出错');
+										}
+										tempData.splice(index2, 1);
+									}
+								});
+							});
+
 						} else {
 							mui.toast(data.RspTxt);
 						}

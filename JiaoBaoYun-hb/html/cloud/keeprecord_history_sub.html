@@ -186,7 +186,7 @@
 					classId: subData.data, //班级ID
 					pageIndex: pageIndex, //当前页数
 					pageSize: pageSize, //每页记录数
-					publisherId:personalUTID//发布者ID,0代表全部
+					publisherId: personalUTID //发布者ID,0代表全部
 				};
 				//返回model_userNoteInfo
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -331,17 +331,21 @@
 					var unick = data.ugname; //学生姓名
 					if(data.NoteType == 1) { //点到
 						html5 = '<h4 style="margin-top:10px;">' + unick + '</h4>\
-								 <div>' + data.CheckTypeStr + ' : ' + data.MsgContent + '</div>';
+								 <div id="MsgContent_' + data.TabId + '" style="word-break:break-all;"></div>';
 					} else if(data.NoteType == 2) { //记事
 						html5 = '<h4 style="margin-top:10px;">' + unick + '</h4>\
-							 	 <div>' + data.MsgContent + '</div>';
+							 	 <div id="MsgContent_' + data.TabId + '" style="word-break:break-all;"></div>';
 					}
 					div2.innerHTML = html4 + html5;
 
 					if(data.NoteType == 1) { //点到
 						document.getElementById(date0 + "_call").appendChild(div2);
+						document.getElementById("MsgContent_" + data.TabId).innerText = data.CheckTypeStr + ' : ' + data.MsgContent;
+
 					} else if(data.NoteType == 2) { //记事
 						document.getElementById(date0 + "_record").appendChild(div2);
+						document.getElementById("MsgContent_" + data.TabId).innerText = data.MsgContent;
+
 					}
 					beforeItemData = data;
 				}
