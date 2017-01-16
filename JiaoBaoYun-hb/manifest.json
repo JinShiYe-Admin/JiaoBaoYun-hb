@@ -2469,7 +2469,8 @@
 					"css/iconfont/iconfont.css",
 					"fonts/iconfont.ttf",
 					"js/storageKeyName.js",
-					"js/publicQiuzhiProtocol.js"
+					"js/publicQiuzhiProtocol.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html"
@@ -2517,7 +2518,8 @@
 					"html/show/show-sub.html"
 				],
 				"refer": [
-					"html/show/show-sub1.html"
+					"html/show/show-sub1.html",
+					"html/utils/customizeCity.html"
 				],
 				"priority": 0
 			},
