@@ -6,6 +6,7 @@ var pageFlag = 1;
 mui.init();
 var zonepArray;
 var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
+mui('.mui-scroll-wrapper').scroll();
 mui.plusReady(function() {
 	initNativeObjects();
 	addReplyView();
