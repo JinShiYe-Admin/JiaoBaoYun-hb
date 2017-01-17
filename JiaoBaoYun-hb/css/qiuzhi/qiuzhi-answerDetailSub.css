@@ -1,0 +1,15 @@
+.img-container{
+	float: left;
+	max-width: 20%;
+	min-width: 5rem;
+	text-align: start;
+	/*padding:1rem;*/
+}
+.head-img{
+	width: 4rem;
+	height:4rem;
+}
+.comment-container{
+	display: inline-block;
+	width: 78%;
+}

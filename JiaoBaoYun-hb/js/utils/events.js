@@ -103,8 +103,6 @@ var events = (function(mod) {
 	 * @param {Object} id 刷新的list控件id
 	 * @param {Object} fresh 下拉刷新加载数据的方法
 	 * @param {Object} addMore 上拉刷新加载数据的方法
-	 * @param {Object} curPageCount 当前页码
-	 * @param {Object} totalPageCount 总页码
 	 */
 	mod.initRefresh = function(id, fresh, addMore) {
 

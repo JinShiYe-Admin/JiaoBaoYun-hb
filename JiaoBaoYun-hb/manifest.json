@@ -2500,7 +2500,8 @@
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
 					"html/qiuzhi/qiuzhi-questionSub.html",
-					"html/qiuzhi/qiuzhi-answerDetail.html"
+					"html/qiuzhi/qiuzhi-answerDetail.html",
+					"html/qiuzhi/qiuzhi-newQ.html"
 				],
 				"priority": 0
 			},
@@ -2527,7 +2528,8 @@
 					"js/utils/events.js",
 					"css/mui.min.css",
 					"css/utils/common.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/publicQiuzhiProtocol.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2636,7 +2638,9 @@
 					"js/utils/RSAEncrypt.js",
 					"js/senedu/SenEduHomeItem.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/scienceeducation/senedu_show_main.html"
+				],
 				"priority": 0
 			},
 			"html/utils/customizeCity.html": {
@@ -2664,7 +2668,28 @@
 			},
 			"html/qiuzhi/qiuzhi-answerDetail.html": {
 				"resources": [
-					"html/qiuzhi/qiuzhi-answerDetailSub.html"
+					"html/qiuzhi/qiuzhi-answerDetailSub.html",
+					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/qiuzhi-answerDetailSub.html": {
+				"resources": [
+					"js/qiuzhi/qiuzhi-answerDetailSub.js",
+					"css/qiuzhi/qiuzhi-answerDetailSub.css",
+					"js/publicQiuzhiProtocol.js",
+					"fonts/iconfont.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/scienceeducation/senedu_show_main.html": {
+				"resources": [
+					"fonts/mui.ttf",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0

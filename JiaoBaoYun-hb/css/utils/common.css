@@ -140,3 +140,19 @@ header>a{
 	color: #00A5E0;
 	border-bottom: 2px solid #00A5E0;
 }
+/*底部评论套装*/
+.input-footerContainer{
+	width: 100%;
+	position: fixed;
+	padding-top: 10px;
+	bottom: 0;
+	background-color: white;
+	border-top: solid thin darkgray;
+}
+.input-footerContainer .input-text{
+	width: 80%;
+}
+.input-footerContainer .send-icon{
+	width: 18%;
+	text-align: center;
+}
