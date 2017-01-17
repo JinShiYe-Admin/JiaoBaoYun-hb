@@ -5,7 +5,7 @@
  */
 
 mui.init();
-var cityType=0;
+var cityType = 0;
 mui.plusReady(function() {
 	var showCity; //当前展示城市信息
 	var SECity; //当前科教频道城市信息
@@ -35,14 +35,14 @@ mui.plusReady(function() {
 		getAboutMe();
 	});
 	window.addEventListener('showCity', function(e) {
-		if(cityType){
-			showCity = e.detail.data;
+		var curCity;
+		if(cityType) {
+			curCity = showCity = e.detail.data;
 			console.log('主界面标题获取的城市信息：' + JSON.stringify(showCity));
-		}else{
-			SECity=e.detail.data;
+		} else {
+			curCity = SECity = e.detail.data;
 			console.log('主界面标题获取的城市信息：' + JSON.stringify(SECity));
 		}
-		
 		setShowCity(cityType);
 	});
 	getAboutMe(); //获取与我相关未读数
@@ -87,17 +87,17 @@ mui.plusReady(function() {
 			return;
 		}
 		if(this.querySelector('.mui-tab-label').innerHTML == '展现') {
-			cityType=1;
-			if(showCity){
+			cityType = 1;
+			if(showCity) {
 				setShowCity(cityType);
 			}
-			
-		} else if(this.querySelector('.mui-tab-label').innerHTML == '科教'){
-			cityType=0;
-			if(SECity){
+
+		} else if(this.querySelector('.mui-tab-label').innerHTML == '科教') {
+			cityType = 0;
+			if(SECity) {
 				setShowCity(cityType);
 			}
-		}else{
+		} else {
 			//更换标题
 			title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
 		}
@@ -267,7 +267,7 @@ mui.plusReady(function() {
 				console.log('修改后的最终值为:' + JSON.stringify(eduArray));
 			} else {
 				mui.toast(data.RspTxt);
-			} 
+			}
 		});
 	}
 	var setShowCity = function(type) {
@@ -291,12 +291,13 @@ mui.plusReady(function() {
 	var getShowCityInner = function(curCity) {
 			var inner = '<p id="current-city" class="current-city">' + curCity.aname + '</p><div class="mine-slider-indicator">';
 			for(var i = 0; i < curCity.totalNo; i++) {
-				if(i == 0) { //第一个
+				if(i==curCity.index){
 					inner += '<div class="mine-indicator mine-active"></div>'
-				} else if(i == curCity.totalNo - 1) { //最后一个
-					inner += '<div class="mine-indicator"></div></div>'
-				} else { //中间的
+				}else{
 					inner += '<div class="mine-indicator"></div>'
+				}
+				if(i==curCity.totalNo - 1){
+					inner+='</div>'	
 				}
 			}
 			return inner;

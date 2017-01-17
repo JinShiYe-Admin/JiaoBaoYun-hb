@@ -127,17 +127,7 @@ var slide_selector = (function(mod) {
 			getCurrentCity();
 			events.fireToPageNone('../index/index.html', 'showCity', curCity)
 		}
-		/**
-		 * 设置点点的显示
-		 */
-	var setIndicatorShow = function() {
-			jQuery(".mine-active").className = "mine-indicator";
-			if(citiesIndex >= 0) {
-				jQuery(".mine-slider-indicator").children().eq(citiesIndex % thisCities.length).className = "mine-indicator mine-active";
-			} else {
-				jQuery(".mine-slider-indicator").children().eq(citiesIndex % thisCities.length + thisCities.length).className = "mine-indicator mine-active";
-			}
-		}
+	
 		/**
 		 * 获取当前城市
 		 */
