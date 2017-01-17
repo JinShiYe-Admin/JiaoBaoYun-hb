@@ -28,20 +28,14 @@ var SenEduHomeItem = (function(mod) {
 		itemId++;
 	}
 
-	mod.addItemTapListener = function(){
-		mui('.mui-table-view').on('tap','.mui-table-view-cell',function(){
-		  console.log(this.parentNode.innerHTML);
-		});
-	}
-
 	function addItem_0(element, data, id) {
 		var li = document.createElement('li');
 		li.className = 'mui-table-view-cell mui-media';
 		li.setAttribute('data-turl', data.turl);
 		li.id = id;
-		li.innerHTML = '<div id="mediaBody_' + itemId + '" class="mui-media-body">' +
+		li.innerHTML = '<div id="mediaBody_' + itemId + '" class="mui-media-body" style="padding-top: 5px;padding-bottom: 3px;">' +
 			'<b id="title_' + itemId + '" style="word-break: break-all;font-size: 20px;">' + data.title + '</b>' +
-			'<div id="from_' + itemId + '" style="word-break: break-all;margin-top: 10px;">' + data.tips + '</div></div>';
+			'<div id="from_' + itemId + '" style="word-break: break-all;margin-top: 5px;">' + data.tips + '</div></div>';
 		element.appendChild(li);
 	}
 
@@ -50,10 +44,10 @@ var SenEduHomeItem = (function(mod) {
 		li.className = 'mui-table-view-cell mui-media';
 		li.setAttribute('data-turl', data.turl);
 		li.id = id;
-		li.innerHTML = '<div id="mediaBody_' + id + '" class="mui-media-body">' +
+		li.innerHTML = '<div id="mediaBody_' + id + '" class="mui-media-body" style="padding-top: 5px;padding-bottom: 3px;">' +
 			'<img id="image_' + id + '" class="mui-pull-right" style="width: 30%;" src="' + data.timgs[0] + '">' +
 			'<b id="title_' + id + '" style="word-break: break-all;font-size: 20px;">' + data.title + '</b>' +
-			'<div id="from_' + id + '" style="word-break: break-all;margin-top: 10px;">' + data.tips + '</div></div>';
+			'<div id="from_' + id + '" style="word-break: break-all;margin-top: 5px;">' + data.tips + '</div></div>';
 		element.appendChild(li);
 		var image = document.getElementById("image_1_0_" + id);
 		var parentNode = image.parentNode;
@@ -66,10 +60,9 @@ var SenEduHomeItem = (function(mod) {
 		li.className = 'mui-table-view-cell mui-media';
 		li.setAttribute('data-turl', data.turl);
 		li.id = id;
-		li.innerHTML = '<div id="mediaBody_' + id + '" class="mui-media-body">' +
+		li.innerHTML = '<div id="mediaBody_' + id + '" class="mui-media-body" style="padding-top: 5px;padding-bottom: 3px;">' +
 			'<b id="title_' + id + '" style="word-break: break-all;font-size: 20px;">' + data.title + '</b>' +
-			'<div id="from_' + id + '" style="word-break: break-all;margin-top: 10px;">' + data.tips + '</div></div>' +
-			'<div class="mui-row">' +
+			'<div class="mui-row" style="margin-top: 3px;">' +
 			'<div class="mui-col-xs-4 mui-col-sm-4" style="padding: 2px;">' +
 			'<img id="image_3_0_' + id + '" style="width: 100%;" src="' + data.timgs[0] + '">' +
 			'</div>' +
@@ -78,7 +71,7 @@ var SenEduHomeItem = (function(mod) {
 			'</div>' +
 			'<div class="mui-col-xs-4 mui-col-sm-4" style="padding: 2px;">' +
 			'<img id="image_3_2_' + id + '" style="width: 100%;" src="' + data.timgs[2] + '">' +
-			'</div></div></div>';
+			'</div></div><div id="from_' + id + '" style="word-break: break-all;margin-top: 5px;">' + data.tips + '</div></div>';
 		element.appendChild(li);
 		var image_3_0 = document.getElementById("image_3_0_" + id);
 		var image_3_1 = document.getElementById("image_3_1_" + id);
