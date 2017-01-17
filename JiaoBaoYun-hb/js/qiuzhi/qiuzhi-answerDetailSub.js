@@ -1,9 +1,19 @@
+<<<<<<< HEAD
 var type = 2;
 var answerId;
 events.initRefresh('list-container', function() {
 	requestAnswerDetail(answerId);
 }, function() {
 	mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+=======
+mui.init()
+mui.plusReady(function(){
+	window.addEventListener('answerId',function(e){
+		console.log('回答详情获取的答案id:'+e.detail.data);
+		//8.获取某个回答的详情
+				requestAnswerDetail(e.detail.data);
+	})
+>>>>>>> origin/master
 })
 mui.plusReady(function() {
 		window.addEventListener('answerId', function(e) {
@@ -20,7 +30,11 @@ function requestAnswerDetail(answerId) {
 	//所需参数
 	var comData = {
 		answerId: answerId, //回答ID
+<<<<<<< HEAD
 		orderType: type, //评论排序方式,1 时间正序排序,2 时间倒序排序
+=======
+		orderType: '2', //评论排序方式,1 时间正序排序,2 时间倒序排序
+>>>>>>> origin/master
 		pageIndex: '1', //当前页数
 		pageSize: '0' //每页记录数,传入0，获取总记录数
 	};
