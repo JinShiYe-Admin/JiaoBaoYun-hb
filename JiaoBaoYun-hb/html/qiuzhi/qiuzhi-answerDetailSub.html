@@ -12,6 +12,7 @@
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/qiuzhi/qiuzhi-answerDetailSub.js" type="text/javascript" charset="utf-8"></script>
 
 	</head>
 
@@ -40,14 +41,10 @@
 		</div>
 		<script type="text/javascript">
 			var datasource = {};
-			mui.init();
-			mui.plusReady(function() {
-				//8.获取某个回答的详情
-				requestAnswerDetail();
-			})
 
 			function refreshUI() {
 				var ul = document.getElementById('ul');
+				ul.innerHTML = '';
 				var li_title = document.createElement("li");
 				li_title.className = 'mui-table-view-cell mui-media';
 				li_title.innerHTML = datasource.AskTitle;

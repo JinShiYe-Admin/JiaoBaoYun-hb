@@ -2,13 +2,15 @@ mui.init()
 mui.plusReady(function(){
 	window.addEventListener('answerId',function(e){
 		console.log('回答详情获取的答案id:'+e.detail.data);
+		//8.获取某个回答的详情
+				requestAnswerDetail(e.detail.data);
 	})
 })
 	//8.获取某个回答的详情
-function requestAnswerDetail() {
+function requestAnswerDetail(answerId) {
 	//所需参数
 	var comData = {
-		answerId: '3', //回答ID
+		answerId: answerId, //回答ID
 		orderType: '2', //评论排序方式,1 时间正序排序,2 时间倒序排序
 		pageIndex: '1', //当前页数
 		pageSize: '0' //每页记录数,传入0，获取总记录数
