@@ -44,7 +44,7 @@ var slide_selector = (function(mod) {
 			// 子窗口样式
 			var subStyles = {
 				top: "0px",
-				bottom: "50px"
+				bottom: "0px"
 			};
 			// 创建子页面
 			for(var i = 0; i < 2; i++) {
@@ -91,7 +91,7 @@ var slide_selector = (function(mod) {
 		/**
 		 * 滑动事件的实现
 		 * @param {Object} type 0 右滑 1左滑
-		 * @param {Object} index 
+		 * @param {Object} index
 		 */
 	var swipe = function(type) {
 		var showPage;
@@ -127,17 +127,7 @@ var slide_selector = (function(mod) {
 			getCurrentCity();
 			events.fireToPageNone('../index/index.html', 'showCity', curCity)
 		}
-		/**
-		 * 设置点点的显示
-		 */
-	var setIndicatorShow = function() {
-			jQuery(".mine-active").className = "mine-indicator";
-			if(citiesIndex >= 0) {
-				jQuery(".mine-slider-indicator").children().eq(citiesIndex % thisCities.length).className = "mine-indicator mine-active";
-			} else {
-				jQuery(".mine-slider-indicator").children().eq(citiesIndex % thisCities.length + thisCities.length).className = "mine-indicator mine-active";
-			}
-		}
+
 		/**
 		 * 获取当前城市
 		 */
@@ -149,7 +139,6 @@ var slide_selector = (function(mod) {
 		}
 	}
 	mod.addSwipeListener = function() {
-		console.log(44444444444)	
 			var parent = plus.webview.currentWebview().parent();
 			// 左滑事件
 			document.addEventListener("swipeleft", function(event) {

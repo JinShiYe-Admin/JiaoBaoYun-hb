@@ -6,23 +6,29 @@ var pageFlag = 1;
 mui.init();
 var zonepArray;
 var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
+mui('.mui-scroll-wrapper').scroll();
 mui.plusReady(function() {
 	initNativeObjects();
 	addReplyView();
-	addReplyLisetner()
-		// 获取当前窗口对象
+	addReplyLisetner();
+	addSomeEvent();
+	// 获取当前窗口对象
 	var self = plus.webview.currentWebview();
 	h5fresh.addRefresh(function() {
-
+		pageIndex = 1;
+		requestData();
 	})
 	window.addEventListener('cityInfo', function(e) {
-			showCity = e.detail;
-			console.log("展示子页面获取的城市信息：" + JSON.stringify(showCity));
-			personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-			pageIndex = 1;
-			requestData();
-		})
+		showCity = e.detail;
+		console.log("展示子页面获取的城市信息：" + JSON.stringify(showCity));
+		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+		pageIndex = 1;
+		requestData();
+	})
 
+});
+
+function addSomeEvent() {
 	var click = []; //记录被点击的li的id和被点击元素
 	mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
 		click.push('头像');
@@ -158,11 +164,8 @@ mui.plusReady(function() {
 	mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
 		click.push('评论者：' + this.innerText);
 	});
-	console.log(33333333333)	
 	slide_selector.addSwipeListener();
-});
-
-
+}
 /**
  * 请求数据
  */
@@ -191,25 +194,32 @@ var requestData = function() {
 	 * @param {Object} data
 	 */
 var getPersonIds = function(data) {
-		var personIds = [];
-		for(var i in data) {
-			personIds.push(data[i].PublisherId);
-			if(data.Comments) {
-				for(var j in data[i].Comments) {
-					if(data[i].Comments[j].UserId) {
-						personIds.push(data[i].Comments[j].UserId);
-					}
-					if(data.Comments[j].ReplyId) {
-						personIds.push(data[i].Comments[j].ReplyId);
-					}
+	var personIds = [];
+	for(var i in data) {
+		personIds.push(data[i].PublisherId);
+		data[i].LikeUsers = arrayDupRemoval(data[i].LikeUsers);
+		personIds = personIds.concat(data[i].LikeUsers);
+
+		if(data[i].Comments) {
+			for(var j in data[i].Comments) {
+				if(data[i].Comments[j].UserId) {
+					personIds.push(data[i].Comments[j].UserId);
+				}
+				if(data[i].Comments[j].ReplyId) {
+					personIds.push(data[i].Comments[j].ReplyId);
+				}
+				for(var k in data[i].Comments[j].Replys) {
+					var reply = data[i].Comments[j].Replys[k]
+					personIds.push(reply.UserId);
+					personIds.push(reply.ReplyId);
 				}
 			}
 		}
-		personIds = events.arraySingleItem(personIds);
-		getPersonalInfo(data, personIds);
 	}
-
-
+	personIds = arrayDupRemoval(personIds);
+	personIds = events.arraySingleItem(personIds);
+	getPersonalInfo(data, personIds);
+}
 
 /**
  * 
@@ -240,28 +250,46 @@ var getPersonalInfo = function(data, ids) {
 	 * @param {Object} personsData 添加的个人信息
 	 */
 var rechargeData = function(data, personsData) {
-		console.log('要重组的数据:' + JSON.stringify(data));
-		//	console.log('加入的数据：'+JSON.stringfy(personsData));
 		for(var i in data) {
 			for(var j in personsData) {
 				if(data[i].PublisherId == personsData[j].utid) {
 					data[i].PublisherName = personsData[j].unick;
 					data[i].PublisherImg = personsData[j].uimg;
 				}
+				//遍历点赞的人
+				for(var item2 in data[i].LikeUsers) {
+					if(personsData[j].utid == data[i].LikeUsers[item2]) {
+						data[i].LikeUsers[item2] = mui.extend(data[i].LikeUsers[item2], personsData[j])
+					}
+
+				}
+
 				if(data[i].Comments.length > 0) {
 					for(var m in data[i].Comments) {
 						if(data[i].Comments[m].UserId == personsData[j].utid) {
-							data[i].Comments[m].UserName = personsData[j].unick;
+
+							data[i].Comments[m].UserIdName = personsData[j].unick;
 						}
 						if(data[i].Comments[m].ReplyId == personsData[j].utid) {
-							data[i].Comments[m].ReplyName = personsData[j].unick;
+							data[i].Comments[m].ReplyIdName = personsData[j].unick;
 						}
+						for(var k in data[i].Comments[m].Replys) {
+							var reply = data[i].Comments[m].Replys[k];
+							if(reply.UserId == personsData[j].utid) {
+								reply.UserIdName = personsData[j].unick;
+
+							}
+							if(reply.ReplyId == personsData[j].utid) {
+								reply.ReplyIdName = personsData[j].unick;
+							}
+
+						}
+
 					}
 				}
 
 			}
 		}
-
 		return data; //返回重组后数据
 	}
 	/**
@@ -278,9 +306,6 @@ var setData = function(data) {
 			dynamiclistitem.addItem(table, data1, id);
 		}
 
-		//		var list = document.getElementById('list-container');
-		//		var li = document.createElement('li');
-		//		li.innerHTML = '<a><div></div></a>'
 	}
 	//加载数据
 function addData(index) {
@@ -296,12 +321,6 @@ function addData(index) {
 	var tempModel = zonepArray[index];
 	console.log('tempModel=' + JSON.stringify(tempModel));
 	tempModel.PublisherImg = updateHeadImg(tempModel.PublisherImg, 2)
-		//			if(tempModel.uimg == '' || tempModel.uimg == null) { //赋值
-		//				tempModel.uimg = '../../image/utils/default_personalimage.png';
-		//			} else { //修改值
-		//				var myDate = new Date();
-		//				tempModel.uimg = tempModel.uimg + '?' + myDate.getTime();
-		//			}
 	var personalImage = tempModel.PublisherImg;
 	var personalName = tempModel.PublisherName;
 	var time = tempModel.PublishDate;

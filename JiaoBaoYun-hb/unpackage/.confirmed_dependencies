@@ -2055,7 +2055,16 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"image/dynamic/icon_praise_small.png",
+			"js/utils/native.js",
+			"js/quan/dynamiclistitem.js",
+			"fonts/iconfont.ttf",
+			"css/icons-extra.css",
+			"image/utils/default_personalimage.png",
+			"js/utils/slide-selector.js",
+			"css/utils/common.css",
+			"css/iconfont/iconfont.css"
 		]
 	},
 	"html/show/show-sub1.html": {
@@ -2097,6 +2106,28 @@
 			"js/libs/crypto-js/require.js",
 			"js/utils/slide-selector.js",
 			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/senedu/SenEduHomeItem.js"
+		]
+	},
+	"html/utils/customizeCity.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
 			"js/publicProtocol.js",
 			"js/libs/jquery.js",
 			"js/mui.min.js",
