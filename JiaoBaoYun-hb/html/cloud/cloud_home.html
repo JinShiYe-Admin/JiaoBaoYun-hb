@@ -91,8 +91,10 @@
 			.mui-table-view {
 				background: transparent;
 				min-height: 90px;
-				margin: 5px 0 !important;
-				padding: 16px 0 !important;
+				margin: 3px 0 !important;
+				/*padding: 16px 0 !important;*/
+				padding: 0px !important;
+
 			}
 
 			.mui-progressbar {
@@ -169,10 +171,10 @@
 					<div id="bottom" style="width: 100%;position: relative;">
 						<!--云盘-->
 						<ul id="cloudstorage" class="mui-table-view mui-grid-view" style="padding-right: 0px;">
-							<li id="cloudstoragename" class="mui-table-view-cell mui-media cloud-font" style="width: 16%;">
+							<li id="cloudstoragename" class="mui-table-view-cell mui-media cloud-font" style="width: 16%;border-right: 1px solid #d9d9d9;padding-top: 10px;padding-bottom: 10px;">
 								云<br/>盘
 							</li>
-							<li class="mui-table-view-cell mui-media" style="padding: 0px;margin: 0;width:84%;border-left: 1px solid #d9d9d9;">
+							<li class="mui-table-view-cell mui-media" style="padding: 0px;margin: 0;width:84%;">
 								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 80px;padding-left: 5px;padding-right: 5px;">
 									<div id="cloudstorage_0" class="mui-scroll">
 										<!--<a class="mui-control-item"style="width: 61px;">
@@ -209,10 +211,10 @@
 						</ul>
 						<!--家校互动-->
 						<ul id="cloudrecord" class="mui-table-view mui-grid-view">
-							<li class="mui-table-view-cell mui-media cloud-font" style="width: 16%;">
+							<li class="mui-table-view-cell mui-media cloud-font" style="width: 16%;border-right: 1px solid #d9d9d9;padding-top: 10px;padding-bottom: 10px;">
 								家<br />校<br />互<br />动
 							</li>
-							<li class="mui-table-view-cell mui-media" style="padding: 0px;margin: 0;width:84%;border-left: 1px solid #d9d9d9;">
+							<li class="mui-table-view-cell mui-media" style="padding: 0px;margin: 0;width:84%;">
 								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 80px;padding-left: 5px;padding-right: 5px;">
 									<div id="cloudrecord_0" class="mui-scroll">
 									</div>
@@ -231,10 +233,10 @@
 						</ul>
 						<!--云应用-->
 						<ul id="cloudapps" class="mui-table-view mui-grid-view">
-							<li class="mui-table-view-cell mui-media cloud-font" style="width: 16%;">
+							<li class="mui-table-view-cell mui-media cloud-font" style="width: 16%;border-right: 1px solid #d9d9d9;padding-top: 10px;padding-bottom: 10px;">
 								应<br/>用
 							</li>
-							<li class="mui-table-view-cell mui-media" style="padding: 0px;margin: 0;width:84%;border-left: 1px solid #d9d9d9;">
+							<li class="mui-table-view-cell mui-media" style="padding: 0px;margin: 0;width:84%;">
 								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 80px;padding-left: 5px;padding-right: 5px;">
 									<div id="cloudapps_0" class="mui-scroll">
 									</div>
@@ -278,6 +280,8 @@
 
 				//屏幕宽度
 				var screenWidth = plus.screen.resolutionWidth;
+				//webview高度
+				var webHeight = plus.screen.resolutionHeight;
 				//console.log('screenWidth:' + screenWidth);
 				//左侧文字宽度
 				var nameWidth = document.getElementById("cloudstoragename").offsetWidth;
