@@ -10,11 +10,13 @@ mui('.mui-scroll-wrapper').scroll();
 mui.plusReady(function() {
 	initNativeObjects();
 	addReplyView();
-	addReplyLisetner()
-		// 获取当前窗口对象
+	addReplyLisetner();
+	addSomeEvent();
+	// 获取当前窗口对象
 	var self = plus.webview.currentWebview();
 	h5fresh.addRefresh(function() {
-
+		pageIndex = 1;
+		requestData();
 	})
 	window.addEventListener('cityInfo', function(e) {
 		showCity = e.detail;
@@ -24,6 +26,9 @@ mui.plusReady(function() {
 		requestData();
 	})
 
+});
+
+function addSomeEvent() {
 	var click = []; //记录被点击的li的id和被点击元素
 	mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
 		click.push('头像');
@@ -160,8 +165,7 @@ mui.plusReady(function() {
 		click.push('评论者：' + this.innerText);
 	});
 	slide_selector.addSwipeListener();
-});
-
+}
 /**
  * 请求数据
  */
@@ -255,11 +259,11 @@ var rechargeData = function(data, personsData) {
 				//遍历点赞的人
 				for(var item2 in data[i].LikeUsers) {
 					if(personsData[j].utid == data[i].LikeUsers[item2]) {
-						data[i].LikeUsers[item2] = mui.extend(data[i].LikeUsers[item2],personsData[j])
+						data[i].LikeUsers[item2] = mui.extend(data[i].LikeUsers[item2], personsData[j])
 					}
-					
+
 				}
-			
+
 				if(data[i].Comments.length > 0) {
 					for(var m in data[i].Comments) {
 						if(data[i].Comments[m].UserId == personsData[j].utid) {

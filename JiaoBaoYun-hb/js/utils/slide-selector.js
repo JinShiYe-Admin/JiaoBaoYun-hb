@@ -139,7 +139,6 @@ var slide_selector = (function(mod) {
 		}
 	}
 	mod.addSwipeListener = function() {
-		console.log(44444444444)
 			var parent = plus.webview.currentWebview().parent();
 			// 左滑事件
 			document.addEventListener("swipeleft", function(event) {
