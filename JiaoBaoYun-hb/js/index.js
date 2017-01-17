@@ -43,7 +43,6 @@ mui.plusReady(function() {
 			curCity = SECity = e.detail.data;
 			console.log('主界面标题获取的城市信息：' + JSON.stringify(SECity));
 		}
-		setIndicatorShow(parseInt(curCity.index));
 		setShowCity(cityType);
 	});
 	getAboutMe(); //获取与我相关未读数
@@ -292,22 +291,16 @@ mui.plusReady(function() {
 	var getShowCityInner = function(curCity) {
 			var inner = '<p id="current-city" class="current-city">' + curCity.aname + '</p><div class="mine-slider-indicator">';
 			for(var i = 0; i < curCity.totalNo; i++) {
-				if(i == 0) { //第一个
+				if(i==curCity.index){
 					inner += '<div class="mine-indicator mine-active"></div>'
-				} else if(i == curCity.totalNo - 1) { //最后一个
-					inner += '<div class="mine-indicator"></div></div>'
-				} else { //中间的
+				}else{
 					inner += '<div class="mine-indicator"></div>'
+				}
+				if(i==curCity.totalNo - 1){
+					inner+='</div>'	
 				}
 			}
 			return inner;
-		}
-		/**
-		 * 设置点点的显示
-		 */
-	var setIndicatorShow = function(index) {
-			jQuery(".mine-active").className = "mine-indicator";
-			jQuery(".mine-slider-indicator").children().eq(index).className = "mine-indicator mine-active";
 		}
 		//44.获取个人的订制城市
 	function requestUserCity(callback) {
