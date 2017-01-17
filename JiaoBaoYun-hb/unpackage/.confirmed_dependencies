@@ -1966,7 +1966,20 @@
 			"html/qiuzhi/qiuzhi-sub.html",
 			"css/qiuzhi/qiuzhi.css",
 			"js/utils/events.js",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/qiuzhi/qiuzhi-home.js",
+			"js/publicQiuzhiProtocol.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-sub.html"
@@ -1985,10 +1998,22 @@
 			"fonts/iconfont.ttf",
 			"js/storageKeyName.js",
 			"js/publicQiuzhiProtocol.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
-			"html/qiuzhi/qiuzhi-question.html"
+			"html/qiuzhi/qiuzhi-question.html",
+			"html/qiuzhi/qiuzhi-questionSub.html",
+			"html/qiuzhi/qiuzhi-answerDetail.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-question.html": {
@@ -2014,7 +2039,8 @@
 			"js/mui.min.js",
 			"js/utils/events.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"fonts/mui.ttf"
 		]
 	},
 	"html/show/show_home.html": {
@@ -2064,7 +2090,8 @@
 			"image/utils/default_personalimage.png",
 			"js/utils/slide-selector.js",
 			"css/utils/common.css",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/show/show-sub1.html": {
@@ -2137,6 +2164,14 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/qiuzhi/qiuzhi-answerDetail.html": {
+		"resources": [
+			"html/qiuzhi/qiuzhi-answerDetailSub.html"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-answerDetailSub.html"
 		]
 	}
 }

@@ -3,14 +3,16 @@
  */
 mui.init();
 mui.plusReady(function() {
+	window.addEventListener('askId',function(e){
+		console.log('问题详情页面获取的问题id:'+e.detail.data);
+	})
 	//加载刷新
 	events.initRefresh("控件id",
 	function() {//刷新方法
 		
 	}, function() {//加载更多
 		
-	}, curPagNo, 
-	totalPagNo);
+	});
 })
 /**
  * 请求问题

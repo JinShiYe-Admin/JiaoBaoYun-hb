@@ -194,6 +194,7 @@
 						} else {
 							SECity.array = SECity.array.concat(tempArr);
 						}
+						events.fireToPageNone('scienceeducation_home.html','cityInfo',SECity);
 						//刷新界面
 						mui.each(tempArr, function(index, element) {
 							//生成每一项

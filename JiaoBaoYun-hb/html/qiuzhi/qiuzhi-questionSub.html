@@ -9,121 +9,24 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/qiuzhi/qiuzhi-questionSub.css" rel="stylesheet" />
-		<link href="../../css/quan/class_space.css" rel="stylesheet" />
 
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">问题</h1>
-			<a id="publish" class="mui-pull-right">提问</a>
-		</header>
-		<div class="mui-content">
-			<textarea id="askTitle" placeholder="写下你的问题" style="height: 40px;"></textarea>
-			<p style="margin-left: 10px;font-size: 14px;">请添加问题的补充说明</p>
-			<div class="input-content" style="margin-top: 80px;">
-				<textarea id="askNote" placeholder="请输入内容"></textarea>
-				<div id="take_pic" class="take_pic">
-					<a class="mui-icon iconfont icon-xiangji"></a>
-				</div>
-				<div id="take_camero" class="take_camero">
-					<a class="mui-icon iconfont icon-shipin"></a>
-				</div>
-				<div id="get_gallery" class="get_gallery">
-					<a class="mui-icon iconfont icon-xiangce"></a>
-				</div>
-			</div>
+		<!--下拉刷新容器-->
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		  <div class="mui-scroll">
+		    <!--数据列表-->
+		    <ul class="mui-table-view mui-table-view-chevron">
+		      
+		    </ul>
+		  </div>
 		</div>
-
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/utils/camera.js"></script>
-		<script src="../../js/utils/files.js"></script>
-		<script src="../../js/utils/ASFiles.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
-
-		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">
-			events.addTap('take_pic', function() {
-				camera.getPic(camera.getCamera(), function(path) {
-
-				});
-			});
-			events.addTap('take_camero', function() {
-				camera.getVideo(camera.getCamera(), function(path) {
-
-				});
-			});
-			events.addTap('get_gallery', function() {
-				gallery.getMultiplePic(function(paths) {
-
-				});
-			});
-			events.addTap('publish', function() {
-				console.log(1111111)
-				requestAddAsk();
-			});
-
-			//6.新增某个用户提交问题
-			function requestAddAsk() {
-				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
-				var askTitle = document.getElementById("askTitle");
-				var askNote = document.getElementById("askNote");
-				var tempText = Trim(askTitle.value);
-				console.log('textView.value===' + tempText)
-				if(!tempText || tempText == '') {
-					mui.toast('请输入问题');
-					return;
-				} else if(tempText.length > 200) {
-					mui.toast('不能超过200字');
-					return;
-				} else {
-					tempText = replaceAllBL(tempText)
-				}
-				tempText = Trim(askNote.value);
-				console.log('textView.value===' + tempText)
-				if(!tempText || tempText == '') {
-					mui.toast('请输入补充说明');
-					return;
-				} else if(tempText.length > 2000) {
-					mui.toast('不能超过2000字');
-					return;
-				} else {
-					tempText = replaceAllBL(tempText)
-				}
-				//所需参数
-				var comData = {
-					askTitle: askTitle.value, //问题标题,200
-					askNote: askNote.value, //问题说明,2000
-					askChannel: 1, //问题话题
-					askMan: personalUTID, //提问人
-					isAnonym: 0, //是否匿名
-					inviteExperts: '[]' //邀请专家,例如[1,2,3]
-				};
-				// 等待的对话框
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				//6.新增某个用户提交问题
-				postDataQZPro_addAsk(comData, wd, function(data) {
-					wd.close();
-					console.log('6.新增某个用户提交问题:' + JSON.stringify(data));
-					if(data.RspCode == 0) {
-						askTitle.value = '';
-						askNote.value = '';
-
-					} else {
-						mui.toast(data.RspTxt);
-					}
-				});
-			}
-			//去除前后空格
-			function Trim(str) {
-				return str.replace(/(^\s*)|(\s*$)/g, "");
-			}
-		</script>
-		<!--<script src="../../js/qiuzhi/qiuzhi-questionSub.js"></script>-->
+		<script src="../../js/publicQiuzhiProtocol.js"></script>
+		<script src="../../js/qiuzhi/qiuzhi-questionSub.js"></script>
 	</body>
 
 </html>
