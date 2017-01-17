@@ -239,6 +239,10 @@
 									<div id="cloudapps_0" class="mui-scroll">
 									</div>
 								</div>
+								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 80px;padding-left: 5px;padding-right: 5px;">
+									<div id="cloudapps_1" class="mui-scroll">
+									</div>
+								</div>
 							</li>
 						</ul>
 					</div>
@@ -419,7 +423,6 @@
 									studentName: topStudentArr[index].stuname,
 									stuimg: topStudentArr[index].stuimg
 								}
-
 							},
 						});
 					}
@@ -469,7 +472,6 @@
 									}
 								},
 							});
-
 						}
 					}
 				});
@@ -822,12 +824,15 @@
 					if(type == 0) {
 						a.id = 'tarClass' + id_index
 						html1 = html0 + '<img class="cloud-bottom-imge3-bg" src="../../image/cloud/cloud_0_class.png" style="margin-left:' + maxWidth / 2.5 + 'px' + ';"/>';
+						a.innerHTML = html1 + '<img class="cloud-bottom-imge2-bg" src="' + updateHeadImg(data.gimg, 2) + '"/>\
+									   <p class="mui-ellipsis">' + data.gname + '</p>';
 					} else {
 						a.id = 'tarClass1' + id_index
 						html1 = html0 + '<img class="cloud-bottom-imge3-bg" src="../../image/cloud/cloud_0_zone.png" style="margin-left:' + maxWidth / 2.5 + 'px' + ';"/>';
+						a.innerHTML = html1 + '<img class="cloud-bottom-imge2-bg" src="' + updateHeadImg(data.gimg, 2) + '"/>\
+									   <p class="mui-ellipsis">家长(' + data.gname + ')</p>';
 					}
-					a.innerHTML = html1 + '<img class="cloud-bottom-imge2-bg" src="' + updateHeadImg(data.gimg, 2) + '"/>\
-									   <p class="mui-ellipsis">' + data.gname + '</p>';
+
 					a.style.width = maxWidth + 'px';
 					a.style.height = '60px';
 					a.style.marginTop = '10px';
@@ -943,7 +948,7 @@
 							//生成班级界面
 							mui.each(datasource, function(index, element) {
 								//console.log('班级:' + index + '|' + JSON.stringify(element));
-								addcloudrecord_1_0(index,element, 0);
+								addcloudrecord_1_0(index, element, 0);
 							});
 							//生成家校圈界面
 							mui.each(datasource, function(index, element) {

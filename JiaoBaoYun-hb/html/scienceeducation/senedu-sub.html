@@ -169,9 +169,9 @@
 				postDataPro_PostTnews(comData, wd, function(data) {
 					wd.close();
 					console.log('对应区域的分页新闻:' + JSON.stringify(data));
-					//新闻总页数
-					eduSumCount = data.RspData.pg.PageCount;
 					if(data.RspCode == 0) {
+						//新闻总页数
+						eduSumCount = data.RspData.pg.PageCount;
 						eduIndex++;
 						var tempArr = data.RspData.dt;
 						//将返回的新闻遍历
