@@ -34,20 +34,20 @@
 			}
 
 			.cloud-bottom-imge2 {
-				height: 40px !important;
-				width: 40px !important;
+				height: 35px !important;
+				width: 35px !important;
 			}
 
 			.cloud-bottom-imge3 {
-				height: 40px;
-				width: 40px;
+				height: 33px;
+				width: 33px;
 				/*padding: 5px;
 				padding-top: 0px;*/
 			}
 
 			.cloud-bottom-imge2-bg {
-				height: 40px;
-				width: 40px;
+				height: 35px;
+				width: 35px;
 				border-radius: 50%;
 				margin: auto;
 			}
@@ -57,7 +57,7 @@
 				width: 15px;
 				border-radius: 50%;
 				position: absolute;
-				top: 90%;
+				top: 60%;
 			}
 
 			.cloud-bottom-icon {
@@ -107,8 +107,8 @@
 			}
 
 			.cloud-file-icon {
-				font-size: 30px;
-				padding-top: 10px;
+				font-size: 20px;
+				padding-top: 5px;
 			}
 
 			.cloud-iconfont {
@@ -175,7 +175,7 @@
 								云<br/>盘
 							</li>
 							<li class="mui-table-view-cell mui-media" style="padding: 0px;margin: 0;width:84%;">
-								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 80px;padding-left: 5px;padding-right: 5px;">
+								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 75px;padding-left: 5px;padding-right: 5px;">
 									<div id="cloudstorage_0" class="mui-scroll">
 										<!--<a class="mui-control-item"style="width: 61px;">
 												<img class="cloud-bottom-imge2" src="../../image/cloud/note.png" />
@@ -187,7 +187,7 @@
 											</a>-->
 									</div>
 								</div>
-								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 80px;padding-left: 5px;padding-right: 5px;">
+								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 70px;padding-left: 5px;padding-right: 5px;">
 									<div id="cloudstorage_1" class="mui-scroll">
 										<!--<a class="mui-control-item" style="background: red;">
 											<span class="mui-icon iconfont icon-newfolder cloud-file-icon" style="color: #0ABAF5;"></span>
@@ -215,11 +215,11 @@
 								家<br />校<br />互<br />动
 							</li>
 							<li class="mui-table-view-cell mui-media" style="padding: 0px;margin: 0;width:84%;">
-								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 80px;padding-left: 5px;padding-right: 5px;">
+								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 75px;padding-left: 5px;padding-right: 5px;">
 									<div id="cloudrecord_0" class="mui-scroll">
 									</div>
 								</div>
-								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 80px;padding-left: 5px;padding-right: 5px;">
+								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 70px;padding-left: 5px;padding-right: 5px;">
 									<div id="cloudrecord_1" class="mui-scroll">
 										<!--<a class="mui-control-item">
 											<div class="cloud-red-point"></div>
@@ -237,11 +237,11 @@
 								应<br/>用
 							</li>
 							<li class="mui-table-view-cell mui-media" style="padding: 0px;margin: 0;width:84%;">
-								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 80px;padding-left: 5px;padding-right: 5px;">
+								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 75px;padding-left: 5px;padding-right: 5px;">
 									<div id="cloudapps_0" class="mui-scroll">
 									</div>
 								</div>
-								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 80px;padding-left: 5px;padding-right: 5px;">
+								<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 70px;padding-left: 5px;padding-right: 5px;">
 									<div id="cloudapps_1" class="mui-scroll">
 									</div>
 								</div>
@@ -705,8 +705,8 @@
 					}
 					a.innerHTML = html1 + html2;
 					a.style.width = maxWidth + 'px';
-					a.style.height = '80px';
-					a.style.marginTop = '10px';
+					a.style.height = '70px';
+					//a.style.marginTop = '10px';
 					document.getElementById("cloudstorage_1").appendChild(a);
 
 				}
@@ -720,8 +720,8 @@
 					a.className = 'mui-control-item';
 					a.innerHTML = '<img class="cloud-bottom-imge2" src="../../image/cloud/cloud_0_xinjian.png" /><p class="mui-ellipsis">新建文件夹</p>';
 					a.style.width = maxWidth + 'px';
-					a.style.height = '80px';
-					a.style.marginTop = '10px';
+					a.style.height = '70px';
+					a.style.paddingTop = '2px';
 					document.getElementById("cloudstorage_1").appendChild(a);
 				}
 
@@ -839,7 +839,7 @@
 
 					a.style.width = maxWidth + 'px';
 					a.style.height = '60px';
-					a.style.marginTop = '10px';
+//					a.style.paddingTop = '10px';
 					a.setAttribute('type', type);
 					document.getElementById("cloudrecord_1").appendChild(a);
 				}
