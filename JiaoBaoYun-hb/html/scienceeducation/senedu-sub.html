@@ -17,9 +17,10 @@
 			.mui-table-view:after {
 				height: 0px;
 			}
-			/*.mui-content .mui-table-view:first-child {
+
+			.mui-content .mui-table-view:first-child {
 				margin-top: 0px;
-			}*/
+			}
 
 			.mui-table-view-cell:after {
 				right: 15px;
@@ -84,10 +85,16 @@
 					requestCityNews(SECity.acode);
 				});
 				slide_selector.addSwipeListener();
-				SenEduHomeItem.addItemTapListener();
-				document.getElementById('ul_refresh').addEventListener('tap', function() {
-					console.log(this.parentNode.innerHTML);
-				})
+
+				//点击每一项的监听
+				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+					var id = this.getAttribute('id');
+					var turl = this.getAttribute('data-turl');
+					console.log(id + '|' + turl);
+					events.openNewWindowWithData('senedu_show_main.html', {
+						turl: turl
+					});
+				});
 			});
 
 			//加载更多
@@ -180,12 +187,31 @@
 						//判断是加载更多1还是刷新0
 						if(eduFlag == 0) {
 							SECity.array = tempArr;
+							//清空界面
 							document.getElementById("ul_refresh").innerHTML = '';
 						} else {
 							SECity.array = SECity.array.concat(tempArr);
 						}
 						//刷新界面
 						mui.each(tempArr, function(index, element) {
+							//生成每一项
+							var tips = element.tips;
+							var tipsList = tips.split('|');
+							var date = tipsList[0].split(' ')[0]; //日期
+							var time = tipsList[0].split(' ')[1]; //日期
+							var from = tipsList[1].substring(3, tipsList[1].length); //来源
+
+							var dataStr = '';
+							var timeStr = time.substring(0, 5);
+							var mydate = new Date();
+							var today = mydate.getFullYear() + '-' + (mydate.getMonth() + 1) + '-' + mydate.getDate();
+
+							if(today == date) { //今天，显示时间
+								dataStr = timeStr;
+							} else { //显示日期
+								dataStr = date;
+							}
+							element.tips = from + ' | ' + dataStr;
 							SenEduHomeItem.addItem(document.getElementById("ul_refresh"), element);
 						});
 
