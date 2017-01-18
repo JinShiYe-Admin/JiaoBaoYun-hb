@@ -312,6 +312,7 @@ var publicModel = (function($, mod) {
 		TabId:'',//问题表ID
 		AskTitle	:'',//问题标题
 		AskNote:'',//问题说明
+		AskEncAddr:'',//问题附件地址,多个的情况例如：1.jpg|2.jpg
 		AskChannelId	:'',//问题所属话题ID
 		AskChannel:'',//	问题所属话题
 		AskMan:'',//	提问人
@@ -320,6 +321,9 @@ var publicModel = (function($, mod) {
 		AnswerId	:'',//回答ID
 		AnswerContent:'',//回答内容
 		IsLikeNum:'',//回答点赞数
+		AnswerEncAddr:'',//回答附件,多个的情况例如：1.jpg|2.jpg
+		AnswerMan:'',//回答人
+		AnswerTime:'',//回答时间
 		CommentNum:''//回答评论数
 	}
 	
@@ -328,6 +332,7 @@ var publicModel = (function($, mod) {
 		TabId:'',//	问题ID
 		AskTitle:'',//问题标题
 		AskNote:'',//问题说明
+		AskEncAddr:'',//问题附件地址,多个的情况例如：1.jpg|2.jpg
 		AskChannelId:'',//问题所属话题ID
 		AskChannel:'',//	问题所属话题
 		ReadNum:'',//阅读数
@@ -347,6 +352,7 @@ var publicModel = (function($, mod) {
 	mod.model_QZAnswer = {
 		AnswerId	:'',//回答ID
 		AnswerContent:'',//	回答内容
+		AnswerEncAddr:'',//回答附件地址,多个的情况例如：1.jpg|2.jpg
 		AnswerMan:'',//	回答人
 		AnswerTime:'',//	回答时间
 		IsLikeNum:'',//	回答点赞数
@@ -360,6 +366,7 @@ var publicModel = (function($, mod) {
 		AskId:'',//	问题ID
 		AskTitle:'',//	问题标题
 		AnswerContent:'',//	回答内容
+		AnswerEncAddr:'',//回答附件地址,多个的情况例如：1.jpg|2.jpg
 		AnswerMan:'',//	回答人
 		AnswerTime:'',//	回答时间
 		IsLikeNum:'',//	回答点赞数

@@ -75,11 +75,12 @@ var events = (function(mod) {
 	 * @param {Object} subPage 子页面路径
 	 * @param {Object} datas 向子页面加载的数据，可选参数
 	 */
-	mod.initSubPage = function(subPage, datas,height) {
+	mod.initSubPage = function(subPage, datas, height, bottom) {
 		if(!datas) {
 			datas = null;
 		}
-		height=height?height:0;
+		height = height ? height : 0;
+		bottom = bottom ? bottom : 0;
 		mui.init({
 			gestureConfig: {
 				doubletap: true //启用双击监听
@@ -88,8 +89,8 @@ var events = (function(mod) {
 				url: subPage,
 				id: subPage,
 				styles: {
-					top: (localStorage.getItem('StatusHeightNo') * 1 + 45+height) + 'px',
-					bottom: '0px',
+					top: (localStorage.getItem('StatusHeightNo') * 1 + 45 + height) + 'px',
+					bottom: bottom + 'px',
 				},
 				extras: {
 					data: datas
@@ -308,16 +309,16 @@ var events = (function(mod) {
 	mod.shortForDate = function(fullDate) {
 		var arrDate = fullDate.split(":");
 		arrDate.splice(arrDate.length - 1, 1);
-		var noSecond= arrDate.join(':');
-		var arrSecond=noSecond.split('-');
-		if(new Date().getFullYear()==arrSecond[0]){
-			arrSecond.splice(0,1);
+		var noSecond = arrDate.join(':');
+		var arrSecond = noSecond.split('-');
+		if(new Date().getFullYear() == arrSecond[0]) {
+			arrSecond.splice(0, 1);
 		}
 		return arrSecond.join('-');
 	}
-	mod.blurBack=function(blurItemId){
-		var oldBack=mui.back;
-		mui.back=function(){
+	mod.blurBack = function(blurItemId) {
+		var oldBack = mui.back;
+		mui.back = function() {
 			plus.webview.currentWebview().blur();
 			document.getElementById(blurItemId).blur();
 			oldBack();
