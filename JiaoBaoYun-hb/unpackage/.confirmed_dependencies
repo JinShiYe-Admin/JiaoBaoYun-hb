@@ -1218,7 +1218,8 @@
 			"js/publicHomeworkProtocol.js",
 			"html/tab_knowledge.html",
 			"html/cloud/cloud_home.html",
-			"css/utils/slide_navigatian.css"
+			"css/utils/slide_navigatian.css",
+			"html/scienceeducation/scienceeducation_home.html"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",

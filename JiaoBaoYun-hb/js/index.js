@@ -252,6 +252,7 @@ mui.plusReady(function() {
 		//44.获取个人的订制城市
 		postDataPro_PostUTcity(comData, wd, function(data) {
 			wd.close();
+			eduArray=[];
 			console.log('获取个人的订制城市科教频道:' + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				if(data.RspData[0].citys){
@@ -287,12 +288,13 @@ mui.plusReady(function() {
 					//					}
 				}
 				SECity = eduArray[0];
-				events.fireToPageNone('../scienceeducation/scienceeducation_home.html', 'citiesInfo', eduArray);
+				
 				setShowCity(0);
 				console.log('修改后的最终值为:' + JSON.stringify(eduArray));
 				}else{
 					mui.toast('暂无科教频道的定制城市，请选择')
 				}
+				events.fireToPageNone('../scienceeducation/scienceeducation_home.html', 'citiesInfo', eduArray);
 			} else {
 				mui.toast(data.RspTxt);
 			}
@@ -348,6 +350,7 @@ mui.plusReady(function() {
 		//44.获取个人的订制城市
 		postDataPro_PostUTcity(comData, wd, function(data) {
 			wd.close();
+			showArray=[];
 			console.log('获取个人的订制城市展示频道:' + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				if(data.RspData[0].citys) {
@@ -376,12 +379,12 @@ mui.plusReady(function() {
 						showArray.splice(m, 1, model_area);
 					}
 					showCity = showArray[0];
-					events.fireToPageNone('../show/show_home.html', 'citiesInfo', showArray);
 					setShowCity(cityType);
 					console.log('修改后的最终值为:' + JSON.stringify(showArray));
 				}else{
-					mui.toast('暂无订阅展示频道的城市，请订阅！')
+					mui.toast('暂无订阅展示频道的城市，请订阅！');
 				}
+				events.fireToPageNone('../show/show_home.html', 'citiesInfo', showArray);
 			} else {
 				mui.toast(data.RspTxt);
 			}

@@ -1749,7 +1749,8 @@
 					"js/publicHomeworkProtocol.js",
 					"html/tab_knowledge.html",
 					"html/cloud/cloud_home.html",
-					"css/utils/slide_navigatian.css"
+					"css/utils/slide_navigatian.css",
+					"html/scienceeducation/scienceeducation_home.html"
 				],
 				"refer": [
 					"html/mine.html",
@@ -1758,7 +1759,6 @@
 					"html/quan/aboutme.html",
 					"html/index/mine.html",
 					"html/quan/pub-dynamic.html",
-					"html/scienceeducation/scienceeducation_home.html",
 					"html/show/show_home.html",
 					"html/qiuzhi/qiuzhi_home.html"
 				],
