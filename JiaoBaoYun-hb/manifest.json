@@ -2470,7 +2470,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"css/iconfont/iconfont.css",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0

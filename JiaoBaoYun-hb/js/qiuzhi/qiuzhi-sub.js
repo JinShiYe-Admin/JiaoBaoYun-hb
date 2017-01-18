@@ -11,8 +11,8 @@ mui.plusReady(function() {
 		events.preload("qiuzhi-answerDetail.html", 300);
 		window.addEventListener('channelInfo', function(e) {
 				console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
-				pageIndex=1;
-				totalPage=0;
+				pageIndex = 1;
+				totalPage = 0;
 				channelInfo = e.detail.data.curChannel;
 				allChannels = e.detail.data.allChannels;
 				requestChannelList(channelInfo);
@@ -72,7 +72,7 @@ var setChannelList = function(data) {
 		li.className = "mui-table-view-cell";
 		li.innerHTML = getInnerHTML(data[i]);
 		list.appendChild(li);
-		li.querySelector('.answer-content').answerInfo=data[i];
+		li.querySelector('.answer-content').answerInfo = data[i];
 	}
 }
 var getInnerHTML = function(cell) {
@@ -104,6 +104,9 @@ var getChannelIcon = function(cell) {
 				break;
 			case "健康":
 				iconSourse += "channel-health.png";
+				break;
+			case "其他":
+				iconSourse += "channel-others.png";
 				break;
 			default:
 				iconSourse = "";
@@ -140,7 +143,7 @@ var setListener = function() {
 	});
 	mui('.mui-table-view').on('tap', '.answer-content', function() {
 		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', this.answerInfo);
-		console.log('传递的answerInfo:'+JSON.stringify(this.answerInfo));
+		console.log('传递的answerInfo:' + JSON.stringify(this.answerInfo));
 		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
 	});
 }
