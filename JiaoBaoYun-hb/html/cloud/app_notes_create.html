@@ -60,7 +60,9 @@
 							encImg: '', //附件缩略图地址
 							encIntro: '', //附件简介
 							noteType: '1', //信息类型,1云笔记2个人空间
-							userIds: '[]' //推送用户ID
+							userIds: '[]', //推送用户ID
+							pubScopes: '[1]', //1 家校圈 必选,2 展现 可选例如[1,2]
+							pubArea: '' //具体到市级代码
 						};
 						//非0为正确
 						// 等待的对话框
@@ -69,6 +71,7 @@
 							wd.close();
 							console.log('38postDataPro_addUserSpace（用户空间）新增某用户空间信息 （云笔记）.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) {
+								mui.toast('发布成功');
 								events.fireToPageNone('app_notes_sub.html', 'refresh');
 								mui.back();
 							} else {

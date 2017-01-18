@@ -12,14 +12,53 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">问题</h1>
-		    <a class="mui-pull-right">提问</a>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">提问</h1>
+			<a class="mui-icon iconfont icon-ruqun mui-pull-right"></a>
 		</header>
+		<nav class="mui-bar mui-bar-tab" style="background: white;box-shadow: none;padding-top: 6px;">
+			<span class="mui-icon iconfont icon-xie mui-pull-left" style="color: gray;line-height: 34px;padding: 0px;margin-left: 10px;margin-right: 10px;"></span>
+			<div id="tab_div" style="line-height: 34px;border: 1px solid #D9D9D9;margin-left: 50px;margin-right: 10px;padding-left: 25px;color: gray;border-radius: 3px;">
+				<font id="tab_font">请输入问题的答案</font>
+			</div>
+		</nav>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
-			events.initSubPage('qiuzhi-questionSub.html')
+			events.initSubPage('qiuzhi-questionSub.html', '', 0, 51);
+
+			mui.init({
+				gestureConfig: {
+					tap: true,
+					hold: true,
+					release: true
+				}
+			});
+			mui.plusReady(function() {
+				//---点击效果---start---
+				var tab_div = document.getElementById("tab_div");
+				var tab_font = document.getElementById("tab_font");
+				tab_div.addEventListener('tap', function() {
+					console.log('tab_div-tap');
+					tab_div.style.background = '#DDDDDD';
+					tab_font.style.color = 'white';
+					setTimeout(function() {
+						tab_div.style.background = 'white';
+						tab_font.style.color = 'gray';
+					}, 80);
+				});
+				tab_div.addEventListener('hold', function() {
+					console.log('tab_div-hold');
+					tab_div.style.background = '#DDDDDD';
+					tab_font.style.color = 'white';
+				});
+				tab_div.addEventListener('release', function() {
+					console.log('tab_div-release');
+					tab_div.style.background = 'white';
+					tab_font.style.color = 'gray';
+				});
+				//---点击效果---end---
+			});
 		</script>
 	</body>
 
