@@ -1,6 +1,6 @@
 
 var type = 2;
-var answerId;
+var answerInfo;
 events.initRefresh('list-container', function() {
 	requestAnswerDetail(answerId);
 }, function() {
@@ -9,9 +9,9 @@ events.initRefresh('list-container', function() {
 })
 mui.plusReady(function() {
 		window.addEventListener('answerInfo', function(e) {
-			var answerInfo=e.detail.data;
+			answerInfo=e.detail.data;
 			console.log('回答详情获取的答案信息:'+JSON.stringify(answerInfo));
-			answerId = e.detail.data.AnswerId;
+			var answerId = answerInfo.AnswerId;
 			events.clearChild(document.getElementById('list-container'));
 			requestAnswerDetail(answerId);
 		})
@@ -113,7 +113,7 @@ function refreshUI(datasource) {
 	li_person.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(datasource.uimg, 2) + '">' +
 		'<div class="mui-media-body">' +
 		datasource.unick +
-		'<p class="mui-ellipsis">' + '专栏:教育、美食' + '</p>' +
+		'<p class="mui-ellipsis">' +'专栏：'+ answerInfo.AskChannel + '</p>' +
 		'<button class="mui-btn-green mui-pull-right" style="margin-top: -40px;">' + '关注' + '</button>' +
 		'</div>';
 	var li_content = document.createElement("li");
