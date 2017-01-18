@@ -72,9 +72,16 @@
 					SECity = e.detail; //当前显示的科教城市
 					console.log("科教子页面获取的城市信息：" + JSON.stringify(SECity));
 					//获取对应城市新闻
-					if (SECity.array.length == 0) {
+					if(SECity.array.length == 0) {
 						requestCityNews(SECity.acode);
 					}
+
+					//刷新界面
+					document.getElementById("ul_refresh").innerHTML = '';
+					mui.each(SECity.array, function(index, element) {
+						//生成每一项
+						addItem(element);
+					});
 					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 					//					pageIndex = 1;
 					//					requestData();
@@ -194,34 +201,41 @@
 						} else {
 							SECity.array = SECity.array.concat(tempArr);
 						}
-						events.fireToPageNone('scienceeducation_home.html','cityInfo',SECity);
+						events.fireToPageNone('scienceeducation_home.html', 'cityInfo', SECity);
 						//刷新界面
 						mui.each(tempArr, function(index, element) {
 							//生成每一项
-							var tips = element.tips;
-							var tipsList = tips.split('|');
-							var date = tipsList[0].split(' ')[0]; //日期
-							var time = tipsList[0].split(' ')[1]; //日期
-							var from = tipsList[1].substring(3, tipsList[1].length); //来源
-
-							var dataStr = '';
-							var timeStr = time.substring(0, 5);
-							var mydate = new Date();
-							var today = mydate.getFullYear() + '-' + (mydate.getMonth() + 1) + '-' + mydate.getDate();
-
-							if(today == date) { //今天，显示时间
-								dataStr = timeStr;
-							} else { //显示日期
-								dataStr = date;
-							}
-							element.tips = from + ' | ' + dataStr;
-							SenEduHomeItem.addItem(document.getElementById("ul_refresh"), element);
+							addItem(element);
 						});
-
 					} else {
 						mui.toast(data.RspTxt);
 					}
 				});
+			}
+
+			/**
+			 * 添加一条记录
+			 * @param {Object} data
+			 */
+			function addItem(data) {
+				var tips = data.tips;
+				var tipsList = tips.split('|');
+				var date = tipsList[0].split(' ')[0]; //日期
+				var time = tipsList[0].split(' ')[1]; //日期
+				var from = tipsList[1]; //.substring(3, tipsList[1].length); //来源
+
+				var dataStr = '';
+				var timeStr = time.substring(0, 5);
+				var mydate = new Date();
+				var today = mydate.getFullYear() + '-' + (mydate.getMonth() + 1) + '-' + mydate.getDate();
+
+				if(today == date) { //今天，显示时间
+					dataStr = timeStr;
+				} else { //显示日期
+					dataStr = date;
+				}
+				data.tips = from + ' | ' + dataStr;
+				SenEduHomeItem.addItem(document.getElementById("ul_refresh"), data);
 			}
 		</script>
 	</body>

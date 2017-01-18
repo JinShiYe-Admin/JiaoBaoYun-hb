@@ -49,7 +49,7 @@ var SenEduHomeItem = (function(mod) {
 			'<b id="title_' + id + '" style="word-break: break-all;font-size: 20px;">' + data.title + '</b>' +
 			'<div id="from_' + id + '" style="word-break: break-all;margin-top: 5px;">' + data.tips + '</div></div>';
 		element.appendChild(li);
-		var image = document.getElementById("image_1_0_" + id);
+		var image = document.getElementById("image_" + id);
 		var parentNode = image.parentNode;
 		image.style.height = (parentNode.offsetWidth * 0.3 * (2 / 3)) + 'px';
 		image.style.marginTop = (parentNode.offsetHeight - image.offsetHeight) / 2 + 'px';
