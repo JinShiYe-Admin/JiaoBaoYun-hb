@@ -11,6 +11,8 @@ mui.plusReady(function() {
 		events.preload("qiuzhi-answerDetail.html", 300);
 		window.addEventListener('channelInfo', function(e) {
 				console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
+				pageIndex=1;
+				totalPage=0;
 				channelInfo = e.detail.data.curChannel;
 				allChannels = e.detail.data.allChannels;
 				requestChannelList(channelInfo);
@@ -128,6 +130,7 @@ var pullUpFresh = function() {
 	 */
 var setListener = function() {
 	events.addTap('submit-question', function() {
+		console.log(allChannels)
 		events.openNewWindowWithData('qiuzhi-newQ.html', allChannels);
 	});
 	//标题点击事件

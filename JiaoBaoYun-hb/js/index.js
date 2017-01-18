@@ -147,7 +147,6 @@ mui.plusReady(function() {
 				} else {
 					noRead.style.visibility = 'visible';
 					noRead.innerHTML = NoReadCnt;
-
 				}
 			} else {
 				//				mui.toast(data.RspTxt);
