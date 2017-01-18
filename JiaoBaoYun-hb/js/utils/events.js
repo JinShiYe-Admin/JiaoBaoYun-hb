@@ -203,7 +203,7 @@ var events = (function(mod) {
 			//获得目标页面
 			if(!targetPage) {
 				targetPage = plus.webview.getWebviewById(tarPage);
-				console.log(typeof(targetPage))
+//				console.log(typeof(targetPage))
 			}
 			//触发目标页面的listener事件
 			mui.fire(targetPage, listener, {

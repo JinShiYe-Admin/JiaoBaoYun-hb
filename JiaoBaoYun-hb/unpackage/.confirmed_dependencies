@@ -2013,7 +2013,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"image/qiuzhi/channel-edu.png",
-			"image/qiuzhi/channel-health.png"
+			"image/qiuzhi/channel-health.png",
+			"image/qiuzhi/channel-food.png"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-question.html",
@@ -2061,7 +2062,8 @@
 			"css/mui.min.css",
 			"js/main/slide_navigation.js",
 			"js/utils/slide-selector.js",
-			"html/show/show-sub.html"
+			"html/show/show-sub.html",
+			"js/storageKeyName.js"
 		],
 		"refer": [
 			"html/show/show-sub.html",
@@ -2151,7 +2153,9 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/senedu/SenEduHomeItem.js",
-			"js/utils/h5fresh.js"
+			"js/utils/h5fresh.js",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/scienceeducation/senedu_show_main.html"
