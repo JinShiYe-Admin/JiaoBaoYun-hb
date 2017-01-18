@@ -527,7 +527,7 @@ var pullUpFresh = function() {
 				pageIndex++;
 				requestData();
 			} else {
-				mui.toast('到底啦，别拉了！');
+				mui.toast('没有更多了');
 			}
 		}, false);
 	}
