@@ -253,6 +253,8 @@ mui.plusReady(function() {
 					model_area.atype = '1';
 					model_area.index = m;
 					model_area.array = [];
+					model_area.eduIndex = 1;
+					model_area.eduSumCount = 0;
 					model_area.totalNo = eduArray.length;
 					//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
 					eduArray.splice(m, 1, model_area);
