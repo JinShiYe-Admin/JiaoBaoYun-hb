@@ -93,6 +93,8 @@
 					requestCityNews(SECity.acode);
 				});
 				slide_selector.addSwipeListener();
+				
+				pullUpRefresh();
 
 				//点击每一项的监听
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
@@ -111,8 +113,10 @@
 					//					console.log('我在底部pageIndex:' + selectGContainer.classInfo.pageIndex + ',totalPageCount:' + totalPageCount);
 					eduFlag = 1;
 					//判断是否还有更多
-					if(SECity.eduIndex <= SECity.eduSumCount) {
+					if(SECity.eduIndex < SECity.eduSumCount) {
 						requestCityNews();
+					}else{
+						mui.toast('没有更多了');
 					}
 				}, false);
 			}
