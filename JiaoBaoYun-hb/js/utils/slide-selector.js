@@ -47,6 +47,7 @@ var slide_selector = (function(mod) {
 					top: "0px",
 					bottom: "0px"
 				};
+				var isAddedSwipe=true;
 				// 创建子页面
 				for(var i = 0; i < 2&&i<cities.length; i++) {
 					// 创建窗口对象
@@ -55,14 +56,16 @@ var slide_selector = (function(mod) {
 						subWv = plus.webview.create(subPage, subPage + i, subStyles, {
 							index: i
 						});
+						isAddedSwipe=false;
 					}
 					if(i > 0) {
-							subWv.hide("none");
+						subWv.hide("none");
 					}
 					// 窗口对象添加至数组
 					mod.pages.push(subWv);
 					self.append(subWv);
 				}
+				
 				curCity = thisCities[0];
 				console.log("当前的城市为：" + curCity.aname + ",当前的pageId为：" + mod.pages[0].id);
 				var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -70,9 +73,9 @@ var slide_selector = (function(mod) {
 					mui.fire(mod.pages[0], 'cityInfo', curCity);
 					wd.close();
 				}, 2000)
-				if(cities.length>1){
+				if(!isAddedSwipe&&cities.length>1){
 					addSwipe();
-				}
+				}	
 			}else{
 				curCity=null;
 				self.hide();
