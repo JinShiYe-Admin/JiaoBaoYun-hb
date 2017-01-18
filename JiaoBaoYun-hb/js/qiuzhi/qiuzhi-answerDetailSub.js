@@ -1,13 +1,17 @@
 
 var type = 2;
+var pageIndex=1;
+var totalPage= 0;
 var answerInfo;
 events.initRefresh('list-container', function() {
-	requestAnswerDetail(answerId);
+	pageIndex=1;
+	requestAnswerDetail(answerInfo.AnswerId);
 }, function() {
 	mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
 
 })
 mui.plusReady(function() {
+	pullUpFresh();
 		window.addEventListener('answerInfo', function(e) {
 			answerInfo=e.detail.data;
 			console.log('回答详情获取的答案信息:'+JSON.stringify(answerInfo));
@@ -24,8 +28,8 @@ function requestAnswerDetail(answerId) {
 	var comData = {
 		answerId: answerId, //回答ID
 		orderType: type, //评论排序方式,1 时间正序排序,2 时间倒序排序
-		pageIndex: '1', //当前页数
-		pageSize: '0' //每页记录数,传入0，获取总记录数
+		pageIndex: pageIndex, //当前页数
+		pageSize: '10' //每页记录数,传入0，获取总记录数
 	};
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -35,6 +39,7 @@ function requestAnswerDetail(answerId) {
 		console.log('8.获取某个回答的详情:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			var datasource = data.RspData;
+			totalPage = datasource.TotalPage;
 			getInfos(datasource);
 
 		} else {
@@ -105,6 +110,9 @@ var rechargeInfos = function(datasource, infos) {
 function refreshUI(datasource) {
 	console.log('重组后的答案详情信息：' + JSON.stringify(datasource));
 	var ul = document.getElementById('list-container');
+	if(pageIndex ==1){
+		ul.innerHTML = '';
+	}
 	var li_title = document.createElement("li");
 	li_title.className = 'mui-table-view-cell mui-media';
 	li_title.innerHTML = datasource.AskTitle;
@@ -155,7 +163,7 @@ var addComment = function(commentValue) {
 	var pId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataQZPro_addAnswerComment({
-		answerId: answerId, //回答ID
+		answerId: answerInfo.AnswerId, //回答ID
 		upperId: 0, //上级评论ID,第一个评论传0，其他的传最上层的ID
 		userId: pId, //评论用户ID,
 		commentContent: commentValue, //评论内容
@@ -182,3 +190,14 @@ var setListeners = function() {
 		}
 	})
 }
+var pullUpFresh = function() {
+		document.addEventListener("plusscrollbottom", function() {
+			console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
+			if(pageIndex < totalPage) {
+				pageIndex++;
+				requestAnswerDetail(answerInfo.AnswerId);
+			} else {
+				mui.toast('到底啦，别拉了！');
+			}
+		}, false);
+	}
