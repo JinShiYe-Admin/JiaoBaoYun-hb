@@ -118,7 +118,8 @@
 			"html/cloud/storage_upload.html",
 			"html/cloud/app_notes_main.html",
 			"html/cloud/record_student_main.html",
-			"html/cloud/storage_upload_choose.html"
+			"html/cloud/storage_upload_choose.html",
+			"html/quan/parentZone.html"
 		]
 	},
 	"html/quan/tab-zone.html": {
@@ -2128,7 +2129,8 @@
 			"html/scienceeducation/senedu-sub.html"
 		],
 		"refer": [
-			"html/scienceeducation/senedu-sub.html"
+			"html/scienceeducation/senedu-sub.html",
+			"html/utils/customizeCity.html"
 		]
 	},
 	"html/scienceeducation/senedu-sub.html": {
@@ -2148,7 +2150,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/senedu/SenEduHomeItem.js"
+			"js/senedu/SenEduHomeItem.js",
+			"js/utils/h5fresh.js"
 		],
 		"refer": [
 			"html/scienceeducation/senedu_show_main.html"
@@ -2221,6 +2224,19 @@
 		"resources": [
 			"js/utils/ASFiles.js",
 			"css/quan/class_space.css"
+		]
+	},
+	"html/quan/parentZone-sub.html": {
+		"resources": [
+			"css/home/zone.css"
+		]
+	},
+	"html/quan/parentZone.html": {
+		"resources": [
+			"html/quan/parentZone-sub.html"
+		],
+		"refer": [
+			"html/quan/parentZone-sub.html"
 		]
 	}
 }

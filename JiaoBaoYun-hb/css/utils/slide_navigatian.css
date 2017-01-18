@@ -2,8 +2,7 @@
 .mine-slider-indicator {
 	position: absolute;
 	bottom: 0px;
-	left: 40%;
-	width: 20%;
+	width: 100%;
 	text-align: center;
 	background: 0 0
 }
