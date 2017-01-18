@@ -105,13 +105,19 @@
 
 .icon-dongtai1:before { content: "\e671"; }
 
+.icon-liulan:before { content: "\e635"; }
+
 .icon-liaotian1:before { content: "\e601"; }
+
+.icon-31guanzhu1xuanzhong:before { content: "\e657"; }
 
 .icon-imge:before { content: "\e650"; }
 
 .icon-xinxiaoxi:before { content: "\e673"; }
 
 .icon-tingzhi:before { content: "\e62f"; }
+
+.icon-fasong:before { content: "\e636"; }
 
 .icon-wenda1:before { content: "\e66d"; }
 
@@ -176,6 +182,8 @@
 .icon-huaxue:before { content: "\e618"; }
 
 .icon-shuxue:before { content: "\e61a"; }
+
+.icon-qita1:before { content: "\e67d"; }
 
 .icon-xiangji:before { content: "\e60c"; }
 
