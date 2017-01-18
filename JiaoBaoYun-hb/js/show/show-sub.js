@@ -1,6 +1,7 @@
 var personalUTID;
 var showCity;
-var pageIndex;
+var pageIndex=1;
+var totalPage=0;
 var id = 0; //cell的id
 var pageFlag = 1;
 mui.init();
@@ -12,6 +13,7 @@ mui.plusReady(function() {
 	addReplyView();
 	addReplyLisetner();
 	addSomeEvent();
+	pullUpFresh()
 	// 获取当前窗口对象
 	var self = plus.webview.currentWebview();
 	h5fresh.addRefresh(function() {
@@ -183,6 +185,7 @@ var requestData = function() {
 			wd.close();
 			console.log('展示获取的数据：' + JSON.stringify(data));
 			if(data.RspCode == 0 && data.RspData.Data.length > 0) {
+				totalPage = data.RspData.TotalPage
 				getPersonIds(data.RspData.Data);
 			} else {
 
@@ -514,3 +517,17 @@ function inputOnblur(input) {
 	document.getElementById('footer').className = '';
 	document.getElementById('footer').style.display = 'none';
 }
+	/**
+	 * 上拉加载的实现方法
+	 */
+var pullUpFresh = function() {
+		document.addEventListener("plusscrollbottom", function() {
+			console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
+			if(pageIndex < totalPage) {
+				pageIndex++;
+				requestData();
+			} else {
+				mui.toast('到底啦，别拉了！');
+			}
+		}, false);
+	}
