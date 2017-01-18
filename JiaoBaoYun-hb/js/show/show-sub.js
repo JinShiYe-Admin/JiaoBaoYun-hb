@@ -1,7 +1,7 @@
 var personalUTID;
 var showCity;
-var pageIndex=1;
-var totalPage=0;
+var pageIndex = 1;
+var totalPage = 0;
 var id = 0; //cell的id
 var pageFlag = 1;
 mui.init();
@@ -14,7 +14,7 @@ mui.plusReady(function() {
 	addReplyLisetner();
 	addSomeEvent();
 	pullUpFresh()
-	// 获取当前窗口对象
+		// 获取当前窗口对象
 	var self = plus.webview.currentWebview();
 	h5fresh.addRefresh(function() {
 		pageIndex = 1;
@@ -188,7 +188,8 @@ var requestData = function() {
 				totalPage = data.RspData.TotalPage
 				getPersonIds(data.RspData.Data);
 			} else {
-
+				var table = document.body.querySelector('.mui-table-view');
+				table.innerHTML = ''
 			}
 		})
 	}
@@ -517,17 +518,17 @@ function inputOnblur(input) {
 	document.getElementById('footer').className = '';
 	document.getElementById('footer').style.display = 'none';
 }
-	/**
-	 * 上拉加载的实现方法
-	 */
+/**
+ * 上拉加载的实现方法
+ */
 var pullUpFresh = function() {
-		document.addEventListener("plusscrollbottom", function() {
-			console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
-			if(pageIndex < totalPage) {
-				pageIndex++;
-				requestData();
-			} else {
-				mui.toast('没有更多了');
-			}
-		}, false);
-	}
+	document.addEventListener("plusscrollbottom", function() {
+		console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
+		if(pageIndex < totalPage) {
+			pageIndex++;
+			requestData();
+		} else {
+			mui.toast('没有更多了');
+		}
+	}, false);
+}
