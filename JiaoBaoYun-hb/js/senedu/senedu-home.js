@@ -14,15 +14,12 @@ mui.plusReady(function() {
 	window.addEventListener('tapTitleLeft', function() {
 		events.openNewWindowWithData('../utils/customizeCity.html', {
 			id: '0', //0科教，1展现
-			webid: '../scienceeducation/scienceeducation_home.html', //当前webview的id
+			webid: '../index/index.html', //当前webview的id
 			cities: cities //已经定制的城市数组
 		});
 	});
 
-	//退出订制城市界面返回的数据
-	window.addEventListener('customizeCity', function(e) {
-		cities = e.detail.data;
-	});
+	
 
 	//---订制城市---end---
 });

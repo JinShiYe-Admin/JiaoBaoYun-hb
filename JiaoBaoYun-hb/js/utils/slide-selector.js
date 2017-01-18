@@ -32,7 +32,6 @@ var slide_selector = (function(mod) {
 			document.querySelector('.mui-content').appendChild(fragment);
 		}
 	}
-
 	/**
 	 * 获取不同的页面
 	 * @param {Object} pagePath 要加载的html路径
@@ -40,38 +39,44 @@ var slide_selector = (function(mod) {
 	mod.getPages = function(cities, subPage) {
 			thisCities = cities;
 			self = plus.webview.currentWebview();
-			mod.pages = [];
-			// 子窗口样式
-			var subStyles = {
-				top: "0px",
-				bottom: "0px"
-			};
-			// 创建子页面
-			for(var i = 0; i < 2; i++) {
-				/**
-				 * 创建窗口对象
-				 */
-				var subWv = plus.webview.getWebviewById(subPage + i);
-				if(!subWv) {
-					subWv = plus.webview.create(subPage, subPage + i, subStyles, {
-						index: i
-					});
-					if(i > 0) {
-						subWv.hide("none");
+			if(cities.length > 0) {
+				self.show();
+				mod.pages = [];
+				// 子窗口样式
+				var subStyles = {
+					top: "0px",
+					bottom: "0px"
+				};
+				// 创建子页面
+				for(var i = 0; i < 2&&i<cities.length; i++) {
+					// 创建窗口对象
+					var subWv = plus.webview.getWebviewById(subPage + i);
+					if(!subWv) {
+						subWv = plus.webview.create(subPage, subPage + i, subStyles, {
+							index: i
+						});
 					}
+					if(i > 0) {
+							subWv.hide("none");
+					}
+					// 窗口对象添加至数组
+					mod.pages.push(subWv);
+					self.append(subWv);
 				}
-				// 窗口对象添加至数组
-				mod.pages.push(subWv);
-
-				self.append(subWv);
+				curCity = thisCities[0];
+				console.log("当前的城市为：" + curCity.aname + ",当前的pageId为：" + mod.pages[0].id);
+				var wd=plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				setTimeout(function() {
+					mui.fire(mod.pages[0], 'cityInfo', curCity);
+					wd.close();
+				}, 2000)
+				if(cities.length>1){
+					addSwipe();
+				}
+			}else{
+				curCity=null;
+				self.hide();
 			}
-			curCity = thisCities[0];
-			console.log("当前的城市为：" + curCity.aname + ",当前的pageId为：" + mod.pages[0].id);
-			setTimeout(function() {
-				mui.fire(mod.pages[0], 'cityInfo', curCity);
-			}, 2000)
-
-			addSwipe();
 		}
 		/**
 		 * 加载左滑、右滑事件
@@ -124,13 +129,13 @@ var slide_selector = (function(mod) {
 		}
 	}
 	var sendPageChanged = function() {
-			getCurrentCity();
-			events.fireToPageNone('../index/index.html', 'showCity', curCity)
-		}
+		getCurrentCity();
+		events.fireToPageNone('../index/index.html', 'showCity', curCity)
+	}
 
-		/**
-		 * 获取当前城市
-		 */
+	/**
+	 * 获取当前城市
+	 */
 	var getCurrentCity = function() {
 		if(citiesIndex >= 0) {
 			curCity = thisCities[citiesIndex % thisCities.length];
@@ -173,9 +178,7 @@ var slide_selector = (function(mod) {
 		 * @param {String} direction 方向
 		 */
 	function parentEvent(wvobj, direction) {
-		/**
-		 * 触发自定义事件
-		 */
+		//传值
 		mui.fire(wvobj, "swipe_event", {
 			direction: direction
 		});
