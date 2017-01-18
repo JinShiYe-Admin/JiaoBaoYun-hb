@@ -343,7 +343,7 @@ var publicModel = (function($, mod) {
 		IsAnonym	:'',//是否匿名
 		TotalPage:'',//评论总页数
 		TotalCnt:'',//评论总记录数,用于分页，结果应该与AnswerNum相同
-		Answers:'',//	回答列表,Array[model_QZAnswer]
+		Data:'',//	回答列表,Array[model_QZAnswer]
 		
 		AskId:''//问题ID
 	}
@@ -373,7 +373,7 @@ var publicModel = (function($, mod) {
 		CommentNum:'',//	回答评论数
 		TotalPage:'',//	评论总页数
 		TotalCnt	:'',//评论总记录数,用于分页，结果应该与CommentNum相同
-		Comments	:''//评论列表,Array[model_QZComment]
+		Data	:''//评论列表,Array[model_QZComment]
 	}
 	
 	//回答详情--求知

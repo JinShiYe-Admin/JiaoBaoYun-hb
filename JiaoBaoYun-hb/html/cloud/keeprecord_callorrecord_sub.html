@@ -107,89 +107,8 @@
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<!--<ul class="mui-table-view" id="ul_table">
-					<div style="width: 100%;">
-						<div class="mui-row">
-							<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
-								<span class="mui-icon iconfont icon-date" style="color: deepskyblue;margin-right: 10px;"></span>
-								<font style="margin-right: 10px;">时间</font>
-							</div>
-							<div class="mui-col-sm-8 mui-col-xs-8" style="line-height: 36px;">
-								<font id="time" style="color: #AAAAAA;">2016年11月18日11:31</font>
-							</div>
-							<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
-								<span class="mui-icon iconfont icon-xie" style="color: #86BE49;margin-right: 10px;"></span>
-								<font style="margin-right: 10px;">类型</font>
-							</div>
-							<div class="mui-col-sm-3 mui-col-xs-3" value="1">
-								<div class="mui-input-row mui-checkbox mui-left">
-									<label>点到</label>
-									<input id="cb_1" name="checkbox" type="checkbox" checked="true">
-								</div>
-							</div>
-							<div class="mui-col-sm-3 mui-col-xs-3" value="2">
-								<div class="mui-input-row mui-checkbox mui-left">
-									<label>记事</label>
-									<input id="cb_2" name="checkbox" type="checkbox">
-								</div>
-							</div>
-						</div>
-						<div id="call" style="display: inline;" value="0">
-							<div class="call-type" value="1">
-								<div class="mui-input-row mui-checkbox mui-left">
-									<label>正常</label>
-									<input id="cb_call1" name="checkbox" type="checkbox" checked>
-								</div>
-							</div>
-							<div class="call-type" value="2" style="margin-left: 20%;">
-								<div class="mui-input-row mui-checkbox mui-left">
-									<label>旷课</label>
-									<input id="cb_call2" name="checkbox" type="checkbox">
-								</div>
-							</div>
-							<div class="call-type" value="3">
-								<div class="mui-input-row mui-checkbox mui-left">
-									<label>迟到</label>
-									<input id="cb_call3" name="checkbox" type="checkbox">
-								</div>
-							</div>
-							<div class="call-type" value="4">
-								<div class="mui-input-row mui-checkbox mui-left">
-									<label>早退</label>
-									<input id="cb_call4" name="checkbox" type="checkbox">
-								</div>
-							</div>
-							<div class="call-type" value="5">
-								<div class="mui-input-row mui-checkbox mui-left">
-									<label>其他</label>
-									<input id="cb_call5" name="checkbox" type="checkbox">
-								</div>
-							</div>
-							<div class="mui-input-row" style="margin: 0px 5px;" style="">
-								<textarea id="textarea_call" maxlength="500" rows="4" placeholder="点到："></textarea>
-							</div>
-						</div>
-						<div id="record" style="display: none;">
-							<div class="mui-input-row" style="margin: 0px 5px;">
-								<textarea id="textarea_record" maxlength="500" rows="4" placeholder="记事："></textarea>
-							</div>
-						</div>
-					</div>
-				</ul>-->
 				<ul class="mui-table-view" id="ul_table">
 					<div id="top">
-						<!--<li class="mui-table-view-cell mui-media ">
-							<div class="time">2017-1-10 14:19:56</div>
-							<div class="mui-media-body" style="margin-top: 10px;">
-								能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？
-							</div>
-						</li>
-						<li class="mui-table-view-cell mui-media ">
-							<div class="time">2017-1-10 14:19:56</div>
-							<div class="mui-media-body" style="margin-top: 10px;">
-								能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？
-							</div>
-						</li>-->
 					</div>
 					<div id="call" style="width: 100%;background: white;padding-top: 8px;">
 						<div id="calltype" style="width: 100%;height: 36px;">
@@ -247,21 +166,12 @@
 			var subData = null; //接收页面传入的参数值
 			var NotesList = null; //记录获取的数据
 			mui.plusReady(function() {
-				//				mui('.mui-scroll-wrapper').scroll({
-				//					scrollY: true, //是否竖向滚动
-				//					scrollX: false, //是否横向滚动
-				//					indicators: true, //是否显示滚动条
-				//				});
 				//---从父页面获取数据---start---
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				subData = main.data; //接收页面传入的参数值
 				console.log('从父页面获取的数据:' + JSON.stringify(subData));
 				//---从父页面获取数据---end---
-				var top = document.getElementById("top");
-				//var checkbox_1 = document.getElementById("cb_1"); //点到checkbox元素
-				//var checkbox_2 = document.getElementById("cb_2"); //记事checkbox元素
-				//var div_call = document.getElementById("call"); //点到区域
-				//var div_record = document.getElementById("record"); //记事区域
+
 				var call_type = ''; //记录最后点击的点到类型
 				var call_input = ''; //记录点到的备注
 				var commit = false; //是否允许提交
@@ -479,83 +389,83 @@
 						wd.close();
 					});
 				}
-
-				/**
-				 * 获取用户针对某学生的点到记事列表
-				 * @param {Object} pageIndex 当前页数
-				 * @param {Object} pageSize 每页记录数
-				 */
-				function getNotes(pageIndex, pageSize) {
-					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-					var userId = personalUTID; //发布教师ID
-					//4.（点到记事）获取用户针对某学生的点到记事列表
-					//所需参数
-					var comData = {
-						userId: userId, //用户ID----utid
-						studentId: subData.stuid, //学生ID----stuid
-						classId: subData.gid, //班级ID
-						pageIndex: pageIndex, //当前页数
-						pageSize: pageSize, //每页记录数
-						publisherId: userId //发布者ID,0代表全部
-					};
-					//返回model：model_homeSchoolList,model_userNoteInfo
-					//console.log('发送获取记事列表请求的数据:' + JSON.stringify(comData));
-					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-					postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
-						console.log('4.取记事列表:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-						if(data.RspCode == 0) {
-							TotalPage++;
-							if(pageIndex == 1) { //获取第一页的内容
-								top.innerHTML = '';
-								//滚动到底部
-								mui.scrollTo(document.body.scrollHeight, 100);
-							}
-							if(NotesList == null) {
-								NotesList == [];
-								NotesList = data.RspData;
-								//TotalPage = data.RspData.TotalPage; //总页数
-								TotalCnt = data.RspData.TotalCnt; //总记录数
-							}
-							mui.each(data.RspData.Data, function(index, item) {
-								NotesList.Data.push(item);
-								//console.log(index + '|' + JSON.stringify(item));
-								createNotes(item);
-							});
-							if(data.RspData.Data.length == 0) {
-								if(NotesList.length != 0) {
-									mui.toast('没有更多了');
-									TotalPage--;
-								} else {
-									mui.toast('无记录');
-								}
-							}
-						} else {
-							mui.toast('获取点到记事列表:' + data.RspTxt);
-							console.log('获取用户针对某学生的点到记事列表:' + data.RspTxt);
-						}
-						//mui('.mui-scroll-wrapper').scroll().scrollToBottom(100); //滚动到底部-----有BUG
-						wd.close();
-					});
-				}
-
-				/**
-				 * 界面中创建一条记录
-				 * @param {Object} data
-				 */
-				function createNotes(data) {
-					//console.log('createNotes:' + JSON.stringify(data));
-					var li = document.createElement('li');
-					li.className = 'mui-table-view-cell';
-					var type = '';
-					if(data.NoteType == 1) {
-						type = data.CheckTypeStr + ' : ';
-					}
-					li.innerHTML = '<div class="time">' + data.PublishDate + '</div>\
-								<div class="mui-media-body" style="word-break:break-all;">' + type + data.MsgContent + '</div>';
-					top.insertBefore(li, top.firstChild);
-				}
 			});
+
+			/**
+			 * 界面中创建一条记录
+			 * @param {Object} data
+			 */
+			function createNotes(data) {
+				//console.log('createNotes:' + JSON.stringify(data));
+				var li = document.createElement('li');
+				li.className = 'mui-table-view-cell';
+				var type = '';
+				if(data.NoteType == 1) {
+					type = data.CheckTypeStr + ' : ';
+				}
+				li.innerHTML = '<div class="time">' + data.PublishDate + '</div>\
+								<div class="mui-media-body" style="word-break:break-all;">' + type + data.MsgContent + '</div>';
+				document.getElementById("top").insertBefore(li, document.getElementById("top").firstChild);
+			}
+
+			/**
+			 * 获取用户针对某学生的点到记事列表
+			 * @param {Object} pageIndex 当前页数
+			 * @param {Object} pageSize 每页记录数
+			 */
+			function getNotes(pageIndex, pageSize) {
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				var userId = personalUTID; //发布教师ID
+				//4.（点到记事）获取用户针对某学生的点到记事列表
+				//所需参数
+				var comData = {
+					userId: userId, //用户ID----utid
+					studentId: subData.stuid, //学生ID----stuid
+					classId: subData.gid, //班级ID
+					pageIndex: pageIndex, //当前页数
+					pageSize: pageSize, //每页记录数
+					publisherId: userId //发布者ID,0代表全部
+				};
+				//返回model：model_homeSchoolList,model_userNoteInfo
+				//console.log('发送获取记事列表请求的数据:' + JSON.stringify(comData));
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
+					console.log('4.取记事列表:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						TotalPage++;
+						if(pageIndex == 1) { //获取第一页的内容
+							document.getElementById("top").innerHTML = '';
+							//滚动到底部
+							mui.scrollTo(document.body.scrollHeight, 100);
+						}
+						if(NotesList == null) {
+							NotesList == [];
+							NotesList = data.RspData;
+							//TotalPage = data.RspData.TotalPage; //总页数
+							TotalCnt = data.RspData.TotalCnt; //总记录数
+						}
+						mui.each(data.RspData.Data, function(index, item) {
+							NotesList.Data.push(item);
+							//console.log(index + '|' + JSON.stringify(item));
+							createNotes(item);
+						});
+						if(data.RspData.Data.length == 0) {
+							if(NotesList.length != 0) {
+								mui.toast('没有更多了');
+								TotalPage--;
+							} else {
+								mui.toast('无记录');
+							}
+						}
+					} else {
+						mui.toast('获取点到记事列表:' + data.RspTxt);
+						console.log('获取用户针对某学生的点到记事列表:' + data.RspTxt);
+					}
+					//mui('.mui-scroll-wrapper').scroll().scrollToBottom(100); //滚动到底部-----有BUG
+					wd.close();
+				});
+			}
 		</script>
 	</body>
 

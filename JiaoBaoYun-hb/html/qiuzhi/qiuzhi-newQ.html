@@ -151,6 +151,7 @@
 					wd.close();
 					console.log('6.新增某个用户提交问题:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
+						mui.toast('发布成功')
 						askTitle.value = '';
 						askNote.value = '';
 

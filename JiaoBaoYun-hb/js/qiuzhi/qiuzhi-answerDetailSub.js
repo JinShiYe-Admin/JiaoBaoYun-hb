@@ -1,17 +1,17 @@
 
 var type = 2;
-var answerId;
+var answerInfo;
 events.initRefresh('list-container', function() {
-	requestAnswerDetail(answerId);
+	requestAnswerDetail(answerInfo.AnswerId);
 }, function() {
 	mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
 
 })
 mui.plusReady(function() {
 		window.addEventListener('answerInfo', function(e) {
-			var answerInfo=e.detail.data;
+			answerInfo=e.detail.data;
 			console.log('回答详情获取的答案信息:'+JSON.stringify(answerInfo));
-			answerId = e.detail.data.AnswerId;
+			var answerId = answerInfo.AnswerId;
 			events.clearChild(document.getElementById('list-container'));
 			requestAnswerDetail(answerId);
 		})
@@ -25,7 +25,7 @@ function requestAnswerDetail(answerId) {
 		answerId: answerId, //回答ID
 		orderType: type, //评论排序方式,1 时间正序排序,2 时间倒序排序
 		pageIndex: '1', //当前页数
-		pageSize: '0' //每页记录数,传入0，获取总记录数
+		pageSize: '10' //每页记录数,传入0，获取总记录数
 	};
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -113,7 +113,7 @@ function refreshUI(datasource) {
 	li_person.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(datasource.uimg, 2) + '">' +
 		'<div class="mui-media-body">' +
 		datasource.unick +
-		'<p class="mui-ellipsis">' + '专栏:教育、美食' + '</p>' +
+		'<p class="mui-ellipsis">' +'专栏：'+ answerInfo.AskChannel + '</p>' +
 		'<button class="mui-btn-green mui-pull-right" style="margin-top: -40px;">' + '关注' + '</button>' +
 		'</div>';
 	var li_content = document.createElement("li");
@@ -155,7 +155,7 @@ var addComment = function(commentValue) {
 	var pId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataQZPro_addAnswerComment({
-		answerId: answerId, //回答ID
+		answerId: answerInfo.AnswerId, //回答ID
 		upperId: 0, //上级评论ID,第一个评论传0，其他的传最上层的ID
 		userId: pId, //评论用户ID,
 		commentContent: commentValue, //评论内容

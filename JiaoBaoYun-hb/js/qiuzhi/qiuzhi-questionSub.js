@@ -2,6 +2,21 @@
  * 问题界面逻辑
  */
 mui.init();
+//问题id
+var askID = 0;
+//取数据的默认排序
+var askOrderType = 2;
+//获取的第几页回复
+var answerIndex = 1;
+//答案回复的总页数
+var answerPageCount = 0;
+//回复数组,切换排序方式后，清空数组
+var answerArray = [];
+//刷新0，还是加载更多1
+var answerFlag = 0;
+//当前问题的详情model
+var askModel;
+
 mui.plusReady(function() {
 	//---滑动start---
 	mui(".mui-scroll-wrapper").scroll({
@@ -15,15 +30,26 @@ mui.plusReady(function() {
 
 	window.addEventListener('askId', function(e) {
 		console.log('问题详情页面获取的问题id:' + e.detail.data);
+		askID = e.detail.data;
+		//5.获取某个问题的详情
+		requestAskDetail();
 	});
 
 	//加载刷新
 	events.initRefresh("refreshContainer",
 		function() { //刷新方法
-
+			answerFlag = 0;
+			answerIndex = 1;
+			//5.获取某个问题的详情
+			requestAskDetail();
 		},
 		function() { //加载更多
-
+			answerFlag = 1;
+			//判断是否还有更多
+			if(answerIndex <= answerPageCount) {
+				//5.获取某个问题的详情
+				requestAskDetail();
+			}
 		}
 	);
 
@@ -32,6 +58,38 @@ mui.plusReady(function() {
 /**
  * 请求问题
  */
+//5.获取某个问题的详情
+function requestAskDetail() {
+	//所需参数
+	var comData = {
+		askId: askID, //问题ID
+		orderType: askOrderType, //回答排序方式,1 按时间排序,2 按质量排序：点赞数+评论数
+		pageIndex: answerIndex, //当前页数
+		pageSize: '10' //每页记录数,传入0，获取总记录数
+	};
+	// 等待的对话框
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//5.获取某个问题的详情
+	postDataQZPro_getAskById(comData, wd, function(data) {
+		wd.close();
+		console.log('5.获取某个问题的详情:' + JSON.stringify(data));
+		if(data.RspCode == 0) {
+			askModel = data.RspData;
+			answerPageCount = data.RspData.TotalPage;//回答总页数
+			answerIndex++;
+			//刷新0，还是加载更多1
+			if (answerFlag == 0) {
+				answerArray = data.RspData.Data;
+			}else{
+				answerArray = answerArray.concat(data.RspData.Data);
+			}
+			//刷新界面
+			
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+}
 
 /**
  * 请求答案列表
