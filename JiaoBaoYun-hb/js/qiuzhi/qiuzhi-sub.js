@@ -128,6 +128,7 @@ var pullUpFresh = function() {
 	 */
 var setListener = function() {
 	events.addTap('submit-question', function() {
+		console.log(allChannels)
 		events.openNewWindowWithData('qiuzhi-newQ.html', allChannels);
 	});
 	//标题点击事件
