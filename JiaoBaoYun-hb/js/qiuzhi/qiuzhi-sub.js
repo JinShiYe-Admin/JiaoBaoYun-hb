@@ -16,7 +16,8 @@ mui.plusReady(function() {
 			//加载h5刷新方式
 		h5fresh.addRefresh(function() {
 			pageIndex = 1;
-			//刷新的界面实现逻辑
+			events.clearChild(document.getElementById('list-container'))
+				//刷新的界面实现逻辑
 			requestChannelList(channelInfo);
 		})
 		setListener();
@@ -69,7 +70,7 @@ var setChannelList = function(data) {
 var getInnerHTML = function(cell) {
 	var inner = '<a>' +
 		'<div class="channel-info">' +
-		'<p><span></span>来自话题:' + cell.AskChannel + '</p>' +
+		'<p><img src="'+getChannelIcon(cell)+'" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
 		'</div>' +
 		'<div class="ask-container">' +
 		'<h4 class="ask-title" askId="' + cell.TabId + '">' + cell.AskTitle + '</h4>' +
@@ -80,10 +81,31 @@ var getInnerHTML = function(cell) {
 		'</a>'
 	return inner;
 }
-
 /**
- * 上拉加载的实现方法
+ * 
+ * @param {Object} cell
  */
+var getChannelIcon = function(cell) {
+	var iconSourse="../../image/qiuzhi/";
+		switch(cell.AskChannel) {
+			case "教学":
+			iconSourse+="channel-edu.png";
+				break;
+			case "美食":
+			iconSourse+="channel-food.png";
+				break;
+			case "健康":
+			iconSourse+="channel-health.png";
+				break;
+			default:
+			iconSourse="";
+				break;
+		}
+		return iconSourse;
+	}
+	/**
+	 * 上拉加载的实现方法
+	 */
 var pullUpFresh = function() {
 
 	}

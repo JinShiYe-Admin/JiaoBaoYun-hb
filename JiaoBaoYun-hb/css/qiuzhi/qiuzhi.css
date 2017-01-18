@@ -29,3 +29,9 @@
 	background-color: #1296db;
 	border-radius: 50%;
 }
+.channel-icon{
+	width: 2rem;
+	vertical-align: middle;
+	margin-right: .5rem;
+}
+

@@ -2008,7 +2008,9 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"image/qiuzhi/channel-edu.png",
+			"image/qiuzhi/channel-health.png"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-question.html",
@@ -2185,7 +2187,23 @@
 			"js/qiuzhi/qiuzhi-answerDetailSub.js",
 			"css/qiuzhi/qiuzhi-answerDetailSub.css",
 			"js/publicQiuzhiProtocol.js",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	},
 	"html/scienceeducation/senedu_show_main.html": {
