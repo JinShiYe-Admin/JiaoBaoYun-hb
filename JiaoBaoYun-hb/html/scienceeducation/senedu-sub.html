@@ -114,14 +114,13 @@
 					eduFlag = 1;
 					//判断是否还有更多
 					if(SECity.eduIndex < SECity.eduSumCount) {
+						SECity.eduIndex++;
 						requestCityNews();
-					}else{
+					} else {
 						mui.toast('没有更多了');
 					}
 				}, false);
-			}
-
-			//45.通过区域代码获取对应区域的分页新闻
+			}//45.通过区域代码获取对应区域的分页新闻
 			function requestCityNews(cityCode) {
 				//所需参数
 				var comData = {
