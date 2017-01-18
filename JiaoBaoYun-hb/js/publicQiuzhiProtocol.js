@@ -97,6 +97,7 @@ var postDataQZPro_getAskById = function(commonData, wd, callback) {
 //		var comData = {
 //			askTitle: '',//问题标题,200
 //			askNote:'',//问题说明,2000
+//			encAddr:'',//附件地址,300,多个的情况例如：1.jpg|2.jpg
 //			askChannel: '',//问题话题
 //			askMan:'',//提问人
 //			isAnonym: '',//是否匿名
@@ -115,7 +116,8 @@ var postDataQZPro_addAsk = function(commonData, wd, callback) {
 //		var comData = {
 //			askId: '',//问题ID
 //			askTitle: '',//问题标题,200
-//			askNote:''//问题说明,2000
+//			askNote:'',//问题说明,2000
+//			encAddr:''//附件地址,300,多个的情况例如：1.jpg|2.jpg
 //		};
 //返回值：1为正确
 var postDataQZPro_setAskById = function(commonData, wd, callback) {
@@ -146,6 +148,7 @@ var postDataQZPro_getAnswerById = function(commonData, wd, callback) {
 //		var comData = {
 //			askId: '',//问题ID
 //			answerContent: '',//回答内容,4000
+//			encAddr: '',//附件地址,300,多个的情况例如：1.jpg|2.jpg
 //			answerMan:''//回答人
 //		};
 //返回值：非0为正确
@@ -160,7 +163,8 @@ var postDataQZPro_addAnswer = function(commonData, wd, callback) {
 //所需参数
 //		var comData = {
 //			answerId: '',//回答ID
-//			answerContent:''//回答内容,4000
+//			answerContent:'',//回答内容,4000
+//			encAddr:''//附件地址,300,多个的情况例如：1.jpg|2.jpg
 //		};
 //返回值：1为正确
 var postDataQZPro_setAnswerById = function(commonData, wd, callback) {
