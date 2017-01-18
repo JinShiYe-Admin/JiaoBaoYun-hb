@@ -8,9 +8,10 @@ events.initRefresh('list-container', function() {
 
 })
 mui.plusReady(function() {
-		window.addEventListener('answerId', function(e) {
-			console.log('回答详情获取的答案id:' + e.detail.data);
-			answerId = e.detail.data;
+		window.addEventListener('answerInfo', function(e) {
+			var answerInfo=e.detail.data;
+			console.log('回答详情获取的答案信息:'+JSON.stringify(answerInfo));
+			answerId = e.detail.data.AnswerId;
 			events.clearChild(document.getElementById('list-container'));
 			requestAnswerDetail(answerId);
 		})

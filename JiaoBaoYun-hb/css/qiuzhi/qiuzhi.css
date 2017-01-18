@@ -6,10 +6,13 @@
 }
 .more-navigation{
 	position: absolute;
+	height: 45px;
 	right: 0;
 	top: 0;
-	padding: 10px;
+	text-align: center;
+	padding:5px 10px;
 	border: solid thin #000000 2px;
+	box-shadow: -5px 0 5px -3px black;
 }
 .mui-slider-indicator:last-of-type{
 	height: 4rem;
@@ -33,5 +36,11 @@
 	width: 2rem;
 	vertical-align: middle;
 	margin-right: .5rem;
+}
+.icon-qita1{
+	color:grey;
+}
+.more-navigation p{
+	line-height: 50%;
 }
 

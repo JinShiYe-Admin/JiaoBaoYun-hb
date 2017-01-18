@@ -1979,7 +1979,9 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"css/iconfont/iconfont.css",
+			"fonts/iconfont.ttf"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-sub.html"
@@ -2203,7 +2205,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/scienceeducation/senedu_show_main.html": {
@@ -2212,6 +2215,12 @@
 			"js/mui.min.js",
 			"css/mui.min.css",
 			"css/utils/common.css"
+		]
+	},
+	"html/qiuzhi/qiuzhi-newQ.html": {
+		"resources": [
+			"js/utils/ASFiles.js",
+			"css/quan/class_space.css"
 		]
 	}
 }
