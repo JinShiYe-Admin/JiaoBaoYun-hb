@@ -138,6 +138,7 @@ var setListener = function() {
 	});
 	//标题点击事件
 	mui('.mui-table-view').on('tap', '.ask-title', function() {
+		events.fireToPageNone('qiuzhi-question.html', 'askId', this.getAttribute('askId'));
 		events.fireToPageNone('qiuzhi-questionSub.html', 'askId', this.getAttribute('askId'));
 		plus.webview.getWebviewById('qiuzhi-question.html').show();
 	});

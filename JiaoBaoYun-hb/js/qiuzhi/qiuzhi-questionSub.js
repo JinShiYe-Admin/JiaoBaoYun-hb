@@ -1,7 +1,19 @@
 /**
  * 问题界面逻辑
  */
-mui.init();
+mui.init({
+	pullRefresh: {
+		container: '#refreshContainer',
+		down: {
+			callback: pulldownRefresh
+		},
+		up: {
+			contentrefresh: '正在加载...',
+			callback: pullupRefresh
+		}
+	}
+});
+
 //问题id
 var askID = 0;
 //取数据的默认排序
@@ -19,41 +31,79 @@ var askModel;
 
 mui.plusReady(function() {
 	//---滑动start---
-	mui(".mui-scroll-wrapper").scroll({
-		scrollY: true, //是否竖向滚动
-		scrollX: false, //是否横向滚动
-		indicators: true, //是否显示滚动条
-		deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
-		bounce: true, //是否启用回弹
-	});
+	//	mui(".mui-scroll-wrapper").scroll({
+	//		scrollY: true, //是否竖向滚动
+	//		scrollX: false, //是否横向滚动
+	//		indicators: true, //是否显示滚动条
+	//		deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+	//		bounce: true, //是否启用回弹
+	//	});
 	//---滑动end---
 
 	window.addEventListener('askId', function(e) {
-		console.log('问题详情页面获取的问题id:' + e.detail.data);
+		console.log('问题详情子页面获取的问题id:' + e.detail.data);
 		askID = e.detail.data;
 		//5.获取某个问题的详情
 		requestAskDetail();
 	});
 
-	//加载刷新
-	events.initRefresh("refreshContainer",
-		function() { //刷新方法
-			answerFlag = 0;
+	mui('#popover').on('tap', '.mui-table-view-cell', function() {
+		console.log('选择排序' + this.id + '|' + this.value + '|' + this.getAttribute('data-value'));
+
+		if(askOrderType != this.value) {
+			var ordertype = document.getElementById("ordertype").innerText = this.getAttribute('data-value');
+			document.getElementById("ordertype_" + askOrderType + "_icon").style.display = 'none';
+			document.getElementById("ordertype_" + this.value + "_icon").style.display = 'inline';
+			askOrderType = this.value;
+			//获取的第几页回复
 			answerIndex = 1;
+			//答案回复的总页数
+			answerPageCount = 0;
+			//回复数组,切换排序方式后，清空数组
+			answerArray = [];
+			//刷新0，还是加载更多1
+			answerFlag = 0;
 			//5.获取某个问题的详情
 			requestAskDetail();
-		},
-		function() { //加载更多
-			answerFlag = 1;
-			//判断是否还有更多
-			if(answerIndex <= answerPageCount) {
-				//5.获取某个问题的详情
-				requestAskDetail();
-			}
 		}
-	);
+		mui('#popover').popover('hide');
+	});
 
 });
+
+/**
+ * 下拉刷新具体业务实现
+ */
+function pulldownRefresh() {
+	setTimeout(function() {
+		//获取的第几页回复
+		answerIndex = 1;
+		//答案回复的总页数
+		answerPageCount = 0;
+		//回复数组,切换排序方式后，清空数组
+		answerArray = [];
+		//刷新0，还是加载更多1
+		answerFlag = 0;
+		//5.获取某个问题的详情
+		requestAskDetail();
+	}, 1500);
+}
+
+/**
+ * 上拉加载具体业务实现
+ */
+function pullupRefresh() {
+	setTimeout(function() {
+		answerFlag = 1;
+		//判断是否还有更多
+		if(answerIndex <= answerPageCount) {
+			//5.获取某个问题的详情
+			requestAskDetail();
+		} else {
+			mui('#refreshContainer').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+		}
+	}, 1500);
+}
 
 /**
  * 请求问题
@@ -75,25 +125,32 @@ function requestAskDetail() {
 		console.log('5.获取某个问题的详情:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			askModel = data.RspData;
-			answerPageCount = data.RspData.TotalPage;//回答总页数
+			answerPageCount = data.RspData.TotalPage; //回答总页数
 			answerIndex++;
 			//刷新0，还是加载更多1
-			if (answerFlag == 0) {
+			if(answerFlag == 0) {
+				mui('#refreshContainer').pullRefresh().endPulldownToRefresh(); //下拉刷新结束
+				mui('#refreshContainer').pullRefresh().enablePullupToRefresh(); //启用上拉刷新
 				answerArray = data.RspData.Data;
-			}else{
+				//清理原界面
+				cleanQuestion();
+				cleanAnswer();
+				//生成新界面
+				addQuestion(data.RspData);
+				if(data.RspData.Data.length == 0) {//没有人回答
+					mui.toast('没有人回答该提问');
+					mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+				}
+			} else {
 				answerArray = answerArray.concat(data.RspData.Data);
 			}
 			//刷新界面
-			
+			addAnswer(data.RspData.Data);
 		} else {
 			mui.toast(data.RspTxt);
 		}
 	});
 }
-
-/**
- * 请求答案列表
- */
 
 /**
  *清空问题的所有信息，和回答数
@@ -112,6 +169,7 @@ function cleanQuestion() {
  * 放置问题，和回答数
  */
 function addQuestion(data) {
+	console.log('addQuestion:' + JSON.stringify(data));
 	questionTitle(data.AskTitle);
 	//questionImages(data.imageArray);
 	questionContent(data.AskNote);
@@ -145,7 +203,7 @@ function questionImages(imageArray) {
  * @param {Object} content 问题内容
  */
 function questionContent(content) {
-	document.getElementById("question_content").innerText = title;
+	document.getElementById("question_content").innerText = content;
 }
 
 /**
@@ -154,8 +212,8 @@ function questionContent(content) {
  * @param {Object} guanzhushu 问题关注数
  */
 function questionInfo(liulanshu, guanzhushu) {
-	document.getElementById("liulanshu").innerText = liulanshu;
-	document.getElementById("guanzhushu").innerText = guanzhushu;
+	document.getElementById("liulanshu").innerHTML = '&nbsp;' + liulanshu;
+	document.getElementById("guanzhushu").innerHTML = '&nbsp;' + guanzhushu;
 }
 
 /**
@@ -172,10 +230,10 @@ function answerShu(answershu) {
 function cleanAnswer() {
 	//回答列表
 	document.getElementById("answer_bottom").innerHTML = '';
-	//排序类型
-	document.getElementById("ordertype").innerText = '按质量排序';
-	document.getElementById("ordertype_2_icon").style.display = 'inline';
-	document.getElementById("ordertype_1_icon").style.display = 'inline';
+//	//排序类型
+//	document.getElementById("ordertype").innerText = '按质量排序';
+//	document.getElementById("ordertype_2_icon").style.display = 'inline';
+//	document.getElementById("ordertype_1_icon").style.display = 'none';
 }
 
 /**
@@ -203,11 +261,4 @@ function answerList(data) {
 		'<div class="answer-info">' + data.IsLikeNum + '赞同·' + data.CommentNum + '评论·' + data.AnswerTime + '</div>';
 	document.getElementById("answer_bottom").appendChild(li);
 	document.getElementById("answer_content_" + data.AnswerId).innerText = data.AnswerContent;
-}
-
-/**
- * 各种监听事件
- */
-var setListener = function() {
-
 }

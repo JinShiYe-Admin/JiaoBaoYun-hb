@@ -35,6 +35,12 @@
 				}
 			});
 			mui.plusReady(function() {
+				var askID = 0;
+				window.addEventListener('askId', function(e) {
+					console.log('问题详情父页面获取的问题id:' + e.detail.data);
+					askID = e.detail.data;
+				});
+
 				//---点击效果---start---
 				var tab_div = document.getElementById("tab_div");
 				var tab_font = document.getElementById("tab_font");
