@@ -1,4 +1,5 @@
 events.initSubPage('qiuzhi-sub.html');
+var allChannels;
 mui.plusReady(function() {
 		var curPage = plus.webview.currentWebview();
 		curPage.addEventListener("show", function(e) {
@@ -34,6 +35,13 @@ function requestAllChannels(callback) {
 var setChannels = function(subjectArr) {
 	var subjects=document.getElementById('subjects-container');
 	console.log('要加载的类别:'+JSON.stringify(subjectArr));
+	allChannels=subjectArr;
+	var allChannel={
+		TabId:0,
+		ChannelCode:00,
+		ChannelName:"全部"
+	}
+	subjectArr.splice(0,0,allChannel);
 	events.clearChild(subjects);
 	for(var i in subjectArr){
 		var a=document.createElement('a');
@@ -46,11 +54,11 @@ var setChannels = function(subjectArr) {
 		a.info=subjectArr[i];
 		subjects.appendChild(a);
 	}
-	events.fireToPageNone('qiuzhi-sub.html','channelInfo',subjectArr[0]);
+	events.fireToPageNone('qiuzhi-sub.html','channelInfo',{curChannel:subjectArr[0],allChannels:allChannels});
 }
 var setListener=function(){
 	mui('.tabs-channels').on('tap','.mui-control-item',function(){
 		var channelInfo=this.info;
-		events.fireToPageNone('qiuzhi-sub.html','channelInfo',channelInfo);
+		events.fireToPageNone('qiuzhi-sub.html','channelInfo',{curChannel:channelInfo,allChannels:allChannels});
 	})
 }
