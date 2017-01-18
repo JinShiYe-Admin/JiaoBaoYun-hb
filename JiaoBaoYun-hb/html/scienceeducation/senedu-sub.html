@@ -72,12 +72,10 @@
 					SECity = e.detail; //当前显示的科教城市
 					console.log("科教子页面获取的城市信息：" + JSON.stringify(SECity));
 					//获取对应城市新闻
-					if (SECity.array.length == 0) {
+					if (!SECity.array||SECity.array.length == 0) {
 						requestCityNews(SECity.acode);
 					}
 					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-					//					pageIndex = 1;
-					//					requestData();
 				});
 				//刷新
 				h5fresh.addRefresh(function() {

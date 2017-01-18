@@ -167,12 +167,15 @@
 						mui.each(tempCityArray, function(index2, element2) {
 							if(elementAcode == element2.acode) {
 								tempCities.push(element2);
+								element2.index=commitCities.length;
 								commitCities.push(element2); //设置提交的城市
 								return false;
 							}
 						});
 					});
-
+					for(var i  in commitCities){
+						commitCities[i].totalNo=commitCities.length;
+					}
 					console.log('commitCities:' + JSON.stringify(commitCities));
 					//将数组改为字符串
 					var tempStr = '';
@@ -274,9 +277,11 @@
 					wd.close();
 					console.log('用户修改或添加区域阅读设置:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
-						events.fireToPage(main.data.webid, 'customizeCity', function() {
-							return commitCities;
-						});
+						var citiesInfo={
+								type:main.data.id,
+								cities:commitCities
+							};
+						events.fireToPageNone(main.data.webid, 'customizeCity', citiesInfo);
 						mui.toast('订制城市成功');
 						mui.back();
 					} else {
