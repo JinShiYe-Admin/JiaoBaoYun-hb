@@ -143,6 +143,7 @@ function requestAskDetail() {
 				}
 			} else {
 				answerArray = answerArray.concat(data.RspData.Data);
+				mui('#refreshContainer').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
 			}
 			//刷新界面
 			addAnswer(data.RspData.Data);
