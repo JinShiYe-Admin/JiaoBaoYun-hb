@@ -12,7 +12,7 @@
 	text-align: center;
 	padding:5px 10px;
 	border: solid thin #000000 2px;
-	box-shadow: -5px 0 5px -3px black;
+	box-shadow: -5px 0 5px -3px #d2d2d2;
 }
 .mui-slider-indicator:last-of-type{
 	height: 4rem;
@@ -22,7 +22,8 @@
 	height: 4rem;
 }
 
-.icon-qita{
+.icon-qita11{
+	font-size:20px;
 	color:grey;
 }
 .more-navigation p{

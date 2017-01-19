@@ -19,8 +19,14 @@
 	font-size: 4rem;
 	color: white;
 	padding: 1rem;
-	background-color: #1296db;
+	background-color: #1DB8F1;
 	border-radius: 50%;
+}
+p{
+	color: #B7B7B7;
+}
+.ask-title{
+	color: #323232;
 }
 
 .mui-segmented-control {
