@@ -6,47 +6,32 @@
 }
 .more-navigation{
 	position: absolute;
-	height: 45px;
+	height: 40px;
 	right: 0;
 	top: 0;
 	text-align: center;
 	padding:5px 10px;
 	border: solid thin #000000 2px;
-	box-shadow: -5px 0 5px -3px black;
+	box-shadow: -5px 0 5px -3px #d2d2d2;
 }
 .mui-slider-indicator:last-of-type{
-	height: 4rem;
+	height: 40px;
 	background-color: #ffffff;
 }
 .mui-control-item:last-of-type{
-	height: 4rem;
+	height: 40px;
 }
-.icon-bianji{
-	position: fixed;
-	bottom: 2rem;
-	right: 2rem;
-	z-index: 666;
-	font-size: 4rem;
-	color: white;
-	padding: 1rem;
-	background-color: #1296db;
-	border-radius: 50%;
-}
-.channel-icon{
-	width: 2rem;
-	vertical-align: middle;
-	margin-right: .5rem;
-}
-.icon-qita1{
+
+.icon-qita11{
+	font-size:20px;
 	color:grey;
+}
+.navigation{
+	background-color: white;
+	height: 40px;
 }
 .more-navigation p{
 	line-height: 50%;
 }
-.imgs-container{
-	padding:0 3% ;
-}
-.answer-img{
-	width: 30%;
-	display: inline-block;
-}
+
+

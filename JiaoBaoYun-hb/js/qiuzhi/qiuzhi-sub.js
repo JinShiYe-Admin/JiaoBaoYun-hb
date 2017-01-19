@@ -81,7 +81,7 @@ var getInnerHTML = function(cell) {
 			'<p><img src="' + getChannelIcon(cell) + '" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
 			'</div>' +
 			'<div class="ask-container">' +
-			'<h4 class="ask-title" askId="' + cell.TabId + '">[' + cell.AskChannel + ']' + cell.AskTitle + '</h4>' +
+			'<h5 class="ask-title" askId="' + cell.TabId + '">[' + cell.AskChannel + ']' + cell.AskTitle + '</h5>' +
 			'<p class="answer-content" answerInfo="' + cell.AnswerId + '">' + cell.AnswerContent + '</p>' +
 			'<div class="imgs-container">'+getImgs(cell.AnswerEncAddr)+'</div>'+
 			'</div>' +

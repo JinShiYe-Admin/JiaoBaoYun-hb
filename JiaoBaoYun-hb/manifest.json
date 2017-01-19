@@ -643,7 +643,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"css/quan/custom-textarea.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -784,7 +785,8 @@
 					"html/cloud/record_student_main.html",
 					"html/cloud/storage_upload_choose.html",
 					"html/quan/parentZone.html",
-					"html/mine/qun_manage_info.html"
+					"html/mine/qun_manage_info.html",
+					"html/quan/class_space.html"
 				],
 				"priority": 0
 			},
@@ -1363,7 +1365,9 @@
 					"image/cloud/record_link.gif",
 					"fonts/iconfont.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"html/cloud/keeprecord_callorrecord_main.html"
+				],
 				"priority": 0
 			},
 			"html/quan/aboutme.html": {
@@ -2505,7 +2509,8 @@
 					"image/qiuzhi/channel-edu.png",
 					"image/qiuzhi/channel-health.png",
 					"image/qiuzhi/channel-food.png",
-					"image/qiuzhi/channel-others.png"
+					"image/qiuzhi/channel-others.png",
+					"css/qiuzhi/qiuzhi-sub.css"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
@@ -2539,7 +2544,8 @@
 					"css/mui.min.css",
 					"css/utils/common.css",
 					"fonts/mui.ttf",
-					"js/publicQiuzhiProtocol.js"
+					"js/publicQiuzhiProtocol.js",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -2730,7 +2736,8 @@
 			"html/qiuzhi/qiuzhi-newQ.html": {
 				"resources": [
 					"js/utils/ASFiles.js",
-					"css/quan/class_space.css"
+					"css/quan/class_space.css",
+					"css/quan/custom-textarea.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -2745,6 +2752,21 @@
 			"html/quan/parentZone.html": {
 				"resources": [
 					"html/quan/parentZone-sub.html"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/cloud/keeprecord_callorrecord_sub.html": {
+				"resources": [
+					"js/utils/MultiMedia.js",
+					"css/utils/MultiMedia.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/cloud/keeprecord_callorrecord_main.html": {
+				"resources": [
+					"html/cloud/keeprecord_callorrecord_sub.html"
 				],
 				"refer": [],
 				"priority": 0
