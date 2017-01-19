@@ -9,7 +9,7 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/qiuzhi/qiuzhi-questionSub.css" rel="stylesheet" />
-		<link href="../../css/quan/class_space.css" rel="stylesheet" />
+		<link href="../../css/quan/custom-textarea.css" rel="stylesheet" />
 
 	</head>
 
@@ -19,15 +19,15 @@
 			<h1 class="mui-title">问题</h1>
 			<a id="publish" class="mui-pull-right">提问</a>
 		</header>
-								<!--快捷输入具体内容，开发者可自己替换常用语-->
-				<div id="popover" class="mui-popover">
-							<ul class="mui-table-view">
+		<!--快捷输入具体内容，开发者可自己替换常用语-->
+		<div id="popover" class="mui-popover">
+			<ul class="mui-table-view">
 
-							</ul>
-					</div>
+			</ul>
+		</div>
 		<div class="mui-content">
-			<textarea id="askTitle" placeholder="写下你的问题" style="height: 40px;"></textarea>
-			<p style="margin-left: 10px;font-size: 14px;">请添加问题的补充说明</p>
+			<textarea id="askTitle" placeholder="写下你的问题" style="height: 40px;margin-top: 5px;"></textarea>
+			<p style="margin-left: 10px;font-size: 14px;margin-top: -12px;">请添加问题的补充说明</p>
 			<div class="input-content" style="margin-top: 80px;">
 				<textarea id="askNote" placeholder="请输入内容"></textarea>
 				<div id="take_pic" class="take_pic">
@@ -40,15 +40,16 @@
 					<a class="mui-icon iconfont icon-xiangce"></a>
 				</div>
 			</div>
-			<p style="margin-top: 275px;margin-left: 10px;font-size: 14px;width: 100px;">选择话题:<a id="channal" style="margin-left: 4px;" href="#popover">
+			<p style="margin-top: 275px;margin-left: 10px;font-size: 14px;width: 100px;">选择话题:
+				<a id="channal" style="margin-left: 4px;" href="#popover">
 					全部
-				</a></p>
-					<div class="mui-input-row mui-checkbox mui-left" style="float: right;width: 100px;margin-top: -35px;margin-left: -100px;">
-						<label>匿名</label>
-						<input id="checkbox" name="checkbox" value="" type="checkbox" >
-					</div>
-	
-			
+				</a>
+			</p>
+			<div class="mui-input-row mui-checkbox mui-left" style="float: right;width: 100px;margin-top: -35px;margin-left: -100px;">
+				<label>匿名</label>
+				<input id="checkbox" name="checkbox" value="" type="checkbox">
+			</div>
+
 		</div>
 
 		<script src="../../js/mui.min.js"></script>
@@ -62,24 +63,24 @@
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-		mui.init();
-		mui.plusReady(function(){
-			var channelData = plus.webview.currentWebview().data;
-			var ul = document.getElementById("popover").getElementsByClassName('mui-table-view')[0];
-			for(var i=0;i<channelData.length;i++){
-				var li = document.createElement("li");
-				li.id = channelData[i].TabId;
-				li.className = 'mui-table-view-cell';
-				var a = document.createElement("a");
-				a.href = '#'
-				a.innerHTML = channelData[i].ChannelName;
-				li.appendChild(a);
-				ul.appendChild(li);
-			}
-			
-		})
-		
-		var askChannel='1';
+			mui.init();
+			mui.plusReady(function() {
+				var channelData = plus.webview.currentWebview().data;
+				var ul = document.getElementById("popover").getElementsByClassName('mui-table-view')[0];
+				for(var i = 0; i < channelData.length; i++) {
+					var li = document.createElement("li");
+					li.id = channelData[i].TabId;
+					li.className = 'mui-table-view-cell';
+					var a = document.createElement("a");
+					a.href = '#'
+					a.innerHTML = channelData[i].ChannelName;
+					li.appendChild(a);
+					ul.appendChild(li);
+				}
+
+			})
+
+			var askChannel = '1';
 			events.addTap('take_pic', function() {
 				camera.getPic(camera.getCamera(), function(path) {
 
@@ -130,9 +131,9 @@
 				var checkbox = document.getElementById("checkbox")
 				var isAnonym = 0;
 				if(!checkbox.checked) {
-					 isAnonym = 0;
-				}else{
-					 isAnonym = 1;
+					isAnonym = 0;
+				} else {
+					isAnonym = 1;
 				}
 				//所需参数
 				var comData = {
@@ -141,7 +142,7 @@
 					askChannel: askChannel, //问题话题
 					askMan: personalUTID, //提问人
 					isAnonym: isAnonym, //是否匿名
-					encAddr:'',
+					encAddr: '',
 					inviteExperts: '[]' //邀请专家,例如[1,2,3]
 				};
 				// 等待的对话框
@@ -164,14 +165,13 @@
 			function Trim(str) {
 				return str.replace(/(^\s*)|(\s*$)/g, "");
 			}
-			  	//选择快捷输入
-	mui('.mui-popover').on('tap','li',function(e){
-	  document.getElementById("channal").innerHTML =  this.children[0].innerHTML;
-	  askChannel = this.id;
-	  console.log(askChannel);
-	  mui('.mui-popover').popover('toggle')
-	}) 
-
+			//选择快捷输入
+			mui('.mui-popover').on('tap', 'li', function(e) {
+				document.getElementById("channal").innerHTML = this.children[0].innerHTML;
+				askChannel = this.id;
+				console.log(askChannel);
+				mui('.mui-popover').popover('toggle')
+			})
 		</script>
 		<!--<script src="../../js/qiuzhi/qiuzhi-questionSub.js"></script>-->
 	</body>

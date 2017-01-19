@@ -1,0 +1,72 @@
+/**
+ * 班级空间icon样式
+ */
+.iconfont.mui-pull-right:before{
+	margin-left: 10px;	
+}
+/**
+ * 输入内容父控件div
+ */
+.input-content{
+	position: absolute;
+	top: 45px;
+	width: 100%;
+	height: 25rem;
+	background-color: white;
+	border-color: lightgray;
+}
+/**
+ * 输入内容样式
+ */
+textarea{
+	border-radius: 5px 5px 0 0;
+	border-color: transparent;
+	border-bottom-color:lightgray ;
+	width: 100%;
+	height: 20rem;
+}
+/**
+ * 拍照、添加文件样式
+ */
+.take_pic,.take_camero,.get_gallery{
+	width: 6rem;
+	height: 6rem;
+	border: solid;
+	border-width: 0;
+	border-radius: 0px;
+	border-color: #929292;
+	padding: 0.7rem;
+	text-align: center;
+	position: absolute;
+}
+/**
+ * 样式
+ */
+div>.icon-xiangce:before,.icon-shipin:before,.icon-xiangji:before{
+	font-size: 3.0rem;
+	color: gray;
+}
+/**
+ * 班级动态
+ * 拍照按钮
+ */
+.take_pic{
+	top: 20rem;
+	left: 0.5rem;
+	z-index: 1;
+}
+/**
+ * 班级动态
+ * 添加文件按钮
+ */
+.take_camero{
+	top: 20rem;
+	left: 6.5rem;
+	z-index: 1;
+}
+.get_gallery{
+	top: 20.2rem;
+	left: 12.5rem;
+	z-index: 1;
+}
+

@@ -7,18 +7,18 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
-		<link href="../../css/quan/class_space.css" rel="stylesheet" />
+		<link href="../../css/quan/custom-textarea.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 
 	</head>
 
-	<body>
+	<body style="background-color: white;">
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left " ></a>
 			<h1 id="title" class="mui-title"></h1>
 			<a id="publish" class="mui-pull-right">发布</a>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content" >
 			<div class="input-content">
 				<textarea id="input-content" placeholder="这一刻的想法"></textarea>
 				<div id="take_pic" class="take_pic">
@@ -31,15 +31,16 @@
 					<a class="mui-icon iconfont icon-xiangce"></a>
 				</div>
 			</div>
-			<div style="margin-left: -10px;">
-				<div  style="width:50; height:30px; float:left; display:inline; top: 5px;padding-left: 10px;">
-					<p style="margin-top: 275px;margin-left: 10px;margin-right: 10px;font-size: 15px;width: 100px;color: black;">发布到:</p>
+			
+				<div>
+					<p style="margin-top: 260px;margin-left: 10px;font-size: 15px;">发布到:</p>
 				</div>
-				<div class="mui-checkbox mui-left mui-disabled" style="width:100; height:30px; float:left; display:inline; top: 275px;margin-left: -60px;">
+				<div style="margin-left: 10px;background-color: lightgray;">
+				<div class="mui-checkbox mui-left mui-disabled" style="width:100; height:30px; float:left; display:inline; top: 0px;margin-left: -20px;">
 					<label style="font-size: 15px;">家校圈</label>
 					<input name="checkbox" value="0" type="checkbox" disabled="disabled" style="margin-top: -7px;" checked>
 				</div>
-				<div class="mui-checkbox mui-left" style="width:100; height:30px; float:left; display:inline; top: 275px;">
+				<div class="mui-checkbox mui-left" style="width:100; height:30px; float:left; display:inline; top: 0px;">
 					<label style="font-size: 15px;">展现</label>
 					<input id="chenckBox" name="checkbox" value="1" type="checkbox" style="margin-top: -7px;">
 				</div>
