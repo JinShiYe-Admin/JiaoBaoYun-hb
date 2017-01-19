@@ -154,9 +154,11 @@
 			//每一行的高度
 			var cloudItemHeight = 0;
 			//第一行和第三行的比重
-			var cloudFirst = 1;
+			var cloudFirst = 3;
 			//第二行的比重
-			var cloudSecond = 1.5;
+			var cloudSecond = 4;
+			//第三行的比重
+			var cloudThird = 3;
 			//第一项的高度
 			var cloudFirstItemHeight = 0;
 			//第二项的高度
@@ -176,6 +178,7 @@
 				//下拉刷新
 				h5fresh.addRefresh(function() {
 					console.log('下拉刷新');
+					events.fireToPageNone('../index/index.html', 'aboutmNoRead');
 					//文件存储数组
 					fileArray = [];
 					//获取所有的群
@@ -193,7 +196,7 @@
 				var webHeight = plus.screen.resolutionHeight - (plus.navigator.getStatusbarHeight() + 45 + 50);
 				//console.log('webHeight:' + webHeight);
 				//每一行的高度
-				cloudItemHeight = (webHeight * 1 - (webHeight * 0.015 * 4)) / (cloudFirst + cloudFirst + cloudSecond);
+				cloudItemHeight = (webHeight * 1 - (webHeight * 0.015 * 4)) / (cloudFirst + cloudSecond + cloudThird);
 				//左侧文字宽度
 				var nameWidth = document.getElementById("cloudstoragename").offsetWidth;
 				//console.log('nameWidth:' + nameWidth);
@@ -206,11 +209,14 @@
 						element.style.height = (cloudItemHeight * cloudSecond) + 'px';
 						cloudSecondItemHeight = element.offsetHeight;
 						sliderHeight = cloudSecondItemHeight;
-					} else {
+					} else if(element.id == 'cloudstorage') {
 						element.style.height = (cloudItemHeight * cloudFirst) + 'px';
 						cloudFirstItemHeight = element.offsetHeight;
-						cloudThirdItemHeight = element.offsetHeight;
 						sliderHeight = cloudFirstItemHeight;
+					} else if(element.id == 'cloudapps') {
+						element.style.height = (cloudItemHeight * cloudThird) + 'px';
+						cloudThirdItemHeight = element.offsetHeight;
+						sliderHeight = cloudThirdItemHeight;
 					}
 					element.style.marginTop = (webHeight * 0.015) + 'px';
 					element.style.marginBottom = (webHeight * 0.015) + 'px';
@@ -218,17 +224,17 @@
 					//每一项左侧的文字垂直居中
 					element.firstElementChild.style.marginTop = (element.offsetHeight - element.firstElementChild.offsetHeight) / 2 + 'px';
 					//设置右侧左右滑动的高度
-					if(element.id == 'cloudapps') {
-						element.lastElementChild.firstElementChild.style.height = sliderHeight + 'px';
-						element.lastElementChild.lastElementChild.style.height = 0 + 'px';
-						element.lastElementChild.firstElementChild.firstElementChild.style.height = sliderHeight + 'px';
-						element.lastElementChild.lastElementChild.firstElementChild.style.height = 0 + 'px';
-					} else {
+//					if(element.id == 'cloudapps') {
+//						element.lastElementChild.firstElementChild.style.height = sliderHeight + 'px';
+//						element.lastElementChild.lastElementChild.style.height = 0 + 'px';
+//						element.lastElementChild.firstElementChild.firstElementChild.style.height = sliderHeight + 'px';
+//						element.lastElementChild.lastElementChild.firstElementChild.style.height = 0 + 'px';
+//					} else {
 						element.lastElementChild.firstElementChild.style.height = sliderHeight / 2 + 'px';
 						element.lastElementChild.lastElementChild.style.height = sliderHeight / 2 + 'px';
 						element.lastElementChild.firstElementChild.firstElementChild.style.height = sliderHeight / 2 + 'px';
 						element.lastElementChild.lastElementChild.firstElementChild.style.height = sliderHeight / 2 + 'px';
-					}
+					//}
 				});
 
 				//---调整界面---end---
@@ -809,9 +815,9 @@
 					li.innerHTML = '<img src="../../image/cloud/cloud_0_biji.png" style="height: ' + (maxWidth * 0.6) + 'px;width: ' + (maxWidth * 0.6) + 'px;"/>\
 									   <p class="mui-ellipsis">笔记</p>';
 					li.style.width = maxWidth + 'px';
-					li.style.height = cloudThirdItemHeight + 'px';
+					li.style.height = cloudThirdItemHeight/2 + 'px';
 					document.getElementById("cloudapps_0").appendChild(li);
-					li.style.paddingTop = (cloudThirdItemHeight - (li.lastElementChild.offsetHeight + li.lastElementChild.offsetTop - li.firstElementChild.offsetTop)) / 2 + 'px'; //笔记
+					li.style.paddingTop = (cloudThirdItemHeight/2 - (li.lastElementChild.offsetHeight + li.lastElementChild.offsetTop - li.firstElementChild.offsetTop)) / 2 + 'px'; //笔记
 
 					var li2 = document.createElement('li');
 					li2.id = 'note';
@@ -820,9 +826,9 @@
 					li2.innerHTML = '<img src="../../image/cloud/cloud_0_jishi.png" style="height: ' + (maxWidth * 0.6) + 'px;width: ' + (maxWidth * 0.6) + 'px;"/>\
 									   <p class="mui-ellipsis">记事</p>';
 					li2.style.width = maxWidth + 'px';
-					li2.style.height = cloudThirdItemHeight + 'px';
+					li2.style.height = cloudThirdItemHeight/2 + 'px';
 					document.getElementById("cloudapps_0").appendChild(li2);
-					li2.style.paddingTop = (cloudThirdItemHeight - (li2.lastElementChild.offsetHeight + li2.lastElementChild.offsetTop - li2.firstElementChild.offsetTop)) / 2 + 'px'; //记事
+					li2.style.paddingTop = (cloudThirdItemHeight/2 - (li2.lastElementChild.offsetHeight + li2.lastElementChild.offsetTop - li2.firstElementChild.offsetTop)) / 2 + 'px'; //记事
 				}
 
 				//获取学生列表

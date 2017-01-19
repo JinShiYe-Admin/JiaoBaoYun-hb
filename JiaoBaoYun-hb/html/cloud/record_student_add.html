@@ -94,7 +94,7 @@
 		<div class="mui-content">
 			<ul class="mui-table-view" id="ul_table">
 				<div style="width: 100%;">
-					<div class="mui-row">
+					<!--<div class="mui-row">-->
 						<!--<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
 								<span class="mui-icon iconfont icon-date" style="color: deepskyblue;margin-right: 10px;"></span>
 								<font style="margin-right: 10px;">时间</font>
@@ -102,7 +102,7 @@
 							<div class="mui-col-sm-8 mui-col-xs-8" style="line-height: 36px;">
 								<font id="time" style="color: #AAAAAA;">2016年11月18日11:31</font>
 							</div>-->
-						<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
+						<!--<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
 							<span class="mui-icon iconfont icon-xie" style="color: #86BE49;margin-right: 10px;"></span>
 							<font style="margin-right: 10px;">类型</font>
 						</div>
@@ -112,10 +112,10 @@
 								<input id="cb_2" name="checkbox" type="checkbox" checked="true" disabled="disabled">
 							</div>
 						</div>
-					</div>
+					</div>-->
 					<div id="record">
 						<div class="mui-input-row" style="margin: 0px 5px;">
-							<textarea id="textarea_record" rows="4" placeholder="记事："></textarea>
+							<textarea id="textarea_record" rows="4" placeholder="记事：" maxlength="500"></textarea>
 						</div>
 					</div>
 				</div>
@@ -137,7 +137,7 @@
 						mui.toast('请输入文字');
 					} else {
 						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-						var personalUNICK = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
+						var personalUNICK = '【'+window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick+'家长】';
 
 						//70.（云档案）新增某学生档案
 						//所需参数
