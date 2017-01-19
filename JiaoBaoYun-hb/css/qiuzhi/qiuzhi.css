@@ -43,4 +43,10 @@
 .more-navigation p{
 	line-height: 50%;
 }
-
+.imgs-container{
+	padding:0 3% ;
+}
+.answer-img{
+	width: 30%;
+	display: inline-block;
+}
