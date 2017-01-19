@@ -773,7 +773,8 @@
 					"image/cloud/cloud_0_tongxunlu.png",
 					"image/cloud/cloud_0_zuoye.png",
 					"image/cloud/cloud_0_xinjian.png",
-					"image/quan/add.png"
+					"image/quan/add.png",
+					"js/utils/h5fresh.js"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -786,7 +787,8 @@
 					"html/cloud/storage_upload_choose.html",
 					"html/quan/parentZone.html",
 					"html/mine/qun_manage_info.html",
-					"html/quan/class_space.html"
+					"html/quan/class_space.html",
+					"html/quan/studentdynamic_main.html"
 				],
 				"priority": 0
 			},
@@ -2545,7 +2547,8 @@
 					"css/utils/common.css",
 					"fonts/mui.ttf",
 					"js/publicQiuzhiProtocol.js",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [],
 				"priority": 0
