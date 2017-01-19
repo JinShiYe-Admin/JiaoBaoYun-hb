@@ -25,10 +25,23 @@
 p{
 	color: #B7B7B7;
 }
+.experts-show{
+	padding: 1rem;
+}
+.expert-icon{
+	font-size: 2.0rem;
+	color: white;
+	background-color:#1DB8F1;
+	border-radius:50%;
+	padding: .5rem;
+}
 .ask-title{
 	color: #323232;
 }
-
+.answer-content{
+	color: #808080;
+	font-size: 1.5rem;
+}
 .mui-segmented-control {
 	border: none;
 }
