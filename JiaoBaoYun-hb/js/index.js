@@ -401,7 +401,7 @@ mui.plusReady(function() {
 		var pubDynamic = document.createElement('a');
 		pubDynamic.id = 'pubDynamic'
 		pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
-		pubDynamic.style.paddingLeft = '20px'
+		pubDynamic.style.paddingLeft = '30px'
 		pubDynamic.style.paddingTop = '15px'
 		pubDynamic.style.fontSize = '16px'
 		pubDynamic.innerHTML = '晒一晒'
