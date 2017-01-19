@@ -319,7 +319,7 @@ var events = (function(mod) {
 	mod.blurBack = function(blurItemId) {
 		var oldBack = mui.back;
 		mui.back = function() {
-			plus.webview.currentWebview().blur();
+//			plus.webview.currentWebview().blur();
 			document.getElementById(blurItemId).blur();
 			oldBack();
 		}

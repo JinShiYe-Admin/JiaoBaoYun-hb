@@ -244,7 +244,7 @@ var getCellData = function(cell) {
 	switch(cell.MsgType) {
 		//其他用户评论
 		case 1:
-			cellData.title = cell.MaxUserName + ' 评论了你';
+			cellData.title = events.shortForString(cell.MaxUserName, 4) + ' 评论了你';
 
 			break;
 			//评论的回复
@@ -274,7 +274,7 @@ var getCellData = function(cell) {
 		var messages = new Array();
 		if(cellData.MsgType != 4) {
 			if(cell.Content) {
-				messages.push('<p class="single-line"><span>' + cell.UserName + ':</span>' + cell.Content + '</p>')
+				messages.push('<p class="single-line"><span>' + events.shortForString(cell.UserName, 4) + ':</span>' + cell.Content + '</p>')
 			}
 		}
 
@@ -282,9 +282,9 @@ var getCellData = function(cell) {
 			cell.MsgArray.forEach(function(msg, i, msgArray) {
 				if(msg.MsgContent) {
 					if(msg.MsgToName) {
-						messages.push('<p class="single-line" ><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>');
+						messages.push('<p class="single-line" ><span>' +events.shortForString(msg.MsgFromName, 4)  + '</span>回复<span>' +events.shortForString(msg.MsgToName, 4)  + ':</span>' + msg.MsgContent + '</p>');
 					} else {
-						messages.push('<p class="single-line" ><span>' + msg.MsgFromName + ':</span>' + msg.MsgContent + '</p>');
+						messages.push('<p class="single-line" ><span>' + events.shortForString(msg.MsgFromName, 4) + ':</span>' + msg.MsgContent + '</p>');
 					}
 				}
 

@@ -1,6 +1,7 @@
 var workInfo;
 var personalUTID;
 mui.init();
+mui('.mui-scroll').scroll();
 mui.plusReady(function() {
 	mui.previewImage();
 	window.addEventListener('workInfo', function(e) {

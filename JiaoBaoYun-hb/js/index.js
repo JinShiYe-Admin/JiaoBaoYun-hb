@@ -30,6 +30,8 @@ mui.plusReady(function() {
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 		document.querySelector('img').src = img ? img : storageKeyName.storageKeyName.DEFAULTPERSONALHEADIMAGE;
+		showCity=0;
+		SECity=0;
 	});
 	window.addEventListener('aboutmNoRead', function() {
 		getAboutMe();

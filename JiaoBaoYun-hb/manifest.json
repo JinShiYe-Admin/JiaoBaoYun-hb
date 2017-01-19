@@ -783,7 +783,8 @@
 					"html/cloud/app_notes_main.html",
 					"html/cloud/record_student_main.html",
 					"html/cloud/storage_upload_choose.html",
-					"html/quan/parentZone.html"
+					"html/quan/parentZone.html",
+					"html/mine/qun_manage_info.html"
 				],
 				"priority": 0
 			},
@@ -1372,7 +1373,8 @@
 					"css/mui.min.css",
 					"html/quan/aboutme_sub.html",
 					"css/utils/common.css",
-					"css/quan/about-me.css"
+					"css/quan/about-me.css",
+					"js/utils/events.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2502,7 +2504,8 @@
 					"js/utils/RSAEncrypt.js",
 					"image/qiuzhi/channel-edu.png",
 					"image/qiuzhi/channel-health.png",
-					"image/qiuzhi/channel-food.png"
+					"image/qiuzhi/channel-food.png",
+					"image/qiuzhi/channel-others.png"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
