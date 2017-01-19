@@ -6,7 +6,7 @@
 }
 .more-navigation{
 	position: absolute;
-	height: 45px;
+	height: 40px;
 	right: 0;
 	top: 0;
 	text-align: center;
@@ -15,16 +15,20 @@
 	box-shadow: -5px 0 5px -3px #d2d2d2;
 }
 .mui-slider-indicator:last-of-type{
-	height: 4rem;
+	height: 40px;
 	background-color: #ffffff;
 }
 .mui-control-item:last-of-type{
-	height: 4rem;
+	height: 40px;
 }
 
 .icon-qita11{
 	font-size:20px;
 	color:grey;
+}
+.navigation{
+	background-color: white;
+	height: 40px;
 }
 .more-navigation p{
 	line-height: 50%;

@@ -1365,7 +1365,9 @@
 					"image/cloud/record_link.gif",
 					"fonts/iconfont.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"html/cloud/keeprecord_callorrecord_main.html"
+				],
 				"priority": 0
 			},
 			"html/quan/aboutme.html": {
@@ -2750,6 +2752,21 @@
 			"html/quan/parentZone.html": {
 				"resources": [
 					"html/quan/parentZone-sub.html"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/cloud/keeprecord_callorrecord_sub.html": {
+				"resources": [
+					"js/utils/MultiMedia.js",
+					"css/utils/MultiMedia.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/cloud/keeprecord_callorrecord_main.html": {
+				"resources": [
+					"html/cloud/keeprecord_callorrecord_sub.html"
 				],
 				"refer": [],
 				"priority": 0

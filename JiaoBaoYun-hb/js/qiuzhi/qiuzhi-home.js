@@ -50,7 +50,7 @@ var setChannels = function(subjectArr) {
 		}else{
 			a.className="mui-control-item";
 		}
-		a.innerHTML=subjectArr[i].ChannelName;
+		a.innerText=subjectArr[i].ChannelName;
 		a.info=subjectArr[i];
 		subjects.appendChild(a);
 	}
