@@ -1,0 +1,42 @@
+.imgs-container {
+	padding: 0 3%;
+}
+
+.answer-img {
+	width: 30%;
+	display: inline-block;
+}
+.channel-icon{
+	width: 2rem;
+	vertical-align: middle;
+	margin-right: .5rem;
+}
+.icon-bianji{
+	position: fixed;
+	bottom: 2rem;
+	right: 2rem;
+	z-index: 666;
+	font-size: 4rem;
+	color: white;
+	padding: 1rem;
+	background-color: #1296db;
+	border-radius: 50%;
+}
+
+.mui-segmented-control {
+	border: none;
+}
+
+.mui-segmented-control .mui-control-item {
+	line-height: normal;
+}
+
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+	color: inherit;
+	border-bottom: none;
+}
+
+.mui-slider-indicator .mui-icon {
+	border: none;
+	/*font-size: 35px;*/
+}

@@ -120,7 +120,8 @@
 			"html/cloud/record_student_main.html",
 			"html/cloud/storage_upload_choose.html",
 			"html/quan/parentZone.html",
-			"html/mine/qun_manage_info.html"
+			"html/mine/qun_manage_info.html",
+			"html/quan/class_space.html"
 		]
 	},
 	"html/quan/tab-zone.html": {
@@ -1110,7 +1111,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/quan/custom-textarea.css"
 		],
 		"refer": []
 	},
@@ -2019,7 +2021,8 @@
 			"image/qiuzhi/channel-edu.png",
 			"image/qiuzhi/channel-health.png",
 			"image/qiuzhi/channel-food.png",
-			"image/qiuzhi/channel-others.png"
+			"image/qiuzhi/channel-others.png",
+			"css/qiuzhi/qiuzhi-sub.css"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-question.html",
@@ -2053,7 +2056,8 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"fonts/mui.ttf",
-			"js/publicQiuzhiProtocol.js"
+			"js/publicQiuzhiProtocol.js",
+			"image/utils/default_personalimage.png"
 		]
 	},
 	"html/show/show_home.html": {
@@ -2232,7 +2236,8 @@
 	"html/qiuzhi/qiuzhi-newQ.html": {
 		"resources": [
 			"js/utils/ASFiles.js",
-			"css/quan/class_space.css"
+			"css/quan/class_space.css",
+			"css/quan/custom-textarea.css"
 		]
 	},
 	"html/quan/parentZone-sub.html": {
