@@ -400,9 +400,9 @@ mui.plusReady(function() {
 	var addZoneIcon = function(container) {
 		var pubDynamic = document.createElement('a');
 		pubDynamic.id = 'pubDynamic'
-		pubDynamic.className = 'mui-pull-right mui-plus-visible';
+		pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
 		pubDynamic.style.paddingLeft = '20px'
-		pubDynamic.style.paddingTop = '10px'
+		pubDynamic.style.paddingTop = '15px'
 		pubDynamic.style.fontSize = '16px'
 		pubDynamic.innerHTML = '晒一晒'
 		container.appendChild(pubDynamic)
