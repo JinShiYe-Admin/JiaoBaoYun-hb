@@ -2747,14 +2747,35 @@
 			},
 			"html/quan/parentZone-sub.html": {
 				"resources": [
-					"css/home/zone.css"
+					"css/home/zone.css",
+					"image/utils/default_personalimage.png",
+					"js/libs/crypto-js/crypto-js.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/quan/zone_main.html"
+				],
 				"priority": 0
 			},
 			"html/quan/parentZone.html": {
 				"resources": [
-					"html/quan/parentZone-sub.html"
+					"html/quan/parentZone-sub.html",
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"css/iconfont/iconfont.css",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
