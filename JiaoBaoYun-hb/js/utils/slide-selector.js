@@ -15,6 +15,7 @@ var slide_selector = (function(mod) {
 	 * @param {Object} cities //城市数组
 	 */
 	mod.setCities = function(cities) {
+		
 			thisCities = cities;
 			if(cities.length > 0) {
 				var fragment = document.createDocumentFragment();
@@ -39,6 +40,7 @@ var slide_selector = (function(mod) {
 		 */
 	mod.getPages = function(cities, subPage) {
 			thisCities = cities;
+			citiesIndex = 0;
 			self = plus.webview.currentWebview();
 			if(cities.length > 0) {
 				self.show();
