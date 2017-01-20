@@ -245,7 +245,6 @@ var setListener = function(userId) {
 			} else {
 				mui.toast('点赞失败！')
 			}
-			//			if(data.Rs)
 		})
 	})
 }

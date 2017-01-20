@@ -47,19 +47,22 @@ mui.plusReady(function() {
 		var publish_container = document.getElementById('publish-content');
 		//录音键
 		events.addTap('getRecord', function() {
-				startRecord()
+//				startRecord()
+				mui.toast('功能暂未开放！');
 			})
 			//相机按钮
 		events.addTap('getImg', function() {
-				camera.getPic(camera.getCamera(), function(picPath) {
-					console.log("picPath:" + picPath);
-				})
+//				camera.getPic(camera.getCamera(), function(picPath) {
+//					console.log("picPath:" + picPath);
+//				})
+				mui.toast('功能暂未开放！');
 			})
 			//录像按钮
 		events.addTap('getVideo', function() {
-			camera.getVideo(camera.getCamera(), function(videoPath) {
-				console.log("videoPath:" + videoPath);
-			})
+//			camera.getVideo(camera.getCamera(), function(videoPath) {
+//				console.log("videoPath:" + videoPath);
+//			})
+			mui.toast('功能暂未开放！');
 		});
 	})
 	//17.获取所有科目列表

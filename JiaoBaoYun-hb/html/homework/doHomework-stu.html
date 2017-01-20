@@ -46,7 +46,7 @@
 			mui.init();
 			var personalUTID;
 			var flag = 0
-			//作业model
+				//作业model
 			var homeworkModel;
 			mui.plusReady(function() {
 				window.addEventListener('homeworkInfo', function(e) {
@@ -71,9 +71,30 @@
 					}
 
 				})
+				setListener();
 			});
-			
-			//7.	提交作业结果；逻辑：如果是图片类型，同时生成缩略图
+			var setListener = function() {
+					//录音键
+					events.addTap('take_pic', function() {
+						//				startRecord()
+						mui.toast('功能暂未开放！');
+					});
+					//相机按钮
+					events.addTap('take_camero', function() {
+						//				camera.getPic(camera.getCamera(), function(picPath) {
+						//					console.log("picPath:" + picPath);
+						//				})
+						mui.toast('功能暂未开放！');
+					});
+					//录像按钮
+					events.addTap('get_gallery', function() {
+						//			camera.getVideo(camera.getCamera(), function(videoPath) {
+						//				console.log("videoPath:" + videoPath);
+						//			})
+						mui.toast('功能暂未开放！');
+					});
+				}
+				//7.	提交作业结果；逻辑：如果是图片类型，同时生成缩略图
 			function requestSubmitHomeworkResult() {
 				var textView = document.getElementById('input-content');
 				var tempText = textView.value;
@@ -89,7 +110,7 @@
 				var comData = {
 					userId: personalUTID, //学生/家长id，
 					studentId: personalUTID, //学生Id；
-					classId:homeworkModel.gid,
+					classId: homeworkModel.gid,
 					homeworkId: homeworkModel.HomeworkId, //作业id；
 					content: tempText, //文本答案；
 					fileIds: '' //文件id数组；
@@ -99,11 +120,11 @@
 				//7.	提交作业结果；逻辑：如果是图片类型，同时生成缩略图
 				postDataPro_SubmitHomeworkResult(comData, wd, function(data) {
 					wd.close();
-					console.log('做作业界面，提交作业获取的值'+JSON.stringify(data));
+					console.log('做作业界面，提交作业获取的值' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						mui.toast('提交作业答案成功！')
-						events.fireToPageNone(plus.webview.currentWebview().opener(),'workSubmitted');
-							//清空输入框
+						events.fireToPageNone(plus.webview.currentWebview().opener(), 'workSubmitted');
+						//清空输入框
 						textView.value = '';
 						mui.back();
 
@@ -141,14 +162,16 @@
 					console.log('9.postDataPro_ModifyHomeworkResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						mui.toast('修改作业答案成功！')
-						events.fireToPageNone('homework-commented.html','refreshAnswer',{answer: textView.value});
-//						//获得主页面的webview
-//						var main = plus.webview.getWebviewById('../quan/doHomework-stu.html');
-//						//触发tab-zone页面的setRead事件
-//						mui.fire(main, 'refreshAnswer', {
-//							answer: textView.value
-//						});
-							//清空输入框
+						events.fireToPageNone('homework-commented.html', 'refreshAnswer', {
+							answer: textView.value
+						});
+						//						//获得主页面的webview
+						//						var main = plus.webview.getWebviewById('../quan/doHomework-stu.html');
+						//						//触发tab-zone页面的setRead事件
+						//						mui.fire(main, 'refreshAnswer', {
+						//							answer: textView.value
+						//						});
+						//清空输入框
 						textView.value = '';
 						mui.back();
 					} else {
