@@ -28,43 +28,43 @@
 			/*#qunimage {
 				height: 100px;
 			}*/
-			
+
 			.qun-image {
 				height: 100px;
 				width: 100px;
 				/*text-align: center;*/
 				margin-top: 20px;
 			}
-			
+
 			.mui-input-row label {
 				text-align: center;
 				width: 25%;
 				padding: 11px 0px;
 				font-size: 15px;
 			}
-			
+
 			.mui-input-group {
 				margin-top: 20px;
 			}
-			
+
 			.mui-input-group:before,
 			.mui-input-group:after {
 				height: 0px;
 			}
-			
+
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				width: 75%;
 				font-size: 15px;
 			}
-			
+
 			.mui-input-group .mui-input-row:after {
 				width: 100%;
 				left: 0;
 				background: #e4e4e4;
 			}
-			
+
 			.mui-btn-block {
 				/*border-radius: 50px;*/
 				margin-top: 50px;
@@ -107,7 +107,7 @@
 					<input id="qunremark" type="text">
 				</div>
 			</form>
-			<button type="button" class="mui-btn mui-btn-blue mui-btn-block">提交</button>
+			<button id="commit" type="button" class="mui-btn mui-btn-blue mui-btn-block">提交</button>
 		</div>
 		<script type="text/javascript">
 			mui.init();
@@ -151,14 +151,15 @@
 					});
 				});
 
-				document.body.querySelector('.mui-btn-block').addEventListener('tap', function() {
+				document.getElementById("commit").addEventListener('tap', function() {
 					var qunName = document.getElementById("qunname"); //群名称
 					var qunIntroduce = document.getElementById("qunintroduce"); //群说明
 					var qunRemark = document.getElementById("qunremark"); //群备注
-					console.log('提交');
 					if(qunName.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
 						mui.toast('群名称不能为空');
 					} else {
+						document.getElementById("commit").disabled = true;
+						document.activeElement.blur();
 						createQun(qunName.value, qunIntroduce.value);
 					}
 				});

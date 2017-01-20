@@ -52,7 +52,7 @@ mui.plusReady(function() {
 		}
 		setShowCity(cityType);
 		events.fireToPageNone(path, 'citiesInfo', citiesArray);
-		
+
 	});
 	window.addEventListener('showCity', function(e) {
 		var curCity;
@@ -125,7 +125,7 @@ mui.plusReady(function() {
 			//更换标题
 			title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
 		}
-		if(title.innerHTML == '首页') {
+		if(title.innerHTML == '云盘') {
 			title.innerHTML = '';
 		}
 		changRightIcons(targetTab);
@@ -290,13 +290,13 @@ mui.plusReady(function() {
 					//					}
 				}
 				SECity = eduArray[0];
-				
+
 				setShowCity(0);
 				console.log('修改后的最终值为:' + JSON.stringify(eduArray));
 				}else{
 					mui.toast('暂无科教频道的定制城市，请选择')
 				}
-				
+
 			} else {
 				eduArray=[];
 				mui.toast(data.RspTxt);
@@ -387,7 +387,7 @@ mui.plusReady(function() {
 				}else{
 					mui.toast('暂无订阅展示频道的城市，请订阅！');
 				}
-				
+
 			} else {
 				mui.toast(data.RspTxt);
 			}
