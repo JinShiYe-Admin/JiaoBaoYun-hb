@@ -534,9 +534,10 @@
 						html3 = '<img src="../../image/utils/default_personalimage.png" />';
 					}
 					//名称
-					var html4 = '<p class="mui-ellipsis">' + member.stuname + '</p></div>';
+					var html4 = '<p id="stuname_' + member.stuid + '" class="mui-ellipsis"></p></div>';
 					li.innerHTML = html1 + html2 + html3 + html4;
 					qunBot.insertBefore(li, addTable);
+					document.getElementById("stuname_" + member.stuid).innerText = member.stuname;
 					//console.log('addMember|member:' + JSON.stringify(member));
 				}
 

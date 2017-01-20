@@ -404,8 +404,9 @@
 					type = data.CheckTypeStr + ' : ';
 				}
 				li.innerHTML = '<div class="time">' + data.PublishDate + '</div>\
-								<div class="mui-media-body" style="word-break:break-all;">' + type + data.MsgContent + '</div>';
+								<div id="MsgContent_' + data.TabId + '" class="mui-media-body" style="word-break:break-all;"></div>';
 				document.getElementById("top").insertBefore(li, document.getElementById("top").firstChild);
+				document.getElementById("MsgContent_" + data.TabId).innerText = type + data.MsgContent;
 			}
 
 			/**

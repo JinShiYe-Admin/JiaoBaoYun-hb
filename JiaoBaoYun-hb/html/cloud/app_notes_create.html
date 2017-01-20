@@ -8,9 +8,12 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<link rel="stylesheet" href="../../css/utils/MultiMedia.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/utils/MultiMedia.js"></script>
+
 		<style type="text/css">
 			body,
 			.mui-content {
@@ -31,8 +34,11 @@
 			<h1 class="mui-title" style="color: white;">笔记</h1>
 			<h1 id="finish" class="mui-title" style="text-align: right;right: 10px;">完成</h1>
 		</header>
+		<nav class="mui-bar mui-bar-tab"style="box-shadow: none;">
+			<div id="MultiMedia">
+			</div>
+		</nav>
 		<div class="mui-content">
-			<!--<span class="mui-icon iconfont icon-xie" style="color: gray;position: absolute;"></span>-->
 			<textarea id="notes" maxlength="2000" placeholder="✎ 分享你的学习与生活..." style="border: none;"></textarea>
 		</div>
 
@@ -40,9 +46,11 @@
 			mui.init();
 			mui.plusReady(function() {
 				var notes = document.getElementById("notes");
-				var height = plus.screen.resolutionHeight - (localStorage.getItem('StatusHeightNo') * 1 + 75); //屏幕高度-状态栏高度-顶部导航高度
+				var height = plus.screen.resolutionHeight - (localStorage.getItem('StatusHeightNo') * 1 + 75+ 50); //屏幕高度-状态栏高度-顶部导航高度
 
 				notes.style.height = height + 'px';
+
+				MultiMedia.addElement(document.getElementById("MultiMedia"));
 
 				document.getElementById('finish').addEventListener('tap', function() {
 					if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "") { //为空不允许发送

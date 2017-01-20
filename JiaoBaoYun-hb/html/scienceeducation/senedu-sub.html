@@ -73,6 +73,7 @@
 					console.log("科教子页面获取的城市信息：" + JSON.stringify(SECity));
 					//获取对应城市新闻
 					if (!SECity.array||SECity.array.length == 0) {
+						SECity.array=[];
 						SECity.eduIndex=1;
 						requestCityNews(SECity.acode);
 					}
@@ -93,7 +94,7 @@
 					requestCityNews(SECity.acode);
 				});
 				slide_selector.addSwipeListener();
-				
+
 				pullUpRefresh();
 
 				//点击每一项的监听

@@ -330,10 +330,10 @@
 					var html5 = '';
 					var unick = data.ugname; //学生姓名
 					if(data.NoteType == 1) { //点到
-						html5 = '<h4 style="margin-top:10px;">' + unick + '</h4>\
+						html5 = '<h4 id="unick_' + data.TabId + '" style="margin-top:10px;"></h4>\
 								 <div id="MsgContent_' + data.TabId + '" style="word-break:break-all;"></div>';
 					} else if(data.NoteType == 2) { //记事
-						html5 = '<h4 style="margin-top:10px;">' + unick + '</h4>\
+						html5 = '<h4 id="unick_' + data.TabId + '" style="margin-top:10px;"></h4>\
 							 	 <div id="MsgContent_' + data.TabId + '" style="word-break:break-all;"></div>';
 					}
 					div2.innerHTML = html4 + html5;
@@ -341,12 +341,11 @@
 					if(data.NoteType == 1) { //点到
 						document.getElementById(date0 + "_call").appendChild(div2);
 						document.getElementById("MsgContent_" + data.TabId).innerText = data.CheckTypeStr + ' : ' + data.MsgContent;
-
 					} else if(data.NoteType == 2) { //记事
 						document.getElementById(date0 + "_record").appendChild(div2);
 						document.getElementById("MsgContent_" + data.TabId).innerText = data.MsgContent;
-
 					}
+					document.getElementById("unick_" + data.TabId).innerText = unick;
 					beforeItemData = data;
 				}
 			}

@@ -8,8 +8,12 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<link rel="stylesheet" href="../../css/utils/MultiMedia.css" />
+
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/utils/MultiMedia.js"></script>
+
 		<style>
 			body,
 			.mui-content {
@@ -95,14 +99,14 @@
 			<ul class="mui-table-view" id="ul_table">
 				<div style="width: 100%;">
 					<!--<div class="mui-row">-->
-						<!--<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
+					<!--<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
 								<span class="mui-icon iconfont icon-date" style="color: deepskyblue;margin-right: 10px;"></span>
 								<font style="margin-right: 10px;">时间</font>
 							</div>
 							<div class="mui-col-sm-8 mui-col-xs-8" style="line-height: 36px;">
 								<font id="time" style="color: #AAAAAA;">2016年11月18日11:31</font>
 							</div>-->
-						<!--<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
+					<!--<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
 							<span class="mui-icon iconfont icon-xie" style="color: #86BE49;margin-right: 10px;"></span>
 							<font style="margin-right: 10px;">类型</font>
 						</div>
@@ -117,6 +121,8 @@
 						<div class="mui-input-row" style="margin: 0px 5px;">
 							<textarea id="textarea_record" rows="4" placeholder="记事：" maxlength="500"></textarea>
 						</div>
+						<div id="MultiMedia">
+						</div>
 					</div>
 				</div>
 			</ul>
@@ -130,6 +136,7 @@
 				console.log('从父页面获取的数据:' + JSON.stringify(subData));
 				document.getElementById("title").innerText = subData.data.StudentName;
 				//---从父页面获取数据---end---
+				MultiMedia.addElement(document.getElementById("MultiMedia"));
 
 				document.getElementById('commit').addEventListener('tap', function() {
 					var msgContent = document.getElementById("textarea_record").value;
@@ -137,7 +144,7 @@
 						mui.toast('请输入文字');
 					} else {
 						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-						var personalUNICK = '【'+window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick+'家长】';
+						var personalUNICK = '【' + window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick + '家长】';
 
 						//70.（云档案）新增某学生档案
 						//所需参数
