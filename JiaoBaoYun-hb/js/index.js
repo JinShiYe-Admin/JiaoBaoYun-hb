@@ -254,7 +254,7 @@ mui.plusReady(function() {
 		//44.获取个人的订制城市
 		postDataPro_PostUTcity(comData, wd, function(data) {
 			wd.close();
-			eduArray=[];
+			var eduArray=[];
 			console.log('获取个人的订制城市科教频道:' + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				if(data.RspData[0].citys){
@@ -296,10 +296,12 @@ mui.plusReady(function() {
 				}else{
 					mui.toast('暂无科教频道的定制城市，请选择')
 				}
-				events.fireToPageNone('../scienceeducation/scienceeducation_home.html', 'citiesInfo', eduArray);
+				
 			} else {
+				eduArray=[];
 				mui.toast(data.RspTxt);
 			}
+			events.fireToPageNone('../scienceeducation/scienceeducation_home.html', 'citiesInfo', eduArray);
 		});
 	}
 	var setShowCity = function(type) {
@@ -342,7 +344,6 @@ mui.plusReady(function() {
 		}
 		//44.获取个人的订制城市
 	function requestUserCity(callback) {
-		var showArray = [];
 		//所需参数
 		var comData = {
 			vvl: '1' //订制频道,0科教频道,1展示频道,其他待定
@@ -352,7 +353,7 @@ mui.plusReady(function() {
 		//44.获取个人的订制城市
 		postDataPro_PostUTcity(comData, wd, function(data) {
 			wd.close();
-			showArray=[];
+			var showArray=[];
 			console.log('获取个人的订制城市展示频道:' + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				if(data.RspData[0].citys) {
@@ -363,11 +364,11 @@ mui.plusReady(function() {
 						var tempStr = showArray[m];
 						//初始化model
 						var model_area = {
-							//						acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
-							//						aname: '', //节点名称
-							//						atype: '', //节点类型,0省1城市2区县
-							//						index:'',//当前页码
-							//						totalNo:''//总数量
+							//acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
+							//aname: '', //节点名称
+							//atype: '', //节点类型,0省1城市2区县
+							//index:'',//当前页码
+							//totalNo:''//总数量
 						};
 						console.log('tempStr:' + tempStr);
 						//将分成的每个值，再通过‘_’拆分为model
@@ -386,10 +387,11 @@ mui.plusReady(function() {
 				}else{
 					mui.toast('暂无订阅展示频道的城市，请订阅！');
 				}
-				events.fireToPageNone('../show/show_home.html', 'citiesInfo', showArray);
+				
 			} else {
 				mui.toast(data.RspTxt);
 			}
+			events.fireToPageNone('../show/show_home.html', 'citiesInfo', showArray);
 		});
 	}
 
