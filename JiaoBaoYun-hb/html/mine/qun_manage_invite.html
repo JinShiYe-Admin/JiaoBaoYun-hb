@@ -89,7 +89,7 @@
 			</div>
 			<button id="btn_search" style="position: absolute;right: 5px;width: 20%; border:1px solid white ;" type="button" class="mui-btn mui-btn-green mui-btn-outlined mui-pull-right">搜索</button>
 
-			<div id="bot" style="display: none;">
+			<div id="bot" style="display:none;">
 				<ul class="mui-table-view" style="margin-top: 50px;">
 					<div>
 						选择被邀请成员
@@ -98,27 +98,10 @@
 						<img id="uimg" class="mui-media-object mui-pull-left" style="border-radius:50% ;height: 42px;width: 42px;" src="../../image/utils/default_personalimage.png">
 						<div class="mui-media-body">
 							<div id="unick" class="mui-ellipsis"></div>
-							<font id="qunName">
-
-							</font>
-							<font id="type">
-
-							</font>
-							<!--<div>
-								<form class="mui-input-group" style="position:absolute;width: 23%;right:23%;background: transparent;top: 24px;">
-									<div class="mui-input-row mui-checkbox">
-										<label style="padding:11px 0px;">老师</label>
-										<input style="right: 20%;" name="checkbox1" value="teacher" type="checkbox">
-									</div>
-
-								</form>
-								<form class="mui-input-group" style="position:absolute;width: 23%;right:0px;background: transparent;top: 24px;">
-									<div class="mui-input-row mui-checkbox">
-										<label style="padding:11px 0px;">家长</label>
-										<input style="right: 20%;" name="checkbox1" value="parents" type="checkbox" checked>
-									</div>
-								</form>
-							</div>-->
+							<div style="float: left;">[</div>
+							<div id="type" style="float: right;"></div>
+							<div style="float: right;">]</div>
+							<div class="mui-ellipsis" id="qunName" style="max-width: 100%;"></div>
 						</div>
 					</li>
 					<div>请选择现有成员资料</div>
@@ -182,7 +165,7 @@
 				//					vtp: item.mstype //邀请人的类型（用户管理角色,0家长,1管理员,2老师,3学生）
 				//				}
 				console.log('邀请群成员获得的数据:' + JSON.stringify(data));
-				document.getElementById("qunName").innerText = '[' + data.gname + ']'; //显示群名
+				document.getElementById("qunName").innerText = data.gname; //显示群名
 				var type = ''; //记录显示的成员类型
 				switch(data.mstype) {
 					case 'student':
@@ -439,9 +422,10 @@
 					} else {
 						html2 = '<img src="../../image/utils/default_personalimage.png" />';
 					}
-					var html3 = '<p class="mui-ellipsis">' + data.stuname + '</p></div>';
+					var html3 = '<p id="stuname_' + data.stuid + '" class="mui-ellipsis"></p></div>';
 					li.innerHTML = html1 + html2 + html3;
 					document.getElementById("row_data").appendChild(li);
+					document.getElementById("stuname_" + data.stuid).innerText = data.stuname;
 				}
 
 				/**

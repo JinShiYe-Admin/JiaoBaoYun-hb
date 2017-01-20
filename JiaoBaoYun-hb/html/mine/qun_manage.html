@@ -413,6 +413,12 @@
 					window.addEventListener('qunNameChange', function(e) {
 						var data = e.detail;
 						document.getElementById("top_" + data.gid).innerText = data.gname;
+						mui.each(qunList, function(index, item) {
+							if(item.gid == data.gid) {
+								item.gname = data.gname;
+								return false;
+							}
+						});
 					});
 					//---方法---start---
 

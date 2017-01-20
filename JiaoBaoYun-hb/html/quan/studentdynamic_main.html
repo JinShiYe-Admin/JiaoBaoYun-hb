@@ -87,10 +87,10 @@
 				console.log('上传并修改资料头像，成功的回调' + JSON.stringify(successCB));
 				mui.toast('修改资料头像成功');
 				//获得主页面的webview
-				var zone = plus.webview.getWebviewById('../quan/tab-zone.html');
+				var cloud_home = plus.webview.getWebviewById('../cloud/cloud_home.html');
 				//触发tab-zone页面的setRead事件
-				mui.fire(zone, 'setRead', {
-					flag: 1,
+				mui.fire(cloud_home, 'stuImgeChanged', {
+					id: data.studentId,
 					img:successCB
 				});
 			}, function(errorCB) {

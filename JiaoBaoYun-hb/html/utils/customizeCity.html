@@ -142,6 +142,7 @@
 
 				//点击城市
 				mui('#allCity').on('tap', '.mui-table-view-cell', function() {
+
 					var classNameArry = this.getAttribute('class').split(' ');
 					var select = false;
 					mui.each(classNameArry, function(index, element) {
@@ -153,13 +154,18 @@
 					if(select) {
 						this.className = 'mui-table-view-cell mui-media';
 					} else {
-						this.className = 'mui-table-view-cell mui-media city-select';
+						if(mui('.city-select').length > 9) {
+							mui.toast('最多只允许订制10个城市');
+						} else {
+							this.className = 'mui-table-view-cell mui-media city-select';
+						}
 					}
 				});
 
 				//点击提交
 				document.getElementById('commit').addEventListener('tap', function() {
 					var tempCities = []; //选取的城市
+					commitCities = [];
 					var tempCityArray = cityArray;
 					//获取被选中的元素
 					mui('.city-select').each(function(index, element) {
@@ -167,14 +173,14 @@
 						mui.each(tempCityArray, function(index2, element2) {
 							if(elementAcode == element2.acode) {
 								tempCities.push(element2);
-								element2.index=commitCities.length;
+								element2.index = commitCities.length;
 								commitCities.push(element2); //设置提交的城市
 								return false;
 							}
 						});
 					});
-					for(var i  in commitCities){
-						commitCities[i].totalNo=commitCities.length;
+					for(var i in commitCities) {
+						commitCities[i].totalNo = commitCities.length;
 					}
 					console.log('commitCities:' + JSON.stringify(commitCities));
 					//将数组改为字符串
@@ -277,10 +283,10 @@
 					wd.close();
 					console.log('用户修改或添加区域阅读设置:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
-						var citiesInfo={
-								type:main.data.id,
-								cities:commitCities
-							};
+						var citiesInfo = {
+							type: main.data.id,
+							cities: commitCities
+						};
 						events.fireToPageNone(main.data.webid, 'customizeCity', citiesInfo);
 						mui.toast('订制城市成功');
 						mui.back();

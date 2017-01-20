@@ -717,9 +717,10 @@
 						//头像
 						var html3 = '<img id="stuimg_' + member.stuid + '" src="' + updateHeadImg(member.stuimg, 2) + '" />';
 						//名称
-						var html4 = '<p class="mui-ellipsis">' + member.stuname + '</p></div>';
+						var html4 = '<p id="stuname_' + member.stuid + '" class="mui-ellipsis"></p></div>';
 						li.innerHTML = html1 + html2 + html3 + html4;
 						qunBot.insertBefore(li, table);
+						document.getElementById("stuname_" + member.stuid).innerText = member.stuname;
 					}
 
 					/**
