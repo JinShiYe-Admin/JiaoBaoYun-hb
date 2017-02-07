@@ -201,14 +201,11 @@ var cloud = (function($, mod) {
 			case 'mpeg4':
 			case 'webm':
 				return 'html5-video';
-				break;
-			case 'psd': //图片类型
-			case 'jpeg':
+				break; 
+			case 'jpeg'://图片类型
 			case 'jpg':
 			case 'png':
 			case 'gif':
-			case 'webp':
-			case 'tiff':
 			case 'bmp':
 				return 'html5-imge';
 				break;
