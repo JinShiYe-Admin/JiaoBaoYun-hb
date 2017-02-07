@@ -61,6 +61,15 @@ mui.plusReady(function() {
 			events.openNewWindowWithData('edit-info.html', parseInt(this.getAttribute('pos')));
 		}
 	});
+
+	document.getElementById('uarea_li').addEventListener('tap', function() {
+		events.openNewWindowWithData('../utils/customizeCity.html', {
+			id: 'uarea', //0科教，1展现,uarea账号地区
+			webid: '/html/mine/account-info.html', //id对应webview的id
+			cities: [pInfo.uarea] //已经定制的城市数组
+		});
+	});
+
 	window.addEventListener('infoChanged', function() {
 		pInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
 		changeInfo(pInfo);
@@ -124,6 +133,7 @@ var changeInfo = function(pInfo) {
 	var uemail = document.getElementById('email');
 	var uname = document.getElementById('uname');
 	var usex = document.getElementById('sex');
+	var uarea = document.getElementById('uarea'); //地区
 	uimg.src = pInfo.uimg ? pInfo.uimg : "../../image/utils/default_personalimage.png";
 
 	if(pInfo.uid) {
@@ -148,5 +158,8 @@ var changeInfo = function(pInfo) {
 	if(pInfo.uname) {
 		uname.innerText = pInfo.uname;
 	}
+
+	//地区
+	uarea.innerText = pInfo.uarea.proname + ' ' + pInfo.uarea.aname
 
 }

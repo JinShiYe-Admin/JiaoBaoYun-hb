@@ -126,7 +126,7 @@
 				cities = main.data.cities;
 				console.log('订制城市：' + JSON.stringify(main.data));
 				//main.data = {
-				//	id: '0',//0科教，1展现
+				//	id: '0',//0科教，1展现，uarea账号地区
 				//	webid: '../scienceeducation/scienceeducation_home.html', //id对应webview的id
 				//	cities: eduArray //已经定制的城市数组
 				//}
@@ -134,7 +134,10 @@
 				//自己当前手机号对应的城市(可能修改后的)，从内存中获取
 				var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				addBeforeCity(tempInfo.uarea);
-
+				var selectId = '';
+				if(main.data.id == 'uarea') { //uarea账号地区
+					selectId = main.data.cities[0].acode; //修改账号地区时记录选择的元素id（acode）
+				}
 				//41.获取某个区域下的所有子区域或查询城市
 				requestAllCity();
 
@@ -142,22 +145,30 @@
 
 				//点击城市
 				mui('#allCity').on('tap', '.mui-table-view-cell', function() {
-
 					var classNameArry = this.getAttribute('class').split(' ');
-					var select = false;
+					var select = false; //被点击的城市是否是选择的
 					mui.each(classNameArry, function(index, element) {
 						if(element == 'city-select') {
 							select = true;
 							return false;
 						}
 					});
-					if(select) {
-						this.className = 'mui-table-view-cell mui-media';
-					} else {
-						if(mui('.city-select').length > 9) {
-							mui.toast('最多只允许订制10个城市');
+
+					if(main.data.id == '0' || main.data.id == '1') { //0科教，1展现
+						if(select) {
+							this.className = 'mui-table-view-cell mui-media';
 						} else {
+							if(mui('.city-select').length > 9) {
+								mui.toast('最多只允许订制10个城市');
+							} else {
+								this.className = 'mui-table-view-cell mui-media city-select';
+							}
+						}
+					} else if(main.data.id == 'uarea') { //uarea账号地区
+						if(!select) {
+							document.getElementById(selectId).setAttribute('class', 'mui-table-view-cell mui-media');
 							this.className = 'mui-table-view-cell mui-media city-select';
+							selectId = this.id;
 						}
 					}
 				});
@@ -183,16 +194,44 @@
 						commitCities[i].totalNo = commitCities.length;
 					}
 					console.log('commitCities:' + JSON.stringify(commitCities));
-					//将数组改为字符串
-					var tempStr = '';
-					for(var m in tempCities) {
-						var tempModel = tempCities[m];
-						var tempStr1 = tempModel.acode + '_' + tempModel.aname;
-						tempCities.splice(m, 1, tempStr1);
-						tempStr = tempCities.join('|');
+
+					if(main.data.id == '0' || main.data.id == '1') { //0科教，1展现
+						//将数组改为字符串
+						var tempStr = '';
+						for(var m in tempCities) {
+							var tempModel = tempCities[m];
+							var tempStr1 = tempModel.acode + '_' + tempModel.aname;
+							tempCities.splice(m, 1, tempStr1);
+							tempStr = tempCities.join('|');
+						}
+						//43.用户修改或添加区域阅读设置
+						requestCitySetting(tempStr);
+					} else if(main.data.id == 'uarea') { //uarea账号地区
+						var procode = ''; //省份代码
+						var proname = ''; //省份名称
+						var acode = commitCities[0].acode; //城市代码
+						var aname = commitCities[0].aname; //城市名称
+
+						procode = acode.substring(0, 2);
+						//acode=acode.substring(2, 4);
+						switch(procode) {
+							case '37':
+								proname = '山东省';
+								break;
+							case '42':
+								proname = '湖北省';
+								break;
+							case '46':
+								proname = '海南省';
+								break;
+							default:
+								break;
+						}
+						procode = procode + '0000';
+						var commitSrt = procode + ' ' + acode + '|' + proname + ' ' + aname;
+						console.log(commitSrt);
+						uareaPostReUinf(commitSrt);
 					}
-					//43.用户修改或添加区域阅读设置
-					requestCitySetting(tempStr);
 				});
 
 				//---监听---end---
@@ -223,7 +262,7 @@
 					select = 'city-select';
 				}
 				div.className = 'mui-col-xs-4 mui-col-sm-4'
-				div.innerHTML = '<li class="mui-table-view-cell mui-media ' + select + '" data-acode="' + data.acode + '">\
+				div.innerHTML = '<li id="' + data.acode + '" class="mui-table-view-cell mui-media ' + select + '" data-acode="' + data.acode + '">\
 									  <div class="mui-media-body mui-ellipsis">' + data.aname + '</div>\
 								   </li>';
 				document.getElementById("City_" + id).appendChild(div)
@@ -293,6 +332,45 @@
 					} else {
 						mui.toast(data.RspTxt);
 					}
+				});
+			}
+
+			//6.用户修改各项用户信息
+			function uareaPostReUinf(vvl) {
+				//所需参数
+				var comData = {
+					vtp: 'uarea', //uimg(头像),utxt(签名),unick(昵)称,usex(性别),uemail(邮件),uphone(手机绑定)uphoneq(手机解绑),uemailq(邮件解绑),uname(账号,只能修改一次,且只能字母开头,字母与数字,定了就不能修改),uarea(区域,值(省代码 市代码 区代码|省名称 市名称 区名称))
+					vvl: vvl //值(省代码 市代码 区代码|省名称 市名称 区名称)
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//6.用户修改各项用户信息
+				postDataPro_PostReUinf(comData, wd, function(data) {
+					console.log('6.用户修改各项用户信息success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						mui.toast('修改成功');
+						var pInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
+						//解析省市代码
+						var tempArray = vvl.split('|');
+						if(tempArray.length > 0) {
+							var temp0 = tempArray[0].split(' ');
+							var temp1 = tempArray[1].split(' ');
+							var model_area = {
+								procode: temp0[0], //省份code，自己添加的参数
+								proname: temp1[0], //省份名称，自己添加的参数
+								acode: temp0[1], //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
+								aname: temp1[1], //节点名称--城市名称
+								atype: '' //节点类型,0省1城市2区县
+							}
+							pInfo.uarea = model_area;
+						}
+						window.myStorage.setItem(window.storageKeyName.PERSONALINFO, pInfo);
+						events.fireToPageNone(main.data.webid, 'infoChanged');
+						mui.back();
+					} else {
+						mui.toast(data.RspTxt);
+					}
+					wd.close();
 				});
 			}
 		</script>
