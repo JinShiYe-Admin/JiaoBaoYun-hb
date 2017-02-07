@@ -340,6 +340,8 @@
 									if(data.RspCode == 0) {
 										//26.用户云盘顶层文件及文件夹获取
 										postFirstFile();
+										mui.toast('创建成功');
+										mui.closePopups();
 									} else if(data.RspCode == 8) {
 										mui.toast('操作失败！已存在相同的名字');
 									} else {
@@ -347,6 +349,7 @@
 									}
 								});
 							}
+							return false;
 						} else {
 							//点击取消
 						}

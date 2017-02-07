@@ -304,6 +304,7 @@
 											topFolderData[0].fdata.push(newFolderData);
 										}
 										mui.toast('创建成功');
+										mui.closePopups();
 									} else if(data.RspCode == 8) {
 										mui.toast('操作失败！已存在相同的名字');
 									} else {
@@ -311,6 +312,7 @@
 									}
 								});
 							}
+							return false;
 						} else {
 							//点击取消
 						}
@@ -428,11 +430,11 @@
 							var vvl1 = e.value;
 							if(vvl1.replace(/(^\s*)|(\s*$)/g, "") == "") {
 								mui.toast('名字不能为空');
-								return false;
 							} else if(!reg.test(e.value)) {
 								//特殊字符
 								mui.toast('名字中不能包含这些字符 \ / : * ? " < > | ');
-								return false;
+							} else if(fname == e.value) {
+								mui.toast('操作失败，不能与原名字相同');
 							} else {
 								//28.用户修改文件或文件夹名称
 								//所需参数
@@ -461,6 +463,7 @@
 												}
 											});
 										});
+										mui.closePopups();
 									} else if(data.RspCode == 8) {
 										mui.toast('操作失败！已存在相同的名字');
 									} else {
@@ -469,6 +472,7 @@
 									wd.close();
 								});
 							}
+							return false;
 						} else { //取消
 
 						}
