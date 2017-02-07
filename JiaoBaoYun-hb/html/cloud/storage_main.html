@@ -16,6 +16,7 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<link rel="stylesheet" href="../../css/cloud/file.css" />
+		<link rel="stylesheet" href="../../css/utils/preview.css" />
 		<script src="../../js/mui.min.js"></script>
 		<!--<script type="text/javascript" src="../../js/mui.js" ></script>-->
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
@@ -24,6 +25,8 @@
 		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<!--<script type="text/javascript" src="../../js/mui.lazyload.js"></script>-->
 		<!--<script type="text/javascript" src="../../js/mui.lazyload.img.js"></script>-->
+		<!--<script type="text/javascript" src="../../js/mui.zoom.js"></script>-->
+		<!--<script type="text/javascript" src="../../js/mui.previewimage.js"></script>-->
 		<style>
 			.iconfont {
 				line-height: 42px;
@@ -203,7 +206,6 @@
 					longtap: true, //默认为false
 				}
 			});
-
 			mui.plusReady(function() {
 				//				console.log('云存储');
 				//---初始化---start---
@@ -302,6 +304,7 @@
 											topFolderData[0].fdata.push(newFolderData);
 										}
 										mui.toast('创建成功');
+										mui.closePopups();
 									} else if(data.RspCode == 8) {
 										mui.toast('操作失败！已存在相同的名字');
 									} else {
@@ -309,6 +312,7 @@
 									}
 								});
 							}
+							return false;
 						} else {
 							//点击取消
 						}
@@ -369,7 +373,8 @@
 					var fid = this.getAttribute('data-fid'); //文件id
 					var fname = this.getAttribute('data-fname'); //文件或文件夹名字
 					var ftype = this.getAttribute('data-ftype'); //文件类型
-					console.log('点击文件或文件夹' + id + '|' + fid + "|" + fname + '|' + ftype);
+					var fpath = this.getAttribute('data-fpath'); //文件路径
+					console.log('点击文件或文件夹' + id + '|' + fid + "|" + fname + '|' + ftype + '|' + fpath);
 					if(ftype == '.file') { //点击文件夹
 						document.getElementById("title").innerText = fname;
 						if(document.getElementById("pid_" + fid) != null) {
@@ -385,7 +390,26 @@
 						};
 						//请求数据
 						requestData(comData, fname);
-					} else {}
+					} else {
+						var type = cloud.classifyHtml5Media(fname + ftype);
+						if(type == 'html5-imge') { //图片
+							//跳到展示图片界面
+							var targetPage = plus.webview.getWebviewById('storage_show_imge.html');
+							if(targetPage) {
+								events.fireToPageWithData('storage_show_imge.html', 'showFile', {
+									fpath: fpath //图片的七牛路径
+								});
+							} else {
+								events.openNewWindowWithData('storage_show_imge.html', {
+									fpath: fpath //图片的七牛路径
+								});
+							}
+						}
+					}
+				});
+
+				mui('#all').on('tap', 'img', function() {
+					console.log('img');
 				});
 
 				/**
@@ -406,11 +430,11 @@
 							var vvl1 = e.value;
 							if(vvl1.replace(/(^\s*)|(\s*$)/g, "") == "") {
 								mui.toast('名字不能为空');
-								return false;
 							} else if(!reg.test(e.value)) {
 								//特殊字符
 								mui.toast('名字中不能包含这些字符 \ / : * ? " < > | ');
-								return false;
+							} else if(fname == e.value) {
+								mui.toast('操作失败，不能与原名字相同');
 							} else {
 								//28.用户修改文件或文件夹名称
 								//所需参数
@@ -439,6 +463,7 @@
 												}
 											});
 										});
+										mui.closePopups();
 									} else if(data.RspCode == 8) {
 										mui.toast('操作失败！已存在相同的名字');
 									} else {
@@ -447,6 +472,7 @@
 									wd.close();
 								});
 							}
+							return false;
 						} else { //取消
 
 						}
@@ -635,8 +661,8 @@
 						//请求数据
 						requestData(comData, data.title);
 					}
-					var ul = document.getElementById("ul_file_0");
-					console.log(ul.innerHTML);
+					//var ul = document.getElementById("ul_file_0");
+					//console.log(ul.innerHTML);
 					//					var lazyLoad = mui('.mui-scroll-wrapper').imageLazyload({
 					//						placeholder: '../../image/utils/loading_128px.png',
 					//						destroy: false
@@ -674,7 +700,7 @@
 				 * @param {Object} data
 				 */
 				function additem(data) {
-					console.log('additem:' + JSON.stringify(data))
+					//console.log('additem:' + JSON.stringify(data))
 					var li = document.createElement('li');
 					li.setAttribute('id', 'fid_' + data.fid); //元素id
 					li.setAttribute('data-pid', data.pid); //父ID
@@ -712,7 +738,7 @@
 							if(type != '') {
 								html3 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
 							} else { //七牛能生成缩略图的图片或视频
-								html3 = '<img class="mui-media-object cloud-bottom-imge mui-pull-left" src="' + path + '" />';
+								html3 = '<img class="mui-media-object cloud-bottom-imge mui-pull-left" src="' + path + '"/>';
 
 								//html3 = '<img class="mui-media-object cloud-bottom-imge mui-pull-left" data-lazyload="' + path + '"/>';
 								//console.log(html3);

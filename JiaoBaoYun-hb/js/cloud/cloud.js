@@ -185,6 +185,54 @@ var cloud = (function($, mod) {
 	}
 
 	/**
+	 * 通过文件名后缀将文件分类,html5支持的格式
+	 * @param {Object} filename 文件名
+	 */
+	mod.classifyHtml5Media = function(filename) {
+		//把一个字符串分割成字符串数组
+		var nameList = filename.split(".");
+		//获取文件后缀
+		var type = nameList[nameList.length - 1];
+		//转换为小写
+		type = type.toLowerCase(); //转换为小写
+		switch(type) {
+			case 'ogg': //视频类型
+			case 'mp4':
+			case 'mpeg4':
+			case 'webm':
+				return 'html5-video';
+				break; 
+			case 'jpeg'://图片类型
+			case 'jpg':
+			case 'png':
+			case 'gif':
+			case 'bmp':
+				return 'html5-imge';
+				break;
+			case 'cda': //音频类型
+			case 'wav':
+			case 'cda':
+			case 'aif':
+			case 'aiff':
+			case 'au':
+			case 'mp1':
+			case 'mp2':
+			case 'mp3':
+			case 'ra':
+			case 'rm':
+			case 'ram':
+			case 'mid':
+			case 'Rmi':
+				return 'html5-audio';
+				break;
+			default:
+				return 'html5-file'; //未识别的文件类型
+				break;
+		}
+	}
+
+
+	/**
 	 * 通过文件地址获取文件名
 	 * @param {Object} filename 文件名
 	 */

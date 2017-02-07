@@ -1,0 +1,114 @@
+<!--
+	作者：444811716@qq.com
+	时间：2017-02-06
+	描述：查看七牛图片的原图
+-->
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
+		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/utils/TouchMove.js"></script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">图片</h1>
+		</header>
+		<div class="mui-content" id="content">
+		</div>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig: {
+					doubletap: true
+				},
+			});
+			var allImgeData = [];//记录所有的图片id和token
+			var content = null;
+
+			mui.plusReady(function() {
+				var wd = plus.nativeUI.showWaiting(window.storageKeyName.WAITING);
+				document.querySelector(".mui-content").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
+				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				content = document.getElementById("content");
+
+				getAllToken(main.data.fpath);
+
+				window.addEventListener('showFile', function(e) {
+					var wd2 = plus.nativeUI.showWaiting(window.storageKeyName.WAITING);
+					console.log('showFile');
+					var getToken = true;
+					mui.each(allImgeData, function(index, element) {
+						if(element.id == e.detail.data.fpath) {
+							var str = element.token;
+							var deadline = str.match(/\\?e=(\S*)&token=/)[1];
+							var myDate = new Date();
+							var getTime = myDate.getTime().toString();
+							getTime = getTime.substring(0, getTime.length - 2);
+							if(getTime < deadline) { //在过期时间内
+								getToken = false;
+								showImge(element.id, element.token);
+							} else {
+								allImgeData.splice(index, 1);
+							}
+							return false;
+						}
+					});
+					if(getToken) {
+						getAllToken(e.detail.data.fpath);
+					}
+				});
+
+				mui.back = function() {
+					document.getElementById("content").innerHTML = '';
+					plus.webview.hide(main, 'pop-out');
+				}
+
+			});
+
+			/**
+			 * 获取文件的路径
+			 */
+			function getAllToken(fpath) {
+				CloudFileUtil.getQNDownToken(window.storageKeyName.QNGETDOWNTOKENFILE + fpath, function(data) {
+					console.log('七牛下载token:' + data);
+					allImgeData.push({
+						id: fpath,//文件路径
+						token: data//文件对应的token
+					});
+					showImge(fpath, data);
+				}, function(xhr, type, errorThrown) {
+					plus.nativeUI.closeWaiting();
+					mui.toast('获取文件路径失败：' + type);
+					console.log('获取文件路径失败：' + type);
+				});
+			}
+
+			/**
+			 * 显示图片
+			 * @param {Object} id 图片的存储路径
+			 * @param {Object} path 图片的token
+			 */
+			function showImge(id, path) {
+				setTimeout(function() {
+					document.getElementById("content").innerHTML = '<img id="' + id + '" style="position: absolute;width: 80%;visibility: hidden;" src="' + path + '"/>';
+					document.getElementById(id).onload = function() {
+						document.getElementById(id).style.visibility = 'visible';
+						TouchMove.addTouchListener(document.getElementById(id));
+						plus.nativeUI.closeWaiting();
+					}
+				}, 300);
+			}
+		</script>
+	</body>
+
+</html>
