@@ -166,7 +166,9 @@
 						}
 					} else if(main.data.id == 'uarea') { //uarea账号地区
 						if(!select) {
-							document.getElementById(selectId).setAttribute('class', 'mui-table-view-cell mui-media');
+							if(document.getElementById(selectId)) {
+								document.getElementById(selectId).setAttribute('class', 'mui-table-view-cell mui-media');
+							}
 							this.className = 'mui-table-view-cell mui-media city-select';
 							selectId = this.id;
 						}
@@ -207,30 +209,33 @@
 						//43.用户修改或添加区域阅读设置
 						requestCitySetting(tempStr);
 					} else if(main.data.id == 'uarea') { //uarea账号地区
-						var procode = ''; //省份代码
-						var proname = ''; //省份名称
-						var acode = commitCities[0].acode; //城市代码
-						var aname = commitCities[0].aname; //城市名称
-
-						procode = acode.substring(0, 2);
-						//acode=acode.substring(2, 4);
-						switch(procode) {
-							case '37':
-								proname = '山东省';
-								break;
-							case '42':
-								proname = '湖北省';
-								break;
-							case '46':
-								proname = '海南省';
-								break;
-							default:
-								break;
+						if(commitCities.length == 0 || commitCities[0].acode == tempInfo.uarea.acode) {
+							mui.back();
+						} else {
+							var procode = ''; //省份代码
+							var proname = ''; //省份名称
+							var acode = commitCities[0].acode; //城市代码
+							var aname = commitCities[0].aname; //城市名称
+							procode = acode.substring(0, 2);
+							//acode=acode.substring(2, 4);
+							switch(procode) {
+								case '37':
+									proname = '山东省';
+									break;
+								case '42':
+									proname = '湖北省';
+									break;
+								case '46':
+									proname = '海南省';
+									break;
+								default:
+									break;
+							}
+							procode = procode + '0000';
+							var commitSrt = procode + ' ' + acode + '|' + proname + ' ' + aname;
+							console.log(commitSrt);
+							uareaPostReUinf(commitSrt);
 						}
-						procode = procode + '0000';
-						var commitSrt = procode + ' ' + acode + '|' + proname + ' ' + aname;
-						console.log(commitSrt);
-						uareaPostReUinf(commitSrt);
 					}
 				});
 
