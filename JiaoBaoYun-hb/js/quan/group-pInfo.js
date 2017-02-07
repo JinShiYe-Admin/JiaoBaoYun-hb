@@ -92,6 +92,7 @@ var manageAccountInfo = function(data) {
 		document.getElementById('person-remark').innerText=isSelf?pInfo.ugname:pInfo.bunick;
 		document.getElementById('data-info').innerText = pInfo.uid;
 		document.getElementById('person-space').innerText = isSelf?"我的空间":pInfo.unick+ '的空间' ;
+		document.getElementById('person-area').innerText=pInfo.uarea.split("|")[1];
 	}
 	/**
 	 *40.通过用户ID获取用户各项资料

@@ -1492,7 +1492,8 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"image/cloud/A_folder.png",
 					"js/mui.lazyload.js",
-					"js/mui.lazyload.img.js"
+					"js/mui.lazyload.img.js",
+					"css/utils/preview.css"
 				],
 				"refer": [],
 				"priority": 0
