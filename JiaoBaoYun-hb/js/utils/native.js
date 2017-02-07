@@ -11,7 +11,7 @@ var initNativeObjects = function() {
 };
 var showSoftInput = function(selector) {
     if (mui.os.android) {
-        imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+        imm.toggleSoftInput(2000, InputMethodManager.SHOW_FORCED);
     } else {
         nativeWebview.plusCallMethod({
             "setKeyboardDisplayRequiresUserAction": false
