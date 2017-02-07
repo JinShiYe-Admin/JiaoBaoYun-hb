@@ -1,5 +1,6 @@
 var class_space = (function(mod) {
 	var list;
+	var zanSpan;
 	/**
 	 * 
 	 * @param {Object} postData
@@ -73,15 +74,16 @@ var class_space = (function(mod) {
 	var createInnerHtml = function(item) {
 		var inner = '<div><div class="mui-pull-left head-img" >' +
 			'<img class="head-portrait" src="' + getUImg(item.uimg) + '"/>' +
-			'<p class="single-line">' +events.shortForString(item.unick,6)  + '</p>' +
+			'<p class="single-line">' + events.shortForString(item.unick, 6) + '</p>' +
 			'</div>' +
 			'<div class="chat_content_left">' +
 			'<div class="chat-body"><p class="chat-words">' +
 			item.MsgContent + '</p>' +
 			createImgsInner(item) +
 			'</div>' +
-			'<p class="chat-bottom">' + events.shortForDate(item.PublishDate)+
-			'<span tabId="' + item.TabId + '" class="mui-icon iconfont icon-support ' + setIsLike(item.IsLike) + '">(' + item.LikeCnt + ')</span><span class="mui-icon iconfont icon-xianshi">(' + item.ReadCnt + ')</span></p>' +
+			'<p class="chat-bottom">' + events.shortForDate(item.PublishDate) +
+			'<a href="#popover" tabId="' + item.TabId + '" class="mui-icon iconfont icon-support ' + setIsLike(item.IsLike) + '">(' + item.LikeCnt + 
+			')</a><span tabId="' + item.TabId +'" class="mui-icon iconfont icon-xianshi">(' + item.ReadCnt + ')</span></p>' +
 			'</div></div>';
 		return inner;
 	}
@@ -180,7 +182,7 @@ var pageSize = 10;
 mui.plusReady(function() {
 	var postData = plus.webview.currentWebview().data;
 	postData.userId = parseInt(postData.userId);
-
+	events.preload('classSpace-persons.html',200);
 	setReaded(postData.userId, postData.classId);
 	console.log('班级空间获取值：' + JSON.stringify(postData));
 	class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
@@ -229,22 +231,75 @@ var setReaded = function(userId, classId) {
 	})
 }
 var setListener = function(userId) {
-	mui('.mui-table-view').on('tap', '.isNotLike', function() {
-		var span = this;
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		postDataPro_setClassSpaceLikeByUser({
-			userId: userId,
-			classSpaceId: parseInt(this.getAttribute('tabId'))
-		}, wd, function(data) {
-			wd.close();
-			console.log("点赞后返回数据：" + JSON.stringify(data));
-			if(data.RspData.Result == 1) {
-				span.className = "mui-icon iconfont icon-support isLike";
-				console.log('更改是否已点赞状态' + span.className)
-				span.innerText = '(' + (parseInt(span.innerText.replace('(', '').replace(')', '')) + 1) + ')'
+	var zan = document.getElementById('zan');
+	/**
+	 * 未点赞按钮点击事件
+	 */
+	mui('.mui-table-view').on('tap', '.icon-support', function() {
+		zanSpan = this;
+		//未点赞
+		if(jQuery(this).hasClass('isNotLike')) {
+			zan.isLike = false;
+			zan.innerText = '点赞';
+		} else { //已点赞
+			zan.isLike = true;
+			zan.innerText = '取消点赞';
+		}
+	
+	})
+
+	//点赞
+	document.getElementById('zan').addEventListener('tap', function() {
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			if(this.isLike) {
+				postDataPro_delClassSpaceLikeByUser({
+					userId: userId,
+					classSpaceId: parseInt(zanSpan.getAttribute('tabId'))
+				}, wd, function(data) {
+					wd.close();
+					console.log('取消点赞获取的数据:'+JSON.stringify(data))
+					if(data.RspData.Result == 1) {
+						mui.toast('您已取消点赞');
+						zanSpan.className = "mui-icon iconfont icon-support isNotLike";
+						console.log('更改是否已点赞状态' + zanSpan.className)
+						zanSpan.innerText = '(' + (parseInt(zanSpan.innerText.replace('(', '').replace(')', '')) - 1) + ')'
+					} else {
+						mui.toast('取消点赞失败！')
+					}
+					mui('.mui-popover').popover('toggle');
+				})
 			} else {
-				mui.toast('点赞失败！')
+				postDataPro_setClassSpaceLikeByUser({
+					userId: userId,
+					classSpaceId: parseInt(zanSpan.getAttribute('tabId'))
+				}, wd, function(data) {
+					wd.close();
+					console.log("点赞后返回数据：" + JSON.stringify(data));
+					if(data.RspData.Result == 1) {
+						mui.toast('点赞成功！')
+						zanSpan.className = "mui-icon iconfont icon-support isLike";
+						console.log('更改是否已点赞状态' + zanSpan.className)
+						zanSpan.innerText = '(' + (parseInt(zanSpan.innerText.replace('(', '').replace(')', '')) + 1) + ')'
+					} else {
+						mui.toast('点赞失败！')
+					}
+						mui('.mui-popover').popover('toggle');
+				})
 			}
+
+		})
+		//查看
+	document.getElementById('check').addEventListener('tap', function() {
+		events.fireToPageWithData('classSpace-persons.html', 'personsList', {
+			type: 1,
+			classSpaceId: parseInt(zanSpan.getAttribute('tabId'))
+		})
+		mui('.mui-popover').popover('toggle');
+	})
+	mui('.mui-table-view').on('tap','.icon-xianshi',function(){
+		events.fireToPageWithData('classSpace-persons.html', 'personsList', {
+			type: 0,
+			classSpaceId: parseInt(this.getAttribute('tabId'))//id
 		})
 	})
 }

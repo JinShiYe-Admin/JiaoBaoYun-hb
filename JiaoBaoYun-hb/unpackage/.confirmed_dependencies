@@ -123,7 +123,8 @@
 			"html/quan/parentZone.html",
 			"html/mine/qun_manage_info.html",
 			"html/quan/class_space.html",
-			"html/quan/studentdynamic_main.html"
+			"html/quan/studentdynamic_main.html",
+			"html/mine/qun_manage.html"
 		]
 	},
 	"html/quan/tab-zone.html": {
@@ -421,7 +422,9 @@
 			"css/iconfont/iconfont.css",
 			"fonts/iconfont.ttf"
 		],
-		"refer": []
+		"refer": [
+			"html/quan/classSpace-persons.html"
+		]
 	},
 	"html/homework/homework-tea-sub.html": {
 		"resources": [
@@ -2300,6 +2303,15 @@
 		],
 		"refer": [
 			"html/cloud/keeprecord_callorrecord_sub.html"
+		]
+	},
+	"html/quan/classSpace-persons.html": {
+		"resources": [
+			"js/quan/classSpace-persons.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/grideControl.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	}
 }

@@ -27,7 +27,7 @@ var createGride = function(gride,array) {
 			//子控件的innerHTML
 			li.innerHTML = '<a href="#">' +
 				'<img class="circular-square" src="' + getImg(map.uimg)+'"/></br>' +
-				'<small class="">' + map.ugname + '</small>' +
+				'<small class="">' + getName(map) + '</small>' +
 				'</a>';
 			/**
 			 * 子控件加载点击监听事件
@@ -39,6 +39,9 @@ var createGride = function(gride,array) {
 			gride.appendChild(li)
 		})
 	}
+var getName=function(map){
+	return map.ugname?map.ugname:map.unick;
+}
 var getImg=function(img){
  return	img==null?"../../image/utils/default_personalimage.png":img
 }

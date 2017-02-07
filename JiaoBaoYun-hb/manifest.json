@@ -553,7 +553,9 @@
 					"css/iconfont/iconfont.css",
 					"fonts/iconfont.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"html/quan/classSpace-persons.html"
+				],
 				"priority": 0
 			},
 			"html/quan/studentdynamic_main.html": {
@@ -788,7 +790,8 @@
 					"html/quan/parentZone.html",
 					"html/mine/qun_manage_info.html",
 					"html/quan/class_space.html",
-					"html/quan/studentdynamic_main.html"
+					"html/quan/studentdynamic_main.html",
+					"html/mine/qun_manage.html"
 				],
 				"priority": 0
 			},
@@ -2791,6 +2794,17 @@
 			"html/cloud/keeprecord_callorrecord_main.html": {
 				"resources": [
 					"html/cloud/keeprecord_callorrecord_sub.html"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/classSpace-persons.html": {
+				"resources": [
+					"js/quan/classSpace-persons.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/utils/grideControl.js",
+					"css/mui.min.css",
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0
