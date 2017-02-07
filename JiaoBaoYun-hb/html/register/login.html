@@ -266,6 +266,20 @@
 										tempInfo.unick = tepI0000.unick;
 										tempInfo.usex = tepI0000.usex;
 										tempInfo.utxt = tepI0000.utxt;
+										//解析省市代码
+										var tempArray = tepI0000.uarea.split('|');
+										if(tempArray.length > 0) {
+											var temp0 = tempArray[0].split(' ');
+											var temp1 = tempArray[1].split(' ');
+											var model_area = {
+												procode: temp0[0], //省份code，自己添加的参数
+												proname: temp1[0], //省份名称，自己添加的参数
+												acode: temp0[1], //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
+												aname: temp1[1], //节点名称--城市名称
+												atype: '' //节点类型,0省1城市2区县
+											}
+											tempInfo.uarea = model_area;
+										}
 										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
 										//
 										events.infoChanged();
@@ -441,7 +455,7 @@
 										data.RspData.uarea = model_area;
 									}
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
-									console.log('登录保存的个人信息：' + JSON.stringify(data.RspData)); 
+									console.log('登录保存的个人信息：' + JSON.stringify(data.RspData));
 									//
 									events.infoChanged();
 									//存储自动登录
