@@ -96,15 +96,15 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>群名称：</label>
-					<input id="qunname" type="text" placeholder="请为你们的群起一个给力的名字吧！">
+					<input id="qunname" type="text" placeholder="请为你们的群起一个给力的名字吧！" maxlength="20">
 				</div>
 				<div class="mui-input-row">
 					<label>群说明：</label>
-					<input id="qunintroduce" type="text" placeholder="请简单介绍一下本群！">
+					<input id="qunintroduce" type="text" placeholder="请简单介绍一下本群！" maxlength="30">
 				</div>
 				<div class="mui-input-row">
 					<label>群备注：</label>
-					<input id="qunremark" type="text">
+					<input id="qunremark" type="text" maxlength="30">
 				</div>
 			</form>
 			<button id="commit" type="button" class="mui-btn mui-btn-blue mui-btn-block">提交</button>
@@ -113,18 +113,6 @@
 			mui.init();
 			mui.plusReady(function() {
 				var qunImgPath = '';
-				//				var Width = plus.screen.resolutionWidth;
-				//				var marginLeft = '';
-				//				if(mui.os.ios) {
-				//					marginLeft = (Width - 100) / 2 + 'px';
-				//				} else {
-				//					marginLeft = (Width) / 8 + 'px';
-				//				}
-				//addQunImg(); //显示上传群头像的图标
-				//输入的字数限制
-				jQuery('#qunname').prop("maxLength", "20");
-				jQuery('#qunintroduce').prop("maxLength", "30");
-				jQuery('#qunremark').prop("maxLength", "30");
 				document.getElementById('choose').addEventListener('tap', function() {
 					//console.log('选择群图标');
 					var btnArray = [{
@@ -260,31 +248,41 @@
 						gnote: gnote, //群说明
 						gimg: '', //群头像
 					};
+					var gid = ''; //群id
 					// 等待的对话框
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					postDataPro_PostCrGrp(comData, wd, function(data) {
 						console.log('7.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
-							console.log('创建群成功');
+							gid = data.RspData;
 							if(qunImgPath == '') {
-								events.fireToPageNone('/html/mine/qun_manage.html', 'refresh');
-								events.fireToPageNone('/html/mine/qun_data.html', 'refresh');
-								events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
+								changInfo({
+									gid: gid, //群id
+									gname: gname, //群名
+									gnote: gnote, //群说明
+									gimg: '', //群头像
+								});
 								mui.toast('创建群成功');
 								mui.back();
 							} else {
 								plus.nativeUI.showWaiting('正在加载中');
 								uploadQunHeadImge(data.RspData, qunImgPath, function(successCB) {
-									events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
-									events.fireToPageNone('/html/mine/qun_manage.html', 'refresh');
-									events.fireToPageNone('/html/mine/qun_data.html', 'refresh');
+									changInfo({
+										gid: gid, //群id
+										gname: gname, //群名
+										gnote: gnote, //群说明
+										gimg: successCB, //群头像
+									});
 									plus.nativeUI.closeWaiting();
 									mui.toast('创建群成功');
 									mui.back();
 								}, function(errorCB) {
-									events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
-									events.fireToPageNone('/html/mine/qun_manage.html', 'refresh');
-									events.fireToPageNone('/html/mine/qun_data.html', 'refresh');
+									changInfo({
+										gid: gid, //群id
+										gname: gname, //群名
+										gnote: gnote, //群说明
+										gimg: '', //群头像
+									});
 									plus.nativeUI.closeWaiting();
 									mui.toast('创建群成功但是上传群头像失败：' + JSON.stringify(errorCB));
 									mui.back();
@@ -296,6 +294,15 @@
 						}
 						wd.close();
 					});
+				}
+
+				/**
+				 * 创建群后修改界面
+				 */
+				function changInfo(data) {
+					events.fireToPageWithData('qun_manage_sub.html', 'createQun', data);
+					events.fireToPageNone('/html/mine/qun_data.html', 'refresh');
+					events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 				}
 
 				/**
@@ -354,7 +361,7 @@
 											wd2.close();
 											console.log('8_PostReGinfo:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 											if(data.RspCode == 0) {
-												successCallBack();
+												successCallBack(gimgPath);
 											} else {
 												errorCallBack();
 												mui.toast(data.RspTxt);

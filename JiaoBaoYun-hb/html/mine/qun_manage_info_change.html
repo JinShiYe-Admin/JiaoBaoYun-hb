@@ -112,8 +112,8 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
-//				var Width = plus.screen.resolutionWidth;
-//				var marginLeft = (Width) / 8 + 'px';
+				//				var Width = plus.screen.resolutionWidth;
+				//				var marginLeft = (Width) / 8 + 'px';
 				//addQunImg(); //显示上传群头像的图标
 				var qname = document.getElementById("gname"); //群名称
 				var qnote = document.getElementById("gnote"); //群说明
@@ -142,8 +142,8 @@
 						qname.value = data.RspData[0].gname;
 						qnote.value = data.RspData[0].gnote;
 						//qremark.value=data.RspData[0].;
-						if(data.RspData[0].gimg != '' && data.RspData[0].gimg != null) {
-							document.getElementById("choose").innerHTML = '<img src="' + updateHeadImg(data.RspData[0].gimg) + '" style="margin-top:0px;border: 1px solid #F2F2F2;border-radius: 50%;height: 100px;width: 100px;" />';
+						if(data.RspData[0].gimg != '' && data.RspData[0].gimg != null && data.RspData[0].gimg != 'null') {
+							document.getElementById("choose").innerHTML = '<img src="' + updateHeadImg(data.RspData[0].gimg, 2) + '" style="margin-top:0px;border: 1px solid #F2F2F2;border-radius: 50%;height: 100px;width: 100px;" />';
 						}
 						//upQN();
 					} else {
@@ -198,7 +198,13 @@
 					id: subData.gid, //资料id
 				}, function(successCB) {
 					console.log('上传并修改资料头像，成功的回调' + JSON.stringify(successCB));
-					document.getElementById("choose").innerHTML = '<img src="' + updateHeadImg(successCB) + '" style="margin-top:0px;border: 1px solid #F2F2F2;border-radius: 50%;height: 100px;width: 100px;"/>';
+					document.getElementById("choose").innerHTML = '<img src="' + updateHeadImg(successCB, 2) + '" style="margin-top:0px;border: 1px solid #F2F2F2;border-radius: 50%;height: 100px;width: 100px;"/>';
+					var main2 = plus.webview.getWebviewById('qun_manage_sub.html');
+					mui.fire(main2, 'changeQunInfo', {
+						gid: subData.gid, //群id
+						type: 'gimg', //修改的类型
+						value: successCB //修改后的值
+					});
 					mui.toast('修改群头像成功');
 				}, function(errorCB) {
 					console.log('上传并修改资料头像，失败的回调' + JSON.stringify(errorCB));
