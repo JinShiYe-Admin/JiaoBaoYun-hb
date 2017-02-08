@@ -39,6 +39,10 @@
 			});
 
 			mui.plusReady(function() {
+				var wd = plus.nativeUI.showWaiting('加载中...', {
+					back: 'none'
+				});
+
 				//---获取数据并传递数据---start---
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var data = main.data; //接收A页面传入参数值
@@ -51,8 +55,12 @@
 				}, {
 					data: data
 				});
+
 				sub.addEventListener('loaded', function() {
 					main.append(sub);
+					setTimeout(function() {
+						wd.close();
+					}, 250);
 				});
 				//---获取数据并传递数据---end---
 			});
