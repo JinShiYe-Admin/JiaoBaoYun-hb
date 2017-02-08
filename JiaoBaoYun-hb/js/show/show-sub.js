@@ -4,6 +4,7 @@ var pageIndex = 1;
 var totalPage = 0;
 var id = 0; //cell的id
 var pageFlag = 1;
+var pullFlag = 0;
 mui.init();
 var zonepArray;
 var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
@@ -25,6 +26,7 @@ mui.plusReady(function() {
 		console.log("展示子页面获取的城市信息：" + JSON.stringify(showCity));
 		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 		pageIndex = 1;
+		pullFlag = 0;
 		requestData();
 	})
 
@@ -186,6 +188,7 @@ var requestData = function() {
 			console.log('展示获取的数据：' + JSON.stringify(data));
 			if(data.RspCode == 0 && data.RspData.Data.length > 0) {
 				totalPage = data.RspData.TotalPage
+				console.log('11111111111======'+totalPage)
 				getPersonIds(data.RspData.Data);
 			} else {
 				var table = document.body.querySelector('.mui-table-view');
@@ -240,9 +243,17 @@ var getPersonalInfo = function(data, ids) {
 			console.log('展示子页面获取的个人信息：' + JSON.stringify(personsData));
 			if(personsData.RspCode == 0) {
 				data = rechargeData(data, personsData.RspData)
-				zonepArray = data;
-				console.log("重组后的数据：" + JSON.stringify(data));
-				setData(data);
+				if(pullFlag == 1) {
+					console.log('888888888888'+JSON.stringify(zonepArray))
+					console.log('999999999999'+JSON.stringify(data))
+					//合并数组
+					zonepArray = zonepArray.concat(data);
+				} else {
+					zonepArray = data;
+				}
+
+				console.log("重组后的数据：" + JSON.stringify(zonepArray));
+				setData(zonepArray);
 			} else {
 
 			}
@@ -526,6 +537,7 @@ var pullUpFresh = function() {
 		console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
 		if(pageIndex < totalPage) {
 			pageIndex++;
+			pullFlag=1;
 			requestData();
 		} else {
 			mui.toast('没有更多了');

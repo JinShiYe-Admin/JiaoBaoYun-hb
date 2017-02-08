@@ -44,11 +44,11 @@ var dynamiclistitem = (function($, mod) {
 		var html2 = '<img class=" dynamic-personal-image" src="' + InfoList[0] + '"></div>';
 		var html3 = '<div class="mui-media-body dynamic-padding-left-10px">' + closeempty;
 		//姓名
-		var html4 = '<h6 style = "color:black">' + InfoList[1] + '</h6>';
+		var html4 = '<h6 style = "color:black;font-size:16px">' + InfoList[1] + '</h6>';
 		//时间
 		var html5 = '<p>' + InfoList[2] + '</p></div></div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext">';
-		var html7 = '<font>';
+		var html7 = '<font style = "color:black;font-size:14px">';
 		//内容
 		var html8 = InfoList[3];
 		var html9 = '</font></div></div>';
@@ -187,14 +187,14 @@ var dynamiclistitem = (function($, mod) {
 			var replyComment = '';
 			var html1 = '<div id="replyComment' + id + '-' + index + '-' + '评论' + '" class="mui-media-body replyComment">';
 			var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + element.UserIdName + '</font>';
-			var html3 = '<font class="common-font-family-Regular">：' + element.CommentContent + '</font>';
+			var html3 = '<font class="common-font-family-Regular" style = "font-size:14px">：' + element.CommentContent + '</font>';
 			firstComment = html1 + html2 + html3;
 			if(element.Replys.length != 0) {
 				for(var i = 0; i < element.Replys.length; i++) {
 					var tempModel = element.Replys;
 					var html1 = '<div id="replyComment' + id + '-' + index + '-' + i + '" class="mui-media-body replyComment">';
 					var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].UserIdName + '</font>';
-					var html3 = '<font class="common-font-family-Regular">回复</font>';
+					var html3 = '<font class="common-font-family-Regular" style = "font-size:14px">回复</font>';
 					var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].ReplyIdName + '</font>';
 					var html5 = '<font class="common-font-family-Regular">：' + tempModel[i].CommentContent + '</font></div>';
 					replyComment = replyComment + html1 + html2 + html3 + html4 + html5;
