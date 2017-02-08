@@ -29,7 +29,7 @@ var events = (function(mod) {
 	mod.openNewWindow = function(targetHTML) {
 			mui.openWindow({
 				url: targetHTML,
-				id: targetHTML,
+				id: targetHTML.split('/')[targetHTML.split('/').length - 1],
 				show: {
 					anishow: 'slide-in-right',
 					duration: 250
@@ -53,7 +53,7 @@ var events = (function(mod) {
 	mod.openNewWindowWithData = function(targetHTML, passData) {
 		mui.openWindow({
 			url: targetHTML,
-			id: targetHTML,
+			id: targetHTML.split('/')[targetHTML.split('/').length - 1],
 			extras: {
 				data: passData
 			},
@@ -87,7 +87,7 @@ var events = (function(mod) {
 			},
 			subpages: [{
 				url: subPage,
-				id: subPage,
+				id: subPage.split('/')[subPage.split('/').length - 1],
 				styles: {
 					top: (localStorage.getItem('StatusHeightNo') * 1 + 45 + height) + 'px',
 					bottom: bottom + 'px',
@@ -160,7 +160,7 @@ var events = (function(mod) {
 				setTimeout(function() {
 					mui.preload({
 						url: tarPage,
-						id: tarPage, //默认使用当前页面的url作为id
+						id: tarPage.split('/')[tarPage.split('/').length - 1], //默认使用当前页面的url作为id
 						styles: { //窗口参数
 							top: '0px',
 							bottom: '0px'
@@ -203,7 +203,7 @@ var events = (function(mod) {
 			//获得目标页面
 			if(!targetPage) {
 				targetPage = plus.webview.getWebviewById(tarPage);
-//				console.log(typeof(targetPage))
+				//				console.log(typeof(targetPage))
 			}
 			//触发目标页面的listener事件
 			mui.fire(targetPage, listener, {
@@ -319,7 +319,7 @@ var events = (function(mod) {
 	mod.blurBack = function(blurItemId) {
 		var oldBack = mui.back;
 		mui.back = function() {
-//			plus.webview.currentWebview().blur();
+			//			plus.webview.currentWebview().blur();
 			document.getElementById(blurItemId).blur();
 			oldBack();
 		}
