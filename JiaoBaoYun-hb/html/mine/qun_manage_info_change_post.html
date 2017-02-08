@@ -73,10 +73,11 @@
 									value: vvl //修改后的值
 								});
 								if(subData.type == 'gname') {
-									var main2 = plus.webview.getWebviewById('/html/mine/qun_manage.html');
-									mui.fire(main2, 'qunNameChange', {
+									var main2 = plus.webview.getWebviewById('qun_manage_sub.html');
+									mui.fire(main2, 'changeQunInfo', {
 										gid: subData.gid, //群id
-										gname: vvl //修改后的值
+										type:'gname',//修改的类型
+										value: vvl //修改后的值
 									});
 								}
 								mui.back();
