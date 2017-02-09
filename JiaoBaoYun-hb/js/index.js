@@ -85,7 +85,7 @@ mui.plusReady(function() {
 	var self = plus.webview.currentWebview();
 	for(var i = 0; i < 4; i++) {
 		var temp = {};
-		var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
+		var sub = plus.webview.create(subpages[i], subpages[i].split('/')[subpages[i].split('/').length-1], subpage_style);
 		if(i > 0) {
 			sub.hide();
 		} else {
