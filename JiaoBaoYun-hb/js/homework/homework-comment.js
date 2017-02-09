@@ -1,11 +1,14 @@
 var workInfo;
 var personalUTID;
 mui.init();
-mui('.mui-scroll').scroll();
+mui('.mui-scroll-wrapper').scroll({
+	 indicators: true, //是否显示滚动条
+});
 mui.plusReady(function() {
+	
 	mui.previewImage();
 	window.addEventListener('workInfo', function(e) {
-		
+		mui('.mui-scroll-wrapper').scroll().scrollTo(0,0,100);//100毫秒滚动到顶
 		workInfo = e.detail.data;
 		console.log('老师评价页面获取的作业信息：' + JSON.stringify(workInfo))
 		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
@@ -27,7 +30,7 @@ mui.plusReady(function() {
 var setStuInfo = function() {
 	var uimg = workInfo.uimg;
 	var ugnick = workInfo.ugnick;
-	document.getElementById('stu-head').src = uimg;
+	document.getElementById('stu-head').src = updateHeadImg(uimg,2);
 	document.getElementById('stu-name').innerText = ugnick;
 }
 var setCondition = function() {

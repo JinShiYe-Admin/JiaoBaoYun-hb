@@ -669,6 +669,39 @@ var postDataPro_PostTnews = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINURL + 'PostTnews', enData, commonData, 1, wd, callback);
 }
 
+//46.科教频道新闻添加
+//所需参数
+//		var comData = {
+//			title:'',//新闻标题,50
+//			tnote:'',//新闻摘要,50
+//			tips:'',//新闻要素组,50,时间(必须为时间格式)|来源(或作者或其他要素),’|’分隔
+//			timgs:'',//三张新闻图片url组,500,url1|url2|url3
+//			tarea:'',//新闻区域编码,50,由系统提供,在区域附件表中
+//			turl:''//新闻原链接,200,新闻原来的url地址
+//		};
+//返回值：
+var postDataPro_PostTnewsA = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostTnewsA', enData, commonData, 1, wd, callback);
+}
+
+//47.获取APP版本号
+//所需参数
+//		var comData = {
+//			uuid:'',//用户设备号
+//			appid:'',//应用ID
+//			vvl:''//安卓：android,苹果：ios
+//		};
+//返回值：
+var postDataPro_PostVerInfo = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostVerInfo', enData, commonData, 0, wd, callback);
+}
+
 //---------------------------------------家校圈-----------------------------------------------------------------------------------------------------------
 //家校圈接口
 
