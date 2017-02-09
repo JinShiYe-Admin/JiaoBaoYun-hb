@@ -46,14 +46,14 @@
 			mui.init();
 			mui.plusReady(function() {
 				//隐私
-				events.addTap('yinsi', function() {
-					mui.toast('此功能暂未开放');
-				});
+//				events.addTap('yinsi', function() {
+//					mui.toast('此功能暂未开放');
+//				});
 				//修改密码
 				events.preload('../register/modify_password.html');
 				events.addTap('change-passwords', function() {
 						events.fireToPageNone('../register/modify_password.html', 'changePasswords');
-						events.openNewWindow('../register/modify_password.html');
+						plus.webview.getWebviewById('modify_password.html').show()
 					})
 					//退出
 				events.addTap('quit', function() {

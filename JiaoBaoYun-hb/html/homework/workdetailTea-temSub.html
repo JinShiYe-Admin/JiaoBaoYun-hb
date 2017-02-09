@@ -40,7 +40,7 @@
 			<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
 
 			<script type="text/javascript">
-			var selectCell;
+				var selectCell;
 				var homeworkModel = {};
 				var homeworkNodes = {
 					list: document.getElementById('list'), //临时作业列表
@@ -57,7 +57,7 @@
 
 						selectCell.homeworkInfo.IsCommented = 'true';
 					})
-					
+
 					window.addEventListener('workDetail', function(e) {
 						resetData();
 						console.log('作业主界面传送的值：' + JSON.stringify(e.detail.data));
@@ -71,7 +71,7 @@
 						var comData = {
 							teacherId: personalUTID, //教师Id
 							classId: homeworkModel.gid, //班级群Id；
-							date: date//查看的日期，不带时间；
+							date: date //查看的日期，不带时间；
 						};
 						requestAnswerList(comData);
 						refeshUI();
@@ -108,7 +108,7 @@
 								vvl: homeworkModel.gid, //群ID，查询的值
 								vvl1: '-1' //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 							};
-							console.log('comData1:'+JSON.stringify(comData1));
+							console.log('comData1:' + JSON.stringify(comData1));
 							//13.通过群ID获取群的正常用户
 							postDataPro_PostGusers(comData1, wd, function(data1) {
 								wd.close();
@@ -150,25 +150,25 @@
 					});
 				}
 				var refeshUI = function() {
-					for(var i = 0; i <answerListArray.length; i++) {
+					for(var i = 0; i < answerListArray.length; i++) {
 						var li = document.createElement('li');
 						li.className = 'mui-table-view-cell mui-media';
 						li.homeworkInfo = answerListArray[i];
-						mui.extend( this.homeworkInfo, homeworkModel);
+						mui.extend(this.homeworkInfo, homeworkModel);
 						li.homeworkInfo.workType = 0;
 						var IsCommented;
-if(answerListArray[i].IsCommented==true){
-	IsCommented = '已评'
-}else{
-	IsCommented = '未评'
-}
+						if(answerListArray[i].IsCommented == true) {
+							IsCommented = '已评'
+						} else {
+							IsCommented = '未评'
+						}
 						li.innerHTML =
-							'<img id="img" class="mui-media-object mui-pull-left dynamic-personal-image " src="'+updateHeadImg(answerListArray[i].uimg)+'" />' +
+							'<img id="img" class="mui-media-object mui-pull-left dynamic-personal-image " src="' + updateHeadImg(answerListArray[i].uimg,2) + '" />' +
 							'<div class="mui-media-body" style="margin-top: 8px;">' +
-							'<p id="name"  style="font-size: 16px;">'+answerListArray[i].ugnick+'<font style="font-size: 12px;">&nbsp&nbsp&nbsp&nbsp'+answerListArray[i].QuestionResultStr+'</font></p>' +
+							'<p id="name"  style="font-size: 16px;">' + answerListArray[i].ugnick + '<font style="font-size: 12px;">&nbsp&nbsp&nbsp&nbsp' + answerListArray[i].QuestionResultStr + '</font></p>' +
 							'</div>' +
 							'<div class="mui-media-body mui-pull-right" style="margin-top: -25px;">' +
-							'<p id="isCommented" class = "IsCommented" style="font-size: 13px;">'+IsCommented+'<span class="mui-icon mui-icon-forward"></span></p>' +
+							'<p id="isCommented" class = "IsCommented" style="font-size: 13px;">' + IsCommented + '<span class="mui-icon mui-icon-forward"></span></p>' +
 							'</div>'
 						homeworkNodes.list.appendChild(li);
 					}
