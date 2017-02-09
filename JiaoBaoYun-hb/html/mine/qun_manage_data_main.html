@@ -20,7 +20,8 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<h1 id="title" class="mui-title">人员资料</h1>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title"></h1>
 		</header>
 		<div class="mui-content"></div>
 	</body>
@@ -30,15 +31,7 @@
 		mui.init({
 			gestureConfig: {
 				doubletap: true
-			},
-			subpages: [{
-				url: 'qun_manage_data_sub.html',
-				id: 'qun_manage_data_sub.html',
-				styles: {
-					top: '45px',
-					bottom: '0px',
-				}
-			}]
+			}
 		});
 
 		var contentWebview = null;
@@ -47,6 +40,31 @@
 				contentWebview = plus.webview.currentWebview().children()[0];
 			}
 			contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
+		});
+
+		mui.plusReady(function() {
+			var wd = plus.nativeUI.showWaiting('加载中...', {
+				back: 'none'
+			});
+			//---获取数据并传递数据---start---
+			var main = plus.webview.currentWebview(); //获取当前窗体对象
+			var data = main.data; //接收A页面传入参数值
+			console.log('qun_manage_member_main.html:' + JSON.stringify(data));
+			document.getElementById("title").innerText = data.gname + '人员资料';
+			//创建子页面
+			var sub = plus.webview.create('qun_manage_data_sub.html', 'qun_manage_data_sub.html', {
+				top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px',
+				bottom: '0px'
+			}, {
+				data: data
+			});
+			sub.addEventListener('loaded', function() {
+				main.append(sub);
+				setTimeout(function() {
+					wd.close();
+				}, 250);
+			});
+			//---获取数据并传递数据---end---
 		});
 	</script>
 

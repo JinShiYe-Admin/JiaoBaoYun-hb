@@ -1,3 +1,8 @@
+<!--
+	作者：444811716@qq.com
+	时间：2017-02-07
+	描述：群管理第二版
+-->
 <!DOCTYPE html>
 <html>
 
@@ -128,7 +133,7 @@
 					var data = e.detail.data;
 					console.log('createQun ' + JSON.stringify(data));
 					addQunItem(data);
-				})
+				});
 			});
 
 			/**
@@ -147,13 +152,12 @@
 			 */
 			function addQunItem(data) {
 				//console.log('addQunItem ' + JSON.stringify(data));
-				var div = document.createElement('div');
-				div.className = 'mui-col-xs-3 mui-col-sm-3';
-				div.innerHTML = '<li id="qun_' + data.gid + '" class="mui-table-view-cell mui-media">\
-									<img id="gimg_' + data.gid + '" src="' + updateHeadImg(data.gimg, 2) + '" />\
-									<div id="gname_' + data.gid + '" class="mui-media-body mui-ellipsis"></div>\
-								</li>';
-				document.getElementById("allQun").appendChild(div);
+				var element = document.createElement('li');
+				element.id = 'qun_' + data.gid;
+				element.className = 'mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3';
+				element.innerHTML = '<img id="gimg_' + data.gid + '" src="' + updateHeadImg(data.gimg, 2) + '" />\
+									<div id="gname_' + data.gid + '" class="mui-media-body mui-ellipsis"></div>';
+				document.getElementById("allQun").appendChild(element);
 				document.getElementById("gname_" + data.gid).innerText = data.gname;
 			}
 

@@ -196,7 +196,7 @@ var dynamiclistitem = (function($, mod) {
 					var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].UserIdName + '</font>';
 					var html3 = '<font class="common-font-family-Regular" style = "font-size:14px">回复</font>';
 					var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].ReplyIdName + '</font>';
-					var html5 = '<font class="common-font-family-Regular">：' + tempModel[i].CommentContent + '</font></div>';
+					var html5 = '<font class="common-font-family-Regular" style = "font-size:14px">：' + tempModel[i].CommentContent + '</font></div>';
 					replyComment = replyComment + html1 + html2 + html3 + html4 + html5;
 				}
 				replyComment = replyComment + '</div>'
