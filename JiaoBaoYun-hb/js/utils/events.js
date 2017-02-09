@@ -199,6 +199,7 @@ var events = (function(mod) {
 		 */
 	mod.fireToPage = function(tarPage, listener, getDatas) {
 			//			console.log('tarPage:' + tarPage);
+			tarPage=tarPage.split('/')[tarPage.split('/').length-1];
 			var targetPage = null;
 			//获得目标页面
 			if(!targetPage) {
@@ -221,6 +222,7 @@ var events = (function(mod) {
 		 */
 	mod.fireToPageWithData = function(tarPage, listener, datas) {
 			console.log('tarPage:' + tarPage);
+			tarPage=tarPage.split('/')[tarPage.split('/').length-1];
 			var targetPage = null;
 			//获得目标页面
 			if(!targetPage) {
@@ -239,6 +241,7 @@ var events = (function(mod) {
 		 * @param {Object} listener 事件
 		 */
 	mod.fireToPageNone = function(tarPage, listener, datas) {
+			tarPage=tarPage.split('/')[tarPage.split('/').length-1];
 			if(!datas) {
 				datas = null;
 			}
