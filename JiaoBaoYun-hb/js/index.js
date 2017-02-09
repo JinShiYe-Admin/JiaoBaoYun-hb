@@ -30,8 +30,8 @@ mui.plusReady(function() {
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 		document.querySelector('img').src = img ? img : storageKeyName.storageKeyName.DEFAULTPERSONALHEADIMAGE;
-		showCity=0;
-		SECity=0;
+		showCity = 0;
+		SECity = 0;
 	});
 	window.addEventListener('aboutmNoRead', function() {
 		getAboutMe();
@@ -85,7 +85,7 @@ mui.plusReady(function() {
 	var self = plus.webview.currentWebview();
 	for(var i = 0; i < 4; i++) {
 		var temp = {};
-		var sub = plus.webview.create(subpages[i], subpages[i].split('/')[subpages[i].split('/').length-1], subpage_style);
+		var sub = plus.webview.create(subpages[i], subpages[i].split('/')[subpages[i].split('/').length - 1], subpage_style);
 		if(i > 0) {
 			sub.hide();
 		} else {
@@ -129,21 +129,21 @@ mui.plusReady(function() {
 			title.innerHTML = '';
 		}
 		changRightIcons(targetTab);
-		var targetSplit=targetTab.split('/');
+		var targetSplit = targetTab.split('/');
 		//显示目标选项卡
 		//若为iOS平台或非首次显示，则直接显示
 		if(mui.os.ios || aniShow[targetTab]) {
-			plus.webview.show(targetSplit[targetSplit.length-1]);
+			plus.webview.show(targetSplit[targetSplit.length - 1]);
 		} else {
 			//否则，使用fade-in动画，且保存变量
 			var temp = {};
 			temp[targetTab] = "true";
 			mui.extend(aniShow, temp);
-			plus.webview.show(targetSplit[targetSplit.length-1], "fade-in", 300);
+			plus.webview.show(targetSplit[targetSplit.length - 1], "fade-in", 300);
 		}
-		var activeSplit=activeTab.split('/')
+		var activeSplit = activeTab.split('/');
 		//隐藏当前;
-		plus.webview.hide(activeSplit[activeSplit.length-1]);
+		plus.webview.hide(activeSplit[activeSplit.length - 1]);
 		//更改当前活跃的选项卡
 		activeTab = targetTab;
 
@@ -255,51 +255,51 @@ mui.plusReady(function() {
 		//44.获取个人的订制城市
 		postDataPro_PostUTcity(comData, wd, function(data) {
 			wd.close();
-			var eduArray=[];
+			var eduArray = [];
 			console.log('获取个人的订制城市科教频道:' + JSON.stringify(data));
 			if(data.RspCode == 0) {
-				if(data.RspData[0].citys){
+				if(data.RspData[0].citys) {
 					//先通过‘|’将返回值分为数组
-				eduArray = data.RspData[0].citys.split('|');
-				//遍历此数组
-				for(var m in eduArray) {
-					var tempStr = eduArray[m];
-					//初始化model
-					var model_area = {
-						//						acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
-						//						aname: '', //节点名称
-						//						atype: '', //节点类型,0省1城市2区县
-						//						index: '', //在数组位置
-						//						totalNo: 0 //数组大小
-					};
-					console.log('tempStr:' + tempStr);
-					//将分成的每个值，再通过‘_’拆分为model
-					var tempArea = tempStr.split('_');
-					model_area.acode = tempArea[0];
-					model_area.aname = tempArea[1];
-					model_area.atype = '1';
-					model_area.index = m;
-					model_area.array = [];
-					model_area.eduIndex = 1;
-					model_area.eduSumCount = 0;
-					model_area.totalNo = eduArray.length;
-					//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
-					eduArray.splice(m, 1, model_area);
-					//					//如果有值，默认获取第一个城市的数据
-					//					if(m == 0) {
-					//						requestCityNews(tempArea[0]);
-					//					}
-				}
-				SECity = eduArray[0];
+					eduArray = data.RspData[0].citys.split('|');
+					//遍历此数组
+					for(var m in eduArray) {
+						var tempStr = eduArray[m];
+						//初始化model
+						var model_area = {
+							//						acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
+							//						aname: '', //节点名称
+							//						atype: '', //节点类型,0省1城市2区县
+							//						index: '', //在数组位置
+							//						totalNo: 0 //数组大小
+						};
+						console.log('tempStr:' + tempStr);
+						//将分成的每个值，再通过‘_’拆分为model
+						var tempArea = tempStr.split('_');
+						model_area.acode = tempArea[0];
+						model_area.aname = tempArea[1];
+						model_area.atype = '1';
+						model_area.index = m;
+						model_area.array = [];
+						model_area.eduIndex = 1;
+						model_area.eduSumCount = 0;
+						model_area.totalNo = eduArray.length;
+						//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
+						eduArray.splice(m, 1, model_area);
+						//					//如果有值，默认获取第一个城市的数据
+						//					if(m == 0) {
+						//						requestCityNews(tempArea[0]);
+						//					}
+					}
+					SECity = eduArray[0];
 
-				setShowCity(0);
-				console.log('修改后的最终值为:' + JSON.stringify(eduArray));
-				}else{
+					setShowCity(0);
+					console.log('修改后的最终值为:' + JSON.stringify(eduArray));
+				} else {
 					mui.toast('暂无科教频道的定制城市，请选择')
 				}
 
 			} else {
-				eduArray=[];
+				eduArray = [];
 				mui.toast(data.RspTxt);
 			}
 			events.fireToPageNone('../scienceeducation/scienceeducation_home.html', 'citiesInfo', eduArray);
@@ -354,7 +354,7 @@ mui.plusReady(function() {
 		//44.获取个人的订制城市
 		postDataPro_PostUTcity(comData, wd, function(data) {
 			wd.close();
-			var showArray=[];
+			var showArray = [];
 			console.log('获取个人的订制城市展示频道:' + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				if(data.RspData[0].citys) {
@@ -385,7 +385,7 @@ mui.plusReady(function() {
 					showCity = showArray[0];
 					setShowCity(cityType);
 					console.log('修改后的最终值为:' + JSON.stringify(showArray));
-				}else{
+				} else {
 					mui.toast('暂无订阅展示频道的城市，请订阅！');
 				}
 

@@ -6,7 +6,20 @@ var appUpdate = (function(mod) {
 		});
 	}
 
-	function downWgt(downloadUrl) {
+	function downApk(ApkUrl) {
+		var url = ""; // 下载文件地址
+		var dtask = plus.downloader.createDownload(url, {}, function(d, status) {
+			if(status == 200) { // 下载成功
+				var path = d.filename;
+				console.log(d.filename);
+			} else { //下载失败
+				alert("Download failed: " + status);
+			}
+		});
+		dtask.start();
+	}
+
+	function downWgt(wgtUrl) {
 		plus.nativeUI.showWaiting("下载wgt文件...");
 		plus.downloader.createDownload(wgtUrl, {
 			filename: "_doc/update/"
@@ -21,11 +34,12 @@ var appUpdate = (function(mod) {
 			plus.nativeUI.closeWaiting();
 		}).start();
 	}
-	function installApp(path){
-		if(plus.os.name=='Android'){
-			plus.runtime.install(path);  // 安装下载的apk文件
-		}else{
-			var url='itms-apps://itunes.apple.com/cn/app/hello-h5+/id682211190?l=zh&mt=8';// HelloH5应用在appstore的地址
+
+	function installApk(path) {
+		if(plus.os.name == 'Android') {
+			plus.runtime.install(path); // 安装下载的apk文件
+		} else {
+			var url = 'itms-apps://itunes.apple.com/cn/app/hello-h5+/id682211190?l=zh&mt=8'; // HelloH5应用在appstore的地址
 			plus.runtime.openURL(url);
 		}
 	}
