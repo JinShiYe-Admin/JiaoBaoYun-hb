@@ -191,6 +191,31 @@
 							}
 						}
 					}
+
+					//47.获取APP版本号
+					console.log('plus.os.name:'+plus.os.name);
+					var tempVVL  = 'android';
+					if (plus.os.name == 'iOS') {
+						tempVVL  = 'ios';
+					}
+					//所需参数
+					var comData9 = {
+						uuid: plus.device.uuid, //用户设备号
+						appid: plus.runtime.appid, //应用ID
+						vvl: tempVVL //安卓：android,苹果：ios
+					};
+					// 等待的对话框
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					postDataPro_PostVerInfo(comData9, wd, function(data) {
+						wd.close();
+						console.log('获取APP版本号:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					});
+
 					//---设置沉浸式---end---
 
 					events.preload('register_phoneNumber.html');
@@ -240,8 +265,6 @@
 							utid: personal.utid,
 							appid: plus.runtime.appid
 						};
-						// 等待的对话框
-						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 						//token续订
 						postDataPro_PostTokenRenew(comData, wd, function(data0) {
 							wd.close();
@@ -408,7 +431,7 @@
 					//发送网络请求，data为网络返回值
 					postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData0, comData0, 0, wd, function(data) {
 						wd.close();
-						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						console.log('PostShakeHand:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							//存储到手机本地
 							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
