@@ -165,6 +165,7 @@
 			 * 获取创建的群
 			 */
 			function getCGQun() {
+				var wd = events.showWaiting();
 				//9.获取用户群
 				//获取个人信息
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
@@ -173,8 +174,6 @@
 					vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
 					vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
 				};
-				// 等待的对话框
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_PostGList(getQunData, wd, function(data) {
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 					console.log('9.获取用户创建的群success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);

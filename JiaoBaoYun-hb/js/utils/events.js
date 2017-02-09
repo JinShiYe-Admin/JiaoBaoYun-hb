@@ -327,6 +327,27 @@ var events = (function(mod) {
 			oldBack();
 		}
 	}
+
+	/**
+	 * 返回一个无法关闭的等待框
+	 */
+	mod.showWaiting = function() {
+		var showWaiting = plus.nativeUI.showWaiting('加载中...', {
+			back: 'none'
+		});
+		return showWaiting;
+	}
+
+	/**
+	 * 关闭一个或所有的等待框
+	 */
+	mod.closeWaiting = function(waiting) {
+		if(waiting) {
+			waiting.close();
+		} else {
+			plus.nativeUI.closeWaiting();
+		}
+	}
 	return mod;
 
 })(events || {});
