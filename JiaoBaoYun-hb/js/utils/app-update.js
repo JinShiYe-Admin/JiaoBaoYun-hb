@@ -21,6 +21,14 @@ var appUpdate = (function(mod) {
 			plus.nativeUI.closeWaiting();
 		}).start();
 	}
+	function installApp(path){
+		if(plus.os.name=='Android'){
+			plus.runtime.install(path);  // 安装下载的apk文件
+		}else{
+			var url='itms-apps://itunes.apple.com/cn/app/hello-h5+/id682211190?l=zh&mt=8';// HelloH5应用在appstore的地址
+			plus.runtime.openURL(url);
+		}
+	}
 	// 更新应用资源
 	function installWgt(path) {
 		plus.nativeUI.showWaiting("安装wgt文件...");

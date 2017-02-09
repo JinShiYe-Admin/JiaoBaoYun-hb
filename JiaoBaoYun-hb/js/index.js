@@ -129,20 +129,21 @@ mui.plusReady(function() {
 			title.innerHTML = '';
 		}
 		changRightIcons(targetTab);
+		var targetSplit=targetTab.split('/');
 		//显示目标选项卡
 		//若为iOS平台或非首次显示，则直接显示
 		if(mui.os.ios || aniShow[targetTab]) {
-			plus.webview.show(targetTab);
+			plus.webview.show(targetSplit[targetSplit.length-1]);
 		} else {
 			//否则，使用fade-in动画，且保存变量
 			var temp = {};
 			temp[targetTab] = "true";
 			mui.extend(aniShow, temp);
-			plus.webview.show(targetTab, "fade-in", 300);
+			plus.webview.show(targetSplit[targetSplit.length-1], "fade-in", 300);
 		}
-
+		var activeSplit=activeTab.split('/')
 		//隐藏当前;
-		plus.webview.hide(activeTab);
+		plus.webview.hide(activeSplit[activeSplit.length-1]);
 		//更改当前活跃的选项卡
 		activeTab = targetTab;
 
