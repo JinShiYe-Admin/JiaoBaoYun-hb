@@ -1,21 +1,21 @@
 var appUpdate = (function(mod) {
-	mod.getAppVersion = function(newestVersion) {
+	mod.getAppVersion = function(versionInfo) {
 		plus.runtime.getProperty(plus.runtime.appid, function(inf) {
 			mod.appVersion = inf.version;
 			console.log("当前应用版本：" + mod.appVersion);
-			getUpCondition(newestVersion);
+			getUpCondition(versionInfo);
 		});
 	}
-	var getUpCondition = function(newestVersion) {
+	var getUpCondition = function(versionInfo) {
 		var appVersions = mod.appVersion.split('.');
-		var newestVersions = newestVersion.split('.');
+		var newestVersions = versionInfo.ver.split('.');
 		var appVersionMinMax = getMinMax(appVersions);
 		var newestVersionMinMax = getMinMax(newestVersions);
 		if(appVersionMinMax.max < newestVersionMinMax.max) {
-			downApk(apkUrl);
+			downApk(versionInfo.baseverurl);
 		} else {
 			if(appVersionMinMax.min<newestVersionMinMax.min){
-				downWgt(wgtUrl);
+				downWgt(versionInfo.addverurl);
 			}
 		}
 	}

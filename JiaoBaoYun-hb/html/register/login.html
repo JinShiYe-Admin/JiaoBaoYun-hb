@@ -211,7 +211,7 @@
 						wd.close();
 						console.log('获取APP版本号:'+JSON.stringify(data));
 						if(data.RspCode == 0) {
-							appUpdate.getAppVersion(newestVersion);
+							appUpdate.getAppVersion(data.RspData);
 						} else {
 							mui.toast(data.RspTxt);
 						}

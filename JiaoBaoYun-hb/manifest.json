@@ -871,7 +871,8 @@
 					"fonts/mui.ttf",
 					"js/publicProtocol.js",
 					"css/utils/common.css",
-					"js/utils/Statusbar.js"
+					"js/utils/Statusbar.js",
+					"js/utils/app-update.js"
 				],
 				"refer": [
 					"html/register/register_phoneNumber.html",
@@ -1960,7 +1961,15 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"image/mine/setting.png",
+					"image/mine/data.png",
+					"image/mine/group-manage.png",
+					"image/mine/apply-group.png",
+					"image/mine/new-message.png",
+					"image/mine/about.png",
+					"image/mine/my-space.png",
+					"image/mine/my-points.png"
 				],
 				"refer": [
 					"html/mine/approval-apply.html",
