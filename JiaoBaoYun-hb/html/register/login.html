@@ -160,6 +160,7 @@
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<!--签名-->
 		<script src="../../js/libs/crypto-js/require.js"></script>
+		<script src="../../js/utils/app-update.js"></script>
 		<script src="../../js/utils/sortSign.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/utils/signHmacSHA1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/libs/jquery.js" type="text/javascript" charset="utf-8"></script>
@@ -208,9 +209,9 @@
 					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 					postDataPro_PostVerInfo(comData9, wd, function(data) {
 						wd.close();
-						console.log('获取APP版本号:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						console.log('获取APP版本号:'+JSON.stringify(data));
 						if(data.RspCode == 0) {
-							
+							appUpdate.getAppVersion(newestVersion);
 						} else {
 							mui.toast(data.RspTxt);
 						}

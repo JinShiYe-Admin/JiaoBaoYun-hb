@@ -1,22 +1,50 @@
 var appUpdate = (function(mod) {
-	mod.getAppVersion = function() {
+	mod.getAppVersion = function(newestVersion) {
 		plus.runtime.getProperty(plus.runtime.appid, function(inf) {
 			mod.appVersion = inf.version;
 			console.log("当前应用版本：" + mod.appVersion);
+			getUpCondition(newestVersion);
 		});
+	}
+	var getUpCondition = function(newestVersion) {
+		var appVersions = mod.appVersion.split('.');
+		var newestVersions = newestVersion.split('.');
+		var appVersionMinMax = getMinMax(appVersions);
+		var newestVersionMinMax = getMinMax(newestVersions);
+		if(appVersionMinMax.max < newestVersionMinMax.max) {
+			downApk(apkUrl);
+		} else {
+			if(appVersionMinMax.min<newestVersionMinMax.min){
+				downWgt(wgtUrl);
+			}
+		}
+	}
+	var getMinMax = function(numArray) {
+		var minMax = {};
+		for(var i in numArray) {
+			if(i ==0) {
+				minMax.max = parseInt(numArray[i]);
+			} else {
+				minMax.min += parseInt(numArray[i]);
+			}
+		}
+		return minMax;
 	}
 
 	function downApk(ApkUrl) {
-		var url = ""; // 下载文件地址
-		var dtask = plus.downloader.createDownload(url, {}, function(d, status) {
-			if(status == 200) { // 下载成功
-				var path = d.filename;
-				console.log(d.filename);
-			} else { //下载失败
-				alert("Download failed: " + status);
-			}
-		});
-		dtask.start();
+		if(plus.os.android) {
+			var url = ""; // 下载文件地址
+			var dtask = plus.downloader.createDownload(url, {}, function(d, status) {
+				if(status == 200) { // 下载成功
+					var path = d.filename;
+					console.log(d.filename);
+					installApk(path);
+				} else { //下载失败
+					alert("Download failed: " + status);
+				}
+			});
+			dtask.start();
+		}
 	}
 
 	function downWgt(wgtUrl) {
@@ -36,7 +64,7 @@ var appUpdate = (function(mod) {
 	}
 
 	function installApk(path) {
-		if(plus.os.name == 'Android') {
+		if(plus.os.android) {
 			plus.runtime.install(path); // 安装下载的apk文件
 		} else {
 			var url = 'itms-apps://itunes.apple.com/cn/app/hello-h5+/id682211190?l=zh&mt=8'; // HelloH5应用在appstore的地址
