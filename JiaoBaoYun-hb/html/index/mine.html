@@ -44,9 +44,9 @@
 					</li>
 					<li class="mui-table-view-divider"></li>
 					<li class="mui-table-view-cell" position='3'>
-						<a class="mui-navigate-right" open-type="common">
+						<a class="" open-type="common">
 							<img src="../../image/mine/new-message.png" class="mine-icon"></span> 新消息
-							<span id="news-amount" class="mui-badge mui-badge-red">数字</span>
+							<span id="news-amount" class="mui-badge mui-badge-red">0</span>
 						</a>
 					</li>
 
@@ -136,8 +136,8 @@
 							break;
 							//申请加入群
 						case 2:
-							var recordPage = plus.webview.getWebviewById('/html/mine/apply-record.html')
-							if(recordPage) {
+							var recordPage = plus.webview.getWebviewById('apply-record.html')
+							if(recordPage&&recordPage!=null) {
 								recordPage.reload(true);
 							}
 							events.openNewWindow('/html/mine/apply-record.html');
@@ -209,6 +209,7 @@
 						num.innerText = setAmount(data.RspData);
 					} else {
 						num.style.display = 'none';
+						num.innerText = '0';
 					}
 				});
 			}

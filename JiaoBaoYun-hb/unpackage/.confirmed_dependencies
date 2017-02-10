@@ -1674,7 +1674,9 @@
 	"html/homework/workdetailTea-temporary.html": {
 		"resources": [
 			"html/homework/workdetailTea-temSub.html",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/homework/workdetailTea-temSub.html"
@@ -2345,7 +2347,13 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"css/utils/common.css",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"image/utils/default_personalimage.png",
+			"js/mui.min.js"
+		],
+		"refer": [
+			"html/mine/qun_manage_info.html",
+			"html/mine/qun_manage_member_main.html"
 		]
 	},
 	"html/mine/qun_manage_main.html": {
@@ -2354,7 +2362,8 @@
 			"html/mine/qun_manage_sub.html",
 			"css/utils/common.css",
 			"js/mui.min.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"js/utils/events.js"
 		],
 		"refer": [
 			"html/mine/qun_manage_sub.html"
@@ -2367,6 +2376,39 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"css/utils/common.css"
+		]
+	},
+	"html/mine/qun_manage_member_main.html": {
+		"resources": [
+			"html/mine/qun_manage_member_sub.html",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/mine/qun_manage_member_sub.html"
+		]
+	},
+	"html/mine/qun_manage_member_sub.html": {
+		"resources": [
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/mine/qun_manage_invite.html",
+			"html/quan/group-pInfo.html"
 		]
 	}
 }

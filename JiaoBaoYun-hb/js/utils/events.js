@@ -24,12 +24,18 @@ var events = (function(mod) {
 		}
 		/**
 		 * 打开新界面
-		 * @param {Object} targetHTML 目标界面
+		 * @param {Object} targetPage 目标界面
 		 */
-	mod.openNewWindow = function(targetHTML) {
+	mod.openNewWindow = function(tarPagePath) {
+		var tarPageIds=tarPagePath.split('/');
+		var targetPage=plus.webview.getWebviewById(tarPageIds[tarPageIds.length-1]);
+		console.log('targetPage是否存在:'+Boolean(targetPage))
+		if(targetPage){
+			targetPage.show();
+		}else{
 			mui.openWindow({
-				url: targetHTML,
-				id: targetHTML.split('/')[targetHTML.split('/').length - 1],
+				url: tarPagePath,
+				id: tarPageIds[tarPageIds.length - 1],
 				show: {
 					anishow: 'slide-in-right',
 					duration: 250
@@ -42,6 +48,8 @@ var events = (function(mod) {
 					bottom: '0px'
 				}
 			})
+		}
+			
 		}
 		/**
 		 * 打开新页面时，同时传值
