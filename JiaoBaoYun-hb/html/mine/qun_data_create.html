@@ -24,17 +24,25 @@
 				background: white;
 			}
 
+			.mui-scroll-wrapper {
+				margin-top: 45px;
+			}
+
 			.mui-content>.mui-table-view:first-child {
 				margin-top: 0px
 			}
 
-			.mui-table-view:before,
 			.mui-table-view:after {
 				height: 0px;
 			}
 
+			.mui-table-view:first-child {
+				margin-top: 2px;
+			}
+
 			.mui-table-view-cell {
 				padding: 5px 15px;
+				line-height: 21px;
 			}
 
 			.mui-table-view-cell:after {
@@ -43,26 +51,30 @@
 
 			.mui-input-row label {
 				width: 20%;
-				padding: 11px 0px
+				padding: 11px 0px;
+				height: 40px;
+				line-height: 20px;
 			}
 
 			.mui-input-row label~input {
 				width: 80%;
 			}
 
-			.gender {
-				/*性别选择*/
-				float: right;
+			.create-type {
+				/*身份选择*/
+				line-height: 20px;
 				width: 80%;
-				height: 40px;
-				padding: 10px 15px;
-				padding-left: 0px;
-				line-height: 21px;
-				-webkit-user-select: text;
-				border-radius: 3px;
-				outline: 0;
-				-webkit-appearance: none;
+				float: right;
+				font-family: 'Helvetica Neue', Helvetica, sans-serif;
 				font-size: 17px;
+				height: 40px;
+				background-color: red;
+				padding: 0px 0px;
+				margin: 0px;
+			}
+
+			.mui-icon-arrowdown {
+				margin-left: 10px;
 			}
 		</style>
 	</head>
@@ -73,14 +85,21 @@
 			<h1 class="mui-title" style="color: white;">创建资料</h1>
 			<h1 id="finish" class="mui-title" style="text-align: right;right: 10px;">完成</h1>
 		</header>
-		<div class="mui-content mui-scroll-wrapper">
-			<div class="mui-scroll">
-				<ul class="mui-table-view">
-					<div id="stu_create" style="display:none;">
+		<div class="mui-content">
+			<div id="stu_create" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<label>身份:</label>
+								<input id="stu_name" type="text" value="学生" onfocus="this.blur()">
+								<!--<div class="create-type">学生 <span class="mui-icon mui-icon-arrowdown"></span></div>-->
+							</div>
+						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>学生姓名:</label>
-								<input id="stu_name" type="text" class="mui-input-clear">
+								<input id="stu_name" type="text" class="mui-input-clear" maxlength="10">
 								<div style="position: absolute;right: 0px;top: 13px;color: red;font-size: 24px;">*</div>
 							</div>
 						</li>
@@ -99,7 +118,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row ">
 								<label>性别:</label>
-								<div id="stu_gender" class="gender"></div>
+								<input id="stu_gender" type="text" class="mui-input-clear" disabled="disabled">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
@@ -120,52 +139,17 @@
 								<input type="text" class="mui-input-clear" disabled="disabled">
 							</div>
 						</li>
-					</div>
-					<!--<div id="par_create" style="display:none;">
-						<li class="mui-table-view-cell">
-							<div class="mui-input-row">
-								<label>家长姓名:</label>
-								<input id="par_name" type="text" class="mui-input-clear">
-							</div>
-						</li>
-						<li class="mui-table-view-cell">
-							<div class="mui-input-row">
-								<label>家长账号:</label>
-								<input id="par_utid" type="text" class="mui-input-clear">
-							</div>
-						</li>
-						<li class="mui-table-view-cell">
-							<div class="mui-input-row">
-								<label>关系:</label>
-								<input type="text" class="mui-input-clear">
-							</div>
-						</li>
-						<li class="mui-table-view-cell">
-							<div class="mui-input-row">
-								<label>电话:</label>
-								<input type="text" class="mui-input-clear">
-							</div>
-						</li>
-						<li class="mui-table-view-cell">
-							<div class="mui-input-row">
-								<label>所属群:</label>
-								<input id="par_gname" type="text" class="mui-input-clear">
-							</div>
-						</li>
-						<li class="mui-table-view-cell">
-							<div class="mui-input-row">
-								<label>简介:</label>
-								<input type="text" class="mui-input-clear">
-							</div>
-						</li>
-					</div>-->
-					<div id="tea_create" style="display: none;">
+					</ul>
+				</div>
+			</div>
+			<div id="tea_create" class="mui-scroll-wrapper" style="display:none ;">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>姓名:</label>
-								<input id="tea_name" type="text" class="mui-input-clear">
+								<input id="tea_name" type="text" class="mui-input-clear" maxlength="10">
 								<div style="position: absolute;right: 0px;top: 13px;color: red;font-size: 24px;">*</div>
-
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
@@ -183,7 +167,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>性别:</label>
-								<div id="tea_gender" class="gender"></div>
+								<input id="tea_gender" type="text" class="mui-input-clear" disabled="disabled">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
@@ -195,25 +179,25 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>职位:</label>
-								<input id="tea_job" type="text" class="mui-input-clear">
+								<input id="tea_job" type="text" class="mui-input-clear" maxlength="10">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>科目:</label>
-								<input id="tea_sub" type="text" class="mui-input-clear">
+								<input id="tea_sub" type="text" class="mui-input-clear" maxlength="10">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>职称:</label>
-								<input id="tea_title" type="text" class="mui-input-clear">
+								<input id="tea_title" type="text" class="mui-input-clear" maxlength="10">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>教龄:</label>
-								<input id="tea_expsch" type="number" oninput="if(value.length>10)value=value.slice(0,10)" class="mui-input-clear">
+								<input id="tea_expsch" type="number" oninput="if(value.length>10)value=value.slice(0,10)" class="mui-input-clear" maxlength="10">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
@@ -222,14 +206,16 @@
 								<input id="tea_introduction" type="text" class="mui-input-clear" disabled="disabled">
 							</div>
 						</li>
-					</div>
-				</ul>
+					</ul>
+				</div>
 			</div>
 		</div>
 
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
+				document.getElementById("stu_create").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
+				document.getElementById("tea_create").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
 
 				var mstype = ''; //创建的资料类型0家长,2老师,3学生
 				//---从父页面获取数据---start---
@@ -238,29 +224,9 @@
 				//var data = {
 				//	gid: gid, //群id
 				//	gname: gname, //群名称
-				//	type: type, //资料类型
 				//}
 				console.log('从群资料页面获取的数据:' + JSON.stringify(data));
-				switch(data.type) {
-					case 'student': //学生
-						mstype = 3;
-						createStu();
-						break;
-					case 'teacher': //老师
-						mstype = 2;
-						createTea();
-						break;
-					case 'parents': //家长
-						//mstype = 0;
-						//createPar();
-						mstype = 3;
-						createStu();
-						break;
-					default:
-						console.log('资料类型选择出错');
-						break;
-				}
-				console.log(mstype);
+
 				//---从父页面获取数据---end---
 				mui('.mui-scroll-wrapper').scroll({
 					scrollY: true, //是否竖向滚动
@@ -271,44 +237,13 @@
 				function createStu() {
 					document.getElementById("stu_gname").value = data.gname;
 					document.getElementById("stu_create").style.display = 'inline';
-					jQuery('#stu_name').prop("maxLength", "10");
 				}
 
 				//创建老师资料
 				function createTea() {
 					document.getElementById("tea_gname").value = data.gname;
 					document.getElementById("tea_create").style.display = 'inline';
-					jQuery('#tea_name').prop("maxLength", "10");
-					jQuery('#tea_job').prop("maxLength", "10");
-					jQuery('#tea_sub').prop("maxLength", "10");
-					jQuery('#tea_title').prop("maxLength", "10");
 				}
-
-				//创建家长资料
-				function createPar() {
-					document.getElementById("par_gname").value = data.gname;
-					document.getElementById("par_create").style.display = 'inline';
-				}
-				//				var genderPicker = new mui.PopPicker();
-				//				genderPicker.setData([{
-				//					value: '男',
-				//					text: '男'
-				//				}, {
-				//					value: '女',
-				//					text: '女'
-				//				}]);
-				//
-				//				//性别监听
-				//				mui('.mui-content').on('tap', '.gender', function() {
-				//					console.log('gender:' + this.getAttribute('id'));
-				//					document.activeElement.blur(); //强制隐藏软键盘
-				//					var id = this.getAttribute('id')
-				//					genderPicker.show(function(items) {
-				//						document.getElementById(id).innerText = items[0].value;
-				//						//返回 false 可以阻止选择框的关闭
-				//						//return false;
-				//					});
-				//				});
 
 				//完成按钮监听
 				document.getElementById('finish').addEventListener('tap', function() {
@@ -320,9 +255,7 @@
 
 					if(mstype == 3) { //资料类型0家长,2老师,3学生
 						name = document.getElementById("stu_name").value;
-					} else if(mstype == 0) {
-						name = document.getElementById("par_name").value;
-					} else {
+					} else if(mstype == 2) {
 						name = document.getElementById("tea_name").value;
 						job = document.getElementById("tea_job").value;
 						title = document.getElementById("tea_title").value;
@@ -362,8 +295,7 @@
 						});
 					}
 				});
-
-			})
+			});
 		</script>
 	</body>
 

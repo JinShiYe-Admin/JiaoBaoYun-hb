@@ -6,7 +6,7 @@ html,body,.mui-content{
 }
 .btn-submit{
 	/*position: absolute;*/
-	margin-left: 2%;
+	margin-left: 5%;
 	width: 90%;
 	height: 4rem;
 	margin-bottom: 1rem;
@@ -28,7 +28,7 @@ html,body,.mui-content{
 .result-text{
 	min-height: 4rem;
 }
-.mui-content{
+.mui-scroll{
 	padding: 1rem;
 }
 .stuInfo-img{

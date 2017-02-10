@@ -71,11 +71,12 @@
 			.member-add span {
 				font-size: 40px;
 				/*font-weight: 600;*/
-				color: black;
+				color: #CECECE;
 			}
 
 			.mui-ellipsis {
 				padding: 0px;
+				color: #868686;
 			}
 
 			img {
@@ -222,13 +223,12 @@
 						var btnArray = ['否', '是'];
 						mui.confirm('确认删除？', '删除群成员', btnArray, function(e) {
 							if(e.index == 1) {
+								var wd = events.showWaiting();
 								//31.群成员退出群或者剔除群成员
 								//所需参数
 								var comData = {
 									vvl: info.gutid, //群成员群ID，gutid
 								};
-								// 等待的对话框
-								var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 								postDataPro_PostGuD(comData, wd, function(data) {
 									wd.close();
 									console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
@@ -331,6 +331,7 @@
 			 * @param {Object} vvl1 //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 			 */
 			function getMember(gid, vvl1) {
+				var wd = events.showWaiting();
 				var stuList = []; //学生列表
 				var adminList = []; //管理员列表
 				var teaList = []; //老师列表
@@ -343,9 +344,6 @@
 					vvl: gid, //群ID，查询的值
 					vvl1: vvl1, //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 				};
-				//console.log('getMemData:' + JSON.stringify(getMemData));
-				// 等待的对话框
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_PostGusers(getMemData, wd, function(data) {
 					console.log('13_postDataPro_PostGusers_通过群ID获取群的正常用户.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
@@ -385,10 +383,11 @@
 					mui.each(stuList, function(index, element) {
 						addMemItem('stu', element);
 					});
-					wd.close();
+
 					//获取备注
 					var str = tempList.join(',');
 					getBeiZhu(str);
+					wd.close();
 				});
 			}
 
@@ -397,15 +396,13 @@
 			 * @param {Object} strUtid
 			 */
 			function getBeiZhu(strUtid) {
+				var wd = events.showWaiting();
 				//获取备注
 				//35.个人获取对某人或一群人的备注
 				//所需参数
 				var comData = {
 					vvl: strUtid //被备注用户ID,utid或utid串
 				};
-				//返回值
-				// 等待的对话框
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_PostUmk(comData, wd, function(data) {
 					console.log('35_postDataPro_PostUmk_个人获取对某人或一群人的备注.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
