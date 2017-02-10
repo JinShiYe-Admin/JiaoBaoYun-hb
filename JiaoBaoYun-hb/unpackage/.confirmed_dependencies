@@ -677,7 +677,8 @@
 			"js/utils/CloudFileUtil.js"
 		],
 		"refer": [
-			"html/mine/edit-info.html"
+			"html/mine/edit-info.html",
+			"html/utils/customizeCity.html"
 		]
 	},
 	"html/cloud/app_keeprecord.html": {
@@ -2353,7 +2354,8 @@
 		],
 		"refer": [
 			"html/mine/qun_manage_info.html",
-			"html/mine/qun_manage_member_main.html"
+			"html/mine/qun_manage_member_main.html",
+			"html/mine/qun_manage_data_main.html"
 		]
 	},
 	"html/mine/qun_manage_main.html": {
@@ -2409,6 +2411,21 @@
 		"refer": [
 			"html/mine/qun_manage_invite.html",
 			"html/quan/group-pInfo.html"
+		]
+	},
+	"html/mine/qun_manage_data_sub.html": {
+		"resources": [
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/mine/qun_manage_data_main.html": {
+		"resources": [
+			"css/mui.min.css",
+			"html/mine/qun_manage_data_sub.html",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/mine/qun_manage_data_sub.html"
 		]
 	}
 }
