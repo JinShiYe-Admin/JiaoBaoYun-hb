@@ -27,29 +27,29 @@ var events = (function(mod) {
 		 * @param {Object} targetPage 目标界面
 		 */
 	mod.openNewWindow = function(tarPagePath) {
-		var tarPageIds=tarPagePath.split('/');
-		var targetPage=plus.webview.getWebviewById(tarPageIds[tarPageIds.length-1]);
-		console.log('targetPage是否存在:'+Boolean(targetPage))
-		if(targetPage){
-			targetPage.show();
-		}else{
-			mui.openWindow({
-				url: tarPagePath,
-				id: tarPageIds[tarPageIds.length - 1],
-				show: {
-					anishow: 'slide-in-right',
-					duration: 250
-				},
-				waiting: {
-					title: '正在加载...'
-				},
-				styles: {
-					top: '0px',
-					bottom: '0px'
-				}
-			})
-		}
-			
+			var tarPageIds = tarPagePath.split('/');
+			var targetPage = plus.webview.getWebviewById(tarPageIds[tarPageIds.length - 1]);
+			console.log('targetPage是否存在:' + Boolean(targetPage))
+			if(targetPage) {
+				targetPage.show();
+			} else {
+				mui.openWindow({
+					url: tarPagePath,
+					id: tarPageIds[tarPageIds.length - 1],
+					show: {
+						anishow: 'slide-in-right',
+						duration: 250
+					},
+					waiting: {
+						title: '正在加载...'
+					},
+					styles: {
+						top: '0px',
+						bottom: '0px'
+					}
+				})
+			}
+
 		}
 		/**
 		 * 打开新页面时，同时传值
@@ -207,7 +207,7 @@ var events = (function(mod) {
 		 */
 	mod.fireToPage = function(tarPage, listener, getDatas) {
 			//			console.log('tarPage:' + tarPage);
-			tarPage=tarPage.split('/')[tarPage.split('/').length-1];
+			tarPage = tarPage.split('/')[tarPage.split('/').length - 1];
 			var targetPage = null;
 			//获得目标页面
 			if(!targetPage) {
@@ -230,7 +230,7 @@ var events = (function(mod) {
 		 */
 	mod.fireToPageWithData = function(tarPage, listener, datas) {
 			console.log('tarPage:' + tarPage);
-			tarPage=tarPage.split('/')[tarPage.split('/').length-1];
+			tarPage = tarPage.split('/')[tarPage.split('/').length - 1];
 			var targetPage = null;
 			//获得目标页面
 			if(!targetPage) {
@@ -249,7 +249,7 @@ var events = (function(mod) {
 		 * @param {Object} listener 事件
 		 */
 	mod.fireToPageNone = function(tarPage, listener, datas) {
-			tarPage=tarPage.split('/')[tarPage.split('/').length-1];
+			tarPage = tarPage.split('/')[tarPage.split('/').length - 1];
 			if(!datas) {
 				datas = null;
 			}
@@ -337,7 +337,8 @@ var events = (function(mod) {
 	}
 
 	/**
-	 * 返回一个无法关闭的等待框
+	 * 返回一个安卓手机返回键无法关闭的等待框
+	 * @author 莫尚霖
 	 */
 	mod.showWaiting = function() {
 		var showWaiting = plus.nativeUI.showWaiting('加载中...', {
@@ -348,6 +349,8 @@ var events = (function(mod) {
 
 	/**
 	 * 关闭一个或所有的等待框
+	 * @author 莫尚霖
+	 * @param {Object} waiting 等待框对象
 	 */
 	mod.closeWaiting = function(waiting) {
 		if(waiting) {
@@ -356,6 +359,29 @@ var events = (function(mod) {
 			plus.nativeUI.closeWaiting();
 		}
 	}
+
+	/**
+	 * 创建一个子页面，并传递数据
+	 * @author 莫尚霖
+	 * @param {Object} mainWebviewObject 主页面的窗体
+	 * @param {Object} subPageUrl 子页面的路径
+	 * @param {Object} data 传递给子页面的数据
+	 * @param {Object} loadedCallBack 子页面加载完成的回调
+	 */
+	mod.createSubAppendMain = function(mainWebviewObject, subPageUrl, data, loadedCallBack) {
+		var sub = plus.webview.create(subPageUrl, subPageUrl.split('/')[subPageUrl.split('/').length - 1], {
+			top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px',
+			bottom: '0px'
+		}, {
+			data: data
+		});
+
+		sub.addEventListener('loaded', function() {
+			mainWebviewObject.append(sub);
+			loadedCallBack();
+		});
+	}
+
 	return mod;
 
 })(events || {});

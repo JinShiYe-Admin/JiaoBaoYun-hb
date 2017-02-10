@@ -47,19 +47,12 @@
 				console.log('qun_manage_main.html:' + JSON.stringify(data));
 
 				//创建子页面
-				var sub = plus.webview.create('qun_manage_sub.html', 'qun_manage_sub.html', {
-					top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px',
-					bottom: '0px'
-				}, {
-					data: data
-				});
-
-				sub.addEventListener('loaded', function() {
-					main.append(sub);
+				events.createSubAppendMain(main,'qun_manage_sub.html',data,function(){
 					setTimeout(function() {
 						wd.close();
 					}, 250);
 				});
+
 				//---获取数据并传递数据---end---
 			});
 		</script>

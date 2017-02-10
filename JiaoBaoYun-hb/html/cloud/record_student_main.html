@@ -46,6 +46,7 @@
 			contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
 		});
 		mui.plusReady(function() {
+			var wd = events.showWaiting();
 			//---获取数据并传递数据---start---
 			var main = plus.webview.currentWebview(); //获取当前窗体对象
 			var data = main.data; //接收A页面传入参数值
@@ -54,15 +55,12 @@
 			document.body.querySelector('.mui-title').innerText = '云盘--' + data.StudentName + '档案';
 
 			//创建子页面
-			var sub = plus.webview.create('record_student_sub.html', 'record_student_sub.html', {
-				top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px',
-				bottom: '0px'
-			}, {
-				data: data
+			events.createSubAppendMain(main, 'record_student_sub.html', data, function() {
+				setTimeout(function() {
+					wd.close();
+				}, 250);
 			});
-			sub.addEventListener('loaded', function() {
-				main.append(sub);
-			});
+
 			//---获取数据并传递数据---end---
 			document.getElementById('add').addEventListener('tap', function() {
 				events.openNewWindowWithData('record_student_add.html', {
