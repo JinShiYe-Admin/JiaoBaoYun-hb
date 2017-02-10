@@ -123,6 +123,7 @@ header .mui-icon-bars:before{
 	padding-top: 2rem;
 	font-size: 4rem;
 	color: darkgray;
+	max-width: 18%;
 }
 .header-title{
 	color: #404040;
