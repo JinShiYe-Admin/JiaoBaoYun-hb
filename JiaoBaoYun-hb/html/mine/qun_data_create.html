@@ -24,8 +24,15 @@
 				background: white;
 			}
 
+			.mui-bar-tab {
+				top: 45px;
+				box-shadow: none;
+				border-bottom: 1px solid #dedfe0;
+				height: 50px;
+			}
+
 			.mui-scroll-wrapper {
-				margin-top: 45px;
+				margin-top: 95px;
 			}
 
 			.mui-content>.mui-table-view:first-child {
@@ -36,45 +43,84 @@
 				height: 0px;
 			}
 
-			.mui-table-view:first-child {
-				margin-top: 2px;
-			}
-
 			.mui-table-view-cell {
 				padding: 5px 15px;
 				line-height: 21px;
+			}
+
+			.mui-table-view-cell.mui-active {
+				background: white;
 			}
 
 			.mui-table-view-cell:after {
 				left: 0px;
 			}
 
+			#type .mui-table-view-cell {
+				margin-top: 1px;
+			}
+
+			#type .mui-table-view-cell:after {
+				height: 0px;
+			}
+
+			#type_name {
+				height: 40px;
+				padding-left: 0px;
+				line-height: 40px;
+				font-size: 15px;
+				color: black;
+			}
+
+			#arrowdown {
+				position: absolute;
+				top: 0px;
+			}
+
 			.mui-input-row label {
-				width: 20%;
+				width: auto;
 				padding: 11px 0px;
 				height: 40px;
 				line-height: 20px;
+				font-size: 16px;
 			}
 
 			.mui-input-row label~input {
-				width: 80%;
-			}
-
-			.create-type {
-				/*身份选择*/
-				line-height: 20px;
-				width: 80%;
-				float: right;
-				font-family: 'Helvetica Neue', Helvetica, sans-serif;
-				font-size: 17px;
-				height: 40px;
-				background-color: red;
-				padding: 0px 0px;
-				margin: 0px;
+				width: auto;
+				font-size: 15px;
+				float: left;
+				margin-left: 5px;
 			}
 
 			.mui-icon-arrowdown {
 				margin-left: 10px;
+				float: left;
+				color: black;
+			}
+
+			.mui-bar .mui-icon {
+				line-height: 40px;
+				padding: 0px;
+				margin: 0px;
+			}
+
+			.mui-backdrop {
+				/*选择排序的遮罩*/
+				/*position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				z-index: 0;*/
+				background-color: transparent;
+				/*height: 0px;
+				width: 0px;*/
+			}
+
+			.mui-popover .mui-popover-arrow:after {
+				/*popover的三角形箭头*/
+				background-color: white;
+				box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 			}
 		</style>
 	</head>
@@ -83,22 +129,35 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title" style="color: white;">创建资料</h1>
-			<h1 id="finish" class="mui-title" style="text-align: right;right: 10px;">完成</h1>
+			<h1 id="finish" class="mui-title" style="text-align: right;right: 10px;top: 0px;">完成</h1>
 		</header>
-		<div class="mui-content">
+		<nav id="type" class="mui-bar mui-bar-tab">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<div class="mui-input-row">
+						<label>身份:</label>
+						<a href="#popover" id="type_name">
+							<font id="type_name_font">学生</font>
+							<div id="arrowdown" class="mui-icon mui-icon-arrowdown"></div>
+						</a>
+					</div>
+				</li>
+			</ul>
+		</nav>
+		<div id="content" class="mui-content">
+			<div id="popover" class="mui-popover" style="width: 80px;z-index: 999;">
+				<ul class="mui-table-view" style="background: white;text-align: center;">
+					<li class="mui-table-view-cell">
+						<div id="type_popover" style="line-height: 40px; font-size: 15px;">老师</div>
+					</li>
+				</ul>
+			</div>
 			<div id="stu_create" class="mui-scroll-wrapper">
 				<div class="mui-scroll">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
-								<label>身份:</label>
-								<input id="stu_name" type="text" value="学生" onfocus="this.blur()">
-								<!--<div class="create-type">学生 <span class="mui-icon mui-icon-arrowdown"></span></div>-->
-							</div>
-						</li>
-						<li class="mui-table-view-cell">
-							<div class="mui-input-row">
-								<label>学生姓名:</label>
+								<label id="stu_la">学生姓名:</label>
 								<input id="stu_name" type="text" class="mui-input-clear" maxlength="10">
 								<div style="position: absolute;right: 0px;top: 13px;color: red;font-size: 24px;">*</div>
 							</div>
@@ -213,11 +272,31 @@
 
 		<script type="text/javascript">
 			mui.init();
+			window.onload = function() {
+				document.getElementById("type").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
+				var stu_name = document.getElementById("stu_name");
+				var type_name = document.getElementById("type_name");
+				var stu_gname = document.getElementById("stu_gname");
+				var arrowdown = document.getElementById("arrowdown");
+				type_name.style.width = document.getElementById("stu_la").offsetWidth * 2 + 'px';
+				type_name.style.marginLeft = stu_name.offsetLeft - type_name.offsetLeft + 5 + 'px';
+				stu_gname.style.marginLeft = stu_name.offsetLeft - stu_gname.offsetLeft + 5 + 'px';
+				arrowdown.style.left = stu_gname.offsetLeft + document.getElementById("stu_la").offsetWidth / 1.6 + 'px';
+				document.getElementById("popover").style.marginLeft = document.getElementById("stu_la").offsetWidth / 3 + 'px';
+			}
 			mui.plusReady(function() {
-				document.getElementById("stu_create").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
-				document.getElementById("tea_create").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
+				//document.getElementById("type").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
+				document.getElementById("stu_create").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 45 + 50) + 'px';
+				document.getElementById("tea_create").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 45 + 50) + 'px';
 
-				var mstype = ''; //创建的资料类型0家长,2老师,3学生
+				//				var stu_name = document.getElementById("stu_name");
+				//				var type_name = document.getElementById("type_name");
+				//				var stu_gname = document.getElementById("stu_gname")
+				//				type_name.style.marginLeft = stu_name.offsetLeft - type_name.offsetLeft + 5 + 'px';
+				//				stu_gname.style.marginLeft = stu_name.offsetLeft - type_name.offsetLeft + 5 + 'px';
+				//
+				var mstype = 3; //创建的资料类型0家长,2老师,3学生
+
 				//---从父页面获取数据---start---
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var data = main.data; //接收页面传入的参数值
@@ -226,24 +305,33 @@
 				//	gname: gname, //群名称
 				//}
 				console.log('从群资料页面获取的数据:' + JSON.stringify(data));
-
 				//---从父页面获取数据---end---
+
+				document.getElementById("stu_gname").value = data.gname;
+				document.getElementById("tea_gname").value = data.gname;
+
 				mui('.mui-scroll-wrapper').scroll({
 					scrollY: true, //是否竖向滚动
 					bounce: true, //是否启用回弹
 				});
 
-				//创建学生资料
-				function createStu() {
-					document.getElementById("stu_gname").value = data.gname;
-					document.getElementById("stu_create").style.display = 'inline';
-				}
-
-				//创建老师资料
-				function createTea() {
-					document.getElementById("tea_gname").value = data.gname;
-					document.getElementById("tea_create").style.display = 'inline';
-				}
+				document.getElementById('type_popover').addEventListener('tap', function() {
+					var value = document.getElementById("type_popover").innerText;
+					if(value == '老师') {
+						document.getElementById("type_popover").innerText='学生';
+						document.getElementById("type_name_font").innerText='老师';
+						document.getElementById("stu_create").style.display = 'none';
+						document.getElementById("tea_create").style.display = 'inline';
+						mstype = 2;
+					} else {
+						document.getElementById("type_popover").innerText='老师';
+						document.getElementById("type_name_font").innerText='学生';
+						document.getElementById("stu_create").style.display = 'inline';
+						document.getElementById("tea_create").style.display = 'none';
+						mstype = 3;
+					}
+					mui('#popover').popover('toggle');
+				});
 
 				//完成按钮监听
 				document.getElementById('finish').addEventListener('tap', function() {
@@ -280,18 +368,34 @@
 						};
 						console.log('comData:' + JSON.stringify(comData));
 						// 等待的对话框
-						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						var wd = events.showWaiting();
 						postDataPro_PostGAddUInf(comData, wd, function(data) {
-							wd.close();
+
 							console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) {
-								events.fireToPageNone('/html/mine/qun_data.html', 'refresh');
 								mui.toast('资料添加成功！');
 								console.log('资料添加成功！');
-								mui.back();
+								events.fireToPageNone('qun_manage_data_sub.html', 'addData', {
+									stuid: data.RspData,
+									gid: data.gid,
+									stuname: name,
+									stuimg: '',
+									mstype: mstype
+								});
+								if(mstype == 3) { //2老师,3学生
+									document.getElementById("stu_name").value = '';
+								} else {
+									console.log('老师');
+									document.getElementById("tea_name").value = '';
+									document.getElementById("tea_job").value = '';
+									document.getElementById("tea_title").value = '';
+									document.getElementById("tea_expsch").value = '';
+									document.getElementById("tea_sub").value = '';
+								}
 							} else {
 								mui.toast(data.RspTxt);
 							}
+							wd.close();
 						});
 					}
 				});

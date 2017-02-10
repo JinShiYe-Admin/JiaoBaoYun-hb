@@ -160,6 +160,19 @@
 					info.stuname = data.stuname;
 					element.setAttribute('data-info', JSON.stringify(info));
 				});
+
+				//增加一项新的资料
+				window.addEventListener('addData', function(e) {
+					var data = e.detail.data;
+					console.log('addData ' + JSON.stringify(data));
+					if(data.mstype == 2) {
+						addDataItem(data, '老师');
+					} else if(data.mstype == 3) {
+						addDataItem(data, '学生');
+					} else {
+						console.log('资料类型异常');
+					}
+				});
 			});
 
 			/**
@@ -174,6 +187,7 @@
 			/**
 			 * 界面生成一项资料
 			 * @param {Object} data
+			 * @param {Object} type
 			 */
 			function addDataItem(data, type) {
 				console.log('addDataItem ' + JSON.stringify(data));
