@@ -65,7 +65,7 @@ mui.plusReady(function() {
 	document.getElementById('uarea_li').addEventListener('tap', function() {
 		events.openNewWindowWithData('../utils/customizeCity.html', {
 			id: 'uarea', //0科教，1展现,uarea账号地区
-			webid: '/html/mine/account-info.html', //id对应webview的id
+			webid: 'account-info.html', //id对应webview的id
 			cities: [pInfo.uarea] //已经定制的城市数组
 		});
 	});
