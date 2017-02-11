@@ -233,6 +233,7 @@ mui.plusReady(function() {
 					break;
 				case '../show/show_home.html': //展现
 					addListIcon(title_left, '../show/show_home.html');
+					addShai(iconContainer);
 					if(!showCity) {
 						requestUserCity();
 					}
@@ -401,6 +402,14 @@ mui.plusReady(function() {
 	 * @param {Object} container
 	 */
 	var addZoneIcon = function(container) {
+		addShai(container);
+		addAboutMe(container);
+	}
+	/**
+	 * 加载晒一晒
+	 * @param {Object} container
+	 */
+	var addShai=function(container){
 		var pubDynamic = document.createElement('a');
 		pubDynamic.id = 'pubDynamic'
 		pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
@@ -408,7 +417,16 @@ mui.plusReady(function() {
 		pubDynamic.style.paddingTop = '15px'
 		pubDynamic.style.fontSize = '16px'
 		pubDynamic.innerHTML = '晒一晒'
-		container.appendChild(pubDynamic)
+		container.appendChild(pubDynamic);
+		events.addTap('pubDynamic', function() {
+			events.openNewWindowWithData('../quan/pub-dynamic.html', 'FromIndex');
+		})
+	}
+	/**
+	 * 加载与我相关
+	 * @param {Object} container
+	 */
+	var addAboutMe=function(container){
 		var aboutme = document.createElement('a');
 		aboutme.className = 'mui-icon  mui-pull-right mui-plus-visible';
 		aboutme.id = 'aboutme'
@@ -430,11 +448,7 @@ mui.plusReady(function() {
 			noRead.style.visibility = 'hidden';
 
 		})
-		events.addTap('pubDynamic', function() {
-			events.openNewWindowWithData('../quan/pub-dynamic.html', 'FromIndex');
-		})
 	}
-
 	/**
 	 * 修改科教，展现的顶部导航
 	 * @param {Object} container

@@ -2067,7 +2067,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"css/quan/class_space.css",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"css/quan/custom-textarea.css"
 				],
 				"refer": [],
 				"priority": 0
