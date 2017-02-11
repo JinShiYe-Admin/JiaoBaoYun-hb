@@ -1096,7 +1096,9 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"js/utils/events.js"
 		],
-		"refer": []
+		"refer": [
+			"html/mine/qun_manage_invite_info.html"
+		]
 	},
 	"html/quan/class-dynamic.html": {
 		"resources": [
@@ -1609,7 +1611,9 @@
 			"html/homework/workdetail-tea-sub.html",
 			"fonts/mui.ttf",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/mui.min.js",
+			"js/utils/events.js"
 		],
 		"refer": [
 			"html/homework/workdetail-tea-sub.html"
@@ -2327,7 +2331,17 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"js/utils/grideControl.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/libs/jquery.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/myStorage/myStorage.js"
 		]
 	},
 	"html/mine/qun_manage_sub.html": {
@@ -2426,6 +2440,26 @@
 		],
 		"refer": [
 			"html/mine/qun_manage_data_sub.html"
+		]
+	},
+	"html/mine/qun_manage_invite_info.html": {
+		"resources": [
+			"image/utils/default_personalimage.png",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	}
 }

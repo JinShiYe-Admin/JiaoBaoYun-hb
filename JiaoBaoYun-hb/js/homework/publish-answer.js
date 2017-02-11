@@ -56,6 +56,9 @@ mui.plusReady(function() {
 			//				});
 			//			});
 	});
+	/**
+	 * 查看结果按钮点击事件
+	 */
 	events.addTap('checkResult', function() {
 		if(teaInfo){
 			var teachers_container = document.getElementById('receive-teachers'); //selectid
@@ -334,7 +337,8 @@ var setTeachers = function(teaInfos) {
 	teaInfos.forEach(function(teaInfo, i) {
 		var op = document.createElement('option');
 		op.teaInfo = teaInfo;
-		op.innerHTML = '<p><span  class="receiver-name">' + teaInfo.ugnick + '</span><span class="recerver-">-</span><span class="receiver-class">' + teaInfo.gname + '</span></p>';
+		op.innerHTML = '<p><span  class="receiver-name">' +events.shortForString(teaInfo.ugnick,8)  +
+		'</span><span class="recerver-">-</span><span class="receiver-class">' +events.shortForString(teaInfo.gname,8)+ '</span></p>';
 		teaContainer.appendChild(op);
 	})
 	teaInfo=teaContainer.firstElementChild.teaInfo;
