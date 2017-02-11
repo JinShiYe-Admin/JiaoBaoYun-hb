@@ -24,13 +24,6 @@
 				background: white;
 			}
 
-			.mui-bar-tab {
-				top: 45px;
-				box-shadow: none;
-				border-bottom: 1px solid #dedfe0;
-				height: 50px;
-			}
-
 			.mui-scroll-wrapper {
 				margin-top: 95px;
 			}
@@ -60,8 +53,8 @@
 				margin-top: 1px;
 			}
 
-			#type .mui-table-view-cell:after {
-				height: 0px;
+			#type {
+				border-bottom: 1px solid #dedfe0;
 			}
 
 			#type_name {
@@ -73,8 +66,7 @@
 			}
 
 			#arrowdown {
-				position: absolute;
-				top: 0px;
+				line-height: 40px;
 			}
 
 			.mui-input-row label {
@@ -93,8 +85,8 @@
 			}
 
 			.mui-icon-arrowdown {
-				margin-left: 10px;
-				float: left;
+				/*margin-left: 5px;*/
+				/*float: left;*/
 				color: black;
 			}
 
@@ -129,13 +121,14 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title" style="color: white;">创建资料</h1>
-			<h1 id="finish" class="mui-title" style="text-align: right;right: 10px;top: 0px;">完成</h1>
+			<h1 id="finish" class="mui-title" style="text-align: right;right: 10px;">完成</h1>
 		</header>
-		<nav id="type" class="mui-bar mui-bar-tab">
-			<ul class="mui-table-view">
+
+		<div id="content" class="mui-content">
+			<ul id="type" class="mui-table-view">
 				<li class="mui-table-view-cell">
 					<div class="mui-input-row">
-						<label>身份:</label>
+						<label id="type_name_la">身份:</label>
 						<a href="#popover" id="type_name">
 							<font id="type_name_font">学生</font>
 							<div id="arrowdown" class="mui-icon mui-icon-arrowdown"></div>
@@ -143,9 +136,8 @@
 					</div>
 				</li>
 			</ul>
-		</nav>
-		<div id="content" class="mui-content">
-			<div id="popover" class="mui-popover" style="width: 80px;z-index: 999;">
+			<div id="popover" class="mui-popover" style="width: 80px;">
+				<div id="popover_arrow" class="mui-popover-arrow"></div>
 				<ul class="mui-table-view" style="background: white;text-align: center;">
 					<li class="mui-table-view-cell">
 						<div id="type_popover" style="line-height: 40px; font-size: 15px;">老师</div>
@@ -273,21 +265,54 @@
 		<script type="text/javascript">
 			mui.init();
 			window.onload = function() {
-				document.getElementById("type").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
-				var stu_name = document.getElementById("stu_name");
-				var type_name = document.getElementById("type_name");
-				var stu_gname = document.getElementById("stu_gname");
-				var arrowdown = document.getElementById("arrowdown");
-				type_name.style.width = document.getElementById("stu_la").offsetWidth * 2 + 'px';
-				type_name.style.marginLeft = stu_name.offsetLeft - type_name.offsetLeft + 5 + 'px';
+				var header = document.querySelector('header');
+				if(header) {
+					var headerNum = localStorage.getItem('StatusHeightNo') * 1 + 45;
+					//设置顶部导航高度（状态栏）
+					header.style.height = headerNum + 'px';
+					header.style.paddingTop = localStorage.getItem('$Statusbar');
+					//mui.alert(headerNum, 'header-height');
+					//mui.alert(localStorage.getItem('StatusbarStr'), 'header-paddingTop');
+					var content = document.querySelector(".mui-content");
+					//设置顶部导航高度（状态栏）
+					if(content) {
+						//console.log('window.content');
+						content.style.marginTop = localStorage.getItem('$Statusbar');
+					}
+				}
+				//document.getElementById("type").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
+				document.getElementById("stu_create").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 45 + 53) + 'px';
+				document.getElementById("tea_create").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 45 + 53) + 'px';
+
+				var stu_la = document.getElementById("stu_la"); //学生姓名标题
+				var stu_name = document.getElementById("stu_name"); //学生姓名输入框
+				var stu_gname = document.getElementById("stu_gname"); //所属群输入框
+				var type_name_la = document.getElementById("type_name_la") //身份类型左侧标题
+				var type_name = document.getElementById("type_name"); //身份类型右侧区域
+				var arrowdown = document.getElementById("arrowdown"); //身份类型区域向下箭头
+				var popover = document.getElementById("popover"); //popover显示框
+				var popover_arrow = document.getElementById("popover_arrow"); //popover显示框的三角区域
+
+				//var type_popover = document.getElementById("type_popover");//popover中的类型
+				type_name_la.style.width = stu_la.offsetWidth + 'px';
+				type_name.style.width = stu_la.offsetWidth * 2 + 'px';
+				type_name.style.marginLeft = stu_name.offsetLeft - type_name.offsetLeft + 'px';
 				stu_gname.style.marginLeft = stu_name.offsetLeft - stu_gname.offsetLeft + 5 + 'px';
-				arrowdown.style.left = stu_gname.offsetLeft + document.getElementById("stu_la").offsetWidth / 1.6 + 'px';
-				document.getElementById("popover").style.marginLeft = document.getElementById("stu_la").offsetWidth / 3 + 'px';
+				arrowdown.style.left = stu_gname.offsetLeft + stu_la.offsetWidth / 1.6 + 'px';
+
+				console.log('type_name_font.offsetLeft ' + document.getElementById("type_name_font").offsetLeft);
+				console.log('popover.style.left ' + popover.style.left);
+				//popover.style.marginLeft = (arrowdown.offsetLeft + (arrowdown.offsetWidth / 2)) - (popover.offsetLeft) + 'px';
+
+				console.log('arrowdown.offsetLeft ' + arrowdown.offsetLeft);
+				console.log('arrowdown.offsetWidth / 2 ' + arrowdown.offsetWidth / 2);
+				console.log('popover.offsetLeft ' + popover.offsetLeft);
+				//popover.style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
+				//popover_arrow.style.width = '300px';
+				//popover_arrow.style.backgroundColor='red';
 			}
 			mui.plusReady(function() {
 				//document.getElementById("type").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
-				document.getElementById("stu_create").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 45 + 50) + 'px';
-				document.getElementById("tea_create").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 45 + 50) + 'px';
 
 				//				var stu_name = document.getElementById("stu_name");
 				//				var type_name = document.getElementById("type_name");
@@ -295,6 +320,7 @@
 				//				type_name.style.marginLeft = stu_name.offsetLeft - type_name.offsetLeft + 5 + 'px';
 				//				stu_gname.style.marginLeft = stu_name.offsetLeft - type_name.offsetLeft + 5 + 'px';
 				//
+
 				var mstype = 3; //创建的资料类型0家长,2老师,3学生
 
 				//---从父页面获取数据---start---
@@ -318,14 +344,14 @@
 				document.getElementById('type_popover').addEventListener('tap', function() {
 					var value = document.getElementById("type_popover").innerText;
 					if(value == '老师') {
-						document.getElementById("type_popover").innerText='学生';
-						document.getElementById("type_name_font").innerText='老师';
+						document.getElementById("type_popover").innerText = '学生';
+						document.getElementById("type_name_font").innerText = '老师';
 						document.getElementById("stu_create").style.display = 'none';
 						document.getElementById("tea_create").style.display = 'inline';
 						mstype = 2;
 					} else {
-						document.getElementById("type_popover").innerText='老师';
-						document.getElementById("type_name_font").innerText='学生';
+						document.getElementById("type_popover").innerText = '老师';
+						document.getElementById("type_name_font").innerText = '学生';
 						document.getElementById("stu_create").style.display = 'inline';
 						document.getElementById("tea_create").style.display = 'none';
 						mstype = 3;

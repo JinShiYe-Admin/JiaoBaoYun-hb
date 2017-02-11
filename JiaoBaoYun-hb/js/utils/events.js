@@ -378,8 +378,30 @@ var events = (function(mod) {
 
 		sub.addEventListener('loaded', function() {
 			mainWebviewObject.append(sub);
-			loadedCallBack();
+			loadedCallBack(sub);
 		});
+	}
+
+	/**
+	 * 修改双webview下拉刷新出现的位置，在main中使用
+	 * @author 莫尚霖
+	 * @param {Object} top 下拉刷新距离顶部的高度
+	 */
+	mod.changeTopPocket = function(top) {
+		setTimeout(function() {
+			var toppocket = document.querySelector('.mui-pull-top-pocket');
+			var height;//高度
+			if(top) {
+				height = top;
+			} else {
+				height = localStorage.getItem('StatusHeightNo') * 1 + 45;
+			}
+			if(toppocket) {
+				document.querySelector('.mui-pull-top-pocket').style.top = height + 'px';
+			} else {
+				mod.changeTopPocket();
+			}
+		}, 200);
 	}
 
 	return mod;
