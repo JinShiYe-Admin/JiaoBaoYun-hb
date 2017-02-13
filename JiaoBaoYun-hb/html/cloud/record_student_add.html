@@ -119,7 +119,7 @@
 					</div>-->
 					<div id="record">
 						<div class="mui-input-row" style="margin: 0px 5px;">
-							<textarea id="textarea_record" rows="4" placeholder="记事：" maxlength="500"></textarea>
+							<textarea id="textarea_record" rows="4" placeholder="记事：" oninput="if(value.length>500)value=value.slice(0,500)"></textarea>
 						</div>
 						<div id="MultiMedia">
 						</div>

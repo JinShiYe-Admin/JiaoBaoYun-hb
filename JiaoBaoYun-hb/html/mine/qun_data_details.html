@@ -82,7 +82,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>学生姓名:</label>
-								<input id="stu_name" type="text" class="mui-input-clear">
+								<input id="stu_name" type="text" class="mui-input-clear" oninput="if(value.length>10)value=value.slice(0,10)">
 								<div style="position: absolute;right: 0px;top: 13px;color: red;font-size: 24px;">*</div>
 							</div>
 						</li>
@@ -128,7 +128,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>姓名:</label>
-								<input id="tea_name" type="text" class="mui-input-clear">
+								<input id="tea_name" type="text" class="mui-input-clear" oninput="if(value.length>10)value=value.slice(0,10)">
 								<div style="position: absolute;right: 0px;top: 13px;color: red;font-size: 24px;">*</div>
 							</div>
 						</li>
@@ -165,19 +165,19 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>职位:</label>
-								<input id="tea_job" type="text" class="mui-input-clear" value="">
+								<input id="tea_job" type="text" class="mui-input-clear" value="" oninput="if(value.length>10)value=value.slice(0,10)">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>科目:</label>
-								<input id="tea_sub" type="text" class="mui-input-clear" value="">
+								<input id="tea_sub" type="text" class="mui-input-clear" value="" oninput="if(value.length>10)value=value.slice(0,10)">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>职称:</label>
-								<input id="tea_title" type="text" class="mui-input-clear" value="">
+								<input id="tea_title" type="text" class="mui-input-clear" value="" oninput="if(value.length>10)value=value.slice(0,10)">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
@@ -394,10 +394,6 @@
 						tea_expsch.setAttribute('disabled', 'disabled'); //老师教龄
 						//tea_introduction.setAttribute('disabled', 'disabled'); //老师简介
 					}
-					jQuery('#tea_name').prop("maxLength", "10");
-					jQuery('#tea_job').prop("maxLength", "10");
-					jQuery('#tea_sub').prop("maxLength", "10");
-					jQuery('#tea_title').prop("maxLength", "10");
 					getData(2);
 				}
 
@@ -415,7 +411,6 @@
 						//stu_gname.setAttribute('disabled', 'disabled'); //学生所属群
 						//stu_introduction.setAttribute('disabled', 'disabled'); //学生简介
 					}
-					jQuery('#stu_name').prop("maxLength", "10");
 					getData(3);
 				}
 
@@ -522,7 +517,7 @@
 						html2 = '<li class="mui-table-view-cell">\
 									<div class="mui-input-row">\
 										<label>关系:</label>\
-										<input id="par_urel_' + data.utid + '" type="text" class="mui-input-clear" maxLength="10" value="' + data.urel + '">\
+										<input id="par_urel_' + data.utid + '" type="text" class="mui-input-clear" oninput="if(value.length>10)value=value.slice(0,10)" value="' + data.urel + '">\
 									</div>\
 								</li>';
 					} else {

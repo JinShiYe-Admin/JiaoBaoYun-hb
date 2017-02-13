@@ -31,20 +31,28 @@
 				var subData = main.data; //接收页面传入的参数值
 				console.log('从父页面获取的数据:' + JSON.stringify(subData));
 				//---从父页面获取数据---end---
+				var maxLength = 0; //字数限制
 				switch(subData.type) {
 					case 'gname': //名称
-						jQuery('#input').prop("maxLength", "20");
+						maxLength = 20;
 						break;
 					case 'gnote': //群说明
-						jQuery('#input').prop("maxLength", "30");
+						maxLength = 30;
 						break;
 					case 'qunremark': //群备注
-						jQuery('#input').prop("maxLength", "30");
+						maxLength = 30;
 						break;
 					default:
 						console.log('修改群资料的类型选择出错');
 						break;
 				}
+
+				document.getElementById('input').addEventListener('input', function() {
+					if(this.value.length > maxLength) {
+						this.value = this.value.slice(0, maxLength)
+					}
+				});
+
 				document.getElementById("input").value = subData.value;
 				document.getElementById('save').addEventListener('tap', function() {
 					var vvl = document.getElementById("input").value;
@@ -76,7 +84,7 @@
 									var main2 = plus.webview.getWebviewById('qun_manage_sub.html');
 									mui.fire(main2, 'changeQunInfo', {
 										gid: subData.gid, //群id
-										type:'gname',//修改的类型
+										type: 'gname', //修改的类型
 										value: vvl //修改后的值
 									});
 								}

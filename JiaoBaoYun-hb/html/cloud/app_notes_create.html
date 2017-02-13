@@ -39,7 +39,7 @@
 			</div>
 		</nav>
 		<div class="mui-content">
-			<textarea id="notes" maxlength="2000" placeholder="✎ 分享你的学习与生活..." style="border: none;"></textarea>
+			<textarea id="notes" oninput="if(value.length>2000)value=value.slice(0,2000)" placeholder="✎ 分享你的学习与生活..." style="border: none;"></textarea>
 		</div>
 
 		<script type="text/javascript">

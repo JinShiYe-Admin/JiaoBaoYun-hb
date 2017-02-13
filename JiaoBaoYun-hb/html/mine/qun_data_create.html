@@ -156,7 +156,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label id="stu_la">学生姓名:</label>
-								<input id="stu_name" type="text" class="mui-input-clear" maxlength="10">
+								<input id="stu_name" type="text" class="mui-input-clear" oninput="if(value.length>10)value=value.slice(0,10)">
 								<div style="position: absolute;right: 0px;top: 13px;color: red;font-size: 24px;">*</div>
 							</div>
 						</li>
@@ -205,7 +205,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>姓名:</label>
-								<input id="tea_name" type="text" class="mui-input-clear" maxlength="10">
+								<input id="tea_name" type="text" class="mui-input-clear" oninput="if(value.length>10)value=value.slice(0,10)">
 								<div style="position: absolute;right: 0px;top: 13px;color: red;font-size: 24px;">*</div>
 							</div>
 						</li>
@@ -236,25 +236,25 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>职位:</label>
-								<input id="tea_job" type="text" class="mui-input-clear" maxlength="10">
+								<input id="tea_job" type="text" class="mui-input-clear" oninput="if(value.length>10)value=value.slice(0,10)">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>科目:</label>
-								<input id="tea_sub" type="text" class="mui-input-clear" maxlength="10">
+								<input id="tea_sub" type="text" class="mui-input-clear" oninput="if(value.length>10)value=value.slice(0,10)">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>职称:</label>
-								<input id="tea_title" type="text" class="mui-input-clear" maxlength="10">
+								<input id="tea_title" type="text" class="mui-input-clear" oninput="if(value.length>10)value=value.slice(0,10)">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>教龄:</label>
-								<input id="tea_expsch" type="number" oninput="if(value.length>10)value=value.slice(0,10)" class="mui-input-clear" maxlength="10">
+								<input id="tea_expsch" type="number" oninput="if(value.length>10)value=value.slice(0,10)" class="mui-input-clear">
 							</div>
 						</li>
 						<li class="mui-table-view-cell" style="display: none;">

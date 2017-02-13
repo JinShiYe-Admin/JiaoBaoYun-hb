@@ -129,10 +129,10 @@
 								<input id="cb_4" value="4" name="checkbox" type="checkbox">
 							</div>
 						</div>
-						<input id="input_call" type="text" class="mui-input-clear" placeholder="备注" maxlength="20" style="margin-bottom: 10px;">
+						<input id="input_call" type="text" class="mui-input-clear" placeholder="备注" oninput="if(value.length>20)value=value.slice(0,20)" style="margin-bottom: 10px;">
 					</div>
 					<div id="record" style="background: white;margin-top: 10px;padding-top: 10px;padding-bottom: 10px;">
-						<textarea id="textarea_record" rows="4" placeholder="记事" maxlength="500" style="margin-bottom: 4px;"></textarea>
+						<textarea id="textarea_record" rows="4" placeholder="记事" oninput="if(value.length>500)value=value.slice(0,500)" style="margin-bottom: 4px;"></textarea>
 						<!--<span class="mui-icon iconfont icon-yuyin"></span>-->
 						<!--<span class="mui-icon iconfont icon-xiangji"></span>-->
 						<!--<span class="mui-icon iconfont icon-shipin"></span>-->
