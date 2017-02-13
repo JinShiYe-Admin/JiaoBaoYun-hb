@@ -202,6 +202,11 @@
 				};
 				//请求数据
 				requestData(comData);
+
+				//下拉刷新的监听
+				window.addEventListener('refreshView',function () {
+				        pulldownRefresh();
+				});
 			});
 
 			/**
