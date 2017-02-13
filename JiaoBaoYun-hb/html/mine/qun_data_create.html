@@ -130,17 +130,23 @@
 					<div class="mui-input-row">
 						<label id="type_name_la">身份:</label>
 						<a href="#popover" id="type_name">
-							<font id="type_name_font">学生</font>
+							<font class="mui-input-row mui-checkbox mui-left">
+								<label id="type_name_font"style="padding-left: 40px;">学生</label>
+								<input id="type_cb" name="checkbox1" type="checkbox" checked style="top: -7px;left: 1px;">
+							</font>
 							<div id="arrowdown" class="mui-icon mui-icon-arrowdown"></div>
 						</a>
 					</div>
 				</li>
 			</ul>
-			<div id="popover" class="mui-popover" style="width: 80px;">
+			<div id="popover" class="mui-popover" style="width: 110px;">
 				<div id="popover_arrow" class="mui-popover-arrow"></div>
 				<ul class="mui-table-view" style="background: white;text-align: center;">
-					<li class="mui-table-view-cell">
-						<div id="type_popover" style="line-height: 40px; font-size: 15px;">老师</div>
+					<li class="mui-table-view-cell" style="padding-left: 0px;padding-right: 0px;text-align: center;">
+						<div class="mui-input-row mui-checkbox mui-left">
+							<div id="type_popover" style="line-height: 40px; font-size: 15px;text-align: center;margin-left: 28px;">老师</div>
+							<input id="cb_popover" name="Checkbox2" type="checkbox">
+						</div>
 					</li>
 				</ul>
 			</div>
@@ -178,13 +184,13 @@
 								<input type="text" class="mui-input-clear" disabled="disabled">
 							</div>
 						</li>
-						<li class="mui-table-view-cell">
+						<li class="mui-table-view-cell" style="display: none;">
 							<div class="mui-input-row">
 								<label>所属群:</label>
 								<input id="stu_gname" type="text" class="mui-input-clear" disabled="disabled">
 							</div>
 						</li>
-						<li class="mui-table-view-cell">
+						<li class="mui-table-view-cell" style="display: none;">
 							<div class="mui-input-row">
 								<label>简介:</label>
 								<input type="text" class="mui-input-clear" disabled="disabled">
@@ -221,7 +227,7 @@
 								<input id="tea_gender" type="text" class="mui-input-clear" disabled="disabled">
 							</div>
 						</li>
-						<li class="mui-table-view-cell">
+						<li class="mui-table-view-cell" style="display: none;">
 							<div class="mui-input-row">
 								<label>所属群:</label>
 								<input id="tea_gname" type="text" class="mui-input-clear" disabled="disabled">
@@ -251,7 +257,7 @@
 								<input id="tea_expsch" type="number" oninput="if(value.length>10)value=value.slice(0,10)" class="mui-input-clear" maxlength="10">
 							</div>
 						</li>
-						<li class="mui-table-view-cell">
+						<li class="mui-table-view-cell" style="display: none;">
 							<div class="mui-input-row">
 								<label>简介:</label>
 								<input id="tea_introduction" type="text" class="mui-input-clear" disabled="disabled">
@@ -342,6 +348,18 @@
 				});
 
 				document.getElementById('type_popover').addEventListener('tap', function() {
+					tapPopover();
+				});
+
+				document.getElementById('cb_popover').addEventListener('change', function() {
+					document.getElementById("cb_popover").checked = false;
+					tapPopover();
+				});
+
+				/**
+				 * 点击popover的效果
+				 */
+				function tapPopover() {
 					var value = document.getElementById("type_popover").innerText;
 					if(value == '老师') {
 						document.getElementById("type_popover").innerText = '学生';
@@ -357,7 +375,15 @@
 						mstype = 3;
 					}
 					mui('#popover').popover('toggle');
-				});
+				}
+
+				//				document.getElementById('type_cb').addEventListener('tap',function () {
+				//				        mui('#popover').popover('toggle');
+				//				});
+
+				//				document.getElementById('type_name_font').addEventListener('tap',function () {
+				//				        mui('#popover').popover('show');
+				//				});
 
 				//完成按钮监听
 				document.getElementById('finish').addEventListener('tap', function() {

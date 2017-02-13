@@ -94,6 +94,9 @@
 						<div class="city-p">湖北省</div>
 						<div id="City_42" class=" mui-row">
 						</div>
+						<div class="city-p">广西壮族自治区</div>
+						<div id="City_45" class=" mui-row">
+						</div>
 						<div class="city-p">海南省</div>
 						<div id="City_46" class=" mui-row">
 						</div>
@@ -225,6 +228,9 @@
 								case '42':
 									proname = '湖北省';
 									break;
+								case '45':
+									proname = '广西壮族自治区';
+									break;
 								case '46':
 									proname = '海南省';
 									break;
@@ -292,8 +298,8 @@
 						mui.each(cityArray, function(index, element) {
 							//遍历，然后判断是否是之前选择的城市，修改选中状态
 							var proAcode = element.acode.substring(0, 2); //截取省份代码
-							if(proAcode == '37' || proAcode == '42' || proAcode == '46') {
-								//山东，湖北，海南
+							if(proAcode == '37' || proAcode == '42' || proAcode == '45' || proAcode == '46') {
+								//山东，湖北，广西，海南
 								var select = 0; //默认为不选中
 								for(var m in tempArry) {
 									var tempModel = tempArry[m];

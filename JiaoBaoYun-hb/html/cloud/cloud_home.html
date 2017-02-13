@@ -366,7 +366,10 @@
 					if(id == 'homework') { //作业
 						requestClassData();
 					} else if(id == 'manage') { //班级管理
-						events.openNewWindow('/html/mine/qun_manage.html');
+						events.openNewWindowWithData('/html/mine/qun_manage_main.html', {
+							type: '1' //0群管理,1人员资料
+						});
+						//events.openNewWindow('/html/mine/qun_manage.html');
 					} else { //学生
 						console.log('学生');
 						var index = this.id.replace('studentsdynamic', '');
@@ -728,7 +731,7 @@
 				}
 
 				/**
-				 * 作业和班级管理
+				 * 作业和人员资料
 				 */
 				function addcloudrecord_0_0() {
 					//作业
@@ -743,13 +746,13 @@
 					document.getElementById("cloudrecord_0").appendChild(li);
 					li.style.paddingTop = (cloudSecondItemHeight / 2 - (li.lastElementChild.offsetHeight + li.lastElementChild.offsetTop - li.firstElementChild.offsetTop)) / 2 + 'px';
 
-					//班级管理
+					//人员资料
 					var li2 = document.createElement('li');
 					li2.id = 'manage';
 					li2.className = 'mui-table-view-cell';
 					li2.setAttribute('value', 1);
 					li2.innerHTML = '<img src="../../image/cloud/cloud_0_banjiguanli.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
-									   <p class="mui-ellipsis">班级管理</p>';
+									   <p class="mui-ellipsis">人员资料</p>';
 					li2.style.width = maxWidth + 'px';
 					li2.style.height = cloudSecondItemHeight / 2 + 'px';
 					document.getElementById("cloudrecord_0").appendChild(li2);
