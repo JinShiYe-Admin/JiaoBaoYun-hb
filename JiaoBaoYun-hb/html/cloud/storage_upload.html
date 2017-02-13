@@ -341,7 +341,7 @@
 
 								console.log("获取目录或文件的属性成功");
 								//console.log("getMetadata:" + JSON.stringify(succesCB));
-								//console.log("readFileSize：" + AndroidFileSystem.readSize(succesCB.size));
+								console.log("readFileSize：" + AndroidFileSystem.readSize(succesCB.size));
 								//限制50M
 								if(succesCB.size <= (50 * 1024 * 1024)) {
 									if(upFile == null) { //当前页面没选上传的文件
