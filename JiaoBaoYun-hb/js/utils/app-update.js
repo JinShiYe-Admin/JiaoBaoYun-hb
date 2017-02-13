@@ -56,13 +56,15 @@ var appUpdate = (function(mod) {
 		 */
 	var getMinMax = function(numArray) {
 			var minMax = {};
+			var min='';
 			for(var i in numArray) {
 				if(i == 0) {
 					minMax.max = parseInt(numArray[i]);
 				} else {
-					minMax.min += parseInt(numArray[i]);
+					min+=numArray[i];
 				}
 			}
+			minMax.min=parseInt(min);
 			return minMax;
 		}
 		/**
