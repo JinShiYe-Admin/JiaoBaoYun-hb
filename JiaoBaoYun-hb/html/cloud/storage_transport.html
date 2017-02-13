@@ -558,6 +558,7 @@
 							downloading = false;
 							document.getElementById("down_btn_" + downid).innerText = '继续';
 							document.getElementById("down_btn_" + downid).value = '5';
+							document.getElementById("down_waiting_" + downid).innerText = '已经暂停';
 							//开始新的下载任务
 							mui.each(downloadList, function(index, element) {
 								if(element.id !== downid && element.state != 5) {
@@ -731,17 +732,21 @@
 									return false;
 								}
 							});
-							document.getElementById("down_btn_" + download.id).style.display = 'none';
-							document.getElementById("down_" + download.id).parentNode.removeChild(document.getElementById("down_" + download.id));
 							if(status == 200) {
 								mui.toast('下载成功');
+								document.getElementById("down_btn_" + download.id).style.display = 'none';
+								document.getElementById("down_" + download.id).parentNode.removeChild(document.getElementById("down_" + download.id));
+
 								plus.io.resolveLocalFileSystemURL(fpath, function(succesCB) {
 									addUpedOrDownedMetadataItem(0, succesCB);
 								}, function(errorCB) {
 									console.log("请求上传或者下载文件系统失败: " + JSON.stringify(errorCB));
 								});
 							} else {
-								mui.toast('下载失败:' + status + ' ' + download.responseText);
+								document.getElementById("down_btn_" + download.id).style.display = 'none';
+								//document.getElementById("down_" + download.id).parentNode.removeChild(document.getElementById("down_" + download.id));
+								document.getElementById("down_waiting_" + download.id).innerText = '下载失败';
+								mui.toast('下载失败');
 							}
 
 						}, function(download, status) {
@@ -769,9 +774,10 @@
 									console.log('下载任务请求已经接收:|id:' + id + '|downloadState:' + downloadState);
 									document.getElementById("down_btn_" + id).innerText = '暂停';
 									document.getElementById("down_btn_" + id).value = '3';
-									document.getElementById("down_waiting_" + id).style.display = 'none';
+									document.getElementById("down_waiting_" + id).innerText = '请求已经接收';
 									break;
 								case 3: //下载任务接收数据
+									document.getElementById("down_waiting_" + id).innerText = '下载中';
 									//console.log('下载任务接收数据:|id:' + id + '|downloadSize:' + downloadSize + '|totalSize:' + totalSize + '|uploadState:' + downloadState);
 									//document.getElementById("down_btn_" + id).innerText = '暂停';
 									//document.getElementById("down_btn_" + id).value = '3';
@@ -808,6 +814,7 @@
 									console.log('下载任务已完成:|id:' + id + '|downloadState:' + downloadState);
 									break;
 								case 5: //下载任务已暂停
+									document.getElementById("down_waiting_" + id).innerText = '已经暂停';
 									console.log('下载任务已暂停:|id:' + id + '|downloadState:' + downloadState);
 									document.getElementById("down_btn_" + id).innerText = '继续';
 									document.getElementById("down_btn_" + id).value = '5';
@@ -888,7 +895,6 @@
 								document.getElementById("up_btn_" + upload.__UUID__).style.display = 'none';
 								//document.getElementById("up_" + upload.__UUID__).parentNode.removeChild(document.getElementById("up_" + upload.__UUID__));
 								document.getElementById("up_waiting_" + upload.__UUID__).innerText = '上传失败';
-								document.getElementById("up_waiting_" + upload.__UUID__).style.display = 'inline';
 								mui.toast('上传失败:' + status + ' ' + upload.responseText);
 							}
 
@@ -913,12 +919,14 @@
 									mui("#up_bar_" + id).progressbar({
 										progress: 0
 									}).show();
-									document.getElementById("up_waiting_" + id).style.display = 'none';
+									document.getElementById("up_waiting_" + id).innerText = '开始请求';
 									break;
 								case 2: //上传任务请求已经建立
+									document.getElementById("up_waiting_" + id).innerText = '请求已经建立';
 									console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
 									break;
 								case 3: //上传任务提交数据
+									document.getElementById("up_waiting_" + id).innerText = '正在上传';
 									//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
 									//document.getElementById("up_btn_" + id).innerText = '暂停';
 									//document.getElementById("up_btn_" + id).value = '3';
@@ -935,6 +943,8 @@
 								case 5: //上传任务已暂停
 									//document.getElementById("up_btn_" + id).innerText = '继续';
 									//document.getElementById("up_btn_" + id).value = '5';
+									//document.getElementById("up_waiting_" + id).innerText = '已经暂停';
+
 									console.log('上传任务已暂停:|id:' + id + '|uploadState:' + uploadState);
 									break;
 								default:
