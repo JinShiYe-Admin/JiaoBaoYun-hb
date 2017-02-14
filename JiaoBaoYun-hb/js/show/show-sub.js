@@ -101,7 +101,7 @@ function addSomeEvent() {
 					console.log('index=' + index)
 					var a = document.getElementById("praise" + index);
 					a.style.color = 'rgb(0, 165, 224)'
-					mui.toast('点赞成功');
+//					mui.toast('点赞成功');
 					var PraiseList = document.getElementById("PraiseList" + index);
 					console.log(PraiseList.innerHTML);
 					var praiseNameList = PraiseList.getElementsByTagName("font");
@@ -133,7 +133,7 @@ function addSomeEvent() {
 				if(data.RspCode == 0) {
 					var a = document.getElementById("praise" + index);
 					a.style.color = 'rgb(143, 143, 148)'
-					mui.toast('取消点赞成功');
+//					mui.toast('取消点赞成功');
 					var PraiseList = document.getElementById("PraiseList" + index);
 					var praiseName = PraiseList.getElementsByTagName("font")[0];
 					if(praiseName.innerHTML.indexOf('、') > -1) {
