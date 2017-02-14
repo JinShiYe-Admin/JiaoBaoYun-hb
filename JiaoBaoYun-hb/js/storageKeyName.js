@@ -36,6 +36,7 @@ var storageKeyName = (function(mod) {
 	mod.QNHEADIMGEDOMAIN = 'http://oigr7qsvz.bkt.clouddn.com/'; //存放在七牛的个人头像，群头像，资料头像的域名，公开的，jiaobaoyun-headimage
 //	mod.QNDEFAULTIMAGEDOMAIN = 'http://oixh9lre3.bkt.clouddn.com/'; //存放在七牛的默认图片的域名，公开的
 	//---测试---start---
+		mod.QNGETUPLOADTOKEN='http://114.215.222.186:8004/Api/QiNiu/GetUpLoadToKen';
 //		mod.QNGETUPTOKENHEADIMGE = 'http://192.168.0.178:8517/GetTokenProfilePhoto.ashx'; //获取上传个人头像，群头像，资料头像到七牛的token的url
 //		mod.QNGETUPTOKENFILE = 'http://192.168.0.178:8517/QiuToken.ashx'; //获取上传文件（云存储）到七牛的token的url
 //		mod.QNGETDOWNTOKENFILE = 'http://192.168.0.178:8517/GetToken.ashx?geturl='; //获取下载文件（云存储）的token的url，url+七牛文件url
@@ -43,6 +44,7 @@ var storageKeyName = (function(mod) {
 	//---测试---end---
 
 	//---外网---start---
+//	mod.QNGETUPLOADTOKEN="http://114.215.222.186:8005/Api/QiNiu/GetUpLoadToKen";
 	mod.QNGETUPTOKENHEADIMGE = 'http://114.215.222.186:8003/GetTokenProfilePhoto.ashx'; //获取上传个人头像，群头像，资料头像到七牛的token的url
 	mod.QNGETUPTOKENFILE = 'http://114.215.222.186:8003/QiuToken.ashx'; //获取上传文件（云存储）到七牛的token的url
 	mod.QNGETDOWNTOKENFILE = 'http://114.215.222.186:8003/GetToken.ashx?geturl='; //获取下载文件（云存储）的token的url，url+七牛文件url

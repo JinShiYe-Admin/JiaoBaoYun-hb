@@ -30,7 +30,7 @@ mui.plusReady(function() {
 		 */
 	window.addEventListener('modifyAnswer', function(e) {
 		personalUTID = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
-		 console.log('上个页面传回来的值：'+JSON.stringify(e.detail.data));
+		console.log('上个页面传回来的值：' + JSON.stringify(e.detail.data));
 		answerResultId = e.detail.data.AnswerResultId;
 		imgIds = [];
 		stuSubmitAnswer = false;
@@ -45,10 +45,41 @@ mui.plusReady(function() {
 	 */
 	events.addTap('getAnswer', function() {
 		camera.getPic(camera.getCamera(), function(picPath) {
-				files.getFileByPath(picPath, function(fileStream) {
-					uploadFile(picPath, fileStream);
-				})
-
+				//				files.getFileByPath(picPath, function(fileStream) {
+				//					uploadFile(picPath, fileStream);
+				//				})
+				var MainSpace="kf-pb";
+				var saveSpace;
+				var thumbSpace;
+				if(role == 2) {
+					saveSpace = "TeaAnswersPic/";
+					thumbSpace = "TeaAnThumbPic/";
+				} else {
+					saveSpace = "StuAnswersPic/"
+					thumbSpace = "StuAnThumbPic/";
+				}
+				var QNFileName = saveSpace+"123.png";
+				var ops = "imageView2/2/w/200/h/200/format/png|saveas/" +
+					Qiniu.URLSafeBase64Encode(MainSpace + ":" +thumbSpace+QNFileName);
+				var param ={
+					Bucket: MainSpace,
+					Key: QNFileName,
+					Pops: '',
+					NotifyUrl: ''
+				}
+				console.log("参数数据："+param.toString())
+				var key = 'zy309309!';
+				var data = {
+					AppID: "2",
+					Param: encryptByDES(key,JSON.stringify(param))
+				}
+				var AppId = 2; //
+				console.log("加密后的信息："+encryptByDES(key,JSON.stringify(param)))
+				CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data, function(datas) {
+					console.log("获取的数据：" + JSON.stringify(datas))
+				}, function(xhr, type, errorThrown) {
+					console.log("错误类型：" + type + errorThrown);
+				});
 			})
 			//			gallery.getSinglePic(function(picPath) {
 			//				files.getFileByPath(picPath, function(fileStream) {
@@ -60,12 +91,15 @@ mui.plusReady(function() {
 	 * 查看结果按钮点击事件
 	 */
 	events.addTap('checkResult', function() {
-		if(teaInfo){
-			var teachers_container = document.getElementById('receive-teachers'); //selectid
-			teaInfo = teachers_container.options[teachers_container.selectedIndex].teaInfo;
-		}
-		jQuery.extend(teaInfo,{AnswerResultId:answerResultId,workType:0})
-		console.log('传递的answerResultId：'+answerResultId);
+			if(teaInfo) {
+				var teachers_container = document.getElementById('receive-teachers'); //selectid
+				teaInfo = teachers_container.options[teachers_container.selectedIndex].teaInfo;
+			}
+			jQuery.extend(teaInfo, {
+				AnswerResultId: answerResultId,
+				workType: 0
+			})
+			console.log('传递的answerResultId：' + answerResultId);
 			events.fireToPageWithData('homework-commented.html', 'workDetail', teaInfo);
 		})
 		//删除图标的点击事件
@@ -97,7 +131,7 @@ var addPostEventListener = function() {
 				var teachers_container = document.getElementById('receive-teachers'); //selectid
 				teaInfo = teachers_container.options[teachers_container.selectedIndex].teaInfo;
 				//判断是要学生提交答案0，还是修改答案1
-				console.log('teaInfo:'+JSON.stringify(teaInfo))
+				console.log('teaInfo:' + JSON.stringify(teaInfo))
 				if(stuSubmitAnswer) {
 					//6.	提交答案结果
 					//所需参数
@@ -109,7 +143,7 @@ var addPostEventListener = function() {
 						teacherId: teaInfo.utid, //老师Id；
 						teacherName: "" //老师名字；
 					};
-//					TeacherId=teaInfo.utid;
+					//					TeacherId=teaInfo.utid;
 					requestSubmitAnswer(comData);
 				} else {
 					//8.修改答案结果；
@@ -122,7 +156,7 @@ var addPostEventListener = function() {
 						teacherId: teaInfo.utid, //老师Id；
 						teacherName: "" //老师名字；
 					};
-//					TeacherId=teaInfo.utid;
+					//					TeacherId=teaInfo.utid;
 					requestModifyAnswer(comData);
 				}
 			}
@@ -139,7 +173,7 @@ var getStudentClasses = function(callback) {
 		vvl: personalUTID //查询的各项，对应人的utid，可以是查询的任何人
 	}, wd, function(data) {
 		wd.close();
-		console.log('获取的群信息：'+JSON.stringify(data));
+		console.log('获取的群信息：' + JSON.stringify(data));
 		var studentClasses = [];
 		if(data.RspCode == 0) {
 			for(var i in data.RspData) {
@@ -202,7 +236,7 @@ var setPic = function(picPath, img) {
 		var div = document.createElement('div');
 		div.imgId = img.FileId;
 		div.className = 'img-div';
-		div.innerHTML = '<img src="' +storageKeyName.MAINHOMEWORKURL+img.ThumbUrl + '" data-preview-src="'+storageKeyName.MAINHOMEWORKURL+img.Url+'" data-preview-group="1"/>' +
+		div.innerHTML = '<img src="' + storageKeyName.MAINHOMEWORKURL + img.ThumbUrl + '" data-preview-src="' + storageKeyName.MAINHOMEWORKURL + img.Url + '" data-preview-group="1"/>' +
 			'<a class="mui-icon iconfont icon-guanbi"></a>'
 		pictures.appendChild(div);
 	}
@@ -337,11 +371,11 @@ var setTeachers = function(teaInfos) {
 	teaInfos.forEach(function(teaInfo, i) {
 		var op = document.createElement('option');
 		op.teaInfo = teaInfo;
-		op.innerHTML = '<p><span  class="receiver-name">' +events.shortForString(teaInfo.ugnick,8)  +
-		'</span><span class="recerver-">-</span><span class="receiver-class">' +events.shortForString(teaInfo.gname,8)+ '</span></p>';
+		op.innerHTML = '<p><span  class="receiver-name">' + events.shortForString(teaInfo.ugnick, 8) +
+			'</span><span class="recerver-">-</span><span class="receiver-class">' + events.shortForString(teaInfo.gname, 8) + '</span></p>';
 		teaContainer.appendChild(op);
 	})
-	teaInfo=teaContainer.firstElementChild.teaInfo;
+	teaInfo = teaContainer.firstElementChild.teaInfo;
 }
 
 //所需参数
@@ -441,9 +475,9 @@ function requestModifyAnswer(comData) {
 		console.log('8.postDataPro_ModifyAnswerResult:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			if(data.RspData.r) {
-				mui.toast("修改答案成功！")
+				mui.toast("修改答案成功！");
 			} else {
-				mui.toast('修改答案失败！')
+				mui.toast('修改答案失败！');
 			}
 		} else {
 			mui.toast(data.RspTxt);
