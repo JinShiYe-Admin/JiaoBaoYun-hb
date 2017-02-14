@@ -53,9 +53,9 @@
 			//判断是加载更多1还是刷新0
 			var eduFlag = 0;
 			//当前加载的页码
-//			var eduIndex = 1;
-//			//新闻总页码
-//			var eduSumCount = 0;
+			//			var eduIndex = 1;
+			//			//新闻总页码
+			//			var eduSumCount = 0;
 			mui.plusReady(function() {
 
 				//---滑动start---
@@ -72,9 +72,9 @@
 					SECity = e.detail; //当前显示的科教城市
 					console.log("科教子页面获取的城市信息：" + JSON.stringify(SECity));
 					//获取对应城市新闻
-					if (!SECity.array||SECity.array.length == 0) {
-						SECity.array=[];
-						SECity.eduIndex=1;
+					if(!SECity.array || SECity.array.length == 0) {
+						SECity.array = [];
+						SECity.eduIndex = 1;
 						requestCityNews(SECity.acode);
 					}
 
@@ -114,10 +114,10 @@
 					//					console.log('我在底部pageIndex:' + selectGContainer.classInfo.pageIndex + ',totalPageCount:' + totalPageCount);
 					eduFlag = 1;
 					//判断是否还有更多
-					console.log('SECity '+JSON.stringify(SECity));
-					if(SECity.eduIndex < SECity.eduSumCount) {
-						SECity.eduIndex++;
-						requestCityNews();
+					console.log('SECity ' + JSON.stringify(SECity));
+					if((SECity.eduIndex-1) * 10 < SECity.eduSumCount) {
+						//SECity.eduIndex++;
+						requestCityNews(SECity.acode);
 					} else {
 						mui.toast('没有更多了');
 					}
@@ -140,7 +140,7 @@
 					console.log('对应区域的分页新闻:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						//新闻总页数
-						SECity.eduSumCount = data.RspData.pg.PageCount;
+						SECity.eduSumCount = data.RspData.pg.RowCount;
 						SECity.eduIndex++;
 						var tempArr = data.RspData.dt;
 						//将返回的新闻遍历
