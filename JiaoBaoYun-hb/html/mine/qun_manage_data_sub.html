@@ -312,7 +312,10 @@
 					} else {
 						mui.toast(data.RspTxt);
 					}
-					getBeiZhu(parList);
+
+					if(parList.length != 0) {
+						getBeiZhu(parList);
+					}
 					wd.close();
 				});
 			}
