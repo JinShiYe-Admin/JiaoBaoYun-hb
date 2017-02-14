@@ -67,13 +67,12 @@ mui.plusReady(function() {
 					Pops: '',
 					NotifyUrl: ''
 				}
-				console.log("参数数据："+param.toString())
+				console.log("参数数据："+JSON.stringify(param))
 				var key = 'zy309309!';
 				var data = {
-					AppID: "2",
+					AppID: "3",
 					Param: encryptByDES(key,JSON.stringify(param))
 				}
-				var AppId = 2; //
 				console.log("加密后的信息："+encryptByDES(key,JSON.stringify(param)))
 				CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data, function(datas) {
 					console.log("获取的数据：" + JSON.stringify(datas))
