@@ -89,6 +89,7 @@ var setListListener = function() {
 			choseGroupId = parseInt(this.getAttribute('gid'));
 			document.querySelector('#search-group').blur();
 			console.log('选中的申请的群id：' + choseGroupId);
+			resetRoles();
 		})
 	}
 	/**
@@ -193,6 +194,17 @@ var getAllGroups = function(utid, callback) {
 		})
 
 	}
+/**
+ * 重置角色选择
+ */
+var resetRoles=function(){
+		//家长选择按钮
+		document.getElementById('check-parents').checked=false;
+		//老师选择按钮
+		document.getElementById('check-tea').checked=false;
+		//学生选择按钮
+		document.getElementById('check-stu').checked=false;
+}
 	/**
 	 * 多选按钮选择逻辑
 	 */

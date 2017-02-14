@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js" ></script>
 	</head>
 
 	<body>
@@ -43,6 +44,9 @@
 				contentWebview = plus.webview.currentWebview().children()[0];
 			}
 			contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
+		});
+		mui.plusReady(function () {
+		    events.changeTopPocket();
 		});
 	</script>
 

@@ -34,28 +34,30 @@
 			<h1 class="mui-title" style="color: white;">笔记</h1>
 			<h1 id="finish" class="mui-title" style="text-align: right;right: 10px;">完成</h1>
 		</header>
-		<nav class="mui-bar mui-bar-tab"style="box-shadow: none;">
+		<nav class="mui-bar mui-bar-tab" style="box-shadow: none;">
 			<div id="MultiMedia">
 			</div>
 		</nav>
 		<div class="mui-content">
-			<textarea id="notes" maxlength="2000" placeholder="✎ 分享你的学习与生活..." style="border: none;"></textarea>
+			<textarea id="notes" oninput="if(value.length>2000)value=value.slice(0,2000)" placeholder="✎ 分享你的学习与生活..." style="border: none;"></textarea>
 		</div>
 
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
 				var notes = document.getElementById("notes");
-				var height = plus.screen.resolutionHeight - (localStorage.getItem('StatusHeightNo') * 1 + 75+ 50); //屏幕高度-状态栏高度-顶部导航高度
+				var height = plus.screen.resolutionHeight - (localStorage.getItem('StatusHeightNo') * 1 + 75 + 50); //屏幕高度-状态栏高度-顶部导航高度
 
 				notes.style.height = height + 'px';
 
 				MultiMedia.addElement(document.getElementById("MultiMedia"));
 
 				document.getElementById('finish').addEventListener('tap', function() {
+
 					if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "") { //为空不允许发送
 						mui.toast('请输入文字');
 					} else {
+						document.getElementById("finish").disabled = true;
 						var userId = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 
 						//38.（用户空间）新增某用户空间信息 （云笔记）
@@ -80,12 +82,13 @@
 							console.log('38postDataPro_addUserSpace（用户空间）新增某用户空间信息 （云笔记）.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) {
 								mui.toast('发布成功');
-								events.fireToPageNone('app_notes_sub.html', 'refresh');
+								events.fireToPageNone('app_notes_sub.html', 'refreshView');
 								mui.back();
 							} else {
 								if(data.RspCode != 9) {
 									mui.toast(data.RspTxt);
 								}
+								document.getElementById("finish").disabled = false;
 							}
 						});
 					}

@@ -13,6 +13,7 @@
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/MultiMedia.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
 
 		<style>
 			body,
@@ -119,7 +120,7 @@
 					</div>-->
 					<div id="record">
 						<div class="mui-input-row" style="margin: 0px 5px;">
-							<textarea id="textarea_record" rows="4" placeholder="记事：" maxlength="500"></textarea>
+							<textarea id="textarea_record" rows="4" placeholder="记事：" oninput="if(value.length>500)value=value.slice(0,500)"></textarea>
 						</div>
 						<div id="MultiMedia">
 						</div>
@@ -143,6 +144,7 @@
 					if(msgContent.replace(/(^\s*)|(\s*$)/g, "") == "") {
 						mui.toast('请输入文字');
 					} else {
+						document.getElementById("commit").disabled = true;
 						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 						var personalUNICK = '【' + window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick + '家长】';
 
@@ -162,17 +164,19 @@
 							checkType: '0' //点到类型,1 正常2 旷课3 迟到4 早退5 其他
 						};
 						//返回	非0为正确
-						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						var wd = events.showWaiting();
 						postDataPro_addStudentFile(comData, wd, function(data) {
 							console.log('70_addStudentFile_新增某学生档案.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) {
 								console.log('新增成功：' + JSON.stringify(data.RspData.Result));
+								events.fireToPageNone('record_student_sub.html', 'refreshView');
 								mui.toast('发送成功');
 								mui.back();
 							} else {
 								if(data.RspCode != 9) {
 									mui.toast(data.RspTxt);
 								}
+								document.getElementById("commit").disabled = false;
 							}
 							wd.close();
 						});

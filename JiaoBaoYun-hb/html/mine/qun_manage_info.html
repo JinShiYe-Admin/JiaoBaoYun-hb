@@ -96,15 +96,15 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>群名称：</label>
-					<input id="qunname" type="text" placeholder="请为你们的群起一个给力的名字吧！" maxlength="20">
+					<input id="qunname" type="text" placeholder="请为你们的群起一个给力的名字吧！" oninput="if(value.length>20)value=value.slice(0,20)">
 				</div>
 				<div class="mui-input-row">
 					<label>群说明：</label>
-					<input id="qunintroduce" type="text" placeholder="请简单介绍一下本群！" maxlength="30">
+					<input id="qunintroduce" type="text" placeholder="请简单介绍一下本群！" oninput="if(value.length>30)value=value.slice(0,30)">
 				</div>
 				<div class="mui-input-row">
 					<label>群备注：</label>
-					<input id="qunremark" type="text" maxlength="30">
+					<input id="qunremark" type="text" oninput="if(value.length>30)value=value.slice(0,30)">
 				</div>
 			</form>
 			<button id="commit" type="button" class="mui-btn mui-btn-blue mui-btn-block">提交</button>
@@ -301,7 +301,7 @@
 				 */
 				function changInfo(data) {
 					events.fireToPageWithData('qun_manage_sub.html', 'createQun', data);
-					events.fireToPageNone('/html/mine/qun_data.html', 'refresh');
+					events.fireToPageNone('/html/mine/qun_data.html', 'refreshView');
 					events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 				}
 
