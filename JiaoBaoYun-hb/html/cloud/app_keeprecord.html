@@ -453,7 +453,7 @@
 							document.body.querySelector('.mui-slider').style.display = 'inline';
 							document.getElementById("scrollwrapper").style.background = 'white';
 							mui.each(qunList, function(index, item) {
-								console.log('qunList:' + JSON.stringify(item));
+								//console.log('qunList:' + JSON.stringify(item));
 								addQun(item);
 							});
 							getMember(qunList[0].gid); //通过群ID获取群的正常用户
@@ -569,13 +569,9 @@
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							mui.each(data.RspData, function(index, item) {
-								tempAllMem.push(item);
-								console.log('getMemData:' + JSON.stringify(item));
-								var addTable = document.getElementById('addmember_' + item.gid);
-								var qunBot = document.getElementById("bot_" + item.gid).querySelector('.mui-row');
-								//for(var i = 0; i <= 20; i++) {
-								addMember(qunBot, addTable, item);
-								//}
+								if(item.stuname != '') { //不显示没有资料名称的资料
+									tempAllMem.push(item);
+								}
 							});
 							mui.each(qunList, function(index, item) {
 								if(item.gid == qunId) {
@@ -586,11 +582,22 @@
 						} else {
 							mui.toast(data.RspTxt);
 						}
+
+						if(tempAllMem.length == 0) {
+							mui.toast('查询记录为空');
+						} else {
+							mui.each(tempAllMem, function(index, item) {
+								var addTable = document.getElementById('addmember_' + item.gid);
+								var qunBot = document.getElementById("bot_" + item.gid).querySelector('.mui-row');
+								addMember(qunBot, addTable, item);
+							});
+						}
+
+						qunMemList.push({
+							gid: qunId, //群id
+							mem: tempAllMem //成员
+						});
 						wd.close();
-					});
-					qunMemList.push({
-						gid: qunId, //群id
-						mem: tempAllMem //成员
 					});
 				}
 

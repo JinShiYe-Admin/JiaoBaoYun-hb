@@ -48,6 +48,8 @@
 
 .icon-jiaoyu:before { content: "\e7ec"; }
 
+.icon-re:before { content: "\e672"; }
+
 .icon-shezhi1:before { content: "\e631"; }
 
 .icon-group:before { content: "\e753"; }
@@ -221,3 +223,7 @@
 .icon-qunguanli1:before { content: "\e633"; }
 
 .icon-shipinlei-xunhuanguiji:before { content: "\e634"; }
+
+.icon-ban:before { content: "\e637"; }
+
+.icon-jia0:before { content: "\e638"; }

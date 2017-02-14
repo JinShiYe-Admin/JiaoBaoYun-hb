@@ -86,6 +86,10 @@
 			.cloud-red-point {
 				position: absolute;
 				background: red;
+				height: 10px;
+				width: 10px;
+				border-radius: 50%;
+				display: none;
 			}
 
 			img {
@@ -94,6 +98,14 @@
 
 			#cloudstorage_1 img {
 				border-radius: 0px;
+			}
+
+			.icon-re,
+			.icon-ban,
+			.icon-jia0 {
+				position: absolute;
+				border: none !important;
+				top: 0px;
 			}
 		</style>
 	</head>
@@ -145,6 +157,7 @@
 							</div>
 						</div>
 					</div>
+					<!--<span class="mui-icon iconfont icon-jia0"style="font-size: 200px;"></span>-->
 				</div>
 			</div>
 		</div>
@@ -633,8 +646,10 @@
 						if(data.RspCode == 0) {
 							//设置页面显示
 							mui.each(data.RspData.Students, function(index, item) {
-								//console.log('学生档案：' + index + '|' + JSON.stringify(item));
-								addcloudstorage_0_1(item);
+								console.log('学生档案：' + index + '|' + JSON.stringify(item));
+								if(item.StudentName != '') {
+									addcloudstorage_0_1(item);
+								}
 							});
 						} else if(data.RspCode == 9) {} else {
 							mui.toast(data.RspTxt);
@@ -653,9 +668,11 @@
 					li.className = 'mui-table-view-cell';
 					var html1 = ''; //图标
 					var html2 = ''; //名字
+					var fname = ''; //文件名
 					if(data.ftype == '.file') { //文件夹
 						html1 = '<img class="cloud-bottom-imge2" src="../../image/cloud/cloud_0_wenjianjia.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>';
-						html2 = '<p class="mui-ellipsis">' + data.fname + '</p>';
+						html2 = '<p id="fname_' + data.fid + '" class="mui-ellipsis"></p>';
+						fname = data.fname;
 					} else { //文件
 						var type = cloud.classify(data.ftype);
 						var pathList = data.fpath.split('/');
@@ -667,12 +684,16 @@
 						} else { //七牛能生成缩略图的图片或视频
 							html1 = '<img src="' + path + '" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>';
 						}
-						html2 = '<p class="mui-ellipsis">' + data.fname + data.ftype + '</p>';
+						html2 = '<p id="fname_' + data.fid + '" class="mui-ellipsis">' + data.fname + data.ftype + '</p>';
+						fname = data.fname;
 					}
 					li.innerHTML = html1 + html2;
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudFirstItemHeight + 'px';
 					document.getElementById("cloudstorage_1").appendChild(li);
+
+					document.getElementById("fname_" + data.fid).innerText = fname;
+
 					li.style.paddingTop = (cloudFirstItemHeight / 2 - (li.lastElementChild.offsetHeight + li.lastElementChild.offsetTop - li.firstElementChild.offsetTop)) / 2 + 'px';
 				}
 
@@ -744,8 +765,9 @@
 					li.id = 'homework';
 					li.className = 'mui-table-view-cell';
 					li.setAttribute('value', 0);
-					li.innerHTML = '<img src="../../image/cloud/cloud_0_zuoye.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
-									   <p class="mui-ellipsis">作业</p>';
+					li.innerHTML = '<span class="mui-icon iconfont icon-re" style="left:' + (maxWidth * imgeWith * (4 / 5)) + 'px;font-size:' + maxWidth * imgeWith * (5 / 7) + 'px;"></span>\
+									<img src="../../image/cloud/cloud_0_zuoye.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
+									<p class="mui-ellipsis">作业</p>';
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudSecondItemHeight / 2 + 'px';
 					document.getElementById("cloudrecord_0").appendChild(li);
@@ -770,13 +792,23 @@
 				function addcloudrecord_0_1(id_index, data) {
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell';
-					li.id = 'studentsdynamic' + id_index
-					var html0 = '<div class="cloud-red-point" style="margin-left:' + (maxWidth / 1.5) + 'px' + ';height:' + (maxWidth / 7) + 'px;width:' + (maxWidth / 7) + 'px;border-radius: 50%;"></div>';
+					li.id = 'studentsdynamic' + id_index;
+					var html0 = '<div id="studyn_redpoint_' + data.stuid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 1.5) + 'px' + ';"></div>';
 					li.innerHTML = html0 + '<img id="student_imge_' + data.stuid + '" src="' + updateHeadImg(data.stuimg, 2) + '"style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
-									   <p class="mui-ellipsis">' + data.stuname + '</p>';
+									   <p id="studyn_' + id_index + '" class="mui-ellipsis"></p>';
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudSecondItemHeight / 2 + 'px';
 					document.getElementById("cloudrecord_0").appendChild(li);
+
+					//资料名称为空的时候，用户昵称+的孩子
+					var name = '';
+					if(data.stuname == '') {
+						name = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick + '的孩子';
+					} else {
+						name = data.stuname;
+					}
+					document.getElementById("studyn_" + id_index).innerText = name;
+
 					li.style.paddingTop = (cloudSecondItemHeight / 2 - (li.lastElementChild.offsetHeight + li.lastElementChild.offsetTop - li.querySelector('img').offsetTop)) / 2 + 'px';
 				}
 
@@ -786,27 +818,37 @@
 				 * @param {Object} type 班级0,家校圈1
 				 */
 				function addcloudrecord_1_0(id_index, data, type) {
+					//console.log('addcloudrecord_1_0 ' + JSON.stringify(data));
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell';
 					li.setAttribute('type', type);
-					var html0 = '<div class="cloud-red-point" style="margin-left:' + (maxWidth / 1.5) + 'px;height:' + (maxWidth / 7) + 'px;width:' + (maxWidth / 7) + 'px;border-radius: 50%;"></div>';
+					var html0 = '';
 					var html1 = '';
+					var gname = ''; //群名称
+					var gnameId = ''; //群名称元素的id
 					if(type == 0) {
 						li.id = 'tarClass' + id_index;
-						html1 = html0 + '<img src="../../image/cloud/cloud_0_class.png" style="margin-left:' + (maxWidth / 2.5) + 'px;position: absolute;margin-top: ' + (maxWidth * 0.3) + 'px;"/>';
+						html0 = '<div id="tarClass_' + data.gid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 1.5) + 'px;"></div>';
+						html1 = html0 + '<span class="mui-icon iconfont icon-ban" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
 						li.innerHTML = html1 + '<img src="' + updateHeadImg(data.gimg, 2) + '"style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
-									   <p class="mui-ellipsis">' + data.gname + '</p>';
+									   <p id="tarClass_gname_' + data.gid + '" class="mui-ellipsis"></p>';
+						gnameId = 'tarClass_gname_' + data.gid;
+						gname = data.gname;
 					} else {
 						li.id = 'tarClass1' + id_index;
-						html1 = html0 + '<img  src="../../image/cloud/cloud_0_zone.png" style="margin-left:' + (maxWidth / 2.5) + 'px' + ';position: absolute;margin-top: ' + (maxWidth * 0.3) + 'px;"/>';
+						html0 = '<div id="tarClass1_' + data.gid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 1.5) + 'px;"></div>';
+						html1 = html0 + '<span class="mui-icon iconfont icon-jia0" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
 						li.innerHTML = html1 + '<img src="' + updateHeadImg(data.gimg, 2) + '"style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
-									   <p class="mui-ellipsis">家长(' + data.gname + ')</p>';
+									   <p id="tarClass1_gname_' + data.gid + '" class="mui-ellipsis"></p>';
+						gnameId = 'tarClass1_gname_' + data.gid;
+						gname = '家长(' + data.gname + ')';
 					}
 
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudSecondItemHeight + 'px';
 					document.getElementById("cloudrecord_1").appendChild(li);
-					li.style.paddingTop = (cloudSecondItemHeight / 2 - (li.lastElementChild.offsetHeight + li.lastElementChild.offsetTop - li.querySelectorAll('img')[1].offsetTop)) / 2 + 'px';
+					document.getElementById(gnameId).innerText = gname;
+					li.style.paddingTop = (cloudSecondItemHeight / 2 - (li.lastElementChild.offsetHeight + li.lastElementChild.offsetTop)) / 2 + 'px';
 				}
 
 				/**
@@ -872,7 +914,7 @@
 							topStudentArr = data.RspData;
 							//生成学生界面
 							mui.each(topStudentArr, function(index, element) {
-								console.log('学生:' + index + '|' + JSON.stringify(element));
+								//console.log('学生:' + index + '|' + JSON.stringify(element));
 								addcloudrecord_0_1(index, element);
 							});
 						} else {
