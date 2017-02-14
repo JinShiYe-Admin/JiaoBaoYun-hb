@@ -100,9 +100,21 @@
 				border-radius: 0px;
 			}
 
+			.icon-jiaxiabiao {
+				color: #0ABAF5;
+			}
+
+			.icon-banxiabiao {
+				color: #FFBA00;
+			}
+
+			.icon-re {
+				color: #FD681E;
+			}
+
 			.icon-re,
-			.icon-ban,
-			.icon-jia0 {
+			.icon-banxiabiao,
+			.icon-jiaxiabiao {
 				position: absolute;
 				border: none !important;
 				top: 0px;
@@ -144,7 +156,7 @@
 				</div>
 				<!--应用-->
 				<div id="cloudapps" class="cloud-item">
-					<font class="cloud-item-left" style="">
+					<font class="cloud-item-left">
 						应<br/>用
 					</font>
 					<div class="cloud-item-right mui-table-view">
@@ -157,7 +169,6 @@
 							</div>
 						</div>
 					</div>
-					<!--<span class="mui-icon iconfont icon-jia0"style="font-size: 200px;"></span>-->
 				</div>
 			</div>
 		</div>
@@ -245,17 +256,10 @@
 					//每一项左侧的文字垂直居中
 					element.firstElementChild.style.marginTop = (element.offsetHeight - element.firstElementChild.offsetHeight) / 2 + 'px';
 					//设置右侧左右滑动的高度
-					//					if(element.id == 'cloudapps') {
-					//						element.lastElementChild.firstElementChild.style.height = sliderHeight + 'px';
-					//						element.lastElementChild.lastElementChild.style.height = 0 + 'px';
-					//						element.lastElementChild.firstElementChild.firstElementChild.style.height = sliderHeight + 'px';
-					//						element.lastElementChild.lastElementChild.firstElementChild.style.height = 0 + 'px';
-					//					} else {
 					element.lastElementChild.firstElementChild.style.height = sliderHeight / 2 + 'px';
 					element.lastElementChild.lastElementChild.style.height = sliderHeight / 2 + 'px';
 					element.lastElementChild.firstElementChild.firstElementChild.style.height = sliderHeight / 2 + 'px';
 					element.lastElementChild.lastElementChild.firstElementChild.style.height = sliderHeight / 2 + 'px';
-					//}
 				});
 
 				//---调整界面---end---
@@ -829,7 +833,7 @@
 					if(type == 0) {
 						li.id = 'tarClass' + id_index;
 						html0 = '<div id="tarClass_' + data.gid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 1.5) + 'px;"></div>';
-						html1 = html0 + '<span class="mui-icon iconfont icon-ban" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
+						html1 = html0 + '<span class="mui-icon iconfont icon-banxiabiao" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
 						li.innerHTML = html1 + '<img src="' + updateHeadImg(data.gimg, 2) + '"style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
 									   <p id="tarClass_gname_' + data.gid + '" class="mui-ellipsis"></p>';
 						gnameId = 'tarClass_gname_' + data.gid;
@@ -837,7 +841,7 @@
 					} else {
 						li.id = 'tarClass1' + id_index;
 						html0 = '<div id="tarClass1_' + data.gid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 1.5) + 'px;"></div>';
-						html1 = html0 + '<span class="mui-icon iconfont icon-jia0" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
+						html1 = html0 + '<span class="mui-icon iconfont icon-jiaxiabiao" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
 						li.innerHTML = html1 + '<img src="' + updateHeadImg(data.gimg, 2) + '"style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
 									   <p id="tarClass1_gname_' + data.gid + '" class="mui-ellipsis"></p>';
 						gnameId = 'tarClass1_gname_' + data.gid;

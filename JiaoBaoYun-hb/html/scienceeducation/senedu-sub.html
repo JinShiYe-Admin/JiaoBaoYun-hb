@@ -114,6 +114,7 @@
 					//					console.log('我在底部pageIndex:' + selectGContainer.classInfo.pageIndex + ',totalPageCount:' + totalPageCount);
 					eduFlag = 1;
 					//判断是否还有更多
+					console.log('SECity '+JSON.stringify(SECity));
 					if(SECity.eduIndex < SECity.eduSumCount) {
 						SECity.eduIndex++;
 						requestCityNews();
@@ -121,7 +122,9 @@
 						mui.toast('没有更多了');
 					}
 				}, false);
-			}//45.通过区域代码获取对应区域的分页新闻
+			}
+
+			//45.通过区域代码获取对应区域的分页新闻
 			function requestCityNews(cityCode) {
 				//所需参数
 				var comData = {
