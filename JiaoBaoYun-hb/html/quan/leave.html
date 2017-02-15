@@ -25,6 +25,7 @@
 
 	<script type="text/javascript">
 		mui.plusReady(function() {
+			events.changeTopPocket();
 			var data = plus.webview.currentWebview().data;//留言板拥有者id
 			events.initSubPage('leave-sub.html', data);
 			events.addTap('pubLeave', function() {
