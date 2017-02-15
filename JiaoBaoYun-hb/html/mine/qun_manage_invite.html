@@ -306,18 +306,7 @@
 							vvl: searchValue, //查询的值
 							vtp: vtp //获取类型,nm(用户名),mb(手机号)
 						};
-						//返回值model：model_userInfo
-						//mod.model_userInfo = {
-						//	utid:'',//用户表ID
-						//	uid:'',//用户手机号
-						//	uname:'',//用户名
-						//	unick:'',//用户昵称
-						//	usex:'',//性别
-						//	utxt:'',//签名
-						//	uimg:''//用户头像地址
-						//}
-						// 等待的对话框
-						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						var wd = events.showWaiting();
 						postDataPro_PostUList(comData2, wd, function(data) {
 							console.log('11.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) {
@@ -361,6 +350,7 @@
 				function getUserInfo() {
 					var vvl1 = ''; //类型
 					var vtp = ''; //获取类型
+					var tempList = []; //记录有名称的资料
 					switch(mstype) {
 						case '0': //家长
 							vvl1 = '3';
@@ -390,22 +380,33 @@
 
 					//返回值model：model_groupStus
 					//等待的对话框
-					var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-					postDataPro_PostGUInf(comData2, wd2, function(data) {
+					var wd=events.showWaiting();
+					postDataPro_PostGUInf(comData2, wd, function(data) {
 						console.log('16.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							mui.each(data.RspData, function(index, item) {
+								if(item.stuname != '') {
+									tempList.push(item);
+								}
+							});
+						} else {
+							if(data.RspCode != 9) {
+								mui.toast(data.RspTxt);
+							}
+						}
+
+						if(tempList.length == 0) {
+							//查询为空
+							document.getElementById("row_data").innerHTML = '<li class="mui-table-view-cell mui-media mui-col-xs-12 mui-col-sm-12">成员资料查询记录为空</li>';
+							mui.toast('成员资料:查询记录为空');
+						} else {
+							mui.each(tempList, function(index, item) {
 								console.log('成员资料：' + JSON.stringify(item));
 								dataList.push(item);
 								createUserInfo(item);
 							});
-						} else if(data.RspCode == 9) { //查询为空
-							document.getElementById("row_data").innerHTML = '<li class="mui-table-view-cell mui-media mui-col-xs-12 mui-col-sm-12">成员资料查询记录为空</li>';
-							mui.toast('成员资料：' + data.RspTxt);
-						} else {
-							mui.toast(data.RspTxt);
 						}
-						wd2.close();
+						wd.close();
 					});
 				}
 
@@ -416,12 +417,7 @@
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3';
 					var html1 = '<div id="date_' + data.stuid + '" data-stuid="' + data.stuid + '" class="keep-box-shadow-border keep-member">'
-					var html2 = '';
-					if(data.stuimg != '' && data.stuimg != null) {
-						html2 = '<img src="' + data.stuimg + '" />';
-					} else {
-						html2 = '<img src="../../image/utils/default_personalimage.png" />';
-					}
+					var html2 = '<img src="' + updateHeadImg(data.stuimg,2) + '" />';
 					var html3 = '<p id="stuname_' + data.stuid + '" class="mui-ellipsis"></p></div>';
 					li.innerHTML = html1 + html2 + html3;
 					document.getElementById("row_data").appendChild(li);
@@ -464,7 +460,7 @@
 					};
 					//console.log('comData:' + JSON.stringify(comData));
 					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var wd = events.showWaiting();
 					postDataPro_PostInvGuser(comData, wd, function(data) {
 						wd.close();
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
