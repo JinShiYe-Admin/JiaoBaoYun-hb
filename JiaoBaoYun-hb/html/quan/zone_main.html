@@ -33,6 +33,7 @@
 
 	<script type="text/javascript">
 		mui.plusReady(function() {
+			events.changeTopPocket();
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 			var data = plus.webview.currentWebview().data;
 			var NoReadCnt = plus.webview.currentWebview().NoReadCnt //未读条数
