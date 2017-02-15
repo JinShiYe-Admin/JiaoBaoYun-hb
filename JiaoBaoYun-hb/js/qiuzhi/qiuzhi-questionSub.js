@@ -45,10 +45,18 @@ mui.plusReady(function() {
 	//		bounce: true, //是否启用回弹
 	//	});
 	//---滑动end---
-events.preload('qiuzhi-addAnswer.html');
+	events.preload('qiuzhi-addAnswer.html');
 	window.addEventListener('askId', function(e) {
 		console.log('问题详情子页面获取的问题id:' + e.detail.data);
 		askID = e.detail.data;
+		//获取的第几页回复
+		answerIndex = 1;
+		//答案回复的总页数
+		answerPageCount = 0;
+		//回复数组,切换排序方式后，清空数组
+		answerArray = [];
+		//刷新0，还是加载更多1
+		answerFlag = 0;
 		//5.获取某个问题的详情
 		requestAskDetail();
 	});
@@ -87,7 +95,7 @@ events.preload('qiuzhi-addAnswer.html');
 			tab_font.style.color = 'gray';
 		}, 80);
 		//点击跳转到回答界面
-		
+
 		events.fireToPage('qiuzhi-addAnswer.html', 'qiuzhi-addAnswer', function() {
 			return askModel;
 		});
