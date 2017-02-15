@@ -777,7 +777,12 @@
 					"image/cloud/cloud_0_zuoye.png",
 					"image/cloud/cloud_0_xinjian.png",
 					"image/quan/add.png",
-					"js/utils/h5fresh.js"
+					"js/utils/h5fresh.js",
+					"image/cloud/cloud_0_ban_1.png",
+					"image/cloud/cloud_0_xinjian_4.png",
+					"image/cloud/cloud_0_jia_0.png",
+					"image/cloud/cloud_0_unknow_0.png",
+					"image/cloud/cloud_0_wenjianjia_1.png"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -2585,7 +2590,9 @@
 					"fonts/iconfont.ttf",
 					"js/libs/crypto-js/crypto-js.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/qiuzhi/qiuzhi-addAnswer.html"
+				],
 				"priority": 0
 			},
 			"html/show/show_home.html": {

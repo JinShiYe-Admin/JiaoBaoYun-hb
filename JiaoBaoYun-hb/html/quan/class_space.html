@@ -26,11 +26,10 @@
 		<script src="../../js/publicProtocol.js"></script>
 		<script>
 			/*预加载界面*/
-			//			mui.init();
+//			mui.init();
 			mui.plusReady(function() {
-				events.preload('class-dynamic.html', 100);
+				events.preload('class-dynamic.html');
 				events.preload('class-group.html');
-
 				var write = document.getElementById('write');
 				var data = plus.webview.currentWebview().data;
 				console.log('班级空间：' + JSON.stringify(data));

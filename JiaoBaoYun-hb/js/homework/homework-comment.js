@@ -161,6 +161,8 @@ var setAnswerInfo = function() {
 	}
 	if(workInfo.QuestionResultStr) {
 		document.getElementById('result-text').innerText = workInfo.QuestionResultStr;
+	}else{
+		document.getElementById('result-text').innerText=null;
 	}
 }
 var ceateAnswerPinfo = function(homeworkInfo, type) {

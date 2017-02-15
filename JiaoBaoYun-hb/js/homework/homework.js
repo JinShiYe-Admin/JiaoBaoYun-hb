@@ -5,7 +5,7 @@ var role = 2;//老师角色 30为家长+学生角色
 events.initSubPage('homework-tea-sub.html');
 mui.plusReady(function() {
 	//预加载发布作业界面
-	events.preload('publish-answer.html', 200);
+	events.preload('publish-answer.html');
 	mui('.mui-scrollbar-horizontal').scroll();
 	var title = document.getElementById('workPage-title');
 	var roles = document.getElementById('workPage-roles');
