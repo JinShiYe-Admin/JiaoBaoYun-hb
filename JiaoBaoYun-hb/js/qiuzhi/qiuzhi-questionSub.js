@@ -11,7 +11,13 @@ mui.init({
 			contentrefresh: '正在加载...',
 			callback: pullupRefresh
 		}
+	},
+	gestureConfig: {
+		tap: true,
+		hold: true,
+		release: true
 	}
+
 });
 
 //问题id
@@ -39,7 +45,7 @@ mui.plusReady(function() {
 	//		bounce: true, //是否启用回弹
 	//	});
 	//---滑动end---
-
+events.preload('qiuzhi-addAnswer.html');
 	window.addEventListener('askId', function(e) {
 		console.log('问题详情子页面获取的问题id:' + e.detail.data);
 		askID = e.detail.data;
@@ -68,6 +74,36 @@ mui.plusReady(function() {
 		}
 		mui('#popover').popover('hide');
 	});
+
+	//---点击效果---start---
+	var tab_div = document.getElementById("tab_div");
+	var tab_font = document.getElementById("tab_font");
+	tab_div.addEventListener('tap', function() {
+		console.log('tab_div-tap');
+		tab_div.style.background = '#DDDDDD';
+		tab_font.style.color = 'white';
+		setTimeout(function() {
+			tab_div.style.background = 'white';
+			tab_font.style.color = 'gray';
+		}, 80);
+		//点击跳转到回答界面
+		
+		events.fireToPage('qiuzhi-addAnswer.html', 'qiuzhi-addAnswer', function() {
+			return askModel;
+		});
+
+	});
+	tab_div.addEventListener('hold', function() {
+		console.log('tab_div-hold');
+		tab_div.style.background = '#DDDDDD';
+		tab_font.style.color = 'white';
+	});
+	tab_div.addEventListener('release', function() {
+		console.log('tab_div-release');
+		tab_div.style.background = 'white';
+		tab_font.style.color = 'gray';
+	});
+	//---点击效果---end---
 
 });
 
@@ -137,7 +173,7 @@ function requestAskDetail() {
 				cleanAnswer();
 				//生成新界面
 				addQuestion(data.RspData);
-				if(data.RspData.Data.length == 0) {//没有人回答
+				if(data.RspData.Data.length == 0) { //没有人回答
 					mui.toast('没有人回答该提问');
 					mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
 				}
@@ -231,10 +267,10 @@ function answerShu(answershu) {
 function cleanAnswer() {
 	//回答列表
 	document.getElementById("answer_bottom").innerHTML = '';
-//	//排序类型
-//	document.getElementById("ordertype").innerText = '按质量排序';
-//	document.getElementById("ordertype_2_icon").style.display = 'inline';
-//	document.getElementById("ordertype_1_icon").style.display = 'none';
+	//	//排序类型
+	//	document.getElementById("ordertype").innerText = '按质量排序';
+	//	document.getElementById("ordertype_2_icon").style.display = 'inline';
+	//	document.getElementById("ordertype_1_icon").style.display = 'none';
 }
 
 /**
