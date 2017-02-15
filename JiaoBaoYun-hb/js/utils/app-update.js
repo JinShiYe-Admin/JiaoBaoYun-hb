@@ -29,9 +29,9 @@ var appUpdate = (function(mod) {
 			})
 		} else {
 			if(appVersionMinMax.min < newestVersionMinMax.min) { //在线更新
-				setDialog('教宝云有新版本，是否下载？', function() {
+//				setDialog('教宝云有新版本，是否下载？', function() {
 					downWgt(versionInfo.addverurl);
-				})
+//				})
 			}
 		}
 	}

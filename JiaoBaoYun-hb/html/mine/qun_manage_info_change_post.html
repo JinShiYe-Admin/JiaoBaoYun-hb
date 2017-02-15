@@ -58,7 +58,10 @@
 					var vvl = document.getElementById("input").value;
 					if(subData.type == 'gname' && vvl.replace(/(^\s*)|(\s*$)/g, "") == "") {
 						mui.toast('群名称不能为空');
+					} else if(vvl == subData.value) {
+						mui.back();
 					} else {
+						document.getElementById("input").disabled = true;
 						//8.用户修改群各项信息
 						//需要参数
 						var comData = {
@@ -90,6 +93,7 @@
 								}
 								mui.back();
 							} else {
+								document.getElementById("input").disabled = false;
 								mui.toast(data.RspTxt);
 							}
 						});

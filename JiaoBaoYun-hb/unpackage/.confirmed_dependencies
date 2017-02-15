@@ -504,7 +504,15 @@
 			"image/homework/xiangji.png",
 			"image/homework/temWork-teaHint.png",
 			"image/homework/temWork-stuHint.png",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"js/utils/CloudFileUtil.js",
+			"js/qiniu/qiniu.js",
+			"js/libs/crypto-js/tripledes.js",
+			"js/utils/cryption.js",
+			"js/libs/crypto-js/mode-ecb.js",
+			"js/libs/crypto-js/core.js",
+			"js/libs/CryptoJS/components/mode-ecb-min.js",
+			"js/libs/CryptoJS/rollups/tripledes.js"
 		],
 		"refer": [
 			"html/homework/homework-commented.html"
