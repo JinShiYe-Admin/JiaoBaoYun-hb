@@ -15,9 +15,9 @@ var storageKeyName = (function(mod) {
 		//---开发---end---
 
 	//---测试---start---
-//		mod.MAINURL = 'http://192.168.0.178:8511/api/CloudApi/';//主url
-//		mod.MAINJIAOXIAOURL = 'http://192.168.0.178:8080/JiaoBaoCloudService/';//家校圈url
-//		mod.MAINHOMEWORKURL = 'http://192.168.0.178:8088/' //作业主url
+		mod.MAINURL = 'http://192.168.0.178:8511/api/CloudApi/';//主url
+		mod.MAINJIAOXIAOURL = 'http://192.168.0.178:8080/JiaoBaoCloudService/';//家校圈url
+		mod.MAINHOMEWORKURL = 'http://192.168.0.178:8088/' //作业主url
 	//---测试---end---
 
 	//---外网---start---
