@@ -1157,7 +1157,8 @@
 					"js/libs/crypto-js/mode-ecb.js",
 					"js/libs/crypto-js/core.js",
 					"js/libs/CryptoJS/components/mode-ecb-min.js",
-					"js/libs/CryptoJS/rollups/tripledes.js"
+					"js/libs/CryptoJS/rollups/tripledes.js",
+					"js/utils/compress.js"
 				],
 				"refer": [
 					"html/homework/homework-commented.html"
@@ -2581,7 +2582,8 @@
 					"fonts/mui.ttf",
 					"js/publicQiuzhiProtocol.js",
 					"image/utils/default_personalimage.png",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0

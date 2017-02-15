@@ -403,7 +403,10 @@ var events = (function(mod) {
 			}
 		}, 200);
 	}
-
+	mod.getFileNameByPath=function(filePath){
+		var filePaths=filePath.split("/");
+		return filePaths[filePaths.length-1];
+	}
 	return mod;
 
 })(events || {});
