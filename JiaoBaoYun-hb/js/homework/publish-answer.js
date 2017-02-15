@@ -48,23 +48,23 @@ mui.plusReady(function() {
 				//				files.getFileByPath(picPath, function(fileStream) {
 				//					uploadFile(picPath, fileStream);
 				//				})
-				var MainSpace="kf-pb";
+				var MainSpace=storageKeyName.QNPUBSPACE;
 				var saveSpace;
 				var thumbSpace;
 				if(role == 2) {
-					saveSpace = "TeaAnswersPic/";
-					thumbSpace = "TeaAnThumbPic/";
+					saveSpace = storageKeyName.TEAPICBUCKET;
+					thumbSpace = storageKeyName.TEATHUMBPICBUCKET;
 				} else {
-					saveSpace = "StuAnswersPic/"
-					thumbSpace = "StuAnThumbPic/";
+					saveSpace = storageKeyName.STUPICBUCKET;
+					thumbSpace = storageKeyName.STUTHUMBPICBUCKET;
 				}
-				var QNFileName = saveSpace+"123.png";
+				var QNFileName = saveSpace+picPath.split('/')[1];
 				var ops = "imageView2/2/w/200/h/200/format/png|saveas/" +
 					Qiniu.URLSafeBase64Encode(MainSpace + ":" +thumbSpace+QNFileName);
 				var param ={
 					Bucket: MainSpace,
 					Key: QNFileName,
-					Pops: '',
+					Pops: ops,
 					NotifyUrl: ''
 				}
 				console.log("参数数据："+JSON.stringify(param))
@@ -75,9 +75,13 @@ mui.plusReady(function() {
 				}
 				console.log("加密后的信息："+encryptByDES(key,JSON.stringify(param)))
 				CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data, function(datas) {
-					console.log("获取的数据：" + JSON.stringify(datas))
+					console.log("获取的数据：" + JSON.stringify(datas));
+					if(datas.status==1){
+						var token=datas.Data.Token;
+						CloudFileUtil.uploadFile();
+					}
 				}, function(xhr, type, errorThrown) {
-					console.log("错误类型：" + type + errorThrown);
+					console.log("错误类型：" + type + errorThrown); 
 				});
 			})
 			//			gallery.getSinglePic(function(picPath) {

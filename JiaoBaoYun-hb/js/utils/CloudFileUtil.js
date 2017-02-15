@@ -251,7 +251,7 @@ var CloudFileUtil = (function($, mod) {
 				 * @param {Object} status 上传结果状态码，HTTP传输协议状态码，如果未获取传输状态则其值则为0，如上传成功其值通常为200。
 				 */
 				function(upload, status) {
-					uploadCompletedCallBack(upload, status);
+					 callback(upload, status);
 				}
 			);
 			task.addData("key", path);
