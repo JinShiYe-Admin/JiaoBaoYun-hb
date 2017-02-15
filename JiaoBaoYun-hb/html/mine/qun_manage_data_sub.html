@@ -205,7 +205,11 @@
 				} else {
 					document.getElementById("stuList").appendChild(element);
 				}
-				document.getElementById("name_" + data.stuid).innerText = data.stuname;
+				if(data.stuname == '') {
+					document.getElementById("name_" + data.stuid).innerHTML = '&nbsp;';
+				} else {
+					document.getElementById("name_" + data.stuid).innerText = data.stuname;
+				}
 			}
 
 			/**
@@ -312,7 +316,16 @@
 					} else {
 						mui.toast(data.RspTxt);
 					}
-					getBeiZhu(parList);
+
+					//获取家长的备注
+					//if(parList.length != 0) {
+					//	getBeiZhu(parList);
+					//}
+
+					//获取家长的手机号
+					if(parList.length != 0) {
+						getUid(parList);
+					}
 					wd.close();
 				});
 			}
@@ -381,6 +394,39 @@
 						document.getElementById(id).parentNode.removeChild(document.getElementById(id));
 					} else {
 						mui.toast('删除资料失败：' + data.RspTxt);
+					}
+					wd.close();
+				});
+			}
+
+			/**
+			 * 获取手机号
+			 * @param {Object} parList
+			 */
+			function getUid(parList) {
+				var wd = events.showWaiting();
+				var tempUtidArray = [];
+				mui.each(parList, function(index, element) {
+					tempUtidArray.push(element.utid);
+				});
+				var utidStr = tempUtidArray.join(',');
+				var comData = {
+					vvl: utidStr, //用户id，查询的值,p传个人ID,g传ID串
+					vtp: 'g' //查询类型,p(个人)g(id串)
+				};
+				postDataPro_PostUinf(comData, wd, function(data) {
+					console.log('21.通过用户ID获取用户资料postDataPro_PostUinf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						mui.each(data.RspData, function(index, element) {
+							mui.each(parList, function(index2, element2) {
+								if(element.utid == element2.utid) {
+									element2.uid = element.uid;
+									document.getElementById("parent_" + element2.stuid).innerText = '家长:' + element.uid;
+								}
+							});
+						});
+					} else {
+						mui.toast(data.RspTxt);
 					}
 					wd.close();
 				});
