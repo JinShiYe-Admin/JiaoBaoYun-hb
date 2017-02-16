@@ -332,7 +332,7 @@ function requestClassTeacherInfo(stuClasses) {
 	var classTeacherArray = [];
 	var count = 0;
 	// 等待的对话框
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	var wd = plus.nativeUI.showWaiting(storageKeyName.UPLOADING);
 	for(var i in stuClasses) {
 		//		var tempModel = stuClasses[i];
 		//所需参数
