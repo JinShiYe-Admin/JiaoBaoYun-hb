@@ -23,7 +23,7 @@
 		<div class="mui-content" style="background-color: white;bottom: 0px;">
 			<div style="text-align: center;padding-top: 10px;"><img src="../../image/mine/jiaobaoyun.png" style="width:50%;height: 50%;"></img>
 			</div>
-			<h5 style="text-align: center;">教宝云1.01</h5>
+			<h5 id="version" style="text-align: center;">教宝云</h5>
 			<br />
 			
 			<ul id="list" class="mui-table-view ">
@@ -52,9 +52,13 @@
 
 		</div>
 		<script type="text/javascript">
+			plus.runtime.getProperty(plus.runtime.appid, function(inf) {
+				console.log("当前应用版本：" + inf.version);
+				document.getElementById("version").innerHTML = '教宝云'+inf.version
+			})
+			
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 				if(this.id=='li0'){
-					console.log(123)
 					events.openNewWindow('function.html')
 				}else if(this.id=='li1'){
 					
