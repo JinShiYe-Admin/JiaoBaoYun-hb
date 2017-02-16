@@ -91,7 +91,7 @@ var appUpdate = (function(mod) {
 	 * @param {Object} wgtUrl
 	 */
 	function downWgt(wgtUrl) {
-		plus.nativeUI.showWaiting("下载wgt文件...");
+//		plus.nativeUI.showWaiting("下载wgt文件...");
 		plus.downloader.createDownload(wgtUrl, {
 			filename: "_doc/update/"
 		}, function(d, status) {
@@ -102,7 +102,7 @@ var appUpdate = (function(mod) {
 				myi.toast("下载wgt失败！");
 				plus.nativeUI.alert("下载wgt失败！");
 			}
-			plus.nativeUI.closeWaiting();
+//			plus.nativeUI.closeWaiting();
 		}).start();
 	}
 	/**
