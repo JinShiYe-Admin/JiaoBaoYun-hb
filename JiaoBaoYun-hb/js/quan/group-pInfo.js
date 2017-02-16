@@ -32,7 +32,7 @@ mui.plusReady(function() {
 	})
 	window.addEventListener('nickChanged',function(e){
 		isSelf=true;
-		pInfo=e.detail.data;
+		pInfo=e.detail;
 		console.log('修改群昵称后的数据：'+JSON.stringify(pInfo));
 		manageAccountInfo();
 		events.fireToPageNone('class-group.html','groupInfoChanged');
