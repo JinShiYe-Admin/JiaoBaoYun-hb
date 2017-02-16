@@ -59,8 +59,8 @@
 				document.getElementsByTagName('h1')[0].innerHTML = title
 			var imgArr = plus.webview.currentWebview().data.data;
 						var div = mui('.mui-slider-item-duplicate');
-						div[0].getElementsByTagName('img').src =window.storageKeyName.MAINHOMEWORKURL+ imgArr[imgArr.length-1].Url
-						div[1].getElementsByTagName('img').src =window.storageKeyName.MAINHOMEWORKURL+ imgArr[0].Url;
+						div[0].getElementsByTagName('img').src =imgArr[imgArr.length-1].Url
+						div[1].getElementsByTagName('img').src =imgArr[0].Url;
 
 			for(var i=0;i<imgArr.length;i++){
 				if(i>0){
@@ -68,14 +68,14 @@
 					indicator.className = 'mui-indicator';
 					mui('.mui-slider-indicator')[0].appendChild(indicator)
 				}
-				console.log(imgArr[i].Url)
+				console.log(imgArr[i].Url);
 				var imgDiv = document.createElement('div');
 				imgDiv.className = 'mui-slider-item';
 				var a = document.createElement('a');
 				a.href = '#';
 				imgDiv.appendChild(a);
 				var img = document.createElement('img');
-				img.src =window.storageKeyName.MAINHOMEWORKURL+ imgArr[i].Url;
+				img.src =imgArr[i].Url;
 				a.appendChild(img);
 				div[0].parentElement.insertBefore(imgDiv,div[1]);
 			}
