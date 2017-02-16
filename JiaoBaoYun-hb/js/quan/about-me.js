@@ -235,7 +235,7 @@ var getCellData = function(cell) {
 	var cellData = new Object();
 	cellData.MsgType = cell.MsgType;
 	cellData.UserName = cell.UserName;
-	if(cell.MsgType) {
+	if(cell.MsgType==6) {
 		cellData.headID = cell.UserId;
 	} else {
 		cellData.headID = cell.MaxUser;
