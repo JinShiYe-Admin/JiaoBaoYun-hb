@@ -767,11 +767,10 @@
 				postDataPro_setCommentMsgReadByUser(comData, wd, function(data) {
 					console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
 				})
-				return;
 			}
 
 			var NoReadCnt = plus.webview.currentWebview().data.NoReadCnt //未读条数
-			if(NoReadCnt != 0) { //如果未读条数不为0，则设置空间状态为已读
+//			if(NoReadCnt != 0) { //如果未读条数不为0，则设置空间状态为已读
 				var comData = {
 					userId: personalUTID, //用户ID
 					publisherId: publisherId
@@ -792,7 +791,7 @@
 					}
 
 				})
-			}
+//			}
 		}
 		/**
 		 * 下拉刷新具体业务实现
