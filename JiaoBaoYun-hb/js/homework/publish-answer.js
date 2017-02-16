@@ -48,7 +48,7 @@ mui.plusReady(function() {
 			//				files.getFileByPath(picPath, function(fileStream) {
 			//					uploadFile(picPath, fileStream);
 			//				})
-		
+			plus.nativeUI.showWaiting(storageKeyName.WAITING);
 			var MainSpace = storageKeyName.QNPUBSPACE;
 			var saveSpace;
 			var thumbSpace;
@@ -89,6 +89,7 @@ mui.plusReady(function() {
 								thumb:tokenInfo.OtherKey[thumbBase64],
 								type:1
 							}
+							plus.nativeUI.closeWaiting();
 							setPic(img);
 						});
 					})
@@ -96,6 +97,7 @@ mui.plusReady(function() {
 				}
 			}, function(xhr, type, errorThrown) {
 				console.log("错误类型：" + type + errorThrown);
+				plus.nativeUI.closeWaiting();
 			});
 		})
 		//			gallery.getSinglePic(function(picPath) {
@@ -128,9 +130,10 @@ mui.plusReady(function() {
 	addPostEventListener();
 })
 var addPostEventListener = function() {
+	
 	//上传按钮点击事件
 	events.addTap('post-imgs', function() {
-		console.log('修改点击事件！')
+		console.log('修改答案字符串'+JSON.stringify(imgs));
 		if(imgs.length > 0) {
 			//选择的科目id
 			var selectSubjectID = jQuery('#publish-subjects').val();
@@ -464,6 +467,7 @@ function requestPublishAnswer(comData) {
 		if(data.RspCode == 0) {
 			mui.toast('上传成功');
 			events.clearChild(document.getElementById('pictures'));
+			imgs=[];
 		} else {
 			mui.toast(data.RspTxt);
 		}

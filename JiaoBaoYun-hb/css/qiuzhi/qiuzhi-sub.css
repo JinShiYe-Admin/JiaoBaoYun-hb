@@ -36,6 +36,8 @@ p{
 	padding: .5rem;
 }
 .ask-title{
+	height:auto;
+	padding-top: .2rem;
 	color: #323232;
 }
 .answer-content{

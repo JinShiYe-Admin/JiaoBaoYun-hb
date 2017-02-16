@@ -1701,7 +1701,8 @@
 			"html/homework/workdetailTea-temSub.html",
 			"fonts/mui.ttf",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/mui.min.js"
 		],
 		"refer": [
 			"html/homework/workdetailTea-temSub.html"
@@ -2267,7 +2268,8 @@
 			"js/mui.min.js",
 			"js/utils/events.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"css/iconfont/iconfont.css"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-answerDetailSub.html"
@@ -2312,7 +2314,30 @@
 		"resources": [
 			"js/utils/ASFiles.js",
 			"css/quan/class_space.css",
-			"css/quan/custom-textarea.css"
+			"css/quan/custom-textarea.css",
+			"css/iconfont/iconfont.css",
+			"js/publicQiuzhiProtocol.js",
+			"js/utils/camera.js",
+			"js/utils/files.js",
+			"css/qiuzhi/qiuzhi-questionSub.css",
+			"fonts/iconfont.ttf",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": []
 	},
