@@ -249,7 +249,7 @@ function refreshUITemp() {
 	if(homeworkResult.Files.length > 0) {
 
 		for(var i = 0; i < homeworkResult.Files.length; i++) {
-			var img = storageKeyName.MAINHOMEWORKURL + homeworkResult.Files[i].ThumbUrl;
+			var img =homeworkResult.Files[i].ThumbUrl;
 			TeaAnsImgLi.innerHTML = TeaAnsImgLi.innerHTML + '<img class="mui-media-object mui-pull-left" src="' + img + '" />';
 			if(i == homeworkResult.Files.length - 1) {
 				TeaAnsImgLi.innerHTML = TeaAnsImgLi.innerHTML + '<span class="mui-icon mui-icon-forward mui-pull-right " style = "margin-top:10px"></span>'
@@ -270,7 +270,7 @@ function refreshUITemp() {
 	stuAnsImgLi.className = 'mui-table-view-cell mui-media  tempComment cell-color';
 	stuAnsImgLi.innerHTML = ''
 	for(var i = 0; i < homeworkResult.File.length; i++) {
-		var img = storageKeyName.MAINHOMEWORKURL + homeworkResult.File[i].ThumbUrl;
+		var img =homeworkResult.File[i].ThumbUrl;
 		stuAnsImgLi.innerHTML = stuAnsImgLi.innerHTML + '<img class="mui-media-object mui-pull-left" src="' + img + '" />';
 		if(i == homeworkResult.File.length - 1) {
 			stuAnsImgLi.innerHTML = stuAnsImgLi.innerHTML + '<span class="mui-icon mui-icon-forward mui-pull-right " style = "margin-top:10px"></span>'

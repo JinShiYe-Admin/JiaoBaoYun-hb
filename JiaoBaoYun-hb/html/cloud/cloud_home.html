@@ -123,7 +123,7 @@
 	</head>
 
 	<body>
-		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper"style="visibility: hidden;">
 			<div class="mui-scroll">
 				<!--存储-->
 				<div id="cloudstorage" class="cloud-item">
@@ -261,7 +261,7 @@
 					element.lastElementChild.firstElementChild.firstElementChild.style.height = sliderHeight / 2 + 'px';
 					element.lastElementChild.lastElementChild.firstElementChild.style.height = sliderHeight / 2 + 'px';
 				});
-
+				document.getElementById("refreshContainer").style.visibility='visible';
 				//---调整界面---end---
 
 				//-----------设置数据start---------------
