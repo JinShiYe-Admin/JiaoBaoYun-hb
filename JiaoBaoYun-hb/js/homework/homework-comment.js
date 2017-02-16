@@ -208,7 +208,7 @@ var requireTeachersAnswer = function() {
 			console.log('老师评价页面获取的老师临时作业答案：' + JSON.stringify(data));
 			if(data.RspCode == '0000') {
 				data.RspData.teaUploadTime = data.RspData.UploadTime;
-				data.RspData.teaFiles = data.RspData.Files;
+				data.RspData.teaFiles =getMatchedImgs(data.RspData.Files);
 				data.RspData.UploadTime = null;
 				data.RspData.Files = null;
 				jQuery.extend(workInfo, data.RspData);
@@ -218,6 +218,19 @@ var requireTeachersAnswer = function() {
 			setAnswerInfo(workInfo);
 		})
 	}
+/**
+ * 
+ * @param {Object} files
+ */
+var getMatchedImgs=function(files){
+	var mactchedFiles=[];
+	for(var i in files){
+		if(files[i].MatchRate.replace('%','')>50){
+			mactchedFiles.push(files[i]);
+		}
+	}
+	return mactchedFiles;
+}
 	/**
 	 * 评论普通作业
 	 */

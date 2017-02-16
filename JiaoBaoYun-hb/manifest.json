@@ -2420,7 +2420,8 @@
 					"js/utils/RSAEncrypt.js",
 					"js/mui.previewimage.js",
 					"js/mui.zoom.js",
-					"css/utils/preview.css"
+					"css/utils/preview.css",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [],
 				"priority": 0
