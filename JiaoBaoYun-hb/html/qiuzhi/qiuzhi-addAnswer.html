@@ -69,6 +69,8 @@
 					if(data.RspCode == 0) {
 						mui.toast('回答成功')
 						document.getElementById("answerContent").value = '';
+						events.fireToPageNone('qiuzhi-questionSub.html','answerAdded');
+						mui.back();
 					} else {
 						mui.toast(data.RspTxt);
 					}

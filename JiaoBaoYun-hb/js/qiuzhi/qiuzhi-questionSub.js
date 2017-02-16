@@ -36,6 +36,18 @@ var answerFlag = 0;
 var askModel;
 
 mui.plusReady(function() {
+	window.addEventListener('answerAdded',function(){
+			//获取的第几页回复
+		answerIndex = 1;
+		//答案回复的总页数
+		answerPageCount = 0;
+		//回复数组,切换排序方式后，清空数组
+		answerArray = [];
+		//刷新0，还是加载更多1
+		answerFlag = 0;
+		//5.获取某个问题的详情
+		requestAskDetail();
+	});
 	//---滑动start---
 	//	mui(".mui-scroll-wrapper").scroll({
 	//		scrollY: true, //是否竖向滚动
