@@ -173,16 +173,21 @@ var defaultCheck = function(type) {
 	 */
 var getChecked = function() {
 		mui('.mui-input-group').on('change', 'input', function() {
-			this.checked ? groupRoles.push(parseInt(this.value)) : groupRoles.splice(groupRoles.indexOf(parseInt(this.value), 1))
+			console.log('选择事件：'+this.checked+',值：'+this.value);
+			if(this.checked){
+				groupRoles.push(parseInt(this.value));
+			}else{
+				groupRoles = removeItemFromArray(parseInt(this.value), groupRoles);
+			}
 			if(this.checked) {
 				console.log('this.value' + this.value);
 				switch(parseInt(this.value)) {
-					case 0:
-					case 2:
+					case 0://家长
+					case 2://老师
 						check_stu.checked = false;
 						groupRoles = removeItemFromArray(3, groupRoles);
 						break;
-					case 3:
+					case 3://学生
 						check_tea.checked = false;
 						check_parents.checked = false;
 						groupRoles = removeItemFromArray(2, removeItemFromArray(0, groupRoles))

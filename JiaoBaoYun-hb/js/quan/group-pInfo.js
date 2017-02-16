@@ -124,7 +124,12 @@ var addListener = function() {
 	});
 
 	events.addTap('person-gData', function() {
-		events.openNewWindowWithData('../mine/qun_data_details.html', pInfo);
+		if(pInfo.mstype==1){
+			events.openNewWindowWithData('../mine/qun_data_details.html', pInfo);
+		}else{
+			mui.toast('不是群主，无权限查看资料！');
+		}
+		
 	})
 	events.addTap('edit-remark',function(){
 		if(isSelf){
