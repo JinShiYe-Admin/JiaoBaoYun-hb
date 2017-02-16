@@ -1,27 +1,35 @@
-
 /**
  * 输入内容父控件div
  */
-.input-content{
+
+.input-content {
 	width: 100%;
 	height: 25rem;
 	background-color: white;
 	border-color: lightgray;
 }
+
+
 /**
  * 输入内容样式
  */
-textarea{
+
+textarea {
 	border-radius: 5px 5px 0 0;
 	border-color: transparent;
-	border-bottom-color:lightgray ;
+	border-bottom-color: lightgray;
 	width: 100%;
 	height: 20rem;
 }
+
+
 /**
  * 拍照、添加文件样式
  */
-.take_pic,.take_camero,.get_gallery{
+
+.take_pic,
+.take_camero,
+.get_gallery {
 	width: 6rem;
 	height: 4rem;
 	padding-left: 1rem;
@@ -29,12 +37,15 @@ textarea{
 	float: left;
 	margin-top: -15px;
 }
+
+
 /**
  * 样式
  */
-div>.icon-xiangce:before,.icon-shipin:before,.icon-xiangji:before{
+
+div>.icon-tuku:before,
+.icon-shipin:before,
+.icon-xiangji1:before {
 	font-size: 3.0rem;
 	color: gray;
 }
-
-

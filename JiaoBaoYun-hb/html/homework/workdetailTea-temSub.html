@@ -31,6 +31,7 @@
 				</ul>
 
 			</div>
+			</div>
 			<script src="../../js/mui.min.js"></script>
 			<!--加载选项按钮-->
 			<script src="../../js/homework/homework_detail.js"></script>
@@ -46,6 +47,8 @@
 					list: document.getElementById('list'), //临时作业列表
 					date: document.getElementById('date'), //日期
 				}
+				mui.init();
+				mui('.mui-scroll-wrapper').scroll();	
 				mui.plusReady(function() {
 					mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 						events.fireToPageNone('homework-comment.html', 'workInfo', this.homeworkInfo);
@@ -171,6 +174,7 @@
 							'<p id="isCommented" class = "IsCommented" style="font-size: 13px;">' + IsCommented + '<span class="mui-icon mui-icon-forward"></span></p>' +
 							'</div>'
 						homeworkNodes.list.appendChild(li);
+						
 					}
 
 				}
