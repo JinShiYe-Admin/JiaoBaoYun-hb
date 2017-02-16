@@ -51,6 +51,9 @@ footer {
 	right: 10px;
 	display: inline-block;
 	width: 20%;
+	background-color: #1db8F1;
+	border-color:#1db8F1 ;
+	color: white;
 }
 
 .footer-center {

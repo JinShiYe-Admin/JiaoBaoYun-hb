@@ -2383,7 +2383,8 @@
 					"js/utils/RSAEncrypt.js",
 					"image/homework/math.png",
 					"js/libs/crypto-js/crypto-js.js",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [],
 				"priority": 0
