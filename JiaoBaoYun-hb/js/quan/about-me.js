@@ -47,7 +47,7 @@ var setData = function(data) {
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell';
 			li.innerHTML = createInner(cell);
-			if(cell.MsgType != 6) {
+			if(cell.MsgType != 6&& cell.MsgType!=3) {
 				li.querySelector('.reply').cell = cell;
 			}
 			list.appendChild(li);
@@ -63,7 +63,7 @@ var createInner = function(cell) {
 		var inner = '<a>' +
 			'<div class="cell-title">' +
 			'<img class="title-img" headId="' + cellData.headID + '" src="' + ifHaveImg(cellData) + '"/>' +
-			'<span class="reply">回复</span>' +
+			zanNoReply(cellData.MsgType) +
 			'<div class="title-words">' +
 			'<h4 class="title-title">' + cellData.title + '</h4>' +
 			'<p class="title-words">' + events.shortForDate(cellData.time) + '</p>' +
@@ -89,6 +89,12 @@ var createInner = function(cell) {
 			'</a>';
 	}
 	return inner;
+}
+var zanNoReply=function(msgType){
+	if(msgType==3){
+		return '';
+	}
+	return '<span class="reply">回复</span>';
 }
 var ifHaveReferContent = function(cellData) {
 	if(cellData.referContent) {
