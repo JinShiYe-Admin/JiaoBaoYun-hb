@@ -266,7 +266,7 @@ function requestPublishHomework() {
 		studentIds: tempStuArray.toString(), //班级Id+学生Id串，班级Id和学生Id以“|“分割，如“班级Id|学生Id”，每对id之间逗号分隔，例如“1|1,1|2”；
 		content: document.getElementById('publish-content').value, //作业内容
 		submitOnLine: submitOnLine, //是否需要在线提交；
-		fileIds: '' //上传文件的id串，例如“1,2”；
+		files:[]  //上传文件的id串，例如“1,2”；
 	};
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);

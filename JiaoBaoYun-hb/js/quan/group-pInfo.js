@@ -124,10 +124,10 @@ var addListener = function() {
 	});
 
 	events.addTap('person-gData', function() {
-		if(pInfo.mstype==1){
+		if(pInfo.mstype==1&&pInfo.stuid){
 			events.openNewWindowWithData('../mine/qun_data_details.html', pInfo);
 		}else{
-			mui.toast('不是群主，无权限查看资料！');
+			mui.toast('不是群主，或无资料！');
 		}
 		
 	})
