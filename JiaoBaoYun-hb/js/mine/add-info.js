@@ -76,11 +76,11 @@ var getData = function(role, callback) {
 			function(data) {
 				wd.close();
 				console.log('角色' + role + '获取的班级资料' + JSON.stringify(data))
-				if(data.RspCode == '0000') {
-					callback(role, data.RspData);
-				} else {
+				if(data.RspCode !=0) {
+				
 					mui.toast(data.RspTxt);
 				}
+				callback(role, data.RspData);
 			})
 	}
 	/**
@@ -90,9 +90,10 @@ var getData = function(role, callback) {
 	 * @param {Object} data 数据
 	 */
 var setData = function(type, data) {
-		createFirstChild(type);
 		console.log('放置数据' + JSON.stringify(data));
-		data.forEach(function(item) {
+		if(data){
+			createFirstChild(type);
+			data.forEach(function(item) {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
 				li.stuid = item.stuid;
@@ -100,6 +101,8 @@ var setData = function(type, data) {
 				li.innerHTML = createInner(type, item);
 				list.appendChild(li);
 			})
+		}
+		
 			//两个身份，学生身份请求完毕，请求老师身份
 		if(roles.length > 1 && type == 0) {
 			getData(2, setData);

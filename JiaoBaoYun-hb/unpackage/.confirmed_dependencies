@@ -111,7 +111,16 @@
 			"image/cloud/cloud_0_zuoye.png",
 			"image/cloud/cloud_0_xinjian.png",
 			"image/quan/add.png",
-			"js/utils/h5fresh.js"
+			"js/utils/h5fresh.js",
+			"image/cloud/cloud_0_ban_1.png",
+			"image/cloud/cloud_0_xinjian_4.png",
+			"image/cloud/cloud_0_jia_0.png",
+			"image/cloud/cloud_0_unknow_0.png",
+			"image/cloud/cloud_0_wenjianjia_1.png",
+			"image/cloud/cloud_0_excel_0.png",
+			"image/cloud/cloud_0_word_0.png",
+			"image/cloud/cloud_0_txt_0.png",
+			"image/cloud/cloud_0_yasuobao_0.png"
 		],
 		"refer": [
 			"html/homework/homework-tea.html",
@@ -125,7 +134,8 @@
 			"html/mine/qun_manage_info.html",
 			"html/quan/class_space.html",
 			"html/quan/studentdynamic_main.html",
-			"html/mine/qun_manage.html"
+			"html/mine/qun_manage.html",
+			"html/mine/qun_manage_main.html"
 		]
 	},
 	"html/quan/tab-zone.html": {
@@ -512,7 +522,8 @@
 			"js/libs/crypto-js/mode-ecb.js",
 			"js/libs/crypto-js/core.js",
 			"js/libs/CryptoJS/components/mode-ecb-min.js",
-			"js/libs/CryptoJS/rollups/tripledes.js"
+			"js/libs/CryptoJS/rollups/tripledes.js",
+			"js/utils/compress.js"
 		],
 		"refer": [
 			"html/homework/homework-commented.html"
@@ -1876,7 +1887,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"image/homework/math.png",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": []
 	},
@@ -2094,9 +2106,12 @@
 			"fonts/mui.ttf",
 			"js/publicQiuzhiProtocol.js",
 			"image/utils/default_personalimage.png",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"js/libs/crypto-js/crypto-js.js"
 		],
-		"refer": []
+		"refer": [
+			"html/qiuzhi/qiuzhi-addAnswer.html"
+		]
 	},
 	"html/show/show_home.html": {
 		"resources": [
@@ -2288,7 +2303,17 @@
 		"resources": [
 			"css/home/zone.css",
 			"image/utils/default_personalimage.png",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/libs/jquery.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/myStorage/myStorage.js"
 		],
 		"refer": [
 			"html/quan/zone_main.html"
@@ -2350,7 +2375,10 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/libs/myStorage/myStorage.js"
+			"js/libs/myStorage/myStorage.js",
+			"js/utils/events.js",
+			"js/publicProtocol.js",
+			"js/mui.min.js"
 		]
 	},
 	"html/mine/qun_manage_sub.html": {
@@ -2469,6 +2497,13 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/qiuzhi/qiuzhi-addAnswer.html": {
+		"resources": [
+			"js/publicQiuzhiProtocol.js",
+			"css/iconfont/iconfont.css",
+			"js/libs/myStorage/myStorage.js"
 		]
 	}
 }

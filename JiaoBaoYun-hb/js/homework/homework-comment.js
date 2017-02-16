@@ -161,6 +161,8 @@ var setAnswerInfo = function() {
 	}
 	if(workInfo.QuestionResultStr) {
 		document.getElementById('result-text').innerText = workInfo.QuestionResultStr;
+	}else{
+		document.getElementById('result-text').innerText=null;
 	}
 }
 var ceateAnswerPinfo = function(homeworkInfo, type) {
@@ -182,8 +184,8 @@ var createAnswerImgs = function(homeworkInfo, imgs,type) {
 		var div = document.createElement('div');
 		var imgsInner = '';
 		for(var i in imgs) {
-			imgsInner += '<img class="answer-img" src="' + storageKeyName.MAINHOMEWORKURL + imgs[i].ThumbUrl + 
-			'" data-preview-src="'+storageKeyName.MAINHOMEWORKURL + imgs[i].Url+'" data-preview-group="'+type+'"/>';
+			imgsInner += '<img class="answer-img" src="' + imgs[i].ThumbUrl + 
+			'" data-preview-src="'+ imgs[i].Url+'" data-preview-group="'+type+'"/>';
 		}
 		div.innerHTML = imgsInner;
 		homeworkInfo.appendChild(div);

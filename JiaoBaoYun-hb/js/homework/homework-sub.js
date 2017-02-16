@@ -431,7 +431,7 @@ var getAnswerImgs = function(thumbUrls) {
 	var imgsInner = '';
 	thumbUrls.forEach(function(thumbUrl) {
 		if(thumbUrl != null) {
-			imgsInner += '<img class="answerResult-pic" src="' + storageKeyName.MAINHOMEWORKURL + thumbUrl + '"/>';
+			imgsInner += '<img class="answerResult-pic" src="' + thumbUrl + '"/>';
 		}
 	})
 	imgsInner += '<span class="mui-icon mui-icon-arrowright temporary-more"></span>'
@@ -478,7 +478,7 @@ var createStuAnswerResultInner = function(answerResult) {
 }
 var getStuAnswerImges = function(answerResult) {
 
-	return '<img class="answerResult-pic" src="' + storageKeyName.MAINHOMEWORKURL + answerResult.ThumbUrl + '"/>';
+	return '<img class="answerResult-pic" src="' + answerResult.ThumbUrl + '"/>';
 }
 var getHomeworkIcon = function(subject) {
 		var subjectIcon = '';

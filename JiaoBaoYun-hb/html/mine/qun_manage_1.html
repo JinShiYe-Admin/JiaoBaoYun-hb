@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<style>
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				border-bottom: none;
+			}
+
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
+				border-right: 1px solid black;
+			}
+
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item:last-child {
+				border-right: none;
+			}
+
+			.mui-segmented-control.mui-segmented-control-inverted {
+				border-left: 3px solid #0099FF;
+				margin-top: 2px;
+			}
+
+			.mui-segmented-control .mui-control-item {
+				line-height: normal;
+			}
+
+			.mui-segmented-control.mui-scroll-wrapper .mui-scroll {
+				height: auto;
+				border-top: 8px solid transparent;
+				border-bottom: 8px solid transparent;
+			}
+
+			.mui-slider-indicator .mui-icon.mui-icon-plus {
+				position: relative;
+				border: none;
+				font-size: 25px;
+				color: #C7C7CC;
+				line-height: inherit;
+				margin: 0px;
+				top: -4px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title"></h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<div id="qunList" class="mui-scroll">
+					<div id="qunAdd" class="mui-icon mui-icon-plus qun-add"></div>
+				</div>
+			</div>
+			<div id="slider_group" class="mui-slider-group">
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig: {
+					longtap: true, //默认为false
+				}
+			});
+			var botHeight; //群底部列表的高度
+
+			mui.plusReady(function() {
+				events.closeWaiting();
+				//屏幕高度
+				var screenHeight = plus.screen.resolutionHeight;
+				console.log('screenHeight ' + screenHeight);
+				botHeight = screenHeight * 1 - (plus.navigator.getStatusbarHeight() + 45 + 39);
+				console.log('botHeight ' + botHeight);
+
+				getCGQun();
+			});
+
+			function addQunItem(data, index, length) {
+				console.log('addQunItem ' + index + '|' + length + '|' + JSON.stringify(data));
+
+				var className1 = ''; //顶部
+				var className2 = ''; //底部
+
+				if(index == 0) {
+					className1 = 'mui-control-item mui-active';
+					className2 = 'mui-slider-item mui-control-content mui-active';
+				} else {
+					className1 = 'mui-control-item';
+					className2 = 'mui-slider-item mui-control-content';
+				}
+
+				//---顶部--start---
+				var element1 = document.createElement('a');
+				element1.id = 'qun_top_' + data.gid;
+				element1.className = className1;
+				element1.href = '#qun_bot_' + data.gid;
+				element1.setAttribute('data-info', JSON.stringify(data));
+				element1.innerHTML = data.gname;
+
+				if(index == (length - 1)) {
+					element1.style.borderRight = 'none';
+				}
+
+				var table = document.getElementById("qunList");
+				table.insertBefore(element1, document.getElementById("qunAdd"));
+				//document.getElementById("qun_top_" + data.gid).innerText = data.gname;
+				//---顶部---end---
+
+				//---底部---start---
+				var element2 = document.createElement('div');
+				element2.id = 'qun_bot_' + data.gid;
+				element2.className = className2;
+				element2.innerHTML = '<div class="mui-scroll-wrapper" style="height:' + botHeight + 'px;">\
+										<div class="mui-scroll">\
+											<ul id="qun_bot_ul_' + data.gid + '" class="mui-table-view">\
+											</ul>\
+										</div>\
+									  </div>';
+				document.getElementById("slider_group").appendChild(element2);
+				for(var i = 0; i < 50; i++) {
+					addMember('qun_bot_ul_' + data.gid, data.gname);
+				}
+				//---底部---end---
+			}
+
+			function addMember(gid, data) {
+				var element = document.createElement('li');
+				element.className = 'mui-table-view-cell';
+				element.innerText = data;
+				document.getElementById(gid).appendChild(element);
+			}
+
+			/**
+			 * 获取创建的群
+			 */
+			function getCGQun() {
+				var wd = events.showWaiting();
+				//9.获取用户群
+				//获取个人信息
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				//需要参数
+				var getQunData = {
+					vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
+					vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
+				};
+				postDataPro_PostGList(getQunData, wd, function(data) {
+					console.log('9.获取用户创建的群success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						mui.each(data.RspData, function(index, element) {
+							addQunItem(element, index, data.RspData.length);
+						});
+						console.log(document.getElementById("qunList").innerHTML);
+						console.log(document.getElementById("slider_group").innerHTML);
+						mui(".mui-scroll-wrapper").scroll({
+							scrollY: true, //是否竖向滚动
+							scrollX: false, //是否横向滚动
+							indicators: true, //是否显示滚动条
+							deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+							bounce: true, //是否启用回弹
+						});
+					} else if(data.RspCode == 9) { //未获取到数据
+						mui.toast('查询为空');
+					} else {
+						mui.toast(data.RspTxt);
+					}
+					wd.close();
+				});
+			}
+		</script>
+	</body>
+
+</html>
