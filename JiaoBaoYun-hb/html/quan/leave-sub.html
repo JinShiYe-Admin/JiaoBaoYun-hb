@@ -428,7 +428,7 @@
 					'</div></div>' +
 					'<div style= "margin-top:-10px"  class = "chat_content_left">' +
 					leaveArray[i].MsgContent +
-					'<p style="float:right">' + leaveArray[i].MsgDate + '</p></div>'
+					'<p style = "text-align: right;">' + leaveArray[i].MsgDate + '</p></div>'
 				ul.appendChild(li);
 				for(var j = 0; j < commentArr.length; j++) {
 					var li = document.createElement('li');
@@ -444,7 +444,7 @@
 							'<div style= "margin-top:-10px"  class = "chat_content_left">' + '<span style = "color:rgb(43,176,238);font-size:14px;" class="mui-ellipsis">' +
 							'@' +events.shortForString(commentArr[j].ReplyIdName, 12)  + '</span> ' +
 							commentArr[j].MsgContent +
-							'<p style="float:right">' + commentArr[j].MsgDate + '</p></div>'
+							'<p style = "text-align: right;">' + commentArr[j].MsgDate + '</p></div>'
 					} else {
 						li.innerHTML = '<div style="padding:12px">' +
 							'<div class="mui-media-body mui-pull-right">' +
@@ -454,9 +454,9 @@
 							'<h6>' +events.shortForString(commentArr[j].unick, 12)  + '</h6>' +
 							'</div></div>' +
 							'<div style= "margin-top:-5px; "  class = "chat_content_right">' + '<div class="chat-body ">' +
-							'<div >' + '<span style = "font-size:14px;" class=" mui-pull-right">' + '<span style = "color:rgb(43,176,238);">' +
+							'<div >' + '<span style = "font-size:14px;">' + '<span style = "color:rgb(43,176,238);">' +
 							'@' +events.shortForString(commentArr[j].ReplyIdName, 12)  + '</span>' + '<span>' + " " +
-							commentArr[j].MsgContent + '</span> ' + '</span> ' + '<p class="mui-pull-left">' + commentArr[j].MsgDate + '</p></div></div></div>';
+							commentArr[j].MsgContent + '</span> ' + '</span> </div></div>' + '<p>' + commentArr[j].MsgDate + '</p></div>';
 					}
 
 					ul.appendChild(li);

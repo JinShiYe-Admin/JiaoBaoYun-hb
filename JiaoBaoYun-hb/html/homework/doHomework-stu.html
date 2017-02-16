@@ -113,7 +113,7 @@
 					classId: homeworkModel.gid,
 					homeworkId: homeworkModel.HomeworkId, //作业id；
 					content: tempText, //文本答案；
-					fileIds: '' //文件id数组；
+					files: [] //文件id数组；
 				};
 				// 等待的对话框
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -152,7 +152,7 @@
 					studentId: personalUTID, //学生Id；
 					homeworkResultId: homeworkModel.HomeworkResult.HomeworkResultId, //要修改的作业结果id；
 					content: tempText, //文本答案；
-					fileIds: '' //文件id串，例如“1,2”；
+					files: [] //文件id串，例如“1,2”；
 				};
 				// 等待的对话框
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);

@@ -440,5 +440,5 @@ var setMasterNameClass = function(info) {
 	}
 	//頭像設置
 var getImg = function(img) {
-	return img == null ? "../../image/utils/default_personalimage.png" : img
+	return img?img:"../../image/utils/default_personalimage.png"
 }

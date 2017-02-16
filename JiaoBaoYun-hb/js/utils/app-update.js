@@ -91,18 +91,18 @@ var appUpdate = (function(mod) {
 	 * @param {Object} wgtUrl
 	 */
 	function downWgt(wgtUrl) {
-		plus.nativeUI.showWaiting("下载wgt文件...");
+//		plus.nativeUI.showWaiting("下载wgt文件...");
 		plus.downloader.createDownload(wgtUrl, {
 			filename: "_doc/update/"
 		}, function(d, status) {
 			if(status == 200) {
-				console.log("下载wgt成功：" + d.filename);
+				mui.toast("下载wgt成功：" + d.filename);
 				installWgt(d.filename); // 安装wgt包
 			} else {
-				console.log("下载wgt失败！");
+				myi.toast("下载wgt失败！");
 				plus.nativeUI.alert("下载wgt失败！");
 			}
-			plus.nativeUI.closeWaiting();
+//			plus.nativeUI.closeWaiting();
 		}).start();
 	}
 	/**
