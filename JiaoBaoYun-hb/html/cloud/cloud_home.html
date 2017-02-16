@@ -131,7 +131,7 @@
 						存<br/>储
 					</div>
 					<div class="cloud-item-right">
-						<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 100px;">
+						<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 							<div id="cloudstorage_0" class="mui-scroll">
 							</div>
 						</div>
@@ -600,29 +600,19 @@
 							//循环将获取到的值塞入界面
 							var folder = 0;
 							mui.each(data.RspData, function(index, element) {
-								//								if(folder == 4) {
-								//									return false;
-								//								}
 								if(element.ftype == '.file') {
 									folder++;
 									addStorageFolder(element);
 								}
 							});
-							//if(folder < 4) {
+
 							mui.each(data.RspData, function(index, element) {
-								//									if(folder == 4) {
-								//										return false;
-								//									}
 								if(element.ftype != '.file') {
 									folder++;
 									addStorageFolder(element);
 								}
 							});
-							//}
-							//增加加号
-							//if(fileArray.length < 4) {
 							addStorageIcon();
-							//}
 						} else if(data.RspCode == 9) {
 
 						} else {
@@ -674,22 +664,23 @@
 					var html2 = ''; //名字
 					var fname = ''; //文件名
 					if(data.ftype == '.file') { //文件夹
-						html1 = '<img class="cloud-bottom-imge2" src="../../image/cloud/cloud_0_wenjianjia.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>';
+						html1 = '<img src="../../image/cloud/cloud_0_wenjianjia_1.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>';
 						html2 = '<p id="fname_' + data.fid + '" class="mui-ellipsis"></p>';
 						fname = data.fname;
 					} else { //文件
-						var type = cloud.classify(data.ftype);
+						var type = cloud.classifyQNImg(data.ftype);
 						var pathList = data.fpath.split('/');
 						var pathList2 = pathList[pathList.length - 1].split('.');
 						var fileName = pathList2[0];
 						var path = window.storageKeyName.QNFILEIMGEDOMAIN + fileName + '.PNG';
-						if(type != '') {
-							html1 = '<span class="mui-icon iconfont ' + type + '" style="border:none;font-size:' + (maxWidth * imgeWith) + 'px;"></span>';
-						} else { //七牛能生成缩略图的图片或视频
+						if(type == 'QN_video' || type == 'QN_img') {
 							html1 = '<img src="' + path + '" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>';
+							//html1 = '<span class="mui-icon iconfont ' + type + '" style="border:none;font-size:' + (maxWidth * imgeWith) + 'px;"></span>';
+						} else { //七牛能生成缩略图的图片或视频
+							html1 = '<img src="../../image/cloud/' + type + '" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>';
 						}
-						html2 = '<p id="fname_' + data.fid + '" class="mui-ellipsis">' + data.fname + data.ftype + '</p>';
-						fname = data.fname;
+						html2 = '<p id="fname_' + data.fid + '" class="mui-ellipsis"></p>';
+						fname = data.fname + data.ftype;
 					}
 					li.innerHTML = html1 + html2;
 					li.style.width = maxWidth + 'px';
@@ -708,7 +699,7 @@
 					var li = document.createElement('li');
 					li.id = 'addFolder';
 					li.className = 'mui-table-view-cell';
-					li.innerHTML = '<img class="cloud-bottom-imge2" src="../../image/cloud/cloud_0_xinjian.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/><p class="mui-ellipsis">新建文件夹</p>';
+					li.innerHTML = '<img src="../../image/cloud/cloud_0_xinjian_4.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/><p class="mui-ellipsis">新建文件夹</p>';
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudFirstItemHeight + 'px';
 					document.getElementById("cloudstorage_1").appendChild(li);
@@ -833,7 +824,9 @@
 					if(type == 0) {
 						li.id = 'tarClass' + id_index;
 						html0 = '<div id="tarClass_' + data.gid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 1.5) + 'px;"></div>';
-						html1 = html0 + '<span class="mui-icon iconfont icon-banxiabiao" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
+
+						html1 = html0 + '<img src="../../image/cloud/cloud_0_ban_1.png" style="margin-left:' + (maxWidth / 2.5) + 'px;position: absolute;margin-top: ' + (maxWidth * 0.35) + 'px;height: ' + (maxWidth * imgeWith * 0.5) + 'px;width: ' + (maxWidth * imgeWith * 0.5) + 'px;"/>';
+						//html1 = html0 + '<span class="mui-icon iconfont icon-banxiabiao" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
 						li.innerHTML = html1 + '<img src="' + updateHeadImg(data.gimg, 2) + '"style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
 									   <p id="tarClass_gname_' + data.gid + '" class="mui-ellipsis"></p>';
 						gnameId = 'tarClass_gname_' + data.gid;
@@ -841,7 +834,9 @@
 					} else {
 						li.id = 'tarClass1' + id_index;
 						html0 = '<div id="tarClass1_' + data.gid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 1.5) + 'px;"></div>';
-						html1 = html0 + '<span class="mui-icon iconfont icon-jiaxiabiao" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
+						html1 = html0 + '<img src="../../image/cloud/cloud_0_jia_0.png" style="margin-left:' + (maxWidth / 2.5) + 'px;position: absolute;margin-top: ' + (maxWidth * 0.35) + 'px;height: ' + (maxWidth * imgeWith * 0.5) + 'px;width: ' + (maxWidth * imgeWith * 0.5) + 'px;"/>';
+
+						//html1 = html0 + '<span class="mui-icon iconfont icon-jiaxiabiao" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
 						li.innerHTML = html1 + '<img src="' + updateHeadImg(data.gimg, 2) + '"style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
 									   <p id="tarClass1_gname_' + data.gid + '" class="mui-ellipsis"></p>';
 						gnameId = 'tarClass1_gname_' + data.gid;

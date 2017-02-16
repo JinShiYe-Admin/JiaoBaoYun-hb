@@ -270,7 +270,7 @@ var CloudFileUtil = (function($, mod) {
 		console.log('mui上传状态：' + upload.state)
 		if(upload.state == 4 && status == 200) {
 			// 上传完成
-			console.log("Upload success: " + upload.getFileName());
+//			console.log("Upload success: " + upload.getFileName());
 		}
 	}
 

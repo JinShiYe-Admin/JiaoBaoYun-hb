@@ -777,7 +777,12 @@
 					"image/cloud/cloud_0_zuoye.png",
 					"image/cloud/cloud_0_xinjian.png",
 					"image/quan/add.png",
-					"js/utils/h5fresh.js"
+					"js/utils/h5fresh.js",
+					"image/cloud/cloud_0_ban_1.png",
+					"image/cloud/cloud_0_xinjian_4.png",
+					"image/cloud/cloud_0_jia_0.png",
+					"image/cloud/cloud_0_unknow_0.png",
+					"image/cloud/cloud_0_wenjianjia_1.png"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -1157,7 +1162,8 @@
 					"js/libs/crypto-js/mode-ecb.js",
 					"js/libs/crypto-js/core.js",
 					"js/libs/CryptoJS/components/mode-ecb-min.js",
-					"js/libs/CryptoJS/rollups/tripledes.js"
+					"js/libs/CryptoJS/rollups/tripledes.js",
+					"js/utils/compress.js"
 				],
 				"refer": [
 					"html/homework/homework-commented.html"
@@ -2581,9 +2587,12 @@
 					"fonts/mui.ttf",
 					"js/publicQiuzhiProtocol.js",
 					"image/utils/default_personalimage.png",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/libs/crypto-js/crypto-js.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/qiuzhi/qiuzhi-addAnswer.html"
+				],
 				"priority": 0
 			},
 			"html/show/show_home.html": {
