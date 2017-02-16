@@ -96,10 +96,10 @@ var appUpdate = (function(mod) {
 			filename: "_doc/update/"
 		}, function(d, status) {
 			if(status == 200) {
-				console.log("下载wgt成功：" + d.filename);
+				mui.toast("下载wgt成功：" + d.filename);
 				installWgt(d.filename); // 安装wgt包
 			} else {
-				console.log("下载wgt失败！");
+				myi.toast("下载wgt失败！");
 				plus.nativeUI.alert("下载wgt失败！");
 			}
 			plus.nativeUI.closeWaiting();
