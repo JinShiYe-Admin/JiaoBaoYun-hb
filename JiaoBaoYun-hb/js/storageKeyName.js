@@ -57,6 +57,10 @@ var storageKeyName = (function(mod) {
 	mod.PERSONALSPACETHUMB='PersonalSpaceThumb/';//个人空间、缩略图
 	mod.CLASSSPACE='ClassSpace/';//班级空间、原图
 	mod.CLASSSPACETHUMB='ClassSpaceThumb/';//班级空间、缩略图
+	mod.NOTE='Note/';//笔记、原图
+	mod.NOTETHUMB='NoteThumb/';//笔记、缩略图
+	mod.RECORD='Record/';//记事、原图
+	mod.RECORDTHUMB='RecordThumb/';//记事、缩略图
 	
 	//---测试---start---
 		mod.QNGETUPTOKENHEADIMGE = 'http://192.168.0.178:8517/GetTokenProfilePhoto.ashx'; //获取上传个人头像，群头像，资料头像到七牛的token的url
