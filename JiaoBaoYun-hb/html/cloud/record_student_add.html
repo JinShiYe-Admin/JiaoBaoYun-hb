@@ -93,11 +93,11 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 id="title" class="mui-title"></h1>
-			<a id="commit" class="mui-icon mui-icon-checkmarkempty mui-pull-right"></a>
+			<h1 id="title" class="mui-title" style="text-align: left;color: white;"></h1>
+			<h1 id="commit" class="mui-title" style="text-align: right;right: 10px;">发布</h1>
 		</header>
 		<div class="mui-content">
-			<ul class="mui-table-view" id="ul_table">
+			<ul class="mui-table-view" id="ul_table"style="margin-top: 0px;">
 				<div style="width: 100%;">
 					<!--<div class="mui-row">-->
 					<!--<div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 5%;line-height: 36px;">
@@ -119,9 +119,7 @@
 						</div>
 					</div>-->
 					<div id="record">
-						<div class="mui-input-row" style="margin: 0px 5px;">
-							<textarea id="textarea_record" rows="4" placeholder="记事：" oninput="if(value.length>500)value=value.slice(0,500)"></textarea>
-						</div>
+						<textarea id="textarea_record" rows="6" placeholder="记事：" oninput="if(value.length>500)value=value.slice(0,500)"style="border: none;border-bottom: 1px solid #D9D9D9;"></textarea>
 						<div id="MultiMedia">
 						</div>
 					</div>
