@@ -39,12 +39,12 @@ var storageKeyName = (function(mod) {
 	
 
 	//--七牛空间和接口--开发--start
-//		mod.QNGETUPLOADTOKEN='http://114.215.222.186:8004/Api/QiNiu/GetUpLoadToKen';
+		mod.QNGETUPLOADTOKEN='http://114.215.222.186:8004/Api/QiNiu/GetUpLoadToKen';
 	//--七牛空间和接口--开发 --end
 	
 	
 	//--七牛空间和接口--测试--start
-	  	mod.QNGETUPLOADTOKEN='http://114.215.222.186:8005/Api/QiNiu/GetUpLoadToKen';
+//	  	mod.QNGETUPLOADTOKEN='http://114.215.222.186:8005/Api/QiNiu/GetUpLoadToKen';
 	//--七牛空间和接口--测试--end
 	//七牛存储子空间
 	mod.QNPUBSPACE="pb";//七牛公开空间

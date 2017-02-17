@@ -163,3 +163,10 @@ div>.icon-xiangce:before,.icon-shipin:before,.icon-xiangji:before{
 .master-name{
 	color: #f85977;
 }
+.mui-popover .mui-table-view-cell{
+	padding-left: .5rem;
+	display: inline-block;
+}
+.mui-popover{
+	max-width: 50%;
+}

@@ -141,20 +141,20 @@
 				} else {
 					tempText = replaceAllBL(tempText)
 				}
-				var checkbox = document.getElementById("checkbox")
-				var isAnonym = 0;
-				if(!checkbox.checked) {
-					isAnonym = 0;
-				} else {
-					isAnonym = 1;
-				}
+//				var checkbox = document.getElementById("checkbox")
+//				var isAnonym = 0;
+//				if(!checkbox.checked) {
+//					isAnonym = 0;
+//				} else {
+//					isAnonym = 1;
+//				}
 				//所需参数
 				var comData = {
 					askTitle: askTitle.value, //问题标题,200
 					askNote: askNote.value, //问题说明,2000
 					askChannel: askChannel, //问题话题
 					askMan: personalUTID, //提问人
-					isAnonym: isAnonym, //是否匿名
+					isAnonym: 0, //是否匿名
 					encAddr: '',
 					inviteExperts: '[]' //邀请专家,例如[1,2,3]
 				};

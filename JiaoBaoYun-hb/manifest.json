@@ -481,7 +481,8 @@
 					"image/cloud/record_addclassclose.png",
 					"image/utils/default_personalimage.png",
 					"js/utils/native.js",
-					"css/iconfont/iconfont.css"
+					"css/iconfont/iconfont.css",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -2792,7 +2793,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [],
 				"priority": 0
