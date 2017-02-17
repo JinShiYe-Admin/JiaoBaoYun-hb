@@ -123,10 +123,12 @@
 					console.log('做作业界面，提交作业获取的值' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						mui.toast('提交作业答案成功！')
-						events.fireToPageNone(plus.webview.currentWebview().opener(), 'workSubmitted');
+//						mui.fire(plus.webview.currentWebview().opener(), 'workSubmitted');
+						events.fireToPageWithData('homework-commented.html','workDetail',{HomeworkResultId:data.RspData.HomeworkResultId,workType:1})
 						//清空输入框
 						textView.value = '';
-						mui.back();
+						textView.blur();
+//						mui.back();
 
 					} else {
 						mui.toast(data.RspTxt);
