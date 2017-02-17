@@ -51,10 +51,10 @@ var slideNavigation = (function($) {
 					//主窗体开始侧滑并显示遮罩
 					main.setStyle({
 						mask: 'rgba(0,0,0,0.4)',
-						left: '70%',
-						transition: {
-							duration: 150
-						}
+//						left: '70%',
+//						transition: {
+//							duration: 150
+//						}
 					});
 					menu.setStyle({
 						left: '0',
@@ -87,10 +87,10 @@ var slideNavigation = (function($) {
 				isInTransition = true;
 				main.setStyle({
 					mask: 'none',
-					left: '0',
-					transition: {
-						duration: 200
-					}
+//					left: '0',
+//					transition: {
+//						duration: 200
+//					}
 				});
 				menu.setStyle({
 					left: '-70%',

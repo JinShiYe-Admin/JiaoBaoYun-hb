@@ -8,11 +8,28 @@ var appUpdate = (function(mod) {
 	 */
 	mod.getAppVersion = function(versionInfo) {
 			plus.runtime.getProperty(plus.runtime.appid, function(inf) {
-				mod.appVersion = inf.version;
+				mod.appVersion = getBigVersion(inf.version,plus.runtime.version);
+				console.log('应用版本号:'+plus.runtime.version+',资源升级版本号:'+inf.version)
 				console.log("当前应用版本：" + mod.appVersion);
 				getUpCondition(versionInfo); //判断是否更新
 			});
 		}
+	/**
+	 * 获取最大数据
+	 * @param {Object} version0
+	 * @param {Object} version1
+	 */
+	var getBigVersion=function(version0,version1){
+		var version0Array=version0.split('.');
+		var version1Array=version1.split('.');
+		for(var i in version0Array){
+			if(parseInt(version0Array[i])>parseInt(version1Array[i])){
+				return version0;
+			}else if(parseInt(version0Array[i])<parseInt(version1Array[i])){
+				return version1;
+			}
+		}
+	}
 		/**
 		 * 判断是否更新
 		 * @param {Object} versionInfo
@@ -27,7 +44,7 @@ var appUpdate = (function(mod) {
 			setDialog('教宝云有新版本，是否下载？', function() {
 				downApk(versionInfo.baseverurl)
 			})
-		} else {
+		} else if(appVersionMinMax.max==newestVersionMinMax.max){
 			if(appVersionMinMax.min < newestVersionMinMax.min) { //在线更新
 //				setDialog('教宝云有新版本，是否下载？', function() {
 					downWgt(versionInfo.addverurl);
@@ -124,11 +141,11 @@ var appUpdate = (function(mod) {
 	function installWgt(path) {
 //		plus.nativeUI.showWaiting("安装wgt文件...");
 		plus.runtime.install(path, {force:true}, function() {
-			plus.nativeUI.closeWaiting();
+//			plus.nativeUI.closeWaiting();
 			console.log("安装wgt文件成功！");
-			plus.nativeUI.alert("应用资源更新完成！", function() {
-				plus.runtime.restart();
-			});
+//			plus.nativeUI.alert("应用资源更新完成！", function() {
+//				plus.runtime.restart();
+//			});
 		}, function(e) {
 			plus.nativeUI.closeWaiting();
 			console.log("安装wgt文件失败[" + e.code + "]：" + e.message);

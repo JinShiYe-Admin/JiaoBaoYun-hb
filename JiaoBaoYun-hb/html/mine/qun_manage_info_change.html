@@ -156,7 +156,6 @@
 					var id = this.getAttribute('data-value');
 					var type = '';
 					var value = '';
-					//console.log('row:' + id);
 					switch(id) {
 						case 'gname': //名称
 							type = 'gname';
@@ -167,7 +166,6 @@
 							value = qnote.value;
 							break;
 						case 'qunremark': //群备注
-							//type='gname';
 							type = '';
 							value = qremark.value;
 							break;
@@ -175,15 +173,12 @@
 							console.log('修改群资料的类型选择出错');
 							break;
 					}
-					//					if(type !== '') {
 					events.openNewWindowWithData('qun_manage_info_change_post.html', {
 						gid: subData.gid, //群id
 						type: type, //修改的类型
-						value: value //修改的值
+						value: value, //修改的值
+						listener: [subData.listener, { webid: 'qun_manage_info_change.html', winid: 'valueChange' }]
 					});
-					//					}else{
-					//						mui.toast('群备注业务不清晰');
-					//					}
 				});
 
 				//修改群信息成功后修改界面的值
@@ -199,12 +194,12 @@
 				}, function(successCB) {
 					console.log('上传并修改资料头像，成功的回调' + JSON.stringify(successCB));
 					document.getElementById("choose").innerHTML = '<img src="' + updateHeadImg(successCB, 2) + '" style="margin-top:0px;border: 1px solid #F2F2F2;border-radius: 50%;height: 100px;width: 100px;"/>';
-					var main2 = plus.webview.getWebviewById('qun_manage_sub.html');
-					mui.fire(main2, 'changeQunInfo', {
-						gid: subData.gid, //群id
-						type: 'gimg', //修改的类型
-						value: successCB //修改后的值
-					});
+					//					var main2 = plus.webview.getWebviewById(subData.webid);
+					//					mui.fire(main2, 'changeQunInfo', {
+					//						gid: subData.gid, //群id
+					//						type: 'gimg', //修改的类型
+					//						value: successCB //修改后的值
+					//					});
 					mui.toast('修改群头像成功');
 				}, function(errorCB) {
 					console.log('上传并修改资料头像，失败的回调' + JSON.stringify(errorCB));

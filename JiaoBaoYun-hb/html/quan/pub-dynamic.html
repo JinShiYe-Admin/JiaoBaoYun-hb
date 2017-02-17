@@ -120,7 +120,13 @@
 					} else {
 						pubScopes = '[1,2]';
 					}
-					console.log(pubScopes);
+					var pubArea;
+					if(tempInfo.uarea.acode==undefined){
+						pubArea='';
+					}else{
+						pubArea = tempInfo.uarea.acode
+					}
+					console.log(tempInfo.uarea.acode);
 					var postData = {
 						userId: userInfo.utid,
 						msgContent: tempText,
@@ -130,7 +136,7 @@
 						encImg: '',
 						encIntro: '',
 						pubScopes: pubScopes,
-						pubArea: tempInfo.uarea.acode
+						pubArea: pubArea
 					}
 					for(var z = 0; z < utids.length; z++) {
 						console.log(tempInfo.utid);

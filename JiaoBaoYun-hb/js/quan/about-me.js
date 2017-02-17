@@ -35,7 +35,7 @@ mui.plusReady(function() {
 		//请求并放置数据
 		requestData();
 		addReplyView();
-		addReplyLisetner()
+		addReplyLisetner();
 	})
 	/**
 	 * 界面放置数据
@@ -250,7 +250,7 @@ var getCellData = function(cell) {
 	switch(cell.MsgType) {
 		//其他用户评论
 		case 1:
-			cellData.title = events.shortForString(cell.MaxUserName, 4) + ' 评论了你';
+			cellData.title = events.shortForString(cell.MaxUserName, 4) + ' 评论了我';
 
 			break;
 			//评论的回复

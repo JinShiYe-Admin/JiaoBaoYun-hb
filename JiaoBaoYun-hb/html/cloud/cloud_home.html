@@ -123,7 +123,7 @@
 	</head>
 
 	<body>
-		<div id="refreshContainer" class="mui-content mui-scroll-wrapper"style="visibility: hidden;">
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" style="visibility: hidden;">
 			<div class="mui-scroll">
 				<!--存储-->
 				<div id="cloudstorage" class="cloud-item">
@@ -261,7 +261,7 @@
 					element.lastElementChild.firstElementChild.firstElementChild.style.height = sliderHeight / 2 + 'px';
 					element.lastElementChild.lastElementChild.firstElementChild.style.height = sliderHeight / 2 + 'px';
 				});
-				document.getElementById("refreshContainer").style.visibility='visible';
+				document.getElementById("refreshContainer").style.visibility = 'visible';
 				//---调整界面---end---
 
 				//-----------设置数据start---------------
@@ -271,6 +271,15 @@
 
 				//重新登录或者自动登录后获取的信息
 				window.addEventListener('infoChanged', function() {
+					mui(".mui-scroll-wrapper").scroll({
+						scrollY: true, //是否竖向滚动
+						scrollX: false, //是否横向滚动
+						startX: 0, //初始化时滚动至x
+						startY: 0, //初始化时滚动至y
+						indicators: true, //是否显示滚动条
+						deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+						bounce: true //是否启用回弹
+					});
 					//文件存储数组
 					fileArray = [];
 					//获取所有的群
@@ -293,6 +302,13 @@
 				window.addEventListener('cloudDataChange', function() {
 					//设置页面信息
 					changeCloudData();
+				});
+
+				window.addEventListener('getGroupList', function() {
+					//获取所有的群
+					datasource = [];
+					//获取班级
+					getGroupList();
 				});
 
 				//-----------设置数据end-----------------
@@ -331,7 +347,7 @@
 				mui('#cloudstorage').on('tap', '#addFolder', function(e) {
 					e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
 					var btnArray = ['取消', '确定'];
-					mui.prompt('请输入新文件夹的名称：', '新文件夹', '新建文件夹', btnArray, function(e) {
+					mui.prompt('', '请输入新文件夹的名称', '新建文件夹', btnArray, function(e) {
 						if(e.index == 1) { //点击确定
 							var reg = new RegExp('^[^\\\\\\/:*?\\"<>|]+$'); //特殊字符过滤的正则表达式
 							if(e.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
@@ -387,7 +403,7 @@
 					if(id == 'homework') { //作业
 						requestClassData();
 					} else if(id == 'manage') { //班级管理
-						events.openNewWindowWithData('/html/mine/qun_manage_main.html', {
+						events.openNewWindowWithData('/html/mine/qun_manage_1.html', {
 							type: '1' //0群管理,1人员资料
 						});
 						//events.openNewWindow('/html/mine/qun_manage.html');

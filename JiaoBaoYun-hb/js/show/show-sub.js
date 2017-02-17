@@ -87,6 +87,7 @@ function addSomeEvent() {
 	//点赞和取消点赞
 	mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
 		click.push('点赞');
+		var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
 		var index = this.id.replace('praise', '');
 		var color = this.style.color;
 		if(color == 'rgb(143, 143, 148)') {

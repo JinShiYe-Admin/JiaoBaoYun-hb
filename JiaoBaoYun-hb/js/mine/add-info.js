@@ -94,12 +94,14 @@ var setData = function(type, data) {
 		if(data){
 			createFirstChild(type);
 			data.forEach(function(item) {
-				var li = document.createElement('li');
-				li.className = 'mui-table-view-cell';
-				li.stuid = item.stuid;
-				li.mstype = item.mstype;
-				li.innerHTML = createInner(type, item);
-				list.appendChild(li);
+				if(item.stuname){
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell';
+					li.stuid = item.stuid;
+					li.mstype = item.mstype;
+					li.innerHTML = createInner(type, item);
+					list.appendChild(li);
+				}
 			})
 		}
 		
@@ -120,16 +122,8 @@ var setData = function(type, data) {
 	 */
 var createInner = function(type, item) {
 	return '<a class="mui-navigate-right" stuid="' + item.stuid + 'mstype="' + type + '"><img src="' +
-		getStuimg(item) + '" />' + item.stuname + '</a>';
+		updateHeadImg(item.stuimg,2) + '" />' + item.stuname + '</a>';
 }
-
-/**
- * 获取头像
- * @param {Object} cell 单元数据
- */
-var getStuimg = function(cell) {
-		return cell.stuimg ? cell.stuimg : '../../image/utils/default_personalimage.png';
-	}
 	/**
 	 * 
 	 * @param {Object} type 身份类型
@@ -191,13 +185,6 @@ var getMstype = function(dataMstype) {
 	//			urel:''//与资料关系，与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
 	//		};
 events.addTap('btn-save', function() {
-//	if(roles.length>1){
-//		for(var i in roles){
-//			if(roles[i]!=mstype){
-//				postJoinDo(roles[i]);
-//			}
-//		}
-//	}
 	postJoinDo(mstype);
 })
 var postJoinDo=function(type){
