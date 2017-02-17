@@ -28,7 +28,8 @@ var storageKeyName = (function(mod) {
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url
 	mod.MAINHOMEWORKURLSTUDENT = mod.MAINHOMEWORKURL + 'StudentService.svc/'; //学生作业url
-	mod.WAITING = '加载中...'; //加载提示
+	mod.WAITING = '加载中...'; //
+	mod.UPLOADING='上传中...';
 	mod.SIGNKEY = 'jsy309'; //签名密钥
 	//---七牛---start---
 	mod.QNFILEDOMAIN = 'http://oigrn7z7d.bkt.clouddn.com/'; //存放在七牛的文件（云存储的文件）的域名，私有的,jiaobaoyun-file

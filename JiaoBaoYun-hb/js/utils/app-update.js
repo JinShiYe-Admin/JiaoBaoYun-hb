@@ -122,8 +122,8 @@ var appUpdate = (function(mod) {
 	 * @param {Object} path
 	 */
 	function installWgt(path) {
-		plus.nativeUI.showWaiting("安装wgt文件...");
-		plus.runtime.install(path, {}, function() {
+//		plus.nativeUI.showWaiting("安装wgt文件...");
+		plus.runtime.install(path, {force:true}, function() {
 			plus.nativeUI.closeWaiting();
 			console.log("安装wgt文件成功！");
 			plus.nativeUI.alert("应用资源更新完成！", function() {
@@ -132,7 +132,7 @@ var appUpdate = (function(mod) {
 		}, function(e) {
 			plus.nativeUI.closeWaiting();
 			console.log("安装wgt文件失败[" + e.code + "]：" + e.message);
-			plus.nativeUI.alert("安装wgt文件失败[" + e.code + "]：" + e.message);
+//			plus.nativeUI.alert("安装wgt文件失败[" + e.code + "]：" + e.message);
 		});
 	}
 	return mod;
