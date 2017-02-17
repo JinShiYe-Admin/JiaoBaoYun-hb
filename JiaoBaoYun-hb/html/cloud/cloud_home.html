@@ -366,7 +366,7 @@
 									fsize: '0' //	文件大小，文件用
 								};
 								// 等待的对话框
-								var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+								var wd = events.showWaiting();
 								postDataPro_PostDiFiA(comData, wd, function(data) {
 									wd.close();
 									console.log('27.postDataPro_PostDiFiA:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
@@ -535,7 +535,7 @@
 						vvl: personalUTID //查询的各项，对应人的utid，可以是查询的任何人
 					};
 					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var wd = events.showWaiting();
 					//9.获取用户群
 					postDataPro_PostGList(comData, wd, function(data) {
 						wd.close();
@@ -599,7 +599,7 @@
 						vvl: '0' //	节点ID，顶层为0
 					};
 					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var wd = events.showWaiting();
 					postDataPro_PostDiFi(comData, wd, function(data) {
 						document.getElementById("cloudstorage_1").innerHTML = '';;
 						addStorageIcon();
@@ -648,7 +648,7 @@
 					};
 					//返回学生姓名数组
 					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var wd = events.showWaiting();
 					postDataPro_getStudentName(comData, wd, function(data) {
 						console.log('73.云档案）按家长获取学生档案姓名postDataPro_getStudentName:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						document.getElementById("cloudstorage_0").innerHTML = '';
@@ -918,7 +918,7 @@
 					};
 					//返回值model：model_userDataInfo
 					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var wd = events.showWaiting();
 					//24.通过用户表ID获取用户关联的学生
 					postDataPro_PostUstu(comData, wd, function(data) {
 						//清除学生区域
@@ -948,7 +948,7 @@
 						vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
 					};
 					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var wd = events.showWaiting();
 					//	获取用户群
 					postDataPro_PostGList(comData, wd, function(data) {
 						//清除班级区域
