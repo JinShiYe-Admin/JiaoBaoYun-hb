@@ -145,8 +145,8 @@ var pullUpFresh = function() {
 	 */
 var setListener = function() {
 	events.addTap('submit-question', function() {
-		console.log(allChannels)
-		events.openNewWindowWithData('qiuzhi-newQ.html', allChannels);
+		console.log(JSON.stringify(allChannels))
+		events.openNewWindowWithData('qiuzhi-newQ.html',{curChannel:channelInfo,allChannels:allChannels} );
 	});
 	//标题点击事件
 	mui('.mui-table-view').on('tap', '.ask-title', function() {

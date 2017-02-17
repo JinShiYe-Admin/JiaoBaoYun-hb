@@ -64,8 +64,18 @@
 		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
+			var askChannel = '0';
 			mui.plusReady(function() {
-				var channelData = plus.webview.currentWebview().data;
+				var data = plus.webview.currentWebview().data;
+				console.log('获取的数据：'+JSON.stringify(data));
+				channelData=data.allChannels;
+				channelData.splice(0,1);
+				var curChannel=data.curChannel;
+				if(curChannel.TabId==0){
+					curChannel=channelData[0];
+				}
+				askChannel=curChannel.TabId;
+				document.getElementById("channal").innerHTML =curChannel.ChannelName;
 				var ul = document.getElementById("popover").getElementsByClassName('mui-table-view')[0];
 				for(var i = 0; i < channelData.length; i++) {
 					var li = document.createElement("li");
@@ -80,7 +90,7 @@
 
 			})
 
-			var askChannel = '0';
+			
 			events.addTap('take_pic', function() {
 				mui.toast('此功能暂未开放');
 //				camera.getPic(camera.getCamera(), function(path) {
