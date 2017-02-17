@@ -53,6 +53,10 @@ var storageKeyName = (function(mod) {
 	mod.TEATHUMBPICBUCKET='TeaAnThumbPic/';//老师临时作业答案缩略图存储空间
 	mod.STUPICBUCKET='StuAnswerPic/';//学生临时作业答案存储空间
 	mod.STUTHUMBPICBUCKET='StuAnThumbPic/';//学生临时作业缩略图存储空间
+	mod.PERSONALSPACE='PersonalSpace/';//个人空间、原图
+	mod.PERSONALSPACETHUMB='PersonalSpaceThumb/';//个人空间、缩略图
+	mod.CLASSSPACE='ClassSpace/';//班级空间、原图
+	mod.CLASSSPACETHUMB='ClassSpaceThumb/';//班级空间、缩略图
 	
 	//---测试---start---
 		mod.QNGETUPTOKENHEADIMGE = 'http://192.168.0.178:8517/GetTokenProfilePhoto.ashx'; //获取上传个人头像，群头像，资料头像到七牛的token的url
