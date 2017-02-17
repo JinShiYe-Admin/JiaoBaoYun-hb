@@ -14,6 +14,14 @@ var SenEduHomeItem = (function(mod) {
 	 * }
 	 */
 	mod.addItem = function(element, data) {
+		var tempImgs = [];
+		for(var i = 0; i < data.timgs.length; i++) {
+			if(data.timgs[i] != '' && data.timgs[i] != 'null') {
+				//console.log(data.timgs[i] + '|' + data.title);
+				tempImgs.push(data.timgs[i]);
+			}
+		}
+		data.timgs = tempImgs;
 		var num_imges = 0;
 		if(data.timgs != undefined) {
 			num_imges = data.timgs.length;
@@ -34,7 +42,7 @@ var SenEduHomeItem = (function(mod) {
 		li.setAttribute('data-turl', data.turl);
 		li.id = id;
 		li.innerHTML = '<div id="mediaBody_' + itemId + '" class="mui-media-body" style="padding-top: 5px;padding-bottom: 3px;">' +
-			'<b id="title_' + itemId + '" style="word-break: break-all;font-size: 20px;">' + data.title + '</b>' +
+			'<div id="title_' + itemId + '" style="word-break: break-all;font-size: 20px;">' + data.title + '</div>' +
 			'<div id="from_' + itemId + '" style="word-break: break-all;margin-top: 5px;">' + data.tips + '</div></div>';
 		element.appendChild(li);
 	}
@@ -46,13 +54,13 @@ var SenEduHomeItem = (function(mod) {
 		li.id = id;
 		li.innerHTML = '<div id="mediaBody_' + id + '" class="mui-media-body" style="padding-top: 5px;padding-bottom: 3px;">' +
 			'<img id="image_' + id + '" class="mui-pull-right" style="width: 30%;" src="' + data.timgs[0] + '">' +
-			'<b id="title_' + id + '" style="word-break: break-all;font-size: 20px;">' + data.title + '</b>' +
+			'<div id="title_' + id + '" style="word-break: break-all;font-size: 20px;">' + data.title + '</div>' +
 			'<div id="from_' + id + '" style="word-break: break-all;margin-top: 5px;">' + data.tips + '</div></div>';
 		element.appendChild(li);
 		var image = document.getElementById("image_" + id);
 		var parentNode = image.parentNode;
 		image.style.height = (parentNode.offsetWidth * 0.3 * (2 / 3)) + 'px';
-		image.style.marginTop = (parentNode.offsetHeight - image.offsetHeight) / 2 + 'px';
+		image.style.marginTop = ((parentNode.offsetHeight - image.offsetHeight) / 2 - 6) + 'px';
 	}
 
 	function addItem_3(element, data, id) {
@@ -61,7 +69,7 @@ var SenEduHomeItem = (function(mod) {
 		li.setAttribute('data-turl', data.turl);
 		li.id = id;
 		li.innerHTML = '<div id="mediaBody_' + id + '" class="mui-media-body" style="padding-top: 5px;padding-bottom: 3px;">' +
-			'<b id="title_' + id + '" style="word-break: break-all;font-size: 20px;">' + data.title + '</b>' +
+			'<div id="title_' + id + '" style="word-break: break-all;font-size: 20px;">' + data.title + '</div>' +
 			'<div class="mui-row" style="margin-top: 3px;">' +
 			'<div class="mui-col-xs-4 mui-col-sm-4" style="padding: 2px;">' +
 			'<img id="image_3_0_' + id + '" style="width: 100%;" src="' + data.timgs[0] + '">' +

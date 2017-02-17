@@ -264,7 +264,7 @@
 					console.log('增加文件夹showPid:' + showPid);
 					e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
 					var btnArray = ['取消', '确定'];
-					mui.prompt('请输入新文件夹的名称', '', '新建文件夹', btnArray, function(e) {
+					mui.prompt('', '请输入新文件夹的名称', '新建文件夹', btnArray, function(e) {
 						if(e.index == 1) {
 							//点击确定
 							var reg = new RegExp('^[^\\\\\\/:*?\\"<>|]+$'); //特殊字符过滤的正则表达式
@@ -428,7 +428,7 @@
 					console.log('长按文件或文件夹' + id + '|' + fid + "|" + fname + '|' + ftype);
 					e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
 					var btnArray = ['取消', '确定'];
-					mui.prompt('请输入新的名字', '', '重命名', btnArray, function(e) {
+					mui.prompt('', '请输入新的名字', '重命名', btnArray, function(e) {
 						if(e.index == 1) { //确定
 							var reg = new RegExp('^[^\\\\\\/:*?\\"<>|]+$'); //特殊字符过滤的正则表达式
 							var vvl1 = e.value;
