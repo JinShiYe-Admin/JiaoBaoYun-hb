@@ -120,7 +120,8 @@
 			"image/cloud/cloud_0_excel_0.png",
 			"image/cloud/cloud_0_word_0.png",
 			"image/cloud/cloud_0_txt_0.png",
-			"image/cloud/cloud_0_yasuobao_0.png"
+			"image/cloud/cloud_0_yasuobao_0.png",
+			"fonts/iconfont.ttf"
 		],
 		"refer": [
 			"html/homework/homework-tea.html",
@@ -942,7 +943,9 @@
 			"css/utils/common.css",
 			"image/utils/default_personalimage.png",
 			"js/utils/native.js",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"fonts/mui.ttf",
+			"fonts/iconfont.ttf"
 		],
 		"refer": []
 	},
@@ -1702,7 +1705,8 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"js/utils/events.js"
 		],
 		"refer": [
 			"html/homework/workdetailTea-temSub.html"
@@ -1788,7 +1792,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"fonts/iconfont.ttf"
 		],
 		"refer": []
 	},
@@ -2269,7 +2274,8 @@
 			"js/utils/events.js",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"fonts/iconfont.ttf"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-answerDetailSub.html"
@@ -2297,7 +2303,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": []
 	},
@@ -2545,7 +2552,21 @@
 		"resources": [
 			"js/publicQiuzhiProtocol.js",
 			"css/iconfont/iconfont.css",
-			"js/libs/myStorage/myStorage.js"
+			"js/libs/myStorage/myStorage.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"css/mui.min.css",
+			"js/libs/RSA/RSA.js",
+			"css/utils/common.css",
+			"js/storageKeyName.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/jquery.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	}
 }
