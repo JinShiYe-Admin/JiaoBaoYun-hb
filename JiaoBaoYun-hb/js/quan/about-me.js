@@ -35,7 +35,7 @@ mui.plusReady(function() {
 		//请求并放置数据
 		requestData();
 		addReplyView();
-		addReplyLisetner()
+		addReplyLisetner();
 	})
 	/**
 	 * 界面放置数据
