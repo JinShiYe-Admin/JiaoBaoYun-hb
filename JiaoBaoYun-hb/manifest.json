@@ -2976,7 +2976,9 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"image/mine/jiaobaoyun.png",
+					"js/utils/events.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3099,7 +3101,8 @@
 					"css/mine/manager_data.css"
 				],
 				"refer": [
-					"html/quan/group-pInfo.html"
+					"html/quan/group-pInfo.html",
+					"html/mine/qun_manage_info.html"
 				],
 				"priority": 0
 			}
