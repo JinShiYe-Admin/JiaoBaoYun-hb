@@ -44,7 +44,7 @@ var appUpdate = (function(mod) {
 			setDialog('教宝云有新版本，是否下载？', function() {
 				downApk(versionInfo.baseverurl)
 			})
-		} else {
+		} else if(appVersionMinMax.max==newestVersionMinMax.max){
 			if(appVersionMinMax.min < newestVersionMinMax.min) { //在线更新
 //				setDialog('教宝云有新版本，是否下载？', function() {
 					downWgt(versionInfo.addverurl);

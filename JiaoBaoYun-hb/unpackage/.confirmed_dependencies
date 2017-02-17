@@ -1795,7 +1795,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"css/quan/custom-textarea.css"
 		],
 		"refer": []
 	},
