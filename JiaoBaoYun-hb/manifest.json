@@ -1824,7 +1824,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"css/mine/apply.css"
+					"css/mine/apply.css",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -2007,7 +2008,8 @@
 					"html/mine/setting.html",
 					"html/quan/zone_main.html",
 					"html/mine/qun_manage_main.html",
-					"html/mine/about.html"
+					"html/mine/about.html",
+					"html/mine/qun_manage_1.html"
 				],
 				"priority": 0
 			},
@@ -2920,7 +2922,8 @@
 					"js/libs/myStorage/myStorage.js",
 					"js/utils/events.js",
 					"js/publicProtocol.js",
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -3069,6 +3072,34 @@
 					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"html/mine/qun_manage_1.html": {
+				"resources": [
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"css/mine/manager_member.css",
+					"css/iconfont/iconfont.css",
+					"css/mine/manager_data.css"
+				],
+				"refer": [
+					"html/quan/group-pInfo.html"
+				],
 				"priority": 0
 			}
 		},

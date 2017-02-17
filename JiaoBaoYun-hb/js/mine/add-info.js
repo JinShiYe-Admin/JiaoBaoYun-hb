@@ -120,16 +120,16 @@ var setData = function(type, data) {
 	 */
 var createInner = function(type, item) {
 	return '<a class="mui-navigate-right" stuid="' + item.stuid + 'mstype="' + type + '"><img src="' +
-		getStuimg(item) + '" />' + item.stuname + '</a>';
+		updateHeadImg(item.stuimg,2) + '" />' + item.stuname + '</a>';
 }
 
 /**
  * 获取头像
  * @param {Object} cell 单元数据
  */
-var getStuimg = function(cell) {
-		return cell.stuimg ? cell.stuimg : '../../image/utils/default_personalimage.png';
-	}
+//var getStuimg = function(cell) {
+//		return cell.stuimg ? cell.stuimg : '../../image/utils/default_personalimage.png';
+//	}
 	/**
 	 * 
 	 * @param {Object} type 身份类型
