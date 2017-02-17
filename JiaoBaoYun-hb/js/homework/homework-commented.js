@@ -269,6 +269,7 @@ function refreshUITemp() {
 	stuAnsImgLi.id = 'stuAnsImgLi';
 	stuAnsImgLi.className = 'mui-table-view-cell mui-media  tempComment cell-color';
 	stuAnsImgLi.innerHTML = ''
+	homeworkResult.Files = getMatchedImgs(homeworkResult.Files)
 	for(var i = 0; i < homeworkResult.File.length; i++) {
 		var img =homeworkResult.File[i].ThumbUrl;
 		stuAnsImgLi.innerHTML = stuAnsImgLi.innerHTML + '<img class="mui-media-object mui-pull-left" src="' + img + '" />';
@@ -301,6 +302,16 @@ function refreshUITemp() {
 	homeworkDetailNodes.commentContent.innerText = Comment;
 
 }
+var getMatchedImgs=function(files){
+	var mactchedFiles=[];
+	for(var i in files){
+		if(files[i].MatchRate.replace('%','')>50){
+			mactchedFiles.push(files[i]);
+		}
+	}
+	return mactchedFiles;
+}
+
 //刷新普通作业界面
 function refreshUI() {
 	var className = 'iconfont subject-icon ' + getHomeworkIcon(homeworkModel.Subject);
