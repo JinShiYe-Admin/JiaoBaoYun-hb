@@ -228,7 +228,7 @@
 					var beizhu = JSON.parse(this.getAttribute('data-beizhu'));
 					mui.extend(true, info, beizhu);
 					mui.extend(info, mainData);
-					info.mstype = 1;
+					info.isMaster = true;
 					//console.log('info ' + JSON.stringify(info));
 					events.fireToPageWithData('group-pInfo.html', 'postPInfo', info);
 				});
