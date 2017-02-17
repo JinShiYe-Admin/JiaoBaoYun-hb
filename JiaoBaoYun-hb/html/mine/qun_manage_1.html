@@ -868,7 +868,6 @@
 								for(var j = 0; j < parList.length; j++) {
 									if(tempList[i].stuid == parList[j].stuid) { //显示一个家长
 										same = true;
-										return false;
 									}
 								}
 								if(!same) {
@@ -898,6 +897,7 @@
 			 * @param {Object} parList
 			 */
 			function getUid(parList) {
+				console.log('getUid');
 				var wd = events.showWaiting();
 				var tempUtidArray = [];
 				for(var i = 0; i < parList.length; i++) {
