@@ -3,7 +3,7 @@ mui.init();
 mui.plusReady(function() {
 	//修改答案后刷新界面
 	window.addEventListener('refreshAnswer', function(e) {
-					homeworkDetailNodes.stuCell.innerHTML = e.detail.data.answer;
+					homeworkDetailNodes.stuResult.innerText = e.detail.data.answer;
 					homeworkResult.HomeworkResult.Result = e.detail.data.answer;
 				})
 	//跳转到修改作业界面
