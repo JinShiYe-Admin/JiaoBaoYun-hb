@@ -78,14 +78,16 @@
 							if(data.RspCode == 0) {
 								console.log('修改成功');
 								mui.toast('修改成功');
-								var main = plus.webview.getWebviewById('qun_manage_info_change.html');
-								mui.fire(main, 'valueChange', {
+								var tempListener = subData.listener;
+
+								var main = plus.webview.getWebviewById(tempListener[1].webid);
+								mui.fire(main, tempListener[1].winid, {
 									type: subData.type, //资料类型
 									value: vvl //修改后的值
 								});
 								if(subData.type == 'gname') {
-									var main2 = plus.webview.getWebviewById('qun_manage_sub.html');
-									mui.fire(main2, 'changeQunInfo', {
+									var main2 = plus.webview.getWebviewById(tempListener[0].webid);
+									mui.fire(main2, tempListener[0].winid, {
 										gid: subData.gid, //群id
 										type: 'gname', //修改的类型
 										value: vvl //修改后的值

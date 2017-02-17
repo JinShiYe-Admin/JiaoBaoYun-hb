@@ -306,13 +306,13 @@
 				stu_gname.style.marginLeft = stu_name.offsetLeft - stu_gname.offsetLeft + 5 + 'px';
 				arrowdown.style.left = stu_gname.offsetLeft + stu_la.offsetWidth / 1.6 + 'px';
 
-				console.log('type_name_font.offsetLeft ' + document.getElementById("type_name_font").offsetLeft);
-				console.log('popover.style.left ' + popover.style.left);
+				//console.log('type_name_font.offsetLeft ' + document.getElementById("type_name_font").offsetLeft);
+				//console.log('popover.style.left ' + popover.style.left);
 				//popover.style.marginLeft = (arrowdown.offsetLeft + (arrowdown.offsetWidth / 2)) - (popover.offsetLeft) + 'px';
 
-				console.log('arrowdown.offsetLeft ' + arrowdown.offsetLeft);
-				console.log('arrowdown.offsetWidth / 2 ' + arrowdown.offsetWidth / 2);
-				console.log('popover.offsetLeft ' + popover.offsetLeft);
+				//console.log('arrowdown.offsetLeft ' + arrowdown.offsetLeft);
+				//console.log('arrowdown.offsetWidth / 2 ' + arrowdown.offsetWidth / 2);
+				//console.log('popover.offsetLeft ' + popover.offsetLeft);
 				//popover.style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
 				//popover_arrow.style.width = '300px';
 				//popover_arrow.style.backgroundColor='red';
@@ -418,6 +418,7 @@
 							sub: sub, //科目，老师用,其他填0
 							gutid: '0' //关联的群账号ID，用户在群里的账号ID,无则为0
 						};
+						var gid=data.gid;
 						console.log('comData:' + JSON.stringify(comData));
 						// 等待的对话框
 						var wd = events.showWaiting();
@@ -427,9 +428,9 @@
 							if(data.RspCode == 0) {
 								mui.toast('资料添加成功！');
 								console.log('资料添加成功！');
-								events.fireToPageNone('qun_manage_data_sub.html', 'addData', {
+								events.fireToPageNone('qun_manage_1.html', 'addData', {
 									stuid: data.RspData,
-									gid: data.gid,
+									gid: gid,
 									stuname: name,
 									stuimg: '',
 									mstype: mstype
