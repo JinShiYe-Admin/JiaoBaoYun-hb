@@ -55,6 +55,11 @@
 	<script src="../../js/utils/files.js"></script>
 	<script src="../../js/utils/ASFiles.js"></script>
 	<script src="../../js/publicProtocol.js"></script>
+	<script src="../../js/utils/CloudFileUtil.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/utils/compress.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/utils/cryption.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/qiniu/qiniu.js" type="text/javascript" charset="utf-8"></script>
+	
 	<script>
 	</script>
 	<script type="text/javascript">
@@ -76,12 +81,12 @@
 				var title = document.getElementById('title');
 				title.innerText = userInfo.unick;
 
-				events.addTap('take_pic', function() {
-					mui.toast('此功能暂未开放');
-//					camera.getPic(camera.getCamera(), function(path) {
-
-//					});
-				});
+//				events.addTap('take_pic', function() {
+//					mui.toast('此功能暂未开放');
+////					camera.getPic(camera.getCamera(), function(path) {
+//
+////					});
+//				});
 				events.addTap('take_camero', function() {
 					mui.toast('此功能暂未开放');
 //					camera.getVideo(camera.getCamera(), function(path) {
@@ -225,6 +230,61 @@
 			});
 
 		}
+		
+		/**
+	 * 通过系统相机获取图片
+	 * 并显示在界面上
+	 */
+	events.addTap('take_pic', function() {
+		camera.getPic(camera.getCamera(), function(picPath) {
+			plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			var MainSpace = storageKeyName.QNPUBSPACE;
+			var saveSpace;
+			var thumbSpace;
+			saveSpace = storageKeyName.PERSONALSPACE;
+			thumbSpace = storageKeyName.PERSONALSPACETHUMB;
+			var QNFileName = events.getFileNameByPath(picPath);
+			var thumbBase64=Qiniu.URLSafeBase64Encode(MainSpace + ":" + thumbSpace + QNFileName);
+			var ops = "imageView2/2/w/200/h/200/format/png|saveas/" +thumbBase64;
+			var param = {
+				Bucket: MainSpace,
+				Key: saveSpace + QNFileName,
+				Pops: ops,
+				NotifyUrl: ''
+			}
+			console.log("参数数据：" + JSON.stringify(param))
+			var key = 'jxq789!@';
+			var data = {
+				AppID: "6",
+				Param: encryptByDES(key, JSON.stringify(param))
+			}
+			console.log("加密后的信息：" + encryptByDES(key, JSON.stringify(param)));
+			var img;
+			CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data, function(datas) {
+				console.log("获取的数据：" + JSON.stringify(datas));
+				if(datas.Status == 1) {
+					var tokenInfo = datas.Data;
+					//压缩照片
+					compress.compressPIC(picPath, function(event) {
+						CloudFileUtil.uploadFile(tokenInfo.Key, event.target, tokenInfo.Token, function(uploadData, status) {
+							console.log(JSON.stringify(uploadData));
+							img={
+								url:tokenInfo.Domain+tokenInfo.Key,
+								thumb:tokenInfo.OtherKey[thumbBase64],
+								type:1
+							}
+							plus.nativeUI.closeWaiting();
+							setPic(img);
+						});
+					})
+
+				}
+			}, function(xhr, type, errorThrown) {
+				console.log("错误类型：" + type + errorThrown);
+				plus.nativeUI.closeWaiting();
+			});
+		})
+	});
 	</script>
 
 </html>
