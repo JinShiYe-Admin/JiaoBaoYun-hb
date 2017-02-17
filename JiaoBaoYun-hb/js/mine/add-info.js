@@ -94,12 +94,14 @@ var setData = function(type, data) {
 		if(data){
 			createFirstChild(type);
 			data.forEach(function(item) {
-				var li = document.createElement('li');
-				li.className = 'mui-table-view-cell';
-				li.stuid = item.stuid;
-				li.mstype = item.mstype;
-				li.innerHTML = createInner(type, item);
-				list.appendChild(li);
+				if(item.stuname){
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell';
+					li.stuid = item.stuid;
+					li.mstype = item.mstype;
+					li.innerHTML = createInner(type, item);
+					list.appendChild(li);
+				}
 			})
 		}
 		
