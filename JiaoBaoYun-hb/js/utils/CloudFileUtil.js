@@ -180,16 +180,19 @@ var CloudFileUtil = (function($, mod) {
 				break;
 			case 1:
 				break;
-			case 2:
+			case 2://资源平台
+				desKey="jsy8004";
 				break;
-			case 3:
+			case 3://教宝云作业
 				desKey = "zy309309!";
 				break;
-			case 4:
+			case 4://教宝云盘
+				desKey="jbyp@2017"
 				break;
-			case 5:
+			case 5://教宝云用户管理
+				desKey="jbman456"
 				break;
-			case 6:
+			case 6://家校圈
 				desKey = "jxq789!@";
 				break;
 			default:
