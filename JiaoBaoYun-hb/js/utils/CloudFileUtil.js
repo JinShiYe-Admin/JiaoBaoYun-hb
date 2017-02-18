@@ -76,39 +76,39 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} successCallBack 下载任务创建成功的回调
 	 */
 	mod.download = function(url, filename, DownloadCompletedCallback, onStateChangedCallBack, successCallBack) {
-			var dtask = plus.downloader.createDownload(url, {
-					filename: filename //下载文件保存的路径
-				},
-				/**
-				 * 下载完成时的回调
-				 * @param {Object} download 下载任务对象
-				 * @param {Object} status 下载结果状态码
-				 */
-				function(download, status) {
-					// 下载完成
-					DownloadCompletedCallback(download, status);
-				}
-			);
-			//下载状态变化的监听
-			dtask.addEventListener("statechanged",
-				/**
-				 * 下载状态变化的监听
-				 * @param {Object} download 下载任务对象
-				 * @param {Object} status 下载结果状态码
-				 */
-				function(download, status) {
-					onStateChangedCallBack(download, status);
-				}
-			);
-			successCallBack(dtask);
-			//dtask.start();
-		}
-		/**
-		 * 创建下载任务
-		 * @param {Object} url 要下载文件资源地址
-		 * @param {Object} filename 下载文件保存的路径
-		 * @param {Object} callback 下载成功回调
-		 */
+		var dtask = plus.downloader.createDownload(url, {
+				filename: filename //下载文件保存的路径
+			},
+			/**
+			 * 下载完成时的回调
+			 * @param {Object} download 下载任务对象
+			 * @param {Object} status 下载结果状态码
+			 */
+			function(download, status) {
+				// 下载完成
+				DownloadCompletedCallback(download, status);
+			}
+		);
+		//下载状态变化的监听
+		dtask.addEventListener("statechanged",
+			/**
+			 * 下载状态变化的监听
+			 * @param {Object} download 下载任务对象
+			 * @param {Object} status 下载结果状态码
+			 */
+			function(download, status) {
+				onStateChangedCallBack(download, status);
+			}
+		);
+		successCallBack(dtask);
+		//dtask.start();
+	}
+	/**
+	 * 创建下载任务
+	 * @param {Object} url 要下载文件资源地址
+	 * @param {Object} filename 下载文件保存的路径
+	 * @param {Object} callback 下载成功回调
+	 */
 	mod.downloadFile = function(url, fileName, callback) {
 		var dtask = plus.downloader.createDownload(url, {
 				filename: fileName //下载文件保存的路径
@@ -125,7 +125,7 @@ var CloudFileUtil = (function($, mod) {
 					console.log("Upload success" + d.filename);
 					//上传失败
 				} else {
-					mui.toast('上传失败,请重新上传:'+status);
+					mui.toast('上传失败,请重新上传:' + status);
 				}
 			}
 		);
@@ -164,16 +164,76 @@ var CloudFileUtil = (function($, mod) {
 		});
 	}
 	/**
+	 * 需要先加载qiniu.js,cryption.js,events.js,使用实例在publish-answer.js
+	 * @param {Object} picPath 图片本地路径
+	 * @param {Object} appId AppID
+	 * @param {Object} maxSize 最大长宽
+	 * @param {Object} spaceType 空间类型0：公共空间 1:私有空间
+	 * @param {Object} uploadSpace 上传的空间
+	 * @return {Object} data data.options为获取token的参数之一，data.thumbKey为获取token后获取缩略图地址的key值
+	 */
+	mod.getSingleUploadDataOptions = function(picPath, appId, maxSize, spaceType, uploadSpace) {
+		var data={};
+		var desKey;
+		switch(appId) {
+			case 0:
+				break;
+			case 1:
+				break;
+			case 2://资源平台
+				desKey="jsy8004";
+				break;
+			case 3://教宝云作业
+				desKey = "zy309309!";
+				break;
+			case 4://教宝云盘
+				desKey="jbyp@2017"
+				break;
+			case 5://教宝云用户管理
+				desKey="jbman456"
+				break;
+			case 6://家校圈
+				desKey = "jxq789!@";
+				break;
+			default:
+				break;
+		}
+		var mainSpace;
+		if(spaceType) {
+			mainSpace = storageKeyName.QNPRISPACE; //七牛私有空间
+		} else {
+			mainSpace = storageKeyName.QNPUBSPACE; //七牛公共空间
+		}
+		var saveSpace = uploadSpace;
+		var thumbSpace = saveSpace + 'thumb/';
+		var QNFileName = events.getFileNameByPath(picPath);
+		data.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
+		var ops = "imageView2/2/w/" + maxSize+ "/h/" + maxSize + "/format/png|saveas/" + data.thumbKey;
+		var param = {
+			Bucket: mainSpace,
+			Key: saveSpace + QNFileName,
+			Pops: ops,
+			NotifyUrl: ''
+		}
+		console.log("参数数据：" + JSON.stringify(param))
+		data.options = {
+			AppID: appId,
+			Param: encryptByDES(desKey, JSON.stringify(param))
+		}
+		console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
+		return data;
+	}
+	/**
 	 * 
 	 * @param {Object} url
 	 * @param {Object} data
 	 * @param {Object} successCB
 	 * @param {Object} errorCB
 	 */
-	mod.getQNUpTokenWithManage=function(url,data,successCB, errorCB){
+	mod.getQNUpTokenWithManage = function(url, data, successCB, errorCB) {
 		mui.ajax(url, {
 			async: false,
-			data: data,//请求参数
+			data: data, //请求参数
 			dataType: 'json', //服务器返回json格式数据
 			type: 'post', //HTTP请求类型
 			timeout: 10000, //超时时间设置为10秒
@@ -197,42 +257,42 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} successCallBack 上传任务创建成功监听的回调
 	 */
 	mod.upload = function(fPath, QNUptoken, QNFileName, uploadCompletedCallBack, onStateChangedCallBack, successCallBack) {
-			//console.log('upload:' + fPath);
-			var uid = Math.floor(Math.random() * 100000000 + 10000000).toString();
-			var scope = "private";
-			var task = plus.uploader.createUpload("http://upload.qiniu.com/", {
-					method: "POST"
-				},
-				/**
-				 * 上传任务完成的监听
-				 * @param {Object} upload 上传任务对象
-				 * @param {Object} status 上传结果状态码，HTTP传输协议状态码，如果未获取传输状态则其值则为0，如上传成功其值通常为200。
-				 */
-				function(upload, status) {
-					uploadCompletedCallBack(upload, status);
-				}
-			);
-			task.addData("key", QNFileName);
-			//task.addData("scope", scope + ':' + type);
-			task.addData("token", QNUptoken);
-			task.addFile(fPath, {
-				"key": "file",
-				"name": "file"
-			});
-			//上传状态变化的监听
-			task.addEventListener("statechanged",
-				/**
-				 * 上传状态变化的监听
-				 * @param {Object} upload 上传任务对象
-				 * @param {Object} status 上传结果状态码，HTTP传输协议状态码，如果未获取传输状态则其值则为0，如上传成功其值通常为200。
-				 */
-				function(upload, status) {
-					onStateChangedCallBack(upload, status);
-				}, false);
-			//console.log('upload2:' + fPath + '|' + type + "|" + QNUptoken);
-			successCallBack(task);
-			//task.start();
-		}
+		//console.log('upload:' + fPath);
+		var uid = Math.floor(Math.random() * 100000000 + 10000000).toString();
+		var scope = "private";
+		var task = plus.uploader.createUpload("http://upload.qiniu.com/", {
+				method: "POST"
+			},
+			/**
+			 * 上传任务完成的监听
+			 * @param {Object} upload 上传任务对象
+			 * @param {Object} status 上传结果状态码，HTTP传输协议状态码，如果未获取传输状态则其值则为0，如上传成功其值通常为200。
+			 */
+			function(upload, status) {
+				uploadCompletedCallBack(upload, status);
+			}
+		);
+		task.addData("key", QNFileName);
+		//task.addData("scope", scope + ':' + type);
+		task.addData("token", QNUptoken);
+		task.addFile(fPath, {
+			"key": "file",
+			"name": "file"
+		});
+		//上传状态变化的监听
+		task.addEventListener("statechanged",
+			/**
+			 * 上传状态变化的监听
+			 * @param {Object} upload 上传任务对象
+			 * @param {Object} status 上传结果状态码，HTTP传输协议状态码，如果未获取传输状态则其值则为0，如上传成功其值通常为200。
+			 */
+			function(upload, status) {
+				onStateChangedCallBack(upload, status);
+			}, false);
+		//console.log('upload2:' + fPath + '|' + type + "|" + QNUptoken);
+		successCallBack(task);
+		//task.start();
+	}
 	/**
 	 * 
 	 * @param {Object} path 要上传文件的目标地址
@@ -240,37 +300,37 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} QNUptoken 上传token
 	 * @param {Object} callback 回调函数
 	 */
-	mod.uploadFile = function(path, fileName,QNUptoken, callback) {
-			//console.log('upload:' + fPath);
-			var task = plus.uploader.createUpload("http://upload.qiniu.com/", {
-					method: "POST"
-				},
-				/**
-				 * 上传任务完成的监听
-				 * @param {Object} upload 上传任务对象
-				 * @param {Object} status 上传结果状态码，HTTP传输协议状态码，如果未获取传输状态则其值则为0，如上传成功其值通常为200。
-				 */
-				function(upload, status) {
-					 callback(upload, status);
-				}
-			);
-			task.addData("key", path);
-			//task.addData("scope", scope + ':' + type);
-			task.addData("token", QNUptoken);
-			task.addFile(fileName, {
-				"key": "file",
-				"name": "file"
-			});
-			//上传状态变化的监听
-			task.addEventListener("statechanged", onStateChanged, false);
-			task.start();
-		}
-		// 监听上传任务状态
+	mod.uploadFile = function(path, fileName, QNUptoken, callback) {
+		//console.log('upload:' + fPath);
+		var task = plus.uploader.createUpload("http://upload.qiniu.com/", {
+				method: "POST"
+			},
+			/**
+			 * 上传任务完成的监听
+			 * @param {Object} upload 上传任务对象
+			 * @param {Object} status 上传结果状态码，HTTP传输协议状态码，如果未获取传输状态则其值则为0，如上传成功其值通常为200。
+			 */
+			function(upload, status) {
+				callback(upload, status);
+			}
+		);
+		task.addData("key", path);
+		//task.addData("scope", scope + ':' + type);
+		task.addData("token", QNUptoken);
+		task.addFile(fileName, {
+			"key": "file",
+			"name": "file"
+		});
+		//上传状态变化的监听
+		task.addEventListener("statechanged", onStateChanged, false);
+		task.start();
+	}
+	// 监听上传任务状态
 	function onStateChanged(upload, status) {
 		console.log('mui上传状态：' + upload.state)
 		if(upload.state == 4 && status == 200) {
 			// 上传完成
-//			console.log("Upload success: " + upload.getFileName());
+			//			console.log("Upload success: " + upload.getFileName());
 		}
 	}
 

@@ -51,6 +51,8 @@
 
 .icon-re:before { content: "\e672"; }
 
+.icon-dianzan:before { content: "\e63c"; }
+
 .icon-shezhi1:before { content: "\e631"; }
 
 .icon-group:before { content: "\e753"; }
@@ -126,6 +128,8 @@
 .icon-wenda1:before { content: "\e66d"; }
 
 .icon-qita11:before { content: "\e662"; }
+
+.icon-quxiaozan:before { content: "\e65f"; }
 
 .icon-allfolder:before { content: "\e66a"; }
 
@@ -225,8 +229,7 @@
 
 .icon-shipinlei-xunhuanguiji:before { content: "\e634"; }
 
-.icon-quxiaozan:before { content: "\e637"; }
-
 .icon-jiaxiabiao:before { content: "\e639"; }
 
 .icon-banxiabiao:before { content: "\e638"; }
+

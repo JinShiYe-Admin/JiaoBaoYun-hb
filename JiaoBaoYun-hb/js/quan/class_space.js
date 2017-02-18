@@ -241,7 +241,7 @@ var setListener = function(userId) {
 		if(jQuery(this).hasClass('isNotLike')) {
 			zan.isLike = false;
 			zan.innerText = '点赞';
-			zan.className="mui-icon iconfont icon-support";
+			zan.className="mui-icon iconfont icon-dianzan";
 		} else { //已点赞
 			zan.isLike = true;
 			zan.innerText = '取消点赞';

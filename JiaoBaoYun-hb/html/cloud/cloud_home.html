@@ -123,7 +123,7 @@
 	</head>
 
 	<body>
-		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" style="visibility: hidden;">
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" style="visibility: ;">
 			<div class="mui-scroll">
 				<!--存储-->
 				<div id="cloudstorage" class="cloud-item">
@@ -131,12 +131,13 @@
 						存<br/>储
 					</div>
 					<div class="cloud-item-right">
-						<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div id="cloudstorage_0_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 							<div id="cloudstorage_0" class="mui-scroll">
 							</div>
 						</div>
-						<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-							<div id="cloudstorage_1" class="mui-scroll"></div>
+						<div id="cloudstorage_1_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+							<div id="cloudstorage_1" class="mui-scroll">
+							</div>
 						</div>
 					</div>
 				</div>
@@ -146,10 +147,10 @@
 						家<br />校<br />互<br />动
 					</div>
 					<div class="cloud-item-right">
-						<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div id="cloudrecord_0_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 							<div id="cloudrecord_0" class="mui-scroll"></div>
 						</div>
-						<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div id="cloudrecord_1_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 							<div id="cloudrecord_1" class="mui-scroll"></div>
 						</div>
 					</div>
@@ -271,21 +272,6 @@
 
 				//重新登录或者自动登录后获取的信息
 				window.addEventListener('infoChanged', function() {
-					mui(".mui-scroll-wrapper").scroll({
-						scrollY: true, //是否竖向滚动
-						scrollX: false, //是否横向滚动
-						startX: 0, //初始化时滚动至x
-						startY: 0, //初始化时滚动至y
-						indicators: true, //是否显示滚动条
-						deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
-						bounce: true //是否启用回弹
-					});
-					//文件存储数组
-					fileArray = [];
-					//获取所有的群
-					datasource = [];
-					//获取学生列表
-					topStudentArr = [];
 					changeData();
 					events.fireToPageNone('storage_upload.html', 'createFolder'); //在程序中创建utid的文件夹和对应的上传下载文件夹
 				});
@@ -304,11 +290,30 @@
 					changeCloudData();
 				});
 
+				//创建群的监听
 				window.addEventListener('getGroupList', function() {
 					//获取所有的群
 					datasource = [];
 					//获取班级
 					getGroupList();
+				});
+
+				//退出登录后，清理云盘主页界面和数据
+				window.addEventListener('cleanCloudHome', function() {
+					//文件存储数组
+					fileArray = [];
+					//获取所有的群
+					datasource = [];
+					//获取学生列表
+					topStudentArr = [];
+					//清理界面
+					var id = ['cloudstorage_0', 'cloudstorage_1', 'cloudrecord_0', 'cloudrecord_1'];
+					for(var i = 0; i < id.length; i++) {
+						var element = document.getElementById(id[i]);
+						element.innerHTML = '';
+						var scroll = mui('#' + id[i] + '_sw').scroll();
+						scroll.scrollTo(0, 0, 100); //100毫秒滚动到顶
+					}
 				});
 
 				//-----------设置数据end-----------------
@@ -366,7 +371,7 @@
 									fsize: '0' //	文件大小，文件用
 								};
 								// 等待的对话框
-								var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+								var wd = events.showWaiting();
 								postDataPro_PostDiFiA(comData, wd, function(data) {
 									wd.close();
 									console.log('27.postDataPro_PostDiFiA:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
@@ -535,7 +540,7 @@
 						vvl: personalUTID //查询的各项，对应人的utid，可以是查询的任何人
 					};
 					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var wd = events.showWaiting();
 					//9.获取用户群
 					postDataPro_PostGList(comData, wd, function(data) {
 						wd.close();
@@ -599,7 +604,7 @@
 						vvl: '0' //	节点ID，顶层为0
 					};
 					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var wd = events.showWaiting();
 					postDataPro_PostDiFi(comData, wd, function(data) {
 						document.getElementById("cloudstorage_1").innerHTML = '';;
 						addStorageIcon();
@@ -648,7 +653,7 @@
 					};
 					//返回学生姓名数组
 					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var wd = events.showWaiting();
 					postDataPro_getStudentName(comData, wd, function(data) {
 						console.log('73.云档案）按家长获取学生档案姓名postDataPro_getStudentName:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						document.getElementById("cloudstorage_0").innerHTML = '';
@@ -918,7 +923,7 @@
 					};
 					//返回值model：model_userDataInfo
 					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var wd = events.showWaiting();
 					//24.通过用户表ID获取用户关联的学生
 					postDataPro_PostUstu(comData, wd, function(data) {
 						//清除学生区域
@@ -948,7 +953,7 @@
 						vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
 					};
 					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var wd = events.showWaiting();
 					//	获取用户群
 					postDataPro_PostGList(comData, wd, function(data) {
 						//清除班级区域
