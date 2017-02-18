@@ -36,8 +36,8 @@ var answerFlag = 0;
 var askModel;
 
 mui.plusReady(function() {
-	window.addEventListener('answerAdded',function(){
-			//获取的第几页回复
+	window.addEventListener('answerAdded', function() {
+		//获取的第几页回复
 		answerIndex = 1;
 		//答案回复的总页数
 		answerPageCount = 0;
@@ -183,26 +183,72 @@ function requestAskDetail() {
 			askModel = data.RspData;
 			answerPageCount = data.RspData.TotalPage; //回答总页数
 			answerIndex++;
-			//刷新0，还是加载更多1
-			if(answerFlag == 0) {
-				mui('#refreshContainer').pullRefresh().endPulldownToRefresh(); //下拉刷新结束
-				mui('#refreshContainer').pullRefresh().enablePullupToRefresh(); //启用上拉刷新
-				answerArray = data.RspData.Data;
-				//清理原界面
-				cleanQuestion();
-				cleanAnswer();
-				//生成新界面
-				addQuestion(data.RspData);
-				if(data.RspData.Data.length == 0) { //没有人回答
-					mui.toast('没有人回答该提问');
-					mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
-				}
-			} else {
-				answerArray = answerArray.concat(data.RspData.Data);
-				mui('#refreshContainer').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
+
+			//回调中的临时数据
+			var tempRspData = data.RspData.Data;
+			//获取当前回调的个人信息，主要是头像、昵称
+			var tempArray = [];
+			//先遍历回调数组，获取
+			for(var item in tempRspData) {
+				//当前循环的model
+				var tempModel0 = tempRspData[item];
+				//将当前model中id塞到数组
+				tempArray.push(tempModel0.AnswerMan);
 			}
-			//刷新界面
-			addAnswer(data.RspData.Data);
+			//给数组去重
+			tempArray = arrayDupRemoval(tempArray);
+			//发送获取用户资料申请
+			var tempData = {
+				vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
+				vtp: 'g' //查询类型,p(个人)g(id串)
+			}
+			console.log('tempData:' + JSON.stringify(tempData));
+			//21.通过用户ID获取用户资料
+			postDataPro_PostUinf(tempData, wd, function(data1) {
+				wd.close();
+				console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+				if(data1.RspCode == 0) {
+					//循环当前的个人信息返回值数组
+					for(var i in data1.RspData) {
+						//当前model
+						var tempModel = data1.RspData[i];
+						//更新头像
+						tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
+						//循环回调数组
+						for(var item in tempRspData) {
+							//当前循环的model
+							var tempModel0 = tempRspData[item];
+							//对比id是否一致
+							if(tempModel0.AnswerMan == tempModel.utid) {
+								//合并
+								tempModel0 = $.extend(tempModel0, tempModel);
+							}
+						}
+					}
+				}
+				console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+				//刷新0，还是加载更多1
+				if(answerFlag == 0) {
+					mui('#refreshContainer').pullRefresh().endPulldownToRefresh(); //下拉刷新结束
+					mui('#refreshContainer').pullRefresh().enablePullupToRefresh(); //启用上拉刷新
+					answerArray = tempRspData;
+					//清理原界面
+					cleanQuestion();
+					cleanAnswer();
+					//生成新界面
+					addQuestion(data.RspData);
+					if(tempRspData.length == 0) { //没有人回答
+						mui.toast('没有人回答该提问');
+						mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+					}
+				} else {
+					answerArray = answerArray.concat(tempRspData);
+					mui('#refreshContainer').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
+				}
+				//刷新界面
+				addAnswer(tempRspData);
+			});
+
 		} else {
 			mui.toast(data.RspTxt);
 		}
@@ -313,7 +359,7 @@ function answerList(data) {
 	li.id = 'answer_' + data.AnswerId;
 	li.innerHTML = '' +
 		'<img class="mui-media-object mui-pull-left" src="' + updateHeadImg('', 2) + '">' +
-		'<div class="mui-ellipsis">' + data.AnswerMan + '</div>' +
+		'<div class="mui-ellipsis">' + data.unick + '</div>' +
 		'<div id="answer_content_' + data.AnswerId + '" class="ellipsis-3"></div>' +
 		'<div class="answer-info">' + data.IsLikeNum + '赞同·' + data.CommentNum + '评论·' + data.AnswerTime + '</div>';
 	document.getElementById("answer_bottom").appendChild(li);
