@@ -46,34 +46,14 @@ mui.plusReady(function() {
 	events.addTap('getAnswer', function() {
 		camera.getPic(camera.getCamera(), function(picPath) {
 			plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			var MainSpace = storageKeyName.QNPUBSPACE;
-			var saveSpace;
-			var thumbSpace;
 			if(role == 2) {
 				saveSpace = storageKeyName.TEAPICBUCKET;
-				thumbSpace = storageKeyName.TEATHUMBPICBUCKET;
 			} else {
 				saveSpace = storageKeyName.STUPICBUCKET;
-				thumbSpace = storageKeyName.STUTHUMBPICBUCKET;
 			}
-			var QNFileName = events.getFileNameByPath(picPath);
-			var thumbBase64=Qiniu.URLSafeBase64Encode(MainSpace + ":" + thumbSpace + QNFileName);
-			var ops = "imageView2/2/w/200/h/200/format/png|saveas/" +thumbBase64;
-			var param = {
-				Bucket: MainSpace,
-				Key: saveSpace + QNFileName,
-				Pops: ops,
-				NotifyUrl: ''
-			}
-			console.log("参数数据：" + JSON.stringify(param))
-			var key = 'zy309309!';
-			var data = {
-				AppID: "3",
-				Param: encryptByDES(key, JSON.stringify(param))
-			}
-			console.log("加密后的信息：" + encryptByDES(key, JSON.stringify(param)));
+			var data=CloudFileUtil.getSingleUploadDataOptions(picPath,3,200,0,saveSpace);
 			var img;
-			CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data, function(datas) {
+			CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
 				console.log("获取的数据：" + JSON.stringify(datas));
 				if(datas.Status == 1) {
 					var tokenInfo = datas.Data;
@@ -83,7 +63,7 @@ mui.plusReady(function() {
 							console.log(JSON.stringify(uploadData));
 							img={
 								url:tokenInfo.Domain+tokenInfo.Key,
-								thumb:tokenInfo.OtherKey[thumbBase64],
+								thumb:tokenInfo.OtherKey[data.thumbKey],
 								type:1
 							}
 							plus.nativeUI.closeWaiting();

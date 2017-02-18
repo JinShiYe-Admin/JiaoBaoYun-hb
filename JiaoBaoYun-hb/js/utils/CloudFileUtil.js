@@ -164,7 +164,7 @@ var CloudFileUtil = (function($, mod) {
 		});
 	}
 	/**
-	 * 需要先加载qiniu.js,cryption.js,events.js
+	 * 需要先加载qiniu.js,cryption.js,events.js,使用实例在publish-answer.js
 	 * @param {Object} picPath 图片本地路径
 	 * @param {Object} appId AppID
 	 * @param {Object} maxSize 最大长宽
@@ -173,7 +173,7 @@ var CloudFileUtil = (function($, mod) {
 	 * @return {Object} data data.options为获取token的参数之一，data.thumbKey为获取token后获取缩略图地址的key值
 	 */
 	mod.getSingleUploadDataOptions = function(picPath, appId, maxSize, spaceType, uploadSpace) {
-		var data=null;
+		var data={};
 		var desKey;
 		switch(appId) {
 			case 0:
@@ -208,7 +208,7 @@ var CloudFileUtil = (function($, mod) {
 		var thumbSpace = saveSpace + 'thumb/';
 		var QNFileName = events.getFileNameByPath(picPath);
 		data.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
-		var ops = "imageView2/2/w/" + maxSize "/h/" + maxSize + "/format/png|saveas/" + data.thumbKey;
+		var ops = "imageView2/2/w/" + maxSize+ "/h/" + maxSize + "/format/png|saveas/" + data.thumbKey;
 		var param = {
 			Bucket: mainSpace,
 			Key: saveSpace + QNFileName,
@@ -218,10 +218,10 @@ var CloudFileUtil = (function($, mod) {
 		console.log("参数数据：" + JSON.stringify(param))
 		data.options = {
 			AppID: appId,
-			Param: encryptByDES(deskey, JSON.stringify(param))
+			Param: encryptByDES(desKey, JSON.stringify(param))
 		}
-		console.log("加密后的信息：" + encryptByDES(deskey, JSON.stringify(param)));
-		return data
+		console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
+		return data;
 	}
 	/**
 	 * 
