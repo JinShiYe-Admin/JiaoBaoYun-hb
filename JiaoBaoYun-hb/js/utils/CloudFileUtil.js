@@ -220,7 +220,7 @@ var CloudFileUtil = (function($, mod) {
 			AppID: appId,
 			Param: encryptByDES(desKey, JSON.stringify(param))
 		}
-		console.log("加密后的信息：" + encryptByDES(deskey, JSON.stringify(param)));
+		console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
 		return data;
 	}
 	/**
