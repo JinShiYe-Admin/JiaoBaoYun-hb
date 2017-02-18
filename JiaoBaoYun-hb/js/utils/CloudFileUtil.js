@@ -164,7 +164,7 @@ var CloudFileUtil = (function($, mod) {
 		});
 	}
 	/**
-	 * 需要先加载qiniu.js,cryption.js,events.js
+	 * 需要先加载qiniu.js,cryption.js,events.js,使用实例在publish-answer.js
 	 * @param {Object} picPath 图片本地路径
 	 * @param {Object} appId AppID
 	 * @param {Object} maxSize 最大长宽
@@ -208,7 +208,7 @@ var CloudFileUtil = (function($, mod) {
 		var thumbSpace = saveSpace + 'thumb/';
 		var QNFileName = events.getFileNameByPath(picPath);
 		data.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
-		var ops = "imageView2/2/w/" + maxSize "/h/" + maxSize + "/format/png|saveas/" + data.thumbKey;
+		var ops = "imageView2/2/w/" + maxSize+ "/h/" + maxSize + "/format/png|saveas/" + data.thumbKey;
 		var param = {
 			Bucket: mainSpace,
 			Key: saveSpace + QNFileName,
@@ -221,7 +221,7 @@ var CloudFileUtil = (function($, mod) {
 			Param: encryptByDES(deskey, JSON.stringify(param))
 		}
 		console.log("加密后的信息：" + encryptByDES(deskey, JSON.stringify(param)));
-		return data
+		return data;
 	}
 	/**
 	 * 
