@@ -39,6 +39,9 @@ mui.plusReady(function() {
 		getStuName();
 
 	})
+	mui.back = function() {
+		plus.webview.getWebviewById('homework-tea.html').show();
+	}
 });
 //重置数据
 function resetData() {
