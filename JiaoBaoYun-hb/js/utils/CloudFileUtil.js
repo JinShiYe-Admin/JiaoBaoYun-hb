@@ -173,7 +173,7 @@ var CloudFileUtil = (function($, mod) {
 	 * @return {Object} data data.options为获取token的参数之一，data.thumbKey为获取token后获取缩略图地址的key值
 	 */
 	mod.getSingleUploadDataOptions = function(picPath, appId, maxSize, spaceType, uploadSpace) {
-		var data=null;
+		var data={};
 		var desKey;
 		switch(appId) {
 			case 0:
@@ -218,7 +218,7 @@ var CloudFileUtil = (function($, mod) {
 		console.log("参数数据：" + JSON.stringify(param))
 		data.options = {
 			AppID: appId,
-			Param: encryptByDES(deskey, JSON.stringify(param))
+			Param: encryptByDES(desKey, JSON.stringify(param))
 		}
 		console.log("加密后的信息：" + encryptByDES(deskey, JSON.stringify(param)));
 		return data;
