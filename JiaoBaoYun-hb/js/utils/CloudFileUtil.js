@@ -217,7 +217,7 @@ var CloudFileUtil = (function($, mod) {
 		}
 		console.log("参数数据：" + JSON.stringify(param))
 		data.options = {
-			AppID: "3",
+			AppID: appId,
 			Param: encryptByDES(deskey, JSON.stringify(param))
 		}
 		console.log("加密后的信息：" + encryptByDES(deskey, JSON.stringify(param)));
