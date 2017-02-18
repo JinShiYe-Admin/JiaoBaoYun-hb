@@ -52,6 +52,8 @@
 				window.addEventListener('homeworkInfo', function(e) {
 					personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 					homeworkModel = e.detail.data;
+					var textView = document.getElementById('input-content');
+					textView.value = '';
 					console.log('学生做作业界面从上级界面获取的做作业数据：' + JSON.stringify(homeworkModel));
 					flag = 0;
 				})
