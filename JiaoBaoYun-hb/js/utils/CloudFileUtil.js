@@ -210,7 +210,7 @@ var CloudFileUtil = (function($, mod) {
 		data.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
 		var ops = "imageView2/2/w/" + maxSize "/h/" + maxSize + "/format/png|saveas/" + data.thumbKey;
 		var param = {
-			Bucket: MainSpace,
+			Bucket: mainSpace,
 			Key: saveSpace + QNFileName,
 			Pops: ops,
 			NotifyUrl: ''
