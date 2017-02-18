@@ -124,7 +124,7 @@ var addListener = function() {
 	});
 
 	events.addTap('person-gData', function() {
-		if(pInfo.mstype==1&&pInfo.stuid){
+		if(pInfo.isMaster&&pInfo.stuid){
 			events.openNewWindowWithData('../mine/qun_data_details.html', pInfo);
 		}else{
 			mui.toast('不是群主，或无资料！');

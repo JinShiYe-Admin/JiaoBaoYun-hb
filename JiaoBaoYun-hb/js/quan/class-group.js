@@ -61,13 +61,13 @@ mui.plusReady(function() {
 	})
 		//群組頭像點擊事件
 	mui('#gride1').on('tap', '.mui-table-view-cell', function() {
-		events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
+		events.fireToPageWithData('group-pInfo.html', 'postPInfo', jQuery.extend({},this.info,{isMaster:isMaster}) );
 	})
 	mui('#gride2').on('tap', '.mui-table-view-cell', function() {
-		events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
+		events.fireToPageWithData('group-pInfo.html', 'postPInfo', jQuery.extend({},this.info,{isMaster:isMaster}));
 	})
 	mui('#gride3').on('tap', '.mui-table-view-cell', function() {
-			events.fireToPageWithData('group-pInfo.html', 'postPInfo', this.info);
+			events.fireToPageWithData('group-pInfo.html', 'postPInfo', jQuery.extend({},this.info,{isMaster:isMaster}));
 	})
 })
 var insertMasterInfo = function(cell) {

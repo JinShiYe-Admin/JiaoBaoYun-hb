@@ -380,7 +380,7 @@
 
 					//返回值model：model_groupStus
 					//等待的对话框
-					var wd=events.showWaiting();
+					var wd = events.showWaiting();
 					postDataPro_PostGUInf(comData2, wd, function(data) {
 						console.log('16.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
@@ -417,7 +417,7 @@
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3';
 					var html1 = '<div id="date_' + data.stuid + '" data-stuid="' + data.stuid + '" class="keep-box-shadow-border keep-member">'
-					var html2 = '<img src="' + updateHeadImg(data.stuimg,2) + '" />';
+					var html2 = '<img src="' + updateHeadImg(data.stuimg, 2) + '" />';
 					var html3 = '<p id="stuname_' + data.stuid + '" class="mui-ellipsis"></p></div>';
 					li.innerHTML = html1 + html2 + html3;
 					document.getElementById("row_data").appendChild(li);
@@ -469,9 +469,17 @@
 							chooseInfoElementId = ''; //记录选择的资料元素Id
 							mui.toast('已发送邀请');
 						} else if(data.RspCode == 9) {
-							mui.toast('用户已经被邀请');
+							if(data.RspTxt == '已有相同记录') {
+								mui.toast('已发送邀请成为:' + type);
+							} else if(data.RspTxt == '违反身份互斥规则') {
+								if(type == '家长' || type == '老师') {
+									mui.toast('已发送邀请成为:学生');
+								} else if(type == '学生') {
+									mui.toast('已发送邀请成为:家长或老师');
+								}
+							}
 						} else {
-							mui.toast('邀请失败');
+							mui.toast('邀请失败' + data.RspTxt);
 							console.log('邀请用户入群:' + data.RspTxt);
 						}
 					});

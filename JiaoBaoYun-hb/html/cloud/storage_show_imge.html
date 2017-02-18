@@ -19,8 +19,8 @@
 		<script type="text/javascript" src="../../js/utils/TouchMove.js"></script>
 	</head>
 
-	<body>
-		<header class="mui-bar mui-bar-nav">
+	<body id="body">
+		<header id="header" class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">图片</h1>
 		</header>
@@ -32,9 +32,10 @@
 					doubletap: true
 				},
 			});
-			var allImgeData = [];//记录所有的图片id和token
+			var allImgeData = []; //记录所有的图片id和token
 			var content = null;
-
+			var header = document.getElementById("header");
+			header.style.visibility = 'hidden';
 			mui.plusReady(function() {
 				var wd = plus.nativeUI.showWaiting(window.storageKeyName.WAITING);
 				document.querySelector(".mui-content").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
@@ -73,6 +74,16 @@
 					plus.webview.hide(main, 'pop-out');
 				}
 
+				document.addEventListener('tap', function() {
+					console.log(header.style.visibility);
+					var visibility = header.style.visibility;
+					if(visibility == 'hidden') {
+						header.style.visibility = 'visible';
+					} else {
+						header.style.visibility = 'hidden';
+					}
+				});
+
 			});
 
 			/**
@@ -82,8 +93,8 @@
 				CloudFileUtil.getQNDownToken(window.storageKeyName.QNGETDOWNTOKENFILE + fpath, function(data) {
 					console.log('七牛下载token:' + data);
 					allImgeData.push({
-						id: fpath,//文件路径
-						token: data//文件对应的token
+						id: fpath, //文件路径
+						token: data //文件对应的token
 					});
 					showImge(fpath, data);
 				}, function(xhr, type, errorThrown) {
@@ -100,7 +111,7 @@
 			 */
 			function showImge(id, path) {
 				setTimeout(function() {
-					document.getElementById("content").innerHTML = '<img id="' + id + '" style="position: absolute;width: 80%;visibility: hidden;" src="' + path + '"/>';
+					document.getElementById("content").innerHTML = '<img id="' + id + '" style="position: absolute;width: 100%;visibility: hidden;" src="' + path + '"/>';
 					document.getElementById(id).onload = function() {
 						document.getElementById(id).style.visibility = 'visible';
 						TouchMove.addTouchListener(document.getElementById(id));
