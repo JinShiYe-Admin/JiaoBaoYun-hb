@@ -45,9 +45,6 @@ mui.plusReady(function() {
 	 */
 	events.addTap('getAnswer', function() {
 		camera.getPic(camera.getCamera(), function(picPath) {
-			//				files.getFileByPath(picPath, function(fileStream) {
-			//					uploadFile(picPath, fileStream);
-			//				})
 			plus.nativeUI.showWaiting(storageKeyName.WAITING);
 			var MainSpace = storageKeyName.QNPUBSPACE;
 			var saveSpace;
@@ -100,11 +97,6 @@ mui.plusReady(function() {
 				plus.nativeUI.closeWaiting();
 			});
 		})
-		//			gallery.getSinglePic(function(picPath) {
-		//				files.getFileByPath(picPath, function(fileStream) {
-		//					uploadFile(picPath, fileStream);
-		//				});
-		//			});
 	});
 	/**
 	 * 查看结果按钮点击事件
