@@ -34,12 +34,17 @@
 					<a class="mui-icon iconfont icon-tuku"></a>
 				</div>
 			</div>
+			<div id="pictures" class="img-container temWork-teaHint"></div>
 		</div>
 	</body>
 	<script src="../../js/mui.min.js"></script>
 
 	<script src="../../js/utils/events.js"></script>
+	<script src="../../js/qiniu/qiniu.js"></script>
 	<script src="../../js/utils/camera.js"></script>
+	<script type="text/javascript" src="../../js/utils/compress.js"></script>
+	<script src="../../js/utils/cryption.js"></script>
+	<script src="../../js/utils/CloudFileUtil.js"></script>
 	<!--<script src="../../js/utils/files.js"></script>
 	<script src="../../js/utils/ASFiles.js"></script>-->
 	<script src="../../js/publicProtocol.js"></script>
@@ -48,31 +53,67 @@
 	</script>
 	<script>
 		var personIds = [];
+		var imgs;
 		mui.plusReady(function() {
-//			document.querySelector('.mui-content').style.marginTop=(localStorage.getItem('StatusHeightNo') * 1 + 45 + height) + 'px';
+			//			document.querySelector('.mui-content').styl e.marginTop=(localStorage.getItem('StatusHeightNo') * 1 + 45 + height) + 'px';
 			var groupInfo;
 			//界面监听传值
 			window.addEventListener('postGroupInfo', function(e) {
+				CloudFileUtil.files = [];
 				groupInfo = e.detail.data;
 				console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
 				getGroupPersons(groupInfo.classId);
 			});
+			/**
+			 * 加载监听
+			 */
+			CloudFileUtil.setDelPicListener();
 			events.addTap('take_pic', function() {
-//				camera.getPic(camera.getCamera(), function(path) {
+//				if(CloudFileUtil.files.length < 9) {
+//					camera.getPic(camera.getCamera(), function(picPath) {
+//						plus.nativeUI.showWaiting(storageKeyName.WAITING);
+//						var saveSpace = storageKeyName.CLASSSPACE;
+//						var data = CloudFileUtil.getSingleUploadDataOptions(picPath, 6, 200, 0, saveSpace);
+//						var img;
+//						CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+//							console.log("获取的数据：" + JSON.stringify(datas));
+//							if(datas.Status == 1) {
+//								var tokenInfo = datas.Data;
+//								//压缩照片
+//								compress.compressPIC(picPath, function(event) {
+//									CloudFileUtil.uploadFile(tokenInfo.Key, event.target, tokenInfo.Token, function(uploadData, status) {
+//										console.log(JSON.stringify(uploadData));
+//										img = {
+//											url: tokenInfo.Domain + tokenInfo.Key,
+//											thumb: tokenInfo.OtherKey[data.thumbKey],
+//											type: 1
+//										}
+//										plus.nativeUI.closeWaiting();
+//										CloudFileUtil.setPic(img);
+//									});
+//								})
 //
-//				});
+//							}
+//						}, function(xhr, type, errorThrown) {
+//							console.log("错误类型：" + type + errorThrown);
+//							plus.nativeUI.closeWaiting();
+//						});
+//					})
+//				} else {
+//					mui.toast('上传图片附件不得大于9张！');
+//				}
 				mui.toast('功能暂未开放！');
 			});
 			events.addTap('take_camero', function() {
-//				camera.getVideo(camera.getCamera(), function(path) {
-//
-//				});
-					mui.toast('功能暂未开放！');
+				//				camera.getVideo(camera.getCamera(), function(path) {
+				//
+				//				});
+				mui.toast('功能暂未开放！');
 			});
 			events.addTap('get_gallery', function() {
-//				gallery.getMultiplePic(function(paths) {
-//
-//				});
+				//				gallery.getMultiplePic(function(paths) {
+				//
+				//				});
 				mui.toast('功能暂未开放！');
 			});
 			//发布按钮
@@ -87,12 +128,13 @@
 				} else {
 					tempText = replaceAllBL(tempText);
 				}
+				var TAs=getTypeAddress();
 				var postData = new Object();
 				postData.classId = groupInfo.classId;
 				postData.msgContent = tempText;
-				postData.encType = 0;
-				postData.encAddr = '';
-				postData.encImg = '';
+				postData.encType = TAs.encType;
+				postData.encAddr = TAs.encAddr;
+				postData.encImg = TAs.encImg;
 				postData.teacherId = parseInt(groupInfo.userId);
 				postData.userIds = arrayToStr(personIds);
 				console.log('传值：' + JSON.stringify(postData));
@@ -131,6 +173,35 @@
 				}
 
 			})
+		}
+		/**
+		 * encType: '',//附件类型,1图片2音视频3仅文字
+//			encAddr: '',//附件地址
+//			encImg: '',//附件缩略图地址
+		 */
+		var getTypeAddress=function(){
+			var TAs={};
+			var encType;
+			var encAddrs=[];
+			var encImgs=[];
+			var theFile;
+			if(CloudFileUtil.files.length>0){
+				for(var i in CloudFileUtil.files){
+				theFile=CloudFileUtil.files[i];
+				if(i==0){
+					TAs.encType=theFile.type;
+				}
+				encAddrs.push(theFile.url);
+				encImgs.push(theFile.thumb);
+			}
+			TAs.encAddr=encAddrs.join('|');
+			TAs.encImg=encImgs.join('|');
+			}else{
+				TAs.encType=0;
+				TAs.encAddr='';
+				TAs.encImg='';
+			}
+			return TAs;
 		}
 	</script>
 
