@@ -119,6 +119,13 @@
 				border: none !important;
 				top: 0px;
 			}
+
+			.mui-popup-input input {
+				/*popup 输入框*/
+				height: 34px;
+				border-color: #E4E4E4;
+				margin-top: 5px;
+			}
 		</style>
 	</head>
 
@@ -392,7 +399,8 @@
 							//点击取消
 						}
 					}, 'div');
-					document.querySelector('.mui-popup-input input').type = 'text';
+					var input = document.querySelector('.mui-popup-input input');
+					input.type = 'text';
 					document.querySelector('.mui-popup-input input').addEventListener('input', function() {
 						if(this.value.length > 20) {
 							this.value = this.value.slice(0, 20);
@@ -501,12 +509,23 @@
 
 				//-----------设置监听end---------------
 
+				//重置滑动组件
+				function resetScroll() {
+					//清理界面
+					var id = ['cloudstorage_0', 'cloudstorage_1', 'cloudrecord_0', 'cloudrecord_1'];
+					for(var i = 0; i < id.length; i++) {
+						var scroll = mui('#' + id[i] + '_sw').scroll();
+						scroll.scrollTo(0, 0, 100); //100毫秒滚动到顶
+					}
+				}
+
 				/**
 				 * 修改云盘的文件，档案数据
 				 */
 				function changeData() {
 					document.getElementById("cloudstorage_0").innerHTML = '';
 					document.getElementById("cloudstorage_1").innerHTML = '';
+					resetScroll();
 					//26.用户云盘顶层文件及文件夹获取
 					postFirstFile();
 					//73.（云档案）按家长获取学生档案姓名
@@ -654,6 +673,7 @@
 					//返回学生姓名数组
 					// 等待的对话框
 					var wd = events.showWaiting();
+					addcloudstorage_0_0(); //手机通讯录，手机图库
 					postDataPro_getStudentName(comData, wd, function(data) {
 						console.log('73.云档案）按家长获取学生档案姓名postDataPro_getStudentName:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						document.getElementById("cloudstorage_0").innerHTML = '';
@@ -924,6 +944,7 @@
 					//返回值model：model_userDataInfo
 					// 等待的对话框
 					var wd = events.showWaiting();
+					addcloudrecord_0_0();
 					//24.通过用户表ID获取用户关联的学生
 					postDataPro_PostUstu(comData, wd, function(data) {
 						//清除学生区域
