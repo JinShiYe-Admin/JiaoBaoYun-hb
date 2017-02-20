@@ -73,9 +73,10 @@ var dynamiclistitem = (function($, mod) {
 		var ImageUrlList = data[1]; //图片路径数组
 		var ImageNum = ImageUrlList.length; //图片总数量
 		var html = '';
-		if(pageFlag!=0){
-			ImageNum=0;
-		}
+		console.log('ImageUrlList='+JSON.stringify(ImageUrlList));
+//		if(pageFlag!=0){
+//			ImageNum=0;
+//		}
 
 		if(ImageNum == 1) { //一张图片时
 			var html1 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-image-div" style="height: ' + SCREEN_WIDTH + 'px;">';
