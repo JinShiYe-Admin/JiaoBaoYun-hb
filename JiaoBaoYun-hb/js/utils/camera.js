@@ -72,7 +72,7 @@ var gallery = (function(mod) {
 			filter: "image"
 		});
 	}
-	mod.getMultiplePic = function(callback) {
+	mod.getMultiplePic = function(maxNo,callback) {
 		// 从相册中选择图片
 		console.log("从相册中选择多张图片:");
 		plus.gallery.pick(function(e) {
@@ -81,11 +81,12 @@ var gallery = (function(mod) {
 		}, function(e) {
 			console.log("取消选择图片");
 		}, {
+			system:false,
 			filter: "image",
 			multiple: true,
-			maximum: 9,
+			maximum: maxNo,
 			onmaxed: function() {
-				plus.nativeUI.alert('最多只能选择九张图片');
+				plus.nativeUI.alert('最多只能选择'+maxNo+'张图片');
 			}
 		});
 	}

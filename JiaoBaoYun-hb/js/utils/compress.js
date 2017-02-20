@@ -5,7 +5,8 @@ var compress = (function(mod) {
 	mod.compressPIC = function(picPath, callback) {
 		var options = {
 			src: picPath, //压缩转换原始图片的路径
-			dst: getSavePath(picPath) //压缩转换目标图片的路径
+			dst: getSavePath(picPath), //压缩转换目标图片的路径
+			overwrite:true
 		}
 		var picType=getPicType(picPath);
 		if(picType) { //宽>=长
@@ -33,6 +34,19 @@ var compress = (function(mod) {
 				console.log('图片压缩失败！' + JSON.stringify(error));
 
 			})
+	}
+	mod.compressPics=function(picPaths){
+		var compressedPaths=[];
+		var compressCount=0;
+		for(var i in picPaths){
+			mod.compressPIC(picPaths[i],function(event){
+				compressCount++;
+				compressedPaths[i]=event.target;
+			})
+		}
+		if(compressCount==picPaths.length){
+			return compressedPaths;
+		}
 	}
 	var getPicType = function(picPath) {
 		var picType;

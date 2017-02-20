@@ -69,40 +69,38 @@
 			 */
 			CloudFileUtil.setDelPicListener();
 			events.addTap('take_pic', function() {
-//				if(CloudFileUtil.files.length < 9) {
-//					camera.getPic(camera.getCamera(), function(picPath) {
-//						plus.nativeUI.showWaiting(storageKeyName.WAITING);
-//						var saveSpace = storageKeyName.CLASSSPACE;
-//						var data = CloudFileUtil.getSingleUploadDataOptions(picPath, 6, 200, 0, saveSpace);
-//						var img;
-//						CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-//							console.log("获取的数据：" + JSON.stringify(datas));
-//							if(datas.Status == 1) {
-//								var tokenInfo = datas.Data;
-//								//压缩照片
-//								compress.compressPIC(picPath, function(event) {
-//									CloudFileUtil.uploadFile(tokenInfo.Key, event.target, tokenInfo.Token, function(uploadData, status) {
-//										console.log(JSON.stringify(uploadData));
-//										img = {
-//											url: tokenInfo.Domain + tokenInfo.Key,
-//											thumb: tokenInfo.OtherKey[data.thumbKey],
-//											type: 1
-//										}
-//										plus.nativeUI.closeWaiting();
-//										CloudFileUtil.setPic(img);
-//									});
-//								})
-//
-//							}
-//						}, function(xhr, type, errorThrown) {
-//							console.log("错误类型：" + type + errorThrown);
-//							plus.nativeUI.closeWaiting();
-//						});
-//					})
-//				} else {
-//					mui.toast('上传图片附件不得大于9张！');
-//				}
-				mui.toast('功能暂未开放！');
+				if(CloudFileUtil.files.length < 9) {
+					camera.getPic(camera.getCamera(), function(picPath) {
+						plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						var saveSpace = storageKeyName.CLASSSPACE;
+						var data = CloudFileUtil.getSingleUploadDataOptions(picPath, 6, 200, 0, saveSpace);
+						CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+							console.log("获取的数据：" + JSON.stringify(datas));
+							if(datas.Status == 1) {
+								var tokenInfo = datas.Data;
+								//压缩照片
+								compress.compressPIC(picPath, function(event) {
+									CloudFileUtil.uploadFile(tokenInfo, event.target, function(uploadData, status) {
+										console.log(JSON.stringify(uploadData));
+										var img = {
+											url: tokenInfo.Domain + tokenInfo.Key,
+											thumb: tokenInfo.OtherKey[data.thumbKey],
+											type: 1
+										}
+										plus.nativeUI.closeWaiting();
+										CloudFileUtil.setPic(img);
+									});
+								})
+
+							}
+						}, function(xhr, type, errorThrown) {
+							console.log("错误类型：" + type + errorThrown);
+							plus.nativeUI.closeWaiting();
+						});
+					})
+				} else {
+					mui.toast('上传图片附件不得大于9张！');
+				}
 			});
 			events.addTap('take_camero', function() {
 				//				camera.getVideo(camera.getCamera(), function(path) {
@@ -111,48 +109,80 @@
 				mui.toast('功能暂未开放！');
 			});
 			events.addTap('get_gallery', function() {
-				//				gallery.getMultiplePic(function(paths) {
-				//
-				//				});
-				mui.toast('功能暂未开放！');
+					var picCount = 0;
+					gallery.getMultiplePic(9-CloudFileUtil.files.length, function(paths) {
+							plus.nativeUI.showWaiting(storageKeyName.UPLOADING);
+							console.log("保存的路径：" + JSON.stringify(paths));
+							var saveSpace = storageKeyName.CLASSSPACE;
+							var data = CloudFileUtil.getMultipleUploadDataOptions(paths, 6, 200, 0, saveSpace);
+							CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+										console.log("传回来的值：" + JSON.stringify(datas))
+										if(datas.Status == 1) {
+											var tokenInfos = datas.Data;
+											//压缩照片
+											var compressedPaths = compress.compressPics(paths);
+											CloudFileUtil.uploadFiles(paths, tokenInfos, function(uploadData, status) {
+													console.log(JSON.stringify(uploadData));
+													//									for(var i in paths){
+													var img = {
+														url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
+														thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
+														type: 1
+													}
+													picCount++;
+													//									CloudFileUtil.files.push(img);
+													CloudFileUtil.setPic(img);
+													if(picCount == paths.length) {
+														plus.nativeUI.closeWaiting();
+													}
+		
+												
+											});
+									}
+								},
+								function(xhr, type, errorThrown) {
+									console.log("错误类型：" + type + errorThrown);
+									plus.nativeUI.closeWaiting();
+								});
+					});
 			});
-			//发布按钮
-			events.addTap('publish', function() {
+		//发布按钮
+		events.addTap('publish', function() {
 
-				//								postDataPro_addClassSpace({classId},)
-				console.log('' + JSON.stringify(groupInfo));
-				var tempText = document.getElementById('input-content').value;
-				if(!tempText || tempText == '') {
-					mui.toast('请输入内容');
-					return;
+			//								postDataPro_addClassSpace({classId},)
+			console.log('' + JSON.stringify(groupInfo));
+			var tempText = document.getElementById('input-content').value;
+			if(!tempText || tempText == '') {
+				mui.toast('请输入内容');
+				return;
+			} else {
+				tempText = replaceAllBL(tempText);
+			}
+			var TAs = getTypeAddress();
+			var postData = new Object();
+			postData.classId = groupInfo.classId;
+			postData.msgContent = tempText;
+			postData.encType = TAs.encType;
+			postData.encAddr = TAs.encAddr;
+			postData.encImg = TAs.encImg;
+			postData.teacherId = parseInt(groupInfo.userId);
+			postData.userIds = arrayToStr(personIds);
+			console.log('传值：' + JSON.stringify(postData));
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
+			postDataPro_addClassSpace(postData, wd, function(data) {
+				wd.close();
+				console.log(JSON.stringify(data));
+				if(data.RspCode = '0000') {
+					mui.toast('发布成功！');
+					document.getElementById('input-content').value = '';
+					events.fireToPageNone('classSpace-sub.html', 'infoChanged');
+					//					mui.fire('classSpace-sub.html','refershData');
+					mui.back();
 				} else {
-					tempText = replaceAllBL(tempText);
+					mui.toast(data.RspTxt);
 				}
-				var TAs=getTypeAddress();
-				var postData = new Object();
-				postData.classId = groupInfo.classId;
-				postData.msgContent = tempText;
-				postData.encType = TAs.encType;
-				postData.encAddr = TAs.encAddr;
-				postData.encImg = TAs.encImg;
-				postData.teacherId = parseInt(groupInfo.userId);
-				postData.userIds = arrayToStr(personIds);
-				console.log('传值：' + JSON.stringify(postData));
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
-				postDataPro_addClassSpace(postData, wd, function(data) {
-					wd.close();
-					console.log(JSON.stringify(data));
-					if(data.RspCode = '0000') {
-						mui.toast('发布成功！');
-						document.getElementById('input-content').value = '';
-						events.fireToPageNone('classSpace-sub.html', 'infoChanged');
-						//					mui.fire('classSpace-sub.html','refershData');
-						mui.back();
-					} else {
-						mui.toast(data.RspTxt);
-					}
-				})
 			})
+		})
 		})
 		var getGroupPersons = function(groupId) {
 			personIds = [];
@@ -179,27 +209,27 @@
 //			encAddr: '',//附件地址
 //			encImg: '',//附件缩略图地址
 		 */
-		var getTypeAddress=function(){
-			var TAs={};
+		var getTypeAddress = function() {
+			var TAs = {};
 			var encType;
-			var encAddrs=[];
-			var encImgs=[];
+			var encAddrs = [];
+			var encImgs = [];
 			var theFile;
-			if(CloudFileUtil.files.length>0){
-				for(var i in CloudFileUtil.files){
-				theFile=CloudFileUtil.files[i];
-				if(i==0){
-					TAs.encType=theFile.type;
+			if(CloudFileUtil.files.length > 0) {
+				for(var i in CloudFileUtil.files) {
+					theFile = CloudFileUtil.files[i];
+					if(i == 0) {
+						TAs.encType = theFile.type;
+					}
+					encAddrs.push(theFile.url);
+					encImgs.push(theFile.thumb);
 				}
-				encAddrs.push(theFile.url);
-				encImgs.push(theFile.thumb);
-			}
-			TAs.encAddr=encAddrs.join('|');
-			TAs.encImg=encImgs.join('|');
-			}else{
-				TAs.encType=0;
-				TAs.encAddr='';
-				TAs.encImg='';
+				TAs.encAddr = encAddrs.join('|');
+				TAs.encImg = encImgs.join('|');
+			} else {
+				TAs.encType = 0;
+				TAs.encAddr = '';
+				TAs.encImg = '';
 			}
 			return TAs;
 		}
