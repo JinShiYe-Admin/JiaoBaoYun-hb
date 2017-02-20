@@ -34,7 +34,7 @@ var postDataQZPro_getAllChannels = function(commonData, wd, callback) {
 //2.获取符合条件的专家信息
 //所需参数
 //		var comData = {
-//			userIds: '',//用户编号列表,传入0，获取所有专家
+//			userIds: '',//用户编号列表,Array,传入0，获取所有专家
 //			channelId:'',//话题ID,传入0，获取所有话题数据
 //			pageIndex: '',//当前页数
 //			pageSize:''//每页记录数,传入0，获取总记录数

@@ -12,16 +12,16 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
-		<link href="../../css/iconfont/iconfont.css" rel="stylesheet"/>
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/qiuzhi/qiuzhi.css" rel="stylesheet" />
 	</head>
 
 	<body>
 		<div class="mui-content">
 			<div class="navigation" role="navigation">
-				<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted main-navigation" >
-					<div id="subjects-container" class="mui-scroll tabs-channels" >
-					
+				<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted main-navigation">
+					<div id="subjects-container" class="mui-scroll tabs-channels">
+
 					</div>
 				</div>
 				<div class="more-navigation">
@@ -38,5 +38,563 @@
 		<script src="../../js/publicQiuzhiProtocol.js"></script>
 		<script src="../../js/qiuzhi/qiuzhi-home.js"></script>
 	</body>
+
+	<script type="text/javascript">
+		mui.init();
+		mui.plusReady(function() {
+			//1.获取所有话题
+//			getAllChannels();
+			//2.获取符合条件的专家信息
+//			getExpertsArray();
+			//3.获取某个用户的信息
+//			getExpertsInfo(33);
+			//7.修改某个用户的某个问题
+//			setAskById(35);
+			//10.修改某个用户的某条回答
+//			setAnswerById(365);
+			//11.删除某个用户的某条回答
+//			delAnswerById(351);
+			//13.获取是否已对某个问题关注
+//			getAskFocusByUser(35);
+			//14.设置某个问题的关注
+//			setAskFocus(35);
+			//15.获取某个问题的关注列表
+//			getFocusUsersByAsk(35);
+			//16.获取某条评论
+//			getCommentById(36);
+			//18.删除某条回答的评论
+//			delCommentById(33);
+			//19.获取是否已对某条回答点赞
+//			getAnswerLikeByUser(365);
+			//20.设置某条回答的点赞
+//			setAnswerLike(365);
+			//21.修改某个用户的个人简介
+//			setUserNoteById(33);
+			//22.获取是否已对某个用户关注
+//			getUserFocus(33);
+			//23.设置对某个用户的关注
+//			setUserFocus(33);
+			//24.获取某个用户的回答列表
+//			getAnswersByUser(33);
+			//25.获取某个用户的提问列表
+//			getAsksByUser(33);
+			//26.获取某个用户的关注问题列表
+//			getFocusAsksByUser(33);
+			//27.获取某个用户的关注人列表
+//			getFocusUsersByUser(33);
+			//28.获取某个用户的被人关注列表
+//			getIsFocusedByUser(33);
+			//29.获取是否已对某条评论点赞
+//			getCommentLikeByUser(36,365);
+			//30.设置某条评论的点赞
+//			setCommentLike(36,365);
+			
+		});
+
+		//1.获取所有话题
+		function getAllChannels() {
+			//需要加密的数据
+			var comData = {
+				pageIndex: '1', //当前页数
+				pageSize: '0' //每页记录数,传入0，获取总记录数
+			};
+			// 等待的对话框a
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//1.获取所有话题
+			postDataQZPro_getAllChannels(comData, wd, function(data) {
+				wd.close();
+				console.log('1.获取所有话题:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+
+		//2.获取符合条件的专家信息
+		function getExpertsArray() {
+			//需要加密的数据
+			var comData = {
+				userIds: '[0]', //用户编号列表,Array,传入0，获取所有专家
+				channelId: '0', //话题ID,传入0，获取所有话题数据
+				pageIndex: '1', //当前页数
+				pageSize: '0' //每页记录数,传入0，获取总记录数
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//2.获取符合条件的专家信息
+			postDataQZPro_getExpertsByCondition(comData, wd, function(data) {
+				wd.close();
+				console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//3.获取某个用户的信息
+		function getExpertsInfo(userId) {
+			//需要加密的数据
+			var comData = {
+				userId: userId//用户ID
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//3.获取某个用户的信息
+			postDataQZPro_getUserInfo(comData, wd, function(data) {
+				wd.close();
+				console.log('3.获取某个用户的信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//7.修改某个用户的某个问题
+		function setAskById(askId) {
+			//需要加密的数据
+			var comData = {
+				askId: askId,//问题ID
+				askTitle: '测试修改标题',//问题标题,200
+				askNote:'测试修改问题说明',//问题说明,2000
+				encAddr:''//附件地址,300,多个的情况例如：1.jpg|2.jpg
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//7.修改某个用户的某个问题
+			postDataQZPro_setAskById(comData, wd, function(data) {
+				wd.close();
+				console.log('7.修改某个用户的某个问题:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//10.修改某个用户的某条回答
+		function setAnswerById(answerId) {
+			//需要加密的数据
+			var comData = {
+				answerId: answerId,//回答ID
+				answerContent:'测试修改用户的某条答案',//回答内容,4000
+				encAddr:''//附件地址,300,多个的情况例如：1.jpg|2.jpg
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//10.修改某个用户的某条回答
+			postDataQZPro_setAnswerById(comData, wd, function(data) {
+				wd.close();
+				console.log('10.修改某个用户的某条回答:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//11.删除某个用户的某条回答
+		function delAnswerById(answerId) {
+			//需要加密的数据
+			var comData = {
+				answerId:answerId//回答ID
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//11.删除某个用户的某条回答
+			postDataQZPro_delAnswerById(comData, wd, function(data) {
+				wd.close();
+				console.log('11.删除某个用户的某条回答:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//13.获取是否已对某个问题关注
+		function getAskFocusByUser(askId) {
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+			//需要加密的数据
+			var comData = {
+				userId: personalUTID,//用户ID
+				askId:askId//问题ID
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//13.获取是否已对某个问题关注
+			postDataQZPro_getAskFocusByUser(comData, wd, function(data) {
+				wd.close();
+				console.log('13.获取是否已对某个问题关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//14.设置某个问题的关注
+		function setAskFocus(askId) {
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+			//需要加密的数据
+			var comData = {
+				userId: personalUTID,//用户ID
+				askId: askId,//问题ID
+				status:'1'//关注状态,0 不关注,1 关注
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//14.设置某个问题的关注
+			postDataQZPro_setAskFocus(comData, wd, function(data) {
+				wd.close();
+				console.log('14.设置某个问题的关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//15.获取某个问题的关注列表
+		function getFocusUsersByAsk(askId) {
+			//需要加密的数据
+			var comData = {
+				askId: askId,//问题ID
+				pageIndex: '1',//当前页数
+				pageSize:'0'//每页记录数,传入0，获取总记录数
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//15.获取某个问题的关注列表
+			postDataQZPro_getFocusUsersByAsk(comData, wd, function(data) {
+				wd.close();
+				console.log('15.获取某个问题的关注列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+					
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//16.获取某条评论
+		function getCommentById(commentId) {
+			//需要加密的数据
+			var comData = {
+				commentId:commentId//评论ID
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//16.获取某条评论
+			postDataQZPro_getCommentById(comData, wd, function(data) {
+				wd.close();
+				console.log('16.获取某条评论:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//18.删除某条回答的评论
+		function delCommentById(commentId) {
+			//需要加密的数据
+			var comData = {
+				commentId:commentId//评论ID
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//18.删除某条回答的评论
+			postDataQZPro_delCommentById(comData, wd, function(data) {
+				wd.close();
+				console.log('18.删除某条回答的评论:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//19.获取是否已对某条回答点赞
+		function getAnswerLikeByUser(answerId) {
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+			//需要加密的数据
+			var comData = {
+				userId: personalUTID,//用户ID
+				answerId:answerId//回答ID
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//19.获取是否已对某条回答点赞
+			postDataQZPro_getAnswerLikeByUser(comData, wd, function(data) {
+				wd.close();
+				console.log('19.获取是否已对某条回答点赞:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//20.设置某条回答的点赞
+		function setAnswerLike(answerId) {
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+			//需要加密的数据
+			var comData = {
+				answerId: answerId,//回答ID
+				userId: personalUTID,//点赞用户ID
+				status:'1'//点赞状态,0 取消点赞,1 点赞
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//20.设置某条回答的点赞
+			postDataQZPro_setAnswerLike(comData, wd, function(data) {
+				wd.close();
+				console.log('20.设置某条回答的点赞:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//21.修改某个用户的个人简介
+		function setUserNoteById(userId) {
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+			//需要加密的数据
+			var comData = {
+				userId: userId,//用户ID
+				userNote:'修改用户简介'//用户简介,500
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//21.修改某个用户的个人简介
+			postDataQZPro_setUserNoteById(comData, wd, function(data) {
+				wd.close();
+				console.log('21.修改某个用户的个人简介:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//22.获取是否已对某个用户关注
+		function getUserFocus(userId) {
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+			//需要加密的数据
+			var comData = {
+				userId: personalUTID,//用户ID
+				focusUserId:userId//关注用户ID
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//22.获取是否已对某个用户关注
+			postDataQZPro_getUserFocusByUser(comData, wd, function(data) {
+				wd.close();
+				console.log('22.获取是否已对某个用户关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//23.设置对某个用户的关注
+		function setUserFocus(userId) {
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+			//需要加密的数据
+			var comData = {
+				userId: personalUTID,//用户ID
+				focusUserId: userId,//关注用户ID
+				status:'1'//关注状态,0 不关注,1 关注
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//23.设置对某个用户的关注
+			postDataQZPro_setUserFocus(comData, wd, function(data) {
+				wd.close();
+				console.log('23.设置对某个用户的关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//24.获取某个用户的回答列表
+		function getAnswersByUser(userId) {
+			//需要加密的数据
+			var comData = {
+				userId: userId,//用户ID
+				pageIndex: '1',//当前页数
+				pageSize:'0'//每页记录数,传入0，获取总记录数
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//24.获取某个用户的回答列表
+			postDataQZPro_getAnswersByUser(comData, wd, function(data) {
+				wd.close();
+				console.log('24.获取某个用户的回答列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//25.获取某个用户的提问列表
+		function getAsksByUser(userId) {
+			//需要加密的数据
+			var comData = {
+				userId: userId,//用户ID
+				pageIndex: '1',//当前页数
+				pageSize:0//每页记录数,传入0，获取总记录数
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//25.获取某个用户的提问列表
+			postDataQZPro_getAsksByUser(comData, wd, function(data) {
+				wd.close();
+				console.log('25.获取某个用户的提问列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//26.获取某个用户的关注问题列表
+		function getFocusAsksByUser(userId) {
+			//需要加密的数据
+			var comData = {
+				userId: userId,//用户ID
+				pageIndex: '1',//当前页数
+				pageSize:0//每页记录数,传入0，获取总记录数
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//26.获取某个用户的关注问题列表
+			postDataQZPro_getFocusAsksByUser(comData, wd, function(data) {
+				wd.close();
+				console.log('26.获取某个用户的关注问题列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//27.获取某个用户的关注人列表
+		function getFocusUsersByUser(userId) {
+			//需要加密的数据
+			var comData = {
+				userId: userId,//用户ID
+				pageIndex: '1',//当前页数
+				pageSize:0//每页记录数,传入0，获取总记录数
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//27.获取某个用户的关注人列表
+			postDataQZPro_getFocusUsersByUser(comData, wd, function(data) {
+				wd.close();
+				console.log('27.获取某个用户的关注人列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//28.获取某个用户的被人关注列表
+		function getIsFocusedByUser(userId) {
+			//需要加密的数据
+			var comData = {
+				userId: userId,//用户ID
+				pageIndex: '1',//当前页数
+				pageSize:0//每页记录数,传入0，获取总记录数
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//28.获取某个用户的被人关注列表
+			postDataQZPro_getIsFocusedByUser(comData, wd, function(data) {
+				wd.close();
+				console.log('28.获取某个用户的被人关注列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//29.获取是否已对某条评论点赞
+		function getCommentLikeByUser(commentId,answerId) {
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+			//需要加密的数据
+			var comData = {
+				userId: personalUTID,//用户ID
+				commentId: commentId,//评论ID
+				answerId:answerId//回答ID
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//29.获取是否已对某条评论点赞
+			postDataQZPro_getCommentLikeByUser(comData, wd, function(data) {
+				wd.close();
+				console.log('29.获取是否已对某条评论点赞:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//30.设置某条评论的点赞
+		function setCommentLike(commentId,answerId) {
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+			//需要加密的数据
+			var comData = {
+				commentId: commentId,//评论ID
+				userId:personalUTID,//点赞用户ID
+				answerId: answerId,//回答ID
+				status:'1'//点赞状态，0 取消点赞，1 点赞
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//30.设置某条评论的点赞
+			postDataQZPro_setCommentLike(comData, wd, function(data) {
+				wd.close();
+				console.log('30.设置某条评论的点赞:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+	</script>
 
 </html>
