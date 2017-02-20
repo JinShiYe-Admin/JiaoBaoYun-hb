@@ -67,15 +67,22 @@
 			var askChannel = '0';
 			mui.plusReady(function() {
 				var data = plus.webview.currentWebview().data;
-				console.log('获取的数据：'+JSON.stringify(data));
-				channelData=data.allChannels;
-				channelData.splice(0,1);
-				var curChannel=data.curChannel;
-				if(curChannel.TabId==0){
-					curChannel=channelData[0];
+				console.log('获取的数据：' + JSON.stringify(data));
+				channelData = data.allChannels;
+				channelData.splice(0, 1);
+				var curChannel = data.curChannel;
+				console.log('获取的数据111：' + JSON.stringify(channelData));
+				//2.获取符合条件的专家信息
+				if(channelData.length > 0) {
+					var model_Channel = channelData[0];
+					getExpertsArray(model_Channel.TabId);
 				}
-				askChannel=curChannel.TabId;
-				document.getElementById("channal").innerHTML =curChannel.ChannelName;
+
+				if(curChannel.TabId == 0) {
+					curChannel = channelData[0];
+				}
+				askChannel = curChannel.TabId;
+				document.getElementById("channal").innerHTML = curChannel.ChannelName;
 				var ul = document.getElementById("popover").getElementsByClassName('mui-table-view')[0];
 				for(var i = 0; i < channelData.length; i++) {
 					var li = document.createElement("li");
@@ -90,24 +97,23 @@
 
 			})
 
-			
 			events.addTap('take_pic', function() {
 				mui.toast('此功能暂未开放');
-//				camera.getPic(camera.getCamera(), function(path) {
-//
-//				});
+				//				camera.getPic(camera.getCamera(), function(path) {
+				//
+				//				});
 			});
 			events.addTap('take_camero', function() {
 				mui.toast('此功能暂未开放');
-//				camera.getVideo(camera.getCamera(), function(path) {
-//
-//				});
+				//				camera.getVideo(camera.getCamera(), function(path) {
+				//
+				//				});
 			});
 			events.addTap('get_gallery', function() {
 				mui.toast('此功能暂未开放');
-//				gallery.getMultiplePic(function(paths) {
-//
-//				});
+				//				gallery.getMultiplePic(function(paths) {
+				//
+				//				});
 			});
 			events.addTap('publish', function() {
 				console.log(1111111)
@@ -141,13 +147,13 @@
 				} else {
 					tempText = replaceAllBL(tempText)
 				}
-//				var checkbox = document.getElementById("checkbox")
-//				var isAnonym = 0;
-//				if(!checkbox.checked) {
-//					isAnonym = 0;
-//				} else {
-//					isAnonym = 1;
-//				}
+				//				var checkbox = document.getElementById("checkbox")
+				//				var isAnonym = 0;
+				//				if(!checkbox.checked) {
+				//					isAnonym = 0;
+				//				} else {
+				//					isAnonym = 1;
+				//				}
 				//所需参数
 				var comData = {
 					askTitle: askTitle.value, //问题标题,200
@@ -182,9 +188,34 @@
 			mui('.mui-popover').on('tap', 'li', function(e) {
 				document.getElementById("channal").innerHTML = this.children[0].innerHTML;
 				askChannel = this.id;
-				console.log(askChannel);
+				console.log('askChannel=' + askChannel);
+				//2.获取符合条件的专家信息
+				getExpertsArray(askChannel);
 				mui('.mui-popover').popover('toggle')
 			})
+
+			//2.获取符合条件的专家信息
+			function getExpertsArray(code) {
+				//需要加密的数据
+				var comData = {
+					userIds: '[0]', //用户编号列表,Array,传入0，获取所有专家
+					channelId: code, //话题ID,传入0，获取所有话题数据
+					pageIndex: '1', //当前页数
+					pageSize: '0' //每页记录数,传入0，获取总记录数
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//2.获取符合条件的专家信息
+				postDataQZPro_getExpertsByCondition(comData, wd, function(data) {
+					wd.close();
+					console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						//刷新界面显示
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+			};
 		</script>
 		<!--<script src="../../js/qiuzhi/qiuzhi-questionSub.js"></script>-->
 	</body>
