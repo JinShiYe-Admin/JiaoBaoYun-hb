@@ -416,7 +416,11 @@
 					var data = e.detail.data;
 					console.log('changeName ' + JSON.stringify(data));
 					var element = document.getElementById(data.gid + '_' + data.stuid);
-					document.getElementById("name_" + data.gid + '_' + data.stuid).innerText = data.stuname;
+					if(data.stuname == '') {
+						document.getElementById("name_" + data.gid + '_' + data.stuid).innerHTML = '&nbsp;';
+					} else {
+						document.getElementById("name_" + data.gid + '_' + data.stuid).innerText = data.stuname;
+					}
 					var info = JSON.parse(element.getAttribute('data-info'));
 					info.stuname = data.stuname;
 					element.setAttribute('data-info', JSON.stringify(info));
@@ -512,7 +516,7 @@
 				element1.className = className1;
 				element1.href = '#qun_bot_' + data.gid;
 				element1.setAttribute('data-info', JSON.stringify(data));
-				element1.innerHTML = data.gname;
+				element1.innerText = data.gname;
 
 				var table = document.getElementById("qunList");
 				if(index == (length - 1)) {
