@@ -1,5 +1,5 @@
 events.initSubPage('qiuzhi-sub.html');
-var allChannels;
+var allChannels;//所有话题
 mui.plusReady(function() {
 		var curPage = plus.webview.currentWebview();
 		curPage.addEventListener("show", function(e) {
