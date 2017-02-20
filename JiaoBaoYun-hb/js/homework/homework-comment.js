@@ -225,7 +225,7 @@ var requireTeachersAnswer = function() {
 var getMatchedImgs=function(files){
 	var mactchedFiles=[];
 	for(var i in files){
-		if(files[i].MatchRate.replace('%','')>50){
+		if(!(files[i].MatchRate&&files[i].MatchRate.replace('%','')<50)){
 			mactchedFiles.push(files[i]);
 		}
 	}

@@ -59,4 +59,21 @@ div>.icon-xiangji:before,
 	top: 0;
 	right: 0;
 }
+.img-container{
+	min-height: 200px;
+}.img-div{
+	position: relative;
+	width: 25%;
+	float: left;
+	text-align: center;
+}
+.img-div img{
+	padding-top: 0.5rem;
+	width: 80%;
+}
+.icon-guanbi{
+	position: absolute;
+	top: 0;
+	right: 0;
+}
 .i
