@@ -471,6 +471,10 @@ var CloudFileUtil = (function($, mod) {
 			}
 		});
 	}
+	/**
+	 * 在界面上放置图片
+	 * @param {Object} img
+	 */
 	mod.setPic = function(img) {
 		mod.files.push(img);
 		//	picPath=camero.getAbsolutePath(picPath);
@@ -483,6 +487,9 @@ var CloudFileUtil = (function($, mod) {
 		console.log("放置的图片信息:" + JSON.stringify(img));
 		pictures.appendChild(div);
 	}
+	/**
+	 * 放置删除图片的监听
+	 */
 	mod.setDelPicListener = function() {
 		//删除图标的点击事件
 		mui('#pictures').on('tap', '.icon-guanbi', function() {

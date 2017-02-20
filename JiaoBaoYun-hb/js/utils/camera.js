@@ -72,6 +72,11 @@ var gallery = (function(mod) {
 			filter: "image"
 		});
 	}
+	/**
+	 * 相册多选
+	 * @param {Object} maxNo 最多选多少张图片
+	 * @param {Object} callback 回调函数
+	 */
 	mod.getMultiplePic = function(maxNo,callback) {
 		// 从相册中选择图片
 		console.log("从相册中选择多张图片:");
