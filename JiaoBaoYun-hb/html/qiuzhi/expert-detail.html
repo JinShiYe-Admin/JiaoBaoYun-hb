@@ -101,8 +101,29 @@
 
 	<script type="text/javascript">
 		mui.plusReady(function() {
-
-		})
+			//3.获取某个用户的信息
+			getExpertsInfo(33);
+		});
+		//3.获取某个用户的信息
+		function getExpertsInfo(userId) {
+			//需要加密的数据
+			var comData = {
+				userId: userId//用户ID
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//3.获取某个用户的信息
+			postDataQZPro_getUserInfo(comData, wd, function(data) {
+				wd.close();
+				console.log('3.获取某个用户的信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+					//刷新界面
+					
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
 	</script>
 
 </html>
