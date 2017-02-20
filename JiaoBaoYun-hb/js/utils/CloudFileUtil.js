@@ -1,5 +1,5 @@
 var CloudFileUtil = (function($, mod) {
-
+	mod.files=[];
 	/**
 	 * 获取当前的网络连接状态
 	 * @param {Object} callback 回调callback(data)
@@ -173,26 +173,26 @@ var CloudFileUtil = (function($, mod) {
 	 * @return {Object} data data.options为获取token的参数之一，data.thumbKey为获取token后获取缩略图地址的key值
 	 */
 	mod.getSingleUploadDataOptions = function(picPath, appId, maxSize, spaceType, uploadSpace) {
-		var data={};
+		var data = {};
 		var desKey;
 		switch(appId) {
 			case 0:
 				break;
 			case 1:
 				break;
-			case 2://资源平台
-				desKey="jsy8004";
+			case 2: //资源平台
+				desKey = "jsy8004";
 				break;
-			case 3://教宝云作业
+			case 3: //教宝云作业
 				desKey = "zy309309!";
 				break;
-			case 4://教宝云盘
-				desKey="jbyp@2017"
+			case 4: //教宝云盘
+				desKey = "jbyp@2017"
 				break;
-			case 5://教宝云用户管理
-				desKey="jbman456"
+			case 5: //教宝云用户管理
+				desKey = "jbman456"
 				break;
-			case 6://家校圈
+			case 6: //家校圈
 				desKey = "jxq789!@";
 				break;
 			default:
@@ -208,7 +208,7 @@ var CloudFileUtil = (function($, mod) {
 		var thumbSpace = saveSpace + 'thumb/';
 		var QNFileName = events.getFileNameByPath(picPath);
 		data.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
-		var ops = "imageView2/2/w/" + maxSize+ "/h/" + maxSize + "/format/png|saveas/" + data.thumbKey;
+		var ops = "imageView2/2/w/" + maxSize + "/h/" + maxSize + "/format/png|saveas/" + data.thumbKey;
 		var param = {
 			Bucket: mainSpace,
 			Key: saveSpace + QNFileName,
@@ -364,6 +364,26 @@ var CloudFileUtil = (function($, mod) {
 			}
 		});
 	}
-
+	mod.setPic = function(img) {
+		mod.files.push(img);
+		//	picPath=camero.getAbsolutePath(picPath);
+		var pictures = document.getElementById('pictures');
+		var div = document.createElement('div');
+		div.img = img;
+		div.className = 'img-div';
+		div.innerHTML = '<img src="' + img.url + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
+			'<a class="mui-icon iconfont icon-guanbi"></a>';
+		console.log("放置的图片信息:" + JSON.stringify(img));
+		pictures.appendChild(div);
+	}
+	mod.setDelPicListener = function() {
+		//删除图标的点击事件
+		mui('#pictures').on('tap', '.icon-guanbi', function() {
+			mod.files.splice(imgs.indexOf(this.parentElement.img), 1);
+			//删除图片
+			var pictures = document.getElementById('pictures');
+			pictures.removeChild(this.parentElement);
+		})
+	}
 	return mod;
 })(mui, window.ColudFileUtil || {});

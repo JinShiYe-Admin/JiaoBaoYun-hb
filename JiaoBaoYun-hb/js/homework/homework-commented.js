@@ -39,8 +39,15 @@ mui.plusReady(function() {
 		getStuName();
 
 	})
+	var _back=mui.back;
 	mui.back = function() {
-		plus.webview.getWebviewById('homework-tea.html').show();
+		console.log('返回上级页面的id:'+plus.webview.currentWebview().opener().id);
+		if(plus.webview.currentWebview().opener().id=="publish-answer.html"){
+			plus.webview.getWebviewById('homework-tea.html').show();
+		}else{
+			_back();
+		}
+		
 	}
 });
 //重置数据
@@ -167,8 +174,6 @@ function getAnswerResultStu() {
 				homeworkModel.TeacherId = homeworkModel.utid
 			}
 			requestTeaInfo(homeworkModel.TeacherId);
-
-			//			refreshUI();
 		} else {
 
 		}

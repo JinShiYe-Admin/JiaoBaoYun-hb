@@ -1147,7 +1147,11 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js",
-			"css/quan/custom-textarea.css"
+			"css/quan/custom-textarea.css",
+			"js/utils/cryption.js",
+			"js/utils/CloudFileUtil.js",
+			"js/qiniu/qiniu.js",
+			"js/utils/compress.js"
 		],
 		"refer": []
 	},

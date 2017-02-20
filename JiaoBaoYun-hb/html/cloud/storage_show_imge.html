@@ -12,20 +12,31 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/utils/preview.css" />
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
 		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
-		<script type="text/javascript" src="../../js/utils/TouchMove.js"></script>
+		<!--<script type="text/javascript" src="../../js/utils/TouchMove.js"></script>-->
+		<script type="text/javascript" src="../../js/mui.zoom.js"></script>
+		<script type="text/javascript" src="../../js/cloud/mui.previewimage.js"></script>
+		<style>
+			body {
+				background-color: black;
+			}
+
+			.mui-content {
+				background-color: black;
+			}
+		</style>
 	</head>
 
 	<body id="body">
-		<header id="header" class="mui-bar mui-bar-nav">
+		<header id="header" class="mui-bar mui-bar-nav" style="z-index: 999;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">图片</h1>
 		</header>
-		<div class="mui-content" id="content">
-		</div>
+		<div class="mui-content" id="content"></div>
 		<script type="text/javascript">
 			mui.init({
 				gestureConfig: {
@@ -33,18 +44,20 @@
 				},
 			});
 			var allImgeData = []; //记录所有的图片id和token
-			var content = null;
 			var header = document.getElementById("header");
 			header.style.visibility = 'hidden';
+			var change = false;
+			var showId = ''; //当前展示的图片id
+			var previewImage = mui.previewImage();
 			mui.plusReady(function() {
 				var wd = plus.nativeUI.showWaiting(window.storageKeyName.WAITING);
-				document.querySelector(".mui-content").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
+				document.querySelector(".mui-content").style.top = '0px';
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				content = document.getElementById("content");
 
 				getAllToken(main.data.fpath);
 
 				window.addEventListener('showFile', function(e) {
+					previewImage = mui.previewImage();
 					var wd2 = plus.nativeUI.showWaiting(window.storageKeyName.WAITING);
 					console.log('showFile');
 					var getToken = true;
@@ -70,21 +83,44 @@
 				});
 
 				mui.back = function() {
-					document.getElementById("content").innerHTML = '';
+					//document.getElementById("content").innerHTML = '';
+					//console.log('body '+document.body.innerHTML);
+					previewImage.dispose();
+//					var imge = document.getElementById(showId);
+//					if(imge) {
+//						console.log('imge ' + imge.innerHTML);
+//						imge.parentNode.removeChild(imge);
+//					}
 					plus.webview.hide(main, 'pop-out');
 				}
 
-				document.addEventListener('tap', function() {
-					console.log(header.style.visibility);
-					var visibility = header.style.visibility;
-					if(visibility == 'hidden') {
-						header.style.visibility = 'visible';
-					} else {
-						header.style.visibility = 'hidden';
-					}
+				document.addEventListener('tap', function(e) {
+					//console.log(header.style.visibility);
+					change = true;
+					setTimeout(function() {
+						if(change) {
+							headerChange();
+						}
+					}, 250);
+
 				});
 
+				document.addEventListener('doubletap', function(e) {
+					change = false;
+				});
 			});
+
+			/**
+			 * 显示或隐藏header
+			 */
+			function headerChange() {
+				var visibility = header.style.visibility;
+				if(visibility == 'hidden') {
+					header.style.visibility = 'visible';
+				} else {
+					header.style.visibility = 'hidden';
+				}
+			}
 
 			/**
 			 * 获取文件的路径
@@ -110,14 +146,17 @@
 			 * @param {Object} path 图片的token
 			 */
 			function showImge(id, path) {
-				setTimeout(function() {
-					document.getElementById("content").innerHTML = '<img id="' + id + '" style="position: absolute;width: 100%;visibility: hidden;" src="' + path + '"/>';
-					document.getElementById(id).onload = function() {
-						document.getElementById(id).style.visibility = 'visible';
-						TouchMove.addTouchListener(document.getElementById(id));
-						plus.nativeUI.closeWaiting();
-					}
-				}, 300);
+				showId = id;
+				document.getElementById("content").innerHTML = '<img id="' + id + '" data-preview-src="' + path + '" data-preview-group="' + id + '"/>';
+				previewImage.open(document.getElementById(id),id);
+				//setTimeout(function() {
+				//					document.getElementById("content").innerHTML = '<img id="' + id + '" style="position: absolute;width: 100%;visibility: hidden;" src="' + path + '"/>';
+				//document.getElementById(id).onload = function() {
+				//document.getElementById(id).style.visibility = 'visible';
+				//						TouchMove.addTouchListener(document.getElementById(id));
+				plus.nativeUI.closeWaiting();
+				//}
+				//}, 300);
 			}
 		</script>
 	</body>

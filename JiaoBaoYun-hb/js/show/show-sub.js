@@ -347,21 +347,17 @@ function addData(index) {
 	InfoList.push(contentText);
 
 	//内容的图片
-	//[[ImageUrlList],ImageNum],动态内容的图片路径数组,图片总数量
-	var ImageUrlList = [];
-	//					if(id == 0) {
-	//						ImageUrlList = ['../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png',
-	//							'../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png',
-	//							'../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png', '../../image/dynamic/u101.png'
-	//						];
-	//					} 
-	var ImageNum = ImageUrlList.length;
-	ImageList.push(ImageUrlList);
-	ImageList.push(ImageNum);
+			if(tempModel.EncImgAddr != '') {
+					var EncImgAddrs = tempModel.EncImgAddr.split('|');
+					//内容的图片
+					for(var i = 0; i < EncImgAddrs.length; i++) {
+						ImageList.push(EncImgAddrs[i])
+					}
+				}
 
 	//底部
 	//[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
-	var introduce = '上传了' + ImageNum + '张图片到相册《手机相册》';
+	var introduce = '上传了' + ImageList.length + '张图片到相册《手机相册》';
 	var viewCount = tempModel.ReadCnt;
 	var praiseList = [];
 	if(tempModel.LikeUsers.length != 0) {
