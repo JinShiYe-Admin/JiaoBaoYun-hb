@@ -15,6 +15,9 @@ mui.plusReady(function() {
 			events.clearChild(document.getElementById('list-container'));
 			requestAnswerDetail(answerId);
 		})
+		mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+			events.openNewWindowWithData('../qiuzhi/expert-detail.html',datasource);
+		})
 
 		setListeners();
 	})
@@ -106,10 +109,12 @@ function refreshUI(datasource) {
 	console.log('重组后的答案详情信息：' + JSON.stringify(datasource));
 	var ul = document.getElementById('list-container');
 	var li_title = document.createElement("li");
+	
 	li_title.className = 'mui-table-view-cell mui-media';
 	li_title.innerHTML = datasource.AskTitle;
 	var li_person = document.createElement("li");
 	li_person.className = 'mui-table-view-cell mui-media';
+	li_title.id = 'expertImg'
 	li_person.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(datasource.uimg, 2) + '">' +
 		'<div class="mui-media-body">' +
 		datasource.unick +
