@@ -801,7 +801,8 @@
 			"js/quan/aboutme.js",
 			"image/quan/leave-bg.png",
 			"image/dynamic/u101.png",
-			"css/quan/about-me.css"
+			"css/quan/about-me.css",
+			"css/utils/bubble.css"
 		],
 		"refer": []
 	},
@@ -1562,7 +1563,12 @@
 			"js/utils/RSAEncrypt.js",
 			"css/quan/class_space.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"css/quan/custom-textarea.css"
+			"css/quan/custom-textarea.css",
+			"js/utils/cryption.js",
+			"js/utils/compress.js",
+			"css/homework/publish-answer.css",
+			"js/utils/CloudFileUtil.js",
+			"js/qiniu/qiniu.js"
 		],
 		"refer": []
 	},
@@ -2397,7 +2403,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"fonts/iconfont.ttf"
 		],
 		"refer": [
 			"html/quan/parentZone-sub.html"
