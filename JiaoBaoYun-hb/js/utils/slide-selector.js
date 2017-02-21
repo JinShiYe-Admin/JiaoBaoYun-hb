@@ -81,7 +81,7 @@ var slide_selector = (function(mod) {
 				setTimeout(function() {
 					mui.fire(mod.pages[0], 'cityInfo', curCity);
 					wd.close();
-				}, 2000)
+				}, 3000)
 				if(!isAddedSwipe && cities.length > 1) {
 					addSwipe();
 				}

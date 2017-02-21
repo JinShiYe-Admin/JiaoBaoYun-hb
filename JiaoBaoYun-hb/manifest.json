@@ -3106,7 +3106,8 @@
 					"js/utils/RSAEncrypt.js",
 					"css/mine/manager_member.css",
 					"css/iconfont/iconfont.css",
-					"css/mine/manager_data.css"
+					"css/mine/manager_data.css",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"html/quan/group-pInfo.html",
