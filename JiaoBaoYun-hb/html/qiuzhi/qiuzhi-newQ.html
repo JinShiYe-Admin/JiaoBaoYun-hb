@@ -49,13 +49,14 @@
 				<label>匿名</label>
 				<input id="checkbox" name="checkbox" value="" type="checkbox">
 			</div>-->
-			<ul class="mui-table-view">
-				<li class="mui-table-view-cell mui-media ">
-					<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/answer.png" />
-					<div class="mui-media-body">他的回答</div>
-					<p id="AnswerNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
-
-				</li>
+			<ul id="ExpertList" class="mui-table-view">
+				<!--<li class="mui-table-view-cell mui-media">
+						<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">
+						<div class="mui-media-body">
+							李欣芸
+							<p class='mui-ellipsis'>今天上课表现良好</p>
+						</div>
+					</li>-->
 				<ul/>
 
 		</div>
@@ -73,13 +74,14 @@
 		<script type="text/javascript">
 			mui.init();
 			var askChannel = '0';
+			var datasource = [];
 			mui.plusReady(function() {
 				var data = plus.webview.currentWebview().data;
 				console.log('获取的数据：' + JSON.stringify(data));
 				channelData = data.allChannels;
-//				channelData.splice(0, 1);
+								channelData.splice(0, 1);
 				var curChannel = data.curChannel;
-				console.log('curChannel='+JSON.stringify(curChannel));
+				console.log('curChannel=' + JSON.stringify(curChannel));
 				console.log('获取的数据111：' + JSON.stringify(channelData));
 				//2.获取符合条件的专家信息
 				if(channelData.length > 0) {
@@ -163,6 +165,16 @@
 				//				} else {
 				//					isAnonym = 1;
 				//				}
+				var box = document.getElementsByClassName('checkbox');
+				var selectedBoxes = [];
+				for(var i = 0; i < box.length; i++) {
+					console.log()
+					if(box[i].checked) {
+						selectedBoxes.push(box[i].value);
+					}
+				}
+				var boxesStr =arrayToStr(selectedBoxes)
+				console.log(JSON.stringify(selectedBoxes));
 				//所需参数
 				var comData = {
 					askTitle: askTitle.value, //问题标题,200
@@ -171,7 +183,7 @@
 					askMan: personalUTID, //提问人
 					isAnonym: 0, //是否匿名
 					encAddr: '',
-					inviteExperts: '[]' //邀请专家,例如[1,2,3]
+					inviteExperts: boxesStr //邀请专家,例如[1,2,3]
 				};
 				// 等待的对话框
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -263,7 +275,9 @@
 								}
 							}
 							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+							datasource = tempRspData;
 							//刷新界面
+							addExperts();
 
 						});
 					} else {
@@ -271,6 +285,24 @@
 					}
 				});
 			};
+
+			function addExperts() {
+				var ul = document.getElementById("ExpertList");
+				for(var i = 0; i < datasource.length; i++) {
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell mui-media';
+					li.innerHTML =
+						'<img class="mui-media-object mui-pull-left" src="' + datasource[i].uimg + '">' +
+						'<div class="mui-media-body">' +
+						datasource[i].unick + '<font style="color:gray"> 回答数:<span style="color:red">' + datasource[i].AnswerNum + '</span>' +
+						'</font><p class="mui-ellipsis">' + datasource[i].UserNote + '</p></div>' +
+						'<div class="mui-checkbox" style="float:right;">' +
+						'<input class = "checkbox" value="' + datasource[i].TabId + '" type="checkbox" style="margin-top: -37px;">' +
+						'</div>'
+					ul.appendChild(li);
+				}
+
+			}
 		</script>
 		<!--<script src="../../js/qiuzhi/qiuzhi-questionSub.js"></script>-->
 	</body>
