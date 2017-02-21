@@ -889,7 +889,8 @@
 					"js/publicProtocol.js",
 					"css/utils/common.css",
 					"js/utils/Statusbar.js",
-					"js/utils/app-update.js"
+					"js/utils/app-update.js",
+					"image/dynamic/u101.png"
 				],
 				"refer": [
 					"html/register/register_phoneNumber.html",
@@ -1257,7 +1258,8 @@
 				],
 				"refer": [
 					"html/index.html",
-					"html/index/index.html"
+					"html/index/index.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},

@@ -7,6 +7,20 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<style>
+			.mui-btn {
+				padding: 10px;
+			}
+			.mui-input-group:before{
+				background: #fff;
+			}
+			.mui-input-group:after{
+				background: #fff;
+			}
+			.row1:after{
+				background-color: #e4e4e4;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -19,7 +33,7 @@
 				<a style="color: black;font-size: 20px;">短信验证码已发送，请填写验证码</a>
 			</div>
 			<form class="mui-input-group">
-				<div class="mui-input-row">
+				<div class="mui-input-row row1">
 					<label style="font-size: 15px;">手机号</label>
 					<input type="text" id="phoneNumber" placeholder="请输入手机号" readonly="readonly" style="color: gray;">
 					<input type="text" id="phoneNumber" placeholder="请输入手机号">

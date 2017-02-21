@@ -183,7 +183,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>教龄:</label>
-								<input id="tea_expsch" type="number" oninput="if(value.length>10)value=value.slice(0,10)" class="mui-input-clear" value="">
+								<input id="tea_expsch" type="tel" class="mui-input-clear" value="">
 							</div>
 						</li>
 						<li class="mui-table-view-cell" style="display: none;">
@@ -350,7 +350,24 @@
 				//输入判断，如果未改变不允许保存
 				mui('.mui-content').on('input', 'input', function() {
 					if(mstype == 2) { //老师
-						if(tea_name.value == teaData.stuname && tea_job.value == teaData.job && tea_title.value == teaData.title && tea_sub.value == teaData.sub && (tea_expsch.value == teaData.expsch || (tea_expsch.value == '' && teaData.expsch == null))) {
+						console.log(this.id);
+						if(this.id == 'tea_expsch') {
+							console.log('this ' + this.value + '|' + this.value.length);
+							if(this.value.length > 2) {
+								this.value = this.value.slice(0, 2)
+							}
+							var value = this.value;
+							var temp = '';
+							console.log('value ' + value);
+							for(var i = 0; i < value.length; i++) {
+								if(value[i].replace(/^[1-9]\d*|0$/, '') == '') {
+									console.log('this.value ' + i + '|' + value[i]);
+									temp = temp + value[i];
+								}
+							}
+							this.value = temp;
+						}
+						if(tea_name.value == teaData.stuname && tea_job.value == teaData.job && tea_title.value == teaData.title && tea_sub.value == teaData.sub && (parseInt(tea_expsch.value) == parseInt(teaData.expsch) || (tea_expsch.value == '' && teaData.expsch == null))) {
 							document.getElementById("finish").style.color = 'gray';
 							change = false;
 						} else {
@@ -702,7 +719,7 @@
 							console.log('修改学生姓名 ' + stuName + ' 成功');
 							events.fireToPageNone('qun_manage_1.html', 'changeName', {
 								vtp: 'stu', //更新资料类型,stu:学生,tec:老师,gen:家长关系
-								gid:gid,//群id
+								gid: gid, //群id
 								stuid: stuid, //资料ID,更新学生老师必填,关系留0
 								stuname: stuName, //资料名称
 							});
@@ -794,7 +811,7 @@
 							console.log('修改老师资料成功');
 							events.fireToPageNone('qun_manage_1.html', 'changeName', {
 								vtp: 'tec', //更新资料类型,stu:学生,tec:老师,gen:家长关系
-								gid:gid,//群id
+								gid: gid, //群id
 								stuid: stuid, //资料ID,更新学生老师必填,关系留0
 								stuname: tea_name.value, //资料名称
 							});
