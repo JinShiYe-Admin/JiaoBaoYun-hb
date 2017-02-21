@@ -1,43 +1,78 @@
 /**
  * 求知子页面界面逻辑
  */
-var pageIndex = 1;
-var totalPage;
-var channelInfo;
-var allChannels;
+var pageIndex = 1; //当前页数
+var totalPage; //总页数
+var channelInfo; //选择的话题
+var allChannels; //所有的话题
 mui.init();
 mui.plusReady(function() {
-		events.preload("qiuzhi-question.html", 200);
-		events.preload("qiuzhi-answerDetail.html", 300);
-		window.addEventListener('channelInfo', function(e) {
-				console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
-				pageIndex = 1;
-				totalPage = 0;
-				channelInfo = e.detail.data.curChannel;
-				allChannels = e.detail.data.allChannels;
-				requestChannelList(channelInfo);
-				events.clearChild(document.getElementById('list-container'))
-			})
-			//加载h5刷新方式
-		h5fresh.addRefresh(function() {
-			pageIndex = 1;
-			events.clearChild(document.getElementById('list-container'))
-				//刷新的界面实现逻辑
-			requestChannelList(channelInfo);
-		})
-		setListener();
-		pullUpFresh();
+	events.preload("qiuzhi-question.html", 200);
+	events.preload("qiuzhi-answerDetail.html", 300);
+	window.addEventListener('channelInfo', function(e) {
+		console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
+		pageIndex = 1; //当前页数
+		totalPage = 0; //总页数
+		channelInfo = e.detail.data.curChannel; //选择的话题
+		allChannels = e.detail.data.allChannels; //所有的话题
+		//话题--求知
+//		mod.model_Channel = {
+//			TabId: '', //话题ID
+//			ChannelCode: '', //话题编号
+//			ChannelName: '' //话题名称
+//		}
+		requestChannelList(channelInfo);
+		events.clearChild(document.getElementById('list-container'));
+		//2.获取符合条件的专家信息
+		getExpertsArray(channelInfo.TabId);
+
+	});
+
+	//加载h5刷新方式
+	h5fresh.addRefresh(function() {
+		pageIndex = 1;
+		events.clearChild(document.getElementById('list-container'))
+		//刷新的界面实现逻辑
+		requestChannelList(channelInfo);
 	})
-	/**
-	 * 请求专家数据
-	 */
-	/**
-	 * 放置专家数据
-	 */
-	/**
-	 * 请求求知数据
-	 */
-	//4.获取所有符合条件问题
+	setListener();
+	pullUpFresh();
+});
+
+/**
+ * 请求专家数据
+ * //2.获取符合条件的专家信息
+ */
+function getExpertsArray(channelId) {
+	//需要加密的数据
+	var comData = {
+		userIds: '[0]', //用户编号列表,Array,传入0，获取所有专家
+		channelId: channelId.toString(), //话题ID,传入0，获取所有话题数据
+		pageIndex: '1', //当前页数
+		pageSize: '0' //每页记录数,传入0，获取总记录数
+	};
+	// 等待的对话框
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//2.获取符合条件的专家信息
+	postDataQZPro_getExpertsByCondition(comData, wd, function(data) {
+		wd.close();
+		console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+			//刷新界面
+
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+};
+
+/**
+ * 放置专家数据
+ */
+/**
+ * 请求求知数据
+ */
+//4.获取所有符合条件问题
 function requestChannelList(channelInfo) {
 	//所需参数
 	var comData = {
@@ -76,77 +111,77 @@ var setChannelList = function(data) {
 	}
 }
 var getInnerHTML = function(cell) {
-		var inner = '<a>' + 
-			'<div class="channel-info">' +
-			'<p><img src="' + getChannelIcon(cell) + '" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
-			'</div>' +
-			'<div class="ask-container">' +
-			'<h5 class="single-line ask-title" askId="' + cell.TabId + '">[' + cell.AskChannel + ']' + cell.AskTitle + '</h5>' +
-			'<p class="triple-line answer-content" answerInfo="' + cell.AnswerId + '">' + cell.AnswerContent + '</p>' +
-			'<div class="imgs-container">'+getImgs(cell.AnswerEncAddr)+'</div>'+
-			'</div>' +
-			'<div class="extra-info"></div>' +
-			'<p>' + cell.IsLikeNum + '赞·' + cell.CommentNum + '评论·关注<p>' +
-			'</a>'
-		return inner;
-	}
-var getImgs=function(imgs){
-	if(imgs&&imgs!=""){
-		var imgArray=imgs.split('|');
-		var imgInner=''
-		for(var i=0;i<3&&i<imgArray.length;i++){
-			imgInner+='<img src="'+imgArray[i]+'" class="answer-img"/>'
+	var inner = '<a>' +
+		'<div class="channel-info">' +
+		'<p><img src="' + getChannelIcon(cell) + '" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
+		'</div>' +
+		'<div class="ask-container">' +
+		'<h5 class="single-line ask-title" askId="' + cell.TabId + '">[' + cell.AskChannel + ']' + cell.AskTitle + '</h5>' +
+		'<p class="triple-line answer-content" answerInfo="' + cell.AnswerId + '">' + cell.AnswerContent + '</p>' +
+		'<div class="imgs-container">' + getImgs(cell.AnswerEncAddr) + '</div>' +
+		'</div>' +
+		'<div class="extra-info"></div>' +
+		'<p>' + cell.IsLikeNum + '赞·' + cell.CommentNum + '评论·关注<p>' +
+		'</a>'
+	return inner;
+}
+var getImgs = function(imgs) {
+	if(imgs && imgs != "") {
+		var imgArray = imgs.split('|');
+		var imgInner = ''
+		for(var i = 0; i < 3 && i < imgArray.length; i++) {
+			imgInner += '<img src="' + imgArray[i] + '" class="answer-img"/>'
 		}
 		return imgInner;
 	}
 	return '';
 }
-	/**
-	 * 
-	 * @param {Object} cell
-	 */
+/**
+ *
+ * @param {Object} cell
+ */
 var getChannelIcon = function(cell) {
-		var iconSourse = "../../image/qiuzhi/";
-		switch(cell.AskChannel) {
-			case "教学":
-				iconSourse += "channel-edu.png";
-				break;
-			case "美食":
-				iconSourse += "channel-food.png";
-				break;
-			case "健康":
-				iconSourse += "channel-health.png";
-				break;
-			case "其他":
-				iconSourse += "channel-others.png";
-				break;
-			default:
-				iconSourse = "";
-				break;
-		}
-		return iconSourse;
+	var iconSourse = "../../image/qiuzhi/";
+	switch(cell.AskChannel) {
+		case "教学":
+			iconSourse += "channel-edu.png";
+			break;
+		case "美食":
+			iconSourse += "channel-food.png";
+			break;
+		case "健康":
+			iconSourse += "channel-health.png";
+			break;
+		case "其他":
+			iconSourse += "channel-others.png";
+			break;
+		default:
+			iconSourse = "";
+			break;
 	}
-	/**
-	 * 上拉加载的实现方法
-	 */
+	return iconSourse;
+}
+/**
+ * 上拉加载的实现方法
+ */
 var pullUpFresh = function() {
-		document.addEventListener("plusscrollbottom", function() {
-			console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
-			if(pageIndex < totalPage) {
-				pageIndex++;
-				requestChannelList(channelInfo);
-			} else {
-				mui.toast('到底啦，别拉了！');
-			}
-		}, false);
-	}
-	/**
-	 * 各种监听事件
-	 */
+	document.addEventListener("plusscrollbottom", function() {
+		console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
+		if(pageIndex < totalPage) {
+			pageIndex++;
+			requestChannelList(channelInfo);
+		} else {
+			mui.toast('到底啦，别拉了！');
+		}
+	}, false);
+}
+/**
+ * 各种监听事件
+ */
 var setListener = function() {
 	events.addTap('submit-question', function() {
 		console.log(JSON.stringify(allChannels))
-		events.openNewWindowWithData('qiuzhi-newQ.html',{curChannel:channelInfo,allChannels:allChannels} );
+		events.openNewWindowWithData('qiuzhi-newQ.html', { curChannel: channelInfo, allChannels: allChannels });
 	});
 	//标题点击事件
 	mui('.mui-table-view').on('tap', '.ask-title', function() {

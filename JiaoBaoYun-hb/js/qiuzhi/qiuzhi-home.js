@@ -37,16 +37,16 @@ var setChannels = function(subjectArr) {
 	console.log('要加载的类别:'+JSON.stringify(subjectArr));
 	allChannels=subjectArr;
 	var allChannel={
-		TabId:0,
-		ChannelCode:00,
-		ChannelName:"全部"
+		TabId:0,//话题ID
+		ChannelCode:00,//话题编号
+		ChannelName:"全部"//话题名称
 	}
 	subjectArr.splice(0,0,allChannel);
 	events.clearChild(subjects);
 	for(var i in subjectArr){
 		var a=document.createElement('a');
 		if(i==0){
-			a.className="mui-control-item mui-active";			
+			a.className="mui-control-item mui-active";
 		}else{
 			a.className="mui-control-item";
 		}
