@@ -176,8 +176,6 @@ function addSomeEvent() {
  */
 var requestData = function() {
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-//		plus.webview.getWebviewById('index.html').querySelector('#bottom-show').off('tap');
-//		plus.webview.getWebviewById('index.html').querySelector('#tabclass').off('tap');
 		/**
 		 * 请求区域内的动态
 		 */
@@ -196,6 +194,7 @@ var requestData = function() {
 			} else {
 				var table = document.body.querySelector('.mui-table-view');
 				table.innerHTML = ''
+				events.fireToPageNone('index.html','closeWaiting');
 			}
 		})
 	}
@@ -256,11 +255,9 @@ var getPersonalInfo = function(data, ids) {
 				}
 
 				console.log("重组后的数据：" + JSON.stringify(zonepArray));
-//				plus.webview.getWebviewById('index.html').querySelector('#bottom-show').on('tap');
-//				plus.webview.getWebviewById('index.html').querySelector('#tabclass').on('tap');
 				setData(zonepArray);
 			} else {
-
+				events.fireToPageNone('index.html','closeWaiting');
 			}
 		})
 	}
@@ -325,7 +322,7 @@ var setData = function(data) {
 			var data1 = addData(i);
 			dynamiclistitem.addItem(table, data1, id);
 		}
-
+		events.fireToPageNone('index.html','closeWaiting');
 	}
 	//加载数据
 function addData(index) {

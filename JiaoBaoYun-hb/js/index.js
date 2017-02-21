@@ -5,6 +5,7 @@
  */
 
 mui.init();
+var waitingDia;
 var cityType = 0;
 mui.plusReady(function() {
 	var showCity; //当前展示城市信息
@@ -33,6 +34,9 @@ mui.plusReady(function() {
 		showCity = 0;
 		SECity = 0;
 	});
+	window.addEventListener('closeWaiting',function(){
+		waitingDia.close();
+	})
 	window.addEventListener('aboutmNoRead', function() {
 		getAboutMe();
 	});
@@ -252,10 +256,10 @@ mui.plusReady(function() {
 			vvl: '0' //订制频道,0科教频道,1展示频道,其他待定
 		};
 		// 等待的对话框
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		waitingDia = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		//44.获取个人的订制城市
-		postDataPro_PostUTcity(comData, wd, function(data) {
-			wd.close();
+		postDataPro_PostUTcity(comData, waitingDia, function(data) {
+//			wd.close();
 			var eduArray = [];
 			console.log('获取个人的订制城市科教频道:' + JSON.stringify(data));
 			if(data.RspCode == 0) {
@@ -296,6 +300,7 @@ mui.plusReady(function() {
 					setShowCity(0);
 					console.log('修改后的最终值为:' + JSON.stringify(eduArray));
 				} else {
+					waitingDia.close();
 					mui.toast('暂无科教频道的定制城市，请选择')
 				}
 
@@ -351,10 +356,10 @@ mui.plusReady(function() {
 			vvl: '1' //订制频道,0科教频道,1展示频道,其他待定
 		};
 		// 等待的对话框
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		waitingDia= plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		//44.获取个人的订制城市
-		postDataPro_PostUTcity(comData, wd, function(data) {
-			wd.close();
+		postDataPro_PostUTcity(comData, waitingDia, function(data) {
+			
 			var showArray = [];
 			console.log('获取个人的订制城市展示频道:' + JSON.stringify(data));
 			if(data.RspCode == 0) {
@@ -388,6 +393,7 @@ mui.plusReady(function() {
 					console.log('修改后的最终值为:' + JSON.stringify(showArray));
 				} else {
 					mui.toast('暂无订阅展示频道的城市，请订阅！');
+					waitingDia.close();
 				}
 
 			} else {
