@@ -19,9 +19,8 @@
 	<body>
 		<div class="mui-content">
 			<div class="navigation" role="navigation">
-				<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted main-navigation">
+				<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted main-navigation" style="height: 40px;">
 					<div id="subjects-container" class="mui-scroll tabs-channels">
-
 					</div>
 				</div>
 				<div class="more-navigation">
@@ -40,56 +39,56 @@
 	</body>
 
 	<script type="text/javascript">
-		mui.init();
-		mui.plusReady(function() {
-			//1.获取所有话题
-//			getAllChannels();
-			//2.获取符合条件的专家信息
-//			getExpertsArray();
-			//3.获取某个用户的信息
-//			getExpertsInfo(33);
-			//7.修改某个用户的某个问题
-//			setAskById(35);
-			//10.修改某个用户的某条回答
-//			setAnswerById(365);
-			//11.删除某个用户的某条回答
-//			delAnswerById(351);
-			//13.获取是否已对某个问题关注
-//			getAskFocusByUser(35);
-			//14.设置某个问题的关注
-//			setAskFocus(35);
-			//15.获取某个问题的关注列表
-//			getFocusUsersByAsk(35);
-			//16.获取某条评论
-//			getCommentById(36);
-			//18.删除某条回答的评论
-//			delCommentById(33);
-			//19.获取是否已对某条回答点赞
-//			getAnswerLikeByUser(365);
-			//20.设置某条回答的点赞
-//			setAnswerLike(365);
-			//21.修改某个用户的个人简介
-//			setUserNoteById(33);
-			//22.获取是否已对某个用户关注
-//			getUserFocus(33);
-			//23.设置对某个用户的关注
-//			setUserFocus(33);
-			//24.获取某个用户的回答列表
-//			getAnswersByUser(33);
-			//25.获取某个用户的提问列表
-//			getAsksByUser(33);
-			//26.获取某个用户的关注问题列表
-//			getFocusAsksByUser(33);
-			//27.获取某个用户的关注人列表
-//			getFocusUsersByUser(33);
-			//28.获取某个用户的被人关注列表
-//			getIsFocusedByUser(33);
-			//29.获取是否已对某条评论点赞
-//			getCommentLikeByUser(36,365);
-			//30.设置某条评论的点赞
-//			setCommentLike(36,365);
-			
-		});
+		//mui.init();
+		//mui.plusReady(function() {
+		//1.获取所有话题
+		//			getAllChannels();
+		//2.获取符合条件的专家信息
+		//			getExpertsArray();
+		//3.获取某个用户的信息
+		//			getExpertsInfo(33);
+		//7.修改某个用户的某个问题
+		//			setAskById(35);
+		//10.修改某个用户的某条回答
+		//			setAnswerById(365);
+		//11.删除某个用户的某条回答
+		//			delAnswerById(351);
+		//13.获取是否已对某个问题关注
+		//			getAskFocusByUser(35);
+		//14.设置某个问题的关注
+		//			setAskFocus(35);
+		//15.获取某个问题的关注列表
+		//			getFocusUsersByAsk(35);
+		//16.获取某条评论
+		//			getCommentById(36);
+		//18.删除某条回答的评论
+		//			delCommentById(33);
+		//19.获取是否已对某条回答点赞
+		//			getAnswerLikeByUser(365);
+		//20.设置某条回答的点赞
+		//			setAnswerLike(365);
+		//21.修改某个用户的个人简介
+		//			setUserNoteById(33);
+		//22.获取是否已对某个用户关注
+		//			getUserFocus(33);
+		//23.设置对某个用户的关注
+		//			setUserFocus(33);
+		//24.获取某个用户的回答列表
+		//			getAnswersByUser(33);
+		//25.获取某个用户的提问列表
+		//			getAsksByUser(33);
+		//26.获取某个用户的关注问题列表
+		//			getFocusAsksByUser(33);
+		//27.获取某个用户的关注人列表
+		//			getFocusUsersByUser(33);
+		//28.获取某个用户的被人关注列表
+		//			getIsFocusedByUser(33);
+		//29.获取是否已对某条评论点赞
+		//			getCommentLikeByUser(36,365);
+		//30.设置某条评论的点赞
+		//			setCommentLike(36,365);
+
+		//});
 
 		//1.获取所有话题
 		function getAllChannels() {
@@ -134,12 +133,12 @@
 				}
 			});
 		};
-		
+
 		//3.获取某个用户的信息
 		function getExpertsInfo(userId) {
 			//需要加密的数据
 			var comData = {
-				userId: userId//用户ID
+				userId: userId //用户ID
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -154,15 +153,15 @@
 				}
 			});
 		};
-		
+
 		//7.修改某个用户的某个问题
 		function setAskById(askId) {
 			//需要加密的数据
 			var comData = {
-				askId: askId,//问题ID
-				askTitle: '测试修改标题',//问题标题,200
-				askNote:'测试修改问题说明',//问题说明,2000
-				encAddr:''//附件地址,300,多个的情况例如：1.jpg|2.jpg
+				askId: askId, //问题ID
+				askTitle: '测试修改标题', //问题标题,200
+				askNote: '测试修改问题说明', //问题说明,2000
+				encAddr: '' //附件地址,300,多个的情况例如：1.jpg|2.jpg
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -177,14 +176,14 @@
 				}
 			});
 		};
-		
+
 		//10.修改某个用户的某条回答
 		function setAnswerById(answerId) {
 			//需要加密的数据
 			var comData = {
-				answerId: answerId,//回答ID
-				answerContent:'测试修改用户的某条答案',//回答内容,4000
-				encAddr:''//附件地址,300,多个的情况例如：1.jpg|2.jpg
+				answerId: answerId, //回答ID
+				answerContent: '测试修改用户的某条答案', //回答内容,4000
+				encAddr: '' //附件地址,300,多个的情况例如：1.jpg|2.jpg
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -199,12 +198,12 @@
 				}
 			});
 		};
-		
+
 		//11.删除某个用户的某条回答
 		function delAnswerById(answerId) {
 			//需要加密的数据
 			var comData = {
-				answerId:answerId//回答ID
+				answerId: answerId //回答ID
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -219,14 +218,14 @@
 				}
 			});
 		};
-		
+
 		//13.获取是否已对某个问题关注
 		function getAskFocusByUser(askId) {
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 			//需要加密的数据
 			var comData = {
-				userId: personalUTID,//用户ID
-				askId:askId//问题ID
+				userId: personalUTID, //用户ID
+				askId: askId //问题ID
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -241,15 +240,15 @@
 				}
 			});
 		};
-		
+
 		//14.设置某个问题的关注
 		function setAskFocus(askId) {
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 			//需要加密的数据
 			var comData = {
-				userId: personalUTID,//用户ID
-				askId: askId,//问题ID
-				status:'1'//关注状态,0 不关注,1 关注
+				userId: personalUTID, //用户ID
+				askId: askId, //问题ID
+				status: '1' //关注状态,0 不关注,1 关注
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -264,14 +263,14 @@
 				}
 			});
 		};
-		
+
 		//15.获取某个问题的关注列表
 		function getFocusUsersByAsk(askId) {
 			//需要加密的数据
 			var comData = {
-				askId: askId,//问题ID
-				pageIndex: '1',//当前页数
-				pageSize:'0'//每页记录数,传入0，获取总记录数
+				askId: askId, //问题ID
+				pageIndex: '1', //当前页数
+				pageSize: '0' //每页记录数,传入0，获取总记录数
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -280,18 +279,18 @@
 				wd.close();
 				console.log('15.获取某个问题的关注列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
-					
+
 				} else {
 					mui.toast(data.RspTxt);
 				}
 			});
 		};
-		
+
 		//16.获取某条评论
 		function getCommentById(commentId) {
 			//需要加密的数据
 			var comData = {
-				commentId:commentId//评论ID
+				commentId: commentId //评论ID
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -306,12 +305,12 @@
 				}
 			});
 		};
-		
+
 		//18.删除某条回答的评论
 		function delCommentById(commentId) {
 			//需要加密的数据
 			var comData = {
-				commentId:commentId//评论ID
+				commentId: commentId //评论ID
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -326,14 +325,14 @@
 				}
 			});
 		};
-		
+
 		//19.获取是否已对某条回答点赞
 		function getAnswerLikeByUser(answerId) {
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 			//需要加密的数据
 			var comData = {
-				userId: personalUTID,//用户ID
-				answerId:answerId//回答ID
+				userId: personalUTID, //用户ID
+				answerId: answerId //回答ID
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -348,15 +347,15 @@
 				}
 			});
 		};
-		
+
 		//20.设置某条回答的点赞
 		function setAnswerLike(answerId) {
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 			//需要加密的数据
 			var comData = {
-				answerId: answerId,//回答ID
-				userId: personalUTID,//点赞用户ID
-				status:'1'//点赞状态,0 取消点赞,1 点赞
+				answerId: answerId, //回答ID
+				userId: personalUTID, //点赞用户ID
+				status: '1' //点赞状态,0 取消点赞,1 点赞
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -371,14 +370,14 @@
 				}
 			});
 		};
-		
+
 		//21.修改某个用户的个人简介
 		function setUserNoteById(userId) {
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 			//需要加密的数据
 			var comData = {
-				userId: userId,//用户ID
-				userNote:'修改用户简介'//用户简介,500
+				userId: userId, //用户ID
+				userNote: '修改用户简介' //用户简介,500
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -393,14 +392,14 @@
 				}
 			});
 		};
-		
+
 		//22.获取是否已对某个用户关注
 		function getUserFocus(userId) {
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 			//需要加密的数据
 			var comData = {
-				userId: personalUTID,//用户ID
-				focusUserId:userId//关注用户ID
+				userId: personalUTID, //用户ID
+				focusUserId: userId //关注用户ID
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -415,15 +414,15 @@
 				}
 			});
 		};
-		
+
 		//23.设置对某个用户的关注
 		function setUserFocus(userId) {
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 			//需要加密的数据
 			var comData = {
-				userId: personalUTID,//用户ID
-				focusUserId: userId,//关注用户ID
-				status:'1'//关注状态,0 不关注,1 关注
+				userId: personalUTID, //用户ID
+				focusUserId: userId, //关注用户ID
+				status: '1' //关注状态,0 不关注,1 关注
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -438,14 +437,14 @@
 				}
 			});
 		};
-		
+
 		//24.获取某个用户的回答列表
 		function getAnswersByUser(userId) {
 			//需要加密的数据
 			var comData = {
-				userId: userId,//用户ID
-				pageIndex: '1',//当前页数
-				pageSize:'0'//每页记录数,传入0，获取总记录数
+				userId: userId, //用户ID
+				pageIndex: '1', //当前页数
+				pageSize: '0' //每页记录数,传入0，获取总记录数
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -460,14 +459,14 @@
 				}
 			});
 		};
-		
+
 		//25.获取某个用户的提问列表
 		function getAsksByUser(userId) {
 			//需要加密的数据
 			var comData = {
-				userId: userId,//用户ID
-				pageIndex: '1',//当前页数
-				pageSize:0//每页记录数,传入0，获取总记录数
+				userId: userId, //用户ID
+				pageIndex: '1', //当前页数
+				pageSize: 0 //每页记录数,传入0，获取总记录数
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -482,14 +481,14 @@
 				}
 			});
 		};
-		
+
 		//26.获取某个用户的关注问题列表
 		function getFocusAsksByUser(userId) {
 			//需要加密的数据
 			var comData = {
-				userId: userId,//用户ID
-				pageIndex: '1',//当前页数
-				pageSize:0//每页记录数,传入0，获取总记录数
+				userId: userId, //用户ID
+				pageIndex: '1', //当前页数
+				pageSize: 0 //每页记录数,传入0，获取总记录数
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -504,14 +503,14 @@
 				}
 			});
 		};
-		
+
 		//27.获取某个用户的关注人列表
 		function getFocusUsersByUser(userId) {
 			//需要加密的数据
 			var comData = {
-				userId: userId,//用户ID
-				pageIndex: '1',//当前页数
-				pageSize:0//每页记录数,传入0，获取总记录数
+				userId: userId, //用户ID
+				pageIndex: '1', //当前页数
+				pageSize: 0 //每页记录数,传入0，获取总记录数
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -526,14 +525,14 @@
 				}
 			});
 		};
-		
+
 		//28.获取某个用户的被人关注列表
 		function getIsFocusedByUser(userId) {
 			//需要加密的数据
 			var comData = {
-				userId: userId,//用户ID
-				pageIndex: '1',//当前页数
-				pageSize:0//每页记录数,传入0，获取总记录数
+				userId: userId, //用户ID
+				pageIndex: '1', //当前页数
+				pageSize: 0 //每页记录数,传入0，获取总记录数
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -548,15 +547,15 @@
 				}
 			});
 		};
-		
+
 		//29.获取是否已对某条评论点赞
-		function getCommentLikeByUser(commentId,answerId) {
+		function getCommentLikeByUser(commentId, answerId) {
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 			//需要加密的数据
 			var comData = {
-				userId: personalUTID,//用户ID
-				commentId: commentId,//评论ID
-				answerId:answerId//回答ID
+				userId: personalUTID, //用户ID
+				commentId: commentId, //评论ID
+				answerId: answerId //回答ID
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -571,16 +570,16 @@
 				}
 			});
 		};
-		
+
 		//30.设置某条评论的点赞
-		function setCommentLike(commentId,answerId) {
+		function setCommentLike(commentId, answerId) {
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 			//需要加密的数据
 			var comData = {
-				commentId: commentId,//评论ID
-				userId:personalUTID,//点赞用户ID
-				answerId: answerId,//回答ID
-				status:'1'//点赞状态，0 取消点赞，1 点赞
+				commentId: commentId, //评论ID
+				userId: personalUTID, //点赞用户ID
+				answerId: answerId, //回答ID
+				status: '1' //点赞状态，0 取消点赞，1 点赞
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
