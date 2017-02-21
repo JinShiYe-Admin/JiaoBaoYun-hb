@@ -113,12 +113,15 @@
 			IsFocusedManNum: document.getElementById("IsFocusedManNum"),
 			AnswerNum: document.getElementById("AnswerNum"),
 		}
+		var ExpertsInfo;
 		mui.plusReady(function() {
 			var main = plus.webview.currentWebview(); //获取当前窗体对象
-			var mainData = main.data; //接收页面传入参数值
-			console.log('expert-detail.html:' + JSON.stringify(mainData));
+			ExpertsInfo = main.data; //接收页面传入参数值
+			console.log('expert-detail.html:' + JSON.stringify(ExpertsInfo));
 			//3.获取某个用户的信息
-			getExpertsInfo(33);
+			getExpertsInfo(ExpertsInfo.UserId);
+			//22.获取是否已对某个用户关注
+			getUserFocus(ExpertsInfo.UserId);
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 				console.log(this.id);
 				if(this.id == AnswerLi) { //他的回答
@@ -142,7 +145,7 @@
 				console.log('关注他的人');
 			})
 		});
-		var ExpertsInfo;
+		
 		//3.获取某个用户的信息
 		function getExpertsInfo(userId) {
 			//需要加密的数据
@@ -156,10 +159,57 @@
 				wd.close();
 				console.log('3.获取某个用户的信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
-					//刷新界面
-					ExpertsInfo = data.RspData;
+					//合并，刷新界面
+					ExpertsInfo = $.extend(ExpertsInfo, data.RspData);
+					console.log('合并后ExpertsInfo:'+JSON.stringify(ExpertsInfo));
 					addData();
-
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//22.获取是否已对某个用户关注
+		function getUserFocus(userId) {
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+			//需要加密的数据
+			var comData = {
+				userId: personalUTID,//用户ID
+				focusUserId:userId//关注用户ID
+			};
+			// 等待的对话框
+			var wd = events.showWaiting();
+			//22.获取是否已对某个用户关注
+			postDataQZPro_getUserFocusByUser(comData, wd, function(data) {
+				wd.close();
+				console.log('22.获取是否已对某个用户关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+					//修改界面显示
+					
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+		
+		//23.设置对某个用户的关注
+		function setUserFocus(userId,status) {
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+			//需要加密的数据
+			var comData = {
+				userId: personalUTID,//用户ID
+				focusUserId: userId,//关注用户ID
+				status:status//关注状态,0 不关注,1 关注
+			};
+			// 等待的对话框
+			var wd = events.showWaiting();
+			//23.设置对某个用户的关注
+			postDataQZPro_setUserFocus(comData, wd, function(data) {
+				wd.close();
+				console.log('23.设置对某个用户的关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+					//刷新界面显示
+					
 				} else {
 					mui.toast(data.RspTxt);
 				}
