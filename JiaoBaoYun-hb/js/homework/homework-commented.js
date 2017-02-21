@@ -1,5 +1,7 @@
 //学生查看老师作业评价
 mui.init();
+//作业model
+var homeworkModel = {};
 mui.plusReady(function() {
 	//修改答案后刷新界面
 	window.addEventListener('refreshAnswer', function(e) {
@@ -42,7 +44,7 @@ mui.plusReady(function() {
 	var _back=mui.back;
 	mui.back = function() {
 		console.log('返回上级页面的id:'+plus.webview.currentWebview().opener().id);
-		if(plus.webview.currentWebview().opener().id=="publish-answer.html"){
+		if(homeworkModel.workType==1){
 			plus.webview.getWebviewById('homework-tea.html').show();
 		}else{
 			_back();
@@ -78,8 +80,7 @@ function resetData() {
 	}
 
 };
-//作业model
-var homeworkModel = {};
+
 var homeworkDetailNodes = {
 	headImg: document.getElementById("headImg"),
 	img: document.getElementById("img"), //作业类型图像
@@ -314,7 +315,7 @@ var getMatchedImgs=function(files){
 	var mactchedFiles=[];
 	for(var i in files){
 
-		if(!(files[i].MatchRate)&&files[i].MatchRate.replace('%','')>50){
+		if(!(files[i].MatchRate&&files[i].MatchRate.replace('%','')<50)){
 			mactchedFiles.push(files[i]);
 		}
 	}

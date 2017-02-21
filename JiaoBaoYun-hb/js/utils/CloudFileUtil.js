@@ -1,5 +1,5 @@
 var CloudFileUtil = (function($, mod) {
-	mod.files=[];
+	mod.files = [];
 	/**
 	 * 获取当前的网络连接状态
 	 * @param {Object} callback 回调callback(data)
@@ -224,6 +224,75 @@ var CloudFileUtil = (function($, mod) {
 		return data;
 	}
 	/**
+	 * 需要先加载qiniu.js,cryption.js,events.js,使用实例在publish-answer.js
+	 * @param {Object} picPaths 图片本地路径
+	 * @param {Object} appId AppID
+	 * @param {Object} maxSize 最大长宽
+	 * @param {Object} spaceType 空间类型0：公共空间 1:私有空间
+	 * @param {Object} uploadSpace 上传的空间
+	 * @return {Object} data data.options为获取token的参数之一，data.thumbKey为获取token后获取缩略图地址的key值
+	 */
+	mod.getMultipleUploadDataOptions = function(picPaths, appId, maxSize, spaceType, uploadSpace) {
+		var data = {};
+		var desKey;
+		switch(appId) {
+			case 0:
+				break;
+			case 1:
+				break;
+			case 2: //资源平台
+				desKey = "jsy8004";
+				break;
+			case 3: //教宝云作业
+				desKey = "zy309309!";
+				break;
+			case 4: //教宝云盘
+				desKey = "jbyp@2017"
+				break;
+			case 5: //教宝云用户管理
+				desKey = "jbman456"
+				break;
+			case 6: //家校圈
+				desKey = "jxq789!@";
+				break;
+			default:
+				break;
+		}
+		var mainSpace;
+		if(spaceType) {
+			mainSpace = storageKeyName.QNPRISPACE; //七牛私有空间
+		} else {
+			mainSpace = storageKeyName.QNPUBSPACE; //七牛公共空间
+		}
+		var saveSpace = uploadSpace;
+		var thumbSpace = saveSpace + 'thumb/';
+		var QNFileName;
+		//		var QNFileNames =[];
+		data.thumbKeys = []
+		//		var ops=[];
+		var thumbKey;
+		var params = [];
+		for(var i in picPaths) {
+			var param = {};
+			param.Bucket = mainSpace;
+			QNFileName = events.getFileNameByPath(picPaths[i])
+			//			QNFileNames.push(QNFileName);
+			thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
+			data.thumbKeys.push(thumbKey);
+			param.Key = saveSpace + QNFileName;
+			param.Pops = "imageView2/2/w/" + maxSize + "/h/" + maxSize + "/format/png|saveas/" + thumbKey;
+			param.NotifyUrl = '';
+			params.push(param);
+		}
+		console.log("参数数据：" + JSON.stringify(params))
+		data.options = {
+			AppID: appId,
+			Param: encryptByDES(desKey, JSON.stringify(params))
+		}
+		console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
+		return data;
+	}
+	/**
 	 * 
 	 * @param {Object} url
 	 * @param {Object} data
@@ -294,13 +363,13 @@ var CloudFileUtil = (function($, mod) {
 		//task.start();
 	}
 	/**
-	 * 
+	 * 单张图片文件上传
 	 * @param {Object} path 要上传文件的目标地址
 	 * @param {Object} fileName 本地路径
 	 * @param {Object} QNUptoken 上传token
 	 * @param {Object} callback 回调函数
 	 */
-	mod.uploadFile = function(path, fileName, QNUptoken, callback) {
+	mod.uploadFile = function(tokenInfo, fileName, callback) {
 		//console.log('upload:' + fPath);
 		var task = plus.uploader.createUpload("http://upload.qiniu.com/", {
 				method: "POST"
@@ -314,9 +383,10 @@ var CloudFileUtil = (function($, mod) {
 				callback(upload, status);
 			}
 		);
-		task.addData("key", path);
+
+		task.addData("key", tokenInfo.Key);
 		//task.addData("scope", scope + ':' + type);
-		task.addData("token", QNUptoken);
+		task.addData("token", tokenInfo.Token);
 		task.addFile(fileName, {
 			"key": "file",
 			"name": "file"
@@ -325,9 +395,46 @@ var CloudFileUtil = (function($, mod) {
 		task.addEventListener("statechanged", onStateChanged, false);
 		task.start();
 	}
+	/**
+	 * 多张图片上传
+	 * @param {Object} paths 要上传文件的目标地址
+	 * @param {Object} fileNames 本地路径
+	 * @param {Object} QNUptokens 上传token
+	 * @param {Object} callback 回调函数
+	 */
+	mod.uploadFiles = function(fileNames, tokenInfos, callback) {
+		var tasks=[];
+		for(var i in tokenInfos) {
+			//console.log('upload:' + fPath);
+			var task = plus.uploader.createUpload("http://upload.qiniu.com/", {
+					method: "POST"
+				},
+				/**
+				 * 上传任务完成的监听
+				 * @param {Object} upload 上传任务对象
+				 * @param {Object} status 上传结果状态码，HTTP传输协议状态码，如果未获取传输状态则其值则为0，如上传成功其值通常为200。
+				 */
+				function(upload, status) {
+					callback(upload, status);
+				}
+			);
+			task.addData("key", tokenInfos[i].Key);
+			//task.addData("scope", scope + ':' + type);
+			task.addData("token", tokenInfos[i].Token);
+			task.addFile(fileNames[i], {
+				"key": 'file',
+				"name": "file"
+			});
+
+			//上传状态变化的监听
+			task.addEventListener("statechanged", onStateChanged, false);
+			tasks.push(task);
+		}
+		plus.uploader.startAll();
+	}
 	// 监听上传任务状态
 	function onStateChanged(upload, status) {
-		console.log('mui上传状态：' + upload.state)
+//		console.log('mui上传状态：' + upload.state)
 		if(upload.state == 4 && status == 200) {
 			// 上传完成
 			//			console.log("Upload success: " + upload.getFileName());
@@ -364,6 +471,10 @@ var CloudFileUtil = (function($, mod) {
 			}
 		});
 	}
+	/**
+	 * 在界面上放置图片
+	 * @param {Object} img
+	 */
 	mod.setPic = function(img) {
 		mod.files.push(img);
 		//	picPath=camero.getAbsolutePath(picPath);
@@ -376,10 +487,13 @@ var CloudFileUtil = (function($, mod) {
 		console.log("放置的图片信息:" + JSON.stringify(img));
 		pictures.appendChild(div);
 	}
+	/**
+	 * 放置删除图片的监听
+	 */
 	mod.setDelPicListener = function() {
 		//删除图标的点击事件
 		mui('#pictures').on('tap', '.icon-guanbi', function() {
-			mod.files.splice(imgs.indexOf(this.parentElement.img), 1);
+			mod.files.splice(mod.files.indexOf(this.parentElement.img), 1);
 			//删除图片
 			var pictures = document.getElementById('pictures');
 			pictures.removeChild(this.parentElement);

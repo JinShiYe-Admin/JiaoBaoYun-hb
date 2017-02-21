@@ -81,7 +81,7 @@ var slide_selector = (function(mod) {
 				setTimeout(function() {
 					mui.fire(mod.pages[0], 'cityInfo', curCity);
 					wd.close();
-				}, 2000)
+				}, 3000)
 				if(!isAddedSwipe && cities.length > 1) {
 					addSwipe();
 				}
@@ -172,7 +172,7 @@ var slide_selector = (function(mod) {
 				/**
 				 * 控制滑动的角度，为避免误操作，可自定义限制滑动角度；
 				 */
-				if(angle > 100 && angle < 185) {
+				if(angle > 160 && angle < 175) {
 					parentEvent(parent, "left");
 				}
 			});
@@ -185,7 +185,7 @@ var slide_selector = (function(mod) {
 				/**
 				 * 控制滑动的角度，为避免误操作，可自定义限制滑动角度；
 				 */
-				if(angle < 15) {
+				if(angle < 10) {
 					parentEvent(parent, "right");
 				}
 			});

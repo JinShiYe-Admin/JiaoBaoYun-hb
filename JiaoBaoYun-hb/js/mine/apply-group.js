@@ -112,6 +112,7 @@ var setButtonsListener = function() {
 					mstype: groupRoles[0],
 					urel: ''
 				}, wd, function(data) {
+					groupRoles=[];
 					wd.close();
 					console.log('申请入群获取的数据：' + JSON.stringify(data));
 					if(data.RspCode == '0000') {

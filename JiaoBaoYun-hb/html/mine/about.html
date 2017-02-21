@@ -23,7 +23,7 @@
 			</div>
 			<h5 id="version" style="text-align: center;">教宝云</h5>
 			<br />
-			
+
 			<ul id="list" class="mui-table-view ">
 				<li id="li0" class="mui-table-view-cell mui-media studentsdynamic">
 					<a class="mui-navigate-right">
@@ -49,22 +49,35 @@
   提供科教新闻栏目，实时掌握教育新闻等知识传递。求知问答专家在线，有问必答。提供在线辅导，金牌专家为您在线服务。学生作业在提交，且答案拍照上传在线比对答案，方便快捷！</p>-->
 
 		</div>
-		<script type="text/javascript">mui.ready(function() {
-	plus.runtime.getProperty(plus.runtime.appid, function(inf) {
-		console.log("当前应用版本：" + inf.version);
-		document.getElementById("version").innerHTML = '教宝云' + inf.version
-	})
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				plus.runtime.getProperty(plus.runtime.appid, function(inf) {
+					console.log('应用版本号:' + plus.runtime.version + ',资源升级版本号:' + inf.version)
+					document.getElementById("version").innerHTML = '教宝云' + getBigVersion(plus.runtime.version,inf.version)
+				})
 
-	mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-		if(this.id == 'li0') {
-			events.openNewWindow('function.html')
-		} else if(this.id == 'li1') {
+				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+					if(this.id == 'li0') {
+						events.openNewWindow('function.html')
+					} else if(this.id == 'li1') {
 
-		} else {
+					} else {
 
-		}
-	})
-})</script>
+					}
+				})
+			})
+			var getBigVersion = function(version0, version1) {
+				var version0Array = version0.split('.');
+				var version1Array = version1.split('.');
+				for(var i in version0Array) {
+					if(parseInt(version0Array[i]) > parseInt(version1Array[i])) {
+						return version0;
+					} else if(parseInt(version0Array[i]) < parseInt(version1Array[i])) {
+						return version1;
+					}
+				}
+			}
+		</script>
 	</body>
 
 </html>
