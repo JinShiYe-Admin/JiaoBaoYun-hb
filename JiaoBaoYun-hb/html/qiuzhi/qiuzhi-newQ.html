@@ -49,6 +49,14 @@
 				<label>匿名</label>
 				<input id="checkbox" name="checkbox" value="" type="checkbox">
 			</div>-->
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media ">
+					<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/answer.png" />
+					<div class="mui-media-body">他的回答</div>
+					<p id="AnswerNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
+
+				</li>
+				<ul/>
 
 		</div>
 
@@ -69,8 +77,9 @@
 				var data = plus.webview.currentWebview().data;
 				console.log('获取的数据：' + JSON.stringify(data));
 				channelData = data.allChannels;
-				channelData.splice(0, 1);
+//				channelData.splice(0, 1);
 				var curChannel = data.curChannel;
+				console.log('curChannel='+JSON.stringify(curChannel));
 				console.log('获取的数据111：' + JSON.stringify(channelData));
 				//2.获取符合条件的专家信息
 				if(channelData.length > 0) {
