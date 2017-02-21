@@ -25,7 +25,7 @@
 			}
 			
 			.mui-input-group {
-				margin-top: 10px;
+				margin-top: 3px;
 			}
 			
 			.mui-input-group:first-child {
@@ -96,6 +96,38 @@
 			.oauth-area .oauth-btn.disabled {
 				background-color: #ddd;
 			}
+			/*
+			 * athor:xbs
+			 * 
+			 */
+			
+			.mui-input-group:after {
+				background-color: #fff;
+			}
+			
+			.mui-input-group:before {
+				background-color: #fff;
+			}
+			
+			.row1:after {
+				background-color: #e4e4e4;
+			}
+			
+			input::-webkit-input-placeholder {
+				color: #808080;
+			}
+			
+			.regesterAndForget {
+				color: #00A5E0;
+				font-size: 1.2em;
+			}
+			
+			.head-portrait {
+				width: 70px;
+				height: 70px;
+				border-radius: 70px;
+				margin-top: 10px;
+			}
 		</style>
 
 	</head>
@@ -105,14 +137,17 @@
 			<h1 class="mui-title">登录</h1>
 		</header>
 		<div class="mui-content">
+			<div align="center">
+				<img id="group-img" src="../../image/dynamic/u101.png" class="head-portrait" /><br />
+			</div>
 			<form id='login-form' class="mui-input-group">
-				<div class="mui-input-row">
-					<label style="font-size: 15px;">账号</label>
-					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
+				<div class="mui-input-row row1">
+					<!--<label style="font-size: 15px;">账号</label>-->
+					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="账号/手机号码">
 				</div>
-				<div class="mui-input-row">
-					<label style="font-size: 15px;">密码</label>
-					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+				<div class="mui-input-row ">
+					<!--<label style="font-size: 15px;">密码</label>-->
+					<input id='password' type="password" class="mui-input-clear mui-input " placeholder="密码">
 				</div>
 			</form>
 			<!--<form class="mui-input-group">
@@ -125,21 +160,26 @@
 					</li>
 				</ul>
 			</form>-->
+
 			<div class="mui-content-padded">
-				<button id='login' class="mui-btn mui-btn-block mui-btn-primary" style="background: #13b7f6; border: none;">登录</button>
-				<div class="link-area">
-					<a id='reg' style="color: #333333;">注册账号</a>
-					<!--<span class="spliter">|</span>
-					<a id='forgetPassword'>忘记密码</a>-->
-				</div>
-			</div>
-			<div class="link-area oauth-area">
-				<a id="more" href="#sheet" style="color: #333333;">遇到登录问题？</a>
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary" style="background: #13b7f6; border: 
+
+none; margin-top: -15px;">登录</button>
+					<!--<div class="link-area">-->
+					<a id='forgetPassword' class="regesterAndForget">忘记密码?</a>
+					<!--<span class="spliter">|</span>-->
+					<a id='reg' class="regesterAndForget" style="float: right;">注册账号</a>
+					<!--</div>-->
+
 			</div>
 
 			<!--<div class="mui-content-padded oauth-area">
 
 			</div>-->
+
+		</div>
+		<div class="link-area oauth-area">
+			<a id="more" href="#sheet" style="color: #323232;font-size: 1.2em; top:5px;  position: relative; text-align: center;">遇到登录问题？</a>
 		</div>
 		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
@@ -170,7 +210,6 @@
 				mui.init({
 					//statusBarBackground: '#13b7f6'
 				});
-
 				$.plusReady(function() {
 					//---设置沉浸式---start---
 					Statusbar.barHeight(); //设置距离顶部的高度
@@ -192,7 +231,6 @@
 							}
 						}
 					}
-
 					//47.获取APP版本号
 					console.log('plus.os.name:' + plus.os.name);
 					var tempVVL = 'android';
@@ -217,9 +255,7 @@
 							mui.toast(data.RspTxt);
 						}
 					});
-
 					//---设置沉浸式---end---
-
 					events.preload('register_phoneNumber.html');
 					plus.screen.lockOrientation("portrait-primary");
 					var settings = app.getSettings();
@@ -247,7 +283,6 @@
 						//关闭 splash
 						plus.navigator.closeSplashscreen();
 					}, 600);
-
 					//检查 "登录状态/锁屏状态" 结束
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');
@@ -292,8 +327,8 @@
 										tempInfo.usex = tepI0000.usex;
 										tempInfo.utxt = tepI0000.utxt;
 										//解析省市代码
-										console.log('9999='+tepI0000.uarea);
-										if(tepI0000.uarea!=null) {
+										console.log('9999=' + tepI0000.uarea);
+										if(tepI0000.uarea != null) {
 											var tempArray = tepI0000.uarea.split('|');
 											if(tempArray.length > 0) {
 												var temp0 = tempArray[0].split(' ');
@@ -308,7 +343,6 @@
 												tempInfo.uarea = model_area;
 											}
 										}
-
 										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
 										//
 										events.infoChanged();
@@ -324,7 +358,6 @@
 							}
 						});
 					}
-
 					//登录按钮
 					loginButton.addEventListener('tap', function(event) {
 						if(!accountBox.value) {

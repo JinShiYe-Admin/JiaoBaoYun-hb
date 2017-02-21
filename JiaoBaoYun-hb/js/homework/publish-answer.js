@@ -59,7 +59,7 @@ mui.plusReady(function() {
 					var tokenInfo = datas.Data;
 					//压缩照片
 					compress.compressPIC(picPath, function(event) {
-						CloudFileUtil.uploadFile(tokenInfo.Key, event.target, tokenInfo.Token, function(uploadData, status) {
+						CloudFileUtil.uploadFile(tokenInfo, event.target, function(uploadData, status) {
 							console.log(JSON.stringify(uploadData));
 							img={
 								url:tokenInfo.Domain+tokenInfo.Key,

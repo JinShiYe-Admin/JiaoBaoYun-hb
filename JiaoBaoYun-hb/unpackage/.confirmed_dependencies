@@ -47,7 +47,8 @@
 			"js/publicProtocol.js",
 			"css/utils/common.css",
 			"js/utils/Statusbar.js",
-			"js/utils/app-update.js"
+			"js/utils/app-update.js",
+			"image/dynamic/u101.png"
 		],
 		"refer": [
 			"html/register/register_phoneNumber.html",
@@ -366,7 +367,8 @@
 		],
 		"refer": [
 			"html/index.html",
-			"html/index/index.html"
+			"html/index/index.html",
+			"html/register/login.html"
 		]
 	},
 	"html/quan/class_space.html": {
@@ -1872,7 +1874,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"js/publicHomeworkProtocol.js",
 			"css/homework/subjects-icon.css",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/homework/pic-detail.html"
@@ -2576,7 +2579,8 @@
 			"js/libs/jquery.js",
 			"js/utils/signHmacSHA1.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"fonts/iconfont.ttf"
 		]
 	},
 	"html/mine/qun_manage_1.html": {
