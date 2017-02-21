@@ -116,7 +116,7 @@
 		var ExpertsInfo;
 		mui.plusReady(function() {
 			var main = plus.webview.currentWebview(); //获取当前窗体对象
-			ExpertsInfo = main.data; //接收页面传入参数值
+			ExpertsInfo = main.data; //接收页面传入参数值，传过来的专家model
 			console.log('expert-detail.html:' + JSON.stringify(ExpertsInfo));
 			//3.获取某个用户的信息
 			getExpertsInfo(ExpertsInfo.UserId);
