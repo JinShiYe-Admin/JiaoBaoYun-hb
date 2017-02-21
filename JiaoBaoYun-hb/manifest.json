@@ -2805,7 +2805,9 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"image/utils/default_personalimage.png"
 				],
-				"refer": [],
+				"refer": [
+					"html/qiuzhi/expert-detail.html"
+				],
 				"priority": 0
 			},
 			"html/scienceeducation/senedu_show_main.html": {
@@ -3110,6 +3112,37 @@
 					"html/quan/group-pInfo.html",
 					"html/mine/qun_manage_info.html"
 				],
+				"priority": 0
+			},
+			"html/qiuzhi/expert-detail.html": {
+				"resources": [
+					"js/publicQiuzhiProtocol.js",
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"image/qiuzhi/comment.png",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"image/qiuzhi/yaoqing.png",
+					"css/iconfont/iconfont.css",
+					"image/qiuzhi/answer.png",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"image/qiuzhi/question.png",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"fonts/mui.ttf",
+					"fonts/iconfont.ttf",
+					"image/utils/default_personalimage.png",
+					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},
