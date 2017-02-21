@@ -2094,13 +2094,16 @@
 			"image/qiuzhi/channel-health.png",
 			"image/qiuzhi/channel-food.png",
 			"image/qiuzhi/channel-others.png",
-			"css/qiuzhi/qiuzhi-sub.css"
+			"css/qiuzhi/qiuzhi-sub.css",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-question.html",
 			"html/qiuzhi/qiuzhi-questionSub.html",
 			"html/qiuzhi/qiuzhi-answerDetail.html",
-			"html/qiuzhi/qiuzhi-newQ.html"
+			"html/qiuzhi/qiuzhi-newQ.html",
+			"html/qiuzhi/experts_main.html",
+			"html/qiuzhi/expert-detail.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-question.html": {
@@ -2616,6 +2619,54 @@
 		"refer": [
 			"html/quan/group-pInfo.html",
 			"html/mine/qun_manage_info.html"
+		]
+	},
+	"html/qiuzhi/experts_main.html": {
+		"resources": [
+			"js/mui.min.js",
+			"html/qiuzhi/experts_sub.html",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"html/qiuzhi/experts_sub.html"
+		]
+	},
+	"html/qiuzhi/expert-detail.html": {
+		"resources": [
+			"js/publicQiuzhiProtocol.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"image/qiuzhi/comment.png",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"image/qiuzhi/yaoqing.png",
+			"image/qiuzhi/answer.png",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"image/qiuzhi/question.png",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"image/utils/default_personalimage.png",
+			"fonts/mui.ttf",
+			"css/iconfont/iconfont.css",
+			"fonts/iconfont.ttf"
+		]
+	},
+	"html/qiuzhi/experts_sub.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	}
 }

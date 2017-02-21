@@ -194,6 +194,7 @@ var requestData = function() {
 			} else {
 				var table = document.body.querySelector('.mui-table-view');
 				table.innerHTML = ''
+				events.fireToPageNone('index.html','closeWaiting');
 			}
 		})
 	}
@@ -256,7 +257,7 @@ var getPersonalInfo = function(data, ids) {
 				console.log("重组后的数据：" + JSON.stringify(zonepArray));
 				setData(zonepArray);
 			} else {
-
+				events.fireToPageNone('index.html','closeWaiting');
 			}
 		})
 	}
@@ -321,7 +322,7 @@ var setData = function(data) {
 			var data1 = addData(i);
 			dynamiclistitem.addItem(table, data1, id);
 		}
-
+		events.fireToPageNone('index.html','closeWaiting');
 	}
 	//加载数据
 function addData(index) {
