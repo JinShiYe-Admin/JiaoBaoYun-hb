@@ -363,7 +363,7 @@ var CloudFileUtil = (function($, mod) {
 		//task.start();
 	}
 	/**
-	 * 
+	 * 单张图片文件上传
 	 * @param {Object} path 要上传文件的目标地址
 	 * @param {Object} fileName 本地路径
 	 * @param {Object} QNUptoken 上传token
@@ -396,7 +396,7 @@ var CloudFileUtil = (function($, mod) {
 		task.start();
 	}
 	/**
-	 * 
+	 * 多张图片上传
 	 * @param {Object} paths 要上传文件的目标地址
 	 * @param {Object} fileNames 本地路径
 	 * @param {Object} QNUptokens 上传token
@@ -422,7 +422,7 @@ var CloudFileUtil = (function($, mod) {
 			//task.addData("scope", scope + ':' + type);
 			task.addData("token", tokenInfos[i].Token);
 			task.addFile(fileNames[i], {
-				"key": "file",
+				"key": 'file',
 				"name": "file"
 			});
 
@@ -493,7 +493,7 @@ var CloudFileUtil = (function($, mod) {
 	mod.setDelPicListener = function() {
 		//删除图标的点击事件
 		mui('#pictures').on('tap', '.icon-guanbi', function() {
-			mod.files.splice(imgs.indexOf(this.parentElement.img), 1);
+			mod.files.splice(mod.files.indexOf(this.parentElement.img), 1);
 			//删除图片
 			var pictures = document.getElementById('pictures');
 			pictures.removeChild(this.parentElement);
