@@ -13,6 +13,7 @@
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
 
 	</head>
 
@@ -31,67 +32,67 @@
 				<div style="text-align: center;">
 					<img style="width: 50px;height: 50px;" src="../../image/utils/default_personalimage.png" />
 				</div>
-				<div style="text-align: center;">
-					<h4>教育、美食、健康</h4>
+				<div  style="text-align: center;">
+					<h4 id="ExpertChannels"></h4>
 				</div>
-				<p style="margin: 5px;font-size: 14px;">发福利大姐夫来得及福利大家乐福攻击力的价格的风格乐福攻击力的价格的</p>
+				<p id="UserNote" style="margin: 5px;font-size: 14px;"></p>
 				<hr style="height:1px;border:none;border-top:1px solid lightgray;" />
 			</div>
-			<div id="focus" style="margin: 20px;">
-				<div style="float: left;width: 70px;margin-left: 5px;background: ;">
+			<div id="focus" style="margin-top: 0px;margin-left: 20px;">
+				<div style="float: left;width: 70px;margin-left: 5px;">
 					<div>
 						关注的问题
 					</div>
-					<div style="margin-left: 20px;">
-						223
+					<div id="FocusAskNum" style="margin-left: 20px;">
+						
 					</div>
 				</div>
 				<div style="float: left;width: 70px;margin-left: 40px;">
 					<div>
 						他关注的人
 					</div>
-					<div style="margin-left: 20px;">
-						100
+					<div id="FocusManNum" style="margin-left: 20px;">
+						
 					</div>
 				</div>
 				<div style="float: left;width: 70px;margin-left: 40px;">
 					<div>
 						关注他的人
 					</div>
-					<div style="margin-left: 20px;">
-						300
+					<div id="IsFocusedManNum" style="margin-left: 20px;">
+						
 					</div>
 				</div>
 			</div>
 			<div style="width: device-width;margin-top: 70px;margin-left: 20px;margin-bottom: 20px;margin-right: 20px;">
-				<a class="mui-icon iconfont icon-support dynamic-icon-praise" style="color: gray;">1000</a>
+				<a id="IsLikeNum" class="mui-icon iconfont icon-support dynamic-icon-praise" style="color: gray;"></a>
 				<button class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;">关注</button>
 			</div>
-			<div id="">
+			<div>
 				<ul class="mui-table-view">
 					<li class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/answer.png" />
 						<div class="mui-media-body">他的回答</div>
-						<p style="font-size: 13px;margin-top: -20px;" class="mui-pull-right">30<span class="mui-icon mui-icon-forward"></span></p>
+						<p id="AnswerNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
 
 					</li>
 					<li class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/question.png" />
 						<div class="mui-media-body">他的提问
 							<div>
-								<p style="font-size: 13px;margin-top: -20px;" class="mui-pull-right">30<span class="mui-icon mui-icon-forward"></span></p>
+								<p id="AskNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
 					</li>
 					<li class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/comment.png" />
 						<div class="mui-media-body">他的评论
 							<div>
-								<p style="font-size: 13px;margin-top: -20px;" class="mui-pull-right">30<span class="mui-icon mui-icon-forward"></span></p>
+								<p id="CommentNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
 					</li>
 					<li class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/yaoqing.png" />
 						<div class="mui-media-body">邀请他回答
 							<div>
-								<p style="font-size: 13px;margin-top: -20px;" class="mui-pull-right">30<span class="mui-icon mui-icon-forward"></span></p>
+								<p style="font-size: 13px;margin-top: -20px;" class="mui-pull-right">0<span class="mui-icon mui-icon-forward"></span></p>
 					</li>
 				</ul>
 				</div>
@@ -100,15 +101,29 @@
 	</body>
 
 	<script type="text/javascript">
+		var nodes = {
+			AskNum: document.getElementById("AskNum"),
+			UserNote: document.getElementById("UserNote"),
+			FocusManNum: document.getElementById("FocusManNum"),
+			ExpertLevel: document.getElementById("ExpertLevel"),
+			FocusAskNum: document.getElementById("FocusAskNum"),
+			ExpertChannels: document.getElementById("ExpertChannels"),
+			IsLikeNum: document.getElementById("IsLikeNum"),
+			CommentNum: document.getElementById("CommentNum"),
+			IsFocusedManNum: document.getElementById("IsFocusedManNum"),
+			AnswerNum: document.getElementById("AnswerNum"),
+		}
 		mui.plusReady(function() {
+
 			//3.获取某个用户的信息
 			getExpertsInfo(33);
 		});
+		var ExpertsInfo;
 		//3.获取某个用户的信息
 		function getExpertsInfo(userId) {
 			//需要加密的数据
 			var comData = {
-				userId: userId//用户ID
+				userId: userId //用户ID
 			};
 			// 等待的对话框
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -118,12 +133,27 @@
 				console.log('3.获取某个用户的信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					//刷新界面
-					
+					ExpertsInfo = data.RspData;
+					addData();
+
 				} else {
 					mui.toast(data.RspTxt);
 				}
 			});
 		};
+
+		function addData() {
+			
+			nodes.AskNum.innerHTML = ExpertsInfo.AskNum+'<span class="mui-icon mui-icon-forward"></span>';
+			nodes.UserNote.innerText = ExpertsInfo.UserNote;
+			nodes.FocusManNum.innerText = ExpertsInfo.FocusManNum;
+			nodes.ExpertChannels.innerText = ExpertsInfo.ExpertChannels;
+			nodes.IsLikeNum.innerText = ExpertsInfo.IsLikeNum;
+			nodes.FocusAskNum.innerText = ExpertsInfo.FocusAskNum;
+			nodes.CommentNum.innerHTML = ExpertsInfo.CommentNum+'<span class="mui-icon mui-icon-forward"></span>';
+			nodes.IsFocusedManNum.innerText = ExpertsInfo.IsFocusedManNum;
+			nodes.AnswerNum.innerHTML = ExpertsInfo.AnswerNum+'<span class="mui-icon mui-icon-forward"></span>';
+		}
 	</script>
 
 </html>
