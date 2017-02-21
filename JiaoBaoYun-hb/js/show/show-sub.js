@@ -176,6 +176,8 @@ function addSomeEvent() {
  */
 var requestData = function() {
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+//		plus.webview.getWebviewById('index.html').querySelector('#bottom-show').off('tap');
+//		plus.webview.getWebviewById('index.html').querySelector('#tabclass').off('tap');
 		/**
 		 * 请求区域内的动态
 		 */
@@ -254,6 +256,8 @@ var getPersonalInfo = function(data, ids) {
 				}
 
 				console.log("重组后的数据：" + JSON.stringify(zonepArray));
+//				plus.webview.getWebviewById('index.html').querySelector('#bottom-show').on('tap');
+//				plus.webview.getWebviewById('index.html').querySelector('#tabclass').on('tap');
 				setData(zonepArray);
 			} else {
 

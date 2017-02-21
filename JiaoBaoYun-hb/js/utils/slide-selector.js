@@ -172,7 +172,7 @@ var slide_selector = (function(mod) {
 				/**
 				 * 控制滑动的角度，为避免误操作，可自定义限制滑动角度；
 				 */
-				if(angle > 175 && angle < 185) {
+				if(angle > 160 && angle < 175) {
 					parentEvent(parent, "left");
 				}
 			});
