@@ -2549,9 +2549,9 @@ select:focus {
 	content: '';
 	-webkit-transform: scaleY(.5);
 	transform: scaleY(.5);
-	background-color: #c8c7cc
+	background-color: ;
 }
-
+ 
 .mui-input-row label {
 	font-family: 'Helvetica Neue', Helvetica, sans-serif;
 	line-height: 1.1;
