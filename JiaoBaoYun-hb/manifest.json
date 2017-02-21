@@ -1258,8 +1258,7 @@
 				],
 				"refer": [
 					"html/index.html",
-					"html/index/index.html",
-					"html/register/login.html"
+					"html/index/index.html"
 				],
 				"priority": 0
 			},
@@ -1471,8 +1470,7 @@
 					"js/quan/aboutme.js",
 					"image/quan/leave-bg.png",
 					"image/dynamic/u101.png",
-					"css/quan/about-me.css",
-					"css/utils/bubble.css"
+					"css/quan/about-me.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -2098,12 +2096,7 @@
 					"js/utils/RSAEncrypt.js",
 					"css/quan/class_space.css",
 					"js/libs/crypto-js/crypto-js.js",
-					"css/quan/custom-textarea.css",
-					"js/utils/cryption.js",
-					"js/utils/compress.js",
-					"css/homework/publish-answer.css",
-					"js/utils/CloudFileUtil.js",
-					"js/qiniu/qiniu.js"
+					"css/quan/custom-textarea.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -2373,8 +2366,7 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"js/publicHomeworkProtocol.js",
 					"css/homework/subjects-icon.css",
-					"css/iconfont/iconfont.css",
-					"image/utils/default_personalimage.png"
+					"css/iconfont/iconfont.css"
 				],
 				"refer": [
 					"html/homework/pic-detail.html"
@@ -2580,13 +2572,16 @@
 					"image/qiuzhi/channel-health.png",
 					"image/qiuzhi/channel-food.png",
 					"image/qiuzhi/channel-others.png",
-					"css/qiuzhi/qiuzhi-sub.css"
+					"css/qiuzhi/qiuzhi-sub.css",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
 					"html/qiuzhi/qiuzhi-questionSub.html",
 					"html/qiuzhi/qiuzhi-answerDetail.html",
-					"html/qiuzhi/qiuzhi-newQ.html"
+					"html/qiuzhi/qiuzhi-newQ.html",
+					"html/qiuzhi/expert-detail.html",
+					"html/qiuzhi/experts_main.html"
 				],
 				"priority": 0
 			},
@@ -2897,8 +2892,7 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js",
-					"fonts/iconfont.ttf"
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3086,8 +3080,7 @@
 					"js/libs/jquery.js",
 					"js/utils/signHmacSHA1.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js",
-					"fonts/iconfont.ttf"
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3119,6 +3112,56 @@
 					"html/quan/group-pInfo.html",
 					"html/mine/qun_manage_info.html"
 				],
+				"priority": 0
+			},
+			"html/qiuzhi/expert-detail.html": {
+				"resources": [
+					"image/qiuzhi/yaoqing.png",
+					"image/qiuzhi/answer.png",
+					"image/qiuzhi/question.png",
+					"js/publicQiuzhiProtocol.js",
+					"image/qiuzhi/comment.png",
+					"js/libs/crypto-js/crypto-js.js",
+					"image/utils/default_personalimage.png",
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"css/iconfont/iconfont.css",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"fonts/iconfont.ttf",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/experts_main.html": {
+				"resources": [
+					"fonts/mui.ttf",
+					"html/qiuzhi/experts_sub.html",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"css/utils/common.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/experts_sub.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/utils/common.css"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},

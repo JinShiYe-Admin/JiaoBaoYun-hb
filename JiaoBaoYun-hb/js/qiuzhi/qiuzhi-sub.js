@@ -16,22 +16,31 @@ mui.plusReady(function() {
 		channelInfo = e.detail.data.curChannel; //选择的话题
 		allChannels = e.detail.data.allChannels; //所有的话题
 		//话题--求知
-//		mod.model_Channel = {
-//			TabId: '', //话题ID
-//			ChannelCode: '', //话题编号
-//			ChannelName: '' //话题名称
-//		}
+		//		mod.model_Channel = {
+		//			TabId: '', //话题ID
+		//			ChannelCode: '', //话题编号
+		//			ChannelName: '' //话题名称
+		//		}
+		//获取所有符合条件问题
 		requestChannelList(channelInfo);
+		//清理问题列表
 		events.clearChild(document.getElementById('list-container'));
+		//清理专家列表
+		resetExpertsList();
 		//2.获取符合条件的专家信息
 		getExpertsArray(channelInfo.TabId);
 
 	});
 
-	//加载h5刷新方式
+	//加载h5下拉刷新方式
 	h5fresh.addRefresh(function() {
 		pageIndex = 1;
-		events.clearChild(document.getElementById('list-container'))
+		//清理问题列表
+		events.clearChild(document.getElementById('list-container'));
+		//清理专家列表
+		resetExpertsList();
+		//2.获取符合条件的专家信息
+		getExpertsArray(channelInfo.TabId);
 		//刷新的界面实现逻辑
 		requestChannelList(channelInfo);
 	})
@@ -101,9 +110,11 @@ function getExpertsArray(channelId) {
 						}
 					}
 				}
-				console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+				console.log('专家循环遍历后的值：' + JSON.stringify(tempRspData));
 				//刷新界面
-				
+				for(var i = 0; i < tempRspData.length; i++) {
+					expertsItem(tempRspData[i]);
+				}
 			});
 		} else {
 			mui.toast(data.RspTxt);
@@ -114,6 +125,32 @@ function getExpertsArray(channelId) {
 /**
  * 放置专家数据
  */
+function expertsItem(data) {
+	var element = document.createElement('a');
+	element.id = 'experts_' + data.TabId;
+	element.className = 'mui-control-item';
+	element.setAttribute('data-info', JSON.stringify(data));
+	element.innerHTML = '<img src="' + updateHeadImg(data.uimg, 2) + '" />' +
+		'<p id="experts_name_' + data.TabId + '" class="mui-ellipsis"></p>';
+	var table = document.getElementById("experts_sc");
+	var allExpert = document.getElementById("allExpert");
+	table.insertBefore(element, allExpert);
+	document.getElementById("experts_name_" + data.TabId).innerText = data.unick;
+}
+
+/**
+ * 重置专家列表
+ */
+function resetExpertsList() {
+	var table = document.getElementById("experts_sc");
+	table.innerHTML = '<a id="allExpert" class="mui-control-item" style="width: 8rem;padding: 1rem 0px;">' +
+		'<span class="mui-icon iconfont icon-gengduo" style="color: #12B7F5;font-size: 28px;margin: 0px;"></span>' +
+		'<p style="color: #12B7F5;">查看全部</p>' +
+		'</a>';
+	var scroll = mui('#experts_sw').scroll();
+	scroll.scrollTo(0, 0, 100); //100毫秒滚动到顶
+}
+
 /**
  * 请求求知数据
  */
@@ -166,7 +203,7 @@ var getInnerHTML = function(cell) {
 		'<div class="imgs-container">' + getImgs(cell.AnswerEncAddr) + '</div>' +
 		'</div>' +
 		'<div class="extra-info"></div>' +
-		'<p>' + cell.IsLikeNum + '赞·' + cell.CommentNum + '评论·关注<p>' +
+		'<p>' + cell.IsLikeNum + '赞·' + cell.CommentNum + '评论·关注</p>' +
 		'</a>'
 	return inner;
 }
@@ -228,15 +265,30 @@ var setListener = function() {
 		console.log(JSON.stringify(allChannels))
 		events.openNewWindowWithData('qiuzhi-newQ.html', { curChannel: channelInfo, allChannels: allChannels });
 	});
+
 	//标题点击事件
 	mui('.mui-table-view').on('tap', '.ask-title', function() {
 		events.fireToPageNone('qiuzhi-question.html', 'askId', this.getAttribute('askId'));
 		events.fireToPageNone('qiuzhi-questionSub.html', 'askId', this.getAttribute('askId'));
 		plus.webview.getWebviewById('qiuzhi-question.html').show();
 	});
+
+	//点击回答
 	mui('.mui-table-view').on('tap', '.answer-content', function() {
 		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', this.answerInfo);
 		console.log('传递的answerInfo:' + JSON.stringify(this.answerInfo));
 		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
+	});
+
+	//点击专家列表
+	mui('#experts_sc').on('tap', '.mui-control-item', function() {
+		//console.log('点击专家列表 ' + this.id);
+		//console.log('当前话题的信息 ' + JSON.stringify(channelInfo));
+		if(this.id == 'allExpert') { //查看某个话题的全部专家
+			events.openNewWindowWithData('experts_main.html', channelInfo);
+		} else { //查看某个话题的某个专家
+			//console.log('当前专家的信息 ' + JSON.stringify(JSON.parse(this.getAttribute('data-info'))));
+			events.openNewWindowWithData('expert-detail.html', JSON.parse(this.getAttribute('data-info')));
+		}
 	});
 }
