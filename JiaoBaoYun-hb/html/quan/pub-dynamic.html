@@ -90,15 +90,65 @@
 			//				});
 			events.addTap('take_camero', function() {
 				mui.toast('此功能暂未开放');
-				//					camera.getVideo(camera.getCamera(), function(path) {
+				//					camera.getVideo(camera.getCamera(), function(path) {1
 
 				//					});
 			});
 			events.addTap('get_gallery', function() {
-				mui.toast('此功能暂未开放');
-				//					gallery.getMultiplePic(function(paths) {
+				gallery.getSinglePic(function(paths) {
+					console.log(paths);
+					
+				plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				var MainSpace = storageKeyName.QNPUBSPACE;
+				var saveSpace;
+				var thumbSpace;
+				saveSpace = storageKeyName.PERSONALSPACE;
+				thumbSpace = storageKeyName.PERSONALSPACETHUMB;
+				var QNFileName = events.getFileNameByPath(paths);
+				var thumbBase64 = Qiniu.URLSafeBase64Encode(MainSpace + ":" + thumbSpace + QNFileName);
+				var ops = "imageView2/2/w/200/h/200/format/png|saveas/" + thumbBase64;
+				var param = {
+					Bucket: MainSpace,
+					Key: saveSpace + QNFileName,
+					Pops: ops,
+					NotifyUrl: ''
+				}
+				console.log("参数数据：" + JSON.stringify(param))
+				var key = 'jxq789!@';
+				var data = {
+					AppID: "6",
+					Param: encryptByDES(key, JSON.stringify(param))
+				}
+				console.log("加密后的信息：" + encryptByDES(key, JSON.stringify(param)));
+				var img;
+				CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data, function(datas) {
+					console.log("获取的数据：" + JSON.stringify(datas));
+					if(datas.Status == 1) {
+						var tokenInfo = datas.Data;
+						//压缩照片
+						compress.compressPIC(paths, function(event) {
+							CloudFileUtil.uploadFile(tokenInfo.Key, event.target, tokenInfo.Token, function(uploadData, status) {
+								console.log(JSON.stringify(uploadData));
+								img = {
+									url: tokenInfo.Domain + tokenInfo.Key,
+									thumb: tokenInfo.OtherKey[thumbBase64],
+									type: 1
+								}
+								plus.nativeUI.closeWaiting();
+								console.log(JSON.stringify(img));
+								setPic(img);
+							});
+						})
 
-				//					});
+					}
+				}, function(xhr, type, errorThrown) {
+					console.log("错误类型：" + type + errorThrown);
+					plus.nativeUI.closeWaiting();
+				});
+			
+//					plus.nativeUI.showWaiting(storageKeyName.WAITING);
+//					CloudFileUtil.getSingleUploadDataOptions(paths, '6', '200', '0', storageKeyName.PERSONALSPACE)
+				});
 			});
 
 			//发布按钮
@@ -318,6 +368,13 @@
 			console.log("放置的图片信息:" + JSON.stringify(img));
 			pictures.appendChild(div);
 		}
+			//删除图标的点击事件
+	mui('#pictures').on('tap', '.icon-guanbi', function() {
+		imgs.splice(imgs.indexOf(this.parentElement.img), 1);
+		//删除图片111
+		pictures.removeChild(this.parentElement);
+	})
+
 	</script>
 
 </html>

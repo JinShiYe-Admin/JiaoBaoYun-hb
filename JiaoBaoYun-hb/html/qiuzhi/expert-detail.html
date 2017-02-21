@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav common-background-bar">
+			<h1 id="title" class="mui-title">专家</h1>
+			<div id="random_icon">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left common-color-white"></a>
+
+				<!--<a id="pub-dynamic" class="mui-icon mui-icon-compose  mui-pull-right mui-plus-visible" style="padding-left: 20px;"></a>-->
+			</div>
+		</header>
+
+		<div class="mui-content" style="background-color: white;">
+			<div id="expertInfo" style="height: 150px;background-image:url(../../image/quan/leave-bg.png) ;"><br/>
+				<div style="text-align: center;">
+					<img style="width: 50px;height: 50px;" src="../../image/utils/default_personalimage.png" />
+				</div>
+				<div  style="text-align: center;">
+					<h4 id="ExpertChannels"></h4>
+				</div>
+				<p id="UserNote" style="margin: 5px;font-size: 14px;"></p>
+				<hr style="height:1px;border:none;border-top:1px solid lightgray;" />
+			</div>
+			<div id="focus" style="margin-top: 0px;margin-left: 20px;">
+				<div style="float: left;width: 70px;margin-left: 5px;">
+					<div>
+						关注的问题
+					</div>
+					<div id="FocusAskNum" style="margin-left: 20px;">
+						
+					</div>
+				</div>
+				<div style="float: left;width: 70px;margin-left: 40px;">
+					<div>
+						他关注的人
+					</div>
+					<div id="FocusManNum" style="margin-left: 20px;">
+						
+					</div>
+				</div>
+				<div style="float: left;width: 70px;margin-left: 40px;">
+					<div>
+						关注他的人
+					</div>
+					<div id="IsFocusedManNum" style="margin-left: 20px;">
+						
+					</div>
+				</div>
+			</div>
+			<div style="width: device-width;margin-top: 70px;margin-left: 20px;margin-bottom: 20px;margin-right: 20px;">
+				<a id="IsLikeNum" class="mui-icon iconfont icon-support dynamic-icon-praise" style="color: gray;"></a>
+				<button class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;">关注</button>
+			</div>
+			<div>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-media ">
+						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/answer.png" />
+						<div class="mui-media-body">他的回答</div>
+						<p id="AnswerNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
+
+					</li>
+					<li class="mui-table-view-cell mui-media ">
+						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/question.png" />
+						<div class="mui-media-body">他的提问
+							<div>
+								<p id="AskNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
+					</li>
+					<li class="mui-table-view-cell mui-media ">
+						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/comment.png" />
+						<div class="mui-media-body">他的评论
+							<div>
+								<p id="CommentNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
+					</li>
+					<li class="mui-table-view-cell mui-media ">
+						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/yaoqing.png" />
+						<div class="mui-media-body">邀请他回答
+							<div>
+								<p style="font-size: 13px;margin-top: -20px;" class="mui-pull-right">0<span class="mui-icon mui-icon-forward"></span></p>
+					</li>
+				</ul>
+				</div>
+
+				</div>
+	</body>
+
+	<script type="text/javascript">
+		var nodes = {
+			AskNum: document.getElementById("AskNum"),
+			UserNote: document.getElementById("UserNote"),
+			FocusManNum: document.getElementById("FocusManNum"),
+			ExpertLevel: document.getElementById("ExpertLevel"),
+			FocusAskNum: document.getElementById("FocusAskNum"),
+			ExpertChannels: document.getElementById("ExpertChannels"),
+			IsLikeNum: document.getElementById("IsLikeNum"),
+			CommentNum: document.getElementById("CommentNum"),
+			IsFocusedManNum: document.getElementById("IsFocusedManNum"),
+			AnswerNum: document.getElementById("AnswerNum"),
+		}
+		mui.plusReady(function() {
+
+			//3.获取某个用户的信息
+			getExpertsInfo(33);
+		});
+		var ExpertsInfo;
+		//3.获取某个用户的信息
+		function getExpertsInfo(userId) {
+			//需要加密的数据
+			var comData = {
+				userId: userId //用户ID
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//3.获取某个用户的信息
+			postDataQZPro_getUserInfo(comData, wd, function(data) {
+				wd.close();
+				console.log('3.获取某个用户的信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+					//刷新界面
+					ExpertsInfo = data.RspData;
+					addData();
+
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		};
+
+		function addData() {
+			
+			nodes.AskNum.innerHTML = ExpertsInfo.AskNum+'<span class="mui-icon mui-icon-forward"></span>';
+			nodes.UserNote.innerText = ExpertsInfo.UserNote;
+			nodes.FocusManNum.innerText = ExpertsInfo.FocusManNum;
+			nodes.ExpertChannels.innerText = ExpertsInfo.ExpertChannels;
+			nodes.IsLikeNum.innerText = ExpertsInfo.IsLikeNum;
+			nodes.FocusAskNum.innerText = ExpertsInfo.FocusAskNum;
+			nodes.CommentNum.innerHTML = ExpertsInfo.CommentNum+'<span class="mui-icon mui-icon-forward"></span>';
+			nodes.IsFocusedManNum.innerText = ExpertsInfo.IsFocusedManNum;
+			nodes.AnswerNum.innerHTML = ExpertsInfo.AnswerNum+'<span class="mui-icon mui-icon-forward"></span>';
+		}
+	</script>
+
+</html>

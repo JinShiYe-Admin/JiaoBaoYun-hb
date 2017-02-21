@@ -10,6 +10,7 @@ mui.plusReady(function() {
 	var title = document.getElementById('workPage-title');
 	var roles = document.getElementById('workPage-roles');
 	var btn_more = document.getElementById('more');
+	btn_more.style.display='none';
 	window.addEventListener('postClasses', function(e) {
 			var data = e.detail.data;
 			console.log('作业主界面获取信息：' + JSON.stringify(e.detail.data));
@@ -18,10 +19,10 @@ mui.plusReady(function() {
 			setChoices(title, roles, btn_more);
 		})
 		//三道杠的点击事件
-	events.addTap('more', function() {
-			//通知子页面，显示、关闭菜单 
-			events.fireToPageNone('homework-tea-sub.html', 'togglePop');
-		})
+//	events.addTap('more', function() {
+//			//通知子页面，显示、关闭菜单 
+//			events.fireToPageNone('homework-tea-sub.html', 'togglePop');
+//		})
 		//相机点击事件
 	events.addTap('icon-camero', function() {
 		events.fireToPageWithData('publish-answer.html', 'roleInfo', {
@@ -34,14 +35,21 @@ mui.plusReady(function() {
 	roles.addEventListener("toggle", function(event) {
 		if(event.detail.isActive) {
 			role=30;
-			btn_more.style.display='block';
+//			btn_more.style.display='block';
 		} else {
 			role=2;
-			btn_more.style.display='none';
+//			btn_more.style.display='none';
 		}
 		events.fireToPageNone('homework-tea-sub.html', 'roleChanged', role)
 	})
-
+	var _back=mui.back;
+	mui.back=function(){
+		if(plus.webview.currentWebview().opener().id="homework-commented.html"){
+			plus.webview.getWebviewById('index.html').show();
+		}else{
+			_back();
+		}
+	}
 })
 //向子页面传递数据
 var sendMsgToSub = function() {
@@ -64,7 +72,7 @@ var setChoices = function(title, roles, btn_m) {
 		}
 		title.style.display = 'none';
 		roles.style.display = 'inline-block';
-		btn_m.style.display = 'none';
+//		btn_m.style.display = 'none';
 		role = 2;
 
 	} else if(teacherClasses.length > 0) {
@@ -72,12 +80,12 @@ var setChoices = function(title, roles, btn_m) {
 		roles.style.display = 'none';
 		title.innerText = '我发布的';
 		role = 2;
-		btn_m.style.display = 'none';
+//		btn_m.style.display = 'none';
 	} else if(studentClasses.length > 0) {
 		title.style.display = 'inline-block';
 		roles.style.display = 'none';
 		title.innerText = '学生作业'
-		btn_m.style.display = 'block'
+//		btn_m.style.display = 'block'
 		role = 30;
 	}
 	//向子页面传递数据

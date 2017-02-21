@@ -69,11 +69,14 @@ var dynamiclistitem = (function($, mod) {
 	 * @param {Object} data
 	 */
 	mod.addImage = function(ulElement, liElement, data, id) {
-		var SCREEN_WIDTH = plus.screen.resolutionWidth; //获取设备屏幕宽度分辨率
-		var imageData = data[1]; //[[ImageUrlList],ImageNum]动态内容的图片路径数组,图片总数量
-		var ImageUrlList = imageData[0]; //图片路径数组
-		var ImageNum = imageData[1]; //图片总数量
+		var SCREEN_WIDTH = plus.screen.resolutionWidth; //获取设备屏幕宽度分辨率111
+		var ImageUrlList = data[1]; //图片路径数组
+		var ImageNum = ImageUrlList.length; //图片总数量
 		var html = '';
+		console.log('ImageUrlList='+JSON.stringify(ImageUrlList));
+//		if(pageFlag!=0){
+//			ImageNum=0;
+//		}
 
 		if(ImageNum == 1) { //一张图片时
 			var html1 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-image-div" style="height: ' + SCREEN_WIDTH + 'px;">';

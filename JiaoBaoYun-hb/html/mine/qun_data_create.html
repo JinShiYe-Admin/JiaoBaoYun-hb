@@ -131,7 +131,7 @@
 						<label id="type_name_la">身份:</label>
 						<a href="#popover" id="type_name">
 							<font class="mui-input-row mui-checkbox mui-left">
-								<label id="type_name_font"style="padding-left: 40px;">学生</label>
+								<label id="type_name_font" style="padding-left: 40px;">学生</label>
 								<input id="type_cb" name="checkbox1" type="checkbox" checked style="top: -7px;left: 1px;">
 							</font>
 							<div id="arrowdown" class="mui-icon mui-icon-arrowdown"></div>
@@ -254,7 +254,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>教龄:</label>
-								<input id="tea_expsch" type="number" oninput="if(value.length>10)value=value.slice(0,10)" class="mui-input-clear">
+								<input id="tea_expsch" type="tel" class="mui-input-clear">
 							</div>
 						</li>
 						<li class="mui-table-view-cell" style="display: none;">
@@ -356,6 +356,23 @@
 					tapPopover();
 				});
 
+				document.getElementById('tea_expsch').addEventListener('input', function() {
+					console.log('this ' + this.value + '|' + this.value.length);
+					if(this.value.length > 2) {
+						this.value = this.value.slice(0, 2)
+					}
+					var value = this.value;
+					var temp = '';
+					console.log('value ' + value);
+					for(var i = 0; i < value.length; i++) {
+						if(value[i].replace(/^[1-9]\d*|0$/, '') == '') {
+							console.log('this.value ' + i + '|' + value[i]);
+							temp = temp + value[i];
+						}
+					}
+					this.value = temp;
+				});
+
 				/**
 				 * 点击popover的效果
 				 */
@@ -418,7 +435,7 @@
 							sub: sub, //科目，老师用,其他填0
 							gutid: '0' //关联的群账号ID，用户在群里的账号ID,无则为0
 						};
-						var gid=data.gid;
+						var gid = data.gid;
 						console.log('comData:' + JSON.stringify(comData));
 						// 等待的对话框
 						var wd = events.showWaiting();
