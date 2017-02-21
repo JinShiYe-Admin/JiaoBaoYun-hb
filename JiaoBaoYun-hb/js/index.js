@@ -259,7 +259,7 @@ mui.plusReady(function() {
 		waitingDia = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		//44.获取个人的订制城市
 		postDataPro_PostUTcity(comData, waitingDia, function(data) {
-//			wd.close();
+			waitingDia.close();
 			var eduArray = [];
 			console.log('获取个人的订制城市科教频道:' + JSON.stringify(data));
 			if(data.RspCode == 0) {
@@ -300,7 +300,7 @@ mui.plusReady(function() {
 					setShowCity(0);
 					console.log('修改后的最终值为:' + JSON.stringify(eduArray));
 				} else {
-					waitingDia.close();
+//					waitingDia.close();
 					mui.toast('暂无科教频道的定制城市，请选择')
 				}
 
@@ -359,7 +359,7 @@ mui.plusReady(function() {
 		waitingDia= plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		//44.获取个人的订制城市
 		postDataPro_PostUTcity(comData, waitingDia, function(data) {
-			
+			waitingDia.close();
 			var showArray = [];
 			console.log('获取个人的订制城市展示频道:' + JSON.stringify(data));
 			if(data.RspCode == 0) {
@@ -393,7 +393,7 @@ mui.plusReady(function() {
 					console.log('修改后的最终值为:' + JSON.stringify(showArray));
 				} else {
 					mui.toast('暂无订阅展示频道的城市，请订阅！');
-					waitingDia.close();
+//					waitingDia.close();
 				}
 
 			} else {

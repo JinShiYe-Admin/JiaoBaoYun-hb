@@ -43,7 +43,9 @@ mui.plusReady(function() {
 		getExpertsArray(channelInfo.TabId);
 		//刷新的界面实现逻辑
 		requestChannelList(channelInfo);
-	})
+	}, {
+		height: 200
+	});
 	setListener();
 	pullUpFresh();
 });
@@ -61,10 +63,9 @@ function getExpertsArray(channelId) {
 		pageSize: '0' //每页记录数,传入0，获取总记录数
 	};
 	// 等待的对话框
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	var wd = events.showWaiting();
 	//2.获取符合条件的专家信息
 	postDataQZPro_getExpertsByCondition(comData, wd, function(data) {
-		wd.close();
 		console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			//添加人员信息
@@ -87,9 +88,10 @@ function getExpertsArray(channelId) {
 				vtp: 'g' //查询类型,p(个人)g(id串)
 			}
 			console.log('tempData:' + JSON.stringify(tempData));
+			// 等待的对话框
+			var wd2 = events.showWaiting();
 			//21.通过用户ID获取用户资料
-			postDataPro_PostUinf(tempData, wd, function(data1) {
-				wd.close();
+			postDataPro_PostUinf(tempData, wd2, function(data1) {
 				console.log('21.获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 				if(data1.RspCode == 0) {
 					//循环当前的个人信息返回值数组
@@ -115,10 +117,12 @@ function getExpertsArray(channelId) {
 				for(var i = 0; i < tempRspData.length; i++) {
 					expertsItem(tempRspData[i]);
 				}
+				wd2.close();
 			});
 		} else {
 			mui.toast(data.RspTxt);
 		}
+		wd.close();
 	});
 };
 
@@ -164,7 +168,7 @@ function requestChannelList(channelInfo) {
 		pageSize: 10 //每页记录数,传入0，获取总记录数
 	};
 	// 等待的对话框
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	var wd = events.showWaiting();
 	//4.获取所有符合条件问题
 	postDataQZPro_getAsksByCondition(comData, wd, function(data) {
 		wd.close();

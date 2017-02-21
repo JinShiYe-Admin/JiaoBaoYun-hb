@@ -74,7 +74,7 @@ var class_space = (function(mod) {
 	var createInnerHtml = function(item) {
 		var inner = '<div><div class="mui-pull-left head-img" >' +
 			'<img class="head-portrait" src="' + getUImg(item.uimg) + '"/>' +
-			'<p class="single-line">' + events.shortForString(item.unick, 6) + '</p>' +
+			'<p class="single-line">' + events.shortForString(item.bunick?item.bunick:item.ugname, 6) + '</p>' +
 			'</div>' +
 			'<div class="chat_content_left">' +
 			'<div class="chat-body"><p class="chat-words">' +
@@ -114,13 +114,15 @@ var class_space = (function(mod) {
 		 */
 	var imgsize = 0;
 	var getPersonalImg = function(ids) {
+		var comData = {
+			top: -1,//选择条数
+			vvl: postData.classId.toString(),//群ID或IDS,查询的值,多个用逗号隔开
+			vvl1:-1//群员类型，0家长,1管理员,2老师,3学生,-1取全部
+		};
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
-		postDataPro_PostUinf({
-			vvl: ids,
-			vtp: 'g'
-		}, wd, function(pInfo) {
+		postDataPro_PostGusers(comData, wd, function(pInfo) {
 			console.log('获取的个人信息:' + JSON.stringify(pInfo))
-			wd.close();
+//			wd.close();
 			if(pInfo.RspCode == '0000') {
 				var personalData = pInfo.RspData;
 				for(var i in list) {
@@ -131,8 +133,27 @@ var class_space = (function(mod) {
 						}
 					}
 				}
-				setData();
+				postDataPro_PostUmk({vvl:ids.toString()},wd,function(remarkData){
+					console.log('获取的备注信息：'+JSON.stringify(remarkData));
+					wd.close();
+					if(remarkData.RspCode==0){
+						var buData=remarkData.RspData;
+						for(var i in list){
+							for(var j in buData){
+								if(list[i].utid==buData[i].butid){
+									jQuery.extend(list[i],buData[i]);
+									break;
+								}
+							}
+						}
+					}else{
+						console.log('没啥备注信息。')
+					}
+					setData();
+				})
+				
 			} else {
+				wd.close();
 				console.log(pInfo.RspTxt);
 			}
 
@@ -178,9 +199,9 @@ var class_space = (function(mod) {
 })(class_space || {});
 var pageIndex = 1;
 var pageSize = 10;
-
+var postData
 mui.plusReady(function() {
-	var postData = plus.webview.currentWebview().data;
+	postData = plus.webview.currentWebview().data;
 	postData.userId = parseInt(postData.userId);
 	events.preload('classSpace-persons.html',200);
 	setReaded(postData.userId, postData.classId);
