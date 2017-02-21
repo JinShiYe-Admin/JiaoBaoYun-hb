@@ -6,7 +6,6 @@ var storageKeyName = (function(mod) {
 	mod.AUTOLOGIN = 'autoLogin'; //登录信息
 
 	//---开发---start---
-
 //	mod.MAINURL = 'http://192.168.0.44:8511/api/CloudApi/'; //主url
 //	mod.MAINJIAOXIAOURL = 'http://192.168.0.100:8081/JiaoBaoCloudService/'; //家校圈url
 //	mod.MAINHOMEWORKURL = 'http://192.168.0.211:802/';//作业主url
@@ -40,12 +39,12 @@ var storageKeyName = (function(mod) {
 	
 
 	//--七牛空间和接口--开发--start
-		mod.QNGETUPLOADTOKEN='http://114.215.222.186:8004/Api/QiNiu/GetUpLoadToKen';
+//		mod.QNGETUPLOADTOKEN='http://114.215.222.186:8004/Api/QiNiu/GetUpLoadToKen';
 	//--七牛空间和接口--开发 --end
 	
 	
 	//--七牛空间和接口--测试--start
-//	  	mod.QNGETUPLOADTOKEN='http://114.215.222.186:8005/Api/QiNiu/GetUpLoadToKen';
+	  	mod.QNGETUPLOADTOKEN='http://114.215.222.186:8005/Api/QiNiu/GetUpLoadToKen';
 	//--七牛空间和接口--测试--end
 	//七牛存储子空间
 	mod.QNPUBSPACE="pb";//七牛公开空间
