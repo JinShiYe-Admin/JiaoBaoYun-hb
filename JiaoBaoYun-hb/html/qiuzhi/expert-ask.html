@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<link href="../../css/qiuzhi/qiuzhi-inviteAnswerSub.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">邀请他回答</h1>
+		</header>
+		<!--<div class="mui-scroll">
+				<ul id="list-container" class="mui-table-view">
+				</ul>
+		</div>-->
+		<div id="refreshContainer" class="mui-content mui-fullscreen" style="z-index:0">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul id="list-container" class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<img src="../../image/cloud/cloud_0_tuku.png">
+							<div>
+								<p><span>李云</span>邀请<span>刘老师</span>回答问题</p>
+								<p>[教育]史上严重的毁书事件层造成哪些名著失传？</p>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<img src="../../image/cloud/cloud_0_tuku.png">
+							<div>
+								<p><span>李云</span>邀请<span>刘老师</span>回答问题</p>
+								<p>[教育]史上严重的毁书事件层造成哪些名著失传？</p>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<img src="../../image/cloud/cloud_0_tuku.png">
+							<div>
+								<p><span>李云</span>邀请<span>刘老师</span>回答问题</p>
+								<p>[教育]史上严重的毁书事件层造成哪些名著失传？</p>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<img src="../../image/cloud/cloud_0_tuku.png">
+							<div>
+								<p><span>李云</span>邀请<span>刘老师</span>回答问题</p>
+								<p>[教育]史上严重的毁书事件层造成哪些名著失传？</p>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<img src="../../image/cloud/cloud_0_tuku.png">
+							<div>
+								<p><span>李云</span>邀请<span>刘老师</span>回答问题</p>
+								<p>[教育]史上严重的毁书事件层造成哪些名著失传？</p>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<img src="../../image/cloud/cloud_0_tuku.png">
+							<div>
+								<p><span>李云</span>邀请<span>刘老师</span>回答问题</p>
+								<p>[教育]史上严重的毁书事件层造成哪些名著失传？</p>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<img src="../../image/cloud/cloud_0_tuku.png">
+							<div>
+								<p><span>李云</span>邀请<span>刘老师</span>回答问题</p>
+								<p>[教育]史上严重的毁书事件层造成哪些名著失传？</p>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<img src="../../image/cloud/cloud_0_tuku.png">
+							<div>
+								<p><span>李云</span>邀请<span>刘老师</span>回答问题</p>
+								<p>[教育]史上严重的毁书事件层造成哪些名著失传？</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.pullToRefresh.js"></script>
+		<script src="../../js/mui.pullToRefresh.material.js"></script>
+		<!--<script src="../../js/utils/h5fresh.js"></script>-->
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var expertData; //专家详细页传来的 专家信息
+			var pageIndex = 1; //请求数据页面
+			var totalPageCount = 10; //总页码10 测试用
+
+			mui.init();
+
+			mui.plusReady(function() {
+						console.log(111111)
+						//25.获取某个用户的提问列表
+						getAsksByUser(33);
+				})
+					//25.获取某个用户的提问列表
+					function getAsksByUser(userId) { //需要加密的数据
+						var comData = {
+							userId: userId, //用户ID
+							pageIndex: '1', //当前页数
+							pageSize: 0 //每页记录数,传入0，获取总记录数
+						};
+						// 等待的对话框
+						var wd = events.showWaiting();
+						//25.获取某个用户的提问列表
+						postDataQZPro_getAsksByUser(comData, wd, function(data) {
+							wd.close();
+							console.log('25.获取某个用户的提问列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode == 0) {
+
+							} else {
+								mui.toast(data.RspTxt);
+							}
+						});
+					};
+		</script>
+	</body>
+
+</html>

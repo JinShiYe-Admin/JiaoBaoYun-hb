@@ -30,7 +30,7 @@
 		<div class="mui-content" style="background-color: white;">
 			<div id="expertInfo" style="height: 150px;background-image:url(../../image/quan/leave-bg.png) ;"><br/>
 				<div style="text-align: center;">
-					<img style="width: 50px;height: 50px;" src="../../image/utils/default_personalimage.png" />
+                    <img id="expertImg" style="width: 50px;height: 50px;" src="../../image/utils/default_personalimage.png" />
 				</div>
 				<div style="text-align: center;">
 					<h4 id="ExpertChannels"></h4>
@@ -66,7 +66,7 @@
 			</div>
 			<div style="width: device-width;margin-top: 70px;margin-left: 20px;margin-bottom: 20px;margin-right: 20px;">
 				<a id="IsLikeNum" class="mui-icon iconfont icon-support dynamic-icon-praise" style="color: gray;"></a>
-				<button class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;">关注</button>
+				<button id="focusBtn" class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;">关注</button>
 			</div>
 			<div>
 				<ul class="mui-table-view">
@@ -102,6 +102,7 @@
 
 	<script type="text/javascript">
 		var nodes = {
+			expertImg:document.getElementById("expertImg"),
 			AskNum: document.getElementById("AskNum"),
 			UserNote: document.getElementById("UserNote"),
 			FocusManNum: document.getElementById("FocusManNum"),
@@ -112,7 +113,9 @@
 			CommentNum: document.getElementById("CommentNum"),
 			IsFocusedManNum: document.getElementById("IsFocusedManNum"),
 			AnswerNum: document.getElementById("AnswerNum"),
-			inviteNum:document.getElementById("inviteNum")
+			inviteNum: document.getElementById("inviteNum"),
+			focusBtn:document.getElementById("focusBtn"),
+
 		}
 		var ExpertsInfo;
 		mui.plusReady(function() {
@@ -121,6 +124,8 @@
 			console.log('expert-detail.html:' + JSON.stringify(ExpertsInfo));
 			//3.获取某个用户的信息
 			getExpertsInfo(ExpertsInfo.UserId);
+			nodes.expertImg.src = updateHeadImg(ExpertsInfo.uimg,2);
+
 			//22.获取是否已对某个用户关注
 			getUserFocus(ExpertsInfo.UserId);
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
@@ -128,11 +133,11 @@
 				if(this.id == 'AnswerLi') { //他的回答
 
 				} else if(this.id == 'AskLi') { //他的提问
-
+					events.openNewWindowWithData('expert-ask.html', ExpertsInfo);
 				} else if(this.id == 'CommentLi') { //他的评论
 
 				} else { //邀请他的回答
-	events.openNewWindowWithData('qiuzhi-inviteAnswer.html',ExpertsInfo);
+					events.openNewWindowWithData('qiuzhi-inviteAnswer.html', ExpertsInfo);
 				}
 			})
 			events.addTap('FocusAsk', function() {
@@ -145,9 +150,17 @@
 			events.addTap('IsFocusedMan', function() {
 				console.log('关注他的人');
 			})
-		 
+			events.addTap('focusBtn', function() {
+				console.log('点击关注');
+				if(this.innerText == '关注') {
+					setUserFocus(ExpertsInfo.UserId, 1);
+				} else {
+					setUserFocus(ExpertsInfo.UserId, 0);
+				}
+			})
+
 		});
-		
+
 		//3.获取某个用户的信息
 		function getExpertsInfo(userId) {
 			//需要加密的数据
@@ -163,21 +176,21 @@
 				if(data.RspCode == 0) {
 					//合并，刷新界面
 					ExpertsInfo = $.extend(ExpertsInfo, data.RspData);
-					console.log('合并后ExpertsInfo:'+JSON.stringify(ExpertsInfo));
+					console.log('合并后ExpertsInfo:' + JSON.stringify(ExpertsInfo));
 					addData();
 				} else {
 					mui.toast(data.RspTxt);
 				}
 			});
 		};
-		
+
 		//22.获取是否已对某个用户关注
 		function getUserFocus(userId) {
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 			//需要加密的数据
 			var comData = {
-				userId: personalUTID,//用户ID
-				focusUserId:userId//关注用户ID
+				userId: personalUTID, //用户ID
+				focusUserId: userId //关注用户ID
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -187,21 +200,27 @@
 				console.log('22.获取是否已对某个用户关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					//修改界面显示
-					
+					//					ExpertsInfo = $.extend(ExpertsInfo, data.RspData);
+					if(data.RspData.Result == 0) {
+						nodes.focusBtn.innerText = '关注'
+					} else {
+						nodes.focusBtn.innerText = '已关注'
+					}
+
 				} else {
 					mui.toast(data.RspTxt);
 				}
 			});
 		};
-		
+
 		//23.设置对某个用户的关注
-		function setUserFocus(userId,status) {
+		function setUserFocus(userId, status) {
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 			//需要加密的数据
 			var comData = {
-				userId: personalUTID,//用户ID
-				focusUserId: userId,//关注用户ID
-				status:status//关注状态,0 不关注,1 关注
+				userId: personalUTID, //用户ID
+				focusUserId: userId, //关注用户ID
+				status: status //关注状态,0 不关注,1 关注
 			};
 			// 等待的对话框
 			var wd = events.showWaiting();
@@ -211,7 +230,14 @@
 				console.log('23.设置对某个用户的关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					//刷新界面显示
-					
+					console.log(nodes.focusBtn.innerText);
+					//刷新界面显示
+					if(nodes.focusBtn.innerText == '已关注'){
+						nodes.focusBtn.innerText = '关注'
+					}else{
+						nodes.focusBtn.innerText = '已关注'
+					}
+
 				} else {
 					mui.toast(data.RspTxt);
 				}
@@ -219,7 +245,6 @@
 		};
 
 		function addData() {
-
 			nodes.AskNum.innerHTML = ExpertsInfo.AskNum + '<span class="mui-icon mui-icon-forward"></span>';
 			nodes.UserNote.innerText = ExpertsInfo.UserNote;
 			nodes.FocusManNum.innerText = ExpertsInfo.FocusManNum;
@@ -229,7 +254,7 @@
 			nodes.CommentNum.innerHTML = ExpertsInfo.CommentNum + '<span class="mui-icon mui-icon-forward"></span>';
 			nodes.IsFocusedManNum.innerText = ExpertsInfo.IsFocusedManNum;
 			nodes.AnswerNum.innerHTML = ExpertsInfo.AnswerNum + '<span class="mui-icon mui-icon-forward"></span>';
-			nodes.inviteNum.innerHTML = ExpertsInfo.inviteNum + '<span class="mui-icon mui-icon-forward"></span>';
+//			nodes.inviteNum.innerHTML = ExpertsInfo.inviteNum + '<span class="mui-icon mui-icon-forward"></span>';
 		}
 	</script>
 
