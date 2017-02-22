@@ -116,6 +116,7 @@
 		}
 		var ExpertsInfo;
 		mui.plusReady(function() {
+			events.preload('AttentionPersons.html',10)
 			var main = plus.webview.currentWebview(); //获取当前窗体对象
 			ExpertsInfo = main.data; //接收页面传入参数值，传过来的专家model
 			console.log('expert-detail.html:' + JSON.stringify(ExpertsInfo));
@@ -143,6 +144,7 @@
 				console.log('他关注的人');
 			})
 			events.addTap('IsFocusedMan', function() {
+				events.fireToPageWithData('AttentionPersons.html','expertInfo',ExpertsInfo)
 				console.log('关注他的人');
 			})
 		 
