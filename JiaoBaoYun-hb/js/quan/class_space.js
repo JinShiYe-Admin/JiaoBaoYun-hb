@@ -182,17 +182,18 @@ var class_space = (function(mod) {
 		var imgInner = '';
 		var percent = 0.00;
 		if(cell.EncImgAddr) {
-			cell.EncImgAddr.split('|').forEach(function(img, ind, extras) {
-				if(extras.length <= 3 && extras.length > 0) {
-					percent = 100 / (extras.length)
-					imgInner += '<img src="' + img + '" style="width:' + percent + '%;padding:2px"/>'
+			var imgs=cell.EncImgAddr.split('|');
+			console.log('要显示的图片地址：'+JSON.stringify(imgs));
+		 	for(var i in imgs){
+		 		if(imgs.length <= 3 && imgs.length > 0) {
+					percent = 100 / (imgs.length);
+					imgInner += '<img src="' + imgs[i] + '" style="width:' + percent + '%;padding:2px"/>'
 				} else {
-					imgInner += '<img src="' + img + '" style="width:33.33333333%; padding:2px"/>'
+					imgInner += '<img src="' + imgs[i] + '" style="width:33.33333333%; padding:2px"/>'
 				}
-			});
+		 	}
 		}
-
-		//		console.log(imgInner) 
+		console.log(imgInner);
 		return imgInner;
 	}
 	return mod;
