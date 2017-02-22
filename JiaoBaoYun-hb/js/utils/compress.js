@@ -79,7 +79,7 @@ var compress = (function(mod) {
 	}
 	var getSavePath = function(picPath) {
 		var picPaths = picPath.split('/');
-		picPaths.splice(picPaths.length - 2, 0, "savePath");
+		picPaths.splice(picPaths.length - 1, 0, "savePath");
 		return picPaths.join('/');
 	}
 	return mod;

@@ -405,7 +405,7 @@ var events = (function(mod) {
 	}
 	mod.getFileNameByPath = function(filePath) {
 		var filePaths = filePath.split("/");
-		return filePaths[filePaths.length - 1];
+		return new Date().getTime()+filePaths[filePaths.length - 1];
 	}
 
 	/**
