@@ -5146,6 +5146,9 @@
 			"css/utils/common.css",
 			"image/mine/jiaobaoyun.png",
 			"js/utils/events.js"
+		],
+		"refer": [
+			"html/mine/function.html"
 		]
 	},
 	"html/mine/qun_manage_member_main.html": {

@@ -140,8 +140,8 @@ var class_space = (function(mod) {
 						var buData=remarkData.RspData;
 						for(var i in list){
 							for(var j in buData){
-								if(list[i].utid==buData[i].butid){
-									jQuery.extend(list[i],buData[i]);
+								if(list[i].utid==buData[j].butid){
+									jQuery.extend(list[i],buData[j]);
 									break;
 								}
 							}

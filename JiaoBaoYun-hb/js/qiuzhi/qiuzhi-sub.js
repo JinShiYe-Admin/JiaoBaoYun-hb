@@ -44,7 +44,9 @@ mui.plusReady(function() {
 		//刷新的界面实现逻辑
 		requestChannelList(channelInfo);
 	}, {
-		height: 200
+//		height: '5%',
+//		style: 'circle',
+//		range:'5%'
 	});
 	setListener();
 	pullUpFresh();
@@ -289,7 +291,10 @@ var setListener = function() {
 		//console.log('点击专家列表 ' + this.id);
 		//console.log('当前话题的信息 ' + JSON.stringify(channelInfo));
 		if(this.id == 'allExpert') { //查看某个话题的全部专家
-			events.openNewWindowWithData('experts_main.html', channelInfo);
+			events.openNewWindowWithData('experts_main.html', {
+				channelInfo: channelInfo, //当前话题
+				allChannels: allChannels //所有话题
+			});
 		} else { //查看某个话题的某个专家
 			//console.log('当前专家的信息 ' + JSON.stringify(JSON.parse(this.getAttribute('data-info'))));
 			events.openNewWindowWithData('expert-detail.html', JSON.parse(this.getAttribute('data-info')));
