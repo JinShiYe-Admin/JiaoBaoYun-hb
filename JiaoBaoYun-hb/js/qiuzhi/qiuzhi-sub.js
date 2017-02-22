@@ -44,9 +44,9 @@ mui.plusReady(function() {
 		//刷新的界面实现逻辑
 		requestChannelList(channelInfo);
 	}, {
-		height: '20%',
-//		style: 'circle',
-		range:'20%'
+//		height: '5%',
+////		style: 'circle',
+//		range:'5%'
 	});
 	setListener();
 	pullUpFresh();
