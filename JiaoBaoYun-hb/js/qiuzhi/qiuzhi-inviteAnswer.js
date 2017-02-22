@@ -23,22 +23,15 @@ mui.plusReady(function() {
 		events.openNewWindowWithData('../qiuzhi/expert-detail.html', expertData);
 	});
 
-//	var deceleration = mui.os.ios ? 0.003 : 0.0009;
-//	mui('.mui-scroll-wrapper').scroll({
-//		bounce: false,
-//		indicators: true, //是否显示滚动条
-//		deceleration: deceleration
-//	});
+//初次加载
+requestInviteAnswer();
 
 	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 		down: {
 			callback: function() {
-				//				var self = this;
-				//				setTimeout(function() {
-				//					var ul = self.element.querySelector('.mui-table-view');
-				//					ul.insertBefore(createFragment(ul, index, 10, true), ul.firstChild);
-				//					self.endPullDownToRefresh();
-				//				}, 1000);
+				//清除节点
+				
+				document.getElementById('list-container').innerHTML="";
 				var self = this;
 				console.log("下拉");
 				pageIndex = 1;
@@ -48,12 +41,7 @@ mui.plusReady(function() {
 		},
 		up: {
 			callback: function() {
-				//				var self = this;
-				//				setTimeout(function() {
-				//					var ul = self.element.querySelector('.mui-table-view');
-				//					ul.appendChild(createFragment(ul, index, 5));
-				//					self.endPullUpToRefresh();
-				//				}, 1000);
+
 				var self = this;
 				console.log("上拉");
 				if(pageIndex < totalPageCount) {
@@ -68,46 +56,6 @@ mui.plusReady(function() {
 
 });
 
-//mui.plusReady(function() {
-//	$(".mui-scroll").pullToRefresh({
-//		down: {
-//			callback: function() {
-////				var self = this;
-////				setTimeout(function() {
-////					var ul = self.element.querySelector('.mui-table-view');
-////					ul.insertBefore(createFragment(ul, index, 10, true), ul.firstChild);
-////					self.endPullDownToRefresh();
-////				}, 1000);
-//pageIndex = 1;
-//	requestInviteAnswer();
-//			}
-//		},
-//		up: {
-//			callback: function() {
-////				var self = this;
-////				setTimeout(function() {
-////					var ul = self.element.querySelector('.mui-table-view');
-////					ul.appendChild(createFragment(ul, index, 5));
-////					self.endPullUpToRefresh();
-////				}, 1000);
-//	if(pageIndex < totalPageCount) {
-//		pageIndex++;
-//		requestInviteAnswer();
-//	}
-//			}
-//		}
-//	});
-//
-//	var main = plus.webview.currentWebview();
-//	expertData = main.data; //接收专家详情页传来的专家用户信息
-//	console.log('expert-data:' + JSON.stringify(expertData));
-//	//		getExpertsInfo(data.UserId);
-//	mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-//		events.openNewWindowWithData('../qiuzhi/expert-detail.html', expertData);
-//	})
-//
-//	//		setListeners();
-//});
 //8.获取某个回答的详情
 function requestInviteAnswer(answerId) {
 	//所需参数
@@ -120,10 +68,11 @@ function requestInviteAnswer(answerId) {
 	// 测试数据添加
 	//	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	var list = new Array();
+	console.log(pageIndex);
 	for(var i = 0; i < 10; i++) {
 		list.push({
 			uimg: "../../image/cloud/cloud_0_tuku.png",
-			unick: "李云" + i.toString(),
+			unick: "李云" + ((pageIndex-1)*10+ i).toString(),
 			channel: "教育",
 			content: "史上严重的毁书事件层造成哪些名著失传？"
 		});
@@ -173,7 +122,7 @@ var createList = function(listContainer, record) {
 	var li = document.createElement('li');
 	li.className = 'mui-table-view-cell';
 	//拼接显示
-	//li.innerHTML = "<img src='" + record.uimg + "' /><div><p><span>" + record.unick + "</span>邀请<span>"+expertData.unick+"</span>回答问题</p><p>[" + record.channel + "]" + record.content + "</p></div>";
-	li.innerHTML = "<img src='" + record.uimg + "' /><div><p><span>" + record.unick + "</span>邀请<span>111</span>回答问题</p><p>[" + record.channel + "]" + record.content + "</p></div>";
+	li.innerHTML = "<img src='" + record.uimg + "' /><div><p><span>" + record.unick + "</span>邀请<span>"+expertData.unick+"</span>回答问题</p><p>[" + record.channel + "]" + record.content + "</p></div>";
+	//li.innerHTML = "<img src='" + record.uimg + "' /><div><p><span>" + record.unick + "</span>邀请<span>111</span>回答问题</p><p>[" + record.channel + "]" + record.content + "</p></div>";
 	listContainer.appendChild(li)
 }
