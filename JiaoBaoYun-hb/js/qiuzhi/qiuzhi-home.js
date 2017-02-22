@@ -54,6 +54,7 @@ var setChannels = function(subjectArr) {
 		a.info = subjectArr[i];
 		subjects.appendChild(a);
 	}
+	document.body.querySelector('.main-navigation').style.width = document.body.querySelector('.more-navigation').offsetLeft + 'px';
 	events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: subjectArr[0], allChannels: allChannels });
 }
 var setListener = function() {
