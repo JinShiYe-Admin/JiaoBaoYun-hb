@@ -125,11 +125,11 @@
 			getUserFocus(ExpertsInfo.UserId);
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 				console.log(this.id);
-				if(this.id == AnswerLi) { //他的回答
+				if(this.id == 'AnswerLi') { //他的回答
 
-				} else if(this.id == AskLi) { //他的提问
+				} else if(this.id == 'AskLi') { //他的提问
 
-				} else if(this.id == AskLi) { //他的评论
+				} else if(this.id == 'CommentLi') { //他的评论
 
 				} else { //邀请他的回答
 	events.openNewWindowWithData('qiuzhi-inviteAnswer.html',ExpertsInfo);
