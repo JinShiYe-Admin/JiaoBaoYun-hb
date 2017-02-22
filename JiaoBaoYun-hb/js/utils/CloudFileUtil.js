@@ -280,6 +280,7 @@ var CloudFileUtil = (function($, mod) {
 			thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
 			data.thumbKeys.push(thumbKey);
 			param.Key = saveSpace + QNFileName;
+			console.log('key:'+param.Key);
 			param.Pops = "imageView2/2/w/" + maxSize + "/h/" + maxSize + "/format/png|saveas/" + thumbKey;
 			param.NotifyUrl = '';
 			params.push(param);
@@ -290,6 +291,7 @@ var CloudFileUtil = (function($, mod) {
 			Param: encryptByDES(desKey, JSON.stringify(params))
 		}
 		console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
+		console.log('加密后的data:'+JSON.stringify(data));
 		return data;
 	}
 	/**
