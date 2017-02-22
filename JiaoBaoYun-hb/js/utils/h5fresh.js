@@ -5,12 +5,18 @@
  */
 var h5fresh = (function(mod) {
 	var ws = null; //当前webview
-	// 扩展API加载完毕，现在可以正常调用扩展API
+
+	/**
+	 * 扩展API加载完毕，现在可以正常调用扩展API
+	 * http://www.html5plus.org/doc/zh_cn/webview.html#plus.webview.WebviewObject.setPullToRefresh
+	 * @param {Object} refresh 刷新的回调
+	 * @param {Object} data 控件的样式
+	 */
 	mod.addRefresh = function(refresh, data) {
-		var height = '10%';
-		var range = '20%';
-		var style = 'default';
-		var offset = '0px;'
+		var height = '10%'; //窗口的下拉刷新控件高度
+		var range = '20%'; //)窗口可下拉拖拽的范围
+		var style = 'default'; //"default" - 目前已实现的经典样式； "circle" - 新增下拉圆圈样式。 默认值为"default"。
+		var offset = '0px'; //下拉刷新控件的起始位置.仅对"circle"样式下拉刷新控件有效
 		if(data) {
 			if(data.style) {
 				style = data.style;
@@ -31,7 +37,7 @@ var h5fresh = (function(mod) {
 			style: style, //"default" - 目前已实现的经典样式； "circle" - 新增下拉圆圈样式。 默认值为"default"。
 			offset: offset, //下拉刷新控件的起始位置.仅对"circle"样式下拉刷新控件有效，用于定义刷新控件下拉时的起始位置。 相对于Webview的顶部偏移量，支持百分比，如"10%"；像素值，如"50px"。 默认值为"0px"。
 			height: height, //窗口的下拉刷新控件高度
-			range: range, //)窗口可下拉拖拽的范围
+			range: range, //窗口可下拉拖拽的范围
 			contentdown: {
 				caption: "下拉可以刷新"
 			},

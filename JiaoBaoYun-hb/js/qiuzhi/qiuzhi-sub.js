@@ -45,7 +45,7 @@ mui.plusReady(function() {
 		requestChannelList(channelInfo);
 	}, {
 //		height: '5%',
-////		style: 'circle',
+//		style: 'circle',
 //		range:'5%'
 	});
 	setListener();
