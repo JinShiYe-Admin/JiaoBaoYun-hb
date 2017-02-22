@@ -55,204 +55,207 @@
 		var personIds = []; //人员id
 		//		var imgs;//图片
 		mui.plusReady(function() {
-			//			document.querySelector('.mui-content').styl e.marginTop=(localStorage.getItem('StatusHeightNo') * 1 + 45 + height) + 'px';
-			var groupInfo;
-			//界面监听传值
-			window.addEventListener('postGroupInfo', function(e) {
-				CloudFileUtil.files = [];
-				groupInfo = e.detail.data;
-				console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
-				getGroupPersons(groupInfo.classId);
-				events.clearChild(document.getElementById('pictures'));
-			});
-			/**
-			 * 加载监听
-			 */
-			CloudFileUtil.setDelPicListener();
-			//拍照上传图片至七牛云
-			events.addTap('take_pic', function() {
-				if(CloudFileUtil.files.length < 9) {
-					camera.getPic(camera.getCamera(), function(picPath) {
-						plus.nativeUI.showWaiting(storageKeyName.WAITING);
-						var saveSpace = storageKeyName.CLASSSPACE; //保存空间
-						var data = CloudFileUtil.getSingleUploadDataOptions(picPath, 6, 200, 0, saveSpace);
-						CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-							console.log("获取的数据：" + JSON.stringify(datas));
-							if(datas.Status == 1) {
-								var tokenInfo = datas.Data;
-								//压缩照片
-								compress.compressPIC(picPath, function(event) {
-									//上传文件
-									CloudFileUtil.uploadFile(tokenInfo, event.target, function(uploadData, status) {
-										console.log(JSON.stringify(uploadData));
-										var img = { //图片信息
-											url: tokenInfo.Domain + tokenInfo.Key,
-											thumb: tokenInfo.OtherKey[data.thumbKey],
-											type: 1
-										}
-										//关闭等待框
-										plus.nativeUI.closeWaiting();
-										//放置图片
-										CloudFileUtil.setPic(img);
-									});
-								})
-
-							}
-						}, function(xhr, type, errorThrown) {
-							console.log("错误类型：" + type + errorThrown);
-							plus.nativeUI.closeWaiting(); //关闭等待框
-						});
-					})
-				} else {
-					mui.toast('上传图片附件不得多于9张！');
-				}
-			});
-			//获取录像按钮
-			events.addTap('take_camero', function() {
-				//				camera.getVideo(camera.getCamera(), function(path) {
-				//
-				//				});
-				mui.toast('功能暂未开放！');
-			});
-			/**
-			 * 相册选择按钮
-			 */
-			events.addTap('get_gallery', function() {
-				if(CloudFileUtil.files.length < 9) {
-					var picCount = 0; //上传图片计数
-					gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
-						plus.nativeUI.showWaiting(storageKeyName.UPLOADING); //等待框
-						console.log("保存的路径：" + JSON.stringify(paths));
-						var saveSpace = storageKeyName.CLASSSPACE; //保存路径
-						var data = CloudFileUtil.getMultipleUploadDataOptions(paths, 6, 200, 0, saveSpace); //获取获取token的各参数
-						CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-								console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
-								if(datas.Status == 1) { //成功
-									var tokenInfos = datas.Data; //参数信息
-									//压缩照片
-									compress.compressPics(paths, function(compressedPaths) {
-										console.log('获取的图片路径：'+JSON.stringify(compressedPaths))
-										//上传图片
-										CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status) {
-											console.log(JSON.stringify(uploadData));
-											var img = {
-												url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
-												thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
-												type: 1
-											}
-											picCount++;
-											CloudFileUtil.setPic(img); //放置图片
-											if(picCount == compressedPaths.length) { //所有图片已上传
-												plus.nativeUI.closeWaiting(); //关闭等待框
-											}
-										});
-									});
-
-								}
-							},
-							//错误的回调
-							function(xhr, type, errorThrown) {
-								console.log("错误类型：" + type + errorThrown);
-								plus.nativeUI.closeWaiting();
-							});
+					//			document.querySelector('.mui-content').styl e.marginTop=(localStorage.getItem('StatusHeightNo') * 1 + 45 + height) + 'px';
+					var groupInfo;
+					//界面监听传值
+					window.addEventListener('postGroupInfo', function(e) {
+						CloudFileUtil.files = [];
+						groupInfo = e.detail.data;
+						console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
+						getGroupPersons(groupInfo.classId);
+						events.clearChild(document.getElementById('pictures'));
 					});
-				} else {
-					mui.toast('上传图片附件不得多于9张！');
-				}
+					/**
+					 * 加载监听
+					 */
+					CloudFileUtil.setDelPicListener();
+					//拍照上传图片至七牛云
+					events.addTap('take_pic', function() {
+						if(CloudFileUtil.files.length < 9) {
+							camera.getPic(camera.getCamera(), function(picPath) {
+								plus.nativeUI.showWaiting(storageKeyName.WAITING);
+								var saveSpace = storageKeyName.CLASSSPACE; //保存空间
+								var data = CloudFileUtil.getSingleUploadDataOptions(picPath, 6, 200, 0, saveSpace);
+								CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+									console.log("获取的数据：" + JSON.stringify(datas));
+									if(datas.Status == 1) {
+										var tokenInfo = datas.Data;
+										//压缩照片
+										compress.compressPIC(picPath, function(event) {
+											//上传文件
+											CloudFileUtil.uploadFile(tokenInfo, event.target, function(uploadData, status) {
+												console.log(JSON.stringify(uploadData));
+												var img = { //图片信息
+													url: tokenInfo.Domain + tokenInfo.Key,
+													thumb: tokenInfo.OtherKey[data.thumbKey],
+													type: 1
+												}
+												//关闭等待框
+												plus.nativeUI.closeWaiting();
+												//放置图片
+												CloudFileUtil.setPic(img);
+											});
+										})
 
-			});
-			//发布按钮
-			events.addTap('publish', function() {
-
-				//								postDataPro_addClassSpace({classId},)
-				console.log('' + JSON.stringify(groupInfo));
-				var tempText = document.getElementById('input-content').value;
-				if(!tempText || tempText == '') {
-					mui.toast('请输入内容');
-					return;
-				} else {
-					tempText = replaceAllBL(tempText);
-				}
-				var TAs = getTypeAddress();
-				var postData = new Object();
-				postData.classId = groupInfo.classId;
-				postData.msgContent = tempText;
-				postData.encType = TAs.encType;
-				postData.encAddr = TAs.encAddr;
-				postData.encImg = TAs.encImg;
-				postData.teacherId = parseInt(groupInfo.userId);
-				postData.userIds = arrayToStr(personIds);
-				console.log('传值：' + JSON.stringify(postData));
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
-				postDataPro_addClassSpace(postData, wd, function(data) {
-					wd.close();
-					console.log(JSON.stringify(data));
-					if(data.RspCode = '0000') {
-						mui.toast('发布成功！');
-						document.getElementById('input-content').value = '';
-						events.fireToPageNone('classSpace-sub.html', 'infoChanged');
-						//					mui.fire('classSpace-sub.html','refershData');
-						mui.back();
-					} else {
-						mui.toast(data.RspTxt);
-					}
-				})
-			})
-		})
-		/**
-		 * 通过群id获取群人员信息
-		 * @param {Object} groupId
-		 */
-		var getGroupPersons = function(groupId) {
-			personIds = [];
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
-			postDataPro_PostGusers({
-				top: -1, //选择条数
-				vvl: groupId, //群ID，查询的值
-				vvl1: -1 //群员类型，0家长,1管理员,2老师,3学生,-1取全部)
-			}, wd, function(data) {
-				console.log('獲取的群成員信息：' + JSON.stringify(data));
-				wd.close();
-				if(data.RspCode == '0000') {
-					data.RspData.forEach(function(person) {
-						if(personIds.indexOf(person.utid) < 0) {
-							personIds.push(person.utid);
+									}
+								}, function(xhr, type, errorThrown) {
+									console.log("错误类型：" + type + errorThrown);
+									plus.nativeUI.closeWaiting(); //关闭等待框
+								});
+							})
+						} else {
+							mui.toast('上传图片附件不得多于9张！');
 						}
+					});
+					//获取录像按钮
+					events.addTap('take_camero', function() {
+						//				camera.getVideo(camera.getCamera(), function(path) {
+						//
+						//				});
+						mui.toast('功能暂未开放！');
+					});
+					/**
+					 * 相册选择按钮
+					 */
+					events.addTap('get_gallery', function() {
+							if(CloudFileUtil.files.length < 9) {
+								var picCount = 0; //上传图片计数
+								gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
+										plus.nativeUI.showWaiting(storageKeyName.UPLOADING); //等待框
+										console.log("保存的路径：" + JSON.stringify(paths));
+										var saveSpace = storageKeyName.CLASSSPACE; //保存路径
+										compress.compressPics(paths, function(compressedPaths) {
+												console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
+												var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 6, 200, 0, saveSpace); //获取获取token的各参数
+												CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+														console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
+														if(datas.Status == 1) { //成功
+															var tokenInfos = datas.Data; //参数信息
+															//上传图片
+															CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status) {
+																console.log(JSON.stringify(uploadData));
+																var img = {
+																	url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
+																	thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
+																	type: 1
+																}
+																picCount++;
+																CloudFileUtil.setPic(img); //放置图片
+																if(picCount == compressedPaths.length) { //所有图片已上传
+																	plus.nativeUI.closeWaiting(); //关闭等待框
+																}
+															});
+
+														}
+													},
+													//错误的回调
+													function(xhr, type, errorThrown) {
+														console.log("错误类型：" + type + errorThrown);
+														plus.nativeUI.closeWaiting();
+													});
+											});
+
+										});
+								}
+								else {
+									mui.toast('上传图片附件不得多于9张！');
+								}
+
+							});
+						//发布按钮
+						events.addTap('publish', function() {
+
+							//								postDataPro_addClassSpace({classId},)
+							console.log('' + JSON.stringify(groupInfo));
+							var tempText = document.getElementById('input-content').value;
+							if(!tempText || tempText == '') {
+								mui.toast('请输入内容');
+								return;
+							} else {
+								tempText = replaceAllBL(tempText);
+							}
+							var TAs = getTypeAddress();
+							var postData = new Object();
+							postData.classId = groupInfo.classId;
+							postData.msgContent = tempText;
+							postData.encType = TAs.encType;
+							postData.encAddr = TAs.encAddr;
+							postData.encImg = TAs.encImg;
+							postData.teacherId = parseInt(groupInfo.userId);
+							postData.userIds = arrayToStr(personIds);
+							console.log('传值：' + JSON.stringify(postData));
+							var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
+							postDataPro_addClassSpace(postData, wd, function(data) {
+								wd.close();
+								console.log(JSON.stringify(data));
+								if(data.RspCode = '0000') {
+									mui.toast('发布成功！');
+									document.getElementById('input-content').value = '';
+									events.fireToPageNone('classSpace-sub.html', 'infoChanged');
+									//					mui.fire('classSpace-sub.html','refershData');
+									mui.back();
+								} else {
+									mui.toast(data.RspTxt);
+								}
+							})
+						})
+					})
+				/**
+				 * 通过群id获取群人员信息
+				 * @param {Object} groupId
+				 */
+				var getGroupPersons = function(groupId) {
+					personIds = [];
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
+					postDataPro_PostGusers({
+						top: -1, //选择条数
+						vvl: groupId, //群ID，查询的值
+						vvl1: -1 //群员类型，0家长,1管理员,2老师,3学生,-1取全部)
+					}, wd, function(data) {
+						console.log('獲取的群成員信息：' + JSON.stringify(data));
+						wd.close();
+						if(data.RspCode == '0000') {
+							data.RspData.forEach(function(person) {
+								if(personIds.indexOf(person.utid) < 0) {
+									personIds.push(person.utid);
+								}
+							})
+						}
+
 					})
 				}
-
-			})
-		}
-		/**
-		 * 获取接口数据文件及缩略图
-		 * encType: '',//附件类型,1图片2音视频3仅文字
-		 * encAddr: '',//附件地址
-		 * encImg: '',//附件缩略图地址
-		 */
-		var getTypeAddress = function() {
-			var TAs = {};
-			var encType;
-			var encAddrs = [];
-			var encImgs = [];
-			var theFile;
-			if(CloudFileUtil.files.length > 0) { //如果存在附件
-				for(var i in CloudFileUtil.files) {
-					theFile = CloudFileUtil.files[i];
-					if(i == 0) {
-						TAs.encType = theFile.type;
+				/**
+				 * 获取接口数据文件及缩略图
+				 * encType: '',//附件类型,1图片2音视频3仅文字
+				 * encAddr: '',//附件地址
+				 * encImg: '',//附件缩略图地址
+				 */
+				var getTypeAddress = function() {
+					var TAs = {};
+					var encType;
+					var encAddrs = [];
+					var encImgs = [];
+					var theFile;
+					if(CloudFileUtil.files.length > 0) { //如果存在附件
+						for(var i in CloudFileUtil.files) {
+							theFile = CloudFileUtil.files[i];
+							if(i == 0) {
+								TAs.encType = theFile.type;
+							}
+							encAddrs.push(theFile.url);
+							encImgs.push(theFile.thumb);
+						}
+						console.log(JSON.stringify(encAddrs));
+						console.log(JSON.stringify(encImgs));
+						TAs.encAddr = encAddrs.join('|');
+						TAs.encImg = encImgs.join('|');
+					} else { //不存在附件
+						TAs.encType = 0;
+						TAs.encAddr = '';
+						TAs.encImg = '';
 					}
-					encAddrs.push(theFile.url);
-					encImgs.push(theFile.thumb);
+					return TAs;
 				}
-				TAs.encAddr = encAddrs.join('|');
-				TAs.encImg = encImgs.join('|');
-			} else { //不存在附件
-				TAs.encType = 0;
-				TAs.encAddr = '';
-				TAs.encImg = '';
-			}
-			return TAs;
-		}
 	</script>
 
 </html>
