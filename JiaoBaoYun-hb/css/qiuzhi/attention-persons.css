@@ -1,0 +1,53 @@
+/*头像样式*/
+.head-img,.head-portrait{
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
+	/*max-width: 20%;*/
+}
+.head-img{
+	max-width: 15%;
+}
+/**
+ * 中间信息宽度
+ */
+.info-container{
+	max-width: 60%;
+	padding-left:.5rem;
+}
+.attentioned-btn,.attention-btn{
+	max-width: 25%;
+	float: right;
+	margin-top: 1rem;
+	color: #fff;
+	border: 1px solid #1db8F1;
+	/*background-color: #1db8F1;*/
+}
+/*需关注button*/
+.attention-btn{
+	color: #fff;
+	border: 1px solid #1db8F1;
+}
+/*已关注的显示*/
+.attentioned-btn{
+	color: lightgrey;
+	border: 1px solid lightgrey;
+}
+/*.mui-table-view-cell:last-of-type{
+	padding-right: .5rem;
+}*/
+.li-container{
+	height: 6rem;
+	/*text-align: center;*/
+}
+/*外边框+关注内buttton字体颜色*/
+.mui-btn-outlined.attention-btn{
+	color: #1db8F1;
+}
+/*点击后的颜色*/
+.attention-btn:enabled:active{
+	color: white;
+	border: 1px solid #1db8F1;
+	background-color: #1db8F1;
+}
+
