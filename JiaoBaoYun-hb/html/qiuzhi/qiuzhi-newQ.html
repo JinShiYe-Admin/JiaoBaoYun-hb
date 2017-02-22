@@ -105,6 +105,10 @@
 					li.appendChild(a);
 					ul.appendChild(li);
 				}
+				mui('#ExpertList').on('tap', '.mui-table-view-cell', function() {
+					var index = this.id.replace('li','');
+					events.openNewWindowWithData('../qiuzhi/expert-detail.html',datasource[index]);
+				})
 
 			})
 
@@ -291,6 +295,7 @@
 				for(var i = 0; i < datasource.length; i++) {
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell mui-media';
+					li.id = 'li'+i;
 					li.innerHTML =
 						'<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(datasource[i].uimg,2) + '">' +
 						'<div class="mui-media-body">' +

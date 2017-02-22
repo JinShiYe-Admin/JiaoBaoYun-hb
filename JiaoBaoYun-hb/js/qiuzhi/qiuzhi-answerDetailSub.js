@@ -15,9 +15,9 @@ mui.plusReady(function() {
 			events.clearChild(document.getElementById('list-container'));
 			requestAnswerDetail(answerId);
 		})
-		mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-			events.openNewWindowWithData('../qiuzhi/expert-detail.html','');
-		})
+//		mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+//			events.openNewWindowWithData('../qiuzhi/expert-detail.html','');
+//		})
 
 		setListeners();
 	})
