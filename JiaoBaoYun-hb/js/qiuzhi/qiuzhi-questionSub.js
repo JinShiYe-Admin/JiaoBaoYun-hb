@@ -48,6 +48,7 @@ mui.plusReady(function() {
 		//5.获取某个问题的详情
 		requestAskDetail();
 	});
+
 	//---滑动start---
 	//	mui(".mui-scroll-wrapper").scroll({
 	//		scrollY: true, //是否竖向滚动
@@ -61,6 +62,8 @@ mui.plusReady(function() {
 	window.addEventListener('askId', function(e) {
 		console.log('问题详情子页面获取的问题id:' + e.detail.data);
 		askID = e.detail.data;
+		//13.获取是否已对某个问题关注
+		getAskFocusByUser(askID);
 		//获取的第几页回复
 		answerIndex = 1;
 		//答案回复的总页数
@@ -125,7 +128,71 @@ mui.plusReady(function() {
 	});
 	//---点击效果---end---
 
+	events.addTap('guanzhu', function() {
+		console.log('点击关注');
+		if(this.innerText == '关注') {
+			setAskFocus(askID, 1);
+		} else {
+			setAskFocus(askID, 0);
+		}
+	})
+
 });
+
+//13.获取是否已对某个问题关注
+function getAskFocusByUser(askId) {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+	//需要加密的数据
+	var comData = {
+		userId: personalUTID, //用户ID
+		askId: askId //问题ID
+	};
+	// 等待的对话框
+	var wd = events.showWaiting();
+	//13.获取是否已对某个问题关注
+	postDataQZPro_getAskFocusByUser(comData, wd, function(data) {
+		wd.close();
+		console.log('13.获取是否已对某个问题关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+			//刷新界面
+			if(data.RspData.Result == 0) {
+				document.getElementById("guanzhu").innerText = '关注';
+			} else {
+				document.getElementById("guanzhu").innerText = '已关注';
+			}
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+};
+
+//14.设置某个问题的关注，0 不关注,1 关注
+function setAskFocus(askId, status) {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+	//需要加密的数据
+	var comData = {
+		userId: personalUTID, //用户ID
+		askId: askId, //问题ID
+		status: status //关注状态,0 不关注,1 关注
+	};
+	// 等待的对话框
+	var wd = events.showWaiting();
+	//14.设置某个问题的关注
+	postDataQZPro_setAskFocus(comData, wd, function(data) {
+		wd.close();
+		console.log('14.设置某个问题的关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+			//刷新界面显示
+			if(document.getElementById("guanzhu").innerText == '关注') {
+				document.getElementById("guanzhu").innerText = '已关注';
+			} else {
+				document.getElementById("guanzhu").innerText = '关注';
+			}
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+};
 
 /**
  * 下拉刷新具体业务实现
