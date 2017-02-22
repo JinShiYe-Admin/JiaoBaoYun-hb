@@ -418,6 +418,9 @@ var events = (function(mod) {
 		//清理云盘主页
 		events.fireToPageNone('../cloud/cloud_home.html', 'cleanCloudHome');
 	}
+	mod.ifHaveInfo = function(info) {
+		return info ? info : '暂无信息'
+	}
 
 	return mod;
 
