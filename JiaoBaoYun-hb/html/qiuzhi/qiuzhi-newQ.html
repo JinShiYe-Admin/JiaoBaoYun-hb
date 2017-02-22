@@ -79,7 +79,7 @@
 				var data = plus.webview.currentWebview().data;
 				console.log('获取的数据：' + JSON.stringify(data));
 				channelData = data.allChannels;
-								channelData.splice(0, 1);
+				channelData.splice(0, 1);
 				var curChannel = data.curChannel;
 				console.log('curChannel=' + JSON.stringify(curChannel));
 				console.log('获取的数据111：' + JSON.stringify(channelData));
@@ -108,7 +108,14 @@
 				mui('#ExpertList').on('tap', '.mui-table-view-cell', function() {
 					var index = this.id.replace('li','');
 					events.openNewWindowWithData('../qiuzhi/expert-detail.html',datasource[index]);
+					
 				})
+				mui('#ExpertList').on('tap', '.checkbox', function() {
+					this.checked = !this.checked
+					window.event.stopPropagation()
+					
+				})
+				
 
 			})
 
