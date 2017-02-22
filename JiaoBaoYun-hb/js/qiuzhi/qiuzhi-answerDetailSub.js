@@ -1,4 +1,3 @@
-
 var type = 2;
 var answerInfo;
 events.initRefresh('list-container', function() {
@@ -8,20 +7,32 @@ events.initRefresh('list-container', function() {
 
 })
 mui.plusReady(function() {
-		window.addEventListener('answerInfo', function(e) {
-			answerInfo=e.detail.data;
-			console.log('回答详情获取的答案信息:'+JSON.stringify(answerInfo));
-			var answerId = answerInfo.AnswerId;
-			events.clearChild(document.getElementById('list-container'));
-			requestAnswerDetail(answerId);
-		})
-//		mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-//			events.openNewWindowWithData('../qiuzhi/expert-detail.html','');
-//		})
+	window.addEventListener('answerInfo', function(e) {
+		answerInfo = e.detail.data;
+		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
+		var answerId = answerInfo.AnswerId;
+		events.clearChild(document.getElementById('list-container'));
+		requestAnswerDetail(answerId);
+		//22.获取是否已对某个用户关注
+		getUserFocus(answerInfo.AnswerMan);
+	});
+	//		mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+	//			events.openNewWindowWithData('../qiuzhi/expert-detail.html','');
+	//		})
 
-		setListeners();
-	})
-	//8.获取某个回答的详情
+	setListeners();
+
+	//点击关注按钮
+	events.addTap('focusBtn', function() {
+		console.log('点击关注');
+		if(this.innerText == '关注') {
+			setUserFocus(answerInfo.AnswerMan, 1);
+		} else {
+			setUserFocus(answerInfo.AnswerMan, 0);
+		}
+	});
+})
+//8.获取某个回答的详情
 function requestAnswerDetail(answerId) {
 	//所需参数
 	var comData = {
@@ -39,7 +50,6 @@ function requestAnswerDetail(answerId) {
 		if(data.RspCode == 0) {
 			var datasource = data.RspData;
 			getInfos(datasource);
-
 		} else {
 			mui.toast(data.RspTxt);
 		}
@@ -64,10 +74,10 @@ var requireInfos = function(datasource, pInfos) {
 
 	//发送获取用户资料申请
 	var tempData = {
-			vvl: pInfos.toString(), //用户id，查询的值,p传个人ID,g传ID串
-			vtp: 'g' //查询类型,p(个人)g(id串)
-		}
-		//21.通过用户ID获取用户资料
+		vvl: pInfos.toString(), //用户id，查询的值,p传个人ID,g传ID串
+		vtp: 'g' //查询类型,p(个人)g(id串)
+	}
+	//21.通过用户ID获取用户资料
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataPro_PostUinf(tempData, wd, function(data) {
 		wd.close();
@@ -105,11 +115,67 @@ var rechargeInfos = function(datasource, infos) {
 	return datasource;
 }
 
+//22.获取是否已对某个用户关注
+function getUserFocus(userId) {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+	//需要加密的数据
+	var comData = {
+		userId: personalUTID, //用户ID
+		focusUserId: userId //关注用户ID
+	};
+	// 等待的对话框
+	var wd = events.showWaiting();
+	//22.获取是否已对某个用户关注
+	postDataQZPro_getUserFocusByUser(comData, wd, function(data) {
+		wd.close();
+		console.log('22.获取是否已对某个用户关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+			//修改界面显示
+			if(data.RspData.Result == 0) {
+				
+			} else {
+				
+			}
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+};
+
+//23.设置对某个用户的关注
+function setUserFocus(userId, status) {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+	//需要加密的数据
+	var comData = {
+		userId: personalUTID, //用户ID
+		focusUserId: userId, //关注用户ID
+		status: status //关注状态,0 不关注,1 关注
+	};
+	// 等待的对话框
+	var wd = events.showWaiting();
+	//23.设置对某个用户的关注
+	postDataQZPro_setUserFocus(comData, wd, function(data) {
+		wd.close();
+		console.log('23.设置对某个用户的关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+			//刷新界面显示
+			if(document.getElementById("focusBtn").innerText == '已关注') {
+				
+			} else {
+				
+			}
+
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+};
+
 function refreshUI(datasource) {
 	console.log('重组后的答案详情信息：' + JSON.stringify(datasource));
 	var ul = document.getElementById('list-container');
 	var li_title = document.createElement("li");
-	
+
 	li_title.className = 'mui-table-view-cell mui-media';
 	li_title.innerHTML = datasource.AskTitle;
 	var li_person = document.createElement("li");
@@ -118,8 +184,8 @@ function refreshUI(datasource) {
 	li_person.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(datasource.uimg, 2) + '">' +
 		'<div class="mui-media-body">' +
 		datasource.unick +
-		'<p class="mui-ellipsis">' +'专栏：'+ answerInfo.AskChannel + '</p>' +
-		'<button class="mui-btn-green mui-pull-right" style="margin-top: -40px;">' + '关注' + '</button>' +
+		'<p class="mui-ellipsis">' + '专栏：' + answerInfo.AskChannel + '</p>' +
+		'<button id="focusBtn" class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;">关注</button>' +
 		'</div>';
 	var li_content = document.createElement("li");
 	li_content.className = 'mui-table-view-cell mui-media';
