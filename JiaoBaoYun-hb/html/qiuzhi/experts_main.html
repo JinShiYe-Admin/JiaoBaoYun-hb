@@ -132,7 +132,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">专家列表</h1>
+			<h1 id="title" class="mui-title">专家列表</h1>
 		</header>
 		<div class="mui-content" id="content">
 			<!--<div id="slider" class="mui-slider mui-fullscreen">
@@ -197,17 +197,7 @@
 				//				});
 
 				mui('#slider').slider();
-
-				//				var scrollTop = mui('#sliderSegmentedControl').scroll(); //话题列表区域
-				//				var element = document.getElementById(sliderId);
-				//				var more = document.body.querySelector('.more-navigation');
-				//				console.log('element.offsetLeft ' + element.offsetLeft + '|' + element.offsetWidth + '|' + more.offsetLeft);
-				//				if(more.offsetLeft < (element.offsetLeft + element.offsetWidth)) {
-				//					setTimeout(function() {
-				//						scrollTop.scrollTo(-(element.offsetLeft + element.offsetWidth - more.offsetLeft), 0, 100);
-				//					}, 4000);
-				//				}
-
+				//创建下拉上拉刷新控件
 				pullRefresh();
 				//获取专家
 				getExpertsArray(mainData.channelInfo.TabId, 1);
@@ -255,7 +245,14 @@
 					allChannels: allChannels
 				}
 				console.log('transportData ' + JSON.stringify(transportData));
-				events.openNewWindowWithData('qiuzhi-newQ.html',transportData);
+				events.openNewWindowWithData('qiuzhi-newQ.html', transportData);
+			});
+
+			//双击标题返回列表顶部
+			document.getElementById('title').addEventListener('doubletap', function() {
+				var id = 'bot_sw_' + sliderId.replace('top_', '');
+				var scrollTop = mui('#'+id).scroll(); //话题列表区域
+				scrollTop.scrollTo(0, 0, 100);
 			});
 		});
 
