@@ -185,7 +185,7 @@ function refreshUI(datasource) {
 		'<div class="mui-media-body">' +
 		datasource.unick +
 		'<p class="mui-ellipsis">' + '专栏：' + answerInfo.AskChannel + '</p>' +
-		'<button id="focusBtn" class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;">关注</button>' +
+		'<button id="focusBtn" class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;margin-top:-35px">关注</button>' +
 		'</div>';
 	var li_content = document.createElement("li");
 	li_content.className = 'mui-table-view-cell mui-media';
