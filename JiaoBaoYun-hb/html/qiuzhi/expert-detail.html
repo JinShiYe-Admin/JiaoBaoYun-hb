@@ -119,7 +119,8 @@
 		}
 		var ExpertsInfo;
 		mui.plusReady(function() {
-			events.preload('AttentionPersons.html',10)
+			events.preload('AttentionPersons.html',10);
+			events.preload('qiuzhi-expertAllAnswer.html',10)
 			var main = plus.webview.currentWebview(); //获取当前窗体对象
 			ExpertsInfo = main.data; //接收页面传入参数值，传过来的专家model
 			console.log('expert-detail.html:' + JSON.stringify(ExpertsInfo));
@@ -132,7 +133,7 @@
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 				console.log(this.id);
 				if(this.id == 'AnswerLi') { //他的回答
-
+					events.fireToPageWithData('qiuzhi-expertAllAnswer.html','qiuzhi-expertAllAnswer',ExpertsInfo);
 				} else if(this.id == 'AskLi') { //他的提问
 					events.openNewWindowWithData('expert-ask.html', ExpertsInfo);
 				} else if(this.id == 'CommentLi') { //他的评论
@@ -149,7 +150,7 @@
 				console.log('他关注的人');
 			})
 			events.addTap('IsFocusedMan', function() {
-				events.fireToPageWithData('AttentionPersons.html','expertInfo',ExpertsInfo)
+				events.fireToPageWithData('AttentionPersons.html','expertInfo',ExpertsInfo);
 				console.log('关注他的人');
 			})
 			events.addTap('focusBtn', function() {

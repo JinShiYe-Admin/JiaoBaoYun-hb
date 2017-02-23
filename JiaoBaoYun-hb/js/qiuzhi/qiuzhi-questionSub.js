@@ -135,8 +135,17 @@ mui.plusReady(function() {
 		} else {
 			setAskFocus(askID, 0);
 		}
-	})
+	});
 
+	//点击回答
+	mui('#answer_bottom').on('tap', '.ellipsis-3', function() {
+		var element = this.parentNode;
+		var info = JSON.parse(element.getAttribute('data-info'))
+		console.log(JSON.stringify(info));
+		//跳转页面
+		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', info);
+		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
+	})
 });
 
 //13.获取是否已对某个问题关注
@@ -424,6 +433,7 @@ function answerList(data) {
 	var li = document.createElement('li');
 	li.className = 'mui-table-view-cell mui-media';
 	li.id = 'answer_' + data.AnswerId;
+	li.setAttribute('data-info', JSON.stringify(data));
 	li.innerHTML = '' +
 		'<img class="mui-media-object mui-pull-left" src="' + updateHeadImg('', 2) + '">' +
 		'<div class="mui-ellipsis">' + data.unick + '</div>' +
