@@ -75,15 +75,16 @@
 					camera.getPic(camera.getCamera(), function(picPath) {
 						plus.nativeUI.showWaiting(storageKeyName.WAITING);
 						var saveSpace = storageKeyName.CLASSSPACE; //保存空间
-						var data = CloudFileUtil.getSingleUploadDataOptions(picPath, 6, 200, 0, saveSpace);
-						CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-							console.log("获取的数据：" + JSON.stringify(datas));
-							if(datas.Status == 1) {
-								var tokenInfo = datas.Data;
-								//压缩照片
-								compress.compressPIC(picPath, function(event) {
+						compress.compressPIC(picPath, function(event) {
+							var localPath = event.target;
+							var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 6, 200, 0, saveSpace);
+							CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+								console.log("获取的数据：" + JSON.stringify(datas));
+								if(datas.Status == 1) {
+									var tokenInfo = datas.Data;
+
 									//上传文件
-									CloudFileUtil.uploadFile(tokenInfo, event.target, function(uploadData, status) {
+									CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
 										console.log(JSON.stringify(uploadData));
 										var img = { //图片信息
 											url: tokenInfo.Domain + tokenInfo.Key,
@@ -95,13 +96,13 @@
 										//放置图片
 										CloudFileUtil.setPic(img);
 									});
-								})
+								}
 
-							}
-						}, function(xhr, type, errorThrown) {
-							console.log("错误类型：" + type + errorThrown);
-							plus.nativeUI.closeWaiting(); //关闭等待框
-						});
+							}, function(xhr, type, errorThrown) {
+								console.log("错误类型：" + type + errorThrown);
+								plus.nativeUI.closeWaiting(); //关闭等待框
+							});
+						})
 					})
 				} else {
 					mui.toast('上传图片附件不得多于9张！');
