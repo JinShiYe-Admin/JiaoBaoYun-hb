@@ -10,9 +10,9 @@ mui.plusReady(function() {
 	var main = plus.webview.currentWebview();
 	ExpertsInfo = main.data; //接收专家详情页传来的专家用户信息
 	console.log('邀请回答传值:' + JSON.stringify(ExpertsInfo));
-	mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-		events.openNewWindowWithData('../qiuzhi/expert-detail.html', ExpertsInfo);
-	});
+//	mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+//		events.openNewWindowWithData('../qiuzhi/expert-detail.html', ExpertsInfo);
+//	});
 	//36.获取某个用户的被邀请问题列表
 	getInviteAsksByUser(ExpertsInfo.UserId);
 	//从专家页面传值
@@ -117,7 +117,12 @@ function getInviteAsksByUser(userId) {
 								//合并
 								tempModel0 = $.extend(tempModel0, tempModel);
 							}
+							if(!tempModel0.utid)
+						{
+							tempModel0=$.extend(tempModel0, {unick:"匿名",uimg:"../../image/utils/default_personalimage.png"});
 						}
+						}
+						
 					}
 				}
 				if(flagRef == 0) { //刷新
