@@ -1,24 +1,30 @@
 var type = 2;
-var pageIndex=1;
-var answerInfo;//回答详情
+var pageIndex = 1;
+var totalPageCount = 0;
+var answerInfo; //回答详情
+var answerData;
 events.initRefresh('list-container', function() {
 	requestAnswerDetail(answerInfo.AnswerId);
 }, function() {
-	mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
-
+	mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
+	if(pageIndex < totalPageCount) {
+		pageIndex++;
+		requestAnswerDetail(answerInfo.AnswerId);
+	}
 })
 /**
  * 
  */
 mui.plusReady(function() {
 	window.addEventListener('answerInfo', function(e) {
+		answerData={};
+		pageIndex=1;
+		totalPageCount=0
 		answerInfo = e.detail.data;
 		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
 		var answerId = answerInfo.AnswerId;
 		events.clearChild(document.getElementById('list-container'));
 		requestAnswerDetail(answerId);
-		//22.获取是否已对某个用户关注
-		
 	});
 	//		mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 	//			events.openNewWindowWithData('../qiuzhi/expert-detail.html','');
@@ -27,21 +33,21 @@ mui.plusReady(function() {
 	setListeners();
 
 	//点击关注按钮
-	mui('.mui-table-view').on('tap','#focusBtn',function(){
+	mui('.mui-table-view').on('tap', '#focusBtn', function() {
 		if(this.innerText == '关注') {
-			setUserFocus(answerInfo.AnswerMan, 1,this);
+			setUserFocus(answerInfo.AnswerMan, 1, this);
 		} else {
-			setUserFocus(answerInfo.AnswerMan, 0,this);
+			setUserFocus(answerInfo.AnswerMan, 0, this);
 		}
 	})
-//	events.addTap('focusBtn', function() {
-//		console.log('点击关注');
-//		if(this.innerText == '关注') {
-//			setUserFocus(answerInfo.AnswerMan, 1);
-//		} else {
-//			setUserFocus(answerInfo.AnswerMan, 0);
-//		}
-//	});
+	//	events.addTap('focusBtn', function() {
+	//		console.log('点击关注');
+	//		if(this.innerText == '关注') {
+	//			setUserFocus(answerInfo.AnswerMan, 1);
+	//		} else {
+	//			setUserFocus(answerInfo.AnswerMan, 0);
+	//		}
+	//	});
 })
 //8.获取某个回答的详情
 function requestAnswerDetail(answerId) {
@@ -60,6 +66,7 @@ function requestAnswerDetail(answerId) {
 		console.log('8.获取某个回答的详情:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			var datasource = data.RspData;
+			totalPageCount = datasource.TotalPage;
 			getInfos(datasource);
 		} else {
 			mui.toast(data.RspTxt);
@@ -132,6 +139,11 @@ var rechargeInfos = function(datasource, infos) {
 			}
 		}
 	}
+	if(pageIndex == 1) {
+		answerData = datasource;
+	} else {
+		answerData.Data = answerData.Data.concat(datasource.Data);
+	}
 	return datasource;
 }
 
@@ -152,9 +164,9 @@ function getUserFocus(userId) {
 		if(data.RspCode == 0) {
 			//修改界面显示
 			if(data.RspData.Result) {
-				document.querySelector('#focusBtn').innerText='已关注';
+				document.querySelector('#focusBtn').innerText = '已关注';
 			} else {
-				document.querySelector('#focusBtn').innerText='关注';
+				document.querySelector('#focusBtn').innerText = '关注';
 			}
 		} else {
 			mui.toast(data.RspTxt);
@@ -163,7 +175,7 @@ function getUserFocus(userId) {
 };
 
 //23.设置对某个用户的关注
-function setUserFocus(userId, status,item) {
+function setUserFocus(userId, status, item) {
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 	//需要加密的数据
 	var comData = {
@@ -180,10 +192,10 @@ function setUserFocus(userId, status,item) {
 		if(data.RspCode == 0) {
 			//刷新界面显示
 			if(status) {
-				item.innerText='已关注';
+				item.innerText = '已关注';
 				mui.toast('关注成功！')
 			} else {
-				item.innerText='关注';
+				item.innerText = '关注';
 				mui.toast('取消关注成功！');
 			}
 
@@ -198,61 +210,71 @@ function setUserFocus(userId, status,item) {
  */
 function refreshUI(datasource) {
 	console.log('重组后的答案详情信息：' + JSON.stringify(datasource));
+	if(pageIndex == 1) {
+		setQuestion(datasource);
+		setAnswerManInfo(datasource);
+	}
 	var ul = document.getElementById('list-container');
-	
-//	var li_title = document.createElement("li");
-//
-//	li_title.className = 'mui-table-view-cell mui-media';
-//	li_title.innerHTML = datasource.AskTitle;
-//	var li_person = document.createElement("li");
-//	li_person.className = 'mui-table-view-cell mui-media';
-//	li_title.id = 'expertImg'
-//	li_person.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(datasource.uimg, 2) + '">' +
-//		'<div class="mui-media-body">' +
-//		datasource.unick +
-//		'<p class="mui-ellipsis">' + '专栏：' + answerInfo.AskChannel + '</p>' +
-//		'<button id="focusBtn" class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;margin-top:-35px">关注</button>' +
-//		'</div>';
-//	var li_content = document.createElement("li");
-//	li_content.className = 'mui-table-view-cell mui-media';
-//	li_content.innerHTML = datasource.AnswerContent;
-//	ul.appendChild(li_title);
-//	ul.appendChild(li_person);
-//	ul.appendChild(li_content);
+
+	//	var li_title = document.createElement("li");
+	//
+	//	li_title.className = 'mui-table-view-cell mui-media';
+	//	li_title.innerHTML = datasource.AskTitle;
+	//	var li_person = document.createElement("li");
+	//	li_person.className = 'mui-table-view-cell mui-media';
+	//	li_title.id = 'expertImg'
+	//	li_person.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(datasource.uimg, 2) + '">' +
+	//		'<div class="mui-media-body">' +
+	//		datasource.unick +
+	//		'<p class="mui-ellipsis">' + '专栏：' + answerInfo.AskChannel + '</p>' +
+	//		'<button id="focusBtn" class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;margin-top:-35px">关注</button>' +
+	//		'</div>';
+	//	var li_content = document.createElement("li");
+	//	li_content.className = 'mui-table-view-cell mui-media';
+	//	li_content.innerHTML = datasource.AnswerContent;
+	//	ul.appendChild(li_title);
+	//	ul.appendChild(li_person);
+	//	ul.appendChild(li_content);
 	for(var i in datasource.Data) {
 		var li = document.createElement('li');
 		li.className = 'mui-table-view-cell';
 		li.innerHTML = createCommentsInner(datasource.Data[i]);
 		ul.appendChild(li);
 	}
-	getUserFocus(answerInfo.AnswerMan);
+	//	getUserFocus(answerInfo.AnswerMan);
 }
 /**
  * 设置问题内容
  * @param {Object} datasource
  */
-var setQuestion=function(datasource){
-	document.querySelector('.question-title').innerText=datasource.AskTitle;
-	var questionContainer=document.querySelector('question-content');
-	var p=document.createElement('p');
-	p.innerHTML=datasource.AnswerContent;
+var setQuestion = function(datasource) {
+	document.querySelector('.question-title').innerText = datasource.AskTitle;
+	var questionContainer = document.getElementById('question-content');
+	events.clearChild(questionContainer);
+	var p = document.createElement('p');
+	p.innerHTML = datasource.AnswerContent;
 	questionContainer.appendChild(p);
-	if(datasource.AnswerEncAddr){
-		document.getElementById('img-container').innerHTML=getPicInner(datasource.AnswerEncAddr);
+	events.clearChild(document.getElementById('img-container'));
+	if(datasource.AnswerEncAddr) {
+		document.getElementById('img-container').innerHTML = getPicInner(datasource.AnswerEncAddr);
 	}
+	document.getElementById('comments-no').innerText="评论("+datasource.CommentNum+")";
 }
-var setAnswerManInfo=function(){
-	
+var setAnswerManInfo = function(datasource) {
+	document.getElementById('anthor-container').style.top = document.getElementById('question-container').offsetHeight - 30 + 'px';
+	document.getElementById('anthor-portrait').src = updateHeadImg(datasource.uimg, 2);
+	document.getElementById("anthor-name").innerText = datasource.unick;
+	document.getElementById("anthor-info").innerText = '专栏：' + answerInfo.AskChannel;
 }
-var getPicInner=function(picAddr){
-	var picPaths=picAddr.split('|');
-	var picInner='';
-	var pic_width=33.333333%;
-	for(var i in picPaths){
-		if(picPaths.length<3){
-			pic_width=100/picPaths.length+'%';
+var getPicInner = function(picAddr) {
+	var picPaths = picAddr.split('|');
+	var picInner = '';
+	var pic_width = "33.333333%";
+	for(var i in picPaths) {
+		if(picPaths.length < 3) {
+			pic_width = 100 / picPaths.length + '%';
 		}
-		picInner+='<img src='+picPaths[i]+'style="width:'+pic_width+'" />'
+		picInner += '<img src=' + picPaths[i] + 'style="width:' + pic_width + '" />'
 	}
 	return picInner;
 }
@@ -296,7 +318,7 @@ var addComment = function(commentValue) {
 		console.log('评论结果:' + JSON.stringify(data))
 		if(data.RspCode == 0) {
 			if(data.RspData.Result) {
-				document.getElementById('input-content').value='';
+				document.getElementById('input-content').value = '';
 				mui.toast('评论成功！')
 			}
 		} else {
@@ -317,7 +339,12 @@ var setListeners = function() {
 		}
 	})
 	//设置选择监听
-	document.getElementById("order-selector").addEventListener('onchange',function(){
-		type=parseInt(this.options[this.options.selectedIndex].value); 
-	})
+	document.getElementById('order-selector').onchange=function(){
+		type = parseInt(this.options[this.options.selectedIndex].value);
+		console.log('获取的类型：'+type);
+		answerData.Data.reverse();
+		events.clearChild(document.getElementById('list-container'));
+		refreshUI(answerData);
+	}
 }
+
