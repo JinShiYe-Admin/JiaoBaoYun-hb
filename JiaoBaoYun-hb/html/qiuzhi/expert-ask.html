@@ -40,7 +40,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">邀请他回答</h1>
+			<h1 class="mui-title">他的提问</h1>
 		</header>
 		<div id="refreshContainer" class="mui-content">
 			<div class="mui-scroll-wrapper">
@@ -72,8 +72,11 @@
 
 	mui.init();
 	mui.plusReady(function() {
+		ExpertsInfo = plus.webview.currentWebview().data;
 		//25.获取某个用户的提问列表
-		getAsksByUser(1);
+		getAsksByUser(ExpertsInfo.UserId);
+		ExpertsInfo = event.detail.data;
+					console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
 		mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 			var index = this.id.replace('li', '');
 			events.fireToPageNone('qiuzhi-question.html', datasource[index].AskId);
@@ -90,7 +93,7 @@
 					console.log("下拉刷新");
 					pageIndex = 1;
 					flagRef = 0;
-					getAsksByUser(1);
+					getAsksByUser(ExpertsInfo.UserId);
 					self.endPullDownToRefresh();
 				}
 			},
@@ -101,7 +104,7 @@
 					console.log("上拉加载更多");
 					flagRef = 1;
 					if(pageIndex < totalPageCount) {
-						getAsksByUser(1);
+						getAsksByUser(ExpertsInfo.UserId);
 					} else {
 						mui.toast('没有更多了');
 					}
