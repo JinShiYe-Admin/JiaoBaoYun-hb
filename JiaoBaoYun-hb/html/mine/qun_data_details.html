@@ -351,16 +351,16 @@
 				mui('.mui-content').on('input', 'input', function() {
 					if(mstype == 2) { //老师
 						console.log(this.id);
-						if(this.id == 'tea_expsch') {
+						if(this.id == 'tea_expsch') {//教龄的判断
 							console.log('this ' + this.value + '|' + this.value.length);
-							if(this.value.length > 2) {
+							if(this.value.length > 2) {//限制两位数
 								this.value = this.value.slice(0, 2)
 							}
 							var value = this.value;
 							var temp = '';
 							console.log('value ' + value);
 							for(var i = 0; i < value.length; i++) {
-								if(value[i].replace(/^[1-9]\d*|0$/, '') == '') {
+								if(value[i].replace(/^[1-9]\d*|0$/, '') == '') {//只允许输入数字
 									console.log('this.value ' + i + '|' + value[i]);
 									temp = temp + value[i];
 								}
@@ -368,15 +368,22 @@
 							this.value = temp;
 						}
 						if(tea_name.value == teaData.stuname && tea_job.value == teaData.job && tea_title.value == teaData.title && tea_sub.value == teaData.sub && (parseInt(tea_expsch.value) == parseInt(teaData.expsch) || (tea_expsch.value == '' && teaData.expsch == null))) {
+							//判断是否改变资料
 							document.getElementById("finish").style.color = 'gray';
 							change = false;
 						} else {
 							document.getElementById("finish").style.color = 'white';
 							change = true;
 						}
+						if(tea_name.value.replace(/(^\s*)|(\s*$)/g, "") == ""){
+							//名字为空不允许保存
+							document.getElementById("finish").style.color = 'gray';
+							change = false;
+						}
 					} else if(mstype == 3) { //学生
 						var parChange = false; //家长关系是否改变
 						mui.each(parData, function(index, element) {
+							//判断家长关系是否修改
 							var urel = document.getElementById("par_urel_" + element.utid).value;
 							if(urel != element.urel) {
 								parChange = true;
@@ -384,11 +391,17 @@
 						});
 						console.log('parChange ' + parChange);
 						if(stu_name.value == data.stuname && !parChange) {
+							//判断是否改变资料
 							document.getElementById("finish").style.color = 'gray';
 							change = false;
 						} else {
 							document.getElementById("finish").style.color = 'white';
 							change = true;
+						}
+						if(stu_name.value.replace(/(^\s*)|(\s*$)/g, "") == ""){
+							//名字为空不允许保存
+							document.getElementById("finish").style.color = 'gray';
+							change = false;
 						}
 					}
 				});

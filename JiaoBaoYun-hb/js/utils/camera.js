@@ -19,7 +19,7 @@ var camera = (function(mod) {
 					//处理图片
 					//			managePic(mod.getAbsolutePath(path));
 					if(managePic) {
-						managePic(path);
+						managePic(mod.getAbsolutePath(path));
 					}
 				},
 				function(err) {

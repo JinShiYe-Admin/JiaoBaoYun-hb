@@ -120,16 +120,17 @@ function getInviteAsksByUser(userId) {
 						}
 					}
 				}
+				if(flagRef == 0) { //刷新
+					answerArray = tempRspData;
+				} else { //加载更多
+					pageIndex++;
+					//合并数组
+					answerArray = answerArray.concat(tempRspData);
+				}
+				setAnswerRecord(tempRspData);
 				console.log('专家循环遍历后的值：' + JSON.stringify(tempRspData));
 			});
-			if(flagRef == 0) { //刷新
-				answerArray = tempRspData;
-			} else { //加载更多
-				pageIndex++;
-				//合并数组
-				answerArray = answerArray.concat(tempRspData);
-			}
-			setAnswerRecord(tempRspData);
+
 		} else {
 			mui.toast(data.RspTxt);
 		}
@@ -155,6 +156,6 @@ var createList = function(listContainer, record) {
 	var li = document.createElement('li');
 	li.className = 'mui-table-view-cell';
 	//拼接显示
-	li.innerHTML = "<img src='" + record.uimg + "' /><div><p><span>" + record.unick + "</span>邀请<span>" + ExpertsInfo.unick + "</span>回答问题</p><p>[" + record.channel + "]" + record.content + "</p></div>";
+	li.innerHTML = "<img src='" + record.uimg + "' /><div><p><span>" + record.unick + "</span>邀请<span>" + ExpertsInfo.unick + "</span>回答问题</p><p>[" + record.channel + "]" + record.AskTitle + "</p></div>";
 	listContainer.appendChild(li)
 }
