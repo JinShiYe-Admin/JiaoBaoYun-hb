@@ -8,7 +8,7 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
-		<link href="../../css/qiuzhi/qiuzhi-inviteAnswer.css" rel="stylesheet" />
+		<link href="../../css/qiuzhi/qiuzhi-expertAllAnswer.css" rel="stylesheet" />
 	</head>
 
 	<body>
@@ -137,7 +137,8 @@
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
 				//拼接显示
-				li.innerHTML = "<div><p><span>" + record.AskTitle + "</span></p></div>";
+				//li.innerHTML = "<p>" + record.CommentContent + "</p><div><p><img src='"+record.qChannelImg+"'>["+record.qChannel+"]"+record.AskTitle+"</p><p>"+record.AnswerContent+"</p></div><p>"+record.LikeNum+" 赞 · "+record.cCreatTime + " ·"+record.CommentId+" 关注</p>";
+				li.innerHTML = "<p>" + record.CommentContent + "</p><div><p><img src='"+record.qChannelImg+"'>[频道没给]"+record.AskTitle+"</p><p>"+record.AnswerContent+"</p></div><p>"+record.LikeNum+" 赞 · 评论时间没给 ·关注数没给  关注</p>";
 				listContainer.appendChild(li);
 			}
 		</script>
