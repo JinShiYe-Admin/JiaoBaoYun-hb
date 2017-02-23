@@ -16,7 +16,6 @@ document.write('<script src="../../js/libs/crypto-js/require.js"><\/script>');
 document.write('<script src="../../js/utils/signHmacSHA1.js"><\/script>');
 document.write('<script src="../../js/libs/jquery.js"><\/script>');
 
-
 //1.获取所有话题
 //所需参数
 //		var comData = {
@@ -407,11 +406,12 @@ var postDataQZPro_getFocusAsksByUser = function(commonData, wd, callback) {
 //27.获取某个用户的关注人列表
 //所需参数
 //		var comData = {
-//			userId: '',//用户ID
+//			userId: '',//用户ID,登录用户
+//			focusId:'',//关注用户ID,查看用户
 //			pageIndex: '',//当前页数
 //			pageSize:''//每页记录数,传入0，获取总记录数
 //		};
-//返回值：UserId:用户ID,UserNote:用户简介
+//返回值：UserId:用户ID,UserNote:用户简介，FocusType：关注情况，0 未关注，1 已关注，2 相互关注，3 无法关注（自己）
 var postDataQZPro_getFocusUsersByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
@@ -422,11 +422,12 @@ var postDataQZPro_getFocusUsersByUser = function(commonData, wd, callback) {
 //28.获取某个用户的被人关注列表
 //所需参数
 //		var comData = {
-//			userId: '',//用户ID
+//			userId: '',//用户ID，登录用户
+//			focusId:'',//关注用户ID,查看用户
 //			pageIndex: '',//当前页数
 //			pageSize:''//每页记录数,传入0，获取总记录数
 //		};
-//返回值：UserId:用户ID,UserNote:用户简介
+//返回值：UserId:用户ID,UserNote:用户简介，，FocusType：关注情况，0 未关注，1 已关注，2 相互关注，3 无法关注（自己）
 var postDataQZPro_getIsFocusedByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
@@ -470,9 +471,9 @@ var postDataQZPro_setCommentLike = function(commonData, wd, callback) {
 //		var comData = {
 //			userId: '',//用户ID
 //			pageIndex: '',//当前页数
-//			pageSize:''//每页记录数,传入0，获取总记录数
+//			pageSize:''//每页记录数
 //		};
-//返回值：model_Channel
+//返回值：model_QZetNotification
 var postDataQZPro_getNotification = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
@@ -480,74 +481,77 @@ var postDataQZPro_getNotification = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getNotification', enData, commonData, 2, wd, callback);
 }
 
-//1.获取所有话题
+//32.消息提醒置为已读
 //所需参数
 //		var comData = {
-//			pageIndex: '',//当前页数
-//			pageSize:''//每页记录数,传入0，获取总记录数
+//			userId: '',//用户ID
+//			msgTypes:''//信息类型，Array	是	否	body	1 回答我的提问，2 回答我关注的提问,3 问题的回答被点赞,4 回答下的评论被点赞,5 问题的回答被评论,6 回答下的评论被回复,7 问题被邀请,8 被人关注另：打开消息提醒时可调用[1,2,3,4,5,6,7,8]同时设为已读。
 //		};
-//返回值：model_Channel
-var postDataQZPro_getAllChannels = function(commonData, wd, callback) {
+//返回值：1为正确
+var postDataQZPro_setNotiReadByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getAllChannels', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/setNotiReadByUser', enData, commonData, 2, wd, callback);
 }
 
-//1.获取所有话题
+//33.获取某个用户的评论列表
 //所需参数
 //		var comData = {
+//			userId: '',//用户ID
 //			pageIndex: '',//当前页数
 //			pageSize:''//每页记录数,传入0，获取总记录数
 //		};
-//返回值：model_Channel
-var postDataQZPro_getAllChannels = function(commonData, wd, callback) {
+//返回值：model_QZCommentsByUser
+var postDataQZPro_getCommentsByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getAllChannels', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getCommentsByUser', enData, commonData, 2, wd, callback);
 }
 
-//1.获取所有话题
+//34.邀请某人回答
 //所需参数
 //		var comData = {
-//			pageIndex: '',//当前页数
-//			pageSize:''//每页记录数,传入0，获取总记录数
+//			inviteMan: '',//邀请人ID
+//			askId: '',//问题ID
+//			expertId:''//专家ID
 //		};
-//返回值：model_Channel
-var postDataQZPro_getAllChannels = function(commonData, wd, callback) {
+//返回值：1为正确
+var postDataQZPro_addInvite = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getAllChannels', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/addInvite', enData, commonData, 2, wd, callback);
 }
 
-//1.获取所有话题
+//35.获取是否已对某人邀请此回答
 //所需参数
 //		var comData = {
-//			pageIndex: '',//当前页数
-//			pageSize:''//每页记录数,传入0，获取总记录数
+//			askId: '',//问题ID
+//			expertId:''//专家ID
 //		};
-//返回值：model_Channel
-var postDataQZPro_getAllChannels = function(commonData, wd, callback) {
+//返回值：非0为已邀请
+var postDataQZPro_getInviteByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getAllChannels', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getInviteByUser', enData, commonData, 2, wd, callback);
 }
 
-//1.获取所有话题
+//36.获取某个用户的被邀请问题列表
 //所需参数
 //		var comData = {
+//			userId: '',//用户ID
 //			pageIndex: '',//当前页数
 //			pageSize:''//每页记录数,传入0，获取总记录数
 //		};
-//返回值：model_Channel
-var postDataQZPro_getAllChannels = function(commonData, wd, callback) {
+//返回值：InviteMan	邀请人ID	int；AskId	问题ID	int；AskTitle	问题标题	String
+var postDataQZPro_getInviteAsksByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getAllChannels', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getInviteAsksByUser', enData, commonData, 2, wd, callback);
 }
 
 //1.获取所有话题

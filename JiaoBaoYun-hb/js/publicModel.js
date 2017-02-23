@@ -298,9 +298,11 @@ var publicModel = (function($, mod) {
 		UserNote:'',//用户简介	String		否	
 		ExpertLevel:'',//专家等级	int		否	
 		ExpertChannels:'',//	专家话题列表	Array		否	例如[1,2,3]
+		ExpertChannelNames:''//专家话题名称列表	Array
 		AnswerNum:'',//回答数	int		否	
 		AskNum:'',//	提问数	int		否	
 		CommentNum:'',//	评论数	int		否	
+		InviteNum:''//邀请数	int		否
 		IsLikeNum:'',//回答点赞数	int		否	
 		FocusAskNum:'',//关注问题数	int		否	
 		FocusManNum:'',//关注人数	int		否	
@@ -387,6 +389,27 @@ var publicModel = (function($, mod) {
 		Replys:'',//	下级回复列表,Array
 		
 		AnswerId:''//回答ID
+	}
+	
+	//消息提醒--求知
+	mod.model_QZetNotification = {
+		UserId:'',//	发消息用户ID	int		否	从属Data,包括回答人ID、评论人ID、邀请人ID、关注人ID
+		MsgType:'',//消息类型	int		否	从属Data，1 回答我的提问，2 回答我关注的提问，3 问题的回答被点赞，4 回答下的评论被点赞，5 问题的回答被评论，6 回答下的评论被回复，7 问题被邀请，8 被人关注
+		MsgTime:'',//消息时间	String		否	从属Data
+		AskTitle:'',//问题标题	String		否	从属Data
+		AnswerContent:'',//回答内容	String		否	从属Data
+		ContentId:''//内容ID	int		否	从属Data,1,2，3的内容ID是回答ID；4,5,6的内容ID是评论ID；7的内容ID是问题ID；8的内容ID是用户ID
+	}
+	
+	//获取某个用户的评论列表--求知
+	mod.model_QZCommentsByUser = {
+		AskId:'',//	问题ID	int
+		AskTitle:'',//	问题标题	String
+		AnswerId:'',//	回答ID	int
+		AnswerContent:'',//	回答内容	String
+		CommentId:'',//	评论ID	int
+		CommentContent:'',//	评论内容	String
+		LikeNum:''//	评论点赞数	int
 	}
 
 	return mod;
