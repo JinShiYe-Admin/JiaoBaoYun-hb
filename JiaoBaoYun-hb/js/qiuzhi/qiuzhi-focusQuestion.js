@@ -137,7 +137,7 @@ console.log("图片path："+getChannelIcon(record))
 	li.innerHTML = '<a>'+
 						'<div class="channel-info">'+
 							'<p>'+
-								'<img src="'+getChannelIcon(record)+'"  class="channel-icon head-portrait "/>来自话题:'
+								'<img src="'+getChannelIcon(record.AskChannel)+'"  class="channel-icon head-portrait "/>来自话题:'
 							+record.AskChannel+
 						'</p>'+
 
