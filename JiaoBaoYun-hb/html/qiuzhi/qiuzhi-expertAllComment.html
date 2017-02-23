@@ -14,7 +14,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">全部回答</h1>
+			<h1 class="mui-title">全部评论</h1>
 		</header>
 		<div id="refreshContainer" class="mui-content mui-fullscreen" style="z-index:0">
 			<div class="mui-scroll-wrapper">
@@ -44,14 +44,14 @@
 
 			mui.plusReady(function() {
 				//从专家页面传值
-				window.addEventListener('qiuzhi-expertAllAnswer', function(event) {
+				window.addEventListener('qiuzhi-expertAllComment', function(event) {
 					//赋值
 					ExpertsInfo = event.detail.data;
 					console.log('专家回答页传值：'+JSON.stringify(ExpertsInfo));
 					//清除节点
 					document.getElementById('list-container').innerHTML = "";
-					//24.获取某个用户的回答列表
-					getAnswersByUser(ExpertsInfo.UserId);
+					//33.获取某个用户的评论列表
+					getCommentsByUser(ExpertsInfo.UserId);
 				});
 
 				//上拉下拉注册
@@ -59,26 +59,24 @@
 					down: {
 						callback: function() {
 							//清除节点
-
 							document.getElementById('list-container').innerHTML = "";
 							var self = this;
 							console.log("下拉刷新");
 							pageIndex = 1;
 							flagRef = 0;
-							//24.获取某个用户的回答列表
-							getAnswersByUser(ExpertsInfo.UserId);
+							//33.获取某个用户的评论列表
+							getCommentsByUser(ExpertsInfo.UserId);
 							self.endPullDownToRefresh();
 						}
 					},
 					up: {
 						callback: function() {
-
 							var self = this;
 							console.log("上拉加载更多");
 							flagRef = 1;
 							if(pageIndex < totalPageCount) {
-								//24.获取某个用户的回答列表
-								getAnswersByUser(ExpertsInfo.UserId);
+								//33.获取某个用户的评论列表
+								getCommentsByUser(ExpertsInfo.UserId);
 							}else{
 								mui.toast('没有更多了');
 							}
@@ -89,8 +87,8 @@
 
 			});
 
-			//24.获取某个用户的回答列表
-			function getAnswersByUser(userId) {
+			//33.获取某个用户的评论列表
+			function getCommentsByUser(userId) {
 				//需要加密的数据
 				var comData = {
 					userId: userId, //用户ID
@@ -99,10 +97,10 @@
 				};
 				// 等待的对话框
 				var wd = events.showWaiting();
-				//24.获取某个用户的回答列表
-				postDataQZPro_getAnswersByUser(comData, wd, function(data) {
+				//33.获取某个用户的评论列表
+				postDataQZPro_getCommentsByUser(comData, wd, function(data) {
 					wd.close();
-					console.log('24.获取某个用户的回答列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					console.log('33.获取某个用户的评论列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						//总页数
 						totalPageCount = data.RspData.TotalPage;
