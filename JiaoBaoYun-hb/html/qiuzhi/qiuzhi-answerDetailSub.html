@@ -15,14 +15,37 @@
 		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
 				<!--数据列表-->
+				<div class="question-container">
+					<h4 id="question-title" class="question-title"></h4>
+				</div>
+				<div class="anthor-container">
+					<img id="anthor-portrait" class="img-portrait display-inlineBlock"/>
+					<div class="export-info display-inlineBlock">
+						<h5 id="anthor-name"></h5>
+						<p id="anthor-info"></p>
+					</div>
+					<button type="button" class="mui-btn mui-pull-right btn-attention">关注</button>
+				</div>
+				<div class="questionContent-container">
+					<div id="question-content"></div>
+					<div id="img-container"></div>
+				</div>
+				<div class="comments-info">
+					<p id="comments-no" class="mui-pull-left"></p>
+					<select id="order-selector" class="mui-pull-right order-selector display-inlineBlock">
+						<option value="2">倒序排列</option>
+						<option value="1">顺序排列</option>
+					</select>
+				</div>
 				<ul id="list-container" class="mui-table-view">
 				</ul>
 			</div>
-			<div class="input-footerContainer">
-				<input  type="text" class="input-text" />
+			
+		</div>
+		<div class="input-footerContainer">
+				<input  id="input-content" type="text" class="input-text" />
 				<a id="send-comment" class="mui-icon iconfont icon-fasong send-icon"></a>
 			</div>
-		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>

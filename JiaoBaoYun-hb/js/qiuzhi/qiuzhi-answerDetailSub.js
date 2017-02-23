@@ -1,4 +1,5 @@
 var type = 2;
+var pageIndex=1;
 var answerInfo;//回答详情
 events.initRefresh('list-container', function() {
 	requestAnswerDetail(answerInfo.AnswerId);
@@ -48,7 +49,7 @@ function requestAnswerDetail(answerId) {
 	var comData = {
 		answerId: answerId, //回答ID
 		orderType: type, //评论排序方式,1 时间正序排序,2 时间倒序排序
-		pageIndex: '1', //当前页数
+		pageIndex: pageIndex, //当前页数
 		pageSize: '10' //每页记录数,传入0，获取总记录数
 	};
 	// 等待的对话框
@@ -66,7 +67,7 @@ function requestAnswerDetail(answerId) {
 	});
 }
 /**
- * 
+ * 获取个人信息
  * @param {Object} datasource
  */
 var getInfos = function(datasource) {
@@ -198,25 +199,26 @@ function setUserFocus(userId, status,item) {
 function refreshUI(datasource) {
 	console.log('重组后的答案详情信息：' + JSON.stringify(datasource));
 	var ul = document.getElementById('list-container');
-	var li_title = document.createElement("li");
-
-	li_title.className = 'mui-table-view-cell mui-media';
-	li_title.innerHTML = datasource.AskTitle;
-	var li_person = document.createElement("li");
-	li_person.className = 'mui-table-view-cell mui-media';
-	li_title.id = 'expertImg'
-	li_person.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(datasource.uimg, 2) + '">' +
-		'<div class="mui-media-body">' +
-		datasource.unick +
-		'<p class="mui-ellipsis">' + '专栏：' + answerInfo.AskChannel + '</p>' +
-		'<button id="focusBtn" class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;margin-top:-35px">关注</button>' +
-		'</div>';
-	var li_content = document.createElement("li");
-	li_content.className = 'mui-table-view-cell mui-media';
-	li_content.innerHTML = datasource.AnswerContent;
-	ul.appendChild(li_title);
-	ul.appendChild(li_person);
-	ul.appendChild(li_content);
+	
+//	var li_title = document.createElement("li");
+//
+//	li_title.className = 'mui-table-view-cell mui-media';
+//	li_title.innerHTML = datasource.AskTitle;
+//	var li_person = document.createElement("li");
+//	li_person.className = 'mui-table-view-cell mui-media';
+//	li_title.id = 'expertImg'
+//	li_person.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(datasource.uimg, 2) + '">' +
+//		'<div class="mui-media-body">' +
+//		datasource.unick +
+//		'<p class="mui-ellipsis">' + '专栏：' + answerInfo.AskChannel + '</p>' +
+//		'<button id="focusBtn" class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;margin-top:-35px">关注</button>' +
+//		'</div>';
+//	var li_content = document.createElement("li");
+//	li_content.className = 'mui-table-view-cell mui-media';
+//	li_content.innerHTML = datasource.AnswerContent;
+//	ul.appendChild(li_title);
+//	ul.appendChild(li_person);
+//	ul.appendChild(li_content);
 	for(var i in datasource.Data) {
 		var li = document.createElement('li');
 		li.className = 'mui-table-view-cell';
@@ -224,6 +226,35 @@ function refreshUI(datasource) {
 		ul.appendChild(li);
 	}
 	getUserFocus(answerInfo.AnswerMan);
+}
+/**
+ * 设置问题内容
+ * @param {Object} datasource
+ */
+var setQuestion=function(datasource){
+	document.querySelector('.question-title').innerText=datasource.AskTitle;
+	var questionContainer=document.querySelector('question-content');
+	var p=document.createElement('p');
+	p.innerHTML=datasource.AnswerContent;
+	questionContainer.appendChild(p);
+	if(datasource.AnswerEncAddr){
+		document.getElementById('img-container').innerHTML=getPicInner(datasource.AnswerEncAddr);
+	}
+}
+var setAnswerManInfo=function(){
+	
+}
+var getPicInner=function(picAddr){
+	var picPaths=picAddr.split('|');
+	var picInner='';
+	var pic_width=33.333333%;
+	for(var i in picPaths){
+		if(picPaths.length<3){
+			pic_width=100/picPaths.length+'%';
+		}
+		picInner+='<img src='+picPaths[i]+'style="width:'+pic_width+'" />'
+	}
+	return picInner;
 }
 /**
  * 
@@ -265,6 +296,7 @@ var addComment = function(commentValue) {
 		console.log('评论结果:' + JSON.stringify(data))
 		if(data.RspCode == 0) {
 			if(data.RspData.Result) {
+				document.getElementById('input-content').value='';
 				mui.toast('评论成功！')
 			}
 		} else {
@@ -283,5 +315,9 @@ var setListeners = function() {
 		} else {
 			mui.toast("请输入评论内容");
 		}
+	})
+	//设置选择监听
+	document.getElementById("order-selector").addEventListener('onchange',function(){
+		type=parseInt(this.options[this.options.selectedIndex].value); 
 	})
 }
