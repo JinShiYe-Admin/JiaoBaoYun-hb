@@ -17,17 +17,20 @@
 	</head>
 
 	<body>
-		<div class="mui-content">
-			<div class="navigation" role="navigation">
-				<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted main-navigation" style="height: 40px;">
-					<div id="subjects-container" class="mui-scroll tabs-channels">
+		<div id="content" class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div id="slider_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted main-navigation">
+					<div id="subjects-container" class="mui-scroll">
+						<a class="mui-control-item" href="#defalut"></a>
 					</div>
 				</div>
 				<div class="more-navigation">
 					<a class="iconfont icon-qita11">
-						<!--导航-->
 					</a>
 					<p>导航</p>
+				</div>
+				<div id="sliderGroup" class="mui-slider-group"style="height: 1px;">
+					<div id="defalut" class="mui-slider-item mui-control-content mui-active"></div>
 				</div>
 			</div>
 		</div>

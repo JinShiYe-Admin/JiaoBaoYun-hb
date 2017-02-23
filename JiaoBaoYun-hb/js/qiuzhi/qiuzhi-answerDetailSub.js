@@ -1,11 +1,14 @@
 var type = 2;
-var answerInfo;
+var answerInfo;//回答详情
 events.initRefresh('list-container', function() {
 	requestAnswerDetail(answerInfo.AnswerId);
 }, function() {
 	mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
 
 })
+/**
+ * 
+ */
 mui.plusReady(function() {
 	window.addEventListener('answerInfo', function(e) {
 		answerInfo = e.detail.data;
@@ -14,7 +17,7 @@ mui.plusReady(function() {
 		events.clearChild(document.getElementById('list-container'));
 		requestAnswerDetail(answerId);
 		//22.获取是否已对某个用户关注
-		getUserFocus(answerInfo.AnswerMan);
+		
 	});
 	//		mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 	//			events.openNewWindowWithData('../qiuzhi/expert-detail.html','');
@@ -23,14 +26,21 @@ mui.plusReady(function() {
 	setListeners();
 
 	//点击关注按钮
-	events.addTap('focusBtn', function() {
-		console.log('点击关注');
+	mui('.mui-table-view').on('tap','#focusBtn',function(){
 		if(this.innerText == '关注') {
-			setUserFocus(answerInfo.AnswerMan, 1);
+			setUserFocus(answerInfo.AnswerMan, 1,this);
 		} else {
-			setUserFocus(answerInfo.AnswerMan, 0);
+			setUserFocus(answerInfo.AnswerMan, 0,this);
 		}
-	});
+	})
+//	events.addTap('focusBtn', function() {
+//		console.log('点击关注');
+//		if(this.innerText == '关注') {
+//			setUserFocus(answerInfo.AnswerMan, 1);
+//		} else {
+//			setUserFocus(answerInfo.AnswerMan, 0);
+//		}
+//	});
 })
 //8.获取某个回答的详情
 function requestAnswerDetail(answerId) {
@@ -55,6 +65,10 @@ function requestAnswerDetail(answerId) {
 		}
 	});
 }
+/**
+ * 
+ * @param {Object} datasource
+ */
 var getInfos = function(datasource) {
 	var pInfos = [];
 	pInfos.push(datasource.AnswerMan);
@@ -70,6 +84,11 @@ var getInfos = function(datasource) {
 	pInfos = events.arraySingleItem(pInfos);
 	requireInfos(datasource, pInfos);
 }
+/**
+ * 
+ * @param {Object} datasource
+ * @param {Object} pInfos
+ */
 var requireInfos = function(datasource, pInfos) {
 
 	//发送获取用户资料申请
@@ -131,10 +150,10 @@ function getUserFocus(userId) {
 		console.log('22.获取是否已对某个用户关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			//修改界面显示
-			if(data.RspData.Result == 0) {
-				
+			if(data.RspData.Result) {
+				document.querySelector('#focusBtn').innerText='已关注';
 			} else {
-				
+				document.querySelector('#focusBtn').innerText='关注';
 			}
 		} else {
 			mui.toast(data.RspTxt);
@@ -143,7 +162,7 @@ function getUserFocus(userId) {
 };
 
 //23.设置对某个用户的关注
-function setUserFocus(userId, status) {
+function setUserFocus(userId, status,item) {
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 	//需要加密的数据
 	var comData = {
@@ -159,10 +178,12 @@ function setUserFocus(userId, status) {
 		console.log('23.设置对某个用户的关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			//刷新界面显示
-			if(document.getElementById("focusBtn").innerText == '已关注') {
-				
+			if(status) {
+				item.innerText='已关注';
+				mui.toast('关注成功！')
 			} else {
-				
+				item.innerText='关注';
+				mui.toast('取消关注成功！');
 			}
 
 		} else {
@@ -170,7 +191,10 @@ function setUserFocus(userId, status) {
 		}
 	});
 };
-
+/**
+ * 刷新界面
+ * @param {Object} datasource
+ */
 function refreshUI(datasource) {
 	console.log('重组后的答案详情信息：' + JSON.stringify(datasource));
 	var ul = document.getElementById('list-container');
@@ -199,6 +223,7 @@ function refreshUI(datasource) {
 		li.innerHTML = createCommentsInner(datasource.Data[i]);
 		ul.appendChild(li);
 	}
+	getUserFocus(answerInfo.AnswerMan);
 }
 /**
  * 
@@ -222,6 +247,10 @@ var createCommentsInner = function(cell) {
 		'</div></a>'
 	return inner;
 }
+/**
+ * 增加评论
+ * @param {Object} commentValue
+ */
 var addComment = function(commentValue) {
 	var pId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -243,6 +272,9 @@ var addComment = function(commentValue) {
 		}
 	})
 }
+/**
+ * 设置监听
+ */
 var setListeners = function() {
 	events.addTap('send-comment', function() {
 		var value = document.querySelector('.input-text').value;
