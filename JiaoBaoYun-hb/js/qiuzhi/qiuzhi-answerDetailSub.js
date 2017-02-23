@@ -33,13 +33,13 @@ mui.plusReady(function() {
 	setListeners();
 
 	//点击关注按钮
-	mui('.mui-table-view').on('tap', '#focusBtn', function() {
-		if(this.innerText == '关注') {
-			setUserFocus(answerInfo.AnswerMan, 1, this);
-		} else {
-			setUserFocus(answerInfo.AnswerMan, 0, this);
-		}
-	})
+//	mui('.mui-table-view').on('tap', '#focusBtn', function() {
+//		if(this.innerText == '关注') {
+//			setUserFocus(answerInfo.AnswerMan, 1, this);
+//		} else {
+//			setUserFocus(answerInfo.AnswerMan, 0, this);
+//		}
+//	})
 	//	events.addTap('focusBtn', function() {
 	//		console.log('点击关注');
 	//		if(this.innerText == '关注') {
@@ -215,33 +215,12 @@ function refreshUI(datasource) {
 		setAnswerManInfo(datasource);
 	}
 	var ul = document.getElementById('list-container');
-
-	//	var li_title = document.createElement("li");
-	//
-	//	li_title.className = 'mui-table-view-cell mui-media';
-	//	li_title.innerHTML = datasource.AskTitle;
-	//	var li_person = document.createElement("li");
-	//	li_person.className = 'mui-table-view-cell mui-media';
-	//	li_title.id = 'expertImg'
-	//	li_person.innerHTML = '<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(datasource.uimg, 2) + '">' +
-	//		'<div class="mui-media-body">' +
-	//		datasource.unick +
-	//		'<p class="mui-ellipsis">' + '专栏：' + answerInfo.AskChannel + '</p>' +
-	//		'<button id="focusBtn" class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;margin-top:-35px">关注</button>' +
-	//		'</div>';
-	//	var li_content = document.createElement("li");
-	//	li_content.className = 'mui-table-view-cell mui-media';
-	//	li_content.innerHTML = datasource.AnswerContent;
-	//	ul.appendChild(li_title);
-	//	ul.appendChild(li_person);
-	//	ul.appendChild(li_content);
 	for(var i in datasource.Data) {
 		var li = document.createElement('li');
 		li.className = 'mui-table-view-cell';
 		li.innerHTML = createCommentsInner(datasource.Data[i]);
 		ul.appendChild(li);
 	}
-	//	getUserFocus(answerInfo.AnswerMan);
 }
 /**
  * 设置问题内容
@@ -330,14 +309,14 @@ var addComment = function(commentValue) {
  * 设置监听
  */
 var setListeners = function() {
-	events.addTap('send-comment', function() {
-		var value = document.querySelector('.input-text').value;
-		if(value) {
-			addComment(value);
-		} else {
-			mui.toast("请输入评论内容");
-		}
-	})
+//	events.addTap('send-comment', function() {
+//		var value = document.querySelector('.input-text').value;
+//		if(value) {
+//			addComment(value);
+//		} else {
+//			mui.toast("请输入评论内容");
+//		}
+//	})
 	//设置选择监听
 	document.getElementById('order-selector').onchange=function(){
 		type = parseInt(this.options[this.options.selectedIndex].value);
