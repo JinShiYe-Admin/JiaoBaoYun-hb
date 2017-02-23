@@ -156,6 +156,6 @@ var createList = function(listContainer, record) {
 	var li = document.createElement('li');
 	li.className = 'mui-table-view-cell';
 	//拼接显示
-	li.innerHTML = "<img src='" + record.uimg + "' /><div><p><span>" + record.unick + "</span>邀请<span>" + ExpertsInfo.unick + "</span>回答问题</p><p>[" + record.channel + "]" + record.AskTitle + "</p></div>";
+	li.innerHTML = "<img src='" + record.uimg + "' /><div><p><span>" + record.unick + "</span>邀请<span>" + ExpertsInfo.unick + "</span>回答问题</p><p>[" + record.AskChannel + "]" + record.AskTitle + "</p></div>";
 	listContainer.appendChild(li)
 }
