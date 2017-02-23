@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/quan/custom-textarea.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+
+	</head>
+
+	<body style="background-color: white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left "></a>
+			<h1 id="title" class="mui-title">评论</h1>
+			<a id="btn-reply" class="mui-pull-right">发布</a>
+		</header>
+		<div class="mui-content">
+			<p id="askTitle" style="margin-left: 10px;font-size: 14px;margin-top: 5px;"></p>
+			<div class="input-content">
+				<textarea id="msg-content" placeholder="添加评论"></textarea>
+
+			</div>
+
+		</div>
+
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/utils/events.js"></script>
+	<script src="../../js/publicProtocol.js"></script>
+
+	<script>
+	</script>
+	<script type="text/javascript">
+		mui.init()
+		var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
+		var personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+		mui.plusReady(function() {
+			var data = plus.webview.currentWebview().data;
+			console.log(JSON.stringify(data));
+			var tempIndex = data.tempIndex;
+			var zonepArray = data.zonepArray;
+			events.addTap('btn-reply', function() {
+
+				var replyName = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick
+				var inputComment = document.getElementById("msg-content");
+				var name = inputComment.value; //评论内容
+				if(name == '') {
+					mui.toast('不允许为空');
+				} else {
+					if(tempIndex.indexOf('-') >= 0) {
+						var indexArr = tempIndex.split('-');
+						var id = indexArr[0];
+						var commentId = indexArr[1];
+						var replyId = indexArr[2];
+
+						var tempModel = zonepArray[id].Comments[commentId];
+						var upperId = tempModel.TabId;
+						var replyUserId;
+						var ReplyIdName;
+						if(replyId == '评论') {
+							replyUserId = tempModel.UserId
+							ReplyIdName = tempModel.UserIdName
+						} else {
+							replyUserId = tempModel.Replys[replyId].UserId;
+							ReplyIdName = tempModel.Replys[replyId].UserIdName;
+						}
+
+						var comData = {
+							userId: personalUTID, //用户ID
+							upperId: upperId, //上级评论ID
+							replyUserId: replyUserId, //回复ID
+							userSpaceId: zonepArray[id].TabId, //用户空间ID
+							commentContent: inputComment.value //回复内容
+						};
+						console.log('comData=====' + JSON.stringify(comData))
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
+							wd.close();
+							console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
+							mui.fire(plus.webview.currentWebview().opener(),'refreshShow')
+							mui.back();
+
+						})
+					} else {
+						var comData = {
+							userId: personalUTID, //用户ID
+							userSpaceId: zonepArray[tempIndex].TabId, //用户空间ID
+							commentContent: inputComment.value //回复内容
+						};
+						var tempValue = inputComment.value;
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						postDataPro_addUserSpaceComment(comData, wd, function(data) {
+							wd.close();
+							console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
+							mui.fire(plus.webview.currentWebview().opener(),'refreshShow')
+							mui.back();
+
+						})
+					}
+
+				}
+
+			})
+
+		})
+	</script>
+
+</html>

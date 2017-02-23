@@ -15,7 +15,7 @@ mui.plusReady(function() {
 	addReplyLisetner();
 	addSomeEvent();
 	pullUpFresh()
-		// 获取当前窗口对象
+	// 获取当前窗口对象
 	var self = plus.webview.currentWebview();
 	h5fresh.addRefresh(function() {
 		pageIndex = 1;
@@ -28,6 +28,12 @@ mui.plusReady(function() {
 		pageIndex = 1;
 		pullFlag = 0;
 		requestData();
+	})
+	window.addEventListener('refreshShow', function(data) {
+		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+		pageIndex = 1;
+		pullFlag = 0;
+		requestData()
 	})
 
 });
@@ -102,7 +108,7 @@ function addSomeEvent() {
 					console.log('index=' + index)
 					var a = document.getElementById("praise" + index);
 					a.style.color = 'rgb(0, 165, 224)'
-//					mui.toast('点赞成功');
+					//					mui.toast('点赞成功');
 					var PraiseList = document.getElementById("PraiseList" + index);
 					console.log(PraiseList.innerHTML);
 					var praiseNameList = PraiseList.getElementsByTagName("font");
@@ -134,7 +140,7 @@ function addSomeEvent() {
 				if(data.RspCode == 0) {
 					var a = document.getElementById("praise" + index);
 					a.style.color = 'rgb(143, 143, 148)'
-//					mui.toast('取消点赞成功');
+					//					mui.toast('取消点赞成功');
 					var PraiseList = document.getElementById("PraiseList" + index);
 					var praiseName = PraiseList.getElementsByTagName("font")[0];
 					if(praiseName.innerHTML.indexOf('、') > -1) {
@@ -175,33 +181,33 @@ function addSomeEvent() {
  * 请求数据
  */
 var requestData = function() {
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		/**
-		 * 请求区域内的动态
-		 */
-		postDataPro_getUserSpacesByArea({
-			userId: personalUTID, //用户ID
-			area: showCity.acode, //区域
-			pageIndex: pageIndex, //当前页数
-			pageSize: 10 //每页记录数
-		}, wd, function(data) {
-			wd.close();
-			console.log('展示获取的数据：' + JSON.stringify(data));
-			if(data.RspCode == 0 && data.RspData.Data.length > 0) {
-				totalPage = data.RspData.TotalPage
-				console.log('11111111111======'+totalPage)
-				getPersonIds(data.RspData.Data);
-			} else {
-				var table = document.body.querySelector('.mui-table-view');
-				table.innerHTML = ''
-				events.fireToPageNone('index.html','closeWaiting');
-			}
-		})
-	}
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	/**
-	 * 获取所有人的id
-	 * @param {Object} data
+	 * 请求区域内的动态
 	 */
+	postDataPro_getUserSpacesByArea({
+		userId: personalUTID, //用户ID
+		area: showCity.acode, //区域
+		pageIndex: pageIndex, //当前页数
+		pageSize: 10 //每页记录数
+	}, wd, function(data) {
+		wd.close();
+		console.log('展示获取的数据：' + JSON.stringify(data));
+		if(data.RspCode == 0 && data.RspData.Data.length > 0) {
+			totalPage = data.RspData.TotalPage
+			console.log('11111111111======' + totalPage)
+			getPersonIds(data.RspData.Data);
+		} else {
+			var table = document.body.querySelector('.mui-table-view');
+			table.innerHTML = ''
+			events.fireToPageNone('index.html', 'closeWaiting');
+		}
+	})
+}
+/**
+ * 获取所有人的id
+ * @param {Object} data
+ */
 var getPersonIds = function(data) {
 	var personIds = [];
 	for(var i in data) {
@@ -236,95 +242,95 @@ var getPersonIds = function(data) {
  * @param {Object} ids
  */
 var getPersonalInfo = function(data, ids) {
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		postDataPro_PostUinf({
-			vvl: ids.toString(), //用户id，查询的值,p传个人ID,g传ID串
-			vtp: 'g' //查询类型,p(个人)g(id串)
-		}, wd, function(personsData) {
-			wd.close();
-			console.log('展示子页面获取的个人信息：' + JSON.stringify(personsData));
-			if(personsData.RspCode == 0) {
-				data = rechargeData(data, personsData.RspData)
-				if(pullFlag == 1) {
-					console.log('888888888888'+JSON.stringify(zonepArray))
-					console.log('999999999999'+JSON.stringify(data))
-					//合并数组
-					zonepArray = zonepArray.concat(data);
-				} else {
-					zonepArray = data;
-				}
-
-				console.log("重组后的数据：" + JSON.stringify(zonepArray));
-				setData(zonepArray);
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	postDataPro_PostUinf({
+		vvl: ids.toString(), //用户id，查询的值,p传个人ID,g传ID串
+		vtp: 'g' //查询类型,p(个人)g(id串)
+	}, wd, function(personsData) {
+		wd.close();
+		console.log('展示子页面获取的个人信息：' + JSON.stringify(personsData));
+		if(personsData.RspCode == 0) {
+			data = rechargeData(data, personsData.RspData)
+			if(pullFlag == 1) {
+				console.log('888888888888' + JSON.stringify(zonepArray))
+				console.log('999999999999' + JSON.stringify(data))
+				//合并数组
+				zonepArray = zonepArray.concat(data);
 			} else {
-				events.fireToPageNone('index.html','closeWaiting');
+				zonepArray = data;
 			}
-		})
-	}
-	/**
-	 * 重组数据
-	 * @param {Object} data 要重组的数据
-	 * @param {Object} personsData 添加的个人信息
-	 */
+
+			console.log("重组后的数据：" + JSON.stringify(zonepArray));
+			setData(zonepArray);
+		} else {
+			events.fireToPageNone('index.html', 'closeWaiting');
+		}
+	})
+}
+/**
+ * 重组数据
+ * @param {Object} data 要重组的数据
+ * @param {Object} personsData 添加的个人信息
+ */
 var rechargeData = function(data, personsData) {
-		for(var i in data) {
-			for(var j in personsData) {
-				if(data[i].PublisherId == personsData[j].utid) {
-					data[i].PublisherName = personsData[j].unick;
-					data[i].PublisherImg = personsData[j].uimg;
-				}
-				//遍历点赞的人
-				for(var item2 in data[i].LikeUsers) {
-					if(personsData[j].utid == data[i].LikeUsers[item2]) {
-						data[i].LikeUsers[item2] = mui.extend(data[i].LikeUsers[item2], personsData[j])
-					}
-
-				}
-
-				if(data[i].Comments.length > 0) {
-					for(var m in data[i].Comments) {
-						if(data[i].Comments[m].UserId == personsData[j].utid) {
-
-							data[i].Comments[m].UserIdName = personsData[j].unick;
-						}
-						if(data[i].Comments[m].ReplyId == personsData[j].utid) {
-							data[i].Comments[m].ReplyIdName = personsData[j].unick;
-						}
-						for(var k in data[i].Comments[m].Replys) {
-							var reply = data[i].Comments[m].Replys[k];
-							if(reply.UserId == personsData[j].utid) {
-								reply.UserIdName = personsData[j].unick;
-
-							}
-							if(reply.ReplyId == personsData[j].utid) {
-								reply.ReplyIdName = personsData[j].unick;
-							}
-
-						}
-
-					}
+	for(var i in data) {
+		for(var j in personsData) {
+			if(data[i].PublisherId == personsData[j].utid) {
+				data[i].PublisherName = personsData[j].unick;
+				data[i].PublisherImg = personsData[j].uimg;
+			}
+			//遍历点赞的人
+			for(var item2 in data[i].LikeUsers) {
+				if(personsData[j].utid == data[i].LikeUsers[item2]) {
+					data[i].LikeUsers[item2] = mui.extend(data[i].LikeUsers[item2], personsData[j])
 				}
 
 			}
-		}
-		return data; //返回重组后数据
-	}
-	/**
-	 * 放置数据
-	 * @param {Object} data
-	 */
-var setData = function(data) {
-		var table = document.body.querySelector('.mui-table-view');
-		table.innerHTML = ''
 
-		for(var i = 0; i < data.length; i++) {
-			id = i;
-			var data1 = addData(i);
-			dynamiclistitem.addItem(table, data1, id);
+			if(data[i].Comments.length > 0) {
+				for(var m in data[i].Comments) {
+					if(data[i].Comments[m].UserId == personsData[j].utid) {
+
+						data[i].Comments[m].UserIdName = personsData[j].unick;
+					}
+					if(data[i].Comments[m].ReplyId == personsData[j].utid) {
+						data[i].Comments[m].ReplyIdName = personsData[j].unick;
+					}
+					for(var k in data[i].Comments[m].Replys) {
+						var reply = data[i].Comments[m].Replys[k];
+						if(reply.UserId == personsData[j].utid) {
+							reply.UserIdName = personsData[j].unick;
+
+						}
+						if(reply.ReplyId == personsData[j].utid) {
+							reply.ReplyIdName = personsData[j].unick;
+						}
+
+					}
+
+				}
+			}
+
 		}
-		events.fireToPageNone('index.html','closeWaiting');
 	}
-	//加载数据
+	return data; //返回重组后数据
+}
+/**
+ * 放置数据
+ * @param {Object} data
+ */
+var setData = function(data) {
+	var table = document.body.querySelector('.mui-table-view');
+	table.innerHTML = ''
+
+	for(var i = 0; i < data.length; i++) {
+		id = i;
+		var data1 = addData(i);
+		dynamiclistitem.addItem(table, data1, id);
+	}
+	events.fireToPageNone('index.html', 'closeWaiting');
+}
+//加载数据
 function addData(index) {
 	//[[InfoList],[ImageList],[InteractionList]]动态的信息
 	var datasource = [];
@@ -348,13 +354,13 @@ function addData(index) {
 	InfoList.push(contentText);
 
 	//内容的图片
-			if(tempModel.EncImgAddr != '') {
-					var EncImgAddrs = tempModel.EncImgAddr.split('|');
-					//内容的图片
-					for(var i = 0; i < EncImgAddrs.length; i++) {
-						ImageList.push(EncImgAddrs[i])
-					}
-				}
+	if(tempModel.EncImgAddr != '') {
+		var EncImgAddrs = tempModel.EncImgAddr.split('|');
+		//内容的图片
+		for(var i = 0; i < EncImgAddrs.length; i++) {
+			ImageList.push(EncImgAddrs[i])
+		}
+	}
 
 	//底部
 	//[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
@@ -400,22 +406,25 @@ var addReplyView = function() {
 	mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
 		//				click.push('评论');
 		tempIndex = this.id.replace('comment', '');
-		console.log('tempIndex====' + tempIndex)
-		var replyContainer = document.getElementById('footer');
-		document.getElementById('footer').className = 'mui-bar-tab';
-		replyContainer.style.display = 'block';
-		showSoftInput('#msg-content');
+		addComment();
+		
+//		console.log('tempIndex====' + tempIndex)
+//		var replyContainer = document.getElementById('footer');
+//		document.getElementById('footer').className = 'mui-bar-tab';
+//		replyContainer.style.display = 'block';
+//		showSoftInput('#msg-content');
 		window.event.stopPropagation()
 
 	});
 	//底部评论按钮
 	mui('.mui-table-view').on('tap', '.dynamic-comment-btn', function() {
 		tempIndex = this.id.replace('bottomComment', '');
-		console.log('tap====' + tempIndex)
-		var replyContainer = document.getElementById('footer');
-		document.getElementById('footer').className = 'mui-bar-tab';
-		replyContainer.style.display = 'block';
-		showSoftInput('#msg-content');
+		addComment();
+//		console.log('tap====' + tempIndex)
+//		var replyContainer = document.getElementById('footer');
+//		document.getElementById('footer').className = 'mui-bar-tab';
+//		replyContainer.style.display = 'block';
+//		showSoftInput('#msg-content');
 		window.event.stopPropagation()
 	});
 
@@ -424,13 +433,24 @@ var addReplyView = function() {
 
 		tempIndex = this.id.replace('replyComment', '');
 		console.log('tempIndex====' + tempIndex)
-		var replyContainer = document.getElementById('footer');
-		document.getElementById('footer').className = 'mui-bar-tab';
-		replyContainer.style.display = 'block';
-		showSoftInput('#msg-content');
+		addComment();
+
+		//		var replyContainer = document.getElementById('footer');
+		//		document.getElementById('footer').className = 'mui-bar-tab';
+		//		replyContainer.style.display = 'block';
+		//		showSoftInput('#msg-content');
 		window.event.stopPropagation()
 
 	});
+
+}
+
+function addComment() {
+	console.log(3333333)
+	events.openNewWindowWithData('add-comment.html', {
+		tempIndex:tempIndex,
+		zonepArray:zonepArray
+	})
 
 }
 
@@ -535,7 +555,7 @@ var pullUpFresh = function() {
 		console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
 		if(pageIndex < totalPage) {
 			pageIndex++;
-			pullFlag=1;
+			pullFlag = 1;
 			requestData();
 		} else {
 			mui.toast('没有更多了');

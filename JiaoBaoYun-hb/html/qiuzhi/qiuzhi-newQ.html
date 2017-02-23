@@ -75,23 +75,42 @@
 			mui.init();
 			var askChannel = '0';
 			var datasource = [];
+			var flag = 0;
 			mui.plusReady(function() {
 				var data = plus.webview.currentWebview().data;
 				console.log('获取的数据：' + JSON.stringify(data));
-				channelData = data.allChannels;
-				channelData.splice(0, 1);
+
+				var tempArr = [];
+				var UserId;
+				if(data.expert) {
+					flag = 1;
+					var tempChannels = data.expert.ExpertChannels;
+					for(var i = 0; i < tempChannels.length; i++) {
+						var tempCode = tempChannels[i];
+
+						for(var j = 0; j < data.allChannels.length; j++) {
+							if(tempCode == data.allChannels[j].TabId) {
+								tempArr.push(data.allChannels[j]);
+							}
+						}
+					}
+					data.allChannels = tempArr;
+					channelData = data.allChannels;
+					UserId = data.expert.UserId;
+				} else {
+					channelData = data.allChannels;
+					channelData.splice(0, 1);
+					UserId = 0;
+				}
+
 				var curChannel = data.curChannel;
 				console.log('curChannel=' + JSON.stringify(curChannel));
 				console.log('获取的数据111：' + JSON.stringify(channelData));
-				//2.获取符合条件的专家信息
-				if(channelData.length > 0) {
-					var model_Channel = channelData[0];
-					getExpertsArray(model_Channel.TabId);
-				}
-
 				if(curChannel.TabId == 0) {
 					curChannel = channelData[0];
 				}
+				//2.获取符合条件的专家信息
+				getExpertsArray(curChannel.TabId, '[' + UserId + ']');
 				askChannel = curChannel.TabId;
 				document.getElementById("channal").innerHTML = curChannel.ChannelName;
 				var ul = document.getElementById("popover").getElementsByClassName('mui-table-view')[0];
@@ -106,16 +125,15 @@
 					ul.appendChild(li);
 				}
 				mui('#ExpertList').on('tap', '.mui-table-view-cell', function() {
-					var index = this.id.replace('li','');
-					events.openNewWindowWithData('../qiuzhi/expert-detail.html',datasource[index]);
-					
+					var index = this.id.replace('li', '');
+					events.openNewWindowWithData('../qiuzhi/expert-detail.html', datasource[index]);
+
 				})
 				mui('#ExpertList').on('tap', '.checkbox', function() {
 					this.checked = !this.checked
 					window.event.stopPropagation()
-					
+
 				})
-				
 
 			})
 
@@ -184,7 +202,7 @@
 						selectedBoxes.push(box[i].value);
 					}
 				}
-				var boxesStr =arrayToStr(selectedBoxes)
+				var boxesStr = arrayToStr(selectedBoxes)
 				console.log(JSON.stringify(selectedBoxes));
 				//所需参数
 				var comData = {
@@ -216,21 +234,26 @@
 			function Trim(str) {
 				return str.replace(/(^\s*)|(\s*$)/g, "");
 			}
-			//选择快捷输入
+			//选择话题
 			mui('.mui-popover').on('tap', 'li', function(e) {
 				document.getElementById("channal").innerHTML = this.children[0].innerHTML;
 				askChannel = this.id;
 				console.log('askChannel=' + askChannel);
-				//2.获取符合条件的专家信息
-				getExpertsArray(askChannel);
+				if(flag == 0) {
+					//2.获取符合条件的专家信息
+					getExpertsArray(askChannel,'[0]' );
+				} else {
+
+				}
+
 				mui('.mui-popover').popover('toggle')
 			})
 
 			//2.获取符合条件的专家信息
-			function getExpertsArray(code) {
+			function getExpertsArray(code, UserId) {
 				//需要加密的数据
 				var comData = {
-					userIds: '[0]', //用户编号列表,Array,传入0，获取所有专家
+					userIds: UserId, //用户编号列表,Array,传入0，获取所有专家
 					channelId: code, //话题ID,传入0，获取所有话题数据
 					pageIndex: '1', //当前页数
 					pageSize: '0' //每页记录数,传入0，获取总记录数
@@ -299,12 +322,13 @@
 
 			function addExperts() {
 				var ul = document.getElementById("ExpertList");
+				ul.innerHTML = '';
 				for(var i = 0; i < datasource.length; i++) {
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell mui-media';
-					li.id = 'li'+i;
+					li.id = 'li' + i;
 					li.innerHTML =
-						'<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(datasource[i].uimg,2) + '">' +
+						'<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(datasource[i].uimg, 2) + '">' +
 						'<div class="mui-media-body">' +
 						datasource[i].unick + '<font style="color:gray"> 回答数:<span style="color:red">' + datasource[i].AnswerNum + '</span>' +
 						'</font><p class="mui-ellipsis">' + datasource[i].UserNote + '</p></div>' +
@@ -312,6 +336,12 @@
 						'<input class = "checkbox" value="' + datasource[i].TabId + '" type="checkbox" style="margin-top: -37px;">' +
 						'</div>'
 					ul.appendChild(li);
+				}
+				if(flag == 1) {
+					var box = document.getElementsByClassName('checkbox');
+					for(var i = 0; i < box.length; i++) {
+						box[i].checked = true;
+					}
 				}
 
 			}
