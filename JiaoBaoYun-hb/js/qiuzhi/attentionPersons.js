@@ -95,6 +95,7 @@ var setData = function(persons) {
 	var list = document.getElementById('list-container');
 	for(var i in persons) {
 		var li = document.createElement('li');
+		li.setAttribute('data-info',JSON.stringify(persons));
 		li.className = 'mui-table-view-cell';
 		li.innerHTML = createInner(persons[i]);
 		list.appendChild(li);
@@ -106,8 +107,8 @@ var setData = function(persons) {
  * @param {Object} person 关注人信息
  */
 var createInner = function(person) {
-	var inner = '<a><div class="li-container"><div class="head-img display-inlineBlock"><img class="head-portrait" src="' + updateHeadImg(person.uimg, 2) + '"/></div>' +
-		'<div class="info-container display-inlineBlock"><h5 class="person-name single-line">' + person.unick + '</h5>' +
+	var inner = '<a><div class="li-container"><div class="head-img display-inlineBlock"><img class="person-info head-portrait" src="' + updateHeadImg(person.uimg, 2) + '"/></div>' +
+		'<div class="info-container display-inlineBlock"><h5 class="person-name single-line person-info">' + person.unick + '</h5>' +
 		'<p class="person-info single-line">' + events.ifHaveInfo(person.UserNote) + '</p></div>' +
 		'<button type="button" class="mui-btn mui-btn-outlined ' + getButtonContent(person.FocusType).classInfo + ' " >' + getButtonContent(person.FocusType).inner + '</button></div></a>'
 	return inner;
@@ -189,7 +190,17 @@ var setListener = function() {
 		if(focusType==1){
 			setFocus(this,focusType);
 		}
-	})
+	});
+	
+	//点击头像、昵称、简介进入专家主页
+	mui('.mui-table-view').on('tap','.person-info',function(){
+	  //获取到当前控件的父节点
+		var parent = this.parentNode.parentNode.parentNode.parentNode;
+		//得到父节点的值
+		var info = JSON.parse(parent.getAttribute('data-info'));
+		console.log('dianji 关注他的人：' + JSON.stringify(info));
+		events.openNewWindowWithData('expert-detail.html', JSON.stringify(info));
+	});
 }
 /**
  * 上拉加载的实现方法

@@ -14,13 +14,21 @@ mui.plusReady(function() {
 		ExpertsInfoModel = event.detail.data;
 		console.log('传值的model为=' + JSON.stringify(ExpertsInfoModel));
 		//清除节点
-
 		document.getElementById('list-container').innerHTML = "";
 		//26.获取某个用户的关注问题列表
 		getFocusAsksByUser(ExpertsInfoModel.UserId);
 	});
-	//初次加载
-	getFocusAsksByUser();
+
+	mui('.mui-table-view').on('tap', '.ask-title', function() {
+		var parent = this.parentNode.parentNode.parentNode;
+		var info = JSON.parse(parent.getAttribute('data-info'));
+		console.log('dianji 关注的问题标题' + JSON.stringify(info));
+		//跳转界面
+		events.fireToPageNone('qiuzhi-question.html', 'askId', info.AskId);
+		events.fireToPageNone('qiuzhi-questionSub.html', 'askId', info.AskId);
+		plus.webview.getWebviewById('qiuzhi-question.html').show();
+	});
+
 	//上拉下拉注册
 	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 		down: {
@@ -127,26 +135,24 @@ var getChannelIcon = function(channelName) {
  * @param {Object} record
  */
 var createList = function(listContainer, record) {
-console.log("图片path："+getChannelIcon(record))
-
-	
 	var li = document.createElement('li');
 	li.className = 'mui-table-view-cell';
+	li.setAttribute('data-info', JSON.stringify(record));
 	//拼接显示
 
-	li.innerHTML = '<a>'+
-						'<div class="channel-info">'+
-							'<p>'+
-								'<img src="'+getChannelIcon(record.AskChannel)+'"  class="channel-icon head-portrait "/>来自话题:'
-							+record.AskChannel+
-						'</p>'+
+	li.innerHTML = '<a>' +
+		'<div class="channel-info">' +
+		'<p>' +
+		'<img src="' + getChannelIcon(record.AskChannel) + '"  class="channel-icon head-portrait "/>来自话题:' +
+		record.AskChannel +
+		'</p>' +
 
-					'</div>'+
-					'<div class="ask-container ">'+
-						'<h5 class="single-line ask-title " >'+record.AskTitle+'</h5>'+
-						
-					'</div>'+
-					'<p>' +record.FocusNum+'关注·'+record.AnswerNum+'回答'+'</p>'+
-				'</a>'
+		'</div>' +
+		'<div class="ask-container ">' +
+		'<h5 class="single-line ask-title " >' + record.AskTitle + '</h5>' +
+
+		'</div>' +
+		'<p>' + record.FocusNum + '关注·' + record.AnswerNum + '回答' + '</p>' +
+		'</a>'
 	listContainer.appendChild(li)
 }

@@ -10,9 +10,21 @@ mui.plusReady(function() {
 	var main = plus.webview.currentWebview();
 	ExpertsInfo = main.data; //接收专家详情页传来的专家用户信息
 	console.log('邀请回答传值:' + JSON.stringify(ExpertsInfo));
-//	mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-//		events.openNewWindowWithData('../qiuzhi/expert-detail.html', ExpertsInfo);
-//	});
+	//		mui('.mui-table-view').on('tap', 'img', function() {
+	//			events.openNewWindowWithData('../qiuzhi/expert-detail.html', ExpertsInfo);
+	//		});
+
+	mui('.mui-table-view').on('tap', '.Ask-Title', function() {
+		//获取到当前控件的父节点
+		var parent = this.parentNode.parentNode;
+		//得到父节点的值
+		var info = JSON.parse(parent.getAttribute('data-info'));
+		console.log('dianji 标题' + JSON.stringify(info));
+		//跳转界面
+		events.fireToPageNone('qiuzhi-question.html', 'askId', info.AskId);
+		events.fireToPageNone('qiuzhi-questionSub.html', 'askId', info.AskId);
+		plus.webview.getWebviewById('qiuzhi-question.html').show();
+	});
 	//36.获取某个用户的被邀请问题列表
 	getInviteAsksByUser(ExpertsInfo.UserId);
 	//从专家页面传值
@@ -117,12 +129,11 @@ function getInviteAsksByUser(userId) {
 								//合并
 								tempModel0 = $.extend(tempModel0, tempModel);
 							}
-							if(!tempModel0.utid)
-						{
-							tempModel0=$.extend(tempModel0, {unick:"匿名",uimg:"../../image/utils/default_personalimage.png"});
+							if(!tempModel0.utid) {
+								tempModel0 = $.extend(tempModel0, { unick: "匿名", uimg: "../../image/utils/default_personalimage.png" });
+							}
 						}
-						}
-						
+
 					}
 				}
 				if(flagRef == 0) { //刷新
@@ -160,7 +171,8 @@ var setAnswerRecord = function(list) {
 var createList = function(listContainer, record) {
 	var li = document.createElement('li');
 	li.className = 'mui-table-view-cell';
+	li.setAttribute('data-info', JSON.stringify(record));
 	//拼接显示
-	li.innerHTML = "<img src='" + record.uimg + "' /><div><p><span>" + record.unick + "</span>邀请<span>" + ExpertsInfo.unick + "</span>回答问题</p><p>[" + record.AskChannel + "]" + record.AskTitle + "</p></div>";
-	listContainer.appendChild(li)
+	li.innerHTML = "<img src='" + record.uimg + "' /><div><p><span>" + record.unick + "</span>邀请<span>" + ExpertsInfo.unick + "</span>回答问题</p><p class='Ask-Title'>[" + record.AskChannel + "]" + record.AskTitle + "</p></div>";
+	listContainer.appendChild(li);
 }
