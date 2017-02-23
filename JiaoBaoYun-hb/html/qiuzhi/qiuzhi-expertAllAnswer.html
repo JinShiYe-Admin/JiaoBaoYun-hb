@@ -9,6 +9,32 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/qiuzhi/qiuzhi-inviteAnswer.css" rel="stylesheet" />
+		<style>
+			.mui-table h4,
+			.mui-table h5,
+			.mui-table .mui-h5,
+			.mui-table .mui-h6,
+			.mui-table p {
+				margin-top: 0;
+				padding-left: 10px;
+			}
+			
+			.mui-table h4 {
+				line-height: 21px;
+				font-weight: 500;
+				padding-left: 10px;
+			}
+			
+			.mui-table .oa-icon {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+			}
+			
+			.mui-table .oa-icon-star-filled {
+				color: #f14e41;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -19,7 +45,7 @@
 		<div id="refreshContainer" class="mui-content mui-fullscreen" style="z-index:0">
 			<div class="mui-scroll-wrapper">
 				<div class="mui-scroll">
-					<ul id="list-container" class="mui-table-view">
+					<ul id="list-container" class="mui-table-view mui-table-view-striped mui-table-view-condensed">
 
 					</ul>
 				</div>
@@ -37,8 +63,8 @@
 			var ExpertsInfo; //专家详细页传来的 专家信息
 			var pageIndex = 1; //请求数据页面
 			var totalPageCount; //总页码
-			var flagRef = 0;//是刷新0，还是加载更多1
-			var answerArray = [];//回答总数组
+			var flagRef = 0; //是刷新0，还是加载更多1
+			var answerArray = []; //回答总数组
 
 			mui.init();
 
@@ -47,11 +73,17 @@
 				window.addEventListener('qiuzhi-expertAllAnswer', function(event) {
 					//赋值
 					ExpertsInfo = event.detail.data;
-					console.log('专家回答页传值：'+JSON.stringify(ExpertsInfo));
+					console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
+					document.getElementById('list-container').innerHTML = "";
 					//24.获取某个用户的回答列表
 					getAnswersByUser(ExpertsInfo.UserId);
 				});
-
+				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+					var index = this.id.replace('li', '');
+					events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', answerArray[index]);
+					console.log('传递的answerInfo:' + JSON.stringify(this.answerInfo));
+					plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
+				})
 				//上拉下拉注册
 				mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 					down: {
@@ -77,7 +109,7 @@
 							if(pageIndex < totalPageCount) {
 								//24.获取某个用户的回答列表
 								getAnswersByUser(ExpertsInfo.UserId);
-							}else{
+							} else {
 								mui.toast('没有更多了');
 							}
 							self.endPullUpToRefresh();
@@ -104,9 +136,9 @@
 					if(data.RspCode == 0) {
 						//总页数
 						totalPageCount = data.RspData.TotalPage;
-						if (flagRef == 0) {//刷新
+						if(flagRef == 0) { //刷新
 							answerArray = data.RspData.Data;
-						} else{//加载更多
+						} else { //加载更多
 							pageIndex++;
 							//合并数组
 							answerArray = answerArray.concat(data.RspData.Data);
@@ -125,7 +157,7 @@
 			var setAnswerRecord = function(list) {
 				var listContainer = document.getElementById('list-container');
 				for(var i in list) {
-					createList(listContainer, list[i])
+					createList(listContainer, list[i], i)
 				}
 			}
 			/**
@@ -133,11 +165,20 @@
 			 * @param {Object} listContainer
 			 * @param {Object} record
 			 */
-			var createList = function(listContainer, record) {
+			var createList = function(listContainer, record, index) {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
+				li.id = 'li' + index
 				//拼接显示
-				li.innerHTML = "<div><p><span>" + record.AskTitle + "</span></p></div>";
+				li.innerHTML = '<div class="mui-table">' +
+					'<div class="mui-table-cell mui-col-xs-12">' +
+					'<h4 class="mui-ellipsis">' +
+					record.AskTitle +
+					'</h4><h5>' +
+					record.AnswerContent +
+					'</h5>' +
+					'<p class="mui-h6 mui-ellipsis">' + record.IsLikeNum + '赞 ' + record.CommentNum + '评论 ' + record.AnswerTime +
+					'</p></div></div>';
 				listContainer.appendChild(li);
 			}
 		</script>
