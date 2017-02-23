@@ -1,8 +1,12 @@
 events.initSubPage('qiuzhi-sub.html', '', -(localStorage.getItem('StatusHeightNo') * 1 + 5));
 var allChannels; //所有话题
 mui.plusReady(function() {
+	document.getElementById('subjects-container').innerHTML = '';
+	document.getElementById("sliderGroup").innerHTML = '';
 	var curPage = plus.webview.currentWebview();
 	curPage.addEventListener("show", function(e) {
+		//document.getElementById('subjects-container').innerHTML = '';
+		mui('#slider_sw').scroll().scrollTo(0, 0, 0);
 		requestAllChannels(setChannels);
 	});
 	setListener();
@@ -34,6 +38,7 @@ function requestAllChannels(callback) {
  */
 var setChannels = function(subjectArr) {
 	var subjects = document.getElementById('subjects-container');
+	document.getElementById("sliderGroup").innerHTML = '';
 	console.log('要加载的类别:' + JSON.stringify(subjectArr));
 	allChannels = subjectArr;
 	var allChannel = {
@@ -45,21 +50,29 @@ var setChannels = function(subjectArr) {
 	events.clearChild(subjects);
 	for(var i in subjectArr) {
 		var a = document.createElement('a');
+		var elementBot = document.createElement('div');
 		if(i == 0) {
 			a.className = "mui-control-item mui-active";
+			elementBot.className = 'mui-slider-item mui-control-content mui-active';
 		} else {
 			a.className = "mui-control-item";
+			elementBot.className = 'mui-slider-item mui-control-content';
 		}
 		a.innerText = subjectArr[i].ChannelName;
 		a.info = subjectArr[i];
+		a.href = '#bot_' + subjectArr[i].TabId;
+		elementBot.id = 'bot_' + subjectArr[i].TabId;
+		//elementBot.innerText = subjectArr[i].ChannelName;
 		subjects.appendChild(a);
+		document.getElementById("sliderGroup").appendChild(elementBot);
 	}
 	document.body.querySelector('.main-navigation').style.width = document.body.querySelector('.more-navigation').offsetLeft + 'px';
+	mui('#slider').slider();
 	events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: subjectArr[0], allChannels: allChannels });
 }
 var setListener = function() {
-	mui('.tabs-channels').on('tap', '.mui-control-item', function() {
+	mui('#subjects-container').on('tap', '.mui-control-item', function() {
 		var channelInfo = this.info;
 		events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: channelInfo, allChannels: allChannels });
-	})
+	});
 }
