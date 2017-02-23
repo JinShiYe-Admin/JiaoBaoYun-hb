@@ -1,3 +1,8 @@
+<!--
+	作者：444811716@qq.com
+	时间：2017-02-23
+	描述：专家列表
+-->
 <!DOCTYPE html>
 <html>
 
@@ -232,8 +237,25 @@
 			//点击提问
 			mui('#sliderGroup').on('tap', '.mui-btn-blue', function() {
 				var element = this.parentNode.parentNode;
-				var info = JSON.parse(element.getAttribute('data-info'));
-				console.log('tap mui-btn-blue ' + element.id + '|' + JSON.stringify(info));
+				//专家的信息
+				var expert = JSON.parse(element.getAttribute('data-info'));
+				//当前话题
+				var id = 'bot_' + sliderId.replace('top_', '');
+				var element2 = document.getElementById(id);
+				var channelInfo = JSON.parse(element2.getAttribute('data-info'));
+				//所有话题
+				var allChannels = mainData.allChannels;
+				console.log('expert ' + JSON.stringify(expert));
+				console.log('channelInfo ' + JSON.stringify(channelInfo));
+				console.log('allChannels ' + JSON.stringify(allChannels));
+				//传递的数据
+				var transportData = {
+					expert: expert,
+					curChannel: channelInfo,
+					allChannels: allChannels
+				}
+				console.log('transportData ' + JSON.stringify(transportData));
+				events.openNewWindowWithData('qiuzhi-newQ.html',transportData);
 			});
 		});
 
