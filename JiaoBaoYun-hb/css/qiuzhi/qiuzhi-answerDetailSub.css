@@ -18,5 +18,33 @@
 	font-size: 2.4rem;
 }
 .input-footerContainer{
+	background-color: white;
+	height: 60px;
 	padding-left: 5px;
+	text-align: center;
+	position: fixed;
+	bottom: -50px;
+	z-index: 9999;
 }
+.order-selector{
+	appearance:none;
+	background: url(../../image/qiuzhi/arraw-down.png) no-repeat right center transparent;
+	max-width: 100px;
+}
+.img-portrait{
+	width: 4rem;
+	height: 4rem;
+	max-width: 20%;
+	border-radius: 50%;
+}
+.export-info{
+	max-width: 60%;
+}
+.anthor-container{
+	position: fixed;
+	width: 80%;
+	left: 10%;
+	border: solid 1px gray 2rem;
+	z-index: 50;
+}
+
