@@ -1,3 +1,8 @@
+<!--
+	作者：444811716@qq.com
+	时间：2017-02-23
+	描述：专家列表
+-->
 <!DOCTYPE html>
 <html>
 
@@ -127,7 +132,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">专家列表</h1>
+			<h1 id="title" class="mui-title">专家列表</h1>
 		</header>
 		<div class="mui-content" id="content">
 			<!--<div id="slider" class="mui-slider mui-fullscreen">
@@ -192,17 +197,7 @@
 				//				});
 
 				mui('#slider').slider();
-
-				//				var scrollTop = mui('#sliderSegmentedControl').scroll(); //话题列表区域
-				//				var element = document.getElementById(sliderId);
-				//				var more = document.body.querySelector('.more-navigation');
-				//				console.log('element.offsetLeft ' + element.offsetLeft + '|' + element.offsetWidth + '|' + more.offsetLeft);
-				//				if(more.offsetLeft < (element.offsetLeft + element.offsetWidth)) {
-				//					setTimeout(function() {
-				//						scrollTop.scrollTo(-(element.offsetLeft + element.offsetWidth - more.offsetLeft), 0, 100);
-				//					}, 4000);
-				//				}
-
+				//创建下拉上拉刷新控件
 				pullRefresh();
 				//获取专家
 				getExpertsArray(mainData.channelInfo.TabId, 1);
@@ -232,8 +227,32 @@
 			//点击提问
 			mui('#sliderGroup').on('tap', '.mui-btn-blue', function() {
 				var element = this.parentNode.parentNode;
-				var info = JSON.parse(element.getAttribute('data-info'));
-				console.log('tap mui-btn-blue ' + element.id + '|' + JSON.stringify(info));
+				//专家的信息
+				var expert = JSON.parse(element.getAttribute('data-info'));
+				//当前话题
+				var id = 'bot_' + sliderId.replace('top_', '');
+				var element2 = document.getElementById(id);
+				var channelInfo = JSON.parse(element2.getAttribute('data-info'));
+				//所有话题
+				var allChannels = mainData.allChannels;
+				console.log('expert ' + JSON.stringify(expert));
+				console.log('channelInfo ' + JSON.stringify(channelInfo));
+				console.log('allChannels ' + JSON.stringify(allChannels));
+				//传递的数据
+				var transportData = {
+					expert: expert,
+					curChannel: channelInfo,
+					allChannels: allChannels
+				}
+				console.log('transportData ' + JSON.stringify(transportData));
+				events.openNewWindowWithData('qiuzhi-newQ.html', transportData);
+			});
+
+			//双击标题返回列表顶部
+			document.getElementById('title').addEventListener('doubletap', function() {
+				var id = 'bot_sw_' + sliderId.replace('top_', '');
+				var scrollTop = mui('#'+id).scroll(); //话题列表区域
+				scrollTop.scrollTo(0, 0, 100);
 			});
 		});
 
