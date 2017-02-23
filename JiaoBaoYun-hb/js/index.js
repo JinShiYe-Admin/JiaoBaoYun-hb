@@ -34,41 +34,41 @@ mui.plusReady(function() {
 		showCity = 0;
 		SECity = 0;
 	});
-	window.addEventListener('closeWaiting',function(){
+	window.addEventListener('closeWaiting', function() {
 		waitingDia.close();
 	})
 	window.addEventListener('aboutmNoRead', function() {
 		getAboutMe();
 	});
 	//退出订制城市界面返回的数据
-//	window.addEventListener('customizeCity', function(e) {
-//		var data = e.detail.data;
-//		console.log('获取的修改后的城市信息:' + JSON.stringify(data));
-//		cityType = parseInt(data.type);
-//		var citiesArray = data.cities;
-//		var path;
-//		if(cityType) {
-//			showCity = citiesArray[0];
-//			path = "../show/show_home.html";
-//		} else {
-//			SECity = citiesArray[0];
-//			path = "../scienceeducation/scienceeducation_home.html";
-//		}
-//		setShowCity(cityType);
-//		events.fireToPageNone(path, 'citiesInfo', citiesArray);
-//
-//	});
-//	window.addEventListener('showCity', function(e) {
-//		var curCity;
-//		if(cityType) {
-//			curCity = showCity = e.detail.data;
-//			console.log('主界面标题获取的城市信息：' + JSON.stringify(showCity));
-//		} else {
-//			curCity = SECity = e.detail.data;
-//			console.log('主界面标题获取的城市信息：' + JSON.stringify(SECity));
-//		}
-//		setShowCity(cityType);
-//	});
+	//	window.addEventListener('customizeCity', function(e) {
+	//		var data = e.detail.data;
+	//		console.log('获取的修改后的城市信息:' + JSON.stringify(data));
+	//		cityType = parseInt(data.type);
+	//		var citiesArray = data.cities;
+	//		var path;
+	//		if(cityType) {
+	//			showCity = citiesArray[0];
+	//			path = "../show/show_home.html";
+	//		} else {
+	//			SECity = citiesArray[0];
+	//			path = "../scienceeducation/scienceeducation_home.html";
+	//		}
+	//		setShowCity(cityType);
+	//		events.fireToPageNone(path, 'citiesInfo', citiesArray);
+	//
+	//	});
+	//	window.addEventListener('showCity', function(e) {
+	//		var curCity;
+	//		if(cityType) {
+	//			curCity = showCity = e.detail.data;
+	//			console.log('主界面标题获取的城市信息：' + JSON.stringify(showCity));
+	//		} else {
+	//			curCity = SECity = e.detail.data;
+	//			console.log('主界面标题获取的城市信息：' + JSON.stringify(SECity));
+	//		}
+	//		setShowCity(cityType);
+	//	});
 	getAboutMe(); //获取与我相关未读数
 
 	//设置默认打开首页显示的子页序号；
@@ -112,19 +112,19 @@ mui.plusReady(function() {
 		}
 		if(this.querySelector('.mui-tab-label').innerHTML == '展现') {
 			cityType = 1;
-//			if(showCity) {
-//				setShowCity(cityType);
-//			} else {
-//				title.innerHTML = '展现';
-//			}
+			//			if(showCity) {
+			//				setShowCity(cityType);
+			//			} else {
+			//				title.innerHTML = '展现';
+			//			}
 
 		} else if(this.querySelector('.mui-tab-label').innerHTML == '科教') {
 			cityType = 0;
-//			if(SECity) {
-//				setShowCity(cityType);
-//			} else {
-//				title.innerHTML = '科教';
-//			}
+			//			if(SECity) {
+			//				setShowCity(cityType);
+			//			} else {
+			//				title.innerHTML = '科教';
+			//			}
 		} else {
 			//更换标题
 			title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
@@ -212,196 +212,196 @@ mui.plusReady(function() {
 	 * @param {Object} title 标题
 	 */
 	var changRightIcons = function(targetTab) {
-			//顶部导航右侧区域
-			var iconContainer = document.getElementById('random_icon');
-			while(iconContainer.firstElementChild) {
-				iconContainer.removeChild(iconContainer.firstElementChild);
-			}
-			//顶部导航左侧区域
-			var title_left = document.getElementById("title_left");
-			while(title_left.firstElementChild) {
-				title_left.removeChild(title_left.firstElementChild);
-			}
-
-			switch(targetTab) {
-				case '../cloud/cloud_home.html': //首页
-					addZoneIcon(iconContainer);
-					slideNavigation.addSlideIcon();
-					slideNavigation.iconAddEvent();
-					break;
-				case '../scienceeducation/scienceeducation_home.html': //科教
-					addListIcon(title_left, '../scienceeducation/scienceeducation_home.html');
-					if(!SECity) {
-						requestCustomizationCity();
-					}
-					break;
-				case '../show/show_home.html': //展现
-					addListIcon(title_left, '../show/show_home.html');
-					addShai(iconContainer);
-					if(!showCity) {
-						requestUserCity();
-					}
-					break;
-				case '../qiuzhi/qiuzhi_home.html': //求知
-
-					break;
-				default:
-					break;
-			}
+		//顶部导航右侧区域
+		var iconContainer = document.getElementById('random_icon');
+		while(iconContainer.firstElementChild) {
+			iconContainer.removeChild(iconContainer.firstElementChild);
 		}
-		//44.获取个人的订制城市
-//	function requestCustomizationCity() {
-//		//所需参数
-//		var comData = {
-//			vvl: '0' //订制频道,0科教频道,1展示频道,其他待定
-//		};
-//		// 等待的对话框
-//		waitingDia = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-//		//44.获取个人的订制城市
-//		postDataPro_PostUTcity(comData, waitingDia, function(data) {
-//			waitingDia.close();
-//			var eduArray = [];
-//			console.log('获取个人的订制城市科教频道:' + JSON.stringify(data));
-//			if(data.RspCode == 0) {
-//				if(data.RspData[0].citys) {
-//					//先通过‘|’将返回值分为数组
-//					eduArray = data.RspData[0].citys.split('|');
-//					//遍历此数组
-//					for(var m in eduArray) {
-//						var tempStr = eduArray[m];
-//						//初始化model
-//						var model_area = {
-//							//						acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
-//							//						aname: '', //节点名称
-//							//						atype: '', //节点类型,0省1城市2区县
-//							//						index: '', //在数组位置
-//							//						totalNo: 0 //数组大小
-//						};
-//						console.log('tempStr:' + tempStr);
-//						//将分成的每个值，再通过‘_’拆分为model
-//						var tempArea = tempStr.split('_');
-//						model_area.acode = tempArea[0];
-//						model_area.aname = tempArea[1];
-//						model_area.atype = '1';
-//						model_area.index = m;
-//						model_area.array = [];
-//						model_area.eduIndex = 1;
-//						model_area.eduSumCount = 0;
-//						model_area.totalNo = eduArray.length;
-//						//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
-//						eduArray.splice(m, 1, model_area);
-//						//					//如果有值，默认获取第一个城市的数据
-//						//					if(m == 0) {
-//						//						requestCityNews(tempArea[0]);
-//						//					}
-//					}
-//					SECity = eduArray[0];
-//
-//					setShowCity(0);
-//					console.log('修改后的最终值为:' + JSON.stringify(eduArray));
-//				} else {
-////					waitingDia.close();
-//					mui.toast('暂无科教频道的定制城市，请选择')
-//				}
-//
-//			} else {
-//				eduArray = [];
-//				mui.toast(data.RspTxt);
-//			}
-//			events.fireToPageNone('../scienceeducation/scienceeducation_home.html', 'citiesInfo', eduArray);
-//		});
-//	}
-//	var setShowCity = function(type) {
-//			var curCity;
-//			var titleInner;
-//			if(type) { //1为展现频道
-//				curCity = showCity;
-//				titleInner = '展现';
-//			} else {
-//				curCity = SECity;
-//				titleInner = '科教';
-//			}
-//			if(curCity) {
-//				if(curCity.totalNo == 1) {
-//					title.innerText = curCity.aname;
-//				} else {
-//					title.innerHTML = getShowCityInner(curCity)
-//				}
-//			} else {
-//				title.innerHTML = titleInner;
-//			}
-//		}
-//		/**
-//		 * 点点点模式
-//		 * @param {Object} cities
-//		 */
-//	var getShowCityInner = function(curCity) {
-//			var inner = '<p id="current-city" class="current-city">' + curCity.aname + '</p><div class="mine-slider-indicator">';
-//			for(var i = 0; i < curCity.totalNo; i++) {
-//				if(i == curCity.index) {
-//					inner += '<div class="mine-indicator mine-active"></div>'
-//				} else {
-//					inner += '<div class="mine-indicator"></div>'
-//				}
-//				if(i == curCity.totalNo - 1) {
-//					inner += '</div>'
-//				}
-//			}
-//			return inner;
-//		}
-//		//44.获取个人的订制城市
-//	function requestUserCity(callback) {
-//		//所需参数
-//		var comData = {
-//			vvl: '1' //订制频道,0科教频道,1展示频道,其他待定
-//		};
-//		// 等待的对话框
-//		waitingDia= plus.nativeUI.showWaiting(storageKeyName.WAITING);
-//		//44.获取个人的订制城市
-//		postDataPro_PostUTcity(comData, waitingDia, function(data) {
-//			waitingDia.close();
-//			var showArray = [];
-//			console.log('获取个人的订制城市展示频道:' + JSON.stringify(data));
-//			if(data.RspCode == 0) {
-//				if(data.RspData[0].citys) {
-//					//先通过‘|’将返回值分为数组
-//					showArray = data.RspData[0].citys.split('|');
-//					//遍历此数组
-//					for(var m in showArray) {
-//						var tempStr = showArray[m];
-//						//初始化model
-//						var model_area = {
-//							//acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
-//							//aname: '', //节点名称
-//							//atype: '', //节点类型,0省1城市2区县
-//							//index:'',//当前页码
-//							//totalNo:''//总数量
-//						};
-//						console.log('tempStr:' + tempStr);
-//						//将分成的每个值，再通过‘_’拆分为model
-//						var tempArea = tempStr.split('_');
-//						model_area.acode = tempArea[0];
-//						model_area.aname = tempArea[1];
-//						model_area.atype = '1';
-//						model_area.index = m;
-//						model_area.totalNo = showArray.length;
-//						//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
-//						showArray.splice(m, 1, model_area);
-//					}
-//					showCity = showArray[0];
-//					setShowCity(cityType);
-//					console.log('修改后的最终值为:' + JSON.stringify(showArray));
-//				} else {
-//					mui.toast('暂无订阅展示频道的城市，请订阅！');
-////					waitingDia.close();
-//				}
-//
-//			} else {
-//				mui.toast(data.RspTxt);
-//			}
-//			events.fireToPageNone('../show/show_home.html', 'citiesInfo', showArray);
-//		});
-//	}
+		//顶部导航左侧区域
+		var title_left = document.getElementById("title_left");
+		while(title_left.firstElementChild) {
+			title_left.removeChild(title_left.firstElementChild);
+		}
+
+		switch(targetTab) {
+			case '../cloud/cloud_home.html': //首页
+				addZoneIcon(iconContainer);
+				slideNavigation.addSlideIcon();
+				slideNavigation.iconAddEvent();
+				break;
+			case '../scienceeducation/scienceeducation_home.html': //科教
+				addListIcon(title_left, '../scienceeducation/scienceeducation_home.html');
+				if(!SECity) {
+					requestCustomizationCity();
+				}
+				break;
+			case '../show/show_home.html': //展现
+				addListIcon(title_left, '../show/show_home.html');
+				addShai(iconContainer);
+				if(!showCity) {
+					requestUserCity();
+				}
+				break;
+			case '../qiuzhi/qiuzhi_home.html': //求知
+				addQiuZhiExpertSearch(iconContainer);
+				break;
+			default:
+				break;
+		}
+	}
+	//44.获取个人的订制城市
+	//	function requestCustomizationCity() {
+	//		//所需参数
+	//		var comData = {
+	//			vvl: '0' //订制频道,0科教频道,1展示频道,其他待定
+	//		};
+	//		// 等待的对话框
+	//		waitingDia = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//		//44.获取个人的订制城市
+	//		postDataPro_PostUTcity(comData, waitingDia, function(data) {
+	//			waitingDia.close();
+	//			var eduArray = [];
+	//			console.log('获取个人的订制城市科教频道:' + JSON.stringify(data));
+	//			if(data.RspCode == 0) {
+	//				if(data.RspData[0].citys) {
+	//					//先通过‘|’将返回值分为数组
+	//					eduArray = data.RspData[0].citys.split('|');
+	//					//遍历此数组
+	//					for(var m in eduArray) {
+	//						var tempStr = eduArray[m];
+	//						//初始化model
+	//						var model_area = {
+	//							//						acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
+	//							//						aname: '', //节点名称
+	//							//						atype: '', //节点类型,0省1城市2区县
+	//							//						index: '', //在数组位置
+	//							//						totalNo: 0 //数组大小
+	//						};
+	//						console.log('tempStr:' + tempStr);
+	//						//将分成的每个值，再通过‘_’拆分为model
+	//						var tempArea = tempStr.split('_');
+	//						model_area.acode = tempArea[0];
+	//						model_area.aname = tempArea[1];
+	//						model_area.atype = '1';
+	//						model_area.index = m;
+	//						model_area.array = [];
+	//						model_area.eduIndex = 1;
+	//						model_area.eduSumCount = 0;
+	//						model_area.totalNo = eduArray.length;
+	//						//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
+	//						eduArray.splice(m, 1, model_area);
+	//						//					//如果有值，默认获取第一个城市的数据
+	//						//					if(m == 0) {
+	//						//						requestCityNews(tempArea[0]);
+	//						//					}
+	//					}
+	//					SECity = eduArray[0];
+	//
+	//					setShowCity(0);
+	//					console.log('修改后的最终值为:' + JSON.stringify(eduArray));
+	//				} else {
+	////					waitingDia.close();
+	//					mui.toast('暂无科教频道的定制城市，请选择')
+	//				}
+	//
+	//			} else {
+	//				eduArray = [];
+	//				mui.toast(data.RspTxt);
+	//			}
+	//			events.fireToPageNone('../scienceeducation/scienceeducation_home.html', 'citiesInfo', eduArray);
+	//		});
+	//	}
+	//	var setShowCity = function(type) {
+	//			var curCity;
+	//			var titleInner;
+	//			if(type) { //1为展现频道
+	//				curCity = showCity;
+	//				titleInner = '展现';
+	//			} else {
+	//				curCity = SECity;
+	//				titleInner = '科教';
+	//			}
+	//			if(curCity) {
+	//				if(curCity.totalNo == 1) {
+	//					title.innerText = curCity.aname;
+	//				} else {
+	//					title.innerHTML = getShowCityInner(curCity)
+	//				}
+	//			} else {
+	//				title.innerHTML = titleInner;
+	//			}
+	//		}
+	//		/**
+	//		 * 点点点模式
+	//		 * @param {Object} cities
+	//		 */
+	//	var getShowCityInner = function(curCity) {
+	//			var inner = '<p id="current-city" class="current-city">' + curCity.aname + '</p><div class="mine-slider-indicator">';
+	//			for(var i = 0; i < curCity.totalNo; i++) {
+	//				if(i == curCity.index) {
+	//					inner += '<div class="mine-indicator mine-active"></div>'
+	//				} else {
+	//					inner += '<div class="mine-indicator"></div>'
+	//				}
+	//				if(i == curCity.totalNo - 1) {
+	//					inner += '</div>'
+	//				}
+	//			}
+	//			return inner;
+	//		}
+	//		//44.获取个人的订制城市
+	//	function requestUserCity(callback) {
+	//		//所需参数
+	//		var comData = {
+	//			vvl: '1' //订制频道,0科教频道,1展示频道,其他待定
+	//		};
+	//		// 等待的对话框
+	//		waitingDia= plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//		//44.获取个人的订制城市
+	//		postDataPro_PostUTcity(comData, waitingDia, function(data) {
+	//			waitingDia.close();
+	//			var showArray = [];
+	//			console.log('获取个人的订制城市展示频道:' + JSON.stringify(data));
+	//			if(data.RspCode == 0) {
+	//				if(data.RspData[0].citys) {
+	//					//先通过‘|’将返回值分为数组
+	//					showArray = data.RspData[0].citys.split('|');
+	//					//遍历此数组
+	//					for(var m in showArray) {
+	//						var tempStr = showArray[m];
+	//						//初始化model
+	//						var model_area = {
+	//							//acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
+	//							//aname: '', //节点名称
+	//							//atype: '', //节点类型,0省1城市2区县
+	//							//index:'',//当前页码
+	//							//totalNo:''//总数量
+	//						};
+	//						console.log('tempStr:' + tempStr);
+	//						//将分成的每个值，再通过‘_’拆分为model
+	//						var tempArea = tempStr.split('_');
+	//						model_area.acode = tempArea[0];
+	//						model_area.aname = tempArea[1];
+	//						model_area.atype = '1';
+	//						model_area.index = m;
+	//						model_area.totalNo = showArray.length;
+	//						//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
+	//						showArray.splice(m, 1, model_area);
+	//					}
+	//					showCity = showArray[0];
+	//					setShowCity(cityType);
+	//					console.log('修改后的最终值为:' + JSON.stringify(showArray));
+	//				} else {
+	//					mui.toast('暂无订阅展示频道的城市，请订阅！');
+	////					waitingDia.close();
+	//				}
+	//
+	//			} else {
+	//				mui.toast(data.RspTxt);
+	//			}
+	//			events.fireToPageNone('../show/show_home.html', 'citiesInfo', showArray);
+	//		});
+	//	}
 
 	/**
 	 * 修改首页顶部导航
@@ -415,7 +415,7 @@ mui.plusReady(function() {
 	 * 加载晒一晒
 	 * @param {Object} container
 	 */
-	var addShai=function(container){
+	var addShai = function(container) {
 		var pubDynamic = document.createElement('a');
 		pubDynamic.id = 'pubDynamic'
 		pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
@@ -432,7 +432,7 @@ mui.plusReady(function() {
 	 * 加载与我相关
 	 * @param {Object} container
 	 */
-	var addAboutMe=function(container){
+	var addAboutMe = function(container) {
 		var aboutme = document.createElement('a');
 		aboutme.className = 'mui-icon  mui-pull-right mui-plus-visible';
 		aboutme.id = 'aboutme'
@@ -453,6 +453,19 @@ mui.plusReady(function() {
 			var noRead = document.getElementById('aboutme_noRead');
 			noRead.style.visibility = 'hidden';
 
+		})
+	}
+	var addQiuZhiExpertSearch = function(container) {
+		var pubDynamic = document.createElement('a');
+		pubDynamic.id = 'expertSearch'
+		pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
+		pubDynamic.style.paddingLeft = '30px'
+		pubDynamic.style.paddingTop = '15px'
+		pubDynamic.style.fontSize = '16px'
+		pubDynamic.innerHTML = '搜索'
+		container.appendChild(pubDynamic);
+		events.addTap('expertSearch', function() {
+			events.openNewWindowWithData('../qiuzhi/qiuzhi-questionSearch.html', 'FromIndex');
 		})
 	}
 	/**
