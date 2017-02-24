@@ -13,40 +13,55 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/utils/pullToRefresh.css" />
-		<link rel="stylesheet" href="../../css/show/secedu.css" />
+		<link rel="stylesheet" href="../../css/sciedu/sciedu.css" />
 		<style>
 			body,
 			.mui-content {
 				background: white;
 			}
 
-			#sliderSegmentedControl,.mui-segmented-control.mui-scroll-wrapper .mui-scroll {
+			#sliderSegmentedControl,
+			.mui-segmented-control.mui-scroll-wrapper .mui-scroll {
 				height: 0px;
 			}
 
 			.mui-fullscreen .mui-segmented-control~.mui-slider-group {
 				top: 0px;
+				background-color: white;
+			}
+
+			.mui-slider .mui-slider-group .mui-slider-item .mui-table-view-cell:after {
+				height: 1px;
+			}
+
+			.mui-scroll-wrapper,
+			.mui-pull-bottom-wrapper {
+				/*底部加载更多区域*/
+				background-color: white;
 			}
 		</style>
 	</head>
 
 	<body>
 		<div id="content" class="mui-content">
-			<div id="slider" class="mui-slider mui-fullscreen">
+			<!--<div id="slider" class="mui-slider mui-fullscreen">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div id="topList" class="mui-scroll">
 					</div>
 				</div>
 				<div id="sliderGroup" class="mui-slider-group">
 				</div>
-			</div>
+			</div>-->
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
+		<script type="text/javascript" src="../../js/mui.lazyload.js"></script>
+		<script type="text/javascript" src="../../js/mui.lazyload.img.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
-		<script type="text/javascript" src="../../js/senedu/SenEduHomeItem.js"></script>
+		<script type="text/javascript" src="../../js/sciedu/SciEduHomeItem.js"></script>
 		<script type="text/javascript">
 			mui.init();
 
@@ -56,7 +71,6 @@
 			var sliderId = ''; //记录显示的城市
 			mui.plusReady(function() {
 				events.closeWaiting();
-
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				main.addEventListener("show", function(e) {
 					console.log("show " + main.id);
@@ -68,7 +82,7 @@
 				window.addEventListener('tapTitleLeft', function() {
 					events.openNewWindowWithData('../utils/customizeCity.html', {
 						id: '0', //0科教，1展现
-						webid: '../scienceeducation/scienceeducation_home.html', //当前webview的id
+						webid: '../sciedu/sciedu_home.html', //当前webview的id
 						cities: cities //已经定制的城市数组
 					});
 				});
@@ -81,6 +95,16 @@
 					initBody();
 				});
 				//---订制城市---end---
+
+				//点击每一项的监听
+				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+					var id = this.getAttribute('id');
+					var turl = this.getAttribute('data-turl');
+					console.log(id + '|' + turl);
+					events.openNewWindowWithData('senedu_show_main.html', {
+						turl: turl
+					});
+				});
 			});
 
 			/**
@@ -244,6 +268,12 @@
 			 * @param {Object} data 新闻数据
 			 */
 			function addItems(cityCode, data) {
+				var placeholder = '../../' + window.storageKeyName.DEFAULTSCIEDUIMAGELOAD;
+				console.log('placeholder ' + placeholder);
+				var lazyLoad = mui("#bot_ul_" + cityCode).imageLazyload({
+					placeholder: placeholder.toString(),
+					autoDestroy: false, //元素加载完后是否自动销毁当前插件对象
+				}); //懒加载控件
 				for(var i = 0; i < data.length; i++) {
 					var tips = data[i].tips;
 					var tipsList = tips.split('|');
@@ -262,7 +292,9 @@
 						dataStr = date;
 					}
 					data[i].tips = from + ' | ' + dataStr;
-					SenEduHomeItem.addItem(document.getElementById("bot_ul_" + cityCode), data[i]);
+					SciEduHomeItem.addItem(document.getElementById("bot_ul_" + cityCode), data[i], function() {
+						lazyLoad.refresh(true);
+					});
 				}
 			}
 
@@ -369,25 +401,25 @@
 					}
 
 					//设置上拉下拉控件的状态
+					var tempRefresh;
+					for(var i = 0; i < pullToRefresh.length; i++) {
+						var id = pullToRefresh[i].id.replace('bot_sc_', '');
+						if(id == cityCode) {
+							tempRefresh = pullToRefresh[i];
+						}
+					}
+					if(page.pageIndex >= page.totalPage) {
+						//没有下一页
+						tempRefresh.refresh.endPullUpToRefresh(true);
+					} else {
+						if(pageIndex == 1) {
+							//获取第一页的数据更新当前控件
+							tempRefresh.refresh.refresh(true);
+						}
+					}
 					setTimeout(function() {
-						var tempRefresh;
-						for(var i = 0; i < pullToRefresh.length; i++) {
-							var id = pullToRefresh[i].id.replace('bot_sc_', '');
-							if(id == cityCode) {
-								tempRefresh = pullToRefresh[i];
-							}
-						}
-						if(page.pageIndex >= page.totalPage) {
-							//没有下一页
-							tempRefresh.refresh.endPullUpToRefresh(true);
-						} else {
-							if(pageIndex == 1) {
-								//获取第一页的数据更新当前控件
-								tempRefresh.refresh.refresh(true);
-							}
-						}
 						wd.close();
-					}, 500);
+					}, 1000);
 				});
 			}
 		</script>

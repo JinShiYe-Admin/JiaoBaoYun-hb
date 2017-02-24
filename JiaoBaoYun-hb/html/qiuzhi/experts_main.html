@@ -478,23 +478,23 @@
 				}
 
 				//设置上拉下拉控件的状态
+				var tempRefresh;
+				for(var i = 0; i < pullToRefresh.length; i++) {
+					var id = pullToRefresh[i].id.replace('bot_sc_', '');
+					if(id == channelId) {
+						tempRefresh = pullToRefresh[i];
+					}
+				}
+				if(page.pageIndex >= page.totalPage) {
+					//没有下一页
+					tempRefresh.refresh.endPullUpToRefresh(true);
+				} else {
+					if(pageIndex == 1) {
+						//获取第一页的数据更新当前控件
+						tempRefresh.refresh.refresh(true);
+					}
+				}
 				setTimeout(function() {
-					var tempRefresh;
-					for(var i = 0; i < pullToRefresh.length; i++) {
-						var id = pullToRefresh[i].id.replace('bot_sc_', '');
-						if(id == channelId) {
-							tempRefresh = pullToRefresh[i];
-						}
-					}
-					if(page.pageIndex >= page.totalPage) {
-						//没有下一页
-						tempRefresh.refresh.endPullUpToRefresh(true);
-					} else {
-						if(pageIndex == 1) {
-							//获取第一页的数据更新当前控件
-							tempRefresh.refresh.refresh(true);
-						}
-					}
 					wd.close();
 				}, 500);
 			});
