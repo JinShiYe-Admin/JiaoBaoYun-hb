@@ -53,6 +53,13 @@
 					//33.获取某个用户的评论列表
 					getCommentsByUser(ExpertsInfo.UserId);
 				});
+				
+				//点击cell,跳转回答详情页
+				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+					var index = this.id.replace('li', '');
+				  	events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', answerArray[index]);
+					plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
+				}) 
 
 				//上拉下拉注册
 				mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
@@ -76,7 +83,6 @@
 							flagRef = 1;
 							if(pageIndex < totalPageCount) {
 								//33.获取某个用户的评论列表
-								pageIndex++;
 								getCommentsByUser(ExpertsInfo.UserId);
 							} else {
 								mui.toast('没有更多了');
@@ -105,6 +111,7 @@
 					if(data.RspCode == 0) {
 						//总页数
 						totalPageCount = data.RspData.TotalPage;
+						pageIndex++;
 						if(flagRef == 0) { //刷新
 							answerArray = data.RspData.Data;
 						} else { //加载更多
@@ -126,7 +133,7 @@
 			var setAnswerRecord = function(list) {
 				var listContainer = document.getElementById('list-container');
 				for(var i in list) {
-					createList(listContainer, list[i])
+					createList(listContainer, list[i],i);
 				}
 			}
 			/**
@@ -134,9 +141,10 @@
 			 * @param {Object} listContainer
 			 * @param {Object} record
 			 */
-			var createList = function(listContainer, record) {
+			var createList = function(listContainer, record,index) {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
+				li.id = 'li' + index;
 				//拼接显示
 				li.innerHTML = "<p>" + record.CommentContent + "</p><div><p><img src='" + getChannelIcon(record) + "'>[" +record.AskChannel + ']' + record.AskTitle + "</p><p>" + record.AnswerContent + "</p></div><p>" + record.LikeNum + " 赞 · " + record.CommentDate +'</p>';
 				
