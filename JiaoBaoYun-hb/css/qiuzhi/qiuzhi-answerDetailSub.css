@@ -51,20 +51,37 @@
 	border-radius: 10px;
 }
 .questionContent-container{
+	padding:0 10px;
 	padding-top: 40px;
 	border-bottom: solid gray 1px;
 	background-color: white;
 }
 .question-container{
-	padding-bottom: 40px;
+	padding: 5px 10px 40px 5px;
+	/*padding-top:5px;
+	padding-bottom: 40px;*/
 	border-bottom: solid 1px gray;
 	background-color: white;
 }
 .comments-info{
+	position: relative;
 	min-height: 45px;
+	padding: 0 10px;
 }
 .comment-no{
 	font-size: 14px;
 	padding-top: 10px;
 }
-
+.order-selector{
+	position: fixed;
+	right: 0;
+}
+.head-img{
+	border-radius: 50%;
+}
+.btn-attention{
+	margin-top: 5px;
+	min-width: 4rem;
+	color: white;
+	background-color:#1db8F1 ;
+}

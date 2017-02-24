@@ -15,7 +15,7 @@
 	<body>
 		<nav class="mui-bar mui-bar-tab" style="background: white;box-shadow: none;padding-top: 6px;">
 			<span class="mui-icon iconfont icon-xie mui-pull-left" style="color: gray;line-height: 34px;padding: 0px;margin-left: 10px;margin-right: 10px;"></span>
-			<div id="tab_div" style="line-height: 34px;border: 1px solid #D9D9D9;margin-left: 50px;margin-right: 10px;padding-left: 25px;color: gray;border-radius: 3px;">
+			<div id="answer-comment" style="line-height: 34px;border: 1px solid #D9D9D9;margin-left: 50px;margin-right: 10px;padding-left: 25px;color: gray;border-radius: 3px;">
 				<font id="tab_font">请输入答案评论</font>
 			</div>
 		</nav>
@@ -31,16 +31,20 @@
 						<h5 id="anthor-name"></h5>
 						<p id="anthor-info"></p>
 					</div>
-					<button type="button" class="mui-btn mui-pull-right btn-attention">关注</button>
+					<button id="btn-focus" type="button" class="mui-btn mui-pull-right btn-attention">关注</button>
 				</div>
 				<div class="questionContent-container">
 					<div id="question-content"></div>
 					<div id="img-container"></div>
+					<div class="">
+						<p id="answer-time" class="display-inlineBlock answer-time">5小时前</p>
+						<p class="display-inlineBlock mui-pull-right"><span id="answer-zan" class="mui-icon iconfont icon-zanzan1"></span> </p>
+					</div>
 				</div>
 				<div class="comments-info">
 					<p id="comments-no" class="comment-no mui-pull-left">你好</p>
-					<select id="order-selector" class="mui-pull-right order-selector display-inlineBlock">
-						<option value="2">倒序排列</option>
+					<select id="order-selector" class="order-selector display-inlineBlock">
+						<option id="reverse-order" value="2">倒序排列</option>
 						<option value="1">顺序排列</option>
 					</select>
 				</div>
