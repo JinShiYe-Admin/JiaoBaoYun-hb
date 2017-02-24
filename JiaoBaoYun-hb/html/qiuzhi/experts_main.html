@@ -168,7 +168,6 @@
 		var sliderId = ''; //记录选择的话题
 
 		mui.plusReady(function() {
-			events.closeWaiting();
 			var main = plus.webview.currentWebview(); //获取当前窗体对象
 			mainData = main.data; //接收页面传入参数值
 			console.log('experts_main.html:' + JSON.stringify(mainData));
@@ -251,7 +250,7 @@
 			//双击标题返回列表顶部
 			document.getElementById('title').addEventListener('doubletap', function() {
 				var id = 'bot_sw_' + sliderId.replace('top_', '');
-				var scrollTop = mui('#'+id).scroll(); //话题列表区域
+				var scrollTop = mui('#' + id).scroll(); //话题列表区域
 				scrollTop.scrollTo(0, 0, 100);
 			});
 		});
@@ -409,6 +408,7 @@
 			//2.获取符合条件的专家信息
 			postDataQZPro_getExpertsByCondition(comData, wd, function(data) {
 				console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+
 				//记录页数
 				var page = {
 					pageIndex: pageIndex, //当前页数
@@ -422,6 +422,7 @@
 					//清空对应的界面
 					document.getElementById("bot_ul_" + channelId).innerHTML = '';
 				}
+
 				if(data.RspCode == 0) {
 					//添加人员信息
 					//回调中的临时数据
@@ -485,12 +486,14 @@
 							tempRefresh = pullToRefresh[i];
 						}
 					}
-					if(pageIndex < data.RspData.totalPages) {
-						//更新当前控件
-						self.refresh(true);
-					} else {
+					if(page.pageIndex >= page.totalPage) {
 						//没有下一页
 						tempRefresh.refresh.endPullUpToRefresh(true);
+					} else {
+						if(pageIndex == 1) {
+							//获取第一页的数据更新当前控件
+							tempRefresh.refresh.refresh(true);
+						}
 					}
 					wd.close();
 				}, 500);

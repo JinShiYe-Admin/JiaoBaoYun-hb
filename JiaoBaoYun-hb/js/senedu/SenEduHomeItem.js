@@ -41,9 +41,9 @@ var SenEduHomeItem = (function(mod) {
 		li.className = 'mui-table-view-cell mui-media';
 		li.setAttribute('data-turl', data.turl);
 		li.id = id;
-		li.innerHTML = '<div id="mediaBody_' + itemId + '" class="mui-media-body" style="padding-top: 5px;padding-bottom: 3px;">' +
-			'<div id="title_' + itemId + '" style="word-break: break-all;font-size: 20px;">' + data.title + '</div>' +
-			'<div id="from_' + itemId + '" style="word-break: break-all;margin-top: 5px;">' + data.tips + '</div></div>';
+		li.innerHTML = '<div id="mediaBody_' + itemId + '" class="mui-media-body secedu-body">' +
+			'<div id="title_' + itemId + '" class="secedu-title">' + data.title + '</div>' +
+			'<div id="from_' + itemId + '" class="secedu-from">' + data.tips + '</div></div>';
 		element.appendChild(li);
 	}
 
@@ -52,15 +52,14 @@ var SenEduHomeItem = (function(mod) {
 		li.className = 'mui-table-view-cell mui-media';
 		li.setAttribute('data-turl', data.turl);
 		li.id = id;
-		li.innerHTML = '<div id="mediaBody_' + id + '" class="mui-media-body" style="padding-top: 5px;padding-bottom: 3px;">' +
-			'<img id="image_' + id + '" class="mui-pull-right" style="width: 30%;" src="' + data.timgs[0] + '">' +
-			'<div id="title_' + id + '" style="word-break: break-all;font-size: 20px;">' + data.title + '</div>' +
-			'<div id="from_' + id + '" style="word-break: break-all;margin-top: 5px;">' + data.tips + '</div></div>';
+		li.innerHTML = '<div id="mediaBody_' + id + '" class="mui-media-body secedu-body">' +
+			'<img id="image_' + id + '" class="mui-pull-right" style="width:30%" src="' + data.timgs[0] + '">' +
+			'<div id="title_' + id + '" class="secedu-title">' + data.title + '</div>' +
+			'<div id="from_' + id + '" class="secedu-from">' + data.tips + '</div></div>';
 		element.appendChild(li);
 		var image = document.getElementById("image_" + id);
-		var parentNode = image.parentNode;
-		image.style.height = (parentNode.offsetWidth * 0.3 * (2 / 3)) + 'px';
-		image.style.marginTop = ((parentNode.offsetHeight - image.offsetHeight) / 2 - 6) + 'px';
+		image.style.height = (image.parentNode.offsetWidth * 0.3 * (2 / 3)) + 'px';
+		image.style.marginTop = ((image.parentNode.offsetHeight - image.offsetHeight) / 2 - 6) + 'px';
 	}
 
 	function addItem_3(element, data, id) {
@@ -68,26 +67,24 @@ var SenEduHomeItem = (function(mod) {
 		li.className = 'mui-table-view-cell mui-media';
 		li.setAttribute('data-turl', data.turl);
 		li.id = id;
-		li.innerHTML = '<div id="mediaBody_' + id + '" class="mui-media-body" style="padding-top: 5px;padding-bottom: 3px;">' +
-			'<div id="title_' + id + '" style="word-break: break-all;font-size: 20px;">' + data.title + '</div>' +
-			'<div class="mui-row" style="margin-top: 3px;">' +
-			'<div class="mui-col-xs-4 mui-col-sm-4" style="padding: 2px;">' +
-			'<img id="image_3_0_' + id + '" style="width: 100%;" src="' + data.timgs[0] + '">' +
+		li.innerHTML = '<div id="mediaBody_' + id + '" class="mui-media-body secedu-body">' +
+			'<div id="title_' + id + '" class="secedu-title">' + data.title + '</div>' +
+			'<div class="mui-row">' +
+			'<div class="mui-col-xs-4 mui-col-sm-4">' +
+			'<img id="image_3_0_' + id + '" src="' + data.timgs[0] + '">' +
 			'</div>' +
-			'<div class="mui-col-xs-4 mui-col-sm-4" style="padding: 2px;">' +
-			'<img id="image_3_1_' + id + '" style="width: 100%;" src="' + data.timgs[1] + '">' +
+			'<div class="mui-col-xs-4 mui-col-sm-4">' +
+			'<img id="image_3_1_' + id + '" src="' + data.timgs[1] + '">' +
 			'</div>' +
-			'<div class="mui-col-xs-4 mui-col-sm-4" style="padding: 2px;">' +
-			'<img id="image_3_2_' + id + '" style="width: 100%;" src="' + data.timgs[2] + '">' +
-			'</div></div><div id="from_' + id + '" style="word-break: break-all;margin-top: 5px;">' + data.tips + '</div></div>';
+			'<div class="mui-col-xs-4 mui-col-sm-4">' +
+			'<img id="image_3_2_' + id + '" src="' + data.timgs[2] + '">' +
+			'</div></div><div id="from_' + id + '" class="secedu-from">' + data.tips + '</div></div>';
 		element.appendChild(li);
 		var image_3_0 = document.getElementById("image_3_0_" + id);
-		var image_3_1 = document.getElementById("image_3_1_" + id);
-		var image_3_2 = document.getElementById("image_3_2_" + id);
 		var parentNode = image_3_0.parentNode;
 		image_3_0.style.height = (parentNode.offsetWidth * (2 / 3)) + 'px';
-		image_3_1.style.height = (parentNode.offsetWidth * (2 / 3)) + 'px';
-		image_3_2.style.height = (parentNode.offsetWidth * (2 / 3)) + 'px';
+		document.getElementById("image_3_1_" + id).style.height = (parentNode.offsetWidth * (2 / 3)) + 'px';
+		document.getElementById("image_3_2_" + id).style.height = (parentNode.offsetWidth * (2 / 3)) + 'px';
 	}
 
 	return mod;
