@@ -64,22 +64,11 @@
 			var pageIndex = 1; //请求数据页面
 			var totalPageCount; //总页码
 			var flagRef = 0; //是刷新0，还是加载更多1
-			var answerArray = []; //回答总数组
-			var keyWord = "getAsksByCondition";
+			var keyWord = "";
 			mui.init();
 			mui.plusReady(function() {
 				//注册点击搜索事件
 				//点击 将文本框内容存于变量 并执行下拉刷新所需逻辑
-				/*		document.getElementById('search-btn').addEventListener('tap', function() {
-							keyWord = mui("#search-keyWord")[0].value;
-							console.log(keyWord)
-							document.getElementById('list-container').innerHTML = "";
-							console.log("搜索");
-							pageIndex = 1;
-							flagRef = 0;
-							//33.获取某个用户的评论列表
-							getAsksByCondition(keyWord);
-						})*/
 				document.getElementById('search-btn').addEventListener('tap', searchQuestion);
 				var search_keyWord = document.getElementById('search-keyWord');
 				search_keyWord.addEventListener('search',searchQuestion)
@@ -106,7 +95,6 @@
 							flagRef = 1;
 							console.log(totalPageCount);
 							if(pageIndex < totalPageCount) {
-								//33.获取某个用户的评论列表
 								pageIndex++;
 								getAsksByCondition(keyWord);
 							} else {
@@ -127,13 +115,12 @@
 					console.log("搜索");
 					pageIndex = 1;
 					flagRef = 0;
-					//33.获取某个用户的评论列表
+					//4.获取所有符合条件问题
 					getAsksByCondition(keyWord);
 			}
 			//4.获取所有符合条件问题
 			function getAsksByCondition(askTitle) {
 				//需要加密的数据
-				console.log("11111111111111");
 				var comData = {
 					askTitle: askTitle, //问题标题,用于查找，可输入部分标题
 					channelId: '0', //话题ID,传入0，获取所有话题数据
@@ -156,8 +143,8 @@
 			};
 
 			/**
-			 * 放置邀请回答记录数据
-			 * @param {Object} list 回答记录数据
+			 * 放置问题记录数据
+			 * @param {Object} list 问题记录数据
 			 */
 			var setQuestionRecord = function(list) {
 				var listContainer = document.getElementById('list-container');
@@ -166,7 +153,7 @@
 				}
 			}
 			/**
-			 * 拼接回答记录
+			 * 拼接问题记录
 			 * @param {Object} listContainer
 			 * @param {Object} record
 			 */
