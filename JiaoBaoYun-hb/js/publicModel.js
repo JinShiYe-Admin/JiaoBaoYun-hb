@@ -347,6 +347,7 @@ var publicModel = (function($, mod) {
 		TotalCnt:'',//评论总记录数,用于分页，结果应该与AnswerNum相同
 		Data:'',//	回答列表,Array[model_QZAnswer]
 		
+		AskChannel:'',//	问题话题
 		AskId:''//问题ID
 	}
 	
@@ -357,6 +358,7 @@ var publicModel = (function($, mod) {
 		AnswerEncAddr:'',//回答附件地址,多个的情况例如：1.jpg|2.jpg
 		AnswerMan:'',//	回答人
 		AnswerTime:'',//	回答时间
+		IsAnonym	:'',//是否匿名
 		IsLikeNum:'',//	回答点赞数
 		CommentNum:'',//	回答评论数
 	}
@@ -370,6 +372,8 @@ var publicModel = (function($, mod) {
 		AnswerContent:'',//	回答内容
 		AnswerEncAddr:'',//回答附件地址,多个的情况例如：1.jpg|2.jpg
 		AnswerMan:'',//	回答人
+		AnswerManNote:'',//	回答人简介
+		IsAnonym	:'',//是否匿名
 		AnswerTime:'',//	回答时间
 		IsLikeNum:'',//	回答点赞数
 		CommentNum:'',//	回答评论数
@@ -409,6 +413,8 @@ var publicModel = (function($, mod) {
 		AnswerContent:'',//	回答内容	String
 		CommentId:'',//	评论ID	int
 		CommentContent:'',//	评论内容	String
+		CommentDate:'',//评论时间
+		AskChannel:'',//	问题话题
 		LikeNum:''//	评论点赞数	int
 	}
 
