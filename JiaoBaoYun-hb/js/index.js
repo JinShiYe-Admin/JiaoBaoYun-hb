@@ -46,7 +46,7 @@ mui.plusReady(function() {
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
-	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show_home.html', '../qiuzhi/qiuzhi_home.html'];
+	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show_home_1.html', '../qiuzhi/qiuzhi_home.html'];
 	//	var titles = ['首页', '科教', '展现', '求知'];
 	//设置子页面距离顶部的位置
 
@@ -193,8 +193,8 @@ mui.plusReady(function() {
 			case '../sciedu/sciedu_home.html': //科教
 				addListIcon(title_left, '../sciedu/sciedu_home.html');
 				break;
-			case '../show/show_home.html': //展现
-				addListIcon(title_left, '../show/show_home.html');
+			case '../show/show_home_1.html': //展现
+				addListIcon(title_left, '../show/show_home_1.html');
 				addShai(iconContainer);
 				break;
 			case '../qiuzhi/qiuzhi_home.html': //求知

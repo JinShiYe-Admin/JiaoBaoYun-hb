@@ -419,6 +419,8 @@ var events = (function(mod) {
 		events.fireToPageNone('../cloud/cloud_home.html', 'cleanCloudHome');
 		//清理科教
 		events.fireToPageNone('../sciedu/sciedu_home.html', 'cleanSicEduHome');
+		//清理展现
+		events.fireToPageNone('../show/show_home_1.html.html', 'cleanShowHome');
 	}
 
 	mod.ifHaveInfo = function(info) {
