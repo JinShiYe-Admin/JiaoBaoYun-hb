@@ -16,16 +16,23 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">搜索</h1>
 		</header>
-		<div id="refreshContainer" class="mui-content" style="z-index:0">
-			 
-				<div class="mui-input-row mui-search">
-					<input type="search" class="mui-input-clear" placeholder="">
-				</div>
-			 
-			<div class="mui-scroll-wrapper mui-fullscreen"  style="z-index:0">
+		<div class="mui-content" style="z-index:0">
+			<div class="mui-scroll-wrapper mui-fullscreen" style="z-index:0">
 				<div class="mui-scroll">
+					<!--	<div class="search-form">
+						<div class="mui-input-row mui-search">
+							<input id="search-keyWord" type="search" class="mui-input-clear search-input" placeholder="请输入关键字搜索问题">
+							<input id="search-btn" type="submit" class="search-btn" value="搜索"></input>
+						</div>
+					</div>-->
+					<div class="search-form">
+						<div class="mui-input-row mui-search">
+							<input id="search-keyWord" type="search" class="mui-input-clear search-input" placeholder="请输入关键字搜索问题">
+							<input id="search-btn" type="submit" class="search-btn" value="搜索"></input>
+						</div>
+					</div>
 					<ul id="list-container" class="mui-table-view">
-						<li class="mui-table-view-cell">
+						<!--<li class="mui-table-view-cell">
 							<p>现在能为父母的健康做点什么？</p>
 							<p>摘要：先说说我家的情况，我爸爱抽烟，每天感觉能达到一包，我妈前几年腰间盘突出，现在好了，我家在农村，家里人收入可以约...</p>
 							<p>57赞·3评论·关注</p>
@@ -39,10 +46,11 @@
 							<p>现在能为父母的健康做点什么？</p>
 							<p>摘要：先说说我家的情况，我爸爱抽烟，每天感觉能达到一包，我妈前几年腰间盘突出，现在好了，我家在农村，家里人收入可以约...</p>
 							<p>57赞·3评论·关注</p>
-						</li>
+						</li>-->
 					</ul>
 				</div>
 			</div>
+
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
@@ -53,25 +61,28 @@
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			var ExpertsInfo; //专家详细页传来的 专家信息
 			var pageIndex = 1; //请求数据页面
 			var totalPageCount; //总页码
 			var flagRef = 0; //是刷新0，还是加载更多1
 			var answerArray = []; //回答总数组
-
+			var keyWord = "getAsksByCondition";
 			mui.init();
-
 			mui.plusReady(function() {
-				//从专家页面传值
-				window.addEventListener('qiuzhi-expertAllComment', function(event) {
-					//赋值
-					ExpertsInfo = event.detail.data;
-					console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
-					//清除节点
-					document.getElementById('list-container').innerHTML = "";
-					//33.获取某个用户的评论列表
-					getCommentsByUser(ExpertsInfo.UserId);
-				});
+				//注册点击搜索事件
+				//点击 将文本框内容存于变量 并执行下拉刷新所需逻辑
+				/*		document.getElementById('search-btn').addEventListener('tap', function() {
+							keyWord = mui("#search-keyWord")[0].value;
+							console.log(keyWord)
+							document.getElementById('list-container').innerHTML = "";
+							console.log("搜索");
+							pageIndex = 1;
+							flagRef = 0;
+							//33.获取某个用户的评论列表
+							getAsksByCondition(keyWord);
+						})*/
+				document.getElementById('search-btn').addEventListener('tap', searchQuestion);
+				var search_keyWord = document.getElementById('search-keyWord');
+				search_keyWord.addEventListener('search',searchQuestion)
 
 				//上拉下拉注册
 				mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
@@ -84,7 +95,7 @@
 							pageIndex = 1;
 							flagRef = 0;
 							//33.获取某个用户的评论列表
-							getCommentsByUser(ExpertsInfo.UserId);
+							getAsksByCondition(keyWord);
 							self.endPullDownToRefresh();
 						}
 					},
@@ -93,10 +104,11 @@
 							var self = this;
 							console.log("上拉加载更多");
 							flagRef = 1;
+							console.log(totalPageCount);
 							if(pageIndex < totalPageCount) {
 								//33.获取某个用户的评论列表
 								pageIndex++;
-								getCommentsByUser(ExpertsInfo.UserId);
+								getAsksByCondition(keyWord);
 							} else {
 								mui.toast('没有更多了');
 							}
@@ -107,31 +119,36 @@
 
 			});
 
-			//33.获取某个用户的评论列表
-			function getCommentsByUser(userId) {
+			function searchQuestion() {
+			 
+					keyWord = mui("#search-keyWord")[0].value;
+					console.log(keyWord)
+					document.getElementById('list-container').innerHTML = "";
+					console.log("搜索");
+					pageIndex = 1;
+					flagRef = 0;
+					//33.获取某个用户的评论列表
+					getAsksByCondition(keyWord);
+			}
+			//4.获取所有符合条件问题
+			function getAsksByCondition(askTitle) {
 				//需要加密的数据
+				console.log("11111111111111");
 				var comData = {
-					userId: userId, //用户ID
+					askTitle: askTitle, //问题标题,用于查找，可输入部分标题
+					channelId: '0', //话题ID,传入0，获取所有话题数据
 					pageIndex: pageIndex, //当前页数
 					pageSize: '10' //每页记录数,传入0，获取总记录数
 				};
 				// 等待的对话框
 				var wd = events.showWaiting();
-				//33.获取某个用户的评论列表
-				postDataQZPro_getCommentsByUser(comData, wd, function(data) {
+				//4.获取所有符合条件问题
+				postDataQZPro_getAsksByCondition(comData, wd, function(data) {
 					wd.close();
-					console.log('33.获取某个用户的评论列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					console.log('4.获取所有符合条件问题:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
-						//总页数
-						totalPageCount = data.RspData.TotalPage;
-						if(flagRef == 0) { //刷新
-							answerArray = data.RspData.Data;
-						} else { //加载更多
-							pageIndex++;
-							//合并数组
-							answerArray = answerArray.concat(data.RspData.Data);
-						}
-						setAnswerRecord(data.RspData.Data);
+						totalPageCount = data.RspData.totalPage;
+						setQuestionRecord(data.RspData.Data);
 					} else {
 						mui.toast(data.RspTxt);
 					}
@@ -142,7 +159,7 @@
 			 * 放置邀请回答记录数据
 			 * @param {Object} list 回答记录数据
 			 */
-			var setAnswerRecord = function(list) {
+			var setQuestionRecord = function(list) {
 				var listContainer = document.getElementById('list-container');
 				for(var i in list) {
 					createList(listContainer, list[i])
@@ -164,29 +181,8 @@
 				//	<p>57赞·3评论·关注</p>
 				//</li>
 				//li.innerHTML = "<p>" + record.CommentContent + "</p><div><p><img src='"+record.qChannelImg+"'>["+record.qChannel+"]"+record.AskTitle+"</p><p>"+record.AnswerContent+"</p></div><p>"+record.LikeNum+" 赞 · "+record.cCreatTime + " ·"+record.CommentId+" 关注</p>";
-				li.innerHTML = "<p>" + record.CommentContent + "</p><div><p><img src='" + getChannelIcon(record) + "'>[频道没给]" + record.AskTitle + "</p><p>" + record.AnswerContent + "</p></div><p>" + record.LikeNum + " 赞 · 评论时间没给 ·关注数没给  关注</p>";
+				li.innerHTML = "<p>" + record.AskTitle + "</p><p>" + record.AnswerContent + "</p><p>" + record.IsLikeNum + "赞·" + record.CommentNum + "评论</p>";
 				listContainer.appendChild(li);
-			}
-			var getChannelIcon = function(cell) {
-				var iconSourse = "../../image/qiuzhi/";
-				switch(cell.AskChannel) {
-					case "教学":
-						iconSourse += "channel-edu.png";
-						break;
-					case "美食":
-						iconSourse += "channel-food.png";
-						break;
-					case "健康":
-						iconSourse += "channel-health.png";
-						break;
-					case "其他":
-						iconSourse += "channel-others.png";
-						break;
-					default:
-						iconSourse = "";
-						break;
-				}
-				return iconSourse;
 			}
 		</script>
 	</body>
