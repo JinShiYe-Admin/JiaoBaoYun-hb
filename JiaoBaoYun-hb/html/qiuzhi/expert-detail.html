@@ -129,7 +129,13 @@
 			//3.获取某个用户的信息
 			getExpertsInfo(ExpertsInfo.UserId);
 			nodes.expertImg.src = updateHeadImg(ExpertsInfo.uimg, 2);
-
+			window.addEventListener('expert-detail', function(data) {
+				ExpertsInfo = data.detail.data; //接收页面传入参数值，传过来的专家model
+				console.log('expert-detail.html:' + JSON.stringify(ExpertsInfo.UserId));
+				//3.获取某个用户的信息
+				getExpertsInfo(ExpertsInfo.UserId);
+				nodes.expertImg.src = updateHeadImg(ExpertsInfo.uimg, 2);
+			})
 			//22.获取是否已对某个用户关注
 			getUserFocus(ExpertsInfo.UserId);
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {

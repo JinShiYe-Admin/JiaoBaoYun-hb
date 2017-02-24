@@ -95,7 +95,7 @@ var setData = function(persons) {
 	var list = document.getElementById('list-container');
 	for(var i in persons) {
 		var li = document.createElement('li');
-		li.setAttribute('data-info',JSON.stringify(persons));
+		li.setAttribute('data-info',JSON.stringify(persons[i]));
 		li.className = 'mui-table-view-cell';
 		li.innerHTML = createInner(persons[i]);
 		list.appendChild(li);
@@ -200,6 +200,7 @@ var setListener = function() {
 		var info = JSON.parse(parent.getAttribute('data-info'));
 		console.log('dianji 关注他的人：' + JSON.stringify(info));
 		events.openNewWindowWithData('expert-detail.html', JSON.stringify(info));
+		events.fireToPageWithData('expert-detail.html','expert-detail' ,info)
 	});
 }
 /**
