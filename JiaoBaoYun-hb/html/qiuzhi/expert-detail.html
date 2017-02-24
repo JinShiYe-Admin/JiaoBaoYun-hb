@@ -123,6 +123,7 @@
 			events.preload('qiuzhi-expertAllAnswer.html', 10);
 			events.preload('qiuzhi-expertAllComment.html', 10);
 			events.preload('focus-question.html', 10);
+			events.preload('heAttentionPersons.html', 10);
 			var main = plus.webview.currentWebview(); //获取当前窗体对象
 			ExpertsInfo = main.data; //接收页面传入参数值，传过来的专家model
 			console.log('expert-detail.html:' + JSON.stringify(ExpertsInfo));
@@ -159,7 +160,9 @@
 			})
 			events.addTap('FocusMan', function() {
 				console.log('他关注的人');
-
+				events.fireToPage('heAttentionPersons.html', 'heAttentionPersons', function() {
+					return ExpertsInfo;
+				})
 			})
 			events.addTap('IsFocusedMan', function() {
 				events.fireToPageWithData('AttentionPersons.html', 'expertInfo', ExpertsInfo);
