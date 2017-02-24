@@ -1,6 +1,9 @@
 mui.init();
+mui('.mui-scroll-wrapper').scroll({
+	indicators: true, //是否显示滚动条
+});
 mui.plusReady(function() {
-	events.preload('group-pInfo.html', 200);
+	events.preload('group-pInfo.html');
 	window.addEventListener('postGroupInfo', function(e) {
 		masterInfo = null;
 		isMaster = false;
@@ -103,6 +106,7 @@ var addRemarkData = function(list, remarkList) {
 	} else {
 		list.forEach(function(cell, i) {
 			list[i].bunick = cell.ugname;
+			list[i]=setOrder(cell);
 		})
 	}
 	return list;
