@@ -79,14 +79,14 @@
 					console.log("show " + main.id + '|' + index.id + "|" + sliderId + '|' + cities.length);
 					initBody();
 					//改变顶部的城市
-//					changeIndexHeader();
+					changeIndexHeader();
 				});
 
 				//Webview窗口隐藏事件
 				main.addEventListener("hide", function(e) {
 					console.log("hide " + main.id);
-//					var evalJS = "document.getElementById('title').innerText = '';var sciEduSlider=document.getElementById('sciEduSlider');if(sciEduSlider){sciEduSlider.parentNode.removeChild(sciEduSlider);}";
-//					index.evalJS(evalJS);
+					var evalJS = "var showSlider=document.getElementById('showSlider');if(showSlider){showSlider.parentNode.removeChild(showSlider);}";
+					index.evalJS(evalJS);
 				});
 
 				//---订制城市---start---
@@ -118,8 +118,8 @@
 					pullToRefresh = [] //存储下拉上拉的控件
 					sliderId = ''; //记录显示的城市
 					document.getElementById("content").innerHTML = '';//清理界面
-//					var evalJS = "document.getElementById('title').innerText = '';var sciEduSlider=document.getElementById('sciEduSlider');if(sciEduSlider){sciEduSlider.parentNode.removeChild(sciEduSlider);}";
-//					index.evalJS(evalJS);
+					var evalJS = "var showSlider=document.getElementById('showSlider');if(showSlider){showSlider.parentNode.removeChild(showSlider);}";
+					index.evalJS(evalJS);
 				});
 			});
 
@@ -151,7 +151,7 @@
 							}
 						});
 						//改变顶部的城市
-//						changeIndexHeader();
+						changeIndexHeader();
 						var id = 'bot_' + sliderId.replace('top_', '');
 						var element = document.getElementById(id);
 						var info = JSON.parse(element.getAttribute('data-info'));
@@ -179,7 +179,7 @@
 						//生成滑动框架
 						addCitiesSilders(data, function() {
 							//改变顶部的城市
-							//changeIndexHeader();
+							changeIndexHeader();
 							//初始化滑动控件
 							mui('#slider').slider();
 							//循环初始化所有下拉刷新，上拉加载。
@@ -476,9 +476,9 @@
 							}
 							str = str + '</div>';
 							var str_0 = "document.getElementById('title').innerText = '" + cities[i].aname + "';";
-							var str_1 = "var sciEduSlider = document.getElementById('sciEduSlider');";
-							var str_2 = "if(sciEduSlider) {sciEduSlider.innerHTML = '" + str + "';} else {";
-							var str_3 = "var element = document.createElement('div');element.id = 'sciEduSlider';element.className = 'mui-slider';";
+							var str_1 = "var showSlider = document.getElementById('showSlider');";
+							var str_2 = "if(showSlider) {showSlider.innerHTML = '" + str + "';} else {";
+							var str_3 = "var element = document.createElement('div');element.id = 'showSlider';element.className = 'mui-slider';";
 							var str_4 = "element.style.height = " + localStorage.getItem('StatusHeightNo') * 1 + " + 48 + 'px';";
 							var str_5 = "element.innerHTML = '" + str + "';document.querySelector('header').appendChild(element);}";
 							var evalJS = str_0 + str_1 + str_2 + str_3 + str_4 + str_5;
