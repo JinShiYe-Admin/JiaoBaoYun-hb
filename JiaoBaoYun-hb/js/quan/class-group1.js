@@ -24,6 +24,9 @@ mui.plusReady(function() {
 			})
 		}
 	})
+	mui('#gride').on('tap', '.mui-table-view-cell', function() {
+		events.fireToPageWithData('group-pInfo.html', 'postPInfo', jQuery.extend({},this.info,{isMaster:isMaster}) );
+	})
 })
 /**
  * 获取用户在群组中的信息
@@ -71,12 +74,20 @@ var getRemarkInfos = function(data) {
 		}
 		events.clearChild(gride);
 		console.log('最终呈现的数据：' + JSON.stringify(list));
+		list=resortArray(list);
 		createGride(gride, list);
 	})
+}
+var resortArray = function(list) {
+	list.sort(function(a,b){
+		return a.order-b.order;
+	})
+	return list;
 }
 var addRemarkData = function(list, remarkList) {
 	if(remarkList) {
 		for(var i in list) {
+			list[i]=setOrder(list[i]);
 			var hasBunick = false;
 			for(var j in remarkList) {
 				if(list[i].utid == remarkList[j].butid) {
@@ -95,6 +106,25 @@ var addRemarkData = function(list, remarkList) {
 		})
 	}
 	return list;
+}
+var setOrder = function(cell) {
+	switch(cell.mstype) {
+		case 0:
+			cell.order = 2;
+			break;
+		case 1:
+			cell.order = 0;
+			break;
+		case 2:
+			cell.order = 1;
+			break;
+		case 3:
+			cell.order = 3;
+			break;
+		default:
+			break;
+	}
+	return cell;
 }
 /**
  * 获取备注
@@ -133,11 +163,11 @@ var createGride = function(gride, array) {
 		function(cell, index, array) {
 			var li = document.createElement('li'); //子元素
 			//			var bgColor=getRandomColor();//获取背景色
-			if(array.length <= 3) { //数组小于等于3，每行3个图标
+//			if(array.length <= 3) { //数组小于等于3，每行3个图标
 				li.className = "mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4";
-			} else { //数组大于3，每行四个图标
-				li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
-			}
+//			} else { //数组大于3，每行四个图标
+//				li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
+//			}
 			cell.gname = groupName;
 			if(!cell.bunick) {
 				cell.bunick = cell.ugnick;
@@ -145,32 +175,32 @@ var createGride = function(gride, array) {
 			li.info = cell;
 			//子控件的innerHTML
 			li.innerHTML = '<a href="#">' +
-				'<img class="circular-square" src="' + updateHeadImg(cell.uimg,2) + '"/></br>' +
-				'<small class="' + setMasterNameClass(cell) + '">' +getRoleInGroup(cell)+ cell.bunick + '</small>' +
+				'<img class="circular-square" src="' + updateHeadImg(cell.uimg, 2) + '"/></br>' +
+				'<small class="' + setMasterNameClass(cell) + '">' + getRoleInGroup(cell) + cell.bunick + '</small>' +
 				'</a>';
 			gride.appendChild(li);
 		})
 }
 var setMasterNameClass = function(info) {
-		if(info.mstype == 1) {
-			return 'master-name'
-		}
-		return '';
+	if(info.mstype == 1) {
+		return 'master-name'
 	}
+	return '';
+}
 var getRoleInGroup = function(cell) {
-	var role='';
-	switch (cell.mstype){
+	var role = '';
+	switch(cell.mstype) {
 		case 0:
-			role='[家长]';
+			role = '[家长]';
 			break;
-			case 1:
-			role='[群主]';
+		case 1:
+			role = '[群主]';
 			break;
-			case 2:
-			role='[老师]';
+		case 2:
+			role = '[老师]';
 			break;
-			case 3:
-			role='[学生]';
+		case 3:
+			role = '[学生]';
 		default:
 			break;
 	}
