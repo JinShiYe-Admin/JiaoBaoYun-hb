@@ -137,7 +137,7 @@
 			//36.（用户空间）获取多用户空间列表
 			postDataPro_getUserSpacesByUser(comData, wd, function(data) {
 				wd.close();
-				//				console.log('获取多用户空间列表_getUserSpacesByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						console.log('获取多用户空间列表_getUserSpacesByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					var tempArr = [];
 
