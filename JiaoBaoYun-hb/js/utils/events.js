@@ -405,7 +405,7 @@ var events = (function(mod) {
 	}
 	mod.getFileNameByPath = function(filePath) {
 		var filePaths = filePath.split("/");
-		return new Date().getTime()+filePaths[filePaths.length - 1];
+		return new Date().getTime() + filePaths[filePaths.length - 1];
 	}
 
 	/**
@@ -417,27 +417,31 @@ var events = (function(mod) {
 		events.fireToPageNone('storage_transport.html', 'removeAllTask');
 		//清理云盘主页
 		events.fireToPageNone('../cloud/cloud_home.html', 'cleanCloudHome');
+		//清理科教
+		events.fireToPageNone('../sciedu/sciedu_home.html', 'cleanSicEduHome');
 	}
+
 	mod.ifHaveInfo = function(info) {
 		return info ? info : '暂无信息'
 	}
+
 	/**
-	 * 
+	 *
 	 * @param {Object} title 标题
 	 * @param {Object} hint 提示语
 	 * @param {Object} callback 确认回调
 	 * @param {Object} cancelLog 取消打印信息
 	 */
-	mod.setDialog = function(title,hint, callback,cancelLog) {
-			var btnArray = ['否', '是'];
-			mui.confirm(hint, title, btnArray, function(e) {
-				if(e.index == 1) {
-					callback();
-				} else {
-					mui.toast(cancelLog)
-				}
-			})
-		}
+	mod.setDialog = function(title, hint, callback, cancelLog) {
+		var btnArray = ['否', '是'];
+		mui.confirm(hint, title, btnArray, function(e) {
+			if(e.index == 1) {
+				callback();
+			} else {
+				mui.toast(cancelLog)
+			}
+		})
+	}
 
 	return mod;
 

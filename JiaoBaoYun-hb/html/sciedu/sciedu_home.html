@@ -69,12 +69,24 @@
 			var show = true; //是否显示科教的内容
 			var pullToRefresh = [] //存储下拉上拉的控件
 			var sliderId = ''; //记录显示的城市
+			var index; //获取index的webview
 			mui.plusReady(function() {
 				events.closeWaiting();
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				index = plus.webview.getWebviewById('index.html'); //
+
+				//Webview窗口显示事件
 				main.addEventListener("show", function(e) {
-					console.log("show " + main.id);
+					console.log("show " + main.id + '|' + index.id + "|" + sliderId + '|' + cities.length);
 					initBody();
+					changeIndexHeader();
+				});
+
+				//Webview窗口隐藏事件
+				main.addEventListener("hide", function(e) {
+					console.log("hide " + main.id);
+					var evalJS = "document.getElementById('title').innerText = '';var sciEduSlider=document.getElementById('sciEduSlider');if(sciEduSlider){sciEduSlider.parentNode.removeChild(sciEduSlider);}";
+					index.evalJS(evalJS);
 				});
 
 				//---订制城市---start---
@@ -91,19 +103,23 @@
 				window.addEventListener('customizeCity', function(e) {
 					var data = e.detail.data;
 					console.log('获取的修改后的城市信息:' + JSON.stringify(data));
-					show = true;
+					cities = []; //存储当前定制的城市
+					show = true; //是否显示科教的内容
+					pullToRefresh = [] //存储下拉上拉的控件
+					sliderId = ''; //记录显示的城市
 					initBody();
 				});
 				//---订制城市---end---
 
-				//点击每一项的监听
-				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-					var id = this.getAttribute('id');
-					var turl = this.getAttribute('data-turl');
-					console.log(id + '|' + turl);
-					events.openNewWindowWithData('senedu_show_main.html', {
-						turl: turl
-					});
+				//退出登录清理科教界面
+				window.addEventListener('cleanSicEduHome', function() {
+					cities = []; //存储当前定制的城市
+					show = true; //是否显示科教的内容
+					pullToRefresh = [] //存储下拉上拉的控件
+					sliderId = ''; //记录显示的城市
+					document.getElementById("content").innerHTML = '';//清理界面
+					var evalJS = "document.getElementById('title').innerText = '';var sciEduSlider=document.getElementById('sciEduSlider');if(sciEduSlider){sciEduSlider.parentNode.removeChild(sciEduSlider);}";
+					index.evalJS(evalJS);
 				});
 			});
 
@@ -111,6 +127,7 @@
 			 * 初始化主体
 			 */
 			function initBody() {
+				//console.log('initBody ' + show);
 				if(show) {
 					//生成滑动控件
 					document.getElementById("content").innerHTML = '\
@@ -133,6 +150,7 @@
 								sliderId = element.id;
 							}
 						});
+						changeIndexHeader();
 						var id = 'bot_' + sliderId.replace('top_', '');
 						var element = document.getElementById(id);
 						var info = JSON.parse(element.getAttribute('data-info'));
@@ -143,8 +161,23 @@
 							requestCityNews(info.acode, 1);
 						}
 					});
+
+					//点击每一项的监听
+					mui('#sliderGroup').on('tap', '.mui-table-view-cell', function() {
+						var id = this.getAttribute('id');
+						var turl = this.getAttribute('data-turl');
+						console.log(id + '|' + turl);
+						document.getElementById("title_" + id).style.color = 'darkgray';
+						events.openNewWindowWithData('sciedu_show_main.html', {
+							turl: turl
+						});
+					});
+
+					//获取定制的城市
 					requestCustomizationCity(function(data) {
+						//生成滑动框架
 						addCitiesSilders(data, function() {
+							changeIndexHeader();
 							//初始化滑动控件
 							mui('#slider').slider();
 							//循环初始化所有下拉刷新，上拉加载。
@@ -269,7 +302,7 @@
 			 */
 			function addItems(cityCode, data) {
 				var placeholder = '../../' + window.storageKeyName.DEFAULTSCIEDUIMAGELOAD;
-				console.log('placeholder ' + placeholder);
+				//console.log('placeholder ' + placeholder);
 				var lazyLoad = mui("#bot_ul_" + cityCode).imageLazyload({
 					placeholder: placeholder.toString(),
 					autoDestroy: false, //元素加载完后是否自动销毁当前插件对象
@@ -421,6 +454,37 @@
 						wd.close();
 					}, 1000);
 				});
+			}
+
+			/**
+			 * 改变顶部的城市
+			 */
+			function changeIndexHeader() {
+				if(sliderId != '' && cities.length != 0) {
+					var acode = sliderId.replace('top_', '');
+					for(var i = 0; i < cities.length; i++) {
+						if(cities[i].acode == acode) {
+							var str = '<div class="mui-slider-indicator">';
+							for(var j = 0; j < cities.length; j++) {
+								if(cities[j].acode == acode) {
+									str = str + '<div class="mui-indicator mui-active"></div>';
+								} else {
+									str = str + '<div class="mui-indicator"></div>';
+								}
+							}
+							str = str + '</div>';
+							var str_0 = "document.getElementById('title').innerText = '" + cities[i].aname + "';";
+							var str_1 = "var sciEduSlider = document.getElementById('sciEduSlider');";
+							var str_2 = "if(sciEduSlider) {sciEduSlider.innerHTML = '" + str + "';} else {";
+							var str_3 = "var element = document.createElement('div');element.id = 'sciEduSlider';element.className = 'mui-slider';";
+							var str_4 = "element.style.height = " + localStorage.getItem('StatusHeightNo') * 1 + " + 48 + 'px';";
+							var str_5 = "element.innerHTML = '" + str + "';document.querySelector('header').appendChild(element);}";
+							var evalJS = str_0 + str_1 + str_2 + str_3 + str_4 + str_5;
+							//console.log("evalJS " + evalJS);
+							index.evalJS(evalJS);
+						}
+					}
+				}
 			}
 		</script>
 

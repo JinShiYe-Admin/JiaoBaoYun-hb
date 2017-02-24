@@ -42,9 +42,9 @@ var SciEduHomeItem = (function(mod) {
 		li.className = 'mui-table-view-cell mui-media';
 		li.setAttribute('data-turl', data.turl);
 		li.id = id;
-		li.innerHTML = '<div id="mediaBody_' + itemId + '" class="mui-media-body secedu-body">' +
-			'<div id="title_' + itemId + '" class="secedu-title">' + data.title + '</div>' +
-			'<div id="from_' + itemId + '" class="secedu-from">' + data.tips + '</div></div>';
+		li.innerHTML = '<div id="mediaBody_' + id + '" class="mui-media-body secedu-body">' +
+			'<div id="title_' + id + '" class="secedu-title">' + data.title + '</div>' +
+			'<div id="from_' + id + '" class="secedu-from">' + data.tips + '</div></div>';
 		element.appendChild(li);
 		callBack();
 	}

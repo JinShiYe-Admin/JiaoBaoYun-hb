@@ -9,10 +9,23 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<link rel="stylesheet" href="../../css/home/index.css" />
-		<link rel="stylesheet" href="../../css/utils/slide_navigatian.css"/>
+		<link rel="stylesheet" href="../../css/utils/slide_navigatian.css" />
 		<style type="text/css">
 			.mui-bar-tab .mui-tab-item.mui-active {
 				color: #00a5e01;
+			}
+
+			.mui-slider {
+				position: absolute;
+				left: 0px;
+			}
+
+			.mui-slider-indicator {
+				bottom: 0px;
+			}
+
+			.mui-slider-indicator .mui-indicator {
+				margin: 0px 2px;
 			}
 		</style>
 	</head>
@@ -25,9 +38,17 @@
 				<a id="pubDynamic" class="mui-icon mui-pull-right mui-plus-visible" style="padding-left: 30px;padding-top: 15px;font-size: 16px;">晒一晒</a>
 				<a id="aboutme" class="mui-icon  mui-pull-right mui-plus-visible" style="font-size: 16px;padding-top: 15px;">@与我相关<span id="aboutme_noRead" style="margin-left: -15px;margin-top: 4px;visibility:hidden;" class="mui-badge mui-badge-danger">4</span></a>
 			</div>
+			<!--<div id="sciEduSlider" class="mui-slider" style="height: 45px;">
+ 				<div class="mui-slider-indicator">
+ 					<div class="mui-indicator mui-active"></div>
+ 					<div class="mui-indicator"></div>
+ 					<div class="mui-indicator"></div>
+ 					<div class="mui-indicator"></div>
+ 				</div>
+ 		</div>-->
 		</header>
-		<!--底部选项卡（.mui-bar-tab）-->
 
+		<!--底部选项卡（.mui-bar-tab）-->
 		<nav class="mui-bar mui-bar-tab ">
 			<a id="defaultTab" class="mui-tab-item mui-active" href="../cloud/cloud_home.html">
 				<span class="mui-icon iconfont icon-yunpan1"></span>

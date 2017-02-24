@@ -6,7 +6,7 @@
 
 mui.init();
 //var waitingDia;
-//var cityType = 0;
+
 mui.plusReady(function() {
 	var showCity; //当前展示城市信息
 	var SECity; //当前科教频道城市信息
@@ -40,35 +40,7 @@ mui.plusReady(function() {
 	window.addEventListener('aboutmNoRead', function() {
 		getAboutMe();
 	});
-	//退出订制城市界面返回的数据
-	//	window.addEventListener('customizeCity', function(e) {
-	//		var data = e.detail.data;
-	//		console.log('获取的修改后的城市信息:' + JSON.stringify(data));
-	//		cityType = parseInt(data.type);
-	//		var citiesArray = data.cities;
-	//		var path;
-	//		if(cityType) {
-	//			showCity = citiesArray[0];
-	//			path = "../show/show_home.html";
-	//		} else {
-	//			SECity = citiesArray[0];
-	//			path = "../scienceeducation/scienceeducation_home.html";
-	//		}
-	//		setShowCity(cityType);
-	//		events.fireToPageNone(path, 'citiesInfo', citiesArray);
-	//
-	//	});
-	//	window.addEventListener('showCity', function(e) {
-	//		var curCity;
-	//		if(cityType) {
-	//			curCity = showCity = e.detail.data;
-	//			console.log('主界面标题获取的城市信息：' + JSON.stringify(showCity));
-	//		} else {
-	//			curCity = SECity = e.detail.data;
-	//			console.log('主界面标题获取的城市信息：' + JSON.stringify(SECity));
-	//		}
-	//		setShowCity(cityType);
-	//	});
+
 	getAboutMe(); //获取与我相关未读数
 
 	//设置默认打开首页显示的子页序号；
@@ -111,20 +83,9 @@ mui.plusReady(function() {
 			return;
 		}
 		if(this.querySelector('.mui-tab-label').innerHTML == '展现') {
-			cityType = 1;
-			//			if(showCity) {
-			//				setShowCity(cityType);
-			//			} else {
-			//				title.innerHTML = '展现';
-			//			}
 
 		} else if(this.querySelector('.mui-tab-label').innerHTML == '科教') {
-			cityType = 0;
-			//			if(SECity) {
-			//				setShowCity(cityType);
-			//			} else {
-			//				title.innerHTML = '科教';
-			//			}
+
 		} else {
 			//更换标题
 			title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
@@ -243,45 +204,6 @@ mui.plusReady(function() {
 				break;
 		}
 	}
-
-	//	var setShowCity = function(type) {
-	//			var curCity;
-	//			var titleInner;
-	//			if(type) { //1为展现频道
-	//				curCity = showCity;
-	//				titleInner = '展现';
-	//			} else {
-	//				curCity = SECity;
-	//				titleInner = '科教';
-	//			}
-	//			if(curCity) {
-	//				if(curCity.totalNo == 1) {
-	//					title.innerText = curCity.aname;
-	//				} else {
-	//					title.innerHTML = getShowCityInner(curCity)
-	//				}
-	//			} else {
-	//				title.innerHTML = titleInner;
-	//			}
-	//		}
-	//		/**
-	//		 * 点点点模式
-	//		 * @param {Object} cities
-	//		 */
-	//	var getShowCityInner = function(curCity) {
-	//			var inner = '<p id="current-city" class="current-city">' + curCity.aname + '</p><div class="mine-slider-indicator">';
-	//			for(var i = 0; i < curCity.totalNo; i++) {
-	//				if(i == curCity.index) {
-	//					inner += '<div class="mine-indicator mine-active"></div>'
-	//				} else {
-	//					inner += '<div class="mine-indicator"></div>'
-	//				}
-	//				if(i == curCity.totalNo - 1) {
-	//					inner += '</div>'
-	//				}
-	//			}
-	//			return inner;
-	//		}
 
 	/**
 	 * 修改首页顶部导航
