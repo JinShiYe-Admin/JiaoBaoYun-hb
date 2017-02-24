@@ -83,7 +83,7 @@
 					events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', answerArray[index]);
 					console.log('传递的answerInfo:' + JSON.stringify(this.answerInfo));
 					plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
-				})
+				});
 				//上拉下拉注册
 				mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 					down: {
@@ -168,7 +168,7 @@
 			var createList = function(listContainer, record, index) {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
-				li.id = 'li' + index
+				li.id = 'li' + index;
 				//拼接显示
 				li.innerHTML = '<div class="mui-table">' +
 					'<div class="mui-table-cell mui-col-xs-12">' +
