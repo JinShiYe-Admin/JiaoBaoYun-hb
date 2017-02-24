@@ -12,6 +12,8 @@ mui.init();
 mui.plusReady(function() {
 		events.preload('classes-select.html', 200);
 		window.addEventListener('postClasses', function(e) {
+			CloudFileUtil.files=[];
+			events.clearChild(document.getElementById('pictures'));
 			personalUTID = parseInt(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid);
 			console.log('发布作业界面获取的班级数据：' + JSON.stringify(e.detail.data));
 			var switchItem=document.getElementById("onlineSwitch");
@@ -52,10 +54,42 @@ mui.plusReady(function() {
 			})
 			//相机按钮
 		events.addTap('getImg', function() {
-//				camera.getPic(camera.getCamera(), function(picPath) {
-//					console.log("picPath:" + picPath);
-//				})
-				mui.toast('功能暂未开放！');
+				if(CloudFileUtil.files.length < 9) {
+					camera.getPic(camera.getCamera(), function(picPath) {
+						plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						var saveSpace = storageKeyName.CLASSSPACE; //保存空间
+						compress.compressPIC(picPath, function(event) {
+							var localPath = event.target;
+							var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 6, 200, 0, saveSpace);
+							CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+								console.log("获取的数据：" + JSON.stringify(datas));
+								if(datas.Status == 1) {
+									var tokenInfo = datas.Data;
+
+									//上传文件
+									CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
+										console.log(JSON.stringify(uploadData));
+										var img = { //图片信息
+											url: tokenInfo.Domain + tokenInfo.Key,
+											thumb: tokenInfo.OtherKey[data.thumbKey],
+											type: 1
+										}
+										//关闭等待框
+										plus.nativeUI.closeWaiting();
+										//放置图片
+					 					CloudFileUtil.setPic(img);
+									});
+								}
+
+							}, function(xhr, type, errorThrown) {
+								console.log("错误类型：" + type + errorThrown);
+								plus.nativeUI.closeWaiting(); //关闭等待框
+							});
+						})
+					})
+				} else {
+					mui.toast('上传图片附件不得多于9张！');
+				}
 			})
 			//录像按钮
 		events.addTap('getVideo', function() {

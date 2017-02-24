@@ -220,9 +220,7 @@ function setUserFocus(userId, item) {
 				item.innerText = '已关注';
 				mui.toast('关注成功！')
 				item.isLike = 1;
-				
 			}
-
 		} else {
 			mui.toast(data.RspTxt);
 		}
@@ -259,7 +257,7 @@ var setQuestion = function(datasource) {
 	questionContainer.appendChild(p);
 	events.clearChild(document.getElementById('img-container'));
 	if(datasource.AnswerEncAddr) {
-		document.getElementById('img-container').innerHTML = getPicInner(datasource.AnswerEncAddr);
+		document.getElementById('answer-imgs').innerHTML = getPicInner(datasource.AnswerEncAddr);
 	}
 	document.getElementById('comments-no').innerText = "评论(" + datasource.CommentNum + ")";
 }
@@ -290,12 +288,13 @@ var setAnswerManInfo = function(datasource) {
 var getPicInner = function(picAddr) {
 	var picPaths = picAddr.split('|');
 	var picInner = '';
-	var pic_width = "33.333333%";
+	var win_width=document.getElementById('answer-imgs').offsetWidth;
+	var pic_width =win_width/3;
 	for(var i in picPaths) {
 		if(picPaths.length < 3) {
-			pic_width = 100 / picPaths.length + '%';
+			pic_width = win_width / picPaths.length;
 		}
-		picInner += '<img src=' + picPaths[i] + 'style="width:' + pic_width + '" />'
+		picInner += '<img src=' + picPaths[i] + 'style="width:' + pic_width + 'px;height:"'+pic_width+'px" />'
 	}
 	return picInner;
 }

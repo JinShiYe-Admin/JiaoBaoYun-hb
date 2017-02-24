@@ -16,6 +16,7 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<!--alibaba字库-->
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<link rel="stylesheet" href="../../css/quan/custom-textarea.css" />
 		<!--本页面应用样式表-->
 		<link rel="stylesheet" href="../../css/homework/homework-publish.css" />
 	</head>
@@ -42,7 +43,7 @@
 					<label>接收人</label>
 					<div id="classes" class="receive-classes">
 					</div>
-					
+
 				</div>
 				<div class="input-erea">
 					<textarea id="publish-content" type="text" maxlength="500" placeholder="输入你要布置的作业内容,最多500字！"></textarea>
@@ -53,10 +54,7 @@
 						<a id="getVideo" class="mui-icon iconfont icon-shipin"></a>
 					</div>
 				</div>
-				<!-- History list -->
-				<!--<ul id="history" class="dlist" style="text-align:left;">
-					<li id="empty" class="ditem-empty">无记录</li>
-				</ul>-->
+				<div id="pictures" class="img-container temWork-teaHint"></div>
 				<div class="mui-input-row">
 					<label class="submit-label">需学生在线提交</label>
 					<div id="onlineSwitch" class="mui-switch mui-active mui-switch-green online-switch">
@@ -91,8 +89,12 @@
 		<script src="../../js/mui.min.js"></script>
 		<!--公共事件模块-->
 		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/qiniu/qiniu.js"></script>
 		<!--摄像头模块-->
 		<script src="../../js/utils/camera.js"></script>
+		<script type="text/javascript" src="../../js/utils/compress.js"></script>
+		<script src="../../js/utils/cryption.js"></script>
+		<script src="../../js/utils/CloudFileUtil.js"></script>
 		<script src="../../js/common.js"></script>
 		<!--录音模块-->
 		<script src="../../js/utils/audio.js"></script>

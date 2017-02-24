@@ -59,9 +59,7 @@ div>.icon-xiangji:before,
 	top: 0;
 	right: 0;
 }
-.img-container{
-	min-height: 200px;
-}.img-div{
+.img-div{
 	position: relative;
 	width: 25%;
 	float: left;
@@ -76,4 +74,3 @@ div>.icon-xiangji:before,
 	top: 0;
 	right: 0;
 }
-.i

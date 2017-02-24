@@ -79,6 +79,9 @@
 .head-img{
 	border-radius: 50%;
 }
+.answer-imgs{
+	width: 100%;
+}
 .btn-attention{
 	margin-top: 5px;
 	min-width: 4rem;

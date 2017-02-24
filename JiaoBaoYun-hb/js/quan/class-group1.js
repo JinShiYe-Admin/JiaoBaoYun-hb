@@ -1,4 +1,5 @@
 mui.init();
+var groupRoles;
 mui('.mui-scroll-wrapper').scroll({
 	indicators: true, //是否显示滚动条
 });
@@ -12,25 +13,39 @@ mui.plusReady(function() {
 			groupId = e.detail.data.classId;
 			groupName = e.detail.data.className;
 			document.getElementById('title').innerText = getHeadText(groupName);
-			groupRoles = [];
-			allcount = 0;
-			getUserInGroup(-1, function(data) {
-				getGroupAllInfo();
-				groupRoles = data;
-				console.log('班级群组界面获取的用户在群中的信息:' + JSON.stringify(groupRoles));
-				for(var i in groupRoles) {
-					if(groupRoles[i].mstype == 1) {
-						isMaster = true;
-						break;
-					}
-				}
-			})
+			freshContent();
 		}
 	})
 	mui('#gride').on('tap', '.mui-table-view-cell', function() {
-		events.fireToPageWithData('group-pInfo.html', 'postPInfo', jQuery.extend({},this.info,{isMaster:isMaster}) );
+		events.fireToPageWithData('group-pInfo.html', 'postPInfo', jQuery.extend({}, this.info, { isMaster: isMaster }));
+	})
+	events.addTap('quit-group', function() {
+		showChoices();
 	})
 })
+var freshContent = function() {
+	groupRoles = [];
+	allcount = 0;
+	getUserInGroup(-1, function(data) {
+		getGroupAllInfo();
+		groupRoles = data;
+		console.log('班级群组界面获取的用户在群中的信息:' + JSON.stringify(groupRoles));
+		for(var i in groupRoles) {
+			if(groupRoles[i].mstype == 1) {
+				isMaster = true;
+				groupRoles.splice(i, 1);
+				break;
+			}
+		}
+		if(groupRoles.length == 0) {
+			document.getElementById('quit-group').style.display = 'none';
+		} else if(groupRoles.length == 1 && isMaster) {
+			document.getElementById('quit-group').style.display = 'none';
+		} else {
+			document.getElementById('quit-group').style.display = 'block';
+		}
+	})
+}
 /**
  * 获取用户在群组中的信息
  * @param {Object} mstype
@@ -77,20 +92,20 @@ var getRemarkInfos = function(data) {
 		}
 		events.clearChild(gride);
 		console.log('最终呈现的数据：' + JSON.stringify(list));
-		list=resortArray(list);
+		list = resortArray(list);
 		createGride(gride, list);
 	})
 }
 var resortArray = function(list) {
-	list.sort(function(a,b){
-		return a.order-b.order;
+	list.sort(function(a, b) {
+		return a.order - b.order;
 	})
 	return list;
 }
 var addRemarkData = function(list, remarkList) {
 	if(remarkList) {
 		for(var i in list) {
-			list[i]=setOrder(list[i]);
+			list[i] = setOrder(list[i]);
 			var hasBunick = false;
 			for(var j in remarkList) {
 				if(list[i].utid == remarkList[j].butid) {
@@ -106,7 +121,7 @@ var addRemarkData = function(list, remarkList) {
 	} else {
 		list.forEach(function(cell, i) {
 			list[i].bunick = cell.ugname;
-			list[i]=setOrder(cell);
+			list[i] = setOrder(cell);
 		})
 	}
 	return list;
@@ -166,19 +181,19 @@ var createGride = function(gride, array) {
 		 */
 		function(cell, index, array) {
 			var li = document.createElement('li'); //子元素
-			//			var bgColor=getRandomColor();//获取背景色
-//			if(array.length <= 3) { //数组小于等于3，每行3个图标
+//			var bgColor = getRandomColor(); //获取背景色
+			if(array.length <= 3) { //数组小于等于3，每行3个图标
 				li.className = "mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4";
-//			} else { //数组大于3，每行四个图标
-//				li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
-//			}
+			} else { //数组大于3，每行四个图标
+				li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
+			}
 			cell.gname = groupName;
 			if(!cell.bunick) {
 				cell.bunick = cell.ugnick;
 			}
 			li.info = cell;
 			//子控件的innerHTML
-			li.innerHTML = '<a href="#">' +
+			li.innerHTML = '<a class="gride-inner" href="#">' +
 				'<img class="circular-square" src="' + updateHeadImg(cell.uimg, 2) + '"/></br>' +
 				'<small class="' + setMasterNameClass(cell) + '">' + getRoleInGroup(cell) + cell.bunick + '</small>' +
 				'</a>';
@@ -216,4 +231,139 @@ var getHeadText = function(className) {
 		className = className.substring(0, 8) + '...'
 	}
 	return className;
+}
+/**
+ * 根据角色数量 显示不同选择
+ * @param {Object} data
+ */
+var showChoices = function(data) {
+	console.log('showChoices' + JSON.stringify(data))
+	console.log('群组角色：' + JSON.stringify(groupRoles));
+	if(groupRoles.length > 1 && !isMaster) {
+		plus.nativeUI.actionSheet({
+			title: "请选择退群方式",
+			cancel: "取消",
+			buttons: [{
+				title: "老师身份退出群组"
+			}, {
+				title: "家长身份退出群组"
+			}, {
+				title: "退出所有身份(班主任除外)"
+			}]
+		}, function(e) {
+			console.log("User pressed: " + e.index);
+			if(e.index > 0) {
+				if(e.index == 1) {
+					events.setDialog('退群', '是否要将老师身份退出此群？', function() {
+						//退出老师身份
+						quitGroup(getSquadRoleInfo(2), quitSquad);
+					}, '您取消了退群')
+
+				} else if(e.index == 2) { //退出家长身份
+					events.setDialog('退群', '是否要将家长身份退出此群？', function() {
+						//退出老师身份
+						quitGroup(getSquadRoleInfo(0), quitSquad);
+					}, '您取消了退群')
+
+				} else { //退出班级
+					events.setDialog('退群', '是否退出此群？', function() {
+						//退出老师身份
+						quitGroupAll();
+					}, '您取消了退群')
+
+				}
+			}
+
+		});
+	} else {
+		events.setDialog('退群', '是否退出此群？', function() {
+			quitGroupAll();
+		}, '您取消了退群')
+	}
+}
+/**
+ * 获取小组身份信息
+ * @param {Object} roleType 0家长 2老师 3家长
+ */
+var getSquadRoleInfo = function(roleType) {
+	var quitRole;
+	for(var i in groupRoles) {
+		if(groupRoles[i].mstype == roleType) {
+			quitRole = groupRoles[i];
+			break;
+		}
+	}
+	return quitRole;
+}
+/**
+ * 退出群
+ */
+var quitGroupAll = function() {
+	groupRoles.forEach(function(groupRole, i) {
+		if(groupRole.mstype == 1) {
+			allcount++;
+		} else {
+			//班主任不能退出老师身份
+			if(isMaster && groupRole.mstype == 2) {
+				allcount++;
+			} else {
+				quitGroup(groupRole, allCallback);
+			}
+		}
+	})
+}
+/**
+ * 退出群
+ */
+var allCallback = function(roleInfo) {
+	allcount++;
+	if(allcount > 0 && allcount == groupRoles.length) {
+		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
+		groupRoles = [];
+		allcount = 0;
+		if(!isMaster) {
+			var curpage = plus.webview.currentWebview();
+			curpage.opener().close();
+			curpage.close();
+		} else {
+			freshContent();
+		}
+	}
+}
+/**
+ * 退出小组 
+ * @param {Object} roleInfo
+ */
+var quitSquad = function(roleInfo) {
+	console.log('退群的groupInfo:' + Array.isArray(groupRoles) + JSON.stringify(roleInfo) + groupRoles.indexOf(roleInfo));
+	groupRoles.forEach(function(groupRole, i) {
+		if(groupRole.gutid == roleInfo.gutid) {
+			groupRoles.splice(i, 1);
+			return false;
+		}
+	})
+	//				groupRoles.splice(groupRoles.indexOf(roleInfo), 1);
+	console.log('退组后的身份信息：' + JSON.stringify(groupRoles));
+	freshContent();
+	events.fireToPageNone('../quan/tab-zone.html', 'quitGroup');
+}
+/**
+ * 退出群组
+ * @param {Object} roleInfo
+ * @param {Object} callback
+ */
+var quitGroup = function(roleInfo, callback) {
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	postDataPro_PostGuD({
+		vvl: roleInfo.gutid
+	}, wd, function(data) {
+		console.log('退群返回值：' + JSON.stringify(data));
+		wd.close();
+		if(data.RspCode == '0000') {
+			mui.toast('退群成功');
+			callback(roleInfo);
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	})
 }
