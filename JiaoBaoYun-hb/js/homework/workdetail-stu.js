@@ -46,6 +46,18 @@ var setContentView = function() {
 	document.querySelector('.brief-content').innerText = homeworkInfo.Contents;
 	document.querySelector('.publisher').innerText =events.shortForString(homeworkInfo.unick,6);
 	document.querySelector('.publish-date').innerText = homeworkInfo.Date.split(' ')[0];
+	document.getElementById('brief-imgs').innerHTML=getImgsInner(homeworkInfo.File);
+}
+var getImgsInner=function(imgs){
+	var imgInner='';
+	var img_width="33.33333%";
+	if(imgs&&imgs.length>0){
+		for(var i in imgs){
+			imgInner+='<img style="width:'+imgeWith+';" src="' + imgs[i].ThumbUrl + 
+			'" data-preview-src="'+ imgs[i].Url+'" data-preview-group="'+imgs[i].FileType+'"/>';
+		}
+	}
+	return imgInner;
 }
 
 //2.	获取教师发布作业详情，不包括学生提交的答案；

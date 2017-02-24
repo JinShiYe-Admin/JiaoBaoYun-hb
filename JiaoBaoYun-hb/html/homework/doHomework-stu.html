@@ -10,15 +10,6 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/quan/custom-textarea.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
-		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/utils/camera.js"></script>
-		<script src="../../js/utils/files.js"></script>
-		<script src="../../js/utils/ASFiles.js"></script>
-		<script src="../../js/publicProtocol.js"></script>
-		<script src="../../js/publicHomeworkProtocol.js" type="text/javascript" charset="utf-8"></script>
-		<script>
-		</script>
 	</head>
 
 	<body>
@@ -41,15 +32,26 @@
 					<a class="mui-icon iconfont icon-xiangce"></a>
 				</div>
 			</div>
+			<div id="pictures" class="img-container temWork-teaHint"></div>
 		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/qiniu/qiniu.js"></script>
+		<script src="../../js/utils/camera.js"></script>
+		<script type="text/javascript" src="../../js/utils/compress.js"></script>
+		<script src="../../js/utils/cryption.js"></script>
+		<script src="../../js/utils/CloudFileUtil.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/publicHomeworkProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
 			var personalUTID;
 			var flag = 0
-				//作业model
+			//作业model
 			var homeworkModel;
 			mui.plusReady(function() {
 				window.addEventListener('homeworkInfo', function(e) {
+					CloudFileUtil.files = [];
 					personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 					homeworkModel = e.detail.data;
 					var textView = document.getElementById('input-content');
@@ -58,6 +60,7 @@
 					flag = 0;
 				})
 				window.addEventListener('workDetail', function(e) {
+					CloudFileUtil.files = [];
 					personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					homeworkModel = e.detail.data;
 					console.log('修改作业数据：' + JSON.stringify(homeworkModel))
@@ -76,27 +79,98 @@
 				setListener();
 			});
 			var setListener = function() {
-					//录音键
-					events.addTap('take_pic', function() {
-						//				startRecord()
-						mui.toast('功能暂未开放！');
-					});
-					//相机按钮
-					events.addTap('take_camero', function() {
-						//				camera.getPic(camera.getCamera(), function(picPath) {
-						//					console.log("picPath:" + picPath);
-						//				})
-						mui.toast('功能暂未开放！');
-					});
-					//录像按钮
-					events.addTap('get_gallery', function() {
-						//			camera.getVideo(camera.getCamera(), function(videoPath) {
-						//				console.log("videoPath:" + videoPath);
-						//			})
-						mui.toast('功能暂未开放！');
-					});
-				}
-				//7.	提交作业结果；逻辑：如果是图片类型，同时生成缩略图
+				//录音键
+				events.addTap('take_pic', function() {
+					if(CloudFileUtil.files.length < 9) {
+						camera.getPic(camera.getCamera(), function(picPath) {
+							plus.nativeUI.showWaiting(storageKeyName.WAITING);
+							var saveSpace = storageKeyName.CLASSSPACE; //保存空间
+							compress.compressPIC(picPath, function(event) {
+								var localPath = event.target;
+								var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 6, 200, 0, saveSpace);
+								CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+									console.log("获取的数据：" + JSON.stringify(datas));
+									if(datas.Status == 1) {
+										var tokenInfo = datas.Data;
+
+										//上传文件
+										CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
+											console.log(JSON.stringify(uploadData));
+											var img = { //图片信息
+												url: tokenInfo.Domain + tokenInfo.Key,
+												thumb: tokenInfo.OtherKey[data.thumbKey],
+												type: 1
+											}
+											//关闭等待框
+											plus.nativeUI.closeWaiting();
+											//放置图片
+											CloudFileUtil.setPic(img);
+										});
+									}
+
+								}, function(xhr, type, errorThrown) {
+									console.log("错误类型：" + type + errorThrown);
+									plus.nativeUI.closeWaiting(); //关闭等待框
+								});
+							})
+						})
+					} else {
+						mui.toast('上传图片附件不得多于9张！');
+					}
+				});
+				//相机按钮
+				events.addTap('take_camero', function() {
+					//				camera.getPic(camera.getCamera(), function(picPath) {
+					//					console.log("picPath:" + picPath);
+					//				})
+					mui.toast('功能暂未开放！');
+				});
+				//录像按钮
+				events.addTap('get_gallery', function() {
+					if(CloudFileUtil.files.length < 9) {
+						var picCount = 0; //上传图片计数
+						gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
+							plus.nativeUI.showWaiting(storageKeyName.UPLOADING); //等待框
+							console.log("保存的路径：" + JSON.stringify(paths));
+							var saveSpace = storageKeyName.CLASSSPACE; //保存路径
+							compress.compressPics(paths, function(compressedPaths) {
+								console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
+								var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 6, 200, 0, saveSpace); //获取获取token的各参数
+								CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+										console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
+										if(datas.Status == 1) { //成功
+											var tokenInfos = datas.Data; //参数信息
+											//上传图片
+											CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status) {
+												console.log(JSON.stringify(uploadData));
+												var img = {
+													url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
+													thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
+													type: 1
+												}
+												picCount++;
+												CloudFileUtil.setPic(img); //放置图片
+												if(picCount == compressedPaths.length) { //所有图片已上传
+													plus.nativeUI.closeWaiting(); //关闭等待框
+												}
+											});
+
+										}
+									},
+									//错误的回调
+									function(xhr, type, errorThrown) {
+										console.log("错误类型：" + type + errorThrown);
+										plus.nativeUI.closeWaiting();
+									});
+							});
+
+						});
+					} else {
+						mui.toast('上传图片附件不得多于9张！');
+					}
+				});
+			}
+			//7.	提交作业结果；逻辑：如果是图片类型，同时生成缩略图
 			function requestSubmitHomeworkResult() {
 				var textView = document.getElementById('input-content');
 				var tempText = textView.value;
@@ -108,6 +182,9 @@
 				} else {
 					tempText = replaceAllBL(tempText);
 				}
+				for(var i in CloudFileUtil.files) {
+					CloudFileUtil.files[i].order = i;
+				}
 				//所需参数
 				var comData = {
 					userId: personalUTID, //学生/家长id，
@@ -115,7 +192,7 @@
 					classId: homeworkModel.gid,
 					homeworkId: homeworkModel.HomeworkId, //作业id；
 					content: tempText, //文本答案；
-					files: [] //文件id数组；
+					files: CloudFileUtil.files //文件id数组；
 				};
 				// 等待的对话框
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -125,11 +202,13 @@
 					console.log('做作业界面，提交作业获取的值' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						mui.toast('提交作业答案成功！')
-//						mui.fire(plus.webview.currentWebview().opener(), 'workSubmitted');
-						events.fireToPageWithData('homework-commented.html','workDetail',jQuery.extend({},homeworkModel,{HomeworkResultId:data.RspData.HomeworkResultId,workType:1}));
 						//清空输入框
 						textView.value = '';
 						textView.blur();
+						CloudFileUtil.files = [];
+						events.clearChild(document.getElementById('pictures'));
+						events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, homeworkModel, { HomeworkResultId: data.RspData.HomeworkResultId, workType: 1 }));
+
 					} else {
 						mui.toast(data.RspTxt);
 					}
@@ -148,13 +227,16 @@
 				} else {
 					tempText = replaceAllBL(tempText);
 				}
+				for(var i in CloudFileUtil.files) {
+					CloudFileUtil.files[i].order = i;
+				}
 				//所需参数
 				var comData = {
 					userId: personalUTID, //学生/家长id，
 					studentId: personalUTID, //学生Id；
 					homeworkResultId: homeworkModel.HomeworkResult.HomeworkResultId, //要修改的作业结果id；
 					content: tempText, //文本答案；
-					files: [] //文件id串，例如“1,2”；
+					files: CloudFileUtil.files //文件id串，例如“1,2”；
 				};
 				// 等待的对话框
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -167,12 +249,7 @@
 						events.fireToPageNone('homework-commented.html', 'refreshAnswer', {
 							answer: textView.value
 						});
-						//						//获得主页面的webview
-						//						var main = plus.webview.getWebviewById('../quan/doHomework-stu.html');
-						//						//触发tab-zone页面的setRead事件
-						//						mui.fire(main, 'refreshAnswer', {
-						//							answer: textView.value
-						//						});
+						CloudFileUtil.files = [];
 						//清空输入框
 						textView.value = '';
 						mui.back();

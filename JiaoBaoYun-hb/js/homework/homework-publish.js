@@ -13,7 +13,6 @@ mui.plusReady(function() {
 		events.preload('classes-select.html', 200);
 		window.addEventListener('postClasses', function(e) {
 			CloudFileUtil.files=[];
-			events.clearChild(document.getElementById('pictures'));
 			personalUTID = parseInt(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid);
 			console.log('发布作业界面获取的班级数据：' + JSON.stringify(e.detail.data));
 			var switchItem=document.getElementById("onlineSwitch");
@@ -293,6 +292,9 @@ function requestPublishHomework() {
 	}
 	//给学生去重
 	tempStuArray = arrayDupRemoval(tempStuArray);
+	for(var i in CloudFileUtil.files){
+		CloudFileUtil.files[i].order=i;
+	}
 	//所需参数
 	var comData = {
 		teacherId: personalUTID, //教师Id
@@ -300,7 +302,7 @@ function requestPublishHomework() {
 		studentIds: tempStuArray.toString(), //班级Id+学生Id串，班级Id和学生Id以“|“分割，如“班级Id|学生Id”，每对id之间逗号分隔，例如“1|1,1|2”；
 		content: document.getElementById('publish-content').value, //作业内容
 		submitOnLine: submitOnLine, //是否需要在线提交；
-		files:[]  //上传文件的id串，例如“1,2”；
+		files:CloudFileUtil.files  //上传文件的id串，例如“1,2”；
 	};
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -309,6 +311,8 @@ function requestPublishHomework() {
 		wd.close();
 		console.log('发布作业界面发布作业回调：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
+			CloudFileUtil.files=[];
+			events.clearChild(document.getElementById('pictures'));
 			//提示成功，清空界面数据
 			document.getElementById('publish-content').value = '';
 			submitOnLine = true;

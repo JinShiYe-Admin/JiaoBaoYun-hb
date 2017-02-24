@@ -18,9 +18,9 @@ mui.plusReady(function() {
 		//"ClassId":78,"HomeworkId":165,
 		//"gid":78,"gutid":160,"utid":1,"ugname":"遥不可及","ugnick":"遥不可及",
 		//"uimg":"http://oh2zmummr.bkt.clouddn.com/headimge1.png?1480991289388","mstype":3} at js/homework/homework-comment.js:5
-		if(workInfo.workType == 0) {
+		if(workInfo.workType == 0) {//临时作业
 			requireAnswerResult();
-		} else {
+		} else {//普通作业
 			requireHomeworkResult();
 		}
 	})
@@ -106,6 +106,9 @@ var setHomeWorkInfo = function() {
 			document.getElementById('comment-area').value = workInfo.Comment;
 		} else {
 			document.getElementById('comment-area').value = null;
+		}
+		if(workInfo.Files&&workInfo.Files.length>0){
+			createAnswerImgs(homeworkInfo,workInfo.Files,3);
 		}
 	}
 	/**
