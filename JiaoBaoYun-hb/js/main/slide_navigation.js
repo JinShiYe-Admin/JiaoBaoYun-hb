@@ -125,9 +125,9 @@ var slideNavigation = (function($) {
 		 */
 	var addSystemEvents = function() {
 			//主界面向右滑动，若菜单未显示，则显示菜单；否则不做任何操作
-			window.addEventListener("swiperight", openMenu);
+//			window.addEventListener("swiperight", openMenu);
 			//主界面向左滑动，若菜单已显示，则关闭菜单；否则，不做任何操作；
-			window.addEventListener("swipeleft", closeMenu);
+//			window.addEventListener("swipeleft", closeMenu);
 			//侧滑菜单触发关闭菜单命令
 			window.addEventListener("menu:close", closeMenu);
 			window.addEventListener("menu:open", openMenu);

@@ -255,7 +255,7 @@ var setQuestion = function(datasource) {
 	var p = document.createElement('p');
 	p.innerHTML = datasource.AnswerContent;
 	questionContainer.appendChild(p);
-	events.clearChild(document.getElementById('img-container'));
+	events.clearChild(document.getElementById('answer-imgs'));
 	if(datasource.AnswerEncAddr) {
 		document.getElementById('answer-imgs').innerHTML = getPicInner(datasource.AnswerEncAddr);
 	}
