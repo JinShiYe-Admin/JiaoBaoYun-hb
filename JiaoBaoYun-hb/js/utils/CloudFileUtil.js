@@ -195,6 +195,9 @@ var CloudFileUtil = (function($, mod) {
 			case 6: //家校圈
 				desKey = "jxq789!@";
 				break;
+				case 7: //家校圈
+				desKey = "qz123qwe";
+				break;
 			default:
 				break;
 		}

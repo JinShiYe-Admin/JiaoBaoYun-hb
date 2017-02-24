@@ -392,7 +392,7 @@
 						var saveSpace = storageKeyName.KNOWLEDGE; //保存空间
 						compress.compressPIC(picPath, function(event) {
 							var localPath = event.target;
-							var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 6, 200, 0, saveSpace);
+							var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 7, 200, 0, saveSpace);
 							CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
 								console.log("获取的数据：" + JSON.stringify(datas));
 								if(datas.Status == 1) {

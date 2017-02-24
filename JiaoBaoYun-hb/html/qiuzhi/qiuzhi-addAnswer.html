@@ -36,10 +36,16 @@
 				<label>匿名</label>
 				<input id="checkbox" name="checkbox" value="" type="checkbox">
 			</div>
+			<div id="pictures" style="float: left;background-color: transparent;width: 320px;"></div>
 		</div>
 
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/camera.js"></script>
+		<script src="../../js/utils/CloudFileUtil.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/compress.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/cryption.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/qiniu/qiniu.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
 
 		<script type="text/javascript">
@@ -54,7 +60,7 @@
 				window.addEventListener('qiuzhi-addAnswer', function(event) {
 					type = 0;
 					askModel = event.detail.data;
-					document.getElementById('title').innerText='我要回答';
+					document.getElementById('title').innerText = '我要回答';
 					document.querySelectorAll('.file-extras').forEach(function(item) {
 						item.style.display = 'inline-block'
 					})
@@ -64,7 +70,7 @@
 				//加载评论
 				window.addEventListener('add-comment', function(e) {
 					type = 1;
-					document.getElementById('title').innerText='我要评论';
+					document.getElementById('title').innerText = '我要评论';
 					document.querySelectorAll('.file-extras').forEach(function(item) {
 						item.style.display = 'none';
 					})
@@ -75,10 +81,42 @@
 			});
 			var setListener = function() {
 				events.addTap('take_pic', function() {
-					mui.toast('此功能暂未开放');
-					//				camera.getPic(camera.getCamera(), function(path) {
-					//
-					//				});
+					if(CloudFileUtil.files.length < 9) {
+						camera.getPic(camera.getCamera(), function(picPath) {
+							plus.nativeUI.showWaiting(storageKeyName.WAITING);
+							var saveSpace = storageKeyName.KNOWLEDGE; //保存空间
+							compress.compressPIC(picPath, function(event) {
+								var localPath = event.target;
+								var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 7, 200, 0, saveSpace);
+								CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+									console.log("获取的数据：" + JSON.stringify(datas));
+									if(datas.Status == 1) {
+										var tokenInfo = datas.Data;
+
+										//上传文件
+										CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
+											console.log(JSON.stringify(uploadData));
+											var img = { //图片信息
+												url: tokenInfo.Domain + tokenInfo.Key,
+												thumb: tokenInfo.OtherKey[data.thumbKey],
+												type: 1
+											}
+											//关闭等待框
+											plus.nativeUI.closeWaiting();
+											//放置图片
+											CloudFileUtil.setPic(img);
+										});
+									}
+
+								}, function(xhr, type, errorThrown) {
+									console.log("错误类型：" + type + errorThrown);
+									plus.nativeUI.closeWaiting(); //关闭等待框
+								});
+							})
+						})
+					} else {
+						mui.toast('上传图片附件不得多于9张！');
+					}
 				});
 				events.addTap('take_camero', function() {
 					mui.toast('此功能暂未开放');
@@ -87,10 +125,48 @@
 					//				});
 				});
 				events.addTap('get_gallery', function() {
-					mui.toast('此功能暂未开放');
-					//				gallery.getMultiplePic(function(paths) {
-					//
-					//				});
+					if(CloudFileUtil.files.length < 9) {
+						var picCount = 0; //上传图片计数
+						gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
+							plus.nativeUI.showWaiting(storageKeyName.UPLOADING); //等待框
+							console.log("保存的路径：" + JSON.stringify(paths));
+							var saveSpace = storageKeyName.KNOWLEDGE; //保存路径
+							compress.compressPics(paths, function(compressedPaths) {
+								console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
+								var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 7, 200, 0, saveSpace); //获取获取token的各参数
+								CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+										console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
+										if(datas.Status == 1) { //成功
+											var tokenInfos = datas.Data; //参数信息
+											//上传图片
+											CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status) {
+												console.log(JSON.stringify(uploadData));
+												var img = {
+													url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
+													thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
+													type: 1
+												}
+												picCount++;
+												CloudFileUtil.setPic(img); //放置图片
+												if(picCount == compressedPaths.length) { //所有图片已上传
+													plus.nativeUI.closeWaiting(); //关闭等待框
+												}
+											});
+
+										}
+									},
+									//错误的回调
+									function(xhr, type, errorThrown) {
+										console.log("错误类型：" + type + errorThrown);
+										plus.nativeUI.closeWaiting();
+									});
+							});
+
+						});
+					} else {
+						mui.toast('上传图片附件不得多于9张！');
+					}
+
 				});
 
 				//提交按钮
@@ -112,17 +188,17 @@
 			 */
 			var addAnswer = function(answerContent) {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
-				
-				var isAnonym=document.getElementById('checkbox').checked;
-				var isAnonymNo=isAnonym?1:0;
-				console.log('是否显示匿名：'+isAnonym);
+
+				var isAnonym = document.getElementById('checkbox').checked;
+				var isAnonymNo = isAnonym ? 1 : 0;
+				console.log('是否显示匿名：' + isAnonym);
 				//所需参数
 				var comData = {
 					askId: askModel.TabId, //问题ID
 					answerContent: answerContent, //回答内容,4000
 					encAddr: '', //附件地址,300,多个的情况例如：1.jpg|2.jpg
-					answerMan: personalUTID,//回答人
-					isAnonym:isAnonymNo
+					answerMan: personalUTID, //回答人
+					isAnonym: isAnonymNo
 				};
 				// 等待的对话框
 				var wd = events.showWaiting();
@@ -167,6 +243,46 @@
 						mui.toast('评论失败，请重新提交评论！');
 					}
 				})
+			}
+			var imgs = [];
+
+			//删除图标的点击事件
+			mui('#pictures').on('tap', '.icon-guanbi', function() {
+				imgs.splice(imgs.indexOf(this.parentElement.img), 1);
+				//删除图片111
+				pictures.removeChild(this.parentElement);
+			})
+			/**
+			 * 获取接口数据文件及缩略图
+			 * encType: '',//附件类型,1图片2音视频3仅文字
+			 * encAddr: '',//附件地址
+			 * encImg: '',//附件缩略图地址
+			 */
+			var getTypeAddress = function() {
+				var TAs = {};
+				var encType;
+				var encAddrs = [];
+				var encImgs = [];
+				var theFile;
+				if(CloudFileUtil.files.length > 0) { //如果存在附件
+					for(var i in CloudFileUtil.files) {
+						theFile = CloudFileUtil.files[i];
+						if(i == 0) {
+							TAs.encType = theFile.type;
+						}
+						encAddrs.push(theFile.url);
+						encImgs.push(theFile.thumb);
+					}
+					console.log(JSON.stringify(encAddrs));
+					console.log(JSON.stringify(encImgs));
+					TAs.encAddr = encAddrs.join('|');
+					TAs.encImg = encImgs.join('|');
+				} else { //不存在附件
+					TAs.encType = 0;
+					TAs.encAddr = '';
+					TAs.encImg = '';
+				}
+				return TAs;
 			}
 		</script>
 	</body>
