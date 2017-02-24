@@ -65,13 +65,21 @@
 			var totalPageCount; //总页码
 			var flagRef = 0; //是刷新0，还是加载更多1
 			var keyWord = "";
+			var answerArray = []; //搜索总数组
 			mui.init();
 			mui.plusReady(function() {
 				//注册点击搜索事件
 				//点击 将文本框内容存于变量 并执行下拉刷新所需逻辑
 				document.getElementById('search-btn').addEventListener('tap', searchQuestion);
 				var search_keyWord = document.getElementById('search-keyWord');
-				search_keyWord.addEventListener('search',searchQuestion)
+				search_keyWord.addEventListener('search',searchQuestion);
+				
+				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+					var index = this.id.replace('li', '');
+					events.fireToPageNone('qiuzhi-question.html', 'askId', answerArray[index].TabId);
+					events.fireToPageNone('qiuzhi-questionSub.html', 'askId', answerArray[index].TabId);
+					plus.webview.getWebviewById('qiuzhi-question.html').show();
+				});
 
 				//上拉下拉注册
 				mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
@@ -95,7 +103,6 @@
 							flagRef = 1;
 							console.log(totalPageCount);
 							if(pageIndex < totalPageCount) {
-								pageIndex++;
 								getAsksByCondition(keyWord);
 							} else {
 								mui.toast('没有更多了');
@@ -136,6 +143,14 @@
 					if(data.RspCode == 0) {
 						totalPageCount = data.RspData.totalPage;
 						setQuestionRecord(data.RspData.Data);
+						pageIndex++;
+						if(flagRef == 0) { //刷新
+							answerArray = data.RspData.Data;
+						} else { //加载更多
+							pageIndex++;
+							//合并数组
+							answerArray = answerArray.concat(data.RspData.Data);
+						}
 					} else {
 						mui.toast(data.RspTxt);
 					}
@@ -149,7 +164,7 @@
 			var setQuestionRecord = function(list) {
 				var listContainer = document.getElementById('list-container');
 				for(var i in list) {
-					createList(listContainer, list[i])
+					createList(listContainer, list[i],i);
 				}
 			}
 			/**
@@ -157,9 +172,10 @@
 			 * @param {Object} listContainer
 			 * @param {Object} record
 			 */
-			var createList = function(listContainer, record) {
+			var createList = function(listContainer, record, index) {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
+				li.id = 'li' + index;
 				//拼接显示
 
 				//				<li class="mui-table-view-cell">
