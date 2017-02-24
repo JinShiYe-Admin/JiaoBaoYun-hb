@@ -11,21 +11,387 @@
 		<title>科教</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/utils/pullToRefresh.css" />
+		<link rel="stylesheet" href="../../css/show/secedu.css" />
 		<style>
 			body,
 			.mui-content {
 				background: white;
 			}
+
+			#sliderSegmentedControl,.mui-segmented-control.mui-scroll-wrapper .mui-scroll {
+				height: 0px;
+			}
+
+			.mui-fullscreen .mui-segmented-control~.mui-slider-group {
+				top: 0px;
+			}
 		</style>
 	</head>
 
 	<body>
+		<div id="content" class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div id="topList" class="mui-scroll">
+					</div>
+				</div>
+				<div id="sliderGroup" class="mui-slider-group">
+				</div>
+			</div>
+		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/libs/jquery.js"></script>
-		<script src="../../js/storageKeyName.js"></script>
-		<script src="../../js/utils/slide-selector.js"></script>
-		<script src="../../js/senedu/senedu-home.js"></script>
+		<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
+		<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/senedu/SenEduHomeItem.js"></script>
+		<script type="text/javascript">
+			mui.init();
+
+			var cities = []; //存储当前定制的城市
+			var show = true; //是否显示科教的内容
+			var pullToRefresh = [] //存储下拉上拉的控件
+			var sliderId = ''; //记录显示的城市
+			mui.plusReady(function() {
+				events.closeWaiting();
+
+				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				main.addEventListener("show", function(e) {
+					console.log("show " + main.id);
+					initBody();
+				});
+
+				//---订制城市---start---
+				//进入订制城市界面
+				window.addEventListener('tapTitleLeft', function() {
+					events.openNewWindowWithData('../utils/customizeCity.html', {
+						id: '0', //0科教，1展现
+						webid: '../scienceeducation/scienceeducation_home.html', //当前webview的id
+						cities: cities //已经定制的城市数组
+					});
+				});
+
+				//退出订制城市界面返回的数据
+				window.addEventListener('customizeCity', function(e) {
+					var data = e.detail.data;
+					console.log('获取的修改后的城市信息:' + JSON.stringify(data));
+					show = true;
+					initBody();
+				});
+				//---订制城市---end---
+			});
+
+			/**
+			 * 初始化主体
+			 */
+			function initBody() {
+				if(show) {
+					//生成滑动控件
+					document.getElementById("content").innerHTML = '\
+					<div id="slider" class="mui-slider mui-fullscreen">\
+						<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">\
+							<div id="topList" class="mui-scroll">\
+							</div>\
+						</div>\
+						<div id="sliderGroup" class="mui-slider-group">\
+						</div>\
+					</div>';
+					show = false;
+					//滑动底部列表
+					document.querySelector('.mui-slider').addEventListener('slide', function() {
+						console.log('slide ' + event.detail.slideNumber);
+						mui('.mui-control-item').each(function(index, element) {
+							if(index == event.detail.slideNumber) {
+								document.getElementById(sliderId).className = 'mui-control-item';
+								element.className = 'mui-control-item mui-active';
+								sliderId = element.id;
+							}
+						});
+						var id = 'bot_' + sliderId.replace('top_', '');
+						var element = document.getElementById(id);
+						var info = JSON.parse(element.getAttribute('data-info'));
+						var page = JSON.parse(element.getAttribute('data-page'));
+						console.log('slide ' + JSON.stringify(info));
+						console.log('slide ' + JSON.stringify(page));
+						if(!page) {
+							requestCityNews(info.acode, 1);
+						}
+					});
+					requestCustomizationCity(function(data) {
+						addCitiesSilders(data, function() {
+							//初始化滑动控件
+							mui('#slider').slider();
+							//循环初始化所有下拉刷新，上拉加载。
+							pullRefresh(function() {
+								requestCityNews(cities[0].acode, 1);
+							});
+						});
+					});
+				}
+			}
+
+			/**
+			 * 顶部增加定制的城市和底部列表的框架
+			 * @param {Object} data 定制的城市
+			 * @param {Object} callBack 完成的回调
+			 */
+			function addCitiesSilders(data, callBack) {
+				var fragmentTop = document.createDocumentFragment();
+				var fragmentBot = document.createDocumentFragment();
+				for(var i = 0; i < data.length; i++) {
+					//顶部城市
+					var elementTop = document.createElement('a');
+					//底部列表
+					var elementBot = document.createElement('div');
+
+					if(i == 0) {
+						//选择的城市
+						sliderId = 'top_' + data[i].acode;
+						elementTop.className = 'mui-control-item mui-active';
+						elementBot.className = 'mui-slider-item mui-control-content mui-active';
+					} else {
+						elementTop.className = 'mui-control-item';
+						elementBot.className = 'mui-slider-item mui-control-content';
+					}
+					//顶部城市
+					elementTop.id = 'top_' + data[i].acode;
+					elementTop.href = '#bot_' + data[i].acode;
+					elementTop.innerText = data[i].aname;
+					//底部列表
+					elementBot.id = 'bot_' + data[i].acode;
+					elementBot.setAttribute('data-info', JSON.stringify(data[i]));
+					elementBot.innerHTML = '<div id="bot_sw_' + data[i].acode + '" class="mui-scroll-wrapper">\
+											<div id="bot_sc_' + data[i].acode + '" class="mui-scroll">\
+												<ul id="bot_ul_' + data[i].acode + '" class="mui-table-view">\
+												</ul>\
+											</div>\
+										</div>';
+					fragmentTop.appendChild(elementTop);
+					fragmentBot.appendChild(elementBot);
+				}
+				document.getElementById("topList").appendChild(fragmentTop);
+				document.getElementById("sliderGroup").appendChild(fragmentBot);
+
+				callBack();
+			}
+
+			/**
+			 * 循环初始化所有下拉刷新，上拉加载。
+			 * @param {Object} callBack 完成的回调
+			 */
+			function pullRefresh(callBack) {
+				//阻尼系数
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				mui('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+				//循环初始化所有下拉刷新，上拉加载。
+				mui.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+					var refresh = mui(pullRefreshEl).pullToRefresh({
+						down: {
+							callback: function() {
+								var self = this;
+								var id = pullRefreshEl.parentNode.parentNode.id;
+								var element = document.getElementById(id);
+								var info = JSON.parse(element.getAttribute('data-info'));
+								var page = JSON.parse(element.getAttribute('data-page'));
+								console.log('down ' + JSON.stringify(info));
+								console.log('down ' + JSON.stringify(page));
+								setTimeout(function() {
+									//获取数据
+									requestCityNews(info.acode, 1);
+									//结束下拉刷新
+									self.endPullDownToRefresh();
+								}, 1000);
+							}
+						},
+						up: {
+							contentinit: '',
+							callback: function() {
+								var self = this;
+								var id = pullRefreshEl.parentNode.parentNode.id;
+								var element = document.getElementById(id);
+								var info = JSON.parse(element.getAttribute('data-info'));
+								var page = JSON.parse(element.getAttribute('data-page'));
+								console.log('up ' + JSON.stringify(info));
+								console.log('up ' + JSON.stringify(page));
+								if(page) {
+									setTimeout(function() {
+										requestCityNews(info.acode, page.pageIndex + 1);
+										self.endPullUpToRefresh();
+									}, 1000);
+								} else {
+									self.endPullUpToRefresh();
+								}
+							}
+						}
+					});
+					pullToRefresh.push({
+						id: pullRefreshEl.id,
+						refresh: refresh
+					});
+				});
+				callBack();
+			}
+
+			/**
+			 * 添加一条记录
+			 * @param {Object} cityCode 城市代码
+			 * @param {Object} data 新闻数据
+			 */
+			function addItems(cityCode, data) {
+				for(var i = 0; i < data.length; i++) {
+					var tips = data[i].tips;
+					var tipsList = tips.split('|');
+					var date = tipsList[0].split(' ')[0]; //日期
+					var time = tipsList[0].split(' ')[1]; //日期
+					var from = tipsList[1]; //.substring(3, tipsList[1].length); //来源
+
+					var dataStr = '';
+					var timeStr = time.substring(0, 5);
+					var mydate = new Date();
+					var today = mydate.getFullYear() + '-' + (mydate.getMonth() + 1) + '-' + mydate.getDate();
+
+					if(today == date) { //今天，显示时间
+						dataStr = timeStr;
+					} else { //显示日期
+						dataStr = date;
+					}
+					data[i].tips = from + ' | ' + dataStr;
+					SenEduHomeItem.addItem(document.getElementById("bot_ul_" + cityCode), data[i]);
+				}
+			}
+
+			/**
+			 * 44.获取个人的订制城市
+			 * @param {Object} callBack 成功后的回调
+			 */
+			function requestCustomizationCity(callBack) {
+				//所需参数
+				var comData = {
+					vvl: '0' //订制频道,0科教频道,1展示频道,其他待定
+				};
+				// 等待的对话框
+				var waitingDia = events.showWaiting();
+				//44.获取个人的订制城市
+				postDataPro_PostUTcity(comData, waitingDia, function(data) {
+					var eduArray = [];
+					console.log('获取个人的订制城市科教频道:' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						if(data.RspData[0].citys) {
+							//先通过‘|’将返回值分为数组
+							eduArray = data.RspData[0].citys.split('|');
+							//遍历此数组
+							for(var m in eduArray) {
+								var tempStr = eduArray[m];
+								//初始化model
+								var model_area = {
+									acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
+									aname: '', //节点名称
+								};
+								console.log('tempStr:' + tempStr);
+								//将分成的每个值，再通过‘_’拆分为model
+								var tempArea = tempStr.split('_');
+								model_area.acode = tempArea[0];
+								model_area.aname = tempArea[1];
+								//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
+								eduArray.splice(m, 1, model_area);
+							}
+							console.log('修改后的最终值为:' + JSON.stringify(eduArray));
+						}
+					} else {
+						eduArray = [];
+						mui.toast(data.RspTxt);
+					}
+					if(eduArray.length == 0) {
+						var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
+						console.log(JSON.stringify(uarea));
+						eduArray.push({
+							acode: uarea.acode,
+							aname: uarea.aname
+						});
+					}
+					cities = eduArray.slice(0); //拷贝数组
+					callBack(cities);
+					waitingDia.close();
+				});
+			}
+
+			//45.通过区域代码获取对应区域的分页新闻
+			function requestCityNews(cityCode, pageIndex) {
+				//所需参数
+				var comData = {
+					top: '10', //每页行数，
+					vvl: cityCode, //查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
+					vvl1: pageIndex //页码,获取第几页
+				};
+				// 等待的对话框
+				var wd = events.showWaiting();
+				//45.通过区域代码获取对应区域的分页新闻
+				postDataPro_PostTnews(comData, wd, function(data) {
+					console.log('对应区域的分页新闻:' + JSON.stringify(data));
+
+					//记录页数
+					var page = {
+						pageIndex: pageIndex, //当前页数
+						totalPage: 0 //总页数
+					};
+					if(data.RspCode == 0) {
+						page.totalPage = data.RspData.pg.PageCount;
+					}
+					document.getElementById("bot_" + cityCode).setAttribute('data-page', JSON.stringify(page))
+					if(pageIndex == 1) { //获取的第一页的内容
+						//清空对应的界面
+						document.getElementById("bot_ul_" + cityCode).innerHTML = '';
+					}
+
+					if(data.RspCode == 0) {
+						//新闻总页数
+						var tempArr = data.RspData.dt;
+						//将返回的新闻遍历
+						for(var m in tempArr) {
+							var tempModel = tempArr[m];
+							if(tempModel.timgs == 'null' || tempModel.timgs == null) {
+								tempModel.timgs = [];
+							} else {
+								tempModel.timgs = tempModel.timgs.split('|');
+							}
+						}
+						console.log('新闻最终值为:' + JSON.stringify(tempArr));
+						//生成每一项
+						addItems(cityCode, tempArr);
+					} else {
+						mui.toast(data.RspTxt);
+					}
+
+					//设置上拉下拉控件的状态
+					setTimeout(function() {
+						var tempRefresh;
+						for(var i = 0; i < pullToRefresh.length; i++) {
+							var id = pullToRefresh[i].id.replace('bot_sc_', '');
+							if(id == cityCode) {
+								tempRefresh = pullToRefresh[i];
+							}
+						}
+						if(page.pageIndex >= page.totalPage) {
+							//没有下一页
+							tempRefresh.refresh.endPullUpToRefresh(true);
+						} else {
+							if(pageIndex == 1) {
+								//获取第一页的数据更新当前控件
+								tempRefresh.refresh.refresh(true);
+							}
+						}
+						wd.close();
+					}, 500);
+				});
+			}
+		</script>
+
 	</body>
 
 </html>

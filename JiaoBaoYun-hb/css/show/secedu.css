@@ -1,0 +1,30 @@
+/*科教样式*/
+.secedu-body {
+	/*内容*/
+	padding-top: 5px;
+	padding-bottom: 3px;
+}
+
+.secedu-title {
+	/*标题*/
+	word-break: break-all;
+	font-size: 20px;
+}
+
+.secedu-from {
+	/*来源*/
+	word-break: break-all;
+	margin-top: 5px;
+}
+
+.mui-row {
+	margin-top: 3px;
+}
+
+.mui-col-sm-4 {
+	padding: 2px;
+}
+
+.mui-col-sm-4 img {
+	width: 100%;
+}

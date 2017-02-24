@@ -231,9 +231,6 @@ mui.plusReady(function() {
 				break;
 			case '../scienceeducation/scienceeducation_home.html': //科教
 				addListIcon(title_left, '../scienceeducation/scienceeducation_home.html');
-				if(!SECity) {
-					requestCustomizationCity();
-				}
 				break;
 			case '../show/show_home.html': //展现
 				addListIcon(title_left, '../show/show_home.html');
@@ -249,68 +246,7 @@ mui.plusReady(function() {
 				break;
 		}
 	}
-	//44.获取个人的订制城市
-	//	function requestCustomizationCity() {
-	//		//所需参数
-	//		var comData = {
-	//			vvl: '0' //订制频道,0科教频道,1展示频道,其他待定
-	//		};
-	//		// 等待的对话框
-	//		waitingDia = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	//		//44.获取个人的订制城市
-	//		postDataPro_PostUTcity(comData, waitingDia, function(data) {
-	//			waitingDia.close();
-	//			var eduArray = [];
-	//			console.log('获取个人的订制城市科教频道:' + JSON.stringify(data));
-	//			if(data.RspCode == 0) {
-	//				if(data.RspData[0].citys) {
-	//					//先通过‘|’将返回值分为数组
-	//					eduArray = data.RspData[0].citys.split('|');
-	//					//遍历此数组
-	//					for(var m in eduArray) {
-	//						var tempStr = eduArray[m];
-	//						//初始化model
-	//						var model_area = {
-	//							//						acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
-	//							//						aname: '', //节点名称
-	//							//						atype: '', //节点类型,0省1城市2区县
-	//							//						index: '', //在数组位置
-	//							//						totalNo: 0 //数组大小
-	//						};
-	//						console.log('tempStr:' + tempStr);
-	//						//将分成的每个值，再通过‘_’拆分为model
-	//						var tempArea = tempStr.split('_');
-	//						model_area.acode = tempArea[0];
-	//						model_area.aname = tempArea[1];
-	//						model_area.atype = '1';
-	//						model_area.index = m;
-	//						model_area.array = [];
-	//						model_area.eduIndex = 1;
-	//						model_area.eduSumCount = 0;
-	//						model_area.totalNo = eduArray.length;
-	//						//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
-	//						eduArray.splice(m, 1, model_area);
-	//						//					//如果有值，默认获取第一个城市的数据
-	//						//					if(m == 0) {
-	//						//						requestCityNews(tempArea[0]);
-	//						//					}
-	//					}
-	//					SECity = eduArray[0];
-	//
-	//					setShowCity(0);
-	//					console.log('修改后的最终值为:' + JSON.stringify(eduArray));
-	//				} else {
-	////					waitingDia.close();
-	//					mui.toast('暂无科教频道的定制城市，请选择')
-	//				}
-	//
-	//			} else {
-	//				eduArray = [];
-	//				mui.toast(data.RspTxt);
-	//			}
-	//			events.fireToPageNone('../scienceeducation/scienceeducation_home.html', 'citiesInfo', eduArray);
-	//		});
-	//	}
+
 	//	var setShowCity = function(type) {
 	//			var curCity;
 	//			var titleInner;

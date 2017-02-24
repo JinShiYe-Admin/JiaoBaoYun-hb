@@ -18,8 +18,5 @@ mui.plusReady(function() {
 			cities: cities //已经定制的城市数组
 		});
 	});
-
-	
-
 	//---订制城市---end---
 });
