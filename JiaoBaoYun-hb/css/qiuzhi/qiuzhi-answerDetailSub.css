@@ -32,12 +32,15 @@
 	max-width: 100px;
 }
 .img-portrait{
+	float: left;
 	width: 40px;
 	height: 40px;
 	border-radius: 50%;
+	max-width: 15%;
 }
 .export-info{
-	max-width: 60%;
+	max-width: 55%;
+	padding-left:5px;
 }
 .anthor-container{
 	padding: 8px 5px;
@@ -85,6 +88,10 @@
 .btn-attention{
 	margin-top: 5px;
 	min-width: 4rem;
+	max-width: 25%;
 	color: white;
 	background-color:#1db8F1 ;
+}
+.question-content{
+	word-wrap: break-word;
 }

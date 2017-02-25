@@ -44,9 +44,9 @@ mui.plusReady(function() {
 		//刷新的界面实现逻辑
 		requestChannelList(channelInfo);
 	}, {
-//		height: '5%',
-//		style: 'circle',
-//		range:'5%'
+		//		height: '5%',
+		//		style: 'circle',
+		//		range:'5%'
 	});
 	setListener();
 	pullUpFresh();
@@ -199,18 +199,18 @@ var setChannelList = function(data) {
 	}
 }
 var getInnerHTML = function(cell) {
-	var inner = '<a>' +
+	var inner ='<div>' +
 		'<div class="channel-info">' +
 		'<p><img src="' + getChannelIcon(cell) + '" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
 		'</div>' +
 		'<div class="ask-container">' +
 		'<h5 class="single-line ask-title" askId="' + cell.TabId + '">[' + cell.AskChannel + ']' + cell.AskTitle + '</h5>' +
-		'<p class="triple-line answer-content" answerInfo="' + cell.AnswerId + '">' + cell.AnswerContent + '</p>' +
+		'<p class="answer-content triple-line" answerInfo="' + cell.AnswerId + '">' + cell.AnswerContent + '</p>' +
 		'<div class="imgs-container">' + getImgs(cell.AnswerEncAddr) + '</div>' +
 		'</div>' +
 		'<div class="extra-info"></div>' +
 		'<p>' + cell.IsLikeNum + '赞·' + cell.CommentNum + '评论·关注</p>' +
-		'</a>'
+		'</div>';
 	return inner;
 }
 var getImgs = function(imgs) {

@@ -82,13 +82,6 @@
 					changeIndexHeader();
 				});
 
-				//Webview窗口隐藏事件
-				main.addEventListener("hide", function(e) {
-					console.log("hide " + main.id);
-					var evalJS = "var sciEduSlider=document.getElementById('sciEduSlider');if(sciEduSlider){sciEduSlider.parentNode.removeChild(sciEduSlider);}";
-					index.evalJS(evalJS);
-				});
-
 				//---订制城市---start---
 				//进入订制城市界面
 				window.addEventListener('tapTitleLeft', function() {

@@ -26,7 +26,13 @@
 	/*字体样式*/
 	font-family: '微软雅黑 Bold', '微软雅黑';
 }
-
+@font-face {
+	font-family:fangzheng;
+	src: url(../../fonts/fangzheng.ttf) format('truetype');
+}
+.mui-content{
+	font-family: fangzheng;
+}
 
 /*header统一样式*/
 
@@ -187,7 +193,7 @@ h6 {
 .triple-line {
 	overflow: hidden;
 	text-overflow: ellipsis;
-	white-space: nowrap;
+	/*white-space: nowrap;*/
 	display: -webkit-box;
 	/*设置弹性盒模型*/
 	-webkit-line-clamp: 3;
