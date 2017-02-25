@@ -61,8 +61,8 @@
 					type = 0;
 					askModel = event.detail.data;
 					document.getElementById('title').innerText = '我要回答';
-					mui.querySelectorAll('.file-extras').forEach(function(item) {
-						item.style.display = 'inline-block'
+					[].forEach.call(document.querySelectorAll('.file-extras'),function(item) {
+						item.style.display = 'inline-block';
 					})
 					var askTitle = document.getElementById("askTitle");
 					askTitle.innerHTML = askModel.AskTitle;
@@ -71,7 +71,7 @@
 				window.addEventListener('add-comment', function(e) {
 					type = 1;
 					document.getElementById('title').innerText = '我要评论';
-					mui.querySelectorAll('.file-extras').forEach(function(item) {
+					[].forEach.call(document.querySelectorAll('.file-extras'),function(item) {
 						item.style.display = 'none';
 					})
 					answerInfo = e.detail.data;

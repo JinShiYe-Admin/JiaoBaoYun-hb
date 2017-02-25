@@ -6,17 +6,17 @@ var storageKeyName = (function(mod) {
 	mod.AUTOLOGIN = 'autoLogin'; //登录信息
 
 	//---开发---start---
-	mod.MAINURL = 'http://192.168.0.44:8511/api/CloudApi/'; //主url
-	mod.MAINJIAOXIAOURL = 'http://192.168.0.100:8081/JiaoBaoCloudService/'; //家校圈url
-	mod.MAINHOMEWORKURL = 'http://192.168.0.211:802/'; //作业主url
-	mod.MAINQIUZHI = 'http://192.168.0.100:8081/JiaoBaoCloudService/'; //求知主url
+//	mod.MAINURL = 'http://192.168.0.44:8511/api/CloudApi/'; //主url
+//	mod.MAINJIAOXIAOURL = 'http://192.168.0.100:8081/JiaoBaoCloudService/'; //家校圈url
+//	mod.MAINHOMEWORKURL = 'http://192.168.0.211:802/'; //作业主url
+//	mod.MAINQIUZHI = 'http://192.168.0.100:8081/JiaoBaoCloudService/'; //求知主url
 	//---开发---end---
 
 	//---测试---start---
-//	mod.MAINURL = 'http://192.168.0.178:8511/api/CloudApi/';//主url
-//	mod.MAINJIAOXIAOURL = 'http://192.168.0.178:8080/JiaoBaoCloudService/';//家校圈url
-//	mod.MAINHOMEWORKURL = 'http://192.168.0.178:8088/' //作业主url
-//	mod.MAINQIUZHI = 'http://192.168.0.100:8081/JiaoBaoCloudService/'; //求知主url
+	mod.MAINURL = 'http://192.168.0.178:8511/api/CloudApi/';//主url
+	mod.MAINJIAOXIAOURL = 'http://192.168.0.178:8080/JiaoBaoCloudService/';//家校圈url
+	mod.MAINHOMEWORKURL = 'http://192.168.0.178:8088/' //作业主url
+	mod.MAINQIUZHI = 'http://192.168.0.100:8081/JiaoBaoCloudService/'; //求知主url
 	//---测试---end---
 
 	//---外网---start---
@@ -38,11 +38,11 @@ var storageKeyName = (function(mod) {
 	//	mod.QNDEFAULTIMAGEDOMAIN = 'http://oixh9lre3.bkt.clouddn.com/'; //存放在七牛的默认图片的域名，公开的
 
 	//--七牛空间和接口--开发--start
-	mod.QNGETUPLOADTOKEN = 'http://114.215.222.186:8004/Api/QiNiu/GetUpLoadToKen';
+//	mod.QNGETUPLOADTOKEN = 'http://114.215.222.186:8004/Api/QiNiu/GetUpLoadToKen';
 	//--七牛空间和接口--开发 --end
 
 	//--七牛空间和接口--测试--start
-//	mod.QNGETUPLOADTOKEN='http://114.215.222.186:8005/Api/QiNiu/GetUpLoadToKen';
+	mod.QNGETUPLOADTOKEN='http://114.215.222.186:8005/Api/QiNiu/GetUpLoadToKen';
 	//--七牛空间和接口--测试--end
 
 	//七牛存储子空间

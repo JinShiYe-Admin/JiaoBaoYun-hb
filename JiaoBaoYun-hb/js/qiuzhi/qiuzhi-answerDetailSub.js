@@ -71,6 +71,7 @@ mui.plusReady(function() {
 function requestAnswerDetail(answerId) {
 	//所需参数
 	var comData = {
+		userId:selfId,
 		answerId: answerId, //回答ID
 		orderType: type, //评论排序方式,1 时间正序排序,2 时间倒序排序
 		pageIndex: pageIndex, //当前页数
@@ -378,6 +379,7 @@ var setIsLikeAnswer = function(item) {
 		userId: selfId, //点赞用户ID
 		status: item.isLike ? 0 : 1 //点赞状态,0 取消点赞,1 点赞
 	}, wd, function(data) {
+		wd.close();
 		console.log('答案点赞取消点赞结果：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			setZanIconCondition(item);
