@@ -28,7 +28,7 @@
 }
 
 .mui-slider-indicator.mui-segmented-control {
-	background-color: transparent;
+	background-color: #F5F5F5;
 }
 .mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
 	 border-top: none;

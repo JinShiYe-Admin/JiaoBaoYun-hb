@@ -64,6 +64,7 @@ div>.icon-xiangji:before,
 	width: 25%;
 	float: left;
 	text-align: center;
+	background-color: transparent;
 }
 .img-div img{
 	padding-top: 0.5rem;
@@ -73,4 +74,7 @@ div>.icon-xiangji:before,
 	position: absolute;
 	top: 0;
 	right: 0;
+}
+.imgs-extras{
+	background-color: transparent;
 }

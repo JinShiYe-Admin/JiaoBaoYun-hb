@@ -201,7 +201,7 @@ var setChannelList = function(data) {
 var getInnerHTML = function(cell) {
 	var inner ='<div>' +
 		'<div class="channel-info">' +
-		'<p><img src="' + getChannelIcon(cell) + '" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
+		'<p class="channel-title"><img src="' + getChannelIcon(cell) + '" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
 		'</div>' +
 		'<div class="ask-container">' +
 		'<h5 class="single-line ask-title" askId="' + cell.TabId + '">[' + cell.AskChannel + ']' + cell.AskTitle + '</h5>' +
@@ -209,7 +209,7 @@ var getInnerHTML = function(cell) {
 		'<div class="imgs-container">' + getImgs(cell.AnswerEncAddr) + '</div>' +
 		'</div>' +
 		'<div class="extra-info"></div>' +
-		'<p>' + cell.IsLikeNum + '赞·' + cell.CommentNum + '评论·关注</p>' +
+		'<p class="question-bottom">' + cell.IsLikeNum + '赞·' + cell.CommentNum + '评论·关注</p>' +
 		'</div>';
 	return inner;
 }
