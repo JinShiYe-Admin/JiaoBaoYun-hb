@@ -61,7 +61,7 @@
 					type = 0;
 					askModel = event.detail.data;
 					document.getElementById('title').innerText = '我要回答';
-					document.querySelectorAll('.file-extras').forEach(function(item) {
+					mui.querySelectorAll('.file-extras').forEach(function(item) {
 						item.style.display = 'inline-block'
 					})
 					var askTitle = document.getElementById("askTitle");
@@ -71,7 +71,7 @@
 				window.addEventListener('add-comment', function(e) {
 					type = 1;
 					document.getElementById('title').innerText = '我要评论';
-					document.querySelectorAll('.file-extras').forEach(function(item) {
+					mui.querySelectorAll('.file-extras').forEach(function(item) {
 						item.style.display = 'none';
 					})
 					answerInfo = e.detail.data;

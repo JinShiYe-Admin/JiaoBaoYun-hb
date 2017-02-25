@@ -59,6 +59,7 @@ mui.plusReady(function() {
 function getExpertsArray(channelId) {
 	//需要加密的数据
 	var comData = {
+		askId: '0',//问题ID，传入0，则不包括问题参数
 		userIds: '[0]', //用户编号列表,Array,传入0，获取所有专家
 		channelId: channelId.toString(), //话题ID,传入0，获取所有话题数据
 		pageIndex: '1', //当前页数
@@ -162,8 +163,10 @@ function resetExpertsList() {
  */
 //4.获取所有符合条件问题
 function requestChannelList(channelInfo) {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 	//所需参数
 	var comData = {
+		userId: personalUTID,//用户ID
 		askTitle: '', //问题标题,用于查找，可输入部分标题
 		channelId: channelInfo.TabId, //话题ID,传入0，获取所有话题数据
 		pageIndex: pageIndex, //当前页数

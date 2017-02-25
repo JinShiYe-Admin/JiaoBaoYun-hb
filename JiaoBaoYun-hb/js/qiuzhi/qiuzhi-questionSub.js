@@ -136,6 +136,13 @@ mui.plusReady(function() {
 			setAskFocus(askID, 0);
 		}
 	});
+	
+	//点击右上角邀请专家按钮
+	events.addTap('addExpert', function() {
+		console.log('12121212');
+		
+		events.openNewWindowWithData('experts_main.html', askModel);
+	});
 
 	//点击回答
 	mui('#answer_bottom').on('tap', '.ellipsis-3', function() {
@@ -242,8 +249,10 @@ function pullupRefresh() {
  */
 //5.获取某个问题的详情
 function requestAskDetail() {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 	//所需参数
 	var comData = {
+		userId: personalUTID,//用户ID
 		askId: askID, //问题ID
 		orderType: askOrderType, //回答排序方式,1 按时间排序,2 按质量排序：点赞数+评论数
 		pageIndex: answerIndex, //当前页数
