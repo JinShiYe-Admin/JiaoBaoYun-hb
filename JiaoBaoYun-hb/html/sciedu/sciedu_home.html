@@ -118,7 +118,7 @@
 					pullToRefresh = [] //存储下拉上拉的控件
 					sliderId = ''; //记录显示的城市
 					document.getElementById("content").innerHTML = '';//清理界面
-					var evalJS = "document.getElementById('title').innerText = '';var sciEduSlider=document.getElementById('sciEduSlider');if(sciEduSlider){sciEduSlider.parentNode.removeChild(sciEduSlider);}";
+					var evalJS = "var sciEduSlider=document.getElementById('sciEduSlider');if(sciEduSlider){sciEduSlider.parentNode.removeChild(sciEduSlider);}";
 					index.evalJS(evalJS);
 				});
 			});
