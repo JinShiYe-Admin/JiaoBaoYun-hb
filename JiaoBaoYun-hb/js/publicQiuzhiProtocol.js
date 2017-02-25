@@ -33,6 +33,7 @@ var postDataQZPro_getAllChannels = function(commonData, wd, callback) {
 //2.获取符合条件的专家信息
 //所需参数
 //		var comData = {
+//			askId: '',//问题ID，传入0，则不包括问题参数
 //			userIds: '',//用户编号列表,Array,传入0，获取所有专家
 //			channelId:'',//话题ID,传入0，获取所有话题数据
 //			pageIndex: '',//当前页数
@@ -62,6 +63,7 @@ var postDataQZPro_getUserInfo = function(commonData, wd, callback) {
 //4.获取所有符合条件问题
 //所需参数
 //		var comData = {
+//			userId: '',//用户ID
 //			askTitle: '',//问题标题,用于查找，可输入部分标题
 //			channelId:'',//话题ID,传入0，获取所有话题数据
 //			pageIndex: '',//当前页数
@@ -78,6 +80,7 @@ var postDataQZPro_getAsksByCondition = function(commonData, wd, callback) {
 //5.获取某个问题的详情
 //所需参数
 //		var comData = {
+//			userId: '',//用户ID
 //			askId: '',//问题ID
 //			orderType:'',//回答排序方式,1 按时间排序,2 按质量排序：点赞数+评论数
 //			pageIndex: '',//当前页数
@@ -129,6 +132,7 @@ var postDataQZPro_setAskById = function(commonData, wd, callback) {
 //8.获取某个回答的详情
 //所需参数
 //		var comData = {
+//			userId: '',//用户ID
 //			answerId: '',//回答ID
 //			orderType:'',//评论排序方式,1 时间正序排序,2 时间倒序排序
 //			pageIndex: '',//当前页数
@@ -247,6 +251,8 @@ var postDataQZPro_getFocusUsersByAsk = function(commonData, wd, callback) {
 //16.获取某条评论
 //所需参数
 //		var comData = {
+//			userId:'',//	用户ID
+//			answerId:'',//回答ID
 //			commentId:''//评论ID
 //		};
 //返回值：model_QZComment

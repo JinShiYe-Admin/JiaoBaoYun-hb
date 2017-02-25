@@ -75,19 +75,17 @@
 		ExpertsInfo = plus.webview.currentWebview().data;
 		//25.获取某个用户的提问列表
 		getAsksByUser(ExpertsInfo.UserId);
-		ExpertsInfo = event.detail.data;
-					console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
+		console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
 		mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 			var index = this.id.replace('li', '');
 			events.fireToPageNone('qiuzhi-question.html', datasource[index].AskId);
 			events.fireToPageNone('qiuzhi-questionSub.html', 'askId', datasource[index].AskId);
 			plus.webview.getWebviewById('qiuzhi-question.html').show();
-		})
+		});
 		mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 			down: {
 				callback: function() {
 					//清除节点
-
 					document.getElementById('list-container').innerHTML = "";
 					var self = this;
 					console.log("下拉刷新");
@@ -99,7 +97,6 @@
 			},
 			up: {
 				callback: function() {
-
 					var self = this;
 					console.log("上拉加载更多");
 					flagRef = 1;

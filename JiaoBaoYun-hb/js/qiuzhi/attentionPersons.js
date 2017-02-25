@@ -200,7 +200,7 @@ var setListener = function() {
 		var info = JSON.parse(parent.getAttribute('data-info'));
 		console.log('dianji 关注他的人：' + JSON.stringify(info));
 		events.openNewWindowWithData('expert-detail.html', JSON.stringify(info));
-		events.fireToPageWithData('expert-detail.html','expert-detail' ,info)
+		events.fireToPageWithData('expert-detail.html','expert-detail' ,info);
 	});
 }
 /**
