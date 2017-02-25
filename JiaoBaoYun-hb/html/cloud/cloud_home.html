@@ -294,6 +294,8 @@
 				//修改云存储信息
 				window.addEventListener('cloudDataChange', function() {
 					//设置页面信息
+					var scroll = mui('#cloudstorage_1_sw').scroll();
+					scroll.scrollTo(0, 0, 100); //100毫秒滚动到顶
 					changeCloudData();
 				});
 
@@ -525,6 +527,7 @@
 				function changeData() {
 					document.getElementById("cloudstorage_0").innerHTML = '';
 					document.getElementById("cloudstorage_1").innerHTML = '';
+					//重置滑动组件
 					resetScroll();
 					//26.用户云盘顶层文件及文件夹获取
 					postFirstFile();

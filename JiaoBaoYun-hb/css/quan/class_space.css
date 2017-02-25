@@ -225,6 +225,6 @@ div>.icon-xiangce:before,
 .mui-popover {
 	max-width: 50%;
 }
-.gride-inner>small{
-	font-size: 0.9rem;
+.mui-grid-view.mui-grid-9 .mui-table-view-cell{
+	padding: 0;
 }

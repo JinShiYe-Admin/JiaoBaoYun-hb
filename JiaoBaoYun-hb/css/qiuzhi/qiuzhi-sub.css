@@ -21,7 +21,7 @@
 	font-size: 3rem;
 	color: white;
 	padding: 1rem;
-	background-color: #1DB8F1;
+	background-color: #12B7F5;
 	border-radius: 50%;
 }
 
@@ -48,6 +48,7 @@ p {
 }
 
 .answer-content {
+	word-wrap: break-word;
 	color: #808080;
 	font-size: 1.5rem;
 }
@@ -106,4 +107,19 @@ p {
 .mui-segmented-control.mui-segmented-control-inverted .mui-control-item p {
 	color: #000000;
 	margin: 0px;
+}
+/*专家风采*/
+.export-show{
+	color: #B7B7B7;
+}
+/*问题标题*/
+.ask-title{
+	color:#222222; 
+}
+/*频道信息*/
+.question-bottom,.channel-title{
+	color: #B7B7B7;
+}
+.mui-table-view-divider{
+	background-color: #F8F9FB;
 }
