@@ -5,11 +5,9 @@
  */
 
 mui.init();
-//var waitingDia;
 
 mui.plusReady(function() {
-	var showCity; //当前展示城市信息
-	var SECity; //当前科教频道城市信息
+	var waitingDia = events.showWaiting();
 	//安卓的连续点击两次退出程序
 	var backButtonPress = 0;
 	mui.back = function(event) {
@@ -31,8 +29,6 @@ mui.plusReady(function() {
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 		document.querySelector('img').src = img ? img : storageKeyName.storageKeyName.DEFAULTPERSONALHEADIMAGE;
-		showCity = 0;
-		SECity = 0;
 	});
 	window.addEventListener('closeWaiting', function() {
 		waitingDia.close();
@@ -75,6 +71,8 @@ mui.plusReady(function() {
 	var activeTab = subpages[0];
 	var title = document.getElementById("title");
 
+	waitingDia.close();
+
 	//选项卡点击事件
 	mui('.mui-bar-tab').on('tap', 'a', function(e) {
 		var targetTab = this.getAttribute('href');
@@ -82,13 +80,23 @@ mui.plusReady(function() {
 		if(targetTab == activeTab) {
 			return;
 		}
+		var idSlider = []; //去掉展现和科教城市下面的点
 		if(this.querySelector('.mui-tab-label').innerHTML == '展现') {
-
+			idSlider = ['sciEduSlider'];
 		} else if(this.querySelector('.mui-tab-label').innerHTML == '科教') {
-
+			idSlider = ['showSlider'];
 		} else {
 			//更换标题
 			title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
+			//去掉展现和科教城市下面的点
+			idSlider = ['sciEduSlider', 'showSlider'];
+		}
+		//去掉展现和科教城市下面的点
+		for(var i = 0; i < idSlider.length; i++) {
+			var element = document.getElementById(idSlider[i]);
+			if(element) {
+				element.parentNode.removeChild(element);
+			}
 		}
 		if(title.innerHTML == '云盘') {
 			title.innerHTML = '';
