@@ -95,3 +95,9 @@
 .question-content{
 	word-wrap: break-word;
 }
+.isLike{
+	color:darkgray;
+}
+.isNotLike{
+	color: #000000;
+}

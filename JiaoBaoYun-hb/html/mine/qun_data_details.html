@@ -335,7 +335,7 @@
 							}
 
 							mui.each(parData, function(index, item) {
-								//console.log('家长信息:' + JSON.stringify(item));
+								console.log('家长信息:' + JSON.stringify(item));
 								var urel = document.getElementById("par_urel_" + item.utid).value;
 								if(urel != item.urel) { //判断是否修改了家长关系
 									console.log('更改家长关系:' + item.utid + '|' + urel);
@@ -351,16 +351,16 @@
 				mui('.mui-content').on('input', 'input', function() {
 					if(mstype == 2) { //老师
 						console.log(this.id);
-						if(this.id == 'tea_expsch') {//教龄的判断
+						if(this.id == 'tea_expsch') { //教龄的判断
 							console.log('this ' + this.value + '|' + this.value.length);
-							if(this.value.length > 2) {//限制两位数
+							if(this.value.length > 2) { //限制两位数
 								this.value = this.value.slice(0, 2)
 							}
 							var value = this.value;
 							var temp = '';
 							console.log('value ' + value);
 							for(var i = 0; i < value.length; i++) {
-								if(value[i].replace(/^[1-9]\d*|0$/, '') == '') {//只允许输入数字
+								if(value[i].replace(/^[1-9]\d*|0$/, '') == '') { //只允许输入数字
 									console.log('this.value ' + i + '|' + value[i]);
 									temp = temp + value[i];
 								}
@@ -375,7 +375,7 @@
 							document.getElementById("finish").style.color = 'white';
 							change = true;
 						}
-						if(tea_name.value.replace(/(^\s*)|(\s*$)/g, "") == ""){
+						if(tea_name.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
 							//名字为空不允许保存
 							document.getElementById("finish").style.color = 'gray';
 							change = false;
@@ -398,7 +398,7 @@
 							document.getElementById("finish").style.color = 'white';
 							change = true;
 						}
-						if(stu_name.value.replace(/(^\s*)|(\s*$)/g, "") == ""){
+						if(stu_name.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
 							//名字为空不允许保存
 							document.getElementById("finish").style.color = 'gray';
 							change = false;
@@ -456,6 +456,8 @@
 					var comData = {
 						vvl: data.stuid //查询的用户资料ID
 					};
+					var gid = data.gid;
+					console.log('gid '+gid);
 					postDataPro_PostUuinf(comData, wd, function(data) {
 						console.log('22通过用户资料ID获取用户各项资料postDataPro_PostUuinf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
@@ -488,11 +490,13 @@
 								}
 							} else if(type == 3) { //学生
 								var utidArray = [];
+								console.log('学生详细信息:data.RspData.length' + data.RspData.length);
 								mui.each(data.RspData, function(index, item) {
-									if(item.utid != null && item.utid != '') {
-										//console.log('获取学生详细信息:' + JSON.stringify(item));
+									//console.log('data.RspData:' + JSON.stringify(item));
+									if(item.utid != null && item.utid != '' && gid == item.gid) {
 										stuData.push(item); //记录获取的学生资料
 										if(item.umstype == 3) {
+											console.log('学生详细信息:' + JSON.stringify(item));
 											//关联的学生账号
 											//stu_utid.value = item.utid;
 											stu_ugname.value = item.ugname;
@@ -500,7 +504,8 @@
 												utid: item.utid,
 												dataType: '3'
 											});
-										} else {
+										} else if(item.umstype == 0) {
+											console.log('家长详细信息:' + JSON.stringify(item));
 											parData.push(item);
 											addParents(item);
 											utidArray.push({
@@ -775,7 +780,7 @@
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							mui.toast('更新与家长关系 ' + urel + ' 成功');
-							console.log('更新与家长关系 ' + urel + ' 成功');
+							//console.log('更新与家长关系 ' + urel + ' 成功');
 							postNum--;
 							if(postNum == 0) {
 								mui.back();

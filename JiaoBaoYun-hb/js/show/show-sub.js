@@ -10,17 +10,17 @@ var zonepArray;
 var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
 mui('.mui-scroll-wrapper').scroll();
 mui.plusReady(function() {
-	initNativeObjects();
+//	initNativeObjects();
 	addReplyView();
-	addReplyLisetner();
+//	addReplyLisetner();
 	addSomeEvent();
 	pullUpFresh()
 	// 获取当前窗口对象
 	var self = plus.webview.currentWebview();
-	h5fresh.addRefresh(function() {
-		pageIndex = 1;
-		requestData();
-	})
+//	h5fresh.addRefresh(function() {
+//		pageIndex = 1;
+//		requestData();
+//	})
 	window.addEventListener('cityInfo', function(e) {
 		showCity = e.detail;
 		console.log("展示子页面获取的城市信息：" + JSON.stringify(showCity));
@@ -175,7 +175,7 @@ function addSomeEvent() {
 	mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
 		click.push('评论者：' + this.innerText);
 	});
-	slide_selector.addSwipeListener();
+//	slide_selector.addSwipeListener();
 }
 /**
  * 请求数据
@@ -187,7 +187,7 @@ var requestData = function() {
 	 */
 	postDataPro_getUserSpacesByArea({
 		userId: personalUTID, //用户ID
-		area: showCity.acode, //区域
+		area: cityCode, //区域    
 		pageIndex: pageIndex, //当前页数
 		pageSize: 10 //每页记录数
 	}, wd, function(data) {

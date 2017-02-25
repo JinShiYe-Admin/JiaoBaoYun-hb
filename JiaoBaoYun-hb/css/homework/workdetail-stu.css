@@ -28,7 +28,7 @@ html,body,.mui-content{
 }
 .homework-detail{
 	padding: 1rem;
-	margin-bottom: 8.8rem;
+	/*margin-bottom: 8.8rem;*/
 }
 .startWork-container{
 	border-top: solid 1px #dedfe0;
@@ -58,5 +58,8 @@ html,body,.mui-content{
 }
 .brief-title,.brief-content{
 	color: #404040;
+}
+.work-detail{
+	margin-bottom: 8.8rem;
 }
 
