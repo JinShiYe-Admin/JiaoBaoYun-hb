@@ -9,72 +9,73 @@ var class_space = (function(mod) {
 	 * @param {Object} callback
 	 */
 	mod.getList = function(postData, pageIndex, pageSize, callback) {
-			postData.pageIndex = pageIndex;
-			postData.pageSize = pageSize;
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
-			postDataPro_getClassSpacesByUserForClass(postData, wd, function(pagedata) {
-				wd.close();
-				if(pagedata.RspCode == '0000') {
-					console.log('获取的班级动态：' + JSON.stringify(pagedata));
-					mod.totalPagNo = pagedata.RspData.TotalPage;
-					list = pagedata.RspData.Data;
-					callback();
-				} else {
-					mui.toast(pagedata.RspTxt);
-				}
+		postData.pageIndex = pageIndex;
+		postData.pageSize = pageSize;
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
+		postDataPro_getClassSpacesByUserForClass(postData, wd, function(pagedata) {
+			wd.close();
+			if(pagedata.RspCode == '0000') {
+				console.log('获取的班级动态：' + JSON.stringify(pagedata));
+				mod.totalPagNo = pagedata.RspData.TotalPage;
+				list = pagedata.RspData.Data;
+				callback();
+			} else {
+				mui.toast(pagedata.RspTxt);
+			}
 
-			})
-		}
-		/**
-		 * 更换url 然后创建listView
-		 * @param {Object} list
-		 */
+		})
+	}
+	/**
+	 * 更换url 然后创建listView
+	 * @param {Object} list
+	 */
 	var i = 0;
 	mod.replaceUrl = function() {
-			getUrlBrief();
-			i = 0;
-			createListView();
-		}
-		/**
-		 * 获取Url信息
-		 */
+		getUrlBrief();
+		i = 0;
+		createListView();
+	}
+	/**
+	 * 获取Url信息
+	 */
 	var getUrlBrief = function() {
-			if(i < list.length) {
-				urlBrief.getUrlFromMessage(list[i].MsgContent, function(message) {
-					list[i].MsgContent = message;
-					i++;
-					getUrlBrief();
-				})
-			}
+		if(i < list.length) {
+			urlBrief.getUrlFromMessage(list[i].MsgContent, function(message) {
+				list[i].MsgContent = message;
+				i++;
+				getUrlBrief();
+			})
+		}
 
-		}
-		/**
-		 * 
-		 * @param {Object} list
-		 */
+	}
+	/**
+	 * 
+	 * @param {Object} list
+	 */
 	var createListView = function() {
-			if(list.length > 0) {
-				console.log('总页码：' + mod.totalPagNo);
-				imgsize = 0;
-				var utids = [];
-				for(var i in list) {
-					utids.push(list[i].PublisherId);
-				}
-				console.log('')
-				getPersonalImg(utids.toString());
-				//				
-			} else {
-				console.log('暂无数据');
+		if(list.length > 0) {
+			console.log('总页码：' + mod.totalPagNo);
+			imgsize = 0;
+			var utids = [];
+			for(var i in list) {
+				utids.push(list[i].PublisherId);
 			}
+			console.log('')
+			getPersonalImg(utids.toString());
+			//				
+		} else {
+			console.log('暂无数据');
 		}
-		/**
-		 * 
-		 * @param {Object} item
-		 */
+	}
+	/**
+	 * 
+	 * @param {Object} item
+	 */
 	var createInnerHtml = function(item) {
+		console.log("加载的数据："+JSON.stringify(item));
 		var inner = '<div><div class="mui-pull-left head-img" >' +
-			'<img class="head-portrait" src="' + getUImg(item.uimg) + '"/>' +
-			'<p class="single-line">' + events.shortForString(item.bunick?item.bunick:item.ugname, 6) + '</p>' +
+			'<img class="head-portrait" headId="' + item.utid + '" src="' + getUImg(item.uimg) + '"/>' +
+			'<p class="single-line">' + events.shortForString(item.bunick ? item.bunick : item.ugname, 6) + '</p>' +
 			'</div>' +
 			'<div class="chat_content_left">' +
 			'<div class="chat-body"><p class="chat-words">' +
@@ -82,8 +83,8 @@ var class_space = (function(mod) {
 			createImgsInner(item) +
 			'</div>' +
 			'<p class="chat-bottom">' + events.shortForDate(item.PublishDate) +
-			'<a href="#popover" tabId="' + item.TabId + '" class="mui-icon iconfont icon-support ' + setIsLike(item.IsLike) + '">(' + item.LikeCnt + 
-			')</a><span tabId="' + item.TabId +'" class="mui-icon iconfont icon-xianshi">(' + item.ReadCnt + ')</span></p>' +
+			'<a href="#popover" tabId="' + item.TabId + '" class="mui-icon iconfont icon-support ' + setIsLike(item.IsLike) + '">(' + item.LikeCnt +
+			')</a><span tabId="' + item.TabId + '" class="mui-icon iconfont icon-xianshi">(' + item.ReadCnt + ')</span></p>' +
 			'</div></div>';
 		return inner;
 	}
@@ -96,33 +97,33 @@ var class_space = (function(mod) {
 	 * @param {Object} pDate
 	 */
 	var changeDate = function(pDate) {
-			var noDate = pDate.split('-');
-			console.log(noDate);
-			if(parseInt(noDate[0]) == new Date().getFullYear()) {
-				noDate.splice(0, 1);
-			}
-			noDate = noDate.join('-')
-			noDate = noDate.split(':');
-			noDate.splice(2, 1);
-			return noDate.join(':')
+		var noDate = pDate.split('-');
+		console.log(noDate);
+		if(parseInt(noDate[0]) == new Date().getFullYear()) {
+			noDate.splice(0, 1);
 		}
-		/**
-		 * 
-		 * @param {Object} cell
-		 * @param {Object} li
-		 * @param {Object} container
-		 */
+		noDate = noDate.join('-')
+		noDate = noDate.split(':');
+		noDate.splice(2, 1);
+		return noDate.join(':')
+	}
+	/**
+	 * 
+	 * @param {Object} cell
+	 * @param {Object} li
+	 * @param {Object} container
+	 */
 	var imgsize = 0;
 	var getPersonalImg = function(ids) {
 		var comData = {
-			top: -1,//选择条数
-			vvl: postData.classId.toString(),//群ID或IDS,查询的值,多个用逗号隔开
-			vvl1:-1//群员类型，0家长,1管理员,2老师,3学生,-1取全部
+			top: -1, //选择条数
+			vvl: postData.classId.toString(), //群ID或IDS,查询的值,多个用逗号隔开
+			vvl1: -1 //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 		};
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
 		postDataPro_PostGusers(comData, wd, function(pInfo) {
 			console.log('获取的个人信息:' + JSON.stringify(pInfo))
-//			wd.close();
+			//			wd.close();
 			if(pInfo.RspCode == '0000') {
 				var personalData = pInfo.RspData;
 				for(var i in list) {
@@ -133,25 +134,25 @@ var class_space = (function(mod) {
 						}
 					}
 				}
-				postDataPro_PostUmk({vvl:ids.toString()},wd,function(remarkData){
-					console.log('获取的备注信息：'+JSON.stringify(remarkData));
+				postDataPro_PostUmk({ vvl: ids.toString() }, wd, function(remarkData) {
+					console.log('获取的备注信息：' + JSON.stringify(remarkData));
 					wd.close();
-					if(remarkData.RspCode==0){
-						var buData=remarkData.RspData;
-						for(var i in list){
-							for(var j in buData){
-								if(list[i].utid==buData[j].butid){
-									jQuery.extend(list[i],buData[j]);
+					if(remarkData.RspCode == 0) {
+						var buData = remarkData.RspData;
+						for(var i in list) {
+							for(var j in buData) {
+								if(list[i].utid == buData[j].butid) {
+									jQuery.extend(list[i], buData[j]);
 									break;
 								}
 							}
 						}
-					}else{
+					} else {
 						console.log('没啥备注信息。')
 					}
 					setData();
 				})
-				
+
 			} else {
 				wd.close();
 				console.log(pInfo.RspTxt);
@@ -169,29 +170,29 @@ var class_space = (function(mod) {
 		}
 	}
 	var getUImg = function(uimg) {
-			if(!uimg || uimg == null) {
-				uimg = storageKeyName.DEFAULTPERSONALHEADIMAGE;
-			}
-			return uimg;
+		if(!uimg || uimg == null) {
+			uimg = storageKeyName.DEFAULTPERSONALHEADIMAGE;
 		}
-		/**
-		 * 
-		 * @param {Object} cell
-		 */
+		return uimg;
+	}
+	/**
+	 * 
+	 * @param {Object} cell
+	 */
 	var createImgsInner = function(cell) {
 		var imgInner = '';
 		var percent = 0.00;
 		if(cell.EncImgAddr) {
-			var imgs=cell.EncImgAddr.split('|');
-			console.log('要显示的图片地址：'+JSON.stringify(imgs));
-		 	for(var i in imgs){
-		 		if(imgs.length <= 3 && imgs.length > 0) {
+			var imgs = cell.EncImgAddr.split('|');
+			console.log('要显示的图片地址：' + JSON.stringify(imgs));
+			for(var i in imgs) {
+				if(imgs.length <= 3 && imgs.length > 0) {
 					percent = 100 / (imgs.length);
 					imgInner += '<img src="' + imgs[i] + '" style="width:' + percent + '%;padding:2px"/>'
 				} else {
 					imgInner += '<img src="' + imgs[i] + '" style="width:33.33333333%; padding:2px"/>'
 				}
-		 	}
+			}
 		}
 		console.log(imgInner);
 		return imgInner;
@@ -204,22 +205,22 @@ var postData
 mui.plusReady(function() {
 	postData = plus.webview.currentWebview().data;
 	postData.userId = parseInt(postData.userId);
-	events.preload('classSpace-persons.html',200);
+	events.preload('classSpace-persons.html', 200);
 	setReaded(postData.userId, postData.classId);
 	console.log('班级空间获取值：' + JSON.stringify(postData));
 	class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 	setListener(postData.userId);
 	//更改个人信息，更新界面
 	window.addEventListener('infoChanged', function() {
-			pageIndex = 1;
-			setReaded(postData.userId, postData.classId);
-			var container = document.getElementById('classSpace_list');
-			events.clearChild(container);
-			class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-		})
-		/***
-		 * 加载刷新
-		 */
+		pageIndex = 1;
+		setReaded(postData.userId, postData.classId);
+		var container = document.getElementById('classSpace_list');
+		events.clearChild(container);
+		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+	})
+	/***
+	 * 加载刷新
+	 */
 	events.initRefresh('classSpace_list',
 		function() {
 			setReaded(postData.userId, postData.classId);
@@ -234,6 +235,23 @@ mui.plusReady(function() {
 				class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 			}
 		});
+	mui('.mui-table-view').on('tap', '.head-portrait', function() {
+		var id = this.getAttribute('headId');
+		console.log(id);
+		mui.openWindow({
+			url: 'zone_main.html',
+			id: 'zone_main.html',
+			styles: {
+				top: '0px', //设置距离顶部的距离
+				bottom: '0px'
+			},
+			extras: {
+				data: id,
+				NoReadCnt: 0
+			}
+
+		});
+	})
 });
 var setReaded = function(userId, classId) {
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -263,56 +281,56 @@ var setListener = function(userId) {
 		if(jQuery(this).hasClass('isNotLike')) {
 			zan.isLike = false;
 			zan.innerText = '点赞';
-			zan.className="mui-icon iconfont icon-dianzan";
+			zan.className = "mui-icon iconfont icon-dianzan";
 		} else { //已点赞
 			zan.isLike = true;
 			zan.innerText = '取消点赞';
-			zan.className="mui-icon iconfont icon-quxiaozan";
+			zan.className = "mui-icon iconfont icon-quxiaozan";
 		}
-	
+
 	})
 
 	//点赞
 	document.getElementById('zan').addEventListener('tap', function() {
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			if(this.isLike) {
-				postDataPro_delClassSpaceLikeByUser({
-					userId: userId,
-					classSpaceId: parseInt(zanSpan.getAttribute('tabId'))
-				}, wd, function(data) {
-					wd.close();
-					console.log('取消点赞获取的数据:'+JSON.stringify(data))
-					if(data.RspData.Result == 1) {
-						mui.toast('您已取消点赞');
-						zanSpan.className = "mui-icon iconfont icon-support isNotLike";
-						console.log('更改是否已点赞状态' + zanSpan.className)
-						zanSpan.innerText = '(' + (parseInt(zanSpan.innerText.replace('(', '').replace(')', '')) - 1) + ')'
-					} else {
-						mui.toast('取消点赞失败！')
-					}
-					mui('.mui-popover').popover('toggle');
-				})
-			} else {
-				postDataPro_setClassSpaceLikeByUser({
-					userId: userId,
-					classSpaceId: parseInt(zanSpan.getAttribute('tabId'))
-				}, wd, function(data) {
-					wd.close();
-					console.log("点赞后返回数据：" + JSON.stringify(data));
-					if(data.RspData.Result == 1) {
-						mui.toast('点赞成功！')
-						zanSpan.className = "mui-icon iconfont icon-support isLike";
-						console.log('更改是否已点赞状态' + zanSpan.className)
-						zanSpan.innerText = '(' + (parseInt(zanSpan.innerText.replace('(', '').replace(')', '')) + 1) + ')'
-					} else {
-						mui.toast('点赞失败！')
-					}
-						mui('.mui-popover').popover('toggle');
-				})
-			}
+		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		if(this.isLike) {
+			postDataPro_delClassSpaceLikeByUser({
+				userId: userId,
+				classSpaceId: parseInt(zanSpan.getAttribute('tabId'))
+			}, wd, function(data) {
+				wd.close();
+				console.log('取消点赞获取的数据:' + JSON.stringify(data))
+				if(data.RspData.Result == 1) {
+					mui.toast('您已取消点赞');
+					zanSpan.className = "mui-icon iconfont icon-support isNotLike";
+					console.log('更改是否已点赞状态' + zanSpan.className)
+					zanSpan.innerText = '(' + (parseInt(zanSpan.innerText.replace('(', '').replace(')', '')) - 1) + ')'
+				} else {
+					mui.toast('取消点赞失败！')
+				}
+				mui('.mui-popover').popover('toggle');
+			})
+		} else {
+			postDataPro_setClassSpaceLikeByUser({
+				userId: userId,
+				classSpaceId: parseInt(zanSpan.getAttribute('tabId'))
+			}, wd, function(data) {
+				wd.close();
+				console.log("点赞后返回数据：" + JSON.stringify(data));
+				if(data.RspData.Result == 1) {
+					mui.toast('点赞成功！')
+					zanSpan.className = "mui-icon iconfont icon-support isLike";
+					console.log('更改是否已点赞状态' + zanSpan.className)
+					zanSpan.innerText = '(' + (parseInt(zanSpan.innerText.replace('(', '').replace(')', '')) + 1) + ')'
+				} else {
+					mui.toast('点赞失败！')
+				}
+				mui('.mui-popover').popover('toggle');
+			})
+		}
 
-		})
-		//查看
+	})
+	//查看
 	document.getElementById('check').addEventListener('tap', function() {
 		events.fireToPageWithData('classSpace-persons.html', 'personsList', {
 			type: 1,
@@ -320,10 +338,10 @@ var setListener = function(userId) {
 		})
 		mui('.mui-popover').popover('toggle');
 	})
-	mui('.mui-table-view').on('tap','.icon-xianshi',function(){
+	mui('.mui-table-view').on('tap', '.icon-xianshi', function() {
 		events.fireToPageWithData('classSpace-persons.html', 'personsList', {
 			type: 0,
-			classSpaceId: parseInt(this.getAttribute('tabId'))//id
+			classSpaceId: parseInt(this.getAttribute('tabId')) //id
 		})
 	})
 }

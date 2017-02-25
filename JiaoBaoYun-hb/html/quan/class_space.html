@@ -26,8 +26,9 @@
 		<script src="../../js/publicProtocol.js"></script>
 		<script>
 			/*预加载界面*/
-//			mui.init();
+			//			mui.init();
 			mui.plusReady(function() {
+				events.changeTopPocket();
 				events.preload('class-dynamic.html');
 				events.preload('class-group.html');
 				var write = document.getElementById('write');
@@ -60,16 +61,16 @@
 				events.initSubPage('classSpace-sub.html', data);
 			})
 			var getHeadText = function(className) {
-					if(className.length > 8) {
-						className = className.substring(0, 10) + '...'
-					}
-					return className;
+				if(className.length > 8) {
+					className = className.substring(0, 10) + '...'
 				}
-				/**
-				 * 获取用户在群组中的信息
-				 * @param {Object} mstype
-				 * @param {Object} callback
-				 */
+				return className;
+			}
+			/**
+			 * 获取用户在群组中的信息
+			 * @param {Object} mstype
+			 * @param {Object} callback
+			 */
 			var getUserInGroup = function(mstype, groupId, callback) {
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_PostGuI({

@@ -86,7 +86,7 @@ var manageAccountInfo = function(data) {
 		//{"utid":5,"uid":"18853113151","uname":"test867830028690115",
 		//"unick":"BugHunter","usex":0,"utxt":null,
 		//"uimg":"http://oh2zmummr.bkt.clouddn.com/headimge5.png"}
-		document.getElementById('info-headImg').src = pInfo.uimg?pInfo.uimg:storageKeyName.DEFAULTPERSONALHEADIMAGE;
+		document.getElementById('info-headImg').src = updateHeadImg(pInfo.uimg,2);
 		document.getElementById('info-name').innerText = pInfo.uname;
 		document.getElementById('info-nick').innerText ="昵称:"+pInfo.unick;
 		document.getElementById('person-remark').innerText=isSelf?pInfo.ugname:pInfo.bunick;
