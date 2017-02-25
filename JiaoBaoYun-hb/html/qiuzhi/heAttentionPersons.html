@@ -322,7 +322,7 @@
 			var setPersonRecord = function(list) {
 				var listContainer = document.getElementById('list-container');
 				for(var i in list) {
-					createList(listContainer, list[i])
+					createList(listContainer, list[i], i);
 
 				}
 			}
@@ -331,12 +331,13 @@
 			 * @param {Object} listContainer
 			 * @param {Object} record
 			 */
-			var createList = function(listContainer, record) {
+			var createList = function(listContainer, record, index) {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
+				li.setAttribute('data-info', JSON.stringify(record));
 				//拼接显示
-				li.innerHTML = '<a><div class="li-container"><div class="head-img display-inlineBlock"><img class="head-portrait" src="' + updateHeadImg(record.uimg, 2) + '"/></div>' +
-					'<div class="info-container display-inlineBlock"><h5 class="person-name single-line">' + record.unick + '</h5>' +
+				li.innerHTML = '<a><div class="li-container"><div class="head-img display-inlineBlock"><img class="head-portrait person-info" src="' + updateHeadImg(record.uimg, 2) + '"/></div>' +
+					'<div class="info-container display-inlineBlock"><h5 class="person-name single-line person-info">' + record.unick + '</h5>' +
 					'<p class="person-info single-line">' + record.UserNote + '</p></div>' +
 					'<button type="button" class="mui-btn mui-btn-outlined ' + getButtonContent(record.FocusType).classInfo + ' " >' + getButtonContent(record.FocusType).inner + '</button></div></a>'
 				listContainer.appendChild(li);
@@ -379,7 +380,7 @@
 			 * @param {Object} type 关注状态,0 不关注,1 关注
 			 */
 			var setFocus = function(item, type) {
-				console.log("item.personInfo:"+JSON.stringify(item.personInfo));
+				console.log("item.personInfo:" + JSON.stringify(item.personInfo));
 				var wd = events.showWaiting();
 				postDataQZPro_setUserFocus({
 					userId: personalUTID, //登录用户ID
@@ -419,7 +420,17 @@
 					if(focusType == 1) {
 						setFocus(this, focusType);
 					}
-				})
+				});
+
+				//点击头像、昵称、简介进入专家主页
+				mui('.mui-table-view').on('tap', '.person-info', function() {
+					//获取到当前控件的父节点
+					var parent = this.parentNode.parentNode.parentNode.parentNode;
+					//得到父节点的值
+					var info = JSON.parse(parent.getAttribute('data-info'));
+					events.openNewWindowWithData('expert-detail.html', info);
+					events.fireToPageWithData('expert-detail.html', 'expert-detail', info);
+				});
 			}
 		</script>
 	</body>

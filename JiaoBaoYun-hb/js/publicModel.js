@@ -287,7 +287,8 @@ var publicModel = (function($, mod) {
 		UserNote	:'',//专家简介
 		ExpertLevel:'',//专家等级
 		ExpertChannels:'',//	专家话题列表,Array,例如[1,2,3]
-		AnswerNum:''//回答数
+		AnswerNum:'',//回答数
+		IsInvited:''//是否邀请
 	}
 	
 	//用户信息--求知
@@ -326,6 +327,7 @@ var publicModel = (function($, mod) {
 		AnswerEncAddr:'',//回答附件,多个的情况例如：1.jpg|2.jpg
 		AnswerMan:'',//回答人
 		AnswerTime:'',//回答时间
+		IsFocused:'',//是否已关注
 		CommentNum:''//回答评论数
 	}
 	
@@ -346,6 +348,7 @@ var publicModel = (function($, mod) {
 		TotalPage:'',//评论总页数
 		TotalCnt:'',//评论总记录数,用于分页，结果应该与AnswerNum相同
 		Data:'',//	回答列表,Array[model_QZAnswer]
+		IsFocused:'',//	是否已关注
 		
 		AskChannel:'',//	问题话题
 		AskId:''//问题ID
@@ -361,6 +364,7 @@ var publicModel = (function($, mod) {
 		IsAnonym	:'',//是否匿名
 		IsLikeNum:'',//	回答点赞数
 		CommentNum:'',//	回答评论数
+		IsLiked:''//	是否已点赞
 	}
 	
 	//某个回答的详情--求知
@@ -379,17 +383,19 @@ var publicModel = (function($, mod) {
 		CommentNum:'',//	回答评论数
 		TotalPage:'',//	评论总页数
 		TotalCnt	:'',//评论总记录数,用于分页，结果应该与CommentNum相同
+		IsLiked:'',//	是否已点赞
 		Data	:''//评论列表,Array[model_QZComment]
 	}
 	
 	//回答详情--求知
 	mod.model_QZComment = {
-		TabId:'',//	评论ID
+		TabId:'',//评论ID
 		UserId:'',//	评论用户ID
-		ReplyId:'',//	回复用户ID
+		ReplyId:'',//回复用户ID
 		CommentContent:'',//	评论或回复内容
-		CommentDate:'',//	评论或回复时间
-		UpperId:'',//	上级ID
+		CommentDate:'',//评论或回复时间
+		UpperId:'',//上级ID
+		IsLiked:'',//是否已点赞
 		Replys:'',//	下级回复列表,Array
 		
 		AnswerId:''//回答ID
