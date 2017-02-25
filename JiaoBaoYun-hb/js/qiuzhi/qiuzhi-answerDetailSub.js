@@ -242,6 +242,14 @@ function refreshUI(datasource) {
 		li.className = 'mui-table-view-cell';
 		li.innerHTML = createCommentsInner(datasource.Data[i]);
 		ul.appendChild(li);
+		var comments_zan=li.querySelector('icon-zanzan1');
+		comments_zan.isLike=datasource.Data[i].IsLiked;
+		comments_zan.commentId=datasource.Data[i].TabId;
+		if(datasource.Data[i].IsLiked){
+			comments_zan.className="mui-icon iconfont icon-zanzan1 mui-pull-right isLike"
+		}else{
+			comments_zan.className="mui-icon iconfont icon-zanzan1 mui-pull-right isNotLike"
+		}
 	}
 }
 /**
@@ -260,6 +268,15 @@ var setQuestion = function(datasource) {
 		document.getElementById('answer-imgs').innerHTML = getPicInner(datasource.AnswerEncAddr);
 	}
 	document.getElementById('comments-no').innerText = "评论(" + datasource.CommentNum + ")";
+	var zan_icon=document.getElementById('answer-zan');
+	zan_icon.isLike=datasource.IsLiked;
+	if(datasource.IsLiked){
+		zan_icon.className="mui-icon iconfont icon-zanzan1 isLike";
+	}else{
+		zan_icon.className="mui-icon iconfont icon-zanzan1 isNotLike";
+	}
+	
+	
 }
 /**
  * 设置回答人信息
@@ -395,10 +412,10 @@ var setIsLikeComment = function(item) {
  */
 var setZanIconCondition = function(item) {
 	if(item.isLike) {
-		item.className = "mui-icon iconfont icon-zanzan1 isNotLike";
+		item.className = "mui-pull-right mui-icon iconfont icon-zanzan1 isNotLike ";
 		item.isLike = 0;
 	} else {
-		item.className = "mui-icon iconfont icon-zanzan1 isLike";
+		item.className = "mui-pull-right mui-icon iconfont icon-zanzan1 isLike";
 		item.isLike = 1;
 	}
 }
