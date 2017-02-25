@@ -65,7 +65,7 @@ var createInner = function(cell) {
 			'<img class="title-img" headId="' + cellData.headID + '" src="' + ifHaveImg(cellData) + '"/>' +
 			zanNoReply(cellData.MsgType) +
 			'<div class="title-words">' +
-			'<h4 class="title-title">' + cellData.title + '</h4>' +
+			'<h5 class="title-title">' + cellData.title + '</h5>' +
 			'<p class="title-words">' + events.shortForDate(cellData.time) + '</p>' +
 			'</div>' +
 			'</div>' +
