@@ -13,32 +13,204 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/utils/pullToRefresh.css" />
-		<link rel="stylesheet" href="../../css/sciedu/sciedu.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/icons-extra.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<!--<link rel="stylesheet" href="../../css/sciedu/sciedu.css" />-->
+
 		<style>
 			body,
 			.mui-content {
 				background: white;
 			}
-
+			
 			#sliderSegmentedControl,
 			.mui-segmented-control.mui-scroll-wrapper .mui-scroll {
 				height: 0px;
 			}
-
+			
 			.mui-fullscreen .mui-segmented-control~.mui-slider-group {
 				top: 0px;
 				background-color: white;
 			}
-
+			
 			.mui-slider .mui-slider-group .mui-slider-item .mui-table-view-cell:after {
 				height: 1px;
 			}
-
+			
 			.mui-scroll-wrapper,
 			.mui-pull-bottom-wrapper {
 				/*底部加载更多区域*/
 				background-color: white;
 			}
+			
+			<style>.mui-table-view-cell,
+			.mui-table-view-cell:active {
+				background-color: #FFFFFF;
+			}
+			
+			.mui-table-view {
+				background: transparent;
+				/*背景色透明*/
+			}
+			
+			.mui-table-view-cell {
+				background: white;
+				/*cell 背景设为白色*/
+				padding: 0;
+				/*内边距为0*/
+				margin-bottom: 10px;
+			}
+			
+			.mui-table-view:before,
+			.mui-table-view:after,
+			.mui-table-view-cell:after {
+				height: 0px;
+				/*去掉横线*/
+			}
+			
+			.mui-row-padding-8px {
+				padding: 8px;
+				/*内边距为8px*/
+				padding: 12px;
+			}
+			
+			.dynamic-personal-image {
+				/*个人头像圆形*/
+				border-radius: 50%;
+				width: 50px;
+				height: 50px;
+			}
+			
+			.dynamic-image-div {
+				/*内容中图片之间的内边距*/
+				padding: 1px;
+			}
+			
+			.dynamic-image {
+				/*内容的图片占全部空间*/
+				width: 100%;
+				height: 100%;
+			}
+			
+			.dynamic-icon,
+			.dynamic-icon-praise,
+			.dynamic-icon-comment,
+			.dynamic-icon-forward {
+				/*点赞，评论，分享的图标*/
+				height: 30px;
+				width: 30px;
+				margin-left: 25px;
+			}
+			
+			.dynamic-icon-Level {
+				/*等级图标*/
+				height: 20px;
+				margin-left: 10px;
+			}
+			
+			.dynamic-icon-praise-small {
+				/*点赞列表的小图标*/
+				height: 15px;
+				width: 15px;
+				margin-right: 5px;
+				margin-bottom: 0px;
+			}
+			
+			.dynamic-margin-top-10px {
+				margin-top: 10px;
+			}
+			
+			.dynamic-padding-left-10px {
+				padding-left: 10px;
+			}
+			
+			.dynamic-line {
+				/*点赞列表上面的横线*/
+				height: 1px;
+				width: 100%;
+				background: #e4e4e4;
+			}
+			
+			.dynamic-contenttext {
+				/*动态内容*/
+				font-family: '微软雅黑 Regular', '微软雅黑';
+				/*字体样式*/
+			}
+			
+			.dynamic-praise-name,
+			.dynamic-comment-name {
+				/*点赞者和评论者的名字*/
+				color: #1277C7;
+				font-size: 14px;
+			}
+			
+			.replyComment {
+				padding-top: 5px;
+			}
+			
+			.dynamic-comment-btn {
+				/*底部的评论按钮*/
+				width: 100%;
+				margin-top: 10px;
+				border-width: 1px;
+				border-color: #e4e4e4;
+			}
+			
+			.dynamic-image-more {
+				/*更多图片*/
+				position: absolute;
+				width: 99%;
+				height: 99%;
+				font-size: 40px;
+				color: white;
+				text-align: center;
+				background-color: rgba(0, 0, 0, 0.3);
+			}
+			
+			.mui-popover {
+				position: fixed;
+				height: 45px;
+				width: 60px;
+			}
+			
+			footer {
+				height: 60px;
+				width: 100%;
+				z-index: 20;
+				background-color: white;
+				border-color: lightgray;
+				border-width: 5px;
+				position: fixed;
+				bottom: 0;
+				display: none;
+			}
+			
+			.footer-center {
+				display: inline-block;
+				width: 75%;
+				padding: 5px;
+				height: 100%;
+			}
+			
+			.footer-center .input-text {
+				background: #fff;
+				border: solid 1px #ddd;
+				padding: 10px !important;
+				font-size: 16px !important;
+				line-height: 18px !important;
+				font-family: verdana !important;
+				overflow: hidden;
+				height: 40px;
+			}
+			
+			.btn-commit {
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				display: inline-block;
+				width: 20%;
+			}
+		</style>
 		</style>
 	</head>
 
@@ -54,6 +226,7 @@
 			</div>-->
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
 		<script type="text/javascript" src="../../js/mui.lazyload.js"></script>
@@ -61,6 +234,8 @@
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script src="../../js/show/show-sub.js"></script>
+		<script type="text/javascript" src="../../js/utils/native.js"></script>
 		<script type="text/javascript">
 			mui.init();
 
@@ -69,6 +244,7 @@
 			var pullToRefresh = [] //存储下拉上拉的控件
 			var sliderId = ''; //记录显示的城市
 			var index; //获取index的webview
+			var personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 			mui.plusReady(function() {
 				events.closeWaiting();
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
@@ -82,19 +258,12 @@
 					changeIndexHeader();
 				});
 
-				//Webview窗口隐藏事件
-				main.addEventListener("hide", function(e) {
-					console.log("hide " + main.id);
-					var evalJS = "var showSlider=document.getElementById('showSlider');if(showSlider){showSlider.parentNode.removeChild(showSlider);}";
-					index.evalJS(evalJS);
-				});
-
 				//---订制城市---start---
 				//进入订制城市界面
 				window.addEventListener('tapTitleLeft', function() {
 					events.openNewWindowWithData('../utils/customizeCity.html', {
 						id: '1', //0科教，1展现
-						webid: '../sciedu/sciedu_home.html', //当前webview的id
+						webid: '../show/show_home_1.html', //当前webview的id
 						cities: cities //已经定制的城市数组
 					});
 				});
@@ -117,7 +286,7 @@
 					show = true; //是否显示科教的内容
 					pullToRefresh = [] //存储下拉上拉的控件
 					sliderId = ''; //记录显示的城市
-					document.getElementById("content").innerHTML = '';//清理界面
+					document.getElementById("content").innerHTML = ''; //清理界面
 					var evalJS = "var showSlider=document.getElementById('showSlider');if(showSlider){showSlider.parentNode.removeChild(showSlider);}";
 					index.evalJS(evalJS);
 				});
@@ -159,20 +328,22 @@
 						console.log('slide ' + JSON.stringify(info));
 						console.log('slide ' + JSON.stringify(page));
 						if(!page) {
-							requestCityNews(info.acode, 1);
+							console.log(111111111111)
+							//							requestCityNews(info.acode, 1);
+							requestData(info.acode, 1);
 						}
 					});
 
-					//点击每一项的监听
-					mui('#sliderGroup').on('tap', '.mui-table-view-cell', function() {
-						var id = this.getAttribute('id');
-						var turl = this.getAttribute('data-turl');
-						console.log(id + '|' + turl);
-						document.getElementById("title_" + id).style.color = 'darkgray';
-						events.openNewWindowWithData('sciedu_show_main.html', {
-							turl: turl
-						});
-					});
+//					//点击每一项的监听
+//					mui('#sliderGroup').on('tap', '.mui-table-view-cell', function() {
+//						var id = this.getAttribute('id');
+//						var turl = this.getAttribute('data-turl');
+//						console.log(id + '|' + turl);
+//						document.getElementById("title_" + id).style.color = 'darkgray';
+//						events.openNewWindowWithData('sciedu_show_main.html', {
+//							turl: turl
+//						});
+//					});
 
 					//获取定制的城市
 					requestCustomizationCity(function(data) {
@@ -184,7 +355,7 @@
 							mui('#slider').slider();
 							//循环初始化所有下拉刷新，上拉加载。
 							pullRefresh(function() {
-								requestCityNews(cities[0].acode, 1);
+								requestData(cities[0].acode, 1);
 							});
 						});
 					});
@@ -262,7 +433,7 @@
 								console.log('down ' + JSON.stringify(page));
 								setTimeout(function() {
 									//获取数据
-									requestCityNews(info.acode, 1);
+									requestData(info.acode, 1);
 									//结束下拉刷新
 									self.endPullDownToRefresh();
 								}, 1000);
@@ -280,7 +451,7 @@
 								console.log('up ' + JSON.stringify(page));
 								if(page) {
 									setTimeout(function() {
-										requestCityNews(info.acode, page.pageIndex + 1);
+										requestData(info.acode, page.pageIndex + 1);
 										self.endPullUpToRefresh();
 									}, 1000);
 								} else {
@@ -310,26 +481,10 @@
 					autoDestroy: false, //元素加载完后是否自动销毁当前插件对象
 				}); //懒加载控件
 				for(var i = 0; i < data.length; i++) {
-					var tips = data[i].tips;
-					var tipsList = tips.split('|');
-					var date = tipsList[0].split(' ')[0]; //日期
-					var time = tipsList[0].split(' ')[1]; //日期
-					var from = tipsList[1]; //.substring(3, tipsList[1].length); //来源
 
-					var dataStr = '';
-					var timeStr = time.substring(0, 5);
-					var mydate = new Date();
-					var today = mydate.getFullYear() + '-' + (mydate.getMonth() + 1) + '-' + mydate.getDate();
-
-					if(today == date) { //今天，显示时间
-						dataStr = timeStr;
-					} else { //显示日期
-						dataStr = date;
-					}
-					data[i].tips = from + ' | ' + dataStr;
-//					SciEduHomeItem.addItem(document.getElementById("bot_ul_" + cityCode), data[i], function() {
-//						lazyLoad.refresh(true);
-//					});
+					//					SciEduHomeItem.addItem(document.getElementById("bot_ul_" + cityCode), data[i], function() {
+					//						lazyLoad.refresh(true);
+					//					});
 				}
 			}
 
@@ -456,6 +611,31 @@
 						wd.close();
 					}, 1000);
 				});
+			}
+
+			var requestData = function(cityCode, pageIndex) {
+				var wd = events.showWaiting();
+				/**
+				 * 请求区域内的动态
+				 */
+				postDataPro_getUserSpacesByArea({
+					userId: personalUTID, //用户ID
+					area: cityCode, //区域
+					pageIndex: pageIndex, //当前页数
+					pageSize: 10 //每页记录数
+				}, wd, function(data) {
+					events.closeWaiting();
+					console.log('展示获取的数据：' + JSON.stringify(data));
+					if(data.RspCode == 0 && data.RspData.Data.length > 0) {
+						totalPage = data.RspData.TotalPage
+						console.log('11111111111======' + totalPage)
+						getPersonIds(data.RspData.Data);
+					} else {
+						var table = document.body.querySelector('.mui-table-view');
+						table.innerHTML = ''
+						events.fireToPageNone('index.html', 'closeWaiting');
+					}
+				})
 			}
 
 			/**
