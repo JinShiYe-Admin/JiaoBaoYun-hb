@@ -235,8 +235,8 @@
 
 				//长按成员
 				mui('#slider_group').on('longtap', '.member-item', function() {
-					//console.log('member-item ' + this.getAttribute('data-info'));
-					//console.log('member-item ' + this.getAttribute('data-beizhu'));
+					console.log('member-item ' + this.getAttribute('data-info'));
+					console.log('member-item ' + this.getAttribute('data-beizhu'));
 					var info = JSON.parse(this.getAttribute('data-info'));
 					var beizhu = JSON.parse(this.getAttribute('data-beizhu'));
 					mui.extend(true, info, beizhu);
@@ -259,7 +259,7 @@
 									wd.close();
 									console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 									if(data.RspCode == 0) {
-										delMember(info.gid, info.utid);
+										delMember(info.gid, info.utid, info.mstype);
 										mui.toast('删除成功');
 									} else {
 										mui.toast(data.RspTxt);
@@ -735,16 +735,14 @@
 			/**
 			 * 删除成员
 			 * @param {Object} gid 群id
-			 * @param {Object} utid
+			 * @param {Object} utid 用户utid
+			 *  @param {Object} mstype 用户类型
 			 */
-			function delMember(gid, utid) {
-				var idList = [0, 2, 3]; //0家长,1管理员,2老师,3学生
-				for(var i = 0; i < idList.length; i++) {
-					if(document.getElementById(gid + '_' + idList[i] + '_' + utid)) {
-						var element = document.getElementById(gid + '_' + idList[i] + '_' + utid);
-						var parNode = element.parentNode;
-						parNode.removeChild(element);
-					}
+			function delMember(gid, utid, mstype) {
+				if(document.getElementById(gid + '_' + mstype + '_' + utid)) {
+					var element = document.getElementById(gid + '_' + mstype + '_' + utid);
+					var parNode = element.parentNode;
+					parNode.removeChild(element);
 				}
 			}
 
@@ -842,7 +840,7 @@
 					//获取学生关联的人员
 					var stuids = stuid.join(',');
 					if(stuids != '') {
-						getGuanLian(stuids);
+						getGuanLian(stuids,gid);
 					}
 					wd.close();
 				});
@@ -851,8 +849,9 @@
 			/**
 			 * 通过资料ID获取关联的人员
 			 * @param {Object} stuids
+			 * @param {Object} id
 			 */
-			function getGuanLian(stuids) {
+			function getGuanLian(stuids, id) {
 				var wd = events.showWaiting();
 				var parList = []; //家长列表
 				//30.通过资料ID获取关联的人员
@@ -861,13 +860,15 @@
 					vvl: stuids, //群成员群ID，Stuid或ID串
 					vtp: 'ids' //资料ID类型,Id:单个ID,ids:ID串
 				};
+				var gId = id;
 				postDataPro_PostStuU(comData2, wd, function(data) {
 					console.log('30.通过资料ID获取关联的人员.postDataPro_PostStuU:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						var tempList = data.RspData;
 						for(var i = 0; i < tempList.length; i++) {
-							console.log('tempList' + JSON.stringify(tempList[i]));
-							if(tempList[i].umstype == 0) { //用户在群类型为家长
+							console.log('tempList ' + gId + '|' + JSON.stringify(tempList[i]));
+							if(gId == tempList[i].gid && tempList[i].umstype == 0) { //用户在群类型为家长
+								console.log('tempList2' + JSON.stringify(tempList[i]));
 								var same = false
 								for(var j = 0; j < parList.length; j++) {
 									if(tempList[i].stuid == parList[j].stuid) { //显示一个家长
