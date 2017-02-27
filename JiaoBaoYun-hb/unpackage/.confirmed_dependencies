@@ -336,7 +336,8 @@
       "image/qiuzhi/question.png",
       "css/mui.min.css",
       "image/qiuzhi/comment.png",
-      "css/utils/common.css"
+      "css/utils/common.css",
+      "js/libs/crypto-js/crypto-js.js"
     ],
     "refer": [
       "html/qiuzhi/qiuzhi-expertAllAnswer.html",
