@@ -25,6 +25,9 @@
 	<script src="../../js/utils/events.js"></script>
 	<script type="text/javascript">
 		events.initSubPage('aboutme_sub.html');
+		mui.plusReady(function(){
+			events.changeTopPocket();
+		})
 		//启用双击监听
 //		mui.init({
 //			gestureConfig: {

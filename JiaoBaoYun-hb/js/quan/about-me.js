@@ -60,26 +60,25 @@ var setData = function(data) {
 var createInner = function(cell) {
 	var cellData = getCellData(cell);
 	if(cellData.MsgType != 6) {
-		var inner = '<a>' +
+		var inner = 
 			'<div class="cell-title">' +
 			'<img class="title-img" headId="' + cellData.headID + '" src="' + ifHaveImg(cellData) + '"/>' +
 			zanNoReply(cellData.MsgType) +
 			'<div class="title-words">' +
-			'<h4 class="title-title">' + cellData.title + '</h4>' +
+			'<h5 class="title-title">' + cellData.title + '</h5>' +
 			'<p class="title-words">' + events.shortForDate(cellData.time) + '</p>' +
 			'</div>' +
 			'</div>' +
 			//最新内容
-			'<p class="comment-content single-line">' + ifHave(cellData.content) + '</p>' +
+			'<p class="comment-content break-words">' + ifHave(cellData.content) + '</p>' +
 			ifHaveReferContent(cellData) +
-			'<div class="extras">' + ifHave(cellData.messages) + '</div>'
-		'</a>';
+			'<div class="extras">' + ifHave(cellData.messages) + '</div>';
 	} else {
-		var inner = '<div class="cell-title">' +
+		var inner = '<a><div class="cell-title">' +
 			'<img class="title-img" headId="' + cellData.headID + '" src="' + ifHaveImg(cellData) + '"/>' +
 			//		'<span class="reply">回复</span>' +
 			'<div class="title-words">' +
-			'<h4 class="title-title">' + cellData.title + '</h4>' +
+			'<h5 class="title-title">' + cellData.title + '</h5>' +
 			'<p class="title-words">' + events.shortForDate(cellData.time) + '</p>' +
 			'</div>' +
 			'</div>' +
@@ -98,7 +97,7 @@ var zanNoReply=function(msgType){
 }
 var ifHaveReferContent = function(cellData) {
 	if(cellData.referContent) {
-		return '<div class="refer-content single-line">' + '<span>' + cellData.UserOwnerNick + ':</span>' + cellData.referContent + '</div>'
+		return '<div class="refer-content break-words">' + '<span>' + cellData.UserOwnerNick + ':</span>' + cellData.referContent + '</div>'
 	} else {
 		return '';
 	}
@@ -147,9 +146,9 @@ var addReplyLisetner = function() {
 					document.getElementById('footer').style.display = 'none';
 					jQuery('#msg-content').blur();
 					var p = document.createElement('p');
-					p.className = "single-line";
+					p.className = "break-words";
 					p.innerHTML = '<span>' + pName + '</span>回复<span>' + events.shortForString(repliedCell.MaxUserName, 4) + ':</span>' + replyValue;
-					//				<p class="single-line" ><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>'
+					//				<p class="break-words" ><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>'
 					repliedItem.appendChild(p);
 				})
 			} else {
@@ -277,10 +276,10 @@ var getCellData = function(cell) {
 	}
 	cellData.time = cell.MsgDate;
 	if(cellData.MsgType != 6) {
-		var messages = new Array();
+		var messages = '';
 		if(cellData.MsgType != 4) {
 			if(cell.Content) {
-				messages.push('<p class="single-line"><span>' + events.shortForString(cell.UserName, 4) + ':</span>' + cell.Content + '</p>')
+				messages+=('<p class="break-words"><span>' + events.shortForString(cell.UserName, 4) + ':</span>' + cell.Content + '</p>')
 			}
 		}
 
@@ -288,15 +287,15 @@ var getCellData = function(cell) {
 			cell.MsgArray.forEach(function(msg, i, msgArray) {
 				if(msg.MsgContent) {
 					if(msg.MsgToName) {
-						messages.push('<p class="single-line" ><span>' +events.shortForString(msg.MsgFromName, 4)  + '</span>回复<span>' +events.shortForString(msg.MsgToName, 4)  + ':</span>' + msg.MsgContent + '</p>');
+						messages+=('<p class="break-words" ><span>' +events.shortForString(msg.MsgFromName, 4)  + '</span>回复<span>' +events.shortForString(msg.MsgToName, 4)  + ':</span>' + msg.MsgContent + '</p>');
 					} else {
-						messages.push('<p class="single-line" ><span>' + events.shortForString(msg.MsgFromName, 4) + ':</span>' + msg.MsgContent + '</p>');
+						messages+=('<p class="break-words" ><span>' + events.shortForString(msg.MsgFromName, 4) + ':</span>' + msg.MsgContent + '</p>');
 					}
 				}
 
 			});
 		}
-		cellData.messages = messages.join('');
+		cellData.messages = messages;
 	}
 
 	return cellData;

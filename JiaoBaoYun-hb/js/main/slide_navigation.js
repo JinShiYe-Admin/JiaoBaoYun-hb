@@ -95,15 +95,15 @@ var slideNavigation = (function($) {
 				menu.setStyle({
 					left: '-70%',
 					transition: {
-						duration: 200
+						duration: 150
 					}
 				})
 
 				//等动画结束后，隐藏菜单webview，节省资源；
-				setTimeout(function() {
+//				setTimeout(function() {
 					isInTransition = false;
 					menu.hide();
-				}, 200);
+//				}, 150);
 				showMenu = false;
 			}
 		}
