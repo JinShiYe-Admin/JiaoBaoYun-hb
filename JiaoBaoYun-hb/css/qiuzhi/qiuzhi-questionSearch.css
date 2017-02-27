@@ -1,10 +1,13 @@
 .search-form .mui-input-row {
 	line-height: 2rem;
+	text-align: left;
 }
 
 .search-form .search-btn {
+	width: 11%;
 	line-height: 3rem;
-	padding: 6px 0;
+	padding: 0px 0;
+	margin: 8px 0 7px 0;
 	display: inline;
 }
 
@@ -26,12 +29,18 @@ input[type=submit]:enabled:active {
 	font-size: 1.5rem;
 	font-weight: bold;
 }
+.mui-bar .mui-title
+{
+	width: 100%;
+}
 .search-form input:nth-child(1) {
-	width: 87%;
+	width: 75%;
 	background-color: #ffffff;
 	text-align: left;
 	border-radius: 50px;
 	padding: 0 15px;
+	margin-top: 8px;
+    margin-bottom: 7px;
 	color: #000000;
 }
 
@@ -179,4 +188,11 @@ input[type=submit]:enabled:active {
 
 .mui-slider-indicator.mui-segmented-control {
 	background-color: #efeff4;
+}
+.search-form .mui-icon-clear
+{
+	position: relative!important;
+	top: 1px;
+    right: 50px;
+    z-index: 99;
 }
