@@ -9,7 +9,7 @@ var events = (function(mod) {
 	 * @param {Object} event 绑定的监听事件
 	 */
 	mod.addTap = function(id, event) {
-		console.log("获取当前页面的id："+plus.webview.currentWebview().id);
+		//console.log("获取当前页面的id："+plus.webview.currentWebview().id);
 		var item = document.getElementById(id);
 		item.addEventListener('tap', event);
 	}

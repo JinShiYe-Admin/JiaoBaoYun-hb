@@ -48,7 +48,7 @@
 				border: solid thin #000000 2px;
 				box-shadow: -5px 0 5px -3px #d2d2d2;
 				z-index: 999;
-				background-color: #F8F9FB;
+				background-color: #F5F5F5;
 			}
 
 			.more-navigation p {
@@ -112,11 +112,25 @@
 				color: red;
 			}
 
-			.mui-btn-blue {
+			.expert-ask,
+			.expert-invite,
+			.expert-invited {
+				margin-top: 15px;
+				color: white;
+			}
+
+			.expert-ask,
+			.expert-invite {
 				/*提问按钮*/
+				/*邀请按钮*/
 				background-color: #1DB8F1;
 				border: 1px solid #1DB8F1;
-				margin-top: 15px;
+			}
+
+			.expert-invited {
+				/*已被邀请按钮*/
+				background-color: #d4d4d4;
+				border: 1px solid #d4d4d4;
 			}
 
 			.expert-usernote {
@@ -166,10 +180,11 @@
 		var mainData; //接收页面传入参数值
 		var pullToRefresh = []; //存储下拉上拉的控件
 		var sliderId = ''; //记录选择的话题
-
+		var askId = '0'; //记录问题的id
 		mui.plusReady(function() {
 			var main = plus.webview.currentWebview(); //获取当前窗体对象
 			mainData = main.data; //接收页面传入参数值
+			askId = mainData.askID;
 			console.log('experts_main.html:' + JSON.stringify(mainData));
 
 			document.getElementById("content").innerHTML = '\
@@ -224,7 +239,7 @@
 			});
 
 			//点击提问
-			mui('#sliderGroup').on('tap', '.mui-btn-blue', function() {
+			mui('#sliderGroup').on('tap', '.expert-ask', function() {
 				var element = this.parentNode.parentNode;
 				//专家的信息
 				var expert = JSON.parse(element.getAttribute('data-info'));
@@ -245,6 +260,59 @@
 				}
 				console.log('transportData ' + JSON.stringify(transportData));
 				events.openNewWindowWithData('qiuzhi-newQ.html', transportData);
+			});
+
+			//点击邀请
+			mui('#sliderGroup').on('tap', '.expert-invite', function() {
+				var element = this.parentNode.parentNode;
+				//专家的信息
+				var expert = JSON.parse(element.getAttribute('data-info'));
+				//当前话题
+				var id = 'bot_' + sliderId.replace('top_', '');
+				var element2 = document.getElementById(id);
+				var channelInfo = JSON.parse(element2.getAttribute('data-info'));
+				//所有话题
+				var allChannels = mainData.allChannels;
+				console.log('expert ' + JSON.stringify(expert));
+				console.log('channelInfo ' + JSON.stringify(channelInfo));
+				console.log('allChannels ' + JSON.stringify(allChannels));
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+
+				//34.邀请某人回答
+				//所需参数
+				var comData = {
+					inviteMan: personalUTID, //邀请人ID
+					askId: askId, //问题ID
+					expertId: expert.UserId //专家ID
+				};
+				// 等待的对话框
+				var wd = events.showWaiting();
+				//34.邀请某人回答
+				postDataQZPro_addInvite(comData, wd, function(data) {
+					console.log('34.邀请某人回答:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						if(data.RspData.Result == 1) {
+							//调整界面中该专家的所有邀请按钮
+							var tempExpert = expert.ExpertChannels;
+							tempExpert.unshift(0);
+							console.log(JSON.stringify(tempExpert));
+							for(var i = 0; i < tempExpert.length; i++) {
+								var btn = document.getElementById("expert_btn_" + tempExpert[i] + '_' + expert.TabId);
+								if(btn) {
+									btn.className = 'mui-btn expert-invited';
+								}
+							}
+							mui.toast('邀请成功');
+						} else {
+							mui.toast('邀请失败成功');
+						}
+					} else {
+						mui.toast(data.RspTxt);
+					}
+					setTimeout(function() {
+						wd.close();
+					}, 500);
+				});
 			});
 
 			//双击标题返回列表顶部
@@ -269,8 +337,8 @@
 				var elementTop = document.createElement('a');
 				//底部列表
 				var elementBot = document.createElement('div');
-				console.log('channelInfo ' + JSON.stringify(channelInfo));
-				console.log('allChannels[' + i + '] ' + JSON.stringify(allChannels[i]));
+				//console.log('channelInfo ' + JSON.stringify(channelInfo));
+				//console.log('allChannels[' + i + '] ' + JSON.stringify(allChannels[i]));
 				if(channelInfo.TabId == allChannels[i].TabId) {
 					//选择的话题
 					sliderId = 'top_' + allChannels[i].TabId;
@@ -370,12 +438,31 @@
 		function addExperts(channelId, data) {
 			for(var i = 0; i < data.length; i++) {
 				//console.log("addExperts " + JSON.stringify(data[i]));
+
+				//提问或邀请按钮
+				var btnClass = '';
+				var btnStr = '';
+				if(askId == '0') {
+					btnClass = 'expert-ask';
+					btnStr = '提问';
+				} else {
+					btnStr = '邀请';
+					if(data[i].IsInvited == 0) { //没有被邀请
+						btnClass = 'expert-invite';
+					} else {
+						btnClass = 'expert-invited';
+					}
+				}
+				//回答数处理
+				if(data[i].AnswerNum > 999) {
+					data[i].AnswerNum = '999+';
+				}
 				var element = document.createElement('li');
 				element.id = 'experts_' + channelId + '_' + data[i].TabId; //问答用户表ID
 				element.className = 'mui-table-view-cell mui-media';
 				element.setAttribute('data-info', JSON.stringify(data[i]));
 				element.innerHTML = '<div class="mui-media-body mui-pull-right">\
-										<button type="button" class="mui-btn mui-btn-blue">提问</button>\
+										<button id="expert_btn_' + channelId + '_' + data[i].TabId + '" type="button" class="mui-btn ' + btnClass + '">' + btnStr + '</button>\
 									</div>\
 									<img class="mui-media-object mui-pull-left expert-headimg" src="' + updateHeadImg(data[i].uimg, 2) + '">\
 									<div class="mui-media-body">\
@@ -399,7 +486,7 @@
 		function getExpertsArray(channelId, pageIndex) {
 			//需要加密的数据
 			var comData = {
-				askId: '0', //问题ID，传入0，则不包括问题参数
+				askId: parseInt(askId), //问题ID，传入0，则不包括问题参数
 				userIds: '[0]', //用户编号列表,Array,传入0，获取所有专家
 				channelId: channelId.toString(), //话题ID,传入0，获取所有话题数据
 				pageIndex: pageIndex, //当前页数
