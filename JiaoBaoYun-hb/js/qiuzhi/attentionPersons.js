@@ -92,6 +92,7 @@ var requirePersonInfo = function(personIds, persons) {
  * @param {Object} persons 
  */
 var setData = function(persons) {
+	console.log("要放置的个人数据："+JSON.stringify(persons));
 	var list = document.getElementById('list-container');
 	for(var i in persons) {
 		var li = document.createElement('li');
