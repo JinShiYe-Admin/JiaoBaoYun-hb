@@ -9,7 +9,7 @@ var events = (function(mod) {
 	 * @param {Object} event 绑定的监听事件
 	 */
 	mod.addTap = function(id, event) {
-		console.log("获取当前页面的id："+plus.webview.currentWebview().id);
+//		console.log("获取当前页面的id：" + plus.webview.currentWebview().id);
 		var item = document.getElementById(id);
 		item.addEventListener('tap', event);
 	}
@@ -238,11 +238,16 @@ var events = (function(mod) {
 			targetPage = plus.webview.getWebviewById(tarPage);
 			//				console.log(typeof(targetPage));
 		}
-		//触发目标页面的listener事件
-		mui.fire(targetPage, listener, {
-			data: datas
-		});
-		targetPage.show('slide-in-right', 250)
+		mod.showWaiting();
+		setTimeout(function() {
+			//触发目标页面的listener事件
+			mui.fire(targetPage, listener, {
+				data: datas
+			});
+			targetPage.show('slide-in-right', 250);
+			mod.closeWaiting();
+		}, 1000)
+
 	}
 	/**
 	 * 事件传递 不传数据 常用于 父子页面间
@@ -446,7 +451,6 @@ var events = (function(mod) {
 			}
 		})
 	}
-
 	return mod;
 
 })(events || {});

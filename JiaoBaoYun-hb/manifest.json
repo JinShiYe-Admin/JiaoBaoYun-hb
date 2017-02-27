@@ -890,7 +890,8 @@
 					"css/utils/common.css",
 					"js/utils/Statusbar.js",
 					"js/utils/app-update.js",
-					"image/dynamic/u101.png"
+					"image/dynamic/u101.png",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/register/register_phoneNumber.html",
@@ -1035,7 +1036,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"css/quan/custom-textarea.css"
 				],
 				"refer": [
 					"html/homework/classes-select.html"
@@ -1804,7 +1806,9 @@
 					"html/index/mine.html",
 					"html/quan/pub-dynamic.html",
 					"html/show/show_home.html",
-					"html/qiuzhi/qiuzhi_home.html"
+					"html/qiuzhi/qiuzhi_home.html",
+					"html/sciedu/sciedu_home.html",
+					"html/show/show_home_1.html"
 				],
 				"priority": 0
 			},
@@ -2805,7 +2809,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"image/qiuzhi/arraw-down.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -3144,7 +3149,13 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/qiuzhi/qiuzhi-expertAllAnswer.html",
+					"html/qiuzhi/focus-question.html",
+					"html/qiuzhi/AttentionPersons.html",
+					"html/qiuzhi/qiuzhi-expertAllComment.html",
+					"html/qiuzhi/heAttentionPersons.html"
+				],
 				"priority": 0
 			},
 			"html/qiuzhi/experts_main.html": {
@@ -3160,6 +3171,72 @@
 			},
 			"html/qiuzhi/experts_sub.html": {
 				"resources": [
+					"css/mui.min.css",
+					"css/utils/common.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/sciedu/sciedu_home.html": {
+				"resources": [
+					"js/mui.pullToRefresh.js",
+					"css/utils/pullToRefresh.css",
+					"js/mui.pullToRefresh.material.js",
+					"js/sciedu/SciEduHomeItem.js",
+					"js/mui.lazyload.js",
+					"js/mui.lazyload.img.js",
+					"css/sciedu/sciedu.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/show/show_home_1.html": {
+				"resources": [
+					"js/utils/native.js",
+					"js/quan/dynamiclistitem.js",
+					"css/icons-extra.css",
+					"js/mui.pullToRefresh.js",
+					"css/utils/pullToRefresh.css",
+					"js/mui.pullToRefresh.material.js",
+					"js/mui.lazyload.js",
+					"js/mui.lazyload.img.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/qiuzhi-expertAllAnswer.html": {
+				"resources": [
+					"css/qiuzhi/qiuzhi-inviteAnswer.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/focus-question.html": {
+				"resources": [
+					"css/qiuzhi/qiuzhi-sub.css",
+					"js/qiuzhi/qiuzhi-focusQuestion.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/AttentionPersons.html": {
+				"resources": [
+					"css/qiuzhi/attention-persons.css",
+					"js/qiuzhi/attentionPersons.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/qiuzhi-expertAllComment.html": {
+				"resources": [
+					"css/qiuzhi/qiuzhi-expertAllComment.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/heAttentionPersons.html": {
+				"resources": [
+					"js/libs/crypto-js/crypto-js.js",
 					"css/mui.min.css",
 					"css/utils/common.css"
 				],
@@ -3185,5 +3262,5 @@
 				"image/cloud.png"
 			]
 		}
-	},"fullscreen":false
+	},"fullscreen":true
 }

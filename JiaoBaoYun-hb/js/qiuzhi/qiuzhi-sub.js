@@ -278,9 +278,9 @@ var setListener = function() {
 	//标题点击事件
 	mui('.mui-table-view').on('tap', '.ask-title', function() {
 		events.fireToPageNone('qiuzhi-question.html', 'askId', {
-			askID: this.getAttribute('askId'),//问题id
-			channelInfo: channelInfo,//当前话题
-			allChannels: allChannels//全部话题
+			askID: this.getAttribute('askId'), //问题id
+			channelInfo: channelInfo, //当前话题
+			allChannels: allChannels //全部话题
 		});
 		events.fireToPageNone('qiuzhi-questionSub.html', 'askId', this.getAttribute('askId'));
 		plus.webview.getWebviewById('qiuzhi-question.html').show();
@@ -299,6 +299,7 @@ var setListener = function() {
 		//console.log('当前话题的信息 ' + JSON.stringify(channelInfo));
 		if(this.id == 'allExpert') { //查看某个话题的全部专家
 			events.openNewWindowWithData('experts_main.html', {
+				askID: '0',
 				channelInfo: channelInfo, //当前话题
 				allChannels: allChannels //所有话题
 			});
