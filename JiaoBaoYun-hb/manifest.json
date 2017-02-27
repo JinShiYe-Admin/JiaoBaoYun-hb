@@ -3233,6 +3233,15 @@
 				],
 				"refer": [],
 				"priority": 0
+			},
+			"html/qiuzhi/heAttentionPersons.html": {
+				"resources": [
+					"js/libs/crypto-js/crypto-js.js",
+					"css/mui.min.css",
+					"css/utils/common.css"
+				],
+				"refer": [],
+				"priority": 0
 			}
 		},
 		"idle": {
