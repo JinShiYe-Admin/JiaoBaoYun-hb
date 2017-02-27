@@ -37,7 +37,11 @@
 			"css/iconfont/iconfont.css",
 			"css/mui.min.css",
 			"js/libs/crypto-js/crypto-js.js",
+<<<<<<< HEAD
 			"image/quan/add.png"
+=======
+			"image/cloud/cloud_0_unknow_0.png"
+>>>>>>> origin/master
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
