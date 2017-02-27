@@ -79,12 +79,14 @@
 				var askChannel = '0';
 				var datasource = [];
 				var flag = 0;
+				var UserId;
 				mui.plusReady(function() {
 					var data = plus.webview.currentWebview().data;
 					console.log('获取的数据：' + JSON.stringify(data));
 
 					var tempArr = [];
-					var UserId;
+					var curChannel = {};
+					channelData = data.allChannels;
 					if(data.expert) {
 						flag = 1;
 						var tempChannels = data.expert.ExpertChannels;
@@ -93,27 +95,28 @@
 
 							for(var j = 0; j < data.allChannels.length; j++) {
 								if(tempCode == data.allChannels[j].TabId) {
-									tempArr.push(data.allChannels[j]);
+									//	tempArr.push(data.allChannels[j]);
+									curChannel = data.allChannels[j];
 								}
 							}
 						}
-						data.allChannels = tempArr;
-						channelData = data.allChannels;
+						//						data.allChannels = tempArr;
+						//						channelData = data.allChannels;
 						UserId = data.expert.UserId;
 					} else {
-						channelData = data.allChannels;
-						channelData.splice(0, 1);
+
 						UserId = 0;
+						curChannel = data.curChannel;
 					}
 
-					var curChannel = data.curChannel;
+					channelData.splice(0, 1);
 					console.log('curChannel=' + JSON.stringify(curChannel));
 					console.log('获取的数据111：' + JSON.stringify(channelData));
 					if(curChannel.TabId == 0) {
 						curChannel = channelData[0];
 					}
 					//2.获取符合条件的专家信息
-					getExpertsArray(curChannel.TabId, '[' + UserId + ']');
+					getExpertsArray(curChannel.TabId, UserId);
 					askChannel = curChannel.TabId;
 					document.getElementById("channal").innerHTML = curChannel.ChannelName;
 					var ul = document.getElementById("popover").getElementsByClassName('mui-table-view')[0];
@@ -235,7 +238,7 @@
 						//2.获取符合条件的专家信息
 						getExpertsArray(askChannel, '[0]');
 					} else {
-
+						getExpertsArray(askChannel, UserId);
 					}
 
 					mui('.mui-popover').popover('toggle')
@@ -245,8 +248,8 @@
 				function getExpertsArray(code, UserId) {
 					//需要加密的数据
 					var comData = {
-						askId: '0',//问题ID，传入0，则不包括问题参数
-						userIds: UserId, //用户编号列表,Array,传入0，获取所有专家
+						askId: '0', //问题ID，传入0，则不包括问题参数
+						userIds: '[0]', //用户编号列表,Array,传入0，获取所有专家
 						channelId: code, //话题ID,传入0，获取所有话题数据
 						pageIndex: '1', //当前页数
 						pageSize: '0' //每页记录数,传入0，获取总记录数
@@ -304,7 +307,7 @@
 								console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 								datasource = tempRspData;
 								//刷新界面
-								addExperts();
+								addExperts(UserId);
 
 							});
 						} else {
@@ -313,7 +316,7 @@
 					});
 				};
 
-				function addExperts() {
+				function addExperts(seletedID) {
 					var ul = document.getElementById("ExpertList");
 					ul.innerHTML = '';
 					for(var i = 0; i < datasource.length; i++) {
@@ -333,7 +336,10 @@
 					if(flag == 1) {
 						var box = document.getElementsByClassName('checkbox');
 						for(var i = 0; i < box.length; i++) {
-							box[i].checked = true;
+							if(datasource[i].UserId == seletedID) {
+								box[i].checked = true;
+							}
+
 						}
 					}
 
@@ -387,43 +393,43 @@
 				 * 并显示在界面上
 				 */
 				events.addTap('take_pic', function() {
-				if(CloudFileUtil.files.length < 9) {
-					camera.getPic(camera.getCamera(), function(picPath) {
-						plus.nativeUI.showWaiting(storageKeyName.WAITING);
-						var saveSpace = storageKeyName.KNOWLEDGE; //保存空间
-						compress.compressPIC(picPath, function(event) {
-							var localPath = event.target;
-							var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 7, 200, 0, saveSpace);
-							CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-								console.log("获取的数据：" + JSON.stringify(datas));
-								if(datas.Status == 1) {
-									var tokenInfo = datas.Data;
+					if(CloudFileUtil.files.length < 9) {
+						camera.getPic(camera.getCamera(), function(picPath) {
+							plus.nativeUI.showWaiting(storageKeyName.WAITING);
+							var saveSpace = storageKeyName.KNOWLEDGE; //保存空间
+							compress.compressPIC(picPath, function(event) {
+								var localPath = event.target;
+								var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 7, 200, 0, saveSpace);
+								CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+									console.log("获取的数据：" + JSON.stringify(datas));
+									if(datas.Status == 1) {
+										var tokenInfo = datas.Data;
 
-									//上传文件
-									CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
-										console.log(JSON.stringify(uploadData));
-										var img = { //图片信息
-											url: tokenInfo.Domain + tokenInfo.Key,
-											thumb: tokenInfo.OtherKey[data.thumbKey],
-											type: 1
-										}
-										//关闭等待框
-										plus.nativeUI.closeWaiting();
-										//放置图片
-					 					CloudFileUtil.setPic(img);
-									});
-								}
+										//上传文件
+										CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
+											console.log(JSON.stringify(uploadData));
+											var img = { //图片信息
+												url: tokenInfo.Domain + tokenInfo.Key,
+												thumb: tokenInfo.OtherKey[data.thumbKey],
+												type: 1
+											}
+											//关闭等待框
+											plus.nativeUI.closeWaiting();
+											//放置图片
+											CloudFileUtil.setPic(img);
+										});
+									}
 
-							}, function(xhr, type, errorThrown) {
-								console.log("错误类型：" + type + errorThrown);
-								plus.nativeUI.closeWaiting(); //关闭等待框
-							});
+								}, function(xhr, type, errorThrown) {
+									console.log("错误类型：" + type + errorThrown);
+									plus.nativeUI.closeWaiting(); //关闭等待框
+								});
+							})
 						})
-					})
-				} else {
-					mui.toast('上传图片附件不得多于9张！');
-				}
-			});
+					} else {
+						mui.toast('上传图片附件不得多于9张！');
+					}
+				});
 				var imgs = [];
 
 				//删除图标的点击事件
