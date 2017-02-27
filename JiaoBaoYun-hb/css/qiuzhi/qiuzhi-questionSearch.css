@@ -17,7 +17,15 @@ input[type=submit] {
 	font-size: 1.5rem;
 	font-weight: bold;
 }
-
+.mui-btn-blue,
+.mui-btn-primary,
+input[type=submit]:enabled:active {
+	color: #fff;
+	border: #13b7f6;
+	background-color: #13b7f6;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
 .search-form input:nth-child(1) {
 	width: 87%;
 	background-color: #ffffff;
@@ -27,18 +35,18 @@ input[type=submit] {
 	color: #000000;
 }
 
-.history_container {
+#history_container {
 	position: absolute;
 	width: 100%;
-	margin-top: -15px;
+	margin-top: -9px;
 	z-index: 2;
 }
 
-.history_container .mui-table-view-cell .mui-icon-search {
+#history_container .mui-table-view-cell .mui-icon-search {
 	font-size: 1.8rem;
 }
 
-.history_container .mui-table-view-cell>a {
+#history_container .mui-table-view-cell>a {
 	line-height: 1rem;
 	padding: 0.5rem 1.1rem;
 }
@@ -74,10 +82,14 @@ input[type=submit] {
 }
 
 .mui-table-view-cell {
-	border-bottom: #EFEFEF solid 1px;
+	/*border-bottom: #EFEFEF solid 1px;*/
 	padding: 1.5rem 1rem;
 }
-
+#history_container  .mui-table-view-cell:last-child
+{
+	line-height:1rem;
+	text-align: center;
+}
 .mui-table-view-cell p {}
 
 .mui-table-view-cell p:nth-child(1) {

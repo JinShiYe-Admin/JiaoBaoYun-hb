@@ -1,26 +1,28 @@
 .info-headImg{
-	float: left;
 	width: 6rem;
 	height: 6rem;
-	margin: 1rem;
 	border-radius: 50%;
 }
 .info-main{
-	height: 8rem;
+	width: 100%;
+	padding: 2rem 0 1rem;
+	text-align: center;
 	background-color: white;
 }
-.info-briefIntro{
-	padding:1.5rem;
+.mui-table-view-cell p{
+	color: #323232;
+	font-size: 1.5rem;
 }
 .info-remark{
 	color: #000000;
 }
+.info-nick{
+	color: #323232;
+	font-size: 1.6rem;
+}
 .mui-badge {
+	color: #8f8f94;
 	font-size: 1.2rem;
-	/*line-height: 1;
-	display: inline-block;
-	padding: 3px 6px;
-	color: #333;
-	border-radius: 100px;*/
-	background-color: transparent
+	background-color: transparent;
+	max-width: 80%;
 }

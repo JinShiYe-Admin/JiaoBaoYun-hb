@@ -699,7 +699,9 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"image/utils/default_personalimage.png",
 					"js/utils/events.js",
-					"js/quan/class-group.js"
+					"js/quan/class-group.js",
+					"js/quan/class-group1.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/quan/group-pInfo.html"
@@ -2812,7 +2814,9 @@
 					"image/utils/default_personalimage.png",
 					"image/qiuzhi/arraw-down.png"
 				],
-				"refer": [],
+				"refer": [
+					"html/qiuzhi/qiuzhi-addAnswer.html"
+				],
 				"priority": 0
 			},
 			"html/scienceeducation/senedu_show_main.html": {
@@ -3164,7 +3168,9 @@
 					"html/qiuzhi/experts_sub.html",
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"image/qiuzhi/expert_level.png",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3185,7 +3191,9 @@
 					"js/sciedu/SciEduHomeItem.js",
 					"js/mui.lazyload.js",
 					"js/mui.lazyload.img.js",
-					"css/sciedu/sciedu.css"
+					"css/sciedu/sciedu.css",
+					"css/mui.min.css",
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -3262,5 +3270,5 @@
 				"image/cloud.png"
 			]
 		}
-	},"fullscreen":true
+	},"fullscreen":false
 }

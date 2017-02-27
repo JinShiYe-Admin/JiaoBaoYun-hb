@@ -35,6 +35,11 @@
 					events.openNewWindowWithData('experts_main.html', data);
 				});
 
+				mui.back = function() {
+					console.log('mui.back');
+					plus.webview.hide(plus.webview.currentWebview(), 'pop-out', 250);
+					events.fireToPageNone('qiuzhi-questionSub.html', 'muiBack');
+				}
 			});
 		</script>
 	</body>
