@@ -311,6 +311,7 @@ var events = (function(mod) {
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		events.fireToPageNone('../index/index.html', 'infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
+		events.fireToPageNone('../show/show_home_1.html', 'infoChanged');
 	}
 	mod.shortForString = function(str, len) {
 		if(str.length > len + 2) {
@@ -421,7 +422,7 @@ var events = (function(mod) {
 		//清理科教
 		events.fireToPageNone('../sciedu/sciedu_home.html', 'cleanSicEduHome');
 		//清理展现
-		events.fireToPageNone('../show/show_home_1.html.html', 'cleanShowHome');
+		events.fireToPageNone('../show/show_home_1.html', 'cleanShowHome');
 	}
 
 	mod.ifHaveInfo = function(info) {
