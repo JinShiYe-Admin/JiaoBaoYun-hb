@@ -59,7 +59,7 @@ mui.plusReady(function() {
 function getExpertsArray(channelId) {
 	//需要加密的数据
 	var comData = {
-		askId: '0',//问题ID，传入0，则不包括问题参数
+		askId: '0', //问题ID，传入0，则不包括问题参数
 		userIds: '[0]', //用户编号列表,Array,传入0，获取所有专家
 		channelId: channelId.toString(), //话题ID,传入0，获取所有话题数据
 		pageIndex: '1', //当前页数
@@ -166,7 +166,7 @@ function requestChannelList(channelInfo) {
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 	//所需参数
 	var comData = {
-		userId: personalUTID,//用户ID
+		userId: personalUTID, //用户ID
 		askTitle: '', //问题标题,用于查找，可输入部分标题
 		channelId: channelInfo.TabId, //话题ID,传入0，获取所有话题数据
 		pageIndex: pageIndex, //当前页数
@@ -202,7 +202,7 @@ var setChannelList = function(data) {
 	}
 }
 var getInnerHTML = function(cell) {
-	var inner ='<div>' +
+	var inner = '<div>' +
 		'<div class="channel-info">' +
 		'<p class="channel-title"><img src="' + getChannelIcon(cell) + '" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
 		'</div>' +
@@ -277,7 +277,11 @@ var setListener = function() {
 
 	//标题点击事件
 	mui('.mui-table-view').on('tap', '.ask-title', function() {
-		events.fireToPageNone('qiuzhi-question.html', 'askId', this.getAttribute('askId'));
+		events.fireToPageNone('qiuzhi-question.html', 'askId', {
+			askID: this.getAttribute('askId'),//问题id
+			channelInfo: channelInfo,//当前话题
+			allChannels: allChannels//全部话题
+		});
 		events.fireToPageNone('qiuzhi-questionSub.html', 'askId', this.getAttribute('askId'));
 		plus.webview.getWebviewById('qiuzhi-question.html').show();
 	});

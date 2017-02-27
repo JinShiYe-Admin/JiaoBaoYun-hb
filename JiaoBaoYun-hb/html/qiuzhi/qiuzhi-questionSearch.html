@@ -14,26 +14,21 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">搜索</h1>
+			<h1 class="mui-title">	
+				<div class="search-form">
+					<div class="mui-input-row  ">
+						<input id="search-keyWord" type="search" class="mui-input-clear" placeholder="请输入关键字搜索问题">
+						<input id="search-btn" type="submit" class="search-btn" value="搜索" />
+					</div>
+				</div>
+			</h1>
 		</header>
 		<div class="mui-content" style="z-index:0">
 			<div class="mui-scroll-wrapper mui-fullscreen" style="z-index:0">
 				<div class="mui-scroll">
-					<!--	<div class="search-form">
-						<div class="mui-input-row mui-search">
-							<input id="search-keyWord" type="search" class="mui-input-clear search-input" placeholder="请输入关键字搜索问题">
-							<input id="search-btn" type="submit" class="search-btn" value="搜索"></input>
-						</div>
-					</div>-->
-					<div class="search-form">
-						<div class="mui-input-row mui-search">
-							<input id="search-keyWord" type="search" class="mui-input-clear search-input" placeholder="请输入关键字搜索问题">
-							<input id="search-btn" type="submit" class="search-btn" value="搜索"></input>
-						</div>
-					</div>
 
 					<ul class="mui-table-view history_container">
-						<li class="mui-table-view-cell">
+						<!--<li class="mui-table-view-cell">
 							<a class="mui-navigate-right">
 								<span class="mui-icon mui-icon-search"></span> <span> Item 1</span>
 							</a>
@@ -44,10 +39,10 @@
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right">
-								<span class="mui-icon mui-icon-search"></span> <span> Item 1</span>
+							<a>
+								<span class="mui-icon mui-icon-search"></span> <span> Item 1</span><span class="mui-icon icon-del"></span>
 							</a>
-						</li>
+						</li>-->
 					</ul>
 
 					<ul id="list-container" class="mui-table-view">
@@ -79,6 +74,7 @@
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var pageIndex = 1; //请求数据页面
 			var totalPageCount; //总页码
@@ -92,21 +88,37 @@
 				document.getElementById('search-btn').addEventListener('tap', searchQuestion);
 				var search_keyWord = document.getElementById('search-keyWord');
 				search_keyWord.addEventListener("focus", function() {
+					//加载搜索历史记录
+					LoadHistory();
+					//显示隐藏对应div
 					mui(".history_container")[0].classList.remove("mui-hidden");
 					mui("#list-container")[0].classList.add("mui-hidden");
 				});
 				search_keyWord.addEventListener("blur", function() {
+
 					mui(".history_container")[0].classList.add("mui-hidden");
 					mui("#list-container")[0].classList.remove("mui-hidden");
 				});
 				search_keyWord.addEventListener('search', searchQuestion);
-
-				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-					var index = this.id.replace('li', '');
-					events.fireToPageNone('qiuzhi-question.html', 'askId', answerArray[index].TabId);
-					events.fireToPageNone('qiuzhi-questionSub.html', 'askId', answerArray[index].TabId);
-					plus.webview.getWebviewById('qiuzhi-question.html').show();
-				});
+				//注册搜索历史的点击事件
+				//一个是应用搜索历史
+				mui('.history_container').on('tap', '.mui-table-view-cell', function() {					
+					//获取设置关键字
+					var str_text=this.getElementsByTagName("span")[1].innerHTML;
+					mui("#search-keyWord")[0].value=str_text;
+					//执行搜索
+					searchQuestion();
+				})
+				//一个是移除搜索历史
+				mui('.history_container').on('tap', '.mui-table-view-cell .icon-del', function() {
+					//移除搜索历史
+					console.log(this.previousSibling.innerHTML);
+					//重写显示
+					var str_text=this.previousSibling.innerHTML;
+					HistoryItemRemove(str_text);
+					LoadHistory();
+					return false;
+				})
 
 				//上拉下拉注册
 				mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
@@ -140,11 +152,83 @@
 				});
 
 			});
+			/**
+			 * 加载搜索历史记录
+			 */
+			function LoadHistory() {
+				var history_container = mui(".history_container")[0];
+				history_container.innerHTML = "";
+				var list_History = window.myStorage.getItem("qiuzhi-Question-History");
+				mui.each(list_History, function(index, item) {
+					//显示节点
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell';
+					//拼接显示
+					//				<li class="mui-table-view-cell">
+					//					<a class="mui-navigate-right">
+					//						<span class="mui-icon mui-icon-search"></span> <span> Item 1</span>
+					//					</a>
+					//				</li>
+					//li.innerHTML = "<p>" + record.CommentContent + "</p><div><p><img src='"+record.qChannelImg+"'>["+record.qChannel+"]"+record.AskTitle+"</p><p>"+record.AnswerContent+"</p></div><p>"+record.LikeNum+" 赞 · "+record.cCreatTime + " ·"+record.CommentId+" 关注</p>";
+					li.innerHTML = "<a><span class='mui-icon mui-icon-search'></span> <span>" + item.text + "</span><span class='mui-icon icon-del' ></span></a>";
+					history_container.insertBefore(li,history_container.firstChild);
+				});
+			}
+			/**
+			 * 追加某搜索历史记录
+			 * @param {Object} _keyWord 搜索关键字
+			 */
+			function setHistory(_keyWord) {
+				//存储历史记录开始
+				var list_History = window.myStorage.getItem("qiuzhi-Question-History");
+				if(list_History) {
 
+				} else {
+					list_History = new Array();
+				}
+				var d = new Date();
+				//清除掉重复的 追加上新的
+				//var model_History={text=""};
+				var int_index = 0;
+				mui.each(list_History, function(index, item) {
+					if(item.text == _keyWord) {
+						//移除掉
+						list_History.splice(int_index, 1);
+					}
+					int_index++;
+				});
+				list_History.push({ text: keyWord });
+				window.myStorage.setItem("qiuzhi-Question-History", list_History);
+				//存储历史记录结束
+			}
+			/**
+			 * 在搜索历史中移除某关键字
+			 */
+			function HistoryItemRemove(_keyWord){
+				var list_History = window.myStorage.getItem("qiuzhi-Question-History");
+				if(list_History) {
+
+				} else {
+					list_History = new Array();
+				}
+				var d = new Date();
+				var int_index = 0;
+				mui.each(list_History, function(index, item) {
+					if(item.text == _keyWord) {
+						//移除掉
+						list_History.splice(int_index, 1);
+					}
+					int_index++;
+				});
+				window.myStorage.setItem("qiuzhi-Question-History", list_History);
+			}
+			/**
+			 * 通过关键字搜索问题 并记录搜索历史
+			 */
 			function searchQuestion() {
-
 				keyWord = mui("#search-keyWord")[0].value;
 				console.log(keyWord)
+				setHistory(keyWord);
 				document.getElementById('list-container').innerHTML = "";
 				console.log("搜索");
 				pageIndex = 1;
@@ -154,8 +238,11 @@
 			}
 			//4.获取所有符合条件问题
 			function getAsksByCondition(askTitle) {
+				document.getElementById('search-keyWord').blur();
+var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 				//需要加密的数据
 				var comData = {
+					userId:personalUTID,
 					askTitle: askTitle, //问题标题,用于查找，可输入部分标题
 					channelId: '0', //话题ID,传入0，获取所有话题数据
 					pageIndex: pageIndex, //当前页数

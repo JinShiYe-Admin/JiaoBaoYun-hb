@@ -238,6 +238,9 @@
 
 			//27.获取某个用户的关注人列表
 			function getFocusUsersByUser(focusId) {
+				if(pageIndex==1){
+					events.clearChild(document.getElementById('list-container'));
+				}
 				personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 				//需要加密的数据
 				var comData = {

@@ -24,15 +24,15 @@
 
 			mui.init();
 			mui.plusReady(function() {
-				var askID = 0;
+				var data;
 				window.addEventListener('askId', function(e) {
 					console.log('问题详情父页面获取的问题id:' + e.detail.data);
-					askID = e.detail.data;
+					data = e.detail.data;
 				});
 
 				//点击右上角邀请专家按钮
 				events.addTap('addExpert', function() {
-					events.openNewWindowWithData('experts_main.html', askID);
+					events.openNewWindowWithData('experts_main.html', data);
 				});
 
 			});
