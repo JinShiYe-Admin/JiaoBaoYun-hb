@@ -138,7 +138,7 @@ function expertsItem(data) {
 	element.className = 'mui-control-item';
 	element.setAttribute('data-info', JSON.stringify(data));
 	element.innerHTML = '<img src="' + updateHeadImg(data.uimg, 2) + '" />' +
-		'<p id="experts_name_' + data.TabId + '" class="mui-ellipsis"></p>';
+		'<p id="experts_name_' + data.TabId + '" class="mui-ellipsis" style="color:#323232;"></p>';
 	var table = document.getElementById("experts_sc");
 	var allExpert = document.getElementById("allExpert");
 	table.insertBefore(element, allExpert);

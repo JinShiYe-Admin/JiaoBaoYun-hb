@@ -34,7 +34,8 @@
 			"css/utils/common.css",
 			"css/iconfont/iconfont.css",
 			"css/mui.min.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/cloud/cloud_0_unknow_0.png"
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
@@ -116,7 +117,8 @@
 			"js/index.js",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",
@@ -150,7 +152,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/register/register_phoneNumber.html",
