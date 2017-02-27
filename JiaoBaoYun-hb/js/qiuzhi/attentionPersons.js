@@ -92,11 +92,11 @@ var requirePersonInfo = function(personIds, persons) {
  * @param {Object} persons 
  */
 var setData = function(persons) {
-	console.log("要放置的个人数据："+JSON.stringify(persons));
+	console.log("要放置的个人数据：" + JSON.stringify(persons));
 	var list = document.getElementById('list-container');
 	for(var i in persons) {
 		var li = document.createElement('li');
-		li.setAttribute('data-info',JSON.stringify(persons[i]));
+		li.setAttribute('data-info', JSON.stringify(persons[i]));
 		li.className = 'mui-table-view-cell';
 		li.innerHTML = createInner(persons[i]);
 		list.appendChild(li);
@@ -126,6 +126,7 @@ var getButtonContent = function(focusType) {
 	var buttonInfo = {};
 	switch(focusType) {
 		case 0:
+		case 2:
 			buttonInfo.classInfo = 'attention-btn';
 			buttonInfo.inner = '关注';
 			break;
@@ -133,11 +134,11 @@ var getButtonContent = function(focusType) {
 			buttonInfo.classInfo = 'attentioned-btn';
 			buttonInfo.inner = '已关注';
 			break;
-		case 2:
+		case 3:
 			buttonInfo.classInfo = 'attentioned-btn';
 			buttonInfo.inner = '已互关';
 			break;
-		case 3:
+		case 5:
 			buttonInfo.classInfo = 'display-none';
 			buttonInfo.inner = '自己'
 		default:
@@ -163,71 +164,78 @@ var setFocus = function(item, type) {
 		if(data.RspCode == 0 && data.RspData.Result == 1) {
 			if(type) {
 				mui.toast('关注成功！')
-				item.className='mui-btn mui-btn-outlined attentioned-btn';
-				item.innerText='已关注';
-				item.personInfo.FocusType=1;
 			} else {
 				mui.toast('取消关注成功！')
-				item.className='mui-btn mui-btn-outlined attention-btn';
-				item.innerText="关注";
-				item.personInfo.FocusType=0;
 			}
-
+			setButtonInfoType(item);
+			var buttonInfo=getButtonContent(item.personInfo.FocusType);
+			item.innerText =buttonInfo.inner;
+			item.className='mui-btn mui-btn-outlined '+buttonInfo.classInfo;
 		}
 	})
 }
-//var setButtonContent=function(item,type){
-//	if(type){//关注
-//		switch (item.personInfo.FocusType){
-//			case value:
-//				break;
-//			default:
-//				break;
-//		}
-//	}else{//取消关注
-//		
-//	}
-//}
-var setListener = function() {
-	mui('.mui-table-view').on('tap', '.mui-btn', function() {
-		var focusType;
-		switch(this.personInfo.FocusType) {
+/**
+ *	关注状态关注的
+ * @param {Object} item
+ */
+var setButtonInfoType = function(item) {
+		switch(item.personInfo.FocusType) {
 			case 0:
-				focusType=1;
+				item.personInfo.FocusType = 1;
 				break;
 			case 1:
+				item.personInfo.FocusType = 0;
+				break;
 			case 2:
+				item.personInfo.FocusType = 3;
+				break;
 			case 3:
-				focusType=0;
+				item.personInfo.FocusType = 2;
 				break;
 			default:
 				break;
 		}
-		setFocus(this,focusType);
-	});
-	
-	//点击头像、昵称、简介进入专家主页
-	mui('.mui-table-view').on('tap','.person-info',function(){
-	  //获取到当前控件的父节点
-		var parent = this.parentNode.parentNode.parentNode.parentNode;
-		//得到父节点的值
-		var info = JSON.parse(parent.getAttribute('data-info'));
-		console.log('dianji 关注他的人：' + JSON.stringify(info));
-		events.openNewWindowWithData('expert-detail.html', JSON.stringify(info));
-		events.fireToPageWithData('expert-detail.html','expert-detail' ,info);
-	});
-}
-/**
- * 上拉加载的实现方法
- */
-var pullUpFresh = function() {
-	document.addEventListener("plusscrollbottom", function() {
-		console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPageCount);
-		if(pageIndex < totalPageCount) {
-			pageIndex++;
-			requestData();
-		} else {
-			mui.toast('没有更多了');
+
+		var setListener = function() {
+			mui('.mui-table-view').on('tap', '.mui-btn', function() {
+				var focusType;
+				switch(this.personInfo.FocusType) {
+					case 0:
+						focusType = 1;
+						break;
+					case 1:
+					case 2:
+					case 3:
+						focusType = 0;
+						break;
+					default:
+						break;
+				}
+				setFocus(this, focusType);
+			});
+
+			//点击头像、昵称、简介进入专家主页
+			mui('.mui-table-view').on('tap', '.person-info', function() {
+				//获取到当前控件的父节点
+				var parent = this.parentNode.parentNode.parentNode.parentNode;
+				//得到父节点的值
+				var info = JSON.parse(parent.getAttribute('data-info'));
+				console.log('dianji 关注他的人：' + JSON.stringify(info));
+				events.openNewWindowWithData('expert-detail.html', JSON.stringify(info));
+				events.fireToPageWithData('expert-detail.html', 'expert-detail', info);
+			});
 		}
-	}, false);
-}
+		/**
+		 * 上拉加载的实现方法
+		 */
+		var pullUpFresh = function() {
+			document.addEventListener("plusscrollbottom", function() {
+				console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPageCount);
+				if(pageIndex < totalPageCount) {
+					pageIndex++;
+					requestData();
+				} else {
+					mui.toast('没有更多了');
+				}
+			}, false);
+		}
