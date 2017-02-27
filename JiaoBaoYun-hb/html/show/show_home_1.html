@@ -334,7 +334,6 @@
 						console.log('slide ' + JSON.stringify(info));
 						console.log('slide ' + JSON.stringify(page));
 						if(!page) {
-							console.log(111111111111)
 							//							requestCityNews(info.acode, 1);
 							requestData(info.acode, 1);
 						}
@@ -433,6 +432,7 @@
 					var refresh = mui(pullRefreshEl).pullToRefresh({
 						down: {
 							callback: function() {
+								pullFlag=0;
 								var self = this;
 								var id = pullRefreshEl.parentNode.parentNode.id;
 								var element = document.getElementById(id);
@@ -451,6 +451,7 @@
 						up: {
 							contentinit: '',
 							callback: function() {
+								pullFlag=1;
 								var self = this;
 								var id = pullRefreshEl.parentNode.parentNode.id;
 								var element = document.getElementById(id);
@@ -566,20 +567,6 @@
 				postDataPro_PostTnews(comData, wd, function(data) {
 					console.log('对应区域的分页新闻:' + JSON.stringify(data));
 
-					//记录页数
-					var page = {
-						pageIndex: pageIndex, //当前页数
-						totalPage: 0 //总页数
-					};
-					if(data.RspCode == 0) {
-						page.totalPage = data.RspData.pg.PageCount;
-					}
-					document.getElementById("bot_" + cityCode).setAttribute('data-page', JSON.stringify(page))
-					if(pageIndex == 1) { //获取的第一页的内容
-						//清空对应的界面
-						document.getElementById("bot_ul_" + cityCode).innerHTML = '';
-					}
-
 					if(data.RspCode == 0) {
 						//新闻总页数
 						var tempArr = data.RspData.dt;
@@ -597,6 +584,45 @@
 						addItems(cityCode, tempArr);
 					} else {
 						mui.toast(data.RspTxt);
+					}
+
+				});
+			}
+
+			var requestData = function(cityCode, pageIndex) {
+				var wd = events.showWaiting();
+				/**
+				 * 请求区域内的动态
+				 */
+				postDataPro_getUserSpacesByArea({
+					userId: personalUTID, //用户ID
+					area: cityCode, //区域
+					pageIndex: pageIndex, //当前页数
+					pageSize: 10 //每页记录数
+				}, wd, function(data) {
+					events.closeWaiting();
+					console.log('展示获取的数据：' + JSON.stringify(data));
+					//记录页数
+					var page = {
+						pageIndex: pageIndex, //当前页数
+						totalPage: 0 //总页数
+					};
+					if(data.RspCode == 0) {
+						page.totalPage = data.RspData.TotalPage;
+					}
+					document.getElementById("bot_" + cityCode).setAttribute('data-page', JSON.stringify(page))
+					if(pageIndex == 1) { //获取的第一页的内容
+						//清空对应的界面
+						document.getElementById("bot_ul_" + cityCode).innerHTML = '';
+					}
+
+					if(data.RspCode == 0 && data.RspData.Data.length > 0) {
+						totalPage = data.RspData.TotalPage
+						getPersonIds(data.RspData.Data);
+					} else {
+						var table = document.body.querySelector('.mui-table-view');
+						table.innerHTML = ''
+						events.fireToPageNone('index.html', 'closeWaiting');
 					}
 
 					//设置上拉下拉控件的状态
@@ -619,31 +645,6 @@
 					setTimeout(function() {
 						wd.close();
 					}, 1000);
-				});
-			}
-
-			var requestData = function(cityCode, pageIndex) {
-				var wd = events.showWaiting();
-				/**
-				 * 请求区域内的动态
-				 */
-				postDataPro_getUserSpacesByArea({
-					userId: personalUTID, //用户ID
-					area: cityCode, //区域
-					pageIndex: pageIndex, //当前页数
-					pageSize: 10 //每页记录数
-				}, wd, function(data) {
-					events.closeWaiting();
-					console.log('展示获取的数据：' + JSON.stringify(data));
-					if(data.RspCode == 0 && data.RspData.Data.length > 0) {
-						totalPage = data.RspData.TotalPage
-						console.log('11111111111======' + totalPage)
-						getPersonIds(data.RspData.Data);
-					} else {
-						var table = document.body.querySelector('.mui-table-view');
-						table.innerHTML = ''
-						events.fireToPageNone('index.html', 'closeWaiting');
-					}
 				})
 			}
 
@@ -679,7 +680,6 @@
 			}
 
 			function addSomeEvent() {
-				console.log(22222222)
 				var click = []; //记录被点击的li的id和被点击元素
 				mui('#sliderGroup').on('tap', '.dynamic-personal-image', function() {
 					click.push('头像');
@@ -694,7 +694,6 @@
 					mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
 						if(e.index == 1) {
 							var index = closeId.replace('delete', '');
-							console.log(closeId);
 							var comData = {
 								userSpaceId: zonepArray[index].TabId, //用户空间ID
 							};
@@ -706,9 +705,7 @@
 									//						var wobj = plus.webview.currentWebview();
 									//						wobj.reload(true);
 									var deleteNode = document.getElementById(index);
-									console.log(deleteNode.parentNode.innerHTML);
 									deleteNode.parentNode.removeChild(deleteNode);
-									console.log(deleteNode.parentNode);
 									zonepArray.splice(index, 1)
 								} else {
 									mui.toast(data.RspTxt);
@@ -746,18 +743,14 @@
 						postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
 							wd.close();
 							if(data.RspCode == 0) {
-								console.log('index=' + index)
 								var a = document.getElementById("praise" + index);
 								a.style.color = 'rgb(0, 165, 224)'
 								//					mui.toast('点赞成功');
 								var PraiseList = document.getElementById("PraiseList" + index);
-								console.log(PraiseList.innerHTML);
 								var praiseNameList = PraiseList.getElementsByTagName("font");
-								console.log(praiseNameList.length)
 								if(praiseNameList.length > 0) {
 									var praiseName = praiseNameList[0];
 									praiseName.innerHTML = praiseName.innerHTML + '、' + personalunick;
-									console.log(praiseName.innerHTML);
 								} else {
 
 									PraiseList.innerHTML = '<img id= "praiseImg" src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />' +
@@ -791,7 +784,6 @@
 								} else {
 									console.log('一个人点赞')
 
-									console.log(PraiseList.outerHTML);
 									PraiseList.removeChild(praiseName);
 									var praiseImg = document.getElementById("praiseImg");
 									PraiseList.removeChild(praiseImg);
@@ -954,7 +946,6 @@
 				//[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
 				//判断img是否为null，或者空
 				var tempModel = zonepArray[index];
-				console.log('tempModel=' + JSON.stringify(tempModel));
 				tempModel.PublisherImg = updateHeadImg(tempModel.PublisherImg, 2)
 				var personalImage = tempModel.PublisherImg;
 				var personalName = tempModel.PublisherName;
@@ -1010,7 +1001,7 @@
 					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 					pageIndex = 1;
 					pullFlag = 0;
-					var id =  sliderId.replace('top_', '');
+					var id = sliderId.replace('top_', '');
 					requestData(id, 1);
 				})
 
@@ -1086,7 +1077,6 @@
 								userSpaceId: zonepArray[id].TabId, //用户空间ID
 								commentContent: inputComment.value //回复内容
 							};
-							console.log('comData=====' + JSON.stringify(comData))
 							var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 							postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
 								wd.close();

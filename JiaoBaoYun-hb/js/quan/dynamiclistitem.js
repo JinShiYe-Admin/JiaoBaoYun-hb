@@ -73,7 +73,6 @@ var dynamiclistitem = (function($, mod) {
 		var ImageUrlList = data[1]; //图片路径数组
 		var ImageNum = ImageUrlList.length; //图片总数量
 		var html = '';
-		console.log('ImageUrlList='+JSON.stringify(ImageUrlList));
 //		if(pageFlag!=0){
 //			ImageNum=0;
 //		}
