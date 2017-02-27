@@ -257,11 +257,21 @@
 
 				//Webview窗口显示事件
 				main.addEventListener("show", function(e) {
+					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+					pageIndex = 1;
+					pullFlag = 0;
 					console.log("show " + main.id + '|' + index.id + "|" + sliderId + '|' + cities.length);
 					initBody();
 					//改变顶部的城市
 					changeIndexHeader();
 				});
+				//				window.addEventListener('infoChanged', function() {
+				//					console.log('重现显示展现界面')
+				//					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+				//					pageIndex = 1;
+				//					pullFlag = 0;
+				//					requestData(cities[0].acode, 1);
+				//				});
 
 				//---订制城市---start---
 				//进入订制城市界面
@@ -287,6 +297,8 @@
 
 				//退出登录清理科教界面
 				window.addEventListener('cleanShowHome', function() {
+
+					console.log('重新登录')
 					cities = []; //存储当前定制的城市
 					show = true; //是否显示科教的内容
 					pullToRefresh = [] //存储下拉上拉的控件
@@ -432,7 +444,7 @@
 					var refresh = mui(pullRefreshEl).pullToRefresh({
 						down: {
 							callback: function() {
-								pullFlag=0;
+								pullFlag = 0;
 								var self = this;
 								var id = pullRefreshEl.parentNode.parentNode.id;
 								var element = document.getElementById(id);
@@ -451,7 +463,7 @@
 						up: {
 							contentinit: '',
 							callback: function() {
-								pullFlag=1;
+								pullFlag = 1;
 								var self = this;
 								var id = pullRefreshEl.parentNode.parentNode.id;
 								var element = document.getElementById(id);

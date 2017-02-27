@@ -87,11 +87,11 @@ var manageAccountInfo = function(data) {
 		//"unick":"BugHunter","usex":0,"utxt":null,
 		//"uimg":"http://oh2zmummr.bkt.clouddn.com/headimge5.png"}
 		document.getElementById('info-headImg').src = updateHeadImg(pInfo.uimg,2);
-		document.getElementById('info-name').innerText = pInfo.uname;
-		document.getElementById('info-nick').innerText ="昵称:"+pInfo.unick;
+//		document.getElementById('info-name').innerText = pInfo.uname;
+		document.getElementById('info-nick').innerText =pInfo.unick;
 		document.getElementById('person-remark').innerText=isSelf?pInfo.ugname:pInfo.bunick;
 		document.getElementById('data-info').innerText = pInfo.uid;
-		document.getElementById('person-space').innerText = isSelf?"我的空间":pInfo.unick+ '的空间' ;
+		document.getElementById('person-space').innerText = isSelf?"我的空间": events.shortForString(pInfo.unick,10) + '的空间' ;
 		document.getElementById('person-area').innerText=pInfo.uarea.split("|")[1];
 	}
 	/**
