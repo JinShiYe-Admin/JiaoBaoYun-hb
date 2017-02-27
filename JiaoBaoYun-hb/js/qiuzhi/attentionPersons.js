@@ -168,9 +168,9 @@ var setFocus = function(item, type) {
 				mui.toast('取消关注成功！')
 			}
 			setButtonInfoType(item);
-			var buttonInfo=getButtonContent(item.personInfo.FocusType);
-			item.innerText =buttonInfo.inner;
-			item.className='mui-btn mui-btn-outlined '+buttonInfo.classInfo;
+			var buttonInfo = getButtonContent(item.personInfo.FocusType);
+			item.innerText = buttonInfo.inner;
+			item.className = 'mui-btn mui-btn-outlined ' + buttonInfo.classInfo;
 		}
 	})
 }
@@ -179,63 +179,64 @@ var setFocus = function(item, type) {
  * @param {Object} item
  */
 var setButtonInfoType = function(item) {
-		switch(item.personInfo.FocusType) {
+	switch(item.personInfo.FocusType) {
+		case 0:
+			item.personInfo.FocusType = 1;
+			break;
+		case 1:
+			item.personInfo.FocusType = 0;
+			break;
+		case 2:
+			item.personInfo.FocusType = 3;
+			break;
+		case 3:
+			item.personInfo.FocusType = 2;
+			break;
+		default:
+			break;
+	}
+}
+
+var setListener = function() {
+	mui('.mui-table-view').on('tap', '.mui-btn', function() {
+		var focusType;
+		switch(this.personInfo.FocusType) {
 			case 0:
-				item.personInfo.FocusType = 1;
+				focusType = 1;
 				break;
 			case 1:
-				item.personInfo.FocusType = 0;
-				break;
 			case 2:
-				item.personInfo.FocusType = 3;
-				break;
 			case 3:
-				item.personInfo.FocusType = 2;
+				focusType = 0;
 				break;
 			default:
 				break;
 		}
+		setFocus(this, focusType);
+	});
 
-		var setListener = function() {
-			mui('.mui-table-view').on('tap', '.mui-btn', function() {
-				var focusType;
-				switch(this.personInfo.FocusType) {
-					case 0:
-						focusType = 1;
-						break;
-					case 1:
-					case 2:
-					case 3:
-						focusType = 0;
-						break;
-					default:
-						break;
-				}
-				setFocus(this, focusType);
-			});
-
-			//点击头像、昵称、简介进入专家主页
-			mui('.mui-table-view').on('tap', '.person-info', function() {
-				//获取到当前控件的父节点
-				var parent = this.parentNode.parentNode.parentNode.parentNode;
-				//得到父节点的值
-				var info = JSON.parse(parent.getAttribute('data-info'));
-				console.log('dianji 关注他的人：' + JSON.stringify(info));
-				events.openNewWindowWithData('expert-detail.html', JSON.stringify(info));
-				events.fireToPageWithData('expert-detail.html', 'expert-detail', info);
-			});
+	//点击头像、昵称、简介进入专家主页
+	mui('.mui-table-view').on('tap', '.person-info', function() {
+		//获取到当前控件的父节点
+		var parent = this.parentNode.parentNode.parentNode.parentNode;
+		//得到父节点的值
+		var info = JSON.parse(parent.getAttribute('data-info'));
+		console.log('dianji 关注他的人：' + JSON.stringify(info));
+		events.openNewWindowWithData('expert-detail.html', JSON.stringify(info));
+		events.fireToPageWithData('expert-detail.html', 'expert-detail', info);
+	});
+}
+/**
+ * 上拉加载的实现方法
+ */
+var pullUpFresh = function() {
+	document.addEventListener("plusscrollbottom", function() {
+		console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPageCount);
+		if(pageIndex < totalPageCount) {
+			pageIndex++;
+			requestData();
+		} else {
+			mui.toast('没有更多了');
 		}
-		/**
-		 * 上拉加载的实现方法
-		 */
-		var pullUpFresh = function() {
-			document.addEventListener("plusscrollbottom", function() {
-				console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPageCount);
-				if(pageIndex < totalPageCount) {
-					pageIndex++;
-					requestData();
-				} else {
-					mui.toast('没有更多了');
-				}
-			}, false);
-		}
+	}, false);
+}

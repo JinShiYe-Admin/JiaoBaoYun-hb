@@ -69,7 +69,8 @@
       "css/home/index-menu.css",
       "image/mine/about.png",
       "image/mine/my-space.png",
-      "image/mine/my-points.png"
+      "image/mine/my-points.png",
+      "js/libs/crypto-js/crypto-js.js"
     ],
     "refer": []
   },
