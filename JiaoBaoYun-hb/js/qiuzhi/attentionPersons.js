@@ -165,16 +165,31 @@ var setFocus = function(item, type) {
 				mui.toast('关注成功！')
 				item.className='mui-btn mui-btn-outlined attentioned-btn';
 				item.innerText='已关注';
+				item.personInfo.FocusType=1;
 			} else {
 				mui.toast('取消关注成功！')
 				item.className='mui-btn mui-btn-outlined attention-btn';
+				item.innerText="关注";
+				item.personInfo.FocusType=0;
 			}
 
 		}
 	})
 }
+//var setButtonContent=function(item,type){
+//	if(type){//关注
+//		switch (item.personInfo.FocusType){
+//			case value:
+//				break;
+//			default:
+//				break;
+//		}
+//	}else{//取消关注
+//		
+//	}
+//}
 var setListener = function() {
-	mui('.mui-table-view').on('tap', '.attention-btn', function() {
+	mui('.mui-table-view').on('tap', '.mui-btn', function() {
 		var focusType;
 		switch(this.personInfo.FocusType) {
 			case 0:
@@ -188,9 +203,7 @@ var setListener = function() {
 			default:
 				break;
 		}
-		if(focusType==1){
-			setFocus(this,focusType);
-		}
+		setFocus(this,focusType);
 	});
 	
 	//点击头像、昵称、简介进入专家主页
