@@ -43,12 +43,12 @@
 
 			#question {
 				/*问题区域*/
-				text-align: justify;
 				border-bottom: 1px solid #EEEEEE;
 				box-shadow: 0px 0px 5px #E3E3E3;
 			}
 
 			#question_title {
+				text-align: justify;
 				color: #222222;
 				font-weight: bold;
 			}
@@ -162,6 +162,23 @@
 				margin-top: 10px;
 				color: #323232;
 			}
+
+			.ellipsis-show {
+				/*内容*/
+				display: -webkit-box;
+				overflow: hidden;
+				white-space: normal !important;
+				text-overflow: ellipsis;
+				word-wrap: break-word;
+				-webkit-line-clamp: inherit;
+				-webkit-box-orient: vertical;
+			}
+
+			#showAll {
+				display: none;
+				color: #D7D7D7;
+				margin-top: 10px;
+			}
 		</style>
 	</head>
 
@@ -181,7 +198,9 @@
 						<div class="mui-media-body">
 							<h4 id="question_title"></h4>
 							<div id="question_images" class="mui-row"></div>
-							<div id="question_content"></div>
+							<div id="question_content" class="ellipsis-show">
+							</div>
+							<div id="showAll">显示全部</div>
 						</div>
 						<div class="mui-media-body">
 							<span id="liulanshu" class="mui-icon iconfont icon-liulan"></span>

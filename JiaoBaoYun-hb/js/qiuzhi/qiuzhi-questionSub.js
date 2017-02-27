@@ -36,6 +36,7 @@ var answerFlag = 0;
 var askModel;
 
 mui.plusReady(function() {
+
 	window.addEventListener('answerAdded', function() {
 		//获取的第几页回复
 		answerIndex = 1;
@@ -47,6 +48,16 @@ mui.plusReady(function() {
 		answerFlag = 0;
 		//5.获取某个问题的详情
 		requestAskDetail();
+	});
+
+	//退出界面
+	window.addEventListener('muiBack', function() {
+		console.log('muiBack');
+		//清理原界面
+		cleanQuestion();
+		cleanAnswer();
+		document.getElementById("showAll").innerText = '显示全部';
+		document.getElementById("showAll").style.display = 'none';
 	});
 
 	//---滑动start---
@@ -137,13 +148,6 @@ mui.plusReady(function() {
 		}
 	});
 
-	//点击右上角邀请专家按钮
-	events.addTap('addExpert', function() {
-		console.log('12121212');
-
-		events.openNewWindowWithData('experts_main.html', askModel);
-	});
-
 	//点击回答
 	mui('#answer_bottom').on('tap', '.ellipsis-3', function() {
 		var element = this.parentNode;
@@ -152,7 +156,21 @@ mui.plusReady(function() {
 		//跳转页面
 		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', info);
 		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
-	})
+	});
+
+	var showAll = document.getElementById("showAll");
+	console.log('showAll' + showAll.innerText);
+	showAll.addEventListener('tap', function() {
+		var str = this.innerText;
+		console.log('showAll' + str);
+		if(str == '显示全部') {
+			showAll.innerText = '收起';
+			document.getElementById("question_content").style.webkitLineClamp = 'inherit';
+		} else if(str == '收起') {
+			showAll.innerText = '显示全部';
+			document.getElementById("question_content").style.webkitLineClamp = '3';
+		}
+	});
 });
 
 //13.获取是否已对某个问题关注
@@ -391,7 +409,20 @@ function questionImages(imageArray) {
  * @param {Object} content 问题内容
  */
 function questionContent(content) {
+	var height_0;
+	var height_1;
 	document.getElementById("question_content").innerText = content;
+	document.getElementById("question_content").style.webkitLineClamp = '4';
+	height_0 = document.getElementById("question_content").offsetHeight;
+	document.getElementById("question_content").style.webkitLineClamp = '3';
+	height_1 = document.getElementById("question_content").offsetHeight;
+	console.log(height_0 + '|' + height_1);
+	if(height_0 > height_1) {
+		//内容高度大于三行
+		document.getElementById("showAll").style.display = 'inline';
+	} else {
+		document.getElementById("showAll").style.display = 'none';
+	}
 }
 
 /**

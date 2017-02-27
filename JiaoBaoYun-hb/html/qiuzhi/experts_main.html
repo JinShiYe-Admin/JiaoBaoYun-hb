@@ -188,7 +188,7 @@
 			console.log('experts_main.html:' + JSON.stringify(mainData));
 
 			document.getElementById("content").innerHTML = '\
-				<div id="slider" class="mui-slider mui-fullscreen">\
+				<div id="slider" class="mui-slider mui-fullscreen"  style="top: ' + (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px' + ';">\
 					<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">\
 						<div id="topList" class="mui-scroll">\
 						</div>\

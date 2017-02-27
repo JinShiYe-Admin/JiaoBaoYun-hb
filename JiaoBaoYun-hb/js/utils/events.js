@@ -9,9 +9,13 @@ var events = (function(mod) {
 	 * @param {Object} event 绑定的监听事件
 	 */
 	mod.addTap = function(id, event) {
-//		console.log("获取当前页面的id：" + plus.webview.currentWebview().id);
+		//		console.log("获取当前页面的id：" + plus.webview.currentWebview().id);
 		var item = document.getElementById(id);
-		item.addEventListener('tap', event);
+		if(item) {
+			item.addEventListener('tap', event);
+		} else {
+			console.log('### ERROR ### 页面: ' + plus.webview.currentWebview().id + ' 未找到id为 ' + id + ' 的元素');
+		}
 	}
 	/**
 	 * 加载跳转界面监听的公用方法
