@@ -174,7 +174,7 @@ var setFocus = function(item, type) {
 	})
 }
 var setListener = function() {
-	mui('.mui-table-view').on('tap', '.mui-btn', function() {
+	mui('.mui-table-view').on('tap', '.attention-btn', function() {
 		var focusType;
 		switch(this.personInfo.FocusType) {
 			case 0:

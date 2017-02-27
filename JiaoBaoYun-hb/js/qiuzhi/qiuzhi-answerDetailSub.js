@@ -416,8 +416,10 @@ var setZanIconCondition = function(item) {
 	if(item.isLike) {
 		item.className = "mui-pull-right mui-icon iconfont icon-zanzan1 isNotLike ";
 		item.isLike = 0;
+		mui.toast('已取消点赞');
 	} else {
 		item.className = "mui-pull-right mui-icon iconfont icon-zanzan1 isLike";
 		item.isLike = 1;
+		mui.toast('点赞成功');
 	}
 }
