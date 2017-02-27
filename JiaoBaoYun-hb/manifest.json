@@ -3194,7 +3194,12 @@
 				"resources": [
 					"js/utils/native.js",
 					"js/quan/dynamiclistitem.js",
-					"css/icons-extra.css"
+					"css/icons-extra.css",
+					"js/mui.pullToRefresh.js",
+					"css/utils/pullToRefresh.css",
+					"js/mui.pullToRefresh.material.js",
+					"js/mui.lazyload.js",
+					"js/mui.lazyload.img.js"
 				],
 				"refer": [],
 				"priority": 0

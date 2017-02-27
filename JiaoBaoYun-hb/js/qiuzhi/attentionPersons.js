@@ -202,10 +202,10 @@ var setListener = function() {
 		var focusType;
 		switch(this.personInfo.FocusType) {
 			case 0:
+			case 2:
 				focusType = 1;
 				break;
 			case 1:
-			case 2:
 			case 3:
 				focusType = 0;
 				break;

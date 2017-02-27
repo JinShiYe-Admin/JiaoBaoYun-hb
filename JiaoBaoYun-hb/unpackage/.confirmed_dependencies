@@ -3,7 +3,8 @@
     "resources": [
       "css/qiuzhi/qiuzhi-sub.css",
       "js/qiuzhi/qiuzhi-sub.js",
-      "image/qiuzhi/channel-edu.png"
+      "image/qiuzhi/channel-edu.png",
+      "js/libs/crypto-js/crypto-js.js"
     ],
     "refer": [
       "html/qiuzhi/qiuzhi-question.html",
@@ -78,7 +79,12 @@
     "resources": [
       "js/utils/native.js",
       "js/quan/dynamiclistitem.js",
-      "css/icons-extra.css"
+      "css/icons-extra.css",
+      "js/mui.pullToRefresh.js",
+      "css/utils/pullToRefresh.css",
+      "js/mui.pullToRefresh.material.js",
+      "js/mui.lazyload.js",
+      "js/mui.lazyload.img.js"
     ],
     "refer": []
   },
@@ -193,7 +199,8 @@
       "html/homework/workdetail-tea.html",
       "html/homework/homework-publish.html",
       "html/homework/workdetail-stu.html",
-      "html/homework/workdetailTea-temporary.html"
+      "html/homework/workdetailTea-temporary.html",
+      "html/homework/homework-commented.html"
     ]
   },
   "html/qiuzhi/qiuzhi-question.html": {
@@ -361,5 +368,11 @@
       "css/qiuzhi/qiuzhi-expertAllComment.css"
     ],
     "refer": []
+  },
+  "html/homework/workdetailTea-temSub.html": {
+    "resources": [
+      "js/homework/homework_detail.js",
+      "css/homework/workdetail.css"
+    ]
   }
 }
