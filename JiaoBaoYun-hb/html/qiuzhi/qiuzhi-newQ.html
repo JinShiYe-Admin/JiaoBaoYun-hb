@@ -245,6 +245,7 @@
 				function getExpertsArray(code, UserId) {
 					//需要加密的数据
 					var comData = {
+						askId: '0',//问题ID，传入0，则不包括问题参数
 						userIds: UserId, //用户编号列表,Array,传入0，获取所有专家
 						channelId: code, //话题ID,传入0，获取所有话题数据
 						pageIndex: '1', //当前页数
