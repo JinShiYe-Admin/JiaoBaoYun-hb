@@ -557,10 +557,11 @@
 				//				click.push('评论');
 				tempIndex = this.id.replace('comment', '');
 				console.log('tempIndex====' + tempIndex)
-				var replyContainer = document.getElementById('footer');
-				document.getElementById('footer').className = 'mui-bar-tab';
-				replyContainer.style.display = 'block';
-				showSoftInput('#msg-content');
+				addComment();
+//				var replyContainer = document.getElementById('footer');
+//				document.getElementById('footer').className = 'mui-bar-tab';
+//				replyContainer.style.display = 'block';
+//				showSoftInput('#msg-content');
 				window.event.stopPropagation()
 
 			});
@@ -568,10 +569,11 @@
 			mui('.mui-table-view').on('tap', '.dynamic-comment-btn', function() {
 				tempIndex = this.id.replace('bottomComment', '');
 				console.log('tap====' + tempIndex)
-				var replyContainer = document.getElementById('footer');
-				document.getElementById('footer').className = 'mui-bar-tab';
-				replyContainer.style.display = 'block';
-				showSoftInput('#msg-content');
+				addComment();
+//				var replyContainer = document.getElementById('footer');
+//				document.getElementById('footer').className = 'mui-bar-tab';
+//				replyContainer.style.display = 'block';
+//				showSoftInput('#msg-content');
 				window.event.stopPropagation()
 			});
 
@@ -580,16 +582,23 @@
 
 				tempIndex = this.id.replace('replyComment', '');
 				console.log('tempIndex====' + tempIndex)
-				var replyContainer = document.getElementById('footer');
-				document.getElementById('footer').className = 'mui-bar-tab';
-				replyContainer.style.display = 'block';
-				showSoftInput('#msg-content');
+				addComment();
+//				var replyContainer = document.getElementById('footer');
+//				document.getElementById('footer').className = 'mui-bar-tab';
+//				replyContainer.style.display = 'block';
+//				showSoftInput('#msg-content');
 				window.event.stopPropagation()
 
 			});
 
 		}
+			function addComment() {
+				events.openNewWindowWithData('../show/add-comment.html', {
+					tempIndex: tempIndex,
+					zonepArray: zonepArray
+				})
 
+			}
 		//加载数据
 		function addData(index) {
 			//[[InfoList],[ImageList],[InteractionList]]动态的信息

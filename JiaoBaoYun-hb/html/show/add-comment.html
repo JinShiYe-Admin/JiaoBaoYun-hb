@@ -50,7 +50,11 @@
 				var name = inputComment.value; //评论内容
 				if(name == '') {
 					mui.toast('不允许为空');
-				} else {
+					return;
+				}else if(name.length > 200) {
+					mui.toast('不能超过200字');
+					return;
+				}else {
 					if(tempIndex.indexOf('-') >= 0) {
 						var indexArr = tempIndex.split('-');
 						var id = indexArr[0];
@@ -82,6 +86,7 @@
 							wd.close();
 							console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
 							mui.fire(plus.webview.currentWebview().opener(),'refreshShow')
+							mui.fire(plus.webview.currentWebview().opener(),'refreshZonep')
 							mui.back();
 
 						})
@@ -97,6 +102,7 @@
 							wd.close();
 							console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
 							mui.fire(plus.webview.currentWebview().opener(),'refreshShow')
+							mui.fire(plus.webview.currentWebview().opener(),'refreshZonep')
 							mui.back();
 
 						})
