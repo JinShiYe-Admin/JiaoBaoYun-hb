@@ -46,9 +46,9 @@
 			mui.init();
 			mui.plusReady(function() {
 				var self = plus.webview.currentWebview();
-				self.setStyle({
-					softinputMode:'adjustResize'
-				});
+//				self.setStyle({
+//					softinputMode:'adjustResize'
+//				});
 				var notes = document.getElementById("notes");
 				var height = plus.screen.resolutionHeight - (localStorage.getItem('StatusHeightNo') * 1 + 75 + 50); //屏幕高度-状态栏高度-顶部导航高度
 

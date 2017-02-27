@@ -321,7 +321,17 @@ var getMatchedImgs=function(files){
 	}
 	return mactchedFiles;
 }
-
+var getImgsInner = function(imgs) {
+	var imgInner = '';
+	var img_width = "33.33333%";
+	if(imgs && imgs.length > 0) {
+		for(var i in imgs) {
+			imgInner += '<img style="width:' + img_width + ';" src="' + imgs[i].ThumbUrl +
+				'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + imgs[i].FileType + '"/>';
+		}
+	}
+	return imgInner;
+}
 //刷新普通作业界面
 function refreshUI() {
 	var className = 'iconfont subject-icon ' + getHomeworkIcon(homeworkModel.Subject);
@@ -333,6 +343,7 @@ function refreshUI() {
 		HomeworkContents = '作业内容';
 	}
 	homeworkDetailNodes.content.innerText = HomeworkContents;
+	document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkResult.HomeworkResult.Files);
 	console.log(homeworkResult.HomeworkResult.Result)
 	homeworkDetailNodes.stuResult.innerText = homeworkResult.HomeworkResult.Result;
 	var Comment = homeworkResult.HomeworkResult.Comment;
