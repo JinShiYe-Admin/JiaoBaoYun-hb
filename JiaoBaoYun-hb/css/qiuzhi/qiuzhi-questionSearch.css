@@ -93,6 +93,9 @@ input[type=submit]:enabled:active {
 #history_container {
 	padding-top: 44px;
 }
+#history_container span{
+	color: #323232;
+}
 
 .mui-table-view-cell {
 	/*border-bottom: #EFEFEF solid 1px;*/
