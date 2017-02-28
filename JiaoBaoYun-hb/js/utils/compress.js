@@ -29,7 +29,7 @@ var compress = (function(mod) {
 					var message = error.message; // 错误描述信息
 					mui.toast('图片压缩失败！' + '错误编码：' + code + '描述信息：' + message);
 					console.log('图片压缩失败！' + JSON.stringify(error));
-
+					plus.nativeUI.closeWaiting();
 				})
 		});
 

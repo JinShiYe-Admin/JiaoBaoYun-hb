@@ -265,13 +265,13 @@
 					//改变顶部的城市
 					changeIndexHeader();
 				});
-				//				window.addEventListener('infoChanged', function() {
-				//					console.log('重现显示展现界面')
-				//					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-				//					pageIndex = 1;
-				//					pullFlag = 0;
-				//					requestData(cities[0].acode, 1);
-				//				});
+				window.addEventListener('infoChanged', function() {
+					console.log('重现显示展现界面')
+					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+					pageIndex = 1;
+					pullFlag = 0;
+					requestData(cities[0].acode, 1);
+				});
 
 				//---订制城市---start---
 				//进入订制城市界面

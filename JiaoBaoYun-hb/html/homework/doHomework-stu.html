@@ -10,6 +10,7 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/quan/custom-textarea.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<link href="../../css/utils/preview.css" rel="stylesheet" />
 	</head>
 
 	<body>
@@ -42,6 +43,8 @@
 		<script src="../../js/utils/cryption.js"></script>
 		<script src="../../js/utils/CloudFileUtil.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/mui.zoom.js"></script>
+		<script src="../../js/cloud/mui.previewimage.js"></script>
 		<script src="../../js/publicHomeworkProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
@@ -50,6 +53,7 @@
 			//作业model
 			var homeworkModel;
 			mui.plusReady(function() {
+				mui.previewImage();
 				window.addEventListener('homeworkInfo', function(e) {
 					CloudFileUtil.files = [];
 					personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
@@ -63,10 +67,14 @@
 					CloudFileUtil.files = [];
 					personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					homeworkModel = e.detail.data;
+					CloudFileUtil.rechargePicsData(homeworkModel.HomeworkResult.Files); 
 					console.log('修改作业数据：' + JSON.stringify(homeworkModel))
 					var textView = document.getElementById('input-content');
 					textView.value = homeworkModel.HomeworkResult.Result;
 					flag = 1;
+					for(var i in CloudFileUtil.files) {
+						CloudFileUtil.setPic(CloudFileUtil.files[i], 1);
+					}
 				})
 				events.addTap('publish', function() {
 					if(flag == 0) {
@@ -78,7 +86,10 @@
 				})
 				setListener();
 			});
+			
 			var setListener = function() {
+				//删除图标的点击事件
+				CloudFileUtil.setDelPicListener();
 				//录音键
 				events.addTap('take_pic', function() {
 					if(CloudFileUtil.files.length < 9) {
@@ -125,7 +136,7 @@
 					//				})
 					mui.toast('功能暂未开放！');
 				});
-				//录像按钮
+				//相册按钮
 				events.addTap('get_gallery', function() {
 					if(CloudFileUtil.files.length < 9) {
 						var picCount = 0; //上传图片计数

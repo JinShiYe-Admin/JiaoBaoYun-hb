@@ -243,7 +243,7 @@ function refreshUI(datasource) {
 		li.className = 'mui-table-view-cell';
 		li.innerHTML = createCommentsInner(datasource.Data[i]);
 		ul.appendChild(li);
-		var comments_zan=li.querySelector('icon-zanzan1');
+		var comments_zan=li.querySelector('.icon-zanzan1');
 		comments_zan.isLike=datasource.Data[i].IsLiked;
 		comments_zan.commentId=datasource.Data[i].TabId;
 		if(datasource.Data[i].IsLiked){
@@ -330,13 +330,13 @@ var getPicInner = function(picAddr) {
 var createCommentsInner = function(cell) {
 	var headImg = cell.UserImg ? cell.UserImg : cell.ReplyImg;
 	var personName = cell.UserName ? cell.UserName : cell.ReplyName;
-	var inner = '<a><span class="mui-icon iconfont icon-zanzan1 mui-pull-right"></span>' +
+	var inner = '<div><span class="mui-icon iconfont icon-zanzan1 mui-pull-right"></span>' +
 		'<div class="img-container"><img class="head-img" src="' + headImg + '"/></div>' +
 		'<div class="comment-container">' +
 		'<h4 class="comment-personName">' + personName + '</h4>' +
 		'<p class="comment-words">' + cell.CommentContent + '</p>' +
 		'<p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p>' +
-		'</div></a>'
+		'</div></div>'
 	return inner;
 }
 

@@ -48,7 +48,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="mui-scroll-wrapper mui-fullscreen  mui-hidden" style="z-index:0;" id="list-container">
+			<div class="mui-scroll-wrapper mui-fullscreen  mui-hidden" style="z-index:0;" id="list-container" >
 				<div class="mui-scroll">
 					<ul class="mui-table-view">
 						<!--<li class="mui-table-view-cell">
@@ -88,6 +88,16 @@
 			var answerArray = []; //搜索总数组
 			mui.init();
 			mui.plusReady(function() {
+				//注册列表项点击事件
+				mui('#list-container .mui-table-view').on('tap', 'li', function() {
+					//获取存储值
+					var tabid = JSON.parse(this.getAttribute('tabid'));
+					console.log('dianji 标题' + JSON.stringify(tabid));
+					//跳转界面
+					events.fireToPageNone('qiuzhi-question.html', 'askId', tabid);
+					events.fireToPageNone('qiuzhi-questionSub.html', 'askId', tabid);
+					plus.webview.getWebviewById('qiuzhi-question.html').show();
+				});
 
 				//注册点击搜索事件
 				//点击 将文本框内容存于变量 并执行下拉刷新所需逻辑
@@ -179,7 +189,6 @@
 				//加载搜索历史
 				LoadHistory();
 
-		
 			});
 			/**
 			 * 加载搜索历史记录
@@ -350,6 +359,7 @@
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
 				li.id = 'li' + index;
+				li.setAttribute("tabid", record.TabId);
 				//拼接显示
 
 				//				<li class="mui-table-view-cell">

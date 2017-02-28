@@ -95,7 +95,7 @@ p {
 }
 
 .mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
-	border: 1px solid #f3f3f3;
+	border: 1px solid #e4e4e4;
 	height: 7rem;
 	width: 8rem;
 	vertical-align: middle;
@@ -108,18 +108,29 @@ p {
 	color: #000000;
 	margin: 0px;
 }
+
+
 /*专家风采*/
-.export-show{
+
+.export-show {
 	color: #B7B7B7;
 }
+
+
 /*问题标题*/
-.ask-title{
-	color:#222222; 
+
+.ask-title {
+	color: #222222;
 }
+
+
 /*频道信息*/
-.question-bottom,.channel-title{
+
+.question-bottom,
+.channel-title {
 	color: #B7B7B7;
 }
-.mui-table-view-divider{
+
+.mui-table-view-divider {
 	background-color: #F8F9FB;
 }

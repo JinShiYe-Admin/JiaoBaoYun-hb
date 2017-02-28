@@ -93,12 +93,13 @@ mui.plusReady(function() {
 		console.log('传递的answerResultId：' + answerResultId);
 		events.fireToPageWithData('homework-commented.html', 'workDetail', teaInfo);
 	})
-	//删除图标的点击事件
-	mui('#pictures').on('tap', '.icon-guanbi', function() {
-		imgs.splice(imgs.indexOf(this.parentElement.img), 1);
-		//删除图片
-		pictures.removeChild(this.parentElement);
-	})
+//	//删除图标的点击事件
+//	mui('#pictures').on('tap', '.icon-guanbi', function() {
+//		CloudFileUtil.files.splice(CloudFileUtil.files.indexOf(this.parentElement.img), 1);
+//		//删除图片
+//		pictures.removeChild(this.parentElement);
+//	})
+	CloudFileUtil.setDelPicListener();
 	addPostEventListener();
 })
 var addPostEventListener = function() {

@@ -37,13 +37,13 @@
 				<p style="margin-left: 10px;font-size: 15px;height: 30px;padding-top: 5px;">发布到:</p>
 			</div>
 			<div style="margin-left: 10px;">
-				<div class="mui-checkbox mui-left mui-disabled" style="width:100; height:30px; float:left; display:inline;margin-left: -20px;">
+				<div id="zoneiv" class="mui-checkbox mui-left mui-disabled" style="width:100; height:30px; float:left; display:inline;margin-left: -20px;">
 					<label style="font-size: 15px;">空间</label>
-					<input name="checkbox" value="0" type="checkbox" disabled="disabled" style="margin-top: -7px;" checked>
+					<input id="zone" name="checkbox" value="0" type="checkbox" disabled="disabled" style="margin-top: -7px;" checked>
 				</div>
-				<div class="mui-checkbox mui-left" style="width:100; height:30px; float:left; display:inline; ">
+				<div id="showDiv"  class="mui-checkbox mui-left mui-disabled" style="width:100; height:30px; float:left; display:inline; ">
 					<label style="font-size: 15px;">展现</label>
-					<input id="chenckBox" name="checkbox" value="1" type="checkbox" style="margin-top: -7px;">
+					<input id="show" name="checkbox" value="1" type="checkbox" disabled="disabled" style="margin-top: -7px;" checked>
 				</div>
 			</div>
 			<div id="pictures" style="float: left;background-color: transparent;width: 320px;"></div>
@@ -68,7 +68,10 @@
 	</script>
 	<script>
 		var utids = [];
+		var pageFlag;;
 		mui.plusReady(function() {
+			pageFlag = plus.webview.currentWebview().data
+							console.log(JSON.stringify(pageFlag));
 			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
 
 			getGroupList();
@@ -81,6 +84,23 @@
 			//			});
 			var title = document.getElementById('title');
 			title.innerText = userInfo.unick;
+			if(pageFlag == 'jxq') {
+				console.log('jxq')
+				document.getElementById("zone").disabled = "disabled"
+				document.getElementById("zone").checked = true;
+				document.getElementById("show").disabled = ""
+				document.getElementById("show").checked = false;
+				document.getElementById("zoneiv").className = "mui-checkbox mui-left mui-disabled"
+				document.getElementById("showDiv").className = "mui-checkbox mui-left"
+			}else{
+				console.log('zx')
+				document.getElementById("zone").disabled = ""
+				document.getElementById("zone").checked = false;
+				document.getElementById("show").disabled = "disabled"
+				document.getElementById("show").checked = true;
+				document.getElementById("zoneiv").className = "mui-checkbox mui-left"
+				document.getElementById("showDiv").className = "mui-checkbox mui-left mui-disabled"
+			}
 
 			//				events.addTap('take_pic', function() {
 			//					mui.toast('此功能暂未开放');
@@ -141,6 +161,8 @@
 
 			//发布按钮
 			events.addTap('publish', function() {
+				
+				
 				var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				console.log(tempInfo.uarea.acode)
 
@@ -171,7 +193,6 @@
 					pubArea = tempInfo.uarea.acode
 				}
 
-
 				var postData = {
 					userId: userInfo.utid,
 					msgContent: tempText,
@@ -199,7 +220,12 @@
 					mui.toast('发布成功！');
 					console.log('推送个人空间成功' + JSON.stringify(data));
 					textView.value = '';
-					events.fireToPageNone('zonep_sub.html', 'refreshZonep');
+					if(pageFlag == 'jxq') {
+						events.fireToPageNone('zonep_sub.html', 'refreshZonep');
+					} else {
+						events.fireToPageNone('../show/show_home_1.html', 'infoChanged');
+					}
+
 					mui.back();
 
 				})
@@ -276,50 +302,50 @@
 		 * 并显示在界面上
 		 */
 		events.addTap('take_pic', function() {
-				if(CloudFileUtil.files.length < 9) {
-					camera.getPic(camera.getCamera(), function(picPath) {
-						plus.nativeUI.showWaiting(storageKeyName.WAITING);
-						var saveSpace = storageKeyName.PERSONALSPACE; //保存空间
-						var data = CloudFileUtil.getSingleUploadDataOptions(picPath, 6, 200, 0, saveSpace);
-						CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-							console.log("获取的数据：" + JSON.stringify(datas));
-							if(datas.Status == 1) {
-								var tokenInfo = datas.Data;
-								//压缩照片
-								compress.compressPIC(picPath, function(event) {
-									//上传文件
-									CloudFileUtil.uploadFile(tokenInfo, event.target, function(uploadData, status) {
-										console.log(JSON.stringify(uploadData));
-										var img = { //图片信息
-											url: tokenInfo.Domain + tokenInfo.Key,
-											thumb: tokenInfo.OtherKey[data.thumbKey],
-											type: 1
-										}
-										//关闭等待框
-										plus.nativeUI.closeWaiting();
-										//放置图片
-										CloudFileUtil.setPic(img);
-									});
-								})
+			if(CloudFileUtil.files.length < 9) {
+				camera.getPic(camera.getCamera(), function(picPath) {
+					plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var saveSpace = storageKeyName.PERSONALSPACE; //保存空间
+					var data = CloudFileUtil.getSingleUploadDataOptions(picPath, 6, 200, 0, saveSpace);
+					CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+						console.log("获取的数据：" + JSON.stringify(datas));
+						if(datas.Status == 1) {
+							var tokenInfo = datas.Data;
+							//压缩照片
+							compress.compressPIC(picPath, function(event) {
+								//上传文件
+								CloudFileUtil.uploadFile(tokenInfo, event.target, function(uploadData, status) {
+									console.log(JSON.stringify(uploadData));
+									var img = { //图片信息
+										url: tokenInfo.Domain + tokenInfo.Key,
+										thumb: tokenInfo.OtherKey[data.thumbKey],
+										type: 1
+									}
+									//关闭等待框
+									plus.nativeUI.closeWaiting();
+									//放置图片
+									CloudFileUtil.setPic(img);
+								});
+							})
 
-							}
-						}, function(xhr, type, errorThrown) {
-							console.log("错误类型：" + type + errorThrown);
-							plus.nativeUI.closeWaiting(); //关闭等待框
-						});
-					})
-				} else {
-					mui.toast('上传图片附件不得多于9张！');
-				}
-			});
+						}
+					}, function(xhr, type, errorThrown) {
+						console.log("错误类型：" + type + errorThrown);
+						plus.nativeUI.closeWaiting(); //关闭等待框
+					});
+				})
+			} else {
+				mui.toast('上传图片附件不得多于9张！');
+			}
+		});
 		var imgs = [];
 
-			//删除图标的点击事件
-	mui('#pictures').on('tap', '.icon-guanbi', function() {
-		imgs.splice(imgs.indexOf(this.parentElement.img), 1);
-		//删除图片111
-		pictures.removeChild(this.parentElement);
-	})
+		//删除图标的点击事件
+		mui('#pictures').on('tap', '.icon-guanbi', function() {
+			imgs.splice(imgs.indexOf(this.parentElement.img), 1);
+			//删除图片111
+			pictures.removeChild(this.parentElement);
+		})
 		/**
 		 * 获取接口数据文件及缩略图
 		 * encType: '',//附件类型,1图片2音视频3仅文字
@@ -352,7 +378,6 @@
 			}
 			return TAs;
 		}
-
 	</script>
 
 </html>

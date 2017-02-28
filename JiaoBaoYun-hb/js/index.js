@@ -203,7 +203,7 @@ mui.plusReady(function() {
 				break;
 			case '../show/show_home_1.html': //展现
 				addListIcon(title_left, '../show/show_home_1.html');
-				addShai(iconContainer);
+				addShai(iconContainer,'zx');
 				break;
 			case '../qiuzhi/qiuzhi_home.html': //求知
 				addQiuZhiExpertSearch(iconContainer);
@@ -218,14 +218,14 @@ mui.plusReady(function() {
 	 * @param {Object} container
 	 */
 	var addZoneIcon = function(container) {
-		addShai(container);
+		addShai(container,'jxq');
 		addAboutMe(container);
 	}
 	/**
 	 * 加载晒一晒
 	 * @param {Object} container
 	 */
-	var addShai = function(container) {
+	var addShai = function(container,name) {
 		var pubDynamic = document.createElement('a');
 		pubDynamic.id = 'pubDynamic'
 		pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
@@ -235,7 +235,12 @@ mui.plusReady(function() {
 		pubDynamic.innerHTML = '晒一晒'
 		container.appendChild(pubDynamic);
 		events.addTap('pubDynamic', function() {
-			events.openNewWindowWithData('../quan/pub-dynamic.html', 'FromIndex');
+			if(name == 'jxq'){
+				events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
+			}else{
+				events.openNewWindowWithData('../quan/pub-dynamic.html', 'zx');
+			}
+			
 		})
 	}
 	/**
@@ -275,7 +280,7 @@ mui.plusReady(function() {
 		pubDynamic.innerHTML = '搜索'
 		container.appendChild(pubDynamic);
 		events.addTap('expertSearch', function() {
-			events.openNewWindowWithData('../qiuzhi/qiuzhi-questionSearch.html', 'FromIndex');
+			events.openNewWindowWithData('../qiuzhi/qiuzhi-questionSearch.html', 'jxq');
 		})
 	}
 	/**
@@ -300,7 +305,7 @@ mui.plusReady(function() {
 	})
 	var pubDynamic = document.getElementById('pubDynamic');
 	events.addTap('pubDynamic', function() {
-		events.openNewWindowWithData('../quan/pub-dynamic.html', 'FromIndex');
+		events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
 	});
 
 	//自定义事件，模拟点击“首页选项卡”
