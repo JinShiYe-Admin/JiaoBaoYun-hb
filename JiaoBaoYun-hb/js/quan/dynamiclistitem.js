@@ -222,7 +222,10 @@ var dynamiclistitem = (function($, mod) {
 		liElement.appendChild(div);
 
 		ulElement.appendChild(liElement);
+//		console.log(document.getElementById("topList").innerHTML);
+//		console.log(document.getElementById("sliderGroup").innerHTML);
 	};
+	
 
 	return mod;
 
