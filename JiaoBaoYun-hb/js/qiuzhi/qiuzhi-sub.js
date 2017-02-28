@@ -118,7 +118,7 @@ function getExpertsArray(channelId) {
 				console.log('专家循环遍历后的值：' + JSON.stringify(tempRspData));
 				//刷新界面
 				for(var i = 0; i < tempRspData.length; i++) {
-					expertsItem(tempRspData[i]);
+					expertsItem(channelId, tempRspData[i]);
 				}
 				wd2.close();
 			});
@@ -131,10 +131,13 @@ function getExpertsArray(channelId) {
 
 /**
  * 放置专家数据
+ * @param {Object} channelId 话题id
+ * @param {Object} data 专家数据
  */
-function expertsItem(data) {
+function expertsItem(channelId, data) {
+	console.log('expertsItem ' + channelId + '|' + JSON.stringify(data));
 	var element = document.createElement('a');
-	element.id = 'experts_' + data.TabId;
+	element.id = 'experts_' + channelId + '_' + data.TabId;
 	element.className = 'mui-control-item';
 	element.setAttribute('data-info', JSON.stringify(data));
 	element.innerHTML = '<img src="' + updateHeadImg(data.uimg, 2) + '" />' +
