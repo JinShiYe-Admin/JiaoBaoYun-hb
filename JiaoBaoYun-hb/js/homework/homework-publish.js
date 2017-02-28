@@ -9,7 +9,7 @@ var subjectsContainer = document.getElementById('subjects');
 //个人id
 var personalUTID;
 mui.init();
-mui.plusReady(function() {
+mui.plusReady(function(){
 	events.preload('classes-select.html', 200);
 	window.addEventListener('postClasses', function(e) {
 		CloudFileUtil.files = [];
@@ -27,10 +27,10 @@ mui.plusReady(function() {
 		requestClassStudents();
 		//科目
 		requestSubjectList(setSubjects);
-	})
+	}); 
 	events.addTap('select-classes', function() {
 		events.fireToPageWithData('classes-select.html', 'postClasses', selectClassArray);
-	})
+	}) 
 	CloudFileUtil.setDelPicListener();
 	/**
 	 * 监听选择班级后的返回数据
@@ -47,11 +47,7 @@ mui.plusReady(function() {
 	setSubmitEvent();
 	var lastEditRange = null;
 	var publish_container = document.getElementById('publish-content');
-	//录音键
-	//		events.addTap('getRecord', function() {
-	////				startRecord()
-	//				mui.toast('功能暂未开放！');
-	//			})
+
 	//相册按钮
 	events.addTap('get_gallery', function() {
 		if(CloudFileUtil.files.length < 9) {
@@ -96,53 +92,52 @@ mui.plusReady(function() {
 			mui.toast('上传图片附件不得多于9张！');
 		}
 	});
-}
-//相机按钮
-events.addTap('getImg', function() {
-	if(CloudFileUtil.files.length < 9) {
-		camera.getPic(camera.getCamera(), function(picPath) {
-			plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			var saveSpace = storageKeyName.CLASSSPACE; //保存空间
-			compress.compressPIC(picPath, function(event) {
-				var localPath = event.target;
-				var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 6, 200, 0, saveSpace);
-				CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-					console.log("获取的数据：" + JSON.stringify(datas));
-					if(datas.Status == 1) {
-						var tokenInfo = datas.Data;
+	//相机按钮
+	events.addTap('getImg', function() {
+		if(CloudFileUtil.files.length < 9) {
+			camera.getPic(camera.getCamera(), function(picPath) {
+				plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				var saveSpace = storageKeyName.CLASSSPACE; //保存空间
+				compress.compressPIC(picPath, function(event) {
+					var localPath = event.target;
+					var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 6, 200, 0, saveSpace);
+					CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+						console.log("获取的数据：" + JSON.stringify(datas));
+						if(datas.Status == 1) {
+							var tokenInfo = datas.Data;
 
-						//上传文件
-						CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
-							console.log(JSON.stringify(uploadData));
-							var img = { //图片信息
-								url: tokenInfo.Domain + tokenInfo.Key,
-								thumb: tokenInfo.OtherKey[data.thumbKey],
-								type: 1
-							}
-							//关闭等待框
-							plus.nativeUI.closeWaiting();
-							//放置图片
-							CloudFileUtil.setPic(img);
-						});
-					}
+							//上传文件
+							CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
+								console.log(JSON.stringify(uploadData));
+								var img = { //图片信息
+									url: tokenInfo.Domain + tokenInfo.Key,
+									thumb: tokenInfo.OtherKey[data.thumbKey],
+									type: 1
+								}
+								//关闭等待框
+								plus.nativeUI.closeWaiting();
+								//放置图片
+								CloudFileUtil.setPic(img);
+							});
+						}
 
-				}, function(xhr, type, errorThrown) {
-					console.log("错误类型：" + type + errorThrown);
-					plus.nativeUI.closeWaiting(); //关闭等待框
-				});
+					}, function(xhr, type, errorThrown) {
+						console.log("错误类型：" + type + errorThrown);
+						plus.nativeUI.closeWaiting(); //关闭等待框
+					});
+				})
 			})
-		})
-	} else {
-		mui.toast('上传图片附件不得多于9张！');
-	}
-})
-//录像按钮
-events.addTap('getVideo', function() {
-	//			camera.getVideo(camera.getCamera(), function(videoPath) {
-	//				console.log("videoPath:" + videoPath);
-	//			})
-	mui.toast('功能暂未开放！');
-});
+		} else {
+			mui.toast('上传图片附件不得多于9张！');
+		}
+	})
+	//录像按钮
+	events.addTap('getVideo', function() {
+		//			camera.getVideo(camera.getCamera(), function(videoPath) {
+		//				console.log("videoPath:" + videoPath);
+		//			})
+		mui.toast('功能暂未开放！');
+	});
 })
 //17.获取所有科目列表
 function requestSubjectList(callback) {
