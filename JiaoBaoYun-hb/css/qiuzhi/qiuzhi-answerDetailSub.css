@@ -101,3 +101,7 @@
 .isNotLike{
 	color: #000000;
 }
+/*评论内容*/
+.comment-words{
+	word-wrap: break-word;
+}
