@@ -330,10 +330,10 @@ var getPicInner = function(picAddr) {
 var createCommentsInner = function(cell) {
 	var headImg = cell.UserImg ? cell.UserImg : cell.ReplyImg;
 	var personName = cell.UserName ? cell.UserName : cell.ReplyName;
-	var inner = '<div><span class="mui-icon iconfont icon-zanzan1 mui-pull-right"></span>' +
+	var inner = '<div><a class="mui-icon iconfont icon-zanzan1 mui-pull-right"></a>' +
 		'<div class="img-container"><img class="head-img" src="' + headImg + '"/></div>' +
 		'<div class="comment-container">' +
-		'<h4 class="comment-personName">' + personName + '</h4>' +
+		'<h4 class="comment-personName single-line">' + personName + '</h4>' +
 		'<p class="comment-words">' + cell.CommentContent + '</p>' +
 		'<p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p>' +
 		'</div></div>'
@@ -345,7 +345,7 @@ var createCommentsInner = function(cell) {
  */
 var setListeners = function() {
 	//评论的点赞按钮点击事件
-	mui(".mui-table-view").on('tap', 'icon-zanzan1', function() {
+	mui(".mui-table-view").on('tap', '.icon-zanzan1', function() {
 		setIsLikeComment(this);
 	})
 	//回答的点赞按钮的点赞事件
@@ -393,6 +393,7 @@ var setIsLikeAnswer = function(item) {
  * @param {Object} 点赞的item
  */
 var setIsLikeComment = function(item) {
+	var wd=events.showWaiting();
 	postDataQZPro_setCommentLike({
 		commentId: item.commentId, //评论ID
 		userId: selfId, //点赞用户ID
