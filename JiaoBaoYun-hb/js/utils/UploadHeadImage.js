@@ -12,8 +12,10 @@ var UploadHeadImage = (function($, mod) {
 	var imageType = null;
 	//获取七牛上传token的url
 	var getUploadTokenUrl = window.storageKeyName.QNGETUPTOKENHEADIMGE;
-	//存放头像的七牛域名
-	var domain = window.storageKeyName.QNHEADIMGEDOMAIN;
+	//私有空间或公有空间
+	var mainSpace = window.storageKeyName.QNPUBSPACE;
+	//头像上传的空间
+	var uploadSpace = window.storageKeyName.HEADIMAGE;
 	//成功的回调
 	var successCallBack;
 	//失败的回调
@@ -31,15 +33,15 @@ var UploadHeadImage = (function($, mod) {
 		var titleStr = '';
 		switch(imageType) {
 			case 0: //个人头像
-				fileName = 'headimge' + headData.id + '.png';
+				fileName = 'headimage' + headData.id + '.png';
 				titleStr = '选择修改个人头像的方式';
 				break;
 			case 1: //资料头像
-				fileName = 'stuheadimge' + headData.id + '.png';
+				fileName = 'stuheadimage' + headData.id + '.png';
 				titleStr = '选择修改学生资料头像的方式';
 				break;
 			case 2: //群头像
-				fileName = 'qunheadimge' + headData.id + '.png';
+				fileName = 'qunheadimage' + headData.id + '.png';
 				titleStr = '选择修改群头像的方式';
 				break;
 			default:
@@ -101,14 +103,12 @@ var UploadHeadImage = (function($, mod) {
 				//拍照成功的回调
 				//capturedFile ：图片的路径
 				//显示等待窗口
-				var wd=plus.nativeUI.showWaiting('正在加载中', {
-					back: 'none'
-				});
+				var wd = events.showWaiting();
 				//console.log('拍照成功,图片的路径为：' + capturedFile);
 				//将本地URL路径转换成平台绝对路径
 				//capturedFile = 'file://' + plus.io.convertLocalFileSystemURL(capturedFile);
 				//console.log('转换成平台绝对路径,图片的路径为：' + capturedFile);
-				compressImage(wd,capturedFile) //压缩图片
+				compressImage(wd, capturedFile) //压缩图片
 			},
 			function(error) {
 				// 拍照失败的回调
@@ -142,12 +142,10 @@ var UploadHeadImage = (function($, mod) {
 		plus.gallery.pick(function(file) {
 
 			//显示等待窗口
-			var wd=plus.nativeUI.showWaiting('加载中...', {
-				back: 'none'
-			});
+			var wd = events.showWaiting();
 			console.log('从相册选取图片成功,图片的路径为：' + file);
 			//openImage(file); //打开新页面查看图片
-			compressImage(wd,file) //压缩图片
+			compressImage(wd, file) //压缩图片
 		}, function(error) {
 			//从相册选取图片失败的回调
 			var code = error.code; // 错误编码
@@ -171,7 +169,7 @@ var UploadHeadImage = (function($, mod) {
 	}
 
 	//压缩图片并且在新页面显示压缩后的图片
-	function compressImage(wd,filepath) {
+	function compressImage(wd, filepath) {
 		//console.log('压缩图片,图片的路径为：' + filepath);
 		plus.zip.compressImage({
 				src: filepath, //压缩转换原始图片的路径
@@ -187,7 +185,7 @@ var UploadHeadImage = (function($, mod) {
 				var height = event.height; // 压缩转换后图片的实际高度，单位为px
 				console.log('压缩图片成功---target:' + target + '|size:' + AndroidFileSystem.readSize(size) + '|width:' + width + '|height:' + height);
 				//openImage(target); //打开新页面查看图片
-				uploadHeadImge(wd,target);
+				uploadHeadImge(wd, target);
 			},
 			function(error) {
 				//图片压缩失败
@@ -205,101 +203,114 @@ var UploadHeadImage = (function($, mod) {
 	 * 打开新页面查看选择的图片
 	 * @param {Object} path 图片路径
 	 */
-	function openImage(path) {
-		events.openNewWindowWithData('studentpersonalimge.html', {
-			path: path
-		});
-	}
+	//	function openImage(path) {
+	//		events.openNewWindowWithData('studentpersonalimge.html', {
+	//			path: path
+	//		});
+	//	}
 
 	/**
 	 * 上传资料头像
 	 */
-	function uploadHeadImge(wd,fPath) {
-		CloudFileUtil.getQNUpToken(getUploadTokenUrl, fileName, function(data) {
-			var QNUptoken = data.uptoken;
-			console.log('七牛上传token:' + QNUptoken);
-			//关闭等待窗口
-			//plus.nativeUI.closeWaiting();
-			//var size = plus.nativeUI.showWaiting('正在上传');
-			CloudFileUtil.upload(fPath, QNUptoken, fileName, function(upload, status) {
-				//上传任务完成的监听
-				console.log('上传任务完成');
-				console.log('上传任务完成:' + status);
-				console.log('上传任务完成:' + JSON.stringify(upload));
-				//size.close();
-				//plus.nativeUI.closeWaiting();
-				if(status == 200) { //上传任务成功
-					//头像类型,个人头像0，资料头像1，群头像2
-					switch(imageType) {
-						case 0: //个人头像
-							changeHeadImge(wd,fileName);
+	function uploadHeadImge(wd, fPath) {
+		var getToken = {
+			type: '0', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件
+			QNFileName: fileName, //str 必填 存放到七牛的文件名
+			appId: 5, //int 必填 项目id
+			mainSpace: mainSpace, //str 必填 私有空间或公有空间
+			uploadSpace: uploadSpace, //str 必填  上传的空间
+		}
+		CloudFileUtil.getQNUpToken(getUploadTokenUrl, getToken, function(data) {
+			var QNUptoken = data.data; //token数据
+			var configure = data.configure; //获取token的配置信息
+			console.log('七牛上传token:' + JSON.stringify(QNUptoken));
+			if(QNUptoken.Status == 0) { //失败
+				mui.toast('获取上传凭证失败 ' + QNUptoken.Message);
+				console.log('### ERROR ### 请求上传凭证失败' + QNUptoken.Message);
+				wd.close();
+			} else {
+				CloudFileUtil.upload(fPath, QNUptoken.Data.Token, QNUptoken.Data.Key, function(upload, status) {
+					//上传任务完成的监听
+					console.log('上传任务完成:' + status);
+					console.log('上传任务完成:' + JSON.stringify(upload));
+					if(status == 200) { //上传任务成功
+						//头像类型,个人头像0，资料头像1，群头像2
+						var thumb = QNUptoken.Data.OtherKey[configure.thumbKey]; //缩略图地址
+						var domain = QNUptoken.Data.Domain + QNUptoken.Data.Key; //文件地址
+						console.log(thumb);
+						console.log(domain);
+						switch(imageType) {
+							case 0: //个人头像
+								changeHeadImge(wd, domain, thumb);
+								break;
+							case 1: //资料头像
+								changeSutHeadImge(wd, domain, thumb);
+								break;
+							case 2: //群头像
+								changeQunHeadImge(wd, domain, thumb);
+							default:
+								break;
+						}
+					} else { //上传失败
+						errorCallBack(upload.responseText);
+						wd.close();
+					}
+				}, function(upload, status) {
+					//上传任务状态监听
+					//上传任务的标识
+					var id = upload.__UUID__;
+					//已完成上传数据的大小
+					var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
+					//上传数据的总大小
+					var totalSize = AndroidFileSystem.readSize(upload.totalSize);
+					//上传任务的状态
+					var uploadState = upload.state;
+					switch(uploadState) {
+						case 0: //上传任务开始调度
+							console.log('上传任务开始调度:|id:' + id + '|uploadState:' + uploadState);
 							break;
-						case 1: //资料头像
-							changeSutHeadImge(wd,fileName);
+						case 1: //上传任务开始请求
+							console.log('上传任务开始请求:|id:' + id + '|uploadState:' + uploadState);
 							break;
-						case 2: //群头像
-							changeQunHeadImge(wd,fileName);
+						case 2: //上传任务请求已经建立
+							console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
+							break;
+						case 3: //上传任务提交数据
+							//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
+							//var num = parseInt(upload.uploadedSize / upload.totalSize * 100) + '%';
+							//console.log(num);
+							//size.setTitle('正在上传 ' + num);
+							break;
+						case 4: //上传任务已完成
+							//console.log('上传任务已完成:|id:' + id + '|uploadState:' + uploadState);
+							break;
+						case 5: //上传任务已暂停
+							console.log('上传任务已暂停:|id:' + id + '|uploadState:' + uploadState);
+							break;
 						default:
+							console.log('上传任务状态监听:其他状态:' + uploadState);
 							break;
 					}
-				} else { //上传失败
-					errorCallBack('上传失败');
-					wd.close();
-				}
-			}, function(upload, status) {
-				//上传任务状态监听
-				//上传任务的标识
-				var id = upload.__UUID__;
-				//已完成上传数据的大小
-				var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
-				//上传数据的总大小
-				var totalSize = AndroidFileSystem.readSize(upload.totalSize);
-				//上传任务的状态
-				var uploadState = upload.state;
-				switch(uploadState) {
-					case 0: //上传任务开始调度
-						console.log('上传任务开始调度:|id:' + id + '|uploadState:' + uploadState);
-						break;
-					case 1: //上传任务开始请求
-						console.log('上传任务开始请求:|id:' + id + '|uploadState:' + uploadState);
-						break;
-					case 2: //上传任务请求已经建立
-						console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
-						break;
-					case 3: //上传任务提交数据
-						//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
-						//var num = parseInt(upload.uploadedSize / upload.totalSize * 100) + '%';
-						//console.log(num);
-						//size.setTitle('正在上传 ' + num);
-						break;
-					case 4: //上传任务已完成
-						//console.log('上传任务已完成:|id:' + id + '|uploadState:' + uploadState);
-						break;
-					case 5: //上传任务已暂停
-						console.log('上传任务已暂停:|id:' + id + '|uploadState:' + uploadState);
-						break;
-					default:
-						console.log('上传任务状态监听:其他状态:' + uploadState);
-						break;
-				}
-			}, function(task) {
-				//上传任务创建成功的回调
-				task.start();
-			});
+				}, function(task) {
+					//上传任务创建成功的回调
+					task.start();
+				});
+			}
 		}, function(xhr, type, errorThrown) {
 			wd.close();
-			mui.toast('获取七牛上传token失败：' + type);
-			console.log('获取七牛上传token失败：' + type);
+			mui.toast('请求上传凭证失败 ' + type);
+			console.log('### ERROR ### 请求上传凭证失败' + type);
 		});
 	}
 
 	/**
 	 * 修改群头像
-	 * @param {Object} fileName 头像在七牛上的名称
+	 * @param { Object } domain 头像在七牛上的文件地址
+	 * @param { Object } thumb 头像在七牛上的文件缩略图地址
 	 */
-	function changeQunHeadImge(wd,fileName) {
+	function changeQunHeadImge(wd, domain, thumb) {
 		var myDate = new Date();
-		var imgeURL = domain + fileName + '?' + myDate.getTime();
+		var imgeURL = thumb + '?' + myDate.getTime();
 		//8.用户修改群各项信息
 		//需要参数
 		var comData2 = {
@@ -310,14 +321,14 @@ var UploadHeadImage = (function($, mod) {
 		};
 		//返回值model：model_groupList
 		// 等待的对话框
-//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING, {
-//			back: 'none'
-//		});
+		//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING, {
+		//			back: 'none'
+		//		});
 		postDataPro_PostReGinfo(comData2, wd, function(data) {
 			console.log('8_PostReGinfo:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				//成功的回调
-				successCallBack(imgeURL);
+				successCallBack(domain + '?' + myDate.getTime());
 			} else {
 				errorCallBack(data);
 			}
@@ -327,25 +338,23 @@ var UploadHeadImage = (function($, mod) {
 
 	/**
 	 * 修改个人头像
-	 * @param {Object} fileName 头像在七牛上的名称
+	 * @param { Object } domain 头像在七牛上的文件地址
+	 * @param { Object } thumb 头像在七牛上的文件缩略图地址
 	 */
-	function changeHeadImge(wd,fileName) {
+	function changeHeadImge(wd, domain, thumb) {
 		var myDate = new Date();
-		var imgeURL = domain + fileName + '?' + myDate.getTime();
+		var imgeURL = thumb + '?' + myDate.getTime();
 		//6.用户修改各项用户信息
 		//调用方法
 		var comData = {
 			vtp: 'uimg', //uimg(头像),utxt(签名),unick(昵)称,usex(性别),uemail(邮件)
 			vvl: imgeURL //对应的值
 		};
-//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING, {
-//			back: 'none'
-//		});
 		postDataPro_PostReUinf(comData, wd, function(data) {
 			console.log('6_PostReUinf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				//成功的回调
-				successCallBack(imgeURL);
+				successCallBack(domain + '?' + myDate.getTime());
 			} else {
 				errorCallBack(data);
 			}
@@ -355,11 +364,12 @@ var UploadHeadImage = (function($, mod) {
 
 	/**
 	 * 修改学生资料头像
-	 * @param {Object} fileName 头像在七牛上的名称
+	 * @param {Object} domain 头像在七牛上的文件地址
+	 * @param {Object} thumb 头像在七牛上的文件缩略图地址
 	 */
-	function changeSutHeadImge(wd,fileName) {
+	function changeSutHeadImge(wd, domain, thumb) {
 		var myDate = new Date();
-		var stuImgePath = domain + fileName + '?' + myDate.getTime();
+		var stuImgePath = thumb + '?' + myDate.getTime();
 		//23.通过用户资料ID或关联ID更改各类型资料
 		//所需参数
 		var comData = {
@@ -374,17 +384,11 @@ var UploadHeadImage = (function($, mod) {
 			ustuid: '', //关联ID,更新与家长关系必填,其他留空
 			urel: '' //关系,更新与家长关系必填,其他留空
 		};
-		//返回值model：model_groupList
-		// 等待的对话框
-//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING, {
-//			back: 'none'
-//		});
 		postDataPro_PostReStu(comData, wd, function(data) {
-
 			console.log('23_PostReStu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				//成功的回调
-				successCallBack(stuImgePath);
+				successCallBack(domain + '?' + myDate.getTime());
 			} else {
 				errorCallBack(data);
 			}

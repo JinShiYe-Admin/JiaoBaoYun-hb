@@ -37,24 +37,6 @@ mui.plusReady(function() {
 		});
 	})
 
-	/**
-	 * 拍照
-	 */
-	//		events.addTap('take-pic',function(){
-	//			camera.getPic(camera.getCamera(),function(picPath){
-	//				console.log(picPath);
-	//				getFileByPath(picPath)
-	//			})
-	//		})
-	/**
-	 * 打开相册
-	 */
-	//		events.addTap('open-album',function(){
-	//			gallery.getSinglePic(function(picPath){
-	//				getFileByPath(picPath)
-	//			})
-	//		})
-
 	//监听事件 传值 打开新页面
 	mui('.mui-table-view').on('tap', '.open-newPage', function() {
 		if(!(parseInt(this.getAttribute('pos')) == 10 && pInfo.uname && pInfo.uname != null)) {
@@ -93,9 +75,7 @@ mui.plusReady(function() {
 			document.getElementById("img").src = successCB;
 			events.fireToPageNone('mine.html', 'infoChanged');
 			events.fireToPageNone('../index/index.html', 'infoChanged');
-			events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 			events.fireToPageNone('classSpace-sub.html', 'infoChanged');
-			//events.fireToPageNone('../cloud/cloud_home.html', 'personChanged');
 			wd.close();
 		}, 2000);
 	}, function(errorCB) {

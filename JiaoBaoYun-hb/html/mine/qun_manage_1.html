@@ -71,11 +71,11 @@
 			<h1 id="title" class="mui-title"></h1>
 			<a id="addData" class="mui-icon iconfont icon-ruqun mui-pull-right" style="display: none;"></a>
 		</header>
-		<div class="mui-content">
+		<div id="content" class="mui-content">
 			<span id="noqun" class="mui-icon mui-icon-plus qun-add" style="display: none;position: absolute;top: 80px;">新增群按钮</span>
 			<div id="qun_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="visibility: hidden;">
 				<div id="qunList" class="mui-scroll">
-					<div id="qunAdd" class="mui-icon mui-icon-plus qun-add"></div>
+					<div id="qunAdd" class="mui-icon mui-icon-plus qun-add"style="margin-top: 3px;"></div>
 				</div>
 			</div>
 			<div id="slider_group" class="mui-slider-group" style="visibility: hidden;">
@@ -124,7 +124,8 @@
 			var inviteOrCreate; //记录点击邀请或创建资料时的数据
 
 			mui.plusReady(function() {
-				events.closeWaiting();
+				document.getElementById("content").style.marginTop = localStorage.getItem('StatusHeightNo') * 1 + 1 + 'px'
+
 				if(plus.webview.getWebviewById('group-pInfo.html') == null) {
 					events.preload('../quan/group-pInfo.html');
 				}
@@ -840,7 +841,7 @@
 					//获取学生关联的人员
 					var stuids = stuid.join(',');
 					if(stuids != '') {
-						getGuanLian(stuids,gid);
+						getGuanLian(stuids, gid);
 					}
 					wd.close();
 				});
