@@ -321,6 +321,11 @@ function requestAskDetail() {
 						for(var item in tempRspData) {
 							//当前循环的model
 							var tempModel0 = tempRspData[item];
+							//判断是否为匿名
+							if (tempModel0.IsAnonym == 1) {
+								tempModel.uimg = updateHeadImg('', 2);
+								tempModel.unick = '匿名用户';
+							}
 							//对比id是否一致
 							if(tempModel0.AnswerMan == tempModel.utid) {
 								//合并
