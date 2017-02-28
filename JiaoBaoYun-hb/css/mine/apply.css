@@ -118,3 +118,26 @@ a>p {
 .mui-input-row .mui-input-clear~.mui-icon-clear{
 	right: 20%;
 }
+.apply-container,.qun-portrait,.apply-info,.apply-state{
+	display: flex;
+	display: -webkit-flex;
+}
+.qun-portrait{
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
+}
+.apply-container{
+	width: 100%;
+	flex-direction: row;
+	align-content: center;
+}
+.apply-info{
+	flex-grow: 1;
+	align-items: center;
+	color: #000000;
+}
+.apply-state{
+	min-width: 4rem;
+	align-items: center;
+}

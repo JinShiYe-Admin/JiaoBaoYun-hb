@@ -92,15 +92,15 @@
 			 *		stat:''//状态，0待审,1通过,2被拒绝
 			 */
 			var createInner = function(cell) {
-				var inner = '<a href="#chose-roles" class="" gid="' + cell.gid + '">' +
-					'<img src="' + getGimg(cell) + '"/>'
+				var inner = '<div href="#chose-roles" class="apply-container" gid="' + cell.gid + '">' +
+					'<img class="qun-portrait" src="' + getGimg(cell) + '"/><p class="apply-info single-line">'
 					//							+ cell.gname + '</a>';
 				if(cell.invname != cell.beinvname) {
-					inner += cell.invaname + '邀请你加入群：' + cell.gname;
+					inner +=  events.shortForString(cell.invaname,10) + '邀请你加入群：' + events.shortForString(cell.gname,10);
 				} else {
-					inner += '你已申请加入群：' + cell.gname;
+					inner += '你已申请加入群：' +  events.shortForString(cell.gname,10);
 				}
-				inner += '<p>' + setApplyState(cell.stat) + '</p></a>'
+				inner += '</p><p class="apply-state">' + setApplyState(cell.stat) + '</p></div>'
 				return inner;
 			}
 			var setApplyState = function(type) {

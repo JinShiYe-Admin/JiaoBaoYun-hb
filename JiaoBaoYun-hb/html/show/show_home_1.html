@@ -936,6 +936,7 @@
 			 * @param {Object} data
 			 */
 			var setData = function(data) {
+				console.log('data==='+JSON.stringify(data))
 				var table = document.body.querySelector('.mui-table-view');
 				table.innerHTML = ''
 
@@ -1005,6 +1006,7 @@
 				InteractionList.push(commentList);
 
 				datasource = [InfoList, ImageList, InteractionList]
+				console.log('datasource'+JSON.stringify(datasource))
 				return datasource;
 			}
 

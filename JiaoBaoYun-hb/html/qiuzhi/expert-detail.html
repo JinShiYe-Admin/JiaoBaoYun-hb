@@ -88,7 +88,7 @@
 							<div>
 								<p id="CommentNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
 					</li>
-					<li class="mui-table-view-cell mui-media ">
+					<li  id="inviteNumLi" class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/yaoqing.png" />
 						<div class="mui-media-body">邀请他回答
 							<div>
@@ -272,7 +272,13 @@
 			nodes.CommentNum.innerHTML = ExpertsInfo.CommentNum + '<span class="mui-icon mui-icon-forward"></span>';
 			nodes.IsFocusedManNum.innerText = ExpertsInfo.IsFocusedManNum;
 			nodes.AnswerNum.innerHTML = ExpertsInfo.AnswerNum + '<span class="mui-icon mui-icon-forward"></span>';
-			nodes.inviteNum.innerHTML = ExpertsInfo.InviteNum + '<span class="mui-icon mui-icon-forward"></span>';
+			var inviteNumLi = document.getElementById("inviteNumLi");
+			if(ExpertsInfo.IsExpert==1){
+				nodes.inviteNum.innerHTML = ExpertsInfo.InviteNum + '<span class="mui-icon mui-icon-forward"></span>';
+			}else{
+				inviteNumLi.parentNode.removeChild(inviteNumLi);
+			}
+			
 		}
 	</script>
 
