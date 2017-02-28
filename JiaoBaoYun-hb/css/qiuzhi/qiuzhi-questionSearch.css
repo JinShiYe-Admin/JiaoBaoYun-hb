@@ -9,6 +9,7 @@
 	padding: 0px 0;
 	margin: 8px 0 7px 0;
 	display: inline;
+	height: 2.5rem;
 }
 
 .mui-btn-blue,
@@ -86,7 +87,10 @@ input[type=submit]:enabled:active {
 	right: 20%;
 }
 
-.mui-scroll-wrapper {
+#list-container {
+	padding-top: 35px;
+}
+#history_container {
 	padding-top: 44px;
 }
 
@@ -192,7 +196,9 @@ input[type=submit]:enabled:active {
 .search-form .mui-icon-clear
 {
 	position: relative!important;
-	top: 1px;
-    right: 50px;
-    z-index: 99;
+	top: 1px!important;
+    right: 38px!important;
+    
+    margin-right: -38px!important;
 }
+  

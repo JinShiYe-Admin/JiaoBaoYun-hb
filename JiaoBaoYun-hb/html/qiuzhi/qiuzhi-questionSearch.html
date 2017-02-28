@@ -48,7 +48,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="mui-scroll-wrapper mui-fullscreen  mui-hidden" style="z-index:0;" id="list-container">
+			<div class="mui-scroll-wrapper mui-fullscreen  mui-hidden" style="z-index:0;" id="list-container" >
 				<div class="mui-scroll">
 					<ul class="mui-table-view">
 						<!--<li class="mui-table-view-cell">
@@ -89,7 +89,7 @@
 			mui.init();
 			mui.plusReady(function() {
 				//注册列表项点击事件
-				mui('.mui-table-view').on('tap', 'li', function() {
+				mui('#list-container .mui-table-view').on('tap', 'li', function() {
 					//获取存储值
 					var tabid = JSON.parse(this.getAttribute('tabid'));
 					console.log('dianji 标题' + JSON.stringify(tabid));
