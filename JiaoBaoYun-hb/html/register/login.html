@@ -296,7 +296,7 @@ none; margin-top: -15px;">登录</button>
 					var moreButton = doc.getElementById('more');
 					//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
 					var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-					if(personal) {
+					if(personal.isLogin == 1) {
 						//需要参数
 						var comData = {
 							uuid: plus.device.uuid,
@@ -327,6 +327,7 @@ none; margin-top: -15px;">登录</button>
 										tempInfo.unick = tepI0000.unick;
 										tempInfo.usex = tepI0000.usex;
 										tempInfo.utxt = tepI0000.utxt;
+										tempInfo.isLogin = 1;
 										//解析省市代码
 										console.log('9999=' + tepI0000.uarea);
 										if(tepI0000.uarea != null) {
@@ -473,8 +474,6 @@ none; margin-top: -15px;">登录</button>
 						wd.close();
 						console.log('PostShakeHand:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
-							//存储到手机本地
-							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
 							//账号密码登录协议
 							//需要加密的数据
 							var enData = {
@@ -497,7 +496,8 @@ none; margin-top: -15px;">登录</button>
 									mui.toast(data.RspTxt);
 									return;
 								} else {
-									mui.toast('登录成功')
+									mui.toast('登录成功');
+									data.RspData.isLogin = 1;
 									//存储到手机本地
 									data.RspData.ispw = '1';
 									if(!data.RspData.uimg) {
