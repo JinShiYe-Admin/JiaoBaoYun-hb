@@ -35,7 +35,10 @@
 .mui-table-view-cell div p:nth-child(2) {
 	color: #323232;
 	}
-	
+	.mui-table-view-cell:after
+	{
+		height: 0px;
+	}
 	
 .mui-table-view img {
 	width: 2rem;
