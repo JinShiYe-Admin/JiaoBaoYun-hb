@@ -112,3 +112,8 @@
 .mui-slider-indicator.mui-segmented-control {
 	background-color: #efeff4;
 }
+
+.mui-table-view-cell:after
+{
+	height: 0px;
+}

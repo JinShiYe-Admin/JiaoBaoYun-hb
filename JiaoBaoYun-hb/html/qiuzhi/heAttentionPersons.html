@@ -1,4 +1,4 @@
- <!doctype html>
+<!doctype html>
 <html>
 
 	<head>
@@ -204,9 +204,9 @@
 				//上拉下拉注册
 				mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 					down: {
-						
+
 						callback: function() {
-							
+
 							//清除节点
 
 							document.getElementById('list-container').innerHTML = "";
@@ -269,14 +269,14 @@
 							personArray = personArray.concat(data.RspData.Data);
 						}
 						var personIds = [];
-							//遍历获取关注人id数组
-							for(var i in personArray) {
-								personIds.push(personArray[i].UserId);
-							}
-							//通过id数组，获取人员资料，并重组
-							if (personIds.length>0) {
-								requirePersonInfo(personIds, personArray);
-							}
+						//遍历获取关注人id数组
+						for(var i in personArray) {
+							personIds.push(personArray[i].UserId);
+						}
+						//通过id数组，获取人员资料，并重组
+						if(personIds.length > 0) {
+							requirePersonInfo(personIds, personArray);
+						}
 					} else {
 						mui.toast(data.RspTxt);
 					}
