@@ -2,6 +2,13 @@ mui.init();
 var pageIndex = 1; //页码
 var selfId; //本人id
 var totalPageCount = 0;
+h5fresh.addPullUpFresh("#refreshContainer", function() {
+	mui("#refreshContainer").pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
+	if(pageIndex < totalPageCount) {
+		pageIndex++;
+		requestData();
+	}
+})
 mui.plusReady(function() {
 	var options = {
 		style: 'circle',
@@ -20,7 +27,7 @@ mui.plusReady(function() {
 		requireData();
 		console.log('获取的专家信息：' + JSON.stringify(expertInfo));
 	})
-	pullUpFresh();
+//	pullUpFresh();
 	setListener();
 })
 /**
@@ -226,17 +233,17 @@ var setListener = function() {
 		events.fireToPageWithData('expert-detail.html', 'expert-detail', info);
 	});
 }
-/**
- * 上拉加载的实现方法
- */
-var pullUpFresh = function() {
-	document.addEventListener("plusscrollbottom", function() {
-		console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPageCount);
-		if(pageIndex < totalPageCount) {
-			pageIndex++;
-			requestData();
-		} else {
-			mui.toast('没有更多了');
-		}
-	}, false);
-}
+///**
+// * 上拉加载的实现方法
+// */
+//var pullUpFresh = function() {
+//	document.addEventListener("plusscrollbottom", function() {
+//		console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPageCount);
+//		if(pageIndex < totalPageCount) {
+//			pageIndex++;
+//			requestData();
+//		} else {
+//			mui.toast('没有更多了');
+//		}
+//	}, false);
+//}
