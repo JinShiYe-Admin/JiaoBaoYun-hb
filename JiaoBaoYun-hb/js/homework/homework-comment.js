@@ -108,7 +108,7 @@ var setHomeWorkInfo = function() {
 			document.getElementById('comment-area').value = null;
 		}
 		if(workInfo.Files&&workInfo.Files.length>0){
-			createAnswerImgs(homeworkInfo,workInfo.Files,3);
+			createAnswerImgs(document.getElementById("result-text"),workInfo.Files,3);
 		}
 	}
 	/**
