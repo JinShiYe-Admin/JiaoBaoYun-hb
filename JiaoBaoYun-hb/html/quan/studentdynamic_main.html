@@ -16,12 +16,11 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
-		<!--<script type="text/javascript" src="../../js/qiniu/plupload.full.min.js"></script>-->
-		<!--<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>-->
-		<!--<script type="text/javascript" src="../../js/utils/QiNiuUtil.js"></script>-->
-		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
+		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
+		<script type="text/javascript" src="../../js/utils/cryption.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
 		<script type="text/javascript" src="../../js/utils/UploadHeadImage.js"></script>
 		<style>
@@ -92,8 +91,8 @@
 					img: successCB
 				});
 			}, function(errorCB) {
-				console.log('上传并修改资料头像，失败的回调' + JSON.stringify(errorCB));
-				mui.toast(data.RspTxt);
+				console.log('上传并修改资料头像失败 ' + JSON.stringify(errorCB));
+				mui.toast('上传失败' + JSON.stringify(errorCB));
 			});
 		});
 	</script>

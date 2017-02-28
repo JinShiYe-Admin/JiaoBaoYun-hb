@@ -110,7 +110,7 @@
 					show = true; //是否显示科教的内容
 					pullToRefresh = [] //存储下拉上拉的控件
 					sliderId = ''; //记录显示的城市
-					document.getElementById("content").innerHTML = '';//清理界面
+					document.getElementById("content").innerHTML = ''; //清理界面
 					var evalJS = "var sciEduSlider=document.getElementById('sciEduSlider');if(sciEduSlider){sciEduSlider.parentNode.removeChild(sciEduSlider);}";
 					index.evalJS(evalJS);
 				});
@@ -470,7 +470,7 @@
 							var str_1 = "var sciEduSlider = document.getElementById('sciEduSlider');";
 							var str_2 = "if(sciEduSlider) {sciEduSlider.innerHTML = '" + str + "';} else {";
 							var str_3 = "var element = document.createElement('div');element.id = 'sciEduSlider';element.className = 'mui-slider';";
-							var str_4 = "element.style.height = " + localStorage.getItem('StatusHeightNo') * 1 + " + 48 + 'px';";
+							var str_4 = "element.style.height = '45px';element.style.top = '" + (localStorage.getItem('StatusHeightNo') * 1 + 10) + "px';";
 							var str_5 = "element.innerHTML = '" + str + "';document.querySelector('header').appendChild(element);}";
 							var evalJS = str_0 + str_1 + str_2 + str_3 + str_4 + str_5;
 							//console.log("evalJS " + evalJS);

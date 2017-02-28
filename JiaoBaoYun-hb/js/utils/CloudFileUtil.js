@@ -2,6 +2,7 @@ var CloudFileUtil = (function($, mod) {
 	mod.files = [];
 	/**
 	 * 获取当前的网络连接状态
+	 * @author 莫尚霖
 	 * @param {Object} callback 回调callback(data)
 	 */
 	mod.getCurrentType = function(callback) {
@@ -39,6 +40,7 @@ var CloudFileUtil = (function($, mod) {
 
 	/**
 	 * 获取七牛下载的token
+	 * @author 莫尚霖
 	 * @param {Object} url 获取下载token路径
 	 * @param {Object} successCB
 	 * @param {Object} errorCB
@@ -69,6 +71,7 @@ var CloudFileUtil = (function($, mod) {
 
 	/**
 	 * 创建下载任务
+	 * @author 莫尚霖
 	 * @param {Object} url 文件路径
 	 * @param {Object} filename 下载到本地的路径
 	 * @param {Object} uploadCompletedCallBack 下载完成时的回调
@@ -103,8 +106,10 @@ var CloudFileUtil = (function($, mod) {
 		successCallBack(dtask);
 		//dtask.start();
 	}
+
 	/**
 	 * 创建下载任务
+	 * @author 莫尚霖
 	 * @param {Object} url 要下载文件资源地址
 	 * @param {Object} filename 下载文件保存的路径
 	 * @param {Object} callback 下载成功回调
@@ -135,36 +140,128 @@ var CloudFileUtil = (function($, mod) {
 	}
 
 	/**
-	 * 获取上传到七牛的uptoken
+	 * 获取上传到七牛的uptoken（单个文件的token）
+	 * @author 莫尚霖
 	 * @param {Object} url 获取token的url
-	 * @param {Object} QNFileName 存放到七牛的文件名
+	 * @param {Object} data 数据 json
 	 * @param {Object} successCB 成功的回调successCB(data)
 	 * @param {Object} errorCB 失败的回调errorCB(xhr, type, errorThrown);
+	 * data={
+	 * 	type:'',//str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件
+	 *  QNFileName:'',//str 必填 存放到七牛的文件名
+	 *  appId:'' , //int 必填 项目id
+	 *  mainSpace:'', //str 必填 私有空间或公有空间
+	 *  uploadSpace: '',//str 必填  上传的空间
+	 *  style:{ 	//json 选填 type为0时有效，配置生成缩略图的最大宽和高
+	 * 		maxWidth:'', //int 配置生成缩略图的最大宽,默认100
+	 *  	maxHeight:'' //int 配置生成缩略图的最大高，默认100
+	 *  }
+	 * }
 	 */
-	mod.getQNUpToken = function(url, QNFileName, successCB, errorCB) {
-		mui.ajax(url, {
-			async: false,
-			data: {
-				Key: QNFileName
-			},
-			dataType: 'json', //服务器返回json格式数据
-			type: 'post', //HTTP请求类型
-			timeout: 10000, //超时时间设置为10秒
-			//			headers: {
-			//				'Content-Type': 'application/json'
-			//			},
-			success: function(data) {
-				//服务器返回响应
-				successCB(data);
-			},
-			error: function(xhr, type, errorThrown) {
-				//异常处理
-				errorCB(xhr, type, errorThrown);
+	mod.getQNUpToken = function(url, data, successCB, errorCB) {
+		console.log('getQNUpToken ' + url + ' ' + JSON.stringify(data));
+		var type = ''; //获取上传token的类型。0上传需要生成缩略图的文件；1上传文件
+		var QNFileName = ''; //存放到七牛的文件名
+		var desKey = ''; //项目名称
+		var appId = 0; //项目id
+		var mainSpace = ''; //私有空间或公有空间
+		var saveSpace = ''; //上传的空间
+		var configure = {}; //配置的数据
+		var maxWidth = '100'; //type为0时 缩略图默认宽为100
+		var maxHeight = '100'; //type为0时 缩略图默认高为100
+		if(data) {
+			if(data.type) {
+				type = data.type
+				if(type == 0) {
+					if(data.style) {
+						if(data.style.maxWidth) {
+							maxWidth = data.style.maxWidth
+						}
+						if(data.style.maxHeight) {
+							maxHeight = data.style.maxHeight
+						}
+					}
+				}
 			}
-		});
+			if(data.QNFileName) {
+				QNFileName = data.QNFileName;
+			}
+			if(data.appId) {
+				appId = data.appId;
+				switch(data.appId) {
+					case 0:
+						break;
+					case 1:
+						break;
+					case 2: //资源平台
+						desKey = "jsy8004";
+						break;
+					case 3: //教宝云作业
+						desKey = "zy309309!";
+						break;
+					case 4: //教宝云盘
+						desKey = "jbyp@2017"
+						break;
+					case 5: //教宝云用户管理
+						desKey = "jbman456"
+						break;
+					case 6: //家校圈
+						desKey = "jxq789!@";
+						break;
+					case 7: //家校圈
+						desKey = "qz123qwe";
+						break;
+					default:
+						break;
+				}
+			}
+			if(data.mainSpace) {
+				mainSpace = data.mainSpace;
+			}
+			if(data.uploadSpace) {
+				saveSpace = data.uploadSpace;
+			}
+
+		}
+		if((type == '0' || type == '1') && QNFileName != '' && desKey != '' && mainSpace != '' && saveSpace != '') {
+			var thumbSpace = ''; //缩略图的七牛空间
+			var ops = '' //七牛预持久化命令
+			if(type == '0') {
+				thumbSpace = saveSpace + 'thumb/'; //缩略图的七牛空间
+				configure.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
+				ops = "imageView2/2/w/" + maxWidth + "/h/" + maxHeight + "/format/png|saveas/" + configure.thumbKey;
+			}
+
+			var param = {
+				Bucket: mainSpace,
+				Key: saveSpace + QNFileName,
+				Pops: ops,
+				NotifyUrl: ''
+			}
+			console.log("参数数据：" + JSON.stringify(param))
+			configure.options = {
+				AppID: appId,
+				Param: encryptByDES(desKey, JSON.stringify(param))
+			}
+			console.log("参数数据：" + JSON.stringify(configure.options))
+			//获取token
+			mod.getQNUpTokenWithManage(url, configure.options, function(data) {
+				successCB({
+					configure: configure,
+					data: data
+				});
+			}, function(xhr, type, errorThrown) {
+				errorCB(xhr, type, errorThrown);
+			});
+		} else {
+			errorCB('### ERROR ### 配置获取七牛上传token参数错误');
+		}
 	}
+
 	/**
 	 * 需要先加载qiniu.js,cryption.js,events.js,使用实例在publish-answer.js
+	 * 配置获取上传token时需要上传的数据（传单张图片）
+	 * @author 安琪
 	 * @param {Object} picPath 图片本地路径
 	 * @param {Object} appId AppID
 	 * @param {Object} maxSize 最大长宽
@@ -187,10 +284,10 @@ var CloudFileUtil = (function($, mod) {
 				desKey = "zy309309!";
 				break;
 			case 4: //教宝云盘
-				desKey = "jbyp@2017"
+				desKey = "jbyp@2017";
 				break;
 			case 5: //教宝云用户管理
-				desKey = "jbman456"
+				desKey = "jbman456";
 				break;
 			case 6: //家校圈
 				desKey = "jxq789!@";
@@ -226,8 +323,11 @@ var CloudFileUtil = (function($, mod) {
 		console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
 		return data;
 	}
+
 	/**
 	 * 需要先加载qiniu.js,cryption.js,events.js,使用实例在publish-answer.js
+	 * 配置获取上传token时需要上传的数据（传多张图片）
+	 * @author 安琪
 	 * @param {Object} picPaths 图片本地路径
 	 * @param {Object} appId AppID
 	 * @param {Object} maxSize 最大长宽
@@ -300,8 +400,10 @@ var CloudFileUtil = (function($, mod) {
 		console.log('加密后的data:' + JSON.stringify(data));
 		return data;
 	}
+
 	/**
-	 * 
+	 * 获取上传的token
+	 * @author 安琪
 	 * @param {Object} url
 	 * @param {Object} data
 	 * @param {Object} successCB
@@ -327,16 +429,18 @@ var CloudFileUtil = (function($, mod) {
 
 	/**
 	 * 创建上传任务
+	 * @author 莫尚霖
 	 * @param {Object} fPath 文件路径
-	 * @param {Object} QNUptoken 七牛上传token
+	 * @param {Object} token 七牛上传token
+	 * @param {Object} key 七牛上传key
 	 * @param {Object} uploadCompletedCallBack 上传完成时的回调
 	 * @param {Object} onStateChangedCallBack 上传任务状态监听的回调
 	 * @param {Object} successCallBack 上传任务创建成功监听的回调
 	 */
-	mod.upload = function(fPath, QNUptoken, QNFileName, uploadCompletedCallBack, onStateChangedCallBack, successCallBack) {
-		//console.log('upload:' + fPath);
-		var uid = Math.floor(Math.random() * 100000000 + 10000000).toString();
-		var scope = "private";
+	mod.upload = function(fPath, token, key, uploadCompletedCallBack, onStateChangedCallBack, successCallBack) {
+		console.log('upload fPath ' + fPath);
+		console.log('upload token ' + token);
+		console.log('upload key ' + key);
 		var task = plus.uploader.createUpload("http://upload.qiniu.com/", {
 				method: "POST"
 			},
@@ -349,9 +453,8 @@ var CloudFileUtil = (function($, mod) {
 				uploadCompletedCallBack(upload, status);
 			}
 		);
-		task.addData("key", QNFileName);
-		//task.addData("scope", scope + ':' + type);
-		task.addData("token", QNUptoken);
+		task.addData("key", key);
+		task.addData("token", token);
 		task.addFile(fPath, {
 			"key": "file",
 			"name": "file"
@@ -370,8 +473,10 @@ var CloudFileUtil = (function($, mod) {
 		successCallBack(task);
 		//task.start();
 	}
+
 	/**
 	 * 单张图片文件上传
+	 * @author 安琪
 	 * @param {Object} path 要上传文件的目标地址
 	 * @param {Object} fileName 本地路径
 	 * @param {Object} QNUptoken 上传token
@@ -403,8 +508,10 @@ var CloudFileUtil = (function($, mod) {
 		task.addEventListener("statechanged", onStateChanged, false);
 		task.start();
 	}
+
 	/**
 	 * 多张图片上传
+	 * @author 安琪
 	 * @param {Object} paths 要上传文件的目标地址
 	 * @param {Object} fileNames 本地路径
 	 * @param {Object} QNUptokens 上传token
@@ -479,8 +586,10 @@ var CloudFileUtil = (function($, mod) {
 			}
 		});
 	}
+
 	/**
 	 * 在界面上放置图片
+	 * @author 安琪
 	 * @param {Object} img
 	 * @flag {Object} 1获取的 0：上传模式
 	 */
@@ -502,25 +611,29 @@ var CloudFileUtil = (function($, mod) {
 		console.log("放置的图片信息:" + JSON.stringify(img));
 		pictures.appendChild(div);
 	}
+
 	/**
-	 * 
+	 *
 	 * @param {Object} pics
+	 *  @author 安琪
 	 */
-	mod.rechargePicsData=function(pics){
-				for(var i in pics){
-					var img={};
-					img.url=pics[i].Url;
-					img.thumb=pics[i].ThumbUrl;
-					img.order=pics[i].DisplayOrder;
-					img.type=pics[i].FileType;
-					mod.files.push(img);
-				}
-				mod.files.sort(function(a,b){
-					return a.order-b.order;
-				})
-			}
+	mod.rechargePicsData = function(pics) {
+		for(var i in pics) {
+			var img = {};
+			img.url = pics[i].Url;
+			img.thumb = pics[i].ThumbUrl;
+			img.order = pics[i].DisplayOrder;
+			img.type = pics[i].FileType;
+			mod.files.push(img);
+		}
+		mod.files.sort(function(a, b) {
+			return a.order - b.order;
+		})
+	}
+	
 	/**
 	 * 放置删除图片的监听
+	 * @author 安琪
 	 */
 	mod.setDelPicListener = function() {
 		//删除图标的点击事件

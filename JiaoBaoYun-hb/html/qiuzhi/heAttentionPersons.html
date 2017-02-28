@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html>
 
 	<head>
@@ -7,7 +7,6 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet">
-		<link href="../../css/qiuzhi/attention-persons.css" rel="stylesheet" />
 		<style>
 			.mui-scroll-wrapper {
 				padding-top: 44px;
@@ -205,7 +204,9 @@
 				//上拉下拉注册
 				mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 					down: {
+						
 						callback: function() {
+							
 							//清除节点
 
 							document.getElementById('list-container').innerHTML = "";
@@ -219,6 +220,8 @@
 						}
 					},
 					up: {
+						contentinit: '',
+						contentdown: '',
 						callback: function() {
 
 							var self = this;
@@ -239,9 +242,6 @@
 
 			//27.获取某个用户的关注人列表
 			function getFocusUsersByUser(focusId) {
-				if(pageIndex == 1) {
-					events.clearChild(document.getElementById('list-container'));
-				}
 				personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 				//需要加密的数据
 				var comData = {
@@ -266,6 +266,8 @@
 							for(var i in personArray) {
 								personIds.push(personArray[i].UserId);
 							}
+							//清除节点
+							document.getElementById('list-container').innerHTML = "";
 							//通过id数组，获取人员资料，并重组
 							requirePersonInfo(personIds, personArray);
 						} else { //加载更多
@@ -277,6 +279,7 @@
 							for(var i in personArray) {
 								personIds.push(personArray[i].UserId);
 							}
+							
 							//通过id数组，获取人员资料，并重组
 							requirePersonInfo(personIds, personArray);
 						}
@@ -348,18 +351,17 @@
 				li.querySelector('.mui-btn').personInfo = record;
 			}
 			/**
-			 * 根据信息，设置关注状况
-			 * @param {Object} focusType 
-			 * 0 未关注
-				1 已关注
-				2 相互关注
-				3 无法关注（自己）
-			 */
+ * 根据信息，设置关注状况
+ * @param {Object} focusType 
+ * 0 未关注
+	1 已关注
+	2 相互关注
+	3 无法关注（自己）
+ */
 			var getButtonContent = function(focusType) {
 				var buttonInfo = {};
 				switch(focusType) {
 					case 0:
-					case 2:
 						buttonInfo.classInfo = 'attention-btn';
 						buttonInfo.inner = '关注';
 						break;
@@ -367,11 +369,11 @@
 						buttonInfo.classInfo = 'attentioned-btn';
 						buttonInfo.inner = '已关注';
 						break;
-					case 3:
+					case 2:
 						buttonInfo.classInfo = 'attentioned-btn';
 						buttonInfo.inner = '已互关';
 						break;
-					case 5:
+					case 3:
 						buttonInfo.classInfo = 'display-none';
 						buttonInfo.inner = '自己'
 					default:
@@ -397,58 +399,34 @@
 					if(data.RspCode == 0 && data.RspData.Result == 1) {
 						if(type) {
 							mui.toast('关注成功！')
+							item.className = 'mui-btn mui-btn-outlined attentioned-btn';
+							item.innerText = '已关注';
 						} else {
 							mui.toast('取消关注成功！')
+							item.className = 'mui-btn mui-btn-outlined attention-btn';
 						}
-						setButtonInfoType(item);
-						var buttonInfo = getButtonContent(item.personInfo.FocusType);
-						item.innerText = buttonInfo.inner;
-						item.className = 'mui-btn mui-btn-outlined ' + buttonInfo.classInfo;
 
 					}
 				})
-			}
-			/**
-			 *	关注状态关注的
-			 * @param {Object} item
-			 */
-			var setButtonInfoType = function(item) {
-				switch(item.personInfo.FocusType) {
-					case 0:
-						item.personInfo.FocusType = 1;
-						break;
-					case 1:
-						item.personInfo.FocusType = 0;
-						break;
-					case 2:
-						item.personInfo.FocusType = 3;
-						break;
-					case 3:
-						item.personInfo.FocusType = 2;
-						break;
-					default:
-						break;
-				}
 			}
 			var setListener = function() {
 				mui('.mui-table-view').on('tap', '.mui-btn', function() {
 					var focusType;
 					switch(this.personInfo.FocusType) {
 						case 0:
-						case 2:
 							focusType = 1;
 							break;
 						case 1:
-							//								case 2:
+						case 2:
 						case 3:
 							focusType = 0;
 							break;
 						default:
 							break;
 					}
-					//					if(focusType == 1) {
-					setFocus(this, focusType);
-					//					}
+					if(focusType == 1) {
+						setFocus(this, focusType);
+					}
 				});
 
 				//点击头像、昵称、简介进入专家主页

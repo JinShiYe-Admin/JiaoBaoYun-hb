@@ -121,6 +121,8 @@
 						if(data.RspCode == 0) {
 							//存储到手机本地
 							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+							//标注为登录状态
+							data.RspData.isLogin = 1;
 							//判断是注册0，还是验证码模式登录1
 							if(regFlag == 0) { //注册0
 								//发送网络请求，data为网络返回值

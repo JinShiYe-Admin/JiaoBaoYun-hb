@@ -46,6 +46,8 @@ mui.plusReady(function() {
 			}
 		},
 		up: {
+			contentinit: '',
+			contentdown: '',
 			callback: function() {
 
 				var self = this;
@@ -55,6 +57,8 @@ mui.plusReady(function() {
 					//26.获取某个用户的关注问题列表
 					getFocusAsksByUser(ExpertsInfoModel.UserId);
 
+				} else {
+					mui.toast('没有更多了');
 				}
 				self.endPullUpToRefresh();
 			}
