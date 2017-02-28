@@ -90,7 +90,7 @@
 										if(data.RspCode == 0) {
 											tempInfo.isLogin = 1;
 											//修改自动登录值
-											window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
+											window.myStorage.setItem(window.storageKeyName.PERSONALINFO, null);
 											//退出登录
 											events.logOff();
 //											plus.runtime.quit();

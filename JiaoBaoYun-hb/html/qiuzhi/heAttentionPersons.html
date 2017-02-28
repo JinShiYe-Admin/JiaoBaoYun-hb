@@ -261,28 +261,22 @@
 						totalPageCount = data.RspData.TotalPage;
 						if(flagRef == 0) { //刷新
 							personArray = data.RspData.Data;
-							var personIds = [];
-							//遍历获取关注人id数组
-							for(var i in personArray) {
-								personIds.push(personArray[i].UserId);
-							}
 							//清除节点
 							document.getElementById('list-container').innerHTML = "";
-							//通过id数组，获取人员资料，并重组
-							requirePersonInfo(personIds, personArray);
 						} else { //加载更多
 							pageIndex++;
 							//合并数组
 							personArray = personArray.concat(data.RspData.Data);
-							var personIds = [];
+						}
+						var personIds = [];
 							//遍历获取关注人id数组
 							for(var i in personArray) {
 								personIds.push(personArray[i].UserId);
 							}
-							
 							//通过id数组，获取人员资料，并重组
-							requirePersonInfo(personIds, personArray);
-						}
+							if (personIds.length>0) {
+								requirePersonInfo(personIds, personArray);
+							}
 					} else {
 						mui.toast(data.RspTxt);
 					}
