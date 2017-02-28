@@ -251,7 +251,7 @@
 			var index; //获取index的webview
 			var personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 			mui.plusReady(function() {
-				events.closeWaiting();
+//				events.closeWaiting();
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				index = plus.webview.getWebviewById('index.html'); //
 
@@ -681,7 +681,7 @@
 							var str_1 = "var showSlider = document.getElementById('showSlider');";
 							var str_2 = "if(showSlider) {showSlider.innerHTML = '" + str + "';} else {";
 							var str_3 = "var element = document.createElement('div');element.id = 'showSlider';element.className = 'mui-slider';";
-							var str_4 = "element.style.height = " + localStorage.getItem('StatusHeightNo') * 1 + " + 48 + 'px';";
+							var str_4 = "element.style.height = '45px';element.style.top = '" + (localStorage.getItem('StatusHeightNo') * 1 + 10) + "px';";
 							var str_5 = "element.innerHTML = '" + str + "';document.querySelector('header').appendChild(element);}";
 							var evalJS = str_0 + str_1 + str_2 + str_3 + str_4 + str_5;
 							//console.log("evalJS " + evalJS);
@@ -936,7 +936,7 @@
 			 * @param {Object} data
 			 */
 			var setData = function(data) {
-				console.log('data==='+JSON.stringify(data))
+				console.log('data===' + JSON.stringify(data))
 				var table = document.body.querySelector('.mui-table-view');
 				table.innerHTML = ''
 
@@ -1006,7 +1006,7 @@
 				InteractionList.push(commentList);
 
 				datasource = [InfoList, ImageList, InteractionList]
-				console.log('datasource'+JSON.stringify(datasource))
+				console.log('datasource' + JSON.stringify(datasource))
 				return datasource;
 			}
 
