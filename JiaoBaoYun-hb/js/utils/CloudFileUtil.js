@@ -195,7 +195,7 @@ var CloudFileUtil = (function($, mod) {
 			case 6: //家校圈
 				desKey = "jxq789!@";
 				break;
-				case 7: //家校圈
+			case 7: //家校圈
 				desKey = "qz123qwe";
 				break;
 			default:
@@ -258,7 +258,7 @@ var CloudFileUtil = (function($, mod) {
 			case 6: //家校圈
 				desKey = "jxq789!@";
 				break;
-				case 7: //家校圈
+			case 7: //家校圈
 				desKey = "qz123qwe";
 				break;
 			default:
@@ -286,7 +286,7 @@ var CloudFileUtil = (function($, mod) {
 			thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
 			data.thumbKeys.push(thumbKey);
 			param.Key = saveSpace + QNFileName;
-			console.log('key:'+param.Key);
+			console.log('key:' + param.Key);
 			param.Pops = "imageView2/2/w/" + maxSize + "/h/" + maxSize + "/format/png|saveas/" + thumbKey;
 			param.NotifyUrl = '';
 			params.push(param);
@@ -297,7 +297,7 @@ var CloudFileUtil = (function($, mod) {
 			Param: encryptByDES(desKey, JSON.stringify(params))
 		}
 		console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
-		console.log('加密后的data:'+JSON.stringify(data));
+		console.log('加密后的data:' + JSON.stringify(data));
 		return data;
 	}
 	/**
@@ -411,7 +411,7 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} callback 回调函数
 	 */
 	mod.uploadFiles = function(fileNames, tokenInfos, callback) {
-		var tasks=[];
+		var tasks = [];
 		for(var i in tokenInfos) {
 			//console.log('upload:' + fPath);
 			var task = plus.uploader.createUpload("http://upload.qiniu.com/", {
@@ -442,7 +442,7 @@ var CloudFileUtil = (function($, mod) {
 	}
 	// 监听上传任务状态
 	function onStateChanged(upload, status) {
-//		console.log('mui上传状态：' + upload.state)
+		//		console.log('mui上传状态：' + upload.state)
 		if(upload.state == 4 && status == 200) {
 			// 上传完成
 			//			console.log("Upload success: " + upload.getFileName());
@@ -482,19 +482,43 @@ var CloudFileUtil = (function($, mod) {
 	/**
 	 * 在界面上放置图片
 	 * @param {Object} img
+	 * @flag {Object} 1获取的 0：上传模式
 	 */
-	mod.setPic = function(img) {
+	mod.setPic = function(img, flag) {
 		mod.files.push(img);
 		//	picPath=camero.getAbsolutePath(picPath);
 		var pictures = document.getElementById('pictures');
 		var div = document.createElement('div');
 		div.img = img;
 		div.className = 'img-div';
-		div.innerHTML = '<img src="' + img.url + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
-			'<a class="mui-icon iconfont icon-guanbi"></a>';
+		if(flag) {
+			div.innerHTML = '<img src="' + img.thumb + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
+				'<a class="mui-icon iconfont icon-guanbi"></a>';
+		} else {
+			div.innerHTML = '<img src="' + img.url + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
+				'<a class="mui-icon iconfont icon-guanbi"></a>';
+		}
+
 		console.log("放置的图片信息:" + JSON.stringify(img));
 		pictures.appendChild(div);
 	}
+	/**
+	 * 
+	 * @param {Object} pics
+	 */
+	mod.rechargePicsData=function(pics){
+				for(var i in pics){
+					var img={};
+					img.url=pics[i].Url;
+					img.thumb=pics[i].ThumbUrl;
+					img.order=pics[i].DisplayOrder;
+					img.type=pics[i].FileType;
+					mod.files.push(img);
+				}
+				mod.files.sort(function(a,b){
+					return a.order-b.order;
+				})
+			}
 	/**
 	 * 放置删除图片的监听
 	 */
