@@ -19,7 +19,8 @@ var publicModel = (function($, mod) {
 		utxt:'',//用户签名
 		uarea:'',//用户区域,省代码 市代码|省名称 市名称
 		token:'',//用户令牌
-		ispw:''//0无密码，1有密码
+		ispw:'',//0无密码，1有密码
+		isLogin:''//是否登录，0没，1登录
 	};
 	
 	//9.获取用户群
