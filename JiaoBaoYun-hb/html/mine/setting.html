@@ -88,7 +88,7 @@
 										wd.close();
 										console.log('注销success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 										if(data.RspCode == 0) {
-											tempInfo.isLogin = 0;
+											tempInfo.isLogin = 1;
 											//修改自动登录值
 											window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
 											//退出登录
