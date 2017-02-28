@@ -179,12 +179,20 @@
 					tempText = replaceAllBL(tempText)
 				}
 				var pubScopes;
-				var chenckBox = document.getElementById('chenckBox')
-				if(!chenckBox.checked) {
-					pubScopes = '[1]';
-				} else {
+				var chenckBox1 = document.getElementById('zone')
+				var chenckBox2 = document.getElementById('show')
+				if(chenckBox1.checked&&chenckBox2.checked){
 					pubScopes = '[1,2]';
+				}else if(!chenckBox1.checked&&chenckBox2.checked){
+					pubScopes = '[2]';
+				}else{
+					pubScopes = '[1]';
 				}
+//				if(!chenckBox.checked) {
+//					pubScopes = '[1]';
+//				} else {
+//					pubScopes = '[1,2]';
+//				}
 				var pubArea;
 				var TAs = getTypeAddress();
 				if(tempInfo.uarea.acode == undefined) {

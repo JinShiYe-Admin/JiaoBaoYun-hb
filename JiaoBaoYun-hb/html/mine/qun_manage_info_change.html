@@ -9,11 +9,10 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
+		<script type="text/javascript" src="../../js/utils/cryption.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
-		<!--<script type="text/javascript" src="../../js/qiniu/plupload.full.min.js"></script>-->
-		<!--<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>-->
-		<!--<script type="text/javascript" src="../../js/utils/QiNiuUtil.js"></script>-->
 		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
@@ -23,16 +22,10 @@
 			.mui-content {
 				background: white;
 			}
-			/*#qunimage {
-				height: 100px;
-			}*/
 
 			.qun-image {
-				/*border: 2px solid #F2F2F2;*/
-				/*border-radius: 50%;*/
 				height: 100px;
 				width: 100px;
-				/*text-align: center;*/
 				margin-top: 20px;
 			}
 
@@ -63,6 +56,7 @@
 			.mui-input-group .mui-input-row:after {
 				width: 100%;
 				left: 0;
+				background-color: #D9D9D9 !important;
 			}
 
 			.mui-btn-block {
@@ -94,17 +88,14 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row" data-value='gname'>
 					<label>群名称：</label>
-					<!--<div id="qunname" class="gender" style="background: red;"></div>-->
 					<input id="gname" type="text" class="mui-input-clear">
 				</div>
 				<div class="mui-input-row" data-value='gnote'>
 					<label>群说明：</label>
-					<!--<div id="qunintroduce"></div>-->
 					<input id="gnote" type="text" class="mui-input-clear">
 				</div>
 				<div class="mui-input-row" data-value='qunremark'>
 					<label>群备注：</label>
-					<!--<div id="qunremark"></div>-->
 					<input id="qunremark" type="text" class="mui-input-clear">
 				</div>
 			</form>
@@ -192,18 +183,12 @@
 				UploadHeadImage.addListener(qunimage, 2, {
 					id: subData.gid, //资料id
 				}, function(successCB) {
-					console.log('上传并修改资料头像，成功的回调' + JSON.stringify(successCB));
+					console.log('上传并修改群头像，成功的回调' + JSON.stringify(successCB));
 					document.getElementById("choose").innerHTML = '<img src="' + updateHeadImg(successCB, 2) + '" style="margin-top:0px;border: 1px solid #F2F2F2;border-radius: 50%;height: 100px;width: 100px;"/>';
-					//					var main2 = plus.webview.getWebviewById(subData.webid);
-					//					mui.fire(main2, 'changeQunInfo', {
-					//						gid: subData.gid, //群id
-					//						type: 'gimg', //修改的类型
-					//						value: successCB //修改后的值
-					//					});
 					mui.toast('修改群头像成功');
 				}, function(errorCB) {
-					console.log('上传并修改资料头像，失败的回调' + JSON.stringify(errorCB));
-					mui.toast(data.RspTxt);
+					console.log('上传并修改群头像，失败的回调' + JSON.stringify(errorCB));
+					mui.toast('上传失败 ' + JSON.stringify(errorCB));
 				});
 
 				/**
