@@ -251,6 +251,7 @@ function refreshUI(datasource) {
 		}else{
 			comments_zan.className="mui-icon iconfont icon-zanzan1 mui-pull-right isNotLike"
 		}
+		comments_zan.order=i;
 	}
 }
 /**
@@ -275,9 +276,7 @@ var setQuestion = function(datasource) {
 		zan_icon.className="mui-icon iconfont icon-zanzan1 isLike";
 	}else{
 		zan_icon.className="mui-icon iconfont icon-zanzan1 isNotLike";
-	}
-	
-	
+	}	
 }
 /**
  * 设置回答人信息
@@ -418,9 +417,11 @@ var setZanIconCondition = function(item) {
 		item.className = "mui-pull-right mui-icon iconfont icon-zanzan1 isNotLike ";
 		item.isLike = 0;
 		mui.toast('已取消点赞');
+		answerData.Data[item.order].IsLiked=0;
 	} else {
 		item.className = "mui-pull-right mui-icon iconfont icon-zanzan1 isLike";
 		item.isLike = 1;
 		mui.toast('点赞成功');
+		answerData.Data[item.order].IsLiked=1;
 	}
 }
