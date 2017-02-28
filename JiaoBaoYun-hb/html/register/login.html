@@ -138,14 +138,12 @@
 		</header>
 		<div class="mui-content">
 			<div align="center">
-				<!--<img id="group-img" src="../../image/dynamic/u101.png" class="head-portrait" /><br />
-				<div id='account'>15069123759</div>-->
-				
+				<!--<img id="group-img" src="../../image/dynamic/u101.png" class="head-portrait" /><br />-->
 			</div>
 			<form id='login-form' class="mui-input-group">
 				<p></p>
 				<div class="mui-input-row row1">
-					<label style="font-size: 15px;">账号</label>
+					<!--<label style="font-size: 15px;">账号</label>-->
 					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="账号/手机号码">
 				</div>
 				<div class="mui-input-row ">
@@ -329,7 +327,6 @@ none; margin-top: -15px;">登录</button>
 										tempInfo.unick = tepI0000.unick;
 										tempInfo.usex = tepI0000.usex;
 										tempInfo.utxt = tepI0000.utxt;
-										tempInfo.isLogin = 1;
 										//解析省市代码
 										console.log('9999=' + tepI0000.uarea);
 										if(tepI0000.uarea != null) {
@@ -476,11 +473,13 @@ none; margin-top: -15px;">登录</button>
 						wd.close();
 						console.log('PostShakeHand:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
+							//存储到手机本地
+							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
 							//账号密码登录协议
 							//需要加密的数据
 							var enData = {
 								uid: loginInfo.account, //用户手机号或账号或email
-								pw: loginInfo.password,
+								pw: loginInfo.password
 							};
 							//不需要加密的数据
 							var comData = {
@@ -498,8 +497,7 @@ none; margin-top: -15px;">登录</button>
 									mui.toast(data.RspTxt);
 									return;
 								} else {
-									mui.toast('登录成功');
-									data.RspData.isLogin = 1;
+									mui.toast('登录成功')
 									//存储到手机本地
 									data.RspData.ispw = '1';
 									if(!data.RspData.uimg) {
