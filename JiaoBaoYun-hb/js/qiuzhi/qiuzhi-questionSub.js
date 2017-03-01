@@ -114,6 +114,10 @@ mui.plusReady(function() {
 	var tab_font = document.getElementById("tab_font");
 	tab_div.addEventListener('tap', function() {
 		console.log('tab_div-tap');
+		if (askModel.IsAnswered == 1) {
+			mui.toast('已经回答过此问题');
+			return;
+		}
 		tab_div.style.background = '#DDDDDD';
 		tab_font.style.color = 'white';
 		setTimeout(function() {
