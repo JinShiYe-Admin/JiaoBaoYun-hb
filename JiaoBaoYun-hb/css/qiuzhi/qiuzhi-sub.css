@@ -32,13 +32,13 @@ p {
 .experts-show {
 	padding: 1rem;
 }
-
+/*专家图标大小*/
 .expert-icon {
-	font-size: 2.0rem;
+	font-size: 1.5rem;
 	color: white;
 	background-color: #1DB8F1;
 	border-radius: 50%;
-	padding: .5rem;
+	padding: .25rem;
 }
 
 .ask-title {
