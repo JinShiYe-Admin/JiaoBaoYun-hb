@@ -32,10 +32,7 @@ var storageKeyName = (function(mod) {
 	mod.UPLOADING = '上传中...';
 	mod.SIGNKEY = 'jsy309'; //签名密钥
 	//---七牛---start---
-	mod.QNFILEDOMAIN = 'http://oigrn7z7d.bkt.clouddn.com/'; //存放在七牛的文件（云存储的文件）的域名，私有的,jiaobaoyun-file
-	mod.QNFILEIMGEDOMAIN = 'http://oigrmug2o.bkt.clouddn.com/'; //存放在七牛的文件（云存储的图片，视频文件）的缩略图域名，公开的,jiaobaoyun-filethumbnail
-	mod.QNHEADIMGEDOMAIN = 'http://oigr7qsvz.bkt.clouddn.com/'; //存放在七牛的个人头像，群头像，资料头像的域名，公开的，jiaobaoyun-headimage
-	//mod.QNDEFAULTIMAGEDOMAIN = 'http://oixh9lre3.bkt.clouddn.com/'; //存放在七牛的默认图片的域名，公开的
+    //mod.QNDEFAULTIMAGEDOMAIN = 'http://oixh9lre3.bkt.clouddn.com/'; //存放在七牛的默认图片的域名，公开的
 
 	//七牛存储子空间（文件二级文件名）
 	mod.QNPUBSPACE = "pb"; //七牛公开空间

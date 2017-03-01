@@ -363,8 +363,8 @@
 					getUpAndDownEntry();
 					var myDate = new Date();
 					var dateName = myDate.getTime() + (Math.floor(Math.random() * 10)) + '.';
-					var url = window.storageKeyName.QNGETDOWNTOKENFILE + subData.fpath + '?attname=' + dateName + subData.fname + subData.ftype;
-					console.log('addDownload:' + url);
+					var url = subData.fpath + '?attname=' + dateName + subData.fname + subData.ftype;
+					console.log('addDownload ' + url);
 					//---数据准备---end---
 					var data = {
 						fileUrl: url, //文件下载地址
@@ -715,11 +715,16 @@
 					//var dateName = myDate.getTime() + (Math.floor(Math.random() * 10)) + '_';
 					var filename = '_documents/' + personalUTID + '/download/'; // + dateName + fname + '';
 					var fpath = '_documents/' + personalUTID + '/download/' + loaclname;
-					console.log('getQNDownToken:fname:' + fname);
-					console.log('getQNDownToken:fpath:' + fpath);
-					CloudFileUtil.getQNDownToken(fileUrl, function(data) {
-						console.log('七牛下载token:' + data);
-						CloudFileUtil.download(data, filename, function(download, status) {
+					console.log('getQNDownToken:fname ' + fname);
+					console.log('getQNDownToken:fpath ' + fpath);
+					var getDownToken = {
+						appId: 4, //int 必填 项目id
+						urls: [fileUrl] //array 必填 需要获取下载token文件的路径
+					}
+					var getDownTokenUrl = window.storageKeyName.QNGETDOWNTOKENFILE;
+					CloudFileUtil.getQNDownToken(getDownTokenUrl, getDownToken, function(data) {
+						console.log('七牛下载token ' + JSON.stringify(data));
+						CloudFileUtil.download(data.Data[0].Value, filename, function(download, status) {
 							//下载任务完成的监听
 							console.log('下载任务完成' + status + '|' + JSON.stringify(download));
 							downloading = false;
@@ -843,7 +848,7 @@
 						appId: 4, //int 必填 项目id
 						mainSpace: mainSpace, //str 必填 文件存放在私有空间或公有空间
 						uploadSpace: uploadSpace, //str 必填  上传的空间
-						imageThumb: imageThumb  //str json 选填 type为0时有效，缩略图存放在私有空间或公有空间，默认mainSpace
+						imageThumb: imageThumb //str json 选填 type为0时有效，缩略图存放在私有空间或公有空间，默认mainSpace
 					}
 					CloudFileUtil.getQNUpToken(getUpTokenUrl, getToken, function(data) {
 						var QNUptoken = data.data; //token数据
@@ -1153,12 +1158,15 @@
 							} else {
 								mui.toast('上传失败 ' + data.RspTxt);
 							}
-							var pathStr = '["' + comData.fpath + '"]';
+							var batchDelete = {
+								appId: 4, //int 必填 项目id
+								urls: [comData.fpath] //array 必填 需要获取下载token文件的路径
+							}
 							/**
 							 * 七牛批量删除
 							 */
-							CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, pathStr, function(data) {
-									if(data.RspCode == 0) {
+							CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, batchDelete, function(data) {
+									if(data.Status == 1) {
 										//mui.toast('七牛删除成功');
 										console.log('七牛删除成功:' + JSON.stringify(data));
 									} else {
@@ -1167,7 +1175,7 @@
 									}
 								},
 								function(xhr, type, errorThrown) {
-									mui.toast('七牛删除失败' + JSON.stringify(data));
+									mui.toast('七牛删除失败' + JSON.stringify(type));
 									console.log('七牛删除失败:' + JSON.stringify(type));
 								}
 							);
