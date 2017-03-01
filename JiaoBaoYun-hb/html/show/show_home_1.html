@@ -15,203 +15,9 @@
 		<link rel="stylesheet" href="../../css/utils/pullToRefresh.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/icons-extra.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
-		<!--<link rel="stylesheet" href="../../css/sciedu/sciedu.css" />-->
+		<link rel="stylesheet" href="../../css/show/show.css" />
 
-		<style>
-			body,
-			.mui-content {
-				background: white;
-			}
-			
-			#sliderSegmentedControl,
-			.mui-segmented-control.mui-scroll-wrapper .mui-scroll {
-				height: 0px;
-			}
-			
-			.mui-fullscreen .mui-segmented-control~.mui-slider-group {
-				top: 0px;
-				background-color: white;
-			}
-			
-			.mui-slider .mui-slider-group .mui-slider-item .mui-table-view-cell:after {
-				height: 1px;
-			}
-			
-			.mui-scroll-wrapper,
-			.mui-pull-bottom-wrapper {
-				/*底部加载更多区域*/
-				background-color: white;
-			}
-			
-			<style>.mui-table-view-cell,
-			.mui-table-view-cell:active {
-				background-color: #FFFFFF;
-			}
-			
-			.mui-table-view {
-				background: transparent;
-				/*背景色透明*/
-			}
-			
-			.mui-table-view-cell {
-				background: white;
-				/*cell 背景设为白色*/
-				padding: 0;
-				/*内边距为0*/
-				margin-bottom: 10px;
-			}
-			
-			.mui-table-view:before,
-			.mui-table-view:after,
-			.mui-table-view-cell:after {
-				height: 0px;
-				/*去掉横线*/
-			}
-			
-			.mui-row-padding-8px {
-				padding: 8px;
-				/*内边距为8px*/
-				padding: 12px;
-			}
-			
-			.dynamic-personal-image {
-				/*个人头像圆形*/
-				border-radius: 50%;
-				width: 50px !important;
-				height: 50px;
-			}
-			
-			.dynamic-image-div {
-				/*内容中图片之间的内边距*/
-				padding: 1px;
-			}
-			
-			.dynamic-image {
-				/*内容的图片占全部空间*/
-				width: 100%;
-				height: 100%;
-			}
-			
-			.dynamic-icon,
-			.dynamic-icon-praise,
-			.dynamic-icon-comment,
-			.dynamic-icon-forward {
-				/*点赞，评论，分享的图标*/
-				height: 30px;
-				width: 30px;
-				margin-left: 25px;
-			}
-			
-			.dynamic-icon-Level {
-				/*等级图标*/
-				height: 20px;
-				margin-left: 10px;
-			}
-			
-			.dynamic-icon-praise-small {
-				/*点赞列表的小图标*/
-				height: 15px;
-				width: 15px !important;
-				margin-right: 5px;
-				margin-bottom: 0px;
-			}
-			
-			.dynamic-margin-top-10px {
-				margin-top: 10px;
-			}
-			
-			.dynamic-padding-left-10px {
-				padding-left: 10px;
-			}
-			
-			.dynamic-line {
-				/*点赞列表上面的横线*/
-				height: 1px;
-				width: 100%;
-				background: #e4e4e4;
-			}
-			
-			.dynamic-contenttext {
-				/*动态内容*/
-				font-family: '微软雅黑 Regular', '微软雅黑';
-				/*字体样式*/
-			}
-			
-			.dynamic-praise-name,
-			.dynamic-comment-name {
-				/*点赞者和评论者的名字*/
-				color: #1277C7;
-				font-size: 14px;
-			}
-			
-			.replyComment {
-				padding-top: 5px;
-			}
-			
-			.dynamic-comment-btn {
-				/*底部的评论按钮*/
-				width: 100%;
-				margin-top: 10px;
-				border-width: 1px;
-				border-color: #e4e4e4;
-			}
-			
-			.dynamic-image-more {
-				/*更多图片*/
-				position: absolute;
-				width: 99%;
-				height: 99%;
-				font-size: 40px;
-				color: white;
-				text-align: center;
-				background-color: rgba(0, 0, 0, 0.3);
-			}
-			
-			.mui-popover {
-				position: fixed;
-				height: 45px;
-				width: 60px;
-			}
-			
-			footer {
-				height: 60px;
-				width: 100%;
-				z-index: 20;
-				background-color: white;
-				border-color: lightgray;
-				border-width: 5px;
-				position: fixed;
-				bottom: 0;
-				display: none;
-			}
-			
-			.footer-center {
-				display: inline-block;
-				width: 75%;
-				padding: 5px;
-				height: 100%;
-			}
-			
-			.footer-center .input-text {
-				background: #fff;
-				border: solid 1px #ddd;
-				padding: 10px !important;
-				font-size: 16px !important;
-				line-height: 18px !important;
-				font-family: verdana !important;
-				overflow: hidden;
-				height: 40px;
-			}
-			
-			.btn-commit {
-				position: absolute;
-				top: 10px;
-				right: 10px;
-				display: inline-block;
-				width: 20%;
-			}
-		</style>
-		</style>
+
 	</head>
 
 	<body>
@@ -251,7 +57,6 @@
 			var index; //获取index的webview
 			var personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 			mui.plusReady(function() {
-//				events.closeWaiting();
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				index = plus.webview.getWebviewById('index.html'); //
 
@@ -346,7 +151,6 @@
 						console.log('slide ' + JSON.stringify(info));
 						console.log('slide ' + JSON.stringify(page));
 						if(!page) {
-							//							requestCityNews(info.acode, 1);
 							requestData(info.acode, 1);
 						}
 					});
@@ -354,16 +158,7 @@
 					addReplyView();
 					addSomeEvent();
 
-					//					//点击每一项的监听
-					//					mui('#sliderGroup').on('tap', '.mui-table-view-cell', function() {
-					//						var id = this.getAttribute('id');
-					//						var turl = this.getAttribute('data-turl');
-					//						console.log(id + '|' + turl);
-					//						document.getElementById("title_" + id).style.color = 'darkgray';
-					//						events.openNewWindowWithData('sciedu_show_main.html', {
-					//							turl: turl
-					//						});
-					//					});
+
 
 					//获取定制的城市
 					requestCustomizationCity(function(data) {
@@ -565,41 +360,7 @@
 				});
 			}
 
-			//45.通过区域代码获取对应区域的分页新闻
-			function requestCityNews(cityCode, pageIndex) {
-				//所需参数
-				var comData = {
-					top: '10', //每页行数，
-					vvl: cityCode, //查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
-					vvl1: pageIndex //页码,获取第几页
-				};
-				// 等待的对话框
-				var wd = events.showWaiting();
-				//45.通过区域代码获取对应区域的分页新闻
-				postDataPro_PostTnews(comData, wd, function(data) {
-					console.log('对应区域的分页新闻:' + JSON.stringify(data));
 
-					if(data.RspCode == 0) {
-						//新闻总页数
-						var tempArr = data.RspData.dt;
-						//将返回的新闻遍历
-						for(var m in tempArr) {
-							var tempModel = tempArr[m];
-							if(tempModel.timgs == 'null' || tempModel.timgs == null) {
-								tempModel.timgs = [];
-							} else {
-								tempModel.timgs = tempModel.timgs.split('|');
-							}
-						}
-						console.log('新闻最终值为:' + JSON.stringify(tempArr));
-						//生成每一项
-						addItems(cityCode, tempArr);
-					} else {
-						mui.toast(data.RspTxt);
-					}
-
-				});
-			}
 
 			var requestData = function(cityCode, pageIndex) {
 				var wd = events.showWaiting();
@@ -630,7 +391,7 @@
 
 					if(data.RspCode == 0 && data.RspData.Data.length > 0) {
 						totalPage = data.RspData.TotalPage
-						getPersonIds(data.RspData.Data);
+						getPersonIds(data.RspData.Data,cityCode);
 					} else {
 						var table = document.body.querySelector('.mui-table-view');
 						table.innerHTML = ''
@@ -826,7 +587,7 @@
 			/* 获取所有人的id
 			 * @param {Object} data
 			 */
-			var getPersonIds = function(data) {
+			var getPersonIds = function(data,cityCode) {
 				var personIds = [];
 				for(var i in data) {
 					personIds.push(data[i].PublisherId);
@@ -851,7 +612,7 @@
 				}
 				personIds = arrayDupRemoval(personIds);
 				personIds = events.arraySingleItem(personIds);
-				getPersonalInfo(data, personIds);
+				getPersonalInfo(data, personIds,cityCode);
 			}
 
 			/**
@@ -859,7 +620,7 @@
 			 * @param {Object} data
 			 * @param {Object} ids
 			 */
-			var getPersonalInfo = function(data, ids) {
+			var getPersonalInfo = function(data, ids,cityCode) {
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_PostUinf({
 					vvl: ids.toString(), //用户id，查询的值,p传个人ID,g传ID串
@@ -877,7 +638,7 @@
 						}
 
 						console.log("重组后的数据：" + JSON.stringify(zonepArray));
-						setData(zonepArray);
+						setData(zonepArray,cityCode);
 					} else {
 						events.fireToPageNone('index.html', 'closeWaiting');
 					}
@@ -935,9 +696,11 @@
 			 * 放置数据
 			 * @param {Object} data
 			 */
-			var setData = function(data) {
+			var setData = function(data,cityCode) {
 				console.log('data===' + JSON.stringify(data))
-				var table = document.body.querySelector('.mui-table-view');
+//				var table = document.body.querySelector('.mui-table-view');
+				var id = 'bot_' + sliderId.replace('top_', '');
+				var table = document.getElementById("bot_ul_" + cityCode)
 				table.innerHTML = ''
 
 				for(var i = 0; i < data.length; i++) {
