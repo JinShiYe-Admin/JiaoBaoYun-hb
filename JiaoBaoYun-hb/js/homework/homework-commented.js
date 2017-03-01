@@ -4,6 +4,7 @@ mui.init();
 var homeworkModel = {};
 mui('.mui-scroll-wrapper').scroll();
 mui.plusReady(function() {
+	mui.previewImage();
 	//修改答案后刷新界面
 	window.addEventListener('refreshAnswer', function(e) {
 		homeworkDetailNodes.stuResult.innerText = e.detail.data.answer;
