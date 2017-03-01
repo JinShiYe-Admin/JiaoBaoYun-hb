@@ -363,6 +363,7 @@
 
 
 			var requestData = function(cityCode, pageIndex) {
+				console.log('网络请求')
 				var wd = events.showWaiting();
 				/**
 				 * 请求区域内的动态
@@ -393,9 +394,9 @@
 						totalPage = data.RspData.TotalPage
 						getPersonIds(data.RspData.Data,cityCode);
 					} else {
-						var table = document.body.querySelector('.mui-table-view');
-						table.innerHTML = ''
-						events.fireToPageNone('index.html', 'closeWaiting');
+						//var table = document.body.querySelector('.mui-table-view');
+						//table.innerHTML = ''
+						//events.fireToPageNone('index.html', 'closeWaiting');
 					}
 
 					//设置上拉下拉控件的状态
