@@ -240,7 +240,10 @@ mui.plusReady(function() {
 	events.initRefresh('classSpace_list',
 		function() {
 			setReaded(postData.userId, postData.classId);
-
+			pageIndex = 1;
+			var container = document.getElementById('classSpace_list');
+			events.clearChild(container);
+			class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 		},
 		function() {
 			console.log('请求页面：page' + pageIndex);
