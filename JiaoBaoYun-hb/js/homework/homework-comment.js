@@ -82,7 +82,9 @@ var requireHomeworkResult = function() {
 		console.log('老师评价作业界面获取的作业信息：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			HomeworkResultId = data.RspData.HomeworkResultId;
-			workInfo.stuFiles=data.RspData.File;
+			workInfo.stuFiles=data.RspData.Files;
+			data.RspData.Files=null;
+			jQuery.extend(workInfo, data.RspData);
 //			setHomeWorkInfo(jQuery.extend(workInfo, data.RspData))
 		} else {
 			mui.toast(data.RspTxt);
