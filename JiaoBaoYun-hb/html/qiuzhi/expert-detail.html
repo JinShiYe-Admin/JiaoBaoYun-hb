@@ -28,16 +28,21 @@
 		</header>
 
 		<div class="mui-content" style="background-color: white;">
-			<div id="expertInfo" style="height: 150px;background-image:url(../../image/quan/leave-bg.png) ;"><br/>
+			<div id="expertInfo" style="min-height: 150px;height: auto;"><br/>
 				<div style="text-align: center;">
 					<img id="expertImg" style="width: 50px;height: 50px;border-radius: 50%;" src="../../image/utils/default_personalimage.png" />
 				</div>
 				<div style="text-align: center;">
 					<h4 id="ExpertChannels"></h4>
 				</div>
-				<p id="UserNote" style="margin: 5px;font-size: 14px;"></p>
-				<hr style="height:1px;border:none;border-top:1px solid lightgray;" />
+				<div style="margin-bottom: 10px;">
+					<p id="UserNote" style="margin: 5px;font-size: 15px;text-align: center;"></p>
+				</div>
+				
+					<!--<textarea  id="UserNote" id='leaveTitle'  onblur="inputOnblur(this)" class="mui-input-clear question" placeholder="" style="min-height: 30px;height: 30px;；width: 100%;background-color: transparent;font-size: 15px;border-color:transparent ;"></textarea>-->
 			</div>
+							<hr style="height:1px;border:none;border-top:1px solid lightgray;" />
+
 			<div style="margin-top: 0px;margin-left: 20px;">
 				<div id="FocusAsk" style="float: left;width: 70px;margin-left: 5px;">
 					<div>
@@ -64,7 +69,7 @@
 					</div>
 				</div>
 			</div>
-			<div style="width: device-width;margin-top: 70px;margin-left: 20px;margin-bottom: 20px;margin-right: 20px;">
+			<div style="width: device-width;margin-top: 50px;margin-left: 20px;margin-bottom: 20px;margin-right: 20px;">
 				<a id="IsLikeNum" class="mui-icon iconfont icon-support dynamic-icon-praise" style="color: gray;"></a>
 				<button id="focusBtn" class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;">关注</button>
 			</div>
@@ -150,6 +155,12 @@
 				} else { //邀请他的回答
 					events.openNewWindowWithData('qiuzhi-inviteAnswer.html', ExpertsInfo);
 				}
+			})
+			window.addEventListener('refresh_expertdetail', function(data) {
+				getExpertsInfo(ExpertsInfo.UserId);
+			})
+			events.addTap('UserNote',function(){
+				events.openNewWindowWithData('modifyExpertNote.html',ExpertsInfo.UserNote);
 			})
 			events.addTap('FocusAsk', function() {
 				console.log('关注的问题');
@@ -267,7 +278,7 @@
 
 		function addData() {
 			nodes.AskNum.innerHTML = ExpertsInfo.AskNum + '<span class="mui-icon mui-icon-forward"></span>';
-			nodes.UserNote.innerText = ExpertsInfo.UserNote;
+			nodes.UserNote.innerHTML = ExpertsInfo.UserNote+' '+'<img id="bianji" style = "width:20px;height:20px"  src="../../image/qiuzhi/bianji.png" />';
 			nodes.FocusManNum.innerText = ExpertsInfo.FocusManNum;
 			nodes.ExpertChannels.innerText = ExpertsInfo.ExpertChannelNames;
 			nodes.IsLikeNum.innerText = ExpertsInfo.IsLikeNum;

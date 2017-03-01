@@ -30,11 +30,13 @@
 			//将传值到的个人信息
 			var expertModel; //专家model
 			mui.plusReady(function() {
+				var data = plus.webview.currentWebview().data;
+				var answerContent = document.getElementById("answerContent");
+					answerContent.innerHTML = data;
 				jQuery('#answerContent').prop("maxLength", "4000");
 				window.addEventListener('modifyExpertNote', function(event) {
 					expertModel = event.detail.data;
-					var answerContent = document.getElementById("answerContent");
-					answerContent.innerHTML = expertModel.UserNote;
+					
 				});
 				//提交按钮
 				events.addTap('submitBtn', function() {
@@ -53,7 +55,9 @@
 							wd.close();
 							console.log('21.修改某个用户的个人简介:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) {
-								//
+								events.fireToPageNone('expert-detail.html', 'refresh_expertdetail');
+								mui.back();
+								mui.toast('修改成功')
 							} else {
 								mui.toast(data.RspTxt);
 							}
