@@ -618,17 +618,19 @@ var CloudFileUtil = (function($, mod) {
 	 *  @author 安琪
 	 */
 	mod.rechargePicsData = function(pics) {
+		var files=[];
 		for(var i in pics) {
 			var img = {};
 			img.url = pics[i].Url;
 			img.thumb = pics[i].ThumbUrl;
 			img.order = pics[i].DisplayOrder;
 			img.type = pics[i].FileType;
-			mod.files.push(img);
+			files.push(img);
 		}
-		mod.files.sort(function(a, b) {
+		files.sort(function(a, b) {
 			return a.order - b.order;
 		})
+		return files;
 	}
 	
 	/**

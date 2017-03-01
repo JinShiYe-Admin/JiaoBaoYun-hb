@@ -69,13 +69,13 @@
 					events.clearChild(document.getElementById('pictures'));
 					personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					homeworkModel = e.detail.data;
-					CloudFileUtil.rechargePicsData(homeworkModel.HomeworkResult.Files); 
+					var files=CloudFileUtil.rechargePicsData(homeworkModel.HomeworkResult.Files); 
 					console.log('修改作业数据：' + JSON.stringify(homeworkModel))
 					var textView = document.getElementById('input-content');
 					textView.value = homeworkModel.HomeworkResult.Result;
 					flag = 1;
-					for(var i in CloudFileUtil.files) {
-						CloudFileUtil.setPic(CloudFileUtil.files[i], 1);
+					for(var i in files) {
+						CloudFileUtil.setPic(files[i], 1);
 					}
 				})
 				events.addTap('publish', function() {
