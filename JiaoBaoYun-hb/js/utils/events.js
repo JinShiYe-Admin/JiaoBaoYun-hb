@@ -321,6 +321,7 @@ var events = (function(mod) {
 		events.fireToPageNone('../index/index.html', 'infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		events.fireToPageNone('../show/show_home_1.html', 'infoChanged');
+		events.fireToPageNone('qiuzhi_home.html', 'infoChanged');
 	}
 	mod.shortForString = function(str, len) {
 		if(str.length > len + 2) {
