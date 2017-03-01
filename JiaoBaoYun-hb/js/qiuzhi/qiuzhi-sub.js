@@ -63,7 +63,7 @@ function getExpertsArray(channelId) {
 		userIds: '[0]', //用户编号列表,Array,传入0，获取所有专家
 		channelId: channelId.toString(), //话题ID,传入0，获取所有话题数据
 		pageIndex: '1', //当前页数
-		pageSize: '0' //每页记录数,传入0，获取总记录数
+		pageSize: '10' //每页记录数,传入0，获取总记录数
 	};
 	// 等待的对话框
 	var wd = events.showWaiting();
@@ -135,7 +135,7 @@ function getExpertsArray(channelId) {
  * @param {Object} data 专家数据
  */
 function expertsItem(channelId, data) {
-	console.log('expertsItem ' + channelId + '|' + JSON.stringify(data));
+	//console.log('expertsItem ' + channelId + '|' + JSON.stringify(data));
 	var element = document.createElement('a');
 	element.id = 'experts_' + channelId + '_' + data.TabId;
 	element.className = 'mui-control-item';

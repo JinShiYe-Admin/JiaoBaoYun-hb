@@ -58,7 +58,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title" style="color: white;">订制城市</h1>
+			<h1 id="title" class="mui-title" style="color: white;"></h1>
 			<h1 id="commit" class="mui-title" style="text-align: right;right: 10px;">提交</h1>
 		</header>
 		<div class="mui-content mui-scroll-wrapper">
@@ -139,7 +139,10 @@
 				addBeforeCity(tempInfo.uarea);
 				var selectId = '';
 				if(main.data.id == 'uarea') { //uarea账号地区
+					document.getElementById("title").innerText='所在地';
 					selectId = main.data.cities[0].acode; //修改账号地区时记录选择的元素id（acode）
+				}else{
+					document.getElementById("title").innerText='订制城市';
 				}
 				//41.获取某个区域下的所有子区域或查询城市
 				requestAllCity();
