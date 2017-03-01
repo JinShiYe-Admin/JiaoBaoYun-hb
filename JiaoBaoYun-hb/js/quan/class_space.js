@@ -217,14 +217,17 @@ mui.plusReady(function() {
 	_self = plus.webview.currentWebview();
 	_self.setPullToRefresh({
 		support: true,
-		height: '0px',
-		range: '50px',
+		height: '50px',
+		range: '100px',
 		style: 'circle',
 		offset: '1px'
 	}, function() {
 		events.clearChild(document.getElementById('classSpace_list'));
 		pageIndex = 1;
 		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+		setTimeout(function(){
+			_self.endPullToRefresh();
+		},1000);
 	});
 //	h5fresh.addRefresh(function() {
 //		events.clearChild(document.getElementById('classSpace_list'));
