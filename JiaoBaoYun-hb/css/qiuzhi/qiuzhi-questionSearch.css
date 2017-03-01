@@ -7,7 +7,7 @@
 	width: 11%;
 	line-height: 3rem;
 	padding: 0px 0;
-	margin: 8px 0 7px 0;
+	margin: 0.8rem 0 0.7rem 0;
 	display: inline;
 	height: 2.5rem;
 }
@@ -39,16 +39,16 @@ input[type=submit]:enabled:active {
 	background-color: #ffffff;
 	text-align: left;
 	border-radius: 50px;
-	padding: 0 15px;
+	padding: 0 1.5rem;
 	margin-top: 8px;
-    margin-bottom: 7px;
+    margin-bottom: 0.7rem;
 	color: #000000;
 }
 
 #history_container {
 	position: absolute;
 	width: 100%;
-	margin-top: -9px;
+	margin-top: -0.9rem;
 	z-index: 2;
 }
 
@@ -58,7 +58,8 @@ input[type=submit]:enabled:active {
 
 #history_container .mui-table-view-cell>a {
 	line-height: 1rem;
-	padding: 0.5rem 1.1rem;
+	padding: 0.5rem 1.5rem;
+	margin: -1.1rem -1.5rem;
 }
 .icon-del
 {
@@ -88,13 +89,14 @@ input[type=submit]:enabled:active {
 }
 
 #list-container {
-	padding-top: 35px;
+	padding-top: 3.5rem;
 }
 #history_container {
-	padding-top: 44px;
+	padding-top: 4.4rem;
 }
 #history_container span{
 	color: #323232;
+	line-height: 1rem;
 }
 
 .mui-table-view-cell {

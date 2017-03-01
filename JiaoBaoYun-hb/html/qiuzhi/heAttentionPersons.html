@@ -356,6 +356,7 @@
 				var buttonInfo = {};
 				switch(focusType) {
 					case 0:
+					case 2:
 						buttonInfo.classInfo = 'attention-btn';
 						buttonInfo.inner = '关注';
 						break;
@@ -363,11 +364,11 @@
 						buttonInfo.classInfo = 'attentioned-btn';
 						buttonInfo.inner = '已关注';
 						break;
-					case 2:
+					case 3:
 						buttonInfo.classInfo = 'attentioned-btn';
 						buttonInfo.inner = '已互关';
 						break;
-					case 3:
+					case 5:
 						buttonInfo.classInfo = 'display-none';
 						buttonInfo.inner = '自己'
 					default:
