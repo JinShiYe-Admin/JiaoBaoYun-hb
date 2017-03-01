@@ -213,6 +213,7 @@
 				var showTop = true; //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var subData = null; //接收页面传入的参数值
+				var back = true;//是否允许返回
 				//			var subData = {
 				//				fid: this.getAttribute("data-fid"), //fid，如果是0则显示顶层文件和文件夹
 				//			    showTop:showTop,//是否显示顶部三项
@@ -259,6 +260,7 @@
 
 				//增加文件夹的监听
 				document.getElementById('addfolder').addEventListener('tap', function(e) {
+					back=false;//是否允许返回
 					console.log('增加文件夹showPid:' + showPid);
 					e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
 					var btnArray = ['取消', '确定'];
@@ -302,6 +304,7 @@
 											topFolderData[0].fdata.push(newFolderData);
 										}
 										mui.toast('创建成功');
+										back=true;//是否允许返回
 										mui.closePopups();
 									} else if(data.RspCode == 8) {
 										mui.toast('操作失败！已存在相同的名字');
@@ -313,6 +316,7 @@
 							return false;
 						} else {
 							//点击取消
+							back=true;//是否允许返回
 						}
 					}, 'div');
 					document.querySelector('.mui-popup-input input').type = 'text';
@@ -325,44 +329,31 @@
 
 				//返回按钮监听
 				mui.back = function() {
-					//				mui.each(showPidList, function(index, item) {
-					//					console.log('backshowPidList:' + JSON.stringify(item));
-					//				});
-					//				mui.each(topFolderData, function(index, item) {
-					//					console.log('back:topFolderData' + JSON.stringify(item));
-					//				});
-					showPidList.pop(); //清除最后一个历史记录
-					//topFolderData.pop(); //清除最后一个数据
-					//				console.log('------------------------');
-					//				mui.each(showPidList, function(index, item) {
-					//					console.log('backshowPidList:' + JSON.stringify(item));
-					//				});
-					//				mui.each(topFolderData, function(index, item) {
-					//					console.log('back:topFolderData' + JSON.stringify(item));
-					//				});
-					if(showPidList.length == 0) {
-						//mui.back();
-						events.fireToPageNone('../cloud/cloud_home.html', 'cloudDataChange')
-						plus.webview.hide(main, 'pop-out');
-					} else {
-						//从屏幕右边移出当前界面
-						mui('#scroll_' + showPid + ' ul').each(function(index, element) {
-							element.className = 'mui-table-view move-out-right';
-						});
+					if(back) {
+						showPidList.pop(); //清除最后一个历史记录
+						if(showPidList.length == 0) {
+							events.fireToPageNone('../cloud/cloud_home.html', 'cloudDataChange')
+							plus.webview.hide(main, 'pop-out');
+						} else {
+							//从屏幕右边移出当前界面
+							mui('#scroll_' + showPid + ' ul').each(function(index, element) {
+								element.className = 'mui-table-view move-out-right';
+							});
 
-						//从屏幕左边移进显示上一个历史界面
-						var show = showPidList[showPidList.length - 1];
-						document.getElementById("pid_" + show.pid).style.display = 'inline';
-						mui('#scroll_' + show.pid + ' ul').each(function(index, element) {
-							element.className = 'mui-table-view move-in-left';
-						});
+							//从屏幕左边移进显示上一个历史界面
+							var show = showPidList[showPidList.length - 1];
+							document.getElementById("pid_" + show.pid).style.display = 'inline';
+							mui('#scroll_' + show.pid + ' ul').each(function(index, element) {
+								element.className = 'mui-table-view move-in-left';
+							});
 
-						setTimeout(function() { //动画结束后
-							//隐藏当前界面
-							document.getElementById("pid_" + showPid).style.display = 'none';
-							document.getElementById("title").innerText = show.pname;
-							showPid = show.pid;
-						}, 400);
+							setTimeout(function() { //动画结束后
+								//隐藏当前界面
+								document.getElementById("pid_" + showPid).style.display = 'none';
+								document.getElementById("title").innerText = show.pname;
+								showPid = show.pid;
+							}, 400);
+						}
 					}
 				}
 
@@ -418,6 +409,7 @@
 				 * 长按文件或文件夹
 				 */
 				mui('#all').on('longtap', '.mui-table-view-cell', function(e) {
+					back=false;//是否允许返回
 					var id = this.getAttribute('id'); //元素id
 					var pid = this.getAttribute('data-pid'); //父ID
 					var fid = this.getAttribute('data-fid'); //文件id
@@ -465,6 +457,7 @@
 												}
 											});
 										});
+										back=true;//是否允许返回
 										mui.closePopups();
 									} else if(data.RspCode == 8) {
 										mui.toast('操作失败！已存在相同的名字');
@@ -476,7 +469,7 @@
 							}
 							return false;
 						} else { //取消
-
+							back=true;//是否允许返回
 						}
 					}, 'div');
 					document.querySelector('.mui-popup-input input').type = 'text';
