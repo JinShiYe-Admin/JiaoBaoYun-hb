@@ -98,12 +98,12 @@
 	</head>
 
 	<body>
-		<footer id="footer" class="mui-bar-tab" style="display: block;">
+		<!--<footer id="footer" class="mui-bar-tab" style="display: block;">
 			<div class="footer-center">
 				<textarea onblur="inputOnblur(this)" onfocus="setStyle(this.id)" id='msg-content' type="text" class='input-text' placeholder=""></textarea>
 			</div>
 			<button id='btn-reply' class="mui-btn  btn-commit">发送</button>
-		</footer>
+		</footer>-->
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
@@ -472,10 +472,18 @@
 			//点击回复
 			mui('.mui-table-view').on('tap', '.ableSelectedCell', function() {
 				var replyContainer = document.getElementById('footer');
-				var leaveContent = document.getElementById('msg-content');
-				showSoftInput('#msg-content');
+//				var leaveContent = document.getElementById('msg-content');
+//				showSoftInput('#msg-content');
 				cellIndex = this.id.replace('reply', '');
-				leaveContent.placeholder = '@' + leaveArray[cellIndex].unick;
+				var data = {
+					userId: personalUTID,
+					upperId: leaveArray[cellIndex].TabId,
+					replyUserId: leaveArray[cellIndex].UserId,
+					userOwnerId: userId,
+//					placehold:'@' + leaveArray[cellIndex].unick,
+				}
+				events.openNewWindowWithData('leave-reply.html',data)
+//				leaveContent.placeholder = '@' + leaveArray[cellIndex].unick;
 				console.log(cellIndex);
 
 			});

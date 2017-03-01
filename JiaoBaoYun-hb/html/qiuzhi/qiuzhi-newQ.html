@@ -41,7 +41,7 @@
 				</div>
 			</div>
 			<div id="pictures" style="float: left;background-color: transparent;width: 320px;"></div>
-			<p style="margin-top: 10px;margin-left: 10px;font-size: 14px;width: 100px;">选择话题:
+			<p style="margin-top: 10px;margin-left: 10px;font-size: 14px;width: 150px;">选择话题:
 				<a id="channal" style="margin-left: 4px;" href="#popover">
 					全部
 				</a>
@@ -118,8 +118,22 @@
 					//2.获取符合条件的专家信息
 					getExpertsArray(curChannel.TabId, UserId);
 					askChannel = curChannel.TabId;
-					document.getElementById("channal").innerHTML = curChannel.ChannelName;
+					
+					if(flag==0){
+						document.getElementById("channal").innerHTML = '请选择';
+					}else{
+						document.getElementById("channal").innerHTML = curChannel.ChannelName;
+					}
+
 					var ul = document.getElementById("popover").getElementsByClassName('mui-table-view')[0];
+					var li = document.createElement("li");
+						li.id = '999';
+						li.className = 'mui-table-view-cell';
+						var a = document.createElement("a");
+						a.href = '#'
+						a.innerHTML = '请选择';
+						li.appendChild(a);
+						ul.appendChild(li);
 					for(var i = 0; i < channelData.length; i++) {
 						var li = document.createElement("li");
 						li.id = channelData[i].TabId;
@@ -199,6 +213,10 @@
 					var boxesStr = arrayToStr(selectedBoxes)
 					console.log(JSON.stringify(selectedBoxes));
 					var TAs = getTypeAddress();
+					if(askChannel=="999"){
+						mui.toast('请选择话题')
+						return;
+					}
 					//所需参数
 					var comData = {
 						askTitle: askTitle.value, //问题标题,200
@@ -324,7 +342,7 @@
 						li.className = 'mui-table-view-cell mui-media';
 						li.id = 'li' + i;
 						li.innerHTML =
-							'<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(datasource[i].uimg, 2) + '">' +
+							'<img class="mui-media-object mui-pull-left" style = "width:50px;height:45px;border-radius: 50%;" src="' + updateHeadImg(datasource[i].uimg, 2) + '">' +
 							'<div class="mui-media-body">' +
 							datasource[i].unick + '<font style="color:gray"> 回答数:<span style="color:red">' + datasource[i].AnswerNum + '</span>' +
 							'</font><p class="mui-ellipsis">' + datasource[i].UserNote + '</p></div>' +
