@@ -71,7 +71,7 @@ var class_space = (function(mod) {
 	 * 
 	 * @param {Object} item
 	 */
-	var createInnerHtml = function(item) {
+	var createInnerHtml = function(item,index) {
 		console.log("加载的数据：" + JSON.stringify(item));
 		var inner = '<div><div class="mui-pull-left head-img" >' +
 			'<img class="head-portrait" headId="' + item.utid + '" src="' + getUImg(item.uimg) + '"/>' +
@@ -80,7 +80,7 @@ var class_space = (function(mod) {
 			'<div class="chat_content_left">' +
 			'<div class="chat-body"><p class="chat-words">' +
 			item.MsgContent + '</p>' +
-			createImgsInner(item) +
+			createImgsInner(item,index) +
 			'</div>' +
 			'<p class="chat-bottom">' + events.shortForDate(item.PublishDate) +
 			'<a href="#popover" tabId="' + item.TabId + '" class="mui-icon iconfont icon-support ' + setIsLike(item.IsLike) + '">(' + item.LikeCnt +
@@ -165,7 +165,7 @@ var class_space = (function(mod) {
 		for(var i in list) {
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell';
-			li.innerHTML = createInnerHtml(list[i]);
+			li.innerHTML = createInnerHtml(list[i],pageIndex*10+i);
 			container.appendChild(li);
 		}
 	}
@@ -179,18 +179,21 @@ var class_space = (function(mod) {
 	 * 
 	 * @param {Object} cell
 	 */
-	var createImgsInner = function(cell) {
+	var createImgsInner = function(cell,index) {
 		var imgInner = '';
 		var percent = 0.00;
 		if(cell.EncImgAddr) {
 			var imgs = cell.EncImgAddr.split('|');
+			var trueImgs=cell.EncAddr.split('|');
 			console.log('要显示的图片地址：' + JSON.stringify(imgs));
 			for(var i in imgs) {
 				if(imgs.length <= 3 && imgs.length > 0) {
 					percent = 100 / (imgs.length);
-					imgInner += '<img src="' + imgs[i] + '" style="width:' + percent + '%;padding:2px"/>'
+					imgInner += '<img src="' + imgs[i] + '" style="width:' + percent + '%;padding:2px;"'+
+							'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' +index + '"/>'
 				} else {
-					imgInner += '<img src="' + imgs[i] + '" style="width:33.33333333%; padding:2px"/>'
+					imgInner += '<img src="' + imgs[i] + '" style="width:33.33333333%; padding:2px;"'+
+					'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + index + '"/>'
 				}
 			}
 		}
@@ -210,6 +213,7 @@ h5fresh.addPullUpFresh("#refreshContainer", function() {
 	}
 })
 mui.plusReady(function() {
+	mui.previewImage();
 	h5fresh.addRefresh(function() {
 		events.clearChild(document.getElementById('classSpace_list'));
 		pageIndex = 1;
