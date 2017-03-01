@@ -13,7 +13,7 @@
 	margin-right: .5rem;
 }
 
-.icon-bianji {
+.icon-myQuestion {
 	position: fixed;
 	bottom: 2rem;
 	right: 2rem;
@@ -131,6 +131,13 @@ p {
 	color: #B7B7B7;
 }
 
-.mui-table-view-divider {
+/*.mui-table-view-divider {
 	background-color: #F8F9FB;
+}*/
+.mui-content,.mui-table-view{
+	background-color:#F8F9FB ;
+}
+.mui-table-view-cell{
+	background-color: #fff;
+	margin-top: 1rem;
 }
