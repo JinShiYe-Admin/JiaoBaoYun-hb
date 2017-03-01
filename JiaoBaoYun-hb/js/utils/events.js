@@ -137,7 +137,7 @@ var events = (function(mod) {
 		 */
 		function pulldownRefresh() {
 			setTimeout(function() {
-				mui('#refreshContainer').pullRefresh().refresh(true);
+//				mui('#refreshContainer').pullRefresh().refresh(true);
 				var item = document.getElementById(id)
 				//清除所有数据
 				mod.clearChild(item);
