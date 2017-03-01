@@ -45,6 +45,9 @@
 			mui.plusReady(function() {
 				//从专家页面传值
 				window.addEventListener('qiuzhi-expertAllComment', function(event) {
+					pageIndex = 1;
+					flagRef = 0;
+					answerArray = [];
 					//赋值
 					ExpertsInfo = event.detail.data;
 					console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
