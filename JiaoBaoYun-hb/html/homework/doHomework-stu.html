@@ -69,7 +69,7 @@
 					events.clearChild(document.getElementById('pictures'));
 					personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					homeworkModel = e.detail.data;
-					var files=CloudFileUtil.rechargePicsData(homeworkModel.HomeworkResult.Files); 
+					var files = CloudFileUtil.rechargePicsData(homeworkModel.HomeworkResult.Files);
 					console.log('修改作业数据：' + JSON.stringify(homeworkModel))
 					var textView = document.getElementById('input-content');
 					textView.value = homeworkModel.HomeworkResult.Result;
@@ -88,7 +88,7 @@
 				})
 				setListener();
 			});
-			
+
 			var setListener = function() {
 				//删除图标的点击事件
 				CloudFileUtil.setDelPicListener();
@@ -96,7 +96,9 @@
 				events.addTap('take_pic', function() {
 					if(CloudFileUtil.files.length < 9) {
 						camera.getPic(camera.getCamera(), function(picPath) {
-							plus.nativeUI.showWaiting(storageKeyName.WAITING);
+							plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
+								back: 'none'
+							});
 							var saveSpace = storageKeyName.CLASSSPACE; //保存空间
 							compress.compressPIC(picPath, function(event) {
 								var localPath = event.target;
@@ -143,7 +145,9 @@
 					if(CloudFileUtil.files.length < 9) {
 						var picCount = 0; //上传图片计数
 						gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
-							plus.nativeUI.showWaiting(storageKeyName.UPLOADING); //等待框
+							plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
+								back: 'none'
+							}); //等待框
 							console.log("保存的路径：" + JSON.stringify(paths));
 							var saveSpace = storageKeyName.CLASSSPACE; //保存路径
 							compress.compressPics(paths, function(compressedPaths) {
@@ -220,7 +224,7 @@
 						textView.blur();
 						CloudFileUtil.files = [];
 						events.clearChild(document.getElementById('pictures'));
-						events.fireToPageNone('homework-tea-sub.html','homeworkDone');
+						events.fireToPageNone('homework-tea-sub.html', 'homeworkDone');
 						events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, homeworkModel, { HomeworkResultId: data.RspData.HomeworkResultId, workType: 1 }));
 					} else {
 						mui.toast(data.RspTxt);

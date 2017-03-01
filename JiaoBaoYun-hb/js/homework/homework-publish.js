@@ -9,7 +9,7 @@ var subjectsContainer = document.getElementById('subjects');
 //个人id
 var personalUTID;
 mui.init();
-mui.plusReady(function(){
+mui.plusReady(function() {
 	events.preload('classes-select.html', 200);
 	window.addEventListener('postClasses', function(e) {
 		CloudFileUtil.files = [];
@@ -27,10 +27,10 @@ mui.plusReady(function(){
 		requestClassStudents();
 		//科目
 		requestSubjectList(setSubjects);
-	}); 
+	});
 	events.addTap('select-classes', function() {
 		events.fireToPageWithData('classes-select.html', 'postClasses', selectClassArray);
-	}) 
+	})
 	CloudFileUtil.setDelPicListener();
 	/**
 	 * 监听选择班级后的返回数据
@@ -53,7 +53,9 @@ mui.plusReady(function(){
 		if(CloudFileUtil.files.length < 9) {
 			var picCount = 0; //上传图片计数
 			gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
-				plus.nativeUI.showWaiting(storageKeyName.UPLOADING); //等待框
+				plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
+					back: 'none'
+				}); //等待框
 				console.log("保存的路径：" + JSON.stringify(paths));
 				var saveSpace = storageKeyName.CLASSSPACE; //保存路径
 				compress.compressPics(paths, function(compressedPaths) {
@@ -96,7 +98,9 @@ mui.plusReady(function(){
 	events.addTap('getImg', function() {
 		if(CloudFileUtil.files.length < 9) {
 			camera.getPic(camera.getCamera(), function(picPath) {
-				plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
+					back: 'none'
+				});
 				var saveSpace = storageKeyName.CLASSSPACE; //保存空间
 				compress.compressPIC(picPath, function(event) {
 					var localPath = event.target;
