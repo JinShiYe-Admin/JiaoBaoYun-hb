@@ -97,7 +97,7 @@
 
 .icon-xiaoxizhongxin:before { content: "\e611"; }
 
-.icon-xie1:before { content: "\e608"; }
+.icon-write:before { content: "\e608"; }
 
 .icon-qunziliao2:before { content: "\e615"; }
 
@@ -126,6 +126,8 @@
 .icon-tingzhi:before { content: "\e62f"; }
 
 .icon-fasong:before { content: "\e636"; }
+
+.icon-aomenwaimaijiantou-copy:before { content: "\e6da"; }
 
 .icon-wenda1:before { content: "\e66d"; }
 
@@ -207,6 +209,8 @@
 
 .icon-xiangce:before { content: "\e908"; }
 
+.icon-myQuestion:before { content: "\e644"; }
+
 .icon-wenda-copy:before { content: "\e909"; }
 
 .icon-qunziliao:before { content: "\e626"; }
@@ -234,4 +238,3 @@
 .icon-jiaxiabiao:before { content: "\e639"; }
 
 .icon-banxiabiao:before { content: "\e638"; }
-

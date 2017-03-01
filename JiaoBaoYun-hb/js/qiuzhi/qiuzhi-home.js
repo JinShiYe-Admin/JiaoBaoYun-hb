@@ -6,9 +6,17 @@ mui.plusReady(function() {
 	var curPage = plus.webview.currentWebview();
 	curPage.addEventListener("show", function(e) {
 		//document.getElementById('subjects-container').innerHTML = '';
+		if(allChannels&&allChannels.length>0){
+			
+		}else{
+			mui('#slider_sw').scroll().scrollTo(0, 0, 0);
+			requestAllChannels(setChannels);
+		}
+	});
+	window.addEventListener('infoChanged',function(){
 		mui('#slider_sw').scroll().scrollTo(0, 0, 0);
 		requestAllChannels(setChannels);
-	});
+	})
 	setListener();
 })
 //1.获取所有话题
