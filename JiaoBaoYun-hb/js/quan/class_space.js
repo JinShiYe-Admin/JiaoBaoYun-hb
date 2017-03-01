@@ -205,30 +205,15 @@ var class_space = (function(mod) {
 var pageIndex = 1;
 var pageSize = 10;
 var postData;
-h5fresh.addPullUpFresh("#refreshContainer", function() {
-	mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
-	if(pageIndex < class_space.totalPagNo) {
-		pageIndex++;
-		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-	}
-})
+//h5fresh.addPullUpFresh("#refreshContainer", function() {
+//	mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
+//	if(pageIndex < class_space.totalPagNo) {
+//		pageIndex++;
+//		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+//	}
+//})
 mui.plusReady(function() {
 	mui.previewImage();
-	_self = plus.webview.currentWebview();
-	_self.setPullToRefresh({
-		support: true,
-		height: '50px',
-		range: '100px',
-		style: 'circle',
-		offset: '1px'
-	}, function() {
-		events.clearChild(document.getElementById('classSpace_list'));
-		pageIndex = 1;
-		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-		setTimeout(function(){
-			_self.endPullToRefresh();
-		},1000);
-	});
 //	h5fresh.addRefresh(function() {
 //		events.clearChild(document.getElementById('classSpace_list'));
 //		pageIndex = 1;
@@ -252,19 +237,22 @@ mui.plusReady(function() {
 	/***
 	 * 加载刷新
 	 */
-	//	events.initRefresh('classSpace_list',
-	//		function() {
-	//			setReaded(postData.userId, postData.classId);
-	//
-	//		},
-	//		function() {
-	//			console.log('请求页面：page' + pageIndex);
-	//			mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
-	//			if(pageIndex < class_space.totalPagNo) {
-	//				pageIndex++;
-	//				class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-	//			}
-	//		});
+	events.initRefresh('classSpace_list',
+		function() {
+			setReaded(postData.userId, postData.classId);
+			pageIndex = 1;
+			var container = document.getElementById('classSpace_list');
+			events.clearChild(container);
+			class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+		},
+		function() {
+			console.log('请求页面：page' + pageIndex);
+			mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
+			if(pageIndex < class_space.totalPagNo) {
+				pageIndex++;
+				class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+			}
+		});
 	mui('.mui-table-view').on('tap', '.head-portrait', function() {
 		var id = this.getAttribute('headId');
 		console.log(id);

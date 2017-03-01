@@ -704,7 +704,7 @@
 				 * @param {Object} data
 				 */
 				function additem(data) {
-					//console.log('additem:' + JSON.stringify(data))
+					console.log('additem:' + JSON.stringify(data))
 					var li = document.createElement('li');
 					li.setAttribute('id', 'fid_' + data.fid); //元素id
 					li.setAttribute('data-pid', data.pid); //父ID
@@ -737,11 +737,12 @@
 							var pathList = data.fpath.split('/');
 							var pathList2 = pathList[pathList.length - 1].split('.');
 							var fileName = pathList2[0];
-							var path = window.storageKeyName.QNFILEIMGEDOMAIN + fileName + '.PNG';
+							var path = window.storageKeyName.QNPB + 'yuncunc/' + window.storageKeyName.CLOUDSTORAGETHUMB + fileName + '.png'
 							//console.log('path:' + path);
 							if(type != '') {
 								html3 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
 							} else { //七牛能生成缩略图的图片或视频
+								//console.log('path:' + path);
 								html3 = '<img class="mui-media-object cloud-bottom-imge mui-pull-left" src="' + path + '"/>';
 
 								//html3 = '<img class="mui-media-object cloud-bottom-imge mui-pull-left" data-lazyload="' + path + '"/>';

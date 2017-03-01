@@ -4,16 +4,17 @@ mui.init();
 var homeworkModel = {};
 mui('.mui-scroll-wrapper').scroll();
 mui.plusReady(function() {
+	mui.previewImage();
 	//修改答案后刷新界面
 	window.addEventListener('refreshAnswer', function(e) {
-					homeworkDetailNodes.stuResult.innerText = e.detail.data.answer;
-					homeworkResult.HomeworkResult.Result = e.detail.data.answer;
-				})
+		homeworkDetailNodes.stuResult.innerText = e.detail.data.answer;
+		homeworkResult.HomeworkResult.Result = e.detail.data.answer;
+	})
 	//跳转到修改作业界面
 	events.addTap('modifyHomework', function() {
 		console.log('homeworkResult=' + JSON.stringify(homeworkResult));
 		console.log('homeworkModel=' + JSON.stringify(homeworkModel));
-		if(homeworkModel.workType == 0) {//0:临时作业 1：普通作业
+		if(homeworkModel.workType == 0) { //0:临时作业 1：普通作业
 			var modifyAnswerData = mui.extend(homeworkResult, {
 				role: 30
 			}, homeworkModel)
@@ -29,28 +30,29 @@ mui.plusReady(function() {
 	//上个界面跳转到此界面的监听事件
 	window.addEventListener('workDetail', function(e) {
 		homeworkModel = e.detail.data;
-		resetData();//数据初始化
+		resetData(); //数据初始化
 		console.log('学生查看作业结果界面：' + JSON.stringify(homeworkModel));
 		if(homeworkModel.workType == 0) {
 			document.getElementById("modifyHomework").hidden = 'hidden'
-				//			document.getElementById("list").hidden = 'hidden';
+			//			document.getElementById("list").hidden = 'hidden';
 			getAnswerResultStu();
 		} else {
 			document.getElementById("list").hidden = '';
+			requestHomeworkDetail();
 			requestGetHomeworkResultStu();
 		}
 		getStuName();
 
 	})
-	var _back=mui.back;
+	var _back = mui.back;
 	mui.back = function() {
-		console.log('返回上级页面的id:'+plus.webview.currentWebview().opener().id);
-		if(homeworkModel.workType==1){
+		console.log('返回上级页面的id:' + plus.webview.currentWebview().opener().id);
+		if(homeworkModel.workType == 1) {
 			plus.webview.getWebviewById('homework-tea.html').show();
-		}else{
+		} else {
 			_back();
 		}
-		
+
 	}
 });
 //重置数据
@@ -62,7 +64,7 @@ function resetData() {
 		homeworkDetailNodes.list.removeChild(tempNodes[i]);
 	}
 
-	if(homeworkModel.workType == 0) {//0:临时作业 1：普通作业
+	if(homeworkModel.workType == 0) { //0:临时作业 1：普通作业
 		console.log('临时作业')
 		homeworkDetailNodes.stuHomework.hidden = 'hidden';
 		homeworkDetailNodes.stuCell.hidden = 'hidden';
@@ -102,6 +104,27 @@ var homeworkDetailNodes = {
 //作业结果model
 var homeworkResult = {};
 var personalUTID;
+//获取作业详情
+function requestHomeworkDetail() {
+	//所需参数
+	var comData = {
+		teacherId: homeworkModel.TeacherId, //教师Id
+		homeworkId: homeworkModel.HomeworkId //作业id；
+	};
+	// 等待的对话框
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//2.获取教师发布作业详情；
+	postDataPro_GetHomework(comData, wd, function(data) {
+		wd.close();
+		console.log('2.postDataPro_GetHomework:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+			//修改界面
+	document.getElementById('brief-imgs').innerHTML = getImgsInner(data.RspData.File);
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+}
 //获取学生个人资料
 function getStuName() {
 	var tempData = {
@@ -172,7 +195,7 @@ function getAnswerResultStu() {
 		console.log('4.postDataPro_GetAnswerResultStu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			homeworkResult = data.RspData;
-			if(!homeworkModel.TeacherId){
+			if(!homeworkModel.TeacherId) {
 				homeworkModel.TeacherId = homeworkModel.utid
 			}
 			requestTeaInfo(homeworkModel.TeacherId);
@@ -183,25 +206,25 @@ function getAnswerResultStu() {
 }
 //请求老师临时作业答案
 var requireTeachersAnswer = function() {
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		console.log('homeworkModel' + JSON.stringify(homeworkModel));
-		postDataPro_GetAnswer({
-			teacherId: homeworkModel.TeacherId,
-			answerResultId: homeworkModel.AnswerResultId
-		}, wd, function(data) {
-			wd.close();
-			console.log('学生作业页面获取的临时作业答案：' + JSON.stringify(data));
-			if(data.RspCode == '0000') {
-				mui.extend(homeworkResult, data.RspData);
-				console.log('homeworkResult=' + JSON.stringify(homeworkResult));
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	console.log('homeworkModel' + JSON.stringify(homeworkModel));
+	postDataPro_GetAnswer({
+		teacherId: homeworkModel.TeacherId,
+		answerResultId: homeworkModel.AnswerResultId
+	}, wd, function(data) {
+		wd.close();
+		console.log('学生作业页面获取的临时作业答案：' + JSON.stringify(data));
+		if(data.RspCode == '0000') {
+			mui.extend(homeworkResult, data.RspData);
+			console.log('homeworkResult=' + JSON.stringify(homeworkResult));
 
-				refreshUITemp();
-			} else if(data.RspCode == '9999') {
-				//				refreshUITemp();
-			}
-		})
-	}
-	//查找老师info
+			refreshUITemp();
+		} else if(data.RspCode == '9999') {
+			//				refreshUITemp();
+		}
+	})
+}
+//查找老师info
 var requestTeaInfo = function(teaId) {
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataPro_PostUinf({
@@ -213,29 +236,29 @@ var requestTeaInfo = function(teaId) {
 		if(data.RspCode = '0000') {
 			mui.extend(homeworkResult, data.RspData[0])
 			if(homeworkModel.workType == 0) {
-				if(homeworkModel.UploadTime){
-				var dateArr = homeworkModel.UploadTime.split(' ');
-				homeworkModel.UploadTime = dateArr[0];
-				homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime+'</span>'
+				if(homeworkModel.UploadTime) {
+					var dateArr = homeworkModel.UploadTime.split(' ');
+					homeworkModel.UploadTime = dateArr[0];
+					homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime + '</span>'
 
-				}else{
+				} else {
 					console.log(homeworkResult.SubmitTime);
 					homeworkModel.UploadTime = homeworkResult.SubmitTime;
 					var dateArr = homeworkModel.UploadTime.split(' ');
-				homeworkModel.UploadTime = dateArr[0];
-				
-				homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime+'</span>'
+					homeworkModel.UploadTime = dateArr[0];
+
+					homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime + '</span>'
 				}
 				homeworkDetailNodes.title.innerText = data.RspData[0].unick;
 				homeworkDetailNodes.content.innerText = '';
-				document.getElementById("headImg").src = updateHeadImg(data.RspData[0].uimg,2);
+				document.getElementById("headImg").src = updateHeadImg(data.RspData[0].uimg, 2);
 
 			} else {
 				var dateArr = homeworkResult.HomeworkResult.UploadTime.split(' ');
 				homeworkResult.HomeworkResult.UploadTime = dateArr[0];
-				console.log('1111111==='+data.RspData[0].unick)
-				
-				homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkResult.HomeworkResult.UploadTime+'</span>'
+				console.log('1111111===' + data.RspData[0].unick)
+
+				homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkResult.HomeworkResult.UploadTime + '</span>'
 
 			}
 			requireTeachersAnswer();
@@ -259,7 +282,7 @@ function refreshUITemp() {
 	if(homeworkResult.Files.length > 0) {
 
 		for(var i = 0; i < homeworkResult.Files.length; i++) {
-			var img =homeworkResult.Files[i].ThumbUrl;
+			var img = homeworkResult.Files[i].ThumbUrl;
 			TeaAnsImgLi.innerHTML = TeaAnsImgLi.innerHTML + '<img class="mui-media-object mui-pull-left" src="' + img + '" />';
 			if(i == homeworkResult.Files.length - 1) {
 				TeaAnsImgLi.innerHTML = TeaAnsImgLi.innerHTML + '<span class="mui-icon mui-icon-forward mui-pull-right " style = "margin-top:10px"></span>'
@@ -281,7 +304,7 @@ function refreshUITemp() {
 	stuAnsImgLi.innerHTML = ''
 	homeworkResult.Files = getMatchedImgs(homeworkResult.Files)
 	for(var i = 0; i < homeworkResult.File.length; i++) {
-		var img =homeworkResult.File[i].ThumbUrl;
+		var img = homeworkResult.File[i].ThumbUrl;
 		stuAnsImgLi.innerHTML = stuAnsImgLi.innerHTML + '<img class="mui-media-object mui-pull-left" src="' + img + '" />';
 		if(i == homeworkResult.File.length - 1) {
 			stuAnsImgLi.innerHTML = stuAnsImgLi.innerHTML + '<span class="mui-icon mui-icon-forward mui-pull-right " style = "margin-top:10px"></span>'
@@ -312,11 +335,11 @@ function refreshUITemp() {
 	homeworkDetailNodes.commentContent.innerText = Comment;
 
 }
-var getMatchedImgs=function(files){
-	var mactchedFiles=[];
-	for(var i in files){
+var getMatchedImgs = function(files) {
+	var mactchedFiles = [];
+	for(var i in files) {
 
-		if(!(files[i].MatchRate&&files[i].MatchRate.replace('%','')<50)){
+		if(!(files[i].MatchRate && files[i].MatchRate.replace('%', '') < 50)) {
 			mactchedFiles.push(files[i]);
 		}
 	}
@@ -344,9 +367,11 @@ function refreshUI() {
 		HomeworkContents = '作业内容';
 	}
 	homeworkDetailNodes.content.innerText = HomeworkContents;
-	document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkResult.HomeworkResult.Files);
+	//	document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkResult.HomeworkResult.Files);
 	console.log(homeworkResult.HomeworkResult.Result)
 	homeworkDetailNodes.stuResult.innerText = homeworkResult.HomeworkResult.Result;
+
+	document.getElementById('brief-imgs-stu').innerHTML = getImgsInner(homeworkResult.HomeworkResult.Files);
 	var Comment = homeworkResult.HomeworkResult.Comment;
 	if(!Comment) {
 		Comment = '无评语';
@@ -396,14 +421,14 @@ var getHomeworkIcon = function(subject) {
 }
 //点击图片跳转到图片详情界面
 mui('.mui-table-view').on('tap', '.cell-color', function() {
-	if(this.id == 'TeaAnsImgLi') {//老师答案
+	if(this.id == 'TeaAnsImgLi') { //老师答案
 		console.log('点击图片');
 		var imageArr = homeworkResult.Files;
 		events.openNewWindowWithData('pic-detail.html', {
 			data: imageArr,
 			title: '老师答案'
 		})
-	} else if(this.id == 'stuAnsImgLi') {//学生答案
+	} else if(this.id == 'stuAnsImgLi') { //学生答案
 		console.log('点击图片')
 		var imageArr = homeworkResult.File;
 		events.openNewWindowWithData('pic-detail.html', {

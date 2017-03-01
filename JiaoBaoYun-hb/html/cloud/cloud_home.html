@@ -745,7 +745,7 @@
 						var pathList = data.fpath.split('/');
 						var pathList2 = pathList[pathList.length - 1].split('.');
 						var fileName = pathList2[0];
-						var path = window.storageKeyName.QNFILEIMGEDOMAIN + fileName + '.PNG';
+						var path = window.storageKeyName.QNPB + 'yuncunc/' + window.storageKeyName.CLOUDSTORAGETHUMB + fileName + '.png'
 						if(type == 'QN_video' || type == 'QN_img') {
 							html1 = '<img src="' + path + '" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>';
 							//html1 = '<span class="mui-icon iconfont ' + type + '" style="border:none;font-size:' + (maxWidth * imgeWith) + 'px;"></span>';

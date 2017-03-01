@@ -150,8 +150,9 @@ var CloudFileUtil = (function($, mod) {
 	 * 	type:'',//str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件
 	 *  QNFileName:'',//str 必填 存放到七牛的文件名
 	 *  appId:'' , //int 必填 项目id
-	 *  mainSpace:'', //str 必填 私有空间或公有空间
+	 *  mainSpace:'', //str 必填 文件存放在私有空间或公有空间
 	 *  uploadSpace: '',//str 必填  上传的空间
+	 *  imageThumb:'',//str json 选填 type为0时有效，缩略图存放在私有空间或公有空间，默认mainSpace
 	 *  style:{ 	//json 选填 type为0时有效，配置生成缩略图的最大宽和高
 	 * 		maxWidth:'', //int 配置生成缩略图的最大宽,默认100
 	 *  	maxHeight:'' //int 配置生成缩略图的最大高，默认100
@@ -164,7 +165,8 @@ var CloudFileUtil = (function($, mod) {
 		var QNFileName = ''; //存放到七牛的文件名
 		var desKey = ''; //项目名称
 		var appId = 0; //项目id
-		var mainSpace = ''; //私有空间或公有空间
+		var mainSpace = ''; //文件存放在私有空间或公有空间
+		var imageThumb = ''; //缩略图存放在私有空间或公有空间
 		var saveSpace = ''; //上传的空间
 		var configure = {}; //配置的数据
 		var maxWidth = '100'; //type为0时 缩略图默认宽为100
@@ -218,6 +220,12 @@ var CloudFileUtil = (function($, mod) {
 			if(data.mainSpace) {
 				mainSpace = data.mainSpace;
 			}
+			if(data.imageThumb) {
+				imageThumb = data.imageThumb;
+			}
+			if(imageThumb == '') {
+				imageThumb = mainSpace;
+			}
 			if(data.uploadSpace) {
 				saveSpace = data.uploadSpace;
 			}
@@ -227,9 +235,24 @@ var CloudFileUtil = (function($, mod) {
 			var thumbSpace = ''; //缩略图的七牛空间
 			var ops = '' //七牛预持久化命令
 			if(type == '0') {
-				thumbSpace = saveSpace + 'thumb/'; //缩略图的七牛空间
-				configure.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
-				ops = "imageView2/2/w/" + maxWidth + "/h/" + maxHeight + "/format/png|saveas/" + configure.thumbKey;
+				thumbSpace = saveSpace + 'Thumb/'; //缩略图的七牛空间
+				var temp = QNFileName.split('.');
+				console.log(JSON.stringify(temp));
+				var thumbName = temp[0];
+				var thumbType = temp[1];
+				if(thumbType == 'avi' || thumbType == 'mp4' || thumbType == 'flv' || thumbType == 'swf' || thumbType == '3gp' || thumbType == 'rm') {
+					//视频
+					configure.thumbKey = Qiniu.URLSafeBase64Encode(imageThumb + ":" + thumbSpace + thumbName + '.png');
+					ops = "vframe/png/offset/1/w/" + maxWidth + "/h/" + maxHeight + "|saveas/" + configure.thumbKey;
+				} else {
+					//图片
+					if(appId == 5) { //头像
+						configure.thumbKey = Qiniu.URLSafeBase64Encode(imageThumb + ":" + thumbSpace + QNFileName);
+					} else if(appId == 4) { //云存储
+						configure.thumbKey = Qiniu.URLSafeBase64Encode(imageThumb + ":" + thumbSpace + thumbName + '.png');
+					}
+					ops = "imageView2/2/w/" + maxWidth + "/h/" + maxHeight + "/format/png|saveas/" + configure.thumbKey;
+				}
 			}
 
 			var param = {
@@ -618,17 +641,19 @@ var CloudFileUtil = (function($, mod) {
 	 *  @author 安琪
 	 */
 	mod.rechargePicsData = function(pics) {
+		var files=[];
 		for(var i in pics) {
 			var img = {};
 			img.url = pics[i].Url;
 			img.thumb = pics[i].ThumbUrl;
 			img.order = pics[i].DisplayOrder;
 			img.type = pics[i].FileType;
-			mod.files.push(img);
+			files.push(img);
 		}
-		mod.files.sort(function(a, b) {
+		files.sort(function(a, b) {
 			return a.order - b.order;
 		})
+		return files;
 	}
 	
 	/**
@@ -638,7 +663,12 @@ var CloudFileUtil = (function($, mod) {
 	mod.setDelPicListener = function() {
 		//删除图标的点击事件
 		mui('#pictures').on('tap', '.icon-guanbi', function() {
-			mod.files.splice(mod.files.indexOf(this.parentElement.img), 1);
+			for(var i in mod.files){
+				if(this.parentElement.img.url==mod.files[i].url){
+					mod.files.splice(i,1);
+					break;
+				}
+			}
 			//删除图片
 			var pictures = document.getElementById('pictures');
 			pictures.removeChild(this.parentElement);
