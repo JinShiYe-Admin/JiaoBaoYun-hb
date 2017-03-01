@@ -71,7 +71,7 @@ var class_space = (function(mod) {
 	 * 
 	 * @param {Object} item
 	 */
-	var createInnerHtml = function(item,index) {
+	var createInnerHtml = function(item, index) {
 		console.log("加载的数据：" + JSON.stringify(item));
 		var inner = '<div><div class="mui-pull-left head-img" >' +
 			'<img class="head-portrait" headId="' + item.utid + '" src="' + getUImg(item.uimg) + '"/>' +
@@ -80,7 +80,7 @@ var class_space = (function(mod) {
 			'<div class="chat_content_left">' +
 			'<div class="chat-body"><p class="chat-words">' +
 			item.MsgContent + '</p>' +
-			createImgsInner(item,index) +
+			createImgsInner(item, index) +
 			'</div>' +
 			'<p class="chat-bottom">' + events.shortForDate(item.PublishDate) +
 			'<a href="#popover" tabId="' + item.TabId + '" class="mui-icon iconfont icon-support ' + setIsLike(item.IsLike) + '">(' + item.LikeCnt +
@@ -165,7 +165,7 @@ var class_space = (function(mod) {
 		for(var i in list) {
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell';
-			li.innerHTML = createInnerHtml(list[i],pageIndex*10+i);
+			li.innerHTML = createInnerHtml(list[i], pageIndex * 10 + i);
 			container.appendChild(li);
 		}
 	}
@@ -179,21 +179,21 @@ var class_space = (function(mod) {
 	 * 
 	 * @param {Object} cell
 	 */
-	var createImgsInner = function(cell,index) {
+	var createImgsInner = function(cell, index) {
 		var imgInner = '';
 		var percent = 0.00;
 		if(cell.EncImgAddr) {
 			var imgs = cell.EncImgAddr.split('|');
-			var trueImgs=cell.EncAddr.split('|');
+			var trueImgs = cell.EncAddr.split('|');
 			console.log('要显示的图片地址：' + JSON.stringify(imgs));
 			for(var i in imgs) {
 				if(imgs.length <= 3 && imgs.length > 0) {
 					percent = 100 / (imgs.length);
-					imgInner += '<img src="' + imgs[i] + '" style="width:' + percent + '%;padding:2px;"'+
-							'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' +index + '"/>'
+					imgInner += '<img src="' + imgs[i] + '" style="width:' + percent + '%;padding:2px;"' +
+						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + index + '"/>'
 				} else {
-					imgInner += '<img src="' + imgs[i] + '" style="width:33.33333333%; padding:2px;"'+
-					'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + index + '"/>'
+					imgInner += '<img src="' + imgs[i] + '" style="width:33.33333333%; padding:2px;"' +
+						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + index + '"/>'
 				}
 			}
 		}
@@ -205,20 +205,20 @@ var class_space = (function(mod) {
 var pageIndex = 1;
 var pageSize = 10;
 var postData;
-h5fresh.addPullUpFresh("#refreshContainer", function() {
-	mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
-	if(pageIndex < class_space.totalPagNo) {
-		pageIndex++;
-		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-	}
-})
+//h5fresh.addPullUpFresh("#refreshContainer", function() {
+//	mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
+//	if(pageIndex < class_space.totalPagNo) {
+//		pageIndex++;
+//		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+//	}
+//})
 mui.plusReady(function() {
 	mui.previewImage();
-	h5fresh.addRefresh(function() {
-		events.clearChild(document.getElementById('classSpace_list'));
-		pageIndex = 1;
-		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-	}, { style: "circle" })
+//	h5fresh.addRefresh(function() {
+//		events.clearChild(document.getElementById('classSpace_list'));
+//		pageIndex = 1;
+//		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+//	}, { style: "circle" })
 	postData = plus.webview.currentWebview().data;
 	postData.userId = parseInt(postData.userId);
 	events.preload('classSpace-persons.html', 200);
@@ -237,19 +237,19 @@ mui.plusReady(function() {
 	/***
 	 * 加载刷新
 	 */
-	//	events.initRefresh('classSpace_list',
-	//		function() {
-	//			setReaded(postData.userId, postData.classId);
-	//
-	//		},
-	//		function() {
-	//			console.log('请求页面：page' + pageIndex);
-	//			mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
-	//			if(pageIndex < class_space.totalPagNo) {
-	//				pageIndex++;
-	//				class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-	//			}
-	//		});
+	events.initRefresh('classSpace_list',
+		function() {
+			setReaded(postData.userId, postData.classId);
+
+		},
+		function() {
+			console.log('请求页面：page' + pageIndex);
+			mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
+			if(pageIndex < class_space.totalPagNo) {
+				pageIndex++;
+				class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+			}
+		});
 	mui('.mui-table-view').on('tap', '.head-portrait', function() {
 		var id = this.getAttribute('headId');
 		console.log(id);
