@@ -72,7 +72,7 @@ var class_space = (function(mod) {
 	 * @param {Object} item
 	 */
 	var createInnerHtml = function(item) {
-		console.log("加载的数据："+JSON.stringify(item));
+		console.log("加载的数据：" + JSON.stringify(item));
 		var inner = '<div><div class="mui-pull-left head-img" >' +
 			'<img class="head-portrait" headId="' + item.utid + '" src="' + getUImg(item.uimg) + '"/>' +
 			'<p class="single-line">' + events.shortForString(item.bunick ? item.bunick : item.ugname, 6) + '</p>' +
@@ -201,8 +201,20 @@ var class_space = (function(mod) {
 })(class_space || {});
 var pageIndex = 1;
 var pageSize = 10;
-var postData
+var postData;
+h5fresh.addPullUpFresh("#refreshContainer", function() {
+	mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
+	if(pageIndex < class_space.totalPagNo) {
+		pageIndex++;
+		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+	}
+})
 mui.plusReady(function() {
+	h5fresh.addRefresh(function() {
+		events.clearChild(document.getElementById('classSpace_list'));
+		pageIndex = 1;
+		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+	}, { style: "circle" })
 	postData = plus.webview.currentWebview().data;
 	postData.userId = parseInt(postData.userId);
 	events.preload('classSpace-persons.html', 200);
@@ -221,20 +233,19 @@ mui.plusReady(function() {
 	/***
 	 * 加载刷新
 	 */
-	events.initRefresh('classSpace_list',
-		function() {
-			setReaded(postData.userId, postData.classId);
-			pageIndex = 1;
-			class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-		},
-		function() {
-			console.log('请求页面：page' + pageIndex);
-			mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
-			if(pageIndex < class_space.totalPagNo) {
-				pageIndex++;
-				class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-			}
-		});
+	//	events.initRefresh('classSpace_list',
+	//		function() {
+	//			setReaded(postData.userId, postData.classId);
+	//
+	//		},
+	//		function() {
+	//			console.log('请求页面：page' + pageIndex);
+	//			mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
+	//			if(pageIndex < class_space.totalPagNo) {
+	//				pageIndex++;
+	//				class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+	//			}
+	//		});
 	mui('.mui-table-view').on('tap', '.head-portrait', function() {
 		var id = this.getAttribute('headId');
 		console.log(id);

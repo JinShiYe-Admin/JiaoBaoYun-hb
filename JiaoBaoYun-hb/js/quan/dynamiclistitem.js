@@ -94,10 +94,10 @@ var dynamiclistitem = (function($, mod) {
 				var html3 = '';
 
 				if(index < 8) {
-					html1 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: ' + (SCREEN_WIDTH / 3) + 'px;">';
+					html1 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: ' + (SCREEN_WIDTH / 3) + 'px;width: ' + (SCREEN_WIDTH / 3) + 'px;">';
 					html2 = '<img class="dynamic-image" src="' + element + '"></div>';
 				} else if(index == 8) {
-					var html4 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: ' + (SCREEN_WIDTH / 3) + 'px;">';
+					var html4 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: ' + (SCREEN_WIDTH / 3) + 'px;width: ' + (SCREEN_WIDTH / 3) + 'px;">';
 					var html5 = '';
 					//蒙版
 					if(ImageNum > 9) {

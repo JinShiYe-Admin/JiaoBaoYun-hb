@@ -2,6 +2,7 @@
 mui.init();
 //作业model
 var homeworkModel = {};
+mui('.mui-scroll-wrapper').scroll();
 mui.plusReady(function() {
 	//修改答案后刷新界面
 	window.addEventListener('refreshAnswer', function(e) {
