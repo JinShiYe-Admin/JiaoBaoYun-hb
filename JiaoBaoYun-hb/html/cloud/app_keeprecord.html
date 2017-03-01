@@ -16,7 +16,7 @@
 		<style>
 			body,
 			.mui-content {
-				/*background: white;*/
+				background: white;
 			}
 
 			.mui-table-view:before,
@@ -25,57 +25,19 @@
 				height: 0px;
 			}
 
-			.mui-fullscreen {
-				background-color: white;
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
+				border-right: 1px solid #b7b7b7;
+				line-height: normal;
+				margin-top: 10px;
 			}
 
-			.keep-noqun {
-				/*无班级*/
-				text-align: center;
-				margin-top: 20px;
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item:last-child {
+				border-right: none;
 			}
 
-			.mui-segmented-control.mui-scroll-wrapper .mui-control-item {
-				padding-left: 10px;
-				padding-right: 10px;
-				margin-left: 10px;
-			}
-
-			.mui-slider-group {
-				background: transparent;
-				/*position: absolute;*/
-				/*width: 100%;*/
-				top: 55px;
-			}
-
-			.mui-slider {
-				background: transparent;
-				/*position: absolute;*/
-				/*width: 100%;*/
-				top: 10px;
-			}
-
-			.keep-line-blue {
-				/*群栏蓝竖线*/
-				position: absolute;
-				height: 48px;
-				width: 5px;
-				top: 50px;
-				background-color: #64A1EB;
-				z-index: 3;
-			}
-
-			.keep-line-white {
-				position: absolute;
-				height: 10px;
-				background: white;
-				width: 100%;
-			}
-
-			.keep-line-black {
-				/*群栏黑竖线*/
-				position: absolute;
-				top: 10px;
+			.mui-segmented-control.mui-segmented-control-inverted {
+				border-left: 3px solid #64A1EB;
+				margin-top: 5px;
 			}
 
 			.mui-table-view-cell {
@@ -130,50 +92,18 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<p class="mui-title common-color-white">云盘—记事</p>
-			<span id="history" class=" mui-icon iconfont icon-lishijilu mui-pull-right" style="color: white;display: none;"></span>
+			<span id="history" class=" mui-icon iconfont icon-lishijilu mui-pull-right" style="color: white;display:none;margin-top: 2px;padding-right: 14px;"></span>
 		</header>
 		<div class="mui-content">
-			<div class="mui-popover" style="width: 100%;top: 150px;height: 200px;">
-				<ul class="mui-table-view">
-					<img id="closepop" src="../../image/cloud/record_addclassclose.png" style="height: 30px;float: right;margin: 10px;" />
-					<input id="inputqunname" type="text" class="mui-input-clear" placeholder="请输入群名称" style="width:80% ;margin-left: 10%;text-align: center;border-radius: 50px;">
-					<button id="createqun" type="button" class="mui-btn mui-btn-blue mui-btn-block" style="border-radius: 50px;height: 40px;width: 80%;left: 10%;padding: 0;">创建</button>
-				</ul>
-			</div>
-			<div id="noqun" class="keep-noqun" style="display: none;">
-				<h5>现在没有班级请点击一下按钮创建班级</h5>
-				<div>
-					<img class="addqun" src="../../image/cloud/record_addclass.gif" />
-				</div>
-			</div>
-			<div id="linewhite" class="keep-line-white" style="display: none;"></div>
-			<div id="lineblue" class="keep-line-blue" style="display: none;"></div>
-			<!--<div class="mui-slider-group mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="display: none;">
-				<div id="qunlist" class="mui-scroll">
-					<a id="qun_1001班" class="mui-control-item mui-active" data-value="1001班">
-						1001班
-					</a>
-					<font class="keep-line-black">丨</font>
-					<a id="qun_1002班" class="mui-control-item" data-value="1002班">
-						1002班
-					</a>
-					<a id="controladd" class="mui-control-item" style="width: 40px;">
-					</a>
-					<div class="mui-icon mui-icon-plus addqun" style="position: absolute;border: 0px solid #ddd;font-size: 25px;color: #C7C7CC;right: 0px;top: 3px;"></div>
-				</div>
-			</div>-->
-			<div id="slider" class="mui-slider" style="display: none;">
-				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div id="qunlist" class="mui-scroll" style="background: #efeff4;">
-						<!--<a class="mui-control-item" href="#1001班" style="margin-left: 10px;">
+			<div id="slider" class="mui-slider" style="display:none;">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="background:#EFEFEF;">
+					<div id="qunlist" class="mui-scroll">
+						<!--<a class="mui-control-item" href="#1001班">
 							1001班
 						</a>
-						<font class="keep-line-black">丨</font>
-						<a class="mui-control-item" href="#1002班" style="margin-left: 10px;">
+						<a class="mui-control-item" href="#1002班">
 							1002班222
 						</a>-->
-						<a id="controladd" class="mui-control-item" style="width: 40px;">
-						</a>
 						<!--<div class="mui-icon mui-icon-plus addqun" style="position: absolute;border: 0px solid #ddd;font-size: 25px;color: #C7C7CC;right: 0px;"></div>-->
 					</div>
 				</div>
@@ -243,11 +173,8 @@
 				var closeShow = false; //删除按钮是否显示
 				var content = document.body.querySelector('.mui-content');
 				var qunlist = document.getElementById("qunlist"); //群名称显示栏
-				var controladd = document.getElementById("controladd"); //群名称显示栏添加群按钮前一个item
-				document.querySelector(".mui-content").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 5) + 'px';
-				document.querySelector(".keep-line-blue").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 55) + 'px';
-				document.querySelector(".keep-line-white").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
-				document.querySelector("#scrollwrapper").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 103) + 'px';
+				document.querySelector(".mui-content").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1) + 'px';
+				document.querySelector("#scrollwrapper").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 90) + 'px';
 
 				mui(".mui-scroll-wrapper").scroll({
 					scrollY: true, //是否竖向滚动
@@ -345,17 +272,6 @@
 					postDataPro_PostGList(cgQunData, wd, function(data) {
 						console.log('9_PostGList_获取创建的群.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
-							//获取到数据
-							//console.log('获取群数据成功');
-							//document.getElementById("noqun").style.display = 'none';
-							//document.getElementById("linewhite").style.display = 'inline';
-							//document.getElementById("lineblue").style.display = 'inline';
-							//document.body.querySelector('.mui-slider').style.display = 'inline';
-							//参数名	名称	参数类型	长度	是否加密	备注
-							//gid	群ID	int		否
-							//gname	群名	string		否	群名称
-							//gimg	群头像	string		否	群头像的链接
-							//mstype	用户管理角色	int		否	0家长,1管理员,2老师,3学生
 							mui.each(data.RspData, function(index, item) {
 								//console.log('data.RspData:' + item.gname);
 								var qun = {
@@ -394,17 +310,6 @@
 					postDataPro_PostGList(mgQunData, wd2, function(data2) {
 						console.log('9_PostGList_获取协管的群.90909090success:RspCode:' + data2.RspCode + ',RspData:' + JSON.stringify(data2.RspData) + ',RspTxt:' + data2.RspTxt);
 						if(data2.RspCode == 0) {
-							//获取到数据
-							//console.log('获取群数据成功');
-							//document.getElementById("noqun").style.display = 'none';
-							//document.getElementById("linewhite").style.display = 'inline';
-							//document.getElementById("lineblue").style.display = 'inline';
-							//document.body.querySelector('.mui-slider').style.display = 'inline';
-							//参数名	名称	参数类型	长度	是否加密	备注
-							//gid	群ID	int		否
-							//gname	群名	string		否	群名称
-							//gimg	群头像	string		否	群头像的链接
-							//mstype	用户管理角色	int		否	0家长,1管理员,2老师,3学生
 							mui.each(data2.RspData, function(index, item) {
 								//剔除同一个群身份不同
 								var same = false;
@@ -435,21 +340,15 @@
 								mui.toast(data.RspTxt);
 							}
 						}
+
 						if(qunList.length == 0) {
 							//未获取到数据
 							mui.toast('没有管理的群');
-							//document.getElementById("noqun").style.display = 'inline';
-							//document.getElementById("noqun").style.textAlign = "center";
-							document.getElementById("linewhite").style.display = 'none';
-							document.getElementById("lineblue").style.display = 'none';
 							document.getElementById("history").style.display = 'none';
 							document.body.querySelector('.mui-slider').style.display = 'none';
 						} else {
 							//获取到数据
-							//document.getElementById("noqun").style.display = 'none';
 							document.getElementById("history").style.display = 'inline';
-							document.getElementById("linewhite").style.display = 'inline';
-							document.getElementById("lineblue").style.display = 'inline';
 							document.body.querySelector('.mui-slider').style.display = 'inline';
 							document.getElementById("scrollwrapper").style.background = 'white';
 							mui.each(qunList, function(index, item) {
@@ -475,15 +374,10 @@
 						show = qun.gid;
 						a.className = 'mui-control-item mui-active';
 					} else {
-						var font = document.createElement('font');
-						font.className = 'keep-line-black';
-						font.innerText = '丨';
-						qunlist.insertBefore(font, controladd);
 						a.className = 'mui-control-item';
-						a.style.marginLeft = '10px';
 					}
 					a.setAttribute('data-value', qun.gid);
-					qunlist.insertBefore(a, controladd);
+					qunlist.appendChild(a);
 
 					//成员栏添加默认元素
 					var div = document.createElement('div');
@@ -498,7 +392,7 @@
 						div.style.display = "none";
 					}
 					var html1 = '<ul class="mui-table-view">\
-									<div class="mui-row" style="margin-top: 8px;">';
+									<div class="mui-row">';
 					//添加学生
 					var html2 = '';
 					html2 = '<li id="addmember_' + qun.gid + '" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3 "></li>';
