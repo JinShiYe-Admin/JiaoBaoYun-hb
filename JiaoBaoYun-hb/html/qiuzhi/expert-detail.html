@@ -196,6 +196,9 @@
 					ExpertsInfo = $.extend(ExpertsInfo, data.RspData);
 					console.log('合并后ExpertsInfo:' + JSON.stringify(ExpertsInfo));
 					addData();
+					//修改nav显示昵称
+					var titleTemp = document.getElementById("title");
+					titleTemp.innerText = ExpertsInfo.unick;
 				} else {
 					mui.toast(data.RspTxt);
 				}

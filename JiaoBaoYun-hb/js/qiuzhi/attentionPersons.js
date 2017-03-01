@@ -55,7 +55,9 @@ var requireData = function() {
 				personIds.push(persons[i].UserId);
 			}
 			//通过id数组，获取人员资料，并重组
-			requirePersonInfo(personIds, persons);
+			if (personIds.length>0) {
+				requirePersonInfo(personIds, persons);
+			}
 		} else {
 			mui.toast(data.RspTxt);
 		}

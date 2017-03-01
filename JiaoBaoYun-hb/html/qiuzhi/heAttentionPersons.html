@@ -6,7 +6,9 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
-		<link href="../../css/utils/common.css" rel="stylesheet">
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<!--<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />-->
+		<!--<link href="../../css/qiuzhi/qiuzhi-inviteAnswer.css" rel="stylesheet" />-->
 		<style>
 			.mui-scroll-wrapper {
 				padding-top: 44px;
@@ -173,12 +175,13 @@
 		</div>
 
 		<script src="../../js/mui.min.js"></script>
-		<!--<script src="../../js/utils/h5fresh.js"></script>-->
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
 		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/publicProtocol.js"></script>
-		<script src="../../js/publicQiuzhiProtocol.js"></script>
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
+
 		<script>
 			var personalUTID; //登录用户ID
 			var ExpertsInfo; //专家详细页传来的 专家信息
@@ -204,11 +207,8 @@
 				//上拉下拉注册
 				mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 					down: {
-
 						callback: function() {
-
 							//清除节点
-
 							document.getElementById('list-container').innerHTML = "";
 							var self = this;
 							console.log("下拉刷新");
@@ -220,10 +220,7 @@
 						}
 					},
 					up: {
-						contentinit: '',
-						contentdown: '',
 						callback: function() {
-
 							var self = this;
 							console.log("上拉加载更多");
 							flagRef = 1;
@@ -259,12 +256,12 @@
 					if(data.RspCode == 0) {
 						//总页数
 						totalPageCount = data.RspData.TotalPage;
-						if(flagRef == 0) { //刷新
+						pageIndex++;
+						if (flagRef == 0) {//刷新
 							personArray = data.RspData.Data;
 							//清除节点
 							document.getElementById('list-container').innerHTML = "";
-						} else { //加载更多
-							pageIndex++;
+						} else{//加载更多
 							//合并数组
 							personArray = personArray.concat(data.RspData.Data);
 						}
