@@ -638,7 +638,12 @@ var CloudFileUtil = (function($, mod) {
 	mod.setDelPicListener = function() {
 		//删除图标的点击事件
 		mui('#pictures').on('tap', '.icon-guanbi', function() {
-			mod.files.splice(mod.files.indexOf(this.parentElement.img), 1);
+			for(var i in mod.files){
+				if(this.parentElement.img.url==mod.files[i].url){
+					mod.files.splice(i,1);
+					break;
+				}
+			}
 			//删除图片
 			var pictures = document.getElementById('pictures');
 			pictures.removeChild(this.parentElement);
