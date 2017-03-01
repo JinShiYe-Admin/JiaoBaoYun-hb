@@ -70,20 +70,29 @@ var dynamiclistitem = (function($, mod) {
 	 */
 	mod.addImage = function(ulElement, liElement, data, id) {
 		var SCREEN_WIDTH = plus.screen.resolutionWidth; //获取设备屏幕宽度分辨率111
+console.log(pageFlag)
+console.log(mui.os.android)
+		if(pageFlag==1&&mui.os.android){
+			
+			SCREEN_WIDTH=SCREEN_WIDTH*360/1440
+			console.log('SCREEN_WIDTH=='+SCREEN_WIDTH*360/1440)
+		}
 		var ImageUrlList = data[1]; //图片路径数组
 		var ImageNum = ImageUrlList.length; //图片总数量
 		var html = '';
+		console.log('cell==='+id+' ImageNum==='+ImageNum)
+		console.log('屏幕宽度为：'+SCREEN_WIDTH)
 //		if(pageFlag!=0){
 //			ImageNum=0;
 //		}
 
 		if(ImageNum == 1) { //一张图片时
-			var html1 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-image-div" style="height: ' + SCREEN_WIDTH + 'px;">';
+			var html1 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-image-div" style="height: ' + SCREEN_WIDTH + 'px;width: ' + (SCREEN_WIDTH) + 'px;">';
 			var html2 = '<img class="dynamic-image" src="' + ImageUrlList[0] + '"></div>';
 			html = html1 + html2;
 		} else if(ImageNum == 2) { //两张图片时
 			$.each(ImageUrlList, function(index, element) {
-				var html1 = '<div class="mui-col-sm-6 mui-col-xs-6 dynamic-image-div" style="height: ' + (SCREEN_WIDTH / 2) + 'px;">';
+				var html1 = '<div class="mui-col-sm-6 mui-col-xs-6 dynamic-image-div" style="height: ' + (SCREEN_WIDTH / 2) + 'px;width: ' + (SCREEN_WIDTH / 2) + 'px;">';
 				var html2 = '<img class="dynamic-image" src="' + element + '"></div>';
 				html = html + html1 + html2;
 			});

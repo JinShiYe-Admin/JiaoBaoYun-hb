@@ -41,9 +41,9 @@
 					<label style="font-size: 15px;">空间</label>
 					<input id="zone" name="checkbox" value="0" type="checkbox" disabled="disabled" style="margin-top: -7px;" checked>
 				</div>
-				<div id="showDiv"  class="mui-checkbox mui-left mui-disabled" style="width:100; height:30px; float:left; display:inline; ">
+				<div id="showDiv"  class="mui-checkbox mui-left" style="width:100; height:30px; float:left; display:inline; ">
 					<label style="font-size: 15px;">展现</label>
-					<input id="show" name="checkbox" value="1" type="checkbox" disabled="disabled" style="margin-top: -7px;" checked>
+					<input id="show" name="checkbox" value="1" type="checkbox"  style="margin-top: -7px;" checked>
 				</div>
 			</div>
 			<div id="pictures" style="float: left;background-color: transparent;width: 320px;"></div>
@@ -86,20 +86,10 @@
 			title.innerText = userInfo.unick;
 			if(pageFlag == 'jxq') {
 				console.log('jxq')
-				document.getElementById("zone").disabled = "disabled"
-				document.getElementById("zone").checked = true;
-				document.getElementById("show").disabled = ""
 				document.getElementById("show").checked = false;
-				document.getElementById("zoneiv").className = "mui-checkbox mui-left mui-disabled"
-				document.getElementById("showDiv").className = "mui-checkbox mui-left"
 			}else{
 				console.log('zx')
-				document.getElementById("zone").disabled = ""
-				document.getElementById("zone").checked = false;
-				document.getElementById("show").disabled = "disabled"
 				document.getElementById("show").checked = true;
-				document.getElementById("zoneiv").className = "mui-checkbox mui-left"
-				document.getElementById("showDiv").className = "mui-checkbox mui-left mui-disabled"
 			}
 
 			//				events.addTap('take_pic', function() {
