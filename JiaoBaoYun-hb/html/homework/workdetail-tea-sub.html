@@ -10,9 +10,11 @@
 
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/utils/preview.css" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/homework/workdetail.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		
 		<link href="../../css/homework/subjects-icon.css" rel="stylesheet" />
 		<script src="../../js/mui.min.js"></script>
 
@@ -24,11 +26,13 @@
 				/*去掉横线
 		}*/
 			
-			.dynamic-personal-image {
+			.dynamic-personal-image{
 				/*个人头像圆形*/
 				border-radius: 50%;
+				min-height: 50px;
 				width: 50px;
 				height: 50px;
+				max-height: 50px;
 			}
 		</style>
 
@@ -102,6 +106,8 @@
 		<!--加载选项按钮-->
 		<script src="../../js/homework/homework_detail.js"></script>
 		<script src="../../js/publicHomeworkProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.zoom.js"></script>
+		<script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
@@ -156,7 +162,7 @@
 			var remainArray = [];
 
 			mui.plusReady(function() {
-
+				mui.previewImage();
 				window.addEventListener('workCommented', function(e) {
 					requestHomeworkStuList();
 				})
