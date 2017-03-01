@@ -14,10 +14,11 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/utils/preview.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
+		<script type="text/javascript" src="../../js/utils/cryption.js"></script>
 		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
-		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
-		<!--<script type="text/javascript" src="../../js/utils/TouchMove.js"></script>-->
+		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<script type="text/javascript" src="../../js/mui.zoom.js"></script>
 		<script type="text/javascript" src="../../js/cloud/mui.previewimage.js"></script>
 		<style>
@@ -86,11 +87,11 @@
 					//document.getElementById("content").innerHTML = '';
 					//console.log('body '+document.body.innerHTML);
 					previewImage.dispose();
-//					var imge = document.getElementById(showId);
-//					if(imge) {
-//						console.log('imge ' + imge.innerHTML);
-//						imge.parentNode.removeChild(imge);
-//					}
+					//					var imge = document.getElementById(showId);
+					//					if(imge) {
+					//						console.log('imge ' + imge.innerHTML);
+					//						imge.parentNode.removeChild(imge);
+					//					}
 					plus.webview.hide(main, 'pop-out');
 				}
 
@@ -126,13 +127,18 @@
 			 * 获取文件的路径
 			 */
 			function getAllToken(fpath) {
-				CloudFileUtil.getQNDownToken(window.storageKeyName.QNGETDOWNTOKENFILE + fpath, function(data) {
+				var getDownToken = {
+					appId: 4, //int 必填 项目id
+					urls: [fpath] //array 必填 需要获取下载token文件的路径
+				}
+				var getDownTokenUrl = window.storageKeyName.QNGETDOWNTOKENFILE;
+				CloudFileUtil.getQNDownToken(getDownTokenUrl, getDownToken, function(data) {
 					console.log('七牛下载token:' + data);
 					allImgeData.push({
 						id: fpath, //文件路径
-						token: data //文件对应的token
+						token: data.Data[0].Value //文件对应的token
 					});
-					showImge(fpath, data);
+					showImge(fpath, data.Data[0].Value);
 				}, function(xhr, type, errorThrown) {
 					plus.nativeUI.closeWaiting();
 					mui.toast('获取文件路径失败：' + type);
@@ -148,7 +154,7 @@
 			function showImge(id, path) {
 				showId = id;
 				document.getElementById("content").innerHTML = '<img id="' + id + '" data-preview-src="' + path + '" data-preview-group="' + id + '"/>';
-				previewImage.open(document.getElementById(id),id);
+				previewImage.open(document.getElementById(id), id);
 				//setTimeout(function() {
 				//					document.getElementById("content").innerHTML = '<img id="' + id + '" style="position: absolute;width: 100%;visibility: hidden;" src="' + path + '"/>';
 				//document.getElementById(id).onload = function() {

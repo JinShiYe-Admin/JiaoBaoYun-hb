@@ -42,31 +42,89 @@ var CloudFileUtil = (function($, mod) {
 	 * 获取七牛下载的token
 	 * @author 莫尚霖
 	 * @param {Object} url 获取下载token路径
+	 * @param {Object} data 配置的数据json
 	 * @param {Object} successCB
 	 * @param {Object} errorCB
+	 * data={
+	 * 	appId:'',//int 必填 项目id
+	 *  urls:[]//array 必填 需要获取下载token文件的路径
+	 * }
 	 */
-	mod.getQNDownToken = function(url, successCB, errorCB) {
-		console.log('getQNDownToken:' + url);
-		mui.ajax(url, {
-			async: false,
-			//			data: {
-			//				Key: QNFileName
-			//			},
-			dataType: 'json', //服务器返回json格式数据
-			type: 'post', //HTTP请求类型
-			timeout: 10000, //超时时间设置为10秒
-			//			headers: {
-			//				'Content-Type': 'application/json'
-			//			},
-			success: function(data) {
-				//服务器返回响应
-				successCB(data);
-			},
-			error: function(xhr, type, errorThrown) {
-				//异常处理
-				errorCB(xhr, type, errorThrown);
+	mod.getQNDownToken = function(url, data, successCB, errorCB) {
+		console.log('getQNDownToken:url ' + JSON.stringify(data));
+		console.log('getQNDownToken:data ' + JSON.stringify(data));
+		var desKey = ''; //项目名称
+		var appId = 0; //项目id
+		var urls = []; //需要获取下载token文件的路径
+		var configure = {}; //配置的数据
+		if(data) {
+			if(data.appId) {
+				appId = data.appId;
+				switch(appId) {
+					case 0:
+						break;
+					case 1:
+						break;
+					case 2: //资源平台
+						desKey = "jsy8004";
+						break;
+					case 3: //教宝云作业
+						desKey = "zy309309!";
+						break;
+					case 4: //教宝云盘
+						desKey = "jbyp@2017";
+						break;
+					case 5: //教宝云用户管理
+						desKey = "jbman456";
+						break;
+					case 6: //家校圈
+						desKey = "jxq789!@";
+						break;
+					case 7: //家校圈
+						desKey = "qz123qwe";
+						break;
+					default:
+						break;
+				}
 			}
-		});
+			if(data.urls) {
+				urls = data.urls;
+			}
+
+		}
+		if(desKey != '' && urls.length != 0) {
+			//			var param = '';
+			//			var tempSrt = urls.join(',');
+			//			param = '[' + tempSrt + ']';
+			//			console.log("参数数据：" + JSON.stringify(param));
+			configure.options = {
+				AppID: appId,
+				Param: encryptByDES(desKey, JSON.stringify(urls))
+			}
+			console.log("参数数据：" + JSON.stringify(configure.options));
+			mui.ajax(url, {
+				async: false,
+				data: configure.options,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒
+				//			headers: {
+				//				'Content-Type': 'application/json'
+				//			},
+				success: function(data) {
+					//服务器返回响应
+					//console.log(JSON.stringify(data));
+					successCB(data);
+				},
+				error: function(xhr, type, errorThrown) {
+					//异常处理
+					errorCB(xhr, type, errorThrown);
+				}
+			});
+
+		} else {
+			errorCB('### ERROR ### 配置获取七牛下载token参数错误');
+		}
 	}
 
 	/**
@@ -79,6 +137,8 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} successCallBack 下载任务创建成功的回调
 	 */
 	mod.download = function(url, filename, DownloadCompletedCallback, onStateChangedCallBack, successCallBack) {
+		console.log('download ' + url);
+		console.log('filename ' + filename);
 		var dtask = plus.downloader.createDownload(url, {
 				filename: filename //下载文件保存的路径
 			},
@@ -108,39 +168,8 @@ var CloudFileUtil = (function($, mod) {
 	}
 
 	/**
-	 * 创建下载任务
-	 * @author 莫尚霖
-	 * @param {Object} url 要下载文件资源地址
-	 * @param {Object} filename 下载文件保存的路径
-	 * @param {Object} callback 下载成功回调
-	 */
-	mod.downloadFile = function(url, fileName, callback) {
-		var dtask = plus.downloader.createDownload(url, {
-				filename: fileName //下载文件保存的路径
-			},
-			/**
-			 * 下载完成时的回调
-			 * @param {Object} download 下载任务对象
-			 * @param {Object} status 下载结果状态码
-			 */
-			function(d, status) {
-				// 下载完成
-				if(status == 200) {
-					callback(d);
-					console.log("Upload success" + d.filename);
-					//上传失败
-				} else {
-					mui.toast('上传失败,请重新上传:' + status);
-				}
-			}
-		);
-		//下载状态变化的监听
-		task.addEventListener("statechanged", onStateChanged, false);
-		dtask.start();
-	}
-
-	/**
 	 * 获取上传到七牛的uptoken（单个文件的token）
+	 * 使用到的地方：1.个人头像2.资料头像3.群头像4.上传到云存储
 	 * @author 莫尚霖
 	 * @param {Object} url 获取token的url
 	 * @param {Object} data 数据 json
@@ -151,11 +180,11 @@ var CloudFileUtil = (function($, mod) {
 	 *  QNFileName:'',//str 必填 存放到七牛的文件名
 	 *  appId:'' , //int 必填 项目id
 	 *  mainSpace:'', //str 必填 文件存放在私有空间或公有空间
-	 *  uploadSpace: '',//str 必填  上传的空间
+	 *  uploadSpace: '',//str 必填  上传的空间（文件二级文件名）
 	 *  imageThumb:'',//str json 选填 type为0时有效，缩略图存放在私有空间或公有空间，默认mainSpace
 	 *  style:{ 	//json 选填 type为0时有效，配置生成缩略图的最大宽和高
-	 * 		maxWidth:'', //int 配置生成缩略图的最大宽,默认100
-	 *  	maxHeight:'' //int 配置生成缩略图的最大高，默认100
+	 * 		maxWidth:'', //int 选填 配置生成缩略图的最大宽,默认100
+	 *  	maxHeight:'' //int 选填 配置生成缩略图的最大高，默认100
 	 *  }
 	 * }
 	 */
@@ -581,33 +610,90 @@ var CloudFileUtil = (function($, mod) {
 
 	/**
 	 * 批量删除七牛的文件
-	 * @param {Object} Url 批量删除文件的地址
-	 * @param {Object} fileUrl 所有的文件路径'['url1','url2']'
-	 * @param {Object} successCB 成功的回调
-	 * @param {Object} errorCB 失败的回调
+	 * @author 莫尚霖
+	 * @param {Object} url 获取下载token路径
+	 * @param {Object} data 配置的数据json
+	 * @param {Object} successCB
+	 * @param {Object} errorCB
+	 * data={
+	 * 	appId:'',//int 必填 项目id
+	 *  urls:[]//array 必填 需要获取下载token文件的路径
+	 * }
 	 */
-	mod.BatchDelete = function(Url, fileUrl, successCB, errorCB) {
-		console.log('BatchDelete:' + Url + '|' + fileUrl);
-		mui.ajax(Url, {
-			async: false,
-			data: {
-				Paths: fileUrl
-			},
-			dataType: 'json', //服务器返回json格式数据
-			type: 'post', //HTTP请求类型
-			timeout: 10000, //超时时间设置为10秒
-			//			headers: {
-			//				'Content-Type': 'application/json'
-			//			},
-			success: function(data) {
-				//服务器返回响应
-				successCB(data);
-			},
-			error: function(xhr, type, errorThrown) {
-				//异常处理
-				errorCB(xhr, type, errorThrown);
+	mod.BatchDelete = function(url, data, successCB, errorCB) {
+		console.log('BatchDelete:url ' + JSON.stringify(data));
+		console.log('BatchDelete:data ' + JSON.stringify(data));
+		var desKey = ''; //项目名称
+		var appId = 0; //项目id
+		var urls = []; //需要获取下载token文件的路径
+		var configure = {}; //配置的数据
+		if(data) {
+			if(data.appId) {
+				appId = data.appId;
+				switch(appId) {
+					case 0:
+						break;
+					case 1:
+						break;
+					case 2: //资源平台
+						desKey = "jsy8004";
+						break;
+					case 3: //教宝云作业
+						desKey = "zy309309!";
+						break;
+					case 4: //教宝云盘
+						desKey = "jbyp@2017";
+						break;
+					case 5: //教宝云用户管理
+						desKey = "jbman456";
+						break;
+					case 6: //家校圈
+						desKey = "jxq789!@";
+						break;
+					case 7: //家校圈
+						desKey = "qz123qwe";
+						break;
+					default:
+						break;
+				}
 			}
-		});
+			if(data.urls) {
+				urls = data.urls;
+			}
+
+		}
+		if(desKey != '' && urls.length != 0) {
+			//			var param = '';
+			//			var tempSrt = urls.join(',');
+			//			param = '[' + tempSrt + ']';
+			//			console.log("参数数据：" + JSON.stringify(param));
+			configure.options = {
+				AppID: appId,
+				Param: encryptByDES(desKey, JSON.stringify(urls))
+			}
+			console.log("参数数据：" + JSON.stringify(configure.options));
+			mui.ajax(url, {
+				async: false,
+				data: configure.options,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒
+				//			headers: {
+				//				'Content-Type': 'application/json'
+				//			},
+				success: function(data) {
+					//服务器返回响应
+					//console.log(JSON.stringify(data));
+					successCB(data);
+				},
+				error: function(xhr, type, errorThrown) {
+					//异常处理
+					errorCB(xhr, type, errorThrown);
+				}
+			});
+		} else {
+			errorCB('### ERROR ### 配置获取七牛下载token参数错误');
+		}
 	}
 
 	/**
@@ -641,7 +727,7 @@ var CloudFileUtil = (function($, mod) {
 	 *  @author 安琪
 	 */
 	mod.rechargePicsData = function(pics) {
-		var files=[];
+		var files = [];
 		for(var i in pics) {
 			var img = {};
 			img.url = pics[i].Url;
@@ -655,7 +741,7 @@ var CloudFileUtil = (function($, mod) {
 		})
 		return files;
 	}
-	
+
 	/**
 	 * 放置删除图片的监听
 	 * @author 安琪
@@ -663,9 +749,9 @@ var CloudFileUtil = (function($, mod) {
 	mod.setDelPicListener = function() {
 		//删除图标的点击事件
 		mui('#pictures').on('tap', '.icon-guanbi', function() {
-			for(var i in mod.files){
-				if(this.parentElement.img.url==mod.files[i].url){
-					mod.files.splice(i,1);
+			for(var i in mod.files) {
+				if(this.parentElement.img.url == mod.files[i].url) {
+					mod.files.splice(i, 1);
 					break;
 				}
 			}
