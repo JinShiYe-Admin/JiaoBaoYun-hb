@@ -2,23 +2,7 @@ mui.init();
 var pageIndex = 1; //页码
 var selfId; //本人id
 var totalPageCount = 0;
-h5fresh.addPullUpFresh("#refreshContainer", function() {
-	mui("#refreshContainer").pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
-	if(pageIndex < totalPageCount) {
-		pageIndex++;
-		requestData();
-	}
-})
 mui.plusReady(function() {
-	var options = {
-		style: 'circle',
-		offset: '50px'
-	}
-	//加载h5刷新
-	h5fresh.addRefresh(function() {
-		pageIndex = 1;
-		requireData()
-	}, options);
 	window.addEventListener('expertInfo', function(e) {
 		selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 		pageIndex = 1;
@@ -27,8 +11,36 @@ mui.plusReady(function() {
 		requireData();
 		console.log('获取的专家信息：' + JSON.stringify(expertInfo));
 	})
-//	pullUpFresh();
 	setListener();
+
+	//上拉下拉注册
+	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
+		down: {
+			callback: function() {
+				var self = this;
+				console.log("下拉刷新");
+				pageIndex = 1;
+				flagRef = 0;
+				//获取关注人数据
+				requireData();
+				self.endPullDownToRefresh();
+			}
+		},
+		up: {
+			callback: function() {
+				var self = this;
+				console.log("上拉加载更多");
+				flagRef = 1;
+				if(pageIndex < totalPageCount) {
+					//获取关注人数据
+					requireData();
+				} else {
+					mui.toast('没有更多了');
+				}
+				self.endPullUpToRefresh();
+			}
+		}
+	});
 })
 /**
  * 获取关注人数据
@@ -48,6 +60,7 @@ var requireData = function() {
 		wd.close();
 		if(data.RspCode == 0) {
 			totalPageCount = data.RspData.TotalPage; //获取总页数
+			pageIndex++;
 			var persons = data.RspData.Data; //关注人数据
 			var personIds = [];
 			//遍历获取关注人id数组
@@ -55,7 +68,7 @@ var requireData = function() {
 				personIds.push(persons[i].UserId);
 			}
 			//通过id数组，获取人员资料，并重组
-			if (personIds.length>0) {
+			if(personIds.length > 0) {
 				requirePersonInfo(personIds, persons);
 			}
 		} else {
