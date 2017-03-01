@@ -350,6 +350,7 @@ var publicModel = (function($, mod) {
 		TotalCnt:'',//评论总记录数,用于分页，结果应该与AnswerNum相同
 		Data:'',//	回答列表,Array[model_QZAnswer]
 		IsFocused:'',//	是否已关注
+		IsAnswered:'',//	是否已回答
 		
 		AskChannel:'',//	问题话题
 		AskId:''//问题ID
