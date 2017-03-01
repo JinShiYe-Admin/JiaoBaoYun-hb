@@ -29,10 +29,8 @@
 			.dynamic-personal-image{
 				/*个人头像圆形*/
 				border-radius: 50%;
-				min-height: 50px;
 				width: 50px;
 				height: 50px;
-				max-height: 50px;
 			}
 		</style>
 
@@ -401,7 +399,7 @@
 					li.workInfo.workType = 1;
 					mui.extend(li.workInfo, homeworkDetailModel)
 					li.className = 'mui-table-view-cell mui-media isCommented'
-					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" src="' + headImg + '" />' +
+					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" style = "width:50px;height:42px;border-radius: 50%;" src="' + headImg + '" />' +
 						'<div class="mui-media-body">' + events.shortForString(uploadArray[i].ugnick, 12) +
 						'<div class="mui-media-body mui-pull-right" ' +
 						'<p id="isCommented' + i + '" style="font-size: 13px;">' + IsCommented + '<span class="mui-icon mui-icon-forward"></span></p></div>' +
@@ -427,7 +425,7 @@
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell mui-media'
 
-					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" src="' + headImg + '" />' +
+					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image"  style = "width:50px;height:42px ;border-radius: 50%;" src="' + headImg + '" />' +
 						'<div class="mui-media-body">' +
 						'<div style = "padding-top:10px">' + events.shortForString(remainArray[i].ugnick, 12) + '<button id="alert' + i + '" style="float: right;width:50px;height:30px;padding:1px 0 0 1px;font-size:12px;margin-top:-7px;" onclick="alertStu(this)"' + disabled + '>' +
 						alert +
