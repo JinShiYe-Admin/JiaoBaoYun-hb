@@ -22,10 +22,12 @@ events.initRefresh('list-container', function() {
  * 
  */
 mui.plusReady(function() {
+	mui.previewImage();
 	events.preload('qiuzhi-addAnswer.html');
 	//加载监听
 	window.addEventListener('answerInfo', function(e) {
 		selfId=parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
+		mui('#refreshContainer').pullRefresh().refresh(true);
 		answerData = {};
 		pageIndex = 1;
 		totalPageCount = 1;
@@ -317,7 +319,8 @@ var getPicInner = function(picAddr) {
 		if(picPaths.length < 3) {
 			pic_width = win_width / picPaths.length;
 		}
-		picInner += '<img src=' + picPaths[i] + 'style="width:' + pic_width + 'px;height:"'+pic_width+'px" />'
+		picInner += '<img src=' + picPaths[i] + 'style="width:' + pic_width + 'px;height:"'+pic_width+'px" '+
+		'" data-preview-src="' + picPaths[i] + '" data-preview-group="1"/>';
 	}
 	return picInner;
 }
