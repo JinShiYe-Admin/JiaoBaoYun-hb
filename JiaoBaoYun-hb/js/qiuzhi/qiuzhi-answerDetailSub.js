@@ -26,6 +26,7 @@ mui.plusReady(function() {
 	//加载监听
 	window.addEventListener('answerInfo', function(e) {
 		selfId=parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
+		mui('#refreshContainer').pullRefresh().refresh(true);
 		answerData = {};
 		pageIndex = 1;
 		totalPageCount = 1;
