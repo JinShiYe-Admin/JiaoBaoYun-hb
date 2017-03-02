@@ -385,8 +385,10 @@ function cleanQuestion() {
 function addQuestion(data) {
 	console.log('addQuestion:' + JSON.stringify(data));
 	questionTitle(data.AskTitle);
-	var temp = data.AskEncAddr.split('|');
-	questionImages(temp);
+	if(data.AskEncAddr != '') {
+		var temp = data.AskEncAddr.split('|');
+		questionImages(temp);
+	}
 	questionContent(data.AskNote);
 	questionInfo(data.ReadNum, data.FocusNum);
 	answerShu(data.AnswerNum);
@@ -406,6 +408,7 @@ function questionTitle(title) {
  */
 function questionImages(imageArray) {
 	mui.each(imageArray, function(index, element) {
+		console.log(element);
 		var div = document.createElement('div');
 		div.className = 'mui-col-xs-4 mui-col-sm-4';
 		div.innerHTML = '<img id="' + element + '" src="' + element + '"/>';
