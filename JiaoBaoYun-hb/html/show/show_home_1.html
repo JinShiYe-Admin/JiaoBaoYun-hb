@@ -18,7 +18,6 @@
 		<link href="../../css/utils/preview.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/show/show.css" />
 
-
 	</head>
 
 	<body>
@@ -33,7 +32,7 @@
 			</div>-->
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		
+
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
 		<script type="text/javascript" src="../../js/mui.lazyload.js"></script>
@@ -162,8 +161,6 @@
 
 					addReplyView();
 					addSomeEvent();
-
-
 
 					//获取定制的城市
 					requestCustomizationCity(function(data) {
@@ -349,7 +346,7 @@
 						}
 					} else {
 						eduArray = [];
-//						mui.toast(data.RspTxt);
+						//						mui.toast(data.RspTxt);
 					}
 					if(eduArray.length == 0) {
 						var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
@@ -364,8 +361,6 @@
 					waitingDia.close();
 				});
 			}
-
-
 
 			var requestData = function(cityCode, pageIndex) {
 				console.log('网络请求')
@@ -397,7 +392,7 @@
 
 					if(data.RspCode == 0 && data.RspData.Data.length > 0) {
 						totalPage = data.RspData.TotalPage
-						getPersonIds(data.RspData.Data,cityCode);
+						getPersonIds(data.RspData.Data, cityCode);
 					} else {
 						//var table = document.body.querySelector('.mui-table-view');
 						//table.innerHTML = ''
@@ -593,7 +588,7 @@
 			/* 获取所有人的id
 			 * @param {Object} data
 			 */
-			var getPersonIds = function(data,cityCode) {
+			var getPersonIds = function(data, cityCode) {
 				var personIds = [];
 				for(var i in data) {
 					personIds.push(data[i].PublisherId);
@@ -618,7 +613,7 @@
 				}
 				personIds = arrayDupRemoval(personIds);
 				personIds = events.arraySingleItem(personIds);
-				getPersonalInfo(data, personIds,cityCode);
+				getPersonalInfo(data, personIds, cityCode);
 			}
 
 			/**
@@ -626,7 +621,7 @@
 			 * @param {Object} data
 			 * @param {Object} ids
 			 */
-			var getPersonalInfo = function(data, ids,cityCode) {
+			var getPersonalInfo = function(data, ids, cityCode) {
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_PostUinf({
 					vvl: ids.toString(), //用户id，查询的值,p传个人ID,g传ID串
@@ -644,7 +639,7 @@
 						}
 
 						console.log("重组后的数据：" + JSON.stringify(zonepArray));
-						setData(zonepArray,cityCode);
+						setData(zonepArray, cityCode);
 					} else {
 						events.fireToPageNone('index.html', 'closeWaiting');
 					}
@@ -702,9 +697,9 @@
 			 * 放置数据
 			 * @param {Object} data
 			 */
-			var setData = function(data,cityCode) {
+			var setData = function(data, cityCode) {
 				console.log('data===' + JSON.stringify(data))
-//				var table = document.body.querySelector('.mui-table-view');
+				//				var table = document.body.querySelector('.mui-table-view');
 				var id = 'bot_' + sliderId.replace('top_', '');
 				var table = document.getElementById("bot_ul_" + cityCode)
 				table.innerHTML = ''
@@ -777,8 +772,8 @@
 				InteractionList.push(praiseList);
 				InteractionList.push(commentList);
 
-				datasource = [InfoList, ImageList, InteractionList,EncAddrList]
-//				console.log('datasource' + JSON.stringify(datasource))
+				datasource = [InfoList, ImageList, InteractionList, EncAddrList]
+				//				console.log('datasource' + JSON.stringify(datasource))
 				return datasource;
 			}
 

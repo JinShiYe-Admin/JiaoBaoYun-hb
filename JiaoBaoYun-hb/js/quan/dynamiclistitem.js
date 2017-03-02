@@ -41,7 +41,7 @@ var dynamiclistitem = (function($, mod) {
 
 		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body mui-pull-left">';
 		//头像
-		var html2 = '<img class=" dynamic-personal-image" src="' + InfoList[0] + '"></div>';
+		var html2 = '<img class=" dynamic-personal-image" style="width:50px;height:50px;border-radius: 50%;" src="' + InfoList[0] + '"></div>';
 		var html3 = '<div class="mui-media-body dynamic-padding-left-10px">' + closeempty;
 		//姓名
 		var html4 = '<h6 style = "color:black;font-size:16px">' + InfoList[1] + '</h6>';
