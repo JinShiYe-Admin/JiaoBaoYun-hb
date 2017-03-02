@@ -458,11 +458,13 @@
 					for(var i = 0; i < cities.length; i++) {
 						if(cities[i].acode == acode) {
 							var str = '<div class="mui-slider-indicator">';
-							for(var j = 0; j < cities.length; j++) {
-								if(cities[j].acode == acode) {
-									str = str + '<div class="mui-indicator mui-active"></div>';
-								} else {
-									str = str + '<div class="mui-indicator"></div>';
+							if(cities.length > 1) {
+								for(var j = 0; j < cities.length; j++) {
+									if(cities[j].acode == acode) {
+										str = str + '<div class="mui-indicator mui-active"></div>';
+									} else {
+										str = str + '<div class="mui-indicator"></div>';
+									}
 								}
 							}
 							str = str + '</div>';

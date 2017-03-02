@@ -296,6 +296,7 @@ mui.plusReady(function() {
 	var addListIcon = function(container, id) {
 		var a = document.createElement('a');
 		a.className = 'mui-icon mui-icon mui-icon-list mui-pull-left';
+		a.style.marginTop = "2px";
 		a.addEventListener('tap', function() {
 			events.fireToPageNone(id, 'tapTitleLeft');
 		});
