@@ -39,6 +39,7 @@ mui.plusReady(function() {
 	});
 	window.addEventListener('commentAdded', function() {
 		selfId=parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
+		mui('#refreshContainer').pullRefresh().refresh(true);
 		answerData = {};
 		pageIndex = 1;
 		totalPageCount = 0
@@ -88,7 +89,6 @@ function requestAnswerDetail(answerId) {
 			var datasource = data.RspData;
 			totalPageCount = datasource.TotalPage;
 			getInfos(datasource);
-			mui('#refreshContainer').pullRefresh().refresh(true);
 		} else {
 			mui.toast(data.RspTxt);
 		}
