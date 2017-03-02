@@ -1,1 +1,336 @@
-null
+{
+	"html/register/yanZhengMa.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/register/register_phoneNumber.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/register/yanZhengMa.html"
+		]
+	},
+	"html/register/login.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/utils/Statusbar.js",
+			"js/utils/app-update.js",
+			"css/utils/common.css",
+			"html/register/js/app.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
+			"html/register/js/mui.enterfocus.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/sortSign.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		],
+		"refer": [
+			"html/register/register_phoneNumber.html",
+			"html/index/index.html"
+		]
+	},
+	"html/cloud/cloud_home.html": {
+		"resources": [
+			"css/iconfont/iconfont.css",
+			"css/cloud/file.css",
+			"css/mui.min.css",
+			"js/utils/h5fresh.js",
+			"css/utils/common.css",
+			"js/cloud/cloud.js",
+			"image/cloud/cloud_0_banjiguanli.png",
+			"image/cloud/cloud_0_ban_1.png",
+			"image/cloud/cloud_0_biji.png",
+			"image/cloud/cloud_0_jishi.png",
+			"image/cloud/cloud_0_tuku.png",
+			"image/cloud/cloud_0_xinjian_4.png",
+			"image/cloud/cloud_0_tongxunlu.png",
+			"image/cloud/cloud_0_jia_0.png",
+			"image/cloud/cloud_0_zuoye.png",
+			"image/cloud/cloud_0_wenjianjia_1.png"
+		],
+		"refer": [
+			"html/cloud/storage_upload_choose.html",
+			"html/homework/homework-tea.html",
+			"html/cloud/storage_upload.html",
+			"html/cloud/storage_main.html"
+		]
+	},
+	"html/sciedu/sciedu_home.html": {
+		"resources": [
+			"js/sciedu/SciEduHomeItem.js",
+			"css/sciedu/sciedu.css",
+			"js/mui.pullToRefresh.js",
+			"css/utils/pullToRefresh.css",
+			"js/mui.pullToRefresh.material.js",
+			"js/mui.lazyload.js",
+			"js/mui.lazyload.img.js"
+		]
+	},
+	"html/index/mine.html": {
+		"resources": [
+			"image/mine/setting.png",
+			"image/mine/data.png",
+			"image/utils/default_personalimage.png",
+			"image/mine/group-manage.png",
+			"image/mine/apply-group.png",
+			"image/mine/new-message.png",
+			"css/home/index-menu.css",
+			"image/mine/about.png",
+			"image/mine/my-space.png",
+			"image/mine/my-points.png",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/show/show_home_1.html": {
+		"resources": [
+			"js/mui.pullToRefresh.js",
+			"js/utils/native.js",
+			"js/mui.zoom.js",
+			"css/utils/pullToRefresh.css",
+			"js/mui.pullToRefresh.material.js",
+			"js/quan/dynamiclistitem.js",
+			"js/mui.previewimage.js",
+			"js/mui.lazyload.js",
+			"css/icons-extra.css",
+			"css/utils/preview.css",
+			"js/mui.lazyload.img.js",
+			"css/show/show.css",
+			"image/dynamic/icon_praise_small.png",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/index/index.html": {
+		"resources": [
+			"html/cloud/cloud_home.html",
+			"css/iconfont/iconfont.css",
+			"css/utils/slide_navigatian.css",
+			"css/mui.min.css",
+			"js/publicHomeworkProtocol.js",
+			"fonts/iconfont.ttf",
+			"js/main/slide_navigation.js",
+			"css/home/index.css",
+			"css/utils/common.css",
+			"js/index.js",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/cloud/cloud_home.html",
+			"html/sciedu/sciedu_home.html",
+			"html/index/mine.html",
+			"html/show/show_home_1.html",
+			"html/qiuzhi/qiuzhi_home.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi_home.html": {
+		"resources": [
+			"js/publicQiuzhiProtocol.js",
+			"js/qiuzhi/qiuzhi-home.js",
+			"css/qiuzhi/qiuzhi.css",
+			"html/qiuzhi/qiuzhi-sub.html"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-sub.html"
+		]
+	},
+	"html/homework/workdetail-tea.html": {
+		"resources": [
+			"html/homework/workdetail-tea-sub.html"
+		],
+		"refer": [
+			"html/homework/workdetail-tea-sub.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi-answerDetailSub.html": {
+		"resources": [
+			"image/qiuzhi/arraw-down.png",
+			"css/qiuzhi/qiuzhi-answerDetailSub.css",
+			"js/qiuzhi/qiuzhi-answerDetailSub.js",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-addAnswer.html"
+		]
+	},
+	"html/homework/homework-tea-sub.html": {
+		"resources": [
+			"js/homework/homework-sub.js",
+			"css/homework/subjects-icon.css"
+		],
+		"refer": [
+			"html/homework/doHomework-stu.html",
+			"html/homework/workdetail-tea.html",
+			"html/homework/homework-publish.html",
+			"html/homework/workdetail-stu.html",
+			"html/homework/workdetailTea-temporary.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi-question.html": {
+		"resources": [
+			"html/qiuzhi/qiuzhi-questionSub.html"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-questionSub.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi-answerDetail.html": {
+		"resources": [
+			"html/qiuzhi/qiuzhi-answerDetailSub.html"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-answerDetailSub.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi-questionSub.html": {
+		"resources": [
+			"js/qiuzhi/qiuzhi-questionSub.js",
+			"css/qiuzhi/qiuzhi-questionSub.css",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-addAnswer.html"
+		]
+	},
+	"html/homework/workdetailTea-temSub.html": {
+		"resources": [
+			"js/homework/homework_detail.js",
+			"css/homework/workdetail.css"
+		]
+	},
+	"html/homework/workdetail-tea-sub.html": {
+		"refer": [
+			"html/homework/homework-comment.html"
+		],
+		"resources": [
+			"js/homework/homework_detail.js",
+			"css/homework/workdetail.css"
+		]
+	},
+	"html/homework/homework-tea.html": {
+		"resources": [
+			"css/homework/homework.css",
+			"html/homework/homework-tea-sub.html",
+			"js/homework/homework.js",
+			"js/utils/switch-mine.js"
+		],
+		"refer": [
+			"html/homework/homework-tea-sub.html",
+			"html/homework/publish-answer.html"
+		]
+	},
+	"html/cloud/storage_main.html": {
+		"resources": [
+			"js/utils/cryption.js",
+			"js/utils/CloudFileUtil.js",
+			"js/qiniu/qiniu.js",
+			"css/utils/preview.css"
+		]
+	},
+	"html/qiuzhi/qiuzhi-sub.html": {
+		"resources": [
+			"image/qiuzhi/channel-edu.png",
+			"css/qiuzhi/qiuzhi-sub.css",
+			"image/qiuzhi/channel-health.png",
+			"js/qiuzhi/qiuzhi-sub.js",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-question.html",
+			"html/qiuzhi/qiuzhi-answerDetail.html"
+		]
+	},
+	"html/homework/doHomework-stu.html": {
+		"resources": [
+			"js/cloud/mui.previewimage.js"
+		]
+	},
+	"html/cloud/storage_upload_choose.html": {
+		"resources": [
+			"image/cloud/A_folder.png",
+			"js/cloud/AndroidFileSystem.js"
+		]
+	},
+	"html/homework/publish-answer.html": {
+		"resources": [
+			"image/homework/xiangji.png",
+			"css/homework/publish-answer.css",
+			"image/homework/temWork-teaHint.png",
+			"js/utils/load.js",
+			"js/homework/publish-answer.js",
+			"js/utils/compress.js",
+			"js/libs/CryptoJS/components/mode-ecb-min.js",
+			"js/utils/camera.js",
+			"js/libs/CryptoJS/rollups/tripledes.js",
+			"js/utils/files.js"
+		],
+		"refer": [
+			"html/homework/homework-commented.html"
+		]
+	},
+	"html/homework/homework-publish.html": {
+		"resources": [
+			"js/common.js",
+			"css/homework/homework-publish.css",
+			"css/quan/custom-textarea.css",
+			"js/utils/audio.js",
+			"js/homework/homework-publish.js"
+		],
+		"refer": [
+			"html/homework/classes-select.html"
+		]
+	},
+	"html/homework/workdetail-stu.html": {
+		"resources": [
+			"js/homework/workdetail-stu.js",
+			"css/homework/workdetail-stu.css"
+		]
+	},
+	"html/homework/workdetailTea-temporary.html": {
+		"resources": [
+			"html/homework/workdetailTea-temSub.html"
+		],
+		"refer": [
+			"html/homework/workdetailTea-temSub.html"
+		]
+	},
+	"html/homework/homework-commented.html": {
+		"resources": [
+			"js/homework/homework-commented.js",
+			"css/homework/subjects-icon.css"
+		]
+	},
+	"html/cloud/storage_upload.html": {
+		"refer": [
+			"html/cloud/storage_transport.html",
+			"html/cloud/storage_main_choose.html"
+		],
+		"resources": [
+			"image/cloud/A_folder.png",
+			"css/cloud/file.css",
+			"js/cloud/AndroidFileSystem.js"
+		]
+	},
+	"html/homework/homework-comment.html": {
+		"resources": [
+			"css/homework/homework-commit.css",
+			"js/homework/homework-comment.js"
+		]
+	}
+}
