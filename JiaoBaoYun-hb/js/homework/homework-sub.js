@@ -32,8 +32,8 @@ mui.plusReady(function() {
 	});
 	window.addEventListener('homeworkDone', function() {
 		clickItem.homeworkInfo.IsSubmitted=true;
-		clickItem.className = 'mui-table-view-cell stuHomework ' + getBackGround(homework);
-		clickItem.innerHTML = createStuHomeworkInner(homework);
+		clickItem.className = 'mui-table-view-cell stuHomework ' + getBackGround(clickItem.homeworkInfo);
+		clickItem.innerHTML = createStuHomeworkInner(clickItem.homeworkInfo);
 	})
 	//错题本按钮监听事件
 	events.addTap('err', function() {
