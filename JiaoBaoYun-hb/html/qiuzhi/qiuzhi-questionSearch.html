@@ -14,7 +14,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">	
+			<h1 class="mui-title">
 				<div class="search-form">
 					<div class="mui-input-row  ">
 						<input id="search-keyWord" type="search" class="mui-input-clear" placeholder="请输入关键字搜索问题">
@@ -23,7 +23,7 @@
 				</div>
 			</h1>
 		</header>
-		<div class="mui-content" style="z-index:0">
+		<div class="mui-content" style="z-index:0;">
 			<div class="mui-scroll-wrapper mui-fullscreen" id="history_container">
 				<div class="mui-scroll">
 					<ul class="mui-table-view">
@@ -89,7 +89,9 @@
 			var Storage_History = "qiuzhi-Question-History";
 			mui.init();
 			mui.plusReady(function() {
-				
+				document.getElementById("history_container").style.top = localStorage.getItem('StatusHeightNo') * 1 + 11 + 'px';
+				document.getElementById("list-container").style.top = localStorage.getItem('StatusHeightNo') * 1 + 10 + 'px';
+
 				Storage_History = Storage_History + "_" + window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 				//注册列表项点击事件
 				mui('#list-container .mui-table-view').on('tap', 'li', function() {
