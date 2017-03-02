@@ -67,24 +67,17 @@
 	background-color: white;
 }
 .comments-info{
-	display: flex;
-	display: -webkit-flex;
-	justify-content:space-between;
-	align-items: center;
-	height: 45px;
+	position: relative;
+	min-height: 45px;
 	padding: 0 10px;
 }
 .comment-no{
-	display: flex;
-	display: -webkit-flex;
 	font-size: 14px;
-	/*align-self: flex-start;*/
-	/*padding-top: 10px;*/
+	padding-top: 10px;
 }
 .order-selector{
-	display: flex;
-	display: -webkit-flex;
-	/*align-self: flex-end;*/
+	position: fixed;
+	right: 0;
 }
 .head-img{
 	border-radius: 50%;
