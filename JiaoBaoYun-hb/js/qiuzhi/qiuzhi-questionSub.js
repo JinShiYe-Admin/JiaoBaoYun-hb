@@ -34,47 +34,24 @@ var answerArray = [];
 var answerFlag = 0;
 //当前问题的详情model
 var askModel;
-var previewImage;
+
+var mainData; //记录获取的数据
 mui.plusReady(function() {
-	previewImage = mui.previewImage();
-	window.addEventListener('answerAdded', function() {
-		//获取的第几页回复
-		answerIndex = 1;
-		//答案回复的总页数
-		answerPageCount = 0;
-		//回复数组,切换排序方式后，清空数组
-		answerArray = [];
-		//刷新0，还是加载更多1
-		answerFlag = 0;
-		//5.获取某个问题的详情
-		requestAskDetail();
-	});
+	mui.previewImage();
+	var main = plus.webview.currentWebview(); //获取当前窗体对象
+	mainData = main.data; //接收A页面传入参数值
+	console.log('qiuzhi-questionSub.html:' + JSON.stringify(mainData));
 
-	//退出界面
-	window.addEventListener('muiBack', function() {
-		console.log('muiBack');
-		//清理原界面
-		cleanQuestion();
-		cleanAnswer();
-		document.getElementById("showAll").innerText = '显示全部';
-		document.getElementById("showAll").style.display = 'none';
-	});
-
-	//---滑动start---
-	//	mui(".mui-scroll-wrapper").scroll({
-	//		scrollY: true, //是否竖向滚动
-	//		scrollX: false, //是否横向滚动
-	//		indicators: true, //是否显示滚动条
-	//		deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
-	//		bounce: true, //是否启用回弹
-	//	});
-	//---滑动end---
 	events.preload('qiuzhi-addAnswer.html');
-	window.addEventListener('askId', function(e) {
-		console.log('问题详情子页面获取的问题id:' + e.detail.data);
-		askID = e.detail.data;
-		//13.获取是否已对某个问题关注
-		getAskFocusByUser(askID);
+
+	askID = mainData.askID;
+
+	//5.获取某个问题的详情
+	requestAskDetail();
+	//13.获取是否已对某个问题关注
+	getAskFocusByUser(askID);
+
+	window.addEventListener('answerAdded', function() {
 		//获取的第几页回复
 		answerIndex = 1;
 		//答案回复的总页数
@@ -173,14 +150,6 @@ mui.plusReady(function() {
 			showAll.innerText = '显示全部';
 			document.getElementById("question_content").style.webkitLineClamp = '3';
 		}
-	});
-
-	mui('#question_images').on('tap', 'img', function() {
-		//		if(previewImage.isShown) {
-		//			previewImage.close();
-		//		} else {
-		//			previewImage.open(this);
-		//		}
 	});
 });
 
@@ -288,7 +257,7 @@ function requestAskDetail() {
 		pageSize: '10' //每页记录数,传入0，获取总记录数
 	};
 	// 等待的对话框
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	var wd = events.showWaiting();
 	//5.获取某个问题的详情
 	postDataQZPro_getAskById(comData, wd, function(data) {
 		wd.close();
@@ -349,7 +318,6 @@ function requestAskDetail() {
 				//刷新0，还是加载更多1
 				if(answerFlag == 0) {
 					mui('#refreshContainer').pullRefresh().endPulldownToRefresh(); //下拉刷新结束
-					mui('#refreshContainer').pullRefresh().enablePullupToRefresh(); //启用上拉刷新
 					answerArray = tempRspData;
 					//清理原界面
 					cleanQuestion();
@@ -359,9 +327,12 @@ function requestAskDetail() {
 					if(tempRspData.length == 0) { //没有人回答
 						mui.toast('没有人回答该提问');
 						mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+					} else {
+						mui('#refreshContainer').pullRefresh().enablePullupToRefresh(false); //启用上拉加载更多
 					}
 				} else {
 					answerArray = answerArray.concat(tempRspData);
+
 					mui('#refreshContainer').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
 				}
 				//刷新界面
@@ -417,7 +388,6 @@ function questionTitle(title) {
  */
 function questionImages(id, imageArray) {
 	mui.each(imageArray, function(index, element) {
-		console.log(element);
 		var div = document.createElement('div');
 		div.className = 'mui-col-xs-4 mui-col-sm-4';
 		div.innerHTML = '<img id="' + element + '" src="' + element + '"data-preview-src="' + element + '" data-preview-group="' + id + '"/>';
@@ -425,7 +395,7 @@ function questionImages(id, imageArray) {
 		document.getElementById(element).style.width = (div.offsetWidth - 4) + 'px';
 		document.getElementById(element).style.height = (div.offsetWidth - 4) + 'px';
 	});
-	console.log(document.getElementById("question_images").innerHTML);
+	//console.log(document.getElementById("question_images").innerHTML);
 }
 
 /**
@@ -440,7 +410,7 @@ function questionContent(content) {
 	height_0 = document.getElementById("question_content").offsetHeight;
 	document.getElementById("question_content").style.webkitLineClamp = '3';
 	height_1 = document.getElementById("question_content").offsetHeight;
-	console.log(height_0 + '|' + height_1);
+	//console.log(height_0 + '|' + height_1);
 	if(height_0 > height_1) {
 		//内容高度大于三行
 		document.getElementById("showAll").style.display = 'inline';

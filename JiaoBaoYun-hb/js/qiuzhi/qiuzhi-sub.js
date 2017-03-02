@@ -7,7 +7,6 @@ var channelInfo; //选择的话题
 var allChannels; //所有的话题
 mui.init();
 mui.plusReady(function() {
-	events.preload("qiuzhi-question.html", 200);
 	events.preload("qiuzhi-answerDetail.html", 300);
 	window.addEventListener('channelInfo', function(e) {
 		console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
@@ -280,13 +279,11 @@ var setListener = function() {
 
 	//标题点击事件
 	mui('.mui-table-view').on('tap', '.ask-title', function() {
-		events.fireToPageNone('qiuzhi-question.html', 'askId', {
+		events.openNewWindowWithData('qiuzhi-question.html', {
 			askID: this.getAttribute('askId'), //问题id
 			channelInfo: channelInfo, //当前话题
 			allChannels: allChannels //全部话题
 		});
-		events.fireToPageNone('qiuzhi-questionSub.html', 'askId', this.getAttribute('askId'));
-		plus.webview.getWebviewById('qiuzhi-question.html').show();
 	});
 
 	//点击回答
