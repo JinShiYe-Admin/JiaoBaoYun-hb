@@ -888,7 +888,9 @@
 							}
 						}
 					} else {
-						mui.toast(data.RspTxt);
+						if(data.RspCode != 9){
+							mui.toast(data.RspTxt);
+						}
 					}
 
 					//获取家长的手机号

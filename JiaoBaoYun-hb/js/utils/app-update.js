@@ -11,6 +11,7 @@ var appUpdate = (function(mod) {
 				mod.appVersion = getBigVersion(inf.version,plus.runtime.version);
 				console.log('应用版本号:'+plus.runtime.version+',资源升级版本号:'+inf.version)
 				console.log("当前应用版本：" + mod.appVersion);
+//				mui.toast('应用版本号:'+plus.runtime.version+',资源升级版本号:'+inf.version)
 				getUpCondition(versionInfo); //判断是否更新
 			});
 		}
@@ -29,6 +30,7 @@ var appUpdate = (function(mod) {
 				return version1;
 			}
 		}
+		return version0;
 	}
 		/**
 		 * 判断是否更新
@@ -77,8 +79,10 @@ var appUpdate = (function(mod) {
 			for(var i in numArray) {
 				if(i == 0) {
 					minMax.max = parseInt(numArray[i]);
-				} else {
+				} else if(i<3) {
 					min+=numArray[i];
+				}else{
+					break;
 				}
 			}
 			minMax.min=parseInt(min);

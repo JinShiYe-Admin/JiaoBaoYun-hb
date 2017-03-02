@@ -9,14 +9,16 @@
 .secedu-title {
 	/*标题*/
 	word-break: break-all;
-	font-size: 20px;
+	font-size: 17px;
+	color: #323232;
 }
 
 .secedu-from {
 	/*来源*/
 	word-break: break-all;
 	margin-top: 5px;
-	color: #909090;
+	font-size: 12px;
+	color: #B7B7B7;
 }
 
 .mui-row {
