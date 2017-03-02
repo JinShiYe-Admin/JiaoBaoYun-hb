@@ -601,13 +601,16 @@ footer {
 					for(var i = 0; i < cities.length; i++) {
 						if(cities[i].acode == acode) {
 							var str = '<div class="mui-slider-indicator">';
-							for(var j = 0; j < cities.length; j++) {
+							if(cities.length>1){
+								for(var j = 0; j < cities.length; j++) {
 								if(cities[j].acode == acode) {
 									str = str + '<div class="mui-indicator mui-active"></div>';
 								} else {
 									str = str + '<div class="mui-indicator"></div>';
 								}
 							}
+							}
+							
 							str = str + '</div>';
 							var str_0 = "document.getElementById('title').innerText = '" + cities[i].aname + "';";
 							var str_1 = "var showSlider = document.getElementById('showSlider');";
