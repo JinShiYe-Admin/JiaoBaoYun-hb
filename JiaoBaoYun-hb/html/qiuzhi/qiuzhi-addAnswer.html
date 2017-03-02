@@ -87,7 +87,9 @@
 				events.addTap('take_pic', function() {
 					if(CloudFileUtil.files.length < 9) {
 						camera.getPic(camera.getCamera(), function(picPath) {
-							plus.nativeUI.showWaiting(storageKeyName.WAITING);
+							plus.nativeUI.showWaiting(storageKeyName.UPLOADING,{
+								back:'none'
+							});
 							var saveSpace = storageKeyName.KNOWLEDGE; //保存空间
 							compress.compressPIC(picPath, function(event) {
 								var localPath = event.target;
@@ -132,7 +134,9 @@
 					if(CloudFileUtil.files.length < 9) {
 						var picCount = 0; //上传图片计数
 						gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
-							plus.nativeUI.showWaiting(storageKeyName.UPLOADING); //等待框
+							plus.nativeUI.showWaiting(storageKeyName.UPLOADING,{
+								back:'none'
+							}); //等待框
 							console.log("保存的路径：" + JSON.stringify(paths));
 							var saveSpace = storageKeyName.KNOWLEDGE; //保存路径
 							compress.compressPics(paths, function(compressedPaths) {
