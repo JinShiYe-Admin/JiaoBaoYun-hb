@@ -7,6 +7,7 @@
 mui.init();
 
 mui.plusReady(function() {
+	events.preload("../qiuzhi/expert-detail.html",100);
 	var waitingDia = events.showWaiting();
 	//安卓的连续点击两次退出程序
 	var backButtonPress = 0;
@@ -190,8 +191,7 @@ mui.plusReady(function() {
 		var title_left = document.getElementById("title_left");
 		while(title_left.firstElementChild) {
 			title_left.removeChild(title_left.firstElementChild);
-		}
-
+		};
 		switch(targetTab) {
 			case '../cloud/cloud_home.html': //首页
 				addZoneIcon(iconContainer);
@@ -203,10 +203,16 @@ mui.plusReady(function() {
 				break;
 			case '../show/show_home_1.html': //展现
 				addListIcon(title_left, '../show/show_home_1.html');
-				addShai(iconContainer,'zx');
+				addShai(iconContainer, 'zx');
 				break;
 			case '../qiuzhi/qiuzhi_home.html': //求知
+				slideNavigation.addSlideIcon();
 				addQiuZhiExpertSearch(iconContainer);
+				document.querySelector('.img-icon').addEventListener('tap', function(e) {
+					var personalInfo=myStorage.getItem(storageKeyName.PERSONALINFO);
+					personalInfo.UserId=personalInfo.utid;
+					events.fireToPageWithData('expert-detail.html','expert-detail',personalInfo);
+				})
 				break;
 			default:
 				break;
@@ -218,14 +224,14 @@ mui.plusReady(function() {
 	 * @param {Object} container
 	 */
 	var addZoneIcon = function(container) {
-		addShai(container,'jxq');
+		addShai(container, 'jxq');
 		addAboutMe(container);
 	}
 	/**
 	 * 加载晒一晒
 	 * @param {Object} container
 	 */
-	var addShai = function(container,name) {
+	var addShai = function(container, name) {
 		var pubDynamic = document.createElement('a');
 		pubDynamic.id = 'pubDynamic'
 		pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
@@ -235,12 +241,12 @@ mui.plusReady(function() {
 		pubDynamic.innerHTML = '晒一晒'
 		container.appendChild(pubDynamic);
 		events.addTap('pubDynamic', function() {
-			if(name == 'jxq'){
+			if(name == 'jxq') {
 				events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
-			}else{
+			} else {
 				events.openNewWindowWithData('../quan/pub-dynamic.html', 'zx');
 			}
-			
+
 		})
 	}
 	/**
