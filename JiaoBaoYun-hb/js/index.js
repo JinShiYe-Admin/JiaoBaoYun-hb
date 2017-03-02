@@ -7,7 +7,7 @@
 mui.init();
 
 mui.plusReady(function() {
-	events.preload("../qiuzhi/expert-detail.html",100);
+//	events.preload("../qiuzhi/expert-detail.html",100);
 	var waitingDia = events.showWaiting();
 	//安卓的连续点击两次退出程序
 	var backButtonPress = 0;
@@ -211,7 +211,7 @@ mui.plusReady(function() {
 				document.querySelector('.img-icon').addEventListener('tap', function(e) {
 					var personalInfo=myStorage.getItem(storageKeyName.PERSONALINFO);
 					personalInfo.UserId=personalInfo.utid;
-					events.fireToPageWithData('expert-detail.html','expert-detail',personalInfo);
+					events.openNewWindowWithData('../qiuzhi/expert-detail.html',personalInfo);
 				})
 				break;
 			default:

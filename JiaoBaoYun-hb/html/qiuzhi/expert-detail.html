@@ -38,10 +38,10 @@
 				<div style="margin-bottom: 10px;">
 					<p id="UserNote" style="margin: 5px;font-size: 15px;text-align: center;"></p>
 				</div>
-				
-					<!--<textarea  id="UserNote" id='leaveTitle'  onblur="inputOnblur(this)" class="mui-input-clear question" placeholder="" style="min-height: 30px;height: 30px;；width: 100%;background-color: transparent;font-size: 15px;border-color:transparent ;"></textarea>-->
+
+				<!--<textarea  id="UserNote" id='leaveTitle'  onblur="inputOnblur(this)" class="mui-input-clear question" placeholder="" style="min-height: 30px;height: 30px;；width: 100%;background-color: transparent;font-size: 15px;border-color:transparent ;"></textarea>-->
 			</div>
-							<hr style="height:1px;border:none;border-top:1px solid lightgray;" />
+			<hr style="height:1px;border:none;border-top:1px solid lightgray;" />
 
 			<div style="margin-top: 0px;margin-left: 20px;">
 				<div id="FocusAsk" style="float: left;width: 70px;margin-left: 5px;">
@@ -93,7 +93,7 @@
 							<div>
 								<p id="CommentNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
 					</li>
-					<li  id="inviteNumLi" class="mui-table-view-cell mui-media ">
+					<li id="inviteNumLi" class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/yaoqing.png" />
 						<div class="mui-media-body">邀请他回答
 							<div>
@@ -159,8 +159,12 @@
 			window.addEventListener('refresh_expertdetail', function(data) {
 				getExpertsInfo(ExpertsInfo.UserId);
 			})
-			events.addTap('UserNote',function(){
-				events.openNewWindowWithData('modifyExpertNote.html',ExpertsInfo.UserNote);
+			events.addTap('UserNote', function() {
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+				if(ExpertsInfo.UserId == personalUTID) {
+					events.openNewWindowWithData('modifyExpertNote.html', ExpertsInfo.UserNote);
+				}
+
 			})
 			events.addTap('FocusAsk', function() {
 				console.log('关注的问题');
@@ -278,7 +282,13 @@
 
 		function addData() {
 			nodes.AskNum.innerHTML = ExpertsInfo.AskNum + '<span class="mui-icon mui-icon-forward"></span>';
-			nodes.UserNote.innerHTML = ExpertsInfo.UserNote+' '+'<img id="bianji" style = "width:20px;height:20px"  src="../../image/qiuzhi/bianji.png" />';
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+			if(ExpertsInfo.UserId == personalUTID) {
+				nodes.UserNote.innerHTML = ExpertsInfo.UserNote + ' ' + '<img id="bianji" style = "width:20px;height:20px"  src="../../image/qiuzhi/bianji.png" />';
+			}else{
+				nodes.UserNote.innerHTML = ExpertsInfo.UserNote;
+			}
+
 			nodes.FocusManNum.innerText = ExpertsInfo.FocusManNum;
 			nodes.ExpertChannels.innerText = ExpertsInfo.ExpertChannelNames;
 			nodes.IsLikeNum.innerText = ExpertsInfo.IsLikeNum;
@@ -287,12 +297,12 @@
 			nodes.IsFocusedManNum.innerText = ExpertsInfo.IsFocusedManNum;
 			nodes.AnswerNum.innerHTML = ExpertsInfo.AnswerNum + '<span class="mui-icon mui-icon-forward"></span>';
 			var inviteNumLi = document.getElementById("inviteNumLi");
-			if(ExpertsInfo.IsExpert==1){
+			if(ExpertsInfo.IsExpert == 1) {
 				nodes.inviteNum.innerHTML = ExpertsInfo.InviteNum + '<span class="mui-icon mui-icon-forward"></span>';
-			}else{
+			} else {
 				inviteNumLi.parentNode.removeChild(inviteNumLi);
 			}
-			
+
 		}
 	</script>
 
