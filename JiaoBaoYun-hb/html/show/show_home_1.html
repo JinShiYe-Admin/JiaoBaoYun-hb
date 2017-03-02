@@ -876,13 +876,13 @@ footer {
 
 				for(var i = 0; i < data.length; i++) {
 					id = i;
-					var data1 = addData(i);
+					var data1 = addData(i,cityCode);
 					dynamiclistitem.addItem(table, data1, id);
 				}
 				events.fireToPageNone('index.html', 'closeWaiting');
 			}
 			//加载数据
-			function addData(index) {
+			function addData(index,cityCode) {
 				//[[InfoList],[ImageList],[InteractionList]]动态的信息
 				var datasource = [];
 				var InfoList = []; //头部和内容
@@ -942,7 +942,7 @@ footer {
 				InteractionList.push(praiseList);
 				InteractionList.push(commentList);
 
-				datasource = [InfoList, ImageList, InteractionList, EncAddrList]
+				datasource = [InfoList, ImageList, InteractionList, EncAddrList,cityCode]
 				//				console.log('datasource' + JSON.stringify(datasource))
 				return datasource;
 			}
