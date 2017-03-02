@@ -117,3 +117,11 @@
 {
 	height: 0px;
 }
+.mui-table-view-cell img {
+float: left;
+}
+
+.mui-table-view-cell  div{
+float: left;
+width: 80%;
+}
