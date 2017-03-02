@@ -34,9 +34,9 @@ var answerArray = [];
 var answerFlag = 0;
 //当前问题的详情model
 var askModel;
-
+var previewImage;
 mui.plusReady(function() {
-
+	previewImage = mui.previewImage();
 	window.addEventListener('answerAdded', function() {
 		//获取的第几页回复
 		answerIndex = 1;
@@ -173,6 +173,14 @@ mui.plusReady(function() {
 			showAll.innerText = '显示全部';
 			document.getElementById("question_content").style.webkitLineClamp = '3';
 		}
+	});
+
+	mui('#question_images').on('tap', 'img', function() {
+		//		if(previewImage.isShown) {
+		//			previewImage.close();
+		//		} else {
+		//			previewImage.open(this);
+		//		}
 	});
 });
 
@@ -387,7 +395,7 @@ function addQuestion(data) {
 	questionTitle(data.AskTitle);
 	if(data.AskEncAddr != '') {
 		var temp = data.AskEncAddr.split('|');
-		questionImages(temp);
+		questionImages(data.TabId, temp);
 	}
 	questionContent(data.AskNote);
 	questionInfo(data.ReadNum, data.FocusNum);
@@ -404,18 +412,20 @@ function questionTitle(title) {
 
 /**
  * 放置问题图片
+ * @param {Object} id 问题id
  * @param {Object} imageArray 问题图片数组
  */
-function questionImages(imageArray) {
+function questionImages(id, imageArray) {
 	mui.each(imageArray, function(index, element) {
 		console.log(element);
 		var div = document.createElement('div');
 		div.className = 'mui-col-xs-4 mui-col-sm-4';
-		div.innerHTML = '<img id="' + element + '" src="' + element + '"/>';
+		div.innerHTML = '<img id="' + element + '" src="' + element + '"data-preview-src="' + element + '" data-preview-group="' + id + '"/>';
 		document.getElementById("question_images").appendChild(div);
 		document.getElementById(element).style.width = (div.offsetWidth - 4) + 'px';
 		document.getElementById(element).style.height = (div.offsetWidth - 4) + 'px';
 	});
+	console.log(document.getElementById("question_images").innerHTML);
 }
 
 /**
