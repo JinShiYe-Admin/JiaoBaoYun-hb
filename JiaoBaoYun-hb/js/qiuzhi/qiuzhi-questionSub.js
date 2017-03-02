@@ -114,7 +114,7 @@ mui.plusReady(function() {
 	var tab_font = document.getElementById("tab_font");
 	tab_div.addEventListener('tap', function() {
 		console.log('tab_div-tap');
-		if (askModel.IsAnswered == 1) {
+		if(askModel.IsAnswered == 1) {
 			mui.toast('已经回答过此问题');
 			return;
 		}
@@ -163,7 +163,6 @@ mui.plusReady(function() {
 	});
 
 	var showAll = document.getElementById("showAll");
-	console.log('showAll' + showAll.innerText);
 	showAll.addEventListener('tap', function() {
 		var str = this.innerText;
 		console.log('showAll' + str);
@@ -326,7 +325,7 @@ function requestAskDetail() {
 							//当前循环的model
 							var tempModel0 = tempRspData[item];
 							//判断是否为匿名
-							if (tempModel0.IsAnonym == 1) {
+							if(tempModel0.IsAnonym == 1) {
 								tempModel.uimg = updateHeadImg('', 2);
 								tempModel.unick = '匿名用户';
 							}
@@ -386,7 +385,8 @@ function cleanQuestion() {
 function addQuestion(data) {
 	console.log('addQuestion:' + JSON.stringify(data));
 	questionTitle(data.AskTitle);
-	//questionImages(data.imageArray);
+	var temp = data.AskEncAddr.split('|');
+	questionImages(temp);
 	questionContent(data.AskNote);
 	questionInfo(data.ReadNum, data.FocusNum);
 	answerShu(data.AnswerNum);
@@ -408,8 +408,10 @@ function questionImages(imageArray) {
 	mui.each(imageArray, function(index, element) {
 		var div = document.createElement('div');
 		div.className = 'mui-col-xs-4 mui-col-sm-4';
-		div.innerHTML = '<img class="mui-pull-right" style="width: 30%;" src="' + element + '"';
+		div.innerHTML = '<img id="' + element + '" src="' + element + '"/>';
 		document.getElementById("question_images").appendChild(div);
+		document.getElementById(element).style.width = (div.offsetWidth - 4) + 'px';
+		document.getElementById(element).style.height = (div.offsetWidth - 4) + 'px';
 	});
 }
 
