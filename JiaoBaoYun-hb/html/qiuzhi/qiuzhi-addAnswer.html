@@ -64,6 +64,8 @@
 					[].forEach.call(document.querySelectorAll('.file-extras'),function(item) {
 						item.style.display = 'inline-block';
 					})
+					document.getElementById('answerContent').placeholder="添加回答,最多4000字";
+					jQuery('#answerContent').prop("maxLength", "4000");//设置最长
 					var askTitle = document.getElementById("askTitle");
 					askTitle.innerHTML = askModel.AskTitle;
 				});
@@ -71,6 +73,8 @@
 				window.addEventListener('add-comment', function(e) {
 					type = 1;
 					document.getElementById('title').innerText = '我要评论';
+					document.getElementById('answerContent').placeholder="添加评论,最多1000字";
+					jQuery('#answerContent').prop("maxLength", "1000");//设置最长
 					[].forEach.call(document.querySelectorAll('.file-extras'),function(item) {
 						item.style.display = 'none';
 					})

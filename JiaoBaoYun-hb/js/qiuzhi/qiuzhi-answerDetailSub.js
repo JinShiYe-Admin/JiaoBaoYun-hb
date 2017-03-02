@@ -332,7 +332,7 @@ var createCommentsInner = function(cell) {
 	var inner = '<div><a class="mui-icon iconfont icon-zanzan1 mui-pull-right"></a>' +
 		'<div class="img-container"><img class="head-img" src="' + headImg + '"/></div>' +
 		'<div class="comment-container">' +
-		'<h4 class="comment-personName single-line">' + personName + '</h4>' +
+		'<h5 class="comment-personName single-line">' + personName + '</h5>' +
 		'<p class="comment-words">' + cell.CommentContent + '</p>' +
 		'<p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p>' +
 		'</div></div>'
