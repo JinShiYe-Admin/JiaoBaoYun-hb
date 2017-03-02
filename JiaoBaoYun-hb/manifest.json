@@ -1816,7 +1816,8 @@
 					"html/show/show_home.html",
 					"html/qiuzhi/qiuzhi_home.html",
 					"html/sciedu/sciedu_home.html",
-					"html/show/show_home_1.html"
+					"html/show/show_home_1.html",
+					"html/qiuzhi/expert-detail.html"
 				],
 				"priority": 0
 			},
@@ -3161,7 +3162,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"image/qiuzhi/bianji.png"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-expertAllAnswer.html",

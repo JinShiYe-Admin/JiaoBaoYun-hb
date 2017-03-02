@@ -80,7 +80,9 @@
 			"css/utils/pullToRefresh.css",
 			"js/mui.pullToRefresh.material.js",
 			"js/mui.lazyload.js",
-			"js/mui.lazyload.img.js"
+			"js/mui.lazyload.img.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/index/mine.html": {
@@ -135,7 +137,8 @@
 			"html/sciedu/sciedu_home.html",
 			"html/index/mine.html",
 			"html/show/show_home_1.html",
-			"html/qiuzhi/qiuzhi_home.html"
+			"html/qiuzhi/qiuzhi_home.html",
+			"html/qiuzhi/expert-detail.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi_home.html": {
@@ -143,7 +146,8 @@
 			"js/publicQiuzhiProtocol.js",
 			"js/qiuzhi/qiuzhi-home.js",
 			"css/qiuzhi/qiuzhi.css",
-			"html/qiuzhi/qiuzhi-sub.html"
+			"html/qiuzhi/qiuzhi-sub.html",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-sub.html"
@@ -171,7 +175,8 @@
 	"html/homework/homework-tea-sub.html": {
 		"resources": [
 			"js/homework/homework-sub.js",
-			"css/homework/subjects-icon.css"
+			"css/homework/subjects-icon.css",
+			"css/homework/homework.css"
 		],
 		"refer": [
 			"html/homework/doHomework-stu.html",
@@ -330,7 +335,60 @@
 	"html/homework/homework-comment.html": {
 		"resources": [
 			"css/homework/homework-commit.css",
-			"js/homework/homework-comment.js"
+			"js/homework/homework-comment.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/qiuzhi/qiuzhi-expertAllAnswer.html": {
+		"resources": [
+			"css/qiuzhi/qiuzhi-inviteAnswer.css"
+		]
+	},
+	"html/qiuzhi/focus-question.html": {
+		"resources": [
+			"css/qiuzhi/qiuzhi-sub.css",
+			"js/qiuzhi/qiuzhi-focusQuestion.js"
+		]
+	},
+	"html/qiuzhi/AttentionPersons.html": {
+		"resources": [
+			"css/qiuzhi/attention-persons.css",
+			"js/qiuzhi/attentionPersons.js"
+		]
+	},
+	"html/qiuzhi/qiuzhi-expertAllComment.html": {
+		"resources": [
+			"css/qiuzhi/qiuzhi-expertAllComment.css"
+		]
+	},
+	"html/qiuzhi/expert-detail.html": {
+		"resources": [
+			"image/qiuzhi/yaoqing.png",
+			"image/qiuzhi/answer.png",
+			"image/qiuzhi/question.png",
+			"image/qiuzhi/bianji.png",
+			"css/mui.min.css",
+			"image/qiuzhi/comment.png",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-expertAllAnswer.html",
+			"html/qiuzhi/focus-question.html",
+			"html/qiuzhi/AttentionPersons.html",
+			"html/qiuzhi/qiuzhi-expertAllComment.html",
+			"html/qiuzhi/heAttentionPersons.html"
+		]
+	},
+	"html/qiuzhi/heAttentionPersons.html": {
+		"resources": [
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/cloud/storage_main_choose.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	}
 }
