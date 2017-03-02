@@ -295,8 +295,12 @@ var setAnswerManInfo = function(datasource) {
 		document.getElementById('anthor-portrait').src = updateHeadImg(datasource.uimg, 2);
 		document.getElementById("anthor-name").innerText = datasource.unick;
 		document.getElementById("anthor-info").innerText = datasource.AnswerManNote ? datasource.AnswerManNote : "暂无简介";
-		document.getElementById('btn-focus').style.display = "inline-block";
-		getUserFocus(datasource.AnswerMan);
+		if(datasource.AnswerMan==selfId){//如果专家是自己，隐藏关注按钮
+			document.getElementById('btn-focus').style.display = "none";
+		}else{//不是自己，显示关注按钮
+			document.getElementById('btn-focus').style.display = "inline-block";
+			getUserFocus(datasource.AnswerMan);
+		}
 	}
 	document.getElementById('answer-time').innerText = events.shortForDate(datasource.AnswerTime);
 }
