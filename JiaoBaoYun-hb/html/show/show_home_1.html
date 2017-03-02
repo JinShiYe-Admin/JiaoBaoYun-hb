@@ -15,6 +15,7 @@
 		<link rel="stylesheet" href="../../css/utils/pullToRefresh.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/icons-extra.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<link href="../../css/utils/preview.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/show/show.css" />
 
 
@@ -32,17 +33,21 @@
 			</div>-->
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
+		
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
 		<script type="text/javascript" src="../../js/mui.lazyload.js"></script>
 		<script type="text/javascript" src="../../js/mui.lazyload.img.js"></script>
+		<script src="../../js/mui.zoom.js"></script>
+		<script src="../../js/mui.previewimage.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/utils/native.js"></script>
+		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 		<script type="text/javascript">
 			mui.init();
+			mui.previewImage();
 			var pageIndex = 1;
 			var totalPage = 0;
 			var id = 0; //cell的id
@@ -717,6 +722,7 @@
 				var datasource = [];
 				var InfoList = []; //头部和内容
 				var ImageList = []; //内容的图片
+				var EncAddrList = [];
 				var InteractionList = []; //底部内容
 
 				//个人信息和内容
@@ -736,9 +742,11 @@
 				//内容的图片
 				if(tempModel.EncImgAddr != '') {
 					var EncImgAddrs = tempModel.EncImgAddr.split('|');
+					var EncAddr = tempModel.EncAddr.split('|');
 					//内容的图片
 					for(var i = 0; i < EncImgAddrs.length; i++) {
 						ImageList.push(EncImgAddrs[i])
+						EncAddrList.push(EncAddr[i]);
 					}
 				}
 
@@ -769,7 +777,7 @@
 				InteractionList.push(praiseList);
 				InteractionList.push(commentList);
 
-				datasource = [InfoList, ImageList, InteractionList]
+				datasource = [InfoList, ImageList, InteractionList,EncAddrList]
 //				console.log('datasource' + JSON.stringify(datasource))
 				return datasource;
 			}

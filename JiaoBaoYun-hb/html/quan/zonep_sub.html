@@ -11,13 +11,17 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/icons-extra.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<link href="../../css/utils/preview.css" rel="stylesheet" />
 		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/native.js"></script>
 		<script type="text/javascript" src="../../js/mui.lazyload.js"></script>
 		<script type="text/javascript" src="../../js/mui.lazyload.img.js"></script>
+		<script src="../../js/mui.zoom.js"></script>
+		<script src="../../js/mui.previewimage.js"></script>
+				<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
+
 		<style>
 			.mui-table-view-cell,
 			.mui-table-view-cell:active {
@@ -382,6 +386,7 @@
 
 		var id = 0; //cell的id
 		mui.plusReady(function() {
+			mui.previewImage();
 			initNativeObjects();
 			addReplyView();
 			addReplyLisetner()
@@ -607,6 +612,7 @@
 			var Data = [];
 			var InfoList = []; //头部和内容
 			var ImageList = []; //内容的图片
+			var EncAddrList = [];
 			var InteractionList = []; //底部内容
 
 			//个人信息和内容
@@ -625,9 +631,12 @@
 			InfoList.push(contentText);
 			if(tempModel.EncImgAddr != '') {
 					var EncImgAddrs = tempModel.EncImgAddr.split('|');
+					var EncAddr = tempModel.EncAddr.split('|');
+					
 					//内容的图片
 					for(var i = 0; i < EncImgAddrs.length; i++) {
 						ImageList.push(EncImgAddrs[i])
+						EncAddrList.push(EncAddr[i]);
 					}
 				}
 
@@ -665,8 +674,9 @@
 			InteractionList.push(viewCount);
 			InteractionList.push(praiseList);
 			InteractionList.push(commentList);
-
-			Data = [InfoList, ImageList, InteractionList]
+			console.log('EncAddrList='+JSON.stringify(EncAddrList));
+			Data = [InfoList, ImageList, InteractionList,EncAddrList]
+			console.log('Data='+JSON.stringify(Data))
 			return Data;
 		}
 

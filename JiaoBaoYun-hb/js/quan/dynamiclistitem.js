@@ -78,6 +78,8 @@ console.log(mui.os.android)
 			console.log('SCREEN_WIDTH=='+SCREEN_WIDTH*360/1440)
 		}
 		var ImageUrlList = data[1]; //图片路径数组
+		var EncAddrList = data[3]
+		console.log('data='+JSON.stringify(data))
 		var ImageNum = ImageUrlList.length; //图片总数量
 		var html = '';
 		console.log('cell==='+id+' ImageNum==='+ImageNum)
@@ -88,12 +90,12 @@ console.log(mui.os.android)
 
 		if(ImageNum == 1) { //一张图片时
 			var html1 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-image-div" style="height: ' + SCREEN_WIDTH + 'px;width: ' + (SCREEN_WIDTH) + 'px;">';
-			var html2 = '<img class="dynamic-image" src="' + ImageUrlList[0] + '"></div>';
+			var html2 = '<img class="dynamic-image" src="' + ImageUrlList[0] +'" data-preview-src="' + EncAddrList[0] + '" data-preview-group="' + 'cellImageType'+id +  '"/></div>';
 			html = html1 + html2;
 		} else if(ImageNum == 2) { //两张图片时
 			$.each(ImageUrlList, function(index, element) {
 				var html1 = '<div class="mui-col-sm-6 mui-col-xs-6 dynamic-image-div" style="height: ' + (SCREEN_WIDTH / 2) + 'px;width: ' + (SCREEN_WIDTH / 2) + 'px;">';
-				var html2 = '<img class="dynamic-image" src="' + element + '"></div>';
+				var html2 = '<img class="dynamic-image" src="' + element +'" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + 'cellImageType'+id + '"/>'+'</div>';
 				html = html + html1 + html2;
 			});
 		} else if(ImageNum >= 3) { //大于两张图片时
@@ -104,7 +106,7 @@ console.log(mui.os.android)
 
 				if(index < 8) {
 					html1 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: ' + (SCREEN_WIDTH / 3) + 'px;width: ' + (SCREEN_WIDTH / 3) + 'px;">';
-					html2 = '<img class="dynamic-image" src="' + element + '"></div>';
+					html2 = '<img class="dynamic-image" src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + 'cellImageType'+id + '"/></div>';
 				} else if(index == 8) {
 					var html4 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: ' + (SCREEN_WIDTH / 3) + 'px;width: ' + (SCREEN_WIDTH / 3) + 'px;">';
 					var html5 = '';
@@ -112,7 +114,7 @@ console.log(mui.os.android)
 					if(ImageNum > 9) {
 						html5 = '<div class="dynamic-image-more"><font style="line-height: ' + (SCREEN_WIDTH / 3) + 'px;">+' + (ImageNum - 9) + '</font></div>';
 					}
-					var html6 = '<img class="dynamic-image" src="' + element + '"></div>';
+					var html6 = '<img class="dynamic-image" src="' + element +'" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + 'cellImageType'+id +  '"/></div>';
 					html3 = html4 + html5 + html6;
 				}
 
