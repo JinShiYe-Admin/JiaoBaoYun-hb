@@ -166,9 +166,7 @@
 			"image/qiuzhi/arraw-down.png",
 			"css/qiuzhi/qiuzhi-answerDetailSub.css",
 			"js/qiuzhi/qiuzhi-answerDetailSub.js",
-			"js/libs/crypto-js/crypto-js.js",
-			"css/mui.min.css",
-			"css/utils/common.css"
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-addAnswer.html"
@@ -256,8 +254,7 @@
 			"css/qiuzhi/qiuzhi-sub.css",
 			"image/qiuzhi/channel-health.png",
 			"js/qiuzhi/qiuzhi-sub.js",
-			"js/libs/crypto-js/crypto-js.js",
-			"image/qiuzhi/channel-others.png"
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-question.html",

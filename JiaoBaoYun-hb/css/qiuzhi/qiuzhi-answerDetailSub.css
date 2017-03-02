@@ -69,7 +69,6 @@
 .comments-info{
 	display: flex;
 	display: -webkit-flex;
-	width: 100%;
 	justify-content:space-between;
 	align-items: center;
 	height: 45px;
