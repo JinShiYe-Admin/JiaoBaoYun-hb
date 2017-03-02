@@ -137,7 +137,7 @@ var events = (function(mod) {
 		 */
 		function pulldownRefresh() {
 			setTimeout(function() {
-//				mui('#refreshContainer').pullRefresh().refresh(true);
+//			
 				var item = document.getElementById(id)
 				//清除所有数据
 				mod.clearChild(item);
@@ -147,6 +147,7 @@ var events = (function(mod) {
 				//加载新控件
 				fresh();
 				mui('#refreshContainer').pullRefresh().endPulldownToRefresh(); //refresh completed
+				mui('#refreshContainer').pullRefresh().refresh(true);
 			}, 150);
 		}
 		var count = 0;

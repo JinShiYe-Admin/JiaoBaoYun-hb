@@ -73,8 +73,8 @@
 			events.addTap('take_pic', function() {
 				if(CloudFileUtil.files.length < 9) {
 					camera.getPic(camera.getCamera(), function(picPath) {
-						plus.nativeUI.showWaiting(storageKeyName.UPLOADING,{
-							back:'none'
+						plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
+							back: 'none'
 						});
 						var saveSpace = storageKeyName.CLASSSPACE; //保存空间
 						compress.compressPIC(picPath, function(event) {
@@ -96,7 +96,7 @@
 										//关闭等待框
 										plus.nativeUI.closeWaiting();
 										//放置图片
-					 					CloudFileUtil.setPic(img);
+										CloudFileUtil.setPic(img);
 									});
 								}
 
@@ -124,8 +124,8 @@
 				if(CloudFileUtil.files.length < 9) {
 					var picCount = 0; //上传图片计数
 					gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
-						plus.nativeUI.showWaiting(storageKeyName.UPLOADING,{
-							back:'none'
+						plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
+							back: 'none'
 						}); //等待框
 						console.log("保存的路径：" + JSON.stringify(paths));
 						var saveSpace = storageKeyName.CLASSSPACE; //保存路径
@@ -139,13 +139,17 @@
 										//上传图片
 										CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status) {
 											console.log(JSON.stringify(uploadData));
-											var img = {
-												url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
-												thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
-												type: 1
+											if(JSON.parse(uploadData.responseText).key) {
+												var img = {
+													url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
+													thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
+													type: 1
+												}
+												CloudFileUtil.setPic(img); //放置图片
+											}else{
+												mui.toast(uploadData.responseText);
 											}
 											picCount++;
-											CloudFileUtil.setPic(img); //放置图片
 											if(picCount == compressedPaths.length) { //所有图片已上传
 												plus.nativeUI.closeWaiting(); //关闭等待框
 											}

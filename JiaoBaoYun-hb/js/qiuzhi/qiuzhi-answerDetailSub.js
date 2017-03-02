@@ -1,6 +1,6 @@
 var type = 2; //排列顺序类型
 var pageIndex = 1; //当前页码
-var totalPageCount = 0; //总页数
+var totalPageCount = 1; //总页数
 var answerInfo; //回答详情
 var answerData; //答案数据
 var selfId;
@@ -8,6 +8,7 @@ var selfId;
  * 加载刷新
  */
 events.initRefresh('list-container', function() {
+	pageIndex=1;
 	requestAnswerDetail(answerInfo.AnswerId);
 }, function() {
 	mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
@@ -27,7 +28,7 @@ mui.plusReady(function() {
 		selfId=parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 		answerData = {};
 		pageIndex = 1;
-		totalPageCount = 0
+		totalPageCount = 1;
 		answerInfo = e.detail.data;
 		document.getElementById('reverse-order').selected = true;
 		type = 2;
@@ -87,6 +88,7 @@ function requestAnswerDetail(answerId) {
 			var datasource = data.RspData;
 			totalPageCount = datasource.TotalPage;
 			getInfos(datasource);
+			mui('#refreshContainer').pullRefresh().refresh(true);
 		} else {
 			mui.toast(data.RspTxt);
 		}
