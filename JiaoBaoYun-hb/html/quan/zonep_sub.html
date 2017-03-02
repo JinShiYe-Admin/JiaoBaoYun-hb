@@ -20,7 +20,7 @@
 		<script type="text/javascript" src="../../js/mui.lazyload.img.js"></script>
 		<script src="../../js/mui.zoom.js"></script>
 		<script src="../../js/mui.previewimage.js"></script>
-		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
+				<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 
 		<style>
 			.mui-table-view-cell,
@@ -565,10 +565,10 @@
 				tempIndex = this.id.replace('comment', '');
 				console.log('tempIndex====' + tempIndex)
 				addComment();
-				//				var replyContainer = document.getElementById('footer');
-				//				document.getElementById('footer').className = 'mui-bar-tab';
-				//				replyContainer.style.display = 'block';
-				//				showSoftInput('#msg-content');
+//				var replyContainer = document.getElementById('footer');
+//				document.getElementById('footer').className = 'mui-bar-tab';
+//				replyContainer.style.display = 'block';
+//				showSoftInput('#msg-content');
 				window.event.stopPropagation()
 
 			});
@@ -577,10 +577,10 @@
 				tempIndex = this.id.replace('bottomComment', '');
 				console.log('tap====' + tempIndex)
 				addComment();
-				//				var replyContainer = document.getElementById('footer');
-				//				document.getElementById('footer').className = 'mui-bar-tab';
-				//				replyContainer.style.display = 'block';
-				//				showSoftInput('#msg-content');
+//				var replyContainer = document.getElementById('footer');
+//				document.getElementById('footer').className = 'mui-bar-tab';
+//				replyContainer.style.display = 'block';
+//				showSoftInput('#msg-content');
 				window.event.stopPropagation()
 			});
 
@@ -590,23 +590,22 @@
 				tempIndex = this.id.replace('replyComment', '');
 				console.log('tempIndex====' + tempIndex)
 				addComment();
-				//				var replyContainer = document.getElementById('footer');
-				//				document.getElementById('footer').className = 'mui-bar-tab';
-				//				replyContainer.style.display = 'block';
-				//				showSoftInput('#msg-content');
+//				var replyContainer = document.getElementById('footer');
+//				document.getElementById('footer').className = 'mui-bar-tab';
+//				replyContainer.style.display = 'block';
+//				showSoftInput('#msg-content');
 				window.event.stopPropagation()
 
 			});
 
 		}
+			function addComment() {
+				events.openNewWindowWithData('../show/add-comment.html', {
+					tempIndex: tempIndex,
+					zonepArray: zonepArray
+				})
 
-		function addComment() {
-			events.openNewWindowWithData('../show/add-comment.html', {
-				tempIndex: tempIndex,
-				zonepArray: zonepArray
-			})
-
-		}
+			}
 		//加载数据
 		function addData(index) {
 			//[[InfoList],[ImageList],[InteractionList]]动态的信息
@@ -631,19 +630,19 @@
 			InfoList.push(time);
 			InfoList.push(contentText);
 			if(tempModel.EncImgAddr != '') {
-				var EncImgAddrs = tempModel.EncImgAddr.split('|');
-				var EncAddr = tempModel.EncAddr.split('|');
-
-				//内容的图片
-				for(var i = 0; i < EncImgAddrs.length; i++) {
-					ImageList.push(EncImgAddrs[i])
-					EncAddrList.push(EncAddr[i]);
+					var EncImgAddrs = tempModel.EncImgAddr.split('|');
+					var EncAddr = tempModel.EncAddr.split('|');
+					
+					//内容的图片
+					for(var i = 0; i < EncImgAddrs.length; i++) {
+						ImageList.push(EncImgAddrs[i])
+						EncAddrList.push(EncAddr[i]);
+					}
 				}
-			}
 
-			//底部
-			//[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
-			var introduce = '上传了' + ImageList.length + '张图片到相册《手机相册》';
+				//底部
+				//[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
+				var introduce = '上传了' + ImageList.length + '张图片到相册《手机相册》';
 			var viewCount = tempModel.ReadCnt;
 			var praiseList = [];
 			if(tempModel.LikeUsers.length != 0) {
@@ -675,9 +674,9 @@
 			InteractionList.push(viewCount);
 			InteractionList.push(praiseList);
 			InteractionList.push(commentList);
-			console.log('EncAddrList=' + JSON.stringify(EncAddrList));
-			Data = [InfoList, ImageList, InteractionList, EncAddrList]
-			console.log('Data=' + JSON.stringify(Data))
+			console.log('EncAddrList='+JSON.stringify(EncAddrList));
+			Data = [InfoList, ImageList, InteractionList,EncAddrList]
+			console.log('Data='+JSON.stringify(Data))
 			return Data;
 		}
 
