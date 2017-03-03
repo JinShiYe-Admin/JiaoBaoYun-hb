@@ -15,6 +15,8 @@ mui.plusReady(function() {
 		console.log('传值的model为=' + JSON.stringify(ExpertsInfoModel));
 		//清除节点
 		document.getElementById('list-container').innerHTML = "";
+		pageIndex = 1;
+		flagRef = 0;
 		//26.获取某个用户的关注问题列表
 		getFocusAsksByUser(ExpertsInfoModel.UserId);
 	});
@@ -34,7 +36,6 @@ mui.plusReady(function() {
 		down: {
 			callback: function() {
 				//清除节点
-
 				document.getElementById('list-container').innerHTML = "";
 				var self = this;
 				console.log("下拉刷新");
@@ -46,17 +47,13 @@ mui.plusReady(function() {
 			}
 		},
 		up: {
-			contentinit: '',
-			contentdown: '',
 			callback: function() {
-
 				var self = this;
 				console.log("上拉加载更多");
-				if(pageIndex < totalPageCount) {
-					pageIndex++;
+				if(pageIndex <= totalPageCount) {
+					flagRef = 1;
 					//26.获取某个用户的关注问题列表
 					getFocusAsksByUser(ExpertsInfoModel.UserId);
-
 				} else {
 					mui.toast('没有更多了');
 				}
@@ -72,7 +69,7 @@ function getFocusAsksByUser(userId) {
 	//需要加密的数据
 	var comData = {
 		userId: userId, //用户ID
-		pageIndex: '1', //当前页数
+		pageIndex: pageIndex, //当前页数
 		pageSize: 10 //每页记录数,传入0，获取总记录数
 	};
 	// 等待的对话框
@@ -84,10 +81,10 @@ function getFocusAsksByUser(userId) {
 		if(data.RspCode == 0) {
 			//总页数
 			totalPageCount = data.RspData.TotalPage;
+			pageIndex++;
 			if(flagRef == 0) { //刷新
 				questionArray = data.RspData.Data;
 			} else { //加载更多
-				pageIndex++;
 				//合并数组
 				questionArray = questionArray.concat(data.RspData.Data);
 			}

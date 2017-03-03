@@ -31,7 +31,7 @@ mui.plusReady(function() {
 				var self = this;
 				console.log("上拉加载更多");
 				flagRef = 1;
-				if(pageIndex < totalPageCount) {
+				if(pageIndex <= totalPageCount) {
 					//获取关注人数据
 					requireData();
 				} else {
