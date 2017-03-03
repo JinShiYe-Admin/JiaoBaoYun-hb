@@ -16,30 +16,28 @@
 			<h1 class="mui-title">提问</h1>
 			<a class="mui-icon iconfont icon-ruqun mui-pull-right" id="addExpert"></a>
 		</header>
-
+		<div class="mui-content"></div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
-			events.initSubPage('qiuzhi-questionSub.html', '', 0, 0);
-
 			mui.init();
 			mui.plusReady(function() {
-				var data;
-				window.addEventListener('askId', function(e) {
-					console.log('问题详情父页面获取的问题id:' + e.detail.data);
-					data = e.detail.data;
+				var wd = events.showWaiting();
+				//---获取数据并传递数据---start---
+				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				var data = main.data; //接收A页面传入参数值
+				console.log('qiuzhi-question.html:' + JSON.stringify(data));
+				events.createSubAppendMain(main, 'qiuzhi-questionSub.html', data, function(sub) {
+					setTimeout(function() {
+						wd.close();
+					}, 250);
+					events.changeTopPocket();
 				});
 
 				//点击右上角邀请专家按钮
 				events.addTap('addExpert', function() {
 					events.openNewWindowWithData('experts_main.html', data);
 				});
-
-				mui.back = function() {
-					console.log('mui.back');
-					plus.webview.hide(plus.webview.currentWebview(), 'pop-out', 250);
-					events.fireToPageNone('qiuzhi-questionSub.html', 'muiBack');
-				}
 			});
 		</script>
 	</body>
