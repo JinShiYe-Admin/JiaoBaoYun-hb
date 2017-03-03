@@ -1421,7 +1421,8 @@
 					"html/quan/aboutme_sub.html",
 					"css/utils/common.css",
 					"css/quan/about-me.css",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -1453,10 +1454,12 @@
 					"fonts/mui.ttf",
 					"image/utils/default_personalimage.png",
 					"js/publicHomeworkProtocol.js",
-					"js/utils/native.js"
+					"js/utils/native.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
-					"html/quan/zone_main.html"
+					"html/quan/zone_main.html",
+					"html/quan/reply-aboutMe.html"
 				],
 				"priority": 0
 			},
@@ -2450,7 +2453,8 @@
 					"js/mui.previewimage.js",
 					"js/mui.zoom.js",
 					"css/utils/preview.css",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -3293,6 +3297,32 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"css/mui.min.css",
 					"css/utils/common.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/reply-aboutMe.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"css/quan/custom-textarea.css",
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"css/iconfont/iconfont.css",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"fonts/fangzheng.ttf",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
