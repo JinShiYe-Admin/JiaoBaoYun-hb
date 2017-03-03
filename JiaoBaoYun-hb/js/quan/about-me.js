@@ -155,58 +155,58 @@ var addReplyLisetner = function() {
  * 
  * @param {Object} callback
  */
-var postReply = function(callback) {
-	var msgContent = document.getElementById('msg-content');
-	console.log('类型:' + msgType)
-	switch(msgType) {
-		//1为其他用户评论
-		case 1:
-			//2为评论的回复
-		case 2:
-			//3为其他用户点赞
-		case 3:
-
-			var comData = {
-				userId: pId, //用户ID
-				upperId: repliedCell.TabId, //上级评论ID
-				replyUserId: repliedCell.MaxUser, //回复ID
-				userSpaceId: repliedCell.SpaceId, //用户空间ID
-				commentContent: msgContent.value //回复内容
-			};
-			console.log('开始post回复数据' + JSON.stringify(comData));
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
-				console.log('发布回复后返回的数据：' + JSON.stringify(data))
-				wd.close();
-				if(data.RspCode == 0) {
-					callback();
-				}
-			})
-			break;
-
-			//4为其他用户留言
-		case 4:
-			//5为留言的回复
-		case 5:
-			var comData = {
-				userId: pId, //用户ID
-				upperId: repliedCell.TabId, //上级评论ID
-				replyUserId: repliedCell.MaxUser, //回复ID
-				userOwnerId: repliedCell.UserOwnerId, //用户空间ID
-				msgContent: msgContent.value //回复内容
-			};
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_addUserSpaceMsgReply(comData, wd, function(data) {
-				wd.close();
-				if(data.RspCode == 0) {
-					callback();
-				}
-			})
-			break;
-		default:
-			break;
-	}
-}
+//var postReply = function(callback) {
+//	var msgContent = document.getElementById('msg-content');
+//	console.log('类型:' + msgType)
+//	switch(msgType) {
+//		//1为其他用户评论
+//		case 1:
+//			//2为评论的回复
+//		case 2:
+//			//3为其他用户点赞
+//		case 3:
+//
+//			var comData = {
+//				userId: pId, //用户ID
+//				upperId: repliedCell.TabId, //上级评论ID
+//				replyUserId: repliedCell.MaxUser, //回复ID
+//				userSpaceId: repliedCell.SpaceId, //用户空间ID
+//				commentContent: msgContent.value //回复内容
+//			};
+//			console.log('开始post回复数据' + JSON.stringify(comData));
+//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+//			postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
+//				console.log('发布回复后返回的数据：' + JSON.stringify(data))
+//				wd.close();
+//				if(data.RspCode == 0) {
+//					callback();
+//				}
+//			})
+//			break;
+//
+//			//4为其他用户留言
+//		case 4:
+//			//5为留言的回复
+//		case 5:
+//			var comData = {
+//				userId: pId, //用户ID
+//				upperId: repliedCell.TabId, //上级评论ID
+//				replyUserId: repliedCell.MaxUser, //回复ID
+//				userOwnerId: repliedCell.UserOwnerId, //用户空间ID
+//				msgContent: msgContent.value //回复内容
+//			};
+//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+//			postDataPro_addUserSpaceMsgReply(comData, wd, function(data) {
+//				wd.close();
+//				if(data.RspCode == 0) {
+//					callback();
+//				}
+//			})
+//			break;
+//		default:
+//			break;
+//	}
+//}
 
 var ifHave = function(data) {
 	return data ? data : '';
