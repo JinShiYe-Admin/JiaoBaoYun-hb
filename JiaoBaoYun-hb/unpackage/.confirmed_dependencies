@@ -155,7 +155,9 @@
 	},
 	"html/homework/workdetail-tea.html": {
 		"resources": [
-			"html/homework/workdetail-tea-sub.html"
+			"html/homework/workdetail-tea-sub.html",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/homework/workdetail-tea-sub.html"
@@ -166,7 +168,9 @@
 			"image/qiuzhi/arraw-down.png",
 			"css/qiuzhi/qiuzhi-answerDetailSub.css",
 			"js/qiuzhi/qiuzhi-answerDetailSub.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-addAnswer.html"
@@ -183,12 +187,15 @@
 			"html/homework/workdetail-tea.html",
 			"html/homework/homework-publish.html",
 			"html/homework/workdetail-stu.html",
-			"html/homework/workdetailTea-temporary.html"
+			"html/homework/workdetailTea-temporary.html",
+			"html/homework/homework-commented.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-question.html": {
 		"resources": [
-			"html/qiuzhi/qiuzhi-questionSub.html"
+			"html/qiuzhi/qiuzhi-questionSub.html",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-questionSub.html"
@@ -254,7 +261,10 @@
 			"css/qiuzhi/qiuzhi-sub.css",
 			"image/qiuzhi/channel-health.png",
 			"js/qiuzhi/qiuzhi-sub.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/qiuzhi/channel-others.png",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-question.html",
@@ -386,6 +396,18 @@
 		]
 	},
 	"html/cloud/storage_main_choose.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/homework/classes-select.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/cloud/storage_transport.html": {
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css"

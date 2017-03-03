@@ -6,9 +6,10 @@ var totalPage; //总页数
 var channelInfo; //选择的话题
 var allChannels; //所有的话题
 mui.init();
+
 mui.plusReady(function() {
-	events.preload("qiuzhi-question.html", 200);
-	events.preload("qiuzhi-answerDetail.html", 300);
+	events.preload("qiuzhi-question.html", 50);
+	events.preload("qiuzhi-answerDetail.html", 80);
 	window.addEventListener('channelInfo', function(e) {
 		console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
 		pageIndex = 1; //当前页数
