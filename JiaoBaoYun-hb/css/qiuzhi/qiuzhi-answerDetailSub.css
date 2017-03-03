@@ -111,3 +111,6 @@
 .support-container{
 	padding: 0 0 2rem 2rem;
 }
+.imgs-container{
+	min-width: 100%;
+}
