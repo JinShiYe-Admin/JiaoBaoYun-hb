@@ -4,16 +4,19 @@ var totalPageCount = 1; //总页数
 var answerInfo; //回答详情
 var answerData; //答案数据
 var selfId;
+var flag=1;//1为加载数据 0 为重置顺序
 /**
  * 加载刷新
  */
 events.initRefresh('list-container', function() {
+	flag=1;
 	pageIndex=1;
 	requestAnswerDetail(answerInfo.AnswerId);
 }, function() {
 	mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
 	if(pageIndex < totalPageCount) {
 		pageIndex++;
+		flag=1;
 		requestAnswerDetail(answerInfo.AnswerId);
 	}
 })
@@ -26,6 +29,7 @@ mui.plusReady(function() {
 	events.preload('qiuzhi-addAnswer.html');
 	//加载监听
 	window.addEventListener('answerInfo', function(e) {
+		flag=1;
 		selfId=parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 		mui('#refreshContainer').pullRefresh().refresh(true);
 		answerData = {};
@@ -40,6 +44,7 @@ mui.plusReady(function() {
 		requestAnswerDetail(answerId);
 	});
 	window.addEventListener('commentAdded', function() {
+		flag=1;
 		selfId=parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 		mui('#refreshContainer').pullRefresh().refresh(true);
 		answerData = {};
@@ -260,7 +265,12 @@ function refreshUI(datasource) {
 		}else{
 			comments_zan.className="mui-icon iconfont icon-support mui-pull-right isNotLike"
 		}
-		comments_zan.order=i;
+		if(flag){
+			comments_zan.order=(parseInt(pageIndex)-1)*10+parseInt(i);
+		}else{
+			comments_zan.order=parseInt(i);
+		}
+		
 	}
 }
 /**
@@ -375,6 +385,7 @@ var setListeners = function() {
 	//设置选择监听
 	document.getElementById('order-selector').onchange = function() {
 		type = parseInt(this.options[this.options.selectedIndex].value);
+		flag=0;
 		console.log('获取的类型：' + type);
 		answerData.Data.reverse();
 		events.clearChild(document.getElementById('list-container'));
@@ -431,6 +442,7 @@ var setZanIconCondition = function(item) {
 		item.className = "mui-pull-right mui-icon iconfont icon-support isNotLike ";
 		item.isLike = 0;
 		mui.toast('已取消点赞');
+		console.log('顺序：'+JSON.stringify(item.order))
 		if(item.order||item.order==0){
 			answerData.Data[item.order].IsLiked=0;
 		}else{
@@ -441,6 +453,7 @@ var setZanIconCondition = function(item) {
 		item.className = "mui-pull-right mui-icon iconfont icon-support isLike";
 		item.isLike = 1;
 		mui.toast('点赞成功');
+		console.log('顺序：'+JSON.stringify(item.order))
 		if(item.order||item.order==0){
 			answerData.Data[item.order].IsLiked=1;
 		}else{
