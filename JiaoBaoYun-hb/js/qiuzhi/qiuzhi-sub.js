@@ -202,6 +202,8 @@ var setChannelList = function(data) {
 		li.innerHTML = getInnerHTML(data[i]);
 		list.appendChild(li);
 		li.querySelector('.answer-content').answerInfo = data[i];
+		li.querySelector('.answer-img').style.width=li.querySelector(".imgs-container").offsetWidth/3+'px';
+		li.querySelector('.answer-img').style.height=li.querySelector(".imgs-container").offsetWidth/3+'px';
 	}
 }
 var getInnerHTML = function(cell) {

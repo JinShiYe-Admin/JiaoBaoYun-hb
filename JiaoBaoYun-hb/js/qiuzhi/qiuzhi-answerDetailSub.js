@@ -140,6 +140,11 @@ var requireInfos = function(datasource, pInfos) {
 	})
 
 }
+/**
+ * 重组数据
+ * @param {Object} datasource
+ * @param {Object} infos
+ */
 var rechargeInfos = function(datasource, infos) {
 	for(var j in infos) {
 		var info = infos[j];
@@ -426,11 +431,20 @@ var setZanIconCondition = function(item) {
 		item.className = "mui-pull-right mui-icon iconfont icon-support isNotLike ";
 		item.isLike = 0;
 		mui.toast('已取消点赞');
-		answerData.Data[item.order].IsLiked=0;
+		if(item.order||item.order==0){
+			answerData.Data[item.order].IsLiked=0;
+		}else{
+			answerData.IsLiked=0;
+		}
+		
 	} else {
 		item.className = "mui-pull-right mui-icon iconfont icon-support isLike";
 		item.isLike = 1;
 		mui.toast('点赞成功');
-		answerData.Data[item.order].IsLiked=1;
+		if(item.order||item.order==0){
+			answerData.Data[item.order].IsLiked=1;
+		}else{
+			answerData.IsLiked=1;
+		}
 	}
 }
