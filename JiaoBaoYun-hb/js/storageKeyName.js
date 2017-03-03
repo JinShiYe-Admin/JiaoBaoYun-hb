@@ -85,7 +85,7 @@ var storageKeyName = (function(mod) {
 	mod.DOCUMENTSPATH = 'DOCUMENTSPATH'; //记录document的地址
 
 	//---默认图片---start---
-	mod.DEFAULTPERSONALHEADIMAGE = mod.QNHEADIMGEDOMAIN + 'default_personalimage.png'; //默认的个人头像
+	mod.DEFAULTPERSONALHEADIMAGE = '../../image/utils/default_personalimage.png'; //默认的个人头像
 	mod.DEFAULTSCIEDUIMAGELOAD = '/image/utils/default_load_2.gif'; //科教首页，懒加载显示加载中的图片
 	//---默认图片---end---
 	return mod;

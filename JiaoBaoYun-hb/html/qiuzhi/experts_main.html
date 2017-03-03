@@ -84,33 +84,49 @@
 				background-color: white;
 			}
 
-			.mui-slider .mui-slider-group .mui-slider-item img {
-				height: 50px;
-				width: 50px;
-				max-height: 50px;
-				max-width: 50px;
+			.mui-table-view-cell {
+				line-height: 25px;
 			}
 
-			.mui-table-view-cell {
-				line-height: 32px;
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				height: 40px;
+				width: 40px;
+				max-height: 40px;
+				max-width: 40px;
+				min-height: 40px;
+				min-width: 40px;
 			}
 
 			.mui-media-object.expert-headimg {
 				/*专家头像*/
 				border-radius: 50% !important;
-				margin-top: 4px;
-				margin-bottom: 10px;
+				margin-top: 11px;
+				margin-bottom: 12px;
+			}
+
+			.expert-info {
+				/*专家信息*/
+				margin-top: 10px;
+				font-size: 15px;
 			}
 
 			.expert-name {
 				/*专家姓名*/
 				width: 35%;
+				color: #323232;
+				margin-right: 10px;
 			}
 
 			.mui-media-object.expert-level {
 				/*专家等级*/
-				height: 20px !important;
-				width: 20px !important;
+				display: none;
+				/*height: 20px !important;
+				width: 20px !important;*/
+			}
+
+			.expert-answer {
+				/*专家回答数*/
+				color: #B7B7B7;
 			}
 
 			.expert-answernum {
@@ -131,6 +147,8 @@
 				/*邀请按钮*/
 				background-color: #1DB8F1;
 				border: 1px solid #1DB8F1;
+				padding-top: 3px;
+				padding-bottom: 3px;
 			}
 
 			.expert-invited {
@@ -141,9 +159,9 @@
 
 			.expert-usernote {
 				/*专家简介*/
-				line-height: 21px;
+				line-height: 16px;
 				font-size: 13px;
-				color: #666666;
+				color: #808080;
 				margin-right: 20px;
 			}
 		</style>
@@ -165,6 +183,26 @@
 					<p>导航</p>
 				</div>
 				<div id="sliderGroup" class="mui-slider-group">
+					<div class="mui-slider-item mui-control-content mui-active" id="bot_0">
+						<div id="bot_sw_0" class="mui-scroll-wrapper">
+							<div id="bot_sc_0" class="mui-scroll">
+								<ul id="bot_ul_0" class="mui-table-view">
+									<li id="experts_0_1" class="mui-table-view-cell mui-media">
+										<div class="mui-media-body mui-pull-right">
+											<button id="expert_btn_0_1" type="button" class="mui-btn expert-ask">提问</button> </div> <img class="mui-media-object mui-pull-left expert-headimg" src="http://oigr7qsvz.bkt.clouddn.com/headimge2.png?1488177190317">
+										<div class="mui-media-body expert-info">
+											<div id="expert_name_0_1" class="expert-name  mui-pull-left mui-ellipsis">冰糖馨儿</div> <img class="mui-media-object expert-level" src="../../image/qiuzhi/expert_level.png">
+											<font class="expert-answer">回答数 :</font>
+											<font class="expert-answernum">338</font>
+											<div id="expert_usernote_0_1" class="mui-ellipsis expert-usernote">
+												你好啊你好啊你好啊你好啊你好啊你好啊 你好啊你好啊你好啊你好啊你好啊你好啊 你好啊你好啊你好啊你好啊你好啊你好啊 你好啊你好啊你好啊你好啊你好啊你好啊
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>-->
 		</div>
@@ -471,10 +509,10 @@
 										<button id="expert_btn_' + channelId + '_' + data[i].TabId + '" type="button" class="mui-btn ' + btnClass + '">' + btnStr + '</button>\
 									</div>\
 									<img class="mui-media-object mui-pull-left expert-headimg" src="' + updateHeadImg(data[i].uimg, 2) + '">\
-									<div class="mui-media-body">\
+									<div class="mui-media-body expert-info">\
 										<div id="expert_name_' + channelId + '_' + data[i].TabId + '" class="expert-name  mui-pull-left mui-ellipsis"></div>\
 										<img class="mui-media-object expert-level" src="../../image/qiuzhi/expert_level.png" />\
-										<font>回答数 :</font>\
+										<font class="expert-answer">回答数 :</font>\
 										<font class="expert-answernum">' + data[i].AnswerNum + '</font>\
 										<div id="expert_usernote_' + channelId + '_' + data[i].TabId + '" class="mui-ellipsis expert-usernote"></div>\
 									</div>';
