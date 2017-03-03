@@ -46,7 +46,7 @@
 
 			<div style="margin-top: 0px;margin-left: 20px;">
 				<div id="FocusAsk" style="float: left;width: 70px;margin-left: 5px;">
-					<div>
+					<div style="color: #808080;">
 						关注的问题
 					</div>
 					<div id="FocusAskNum" style="margin-left: 20px;">
@@ -54,7 +54,7 @@
 					</div>
 				</div>
 				<div id="FocusMan" style="float: left;width: 70px;margin-left: 40px;">
-					<div>
+					<div  style="color: #808080;">
 						他关注的人
 					</div>
 					<div id="FocusManNum" style="margin-left: 20px;">
@@ -62,7 +62,7 @@
 					</div>
 				</div>
 				<div id="IsFocusedMan" style="float: left;width: 70px;margin-left: 40px;">
-					<div>
+					<div  style="color: #808080;">
 						关注他的人
 					</div>
 					<div id="IsFocusedManNum" style="margin-left: 20px;">
@@ -70,9 +70,9 @@
 					</div>
 				</div>
 			</div>
-			<div style="width: device-width;margin-top: 50px;margin-left: 20px;margin-bottom: 20px;margin-right: 20px;">
-				<a id="IsLikeNum" class="mui-icon iconfont icon-support dynamic-icon-praise" style="color: gray;"></a>
-				<button id="focusBtn" class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;">关注</button>
+			<div style="width: device-width;margin-top: 60px;margin-left: 20px;margin-bottom: 20px;margin-right: 20px;">
+				<a id="IsLikeNum" class="mui-icon iconfont icon-support dynamic-icon-praise" style="color: #e4e4e4;margin-top: 5px;"></a>
+				<button id="focusBtn" class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;height: 30px;">关注</button>
 			</div>
 			<div>
 				<ul class="mui-table-view">
@@ -292,7 +292,7 @@
 
 			nodes.FocusManNum.innerText = ExpertsInfo.FocusManNum;
 			nodes.ExpertChannels.innerText = ExpertsInfo.ExpertChannelNames;
-			nodes.IsLikeNum.innerText = ExpertsInfo.IsLikeNum;
+			nodes.IsLikeNum.innerHTML = '<span style="color: #808080;">'+ExpertsInfo.IsLikeNum+'</span>';
 			nodes.FocusAskNum.innerText = ExpertsInfo.FocusAskNum;
 			nodes.CommentNum.innerHTML = ExpertsInfo.CommentNum + '<span class="mui-icon mui-icon-forward"></span>';
 			nodes.IsFocusedManNum.innerText = ExpertsInfo.IsFocusedManNum;
