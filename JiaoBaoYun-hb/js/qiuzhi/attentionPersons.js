@@ -3,14 +3,12 @@ var pageIndex = 1; //页码
 var selfId; //本人id
 var totalPageCount = 0;
 mui.plusReady(function() {
-	window.addEventListener('expertInfo', function(e) {
-		selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-		pageIndex = 1;
-		var expertInfo = e.detail.data;
-		expertId = expertInfo.UserId;
-		requireData();
-		console.log('获取的专家信息：' + JSON.stringify(expertInfo));
-	})
+	selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+	var expertInfo = plus.webview.currentWebview().data;
+	console.log('获取的专家信息：' + JSON.stringify(expertInfo));
+	pageIndex = 1;
+	expertId = expertInfo.UserId;
+	requireData();
 	setListener();
 
 	//上拉下拉注册
