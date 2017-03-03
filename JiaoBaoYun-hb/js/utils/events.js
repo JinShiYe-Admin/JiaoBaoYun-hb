@@ -137,7 +137,7 @@ var events = (function(mod) {
 		 */
 		function pulldownRefresh() {
 			setTimeout(function() {
-//			
+				//
 				var item = document.getElementById(id)
 				//清除所有数据
 				mod.clearChild(item);
@@ -352,9 +352,14 @@ var events = (function(mod) {
 	/**
 	 * 返回一个安卓手机返回键无法关闭的等待框
 	 * @author 莫尚霖
+	 * @param {Object} string 等待框显示的文字，默认'加载中...'
 	 */
-	mod.showWaiting = function() {
-		var showWaiting = plus.nativeUI.showWaiting('加载中...', {
+	mod.showWaiting = function(string) {
+		var title = '加载中...';
+		if(string) {
+			title = string;
+		}
+		var showWaiting = plus.nativeUI.showWaiting(title, {
 			back: 'none'
 		});
 		return showWaiting;

@@ -11,7 +11,7 @@
 }
 .comment-container{
 	display: inline-block;
-	width: 78%;
+	width: 70%;
 }
 .icon-fasong{
 	color: gainsboro;
@@ -67,25 +67,17 @@
 	background-color: white;
 }
 .comments-info{
-	display: flex;
-	display: -webkit-flex;
-	width: 100%;
-	justify-content:space-between;
-	align-items: center;
-	height: 45px;
+	position: relative;
+	min-height: 45px;
 	padding: 0 10px;
 }
 .comment-no{
-	display: flex;
-	display: -webkit-flex;
 	font-size: 14px;
-	/*align-self: flex-start;*/
-	/*padding-top: 10px;*/
+	padding-top: 10px;
 }
 .order-selector{
-	display: flex;
-	display: -webkit-flex;
-	/*align-self: flex-end;*/
+	position: fixed;
+	right: 0;
 }
 .head-img{
 	border-radius: 50%;
@@ -98,7 +90,7 @@
 	min-width: 4rem;
 	max-width: 25%;
 	color: white;
-	background-color:#1db8F1 ;
+	background-color:#1db8F1;
 }
 .question-content{
 	word-wrap: break-word;
@@ -115,4 +107,15 @@
 }
 .answer-comment{
 	box-shadow: 0px -1px 2px #E4E4E4 !important;
+}
+.support-container{
+	/*background-color: yellow;*/
+	float: right;
+	height: 4rem;
+	width: 4rem;
+	max-width: 14%;
+	padding: 0 0 2rem 2rem;
+}
+.imgs-container{
+	min-width: 100%;
 }

@@ -6,9 +6,9 @@ var totalPage; //总页数
 var channelInfo; //选择的话题
 var allChannels; //所有的话题
 mui.init();
+
 mui.plusReady(function() {
-	events.preload("qiuzhi-question.html", 200);
-	events.preload("qiuzhi-answerDetail.html", 300);
+	events.preload("qiuzhi-answerDetail.html", 80);
 	window.addEventListener('channelInfo', function(e) {
 		console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
 		pageIndex = 1; //当前页数
@@ -201,7 +201,13 @@ var setChannelList = function(data) {
 		li.className = "mui-table-view-cell";
 		li.innerHTML = getInnerHTML(data[i]);
 		list.appendChild(li);
-		li.querySelector('.answer-content').answerInfo = data[i];
+		if(li.querySelector('.answer-content')){
+			li.querySelector('.answer-content').answerInfo = data[i];
+		}
+		if(li.querySelector('.answer-img')) {
+			li.querySelector('.answer-img').style.width = li.querySelector(".imgs-container").offsetWidth / 3 + 'px';
+			li.querySelector('.answer-img').style.height = li.querySelector(".imgs-container").offsetWidth / 3 + 'px';
+		}
 	}
 }
 var getInnerHTML = function(cell) {
@@ -210,14 +216,23 @@ var getInnerHTML = function(cell) {
 		'<p class="channel-title"><img src="' + getChannelIcon(cell) + '" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
 		'</div>' +
 		'<div class="ask-container">' +
-		'<h5 class="single-line ask-title" askId="' + cell.TabId + '">[' + cell.AskChannel + ']' + cell.AskTitle + '</h5>' +
-		'<p class="answer-content triple-line" answerInfo="' + cell.AnswerId + '">' + cell.AnswerContent + '</p>' +
-		'<div class="imgs-container">' + getImgs(cell.AnswerEncAddr) + '</div>' +
-		'</div>' +
-		'<div class="extra-info"></div>' +
-		'<p class="question-bottom">' + cell.IsLikeNum + '赞·' + cell.CommentNum + '评论·关注</p>' +
-		'</div>';
+		'<h5 class="single-line ask-title" askId="' + cell.TabId + '">[' + cell.AskChannel + ']' + cell.AskTitle + '</h5>';
+	if(cell.AnswerContent && cell.AnswerContent.length > 0) {
+		inner += '<p class="answer-content triple-line" answerInfo="' + cell.AnswerId + '">' + cell.AnswerContent + '</p>' +
+			'<div class="imgs-container">' + getImgs(cell.AnswerEncAddr) + '</div>' +
+			'</div>' +
+			'<div class="extra-info"></div>' +
+			'<p class="question-bottom">' + cell.IsLikeNum + '赞·' + cell.CommentNum + '评论·' + setFocusCondition(cell) + '</p></div>'
+	} else {
+		inner += '<p class="question-bottom">' + setFocusCondition(cell) + '</p></div>'
+	}
 	return inner;
+}
+var setFocusCondition = function(cell) {
+	if(cell.IsFocused) {
+		return '已关注';
+	}
+	return '未关注';
 }
 var getImgs = function(imgs) {
 	if(imgs && imgs != "") {
@@ -280,13 +295,11 @@ var setListener = function() {
 
 	//标题点击事件
 	mui('.mui-table-view').on('tap', '.ask-title', function() {
-		events.fireToPageNone('qiuzhi-question.html', 'askId', {
+		events.openNewWindowWithData('qiuzhi-question.html', {
 			askID: this.getAttribute('askId'), //问题id
 			channelInfo: channelInfo, //当前话题
 			allChannels: allChannels //全部话题
 		});
-		events.fireToPageNone('qiuzhi-questionSub.html', 'askId', this.getAttribute('askId'));
-		plus.webview.getWebviewById('qiuzhi-question.html').show();
 	});
 
 	//点击回答

@@ -4,16 +4,19 @@ var totalPageCount = 1; //总页数
 var answerInfo; //回答详情
 var answerData; //答案数据
 var selfId;
+var flag = 1; //1为加载数据 0 为重置顺序
 /**
  * 加载刷新
  */
 events.initRefresh('list-container', function() {
-	pageIndex=1;
+	flag = 1;
+	pageIndex = 1;
 	requestAnswerDetail(answerInfo.AnswerId);
 }, function() {
 	mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
 	if(pageIndex < totalPageCount) {
 		pageIndex++;
+		flag = 1;
 		requestAnswerDetail(answerInfo.AnswerId);
 	}
 })
@@ -26,7 +29,8 @@ mui.plusReady(function() {
 	events.preload('qiuzhi-addAnswer.html');
 	//加载监听
 	window.addEventListener('answerInfo', function(e) {
-		selfId=parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
+		flag = 1;
+		selfId = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 		mui('#refreshContainer').pullRefresh().refresh(true);
 		answerData = {};
 		pageIndex = 1;
@@ -40,7 +44,8 @@ mui.plusReady(function() {
 		requestAnswerDetail(answerId);
 	});
 	window.addEventListener('commentAdded', function() {
-		selfId=parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
+		flag = 1;
+		selfId = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 		mui('#refreshContainer').pullRefresh().refresh(true);
 		answerData = {};
 		pageIndex = 1;
@@ -75,7 +80,7 @@ mui.plusReady(function() {
 function requestAnswerDetail(answerId) {
 	//所需参数
 	var comData = {
-		userId:selfId,
+		userId: selfId,
 		answerId: answerId, //回答ID
 		orderType: type, //评论排序方式,1 时间正序排序,2 时间倒序排序
 		pageIndex: pageIndex, //当前页数
@@ -140,6 +145,11 @@ var requireInfos = function(datasource, pInfos) {
 	})
 
 }
+/**
+ * 重组数据
+ * @param {Object} datasource
+ * @param {Object} infos
+ */
 var rechargeInfos = function(datasource, infos) {
 	for(var j in infos) {
 		var info = infos[j];
@@ -154,11 +164,11 @@ var rechargeInfos = function(datasource, infos) {
 			var info = infos[j];
 			if(datasource.Data[i].UserId == info.utid) {
 				datasource.Data[i].UserName = info.unick;
-				datasource.Data[i].UserImg = info.uimg == null ? storageKeyName.DEFAULTPERSONALHEADIMAGE : info.uimg;
+				datasource.Data[i].UserImg = updateHeadImg(info.uimg, 2);
 			}
 			if(datasource.Data[i].ReplyId == info.utid) {
 				datasource.Data[i].ReplyName = info.unick;
-				datasource.Data[i].ReplyImg = info.uimg == null ? storageKeyName.DEFAULTPERSONALHEADIMAGE : info.uimg;
+				datasource.Data[i].ReplyImg = updateHeadImg(info.uimg, 2);
 			}
 		}
 	}
@@ -247,15 +257,20 @@ function refreshUI(datasource) {
 		li.className = 'mui-table-view-cell';
 		li.innerHTML = createCommentsInner(datasource.Data[i]);
 		ul.appendChild(li);
-		var comments_zan=li.querySelector('.icon-zanzan1');
-		comments_zan.isLike=datasource.Data[i].IsLiked;
-		comments_zan.commentId=datasource.Data[i].TabId;
-		if(datasource.Data[i].IsLiked){
-			comments_zan.className="mui-icon iconfont icon-zanzan1 mui-pull-right isLike"
-		}else{
-			comments_zan.className="mui-icon iconfont icon-zanzan1 mui-pull-right isNotLike"
+		var comments_zan = li.querySelector('.icon-support');
+		comments_zan.isLike = datasource.Data[i].IsLiked;
+		comments_zan.commentId = datasource.Data[i].TabId;
+		if(datasource.Data[i].IsLiked) {
+			comments_zan.className = "mui-icon iconfont icon-support mui-pull-right isLike"
+		} else {
+			comments_zan.className = "mui-icon iconfont icon-support mui-pull-right isNotLike"
 		}
-		comments_zan.order=i;
+		if(flag) {
+			comments_zan.order = (parseInt(pageIndex) - 1) * 10 + parseInt(i);
+		} else {
+			comments_zan.order = parseInt(i);
+		}
+
 	}
 }
 /**
@@ -274,13 +289,13 @@ var setQuestion = function(datasource) {
 		document.getElementById('answer-imgs').innerHTML = getPicInner(datasource.AnswerEncAddr);
 	}
 	document.getElementById('comments-no').innerText = "评论(" + datasource.CommentNum + ")";
-	var zan_icon=document.getElementById('answer-zan');
-	zan_icon.isLike=datasource.IsLiked;
-	if(datasource.IsLiked){
-		zan_icon.className="mui-icon iconfont icon-zanzan1 isLike";
-	}else{
-		zan_icon.className="mui-icon iconfont icon-zanzan1 isNotLike";
-	}	
+	var zan_icon = document.getElementById('answer-zan');
+	zan_icon.isLike = datasource.IsLiked;
+	if(datasource.IsLiked) {
+		zan_icon.className = "mui-icon iconfont icon-support isLike";
+	} else {
+		zan_icon.className = "mui-icon iconfont icon-support isNotLike";
+	}
 }
 /**
  * 设置回答人信息
@@ -297,9 +312,9 @@ var setAnswerManInfo = function(datasource) {
 		document.getElementById('anthor-portrait').src = updateHeadImg(datasource.uimg, 2);
 		document.getElementById("anthor-name").innerText = datasource.unick;
 		document.getElementById("anthor-info").innerText = datasource.AnswerManNote ? datasource.AnswerManNote : "暂无简介";
-		if(datasource.AnswerMan==selfId){//如果专家是自己，隐藏关注按钮
+		if(datasource.AnswerMan == selfId) { //如果专家是自己，隐藏关注按钮
 			document.getElementById('btn-focus').style.display = "none";
-		}else{//不是自己，显示关注按钮
+		} else { //不是自己，显示关注按钮
 			document.getElementById('btn-focus').style.display = "inline-block";
 			getUserFocus(datasource.AnswerMan);
 		}
@@ -313,14 +328,14 @@ var setAnswerManInfo = function(datasource) {
 var getPicInner = function(picAddr) {
 	var picPaths = picAddr.split('|');
 	var picInner = '';
-	var win_width=document.getElementById('answer-imgs').offsetWidth;
-	var pic_width =win_width/3;
+	var win_width = document.getElementById('answer-imgs').offsetWidth;
+	var pic_width = win_width / 3;
 	for(var i in picPaths) {
 		if(picPaths.length < 3) {
 			pic_width = win_width / picPaths.length;
 		}
-		picInner += '<img src=' + picPaths[i] + 'style="width:' + pic_width + 'px;height:"'+pic_width+'px" '+
-		'" data-preview-src="' + picPaths[i] + '" data-preview-group="1"/>';
+		picInner += '<img src=' + picPaths[i] + 'style="width:' + pic_width + 'px;height:"' + pic_width + 'px" ' +
+			'" data-preview-src="' + picPaths[i] + '" data-preview-group="1"/>';
 	}
 	return picInner;
 }
@@ -338,8 +353,8 @@ var getPicInner = function(picAddr) {
 var createCommentsInner = function(cell) {
 	var headImg = cell.UserImg ? cell.UserImg : cell.ReplyImg;
 	var personName = cell.UserName ? cell.UserName : cell.ReplyName;
-	var inner = '<div><a class="mui-icon iconfont icon-zanzan1 mui-pull-right"></a>' +
-		'<div class="img-container"><img class="head-img" src="' + headImg + '"/></div>' +
+	var inner = '<div><div class="support-container mui-pull-right"> <a class="mui-icon iconfont icon-support "></a></div>' +
+		'<div class="img-container"><img class="head-img" headId="'+cell.UserId+'"  src="' + headImg + '"/></div>' +
 		'<div class="comment-container">' +
 		'<h5 class="comment-personName single-line">' + personName + '</h5>' +
 		'<p class="comment-words">' + cell.CommentContent + '</p>' +
@@ -353,12 +368,12 @@ var createCommentsInner = function(cell) {
  */
 var setListeners = function() {
 	//评论的点赞按钮点击事件
-	mui(".mui-table-view").on('tap', '.icon-zanzan1', function() {
-		setIsLikeComment(this);
+	mui(".mui-table-view").on('tap', '.support-container', function() {
+		setIsLikeComment(this.querySelector('.icon-support'));
 	})
 	//回答的点赞按钮的点赞事件
-	events.addTap('answer-zan', function() {
-		setIsLikeAnswer(this);
+	events.addTap('support-answer', function() {
+		setIsLikeAnswer(this.querySelector('.icon-support'));
 	})
 	//按钮点击事件关注事件
 	events.addTap('btn-focus', function() {
@@ -367,14 +382,39 @@ var setListeners = function() {
 	events.addTap('answer-comment', function() {
 		events.fireToPageWithData('qiuzhi-addAnswer.html', 'add-comment', answerData);
 	})
+	events.addTap('anthor-portrait',function(){
+		openNewPersonalSpace(answerData.utid);
+	})
+	//评论头像点击事件
+	mui('.mui-table-view').on('tap', '.head-img', function() {
+		var id = this.getAttribute('headId');
+		console.log(id);
+		openNewPersonalSpace(id);
+	})
 	//设置选择监听
 	document.getElementById('order-selector').onchange = function() {
 		type = parseInt(this.options[this.options.selectedIndex].value);
+		flag = 0;
 		console.log('获取的类型：' + type);
 		answerData.Data.reverse();
 		events.clearChild(document.getElementById('list-container'));
 		refreshUI(answerData);
 	}
+}
+var openNewPersonalSpace=function(id){
+	mui.openWindow({
+			url: '../quan/zone_main.html',
+			id: 'zone_main.html',
+			styles: {
+				top: '0px', //设置距离顶部的距离
+				bottom: '0px'
+			},
+			extras: {
+				data: id,
+				NoReadCnt: 0
+			}
+
+		});
 }
 /**
  * 设置是否点赞
@@ -401,7 +441,7 @@ var setIsLikeAnswer = function(item) {
  * @param {Object} 点赞的item
  */
 var setIsLikeComment = function(item) {
-	var wd=events.showWaiting();
+	var wd = events.showWaiting();
 	postDataQZPro_setCommentLike({
 		commentId: item.commentId, //评论ID
 		userId: selfId, //点赞用户ID
@@ -423,14 +463,25 @@ var setIsLikeComment = function(item) {
  */
 var setZanIconCondition = function(item) {
 	if(item.isLike) {
-		item.className = "mui-pull-right mui-icon iconfont icon-zanzan1 isNotLike ";
+		item.className = "mui-pull-right mui-icon iconfont icon-support isNotLike ";
 		item.isLike = 0;
 		mui.toast('已取消点赞');
-		answerData.Data[item.order].IsLiked=0;
+		console.log('顺序：' + JSON.stringify(item.order))
+		if(item.order || item.order == 0) {
+			answerData.Data[item.order].IsLiked = 0;
+		} else {
+			answerData.IsLiked = 0;
+		}
+
 	} else {
-		item.className = "mui-pull-right mui-icon iconfont icon-zanzan1 isLike";
+		item.className = "mui-pull-right mui-icon iconfont icon-support isLike";
 		item.isLike = 1;
 		mui.toast('点赞成功');
-		answerData.Data[item.order].IsLiked=1;
+		console.log('顺序：' + JSON.stringify(item.order))
+		if(item.order || item.order == 0) {
+			answerData.Data[item.order].IsLiked = 1;
+		} else {
+			answerData.IsLiked = 1;
+		}
 	}
 }

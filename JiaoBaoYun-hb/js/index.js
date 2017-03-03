@@ -7,7 +7,7 @@
 mui.init();
 
 mui.plusReady(function() {
-//	events.preload("../qiuzhi/expert-detail.html",100);
+	//	events.preload("../qiuzhi/expert-detail.html",100);
 	var waitingDia = events.showWaiting();
 	//安卓的连续点击两次退出程序
 	var backButtonPress = 0;
@@ -72,6 +72,15 @@ mui.plusReady(function() {
 	var activeTab = subpages[0];
 	var title = document.getElementById("title");
 
+	//去掉展现和科教城市下面的点
+	var idSlider = ['sciEduSlider', 'showSlider'];
+	//去掉展现和科教城市下面的点
+	for(var i = 0; i < idSlider.length; i++) {
+		var element = document.getElementById(idSlider[i]);
+		if(element) {
+			element.parentNode.removeChild(element);
+		}
+	}
 	waitingDia.close();
 
 	//选项卡点击事件
@@ -192,6 +201,7 @@ mui.plusReady(function() {
 		while(title_left.firstElementChild) {
 			title_left.removeChild(title_left.firstElementChild);
 		};
+
 		switch(targetTab) {
 			case '../cloud/cloud_home.html': //首页
 				addZoneIcon(iconContainer);
@@ -209,9 +219,9 @@ mui.plusReady(function() {
 				slideNavigation.addSlideIcon();
 				addQiuZhiExpertSearch(iconContainer);
 				document.querySelector('.img-icon').addEventListener('tap', function(e) {
-					var personalInfo=myStorage.getItem(storageKeyName.PERSONALINFO);
-					personalInfo.UserId=personalInfo.utid;
-					events.openNewWindowWithData('../qiuzhi/expert-detail.html',personalInfo);
+					var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
+					personalInfo.UserId = personalInfo.utid;
+					events.openNewWindowWithData('../qiuzhi/expert-detail.html', personalInfo);
 				})
 				break;
 			default:

@@ -25,42 +25,42 @@ var repliedItem; //回复的对象
 var aboutMeArray = [];
 mui.init();
 mui.plusReady(function() {
-		var pInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-		personalUTID = pInfo.utid;
-		pId = parseInt(pInfo.utid);
-		pName = pInfo.unick;
-		initNativeObjects();
-		//页码1
-		pageIndex = 1;
-		//请求并放置数据
-		requestData();
-		addReplyView();
-		addReplyLisetner();
-	})
-	/**
-	 * 界面放置数据
-	 * @param {Object} data 请求成功后返回的数据
-	 */
+	var pInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+	personalUTID = pInfo.utid;
+	pId = parseInt(pInfo.utid);
+	pName = pInfo.unick;
+//	initNativeObjects();
+	//页码1
+	pageIndex = 1;
+	//请求并放置数据
+	requestData();
+	addReplyView();
+	addReplyLisetner();
+})
+/**
+ * 界面放置数据
+ * @param {Object} data 请求成功后返回的数据
+ */
 var setData = function(data) {
-		var list = document.getElementById('list-container');
-		data.forEach(function(cell, i) {
-			var li = document.createElement('li');
-			li.className = 'mui-table-view-cell';
-			li.innerHTML = createInner(cell);
-			if(cell.MsgType != 6&& cell.MsgType!=3) {
-				li.querySelector('.reply').cell = cell;
-			}
-			list.appendChild(li);
-		})
-	}
-	/**
-	 * 创建Inner
-	 * @param {Object} cell
-	 */
+	var list = document.getElementById('list-container');
+	data.forEach(function(cell, i) {
+		var li = document.createElement('li');
+		li.className = 'mui-table-view-cell';
+		li.innerHTML = createInner(cell);
+		if(cell.MsgType != 6 && cell.MsgType != 3) {
+			li.querySelector('.reply').cell = cell;
+		}
+		list.appendChild(li);
+	})
+}
+/**
+ * 创建Inner
+ * @param {Object} cell
+ */
 var createInner = function(cell) {
 	var cellData = getCellData(cell);
 	if(cellData.MsgType != 6) {
-		var inner = 
+		var inner =
 			'<div class="cell-title">' +
 			'<img class="title-img" headId="' + cellData.headID + '" src="' + ifHaveImg(cellData) + '"/>' +
 			zanNoReply(cellData.MsgType) +
@@ -89,8 +89,8 @@ var createInner = function(cell) {
 	}
 	return inner;
 }
-var zanNoReply=function(msgType){
-	if(msgType==3){
+var zanNoReply = function(msgType) {
+	if(msgType == 3) {
 		return '';
 	}
 	return '<span class="reply">回复</span>';
@@ -103,16 +103,24 @@ var ifHaveReferContent = function(cellData) {
 	}
 }
 var addReplyView = function() {
+	/**
+	 * 回复点击事件
+	 */
 	mui('.mui-table-view').on('tap', '.reply', function() {
 		var replyContainer = document.getElementById('footer');
-		replyContainer.style.display = 'block';
-		showSoftInput('#msg-content');
+//		replyContainer.style.display = 'block';
+//		showSoftInput('#msg-content');
 		repliedCell = this.cell;
 		repliedItem = this.parentElement.parentElement.querySelector(".extras");
 		console.log('点击的回复包含数据：' + JSON.stringify(repliedCell));
 		msgType = this.cell.MsgType;
-		document.getElementById('msg-content').value = '';
+//		document.getElementById('msg-content').value = '';
+		events.openNewWindowWithData('reply-aboutMe.html', repliedCell);
+		//		replyContainer.style.top=(plus.screen.resolutionHeight-replyContainer.offsetHeight);
 	})
+	/**
+	 * 头像点击事件
+	 */
 	mui('.mui-table-view').on('tap', '.title-img', function() {
 		var id = this.getAttribute('headId');
 		console.log(id);
@@ -131,110 +139,97 @@ var addReplyView = function() {
 		});
 	})
 }
+/**
+ * 评论成功后，加载评论
+ */
 var addReplyLisetner = function() {
-		document.getElementById("msg-content").onblur = function() {
-			document.getElementById('footer').className = '';
-			document.getElementById('footer').style.display = 'none';
-		}
-		events.addTap('btn-reply', function() {
-
-			var replyValue = document.getElementById('msg-content').value;
-			console.log('监听没反应' + replyValue)
-			if(replyValue) {
-				postReply(function() {
-					document.getElementById('footer').className = '';
-					document.getElementById('footer').style.display = 'none';
-					jQuery('#msg-content').blur();
-					var p = document.createElement('p');
-					p.className = "break-words";
-					p.innerHTML = '<span>' + pName + '</span>回复<span>' + events.shortForString(repliedCell.MaxUserName, 4) + ':</span>' + replyValue;
-					//				<p class="break-words" ><span>' + msg.MsgFromName + '</span>回复<span>' + msg.MsgToName + ':</span>' + msg.MsgContent + '</p>'
-					repliedItem.appendChild(p);
-				})
-			} else {
-				mui.toast('请输入回复内容！')
-			}
-		})
-	}
-	/**
-	 * 
-	 * @param {Object} callback
-	 */
-var postReply = function(callback) {
-	var msgContent = document.getElementById('msg-content');
-	console.log('类型:' + msgType)
-	switch(msgType) {
-		//1为其他用户评论
-		case 1:
-			//2为评论的回复
-		case 2:
-			//3为其他用户点赞
-		case 3:
-
-			var comData = {
-				userId: pId, //用户ID
-				upperId: repliedCell.TabId, //上级评论ID
-				replyUserId: repliedCell.MaxUser, //回复ID
-				userSpaceId: repliedCell.SpaceId, //用户空间ID
-				commentContent: msgContent.value //回复内容
-			};
-			console.log('开始post回复数据' + JSON.stringify(comData));
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
-				console.log('发布回复后返回的数据：' + JSON.stringify(data))
-				wd.close();
-				if(data.RspCode == 0) {
-					callback();
-				}
-			})
-			break;
-
-			//4为其他用户留言
-		case 4:
-			//5为留言的回复
-		case 5:
-			var comData = {
-				userId: pId, //用户ID
-				upperId: repliedCell.TabId, //上级评论ID
-				replyUserId: repliedCell.MaxUser, //回复ID
-				userOwnerId: repliedCell.UserOwnerId, //用户空间ID
-				msgContent: msgContent.value //回复内容
-			};
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_addUserSpaceMsgReply(comData, wd, function(data) {
-				wd.close();
-				if(data.RspCode == 0) {
-					callback();
-				}
-			})
-			break;
-		default:
-			break;
-	}
+	window.addEventListener('hasReplied', function(e) {
+		var replyValue = e.detail;
+		var p = document.createElement('p');
+		p.className = "break-words";
+		p.innerHTML = '<span>' + pName + '</span>回复<span>' + events.shortForString(repliedCell.MaxUserName, 4) + ':</span>' + replyValue;
+		repliedItem.appendChild(p);
+	});
 }
+/**
+ * 
+ * @param {Object} callback
+ */
+//var postReply = function(callback) {
+//	var msgContent = document.getElementById('msg-content');
+//	console.log('类型:' + msgType)
+//	switch(msgType) {
+//		//1为其他用户评论
+//		case 1:
+//			//2为评论的回复
+//		case 2:
+//			//3为其他用户点赞
+//		case 3:
+//
+//			var comData = {
+//				userId: pId, //用户ID
+//				upperId: repliedCell.TabId, //上级评论ID
+//				replyUserId: repliedCell.MaxUser, //回复ID
+//				userSpaceId: repliedCell.SpaceId, //用户空间ID
+//				commentContent: msgContent.value //回复内容
+//			};
+//			console.log('开始post回复数据' + JSON.stringify(comData));
+//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+//			postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
+//				console.log('发布回复后返回的数据：' + JSON.stringify(data))
+//				wd.close();
+//				if(data.RspCode == 0) {
+//					callback();
+//				}
+//			})
+//			break;
+//
+//			//4为其他用户留言
+//		case 4:
+//			//5为留言的回复
+//		case 5:
+//			var comData = {
+//				userId: pId, //用户ID
+//				upperId: repliedCell.TabId, //上级评论ID
+//				replyUserId: repliedCell.MaxUser, //回复ID
+//				userOwnerId: repliedCell.UserOwnerId, //用户空间ID
+//				msgContent: msgContent.value //回复内容
+//			};
+//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+//			postDataPro_addUserSpaceMsgReply(comData, wd, function(data) {
+//				wd.close();
+//				if(data.RspCode == 0) {
+//					callback();
+//				}
+//			})
+//			break;
+//		default:
+//			break;
+//	}
+//}
 
 var ifHave = function(data) {
 	return data ? data : '';
 }
 var ifHaveImg = function(cellData) {
-		if(cellData.headImg) {
-			return cellData.headImg;
-		} else if(cellData.UserImg) {
-			return cellData.UserImg;
-		} else {
-			return '../../image/utils/default_personalimage.png'
-		}
-
+	if(cellData.headImg) {
+		return cellData.headImg;
+	} else if(cellData.UserImg) {
+		return cellData.UserImg;
+	} else {
+		return '../../image/utils/default_personalimage.png'
 	}
-	/**
-	 * 根据获取信息 设置
-	 * @param {Object} cell 单个cell数据
-	 */
+
+}
+/**
+ * 根据获取信息 设置
+ * @param {Object} cell 单个cell数据
+ */
 var getCellData = function(cell) {
 	var cellData = new Object();
 	cellData.MsgType = cell.MsgType;
 	cellData.UserName = cell.UserName;
-	if(cell.MsgType==6) {
+	if(cell.MsgType == 6) {
 		cellData.headID = cell.UserId;
 	} else {
 		cellData.headID = cell.MaxUser;
@@ -279,7 +274,7 @@ var getCellData = function(cell) {
 		var messages = '';
 		if(cellData.MsgType != 4) {
 			if(cell.Content) {
-				messages+=('<p class="break-words"><span>' + events.shortForString(cell.UserName, 4) + ':</span>' + cell.Content + '</p>')
+				messages += ('<p class="break-words"><span>' + events.shortForString(cell.UserName, 4) + ':</span>' + cell.Content + '</p>')
 			}
 		}
 
@@ -287,9 +282,9 @@ var getCellData = function(cell) {
 			cell.MsgArray.forEach(function(msg, i, msgArray) {
 				if(msg.MsgContent) {
 					if(msg.MsgToName) {
-						messages+=('<p class="break-words" ><span>' +events.shortForString(msg.MsgFromName, 4)  + '</span>回复<span>' +events.shortForString(msg.MsgToName, 4)  + ':</span>' + msg.MsgContent + '</p>');
+						messages += ('<p class="break-words" ><span>' + events.shortForString(msg.MsgFromName, 4) + '</span>回复<span>' + events.shortForString(msg.MsgToName, 4) + ':</span>' + msg.MsgContent + '</p>');
 					} else {
-						messages+=('<p class="break-words" ><span>' + events.shortForString(msg.MsgFromName, 4) + ':</span>' + msg.MsgContent + '</p>');
+						messages += ('<p class="break-words" ><span>' + events.shortForString(msg.MsgFromName, 4) + ':</span>' + msg.MsgContent + '</p>');
 					}
 				}
 
@@ -410,69 +405,69 @@ events.initRefresh('list-container',
  * 获取与我相关
  */
 var requireAboutMe = function() {
-		var comData = {
-			userId: personalUTID, //用户ID
-			pageIndex: pageIndex + '', //当前页数
-			pageSize: pageCount + '' //每页记录数
-		};
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		//56.（用户空间）获取与我相关
-		postDataPro_getAboutMe(comData, wd, function(data) {
-			wd.close();
-			console.log('获取的与我相关的数据：' + JSON.stringify(data));
-			if(data.RspCode == '0000') {
-				setCommentMsgReadByUser();
-				totalPage = data.RspData.TotalPage;
-				if(pageIndex == 1 || pageIndex <= alertTotalPage) {
-					requireHomeworkAlert(data.RspData.Data);
-				} else {
-					getRoleInfos(data.RspData.Data)
-				}
+	var comData = {
+		userId: personalUTID, //用户ID
+		pageIndex: pageIndex + '', //当前页数
+		pageSize: pageCount + '' //每页记录数
+	};
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//56.（用户空间）获取与我相关
+	postDataPro_getAboutMe(comData, wd, function(data) {
+		wd.close();
+		console.log('获取的与我相关的数据：' + JSON.stringify(data));
+		if(data.RspCode == '0000') {
+			setCommentMsgReadByUser();
+			totalPage = data.RspData.TotalPage;
+			if(pageIndex == 1 || pageIndex <= alertTotalPage) {
+				requireHomeworkAlert(data.RspData.Data);
+			} else {
+				getRoleInfos(data.RspData.Data)
+			}
 
-			} else {
-				mui.toast(data.RspTxt);
-			}
-		});
-	}
-	/**
-	 * 获取作业提醒并和与我相关的消息合并
-	 * @param {Object} aboutMeData 与我相关的数据
-	 */
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+}
+/**
+ * 获取作业提醒并和与我相关的消息合并
+ * @param {Object} aboutMeData 与我相关的数据
+ */
 var requireHomeworkAlert = function(aboutMeData) {
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		//	userId，学生/家长Id；
-		//pageIndex，页码，从1开始；
-		//pageSize，每页记录数；
-		postDataPro_GetHomeworkAlert({
-			userId: personalUTID,
-			pageIndex: pageIndex,
-			pageSize: 5
-		}, wd, function(data) {
-			wd.close();
-			console.log('与我相关界面获取的作业提醒：' + JSON.stringify(data));
-			if(data.RspCode == 0) {
-				alertTotalPage = data.RspData.TotalPage;
-				if(!aboutMeData) {
-					aboutMeData = [];
-				}
-				for(var i in data.RspData.Data) {
-					data.RspData.Data[i].MsgDate = new Date(data.RspData.Data[i].MsgDate).Format('yyyy-MM-dd HH:mm:ss')
-				}
-				//拼接数据
-				var allData = aboutMeData.concat(data.RspData.Data);
-				//数据排序
-				allData.sort(function(a, b) {
-					return -((new Date(a.MsgDate.replace(/-/g, '/')).getTime()) - (new Date(b.MsgDate.replace(/-/g, '/')).getTime()));
-				})
-				console.log('与我相关界面获取的所有数据:' + JSON.stringify(allData))
-					//获取人员信息
-				getRoleInfos(allData);
-			} else {
-				mui.toast(data.RspTxt);
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//	userId，学生/家长Id；
+	//pageIndex，页码，从1开始；
+	//pageSize，每页记录数；
+	postDataPro_GetHomeworkAlert({
+		userId: personalUTID,
+		pageIndex: pageIndex,
+		pageSize: 5
+	}, wd, function(data) {
+		wd.close();
+		console.log('与我相关界面获取的作业提醒：' + JSON.stringify(data));
+		if(data.RspCode == 0) {
+			alertTotalPage = data.RspData.TotalPage;
+			if(!aboutMeData) {
+				aboutMeData = [];
 			}
-		})
-	}
-	//格式化日期
+			for(var i in data.RspData.Data) {
+				data.RspData.Data[i].MsgDate = new Date(data.RspData.Data[i].MsgDate).Format('yyyy-MM-dd HH:mm:ss')
+			}
+			//拼接数据
+			var allData = aboutMeData.concat(data.RspData.Data);
+			//数据排序
+			allData.sort(function(a, b) {
+				return -((new Date(a.MsgDate.replace(/-/g, '/')).getTime()) - (new Date(b.MsgDate.replace(/-/g, '/')).getTime()));
+			})
+			console.log('与我相关界面获取的所有数据:' + JSON.stringify(allData))
+			//获取人员信息
+			getRoleInfos(allData);
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	})
+}
+//格式化日期
 Date.prototype.Format = function(fmt) {
 	var o = {
 		"y+": this.getFullYear(),

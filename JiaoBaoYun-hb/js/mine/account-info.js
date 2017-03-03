@@ -64,19 +64,19 @@ mui.plusReady(function() {
 		id: window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid, //utid
 		//name: data.studentName //资料名称
 	}, function(successCB) {
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING, {
-			back: 'none'
-		});
+		var wd = events.showWaiting('更新头像...');
 		console.log('上传并修改个人头像，成功的回调' + JSON.stringify(successCB));
 		mui.toast('个人头像成功');
 		setTimeout(function() {
 			pInfo.uimg = successCB;
 			myStorage.setItem(storageKeyName.PERSONALINFO, pInfo);
 			document.getElementById("img").src = successCB;
+			document.getElementById("img").onload=function(){
+				wd.close();
+			}
 			events.fireToPageNone('mine.html', 'infoChanged');
 			events.fireToPageNone('../index/index.html', 'infoChanged');
 			events.fireToPageNone('classSpace-sub.html', 'infoChanged');
-			wd.close();
 		}, 2000);
 	}, function(errorCB) {
 		console.log('上传并修改个人头像，失败的回调' + JSON.stringify(errorCB));

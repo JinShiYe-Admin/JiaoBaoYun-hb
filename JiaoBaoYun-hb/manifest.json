@@ -1041,7 +1041,11 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"css/quan/custom-textarea.css"
+					"css/quan/custom-textarea.css",
+					"js/utils/cryption.js",
+					"js/utils/CloudFileUtil.js",
+					"js/utils/compress.js",
+					"js/qiniu/qiniu.js"
 				],
 				"refer": [
 					"html/homework/classes-select.html"
@@ -1421,7 +1425,8 @@
 					"html/quan/aboutme_sub.html",
 					"css/utils/common.css",
 					"css/quan/about-me.css",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -1453,10 +1458,12 @@
 					"fonts/mui.ttf",
 					"image/utils/default_personalimage.png",
 					"js/publicHomeworkProtocol.js",
-					"js/utils/native.js"
+					"js/utils/native.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
-					"html/quan/zone_main.html"
+					"html/quan/zone_main.html",
+					"html/quan/reply-aboutMe.html"
 				],
 				"priority": 0
 			},
@@ -2289,7 +2296,9 @@
 					"js/publicProtocol.js",
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"js/storageKeyName.js"
+					"js/storageKeyName.js",
+					"js/utils/cryption.js",
+					"js/qiniu/qiniu.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2450,7 +2459,8 @@
 					"js/mui.previewimage.js",
 					"js/mui.zoom.js",
 					"css/utils/preview.css",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -2611,7 +2621,9 @@
 					"html/qiuzhi/qiuzhi-questionSub.html",
 					"js/utils/events.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/qiuzhi/experts_main.html"
+				],
 				"priority": 0
 			},
 			"html/qiuzhi/qiuzhi-questionSub.html": {
@@ -2638,7 +2650,11 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"css/utils/preview.css",
+					"js/mui.zoom.js",
+					"fonts/fangzheng.ttf",
+					"js/mui.previewimage.js"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-addAnswer.html"
@@ -3182,7 +3198,27 @@
 					"css/mui.min.css",
 					"css/utils/common.css",
 					"image/qiuzhi/expert_level.png",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"css/utils/pullToRefresh.css",
+					"js/publicQiuzhiProtocol.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/myStorage/myStorage.js",
+					"css/iconfont/iconfont.css",
+					"js/utils/signHmacSHA1.js",
+					"fonts/iconfont.ttf",
+					"js/utils/postData.js",
+					"image/utils/default_personalimage.png",
+					"js/mui.pullToRefresh.js",
+					"js/storageKeyName.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/libs/crypto-js/require.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"fonts/fangzheng.ttf",
+					"js/libs/RSA/BigInt.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3207,7 +3243,8 @@
 					"css/mui.min.css",
 					"css/utils/common.css",
 					"js/libs/crypto-js/crypto-js.js",
-					"/image/utils/default_load_2.gif"
+					"/image/utils/default_load_2.gif",
+					"js/storageKeyName.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3293,6 +3330,32 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"css/mui.min.css",
 					"css/utils/common.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/reply-aboutMe.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"css/quan/custom-textarea.css",
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"css/iconfont/iconfont.css",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"fonts/fangzheng.ttf",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
