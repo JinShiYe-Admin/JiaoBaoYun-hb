@@ -11,7 +11,7 @@
 }
 .comment-container{
 	display: inline-block;
-	width: 78%;
+	width: 70%;
 }
 .icon-fasong{
 	color: gainsboro;
@@ -109,6 +109,11 @@
 	box-shadow: 0px -1px 2px #E4E4E4 !important;
 }
 .support-container{
+	/*background-color: yellow;*/
+	float: right;
+	height: 4rem;
+	width: 4rem;
+	max-width: 14%;
 	padding: 0 0 2rem 2rem;
 }
 .imgs-container{
