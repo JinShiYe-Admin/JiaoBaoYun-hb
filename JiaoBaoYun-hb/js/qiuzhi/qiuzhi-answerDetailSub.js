@@ -154,11 +154,11 @@ var rechargeInfos = function(datasource, infos) {
 			var info = infos[j];
 			if(datasource.Data[i].UserId == info.utid) {
 				datasource.Data[i].UserName = info.unick;
-				datasource.Data[i].UserImg = info.uimg == null ? storageKeyName.DEFAULTPERSONALHEADIMAGE : info.uimg;
+				datasource.Data[i].UserImg = updateHeadImg(info.uimg,2);
 			}
 			if(datasource.Data[i].ReplyId == info.utid) {
 				datasource.Data[i].ReplyName = info.unick;
-				datasource.Data[i].ReplyImg = info.uimg == null ? storageKeyName.DEFAULTPERSONALHEADIMAGE : info.uimg;
+				datasource.Data[i].ReplyImg = updateHeadImg(info.uimg,2);
 			}
 		}
 	}
@@ -247,13 +247,13 @@ function refreshUI(datasource) {
 		li.className = 'mui-table-view-cell';
 		li.innerHTML = createCommentsInner(datasource.Data[i]);
 		ul.appendChild(li);
-		var comments_zan=li.querySelector('.icon-zanzan1');
+		var comments_zan=li.querySelector('.icon-support');
 		comments_zan.isLike=datasource.Data[i].IsLiked;
 		comments_zan.commentId=datasource.Data[i].TabId;
 		if(datasource.Data[i].IsLiked){
-			comments_zan.className="mui-icon iconfont icon-zanzan1 mui-pull-right isLike"
+			comments_zan.className="mui-icon iconfont icon-support mui-pull-right isLike"
 		}else{
-			comments_zan.className="mui-icon iconfont icon-zanzan1 mui-pull-right isNotLike"
+			comments_zan.className="mui-icon iconfont icon-support mui-pull-right isNotLike"
 		}
 		comments_zan.order=i;
 	}
@@ -277,9 +277,9 @@ var setQuestion = function(datasource) {
 	var zan_icon=document.getElementById('answer-zan');
 	zan_icon.isLike=datasource.IsLiked;
 	if(datasource.IsLiked){
-		zan_icon.className="mui-icon iconfont icon-zanzan1 isLike";
+		zan_icon.className="mui-icon iconfont icon-support isLike";
 	}else{
-		zan_icon.className="mui-icon iconfont icon-zanzan1 isNotLike";
+		zan_icon.className="mui-icon iconfont icon-support isNotLike";
 	}	
 }
 /**
@@ -338,7 +338,7 @@ var getPicInner = function(picAddr) {
 var createCommentsInner = function(cell) {
 	var headImg = cell.UserImg ? cell.UserImg : cell.ReplyImg;
 	var personName = cell.UserName ? cell.UserName : cell.ReplyName;
-	var inner = '<div><a class="mui-icon iconfont icon-zanzan1 mui-pull-right"></a>' +
+	var inner = '<div><div class="support-container"> <a class="mui-icon iconfont icon-support mui-pull-right"></a><div>' +
 		'<div class="img-container"><img class="head-img" src="' + headImg + '"/></div>' +
 		'<div class="comment-container">' +
 		'<h5 class="comment-personName single-line">' + personName + '</h5>' +
@@ -353,12 +353,12 @@ var createCommentsInner = function(cell) {
  */
 var setListeners = function() {
 	//评论的点赞按钮点击事件
-	mui(".mui-table-view").on('tap', '.icon-zanzan1', function() {
-		setIsLikeComment(this);
+	mui(".mui-table-view").on('tap', '.support-container', function() {
+		setIsLikeComment(this.querySelector('.icon-support'));
 	})
 	//回答的点赞按钮的点赞事件
-	events.addTap('answer-zan', function() {
-		setIsLikeAnswer(this);
+	events.addTap('support-answer', function() {
+		setIsLikeAnswer(this.querySelector('.icon-support'));
 	})
 	//按钮点击事件关注事件
 	events.addTap('btn-focus', function() {
@@ -423,12 +423,12 @@ var setIsLikeComment = function(item) {
  */
 var setZanIconCondition = function(item) {
 	if(item.isLike) {
-		item.className = "mui-pull-right mui-icon iconfont icon-zanzan1 isNotLike ";
+		item.className = "mui-pull-right mui-icon iconfont icon-support isNotLike ";
 		item.isLike = 0;
 		mui.toast('已取消点赞');
 		answerData.Data[item.order].IsLiked=0;
 	} else {
-		item.className = "mui-pull-right mui-icon iconfont icon-zanzan1 isLike";
+		item.className = "mui-pull-right mui-icon iconfont icon-support isLike";
 		item.isLike = 1;
 		mui.toast('点赞成功');
 		answerData.Data[item.order].IsLiked=1;
