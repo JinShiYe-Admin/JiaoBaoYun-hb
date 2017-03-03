@@ -90,7 +90,7 @@ var dynamiclistitem = (function($, mod) {
 //		}
 
 		if(ImageNum == 1) { //一张图片时
-			var html1 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-image-div" style="padding:10px;height: ' + SCREEN_WIDTH*2/3 + 'px;width: ' + (SCREEN_WIDTH) + 'px;">';
+			var html1 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-image-div" style="padding:10px;height: ' + SCREEN_WIDTH*2/3 + 'px;width: ' + (SCREEN_WIDTH-20) + 'px;">';
 			var html2 = '<img class="dynamic-image" style= "height: ' + SCREEN_WIDTH*2/3 + 'px;" src="' + ImageUrlList[0] +'" data-preview-src="' + EncAddrList[0] + '" data-preview-group="' + citycode+'cellImageType'+id +  '"/></div>';
 			html = html1 + html2;
 		} else if(ImageNum == 2) { //两张图片时
