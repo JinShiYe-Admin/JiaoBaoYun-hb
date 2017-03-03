@@ -206,7 +206,13 @@ input[type=submit]:enabled:active {
 	position: relative!important;
 	top: 1px!important;
     right: 38px!important;
-    
+ 	color: #e4e4e4!important;   
     margin-right: -38px!important;
 }
+ 
   
+.mui-icon-clear:before, .mui-icon-close-filled:before
+{
+	font-family: "iconfont" !important;
+	content: '\e647'!important;
+}
