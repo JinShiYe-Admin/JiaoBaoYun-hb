@@ -136,7 +136,7 @@ var createInner = function(person) {
 		person.unick + '</h5>' +
 		'<p class="person-info single-line">' + events.ifHaveInfo(person.UserNote) +
 		'</p></div>' +
-		'<button type="button" class="mui-btn mui-btn-outlined ' + getButtonContent(person.FocusType).classInfo + ' " >' + getButtonContent(person.FocusType).inner + '</button></div></a>'
+		'<p  class="mui-btn mui-btn-outlined ' + getButtonContent(person.FocusType).classInfo + ' " >' + getButtonContent(person.FocusType).inner + '</p></div></a>'
 	return inner;
 }
 /**
@@ -161,7 +161,7 @@ var getButtonContent = function(focusType) {
 			break;
 		case 3:
 			buttonInfo.classInfo = 'attentioned-btn';
-			buttonInfo.inner = '已互关';
+			buttonInfo.inner = '<span class="iconfont icon-huxiangguanzhu"></span>关注';
 			break;
 		case 5:
 			buttonInfo.classInfo = 'display-none';
@@ -194,7 +194,7 @@ var setFocus = function(item, type) {
 			}
 			setButtonInfoType(item);
 			var buttonInfo = getButtonContent(item.personInfo.FocusType);
-			item.innerText = buttonInfo.inner;
+			item.innerHTML = buttonInfo.inner;
 			item.className = 'mui-btn mui-btn-outlined ' + buttonInfo.classInfo;
 		}
 	})
