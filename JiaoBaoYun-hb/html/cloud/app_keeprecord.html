@@ -267,7 +267,7 @@
 						vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
 					};
 					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var wd = events.showWaiting();
 					//获取创建的群
 					postDataPro_PostGList(cgQunData, wd, function(data) {
 						console.log('9_PostGList_获取创建的群.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
@@ -306,7 +306,7 @@
 						vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
 					};
 					// 等待的对话框
-					var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var wd2 = events.showWaiting();
 					postDataPro_PostGList(mgQunData, wd2, function(data2) {
 						console.log('9_PostGList_获取协管的群.90909090success:RspCode:' + data2.RspCode + ',RspData:' + JSON.stringify(data2.RspData) + ',RspTxt:' + data2.RspTxt);
 						if(data2.RspCode == 0) {
@@ -458,7 +458,7 @@
 					//		mstype:''//资料类型,0家长,1管理员,2老师,3学生
 					//	}
 					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var wd = events.showWaiting();
 					postDataPro_PostGUInf(getMemData, wd, function(data) {
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
@@ -474,7 +474,9 @@
 								}
 							});
 						} else {
-							mui.toast(data.RspTxt);
+							if(data.RspCode != 9){
+								mui.toast(data.RspTxt);
+							}
 						}
 
 						if(tempAllMem.length == 0) {
