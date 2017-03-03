@@ -31,7 +31,7 @@ mui.plusReady(function() {
 				var self = this;
 				console.log("上拉加载更多");
 				flagRef = 1;
-				if(pageIndex < totalPageCount) {
+				if(pageIndex <= totalPageCount) {
 					//获取关注人数据
 					requireData();
 				} else {
@@ -130,9 +130,12 @@ var setData = function(persons) {
  * @param {Object} person 关注人信息
  */
 var createInner = function(person) {
-	var inner = '<a><div class="li-container"><div class="head-img display-inlineBlock"><img class="person-info head-portrait" src="' + updateHeadImg(person.uimg, 2) + '"/></div>' +
-		'<div class="info-container display-inlineBlock"><h5 class="person-name single-line person-info">' + person.unick + '</h5>' +
-		'<p class="person-info single-line">' + events.ifHaveInfo(person.UserNote) + '</p></div>' +
+	var inner = '<a><div class="li-container"><div class="head-img display-inlineBlock"><img class="person-info head-portrait" src="' +
+		updateHeadImg(person.uimg, 2) + '"/></div>' +
+		'<div class="info-container display-inlineBlock"><h5 class="person-name single-line person-info">' +
+		person.unick + '</h5>' +
+		'<p class="person-info single-line">' + events.ifHaveInfo(person.UserNote) +
+		'</p></div>' +
 		'<button type="button" class="mui-btn mui-btn-outlined ' + getButtonContent(person.FocusType).classInfo + ' " >' + getButtonContent(person.FocusType).inner + '</button></div></a>'
 	return inner;
 }
@@ -150,7 +153,7 @@ var getButtonContent = function(focusType) {
 		case 0:
 		case 2:
 			buttonInfo.classInfo = 'attention-btn';
-			buttonInfo.inner = '关注';
+			buttonInfo.inner = '+关注';
 			break;
 		case 1:
 			buttonInfo.classInfo = 'attentioned-btn';

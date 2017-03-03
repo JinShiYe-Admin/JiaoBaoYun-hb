@@ -58,7 +58,7 @@ mui.plusReady(function() {
 				var self = this;
 				console.log("上拉加载更多");
 				flagRef = 1;
-				if(pageIndex < totalPageCount) {
+				if(pageIndex <= totalPageCount) {
 					//36.获取某个用户的被邀请问题列表
 					getInviteAsksByUser(ExpertsInfo.UserId);
 				} else {
@@ -88,6 +88,7 @@ function getInviteAsksByUser(userId) {
 		if(data.RspCode == 0) {
 			//总页数
 			totalPageCount = data.RspData.TotalPage;
+			pageIndex++;
 			//回调中的临时数据
 			var tempRspData = data.RspData.Data;
 			//获取当前回调的个人信息，主要是头像、昵称
@@ -139,7 +140,6 @@ function getInviteAsksByUser(userId) {
 				if(flagRef == 0) { //刷新
 					answerArray = tempRspData;
 				} else { //加载更多
-					pageIndex++;
 					//合并数组
 					answerArray = answerArray.concat(tempRspData);
 				}

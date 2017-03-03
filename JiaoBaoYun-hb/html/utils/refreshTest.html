@@ -74,7 +74,7 @@
 							var self = this;
 							console.log("上拉加载更多");
 							flagRef = 1;
-							if(pageIndex < totalPageCount) {
+							if(pageIndex <= totalPageCount) {
 								//24.获取某个用户的回答列表
 								getAnswersByUser(ExpertsInfo.UserId);
 							}else{

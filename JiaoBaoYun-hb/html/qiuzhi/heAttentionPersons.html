@@ -200,6 +200,8 @@
 					console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
 					//清除节点
 					document.getElementById('list-container').innerHTML = "";
+					pageIndex = 1;
+					flagRef = 0;
 					//27.获取某个用户的关注人列表
 					getFocusUsersByUser(ExpertsInfo.UserId);
 				});
@@ -224,7 +226,7 @@
 							var self = this;
 							console.log("上拉加载更多");
 							flagRef = 1;
-							if(pageIndex < totalPageCount) {
+							if(pageIndex <= totalPageCount) {
 								//27.获取某个用户的关注人列表
 								getFocusUsersByUser(ExpertsInfo.UserId);
 							} else {
@@ -244,7 +246,7 @@
 				var comData = {
 					userId: personalUTID, //用户ID
 					focusId: focusId, //关注用户ID,查看用户
-					pageIndex: '1', //当前页数
+					pageIndex: pageIndex, //当前页数
 					pageSize: 10 //每页记录数,传入0，获取总记录数
 				};
 				// 等待的对话框
