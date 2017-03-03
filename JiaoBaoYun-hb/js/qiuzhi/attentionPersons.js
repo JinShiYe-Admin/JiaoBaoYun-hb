@@ -3,14 +3,12 @@ var pageIndex = 1; //页码
 var selfId; //本人id
 var totalPageCount = 0;
 mui.plusReady(function() {
-	window.addEventListener('expertInfo', function(e) {
-		selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-		pageIndex = 1;
-		var expertInfo = e.detail.data;
-		expertId = expertInfo.UserId;
-		requireData();
-		console.log('获取的专家信息：' + JSON.stringify(expertInfo));
-	})
+	selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+	var expertInfo = plus.webview.currentWebview().data;
+	console.log('获取的专家信息：' + JSON.stringify(expertInfo));
+	pageIndex = 1;
+	expertId = expertInfo.UserId;
+	requireData();
 	setListener();
 
 	//上拉下拉注册
@@ -130,10 +128,13 @@ var setData = function(persons) {
  * @param {Object} person 关注人信息
  */
 var createInner = function(person) {
-	var inner = '<a><div class="li-container"><div class="head-img display-inlineBlock"><img class="person-info head-portrait" src="' + updateHeadImg(person.uimg, 2) + '"/></div>' +
-		'<div class="info-container display-inlineBlock"><h5 class="person-name single-line person-info">' + person.unick + '</h5>' +
-		'<p class="person-info single-line">' + events.ifHaveInfo(person.UserNote) + '</p></div>' +
-		'<button type="button" class="mui-btn mui-btn-outlined ' + getButtonContent(person.FocusType).classInfo + ' " >' + getButtonContent(person.FocusType).inner + '</button></div></a>'
+	var inner = '<a><div class="li-container"><div class="head-img display-inlineBlock"><img class="person-info head-portrait" src="' +
+		updateHeadImg(person.uimg, 2) + '"/></div>' +
+		'<div class="info-container display-inlineBlock"><h5 class="person-name single-line person-info">' +
+		person.unick + '</h5>' +
+		'<p class="person-info single-line">' + events.ifHaveInfo(person.UserNote) +
+		'</p></div>' +
+		'<p  class="mui-btn mui-btn-outlined ' + getButtonContent(person.FocusType).classInfo + ' " >' + getButtonContent(person.FocusType).inner + '</p></div></a>'
 	return inner;
 }
 /**
@@ -150,7 +151,7 @@ var getButtonContent = function(focusType) {
 		case 0:
 		case 2:
 			buttonInfo.classInfo = 'attention-btn';
-			buttonInfo.inner = '关注';
+			buttonInfo.inner = '+关注';
 			break;
 		case 1:
 			buttonInfo.classInfo = 'attentioned-btn';
@@ -158,7 +159,7 @@ var getButtonContent = function(focusType) {
 			break;
 		case 3:
 			buttonInfo.classInfo = 'attentioned-btn';
-			buttonInfo.inner = '已互关';
+			buttonInfo.inner = '<span class="iconfont icon-huxiangguanzhu"></span>关注';
 			break;
 		case 5:
 			buttonInfo.classInfo = 'display-none';
@@ -191,7 +192,7 @@ var setFocus = function(item, type) {
 			}
 			setButtonInfoType(item);
 			var buttonInfo = getButtonContent(item.personInfo.FocusType);
-			item.innerText = buttonInfo.inner;
+			item.innerHTML = buttonInfo.inner;
 			item.className = 'mui-btn mui-btn-outlined ' + buttonInfo.classInfo;
 		}
 	})

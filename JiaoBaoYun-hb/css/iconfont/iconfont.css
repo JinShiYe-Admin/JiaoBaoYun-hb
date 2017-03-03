@@ -109,6 +109,8 @@
 
 .icon-lishijilu:before { content: "\e621"; }
 
+.icon-huxiangguanzhu:before { content: "\e641"; }
+
 .icon-renren:before { content: "\e609"; }
 
 .icon-dongtai1:before { content: "\e671"; }
@@ -240,3 +242,5 @@
 .icon-jiaxiabiao:before { content: "\e639"; }
 
 .icon-banxiabiao:before { content: "\e638"; }
+
+.icon-shanchu2:before { content: "\e647"; }
