@@ -125,7 +125,6 @@
 		}
 		var ExpertsInfo;
 		mui.plusReady(function() {
-			events.preload('AttentionPersons.html');
 			events.preload('qiuzhi-expertAllAnswer.html', 10);
 			events.preload('qiuzhi-expertAllComment.html', 10);
 			events.preload('focus-question.html', 10);
@@ -181,7 +180,8 @@
 				})
 			})
 			events.addTap('IsFocusedMan', function() {
-				events.fireToPageWithData('AttentionPersons.html', 'expertInfo', ExpertsInfo);
+				console.log('专家信息：'+JSON.stringify(ExpertsInfo))
+				events.openNewWindowWithData('AttentionPersons.html', ExpertsInfo);
 				console.log('关注他的人');
 			})
 			events.addTap('focusBtn', function() {
