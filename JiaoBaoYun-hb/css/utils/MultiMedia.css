@@ -1,6 +1,18 @@
-#MultiMedia_yuyin,#MultiMedia_xiangji {
+/*多媒体控件样式*/
+
+#MultiMedia_Picture_Header,
+#MultiMedia_Audio_Header,
+#MultiMedia_Video_Header {
 	font-size: 30px;
 	/*background: red;*/
 	margin-left: 15px;
 	color: gray;
+}
+
+.multimedia-body{
+	background-color: white;
+}
+.multimedia-header{
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
