@@ -54,7 +54,7 @@
 					</div>
 				</div>
 				<div id="FocusMan" style="float: left;width: 70px;margin-left: 40px;">
-					<div  style="color: #808080;">
+					<div style="color: #808080;" id="titleFlag0">
 						他关注的人
 					</div>
 					<div id="FocusManNum" style="margin-left: 20px;">
@@ -62,7 +62,7 @@
 					</div>
 				</div>
 				<div id="IsFocusedMan" style="float: left;width: 70px;margin-left: 40px;">
-					<div  style="color: #808080;">
+					<div style="color: #808080;" id="titleFlag1">
 						关注他的人
 					</div>
 					<div id="IsFocusedManNum" style="margin-left: 20px;">
@@ -78,25 +78,25 @@
 				<ul class="mui-table-view">
 					<li id="AnswerLi" class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/answer.png" />
-						<div class="mui-media-body">他的回答</div>
+						<div class="mui-media-body" id="titleFlag2">他的回答</div>
 						<p id="AnswerNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
 
 					</li>
 					<li id="AskLi" class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/question.png" />
-						<div class="mui-media-body">他的提问
+						<div class="mui-media-body" id="titleFlag3">他的提问
 							<div>
 								<p id="AskNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
 					</li>
 					<li id="CommentLi" class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/comment.png" />
-						<div class="mui-media-body">他的评论
+						<div class="mui-media-body" id="titleFlag4">他的评论
 							<div>
 								<p id="CommentNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
 					</li>
 					<li id="inviteNumLi" class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/yaoqing.png" />
-						<div class="mui-media-body">邀请他回答
+						<div class="mui-media-body" id="titleFlag5">邀请他回答
 							<div>
 								<p id="inviteNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right">0<span class="mui-icon mui-icon-forward"></span></p>
 					</li>
@@ -108,22 +108,30 @@
 
 	<script type="text/javascript">
 		var nodes = {
-			expertImg: document.getElementById("expertImg"),//专家头像
-			AskNum: document.getElementById("AskNum"),//他的回答数量
-			UserNote: document.getElementById("UserNote"),//专家简介
-			FocusManNum: document.getElementById("FocusManNum"),//他关注的人
-			ExpertLevel: document.getElementById("ExpertLevel"),//
-			FocusAskNum: document.getElementById("FocusAskNum"),//关注的问题数量
-			ExpertChannels: document.getElementById("ExpertChannels"),//专家话题
-			IsLikeNum: document.getElementById("IsLikeNum"),//点赞数量
-			CommentNum: document.getElementById("CommentNum"),//评论数量
-			IsFocusedManNum: document.getElementById("IsFocusedManNum"),//关注他的人
-			AnswerNum: document.getElementById("AnswerNum"),//他的回答
-			inviteNum: document.getElementById("inviteNum"),//邀请他的回答
-			focusBtn: document.getElementById("focusBtn"),//关注按钮
+			expertImg: document.getElementById("expertImg"), //专家头像
+			AskNum: document.getElementById("AskNum"), //他的回答数量
+			UserNote: document.getElementById("UserNote"), //专家简介
+			FocusManNum: document.getElementById("FocusManNum"), //他关注的人
+			ExpertLevel: document.getElementById("ExpertLevel"), //
+			FocusAskNum: document.getElementById("FocusAskNum"), //关注的问题数量
+			ExpertChannels: document.getElementById("ExpertChannels"), //专家话题
+			IsLikeNum: document.getElementById("IsLikeNum"), //点赞数量
+			CommentNum: document.getElementById("CommentNum"), //评论数量
+			IsFocusedManNum: document.getElementById("IsFocusedManNum"), //关注他的人
+			AnswerNum: document.getElementById("AnswerNum"), //他的回答
+			inviteNum: document.getElementById("inviteNum"), //邀请他的回答
+			focusBtn: document.getElementById("focusBtn"), //关注按钮
+			
+			titleFlag0: document.getElementById("titleFlag0"), //他关注的人
+			titleFlag1: document.getElementById("titleFlag1"), //关注他的人
+			titleFlag2: document.getElementById("titleFlag2"), //他的回答
+			titleFlag3: document.getElementById("titleFlag3"), //他的提问
+			titleFlag4: document.getElementById("titleFlag4"), //他的评论
+			titleFlag5: document.getElementById("titleFlag5"), //邀请他回答
 
 		}
 		var ExpertsInfo;
+		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 		mui.plusReady(function() {
 			events.preload('qiuzhi-expertAllAnswer.html', 10);
 			events.preload('qiuzhi-expertAllComment.html', 10);
@@ -141,7 +149,17 @@
 				//3.获取某个用户的信息
 				getExpertsInfo(ExpertsInfo.UserId);
 				nodes.expertImg.src = updateHeadImg(ExpertsInfo.uimg, 2);
-			})
+			});
+			//判断是不是自己，如果是自己，不显示关注按钮
+			if(ExpertsInfo.UserId == personalUTID) {
+				document.getElementById('focusBtn').style.display = 'none';
+				nodes.titleFlag0.innerText = '我关注的人';
+				nodes.titleFlag1.innerText = '关注我的人';
+				nodes.titleFlag2.innerText = '我的回答';
+				nodes.titleFlag3.innerText = '我的提问';
+				nodes.titleFlag4.innerText = '我的评论';
+				nodes.titleFlag5.innerText = '邀请我回答';
+			} 
 			//22.获取是否已对某个用户关注
 			getUserFocus(ExpertsInfo.UserId);
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
@@ -180,7 +198,7 @@
 				})
 			})
 			events.addTap('IsFocusedMan', function() {
-				console.log('专家信息：'+JSON.stringify(ExpertsInfo))
+				console.log('专家信息：' + JSON.stringify(ExpertsInfo))
 				events.openNewWindowWithData('AttentionPersons.html', ExpertsInfo);
 				console.log('关注他的人');
 			})
@@ -283,16 +301,16 @@
 
 		function addData() {
 			nodes.AskNum.innerHTML = ExpertsInfo.AskNum + '<span class="mui-icon mui-icon-forward"></span>';
-			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+			//如果是自己，显示编辑简介按钮
 			if(ExpertsInfo.UserId == personalUTID) {
 				nodes.UserNote.innerHTML = ExpertsInfo.UserNote + ' ' + '<img id="bianji" style = "width:20px;height:20px"  src="../../image/qiuzhi/bianji.png" />';
-			}else{
+			} else {
 				nodes.UserNote.innerHTML = ExpertsInfo.UserNote;
 			}
 
 			nodes.FocusManNum.innerText = ExpertsInfo.FocusManNum;
 			nodes.ExpertChannels.innerText = ExpertsInfo.ExpertChannelNames;
-			nodes.IsLikeNum.innerHTML = '<span style="color: #808080;">'+ExpertsInfo.IsLikeNum+'</span>';
+			nodes.IsLikeNum.innerHTML = '<span style="color: #808080;">' + ExpertsInfo.IsLikeNum + '</span>';
 			nodes.FocusAskNum.innerText = ExpertsInfo.FocusAskNum;
 			nodes.CommentNum.innerHTML = ExpertsInfo.CommentNum + '<span class="mui-icon mui-icon-forward"></span>';
 			nodes.IsFocusedManNum.innerText = ExpertsInfo.IsFocusedManNum;
