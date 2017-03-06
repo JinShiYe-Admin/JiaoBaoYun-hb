@@ -149,9 +149,9 @@
 									//存储到手机本地
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 									//判断是否有密码，如果有，直接到主界面，没有，则设置密码
+									events.infoChanged();
 									if(data.RspData.ispw == 1) {
 										//跳转到主界面
-										events.infoChanged();
 										events.openNewWindowWithData('../index/index.html', '');
 									} else {
 										//跳转到修改密码界面

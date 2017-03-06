@@ -1268,7 +1268,8 @@
 				],
 				"refer": [
 					"html/index.html",
-					"html/index/index.html"
+					"html/index/index.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},
@@ -1709,7 +1710,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/register/modify_password.html",
@@ -2598,7 +2600,8 @@
 					"image/qiuzhi/channel-food.png",
 					"image/qiuzhi/channel-others.png",
 					"css/qiuzhi/qiuzhi-sub.css",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"image/qiuzhi/expert_more.png"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
