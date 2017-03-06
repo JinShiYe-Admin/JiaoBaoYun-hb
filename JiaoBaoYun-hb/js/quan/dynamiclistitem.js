@@ -71,32 +71,32 @@ var dynamiclistitem = (function($, mod) {
 	mod.addImage = function(ulElement, liElement, data, id) {
 		var SCREEN_WIDTH = plus.screen.resolutionWidth; //获取设备屏幕宽度分辨率111
 		var citycode;
-		if(pageFlag==1){
-			citycode=data[4]
-		}else{
-			citycode=''
+		if(pageFlag == 1) {
+			citycode = data[4]
+		} else {
+			citycode = ''
 		}
-		if(pageFlag==1&&mui.os.android){
-			
-			SCREEN_WIDTH=SCREEN_WIDTH*360/1440
-			console.log('SCREEN_WIDTH=='+SCREEN_WIDTH*360/1440)
+		if(pageFlag == 1 && mui.os.android) {
+
+			SCREEN_WIDTH = SCREEN_WIDTH * 360 / 1440
+			console.log('SCREEN_WIDTH==' + SCREEN_WIDTH * 360 / 1440)
 		}
 		var ImageUrlList = data[1]; //图片路径数组
 		var EncAddrList = data[3]
 		var ImageNum = ImageUrlList.length; //图片总数量
 		var html = '';
-//		if(pageFlag!=0){
-//			ImageNum=0;
-//		}
+		//		if(pageFlag!=0){
+		//			ImageNum=0;
+		//		}
 
 		if(ImageNum == 1) { //一张图片时
-			var html1 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-image-div" style="padding:10px;height: ' + SCREEN_WIDTH*2/3 + 'px;width: ' + (SCREEN_WIDTH-20) + 'px;">';
-			var html2 = '<img class="dynamic-image" style= "height: ' + SCREEN_WIDTH*2/3 + 'px;" src="' + ImageUrlList[0] +'" data-preview-src="' + EncAddrList[0] + '" data-preview-group="' + citycode+'cellImageType'+id +  '"/></div>';
+			var html1 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-image-div" style="padding:10px;height: ' + SCREEN_WIDTH * 2 / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) + 'px;">';
+			var html2 = '<img class="dynamic-image" style= "height: ' + SCREEN_WIDTH * 2 / 3 + 'px;" src="' + ImageUrlList[0] + '" data-preview-src="' + EncAddrList[0] + '" data-preview-group="' + citycode + 'cellImageType' + id + '"/></div>';
 			html = html1 + html2;
 		} else if(ImageNum == 2) { //两张图片时
 			$.each(ImageUrlList, function(index, element) {
-				var html1 = '<div class="mui-col-sm-6 mui-col-xs-6 dynamic-image-div" style="padding:10px;height: ' + (SCREEN_WIDTH -20)/ 2 + 'px;width: ' + (SCREEN_WIDTH -20)/ 2 + 'px;">';
-				var html2 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH -20)/ 2 + 'px;" src="' + element +'" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + citycode+'cellImageType'+id + '"/>'+'</div>';
+				var html1 = '<div class="mui-col-sm-6 mui-col-xs-6 dynamic-image-div" style="padding:10px;height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;width: ' + (SCREEN_WIDTH - 20) / 2 + 'px;">';
+				var html2 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;" src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + citycode + 'cellImageType' + id + '"/>' + '</div>';
 				html = html + html1 + html2;
 			});
 		} else if(ImageNum >= 3) { //大于两张图片时
@@ -106,16 +106,16 @@ var dynamiclistitem = (function($, mod) {
 				var html3 = '';
 
 				if(index < 8) {
-					html1 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: ' + (SCREEN_WIDTH -20)/ 3 + 'px;width: ' + (SCREEN_WIDTH -20)/ 3 + 'px;">';
-					html2 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH -20)/ 3 + 'px;" src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + citycode+'cellImageType'+id + '"/></div>';
+					html1 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
+					html2 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;" src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + citycode + 'cellImageType' + id + '"/></div>';
 				} else if(index == 8) {
-					var html4 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: ' + (SCREEN_WIDTH -20)/ 3 + 'px;width: ' + (SCREEN_WIDTH -20)/ 3 + 'px;">';
+					var html4 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
 					var html5 = '';
 					//蒙版
 					if(ImageNum > 9) {
-						html5 = '<div class="dynamic-image-more"><font style="line-height: ' + (SCREEN_WIDTH -20)/ 3 + 'px;">+' + (ImageNum - 9) + '</font></div>';
+						html5 = '<div class="dynamic-image-more"><font style="line-height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">+' + (ImageNum - 9) + '</font></div>';
 					}
-					var html6 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH -20)/ 3 + 'px;" src="' + element +'" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + citycode+'cellImageType'+id +  '"/></div>';
+					var html6 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;" src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + citycode + 'cellImageType' + id + '"/></div>';
 					html3 = html4 + html5 + html6;
 				}
 
@@ -125,8 +125,8 @@ var dynamiclistitem = (function($, mod) {
 
 		var div = document.createElement('div');
 		div.className = 'mui-row ';
-		div.style.paddingLeft='10px'
-		div.style.paddingRight='10px'
+		div.style.paddingLeft = '10px'
+		div.style.paddingRight = '10px'
 		div.innerHTML = html;
 		liElement.appendChild(div);
 
@@ -150,22 +150,22 @@ var dynamiclistitem = (function($, mod) {
 		//						2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
 
 		var html = '';
-		var htmlPraiseList = '<div  class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div id= "PraiseList' + id + '" class="mui-media-body">'; //点赞列表
+		var htmlPraiseList = '<div  class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div id= "PraiseList' + data[4] + idFlag + id + '" class="mui-media-body">'; //点赞列表
 		var htmlCommentList = ''; //评论列表
 
 		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body">';
 		var html2 = '</div></div>'
-			//		var html2 = '<p><span class="mui-icon mui-icon-image"></span>' + introduce + '</p></div></div>';
+		//		var html2 = '<p><span class="mui-icon mui-icon-image"></span>' + introduce + '</p></div></div>';
 		var html3 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div class="mui-media-body mui-pull-right">';
 		var html4;
 		if(zonepArray[id].IsLike == 1) {
-			html4 = '<a id="praise' + id + '" style = "color: rgb(0,165,224)"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
+			html4 = '<a id="praise' + data[4] + idFlag + id + '" style = "color: rgb(0,165,224)"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
 
 		} else {
-			html4 = '<a id="praise' + id + '" style = "color: #8F8F94"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
+			html4 = '<a id="praise' + data[4] + idFlag + id + '" style = "color: #8F8F94"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
 		}
 
-		var html5 = '<a id="comment' + id + '" style = "color: #8F8F94;" class="mui-icon iconfont icon-xiaoxizhongxin dynamic-icon-comment"></a>';
+		var html5 = '<a id="comment' + data[4] + idFlag + id + '" style = "color: #8F8F94;" class="mui-icon iconfont icon-xiaoxizhongxin dynamic-icon-comment"></a>';
 		//				var html6 = '<img src="../../image/dynamic/icon_forward.png" class="dynamic-icon-forward" />';
 		var html6 = '<font style="padding-right:7px"></font>';
 		var html7 = '</div><div class="mui-media-body"><p>浏览' + viewCount + '次</p></div></div>';
@@ -195,20 +195,20 @@ var dynamiclistitem = (function($, mod) {
 		//		htmlPraiseList = htmlPraiseList +html4+ '</div></div>';
 
 		//评论列表
-		var htmlCommentList1 = '<div id="commentList' + id + '" class="mui-col-sm-12 mui-col-xs-12">';
+		var htmlCommentList1 = '<div id="commentList' + data[4] + idFlag + id + '" class="mui-col-sm-12 mui-col-xs-12">';
 		var htmlCommentList2 = '';
 
 		$.each(commentList, function(index, element) {
 			var firstComment = '';
 			var replyComment = '';
-			var html1 = '<div id="replyComment' + id + '-' + index + '-' + '评论' + '" class="mui-media-body replyComment">';
+			var html1 = '<div id="replyComment' + data[4] + idFlag + id + '-' + index + '-' + '评论' + '" class="mui-media-body replyComment">';
 			var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + element.UserIdName + '</font>';
 			var html3 = '<font class="common-font-family-Regular" style = "font-size:14px">：' + element.CommentContent + '</font>';
 			firstComment = html1 + html2 + html3;
 			if(element.Replys.length != 0) {
 				for(var i = 0; i < element.Replys.length; i++) {
 					var tempModel = element.Replys;
-					var html1 = '<div id="replyComment' + id + '-' + index + '-' + i + '" class="mui-media-body replyComment">';
+					var html1 = '<div id="replyComment' + data[4] + idFlag + id + '-' + index + '-' + i + '" class="mui-media-body replyComment">';
 					var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].UserIdName + '</font>';
 					var html3 = '<font class="common-font-family-Regular" style = "font-size:14px">回复</font>';
 					var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].ReplyIdName + '</font>';
@@ -224,8 +224,7 @@ var dynamiclistitem = (function($, mod) {
 		});
 
 		htmlCommentList = htmlCommentList1 + htmlCommentList2 + '</div>';
-
-		var htmlCommentBtn = '<div  class="mui-col-sm-12 mui-col-xs-12"><button id="bottomComment' + id + '" type="button" class="mui-btn dynamic-comment-btn"><p class="mui-pull-left">评论</p></button></div>';
+		var htmlCommentBtn = '<div  class="mui-col-sm-12 mui-col-xs-12"><button id="bottomComment' + data[4] + idFlag + id + '" type="button" class="mui-btn dynamic-comment-btn"><p class="mui-pull-left">评论</p></button></div>';
 
 		html = html + htmlPraiseList + htmlCommentList + htmlCommentBtn;
 
@@ -236,10 +235,8 @@ var dynamiclistitem = (function($, mod) {
 		liElement.appendChild(div);
 
 		ulElement.appendChild(liElement);
-//		console.log(document.getElementById("topList").innerHTML);
-//		console.log(document.getElementById("sliderGroup").innerHTML);
+
 	};
-	
 
 	return mod;
 
