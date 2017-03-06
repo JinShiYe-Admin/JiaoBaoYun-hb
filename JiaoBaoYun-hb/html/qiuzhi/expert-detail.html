@@ -84,19 +84,19 @@
 					</li>
 					<li id="AskLi" class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/question.png" />
-						<div class="mui-media-body" id="titleFlag3">他的提问
+						<div class="mui-media-body" id="titleFlag3">他的提问</div>
 							<div>
 								<p id="AskNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
 					</li>
 					<li id="CommentLi" class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/comment.png" />
-						<div class="mui-media-body" id="titleFlag4">他的评论
+						<div class="mui-media-body" id="titleFlag4">他的评论</div>
 							<div>
 								<p id="CommentNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
 					</li>
 					<li id="inviteNumLi" class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/yaoqing.png" />
-						<div class="mui-media-body" id="titleFlag5">邀请他回答
+						<div class="mui-media-body" id="titleFlag5">邀请他回答</div>
 							<div>
 								<p id="inviteNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right">0<span class="mui-icon mui-icon-forward"></span></p>
 					</li>
@@ -313,8 +313,10 @@
 			nodes.IsLikeNum.innerHTML = '<span style="color: #808080;">' + ExpertsInfo.IsLikeNum + '</span>';
 			nodes.FocusAskNum.innerText = ExpertsInfo.FocusAskNum;
 			nodes.CommentNum.innerHTML = ExpertsInfo.CommentNum + '<span class="mui-icon mui-icon-forward"></span>';
+			console.log(nodes.CommentNum.innerHTML)
 			nodes.IsFocusedManNum.innerText = ExpertsInfo.IsFocusedManNum;
 			nodes.AnswerNum.innerHTML = ExpertsInfo.AnswerNum + '<span class="mui-icon mui-icon-forward"></span>';
+			console.log(nodes.AnswerNum.innerHTML)
 			var inviteNumLi = document.getElementById("inviteNumLi");
 			if(ExpertsInfo.IsExpert == 1) {
 				nodes.inviteNum.innerHTML = ExpertsInfo.InviteNum + '<span class="mui-icon mui-icon-forward"></span>';
