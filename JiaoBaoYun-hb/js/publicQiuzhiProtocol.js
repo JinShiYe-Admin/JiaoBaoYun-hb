@@ -100,6 +100,7 @@ var postDataQZPro_getAskById = function(commonData, wd, callback) {
 //			askTitle: '',//问题标题,200
 //			askNote:'',//问题说明,2000
 //			encAddr:'',//附件地址,300,多个的情况例如：1.jpg|2.jpg
+//			thumbnail: '',//缩略图,3000,
 //			askChannel: '',//问题话题
 //			askMan:'',//提问人
 //			isAnonym: '',//是否匿名
@@ -152,6 +153,7 @@ var postDataQZPro_getAnswerById = function(commonData, wd, callback) {
 //			askId: '',//问题ID
 //			answerContent: '',//回答内容,4000
 //			encAddr: '',//附件地址,300,多个的情况例如：1.jpg|2.jpg
+//			thumbnail:'',//缩略图,3000
 //			answerMan:'',//回答人
 //			isAnonym:''//是否匿名
 //		};
