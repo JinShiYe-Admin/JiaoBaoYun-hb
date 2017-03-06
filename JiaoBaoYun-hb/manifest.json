@@ -2601,7 +2601,8 @@
 					"image/qiuzhi/channel-others.png",
 					"css/qiuzhi/qiuzhi-sub.css",
 					"image/utils/default_personalimage.png",
-					"image/qiuzhi/expert_more.png"
+					"image/qiuzhi/expert_more.png",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",

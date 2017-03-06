@@ -164,7 +164,27 @@
 			"image/qiuzhi/channel-edu.png",
 			"image/qiuzhi/channel-others.png",
 			"image/qiuzhi/channel-health.png",
-			"image/qiuzhi/channel-food.png"
+			"image/qiuzhi/channel-food.png",
+			"js/publicQiuzhiProtocol.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/utils/h5fresh.js"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-answerDetail.html"
@@ -203,7 +223,8 @@
 			"js/sciedu/SciEduHomeItem.js",
 			"js/mui.lazyload.js",
 			"js/mui.lazyload.img.js",
-			"css/sciedu/sciedu.css"
+			"css/sciedu/sciedu.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/show/show_home_1.html": {
@@ -214,7 +235,8 @@
 			"js/mui.previewimage.js",
 			"css/icons-extra.css",
 			"css/utils/preview.css",
-			"css/show/show.css"
+			"css/show/show.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/register/register_phoneNumber.html": {
