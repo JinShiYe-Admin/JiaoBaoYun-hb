@@ -1,14 +1,17 @@
 mui.init();
 var pageIndex = 1; //页码
 var selfId; //本人id
+var expertInfo;//专家信息
+var type;//类型 0 他关注的人 1 关注他的人
 var totalPageCount = 0;
 mui.plusReady(function() {
 	selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-	var expertInfo = plus.webview.currentWebview().data;
+	expertInfo = plus.webview.currentWebview().data.expertInfo;
+	type = plus.webview.currentWebview().data.type;
 	console.log('获取的专家信息：' + JSON.stringify(expertInfo));
 	pageIndex = 1;
-	expertId = expertInfo.UserId;
-	requireData();
+//	expertId = expertInfo.UserId;
+	requireData(type);
 	setListener();
 
 	//上拉下拉注册
@@ -20,7 +23,7 @@ mui.plusReady(function() {
 				pageIndex = 1;
 				flagRef = 0;
 				//获取关注人数据
-				requireData();
+				requireData(type);
 				self.endPullDownToRefresh();
 			}
 		},
@@ -31,7 +34,7 @@ mui.plusReady(function() {
 				flagRef = 1;
 				if(pageIndex <= totalPageCount) {
 					//获取关注人数据
-					requireData();
+					requireData(type);
 				} else {
 					mui.toast('没有更多了');
 				}
@@ -48,32 +51,79 @@ var requireData = function() {
 	if(pageIndex == 1) {
 		events.clearChild(document.getElementById('list-container'));
 	}
-	postDataQZPro_getIsFocusedByUser({
-		userId: selfId,
-		focusId: expertId,
-		pageIndex: pageIndex,
-		pageSize: 10
-	}, wd, function(data) {
-		console.log('获取的关注此专家的人：' + JSON.stringify(data));
+	if(type) {
+		postDataQZPro_getIsFocusedByUser({
+			userId: selfId,
+			focusId: expertInfo.UserId,
+			pageIndex: pageIndex,
+			pageSize: 10
+		}, wd, function(data) {
+			console.log('获取的关注此专家的人：' + JSON.stringify(data));
+			wd.close();
+			if(data.RspCode == 0) {
+				totalPageCount = data.RspData.TotalPage; //获取总页数
+				pageIndex++;
+				var persons = data.RspData.Data; //关注人数据
+				var personIds = [];
+				//遍历获取关注人id数组
+				for(var i in persons) {
+					personIds.push(persons[i].UserId);
+				}
+				//通过id数组，获取人员资料，并重组
+				if(personIds.length > 0) {
+					requirePersonInfo(personIds, persons);
+				}
+			} else {
+				mui.toast(data.RspTxt);
+			}
+		})
+	} else {
+		getFocusUsersByUser(expertInfo.UserId);
+	}
+
+}
+//27.获取某个用户的关注人列表
+function getFocusUsersByUser(focusId) {
+//	personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+	//需要加密的数据
+	var comData = {
+		userId: selfId, //用户ID
+		focusId: focusId, //关注用户ID,查看用户
+		pageIndex: pageIndex, //当前页数
+		pageSize: 10 //每页记录数,传入0，获取总记录数
+	};
+	// 等待的对话框
+	var wd = events.showWaiting();
+	//27.获取某个用户的关注人列表
+	postDataQZPro_getFocusUsersByUser(comData, wd, function(data) {
 		wd.close();
+		console.log('27.获取某个用户的关注人列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
-			totalPageCount = data.RspData.TotalPage; //获取总页数
+			//总页数
+			totalPageCount = data.RspData.TotalPage;
 			pageIndex++;
-			var persons = data.RspData.Data; //关注人数据
+			if(flagRef == 0) { //刷新
+				personArray = data.RspData.Data;
+				//清除节点
+				document.getElementById('list-container').innerHTML = "";
+			} else { //加载更多
+				//合并数组
+				personArray = personArray.concat(data.RspData.Data);
+			}
 			var personIds = [];
 			//遍历获取关注人id数组
-			for(var i in persons) {
-				personIds.push(persons[i].UserId);
+			for(var i in personArray) {
+				personIds.push(personArray[i].UserId);
 			}
 			//通过id数组，获取人员资料，并重组
 			if(personIds.length > 0) {
-				requirePersonInfo(personIds, persons);
+				requirePersonInfo(personIds, personArray);
 			}
 		} else {
 			mui.toast(data.RspTxt);
 		}
-	})
-}
+	});
+};
 /**
  * 获取个人信息 并重组数据
  * @param {Object} personIds
