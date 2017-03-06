@@ -96,11 +96,12 @@ var MultiMedia = (function($, mod) {
 
 		if(this.options.Picture) {
 			document.getElementById('MultiMedia_Picture_Header').addEventListener('tap', function() {
-				if(self.data.Pictures > 0) {
-					self.pictureActionSheet();
-				} else {
-					mui.alert('图片超出' + self.options.TotalPicture + ' 张限制');
-				}
+				//				if(self.data.Pictures > 0) {
+				//					self.pictureActionSheet();
+				//				} else {
+				//					mui.alert('图片超出' + self.options.TotalPicture + ' 张限制');
+				//				}
+				mui.toast('图片功能暂未开放');
 			});
 		}
 		if(this.options.Audio) {
