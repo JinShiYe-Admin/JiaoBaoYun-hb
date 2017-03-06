@@ -148,6 +148,9 @@
 				pullRefresh: {
 					container: '#pullrefresh',
 					down: {
+						contentdown: "下拉加载更多", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+						contentover: "释放立即加载", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+						contentrefresh: "正在加载...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
 						callback: pulldownRefresh
 					},
 				}
@@ -171,14 +174,23 @@
 				subData = main.data; //接收页面传入的参数值
 				console.log('从父页面获取的数据:' + JSON.stringify(subData));
 				//---从父页面获取数据---end---
-//				main.setStyle({
-//					softinputMode:'adjustResize'
-//				});
+				//				main.setStyle({
+				//					softinputMode:'adjustResize'
+				//				});
 				var call_type = ''; //记录最后点击的点到类型
 				var call_input = ''; //记录点到的备注
 				var commit = false; //是否允许提交
 				var commitNum = 0; //记录发布请求的次数
-				MultiMedia.addElement(document.getElementById("MultiMedia"));
+
+				//设置多媒体控件
+				MultiMedia.multiMedia({
+					MultiMediaId: 'MultiMedia', //存放多媒体对象控件的id
+					Audio: true, //是否显示音频图标
+					Video: false, //是否显示视频图标
+					TotalAudio: 0, //音频的个数
+					TotalVideo: 0, //视频的个数
+				});
+
 				//---获取数据---start---
 
 				getNotes(1, 10);
@@ -252,6 +264,11 @@
 				window.addEventListener("addNote", function() {
 					if(!commit) {
 						console.log('不允许发布');
+						var tempMultiMedia = MultiMedia.getMultiMedia();
+						var temp = tempMultiMedia.data.PictureArray;
+						for(var i = 0; i < temp.length; i++) {
+							console.log(i + ' ' + temp[i]);
+						}
 					} else {
 						var parentIds = []; //家长列表
 						var userIds = []; //推送用户ID
@@ -323,7 +340,7 @@
 					var personalUNICK = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
 					var teacherId = personalUTID; //发布教师ID
 					var publisherName = '【' + personalUNICK + '老师】【' + subData.gname + '】' //发布者姓名
-						//var publisherName = personalUNICK; //发布者姓名
+					//var publisherName = personalUNICK; //发布者姓名
 					var noteType = type; //点到记事类型1点到2记事
 					var checkType = ''; //点到类型
 					var msgContent = ''; //内容
@@ -402,8 +419,12 @@
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
 				var type = '';
-				if(data.NoteType == 1) {
-					type = data.CheckTypeStr + ' : ';
+				if(data.NoteType == 1) { //点到
+					if(data.MsgContent != '') {
+						type = data.CheckTypeStr + ' : ';
+					} else {
+						type = data.CheckTypeStr;
+					}
 				}
 				li.innerHTML = '<div class="time">' + data.PublishDate + '</div>\
 								<div id="MsgContent_' + data.TabId + '" class="mui-media-body" style="word-break:break-all;"></div>';
