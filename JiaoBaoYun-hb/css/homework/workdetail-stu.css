@@ -38,6 +38,7 @@ html,body,.mui-content{
 	left: 0;
 	background-color: #F8F9FB;
 	height: 8.8rem;
+	z-index: 88;
 }
 .startWork-hint{
 	padding-top: 1rem;

@@ -7,8 +7,8 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
-		<!--<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />-->
-		<!--<link href="../../css/qiuzhi/qiuzhi-inviteAnswer.css" rel="stylesheet" />-->
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<link href="../../css/qiuzhi/attention-persons.css" rel="stylesheet" />
 		<style>
 			.mui-scroll-wrapper {
 				padding-top: 44px;
@@ -189,22 +189,14 @@
 			var totalPageCount; //总页码
 			var flagRef = 0; //是刷新0，还是加载更多1
 			var personArray = []; //他关注的人总数组
-
 			mui.init();
-
 			mui.plusReady(function() {
-				//从专家页面传值
-				window.addEventListener('heAttentionPersons', function(event) {
-					//赋值
-					ExpertsInfo = event.detail.data;
-					console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
-					//清除节点
-					document.getElementById('list-container').innerHTML = "";
-					pageIndex = 1;
-					flagRef = 0;
-					//27.获取某个用户的关注人列表
-					getFocusUsersByUser(ExpertsInfo.UserId);
-				});
+				personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+				ExpertsInfo = plus.webview.currentWebview().data;
+				document.getElementById('list-container').innerHTML = "";
+				pageIndex = 1;
+				flagRef = 0;
+				getFocusUsersByUser(ExpertsInfo.UserId);
 				setListener();
 				//上拉下拉注册
 				mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
@@ -259,11 +251,11 @@
 						//总页数
 						totalPageCount = data.RspData.TotalPage;
 						pageIndex++;
-						if (flagRef == 0) {//刷新
+						if(flagRef == 0) { //刷新
 							personArray = data.RspData.Data;
 							//清除节点
 							document.getElementById('list-container').innerHTML = "";
-						} else{//加载更多
+						} else { //加载更多
 							//合并数组
 							personArray = personArray.concat(data.RspData.Data);
 						}

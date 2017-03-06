@@ -5,6 +5,7 @@ mui.plusReady(function() {
 	events.preload('doHomework-stu.html', 200);
 	mui.previewImage();//加载预览功能
 	window.addEventListener('workDetail', function(e) {
+		mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
 		personalUTID=parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)
 		homeworkInfo = e.detail.data;
 		if(homeworkInfo.SubmitOnline) {
