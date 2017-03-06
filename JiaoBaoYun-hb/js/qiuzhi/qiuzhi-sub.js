@@ -153,9 +153,9 @@ function expertsItem(channelId, data) {
  */
 function resetExpertsList() {
 	var table = document.getElementById("experts_sc");
-	table.innerHTML = '<a id="allExpert" class="mui-control-item" style="width: 8rem;padding: 1rem 0px;">' +
-		'<span class="mui-icon iconfont icon-gengduo" style="color: #12B7F5;font-size: 28px;margin: 0px;"></span>' +
-		'<p style="color: #12B7F5;">查看全部</p>' +
+	table.innerHTML = '<a id="allExpert" class="mui-control-item">' +
+		'<img src="../../image/qiuzhi/expert_more.png" />' +
+		'<p>查看全部</p>' +
 		'</a>';
 	var scroll = mui('#experts_sw').scroll();
 	scroll.scrollTo(0, 0, 100); //100毫秒滚动到顶
@@ -205,8 +205,12 @@ var setChannelList = function(data) {
 			li.querySelector('.answer-content').answerInfo = data[i];
 		}
 		if(li.querySelector('.answer-img')) {
-			li.querySelector('.answer-img').style.width = li.querySelector(".imgs-container").offsetWidth / 3 + 'px';
-			li.querySelector('.answer-img').style.height = li.querySelector(".imgs-container").offsetWidth / 3 + 'px';
+			var max_width=li.querySelector(".imgs-container").offsetWidth;
+//			li.querySelector('.answer-img').style.position="absolute";
+//			li.querySelector('.answer-img').style= "position:absolute;clip:rect(100px auto 100px 0px)";
+			li.querySelector('.answer-img').style.width = max_width/3+ 'px';
+
+			li.querySelector('.answer-img').style.height = max_width/3 + 'px';
 		}
 	}
 }
@@ -238,9 +242,10 @@ var getImgs = function(imgs) {
 	if(imgs && imgs != "") {
 		var imgArray = imgs.split('|');
 		var imgInner = ''
-		for(var i = 0; i < 3 && i < imgArray.length; i++) {
-			imgInner += '<img src="' + imgArray[i] + '" class="answer-img"/>'
-		}
+//		for(var i = 0; i < 3 && i < imgArray.length; i++) {
+			imgInner = '<img src="' + imgArray[0] + '" class="answer-img"'+
+			'" data-preview-src="' + imgArray[0] + '" data-preview-group="1"/>';
+//		}
 		return imgInner;
 	}
 	return '';

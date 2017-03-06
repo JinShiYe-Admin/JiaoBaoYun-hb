@@ -58,24 +58,26 @@
 			mui.plusReady(function() {
 				jQuery('#answerContent').prop("maxLength", "4000");
 				window.addEventListener('qiuzhi-addAnswer', function(event) {
+					CloudFileUtil.files = [];
 					type = 0;
 					askModel = event.detail.data;
 					document.getElementById('title').innerText = '我要回答';
-					[].forEach.call(document.querySelectorAll('.file-extras'),function(item) {
+					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
 						item.style.display = 'inline-block';
 					})
-					document.getElementById('answerContent').placeholder="添加回答,最多4000字";
-					jQuery('#answerContent').prop("maxLength", "4000");//设置最长
+					document.getElementById('answerContent').placeholder = "添加回答,最多4000字";
+					jQuery('#answerContent').prop("maxLength", "4000"); //设置最长
 					var askTitle = document.getElementById("askTitle");
 					askTitle.innerHTML = askModel.AskTitle;
 				});
 				//加载评论
 				window.addEventListener('add-comment', function(e) {
+					CloudFileUtil.files = [];
 					type = 1;
 					document.getElementById('title').innerText = '我要评论';
-					document.getElementById('answerContent').placeholder="添加评论,最多1000字";
-					jQuery('#answerContent').prop("maxLength", "1000");//设置最长
-					[].forEach.call(document.querySelectorAll('.file-extras'),function(item) {
+					document.getElementById('answerContent').placeholder = "添加评论,最多1000字";
+					jQuery('#answerContent').prop("maxLength", "1000"); //设置最长
+					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
 						item.style.display = 'none';
 					})
 					answerInfo = e.detail.data;
@@ -87,13 +89,24 @@
 				events.addTap('take_pic', function() {
 					if(CloudFileUtil.files.length < 9) {
 						camera.getPic(camera.getCamera(), function(picPath) {
-							plus.nativeUI.showWaiting(storageKeyName.UPLOADING,{
-								back:'none'
+							plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
+								back: 'none'
 							});
 							var saveSpace = storageKeyName.KNOWLEDGE; //保存空间
 							compress.compressPIC(picPath, function(event) {
 								var localPath = event.target;
-								var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 7, 200, 0, saveSpace);
+								var options = {
+									type: 10,
+									thumbSize: {
+										width: 200,
+										height: 200
+									},
+									cropSize: {
+										height: 200
+									}
+								}
+								var data = CloudFileUtil.getSingleImgUploadOptions(localPath, 7, 0, saveSpace, options);
+								//								var data = CloudFileUtil.getQNUpTokenWithManage(localPath, 7, 200, 0, );
 								CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
 									console.log("获取的数据：" + JSON.stringify(datas));
 									if(datas.Status == 1) {
@@ -105,8 +118,10 @@
 											var img = { //图片信息
 												url: tokenInfo.Domain + tokenInfo.Key,
 												thumb: tokenInfo.OtherKey[data.thumbKey],
+												clip: tokenInfo.OtherKey[data.clipKey],
 												type: 1
 											}
+											console.log("获取的图片信息：" + JSON.stringify(img));
 											//关闭等待框
 											plus.nativeUI.closeWaiting();
 											//放置图片
@@ -134,15 +149,27 @@
 					if(CloudFileUtil.files.length < 9) {
 						var picCount = 0; //上传图片计数
 						gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
-							plus.nativeUI.showWaiting(storageKeyName.UPLOADING,{
-								back:'none'
+							plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
+								back: 'none'
 							}); //等待框
 							console.log("保存的路径：" + JSON.stringify(paths));
 							var saveSpace = storageKeyName.KNOWLEDGE; //保存路径
 							compress.compressPics(paths, function(compressedPaths) {
-								console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
-								var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 7, 200, 0, saveSpace); //获取获取token的各参数
-								CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+									console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
+									var options = { //上传七牛后的处理参数
+										type: 1, //处理类型 0：缩略图 1 裁剪 10 缩略图+裁剪
+										thumbSize: {
+											width: 200, //缩略图最大宽度
+											height: 200 //缩略图最大高度
+										},
+										cropSize: {
+											height: 200 //裁剪宽度值
+										}
+									}
+									//多图片处理获取参数
+									var data = CloudFileUtil.getMultipleImgUploadOptions(compressedPaths, 7, 0, saveSpace, options);
+									//								var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 7, 200, 0, saveSpace); //获取获取token的各参数
+									CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
 										console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
 										if(datas.Status == 1) { //成功
 											var tokenInfos = datas.Data; //参数信息
@@ -151,25 +178,26 @@
 												console.log(JSON.stringify(uploadData));
 												var img = {
 													url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
-													thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
+													thumb: tokenInfos[0].Domain + uploadData.responseText.key.replace(saveSpace, saveSpace + "thumb/"),
+													clip: tokenInfos[0].Domain + tokenInfos[0].Key.replace(saveSpace, saveSpace + "clip/"),
 													type: 1
-												}
+												};
 												picCount++;
+												//放置图片
 												CloudFileUtil.setPic(img); //放置图片
 												if(picCount == compressedPaths.length) { //所有图片已上传
 													plus.nativeUI.closeWaiting(); //关闭等待框
 												}
-											});
-
+											})
 										}
-									},
-									//错误的回调
-									function(xhr, type, errorThrown) {
-										console.log("错误类型：" + type + errorThrown);
-										plus.nativeUI.closeWaiting();
-									});
-							});
-
+									})
+								},
+								//错误的回调
+								function(xhr, type, errorThrown) {
+									console.log("错误类型：" + type + errorThrown);
+									plus.nativeUI.closeWaiting();
+								});
+		
 						});
 					} else {
 						mui.toast('上传图片附件不得多于9张！');
@@ -204,7 +232,7 @@
 				var comData = {
 					askId: askModel.TabId, //问题ID
 					answerContent: answerContent, //回答内容,4000
-					encAddr: '', //附件地址,300,多个的情况例如：1.jpg|2.jpg
+					encAddr: getTypeAddress(CloudFileUtil.files).encAddr, //附件地址,300,多个的情况例如：1.jpg|2.jpg
 					answerMan: personalUTID, //回答人
 					isAnonym: isAnonymNo
 				};
@@ -255,11 +283,7 @@
 			var imgs = [];
 
 			//删除图标的点击事件
-			mui('#pictures').on('tap', '.icon-guanbi', function() {
-				imgs.splice(imgs.indexOf(this.parentElement.img), 1);
-				//删除图片111
-				pictures.removeChild(this.parentElement);
-			})
+			CloudFileUtil.setDelPicListener();
 			/**
 			 * 获取接口数据文件及缩略图
 			 * encType: '',//附件类型,1图片2音视频3仅文字

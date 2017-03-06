@@ -64,7 +64,7 @@
 					if(data.RspCode == 0) {
 						mui.toast('成功')
 						leaveContent.value = '';
-						events.fireToPageNone('leave-sub.html','refreshLeaveList');
+						events.fireToPageNone('leaveNew.html','refreshLeaveList');
 						mui.back();
 					} else {
 						mui.toast(data.RspTxt);

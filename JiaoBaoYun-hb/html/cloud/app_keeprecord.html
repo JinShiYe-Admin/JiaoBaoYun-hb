@@ -173,7 +173,7 @@
 				var closeShow = false; //删除按钮是否显示
 				var content = document.body.querySelector('.mui-content');
 				var qunlist = document.getElementById("qunlist"); //群名称显示栏
-				document.querySelector(".mui-content").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1) + 'px';
+				document.querySelector(".mui-content").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1-4) + 'px';
 				document.querySelector("#scrollwrapper").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 90) + 'px';
 
 				mui(".mui-scroll-wrapper").scroll({

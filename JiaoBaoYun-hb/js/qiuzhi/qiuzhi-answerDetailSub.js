@@ -330,13 +330,15 @@ var getPicInner = function(picAddr) {
 	var picInner = '';
 	var win_width = document.getElementById('answer-imgs').offsetWidth;
 	var pic_width = win_width / 3;
+	
 	for(var i in picPaths) {
 		if(picPaths.length < 3) {
 			pic_width = win_width / picPaths.length;
 		}
-		picInner += '<img src=' + picPaths[i] + 'style="width:' + pic_width + 'px;height:"' + pic_width + 'px" ' +
+		picInner += '<img src="' + picPaths[i] + '" style="width:' + pic_width + 'px;height:"' + pic_width + 'px" ' +
 			'" data-preview-src="' + picPaths[i] + '" data-preview-group="1"/>';
 	}
+	console.log('图片路径：'+JSON.stringify(picPaths)+'图片宽度'+pic_width)
 	return picInner;
 }
 /**

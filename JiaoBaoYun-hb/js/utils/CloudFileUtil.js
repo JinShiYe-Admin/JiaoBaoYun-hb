@@ -375,20 +375,155 @@ var CloudFileUtil = (function($, mod) {
 		console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
 		return data;
 	}
-
 	/**
 	 * 需要先加载qiniu.js,cryption.js,events.js,使用实例在publish-answer.js
-	 * 配置获取上传token时需要上传的数据（传多张图片）
+	 * 配置获取上传token时需要上传的数据（传单张图片 自定义参数）
 	 * @author 安琪
-	 * @param {Object} picPaths 图片本地路径
+	 * @param {Object} picPath 图片本地路径
 	 * @param {Object} appId AppID
 	 * @param {Object} maxSize 最大长宽
 	 * @param {Object} spaceType 空间类型0：公共空间 1:私有空间
-	 * @param {Object} uploadSpace 上传的空间
+	 * @param {Object} saveSpace 上传的空间
+	 * @param {Object} manageOptions 处理参数{
+	 * 	type:0 // 0生成缩略图1裁剪 10缩略图和裁剪
+	 * 	thumbSize {width height } 生成缩略图大小
+	 * 	cropSize{width 生成缩略图的长（1-10000）
+	 * 	height  宽（1-10000）
+	 * 	offsX 水平偏移量
+	 *	offsY} 垂直偏移量
+	 * }
 	 * @return {Object} data data.options为获取token的参数之一，data.thumbKey为获取token后获取缩略图地址的key值
 	 */
-	mod.getMultipleUploadDataOptions = function(picPaths, appId, maxSize, spaceType, uploadSpace) {
+	mod.getSingleImgUploadOptions = function(picPath, appId, spaceType, saveSpace, manageOptions) {
 		var data = {};
+		var desKey = getAppKey(appId);
+		var mainSpace;
+		if(spaceType) {
+			mainSpace = storageKeyName.QNPRISPACE; //七牛私有空间
+		} else {
+			mainSpace = storageKeyName.QNPUBSPACE; //七牛公共空间
+		}
+		var QNFileName = events.getFileNameByPath(picPath);
+		var opsData = getOptions(manageOptions, saveSpace, mainSpace, QNFileName);
+		var ops = opsData.ops;
+		if(opsData.thumbKey) {
+			data.thumbKey = opsData.thumbKey;
+		}
+		if(opsData.clipKey) {
+			data.clipKey = opsData.clipKey;
+		}
+		var param = {
+			Bucket: mainSpace,
+			Key: saveSpace + QNFileName,
+			Pops: ops,
+			NotifyUrl: ''
+		}
+		console.log("参数数据：" + JSON.stringify(param))
+		data.options = {
+			AppID: appId,
+			Param: encryptByDES(desKey, JSON.stringify(param))
+		}
+		console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
+		return data;
+	}
+	/**
+	 * 
+	 * @param {Object} manageOptions 处理参数
+	 * @param {Object} saveSpace 保存空间
+	 * @param {Object} mainSpace 主空间
+	 * @param {Object} QNFileName 文件名
+	 */
+	var getOptions = function(manageOptions, saveSpace, mainSpace, QNFileName) {
+		var returnData = {};
+		switch(manageOptions.type) {
+			case 0: //缩略图
+				var thumbSpace = saveSpace + 'thumb/';
+				returnData.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
+				returnData.ops = "imageView2/2/w/" + manageOptions.thumbSize.width + "/h/" + manageOptions.thumbSize.height + "/format/png|saveas/" + returnData.thumbKey;
+				break;
+			case 1: //裁剪
+				var clipSpace = saveSpace + 'clip/';
+				returnData.clipKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + clipSpace + QNFileName);
+				returnData.ops = "imageMogr2/gravity/Center/crop/!" + getIfExist(manageOptions.cropSize.width) + "x" + getIfExist(manageOptions.cropSize.height) + "/format/png|saveas/" + returnData.clipKey;
+				break;
+			case 10: //缩略图+裁剪
+				var thumbSpace = saveSpace + 'thumb/';
+				returnData.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
+				var clipSpace = saveSpace + 'clip/';
+				returnData.clipKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + clipSpace + QNFileName);
+				returnData.ops = "imageView2/2/w/" + manageOptions.thumbSize.width + "/h/" + manageOptions.thumbSize.height + "/format/png|saveas/" + returnData.thumbKey +
+					";imageMogr2/gravity/Center/crop/!" + getIfExist(manageOptions.cropSize.width) + "x" + getIfExist(manageOptions.cropSize.height) + "/format/png|saveas/" + returnData.clipKey;
+				break;
+			default:
+				break;
+		}
+		return returnData;
+	}
+	/**
+	 * 需要先加载qiniu.js,cryption.js,events.js,使用实例在publish-answer.js
+	 * 配置获取上传token时需要上传的数据（传多张图片 自定义参数）
+	 * @author 安琪
+	 * @param {Object} picPaths 图片本地路径数组
+	 * @param {Object} appId AppID
+	 * @param {Object} spaceType 空间类型0：公共空间 1:私有空间
+	 * @param {Object} saveSpace 上传的空间
+	 * @param {Object} manageOptions 处理参数{
+	 * 	type:0 // 0生成缩略图1裁剪 10缩略图和裁剪
+	 * 	thumbSize {width height } 生成缩略图大小
+	 * 	cropSize{width 生成缩略图的长（1-10000）
+	 * 	height  宽（1-10000）
+	 * 	offsX 水平偏移量
+	 *	offsY} 垂直偏移量
+	 * }
+	 * @return {Object} data data.options为获取token的参数之一，data.thumbKey为获取token后获取缩略图地址的key值
+	 */
+	mod.getMultipleImgUploadOptions = function(picPaths, appId, spaceType, saveSpace, uploadOptions) {
+		var data = {};
+		var desKey = getAppKey(appId);
+		var mainSpace;
+		if(spaceType) {
+			mainSpace = storageKeyName.QNPRISPACE; //七牛私有空间
+		} else {
+			mainSpace = storageKeyName.QNPUBSPACE; //七牛公共空间
+		}
+		var QNFileName;//文件名
+		var params = [];
+		for(var i in picPaths) {
+			if(parseInt(i)==0){
+				uploadOptions.type=1;
+			}else{
+				uploadOptions.type=0;
+			}
+			var param = {};
+			param.Bucket = mainSpace;
+			//获取文件路径
+			QNFileName = events.getFileNameByPath(picPaths[i]);
+			param.Key = saveSpace + QNFileName;
+			console.log('key:' + param.Key);
+			//获取处理参数
+			var opsData = getOptions(uploadOptions, saveSpace, mainSpace, QNFileName);
+			param.Pops = opsData.ops;
+			param.NotifyUrl = '';
+			//保存空间值
+			params.push(param);
+		}
+		console.log("参数数据：" + JSON.stringify(params))
+		data.options = {
+			AppID: appId,
+			Param: encryptByDES(desKey, JSON.stringify(params))
+		}
+		console.log("加密后的信息：" + encryptByDES(desKey, JSON.stringify(param)));
+		console.log('加密后的data:' + JSON.stringify(data));
+		return data;
+	}
+	var getIfExist = function(option) {
+		return option ? option : '';
+	}
+	/**
+	 * 
+	 * @param {Object} appId app的id
+	 */
+	var getAppKey = function(appId) {
 		var desKey;
 		switch(appId) {
 			case 0:
@@ -402,10 +537,10 @@ var CloudFileUtil = (function($, mod) {
 				desKey = "zy309309!";
 				break;
 			case 4: //教宝云盘
-				desKey = "jbyp@2017"
+				desKey = "jbyp@2017";
 				break;
 			case 5: //教宝云用户管理
-				desKey = "jbman456"
+				desKey = "jbman456";
 				break;
 			case 6: //家校圈
 				desKey = "jxq789!@";
@@ -416,13 +551,29 @@ var CloudFileUtil = (function($, mod) {
 			default:
 				break;
 		}
+		return desKey;
+	}
+
+	/**
+	 * 需要先加载qiniu.js,cryption.js,events.js,使用实例在publish-answer.js
+	 * 配置获取上传token时需要上传的数据（传多张图片）
+	 * @author 安琪
+	 * @param {Object} picPaths 图片本地路径
+	 * @param {Object} appId AppID
+	 * @param {Object} maxSize 最大长宽
+	 * @param {Object} spaceType 空间类型0：公共空间 1:私有空间
+	 * @param {Object} saveSpace 上传的空间
+	 * @return {Object} data data.options为获取token的参数之一，data.thumbKey为获取token后获取缩略图地址的key值
+	 */
+	mod.getMultipleUploadDataOptions = function(picPaths, appId, maxSize, spaceType, saveSpace) {
+		var data = {};
+		var desKey = getAppKey(appId);
 		var mainSpace;
 		if(spaceType) {
 			mainSpace = storageKeyName.QNPRISPACE; //七牛私有空间
 		} else {
 			mainSpace = storageKeyName.QNPUBSPACE; //七牛公共空间
 		}
-		var saveSpace = uploadSpace;
 		var thumbSpace = saveSpace + 'thumb/';
 		var QNFileName;
 		//		var QNFileNames =[];
