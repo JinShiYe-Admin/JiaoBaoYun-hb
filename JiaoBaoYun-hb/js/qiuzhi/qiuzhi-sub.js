@@ -206,11 +206,11 @@ var setChannelList = function(data) {
 		}
 		if(li.querySelector('.answer-img')) {
 			var max_width=li.querySelector(".imgs-container").offsetWidth;
-			li.querySelector('.answer-img').style.position="absolute";
-			li.querySelector('.answer-img').style= "position:absolute;clip:rect(100px auto 100px 0px)";
-			li.querySelector('.answer-img').style.width = max_width+ 'px';
+//			li.querySelector('.answer-img').style.position="absolute";
+//			li.querySelector('.answer-img').style= "position:absolute;clip:rect(100px auto 100px 0px)";
+			li.querySelector('.answer-img').style.width = max_width/3+ 'px';
 
-//			li.querySelector('.answer-img').style.height = li.querySelector(".imgs-container").offsetWidth / 3 + 'px';
+			li.querySelector('.answer-img').style.height = max_width/3 + 'px';
 		}
 	}
 }
