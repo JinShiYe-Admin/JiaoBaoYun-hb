@@ -153,12 +153,12 @@
 			//判断是不是自己，如果是自己，不显示关注按钮
 			if(ExpertsInfo.UserId == personalUTID) {
 				document.getElementById('focusBtn').style.display = 'none';
-				nodes.titleFlag0.innerText = '我关注的人';
-				nodes.titleFlag1.innerText = '关注我的人';
-				nodes.titleFlag2.innerText = '我的回答';
-				nodes.titleFlag3.innerText = '我的提问';
-				nodes.titleFlag4.innerText = '我的评论';
-				nodes.titleFlag5.innerText = '邀请我回答';
+				nodes.titleFlag0.innerHTML=nodes.titleFlag0.innerHTML.replace('他','我');
+				nodes.titleFlag1.innerHTML=nodes.titleFlag1.innerHTML.replace('他','我');
+				nodes.titleFlag2.innerHTML=nodes.titleFlag2.innerHTML.replace('他','我');
+				nodes.titleFlag3.innerHTML=nodes.titleFlag3.innerHTML.replace('他','我');
+				nodes.titleFlag4.innerHTML=nodes.titleFlag4.innerHTML.replace('他','我');
+				nodes.titleFlag5.innerHTML=nodes.titleFlag5.innerHTML.replace('他','我');
 			} 
 			//22.获取是否已对某个用户关注
 			getUserFocus(ExpertsInfo.UserId);
