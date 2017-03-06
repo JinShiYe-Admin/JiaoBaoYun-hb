@@ -4,11 +4,13 @@ var selfId; //本人id
 var expertInfo;//专家信息
 var type;//类型 0 他关注的人 1 关注他的人
 var totalPageCount = 0;
+var flagRef =0;
 mui.plusReady(function() {
 	selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	expertInfo = plus.webview.currentWebview().data.expertInfo;
 	type = plus.webview.currentWebview().data.type;
 	console.log('获取的专家信息：' + JSON.stringify(expertInfo));
+	flagRef=0;
 	pageIndex = 1;
 //	expertId = expertInfo.UserId;
 	requireData(type);
@@ -102,14 +104,14 @@ function getFocusUsersByUser(focusId) {
 			//总页数
 			totalPageCount = data.RspData.TotalPage;
 			pageIndex++;
-			if(flagRef == 0) { //刷新
+//			if(flagRef == 0) { //刷新
 				personArray = data.RspData.Data;
 				//清除节点
-				document.getElementById('list-container').innerHTML = "";
-			} else { //加载更多
-				//合并数组
-				personArray = personArray.concat(data.RspData.Data);
-			}
+//				document.getElementById('list-container').innerHTML = "";
+//			} else { //加载更多
+//				//合并数组
+//				personArray = personArray.concat(data.RspData.Data);
+//			}
 			var personIds = [];
 			//遍历获取关注人id数组
 			for(var i in personArray) {
