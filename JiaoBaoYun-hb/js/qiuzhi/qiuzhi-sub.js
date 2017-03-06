@@ -153,9 +153,9 @@ function expertsItem(channelId, data) {
  */
 function resetExpertsList() {
 	var table = document.getElementById("experts_sc");
-	table.innerHTML = '<a id="allExpert" class="mui-control-item" style="width: 8rem;padding: 1rem 0px;">' +
-		'<span class="mui-icon iconfont icon-gengduo" style="color: #12B7F5;font-size: 28px;margin: 0px;"></span>' +
-		'<p style="color: #12B7F5;">查看全部</p>' +
+	table.innerHTML = '<a id="allExpert" class="mui-control-item">' +
+		'<img src="../../image/qiuzhi/expert_more.png" />' +
+		'<p>查看全部</p>' +
 		'</a>';
 	var scroll = mui('#experts_sw').scroll();
 	scroll.scrollTo(0, 0, 100); //100毫秒滚动到顶
