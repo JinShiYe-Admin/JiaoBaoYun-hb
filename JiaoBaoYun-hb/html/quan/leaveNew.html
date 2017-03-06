@@ -8,12 +8,175 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
-		<link href="../../css/qiuzhi/qiuzhi-inviteAnswer.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/quan/about-me.css" />
+		<link rel="stylesheet" href="../../css/utils/bubble.css" />
+		<!--<link href="../../css/qiuzhi/qiuzhi-inviteAnswer.css" rel="stylesheet" />-->
+		<style>
+			.mui-scroll-wrapper {
+				padding-top: 44px;
+			}
+			
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-table-view {
+				background: white;
+				/*背景色透明*/
+			}
+			
+			.mui-table-view-cell {
+				background: white;
+				/*cell 背景设为白色*/
+				/*padding: 0;*/
+				/*内边距为0*/
+				/*margin-bottom: 10px;*/
+			}
+			
+			.mui-table-view:before,
+			.mui-table-view:after,
+			.mui-table-view-cell:after {
+				height: 0px;
+				/*去掉横线*/
+			}
+			
+			.dynamic-personal-image {
+				/*个人头像圆形*/
+				border-radius: 50%;
+				width: 50px;
+				height: 50px;
+			}
+			
+			.dynamic-padding-left-10px {
+				padding-left: 10px;
+			}
+			
+			.dynamic-praise-name,
+			.dynamic-comment-name {
+				/*点赞者和评论者的名字*/
+				color: #1277C7;
+			}
+			
+			footer {
+				height: 60px;
+				width: 100%;
+				z-index: 20;
+				background-color: white;
+				border-color: lightgray;
+				border-width: 5px;
+				position: fixed;
+				bottom: 0;
+				display: none;
+			}
+			
+			.footer-center {
+				display: inline-block;
+				width: 75%;
+				padding: 5px;
+				height: 100%;
+			}
+			
+			.footer-center .input-text {
+				background: #fff;
+				border: solid 1px #ddd;
+				padding: 10px !important;
+				font-size: 16px !important;
+				line-height: 18px !important;
+				font-family: verdana !important;
+				overflow: hidden;
+				height: 40px;
+			}
+			
+			.btn-commit {
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				display: inline-block;
+				width: 20%;
+				background-color: rgb(43, 176, 238);
+				border-color: rgb(43, 176, 238);
+				color: white;
+			}
+		</style>
+
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a id="pubLeave" class=" mui-icon iconfont icon-xie  mui-pull-right mui-plus-visible common-color-white"></a>
 			<h1 class="mui-title">留言板</h1>
 		</header>
 		<div id="refreshContainer" class="mui-content mui-fullscreen" style="z-index:0">
@@ -37,10 +200,16 @@
 			var totalPageCount; //总页码
 			var flagRef = 0; //是刷新0，还是加载更多1
 			var leaveArray = []; //留言总数组
-			var personalUTID;//账号id
+			var personalUTID; //账号id
+			var userId
 			mui.init();
 
 			mui.plusReady(function() {
+				userId = plus.webview.currentWebview().data;
+				events.addTap('pubLeave', function() {
+					console.log(JSON.stringify(userId))
+					events.openNewWindowWithData('../quan/pub-leave.html', userId);
+				})
 				personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 				//赋值
 				userID = plus.webview.currentWebview().data;
@@ -55,7 +224,7 @@
 					down: {
 						callback: function() {
 							//清除节点
-//							document.getElementById('list-container').innerHTML = "";
+							//							document.getElementById('list-container').innerHTML = "";
 							var self = this;
 							flagRef = 1;
 							if(pageIndex <= totalPageCount) {
@@ -67,20 +236,14 @@
 							self.endPullDownToRefresh();
 						}
 					},
-//					up: {
-//						callback: function() {
-//							var self = this;
-//							console.log("上拉加载更多");
-//							flagRef = 1;
-//							if(pageIndex <= totalPageCount) {
-//								//24.获取某个用户的回答列表
-//								getUserSpaceMsgsById(userID);
-//							} else {
-//								mui.toast('没有更多了');
-//							}
-//							self.endPullUpToRefresh();
-//						}
-//					}
+					//					up: {
+					//						callback: function() {
+					//							var self = this;
+					//							console.log("上拉加载更多");
+					//
+					//							self.endPullUpToRefresh();
+					//						}
+					//					}
 				});
 
 			});
@@ -120,6 +283,7 @@
 							var tempModel0 = tempRspData[item];
 							//将当前model中id塞到数组
 							tempArray.push(tempModel0.UserId);
+							tempArray.push(tempModel0.ReplyId);
 						}
 						//给数组去重
 						tempArray = arrayDupRemoval(tempArray);
@@ -149,6 +313,9 @@
 											//合并
 											tempModel0 = $.extend(tempModel0, tempModel);
 										}
+										if(tempModel0.ReplyId == tempModel.utid) {
+											tempModel0.ReplyName = tempModel.unick
+										}
 									}
 								}
 							}
@@ -157,11 +324,12 @@
 								leaveArray = tempRspData;
 							} else { //加载更多
 								//合并数组
-//								Array.prototype.push.apply(tempRspData, leaveArray);
-								leaveArray = tempRspData.concat(leaveArray);
+								leaveArray = leaveArray.concat(tempRspData);
 							}
 							console.log('合并后的值为：' + JSON.stringify(leaveArray));
-							setAnswerRecord(tempRspData);
+							var listContainer = document.getElementById('list-container');
+							listContainer.innerHTML = '';
+							setLeaveList(leaveArray);
 						});
 
 					} else {
@@ -174,10 +342,11 @@
 			 * 放置邀请回答记录数据
 			 * @param {Object} list 回答记录数据
 			 */
-			var setAnswerRecord = function(list) {
+			var setLeaveList = function(list) {
 				var listContainer = document.getElementById('list-container');
+				console.log('数量为' + list.length)
 				for(var i in list) {
-					createList(listContainer, list[i])
+					createList(listContainer, list[i], i)
 				}
 			}
 			/**
@@ -185,13 +354,98 @@
 			 * @param {Object} listContainer
 			 * @param {Object} record
 			 */
-			var createList = function(listContainer, record) {
+			var createList = function(listContainer, datasource, index) {
 				var li = document.createElement('li');
-				li.className = 'mui-table-view-cell';
-				//拼接显示
-				li.innerHTML = "<div><p><span>" + record.MsgContent + "</span></p></div>";
-				listContainer.appendChild(li);
+				li.className = 'mui-table-view-cell ableSelectedCell';
+				li.id = 'reply' + index
+				if(datasource.ReplyId == 0) {
+					if(datasource.UserId != userId) {
+						li.innerHTML = '<div style="padding:12px">' +
+							'<div class="mui-media-body mui-pull-left">' +
+							'<img class=" dynamic-personal-image" src="' + datasource.uimg + '">' +
+							'</div>' +
+							'<div class="mui-media-body dynamic-padding-left-10px">' +
+							'<h6>' + events.shortForString(datasource.unick, 12) + '</h6>' +
+							'</div></div>' +
+							'<div style= "margin-top:-10px"  class = "chat_content_left">' +
+							datasource.MsgContent +
+							'<p style = "text-align: right;">' + datasource.MsgDate + '</p></div>'
+					} else {
+						li.innerHTML = '<div style="padding:12px">' +
+							'<div class="mui-media-body mui-pull-right">' +
+							'<img class=" dynamic-personal-image" src="' + datasource.uimg + '">' +
+							'</div>' +
+							'<div class="mui-media-body dynamic-padding-left-10px">' +
+							'<h6>' + events.shortForString(datasource.unick, 12) + '</h6>' +
+							'</div></div>' +
+							'<div style= "margin-top:-10px"  class = "chat_content_right">' +
+							datasource.MsgContent +
+							'<p style = "text-align: right;">' + datasource.MsgDate + '</p></div>'
+					}
+
+					listContainer.insertBefore(li, listContainer.childNodes[0]);
+
+				} else {
+					if(datasource.UserId != userId) {
+						li.innerHTML = '<div style="padding:12px">' +
+							'<div class="mui-media-body mui-pull-left">' +
+							'<img class=" dynamic-personal-image" src="' + datasource.uimg + '">' +
+							'</div>' +
+							'<div class="mui-media-body dynamic-padding-left-10px">' +
+							'<h6>' + events.shortForString(datasource.unick, 12) + '</h6>' +
+							'</div></div>' +
+							'<div style= "margin-top:-10px"  class = "chat_content_left">' + '<span style = "color:rgb(43,176,238);font-size:14px;" class="mui-ellipsis">' +
+							'@' + events.shortForString(datasource.ReplyName, 12) + '</span> ' +
+							datasource.MsgContent +
+							'<p style = "text-align: right;">' + datasource.MsgDate + '</p></div>'
+					} else {
+						li.innerHTML = '<div style="padding:12px">' +
+							'<div class="mui-media-body mui-pull-right">' +
+							'<img class=" dynamic-personal-image" src="' + datasource.uimg + '">' +
+							'</div>' +
+							'<div class="mui-media-body" style = "text-align: right;padding-right:10px">' +
+							'<h6>' + events.shortForString(datasource.unick, 12) + '</h6>' +
+							'</div></div>' +
+							'<div style= "margin-top:-5px; "  class = "chat_content_right">' + '<div class="chat-body ">' +
+							'<div >' + '<span style = "font-size:14px;">' + '<span style = "color:rgb(43,176,238);">' +
+							'@' + events.shortForString(datasource.ReplyName, 12) + '</span>' + '<span>' + " " +
+							datasource.MsgContent + '</span> ' + '</span> </div></div>' + '<p>' + datasource.MsgDate + '</p></div>';
+					}
+					listContainer.insertBefore(li, listContainer.childNodes[0]);
+				}
+				if(flagRef == 0) {
+					var scroll = mui('.mui-scroll-wrapper').scroll();
+					//重新计算布局值，最大滚动的高度等等
+					scroll.reLayout();
+					//滚动到底部
+					scroll.scrollToBottom(100);
+				}else{
+					
+				}
+
 			}
+			window.addEventListener('refreshLeaveList', function() { //发布留言成功后的回调
+				//刷新时将页码归1
+				totalCnt = 0;
+				flagRef = 0;
+				pageIndex = 1;
+				getUserSpaceMsgsById(userId);
+
+			})
+			//点击回复
+			mui('.mui-table-view').on('tap', '.ableSelectedCell', function() {
+				cellIndex = this.id.replace('reply', '');
+
+				console.log(cellIndex);
+				var data = {
+					userId: personalUTID,
+					upperId: leaveArray[cellIndex].TabId,
+					replyUserId: leaveArray[cellIndex].UserId,
+					userOwnerId: userId,
+				}
+				events.openNewWindowWithData('leave-reply.html', data)
+
+			});
 		</script>
 	</body>
 
