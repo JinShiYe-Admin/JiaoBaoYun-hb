@@ -490,7 +490,7 @@ var CloudFileUtil = (function($, mod) {
 		var params = [];
 		for(var i in picPaths) {
 			if(parseInt(i)==0){
-				uploadOptions.type=1;
+				uploadOptions.type=10;
 			}else{
 				uploadOptions.type=0;
 			}

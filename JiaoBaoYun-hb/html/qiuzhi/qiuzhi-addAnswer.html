@@ -59,6 +59,7 @@
 				jQuery('#answerContent').prop("maxLength", "4000");
 				window.addEventListener('qiuzhi-addAnswer', function(event) {
 					CloudFileUtil.files = [];
+					events.clearChild(document.getElementById('pictures'));
 					type = 0;
 					askModel = event.detail.data;
 					document.getElementById('title').innerText = '我要回答';
@@ -73,6 +74,7 @@
 				//加载评论
 				window.addEventListener('add-comment', function(e) {
 					CloudFileUtil.files = [];
+					events.clearChild(document.getElementById('pictures')) 
 					type = 1;
 					document.getElementById('title').innerText = '我要评论';
 					document.getElementById('answerContent').placeholder = "添加评论,最多1000字";
@@ -178,7 +180,7 @@
 												console.log(JSON.stringify(uploadData));
 												var img = {
 													url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
-													thumb: tokenInfos[0].Domain + uploadData.responseText.key.replace(saveSpace, saveSpace + "thumb/"),
+													thumb: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key.replace(saveSpace, saveSpace + "thumb/"),
 													clip: tokenInfos[0].Domain + tokenInfos[0].Key.replace(saveSpace, saveSpace + "clip/"),
 													type: 1
 												};
@@ -233,6 +235,7 @@
 					askId: askModel.TabId, //问题ID
 					answerContent: answerContent, //回答内容,4000
 					encAddr: getTypeAddress(CloudFileUtil.files).encAddr, //附件地址,300,多个的情况例如：1.jpg|2.jpg
+					thumbnail:getTypeAddress(CloudFileUtil.files).encImg,
 					answerMan: personalUTID, //回答人
 					isAnonym: isAnonymNo
 				};
@@ -301,6 +304,7 @@
 						theFile = CloudFileUtil.files[i];
 						if(i == 0) {
 							TAs.encType = theFile.type;
+							TAs.clipAddress=theFile.clip;
 						}
 						encAddrs.push(theFile.url);
 						encImgs.push(theFile.thumb);

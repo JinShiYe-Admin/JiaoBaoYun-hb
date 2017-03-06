@@ -227,6 +227,7 @@ div>.icon-xiangce:before,
 }
 .mui-grid-view.mui-grid-9 .mui-table-view-cell{
 	padding: 0;
+	border: none;
 }
 .icon-fabu-copy:before,.icon-renren:before{
 	font-size: 2.0rem;
