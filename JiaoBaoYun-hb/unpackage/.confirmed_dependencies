@@ -52,7 +52,8 @@
 		"refer": [
 			"html/qiuzhi/qiuzhi-expertAllAnswer.html",
 			"html/qiuzhi/focus-question.html",
-			"html/qiuzhi/qiuzhi-expertAllComment.html"
+			"html/qiuzhi/qiuzhi-expertAllComment.html",
+			"html/qiuzhi/AttentionPersons.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-expertAllAnswer.html": {
@@ -186,10 +187,13 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/utils/h5fresh.js"
+			"js/utils/h5fresh.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
-			"html/qiuzhi/qiuzhi-answerDetail.html"
+			"html/qiuzhi/qiuzhi-answerDetail.html",
+			"html/qiuzhi/qiuzhi-question.html",
+			"html/qiuzhi/expert-detail.html"
 		]
 	},
 	"html/cloud/cloud_home.html": {
@@ -240,7 +244,13 @@
 			"css/utils/preview.css",
 			"css/show/show.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"js/show/show-sub.js"
+			"js/show/show-sub.js",
+			"js/mui.pullToRefresh.js",
+			"css/utils/pullToRefresh.css",
+			"js/mui.pullToRefresh.material.js",
+			"js/mui.lazyload.js",
+			"js/mui.lazyload.img.js",
+			"image/dynamic/icon_praise_small.png"
 		]
 	},
 	"html/register/register_phoneNumber.html": {
@@ -552,6 +562,33 @@
 		"resources": [
 			"css/mine/search.css",
 			"js/mine/apply-group.js"
+		]
+	},
+	"html/qiuzhi/qiuzhi-question.html": {
+		"resources": [
+			"html/qiuzhi/qiuzhi-questionSub.html"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-questionSub.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi-questionSub.html": {
+		"resources": [
+			"js/qiuzhi/qiuzhi-questionSub.js",
+			"css/qiuzhi/qiuzhi-questionSub.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/qiuzhi/qiuzhi-addAnswer.html": {
+		"resources": [
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/qiuzhi/AttentionPersons.html": {
+		"resources": [
+			"css/qiuzhi/attention-persons.css",
+			"js/qiuzhi/attentionPersons.js",
+			"js/utils/h5fresh.js"
 		]
 	}
 }

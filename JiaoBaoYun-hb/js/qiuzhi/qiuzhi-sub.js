@@ -201,16 +201,11 @@ var setChannelList = function(data) {
 		li.className = "mui-table-view-cell";
 		li.innerHTML = getInnerHTML(data[i]);
 		list.appendChild(li);
-		if(li.querySelector('.answer-content')){
+		if(li.querySelector('.answer-content')) {
 			li.querySelector('.answer-content').answerInfo = data[i];
 		}
 		if(li.querySelector('.answer-img')) {
-			var max_width=li.querySelector(".imgs-container").offsetWidth;
-//			li.querySelector('.answer-img').style.position="absolute";
-//			li.querySelector('.answer-img').style= "position:absolute;clip:rect(100px auto 100px 0px)";
-			li.querySelector('.answer-img').style.width = max_width/3+ 'px';
-
-			li.querySelector('.answer-img').style.height = max_width/3 + 'px';
+			li.querySelector('.answer-img').style.width = "100%";
 		}
 	}
 }
@@ -221,9 +216,9 @@ var getInnerHTML = function(cell) {
 		'</div>' +
 		'<div class="ask-container">' +
 		'<h5 class="single-line ask-title" askId="' + cell.TabId + '">[' + cell.AskChannel + ']' + cell.AskTitle + '</h5>';
-	if(cell.AnswerContent && cell.AnswerContent.length > 0) {
-		inner += '<p class="answer-content triple-line" answerInfo="' + cell.AnswerId + '">' + cell.AnswerContent + '</p>' +
-			'<div class="imgs-container">' + getImgs(cell.AnswerEncAddr) + '</div>' +
+	if(cell.AnswerContent && cell.AnswerContent.length  > 0) {
+		inner += '<div class="imgs-container">' + getImgs(cell) + '</div>' +
+			'<p class="answer-content triple-line" answerInfo="' + cell.AnswerId + '">' + cell.AnswerContent + '</p>' +
 			'</div>' +
 			'<div class="extra-info"></div>' +
 			'<p class="question-bottom">' + cell.IsLikeNum + '赞·' + cell.CommentNum + '评论·' + setFocusCondition(cell) + '</p></div>'
@@ -238,14 +233,12 @@ var setFocusCondition = function(cell) {
 	}
 	return '未关注';
 }
-var getImgs = function(imgs) {
-	if(imgs && imgs != "") {
-		var imgArray = imgs.split('|');
-		var imgInner = ''
-//		for(var i = 0; i < 3 && i < imgArray.length; i++) {
-			imgInner = '<img src="' + imgArray[0] + '" class="answer-img"'+
-			'" data-preview-src="' + imgArray[0] + '" data-preview-group="1"/>';
-//		}
+var getImgs = function(cell) {
+	if(cell.AnswerCutImg && cell.AnswerCutImg != "") {
+		var imgArray = cell.AnswerEncAddr.split('|');
+		var clipImg = cell.AnswerCutImg;
+		imgInner = '<img src="' + clipImg + '" class="answer-img"' +
+			'" data-preview-src="' + imgArray[0] + '" data-preview-group="' + clipImg + '"/>';
 		return imgInner;
 	}
 	return '';

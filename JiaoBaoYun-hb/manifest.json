@@ -3134,7 +3134,8 @@
 					"js/libs/jquery.js",
 					"js/utils/signHmacSHA1.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
