@@ -861,7 +861,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/register/yanZhengMa.html"
@@ -1136,7 +1137,10 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"css/homework/subjects-icon.css"
+					"css/homework/subjects-icon.css",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js",
+					"css/utils/preview.css"
 				],
 				"refer": [
 					"html/homework/homework-comment.html"
@@ -1775,10 +1779,14 @@
 					"js/mine/approval-apply.js",
 					"js/utils/events.js",
 					"image/utils/default_personalimage.png",
-					"css/mine/apply.css"
+					"css/mine/apply.css",
+					"fonts/fangzheng.ttf",
+					"css/iconfont/iconfont.css",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
-					"html/mine/add-info.html"
+					"html/mine/add-info.html",
+					"html/mine/apply-group.html"
 				],
 				"priority": 0
 			},
@@ -1852,7 +1860,8 @@
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
 					"css/mine/apply.css",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -1909,7 +1918,8 @@
 					"css/mine/apply.css",
 					"js/utils/events.js",
 					"html/mine/apply-group.html",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"css/mine/search.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -2392,7 +2402,10 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"js/publicHomeworkProtocol.js",
 					"css/homework/subjects-icon.css",
-					"css/iconfont/iconfont.css"
+					"css/iconfont/iconfont.css",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js",
+					"css/utils/preview.css"
 				],
 				"refer": [
 					"html/homework/pic-detail.html"
@@ -3271,7 +3284,8 @@
 					"js/mui.zoom.js",
 					"js/mui.previewimage.js",
 					"css/utils/preview.css",
-					"css/show/show.css"
+					"css/show/show.css",
+					"js/show/show-sub.js"
 				],
 				"refer": [],
 				"priority": 0
