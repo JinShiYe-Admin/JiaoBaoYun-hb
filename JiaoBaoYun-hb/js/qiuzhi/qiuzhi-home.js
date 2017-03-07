@@ -1,5 +1,6 @@
 events.initSubPage('qiuzhi-sub.html', '', -(localStorage.getItem('StatusHeightNo') * 1 + 5));
 var allChannels; //所有话题
+var channelInfo;//当前话题
 mui.plusReady(function() {
 	document.getElementById('subjects-container').innerHTML = '';
 	document.getElementById("sliderGroup").innerHTML = '';
@@ -7,7 +8,10 @@ mui.plusReady(function() {
 	curPage.addEventListener("show", function(e) {
 		//document.getElementById('subjects-container').innerHTML = '';
 		if(allChannels && allChannels.length > 0) {
-
+				if(!channelInfo){//如果当前频道不存在
+					channelInfo=allChannels[0];//
+					events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: channelInfo, allChannels: allChannels });
+				}
 		} else {
 			mui('#slider_sw').scroll().scrollTo(0, 0, 0);
 			requestAllChannels(setChannels);
@@ -76,11 +80,12 @@ var setChannels = function(subjectArr) {
 	}
 //	document.body.querySelector('.main-navigation').style.width = document.body.querySelector('.more-navigation').offsetLeft + 'px';
 	mui('#slider').slider();
-	events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: allChannels[0], allChannels: allChannels });
+	channelInfo=allChannels[0];
+	events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: channelInfo, allChannels: allChannels });
 }
 var setListener = function() {
 	mui('#subjects-container').on('tap', '.mui-control-item', function() {
-		var channelInfo = this.info;
+		channelInfo= this.info;
 		events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: channelInfo, allChannels: allChannels });
 	});
 }
