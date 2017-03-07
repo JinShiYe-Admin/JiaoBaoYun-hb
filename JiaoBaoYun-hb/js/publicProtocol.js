@@ -1302,7 +1302,7 @@ var postDataPro_addUserSpaceCommentReply = function(commonData, wd, callback) {
 //所需参数
 //		var comData = {
 //			userId: '',//用户ID
-//			publisherId:'',//发布用户ID
+//			publisherIds:''//发布用户ID,Array,例如[1,2,3]
 //		};
 //1为正确
 var postDataPro_setUserSpaceReadByUser = function(commonData, wd, callback) {
@@ -1316,7 +1316,7 @@ var postDataPro_setUserSpaceReadByUser = function(commonData, wd, callback) {
 //所需参数
 //		var comData = {
 //			userId: '',//用户ID
-//			userSpaceId:'',//用户空间ID
+//			userSpaceId:''//用户空间ID
 //		};
 //1为正确
 var postDataPro_setUserSpaceLikeByUser = function(commonData, wd, callback) {
@@ -1756,7 +1756,7 @@ var postDataPro_getStudentName = function(commonData, wd, callback) {
 //			pageIndex: '',//当前页数
 //			pageSize: ''//每页记录数
 //		};
-//返回:model_userNoteInfo
+//返回:model_userNoteInfo,model_userComment
 var postDataPro_getAllUserSpacesByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};

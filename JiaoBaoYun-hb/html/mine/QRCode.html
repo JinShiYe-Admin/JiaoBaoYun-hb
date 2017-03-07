@@ -15,48 +15,46 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">生成二维码</h1>
+			<h1 class="mui-title">群二维码名片</h1>
 		</header>
-		<div class="mui-content">
-			<div class="qrcode" style="background: white;height: 256px; width: 256px;margin-top: 10px;"></div>
+		
+		<!--<div class="mui-content" style="background: black none repeat scroll 0% 0%;">
+			<div id="" style="background: white;/*! margin-top: 10px; *//*! margin-left: 10px; *//*! margin-right: 10px; *//*! margin-bottom: 10px; */margin: 2.5rem;">
+				<div style="padding: 1.8rem;/*! vertical-align: middle; *//*! line-height: 4.5rem; *//*! height: 4.5rem; */">
+					<img src="../../image/cloud/cloud_0_banjiguanli.png" style="width: 4.5rem;height: 4.5rem;float: left;"><span style="line-height: 4.5rem;/*! height: 4.5rem; *//*! margin: 1.8rem 0; *//*! display: inline-block; */margin-left: 1rem;">weijjj</span>
+				</div>
+				<div class="qrcode" style="background: white;/*! height: 256px; */ /*! width: 256px; */margin-top: 10px;text-align: center;padding: 2.5rem;"><img src="../../image/cloud/cloud_0_banjiguanli.png" style="width: 100%;height: 100%;"></div>
+			</div>
+
+		</div>-->
+		
+		<div class="mui-content mui-fullscreen" style="background: black;"> 
+			<div id=""  style="background: white; margin: 2.5rem; position: absolute;top: 5.3rem;right: 0;bottom: 7.5rem;left: 0;">
+				<div style="padding: 1.8rem;">
+					<img src="../../image/cloud/cloud_0_banjiguanli.png" style="width: 4.5rem;height: 4.5rem;float: left;"><span style="line-height: 4.5rem;margin-left: 1rem;">weijjj</span>
+				</div>
+				<div class="qrcode" style="background: white;text-align: center;padding: 1rem;width: 100%;height: 100%;"></div>
+			</div>
+
 		</div>
 
 		<script src="../../js/mui.min.js"></script>
-		
-		<!--<script src="../../js/libs/jquery.js" type="text/javascript" charset="utf-8"></script>-->
-		<!--<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>-->
-		<!--<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
 
 		<script type="text/javascript">
-			var qrcodeUrl = 'http://192.168.0.44:8511/api/CloudApi/PostInvGuser?appid=HBuilder&beinvnick=qw&beinvutid=1&gid=1&lnkinfid=0&mstype=2&sign=t3an9MjSjkWa7L3A4FZF7fWyF2Y=&stat=0&token=E2m1FBHehToMhQy4ineh2wUFQcw=&urel=&utid=1&uuid=70C72521-2CD6-45DD-AF6E-375654EB734A&vtp=2';
-//			var qrcodeUrl = "http://blog.csdn.net/zhuming3834";
+			var qrcodeUrl = '12'; //要加入的群号
 
-			mui.init();
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
 			mui.plusReady(function() {
-//				qrcodeUrl = QRCodeUrl(storageKeyName.MAINURL + 'PostInvGuser', enData, comData, 1);  
 				makrQRCode();
 			});
 
 			// 制作二维码
 			function makrQRCode() {
-				console.log('12121:'+$('.qrcode'));
 				$('.qrcode').qrcode(qrcodeUrl);
 			}
-			//12.邀请用户入群
-			//需要参数
-			var comData = {
-				gid: '1', //群ID
-				beinvutid: '1', //被邀请人ID
-				beinvnick: 'qw', //被邀请人昵称
-				mstype: '2', //被邀请人类型,0家长,2老师,3学生
-				stat: '0', //入群状态,0待审,1同意
-				lnkinfid: '0', //关联资料ID,无资料关联填写0
-				urel: '', //与资料关系,与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
-				vtp: '2' //邀请类型,0老师邀请家长,1个人申请入群,2群员邀请群员
-			};
-			//需要加密的数据
-			var enData = {};
-//			qrcodeUrl = QRCodeUrl(storageKeyName.MAINURL + 'PostInvGuser', enData, comData, 1);
 		</script>
 	</body>
 
