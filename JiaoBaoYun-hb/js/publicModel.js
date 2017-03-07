@@ -318,6 +318,7 @@ var publicModel = (function($, mod) {
 		AskNote:'',//问题说明
 		AskEncAddr:'',//问题附件地址,多个的情况例如：1.jpg|2.jpg
 		AskThumbnail:'',//问题缩略图
+		AskCutImg:'',//问题剪切图
 		AskChannelId	:'',//问题所属话题ID
 		AskChannel:'',//	问题所属话题
 		AskMan:'',//	提问人
@@ -328,6 +329,7 @@ var publicModel = (function($, mod) {
 		IsLikeNum:'',//回答点赞数
 		AnswerEncAddr:'',//回答附件,多个的情况例如：1.jpg|2.jpg
 		AnswerThumbnail:'',//回答缩略图
+		AnswerCutImg	:'',//回答剪切图
 		AnswerMan:'',//回答人
 		AnswerTime:'',//回答时间
 		IsFocused:'',//是否已关注
@@ -341,6 +343,7 @@ var publicModel = (function($, mod) {
 		AskNote:'',//问题说明
 		AskEncAddr:'',//问题附件地址,多个的情况例如：1.jpg|2.jpg
 		AskThumbnail:'',//问题缩略图
+		AskCutImg:'',//问题剪切图
 		AskChannelId:'',//问题所属话题ID
 		AskChannel:'',//	问题所属话题
 		ReadNum:'',//阅读数
@@ -365,6 +368,7 @@ var publicModel = (function($, mod) {
 		AnswerContent:'',//	回答内容
 		AnswerEncAddr:'',//回答附件地址,多个的情况例如：1.jpg|2.jpg
 		AnswerThumbnail:'',//回答缩略图
+		AnswerCutImg	:'',//回答剪切图
 		AnswerMan:'',//	回答人
 		AnswerTime:'',//	回答时间
 		IsAnonym	:'',//是否匿名
@@ -382,6 +386,7 @@ var publicModel = (function($, mod) {
 		AnswerContent:'',//	回答内容
 		AnswerEncAddr:'',//回答附件地址,多个的情况例如：1.jpg|2.jpg
 		AnswerThumbnail:'',//回答缩略图
+		AnswerCutImg:'',//回答剪切图
 		AnswerMan:'',//	回答人
 		AnswerManNote:'',//	回答人简介
 		IsAnonym	:'',//是否匿名

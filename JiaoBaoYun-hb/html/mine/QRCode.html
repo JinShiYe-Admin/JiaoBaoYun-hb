@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<script src="../../js/utils/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/jquery.qrcode.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">生成二维码</h1>
+		</header>
+		<div class="mui-content">
+			<div class="qrcode" style="background: white;height: 256px; width: 256px;margin-top: 10px;"></div>
+		</div>
+
+		<script src="../../js/mui.min.js"></script>
+		
+		<!--<script src="../../js/libs/jquery.js" type="text/javascript" charset="utf-8"></script>-->
+		<!--<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>-->
+		<!--<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>-->
+
+		<script type="text/javascript">
+			var qrcodeUrl = 'http://192.168.0.44:8511/api/CloudApi/PostInvGuser?appid=HBuilder&beinvnick=qw&beinvutid=1&gid=1&lnkinfid=0&mstype=2&sign=t3an9MjSjkWa7L3A4FZF7fWyF2Y=&stat=0&token=E2m1FBHehToMhQy4ineh2wUFQcw=&urel=&utid=1&uuid=70C72521-2CD6-45DD-AF6E-375654EB734A&vtp=2';
+//			var qrcodeUrl = "http://blog.csdn.net/zhuming3834";
+
+			mui.init();
+			mui.plusReady(function() {
+//				qrcodeUrl = QRCodeUrl(storageKeyName.MAINURL + 'PostInvGuser', enData, comData, 1);  
+				makrQRCode();
+			});
+
+			// 制作二维码
+			function makrQRCode() {
+				console.log('12121:'+$('.qrcode'));
+				$('.qrcode').qrcode(qrcodeUrl);
+			}
+			//12.邀请用户入群
+			//需要参数
+			var comData = {
+				gid: '1', //群ID
+				beinvutid: '1', //被邀请人ID
+				beinvnick: 'qw', //被邀请人昵称
+				mstype: '2', //被邀请人类型,0家长,2老师,3学生
+				stat: '0', //入群状态,0待审,1同意
+				lnkinfid: '0', //关联资料ID,无资料关联填写0
+				urel: '', //与资料关系,与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
+				vtp: '2' //邀请类型,0老师邀请家长,1个人申请入群,2群员邀请群员
+			};
+			//需要加密的数据
+			var enData = {};
+//			qrcodeUrl = QRCodeUrl(storageKeyName.MAINURL + 'PostInvGuser', enData, comData, 1);
+		</script>
+	</body>
+
+</html>
