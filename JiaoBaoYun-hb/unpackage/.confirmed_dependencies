@@ -366,7 +366,8 @@
 			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
-			"html/qiuzhi/qiuzhi-addAnswer.html"
+			"html/qiuzhi/qiuzhi-addAnswer.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/mine/account-info.html": {
@@ -658,6 +659,20 @@
 			"css/qiuzhi/attention-persons.css",
 			"js/qiuzhi/attentionPersons.js",
 			"js/utils/h5fresh.js"
+		]
+	},
+	"html/quan/zone_main.html": {
+		"resources": [
+			"html/quan/zonep_sub.html"
+		],
+		"refer": [
+			"html/quan/zonep_sub.html"
+		]
+	},
+	"html/quan/zonep_sub.html": {
+		"resources": [
+			"image/dynamic/icon_praise_small.png",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }

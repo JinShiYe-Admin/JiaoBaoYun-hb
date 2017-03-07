@@ -2858,7 +2858,8 @@
 					"image/qiuzhi/arraw-down.png"
 				],
 				"refer": [
-					"html/qiuzhi/qiuzhi-addAnswer.html"
+					"html/qiuzhi/qiuzhi-addAnswer.html",
+					"html/quan/zone_main.html"
 				],
 				"priority": 0
 			},
