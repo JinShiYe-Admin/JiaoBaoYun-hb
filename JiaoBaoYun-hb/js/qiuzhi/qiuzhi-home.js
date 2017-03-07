@@ -74,7 +74,7 @@ var setChannels = function(subjectArr) {
 		subjects.appendChild(a);
 		document.getElementById("sliderGroup").appendChild(elementBot);
 	}
-	document.body.querySelector('.main-navigation').style.width = document.body.querySelector('.more-navigation').offsetLeft + 'px';
+//	document.body.querySelector('.main-navigation').style.width = document.body.querySelector('.more-navigation').offsetLeft + 'px';
 	mui('#slider').slider();
 	events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: subjectArr[0], allChannels: allChannels });
 }
