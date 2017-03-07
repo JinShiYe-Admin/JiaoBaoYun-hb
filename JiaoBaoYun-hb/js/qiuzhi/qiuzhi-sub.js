@@ -201,8 +201,8 @@ var setChannelList = function(data) {
 		li.className = "mui-table-view-cell";
 		li.innerHTML = getInnerHTML(data[i]);
 		list.appendChild(li);
-		if(li.querySelector('.answer-content')) {
-			li.querySelector('.answer-content').answerInfo = data[i];
+		if(li.querySelector('.answer-container')) {
+			li.querySelector('.answer-container').answerInfo = data[i];
 		}
 		if(li.querySelector('.answer-img')) {
 			li.querySelector('.answer-img').style.width = "100%";
@@ -217,9 +217,9 @@ var getInnerHTML = function(cell) {
 		'<div class="ask-container">' +
 		'<h5 class="single-line ask-title" askId="' + cell.TabId + '">[' + cell.AskChannel + ']' + cell.AskTitle + '</h5>';
 	if(cell.AnswerContent && cell.AnswerContent.length  > 0) {
-		inner += '<div class="imgs-container">' + getImgs(cell) + '</div>' +
+		inner += '<div class="answer-container"><div class="imgs-container">' + getImgs(cell) + '</div>' +
 			'<p class="answer-content triple-line" answerInfo="' + cell.AnswerId + '">' + cell.AnswerContent + '</p>' +
-			'</div>' +
+			'</div></div>' +
 			'<div class="extra-info"></div>' +
 			'<p class="question-bottom">' + cell.IsLikeNum + '赞·' + cell.CommentNum + '评论·' + setFocusCondition(cell) + '</p></div>'
 	} else {
@@ -249,7 +249,7 @@ var getImgs = function(cell) {
  */
 var getChannelIcon = function(cell) {
 	var iconSourse = "../../image/qiuzhi/";
-	switch(cell.AskChannel) {
+	switch(cell.AskChannel) { 
 		case "教学":
 			iconSourse += "channel-edu.png";
 			break;
@@ -304,7 +304,7 @@ var setListener = function() {
 	});
 
 	//点击回答
-	mui('.mui-table-view').on('tap', '.answer-content', function() {
+	mui('.mui-table-view').on('tap', '.answer-container', function() {
 		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', this.answerInfo);
 		console.log('传递的answerInfo:' + JSON.stringify(this.answerInfo));
 		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();

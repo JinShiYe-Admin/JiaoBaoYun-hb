@@ -3136,7 +3136,15 @@
 					"js/utils/signHmacSHA1.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"css/quan/custom-textarea.css",
+					"js/utils/cryption.js",
+					"fonts/fangzheng.ttf",
+					"js/utils/camera.js",
+					"js/utils/CloudFileUtil.js",
+					"js/utils/compress.js",
+					"js/qiniu/qiniu.js",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -3287,7 +3295,8 @@
 					"js/mui.previewimage.js",
 					"css/utils/preview.css",
 					"css/show/show.css",
-					"js/show/show-sub.js"
+					"js/show/show-sub.js",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [],
 				"priority": 0
