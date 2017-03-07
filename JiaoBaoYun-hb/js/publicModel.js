@@ -210,6 +210,17 @@ var publicModel = (function($, mod) {
 		NoReadCnt:''//未读条数
 	}
 	
+	//74.（用户空间）获取多用户空间所有用户动态列表
+	mod.model_userComment = {
+		TabId:'',//评论ID
+		UserId:'',//	评论用户ID
+		ReplyId:'',//回复用户ID
+		CommentContent:'',//	评论或回复内容
+		CommentDate:'',//评论或回复时间
+		UpperId:'',//上级ID
+		Replys:''//	下级回复列表
+	}
+	
 	//用户空间，用户列表
 	mod.model_userSpaceInfo = {
 		TabId:'',//评论ID
