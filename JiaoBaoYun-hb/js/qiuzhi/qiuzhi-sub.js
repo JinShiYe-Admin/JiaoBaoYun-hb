@@ -262,6 +262,9 @@ var getChannelIcon = function(cell) {
 		case "其他":
 			iconSourse += "channel-others.png";
 			break;
+		case "科普":
+			iconSourse+="channel-science.png";
+			break;
 		default:
 			iconSourse = "";
 			break;
