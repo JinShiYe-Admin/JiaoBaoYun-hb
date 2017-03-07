@@ -29,7 +29,7 @@ mui.plusReady(function() {
 		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
-		document.querySelector('img').src = img ? img : storageKeyName.storageKeyName.DEFAULTPERSONALHEADIMAGE;
+		document.querySelector('img').src = updateHeadImg(img,2);
 	});
 	window.addEventListener('closeWaiting', function() {
 		waitingDia.close();

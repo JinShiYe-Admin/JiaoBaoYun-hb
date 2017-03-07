@@ -51,10 +51,10 @@
 				if(name == '') {
 					mui.toast('不允许为空');
 					return;
-				}else if(name.length > 200) {
+				} else if(name.length > 200) {
 					mui.toast('不能超过200字');
 					return;
-				}else {
+				} else {
 					if(tempIndex.indexOf('-') >= 0) {
 						var indexArr = tempIndex.split('-');
 						var id = indexArr[0];
@@ -85,8 +85,8 @@
 						postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
 							wd.close();
 							console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
-							mui.fire(plus.webview.currentWebview().opener(),'refreshShow')
-							mui.fire(plus.webview.currentWebview().opener(),'refreshZonep')
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow')
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep')
 							mui.back();
 
 						})
@@ -101,8 +101,8 @@
 						postDataPro_addUserSpaceComment(comData, wd, function(data) {
 							wd.close();
 							console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
-							mui.fire(plus.webview.currentWebview().opener(),'refreshShow')
-							mui.fire(plus.webview.currentWebview().opener(),'refreshZonep')
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow')
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep')
 							mui.back();
 
 						})

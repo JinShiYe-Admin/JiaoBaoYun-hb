@@ -20,7 +20,7 @@
 	z-index: 666;
 	font-size: 3rem;
 	color: white;
-	padding: 1rem;
+	padding: 12px 10.5px;
 	background-color: #12B7F5;
 	border-radius: 50%;
 }
@@ -35,6 +35,7 @@ p {
 
 
 /*专家图标大小*/
+
 .expert-icon {
 	font-size: 1.5rem;
 	color: white;
@@ -86,7 +87,7 @@ p {
 }
 
 .mui-segmented-control.mui-scroll-wrapper {
-	height: 10rem;
+	height: 11rem;
 }
 
 .mui-segmented-control.mui-segmented-control-inverted .mui-control-item img {
@@ -109,7 +110,7 @@ p {
 }
 
 .mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
-	border: 1px solid #E4E4E4;
+	border: 1px solid rgba(228,228,228,0.5);
 	height: 9rem;
 	width: 8.5rem;
 	vertical-align: middle;
@@ -124,7 +125,9 @@ p {
 	margin-top: 0.5rem;
 }
 
+
 /*专家风采*/
+
 .export-show {
 	color: #B7B7B7;
 	line-height: normal;
@@ -133,14 +136,17 @@ p {
 
 
 /*问题标题*/
+
 .ask-title {
 	color: #222222;
 }
 
 
 /*频道信息*/
+
 .question-bottom,
 .channel-title {
+	font-size:1.12rem;
 	color: #B7B7B7;
 }
 
@@ -155,7 +161,13 @@ p {
 }
 
 #experts_sw .mui-control-item {
-	margin-top: 0.25rem;
+	margin-top: 0.5rem;
 	border-radius: 3px;
-	box-shadow: 0px 0px 8px rgba(228, 228, 228, 0.7);
+
+	/*box-shadow: -1px 0px 2px rgba(228,228,228,0.4),
+	1px 2px 1px rgba(228,228,228,0.4);*/
+
+	/*box-shadow: -1px 0px 2px rgba(230,230,230,0.6),
+	1px 2px 1px rgba(230,230,230,0.4);*/
+	box-shadow: 0px 2px 4px rgba(183, 183, 183, 0.2);
 }

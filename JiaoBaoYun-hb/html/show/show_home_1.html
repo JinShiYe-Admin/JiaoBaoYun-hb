@@ -16,193 +16,15 @@
 		<link rel="stylesheet" href="../../css/utils/pullToRefresh.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/icons-extra.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
-		
 		<link rel="stylesheet" href="../../css/show/show.css" />
-		<style type="text/css">
-			.mui-table-view-cell,
-.mui-table-view-cell:active {
-	background-color: #FFFFFF;
-}
-
-.mui-table-view {
-	background: transparent;
-	/*背景色透明*/
-}
-
-.mui-table-view-cell {
-	background: white;
-	/*cell 背景设为白色*/
-	padding: 0;
-	/*内边距为0*/
-	margin-bottom: 10px;
-}
-
-.mui-table-view:before,
-.mui-table-view:after,
-.mui-table-view-cell:after {
-	height: 0px;
-	/*去掉横线*/
-}
-
-.mui-row-padding-8px {
-	padding: 8px;
-	/*内边距为8px*/
-	padding: 12px;
-}
-
-.dynamic-personal-image {
-	/*个人头像圆形*/
-	border-radius: 50%;
-	width: 50px !important;
-	height: 50px;
-}
-
-.dynamic-image-div {
-	/*内容中图片之间的内边距*/
-	padding: 1px;
-}
-
-.dynamic-image {
-	/*内容的图片占全部空间*/
-	width: 100%;
-	height: 100%;
-}
-
-.dynamic-icon,
-.dynamic-icon-praise,
-.dynamic-icon-comment,
-.dynamic-icon-forward {
-	/*点赞，评论，分享的图标*/
-	height: 30px;
-	width: 30px;
-	margin-left: 25px;
-}
-
-.dynamic-icon-Level {
-	/*等级图标*/
-	height: 20px;
-	margin-left: 10px;
-}
-
-.dynamic-icon-praise-small {
-	/*点赞列表的小图标*/
-	height: 15px;
-	width: 15px !important;
-	margin-right: 5px;
-	margin-bottom: 0px;
-}
-
-.dynamic-margin-top-10px {
-	margin-top: 10px;
-}
-
-.dynamic-padding-left-10px {
-	padding-left: 10px;
-}
-
-.dynamic-line {
-	/*点赞列表上面的横线*/
-	height: 1px;
-	width: 100%;
-	background: #e4e4e4;
-}
-
-.dynamic-contenttext {
-	/*动态内容*/
-	font-family: '微软雅黑 Regular', '微软雅黑';
-	/*字体样式*/
-}
-
-.dynamic-praise-name,
-.dynamic-comment-name {
-	/*点赞者和评论者的名字*/
-	color: #1277C7;
-	font-size: 14px;
-}
-
-.replyComment {
-	padding-top: 5px;
-}
-
-.dynamic-comment-btn {
-	/*底部的评论按钮*/
-	width: 100%;
-	margin-top: 10px;
-	border-width: 1px;
-	border-color: #e4e4e4;
-}
-
-.dynamic-image-more {
-	/*更多图片*/
-	position: absolute;
-	width: 99%;
-	height: 99%;
-	font-size: 40px;
-	color: white;
-	text-align: center;
-	background-color: rgba(0, 0, 0, 0.3);
-}
-
-.mui-popover {
-	position: fixed;
-	height: 45px;
-	width: 60px;
-}
-
-footer {
-	height: 60px;
-	width: 100%;
-	z-index: 20;
-	background-color: white;
-	border-color: lightgray;
-	border-width: 5px;
-	position: fixed;
-	bottom: 0;
-	display: none;
-}
-
-.footer-center {
-	display: inline-block;
-	width: 75%;
-	padding: 5px;
-	height: 100%;
-}
-
-.footer-center .input-text {
-	background: #fff;
-	border: solid 1px #ddd;
-	padding: 10px !important;
-	font-size: 16px !important;
-	line-height: 18px !important;
-	font-family: verdana !important;
-	overflow: hidden;
-	height: 40px;
-}
-
-.btn-commit {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	display: inline-block;
-	width: 20%;
-}
-		</style>
 
 	</head>
 
 	<body>
 		<div id="content" class="mui-content">
-			<!--<div id="slider" class="mui-slider mui-fullscreen">
-				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div id="topList" class="mui-scroll">
-					</div>
-				</div>
-				<div id="sliderGroup" class="mui-slider-group">
-				</div>
-			</div>-->
+
 		</div>
 		<script src="../../js/mui.min.js"></script>
-
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
 		<script type="text/javascript" src="../../js/mui.lazyload.js"></script>
@@ -213,9 +35,11 @@ footer {
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/utils/native.js"></script>
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
+		<script type="text/javascript" src="../../js/show/show-sub.js"></script>
 		<script type="text/javascript">
 			mui.init();
-			
+			var datasource = {};
+			var idFlag = 'zx';
 			var pageIndex = 1;
 			var totalPage = 0;
 			var id = 0; //cell的id
@@ -329,21 +153,21 @@ footer {
 						}
 					});
 
-					addReplyView();
-					addSomeEvent();
-
 					//获取定制的城市
 					requestCustomizationCity(function(data) {
 						//生成滑动框架
 						addCitiesSilders(data, function() {
 							//改变顶部的城市
 							changeIndexHeader();
+
 							//初始化滑动控件
 							mui('#slider').slider();
 							//循环初始化所有下拉刷新，上拉加载。
 							pullRefresh(function() {
 								requestData(cities[0].acode, 1);
+
 							});
+							addSomeEvent();
 						});
 					});
 				}
@@ -601,16 +425,16 @@ footer {
 					for(var i = 0; i < cities.length; i++) {
 						if(cities[i].acode == acode) {
 							var str = '<div class="mui-slider-indicator">';
-							if(cities.length>1){
+							if(cities.length > 1) {
 								for(var j = 0; j < cities.length; j++) {
-								if(cities[j].acode == acode) {
-									str = str + '<div class="mui-indicator mui-active"></div>';
-								} else {
-									str = str + '<div class="mui-indicator"></div>';
+									if(cities[j].acode == acode) {
+										str = str + '<div class="mui-indicator mui-active"></div>';
+									} else {
+										str = str + '<div class="mui-indicator"></div>';
+									}
 								}
 							}
-							}
-							
+
 							str = str + '</div>';
 							var str_0 = "document.getElementById('title').innerText = '" + cities[i].aname + "';";
 							var str_1 = "var showSlider = document.getElementById('showSlider');";
@@ -627,59 +451,53 @@ footer {
 			}
 
 			function addSomeEvent() {
+
+				window.addEventListener('refreshShow', function(data) {
+					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+					pageIndex = 1;
+					pullFlag = 0;
+					var id = sliderId.replace('top_', '');
+					requestData(id, 1);
+				})
+
+				//			评论
+				mui('#sliderGroup').on('tap', '.dynamic-icon-comment', function() {
+					//				click.push('评论');
+					var pageID = sliderId.replace('top_', '')
+					tempIndex = this.id.replace('comment' + pageID + 'zx', '');
+					addComment();
+
+					window.event.stopPropagation()
+
+				});
+				//底部评论按钮
+				mui('#sliderGroup').on('tap', '.dynamic-comment-btn', function() {
+					var pageID = sliderId.replace('top_', '')
+					console.log(pageID)
+					tempIndex = this.id.replace('bottomComment' + pageID + 'zx', '');
+					addComment();
+
+					window.event.stopPropagation()
+				});
+
+				//			回复评论
+				mui('#sliderGroup').on('tap', '.replyComment', function() {
+					var pageID = sliderId.replace('top_', '')
+					tempIndex = this.id.replace('replyComment' + pageID + 'zx', '');
+					console.log('tempIndex====' + tempIndex)
+					addComment();
+
+					window.event.stopPropagation()
+
+				});
+
 				var click = []; //记录被点击的li的id和被点击元素
-				mui('#sliderGroup').on('tap', '.dynamic-personal-image', function() {
-					click.push('头像');
-				});
-				mui('#sliderGroup').on('tap', 'h4', function() {
-					click.push('姓名');
-				});
-				//删除动态
-				mui('#sliderGroup').on('tap', '.mui-icon-closeempty', function() {
-					var btnArray = ['取消', '确定'];
-					var closeId = this.id;
-					mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
-						if(e.index == 1) {
-							var index = closeId.replace('delete', '');
-							var comData = {
-								userSpaceId: zonepArray[index].TabId, //用户空间ID
-							};
-							var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-							postDataPro_delUserSpaceById(comData, wd, function(data) {
-								wd.close();
-								if(data.RspCode == 0) {
-									mui.toast('已删除');
-									//						var wobj = plus.webview.currentWebview();
-									//						wobj.reload(true);
-									var deleteNode = document.getElementById(index);
-									deleteNode.parentNode.removeChild(deleteNode);
-									zonepArray.splice(index, 1)
-								} else {
-									mui.toast(data.RspTxt);
-								}
-
-							})
-						} else {
-
-						}
-					})
-
-					click.push('向下按钮');
-				});
-				mui('#sliderGroup').on('tap', '.dynamic-contenttext', function() {
-					click.push('动态文字');
-				});
-				mui('#sliderGroup').on('tap', '.dynamic-image', function() {
-					click.push('图片' + this.getAttribute('src'));
-				});
-				mui('#sliderGroup').on('tap', '.dynamic-image-more', function() {
-					click.push('更多图片');
-				});
 				//点赞和取消点赞
 				mui('#sliderGroup').on('tap', '.dynamic-icon-praise', function() {
+					var pageID = sliderId.replace('top_', '')
 					click.push('点赞');
 					var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
-					var index = this.id.replace('praise', '');
+					var index = this.id.replace('praise' + pageID + 'zx', '');
 					var color = this.style.color;
 					if(color == 'rgb(143, 143, 148)') {
 						var comData = {
@@ -690,10 +508,10 @@ footer {
 						postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
 							wd.close();
 							if(data.RspCode == 0) {
-								var a = document.getElementById("praise" + index);
+								var a = document.getElementById("praise" + pageID + 'zx' + index);
 								a.style.color = 'rgb(0, 165, 224)'
 								//					mui.toast('点赞成功');
-								var PraiseList = document.getElementById("PraiseList" + index);
+								var PraiseList = document.getElementById("PraiseList" + pageID + 'zx' + index);
 								var praiseNameList = PraiseList.getElementsByTagName("font");
 								if(praiseNameList.length > 0) {
 									var praiseName = praiseNameList[0];
@@ -719,10 +537,10 @@ footer {
 						postDataPro_delUserSpaceLikeByUser(comData, wd, function(data) {
 							wd.close();
 							if(data.RspCode == 0) {
-								var a = document.getElementById("praise" + index);
+								var a = document.getElementById("praise" + pageID + 'zx' + index);
 								a.style.color = 'rgb(143, 143, 148)'
 								//					mui.toast('取消点赞成功');
-								var PraiseList = document.getElementById("PraiseList" + index);
+								var PraiseList = document.getElementById("PraiseList" + pageID + 'zx' + index);
 								var praiseName = PraiseList.getElementsByTagName("font")[0];
 								if(praiseName.innerHTML.indexOf('、') > -1) {
 									console.log('多个人点赞')
@@ -746,16 +564,6 @@ footer {
 
 				});
 
-				mui('#sliderGroup').on('tap', '.dynamic-icon-forward', function() {
-					click.push('分享');
-				});
-				mui('#sliderGroup').on('tap', '.dynamic-praise-name', function() {
-					click.push('点赞者：' + this.innerText);
-				});
-				mui('#sliderGroup').on('tap', '.dynamic-comment-name', function() {
-					click.push('评论者：' + this.innerText);
-				});
-				//	slide_selector.addSwipeListener();
 			}
 
 			/* 获取所有人的id
@@ -794,6 +602,7 @@ footer {
 			 * @param {Object} data
 			 * @param {Object} ids
 			 */
+
 			var getPersonalInfo = function(data, ids, cityCode) {
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_PostUinf({
@@ -810,7 +619,7 @@ footer {
 						} else {
 							zonepArray = data;
 						}
-
+						datasource[sliderId] = zonepArray;
 						console.log("重组后的数据：" + JSON.stringify(zonepArray));
 						setData(zonepArray, cityCode);
 					} else {
@@ -875,19 +684,21 @@ footer {
 				//				var table = document.body.querySelector('.mui-table-view');
 				var id = 'bot_' + sliderId.replace('top_', '');
 				var table = document.getElementById("bot_ul_" + cityCode)
+				table.setAttribute('data-info', JSON.stringify(data));
 				table.innerHTML = ''
 
 				for(var i = 0; i < data.length; i++) {
 					id = i;
-					var data1 = addData(i,cityCode);
+					var data1 = addData(i, cityCode);
 					dynamiclistitem.addItem(table, data1, id);
 				}
 				events.fireToPageNone('index.html', 'closeWaiting');
 			}
 			//加载数据
-			function addData(index,cityCode) {
+			function addData(index, cityCode) {
+				console.log('cityCode=' + cityCode);
 				//[[InfoList],[ImageList],[InteractionList]]动态的信息
-				var datasource = [];
+				var datasource1 = [];
 				var InfoList = []; //头部和内容
 				var ImageList = []; //内容的图片
 				var EncAddrList = [];
@@ -945,48 +756,10 @@ footer {
 				InteractionList.push(praiseList);
 				InteractionList.push(commentList);
 
-				datasource = [InfoList, ImageList, InteractionList, EncAddrList,cityCode]
+				datasource1 = [InfoList, ImageList, InteractionList, EncAddrList, cityCode]
+
 				//				console.log('datasource' + JSON.stringify(datasource))
-				return datasource;
-			}
-
-			var addReplyView = function() {
-				window.addEventListener('refreshShow', function(data) {
-					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-					pageIndex = 1;
-					pullFlag = 0;
-					var id = sliderId.replace('top_', '');
-					requestData(id, 1);
-				})
-
-				//			评论
-				mui('#sliderGroup').on('tap', '.dynamic-icon-comment', function() {
-					//				click.push('评论');
-					tempIndex = this.id.replace('comment', '');
-					addComment();
-
-					window.event.stopPropagation()
-
-				});
-				//底部评论按钮
-				mui('#sliderGroup').on('tap', '.dynamic-comment-btn', function() {
-					tempIndex = this.id.replace('bottomComment', '');
-					addComment();
-
-					window.event.stopPropagation()
-				});
-
-				//			回复评论
-				mui('#sliderGroup').on('tap', '.replyComment', function() {
-
-					tempIndex = this.id.replace('replyComment', '');
-					console.log('tempIndex====' + tempIndex)
-					addComment();
-
-					window.event.stopPropagation()
-
-				});
-
+				return datasource1;
 			}
 
 			function addComment() {
@@ -995,92 +768,6 @@ footer {
 					zonepArray: zonepArray
 				})
 
-			}
-
-			function addReplyLisetner() {
-				events.addTap('btn-reply', function() {
-
-					var replyName = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick
-					var inputComment = document.getElementById("msg-content");
-					var name = inputComment.value; //评论内容
-					if(name == '') {
-						mui.toast('不允许为空');
-					} else {
-						if(tempIndex.indexOf('-') >= 0) {
-							var indexArr = tempIndex.split('-');
-							var id = indexArr[0];
-							var commentId = indexArr[1];
-							var replyId = indexArr[2];
-
-							var tempModel = zonepArray[id].Comments[commentId];
-							var upperId = tempModel.TabId;
-							var replyUserId;
-							var ReplyIdName;
-							if(replyId == '评论') {
-								replyUserId = tempModel.UserId
-								ReplyIdName = tempModel.UserIdName
-							} else {
-								replyUserId = tempModel.Replys[replyId].UserId;
-								ReplyIdName = tempModel.Replys[replyId].UserIdName;
-							}
-
-							var comData = {
-								userId: personalUTID, //用户ID
-								upperId: upperId, //上级评论ID
-								replyUserId: replyUserId, //回复ID
-								userSpaceId: zonepArray[id].TabId, //用户空间ID
-								commentContent: inputComment.value //回复内容
-							};
-							var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-							postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
-								wd.close();
-
-								console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
-
-								var replyComment = document.getElementById('replyComment' + id + '-' + commentId + '-' + '评论');
-								var nextReplyComment = document.createElement('div');
-								var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + personalunick + '</font>';
-								var html3 = '<font class="common-font-family-Regular">回复</font>';
-								var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + ReplyIdName + '</font>';
-								var html5 = '<font class="common-font-family-Regular">:' + inputComment.value + '</font>'
-								nextReplyComment.innerHTML = html2 + html3 + html4 + html5;
-								replyComment.appendChild(nextReplyComment);
-								document.getElementById('footer').className = '';
-								document.getElementById('footer').style.display = 'none';
-								jQuery('#msg-content').blur();
-								inputComment.value = '';
-
-							})
-						} else {
-							var comData = {
-								userId: personalUTID, //用户ID
-								userSpaceId: zonepArray[tempIndex].TabId, //用户空间ID
-								commentContent: inputComment.value //回复内容
-							};
-							var tempValue = inputComment.value;
-							var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-							postDataPro_addUserSpaceComment(comData, wd, function(data) {
-								wd.close();
-								console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
-								var commentArr = zonepArray[tempIndex].Comments;
-								console.log("commentList" + tempIndex);
-								var commentList = document.getElementById("commentList" + tempIndex);
-								var html1 = '<div id="replyComment' + tempIndex + '-' + commentArr.length + '-' + '评论' + '" class="mui-media-body replyComment">';
-								var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + personalunick + '</font>';
-								var html3 = '<font class="common-font-family-Regular">：' + tempValue + '</font></div>';
-								var htmlComment = html1 + html2 + html3;
-								commentList.innerHTML = commentList.innerHTML + htmlComment
-								document.getElementById('footer').className = '';
-								document.getElementById('footer').style.display = 'none';
-								jQuery('#msg-content').blur();
-								inputComment.value = '';
-
-							})
-						}
-
-					}
-
-				})
 			}
 		</script>
 

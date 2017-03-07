@@ -99,7 +99,7 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
-//				console.log('选择文件的方式');
+				console.log('选择文件的方式');
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var subData = null; //记录从父页面获取的数据
 				var upFile = null; //记录上传的文件
@@ -223,7 +223,31 @@
 					var fmt = cmr.supportedImageFormats[0];
 					cmr.captureImage(function(capturedFile) {
 							console.log('拍照成功,图片的路径为：' + capturedFile);
-							getFile(capturedFile);
+							//压缩图片并且在新页面显示压缩后的图片
+							plus.zip.compressImage({
+									src: capturedFile, //压缩转换原始图片的路径
+									dst: capturedFile, //压缩转换目标图片的路径
+									overwrite: true, //覆盖生成新文件,仅在dst制定的路径文件存在时有效
+								},
+								function(event) {
+									//图片压缩成功
+									var target = event.target; // 压缩转换后的图片url路径，以"file://"开头
+									var size = event.size; // 压缩转换后图片的大小，单位为字节（Byte）
+									var width = event.width; // 压缩转换后图片的实际宽度，单位为px
+									var height = event.height; // 压缩转换后图片的实际高度，单位为px
+									console.log('压缩图片成功---target:' + target + '|size:' + AndroidFileSystem.readSize(size) + '|width:' + width + '|height:' + height);
+									//openImage(target); //打开新页面查看图片
+									getFile(target);
+								},
+								function(error) {
+									//图片压缩失败
+									var code = error.code; // 错误编码
+									var message = error.message; // 错误描述信息
+									mui.toast('图片压缩失败！' + '错误编码：' + code + '描述信息：' + message);
+									console.log('图片压缩失败！' + JSON.stringify(error));
+								}
+							);
+
 						},
 						function(error) {
 							// 拍照失败的回调

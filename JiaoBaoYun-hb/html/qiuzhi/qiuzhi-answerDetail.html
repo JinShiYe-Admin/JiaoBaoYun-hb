@@ -1,3 +1,4 @@
+<!--求知回答界面-->
 <!doctype html>
 <html>
 
@@ -8,11 +9,6 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
-		<style>
-			/*.mui-bar-nav~.mui-content .mui-pull-bottom-pocket {
-				bottom: 150px !important;
-			}*/
-		</style>
 	</head>
 
 	<body>
@@ -23,8 +19,10 @@
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
+			//加载子页面
 			events.initSubPage('qiuzhi-answerDetailSub.html');
 			mui.plusReady(function(){
+				//沉浸式状态栏处理
 				events.changeTopPocket();
 			})
 		</script>
