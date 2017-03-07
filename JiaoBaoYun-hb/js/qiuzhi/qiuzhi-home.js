@@ -6,14 +6,14 @@ mui.plusReady(function() {
 	var curPage = plus.webview.currentWebview();
 	curPage.addEventListener("show", function(e) {
 		//document.getElementById('subjects-container').innerHTML = '';
-		if(allChannels&&allChannels.length>0){
-			
-		}else{
+		if(allChannels && allChannels.length > 0) {
+
+		} else {
 			mui('#slider_sw').scroll().scrollTo(0, 0, 0);
 			requestAllChannels(setChannels);
 		}
 	});
-	window.addEventListener('infoChanged',function(){
+	window.addEventListener('infoChanged', function() {
 		mui('#slider_sw').scroll().scrollTo(0, 0, 0);
 		requestAllChannels(setChannels);
 	})
@@ -34,6 +34,12 @@ function requestAllChannels(callback) {
 		console.log('获取所有话题:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			var temArr = data.RspData.Data;
+			var allChannel = {
+				TabId: 0, //话题ID
+				ChannelCode: 00, //话题编号
+				ChannelName: "全部" //话题名称
+			}
+			temArr.splice(0, 0, allChannel);
 			callback(temArr);
 		} else {
 			mui.toast(data.RspTxt);
@@ -49,12 +55,6 @@ var setChannels = function(subjectArr) {
 	document.getElementById("sliderGroup").innerHTML = '';
 	console.log('要加载的类别:' + JSON.stringify(subjectArr));
 	allChannels = subjectArr;
-	var allChannel = {
-		TabId: 0, //话题ID
-		ChannelCode: 00, //话题编号
-		ChannelName: "全部" //话题名称
-	}
-	subjectArr.splice(0, 0, allChannel);
 	events.clearChild(subjects);
 	for(var i in subjectArr) {
 		var a = document.createElement('a');
