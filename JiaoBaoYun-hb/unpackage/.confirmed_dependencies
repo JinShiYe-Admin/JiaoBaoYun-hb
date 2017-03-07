@@ -309,7 +309,24 @@
 			"js/publicQiuzhiProtocol.js",
 			"js/qiuzhi/qiuzhi-home.js",
 			"css/qiuzhi/qiuzhi.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-sub.html"

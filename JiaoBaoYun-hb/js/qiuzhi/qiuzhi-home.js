@@ -76,7 +76,7 @@ var setChannels = function(subjectArr) {
 	}
 //	document.body.querySelector('.main-navigation').style.width = document.body.querySelector('.more-navigation').offsetLeft + 'px';
 	mui('#slider').slider();
-	events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: subjectArr[0], allChannels: allChannels });
+	events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: allChannels[0], allChannels: allChannels });
 }
 var setListener = function() {
 	mui('#subjects-container').on('tap', '.mui-control-item', function() {
