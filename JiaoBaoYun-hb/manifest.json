@@ -2617,7 +2617,8 @@
 					"css/qiuzhi/qiuzhi-sub.css",
 					"image/utils/default_personalimage.png",
 					"image/qiuzhi/expert_more.png",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"image/qiuzhi/channel-science.png"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
