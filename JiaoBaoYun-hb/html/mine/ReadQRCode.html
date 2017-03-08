@@ -6,12 +6,77 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 	</head>
 
 	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">扫描二维码</h1>
+		</header>
+		<div class="mui-content">
+			<div id="bcid" style="height:460px; width:320px;"></div>
+		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
+		
 		<script type="text/javascript">
-			mui.init()
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			var scan = null; //扫描控件
+			mui.plusReady(function() {
+				startRecognize();
+			});
+			// 条码识别成功事件
+			function onmarked(type, result) {
+				scan.cancel();
+				var text = '未知: ';
+				switch(type) {
+					case plus.barcode.QR:
+						text = 'QR: '; // 二维码
+						break;
+					case plus.barcode.EAN13:
+						text = 'EAN13: ';
+						break;
+					case plus.barcode.EAN8:
+						text = 'EAN8: ';
+						break;
+				}
+				console.log('扫描到的信息为:' + result);
+				//19.用户申请入群
+				var unick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
+				//所需参数
+				var comData = {
+					gid: result, //群ID
+					beinvnick: unick, //申请人昵称
+					mstype: '3', //申请成为，0家长,2老师,3学生
+					urel: '' //备注，与资料关系，与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
+				};
+				// 等待的对话框
+				var wd = events.showWaiting();
+				//19.用户申请入群
+				postDataPro_PostJoinGuser(comData, wd, function(data) {
+					wd.close();
+					console.log('19.用户申请入群:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						mui.toast('成功提交入群申请');
+						scan.cancel();
+						mui.back();
+					} else {
+						mui.toast(data.RspTxt);
+						scan.start(); //开始扫描
+					}
+				});
+			}
+			// 创建扫描控件
+			function startRecognize() {
+				scan = new plus.barcode.Barcode('bcid');
+				scan.onmarked = onmarked;
+				scan.start(); //开始扫描
+			}
 		</script>
 	</body>
 

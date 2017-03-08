@@ -16,251 +16,302 @@ var gid = 0; //群id
 var defaultRole = 0; //默认角色
 var stuname = '';
 mui.plusReady(function() {
-		//预加载界面
-		events.preload('add-info.html', 200);
-		//	getData('inv', setData);
-		//获取数据，并填充
-		getData('inv', setData);
-		//checkBox加载监听
-		getChecked()
-			//列表加载监听
-		addListener();
-		//选择身份后，加载监听
-		setButtonsListener();
-			/**
-			 * 申请通过后传递的事件
-			 */
-		window.addEventListener('appPassed', function(e) {
-			console.log('接受邀请');
-			events.clearChild(list);
-			getData('inv', setData);
-//			var passedGutid = e.detail.data;
-//			//获取通过的cell中的按钮
-//			var btn_passed = document.querySelector('[gtuid=' + passedGutid + ']');
-//			btn_passed.className = 'apply-passed';
-//			btn_passed.innerText = '已添加';
-		})
-	})
+	//预加载界面
+	events.preload('add-info.html', 200);
+	//	getData('inv', setData);
+	//获取数据，并填充
+	getData('inv', []);
+	//checkBox加载监听
+	getChecked()
+	//列表加载监听
+	addListener();
+	//选择身份后，加载监听
+	setButtonsListener();
 	/**
-	 * 获取数据
-	 * @param {Object} type 类型 inv=被邀请入群 app=申请入群
-	 * @param {Object} callback
+	 * 申请通过后传递的事件
 	 */
-var getData = function(type, callback) {
-		//获取申请人
+	window.addEventListener('appPassed', function(e) {
+		console.log('接受邀请');
+		events.clearChild(list);
+		getData('inv', []);
+	})
+})
+/**
+ * 获取数据
+ * @param {Object} type 类型 inv=被邀请入群 app=申请入群
+ * @param {Object} callback
+ */
+var getData = function(type, records) {
+	console.log("申请记录：" + JSON.stringify(records));
+	//获取申请人
+	var wd = events.showWaiting();
+	postDataPro_PostGrInv({
+		vtp: type
+	}, wd, function(data) {
+		wd.close();
+		console.log('申请人数据：' + JSON.stringify(data));
+		if(data.RspCode == 0) {
+			records = records.concat(data.RspData);
+		}
+		if(type == 'inv') {
+			getData('app', records);
+		} else {
+			getApplyRecord(records);
+		}
+	})
+}
+/**
+ * 获取申请记录
+ */
+var getApplyRecord = function(records) {
+	var wd = events.showWaiting();
+	console.log("申请记录：" + JSON.stringify(records));
+	postDataPro_PostMJoin({}, wd, function(data) {
+		wd.close();
+		console.log('获取的我的群申请记录：' + JSON.stringify(data));
+		if(data.RspCode == 0) {
+			records = records.concat(data.RspData);
+		}
+		sortData(records);
+	})
+}
+/**
+ * 为数据排序 并放置数据
+ * @param {Object} records
+ */
+var sortData = function(records) {
+	console.log("待排序的记录:" + JSON.stringify(records));
+	records.sort(function(a, b) {
+		return  Date.parse(b.aptime)-Date.parse(a.aptime);
+	})
+	setData(records);
+}
+/**
+ * 填充数据
+ * @param {Object} data
+ */
+var setData = function(records) {
+	//填充真实数据
+	records.forEach(function(item, i, records) {
+		var li = document.createElement('li');
+		li.className = 'mui-table-view-cell mui-media';
+		li.innerHTML = getInnerHTML(item);
+		list.appendChild(li);
+	})
+}
+/**
+ * 加载监听
+ */
+var addListener = function() {
+	/**
+	 * 别人邀请我入群后
+	 * 点击接受按钮事件
+	 */
+	mui('.mui-table-view').on('tap', '.btn-apply', function() {
+		//获取群申请记录id;
+		gutid = parseInt(this.getAttribute('gutid'));
+		//获取要申请的群id
+		gid = parseInt(this.getAttribute('gid'));
 		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-		postDataPro_PostGrInv({
-			vtp: type
+		//向接口传递数据，用户同意邀请
+		postDataPro_PostInvDo({
+			gutid: gutid,
+			stat: 1
 		}, wd, function(data) {
 			wd.close();
-			console.log('申请人数据：' + JSON.stringify(data));
-			if(data.RspCode == '0000') {
-				callback(type, data.RspData);
-			} else if(data.RspCode = '0009' && type == 'inv') {
-				getData('app', setData)
-//			} else {
-//				mui.toast(data.RspTxt);
+			if(data.RspCode = '0000') {
+				mui.toast('您已同意入群');
+				events.clearChild(list);
+				getData('inv', setData);
+				events.fireToPageNone('mine.html', 'newsChanged');
+				events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
+
+			} else {
+				mui.toast(data.RspTxt);
 			}
+			console.log('用户同意邀请入群:' + JSON.stringify(data));
 		})
-	}
-	/**
-	 * 填充数据
-	 * @param {Object} type
-	 * @param {Object} data
-	 */
-var setData = function(type, data) {
-		//填充分组信息
-		createFirst(type);
-		//填充真实数据
-		data.forEach(function(item, i, data) {
-				var li = document.createElement('li');
-				li.className = 'mui-table-view-cell mui-media cell-' + type;
-				li.innerHTML = getInnerHTML(type, item);
-				//			li.querySelector('button').addEventListener()
-				list.appendChild(li);
-//				li.querySelector('.btn-openPopover').
-			})
-			//先载入被邀请数据，在加载申请数据
-		if(type == 'inv') {
-			getData('app', setData)
-		}
-	}
-	/**
-	 * 加载监听
-	 */
-var addListener = function() {
-		/**
-		 * 别人邀请我入群后
-		 * 点击接受按钮事件
-		 */
-		mui('.mui-table-view').on('tap', '.btn-apply', function() {
-				//获取群申请记录id;
-				gutid = parseInt(this.getAttribute('gutid'));
-				//获取要申请的群id
-				gid = parseInt(this.getAttribute('gid'));
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				//向接口传递数据，用户同意邀请
-				postDataPro_PostInvDo({
-					gutid: gutid,
-					stat: 1
-				}, wd, function(data) {
-					wd.close();
-					if(data.RspCode='0000'){
-						mui.toast('您已同意入群');
-						events.clearChild(list);
-						getData('inv', setData);
-						events.fireToPageNone('mine.html','newsChanged');
-						events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 
-					}else{
-						mui.toast(data.RspTxt);
-					}
-					console.log('用户同意邀请入群:' + JSON.stringify(data));
-				})
-
-			})
-			/**
-			 * 申请入群
-			 * 我点击接受后选择身份
-			 */
-		mui('.mui-table-view').on('tap', '.btn-openPopover', function() {
-			//清空选中身份信息
-			groupRoles = [];
-			//获取默认身份
-			defaultRole = parseInt(this.getAttribute('mstype'));
-			//添加默认身份
-			groupRoles.push(defaultRole);
-			//默认身份选中
-			defaultCheck(defaultRole);
-			//获取群申请记录id;
-			gutid = parseInt(this.getAttribute('gutid'));
-			//获取要申请的群id
-			gid = parseInt(this.getAttribute('gid'));
-//			//关联学生name
-//			stuname = this.getAttribute('st');
-		})
-	}
+	})
 	/**
-	 * 默认身份值
-	 * @param {Object} type 选中默认身份
+	 * 申请入群
+	 * 我点击接受后选择身份
 	 */
+	mui('.mui-table-view').on('tap', '.btn-openPopover', function() {
+		//清空选中身份信息
+		groupRoles = [];
+		//获取默认身份
+		defaultRole = parseInt(this.getAttribute('mstype'));
+		//添加默认身份
+		groupRoles.push(defaultRole);
+		//默认身份选中
+		defaultCheck(defaultRole);
+		//获取群申请记录id;
+		gutid = parseInt(this.getAttribute('gutid'));
+		//获取要申请的群id
+		gid = parseInt(this.getAttribute('gid'));
+		//			//关联学生name
+		//			stuname = this.getAttribute('st');
+	})
+	events.addTap('btn-apply', function() {
+		   events.openNewWindow('apply-group.html');
+	})
+}
+/**
+ * 默认身份值
+ * @param {Object} type 选中默认身份
+ */
 var defaultCheck = function(type) {
-	console.log('默认身份:'+type);
-	
-		check_parents.checked = false;
-		check_stu.checked = false;
-		check_tea.checked = false;
-		switch(type) {
-			//家长
-			case 0:
-				check_parents.checked = true;
-				break;
-				//老师
-			case 2:
-				check_tea.checked = true;
-				break;
-				//学生	
-			case 3:
-				check_stu.checked = true;
-				break;
-			default:
-				break;
-		}
+	console.log('默认身份:' + type);
+
+	check_parents.checked = false;
+	check_stu.checked = false;
+	check_tea.checked = false;
+	switch(type) {
+		//家长
+		case 0:
+			check_parents.checked = true;
+			break;
+			//老师
+		case 2:
+			check_tea.checked = true;
+			break;
+			//学生	
+		case 3:
+			check_stu.checked = true;
+			break;
+		default:
+			break;
 	}
-	/**
-	 * checkbox加载监听
-	 * 获取选中身份数组
-	 */
+}
+/**
+ * checkbox加载监听
+ * 获取选中身份数组
+ */
 var getChecked = function() {
-		mui('.mui-input-group').on('change', 'input', function() {
-			console.log('选择事件：'+this.checked+',值：'+this.value);
-			if(this.checked){
-				groupRoles.push(parseInt(this.value));
-			}else{
-				groupRoles = removeItemFromArray(parseInt(this.value), groupRoles);
+	mui('.mui-input-group').on('change', 'input', function() {
+		console.log('选择事件：' + this.checked + ',值：' + this.value);
+		if(this.checked) {
+			groupRoles.push(parseInt(this.value));
+		} else {
+			groupRoles = removeItemFromArray(parseInt(this.value), groupRoles);
+		}
+		if(this.checked) {
+			console.log('this.value' + this.value);
+			switch(parseInt(this.value)) {
+				case 0: //家长
+				case 2: //老师
+					check_stu.checked = false;
+					groupRoles = removeItemFromArray(3, groupRoles);
+					break;
+				case 3: //学生
+					check_tea.checked = false;
+					check_parents.checked = false;
+					groupRoles = removeItemFromArray(2, removeItemFromArray(0, groupRoles))
+					break;
+				default:
+					break;
 			}
-			if(this.checked) {
-				console.log('this.value' + this.value);
-				switch(parseInt(this.value)) {
-					case 0://家长
-					case 2://老师
-						check_stu.checked = false;
-						groupRoles = removeItemFromArray(3, groupRoles);
+		}
+		console.log('groupRoles:' + groupRoles);
+	});
+}
+/**
+ * 删除数组目标元素
+ * @param {Object} item 目标元素
+ * @param {Object} arrays 数组
+ */
+var removeItemFromArray = function(item, arrays) {
+	if(arrays.indexOf(item) >= 0) {
+		arrays.splice(arrays.indexOf(item), 1);
+	}
+	return arrays;
+}
+/**
+ *	获取innerHTML
+ * @param {Object} type
+ * @param {Object} item
+ */
+var getInnerHTML = function(item) {
+	var inner = '';
+	if(!item.stat) {
+		if(item.invname != item.beinvname) {
+			inner = ' <a class="">' +
+				'<img class = "mui-media-object mui-pull-left"' +
+				'src = "' + getGimg(item) + '" >' +
+				'<div class = "mui-media-body"' +
+				'style = "margin-right: 4rem;" >' +
+				item.gname +
+				'<p class="single-line apply-message">' + events.shortForString(item.invname, 4) + '邀请你以' + getRole(item.mstype) + '身份加入群</p>' +
+				'</div>' +
+				'<a class = "mui-btn mui-btn-green btn-apply" ' +
+				' gutid="' + item.gutid + '" mstype="' + item.mstype + '" gid="' + item.gid + '" >接受</a></a>'
+		} else {
+			inner = ' <a href="javascript:;">' +
+				'<img class = "mui-media-object mui-pull-left"' +
+				'src = "' + getGimg(item) + '" >' +
+				'<div class = "mui-media-body"' +
+				'style = "margin-right: 4rem;" >' +
+				item.gname +
+				'<p class="single-line apply-message">' + events.shortForString(item.invname, 4) + '申请以' + getRole(item.mstype) + '身份加入你的群:' + events.shortForString(item.gname, 4) + '</p>' +
+				'</div>' +
+				'<a href="#chose-roles" class = "mui-btn mui-btn-green btn-openPopover" ' +
+				' gutid="' + item.gutid + '" mstype="' + item.mstype + '" gid="' + item.gid + '" stuname="' + item.stuname + '">接受</a></a>'
+		}
+	} else {
+		inner = ' <a href="javascript:;" class="apply-container">' +
+				'<img class = "mui-media-object mui-pull-left qun-portrait"' +
+				'src = "' + getGimg(item) + '" />' +
+				'<div class = "mui-media-body apply-info"' +
+				'style = "margin-right: 4rem;" >' +
+				item.gname +
+				'<p class="single-line apply-message">';
+				if(item.invname != item.beinvname) {
+					inner +=  events.shortForString(item.invaname,10) + '邀请你加入群：' + events.shortForString(item.gname,10);
+				} else {
+					inner += '你已申请加入群：' +  events.shortForString(item.gname,10);
+				}
+				inner+='</p></div><a  class = "mui-btn mui-btn-outlined">'+setApplyState(item.stat)+'</a></a>'
+	}
+
+	return inner;
+}
+var setApplyState = function(type) {
+				var applyState = '';
+				switch(type) {
+					case 0:
+						applyState = '待审';
 						break;
-					case 3://学生
-						check_tea.checked = false;
-						check_parents.checked = false;
-						groupRoles = removeItemFromArray(2, removeItemFromArray(0, groupRoles))
+					case 1:
+						applyState = '通过';
+						break;
+					case 2:
+						applyState = '拒绝';
 						break;
 					default:
 						break;
 				}
+				return applyState;
 			}
-			console.log('groupRoles:' + groupRoles);
-		});
-	}
-	/**
-	 * 删除数组目标元素
-	 * @param {Object} item 目标元素
-	 * @param {Object} arrays 数组
-	 */
-var removeItemFromArray = function(item, arrays) {
-		if(arrays.indexOf(item) >= 0) {
-			arrays.splice(arrays.indexOf(item), 1);
-		}
-		return arrays;
-	}
-	/**
-	 *	获取innerHTML
-	 * @param {Object} type
-	 * @param {Object} item
-	 */
-var getInnerHTML = function(type, item) {
-	var inner = '';
-	if(type == 'inv') {
-		inner = ' <a class="">' +
-			'<img class = "mui-media-object mui-pull-left"' +
-			'src = "' + getGimg(item) + '" >' +
-			'<div class = "mui-media-body"' +
-			'style = "margin-right: 4rem;" >' +
-			item.gname +
-			'<p class="mui-ellipsis">' +events.shortForString(item.invname,4) + '邀请你以'+getRole(item.mstype)+'身份加入群</p>' +
-			'</div>' +
-			'<a class = "mui-btn mui-btn-green btn-apply" ' +
-			' gutid="' + item.gutid + '" mstype="' + item.mstype + '" gid="' + item.gid + '" >接受</a></a>'
-	} else {
-		inner = ' <a href="javascript:;">' +
-			'<img class = "mui-media-object mui-pull-left"' +
-			'src = "' + getGimg(item) + '" >' +
-			'<div class = "mui-media-body"' +
-			'style = "margin-right: 4rem;" >' +
-			item.gname +
-			'<p class="mui-ellipsis apply-message">' + events.shortForString(item.invname,4)+ '申请以'+getRole(item.mstype)+'身份加入你的群:' + events.shortForString(item.gname,4)+ '</p>' +
-			'</div>' +
-			'<a href="#chose-roles" class = "mui-btn mui-btn-green btn-openPopover" ' +
-			' gutid="' + item.gutid + '" mstype="' + item.mstype + '" gid="' + item.gid + '" stuname="' + item.stuname + '">接受</a></a>'
-	}
-	return inner;
-}
 /**
  * 獲取角色
  * @param {Object} mstype
  */
-var getRole=function(mstype){
-	var role='';
-	switch (mstype){
+var getRole = function(mstype) {
+	var role = '';
+	switch(mstype) {
 		case 0:
-		role='家长';
+			role = '家长';
 			break;
 		case 1:
-		role='管理员';
+			role = '管理员';
 			break
 		case 2:
-		role='老师';
-		break;
+			role = '老师';
+			break;
 		case 3:
-		role='学生';
-		break;
+			role = '学生';
+			break;
 		default:
 			break;
 	}
@@ -271,12 +322,12 @@ var getRole=function(mstype){
  * @param {Object} cell
  */
 var getGimg = function(cell) {
-		return cell.gimg ? cell.gimg : '../../image/utils/default_personalimage.png';
-	}
-	/**
-	 * 根据不同类型床架分类条目
-	 * @param {Object} type 申请类型
-	 */
+	return cell.gimg ? cell.gimg : '../../image/utils/default_personalimage.png';
+}
+/**
+ * 根据不同类型床架分类条目
+ * @param {Object} type 申请类型
+ */
 var createFirst = function(type) {
 	var li = document.createElement('li');
 	if(type == 'inv') {
@@ -298,14 +349,14 @@ var setButtonsListener = function() {
 	var btn_cancel = document.getElementById('btn-cancle');
 	//確定按鈕加載監聽
 	btn_sure.addEventListener('tap', function() {
-		if(groupRoles.length>0){
+		if(groupRoles.length > 0) {
 			events.fireToPageWithData('add-info.html', 'postRoles', {
-						gutid: gutid,
-						gid: gid,
-						groupRoles: groupRoles
-					});
+				gutid: gutid,
+				gid: gid,
+				groupRoles: groupRoles
+			});
 			mui('.mui-popover').popover('toggle');
-		}else{
+		} else {
 			mui.toast('请选择身份');
 		}
 	});

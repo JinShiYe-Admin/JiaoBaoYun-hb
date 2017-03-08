@@ -19,7 +19,7 @@
 		</header>
 		<div class="mui-content">
 			<div class="input-content">
-				<textarea id="answerContent" placeholder="修改简介,最多100字"></textarea>
+				<textarea id="answerContent" placeholder="修改简介,最多100字" oninput="if(value.length>100)value=value.slice(0,100)" ></textarea>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>

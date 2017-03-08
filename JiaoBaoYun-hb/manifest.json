@@ -861,7 +861,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/register/yanZhengMa.html"
@@ -926,7 +927,8 @@
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
 					"js/libs/jquery.js",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/index.html",
@@ -1136,7 +1138,10 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"css/homework/subjects-icon.css"
+					"css/homework/subjects-icon.css",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js",
+					"css/utils/preview.css"
 				],
 				"refer": [
 					"html/homework/homework-comment.html"
@@ -1775,10 +1780,14 @@
 					"js/mine/approval-apply.js",
 					"js/utils/events.js",
 					"image/utils/default_personalimage.png",
-					"css/mine/apply.css"
+					"css/mine/apply.css",
+					"fonts/fangzheng.ttf",
+					"css/iconfont/iconfont.css",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
-					"html/mine/add-info.html"
+					"html/mine/add-info.html",
+					"html/mine/apply-group.html"
 				],
 				"priority": 0
 			},
@@ -1852,7 +1861,8 @@
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
 					"css/mine/apply.css",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -1909,7 +1919,8 @@
 					"css/mine/apply.css",
 					"js/utils/events.js",
 					"html/mine/apply-group.html",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"css/mine/search.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -2392,7 +2403,10 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"js/publicHomeworkProtocol.js",
 					"css/homework/subjects-icon.css",
-					"css/iconfont/iconfont.css"
+					"css/iconfont/iconfont.css",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js",
+					"css/utils/preview.css"
 				],
 				"refer": [
 					"html/homework/pic-detail.html"
@@ -2566,7 +2580,8 @@
 					"js/utils/RSAEncrypt.js",
 					"css/iconfont/iconfont.css",
 					"fonts/iconfont.ttf",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -2602,7 +2617,8 @@
 					"css/qiuzhi/qiuzhi-sub.css",
 					"image/utils/default_personalimage.png",
 					"image/qiuzhi/expert_more.png",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"image/qiuzhi/channel-science.png"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
@@ -2841,10 +2857,15 @@
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
 					"image/utils/default_personalimage.png",
-					"image/qiuzhi/arraw-down.png"
+					"image/qiuzhi/arraw-down.png",
+					"css/utils/preview.css",
+					"js/mui.zoom.js",
+					"fonts/fangzheng.ttf",
+					"js/mui.previewimage.js"
 				],
 				"refer": [
-					"html/qiuzhi/qiuzhi-addAnswer.html"
+					"html/qiuzhi/qiuzhi-addAnswer.html",
+					"html/quan/zone_main.html"
 				],
 				"priority": 0
 			},
@@ -3121,7 +3142,16 @@
 					"js/libs/jquery.js",
 					"js/utils/signHmacSHA1.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"css/quan/custom-textarea.css",
+					"js/utils/cryption.js",
+					"fonts/fangzheng.ttf",
+					"js/utils/camera.js",
+					"js/utils/CloudFileUtil.js",
+					"js/utils/compress.js",
+					"js/qiniu/qiniu.js",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -3272,7 +3302,8 @@
 					"js/mui.previewimage.js",
 					"css/utils/preview.css",
 					"css/show/show.css",
-					"js/show/show-sub.js"
+					"js/show/show-sub.js",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [],
 				"priority": 0

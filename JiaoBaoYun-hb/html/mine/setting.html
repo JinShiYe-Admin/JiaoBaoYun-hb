@@ -52,9 +52,10 @@
 				//修改密码
 				events.preload('../register/modify_password.html');
 				events.addTap('change-passwords', function() {
-//						events.fireToPageNone('../register/modify_password.html', 'changePasswords');
-//						plus.webview.getWebviewById('modify_password.html').show()
-						events.openNewWindowWithData('QRCode.html');
+						events.fireToPageNone('../register/modify_password.html', 'changePasswords');
+						plus.webview.getWebviewById('modify_password.html').show()
+//						events.openNewWindowWithData('QRCode.html');
+//						events.openNewWindowWithData('ReadQRCode.html');
 					})
 					//退出
 				events.addTap('quit', function() {
@@ -84,7 +85,7 @@
 
 									};
 									// 等待的对话框
-									var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+									var wd = events.showWaiting();
 									postDataPro_PostLoginOut(comData, wd, function(data) {
 										wd.close();
 										console.log('注销success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);

@@ -9,10 +9,30 @@
 	color: gray;
 }
 
-.multimedia-body{
+.multimedia-body {
 	background-color: white;
 }
-.multimedia-header{
+
+.multimedia-header {
+	/*图标*/
 	margin-top: 5px;
 	margin-bottom: 5px;
+}
+
+.multimedia-picture-area {
+	/*图片区域*/
+	float: left;
+}
+
+.multimedia-picture {
+	/*图片*/
+	overflow: hidden;
+	background-color: red;
+	position: relative;
+}
+
+.multimedia-picture-delete {
+	/*删除图片*/
+	position: absolute;
+	z-index: 2;
 }

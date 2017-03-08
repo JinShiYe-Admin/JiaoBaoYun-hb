@@ -286,7 +286,7 @@ var setQuestion = function(datasource) {
 	questionContainer.appendChild(p);
 	events.clearChild(document.getElementById('answer-imgs'));
 	if(datasource.AnswerEncAddr) {
-		document.getElementById('answer-imgs').innerHTML = getPicInner(datasource.AnswerEncAddr);
+		document.getElementById('answer-imgs').innerHTML = getPicInner(datasource);
 	}
 	document.getElementById('comments-no').innerText = "评论(" + datasource.CommentNum + ")";
 	var zan_icon = document.getElementById('answer-zan');
@@ -325,8 +325,10 @@ var setAnswerManInfo = function(datasource) {
  * 根据图片数量，设置不同宽高的图片尺寸
  * @param {Object} picAddr
  */
-var getPicInner = function(picAddr) {
-	var picPaths = picAddr.split('|');
+var getPicInner = function(data) {
+	var picAddr=data.AnswerThumbnail;
+	var  picPaths = picAddr.split('|');
+	var picBigPaths=data.AnswerEncAddr.split('|');
 	var picInner = '';
 	var win_width = document.getElementById('answer-imgs').offsetWidth;
 	var pic_width = win_width / 3;
@@ -335,8 +337,8 @@ var getPicInner = function(picAddr) {
 		if(picPaths.length < 3) {
 			pic_width = win_width / picPaths.length;
 		}
-		picInner += '<img src="' + picPaths[i] + '" style="width:' + pic_width + 'px;height:"' + pic_width + 'px" ' +
-			'" data-preview-src="' + picPaths[i] + '" data-preview-group="1"/>';
+		picInner += '<img src="' + picPaths[i] + '" class="answer-img" style="width:' + pic_width + 'px;height:"' + pic_width + 'px" ' +
+			'" data-preview-src="' + picBigPaths[i] + '" data-preview-group="1"/>';
 	}
 	console.log('图片路径：'+JSON.stringify(picPaths)+'图片宽度'+pic_width)
 	return picInner;
