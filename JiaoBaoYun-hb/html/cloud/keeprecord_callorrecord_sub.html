@@ -153,28 +153,55 @@
 				pullRefresh: {
 					container: '#pullrefresh',
 					down: {
-						contentdown: "下拉加载更多", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
-						contentover: "释放立即加载", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
-						contentrefresh: "正在加载...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
 						callback: pulldownRefresh
 					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
 				}
 			});
+
 			/**
 			 * 下拉刷新具体业务实现
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
-					getNotes(TotalPage, 10);
+					getNotes(1, 10);
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+					mui('#pullrefresh').pullRefresh().refresh(true);
 				}, 1500);
+			}
+
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				var element = document.getElementById('top');
+				var page = JSON.parse(element.getAttribute('data-page'));
+				//console.log('page' + JSON.stringify(page));
+				if(page) {
+					if(page.pageIndex >= page.totalPage) {
+						mui.toast('没有更多数据了');
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					} else {
+						setTimeout(function() {
+							getNotes(page.pageIndex + 1, 10);
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+						}, 1500);
+					}
+				} else {
+					setTimeout(function() {
+						mui.toast('数据异常，请下拉刷新后重新尝试');
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+					}, 1500);
+				}
 			}
 
 			var TotalPage = 1; //总页数
 			var TotalCnt = 0; //总记录数
 			var main; //获取当前窗体对象
 			var subData = null; //接收页面传入的参数值
-			var NotesList = null; //记录获取的数据
 			var multiMedia; //多媒体选取控件
 			var commit = false; //是否允许提交
 			var call_type = ''; //记录最后点击的点到类型
@@ -425,7 +452,7 @@
 			 * @param {Object} data
 			 */
 			function createNotes(data) {
-				console.log('createNotes:' + JSON.stringify(data));
+				//console.log('createNotes:' + JSON.stringify(data));
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
 				var type = '';
@@ -442,7 +469,7 @@
 				}
 				li.innerHTML = '<div class="time">' + data.PublishDate + '</div>\
 								<div id="MsgContent_' + data.TabId + '" class="mui-media-body" style="word-break:break-all;"></div>';
-				document.getElementById("top").insertBefore(li, document.getElementById("top").firstChild);
+				document.getElementById("top").appendChild(li);
 				document.getElementById("MsgContent_" + data.TabId).innerText = type + data.MsgContent;
 			}
 
@@ -470,37 +497,32 @@
 				var wd = events.showWaiting();
 				postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
 					console.log('4.取记事列表:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+
+					//记录页数
+					var page = {
+						pageIndex: pageIndex, //当前页数
+						totalPage: 0 //总页数
+					};
 					if(data.RspCode == 0) {
-						TotalPage++;
-						if(pageIndex == 1) { //获取第一页的内容
-							document.getElementById("top").innerHTML = '';
-							//滚动到底部
-							//mui.scrollTo(document.body.scrollHeight, 100);
-						}
-						if(NotesList == null) {
-							NotesList == [];
-							NotesList = data.RspData;
-							//TotalPage = data.RspData.TotalPage; //总页数
-							TotalCnt = data.RspData.TotalCnt; //总记录数
-						}
+						page.totalPage = data.RspData.TotalPage;
+					}
+					document.getElementById('top').setAttribute('data-page', JSON.stringify(page))
+					if(pageIndex == 1) { //获取的第一页的内容
+						//清空对应的界面
+						document.getElementById('top').innerHTML = '';
+					}
+
+					if(data.RspCode == 0) {
 						mui.each(data.RspData.Data, function(index, item) {
-							NotesList.Data.push(item);
-							//console.log(index + '|' + JSON.stringify(item));
 							createNotes(item);
 						});
-						if(data.RspData.Data.length == 0) {
-							if(NotesList.length != 0) {
-								mui.toast('没有更多了');
-								TotalPage--;
-							} else {
-								mui.toast('无记录');
-							}
+						if(data.RspData.Data.length==0&&pageIndex == 1){
+							mui.toast('点到记事为空');
 						}
 					} else {
-						mui.toast('获取点到记事列表:' + data.RspTxt);
+						mui.toast('获取点到记事列表 ' + data.RspTxt);
 						console.log('获取用户针对某学生的点到记事列表:' + data.RspTxt);
 					}
-					//mui('.mui-scroll-wrapper').scroll().scrollToBottom(100); //滚动到底部-----有BUG
 					wd.close();
 				});
 			}
