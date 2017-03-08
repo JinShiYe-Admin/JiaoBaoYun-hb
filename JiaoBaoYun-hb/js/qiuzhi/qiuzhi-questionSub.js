@@ -171,8 +171,12 @@ function getAskFocusByUser(askId) {
 			//刷新界面
 			if(data.RspData.Result == 0) {
 				document.getElementById("guanzhu").innerText = '关注';
+				document.getElementById("guanzhu").style.background = '#1db8F1';
+				document.getElementById("guanzhu").style.border = '#1db8F1';
 			} else {
 				document.getElementById("guanzhu").innerText = '已关注';
+				document.getElementById("guanzhu").style.background = '#b7b7b7';
+				document.getElementById("guanzhu").style.border = '#b7b7b7';
 			}
 		} else {
 			mui.toast(data.RspTxt);
@@ -199,8 +203,13 @@ function setAskFocus(askId, status) {
 			//刷新界面显示
 			if(document.getElementById("guanzhu").innerText == '关注') {
 				document.getElementById("guanzhu").innerText = '已关注';
+				document.getElementById("guanzhu").style.background = '#b7b7b7';
+				document.getElementById("guanzhu").style.border = '#b7b7b7';
 			} else {
 				document.getElementById("guanzhu").innerText = '关注';
+				document.getElementById("guanzhu").style.background = '#1db8F1';
+				document.getElementById("guanzhu").style.border = '#1db8F1';
+				
 			}
 		} else {
 			mui.toast(data.RspTxt);
