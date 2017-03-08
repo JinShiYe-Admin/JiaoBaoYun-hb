@@ -312,7 +312,7 @@ var CloudFileUtil = (function($, mod) {
 						height: maxHeight //缩略图最大高度
 					}
 				}
-
+				configure.thumbKey=[];
 				for(var i = 0; i < fileList.length; i++) {
 					var QNFileName; //文件名
 					var param = {};
@@ -328,6 +328,7 @@ var CloudFileUtil = (function($, mod) {
 					param.NotifyUrl = '';
 					//保存空间值
 					params.push(param);
+					configure.thumbKey.push(opsData.thumbKey);
 				}
 
 				configure.options = {
@@ -813,7 +814,7 @@ var CloudFileUtil = (function($, mod) {
 	 * }
 	 */
 	mod.BatchDelete = function(url, data, successCB, errorCB) {
-		console.log('BatchDelete:url ' + JSON.stringify(data));
+		console.log('BatchDelete:url ' + url);
 		console.log('BatchDelete:data ' + JSON.stringify(data));
 		var desKey = ''; //项目名称
 		var appId = 0; //项目id
