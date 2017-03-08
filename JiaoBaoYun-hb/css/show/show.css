@@ -48,35 +48,42 @@ body,
 }
 
 .mui-table-view-cell,
-.mui-table-view-cell:active {
-	background-color: #FFFFFF;
-}
+			.mui-table-view-cell:active {
+				background-color: rgb(235,234,241);
+			}
+			
+			.mui-table-view {
+				background: rgb(235,234,241);
+				/*背景色透明*/
+			}
+			
+			.mui-table-view-cell {
+				background: white;
+				/*cell 背景设为白色*/
+				padding: 0;
+				/*内边距为0*/
+				margin-bottom: 10px;
+			}
+			
+			.mui-table-view:before,
+			.mui-table-view:after,
+			.mui-table-view-cell:after {
+				height: 0px;
+				/*去掉横线*/
+			}
+			
+			.mui-table-view-cell {
+				background-color: #fff;
+				margin-top: 1rem;
+			}
+			
+			.mui-row-padding-8px {
+				padding: 8px;
+				/*内边距为8px*/
+				padding: 12px;
+			}
 
-.mui-table-view {
-	background: transparent;
-	/*背景色透明*/
-}
 
-.mui-table-view-cell {
-	background: white;
-	/*cell 背景设为白色*/
-	padding: 0;
-	/*内边距为0*/
-	margin-bottom: 10px;
-}
-
-.mui-table-view:before,
-.mui-table-view:after,
-.mui-table-view-cell:after {
-	height: 0px;
-	/*去掉横线*/
-}
-
-.mui-row-padding-8px {
-	padding: 8px;
-	/*内边距为8px*/
-	padding: 12px;
-}
 
 .dynamic-personal-image {
 	/*个人头像圆形*/

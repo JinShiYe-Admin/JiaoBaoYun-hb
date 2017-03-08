@@ -17,7 +17,10 @@
 			"fonts/iconfont.ttf",
 			"js/main/slide_navigation.js",
 			"css/home/index.css",
-			"js/index.js"
+			"js/index.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/qiuzhi/expert-detail.html": {
@@ -82,7 +85,9 @@
 			"css/home/index-menu.css",
 			"image/mine/about.png",
 			"image/mine/my-space.png",
-			"image/mine/my-points.png"
+			"image/mine/my-points.png",
+			"image/utils/default_personalimage.png",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/qiuzhi/qiuzhi-expertAllComment.html": {
@@ -149,7 +154,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/register/register_phoneNumber.html",
@@ -205,7 +211,12 @@
 			"image/cloud/cloud_0_zuoye.png",
 			"image/cloud/cloud_0_ban_1.png",
 			"image/cloud/cloud_0_jia_0.png",
-			"image/cloud/cloud_0_wenjianjia_1.png"
+			"image/cloud/cloud_0_wenjianjia_1.png",
+			"image/cloud/cloud_0_dangan.png",
+			"css/utils/common.css",
+			"css/iconfont/iconfont.css",
+			"css/mui.min.css",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
@@ -224,7 +235,8 @@
 			"js/mui.lazyload.js",
 			"js/mui.lazyload.img.js",
 			"css/sciedu/sciedu.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"/image/utils/default_load_2.gif"
 		]
 	},
 	"html/show/show_home_1.html": {
@@ -236,13 +248,19 @@
 			"css/icons-extra.css",
 			"css/utils/preview.css",
 			"css/show/show.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/dynamic/icon_praise_small.png",
+			"js/show/show-sub.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/register/register_phoneNumber.html": {
 		"resources": [
 			"fonts/mui.ttf",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/register/yanZhengMa.html"
@@ -386,7 +404,9 @@
 	"html/homework/homework-comment.html": {
 		"resources": [
 			"css/homework/homework-commit.css",
-			"js/homework/homework-comment.js"
+			"js/homework/homework-comment.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/homework/workdetailTea-temporary.html": {
@@ -404,7 +424,9 @@
 	},
 	"html/register/yanZhengMa.html": {
 		"resources": [
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/cloud/app_notes_sub.html": {

@@ -71,7 +71,6 @@
 		var pageFlag;;
 		mui.plusReady(function() {
 			pageFlag = plus.webview.currentWebview().data
-							console.log(JSON.stringify(pageFlag));
 			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
 
 			getGroupList();

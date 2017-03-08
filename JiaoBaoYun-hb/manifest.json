@@ -3271,7 +3271,8 @@
 					"js/mui.zoom.js",
 					"js/mui.previewimage.js",
 					"css/utils/preview.css",
-					"css/show/show.css"
+					"css/show/show.css",
+					"js/show/show-sub.js"
 				],
 				"refer": [],
 				"priority": 0
