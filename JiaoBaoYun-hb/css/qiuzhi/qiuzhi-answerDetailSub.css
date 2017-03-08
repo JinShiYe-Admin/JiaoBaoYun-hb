@@ -5,18 +5,22 @@
 	text-align: start;
 	/*padding:1rem;*/
 }
+/*头像*/
 .head-img{
 	width: 4rem;
 	height:4rem;
 }
+/*评论内容*/
 .comment-container{
 	display: inline-block;
 	width: 70%;
 }
+/*发送按钮*/
 .icon-fasong{
 	color: gainsboro;
 	font-size: 2.4rem;
 }
+/*输入答案评论按钮*/
 .input-footerContainer{
 	background-color: white;
 	height: 60px;
@@ -26,11 +30,13 @@
 	bottom: 0;
 	z-index: 9999;
 }
+/*排序规则*/
 .order-selector{
 	appearance:none;
 	background: url(../../image/qiuzhi/arraw-down.png) no-repeat right center transparent;
 	max-width: 100px;
 }
+/**/
 .img-portrait{
 	float: left;
 	width: 40px;
@@ -38,17 +44,21 @@
 	border-radius: 50%;
 	max-width: 15%;
 }
+/*专家信息栏*/
 .export-info{
 	max-width: 55%;
 	padding-left:5px;
+	margin-top: -2px;
 }
+/*作者内容控件*/
 .anthor-container{
-	padding: 8px 5px;
+	padding: 10px;
 	height: 60px;
 	position: fixed;
-	width: 80%;
-	left: 10%;
-	border: solid 1px gray;
+	width: 90%;
+	left: 5%;
+/*	border: solid 1px gray;*/
+	box-shadow: 0px 0.5px 2px rgb(183,183,183,.6);
 	z-index: 50;
 	background-color: white;
 	border-radius: 10px;
@@ -63,8 +73,13 @@
 	padding: 5px 10px 40px 5px;
 	/*padding-top:5px;
 	padding-bottom: 40px;*/
-	border-bottom: solid 1px gray;
-	background-color: white;
+	border-bottom: solid 1px #F2F3F5;
+	background-color:#F8F9FB;
+}
+/*问题标题*/
+.question-container>.question-title{
+	font-size: 1.7rem;
+	color: #323232;
 }
 .comments-info{
 	position: relative;
@@ -118,4 +133,12 @@
 }
 .imgs-container{
 	min-width: 100%;
+}
+.anthor-name{
+	color: #323232;
+	font-size: 1.5rem;
+}
+.anthor-intro{
+	color: #808080;
+	font-size: 1.3rem;
 }

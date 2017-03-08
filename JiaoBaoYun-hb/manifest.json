@@ -927,7 +927,8 @@
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
 					"js/libs/jquery.js",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/index.html",
