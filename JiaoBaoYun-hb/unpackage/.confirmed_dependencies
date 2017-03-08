@@ -48,7 +48,8 @@
 			"css/mui.min.css",
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"image/qiuzhi/expertBG.jpg"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-expertAllAnswer.html",

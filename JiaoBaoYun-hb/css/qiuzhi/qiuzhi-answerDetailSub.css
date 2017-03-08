@@ -109,7 +109,7 @@
 .btn-attention{
 	border: none;
 	margin-top: 5px;
-	min-width: 4rem;
+	min-width: 7rem;
 	max-width: 25%;
 	color: white;
 	background-color:#1db8F1;
@@ -117,7 +117,7 @@
 .btn-attentioned{
 	border: none;
 	margin-top: 5px;
-	min-width: 4rem;
+	min-width: 7rem;
 	max-width: 25%;
 	color: white;
 	background-color:#b7b7b7;

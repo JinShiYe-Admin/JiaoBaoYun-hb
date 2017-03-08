@@ -3227,7 +3227,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"fonts/fangzheng.ttf",
-					"image/qiuzhi/bianji.png"
+					"image/qiuzhi/bianji.png",
+					"image/qiuzhi/expertBG.jpg"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-expertAllAnswer.html",
