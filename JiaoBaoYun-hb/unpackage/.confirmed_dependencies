@@ -343,7 +343,8 @@
 			"js/utils/CloudFileUtil.js",
 			"js/qiniu/qiniu.js",
 			"fonts/mui.ttf",
-			"js/cloud/cloud.js"
+			"js/cloud/cloud.js",
+			"css/cloud/file.css"
 		]
 	},
 	"html/qiuzhi/qiuzhi_home.html": {
@@ -524,7 +525,9 @@
 			"js/utils/camera.js",
 			"js/qiniu/qiniu.js",
 			"fonts/iconfont.ttf",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/storageKeyName.js"
 		],
 		"refer": [
 			"html/homework/classes-select.html"
@@ -567,12 +570,19 @@
 			"js/mui.zoom.js",
 			"js/publicHomeworkProtocol.js",
 			"js/mui.previewimage.js",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/mui.min.js",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/homework/workdetailTea-temporary.html": {
 		"resources": [
-			"html/homework/workdetailTea-temSub.html"
+			"html/homework/workdetailTea-temSub.html",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/homework/workdetailTea-temSub.html"
@@ -879,7 +889,10 @@
 			"js/quan/class_space.js",
 			"js/mui.previewimage.js",
 			"js/utils/h5fresh.js",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"js/publicProtocol.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html"

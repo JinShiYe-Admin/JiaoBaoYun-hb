@@ -243,15 +243,15 @@ var events = (function(mod) {
 			targetPage = plus.webview.getWebviewById(tarPage);
 			//				console.log(typeof(targetPage));
 		}
-		mod.showWaiting();
-		setTimeout(function() {
-			//触发目标页面的listener事件
-			mui.fire(targetPage, listener, {
-				data: datas
-			});
-			targetPage.show('slide-in-right', 250);
-			mod.closeWaiting();
-		}, 1000)
+		//		mod.showWaiting();
+		//		setTimeout(function() {
+		//触发目标页面的listener事件
+		mui.fire(targetPage, listener, {
+			data: datas
+		});
+		targetPage.show('slide-in-right', 250);
+		//			mod.closeWaiting();
+		//		}, 1000)
 
 	}
 	/**

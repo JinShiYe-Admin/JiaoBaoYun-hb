@@ -27,6 +27,7 @@ events.initRefresh('list-container', function() {
 mui.plusReady(function() {
 	mui.previewImage();
 	events.preload('qiuzhi-addAnswer.html');
+	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'),"answerIsReady");
 	//加载监听
 	window.addEventListener('answerInfo', function(e) {
 		flag = 1;
