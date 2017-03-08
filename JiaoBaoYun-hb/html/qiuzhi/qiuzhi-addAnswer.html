@@ -89,7 +89,12 @@
 				window.addEventListener("comment-reply", function(e) {
 					console.log('回复评论要加载的值：' + JSON.stringify(e.detail.data));
 					type = 2;
+					document.getElementById('title').innerText = '回复评论';
 					commentInfo=e.detail.data;
+					document.getElementById('answerContent').placeholder = "添加评论回复,最多1000字";
+					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
+						item.style.display = 'none';
+					})
 				})
 				setListener();
 			});

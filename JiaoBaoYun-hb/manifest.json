@@ -2201,9 +2201,7 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js",
-					"js/mui.min.js",
-					"css/mui.min.css"
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2214,8 +2212,7 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"css/utils/common.css",
-					"js/utils/events.js"
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0
