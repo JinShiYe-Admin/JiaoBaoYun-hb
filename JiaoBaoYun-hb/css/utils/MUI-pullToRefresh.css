@@ -1,67 +1,3 @@
-/*头像样式*/
-.head-img,.head-portrait{
-	width: 4rem;
-	height: 4rem;
-	border-radius: 50%;
-	/*max-width: 20%;*/
-}
-.head-img{
-	max-width: 15%;
-}
-
-.mui-scroll-wrapper {
-	padding-top: 44px;
-}
-/**
- * 中间信息宽度
- */
-.info-container{
-	max-width: 60%;
-	padding: .5rem 0 0 .5rem;
-}
-.person-info{
-	line-height: 120%;
-}
-.attentioned-btn,.attention-btn{
-	max-width: 25%;
-	float: right;
-	margin-top: 1rem;
-	color: #fff;
-	border: 1px solid #1db8F1;
-	/*background-color: #1db8F1;*/
-}
-/*需关注button*/
-.attention-btn{
-	color: #fff;
-	border: 1px solid #1db8F1;
-}
-/*已关注的显示*/
-.attentioned-btn{
-	color: lightgrey;
-	border: 1px solid lightgrey;
-}
-/*.mui-table-view-cell:last-of-type{
-	padding-right: .5rem;
-}*/
-.li-container{
-	height: 6rem;
-	/*text-align: center;*/
-}
-/*外边框+关注内buttton字体颜色*/
-.mui-btn-outlined.attention-btn{
-	color: #1db8F1;
-}
-/*点击后的颜色*/
-.attention-btn:enabled:active{
-	color: white;
-	border: 1px solid #1db8F1;
-	background-color: #1db8F1;
-}
-.mui-btn-outlined{
-	/*min-width: 20%;*/
-	width: 70px;
-}
-
 .mui-bar~.mui-content .mui-fullscreen {
 	top: 44px;
 	height: auto;
@@ -88,10 +24,10 @@
 	display: block;
 	text-align: center;
 	background-color: #efeff4;
-	border: 1px solid #ddd;
+	border: 1px solid #ddd;/*圆圈的边框*/
 	border-radius: 25px;
 	background-clip: padding-box;
-	box-shadow: 0 4px 10px #bbb;
+	box-shadow: 0 4px 10px #bbb;/*圆圈边框的模糊效果*/
 	overflow: hidden;
 }
 
@@ -118,15 +54,15 @@
 
 .mui-pull-bottom-tips {
 	text-align: center;
-	background-color: #efeff4;
+	background-color: #efeff4;/*上啦显示更多，那一条的背景色*/
 	font-size: 15px;
 	line-height: 40px;
-	color: #777;
+	color: #777;/*上啦显示更多---字的背景色*/
 }
 
 .mui-pull-top-canvas {
 	overflow: hidden;
-	background-color: #fafafa;
+	background-color: #fafafa;/*圆圈的背景色*/
 	border-radius: 40px;
 	box-shadow: 0 4px 10px #bbb;
 	width: 40px;
@@ -136,4 +72,8 @@
 
 .mui-pull-top-canvas canvas {
 	width: 40px;
+}
+
+.mui-slider-indicator.mui-segmented-control {
+	background-color: #efeff4;
 }
