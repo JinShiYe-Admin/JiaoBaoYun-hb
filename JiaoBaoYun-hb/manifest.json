@@ -2856,7 +2856,11 @@
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
 					"image/utils/default_personalimage.png",
-					"image/qiuzhi/arraw-down.png"
+					"image/qiuzhi/arraw-down.png",
+					"css/utils/preview.css",
+					"js/mui.zoom.js",
+					"fonts/fangzheng.ttf",
+					"js/mui.previewimage.js"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-addAnswer.html",

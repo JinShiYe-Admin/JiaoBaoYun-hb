@@ -337,7 +337,7 @@ var getPicInner = function(data) {
 		if(picPaths.length < 3) {
 			pic_width = win_width / picPaths.length;
 		}
-		picInner += '<img src="' + picPaths[i] + '" style="width:' + pic_width + 'px;height:"' + pic_width + 'px" ' +
+		picInner += '<img src="' + picPaths[i] + '" class="answer-img" style="width:' + pic_width + 'px;height:"' + pic_width + 'px" ' +
 			'" data-preview-src="' + picBigPaths[i] + '" data-preview-group="1"/>';
 	}
 	console.log('图片路径：'+JSON.stringify(picPaths)+'图片宽度'+pic_width)
