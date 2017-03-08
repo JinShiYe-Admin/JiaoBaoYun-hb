@@ -53,7 +53,8 @@
 			//将传值到的标题显示
 			var askModel; //问题model
 			var answerInfo; //答案信息
-			var type = 0; //0：回答问题，1：评论答案
+			var commentInfo; //评论信息
+			var type = 0; //0：回答问题，1：评论答案 2：评论回复
 			//传值接收方法
 			mui.plusReady(function() {
 				jQuery('#answerContent').prop("maxLength", "4000");
@@ -74,7 +75,7 @@
 				//加载评论
 				window.addEventListener('add-comment', function(e) {
 					CloudFileUtil.files = [];
-					events.clearChild(document.getElementById('pictures')) 
+					events.clearChild(document.getElementById('pictures'))
 					type = 1;
 					document.getElementById('title').innerText = '我要评论';
 					document.getElementById('answerContent').placeholder = "添加评论,最多1000字";
@@ -84,6 +85,11 @@
 					})
 					answerInfo = e.detail.data;
 					document.getElementById('askTitle').innerText = answerInfo.AnswerContent;
+				})
+				window.addEventListener("comment-reply", function(e) {
+					console.log('回复评论要加载的值：' + JSON.stringify(e.detail.data));
+					type = 2;
+					commentInfo=e.detail.data;
 				})
 				setListener();
 			});
@@ -199,7 +205,7 @@
 									console.log("错误类型：" + type + errorThrown);
 									plus.nativeUI.closeWaiting();
 								});
-		
+
 						});
 					} else {
 						mui.toast('上传图片附件不得多于9张！');
@@ -211,10 +217,18 @@
 				events.addTap('submitBtn', function() {
 					var answerContent = jQuery.trim(document.getElementById("answerContent").value);
 					if(answerContent) {
-						if(type) { //评论答案
-							addComment(answerContent);
-						} else { //回答问题
-							addAnswer(answerContent);
+						switch(type) {
+							case 0:
+								addAnswer(answerContent);
+								break;
+							case 1:
+								addComment(answerContent);
+								break;
+							case 2:
+								addComment(answerContent, commentInfo);
+								break;
+							default:
+								break;
 						}
 					} else {
 						mui.toast('请输入内容');
@@ -235,8 +249,8 @@
 					askId: askModel.TabId, //问题ID
 					answerContent: answerContent, //回答内容,4000
 					encAddr: getTypeAddress(CloudFileUtil.files).encAddr, //附件地址,300,多个的情况例如：1.jpg|2.jpg
-					thumbnail:getTypeAddress(CloudFileUtil.files).encImg,
-					cutImg:getTypeAddress(CloudFileUtil.files).clipAddress,
+					thumbnail: getTypeAddress(CloudFileUtil.files).encImg,
+					cutImg: getTypeAddress(CloudFileUtil.files).clipAddress,
 					answerMan: personalUTID, //回答人
 					isAnonym: isAnonymNo
 				};
@@ -260,15 +274,32 @@
 			 * 增加评论
 			 * @param {Object} commentValue
 			 */
-			var addComment = function(commentValue) {
+			var addComment = function(commentValue, opotions) {
 				var pId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 				var wd = events.showWaiting();
+				var upperId = 0;
+				var replyId = 0;
+				var answerId;
+				if(answerInfo) {
+					answerId = answerInfo.AnswerId;
+				}
+				//如果有参数
+				if(opotions) {
+//					if(opotions.UpperId=0){
+						upperId = opotions.TabId;
+//					}else{
+//						upperId=opotions.UpperId;
+//					}
+					replyId = opotions.UserId;
+					answerId = opotions.AnswerId;
+				}
+
 				postDataQZPro_addAnswerComment({
-					answerId: answerInfo.AnswerId, //回答ID
-					upperId: 0, //上级评论ID,第一个评论传0，其他的传最上层的ID
+					answerId: answerId, //回答ID
+					upperId: upperId, //上级评论ID,第一个评论传0，其他的传最上层的ID
 					userId: pId, //评论用户ID,
 					commentContent: commentValue, //评论内容
-					replyId: 0 //回复用户ID,新增评论的话传0，回复评论传用户Id
+					replyId: replyId //回复用户ID,新增评论的话传0，回复评论传用户Id
 				}, wd, function(data) {
 					wd.close();
 					console.log('评论结果:' + JSON.stringify(data))
@@ -305,7 +336,7 @@
 						theFile = CloudFileUtil.files[i];
 						if(i == 0) {
 							TAs.encType = theFile.type;
-							TAs.clipAddress=theFile.clip;
+							TAs.clipAddress = theFile.clip;
 						}
 						encAddrs.push(theFile.url);
 						encImgs.push(theFile.thumb);

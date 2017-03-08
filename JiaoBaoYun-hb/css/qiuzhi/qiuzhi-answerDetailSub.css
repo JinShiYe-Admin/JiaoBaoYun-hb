@@ -122,8 +122,9 @@
 	color: white;
 	background-color:#b7b7b7;
 }
-.question-content{
+.question-content>p{
 	word-wrap: break-word;
+	font-size: 14px;
 }
 /*已点赞的颜色*/
 .isLike{
@@ -171,4 +172,6 @@
 .mui-table-view:before{
 	background-color: transparent;
 }
-
+.inner-table-view{
+	padding-left: 50px;
+}
