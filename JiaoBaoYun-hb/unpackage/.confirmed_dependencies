@@ -892,7 +892,8 @@
 			"css/utils/preview.css",
 			"js/publicProtocol.js",
 			"js/storageKeyName.js",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html"

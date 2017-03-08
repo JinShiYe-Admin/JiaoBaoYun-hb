@@ -58,7 +58,7 @@
 	background-color: #1db8F1;
 }
 .mui-btn-outlined{
-	width: 7rem;
+	min-width: 8rem;
 }
 
 .mui-bar~.mui-content .mui-fullscreen {
