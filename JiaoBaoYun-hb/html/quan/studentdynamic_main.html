@@ -82,7 +82,7 @@
 				name: data.studentName //资料名称
 			}, function(successCB) {
 				console.log('上传并修改资料头像，成功的回调' + JSON.stringify(successCB));
-				mui.toast('修改资料头像成功');
+				mui.toast('资料头像更新成功');
 				//获得主页面的webview
 				var cloud_home = plus.webview.getWebviewById('../cloud/cloud_home.html');
 				//触发tab-zone页面的setRead事件
@@ -92,7 +92,7 @@
 				});
 			}, function(errorCB) {
 				console.log('上传并修改资料头像失败 ' + JSON.stringify(errorCB));
-				mui.toast('上传失败' + JSON.stringify(errorCB));
+				mui.toast('资料头像更新失败' + JSON.stringify(errorCB));
 			});
 		});
 	</script>

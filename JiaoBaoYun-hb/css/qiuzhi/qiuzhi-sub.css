@@ -30,7 +30,7 @@ p {
 }
 
 .experts-show {
-	padding: 1rem;
+	padding: 11px 15px;
 }
 
 
@@ -170,4 +170,10 @@ p {
 	/*box-shadow: -1px 0px 2px rgba(230,230,230,0.6),
 	1px 2px 1px rgba(230,230,230,0.4);*/
 	box-shadow: 0px 2px 4px rgba(183, 183, 183, 0.2);
+}
+.mui-table-view:after{
+	background-color: transparent;
+}
+.mui-table-view:before{
+	background-color: transparent;
 }

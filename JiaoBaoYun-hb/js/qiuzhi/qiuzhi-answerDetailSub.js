@@ -27,6 +27,7 @@ events.initRefresh('list-container', function() {
 mui.plusReady(function() {
 	mui.previewImage();
 	events.preload('qiuzhi-addAnswer.html');
+	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'),"answerIsReady");
 	//加载监听
 	window.addEventListener('answerInfo', function(e) {
 		flag = 1;
@@ -200,9 +201,11 @@ function getUserFocus(userId) {
 			if(data.RspData.Result) {
 				btn_focus.innerText = '已关注';
 				btn_focus.isLike = 1;
+				btn_focus.className="mui-btn mui-pull-right btn-attentioned";
 			} else {
 				btn_focus.innerText = '关注';
 				btn_focus.isLike = 0;
+				btn_focus.className="mui-btn mui-pull-right btn-attention"
 			}
 		} else {
 			mui.toast(data.RspTxt);
@@ -231,10 +234,12 @@ function setUserFocus(userId, item) {
 				item.innerText = '关注';
 				mui.toast('取消关注成功！');
 				item.isLike = 0;
+				item.className="mui-btn mui-pull-right btn-attention"
 			} else {
 				item.innerText = '已关注';
 				mui.toast('关注成功！')
 				item.isLike = 1;
+				item.className="mui-btn mui-pull-right btn-attentioned"
 			}
 		} else {
 			mui.toast(data.RspTxt);
@@ -337,7 +342,7 @@ var getPicInner = function(data) {
 		if(picPaths.length < 3) {
 			pic_width = win_width / picPaths.length;
 		}
-		picInner += '<img src="' + picPaths[i] + '" style="width:' + pic_width + 'px;height:"' + pic_width + 'px" ' +
+		picInner += '<img src="' + picPaths[i] + '" class="answer-img" style="width:' + pic_width + 'px;height:"' + pic_width + 'px" ' +
 			'" data-preview-src="' + picBigPaths[i] + '" data-preview-group="1"/>';
 	}
 	console.log('图片路径：'+JSON.stringify(picPaths)+'图片宽度'+pic_width)

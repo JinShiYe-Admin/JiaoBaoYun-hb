@@ -66,7 +66,7 @@ mui.plusReady(function() {
 	}, function(successCB) {
 		var wd = events.showWaiting('更新头像...');
 		console.log('上传并修改个人头像，成功的回调' + JSON.stringify(successCB));
-		mui.toast('个人头像成功');
+		mui.toast('个人头像更新成功');
 		setTimeout(function() {
 			pInfo.uimg = successCB;
 			myStorage.setItem(storageKeyName.PERSONALINFO, pInfo);

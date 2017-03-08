@@ -25,15 +25,15 @@
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-
+			
 			.mui-table-view {
 				/*background-color: white;*/
 			}
-
+			
 			.cloud-item {
 				background-color: white;
 			}
-
+			
 			.cloud-item-left {
 				width: 16%;
 				border-right: 1px solid #D9D9D9;
@@ -42,47 +42,47 @@
 				font-weight: bold;
 				font-size: 1.6rem;
 			}
-
+			
 			.cloud-item-right {
 				/*margin-left: 16%;*/
 				width: 84%;
 				float: right;
 			}
-
+			
 			#cloudstorage_0,
 			#cloudrecord_0,
 			#cloudapps_0 {
 				/*每一项的第一行*/
 				/*background-color: red;*/
 			}
-
+			
 			#cloudstorage_1,
 			#cloudrecord_1,
 			#cloudapps_1 {
 				/*每一项的第二行*/
 				/*background-color: blue;*/
 			}
-
+			
 			.mui-plus-pullrefresh .mui-scroll {
 				position: absolute;
 				/*width: 100%;*/
 			}
-
+			
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				color: black;
 				border: none;
 			}
-
+			
 			.mui-table-view-cell {
 				display: inline-block;
 				width: auto;
 				padding: 1px 1px;
 			}
-
+			
 			.mui-slider-indicator .mui-table-view-cell.mui-active {
 				background: #D9D9D9;
 			}
-
+			
 			.cloud-red-point {
 				position: absolute;
 				background: red;
@@ -91,27 +91,27 @@
 				border-radius: 50%;
 				display: none;
 			}
-
+			
 			img {
 				border-radius: 50%;
 			}
-
+			
 			#cloudstorage_1 img {
 				border-radius: 0px;
 			}
-
+			
 			.icon-jiaxiabiao {
 				color: #0ABAF5;
 			}
-
+			
 			.icon-banxiabiao {
 				color: #FFBA00;
 			}
-
+			
 			.icon-re {
 				color: #FD681E;
 			}
-
+			
 			.icon-re,
 			.icon-banxiabiao,
 			.icon-jiaxiabiao {
@@ -119,7 +119,7 @@
 				border: none !important;
 				top: 0px;
 			}
-
+			
 			.mui-popup-input input {
 				/*popup 输入框*/
 				height: 34px;
@@ -506,8 +506,8 @@
 							var index = this.id.replace('tarClass1', '');
 							console.log('index：' + index)
 							mui.openWindow({
-								url: '../quan/parentZone.html',
-								id: '../quan/parentZone.html',
+								url: '../quan/zone_main.html',
+								id: '../quan/zone_main.html',
 								styles: {
 									top: '0px', //设置距离顶部的距离
 									bottom: '0px'
@@ -1049,6 +1049,70 @@
 					});
 				}
 			});
+			// 通过群ID获取群的正常用户
+			function getBottomList() {
+				//需要参数
+				var comData = {
+					top: '-1', //选择条数
+					vvl: gid, //群ID，查询的值
+					vvl1: '-1', //群员类型，0家长,1管理员,2老师,3学生,-1取全部
+
+				};
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				// 通过群ID获取群的正常用户
+				postDataPro_PostGusers(comData, wd, function(data) {
+					wd.close();
+					console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						datasource = data.RspData;
+						//			群用户去重
+						var tempUtidArr = [];
+						var tempUserArr = [];
+						var groupUserList = datasource;
+
+						for(var i = 0; i < groupUserList.length; i++) {
+
+							if(groupUserList[i].mstype == 0) { //0家长,1管理员,2老师,3学生
+								groupUserList[i].mstypeName = '[家长]';
+							} else if(groupUserList[i].mstype == 1) {
+								groupUserList[i].mstypeName = '[管理员]';
+							} else if(groupUserList[i].mstype == 2) {
+								groupUserList[i].mstypeName = '[老师]';
+							} else {
+								groupUserList[i].mstypeName = '[学生]';
+							}
+
+							var Arrindex = tempUtidArr.indexOf(groupUserList[i].utid);
+							if(Arrindex > -1) {
+								tempUserArr[Arrindex].ugname = tempUserArr[Arrindex].ugname + groupUserList[i].mstypeName;
+							} else {
+								groupUserList[i].ugname = groupUserList[i].ugname + groupUserList[i].mstypeName;
+								tempUtidArr.push(groupUserList[i].utid);
+								tempUserArr.push(groupUserList[i]);
+
+							}
+						}
+						datasource = tempUserArr;
+						var userIds = [];
+						for(var i = 0; i < datasource.length; i++) {
+							//群用户id数组
+							tempModel = datasource[i];
+							//判断img是否为null，或者空
+							tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
+							userIds.push(tempModel.utid)
+							userIds.join(',');
+
+						}
+						userIds = arrayDupRemoval(userIds)
+						upString = arrayToStr(userIds)
+						setUserSpaceReadByUser(upString);
+						getAllUserSpacesByUser(upString); //获取多用户空间列表
+
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+			}
 		</script>
 	</body>
 

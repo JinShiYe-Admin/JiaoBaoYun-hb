@@ -317,7 +317,8 @@
 									if(document.getElementById("textarea_record").value.replace(/(^\s*)|(\s*$)/g, "") != "" && multiMedia.data.PictureArray.length == 0) {
 										addNotes(2, strParent, strUser); //增加记事
 									} else {
-										uploadFile(); //上传文件
+										var wd3 = events.showWaiting();
+										uploadFile(wd3); //上传文件
 									}
 									wd2.close();
 								}, 500);
@@ -512,25 +513,44 @@
 			/**
 			 * 上传文件
 			 */
-			function uploadFile() {
+			function uploadFile(wd) {
 				compressImage(function(pathArray) {
 					for(var i = 0; i < pathArray.length; i++) {
 						console.log('pathArray ' + pathArray[i]);
 					}
-//					var saveSpace = window.storageKeyName.RECORD; //保存路径
-//					var options = { //上传七牛后的处理参数
-//						type: 0, //处理类型 0：缩略图 1 裁剪 10 缩略图+裁剪
-//						thumbSize: {
-//							width: 200, //缩略图最大宽度
-//							height: 200 //缩略图最大高度
-//						},
-//						cropSize: {
-//							height: 200 //裁剪宽度值
-//						}
-//					}
-//					//多图片处理获取参数
-//					var data = CloudFileUtil.getMultipleImgUploadOptions(pathArray, 6, 0, saveSpace, options);
-//					console.log('data ' + JSON.stringify(data));
+					var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENFILE;
+					var mainSpace = window.storageKeyName.QNPUBSPACE;
+					var uploadSpace = window.storageKeyName.RECORD;
+					var getToken = {
+						type: '2', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件；2上传需要生成缩略图的多个文件
+						appId: 6, //int 必填 项目id
+						fileArray: pathArray, //array 选填  type为2时有效，多个文件的路径
+						mainSpace: mainSpace, //str 必填 文件存放在私有空间或公有空间
+						uploadSpace: uploadSpace, //str 必填  上传的空间
+					}
+
+					CloudFileUtil.getQNUpToken(getUpTokenUrl, getToken, function(data) {
+						var QNUptoken = data.data; //token数据
+						var configure = data.configure; //获取token的配置信息
+						console.log('七牛上传凭证:' + JSON.stringify(QNUptoken));
+						if(QNUptoken.Status == 0) { //失败
+							mui.toast('获取上传凭证失败 ' + QNUptoken.Message);
+							console.log('### ERROR ### 请求上传凭证失败 ' + QNUptoken.Message);
+							wd.close();
+						} else {
+							wd.close();
+							console.log('获取上传凭证成功');
+							for (var i = 0; i < QNUptoken.Data.length; i++) {
+								console.log(JSON.stringify(QNUptoken.Data[i]));
+							}
+						}
+					}, function(xhr, type, errorThrown) {
+						mui.toast('请求上传凭证失败 ' + type);
+						console.log('请求上传凭证失败 ' + type);
+						wd.close();
+					});
+				}, function() {
+					wd.close();
 				});
 			}
 
@@ -539,7 +559,7 @@
 			 * @param {Object} successCallBack 成功的回调
 			 * @param {Object} errorCallBack 失败的回调
 			 */
-			function compressImage(successCallBack) {
+			function compressImage(successCallBack, errorCallBack) {
 				var pathArray = [];
 				for(var i = 0; i < multiMedia.data.PictureArray.length; i++) {
 					//console.log(JSON.stringify(multiMedia.data.PictureArray[i]));
@@ -572,6 +592,7 @@
 							var message = error.message; // 错误描述信息
 							mui.toast('图片压缩失败 ' + '错误编码 ' + code + '描述信息 ' + message);
 							console.log('### ERROR ### 图片压缩失败 ' + JSON.stringify(error));
+							errorCallBack();
 						}
 					);
 				}

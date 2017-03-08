@@ -237,6 +237,7 @@ header>a {
 /*分割线色值*/
 
 .mui-table-view-cell:after {
+	left: 0px;
 	background-color: #dedfe0;
 }
 
@@ -250,9 +251,9 @@ header>a {
 
 /*分割线色值*/
 
-.mui-table-view-divider:before {
+/*.mui-table-view-divider:before {
 	background-color: #dedfe0;
-}
+}*/
 
 .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 	color: #00A5E0;

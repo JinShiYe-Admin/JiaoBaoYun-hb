@@ -29,7 +29,7 @@
 		</header>
 
 		<div class="mui-content" style="background-color: white;">
-			<div id="expertInfo" style="min-height: 150px;height: auto;"><br/>
+			<div id="expertInfo" style="min-height: 150px;height: auto;background-image:url(../../image/qiuzhi/expertBG.jpg) ;"><br/>
 				<div style="text-align: center;">
 					<img id="expertImg" style="width: 50px;height: 50px;border-radius: 50%;" src="../../image/utils/default_personalimage.png" />
 				</div>
@@ -37,12 +37,12 @@
 					<h4 id="ExpertChannels"></h4>
 				</div>
 				<div style="margin-bottom: 10px;">
-					<p id="UserNote" style="margin: 5px;font-size: 15px;text-align: center;"></p>
+					<p id="UserNote" style="margin: 5px;font-size: 15px;text-align: center;color: white;"></p>
 				</div>
 
 				<!--<textarea  id="UserNote" id='leaveTitle'  onblur="inputOnblur(this)" class="mui-input-clear question" placeholder="" style="min-height: 30px;height: 30px;；width: 100%;background-color: transparent;font-size: 15px;border-color:transparent ;"></textarea>-->
 			</div>
-			<hr style="height:1px;border:none;border-top:1px solid lightgray;" />
+			<!--<hr style="height:1px;border:none;border-top:1px solid lightgray;" />-->
 
 			<div style="margin-top: 0px;margin-left: 20px;">
 				<div id="FocusAsk" style="float: left;width: 70px;margin-left: 5px;">
@@ -311,7 +311,7 @@
 			nodes.AskNum.innerHTML = ExpertsInfo.AskNum + '<span class="mui-icon mui-icon-forward"></span>';
 			//如果是自己，显示编辑简介按钮
 			if(ExpertsInfo.UserId == personalUTID) {
-				nodes.UserNote.innerHTML = ExpertsInfo.UserNote + ' ' + '<img id="bianji" style = "width:20px;height:20px"  src="../../image/qiuzhi/bianji.png" />';
+				nodes.UserNote.innerHTML = ExpertsInfo.UserNote + ' ' + '<img id="bianji" style = "width:20px;height:20px;"  src="../../image/qiuzhi/bianji.png" />';
 			} else {
 				nodes.UserNote.innerHTML = ExpertsInfo.UserNote;
 			}

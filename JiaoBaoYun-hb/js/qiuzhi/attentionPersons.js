@@ -62,7 +62,7 @@ var requireData = function() {
 		}, wd, function(data) {
 			console.log('获取的关注此专家的人：' + JSON.stringify(data));
 			wd.close();
-			if(data.RspCode == 0) {
+			if(data.RspCode == 0&&data.RspData.TotalPage>0) {
 				totalPageCount = data.RspData.TotalPage; //获取总页数
 				pageIndex++;
 				var persons = data.RspData.Data; //关注人数据
@@ -76,7 +76,7 @@ var requireData = function() {
 					requirePersonInfo(personIds, persons);
 				}
 			} else {
-				mui.toast(data.RspTxt);
+				mui.toast("暂无关注他的人");
 			}
 		})
 	} else {
@@ -98,9 +98,9 @@ function getFocusUsersByUser(focusId) {
 	var wd = events.showWaiting();
 	//27.获取某个用户的关注人列表
 	postDataQZPro_getFocusUsersByUser(comData, wd, function(data) {
-		wd.close();
+		events.closeWaiting();
 		console.log('27.获取某个用户的关注人列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-		if(data.RspCode == 0) {
+		if(data.RspCode == 0&&data.RspData.TotalPage>0) {
 			//总页数
 			totalPageCount = data.RspData.TotalPage;
 			pageIndex++;
@@ -122,7 +122,7 @@ function getFocusUsersByUser(focusId) {
 				requirePersonInfo(personIds, personArray);
 			}
 		} else {
-			mui.toast(data.RspTxt);
+			mui.toast("暂无关注的人");
 		}
 	});
 };

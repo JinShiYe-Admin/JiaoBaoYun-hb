@@ -77,6 +77,9 @@ var dynamiclistitem = (function($, mod) {
 			citycode = ''
 		}
 		if(pageFlag == 1 && mui.os.android) {
+			if(SCREEN_WIDTH<50){
+				SCREEN_WIDTH=plus.screen.resolutionWidth*4
+			}
 
 			SCREEN_WIDTH = SCREEN_WIDTH * 360 / 1440
 			console.log('SCREEN_WIDTH==' + SCREEN_WIDTH * 360 / 1440)
@@ -107,7 +110,7 @@ var dynamiclistitem = (function($, mod) {
 
 				if(index < 8) {
 					html1 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
-					html2 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;" src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + citycode + 'cellImageType' + id + '"/></div>';
+					html2 = '<img class="dynamic-image" style= "padding-top:3px;height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;" src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + citycode + 'cellImageType' + id + '"/></div>';
 				} else if(index == 8) {
 					var html4 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
 					var html5 = '';
@@ -115,7 +118,7 @@ var dynamiclistitem = (function($, mod) {
 					if(ImageNum > 9) {
 						html5 = '<div class="dynamic-image-more"><font style="line-height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">+' + (ImageNum - 9) + '</font></div>';
 					}
-					var html6 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;" src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + citycode + 'cellImageType' + id + '"/></div>';
+					var html6 = '<img class="dynamic-image" style= "padding-top:3px;height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;" src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + citycode + 'cellImageType' + id + '"/></div>';
 					html3 = html4 + html5 + html6;
 				}
 
@@ -144,7 +147,8 @@ var dynamiclistitem = (function($, mod) {
 		var InteractionData = data[2]; //[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
 		var introduce = InteractionData[0]; //信息说明
 		var viewCount = InteractionData[1]; //浏览次数
-		var praiseList = InteractionData[2]; //点赞列表数组
+		var praiseList = InteractionData[2].reverse(); //点赞列表数组
+//		if(praiseList.length>20)
 		var commentList = InteractionData[3]; //评论列表数组
 		//[commentList]:评论列表1.评论[commenter,content]评论者，评论内容
 		//						2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
@@ -153,7 +157,7 @@ var dynamiclistitem = (function($, mod) {
 		var htmlPraiseList = '<div  class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div id= "PraiseList' + data[4] + idFlag + id + '" class="mui-media-body">'; //点赞列表
 		var htmlCommentList = ''; //评论列表
 
-		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body">';
+		var html1 = '<div class="mui-col-sm-12 mui-fcol-xs-12"><div class="mui-media-body">';
 		var html2 = '</div></div>'
 		//		var html2 = '<p><span class="mui-icon mui-icon-image"></span>' + introduce + '</p></div></div>';
 		var html3 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div class="mui-media-body mui-pull-right">';
@@ -168,7 +172,13 @@ var dynamiclistitem = (function($, mod) {
 		var html5 = '<a id="comment' + data[4] + idFlag + id + '" style = "color: #8F8F94;" class="mui-icon iconfont icon-xiaoxizhongxin dynamic-icon-comment"></a>';
 		//				var html6 = '<img src="../../image/dynamic/icon_forward.png" class="dynamic-icon-forward" />';
 		var html6 = '<font style="padding-right:7px"></font>';
-		var html7 = '</div><div class="mui-media-body"><p>浏览' + viewCount + '次</p></div></div>';
+		var html7
+		if(pageFlag==1){
+			html7 = '</div><div class="mui-media-body"><p></p></div></div>';
+		}else{
+			html7 = '</div><div class="mui-media-body"><p>浏览' + viewCount + '次</p></div></div>';
+		}
+		
 		var html8 = '<div id="line" class="mui-col-sm-12 mui-col-xs-12 "><div class="mui-media-body dynamic-line"></div></div>';
 
 		html = html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8;
@@ -226,7 +236,7 @@ var dynamiclistitem = (function($, mod) {
 		htmlCommentList = htmlCommentList1 + htmlCommentList2 + '</div>';
 		var htmlCommentBtn = '<div  class="mui-col-sm-12 mui-col-xs-12"><button id="bottomComment' + data[4] + idFlag + id + '" type="button" class="mui-btn dynamic-comment-btn"><p class="mui-pull-left">评论</p></button></div>';
 
-		html = html + htmlPraiseList + htmlCommentList + htmlCommentBtn;
+		html = html + htmlPraiseList + htmlCommentList //+ htmlCommentBtn;
 
 		var div = document.createElement('div');
 		div.className = 'mui-row mui-row-padding-8px';
