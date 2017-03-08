@@ -6,8 +6,9 @@ var totalPage; //总页数
 var channelInfo; //选择的话题
 var allChannels; //所有的话题
 mui.init();
-
 mui.plusReady(function() {
+	mui.fire(plus.webview.getWebviewById('qiuzhi_home.html'),'subIsReady');
+	console.log(plus.webview.getWebviewById('qiuzhi-sub.html').isReady)
 	events.preload("qiuzhi-answerDetail.html", 80);
 	window.addEventListener('channelInfo', function(e) {
 		console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
