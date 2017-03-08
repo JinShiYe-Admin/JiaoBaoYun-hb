@@ -74,7 +74,7 @@ var getImgsInner = function(imgs) {
 	var img_width = "33.33333%";
 	if(imgs && imgs.length > 0) {
 		for(var i in imgs) {
-			imgInner += '<img style="width:' + img_width + ';" src="' + imgs[i].ThumbUrl +
+			imgInner += '<img class="homework-img" style="width:' + img_width + ';" src="' + imgs[i].ThumbUrl +
 				'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + imgs[i].FileType + '"/>';
 		}
 	}

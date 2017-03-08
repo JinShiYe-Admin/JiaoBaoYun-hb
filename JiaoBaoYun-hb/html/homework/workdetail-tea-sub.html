@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/homework/workdetail.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
-		
+
 		<link href="../../css/homework/subjects-icon.css" rel="stylesheet" />
 		<script src="../../js/mui.min.js"></script>
 
@@ -26,7 +26,11 @@
 				/*去掉横线
 		}*/
 			
-			.dynamic-personal-image{
+			.homework-img {
+				padding: 0 3px;
+			}
+			
+			.dynamic-personal-image {
 				/*个人头像圆形*/
 				border-radius: 50%;
 				width: 50px;
@@ -372,7 +376,7 @@
 				var img_width = "33.33333%";
 				if(imgs && imgs.length > 0) {
 					for(var i in imgs) {
-						imgInner += '<img style="width:' + img_width + ';" src="' + imgs[i].ThumbUrl +
+						imgInner += '<img class="homework-img" style="width:' + img_width + ';" src="' + imgs[i].ThumbUrl +
 							'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + imgs[i].FileType + '"/>';
 					}
 				}

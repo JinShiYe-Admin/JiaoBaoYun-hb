@@ -58,7 +58,7 @@
 	width: 90%;
 	left: 5%;
 /*	border: solid 1px gray;*/
-	box-shadow: 0px 0.5px 2px rgb(183,183,183,.6);
+	box-shadow: 0px 0.5px 2px rgba(183,183,183,.6);
 	z-index: 50;
 	background-color: white;
 	border-radius: 10px;
@@ -85,10 +85,12 @@
 	position: relative;
 	min-height: 45px;
 	padding: 0 10px;
+	background-color: #EFEFF4;
 }
 .comment-no{
 	font-size: 14px;
 	padding-top: 10px;
+	color: #808080;
 }
 .order-selector{
 	position: fixed;
@@ -105,20 +107,31 @@
 	padding: 0 2px;
 }
 .btn-attention{
+	border: none;
 	margin-top: 5px;
 	min-width: 4rem;
 	max-width: 25%;
 	color: white;
 	background-color:#1db8F1;
 }
+.btn-attentioned{
+	border: none;
+	margin-top: 5px;
+	min-width: 4rem;
+	max-width: 25%;
+	color: white;
+	background-color:#b7b7b7;
+}
 .question-content{
 	word-wrap: break-word;
 }
+/*已点赞的颜色*/
 .isLike{
-	color:darkgray;
+	color:#1a9bff;
 }
+/*未点赞颜色*/
 .isNotLike{
-	color: #000000;
+	color: #B7B7B7;
 }
 /*评论内容*/
 .comment-words{
@@ -146,3 +159,16 @@
 	color: #808080;
 	font-size: 1.3rem;
 }
+.mui-table-view{
+	border: none;
+}
+.mui-table-view-cell:after {
+	background-color: #E4E4E4;
+}
+.mui-table-view:after{
+	background-color: transparent;
+}
+.mui-table-view:before{
+	background-color: transparent;
+}
+
