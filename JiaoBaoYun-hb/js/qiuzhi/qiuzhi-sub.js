@@ -49,9 +49,7 @@ mui.plusReady(function() {
 		//刷新的界面实现逻辑
 		requestChannelList(channelInfo);
 	}, {
-		//		height: '5%',
-		//		style: 'circle',
-		//		range:'5%'
+		style: 'circle',
 	});
 	setListener();
 	pullUpFresh();
@@ -254,7 +252,7 @@ var getImgs = function(cell) {
  */
 var getChannelIcon = function(cell) {
 	var iconSourse = "../../image/qiuzhi/";
-	switch(cell.AskChannel) { 
+	switch(cell.AskChannel) {
 		case "教学":
 			iconSourse += "channel-edu.png";
 			break;
@@ -333,7 +331,7 @@ var setListener = function() {
 	});
 }
 /**
- * 
+ *
  * @param {Object} type 0问题 1答案
  */
 var fireToPageReady=function(type,options){
