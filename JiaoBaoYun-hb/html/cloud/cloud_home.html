@@ -874,7 +874,7 @@
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell';
 					li.id = 'studentsdynamic' + id_index;
-					var html0 = '<div id="studyn_redpoint_' + data.stuid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 2) + 'px' + ';"></div>';
+					var html0 = '<div id="studyn_redpoint_' + data.stuid + '" class="cloud-red-point" style="left:' + (maxWidth - 20) + 'px' + ';"></div>';
 					li.innerHTML = html0 + '<img id="student_imge_' + data.stuid + '" src="' + updateHeadImg(data.stuimg, 2) + '"style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
 									   <p id="studyn_' + id_index + '" class="mui-ellipsis"></p>';
 					li.style.width = maxWidth + 'px';
@@ -909,7 +909,7 @@
 					var gnameId = ''; //群名称元素的id
 					if(type == 0) {
 						li.id = 'tarClass' + id_index;
-						html0 = '<div id="tarClass_' + data.gid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 2) + 'px;"></div>';
+						html0 = '<div id="tarClass_' + data.gid + '" class="cloud-red-point" style="left:' + (maxWidth - 20) + 'px;"></div>';
 
 						html1 = html0 + '<img src="../../image/cloud/cloud_0_ban_1.png" style="margin-left:' + (maxWidth / 2.5) + 'px;position: absolute;margin-top: ' + (maxWidth * 0.35) + 'px;height: ' + (maxWidth * imgeWith * 0.5) + 'px;width: ' + (maxWidth * imgeWith * 0.5) + 'px;"/>';
 						//html1 = html0 + '<span class="mui-icon iconfont icon-banxiabiao" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
@@ -919,7 +919,7 @@
 						gname = data.gname;
 					} else {
 						li.id = 'tarClass1' + id_index;
-						html0 = '<div id="tarClass1_' + data.gid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 2) + 'px;"></div>';
+						html0 = '<div id="tarClass1_' + data.gid + '" class="cloud-red-point" style="left:' + (maxWidth - 20) + 'px;"></div>';
 						html1 = html0 + '<img src="../../image/cloud/cloud_0_jia_0.png" style="margin-left:' + (maxWidth / 2.5) + 'px;position: absolute;margin-top: ' + (maxWidth * 0.35) + 'px;height: ' + (maxWidth * imgeWith * 0.5) + 'px;width: ' + (maxWidth * imgeWith * 0.5) + 'px;"/>';
 
 						//html1 = html0 + '<span class="mui-icon iconfont icon-jiaxiabiao" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
@@ -1060,7 +1060,7 @@
 								//console.log('家校圈:' + index + '|' + JSON.stringify(element));
 								addcloudrecord_1_0(index, element, 1);
 							});
-							getAllClassMember(gids,tempArr); // 通过群IDs获取群的正常用户
+							getAllClassMember(gids, tempArr); // 通过群IDs获取群的正常用户
 							getClassSpacesByUserForMutiClass(gids, tempArr); //（班级空间）获取用户针对多班级的空间列表
 						} else if(data.RspCode == 9) { //没有群
 							console.log('显示空白页');
@@ -1074,7 +1074,7 @@
 				}
 			});
 			// 通过群ID获取群的正常用户
-			function getAllClassMember(gids,gidArr) {
+			function getAllClassMember(gids, gidArr) {
 				var gidStr = gids.replace('[', '');
 				gidStr = gidStr.replace(']', '');
 
@@ -1108,7 +1108,7 @@
 						}
 						var usersStr = arrayToStr(userArrays);
 						console.log('所用的群用户：' + usersStr);
-						getNoReadCntForClassByUser(usersStr,gidArr); //79.（用户空间）获取多班级多用户空间所有用户未读数
+						getNoReadCntForClassByUser(usersStr, gidArr); //79.（用户空间）获取多班级多用户空间所有用户未读数
 
 					} else {
 
@@ -1185,7 +1185,7 @@
 				})
 			}
 			//79.（用户空间）获取多班级多用户空间所有用户未读数
-			function getNoReadCntForClassByUser(publisherIds,gidArr) {
+			function getNoReadCntForClassByUser(publisherIds, gidArr) {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 
 				//所需参数
