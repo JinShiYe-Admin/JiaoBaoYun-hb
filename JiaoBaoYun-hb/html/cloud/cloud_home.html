@@ -1172,9 +1172,9 @@
 						}
 						console.log(JSON.stringify(noReadModel));
 						//显示未读的红点
-						for(var i = 0; i < noReadModel.class_noReads.length; i++) {
-							if(noReadModel.class_noReads[i] != 0) {
-								document.getElementById("tarClass_" + gidArr[i]).style.display = 'inline';
+						for(var i = 0; i < tempArr.length; i++) {
+							if(tempArr[i].NoReadCnt != 0) {
+								document.getElementById("tarClass_" + tempArr[i].ClassId).style.display = 'inline';
 							}
 						}
 					} else {
