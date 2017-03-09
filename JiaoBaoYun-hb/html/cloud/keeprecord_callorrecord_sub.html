@@ -86,8 +86,10 @@
 
 			.mui-media-body {
 				margin-top: 10px;
-				margin-bottom: 5px;
+				margin-bottom: 7px;
 				color: #323232;
+				word-break: break-all;
+				font-size: 15px;
 			}
 
 			.time {
@@ -95,6 +97,20 @@
 				text-align: center;
 				border-bottom: 1px solid #e1e1e1;
 				color: #909090;
+				font-size: 15px;
+				padding-top: 4px;
+				padding-bottom: 4px;
+			}
+
+			.record-imge {
+				width: 100%;
+			}
+
+			.record-picture {
+				overflow: hidden;
+				position: relative;
+				float: left;
+				text-align: center;
 			}
 		</style>
 	</head>
@@ -147,7 +163,6 @@
 		<script type="text/javascript" src="../../js/utils/cryption.js"></script>
 		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
-
 		<script>
 			mui.init({
 				pullRefresh: {
@@ -207,10 +222,15 @@
 			var call_type = ''; //记录最后点击的点到类型
 			var call_input = ''; //记录点到的备注
 			var commitNum = 0; //记录发布请求的次数
+			var previewImage; //查看图片的控件
+			var pathList = []; //记录需要删掉的图片和缩略图
+
 			mui.plusReady(function() {
 
-				mui.previewImage();
-				//events.closeWaiting();
+				//图片查看控件
+				previewImage = mui.previewImage();
+
+				events.closeWaiting();
 				//---从父页面获取数据---start---
 				main = plus.webview.currentWebview(); //获取当前窗体对象
 				subData = main.data; //接收页面传入的参数值
@@ -231,6 +251,7 @@
 				 */
 				multiMedia.imageChangeCallBack = function() {
 					changeCommit();
+					//console.log(document.getElementById("MultiMedia_Picture_Footer").innerHTML);
 				}
 
 				//---获取数据---start---
@@ -279,6 +300,10 @@
 				//监听记事的输入
 				document.getElementById('textarea_record').addEventListener('input', function() {
 					changeCommit();
+				});
+
+				mui('#top').on('tap', '.record-picture-num', function() {
+					previewImage.open(document.getElementById("1"));
 				});
 
 				/**
@@ -420,6 +445,8 @@
 							call_input = '';
 						} else {
 							mui.toast('记事发布成功');
+							pathList = [];
+							multiMedia.imageRefresh();
 							document.getElementById("textarea_record").value = '';
 						}
 					} else {
@@ -427,15 +454,12 @@
 							mui.toast('新增点到失败:' + data.RspTxt);
 						} else {
 							mui.toast('新增记事失败:' + data.RspTxt);
+							BatchDelete(pathList);
 						}
 						console.log('新增点到记事信息:' + data.RspTxt);
 					}
 					commitNum--;
 					if(commitNum == 0) {
-						//发送完成
-						if(encType == 1) { //图片
-							multiMedia.imageRefresh();
-						}
 						TotalPage = 1; //总页数
 						TotalCnt = 0; //总记录数
 						NotesList = null; //记录获取的数据
@@ -455,7 +479,8 @@
 				//console.log('createNotes:' + JSON.stringify(data));
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
-				var type = '';
+				var type = ''; //类型
+				var mediaStr = ''; //记录多媒体的html
 				if(data.NoteType == 1) { //点到
 					if(data.MsgContent != '') { //有内容
 						type = data.CheckTypeStr + ' : ';
@@ -467,8 +492,31 @@
 						type = '记事' + ' : ';
 					}
 				}
+
+				var width = (document.getElementById("top").offsetWidth - 30) * 0.32;
+				var height = width * 3 / 4;
+				var marginBottom = (document.getElementById("top").offsetWidth - 30) * 0.02;
+				var marginRight;
+				if(data.EncType == 1) { //附件类型,1图片2音视频3仅文字
+					var imageArray = data.EncAddr.split('|');
+					var thumbArray = data.EncImgAddr.split('|');
+
+					var html_0 = '<div class="record-imge">';
+					var html_1 = '';
+					for(var i = 0; i < imageArray.length; i++) {
+						if(i == 2 || i == 5 || i == 8) {
+							marginRight = 0;
+						} else {
+							marginRight = marginBottom;
+						}
+						html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px; margin-bottom: ' + marginBottom + 'px;">\
+									<img src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-' + width + ')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-' + height + ')/2+\'px\';}">\
+								</div>';
+					}
+					mediaStr = html_0 + html_1 + '</div>';
+				}
 				li.innerHTML = '<div class="time">' + data.PublishDate + '</div>\
-								<div id="MsgContent_' + data.TabId + '" class="mui-media-body" style="word-break:break-all;"></div>';
+								<div id="MsgContent_' + data.TabId + '" class="mui-media-body"></div>' + mediaStr;
 				document.getElementById("top").appendChild(li);
 				document.getElementById("MsgContent_" + data.TabId).innerText = type + data.MsgContent;
 			}
@@ -516,14 +564,17 @@
 						mui.each(data.RspData.Data, function(index, item) {
 							createNotes(item);
 						});
-						if(data.RspData.Data.length==0&&pageIndex == 1){
+						//console.log(document.getElementById("top").innerHTML);
+						if(data.RspData.Data.length == 0 && pageIndex == 1) {
 							mui.toast('点到记事为空');
 						}
 					} else {
 						mui.toast('获取点到记事列表 ' + data.RspTxt);
 						console.log('获取用户针对某学生的点到记事列表:' + data.RspTxt);
 					}
-					wd.close();
+					setTimeout(function() {
+						wd.close();
+					}, 500)
 				});
 			}
 
@@ -545,7 +596,6 @@
 
 					var uploadNum = pathArray.length; //记录上传的次数
 					var uploadErrorNum = 0; //上传失败的次数
-					var pathList = []; //记录需要删掉的图片和缩略图
 					var encAddr = []; //附件地址
 					var encImg = []; //附件缩略图地址
 					CloudFileUtil.getQNUpToken(getUpTokenUrl, getToken, function(data) {
