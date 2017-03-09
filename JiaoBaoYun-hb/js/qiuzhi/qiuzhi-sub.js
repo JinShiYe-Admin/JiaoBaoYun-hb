@@ -397,10 +397,10 @@ var setQuestionFocus = function(item) {
 	}, wd, function(data) {
 		wd.close();
 		if(data.RspCode == 0 && data.RspData.Result) {
-			if(questionInfo.IsFocused) {
+			if(questionInfo.IsFocused) {//原来是已关注
 				item.questionInfo.IsFocused = 0;
 				item.innerText = "关注问题";
-			} else {
+			} else {//原来是未关注
 				item.questionInfo.IsFocused = 1;
 				item.innerText = "已关注";
 			}

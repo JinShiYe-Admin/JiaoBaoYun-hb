@@ -92,6 +92,7 @@
 					jQuery('#answerContent').prop("maxLength", "300"); //设置最长
 					document.getElementById('title').innerText = '回复评论';
 					commentInfo=e.detail.data;
+					document.getElementById('askTitle').innerText=commentInfo.CommentContent;
 					document.getElementById('answerContent').placeholder = "添加评论回复,最多300字";
 					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
 						item.style.display = 'none';
