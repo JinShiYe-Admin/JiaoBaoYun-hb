@@ -126,13 +126,13 @@ var MultiMedia = (function(mod) {
 					if(self.data.PictureArray[i].id == id) {
 						self.data.PictureArray.splice(i, 1);
 						self.data.PicturesNum++;
-						self.imageChangeCallBack();
 					}
 				}
 				//删除界面的图片
 				parent.parentNode.removeChild(parent);
 				//调整界面高度
 				self.changePictureFooter(self.data.PictureArray.length);
+				self.imageChangeCallBack();
 			});
 		}
 		if(this.options.Audio) {
@@ -348,6 +348,7 @@ var MultiMedia = (function(mod) {
 		var marginLeft = self.data.PictureMarginLeft;
 		var marginLeftStr = self.data.PictureMarginLeft + 'px';
 		var footer = document.getElementById("MultiMedia_Picture_Footer");
+		var group = 'MultiMedia_Picture';
 		for(var i = 0; i < paths.length; i++) {
 			//console.log('addImages ' + paths[i]);
 			var images = {
@@ -359,7 +360,6 @@ var MultiMedia = (function(mod) {
 			imageId++;
 			self.data.PicturesNum--;
 			self.data.PictureArray.push(images);
-			self.imageChangeCallBack();
 			var element = document.createElement('div');
 			element.className = 'multimedia-picture-area';
 			//删除按钮
@@ -367,10 +367,11 @@ var MultiMedia = (function(mod) {
 			//显示图片的区域
 			var html_1 = '<div class="multimedia-picture" style="width: ' + widthStr + '; height: ' + widthStr + '; margin-left: ' + marginLeftStr + '; margin-top: ' + marginLeftStr + ';">'
 			//图片
-			var html_2 = '<img src="' + paths[i] + '" data-preview-src="' + paths[i] + '" style="width:100%;visibility: hidden;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + widthStr + '\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-this.offsetHeight)/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-this.offsetWidth)/2+\'px\';}this.style.visibility=\'visible\';" />';
+			var html_2 = '<img src="' + paths[i] + '" data-preview-src="' + paths[i] + '" data-preview-group="' + group + '" style="width:100%;visibility: hidden;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + widthStr + '\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-'+width+')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-'+width+')/2+\'px\';}this.style.visibility=\'visible\';" />';
 			var html_3 = '</div>'
 			element.innerHTML = html_0 + html_1 + html_2 + html_3;
 			footer.appendChild(element);
+			self.imageChangeCallBack();
 		}
 		//console.log(document.getElementById("MultiMedia").innerHTML);
 		self.changePictureFooter(self.data.PictureArray.length);
@@ -418,7 +419,7 @@ var MultiMedia = (function(mod) {
 		self.data.PicturesNum = options.TotalPicture; //可以选取图片的剩余数量
 		self.data.PictureArray = []; //已选取的图片路径
 		var footer = document.getElementById("MultiMedia_Picture_Footer");
-		footer.innerHTML='';
+		footer.innerHTML = '';
 		self.changePictureFooter(self.data.PictureArray.length);
 	}
 
