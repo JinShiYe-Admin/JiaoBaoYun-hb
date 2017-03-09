@@ -78,8 +78,8 @@
 					events.clearChild(document.getElementById('pictures'))
 					type = 1;
 					document.getElementById('title').innerText = '我要评论';
-					document.getElementById('answerContent').placeholder = "添加评论,最多1000字";
-					jQuery('#answerContent').prop("maxLength", "1000"); //设置最长
+					document.getElementById('answerContent').placeholder = "添加评论,最多300字";
+					jQuery('#answerContent').prop("maxLength", "300"); //设置最长
 					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
 						item.style.display = 'none';
 					})
@@ -89,9 +89,10 @@
 				window.addEventListener("comment-reply", function(e) {
 					console.log('回复评论要加载的值：' + JSON.stringify(e.detail.data));
 					type = 2;
+					jQuery('#answerContent').prop("maxLength", "300"); //设置最长
 					document.getElementById('title').innerText = '回复评论';
 					commentInfo=e.detail.data;
-					document.getElementById('answerContent').placeholder = "添加评论回复,最多1000字";
+					document.getElementById('answerContent').placeholder = "添加评论回复,最多300字";
 					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
 						item.style.display = 'none';
 					})
@@ -290,11 +291,12 @@
 				}
 				//如果有参数
 				if(opotions) {
-//					if(opotions.UpperId=0){
+					console.log("数值："+JSON.stringify(opotions))
+					if(opotions.UpperId==0){
 						upperId = opotions.TabId;
-//					}else{
-//						upperId=opotions.UpperId;
-//					}
+					}else{
+						upperId=opotions.UpperId;
+					}
 					replyId = opotions.UserId;
 					answerId = opotions.AnswerId;
 				}

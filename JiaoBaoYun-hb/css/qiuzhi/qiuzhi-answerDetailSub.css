@@ -1,20 +1,10 @@
-.img-container{
-	float: left;
-	max-width: 20%;
-	min-width: 5rem;
-	text-align: start;
-	/*padding:1rem;*/
-}
+
 /*头像*/
 .head-img{
 	width: 4rem;
 	height:4rem;
 }
-/*评论内容*/
-.comment-container{
-	display: inline-block;
-	width: 70%;
-}
+
 /*发送按钮*/
 .icon-fasong{
 	color: gainsboro;
@@ -141,14 +131,7 @@
 .answer-comment{
 	box-shadow: 0px -1px 2px #E4E4E4 !important;
 }
-.support-container{
-	/*background-color: yellow;*/
-	float: right;
-	height: 4rem;
-	width: 4rem;
-	max-width: 14%;
-	padding: 0 0 2rem 2rem;
-}
+
 .imgs-container{
 	min-width: 100%;
 }
@@ -170,8 +153,27 @@
 	background-color: transparent;
 }
 .mui-table-view:before{
-	background-color: transparent;
+	background-color: #E4E4E4;
 }
 .inner-table-view{
-	padding-left: 50px;
+	padding-left: 4rem;
+}
+.table-view-cell{
+	display: flex;
+	display: -webkit-flex;
+}
+.img-container{
+	min-width: 5rem;
+	align-self: flex-start;
+}
+/*评论内容*/
+.comment-container{
+	width: 50%;
+	flex-grow: 1;
+}
+.support-container{
+	height: 4rem;
+	width: 4rem;
+	max-width: 14%;
+	padding: 0 0 2rem 2rem;
 }

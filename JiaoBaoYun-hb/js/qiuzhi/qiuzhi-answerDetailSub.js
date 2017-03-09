@@ -275,7 +275,6 @@ function refreshUI(datasource) {
 		setQuestion(datasource);
 		setAnswerManInfo(datasource);
 	}
-
 	var ul = document.getElementById('list-container');
 	createList(ul, datasource.Data);
 }
@@ -286,17 +285,17 @@ var createList = function(ul, dataArray) {
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell';
 			li.innerHTML = createCommentsInner(dataArray[i]);
-			if(dataArray[i].Replys) {
+			if(dataArray[i].Replys&&dataArray[i].Replys.length>0) {
 				var sul = document.createElement('ul');
 				sul.className = "mui-table-view inner-table-view";
 				li.appendChild(sul)
 				createList(sul, dataArray[i].Replys)
 			}
 			ul.appendChild(li);
-
 			var comment_container = li.querySelector('.comment-words');
 			comment_container.commentInfo = dataArray[i];
 			var comments_zan = li.querySelector('.icon-support');
+			li.querySelector('.head-img').info=dataArray[i];
 			comments_zan.isLike = dataArray[i].IsLiked;
 			comments_zan.commentId = dataArray[i].TabId;
 			if(dataArray[i].IsLiked) {
@@ -306,9 +305,18 @@ var createList = function(ul, dataArray) {
 			}
 
 			if(flag) {
-				comments_zan.order = (parseInt(pageIndex) - 1) * 10 + parseInt(i);
+				if(jQuery('.icon-support').parent().parent().parent().hasClass("inner-table-view")){
+					comments_zan.order = ((parseInt(pageIndex) - 1) * 10 + parseInt(i))+"-"+i;
+				}else{
+					comments_zan.order = (parseInt(pageIndex) - 1) * 10 + parseInt(i);
+				}
 			} else {
-				comments_zan.order = parseInt(i);
+				if(jQuery('.icon-support').parent().parent().parent().hasClass("inner-table-view")){
+					comments_zan.order = parseInt(i)+'-'+i;
+				}else{
+					comments_zan.order = parseInt(i);
+				}
+				
 			}
 
 		}
@@ -400,13 +408,13 @@ var getPicInner = function(data) {
 var createCommentsInner = function(cell) {
 	var headImg = cell.UserImg;
 	var personName = cell.UserName;
-	var inner = '<div><div class="support-container mui-pull-right"> <a class="mui-icon iconfont icon-support "></a></div>' +
-		'<div class="img-container"><img class="head-img" headId="' + cell.UserId + '"  src="' + headImg + '"/></div>' +
+	var inner = '<div class="table-view-cell">' +
+		'<div class="img-container"><img class="head-img" src="' + headImg + '"/></div>' +
 		'<div class="comment-container">' +
 		'<h5 class="comment-personName single-line">' + setName(cell) + '</h5>' +
 		'<p class="comment-words">' + cell.CommentContent + '</p>' +
 		'<p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p>' +
-		'</div></div>'
+		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support "></a></div></div>'
 	return inner;
 }
 var setName=function(cell){
@@ -436,13 +444,13 @@ var setListeners = function() {
 		events.fireToPageWithData('qiuzhi-addAnswer.html', 'add-comment', answerData);
 	})
 	events.addTap('anthor-portrait', function() {
-		openNewPersonalSpace(answerData.utid);
+		events.openNewWindowWithData("expert-detail.html",jQuery.extend(answerData,{UserId:answerData.utid,uimg:answerData.UserImg,unick:answerData.UserName}))
 	})
 	//评论头像点击事件
 	mui('.mui-table-view').on('tap', '.head-img', function() {
-		var id = this.getAttribute('headId');
-		console.log(id);
-		openNewPersonalSpace(id);
+		var info= this.info;
+		console.log(JSON.stringify(info));
+		events.openNewWindowWithData("expert-detail.html", jQuery.extend(info,{UserId:info.utid,uimg:info.UserImg,unick:info.UserName}) )
 	})
 	mui('.mui-table-view').on('tap', ".comment-words", function() {
 		console.log("评论信息：" + JSON.stringify(this.commentInfo));
@@ -457,21 +465,6 @@ var setListeners = function() {
 		events.clearChild(document.getElementById('list-container'));
 		refreshUI(answerData);
 	}
-}
-var openNewPersonalSpace = function(id) {
-	mui.openWindow({
-		url: '../quan/zone_main.html',
-		id: 'zone_main.html',
-		styles: {
-			top: '0px', //设置距离顶部的距离
-			bottom: '0px'
-		},
-		extras: {
-			data: id,
-			NoReadCnt: 0
-		}
-
-	});
 }
 /**
  * 设置是否点赞
@@ -520,23 +513,31 @@ var setIsLikeComment = function(item) {
  */
 var setZanIconCondition = function(item) {
 	if(item.isLike) {
-		item.className = "mui-pull-right mui-icon iconfont icon-support isNotLike ";
+		item.className = "mui-icon iconfont icon-support isNotLike ";
 		item.isLike = 0;
 		mui.toast('已取消点赞');
 		console.log('顺序：' + JSON.stringify(item.order))
 		if(item.order || item.order == 0) {
-			answerData.Data[item.order].IsLiked = 0;
+			if(Number.isNaN(item.order)){
+				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].IsLiked=0;
+			}else{
+				answerData.Data[item.order].IsLiked = 0;
+			}
 		} else {
 			answerData.IsLiked = 0;
 		}
 
 	} else {
-		item.className = "mui-pull-right mui-icon iconfont icon-support isLike";
+		item.className = "mui-icon iconfont icon-support isLike";
 		item.isLike = 1;
 		mui.toast('点赞成功');
 		console.log('顺序：' + JSON.stringify(item.order))
 		if(item.order || item.order == 0) {
-			answerData.Data[item.order].IsLiked = 1;
+			if(Number.isNaN(item.order)){
+				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].IsLiked=1;
+			}else{
+				answerData.Data[item.order].IsLiked = 1;
+			}
 		} else {
 			answerData.IsLiked = 1;
 		}

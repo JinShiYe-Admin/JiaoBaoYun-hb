@@ -56,7 +56,9 @@
 			"html/qiuzhi/qiuzhi-expertAllAnswer.html",
 			"html/qiuzhi/focus-question.html",
 			"html/qiuzhi/qiuzhi-expertAllComment.html",
-			"html/qiuzhi/AttentionPersons.html"
+			"html/qiuzhi/AttentionPersons.html",
+			"html/qiuzhi/qiuzhi-inviteAnswer.html",
+			"html/qiuzhi/expert-ask.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-expertAllAnswer.html": {
@@ -260,7 +262,10 @@
 			"js/publicProtocol.js",
 			"js/mui.min.js",
 			"js/libs/crypto-js/crypto-js.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"js/mui.pullToRefresh.js",
+			"css/utils/MUI-pullToRefresh.css",
+			"js/mui.pullToRefresh.material.js"
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
@@ -451,7 +456,8 @@
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-addAnswer.html",
-			"html/quan/zone_main.html"
+			"html/quan/zone_main.html",
+			"html/qiuzhi/expert-detail.html"
 		]
 	},
 	"html/mine/account-info.html": {
@@ -866,12 +872,31 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"fonts/iconfont.ttf"
 		]
 	},
 	"html/quan/zone_main.html": {
 		"resources": [
-			"html/quan/zonep_sub.html"
+			"html/quan/zonep_sub.html",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/quan/zonep_sub.html"
@@ -880,7 +905,16 @@
 	"html/quan/zonep_sub.html": {
 		"resources": [
 			"image/dynamic/icon_praise_small.png",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/mui.zoom.js",
+			"js/utils/native.js",
+			"fonts/fangzheng.ttf",
+			"js/quan/dynamiclistitem.js",
+			"js/mui.previewimage.js",
+			"js/mui.lazyload.js",
+			"css/utils/preview.css",
+			"css/icons-extra.css",
+			"js/mui.lazyload.img.js"
 		]
 	},
 	"html/qiuzhi/experts_main.html": {
@@ -997,6 +1031,60 @@
 	"html/cloud/storage_main_choose.html": {
 		"resources": [
 			"css/cloud/file.css"
+		]
+	},
+	"html/qiuzhi/qiuzhi-inviteAnswer.html": {
+		"resources": [
+			"js/qiuzhi/qiuzhi-inviteAnswer.js",
+			"js/mui.pullToRefresh.js",
+			"js/publicQiuzhiProtocol.js",
+			"js/mui.pullToRefresh.material.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/qiuzhi/qiuzhi-inviteAnswer.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/qiuzhi/expert-ask.html": {
+		"resources": [
+			"js/mui.pullToRefresh.js",
+			"js/publicQiuzhiProtocol.js",
+			"js/mui.pullToRefresh.material.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	}
 }
