@@ -13,18 +13,17 @@ var selectGContainer; //选中的班级控件；
 var list; //数据列表
 var totalPageCount;
 var clickItem; //点击的子控件
-var classInfo;
+//var classInfo;
 mui.init();
 //mui的plusready监听
 mui.plusReady(function() {
 	//预加载
-	events.preload('workdetail-tea.html', 200);
+	events.preload('workdetail-tea.html', 100);
 	events.preload('homework-publish.html', 500);
 	events.preload('workdetailTea-temporary.html', 300);
-	events.preload('workdetail-stu.html', 800);
-	events.preload('homework-commented.html', 600);
+	events.preload('workdetail-stu.html', 400);
+	events.preload('homework-commented.html', 200);
 	events.preload('doHomework-stu.html', 600);
-
 	//赋值
 	list = document.getElementById('list-container');
 	/**监听父页面的图标事件*/
@@ -76,12 +75,12 @@ mui.plusReady(function() {
 		events.clearChild(list);
 
 		if(role == 2) {
-			classInfo = teacherClasses[0];
+//			classInfo = teacherClasses[0];
 			selectGId = teacherClasses[0].gid;
 			requireHomeWork(teacherClasses[0], setData);
 			//家长、老师角色默认获取的数据
 		} else {
-			classInfo = studentClasses[0];
+//			classInfo = studentClasses[0];
 			selectGId = studentClasses[0].gid;
 			requireHomeWork(studentClasses[0], setData);
 		}
@@ -165,7 +164,7 @@ var pullUpRefresh = function() {
 var setListener = function() {
 	mui('.tabs-classes').on('tap', '.mui-control-item', function() {
 		selectGContainer = this;
-		classInfo = this.classInfo;
+//		classInfo = this.classInfo;
 		selectGId = this.classInfo.gid;
 		events.clearChild(list);
 		console.log('被点击的班级数据：' + JSON.stringify(this.classInfo));

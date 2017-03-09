@@ -3331,7 +3331,20 @@
 					"css/utils/preview.css",
 					"css/show/show.css",
 					"js/show/show-sub.js",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/mui.min.js",
+					"js/utils/signHmacSHA1.js",
+					"js/utils/postData.js",
+					"js/storageKeyName.js",
+					"js/libs/crypto-js/require.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
