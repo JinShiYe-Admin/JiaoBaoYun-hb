@@ -808,7 +808,10 @@
 					"image/cloud/cloud_0_word_0.png",
 					"image/cloud/cloud_0_txt_0.png",
 					"image/cloud/cloud_0_yasuobao_0.png",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/mui.pullToRefresh.js",
+					"css/utils/MUI-pullToRefresh.css",
+					"js/mui.pullToRefresh.material.js"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -3242,7 +3245,8 @@
 					"html/qiuzhi/focus-question.html",
 					"html/qiuzhi/AttentionPersons.html",
 					"html/qiuzhi/qiuzhi-expertAllComment.html",
-					"html/qiuzhi/heAttentionPersons.html"
+					"html/qiuzhi/heAttentionPersons.html",
+					"html/qiuzhi/qiuzhi-inviteAnswer.html"
 				],
 				"priority": 0
 			},
@@ -3375,7 +3379,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -3431,6 +3436,13 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/qiuzhi-inviteAnswer.html": {
+				"resources": [
+					"js/qiuzhi/qiuzhi-inviteAnswer.js"
 				],
 				"refer": [],
 				"priority": 0

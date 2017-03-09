@@ -56,7 +56,8 @@
 			"html/qiuzhi/qiuzhi-expertAllAnswer.html",
 			"html/qiuzhi/focus-question.html",
 			"html/qiuzhi/qiuzhi-expertAllComment.html",
-			"html/qiuzhi/AttentionPersons.html"
+			"html/qiuzhi/AttentionPersons.html",
+			"html/qiuzhi/qiuzhi-inviteAnswer.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-expertAllAnswer.html": {
@@ -260,7 +261,10 @@
 			"js/publicProtocol.js",
 			"js/mui.min.js",
 			"js/libs/crypto-js/crypto-js.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"js/mui.pullToRefresh.js",
+			"css/utils/MUI-pullToRefresh.css",
+			"js/mui.pullToRefresh.material.js"
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
@@ -867,7 +871,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"fonts/iconfont.ttf"
 		]
 	},
 	"html/quan/zone_main.html": {
@@ -1025,6 +1030,11 @@
 	"html/cloud/storage_main_choose.html": {
 		"resources": [
 			"css/cloud/file.css"
+		]
+	},
+	"html/qiuzhi/qiuzhi-inviteAnswer.html": {
+		"resources": [
+			"js/qiuzhi/qiuzhi-inviteAnswer.js"
 		]
 	}
 }
