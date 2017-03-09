@@ -448,7 +448,9 @@
 			"html/homework/workdetail-tea-sub.html",
 			"fonts/mui.ttf",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/mui.min.js",
+			"js/utils/events.js"
 		],
 		"refer": [
 			"html/homework/workdetail-tea-sub.html"
