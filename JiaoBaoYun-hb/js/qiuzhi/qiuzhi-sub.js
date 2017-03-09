@@ -15,6 +15,7 @@ mui.plusReady(function() {
 		answerIsReady=true;
 	})
 	window.addEventListener('channelInfo', function(e) {
+		
 		console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
 		pageIndex = 1; //当前页数
 		totalPage = 0; //总页数
@@ -210,6 +211,7 @@ var setChannelList = function(data) {
 		if(li.querySelector('.answer-img')) {
 			li.querySelector('.answer-img').style.width = "100%";
 		}
+		li.querySelector('.focus-status').questionInfo=data[i];
 	}
 }
 var getInnerHTML = function(cell) {
@@ -232,9 +234,9 @@ var getInnerHTML = function(cell) {
 }
 var setFocusCondition = function(cell) {
 	if(cell.IsFocused) {
-		return '已关注';
+		return '<span class="focus-status">已关注<span>';
 	}
-	return '未关注';
+	return '<span class="focus-status">未关注<span>';
 }
 var getImgs = function(cell) {
 	if(cell.AnswerCutImg && cell.AnswerCutImg != "") {
@@ -329,6 +331,34 @@ var setListener = function() {
 			events.openNewWindowWithData('expert-detail.html', JSON.parse(this.getAttribute('data-info')));
 		}
 	});
+	mui(".mui-table-view").on('tap','.focus-status',function(){
+		setQuestionFocus(this);
+	})
+}
+//关注问题
+var setQuestionFocus=function(item){
+	var wd=events.showWaiting();
+	var questionInfo=item.questionInfo;
+	console.log('当前问题信息：'+JSON.stringify(questionInfo));
+	var selfId=myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+	postDataQZPro_setAskFocus({
+		userId: selfId,//用户ID
+		askId: questionInfo.TabId,//问题ID
+		status:questionInfo.IsFocused?0:1//关注状态,0 不关注,1 关注
+	},wd,function(data){
+		wd.close();
+		if(data.RspCode==0&&data.RspData.Result){
+			if(questionInfo.IsFocused){
+				item.questionInfo.IsFocused=0;
+				item.innerText="未关注";
+			}else{
+				item.questionInfo.IsFocused=1;
+				item.innerText="已关注";
+			}
+		}else{
+			mui.toast('设置关注失败');
+		}
+	})
 }
 /**
  *

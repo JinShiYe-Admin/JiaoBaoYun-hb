@@ -3246,7 +3246,8 @@
 					"html/qiuzhi/AttentionPersons.html",
 					"html/qiuzhi/qiuzhi-expertAllComment.html",
 					"html/qiuzhi/heAttentionPersons.html",
-					"html/qiuzhi/qiuzhi-inviteAnswer.html"
+					"html/qiuzhi/qiuzhi-inviteAnswer.html",
+					"html/qiuzhi/expert-ask.html"
 				],
 				"priority": 0
 			},
@@ -3442,7 +3443,58 @@
 			},
 			"html/qiuzhi/qiuzhi-inviteAnswer.html": {
 				"resources": [
-					"js/qiuzhi/qiuzhi-inviteAnswer.js"
+					"js/qiuzhi/qiuzhi-inviteAnswer.js",
+					"js/mui.pullToRefresh.js",
+					"js/publicQiuzhiProtocol.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"css/qiuzhi/qiuzhi-inviteAnswer.css",
+					"js/libs/crypto-js/crypto-js.js",
+					"css/iconfont/iconfont.css",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"fonts/fangzheng.ttf",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/expert-ask.html": {
+				"resources": [
+					"js/mui.pullToRefresh.js",
+					"js/publicQiuzhiProtocol.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"css/iconfont/iconfont.css",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"fonts/fangzheng.ttf",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
