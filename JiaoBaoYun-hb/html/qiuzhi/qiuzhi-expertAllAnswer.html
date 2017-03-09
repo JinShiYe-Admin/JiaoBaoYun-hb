@@ -139,16 +139,21 @@
 
 			mui.plusReady(function() {
 				//从专家页面传值
-				window.addEventListener('qiuzhi-expertAllAnswer', function(event) {
-					pageIndex = 1;
-					flagRef = 0;
-					//赋值
-					ExpertsInfo = event.detail.data;
-					console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
-					document.getElementById('list-container').innerHTML = "";
-					//24.获取某个用户的回答列表
-					getAnswersByUser(ExpertsInfo.UserId);
-				});
+				var curPage=plus.webview.currentWebview();
+				ExpertsInfo=curPage.data;
+				pageIndex = 1;
+				flagRef = 0;
+				getAnswersByUser(ExpertsInfo.UserId);
+//				window.addEventListener('qiuzhi-expertAllAnswer', function(event) {
+//					pageIndex = 1;
+//					flagRef = 0;
+//					//赋值
+//					ExpertsInfo = event.detail.data;
+//					console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
+//					document.getElementById('list-container').innerHTML = "";
+//					//24.获取某个用户的回答列表
+//					getAnswersByUser(ExpertsInfo.UserId);
+//				});
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					var index = this.id.replace('li', '');
 					events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', answerArray[index]);

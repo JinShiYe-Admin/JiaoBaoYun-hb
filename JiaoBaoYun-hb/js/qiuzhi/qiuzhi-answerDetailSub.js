@@ -285,13 +285,8 @@ var createList = function(ul, dataArray) {
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell';
 			li.innerHTML = createCommentsInner(dataArray[i]);
-			if(dataArray[i].Replys && dataArray[i].Replys.length > 0) {
-				var sul = document.createElement('ul');
-				sul.className = "mui-table-view inner-table-view";
-				li.appendChild(sul)
-				createList(sul, dataArray[i].Replys)
-			}
 			ul.appendChild(li);
+			
 			var comment_container = li.querySelector('.comment-words');
 			comment_container.commentInfo = dataArray[i];
 			var comments_zan = li.querySelector('.icon-support');
@@ -303,20 +298,27 @@ var createList = function(ul, dataArray) {
 			} else {
 				comments_zan.className = "mui-icon iconfont icon-support isNotLike"
 			}
-
+			var repliesContainer=comments_zan.parentElement.parentElement.parentElement.parentElement;
+			console.log('className:'+repliesContainer.className)
 			if(flag) {
-				if(jQuery('.icon-support').parent().parent().parent().hasClass("inner-table-view")) {
-					comments_zan.order = ((parseInt(pageIndex) - 1) * 10 + parseInt(i)) + "-" + i;
+				if(repliesContainer.className==("mui-table-view inner-table-view")) {
+					comments_zan.order = repliesContainer.parentElement.querySelector('.icon-support').order + "-" + i;
 				} else {
 					comments_zan.order = (parseInt(pageIndex) - 1) * 10 + parseInt(i);
 				}
 			} else {
-				if(jQuery('.icon-support').parent().parent().parent().hasClass("inner-table-view")) {
-					comments_zan.order = parseInt(i) + '-' + i;
+				if(repliesContainer.className==("mui-table-view inner-table-view")) {
+					comments_zan.order = repliesContainer.parentElement.querySelector('.icon-support').order + '-' + i;
 				} else {
 					comments_zan.order = parseInt(i);
 				}
 
+			}
+			if(dataArray[i].Replys && dataArray[i].Replys.length > 0) {
+				var sul = document.createElement('ul');
+				sul.className = "mui-table-view inner-table-view";
+				li.appendChild(sul)
+				createList(sul, dataArray[i].Replys)
 			}
 
 		}
@@ -512,13 +514,14 @@ var setIsLikeComment = function(item) {
  * @param {Object} item
  */
 var setZanIconCondition = function(item) {
+	console.log("显示是否为数字："+typeof(item.order));
 	if(item.isLike) {
 		item.className = "mui-icon iconfont icon-support isNotLike ";
 		item.isLike = 0;
 		mui.toast('已取消点赞');
 		console.log('顺序：' + JSON.stringify(item.order))
 		if(item.order || item.order == 0) {
-			if(Number.isNaN(item.order)) {
+			if(typeof(item.order)=="string") {
 				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].IsLiked = 0;
 				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum-=1;
 				item.innerText=replaceBigNo(answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum);
@@ -539,7 +542,7 @@ var setZanIconCondition = function(item) {
 		mui.toast('点赞成功');
 		console.log('顺序：' + JSON.stringify(item.order))
 		if(item.order || item.order == 0) {
-			if(Number.isNaN(item.order)) {
+			if(typeof(item.order)=="string") {
 				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].IsLiked = 1;
 				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum += 1;
 				item.innerText=replaceBigNo(answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum);
