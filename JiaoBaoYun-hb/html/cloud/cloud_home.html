@@ -1048,8 +1048,7 @@
 								}
 							}
 							var gids = arrayToStr(tempArr);
-							getAllClassMember(gids);
-							getClassSpacesByUserForMutiClass(gids)
+
 							datasource = tempDatasource;
 							//生成班级界面
 							mui.each(datasource, function(index, element) {
@@ -1061,6 +1060,8 @@
 								//console.log('家校圈:' + index + '|' + JSON.stringify(element));
 								addcloudrecord_1_0(index, element, 1);
 							});
+							getAllClassMember(gids); // 通过群IDs获取群的正常用户
+							getClassSpacesByUserForMutiClass(gids); //（班级空间）获取用户针对多班级的空间列表
 						} else if(data.RspCode == 9) { //没有群
 							console.log('显示空白页');
 							addcloudrecord_1_noclass();
@@ -1072,7 +1073,7 @@
 					});
 				}
 			});
-
+			// 通过群ID获取群的正常用户
 			function getAllClassMember(gids) {
 				var gidStr = gids.replace('[', '');
 				gidStr = gidStr.replace(']', '');
@@ -1085,14 +1086,13 @@
 
 				};
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				// 通过群ID获取群的正常用户
 				postDataPro_PostGusers(comData, wd, function(data) {
 					wd.close();
 					var userArrays = [];
 					console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						var gids = gidStr.split(',');
-
+						//把是同一个群的用户放到一起
 						for(var i = 0; i < gids.length; i++) {
 							var tempUserArr = [];
 							var gid = gids[i];
@@ -1108,7 +1108,7 @@
 						}
 						var usersStr = arrayToStr(userArrays);
 						console.log('所用的群用户：' + usersStr);
-						getNoReadCntForClassByUser(usersStr);
+						getNoReadCntForClassByUser(usersStr);//79.（用户空间）获取多班级多用户空间所有用户未读数
 
 					} else {
 
@@ -1116,10 +1116,10 @@
 				});
 
 			}
-
+			//77.（点到记事）获取用户针对多学生的点到记事列表
 			function getNotesByUserForMutiStudent(StudentIds, gids) {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-				//77.（点到记事）获取用户针对多学生的点到记事列表
+
 				//所需参数
 				var comData = {
 					userId: personalUTID, //用户ID
@@ -1133,20 +1133,18 @@
 						noReadModel.stu_noReads = [];
 						var tempArr = data.RspData.Data;
 						for(var i = 0; i < tempArr.length; i++) {
-							noReadModel.stu_noReads.push(tempArr[i].NoReadCnt);
+							noReadModel.stu_noReads.push(tempArr[i].NoReadCnt);//学生未读数数组
 						}
 						console.log(JSON.stringify(noReadModel));
-					} else {
-
-					}
+					} else {}
 					console.log('获取所有学生的未读数_getNotesByUserForMutiStudentr:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 				})
 			}
-
+			//76.（班级空间）获取用户针对多班级的空间列表
 			function getClassSpacesByUserForMutiClass(gids) {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-				//76.（班级空间）获取用户针对多班级的空间列表
+
 				//所需参数
 				var comData = {
 					userId: personalUTID, //用户ID
@@ -1157,13 +1155,13 @@
 				postDataPro_getClassSpacesByUserForMutiClass(comData, wd, function(data) {
 					wd.close();
 					if(data.RspCode == 0) {
-						noReadModel.class_noRead = [];
+						noReadModel.class_noReads = [];
 						var tempArr = data.RspData.Data;
 						for(var i = 0; i < tempArr.length; i++) {
-							if(tempArr[i].NoReadCnt==''){
-								tempArr[i].NoReadCnt=0;
+							if(tempArr[i].NoReadCnt == '') {
+								tempArr[i].NoReadCnt = 0;
 							}
-							noReadModel.class_noRead.push(tempArr[i].NoReadCnt);
+							noReadModel.class_noReads.push(tempArr[i].NoReadCnt);//班级未读数数组
 						}
 						console.log(JSON.stringify(noReadModel));
 					} else {
@@ -1173,10 +1171,10 @@
 
 				})
 			}
-
+			//79.（用户空间）获取多班级多用户空间所有用户未读数
 			function getNoReadCntForClassByUser(publisherIds) {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-				//79.（用户空间）获取多班级多用户空间所有用户未读数
+
 				//所需参数
 				var comData = {
 					userId: personalUTID, //用户ID，登录用户
@@ -1187,8 +1185,7 @@
 				postDataPro_getNoReadCntForClassByUser(comData, wd, function(data) {
 					wd.close();
 					if(data.RspCode == 0) {
-						noReadModel.parents_noRead = [];
-						noReadModel.parents_noRead=data.RspData.NoReadCnts;
+						noReadModel.parents_noReads = data.RspData.NoReadCnts;//家长圈未读数数组
 					} else {
 
 					}
