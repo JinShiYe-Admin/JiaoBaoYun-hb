@@ -23,6 +23,17 @@
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 
 		<style>
+			.ellipsis-show {
+				/*内容*/
+				display: -webkit-box;
+				overflow: hidden;
+				white-space: normal !important;
+				text-overflow: ellipsis;
+				word-wrap: break-word;
+				-webkit-line-clamp: inherit;
+				-webkit-box-orient: vertical;
+			}
+			
 			.mui-table-view-cell,
 			.mui-table-view-cell:active {
 				background-color: #FFFFFF;
@@ -268,7 +279,7 @@
 							mui.toast('暂无动态')
 							return;
 						}
-						setUserSpaceReadByUser('['+publisherId+']');
+						setUserSpaceReadByUser('[' + publisherId + ']');
 						totalCnt = data.RspData.TotalCnt;
 						var tempRspData = data.RspData.Data;
 						//获取当前回调留言的个人信息，主要是头像、昵称
@@ -379,6 +390,7 @@
 									var data = addData(i);
 									dynamiclistitem.addItem(table, data, id);
 								}
+								dynamiclistitem.questionContent();
 							} else {
 								tempPage = 1;
 								zonepArray = tempRspData;
@@ -388,6 +400,7 @@
 									var data = addData(i);
 									dynamiclistitem.addItem(table, data, id);
 								}
+								dynamiclistitem.questionContent();
 							}
 						});
 					} else {
@@ -690,9 +703,7 @@
 			InteractionList.push(viewCount);
 			InteractionList.push(praiseList);
 			InteractionList.push(commentList);
-			console.log('EncAddrList=' + JSON.stringify(EncAddrList));
 			Data = [InfoList, ImageList, InteractionList, EncAddrList, '']
-			console.log('Data=' + JSON.stringify(Data))
 			return Data;
 		}
 
@@ -785,7 +796,7 @@
 
 		//设置个人空间动态为已读
 		function setUserSpaceReadByUser(upString) {
-			
+
 			if(personalUTID == publisherId) {
 				var comData = {
 					userId: personalUTID, //用户ID
@@ -924,6 +935,7 @@
 					upString = arrayToStr(userIds)
 					setUserSpaceReadByUser(upString);
 					getAllUserSpacesByUser(upString); //获取多用户空间列表
+					PostUmk(upString);
 
 				} else {
 					mui.toast(data.RspTxt);
@@ -1077,6 +1089,30 @@
 					mui.toast(data.RspTxt);
 				}
 
+			})
+		}
+
+		function PostUmk(upString) {
+			//所需参数
+			var upstrings = upString.replace('[', '');
+			upstrings = upstrings.replace(']', '');
+			var postData = {
+				vvl: upstrings //被备注用户ID,utid或utid串
+			};
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_PostUmk(postData, wd, function(data) {
+				wd.close();
+				console.log('获取多用户备注_PostUmk:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) {
+					for(var j = 0; j < zonepArray.length; j++) {
+						for(var k = 0; k < data.RspData.length; k++) {
+							if(zonepArray[j].utid == data.RspData[k].butid) {
+								zonepArray[j].ugname = data.RspData[k].bunick;
+							}
+						}
+
+					}
+				}
 			})
 		}
 		//失去焦点事件

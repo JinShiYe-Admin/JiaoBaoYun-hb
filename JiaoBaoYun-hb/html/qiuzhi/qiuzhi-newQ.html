@@ -10,6 +10,17 @@
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/qiuzhi/qiuzhi-questionSub.css" rel="stylesheet" />
 		<link href="../../css/quan/custom-textarea.css" rel="stylesheet" />
+		<style type="text/css">
+			.at {
+				width: 6rem;
+				height: 4rem;
+				padding-left: 1.5rem;
+				padding-top: 0.9rem;
+				float: left;
+				margin-top: -15px;
+				
+			}
+		</style>
 
 	</head>
 
@@ -26,10 +37,12 @@
 			</ul>
 		</div>
 		<div class="mui-content">
-			<textarea id="askTitle" placeholder="写下你的问题" style="height: 40px;margin-top: 5px;"></textarea>
+			<form name="form1" action="" method="post">
+				<textarea id="askTitle" name="topic" placeholder="写下你的问题" style="height: 40px;margin-top: 5px;"></textarea>
+			</form>
 			<p style="margin-left: 10px;font-size: 14px;margin-top: -12px;">请添加问题的补充说明</p>
-			<div class="input-content" style="height: 110px;">
-				<textarea id="askNote" placeholder="请输入内容" style="height: 60px;"></textarea>
+			<div class="input-content">
+				<textarea id="askNote" placeholder="请输入内容"></textarea>
 				<div id="take_pic" class="take_pic">
 					<a class="mui-icon iconfont icon-xiangji1"></a>
 				</div>
@@ -39,31 +52,24 @@
 				<div id="get_gallery" class="get_gallery">
 					<a class="mui-icon iconfont icon-tuku"></a>
 				</div>
+				<div id="atExpert" class="at" style="color: gray;">
+					<a class="mui-icon">@</a>
+				</div>
 			</div>
-			<div id="pictures" style="float: left;background-color: transparent;width: 320px;"></div>
+			
 			<p style="margin-top: 10px;margin-left: 10px;font-size: 14px;width: 150px;">选择话题:
 				<a id="channal" style="margin-left: 4px;" href="#popover">
 					全部
 				</a>
 			</p>
+			<p style="margin-top: 10px;margin-left: 10px;font-size: 14px;">邀请的专家：<font id="selectedExpert" style="color: dodgerblue;"></font></p>
+			<div id="pictures" style="float: left;background-color: transparent;width: 320px;"></div>
 			<!--<div class="mui-input-row mui-checkbox mui-left" style="float: right;width: 100px;margin-top: -35px;margin-left: -100px;">
 				<label>匿名</label>
 				<input id="checkbox" name="checkbox" value="" type="checkbox">
 			</div>-->
 		</div>
-
-		</div>
-		<ul id="ExpertList" class="mui-table-view">
-			<!--<li class="mui-table-view-cell mui-media">
-						<img class="mui-media-object mui-pull-left" src="../../image/tab_zone/u72.png">
-						<div class="mui-media-body">
-							李欣芸
-							<p class='mui-ellipsis'>今天上课表现良好</p>
-						</div>
-					</li>-->
-			<ul/>
-
-			</div>
+		<!--<ul id="ExpertList" class="mui-table-view"><ul/>-->
 
 			<script src="../../js/mui.min.js"></script>
 			<script src="../../js/utils/events.js"></script>
@@ -76,11 +82,23 @@
 			<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
 			<script type="text/javascript">
 				mui.init();
-				var askChannel = '0';
+				var askChannel = '999';
 				var datasource = [];
 				var flag = 0;
 				var UserId;
+				var selectedExpert=[];
 				mui.plusReady(function() {
+					window.addEventListener('atExpert', function(data) {
+						console.log(data.detail.data);
+						var tempArr = data.detail.data;
+						var name = []
+						for(var i=0;i<tempArr.length;i++){
+							selectedExpert.push(tempArr[i].TabId)
+							name.push('@'+tempArr[i].unick);
+						}
+						document.getElementById("selectedExpert").innerHTML=name.join('、')
+
+					})
 					var data = plus.webview.currentWebview().data;
 					console.log('获取的数据：' + JSON.stringify(data));
 
@@ -116,7 +134,7 @@
 						curChannel = channelData[0];
 					}
 
-					askChannel = curChannel.TabId;
+					
 
 					if(flag == 0) {
 						document.getElementById("channal").innerHTML = '请选择';
@@ -124,6 +142,7 @@
 						//2.获取符合条件的专家信息
 						getExpertsArray(curChannel.TabId, UserId);
 						document.getElementById("channal").innerHTML = curChannel.ChannelName;
+						askChannel = curChannel.TabId;
 					}
 
 					var ul = document.getElementById("popover").getElementsByClassName('mui-table-view')[0];
@@ -158,6 +177,13 @@
 
 				})
 
+				events.addTap('atExpert', function() {
+					if(askChannel == "999") {
+						mui.toast('请选择话题')
+						return;
+					}
+					events.openNewWindowWithData('atExpert.html', datasource)
+				})
 				events.addTap('take_camero', function() {
 					mui.toast('此功能暂未开放');
 					//				camera.getVideo(camera.getCamera(), function(path) {
@@ -203,16 +229,16 @@
 					//				} else {
 					//					isAnonym = 1;
 					//				}
-					var box = document.getElementsByClassName('checkbox');
-					var selectedBoxes = [];
-					for(var i = 0; i < box.length; i++) {
-						console.log()
-						if(box[i].checked) {
-							selectedBoxes.push(box[i].value);
-						}
-					}
-					var boxesStr = arrayToStr(selectedBoxes)
-					console.log(JSON.stringify(selectedBoxes));
+//					var box = document.getElementsByClassName('checkbox');
+//					var selectedBoxes = [];
+//					for(var i = 0; i < box.length; i++) {
+//						console.log()
+//						if(box[i].checked) {
+//							selectedBoxes.push(box[i].value);
+//						}
+//					}
+					var boxesStr = arrayToStr(selectedExpert)
+					console.log(JSON.stringify(boxesStr));
 					var TAs = getTypeAddress();
 					if(askChannel == "999") {
 						mui.toast('请选择话题')
@@ -226,7 +252,7 @@
 						askMan: personalUTID, //提问人
 						isAnonym: 0, //是否匿名
 						encAddr: TAs.encAddr,
-						thumbnail:TAs.encImg,
+						thumbnail: TAs.encImg,
 						inviteExperts: boxesStr //邀请专家,例如[1,2,3]
 					};
 					// 等待的对话框
@@ -327,7 +353,7 @@
 								console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 								datasource = tempRspData;
 								//刷新界面
-								addExperts(UserId);
+//								addExperts(UserId);
 
 							});
 						} else {
