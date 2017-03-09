@@ -21,6 +21,14 @@
 .mine-indicator.mine-active {
 	background-color: white;
 }
+.btn-attention{
+	border: none;
+	margin-top: 5px;
+	min-width: 7rem;
+	max-width: 25%;
+	color: white;
+	background-color:#1db8F1;
+}
 
 .ellipsis-show {
 	/*内容*/
