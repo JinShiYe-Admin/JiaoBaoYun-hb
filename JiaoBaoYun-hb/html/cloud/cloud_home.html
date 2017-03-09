@@ -194,7 +194,7 @@
 			//获取学生列表
 			var topStudentArr = [];
 			//未读数model
-			var noReadModel={};
+			var noReadModel = {};
 			//每一行的高度
 			var cloudItemHeight = 0;
 			//第一行和第三行的比重
@@ -1130,12 +1130,14 @@
 				postDataPro_getNotesByUserForMutiStudent(comData, wd, function(data) {
 					wd.close();
 					if(data.RspCode == 0) {
-						noReadModel.stu_noReads=[];
-						for(var i=0;i<data.RspData.length;i++){
-							noReadModel.stu_noReads.push(data.RspData[i].NoReadCnt);
+						noReadModel.stu_noReads = [];
+						var tempArr = data.RspData.Data;
+						for(var i = 0; i < tempArr.length; i++) {
+							noReadModel.stu_noReads.push(tempArr[i].NoReadCnt);
 						}
-					}else{
-						
+						console.log(JSON.stringify(noReadModel));
+					} else {
+
 					}
 					console.log('获取所有学生的未读数_getNotesByUserForMutiStudentr:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
@@ -1155,12 +1157,17 @@
 				postDataPro_getClassSpacesByUserForMutiClass(comData, wd, function(data) {
 					wd.close();
 					if(data.RspCode == 0) {
-						noReadModel.class_noRead=[];
-						for(var i=0;i<data.RspData.length;i++){
-							noReadModel.class_noRead.push(data.RspData[i].NoReadCnt);
+						noReadModel.class_noRead = [];
+						var tempArr = data.RspData.Data;
+						for(var i = 0; i < tempArr.length; i++) {
+							if(tempArr[i].NoReadCnt==''){
+								tempArr[i].NoReadCnt=0;
+							}
+							noReadModel.class_noRead.push(tempArr[i].NoReadCnt);
 						}
-					}else{
-						
+						console.log(JSON.stringify(noReadModel));
+					} else {
+
 					}
 					console.log('获取用户针对多班级的空间列表_getClassSpacesByUserForMutiClass:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
@@ -1180,11 +1187,12 @@
 				postDataPro_getNoReadCntForClassByUser(comData, wd, function(data) {
 					wd.close();
 					if(data.RspCode == 0) {
-						noReadModel.parents_noRead=[];
-						noReadModel.parents_noRead.push(data.RspData);
-					}else{
-						
+						noReadModel.parents_noRead = [];
+						noReadModel.parents_noRead=data.RspData.NoReadCnts;
+					} else {
+
 					}
+					console.log(JSON.stringify(noReadModel));
 					console.log('获取所有群的未读数_getNoReadCntForClassByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 				})
