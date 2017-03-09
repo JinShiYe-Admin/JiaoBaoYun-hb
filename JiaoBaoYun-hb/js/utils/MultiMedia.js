@@ -353,7 +353,8 @@ var MultiMedia = (function(mod) {
 			var images = {
 				id: imageId, //图片Id
 				path: paths[i], //图片路径
-				target: '' //图片压缩后的路径
+				domain: '', //图片地址
+				thumb: '' //图片缩略图地址
 			};
 			imageId++;
 			self.data.PicturesNum--;
@@ -366,7 +367,7 @@ var MultiMedia = (function(mod) {
 			//显示图片的区域
 			var html_1 = '<div class="multimedia-picture" style="width: ' + widthStr + '; height: ' + widthStr + '; margin-left: ' + marginLeftStr + '; margin-top: ' + marginLeftStr + ';">'
 			//图片
-			var html_2 = '<img src="' + paths[i] + '" data-preview-src="' + paths[i] + '" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + widthStr + '\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-this.offsetHeight)/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-this.offsetWidth)/2+\'px\';}" />';
+			var html_2 = '<img src="' + paths[i] + '" data-preview-src="' + paths[i] + '" style="width:100%;visibility: hidden;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + widthStr + '\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-this.offsetHeight)/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-this.offsetWidth)/2+\'px\';}this.style.visibility=\'visible\';" />';
 			var html_3 = '</div>'
 			element.innerHTML = html_0 + html_1 + html_2 + html_3;
 			footer.appendChild(element);
@@ -406,6 +407,19 @@ var MultiMedia = (function(mod) {
 	 */
 	proto.imageChangeCallBack = function() {
 
+	}
+
+	/**
+	 * 清空图片选择区域和初始化数据
+	 */
+	proto.imageRefresh = function() {
+		var self = this;
+		var options = this.options;
+		self.data.PicturesNum = options.TotalPicture; //可以选取图片的剩余数量
+		self.data.PictureArray = []; //已选取的图片路径
+		var footer = document.getElementById("MultiMedia_Picture_Footer");
+		footer.innerHTML='';
+		self.changePictureFooter(self.data.PictureArray.length);
 	}
 
 	var MultiMediaApi = null; //声明一个null的变量，用来存储多媒体对象

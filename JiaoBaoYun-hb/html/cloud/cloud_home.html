@@ -14,11 +14,15 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<link rel="stylesheet" href="../../css/cloud/file.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/utils/MUI-pullToRefresh.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.pullToRefresh.js"></script>
+		<script src="../../js/mui.pullToRefresh.material.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
-		<script type="text/javascript" src="../../js/utils/h5fresh.js"></script>
+		<!--<script type="text/javascript" src="../../js/utils/h5fresh.js"></script>-->
+
 		<style>
 			.mui-table-view:before,
 			.mui-table-view:after,
@@ -80,7 +84,7 @@
 			}
 			
 			.mui-slider-indicator .mui-table-view-cell.mui-active {
-				background: #D9D9D9;
+				background: white;
 			}
 			
 			.cloud-red-point {
@@ -130,7 +134,7 @@
 	</head>
 
 	<body>
-		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" style="visibility:hidden ;">
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" style="visibility:hidden ;z-index:0">
 			<div class="mui-scroll">
 				<!--存储-->
 				<div id="cloudstorage" class="cloud-item">
@@ -216,16 +220,25 @@
 				events.preload('storage_upload_choose.html'); //预加载选择上传文件的方式
 
 				//下拉刷新
-				h5fresh.addRefresh(function() {
-					console.log('下拉刷新');
-					events.fireToPageNone('../index/index.html', 'aboutmNoRead');
-					//文件存储数组
-					fileArray = [];
-					//获取所有的群
-					datasource = [];
-					//获取学生列表
-					topStudentArr = [];
-					changeData();
+				mui(".cloud-item-right .mui-scroll-wrapper .mui-scroll").pullToRefresh({
+					down: {
+						callback: function() {
+							var self = this;
+							console.log("下拉刷新");
+							events.fireToPageNone('../index/index.html', 'aboutmNoRead');
+							//文件存储数组
+							fileArray = [];
+							//获取所有的群
+							datasource = [];
+							//获取学生列表
+							topStudentArr = [];
+							changeData();
+							setTimeout(function() {
+								//结束下拉刷新
+								self.endPullDownToRefresh();
+							}, 1000);
+						}
+					},
 				});
 
 				//---调整界面---start---

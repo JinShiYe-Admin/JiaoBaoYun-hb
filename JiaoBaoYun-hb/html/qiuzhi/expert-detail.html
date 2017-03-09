@@ -72,7 +72,7 @@
 			</div>
 			<div style="width: device-width;margin-top: 60px;margin-left: 20px;margin-bottom: 20px;margin-right: 20px;">
 				<a id="IsLikeNum" class="mui-icon iconfont icon-support dynamic-icon-praise" style="color: #e4e4e4;margin-top: 5px;"></a>
-				<button id="focusBtn" class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;height: 30px;">关注</button>
+				<button id="focusBtn" class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;height: 30px;width: 70px;text-align: center;">关注</button>
 			</div>
 			<div>
 				<ul class="mui-table-view">
@@ -258,9 +258,13 @@
 					//修改界面显示
 					//					ExpertsInfo = $.extend(ExpertsInfo, data.RspData);
 					if(data.RspData.Result == 0) {
-						nodes.focusBtn.innerText = '关注'
+						nodes.focusBtn.innerText = '关注';
+						nodes.focusBtn.style.background = '#1db8F1';
+						nodes.focusBtn.style.border = '#1db8F1';
 					} else {
-						nodes.focusBtn.innerText = '已关注'
+						nodes.focusBtn.innerText = '已关注';
+						nodes.focusBtn.style.background = '#b7b7b7';
+						nodes.focusBtn.style.border = '#b7b7b7';
 					}
 
 				} else {
@@ -289,11 +293,14 @@
 					console.log(nodes.focusBtn.innerText);
 					//刷新界面显示
 					if(nodes.focusBtn.innerText == '已关注') {
-						nodes.focusBtn.innerText = '关注'
+						nodes.focusBtn.innerText = '关注';
+						nodes.focusBtn.style.background = '#1db8F1';
+						nodes.focusBtn.style.border = '#1db8F1';
 					} else {
-						nodes.focusBtn.innerText = '已关注'
+						nodes.focusBtn.innerText = '已关注';
+						nodes.focusBtn.style.background = '#b7b7b7';
+						nodes.focusBtn.style.border = '#b7b7b7';
 					}
-
 				} else {
 					mui.toast(data.RspTxt);
 				}

@@ -5,10 +5,15 @@ var pageIndex = 1; //当前页数
 var totalPage; //总页数
 var channelInfo; //选择的话题
 var allChannels; //所有的话题
+var answerIsReady=false;
 mui.init();
-
 mui.plusReady(function() {
+	mui.fire(plus.webview.getWebviewById('qiuzhi_home.html'),'subIsReady');
+	console.log(plus.webview.getWebviewById('qiuzhi-sub.html').isReady)
 	events.preload("qiuzhi-answerDetail.html", 80);
+	window.addEventListener('answerIsReady',function(){
+		answerIsReady=true;
+	})
 	window.addEventListener('channelInfo', function(e) {
 		console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
 		pageIndex = 1; //当前页数
@@ -44,9 +49,7 @@ mui.plusReady(function() {
 		//刷新的界面实现逻辑
 		requestChannelList(channelInfo);
 	}, {
-		//		height: '5%',
-		//		style: 'circle',
-		//		range:'5%'
+		style: 'circle',
 	});
 	setListener();
 	pullUpFresh();
@@ -249,7 +252,7 @@ var getImgs = function(cell) {
  */
 var getChannelIcon = function(cell) {
 	var iconSourse = "../../image/qiuzhi/";
-	switch(cell.AskChannel) { 
+	switch(cell.AskChannel) {
 		case "教学":
 			iconSourse += "channel-edu.png";
 			break;
@@ -305,9 +308,10 @@ var setListener = function() {
 
 	//点击回答
 	mui('.mui-table-view').on('tap', '.answer-container', function() {
-		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', this.answerInfo);
-		console.log('传递的answerInfo:' + JSON.stringify(this.answerInfo));
-		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
+		fireToPageReady(1,this.answerInfo)
+//		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', this.answerInfo);
+//		console.log('传递的answerInfo:' + JSON.stringify(this.answerInfo));
+//		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
 	});
 
 	//点击专家列表
@@ -325,4 +329,21 @@ var setListener = function() {
 			events.openNewWindowWithData('expert-detail.html', JSON.parse(this.getAttribute('data-info')));
 		}
 	});
+}
+/**
+ *
+ * @param {Object} type 0问题 1答案
+ */
+var fireToPageReady=function(type,options){
+	console.log("answerIsReady:"+answerIsReady)
+	if(type){
+		if(answerIsReady){//求知回答界面已加载完毕
+			events.fireToPageNone('qiuzhi-answerDetailSub.html','answerInfo',options);
+			plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
+		}else{
+			setTimeout(function(){
+				fireToPageReady(type,options);
+			},500)
+		}
+	}
 }

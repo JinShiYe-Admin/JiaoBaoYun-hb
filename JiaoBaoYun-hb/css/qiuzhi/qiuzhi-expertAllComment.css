@@ -82,10 +82,10 @@
 	display: block;
 	text-align: center;
 	background-color: #efeff4;
-	border: 1px solid #ddd;
+	border: 1px solid #ddd;/*圆圈的边框*/
 	border-radius: 25px;
 	background-clip: padding-box;
-	box-shadow: 0 4px 10px #bbb;
+	box-shadow: 0 4px 10px #bbb;/*圆圈边框的模糊效果*/
 	overflow: hidden;
 }
 
@@ -112,15 +112,15 @@
 
 .mui-pull-bottom-tips {
 	text-align: center;
-	background-color: #efeff4;
+	background-color: #efeff4;/*上啦显示更多，那一条的背景色*/
 	font-size: 15px;
 	line-height: 40px;
-	color: #777;
+	color: #777;/*上啦显示更多---字的背景色*/
 }
 
 .mui-pull-top-canvas {
 	overflow: hidden;
-	background-color: #fafafa;
+	background-color: #fafafa;/*圆圈的背景色*/
 	border-radius: 40px;
 	box-shadow: 0 4px 10px #bbb;
 	width: 40px;

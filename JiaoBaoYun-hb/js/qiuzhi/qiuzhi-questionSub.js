@@ -138,6 +138,16 @@ mui.plusReady(function() {
 		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', info);
 		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
 	});
+	
+	//点击回答者头像
+	mui('#answer_bottom').on('tap', '.mui-media-object', function() {
+		var element = this.parentNode;
+		var info = JSON.parse(element.getAttribute('data-info'));
+		info.UserId = info.utid;
+		console.log(JSON.stringify(info));
+		//跳转页面
+		events.openNewWindowWithData('expert-detail.html', info);
+	});
 
 	var showAll = document.getElementById("showAll");
 	showAll.addEventListener('tap', function() {
@@ -171,8 +181,12 @@ function getAskFocusByUser(askId) {
 			//刷新界面
 			if(data.RspData.Result == 0) {
 				document.getElementById("guanzhu").innerText = '关注';
+				document.getElementById("guanzhu").style.background = '#1db8F1';
+				document.getElementById("guanzhu").style.border = '#1db8F1';
 			} else {
 				document.getElementById("guanzhu").innerText = '已关注';
+				document.getElementById("guanzhu").style.background = '#b7b7b7';
+				document.getElementById("guanzhu").style.border = '#b7b7b7';
 			}
 		} else {
 			mui.toast(data.RspTxt);
@@ -199,8 +213,13 @@ function setAskFocus(askId, status) {
 			//刷新界面显示
 			if(document.getElementById("guanzhu").innerText == '关注') {
 				document.getElementById("guanzhu").innerText = '已关注';
+				document.getElementById("guanzhu").style.background = '#b7b7b7';
+				document.getElementById("guanzhu").style.border = '#b7b7b7';
 			} else {
 				document.getElementById("guanzhu").innerText = '关注';
+				document.getElementById("guanzhu").style.background = '#1db8F1';
+				document.getElementById("guanzhu").style.border = '#1db8F1';
+				
 			}
 		} else {
 			mui.toast(data.RspTxt);

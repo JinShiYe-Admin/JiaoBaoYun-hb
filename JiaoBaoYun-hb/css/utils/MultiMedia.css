@@ -27,7 +27,7 @@
 .multimedia-picture {
 	/*图片*/
 	overflow: hidden;
-	background-color: red;
+	/*background-color: red;*/
 	position: relative;
 }
 

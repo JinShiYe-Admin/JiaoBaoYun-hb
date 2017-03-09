@@ -482,7 +482,13 @@
 					"image/utils/default_personalimage.png",
 					"js/utils/native.js",
 					"css/iconfont/iconfont.css",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/mui.zoom.js",
+					"fonts/fangzheng.ttf",
+					"js/mui.previewimage.js",
+					"js/mui.lazyload.js",
+					"css/utils/preview.css",
+					"js/mui.lazyload.img.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -554,7 +560,13 @@
 					"js/utils/RSAEncrypt.js",
 					"js/utils/urlBrief.js",
 					"css/iconfont/iconfont.css",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/mui.pullToRefresh.js",
+					"js/mui.zoom.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/mui.previewimage.js",
+					"js/utils/h5fresh.js",
+					"css/utils/preview.css"
 				],
 				"refer": [
 					"html/quan/classSpace-persons.html"
@@ -796,7 +808,10 @@
 					"image/cloud/cloud_0_word_0.png",
 					"image/cloud/cloud_0_txt_0.png",
 					"image/cloud/cloud_0_yasuobao_0.png",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/mui.pullToRefresh.js",
+					"css/utils/MUI-pullToRefresh.css",
+					"js/mui.pullToRefresh.material.js"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -1141,7 +1156,9 @@
 					"css/homework/subjects-icon.css",
 					"js/mui.zoom.js",
 					"js/mui.previewimage.js",
-					"css/utils/preview.css"
+					"css/utils/preview.css",
+					"fonts/fangzheng.ttf",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"html/homework/homework-comment.html"
@@ -2141,7 +2158,8 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"css/utils/common.css",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -2281,7 +2299,11 @@
 					"css/iconfont/iconfont.css",
 					"fonts/iconfont.ttf",
 					"css/homework/subjects-icon.css",
-					"image/homework/need-submit.png"
+					"image/homework/need-submit.png",
+					"css/utils/preview.css",
+					"js/mui.zoom.js",
+					"fonts/fangzheng.ttf",
+					"js/mui.previewimage.js"
 				],
 				"refer": [
 					"html/homework/doHomework-stu.html"
@@ -2406,7 +2428,8 @@
 					"css/iconfont/iconfont.css",
 					"js/mui.zoom.js",
 					"js/mui.previewimage.js",
-					"css/utils/preview.css"
+					"css/utils/preview.css",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/homework/pic-detail.html"
@@ -2865,7 +2888,8 @@
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-addAnswer.html",
-					"html/quan/zone_main.html"
+					"html/quan/zone_main.html",
+					"html/qiuzhi/expert-detail.html"
 				],
 				"priority": 0
 			},
@@ -3213,14 +3237,16 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"fonts/fangzheng.ttf",
-					"image/qiuzhi/bianji.png"
+					"image/qiuzhi/bianji.png",
+					"image/qiuzhi/expertBG.jpg"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-expertAllAnswer.html",
 					"html/qiuzhi/focus-question.html",
 					"html/qiuzhi/AttentionPersons.html",
 					"html/qiuzhi/qiuzhi-expertAllComment.html",
-					"html/qiuzhi/heAttentionPersons.html"
+					"html/qiuzhi/heAttentionPersons.html",
+					"html/qiuzhi/qiuzhi-inviteAnswer.html"
 				],
 				"priority": 0
 			},
@@ -3337,7 +3363,24 @@
 					"js/publicProtocol.js",
 					"js/publicQiuzhiProtocol.js",
 					"js/mui.min.js",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"js/mui.pullToRefresh.js",
+					"js/storageKeyName.js",
+					"js/mui.pullToRefresh.material.js",
+					"fonts/mui.ttf",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"css/iconfont/iconfont.css",
+					"js/libs/jquery.js",
+					"fonts/fangzheng.ttf",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"image/utils/default_personalimage.png",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -3356,7 +3399,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/myStorage/myStorage.js"
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3392,6 +3436,13 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/qiuzhi-inviteAnswer.html": {
+				"resources": [
+					"js/qiuzhi/qiuzhi-inviteAnswer.js"
 				],
 				"refer": [],
 				"priority": 0

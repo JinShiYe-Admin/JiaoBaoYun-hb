@@ -1,18 +1,18 @@
 mui.init();
 var pageIndex = 1; //页码
 var selfId; //本人id
-var expertInfo;//专家信息
-var type;//类型 0 他关注的人 1 关注他的人
+var expertInfo; //专家信息
+var type; //类型 0 他关注的人 1 关注他的人
 var totalPageCount = 0;
-var flagRef =0;
+var flagRef = 0;
 mui.plusReady(function() {
 	selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	expertInfo = plus.webview.currentWebview().data.expertInfo;
 	type = plus.webview.currentWebview().data.type;
 	console.log('获取的专家信息：' + JSON.stringify(expertInfo));
-	flagRef=0;
+	flagRef = 0;
 	pageIndex = 1;
-//	expertId = expertInfo.UserId;
+	//	expertId = expertInfo.UserId;
 	requireData(type);
 	setListener();
 
@@ -26,7 +26,10 @@ mui.plusReady(function() {
 				flagRef = 0;
 				//获取关注人数据
 				requireData(type);
-				self.endPullDownToRefresh();
+				setTimeout(function() {
+					//结束下拉刷新
+					self.endPullDownToRefresh();
+				}, 1000);
 			}
 		},
 		up: {
@@ -62,7 +65,7 @@ var requireData = function() {
 		}, wd, function(data) {
 			console.log('获取的关注此专家的人：' + JSON.stringify(data));
 			wd.close();
-			if(data.RspCode == 0) {
+			if(data.RspCode == 0 && data.RspData.TotalPage > 0) {
 				totalPageCount = data.RspData.TotalPage; //获取总页数
 				pageIndex++;
 				var persons = data.RspData.Data; //关注人数据
@@ -76,7 +79,7 @@ var requireData = function() {
 					requirePersonInfo(personIds, persons);
 				}
 			} else {
-				mui.toast(data.RspTxt);
+				mui.toast("暂无关注他的人");
 			}
 		})
 	} else {
@@ -86,7 +89,7 @@ var requireData = function() {
 }
 //27.获取某个用户的关注人列表
 function getFocusUsersByUser(focusId) {
-//	personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+	//	personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 	//需要加密的数据
 	var comData = {
 		userId: selfId, //用户ID
@@ -98,20 +101,20 @@ function getFocusUsersByUser(focusId) {
 	var wd = events.showWaiting();
 	//27.获取某个用户的关注人列表
 	postDataQZPro_getFocusUsersByUser(comData, wd, function(data) {
-		wd.close();
+		events.closeWaiting();
 		console.log('27.获取某个用户的关注人列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-		if(data.RspCode == 0) {
+		if(data.RspCode == 0 && data.RspData.TotalPage > 0) {
 			//总页数
 			totalPageCount = data.RspData.TotalPage;
 			pageIndex++;
-//			if(flagRef == 0) { //刷新
-				personArray = data.RspData.Data;
-				//清除节点
-//				document.getElementById('list-container').innerHTML = "";
-//			} else { //加载更多
-//				//合并数组
-//				personArray = personArray.concat(data.RspData.Data);
-//			}
+			//			if(flagRef == 0) { //刷新
+			personArray = data.RspData.Data;
+			//清除节点
+			//				document.getElementById('list-container').innerHTML = "";
+			//			} else { //加载更多
+			//				//合并数组
+			//				personArray = personArray.concat(data.RspData.Data);
+			//			}
 			var personIds = [];
 			//遍历获取关注人id数组
 			for(var i in personArray) {
@@ -122,7 +125,7 @@ function getFocusUsersByUser(focusId) {
 				requirePersonInfo(personIds, personArray);
 			}
 		} else {
-			mui.toast(data.RspTxt);
+			mui.toast("暂无关注的人");
 		}
 	});
 };

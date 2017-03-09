@@ -205,7 +205,7 @@ var publicModel = (function($, mod) {
 		CheckTypeStr:'',//点到情况说明
 		
 		IsLike:'',//是否点赞
-		
+		IsFocused:'',//是否已关注
 		//36
 		NoReadCnt:''//未读条数
 	}
@@ -418,6 +418,7 @@ var publicModel = (function($, mod) {
 		CommentContent:'',//	评论或回复内容
 		CommentDate:'',//评论或回复时间
 		UpperId:'',//上级ID
+		LikeNum:'',//评论点赞数
 		IsLiked:'',//是否已点赞
 		Replys:'',//	下级回复列表,Array
 		

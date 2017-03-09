@@ -1822,3 +1822,61 @@ var postDataPro_getUserSpacesByArea = function(commonData, wd, callback) {
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getUserSpacesByArea', enData, commonData, 2, wd, callback);
 }
+
+//79.（用户空间）获取多班级多用户空间所有用户未读数
+//所需参数
+//		var comData = {
+//			userId:'',//用户ID，登录用户
+//			publisherIds:''//发布者ID，Array，例如[[1,2,3],[4,5,6]]
+//		};
+//返回：NoReadCnts：未读总数列表，Array，例如[1,2,3]
+var postDataPro_getNoReadCntForClassByUser = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getNoReadCntForClassByUser', enData, commonData, 2, wd, callback);
+}
+
+//80.（用户空间）设置某用户的关注
+//所需参数
+//		var comData = {
+//			userId:'',//用户ID
+//			focusId:'',//关注ID
+//			status:''//关注状态，0 不关注，1 关注
+//		};
+//返回：1为正确
+var postDataPro_setUserFocus = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/setUserFocus', enData, commonData, 2, wd, callback);
+}
+
+//81.（用户空间）获取用户所有关注的用户
+//所需参数
+//		var comData = {
+//			userId:''//用户ID
+//		};
+//返回：Users，列表数据，Array
+var postDataPro_getFocusByUser = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getFocusByUser', enData, commonData, 2, wd, callback);
+}
+
+//82.（用户空间）获取用户针对某条空间详情
+//所需参数
+//		var comData = {
+//			userId:'',//用户ID
+//			userSpaceId:'',//用户动态ID
+//			pageIndex:'',//评论当前页数
+//			pageSize:''//评论每页记录数
+//		};
+//返回：model_userNoteInfo
+var postDataPro_getUserSpaceByUser = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getUserSpaceByUser', enData, commonData, 2, wd, callback);
+}
