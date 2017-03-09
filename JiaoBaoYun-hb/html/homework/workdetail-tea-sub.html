@@ -165,6 +165,14 @@
 
 			mui.plusReady(function() {
 				mui.previewImage();
+				resetData();
+				var data = plus.webview.currentWebview().data;
+				console.log('作业主界面传送的值：' + JSON.stringify(data));
+				homeworkModel = data;
+				//获取作业详情
+				requestHomeworkDetail();
+				//3.	获取作业对应学生列表
+				requestHomeworkStuList();
 				window.addEventListener('workCommented', function(e) {
 					requestHomeworkStuList();
 				})

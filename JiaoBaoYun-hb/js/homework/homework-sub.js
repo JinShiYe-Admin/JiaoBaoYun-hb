@@ -17,7 +17,7 @@ mui.init();
 //mui的plusready监听
 mui.plusReady(function() {
 	//预加载
-	events.preload('workdetail-tea.html', 200);
+//	events.preload('workdetail-tea.html', 200);
 	events.preload('homework-publish.html', 500);
 	events.preload('workdetailTea-temporary.html', 300);
 	events.preload('workdetail-stu.html', 800);
@@ -184,8 +184,8 @@ var setListener = function() {
 	var publish = document.getElementById('iconPublish');
 	//常规作业点击事件
 	mui('.mui-table-view').on('tap', '.publishedHomework', function() {
-		events.fireToPageNone('workdetail-tea-sub.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
-		plus.webview.getWebviewById("workdetail-tea.html").show();
+		events.openNewWindowWithData('workdetail-tea.html', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+//		plus.webview.getWebviewById("workdetail-tea.html").show();
 	})
 	//临时作业点击事件
 	mui('.mui-table-view').on('tap', '.publishedAnswer', function() {

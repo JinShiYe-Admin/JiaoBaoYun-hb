@@ -24,7 +24,9 @@
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
-			events.initSubPage('workdetail-tea-sub.html');
+			var data = plus.webview.currentWebview().data;
+			console.log(JSON.stringify(data));
+			events.initSubPage('workdetail-tea-sub.html',data);
 		</script>
 	</body>
 
