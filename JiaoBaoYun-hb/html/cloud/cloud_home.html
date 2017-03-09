@@ -469,6 +469,8 @@
 						console.log('学生');
 						var index = this.id.replace('studentsdynamic', '');
 						console.log('studentsdynamic====' + index)
+						var stuid = this.getAttribute('data-stuid');
+						document.getElementById("studyn_redpoint_" + stuid).style.display = 'none';
 						mui.openWindow({
 							url: '../quan/studentdynamic_main.html',
 							id: '../quan/studentdynamic_main.html',
@@ -491,6 +493,7 @@
 				mui('#cloudrecord_1').on('tap', '.mui-table-view-cell', function() {
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					var id = this.id;
+					var gid = this.getAttribute('data-gid');
 					if(id == 'noclass') { //没有班级的情况
 						events.openNewWindow('../mine/qun_manage_info.html');
 					} else { //班级
@@ -498,7 +501,8 @@
 						if(type == 0) {
 							console.log('班级');
 							var index = this.id.replace('tarClass', '');
-							console.log('index：' + index)
+							console.log('index：' + index);
+							document.getElementById("tarClass_" + gid).style.display = 'none';
 							mui.openWindow({
 								url: '../quan/class_space.html',
 								id: '../quan/class_space.html',
@@ -517,7 +521,8 @@
 						} else {
 							console.log('家校圈');
 							var index = this.id.replace('tarClass1', '');
-							console.log('index：' + index)
+							console.log('index：' + index);
+							document.getElementById("tarClass1_" + gid).style.display = 'none';
 							mui.openWindow({
 								url: '../quan/zone_main.html',
 								id: '../quan/zone_main.html',
@@ -874,6 +879,7 @@
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell';
 					li.id = 'studentsdynamic' + id_index;
+					li.setAttribute('data-stuid', data.stuid);
 					var html0 = '<div id="studyn_redpoint_' + data.stuid + '" class="cloud-red-point" style="left:' + (maxWidth - 20) + 'px' + ';"></div>';
 					li.innerHTML = html0 + '<img id="student_imge_' + data.stuid + '" src="' + updateHeadImg(data.stuimg, 2) + '"style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
 									   <p id="studyn_' + id_index + '" class="mui-ellipsis"></p>';
@@ -903,6 +909,7 @@
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell';
 					li.setAttribute('type', type);
+					li.setAttribute('data-gid', data.gid);
 					var html0 = '';
 					var html1 = '';
 					var gname = ''; //群名称
