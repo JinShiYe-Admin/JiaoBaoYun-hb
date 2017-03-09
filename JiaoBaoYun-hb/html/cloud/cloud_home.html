@@ -135,52 +135,52 @@
 
 	<body>
 		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" style="visibility:hidden ;z-index:0">
-				<!--存储-->
-				<div id="cloudstorage" class="cloud-item">
-					<div id="cloudstoragename" class="cloud-item-left">
-						存<br/>储
-					</div>
-					<div class="cloud-item-right">
-						<div id="cloudstorage_0_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-							<div id="cloudstorage_0" class="mui-scroll">
-							</div>
+			<!--存储-->
+			<div id="cloudstorage" class="cloud-item">
+				<div id="cloudstoragename" class="cloud-item-left">
+					存<br/>储
+				</div>
+				<div class="cloud-item-right">
+					<div id="cloudstorage_0_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div id="cloudstorage_0" class="mui-scroll">
 						</div>
-						<div id="cloudstorage_1_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-							<div id="cloudstorage_1" class="mui-scroll">
-							</div>
+					</div>
+					<div id="cloudstorage_1_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div id="cloudstorage_1" class="mui-scroll">
 						</div>
 					</div>
 				</div>
-				<!--家校互动-->
-				<div id="cloudrecord" class="cloud-item">
-					<div class="cloud-item-left">
-						家<br />校<br />互<br />动
+			</div>
+			<!--家校互动-->
+			<div id="cloudrecord" class="cloud-item">
+				<div class="cloud-item-left">
+					家<br />校<br />互<br />动
+				</div>
+				<div class="cloud-item-right">
+					<div id="cloudrecord_0_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div id="cloudrecord_0" class="mui-scroll"></div>
 					</div>
-					<div class="cloud-item-right">
-						<div id="cloudrecord_0_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-							<div id="cloudrecord_0" class="mui-scroll"></div>
+					<div id="cloudrecord_1_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div id="cloudrecord_1" class="mui-scroll"></div>
+					</div>
+				</div>
+			</div>
+			<!--应用-->
+			<div id="cloudapps" class="cloud-item">
+				<font class="cloud-item-left">
+					应<br/>用
+				</font>
+				<div class="cloud-item-right mui-table-view">
+					<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div id="cloudapps_0" class="mui-scroll">
 						</div>
-						<div id="cloudrecord_1_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-							<div id="cloudrecord_1" class="mui-scroll"></div>
+					</div>
+					<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div id="cloudapps_1" class="mui-scroll">
 						</div>
 					</div>
 				</div>
-				<!--应用-->
-				<div id="cloudapps" class="cloud-item">
-					<font class="cloud-item-left">
-						应<br/>用
-					</font>
-					<div class="cloud-item-right mui-table-view">
-						<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-							<div id="cloudapps_0" class="mui-scroll">
-							</div>
-						</div>
-						<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-							<div id="cloudapps_1" class="mui-scroll">
-							</div>
-						</div>
-					</div>
-				</div>
+			</div>
 		</div>
 
 		<script type="text/javascript">
@@ -193,6 +193,8 @@
 			var datasource = [];
 			//获取学生列表
 			var topStudentArr = [];
+			//未读数model
+			var noReadModel={};
 			//每一行的高度
 			var cloudItemHeight = 0;
 			//第一行和第三行的比重
@@ -996,11 +998,18 @@
 						console.log('获取学生列表_PostUstu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0 || data.RspCode == 9 || data.RspCode == 7) { //9为查询记录为空
 							topStudentArr = data.RspData;
+							var stuIds = [];
+							var classIds = [];
 							//生成学生界面
 							mui.each(topStudentArr, function(index, element) {
 								//console.log('学生:' + index + '|' + JSON.stringify(element));
 								addcloudrecord_0_1(index, element);
+								stuIds.push(element.stuid);
+								classIds.push(element.gid);
 							});
+							var stuIdStr = arrayToStr(stuIds);
+							var classStr = arrayToStr(classIds)
+							getNotesByUserForMutiStudent(stuIdStr, classStr);
 						} else {
 							mui.toast(data.RspTxt);
 						}
@@ -1040,6 +1049,7 @@
 							}
 							var gids = arrayToStr(tempArr);
 							getAllClassMember(gids);
+							getClassSpacesByUserForMutiClass(gids)
 							datasource = tempDatasource;
 							//生成班级界面
 							mui.each(datasource, function(index, element) {
@@ -1107,6 +1117,56 @@
 
 			}
 
+			function getNotesByUserForMutiStudent(StudentIds, gids) {
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				//77.（点到记事）获取用户针对多学生的点到记事列表
+				//所需参数
+				var comData = {
+					userId: personalUTID, //用户ID
+					studentIds: StudentIds, //学生ID,Array
+					classIds: gids //班级ID,Array
+				};
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_getNotesByUserForMutiStudent(comData, wd, function(data) {
+					wd.close();
+					if(data.RspCode == 0) {
+						noReadModel.stu_noReads=[];
+						for(var i=0;i<data.RspData.length;i++){
+							noReadModel.stu_noReads.push(data.RspData[i].NoReadCnt);
+						}
+					}else{
+						
+					}
+					console.log('获取所有学生的未读数_getNotesByUserForMutiStudentr:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+
+				})
+			}
+
+			function getClassSpacesByUserForMutiClass(gids) {
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				//76.（班级空间）获取用户针对多班级的空间列表
+				//所需参数
+				var comData = {
+					userId: personalUTID, //用户ID
+					classIds: gids //班级ID，例如[1,2,3]
+				};
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//返回：model_userNoteInfo
+				postDataPro_getClassSpacesByUserForMutiClass(comData, wd, function(data) {
+					wd.close();
+					if(data.RspCode == 0) {
+						noReadModel.class_noRead=[];
+						for(var i=0;i<data.RspData.length;i++){
+							noReadModel.class_noRead.push(data.RspData[i].NoReadCnt);
+						}
+					}else{
+						
+					}
+					console.log('获取用户针对多班级的空间列表_getClassSpacesByUserForMutiClass:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+
+				})
+			}
+
 			function getNoReadCntForClassByUser(publisherIds) {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 				//79.（用户空间）获取多班级多用户空间所有用户未读数
@@ -1119,6 +1179,12 @@
 				//返回：NoReadCnts：未读总数列表，Array，例如[1,2,3]
 				postDataPro_getNoReadCntForClassByUser(comData, wd, function(data) {
 					wd.close();
+					if(data.RspCode == 0) {
+						noReadModel.parents_noRead=[];
+						noReadModel.parents_noRead.push(data.RspData);
+					}else{
+						
+					}
 					console.log('获取所有群的未读数_getNoReadCntForClassByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 				})
