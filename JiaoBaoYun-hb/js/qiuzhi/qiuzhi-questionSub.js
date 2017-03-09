@@ -142,7 +142,8 @@ mui.plusReady(function() {
 	//点击回答者头像
 	mui('#answer_bottom').on('tap', '.mui-media-object', function() {
 		var element = this.parentNode;
-		var info = JSON.parse(element.getAttribute('data-info'))
+		var info = JSON.parse(element.getAttribute('data-info'));
+		info.UserId = info.utid;
 		console.log(JSON.stringify(info));
 		//跳转页面
 		events.openNewWindowWithData('expert-detail.html', info);
