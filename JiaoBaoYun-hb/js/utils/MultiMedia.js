@@ -112,13 +112,11 @@ var MultiMedia = (function(mod) {
 				if(self.data.PicturesNum > 0) {
 					self.pictureActionSheet();
 				} else {
-					mui.alert('图片超出' + self.options.TotalPicture + ' 张限制');
+					mui.alert('图片超出限制');
 				}
-				//mui.toast('图片功能暂未开放');
 			});
 
 			mui('#MultiMedia_Picture_Footer').on('tap', '.multimedia-picture-delete', function() {
-				//console.log('删除选择的图片' + this.id);
 				var id = this.id.replace('MultiMedia_Picture_Delete_', '');
 				var parent = this.parentNode;
 				//删除数组
