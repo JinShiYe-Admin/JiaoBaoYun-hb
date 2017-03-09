@@ -24,6 +24,8 @@ mui.plusReady(function() {
 			requireHomeworkResult();
 		}
 	})
+	//设置最大长度为1000
+	jQuery('.comment-area').prop("maxLength",1000);
 	setListener();
 })
 
@@ -41,6 +43,7 @@ var setCondition = function() {
 	} else {
 		btn_comment.innerText = '提交评论';
 	}
+	
 }
 var setListener = function() {
 	events.addTap('btn-comment', function() {
