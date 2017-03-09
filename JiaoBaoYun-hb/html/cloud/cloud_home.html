@@ -29,15 +29,15 @@
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-			
+
 			.mui-table-view {
 				/*background-color: white;*/
 			}
-			
+
 			.cloud-item {
 				background-color: white;
 			}
-			
+
 			.cloud-item-left {
 				width: 16%;
 				border-right: 1px solid #D9D9D9;
@@ -46,47 +46,47 @@
 				font-weight: bold;
 				font-size: 1.6rem;
 			}
-			
+
 			.cloud-item-right {
 				/*margin-left: 16%;*/
 				width: 84%;
 				float: right;
 			}
-			
+
 			#cloudstorage_0,
 			#cloudrecord_0,
 			#cloudapps_0 {
 				/*每一项的第一行*/
 				/*background-color: red;*/
 			}
-			
+
 			#cloudstorage_1,
 			#cloudrecord_1,
 			#cloudapps_1 {
 				/*每一项的第二行*/
 				/*background-color: blue;*/
 			}
-			
+
 			.mui-plus-pullrefresh .mui-scroll {
 				position: absolute;
 				/*width: 100%;*/
 			}
-			
+
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				color: black;
 				border: none;
 			}
-			
+
 			.mui-table-view-cell {
 				display: inline-block;
 				width: auto;
 				padding: 1px 1px;
 			}
-			
+
 			.mui-slider-indicator .mui-table-view-cell.mui-active {
 				background: white;
 			}
-			
+
 			.cloud-red-point {
 				position: absolute;
 				background: red;
@@ -95,27 +95,27 @@
 				border-radius: 50%;
 				display: none;
 			}
-			
+
 			img {
 				border-radius: 50%;
 			}
-			
+
 			#cloudstorage_1 img {
 				border-radius: 0px;
 			}
-			
+
 			.icon-jiaxiabiao {
 				color: #0ABAF5;
 			}
-			
+
 			.icon-banxiabiao {
 				color: #FFBA00;
 			}
-			
+
 			.icon-re {
 				color: #FD681E;
 			}
-			
+
 			.icon-re,
 			.icon-banxiabiao,
 			.icon-jiaxiabiao {
@@ -123,7 +123,7 @@
 				border: none !important;
 				top: 0px;
 			}
-			
+
 			.mui-popup-input input {
 				/*popup 输入框*/
 				height: 34px;
@@ -874,7 +874,7 @@
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell';
 					li.id = 'studentsdynamic' + id_index;
-					var html0 = '<div id="studyn_redpoint_' + data.stuid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 1.5) + 'px' + ';"></div>';
+					var html0 = '<div id="studyn_redpoint_' + data.stuid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 2) + 'px' + ';"></div>';
 					li.innerHTML = html0 + '<img id="student_imge_' + data.stuid + '" src="' + updateHeadImg(data.stuimg, 2) + '"style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
 									   <p id="studyn_' + id_index + '" class="mui-ellipsis"></p>';
 					li.style.width = maxWidth + 'px';
@@ -909,7 +909,7 @@
 					var gnameId = ''; //群名称元素的id
 					if(type == 0) {
 						li.id = 'tarClass' + id_index;
-						html0 = '<div id="tarClass_' + data.gid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 1.5) + 'px;"></div>';
+						html0 = '<div id="tarClass_' + data.gid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 2) + 'px;"></div>';
 
 						html1 = html0 + '<img src="../../image/cloud/cloud_0_ban_1.png" style="margin-left:' + (maxWidth / 2.5) + 'px;position: absolute;margin-top: ' + (maxWidth * 0.35) + 'px;height: ' + (maxWidth * imgeWith * 0.5) + 'px;width: ' + (maxWidth * imgeWith * 0.5) + 'px;"/>';
 						//html1 = html0 + '<span class="mui-icon iconfont icon-banxiabiao" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
@@ -919,7 +919,7 @@
 						gname = data.gname;
 					} else {
 						li.id = 'tarClass1' + id_index;
-						html0 = '<div id="tarClass1_' + data.gid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 1.5) + 'px;"></div>';
+						html0 = '<div id="tarClass1_' + data.gid + '" class="cloud-red-point" style="margin-left:' + (maxWidth / 2) + 'px;"></div>';
 						html1 = html0 + '<img src="../../image/cloud/cloud_0_jia_0.png" style="margin-left:' + (maxWidth / 2.5) + 'px;position: absolute;margin-top: ' + (maxWidth * 0.35) + 'px;height: ' + (maxWidth * imgeWith * 0.5) + 'px;width: ' + (maxWidth * imgeWith * 0.5) + 'px;"/>';
 
 						//html1 = html0 + '<span class="mui-icon iconfont icon-jiaxiabiao" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
@@ -1009,7 +1009,7 @@
 							});
 							var stuIdStr = arrayToStr(stuIds);
 							var classStr = arrayToStr(classIds)
-							getNotesByUserForMutiStudent(stuIdStr, classStr);
+							getNotesByUserForMutiStudent(stuIdStr, classStr, stuIds);
 						} else {
 							mui.toast(data.RspTxt);
 						}
@@ -1060,8 +1060,8 @@
 								//console.log('家校圈:' + index + '|' + JSON.stringify(element));
 								addcloudrecord_1_0(index, element, 1);
 							});
-							getAllClassMember(gids); // 通过群IDs获取群的正常用户
-							getClassSpacesByUserForMutiClass(gids); //（班级空间）获取用户针对多班级的空间列表
+							getAllClassMember(gids,tempArr); // 通过群IDs获取群的正常用户
+							getClassSpacesByUserForMutiClass(gids, tempArr); //（班级空间）获取用户针对多班级的空间列表
 						} else if(data.RspCode == 9) { //没有群
 							console.log('显示空白页');
 							addcloudrecord_1_noclass();
@@ -1074,7 +1074,7 @@
 				}
 			});
 			// 通过群ID获取群的正常用户
-			function getAllClassMember(gids) {
+			function getAllClassMember(gids,gidArr) {
 				var gidStr = gids.replace('[', '');
 				gidStr = gidStr.replace(']', '');
 
@@ -1108,7 +1108,7 @@
 						}
 						var usersStr = arrayToStr(userArrays);
 						console.log('所用的群用户：' + usersStr);
-						getNoReadCntForClassByUser(usersStr);//79.（用户空间）获取多班级多用户空间所有用户未读数
+						getNoReadCntForClassByUser(usersStr,gidArr); //79.（用户空间）获取多班级多用户空间所有用户未读数
 
 					} else {
 
@@ -1117,7 +1117,7 @@
 
 			}
 			//77.（点到记事）获取用户针对多学生的点到记事列表
-			function getNotesByUserForMutiStudent(StudentIds, gids) {
+			function getNotesByUserForMutiStudent(StudentIds, gids, stuIds) {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 
 				//所需参数
@@ -1133,16 +1133,23 @@
 						noReadModel.stu_noReads = [];
 						var tempArr = data.RspData.Data;
 						for(var i = 0; i < tempArr.length; i++) {
-							noReadModel.stu_noReads.push(tempArr[i].NoReadCnt);//学生未读数数组
+							noReadModel.stu_noReads.push(tempArr[i].NoReadCnt); //学生未读数数组
 						}
 						console.log(JSON.stringify(noReadModel));
+
+						//显示未读的红点
+						for(var i = 0; i < noReadModel.stu_noReads.length; i++) {
+							if(noReadModel.stu_noReads[i] != 0) {
+								document.getElementById("studyn_redpoint_" + stuIds[i]).style.display = 'inline';
+							}
+						}
 					} else {}
 					console.log('获取所有学生的未读数_getNotesByUserForMutiStudentr:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 				})
 			}
 			//76.（班级空间）获取用户针对多班级的空间列表
-			function getClassSpacesByUserForMutiClass(gids) {
+			function getClassSpacesByUserForMutiClass(gids, gidArr) {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 
 				//所需参数
@@ -1161,9 +1168,15 @@
 							if(tempArr[i].NoReadCnt == '') {
 								tempArr[i].NoReadCnt = 0;
 							}
-							noReadModel.class_noReads.push(tempArr[i].NoReadCnt);//班级未读数数组
+							noReadModel.class_noReads.push(tempArr[i].NoReadCnt); //班级未读数数组
 						}
 						console.log(JSON.stringify(noReadModel));
+						//显示未读的红点
+						for(var i = 0; i < noReadModel.class_noReads.length; i++) {
+							if(noReadModel.class_noReads[i] != 0) {
+								document.getElementById("tarClass_" + gidArr[i]).style.display = 'inline';
+							}
+						}
 					} else {
 
 					}
@@ -1172,7 +1185,7 @@
 				})
 			}
 			//79.（用户空间）获取多班级多用户空间所有用户未读数
-			function getNoReadCntForClassByUser(publisherIds) {
+			function getNoReadCntForClassByUser(publisherIds,gidArr) {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 
 				//所需参数
@@ -1185,11 +1198,16 @@
 				postDataPro_getNoReadCntForClassByUser(comData, wd, function(data) {
 					wd.close();
 					if(data.RspCode == 0) {
-						noReadModel.parents_noReads = data.RspData.NoReadCnts;//家长圈未读数数组
+						noReadModel.parents_noReads = data.RspData.NoReadCnts; //家长圈未读数数组
 					} else {
 
 					}
 					console.log(JSON.stringify(noReadModel));
+					for(var i = 0; i < noReadModel.parents_noReads.length; i++) {
+						if(noReadModel.parents_noReads[i] != 0) {
+							document.getElementById("tarClass1_" + gidArr[i]).style.display = 'inline';
+						}
+					}
 					console.log('获取所有群的未读数_getNoReadCntForClassByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 				})
