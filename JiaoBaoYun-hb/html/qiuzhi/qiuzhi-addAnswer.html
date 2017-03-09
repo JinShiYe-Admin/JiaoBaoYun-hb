@@ -290,11 +290,12 @@
 				}
 				//如果有参数
 				if(opotions) {
-//					if(opotions.UpperId=0){
+					console.log("数值："+JSON.stringify(opotions))
+					if(opotions.UpperId==0){
 						upperId = opotions.TabId;
-//					}else{
-//						upperId=opotions.UpperId;
-//					}
+					}else{
+						upperId=opotions.UpperId;
+					}
 					replyId = opotions.UserId;
 					answerId = opotions.AnswerId;
 				}
