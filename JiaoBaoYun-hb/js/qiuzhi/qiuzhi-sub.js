@@ -285,7 +285,7 @@ var setFocusCondition = function(cell) {
 	if(cell.IsFocused) {
 		return '<span class="focus-status">已关注<span>';
 	}
-	return '<span class="focus-status">未关注<span>';
+	return '<span class="focus-status">关注问题<span>';
 }
 var getImgs = function(cell) {
 	if(cell.AnswerCutImg && cell.AnswerCutImg != "") {
@@ -399,7 +399,7 @@ var setQuestionFocus = function(item) {
 		if(data.RspCode == 0 && data.RspData.Result) {
 			if(questionInfo.IsFocused) {
 				item.questionInfo.IsFocused = 0;
-				item.innerText = "未关注";
+				item.innerText = "关注问题";
 			} else {
 				item.questionInfo.IsFocused = 1;
 				item.innerText = "已关注";
@@ -417,10 +417,12 @@ var fireToPageReady = function(type, options) {
 	console.log("answerIsReady:" + answerIsReady)
 	if(type) {
 		if(answerIsReady) { //求知回答界面已加载完毕
+			events.closeWaiting();
 			events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', options);
 			plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
 		} else {
 			setTimeout(function() {
+				events.showWaiting();
 				fireToPageReady(type, options);
 			}, 500)
 		}
