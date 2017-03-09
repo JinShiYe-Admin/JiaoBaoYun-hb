@@ -138,6 +138,15 @@ mui.plusReady(function() {
 		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', info);
 		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
 	});
+	
+	//点击回答者头像
+	mui('#answer_bottom').on('tap', '.mui-media-object', function() {
+		var element = this.parentNode;
+		var info = JSON.parse(element.getAttribute('data-info'))
+		console.log(JSON.stringify(info));
+		//跳转页面
+		events.openNewWindowWithData('expert-detail.html', info);
+	});
 
 	var showAll = document.getElementById("showAll");
 	showAll.addEventListener('tap', function() {

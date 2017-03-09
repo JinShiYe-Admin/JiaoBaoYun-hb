@@ -11,13 +11,16 @@
 			.mui-btn {
 				padding: 10px;
 			}
-			.mui-input-group:before{
+			
+			.mui-input-group:before {
 				background: #fff;
 			}
-			.mui-input-group:after{
+			
+			.mui-input-group:after {
 				background: #fff;
 			}
-			.row1:after{
+			
+			.row1:after {
 				background-color: #e4e4e4;
 			}
 		</style>
@@ -85,10 +88,10 @@
 				});
 				events.addTap('register', function() {
 					//先本地判断验证码
-					if(document.getElementById("yanzheng").value != '123456') {
-						mui.toast('验证码错误');
-						return;
-					}
+					//					if(document.getElementById("yanzheng").value != '123456') {
+					//						mui.toast('验证码错误');
+					//						return;
+					//					}
 					//需要加密的数据
 					var enData = {
 						uid: document.getElementById("phoneNumber").value,
@@ -129,36 +132,42 @@
 								postDataEncry(storageKeyName.MAINURL + 'PostReg', enData, comData, 0, wd, function(data) {
 									//成功，关闭等待框
 									wd.close();
-									console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-									//解析省市代码
-									if(data.RspData.uarea.length > 0) {
-										var tempArray = data.RspData.uarea.split('|');
-										if(tempArray.length > 0) {
-											var temp0 = tempArray[0].split(' ');
-											var temp1 = tempArray[1].split(' ');
-											var model_area = {
-												procode: temp0[0], //省份code，自己添加的参数
-												proname: temp1[0], //省份名称，自己添加的参数
-												acode: temp0[1], //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
-												aname: temp1[1], //节点名称--城市名称
-												atype: '' //节点类型,0省1城市2区县
+									console.log('11111success12:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+									//判断返回值是否正确
+									if(data.RspCode == 0) {
+										//解析省市代码
+										if(data.RspData.uarea.length > 0) {
+											var tempArray = data.RspData.uarea.split('|');
+											if(tempArray.length > 0) {
+												var temp0 = tempArray[0].split(' ');
+												var temp1 = tempArray[1].split(' ');
+												var model_area = {
+													procode: temp0[0], //省份code，自己添加的参数
+													proname: temp1[0], //省份名称，自己添加的参数
+													acode: temp0[1], //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
+													aname: temp1[1], //节点名称--城市名称
+													atype: '' //节点类型,0省1城市2区县
+												}
+												data.RspData.uarea = model_area;
 											}
-											data.RspData.uarea = model_area;
 										}
-									}
-									//存储到手机本地
-									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
-									//判断是否有密码，如果有，直接到主界面，没有，则设置密码
-									events.infoChanged();
-									if(data.RspData.ispw == 1) {
-										//跳转到主界面
-										events.openNewWindowWithData('../index/index.html', '');
+										//存储到手机本地
+										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
+										//判断是否有密码，如果有，直接到主界面，没有，则设置密码
+										events.infoChanged();
+										if(data.RspData.ispw == 1) {
+											//跳转到主界面
+											events.openNewWindowWithData('../index/index.html', '');
+										} else {
+											//跳转到修改密码界面
+											var temp;
+											events.openNewWindowWithData('modify_password.html', temp);
+											events.fireToPageNone('modify_password.html', 'registerPW');
+										}
 									} else {
-										//跳转到修改密码界面
-										var temp;
-										events.openNewWindowWithData('modify_password.html', temp);
-										events.fireToPageNone('modify_password.html', 'registerPW');
+										mui.toast(data.RspTxt);
 									}
+
 								});
 							} else { //验证码模式登录1
 								console.log('yanzhengma denglu');
@@ -167,35 +176,39 @@
 									//成功，关闭等待框
 									wd.close();
 									console.log('11222success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-									//解析省市代码
-									if(data.RspData.uarea.length > 0) {
-										var tempArray = data.RspData.uarea.split('|');
-										if(tempArray.length > 0) {
-											var temp0 = tempArray[0].split(' ');
-											var temp1 = tempArray[1].split(' ');
-											var model_area = {
-												procode: temp0[0], //省份code，自己添加的参数
-												proname: temp1[0], //省份名称，自己添加的参数
-												acode: temp0[1], //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
-												aname: temp1[1], //节点名称--城市名称
-												atype: '' //节点类型,0省1城市2区县
+									//判断返回值是否正确
+									if(data.RspCode == 0) {
+										//解析省市代码
+										if(data.RspData.uarea.length > 0) {
+											var tempArray = data.RspData.uarea.split('|');
+											if(tempArray.length > 0) {
+												var temp0 = tempArray[0].split(' ');
+												var temp1 = tempArray[1].split(' ');
+												var model_area = {
+													procode: temp0[0], //省份code，自己添加的参数
+													proname: temp1[0], //省份名称，自己添加的参数
+													acode: temp0[1], //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
+													aname: temp1[1], //节点名称--城市名称
+													atype: '' //节点类型,0省1城市2区县
+												}
+												data.RspData.uarea = model_area;
 											}
-											data.RspData.uarea = model_area;
 										}
-									}
-									if(data.RspCode != 0000) {
-										mui.toast(data.RspTxt);
-										return;
+										if(data.RspCode != 0000) {
+											mui.toast(data.RspTxt);
+											return;
+										} else {
+											//存储到手机本地
+											window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
+											//跳转到修改密码界面
+											var temp;
+											events.openNewWindowWithData('modify_password.html', temp);
+											events.fireToPageNone('modify_password.html', 'registerPW');
+											//										events.fireToPageNone('../quan/tab-zone.html','infoChanged');
+										}
 									} else {
-										//存储到手机本地
-										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
-										//跳转到修改密码界面
-										var temp;
-										events.openNewWindowWithData('modify_password.html', temp);
-										events.fireToPageNone('modify_password.html', 'registerPW');
-										//										events.fireToPageNone('../quan/tab-zone.html','infoChanged');
+										mui.toast(data.RspTxt);
 									}
-
 								});
 							}
 						} else {

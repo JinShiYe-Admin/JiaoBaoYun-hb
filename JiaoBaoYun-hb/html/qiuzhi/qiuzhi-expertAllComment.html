@@ -76,7 +76,10 @@
 							flagRef = 0;
 							//33.获取某个用户的评论列表
 							getCommentsByUser(ExpertsInfo.UserId);
-							self.endPullDownToRefresh();
+							setTimeout(function() {
+								//结束下拉刷新
+								self.endPullDownToRefresh();
+							}, 1000);
 						}
 					},
 					up: {
@@ -90,7 +93,11 @@
 							} else {
 								mui.toast('没有更多了');
 							}
-							self.endPullUpToRefresh();
+							setTimeout(function() {
+								//结束下拉刷新
+								self.endPullUpToRefresh();
+							}, 1000);
+							
 						}
 					}
 				});

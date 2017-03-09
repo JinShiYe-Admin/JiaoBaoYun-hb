@@ -43,7 +43,10 @@ mui.plusReady(function() {
 				flagRef = 0;
 				//26.获取某个用户的关注问题列表
 				getFocusAsksByUser(ExpertsInfoModel.UserId);
-				self.endPullDownToRefresh();
+				setTimeout(function() {
+					//结束下拉刷新
+					self.endPullDownToRefresh();
+				}, 1000);
 			}
 		},
 		up: {
