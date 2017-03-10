@@ -1095,7 +1095,21 @@
 			"js/storageKeyName.js",
 			"js/utils/events.js",
 			"js/libs/crypto-js/crypto-js.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js",
+			"css/quan/class_space.css",
+			"fonts/iconfont.ttf"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html",

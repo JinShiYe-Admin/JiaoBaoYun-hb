@@ -317,6 +317,16 @@ var requirePostGUInfo = function(wd, callback) {
 
 //12.发布作业
 function requestPublishHomework() {
+	var realClasses=[];
+	for(var i in selectClassArray){
+		if(selectClassArray.isSelected){
+			realClasses.push(selectClassArray);
+		}
+	}
+	if(realClasses.length==0){
+		mui.toast('请选择班级！');
+		return;
+	}
 	//组装学生数组串，
 	var tempStuArray = [];
 	//循环选择的群
