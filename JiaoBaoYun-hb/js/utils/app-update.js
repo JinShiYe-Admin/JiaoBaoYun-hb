@@ -8,11 +8,11 @@ var appUpdate = (function(mod) {
 	 */
 	mod.getAppVersion = function(versionInfo) {
 			plus.runtime.getProperty(plus.runtime.appid, function(inf) {
-				mod.appVersion = getBigVersion(inf.version,plus.runtime.version);
+				mod.appVersion = inf.version;
 				console.log('应用版本号:'+plus.runtime.version+',资源升级版本号:'+inf.version)
 				console.log("当前应用版本：" + mod.appVersion);
-//				mui.toast('应用版本号:'+plus.runtime.version+',资源升级版本号:'+inf.version)
-				getUpCondition(versionInfo); //判断是否更新
+				console.log("服务端应用版本：" + JSON.stringify(versionInfo));
+				getUpCondition(JSON.parse(versionInfo)); //判断是否更新
 			});
 		}
 	/**
@@ -37,14 +37,17 @@ var appUpdate = (function(mod) {
 		 * @param {Object} versionInfo
 		 */
 	var getUpCondition = function(versionInfo) {
+		console.log("服务器版本信息："+JSON.stringify(versionInfo))
 		var appVersions = mod.appVersion.split('.');
-		var newestVersions = versionInfo.ver.split('.');
+		var newestVersions =  versionInfo.ver.split('.');
+		console.log("当前版本号和服务端版本号："+JSON.stringify(appVersions)+JSON.stringify(newestVersions))
 		var appVersionMinMax = getMinMax(appVersions);
 		var newestVersionMinMax = getMinMax(newestVersions);
 		if(appVersionMinMax.max < newestVersionMinMax.max) { //整包更新
 			//询问是否更新
 			setDialog('教宝云有新版本，是否下载？', function() {
-				downApk(versionInfo.baseverurl)
+				console.log("下载APK路径："+JSON.parse(versionInfo).baseverurl)
+				downApk(versionInfo.baseverurl);
 			})
 		} else if(appVersionMinMax.max==newestVersionMinMax.max){
 			if(appVersionMinMax.min < newestVersionMinMax.min) { //在线更新
@@ -75,6 +78,7 @@ var appUpdate = (function(mod) {
 		 */
 	var getMinMax = function(numArray) {
 			var minMax = {};
+			console.log(JSON.stringify(numArray))
 			var min='';
 			for(var i in numArray) {
 				if(i == 0) {
@@ -94,8 +98,10 @@ var appUpdate = (function(mod) {
 		 */
 	function downApk(ApkUrl) {
 		if(plus.os.android) {
-			var url = ""; // 下载文件地址
+			console.log("下载APK路径："+ApkUrl)
+			var url = "_doc/"; // 下载文件地址
 			var dtask = plus.downloader.createDownload(url, {}, function(d, status) {
+				console.log("下载状态："+status);
 				if(status == 200) { // 下载成功
 					var path = d.filename;
 					console.log(d.filename);
@@ -105,6 +111,7 @@ var appUpdate = (function(mod) {
 				}
 			});
 			dtask.start();
+			console.log("开始下载!")
 		}
 	}
 	/**
