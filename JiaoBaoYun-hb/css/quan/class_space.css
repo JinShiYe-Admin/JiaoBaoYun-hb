@@ -238,4 +238,6 @@ div>.icon-xiangce:before,
 /*.mui-table-view-cell{
 	padding: 0rem;
 }*/
-
+.chat-words{
+	padding-right: 5px;
+}

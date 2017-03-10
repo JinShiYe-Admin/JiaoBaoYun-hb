@@ -9,6 +9,100 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<!--<link rel="stylesheet" href="../../css/mui.picker.min.css" />-->
 		<link rel="stylesheet" href="../../css/utils/pullToRefresh.css" />
+		<link rel="stylesheet" href="../../css/utils/preview.css" />
+		<style>
+			body,
+			.mui-content {
+				background-color: white;
+			}
+
+			.mui-pull-bottom-wrapper {
+				/*底部加载更多区域*/
+				background-color: white;
+			}
+
+			.mui-table-view {
+				font-size: 15px;
+				word-break: break-all;
+			}
+
+			.mui-table-view-cell.mui-active {
+				/*background-color: white*/
+			}
+
+			.mui-table-view:before {
+				height: 0px;
+			}
+
+			.mui-table-view:after {
+				height: 2px;
+			}
+
+			.mui-table-view:first-child:before {
+				height: 0px;
+			}
+
+			.mui-table-view-cell:before,
+			.mui-table-view-cell:after {
+				left: 15px;
+				right: 15px;
+			}
+
+			.mui-table-view .history-date:before {
+				height: 0px;
+			}
+
+			.mui-table-view .history-date:after {
+				height: 2px;
+			}
+
+			.mui-table-view-cell:last-child:after {
+				height: 1px;
+			}
+
+			.history-title {
+				/*标题*/
+				display: inline;
+				color: #323232;
+			}
+
+			.history-date {
+				/*日期*/
+				color: #FF9900;
+			}
+
+			.history-time {
+				/*时间*/
+				color: #B7B7B7;
+				font-size: 13px;
+			}
+
+			.history-content {
+				/*内容*/
+				color: #808080;
+				font-size: 14px;
+			}
+
+			.record-imge {
+				width: 100%;
+				margin-top: 5px;
+			}
+
+			.record-picture {
+				overflow: hidden;
+				position: relative;
+				float: left;
+				text-align: center;
+			}
+
+			.record-picture-num {
+				position: absolute;
+				color: white;
+				background-color: rgba(0, 0, 0, .3);
+				width: 100%;
+				font-size: 25px;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -19,37 +113,113 @@
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper mui-fullscreen" style="z-index: 1;">
 			<div class="mui-scroll">
+				<div id="data_scroll"></div>
 				<!--数据列表-->
-				<ul class="mui-table-view">
-				        <li class="mui-table-view-cell">
-				            <a class="mui-navigate-right">
-				                Item 1
-				            </a>
-				        </li>
-				        <li class="mui-table-view-cell">
-				            <a class="mui-navigate-right">
-				                 Item 2
-				            </a>
-				        </li>
-				        <li class="mui-table-view-cell">
-				            <a class="mui-navigate-right">
-				                 Item 3
-				            </a>
-				        </li>
-				    </ul>
+				<!--<ul id="date" class="mui-table-view">
+					<div class="mui-table-view-cell history-date">
+						2017/3/10
+					</div>
+					<div id="date_call">
+						<li class="mui-table-view-cell mui-media">
+							<div class="mui-media-body history-title">
+								艾叶子 迟到
+							</div>
+							<div class="mui-media-body mui-pull-right history-time">
+								08:40
+							</div>
+							<div class="mui-media-body history-content">
+								说明 : 一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十 一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-media-body history-title">
+								艾叶子 迟到
+							</div>
+							<div class="mui-media-body mui-pull-right history-time">
+								08:40
+							</div>
+						</li>
+					</div>
+					<div id="date_record">
+						<li class="mui-table-view-cell">
+							<div class="mui-media-body history-title">
+								艾叶子
+							</div>
+							<div class="mui-media-body mui-pull-right history-time">
+								08:40
+							</div>
+							<div class="mui-media-body history-content">
+								一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十 一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
+							</div>
+							<div class="record-imge">
+								<div class="record-picture" style="width: 105.60000000000001px; height: 79.2px; margin-right: 6.6000000000000005px;">
+									<img src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/3_1489051967671977.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/3_1489051967671977.png" data-preview-group="211" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height='79.2px';this.style.width='initial';this.style.marginLeft=-(this.offsetWidth-105.60000000000001)/2+'px';}else{this.style.marginTop=-(this.offsetHeight-79.2)/2+'px';}">
+								</div>
+								<div class="record-picture" style="width: 105.60000000000001px; height: 79.2px; margin-right: 6.6000000000000005px;">
+									<img src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/3_1489051967671977.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/3_1489051967671977.png" data-preview-group="211" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height='79.2px';this.style.width='initial';this.style.marginLeft=-(this.offsetWidth-105.60000000000001)/2+'px';}else{this.style.marginTop=-(this.offsetHeight-79.2)/2+'px';}">
+								</div>
+								<div class="record-picture" style="width: 105.60000000000001px; height: 79.2px; margin-right: 0px;">
+									<div class="record-picture-num" style="line-height: 79.2px;">+5</div>
+									<img src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/2_1489051967668974.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/2_1489051967668974.png" data-preview-group="211" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height='79.2px';this.style.width='initial';this.style.marginLeft=-(this.offsetWidth-105.60000000000001)/2+'px';}else{this.style.marginTop=-(this.offsetHeight-79.2)/2+'px';}">
+								</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-media-body history-title">
+								艾叶子
+							</div>
+							<div class="mui-media-body mui-pull-right history-time">
+								08:40
+							</div>
+							<div class="record-imge">
+								<div class="record-picture" style="width: 105.60000000000001px; height: 79.2px; margin-right: 6.6000000000000005px;">
+									<img src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/3_1489051967671977.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/3_1489051967671977.png" data-preview-group="211" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height='79.2px';this.style.width='initial';this.style.marginLeft=-(this.offsetWidth-105.60000000000001)/2+'px';}else{this.style.marginTop=-(this.offsetHeight-79.2)/2+'px';}">
+								</div>
+								<div class="record-picture" style="width: 105.60000000000001px; height: 79.2px; margin-right: 6.6000000000000005px;">
+									<img src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/3_1489051967671977.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/3_1489051967671977.png" data-preview-group="211" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height='79.2px';this.style.width='initial';this.style.marginLeft=-(this.offsetWidth-105.60000000000001)/2+'px';}else{this.style.marginTop=-(this.offsetHeight-79.2)/2+'px';}">
+								</div>
+								<div class="record-picture" style="width: 105.60000000000001px; height: 79.2px; margin-right: 0px;">
+									<div class="record-picture-num" style="line-height: 79.2px;">+5</div>
+									<img src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/2_1489051967668974.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/2_1489051967668974.png" data-preview-group="211" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height='79.2px';this.style.width='initial';this.style.marginLeft=-(this.offsetWidth-105.60000000000001)/2+'px';}else{this.style.marginTop=-(this.offsetHeight-79.2)/2+'px';}">
+								</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-media-body history-title">
+								艾叶子
+							</div>
+							<div class="mui-media-body mui-pull-right history-time">
+								08:40
+							</div>
+							<div class="mui-media-body history-content">
+								一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十 一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
+							</div>
+						</li>
+					</div>
+				</ul>-->
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
+		<script type="text/javascript" src="../../js/mui.zoom.js"></script>
+		<script type="text/javascript" src="../../js/mui.previewimage.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 
 		<!--<script type="text/javascript" src="../../js/mui.picker.min.js" ></script>-->
 		<script type="text/javascript">
 			mui.init();
+			var previewImage; //查看图片的控件
+			var pullRefresh; //下拉，上拉控件
+			var main; //获取当前窗体对象
+			var mainData; //接收A页面传入参数值
+			var markDate = ''; //记录日期
 			mui.plusReady(function() {
-				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				var data = main.data; //接收A页面传入参数值
-				console.log(main.id + ' ' + JSON.stringify(data));
+				previewImage = mui.previewImage();
+
+				main = plus.webview.currentWebview(); //获取当前窗体对象
+				mainData = main.data; //接收A页面传入参数值
+				console.log(main.id + ' ' + JSON.stringify(mainData));
 
 				var deceleration = mui.os.ios ? 0.003 : 0.0009;
 				mui('.mui-scroll-wrapper').scroll({
@@ -58,48 +228,202 @@
 					deceleration: deceleration
 				});
 
-				mui('.mui-scroll-wrapper .mui-scroll').pullToRefresh({
+				//初始化下拉，上拉控件
+				pullRefresh = mui('.mui-scroll-wrapper .mui-scroll').pullToRefresh({
 					down: {
 						callback: function() {
 							var self = this;
-							//							var id = pullRefreshEl.parentNode.parentNode.id;
-							//							var element = document.getElementById(id);
-							//							var info = JSON.parse(element.getAttribute('data-info'));
-							//							var page = JSON.parse(element.getAttribute('data-page'));
-							//							console.log('down ' + JSON.stringify(info));
-							//							console.log('down ' + JSON.stringify(page));
+							var element = document.getElementById('data_scroll');
+							var page = JSON.parse(element.getAttribute('data-page'));
+							console.log('down ' + JSON.stringify(page));
 							setTimeout(function() {
 								//获取数据
-								//								requestCityNews(info.acode, 1);
-								//结束下拉刷新
+								getClassHistory(1, 10);
 								console.log('结束下拉');
-								self.endPullDownToRefresh();
-							}, 1000);
+								self.endPullDownToRefresh(); //结束下拉刷新
+							}, 1500);
 						}
 					},
 					up: {
-						//						contentinit: '',
+						contentinit: '', //默认没有更多显示空白
 						callback: function() {
 							var self = this;
-							//							var id = pullRefreshEl.parentNode.parentNode.id;
-							//							var element = document.getElementById(id);
-							//							var info = JSON.parse(element.getAttribute('data-info'));
-							//							var page = JSON.parse(element.getAttribute('data-page'));
-							//							console.log('up ' + JSON.stringify(info));
-							//							console.log('up ' + JSON.stringify(page));
-							//							if(page) {
-							setTimeout(function() {
-								//									requestCityNews(info.acode, page.pageIndex + 1);
-								console.log('结束上拉');
-								self.endPullUpToRefresh();
-							}, 1000);
-							//							} else {
-							//								self.endPullUpToRefresh();
-							//							}
+							var element = document.getElementById('data_scroll');
+							var page = JSON.parse(element.getAttribute('data-page'));
+							console.log('up ' + JSON.stringify(page));
+							if(page) {
+								setTimeout(function() {
+									getClassHistory(page.pageIndex + 1, 10);
+									console.log('结束上拉');
+									self.endPullUpToRefresh();
+								}, 1500);
+							} else {
+								setTimeout(function() {
+									mui.toast('数据异常，请下拉刷新后重新尝试');
+									self.endPullUpToRefresh();
+								}, 1500);
+							}
 						}
 					}
 				});
+
+				//获取数据
+				getClassHistory(1, 10);
+
+				//点击图片的数字
+				mui('#data_scroll').on('tap', '.record-picture-num', function() {
+					previewImage.open(document.getElementById("img_" + this.getAttribute('data-id')))
+				});
 			});
+
+			/**
+			 * 获取针对某班的点到记事列表
+			 * @param {Object} pageIndex 当前页数
+			 * @param {Object} pageSize 每页记录数
+			 */
+			function getClassHistory(pageIndex, pageSize) {
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				//66.（点到记事）获取针对某班的点到记事列表
+				//所需参数
+				var comData = {
+					classId: mainData.data, //班级ID
+					pageIndex: pageIndex, //当前页数
+					pageSize: pageSize, //每页记录数
+					publisherId: personalUTID //发布者ID,0代表全部
+				};
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_getNotesForClass(comData, wd, function(data) {
+					console.log('66.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+
+					//记录页数
+					var page = {
+						pageIndex: pageIndex, //当前页数
+						totalPage: 0 //总页数
+					};
+					if(data.RspCode == 0) {
+						page.totalPage = data.RspData.TotalPage;
+					}
+					document.getElementById('data_scroll').setAttribute('data-page', JSON.stringify(page))
+					if(pageIndex == 1) { //获取的第一页的内容
+						//清空对应的界面
+						document.getElementById('data_scroll').innerHTML = '';
+					}
+
+					if(data.RspCode == 0) {
+						var tempRspData = data.RspData.Data;
+						for(var i = 0; i < tempRspData.length; i++) {
+							for(var j = 0; j < mainData.mem.length; j++) {
+								if(tempRspData[i].StudentId == mainData.mem[j].stuid) {
+									mui.extend(tempRspData[i], {
+										stuname: mainData.mem[j].stuname
+									});
+								}
+							}
+						}
+
+						//生成界面
+						for(var i = 0; i < tempRspData.length; i++) {
+							createItem(tempRspData[i]);
+						}
+
+						if(data.RspData.Data.length == 0 && pageIndex == 1) {
+							mui.toast('班级历史记录为空');
+						}
+					} else {
+						mui.toast(data.RspTxt);
+					}
+
+					console.log('pullRefresh ' + JSON.stringify(pullRefresh));
+					if(page.pageIndex >= page.totalPage) {
+						//没有下一页
+						pullRefresh.endPullUpToRefresh(true);
+					} else {
+						if(pageIndex == 1) {
+							//获取第一页的数据更新当前控件
+							pullRefresh.refresh(true);
+						}
+					}
+					wd.close();
+				});
+			}
+
+			/**
+			 * 生成界面
+			 * @param {Object} data
+			 */
+			function createItem(data) {
+				//console.log('createItem ' + JSON.stringify(data));
+				var date = data.PublishDate.split(' '); //发布的日期和时间
+				var dateItem = date[0].replace(/-/g, '/'); //替换横杠为斜杠
+				var time = date[1].split(':');
+				var timeItem = time[0] + ':' + time[1];
+				if(markDate != dateItem) { //新的日期
+					markDate = dateItem;
+					var element = document.createElement('ul');
+					element.className = 'mui-table-view';
+					element.id = dateItem;
+					element.innerHTML = '<div class="mui-table-view-cell history-date">' + dateItem + '</div><div id="' + dateItem + '_call"></div><div id="' + dateItem + '_record"></div>';
+					document.getElementById("data_scroll").appendChild(element);
+				}
+
+				var html_first = '<div id="' + data.TabId + '_title' + '" class="mui-media-body history-title"></div>\
+							<div class="mui-media-body mui-pull-right history-time">' + timeItem + '</div>\
+							<div id="' + data.TabId + '_content' + '" class="mui-media-body history-content"></div>';
+				var html_media = ''; //多媒体
+
+				var width = (document.getElementById("data_scroll").offsetWidth - 30) * 0.32;
+				var height = width * 3 / 4;
+				var marginBottom = (document.getElementById("data_scroll").offsetWidth - 30) * 0.02;
+				var marginRight;
+
+				if(data.EncType == 1) { //附件类型,1图片2音视频3仅文字
+					var imageArray = data.EncAddr.split('|');
+					var thumbArray = data.EncImgAddr.split('|');
+
+					var html_0 = '<div class="record-imge">';
+					var html_1 = '';
+					var html_2 = ''; //显示剩余的图片数量
+					var html_3 = ''; //是否显示图片
+					for(var i = 0; i < imageArray.length; i++) {
+						if(i == 2 || i == 5 || i == 8) {
+							marginRight = 0;
+						} else {
+							marginRight = marginBottom;
+						}
+						if(i > 2) {
+							html_3 = 'display: none;';
+						}
+						if(i == 2 && imageArray.length > 3) {
+							html_2 = '<div data-id="' + data.TabId + '_' + i + '" class="record-picture-num" style="line-height: ' + height + 'px;">+' + (imageArray.length - 3) + '</div>'
+						}
+						html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px; margin-bottom: ' + marginBottom + 'px;' + html_3 + '">\
+									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-' + width + ')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-' + height + ')/2+\'px\';}">\
+								</div>';
+					}
+					html_media = html_0 + html_1 + '</div>';
+				}
+				var element = document.createElement('li');
+				element.className = 'mui-table-view-cell';
+				var title = ''; //标题
+				var content = ''; //内容
+				if(data.NoteType == 1) { //点到
+					element.innerHTML = html_first;
+					document.getElementById(dateItem + '_call').appendChild(element);
+
+					title = data.stuname + ' ' + data.CheckTypeStr;
+					if(data.MsgContent != '') {
+						content = '说明:' + data.MsgContent;
+					}
+				} else if(data.NoteType == 2) { //记事
+					element.innerHTML = html_first + html_media;
+					document.getElementById(dateItem + '_record').appendChild(element);
+
+					title = data.stuname;
+					content = data.MsgContent;
+				}
+				document.getElementById(data.TabId + '_title').innerText = title;
+				document.getElementById(data.TabId + '_content').innerText = content;
+			}
 		</script>
 	</body>
 

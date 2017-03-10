@@ -28,7 +28,7 @@
 			<a id="publish" class="mui-icon mui-pull-right mui-plus-visible" style="padding-left: 30px;padding-top: 15px;font-size: 16px;">发布</a>
 		</header>
 		<div class="mui-content">
-			<textarea id="input-content" placeholder="请输入回复内容" value=""></textarea>
+			<textarea id="input-content" placeholder="请输入回复内容,最多200字" value=""></textarea>
 
 		</div>
 
@@ -47,7 +47,7 @@
 			var curPage=plus.webview.currentWebview();
 			var replyToInfo = curPage.data;
 			//最大长度2000字
-			jQuery('#input-content').prop('maxlength',2000)
+			jQuery('#input-content').prop('maxlength',200)
 			//发布事件的监听
 			events.addTap('publish', function() {
 				var inputContainer=document.getElementById('input-content');

@@ -566,10 +566,12 @@
 					"js/mui.pullToRefresh.material.js",
 					"js/mui.previewimage.js",
 					"js/utils/h5fresh.js",
-					"css/utils/preview.css"
+					"css/utils/preview.css",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [
-					"html/quan/classSpace-persons.html"
+					"html/quan/classSpace-persons.html",
+					"html/quan/zone_main.html"
 				],
 				"priority": 0
 			},
@@ -1627,7 +1629,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"js/utils/cryption.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1771,7 +1774,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/mine/qun_manage_invite_info.html"
@@ -2369,7 +2373,14 @@
 					"js/utils/RSAEncrypt.js",
 					"fonts/iconfont.ttf",
 					"css/quan/custom-textarea.css",
-					"js/cloud/mui.previewimage.js"
+					"js/cloud/mui.previewimage.js",
+					"js/utils/cryption.js",
+					"js/mui.zoom.js",
+					"js/utils/compress.js",
+					"css/utils/preview.css",
+					"fonts/fangzheng.ttf",
+					"js/utils/CloudFileUtil.js",
+					"js/qiniu/qiniu.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3205,11 +3216,15 @@
 					"js/utils/RSAEncrypt.js",
 					"css/mine/manager_member.css",
 					"css/iconfont/iconfont.css",
-					"css/mine/manager_data.css"
+					"css/mine/manager_data.css",
+					"fonts/fangzheng.ttf",
+					"fonts/iconfont.ttf",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [
 					"html/quan/group-pInfo.html",
-					"html/mine/qun_manage_info.html"
+					"html/mine/qun_manage_info.html",
+					"html/mine/qun_manage_invite.html"
 				],
 				"priority": 0
 			},

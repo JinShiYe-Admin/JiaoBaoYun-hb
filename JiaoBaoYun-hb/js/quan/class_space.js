@@ -75,7 +75,7 @@ var class_space = (function(mod) {
 		console.log("加载的数据：" + JSON.stringify(item));
 		var inner = '<div><div class="mui-pull-left head-img" >' +
 			'<img class="head-portrait" headId="' + item.utid + '" src="' + getUImg(item.uimg) + '"/>' +
-			'<p class="single-line">' + events.shortForString(item.bunick ? item.bunick : item.ugname, 6) + '</p>' +
+			'<p class="single-line">' + events.shortForString(getName(item), 6) + '</p>' +
 			'</div>' +
 			'<div class="chat_content_left">' +
 			'<div class="chat-body"><p class="chat-words">' +
@@ -87,6 +87,17 @@ var class_space = (function(mod) {
 			')</a><span tabId="' + item.TabId + '" class="mui-icon iconfont icon-xianshi">(' + item.ReadCnt + ')</span></p>' +
 			'</div></div>';
 		return inner;
+	}
+	var getName=function(item){
+		if(item.bunick){
+			return item.bunick;
+		}
+		if(item.ugname){
+			return item.ugname;
+		}
+		if(item.unick){
+			return item.unick;
+		}
 	}
 	var setIsLike = function(isLike) {
 		return isLike ? 'isLike' : 'isNotLike';
@@ -150,7 +161,15 @@ var class_space = (function(mod) {
 					} else {
 						console.log('没啥备注信息。')
 					}
-					setData();
+					var personIds = [];
+					for(var i in list) {
+						if(!list[i].ugname) {
+							personIds.push(list[i].PublisherId);
+						}
+					}
+					var realIds = events.arraySingleItem(personIds);
+					requireInfos(realIds);
+//					setData();
 				})
 
 			} else {
@@ -160,6 +179,44 @@ var class_space = (function(mod) {
 
 		})
 	}
+	/**
+	 * 
+	 * @param {Object} datasource
+	 * @param {Object} pInfos
+	 */
+	var requireInfos = function(pInfos) {
+		if(pInfos.length > 0) {
+			//发送获取用户资料申请
+			var tempData = {
+				vvl: pInfos.toString(), //用户id，查询的值,p传个人ID,g传ID串
+				vtp: 'g' //查询类型,p(个人)g(id串)
+			}
+			//21.通过用户ID获取用户资料
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_PostUinf(tempData, wd, function(data) {
+				wd.close();
+				console.log('获取的个人信息:' + JSON.stringify(data));
+				if(data.RspCode == 0) {
+					rechargeInfos(data.RspData);
+				} else {
+					//				setChannelList(datas);
+				}
+			})
+		} else {
+			setData();
+		}
+
+	}
+	var rechargeInfos = function(infos) {
+	for(var i in list) {
+		for(var j in infos) {
+			if(list[i].PublisherId == infos[j].utid) {
+				 jQuery.extend(list[i],infos[j]);
+			}
+		}
+	}
+	setData();
+}
 	var setData = function() {
 		var container = document.getElementById('classSpace_list');
 		for(var i in list) {
@@ -214,11 +271,11 @@ var postData;
 //})
 mui.plusReady(function() {
 	mui.previewImage();
-//	h5fresh.addRefresh(function() {
-//		events.clearChild(document.getElementById('classSpace_list'));
-//		pageIndex = 1;
-//		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-//	}, { style: "circle" })
+	//	h5fresh.addRefresh(function() {
+	//		events.clearChild(document.getElementById('classSpace_list'));
+	//		pageIndex = 1;
+	//		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+	//	}, { style: "circle" })
 	postData = plus.webview.currentWebview().data;
 	postData.userId = parseInt(postData.userId);
 	events.preload('classSpace-persons.html', 200);
@@ -228,6 +285,7 @@ mui.plusReady(function() {
 	setListener(postData.userId);
 	//更改个人信息，更新界面
 	window.addEventListener('infoChanged', function() {
+		mui('#refreshContainer').pullRefresh().refresh(true);
 		pageIndex = 1;
 		setReaded(postData.userId, postData.classId);
 		var container = document.getElementById('classSpace_list');
