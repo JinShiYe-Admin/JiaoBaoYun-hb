@@ -296,9 +296,6 @@ var dynamiclistitem = (function($, mod) {
 
 		ulElement.appendChild(liElement);
 		mod.questionContent(data[0][3]);
-
-		
-
 	};
 
 	return mod;
