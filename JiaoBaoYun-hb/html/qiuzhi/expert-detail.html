@@ -133,7 +133,7 @@
 		var ExpertsInfo;
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 		mui.plusReady(function() {
-			events.preload('qiuzhi-expertAllAnswer.html', 10);
+//			events.preload('qiuzhi-expertAllAnswer.html', 10);
 			events.preload('qiuzhi-expertAllComment.html', 10);
 			events.preload('focus-question.html', 10);
 //			events.preload('heAttentionPersons.html', 10);
@@ -165,7 +165,7 @@
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 				console.log(this.id);
 				if(this.id == 'AnswerLi') { //他的回答
-					events.fireToPageWithData('qiuzhi-expertAllAnswer.html', 'qiuzhi-expertAllAnswer', ExpertsInfo);
+					events.openNewWindowWithData('qiuzhi-expertAllAnswer.html', ExpertsInfo);
 				} else if(this.id == 'AskLi') { //他的提问
 					events.openNewWindowWithData('expert-ask.html', ExpertsInfo);
 				} else if(this.id == 'CommentLi') { //他的评论

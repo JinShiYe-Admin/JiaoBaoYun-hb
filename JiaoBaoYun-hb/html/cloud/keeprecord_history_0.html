@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<!--<link rel="stylesheet" href="../../css/mui.picker.min.css" />-->
+		<link rel="stylesheet" href="../../css/utils/pullToRefresh.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title">历史记录</h1>
+		</header>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper mui-fullscreen" style="z-index: 1;">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul class="mui-table-view">
+				        <li class="mui-table-view-cell">
+				            <a class="mui-navigate-right">
+				                Item 1
+				            </a>
+				        </li>
+				        <li class="mui-table-view-cell">
+				            <a class="mui-navigate-right">
+				                 Item 2
+				            </a>
+				        </li>
+				        <li class="mui-table-view-cell">
+				            <a class="mui-navigate-right">
+				                 Item 3
+				            </a>
+				        </li>
+				    </ul>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
+		<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
+
+		<!--<script type="text/javascript" src="../../js/mui.picker.min.js" ></script>-->
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				var data = main.data; //接收A页面传入参数值
+				console.log(main.id + ' ' + JSON.stringify(data));
+
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				mui('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+
+				mui('.mui-scroll-wrapper .mui-scroll').pullToRefresh({
+					down: {
+						callback: function() {
+							var self = this;
+							//							var id = pullRefreshEl.parentNode.parentNode.id;
+							//							var element = document.getElementById(id);
+							//							var info = JSON.parse(element.getAttribute('data-info'));
+							//							var page = JSON.parse(element.getAttribute('data-page'));
+							//							console.log('down ' + JSON.stringify(info));
+							//							console.log('down ' + JSON.stringify(page));
+							setTimeout(function() {
+								//获取数据
+								//								requestCityNews(info.acode, 1);
+								//结束下拉刷新
+								console.log('结束下拉');
+								self.endPullDownToRefresh();
+							}, 1000);
+						}
+					},
+					up: {
+						//						contentinit: '',
+						callback: function() {
+							var self = this;
+							//							var id = pullRefreshEl.parentNode.parentNode.id;
+							//							var element = document.getElementById(id);
+							//							var info = JSON.parse(element.getAttribute('data-info'));
+							//							var page = JSON.parse(element.getAttribute('data-page'));
+							//							console.log('up ' + JSON.stringify(info));
+							//							console.log('up ' + JSON.stringify(page));
+							//							if(page) {
+							setTimeout(function() {
+								//									requestCityNews(info.acode, page.pageIndex + 1);
+								console.log('结束上拉');
+								self.endPullUpToRefresh();
+							}, 1000);
+							//							} else {
+							//								self.endPullUpToRefresh();
+							//							}
+						}
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

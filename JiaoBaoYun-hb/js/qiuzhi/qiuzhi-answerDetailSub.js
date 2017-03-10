@@ -117,9 +117,9 @@ var getInfos = function(datasource) {
 		if(theComment.ReplyId) {
 			pInfos.push(theComment.ReplyId);
 		}
-		if(datasource.Data[i].Replys&&datasource.Data[i].Replys.length>0){
-			var replies=datasource.Data[i].Replys;
-			for(var j in replies){
+		if(datasource.Data[i].Replys && datasource.Data[i].Replys.length > 0) {
+			var replies = datasource.Data[i].Replys;
+			for(var j in replies) {
 				pInfos.push(replies[j].ReplyId);
 				pInfos.push(replies[j].UserId);
 			}
@@ -178,14 +178,14 @@ var rechargeInfos = function(datasource, infos) {
 				datasource.Data[i].ReplyName = info.unick;
 				datasource.Data[i].ReplyImg = updateHeadImg(info.uimg, 2);
 			}
-			if(datasource.Data[i].Replys&&datasource.Data[i].Replys.length>0){
-				for(var m in datasource.Data[i].Replys){
-					if(datasource.Data[i].Replys[m].UserId==info.utid){
-						datasource.Data[i].Replys[m].UserName=info.unick;
-						datasource.Data[i].Replys[m].UserImg=updateHeadImg(info.uimg, 2)
+			if(datasource.Data[i].Replys && datasource.Data[i].Replys.length > 0) {
+				for(var m in datasource.Data[i].Replys) {
+					if(datasource.Data[i].Replys[m].UserId == info.utid) {
+						datasource.Data[i].Replys[m].UserName = info.unick;
+						datasource.Data[i].Replys[m].UserImg = updateHeadImg(info.uimg, 2)
 					}
-					if(datasource.Data[i].Replys[m].ReplyId==info.utid){
-						datasource.Data[i].Replys[m].ReplyName=info.unick;
+					if(datasource.Data[i].Replys[m].ReplyId == info.utid) {
+						datasource.Data[i].Replys[m].ReplyName = info.unick;
 						datasource.Data[i].Replys[m].ReplyImg = updateHeadImg(info.uimg, 2);
 					}
 				}
@@ -285,38 +285,40 @@ var createList = function(ul, dataArray) {
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell';
 			li.innerHTML = createCommentsInner(dataArray[i]);
-			if(dataArray[i].Replys&&dataArray[i].Replys.length>0) {
+			ul.appendChild(li);
+			
+			var comment_container = li.querySelector('.comment-words');
+			comment_container.commentInfo = dataArray[i];
+			var comments_zan = li.querySelector('.icon-support');
+			li.querySelector('.head-img').info = dataArray[i];
+			comments_zan.isLike = dataArray[i].IsLiked;
+			comments_zan.commentId = dataArray[i].TabId;
+			if(dataArray[i].IsLiked) {
+				comments_zan.className = "mui-icon iconfont icon-support isLike"
+			} else {
+				comments_zan.className = "mui-icon iconfont icon-support isNotLike"
+			}
+			var repliesContainer=comments_zan.parentElement.parentElement.parentElement.parentElement;
+			console.log('className:'+repliesContainer.className)
+			if(flag) {
+				if(repliesContainer.className==("mui-table-view inner-table-view")) {
+					comments_zan.order = repliesContainer.parentElement.querySelector('.icon-support').order + "-" + i;
+				} else {
+					comments_zan.order = (parseInt(pageIndex) - 1) * 10 + parseInt(i);
+				}
+			} else {
+				if(repliesContainer.className==("mui-table-view inner-table-view")) {
+					comments_zan.order = repliesContainer.parentElement.querySelector('.icon-support').order + '-' + i;
+				} else {
+					comments_zan.order = parseInt(i);
+				}
+
+			}
+			if(dataArray[i].Replys && dataArray[i].Replys.length > 0) {
 				var sul = document.createElement('ul');
 				sul.className = "mui-table-view inner-table-view";
 				li.appendChild(sul)
 				createList(sul, dataArray[i].Replys)
-			}
-			ul.appendChild(li);
-			var comment_container = li.querySelector('.comment-words');
-			comment_container.commentInfo = dataArray[i];
-			var comments_zan = li.querySelector('.icon-support');
-			li.querySelector('.head-img').info=dataArray[i];
-			comments_zan.isLike = dataArray[i].IsLiked;
-			comments_zan.commentId = dataArray[i].TabId;
-			if(dataArray[i].IsLiked) {
-				comments_zan.className = "mui-icon iconfont icon-support mui-pull-right isLike"
-			} else {
-				comments_zan.className = "mui-icon iconfont icon-support mui-pull-right isNotLike"
-			}
-
-			if(flag) {
-				if(jQuery('.icon-support').parent().parent().parent().hasClass("inner-table-view")){
-					comments_zan.order = ((parseInt(pageIndex) - 1) * 10 + parseInt(i))+"-"+i;
-				}else{
-					comments_zan.order = (parseInt(pageIndex) - 1) * 10 + parseInt(i);
-				}
-			} else {
-				if(jQuery('.icon-support').parent().parent().parent().hasClass("inner-table-view")){
-					comments_zan.order = parseInt(i)+'-'+i;
-				}else{
-					comments_zan.order = parseInt(i);
-				}
-				
 			}
 
 		}
@@ -368,7 +370,7 @@ var setAnswerManInfo = function(datasource) {
 			getUserFocus(datasource.AnswerMan);
 		}
 	}
-	document.getElementById('answer-time').innerText = events.shortForDate(datasource.AnswerTime);
+	document.getElementById('answer-time').innerText = replaceBigNo(datasource.IsLikeNum)+"赞·" + events.shortForDate(datasource.AnswerTime);
 }
 /**
  * 根据图片数量，设置不同宽高的图片尺寸
@@ -414,12 +416,12 @@ var createCommentsInner = function(cell) {
 		'<h5 class="comment-personName single-line">' + setName(cell) + '</h5>' +
 		'<p class="comment-words">' + cell.CommentContent + '</p>' +
 		'<p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p>' +
-		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support "></a></div></div>'
+		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support ">'+replaceBigNo(cell.LikeNum)+'</a></div></div>'
 	return inner;
 }
-var setName=function(cell){
-	if(cell.ReplyId!=0){
-		return cell.UserName+'回复'+cell.ReplyName;
+var setName = function(cell) {
+	if(cell.ReplyId != 0) {
+		return cell.UserName + '回复' + cell.ReplyName;
 	}
 	return cell.UserName;
 }
@@ -444,13 +446,13 @@ var setListeners = function() {
 		events.fireToPageWithData('qiuzhi-addAnswer.html', 'add-comment', answerData);
 	})
 	events.addTap('anthor-portrait', function() {
-		events.openNewWindowWithData("expert-detail.html",jQuery.extend(answerData,{UserId:answerData.utid,uimg:answerData.UserImg,unick:answerData.UserName}))
+		events.openNewWindowWithData("expert-detail.html", jQuery.extend(answerData, { UserId: answerData.utid, uimg: answerData.UserImg, unick: answerData.UserName }))
 	})
 	//评论头像点击事件
 	mui('.mui-table-view').on('tap', '.head-img', function() {
-		var info= this.info;
+		var info = this.info;
 		console.log(JSON.stringify(info));
-		events.openNewWindowWithData("expert-detail.html", jQuery.extend(info,{UserId:info.utid,uimg:info.UserImg,unick:info.UserName}) )
+		events.openNewWindowWithData("expert-detail.html", jQuery.extend(info, { UserId: info.utid, uimg: info.UserImg, unick: info.UserName }))
 	})
 	mui('.mui-table-view').on('tap', ".comment-words", function() {
 		console.log("评论信息：" + JSON.stringify(this.commentInfo));
@@ -512,19 +514,26 @@ var setIsLikeComment = function(item) {
  * @param {Object} item
  */
 var setZanIconCondition = function(item) {
+	console.log("显示是否为数字："+typeof(item.order));
 	if(item.isLike) {
 		item.className = "mui-icon iconfont icon-support isNotLike ";
 		item.isLike = 0;
 		mui.toast('已取消点赞');
 		console.log('顺序：' + JSON.stringify(item.order))
 		if(item.order || item.order == 0) {
-			if(Number.isNaN(item.order)){
-				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].IsLiked=0;
-			}else{
+			if(typeof(item.order)=="string") {
+				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].IsLiked = 0;
+				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum-=1;
+				item.innerText=replaceBigNo(answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum);
+			} else {
 				answerData.Data[item.order].IsLiked = 0;
+				answerData.Data[item.order].LikeNum-=1;
+				item.innerText=replaceBigNo(answerData.Data[item.order].LikeNum);
 			}
 		} else {
 			answerData.IsLiked = 0;
+			answerData.IsLikeNum -= 1;
+			document.getElementById('answer-time').innerText = replaceBigNo(answerData.IsLikeNum)+"赞·" + events.shortForDate(answerData.AnswerTime);
 		}
 
 	} else {
@@ -533,13 +542,25 @@ var setZanIconCondition = function(item) {
 		mui.toast('点赞成功');
 		console.log('顺序：' + JSON.stringify(item.order))
 		if(item.order || item.order == 0) {
-			if(Number.isNaN(item.order)){
-				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].IsLiked=1;
-			}else{
+			if(typeof(item.order)=="string") {
+				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].IsLiked = 1;
+				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum += 1;
+				item.innerText=replaceBigNo(answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum);
+			} else {
 				answerData.Data[item.order].IsLiked = 1;
+				answerData.Data[item.order].LikeNum += 1;
+				item.innerText=replaceBigNo(answerData.Data[item.order].LikeNum);
 			}
 		} else {
 			answerData.IsLiked = 1;
+			answerData.IsLikeNum += 1;
+			document.getElementById('answer-time').innerText = replaceBigNo(answerData.IsLikeNum)+"赞·" + events.shortForDate(answerData.AnswerTime);
 		}
 	}
+}
+var replaceBigNo=function(no){
+	if(no>100){
+		return '99+'
+	}
+	return no;
 }

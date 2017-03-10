@@ -48,7 +48,6 @@ var dynamiclistitem = (function($, mod) {
 		//时间
 		var html5 = '<p>' + InfoList[2] + '</p></div></div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext ">';
-		console.log('data[4]='+data[4]+'-----'+idFlag+'-----'+id)
 		var html7 = '<div id="question_content' + data[4] + idFlag + id+'" style = "color:black;font-size:14px" class="ellipsis-show question_content">';
 		//内容
 		var html8 = InfoList[3];
@@ -142,7 +141,6 @@ var dynamiclistitem = (function($, mod) {
 		var contentElements = document.getElementsByClassName("question_content");
 		var showAll = document.getElementsByClassName("showAll");
 		for(var i = 0; i < contentElements.length; i++) {
-			console.log('cellID='+contentElements[i].id)
 			contentElements[i].style.webkitLineClamp = '9';
 			height_0 = contentElements[i].offsetHeight;
 			contentElements[i].style.webkitLineClamp = '8';
@@ -289,8 +287,7 @@ var dynamiclistitem = (function($, mod) {
 
 		ulElement.appendChild(liElement);
 		mod.questionContent(data[0][3]);
-		var body = document.getElementById("0").innerHTML;
-		console.log(body)
+
 		
 
 	};

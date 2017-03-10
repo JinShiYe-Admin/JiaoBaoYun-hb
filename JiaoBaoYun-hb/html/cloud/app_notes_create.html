@@ -34,27 +34,31 @@
 			<h1 class="mui-title" style="color: white;">笔记</h1>
 			<h1 id="finish" class="mui-title" style="text-align: right;right: 10px;">完成</h1>
 		</header>
-		<nav class="mui-bar mui-bar-tab" style="box-shadow: none;">
-			<div id="MultiMedia">
-			</div>
-		</nav>
 		<div class="mui-content">
 			<textarea id="notes" oninput="if(value.length>2000)value=value.slice(0,2000)" placeholder="✎ 分享你的学习与生活..." style="border: none;"></textarea>
+			<div id="MultiMedia">
+			</div>
 		</div>
 
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
 				var self = plus.webview.currentWebview();
-//				self.setStyle({
-//					softinputMode:'adjustResize'
-//				});
+				//				self.setStyle({
+				//					softinputMode:'adjustResize'
+				//				});
 				var notes = document.getElementById("notes");
 				var height = plus.screen.resolutionHeight - (localStorage.getItem('StatusHeightNo') * 1 + 75 + 50); //屏幕高度-状态栏高度-顶部导航高度
 
 				notes.style.height = height + 'px';
 
-				MultiMedia.addElement(document.getElementById("MultiMedia"));
+				multiMedia = MultiMedia.multiMedia({
+					MultiMediaId: 'MultiMedia', //存放多媒体对象控件的id
+					Picture: true, //是否显示图片图标
+					Audio: true, //是否显示音频图标
+					TotalPicture: 9, //图片的个数
+					TotalAudio: 1, //音频的个数
+				});
 
 				document.getElementById('finish').addEventListener('tap', function() {
 

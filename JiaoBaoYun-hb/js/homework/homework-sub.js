@@ -13,17 +13,17 @@ var selectGContainer; //选中的班级控件；
 var list; //数据列表
 var totalPageCount;
 var clickItem; //点击的子控件
+//var classInfo;
 mui.init();
 //mui的plusready监听
 mui.plusReady(function() {
 	//预加载
-	events.preload('workdetail-tea.html', 200);
+//	events.preload('workdetail-tea.html', 200);
 	events.preload('homework-publish.html', 500);
 	events.preload('workdetailTea-temporary.html', 300);
-	events.preload('workdetail-stu.html', 800);
-	events.preload('homework-commented.html', 600);
+	events.preload('workdetail-stu.html', 400);
+	events.preload('homework-commented.html', 200);
 	events.preload('doHomework-stu.html', 600);
-
 	//赋值
 	list = document.getElementById('list-container');
 	/**监听父页面的图标事件*/
@@ -31,7 +31,7 @@ mui.plusReady(function() {
 		mui("#popover").popover('toggle');
 	});
 	window.addEventListener('homeworkDone', function() {
-		clickItem.homeworkInfo.IsSubmitted=true;
+		clickItem.homeworkInfo.IsSubmitted = true;
 		clickItem.className = 'mui-table-view-cell stuHomework ' + getBackGround(clickItem.homeworkInfo);
 		clickItem.innerHTML = createStuHomeworkInner(clickItem.homeworkInfo);
 	})
@@ -75,10 +75,12 @@ mui.plusReady(function() {
 		events.clearChild(list);
 
 		if(role == 2) {
+//			classInfo = teacherClasses[0];
 			selectGId = teacherClasses[0].gid;
 			requireHomeWork(teacherClasses[0], setData);
 			//家长、老师角色默认获取的数据
 		} else {
+//			classInfo = studentClasses[0];
 			selectGId = studentClasses[0].gid;
 			requireHomeWork(studentClasses[0], setData);
 		}
@@ -103,7 +105,10 @@ mui.plusReady(function() {
 
 	})
 	window.addEventListener('homeworkPublished', function() {
-
+		teacherHash = newHashMap();
+		selectGContainer.classInfo.pageIndex = 1;
+		events.clearChild(list);
+		requireHomeWork(selectGContainer.classInfo, setData);
 	})
 	//设置监听
 	setListener();
@@ -159,6 +164,7 @@ var pullUpRefresh = function() {
 var setListener = function() {
 	mui('.tabs-classes').on('tap', '.mui-control-item', function() {
 		selectGContainer = this;
+//		classInfo = this.classInfo;
 		selectGId = this.classInfo.gid;
 		events.clearChild(list);
 		console.log('被点击的班级数据：' + JSON.stringify(this.classInfo));
@@ -170,6 +176,7 @@ var setListener = function() {
 				setPublishedData(teacherHash.get(selectGId));
 				//如果数据不存在
 			} else {
+				this.classInfo.pageIndex = 1;
 				requireHomeWork(this.classInfo, setData);
 			}
 			//学生家长角色
@@ -177,6 +184,7 @@ var setListener = function() {
 			if(studentHash.get(selectGId)) {
 				setHomeworkData(studentHash.get(selectGId));
 			} else {
+				this.classInfo.pageIndex = 1;
 				requireHomeWork(this.classInfo, setData);
 			}
 		}
@@ -184,8 +192,8 @@ var setListener = function() {
 	var publish = document.getElementById('iconPublish');
 	//常规作业点击事件
 	mui('.mui-table-view').on('tap', '.publishedHomework', function() {
-		events.fireToPageNone('workdetail-tea-sub.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
-		plus.webview.getWebviewById("workdetail-tea.html").show();
+		events.openNewWindowWithData('workdetail-tea.html', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+//		plus.webview.getWebviewById("workdetail-tea.html").show();
 	})
 	//临时作业点击事件
 	mui('.mui-table-view').on('tap', '.publishedAnswer', function() {

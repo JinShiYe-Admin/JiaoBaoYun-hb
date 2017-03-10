@@ -24,6 +24,8 @@ mui.plusReady(function() {
 			requireHomeworkResult();
 		}
 	})
+	//设置最大长度为1000
+	jQuery('.comment-area').prop("maxLength",1000);
 	setListener();
 })
 
@@ -41,6 +43,7 @@ var setCondition = function() {
 	} else {
 		btn_comment.innerText = '提交评论';
 	}
+	
 }
 var setListener = function() {
 	events.addTap('btn-comment', function() {
@@ -114,11 +117,10 @@ var requireHomeworkInfo = function() {
  */
 var setHomeWorkInfo = function() {
 	document.getElementById('submit-time').innerText = workInfo.UploadTime;
-	document.getElementById('result-text').innerText = workInfo.Result;
 	var homeworkInfo = document.getElementById('homework-info');
 	events.clearChild(homeworkInfo);
 	var p = document.createElement('p')
-	p.innerText = workInfo.Contents;
+	p.innerText = workInfo.Result;
 	homeworkInfo.appendChild(p);
 	if(workInfo.IsCommented) {
 		document.getElementById('comment-area').value = workInfo.Comment;
@@ -126,11 +128,11 @@ var setHomeWorkInfo = function() {
 		document.getElementById('comment-area').value = null;
 	}
 	if(workInfo.stuFiles && workInfo.stuFiles.length > 0) {
-		createAnswerImgs(document.getElementById("result-text"), workInfo.stuFiles, 3);
+		createAnswerImgs(homeworkInfo, workInfo.stuFiles, 3);
 	}
-	if(workInfo.teaFiles&&workInfo.teaFiles.length>0){
-		createAnswerImgs(homeworkInfo,workInfo.teaFiles,2);
-	}
+//	if(workInfo.teaFiles&&workInfo.teaFiles.length>0){
+//		createAnswerImgs(homeworkInfo,workInfo.teaFiles,2);
+//	}
 }
 /**
  * 获取临时作业老师评论
