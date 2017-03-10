@@ -956,7 +956,7 @@
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 			postDataPro_getAllUserSpacesByUser(comData, wd, function(data) {
 				wd.close();
-				console.log('获取所用空间列表_getAllUserSpacesByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					if(data.RspData.Data.length == 0) {
 						mui.toast('暂无动态')

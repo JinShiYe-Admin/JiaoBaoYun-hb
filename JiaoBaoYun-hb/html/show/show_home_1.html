@@ -53,6 +53,7 @@
 			var sliderId = ''; //记录显示的城市
 			var index; //获取index的webview
 			var personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+			var userIDs; //关注的用户
 			mui.plusReady(function() {
 				mui.previewImage();
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
@@ -149,7 +150,12 @@
 						console.log('slide ' + JSON.stringify(info));
 						console.log('slide ' + JSON.stringify(page));
 						if(!page) {
-							requestData(info.acode, 1);
+							if(info.aflag == 0) { //定制的城市
+								requestData(info.acode, 1);
+							} else { //关注的人数据
+								//81.（用户空间）获取用户所有关注的用户
+								getFocusByUser();
+							}
 						}
 					});
 
@@ -165,7 +171,6 @@
 							//循环初始化所有下拉刷新，上拉加载。
 							pullRefresh(function() {
 								requestData(cities[0].acode, 1);
-
 							});
 							addSomeEvent();
 						});
@@ -245,7 +250,12 @@
 								console.log('down ' + JSON.stringify(page));
 								setTimeout(function() {
 									//获取数据
-									requestData(info.acode, 1);
+									if(info.aflag == 0) { //定制的城市
+										requestData(info.acode, 1);
+									} else { //关注的人数据
+										//81.（用户空间）获取用户所有关注的用户
+										getFocusByUser();
+									}
 									//结束下拉刷新
 									self.endPullDownToRefresh();
 								}, 1000);
@@ -264,7 +274,14 @@
 								console.log('up ' + JSON.stringify(page));
 								if(page) {
 									setTimeout(function() {
-										requestData(info.acode, page.pageIndex + 1);
+										if(info.aflag == 0) { //定制的城市
+											requestData(info.acode, page.pageIndex + 1);
+										} else { //关注的人数据
+											var tempModel = cities[cities.length - 1];
+											tempModel.isRefresh = 1; //是刷新0，还是加载更多1
+											//74.(用户空间）获取多用户空间所有用户动态列表
+											getAllUserSpacesByUser(tempModel);
+										}
 										self.endPullUpToRefresh();
 									}, 1000);
 								} else {
@@ -327,6 +344,7 @@
 								var model_area = {
 									acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
 									aname: '', //节点名称
+									aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
 								};
 								console.log('tempStr:' + tempStr);
 								//将分成的每个值，再通过‘_’拆分为model
@@ -342,14 +360,25 @@
 						eduArray = [];
 						//						mui.toast(data.RspTxt);
 					}
+					//如果定制城市为空
 					if(eduArray.length == 0) {
 						var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
 						console.log(JSON.stringify(uarea));
+						//加入手机号所在城市
 						eduArray.push({
 							acode: uarea.acode,
-							aname: uarea.aname
+							aname: uarea.aname,
+							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
 						});
 					}
+					//加入关注的人数据
+					eduArray.push({
+						acode: 0,
+						aname: '我关注的人',
+						aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
+						index: 1, //请求第几页数据
+						isRefresh: 0 //是刷新0，还是加载更多1
+					});
 					cities = eduArray.slice(0); //拷贝数组
 					callBack(cities);
 					waitingDia.close();
@@ -385,7 +414,7 @@
 					}
 
 					if(data.RspCode == 0 && data.RspData.Data.length > 0) {
-						totalPage = data.RspData.TotalPage
+						totalPage = data.RspData.TotalPage;
 						getPersonIds(data.RspData.Data, cityCode);
 					} else {
 						//var table = document.body.querySelector('.mui-table-view');
@@ -413,6 +442,166 @@
 					setTimeout(function() {
 						wd.close();
 					}, 1000);
+				})
+			}
+
+			//81.（用户空间）获取用户所有关注的用户
+			function getFocusByUser() {
+				//所需参数
+				var comData = {
+					userId: personalUTID //用户ID
+				};
+				var wd = events.showWaiting();
+				//81.（用户空间）获取用户所有关注的用户
+				postDataPro_getFocusByUser(comData, wd, function(data) {
+					console.log('81.（用户空间）获取用户所有关注的用户：' + JSON.stringify(data));
+					wd.close();
+					if(data.RspCode == 0) {
+						userIDs = data.RspData.Users;
+						var tempModel = cities[cities.length - 1];
+						tempModel.index = 1;
+						tempModel.isRefresh = 0; //是刷新0，还是加载更多1
+						//74.(用户空间）获取多用户空间所有用户动态列表
+						getAllUserSpacesByUser(tempModel);
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
+			}
+
+			//74.(用户空间）获取多用户空间所有用户动态列表
+			function getAllUserSpacesByUser(tempModel9) {
+				//所需参数
+				var comData = {
+					userId: personalUTID, //用户ID,登录用户
+					publisherIds: arrayToStr(userIDs), //发布者ID,例如[1,2,3]
+					pageIndex: tempModel9.index, //当前页数
+					pageSize: 10 //每页记录数
+				};
+				// 等待的对话框
+				var wd = events.showWaiting();
+				postDataPro_getAllUserSpacesByUser(comData, wd, function(data) {
+					wd.close();
+					console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						if(data.RspData.Data.length == 0) {
+							mui.toast('暂无动态')
+							return;
+						}
+						var tempModel = cities[cities.length - 1];
+						tempModel.index++;
+						//								setUserSpaceReadByUser();
+						totalCnt = data.RspData.TotalCnt;
+						var tempRspData = data.RspData.Data;
+						//获取当前回调留言的个人信息，主要是头像、昵称
+						var tempArray = [];
+						//先遍历回调数组，获取
+						for(var item in tempRspData) {
+							//当前循环的model
+							var tempModel0 = tempRspData[item];
+							//将当前model中id塞到数组
+							tempArray.push(tempModel0.PublisherId);
+							//合并数组,点赞的人
+							tempArray = tempArray.concat(tempModel0.LikeUsers);
+							console.log(JSON.stringify(tempModel0.LikeUsers));
+							tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
+							//循环当前model中的回复数组
+							for(var item1 in tempModel0.Comments) {
+								//回复中的model
+								var tempModel1 = tempModel0.Comments[item1];
+								//将回复中的id塞到数组
+								tempArray.push(tempModel1.UserId);
+								tempArray.push(tempModel1.ReplyId);
+								//
+								for(var item2 in tempModel1.Replys) {
+									//回复中的model
+									var tempModel2 = tempModel1.Replys[item2];
+									//将回复中的id塞到数组
+									tempArray.push(tempModel2.UserId);
+									tempArray.push(tempModel2.ReplyId);
+								}
+							}
+						}
+						//给数组去重
+						tempArray = arrayDupRemoval(tempArray);
+						//发送获取用户资料申请
+						var tempData = {
+							vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
+							vtp: 'g' //查询类型,p(个人)g(id串)
+						}
+
+						//21.通过用户ID获取用户资料
+						postDataPro_PostUinf(tempData, wd, function(data1) {
+							wd.close();
+							console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+							if(data1.RspCode == 0) {
+								//循环当前的个人信息返回值数组
+								for(var i in data1.RspData) {
+									//当前model
+									var tempModel = data1.RspData[i];
+									//更新头像
+									tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
+									//循环留言数组
+									for(var item in tempRspData) {
+										//当前循环的model
+										var tempModel0 = tempRspData[item];
+										//遍历点赞的人
+										for(var item2 in tempModel0.LikeUsers) {
+											//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
+											if(tempModel.utid == tempModel0.LikeUsers[item2]) {
+												tempModel0.LikeUsers.splice(item2, 1, tempModel);
+											}
+										}
+										//对比id是否一致
+										if(tempModel0.PublisherId == tempModel.utid) {
+											//合并
+											tempModel0 = $.extend(tempModel0, tempModel);
+										}
+										//循环当前model中的回复数组
+										for(var item1 in tempModel0.Comments) {
+											//回复中的model
+											var tempModel1 = tempModel0.Comments[item1];
+											//对比id是否一致
+											if(tempModel.utid == tempModel1.UserId) {
+												//添加参数
+												tempModel1.UserIdName = tempModel.unick;
+											}
+											if(tempModel.utid == tempModel1.ReplyId) {
+												//添加参数
+												tempModel1.ReplyIdName = tempModel.unick;
+											}
+											//
+											for(var item2 in tempModel1.Replys) {
+												//回复中的model
+												var tempModel2 = tempModel1.Replys[item2];
+												//对比id是否一致
+												if(tempModel.utid == tempModel2.UserId) {
+													//添加参数
+													tempModel2.UserIdName = tempModel.unick;
+												}
+												if(tempModel.utid == tempModel2.ReplyId) {
+													//添加参数
+													tempModel2.ReplyIdName = tempModel.unick;
+												}
+											}
+										}
+									}
+								}
+							}
+							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+
+							var table = document.body.querySelector('.mui-table-view');
+							//判断是加载更多1，还是刷新0
+							if(tempModel9.isRefresh == 0) {
+
+							} else {
+
+							}
+						});
+					} else {
+						mui.toast(data.RspTxt);
+					}
+
 				})
 			}
 
@@ -451,13 +640,18 @@
 			}
 
 			function addSomeEvent() {
-
+				//评论后，返回，刷新界面
 				window.addEventListener('refreshShow', function(data) {
 					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 					pageIndex = 1;
 					pullFlag = 0;
 					var id = sliderId.replace('top_', '');
-					requestData(id, 1);
+					if(id > 0) { //定制的城市
+						requestData(id, 1);
+					} else { //关注的人数据
+						//81.（用户空间）获取用户所有关注的用户
+						getFocusByUser();
+					}
 				})
 
 				//			评论
@@ -504,7 +698,7 @@
 							userId: personalUTID, //用户ID
 							userSpaceId: zonepArray[index].TabId, //用户空间ID
 						};
-						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						var wd = events.showWaiting();
 						postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
 							wd.close();
 							if(data.RspCode == 0) {
@@ -533,7 +727,7 @@
 							userId: personalUTID, //用户ID
 							userSpaceId: zonepArray[index].TabId, //用户空间ID
 						};
-						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						var wd = events.showWaiting();
 						postDataPro_delUserSpaceLikeByUser(comData, wd, function(data) {
 							wd.close();
 							if(data.RspCode == 0) {
@@ -604,7 +798,7 @@
 			 */
 
 			var getPersonalInfo = function(data, ids, cityCode) {
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				var wd = events.showWaiting();
 				postDataPro_PostUinf({
 					vvl: ids.toString(), //用户id，查询的值,p传个人ID,g传ID串
 					vtp: 'g' //查询类型,p(个人)g(id串)
