@@ -5,7 +5,7 @@
 	width: 100%;
 	height: 25rem;
 	background-color: white;
-	border-color: lightgray;
+	border-color: #E4E4E4;
 }
 
 
@@ -42,7 +42,7 @@ div>.icon-xiangji:before,
 .icon-shipin:before,
 .icon-xiangji1:before {
 	font-size: 3.0rem;
-	color: gray;
+	color: #B7B7B7;
 }
 .img-div{
 	position: relative;

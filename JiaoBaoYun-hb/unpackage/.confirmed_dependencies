@@ -133,7 +133,9 @@
 	"html/qiuzhi/qiuzhi-expertAllComment.html": {
 		"resources": [
 			"css/qiuzhi/qiuzhi-expertAllComment.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/mui.pullToRefresh.js",
+			"js/mui.pullToRefresh.material.js"
 		]
 	},
 	"html/register/modify_password.html": {
