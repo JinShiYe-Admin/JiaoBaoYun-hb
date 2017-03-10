@@ -374,9 +374,10 @@
 				//	<p>57赞·3评论·关注</p>
 				//</li>
 				//li.innerHTML = "<p>" + record.CommentContent + "</p><div><p><img src='"+record.qChannelImg+"'>["+record.qChannel+"]"+record.AskTitle+"</p><p>"+record.AnswerContent+"</p></div><p>"+record.LikeNum+" 赞 · "+record.cCreatTime + " ·"+record.CommentId+" 关注</p>";
-				li.innerHTML = "<p>" + record.AskTitle + "</p><p>" + record.AnswerContent + "</p><p>" + record.IsLikeNum + "赞·" + record.CommentNum + "评论</p>";
+				li.innerHTML = "<p>" + record.AskTitle.replace(keyWord,"<span>"+keyWord+"</span>") + "</p><p>" + record.AnswerContent + "</p><p>" + record.IsLikeNum + "赞·" + record.CommentNum + "评论</p>";
 				listContainer.appendChild(li);
 			}
+			
 		</script>
 	</body>
 
