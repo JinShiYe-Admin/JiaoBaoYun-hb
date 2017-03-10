@@ -64,6 +64,8 @@
 					type = 0;
 					askModel = event.detail.data;
 					document.getElementById('title').innerText = '我要回答';
+					//匿名默认未选择
+					document.getElementById('checkbox').checked=false;
 					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
 						item.style.display = 'inline-block';
 					})
