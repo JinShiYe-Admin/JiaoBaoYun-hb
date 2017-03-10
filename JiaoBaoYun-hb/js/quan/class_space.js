@@ -228,6 +228,7 @@ mui.plusReady(function() {
 	setListener(postData.userId);
 	//更改个人信息，更新界面
 	window.addEventListener('infoChanged', function() {
+		mui('#refreshContainer').pullRefresh().refresh(true);
 		pageIndex = 1;
 		setReaded(postData.userId, postData.classId);
 		var container = document.getElementById('classSpace_list');

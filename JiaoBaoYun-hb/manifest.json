@@ -566,10 +566,12 @@
 					"js/mui.pullToRefresh.material.js",
 					"js/mui.previewimage.js",
 					"js/utils/h5fresh.js",
-					"css/utils/preview.css"
+					"css/utils/preview.css",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [
-					"html/quan/classSpace-persons.html"
+					"html/quan/classSpace-persons.html",
+					"html/quan/zone_main.html"
 				],
 				"priority": 0
 			},
@@ -2371,7 +2373,14 @@
 					"js/utils/RSAEncrypt.js",
 					"fonts/iconfont.ttf",
 					"css/quan/custom-textarea.css",
-					"js/cloud/mui.previewimage.js"
+					"js/cloud/mui.previewimage.js",
+					"js/utils/cryption.js",
+					"js/mui.zoom.js",
+					"js/utils/compress.js",
+					"css/utils/preview.css",
+					"fonts/fangzheng.ttf",
+					"js/utils/CloudFileUtil.js",
+					"js/qiniu/qiniu.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3209,7 +3218,8 @@
 					"css/iconfont/iconfont.css",
 					"css/mine/manager_data.css",
 					"fonts/fangzheng.ttf",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [
 					"html/quan/group-pInfo.html",

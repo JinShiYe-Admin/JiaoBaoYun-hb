@@ -571,7 +571,33 @@
 		"resources": [
 			"js/cloud/mui.previewimage.js",
 			"fonts/iconfont.ttf",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/quan/custom-textarea.css",
+			"js/utils/cryption.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/mui.zoom.js",
+			"js/mui.min.js",
+			"js/utils/compress.js",
+			"js/utils/camera.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"fonts/mui.ttf",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"css/utils/preview.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"fonts/fangzheng.ttf",
+			"js/utils/CloudFileUtil.js",
+			"js/libs/RSA/BigInt.js",
+			"js/qiniu/qiniu.js",
+			"css/mui.min.css",
+			"js/publicHomeworkProtocol.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	},
 	"html/homework/publish-answer.html": {
@@ -1068,10 +1094,12 @@
 			"js/publicProtocol.js",
 			"js/storageKeyName.js",
 			"js/utils/events.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
-			"html/quan/classSpace-persons.html"
+			"html/quan/classSpace-persons.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/quan/class_space.html": {
@@ -1262,11 +1290,13 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"css/mine/manager_data.css",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",
-			"html/mine/qun_manage_invite.html"
+			"html/mine/qun_manage_invite.html",
+			"html/mine/qun_manage_info.html"
 		]
 	},
 	"html/mine/qun_manage_invite.html": {
