@@ -1063,7 +1063,9 @@
 					"js/utils/cryption.js",
 					"js/utils/CloudFileUtil.js",
 					"js/utils/compress.js",
-					"js/qiniu/qiniu.js"
+					"js/qiniu/qiniu.js",
+					"fonts/fangzheng.ttf",
+					"image/homework/arrow-down.png"
 				],
 				"refer": [
 					"html/homework/classes-select.html"
@@ -2160,7 +2162,8 @@
 					"css/mui.min.css",
 					"css/utils/common.css",
 					"js/utils/events.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"css/homework/classes-select.css"
 				],
 				"refer": [],
 				"priority": 0
