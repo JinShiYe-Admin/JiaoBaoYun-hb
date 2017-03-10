@@ -270,6 +270,9 @@
 								var element = document.getElementById(id);
 								var info = JSON.parse(element.getAttribute('data-info'));
 								var page = JSON.parse(element.getAttribute('data-page'));
+								if(info.aflag == 1) { //关注的人数据
+									page = info.index;
+								}
 								console.log('up ' + JSON.stringify(info));
 								console.log('up ' + JSON.stringify(page));
 								if(page) {
@@ -479,9 +482,9 @@
 					pageSize: 10 //每页记录数
 				};
 				// 等待的对话框
-				var wd = events.showWaiting();
-				postDataPro_getAllUserSpacesByUser(comData, wd, function(data) {
-					wd.close();
+				var wd1 = events.showWaiting();
+				postDataPro_getAllUserSpacesByUser(comData, wd1, function(data) {
+					wd1.close();
 					console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						if(data.RspData.Data.length == 0) {
@@ -529,7 +532,7 @@
 							vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
 							vtp: 'g' //查询类型,p(个人)g(id串)
 						}
-
+						var wd = events.showWaiting();
 						//21.通过用户ID获取用户资料
 						postDataPro_PostUinf(tempData, wd, function(data1) {
 							wd.close();
@@ -556,6 +559,7 @@
 										if(tempModel0.PublisherId == tempModel.utid) {
 											//合并
 											tempModel0 = $.extend(tempModel0, tempModel);
+											tempModel0.PublisherName = tempModel0.unick
 										}
 										//循环当前model中的回复数组
 										for(var item1 in tempModel0.Comments) {
@@ -593,10 +597,13 @@
 							var table = document.body.querySelector('.mui-table-view');
 							//判断是加载更多1，还是刷新0
 							if(tempModel9.isRefresh == 0) {
-
+								zonepArray = tempRspData
 							} else {
-
+								zonepArray = zonepArray.concat(tempRspData);
 							}
+							datasource[sliderId] = zonepArray;
+							console.log("重组后的数据：" + JSON.stringify(zonepArray));
+							setData(zonepArray, 0);
 						});
 					} else {
 						mui.toast(data.RspTxt);
@@ -686,6 +693,60 @@
 				});
 
 				var click = []; //记录被点击的li的id和被点击元素
+				//点击关注
+				mui('#sliderGroup').on('tap', '.btn-attention',
+					function() {
+						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
+
+						var pageID = sliderId.replace('top_', '')
+						var tempId = this.id;
+						var index = this.id.replace('btn-focus' + pageID + 'zx', '');
+						//80.（用户空间）设置某用户的关注
+						//所需参数
+						var comData = {
+							userId: personalUTID, //用户ID
+							focusId: zonepArray[index].PublisherId, //关注ID
+							status: '1' //关注状态，0 不关注，1 关注
+						};
+						//返回：1为正确
+						var wd = events.showWaiting();
+						postDataPro_setUserFocus(comData, wd, function(data) {
+							wd.close();
+							console.log(JSON.stringify(data))
+							if(data.RspCode == 0) {
+								var btn = document.getElementById(tempId);
+								btn.innerHTML = '已关注'
+								btn.className = 'mui-btn mui-pull-right btn-attentioned'
+							}
+
+						})
+					}) //点击已关注
+				mui('#sliderGroup').on('tap', '.btn-attentioned', function() {
+					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
+
+					var pageID = sliderId.replace('top_', '')
+					var tempId = this.id;
+					var index = this.id.replace('btn-focus' + pageID + 'zx', '');
+					//80.（用户空间）设置某用户的关注
+					//所需参数
+					var comData = {
+						userId: personalUTID, //用户ID
+						focusId: zonepArray[index].PublisherId, //关注ID
+						status: '0' //关注状态，0 不关注，1 关注
+					};
+					//返回：1为正确
+					var wd = events.showWaiting();
+					postDataPro_setUserFocus(comData, wd, function(data) {
+						wd.close();
+						console.log(JSON.stringify(data))
+						if(data.RspCode == 0) {
+							var btn = document.getElementById(tempId);
+							btn.innerHTML = '关注'
+							btn.className = 'mui-btn mui-pull-right btn-attention'
+						}
+
+					})
+				})
 				//点赞和取消点赞
 				mui('#sliderGroup').on('tap', '.dynamic-icon-praise', function() {
 					var pageID = sliderId.replace('top_', '')
@@ -890,7 +951,6 @@
 			}
 			//加载数据
 			function addData(index, cityCode) {
-				console.log('cityCode=' + cityCode);
 				//[[InfoList],[ImageList],[InteractionList]]动态的信息
 				var datasource1 = [];
 				var InfoList = []; //头部和内容
@@ -911,6 +971,7 @@
 				InfoList.push(personalName);
 				InfoList.push(time);
 				InfoList.push(contentText);
+				InfoList.push(tempModel.IsFocused);
 
 				//内容的图片
 				if(tempModel.EncImgAddr != '') {

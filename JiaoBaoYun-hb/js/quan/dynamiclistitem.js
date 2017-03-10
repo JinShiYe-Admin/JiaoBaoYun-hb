@@ -27,6 +27,7 @@ var dynamiclistitem = (function($, mod) {
 	 */
 	mod.addInfo = function(ulElement, liElement, data, id) {
 		var closeempty = '';
+		var InfoList = data[0]; //[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
 		if(pageFlag == 0) {
 			if(personalUTID == publisherId) {
 				closeempty = '<a id ="delete' + id + '" class="mui-icon mui-icon-closeempty mui-pull-right" ></a>';
@@ -34,9 +35,17 @@ var dynamiclistitem = (function($, mod) {
 			} else {
 				closeempty = '';
 			}
+		}else{
+			if(InfoList[4]==0){
+				closeempty ='<button id="btn-focus'+data[4] + idFlag + id+'" type="button" class="mui-btn mui-pull-right btn-attention" style="width: 70px;">关注</button>'
+			}else{
+				closeempty ='<button id="btn-focus'+data[4] + idFlag + id+'" type="button" class="mui-btn mui-pull-right btn-attentioned style="width: 70px;">已关注</button>'
+				
+			}
+			
 		}
 
-		var InfoList = data[0]; //[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
+		
 		var html = '';
 
 		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body mui-pull-left">';
