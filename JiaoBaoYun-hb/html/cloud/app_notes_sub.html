@@ -270,6 +270,7 @@
 				 * @param {Object} item
 				 */
 				function createNotes(item) {
+
 					//将时间参数分隔，结果为["2016","11","21"]
 					var PublishDate = item.PublishDate.split(' ')[0].split('-');
 					//console.log('PublishDate:' + JSON.stringify(PublishDate));
@@ -286,6 +287,12 @@
 					}
 					if(lastDate == time) { //上一个记录的日期和本记录的日期相同
 						itemData[0] = '';
+					}
+					var imageArray = item.EncAddr.split('|');
+					var thumbArray = item.EncImgAddr.split('|');
+
+					if(item.EncImgAddr!=''){
+						itemData.push(thumbArray[0]);
 					}
 
 					//生成界面
