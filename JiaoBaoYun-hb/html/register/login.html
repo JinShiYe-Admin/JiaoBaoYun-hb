@@ -297,6 +297,8 @@ none; margin-top: -15px;">登录</button>
 					//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
 					var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 					if(personal) {
+						accountBox.value = personal.uid;
+						passwordBox.value = '123456';
 						//需要参数
 						var comData = {
 							uuid: plus.device.uuid,
