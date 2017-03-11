@@ -112,11 +112,6 @@
 
 			<script>
 				mui.init({
-					gestureConfig:{
-					   longtap: true, //默认为false
-					   hold:true,//默认为false，不监听
-					   release:true//默认为false，不监听
-					  },
 					pullRefresh: {
 						container: '#pullrefresh',
 						down: {
@@ -214,15 +209,6 @@
 
 					window.addEventListener('refreshView',function () {
 					       pulldownRefresh();
-					});
-					mui('.mui-content').on('tap','.mui-media-body',function(){
-						console.log('tap-mui-media-body');
-					});
-					mui('.mui-content').on('release','.mui-media-body',function(){
-						console.log('release-mui-media-body');
-					});
-					mui('.mui-content').on('hold','.mui-media-body',function(){
-						console.log('hold-mui-media-body');
 					});
 				});
 

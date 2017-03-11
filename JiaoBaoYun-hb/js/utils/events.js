@@ -340,15 +340,17 @@ var events = (function(mod) {
 		}
 		return arrSecond.join('-');
 	}
-	mod.blurBack = function(blurItemId) {
+
+	/**
+	 * 将界面的焦点清除后再退出当前界面
+	 */
+	mod.blurBack = function() {
 		var oldBack = mui.back;
 		mui.back = function() {
-			//			plus.webview.currentWebview().blur();
-			document.getElementById(blurItemId).blur();
+			document.activeElement.blur();
 			oldBack();
 		}
 	}
-
 	/**
 	 * 返回一个安卓手机返回键无法关闭的等待框
 	 * @author 莫尚霖
@@ -463,15 +465,15 @@ var events = (function(mod) {
 		})
 	}
 
-	mod.format = function(dateTime,format) {
+	mod.format = function(dateTime, format) {
 		var o = {
-			"M+": dateTime.getMonth() + 1, //month  
-			"d+": dateTime.getDate(), //day  
-			"h+": dateTime.getHours(), //hour  
-			"m+": dateTime.getMinutes(), //minute  
-			"s+": dateTime.getSeconds(), //second  
-			"q+": Math.floor((dateTime.getMonth() + 3) / 3), //quarter  
-			"S": dateTime.getMilliseconds() //millisecond  
+			"M+": dateTime.getMonth() + 1, //month
+			"d+": dateTime.getDate(), //day
+			"h+": dateTime.getHours(), //hour
+			"m+": dateTime.getMinutes(), //minute
+			"s+": dateTime.getSeconds(), //second
+			"q+": Math.floor((dateTime.getMonth() + 3) / 3), //quarter
+			"S": dateTime.getMilliseconds() //millisecond
 		};
 		if(/(y+)/.test(format)) {
 			format = format.replace(RegExp.$1, (dateTime.getFullYear() + "").substr(4 - RegExp.$1.length));

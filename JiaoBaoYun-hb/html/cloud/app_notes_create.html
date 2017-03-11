@@ -19,12 +19,10 @@
 			.mui-content {
 				background: white;
 			}
-
-			textarea {
-				height: 100%;
+			/*textarea {
 				width: 100%;
 				margin-bottom: 0;
-			}
+			}*/
 		</style>
 	</head>
 
@@ -35,7 +33,7 @@
 			<h1 id="finish" class="mui-title" style="text-align: right;right: 10px;">完成</h1>
 		</header>
 		<div class="mui-content">
-			<textarea id="notes" oninput="if(value.length>2000)value=value.slice(0,2000)" placeholder="✎ 分享你的学习与生活..." style="border: none;"></textarea>
+			<textarea id="notes" oninput="if(value.length>2000)value=value.slice(0,2000)" placeholder="✎ 分享你的学习与生活..." style="border: none;height: 20rem;border-bottom: 1px solid lightgray;"></textarea>
 			<div id="MultiMedia">
 			</div>
 		</div>
@@ -43,14 +41,13 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
-				var self = plus.webview.currentWebview();
-				//				self.setStyle({
-				//					softinputMode:'adjustResize'
-				//				});
-				var notes = document.getElementById("notes");
-				var height = plus.screen.resolutionHeight - (localStorage.getItem('StatusHeightNo') * 1 + 75 + 50); //屏幕高度-状态栏高度-顶部导航高度
+				var oldBack = mui.back;
+				mui.back=function(){
+					document.activeElement.blur();
+					oldBack();
+				}
 
-				notes.style.height = height + 'px';
+				var notes = document.getElementById("notes");
 
 				multiMedia = MultiMedia.multiMedia({
 					MultiMediaId: 'MultiMedia', //存放多媒体对象控件的id
@@ -60,10 +57,11 @@
 					TotalAudio: 1, //音频的个数
 				});
 
+				//完成
 				document.getElementById('finish').addEventListener('tap', function() {
 
 					if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "") { //为空不允许发送
-						mui.toast('请输入文字');
+						mui.toast('内容不能为空');
 					} else {
 						document.getElementById("finish").disabled = true;
 						var userId = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
@@ -93,15 +91,13 @@
 								events.fireToPageNone('app_notes_sub.html', 'refreshView');
 								mui.back();
 							} else {
-								if(data.RspCode != 9) {
-									mui.toast(data.RspTxt);
-								}
+								mui.toast(data.RspTxt);
 								document.getElementById("finish").disabled = false;
 							}
 						});
 					}
 				})
-			})
+			});
 		</script>
 	</body>
 
