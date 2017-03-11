@@ -263,17 +263,8 @@
 	};
 
 	function addData() {
-		var dt_now = new Date();
-		var int_year = dt_now.getYear();
 		for(var i = 0; i < datasource.length; i++) {
-			var str_Time = "";
-			var dt_item = new Date(datasource[i].AskTime);
-			console.log('dt_item:'+dt_item+','+datasource[i].AskTime);
-			if(int_year == dt_item.getYear()) {
-				str_Time = events.format(dt_item, "MM-dd hh:mm")
-			} else {
-				str_Time = events.format(dt_item, "yyyy-MM-dd hh:mm")
-			}
+			var str_Time = modifyTimeFormat(datasource[i].AskTime);
 			var list = document.getElementById("list-container");
 			var li = document.createElement("li");
 			li.id = 'li' + i;

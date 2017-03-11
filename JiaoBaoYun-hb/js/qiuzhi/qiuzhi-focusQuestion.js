@@ -29,6 +29,11 @@ mui.plusReady(function() {
 		events.fireToPageNone('qiuzhi-question.html', 'askId', info.AskId);
 		events.fireToPageNone('qiuzhi-questionSub.html', 'askId', info.AskId);
 		plus.webview.getWebviewById('qiuzhi-question.html').show();
+		events.openNewWindowWithData('qiuzhi-question.html', {
+						askID: info.AskId, //问题id
+						channelInfo: info, //当前话题
+						allChannels: window.myStorage.getItem('allChannels') //全部话题
+					});
 	});
 
 	//上拉下拉注册

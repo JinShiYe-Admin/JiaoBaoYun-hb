@@ -16,8 +16,8 @@ document.write('<script src="../../js/libs/crypto-js/require.js"><\/script>');
 document.write('<script src="../../js/utils/signHmacSHA1.js"><\/script>');
 document.write('<script src="../../js/libs/jquery.js"><\/script>');
 //替换字符串中的全部换行符
-var replaceAllBL = function(str){
-	return str.replace(new RegExp(/(\n)/g),'<br />');
+var replaceAllBL = function(str) {
+	return str.replace(new RegExp(/(\n)/g), '<br />');
 }
 //给数组去重
 var arrayDupRemoval = function(array) {
@@ -37,7 +37,7 @@ var arrayDupRemoval = function(array) {
 var updateHeadImg = function(string, flag) {
 	var tempStr = '';
 	//判断img是否为null，或者空
-	if(string == '' || string == null  || string == 'null') { //赋值
+	if(string == '' || string == null || string == 'null') { //赋值
 		if(flag == 1) {
 			tempStr = '../image/utils/default_personalimage.png';
 		} else if(flag == 2) {
@@ -48,8 +48,8 @@ var updateHeadImg = function(string, flag) {
 			tempStr = 'image/utils/default_personalimage.png';
 		}
 	} else { //修改值
-//		var myDate = new Date();
-//		tempStr = string + '?' + myDate.getTime();
+		//		var myDate = new Date();
+		//		tempStr = string + '?' + myDate.getTime();
 		tempStr = string;
 	}
 	return tempStr;
@@ -60,6 +60,20 @@ var arrayToStr = function(array) {
 	var tempStr = '';
 	tempStr = array.join(',');
 	tempStr = '[' + tempStr + ']';
+	return tempStr;
+}
+
+//修改数组，改变格式
+var modifyTimeFormat = function(str) {
+	var tempStr = '';
+	var dt_now = new Date();
+	var int_year = dt_now.getYear();
+	var dt_item = new Date(str.replace(/-/g, '/'));
+	if(int_year == dt_item.getYear()) {
+		tempStr = events.format(dt_item, "MM-dd hh:mm")
+	} else {
+		tempStr = events.format(dt_item, "yyyy-MM-dd hh:mm")
+	}
 	return tempStr;
 }
 
@@ -77,11 +91,11 @@ var renewToken = function() {
 	};
 	// 等待的对话框
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	postDataPro_PostTokenRenew(comData,wd,function(data) {
+	postDataPro_PostTokenRenew(comData, wd, function(data) {
 		wd.close();
 		if(data.RspCode == 0) {
 			window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data.RspData;
-		}else{
+		} else {
 			mui.toast(data.RspTxt);
 		}
 	});
@@ -1854,9 +1868,9 @@ var postDataPro_setUserFocus = function(commonData, wd, callback) {
 
 //81.（用户空间）获取用户所有关注的用户
 //所需参数
-//		var comData = {
-//			userId:''//用户ID
-//		};
+var comData = {
+	userId: '' //用户ID
+};
 //返回：Users，列表数据，Array
 var postDataPro_getFocusByUser = function(commonData, wd, callback) {
 	//需要加密的数据

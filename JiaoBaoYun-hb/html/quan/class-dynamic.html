@@ -55,6 +55,8 @@
 		var personIds = []; //人员id
 		//		var imgs;//图片
 		mui.plusReady(function() {
+			//返回时，取消键盘
+			events.blurBack();
 			//			document.querySelector('.mui-content').styl e.marginTop=(localStorage.getItem('StatusHeightNo') * 1 + 45 + height) + 'px';
 			var groupInfo;
 			//界面监听传值
