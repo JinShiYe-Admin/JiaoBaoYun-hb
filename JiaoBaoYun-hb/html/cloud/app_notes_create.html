@@ -9,20 +9,12 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<link rel="stylesheet" href="../../css/utils/MultiMedia.css" />
-		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
-		<script type="text/javascript" src="../../js/utils/events.js"></script>
-		<script type="text/javascript" src="../../js/utils/MultiMedia.js"></script>
 
 		<style type="text/css">
 			body,
 			.mui-content {
 				background: white;
 			}
-			/*textarea {
-				width: 100%;
-				margin-bottom: 0;
-			}*/
 		</style>
 	</head>
 
@@ -37,18 +29,17 @@
 			<div id="MultiMedia">
 			</div>
 		</div>
-
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/utils/MultiMedia.js"></script>
 		<script type="text/javascript">
 			mui.init();
+			var multiMedia; //多媒体控件
+			var notes; //输入框
 			mui.plusReady(function() {
-				var oldBack = mui.back;
-				mui.back=function(){
-					document.activeElement.blur();
-					oldBack();
-				}
-
-				var notes = document.getElementById("notes");
-
+				events.blurBack();
+				notes = document.getElementById("notes"); //输入框
 				multiMedia = MultiMedia.multiMedia({
 					MultiMediaId: 'MultiMedia', //存放多媒体对象控件的id
 					Picture: true, //是否显示图片图标
@@ -59,45 +50,61 @@
 
 				//完成
 				document.getElementById('finish').addEventListener('tap', function() {
-
-					if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "") { //为空不允许发送
+					if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0) { //为空不允许发送
 						mui.toast('内容不能为空');
 					} else {
-						document.getElementById("finish").disabled = true;
-						var userId = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-
-						//38.（用户空间）新增某用户空间信息 （云笔记）
-						//所需参数
-						var comData = {
-							userId: userId, //用户ID
-							msgContent: notes.value, //记事内容
-							encType: '3', //附件类型，1图片2音视频3仅文字
-							encAddr: '', //附件地址
-							encImg: '', //附件缩略图地址
-							encIntro: '', //附件简介
-							noteType: '1', //信息类型,1云笔记2个人空间
-							userIds: '[]', //推送用户ID
-							pubScopes: '[1]', //1 家校圈 必选,2 展现 可选例如[1,2]
-							pubArea: '' //具体到市级代码
-						};
-						//非0为正确
-						// 等待的对话框
 						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-						postDataPro_addUserSpace(comData, wd, function(data) {
-							wd.close();
-							console.log('38postDataPro_addUserSpace（用户空间）新增某用户空间信息 （云笔记）.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							if(data.RspCode == 0) {
-								mui.toast('发布成功');
-								events.fireToPageNone('app_notes_sub.html', 'refreshView');
-								mui.back();
-							} else {
-								mui.toast(data.RspTxt);
-								document.getElementById("finish").disabled = false;
-							}
-						});
+						document.getElementById("finish").disabled = true;
+						if(multiMedia.data.PictureArray.length == 0) { //没有传附件
+							addNote(wd, '3', '', '');
+						} else {
+uploadFile(wd); //上传文件
+						}
 					}
 				})
 			});
+
+			/**
+			 * 增加笔记
+			 * @param {Object} wd 等待框
+			 * @param {Object} encType 附件类型，1图片2音视频3仅文字
+			 * @param {Object} encAddr 附件地址
+			 * @param {Object} encImg 附件缩略图地址
+			 */
+			function addNote(wd, encType, encAddr, encImg) {
+				var userId = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				//38.（用户空间）新增某用户空间信息 （云笔记）
+				//所需参数
+				var comData = {
+					userId: userId, //用户ID
+					msgContent: notes.value, //记事内容
+					encType: encType, //附件类型，1图片2音视频3仅文字
+					encAddr: encAddr, //附件地址
+					encImg: encImg, //附件缩略图地址
+					encIntro: '', //附件简介
+					noteType: '1', //信息类型,1云笔记2个人空间
+					userIds: '[]', //推送用户ID
+					pubScopes: '[1]', //1 家校圈 必选,2 展现 可选例如[1,2]
+					pubArea: '' //具体到市级代码
+				};
+
+				postDataPro_addUserSpace(comData, wd, function(data) {
+					console.log('38postDataPro_addUserSpace（用户空间）新增某用户空间信息 （云笔记）.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						mui.toast('发布成功');
+						events.fireToPageNone('app_notes_sub.html', 'refreshView');
+						mui.back();
+					} else {
+						mui.toast(data.RspTxt);
+						document.getElementById("finish").disabled = false;
+					}
+					wd.close();
+				});
+			}
+
+			function uploadFile(){
+
+			}
 		</script>
 	</body>
 
