@@ -18,25 +18,27 @@
 			<h1 id="submitBtn" class="mui-icon mui-icon-right-nav mui-pull-right" style="text-align: right;right: 10px;font-size: 15px;">提交</h1>
 		</header>
 
-		<div class="mui-content">
-			<p id="askTitle" style="margin-left: 10px;font-size: 14px;margin-top: 5px;word-wrap: break-word;"></p>
-			<div class="input-content">
-				<textarea id="answerContent" placeholder="添加回答,最多4000字"></textarea>
-				<div id="take_pic" class="take_pic file-extras">
-					<a class="mui-icon iconfont icon-xiangji1"></a>
+		<div class="mui-scroll-wrapper mui-content">
+			<div class="mui-scroll">
+				<p id="askTitle" style="margin-left: 10px;font-size: 14px;margin-top: 5px;word-wrap: break-word;"></p>
+				<div class="input-content">
+					<textarea id="answerContent" placeholder="添加回答,最多4000字"></textarea>
+					<div id="take_pic" class="take_pic file-extras">
+						<a class="mui-icon iconfont icon-xiangji1"></a>
+					</div>
+					<div id="take_camero" class="take_camero file-extras">
+						<a class="mui-icon iconfont icon-shipin"></a>
+					</div>
+					<div id="get_gallery" class="get_gallery file-extras">
+						<a class="mui-icon iconfont icon-tuku"></a>
+					</div>
 				</div>
-				<div id="take_camero" class="take_camero file-extras">
-					<a class="mui-icon iconfont icon-shipin"></a>
+				<div class="mui-input-row mui-checkbox mui-left file-extras" style="float: right;width: 100px;margin-top: -35px;margin-left: -100px;">
+					<label>匿名</label>
+					<input id="checkbox" name="checkbox" value="" type="checkbox">
 				</div>
-				<div id="get_gallery" class="get_gallery file-extras">
-					<a class="mui-icon iconfont icon-tuku"></a>
-				</div>
+				<div id="pictures" style="float: left;background-color: transparent;width: 320px;"></div>
 			</div>
-			<div class="mui-input-row mui-checkbox mui-left file-extras" style="float: right;width: 100px;margin-top: -35px;margin-left: -100px;">
-				<label>匿名</label>
-				<input id="checkbox" name="checkbox" value="" type="checkbox">
-			</div>
-			<div id="pictures" style="float: left;background-color: transparent;width: 320px;"></div>
 		</div>
 
 		<script src="../../js/mui.min.js"></script>
@@ -65,7 +67,7 @@
 					askModel = event.detail.data;
 					document.getElementById('title').innerText = '我要回答';
 					//匿名默认未选择
-					document.getElementById('checkbox').checked=false;
+					document.getElementById('checkbox').checked = false;
 					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
 						item.style.display = 'inline-block';
 					})
@@ -93,8 +95,8 @@
 					type = 2;
 					jQuery('#answerContent').prop("maxLength", "300"); //设置最长
 					document.getElementById('title').innerText = '回复评论';
-					commentInfo=e.detail.data;
-					document.getElementById('askTitle').innerText=commentInfo.CommentContent;
+					commentInfo = e.detail.data;
+					document.getElementById('askTitle').innerText = commentInfo.CommentContent;
 					document.getElementById('answerContent').placeholder = "添加评论回复,最多300字";
 					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
 						item.style.display = 'none';
@@ -294,11 +296,11 @@
 				}
 				//如果有参数
 				if(opotions) {
-					console.log("数值："+JSON.stringify(opotions))
-					if(opotions.UpperId==0){
+					console.log("数值：" + JSON.stringify(opotions))
+					if(opotions.UpperId == 0) {
 						upperId = opotions.TabId;
-					}else{
-						upperId=opotions.UpperId;
+					} else {
+						upperId = opotions.UpperId;
 					}
 					replyId = opotions.UserId;
 					answerId = opotions.AnswerId;
@@ -359,7 +361,7 @@
 					TAs.encType = 0;
 					TAs.encAddr = '';
 					TAs.encImg = '';
-					TAs.clipAddress='';
+					TAs.clipAddress = '';
 				}
 				return TAs;
 			}

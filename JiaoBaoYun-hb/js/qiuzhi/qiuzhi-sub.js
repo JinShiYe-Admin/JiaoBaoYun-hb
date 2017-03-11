@@ -9,7 +9,6 @@ var answerIsReady = false;
 mui.init();
 mui.plusReady(function() {
 	mui.fire(plus.webview.getWebviewById('qiuzhi_home.html'), 'subIsReady');
-	console.log(plus.webview.getWebviewById('qiuzhi-sub.html').isReady)
 	events.preload("qiuzhi-answerDetail.html", 80);
 	window.addEventListener('answerIsReady', function() {
 		answerIsReady = true;
