@@ -16,6 +16,9 @@ mui.plusReady(function() {
 			freshContent();
 		}
 	})
+	window.addEventListener('groupInfoChanged', function() {
+			freshContent();
+	})
 	mui('#gride').on('tap', '.mui-table-view-cell', function() {
 		events.fireToPageWithData('group-pInfo.html', 'postPInfo', jQuery.extend({}, this.info, { isMaster: isMaster }));
 	})

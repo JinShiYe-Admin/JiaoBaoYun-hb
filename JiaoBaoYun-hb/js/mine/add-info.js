@@ -15,6 +15,7 @@ mui('.mui-scroll-wrapper').scroll({
 mui.plusReady(function() {
 		//获取传值
 		window.addEventListener('postRoles', function(e) {
+			choseId=0;
 			console.log(JSON.stringify(e.detail.data));
 			//获取申请记录id
 			gutid = e.detail.data.gutid;
@@ -194,7 +195,7 @@ var postJoinDo=function(type){
 			stat: 1,
 			mstype: type + '',
 			lnkinfid: choseId,
-			urel: mstype==0?'爸爸':''
+			urel: getRelation(type)
 		},
 		wd,
 		function(data) {
@@ -209,4 +210,10 @@ var postJoinDo=function(type){
 				mui.toast(data.RspTxt);
 			}
 		})
+}
+var getRelation=function(type){
+	if(choseId){
+		return type?'爸爸':''
+	}
+	return "";
 }

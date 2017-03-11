@@ -234,7 +234,8 @@ var removeItemFromArray = function(item, arrays) {
  */
 var getInnerHTML = function(item) {
 	var inner = '';
-	if(!item.stat) {
+	console.log("当前item状态"+item.stat);
+	if(isNaN(item.stat)) {
 		if(item.invname != item.beinvname) {
 			inner = ' <a class="">' +
 				'<img class = "mui-media-object mui-pull-left"' +
