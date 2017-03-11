@@ -218,7 +218,7 @@
 				li.className = 'mui-table-view-cell';
 				li.id = 'li' + index;
 				//拼接显示
-				li.innerHTML = "<p>" + record.CommentContent + "</p><div><p><img src='" + getChannelIcon(record) + "'>[" + record.AskChannel + ']' + record.AskTitle + "</p><p>" + record.AnswerContent + "</p></div><p>" + record.LikeNum + " 赞 · " + modifyTimeFormat(record.CommentDate) + '</p>';
+				li.innerHTML = "<p style='font-size:1.4rem;color: #808080;'>" + record.CommentContent + "</p><div><p style='font-size:1.4rem;color: #323232;'><img src='" + getChannelIcon(record) + "'>[" + record.AskChannel + ']' + record.AskTitle + "</p><p style='font-size:1.3rem;color: #474747;'>" + record.AnswerContent + "</p></div><p>" + record.LikeNum + " 赞 · " + modifyTimeFormat(record.CommentDate) + '</p>';
 
 				listContainer.appendChild(li);
 			}

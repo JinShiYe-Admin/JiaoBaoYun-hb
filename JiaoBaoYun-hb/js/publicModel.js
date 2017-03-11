@@ -158,6 +158,23 @@ var publicModel = (function($, mod) {
 		recdate:''//	记录时间
 	}
 	
+	//48.通过区域代码及相应参数获取对应分页新闻
+	mod.model_newPG = {
+		PageIndex:'',//当前页码
+		RowCount:'',//总行数
+		PageCount:'',//总页数
+		PageSize:''//每页行数
+	}
+	mod.model_newDT = {
+		title:'',//标题
+		tabid:'',//新闻ID
+		tnote:'',//摘要
+		tips	:'',//作者等信息
+		timgs:'',//图片信息,多个中间用|隔开
+		turl:'',//原文url
+		ischeck:'',//审核状态
+		recdate:''//	记录时间
+	}
 	
 	//家校圈
 	//2.（点到记事）获取用户未读点到记事列表
