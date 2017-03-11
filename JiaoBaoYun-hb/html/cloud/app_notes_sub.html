@@ -9,6 +9,8 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/utils/preview.css" />
+
 		<style>
 			body,
 			.mui-content {
@@ -41,8 +43,8 @@
 			}
 
 			.mui-table-view-cell {
-				padding: 0px;
-				margin: 5px 10px;
+				padding: 8px;
+				margin: 0px;
 			}
 
 			.mui-table-view-cell.mui-active {
@@ -92,7 +94,7 @@
 			}
 
 			.show-all {
-				/*display: none;*/
+				display: none;
 				color: #CCCCCC;
 				font-size: 1.4rem;
 			}
@@ -117,39 +119,7 @@
 						</font>
 					</div>
 					<img src="../../image/cloud/notes_bg2.jpg" style="width: 100%;" />
-
 					<ul id="list" class="mui-table-view">
-						<!--<div id="date">
-							<div class="mui-row">
-								<div class="mui-col-sm-2 mui-col-xs-2">
-									<div class="dynamic-date">
-										<div>03.11</div>
-									</div>
-								</div>
-								<div class="mui-col-sm-10 mui-col-xs-10">
-									<div class="mui-table-view-cell">
-										<div id="content_TabId304"class="dynamic-ellipsis-show">
-											一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
-										</div>
-										<div class="show-all">显示全部</div>
-										<div class="record-imge">
-											<div class="record-imge">
-												<div class="record-picture" style="width: 70px; height: 60px; margin-right: 4px;">
-													<img id="img_33_0" src="http://qn-cspb.jiaobaowang.net/jxq/Record/thumb/0_148920857930576.png" data-preview-src="http://qn-cspb.jiaobaowang.net/jxq/Record/0_148920857930576.png"data-preview-group="33" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height='79.2px';this.style.width='initial';this.style.marginLeft=-(this.offsetWidth-105.60000000000001)/2+'px';}else{this.style.marginTop=-(this.offsetHeight-79.2)/2+'px';}">
-												</div>
-												<div class="record-picture" style="width: 70px; height: 60px; margin-right: 4px;">
-													<img id="img_33_0" src="http://qn-cspb.jiaobaowang.net/jxq/Record/thumb/0_148920857930576.png" data-preview-src="http://qn-cspb.jiaobaowang.net/jxq/Record/0_148920857930576.png"data-preview-group="33" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height='79.2px';this.style.width='initial';this.style.marginLeft=-(this.offsetWidth-105.60000000000001)/2+'px';}else{this.style.marginTop=-(this.offsetHeight-79.2)/2+'px';}">
-												</div>
-												<div class="record-picture" style="width: 70px; height: 60px; margin-right: 4px;">
-													<div class="record-picture-num" style="line-height: 60px;">+5</div>
-													<img id="img_33_0" src="http://qn-cspb.jiaobaowang.net/jxq/Record/thumb/0_148920857930576.png" data-preview-src="http://qn-cspb.jiaobaowang.net/jxq/Record/0_148920857930576.png"data-preview-group="33" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height='79.2px';this.style.width='initial';this.style.marginLeft=-(this.offsetWidth-105.60000000000001)/2+'px';}else{this.style.marginTop=-(this.offsetHeight-79.2)/2+'px';}">
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>-->
 					</ul>
 				</div>
 			</div>
@@ -158,6 +128,8 @@
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/quan/studentdynamic.js"></script>
+		<script type="text/javascript" src="../../js/mui.zoom.js"></script>
+		<script type="text/javascript" src="../../js/mui.previewimage.js"></script>
 		<script type="text/javascript">
 			mui.init({
 				pullRefresh: {
@@ -230,12 +202,18 @@
 			var table = null;
 			var markDate = ''; //记录日期
 			var today = ''; //记录今天日期
+			var previewImage; //查看图片的控件
 
 			mui.plusReady(function() {
+				previewImage = mui.previewImage();
 
 				//---初始化界面---start---
 				var myDate = new Date();
-				today = myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + '-' + myDate.getDate();
+				var month = myDate.getMonth() + 1;
+				if(month.length = 1) {
+					month = '0' + month;
+				}
+				today = myDate.getFullYear() + '-' + month + '-' + myDate.getDate();
 				table = document.getElementById("list");
 
 				//---初始化界面---end---
@@ -255,6 +233,22 @@
 
 				window.addEventListener('refreshView', function() {
 					pulldownRefresh();
+				});
+
+				mui('#list').on('tap', '.show-all', function() {
+					var str = this.innerText;
+					var id = this.id.replace('_show', '');
+					if(str == '显示全部') {
+						this.innerText = '收起';
+						document.getElementById(id + "_content").style.webkitLineClamp = 'inherit';
+					} else if(str == '收起') {
+						this.innerText = '显示全部';
+						document.getElementById(id + "_content").style.webkitLineClamp = '3';
+					}
+				});
+				//点击图片的数字
+				mui('#data_scroll').on('tap', '.record-picture-num', function() {
+					previewImage.open(document.getElementById("img_" + this.getAttribute('data-id')))
 				});
 			});
 
@@ -287,7 +281,7 @@
 						for(var i = 0; i < tempRspData.length; i++) {
 							createNotes(tempRspData[i]);
 						}
-						//console.log(document.getElementById("list").innerHTML);
+						console.log(document.getElementById("list").innerHTML);
 
 						//档案总条数
 						totalCnt = data.RspData.TotalCnt;
@@ -317,33 +311,6 @@
 			 */
 			function createNotes(data) {
 				console.log('createNotes ' + JSON.stringify(data));
-				//				//将时间参数分隔，结果为["2016","11","21"]
-				//				var PublishDate = item.PublishDate.split(' ')[0].split('-');
-				//				//console.log('PublishDate:' + JSON.stringify(PublishDate));
-				//				//console.log('today:' + today);
-				//				var time = PublishDate[0] + PublishDate[1] + PublishDate[2];
-				//				//console.log('time:' + time);
-				//
-				//				var itemData = [
-				//					[PublishDate[1]+'.', PublishDate[2]], item.MsgContent
-				//				];
-				//				//设置时间
-				//				if(time == today) { //日期和今天相同
-				//					itemData[0] = '今天';
-				//				}
-				//				if(lastDate == time) { //上一个记录的日期和本记录的日期相同
-				//					itemData[0] = '';
-				//				}
-				//				var imageArray = item.EncAddr.split('|');
-				//				var thumbArray = item.EncImgAddr.split('|');
-				//
-				//				if(item.EncImgAddr!=''){
-				//					itemData.push(thumbArray[0]);
-				//				}
-				//
-				//				//生成界面
-				//				studentdynamic.additem3(table, itemData, 'TabId' + item.TabId);
-				//				lastDate = time;
 
 				var date = data.PublishDate.split(' '); //发布的日期和时间
 				var dateItem = date[0]; //日期
@@ -352,23 +319,84 @@
 				console.log('dateItem ' + dateItem);
 				//console.log('timeItem ' + timeItem);
 				if(markDate != dateItem) {
-					markDate = dateItem;
 					var element = document.createElement('div');
-					element.id = markDate;
+					element.id = dateItem;
 					document.getElementById("list").appendChild(element);
 				}
-				console.log('today ' + today);
+
 				if(dateItem == today) {
 					timeItem = '今天';
 				}
+				if(markDate == dateItem) {
+					timeItem = '';
+				}
+
+				var html_media = ''; //多媒体
+
+				var width = (document.getElementById(dateItem).offsetWidth * 0.8 - 32) * 0.32;
+				var height = width * 3 / 4;
+				var marginBottom = (document.getElementById(dateItem).offsetWidth * 0.8 - 32) * 0.02;
+				var marginRight;
+
+				if(data.EncType == 1) { //附件类型,1图片2音视频3仅文字
+					var imageArray = data.EncAddr.split('|');
+					var thumbArray = data.EncImgAddr.split('|');
+
+					var html_0 = '<div class="record-imge">';
+					var html_1 = '';
+					var html_2 = ''; //显示剩余的图片数量
+					var html_3 = ''; //是否显示图片
+					for(var i = 0; i < imageArray.length; i++) {
+						if(i == 2 || i == 5 || i == 8) {
+							marginRight = 0;
+						} else {
+							marginRight = marginBottom;
+						}
+						if(i > 2) {
+							html_3 = 'display: none;';
+						}
+						if(i == 2 && imageArray.length > 3) {
+							html_2 = '<div data-id="' + data.TabId + '_' + i + '" class="record-picture-num" style="line-height: ' + (height + 1) + 'px;">+' + (imageArray.length - 3) + '</div>'
+						}
+						html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px;' + html_3 + '">\
+									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-' + width + ')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-' + height + ')/2+\'px\';}">\
+								</div>';
+					}
+					html_media = html_0 + html_1 + '</div>';
+				}
+
 				var element = document.createElement('div');
 				element.className = 'mui-row';
 				element.innerHTML = '<div class="mui-col-sm-2 mui-col-xs-2">\
-									<div class="dynamic-date"><div>' + timeItem + '</div></div></div>\
-								<div class="mui-col-sm-10 mui-col-xs-10">\
-									<div class="mui-table-view-cell">123</div></div>';
+										<div class="dynamic-date">\
+											<div>' + timeItem + '</div>\
+										</div>\
+									</div>\
+									<div class="mui-col-sm-10 mui-col-xs-10">\
+										<div class="mui-table-view-cell">\
+											<div id="' + data.TabId + '_content" class="dynamic-ellipsis-show"></div>\
+											<div id="' + data.TabId + '_show" class="show-all">显示全部</div>' + html_media + '\
+										</div>\
+									</div>';
 				document.getElementById(dateItem).appendChild(element);
+				if(data.MsgContent == '') {
+					document.getElementById(data.TabId + '_content').style.display = 'none';
+				} else {
+					var height_0;
+					var height_1;
+					var contentEl = document.getElementById(data.TabId + '_content');
+					contentEl.innerText = data.MsgContent;
 
+					contentEl.style.webkitLineClamp = '4';
+					height_0 = contentEl.offsetHeight;
+					contentEl.style.webkitLineClamp = '3';
+					height_1 = contentEl.offsetHeight;
+					if(height_0 > height_1) {
+						//内容高度大于三行
+						document.getElementById(data.TabId + "_show").style.display = 'inline';
+					}
+				}
+				markDate = dateItem;
 			}
 		</script>
 	</body>
