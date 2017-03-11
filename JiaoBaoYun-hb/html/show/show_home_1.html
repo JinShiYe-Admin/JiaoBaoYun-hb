@@ -1021,8 +1021,9 @@ function addData(index, cityCode) {
 	var tempModel = zonepArray[index];
 	tempModel.PublisherImg = updateHeadImg(tempModel.PublisherImg, 2)
 	var personalImage = tempModel.PublisherImg;
-	var personalName = tempModel.PublisherName;
-	var time = tempModel.PublishDate;
+	var personalName =events.shortForString(tempModel.PublisherName, 12) ;
+	
+	var time = modifyTimeFormat(tempModel.PublishDate);
 	var contentText = tempModel.MsgContent;
 	InfoList.push(personalImage);
 	InfoList.push(personalName);
