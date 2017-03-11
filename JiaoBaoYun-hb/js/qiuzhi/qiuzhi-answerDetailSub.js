@@ -298,6 +298,8 @@ var createList = function(ul, dataArray) {
 			} else {
 				comments_zan.className = "mui-icon iconfont icon-support isNotLike"
 			}
+			var repliesContainer = comments_zan.parentElement.parentElement.parentElement.parentElement;
+			console.log('className:' + repliesContainer.className)
 			if(flag) {
 				if(repliesContainer.className == ("mui-table-view inner-table-view")) {
 					comments_zan.order = repliesContainer.parentElement.querySelector('.icon-support').order + "-" + i;
@@ -385,6 +387,7 @@ var getPicInner = function(data) {
 		if(picPaths.length < 3) {
 			pic_width = win_width / picPaths.length;
 		}
+		console.log("图片宽度设置：" + pic_width)
 		for(var i in picPaths) {
 			picInner += '<img src="' + picPaths[i] + '" class="answer-img" style="width:' + pic_width + 'px;height: ' + pic_width + 'px;" ' +
 				'" data-preview-src="' + picBigPaths[i] + '" data-preview-group="1"/>';
