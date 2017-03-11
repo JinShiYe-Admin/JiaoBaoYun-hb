@@ -70,7 +70,9 @@ input[type=submit]:enabled:active {
 	line-height: 24px;
 	height: 24px;
 }
-
+#list-container .mui-table-view-cell p span{
+	color: #00a5e0;
+}
 .mui-table-view-cell {
 	/*border-bottom: #EFEFEF solid 1px;*/
 	/*padding: 1.5rem 1rem;*/

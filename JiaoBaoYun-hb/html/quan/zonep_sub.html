@@ -438,12 +438,28 @@
 			var click = []; //记录被点击的li的id和被点击元素
 
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+
 				var toast = '';
 				mui.each(click, function(index, element) {
 					toast = toast + element;
 				});
 				var id = this.getAttribute('id');
 
+				click.push(id);
+				//								mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
+				click = [];
+			});
+			mui('.mui-table-view').on('tap', '.question_content', function() {
+
+				var toast = '';
+				mui.each(click, function(index, element) {
+					toast = toast + element;
+				});
+				var id = this.getAttribute('id');
+				var index = this.id.replace('question_content','');
+				zonepArray[index].focusFlag = 0;
+				
+				events.openNewWindowWithData('space-detail.html', zonepArray[index])
 				click.push(id);
 				//								mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
 				click = [];
@@ -572,7 +588,7 @@
 					})
 
 				}
-
+				window.event.stopPropagation()
 			});
 
 			mui('.mui-table-view').on('tap', '.dynamic-icon-forward', function() {
