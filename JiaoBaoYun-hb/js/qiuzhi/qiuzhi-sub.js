@@ -268,7 +268,7 @@ var getInnerHTML = function(cell) {
 		'<p class="channel-title"><img src="' + getChannelIcon(cell) + '" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
 		'</div>' +
 		'<div class="ask-container">' +
-		'<h5 class="single-line ask-title" askId="' + cell.TabId + '">[' + cell.AskChannel + ']' + cell.AskTitle + '</h5>';
+		'<h5 class="single-line ask-title" askId="' + cell.TabId + '">' + cell.AskTitle + '</h5>';
 	if(cell.AnswerContent && cell.AnswerContent.length > 0) {
 		inner += '<div class="answer-container"><div class="imgs-container">' + getImgs(cell) + '</div>' +
 			'<p class="answer-content triple-line" answerInfo="' + cell.AnswerId + '">' + cell.AnswerManName+":"+cell.AnswerContent + '</p>' +
