@@ -189,15 +189,6 @@ var dynamiclistitem = (function($, mod) {
 			praiseList[19] = praiseList[19] + '等' + praiseList.length + '人觉得很赞';
 		} else {}
 		var commentList = InteractionData[3]; //评论列表数组
-		commentList = commentList.concat(commentList)
-		commentList = commentList.concat(commentList)
-		commentList = commentList.concat(commentList)
-		commentList = commentList.concat(commentList)
-		commentList = commentList.concat(commentList)
-		commentList = commentList.concat(commentList)
-		commentList = commentList.concat(commentList)
-		
-
 
 		//[commentList]:评论列表1.评论[commenter,content]评论者，评论内容
 		//						2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
@@ -211,7 +202,7 @@ var dynamiclistitem = (function($, mod) {
 		//		var html2 = '<p><span class="mui-icon mui-icon-image"></span>' + introduce + '</p></div></div>';
 		var html3 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div class="mui-media-body mui-pull-right">';
 		var html4;
-		if(zonepArray[id].IsLike == 1) {
+		if(zonepArray[id].IsLike != 1) {
 			html4 = '<a id="praise' + data[4] + idFlag + id + '" style = "color: rgb(0,165,224)"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
 
 		} else {

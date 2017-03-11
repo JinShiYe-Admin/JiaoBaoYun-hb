@@ -34,7 +34,9 @@
 
 		</div>
 		<script type="text/javascript">
-			var datasource = plus.webview.currentWebview().data;
+			var datasource;
+			mui.plusReady(function(){
+				datasource = plus.webview.currentWebview().data;
 			console.log('获取的数据：' + JSON.stringify(datasource));
 			addExperts();
 			events.addTap('publish', function() {
@@ -51,6 +53,8 @@
 				events.fireToPageWithData('qiuzhi-newQ.html', 'atExpert', selectedBoxes);
 //				mui.back();
 			})
+			})
+			
 
 			function addExperts() {
 				var ul = document.getElementById("ExpertList");

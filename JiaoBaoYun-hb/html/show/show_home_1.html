@@ -552,6 +552,7 @@ function getAllUserSpacesByUser(tempModel9) {
 								//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
 								if(tempModel.utid == tempModel0.LikeUsers[item2]) {
 									tempModel0.LikeUsers.splice(item2, 1, tempModel);
+									console.log(JSON.stringify('点赞的人='+tempModel0.LikeUsers));
 								}
 							}
 							//对比id是否一致
