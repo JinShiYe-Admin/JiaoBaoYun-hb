@@ -60,7 +60,13 @@ mui.plusReady(function() {
 				} else {
 					mui.toast('没有更多了');
 				}
-				self.endPullUpToRefresh();
+				setTimeout(function() {
+					//结束下拉刷新
+					self.endPullUpToRefresh();
+					if(mui(".mui-table-view-cell").length < 10) {
+						mui(".mui-pull-loading")[0].innerHTML = "";
+					}
+				}, 1000);
 			}
 		}
 	});
