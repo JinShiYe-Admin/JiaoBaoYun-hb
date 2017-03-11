@@ -2960,12 +2960,9 @@
 					"js/utils/compress.js",
 					"js/qiniu/qiniu.js",
 					"fonts/fangzheng.ttf"
-<<<<<<< HEAD
-=======
 				],
 				"refer": [
 					"html/qiuzhi/atExpert.html"
->>>>>>> origin/master
 				],
 				"priority": 0
 			},
