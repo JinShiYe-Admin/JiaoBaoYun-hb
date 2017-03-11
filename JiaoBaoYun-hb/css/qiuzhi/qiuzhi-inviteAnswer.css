@@ -1,7 +1,7 @@
-.Ask-Title
-{
+.Ask-Title {
 	color: #323232;
 }
+
 .mui-scroll-wrapper {
 	padding-top: 44px;
 }
@@ -113,15 +113,20 @@
 	background-color: #efeff4;
 }
 
-.mui-table-view-cell:after
-{
+.mui-table-view-cell:after {
 	height: 0px;
 }
+
 .mui-table-view-cell img {
-float: left;
+	float: left;
 }
 
-.mui-table-view-cell  div{
-float: left;
-width: 80%;
+.mui-table-view-cell div {
+	margin-right: 15px;
+}
+
+.cell-container {
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
 }

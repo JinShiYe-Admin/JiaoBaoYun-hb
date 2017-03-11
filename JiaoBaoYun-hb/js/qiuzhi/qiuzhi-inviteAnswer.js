@@ -180,9 +180,10 @@ var setAnswerRecord = function(list) {
 var createList = function(listContainer, record) {
 	var li = document.createElement('li');
 	li.className = 'mui-table-view-cell';
-	li.style.display = '-webkit-flex;';
 	li.setAttribute('data-info', JSON.stringify(record));
 	//拼接显示
-	li.innerHTML = "<img src='" + record.uimg + "' style = 'width:40px;height:40px;' /><div><p><span>" + record.unick + "</span>邀请<span>" + ExpertsInfo.unick + "</span>回答问题</p><p class='Ask-Title' style= 'font-size:1.4rem'>[" + record.AskChannel + "]" + record.AskTitle + "</p></div>";
+	li.innerHTML = '<div class="cell-container"><img src="' + record.uimg + '" style = "width:40px;height:40px;"/><div><p><span>" '+ 
+	record.unick + '"</span>邀请<span>"' + ExpertsInfo.unick + '"</span>回答问题</p><p class="Ask-Title" style= "font-size:1.4rem;">[' +
+	record.AskChannel + ']' + record.AskTitle + '</p></div></div>';
 	listContainer.appendChild(li);
 }
