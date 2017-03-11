@@ -163,7 +163,7 @@
 		<script type="text/javascript" src="../../js/utils/cryption.js"></script>
 		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
-		<script>
+		<script type="text/javascript">
 			mui.init({
 				pullRefresh: {
 					container: '#pullrefresh',
@@ -224,12 +224,13 @@
 			var commitNum = 0; //记录发布请求的次数
 			var previewImage; //查看图片的控件
 			var pathList = []; //记录需要删掉的图片和缩略图
+			var waiting = []; //记录等待框
 
 			mui.plusReady(function() {
+				events.closeWaiting();
 
 				//图片查看控件
 				previewImage = mui.previewImage();
-
 				//---从父页面获取数据---start---
 				main = plus.webview.currentWebview(); //获取当前窗体对象
 				subData = main.data; //接收页面传入的参数值
@@ -337,28 +338,36 @@
 								var strParent = arrayToStr(parentIds);
 								var strUser = arrayToStr(userIds);
 								if(call_type != '') {
+									var wd2 = events.showWaiting();
+									commitNum++;
 									addNotes(1, strParent, strUser, {
 										encType: '3', //附件类型,1图片2音视频3仅文字
 										encAddr: '', //附件地址
 										encImg: '', //附件缩略图地址
-									}, wd); //增加点到
+									}, wd2); //增加点到
+									waiting.push(wd2);
 								}
-								setTimeout(function() {
-									if(document.getElementById("textarea_record").value.replace(/(^\s*)|(\s*$)/g, "") != "" && multiMedia.data.PictureArray.length == 0) {
-										addNotes(2, strParent, strUser, {
-											encType: '3', //附件类型,1图片2音视频3仅文字
-											encAddr: '', //附件地址
-											encImg: '', //附件缩略图地址
-										}, wd); //增加记事
-									} else if(multiMedia.data.PictureArray.length != 0) {
-										uploadFile(wd, strParent, strUser); //上传文件
-									}
-								}, 500);
+
+								if(document.getElementById("textarea_record").value.replace(/(^\s*)|(\s*$)/g, "") != "" && multiMedia.data.PictureArray.length == 0) {
+									var wd2 = events.showWaiting();
+									commitNum++;
+									addNotes(2, strParent, strUser, {
+										encType: '3', //附件类型,1图片2音视频3仅文字
+										encAddr: '', //附件地址
+										encImg: '', //附件缩略图地址
+									}, wd2); //增加记事
+									waiting.push(wd2);
+								} else if(multiMedia.data.PictureArray.length != 0) {
+									var wd2 = events.showWaiting();
+									commitNum++;
+									uploadFile(wd2, strParent, strUser); //上传文件
+									waiting.push(wd2);
+								}
 
 							} else {
 								mui.toast(data.RspTxt);
-								wd.close();
 							}
+							wd.close();
 						});
 					}
 				});
@@ -431,9 +440,9 @@
 				};
 				//console.log('新增记事发送的数据:' + JSON.stringify(comData));
 				// 等待的对话框
-				commitNum++;
 				postDataPro_addNote(comData, wd, function(data) {
 					console.log('8.新增某学生点到记事信息:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					commitNum--;
 					if(data.RspCode == 0) {
 						console.log('新增点到记事信息成功：' + JSON.stringify(data.RspData.Result));
 						if(noteType == 1) { //点到
@@ -457,16 +466,16 @@
 						}
 						console.log('新增点到记事信息:' + data.RspTxt);
 					}
-					commitNum--;
 					if(commitNum == 0) {
 						TotalPage = 1; //总页数
 						TotalCnt = 0; //总记录数
-						NotesList = null; //记录获取的数据
 						getNotes(1, 10);
 						changeCommit();
-						wd.close();
+						for(var i = 0; i < waiting.length; i++) {
+							waiting[i].close();
+						}
+						waiting=[];
 					}
-
 				});
 			}
 
@@ -571,9 +580,7 @@
 						mui.toast('获取点到记事列表 ' + data.RspTxt);
 						console.log('获取用户针对某学生的点到记事列表:' + data.RspTxt);
 					}
-					setTimeout(function() {
-						wd.close();
-					}, 500)
+					wd.close();
 				});
 			}
 
