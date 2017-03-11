@@ -11,16 +11,19 @@ var class_space = (function(mod) {
 	mod.getList = function(postData, pageIndex, pageSize, callback) {
 		postData.pageIndex = pageIndex;
 		postData.pageSize = pageSize;
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
+		var wd = events.showWaiting();
 		postDataPro_getClassSpacesByUserForClass(postData, wd, function(pagedata) {
 			wd.close();
-			if(pagedata.RspCode == '0000') {
+			if(pagedata.RspCode == 0&&pagedata.RspData.Data.length>0) {
 				console.log('获取的班级动态：' + JSON.stringify(pagedata));
 				mod.totalPagNo = pagedata.RspData.TotalPage;
 				list = pagedata.RspData.Data;
 				callback();
 			} else {
-				mui.toast(pagedata.RspTxt);
+				if(pageIndex==1){
+					mui.toast("暂无班级动态！");
+				}
+				
 			}
 
 		})

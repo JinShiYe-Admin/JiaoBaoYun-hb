@@ -319,8 +319,8 @@ var requirePostGUInfo = function(wd, callback) {
 function requestPublishHomework() {
 	var realClasses=[];
 	for(var i in selectClassArray){
-		if(selectClassArray.isSelected){
-			realClasses.push(selectClassArray);
+		if(selectClassArray[i].isSelected){
+			realClasses.push(selectClassArray[i]);
 		}
 	}
 	if(realClasses.length==0){

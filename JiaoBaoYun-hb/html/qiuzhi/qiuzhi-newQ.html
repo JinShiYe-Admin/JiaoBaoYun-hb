@@ -18,7 +18,6 @@
 				padding-top: 0.9rem;
 				float: left;
 				margin-top: -15px;
-				
 			}
 		</style>
 
@@ -54,13 +53,14 @@
 				</div>
 
 			</div>
-			
+
 			<p style="margin-top: 10px;margin-left: 10px;font-size: 14px;width: 150px;">选择话题:
 				<a id="channal" style="margin-left: 4px;" href="#popover">
 					全部
 				</a>
 			</p>
-			<p id="atExpert" style="margin-top: 10px;margin-left: 10px;font-size: 14px;">邀请专家：<font id="selectedExpert" style="color: dodgerblue;"></font><span class="mui-icon mui-icon-forward mui-pull-right"></span></p>
+			<p id="atExpert" style="margin-top: 10px;margin-left: 10px;font-size: 14px;">邀请专家：
+				<font id="selectedExpert" style="color: dodgerblue;"></font><span class="mui-icon mui-icon-forward mui-pull-right"></span></p>
 			<div id="pictures" style="float: left;background-color: transparent;width: 320px;"></div>
 			<!--<div class="mui-input-row mui-checkbox mui-left" style="float: right;width: 100px;margin-top: -35px;margin-left: -100px;">
 				<label>匿名</label>
@@ -69,454 +69,448 @@
 		</div>
 		<!--<ul id="ExpertList" class="mui-table-view"><ul/>-->
 
-			<script src="../../js/mui.min.js"></script>
-			<script src="../../js/utils/events.js"></script>
-			<script src="../../js/utils/camera.js"></script>
-			<script src="../../js/utils/CloudFileUtil.js" type="text/javascript" charset="utf-8"></script>
-			<script src="../../js/utils/compress.js" type="text/javascript" charset="utf-8"></script>
-			<script src="../../js/utils/cryption.js" type="text/javascript" charset="utf-8"></script>
-			<script src="../../js/qiniu/qiniu.js" type="text/javascript" charset="utf-8"></script>
-			<script src="../../js/publicProtocol.js"></script>
-			<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
-			<script type="text/javascript">
-				mui.init();
-				var askChannel = '999';
-				var datasource = [];
-				var flag = 0;
-				var UserId;
-				var selectedExpert=[];
-				mui.plusReady(function() {
-					window.addEventListener('atExpert', function(data) {
-						console.log(data.detail.data);
-						var tempArr = data.detail.data;
-						var name = []
-						for(var i=0;i<tempArr.length;i++){
-							selectedExpert.push(tempArr[i].TabId)
-							name.push('@'+tempArr[i].unick);
-						}
-						document.getElementById("selectedExpert").innerHTML=name.join('、')
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/utils/camera.js"></script>
+		<script src="../../js/utils/CloudFileUtil.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/compress.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/utils/cryption.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/qiniu/qiniu.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			var askChannel = '999';
+			var datasource = [];
+			var flag = 0;
+			var UserId;
+			var selectedExpert = [];
+			mui.plusReady(function() {
+				window.addEventListener('atExpert', function(data) {
+					console.log(data.detail.data);
+					var tempArr = data.detail.data;
+					var name = []
+					for(var i = 0; i < tempArr.length; i++) {
+						selectedExpert.push(tempArr[i].TabId)
+						name.push('@' + tempArr[i].unick);
+					}
+					document.getElementById("selectedExpert").innerHTML = name.join('、')
 
-					})
-					var data = plus.webview.currentWebview().data;
-					console.log('获取的数据：' + JSON.stringify(data));
+				})
+				var data = plus.webview.currentWebview().data;
+				console.log('获取的数据：' + JSON.stringify(data));
 
-					var tempArr = [];
-					var curChannel = {};
-					channelData = data.allChannels;
-					if(data.expert) {
-						flag = 1;
-						var tempChannels = data.expert.ExpertChannels;
-						for(var i = 0; i < tempChannels.length; i++) {
-							var tempCode = tempChannels[i];
+				var tempArr = [];
+				var curChannel = {};
+				channelData = data.allChannels;
+				if(data.expert) {
+					flag = 1;
+					var tempChannels = data.expert.ExpertChannels;
+					for(var i = 0; i < tempChannels.length; i++) {
+						var tempCode = tempChannels[i];
 
-							for(var j = 0; j < data.allChannels.length; j++) {
-								if(tempCode == data.allChannels[j].TabId) {
-									//	tempArr.push(data.allChannels[j]);
-									curChannel = data.allChannels[j];
-								}
+						for(var j = 0; j < data.allChannels.length; j++) {
+							if(tempCode == data.allChannels[j].TabId) {
+								//	tempArr.push(data.allChannels[j]);
+								curChannel = data.allChannels[j];
 							}
 						}
-						//						data.allChannels = tempArr;
-						//						channelData = data.allChannels;
-						UserId = data.expert.UserId;
-					} else {
-
-						UserId = 0;
-						curChannel = data.curChannel;
 					}
+					//						data.allChannels = tempArr;
+					//						channelData = data.allChannels;
+					UserId = data.expert.UserId;
+				} else {
 
-					channelData.splice(0, 1);
-					console.log('curChannel=' + JSON.stringify(curChannel));
-					console.log('获取的数据111：' + JSON.stringify(channelData));
-					if(curChannel.TabId == 0) {
-						curChannel = channelData[0];
-					}
+					UserId = 0;
+					curChannel = data.curChannel;
+				}
 
-					
+				channelData.splice(0, 1);
+				console.log('curChannel=' + JSON.stringify(curChannel));
+				console.log('获取的数据111：' + JSON.stringify(channelData));
+				if(curChannel.TabId == 0) {
+					curChannel = channelData[0];
+				}
 
-					if(flag == 0) {
-						document.getElementById("channal").innerHTML = '请选择';
-					} else {
-						//2.获取符合条件的专家信息
-						getExpertsArray(curChannel.TabId, UserId);
-						document.getElementById("channal").innerHTML = curChannel.ChannelName;
-						askChannel = curChannel.TabId;
-					}
+				if(flag == 0) {
+					document.getElementById("channal").innerHTML = '请选择';
+				} else {
+					//2.获取符合条件的专家信息
+					getExpertsArray(curChannel.TabId, UserId);
+					document.getElementById("channal").innerHTML = curChannel.ChannelName;
+					askChannel = curChannel.TabId;
+				}
 
-					var ul = document.getElementById("popover").getElementsByClassName('mui-table-view')[0];
+				var ul = document.getElementById("popover").getElementsByClassName('mui-table-view')[0];
+				var li = document.createElement("li");
+				li.id = '999';
+				li.className = 'mui-table-view-cell';
+				var a = document.createElement("a");
+				a.href = '#'
+				a.innerHTML = '请选择';
+				li.appendChild(a);
+				ul.appendChild(li);
+				for(var i = 0; i < channelData.length; i++) {
 					var li = document.createElement("li");
-					li.id = '999';
+					li.id = channelData[i].TabId;
 					li.className = 'mui-table-view-cell';
 					var a = document.createElement("a");
 					a.href = '#'
-					a.innerHTML = '请选择';
+					a.innerHTML = channelData[i].ChannelName;
 					li.appendChild(a);
 					ul.appendChild(li);
-					for(var i = 0; i < channelData.length; i++) {
-						var li = document.createElement("li");
-						li.id = channelData[i].TabId;
-						li.className = 'mui-table-view-cell';
-						var a = document.createElement("a");
-						a.href = '#'
-						a.innerHTML = channelData[i].ChannelName;
-						li.appendChild(a);
-						ul.appendChild(li);
-					}
-					mui('#ExpertList').on('tap', '.mui-table-view-cell', function() {
-						var index = this.id.replace('li', '');
-						events.openNewWindowWithData('../qiuzhi/expert-detail.html', datasource[index]);
+				}
+				mui('#ExpertList').on('tap', '.mui-table-view-cell', function() {
+					var index = this.id.replace('li', '');
+					events.openNewWindowWithData('../qiuzhi/expert-detail.html', datasource[index]);
 
-					})
-					mui('#ExpertList').on('tap', '.checkbox', function() {
-						this.checked = !this.checked
-						window.event.stopPropagation()
-
-					})
+				})
+				mui('#ExpertList').on('tap', '.checkbox', function() {
+					this.checked = !this.checked
+					window.event.stopPropagation()
 
 				})
 
-				events.addTap('atExpert', function() {
-					if(askChannel == "999") {
-						mui.toast('请选择话题')
-						return;
-					}
-					events.openNewWindowWithData('atExpert.html', datasource)
-				})
-				events.addTap('take_camero', function() {
-					mui.toast('此功能暂未开放');
-					//				camera.getVideo(camera.getCamera(), function(path) {
-					//
-					//				});
-				});
+			})
 
-				events.addTap('publish', function() {
-					requestAddAsk();
-				});
+			events.addTap('atExpert', function() {
+				if(askChannel == "999") {
+					mui.toast('请选择话题')
+					return;
+				}
+				events.openNewWindowWithData('atExpert.html', datasource)
+			})
+			events.addTap('take_camero', function() {
+				mui.toast('此功能暂未开放');
+				//				camera.getVideo(camera.getCamera(), function(path) {
+				//
+				//				});
+			});
 
+			events.addTap('publish', function() {
+				requestAddAsk();
+			});
+
+			//6.新增某个用户提交问题
+			function requestAddAsk() {
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+				var askTitle = document.getElementById("askTitle");
+				var askNote = document.getElementById("askNote");
+				var tempText = Trim(askTitle.value);
+				console.log('textView.value===' + tempText)
+				if(!tempText || tempText == '') {
+					mui.toast('请输入问题');
+					return;
+				} else if(tempText.length > 200) {
+					mui.toast('不能超过200字');
+					return;
+				} else {
+					tempText = replaceAllBL(tempText)
+				}
+				tempText = Trim(askNote.value);
+				console.log('textView.value===' + tempText)
+				if(!tempText || tempText == '') {
+					mui.toast('请输入补充说明');
+					return;
+				} else if(tempText.length > 2000) {
+					mui.toast('不能超过2000字');
+					return;
+				} else {
+					tempText = replaceAllBL(tempText)
+				}
+				//				var checkbox = document.getElementById("checkbox")
+				//				var isAnonym = 0;
+				//				if(!checkbox.checked) {
+				//					isAnonym = 0;
+				//				} else {
+				//					isAnonym = 1;
+				//				}
+				//					var box = document.getElementsByClassName('checkbox');
+				//					var selectedBoxes = [];
+				//					for(var i = 0; i < box.length; i++) {
+				//						console.log()
+				//						if(box[i].checked) {
+				//							selectedBoxes.push(box[i].value);
+				//						}
+				//					}
+				var boxesStr = arrayToStr(selectedExpert)
+				console.log(JSON.stringify(boxesStr));
+				var TAs = getTypeAddress();
+				if(askChannel == "999") {
+					mui.toast('请选择话题')
+					return;
+				}
+				//所需参数
+				var comData = {
+					askTitle: askTitle.value, //问题标题,200
+					askNote: askNote.value, //问题说明,2000
+					askChannel: askChannel, //问题话题
+					askMan: personalUTID, //提问人
+					isAnonym: 0, //是否匿名
+					encAddr: TAs.encAddr,
+					thumbnail: TAs.encImg,
+					cutImg: "",
+					inviteExperts: boxesStr //邀请专家,例如[1,2,3]
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				//6.新增某个用户提交问题
-				function requestAddAsk() {
-					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
-					var askTitle = document.getElementById("askTitle");
-					var askNote = document.getElementById("askNote");
-					var tempText = Trim(askTitle.value);
-					console.log('textView.value===' + tempText)
-					if(!tempText || tempText == '') {
-						mui.toast('请输入问题');
-						return;
-					} else if(tempText.length > 200) {
-						mui.toast('不能超过200字');
-						return;
+				postDataQZPro_addAsk(comData, wd, function(data) {
+					wd.close();
+					console.log('6.新增某个用户提交问题:' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						mui.toast('发布成功')
+						askTitle.value = '';
+						askNote.value = '';
+						mui.back();
 					} else {
-						tempText = replaceAllBL(tempText)
+						mui.toast(data.RspTxt);
 					}
-					tempText = Trim(askNote.value);
-					console.log('textView.value===' + tempText)
-					if(!tempText || tempText == '') {
-						mui.toast('请输入补充说明');
-						return;
-					} else if(tempText.length > 2000) {
-						mui.toast('不能超过2000字');
-						return;
-					} else {
-						tempText = replaceAllBL(tempText)
-					}
-					//				var checkbox = document.getElementById("checkbox")
-					//				var isAnonym = 0;
-					//				if(!checkbox.checked) {
-					//					isAnonym = 0;
-					//				} else {
-					//					isAnonym = 1;
-					//				}
-//					var box = document.getElementsByClassName('checkbox');
-//					var selectedBoxes = [];
-//					for(var i = 0; i < box.length; i++) {
-//						console.log()
-//						if(box[i].checked) {
-//							selectedBoxes.push(box[i].value);
-//						}
-//					}
-					var boxesStr = arrayToStr(selectedExpert)
-					console.log(JSON.stringify(boxesStr));
-					var TAs = getTypeAddress();
-					if(askChannel == "999") {
-						mui.toast('请选择话题')
-						return;
-					}
-					//所需参数
-					var comData = {
-						askTitle: askTitle.value, //问题标题,200
-						askNote: askNote.value, //问题说明,2000
-						askChannel: askChannel, //问题话题
-						askMan: personalUTID, //提问人
-						isAnonym: 0, //是否匿名
-						encAddr: TAs.encAddr,
-						thumbnail: TAs.encImg,
-						cutImg:"",
-						inviteExperts: boxesStr //邀请专家,例如[1,2,3]
-					};
-					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-					//6.新增某个用户提交问题
-					postDataQZPro_addAsk(comData, wd, function(data) {
-						wd.close();
-						console.log('6.新增某个用户提交问题:' + JSON.stringify(data));
-						if(data.RspCode == 0) {
-							mui.toast('发布成功')
-							askTitle.value = '';
-							askNote.value = '';
-							mui.back();
-						} else {
-							mui.toast(data.RspTxt);
-						}
-					});
-				}
-				//去除前后空格
-				function Trim(str) {
-					return str.replace(/(^\s*)|(\s*$)/g, "");
-				}
-				//选择话题
-				mui('.mui-popover').on('tap', 'li', function(e) {
-					document.getElementById("channal").innerHTML = this.children[0].innerHTML;
-					askChannel = this.id;
-					console.log('askChannel=' + askChannel);
-					if(flag == 0) {
-						//2.获取符合条件的专家信息
-						getExpertsArray(askChannel, '[0]');
-					} else {
-						getExpertsArray(askChannel, UserId);
-					}
-
-					mui('.mui-popover').popover('toggle')
-				})
-
-				//2.获取符合条件的专家信息
-				function getExpertsArray(code, UserId) {
-					//需要加密的数据
-					var comData = {
-						askId: '0', //问题ID，传入0，则不包括问题参数
-						userIds: '[0]', //用户编号列表,Array,传入0，获取所有专家
-						channelId: code, //话题ID,传入0，获取所有话题数据
-						pageIndex: '1', //当前页数
-						pageSize: '0' //每页记录数,传入0，获取总记录数
-					};
-					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				});
+			}
+			//去除前后空格
+			function Trim(str) {
+				return str.replace(/(^\s*)|(\s*$)/g, "");
+			}
+			//选择话题
+			mui('.mui-popover').on('tap', 'li', function(e) {
+				document.getElementById("channal").innerHTML = this.children[0].innerHTML;
+				askChannel = this.id;
+				console.log('askChannel=' + askChannel);
+				if(flag == 0) {
 					//2.获取符合条件的专家信息
-					postDataQZPro_getExpertsByCondition(comData, wd, function(data) {
-						wd.close();
-						console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-						if(data.RspCode == 0) {
-							//添加人员信息
-							//回调中的临时数据
-							var tempRspData = data.RspData.Data;
-							//获取当前回调的个人信息，主要是头像、昵称
-							var tempArray = [];
-							//先遍历回调数组，获取
-							for(var item in tempRspData) {
-								//当前循环的model
-								var tempModel0 = tempRspData[item];
-								//将当前model中id塞到数组
-								tempArray.push(tempModel0.UserId);
-							}
-							//给数组去重
-							tempArray = arrayDupRemoval(tempArray);
-							//发送获取用户资料申请
-							var tempData = {
-								vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
-								vtp: 'g' //查询类型,p(个人)g(id串)
-							}
-							console.log('tempData:' + JSON.stringify(tempData));
-							//21.通过用户ID获取用户资料
-							postDataPro_PostUinf(tempData, wd, function(data1) {
-								wd.close();
-								console.log('21.获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
-								if(data1.RspCode == 0) {
-									//循环当前的个人信息返回值数组
-									for(var i in data1.RspData) {
-										//当前model
-										var tempModel = data1.RspData[i];
-										//更新头像
-										tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
-										//循环回调数组
-										for(var item in tempRspData) {
-											//当前循环的model
-											var tempModel0 = tempRspData[item];
-											//对比id是否一致
-											if(tempModel0.UserId == tempModel.utid) {
-												//合并
-												tempModel0 = $.extend(tempModel0, tempModel);
-											}
+					getExpertsArray(askChannel, '[0]');
+				} else {
+					getExpertsArray(askChannel, UserId);
+				}
+				document.getElementById("selectedExpert").innerHTML = '';
+				selectedExpert = [];
+				mui('.mui-popover').popover('toggle')
+			})
+
+			//2.获取符合条件的专家信息
+			function getExpertsArray(code, UserId) {
+				//需要加密的数据
+				var comData = {
+					askId: '0', //问题ID，传入0，则不包括问题参数
+					userIds: '[0]', //用户编号列表,Array,传入0，获取所有专家
+					channelId: code, //话题ID,传入0，获取所有话题数据
+					pageIndex: '1', //当前页数
+					pageSize: '0' //每页记录数,传入0，获取总记录数
+				};
+				// 等待的对话框
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//2.获取符合条件的专家信息
+				postDataQZPro_getExpertsByCondition(comData, wd, function(data) {
+					wd.close();
+					console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						//添加人员信息
+						//回调中的临时数据
+						var tempRspData = data.RspData.Data;
+						//获取当前回调的个人信息，主要是头像、昵称
+						var tempArray = [];
+						//先遍历回调数组，获取
+						for(var item in tempRspData) {
+							//当前循环的model
+							var tempModel0 = tempRspData[item];
+							//将当前model中id塞到数组
+							tempArray.push(tempModel0.UserId);
+						}
+						//给数组去重
+						tempArray = arrayDupRemoval(tempArray);
+						//发送获取用户资料申请
+						var tempData = {
+							vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
+							vtp: 'g' //查询类型,p(个人)g(id串)
+						}
+						console.log('tempData:' + JSON.stringify(tempData));
+						//21.通过用户ID获取用户资料
+						postDataPro_PostUinf(tempData, wd, function(data1) {
+							wd.close();
+							console.log('21.获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+							if(data1.RspCode == 0) {
+								//循环当前的个人信息返回值数组
+								for(var i in data1.RspData) {
+									//当前model
+									var tempModel = data1.RspData[i];
+									//更新头像
+									tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
+									//循环回调数组
+									for(var item in tempRspData) {
+										//当前循环的model
+										var tempModel0 = tempRspData[item];
+										//对比id是否一致
+										if(tempModel0.UserId == tempModel.utid) {
+											//合并
+											tempModel0 = $.extend(tempModel0, tempModel);
 										}
 									}
 								}
-								console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
-								datasource = tempRspData;
-								//刷新界面
-//								addExperts(UserId);
-
-							});
-						} else {
-							mui.toast(data.RspTxt);
-						}
-					});
-				};
-
-				function addExperts(seletedID) {
-					var ul = document.getElementById("ExpertList");
-					ul.innerHTML = '';
-					for(var i = 0; i < datasource.length; i++) {
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell mui-media';
-						li.id = 'li' + i;
-						li.innerHTML =
-							'<img class="mui-media-object mui-pull-left" style = "width:50px;height:43px;border-radius: 50%;" src="' + updateHeadImg(datasource[i].uimg, 2) + '">' +
-							'<div class="mui-media-body">' +
-							events.shortForString(datasource[i].unick, 12) + '<font style="color:gray"> 回答数:<span style="color:red">' + datasource[i].AnswerNum + '</span>' +
-							'</font><p class="mui-ellipsis">' + datasource[i].UserNote + '</p></div>' +
-							'<div class="mui-checkbox" style="float:right;">' +
-							'<input class = "checkbox" value="' + datasource[i].TabId + '" type="checkbox" style="margin-top: -37px;">' +
-							'</div>'
-						ul.appendChild(li);
-					}
-					if(flag == 1) {
-						var box = document.getElementsByClassName('checkbox');
-						for(var i = 0; i < box.length; i++) {
-							if(datasource[i].UserId == seletedID) {
-								box[i].checked = true;
 							}
-
-						}
-					}
-
-				}
-				events.addTap('get_gallery', function() {
-					if(CloudFileUtil.files.length < 9) {
-						var picCount = 0; //上传图片计数
-						gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
-							plus.nativeUI.showWaiting(storageKeyName.UPLOADING); //等待框
-							console.log("保存的路径：" + JSON.stringify(paths));
-							var saveSpace = storageKeyName.KNOWLEDGE; //保存路径
-							compress.compressPics(paths, function(compressedPaths) {
-								console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
-								var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 7, 200, 0, saveSpace); //获取获取token的各参数
-								CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-										console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
-										if(datas.Status == 1) { //成功
-											var tokenInfos = datas.Data; //参数信息
-											//上传图片
-											CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status) {
-												console.log(JSON.stringify(uploadData));
-												var img = {
-													url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
-													thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
-													type: 1
-												}
-												picCount++;
-												CloudFileUtil.setPic(img); //放置图片
-												if(picCount == compressedPaths.length) { //所有图片已上传
-													plus.nativeUI.closeWaiting(); //关闭等待框
-												}
-											});
-
-										}
-									},
-									//错误的回调
-									function(xhr, type, errorThrown) {
-										console.log("错误类型：" + type + errorThrown);
-										plus.nativeUI.closeWaiting();
-									});
-							});
+							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+							datasource = tempRspData;
+							//刷新界面
+							//								addExperts(UserId);
 
 						});
 					} else {
-						mui.toast('上传图片附件不得多于9张！');
+						mui.toast(data.RspTxt);
 					}
-
 				});
-				/**
-				 * 通过系统相机获取图片
-				 * 并显示在界面上
-				 */
-				events.addTap('take_pic', function() {
-					if(CloudFileUtil.files.length < 9) {
-						camera.getPic(camera.getCamera(), function(picPath) {
-							plus.nativeUI.showWaiting(storageKeyName.WAITING);
-							var saveSpace = storageKeyName.KNOWLEDGE; //保存空间
-							compress.compressPIC(picPath, function(event) {
-								var localPath = event.target;
-								var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 7, 200, 0, saveSpace);
-								CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-									console.log("获取的数据：" + JSON.stringify(datas));
-									if(datas.Status == 1) {
-										var tokenInfo = datas.Data;
+			};
 
-										//上传文件
-										CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
+			function addExperts(seletedID) {
+				var ul = document.getElementById("ExpertList");
+				ul.innerHTML = '';
+				for(var i = 0; i < datasource.length; i++) {
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell mui-media';
+					li.id = 'li' + i;
+					li.innerHTML =
+						'<img class="mui-media-object mui-pull-left" style = "width:50px;height:43px;border-radius: 50%;" src="' + updateHeadImg(datasource[i].uimg, 2) + '">' +
+						'<div class="mui-media-body">' +
+						events.shortForString(datasource[i].unick, 12) + '<font style="color:gray"> 回答数:<span style="color:red">' + datasource[i].AnswerNum + '</span>' +
+						'</font><p class="mui-ellipsis">' + datasource[i].UserNote + '</p></div>' +
+						'<div class="mui-checkbox" style="float:right;">' +
+						'<input class = "checkbox" value="' + datasource[i].TabId + '" type="checkbox" style="margin-top: -37px;">' +
+						'</div>'
+					ul.appendChild(li);
+				}
+				if(flag == 1) {
+					var box = document.getElementsByClassName('checkbox');
+					for(var i = 0; i < box.length; i++) {
+						if(datasource[i].UserId == seletedID) {
+							box[i].checked = true;
+						}
+
+					}
+				}
+
+			}
+			CloudFileUtil.setDelPicListener();
+			events.addTap('get_gallery', function() {
+				if(CloudFileUtil.files.length < 9) {
+					var picCount = 0; //上传图片计数
+					gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
+						plus.nativeUI.showWaiting(storageKeyName.UPLOADING); //等待框
+						console.log("保存的路径：" + JSON.stringify(paths));
+						var saveSpace = storageKeyName.KNOWLEDGE; //保存路径
+						compress.compressPics(paths, function(compressedPaths) {
+							console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
+							var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 7, 200, 0, saveSpace); //获取获取token的各参数
+							CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+									console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
+									if(datas.Status == 1) { //成功
+										var tokenInfos = datas.Data; //参数信息
+										//上传图片
+										CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status) {
 											console.log(JSON.stringify(uploadData));
-											var img = { //图片信息
-												url: tokenInfo.Domain + tokenInfo.Key,
-												thumb: tokenInfo.OtherKey[data.thumbKey],
+											var img = {
+												url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
+												thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
 												type: 1
 											}
-											//关闭等待框
-											plus.nativeUI.closeWaiting();
-											//放置图片
-											CloudFileUtil.setPic(img);
+											picCount++;
+											CloudFileUtil.setPic(img); //放置图片
+											if(picCount == compressedPaths.length) { //所有图片已上传
+												plus.nativeUI.closeWaiting(); //关闭等待框
+											}
 										});
+
 									}
-
-								}, function(xhr, type, errorThrown) {
+								},
+								//错误的回调
+								function(xhr, type, errorThrown) {
 									console.log("错误类型：" + type + errorThrown);
-									plus.nativeUI.closeWaiting(); //关闭等待框
+									plus.nativeUI.closeWaiting();
 								});
-							})
-						})
-					} else {
-						mui.toast('上传图片附件不得多于9张！');
-					}
-				});
-				var imgs = [];
+						});
 
-				//删除图标的点击事件
-				mui('#pictures').on('tap', '.icon-guanbi', function() {
-					imgs.splice(imgs.indexOf(this.parentElement.img), 1);
-					//删除图片111
-					pictures.removeChild(this.parentElement);
-				})
-				/**
-				 * 获取接口数据文件及缩略图
-				 * encType: '',//附件类型,1图片2音视频3仅文字
-				 * encAddr: '',//附件地址
-				 * encImg: '',//附件缩略图地址
-				 */
-				var getTypeAddress = function() {
-					var TAs = {};
-					var encType;
-					var encAddrs = [];
-					var encImgs = [];
-					var theFile;
-					if(CloudFileUtil.files.length > 0) { //如果存在附件
-						for(var i in CloudFileUtil.files) {
-							theFile = CloudFileUtil.files[i];
-							if(i == 0) {
-								TAs.encType = theFile.type;
-							}
-							encAddrs.push(theFile.url);
-							encImgs.push(theFile.thumb);
-						}
-						console.log(JSON.stringify(encAddrs));
-						console.log(JSON.stringify(encImgs));
-						TAs.encAddr = encAddrs.join('|');
-						TAs.encImg = encImgs.join('|');
-					} else { //不存在附件
-						TAs.encType = 0;
-						TAs.encAddr = '';
-						TAs.encImg = '';
-					}
-					return TAs;
+					});
+				} else {
+					mui.toast('上传图片附件不得多于9张！');
 				}
-			</script>
-			<!--<script src="../../js/qiuzhi/qiuzhi-questionSub.js"></script>-->
+
+			});
+			/**
+			 * 通过系统相机获取图片
+			 * 并显示在界面上
+			 */
+			events.addTap('take_pic', function() {
+				if(CloudFileUtil.files.length < 9) {
+					camera.getPic(camera.getCamera(), function(picPath) {
+						plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						var saveSpace = storageKeyName.KNOWLEDGE; //保存空间
+						compress.compressPIC(picPath, function(event) {
+							var localPath = event.target;
+							var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 7, 200, 0, saveSpace);
+							CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+								console.log("获取的数据：" + JSON.stringify(datas));
+								if(datas.Status == 1) {
+									var tokenInfo = datas.Data;
+
+									//上传文件
+									CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
+										console.log(JSON.stringify(uploadData));
+										var img = { //图片信息
+											url: tokenInfo.Domain + tokenInfo.Key,
+											thumb: tokenInfo.OtherKey[data.thumbKey],
+											type: 1
+										}
+										//关闭等待框
+										plus.nativeUI.closeWaiting();
+										//放置图片
+										CloudFileUtil.setPic(img);
+									});
+								}
+
+							}, function(xhr, type, errorThrown) {
+								console.log("错误类型：" + type + errorThrown);
+								plus.nativeUI.closeWaiting(); //关闭等待框
+							});
+						})
+					})
+				} else {
+					mui.toast('上传图片附件不得多于9张！');
+				}
+			});
+			var imgs = [];
+
+			/**
+			 * 获取接口数据文件及缩略图
+			 * encType: '',//附件类型,1图片2音视频3仅文字
+			 * encAddr: '',//附件地址
+			 * encImg: '',//附件缩略图地址
+			 */
+			var getTypeAddress = function() {
+				var TAs = {};
+				var encType;
+				var encAddrs = [];
+				var encImgs = [];
+				var theFile;
+				if(CloudFileUtil.files.length > 0) { //如果存在附件
+					for(var i in CloudFileUtil.files) {
+						theFile = CloudFileUtil.files[i];
+						if(i == 0) {
+							TAs.encType = theFile.type;
+						}
+						encAddrs.push(theFile.url);
+						encImgs.push(theFile.thumb);
+					}
+					console.log(JSON.stringify(encAddrs));
+					console.log(JSON.stringify(encImgs));
+					TAs.encAddr = encAddrs.join('|');
+					TAs.encImg = encImgs.join('|');
+				} else { //不存在附件
+					TAs.encType = 0;
+					TAs.encAddr = '';
+					TAs.encImg = '';
+				}
+				return TAs;
+			}
+		</script>
+		<!--<script src="../../js/qiuzhi/qiuzhi-questionSub.js"></script>-->
 	</body>
 
 </html>

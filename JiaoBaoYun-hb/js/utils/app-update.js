@@ -8,6 +8,7 @@ var appUpdate = (function(mod) {
 	 */
 	mod.getAppVersion = function(versionInfo) {
 		plus.runtime.getProperty(plus.runtime.appid, function(inf) {
+			
 			mod.appVersion = getBigVersion(inf.version,plus.runtime.version) ;
 			console.log('应用版本号:' + plus.runtime.version + ',资源升级版本号:' + inf.version)
 			console.log("当前应用版本：" + mod.appVersion);

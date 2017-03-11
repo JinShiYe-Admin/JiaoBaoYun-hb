@@ -286,7 +286,7 @@ var createList = function(ul, dataArray) {
 			li.className = 'mui-table-view-cell';
 			li.innerHTML = createCommentsInner(dataArray[i]);
 			ul.appendChild(li);
-			
+
 			var comment_container = li.querySelector('.comment-words');
 			comment_container.commentInfo = dataArray[i];
 			var comments_zan = li.querySelector('.icon-support');
@@ -298,16 +298,16 @@ var createList = function(ul, dataArray) {
 			} else {
 				comments_zan.className = "mui-icon iconfont icon-support isNotLike"
 			}
-			var repliesContainer=comments_zan.parentElement.parentElement.parentElement.parentElement;
-			console.log('className:'+repliesContainer.className)
+			var repliesContainer = comments_zan.parentElement.parentElement.parentElement.parentElement;
+			console.log('className:' + repliesContainer.className)
 			if(flag) {
-				if(repliesContainer.className==("mui-table-view inner-table-view")) {
+				if(repliesContainer.className == ("mui-table-view inner-table-view")) {
 					comments_zan.order = repliesContainer.parentElement.querySelector('.icon-support').order + "-" + i;
 				} else {
 					comments_zan.order = (parseInt(pageIndex) - 1) * 10 + parseInt(i);
 				}
 			} else {
-				if(repliesContainer.className==("mui-table-view inner-table-view")) {
+				if(repliesContainer.className == ("mui-table-view inner-table-view")) {
 					comments_zan.order = repliesContainer.parentElement.querySelector('.icon-support').order + '-' + i;
 				} else {
 					comments_zan.order = parseInt(i);
@@ -370,7 +370,7 @@ var setAnswerManInfo = function(datasource) {
 			getUserFocus(datasource.AnswerMan);
 		}
 	}
-	document.getElementById('answer-time').innerText = replaceBigNo(datasource.IsLikeNum)+"赞·" + events.shortForDate(datasource.AnswerTime);
+	document.getElementById('answer-time').innerText = replaceBigNo(datasource.IsLikeNum) + "赞·" + events.shortForDate(datasource.AnswerTime);
 }
 /**
  * 根据图片数量，设置不同宽高的图片尺寸
@@ -384,14 +384,15 @@ var getPicInner = function(data) {
 		var picInner = '';
 		var win_width = document.getElementById('answer-imgs').offsetWidth;
 		var pic_width = win_width / 3;
+		if(picPaths.length < 3) {
+			pic_width = win_width / picPaths.length;
+		}
+		console.log("图片宽度设置：" + pic_width)
 		for(var i in picPaths) {
-			if(picPaths.length < 3) {
-				pic_width = win_width / picPaths.length;
-			}
-			picInner += '<img src="' + picPaths[i] + '" class="answer-img" style="width:' + pic_width + 'px;height:"' + pic_width + 'px" ' +
+			picInner += '<img src="' + picPaths[i] + '" class="answer-img" style="width:' + pic_width + 'px;height: ' + pic_width + 'px;" ' +
 				'" data-preview-src="' + picBigPaths[i] + '" data-preview-group="1"/>';
 		}
-		console.log('图片路径：' + JSON.stringify(picPaths) + '图片宽度' + pic_width)
+		console.log('图片路径：' + picInner);
 		return picInner;
 	}
 	return ''
@@ -416,7 +417,7 @@ var createCommentsInner = function(cell) {
 		'<h5 class="comment-personName single-line">' + setName(cell) + '</h5>' +
 		'<p class="comment-words">' + cell.CommentContent + '</p>' +
 		'<p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p>' +
-		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support ">'+replaceBigNo(cell.LikeNum)+'</a></div></div>'
+		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>'
 	return inner;
 }
 var setName = function(cell) {
@@ -514,26 +515,26 @@ var setIsLikeComment = function(item) {
  * @param {Object} item
  */
 var setZanIconCondition = function(item) {
-	console.log("显示是否为数字："+typeof(item.order));
+	console.log("显示是否为数字：" + typeof(item.order));
 	if(item.isLike) {
 		item.className = "mui-icon iconfont icon-support isNotLike ";
 		item.isLike = 0;
 		mui.toast('已取消点赞');
 		console.log('顺序：' + JSON.stringify(item.order))
 		if(item.order || item.order == 0) {
-			if(typeof(item.order)=="string") {
+			if(typeof(item.order) == "string") {
 				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].IsLiked = 0;
-				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum-=1;
-				item.innerText=replaceBigNo(answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum);
+				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum -= 1;
+				item.innerText = replaceBigNo(answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum);
 			} else {
 				answerData.Data[item.order].IsLiked = 0;
-				answerData.Data[item.order].LikeNum-=1;
-				item.innerText=replaceBigNo(answerData.Data[item.order].LikeNum);
+				answerData.Data[item.order].LikeNum -= 1;
+				item.innerText = replaceBigNo(answerData.Data[item.order].LikeNum);
 			}
 		} else {
 			answerData.IsLiked = 0;
 			answerData.IsLikeNum -= 1;
-			document.getElementById('answer-time').innerText = replaceBigNo(answerData.IsLikeNum)+"赞·" + events.shortForDate(answerData.AnswerTime);
+			document.getElementById('answer-time').innerText = replaceBigNo(answerData.IsLikeNum) + "赞·" + events.shortForDate(answerData.AnswerTime);
 		}
 
 	} else {
@@ -542,24 +543,24 @@ var setZanIconCondition = function(item) {
 		mui.toast('点赞成功');
 		console.log('顺序：' + JSON.stringify(item.order))
 		if(item.order || item.order == 0) {
-			if(typeof(item.order)=="string") {
+			if(typeof(item.order) == "string") {
 				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].IsLiked = 1;
 				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum += 1;
-				item.innerText=replaceBigNo(answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum);
+				item.innerText = replaceBigNo(answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum);
 			} else {
 				answerData.Data[item.order].IsLiked = 1;
 				answerData.Data[item.order].LikeNum += 1;
-				item.innerText=replaceBigNo(answerData.Data[item.order].LikeNum);
+				item.innerText = replaceBigNo(answerData.Data[item.order].LikeNum);
 			}
 		} else {
 			answerData.IsLiked = 1;
 			answerData.IsLikeNum += 1;
-			document.getElementById('answer-time').innerText = replaceBigNo(answerData.IsLikeNum)+"赞·" + events.shortForDate(answerData.AnswerTime);
+			document.getElementById('answer-time').innerText = replaceBigNo(answerData.IsLikeNum) + "赞·" + events.shortForDate(answerData.AnswerTime);
 		}
 	}
 }
-var replaceBigNo=function(no){
-	if(no>100){
+var replaceBigNo = function(no) {
+	if(no > 100) {
 		return '99+'
 	}
 	return no;
