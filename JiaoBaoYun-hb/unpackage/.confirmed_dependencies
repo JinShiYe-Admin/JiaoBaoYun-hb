@@ -1168,7 +1168,33 @@
 	},
 	"html/qiuzhi/qiuzhi-newQ.html": {
 		"resources": [
-			"css/qiuzhi/qiuzhi-questionSub.css"
+			"css/qiuzhi/qiuzhi-questionSub.css",
+			"css/quan/custom-textarea.css",
+			"js/publicQiuzhiProtocol.js",
+			"js/utils/cryption.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/camera.js",
+			"js/utils/CloudFileUtil.js",
+			"js/utils/compress.js",
+			"css/mui.min.css",
+			"js/qiniu/qiniu.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/jquery.js",
+			"fonts/fangzheng.ttf",
+			"fonts/mui.ttf",
+			"js/libs/crypto-js/require.js",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js"
 		]
 	},
 	"html/homework/classes-select.html": {

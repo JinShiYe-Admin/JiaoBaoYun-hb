@@ -2947,7 +2947,12 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/utils/cryption.js",
+					"js/utils/CloudFileUtil.js",
+					"js/utils/compress.js",
+					"js/qiniu/qiniu.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
