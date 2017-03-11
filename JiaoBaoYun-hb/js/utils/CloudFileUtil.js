@@ -903,10 +903,10 @@ var CloudFileUtil = (function($, mod) {
 		div.img = img;
 		div.className = 'img-div';
 		if(flag) {
-			div.innerHTML = '<img src="' + img.thumb + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
+			div.innerHTML = '<img style="width:60px;height:80px" src="' + img.thumb + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
 				'<a class="mui-icon iconfont icon-guanbi"></a>';
 		} else {
-			div.innerHTML = '<img src="' + img.url + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
+			div.innerHTML = '<img style="width:60px;height:80px" src="' + img.url + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
 				'<a class="mui-icon iconfont icon-guanbi"></a>';
 		}
 

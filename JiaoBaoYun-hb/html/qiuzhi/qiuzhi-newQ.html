@@ -388,6 +388,7 @@
 				}
 
 			}
+			CloudFileUtil.setDelPicListener();
 			events.addTap('get_gallery', function() {
 				if(CloudFileUtil.files.length < 9) {
 					var picCount = 0; //上传图片计数
@@ -476,12 +477,6 @@
 			});
 			var imgs = [];
 
-			//删除图标的点击事件
-			mui('#pictures').on('tap', '.icon-guanbi', function() {
-				imgs.splice(imgs.indexOf(this.parentElement.img), 1);
-				//删除图片111
-				pictures.removeChild(this.parentElement);
-			})
 			/**
 			 * 获取接口数据文件及缩略图
 			 * encType: '',//附件类型,1图片2音视频3仅文字
