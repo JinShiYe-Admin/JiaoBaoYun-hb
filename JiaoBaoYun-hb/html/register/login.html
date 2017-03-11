@@ -232,6 +232,7 @@ none; margin-top: -15px;">登录</button>
 							}
 						}
 					}
+
 					if(plus.os.name == "Android") {
 						//47.获取APP版本号
 						console.log('plus.os.name:' + plus.os.name);
@@ -246,7 +247,7 @@ none; margin-top: -15px;">登录</button>
 							vvl: tempVVL //安卓：android,苹果：ios
 						};
 						// 等待的对话框
-						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						var wd = events.showWaiting();
 						postDataPro_PostVerInfo(comData9, wd, function(data) {
 							wd.close();
 							console.log('获取APP版本号:' + JSON.stringify(data));
@@ -307,6 +308,8 @@ none; margin-top: -15px;">登录</button>
 							utid: personal.utid,
 							appid: plus.runtime.appid
 						};
+						// 等待的对话框
+						var wd = events.showWaiting();
 						//token续订
 						postDataPro_PostTokenRenew(comData, wd, function(data0) {
 							wd.close();

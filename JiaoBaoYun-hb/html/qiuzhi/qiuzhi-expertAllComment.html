@@ -10,7 +10,8 @@
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/qiuzhi/qiuzhi-expertAllComment.css" rel="stylesheet" />
 		<style>
-			.mui-table-view-cell p:last-child,p:first-child  {
+			.mui-table-view-cell p:last-child,
+			p:first-child {
 				-webkit-line-clamp: 3;
 				/*用来限制在一个块元素显示的文本的行数*/
 				display: -webkit-box;
@@ -20,11 +21,11 @@
 				overflow: hidden;
 			}
 			
-			.mui-table-view-cell div p:nth-child(1)
-			{
+			.mui-table-view-cell div p:nth-child(1) {
 				display: block;
 			}
-				.mui-table-view-cell div {
+			
+			.mui-table-view-cell div {
 				width: 100%;
 			}
 		</style>
@@ -141,7 +142,7 @@
 						}
 					},
 					up: {
-						contentinit:"",
+						contentinit: "",
 						callback: function() {
 							var self = this;
 							console.log("上拉加载更多");
@@ -151,14 +152,12 @@
 								getCommentsByUser(ExpertsInfo.UserId);
 							} else {
 								mui.toast('没有更多了');
-							
 							}
 							setTimeout(function() {
 								//结束下拉刷新
 								self.endPullUpToRefresh();
-								if(mui(".mui-table-view-cell").length<10)
-								{
-									mui(".mui-pull-loading")[0].innerHTML="";
+								if(mui(".mui-table-view-cell").length < 10) {
+									mui(".mui-pull-loading")[0].innerHTML = "";
 								}
 							}, 1000);
 
