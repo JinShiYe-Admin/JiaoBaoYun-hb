@@ -36,92 +36,91 @@
 		<script type="text/javascript" src="../../js/utils/native.js"></script>
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 		<script type="text/javascript" src="../../js/show/show-sub.js"></script>
-		<script type="text/javascript">
-			mui.init();
-			var datasource = {};
-			var idFlag = 'zx';
-			var pageIndex = 1;
-			var totalPage = 0;
-			var id = 0; //cell的id
-			var pageFlag = 1;
-			var pullFlag = 0;
-			var zonepArray;
-			var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
-			var cities = []; //存储当前定制的城市
-			var show = true; //是否显示展现的内容
-			var pullToRefresh = [] //存储下拉上拉的控件
-			var sliderId = ''; //记录显示的城市
-			var index; //获取index的webview
-			var personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-			var userIDs; //关注的用户
-			mui.plusReady(function() {
-				mui.previewImage();
-				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				index = plus.webview.getWebviewById('index.html'); //
+		<script type="text/javascript">mui.init();
+var datasource = {};
+var idFlag = 'zx';
+var pageIndex = 1;
+var totalPage = 0;
+var id = 0; //cell的id
+var pageFlag = 1;
+var pullFlag = 0;
+var zonepArray;
+var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
+var cities = []; //存储当前定制的城市
+var show = true; //是否显示展现的内容
+var pullToRefresh = [] //存储下拉上拉的控件
+var sliderId = ''; //记录显示的城市
+var index; //获取index的webview
+var personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+var userIDs; //关注的用户
+mui.plusReady(function() {
+	mui.previewImage();
+	var main = plus.webview.currentWebview(); //获取当前窗体对象
+	index = plus.webview.getWebviewById('index.html'); //
 
-				//Webview窗口显示事件
-				main.addEventListener("show", function(e) {
-					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-					pageIndex = 1;
-					pullFlag = 0;
-					console.log("show " + main.id + '|' + index.id + "|" + sliderId + '|' + cities.length);
-					initBody();
-					//改变顶部的城市
-					changeIndexHeader();
-				});
-				window.addEventListener('infoChanged', function() {
-					console.log('重现显示展现界面')
-					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-					pageIndex = 1;
-					pullFlag = 0;
-					requestData(cities[0].acode, 1);
-				});
+	//Webview窗口显示事件
+	main.addEventListener("show", function(e) {
+		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+		pageIndex = 1;
+		pullFlag = 0;
+		console.log("show " + main.id + '|' + index.id + "|" + sliderId + '|' + cities.length);
+		initBody();
+		//改变顶部的城市
+		changeIndexHeader();
+	});
+	window.addEventListener('infoChanged', function() {
+		console.log('重现显示展现界面')
+		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+		pageIndex = 1;
+		pullFlag = 0;
+		requestData(cities[0].acode, 1);
+	});
 
-				//---订制城市---start---
-				//进入订制城市界面
-				window.addEventListener('tapTitleLeft', function() {
-					events.openNewWindowWithData('../utils/customizeCity.html', {
-						id: '1', //0科教，1展现
-						webid: '../show/show_home_1.html', //当前webview的id
-						cities: cities //已经定制的城市数组
-					});
-				});
+	//---订制城市---start---
+	//进入订制城市界面
+	window.addEventListener('tapTitleLeft', function() {
+		events.openNewWindowWithData('../utils/customizeCity.html', {
+			id: '1', //0科教，1展现
+			webid: '../show/show_home_1.html', //当前webview的id
+			cities: cities //已经定制的城市数组
+		});
+	});
 
-				//退出订制城市界面返回的数据
-				window.addEventListener('customizeCity', function(e) {
-					var data = e.detail.data;
-					console.log('获取的修改后的城市信息:' + JSON.stringify(data));
-					cities = []; //存储当前定制的城市
-					show = true; //是否显示展现的内容
-					pullToRefresh = [] //存储下拉上拉的控件
-					sliderId = ''; //记录显示的城市
-					initBody();
-				});
-				//---订制城市---end---
+	//退出订制城市界面返回的数据
+	window.addEventListener('customizeCity', function(e) {
+		var data = e.detail.data;
+		console.log('获取的修改后的城市信息:' + JSON.stringify(data));
+		cities = []; //存储当前定制的城市
+		show = true; //是否显示展现的内容
+		pullToRefresh = [] //存储下拉上拉的控件
+		sliderId = ''; //记录显示的城市
+		initBody();
+	});
+	//---订制城市---end---
 
-				//退出登录清理科教界面
-				window.addEventListener('cleanShowHome', function() {
+	//退出登录清理科教界面
+	window.addEventListener('cleanShowHome', function() {
 
-					console.log('重新登录')
-					cities = []; //存储当前定制的城市
-					show = true; //是否显示科教的内容
-					pullToRefresh = [] //存储下拉上拉的控件
-					sliderId = ''; //记录显示的城市
-					document.getElementById("content").innerHTML = ''; //清理界面
-					var evalJS = "var showSlider=document.getElementById('showSlider');if(showSlider){showSlider.parentNode.removeChild(showSlider);}";
-					index.evalJS(evalJS);
-				});
+		console.log('重新登录')
+		cities = []; //存储当前定制的城市
+		show = true; //是否显示科教的内容
+		pullToRefresh = [] //存储下拉上拉的控件
+		sliderId = ''; //记录显示的城市
+		document.getElementById("content").innerHTML = ''; //清理界面
+		var evalJS = "var showSlider=document.getElementById('showSlider');if(showSlider){showSlider.parentNode.removeChild(showSlider);}";
+		index.evalJS(evalJS);
+	});
 
-			});
+});
 
-			/**
-			 * 初始化主体
-			 */
-			function initBody() {
-				//console.log('initBody ' + show);
-				if(show) {
-					//生成滑动控件
-					document.getElementById("content").innerHTML = '\
+/**
+ * 初始化主体
+ */
+function initBody() {
+	//console.log('initBody ' + show);
+	if(show) {
+		//生成滑动控件
+		document.getElementById("content").innerHTML = '\
 					<div id="slider" class="mui-slider mui-fullscreen">\
 						<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">\
 							<div id="topList" class="mui-scroll">\
@@ -130,928 +129,957 @@
 						<div id="sliderGroup" class="mui-slider-group">\
 						</div>\
 					</div>';
-					show = false;
-					//滑动底部列表
-					document.querySelector('.mui-slider').addEventListener('slide', function() {
-						console.log('slide ' + event.detail.slideNumber);
-						mui('.mui-control-item').each(function(index, element) {
-							if(index == event.detail.slideNumber) {
-								document.getElementById(sliderId).className = 'mui-control-item';
-								element.className = 'mui-control-item mui-active';
-								sliderId = element.id;
-							}
-						});
-						//改变顶部的城市
-						changeIndexHeader();
-						var id = 'bot_' + sliderId.replace('top_', '');
-						var element = document.getElementById(id);
-						var info = JSON.parse(element.getAttribute('data-info'));
-						var page = JSON.parse(element.getAttribute('data-page'));
-						console.log('slide ' + JSON.stringify(info));
-						console.log('slide ' + JSON.stringify(page));
-						if(!page) {
-							if(info.aflag == 0) { //定制的城市
-								requestData(info.acode, 1);
-							} else { //关注的人数据
-								//81.（用户空间）获取用户所有关注的用户
-								getFocusByUser();
-							}
-						}
-					});
-
-					//获取定制的城市
-					requestCustomizationCity(function(data) {
-						//生成滑动框架
-						addCitiesSilders(data, function() {
-							//改变顶部的城市
-							changeIndexHeader();
-
-							//初始化滑动控件
-							mui('#slider').slider();
-							//循环初始化所有下拉刷新，上拉加载。
-							pullRefresh(function() {
-								requestData(cities[0].acode, 1);
-							});
-							addSomeEvent();
-						});
-					});
+		show = false;
+		//滑动底部列表
+		document.querySelector('.mui-slider').addEventListener('slide', function() {
+			console.log('slide ' + event.detail.slideNumber);
+			mui('.mui-control-item').each(function(index, element) {
+				if(index == event.detail.slideNumber) {
+					document.getElementById(sliderId).className = 'mui-control-item';
+					element.className = 'mui-control-item mui-active';
+					sliderId = element.id;
+				}
+			});
+			//改变顶部的城市
+			changeIndexHeader();
+			var id = 'bot_' + sliderId.replace('top_', '');
+			var element = document.getElementById(id);
+			var info = JSON.parse(element.getAttribute('data-info'));
+			var page = JSON.parse(element.getAttribute('data-page'));
+			console.log('slide ' + JSON.stringify(info));
+			console.log('slide ' + JSON.stringify(page));
+			if(!page) {
+				if(info.aflag == 0) { //定制的城市
+					requestData(info.acode, 1);
+				} else { //关注的人数据
+					//81.（用户空间）获取用户所有关注的用户
+					getFocusByUser();
 				}
 			}
+		});
 
-			/**
-			 * 顶部增加定制的城市和底部列表的框架
-			 * @param {Object} data 定制的城市
-			 * @param {Object} callBack 完成的回调
-			 */
-			function addCitiesSilders(data, callBack) {
-				var fragmentTop = document.createDocumentFragment();
-				var fragmentBot = document.createDocumentFragment();
-				for(var i = 0; i < data.length; i++) {
-					//顶部城市
-					var elementTop = document.createElement('a');
-					//底部列表
-					var elementBot = document.createElement('div');
+		//获取定制的城市
+		requestCustomizationCity(function(data) {
+			//生成滑动框架
+			addCitiesSilders(data, function() {
+				//改变顶部的城市
+				changeIndexHeader();
 
-					if(i == 0) {
-						//选择的城市
-						sliderId = 'top_' + data[i].acode;
-						elementTop.className = 'mui-control-item mui-active';
-						elementBot.className = 'mui-slider-item mui-control-content mui-active';
-					} else {
-						elementTop.className = 'mui-control-item';
-						elementBot.className = 'mui-slider-item mui-control-content';
-					}
-					//顶部城市
-					elementTop.id = 'top_' + data[i].acode;
-					elementTop.href = '#bot_' + data[i].acode;
-					elementTop.innerText = data[i].aname;
-					//底部列表
-					elementBot.id = 'bot_' + data[i].acode;
-					elementBot.setAttribute('data-info', JSON.stringify(data[i]));
-					elementBot.innerHTML = '<div id="bot_sw_' + data[i].acode + '" class="mui-scroll-wrapper">\
+				//初始化滑动控件
+				mui('#slider').slider();
+				//循环初始化所有下拉刷新，上拉加载。
+				pullRefresh(function() {
+					requestData(cities[0].acode, 1);
+				});
+				addSomeEvent();
+			});
+		});
+	}
+}
+
+/**
+ * 顶部增加定制的城市和底部列表的框架
+ * @param {Object} data 定制的城市
+ * @param {Object} callBack 完成的回调
+ */
+function addCitiesSilders(data, callBack) {
+	var fragmentTop = document.createDocumentFragment();
+	var fragmentBot = document.createDocumentFragment();
+	for(var i = 0; i < data.length; i++) {
+		//顶部城市
+		var elementTop = document.createElement('a');
+		//底部列表
+		var elementBot = document.createElement('div');
+
+		if(i == 0) {
+			//选择的城市
+			sliderId = 'top_' + data[i].acode;
+			elementTop.className = 'mui-control-item mui-active';
+			elementBot.className = 'mui-slider-item mui-control-content mui-active';
+		} else {
+			elementTop.className = 'mui-control-item';
+			elementBot.className = 'mui-slider-item mui-control-content';
+		}
+		//顶部城市
+		elementTop.id = 'top_' + data[i].acode;
+		elementTop.href = '#bot_' + data[i].acode;
+		elementTop.innerText = data[i].aname;
+		//底部列表
+		elementBot.id = 'bot_' + data[i].acode;
+		elementBot.setAttribute('data-info', JSON.stringify(data[i]));
+		elementBot.innerHTML = '<div id="bot_sw_' + data[i].acode + '" class="mui-scroll-wrapper">\
 											<div id="bot_sc_' + data[i].acode + '" class="mui-scroll">\
 												<ul id="bot_ul_' + data[i].acode + '" class="mui-table-view">\
 												</ul>\
 											</div>\
 										</div>';
-					fragmentTop.appendChild(elementTop);
-					fragmentBot.appendChild(elementBot);
-				}
-				document.getElementById("topList").appendChild(fragmentTop);
-				document.getElementById("sliderGroup").appendChild(fragmentBot);
+		fragmentTop.appendChild(elementTop);
+		fragmentBot.appendChild(elementBot);
+	}
+	document.getElementById("topList").appendChild(fragmentTop);
+	document.getElementById("sliderGroup").appendChild(fragmentBot);
 
-				callBack();
-			}
+	callBack();
+}
 
-			/**
-			 * 循环初始化所有下拉刷新，上拉加载。
-			 * @param {Object} callBack 完成的回调
-			 */
-			function pullRefresh(callBack) {
-				//阻尼系数
-				var deceleration = mui.os.ios ? 0.003 : 0.0009;
-				mui('.mui-scroll-wrapper').scroll({
-					bounce: false,
-					indicators: true, //是否显示滚动条
-					deceleration: deceleration
-				});
-				//循环初始化所有下拉刷新，上拉加载。
-				mui.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
-					var refresh = mui(pullRefreshEl).pullToRefresh({
-						down: {
-							callback: function() {
-								pullFlag = 0;
-								var self = this;
-								var id = pullRefreshEl.parentNode.parentNode.id;
-								var element = document.getElementById(id);
-								var info = JSON.parse(element.getAttribute('data-info'));
-								var page = JSON.parse(element.getAttribute('data-page'));
-								console.log('down ' + JSON.stringify(info));
-								console.log('down ' + JSON.stringify(page));
-								setTimeout(function() {
-									//获取数据
-									if(info.aflag == 0) { //定制的城市
-										requestData(info.acode, 1);
-									} else { //关注的人数据
-										//81.（用户空间）获取用户所有关注的用户
-										getFocusByUser();
-									}
-									//结束下拉刷新
-									self.endPullDownToRefresh();
-								}, 1000);
-							}
-						},
-						up: {
-							contentinit: '',
-							callback: function() {
-								pullFlag = 1;
-								var self = this;
-								var id = pullRefreshEl.parentNode.parentNode.id;
-								var element = document.getElementById(id);
-								var info = JSON.parse(element.getAttribute('data-info'));
-								var page = JSON.parse(element.getAttribute('data-page'));
-								if(info.aflag == 1) { //关注的人数据
-									page = info.index;
-								}
-								console.log('up ' + JSON.stringify(info));
-								console.log('up ' + JSON.stringify(page));
-								if(page) {
-									setTimeout(function() {
-										if(info.aflag == 0) { //定制的城市
-											requestData(info.acode, page.pageIndex + 1);
-										} else { //关注的人数据
-											var tempModel = cities[cities.length - 1];
-											tempModel.isRefresh = 1; //是刷新0，还是加载更多1
-											//74.(用户空间）获取多用户空间所有用户动态列表
-											getAllUserSpacesByUser(tempModel);
-										}
-										self.endPullUpToRefresh();
-									}, 1000);
-								} else {
-									self.endPullUpToRefresh();
-								}
-							}
-						}
-					});
-					pullToRefresh.push({
-						id: pullRefreshEl.id,
-						refresh: refresh
-					});
-				});
-				callBack();
-			}
-
-			/**
-			 * 添加一条记录
-			 * @param {Object} cityCode 城市代码
-			 * @param {Object} data 新闻数据
-			 */
-			function addItems(cityCode, data) {
-				var placeholder = '../../' + window.storageKeyName.DEFAULTSCIEDUIMAGELOAD;
-				//console.log('placeholder ' + placeholder);
-				var lazyLoad = mui("#bot_ul_" + cityCode).imageLazyload({
-					placeholder: placeholder.toString(),
-					autoDestroy: false, //元素加载完后是否自动销毁当前插件对象
-				}); //懒加载控件
-				for(var i = 0; i < data.length; i++) {
-
-					//					SciEduHomeItem.addItem(document.getElementById("bot_ul_" + cityCode), data[i], function() {
-					//						lazyLoad.refresh(true);
-					//					});
-				}
-			}
-
-			/**
-			 * 44.获取个人的订制城市
-			 * @param {Object} callBack 成功后的回调
-			 */
-			function requestCustomizationCity(callBack) {
-				//所需参数
-				var comData = {
-					vvl: '1' //订制频道,0科教频道,1展示频道,其他待定
-				};
-				// 等待的对话框
-				var waitingDia = events.showWaiting();
-				//44.获取个人的订制城市
-				postDataPro_PostUTcity(comData, waitingDia, function(data) {
-					var eduArray = [];
-					console.log('获取个人的订制城市展现频道:' + JSON.stringify(data));
-					if(data.RspCode == 0) {
-						if(data.RspData[0].citys) {
-							//先通过‘|’将返回值分为数组
-							eduArray = data.RspData[0].citys.split('|');
-							//遍历此数组
-							for(var m in eduArray) {
-								var tempStr = eduArray[m];
-								//初始化model
-								var model_area = {
-									acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
-									aname: '', //节点名称
-									aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
-								};
-								console.log('tempStr:' + tempStr);
-								//将分成的每个值，再通过‘_’拆分为model
-								var tempArea = tempStr.split('_');
-								model_area.acode = tempArea[0];
-								model_area.aname = tempArea[1];
-								//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
-								eduArray.splice(m, 1, model_area);
-							}
-							console.log('修改后的最终值为:' + JSON.stringify(eduArray));
-						}
-					} else {
-						eduArray = [];
-						//						mui.toast(data.RspTxt);
-					}
-					//如果定制城市为空
-					if(eduArray.length == 0) {
-						var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
-						console.log(JSON.stringify(uarea));
-						//加入手机号所在城市
-						eduArray.push({
-							acode: uarea.acode,
-							aname: uarea.aname,
-							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
-						});
-					}
-					//加入关注的人数据
-					eduArray.push({
-						acode: 0,
-						aname: '我关注的人',
-						aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
-						index: 1, //请求第几页数据
-						isRefresh: 0 //是刷新0，还是加载更多1
-					});
-					cities = eduArray.slice(0); //拷贝数组
-					callBack(cities);
-					waitingDia.close();
-				});
-			}
-
-			var requestData = function(cityCode, pageIndex) {
-				console.log('网络请求')
-				var wd = events.showWaiting();
-				/**
-				 * 请求区域内的动态
-				 */
-				postDataPro_getUserSpacesByArea({
-					userId: personalUTID, //用户ID
-					area: cityCode, //区域
-					pageIndex: pageIndex, //当前页数
-					pageSize: 10 //每页记录数
-				}, wd, function(data) {
-					events.closeWaiting();
-					console.log('展示获取的数据：' + JSON.stringify(data));
-					//记录页数
-					var page = {
-						pageIndex: pageIndex, //当前页数
-						totalPage: 0 //总页数
-					};
-					if(data.RspCode == 0) {
-						page.totalPage = data.RspData.TotalPage;
-					}
-					document.getElementById("bot_" + cityCode).setAttribute('data-page', JSON.stringify(page))
-					if(pageIndex == 1) { //获取的第一页的内容
-						//清空对应的界面
-						document.getElementById("bot_ul_" + cityCode).innerHTML = '';
-					}
-
-					if(data.RspCode == 0 && data.RspData.Data.length > 0) {
-						totalPage = data.RspData.TotalPage;
-						getPersonIds(data.RspData.Data, cityCode);
-					} else {
-						//var table = document.body.querySelector('.mui-table-view');
-						//table.innerHTML = ''
-						//events.fireToPageNone('index.html', 'closeWaiting');
-					}
-
-					//设置上拉下拉控件的状态
-					var tempRefresh;
-					for(var i = 0; i < pullToRefresh.length; i++) {
-						var id = pullToRefresh[i].id.replace('bot_sc_', '');
-						if(id == cityCode) {
-							tempRefresh = pullToRefresh[i];
-						}
-					}
-					if(page.pageIndex >= page.totalPage) {
-						//没有下一页
-						tempRefresh.refresh.endPullUpToRefresh(true);
-					} else {
-						if(pageIndex == 1) {
-							//获取第一页的数据更新当前控件
-							tempRefresh.refresh.refresh(true);
-						}
-					}
+/**
+ * 循环初始化所有下拉刷新，上拉加载。
+ * @param {Object} callBack 完成的回调
+ */
+function pullRefresh(callBack) {
+	//阻尼系数
+	var deceleration = mui.os.ios ? 0.003 : 0.0009;
+	mui('.mui-scroll-wrapper').scroll({
+		bounce: false,
+		indicators: true, //是否显示滚动条
+		deceleration: deceleration
+	});
+	//循环初始化所有下拉刷新，上拉加载。
+	mui.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+		var refresh = mui(pullRefreshEl).pullToRefresh({
+			down: {
+				callback: function() {
+					pullFlag = 0;
+					var self = this;
+					var id = pullRefreshEl.parentNode.parentNode.id;
+					var element = document.getElementById(id);
+					var info = JSON.parse(element.getAttribute('data-info'));
+					var page = JSON.parse(element.getAttribute('data-page'));
+					console.log('down ' + JSON.stringify(info));
+					console.log('down ' + JSON.stringify(page));
 					setTimeout(function() {
-						wd.close();
-					}, 1000);
-				})
-			}
-
-			//81.（用户空间）获取用户所有关注的用户
-			function getFocusByUser() {
-				//所需参数
-				var comData = {
-					userId: personalUTID //用户ID
-				};
-				var wd = events.showWaiting();
-				//81.（用户空间）获取用户所有关注的用户
-				postDataPro_getFocusByUser(comData, wd, function(data) {
-					console.log('81.（用户空间）获取用户所有关注的用户：' + JSON.stringify(data));
-					wd.close();
-					if(data.RspCode == 0) {
-						userIDs = data.RspData.Users;
-						var tempModel = cities[cities.length - 1];
-						tempModel.index = 1;
-						tempModel.isRefresh = 0; //是刷新0，还是加载更多1
-						//74.(用户空间）获取多用户空间所有用户动态列表
-						getAllUserSpacesByUser(tempModel);
-					} else {
-						mui.toast(data.RspTxt);
-					}
-				});
-			}
-
-			//74.(用户空间）获取多用户空间所有用户动态列表
-			function getAllUserSpacesByUser(tempModel9) {
-				//所需参数
-				var comData = {
-					userId: personalUTID, //用户ID,登录用户
-					publisherIds: arrayToStr(userIDs), //发布者ID,例如[1,2,3]
-					pageIndex: tempModel9.index, //当前页数
-					pageSize: 10 //每页记录数
-				};
-				// 等待的对话框
-				var wd1 = events.showWaiting();
-				postDataPro_getAllUserSpacesByUser(comData, wd1, function(data) {
-					wd1.close();
-					console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					if(data.RspCode == 0) {
-						if(data.RspData.Data.length == 0) {
-							mui.toast('暂无动态')
-							return;
+						//获取数据
+						if(info.aflag == 0) { //定制的城市
+							requestData(info.acode, 1);
+						} else { //关注的人数据
+							//81.（用户空间）获取用户所有关注的用户
+							getFocusByUser();
 						}
-						var tempModel = cities[cities.length - 1];
-						tempModel.index++;
-						//								setUserSpaceReadByUser();
-						totalCnt = data.RspData.TotalCnt;
-						var tempRspData = data.RspData.Data;
-						//获取当前回调留言的个人信息，主要是头像、昵称
-						var tempArray = [];
-						//先遍历回调数组，获取
+						//结束下拉刷新
+						self.endPullDownToRefresh();
+					}, 1000);
+				}
+			},
+			up: {
+				contentinit: '',
+				callback: function() {
+					pullFlag = 1;
+					var self = this;
+					var id = pullRefreshEl.parentNode.parentNode.id;
+					var element = document.getElementById(id);
+					var info = JSON.parse(element.getAttribute('data-info'));
+					var page = JSON.parse(element.getAttribute('data-page'));
+					if(info.aflag == 1) { //关注的人数据
+						page = info.index;
+					}
+					console.log('up ' + JSON.stringify(info));
+					console.log('up ' + JSON.stringify(page));
+					if(page) {
+						setTimeout(function() {
+							if(info.aflag == 0) { //定制的城市
+								requestData(info.acode, page.pageIndex + 1);
+							} else { //关注的人数据
+								var tempModel = cities[cities.length - 1];
+								tempModel.isRefresh = 1; //是刷新0，还是加载更多1
+								//74.(用户空间）获取多用户空间所有用户动态列表
+								getAllUserSpacesByUser(tempModel);
+							}
+							self.endPullUpToRefresh();
+						}, 1000);
+					} else {
+						self.endPullUpToRefresh();
+					}
+				}
+			}
+		});
+		pullToRefresh.push({
+			id: pullRefreshEl.id,
+			refresh: refresh
+		});
+	});
+	callBack();
+}
+
+/**
+ * 添加一条记录
+ * @param {Object} cityCode 城市代码
+ * @param {Object} data 新闻数据
+ */
+function addItems(cityCode, data) {
+	var placeholder = '../../' + window.storageKeyName.DEFAULTSCIEDUIMAGELOAD;
+	//console.log('placeholder ' + placeholder);
+	var lazyLoad = mui("#bot_ul_" + cityCode).imageLazyload({
+		placeholder: placeholder.toString(),
+		autoDestroy: false, //元素加载完后是否自动销毁当前插件对象
+	}); //懒加载控件
+	for(var i = 0; i < data.length; i++) {
+
+		//					SciEduHomeItem.addItem(document.getElementById("bot_ul_" + cityCode), data[i], function() {
+		//						lazyLoad.refresh(true);
+		//					});
+	}
+}
+
+/**
+ * 44.获取个人的订制城市
+ * @param {Object} callBack 成功后的回调
+ */
+function requestCustomizationCity(callBack) {
+	//所需参数
+	var comData = {
+		vvl: '1' //订制频道,0科教频道,1展示频道,其他待定
+	};
+	// 等待的对话框
+	var waitingDia = events.showWaiting();
+	//44.获取个人的订制城市
+	postDataPro_PostUTcity(comData, waitingDia, function(data) {
+		var eduArray = [];
+		console.log('获取个人的订制城市展现频道:' + JSON.stringify(data));
+		if(data.RspCode == 0) {
+			if(data.RspData[0].citys) {
+				//先通过‘|’将返回值分为数组
+				eduArray = data.RspData[0].citys.split('|');
+				//遍历此数组
+				for(var m in eduArray) {
+					var tempStr = eduArray[m];
+					//初始化model
+					var model_area = {
+						acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
+						aname: '', //节点名称
+						aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+					};
+					console.log('tempStr:' + tempStr);
+					//将分成的每个值，再通过‘_’拆分为model
+					var tempArea = tempStr.split('_');
+					model_area.acode = tempArea[0];
+					model_area.aname = tempArea[1];
+					//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
+					eduArray.splice(m, 1, model_area);
+				}
+				console.log('修改后的最终值为:' + JSON.stringify(eduArray));
+			}
+		} else {
+			eduArray = [];
+			//						mui.toast(data.RspTxt);
+		}
+		//如果定制城市为空
+		if(eduArray.length == 0) {
+			var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
+			console.log(JSON.stringify(uarea));
+			//加入手机号所在城市
+			eduArray.push({
+				acode: uarea.acode,
+				aname: uarea.aname,
+				aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+			});
+		}
+		//加入关注的人数据
+		eduArray.push({
+			acode: 0,
+			aname: '我关注的人',
+			aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
+			index: 1, //请求第几页数据
+			isRefresh: 0 //是刷新0，还是加载更多1
+		});
+		cities = eduArray.slice(0); //拷贝数组
+		callBack(cities);
+		waitingDia.close();
+	});
+}
+
+var requestData = function(cityCode, pageIndex) {
+	console.log('网络请求')
+	var wd = events.showWaiting();
+	/**
+	 * 请求区域内的动态
+	 */
+	postDataPro_getUserSpacesByArea({
+		userId: personalUTID, //用户ID
+		area: cityCode, //区域
+		pageIndex: pageIndex, //当前页数
+		pageSize: 10 //每页记录数
+	}, wd, function(data) {
+		events.closeWaiting();
+		console.log('展示获取的数据：' + JSON.stringify(data));
+		//记录页数
+		var page = {
+			pageIndex: pageIndex, //当前页数
+			totalPage: 0 //总页数
+		};
+		if(data.RspCode == 0) {
+			page.totalPage = data.RspData.TotalPage;
+		}
+		document.getElementById("bot_" + cityCode).setAttribute('data-page', JSON.stringify(page))
+		if(pageIndex == 1) { //获取的第一页的内容
+			//清空对应的界面
+			document.getElementById("bot_ul_" + cityCode).innerHTML = '';
+		}
+
+		if(data.RspCode == 0 && data.RspData.Data.length > 0) {
+			totalPage = data.RspData.TotalPage;
+			getPersonIds(data.RspData.Data, cityCode);
+		} else {
+			//var table = document.body.querySelector('.mui-table-view');
+			//table.innerHTML = ''
+			//events.fireToPageNone('index.html', 'closeWaiting');
+		}
+
+		//设置上拉下拉控件的状态
+		var tempRefresh;
+		for(var i = 0; i < pullToRefresh.length; i++) {
+			var id = pullToRefresh[i].id.replace('bot_sc_', '');
+			if(id == cityCode) {
+				tempRefresh = pullToRefresh[i];
+			}
+		}
+		if(page.pageIndex >= page.totalPage) {
+			//没有下一页
+			tempRefresh.refresh.endPullUpToRefresh(true);
+		} else {
+			if(pageIndex == 1) {
+				//获取第一页的数据更新当前控件
+				tempRefresh.refresh.refresh(true);
+			}
+		}
+		setTimeout(function() {
+			wd.close();
+		}, 1000);
+	})
+}
+
+//81.（用户空间）获取用户所有关注的用户
+function getFocusByUser() {
+	//所需参数
+	var comData = {
+		userId: personalUTID //用户ID
+	};
+	var wd = events.showWaiting();
+	//81.（用户空间）获取用户所有关注的用户
+	postDataPro_getFocusByUser(comData, wd, function(data) {
+		console.log('81.（用户空间）获取用户所有关注的用户：' + JSON.stringify(data));
+		wd.close();
+		if(data.RspCode == 0) {
+			userIDs = data.RspData.Users;
+			var tempModel = cities[cities.length - 1];
+			tempModel.index = 1;
+			tempModel.isRefresh = 0; //是刷新0，还是加载更多1
+			//74.(用户空间）获取多用户空间所有用户动态列表
+			getAllUserSpacesByUser(tempModel);
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+}
+
+//74.(用户空间）获取多用户空间所有用户动态列表
+function getAllUserSpacesByUser(tempModel9) {
+	//所需参数
+	var comData = {
+		userId: personalUTID, //用户ID,登录用户
+		publisherIds: arrayToStr(userIDs), //发布者ID,例如[1,2,3]
+		pageIndex: tempModel9.index, //当前页数
+		pageSize: 10 //每页记录数
+	};
+	// 等待的对话框
+	var wd1 = events.showWaiting();
+	postDataPro_getAllUserSpacesByUser(comData, wd1, function(data) {
+		wd1.close();
+		console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+			if(data.RspData.Data.length == 0) {
+				mui.toast('暂无动态')
+				return;
+			}
+			var tempModel = cities[cities.length - 1];
+			tempModel.index++;
+			//								setUserSpaceReadByUser();
+			totalCnt = data.RspData.TotalCnt;
+			var tempRspData = data.RspData.Data;
+			//获取当前回调留言的个人信息，主要是头像、昵称
+			var tempArray = [];
+			//先遍历回调数组，获取
+			for(var item in tempRspData) {
+				//当前循环的model
+				var tempModel0 = tempRspData[item];
+				//将当前model中id塞到数组
+				tempArray.push(tempModel0.PublisherId);
+				//合并数组,点赞的人
+				tempArray = tempArray.concat(tempModel0.LikeUsers);
+				console.log(JSON.stringify(tempModel0.LikeUsers));
+				tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
+				//循环当前model中的回复数组
+				for(var item1 in tempModel0.Comments) {
+					//回复中的model
+					var tempModel1 = tempModel0.Comments[item1];
+					//将回复中的id塞到数组
+					tempArray.push(tempModel1.UserId);
+					tempArray.push(tempModel1.ReplyId);
+					//
+					for(var item2 in tempModel1.Replys) {
+						//回复中的model
+						var tempModel2 = tempModel1.Replys[item2];
+						//将回复中的id塞到数组
+						tempArray.push(tempModel2.UserId);
+						tempArray.push(tempModel2.ReplyId);
+					}
+				}
+			}
+			//给数组去重
+			tempArray = arrayDupRemoval(tempArray);
+			//发送获取用户资料申请
+			var tempData = {
+				vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
+				vtp: 'g' //查询类型,p(个人)g(id串)
+			}
+			var wd = events.showWaiting();
+			//21.通过用户ID获取用户资料
+			postDataPro_PostUinf(tempData, wd, function(data1) {
+				wd.close();
+				console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+				if(data1.RspCode == 0) {
+					//循环当前的个人信息返回值数组
+					for(var i in data1.RspData) {
+						//当前model
+						var tempModel = data1.RspData[i];
+						//更新头像
+						tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
+						//循环留言数组
 						for(var item in tempRspData) {
 							//当前循环的model
 							var tempModel0 = tempRspData[item];
-							//将当前model中id塞到数组
-							tempArray.push(tempModel0.PublisherId);
-							//合并数组,点赞的人
-							tempArray = tempArray.concat(tempModel0.LikeUsers);
-							console.log(JSON.stringify(tempModel0.LikeUsers));
-							tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
+							//遍历点赞的人
+							for(var item2 in tempModel0.LikeUsers) {
+								//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
+								if(tempModel.utid == tempModel0.LikeUsers[item2]) {
+									tempModel0.LikeUsers.splice(item2, 1, tempModel);
+								}
+							}
+							//对比id是否一致
+							if(tempModel0.PublisherId == tempModel.utid) {
+								//合并
+								tempModel0 = $.extend(tempModel0, tempModel);
+								tempModel0.PublisherName = tempModel0.unick
+							}
 							//循环当前model中的回复数组
 							for(var item1 in tempModel0.Comments) {
 								//回复中的model
 								var tempModel1 = tempModel0.Comments[item1];
-								//将回复中的id塞到数组
-								tempArray.push(tempModel1.UserId);
-								tempArray.push(tempModel1.ReplyId);
+								//对比id是否一致
+								if(tempModel.utid == tempModel1.UserId) {
+									//添加参数
+									tempModel1.UserIdName = tempModel.unick;
+								}
+								if(tempModel.utid == tempModel1.ReplyId) {
+									//添加参数
+									tempModel1.ReplyIdName = tempModel.unick;
+								}
 								//
 								for(var item2 in tempModel1.Replys) {
 									//回复中的model
 									var tempModel2 = tempModel1.Replys[item2];
-									//将回复中的id塞到数组
-									tempArray.push(tempModel2.UserId);
-									tempArray.push(tempModel2.ReplyId);
-								}
-							}
-						}
-						//给数组去重
-						tempArray = arrayDupRemoval(tempArray);
-						//发送获取用户资料申请
-						var tempData = {
-							vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
-							vtp: 'g' //查询类型,p(个人)g(id串)
-						}
-						var wd = events.showWaiting();
-						//21.通过用户ID获取用户资料
-						postDataPro_PostUinf(tempData, wd, function(data1) {
-							wd.close();
-							console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
-							if(data1.RspCode == 0) {
-								//循环当前的个人信息返回值数组
-								for(var i in data1.RspData) {
-									//当前model
-									var tempModel = data1.RspData[i];
-									//更新头像
-									tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
-									//循环留言数组
-									for(var item in tempRspData) {
-										//当前循环的model
-										var tempModel0 = tempRspData[item];
-										//遍历点赞的人
-										for(var item2 in tempModel0.LikeUsers) {
-											//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
-											if(tempModel.utid == tempModel0.LikeUsers[item2]) {
-												tempModel0.LikeUsers.splice(item2, 1, tempModel);
-											}
-										}
-										//对比id是否一致
-										if(tempModel0.PublisherId == tempModel.utid) {
-											//合并
-											tempModel0 = $.extend(tempModel0, tempModel);
-											tempModel0.PublisherName = tempModel0.unick
-										}
-										//循环当前model中的回复数组
-										for(var item1 in tempModel0.Comments) {
-											//回复中的model
-											var tempModel1 = tempModel0.Comments[item1];
-											//对比id是否一致
-											if(tempModel.utid == tempModel1.UserId) {
-												//添加参数
-												tempModel1.UserIdName = tempModel.unick;
-											}
-											if(tempModel.utid == tempModel1.ReplyId) {
-												//添加参数
-												tempModel1.ReplyIdName = tempModel.unick;
-											}
-											//
-											for(var item2 in tempModel1.Replys) {
-												//回复中的model
-												var tempModel2 = tempModel1.Replys[item2];
-												//对比id是否一致
-												if(tempModel.utid == tempModel2.UserId) {
-													//添加参数
-													tempModel2.UserIdName = tempModel.unick;
-												}
-												if(tempModel.utid == tempModel2.ReplyId) {
-													//添加参数
-													tempModel2.ReplyIdName = tempModel.unick;
-												}
-											}
-										}
+									//对比id是否一致
+									if(tempModel.utid == tempModel2.UserId) {
+										//添加参数
+										tempModel2.UserIdName = tempModel.unick;
+									}
+									if(tempModel.utid == tempModel2.ReplyId) {
+										//添加参数
+										tempModel2.ReplyIdName = tempModel.unick;
 									}
 								}
-							}
-							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
-
-							var table = document.body.querySelector('.mui-table-view');
-							//判断是加载更多1，还是刷新0
-							if(tempModel9.isRefresh == 0) {
-								zonepArray = tempRspData
-							} else {
-								zonepArray = zonepArray.concat(tempRspData);
-							}
-							datasource[sliderId] = zonepArray;
-							console.log("重组后的数据：" + JSON.stringify(zonepArray));
-							setData(zonepArray, 0);
-						});
-					} else {
-						mui.toast(data.RspTxt);
-					}
-
-				})
-			}
-
-			/**
-			 * 改变顶部的城市
-			 */
-			function changeIndexHeader() {
-				if(sliderId != '' && cities.length != 0) {
-					var acode = sliderId.replace('top_', '');
-					for(var i = 0; i < cities.length; i++) {
-						if(cities[i].acode == acode) {
-							var str = '<div class="mui-slider-indicator">';
-							if(cities.length > 1) {
-								for(var j = 0; j < cities.length; j++) {
-									if(cities[j].acode == acode) {
-										str = str + '<div class="mui-indicator mui-active"></div>';
-									} else {
-										str = str + '<div class="mui-indicator"></div>';
-									}
-								}
-							}
-
-							str = str + '</div>';
-							var str_0 = "document.getElementById('title').innerText = '" + cities[i].aname + "';";
-							var str_1 = "var showSlider = document.getElementById('showSlider');";
-							var str_2 = "if(showSlider) {showSlider.innerHTML = '" + str + "';} else {";
-							var str_3 = "var element = document.createElement('div');element.id = 'showSlider';element.className = 'mui-slider';";
-							var str_4 = "element.style.height = '45px';element.style.top = '" + (localStorage.getItem('StatusHeightNo') * 1 + 10) + "px';";
-							var str_5 = "element.innerHTML = '" + str + "';document.querySelector('header').appendChild(element);}";
-							var evalJS = str_0 + str_1 + str_2 + str_3 + str_4 + str_5;
-							//console.log("evalJS " + evalJS);
-							index.evalJS(evalJS);
-						}
-					}
-				}
-			}
-
-			function addSomeEvent() {
-				//评论后，返回，刷新界面
-				window.addEventListener('refreshShow', function(data) {
-					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-					pageIndex = 1;
-					pullFlag = 0;
-					var id = sliderId.replace('top_', '');
-					if(id > 0) { //定制的城市
-						requestData(id, 1);
-					} else { //关注的人数据
-						//81.（用户空间）获取用户所有关注的用户
-						getFocusByUser();
-					}
-				})
-			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-
-				var toast = '';
-				mui.each(click, function(index, element) {
-					toast = toast + element;
-				});
-				var id = this.getAttribute('id');
-
-				click.push(id);
-				//								mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
-				click = [];
-			});
-			mui('.mui-table-view').on('tap', '.question_content', function() {
-
-				var toast = '';
-				mui.each(click, function(index, element) {
-					toast = toast + element;
-				});
-				var id = this.getAttribute('id');
-				var cityID = sliderId.replace('top_','');
-				var index = this.id.replace('question_content'+cityID+'zx','');
-				zonepArray[index].focusFlag = 1;
-				
-				events.openNewWindowWithData('../quan/space-detail.html', zonepArray[index])
-				click.push(id);
-				//								mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
-				click = [];
-			});
-				//			评论
-				mui('#sliderGroup').on('tap', '.dynamic-icon-comment', function() {
-					//				click.push('评论');
-					var pageID = sliderId.replace('top_', '')
-					tempIndex = this.id.replace('comment' + pageID + 'zx', '');
-					addComment();
-
-					window.event.stopPropagation()
-
-				});
-				//底部评论按钮
-				mui('#sliderGroup').on('tap', '.dynamic-comment-btn', function() {
-					var pageID = sliderId.replace('top_', '')
-					console.log(pageID)
-					tempIndex = this.id.replace('bottomComment' + pageID + 'zx', '');
-					addComment();
-
-					window.event.stopPropagation()
-				});
-
-				//			回复评论
-				mui('#sliderGroup').on('tap', '.replyComment', function() {
-					var pageID = sliderId.replace('top_', '')
-					tempIndex = this.id.replace('replyComment' + pageID + 'zx', '');
-					console.log('tempIndex====' + tempIndex)
-					addComment();
-
-					window.event.stopPropagation()
-
-				});
-
-				var click = []; //记录被点击的li的id和被点击元素
-				//点击关注
-				mui('#sliderGroup').on('tap', '.btn-attention',
-					function() {
-						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
-
-						var pageID = sliderId.replace('top_', '')
-						var tempId = this.id;
-						var index = this.id.replace('btn-focus' + pageID + 'zx', '');
-						//80.（用户空间）设置某用户的关注
-						//所需参数
-						var comData = {
-							userId: personalUTID, //用户ID
-							focusId: zonepArray[index].PublisherId, //关注ID
-							status: '1' //关注状态，0 不关注，1 关注
-						};
-						//返回：1为正确
-						var wd = events.showWaiting();
-						postDataPro_setUserFocus(comData, wd, function(data) {
-							wd.close();
-							console.log(JSON.stringify(data))
-							if(data.RspCode == 0) {
-								var btn = document.getElementById(tempId);
-								btn.innerHTML = '已关注'
-								btn.className = 'mui-btn mui-pull-right btn-attentioned'
-							}
-
-						})
-					}) //点击已关注
-				mui('#sliderGroup').on('tap', '.btn-attentioned', function() {
-					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
-
-					var pageID = sliderId.replace('top_', '')
-					var tempId = this.id;
-					var index = this.id.replace('btn-focus' + pageID + 'zx', '');
-					//80.（用户空间）设置某用户的关注
-					//所需参数
-					var comData = {
-						userId: personalUTID, //用户ID
-						focusId: zonepArray[index].PublisherId, //关注ID
-						status: '0' //关注状态，0 不关注，1 关注
-					};
-					//返回：1为正确
-					var wd = events.showWaiting();
-					postDataPro_setUserFocus(comData, wd, function(data) {
-						wd.close();
-						console.log(JSON.stringify(data))
-						if(data.RspCode == 0) {
-							var btn = document.getElementById(tempId);
-							btn.innerHTML = '关注'
-							btn.className = 'mui-btn mui-pull-right btn-attention'
-						}
-
-					})
-				})
-				//点赞和取消点赞
-				mui('#sliderGroup').on('tap', '.dynamic-icon-praise', function() {
-					var pageID = sliderId.replace('top_', '')
-					click.push('点赞');
-					var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
-					var index = this.id.replace('praise' + pageID + 'zx', '');
-					var color = this.style.color;
-					if(color == 'rgb(143, 143, 148)') {
-						var comData = {
-							userId: personalUTID, //用户ID
-							userSpaceId: zonepArray[index].TabId, //用户空间ID
-						};
-						var wd = events.showWaiting();
-						postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
-							wd.close();
-							if(data.RspCode == 0) {
-								var a = document.getElementById("praise" + pageID + 'zx' + index);
-								a.style.color = 'rgb(0, 165, 224)'
-								//					mui.toast('点赞成功');
-								var PraiseList = document.getElementById("PraiseList" + pageID + 'zx' + index);
-								var praiseNameList = PraiseList.getElementsByTagName("font");
-								if(praiseNameList.length > 0) {
-									var praiseName = praiseNameList[0];
-									praiseName.innerHTML = praiseName.innerHTML + '、' + personalunick;
-								} else {
-
-									PraiseList.innerHTML = '<img id= "praiseImg" src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />' +
-										'<font class="common-font-family-Regular dynamic-praise-name">' + personalunick + '</font>';
-								}
-							} else {
-								mui.toast(data.RspTxt);
-							}
-
-						})
-
-					} else {
-
-						var comData = {
-							userId: personalUTID, //用户ID
-							userSpaceId: zonepArray[index].TabId, //用户空间ID
-						};
-						var wd = events.showWaiting();
-						postDataPro_delUserSpaceLikeByUser(comData, wd, function(data) {
-							wd.close();
-							if(data.RspCode == 0) {
-								var a = document.getElementById("praise" + pageID + 'zx' + index);
-								a.style.color = 'rgb(143, 143, 148)'
-								//					mui.toast('取消点赞成功');
-								var PraiseList = document.getElementById("PraiseList" + pageID + 'zx' + index);
-								var praiseName = PraiseList.getElementsByTagName("font")[0];
-								if(praiseName.innerHTML.indexOf('、') > -1) {
-									console.log('多个人点赞')
-									praiseName.innerHTML = praiseName.innerHTML.replace('、' + personalunick, '');
-									praiseName.innerHTML = praiseName.innerHTML.replace(personalunick, '');
-								} else {
-									console.log('一个人点赞')
-
-									PraiseList.removeChild(praiseName);
-									var praiseImg = document.getElementById("praiseImg");
-									PraiseList.removeChild(praiseImg);
-
-								}
-							} else {
-								mui.toast(data.RspTxt);
-							}
-
-						})
-
-					}
-
-				});
-
-			}
-
-			/* 获取所有人的id
-			 * @param {Object} data
-			 */
-			var getPersonIds = function(data, cityCode) {
-				var personIds = [];
-				for(var i in data) {
-					personIds.push(data[i].PublisherId);
-					data[i].LikeUsers = arrayDupRemoval(data[i].LikeUsers);
-					personIds = personIds.concat(data[i].LikeUsers);
-
-					if(data[i].Comments) {
-						for(var j in data[i].Comments) {
-							if(data[i].Comments[j].UserId) {
-								personIds.push(data[i].Comments[j].UserId);
-							}
-							if(data[i].Comments[j].ReplyId) {
-								personIds.push(data[i].Comments[j].ReplyId);
-							}
-							for(var k in data[i].Comments[j].Replys) {
-								var reply = data[i].Comments[j].Replys[k]
-								personIds.push(reply.UserId);
-								personIds.push(reply.ReplyId);
 							}
 						}
 					}
 				}
-				personIds = arrayDupRemoval(personIds);
-				personIds = events.arraySingleItem(personIds);
-				getPersonalInfo(data, personIds, cityCode);
-			}
+				console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 
-			/**
-			 * 
-			 * @param {Object} data
-			 * @param {Object} ids
-			 */
+				var table = document.body.querySelector('.mui-table-view');
+				//判断是加载更多1，还是刷新0
+				if(tempModel9.isRefresh == 0) {
+					zonepArray = tempRspData
+				} else {
+					zonepArray = zonepArray.concat(tempRspData);
+				}
+				datasource[sliderId] = zonepArray;
+				console.log("重组后的数据：" + JSON.stringify(zonepArray));
+				setData(zonepArray, 0);
+			});
+		} else {
+			mui.toast(data.RspTxt);
+		}
 
-			var getPersonalInfo = function(data, ids, cityCode) {
-				var wd = events.showWaiting();
-				postDataPro_PostUinf({
-					vvl: ids.toString(), //用户id，查询的值,p传个人ID,g传ID串
-					vtp: 'g' //查询类型,p(个人)g(id串)
-				}, wd, function(personsData) {
-					wd.close();
-					console.log('展示子页面获取的个人信息：' + JSON.stringify(personsData));
-					if(personsData.RspCode == 0) {
-						data = rechargeData(data, personsData.RspData)
-						if(pullFlag == 1) {
-							//合并数组
-							zonepArray = zonepArray.concat(data);
+	})
+}
+
+/**
+ * 改变顶部的城市
+ */
+function changeIndexHeader() {
+	if(sliderId != '' && cities.length != 0) {
+		var acode = sliderId.replace('top_', '');
+		for(var i = 0; i < cities.length; i++) {
+			if(cities[i].acode == acode) {
+				var str = '<div class="mui-slider-indicator">';
+				if(cities.length > 1) {
+					for(var j = 0; j < cities.length; j++) {
+						if(cities[j].acode == acode) {
+							str = str + '<div class="mui-indicator mui-active"></div>';
 						} else {
-							zonepArray = data;
+							str = str + '<div class="mui-indicator"></div>';
 						}
-						datasource[sliderId] = zonepArray;
-						console.log("重组后的数据：" + JSON.stringify(zonepArray));
-						setData(zonepArray, cityCode);
+					}
+				}
+
+				str = str + '</div>';
+				var str_0 = "document.getElementById('title').innerText = '" + cities[i].aname + "';";
+				var str_1 = "var showSlider = document.getElementById('showSlider');";
+				var str_2 = "if(showSlider) {showSlider.innerHTML = '" + str + "';} else {";
+				var str_3 = "var element = document.createElement('div');element.id = 'showSlider';element.className = 'mui-slider';";
+				var str_4 = "element.style.height = '45px';element.style.top = '" + (localStorage.getItem('StatusHeightNo') * 1 + 10) + "px';";
+				var str_5 = "element.innerHTML = '" + str + "';document.querySelector('header').appendChild(element);}";
+				var evalJS = str_0 + str_1 + str_2 + str_3 + str_4 + str_5;
+				//console.log("evalJS " + evalJS);
+				index.evalJS(evalJS);
+			}
+		}
+	}
+}
+
+function addSomeEvent() {
+	//评论后，返回，刷新界面
+	window.addEventListener('refreshShow', function(data) {
+		var citycode = sliderId.replace('top_', '');
+		console.log(JSON.stringify(data.detail))
+		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+		pageIndex = 1;
+		pullFlag = 0;
+		if(id > 0) { //定制的城市
+			requestData(id, 1);
+		} else { //关注的人数据
+			//81.（用户空间）获取用户所有关注的用户
+			getFocusByUser();
+		}
+	})
+	mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+
+		var toast = '';
+		mui.each(click, function(index, element) {
+			toast = toast + element;
+		});
+		var id = this.getAttribute('id');
+
+		click.push(id);
+		click = [];
+	});
+	mui('.mui-table-view').on('tap', '.question_content', function() {
+
+		var toast = '';
+		mui.each(click, function(index, element) {
+			toast = toast + element;
+		});
+		var id = this.getAttribute('id');
+		var cityID = sliderId.replace('top_', '');
+		var index = this.id.replace('question_content' + cityID + 'zx', '');
+		zonepArray[index].focusFlag = 1;
+
+		events.openNewWindowWithData('../quan/space-detail.html', zonepArray[index])
+		click.push(id);
+		//								mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
+		click = [];
+	});
+	mui('.mui-table-view').on('tap', '.show', function() {
+
+		var toast = '';
+		mui.each(click, function(index, element) {
+			toast = toast + element;
+		});
+		var id = this.getAttribute('id');
+		var cityID = sliderId.replace('top_', '');
+		var index = this.id.replace('show' + cityID + 'zx', '');
+		zonepArray[index].focusFlag = 1;
+
+		events.openNewWindowWithData('../quan/space-detail.html', zonepArray[index])
+		click.push(id);
+		click = [];
+	})
+	mui('.mui-table-view').on('tap', '.show2', function() {
+
+		var toast = '';
+		mui.each(click, function(index, element) {
+			toast = toast + element;
+		});
+		var id = this.getAttribute('id');
+		var cityID = sliderId.replace('top_', '');
+		var index = this.id.replace('show2' + cityID + 'zx', '');
+		zonepArray[index].focusFlag = 1;
+
+		events.openNewWindowWithData('../quan/space-detail.html', zonepArray[index])
+		click.push(id);
+		click = [];
+	})
+	//			评论
+	mui('#sliderGroup').on('tap', '.dynamic-icon-comment', function() {
+		//				click.push('评论');
+		var pageID = sliderId.replace('top_', '')
+		tempIndex = this.id.replace('comment' + pageID + 'zx', '');
+		addComment();
+
+		window.event.stopPropagation()
+
+	});
+	//底部评论按钮
+	mui('#sliderGroup').on('tap', '.dynamic-comment-btn', function() {
+		var pageID = sliderId.replace('top_', '')
+		console.log(pageID)
+		tempIndex = this.id.replace('bottomComment' + pageID + 'zx', '');
+		addComment();
+
+		window.event.stopPropagation()
+	});
+
+	//			回复评论
+	mui('#sliderGroup').on('tap', '.replyComment', function() {
+		var pageID = sliderId.replace('top_', '')
+		tempIndex = this.id.replace('replyComment' + pageID + 'zx', '');
+		console.log('tempIndex====' + tempIndex)
+		addComment();
+
+		window.event.stopPropagation()
+
+	});
+
+	var click = []; //记录被点击的li的id和被点击元素
+	//点击关注
+	mui('#sliderGroup').on('tap', '.btn-attention',
+		function() {
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
+
+			var pageID = sliderId.replace('top_', '')
+			var tempId = this.id;
+			var index = this.id.replace('btn-focus' + pageID + 'zx', '');
+			//80.（用户空间）设置某用户的关注
+			//所需参数
+			var comData = {
+				userId: personalUTID, //用户ID
+				focusId: zonepArray[index].PublisherId, //关注ID
+				status: '1' //关注状态，0 不关注，1 关注
+			};
+			//返回：1为正确
+			var wd = events.showWaiting();
+			postDataPro_setUserFocus(comData, wd, function(data) {
+				wd.close();
+				console.log(JSON.stringify(data))
+				if(data.RspCode == 0) {
+					var btn = document.getElementById(tempId);
+					btn.innerHTML = '已关注'
+					btn.className = 'mui-btn mui-pull-right btn-attentioned'
+				}
+
+			})
+		}) //点击已关注
+	mui('#sliderGroup').on('tap', '.btn-attentioned', function() {
+		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
+
+		var pageID = sliderId.replace('top_', '')
+		var tempId = this.id;
+		var index = this.id.replace('btn-focus' + pageID + 'zx', '');
+		//80.（用户空间）设置某用户的关注
+		//所需参数
+		var comData = {
+			userId: personalUTID, //用户ID
+			focusId: zonepArray[index].PublisherId, //关注ID
+			status: '0' //关注状态，0 不关注，1 关注
+		};
+		//返回：1为正确
+		var wd = events.showWaiting();
+		postDataPro_setUserFocus(comData, wd, function(data) {
+			wd.close();
+			console.log(JSON.stringify(data))
+			if(data.RspCode == 0) {
+				var btn = document.getElementById(tempId);
+				btn.innerHTML = '关注'
+				btn.className = 'mui-btn mui-pull-right btn-attention'
+			}
+
+		})
+	})
+	//点赞和取消点赞
+	mui('#sliderGroup').on('tap', '.dynamic-icon-praise', function() {
+		var pageID = sliderId.replace('top_', '')
+		click.push('点赞');
+		var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
+		var index = this.id.replace('praise' + pageID + 'zx', '');
+		var color = this.style.color;
+		if(color == 'rgb(143, 143, 148)') {
+			var comData = {
+				userId: personalUTID, //用户ID
+				userSpaceId: zonepArray[index].TabId, //用户空间ID
+			};
+			var wd = events.showWaiting();
+			postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
+				wd.close();
+				if(data.RspCode == 0) {
+					var a = document.getElementById("praise" + pageID + 'zx' + index);
+					a.style.color = 'rgb(0, 165, 224)'
+					//					mui.toast('点赞成功');
+					var PraiseList = document.getElementById("PraiseList" + pageID + 'zx' + index);
+					var praiseNameList = PraiseList.getElementsByTagName("font");
+					if(praiseNameList.length > 0) {
+						var praiseName = praiseNameList[0];
+						praiseName.innerHTML = praiseName.innerHTML + '、' + personalunick;
 					} else {
-						events.fireToPageNone('index.html', 'closeWaiting');
+
+						PraiseList.innerHTML = '<img id= "praiseImg" src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />' +
+							'<font class="common-font-family-Regular dynamic-praise-name">' + personalunick + '</font>';
 					}
-				})
-			}
-			/**
-			 * 重组数据
-			 * @param {Object} data 要重组的数据
-			 * @param {Object} personsData 添加的个人信息
-			 */
-			var rechargeData = function(data, personsData) {
-				for(var i in data) {
-					for(var j in personsData) {
-						if(data[i].PublisherId == personsData[j].utid) {
-							data[i].PublisherName = personsData[j].unick;
-							data[i].PublisherImg = personsData[j].uimg;
-						}
-						//遍历点赞的人
-						for(var item2 in data[i].LikeUsers) {
-							if(personsData[j].utid == data[i].LikeUsers[item2]) {
-								data[i].LikeUsers[item2] = mui.extend(data[i].LikeUsers[item2], personsData[j])
-							}
+				} else {
+					mui.toast(data.RspTxt);
+				}
 
-						}
+			})
 
-						if(data[i].Comments.length > 0) {
-							for(var m in data[i].Comments) {
-								if(data[i].Comments[m].UserId == personsData[j].utid) {
+		} else {
 
-									data[i].Comments[m].UserIdName = personsData[j].unick;
-								}
-								if(data[i].Comments[m].ReplyId == personsData[j].utid) {
-									data[i].Comments[m].ReplyIdName = personsData[j].unick;
-								}
-								for(var k in data[i].Comments[m].Replys) {
-									var reply = data[i].Comments[m].Replys[k];
-									if(reply.UserId == personsData[j].utid) {
-										reply.UserIdName = personsData[j].unick;
+			var comData = {
+				userId: personalUTID, //用户ID
+				userSpaceId: zonepArray[index].TabId, //用户空间ID
+			};
+			var wd = events.showWaiting();
+			postDataPro_delUserSpaceLikeByUser(comData, wd, function(data) {
+				wd.close();
+				if(data.RspCode == 0) {
+					var a = document.getElementById("praise" + pageID + 'zx' + index);
+					a.style.color = 'rgb(143, 143, 148)'
+					//					mui.toast('取消点赞成功');
+					var PraiseList = document.getElementById("PraiseList" + pageID + 'zx' + index);
+					var praiseName = PraiseList.getElementsByTagName("font")[0];
+					if(praiseName.innerHTML.indexOf('、') > -1) {
+						console.log('多个人点赞')
+						praiseName.innerHTML = praiseName.innerHTML.replace('、' + personalunick, '');
+						praiseName.innerHTML = praiseName.innerHTML.replace(personalunick, '');
+					} else {
+						console.log('一个人点赞')
 
-									}
-									if(reply.ReplyId == personsData[j].utid) {
-										reply.ReplyIdName = personsData[j].unick;
-									}
-
-								}
-
-							}
-						}
+						PraiseList.removeChild(praiseName);
+						var praiseImg = document.getElementById("praiseImg");
+						PraiseList.removeChild(praiseImg);
 
 					}
+				} else {
+					mui.toast(data.RspTxt);
 				}
-				return data; //返回重组后数据
-			}
-			/**
-			 * 放置数据
-			 * @param {Object} data
-			 */
-			var setData = function(data, cityCode) {
-				//				var table = document.body.querySelector('.mui-table-view');
-				var id = 'bot_' + sliderId.replace('top_', '');
-				var table = document.getElementById("bot_ul_" + cityCode)
-				table.setAttribute('data-info', JSON.stringify(data));
-				table.innerHTML = ''
 
-				for(var i = 0; i < data.length; i++) {
-					id = i;
-					var data1 = addData(i, cityCode);
-					dynamiclistitem.addItem(table, data1, id);
+			})
+
+		}
+
+	});
+
+}
+
+/* 获取所有人的id
+ * @param {Object} data
+ */
+var getPersonIds = function(data, cityCode) {
+	var personIds = [];
+	for(var i in data) {
+		personIds.push(data[i].PublisherId);
+		data[i].LikeUsers = arrayDupRemoval(data[i].LikeUsers);
+		personIds = personIds.concat(data[i].LikeUsers);
+
+		if(data[i].Comments) {
+			for(var j in data[i].Comments) {
+				if(data[i].Comments[j].UserId) {
+					personIds.push(data[i].Comments[j].UserId);
 				}
-				dynamiclistitem.questionContent();
-				events.fireToPageNone('index.html', 'closeWaiting');
+				if(data[i].Comments[j].ReplyId) {
+					personIds.push(data[i].Comments[j].ReplyId);
+				}
+				for(var k in data[i].Comments[j].Replys) {
+					var reply = data[i].Comments[j].Replys[k]
+					personIds.push(reply.UserId);
+					personIds.push(reply.ReplyId);
+				}
 			}
-			//加载数据
-			function addData(index, cityCode) {
-				//[[InfoList],[ImageList],[InteractionList]]动态的信息
-				var datasource1 = [];
-				var InfoList = []; //头部和内容
-				var ImageList = []; //内容的图片
-				var EncAddrList = [];
-				var InteractionList = []; //底部内容
+		}
+	}
+	personIds = arrayDupRemoval(personIds);
+	personIds = events.arraySingleItem(personIds);
+	getPersonalInfo(data, personIds, cityCode);
+}
 
-				//个人信息和内容
-				//[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
-				//判断img是否为null，或者空
-				var tempModel = zonepArray[index];
-				tempModel.PublisherImg = updateHeadImg(tempModel.PublisherImg, 2)
-				var personalImage = tempModel.PublisherImg;
-				var personalName = tempModel.PublisherName;
-				var time = tempModel.PublishDate;
-				var contentText = tempModel.MsgContent;
-				InfoList.push(personalImage);
-				InfoList.push(personalName);
-				InfoList.push(time);
-				InfoList.push(contentText);
-				InfoList.push(tempModel.IsFocused);
+/**
+ * 
+ * @param {Object} data
+ * @param {Object} ids
+ */
 
-				//内容的图片
-				if(tempModel.EncImgAddr != '') {
-					var EncImgAddrs = tempModel.EncImgAddr.split('|');
-					var EncAddr = tempModel.EncAddr.split('|');
-					//内容的图片
-					for(var i = 0; i < EncImgAddrs.length; i++) {
-						ImageList.push(EncImgAddrs[i])
-						EncAddrList.push(EncAddr[i]);
+var getPersonalInfo = function(data, ids, cityCode) {
+	var wd = events.showWaiting();
+	postDataPro_PostUinf({
+		vvl: ids.toString(), //用户id，查询的值,p传个人ID,g传ID串
+		vtp: 'g' //查询类型,p(个人)g(id串)
+	}, wd, function(personsData) {
+		wd.close();
+		console.log('展示子页面获取的个人信息：' + JSON.stringify(personsData));
+		if(personsData.RspCode == 0) {
+			data = rechargeData(data, personsData.RspData)
+			if(pullFlag == 1) {
+				//合并数组
+				zonepArray = zonepArray.concat(data);
+			} else {
+				zonepArray = data;
+			}
+			datasource[sliderId] = zonepArray;
+			console.log("重组后的数据：" + JSON.stringify(zonepArray));
+			setData(zonepArray, cityCode);
+		} else {
+			events.fireToPageNone('index.html', 'closeWaiting');
+		}
+	})
+}
+/**
+ * 重组数据
+ * @param {Object} data 要重组的数据
+ * @param {Object} personsData 添加的个人信息
+ */
+var rechargeData = function(data, personsData) {
+	for(var i in data) {
+		for(var j in personsData) {
+			if(data[i].PublisherId == personsData[j].utid) {
+				data[i].PublisherName = personsData[j].unick;
+				data[i].PublisherImg = personsData[j].uimg;
+			}
+			//遍历点赞的人
+			for(var item2 in data[i].LikeUsers) {
+				if(personsData[j].utid == data[i].LikeUsers[item2]) {
+					data[i].LikeUsers[item2] = mui.extend(data[i].LikeUsers[item2], personsData[j])
+				}
+
+			}
+
+			if(data[i].Comments.length > 0) {
+				for(var m in data[i].Comments) {
+					if(data[i].Comments[m].UserId == personsData[j].utid) {
+
+						data[i].Comments[m].UserIdName = personsData[j].unick;
 					}
-				}
+					if(data[i].Comments[m].ReplyId == personsData[j].utid) {
+						data[i].Comments[m].ReplyIdName = personsData[j].unick;
+					}
+					for(var k in data[i].Comments[m].Replys) {
+						var reply = data[i].Comments[m].Replys[k];
+						if(reply.UserId == personsData[j].utid) {
+							reply.UserIdName = personsData[j].unick;
 
-				//底部
-				//[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
-				var introduce = '上传了' + ImageList.length + '张图片到相册《手机相册》';
-				var viewCount = tempModel.ReadCnt;
-				var praiseList = [];
-				if(tempModel.LikeUsers.length != 0) {
-					for(var i = 0; i < tempModel.LikeUsers.length; i++)
-						praiseList.push(tempModel.LikeUsers[i].unick);
-				}
+						}
+						if(reply.ReplyId == personsData[j].utid) {
+							reply.ReplyIdName = personsData[j].unick;
+						}
 
-				//[commentList]:评论列表
-				//1.评论[commenter,content]，评论者，评论内容
-				//2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
-				var commentList = [];
-
-				for(var i = 0; i < tempModel.Comments.length; i++) {
-
-					var tempComment = tempModel.Comments[i];
-					commentList.push(tempComment);
+					}
 
 				}
-
-				InteractionList.push(introduce);
-				InteractionList.push(viewCount);
-				InteractionList.push(praiseList);
-				InteractionList.push(commentList);
-
-				datasource1 = [InfoList, ImageList, InteractionList, EncAddrList, cityCode]
-
-				//				console.log('datasource' + JSON.stringify(datasource))
-				return datasource1;
 			}
 
-			function addComment() {
-				events.openNewWindowWithData('add-comment.html', {
-					tempIndex: tempIndex,
-					zonepArray: zonepArray
-				})
+		}
+	}
+	return data; //返回重组后数据
+}
+/**
+ * 放置数据
+ * @param {Object} data
+ */
+var setData = function(data, cityCode) {
+	//				var table = document.body.querySelector('.mui-table-view');
+	var id = 'bot_' + sliderId.replace('top_', '');
+	var table = document.getElementById("bot_ul_" + cityCode)
+	table.setAttribute('data-info', JSON.stringify(data));
+	table.innerHTML = ''
 
-			}
-		</script>
+	for(var i = 0; i < data.length; i++) {
+		id = i;
+		var data1 = addData(i, cityCode);
+		dynamiclistitem.addItem(table, data1, id);
+	}
+	dynamiclistitem.questionContent();
+	events.fireToPageNone('index.html', 'closeWaiting');
+}
+//加载数据
+function addData(index, cityCode) {
+	//[[InfoList],[ImageList],[InteractionList]]动态的信息
+	var datasource1 = [];
+	var InfoList = []; //头部和内容
+	var ImageList = []; //内容的图片
+	var EncAddrList = [];
+	var InteractionList = []; //底部内容
+
+	//个人信息和内容
+	//[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
+	//判断img是否为null，或者空
+	var tempModel = zonepArray[index];
+	tempModel.PublisherImg = updateHeadImg(tempModel.PublisherImg, 2)
+	var personalImage = tempModel.PublisherImg;
+	var personalName = tempModel.PublisherName;
+	var time = tempModel.PublishDate;
+	var contentText = tempModel.MsgContent;
+	InfoList.push(personalImage);
+	InfoList.push(personalName);
+	InfoList.push(time);
+	InfoList.push(contentText);
+	InfoList.push(tempModel.IsFocused);
+
+	//内容的图片
+	if(tempModel.EncImgAddr != '') {
+		var EncImgAddrs = tempModel.EncImgAddr.split('|');
+		var EncAddr = tempModel.EncAddr.split('|');
+		//内容的图片
+		for(var i = 0; i < EncImgAddrs.length; i++) {
+			ImageList.push(EncImgAddrs[i])
+			EncAddrList.push(EncAddr[i]);
+		}
+	}
+
+	//底部
+	//[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
+	var introduce = '上传了' + ImageList.length + '张图片到相册《手机相册》';
+	var viewCount = tempModel.ReadCnt;
+	var praiseList = [];
+	if(tempModel.LikeUsers.length != 0) {
+		for(var i = 0; i < tempModel.LikeUsers.length; i++)
+			praiseList.push(tempModel.LikeUsers[i].unick);
+	}
+
+	//[commentList]:评论列表
+	//1.评论[commenter,content]，评论者，评论内容
+	//2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
+	var commentList = [];
+
+	for(var i = 0; i < tempModel.Comments.length; i++) {
+
+		var tempComment = tempModel.Comments[i];
+		commentList.push(tempComment);
+
+	}
+
+	InteractionList.push(introduce);
+	InteractionList.push(viewCount);
+	InteractionList.push(praiseList);
+	InteractionList.push(commentList);
+
+	datasource1 = [InfoList, ImageList, InteractionList, EncAddrList, cityCode]
+
+	//				console.log('datasource' + JSON.stringify(datasource))
+	return datasource1;
+}
+
+function addComment() {
+	events.openNewWindowWithData('add-comment.html', {
+		tempIndex: tempIndex,
+		zonepArray: zonepArray
+	})
+
+}</script>
 
 	</body>
 

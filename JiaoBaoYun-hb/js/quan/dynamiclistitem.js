@@ -60,7 +60,11 @@ var dynamiclistitem = (function($, mod) {
 		var html7 = '<div id="question_content' + data[4] + idFlag + id+'" style = "color:black;font-size:14px" class="ellipsis-show question_content">';
 		//内容
 		var html8 = InfoList[3];
-		var html9 = '</div><div class="showAll" style="color:gray;text-align:right;float:right">展开全部>></div></div></div>';
+		var html99 = '<div id="show' + data[4] + idFlag + id+'" class="showAll show" style="color:gray;">展开全部</div>'
+		if(document.getElementById("spaceDetail")){
+			html99='';
+		}
+		var html9 = '</div>'+html99+'</div></div>';
 		html = html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8 + html9;
 
 		var div = document.createElement('div');
@@ -185,6 +189,15 @@ var dynamiclistitem = (function($, mod) {
 			praiseList[19] = praiseList[19] + '等' + praiseList.length + '人觉得很赞';
 		} else {}
 		var commentList = InteractionData[3]; //评论列表数组
+		commentList = commentList.concat(commentList)
+		commentList = commentList.concat(commentList)
+		commentList = commentList.concat(commentList)
+		commentList = commentList.concat(commentList)
+		commentList = commentList.concat(commentList)
+		commentList = commentList.concat(commentList)
+		commentList = commentList.concat(commentList)
+		
+
 
 		//[commentList]:评论列表1.评论[commenter,content]评论者，评论内容
 		//						2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
@@ -231,19 +244,6 @@ var dynamiclistitem = (function($, mod) {
 			htmlPraiseList = htmlPraiseList + '</div></div>';
 		}
 
-		//		//点赞列表
-		//		$.each(praiseList, function(index, element) {
-		//			var html4 = '';
-		//			var html5 = '';
-		//			if(index == 0) { //第一个点赞者
-		//				
-		//				
-		//			} else if(index >= 1) {
-		//				html5 = '、' + element ;
-		//			}
-		//			htmlPraiseList = htmlPraiseList + html4 + html5;
-		//		});
-		//		htmlPraiseList = htmlPraiseList +html4+ '</div></div>';
 
 		//评论列表
 		var htmlCommentList1 = '<div id="commentList' + data[4] + idFlag + id + '" class="mui-col-sm-12 mui-col-xs-12">';
@@ -284,9 +284,15 @@ var dynamiclistitem = (function($, mod) {
 		});
 
 		htmlCommentList = htmlCommentList1 + htmlCommentList2 + '</div>';
-		var htmlCommentBtn = '<div  class="mui-col-sm-12 mui-col-xs-12"><button id="bottomComment' + data[4] + idFlag + id + '" type="button" class="mui-btn dynamic-comment-btn"><p class="mui-pull-left">评论</p></button></div>';
+		var showAll
 
-		html = html + htmlPraiseList + htmlCommentList //+ htmlCommentBtn;
+		if(commentList.length>20&&(!document.getElementById("spaceDetail"))){
+			showAll = '<div id="show2' + data[4] + idFlag + id+'" class="show2" style="color:gray;">展开全部</div>'
+		}else{
+			showAll = '';
+		}
+        
+		html = html + htmlPraiseList + htmlCommentList+showAll //+ htmlCommentBtn;
 
 		var div = document.createElement('div');
 		div.className = 'mui-row mui-row-padding-8px';
@@ -295,7 +301,6 @@ var dynamiclistitem = (function($, mod) {
 		liElement.appendChild(div);
 
 		ulElement.appendChild(liElement);
-		mod.questionContent(data[0][3]);
 	};
 
 	return mod;

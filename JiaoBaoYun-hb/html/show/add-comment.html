@@ -85,8 +85,8 @@
 						postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
 							wd.close();
 							console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow')
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep')
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow',tempIndex)
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep',tempIndex)
 							mui.back();
 
 						})
@@ -101,8 +101,8 @@
 						postDataPro_addUserSpaceComment(comData, wd, function(data) {
 							wd.close();
 							console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow')
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep')
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow',tempIndex)
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep',tempIndex)
 							mui.back();
 
 						})
