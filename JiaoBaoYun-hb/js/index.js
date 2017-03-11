@@ -5,7 +5,7 @@
  */
 
 mui.init();
-
+var noReadCount=0;
 mui.plusReady(function() {
 	//	events.preload("../qiuzhi/expert-detail.html",100);
 	var waitingDia = events.showWaiting();
@@ -149,6 +149,7 @@ mui.plusReady(function() {
 			if(data.RspCode == 0) {
 				var noRead = document.getElementById('aboutme_noRead');
 				NoReadCnt = data.RspData.NoReadCnt + NoReadCnt;
+				noReadCount = NoReadCnt;
 				if(NoReadCnt == 0) {
 					noRead.innerHTML = NoReadCnt;
 					noRead.style.visibility = 'hidden';
@@ -264,6 +265,7 @@ mui.plusReady(function() {
 	 * @param {Object} container
 	 */
 	var addAboutMe = function(container) {
+		console.log(11111)
 		var aboutme = document.createElement('a');
 		aboutme.className = 'mui-icon  mui-pull-right mui-plus-visible';
 		aboutme.id = 'aboutme'
@@ -275,14 +277,23 @@ mui.plusReady(function() {
 		span.className = 'mui-badge mui-badge-danger'
 		span.style.marginLeft = "-15px";
 		span.style.marginTop = "4px";
-		span.style.visibility = 'hidden'
-		span.innerHTML = '3'
+		if(noReadCount==0){
+			span.style.visibility = 'hidden'
+			span.innerHTML = '3'
+		}else{
+			span.style.visibility = 'visible'
+			span.innerHTML = noReadCount
+		}
+		
+		
 		aboutme.appendChild(span)
 		container.appendChild(aboutme);
+		console.log(container.innerHTML)
 		events.addTap('aboutme', function() {
 			events.openNewWindow('../quan/aboutme.html')
 			var noRead = document.getElementById('aboutme_noRead');
 			noRead.style.visibility = 'hidden';
+			noReadCount=0;
 
 		})
 	}
@@ -318,6 +329,7 @@ mui.plusReady(function() {
 		events.openNewWindow('../quan/aboutme.html')
 		var noRead = document.getElementById('aboutme_noRead');
 		noRead.style.visibility = 'hidden';
+		noReadCount=0;
 
 	})
 	var pubDynamic = document.getElementById('pubDynamic');

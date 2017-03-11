@@ -21,7 +21,7 @@
 		<div class="mui-content">
 			<p id="askTitle" style="margin-left: 10px;font-size: 14px;margin-top: 5px;"></p>
 			<div class="input-content">
-				<textarea id="msg-content" placeholder="添加评论"></textarea>
+				<textarea id="msg-content" placeholder="评论（字数不超过200字）"></textarea>
 
 			</div>
 
@@ -71,6 +71,10 @@
 						} else {
 							replyUserId = tempModel.Replys[replyId].UserId;
 							ReplyIdName = tempModel.Replys[replyId].UserIdName;
+						}
+						if(replyUserId==replyUserId){
+							mui.toast('不可以回复自己');
+							return;
 						}
 
 						var comData = {

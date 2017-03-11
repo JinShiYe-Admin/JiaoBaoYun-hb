@@ -629,8 +629,8 @@
 			tempModel.uimg = updateHeadImg(tempModel.uimg)
 
 			var personalImage = tempModel.uimg;
-			var personalName = tempModel.unick;
-			var time = tempModel.PublishDate;
+			var personalName =events.shortForString(tempModel.unick, 15) ;
+			var time = modifyTimeFormat(tempModel.PublishDate);
 			var contentText = tempModel.MsgContent;
 			InfoList.push(personalImage);
 			InfoList.push(personalName);
