@@ -716,6 +716,37 @@ var postDataPro_PostVerInfo = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINURL + 'PostVerInfo', enData, commonData, 0, wd, callback);
 }
 
+//48.通过区域代码及相应参数获取对应分页新闻
+//所需参数
+//		var comData = {
+//			top:'',//每页行数
+//			vvl:'',//查询的区域代码,省份截取城市代码前两位,城市截取城市代码的前4位
+//			vvl1:'',//页码,获取第几页
+//			vvl2:'',//审核状态,审核状态,0未审,1已审,2拒绝,全部-1
+//			vvl3:''//标题模拟查询,标题模拟字符,可留空字符
+//		};
+//返回值：
+var postDataPro_PostTnewsC = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostTnewsC', enData, commonData, 1, wd, callback);
+}
+
+//49.审核科教频道新闻
+//所需参数
+//		var comData = {
+//			vvl:'',//文章ID
+//			vvl1:''//审核状态,审核状态,0未审,1已审,2拒绝,全部-1
+//		};
+//返回值：
+var postDataPro_PostTnewsE = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostTnewsE', enData, commonData, 1, wd, callback);
+}
+
 //---------------------------------------家校圈-----------------------------------------------------------------------------------------------------------
 //家校圈接口
 

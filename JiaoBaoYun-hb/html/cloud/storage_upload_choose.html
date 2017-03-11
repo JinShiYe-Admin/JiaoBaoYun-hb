@@ -169,7 +169,6 @@
 					if(upFile != null) {
 						//console.log("upload:" + JSON.stringify(upFile));
 						//跳转到传输列表
-						plus.nativeUI.showWaiting(storageKeyName.WAITING);
 						events.fireToPageWithData('storage_transport.html', 'addUpload', {
 							path: upFile.path, //路径
 							fname: upFile.fname, //文件名

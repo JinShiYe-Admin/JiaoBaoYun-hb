@@ -63,6 +63,11 @@
 				height: 53px;
 				padding-top: 10px;
 			}
+
+			.mui-checkbox input[type=checkbox]:checked:before,
+			.mui-radio input[type=radio]:checked:before {
+				color: #1A9BFF;
+			}
 		</style>
 	</head>
 
@@ -76,14 +81,14 @@
 			<span id="noqun" class="mui-icon mui-icon-plus qun-add" style="display: none;position: absolute;top: 80px;">新增群按钮</span>
 			<div id="qun_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="visibility: hidden;">
 				<div id="qunList" class="mui-scroll">
-					<div id="qunAdd" class="mui-icon mui-icon-plus qun-add"style="margin-top: 3px;"></div>
+					<div id="qunAdd" class="mui-icon mui-icon-plus qun-add" style="margin-top: 3px;"></div>
 				</div>
 			</div>
 			<div id="slider_group" class="mui-slider-group" style="visibility: hidden;">
 			</div>
 			<div id="popover" class="mui-popover">
 				<ul class="mui-table-view">
-					<div style="height: 40px;line-height: 40px;">
+					<div style="height: 40px;line-height: 40px;font-size: 16px;">
 						选择身份:
 					</div>
 					<li style="height: 45px;line-height: 45px;">
@@ -105,8 +110,8 @@
 						</div>
 					</li>
 					<li class="popover-button">
-						<button id="commit" type="button" class="mui-btn mui-btn-blue">确定</button>
-						<button id="cancle" type="button" class="mui-btn mui-btn-blue mui-btn-outlined">取消</button>
+						<button id="commit" type="button" class="mui-btn mui-btn-blue" style="border: 1px solid #1A9BFF;background-color: #1A9BFF;">确定</button>
+						<button id="cancle" type="button" class="mui-btn mui-btn-blue mui-btn-outlined" style="border: 1px solid #1A9BFF;color:#1A9BFF ;">取消</button>
 					</li>
 				</ul>
 			</div>
@@ -888,7 +893,7 @@
 							}
 						}
 					} else {
-						if(data.RspCode != 9){
+						if(data.RspCode != 9) {
 							mui.toast(data.RspTxt);
 						}
 					}

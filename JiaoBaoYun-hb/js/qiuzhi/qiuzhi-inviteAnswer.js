@@ -14,7 +14,7 @@ mui.plusReady(function() {
 	//			events.openNewWindowWithData('../qiuzhi/expert-detail.html', ExpertsInfo);
 	//		});
 
-	mui('.mui-table-view').on('tap', '.Ask-Title', function() {
+	mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 		//获取到当前控件的父节点
 		var parent = this.parentNode.parentNode;
 		//得到父节点的值
@@ -182,6 +182,8 @@ var createList = function(listContainer, record) {
 	li.className = 'mui-table-view-cell';
 	li.setAttribute('data-info', JSON.stringify(record));
 	//拼接显示
-	li.innerHTML = "<img src='" + record.uimg + "' /><div><p><span>" + record.unick + "</span>邀请<span>" + ExpertsInfo.unick + "</span>回答问题</p><p class='Ask-Title'>[" + record.AskChannel + "]" + record.AskTitle + "</p></div>";
+	li.innerHTML = '<div class="cell-container"><img src="' + record.uimg + '" style = "width:40px;height:40px;"/><div><p><span>" '+ 
+	record.unick + '"</span>邀请<span>"' + ExpertsInfo.unick + '"</span>回答问题</p><p class="Ask-Title" style= "font-size:1.4rem;">[' +
+	record.AskChannel + ']' + record.AskTitle + '</p></div></div>';
 	listContainer.appendChild(li);
 }

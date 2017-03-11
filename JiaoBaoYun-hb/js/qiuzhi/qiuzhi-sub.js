@@ -271,7 +271,7 @@ var getInnerHTML = function(cell) {
 		'<h5 class="single-line ask-title" askId="' + cell.TabId + '">' + cell.AskTitle + '</h5>';
 	if(cell.AnswerContent && cell.AnswerContent.length > 0) {
 		inner += '<div class="answer-container"><div class="imgs-container">' + getImgs(cell) + '</div>' +
-			'<p class="answer-content triple-line" answerInfo="' + cell.AnswerId + '">' + cell.AnswerManName+":"+cell.AnswerContent + '</p>' +
+			'<p class="answer-content triple-line" answerInfo="' + cell.AnswerId + '">' + isAnonymity(cell)+":"+cell.AnswerContent + '</p>' +
 			'</div></div>' +
 			'<div class="extra-info"></div>' +
 			'<p class="question-bottom">' + cell.IsLikeNum + '赞·' + cell.CommentNum + '评论·' + setFocusCondition(cell) + '</p></div>'
@@ -279,6 +279,12 @@ var getInnerHTML = function(cell) {
 		inner += '<p class="question-bottom">' + setFocusCondition(cell) + '</p></div>'
 	}
 	return inner;
+}
+var isAnonymity=function(cell){
+	if(cell.IsAnonym){
+		return "匿名用户"
+	}
+	return cell.AnswerManName;
 }
 var setFocusCondition = function(cell) {
 	if(cell.IsFocused) {
