@@ -1191,7 +1191,8 @@
 	},
 	"html/cloud/storage_main_choose.html": {
 		"resources": [
-			"css/cloud/file.css"
+			"css/cloud/file.css",
+			"fonts/mui.ttf"
 		]
 	},
 	"html/qiuzhi/qiuzhi-inviteAnswer.html": {
