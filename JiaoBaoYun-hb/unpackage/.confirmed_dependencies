@@ -6,7 +6,8 @@
 			"html/sciedu/sciedu_home.html",
 			"html/index/mine.html",
 			"html/show/show_home_1.html",
-			"html/qiuzhi/qiuzhi_home.html"
+			"html/qiuzhi/qiuzhi_home.html",
+			"html/quan/aboutme.html"
 		],
 		"resources": [
 			"image/utils/default_personalimage.png",
@@ -803,7 +804,8 @@
 			"js/mui.min.js",
 			"js/utils/events.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/cloud/app_notes_sub.html"
@@ -814,7 +816,8 @@
 			"image/cloud/A_folder.png",
 			"js/cloud/AndroidFileSystem.js",
 			"fonts/mui.ttf",
-			"css/cloud/file.css"
+			"css/cloud/file.css",
+			"fonts/fangzheng.ttf"
 		]
 	},
 	"html/mine/approval-apply.html": {
@@ -1334,6 +1337,47 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/quan/aboutme.html": {
+		"resources": [
+			"html/quan/aboutme_sub.html",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"fonts/fangzheng.ttf"
+		],
+		"refer": [
+			"html/quan/aboutme_sub.html"
+		]
+	},
+	"html/quan/aboutme_sub.html": {
+		"resources": [
+			"css/quan/about-me.css",
+			"js/quan/about-me.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/publicHomeworkProtocol.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/utils/events.js",
+			"css/utils/common.css",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"html/quan/reply-aboutMe.html"
 		]
 	}
 }

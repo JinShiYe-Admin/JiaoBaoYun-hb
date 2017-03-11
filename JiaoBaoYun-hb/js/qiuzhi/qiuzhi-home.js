@@ -48,6 +48,7 @@ function requestAllChannels(callback) {
 				ChannelName: "全部" //话题名称
 			}
 			temArr.splice(0, 0, allChannel);
+			window.myStorage.setItem('allChannels', temArr);
 			callback(temArr);
 		} else {
 			mui.toast(data.RspTxt);

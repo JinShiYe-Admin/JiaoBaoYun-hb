@@ -96,12 +96,18 @@
 				//注册列表项点击事件
 				mui('#list-container .mui-table-view').on('tap', 'li', function() {
 					//获取存储值
-					var tabid = JSON.parse(this.getAttribute('tabid'));
-					console.log('dianji 标题' + JSON.stringify(tabid));
+					var index = this.id.replace('li', '');
+					var modelTemp = answerArray[index];
+					console.log('dianji 标题' + JSON.stringify(modelTemp));
 					//跳转界面
-					events.fireToPageNone('qiuzhi-question.html', 'askId', tabid);
-					events.fireToPageNone('qiuzhi-questionSub.html', 'askId', tabid);
-					plus.webview.getWebviewById('qiuzhi-question.html').show();
+					//					events.fireToPageNone('qiuzhi-question.html', 'askId', tabid);
+					//					events.fireToPageNone('qiuzhi-questionSub.html', 'askId', tabid);
+					//					plus.webview.getWebviewById('qiuzhi-question.html').show();
+					events.openNewWindowWithData('qiuzhi-question.html', {
+						askID: modelTemp.TabId, //问题id
+						channelInfo: modelTemp, //当前话题
+						allChannels: window.myStorage.getItem('allChannels') //全部话题
+					});
 				});
 
 				//注册点击搜索事件
@@ -365,7 +371,6 @@
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
 				li.id = 'li' + index;
-				li.setAttribute("tabid", record.TabId);
 				//拼接显示
 
 				//				<li class="mui-table-view-cell">
@@ -374,9 +379,10 @@
 				//	<p>57赞·3评论·关注</p>
 				//</li>
 				//li.innerHTML = "<p>" + record.CommentContent + "</p><div><p><img src='"+record.qChannelImg+"'>["+record.qChannel+"]"+record.AskTitle+"</p><p>"+record.AnswerContent+"</p></div><p>"+record.LikeNum+" 赞 · "+record.cCreatTime + " ·"+record.CommentId+" 关注</p>";
-				li.innerHTML = "<p>" + record.AskTitle + "</p><p>" + record.AnswerContent + "</p><p>" + record.IsLikeNum + "赞·" + record.CommentNum + "评论</p>";
+				li.innerHTML = "<p>" + record.AskTitle.replace(keyWord,"<span>"+keyWord+"</span>") + "</p><p>" + record.AnswerContent + "</p><p>" + record.IsLikeNum + "赞·" + record.CommentNum + "评论</p>";
 				listContainer.appendChild(li);
 			}
+			
 		</script>
 	</body>
 

@@ -97,7 +97,7 @@ var zanNoReply = function(msgType) {
 }
 var ifHaveReferContent = function(cellData) {
 	if(cellData.referContent) {
-		return '<div class="refer-content break-words">' + '<span>' + cellData.UserOwnerNick + ':</span>' + cellData.referContent + '</div>'
+		return '<div class="refer-content extra-words break-words">' + '<span>' + events.shortForString(cellData.UserOwnerNick,6)  + ':</span>' + cellData.referContent + '</div>'
 	} else {
 		return '';
 	}
@@ -146,8 +146,8 @@ var addReplyLisetner = function() {
 	window.addEventListener('hasReplied', function(e) {
 		var replyValue = e.detail;
 		var p = document.createElement('p');
-		p.className = "break-words";
-		p.innerHTML = '<span>' + pName + '</span>回复<span>' + events.shortForString(repliedCell.MaxUserName, 4) + ':</span>' + replyValue;
+		p.className = "extra-words break-words";
+		p.innerHTML = '<span>' + pName + '</span>回复<span>' + events.shortForString(repliedCell.MaxUserName, 6) + ':</span>' + replyValue;
 		repliedItem.appendChild(p);
 	});
 }
@@ -184,7 +184,7 @@ var addReplyLisetner = function() {
 //			})
 //			break;
 //
-//			//4为其他用户留言
+//			//为其他用户留言
 //		case 4:
 //			//5为留言的回复
 //		case 5:
@@ -244,27 +244,27 @@ var getCellData = function(cell) {
 	switch(cell.MsgType) {
 		//其他用户评论
 		case 1:
-			cellData.title = events.shortForString(cell.MaxUserName, 4) + ' 评论了我';
+			cellData.title = events.shortForString(cell.MaxUserName, 6) + ' 评论了我';
 
 			break;
 			//评论的回复
 		case 2:
-			cellData.title = events.shortForString(cell.MaxUserName, 4) + " 回复";
+			cellData.title = events.shortForString(cell.MaxUserName, 6) + " 回复";
 			break;
 			//其他用户点赞
 		case 3:
-			cellData.title = events.shortForString(cell.MaxUserName, 4) + " 赞了我";
+			cellData.title = events.shortForString(cell.MaxUserName, 6) + " 赞了我";
 			break;
 			//其他用户留言
 		case 4:
-			cellData.title = events.shortForString(cell.MaxUserName, 4) + " 给我留言";
+			cellData.title = events.shortForString(cell.MaxUserName, 6) + " 给我留言";
 			break;
 			//留言的回复
 		case 5:
-			cellData.title = events.shortForString(cell.MaxUserName, 4) + " 给我留言的回复";
+			cellData.title = events.shortForString(cell.MaxUserName, 6) + " 给我留言的回复";
 			break;
 		case 6:
-			cellData.title = events.shortForString(cell.UserName, 4) + ' 的作业提醒';
+			cellData.title = events.shortForString(cell.UserName, 6) + ' 的作业提醒';
 			break;
 		default:
 			break;
@@ -274,7 +274,7 @@ var getCellData = function(cell) {
 		var messages = '';
 		if(cellData.MsgType != 4) {
 			if(cell.Content) {
-				messages += ('<p class="break-words"><span>' + events.shortForString(cell.UserName, 4) + ':</span>' + cell.Content + '</p>')
+				messages += ('<p class="extra-words break-words"><span>' + events.shortForString(cell.UserName, 6) + ':</span>' + cell.Content + '</p>')
 			}
 		}
 
@@ -282,9 +282,9 @@ var getCellData = function(cell) {
 			cell.MsgArray.forEach(function(msg, i, msgArray) {
 				if(msg.MsgContent) {
 					if(msg.MsgToName) {
-						messages += ('<p class="break-words" ><span>' + events.shortForString(msg.MsgFromName, 4) + '</span>回复<span>' + events.shortForString(msg.MsgToName, 4) + ':</span>' + msg.MsgContent + '</p>');
+						messages += ('<p class="extra-words break-words" ><span>' + events.shortForString(msg.MsgFromName, 6) + '</span>回复<span>' + events.shortForString(msg.MsgToName, 6) + ':</span>' + msg.MsgContent + '</p>');
 					} else {
-						messages += ('<p class="break-words" ><span>' + events.shortForString(msg.MsgFromName, 4) + ':</span>' + msg.MsgContent + '</p>');
+						messages += ('<p class="extra-words break-words" ><span>' + events.shortForString(msg.MsgFromName, 6) + ':</span>' + msg.MsgContent + '</p>');
 					}
 				}
 
@@ -447,6 +447,10 @@ var requireHomeworkAlert = function(aboutMeData) {
 		console.log('与我相关界面获取的作业提醒：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			alertTotalPage = data.RspData.TotalPage;
+			if(totalPage==0&&alertTotalPage==0){
+				mui.toast('暂无数据！')
+				return;
+			}
 			if(!aboutMeData) {
 				aboutMeData = [];
 			}
@@ -459,6 +463,7 @@ var requireHomeworkAlert = function(aboutMeData) {
 			allData.sort(function(a, b) {
 				return -((new Date(a.MsgDate.replace(/-/g, '/')).getTime()) - (new Date(b.MsgDate.replace(/-/g, '/')).getTime()));
 			})
+			
 			console.log('与我相关界面获取的所有数据:' + JSON.stringify(allData))
 			//获取人员信息
 			getRoleInfos(allData);

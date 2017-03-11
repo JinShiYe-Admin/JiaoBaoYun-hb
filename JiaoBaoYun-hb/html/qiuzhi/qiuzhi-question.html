@@ -26,6 +26,11 @@
 				//---获取数据并传递数据---start---
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var data = main.data; //接收A页面传入参数值
+				//从搜索界面跳转的数据，TabId是问题id，得转换为话题id
+				var temp0 = data.channelInfo.AskChannelId;
+				if (temp0>0) {
+					data.channelInfo.TabId = temp0;
+				}
 				console.log('qiuzhi-question.html:' + JSON.stringify(data));
 				events.createSubAppendMain(main, 'qiuzhi-questionSub.html', data, function(sub) {
 					setTimeout(function() {

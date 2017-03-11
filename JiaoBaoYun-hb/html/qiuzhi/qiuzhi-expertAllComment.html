@@ -9,6 +9,25 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/qiuzhi/qiuzhi-expertAllComment.css" rel="stylesheet" />
+		<style>
+			.mui-table-view-cell p:last-child,p:first-child  {
+				-webkit-line-clamp: 3;
+				/*用来限制在一个块元素显示的文本的行数*/
+				display: -webkit-box;
+				/*必须结合的属性，将对象作为弹性伸缩盒子模型显示*/
+				-webkit-box-orient: vertical;
+				/*必须结合的属性 ，设置或检索伸缩盒对象的子元素的排列方式*/
+				overflow: hidden;
+			}
+			
+			.mui-table-view-cell div p:nth-child(1)
+			{
+				display: block;
+			}
+				.mui-table-view-cell div {
+				width: 100%;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -20,7 +39,46 @@
 			<div class="mui-scroll-wrapper">
 				<div class="mui-scroll">
 					<ul id="list-container" class="mui-table-view">
-
+						<!--<li class="mui-table-view-cell">
+							<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+							<div>
+								<p><img src=''>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+								<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+							</div>
+							<p>" + record.LikeNum + " 赞 · " + record.CommentDate +'</p>
+						</li>
+						<li class="mui-table-view-cell">
+							<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+							<div>
+								<p><img src=''>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+								<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+							</div>
+							<p>" + record.LikeNum + " 赞 · " + record.CommentDate +'</p>
+						</li>
+						<li class="mui-table-view-cell">
+							<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+							<div>
+								<p><img src=''>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+								<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+							</div>
+							<p>" + record.LikeNum + " 赞 · " + record.CommentDate +'</p>
+						</li>
+						<li class="mui-table-view-cell">
+							<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+							<div>
+								<p><img src=''>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+								<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+							</div>
+							<p>" + record.LikeNum + " 赞 · " + record.CommentDate +'</p>
+						</li>
+						<li class="mui-table-view-cell">
+							<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+							<div>
+								<p><img src=''>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+								<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+							</div>
+							<p>" + record.LikeNum + " 赞 · " + record.CommentDate +'</p>
+						</li>-->
 					</ul>
 				</div>
 			</div>
@@ -56,13 +114,13 @@
 					//33.获取某个用户的评论列表
 					getCommentsByUser(ExpertsInfo.UserId);
 				});
-				
+
 				//点击cell,跳转回答详情页
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					var index = this.id.replace('li', '');
-				  	events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', answerArray[index]);
+					events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', answerArray[index]);
 					plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
-				}) 
+				})
 
 				//上拉下拉注册
 				mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
@@ -83,6 +141,7 @@
 						}
 					},
 					up: {
+						contentinit:"",
 						callback: function() {
 							var self = this;
 							console.log("上拉加载更多");
@@ -92,12 +151,17 @@
 								getCommentsByUser(ExpertsInfo.UserId);
 							} else {
 								mui.toast('没有更多了');
+							
 							}
 							setTimeout(function() {
 								//结束下拉刷新
 								self.endPullUpToRefresh();
+								if(mui(".mui-table-view-cell").length<10)
+								{
+									mui(".mui-pull-loading")[0].innerHTML="";
+								}
 							}, 1000);
-							
+
 						}
 					}
 				});
@@ -142,7 +206,7 @@
 			var setAnswerRecord = function(list) {
 				var listContainer = document.getElementById('list-container');
 				for(var i in list) {
-					createList(listContainer, list[i],i);
+					createList(listContainer, list[i], i);
 				}
 			}
 			/**
@@ -150,13 +214,13 @@
 			 * @param {Object} listContainer
 			 * @param {Object} record
 			 */
-			var createList = function(listContainer, record,index) {
+			var createList = function(listContainer, record, index) {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
 				li.id = 'li' + index;
 				//拼接显示
-				li.innerHTML = "<p>" + record.CommentContent + "</p><div><p><img src='" + getChannelIcon(record) + "'>[" +record.AskChannel + ']' + record.AskTitle + "</p><p>" + record.AnswerContent + "</p></div><p>" + record.LikeNum + " 赞 · " + record.CommentDate +'</p>';
-				
+				li.innerHTML = "<p>" + record.CommentContent + "</p><div><p><img src='" + getChannelIcon(record) + "'>[" + record.AskChannel + ']' + record.AskTitle + "</p><p>" + record.AnswerContent + "</p></div><p>" + record.LikeNum + " 赞 · " + record.CommentDate + '</p>';
+
 				listContainer.appendChild(li);
 			}
 			var getChannelIcon = function(cell) {

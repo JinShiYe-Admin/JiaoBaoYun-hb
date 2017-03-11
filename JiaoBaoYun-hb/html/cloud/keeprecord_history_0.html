@@ -64,6 +64,7 @@
 				/*标题*/
 				display: inline;
 				color: #323232;
+				font-weight: 900;
 			}
 
 			.history-date {
@@ -81,6 +82,7 @@
 				/*内容*/
 				color: #808080;
 				font-size: 14px;
+				margin-top: 5px;
 			}
 
 			.record-imge {
@@ -89,18 +91,39 @@
 			}
 
 			.record-picture {
+				/*显示图片区域*/
 				overflow: hidden;
 				position: relative;
 				float: left;
 				text-align: center;
+				margin-top: 5px;
+				margin-bottom: 5px;
 			}
 
 			.record-picture-num {
+				/*剩余图片数量*/
 				position: absolute;
 				color: white;
 				background-color: rgba(0, 0, 0, .3);
 				width: 100%;
 				font-size: 25px;
+			}
+
+			.ellipsis-show {
+				/*内容*/
+				display: -webkit-box;
+				overflow: hidden;
+				white-space: normal !important;
+				text-overflow: ellipsis;
+				word-wrap: break-word;
+				-webkit-line-clamp: 3;
+				-webkit-box-orient: vertical;
+			}
+
+			.show-all {
+				display: none;
+				color: #CCCCCC;
+				font-size: 14px;
 			}
 		</style>
 	</head>
@@ -113,90 +136,8 @@
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper mui-fullscreen" style="z-index: 1;">
 			<div class="mui-scroll">
-				<div id="data_scroll"></div>
-				<!--数据列表-->
-				<!--<ul id="date" class="mui-table-view">
-					<div class="mui-table-view-cell history-date">
-						2017/3/10
-					</div>
-					<div id="date_call">
-						<li class="mui-table-view-cell mui-media">
-							<div class="mui-media-body history-title">
-								艾叶子 迟到
-							</div>
-							<div class="mui-media-body mui-pull-right history-time">
-								08:40
-							</div>
-							<div class="mui-media-body history-content">
-								说明 : 一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十 一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
-							</div>
-						</li>
-						<li class="mui-table-view-cell">
-							<div class="mui-media-body history-title">
-								艾叶子 迟到
-							</div>
-							<div class="mui-media-body mui-pull-right history-time">
-								08:40
-							</div>
-						</li>
-					</div>
-					<div id="date_record">
-						<li class="mui-table-view-cell">
-							<div class="mui-media-body history-title">
-								艾叶子
-							</div>
-							<div class="mui-media-body mui-pull-right history-time">
-								08:40
-							</div>
-							<div class="mui-media-body history-content">
-								一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十 一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
-							</div>
-							<div class="record-imge">
-								<div class="record-picture" style="width: 105.60000000000001px; height: 79.2px; margin-right: 6.6000000000000005px;">
-									<img src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/3_1489051967671977.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/3_1489051967671977.png" data-preview-group="211" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height='79.2px';this.style.width='initial';this.style.marginLeft=-(this.offsetWidth-105.60000000000001)/2+'px';}else{this.style.marginTop=-(this.offsetHeight-79.2)/2+'px';}">
-								</div>
-								<div class="record-picture" style="width: 105.60000000000001px; height: 79.2px; margin-right: 6.6000000000000005px;">
-									<img src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/3_1489051967671977.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/3_1489051967671977.png" data-preview-group="211" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height='79.2px';this.style.width='initial';this.style.marginLeft=-(this.offsetWidth-105.60000000000001)/2+'px';}else{this.style.marginTop=-(this.offsetHeight-79.2)/2+'px';}">
-								</div>
-								<div class="record-picture" style="width: 105.60000000000001px; height: 79.2px; margin-right: 0px;">
-									<div class="record-picture-num" style="line-height: 79.2px;">+5</div>
-									<img src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/2_1489051967668974.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/2_1489051967668974.png" data-preview-group="211" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height='79.2px';this.style.width='initial';this.style.marginLeft=-(this.offsetWidth-105.60000000000001)/2+'px';}else{this.style.marginTop=-(this.offsetHeight-79.2)/2+'px';}">
-								</div>
-							</div>
-						</li>
-						<li class="mui-table-view-cell">
-							<div class="mui-media-body history-title">
-								艾叶子
-							</div>
-							<div class="mui-media-body mui-pull-right history-time">
-								08:40
-							</div>
-							<div class="record-imge">
-								<div class="record-picture" style="width: 105.60000000000001px; height: 79.2px; margin-right: 6.6000000000000005px;">
-									<img src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/3_1489051967671977.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/3_1489051967671977.png" data-preview-group="211" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height='79.2px';this.style.width='initial';this.style.marginLeft=-(this.offsetWidth-105.60000000000001)/2+'px';}else{this.style.marginTop=-(this.offsetHeight-79.2)/2+'px';}">
-								</div>
-								<div class="record-picture" style="width: 105.60000000000001px; height: 79.2px; margin-right: 6.6000000000000005px;">
-									<img src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/3_1489051967671977.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/3_1489051967671977.png" data-preview-group="211" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height='79.2px';this.style.width='initial';this.style.marginLeft=-(this.offsetWidth-105.60000000000001)/2+'px';}else{this.style.marginTop=-(this.offsetHeight-79.2)/2+'px';}">
-								</div>
-								<div class="record-picture" style="width: 105.60000000000001px; height: 79.2px; margin-right: 0px;">
-									<div class="record-picture-num" style="line-height: 79.2px;">+5</div>
-									<img src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/2_1489051967668974.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/2_1489051967668974.png" data-preview-group="211" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height='79.2px';this.style.width='initial';this.style.marginLeft=-(this.offsetWidth-105.60000000000001)/2+'px';}else{this.style.marginTop=-(this.offsetHeight-79.2)/2+'px';}">
-								</div>
-							</div>
-						</li>
-						<li class="mui-table-view-cell">
-							<div class="mui-media-body history-title">
-								艾叶子
-							</div>
-							<div class="mui-media-body mui-pull-right history-time">
-								08:40
-							</div>
-							<div class="mui-media-body history-content">
-								一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十 一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
-							</div>
-						</li>
-					</div>
-				</ul>-->
+				<div id="data_scroll">
+				</div>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -274,6 +215,18 @@
 				mui('#data_scroll').on('tap', '.record-picture-num', function() {
 					previewImage.open(document.getElementById("img_" + this.getAttribute('data-id')))
 				});
+
+				mui('#data_scroll').on('tap', '.show-all', function() {
+					var str = this.innerText;
+					var id = this.id.replace('_show', '');
+					if(str == '显示全部') {
+						this.innerText = '收起';
+						document.getElementById(id + "_content").style.webkitLineClamp = 'inherit';
+					} else if(str == '收起') {
+						this.innerText = '显示全部';
+						document.getElementById(id + "_content").style.webkitLineClamp = '3';
+					}
+				});
 			});
 
 			/**
@@ -325,6 +278,7 @@
 						for(var i = 0; i < tempRspData.length; i++) {
 							createItem(tempRspData[i]);
 						}
+						//console.log(document.getElementById("data_scroll").innerHTML)
 
 						if(data.RspData.Data.length == 0 && pageIndex == 1) {
 							mui.toast('班级历史记录为空');
@@ -332,8 +286,6 @@
 					} else {
 						mui.toast(data.RspTxt);
 					}
-
-					console.log('pullRefresh ' + JSON.stringify(pullRefresh));
 					if(page.pageIndex >= page.totalPage) {
 						//没有下一页
 						pullRefresh.endPullUpToRefresh(true);
@@ -343,7 +295,10 @@
 							pullRefresh.refresh(true);
 						}
 					}
-					wd.close();
+
+					setTimeout(function() {
+						wd.close();
+					}, 500)
 				});
 			}
 
@@ -362,13 +317,13 @@
 					var element = document.createElement('ul');
 					element.className = 'mui-table-view';
 					element.id = dateItem;
-					element.innerHTML = '<div class="mui-table-view-cell history-date">' + dateItem + '</div><div id="' + dateItem + '_call"></div><div id="' + dateItem + '_record"></div>';
+					element.innerHTML = '<div class="mui-table-view-cell history-date">' + dateItem + '</div><div id="' + dateItem + '_data"></div>';
 					document.getElementById("data_scroll").appendChild(element);
 				}
 
 				var html_first = '<div id="' + data.TabId + '_title' + '" class="mui-media-body history-title"></div>\
 							<div class="mui-media-body mui-pull-right history-time">' + timeItem + '</div>\
-							<div id="' + data.TabId + '_content' + '" class="mui-media-body history-content"></div>';
+							<div id="' + data.TabId + '_content' + '" class="mui-media-body history-content ellipsis-show"></div><div id="' + data.TabId + '_show' + '" class="show-all">显示全部</div>';
 				var html_media = ''; //多媒体
 
 				var width = (document.getElementById("data_scroll").offsetWidth - 30) * 0.32;
@@ -394,9 +349,9 @@
 							html_3 = 'display: none;';
 						}
 						if(i == 2 && imageArray.length > 3) {
-							html_2 = '<div data-id="' + data.TabId + '_' + i + '" class="record-picture-num" style="line-height: ' + height + 'px;">+' + (imageArray.length - 3) + '</div>'
+							html_2 = '<div data-id="' + data.TabId + '_' + i + '" class="record-picture-num" style="line-height: ' + (height + 1) + 'px;">+' + (imageArray.length - 3) + '</div>'
 						}
-						html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px; margin-bottom: ' + marginBottom + 'px;' + html_3 + '">\
+						html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px;' + html_3 + '">\
 									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-' + width + ')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-' + height + ')/2+\'px\';}">\
 								</div>';
 					}
@@ -408,7 +363,6 @@
 				var content = ''; //内容
 				if(data.NoteType == 1) { //点到
 					element.innerHTML = html_first;
-					document.getElementById(dateItem + '_call').appendChild(element);
 
 					title = data.stuname + ' ' + data.CheckTypeStr;
 					if(data.MsgContent != '') {
@@ -416,13 +370,29 @@
 					}
 				} else if(data.NoteType == 2) { //记事
 					element.innerHTML = html_first + html_media;
-					document.getElementById(dateItem + '_record').appendChild(element);
-
 					title = data.stuname;
 					content = data.MsgContent;
 				}
+
+				document.getElementById(dateItem + '_data').appendChild(element);
 				document.getElementById(data.TabId + '_title').innerText = title;
-				document.getElementById(data.TabId + '_content').innerText = content;
+				if(content == '') {
+					document.getElementById(data.TabId + '_content').style.display = 'none';
+				} else {
+					var height_0;
+					var height_1;
+					var contentEl = document.getElementById(data.TabId + '_content');
+					contentEl.innerText = content;
+
+					contentEl.style.webkitLineClamp = '4';
+					height_0 = contentEl.offsetHeight;
+					contentEl.style.webkitLineClamp = '3';
+					height_1 = contentEl.offsetHeight;
+					if(height_0 > height_1) {
+						//内容高度大于三行
+						document.getElementById(data.TabId + "_show").style.display = 'inline';
+					}
+				}
 			}
 		</script>
 	</body>

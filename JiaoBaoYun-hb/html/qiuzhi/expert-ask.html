@@ -120,13 +120,44 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">他的提问</h1>
+			<h1 class="mui-title">全部提问</h1>
 		</header>
 		<div id="refreshContainer" class="mui-content mui-fullscreen" style="z-index:0">
 			<div class="mui-scroll-wrapper">
 				<div class="mui-scroll">
 					<ul id="list-container" class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-
+						<!--<li class="mui-table-view-cell">
+							<div class="mui-table">
+								<div class="mui-table-cell mui-col-xs-12">
+									<h4 class="mui-ellipsis">啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</h4>
+									<p class="mui-h6 mui-ellipsis">' + datasource[i].AnswerNum + '回答 ' + datasource[i].AskTime + ' ' + datasource[i].FocusNum + '关注</p>
+								</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-table">
+								<div class="mui-table-cell mui-col-xs-12">
+									<h4 class="mui-ellipsis">啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</h4>
+									<p class="mui-h6 mui-ellipsis">' + datasource[i].AnswerNum + '回答 ' + datasource[i].AskTime + ' ' + datasource[i].FocusNum + '关注</p>
+								</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-table">
+								<div class="mui-table-cell mui-col-xs-12">
+									<h4 class="mui-ellipsis">啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</h4>
+									<p class="mui-h6 mui-ellipsis">' + datasource[i].AnswerNum + '回答 ' + datasource[i].AskTime + ' ' + datasource[i].FocusNum + '关注</p>
+								</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-table">
+								<div class="mui-table-cell mui-col-xs-12">
+									<h4 class="mui-ellipsis">啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</h4>
+									<p class="mui-h6 mui-ellipsis">' + datasource[i].AnswerNum + '回答 ' + datasource[i].AskTime + ' ' + datasource[i].FocusNum + '关注</p>
+								</div>
+							</div>
+						</li>-->
 					</ul>
 				</div>
 			</div>
@@ -154,7 +185,7 @@
 	mui.plusReady(function() {
 		ExpertsInfo = plus.webview.currentWebview().data;
 		//25.获取某个用户的提问列表
-		getAsksByUser(ExpertsInfo.UserId);
+	
 		console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
 		mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 			var index = this.id.replace('li', '');
@@ -162,6 +193,7 @@
 			events.fireToPageNone('qiuzhi-questionSub.html', 'askId', datasource[index].AskId);
 			plus.webview.getWebviewById('qiuzhi-question.html').show();
 		});
+		getAsksByUser(ExpertsInfo.UserId);
 		mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 			down: {
 				callback: function() {
@@ -229,18 +261,29 @@
 	};
 
 	function addData() {
+		var dt_now=new Date();
+		var int_year=dt_now.getYear();
 		for(var i = 0; i < datasource.length; i++) {
+			var str_Time="";
+			var dt_item= new Date(datasource[i].AskTime.replace("-","/"));
+			if(int_year==dt_item.getYear())
+			{
+				str_Time= events.format(dt_item,"MM-dd hh:mm")
+			}
+			else{
+				str_Time=events.format(dt_item,"yyyy-MM-dd hh:mm")
+			}
 			var list = document.getElementById("list-container");
 			var li = document.createElement("li");
 			li.id = 'li' + i;
 			li.className = 'mui-table-view-cell';
 			li.innerHTML = '<div class="mui-table"><div class="mui-table-cell mui-col-xs-12">' +
 				'<h4 class="mui-ellipsis">' + datasource[i].AskTitle +
-				'</h4><p class="mui-h6 mui-ellipsis">' + datasource[i].AnswerNum + '回答 ' + datasource[i].AskTime + ' ' + datasource[i].FocusNum + '关注</p></div></div>'
+				'</h4><p class="mui-h6 mui-ellipsis">' + datasource[i].AnswerNum + '回答  ' + datasource[i].FocusNum + '关注  ' + str_Time +'</p></div></div>'
 			list.appendChild(li);
 		}
-
 	}
+
 </script>
 </body>
 

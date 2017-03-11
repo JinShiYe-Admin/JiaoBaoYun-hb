@@ -45,7 +45,6 @@ mui.plusReady(function() {
 	events.preload('qiuzhi-addAnswer.html');
 
 	askID = mainData.askID;
-
 	//5.获取某个问题的详情
 	requestAskDetail();
 	//13.获取是否已对某个问题关注

@@ -19,7 +19,7 @@
 
 .comment-content {
 	font-size: 1.6rem;
-	color: #000000;
+	color: #323232;
 	padding: .5rem;
 }
 
@@ -28,6 +28,7 @@
 }
 
 .reply {
+	color: #1A9BFF !important;
 	float: right;
 }
 
@@ -79,11 +80,17 @@ p span {
 	color: #3969a5;
 }
 .title-title{
-	color: #292c29;
+	color: #323232;
 }
 .title-words{
 	color: #636563;
 }
 .break-words{
 	word-wrap: break-word;
+}
+.extra-words{
+	color: #323232;
+}
+.extra-words>span{
+	color: #1A9BFF;
 }

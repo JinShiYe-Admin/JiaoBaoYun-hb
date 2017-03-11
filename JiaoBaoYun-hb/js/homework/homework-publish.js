@@ -324,7 +324,7 @@ function requestPublishHomework() {
 		}
 	}
 	if(realClasses.length==0){
-		mui.toast('请选择班级！');
+		mui.toast('当前未选择班级！');
 		return;
 	}
 	//组装学生数组串，

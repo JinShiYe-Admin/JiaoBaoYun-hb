@@ -2229,7 +2229,8 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"js/utils/events.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2562,7 +2563,8 @@
 					"js/utils/events.js",
 					"css/mui.min.css",
 					"fonts/iconfont.ttf",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
