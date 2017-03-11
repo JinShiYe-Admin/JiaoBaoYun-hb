@@ -2154,7 +2154,13 @@
 					"js/utils/RSAEncrypt.js",
 					"css/quan/class_space.css",
 					"js/libs/crypto-js/crypto-js.js",
-					"css/quan/custom-textarea.css"
+					"css/quan/custom-textarea.css",
+					"js/utils/cryption.js",
+					"js/utils/compress.js",
+					"css/homework/publish-answer.css",
+					"fonts/fangzheng.ttf",
+					"js/utils/CloudFileUtil.js",
+					"js/qiniu/qiniu.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2854,7 +2860,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -2947,9 +2954,16 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/utils/cryption.js",
+					"js/utils/CloudFileUtil.js",
+					"js/utils/compress.js",
+					"js/qiniu/qiniu.js",
+					"fonts/fangzheng.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"html/qiuzhi/atExpert.html"
+				],
 				"priority": 0
 			},
 			"html/quan/parentZone-sub.html": {
@@ -3366,7 +3380,9 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/RSAEncrypt.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/utils/customizeCity.html"
+				],
 				"priority": 0
 			},
 			"html/qiuzhi/qiuzhi-expertAllAnswer.html": {
@@ -3548,6 +3564,29 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/qiuzhi/atExpert.html": {
+				"resources": [
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"image/utils/default_personalimage.png",
+					"css/iconfont/iconfont.css"
 				],
 				"refer": [],
 				"priority": 0
