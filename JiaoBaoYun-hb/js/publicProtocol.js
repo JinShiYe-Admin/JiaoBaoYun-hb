@@ -63,7 +63,7 @@ var arrayToStr = function(array) {
 	return tempStr;
 }
 
-//修改数组，改变格式
+//将时间转换为显示的格式
 var modifyTimeFormat = function(str) {
 	var tempStr = '';
 	var dt_now = new Date();
