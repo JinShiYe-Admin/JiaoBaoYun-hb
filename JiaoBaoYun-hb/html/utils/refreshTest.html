@@ -66,7 +66,10 @@
 							flagRef = 0;
 							//24.获取某个用户的回答列表
 							getAnswersByUser(ExpertsInfo.UserId);
-							self.endPullDownToRefresh();
+							setTimeout(function() {
+								//结束下拉刷新
+								self.endPullDownToRefresh();
+							}, 1000);
 						}
 					},
 					up: {
@@ -80,7 +83,13 @@
 							}else{
 								mui.toast('没有更多了');
 							}
-							self.endPullUpToRefresh();
+							setTimeout(function() {
+								//结束下拉刷新
+								self.endPullUpToRefresh();
+								if(mui(".mui-table-view-cell").length < 10) {
+									mui(".mui-pull-loading")[0].innerHTML = "";
+								}
+							}, 1000);
 						}
 					}
 				});
