@@ -97,7 +97,7 @@ var studentdynamic = (function($, mod) {
 	}
 
 	/**
-	 * 增加一项学生动态
+	 * 增加笔记
 	 * @param {Object} ulElement 父元素
 	 * @param {Object} data 动态的数据数组[[date],content,imageUrl]日期数组，动态内容，动态图片
 	 * @param {Object} id 动态的id
