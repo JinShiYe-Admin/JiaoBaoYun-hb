@@ -102,9 +102,11 @@ var requireHomeworkInfo = function() {
 		homeworkId: workInfo.HomeworkId
 	}, wd, function(data) {
 		wd.close();
+		console.log("获取的作业信息详情："+JSON.stringify(data))
 		if(data.RspCode == 0) {
 			var homeworkInfo = data.RspData;
 			workInfo.teaFiles = data.RspData.File;
+			jQuery.extend(workInfo, data.RspData);
 		}
 		setHomeWorkInfo(workInfo);
 	})
@@ -116,6 +118,7 @@ var requireHomeworkInfo = function() {
  * "Result":"哦哦哦哦哦哦","StudentId":1,"StudentName":null,"UploadTime":"2016-12-17 11:08:43"
  */
 var setHomeWorkInfo = function() {
+	console.log("要放置的作业数据："+JSON.stringify(workInfo))
 	document.getElementById('submit-time').innerText = workInfo.UploadTime;
 	var homeworkInfo = document.getElementById('homework-info');
 	events.clearChild(homeworkInfo);
@@ -208,9 +211,11 @@ var ceateAnswerPinfo = function(homeworkInfo, type) {
  */
 var createAnswerImgs = function(homeworkInfo, imgs, type) {
 	var div = document.createElement('div');
+	var win_width=document.getElementById("homework-info").offsetWidth;
+	var img_width=(win_width-15)/3;
 	var imgsInner = '';
 	for(var i in imgs) {
-		imgsInner += '<img class="answer-img" src="' + imgs[i].ThumbUrl +
+		imgsInner += '<img class="answer-img" src="' + imgs[i].ThumbUrl +'" style="width:'+img_width+'px;height:'+img_width+'px;"'+
 			'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + type + '"/>';
 	}
 	div.innerHTML = imgsInner;

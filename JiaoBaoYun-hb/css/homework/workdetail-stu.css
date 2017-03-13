@@ -27,7 +27,7 @@ html,body,.mui-content{
 	margin-top: 1rem;
 }
 .homework-detail{
-	padding: 1rem;
+	padding: 15px;
 	/*margin-bottom: 8.8rem;*/
 }
 .startWork-container{
@@ -65,4 +65,7 @@ html,body,.mui-content{
 }
 .homework-img{
 	padding: 0 3px;
+}
+.brief-imgs{
+	width: 100%;
 }
