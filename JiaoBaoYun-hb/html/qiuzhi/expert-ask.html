@@ -189,9 +189,13 @@
 		console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
 		mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 			var index = this.id.replace('li', '');
-			events.fireToPageNone('qiuzhi-question.html', datasource[index].AskId);
-			events.fireToPageNone('qiuzhi-questionSub.html', 'askId', datasource[index].AskId);
-			plus.webview.getWebviewById('qiuzhi-question.html').show();
+			var modelTemp = datasource[index];
+			//跳转界面
+			events.openNewWindowWithData('qiuzhi-question.html', {
+				askID: modelTemp.AskId, //问题id
+				channelInfo: modelTemp, //当前话题
+				allChannels: window.myStorage.getItem('allChannels') //全部话题
+			});
 		});
 		getAsksByUser(ExpertsInfo.UserId);
 		mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({

@@ -15,15 +15,16 @@ mui.plusReady(function() {
 	//		});
 
 	mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-		//获取到当前控件的父节点
-		var parent = this.parentNode.parentNode;
-		//得到父节点的值
-		var info = JSON.parse(parent.getAttribute('data-info'));
-		console.log('dianji 标题' + JSON.stringify(info));
+		//获取存储值
+		var index = this.id.replace('li', '');
+		var modelTemp = answerArray[index];
+		console.log('dianji 标题' + JSON.stringify(modelTemp));
 		//跳转界面
-		events.fireToPageNone('qiuzhi-question.html', 'askId', info.AskId);
-		events.fireToPageNone('qiuzhi-questionSub.html', 'askId', info.AskId);
-		plus.webview.getWebviewById('qiuzhi-question.html').show();
+		events.openNewWindowWithData('qiuzhi-question.html', {
+			askID: modelTemp.AskId, //问题id
+			channelInfo: modelTemp, //当前话题
+			allChannels: window.myStorage.getItem('allChannels') //全部话题
+		});
 	});
 	//36.获取某个用户的被邀请问题列表
 	getInviteAsksByUser(ExpertsInfo.UserId);
@@ -169,7 +170,7 @@ function getInviteAsksByUser(userId) {
 var setAnswerRecord = function(list) {
 	var listContainer = document.getElementById('list-container');
 	for(var i in list) {
-		createList(listContainer, list[i])
+		createList(listContainer, list[i], i);
 	}
 }
 /**
@@ -177,13 +178,13 @@ var setAnswerRecord = function(list) {
  * @param {Object} listContainer
  * @param {Object} record
  */
-var createList = function(listContainer, record) {
+var createList = function(listContainer, record, index) {
 	var li = document.createElement('li');
 	li.className = 'mui-table-view-cell';
-	li.setAttribute('data-info', JSON.stringify(record));
+	li.id = 'li' + index;
 	//拼接显示
-	li.innerHTML = '<div class="cell-container"><img src="' + record.uimg + '" style = "width:40px;height:40px;"/><div><p><span>" '+ 
-	record.unick + '"</span>邀请<span>"' + ExpertsInfo.unick + '"</span>回答问题</p><p class="Ask-Title" style= "font-size:1.4rem;">[' +
-	record.AskChannel + ']' + record.AskTitle + '</p></div></div>';
+	li.innerHTML = '<div class="cell-container"><img src="' + record.uimg + '" style = "width:40px;height:40px;"/><div><p><span>" ' +
+		record.unick + '"</span>邀请<span>"' + ExpertsInfo.unick + '"</span>回答问题</p><p class="Ask-Title" style= "font-size:1.4rem;">[' +
+		record.AskChannel + ']' + record.AskTitle + '</p></div></div>';
 	listContainer.appendChild(li);
 }
