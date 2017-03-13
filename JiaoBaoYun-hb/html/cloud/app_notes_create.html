@@ -130,7 +130,7 @@
 				compressImage(function(pathArray) {
 					var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENFILE; //获取token路径
 					var mainSpace = window.storageKeyName.QNPUBSPACE; //公开空间
-					var uploadSpace = window.storageKeyName.NOTE; //记事空间
+					var uploadSpace = window.storageKeyName.NOTE; //笔记空间
 					var getToken = {
 						type: '2', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件；2上传需要生成缩略图的多个文件
 						appId: 6, //int 必填 项目id
@@ -154,14 +154,13 @@
 							wd.close();
 						} else {
 							console.log('获取上传凭证成功');
-							for(var i = 0; i < QNUptoken.Data.length; i++) {
-								console.log(JSON.stringify(QNUptoken.Data[i]));
-								var filePath = QNUptoken.Data[i].P_Key.split("/");
-								var fileName = filePath[filePath.length - 1];
-								var fileId = fileName.split("_")[0];
-
-								//记录图片和缩略图地址
-								for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
+							//记录图片和缩略图地址
+							for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
+								for(var i = 0; i < QNUptoken.Data.length; i++) {
+									//console.log(JSON.stringify(QNUptoken.Data[i]));
+									var filePath = QNUptoken.Data[i].P_Key.split("/");
+									var fileName = filePath[filePath.length - 1];
+									var fileId = fileName.split("_")[0];
 									if(multiMedia.data.PictureArray[j].id == fileId) {
 										multiMedia.data.PictureArray[j].domain = QNUptoken.Data[i].Domain + QNUptoken.Data[i].Key;
 										multiMedia.data.PictureArray[j].thumb = QNUptoken.Data[i].OtherKey[configure.thumbKey[i]];
