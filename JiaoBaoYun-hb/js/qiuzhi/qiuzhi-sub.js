@@ -424,7 +424,7 @@ var fireToPageReady = function(type, options) {
 		if(answerIsReady) { //求知回答界面已加载完毕
 			events.closeWaiting();
 			events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', options);
-			plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
+			plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right",250);
 		} else {
 			setTimeout(function() {
 				events.showWaiting();

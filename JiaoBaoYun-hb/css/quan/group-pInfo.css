@@ -26,3 +26,10 @@
 	background-color: transparent;
 	max-width: 80%;
 }
+.mui-navigate-right:after, .mui-push-right:after{
+	font-size: 20px;
+}
+.mui-table-view:before{
+	height: 1px;
+	background-color: #E4E4E4;
+}
