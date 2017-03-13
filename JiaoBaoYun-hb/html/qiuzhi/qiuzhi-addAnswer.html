@@ -122,12 +122,12 @@
 										height: 200
 									},
 									cropSize: {
-										width:600,
-										height: 260
+										width: event.width,
+										height: event.width * 0.3
 									}
 								}
 								var data = CloudFileUtil.getSingleImgUploadOptions(localPath, 7, 0, saveSpace, options);
-			
+
 								//								var data = CloudFileUtil.getQNUpTokenWithManage(localPath, 7, 200, 0, );
 								CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
 									console.log("获取的数据：" + JSON.stringify(datas));
@@ -173,21 +173,25 @@
 							}); //等待框
 							console.log("保存的路径：" + JSON.stringify(paths));
 							var saveSpace = storageKeyName.KNOWLEDGE; //保存路径
-							compress.compressPics(paths, function(compressedPaths) {
+							compress.compressPics(paths, function(compressedPaths, widths) {
 									console.log('获取的图片路径：' + JSON.stringify(compressedPaths));
-									var options = { //上传七牛后的处理参数
-										type: 1, //处理类型 0：缩略图 1 裁剪 10 缩略图+裁剪
-										thumbSize: {
-											width: 200, //缩略图最大宽度
-											height: 200 //缩略图最大高度
-										},
-										cropSize: {
-											width:600,
-											height: 260 //裁剪宽度值
+									var multiOptions = [];
+									for(var i in compressedPaths) {
+										var options = { //上传七牛后的处理参数
+											type: 1, //处理类型 0：缩略图 1 裁剪 10 缩略图+裁剪
+											thumbSize: {
+												width: 200, //缩略图最大宽度
+												height: 200 //缩略图最大高度
+											},
+											cropSize: {
+												width: widths[i],
+												height: widths[i] * 0.3 //裁剪宽度值
+											}
 										}
+										multiOptions.push(options);
 									}
 									//多图片处理获取参数
-									var data = CloudFileUtil.getMultipleImgUploadOptions(compressedPaths, 7, 0, saveSpace, options);
+									var data = CloudFileUtil.getMultipleImgUploadOptions(compressedPaths, 7, 0, saveSpace, multiOptions);
 									//								var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 7, 200, 0, saveSpace); //获取获取token的各参数
 									CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
 										console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
