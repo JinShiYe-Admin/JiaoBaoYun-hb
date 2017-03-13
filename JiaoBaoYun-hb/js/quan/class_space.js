@@ -250,10 +250,10 @@ var class_space = (function(mod) {
 				if(imgs.length <= 3 && imgs.length > 0) {
 					percent = 100 / (imgs.length);
 					imgInner += '<img src="' + imgs[i] + '" style="width:' + percent + '%;padding:2px;"' +
-						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + index + '"/>'
+						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate+index + '"/>'
 				} else {
 					imgInner += '<img src="' + imgs[i] + '" style="width:33.33333333%; padding:2px;"' +
-						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + index + '"/>'
+						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate+index + '"/>'
 				}
 			}
 		}

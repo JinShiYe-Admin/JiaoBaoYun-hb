@@ -96,13 +96,13 @@
 			.mui-table .mui-h6,
 			.mui-table p {
 				margin-top: 0;
-				padding-left: 10px;
+				padding-left: 0px;
 			}
 			
 			.mui-table h4 {
 				line-height: 21px;
 				font-weight: 500;
-				padding-left: 10px;
+				padding-left: 0px;
 			}
 			
 			.mui-table .oa-icon {
@@ -184,6 +184,8 @@
 	mui.init();
 	mui.plusReady(function() {
 		ExpertsInfo = plus.webview.currentWebview().data;
+		//清除节点
+		document.getElementById('list-container').innerHTML = "";
 		//25.获取某个用户的提问列表
 
 		console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
@@ -260,6 +262,9 @@
 					datasource = datasource.concat(data.RspData.Data);
 				}
 				addData();
+				if(mui(".mui-table-view-cell").length < 10) {
+					mui(".mui-pull-loading")[0].innerHTML = "";
+				}
 			} else {
 				mui.toast(data.RspTxt);
 			}
@@ -275,7 +280,7 @@
 			li.className = 'mui-table-view-cell';
 			li.innerHTML = '<div class="mui-table"><div class="mui-table-cell mui-col-xs-12">' +
 				'<h4 class="mui-ellipsis" style="font-size:1.6rem;color: #323232;">' + datasource[i].AskTitle +
-				'</h4><p class="mui-h6 mui-ellipsis"  style="font-size:1.3rem;color: #B7B7B7;">' + datasource[i].AnswerNum + '回答  ' + datasource[i].FocusNum + '关注  ' + str_Time + '</p></div></div>'
+				'</h4><p class="mui-h6 mui-ellipsis"  style="font-size:1.3rem;color: #B7B7B7;">' + datasource[i].AnswerNum + '回答·' + datasource[i].FocusNum + '关注·' + str_Time + '</p></div></div>'
 			list.appendChild(li);
 		}
 	}

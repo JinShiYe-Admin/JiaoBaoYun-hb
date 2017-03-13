@@ -8,7 +8,22 @@ var flagRef = 0;
 mui.plusReady(function() {
 	selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	expertInfo = plus.webview.currentWebview().data.expertInfo;
+	console.log("获取的专家信息：" + JSON.stringify(expertInfo));
 	type = plus.webview.currentWebview().data.type;
+	if(type) {
+		if(expertInfo.UserId == selfId) {
+			document.getElementById("title").innerText = "关注我的人";
+		} else {
+			document.getElementById("title").innerText = "关注他的人";
+		}
+	} else {
+		if(expertInfo.UserId == selfId) {
+			document.getElementById("title").innerText = "我关注的人";
+		} else {
+			document.getElementById("title").innerText = "他关注的人";
+		}
+
+	}
 	console.log('获取的专家信息：' + JSON.stringify(expertInfo));
 	flagRef = 0;
 	pageIndex = 1;
@@ -84,6 +99,9 @@ var requireData = function() {
 				if(personIds.length > 0) {
 					requirePersonInfo(personIds, persons);
 				}
+				if(mui(".mui-table-view-cell").length < 10) {
+					mui(".mui-pull-loading")[0].innerHTML = "";
+				}
 			} else {
 				mui.toast("暂无关注他的人");
 			}
@@ -126,11 +144,17 @@ function getFocusUsersByUser(focusId) {
 			for(var i in personArray) {
 				personIds.push(personArray[i].UserId);
 			}
+			if(mui(".mui-table-view-cell").length < 10) {
+				mui(".mui-pull-loading")[0].innerHTML = "";
+			}
 			//通过id数组，获取人员资料，并重组
 			if(personIds.length > 0) {
 				requirePersonInfo(personIds, personArray);
 			}
 		} else {
+			if(mui(".mui-table-view-cell").length < 10) {
+				mui(".mui-pull-loading")[0].innerHTML = "";
+			}
 			mui.toast("暂无关注的人");
 		}
 	});
@@ -193,7 +217,7 @@ var createInner = function(person) {
 		updateHeadImg(person.uimg, 2) + '"/></div>' +
 		'<div class="info-container display-inlineBlock"><h5 class="person-name single-line person-info">' +
 		person.unick + '</h5>' +
-		'<p class="person-info single-line">' + events.ifHaveInfo(person.UserNote) +
+		'<p class="intro-info person-info single-line">' + events.ifHaveInfo(person.UserNote) +
 		'</p></div>' +
 		'<p  class="mui-btn mui-btn-outlined ' + getButtonContent(person.FocusType).classInfo + ' " >' + getButtonContent(person.FocusType).inner + '</p></div></a>'
 	return inner;

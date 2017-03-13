@@ -99,6 +99,9 @@ function getFocusAsksByUser(userId) {
 				//合并数组
 				questionArray = questionArray.concat(data.RspData.Data);
 			}
+			if(mui(".mui-table-view-cell").length < 10) {
+				mui(".mui-pull-loading")[0].innerHTML = "";
+			}
 			setQuestionRecord(data.RspData.Data);
 		} else {
 			mui.toast(data.RspTxt);

@@ -135,7 +135,7 @@ mui.plusReady(function() {
 		console.log(JSON.stringify(info));
 		//跳转页面
 		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', info);
-		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
+		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right",250);
 	});
 
 	//点击回答者头像
@@ -383,8 +383,9 @@ function addQuestion(data) {
 	console.log('addQuestion:' + JSON.stringify(data));
 	questionTitle(data.AskTitle);
 	if(data.AskEncAddr != '') {
-		var temp = data.AskEncAddr.split('|');
-		questionImages(data.TabId, temp);
+		var AskEncAddr = data.AskEncAddr.split('|');
+		var AskThumbnail = data.AskThumbnail.split('|');
+		questionImages(data.TabId, AskEncAddr, AskThumbnail);
 	}
 	questionContent(data.AskNote);
 	questionInfo(data.ReadNum, data.FocusNum);
@@ -402,18 +403,47 @@ function questionTitle(title) {
 /**
  * 放置问题图片
  * @param {Object} id 问题id
- * @param {Object} imageArray 问题图片数组
+ * @param {Object} AskEncAddr 问题图片数组
+ * @param {Object} AskThumbnail 缩略图数组
  */
-function questionImages(id, imageArray) {
-	mui.each(imageArray, function(index, element) {
-		var div = document.createElement('div');
-		div.className = 'mui-col-xs-4 mui-col-sm-4';
-		div.innerHTML = '<img id="' + element + '" src="' + element + '"data-preview-src="' + element + '" data-preview-group="' + id + '"/>';
-		document.getElementById("question_images").appendChild(div);
-		document.getElementById(element).style.width = (div.offsetWidth - 4) + 'px';
-		document.getElementById(element).style.height = (div.offsetWidth - 4) + 'px';
-	});
-	//console.log(document.getElementById("question_images").innerHTML);
+function questionImages(id, AskEncAddr, AskThumbnail) {
+	var footer = document.getElementById("question_images");
+	var imageArray = AskEncAddr;
+	var thumbArray = AskThumbnail;
+	var num = imageArray.length;
+
+	var mediaStr = '';
+	var width = (footer.offsetWidth) * 0.32;
+	var height = width * 3 / 4;
+	var marginBottom = (footer.offsetWidth) * 0.02;
+	var marginRight;
+
+	var html_0 = '<div class="record-imge">';
+	var html_1 = '';
+	for(var i = 0; i < imageArray.length; i++) {
+		if(i == 2 || i == 5 || i == 8) {
+			marginRight = 0;
+		} else {
+			marginRight = marginBottom;
+		}
+		html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px; margin-bottom: ' + marginBottom + 'px;">\
+									<img src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + id + '" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-' + width + ')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-' + height + ')/2+\'px\';}">\
+								</div>';
+	}
+	mediaStr = html_0 + html_1 + '</div>';
+	footer.innerHTML = mediaStr;
+	if(num == 0) { //0张
+		footer.style.height = '0px';
+	} else if(num > 0 && num <= 3) { //1-3张,一行
+		footer.style.height = height + marginBottom + 'px';
+	} else if(num > 3 && num <= 6) { //4-6张，二行
+		footer.style.height = height * 2 + marginBottom * 2 + 'px';
+	} else if(num > 6 && num <= 9) { //7-9张，三行
+		footer.style.height = height * 3 + marginBottom * 3 + 'px';
+	} else {
+		console.log('### ERROR ### 图片数量超过 9 张，放置图片的区域未设置相应的高度');
+	}
+
 }
 
 /**

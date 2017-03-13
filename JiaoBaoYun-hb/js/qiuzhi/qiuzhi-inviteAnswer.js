@@ -153,6 +153,9 @@ function getInviteAsksByUser(userId) {
 					//合并数组
 					answerArray = answerArray.concat(tempRspData);
 				}
+				if(mui(".mui-table-view-cell").length < 10) {
+					mui(".mui-pull-loading")[0].innerHTML = "";
+				}
 				setAnswerRecord(tempRspData);
 				console.log('专家循环遍历后的值：' + JSON.stringify(tempRspData));
 			});

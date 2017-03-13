@@ -29,7 +29,7 @@
 			//			mui.init();
 			mui.plusReady(function() {
 				events.changeTopPocket();
-				events.preload('class-dynamic.html');
+//				events.preload('class-dynamic.html');
 				events.preload('class-group.html');
 				var write = document.getElementById('write');
 				var data = plus.webview.currentWebview().data;
@@ -56,7 +56,7 @@
 					})
 				}, 1000);
 				events.addTap('write', function() {
-					events.fireToPageWithData('class-dynamic.html', 'postGroupInfo', data)
+					events.openNewWindowWithData('class-dynamic.html', data)
 				})
 				events.initSubPage('classSpace-sub.html', data);
 			})

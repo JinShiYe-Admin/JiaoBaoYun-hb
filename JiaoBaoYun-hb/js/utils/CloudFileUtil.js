@@ -763,6 +763,7 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} callback 回调函数
 	 */
 	mod.uploadFiles = function(fileNames, tokenInfos, callback) {
+		plus.uploader.clear();
 		var tasks = [];
 		for(var i in tokenInfos) {
 			//console.log('upload:' + fPath);
