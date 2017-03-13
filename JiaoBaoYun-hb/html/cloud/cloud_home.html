@@ -29,15 +29,15 @@
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-
+			
 			.mui-table-view {
 				/*background-color: white;*/
 			}
-
+			
 			.cloud-item {
 				background-color: white;
 			}
-
+			
 			.cloud-item-left {
 				width: 16%;
 				border-right: 1px solid #D9D9D9;
@@ -46,47 +46,47 @@
 				font-weight: bold;
 				font-size: 1.6rem;
 			}
-
+			
 			.cloud-item-right {
 				/*margin-left: 16%;*/
 				width: 84%;
 				float: right;
 			}
-
+			
 			#cloudstorage_0,
 			#cloudrecord_0,
 			#cloudapps_0 {
 				/*每一项的第一行*/
 				/*background-color: red;*/
 			}
-
+			
 			#cloudstorage_1,
 			#cloudrecord_1,
 			#cloudapps_1 {
 				/*每一项的第二行*/
 				/*background-color: blue;*/
 			}
-
+			
 			.mui-plus-pullrefresh .mui-scroll {
 				position: absolute;
 				/*width: 100%;*/
 			}
-
+			
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				color: black;
 				border: none;
 			}
-
+			
 			.mui-table-view-cell {
 				display: inline-block;
 				width: auto;
 				padding: 1px 1px;
 			}
-
+			
 			.mui-slider-indicator .mui-table-view-cell.mui-active {
 				background: white;
 			}
-
+			
 			.cloud-red-point {
 				position: absolute;
 				background: red;
@@ -95,27 +95,27 @@
 				border-radius: 50%;
 				display: none;
 			}
-
+			
 			img {
 				border-radius: 50%;
 			}
-
+			
 			#cloudstorage_1 img {
 				border-radius: 0px;
 			}
-
+			
 			.icon-jiaxiabiao {
 				color: #0ABAF5;
 			}
-
+			
 			.icon-banxiabiao {
 				color: #FFBA00;
 			}
-
+			
 			.icon-re {
 				color: #FD681E;
 			}
-
+			
 			.icon-re,
 			.icon-banxiabiao,
 			.icon-jiaxiabiao {
@@ -123,7 +123,7 @@
 				border: none !important;
 				top: 0px;
 			}
-
+			
 			.mui-popup-input input {
 				/*popup 输入框*/
 				height: 34px;
@@ -213,12 +213,15 @@
 			var maxWidth = 0;
 			//每个图标中图标图片的宽度
 			var imgeWith = 0.6;
+			var homeworkReady = false;
 			mui.plusReady(function() {
 				events.preload("../homework/homework-tea.html", 300);
 				events.preload('storage_main.html'); //预加载云存储
 				events.preload('storage_upload.html'); //预加载上传文件选择
 				events.preload('storage_upload_choose.html'); //预加载选择上传文件的方式
-
+				window.addEventListener("homeworkReady", function() {
+					homeworkReady = true;
+				})
 				//下拉刷新
 				mui(".cloud-item-right .mui-scroll-wrapper .mui-scroll").pullToRefresh({
 					down: {
@@ -623,10 +626,7 @@
 							}
 							if(teacherClasses.length > 0 || studentClasses.length > 0) {
 								console.log('teacherClasses:' + teacherClasses.length + ',' + studentClasses.length);
-								events.fireToPageWithData('../homework/homework-tea.html', 'postClasses', {
-									teacherClasses: teacherClasses,
-									studentClasses: studentClasses
-								})
+								sendMessageToHomework(teacherClasses,studentClasses);
 							} else {
 								mui.toast('您还未加入班级');
 							}
@@ -1188,6 +1188,20 @@
 					console.log('获取所有群的未读数_getNoReadCntForClassByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
 				})
+			}
+			var sendMessageToHomework = function(teacherClasses,studentClasses) {
+				if(homeworkReady) {
+					events.closeWaiting();
+					events.fireToPageWithData('../homework/homework-tea.html', 'postClasses', {
+						teacherClasses: teacherClasses,
+						studentClasses: studentClasses
+					})
+				} else {
+					events.showWaiting();
+					setTimeout(function(){
+						sendMessageToHomework(teacherClasses,studentClasses)
+					}, 500);
+				}
 			}
 		</script>
 	</body>

@@ -17,8 +17,8 @@ var clickItem; //点击的子控件
 mui.init();
 //mui的plusready监听
 mui.plusReady(function() {
+	events.fireToPageNone('../cloud_home.html','homeworkReady');
 	//预加载
-//	events.preload('workdetail-tea.html', 200);
 	events.preload('homework-publish.html', 500);
 	events.preload('workdetailTea-temporary.html', 300);
 	events.preload('workdetail-stu.html', 400);
