@@ -117,7 +117,7 @@ var setButtonsListener = function() {
 				console.log('申请入群获取的数据：' + JSON.stringify(data));
 				if(data.RspCode == '0000') {
 					mui.toast('申请成功！');
-					events.fireToPageNone('/html/mine/apply-record.html', 'applied')
+					events.fireToPageNone('/html/mine/approval-apply.html', 'applied')
 				} else {
 					mui.toast("申请失败:" + data.RspTxt)
 				}

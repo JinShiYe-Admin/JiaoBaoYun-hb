@@ -137,7 +137,7 @@ mui.plusReady(function() {
 		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', info);
 		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
 	});
-	
+
 	//点击回答者头像
 	mui('#answer_bottom').on('tap', '.mui-media-object', function() {
 		var element = this.parentNode;
@@ -218,7 +218,7 @@ function setAskFocus(askId, status) {
 				document.getElementById("guanzhu").innerText = '关注';
 				document.getElementById("guanzhu").style.background = '#1db8F1';
 				document.getElementById("guanzhu").style.border = '#1db8F1';
-				
+
 			}
 		} else {
 			mui.toast(data.RspTxt);
@@ -490,7 +490,7 @@ function answerList(data) {
 		'<img class="mui-media-object mui-pull-left" src="' + updateHeadImg(data.uimg, 2) + '">' +
 		'<div class="mui-ellipsis">' + data.unick + '</div>' +
 		'<div id="answer_content_' + data.AnswerId + '" class="ellipsis-3"></div>' +
-		'<div class="answer-info">' + data.IsLikeNum + '赞同·' + data.CommentNum + '评论·' + data.AnswerTime + '</div>';
+		'<div class="answer-info">' + data.IsLikeNum + '赞同·' + data.CommentNum + '评论·' + modifyTimeFormat(data.AnswerTime) + '</div>';
 	document.getElementById("answer_bottom").appendChild(li);
 	document.getElementById("answer_content_" + data.AnswerId).innerText = data.AnswerContent;
 }

@@ -35,6 +35,11 @@ mui.plusReady(function() {
 		events.clearChild(list);
 		getData('inv', []);
 	})
+	window.addEventListener('applied',function(e){
+		console.log('申请入群');
+		events.clearChild(list); 
+		getData('inv', []);
+	})
 })
 /**
  * 获取数据
