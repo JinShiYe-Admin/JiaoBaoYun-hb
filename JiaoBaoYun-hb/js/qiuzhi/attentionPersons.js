@@ -207,7 +207,7 @@ var createInner = function(person) {
 		updateHeadImg(person.uimg, 2) + '"/></div>' +
 		'<div class="info-container display-inlineBlock"><h5 class="person-name single-line person-info">' +
 		person.unick + '</h5>' +
-		'<p class="person-info single-line">' + events.ifHaveInfo(person.UserNote) +
+		'<p class="intro-info person-info single-line">' + events.ifHaveInfo(person.UserNote) +
 		'</p></div>' +
 		'<p  class="mui-btn mui-btn-outlined ' + getButtonContent(person.FocusType).classInfo + ' " >' + getButtonContent(person.FocusType).inner + '</p></div></a>'
 	return inner;
