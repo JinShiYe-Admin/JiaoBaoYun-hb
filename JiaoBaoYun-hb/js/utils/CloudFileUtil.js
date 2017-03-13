@@ -447,6 +447,7 @@ var CloudFileUtil = (function($, mod) {
 		}
 		var QNFileName = events.getFileNameByPath(picPath);
 		var opsData = getOptions(manageOptions, saveSpace, mainSpace, QNFileName);
+		console.log("设定的参数："+JSON.stringify(opsData));
 		var ops = opsData.ops;
 		if(opsData.thumbKey) {
 			data.thumbKey = opsData.thumbKey;
