@@ -207,9 +207,11 @@ div>.icon-xiangce:before,
 }
 
 .isLike {
-	color: lightgray;
+	color: #1a9bff;
 }
-
+.isNotLike{
+	color: #B7B7B7;
+}
 .master-name {
 	color: #f85977;
 }
@@ -240,4 +242,5 @@ div>.icon-xiangce:before,
 }*/
 .chat-words{
 	padding-right: 5px;
+	color: #323232;
 }

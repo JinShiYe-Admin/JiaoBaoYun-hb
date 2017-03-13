@@ -35,9 +35,9 @@ mui.plusReady(function() {
 		events.clearChild(list);
 		getData('inv', []);
 	})
-	window.addEventListener('applied',function(e){
+	window.addEventListener('applied', function(e) {
 		console.log('申请入群');
-		events.clearChild(list); 
+		events.clearChild(list);
 		getData('inv', []);
 	})
 })
@@ -87,7 +87,7 @@ var getApplyRecord = function(records) {
 var sortData = function(records) {
 	console.log("待排序的记录:" + JSON.stringify(records));
 	records.sort(function(a, b) {
-		return  Date.parse(b.aptime)-Date.parse(a.aptime);
+		return Date.parse(b.aptime) - Date.parse(a.aptime);
 	})
 	setData(records);
 }
@@ -96,13 +96,25 @@ var sortData = function(records) {
  * @param {Object} data
  */
 var setData = function(records) {
-	//填充真实数据
-	records.forEach(function(item, i, records) {
-		var li = document.createElement('li');
-		li.className = 'mui-table-view-cell mui-media';
-		li.innerHTML = getInnerHTML(item);
-		list.appendChild(li);
-	})
+	var apply_container=document.createElement('div');
+	apply_container.className="apply-container";
+	apply_container.setAttribute("id","btn-apply")
+	apply_container.innerHTML='<p><span class="mui-icon mui-icon-search"></span>&nbsp;&nbsp;申请加入班级</p>'
+	list.appendChild(apply_container);
+	if(records.length > 0) {
+		var divider=document.createElement('li');
+		divider.className="mui-table-view-divider";
+		divider.innerText="新消息";
+		list.appendChild(divider);
+		//填充真实数据
+		records.forEach(function(item, i, records) {
+			var li = document.createElement('li');
+			li.className = 'mui-table-view-cell mui-media';
+			li.innerHTML = getInnerHTML(item);
+			list.appendChild(li);
+		})
+	}
+
 }
 /**
  * 加载监听
@@ -158,8 +170,8 @@ var addListener = function() {
 		//			//关联学生name
 		//			stuname = this.getAttribute('st');
 	})
-	events.addTap('btn-apply', function() {
-		   events.openNewWindow('apply-group.html');
+	mui(".mui-table-view").on("tap",".apply-container",function(){
+		events.openNewWindow('apply-group.html');
 	})
 }
 /**
@@ -239,7 +251,7 @@ var removeItemFromArray = function(item, arrays) {
  */
 var getInnerHTML = function(item) {
 	var inner = '';
-	console.log("当前item状态"+item.stat);
+	console.log("当前item状态" + item.stat);
 	if(isNaN(item.stat)) {
 		if(item.invname != item.beinvname) {
 			inner = ' <a class="">' +
@@ -266,39 +278,39 @@ var getInnerHTML = function(item) {
 		}
 	} else {
 		inner = ' <a href="javascript:;" class="apply-container">' +
-				'<img class = "mui-media-object mui-pull-left qun-portrait"' +
-				'src = "' + getGimg(item) + '" />' +
-				'<div class = "mui-media-body apply-info"' +
-				'style = "margin-right: 4rem;" >' +
-				item.gname +
-				'<p class="single-line apply-message">';
-				if(item.invname != item.beinvname) {
-					inner +=  events.shortForString(item.invaname,10) + '邀请你加入群：' + events.shortForString(item.gname,10);
-				} else {
-					inner += '你已申请加入群：' +  events.shortForString(item.gname,10);
-				}
-				inner+='</p></div><a  class = "mui-btn mui-btn-outlined">'+setApplyState(item.stat)+'</a></a>'
+			'<img class = "mui-media-object mui-pull-left qun-portrait"' +
+			'src = "' + getGimg(item) + '" />' +
+			'<div class = "mui-media-body apply-info"' +
+			'style = "margin-right: 4rem;" >' +
+			item.gname +
+			'<p class="single-line apply-message">';
+		if(item.invname != item.beinvname) {
+			inner += events.shortForString(item.invaname, 10) + '邀请你加入群：' + events.shortForString(item.gname, 10);
+		} else {
+			inner += '你已申请加入群：' + events.shortForString(item.gname, 10);
+		}
+		inner += '</p></div><a  class = "mui-btn mui-btn-outlined">' + setApplyState(item.stat) + '</a></a>'
 	}
 
 	return inner;
 }
 var setApplyState = function(type) {
-				var applyState = '';
-				switch(type) {
-					case 0:
-						applyState = '待审';
-						break;
-					case 1:
-						applyState = '通过';
-						break;
-					case 2:
-						applyState = '拒绝';
-						break;
-					default:
-						break;
-				}
-				return applyState;
-			}
+	var applyState = '';
+	switch(type) {
+		case 0:
+			applyState = '待审';
+			break;
+		case 1:
+			applyState = '通过';
+			break;
+		case 2:
+			applyState = '拒绝';
+			break;
+		default:
+			break;
+	}
+	return applyState;
+}
 /**
  * 獲取角色
  * @param {Object} mstype
