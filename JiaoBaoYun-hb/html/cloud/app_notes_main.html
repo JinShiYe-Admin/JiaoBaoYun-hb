@@ -66,6 +66,16 @@
 				margin-bottom: 20px;
 			}
 
+			.dynamic-date-year-parent {
+				width: 20%;
+			}
+
+			.dynamic-date-year {
+				font-weight: bold;
+				text-align: center;
+				font-size: 1.8rem;
+			}
+
 			.dynamic-date {
 				/*日期*/
 				font-weight: bold;
@@ -273,7 +283,7 @@
 					for(var i = 0; i < tempRspData.length; i++) {
 						createNotes(tempRspData[i]);
 					}
-					//console.log(document.getElementById("list").innerHTML);
+					console.log(document.getElementById("list").innerHTML);
 					if(data.RspData.Data.length == 0 && pageIndex == 1) {
 						mui.toast('笔记为空');
 					}
@@ -307,12 +317,20 @@
 			var dateItem = date[0]; //日期
 			var time = date[0].split('-'); //时间
 			var timeItem = time[1] + '.' + time[2];
+			var year = today.split('-')[0];
+			var yearItem = dateItem.split('-')[0];
+			if(year == yearItem) {
+				year = '';
+			} else {
+				year = yearItem;
+			}
 			//console.log('dateItem ' + dateItem);
 			//console.log('timeItem ' + timeItem);
 			if(markDate != dateItem) {
 				var element = document.createElement('div');
 				element.className = 'dynamic-date-parent'
 				element.id = dateItem;
+				element.innerHTML = '<div class="dynamic-date-year-parent"><div class="dynamic-date-year">' + year + '</div></div>';
 				document.getElementById("list").appendChild(element);
 			}
 
