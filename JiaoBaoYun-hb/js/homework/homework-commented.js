@@ -439,7 +439,7 @@ mui('.mui-table-view').on('tap', '.cell-color', function() {
 
 })
 //打击答案内容跳转到做作业界面
-events.addTap('stuCell', function() {
-	events.fireToPageNone('doHomework-stu.html', 'workDetail', homeworkResult);
-	plus.webview.getWebviewById("doHomework-stu.html").show();
-})
+//events.addTap('stuCell', function() {
+//	events.fireToPageNone('doHomework-stu.html', 'workDetail', homeworkResult);
+//	plus.webview.getWebviewById("doHomework-stu.html").show();
+//})

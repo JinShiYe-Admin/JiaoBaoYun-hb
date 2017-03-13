@@ -60,11 +60,11 @@ var dynamiclistitem = (function($, mod) {
 		var html7 = '<div id="question_content' + data[4] + idFlag + id+'" style = "color:black;font-size:14px" class="ellipsis-show question_content">';
 		//内容
 		var html8 = InfoList[3];
-		var html99 = '<div id="show' + data[4] + idFlag + id+'" class="showAll show" style="color:gray;">展开全部</div>'
+		var html99 = '<div id="show' + data[4] + idFlag + id+'" class="showAll" style="color:gray;">展开全部</div>'
 		if(document.getElementById("spaceDetail")){
 			html99='';
 		}
-		var html9 = '</div>'+html99+'</div></div>';
+		 var html9 = '</div><div class="showAll" style="color:gray;text-align:right;float:right">展开全部>></div></div></div>';
 		html = html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8 + html9;
 
 		var div = document.createElement('div');
@@ -82,7 +82,9 @@ var dynamiclistitem = (function($, mod) {
 	 * @param {Object} data
 	 */
 	mod.addImage = function(ulElement, liElement, data, id) {
-		var SCREEN_WIDTH = plus.screen.resolutionWidth; //获取设备屏幕宽度分辨率111
+
+		
+		
 		var citycode;
 		if(pageFlag == 1) {
 			citycode = data[4]
@@ -92,10 +94,13 @@ var dynamiclistitem = (function($, mod) {
 		if(pageFlag == 1 && mui.os.android) {
 			if(SCREEN_WIDTH < 50) {
 				SCREEN_WIDTH = plus.screen.resolutionWidth * 4
+			}else if(SCREEN_WIDTH > 50&&SCREEN_WIDTH < 450){
+				
+			}else{
+				SCREEN_WIDTH = SCREEN_WIDTH * 360 / 1440
 			}
 
-			SCREEN_WIDTH = SCREEN_WIDTH * 360 / 1440
-			console.log('SCREEN_WIDTH==' + SCREEN_WIDTH * 360 / 1440)
+			
 		}
 		var ImageUrlList = data[1]; //图片路径数组
 		var EncAddrList = data[3]
@@ -146,7 +151,7 @@ var dynamiclistitem = (function($, mod) {
 		div.innerHTML = html;
 		liElement.appendChild(div);
 
-		mod.addInteraction(ulElement, liElement, data, id); //增加动态的互动
+		mod.addInteraction(ulElement, liElement, data, id);
 	};
 	mod.questionContent = function() {
 		var height_0;

@@ -37,7 +37,7 @@
 		</div>
 		<div class="mui-content">
 			<form name="form1" action="" method="post">
-				<textarea id="askTitle" name="topic" placeholder="写下你的问题" style="height: 40px;margin-top: 5px;"></textarea>
+				<textarea id="askTitle" name="topic" placeholder="标题（请以？号结尾）" style="height: 40px;margin-top: 5px;"></textarea>
 			</form>
 			<p style="margin-left: 10px;font-size: 14px;margin-top: -12px;">请添加问题的补充说明</p>
 			<div class="input-content">
@@ -262,6 +262,7 @@
 						mui.toast('发布成功')
 						askTitle.value = '';
 						askNote.value = '';
+						events.fireToPageNone('qiuzhi-sub.html', 'refreshQuestionList');
 						mui.back();
 					} else {
 						mui.toast(data.RspTxt);

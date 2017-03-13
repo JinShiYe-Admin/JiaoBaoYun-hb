@@ -200,6 +200,7 @@
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 		var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
 		var gid;
+		var SCREEN_WIDTH;
 		mui.init({
 			pullRefresh: {
 				container: '#pullrefresh',
@@ -369,6 +370,7 @@
 
 		var id = 0; //cell的id
 		mui.plusReady(function() {
+			SCREEN_WIDTH = plus.screen.resolutionWidth;
 			gid = plus.webview.currentWebview().data.data.classId
 			mui.previewImage();
 			addReplyView();
