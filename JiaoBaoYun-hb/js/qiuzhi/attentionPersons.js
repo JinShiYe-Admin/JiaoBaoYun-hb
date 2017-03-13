@@ -9,6 +9,11 @@ mui.plusReady(function() {
 	selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	expertInfo = plus.webview.currentWebview().data.expertInfo;
 	type = plus.webview.currentWebview().data.type;
+	if(type){
+		document.getElementById("title").innerText="关注他的人";
+	}else{
+		document.getElementById("title").innerText="他关注的人";
+	}
 	console.log('获取的专家信息：' + JSON.stringify(expertInfo));
 	flagRef = 0;
 	pageIndex = 1;

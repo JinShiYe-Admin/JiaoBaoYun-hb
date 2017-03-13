@@ -88,7 +88,7 @@
 						item.style.display = 'none';
 					})
 					answerInfo = e.detail.data;
-					document.getElementById('askTitle').innerText = answerInfo.AnswerContent;
+					document.getElementById('askTitle').innerText = "";
 				})
 				window.addEventListener("comment-reply", function(e) {
 					console.log('回复评论要加载的值：' + JSON.stringify(e.detail.data));
@@ -121,7 +121,7 @@
 										height: 200
 									},
 									cropSize: {
-										height: 200
+										height: 260
 									}
 								}
 								var data = CloudFileUtil.getSingleImgUploadOptions(localPath, 7, 0, saveSpace, options);
@@ -182,7 +182,7 @@
 											height: 200 //缩略图最大高度
 										},
 										cropSize: {
-											height: 300 //裁剪宽度值
+											height: 260 //裁剪宽度值
 										}
 									}
 									//多图片处理获取参数
