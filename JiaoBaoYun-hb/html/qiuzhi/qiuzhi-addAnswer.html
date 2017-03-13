@@ -121,7 +121,7 @@
 										height: 200
 									},
 									cropSize: {
-										height: 260
+										height: 280
 									}
 								}
 								var data = CloudFileUtil.getSingleImgUploadOptions(localPath, 7, 0, saveSpace, options);
@@ -160,9 +160,6 @@
 				});
 				events.addTap('take_camero', function() {
 					mui.toast('此功能暂未开放');
-					//				camera.getVideo(camera.getCamera(), function(path) {
-					//
-					//				});
 				});
 				events.addTap('get_gallery', function() {
 					if(CloudFileUtil.files.length < 9) {
@@ -182,7 +179,7 @@
 											height: 200 //缩略图最大高度
 										},
 										cropSize: {
-											height: 260 //裁剪宽度值
+											height: 280 //裁剪宽度值
 										}
 									}
 									//多图片处理获取参数
