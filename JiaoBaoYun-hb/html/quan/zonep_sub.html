@@ -23,6 +23,12 @@
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 
 		<style>
+			.showAll {
+				display: none;
+				color: #D7D7D7;
+				margin-top: 10px;
+			}
+			
 			.ellipsis-show {
 				/*内容*/
 				display: -webkit-box;
@@ -161,7 +167,6 @@
 				text-align: center;
 				background-color: rgba(0, 0, 0, 0.3);
 			}
-
 		</style>
 	</head>
 
@@ -390,7 +395,66 @@
 			window.addEventListener('refreshZonep', function(data) {
 				requestData(comData)
 			})
+			window.addEventListener('headImgPush', function(data) {
+				console.log(111111)
+				SCREEN_WIDTH = plus.screen.resolutionWidth;
+				gid = plus.webview.currentWebview().data.data.classId
+				mui.previewImage();
+				addReplyView();
+				publisherId = plus.webview.currentWebview().data.data; //发布者id
 
+				tempPage = 1; //页码，请求第几页数据
+				totalCnt = 0; //当前留言的总条数
+				flag = 2; //判断是加载更多1，还是刷新2
+				var comData = {
+					userId: personalUTID, //用户ID
+					publisherId: publisherId, //发布用户ID
+					noteType: '2', //信息类型,1云笔记,2个人空间动态
+					pageIndex: (tempPage).toString(), //当前页数
+					pageSize: '10' //每页记录数
+				};
+				requestData(comData);
+			})
+			mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
+				var index = this.id.replace('headImg', '');
+				var wv = plus.webview.getWebviewById('zone_main.html');
+				console.log('wv='+wv);
+//				if(wv) {
+//					events.fireToPageWithData('zone_main.html', 'headImgPush', {
+//						data: index,
+//						NoReadCnt: 0,
+//						flag: '0'
+//					})
+//				} else {
+					events.openNewWindowWithData('zone_main.html', {
+							data: index,
+							NoReadCnt: 0,
+							flag: '0'
+						});
+					events.fireToPageWithData('zone_main.html', 'headImgPush', {
+							data: index,
+							NoReadCnt: 0,
+							flag: '0'
+						});
+//					mui.openWindow({
+//						url: 'zone_main.html',
+//						id: '../quan/zone_main.html',
+//						styles: {
+//							top: '0px', //设置距离顶部的距离
+//							bottom: '0px'
+//						},
+//						
+//						extras: {
+//							data: index,
+//							NoReadCnt: 0,
+//							flag: '0'
+//						},
+//						createNew:true,
+//
+//					});
+//				}
+
+			})
 			var click = []; //记录被点击的li的id和被点击元素
 
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
@@ -412,9 +476,9 @@
 					toast = toast + element;
 				});
 				var id = this.getAttribute('id');
-				var index = this.id.replace('question_content','');
+				var index = this.id.replace('question_content', '');
 				zonepArray[index].focusFlag = 0;
-				
+
 				events.openNewWindowWithData('space-detail.html', zonepArray[index])
 				click.push(id);
 				click = [];
@@ -426,9 +490,9 @@
 					toast = toast + element;
 				});
 				var id = this.getAttribute('id');
-				var index = this.id.replace('show','');
+				var index = this.id.replace('show', '');
 				zonepArray[index].focusFlag = 0;
-				
+
 				events.openNewWindowWithData('space-detail.html', zonepArray[index])
 				click.push(id);
 				click = [];
@@ -440,9 +504,9 @@
 					toast = toast + element;
 				});
 				var id = this.getAttribute('id');
-				var index = this.id.replace('show2','');
+				var index = this.id.replace('show2', '');
 				zonepArray[index].focusFlag = 0;
-				
+
 				events.openNewWindowWithData('space-detail.html', zonepArray[index])
 				click.push(id);
 				click = [];
@@ -573,7 +637,6 @@
 				window.event.stopPropagation()
 			});
 
-
 			mui('.mui-table-view').on('tap', '.dynamic-praise-name', function() {
 				click.push('点赞者：' + this.innerText);
 			});
@@ -593,7 +656,6 @@
 				window.event.stopPropagation()
 
 			});
-
 
 			//			回复评论
 			mui('.mui-table-view').on('tap', '.replyComment', function() {
@@ -631,7 +693,7 @@
 			tempModel.uimg = updateHeadImg(tempModel.uimg)
 
 			var personalImage = tempModel.uimg;
-			var personalName =events.shortForString(tempModel.unick, 15) ;
+			var personalName = events.shortForString(tempModel.unick, 15);
 			var time = modifyTimeFormat(tempModel.PublishDate);
 			var contentText = tempModel.MsgContent;
 			InfoList.push(personalImage);
@@ -669,7 +731,6 @@
 				var tempComment = tempModel.Comments[i];
 				commentList.push(tempComment);
 
-
 			}
 
 			InteractionList.push(introduce);
@@ -679,7 +740,6 @@
 			Data = [InfoList, ImageList, InteractionList, EncAddrList, '']
 			return Data;
 		}
-
 
 		//设置个人空间动态为已读
 		function setUserSpaceReadByUser(upString) {

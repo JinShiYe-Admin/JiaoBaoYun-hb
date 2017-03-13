@@ -245,3 +245,8 @@ footer {
 	display: inline-block;
 	width: 20%;
 }
+.showAll {
+	display: none;
+	color: #D7D7D7;
+	margin-top: 10px;
+}
