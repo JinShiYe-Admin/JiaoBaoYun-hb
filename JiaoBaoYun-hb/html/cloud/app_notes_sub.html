@@ -246,9 +246,10 @@
 						document.getElementById(id + "_content").style.webkitLineClamp = '3';
 					}
 				});
+
 				//点击图片的数字
-				mui('#data_scroll').on('tap', '.record-picture-num', function() {
-					previewImage.open(document.getElementById("img_" + this.getAttribute('data-id')))
+				mui('#list').on('tap', '.record-picture-num', function() {
+					previewImage.open(document.getElementById("img_" + this.getAttribute('data-id')));
 				});
 			});
 
@@ -281,7 +282,7 @@
 						for(var i = 0; i < tempRspData.length; i++) {
 							createNotes(tempRspData[i]);
 						}
-						console.log(document.getElementById("list").innerHTML);
+						//console.log(document.getElementById("list").innerHTML);
 
 						//档案总条数
 						totalCnt = data.RspData.TotalCnt;
