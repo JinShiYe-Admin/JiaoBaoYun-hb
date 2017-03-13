@@ -216,7 +216,7 @@ var createAnswerImgs = function(homeworkInfo, imgs, type) {
 	var imgsInner = '';
 	for(var i in imgs) {
 		imgsInner += '<img class="answer-img" src="' + imgs[i].ThumbUrl +'" style="width:'+img_width+'px;height:'+img_width+'px;"'+
-			'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + type + '"/>';
+			'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + homeworkInfo.HomeworkResultId + '"/>';
 	}
 	div.innerHTML = imgsInner;
 	homeworkInfo.appendChild(div);

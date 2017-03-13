@@ -384,13 +384,13 @@ var getPicInner = function(data) {
 		var picInner = '';
 		var win_width = document.getElementById('answer-imgs').offsetWidth;
 		var pic_width = win_width / 3;
-		if(picPaths.length < 3) {
-			pic_width = win_width / picPaths.length;
-		}
+//		if(picPaths.length < 3) {
+//			pic_width = win_width / picPaths.length;
+//		}
 		console.log("图片宽度设置：" + pic_width)
 		for(var i in picPaths) {
 			picInner += '<img src="' + picPaths[i] + '" class="answer-img" style="width:' + pic_width + 'px;height: ' + pic_width + 'px;" ' +
-				'" data-preview-src="' + picBigPaths[i] + '" data-preview-group="1"/>';
+				'" data-preview-src="' + picBigPaths[i] + '" data-preview-group="'+data.AnswerId+'"/>';
 		}
 		console.log('图片路径：' + picInner);
 		return picInner;

@@ -24,12 +24,14 @@
 }
 .attentioned-btn,.attention-btn{
 	max-width: 25%;
+	height: 32px;
 	float: right;
-	margin-top: 1rem;
+	margin-top: 1.1rem;
 	color: #fff;
 	border: 1px solid #1db8F1;
 	/*background-color: #1db8F1;*/
 }
+
 /*需关注button*/
 .attention-btn{
 	color: #fff;
@@ -37,8 +39,8 @@
 }
 /*已关注的显示*/
 .attentioned-btn{
-	color: lightgrey;
-	border: 1px solid lightgrey;
+	color: #E4E4E4;
+	border: 1px solid #E4E4E4;
 }
 /*.mui-table-view-cell:last-of-type{
 	padding-right: .5rem;
@@ -136,4 +138,12 @@
 
 .mui-pull-top-canvas canvas {
 	width: 40px;
+}
+.person-name{
+	color: #323232;
+	font-size: 15px;
+}
+.intro-info{
+	color: #808080;
+	font-size: 13px;
 }

@@ -8,7 +8,22 @@ var flagRef = 0;
 mui.plusReady(function() {
 	selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	expertInfo = plus.webview.currentWebview().data.expertInfo;
+	console.log("获取的专家信息：" + JSON.stringify(expertInfo));
 	type = plus.webview.currentWebview().data.type;
+	if(type) {
+		if(expertInfo.UserId == selfId) {
+			document.getElementById("title").innerText = "关注我的人";
+		} else {
+			document.getElementById("title").innerText = "关注他的人";
+		}
+	} else {
+		if(expertInfo.UserId == selfId) {
+			document.getElementById("title").innerText = "我关注的人";
+		} else {
+			document.getElementById("title").innerText = "他关注的人";
+		}
+
+	}
 	console.log('获取的专家信息：' + JSON.stringify(expertInfo));
 	flagRef = 0;
 	pageIndex = 1;
@@ -202,7 +217,7 @@ var createInner = function(person) {
 		updateHeadImg(person.uimg, 2) + '"/></div>' +
 		'<div class="info-container display-inlineBlock"><h5 class="person-name single-line person-info">' +
 		person.unick + '</h5>' +
-		'<p class="person-info single-line">' + events.ifHaveInfo(person.UserNote) +
+		'<p class="intro-info person-info single-line">' + events.ifHaveInfo(person.UserNote) +
 		'</p></div>' +
 		'<p  class="mui-btn mui-btn-outlined ' + getButtonContent(person.FocusType).classInfo + ' " >' + getButtonContent(person.FocusType).inner + '</p></div></a>'
 	return inner;

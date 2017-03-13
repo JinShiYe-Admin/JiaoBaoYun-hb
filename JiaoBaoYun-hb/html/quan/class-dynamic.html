@@ -57,16 +57,19 @@
 		mui.plusReady(function() {
 			//返回时，取消键盘
 			events.blurBack();
-			//			document.querySelector('.mui-content').styl e.marginTop=(localStorage.getItem('StatusHeightNo') * 1 + 45 + height) + 'px';
-			var groupInfo;
+			var curPage=plus.webview.currentWebview();
+			var groupInfo=curPage.data;
+			CloudFileUtil.files = [];
+			events.clearChild(document.getElementById('pictures'));
+			getGroupPersons(groupInfo.classId);
 			//界面监听传值
-			window.addEventListener('postGroupInfo', function(e) {
-				CloudFileUtil.files = [];
-				groupInfo = e.detail.data;
-				console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
-				getGroupPersons(groupInfo.classId);
-				events.clearChild(document.getElementById('pictures'));
-			});
+//			window.addEventListener('postGroupInfo', function(e) {
+//				
+//				groupInfo = e.detail.data;
+//				console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
+//				
+//				
+//			});
 			/**
 			 * 加载监听
 			 */
