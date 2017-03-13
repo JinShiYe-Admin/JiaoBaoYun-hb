@@ -46,6 +46,7 @@ mui.plusReady(function() {
 	var publish = document.getElementById('iconPublish');
 	//加载监听
 	window.addEventListener('workContent', function(e) {
+		mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
 		//个人UTID
 		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 		//获取个人身份角色
