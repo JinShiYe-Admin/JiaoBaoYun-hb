@@ -67,16 +67,16 @@ var setContentView = function() {
 	document.querySelector('.brief-content').innerText = homeworkInfo.Contents;
 	document.querySelector('.publisher').innerText = events.shortForString(homeworkInfo.unick, 6);
 	document.querySelector('.publish-date').innerText = homeworkInfo.Date.split(' ')[0];
-	document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkInfo.File);
+	document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkInfo.File,homeworkInfo.HomeworkId);
 }
-var getImgsInner = function(imgs) {
+var getImgsInner = function(imgs,id) {
 	var imgInner = '';
 	var win_height=document.getElementById('brief-imgs').offsetWidth;
 	var img_width = win_height/3;
 	if(imgs && imgs.length > 0) {
 		for(var i in imgs) {
 			imgInner += '<img class="homework-img" style="width:' + img_width + 'px;height:'+img_width+'px;" src="' + imgs[i].ThumbUrl +
-				'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + imgs[i].FileType + '"/>';
+				'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + id + '"/>';
 		}
 	}
 	return imgInner;
