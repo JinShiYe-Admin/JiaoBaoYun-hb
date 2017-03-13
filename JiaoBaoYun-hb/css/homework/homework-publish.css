@@ -176,6 +176,7 @@ label{
 .mui-input-row:after{
 	height: 1px;
 	background-color: #E4E4E4;
+	margin-left: -15px;
 }
 .online-container{
 	padding: 5px 15px;

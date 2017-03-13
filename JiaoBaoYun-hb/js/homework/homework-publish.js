@@ -13,6 +13,7 @@ mui.plusReady(function() {
 	events.preload('classes-select.html', 200);
 	window.addEventListener('postClasses', function(e) {
 		CloudFileUtil.files = [];
+		events.clearChild(document.getElementById('pictures'));
 		personalUTID = parseInt(window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid);
 		console.log('发布作业界面获取的班级数据：' + JSON.stringify(e.detail.data));
 		var switchItem = document.getElementById("onlineSwitch");
