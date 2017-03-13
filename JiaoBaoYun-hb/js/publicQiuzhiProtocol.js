@@ -557,7 +557,7 @@ var postDataQZPro_getInviteByUser = function(commonData, wd, callback) {
 //			pageIndex: '',//当前页数
 //			pageSize:''//每页记录数,传入0，获取总记录数
 //		};
-//返回值：InviteMan	邀请人ID	int；AskId	问题ID	int；AskTitle	问题标题	String；AskChannel	问题话题
+//返回值：InviteMan	邀请人ID	int；AskId	问题ID	int；AskTitle	问题标题	String；AskChannel	问题话题；AskChannelId	，问题话题ID
 var postDataQZPro_getInviteAsksByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};

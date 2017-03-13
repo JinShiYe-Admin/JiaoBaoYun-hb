@@ -26,14 +26,11 @@ mui.plusReady(function() {
 		var info = JSON.parse(parent.getAttribute('data-info'));
 		console.log('dianji 关注的问题标题' + JSON.stringify(info));
 		//跳转界面
-		events.fireToPageNone('qiuzhi-question.html', 'askId', info.AskId);
-		events.fireToPageNone('qiuzhi-questionSub.html', 'askId', info.AskId);
-		plus.webview.getWebviewById('qiuzhi-question.html').show();
 		events.openNewWindowWithData('qiuzhi-question.html', {
-						askID: info.AskId, //问题id
-						channelInfo: info, //当前话题
-						allChannels: window.myStorage.getItem('allChannels') //全部话题
-					});
+			askID: info.AskId, //问题id
+			channelInfo: info, //当前话题
+			allChannels: window.myStorage.getItem('allChannels') //全部话题
+		});
 	});
 
 	//上拉下拉注册
