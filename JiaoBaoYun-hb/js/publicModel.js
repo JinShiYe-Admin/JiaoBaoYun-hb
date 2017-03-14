@@ -411,6 +411,8 @@ var publicModel = (function($, mod) {
 		TabId:'',//	回答ID
 		AskId:'',//	问题ID
 		AskTitle:'',//	问题标题
+		AskChannelId:'',//问题话题ID
+		AskChannel:'',//	问题话题
 		AnswerContent:'',//	回答内容
 		AnswerEncAddr:'',//回答附件地址,多个的情况例如：1.jpg|2.jpg
 		AnswerThumbnail:'',//回答缩略图
