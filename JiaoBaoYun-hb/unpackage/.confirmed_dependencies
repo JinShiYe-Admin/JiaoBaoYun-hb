@@ -12,7 +12,9 @@
 			"image/utils/default_personalimage.png"
 		],
 		"refer": [
-			"html/qiuzhi/qiuzhi-answerDetail.html"
+			"html/qiuzhi/qiuzhi-answerDetail.html",
+			"html/qiuzhi/qiuzhi-question.html",
+			"html/qiuzhi/qiuzhi-newQ.html"
 		]
 	},
 	"html/cloud/cloud_home.html": {
@@ -52,7 +54,9 @@
 			"js/mui.lazyload.img.js",
 			"css/sciedu/sciedu.css",
 			"js/mui.pullToRefresh.js",
-			"js/mui.pullToRefresh.material.js"
+			"js/mui.pullToRefresh.material.js",
+			"/image/utils/default_load_2.gif",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
 	},
@@ -83,7 +87,10 @@
 			"css/icons-extra.css",
 			"css/utils/preview.css",
 			"js/show/show-sub.js",
-			"css/show/show.css"
+			"css/show/show.css",
+			"image/utils/default_personalimage.png",
+			"image/dynamic/icon_praise_small.png",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
 	},
@@ -254,7 +261,8 @@
 			"css/mui.min.css",
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-addAnswer.html"
@@ -498,7 +506,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/mine/add-info.html",
@@ -507,7 +516,8 @@
 	},
 	"html/mine/add-info.html": {
 		"resources": [
-			"js/mine/add-info.js"
+			"js/mine/add-info.js",
+			"fonts/fangzheng.ttf"
 		]
 	},
 	"html/register/modify_password.html": {
@@ -653,6 +663,106 @@
 			"css/icons-extra.css",
 			"js/libs/crypto-js/crypto-js.js",
 			"js/mui.lazyload.img.js"
+		]
+	},
+	"html/qiuzhi/qiuzhi-question.html": {
+		"resources": [
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"html/qiuzhi/qiuzhi-questionSub.html",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-questionSub.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi-questionSub.html": {
+		"resources": [
+			"js/publicQiuzhiProtocol.js",
+			"js/qiuzhi/qiuzhi-questionSub.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/preview.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.zoom.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/qiuzhi/qiuzhi-questionSub.css",
+			"js/mui.previewimage.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"image/utils/default_personalimage.png"
+		]
+	},
+	"html/qiuzhi/qiuzhi-newQ.html": {
+		"resources": [
+			"css/qiuzhi/qiuzhi-questionSub.css",
+			"css/quan/custom-textarea.css",
+			"js/utils/cryption.js",
+			"js/publicQiuzhiProtocol.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"js/utils/compress.js",
+			"js/utils/camera.js",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"fonts/fangzheng.ttf",
+			"js/utils/CloudFileUtil.js",
+			"js/libs/RSA/BigInt.js",
+			"js/qiniu/qiniu.js",
+			"css/mui.min.css",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/qiuzhi/qiuzhi-addAnswer.html": {
+		"resources": [
+			"css/qiuzhi/qiuzhi-addAnswer.css",
+			"js/utils/cryption.js",
+			"js/publicQiuzhiProtocol.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/camera.js",
+			"js/utils/CloudFileUtil.js",
+			"js/utils/compress.js",
+			"css/mui.min.css",
+			"js/qiniu/qiniu.js",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	}
 }
