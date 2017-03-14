@@ -29,7 +29,9 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"image/qiuzhi/add-question.png.png",
+			"image/qiuzhi/channel-others.png"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-answerDetail.html",

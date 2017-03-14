@@ -2666,7 +2666,8 @@
 					"image/qiuzhi/expert_more.png",
 					"fonts/fangzheng.ttf",
 					"image/qiuzhi/channel-science.png",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/qiuzhi/add-question.png.png"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
