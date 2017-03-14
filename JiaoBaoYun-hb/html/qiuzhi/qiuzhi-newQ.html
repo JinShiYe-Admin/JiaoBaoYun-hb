@@ -454,7 +454,7 @@
 
 									//上传文件
 									CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
-										plus.uploader.clear();
+								
 										console.log(JSON.stringify(uploadData));
 										var img = { //图片信息
 											url: tokenInfo.Domain + tokenInfo.Key,

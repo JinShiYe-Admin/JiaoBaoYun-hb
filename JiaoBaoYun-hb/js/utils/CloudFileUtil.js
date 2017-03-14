@@ -447,6 +447,7 @@ var CloudFileUtil = (function($, mod) {
 		}
 		var QNFileName = events.getFileNameByPath(picPath);
 		var opsData = getOptions(manageOptions, saveSpace, mainSpace, QNFileName);
+		console.log("设定的参数："+JSON.stringify(opsData));
 		var ops = opsData.ops;
 		if(opsData.thumbKey) {
 			data.thumbKey = opsData.thumbKey;
@@ -532,9 +533,9 @@ var CloudFileUtil = (function($, mod) {
 		var params = [];
 		for(var i in picPaths) {
 			if(parseInt(i) == 0) {
-				uploadOptions.type = 10;
+				uploadOptions[i].type = 10;
 			} else {
-				uploadOptions.type = 0;
+				uploadOptions[i].type = 0;
 			}
 			var param = {};
 			param.Bucket = mainSpace;
@@ -543,7 +544,7 @@ var CloudFileUtil = (function($, mod) {
 			param.Key = saveSpace + QNFileName;
 			console.log('key:' + param.Key);
 			//获取处理参数
-			var opsData = getOptions(uploadOptions, saveSpace, mainSpace, QNFileName);
+			var opsData = getOptions(uploadOptions[i], saveSpace, mainSpace, QNFileName);
 			param.Pops = opsData.ops;
 			param.NotifyUrl = '';
 			//保存空间值
