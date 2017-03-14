@@ -253,3 +253,10 @@
 .mui-popover {
 	width: 150px;
 }
+.mui-table-view-radio .mui-table-view-cell .mui-navigate-right:after {
+	font-weight: 400;
+	color: #808080
+}
+.mui-navigate-right{
+	color: #808080 !important;
+}
