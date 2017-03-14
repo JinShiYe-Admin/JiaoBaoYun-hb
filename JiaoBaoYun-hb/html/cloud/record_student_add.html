@@ -65,7 +65,6 @@
 			var pathList = []; //记录需要删掉的图片和缩略图
 
 			mui.plusReady(function() {
-//				events.closeWaiting();
 				mui.previewImage();
 				events.blurBack();
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
@@ -128,7 +127,7 @@
 					console.log('70_addStudentFile_新增某学生档案.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						console.log('新增成功：' + JSON.stringify(data.RspData.Result));
-						events.fireToPageNone('record_student_sub.html', 'refreshView');
+						events.fireToPageNone('record_student_main.html', 'refreshView');
 						mui.toast('发送成功');
 						mui.back();
 					} else {
