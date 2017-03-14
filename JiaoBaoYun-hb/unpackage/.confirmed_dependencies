@@ -400,7 +400,8 @@
 			"css/mui.min.css",
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
-			"css/quan/class_space.css"
+			"css/quan/class_space.css",
+			"fonts/iconfont.ttf"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html"
