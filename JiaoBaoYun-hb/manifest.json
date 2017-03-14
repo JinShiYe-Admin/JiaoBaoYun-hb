@@ -2908,7 +2908,8 @@
 					"css/utils/preview.css",
 					"js/mui.zoom.js",
 					"fonts/fangzheng.ttf",
-					"js/mui.previewimage.js"
+					"js/mui.previewimage.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-addAnswer.html",
