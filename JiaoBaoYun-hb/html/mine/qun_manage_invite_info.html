@@ -29,20 +29,19 @@
 		<div class="mui-content">
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">
-					<img id="uimg" style="height: 40px;width: 40px;" class="mui-media-object mui-pull-right" src="../../image/utils/default_personalimage.png">
+					<img id="uimg" style="height: 40px;width: 40px;border-radius:50% ;" class="mui-media-object mui-pull-right" src="../../image/utils/default_personalimage.png">
 					<div class="mui-media-body">
 						头像
 					</div>
 				</li>
-				<li class="mui-table-view-cell open-newPage">
+				<li class="mui-table-view-cell">
 					<p class="mui-pull-right" id='unick'>暂无</p>
 					<div class="mui-media-body">
 						昵称
 					</div>
-					</a>
 				</li>
 				<li class="mui-table-view-cell mui-media">
-					<p class="mui-pull-right" id='uname'>暂无</p>
+					<p class="mui-pull-right single-line" id='uname' style="max-width: 70%;">暂无</p>
 					<div class="mui-media-body">
 						账号
 					</div>
@@ -58,16 +57,21 @@
 					<div class="mui-media-body">
 						性别
 					</div>
-					</a>
 				</li>
-				<li class="mui-table-view-cell mui-media open-newPage" pos='2'>
-					<p id="utxt" class='mui-pull-right'>暂无</p>
-					<div class="mui-media-body">
+				<li class="mui-table-view-cell mui-media">
+					<p id="utxt" class='mui-pull-right single-line'style="max-width: 70%;">暂无</p>
+					<div class="mui-media-body mui-pull-left">
 						个性签名
 					</div>
-					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<p id="uarea" class='mui-pull-right'>暂无</p>
+					<div class="mui-media-body">
+						地区
+					</div>
 				</li>
 			</ul>
+
 		</div>
 		<script type="text/javascript">
 			mui.init();
@@ -90,13 +94,20 @@
 				}
 				//性别
 				if(data.usex == 0) {
-					document.getElementById("usex").innerText = '男';
+					document.getElementById("usex").innerText = '未定';
 				} else if(data.usex == 1) {
+					document.getElementById("usex").innerText = '男';
+				} else {
 					document.getElementById("usex").innerText = '女';
 				}
 				//个性签名
 				if(data.utxt != '' && data.utxt != null) {
 					document.getElementById("utxt").innerText = data.utxt;
+				}
+				//地区
+				if(data.uarea != '' && data.uarea != null) {
+					var uarea = data.uarea.split('|');
+					document.getElementById("uarea").innerText = uarea[1];
 				}
 			});
 		</script>

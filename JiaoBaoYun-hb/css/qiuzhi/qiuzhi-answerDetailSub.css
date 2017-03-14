@@ -1,17 +1,22 @@
-
 /*头像*/
-.head-img{
+
+.head-img {
 	width: 4rem;
-	height:4rem;
+	height: 4rem;
 }
 
+
 /*发送按钮*/
-.icon-fasong{
+
+.icon-fasong {
 	color: gainsboro;
 	font-size: 2.4rem;
 }
+
+
 /*输入答案评论按钮*/
-.input-footerContainer{
+
+.input-footerContainer {
 	background-color: white;
 	height: 60px;
 	padding-left: 5px;
@@ -20,37 +25,50 @@
 	bottom: 0;
 	z-index: 9999;
 }
+
+
 /*排序规则*/
-.order-selector{
+
+
+/*.order-selector{
+	margin;
 	appearance:none;
-	background: url(../../image/qiuzhi/arraw-down.png) no-repeat right center transparent;
 	max-width: 100px;
-}
+}*/
+
+
 /**/
-.img-portrait{
+
+.img-portrait {
 	float: left;
 	width: 40px;
 	height: 40px;
 	border-radius: 50%;
 	max-width: 15%;
 }
+
+
 /*专家信息栏*/
-.export-info{
+
+.export-info {
 	width: 55%;
-	padding-left:5px;
+	padding-left: 5px;
 	margin-top: -2px;
 	flex-grow: 1;
 	margin: auto 0;
 }
+
+
 /*作者内容控件*/
-.anthor-container{
+
+.anthor-container {
 	padding: 10px;
 	height: 60px;
 	position: fixed;
 	width: 90%;
 	left: 5%;
-/*	border: solid 1px gray;*/
-	box-shadow: 0px 0.5px 2px rgba(183,183,183,.6);
+	/*	border: solid 1px gray;*/
+	box-shadow: 0px 0.5px 2px rgba(183, 183, 183, .6);
 	z-index: 50;
 	background-color: white;
 	border-radius: 10px;
@@ -58,133 +76,187 @@
 	display: -webkit-flex;
 	align-items: center;
 }
-.questionContent-container{
-	padding:0 10px;
+
+.questionContent-container {
+	padding: 0 10px;
 	padding-top: 40px;
-/*	border-bottom: solid gray 1px;*/
+	/*	border-bottom: solid gray 1px;*/
 	background-color: white;
 }
-.question-container{
+
+.question-container {
 	padding: 5px 10px 40px 5px;
 	/*padding-top:5px;
 	padding-bottom: 40px;*/
 	border-bottom: solid 1px #F2F3F5;
-	background-color:#F8F9FB;
+	background-color: #F8F9FB;
 }
+
+
 /*问题标题*/
-.question-container>.question-title{
+
+.question-container>.question-title {
 	font-size: 1.7rem;
 	color: #323232;
 }
-.comments-info{
+
+.comments-info {
 	position: relative;
 	min-height: 45px;
 	padding: 0 10px;
 	background-color: #EFEFF4;
 }
-.comment-no{
+
+.comment-no {
 	font-size: 14px;
 	padding-top: 10px;
 	color: #808080;
 }
-.order-selector{
+
+.order-selector {
 	position: fixed;
 	right: 0;
+	padding: 6px 0;
+	color: #808080;
+	font-size: 14px;
 }
-.head-img{
+
+.head-img {
 	border-radius: 50%;
 }
-.answer-imgs{
+
+.answer-imgs {
 	width: 100%;
 }
+
+
 /*求知回答图片 样式*/
-.answer-img{
+
+.answer-img {
 	padding: 0 2px;
 }
-.btn-attention{
+
+.btn-attention {
 	border: none;
 	margin-top: 5px;
 	min-width: 7rem;
 	max-width: 25%;
 	color: white;
-	background-color:#1db8F1;
+	background-color: #1db8F1;
 }
-.btn-attentioned{
+
+.btn-attentioned {
 	border: none;
 	margin-top: 5px;
 	min-width: 7rem;
 	max-width: 25%;
 	color: white;
-	background-color:#b7b7b7;
+	background-color: #b7b7b7;
 }
-.question-content>p{
+
+.question-content>p {
 	word-wrap: break-word;
 	font-size: 14px;
 }
+
+
 /*已点赞的颜色*/
-.isLike{
-	color:#1a9bff;
+
+.isLike {
+	color: #1a9bff;
 }
+
+
 /*未点赞颜色*/
-.isNotLike{
+
+.isNotLike {
 	color: #B7B7B7;
 }
+
+
 /*评论内容*/
-.comment-words{
+
+.comment-words {
 	word-wrap: break-word;
 }
-.answer-comment{
+
+.answer-comment {
 	box-shadow: 0px -1px 2px #E4E4E4 !important;
 }
 
-.imgs-container{
+.imgs-container {
 	min-width: 100%;
 }
-.anthor-name{
+
+.anthor-name {
 	color: #323232;
 	font-size: 1.5rem;
 	/*line-height: 1.2;*/
 }
-.anthor-intro{
+
+.anthor-intro {
 	color: #808080;
 	font-size: 1.3rem;
-	 flex-basis:auto;
+	flex-basis: auto;
 	/*line-height: 1.2;*/
 }
-.mui-table-view{
+
+.mui-table-view {
 	border: none;
 }
+
 .mui-table-view-cell:after {
 	background-color: #E4E4E4;
 }
-.mui-table-view:after{
+
+.mui-table-view:after {
 	background-color: transparent;
 }
-.mui-table-view:before{
+
+.mui-table-view:before {
 	background-color: #E4E4E4;
 }
-.inner-table-view{
+
+.inner-table-view {
 	padding-left: 4rem;
 }
-.table-view-cell{
+
+.table-view-cell {
 	display: flex;
 	display: -webkit-flex;
 }
-.img-container{
+
+.img-container {
 	min-width: 5rem;
 	align-self: flex-start;
 }
+
+
 /*评论内容*/
-.comment-container{
+
+.comment-container {
 	width: 50%;
 	flex-grow: 1;
 }
-.support-container{
+
+.support-container {
 	height: 4rem;
 	width: 4rem;
 	max-width: 14%;
 	padding: .2rem 0 2rem 2rem;
 }
-.comment-personName{
+
+.comment-personName {
 	line-height: 1.2;
+}
+
+.mui-popover {
+	width: 150px;
+}
+.mui-table-view-radio .mui-table-view-cell .mui-navigate-right:after {
+	font-weight: 400;
+	color: #808080
+}
+.mui-navigate-right{
+	color: #808080 !important;
 }

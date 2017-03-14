@@ -1,4 +1,4 @@
-var type = 2; //排列顺序类型
+var type = 2; //排列顺序类型1为顺序，2为倒序
 var pageIndex = 1; //当前页码
 var totalPageCount = 1; //总页数
 var answerInfo; //回答详情
@@ -37,8 +37,8 @@ mui.plusReady(function() {
 		pageIndex = 1;
 		totalPageCount = 1;
 		answerInfo = e.detail.data;
-		document.getElementById('reverse-order').selected = true;
-		type = 2;
+		type = 2;//倒序
+		setTolerantChecked(type);
 		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
 		var answerId = answerInfo.AnswerId;
 		events.clearChild(document.getElementById('list-container'));
@@ -51,8 +51,6 @@ mui.plusReady(function() {
 		answerData = {};
 		pageIndex = 1;
 		totalPageCount = 0
-		document.getElementById('reverse-order').selected = true;
-		type = 2;
 		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
 		var answerId = answerInfo.AnswerId;
 		events.clearChild(document.getElementById('list-container'));
@@ -77,6 +75,20 @@ mui.plusReady(function() {
 	//		}
 	//	});
 })
+/**
+ * 2倒序 1顺序
+ */
+var setTolerantChecked=function(orderType){
+	if(orderType==1){
+		document.getElementById("sequence-order").className="mui-table-view-cell mui-selected"
+		document.getElementById('reverse-order').className="mui-table-view-cell";
+		document.getElementById("order-selector").innerHTML='顺序排列<span class="mui-icon mui-icon-arrowdown"></span>';
+	}else{
+		document.getElementById("sequence-order").className="mui-table-view-cell"
+		document.getElementById('reverse-order').className="mui-table-view-cell mui-selected";
+		document.getElementById("order-selector").innerHTML='倒序排列<span class="mui-icon mui-icon-arrowdown"></span>';
+	}
+}
 //8.获取某个回答的详情
 function requestAnswerDetail(answerId) {
 	//所需参数
@@ -461,14 +473,24 @@ var setListeners = function() {
 		events.fireToPageWithData('qiuzhi-addAnswer.html', 'comment-reply', jQuery.extend(this.commentInfo, { AnswerId: answerData.AnswerId }));
 	})
 	//设置选择监听
-	document.getElementById('order-selector').onchange = function() {
-		type = parseInt(this.options[this.options.selectedIndex].value);
-		flag = 0;
-		console.log('获取的类型：' + type);
-		answerData.Data.reverse();
-		events.clearChild(document.getElementById('list-container'));
-		refreshUI(answerData);
-	}
+	document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected',function(e){
+			console.log("当前选中的为："+JSON.stringify(e.detail.el.value));
+			type=parseInt(e.detail.el.value);
+			setTolerantChecked(type);
+			flag=0;
+			mui('#popover').popover('hide');
+			answerData.Data.reverse();
+			events.clearChild(document.getElementById('list-container'));
+			refreshUI(answerData);
+		});
+//	document.getElementById('order-selector').onchange = function() {
+//		type = parseInt(this.options[this.options.selectedIndex].value);
+//		flag = 0;
+//		console.log('获取的类型：' + type);
+//		answerData.Data.reverse();
+//		events.clearChild(document.getElementById('list-container'));
+//		refreshUI(answerData);
+//	}
 }
 /**
  * 设置是否点赞

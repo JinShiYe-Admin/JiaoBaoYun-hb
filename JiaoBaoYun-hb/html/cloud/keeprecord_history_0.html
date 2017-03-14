@@ -146,6 +146,7 @@
 		<script type="text/javascript" src="../../js/mui.zoom.js"></script>
 		<script type="text/javascript" src="../../js/mui.previewimage.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
 
 		<!--<script type="text/javascript" src="../../js/mui.picker.min.js" ></script>-->
 		<script type="text/javascript">
@@ -157,11 +158,9 @@
 			var markDate = ''; //记录日期
 			mui.plusReady(function() {
 				previewImage = mui.previewImage();
-
 				main = plus.webview.currentWebview(); //获取当前窗体对象
 				mainData = main.data; //接收A页面传入参数值
 				console.log(main.id + ' ' + JSON.stringify(mainData));
-
 				var deceleration = mui.os.ios ? 0.003 : 0.0009;
 				mui('.mui-scroll-wrapper').scroll({
 					bounce: false,
@@ -244,7 +243,7 @@
 					pageSize: pageSize, //每页记录数
 					publisherId: personalUTID //发布者ID,0代表全部
 				};
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				var wd = events.showWaiting();
 				postDataPro_getNotesForClass(comData, wd, function(data) {
 					console.log('66.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 
@@ -260,6 +259,7 @@
 					if(pageIndex == 1) { //获取的第一页的内容
 						//清空对应的界面
 						document.getElementById('data_scroll').innerHTML = '';
+						markDate = '';
 					}
 
 					if(data.RspCode == 0) {
@@ -325,12 +325,13 @@
 							<div class="mui-media-body mui-pull-right history-time">' + timeItem + '</div>\
 							<div id="' + data.TabId + '_content' + '" class="mui-media-body history-content ellipsis-show"></div><div id="' + data.TabId + '_show' + '" class="show-all">显示全部</div>';
 				var html_media = ''; //多媒体
-
 				var width = (document.getElementById("data_scroll").offsetWidth - 30) * 0.32;
 				var height = width * 3 / 4;
 				var marginBottom = (document.getElementById("data_scroll").offsetWidth - 30) * 0.02;
 				var marginRight;
 
+				var title = ''; //标题
+				var content = ''; //内容
 				if(data.EncType == 1) { //附件类型,1图片2音视频3仅文字
 					var imageArray = data.EncAddr.split('|');
 					var thumbArray = data.EncImgAddr.split('|');
@@ -359,17 +360,25 @@
 				}
 				var element = document.createElement('li');
 				element.className = 'mui-table-view-cell';
-				var title = ''; //标题
-				var content = ''; //内容
+
+				if(data.stuname == undefined) { //
+					data.stuname = '';
+					console.log('stuname 异常 无此人资料' + data.StudentId);
+					//console.log('createItem ' + JSON.stringify(data));
+				}
 				if(data.NoteType == 1) { //点到
 					element.innerHTML = html_first;
-
 					title = data.stuname + ' ' + data.CheckTypeStr;
 					if(data.MsgContent != '') {
 						content = '说明:' + data.MsgContent;
 					}
 				} else if(data.NoteType == 2) { //记事
 					element.innerHTML = html_first + html_media;
+					title = data.stuname;
+					content = data.MsgContent;
+				} else {
+					console.log('NoteType 异常'+data.NoteType);
+					element.innerHTML = html_first;
 					title = data.stuname;
 					content = data.MsgContent;
 				}

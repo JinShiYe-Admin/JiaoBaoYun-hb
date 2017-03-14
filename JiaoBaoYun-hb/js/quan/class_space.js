@@ -14,16 +14,16 @@ var class_space = (function(mod) {
 		var wd = events.showWaiting();
 		postDataPro_getClassSpacesByUserForClass(postData, wd, function(pagedata) {
 			wd.close();
-			if(pagedata.RspCode == 0&&pagedata.RspData.Data.length>0) {
+			if(pagedata.RspCode == 0 && pagedata.RspData.Data.length > 0) {
 				console.log('获取的班级动态：' + JSON.stringify(pagedata));
 				mod.totalPagNo = pagedata.RspData.TotalPage;
 				list = pagedata.RspData.Data;
 				callback();
 			} else {
-				if(pageIndex==1){
+				if(pageIndex == 1) {
 					mui.toast("暂无班级动态！");
 				}
-				
+
 			}
 
 		})
@@ -91,14 +91,14 @@ var class_space = (function(mod) {
 			'</div></div>';
 		return inner;
 	}
-	var getName=function(item){
-		if(item.bunick){
+	var getName = function(item) {
+		if(item.bunick) {
 			return item.bunick;
 		}
-		if(item.ugname){
+		if(item.ugname) {
 			return item.ugname;
 		}
-		if(item.unick){
+		if(item.unick) {
 			return item.unick;
 		}
 	}
@@ -172,7 +172,7 @@ var class_space = (function(mod) {
 					}
 					var realIds = events.arraySingleItem(personIds);
 					requireInfos(realIds);
-//					setData();
+					//					setData();
 				})
 
 			} else {
@@ -211,15 +211,15 @@ var class_space = (function(mod) {
 
 	}
 	var rechargeInfos = function(infos) {
-	for(var i in list) {
-		for(var j in infos) {
-			if(list[i].PublisherId == infos[j].utid) {
-				 jQuery.extend(list[i],infos[j]);
+		for(var i in list) {
+			for(var j in infos) {
+				if(list[i].PublisherId == infos[j].utid) {
+					jQuery.extend(list[i], infos[j]);
+				}
 			}
 		}
+		setData();
 	}
-	setData();
-}
 	var setData = function() {
 		var container = document.getElementById('classSpace_list');
 		for(var i in list) {
@@ -250,10 +250,10 @@ var class_space = (function(mod) {
 				if(imgs.length <= 3 && imgs.length > 0) {
 					percent = 100 / (imgs.length);
 					imgInner += '<img src="' + imgs[i] + '" style="width:' + percent + '%;padding:2px;"' +
-						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate+index + '"/>'
+						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"/>'
 				} else {
 					imgInner += '<img src="' + imgs[i] + '" style="width:33.33333333%; padding:2px;"' +
-						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate+index + '"/>'
+						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"/>'
 				}
 			}
 		}
