@@ -96,15 +96,15 @@
 				</div>
 			</div>
 			<form class="mui-input-group">
-				<div class="mui-input-row">
+				<div class="mui-input-row" data-value='gname'>
 					<label>群名称：</label>
-					<input id="qunname" type="text" placeholder="请为你们的群起一个给力的名字吧！" oninput="if(value.length>20)value=value.slice(0,20)">
+					<input id="gname" type="text" placeholder="请为你们的群起一个给力的名字吧！" oninput="if(value.length>20)value=value.slice(0,20)">
 				</div>
-				<div class="mui-input-row">
+				<div class="mui-input-row" data-value='gnote'>
 					<label>群说明：</label>
-					<input id="qunintroduce" type="text" placeholder="请简单介绍一下本群！" oninput="if(value.length>30)value=value.slice(0,30)">
+					<input id="gnote" type="text" placeholder="请简单介绍一下本群！" oninput="if(value.length>30)value=value.slice(0,30)">
 				</div>
-				<div class="mui-input-row">
+				<div class="mui-input-row" data-value='qunremark'>
 					<label>群备注：</label>
 					<input id="qunremark" type="text" oninput="if(value.length>30)value=value.slice(0,30)">
 				</div>
@@ -115,6 +115,10 @@
 			mui.init();
 			mui.plusReady(function() {
 				var qunImgPath = '';
+				var qname = document.getElementById("gname"); //群名称
+				var qnote = document.getElementById("gnote"); //群说明
+				var qremark = document.getElementById("qunremark"); //群备注
+
 				document.getElementById('choose').addEventListener('tap', function() {
 					//console.log('选择群图标');
 					var btnArray = [{
@@ -141,34 +145,50 @@
 					});
 				});
 
+				mui('.mui-input-group').on('tap', '.mui-input-row', function() {
+					var id = this.getAttribute('data-value');
+					var type = '';
+					var value = '';
+					switch(id) {
+						case 'gname': //名称
+							type = 'gname';
+							value = qname.value;
+							break;
+						case 'gnote': //群说明
+							type = 'gnote';
+							value = qnote.value;
+							break;
+						case 'qunremark': //群备注
+							type = 'qunremark';
+							value = qremark.value;
+							break;
+						default:
+							console.log('修改群资料的类型选择出错');
+							break;
+					}
+					events.openNewWindowWithData('qun_manage_info_change_post.html', {
+						type: type, //修改的类型
+						value: value, //修改的值
+						post: false, //是否post
+						listener: [{ webid: 'qun_manage_info.html', winid: 'valueChange' }] //监听
+					});
+				});
+
 				document.getElementById("commit").addEventListener('tap', function() {
-					var qunName = document.getElementById("qunname"); //群名称
-					var qunIntroduce = document.getElementById("qunintroduce"); //群说明
-					var qunRemark = document.getElementById("qunremark"); //群备注
-					if(qunName.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
+					if(qname.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
 						mui.toast('群名称不能为空');
 					} else {
 						document.getElementById("commit").disabled = true;
 						document.activeElement.blur();
-						createQun(qunName.value, qunIntroduce.value);
+						createQun(qname.value, qnote.value);
 					}
 				});
 
-				/**
-				 * 上传群图标区域
-				 */
-				function addQunImg() {
-					var div = document.getElementById("qunimage");
-					div.innerHTML = '<div id="choose" style="margin-left: ' + marginLeft + ';" class="qun-image">\
-									<a class="mui-icon iconfont icon-xiangji" style="color: #BBBBBB;font-size: 30px;margin-top: 20px;">\
-										<p style="font-size: 10px;margin-top: 10px;">\
-											请上传群图标!\
-										</p>\
-									</a>\
-								</div>';
-					//var table = document.body.querySelector('.mui-content');
-					//table.insertBefore(div, table.firstChild);
-				}
+				//修改群信息成功后修改界面的值
+				window.addEventListener('valueChange', function(e) {
+					var data = e.detail;
+					document.getElementById(data.type).value = data.value;
+				});
 
 				/**
 				 * 从相册选择图片

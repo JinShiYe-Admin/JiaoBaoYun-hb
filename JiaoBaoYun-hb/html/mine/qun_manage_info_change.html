@@ -88,11 +88,11 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row" data-value='gname'>
 					<label>群名称：</label>
-					<input id="gname" type="text" class="mui-input-clear">
+					<input id="gname" type="text" class="mui-input-clear" placeholder="请为你们的群起一个给力的名字吧！">
 				</div>
 				<div class="mui-input-row" data-value='gnote'>
 					<label>群说明：</label>
-					<input id="gnote" type="text" class="mui-input-clear">
+					<input id="gnote" type="text" class="mui-input-clear" placeholder="请简单介绍一下本群！">
 				</div>
 				<div class="mui-input-row" data-value='qunremark'>
 					<label>群备注：</label>
@@ -125,9 +125,8 @@
 				};
 				//返回值model：model_groupList
 				// 等待的对话框
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				var wd = events.showWaiting();
 				postDataPro_PostGList(comData, wd, function(data) {
-					wd.close();
 					console.log('9.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						qname.value = data.RspData[0].gname;
@@ -141,6 +140,7 @@
 						document.getElementById("content").style.display = 'none';
 						mui.toast(data.RspTxt);
 					}
+					wd.close();
 				});
 
 				mui('.mui-input-group').on('tap', '.mui-input-row', function() {
@@ -157,7 +157,7 @@
 							value = qnote.value;
 							break;
 						case 'qunremark': //群备注
-							type = '';
+							type = 'qunremark';
 							value = qremark.value;
 							break;
 						default:
@@ -168,6 +168,7 @@
 						gid: subData.gid, //群id
 						type: type, //修改的类型
 						value: value, //修改的值
+						post: true, //是否post
 						listener: [subData.listener, { webid: 'qun_manage_info_change.html', winid: 'valueChange' }]
 					});
 				});

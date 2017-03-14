@@ -15,7 +15,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title" style="color: white;">修改群信息</h1>
+			<h1 id="title" class="mui-title" style="color: white;"></h1>
 			<h1 id="save" class="mui-title" style="text-align: right;right: 10px;">保存</h1>
 		</header>
 		<div class="mui-content">
@@ -26,6 +26,7 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
+				events.blurBack();
 				//---从父页面获取数据---start---
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var subData = main.data; //接收页面传入的参数值
@@ -35,12 +36,15 @@
 				switch(subData.type) {
 					case 'gname': //名称
 						maxLength = 20;
+						document.getElementById("title").innerText = '群名称';
 						break;
 					case 'gnote': //群说明
 						maxLength = 30;
+						document.getElementById("title").innerText = '群说明';
 						break;
 					case 'qunremark': //群备注
 						maxLength = 30;
+						document.getElementById("title").innerText = '群备注';
 						break;
 					default:
 						console.log('修改群资料的类型选择出错');
@@ -62,43 +66,51 @@
 						mui.back();
 					} else {
 						document.getElementById("input").disabled = true;
-						//8.用户修改群各项信息
-						//需要参数
-						var comData = {
-							rid: subData.gid, //要修改的群id
-							vtp: subData.type, //更改项，指更改用户信息的相应项,对应后面的vvl值,gimg(头像),gname(群名),gnote(群说明)
-							vvl: vvl //要修改成的值
-						};
-						//返回值model：model_groupList
-						// 等待的对话框
-						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-						postDataPro_PostReGinfo(comData, wd, function(data) {
-							wd.close();
-							console.log('8.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							if(data.RspCode == 0) {
-								console.log('修改成功');
-								mui.toast('修改成功');
-								var tempListener = subData.listener;
-
-								var main = plus.webview.getWebviewById(tempListener[1].webid);
-								mui.fire(main, tempListener[1].winid, {
-									type: subData.type, //资料类型
-									value: vvl //修改后的值
-								});
-								if(subData.type == 'gname') {
-									var main2 = plus.webview.getWebviewById(tempListener[0].webid);
-									mui.fire(main2, tempListener[0].winid, {
-										gid: subData.gid, //群id
-										type: 'gname', //修改的类型
+						var tempListener = subData.listener;
+						if(subData.post) {
+							//8.用户修改群各项信息
+							//需要参数
+							var comData = {
+								rid: subData.gid, //要修改的群id
+								vtp: subData.type, //更改项，指更改用户信息的相应项,对应后面的vvl值,gimg(头像),gname(群名),gnote(群说明)
+								vvl: vvl //要修改成的值
+							};
+							//返回值model：model_groupList
+							// 等待的对话框
+							var wd = events.showWaiting();
+							postDataPro_PostReGinfo(comData, wd, function(data) {
+								wd.close();
+								console.log('8.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								if(data.RspCode == 0) {
+									mui.toast('修改成功');
+									var web = plus.webview.getWebviewById(tempListener[1].webid);
+									mui.fire(web, tempListener[1].winid, {
+										type: subData.type, //资料类型
 										value: vvl //修改后的值
 									});
+									if(subData.type == 'gname') {
+										var web2 = plus.webview.getWebviewById(tempListener[0].webid);
+										mui.fire(web2, tempListener[0].winid, {
+											gid: subData.gid, //群id
+											type: 'gname', //修改的类型
+											value: vvl //修改后的值
+										});
+									}
+									mui.back();
+								} else {
+									document.getElementById("input").disabled = false;
+									mui.toast(data.RspTxt);
 								}
-								mui.back();
-							} else {
-								document.getElementById("input").disabled = false;
-								mui.toast(data.RspTxt);
-							}
-						});
+							});
+						} else { //创建群资料
+							var web = plus.webview.getWebviewById(tempListener[0].webid);
+							mui.fire(web, tempListener[0].winid, {
+								type: subData.type, //资料类型
+								value: vvl //修改后的值
+							});
+							mui.back();
+						}
+
 					}
 				});
 			})
