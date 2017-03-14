@@ -139,10 +139,10 @@
 								<input id="cb_4" value="4" name="checkbox" type="checkbox">
 							</div>
 						</div>
-						<input id="input_call" type="text" class="mui-input-clear" placeholder="备注" oninput="if(value.length>20)value=value.slice(0,20)" style="margin-bottom: 10px;">
+						<input id="input_call" type="text" class="mui-input-clear" placeholder="备注,最多20字" maxlength="20" style="margin-bottom: 10px;">
 					</div>
 					<div id="record" style="background: white;margin-top: 10px;padding-top: 10px;padding-bottom: 10px;">
-						<textarea id="textarea_record" rows="4" placeholder="记事" oninput="if(value.length>500)value=value.slice(0,500)" style="margin-bottom: 4px;"></textarea>
+						<textarea id="textarea_record" rows="4" placeholder="记事,最多500字" maxlength="500" style="margin-bottom: 4px;"></textarea>
 						<div id="MultiMedia">
 						</div>
 					</div>
@@ -312,6 +312,10 @@
 				window.addEventListener("addNote", function() {
 					if(!commit) {
 						console.log('不允许发布');
+					} else if(document.getElementById("input_call").value.length > 20) {
+						mui.toast('点到输入超出字数限制');
+					} else if(document.getElementById("textarea_record").value.length > 500) {
+						mui.toast('记事输入超出字数限制');
 					} else {
 						commit = false;
 						var parentIds = []; //家长列表
@@ -338,30 +342,30 @@
 								var strParent = arrayToStr(parentIds);
 								var strUser = arrayToStr(userIds);
 								if(call_type != '') {
-									var wd2 = events.showWaiting();
+									var wd_0 = events.showWaiting();
 									commitNum++;
 									addNotes(1, strParent, strUser, {
 										encType: '3', //附件类型,1图片2音视频3仅文字
 										encAddr: '', //附件地址
 										encImg: '', //附件缩略图地址
 									}, wd2); //增加点到
-									waiting.push(wd2);
+									waiting.push(wd_0);
 								}
 
 								if(document.getElementById("textarea_record").value.replace(/(^\s*)|(\s*$)/g, "") != "" && multiMedia.data.PictureArray.length == 0) {
-									var wd2 = events.showWaiting();
+									var wd_1 = events.showWaiting();
 									commitNum++;
 									addNotes(2, strParent, strUser, {
 										encType: '3', //附件类型,1图片2音视频3仅文字
 										encAddr: '', //附件地址
 										encImg: '', //附件缩略图地址
-									}, wd2); //增加记事
-									waiting.push(wd2);
+									}, wd_1); //增加记事
+									waiting.push(wd_1);
 								} else if(multiMedia.data.PictureArray.length != 0) {
-									var wd2 = events.showWaiting();
+									var wd_2 = events.showWaiting('上传中...');
 									commitNum++;
-									uploadFile(wd2, strParent, strUser); //上传文件
-									waiting.push(wd2);
+									uploadFile(wd_2, strParent, strUser); //上传文件
+									waiting.push(wd_2);
 								}
 
 							} else {
@@ -587,7 +591,7 @@
 			/**
 			 * 上传文件
 			 */
-			function uploadFile(wd, strParent, strUser) {
+			function uploadFile(waiting, strParent, strUser) {
 				compressImage(function(pathArray) {
 					var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENFILE; //获取token路径
 					var mainSpace = window.storageKeyName.QNPUBSPACE; //公开空间
@@ -612,7 +616,7 @@
 						if(QNUptoken.Status == 0) { //失败
 							mui.toast('获取上传凭证失败 ' + QNUptoken.Message);
 							console.log('### ERROR ### 请求上传凭证失败 ' + QNUptoken.Message);
-							wd.close();
+							waiting.close();
 						} else {
 							//记录图片和缩略图地址
 							for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
@@ -658,7 +662,7 @@
 												encType: '1', //附件类型,1图片2音视频3仅文字
 												encAddr: encAddrStr, //附件地址
 												encImg: encImgrStr, //附件缩略图地址
-											}, wd); //增加记事
+											}, waiting); //增加记事
 										}
 									} else {
 										uploadErrorNum++;
@@ -667,7 +671,7 @@
 										mui.toast('上传失败');
 										console.log('上传失败');
 										BatchDelete(pathList);
-										wd.close();
+										waiting.close();
 									}
 								}, function(upload, status) {
 									var id = upload.__UUID__;
@@ -706,10 +710,10 @@
 					}, function(xhr, type, errorThrown) {
 						mui.toast('请求上传凭证失败 ' + type);
 						console.log('请求上传凭证失败 ' + type);
-						wd.close();
+						waiting.close();
 					});
 				}, function() {
-					wd.close();
+					waiting.close();
 				});
 			}
 

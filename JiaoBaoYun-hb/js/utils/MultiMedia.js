@@ -1,4 +1,4 @@
-var MultiMedia = (function(mod) {
+var MultiMedia = (function($,mod) {
 
 	var html_picture_header = '<span id="MultiMedia_Picture_Header" class="mui-icon iconfont icon-xiangji"></span>'; //相机图标
 	var html_audio_header = '<span id="MultiMedia_Audio_Header" class="mui-icon iconfont icon-yuyin"></span>'; //语音图标
@@ -439,4 +439,4 @@ var MultiMedia = (function(mod) {
 
 	return mod;
 
-})(window.MultiMedia || {});
+})(mui,window.MultiMedia || {});
