@@ -228,7 +228,7 @@ div>.icon-xiangce:before,
 }
 
 .mui-popover {
-	max-width: 50%;
+	width: 200px;
 }
 .mui-grid-view.mui-grid-9 .mui-table-view-cell{
 	padding: 0;

@@ -96,11 +96,13 @@ var sortData = function(records) {
  * @param {Object} data
  */
 var setData = function(records) {
-	var apply_container=document.createElement('div');
-	apply_container.className="apply-container";
-	apply_container.setAttribute("id","btn-apply")
-	apply_container.innerHTML='<p><span class="mui-icon mui-icon-search"></span>&nbsp;&nbsp;申请加入班级</p>'
+	console.log("记录："+JSON.stringify(records));
+	var apply_container=document.createElement('li');
+	apply_container.className="mui-table-view-cell";
+//	apply_container.setAttribute("id","btn-apply")
+	apply_container.innerHTML='<div id="btn-apply" class="apply-container"><p><span class="mui-icon mui-icon-search"></span>&nbsp;&nbsp;申请加入班级</p><div>'
 	list.appendChild(apply_container);
+	
 	if(records.length > 0) {
 		var divider=document.createElement('li');
 		divider.className="mui-table-view-divider";

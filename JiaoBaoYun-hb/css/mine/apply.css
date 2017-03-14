@@ -6,12 +6,8 @@
 .mui-table-view-cell p {}
 
 .mui-table-view-cell p:nth-child(1) {
-	font-size: 1.5rem;
-	font-weight: bold;
-	color: #000000;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+	font-size: 16px;
+	color: #808080;	
 }
 
 .mui-bar~.mui-content .mui-fullscreen {
@@ -210,12 +206,9 @@ a>p {
 .mui-btn-outlined{
 	color: #B7B7B7;
 }
-.apply-container{
-	background-color: white;
-	padding: 10px 15px 0; 
-}
 .apply-container>p{
-	font-size: 1.5rem;
+	font-weight: 400
+	color: #808080;
 }
 .mui-table-view-divider{
 	background-color: rgb(238,239,243);
