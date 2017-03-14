@@ -373,9 +373,9 @@ var setAnswerManInfo = function(datasource) {
 		document.getElementById('btn-focus').style.display = 'none';
 	} else {
 		document.getElementById('anthor-portrait').src = updateHeadImg(datasource.uimg, 2);
-		document.getElementById("anthor-name").innerText = datasource.unick;
+		document.getElementById("anthor-name").innerText = events.shortForString(datasource.unick,10) ;
 		document.getElementById("anthor-info").style.display="inline-block"
-		document.getElementById("anthor-info").innerText = datasource.AnswerManNote ? datasource.AnswerManNote : "暂无简介";
+		document.getElementById("anthor-info").innerText = events.shortForString(datasource.AnswerManNote ? datasource.AnswerManNote : "暂无简介",12);
 		if(datasource.AnswerMan == selfId) { //如果专家是自己，隐藏关注按钮
 			document.getElementById('btn-focus').style.display = "none";
 		} else { //不是自己，显示关注按钮

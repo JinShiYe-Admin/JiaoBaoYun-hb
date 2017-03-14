@@ -51,7 +51,7 @@
 /*专家信息栏*/
 
 .export-info {
-	width: 55%;
+	width: 50%;
 	padding-left: 5px;
 	margin-top: -2px;
 	flex-grow: 1;
@@ -139,8 +139,7 @@
 .btn-attention {
 	border: none;
 	margin-top: 5px;
-	min-width: 7rem;
-	max-width: 25%;
+	width: 70px;
 	color: white;
 	background-color: #1db8F1;
 }
@@ -148,8 +147,7 @@
 .btn-attentioned {
 	border: none;
 	margin-top: 5px;
-	min-width: 7rem;
-	max-width: 25%;
+	min-width: 70px;
 	color: white;
 	background-color: #b7b7b7;
 }
