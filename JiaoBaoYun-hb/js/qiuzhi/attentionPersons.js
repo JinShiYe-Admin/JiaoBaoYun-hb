@@ -330,8 +330,22 @@ var setListener = function() {
 		//得到父节点的值
 		var info = JSON.parse(parent.getAttribute('data-info'));
 		console.log('dianji 关注他的人：' + JSON.stringify(info));
-		events.openNewWindowWithData('expert-detail.html', JSON.stringify(info));
-		events.fireToPageWithData('expert-detail.html', 'expert-detail', info);
+		mui.openWindow({
+			url: 'expert-detail.html',
+			id: 'expert-detail.html',
+			styles: {
+				top: '0px', //设置距离顶部的距离
+				bottom: '0px'
+			},
+
+			extras:{
+				data: info
+			},
+			createNew: true,
+
+		});
+//		events.openNewWindowWithData('expert-detail.html', JSON.stringify(info));
+//		events.fireToPageWithData('expert-detail.html', 'expert-detail', info);
 	});
 }
 ///**
