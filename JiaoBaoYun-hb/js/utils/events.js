@@ -235,24 +235,19 @@ var events = (function(mod) {
 	 * @param {Object} datas 要传递的数据
 	 */
 	mod.fireToPageWithData = function(tarPage, listener, datas) {
-		console.log('tarPage:' + tarPage);
+
 		tarPage = tarPage.split('/')[tarPage.split('/').length - 1];
+		console.log('tarPage:' + tarPage);
 		var targetPage = null;
 		//获得目标页面
 		if(!targetPage) {
 			targetPage = plus.webview.getWebviewById(tarPage);
-			//				console.log(typeof(targetPage));
 		}
-		//		mod.showWaiting();
-		//		setTimeout(function() {
 		//触发目标页面的listener事件
 		mui.fire(targetPage, listener, {
 			data: datas
 		});
 		targetPage.show('slide-in-right', 250);
-		//			mod.closeWaiting();
-		//		}, 1000)
-
 	}
 	/**
 	 * 事件传递 不传数据 常用于 父子页面间

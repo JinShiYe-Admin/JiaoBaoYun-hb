@@ -357,11 +357,12 @@ var setAnswerManInfo = function(datasource) {
 	if(datasource.IsAnonym) {
 		document.getElementById('anthor-portrait').src = "../../image/utils/default_personalimage.png";
 		document.getElementById("anthor-name").innerText = "匿名用户";
-		document.getElementById("anthor-info").innerText = "隐藏简介";
+		document.getElementById("anthor-info").style.display="none"
 		document.getElementById('btn-focus').style.display = 'none';
 	} else {
 		document.getElementById('anthor-portrait').src = updateHeadImg(datasource.uimg, 2);
 		document.getElementById("anthor-name").innerText = datasource.unick;
+		document.getElementById("anthor-info").style.display="inline-block"
 		document.getElementById("anthor-info").innerText = datasource.AnswerManNote ? datasource.AnswerManNote : "暂无简介";
 		if(datasource.AnswerMan == selfId) { //如果专家是自己，隐藏关注按钮
 			document.getElementById('btn-focus').style.display = "none";

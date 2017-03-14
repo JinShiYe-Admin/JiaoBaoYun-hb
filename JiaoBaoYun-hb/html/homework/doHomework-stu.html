@@ -193,6 +193,9 @@
 				var tempText = textView.value;
 
 				console.log('textView.value===' + tempText)
+				if(tempText){
+					tempText=tempText.trim();
+				}
 				if(!tempText || tempText == '') {
 					mui.toast('请输入作业内容');
 					return;

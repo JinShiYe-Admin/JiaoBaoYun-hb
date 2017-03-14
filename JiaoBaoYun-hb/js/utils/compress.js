@@ -38,27 +38,17 @@ var compress = (function(mod) {
 		var compressedPaths = [];
 		//		var trueComPaths=[];
 		var compressCount = 0;
+		var widths=[];
 		for(var i in picPaths) {
 			mod.compressPIC(picPaths[i], function(event) {
 				compressCount++;
-
 				compressedPaths.push(event.target);
-
+				widths.push(event.width);
 				if(compressCount == picPaths.length) {
 					console.log('压缩后的图片：' + JSON.stringify(compressedPaths));
 					console.log('压缩前的图片：' + JSON.stringify(picPaths))
-					//					for(var j in picPaths){
-					//						for(var m in compressedPaths){
-					//							console.log('截取后的图片名称：'+events.getFileNameByPath(picPaths[j]));
-					//							if(events.getFileNameByPath(picPaths[j]) ==events.getFileNameByPath(compressedPaths[m])){
-					//								trueComPaths[j]==compressedPaths[m];
-					//								break;
-					//							}
-					//						}
-					//						
-					//					}
 					console.log('全部压缩成功');
-					callback(compressedPaths);
+					callback(compressedPaths,widths);
 				}
 			})
 		}

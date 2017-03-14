@@ -132,19 +132,7 @@
 				alertBar: document.getElementById("alertBar"),
 				alertAllBtn: document.getElementById("alertAll")
 			}
-			var imgType = {
-				chineseImg: '../../image/homework/chinese.png',
-				mathImg: '../../image/homework/math.png',
-				biologyImg: '../../image/homework/biology.png',
-				chemistryImg: '../../image/homework/chemistry.png',
-				englishImg: '../../image/homework/english.png',
-				otherImg: '../../image/homework/other.png',
-				physicsImg: '../../image/homework/physics.png',
-				politicalImg: '../../image/homework/political.png',
-				historyImg: '../../image/homework/history.png',
-				yuwenImg: '../../image/homework/yuwen.png',
-				geographyImg: '../../image/homework/geography.png'
-			}
+
 			//从主页传值到这个界面的model
 			var homeworkModel = {
 				//				"Contents": "Test",
@@ -326,44 +314,9 @@
 			}
 
 			function refreshhomeworkDetail() {
-				console.log(homeworkDetailModel.Subject);
 				var className = 'iconfont subject-icon ' + getHomeworkIcon(homeworkModel.Subject);
-				console.log('className=' + className);
 				homeworkDetailNodes.img.className = className;
-				switch(homeworkDetailModel.Subject) {
-					case '语文':
-						homeworkDetailNodes.img.src = imgType.yuwenImg;
-						break;
-					case '数学':
-						homeworkDetailNodes.img.src = imgType.mathImg;
-						break;
-					case '英语':
-						homeworkDetailNodes.img.src = imgType.englishImg;
-						break;
-					case '历史':
-						homeworkDetailNodes.img.src = imgType.historyImg;
-						break;
-					case '政治':
-						homeworkDetailNodes.img.src = imgType.politicalImg;
-						break;
-					case '地理':
-						homeworkDetailNodes.img.src = imgType.geographyImg;
-						break;
-					case '物理':
-						homeworkDetailNodes.img.src = imgType.physicsImg;
-						break;
-					case '化学':
-						homeworkDetailNodes.img.src = imgType.chemistryImg;
-						break;
-					case '生物':
-						homeworkDetailNodes.img.src = imgType.biologyImg;
-						break;
-
-					default:
-						break;
-				}
 				//				var height = document.getElementById('content').offsetHeight
-				//				console.log('11111111='+height)
 				//				if(homeworkDetailNodes.checkDetailBtn.height=='100px'){
 				//					homeworkDetailNodes.checkDetailBtn.style.visibility = 'visible';
 				//				}else{
@@ -381,10 +334,11 @@
 			}
 			var getImgsInner = function(imgs) {
 				var imgInner = '';
-				var img_width = "33.33333%";
+				var win_height = document.getElementById('brief-imgs').offsetWidth;
+				var img_width = win_height / 3;
 				if(imgs && imgs.length > 0) {
 					for(var i in imgs) {
-						imgInner += '<img class="homework-img" style="width:' + img_width + ';" src="' + imgs[i].ThumbUrl +
+						imgInner += '<img class="homework-img" style="width:' + img_width + 'px;height:' + img_width + 'px;" src="' + imgs[i].ThumbUrl +
 							'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + imgs[i].FileType + '"/>';
 					}
 				}

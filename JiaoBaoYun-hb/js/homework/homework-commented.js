@@ -347,10 +347,11 @@ var getMatchedImgs = function(files) {
 }
 var getImgsInner = function(imgs) {
 	var imgInner = '';
-	var img_width = "33.33333%";
+	var win_height=document.getElementById('brief-imgs').offsetWidth;
+	var img_width = win_height/3;
 	if(imgs && imgs.length > 0) {
 		for(var i in imgs) {
-			imgInner += '<img class="homework-img" style="width:' + img_width + ';" src="' + imgs[i].ThumbUrl +
+			imgInner += '<img class="homework-img" style="width:' + img_width + 'px;height:'+img_width+'px;" src="' + imgs[i].ThumbUrl +
 				'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + imgs[i].FileType + '"/>';
 		}
 	}
@@ -439,7 +440,7 @@ mui('.mui-table-view').on('tap', '.cell-color', function() {
 
 })
 //打击答案内容跳转到做作业界面
-events.addTap('stuCell', function() {
-	events.fireToPageNone('doHomework-stu.html', 'workDetail', homeworkResult);
-	plus.webview.getWebviewById("doHomework-stu.html").show();
-})
+//events.addTap('stuCell', function() {
+//	events.fireToPageNone('doHomework-stu.html', 'workDetail', homeworkResult);
+//	plus.webview.getWebviewById("doHomework-stu.html").show();
+//})

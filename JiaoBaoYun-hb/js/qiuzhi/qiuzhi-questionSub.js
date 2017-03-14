@@ -135,7 +135,7 @@ mui.plusReady(function() {
 		console.log(JSON.stringify(info));
 		//跳转页面
 		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', info);
-		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
+		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right",250);
 	});
 
 	//点击回答者头像

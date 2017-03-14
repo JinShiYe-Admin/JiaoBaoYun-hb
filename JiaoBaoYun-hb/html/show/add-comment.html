@@ -40,9 +40,10 @@
 		var personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 		mui.plusReady(function() {
 			var data = plus.webview.currentWebview().data;
-			console.log(JSON.stringify(data));
+			console.log('传到评论界面的数据：'+JSON.stringify(data));
 			var tempIndex = data.tempIndex;
 			var zonepArray = data.zonepArray;
+			console.log(tempIndex+'-----',zonepArray.length)
 			events.addTap('btn-reply', function() {
 
 				var replyName = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick
