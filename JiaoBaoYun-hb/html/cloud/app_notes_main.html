@@ -182,10 +182,10 @@
 						var element = document.getElementById('pullrefresh');
 						var page = JSON.parse(element.getAttribute('data-page'));
 						console.log('down ' + JSON.stringify(page));
+						requestData(1);
 						setTimeout(function() {
-							requestData(1);
 							self.endPullDownToRefresh(); //结束下拉刷新
-						}, 1500);
+						}, 1000);
 					}
 				},
 				up: {
@@ -196,15 +196,15 @@
 						var page = JSON.parse(element.getAttribute('data-page'));
 						console.log('up ' + JSON.stringify(page));
 						if(page) {
+							requestData(page.pageIndex + 1);
 							setTimeout(function() {
-								requestData(page.pageIndex + 1);
 								self.endPullUpToRefresh();
-							}, 1500);
+							}, 1000);
 						} else {
+							mui.toast('数据异常，请下拉刷新后重新尝试');
 							setTimeout(function() {
-								mui.toast('数据异常，请下拉刷新后重新尝试');
 								self.endPullUpToRefresh();
-							}, 1500);
+							}, 1000);
 						}
 					}
 				}
@@ -277,7 +277,7 @@
 					//清空对应的界面
 					document.getElementById('list').innerHTML = '';
 					year = ''; //清空年份
-					markDate='';//日期
+					markDate = ''; //日期
 				}
 
 				if(data.RspCode == 0) {
@@ -304,7 +304,7 @@
 				}
 				setTimeout(function() {
 					wd.close();
-				}, 500);
+				}, 1000);
 			});
 		}
 
@@ -320,12 +320,12 @@
 			var time = date[0].split('-'); //时间
 			var timeItem = time[1] + '.' + time[2];
 			var yearItem = dateItem.split('-')[0];
-			if(year == yearItem) {//同一年
+			if(year == yearItem) { //同一年
 				yearItem = '';
 			} else {
-				year = yearItem;//新的一年
+				year = yearItem; //新的一年
 			}
-			if(year == today.split('-')[0]){//今年
+			if(year == today.split('-')[0]) { //今年
 				yearItem = '';
 			}
 			//console.log('dateItem ' + dateItem);

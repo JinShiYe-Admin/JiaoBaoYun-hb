@@ -33,7 +33,6 @@
 			}
 
 			.mui-col-sm-3 {
-				/*text-align: center;*/
 				padding-left: 10px;
 			}
 
@@ -64,7 +63,6 @@
 				-webkit-box-orient: vertical;
 				font-size: 1.4rem;
 				line-height: 20px;
-				margin-bottom: 3px;
 			}
 
 			.dynamic-date-parent {
@@ -96,6 +94,7 @@
 
 			.record-imge {
 				width: 100%;
+				margin-top: 3px;
 			}
 
 			.record-picture {
@@ -197,10 +196,10 @@
 						var element = document.getElementById('pullrefresh');
 						var page = JSON.parse(element.getAttribute('data-page'));
 						console.log('down ' + JSON.stringify(page));
+						requestData(1);
 						setTimeout(function() {
-							requestData(1);
 							self.endPullDownToRefresh(); //结束下拉刷新
-						}, 1500);
+						}, 1000);
 					}
 				},
 				up: {
@@ -211,15 +210,15 @@
 						var page = JSON.parse(element.getAttribute('data-page'));
 						console.log('up ' + JSON.stringify(page));
 						if(page) {
+							requestData(page.pageIndex + 1);
 							setTimeout(function() {
-								requestData(page.pageIndex + 1);
 								self.endPullUpToRefresh();
-							}, 1500);
+							}, 1000);
 						} else {
+							mui.toast('数据异常，请下拉刷新后重新尝试');
 							setTimeout(function() {
-								mui.toast('数据异常，请下拉刷新后重新尝试');
 								self.endPullUpToRefresh();
-							}, 1500);
+							}, 1000);
 						}
 					}
 				}
@@ -418,7 +417,6 @@
 				var height_1;
 				var contentEl = document.getElementById(data.TabId + '_content');
 				contentEl.innerText = type + data.MsgContent;
-
 				contentEl.style.webkitLineClamp = '4';
 				height_0 = contentEl.offsetHeight;
 				contentEl.style.webkitLineClamp = '3';
