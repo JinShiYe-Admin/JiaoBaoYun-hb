@@ -241,20 +241,20 @@ var class_space = (function(mod) {
 	 */
 	var createImgsInner = function(cell, index) {
 		var imgInner = '';
-//		var percent = 0.00;
-		var win_width=document.querySelector(".mui-table-view").offsetWidth;
-		var img_width=(win_width-20)*0.7/3;
+		//		var percent = 0.00;
+		var win_width = document.querySelector(".mui-table-view").offsetWidth;
+		var img_width = (win_width - 20) * 0.7 / 3;
 		if(cell.EncImgAddr) {
 			var imgs = cell.EncImgAddr.split('|');
 			var trueImgs = cell.EncAddr.split('|');
 			console.log('要显示的图片地址：' + JSON.stringify(imgs));
 			for(var i in imgs) {
 				if(imgs.length <= 3 && imgs.length > 0) {
-//					percent = 100 / (imgs.length);
-					imgInner += '<img src="' + imgs[i] + '" style="width:'+img_width +'px; height:'+img_width+'px;padding:2px;"' +
+					//					percent = 100 / (imgs.length);
+					imgInner += '<img src="' + imgs[i] + '" style="width:' + img_width + 'px; height:' + img_width + 'px;padding:2px;"' +
 						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"/>'
 				} else {
-					imgInner += '<img src="' + imgs[i] + '" style="width:'+img_width +'px; height:'+img_width+'px;padding:2px;"' +
+					imgInner += '<img src="' + imgs[i] + '" style="width:' + img_width + 'px; height:' + img_width + 'px;padding:2px;"' +
 						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"/>'
 				}
 			}
@@ -329,7 +329,7 @@ mui.plusReady(function() {
 			extras: {
 				data: id,
 				NoReadCnt: 0,
-				flag:0
+				flag: 0
 			}
 
 		});
@@ -420,10 +420,25 @@ var setListener = function(userId) {
 		})
 		mui('.mui-popover').popover('toggle');
 	})
+	var firstTime = null;
+
 	mui('.mui-table-view').on('tap', '.icon-xianshi', function() {
-		events.fireToPageWithData('classSpace-persons.html', 'personsList', {
-			type: 0,
-			classSpaceId: parseInt(this.getAttribute('tabId')) //id
-		})
+		var secondTime = null;
+		if(firstTime) {
+			secondTime = '123456';
+		} else {
+			firstTime = '123';
+		}
+		setTimeout(function() {
+			firstTime = null;
+		}, 1000)
+		console.log("第一次："+firstTime+"第二次："+secondTime);
+		if(!secondTime) {
+			events.fireToPageWithData('classSpace-persons.html', 'personsList', {
+				type: 0,
+				classSpaceId: parseInt(this.getAttribute('tabId')) //id
+			});
+		}
+
 	})
 }
