@@ -25,6 +25,8 @@
 			textarea {
 				margin-bottom: 0px;
 				height: 20rem;
+				border: none;
+				border-bottom: 1px solid #D9D9D9;
 			}
 		</style>
 	</head>
@@ -38,7 +40,7 @@
 		<div class="mui-content">
 			<ul class="mui-table-view" id="ul_table" style="margin-top: 0px;">
 				<div id="record">
-					<textarea id="textarea_record" rows="6" placeholder="记事：" oninput="if(value.length>500)value=value.slice(0,500)" style="border: none;border-bottom: 1px solid #D9D9D9;"></textarea>
+					<textarea id="textarea_record" placeholder="记事,最多500字"></textarea>
 					<div id="MultiMedia">
 					</div>
 				</div>
@@ -84,7 +86,9 @@
 				document.getElementById('commit').addEventListener('tap', function() {
 					var msgContent = textArea.value;
 					if(msgContent.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0) {
-						mui.toast('内容不能为空');
+						mui.toast('记事不能为空');
+					} else if(msgContent.length > 500) {
+						mui.toast('记事最多500字');
 					} else {
 						var wd = events.showWaiting();
 						document.getElementById("commit").disabled = true;
@@ -133,6 +137,9 @@
 					} else {
 						mui.toast(data.RspTxt);
 						document.getElementById("commit").disabled = false;
+						if(pathList.length != 0) {
+							BatchDelete(pathList);
+						}
 						pathList = [];
 					}
 					wd.close();
@@ -218,7 +225,9 @@
 									if((uploadNum != 0 || uploadErrorNum != 0) && (uploadNum - uploadErrorNum) == 0) {
 										mui.toast('上传失败');
 										console.log('上传失败');
-										BatchDelete(pathList);
+										if(pathList.length != 0) {
+											BatchDelete(pathList);
+										}
 										wd.close();
 									}
 								}, function(upload, status) {

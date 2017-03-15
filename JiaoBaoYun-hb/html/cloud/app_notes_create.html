@@ -33,7 +33,7 @@
 			<div id="finish" class="title-text-pull-right">完成</div>
 		</header>
 		<div class="mui-content">
-			<textarea id="notes" oninput="if(value.length>2000)value=value.slice(0,2000)" placeholder="✎ 分享你的学习与生活..."></textarea>
+			<textarea id="notes" maxlength="2000" placeholder="✎ 分享你的学习与生活...,最多2000字"></textarea>
 			<div id="MultiMedia">
 			</div>
 		</div>
@@ -72,7 +72,9 @@
 				//完成
 				document.getElementById('finish').addEventListener('tap', function() {
 					if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0) { //为空不允许发送
-						mui.toast('内容不能为空');
+						mui.toast('笔记不能为空');
+					} else if(notes.value.length > 2000) {
+						mui.toast('笔记最多2000字');
 					} else {
 						var wd = events.showWaiting();
 						document.getElementById("finish").disabled = true;
@@ -118,6 +120,10 @@
 					} else {
 						mui.toast(data.RspTxt);
 						document.getElementById("finish").disabled = false;
+						if(pathList.length != 0) {
+							BatchDelete(pathList);
+						}
+						pathList = [];
 					}
 					wd.close();
 				});
@@ -202,7 +208,9 @@
 									if((uploadNum != 0 || uploadErrorNum != 0) && (uploadNum - uploadErrorNum) == 0) {
 										mui.toast('上传失败');
 										console.log('上传失败');
-										BatchDelete(pathList);
+										if(pathList.length != 0) {
+											BatchDelete(pathList);
+										}
 										wd.close();
 									}
 								}, function(upload, status) {

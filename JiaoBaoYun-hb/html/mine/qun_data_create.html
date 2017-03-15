@@ -161,7 +161,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label id="stu_la">学生姓名:</label>
-								<input id="stu_name" type="text" class="mui-input-clear" oninput="if(value.length>10)value=value.slice(0,10)">
+								<input id="stu_name" type="text" class="mui-input-clear" maxlength="10" placeholder="姓名,最多10个字">
 								<div style="position: absolute;right: 0px;top: 13px;color: red;font-size: 24px;">*</div>
 							</div>
 						</li>
@@ -210,7 +210,7 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>姓名:</label>
-								<input id="tea_name" type="text" class="mui-input-clear" oninput="if(value.length>10)value=value.slice(0,10)">
+								<input id="tea_name" type="text" class="mui-input-clear" maxlength="10" placeholder="姓名,最多10个字">
 								<div style="position: absolute;right: 0px;top: 13px;color: red;font-size: 24px;">*</div>
 							</div>
 						</li>
@@ -241,25 +241,25 @@
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>职位:</label>
-								<input id="tea_job" type="text" class="mui-input-clear" oninput="if(value.length>10)value=value.slice(0,10)">
+								<input id="tea_job" type="text" class="mui-input-clear" maxlength="10" placeholder="职位,最多10个字">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>科目:</label>
-								<input id="tea_sub" type="text" class="mui-input-clear" oninput="if(value.length>10)value=value.slice(0,10)">
+								<input id="tea_sub" type="text" class="mui-input-clear" maxlength="10" placeholder="科目,最多10个字">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>职称:</label>
-								<input id="tea_title" type="text" class="mui-input-clear" oninput="if(value.length>10)value=value.slice(0,10)">
+								<input id="tea_title" type="text" class="mui-input-clear" maxlength="10" placeholder="职称,最多10个字">
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="mui-input-row">
 								<label>教龄:</label>
-								<input id="tea_expsch" type="tel" class="mui-input-clear">
+								<input id="tea_expsch" type="tel" class="mui-input-clear" placeholder="教龄,0-99">
 							</div>
 						</li>
 						<li class="mui-table-view-cell" style="display: none;">
@@ -282,16 +282,12 @@
 					//设置顶部导航高度（状态栏）
 					header.style.height = headerNum + 'px';
 					header.style.paddingTop = localStorage.getItem('$Statusbar');
-					//mui.alert(headerNum, 'header-height');
-					//mui.alert(localStorage.getItem('StatusbarStr'), 'header-paddingTop');
 					var content = document.querySelector(".mui-content");
 					//设置顶部导航高度（状态栏）
 					if(content) {
-						//console.log('window.content');
 						content.style.marginTop = localStorage.getItem('$Statusbar');
 					}
 				}
-				//document.getElementById("type").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
 				document.getElementById("stu_create").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 45 + 53) + 'px';
 				document.getElementById("tea_create").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 45 + 53) + 'px';
 
@@ -304,33 +300,13 @@
 				var popover = document.getElementById("popover"); //popover显示框
 				var popover_arrow = document.getElementById("popover_arrow"); //popover显示框的三角区域
 
-				//var type_popover = document.getElementById("type_popover");//popover中的类型
 				type_name_la.style.width = stu_la.offsetWidth + 'px';
 				type_name.style.width = stu_la.offsetWidth * 2 + 'px';
 				type_name.style.marginLeft = stu_name.offsetLeft - type_name.offsetLeft + 'px';
 				stu_gname.style.marginLeft = stu_name.offsetLeft - stu_gname.offsetLeft + 5 + 'px';
 				arrowdown.style.left = stu_gname.offsetLeft + stu_la.offsetWidth / 1.6 + 'px';
-
-				//console.log('type_name_font.offsetLeft ' + document.getElementById("type_name_font").offsetLeft);
-				//console.log('popover.style.left ' + popover.style.left);
-				//popover.style.marginLeft = (arrowdown.offsetLeft + (arrowdown.offsetWidth / 2)) - (popover.offsetLeft) + 'px';
-
-				//console.log('arrowdown.offsetLeft ' + arrowdown.offsetLeft);
-				//console.log('arrowdown.offsetWidth / 2 ' + arrowdown.offsetWidth / 2);
-				//console.log('popover.offsetLeft ' + popover.offsetLeft);
-				//popover.style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
-				//popover_arrow.style.width = '300px';
-				//popover_arrow.style.backgroundColor='red';
 			}
 			mui.plusReady(function() {
-				//document.getElementById("type").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
-
-				//				var stu_name = document.getElementById("stu_name");
-				//				var type_name = document.getElementById("type_name");
-				//				var stu_gname = document.getElementById("stu_gname")
-				//				type_name.style.marginLeft = stu_name.offsetLeft - type_name.offsetLeft + 5 + 'px';
-				//				stu_gname.style.marginLeft = stu_name.offsetLeft - type_name.offsetLeft + 5 + 'px';
-				//
 
 				var mstype = 3; //创建的资料类型0家长,2老师,3学生
 
@@ -426,54 +402,75 @@
 					}
 					if(name.replace(/(^\s*)|(\s*$)/g, "") == "") { //为空不允许发送
 						mui.toast('姓名不允许为空');
+					} else if(name.length > 10) {
+						mui.toast('姓名,最多10个字');
 					} else {
-						//15.用户添加资料
-						//所需参数
-						var comData = {
-							gid: data.gid, //群ID
-							stuname: name, //资料名
-							stuimg: '', //资料头像
-							mstype: mstype, //资料类型，0家长,2老师,3学生
-							job: job, //职位，老师用,其他填0
-							title: title, //职称，老师用,其他填0
-							expsch: expsch, //教龄，老师用,其他填0
-							sub: sub, //科目，老师用,其他填0
-							gutid: '0' //关联的群账号ID，用户在群里的账号ID,无则为0
-						};
-						var gid = data.gid;
-						console.log('comData:' + JSON.stringify(comData));
-						// 等待的对话框
-						var wd = events.showWaiting();
-						postDataPro_PostGAddUInf(comData, wd, function(data) {
-
-							console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							if(data.RspCode == 0) {
-								mui.toast('资料添加成功！');
-								console.log('资料添加成功！');
-								events.fireToPageNone('qun_manage_1.html', 'addData', {
-									stuid: data.RspData,
-									gid: gid,
-									stuname: name,
-									stuimg: '',
-									mstype: mstype
-								});
-								if(mstype == 3) { //2老师,3学生
-									document.getElementById("stu_name").value = '';
-								} else {
-									console.log('老师');
-									document.getElementById("tea_name").value = '';
-									document.getElementById("tea_job").value = '';
-									document.getElementById("tea_title").value = '';
-									document.getElementById("tea_expsch").value = '';
-									document.getElementById("tea_sub").value = '';
-								}
+						if(mstype == 3) {
+							addData(name, job, title, expsch, sub);
+						} else if(mstype == 2) {
+							if(job.length > 10) {
+								mui.toast('职位,最多10个字');
+							} else if(sub.length > 10) {
+								mui.toast('科目,最多10个字');
+							} else if(title.length > 10) {
+								mui.toast('职称,最多10个字');
+							} else if(expsch > 99 || expsch < 0) {
+								mui.toast('教龄,0-99');
 							} else {
-								mui.toast(data.RspTxt);
+								addData(name, job, title, expsch, sub);
 							}
-							wd.close();
-						});
+						}
+
 					}
 				});
+
+				function addData(name, job, title, expsch, sub) {
+					//15.用户添加资料
+					//所需参数
+					var comData = {
+						gid: data.gid, //群ID
+						stuname: name, //资料名
+						stuimg: '', //资料头像
+						mstype: mstype, //资料类型，0家长,2老师,3学生
+						job: job, //职位，老师用,其他填0
+						title: title, //职称，老师用,其他填0
+						expsch: expsch, //教龄，老师用,其他填0
+						sub: sub, //科目，老师用,其他填0
+						gutid: '0' //关联的群账号ID，用户在群里的账号ID,无则为0
+					};
+					var gid = data.gid;
+					console.log('comData:' + JSON.stringify(comData));
+					// 等待的对话框
+					var wd = events.showWaiting();
+					postDataPro_PostGAddUInf(comData, wd, function(data) {
+
+						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							mui.toast('资料添加成功！');
+							console.log('资料添加成功！');
+							events.fireToPageNone('qun_manage_1.html', 'addData', {
+								stuid: data.RspData,
+								gid: gid,
+								stuname: name,
+								stuimg: '',
+								mstype: mstype
+							});
+							if(mstype == 3) { //2老师,3学生
+								document.getElementById("stu_name").value = '';
+							} else {
+								console.log('老师');
+								document.getElementById("tea_name").value = '';
+								document.getElementById("tea_job").value = '';
+								document.getElementById("tea_title").value = '';
+								document.getElementById("tea_expsch").value = '';
+								document.getElementById("tea_sub").value = '';
+							}
+						} else {
+							mui.toast(data.RspTxt);
+						}
+						wd.close();
+					});
+				}
 			});
 		</script>
 	</body>
