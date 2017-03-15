@@ -1403,7 +1403,8 @@
 					"js/cloud/AndroidFileSystem.js",
 					"js/utils/UploadHeadImage.js",
 					"js/utils/CloudFileUtil.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"js/utils/cryption.js"
 				],
 				"refer": [
 					"html/utils/customizeCity.html"
@@ -2664,7 +2665,9 @@
 					"image/utils/default_personalimage.png",
 					"image/qiuzhi/expert_more.png",
 					"fonts/fangzheng.ttf",
-					"image/qiuzhi/channel-science.png"
+					"image/qiuzhi/channel-science.png",
+					"fonts/mui.ttf",
+					"image/qiuzhi/add-question.png.png"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
@@ -3284,7 +3287,8 @@
 					"html/qiuzhi/qiuzhi-expertAllComment.html",
 					"html/qiuzhi/heAttentionPersons.html",
 					"html/qiuzhi/qiuzhi-inviteAnswer.html",
-					"html/qiuzhi/expert-ask.html"
+					"html/qiuzhi/expert-ask.html",
+					"html/qiuzhi/modifyExpertNote.html"
 				],
 				"priority": 0
 			},

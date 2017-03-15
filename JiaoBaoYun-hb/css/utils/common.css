@@ -26,13 +26,28 @@
 	/*字体样式*/
 	font-family: '微软雅黑 Bold', '微软雅黑';
 }
+
 @font-face {
-	font-family:fangzheng;
+	font-family: fangzheng;
 	src: url(../../fonts/fangzheng.ttf) format('truetype');
 }
-.mui-content{
+
+.mui-content {
 	font-family: fangzheng;
 }
+
+.title-text-pull-right {
+	/*顶部导航右侧文字*/
+	font-size: 17px;
+	line-height: 44px;
+	position: absolute;
+	right: 10px;
+	padding: 0px;
+	font-weight: 500;
+	float: right;
+	color: white;
+}
+
 
 /*header统一样式*/
 
@@ -224,12 +239,18 @@ header>a {
 .display-none:last-of-type {
 	display: none;
 }
+
+
 /*block*/
+
 .display-block {
 	display: block;
 }
+
+
 /*inline-block*/
-.display-inlineBlock{
+
+.display-inlineBlock {
 	display: inline-block;
 }
 
@@ -250,6 +271,7 @@ header>a {
 
 
 /*分割线色值*/
+
 
 /*.mui-table-view-divider:before {
 	background-color: #dedfe0;

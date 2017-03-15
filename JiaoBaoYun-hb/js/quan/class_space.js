@@ -241,18 +241,20 @@ var class_space = (function(mod) {
 	 */
 	var createImgsInner = function(cell, index) {
 		var imgInner = '';
-		var percent = 0.00;
+//		var percent = 0.00;
+		var win_width=document.querySelector(".mui-table-view").offsetWidth;
+		var img_width=(win_width-20)*0.7/3;
 		if(cell.EncImgAddr) {
 			var imgs = cell.EncImgAddr.split('|');
 			var trueImgs = cell.EncAddr.split('|');
 			console.log('要显示的图片地址：' + JSON.stringify(imgs));
 			for(var i in imgs) {
 				if(imgs.length <= 3 && imgs.length > 0) {
-					percent = 100 / (imgs.length);
-					imgInner += '<img src="' + imgs[i] + '" style="width:' + percent + '%;padding:2px;"' +
+//					percent = 100 / (imgs.length);
+					imgInner += '<img src="' + imgs[i] + '" style="width:'+img_width +'px; height:'+img_width+'px;padding:2px;"' +
 						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"/>'
 				} else {
-					imgInner += '<img src="' + imgs[i] + '" style="width:33.33333333%; padding:2px;"' +
+					imgInner += '<img src="' + imgs[i] + '" style="width:'+img_width +'px; height:'+img_width+'px;padding:2px;"' +
 						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"/>'
 				}
 			}

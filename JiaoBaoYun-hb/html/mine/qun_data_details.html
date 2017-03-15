@@ -72,7 +72,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title" style="color: white;">资料详情</h1>
-			<h1 id="finish" class="mui-title" style="text-align: right;right: 10px;display: none;color: gray;">保存</h1>
+			<div id="finish" class="title-text-pull-right" style="color: gray;">保存</div>
 		</header>
 
 		<div class="mui-content mui-scroll-wrapper">
@@ -457,7 +457,7 @@
 						vvl: data.stuid //查询的用户资料ID
 					};
 					var gid = data.gid;
-					console.log('gid '+gid);
+					console.log('gid ' + gid);
 					postDataPro_PostUuinf(comData, wd, function(data) {
 						console.log('22通过用户资料ID获取用户各项资料postDataPro_PostUuinf:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
