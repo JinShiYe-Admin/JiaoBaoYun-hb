@@ -3449,7 +3449,8 @@
 			"html/qiuzhi/focus-question.html": {
 				"resources": [
 					"css/qiuzhi/qiuzhi-sub.css",
-					"js/qiuzhi/qiuzhi-focusQuestion.js"
+					"js/qiuzhi/qiuzhi-focusQuestion.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -3502,7 +3503,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/myStorage/myStorage.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0

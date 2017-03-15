@@ -186,7 +186,7 @@ var createList = function(listContainer, record, index) {
 	li.className = 'mui-table-view-cell';
 	li.id = 'li' + index;
 	//拼接显示
-	li.innerHTML = '<div class="cell-container"><img  src="' + record.uimg + '"/><div class="display-inlineBlock invite-info"><p><span>" ' +
+	li.innerHTML = '<div class="cell-container"><img  src="' + record.uimg + '"/><div class="invite-info"><p><span>" ' +
 		record.unick + '"</span>邀请<span>"' + ExpertsInfo.unick + '"</span>回答问题</p><p class="Ask-Title" style= "font-size:1.4rem;">[' +
 		record.AskChannel + ']' + record.AskTitle + '</p></div></div>';
 	listContainer.appendChild(li);

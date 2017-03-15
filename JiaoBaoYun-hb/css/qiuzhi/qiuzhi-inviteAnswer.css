@@ -23,6 +23,11 @@
 	border-radius: 50%;
 	display: block;
 }
+.invite-info{
+	width: 50%;
+	flex-grow: 1;
+	padding-right: 15px;
+}
 
 .mui-table-view-cell>div {
 	min-height: 5rem;
