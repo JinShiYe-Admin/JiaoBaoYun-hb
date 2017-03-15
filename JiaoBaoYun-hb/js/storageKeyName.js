@@ -63,7 +63,7 @@ var storageKeyName = (function(mod) {
 	mod.QNGETUPTOKENFILE = 'http://114.215.222.186:8004/Api/QiNiu/GetUpLoadToKen'; //获取上传文件（云存储）到七牛的token的url
 	mod.QNGETDOWNTOKENFILE = 'http://114.215.222.186:8004/Api/QiNiu/GetAccess'; //获取下载文件（云存储）的token的url，url+七牛文件url
 	mod.QNGETTOKENDELETE = 'http://114.215.222.186:8004/Api/QiNiu/Delete'; //获取批量（或者一个）删除七牛文件的token的url
-	//---七牛空间和接口---开发---end---
+//	---七牛空间和接口---开发---end---
 
 	//---七牛空间和接口---测试---start---
 //		mod.QNPB='http://qn-cspb.jiaobaowang.net/';//公开空间域名
