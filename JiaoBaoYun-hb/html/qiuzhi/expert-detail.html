@@ -85,20 +85,20 @@
 					<li id="AskLi" class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/question.png" />
 						<div class="mui-media-body" id="titleFlag3">他的提问</div>
-							<div>
-								<p id="AskNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
+						<div>
+							<p id="AskNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
 					</li>
 					<li id="CommentLi" class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/comment.png" />
 						<div class="mui-media-body" id="titleFlag4">他的评论</div>
-							<div>
-								<p id="CommentNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
+						<div>
+							<p id="CommentNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
 					</li>
 					<li id="inviteNumLi" class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/yaoqing.png" />
 						<div class="mui-media-body" id="titleFlag5">邀请他回答</div>
-							<div>
-								<p id="inviteNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right">0<span class="mui-icon mui-icon-forward"></span></p>
+						<div>
+							<p id="inviteNum" style="font-size: 13px;margin-top: -20px;" class="mui-pull-right">0<span class="mui-icon mui-icon-forward"></span></p>
 					</li>
 				</ul>
 				</div>
@@ -121,7 +121,7 @@
 			AnswerNum: document.getElementById("AnswerNum"), //他的回答
 			inviteNum: document.getElementById("inviteNum"), //邀请他的回答
 			focusBtn: document.getElementById("focusBtn"), //关注按钮
-			
+
 			titleFlag0: document.getElementById("titleFlag0"), //他关注的人
 			titleFlag1: document.getElementById("titleFlag1"), //关注他的人
 			titleFlag2: document.getElementById("titleFlag2"), //他的回答
@@ -133,10 +133,10 @@
 		var ExpertsInfo;
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 		mui.plusReady(function() {
-//			events.preload('qiuzhi-expertAllAnswer.html', 10);
+			//			events.preload('qiuzhi-expertAllAnswer.html', 10);
 			events.preload('qiuzhi-expertAllComment.html', 10);
 			events.preload('focus-question.html', 10);
-//			events.preload('heAttentionPersons.html', 10);
+			//			events.preload('heAttentionPersons.html', 10);
 			var main = plus.webview.currentWebview(); //获取当前窗体对象
 			ExpertsInfo = main.data; //接收页面传入参数值，传过来的专家model
 			console.log('expert-detail.html:' + JSON.stringify(ExpertsInfo));
@@ -153,13 +153,13 @@
 			//判断是不是自己，如果是自己，不显示关注按钮
 			if(ExpertsInfo.UserId == personalUTID) {
 				document.getElementById('focusBtn').style.display = 'none';
-				nodes.titleFlag0.innerHTML=nodes.titleFlag0.innerHTML.replace('他','我');
-				nodes.titleFlag1.innerHTML=nodes.titleFlag1.innerHTML.replace('他','我');
-				nodes.titleFlag2.innerHTML=nodes.titleFlag2.innerHTML.replace('他','我');
-				nodes.titleFlag3.innerHTML=nodes.titleFlag3.innerHTML.replace('他','我');
-				nodes.titleFlag4.innerHTML=nodes.titleFlag4.innerHTML.replace('他','我');
-				nodes.titleFlag5.innerHTML=nodes.titleFlag5.innerHTML.replace('他','我');
-			} 
+				nodes.titleFlag0.innerHTML = nodes.titleFlag0.innerHTML.replace('他', '我');
+				nodes.titleFlag1.innerHTML = nodes.titleFlag1.innerHTML.replace('他', '我');
+				nodes.titleFlag2.innerHTML = nodes.titleFlag2.innerHTML.replace('他', '我');
+				nodes.titleFlag3.innerHTML = nodes.titleFlag3.innerHTML.replace('他', '我');
+				nodes.titleFlag4.innerHTML = nodes.titleFlag4.innerHTML.replace('他', '我');
+				nodes.titleFlag5.innerHTML = nodes.titleFlag5.innerHTML.replace('他', '我');
+			}
 			//22.获取是否已对某个用户关注
 			getUserFocus(ExpertsInfo.UserId);
 			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
@@ -193,14 +193,32 @@
 			})
 			events.addTap('FocusMan', function() {
 				console.log('他关注的人');
-//				events.fireToPage('heAttentionPersons.html', 'heAttentionPersons', function() {
-//					return ExpertsInfo;
-//				})
-				events.openNewWindowWithData('AttentionPersons.html', {expertInfo:ExpertsInfo,type:0 });
+				mui.openWindow({
+					url: 'AttentionPersons.html',
+					id: 'AttentionPersons.html',
+					styles: {
+						top: '0px', //设置距离顶部的距离
+						bottom: '0px'
+					},
+					extras: { expertInfo: ExpertsInfo, type: 0 },
+					createNew: true,
+
+				});
 			})
 			events.addTap('IsFocusedMan', function() {
 				console.log('专家信息：' + JSON.stringify(ExpertsInfo))
-				events.openNewWindowWithData('AttentionPersons.html', {expertInfo:ExpertsInfo,type:1 });
+				mui.openWindow({
+					url: 'AttentionPersons.html',
+					id: 'AttentionPersons.html',
+					styles: {
+						top: '0px', //设置距离顶部的距离
+						bottom: '0px'
+					},
+					extras: { expertInfo: ExpertsInfo, type: 1 },
+					createNew: true,
+
+				});
+//				events.openNewWindowWithData('AttentionPersons.html', { expertInfo: ExpertsInfo, type: 1 });
 				console.log('关注他的人');
 			})
 			events.addTap('focusBtn', function() {

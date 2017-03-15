@@ -7,9 +7,9 @@ var totalPageCount = 0;
 var flagRef = 0;
 mui.plusReady(function() {
 	selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-	expertInfo = plus.webview.currentWebview().data.expertInfo;
+	expertInfo = plus.webview.currentWebview().expertInfo;
 	console.log("获取的专家信息：" + JSON.stringify(expertInfo));
-	type = plus.webview.currentWebview().data.type;
+	type = plus.webview.currentWebview().type;
 	if(type) {
 		if(expertInfo.UserId == selfId) {
 			document.getElementById("title").innerText = "关注我的人";
