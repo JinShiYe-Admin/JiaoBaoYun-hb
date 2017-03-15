@@ -2025,7 +2025,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0

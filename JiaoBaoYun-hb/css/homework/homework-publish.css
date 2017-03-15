@@ -114,7 +114,7 @@
 	padding: 1rem;
 }*/
 .class-container{
-	border: solid thin lightgray;
+	border: solid 1px #E4E4E4;
 	margin: 0.2rem 0.5rem;
 	padding: 0.2rem;
 	display: inline-block;
@@ -122,7 +122,7 @@
 	color: #808080;
 }
 .receive-container{
-	padding:5px 15px 0;
+	padding:12px 15px 11px;
 }
 .input-erea{
 	border-bottom: solid 1px #E4E4E4;
@@ -162,7 +162,7 @@ label{
 	background: url(../../image/homework/arrow-down.png) no-repeat right;
 }
 .mui-input-row{
-	padding-right: 15px;
+	padding-right: 16px;
 }
 .submit-label{
 	width: 50%;
@@ -184,12 +184,12 @@ label{
 .online-container,.receive-container{
 	display: flex;
 	display: -webkit-flex;
+	/*align-items: center;*/
 }
 .online-container{
 	align-items: center;
 }
 .submit-label,.receive-classes{
-	padding: 0 5px;
 	width: 50%;
 	flex-grow: 1;
 }
@@ -199,8 +199,12 @@ label{
 
 .mui-icon-arrowright{
 	color: #b7b7b7;
+	font-size: 1.8rem;
 }
 .publish-content::-webkit-input-placeholder{
 	font-size: 1.6rem;
 	color: #808080;
+}
+.mui-input-row{
+	padding-top: 2px ;
 }
