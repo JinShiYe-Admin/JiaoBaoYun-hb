@@ -208,3 +208,7 @@ label{
 .mui-input-row{
 	padding-top: 2px ;
 }
+.class-del{
+	font-size: 1.2rem;
+	color: red;
+}
