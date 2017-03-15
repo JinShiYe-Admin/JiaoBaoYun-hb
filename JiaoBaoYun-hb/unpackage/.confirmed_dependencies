@@ -191,7 +191,8 @@
 			"css/homework/homework.css",
 			"js/homework/homework.js",
 			"js/utils/switch-mine.js",
-			"html/homework/homework-tea-sub.html"
+			"html/homework/homework-tea-sub.html",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/homework/publish-answer.html",
@@ -260,7 +261,25 @@
 			"js/utils/h5fresh.js",
 			"image/homework/commented.png",
 			"image/homework/submitted.png",
-			"image/homework/need-submit.png"
+			"image/homework/need-submit.png",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/publicHomeworkProtocol.js",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/homework/doHomework-stu.html",
@@ -848,7 +867,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/qiuzhi/AttentionPersons.html": {
