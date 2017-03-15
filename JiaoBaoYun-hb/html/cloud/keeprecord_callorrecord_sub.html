@@ -227,7 +227,7 @@
 			var waiting = []; //记录等待框
 
 			mui.plusReady(function() {
-				events.closeWaiting();
+				//events.closeWaiting();
 
 				//图片查看控件
 				previewImage = mui.previewImage();
@@ -313,9 +313,9 @@
 					if(!commit) {
 						console.log('不允许发布');
 					} else if(document.getElementById("input_call").value.length > 20) {
-						mui.toast('点到输入超出字数限制');
+						mui.toast('备注最多20字');
 					} else if(document.getElementById("textarea_record").value.length > 500) {
-						mui.toast('记事输入超出字数限制');
+						mui.toast('记事最多500字');
 					} else {
 						commit = false;
 						var parentIds = []; //家长列表
@@ -328,8 +328,10 @@
 						};
 						//返回值model：model_userDataInfo
 						// 等待的对话框
-						var wd = events.showWaiting();
+						var wd = plus.nativeUI.showWaiting('123');
+
 						postDataPro_PostStuU(comData, wd, function(data) {
+							wd.close();
 							console.log('30_PostStuU通过资料ID获取关联的人员.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0 || data.RspCode == 9) {
 								mui.each(data.RspData, function(index, item) {
@@ -348,7 +350,7 @@
 										encType: '3', //附件类型,1图片2音视频3仅文字
 										encAddr: '', //附件地址
 										encImg: '', //附件缩略图地址
-									}, wd2); //增加点到
+									}, wd_0); //增加点到
 									waiting.push(wd_0);
 								}
 
@@ -356,6 +358,11 @@
 									var wd_1 = events.showWaiting();
 									wd_1.onclose = function() {
 										console.log('upload waiting close wd_1');
+									}
+									if(wd_1) {
+										console.log('wd_1');
+									} else {
+										console.log('else wd_1');
 									}
 									commitNum++;
 									addNotes(2, strParent, strUser, {
@@ -377,7 +384,7 @@
 							} else {
 								mui.toast(data.RspTxt);
 							}
-							wd.close();
+							
 						});
 					}
 				});
