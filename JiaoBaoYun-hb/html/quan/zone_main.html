@@ -22,9 +22,9 @@
 			<div id="random_icon">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left common-color-white"></a>
 
-				<a id="leave" style="visibility:hidden" class="mui-icon iconfont icon-jiujiajingicon02-copy mui-pull-right" style="padding-left: 20px;"></a>
-				<a id="pub-dynamic" style="visibility:hidden" class="mui-icon iconfont icon-fabu mui-pull-right"></a>
-				<!--<a id="pub-dynamic" class="mui-icon mui-icon-compose  mui-pull-right mui-plus-visible" style="padding-left: 20px;"></a>-->
+				<a id="leave" style="visibility:hidden" class="mui-icon iconfont icon-jiujiajingicon02-copy mui-pull-right""></a>
+				<a id="pub-dynamic" style="visibility:hidden" class="mui-icon iconfont icon-fabu mui-pull-right mui-plus-visible" >&nbsp;</a>
+				<!--<a id="pub-dynamic" class="mui-icon mui-icon-compose  mui-pull-right " style="padding-left: 20px;"></a>-->
 			</div>
 		</header>
 
@@ -33,23 +33,36 @@
 
 	<script type="text/javascript">
 		mui.plusReady(function() {
-			
+
 			events.changeTopPocket();
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 			var data = plus.webview.currentWebview().data;
 			var NoReadCnt = plus.webview.currentWebview().NoReadCnt //未读条数
 			var flag = plus.webview.currentWebview().flag
-	
-			events.initSubPage('zonep_sub.html', {data:data,NoReadCnt:NoReadCnt});
-			console.log('我的空间获取的数据' + data)
-			if(data ==personalUTID ){
+			var self = plus.webview.currentWebview();
+			var sub = plus.webview.create(
+				'zonep_sub.html',
+				'zonep_sub.html', 
+				{
+					top: '45px',
+					bottom: '0px',
+				},
+				{
+					data: data,
+					NoReadCnt: NoReadCnt
+				},
+			)
+			self.append(sub);
+//			events.initSubPage('zonep_sub.html', { data: data, NoReadCnt: NoReadCnt });
+			console.log('我的空间获取的数据' + JSON.stringify(data))
+			if(data == personalUTID) {
 				document.getElementById('pub-dynamic').style.visibility = 'visible';
-			}
-			if(flag==0){
 				document.getElementById('leave').style.visibility = 'visible';
 			}
-			
-			
+			if(flag == 0) {
+				document.getElementById('leave').style.visibility = 'visible';
+			}
+
 			//			var tempview =  plus.webview.getWebviewById('zonep_sub.html');
 			events.addTap('leave', function() {
 				events.openNewWindowWithData('../quan/leaveNew.html', data);
