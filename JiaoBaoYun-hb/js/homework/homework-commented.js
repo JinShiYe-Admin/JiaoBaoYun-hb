@@ -9,6 +9,8 @@ mui.plusReady(function() {
 	window.addEventListener('refreshAnswer', function(e) {
 		homeworkDetailNodes.stuResult.innerText = e.detail.data.answer;
 		homeworkResult.HomeworkResult.Result = e.detail.data.answer;
+		var imgFiles = e.detail.data.Files
+		document.getElementById('brief-imgs-stu').innerHTML = getImgsInner(imgFiles)
 	})
 	//跳转到修改作业界面
 	events.addTap('modifyHomework', function() {
@@ -351,6 +353,13 @@ var getImgsInner = function(imgs) {
 	var img_width = win_height/3;
 	if(imgs && imgs.length > 0) {
 		for(var i in imgs) {
+			if(!imgs[i].ThumbUrl){
+				imgs[i].ThumbUrl = imgs[i].thumb
+			}
+			if(!imgs[i].Url){
+				imgs[i].Url = imgs[i].url
+			}
+			
 			imgInner += '<img class="homework-img" style="width:' + img_width + 'px;height:'+img_width+'px;" src="' + imgs[i].ThumbUrl +
 				'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + imgs[i].FileType + '"/>';
 		}

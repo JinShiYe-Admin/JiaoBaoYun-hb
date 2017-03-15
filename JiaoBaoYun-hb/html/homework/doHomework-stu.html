@@ -267,7 +267,8 @@
 					if(data.RspCode == 0) {
 						mui.toast('修改作业答案成功！')
 						events.fireToPageNone('homework-commented.html', 'refreshAnswer', {
-							answer: textView.value
+							answer: textView.value,
+							Files:CloudFileUtil.files
 						});
 						CloudFileUtil.files = [];
 						//清空输入框
