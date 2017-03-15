@@ -133,7 +133,8 @@ var addReplyView = function() {
 			},
 			extras: {
 				data: id,
-				NoReadCnt: 0
+				NoReadCnt: 0,
+				flag:0
 			}
 
 		});

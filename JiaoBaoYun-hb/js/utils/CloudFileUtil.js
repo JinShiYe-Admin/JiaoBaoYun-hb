@@ -901,14 +901,18 @@ var CloudFileUtil = (function($, mod) {
 		mod.files.push(img);
 		//	picPath=camero.getAbsolutePath(picPath);
 		var pictures = document.getElementById('pictures');
+		var win_width=pictures.offsetWidth;
+		var div_width=(win_width)/4;
 		var div = document.createElement('div');
+		div.style.width=div_width+"px";
+		div.style.height=div_width+"px";
 		div.img = img;
 		div.className = 'img-div';
 		if(flag) {
-			div.innerHTML = '<img style="width:60px;height:80px" src="' + img.thumb + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
+			div.innerHTML = '<img style="width:90%;height:90%" src="' + img.thumb + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
 				'<a class="mui-icon iconfont icon-guanbi"></a>';
 		} else {
-			div.innerHTML = '<img style="width:60px;height:80px" src="' + img.url + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
+			div.innerHTML = '<img style="width:90%;height:90%" src="' + img.url + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
 				'<a class="mui-icon iconfont icon-guanbi"></a>';
 		}
 
