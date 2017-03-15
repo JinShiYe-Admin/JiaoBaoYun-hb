@@ -143,7 +143,9 @@
 			"js/mui.lazyload.js",
 			"js/mui.lazyload.img.js"
 		],
-		"refer": []
+		"refer": [
+			"html/utils/customizeCity.html"
+		]
 	},
 	"html/register/register_phoneNumber.html": {
 		"resources": [
@@ -235,7 +237,8 @@
 			"js/utils/cryption.js",
 			"js/utils/CloudFileUtil.js",
 			"js/qiniu/qiniu.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"image/cloud/A_folder.png"
 		],
 		"refer": []
 	},
@@ -492,7 +495,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
 			"css/quan/class_space.css",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html"
@@ -645,7 +649,25 @@
 	"html/mine/add-info.html": {
 		"resources": [
 			"js/mine/add-info.js",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mine/apply.css",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	},
 	"html/register/modify_password.html": {
@@ -1225,6 +1247,27 @@
 			"js/qiniu/qiniu.js",
 			"css/mui.min.css",
 			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/utils/customizeCity.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
 		]
 	}

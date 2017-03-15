@@ -213,3 +213,8 @@ a>p {
 .mui-table-view-divider{
 	background-color: rgb(238,239,243);
 }
+.extra-input{
+	width: 100%;
+	min-height: 50px;
+	border: solid 1px #E4E4E4 !important;
+}
