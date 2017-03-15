@@ -211,14 +211,8 @@
 						console.log('up ' + JSON.stringify(page));
 						if(page) {
 							requestData(page.pageIndex + 1);
-							setTimeout(function() {
-								self.endPullUpToRefresh();
-							}, 1000);
 						} else {
 							mui.toast('数据异常，请下拉刷新后重新尝试');
-							setTimeout(function() {
-								self.endPullUpToRefresh();
-							}, 1000);
 						}
 					}
 				}
@@ -282,11 +276,13 @@
 						page.totalPage = data.RspData.TotalPage;
 					}
 					document.getElementById('pullrefresh').setAttribute('data-page', JSON.stringify(page))
-					if(page.pageIndex == 1) { //获取的第一页的内容
+					if(page.pageIndex == 1) { //下拉刷新或者获取的第一页的内容
 						//清空对应的界面
 						document.getElementById('ul_table').innerHTML = '';
 						year = ''; //清空年份
 						markDate = ''; //清空年份
+					} else { //上拉加载更多
+						pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
 					}
 
 					for(var i = 0; i < tempRspData.length; i++) {
