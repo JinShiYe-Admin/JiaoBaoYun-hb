@@ -29,11 +29,12 @@
 			}
 
 			.mui-col-sm-9 {
-				background: #EEEEEE;
+				background: #F2F3F5;
 			}
 
 			.mui-col-sm-3 {
 				/*text-align: center;*/
+				padding-left: 10px;
 			}
 
 			.dynamic-date :first-child {
@@ -61,8 +62,8 @@
 				display: -webkit-box;
 				-webkit-line-clamp: initial;
 				-webkit-box-orient: vertical;
-				font-size: 1.5rem;
-				line-height: 24px;
+				font-size: 1.4rem;
+				line-height: 20px;
 				margin-bottom: 3px;
 			}
 
@@ -88,7 +89,8 @@
 			}
 
 			.mui-row {
-				margin: 5px 10px;
+				margin-top: 5px;
+				margin-right: 10px;
 				word-break: break-all;
 			}
 
@@ -115,12 +117,13 @@
 
 			.show-all {
 				display: none;
-				color: #CCCCCC;
+				color: #B7B7B7;
 				font-size: 1.4rem;
 			}
 
 			.dynamic-name {
 				float: right;
+				color: #808080;
 			}
 
 			.mui-pull-bottom-wrapper {
@@ -351,13 +354,14 @@
 			}
 
 			var html_media = ''; //多媒体
-
+			var nameMarginTop = 0; //发布者距离顶部的高度
 			var width = (document.getElementById(dateItem).offsetWidth * 0.75 - 32) * 0.32;
 			var height = width * 3 / 4;
 			var marginBottom = (document.getElementById(dateItem).offsetWidth * 0.75 - 32) * 0.02;
 			var marginRight;
 
 			if(data.EncType == 1) { //附件类型,1图片2音视频3仅文字
+				nameMarginTop = height + marginBottom;
 				var imageArray = data.EncAddr.split('|');
 				var thumbArray = data.EncImgAddr.split('|');
 				var html_0 = '<div class="record-imge" style="height=' + height + marginBottom + 'px' + '">';
@@ -387,15 +391,14 @@
 			element.className = 'mui-row';
 			element.innerHTML = '<div class="mui-col-sm-3 mui-col-xs-3">\
 										<div class="dynamic-date">\
-											<div>' + timeItem_day + '</div>\
-											<div>' + timeItem_month + '</div>\
+											<div style="font-size:2.5rem;">' + timeItem_day + '</div><div style="margin-left:2px;font-size:1.4rem;">' + timeItem_month + '</div>\
 										</div>\
 									</div>\
 									<div class="mui-col-sm-9 mui-col-xs-9">\
 										<div class="mui-table-view-cell">\
 											<div id="' + data.TabId + '_content" class="dynamic-ellipsis-show"></div>\
 											<div id="' + data.TabId + '_show" class="show-all">显示全部</div>' + html_media + '\
-											<div><div class="dynamic-name">' + data.PublisherName + '</div></div>\
+											<div style="margin-top:' + nameMarginTop + 'px;" ><div class="dynamic-name">' + data.PublisherName + '</div></div>\
 										</div>\
 									</div>';
 			document.getElementById(dateItem).appendChild(element);
