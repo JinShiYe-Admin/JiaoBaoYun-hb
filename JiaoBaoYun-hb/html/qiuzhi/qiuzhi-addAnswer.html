@@ -41,7 +41,7 @@
 					</div>
 				</div>
 
-				<div id="pictures" style="float: left;background-color: transparent;width: 320px;"></div>
+				<div id="pictures" style="width: 100%;"></div>
 			</div>
 		</div>
 
@@ -61,6 +61,7 @@
 			var answerInfo; //答案信息
 			var commentInfo; //评论信息
 			var type = 0; //0：回答问题，1：评论答案 2：评论回复
+			mui(".mui-scroll-wrapper").scroll();
 			//传值接收方法
 			mui.plusReady(function() {
 				jQuery('#answerContent').prop("maxLength", "4000");

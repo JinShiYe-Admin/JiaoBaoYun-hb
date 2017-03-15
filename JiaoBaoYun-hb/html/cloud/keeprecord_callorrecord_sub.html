@@ -17,50 +17,50 @@
 			.mui-content {
 				/*background: transparent;*/
 			}
-
+			
 			.mui-table-view {
 				background: transparent;
 			}
-
+			
 			.mui-table-view-cell {
 				background: white;
 				padding: 5px 15px;
 				margin-bottom: 15px;
 			}
-
+			
 			.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-
+			
 			.mui-input-group:before,
 			.mui-input-group .mui-input-row:after,
 			.mui-input-group:after {
 				height: 0px;
 			}
-
+			
 			.mui-checkbox input[type=checkbox]:checked:before,
 			.mui-radio input[type=radio]:checked:before {
 				color: #86BE49;
 			}
-
+			
 			.mui-col-sm-4,
 			.mui-col-xs-8 {
 				height: 36px;
 			}
-
+			
 			.mui-checkbox.mui-left input[type=checkbox],
 			.mui-radio.mui-left input[type=radio] {
 				left: 18%;
 			}
-
+			
 			.mui-checkbox.mui-left label,
 			.mui-radio.mui-left label {
 				padding-left: 50%;
 				padding-right: 0px;
 			}
-
+			
 			#textarea_record,
 			#input_call {
 				margin-bottom: 0px;
@@ -72,18 +72,18 @@
 				padding: 10px 5px;
 				/*background: #D9D9D9;*/
 			}
-
+			
 			.mui-checkbox,
 			.mui-checkbox:last-child {
 				width: 25%;
 				background: white;
 				position: absolute;
 			}
-
+			
 			.mui-checkbox input[type=checkbox]:before {
 				font-size: 25px;
 			}
-
+			
 			.mui-media-body {
 				margin-top: 10px;
 				margin-bottom: 7px;
@@ -91,7 +91,7 @@
 				word-break: break-all;
 				font-size: 15px;
 			}
-
+			
 			.time {
 				/*height: 51px;*/
 				text-align: center;
@@ -101,11 +101,11 @@
 				padding-top: 4px;
 				padding-bottom: 4px;
 			}
-
+			
 			.record-imge {
 				width: 100%;
 			}
-
+			
 			.record-picture {
 				overflow: hidden;
 				position: relative;
@@ -227,7 +227,7 @@
 			var waiting = []; //记录等待框
 
 			mui.plusReady(function() {
-				events.closeWaiting();
+				//events.closeWaiting();
 
 				//图片查看控件
 				previewImage = mui.previewImage();
@@ -313,9 +313,9 @@
 					if(!commit) {
 						console.log('不允许发布');
 					} else if(document.getElementById("input_call").value.length > 20) {
-						mui.toast('点到输入超出字数限制');
+						mui.toast('备注最多20字');
 					} else if(document.getElementById("textarea_record").value.length > 500) {
-						mui.toast('记事输入超出字数限制');
+						mui.toast('记事最多500字');
 					} else {
 						commit = false;
 						var parentIds = []; //家长列表
@@ -328,8 +328,10 @@
 						};
 						//返回值model：model_userDataInfo
 						// 等待的对话框
-						var wd = events.showWaiting();
+						var wd = plus.nativeUI.showWaiting('123');
+
 						postDataPro_PostStuU(comData, wd, function(data) {
+							wd.close();
 							console.log('30_PostStuU通过资料ID获取关联的人员.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0 || data.RspCode == 9) {
 								mui.each(data.RspData, function(index, item) {
@@ -354,6 +356,14 @@
 
 								if(document.getElementById("textarea_record").value.replace(/(^\s*)|(\s*$)/g, "") != "" && multiMedia.data.PictureArray.length == 0) {
 									var wd_1 = events.showWaiting();
+									wd_1.onclose = function() {
+										console.log('upload waiting close wd_1');
+									}
+									if(wd_1) {
+										console.log('wd_1');
+									} else {
+										console.log('else wd_1');
+									}
 									commitNum++;
 									addNotes(2, strParent, strUser, {
 										encType: '3', //附件类型,1图片2音视频3仅文字
@@ -363,6 +373,9 @@
 									waiting.push(wd_1);
 								} else if(multiMedia.data.PictureArray.length != 0) {
 									var wd_2 = events.showWaiting('上传中...');
+									wd_2.onclose = function() {
+										console.log('upload waiting close wd_2')
+									}
 									commitNum++;
 									uploadFile(wd_2, strParent, strUser); //上传文件
 									waiting.push(wd_2);
@@ -371,7 +384,7 @@
 							} else {
 								mui.toast(data.RspTxt);
 							}
-							wd.close();
+							
 						});
 					}
 				});
@@ -555,6 +568,9 @@
 				//console.log('发送获取记事列表请求的数据:' + JSON.stringify(comData));
 				// 等待的对话框
 				var wd = events.showWaiting();
+				wd.onclose = function() {
+					console.log('upload waiting close wd')
+				}
 				postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
 					console.log('4.取记事列表:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 

@@ -3019,14 +3019,40 @@
 				"resources": [
 					"js/utils/MultiMedia.js",
 					"css/utils/MultiMedia.css",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/mui.zoom.js",
+					"js/utils/cryption.js",
+					"js/utils/CloudFileUtil.js",
+					"js/qiniu/qiniu.js",
+					"js/mui.previewimage.js",
+					"js/cloud/AndroidFileSystem.js",
+					"css/utils/preview.css",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"css/iconfont/iconfont.css",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"fonts/fangzheng.ttf",
+					"js/libs/RSA/BigInt.js",
+					"fonts/iconfont.ttf",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
 			},
 			"html/cloud/keeprecord_callorrecord_main.html": {
 				"resources": [
-					"html/cloud/keeprecord_callorrecord_sub.html"
+					"html/cloud/keeprecord_callorrecord_sub.html",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -3423,7 +3449,8 @@
 			"html/qiuzhi/focus-question.html": {
 				"resources": [
 					"css/qiuzhi/qiuzhi-sub.css",
-					"js/qiuzhi/qiuzhi-focusQuestion.js"
+					"js/qiuzhi/qiuzhi-focusQuestion.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -3476,7 +3503,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/myStorage/myStorage.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -3541,7 +3569,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [],
 				"priority": 0
