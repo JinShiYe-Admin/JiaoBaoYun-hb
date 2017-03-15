@@ -29,7 +29,10 @@ mui.plusReady(function() {
 	events.preload('qiuzhi-addAnswer.html');
 	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'), "answerIsReady");
 	//加载监听
-	window.addEventListener('answerInfo', function(e) {
+	window.addEventListener("closePreview",function(){
+		mui.previewImage().close();
+	})
+	window.addEventListener('answerInfo', function(e) {                                                                                                                                                                                                                                                                                                                                                    
 		flag = 1;
 		selfId = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 		mui('#refreshContainer').pullRefresh().refresh(true);

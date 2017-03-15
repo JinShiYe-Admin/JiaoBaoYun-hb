@@ -305,7 +305,13 @@
 	},
 	"html/qiuzhi/qiuzhi-answerDetail.html": {
 		"resources": [
-			"html/qiuzhi/qiuzhi-answerDetailSub.html"
+			"html/qiuzhi/qiuzhi-answerDetailSub.html",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-answerDetailSub.html"
@@ -442,7 +448,13 @@
 	},
 	"html/homework/classes-select.html": {
 		"resources": [
-			"css/homework/classes-select.css"
+			"css/homework/classes-select.css",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": []
 	},
