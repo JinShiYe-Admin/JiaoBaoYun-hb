@@ -502,7 +502,8 @@
 		],
 		"refer": [
 			"html/quan/class-group.html",
-			"html/quan/classSpace-sub.html"
+			"html/quan/classSpace-sub.html",
+			"html/quan/class-dynamic.html"
 		]
 	},
 	"html/quan/aboutme.html": {
@@ -1017,6 +1018,36 @@
 			"css/cloud/file.css",
 			"js/cloud/AndroidFileSystem.js",
 			"js/cloud/cloud.js"
+		]
+	},
+	"html/quan/class-dynamic.html": {
+		"resources": [
+			"css/quan/custom-textarea.css",
+			"js/utils/cryption.js",
+			"js/utils/CloudFileUtil.js",
+			"js/utils/compress.js",
+			"js/utils/camera.js",
+			"js/qiniu/qiniu.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	}
 }
