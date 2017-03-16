@@ -101,6 +101,7 @@ var zanNoReply = function(msgType) {
 }
 var ifHaveReferContent = function(cellData,cell) {
 	if(cellData.referContent) {
+		return '<div class="refer-content"><img class="refer-img display-inlineBlock" src="'+addEncImg(cell.EncImgAddr)+'"/><div class="refer-words triple-line extra-words break-words">' + '<span>' + events.shortForString(cellData.UserOwnerNick,6)  + ':</span>' + cellData.referContent + '</div></div>'
 	} else {
 		return '';
 	}
