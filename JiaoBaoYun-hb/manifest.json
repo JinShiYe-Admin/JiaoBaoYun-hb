@@ -3750,7 +3750,10 @@
 					"css/mui.min.css",
 					"js/libs/RSA/RSA.js",
 					"js/utils/RSAEncrypt.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"image/utils/default_personalimage.png",
+					"image/dynamic/icon_praise_small.png",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [],
 				"priority": 0
