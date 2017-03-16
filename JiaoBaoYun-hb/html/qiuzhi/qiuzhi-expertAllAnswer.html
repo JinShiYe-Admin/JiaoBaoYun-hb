@@ -140,26 +140,24 @@
 
 			mui.plusReady(function() {
 				//从专家页面传值
-				var curPage=plus.webview.currentWebview();
-				ExpertsInfo=curPage.data;
+				var curPage = plus.webview.currentWebview();
+				ExpertsInfo = curPage.data;
 				pageIndex = 1;
 				flagRef = 0;
 				getAnswersByUser(ExpertsInfo.UserId);
-//				window.addEventListener('qiuzhi-expertAllAnswer', function(event) {
-//					pageIndex = 1;
-//					flagRef = 0;
-//					//赋值
-//					ExpertsInfo = event.detail.data;
-//					console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
-//					document.getElementById('list-container').innerHTML = "";
-//					//24.获取某个用户的回答列表
-//					getAnswersByUser(ExpertsInfo.UserId);
-//				});
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					var index = this.id.replace('li', '');
 					events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', answerArray[index]);
 					console.log('传递的answerInfo:' + JSON.stringify(this.answerInfo));
 					plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
+				});
+
+				//阻尼系数、初始化刷新加载更多
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				mui('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
 				});
 				//上拉下拉注册
 				mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
@@ -263,7 +261,7 @@
 					'<div class="mui-table-cell mui-col-xs-12">' +
 					'<h4 class="mui-ellipsis">' +
 					record.AskTitle +
-					'</h4><h5>' +
+					'</h4><h5 style= "font-size: 12px;">' +
 					record.AnswerContent +
 					'</h5>' +
 					'<p class="mui-h6 mui-ellipsis">' + record.IsLikeNum + '赞·' + record.CommentNum + '评论·' + modifyTimeFormat(record.AnswerTime) +

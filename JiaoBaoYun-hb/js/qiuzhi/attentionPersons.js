@@ -30,6 +30,14 @@ mui.plusReady(function() {
 	//	expertId = expertInfo.UserId;
 	requireData(type);
 	setListener();
+	
+	//阻尼系数、初始化刷新加载更多
+	var deceleration = mui.os.ios ? 0.003 : 0.0009;
+	mui('.mui-scroll-wrapper').scroll({
+		bounce: false,
+		indicators: true, //是否显示滚动条
+		deceleration: deceleration
+	});
 
 	//上拉下拉注册
 	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
