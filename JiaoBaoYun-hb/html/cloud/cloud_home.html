@@ -29,15 +29,15 @@
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-
+			
 			.mui-table-view {
 				/*background-color: white;*/
 			}
-
+			
 			.cloud-item {
 				background-color: white;
 			}
-
+			
 			.cloud-item-left {
 				width: 16%;
 				border-right: 1px solid #D9D9D9;
@@ -46,47 +46,47 @@
 				font-weight: bold;
 				font-size: 1.6rem;
 			}
-
+			
 			.cloud-item-right {
 				/*margin-left: 16%;*/
 				width: 84%;
 				float: right;
 			}
-
+			
 			#cloudstorage_0,
 			#cloudrecord_0,
 			#cloudapps_0 {
 				/*每一项的第一行*/
 				/*background-color: red;*/
 			}
-
+			
 			#cloudstorage_1,
 			#cloudrecord_1,
 			#cloudapps_1 {
 				/*每一项的第二行*/
 				/*background-color: blue;*/
 			}
-
+			
 			.mui-plus-pullrefresh .mui-scroll {
 				position: absolute;
 				/*width: 100%;*/
 			}
-
+			
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				color: black;
 				border: none;
 			}
-
+			
 			.mui-table-view-cell {
 				display: inline-block;
 				width: auto;
 				padding: 1px 1px;
 			}
-
+			
 			.mui-slider-indicator .mui-table-view-cell.mui-active {
 				background: white;
 			}
-
+			
 			.cloud-red-point {
 				position: absolute;
 				background: red;
@@ -95,27 +95,27 @@
 				border-radius: 50%;
 				display: none;
 			}
-
+			
 			img {
 				border-radius: 50%;
 			}
-
+			
 			#cloudstorage_1 img {
 				border-radius: 0px;
 			}
-
+			
 			.icon-jiaxiabiao {
 				color: #0ABAF5;
 			}
-
+			
 			.icon-banxiabiao {
 				color: #FFBA00;
 			}
-
+			
 			.icon-re {
 				color: #FD681E;
 			}
-
+			
 			.icon-re,
 			.icon-banxiabiao,
 			.icon-jiaxiabiao {
@@ -123,7 +123,7 @@
 				border: none !important;
 				top: 0px;
 			}
-
+			
 			.mui-popup-input input {
 				/*popup 输入框*/
 				height: 34px;
@@ -340,6 +340,35 @@
 						scroll.scrollTo(0, 0, 100); //100毫秒滚动到顶
 					}
 				});
+
+				var self = plus.webview.currentWebview();
+				var androidHeight;
+				console.log('getStyle ' + JSON.stringify(self.getStyle()));
+				if(mui.os.android) {
+					androidHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight");
+				}
+				//防止 父页面选项卡被输入法撑起
+				window.addEventListener('resize', function() {
+					console.log('resize getStyle ' + JSON.stringify(self.getStyle()));
+					if(mui.os.android) {
+						console.log('androidHeight ' + androidHeight);
+						var a = plus.android.invoke(plus.android.currentWebview(), "getHeight"); //webview高度
+						var b = plus.navigator.getStatusbarHeight(); //状态栏高度
+						var c = plus.screen.resolutionHeight; //屏幕高度
+						var d = (c - a - b);
+						console.log('webview高度：' + a + " 状态栏高度：" + b + " 屏幕高度：" + c + " 输入法高度:" + d)
+						if(a < androidHeight) {
+							//键盘弹出
+							self.setStyle({
+								bottom: '0px'
+							});
+						} else {
+							self.setStyle({
+								bottom: '50px'
+							});
+						}
+					}
+				}, false);
 				//-----------设置数据end-----------------
 
 				//-----------设置监听start---------------
@@ -626,7 +655,7 @@
 							}
 							if(teacherClasses.length > 0 || studentClasses.length > 0) {
 								console.log('teacherClasses:' + teacherClasses.length + ',' + studentClasses.length);
-								sendMessageToHomework(teacherClasses,studentClasses);
+								sendMessageToHomework(teacherClasses, studentClasses);
 							} else {
 								mui.toast('您还未加入班级');
 							}
@@ -1189,7 +1218,7 @@
 
 				})
 			}
-			var sendMessageToHomework = function(teacherClasses,studentClasses) {
+			var sendMessageToHomework = function(teacherClasses, studentClasses) {
 				if(homeworkReady) {
 					events.closeWaiting();
 					events.fireToPageWithData('../homework/homework-tea.html', 'postClasses', {
@@ -1198,8 +1227,8 @@
 					})
 				} else {
 					events.showWaiting();
-					setTimeout(function(){
-						sendMessageToHomework(teacherClasses,studentClasses)
+					setTimeout(function() {
+						sendMessageToHomework(teacherClasses, studentClasses)
 					}, 500);
 				}
 			}
