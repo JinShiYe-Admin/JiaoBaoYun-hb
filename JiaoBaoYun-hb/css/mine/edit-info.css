@@ -48,3 +48,6 @@ header>a{
 	padding-top: 1.2rem;
 	font-size: 1.5rem;
 }
+input[type=text]{
+	border: none;
+}
