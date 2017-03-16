@@ -36,6 +36,7 @@ mui.plusReady(function() {
 	requestData();
 	addReplyView();
 	addReplyLisetner();
+	setListener();
 })
 /**
  * 界面放置数据
@@ -51,6 +52,9 @@ var setData = function(data) {
 			li.querySelector('.reply').cell = cell;
 		}
 		list.appendChild(li);
+		if(li.querySelector(".refer-content")){
+			li.querySelector(".refer-content").info=cell;
+		}
 	})
 }
 /**
@@ -138,6 +142,11 @@ var addReplyView = function() {
 			}
 
 		});
+	})
+}
+var setListener=function(){
+	mui(".mui-table-view").on("tap",".refer-content",function(){
+		events.openNewWindowWithData('../quan/space-detail.html', jQuery.extend(this.info,{focusFlag:0}))
 	})
 }
 /**
