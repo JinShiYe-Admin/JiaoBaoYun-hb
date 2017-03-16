@@ -28,11 +28,12 @@
 			var remarkInfo;
 			var type = 0; //修改东西0备注1昵称
 			mui.plusReady(function() {
+				events.blurBack();
 				window.addEventListener('editRemark', function(e) {
 					type = 0;
 					remarkInfo = e.detail.data;
 					console.log('备注传过来的值' + JSON.stringify(remarkInfo));
-					document.getElementById('remark-input').value = remarkInfo.bunick;
+					document.getElementById('remark-input').value = remarkInfo.bunick?remarkInfo.bunick:"";
 					document.querySelector('.mui-title').innerText = '编辑备注';
 				})
 				window.addEventListener('editNick', function(e) {
@@ -53,15 +54,34 @@
 							}else{
 								editNick(inputValue);
 							}
-						} else {
+						} else if(type==0&&remarkInfo.bunick) {
+							events.setDialog("删除备注","确认要删除备注？",function(){
+								delRemark();
+							})
+						}else{
 							mui.toast('请输入！');
 						}
-
 					})
-
 			})
+			var delRemark=function(){
+				var wd=events.showWaiting();
+				postDataPro_PostUmkD({
+					vvl: remarkInfo.utid
+				},wd,function(data){
+					console.log(JSON.stringify(data));
+					wd.close();
+					if(data.RspCode==0){
+						mui.toast("删除备注成功！")
+						mui.fire(plus.webview.currentWebview().opener(), 'remarkChanged');
+						mui.back();
+					}else{
+						mui.toast("失败，请重试")
+					}
+				})
+			}
+			//改变昵称
 			var editNick = function(inputValue) {
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				var wd = events.showWaiting();
 				postDataPro_PostGuNameE({
 					vvl: remarkInfo.gutid, //群成员群ID，gutid
 					vvl1: inputValue //群昵称
@@ -78,6 +98,7 @@
 					}
 				})
 			}
+			//改变备注
 			var editRemark = function(inputValue) {
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_PostUmkA({

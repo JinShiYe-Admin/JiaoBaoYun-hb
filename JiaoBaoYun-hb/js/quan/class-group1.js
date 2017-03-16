@@ -117,13 +117,13 @@ var addRemarkData = function(list, remarkList) {
 					break;
 				}
 			}
-			if(!hasBunick) {
-				list[i].bunick = list[i].ugname;
-			}
+//			if(!hasBunick) {
+//				list[i].bunick = list[i].ugname;
+//			}
 		}
 	} else {
 		list.forEach(function(cell, i) {
-			list[i].bunick = cell.ugname;
+//			list[i].bunick = cell.ugname;
 			list[i] = setOrder(cell);
 		})
 	}
@@ -191,17 +191,23 @@ var createGride = function(gride, array) {
 				li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
 			}
 			cell.gname = groupName;
-			if(!cell.bunick) {
-				cell.bunick = cell.ugnick;
-			}
+//			if(!cell.bunick) {
+//				cell.bunick = cell.ugnick;
+//			}
 			li.info = cell;
 			//子控件的innerHTML
 			li.innerHTML = '<a class="gride-inner" href="#">' +
 				'<img class="circular-square" src="' + updateHeadImg(cell.uimg, 2) + '"/></br>' +
-				'<small class="' + setMasterNameClass(cell) + '">' + getRoleInGroup(cell) + cell.bunick + '</small>' +
+				'<small class="' + setMasterNameClass(cell) + '">' + getRoleInGroup(cell) + setBeunick(cell) + '</small>' +
 				'</a>';
 			gride.appendChild(li);
 		})
+}
+var setBeunick=function(item){
+	if(item.bunick){
+		return item.bunick;
+	}
+	return  item.ugname;
 }
 var setMasterNameClass = function(info) {
 	if(info.mstype == 1) {

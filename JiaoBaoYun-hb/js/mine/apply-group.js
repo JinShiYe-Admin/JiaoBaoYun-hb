@@ -12,6 +12,8 @@ var myGroups = []; //我现所在群信息
 var groupRoles = []; //群角色
 var choseGroupId; //选中申请的群Id
 mui.plusReady(function() {
+	//设置最大长度
+	jQuery("#extra-input").prop("maxLength",20);
 	list = document.getElementById('groups-container');
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 	getAllGroups(personalUTID, manageMyGroups);
@@ -205,6 +207,7 @@ var getAllGroups = function(utid, callback) {
  * 重置角色选择
  */
 var resetRoles = function() {
+	groupRoles=[];
 	//家长选择按钮
 	document.getElementById('check-parents').checked = false;
 	//老师选择按钮

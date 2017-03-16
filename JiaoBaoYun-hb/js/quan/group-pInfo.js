@@ -52,8 +52,8 @@ var getRemark = function() {
 			var remark=document.getElementById('person-remark');
 			if(data.RspCode=='0000'){
 				manageAccountInfo(data.RspData[0]);
-//			}else{
-//				remark.innerText=pInfo.ugnick;
+			}else{
+				remark.innerText=pInfo.ugname;
 //				premark.butid=pInfo.utid;
 //				premark.bunick=pInfo.ugnick;
 			}
@@ -81,7 +81,7 @@ var manageAccountInfo = function(data) {
 		if(data){
 			jQuery.extend(pInfo,data);
 		}
-		pInfo.bunick=pInfo.bunick?pInfo.bunick:pInfo.ugnick;
+//		pInfo.bunick=pInfo.bunick?pInfo.bunick:pInfo.ugnick;
 		console.log('獲取的個人賬號信息：' + JSON.stringify(pInfo));
 		//{"utid":5,"uid":"18853113151","uname":"test867830028690115",
 		//"unick":"BugHunter","usex":0,"utxt":null,
@@ -89,7 +89,8 @@ var manageAccountInfo = function(data) {
 		document.getElementById('info-headImg').src = updateHeadImg(pInfo.uimg,2);
 //		document.getElementById('info-name').innerText = pInfo.uname;
 		document.getElementById('info-nick').innerText =pInfo.unick;
-		document.getElementById('person-remark').innerText=isSelf?pInfo.ugname:pInfo.bunick;
+		//如果存在备注 就放置备注 否则 放置群昵称
+		document.getElementById('person-remark').innerText=pInfo.bunick?pInfo.bunick:pInfo.ugname;
 		document.getElementById('data-info').innerText = pInfo.uid;
 		document.getElementById('person-space').innerText = isSelf?"我的空间": events.shortForString(pInfo.unick,10) + '的空间' ;
 		document.getElementById('person-area').innerText=pInfo.uarea.split("|")[1];

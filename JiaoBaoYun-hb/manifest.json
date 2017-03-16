@@ -1982,7 +1982,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/utils/events.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/quan/zonep_sub.html",
@@ -2138,7 +2139,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/utils/events.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -2606,7 +2608,8 @@
 					"css/mui.min.css",
 					"fonts/iconfont.ttf",
 					"css/utils/common.css",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"js/utils/compress.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3112,7 +3115,8 @@
 					"js/utils/events.js",
 					"js/publicProtocol.js",
 					"js/mui.min.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
