@@ -136,7 +136,7 @@
 					if(data.RspCode == 0) {
 						console.log('新增成功：' + JSON.stringify(data.RspData.Result));
 						events.fireToPageNone('record_student_main.html', 'refreshView');
-						mui.toast('发送成功');
+						mui.toast('发布成功');
 						mui.back();
 					} else {
 						mui.toast(data.RspTxt);
