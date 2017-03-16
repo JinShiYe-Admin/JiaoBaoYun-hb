@@ -110,7 +110,7 @@ var setButtonsListener = function() {
 				gid: choseGroupId,
 				beinvnick: myNick,
 				mstype: groupRoles[0],
-				urel: ''
+				urel: getExtraInfo()
 			}, wd, function(data) {
 				groupRoles = [];
 				wd.close();
@@ -131,6 +131,12 @@ var setButtonsListener = function() {
 	btn_cancel.addEventListener('tap', function() {
 		mui('.mui-popover').popover('toggle')
 	})
+}
+var getExtraInfo=function(){
+ 	if(document.getElementById('extra-input').value){
+ 		return document.getElementById('extra-input').value;
+ 	}
+ 	return "";
 }
 /**
  * 获取我在的所有群信息
@@ -205,6 +211,8 @@ var resetRoles = function() {
 	document.getElementById('check-tea').checked = false;
 	//学生选择按钮
 	document.getElementById('check-stu').checked = false;
+//	document.getElementById("extra-input").style.display="none";
+	document.getElementById("extra-input").value="";
 }
 /**
  * 多选按钮选择逻辑
@@ -218,27 +226,15 @@ var getChecked = function() {
 	var check_stu = document.getElementById('check-stu');
 	mui('.mui-input-group').on('change', 'input', function() {
 		if(this.checked) {
-			groupRoles.push(parseInt(this.value));
-		} else {
-			groupRoles = removeItemFromArray(parseInt(this.value), groupRoles);
+			var choseRole=parseInt(this.value);
+			var extra_input=document.getElementById('extra-input');
+//			if(choseRole){
+//				extra_input.style.display="none";
+//			}else{
+//				extra_input.style.display="block";
+//			}
 		}
-		if(this.checked) {
-			console.log('this.value' + this.value);
-			switch(parseInt(this.value)) {
-				case 0:
-				case 2:
-					check_stu.checked = false;
-					groupRoles = removeItemFromArray(3, groupRoles);
-					break;
-				case 3:
-					check_tea.checked = false;
-					check_parents.checked = false;
-					groupRoles = removeItemFromArray(2, removeItemFromArray(0, groupRoles))
-					break;
-				default:
-					break;
-			}
-		}
+			groupRoles=[choseRole];
 		console.log('groupRoles:' + groupRoles);
 	});
 }

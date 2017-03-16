@@ -182,10 +182,10 @@
 						var element = document.getElementById('pullrefresh');
 						var page = JSON.parse(element.getAttribute('data-page'));
 						console.log('down ' + JSON.stringify(page));
+						requestData(1);
 						setTimeout(function() {
-							requestData(1);
 							self.endPullDownToRefresh(); //结束下拉刷新
-						}, 1500);
+						}, 1000);
 					}
 				},
 				up: {
@@ -196,15 +196,9 @@
 						var page = JSON.parse(element.getAttribute('data-page'));
 						console.log('up ' + JSON.stringify(page));
 						if(page) {
-							setTimeout(function() {
-								requestData(page.pageIndex + 1);
-								self.endPullUpToRefresh();
-							}, 1500);
+							requestData(page.pageIndex + 1);
 						} else {
-							setTimeout(function() {
-								mui.toast('数据异常，请下拉刷新后重新尝试');
-								self.endPullUpToRefresh();
-							}, 1500);
+							mui.toast('数据异常，请下拉刷新后重新尝试');
 						}
 					}
 				}
@@ -273,11 +267,13 @@
 					page.totalPage = data.RspData.TotalPage;
 				}
 				document.getElementById('pullrefresh').setAttribute('data-page', JSON.stringify(page))
-				if(page.pageIndex == 1) { //获取的第一页的内容
+				if(page.pageIndex == 1) { //下拉刷新或者获取的第一页的内容
 					//清空对应的界面
 					document.getElementById('list').innerHTML = '';
 					year = ''; //清空年份
-					markDate='';//日期
+					markDate = ''; //日期
+				} else { //上拉加载更多
+					pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
 				}
 
 				if(data.RspCode == 0) {
@@ -293,8 +289,10 @@
 					mui.toast(data.RspTxt);
 				}
 
+				console.log('page ' + JSON.stringify(page));
 				if(page.pageIndex >= page.totalPage) {
 					//没有下一页
+					console.log('没有下一页');
 					pullRefresh.endPullUpToRefresh(true);
 				} else {
 					if(page.pageIndex == 1) {
@@ -304,7 +302,7 @@
 				}
 				setTimeout(function() {
 					wd.close();
-				}, 500);
+				}, 1000);
 			});
 		}
 
@@ -320,12 +318,12 @@
 			var time = date[0].split('-'); //时间
 			var timeItem = time[1] + '.' + time[2];
 			var yearItem = dateItem.split('-')[0];
-			if(year == yearItem) {//同一年
+			if(year == yearItem) { //同一年
 				yearItem = '';
 			} else {
-				year = yearItem;//新的一年
+				year = yearItem; //新的一年
 			}
-			if(year == today.split('-')[0]){//今年
+			if(year == today.split('-')[0]) { //今年
 				yearItem = '';
 			}
 			//console.log('dateItem ' + dateItem);

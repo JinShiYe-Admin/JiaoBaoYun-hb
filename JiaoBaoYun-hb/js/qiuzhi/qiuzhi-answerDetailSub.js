@@ -30,6 +30,9 @@ mui.plusReady(function() {
 	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'), "answerIsReady");
 	plus.webview.currentWebview().opener().addEventListener("hide",function(){
 		mui.previewImage().close();
+		console.log("求知回答页面已隐藏")
+		events.clearChild(document.getElementById('list-container'));
+		setOriginalCondition();
 	})
 	//加载监听
 	window.addEventListener('answerInfo', function(e) {                                                                                                                                                                                                                                                                                                                                                    
@@ -362,6 +365,22 @@ var setQuestion = function(datasource) {
 	} else {
 		zan_icon.className = "mui-icon iconfont icon-support isNotLike";
 	}
+}
+/**
+ * 无数据
+ */
+var setOriginalCondition=function(){
+	document.getElementById('anthor-portrait').src = "../../image/utils/default_personalimage.png";
+	document.getElementById("anthor-name").innerText = "";
+	document.getElementById("anthor-info").style.display="none"
+	document.getElementById('btn-focus').style.display = 'none';
+	document.getElementById('btn-focus').style.display = "inline-block";
+	document.getElementById('answer-time').innerText = '';
+	document.querySelector('.question-title').innerText = '';
+	events.clearChild(document.getElementById('answer-imgs'));
+	var questionContainer = document.getElementById('question-content');
+	events.clearChild(questionContainer);
+	document.getElementById('comments-no').innerText='';
 }
 /**
  * 设置回答人信息

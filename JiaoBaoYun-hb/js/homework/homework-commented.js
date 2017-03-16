@@ -4,6 +4,22 @@ mui.init();
 var homeworkModel = {};
 mui('.mui-scroll-wrapper').scroll();
 mui.plusReady(function() {
+	var data = plus.webview.currentWebview().data;
+		homeworkModel = data;
+		resetData(); //数据初始化
+		console.log('学生查看作业结果界面：' + JSON.stringify(homeworkModel));
+		if(homeworkModel.workType == 0) {
+			document.getElementById("modifyHomework").hidden = 'hidden'
+			//			document.getElementById("list").hidden = 'hidden';
+			getAnswerResultStu();
+		} else {
+			document.getElementById("list").hidden = '';
+			requestHomeworkDetail();
+			requestGetHomeworkResultStu();
+		}
+		getStuName();
+
+	
 	mui.previewImage();
 	//修改答案后刷新界面
 	window.addEventListener('refreshAnswer', function(e) {

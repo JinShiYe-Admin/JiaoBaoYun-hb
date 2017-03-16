@@ -7,7 +7,7 @@ mui('.mui-scroll-wrapper').scroll({
 	indicators: true, //是否显示滚动条
 })
 var list = document.getElementById('list-container');
-var groupRoles = new Array();
+var groupRoles =[];
 var check_parents = document.getElementById('check-parents');
 var check_tea = document.getElementById('check-tea');
 var check_stu = document.getElementById('check-stu');
@@ -141,7 +141,7 @@ var addListener = function() {
 			if(data.RspCode = '0000') {
 				mui.toast('您已同意入群');
 				events.clearChild(list);
-				getData('inv', setData);
+				getData('inv', []);
 				events.fireToPageNone('mine.html', 'newsChanged');
 				events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 
@@ -209,30 +209,35 @@ var defaultCheck = function(type) {
  */
 var getChecked = function() {
 	mui('.mui-input-group').on('change', 'input', function() {
-		console.log('选择事件：' + this.checked + ',值：' + this.value);
-		if(this.checked) {
-			groupRoles.push(parseInt(this.value));
-		} else {
-			groupRoles = removeItemFromArray(parseInt(this.value), groupRoles);
+		if(this.checked){
+		   var choseRole=parseInt(this.value);
 		}
-		if(this.checked) {
-			console.log('this.value' + this.value);
-			switch(parseInt(this.value)) {
-				case 0: //家长
-				case 2: //老师
-					check_stu.checked = false;
-					groupRoles = removeItemFromArray(3, groupRoles);
-					break;
-				case 3: //学生
-					check_tea.checked = false;
-					check_parents.checked = false;
-					groupRoles = removeItemFromArray(2, removeItemFromArray(0, groupRoles))
-					break;
-				default:
-					break;
-			}
-		}
-		console.log('groupRoles:' + groupRoles);
+		groupRoles=[choseRole];
+		console.log("当前角色："+choseRole+JSON.stringify(groupRoles));
+//		console.log('选择事件：' + this.checked + ',值：' + this.value);
+//		if(this.checked) {
+//			groupRoles.push(parseInt(this.value));
+//		} else {
+//			groupRoles = removeItemFromArray(parseInt(this.value), groupRoles);
+//		}
+//		if(this.checked) {
+//			console.log('this.value' + this.value);
+//			switch(parseInt(this.value)) {
+//				case 0: //家长
+//				case 2: //老师
+//					check_stu.checked = false;
+//					groupRoles = removeItemFromArray(3, groupRoles);
+//					break;
+//				case 3: //学生
+//					check_tea.checked = false;
+//					check_parents.checked = false;
+//					groupRoles = removeItemFromArray(2, removeItemFromArray(0, groupRoles))
+//					break;
+//				default:
+//					break;
+//			}
+//		}
+//		console.log('groupRoles:' + groupRoles);
 	});
 }
 /**
@@ -273,7 +278,7 @@ var getInnerHTML = function(item) {
 				'<div class = "mui-media-body"' +
 				'style = "margin-right: 4rem;" >' +
 				item.gname +
-				'<p class="single-line apply-message">' + events.shortForString(item.invname, 4) + '申请以' + getRole(item.mstype) + '身份加入你的群:' + events.shortForString(item.gname, 4) + '</p>' +
+				'<p class="single-line apply-message">' + events.shortForString(item.invname, 4) + hasRemark(item) + '</p>' +
 				'</div>' +
 				'<a href="#chose-roles" class = "mui-btn mui-btn-green btn-openPopover" ' +
 				' gutid="' + item.gutid + '" mstype="' + item.mstype + '" gid="' + item.gid + '" stuname="' + item.stuname + '">接受</a></a>'
@@ -295,6 +300,12 @@ var getInnerHTML = function(item) {
 	}
 
 	return inner;
+}
+var hasRemark=function(item){
+	if(item.appnote&&appnote.length>0){
+		return ":"+appnote;
+	}
+	return '申请以' + getRole(item.mstype) + '身份加入你的群:' + events.shortForString(item.gname, 4);
 }
 var setApplyState = function(type) {
 	var applyState = '';

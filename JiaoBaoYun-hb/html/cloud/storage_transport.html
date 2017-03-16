@@ -378,17 +378,8 @@
 				window.addEventListener('addUpload', function(e) {
 					var gallery = mui('.mui-slider');
 					gallery.slider().gotoItem(1);
-					//---数据准备---start---
 					var subData = e.detail.data; //接收页面传入的参数值
-					//var subData = {
-					//	path: fid, //路径
-					//	fname: fname, //文件名
-					//	metadata: succesCB //文件信息
-					//  pid:pid//云盘文件夹父ID
-					//}
-					//if(mui.os.android) { //android系统
-					//subData.path = 'file://' + subData.path;
-					//}
+
 					console.log('传输列表新增一项上传任务:' + JSON.stringify(subData));
 
 					//获取上传和下载文件夹的目录对象

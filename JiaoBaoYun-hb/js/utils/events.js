@@ -80,7 +80,8 @@ var events = (function(mod) {
 			styles: {
 				top: '0px',
 				bottom: '0px'
-			}
+			},
+			createNew:true,
 		});
 	};
 	/**

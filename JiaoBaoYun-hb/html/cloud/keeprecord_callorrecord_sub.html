@@ -181,11 +181,11 @@
 			 * 下拉刷新具体业务实现
 			 */
 			function pulldownRefresh() {
+				getNotes(1, 10);
 				setTimeout(function() {
-					getNotes(1, 10);
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 					mui('#pullrefresh').pullRefresh().refresh(true);
-				}, 1500);
+				}, 1000);
 			}
 
 			/**
@@ -200,16 +200,16 @@
 						mui.toast('没有更多数据了');
 						mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
 					} else {
+						getNotes(page.pageIndex + 1, 10);
 						setTimeout(function() {
-							getNotes(page.pageIndex + 1, 10);
 							mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
-						}, 1500);
+						}, 1000);
 					}
 				} else {
+					mui.toast('数据异常，请下拉刷新后重新尝试');
 					setTimeout(function() {
-						mui.toast('数据异常，请下拉刷新后重新尝试');
 						mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
-					}, 1500);
+					}, 1000);
 				}
 			}
 

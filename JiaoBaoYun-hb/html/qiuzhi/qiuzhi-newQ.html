@@ -27,7 +27,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">问题</h1>
-			<a id="publish" class="mui-pull-right">提问</a>
+			<a id="publish" class="mui-icon mui-pull-right mui-plus-visible" style="padding-left: 30px;padding-top: 15px;font-size: 16px;">提问</a>
 		</header>
 		<!--快捷输入具体内容，开发者可自己替换常用语-->
 		<div id="popover" class="mui-popover">
@@ -56,7 +56,7 @@
 
 			<p style="margin-top: 10px;margin-left: 10px;font-size: 14px;width: 150px;">选择话题:
 				<a id="channal" style="margin-left: 4px;" href="#popover">
-					全部
+					请选择
 				</a>
 			</p>
 			<p id="atExpert" style="margin-top: 10px;margin-left: 10px;font-size: 14px;">邀请专家：
@@ -87,13 +87,14 @@
 			var selectedExpert = [];
 			mui.plusReady(function() {
 				window.addEventListener('atExpert', function(data) {
-					console.log(data.detail.data);
+					console.log(JSON.stringify(data.detail.data));
 					var tempArr = data.detail.data;
 					var name = []
 					for(var i = 0; i < tempArr.length; i++) {
 						selectedExpert.push(tempArr[i].TabId)
 						name.push('@' + tempArr[i].unick);
 					}
+					console.log(JSON.stringify(selectedExpert));
 					document.getElementById("selectedExpert").innerHTML = name.join('、')
 
 				})
@@ -178,7 +179,23 @@
 					mui.toast('请选择话题')
 					return;
 				}
-				events.openNewWindowWithData('atExpert.html', datasource)
+								mui.openWindow({
+					url: 'atExpert.html',
+					id: 'atExpert.html',
+					styles: {
+						top: '0px', //设置距离顶部的距离
+						bottom: '0px'
+					},
+
+					extras: {
+						data:datasource,
+						selectedExpert:selectedExpert
+						
+					},
+					createNew: true,
+
+				});
+//				events.openNewWindowWithData('atExpert.html', datasource)
 			})
 			events.addTap('take_camero', function() {
 				mui.toast('此功能暂未开放');
@@ -275,7 +292,6 @@
 			}
 			//选择话题
 			mui('.mui-popover').on('tap', 'li', function(e) {
-				events.blurBack()
 				document.getElementById("channal").innerHTML = this.children[0].innerHTML;
 				askChannel = this.id;
 				console.log('askChannel=' + askChannel);
@@ -304,7 +320,7 @@
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				//2.获取符合条件的专家信息
 				postDataQZPro_getExpertsByCondition(comData, wd, function(data) {
-					wd.close();
+					
 					console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						//添加人员信息
@@ -352,6 +368,7 @@
 							}
 							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 							datasource = tempRspData;
+							wd.close();
 							//刷新界面
 							//								addExperts(UserId);
 

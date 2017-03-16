@@ -176,12 +176,11 @@
 							var element = document.getElementById('data_scroll');
 							var page = JSON.parse(element.getAttribute('data-page'));
 							console.log('down ' + JSON.stringify(page));
+							getClassHistory(1, 10);
 							setTimeout(function() {
 								//获取数据
-								getClassHistory(1, 10);
-								console.log('结束下拉');
 								self.endPullDownToRefresh(); //结束下拉刷新
-							}, 1500);
+							}, 1000);
 						}
 					},
 					up: {
@@ -192,16 +191,9 @@
 							var page = JSON.parse(element.getAttribute('data-page'));
 							console.log('up ' + JSON.stringify(page));
 							if(page) {
-								setTimeout(function() {
-									getClassHistory(page.pageIndex + 1, 10);
-									console.log('结束上拉');
-									self.endPullUpToRefresh();
-								}, 1500);
+								getClassHistory(page.pageIndex + 1, 10);
 							} else {
-								setTimeout(function() {
-									mui.toast('数据异常，请下拉刷新后重新尝试');
-									self.endPullUpToRefresh();
-								}, 1500);
+								mui.toast('数据异常，请下拉刷新后重新尝试');
 							}
 						}
 					}
@@ -256,10 +248,12 @@
 						page.totalPage = data.RspData.TotalPage;
 					}
 					document.getElementById('data_scroll').setAttribute('data-page', JSON.stringify(page))
-					if(pageIndex == 1) { //获取的第一页的内容
+					if(pageIndex == 1) { //下拉刷新或者获取的第一页的内容
 						//清空对应的界面
 						document.getElementById('data_scroll').innerHTML = '';
-						markDate = '';
+						markDate = '';//日期
+					} else { //上拉加载更多
+						pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
 					}
 
 					if(data.RspCode == 0) {
@@ -286,8 +280,10 @@
 					} else {
 						mui.toast(data.RspTxt);
 					}
+					console.log('page ' + JSON.stringify(page));
 					if(page.pageIndex >= page.totalPage) {
 						//没有下一页
+						console.log('没有下一页');
 						pullRefresh.endPullUpToRefresh(true);
 					} else {
 						if(pageIndex == 1) {
@@ -377,7 +373,7 @@
 					title = data.stuname;
 					content = data.MsgContent;
 				} else {
-					console.log('NoteType 异常'+data.NoteType);
+					console.log('NoteType 异常' + data.NoteType);
 					element.innerHTML = html_first;
 					title = data.stuname;
 					content = data.MsgContent;
