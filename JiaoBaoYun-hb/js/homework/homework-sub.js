@@ -22,7 +22,7 @@ mui.plusReady(function() {
 	events.preload('homework-publish.html', 500);
 	events.preload('workdetailTea-temporary.html', 300);
 	events.preload('workdetail-stu.html', 400);
-	events.preload('homework-commented.html', 200);
+//	events.preload('homework-commented.html', 200);
 	events.preload('doHomework-stu.html', 600);
 	//赋值
 	list = document.getElementById('list-container');
@@ -212,15 +212,18 @@ var setListener = function() {
 	})
 	//学生作业已提交点击事件
 	mui('.mui-table-view').on('tap', '.isSubmitted', function() {
-		events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+		events.openNewWindowWithData('homework-commented.html',jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo))
+//		events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 	})
 	//学生作业在已评论点击事件
 	mui('.mui-table-view').on('tap', '.isCommentedBG', function() {
-		events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+		events.openNewWindowWithData('homework-commented.html',jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo))
+//		events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 	})
 	//学生作业在未评论临时作业点击事件
 	mui('.mui-table-view').on('tap', '.noCommentedBG', function() {
-		events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+		events.openNewWindowWithData('homework-commented.html',jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo))
+//		events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 	})
 	//发布作业界面
 	publish.addEventListener('tap', function() {
