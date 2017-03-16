@@ -141,7 +141,7 @@ var addListener = function() {
 			if(data.RspCode = '0000') {
 				mui.toast('您已同意入群');
 				events.clearChild(list);
-				getData('inv', setData);
+				getData('inv', []);
 				events.fireToPageNone('mine.html', 'newsChanged');
 				events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 
@@ -278,7 +278,7 @@ var getInnerHTML = function(item) {
 				'<div class = "mui-media-body"' +
 				'style = "margin-right: 4rem;" >' +
 				item.gname +
-				'<p class="single-line apply-message">' + events.shortForString(item.invname, 4) + '申请以' + getRole(item.mstype) + '身份加入你的群:' + events.shortForString(item.gname, 4) + '</p>' +
+				'<p class="single-line apply-message">' + events.shortForString(item.invname, 4) + hasRemark(item) + '</p>' +
 				'</div>' +
 				'<a href="#chose-roles" class = "mui-btn mui-btn-green btn-openPopover" ' +
 				' gutid="' + item.gutid + '" mstype="' + item.mstype + '" gid="' + item.gid + '" stuname="' + item.stuname + '">接受</a></a>'
@@ -300,6 +300,12 @@ var getInnerHTML = function(item) {
 	}
 
 	return inner;
+}
+var hasRemark=function(item){
+	if(item.appnote&&appnote.length>0){
+		return ":"+appnote;
+	}
+	return '申请以' + getRole(item.mstype) + '身份加入你的群:' + events.shortForString(item.gname, 4);
 }
 var setApplyState = function(type) {
 	var applyState = '';

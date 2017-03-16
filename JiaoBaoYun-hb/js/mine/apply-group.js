@@ -133,7 +133,7 @@ var setButtonsListener = function() {
 	})
 }
 var getExtraInfo=function(){
- 	if(groupRoles[0]==0&&document.getElementById('extra-input').value){
+ 	if(document.getElementById('extra-input').value){
  		return document.getElementById('extra-input').value;
  	}
  	return "";
@@ -211,7 +211,7 @@ var resetRoles = function() {
 	document.getElementById('check-tea').checked = false;
 	//学生选择按钮
 	document.getElementById('check-stu').checked = false;
-	document.getElementById("extra-input").style.display="none";
+//	document.getElementById("extra-input").style.display="none";
 	document.getElementById("extra-input").value="";
 }
 /**
@@ -228,11 +228,11 @@ var getChecked = function() {
 		if(this.checked) {
 			var choseRole=parseInt(this.value);
 			var extra_input=document.getElementById('extra-input');
-			if(choseRole){
-				extra_input.style.display="none";
-			}else{
-				extra_input.style.display="block";
-			}
+//			if(choseRole){
+//				extra_input.style.display="none";
+//			}else{
+//				extra_input.style.display="block";
+//			}
 		}
 			groupRoles=[choseRole];
 		console.log('groupRoles:' + groupRoles);
