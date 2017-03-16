@@ -125,15 +125,20 @@ header .mui-icon-bars:before{
 	color: darkgray;
 	max-width: 18%;
 }
+/*作业标题*/
 .header-title{
-	color: #404040;
+	color: #323232;
+	font-size: 1.6rem;
 }
+/*作业内容*/
 .header-content{
-	color: #747474;
+	color: #808080;
+	font-size: 1.4rem;
 }
+/*额外信息*/
 .homework-bottom>p{
-	color: #b7b7b7;
-	font-size: 1rem;
+	color: #808080;
+	font-size: 1.2rem;
 }
 /*.subject-icon{
 	vertical-align: middle;

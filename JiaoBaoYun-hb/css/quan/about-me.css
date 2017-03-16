@@ -9,11 +9,13 @@
 .title-words {
 	width: 80%;
 }
-
+/**
+ * 背景颜色
+ */
 .refer-content {
 	width: 100%;
 	/*height: 4rem;*/
-	background-color: #fffbff;
+	background-color: #f8f8f8;
 	padding: .5rem;
 }
 

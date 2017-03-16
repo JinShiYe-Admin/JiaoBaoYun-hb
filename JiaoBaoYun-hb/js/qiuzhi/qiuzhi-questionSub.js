@@ -278,7 +278,7 @@ function requestAskDetail() {
 	var wd = events.showWaiting();
 	//5.获取某个问题的详情
 	postDataQZPro_getAskById(comData, wd, function(data) {
-		wd.close();
+
 		console.log('5.获取某个问题的详情:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			askModel = data.RspData;
@@ -306,7 +306,7 @@ function requestAskDetail() {
 			console.log('tempData:' + JSON.stringify(tempData));
 			//21.通过用户ID获取用户资料
 			postDataPro_PostUinf(tempData, wd, function(data1) {
-				wd.close();
+//				wd.close();
 				console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 				if(data1.RspCode == 0) {
 					//循环当前的个人信息返回值数组
@@ -355,9 +355,10 @@ function requestAskDetail() {
 				}
 				//刷新界面
 				addAnswer(tempRspData);
+				wd.close();
 			});
-
 		} else {
+			wd.close();
 			mui.toast(data.RspTxt);
 		}
 	});

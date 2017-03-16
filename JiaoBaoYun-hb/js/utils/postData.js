@@ -18,8 +18,16 @@ function postData(url, data, callback, waitingDialog) {
 			}
 		},
 		error: function(xhr, type, errorThrown) {
+			//			waitingDialog.close();
+			//			mui.alert("网络连接失败，请重新尝试一下", "错误", "OK", null);
+			var data = {
+				RspCode: '404',
+				RspData: '',
+				RspTxt: '网络连接失败，请重新尝试一下'
+			}
+			console.log('' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
+			callback(data);
 			waitingDialog.close();
-			mui.alert("网络连接失败，请重新尝试一下", "错误", "OK", null);
 		}
 	});
 }
@@ -60,9 +68,15 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 				}
 			},
 			error: function(xhr, type, errorThrown) {
+				var data = {
+					RspCode: '404',
+					RspData: '',
+					RspTxt: '网络连接失败，请重新尝试一下'
+				}
 				console.log('' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
+				callback(data);
 				waitingDialog.close();
-				mui.toast("网络连接失败，请重新尝试一下");
+				//mui.toast("网络连接失败，请重新尝试一下");
 			}
 		});
 	});
@@ -143,7 +157,7 @@ function QRCodeUrl(url, encryData, commonData, flag) {
 		var tempStr = arr0.sort().join('&');
 		//拼接url
 		var url0 = url + '?' + tempStr;
-		console.log('需要申请的url为:'+url0);
+		console.log('需要申请的url为:' + url0);
 		return url0;
 	});
 }

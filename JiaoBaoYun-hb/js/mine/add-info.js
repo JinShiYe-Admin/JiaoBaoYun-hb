@@ -78,7 +78,6 @@ var getData = function(role, callback) {
 				wd.close();
 				console.log('角色' + role + '获取的班级资料' + JSON.stringify(data))
 				if(data.RspCode !=0) {
-				
 					mui.toast(data.RspTxt);
 				}
 				callback(role, data.RspData);

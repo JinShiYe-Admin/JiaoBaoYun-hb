@@ -244,3 +244,6 @@ div>.icon-xiangce:before,
 	padding-right: 5px;
 	color: #323232;
 }
+.mui-table-view:after{
+	height: 0;
+}

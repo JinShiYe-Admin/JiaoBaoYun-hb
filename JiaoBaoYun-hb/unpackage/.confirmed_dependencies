@@ -31,7 +31,8 @@
 			"js/utils/RSAEncrypt.js",
 			"fonts/mui.ttf",
 			"image/qiuzhi/add-question.png.png",
-			"image/qiuzhi/channel-others.png"
+			"image/qiuzhi/channel-others.png",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-answerDetail.html",
@@ -61,10 +62,7 @@
 			"image/utils/default_personalimage.png",
 			"image/cloud/cloud_0_wenjianjia_1.png",
 			"image/quan/add.png",
-			"js/libs/crypto-js/crypto-js.js",
-			"css/utils/common.css",
-			"css/iconfont/iconfont.css",
-			"css/mui.min.css"
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
@@ -73,7 +71,7 @@
 			"html/cloud/storage_main.html",
 			"html/quan/class_space.html",
 			"html/cloud/app_keeprecord.html",
-			"html/cloud/app_notes_main.html"
+			"html/quan/studentdynamic_main.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -100,13 +98,32 @@
 			"css/home/index-menu.css",
 			"image/mine/about.png",
 			"image/mine/my-space.png",
-			"image/mine/my-points.png"
+			"image/mine/my-points.png",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/mine/approval-apply.html",
 			"html/mine/setting.html",
 			"html/quan/zone_main.html",
-			"html/mine/account-info.html"
+			"html/mine/account-info.html",
+			"html/mine/qun_manage_1.html"
 		]
 	},
 	"html/show/show_home_1.html": {
@@ -126,15 +143,15 @@
 			"js/mui.lazyload.js",
 			"js/mui.lazyload.img.js"
 		],
-		"refer": []
+		"refer": [
+			"html/utils/customizeCity.html"
+		]
 	},
 	"html/register/register_phoneNumber.html": {
 		"resources": [
 			"fonts/mui.ttf",
 			"fonts/fangzheng.ttf",
-			"js/libs/crypto-js/crypto-js.js",
-			"css/mui.min.css",
-			"css/utils/common.css"
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/register/yanZhengMa.html"
@@ -150,10 +167,7 @@
 			"js/main/slide_navigation.js",
 			"css/home/index.css",
 			"js/index.js",
-			"image/utils/default_personalimage.png",
-			"css/mui.min.css",
-			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",
@@ -162,9 +176,7 @@
 			"html/show/show_home_1.html",
 			"html/qiuzhi/qiuzhi_home.html",
 			"html/quan/aboutme.html",
-			"html/qiuzhi/expert-detail.html",
-			"html/quan/pub-dynamic.html",
-			"html/qiuzhi/qiuzhi-questionSearch.html"
+			"html/qiuzhi/expert-detail.html"
 		]
 	},
 	"html/register/login.html": {
@@ -190,8 +202,7 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js",
-			"fonts/mui.ttf"
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/register/register_phoneNumber.html",
@@ -203,7 +214,8 @@
 			"css/homework/homework.css",
 			"js/homework/homework.js",
 			"js/utils/switch-mine.js",
-			"html/homework/homework-tea-sub.html"
+			"html/homework/homework-tea-sub.html",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/homework/publish-answer.html",
@@ -226,10 +238,7 @@
 			"js/utils/CloudFileUtil.js",
 			"js/qiniu/qiniu.js",
 			"fonts/mui.ttf",
-			"css/cloud/file.css",
-			"css/mui.min.css",
-			"css/utils/common.css",
-			"css/utils/preview.css"
+			"image/cloud/A_folder.png"
 		],
 		"refer": []
 	},
@@ -273,7 +282,28 @@
 			"css/homework/subjects-icon.css",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/homework/homework.css",
-			"js/utils/h5fresh.js"
+			"js/utils/h5fresh.js",
+			"image/homework/commented.png",
+			"image/homework/submitted.png",
+			"image/homework/need-submit.png",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/publicHomeworkProtocol.js",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/homework/doHomework-stu.html",
@@ -321,7 +351,13 @@
 	},
 	"html/qiuzhi/qiuzhi-answerDetail.html": {
 		"resources": [
-			"html/qiuzhi/qiuzhi-answerDetailSub.html"
+			"html/qiuzhi/qiuzhi-answerDetailSub.html",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-answerDetailSub.html"
@@ -341,7 +377,8 @@
 			"image/utils/default_personalimage.png"
 		],
 		"refer": [
-			"html/quan/edit-remark.html"
+			"html/quan/edit-remark.html",
+			"html/mine/qun_data_details.html"
 		]
 	},
 	"html/homework/workdetailTea-temSub.html": {
@@ -385,8 +422,7 @@
 			"js/utils/camera.js",
 			"js/libs/CryptoJS/rollups/tripledes.js",
 			"js/utils/files.js",
-			"js/mui.previewimage.js",
-			"css/utils/preview.css"
+			"js/mui.previewimage.js"
 		],
 		"refer": [
 			"html/homework/homework-commented.html"
@@ -417,7 +453,15 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/utils/events.js",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"css/utils/common.css",
+			"js/publicProtocol.js",
+			"fonts/fangzheng.ttf",
+			"css/mui.min.css",
+			"js/publicHomeworkProtocol.js"
 		],
 		"refer": [
 			"html/homework/classes-select.html"
@@ -451,7 +495,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
 			"css/quan/class_space.css",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html"
@@ -460,6 +505,10 @@
 	"html/homework/classes-select.html": {
 		"resources": [
 			"css/homework/classes-select.css",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
 			"css/mui.min.css",
 			"css/utils/common.css"
 		],
@@ -470,7 +519,8 @@
 			"js/homework/workdetail-stu.js",
 			"css/homework/workdetail-stu.css",
 			"js/mui.previewimage.js",
-			"css/homework/subjects-icon.css"
+			"css/homework/subjects-icon.css",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
 	},
@@ -599,7 +649,25 @@
 	"html/mine/add-info.html": {
 		"resources": [
 			"js/mine/add-info.js",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mine/apply.css",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	},
 	"html/register/modify_password.html": {
@@ -823,9 +891,6 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js"
-		],
-		"refer": [
-			"html/qiuzhi/atExpert.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-addAnswer.html": {
@@ -854,7 +919,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/qiuzhi/AttentionPersons.html": {
@@ -930,8 +996,7 @@
 			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
-			"html/cloud/keeprecord_callorrecord_main.html",
-			"html/cloud/keeprecord_history_0.html"
+			"html/cloud/keeprecord_callorrecord_main.html"
 		]
 	},
 	"html/cloud/keeprecord_callorrecord_sub.html": {
@@ -983,7 +1048,12 @@
 	},
 	"html/homework/workdetail-tea.html": {
 		"resources": [
-			"html/homework/workdetail-tea-sub.html"
+			"html/homework/workdetail-tea-sub.html",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/homework/workdetail-tea-sub.html"
@@ -998,6 +1068,31 @@
 	"html/homework/workdetail-tea-sub.html": {
 		"refer": [
 			"html/homework/homework-comment.html"
+		],
+		"resources": [
+			"image/utils/default_personalimage.png",
+			"js/storageKeyName.js",
+			"js/homework/homework_detail.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/preview.css",
+			"css/homework/workdetail.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.zoom.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"js/publicHomeworkProtocol.js",
+			"js/mui.previewimage.js",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"css/homework/subjects-icon.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/qiuzhi/qiuzhi-expertAllAnswer.html": {
@@ -1073,137 +1168,103 @@
 			"js/utils/RSAEncrypt.js"
 		]
 	},
-	"html/cloud/storage_main_choose.html": {
+	"html/mine/qun_manage_1.html": {
 		"resources": [
-			"css/mui.min.css",
-			"css/utils/common.css"
-		]
-	},
-	"html/quan/pub-dynamic.html": {
-		"resources": [
-			"css/quan/custom-textarea.css",
-			"js/utils/cryption.js",
-			"js/utils/events.js",
-			"js/libs/RSA/Barrett.js",
-			"js/libs/myStorage/myStorage.js",
-			"css/iconfont/iconfont.css",
-			"js/utils/ASFiles.js",
-			"js/mui.min.js",
-			"js/utils/camera.js",
-			"js/utils/compress.js",
-			"fonts/iconfont.ttf",
-			"js/utils/signHmacSHA1.js",
-			"js/utils/postData.js",
-			"js/storageKeyName.js",
-			"fonts/mui.ttf",
-			"js/utils/files.js",
-			"js/libs/crypto-js/require.js",
-			"css/utils/common.css",
-			"css/homework/publish-answer.css",
-			"js/publicProtocol.js",
-			"js/libs/jquery.js",
-			"fonts/fangzheng.ttf",
-			"js/utils/CloudFileUtil.js",
-			"js/libs/RSA/BigInt.js",
-			"css/mui.min.css",
-			"js/qiniu/qiniu.js",
-			"js/libs/RSA/RSA.js",
-			"js/utils/RSAEncrypt.js"
-		]
-	},
-	"html/qiuzhi/qiuzhi-questionSearch.html": {
-		"resources": [
-			"js/mui.pullToRefresh.js",
-			"js/publicQiuzhiProtocol.js",
-			"js/mui.pullToRefresh.material.js",
 			"js/storageKeyName.js",
 			"fonts/mui.ttf",
 			"js/utils/events.js",
 			"js/libs/RSA/Barrett.js",
 			"js/libs/crypto-js/require.js",
+			"css/mine/manager_member.css",
 			"css/utils/common.css",
-			"js/libs/myStorage/myStorage.js",
-			"css/iconfont/iconfont.css",
-			"js/publicProtocol.js",
-			"js/libs/jquery.js",
-			"css/qiuzhi/qiuzhi-questionSearch.css",
-			"js/mui.min.js",
-			"js/libs/RSA/BigInt.js",
-			"css/mui.min.css",
-			"js/utils/signHmacSHA1.js",
-			"js/libs/RSA/RSA.js",
-			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
-		]
-	},
-	"html/cloud/keeprecord_history_0.html": {
-		"resources": [
-			"js/mui.pullToRefresh.js",
-			"js/mui.zoom.js",
-			"css/utils/pullToRefresh.css",
-			"js/mui.pullToRefresh.material.js",
-			"js/mui.previewimage.js",
-			"css/utils/preview.css"
-		]
-	},
-	"html/cloud/app_notes_main.html": {
-		"resources": [
-			"js/mui.pullToRefresh.js",
-			"css/utils/pullToRefresh.css",
-			"image/cloud/notes_bg2.jpg",
-			"js/storageKeyName.js",
-			"js/mui.pullToRefresh.material.js",
-			"fonts/mui.ttf",
-			"js/utils/events.js",
-			"js/libs/RSA/Barrett.js",
-			"js/libs/crypto-js/require.js",
-			"css/utils/common.css",
-			"css/utils/preview.css",
 			"js/libs/myStorage/myStorage.js",
 			"js/libs/crypto-js/crypto-js.js",
+			"css/iconfont/iconfont.css",
 			"js/publicProtocol.js",
 			"js/libs/jquery.js",
-			"js/mui.zoom.js",
 			"js/mui.min.js",
 			"fonts/fangzheng.ttf",
 			"js/libs/RSA/BigInt.js",
 			"css/mui.min.css",
-			"js/mui.previewimage.js",
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
-			"html/cloud/app_notes_create.html"
+			"html/quan/group-pInfo.html"
 		]
 	},
-	"html/cloud/app_notes_create.html": {
+	"html/mine/qun_data_details.html": {
 		"resources": [
-			"css/iconfont/iconfont.css",
-			"js/utils/cryption.js",
-			"js/utils/CloudFileUtil.js",
-			"js/qiniu/qiniu.js",
-			"fonts/iconfont.ttf",
-			"js/utils/MultiMedia.js",
-			"css/utils/MultiMedia.css",
-			"js/cloud/AndroidFileSystem.js"
-		]
-	},
-	"html/qiuzhi/atExpert.html": {
-		"resources": [
-			"css/iconfont/iconfont.css",
-			"css/mui.min.css",
-			"css/utils/common.css",
 			"js/storageKeyName.js",
+			"fonts/mui.ttf",
 			"js/utils/events.js",
 			"js/libs/RSA/Barrett.js",
 			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/quan/studentdynamic_main.html": {
+		"resources": [
+			"css/utils/pullToRefresh.css",
+			"js/utils/cryption.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/cloud/AndroidFileSystem.js",
+			"js/utils/UploadHeadImage.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/mui.zoom.js",
+			"js/mui.min.js",
+			"js/mui.previewimage.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/mui.pullToRefresh.js",
+			"js/mui.pullToRefresh.material.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"css/utils/preview.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"fonts/fangzheng.ttf",
+			"js/utils/CloudFileUtil.js",
+			"js/libs/RSA/BigInt.js",
+			"js/qiniu/qiniu.js",
+			"css/mui.min.css",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/utils/customizeCity.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
 			"js/libs/myStorage/myStorage.js",
 			"js/publicProtocol.js",
 			"js/libs/jquery.js",
 			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
 			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",

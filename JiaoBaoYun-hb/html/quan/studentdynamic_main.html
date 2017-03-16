@@ -17,11 +17,6 @@
 		<link rel="stylesheet" href="../../css/utils/preview.css" />
 		<link rel="stylesheet" href="../../css/utils/pullToRefresh.css" />
 		<style>
-			.mui-title {
-				/*标题居左*/
-				text-align: left;
-			}
-
 			body,
 			.mui-content {
 				background-color: white;
@@ -39,11 +34,11 @@
 			}
 
 			.mui-col-sm-9 {
-				background: #EEEEEE;
+				background: #F2F3F5;
 			}
 
 			.mui-col-sm-3 {
-				/*text-align: center;*/
+				padding-left: 10px;
 			}
 
 			.dynamic-date :first-child {
@@ -71,9 +66,8 @@
 				display: -webkit-box;
 				-webkit-line-clamp: initial;
 				-webkit-box-orient: vertical;
-				font-size: 1.5rem;
-				line-height: 24px;
-				margin-bottom: 3px;
+				font-size: 1.4rem;
+				line-height: 20px;
 			}
 
 			.dynamic-date-parent {
@@ -98,12 +92,14 @@
 			}
 
 			.mui-row {
-				margin: 5px 10px;
+				margin-top: 5px;
+				margin-right: 10px;
 				word-break: break-all;
 			}
 
 			.record-imge {
 				width: 100%;
+				margin-top: 3px;
 			}
 
 			.record-picture {
@@ -125,12 +121,13 @@
 
 			.show-all {
 				display: none;
-				color: #CCCCCC;
+				color: #B7B7B7;
 				font-size: 1.4rem;
 			}
 
 			.dynamic-name {
 				float: right;
+				color: #808080;
 			}
 
 			.mui-pull-bottom-wrapper {
@@ -207,29 +204,22 @@
 						var element = document.getElementById('pullrefresh');
 						var page = JSON.parse(element.getAttribute('data-page'));
 						console.log('down ' + JSON.stringify(page));
+						getNotes(1);
 						setTimeout(function() {
-							getNotes(1);
 							self.endPullDownToRefresh(); //结束下拉刷新
-						}, 1500);
+						}, 1000);
 					}
 				},
 				up: {
-					contentinit: '', //默认没有更多显示空白
 					callback: function() {
 						var self = this;
 						var element = document.getElementById('pullrefresh');
 						var page = JSON.parse(element.getAttribute('data-page'));
 						console.log('up ' + JSON.stringify(page));
 						if(page) {
-							setTimeout(function() {
-								getNotes(page.pageIndex + 1);
-								self.endPullUpToRefresh();
-							}, 1500);
+							getNotes(page.pageIndex + 1);
 						} else {
-							setTimeout(function() {
-								mui.toast('数据异常，请下拉刷新后重新尝试');
-								self.endPullUpToRefresh();
-							}, 1500);
+							mui.toast('数据异常，请下拉刷新后重新尝试');
 						}
 					}
 				}
@@ -296,11 +286,11 @@
 			//返回model：model_homeSchoolList,model_userNoteInfo
 			console.log('获取列表发送的数据:' + JSON.stringify(comData));
 			// 等待的对话框
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			var wd = events.showWaiting();
 			postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
 				console.log('4.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				wd.close();
 				if(data.RspCode == 0) {
-
 					var tempRspData = data.RspData.Data;
 					//记录页数
 					var page = {
@@ -311,7 +301,7 @@
 						page.totalPage = data.RspData.TotalPage;
 					}
 					document.getElementById('pullrefresh').setAttribute('data-page', JSON.stringify(page))
-					if(page.pageIndex == 1) { //获取的第一页的内容
+					if(page.pageIndex == 1) { //下拉刷新或者获取的第一页的内容
 						//清空对应的界面
 						document.getElementById('ul_table').innerHTML = '';
 						year = ''; //清空年份
@@ -321,12 +311,14 @@
 							classId: mainData.classId, //班级ID----
 							studentId: mainData.studentId //学生ID----stuid
 						};
-						var wd2 = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						var wd2 = events.showWaiting();
 						postDataPro_setNoteReadByUser(comData2, wd2, function(data2) {
 							console.log('10.90909090success:RspCode:' + data2.RspCode + ',RspData:' + JSON.stringify(data2.RspData) + ',RspTxt:' + data2.RspTxt);
 							if(data.RspCode == 0) {}
 						});
 						wd2.close();
+					} else { //上拉加载更多
+						pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
 					}
 
 					for(var i = 0; i < tempRspData.length; i++) {
@@ -337,8 +329,11 @@
 					mui.toast('获取点到记事列表:' + data.RspTxt);
 					console.log('获取用户针对某学生的点到记事列表:' + data.RspTxt);
 				}
+
+				console.log('page ' + JSON.stringify(page));
 				if(page.pageIndex >= page.totalPage) {
 					//没有下一页
+					console.log('没有下一页');
 					pullRefresh.endPullUpToRefresh(true);
 				} else {
 					if(page.pageIndex == 1) {
@@ -346,9 +341,6 @@
 						pullRefresh.refresh(true);
 					}
 				}
-				setTimeout(function() {
-					wd.close();
-				}, 500);
 			});
 		}
 
@@ -428,8 +420,7 @@
 			element.className = 'mui-row';
 			element.innerHTML = '<div class="mui-col-sm-3 mui-col-xs-3">\
 										<div class="dynamic-date">\
-											<div>' + timeItem_day + '</div>\
-											<div>' + timeItem_month + '</div>\
+											<div style="font-size:2.5rem;">' + timeItem_day + '</div><div style="margin-left:2px;font-size:1.4rem;">' + timeItem_month + '</div>\
 										</div>\
 									</div>\
 									<div class="mui-col-sm-9 mui-col-xs-9">\

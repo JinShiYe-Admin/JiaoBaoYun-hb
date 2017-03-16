@@ -17,50 +17,50 @@
 			.mui-content {
 				/*background: transparent;*/
 			}
-			
+
 			.mui-table-view {
 				background: transparent;
 			}
-			
+
 			.mui-table-view-cell {
 				background: white;
 				padding: 5px 15px;
 				margin-bottom: 15px;
 			}
-			
+
 			.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-			
+
 			.mui-input-group:before,
 			.mui-input-group .mui-input-row:after,
 			.mui-input-group:after {
 				height: 0px;
 			}
-			
+
 			.mui-checkbox input[type=checkbox]:checked:before,
 			.mui-radio input[type=radio]:checked:before {
 				color: #86BE49;
 			}
-			
+
 			.mui-col-sm-4,
 			.mui-col-xs-8 {
 				height: 36px;
 			}
-			
+
 			.mui-checkbox.mui-left input[type=checkbox],
 			.mui-radio.mui-left input[type=radio] {
 				left: 18%;
 			}
-			
+
 			.mui-checkbox.mui-left label,
 			.mui-radio.mui-left label {
 				padding-left: 50%;
 				padding-right: 0px;
 			}
-			
+
 			#textarea_record,
 			#input_call {
 				margin-bottom: 0px;
@@ -72,18 +72,18 @@
 				padding: 10px 5px;
 				/*background: #D9D9D9;*/
 			}
-			
+
 			.mui-checkbox,
 			.mui-checkbox:last-child {
 				width: 25%;
 				background: white;
 				position: absolute;
 			}
-			
+
 			.mui-checkbox input[type=checkbox]:before {
 				font-size: 25px;
 			}
-			
+
 			.mui-media-body {
 				margin-top: 10px;
 				margin-bottom: 7px;
@@ -91,7 +91,7 @@
 				word-break: break-all;
 				font-size: 15px;
 			}
-			
+
 			.time {
 				/*height: 51px;*/
 				text-align: center;
@@ -101,11 +101,11 @@
 				padding-top: 4px;
 				padding-bottom: 4px;
 			}
-			
+
 			.record-imge {
 				width: 100%;
 			}
-			
+
 			.record-picture {
 				overflow: hidden;
 				position: relative;
@@ -181,11 +181,11 @@
 			 * 下拉刷新具体业务实现
 			 */
 			function pulldownRefresh() {
+				getNotes(1, 10);
 				setTimeout(function() {
-					getNotes(1, 10);
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 					mui('#pullrefresh').pullRefresh().refresh(true);
-				}, 1500);
+				}, 1000);
 			}
 
 			/**
@@ -200,16 +200,16 @@
 						mui.toast('没有更多数据了');
 						mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
 					} else {
+						getNotes(page.pageIndex + 1, 10);
 						setTimeout(function() {
-							getNotes(page.pageIndex + 1, 10);
 							mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
-						}, 1500);
+						}, 1000);
 					}
 				} else {
+					mui.toast('数据异常，请下拉刷新后重新尝试');
 					setTimeout(function() {
-						mui.toast('数据异常，请下拉刷新后重新尝试');
 						mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
-					}, 1500);
+					}, 1000);
 				}
 			}
 
@@ -328,8 +328,7 @@
 						};
 						//返回值model：model_userDataInfo
 						// 等待的对话框
-						var wd = plus.nativeUI.showWaiting('123');
-
+						var wd = events.showWaiting();
 						postDataPro_PostStuU(comData, wd, function(data) {
 							wd.close();
 							console.log('30_PostStuU通过资料ID获取关联的人员.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
@@ -343,6 +342,23 @@
 								});
 								var strParent = arrayToStr(parentIds);
 								var strUser = arrayToStr(userIds);
+
+								if(multiMedia.data.PictureArray.length != 0) {
+									var wd_2 = events.showWaiting('上传中...');
+									commitNum++;
+									uploadFile(wd_2, strParent, strUser); //上传文件
+									waiting.push(wd_2);
+								} else if(document.getElementById("textarea_record").value.replace(/(^\s*)|(\s*$)/g, "") != "") {
+									var wd_1 = events.showWaiting();
+									commitNum++;
+									addNotes(2, strParent, strUser, {
+										encType: '3', //附件类型,1图片2音视频3仅文字
+										encAddr: '', //附件地址
+										encImg: '', //附件缩略图地址
+									}, wd_1); //增加记事
+									waiting.push(wd_1);
+								}
+
 								if(call_type != '') {
 									var wd_0 = events.showWaiting();
 									commitNum++;
@@ -354,37 +370,10 @@
 									waiting.push(wd_0);
 								}
 
-								if(document.getElementById("textarea_record").value.replace(/(^\s*)|(\s*$)/g, "") != "" && multiMedia.data.PictureArray.length == 0) {
-									var wd_1 = events.showWaiting();
-									wd_1.onclose = function() {
-										console.log('upload waiting close wd_1');
-									}
-									if(wd_1) {
-										console.log('wd_1');
-									} else {
-										console.log('else wd_1');
-									}
-									commitNum++;
-									addNotes(2, strParent, strUser, {
-										encType: '3', //附件类型,1图片2音视频3仅文字
-										encAddr: '', //附件地址
-										encImg: '', //附件缩略图地址
-									}, wd_1); //增加记事
-									waiting.push(wd_1);
-								} else if(multiMedia.data.PictureArray.length != 0) {
-									var wd_2 = events.showWaiting('上传中...');
-									wd_2.onclose = function() {
-										console.log('upload waiting close wd_2')
-									}
-									commitNum++;
-									uploadFile(wd_2, strParent, strUser); //上传文件
-									waiting.push(wd_2);
-								}
-
 							} else {
 								mui.toast(data.RspTxt);
 							}
-							
+
 						});
 					}
 				});
@@ -479,19 +468,23 @@
 							mui.toast('新增点到失败:' + data.RspTxt);
 						} else {
 							mui.toast('新增记事失败:' + data.RspTxt);
-							BatchDelete(pathList);
+							if(pathList.length != 0) {
+								BatchDelete(pathList);
+							}
 						}
 						console.log('新增点到记事信息:' + data.RspTxt);
 					}
 					if(commitNum == 0) {
-						TotalPage = 1; //总页数
-						TotalCnt = 0; //总记录数
-						getNotes(1, 10);
-						changeCommit();
-						for(var i = 0; i < waiting.length; i++) {
-							waiting[i].close();
-						}
-						waiting = [];
+						setTimeout(function() {
+							TotalPage = 1; //总页数
+							TotalCnt = 0; //总记录数
+							getNotes(1, 10);
+							changeCommit();
+							for(var i = 0; i < waiting.length; i++) {
+								waiting[i].close();
+							}
+							waiting = [];
+						}, 1000);
 					}
 				});
 			}
@@ -573,7 +566,6 @@
 				}
 				postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
 					console.log('4.取记事列表:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-
 					//记录页数
 					var page = {
 						pageIndex: pageIndex, //当前页数
@@ -686,7 +678,9 @@
 									if((uploadNum != 0 || uploadErrorNum != 0) && (uploadNum - uploadErrorNum) == 0) {
 										mui.toast('上传失败');
 										console.log('上传失败');
-										BatchDelete(pathList);
+										if(pathList.length != 0) {
+											BatchDelete(pathList);
+										}
 										waiting.close();
 									}
 								}, function(upload, status) {

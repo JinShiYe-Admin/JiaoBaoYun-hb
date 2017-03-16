@@ -51,17 +51,16 @@
 						break;
 				}
 
-				document.getElementById('input').addEventListener('input', function() {
-					if(this.value.length > maxLength) {
-						this.value = this.value.slice(0, maxLength)
-					}
-				});
-
+				document.getElementById('input').maxLength = maxLength;
+				document.getElementById("input").placeholder = document.getElementById("title").innerText + ',最多' + maxLength + '字';
 				document.getElementById("input").value = subData.value;
+
 				document.getElementById('save').addEventListener('tap', function() {
 					var vvl = document.getElementById("input").value;
 					if(subData.type == 'gname' && vvl.replace(/(^\s*)|(\s*$)/g, "") == "") {
 						mui.toast('群名称不能为空');
+					} else if(vvl.length > maxLength) {
+						mui.toast(document.getElementById("title").innerText + '最多' + maxLength + '字');
 					} else if(vvl == subData.value) {
 						mui.back();
 					} else {
