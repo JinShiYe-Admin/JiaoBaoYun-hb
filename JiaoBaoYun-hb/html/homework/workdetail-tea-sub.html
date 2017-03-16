@@ -26,6 +26,23 @@
 				/*去掉横线
 		}*/
 			
+			.ellipsis-show {
+				/*内容*/
+				display: -webkit-box;
+				overflow: hidden;
+				white-space: normal !important;
+				text-overflow: ellipsis;
+				word-wrap: break-word;
+				-webkit-line-clamp: inherit;
+				-webkit-box-orient: vertical;
+			}
+			
+			#showAll {
+				display: none;
+				color: #D7D7D7;
+				margin-top: 10px;
+			}
+			
 			.homework-img {
 				padding: 0 3px;
 			}
@@ -63,7 +80,10 @@
 						</div>
 
 						<div id='content' class="mui-media-body">
-							<p id="homeWorkContent"></p>
+							<div id="homeWorkContent" class="ellipsis-show">
+							</div>
+							<div id="showAll">显示全部</div>
+							<!--<p id="homeWorkContent"></p>-->
 							<div id="brief-imgs" class="brief-imgs">
 							</div>
 						</div>
@@ -185,6 +205,18 @@
 					//3.	获取作业对应学生列表
 					requestHomeworkStuList();
 				})
+				var showAll = document.getElementById("showAll");
+				showAll.addEventListener('tap', function() {
+					var str = this.innerText;
+					console.log('showAll' + str);
+					if(str == '显示全部') {
+						showAll.innerText = '收起';
+						document.getElementById("homeWorkContent").style.webkitLineClamp = 'inherit';
+					} else if(str == '收起') {
+						showAll.innerText = '显示全部';
+						document.getElementById("homeWorkContent").style.webkitLineClamp = '3';
+					}
+				});
 
 			});
 
@@ -226,6 +258,21 @@
 						}
 						//修改界面
 						refreshhomeworkDetail();
+						var height_0;
+						var height_1;
+						var contentElement = document.getElementById("homeWorkContent");
+						var showAll = document.getElementById("showAll");
+						contentElement.style.webkitLineClamp = '9';
+						height_0 = contentElement.offsetHeight;
+						contentElement.style.webkitLineClamp = '8';
+						height_1 = contentElement.offsetHeight;
+						console.log(height_0 + '|' + height_1);
+						if(height_0 > height_1) {
+							//内容高度大于八行
+							showAll.style.display = 'inline';
+						} else {
+							showAll.style.display = 'none';
+						}
 
 					} else {
 						mui.toast(data.RspTxt);
