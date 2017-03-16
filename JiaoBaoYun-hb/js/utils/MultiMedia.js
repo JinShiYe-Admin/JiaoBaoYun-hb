@@ -1,4 +1,4 @@
-var MultiMedia = (function($,mod) {
+var MultiMedia = (function($, mod) {
 
 	var html_picture_header = '<span id="MultiMedia_Picture_Header" class="mui-icon iconfont icon-xiangji"></span>'; //相机图标
 	var html_audio_header = '<span id="MultiMedia_Audio_Header" class="mui-icon iconfont icon-yuyin"></span>'; //语音图标
@@ -22,6 +22,7 @@ var MultiMedia = (function($,mod) {
 		//配置参数
 		this.options = $.extend(true, {
 			Id: '_MSL_MultiMedia', //整个控件的ID
+			Key: 'key', //用户的utid
 			MultiMediaId: '', //存放多媒体对象控件的ID
 			Picture: false, //是否显示图片图标
 			Audio: false, //是否显示音频图标
@@ -89,7 +90,6 @@ var MultiMedia = (function($,mod) {
 			this.data.PictureArray = []; //已选取的图片路径
 			this.data.PictureWith = document.getElementById(this.options.Id).offsetWidth * 0.2;
 			this.data.PictureMarginLeft = document.getElementById(this.options.Id).offsetWidth * 0.04;
-
 		}
 		if(this.options.Audio) {
 			this.data.Audios = options.TotalAudio;
@@ -183,11 +183,23 @@ var MultiMedia = (function($,mod) {
 	 */
 	proto.pictureTake = function() {
 		var self = this;
-		//console.log('pictureTake');
-		var self = this;
+		var options = this.options;
 		self.cameraTake(function(path) {
 			//console.log('pictureTake :' + path);
-			self.addImages([path]);
+			var wd = events.showWaiting('处理中...');
+			var myDate = new Date();
+			var fileName = options.Key + myDate.getTime() + (Math.floor(Math.random() * 10)) + '.png';
+			var dst = '_documents/' + imageId + '_' + fileName;
+			imageId++;
+			compress.compressImageTo_1MB({
+				path: path,
+				dst: dst
+			}, function(event) {
+				self.addImages([event.target]);
+				wd.close();
+			}, function(error) {
+				wd.close();
+			});
 		}, function() {
 			var code = error.code; // 错误编码
 			var message = error.message; // 错误描述信息
@@ -203,9 +215,47 @@ var MultiMedia = (function($,mod) {
 	proto.picturesPick = function(NumPick) {
 		//console.log('picturesPick');
 		var self = this;
+		var options = this.options;
 		self.galleryPick('image', true, NumPick, function(event) {
+			var wd = events.showWaiting('处理中...');
 			var files = event.files; // 保存多选的图片或视频文件路径
-			self.addImages(files);
+			var myDate = new Date();
+			var num = 0;
+			var tempArrary = [];
+			for(var i = 0; i < files.length; i++) {
+				var fileName = imageId + '_' + i + '_' + options.Key + myDate.getTime() + (Math.floor(Math.random() * 10)) + '.png';
+				imageId++;
+				var dst = '_documents/' + fileName;
+				tempArrary.push({
+					fpath: files[i], //文件路径
+					dst: dst //压缩后的路径
+				});
+			}
+
+			for(var i = 0; i < tempArrary.length; i++) {
+				compress.compressImageTo_1MB({
+					path: tempArrary[i].fpath,
+					dst: tempArrary[i].dst
+				}, function(event) {
+					num++;
+					var target = event.target;
+					var nameArray = target.split('/');
+					var name = nameArray[nameArray.length - 1];
+					var id = name.split('_')[1];
+					tempArrary[id].target = target;
+					if(num == files.length) {
+						var tempFiles = [];
+						for(var i = 0; i < tempArrary.length; i++) {
+							tempFiles.push(tempArrary[i].target);
+						}
+						self.addImages(tempFiles);
+						wd.close();
+					}
+				}, function(error) {
+					wd.close();
+				});
+			}
+
 		}, function(error) {
 			var code = error.code; // 错误编码
 			var message = error.message; // 错误描述信息
@@ -349,13 +399,15 @@ var MultiMedia = (function($,mod) {
 		var group = 'MultiMedia_Picture';
 		for(var i = 0; i < paths.length; i++) {
 			//console.log('addImages ' + paths[i]);
+			var pathArrary = paths[i].split('/');
+			var name = pathArrary[pathArrary.length - 1];
+			var id = name.split('_')[0];
 			var images = {
-				id: imageId, //图片Id
+				id: id, //图片Id
 				path: paths[i], //图片路径
 				domain: '', //图片地址
 				thumb: '' //图片缩略图地址
 			};
-			imageId++;
 			self.data.PicturesNum--;
 			self.data.PictureArray.push(images);
 			var element = document.createElement('div');
@@ -365,7 +417,7 @@ var MultiMedia = (function($,mod) {
 			//显示图片的区域
 			var html_1 = '<div class="multimedia-picture" style="width: ' + widthStr + '; height: ' + widthStr + '; margin-left: ' + marginLeftStr + '; margin-top: ' + marginLeftStr + ';">'
 			//图片
-			var html_2 = '<img src="' + paths[i] + '" data-preview-src="' + paths[i] + '" data-preview-group="' + group + '" style="width:100%;visibility: hidden;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + widthStr + '\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-'+width+')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-'+width+')/2+\'px\';}this.style.visibility=\'visible\';" />';
+			var html_2 = '<img src="' + paths[i] + '" data-preview-src="' + paths[i] + '" data-preview-group="' + group + '" style="width:100%;visibility: hidden;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + widthStr + '\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-' + width + ')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-' + width + ')/2+\'px\';}this.style.visibility=\'visible\';" />';
 			var html_3 = '</div>'
 			element.innerHTML = html_0 + html_1 + html_2 + html_3;
 			footer.appendChild(element);
@@ -439,4 +491,4 @@ var MultiMedia = (function($,mod) {
 
 	return mod;
 
-})(mui,window.MultiMedia || {});
+})(mui, window.MultiMedia || {});

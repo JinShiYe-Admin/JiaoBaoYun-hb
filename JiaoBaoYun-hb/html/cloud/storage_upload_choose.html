@@ -267,7 +267,10 @@
 						console.log('从相册选取图片成功,图片的路径为：' + file);
 						var myDate = new Date();
 						var dst = '_documents/' + myDate.getTime() + '.png';
-						compress.compressImageTo_1MB(file, dst, function(event) {
+						compress.compressImageTo_1MB({
+							path: file,
+							dst: dst
+						}, function(event) {
 							getFile(event.target);
 							wd.close();
 						}, function(error) {

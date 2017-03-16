@@ -128,7 +128,7 @@ var compress = (function(mod) {
 				var message = error.message; // 错误描述信息
 				mui.toast('图片压缩失败 ' + '错误编码 ' + code + '描述信息 ' + message);
 				console.log('### ERROR ### compressImageTo_1MB 失败 ' + JSON.stringify(error));
-				errorCallBack();
+				errorCallBack(error);
 			}
 		);
 	}
