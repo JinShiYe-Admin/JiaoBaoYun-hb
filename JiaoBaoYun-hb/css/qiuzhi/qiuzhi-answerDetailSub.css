@@ -137,17 +137,13 @@
 }
 
 .btn-attention {
-	border: none;
-	margin-top: 5px;
-	width: 70px;
+	border: 0;padding: 0;
 	color: white;
 	background-color: #1db8F1;
 }
 
 .btn-attentioned {
-	border: none;
-	margin-top: 5px;
-	min-width: 70px;
+	border: 0;padding: 0;
 	color: white;
 	background-color: #b7b7b7;
 }
