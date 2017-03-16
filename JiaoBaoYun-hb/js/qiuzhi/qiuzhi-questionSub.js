@@ -284,7 +284,7 @@ function requestAskDetail() {
 			askModel = data.RspData;
 			answerPageCount = data.RspData.TotalPage; //回答总页数
 			answerIndex++;
-
+			document.getElementById("tempTest").innerHTML=askModel.AskNote;
 			//回调中的临时数据
 			var tempRspData = data.RspData.Data;
 			//获取当前回调的个人信息，主要是头像、昵称
