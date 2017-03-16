@@ -975,7 +975,9 @@
 			"css/utils/preview.css",
 			"css/icons-extra.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"js/mui.lazyload.img.js"
+			"js/mui.lazyload.img.js",
+			"image/dynamic/icon_praise_small.png",
+			"fonts/fangzheng.ttf"
 		]
 	},
 	"html/qiuzhi/qiuzhi-question.html": {
@@ -1488,7 +1490,10 @@
 			"css/mui.min.css",
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"image/utils/default_personalimage.png",
+			"image/dynamic/icon_praise_small.png",
+			"fonts/iconfont.ttf"
 		]
 	},
 	"html/cloud/app_notes_main.html": {

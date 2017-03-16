@@ -151,6 +151,10 @@ var addReplyView = function() {
 }
 var setListener=function(){
 	mui(".mui-table-view").on("tap",".refer-content",function(){
+		this.info.PublisherId = this.info.UserId 
+		this.info.PublisherName = this.info.UserName 
+		this.info.TabId = this.info.SpaceId
+		console.log(JSON.stringify(this.info));
 		events.openNewWindowWithData('../quan/space-detail.html', jQuery.extend(this.info,{focusFlag:0}))
 	})
 }
