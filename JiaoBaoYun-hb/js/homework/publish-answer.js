@@ -6,7 +6,7 @@ var answerResultId; //学生答案id
 var teaInfo;
 mui.init();
 mui.plusReady(function() {
-	events.preload('homework-commented.html', 200);
+//	events.preload('homework-commented.html', 200);
 	mui.previewImage();
 	/**
 	 * 作业主界面传值的监听
@@ -91,7 +91,8 @@ mui.plusReady(function() {
 			workType: 0
 		})
 		console.log('传递的answerResultId：' + answerResultId);
-		events.fireToPageWithData('homework-commented.html', 'workDetail', teaInfo);
+		events.openNewWindowWithData('homework-commented.html',teaInfo)
+//		events.fireToPageWithData('homework-commented.html', 'workDetail', teaInfo);
 	})
 //	//删除图标的点击事件
 //	mui('#pictures').on('tap', '.icon-guanbi', function() {

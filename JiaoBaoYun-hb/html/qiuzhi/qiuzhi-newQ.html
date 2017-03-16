@@ -37,7 +37,7 @@
 		</div>
 		<div class="mui-content">
 			<form name="form1" action="" method="post">
-				<textarea id="askTitle" name="topic" placeholder="标题（请以？号结尾,最多200字）" style="height: 40px;margin-top: 5px;"></textarea>
+				<textarea id="askTitle" name="topic" placeholder="标题（请以？号结尾,最多30字）" style="height: 40px;margin-top: 5px;"></textarea>
 			</form>
 			<p style="margin-left: 10px;font-size: 14px;margin-top: -12px;">请添加问题的补充说明</p>
 			<div class="input-content">
@@ -218,8 +218,8 @@
 				if(!tempText || tempText == '') {
 					mui.toast('请输入问题');
 					return;
-				} else if(tempText.length > 200) {
-					mui.toast('标题不能超过200字');
+				} else if(tempText.length > 30) {
+					mui.toast('标题不能超过30字');
 					return;
 				} else {
 					tempText = replaceAllBL(tempText)

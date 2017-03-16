@@ -18,7 +18,7 @@ events.initRefresh('list-container', function() {//刷新事件
 //界面逻辑
 mui.plusReady(function() {
 	//预加载
-	events.preload('homework-commented.html', 300);
+//	events.preload('homework-commented.html', 300);
 	//获取作业记录
 	getHomeworkRecord();
 	window.addEventListener('changeInfo', function() {
@@ -36,11 +36,13 @@ mui.plusReady(function() {
 		})
 		//学生作业已提交点击事件
 	mui('.mui-table-view').on('tap', '.isSubmitted', function() {
-			events.fireToPageWithData('homework-commented.html', 'workDetail', this.homeworkInfo);
+		events.openNewWindowWithData('homework-commented.html',this.homeworkInfo)
+//			events.fireToPageWithData('homework-commented.html', 'workDetail', this.homeworkInfo);
 		})
 		//学生作业在已评论点击事件
 	mui('.mui-table-view').on('tap', '.isCommentedBG', function() {
-		events.fireToPageWithData('homework-commented.html', 'workDetail', this.homeworkInfo);
+		events.openNewWindowWithData('homework-commented.html',this.homeworkInfo)
+//		events.fireToPageWithData('homework-commented.html', 'workDetail', this.homeworkInfo);
 	})
 
 })
