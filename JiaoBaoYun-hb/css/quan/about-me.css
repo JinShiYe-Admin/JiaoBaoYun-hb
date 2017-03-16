@@ -9,15 +9,7 @@
 .title-words {
 	width: 80%;
 }
-/**
- * 背景颜色
- */
-.refer-content {
-	width: 100%;
-	/*height: 4rem;*/
-	background-color: #f8f8f8;
-	padding: .5rem;
-}
+
 
 .comment-content {
 	font-size: 1.6rem;
@@ -87,10 +79,33 @@ p span {
 .title-words{
 	color: #636563;
 }
+
+
+/**
+ * 背景颜色
+ */
+.refer-content {
+	width: 100%;
+	display: flex;
+	display: -webkit-flex;
+	/*height: 4rem;*/
+	background-color: #f8f8f8;
+	align-items: center;
+}
+.refer-img{
+	width: 60px;
+	height: 60px;
+}
 .break-words{
 	word-wrap: break-word;
 }
+.refer-words{
+	padding-left: 5px;
+	width: 50%;
+	flex-grow: 1;
+}
 .extra-words{
+/*	margin: 0 auto;*/
 	color: #323232;
 }
 .extra-words>span{

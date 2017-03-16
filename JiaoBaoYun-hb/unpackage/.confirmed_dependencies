@@ -62,7 +62,23 @@
 			"image/utils/default_personalimage.png",
 			"image/cloud/cloud_0_wenjianjia_1.png",
 			"image/quan/add.png",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
@@ -72,7 +88,8 @@
 			"html/quan/class_space.html",
 			"html/cloud/app_keeprecord.html",
 			"html/quan/studentdynamic_main.html",
-			"html/cloud/app_notes_main.html"
+			"html/cloud/app_notes_main.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -160,7 +177,8 @@
 			"js/libs/RSA/BigInt.js",
 			"css/mui.min.css",
 			"js/libs/RSA/RSA.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/storageKeyName.js"
 		],
 		"refer": [
 			"html/utils/customizeCity.html"
@@ -186,7 +204,9 @@
 			"js/main/slide_navigation.js",
 			"css/home/index.css",
 			"js/index.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"fonts/mui.ttf",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",
@@ -595,7 +615,8 @@
 			"image/utils/default_personalimage.png"
 		],
 		"refer": [
-			"html/quan/classSpace-persons.html"
+			"html/quan/classSpace-persons.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/homework/classes-select.html": {
@@ -711,7 +732,8 @@
 			"css/mui.min.css"
 		],
 		"refer": [
-			"html/quan/space-detail.html"
+			"html/quan/space-detail.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/cloud/storage_upload_choose.html": {
@@ -1324,7 +1346,9 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"css/mine/manager_data.css",
+			"fonts/iconfont.ttf"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",

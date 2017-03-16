@@ -77,7 +77,7 @@ var class_space = (function(mod) {
 	var createInnerHtml = function(item, index) {
 		console.log("加载的数据：" + JSON.stringify(item));
 		var inner = '<div><div class="mui-pull-left head-img" >' +
-			'<img class="head-portrait" headId="' + item.utid + '" src="' + getUImg(item.uimg) + '"/>' +
+			'<img class="head-portrait" headId="' + item.utid + '" src="' + updateHeadImg(item.uimg,2) + '"/>' +
 			'<p class="single-line">' + events.shortForString(getName(item), 6) + '</p>' +
 			'</div>' +
 			'<div class="chat_content_left">' +
@@ -229,12 +229,12 @@ var class_space = (function(mod) {
 			container.appendChild(li);
 		}
 	}
-	var getUImg = function(uimg) {
-		if(!uimg || uimg == null) {
-			uimg = storageKeyName.DEFAULTPERSONALHEADIMAGE;
-		}
-		return uimg;
-	}
+//	var getUImg = function(uimg) {
+//		if(!uimg || uimg == null) {
+//			uimg = storageKeyName.DEFAULTPERSONALHEADIMAGE;
+//		}
+//		return uimg;
+//	}
 	/**
 	 * 
 	 * @param {Object} cell
