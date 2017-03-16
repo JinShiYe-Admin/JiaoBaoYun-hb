@@ -171,32 +171,14 @@ var UploadHeadImage = (function($, mod) {
 	//压缩图片并且在新页面显示压缩后的图片
 	function compressImage(wd, filepath) {
 		//console.log('压缩图片,图片的路径为：' + filepath);
-		plus.zip.compressImage({
-				src: filepath, //压缩转换原始图片的路径
-				dst: '_documents/' + fileName, //压缩转换目标图片的路径
-				overwrite: true, //覆盖生成新文件,仅在dst制定的路径文件存在时有效
-				format: '.png'
-			},
-			function(event) {
-				//图片压缩成功
-				var target = event.target; // 压缩转换后的图片url路径，以"file://"开头
-				var size = event.size; // 压缩转换后图片的大小，单位为字节（Byte）
-				var width = event.width; // 压缩转换后图片的实际宽度，单位为px
-				var height = event.height; // 压缩转换后图片的实际高度，单位为px
-				console.log('压缩图片成功---target:' + target + '|size:' + AndroidFileSystem.readSize(size) + '|width:' + width + '|height:' + height);
-				//openImage(target); //打开新页面查看图片
-				uploadHeadImge(wd, target);
-			},
-			function(error) {
-				//图片压缩失败
-				var code = error.code; // 错误编码
-				var message = error.message; // 错误描述信息
-				mui.toast('图片压缩失败！' + '错误编码：' + code + '描述信息：' + message);
-				console.log('图片压缩失败！' + JSON.stringify(error));
-				//关闭等待窗口
-				wd.close();
-			}
-		);
+		compress.compressImageTo_1MB({
+			path: filepath,
+			dst: '_documents/' + fileName
+		}, function(event) {
+			uploadHeadImge(wd, event.target);
+		}, function(error) {
+			wd.close();
+		});
 	}
 
 	/**

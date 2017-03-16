@@ -37,9 +37,9 @@ var dynamiclistitem = (function($, mod) {
 			}
 		}else{
 			if(InfoList[4]==0){
-				closeempty ='<button id="btn-focus'+data[4] + idFlag + id+'" type="button" class="mui-btn mui-pull-right btn-attention" style="width: 70px;">关注</button>'
+				closeempty ='<button id="btn-focus'+data[4] + idFlag + id+'" type="button" class="mui-btn mui-pull-right btn-attention" style="width: 55px;">关注</button>'
 			}else{
-				closeempty ='<button id="btn-focus'+data[4] + idFlag + id+'" type="button" class="mui-btn mui-pull-right btn-attentioned style="width: 70px;">已关注</button>'
+				closeempty ='<button id="btn-focus'+data[4] + idFlag + id+'" type="button" class="mui-btn mui-pull-right btn-attentioned style="width: 55px;">已关注</button>'
 				
 			}
 			

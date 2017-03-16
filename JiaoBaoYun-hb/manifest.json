@@ -997,7 +997,8 @@
 					"image/homework/submitted.png",
 					"css/homework/subjects-icon.css",
 					"image/homework/no-comment.png",
-					"image/homework/commented.png"
+					"image/homework/commented.png",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/homework/workdetail-tea.html",

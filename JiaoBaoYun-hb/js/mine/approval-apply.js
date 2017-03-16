@@ -294,12 +294,18 @@ var getInnerHTML = function(item) {
 		if(item.invname != item.beinvname) {
 			inner += events.shortForString(item.invaname, 10) + '邀请你加入群：' + events.shortForString(item.gname, 10);
 		} else {
-			inner += '你已申请加入群：' + events.shortForString(item.gname, 10);
+			inner += applyRecord(item);
 		}
 		inner += '</p></div><a  class = "mui-btn mui-btn-outlined">' + setApplyState(item.stat) + '</a></a>'
 	}
 
 	return inner;
+}
+var applyRecord=function(item){
+	if(item.apnote&&item.apnote.length>0){
+		return "申请入群信息："+item.apnote;
+	}
+	return '申请加入群：' + events.shortForString(item.gname, 10);
 }
 var hasRemark=function(item){
 	if(item.apnote&&item.apnote.length>0){

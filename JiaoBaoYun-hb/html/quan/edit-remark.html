@@ -9,6 +9,11 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<style>
+			input[type=text] {
+				border: none;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -33,7 +38,7 @@
 					type = 0;
 					remarkInfo = e.detail.data;
 					console.log('备注传过来的值' + JSON.stringify(remarkInfo));
-					document.getElementById('remark-input').value = remarkInfo.bunick?remarkInfo.bunick:"";
+					document.getElementById('remark-input').value = remarkInfo.bunick ? remarkInfo.bunick : "";
 					document.querySelector('.mui-title').innerText = '编辑备注';
 				})
 				window.addEventListener('editNick', function(e) {
@@ -49,32 +54,32 @@
 					function() {
 						var inputValue = getInputValue();
 						if(inputValue && inputValue.length > 0) {
-							if(type==0){
+							if(type == 0) {
 								editRemark(inputValue);
-							}else{
+							} else {
 								editNick(inputValue);
 							}
-						} else if(type==0&&remarkInfo.bunick) {
-							events.setDialog("删除备注","确认要删除备注？",function(){
+						} else if(type == 0 && remarkInfo.bunick) {
+							events.setDialog("删除备注", "确认要删除备注？", function() {
 								delRemark();
 							})
-						}else{
+						} else {
 							mui.toast('请输入！');
 						}
 					})
 			})
-			var delRemark=function(){
-				var wd=events.showWaiting();
+			var delRemark = function() {
+				var wd = events.showWaiting();
 				postDataPro_PostUmkD({
 					vvl: remarkInfo.utid
-				},wd,function(data){
+				}, wd, function(data) {
 					console.log(JSON.stringify(data));
 					wd.close();
-					if(data.RspCode==0){
+					if(data.RspCode == 0) {
 						mui.toast("删除备注成功！")
 						mui.fire(plus.webview.currentWebview().opener(), 'remarkChanged');
 						mui.back();
-					}else{
+					} else {
 						mui.toast("失败，请重试")
 					}
 				})
@@ -87,10 +92,10 @@
 					vvl1: inputValue //群昵称
 				}, wd, function(data) {
 					wd.close()
-					JSON.stringify('更改群昵称后返回的数据'+JSON.stringify(data));
+					JSON.stringify('更改群昵称后返回的数据' + JSON.stringify(data));
 					if(data.RspCode == 0) {
-						remarkInfo.ugname=inputValue;
-						mui.fire(plus.webview.currentWebview().opener(), 'nickChanged',remarkInfo);
+						remarkInfo.ugname = inputValue;
+						mui.fire(plus.webview.currentWebview().opener(), 'nickChanged', remarkInfo);
 						mui.toast('修改群昵称成功！');
 						mui.back();
 					} else {
