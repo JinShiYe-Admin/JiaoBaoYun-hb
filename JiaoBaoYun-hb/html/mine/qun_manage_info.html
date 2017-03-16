@@ -22,6 +22,7 @@
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
 		<script type="text/javascript" src="../../js/utils/UploadHeadImage.js"></script>
+		<script type="text/javascript" src="../../js/utils/compress.js"></script>
 		<style>
 			body,
 			.mui-content {
@@ -190,10 +191,22 @@
 				 */
 				function fromPic() {
 					plus.gallery.pick(function(file) {
+						var wd = events.showWaiting('处理中...');
 						console.log('从相册选取图片成功,图片的路径为：' + file);
-						var div = document.getElementById("choose");
-						div.innerHTML = '<img src="' + file + '"style="margin-top:0px;border: 1px solid #F2F2F2;border-radius: 50%;height: 100px;width: 100px;"/>';
-						qunImgPath = file;
+						var myDate = new Date();
+						var dst = '_documents/' + myDate.getTime() + '.png';
+						compress.compressImageTo_1MB({
+							path: file,
+							dst: dst
+						}, function(event) {
+							var div = document.getElementById("choose");
+							div.innerHTML = '<img src="' + event.target + '"style="margin-top:0px;border: 1px solid #F2F2F2;border-radius: 50%;height: 100px;width: 100px;"/>';
+							qunImgPath = event.target;
+							wd.close();
+						}, function(error) {
+							wd.close();
+						});
+
 					}, function(error) {
 						//从相册选取图片失败的回调
 						var code = error.code; // 错误编码
@@ -221,14 +234,18 @@
 				 */
 				function fromCamera() {
 					camera.getPic(camera.getCamera(), function(path) {
-						plus.io.resolveLocalFileSystemURL(path, function(succesCB) {
+						var wd = events.showWaiting('处理中...');
+						//压缩图片并且在新页面显示压缩后的图片
+						compress.compressImageTo_1MB({
+							path: path,
+							dst: path
+						}, function(event) {
 							var div = document.getElementById("choose");
-							div.innerHTML = '<img src="' + succesCB.toLocalURL() + '" style="margin-top:0px;border: 1px solid #F2F2F2;border-radius: 50%;height: 100px;width: 100px;"/>';
-							qunImgPath = succesCB.toLocalURL();
-						}, function(errorCB) {
-							//请求失败的的回调
-							mui.toast('请求文件系统失败:' + JSON.stringify(errorCB));
-							console.log("请求文件系统失败: " + JSON.stringify(errorCB));
+							div.innerHTML = '<img src="' + event.target + '" style="margin-top:0px;border: 1px solid #F2F2F2;border-radius: 50%;height: 100px;width: 100px;"/>';
+							qunImgPath = event.target;
+							wd.close();
+						}, function(error) {
+							wd.close();
 						});
 					}, function(error) {
 						var code = error.code; // error.code（Number类型）获取错误编码
