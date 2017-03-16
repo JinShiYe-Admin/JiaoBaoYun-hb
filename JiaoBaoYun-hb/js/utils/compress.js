@@ -75,17 +75,18 @@ var compress = (function(mod) {
 
 	/**
 	 * 将图片压缩至1M以下
-	 * @param {Object} fpath 图片路径
-	 * @param {Object} dst 压缩转换目标图片的路径
+	 * @param {Object} data
 	 * @param {Object} successCallBack 成功的回调
 	 * @param {Object} errorCallBack 失败的回调
 	 */
-	mod.compressImageTo_1MB = function(fpath, dst, successCallBack, errorCallBack) {
+	mod.compressImageTo_1MB = function(data, successCallBack, errorCallBack) {
 		var options = {
-			src: fpath, //压缩转换原始图片的路径
-			dst: dst, //压缩转换目标图片的路径
+			src: data.path, //压缩转换原始图片的路径
+			dst: data.dst, //压缩转换目标图片的路径
 			overwrite: true, //覆盖生成新文件,仅在dst制定的路径文件存在时有效
-			format: '.png'
+			format: '.png', //压缩转换后的图片格式
+			width: 'auto', //缩放图片的宽度
+			height: 'auto' //(String 类型 )缩放图片的高度
 		}
 		plus.zip.compressImage(options,
 			function(event) {
@@ -95,10 +96,18 @@ var compress = (function(mod) {
 				var width = event.width; // 压缩转换后图片的实际宽度，单位为px
 				var height = event.height; // 压缩转换后图片的实际高度，单位为px
 				console.log('compressImageTo_1MB 成功 target:' + target + ' size:' + size + ' width:' + width + ' height:' + height);
-				if(size < (1048576)) { //小于1M
-					successCallBack(target);
+				if(size <= 1048576) { //小于1M
+					successCallBack(event);
 				} else {
-					mod.compressImageTo_1MB(target,target,successCallBack,errorCallBack);
+					options.src = target;
+					if(width > height) { //宽>=长
+						options.width = "1024px";
+						options.height = "auto";
+					} else { //宽<长
+						options.width = "auto";
+						options.height = "1024px";
+					}
+					mod.compressImageTo_1MB(options, successCallBack, errorCallBack);
 				}
 			},
 			function(error) {
