@@ -85,6 +85,7 @@ p span {
  * 背景颜色
  */
 .refer-content {
+	padding: 5px;
 	width: 100%;
 	display: flex;
 	display: -webkit-flex;
@@ -103,6 +104,7 @@ p span {
 	padding-left: 5px;
 	width: 50%;
 	flex-grow: 1;
+	/*text-align: justify;*/
 }
 .extra-words{
 /*	margin: 0 auto;*/

@@ -490,7 +490,10 @@
 					"css/utils/preview.css",
 					"js/mui.lazyload.img.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/quan/space-detail.html",
+					"html/show/add-comment.html"
+				],
 				"priority": 0
 			},
 			"html/quan/class_space.html": {

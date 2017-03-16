@@ -770,6 +770,9 @@
 			"css/utils/common.css",
 			"fonts/fangzheng.ttf",
 			"fonts/mui.ttf"
+		],
+		"refer": [
+			"html/register/modify_password.html"
 		]
 	},
 	"html/mine/approval-apply.html": {
@@ -830,6 +833,9 @@
 		"resources": [
 			"html/register/js/mui.enterfocus.js",
 			"js/utils/sortSign.js"
+		],
+		"refer": [
+			"html/index/index.html"
 		]
 	},
 	"html/mine/setting.html": {
@@ -962,7 +968,8 @@
 			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
-			"html/quan/zonep_sub.html"
+			"html/quan/zonep_sub.html",
+			"html/quan/pub-dynamic.html"
 		]
 	},
 	"html/quan/zonep_sub.html": {
@@ -978,6 +985,10 @@
 			"js/mui.lazyload.img.js",
 			"image/dynamic/icon_praise_small.png",
 			"fonts/fangzheng.ttf"
+		],
+		"refer": [
+			"html/quan/space-detail.html",
+			"html/show/add-comment.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-question.html": {
@@ -1523,6 +1534,19 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/quan/pub-dynamic.html": {
+		"resources": [
+			"css/homework/publish-answer.css",
+			"js/utils/ASFiles.js",
+			"css/quan/custom-textarea.css",
+			"js/utils/cryption.js",
+			"js/utils/compress.js",
+			"js/utils/CloudFileUtil.js",
+			"js/utils/camera.js",
+			"js/qiniu/qiniu.js",
+			"js/utils/files.js"
 		]
 	}
 }
