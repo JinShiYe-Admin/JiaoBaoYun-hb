@@ -105,7 +105,7 @@ var compress = (function(mod) {
 				var width = event.width; // 压缩转换后图片的实际宽度，单位为px
 				var height = event.height; // 压缩转换后图片的实际高度，单位为px
 				console.log('compressImageTo_1MB 成功 target:' + target + ' size:' + size + ' width:' + width + ' height:' + height);
-				if(size <= 1048576) { //小于1M
+				if(size <= 1048576 || (height <= 1024 && width <= 1024)) { //小于1M
 					successCallBack(event);
 				} else {
 					var data = {
