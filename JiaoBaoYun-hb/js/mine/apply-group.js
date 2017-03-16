@@ -12,6 +12,8 @@ var myGroups = []; //我现所在群信息
 var groupRoles = []; //群角色
 var choseGroupId; //选中申请的群Id
 mui.plusReady(function() {
+	//设置最大长度
+	jQuery("#extra-input").prop("maxLength",20);
 	list = document.getElementById('groups-container');
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 	getAllGroups(personalUTID, manageMyGroups);
@@ -133,7 +135,7 @@ var setButtonsListener = function() {
 	})
 }
 var getExtraInfo=function(){
- 	if(groupRoles[0]==0&&document.getElementById('extra-input').value){
+ 	if(document.getElementById('extra-input').value){
  		return document.getElementById('extra-input').value;
  	}
  	return "";
@@ -205,13 +207,14 @@ var getAllGroups = function(utid, callback) {
  * 重置角色选择
  */
 var resetRoles = function() {
+	groupRoles=[];
 	//家长选择按钮
 	document.getElementById('check-parents').checked = false;
 	//老师选择按钮
 	document.getElementById('check-tea').checked = false;
 	//学生选择按钮
 	document.getElementById('check-stu').checked = false;
-	document.getElementById("extra-input").style.display="none";
+//	document.getElementById("extra-input").style.display="none";
 	document.getElementById("extra-input").value="";
 }
 /**
@@ -228,11 +231,11 @@ var getChecked = function() {
 		if(this.checked) {
 			var choseRole=parseInt(this.value);
 			var extra_input=document.getElementById('extra-input');
-			if(choseRole){
-				extra_input.style.display="none";
-			}else{
-				extra_input.style.display="block";
-			}
+//			if(choseRole){
+//				extra_input.style.display="none";
+//			}else{
+//				extra_input.style.display="block";
+//			}
 		}
 			groupRoles=[choseRole];
 		console.log('groupRoles:' + groupRoles);

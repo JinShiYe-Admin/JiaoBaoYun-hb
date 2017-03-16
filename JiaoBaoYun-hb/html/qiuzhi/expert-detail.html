@@ -133,10 +133,7 @@
 		var ExpertsInfo;
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 		mui.plusReady(function() {
-			//			events.preload('qiuzhi-expertAllAnswer.html', 10);
-			events.preload('qiuzhi-expertAllComment.html', 10);
 			events.preload('focus-question.html', 10);
-			//			events.preload('heAttentionPersons.html', 10);
 			var main = plus.webview.currentWebview(); //获取当前窗体对象
 			ExpertsInfo = main.data; //接收页面传入参数值，传过来的专家model
 			console.log('expert-detail.html:' + JSON.stringify(ExpertsInfo));
@@ -169,7 +166,7 @@
 				} else if(this.id == 'AskLi') { //他的提问
 					events.openNewWindowWithData('expert-ask.html', ExpertsInfo);
 				} else if(this.id == 'CommentLi') { //他的评论
-					events.fireToPageWithData('qiuzhi-expertAllComment.html', 'qiuzhi-expertAllComment', ExpertsInfo);
+					events.openNewWindowWithData('qiuzhi-expertAllComment.html', ExpertsInfo);
 				} else { //邀请他的回答
 					events.openNewWindowWithData('qiuzhi-inviteAnswer.html', ExpertsInfo);
 				}

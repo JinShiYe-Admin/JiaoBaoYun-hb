@@ -28,17 +28,14 @@ mui.plusReady(function() {
 	});
 	//36.获取某个用户的被邀请问题列表
 	getInviteAsksByUser(ExpertsInfo.UserId);
-	//从专家页面传值
-	//				window.addEventListener('qiuzhi-expertAllComment', function(event) {
-	//					//赋值
-	//					ExpertsInfo = event.detail.data;
-	//					console.log('专家回答页传值：'+JSON.stringify(ExpertsInfo));
-	//					//清除节点
-	//					document.getElementById('list-container').innerHTML = "";
-	//					//36.获取某个用户的被邀请问题列表
-	//					getInviteAsksByUser(ExpertsInfo.UserId);
-	//				});
 
+	//阻尼系数、初始化刷新加载更多
+	var deceleration = mui.os.ios ? 0.003 : 0.0009;
+	mui('.mui-scroll-wrapper').scroll({
+		bounce: false,
+		indicators: true, //是否显示滚动条
+		deceleration: deceleration
+	});
 	//上拉下拉注册
 	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 		down: {

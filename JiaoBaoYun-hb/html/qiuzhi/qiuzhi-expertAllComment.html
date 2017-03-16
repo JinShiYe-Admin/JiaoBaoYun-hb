@@ -102,26 +102,27 @@
 			mui.init();
 
 			mui.plusReady(function() {
-				//从专家页面传值
-				window.addEventListener('qiuzhi-expertAllComment', function(event) {
-					pageIndex = 1;
-					flagRef = 0;
-					answerArray = [];
-					//赋值
-					ExpertsInfo = event.detail.data;
-					console.log('专家回答页传值：' + JSON.stringify(ExpertsInfo));
-					//清除节点
-					document.getElementById('list-container').innerHTML = "";
-					//33.获取某个用户的评论列表
-					getCommentsByUser(ExpertsInfo.UserId);
-				});
+				var curPage = plus.webview.currentWebview();
+				ExpertsInfo = curPage.data;
+				pageIndex = 1;
+				flagRef = 0;
+				//33.获取某个用户的评论列表
+				getCommentsByUser(ExpertsInfo.UserId);
 
 				//点击cell,跳转回答详情页
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					var index = this.id.replace('li', '');
 					events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', answerArray[index]);
 					plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
-				})
+				});
+
+				//阻尼系数、初始化刷新加载更多
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				mui('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
 
 				//上拉下拉注册
 				mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
@@ -142,7 +143,6 @@
 						}
 					},
 					up: {
-						contentinit: "",
 						callback: function() {
 							var self = this;
 							console.log("上拉加载更多");
@@ -160,7 +160,6 @@
 									mui(".mui-pull-loading")[0].innerHTML = "";
 								}
 							}, 1000);
-
 						}
 					}
 				});
@@ -186,6 +185,8 @@
 						totalPageCount = data.RspData.TotalPage;
 						pageIndex++;
 						if(flagRef == 0) { //刷新
+							//清除节点
+							document.getElementById('list-container').innerHTML = "";
 							answerArray = data.RspData.Data;
 						} else { //加载更多
 							//合并数组
@@ -236,6 +237,9 @@
 						break;
 					case "其他":
 						iconSourse += "channel-others.png";
+						break;
+					case "科普":
+						iconSourse += "channel-science.png";
 						break;
 					default:
 						iconSourse = "";

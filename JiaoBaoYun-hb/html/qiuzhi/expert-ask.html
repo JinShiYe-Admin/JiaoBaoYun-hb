@@ -200,6 +200,13 @@
 			});
 		});
 		getAsksByUser(ExpertsInfo.UserId);
+		//阻尼系数、初始化刷新加载更多
+		var deceleration = mui.os.ios ? 0.003 : 0.0009;
+		mui('.mui-scroll-wrapper').scroll({
+			bounce: false,
+			indicators: true, //是否显示滚动条
+			deceleration: deceleration
+		});
 		mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 			down: {
 				callback: function() {
