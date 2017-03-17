@@ -34,7 +34,8 @@ var answerArray = [];
 var answerFlag = 0;
 //当前问题的详情model
 var askModel;
-
+var AskEncAddr = []; //提问图片原图
+var AskThumbnail = []; //提问图片缩略图
 var mainData; //记录获取的数据
 mui.plusReady(function() {
 	mui.previewImage();
@@ -135,7 +136,7 @@ mui.plusReady(function() {
 		console.log(JSON.stringify(info));
 		//跳转页面
 		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', info);
-		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right",250);
+		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right", 250);
 	});
 
 	//点击回答者头像
@@ -151,12 +152,14 @@ mui.plusReady(function() {
 	var showAll = document.getElementById("showAll");
 	showAll.addEventListener('tap', function() {
 		var str = this.innerText;
-		console.log('showAll' + str);
+		//console.log('showAll' + str);
 		if(str == '显示全部') {
 			showAll.innerText = '收起';
+			addImages(1);
 			document.getElementById("question_content").style.webkitLineClamp = 'inherit';
 		} else if(str == '收起') {
 			showAll.innerText = '显示全部';
+			addImages(0);
 			document.getElementById("question_content").style.webkitLineClamp = '3';
 		}
 	});
@@ -218,7 +221,6 @@ function setAskFocus(askId, status) {
 				document.getElementById("guanzhu").innerText = '关注';
 				document.getElementById("guanzhu").style.background = '#1db8F1';
 				document.getElementById("guanzhu").style.border = '#1db8F1';
-
 			}
 		} else {
 			mui.toast(data.RspTxt);
@@ -306,7 +308,7 @@ function requestAskDetail() {
 			console.log('tempData:' + JSON.stringify(tempData));
 			//21.通过用户ID获取用户资料
 			postDataPro_PostUinf(tempData, wd, function(data1) {
-//				wd.close();
+				//				wd.close();
 				console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 				if(data1.RspCode == 0) {
 					//循环当前的个人信息返回值数组
@@ -384,13 +386,32 @@ function addQuestion(data) {
 	console.log('addQuestion:' + JSON.stringify(data));
 	questionTitle(data.AskTitle);
 	if(data.AskEncAddr != '') {
-		var AskEncAddr = data.AskEncAddr.split('|');
-		var AskThumbnail = data.AskThumbnail.split('|');
-		questionImages(data.TabId, AskEncAddr, AskThumbnail);
+		AskEncAddr = data.AskEncAddr.split('|'); //图片原图
+		AskThumbnail = data.AskThumbnail.split('|'); //图片缩略图
+		addImages(0);
 	}
+
 	questionContent(data.AskNote);
 	questionInfo(data.ReadNum, data.FocusNum);
 	answerShu(data.AnswerNum);
+}
+
+/**
+ * 放置问题的图片
+ * @param {Object} num 0三张，1全部
+ * @param {Object} data
+ */
+function addImages(num) {
+	if(AskEncAddr.length != 0) {
+		questionImages(num, AskEncAddr, AskThumbnail);
+		if(AskEncAddr.length > 3) {
+			//内容高度大于三行
+			var show = document.getElementById("showAll");
+			if(show.style.display != 'inline') {
+				document.getElementById("showAll").style.display = 'inline';
+			}
+		}
+	}
 }
 
 /**
@@ -403,11 +424,11 @@ function questionTitle(title) {
 
 /**
  * 放置问题图片
- * @param {Object} id 问题id
+ * @param {Object} type 0显示三张，1显示全部
  * @param {Object} AskEncAddr 问题图片数组
  * @param {Object} AskThumbnail 缩略图数组
  */
-function questionImages(id, AskEncAddr, AskThumbnail) {
+function questionImages(type, AskEncAddr, AskThumbnail) {
 	var footer = document.getElementById("question_images");
 	var imageArray = AskEncAddr;
 	var thumbArray = AskThumbnail;
@@ -421,21 +442,25 @@ function questionImages(id, AskEncAddr, AskThumbnail) {
 
 	var html_0 = '<div class="record-imge">';
 	var html_1 = '';
+	var html_2 = ''; //是否显示三张之后的图片
 	for(var i = 0; i < imageArray.length; i++) {
 		if(i == 2 || i == 5 || i == 8) {
 			marginRight = 0;
 		} else {
 			marginRight = marginBottom;
 		}
-		html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px; margin-bottom: ' + marginBottom + 'px;">\
-									<img src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + id + '" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-' + width + ')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-' + height + ')/2+\'px\';}">\
-								</div>';
+		if(type == 0 && i > 2) {
+			html_2 = 'display:none;';
+		}
+		html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px; margin-bottom: ' + marginBottom + 'px;' + html_2 + '">\
+								<img src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="questionImages" style="width:100%;visibility:hidden;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-' + width + ')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-' + height + ')/2+\'px\';}this.style.visibility=\'visible\';" onerror="this.style.visibility=\'visible\';">\
+							</div>';
 	}
 	mediaStr = html_0 + html_1 + '</div>';
 	footer.innerHTML = mediaStr;
 	if(num == 0) { //0张
 		footer.style.height = '0px';
-	} else if(num > 0 && num <= 3) { //1-3张,一行
+	} else if((num > 0 && num <= 3) || type == 0) { //1-3张,一行
 		footer.style.height = height + marginBottom + 'px';
 	} else if(num > 3 && num <= 6) { //4-6张，二行
 		footer.style.height = height * 2 + marginBottom * 2 + 'px';
@@ -463,8 +488,6 @@ function questionContent(content) {
 	if(height_0 > height_1) {
 		//内容高度大于三行
 		document.getElementById("showAll").style.display = 'inline';
-	} else {
-		document.getElementById("showAll").style.display = 'none';
 	}
 }
 
