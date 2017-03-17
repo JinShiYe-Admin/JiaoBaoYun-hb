@@ -63,6 +63,11 @@
 						var replyId = indexArr[2];
 
 						var tempModel = zonepArray[id].Comments[commentId];
+						if(!tempModel){
+							mui.toast('不可以回复自己');
+							return;
+						}
+						console.log(JSON.stringify(tempModel));
 						var upperId = tempModel.TabId;
 						var replyUserId;
 						var ReplyIdName;
@@ -73,7 +78,7 @@
 							replyUserId = tempModel.Replys[replyId].UserId;
 							ReplyIdName = tempModel.Replys[replyId].UserIdName;
 						}
-						if(replyUserId==replyUserId){
+						if(personalUTID==replyUserId){
 							mui.toast('不可以回复自己');
 							return;
 						}
@@ -90,8 +95,16 @@
 						postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
 							wd.close();
 							console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow',tempIndex)
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep',tempIndex)
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow',{
+								tempIndex:tempIndex,
+								content:inputComment.value,
+								flag:'评论回复'
+							})
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep',{
+								tempIndex:tempIndex,
+								content:inputComment.value,
+								flag:'评论回复'
+							})
 							mui.back();
 
 						})
@@ -106,8 +119,16 @@
 						postDataPro_addUserSpaceComment(comData, wd, function(data) {
 							wd.close();
 							console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow',tempIndex)
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep',tempIndex)
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow',{
+								tempIndex:tempIndex,
+								content:inputComment.value,
+								flag:'评论'
+							})
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep',{
+								tempIndex:tempIndex,
+								content:inputComment.value,
+								flag:'评论'
+							})
 							mui.back();
 
 						})

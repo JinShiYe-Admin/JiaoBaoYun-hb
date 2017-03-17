@@ -393,7 +393,50 @@
 			};
 			requestData(comData);
 			window.addEventListener('refreshZonep', function(data) {
-				requestData(comData)
+				var tempData = data.detail;
+				console.log(JSON.stringify(tempData));
+				if(tempData.flag=='评论'){
+				var div = document.createElement("div");
+				var index = zonepArray[tempIndex].Comments.length
+				div.id = 'replyComment' + tempIndex + '-' + index + '-' + '评论'
+				div.className = 'mui-media-body replyComment'
+				div.innerHTML = '<font class="common-font-family-Regular dynamic-comment-name ">' + personalunick + '</font>'+
+				'<font class="common-font-family-Regular" style = "font-size:14px">：' + tempData.content + '</font>'
+				var commentList =  document.getElementById("commentList"+tempData.tempIndex);
+				commentList.appendChild(div);
+				}else if(tempData.flag=='评论回复'){
+					var indexArr = tempIndex.split('-');
+						var id = indexArr[0];
+						var commentId = indexArr[1];
+						var replyId = indexArr[2];
+
+						var tempModel = zonepArray[id].Comments[commentId];
+						var replyUserId;
+						var ReplyIdName;
+						if(replyId == '评论') {
+							replyUserId = tempModel.UserId
+							ReplyIdName = tempModel.UserIdName
+						} else {
+							replyUserId = tempModel.Replys[replyId].UserId;
+							ReplyIdName = tempModel.Replys[replyId].UserIdName;
+						}
+						var commentList =  document.getElementById("commentList"+id);
+					var div = document.createElement("div");
+				div.id = 'replyComment' + id + '-' + commentId + '-' + replyId;
+				div.className = 'mui-media-body replyComment';
+				div.innerHTML = '<font class="common-font-family-Regular dynamic-comment-name">' + personalunick + '</font>'+
+				'<font class="common-font-family-Regular" style = "font-size:14px">回复</font>'+
+				'<font class="common-font-family-Regular dynamic-comment-name">' + ReplyIdName + '</font>'+
+				'<font class="common-font-family-Regular" style = "font-size:14px">：' + tempData.content + '</font></div>'
+				var tempDiv = document.getElementById('replyComment' + id + '-' + commentId + '-' + '评论')
+				tempDiv.appendChild(div)
+
+				}else{
+					requestData(comData)
+				}
+				
+
+				
 			})
 
 			mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
