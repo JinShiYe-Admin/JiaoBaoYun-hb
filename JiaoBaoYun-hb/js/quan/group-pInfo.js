@@ -54,6 +54,7 @@ var getRemark = function() {
 				manageAccountInfo(data.RspData[0]);
 			}else{
 				remark.innerText=pInfo.ugname;
+				pInfo.bunick="";
 //				premark.butid=pInfo.utid;
 //				premark.bunick=pInfo.ugnick;
 			}

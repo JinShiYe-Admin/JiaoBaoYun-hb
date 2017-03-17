@@ -10,6 +10,7 @@ var subjectsContainer = document.getElementById('subjects');
 var personalUTID;
 mui.init();
 mui.plusReady(function() {
+	events.blurBack();
 	events.preload('classes-select.html', 200);
 	window.addEventListener('postClasses', function(e) {
 		CloudFileUtil.files = [];
@@ -143,7 +144,13 @@ mui.plusReady(function() {
 		//			})
 		mui.toast('功能暂未开放！');
 	});
+	setListener();
 })
+var setListener=function(){
+//	jQuery("#input-content").focus(function(){
+//		mui.scrollTo(document.querySelector("#input-content"))
+//	})
+}
 //17.获取所有科目列表
 function requestSubjectList(callback) {
 	//所需参数

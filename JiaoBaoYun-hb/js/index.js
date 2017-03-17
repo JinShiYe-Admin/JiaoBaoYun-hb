@@ -86,7 +86,7 @@ mui.plusReady(function() {
 	//选项卡点击事件
 	mui('.mui-bar-tab').on('tap', 'a', function(e) {
 		var targetTab = this.getAttribute('href');
-		console.log(activeTab)
+		console.log("活动的页面："+activeTab)
 		if(targetTab == activeTab) {
 			return;
 		}

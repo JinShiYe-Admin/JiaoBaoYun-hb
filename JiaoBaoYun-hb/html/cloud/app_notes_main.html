@@ -25,10 +25,8 @@
 			#add {
 				background: white;
 				position: absolute;
-				top: 85px;
 				width: 96%;
-				min-height: 40px;
-				line-height: 40px;
+				height: 40px;
 				border-radius: 5px;
 				left: 2%;
 			}
@@ -132,17 +130,14 @@
 				<!--数据列表-->
 				<div id="top">
 					<div id="add">
-						<font style="margin-left: 5%;">
+						<div style="margin-left: 5%;display: inline;">
 							<span class="mui-icon mui-icon-camera" style="color: #A9A9A9;"></span>
-						</font>
-						<font style="margin-left: 2px;color:#007AFF ;">
-							丨
-						</font>
-						<font style="margin-left: 2px;color: #A9A9A9;">
+						</div>
+						<div style="margin-left: 2px;color: #A9A9A9;display: inline;border-left:1px solid #007AFF;padding-left: 6px;">
 							记录生活，留下美好...
-						</font>
+						</div>
 					</div>
-					<img src="../../image/cloud/notes_bg2.jpg" style="width: 100%;" />
+					<img src="../../image/cloud/notes_bg2.jpg" style="width: 100%;" onload="document.getElementById('add').style.top=(this.offsetHeight-(this.offsetHeight/2))+'px';" />
 					<ul id="list" class="mui-table-view">
 					</ul>
 				</div>
