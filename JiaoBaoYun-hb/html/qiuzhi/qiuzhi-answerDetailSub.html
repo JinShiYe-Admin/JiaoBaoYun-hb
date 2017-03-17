@@ -16,8 +16,8 @@
 
 	<body>
 		<nav id="answer-comment" class="mui-bar mui-bar-tab answer-comment" style="background: white;box-shadow: none;padding-top: 6px;">
-			
-			<div  style="line-height: 34px;border: 1px solid #D9D9D9;margin-left: 10px;margin-right: 10px;padding-left: 20px;color: gray;border-radius: 3px;">
+
+			<div style="line-height: 34px;border: 1px solid #D9D9D9;margin-left: 10px;margin-right: 10px;padding-left: 20px;color: gray;border-radius: 3px;">
 				<span class="mui-icon iconfont icon-xie mui-pull-left" style="color: gray;line-height: 34px;padding: 0px;margin-left: 10px;margin-right: 10px;"></span>
 				<font id="tab_font">请输入答案评论</font>
 			</div>
@@ -40,7 +40,7 @@
 				<!--问题控件-->
 				<div class="questionContent-container">
 					<div id="question-content" class="question-content"></div>
-					<div id="answer-imgs" class="answer-imgs" ></div>
+					<div id="answer-imgs" class="answer-imgs"></div>
 					<div class="">
 						<p id="answer-time" class="display-inlineBlock answer-time"><span id="answer-zanNo" class="zan-num">100</span>赞·5小时前</p>
 						<p id="support-answer" class="support-container display-inlineBlock mui-pull-right"><span id="answer-zan" class="mui-icon iconfont icon-support"></span> </p>
@@ -50,22 +50,23 @@
 				<div class="comments-info">
 					<p id="comments-no" class="comment-no mui-pull-left"></p>
 					<a href="#popover" id="order-selector" class="order-selector display-inlineBlock">
-					倒序排列<span class="mui-icon mui-icon-arrowdown"></span></a>
+						倒序排列<span class="mui-icon mui-icon-arrowdown"></span></a>
 				</div>
 				<!--评论列表-->
 				<ul id="list-container" class="mui-table-view">
 				</ul>
 			</div>
-			<div id="popover" class="mui-popover">
-				<ul class="mui-table-view mui-table-view-radio">
-				    <li id="reverse-order" value="2" class="mui-table-view-cell mui-selected">
-				        <a class="mui-navigate-right">倒序排列</a>
-				    </li>
-				    <li id="sequence-order" value="1" class="mui-table-view-cell">
-				        <a class="mui-navigate-right">顺序排列</a>
-				    </li>
-				</ul>
-			</div>
+
+		</div>
+		<div id="popover" class="mui-popover">
+			<ul class="mui-table-view mui-table-view-radio">
+				<li id="reverse-order" value="2" class="mui-table-view-cell mui-selected">
+					<a class="mui-navigate-right">倒序排列</a>
+				</li>
+				<li id="sequence-order" value="1" class="mui-table-view-cell">
+					<a class="mui-navigate-right">顺序排列</a>
+				</li>
+			</ul>
 		</div>
 		<!--mui.js-->
 		<script src="../../js/mui.min.js"></script>

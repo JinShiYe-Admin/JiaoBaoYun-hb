@@ -264,6 +264,9 @@
 				pageIndex++;
 				if(flagRef == 0) { //刷新
 					datasource = data.RspData.Data;
+					if(data.RspData.Data.length == 0) {
+						mui.toast('没有数据');
+					}
 				} else { //加载更多
 					//合并数组
 					datasource = datasource.concat(data.RspData.Data);

@@ -1869,7 +1869,8 @@
 					"html/tab_knowledge.html",
 					"html/cloud/cloud_home.html",
 					"css/utils/slide_navigatian.css",
-					"html/scienceeducation/scienceeducation_home.html"
+					"html/scienceeducation/scienceeducation_home.html",
+					"html/sciedu/sciedu_home.html"
 				],
 				"refer": [
 					"html/mine.html",
@@ -1880,7 +1881,6 @@
 					"html/quan/pub-dynamic.html",
 					"html/show/show_home.html",
 					"html/qiuzhi/qiuzhi_home.html",
-					"html/sciedu/sciedu_home.html",
 					"html/show/show_home_1.html",
 					"html/qiuzhi/expert-detail.html",
 					"html/qiuzhi/qiuzhi-questionSearch.html"
