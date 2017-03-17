@@ -920,7 +920,9 @@
 			"js/mui.pullToRefresh.js",
 			"css/qiuzhi/qiuzhi-expertAllComment.css",
 			"js/mui.pullToRefresh.material.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"image/qiuzhi/channel-edu.png",
+			"image/qiuzhi/channel-health.png"
 		]
 	},
 	"html/qiuzhi/expert-detail.html": {

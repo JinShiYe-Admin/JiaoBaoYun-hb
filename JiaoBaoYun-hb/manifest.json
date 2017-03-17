@@ -3570,7 +3570,9 @@
 					"js/utils/RSAEncrypt.js",
 					"js/libs/myStorage/myStorage.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/qiuzhi/channel-edu.png",
+					"image/qiuzhi/channel-health.png"
 				],
 				"refer": [],
 				"priority": 0
