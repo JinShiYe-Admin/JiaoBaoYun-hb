@@ -36,6 +36,7 @@ mui.plusReady(function() {
 	requestData();
 	addReplyView();
 	addReplyLisetner();
+	setListener();
 })
 /**
  * 界面放置数据
@@ -51,6 +52,9 @@ var setData = function(data) {
 			li.querySelector('.reply').cell = cell;
 		}
 		list.appendChild(li);
+		if(li.querySelector(".refer-content")){
+			li.querySelector(".refer-content").info=cell;
+		}
 	})
 }
 /**
@@ -71,7 +75,7 @@ var createInner = function(cell) {
 			'</div>' +
 			//最新内容
 			'<p class="comment-content break-words">' + ifHave(cellData.content) + '</p>' +
-			ifHaveReferContent(cellData) +
+			ifHaveReferContent(cellData,cell) +
 			'<div class="extras">' + ifHave(cellData.messages) + '</div>';
 	} else {
 		var inner = '<a><div class="cell-title">' +
@@ -95,11 +99,16 @@ var zanNoReply = function(msgType) {
 	}
 	return '<span class="reply">回复</span>';
 }
-var ifHaveReferContent = function(cellData) {
+var ifHaveReferContent = function(cellData,cell) {
 	if(cellData.referContent) {
-		return '<div class="refer-content extra-words break-words">' + '<span>' + events.shortForString(cellData.UserOwnerNick,6)  + ':</span>' + cellData.referContent + '</div>'
+		return '<div class="refer-content"><img class="refer-img display-inlineBlock" src="'+addEncImg(cell.EncImgAddr)+'"/><div class="refer-words triple-line extra-words break-words">' + '<span>' + events.shortForString(cellData.UserOwnerNick,6)  + ':</span>' + cellData.referContent + '</div></div>'
 	} else {
 		return '';
+	}
+}
+var addEncImg=function(encImg){
+	if(encImg&&encImg.length>0){
+		return encImg.split("|")[0];
 	}
 }
 var addReplyView = function() {
@@ -138,6 +147,15 @@ var addReplyView = function() {
 			}
 
 		});
+	})
+}
+var setListener=function(){
+	mui(".mui-table-view").on("tap",".refer-content",function(){
+		this.info.PublisherId = this.info.UserId 
+		this.info.PublisherName = this.info.UserName 
+		this.info.TabId = this.info.SpaceId
+		console.log(JSON.stringify(this.info));
+		events.openNewWindowWithData('../quan/space-detail.html', jQuery.extend(this.info,{focusFlag:0}))
 	})
 }
 /**

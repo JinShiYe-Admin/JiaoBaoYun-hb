@@ -35,40 +35,39 @@ var dynamiclistitem = (function($, mod) {
 			} else {
 				closeempty = '';
 			}
-		}else{
-			if(InfoList[4]==0){
-				closeempty ='<button id="btn-focus'+data[4] + idFlag + id+'" type="button" class="mui-btn mui-pull-right btn-attention" style="width: 55px;">关注</button>'
-			}else{
-				closeempty ='<button id="btn-focus'+data[4] + idFlag + id+'" type="button" class="mui-btn mui-pull-right btn-attentioned style="width: 55px;">已关注</button>'
-				
+		} else {
+			if(InfoList[4] == 0) {
+				closeempty = '<button id="btn-focus' + data[4] + idFlag + id + '" type="button" class="mui-btn mui-pull-right btn-attention" style="width: 55px;">关注</button>'
+			} else {
+				closeempty = '<button id="btn-focus' + data[4] + idFlag + id + '" type="button" class="mui-btn mui-pull-right btn-attentioned style="width: 55px;">已关注</button>'
+
 			}
-			
+
 		}
 
-		
 		var html = '';
 
 		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body mui-pull-left">';
 		//头像
-		var html2 = '<img id="headImg' + data[4] + idFlag + id+'" class=" dynamic-personal-image" style="width:50px;height:50px;border-radius: 50%;" src="' + InfoList[0] + '"></div>';
+		var html2 = '<img id="headImg' + data[4] + idFlag + id + '" class=" dynamic-personal-image" style="width:50px;height:50px;border-radius: 50%;" src="' + InfoList[0] + '"></div>';
 		var html3 = '<div class="mui-media-body dynamic-padding-left-10px">' + closeempty;
 		//姓名
 		var html4 = '<h6 style = "color:black;font-size:16px">' + InfoList[1] + '</h6>';
 		//时间
 		var html5 = '<p>' + InfoList[2] + '</p></div></div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext ">';
-		var html7 = '<div id="question_content' + data[4] + idFlag + id+'" style = "color:black;font-size:14px" class="ellipsis-show question_content">';
+		var html7 = '<div id="question_content' + data[4] + idFlag + id + '" style = "color:black;font-size:14px" class="ellipsis-show question_content">';
 		//内容
 		var html8 = InfoList[3];
-//		var html99 = '<div id="show' + data[4] + idFlag + id+'" class="showAll" style="color:gray;">展开全部</div>'
-		var html99 = '<div id="show' + data[4] + idFlag + id+'" class="showAll show" style="color:gray;">展开全部</div>'
+		//		var html99 = '<div id="show' + data[4] + idFlag + id+'" class="showAll" style="color:gray;">展开全部</div>'
+		var html99 = '<div id="show' + data[4] + idFlag + id + '" class="showAll show" style="color:gray;">展开全部</div>'
 
-		if(document.getElementById("spaceDetail")){
-			html99='';
+		if(document.getElementById("spaceDetail")) {
+			html99 = '';
 		}
-				var html9 = '</div>'+html99+'</div></div>';
+		var html9 = '</div>' + html99 + '</div></div>';
 
-//		 var html9 = '</div><div class="showAll" style="color:gray;text-align:right;float:right">展开全部>></div></div></div>';
+		//		 var html9 = '</div><div class="showAll" style="color:gray;text-align:right;float:right">展开全部>></div></div></div>';
 		html = html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8 + html9;
 
 		var div = document.createElement('div');
@@ -87,8 +86,6 @@ var dynamiclistitem = (function($, mod) {
 	 */
 	mod.addImage = function(ulElement, liElement, data, id) {
 
-		
-		
 		var citycode;
 		if(pageFlag == 1) {
 			citycode = data[4]
@@ -98,13 +95,12 @@ var dynamiclistitem = (function($, mod) {
 		if(pageFlag == 1 && mui.os.android) {
 			if(SCREEN_WIDTH < 50) {
 				SCREEN_WIDTH = plus.screen.resolutionWidth * 4
-			}else if(SCREEN_WIDTH > 50&&SCREEN_WIDTH < 450){
-				
-			}else{
+			} else if(SCREEN_WIDTH > 50 && SCREEN_WIDTH < 450) {
+
+			} else {
 				SCREEN_WIDTH = SCREEN_WIDTH * 360 / 1440
 			}
 
-			
 		}
 		var ImageUrlList = data[1]; //图片路径数组
 		var EncAddrList = data[3]
@@ -244,7 +240,6 @@ var dynamiclistitem = (function($, mod) {
 			htmlPraiseList = htmlPraiseList + '</div></div>';
 		}
 
-
 		//评论列表
 		var htmlCommentList1 = '<div id="commentList' + data[4] + idFlag + id + '" class="mui-col-sm-12 mui-col-xs-12">';
 		var htmlCommentList2 = '';
@@ -260,8 +255,8 @@ var dynamiclistitem = (function($, mod) {
 			var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + element.UserIdName + '</font>';
 			var html3 = '<font class="common-font-family-Regular" style = "font-size:14px">：' + element.CommentContent + '</font>';
 			firstComment = html1 + html2 + html3;
-			
-			if(element.Replys&&element.Replys.length != 0) {
+
+			if(element.Replys && element.Replys.length != 0) {
 				for(var i = 0; i < element.Replys.length; i++) {
 					commentNum++
 					if(commentNum > 20) {
@@ -282,24 +277,21 @@ var dynamiclistitem = (function($, mod) {
 
 			htmlCommentList2 = htmlCommentList2 + firstComment + replyComment;
 		});
-
-		htmlCommentList = htmlCommentList1 + htmlCommentList2 + '</div>';
-		var showAll
-
-		if(commentList.length>20&&(!document.getElementById("spaceDetail"))){
-			showAll = '<div id="show2' + data[4] + idFlag + id+'" class="show2" style="color:gray;">展开全部</div>'
-		}else{
+		if(commentList.length > 20 && (!document.getElementById("spaceDetail"))) {
+			showAll = '<div id="show2' + data[4] + idFlag + id + '" class="showAll show2" style="color:gray;">展开全部</div>'
+		} else {
 			showAll = '';
 		}
-        
-		html = html + htmlPraiseList + htmlCommentList+showAll //+ htmlCommentBtn;
+
+		htmlCommentList = htmlCommentList1 + htmlCommentList2 +showAll+ '</div>';
+
+		html = html + htmlPraiseList + htmlCommentList //+ showAll //+ htmlCommentBtn;
 
 		var div = document.createElement('div');
 		div.className = 'mui-row mui-row-padding-8px';
 		div.style.marginTop = '-25px'
 		div.innerHTML = html;
 		liElement.appendChild(div);
-
 		ulElement.appendChild(liElement);
 	};
 

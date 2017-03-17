@@ -248,470 +248,563 @@
 			// 等待的对话框
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 
-			//28.（用户空间）获取用户针对某用户的空间列表
+			//82.（用户空间）获取用户针对某条空间详情
 			postDataPro_getUserSpaceByUser(comData, wd, function(data) {
 				wd.close();
-				console.log('获取用户针对某用户的空间列表_getUserSpaceByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				console.log('获取用户针对某条空间详情_getUserSpaceByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					var tempRspData = data.RspData.Data;
-					datasource = mui.extend(tempRspData,datasource)
-					zonepArray.push(datasource);
-					console.log(JSON.stringify(datasource))
-					setSpaceDetail(datasource);
+					var tempArray = [];
+					//当前循环的model
+					var tempModel0 = tempRspData;
+					//将当前model中id塞到数组
+					tempArray.push(tempModel0.PublisherId);
+					//合并数组,点赞的人
+					tempArray = tempArray.concat(tempModel0.LikeUsers);
+					tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
+					//循环当前model中的回复数组
+					for(var item1 in tempModel0.Comments) {
+						//回复中的model
+						var tempModel1 = tempModel0.Comments[item1];
+						//将回复中的id塞到数组
+						tempArray.push(tempModel1.UserId);
+						tempArray.push(tempModel1.ReplyId);
+						//
+						for(var item2 in tempModel1.Replys) {
+							//回复中的model
+							var tempModel2 = tempModel1.Replys[item2];
+							//将回复中的id塞到数组
+							tempArray.push(tempModel2.UserId);
+							tempArray.push(tempModel2.ReplyId);
+						}
+					}
+
+					//给数组去重
+					tempArray = arrayDupRemoval(tempArray);
+					//发送获取用户资料申请
+					var tempData = {
+						vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
+						vtp: 'g' //查询类型,p(个人)g(id串)
+					}
+
+					//21.通过用户ID获取用户资料
+					postDataPro_PostUinf(tempData, wd, function(data1) {
+						wd.close();
+						console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
+						if(data1.RspCode == 0) {
+							//循环当前的个人信息返回值数组
+							for(var i in data1.RspData) {
+								//当前model
+								var tempModel = data1.RspData[i];
+								//更新头像
+								tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
+								//循环留言数组
+								//当前循环的model
+								var tempModel0 = tempRspData;
+								//遍历点赞的人
+								for(var item2 in tempModel0.LikeUsers) {
+									//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
+									if(tempModel.utid == tempModel0.LikeUsers[item2]) {
+										tempModel0.LikeUsers.splice(item2, 1, tempModel);
+									}
+								}
+								//对比id是否一致
+								if(tempModel0.PublisherId == tempModel.utid) {
+									//合并
+									tempModel0 = $.extend(tempModel0, tempModel);
+								}
+								//循环当前model中的回复数组
+								for(var item1 in tempModel0.Comments) {
+									//回复中的model
+									var tempModel1 = tempModel0.Comments[item1];
+									//对比id是否一致
+									if(tempModel.utid == tempModel1.UserId) {
+										//添加参数
+										tempModel1.UserIdName = tempModel.unick;
+									}
+									if(tempModel.utid == tempModel1.ReplyId) {
+										//添加参数
+										tempModel1.ReplyIdName = tempModel.unick;
+									}
+									//
+									for(var item2 in tempModel1.Replys) {
+										//回复中的model
+										var tempModel2 = tempModel1.Replys[item2];
+										//对比id是否一致
+										if(tempModel.utid == tempModel2.UserId) {
+											//添加参数
+											tempModel2.UserIdName = tempModel.unick;
+										}
+										if(tempModel.utid == tempModel2.ReplyId) {
+											//添加参数
+											tempModel2.ReplyIdName = tempModel.unick;
+										}
+									}
+								}
+
+							}
+							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+							datasource = tempRspData
+							zonepArray.push(datasource);
+							console.log(JSON.stringify(datasource))
+							setSpaceDetail(datasource);
+
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					});
+
+				}
+			})
+			}
+
+			function setSpaceDetail(data) {
+				var table = document.body.querySelector('.mui-table-view');
+				table.innerHTML = '';
+
+				//[[InfoList],[ImageList],[InteractionList]]动态的信息
+				var Data = [];
+				var InfoList = []; //头部和内容
+				var ImageList = []; //内容的图片
+				var EncAddrList = [];
+				var InteractionList = []; //底部内容
+
+				//个人信息和内容
+				//[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
+				//判断img是否为null，或者空
+				var tempModel = data;
+				tempModel.PublisherImg = updateHeadImg(tempModel.PublisherImg, 2)
+
+				var personalImage = tempModel.PublisherImg;
+				if(!tempModel.PublisherName) {
+					tempModel.PublisherName = tempModel.unick
+				}
+				var personalName = tempModel.PublisherName;
+				var time = tempModel.PublishDate;
+				var contentText = tempModel.MsgContent;
+				InfoList.push(personalImage);
+				InfoList.push(personalName);
+				InfoList.push(time);
+				InfoList.push(contentText);
+				if(tempModel.EncImgAddr != '') {
+					var EncImgAddrs = tempModel.EncImgAddr.split('|');
+					var EncAddr = tempModel.EncAddr.split('|');
+
+					//内容的图片
+					for(var i = 0; i < EncImgAddrs.length; i++) {
+						ImageList.push(EncImgAddrs[i])
+						EncAddrList.push(EncAddr[i]);
+					}
+				}
+
+				//底部
+				//[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
+				var introduce = '上传了' + ImageList.length + '张图片到相册《手机相册》';
+				var viewCount = tempModel.ReadCnt;
+				var praiseList = [];
+				if(tempModel.LikeUsers.length != 0) {
+					for(var i = 0; i < tempModel.LikeUsers.length; i++)
+						praiseList.push(tempModel.LikeUsers[i].unick);
+				}
+
+				//[commentList]:评论列表
+				//1.评论[commenter,content]，评论者，评论内容
+				//2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
+				var commentList = [];
+
+				for(var i = 0; i < tempModel.Comments.length; i++) {
+
+					var tempComment = tempModel.Comments[i];
+					commentList.push(tempComment);
+					//				if(tempComment.Replys.length != 0) {
+					//					var replys = tempComment.Replys
+					//					for(var j = 0; j < replys.length; j++) {
+					//						var replyModel = replys[j];
+					//						commentList.push(replyModel);
+					//					}
+					//
+					//				}
+
+				}
+
+				InteractionList.push(introduce);
+				InteractionList.push(viewCount);
+				InteractionList.push(praiseList);
+				InteractionList.push(commentList);
+				if(datasource.focusFlag == 0) {
+					pageFlag = 0
+					Data = [InfoList, ImageList, InteractionList, EncAddrList, '']
 
 				} else {
-					mui.toast(data.RspTxt);
+					pageFlag = 1
+					Data = [InfoList, ImageList, InteractionList, EncAddrList, 0]
 				}
-			});
 
-		}
-
-		function setSpaceDetail(data) {
-			var table = document.body.querySelector('.mui-table-view');
-			table.innerHTML = '';
-
-			//[[InfoList],[ImageList],[InteractionList]]动态的信息
-			var Data = [];
-			var InfoList = []; //头部和内容
-			var ImageList = []; //内容的图片
-			var EncAddrList = [];
-			var InteractionList = []; //底部内容
-
-			//个人信息和内容
-			//[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
-			//判断img是否为null，或者空
-			var tempModel = data;
-			tempModel.PublisherImg = updateHeadImg(tempModel.PublisherImg,2)
-
-			var personalImage = tempModel.PublisherImg;
-			if(!tempModel.PublisherName){
-				tempModel.PublisherName= tempModel.unick
-			}
-			var personalName = tempModel.PublisherName;
-			var time = tempModel.PublishDate;
-			var contentText = tempModel.MsgContent;
-			InfoList.push(personalImage);
-			InfoList.push(personalName);
-			InfoList.push(time);
-			InfoList.push(contentText);
-			if(tempModel.EncImgAddr != '') {
-				var EncImgAddrs = tempModel.EncImgAddr.split('|');
-				var EncAddr = tempModel.EncAddr.split('|');
-
-				//内容的图片
-				for(var i = 0; i < EncImgAddrs.length; i++) {
-					ImageList.push(EncImgAddrs[i])
-					EncAddrList.push(EncAddr[i]);
-				}
-			}
-
-			//底部
-			//[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
-			var introduce = '上传了' + ImageList.length + '张图片到相册《手机相册》';
-			var viewCount = tempModel.ReadCnt;
-			var praiseList = [];
-			if(tempModel.LikeUsers.length != 0) {
-				for(var i = 0; i < tempModel.LikeUsers.length; i++)
-					praiseList.push(tempModel.LikeUsers[i].unick);
-			}
-
-			//[commentList]:评论列表
-			//1.评论[commenter,content]，评论者，评论内容
-			//2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
-			var commentList = [];
-
-			for(var i = 0; i < tempModel.Comments.length; i++) {
-
-				var tempComment = tempModel.Comments[i];
-				commentList.push(tempComment);
-				//				if(tempComment.Replys.length != 0) {
-				//					var replys = tempComment.Replys
-				//					for(var j = 0; j < replys.length; j++) {
-				//						var replyModel = replys[j];
-				//						commentList.push(replyModel);
-				//					}
-				//
-				//				}
+				dynamiclistitem.addItem(table, Data, 0);
 
 			}
 
-			InteractionList.push(introduce);
-			InteractionList.push(viewCount);
-			InteractionList.push(praiseList);
-			InteractionList.push(commentList);
-			if(datasource.focusFlag==0){
-				pageFlag=0
-				Data = [InfoList, ImageList, InteractionList, EncAddrList, '']
-				
-			}else{
-				pageFlag=1
-				Data = [InfoList, ImageList, InteractionList, EncAddrList, 0]
+			function addComment() {
+				events.openNewWindowWithData('../show/add-comment.html', {
+					tempIndex: '0',
+					zonepArray: zonepArray
+				})
+
 			}
-			
-			dynamiclistitem.addItem(table, Data, 0);
 
-		}
+			function addSomeEvent() {
+				var click = []; //记录被点击的li的id和被点击元素
 
-		function addComment() {
-			events.openNewWindowWithData('../show/add-comment.html', {
-				tempIndex: '0',
-				zonepArray: zonepArray
-			})
+				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 
-		}
-
-		function addSomeEvent() {
-			var click = []; //记录被点击的li的id和被点击元素
-
-			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-
-				var toast = '';
-				mui.each(click, function(index, element) {
-					toast = toast + element;
+					var toast = '';
+					mui.each(click, function(index, element) {
+						toast = toast + element;
+					});
+					var id = this.getAttribute('id');
+					console.log('点击cell' + this.id);
+					click.push(id);
+					//								mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
+					click = [];
 				});
-				var id = this.getAttribute('id');
-				console.log('点击cell' + this.id);
-				click.push(id);
-				//								mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
-				click = [];
-			});
 
-			mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
-				click.push('头像');
-			});
-			mui('.mui-table-view').on('tap', 'h4', function() {
-				click.push('姓名');
-			});
-			//删除动态
-			mui('.mui-table-view').on('tap', '.mui-icon-closeempty', function() {
-				var btnArray = ['取消', '确定'];
-				var closeId = this.id;
-				mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
-					if(e.index == 1) {
-						var index = closeId.replace('delete', '');
-						console.log(closeId);
+				mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
+					click.push('头像');
+				});
+				mui('.mui-table-view').on('tap', 'h4', function() {
+					click.push('姓名');
+				});
+				//删除动态
+				mui('.mui-table-view').on('tap', '.mui-icon-closeempty', function() {
+					var btnArray = ['取消', '确定'];
+					var closeId = this.id;
+					mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
+						if(e.index == 1) {
+							var index = closeId.replace('delete', '');
+							console.log(closeId);
+							var comData = {
+								userSpaceId: zonepArray[index].TabId, //用户空间ID
+							};
+							var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+							postDataPro_delUserSpaceById(comData, wd, function(data) {
+								wd.close();
+								if(data.RspCode == 0) {
+									mui.toast('已删除');
+									//						var wobj = plus.webview.currentWebview();
+									//						wobj.reload(true);
+									var deleteNode = document.getElementById(index);
+									console.log(deleteNode.parentNode.innerHTML);
+									deleteNode.parentNode.removeChild(deleteNode);
+									console.log(deleteNode.parentNode);
+									zonepArray.splice(index, 1)
+								} else {
+									mui.toast(data.RspTxt);
+								}
+
+							})
+						} else {
+
+						}
+					})
+
+					click.push('向下按钮');
+				});
+				mui('.mui-table-view').on('tap', '.dynamic-contenttext', function() {
+					click.push('动态文字');
+				});
+				mui('.mui-table-view').on('tap', '.dynamic-image', function() {
+					click.push('图片' + this.getAttribute('src'));
+				});
+				mui('.mui-table-view').on('tap', '.dynamic-image-more', function() {
+					click.push('更多图片');
+				});
+				//点赞和取消点赞
+				mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
+					click.push('点赞');
+					personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+					var index = this.id.replace('praise', '');
+					var color = this.style.color;
+					if(color == 'rgb(143, 143, 148)') {
 						var comData = {
-							userSpaceId: zonepArray[index].TabId, //用户空间ID
+							userId: personalUTID, //用户ID
+							userSpaceId: datasource.TabId, //用户空间ID
 						};
 						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-						postDataPro_delUserSpaceById(comData, wd, function(data) {
+						postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
 							wd.close();
 							if(data.RspCode == 0) {
-								mui.toast('已删除');
-								//						var wobj = plus.webview.currentWebview();
-								//						wobj.reload(true);
-								var deleteNode = document.getElementById(index);
-								console.log(deleteNode.parentNode.innerHTML);
-								deleteNode.parentNode.removeChild(deleteNode);
-								console.log(deleteNode.parentNode);
-								zonepArray.splice(index, 1)
+								console.log('index=' + index)
+								var a = document.getElementById("praise" + index);
+								a.style.color = 'rgb(0, 165, 224)'
+								//							mui.toast('点赞成功');
+								var PraiseList = document.getElementById("PraiseList" + index);
+								console.log(PraiseList.innerHTML);
+								var praiseNameList = PraiseList.getElementsByTagName("font");
+								console.log(praiseNameList.length)
+								if(praiseNameList.length > 0) {
+									var praiseName = praiseNameList[0];
+									praiseName.innerHTML = personalunick + '、' + praiseName.innerHTML;
+									console.log(praiseName.innerHTML);
+								} else {
+
+									PraiseList.innerHTML = '<img id= "praiseImg" src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />' +
+										'<font class="common-font-family-Regular dynamic-praise-name">' + personalunick + '</font>';
+								}
 							} else {
 								mui.toast(data.RspTxt);
 							}
 
 						})
+
 					} else {
 
+						var comData = {
+							userId: personalUTID, //用户ID
+							userSpaceId: datasource.TabId, //用户空间ID
+						};
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						postDataPro_delUserSpaceLikeByUser(comData, wd, function(data) {
+							wd.close();
+							if(data.RspCode == 0) {
+								var a = document.getElementById("praise" + index);
+								a.style.color = 'rgb(143, 143, 148)'
+								//							mui.toast('取消点赞成功');
+								var PraiseList = document.getElementById("PraiseList" + index);
+								var praiseName = PraiseList.getElementsByTagName("font")[0];
+								if(praiseName.innerHTML.indexOf('、') > -1) {
+									console.log('多个人点赞')
+									praiseName.innerHTML = praiseName.innerHTML.replace('、' + personalunick, '');
+									0
+									praiseName.innerHTML = praiseName.innerHTML.replace(personalunick + '、', '');
+								} else {
+									console.log('一个人点赞')
+
+									console.log(PraiseList.outerHTML);
+									PraiseList.removeChild(praiseName);
+									var praiseImg = document.getElementById("praiseImg");
+									PraiseList.removeChild(praiseImg);
+
+								}
+							} else {
+								mui.toast(data.RspTxt);
+							}
+
+						})
+
 					}
-				})
 
-				click.push('向下按钮');
-			});
-			mui('.mui-table-view').on('tap', '.dynamic-contenttext', function() {
-				click.push('动态文字');
-			});
-			mui('.mui-table-view').on('tap', '.dynamic-image', function() {
-				click.push('图片' + this.getAttribute('src'));
-			});
-			mui('.mui-table-view').on('tap', '.dynamic-image-more', function() {
-				click.push('更多图片');
-			});
-			//点赞和取消点赞
-			mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
-				click.push('点赞');
-				personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
-				var index = this.id.replace('praise', '');
-				var color = this.style.color;
-				if(color == 'rgb(143, 143, 148)') {
-					var comData = {
-						userId: personalUTID, //用户ID
-						userSpaceId: datasource.TabId, //用户空间ID
-					};
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-					postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
-						wd.close();
-						if(data.RspCode == 0) {
-							console.log('index=' + index)
-							var a = document.getElementById("praise" + index);
-							a.style.color = 'rgb(0, 165, 224)'
-							//							mui.toast('点赞成功');
-							var PraiseList = document.getElementById("PraiseList" + index);
-							console.log(PraiseList.innerHTML);
-							var praiseNameList = PraiseList.getElementsByTagName("font");
-							console.log(praiseNameList.length)
-							if(praiseNameList.length > 0) {
-								var praiseName = praiseNameList[0];
-								praiseName.innerHTML = personalunick + '、' + praiseName.innerHTML;
-								console.log(praiseName.innerHTML);
-							} else {
+				});
+				mui('.mui-table-view').on('tap', '.dynamic-praise-name', function() {
+					click.push('点赞者：' + this.innerText);
+				});
+				mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
+					click.push('评论者：' + this.innerText);
+				});
 
-								PraiseList.innerHTML = '<img id= "praiseImg" src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />' +
-									'<font class="common-font-family-Regular dynamic-praise-name">' + personalunick + '</font>';
-							}
-						} else {
-							mui.toast(data.RspTxt);
-						}
+				//			评论
+				mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
+					//				click.push('评论');
+					tempIndex = this.id.replace('comment', '');
+					console.log('tempIndex====' + tempIndex)
+					addComment();
 
-					})
+					window.event.stopPropagation()
 
-				} else {
+				});
+				//底部评论按钮
+				mui('.mui-table-view').on('tap', '.dynamic-comment-btn', function() {
+					tempIndex = this.id.replace('bottomComment', '');
+					console.log('tap====' + tempIndex)
+					addComment();
 
-					var comData = {
-						userId: personalUTID, //用户ID
-						userSpaceId: datasource.TabId, //用户空间ID
-					};
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-					postDataPro_delUserSpaceLikeByUser(comData, wd, function(data) {
-						wd.close();
-						if(data.RspCode == 0) {
-							var a = document.getElementById("praise" + index);
-							a.style.color = 'rgb(143, 143, 148)'
-							//							mui.toast('取消点赞成功');
-							var PraiseList = document.getElementById("PraiseList" + index);
-							var praiseName = PraiseList.getElementsByTagName("font")[0];
-							if(praiseName.innerHTML.indexOf('、') > -1) {
-								console.log('多个人点赞')
-								praiseName.innerHTML = praiseName.innerHTML.replace('、' + personalunick, '');0
-								praiseName.innerHTML = praiseName.innerHTML.replace(personalunick + '、', '');
-							} else {
-								console.log('一个人点赞')
+					window.event.stopPropagation()
+				});
 
-								console.log(PraiseList.outerHTML);
-								PraiseList.removeChild(praiseName);
-								var praiseImg = document.getElementById("praiseImg");
-								PraiseList.removeChild(praiseImg);
+				//			回复评论
+				mui('.mui-table-view').on('tap', '.replyComment', function() {
 
-							}
-						} else {
-							mui.toast(data.RspTxt);
-						}
+					tempIndex = this.id.replace('replyComment', '');
+					console.log('tempIndex====' + tempIndex)
+					addComment();
 
-					})
+					window.event.stopPropagation()
+
+				});
+
+			}
+			//加载数据
+			function addData(index) {
+				//[[InfoList],[ImageList],[InteractionList]]动态的信息
+				var Data = [];
+				var InfoList = []; //头部和内容
+				var ImageList = []; //内容的图片
+				var EncAddrList = [];
+				var InteractionList = []; //底部内容
+
+				//个人信息和内容
+				//[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
+				//判断img是否为null，或者空
+				zonepArray.push()
+				var tempModel = zonepArray[index];
+				tempModel.uimg = updateHeadImg(tempModel.uimg)
+
+				var personalImage = tempModel.uimg;
+				var personalName = tempModel.unick;
+				var time = tempModel.PublishDate;
+				var contentText = tempModel.MsgContent;
+				InfoList.push(personalImage);
+				InfoList.push(personalName);
+				InfoList.push(time);
+				InfoList.push(contentText);
+				if(tempModel.EncImgAddr != '') {
+					var EncImgAddrs = tempModel.EncImgAddr.split('|');
+					var EncAddr = tempModel.EncAddr.split('|');
+
+					//内容的图片
+					for(var i = 0; i < EncImgAddrs.length; i++) {
+						ImageList.push(EncImgAddrs[i])
+						EncAddrList.push(EncAddr[i]);
+					}
+				}
+
+				//底部
+				//[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
+				var introduce = '上传了' + ImageList.length + '张图片到相册《手机相册》';
+				var viewCount = tempModel.ReadCnt;
+				var praiseList = [];
+				if(tempModel.LikeUsers.length != 0) {
+					for(var i = 0; i < tempModel.LikeUsers.length; i++)
+						praiseList.push(tempModel.LikeUsers[i].unick);
+				}
+
+				//[commentList]:评论列表
+				//1.评论[commenter,content]，评论者，评论内容
+				//2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
+				var commentList = [];
+
+				for(var i = 0; i < tempModel.Comments.length; i++) {
+
+					var tempComment = tempModel.Comments[i];
+					commentList.push(tempComment);
 
 				}
 
-			});
-			mui('.mui-table-view').on('tap', '.dynamic-praise-name', function() {
-				click.push('点赞者：' + this.innerText);
-			});
-			mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
-				click.push('评论者：' + this.innerText);
-			});
+				InteractionList.push(introduce);
+				InteractionList.push(viewCount);
+				InteractionList.push(praiseList);
+				InteractionList.push(commentList);
+				Data = [InfoList, ImageList, InteractionList, EncAddrList, '']
+				return Data;
+			}
 
-			//			评论
-			mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
-				//				click.push('评论');
-				tempIndex = this.id.replace('comment', '');
-				console.log('tempIndex====' + tempIndex)
-				addComment();
+			//设置个人空间动态为已读
+			function setUserSpaceReadByUser(upString) {
 
-				window.event.stopPropagation()
-
-			});
-			//底部评论按钮
-			mui('.mui-table-view').on('tap', '.dynamic-comment-btn', function() {
-				tempIndex = this.id.replace('bottomComment', '');
-				console.log('tap====' + tempIndex)
-				addComment();
-
-				window.event.stopPropagation()
-			});
-
-			//			回复评论
-			mui('.mui-table-view').on('tap', '.replyComment', function() {
-
-				tempIndex = this.id.replace('replyComment', '');
-				console.log('tempIndex====' + tempIndex)
-				addComment();
-
-				window.event.stopPropagation()
-
-			});
-
-		}
-		//加载数据
-		function addData(index) {
-			//[[InfoList],[ImageList],[InteractionList]]动态的信息
-			var Data = [];
-			var InfoList = []; //头部和内容
-			var ImageList = []; //内容的图片
-			var EncAddrList = [];
-			var InteractionList = []; //底部内容
-
-			//个人信息和内容
-			//[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
-			//判断img是否为null，或者空
-			zonepArray.push()
-			var tempModel = zonepArray[index];
-			tempModel.uimg = updateHeadImg(tempModel.uimg)
-
-			var personalImage = tempModel.uimg;
-			var personalName = tempModel.unick;
-			var time = tempModel.PublishDate;
-			var contentText = tempModel.MsgContent;
-			InfoList.push(personalImage);
-			InfoList.push(personalName);
-			InfoList.push(time);
-			InfoList.push(contentText);
-			if(tempModel.EncImgAddr != '') {
-				var EncImgAddrs = tempModel.EncImgAddr.split('|');
-				var EncAddr = tempModel.EncAddr.split('|');
-
-				//内容的图片
-				for(var i = 0; i < EncImgAddrs.length; i++) {
-					ImageList.push(EncImgAddrs[i])
-					EncAddrList.push(EncAddr[i]);
+				if(personalUTID == publisherId) {
+					var comData = {
+						userId: personalUTID, //用户ID
+						spaceTypes: '[4,5,6]'
+					}
+					var wd;
+					postDataPro_setCommentMsgReadByUser(comData, wd, function(data) {
+						console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
+					})
 				}
-			}
 
-			//底部
-			//[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
-			var introduce = '上传了' + ImageList.length + '张图片到相册《手机相册》';
-			var viewCount = tempModel.ReadCnt;
-			var praiseList = [];
-			if(tempModel.LikeUsers.length != 0) {
-				for(var i = 0; i < tempModel.LikeUsers.length; i++)
-					praiseList.push(tempModel.LikeUsers[i].unick);
-			}
-
-			//[commentList]:评论列表
-			//1.评论[commenter,content]，评论者，评论内容
-			//2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
-			var commentList = [];
-
-			for(var i = 0; i < tempModel.Comments.length; i++) {
-
-				var tempComment = tempModel.Comments[i];
-				commentList.push(tempComment);
-
-			}
-
-			InteractionList.push(introduce);
-			InteractionList.push(viewCount);
-			InteractionList.push(praiseList);
-			InteractionList.push(commentList);
-			Data = [InfoList, ImageList, InteractionList, EncAddrList, '']
-			return Data;
-		}
-
-		//设置个人空间动态为已读
-		function setUserSpaceReadByUser(upString) {
-
-			if(personalUTID == publisherId) {
+				var NoReadCnt = plus.webview.currentWebview().data.NoReadCnt //未读条数
+				//			if(NoReadCnt != 0) { //如果未读条数不为0，则设置空间状态为已读
 				var comData = {
 					userId: personalUTID, //用户ID
-					spaceTypes: '[4,5,6]'
-				}
-				var wd;
-				postDataPro_setCommentMsgReadByUser(comData, wd, function(data) {
-					console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
+					publisherIds: upString
+				};
+
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				postDataPro_setUserSpaceReadByUser(comData, wd, function(data) {
+					wd.close();
+					console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						//获得主页面的webview
+						var main = plus.webview.getWebviewById('../quan/tab-zone.html');
+						//触发tab-zone页面的setRead事件
+						mui.fire(main, 'setRead', {
+							flag: 3
+						});
+
+					}
+
 				})
+				//			}
 			}
+			//点击关注
+			mui('.mui-table-view').on('tap', '.btn-attention',
+				function() {
+					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
 
-			var NoReadCnt = plus.webview.currentWebview().data.NoReadCnt //未读条数
-			//			if(NoReadCnt != 0) { //如果未读条数不为0，则设置空间状态为已读
-			var comData = {
-				userId: personalUTID, //用户ID
-				publisherIds: upString
-			};
+					var tempId = this.id;
+					//80.（用户空间）设置某用户的关注
+					//所需参数
+					var comData = {
+						userId: personalUTID, //用户ID
+						focusId: datasource.PublisherId, //关注ID
+						status: '1' //关注状态，0 不关注，1 关注
+					};
+					//返回：1为正确
+					var wd = events.showWaiting();
+					postDataPro_setUserFocus(comData, wd, function(data) {
+						wd.close();
+						if(data.RspCode == 0) {
+							var btn = document.getElementById(tempId);
+							btn.innerHTML = '已关注'
+							btn.className = 'mui-btn mui-pull-right btn-attentioned'
+						}
 
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_setUserSpaceReadByUser(comData, wd, function(data) {
-				wd.close();
-				console.log('设置空间状态为已读_setUserSpaceReadByUser' + JSON.stringify(data));
-				if(data.RspCode == 0) {
-					//获得主页面的webview
-					var main = plus.webview.getWebviewById('../quan/tab-zone.html');
-					//触发tab-zone页面的setRead事件
-					mui.fire(main, 'setRead', {
-						flag: 3
-					});
-
-				}
-
-			})
-			//			}
-		}
-		//点击关注
-		mui('.mui-table-view').on('tap', '.btn-attention',
-			function() {
+					})
+				}) //点击已关注
+			mui('.mui-table-view').on('tap', '.btn-attentioned', function() {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
-
 				var tempId = this.id;
 				//80.（用户空间）设置某用户的关注
 				//所需参数
 				var comData = {
 					userId: personalUTID, //用户ID
 					focusId: datasource.PublisherId, //关注ID
-					status: '1' //关注状态，0 不关注，1 关注
+					status: '0' //关注状态，0 不关注，1 关注
 				};
 				//返回：1为正确
 				var wd = events.showWaiting();
 				postDataPro_setUserFocus(comData, wd, function(data) {
 					wd.close();
+					console.log(JSON.stringify(data))
 					if(data.RspCode == 0) {
 						var btn = document.getElementById(tempId);
-						btn.innerHTML = '已关注'
-						btn.className = 'mui-btn mui-pull-right btn-attentioned'
+						btn.innerHTML = '关注'
+						btn.className = 'mui-btn mui-pull-right btn-attention'
 					}
 
 				})
-			}) //点击已关注
-		mui('.mui-table-view').on('tap', '.btn-attentioned', function() {
-			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
-			var tempId = this.id;
-			//80.（用户空间）设置某用户的关注
-			//所需参数
-			var comData = {
-				userId: personalUTID, //用户ID
-				focusId: datasource.PublisherId, //关注ID
-				status: '0' //关注状态，0 不关注，1 关注
-			};
-			//返回：1为正确
-			var wd = events.showWaiting();
-			postDataPro_setUserFocus(comData, wd, function(data) {
-				wd.close();
-				console.log(JSON.stringify(data))
-				if(data.RspCode == 0) {
-					var btn = document.getElementById(tempId);
-					btn.innerHTML = '关注'
-					btn.className = 'mui-btn mui-pull-right btn-attention'
-				}
-
 			})
-		})
-		/**
-		 * 下拉刷新具体业务实现
-		 */
-		function pulldownRefresh() {
-			setTimeout(function() {
-				var comData = {
-					userId: personalUTID, //用户ID
-					userSpaceId: datasource.PublisherId, //发布用户ID
-					
-					pageIndex: '1', //当前页数
-					pageSize: '10' //每页记录数
-				};
-				//请求数据
-				requestData(comData);
-				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-			}, 1500);
-		}
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					var comData = {
+						userId: personalUTID, //用户ID
+						userSpaceId: datasource.PublisherId, //发布用户ID
 
-		/**
-		 * 上拉加载具体业务实现
-		 */
-		function pullupRefresh() {}
+						pageIndex: '1', //当前页数
+						pageSize: '10' //每页记录数
+					};
+					//请求数据
+					requestData(comData);
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+			}
+
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {}
 	</script>
 
 </html>
