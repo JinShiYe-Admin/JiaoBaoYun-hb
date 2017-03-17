@@ -13,10 +13,10 @@ var groupRoles = []; //群角色
 var choseGroupId; //选中申请的群Id
 mui.plusReady(function() {
 	//设置最大长度
-	jQuery("#extra-input").prop("maxLength",20);
+	jQuery("#extra-input").prop("maxLength", 20);
 	list = document.getElementById('groups-container');
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-	getAllGroups(personalUTID, manageMyGroups);
+	getAllGroups(personalUTID, manageMyGroups, 1);
 	var search_group = document.getElementById('search-group');
 	getChecked();
 	search_group.addEventListener('search', function() {
@@ -134,11 +134,11 @@ var setButtonsListener = function() {
 		mui('.mui-popover').popover('toggle')
 	})
 }
-var getExtraInfo=function(){
- 	if(document.getElementById('extra-input').value){
- 		return document.getElementById('extra-input').value;
- 	}
- 	return "";
+var getExtraInfo = function() {
+	if(document.getElementById('extra-input').value) {
+		return document.getElementById('extra-input').value;
+	}
+	return "";
 }
 /**
  * 获取我在的所有群信息
@@ -153,12 +153,27 @@ var manageMyGroups = function(data) {
  */
 var createInner = function(cell) {
 	var isIn = false;
-	myGroups.forEach(function(myGroup) {
-		if(myGroup.gid == cell.gid) {
-			isIn = true;
-			return;
+	var thisClassRoles = [];
+	for(var i in myGroups) {
+		if(myGroups[i].gid == cell.gid) {
+			if(myGroups[i].mstype == 3) {
+				thisClassRoles.push(myGroups[i]);
+				break;
+			} else {
+				if(myGroups[i].mstype != 1) {
+					thisClassRoles.push(myGroups[i]);
+				}
+			}
 		}
-	})
+	}
+	//长度大于1
+	if(thisClassRoles.length > 1) {
+		isIn = true;
+	} else if(thisClassRoles.length == 1 && thisClassRoles[0].mstype == 3) {
+		isIn = true;
+	} else {
+		isIn = false;
+	}
 	if(isIn) {
 		return '<a>' +
 			'<img src="' + getGimg(cell) + '"/>' + cell.gname + '<p>已入群</p></a>'
@@ -187,7 +202,7 @@ var getGimg = function(cell) {
  * @param {Object} utid
  * @param {Object} callback
  */
-var getAllGroups = function(utid, callback) {
+var getAllGroups = function(utid, callback, first) {
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataPro_PostGList({
 		vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群),ig(群信息vvl对应群ID)
@@ -198,7 +213,9 @@ var getAllGroups = function(utid, callback) {
 		if(data.RspCode == '0000') {
 			callback(data.RspData);
 		} else {
-			mui.toast(data.RspTxt);
+			if(!first) {
+				mui.toast(data.RspTxt);
+			}
 		}
 	})
 
@@ -207,15 +224,15 @@ var getAllGroups = function(utid, callback) {
  * 重置角色选择
  */
 var resetRoles = function() {
-	groupRoles=[];
+	groupRoles = [];
 	//家长选择按钮
 	document.getElementById('check-parents').checked = false;
 	//老师选择按钮
 	document.getElementById('check-tea').checked = false;
 	//学生选择按钮
 	document.getElementById('check-stu').checked = false;
-//	document.getElementById("extra-input").style.display="none";
-	document.getElementById("extra-input").value="";
+	//	document.getElementById("extra-input").style.display="none";
+	document.getElementById("extra-input").value = "";
 }
 /**
  * 多选按钮选择逻辑
@@ -229,15 +246,15 @@ var getChecked = function() {
 	var check_stu = document.getElementById('check-stu');
 	mui('.mui-input-group').on('change', 'input', function() {
 		if(this.checked) {
-			var choseRole=parseInt(this.value);
-			var extra_input=document.getElementById('extra-input');
-//			if(choseRole){
-//				extra_input.style.display="none";
-//			}else{
-//				extra_input.style.display="block";
-//			}
+			var choseRole = parseInt(this.value);
+			var extra_input = document.getElementById('extra-input');
+			//			if(choseRole){
+			//				extra_input.style.display="none";
+			//			}else{
+			//				extra_input.style.display="block";
+			//			}
 		}
-			groupRoles=[choseRole];
+		groupRoles = [choseRole];
 		console.log('groupRoles:' + groupRoles);
 	});
 }

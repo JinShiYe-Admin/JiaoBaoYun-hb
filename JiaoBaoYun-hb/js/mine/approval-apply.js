@@ -7,7 +7,7 @@ mui('.mui-scroll-wrapper').scroll({
 	indicators: true, //是否显示滚动条
 })
 var list = document.getElementById('list-container');
-var groupRoles =[];
+var groupRoles = [];
 var check_parents = document.getElementById('check-parents');
 var check_tea = document.getElementById('check-tea');
 var check_stu = document.getElementById('check-stu');
@@ -56,6 +56,11 @@ var getData = function(type, records) {
 		wd.close();
 		console.log('申请人数据：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
+			if(type == 'inv') {
+				for(var i in data.RspData) {
+					data.RspData[i].aptype = 1;
+				}
+			}
 			records = records.concat(data.RspData);
 		}
 		if(type == 'inv') {
@@ -96,17 +101,17 @@ var sortData = function(records) {
  * @param {Object} data
  */
 var setData = function(records) {
-	console.log("记录："+JSON.stringify(records));
-	var apply_container=document.createElement('li');
-	apply_container.className="mui-table-view-cell";
-//	apply_container.setAttribute("id","btn-apply")
-	apply_container.innerHTML='<div id="btn-apply" class="apply-container"><p><span class="mui-icon mui-icon-search"></span>&nbsp;&nbsp;申请加入班级</p><div>'
+	console.log("记录：" + JSON.stringify(records));
+	var apply_container = document.createElement('li');
+	apply_container.className = "mui-table-view-cell";
+	//	apply_container.setAttribute("id","btn-apply")
+	apply_container.innerHTML = '<div id="btn-apply" class="apply-search"><p><span class="mui-icon mui-icon-search"></span>&nbsp;&nbsp;申请加入班级</p><div>'
 	list.appendChild(apply_container);
-	
+
 	if(records.length > 0) {
-		var divider=document.createElement('li');
-		divider.className="mui-table-view-divider";
-		divider.innerText="新消息";
+		var divider = document.createElement('li');
+		divider.className = "mui-table-view-divider";
+		divider.innerText = "新消息";
 		list.appendChild(divider);
 		//填充真实数据
 		records.forEach(function(item, i, records) {
@@ -144,7 +149,6 @@ var addListener = function() {
 				getData('inv', []);
 				events.fireToPageNone('mine.html', 'newsChanged');
 				events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
-
 			} else {
 				mui.toast(data.RspTxt);
 			}
@@ -172,7 +176,7 @@ var addListener = function() {
 		//			//关联学生name
 		//			stuname = this.getAttribute('st');
 	})
-	mui(".mui-table-view").on("tap",".apply-container",function(){
+	mui(".mui-table-view").on("tap", ".apply-search", function() {
 		events.openNewWindow('apply-group.html');
 	})
 }
@@ -209,35 +213,35 @@ var defaultCheck = function(type) {
  */
 var getChecked = function() {
 	mui('.mui-input-group').on('change', 'input', function() {
-		if(this.checked){
-		   var choseRole=parseInt(this.value);
+		if(this.checked) {
+			var choseRole = parseInt(this.value);
 		}
-		groupRoles=[choseRole];
-		console.log("当前角色："+choseRole+JSON.stringify(groupRoles));
-//		console.log('选择事件：' + this.checked + ',值：' + this.value);
-//		if(this.checked) {
-//			groupRoles.push(parseInt(this.value));
-//		} else {
-//			groupRoles = removeItemFromArray(parseInt(this.value), groupRoles);
-//		}
-//		if(this.checked) {
-//			console.log('this.value' + this.value);
-//			switch(parseInt(this.value)) {
-//				case 0: //家长
-//				case 2: //老师
-//					check_stu.checked = false;
-//					groupRoles = removeItemFromArray(3, groupRoles);
-//					break;
-//				case 3: //学生
-//					check_tea.checked = false;
-//					check_parents.checked = false;
-//					groupRoles = removeItemFromArray(2, removeItemFromArray(0, groupRoles))
-//					break;
-//				default:
-//					break;
-//			}
-//		}
-//		console.log('groupRoles:' + groupRoles);
+		groupRoles = [choseRole];
+		console.log("当前角色：" + choseRole + JSON.stringify(groupRoles));
+		//		console.log('选择事件：' + this.checked + ',值：' + this.value);
+		//		if(this.checked) {
+		//			groupRoles.push(parseInt(this.value));
+		//		} else {
+		//			groupRoles = removeItemFromArray(parseInt(this.value), groupRoles);
+		//		}
+		//		if(this.checked) {
+		//			console.log('this.value' + this.value);
+		//			switch(parseInt(this.value)) {
+		//				case 0: //家长
+		//				case 2: //老师
+		//					check_stu.checked = false;
+		//					groupRoles = removeItemFromArray(3, groupRoles);
+		//					break;
+		//				case 3: //学生
+		//					check_tea.checked = false;
+		//					check_parents.checked = false;
+		//					groupRoles = removeItemFromArray(2, removeItemFromArray(0, groupRoles))
+		//					break;
+		//				default:
+		//					break;
+		//			}
+		//		}
+		//		console.log('groupRoles:' + groupRoles);
 	});
 }
 /**
@@ -260,13 +264,13 @@ var getInnerHTML = function(item) {
 	var inner = '';
 	console.log("当前item状态" + item.stat);
 	if(isNaN(item.stat)) {
-		if(item.invname != item.beinvname) {
+		if(item.aptype) {
 			inner = ' <a class="">' +
 				'<img class = "mui-media-object mui-pull-left"' +
 				'src = "' + getGimg(item) + '" >' +
 				'<div class = "mui-media-body"' +
 				'style = "margin-right: 4rem;" >' +
-				item.gname +
+				'<p class="single-line class-title">'+ item.gname+'</p>' +
 				'<p class="single-line apply-message">' + events.shortForString(item.invname, 6) + '邀请你以' + getRole(item.mstype) + '身份加入群</p>' +
 				'</div>' +
 				'<a class = "mui-btn mui-btn-green btn-apply" ' +
@@ -277,7 +281,7 @@ var getInnerHTML = function(item) {
 				'src = "' + getGimg(item) + '" >' +
 				'<div class = "mui-media-body"' +
 				'style = "margin-right: 4rem;" >' +
-				item.gname +
+				'<p class="single-line class-title">'+ item.gname+'</p>' +
 				'<p class="single-line apply-message">' + events.shortForString(item.invname, 6) + hasRemark(item) + '</p>' +
 				'</div>' +
 				'<a href="#chose-roles" class = "mui-btn mui-btn-green btn-openPopover" ' +
@@ -289,7 +293,7 @@ var getInnerHTML = function(item) {
 			'src = "' + getGimg(item) + '" />' +
 			'<div class = "mui-media-body apply-info"' +
 			'style = "margin-right: 4rem;" >' +
-			item.gname +
+			'<p class="single-line class-title">'+ item.gname+'</p>' +
 			'<p class="single-line apply-message">';
 		if(item.invname != item.beinvname) {
 			inner += events.shortForString(item.invaname, 10) + '邀请你加入群：' + events.shortForString(item.gname, 10);
@@ -301,15 +305,15 @@ var getInnerHTML = function(item) {
 
 	return inner;
 }
-var applyRecord=function(item){
-	if(item.apnote&&item.apnote.length>0){
-		return "申请入群信息："+item.apnote;
+var applyRecord = function(item) {
+	if(item.apnote && item.apnote.length > 0) {
+		return "申请入群信息：" + item.apnote;
 	}
 	return '申请加入群：' + events.shortForString(item.gname, 10);
 }
-var hasRemark=function(item){
-	if(item.apnote&&item.apnote.length>0){
-		return ":"+item.apnote;
+var hasRemark = function(item) {
+	if(item.apnote && item.apnote.length > 0) {
+		return ":" + item.apnote;
 	}
 	return '申请以' + getRole(item.mstype) + '身份加入你的群:' + item.gname;
 }

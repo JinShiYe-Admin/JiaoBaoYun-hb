@@ -1420,7 +1420,8 @@
 					"js/utils/UploadHeadImage.js",
 					"js/utils/CloudFileUtil.js",
 					"fonts/fangzheng.ttf",
-					"js/utils/cryption.js"
+					"js/utils/cryption.js",
+					"js/utils/compress.js"
 				],
 				"refer": [
 					"html/utils/customizeCity.html"
@@ -1649,9 +1650,12 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"fonts/fangzheng.ttf",
-					"js/utils/cryption.js"
+					"js/utils/cryption.js",
+					"js/utils/compress.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/mine/qun_manage_info_change_post.html"
+				],
 				"priority": 0
 			},
 			"html/mine/qun_manage.html": {
@@ -2022,7 +2026,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -3178,7 +3183,8 @@
 					"css/mui.min.css",
 					"css/utils/common.css",
 					"image/mine/jiaobaoyun.png",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/mine/function.html"
@@ -3318,7 +3324,9 @@
 				"refer": [
 					"html/quan/group-pInfo.html",
 					"html/mine/qun_manage_info.html",
-					"html/mine/qun_manage_invite.html"
+					"html/mine/qun_manage_invite.html",
+					"html/mine/qun_data_create.html",
+					"html/mine/qun_data_details.html"
 				],
 				"priority": 0
 			},
@@ -3497,7 +3505,18 @@
 				"resources": [
 					"css/qiuzhi/qiuzhi-sub.css",
 					"js/qiuzhi/qiuzhi-focusQuestion.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/mui.pullToRefresh.js",
+					"js/mui.pullToRefresh.material.js",
+					"css/iconfont/iconfont.css",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/publicQiuzhiProtocol.js",
+					"js/mui.min.js",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -3758,6 +3777,14 @@
 					"image/utils/default_personalimage.png",
 					"image/dynamic/icon_praise_small.png",
 					"fonts/iconfont.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/mine/qun_manage_info_change_post.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0
