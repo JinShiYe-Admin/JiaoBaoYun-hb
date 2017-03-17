@@ -1,4 +1,5 @@
 mui.init();
+mui(".mui-scroll-wrapper").scroll();
 mui.plusReady(function() {
 	window.addEventListener('personsList', function(e) {
 		console.log('传过来的数值:' + JSON.stringify(e.detail.data));
