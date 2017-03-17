@@ -230,7 +230,8 @@
 			"js/libs/jquery.js",
 			"js/libs/RSA/BigInt.js",
 			"js/libs/RSA/RSA.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"html/sciedu/sciedu_home.html"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",
@@ -482,7 +483,12 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/signHmacSHA1.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/utils/events.js",
+			"css/utils/common.css",
+			"js/publicProtocol.js",
+			"js/mui.min.js",
+			"css/mui.min.css"
 		],
 		"refer": []
 	},
