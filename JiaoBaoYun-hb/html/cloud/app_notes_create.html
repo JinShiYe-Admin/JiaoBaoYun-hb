@@ -60,6 +60,9 @@
 				events.blurBack();
 				//图片查看控件
 				previewImage = mui.previewImage();
+				mui('body').on('tap', 'img', function() {
+					document.activeElement.blur();
+				});
 				notes = document.getElementById("notes"); //输入框
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 
