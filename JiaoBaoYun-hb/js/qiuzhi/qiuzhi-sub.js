@@ -36,6 +36,17 @@ mui.plusReady(function() {
 		getExpertsArray(channelInfo.TabId);
 
 	});
+	window.addEventListener("refreshQuestionList",function(){
+		pageIndex = 1;
+		//清理问题列表
+		events.clearChild(document.getElementById('list-container'));
+		//清理专家列表
+		resetExpertsList();
+		//2.获取符合条件的专家信息
+		getExpertsArray(channelInfo.TabId);
+		//刷新的界面实现逻辑
+		requestChannelList(channelInfo);
+	})
 
 	//加载h5下拉刷新方式
 	h5fresh.addRefresh(function() {

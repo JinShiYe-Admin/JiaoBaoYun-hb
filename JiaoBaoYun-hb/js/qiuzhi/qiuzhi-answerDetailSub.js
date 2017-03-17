@@ -33,6 +33,7 @@ mui.plusReady(function() {
 		console.log("求知回答页面已隐藏")
 		events.clearChild(document.getElementById('list-container'));
 		setOriginalCondition();
+		mui('#popover').popover('hide');
 	})
 	//加载监听
 	window.addEventListener('answerInfo', function(e) {                                                                                                                                                                                                                                                                                                                                                    
