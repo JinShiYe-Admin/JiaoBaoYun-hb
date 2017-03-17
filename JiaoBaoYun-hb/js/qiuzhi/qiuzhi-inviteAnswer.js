@@ -146,6 +146,9 @@ function getInviteAsksByUser(userId) {
 				}
 				if(flagRef == 0) { //刷新
 					answerArray = tempRspData;
+					if(data.RspData.Data.length == 0) {
+						mui.toast('没有数据');
+					}
 				} else { //加载更多
 					//合并数组
 					answerArray = answerArray.concat(tempRspData);

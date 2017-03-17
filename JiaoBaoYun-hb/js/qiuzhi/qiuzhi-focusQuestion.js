@@ -103,6 +103,9 @@ function getFocusAsksByUser(userId) {
 			pageIndex++;
 			if(flagRef == 0) { //刷新
 				questionArray = data.RspData.Data;
+				if(data.RspData.Data.length == 0) {
+					mui.toast('没有数据');
+				}
 			} else { //加载更多
 				//合并数组
 				questionArray = questionArray.concat(data.RspData.Data);

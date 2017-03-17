@@ -188,6 +188,9 @@
 							//清除节点
 							document.getElementById('list-container').innerHTML = "";
 							answerArray = data.RspData.Data;
+							if (data.RspData.Data.length==0) {
+								mui.toast('没有数据');
+							}
 						} else { //加载更多
 							//合并数组
 							answerArray = answerArray.concat(data.RspData.Data);

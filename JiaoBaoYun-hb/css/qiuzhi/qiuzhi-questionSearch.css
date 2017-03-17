@@ -19,7 +19,7 @@ input[type=submit] {
 	border: #13b7f6;
 	background-color: #13b7f6;
 	font-size: 16px;/*//1.5rem;*/
-	font-weight: bold;
+	/*font-weight: bold;*/
 	line-height: 44px;
 }
 .mui-btn-blue,
@@ -30,7 +30,7 @@ input[type=submit]:enabled:active {
 	background-color: #13b7f6;
 	/*font-size: 1.5rem;*/
 	font-size: 20px;
-	font-weight: bold;
+	/*font-weight: bold;*/
 }
 .mui-bar .mui-title
 {
@@ -44,7 +44,7 @@ input[type=submit]:enabled:active {
 	padding: 0 1.5rem;
 	margin-top: 8px;
     margin-bottom: 0.7rem;
-	color: #000000;
+	color: #b7b7b7;
 }
 
 #history_container {
@@ -56,7 +56,7 @@ input[type=submit]:enabled:active {
 }
 
 #history_container .mui-table-view-cell .mui-icon-search {
-	font-size: 1.8rem;
+	font-size: 1.5rem;
 }
 
 /*#history_container .mui-table-view-cell>a {
@@ -117,7 +117,7 @@ input[type=submit]:enabled:active {
 
 .mui-table-view-cell p:nth-child(1) {
 	font-size: 1.5rem;
-	font-weight: bold;
+	/*font-weight: bold;*/
 	color: #000000;
 	white-space: nowrap;
 	overflow: hidden;
