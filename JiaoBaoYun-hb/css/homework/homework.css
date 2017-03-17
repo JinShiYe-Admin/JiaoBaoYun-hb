@@ -55,7 +55,7 @@ header .mui-icon-bars:before{
 	margin-top: 7px;
 	position: relative;
 	display: inline-block;
-	width: 15rem;
+	width: 150px;
 	height: 30px;
 	color: white;
 	-webkit-transition-timing-function: ease-in-out;
@@ -73,8 +73,8 @@ header .mui-icon-bars:before{
 	position: absolute;
 	z-index: 1;
 	margin: -1px;
-	padding-top: 5px;
-	width: 8rem;
+	padding-top: 3px;
+	width: 80px;
 	height: 30px;
 	color: #13B7F6;
 	-webkit-transition: .2s ease-in-out;
@@ -86,26 +86,26 @@ header .mui-icon-bars:before{
 	background-clip: padding-box;
 }
 .switch-mine:before {
-	font-size: 1.2rem;
+	font-size: 12px;
 	position: absolute;
 	top: 3px;
-	right: 1rem;
+	right: 10px;
 	content: '学生作业';
 	text-transform: uppercase;
 	/*color: #999*/
 }
 .switch-handle-mine:before{
 	content: '我发布的';
-	font-size: 1.2rem;
+	font-size: 12px;
 }
 .switch-mine.mui-active .switch-handle-mine:before{
-	font-size: 1.2rem;
+	font-size: 12px;
 	content: '学生作业';
 	/*color: #fff*/
 }
 .switch-mine.mui-active:before {
 	right: auto;
-	left: 1rem;
+	left:10px;
 	content: '我发布的';
 	/*color: #fff*/
 }

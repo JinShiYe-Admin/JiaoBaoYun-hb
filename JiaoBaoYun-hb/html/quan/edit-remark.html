@@ -39,6 +39,7 @@
 					remarkInfo = e.detail.data;
 					console.log('备注传过来的值' + JSON.stringify(remarkInfo));
 					document.getElementById('remark-input').value = remarkInfo.bunick ? remarkInfo.bunick : "";
+					document.getElementById('remark-input').placeholder="群昵称："+remarkInfo.ugname+ "(请输入备注,最多20字!)"
 					document.querySelector('.mui-title').innerText = '编辑备注';
 				})
 				window.addEventListener('editNick', function(e) {
@@ -46,6 +47,7 @@
 					remarkInfo = e.detail.data;
 					console.log('备注传过来的值' + JSON.stringify(remarkInfo));
 					document.getElementById('remark-input').value = remarkInfo.ugname;
+					document.getElementById('remark-input').placeholder="请输入群昵称，最多20字";
 					document.querySelector('.mui-title').innerText = '编辑群昵称';
 				})
 
@@ -77,6 +79,7 @@
 					wd.close();
 					if(data.RspCode == 0) {
 						mui.toast("删除备注成功！")
+						document.getElementById('remark-input').value="";
 						mui.fire(plus.webview.currentWebview().opener(), 'remarkChanged');
 						mui.back();
 					} else {
@@ -95,6 +98,7 @@
 					JSON.stringify('更改群昵称后返回的数据' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						remarkInfo.ugname = inputValue;
+						document.getElementById('remark-input').value="";
 						mui.fire(plus.webview.currentWebview().opener(), 'nickChanged', remarkInfo);
 						mui.toast('修改群昵称成功！');
 						mui.back();
@@ -113,6 +117,7 @@
 					wd.close();
 					console.log('修改群备注的返回值：' + JSON.stringify(data))
 					if(data.RspCode == '0000') {
+						document.getElementById('remark-input').value="";
 						mui.fire(plus.webview.currentWebview().opener(), 'remarkChanged');
 						mui.toast('修改备注成功！');
 						mui.back();
