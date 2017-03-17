@@ -203,6 +203,7 @@
 	<script>
 		var pageFlag = 1
 		var datasource = {};
+		var datasource2={};
 		zonepArray = [];
 		idFlag = 'zx';
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
@@ -223,15 +224,15 @@
 		var SCREEN_WIDTH;
 		mui.plusReady(function() {
 			SCREEN_WIDTH = plus.screen.resolutionWidth;
-			datasource = plus.webview.currentWebview().data
+			datasource2 = plus.webview.currentWebview().data
 
-			publisherId = datasource.publisherId
-			console.log('上个界面传过来的值' + JSON.stringify(datasource));
+			publisherId = datasource2.publisherId
+			console.log('上个界面传过来的值' + JSON.stringify(datasource2));
 			mui.previewImage();
 
 			var comData = {
-				userId: datasource.PublisherId, //用户ID
-				userSpaceId: datasource.TabId, //发布用户ID
+				userId: datasource2.PublisherId, //用户ID
+				userSpaceId: datasource2.TabId, //发布用户ID
 				pageIndex: '1', //当前页数
 				pageSize: '100' //每页记录数
 			};
@@ -431,11 +432,12 @@
 				InteractionList.push(viewCount);
 				InteractionList.push(praiseList);
 				InteractionList.push(commentList);
-				if(datasource.focusFlag == 0) {
+				if(datasource2.focusFlag == 0) {
 					pageFlag = 0
 					Data = [InfoList, ImageList, InteractionList, EncAddrList, '']
 
 				} else {
+
 					pageFlag = 1
 					Data = [InfoList, ImageList, InteractionList, EncAddrList, 0]
 				}

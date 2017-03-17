@@ -3419,7 +3419,10 @@
 					"css/utils/common.css",
 					"js/libs/crypto-js/crypto-js.js",
 					"/image/utils/default_load_2.gif",
-					"js/storageKeyName.js"
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/publicProtocol.js",
+					"js/mui.min.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3460,7 +3463,8 @@
 					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
-					"html/utils/customizeCity.html"
+					"html/utils/customizeCity.html",
+					"html/quan/space-detail.html"
 				],
 				"priority": 0
 			},
