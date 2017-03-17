@@ -116,7 +116,7 @@
 .class-container{
 	border: solid 1px #E4E4E4;
 	margin: 0.2rem 0.5rem;
-	padding: 0.2rem;
+	padding: .2rem .3rem 0.1rem;
 	display: inline-block;
 	font-size: 1.2rem;
 	color: #808080;
@@ -150,8 +150,9 @@ html,body{
 .mui-icon-info{
 	color: #00A5E0;
 	background-color: transparent;
-	font-size: 1.2rem;
+	font-size: 1.5rem;
 	vertical-align: middle;
+	margin-right：0.1rem
 }
 label{
 	font-size: 1.2rem;
@@ -193,6 +194,9 @@ label{
 	width: 50%;
 	flex-grow: 1;
 }
+.receive-classes{
+	margin: -0.7rem 0.5rem;
+}
 .submit-label{
 	padding: 12px 0 0 0;
 }
@@ -210,5 +214,6 @@ label{
 }
 .class-del{
 	font-size: 1.2rem;
-	color: red;
+	color: #B7B7B7;
+	margin-left: 0.2rem;
 }

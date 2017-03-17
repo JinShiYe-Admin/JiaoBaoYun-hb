@@ -36,7 +36,7 @@ var events = (function(mod) {
 		var targetPage = plus.webview.getWebviewById(tarPageIds[tarPageIds.length - 1]);
 		console.log('targetPage是否存在:' + Boolean(targetPage))
 		if(targetPage) {
-			targetPage.show();
+			targetPage.show('slide-in-right',250);
 		} else {
 			mui.openWindow({
 				url: tarPagePath,

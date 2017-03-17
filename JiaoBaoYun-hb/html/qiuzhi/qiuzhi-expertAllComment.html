@@ -113,7 +113,7 @@
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					var index = this.id.replace('li', '');
 					events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', answerArray[index]);
-					plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
+					plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right",250);
 				});
 
 				//阻尼系数、初始化刷新加载更多
