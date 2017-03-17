@@ -284,7 +284,7 @@ function requestAskDetail() {
 			askModel = data.RspData;
 			answerPageCount = data.RspData.TotalPage; //回答总页数
 			answerIndex++;
-			document.getElementById("tempTest").innerHTML=askModel.AskNote;
+
 			//回调中的临时数据
 			var tempRspData = data.RspData.Data;
 			//获取当前回调的个人信息，主要是头像、昵称
@@ -454,7 +454,7 @@ function questionImages(id, AskEncAddr, AskThumbnail) {
 function questionContent(content) {
 	var height_0;
 	var height_1;
-	document.getElementById("question_content").innerText = content;
+	document.getElementById("question_content").innerHTML = content;
 	document.getElementById("question_content").style.webkitLineClamp = '4';
 	height_0 = document.getElementById("question_content").offsetHeight;
 	document.getElementById("question_content").style.webkitLineClamp = '3';
