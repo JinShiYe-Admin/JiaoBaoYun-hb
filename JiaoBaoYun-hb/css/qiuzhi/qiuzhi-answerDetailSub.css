@@ -137,13 +137,15 @@
 }
 
 .btn-attention {
-	border: 0;padding: 0;
+	border: 0;
+	padding: 0;
 	color: white;
 	background-color: #1db8F1;
 }
 
 .btn-attentioned {
-	border: 0;padding: 0;
+	border: 0;
+	padding: 0;
 	color: white;
 	background-color: #b7b7b7;
 }
@@ -172,6 +174,7 @@
 
 .comment-words {
 	word-wrap: break-word;
+	color: #808080;
 }
 
 .answer-comment {
@@ -242,15 +245,26 @@
 
 .comment-personName {
 	line-height: 1.2;
+	color: #323232;
 }
 
 .mui-popover {
 	width: 150px;
 }
+
 .mui-table-view-radio .mui-table-view-cell .mui-navigate-right:after {
 	font-weight: 400;
 	color: #808080
 }
-.mui-navigate-right{
+
+.mui-navigate-right {
 	color: #808080 !important;
+}
+
+.mui-backdrop {
+	/*选择排序的遮罩*/
+	background-color: rgba(0, 0, 0, .05);
+}
+.comment-date{
+	color: #B7B7B7;
 }

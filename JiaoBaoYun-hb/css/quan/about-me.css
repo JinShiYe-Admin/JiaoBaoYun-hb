@@ -73,11 +73,14 @@ footer {
 p span {
 	color: #3969a5;
 }
+/*标题*/
 .title-title{
 	color: #323232;
+	font-size:1.5rem;
 }
+/*时间*/
 .title-words{
-	color: #636563;
+	color: #B7B7B7;
 }
 
 
@@ -90,7 +93,7 @@ p span {
 	display: flex;
 	display: -webkit-flex;
 	/*height: 4rem;*/
-	background-color: #f8f8f8;
+	background-color: #F2F3F5;
 	align-items: center;
 }
 .refer-img{
@@ -108,6 +111,7 @@ p span {
 }
 .extra-words{
 /*	margin: 0 auto;*/
+	font-size: 1.3rem;
 	color: #323232;
 }
 .extra-words>span{

@@ -135,9 +135,12 @@ header .mui-icon-bars:before{
 	color: #808080;
 	font-size: 1.4rem;
 }
+.publisher-container{
+	color: #B7B7B7;
+}
 /*额外信息*/
 .homework-bottom>p{
-	color: #808080;
+	color: #B7B7B7;
 	font-size: 1.2rem;
 }
 /*.subject-icon{

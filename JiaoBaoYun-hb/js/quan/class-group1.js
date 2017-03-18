@@ -41,11 +41,14 @@ var freshContent = function() {
 			}
 		}
 		if(groupRoles.length == 0) {
-			document.getElementById('quit-group').style.display = 'none';
+			document.querySelector('.quit-container').style.display = 'none';
+			document.querySelector('.mui-content').style.marginBottom="0"
 		} else if(groupRoles.length == 1 && isMaster) {
-			document.getElementById('quit-group').style.display = 'none';
+			document.querySelector('.quit-container').style.display = 'none';
+			document.querySelector('.mui-content').style.marginBottom="0"
 		} else {
-			document.getElementById('quit-group').style.display = 'block';
+			document.querySelector('.quit-container').style.display = 'block';
+			document.querySelector('.mui-content').style.marginBottom="5rem"
 		}
 	})
 }
