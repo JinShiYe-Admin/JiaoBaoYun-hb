@@ -156,11 +156,20 @@ mui.plusReady(function() {
 		if(str == '显示全部') {
 			showAll.innerText = '收起';
 			addImages(1);
-			document.getElementById("question_content").style.webkitLineClamp = 'inherit';
+			if(askModel.AskSFlag && askModel.AskSFlag == 1) { //旧数据
+				document.getElementById("question_content").style.height = 'auto';
+			} else {
+				document.getElementById("question_content").style.webkitLineClamp = 'inherit';
+			}
 		} else if(str == '收起') {
 			showAll.innerText = '显示全部';
 			addImages(0);
-			document.getElementById("question_content").style.webkitLineClamp = '3';
+			if(askModel.AskSFlag && askModel.AskSFlag == 1) { //旧数据
+				document.getElementById("question_content").style.height = '60px';
+			} else {
+				document.getElementById("question_content").style.webkitLineClamp = '3';
+			}
+			mui('.mui-scroll-wrapper').scroll().scrollTo(0,0,0);//00毫秒滚动到顶
 		}
 	});
 });
@@ -390,8 +399,13 @@ function addQuestion(data) {
 		AskThumbnail = data.AskThumbnail.split('|'); //图片缩略图
 		addImages(0);
 	}
-
-	questionContent(data.AskNote);
+	if(data.AskSFlag && data.AskSFlag == 1) { //问题来源,1 为外部导入数据
+		console.log('AskSFlag111111111');
+		questionContent(data.AskNote, 1);
+	} else {
+		console.log('AskSFlag00000000000');
+		questionContent(data.AskNote, 0);
+	}
 	questionInfo(data.ReadNum, data.FocusNum);
 	answerShu(data.AnswerNum);
 }
@@ -476,18 +490,29 @@ function questionImages(type, AskEncAddr, AskThumbnail) {
  * 放置问题内容
  * @param {Object} content 问题内容
  */
-function questionContent(content) {
+function questionContent(content, flag) {
 	var height_0;
 	var height_1;
-	document.getElementById("question_content").innerHTML = content;
-	document.getElementById("question_content").style.webkitLineClamp = '4';
-	height_0 = document.getElementById("question_content").offsetHeight;
-	document.getElementById("question_content").style.webkitLineClamp = '3';
-	height_1 = document.getElementById("question_content").offsetHeight;
-	//console.log(height_0 + '|' + height_1);
-	if(height_0 > height_1) {
-		//内容高度大于三行
-		document.getElementById("showAll").style.display = 'inline';
+	if(flag == 1) {
+		document.getElementById("question_content").style.lineHeight = '20px';
+		document.getElementById("question_content").innerHTML = content;
+		height_0 = document.getElementById("question_content").offsetHeight;
+		if(height_0 > 60) {
+			document.getElementById("question_content").style.lineHeight = '20px';
+			document.getElementById("question_content").style.height = '60px';
+			document.getElementById("showAll").style.display = 'inline';
+		}
+	} else {
+		document.getElementById("question_content").innerText = content;
+		document.getElementById("question_content").style.webkitLineClamp = '4';
+		height_0 = document.getElementById("question_content").offsetHeight;
+		document.getElementById("question_content").style.webkitLineClamp = '3';
+		height_1 = document.getElementById("question_content").offsetHeight;
+		//console.log(height_0 + '|' + height_1);
+		if(height_0 > height_1) {
+			//内容高度大于三行
+			document.getElementById("showAll").style.display = 'inline';
+		}
 	}
 }
 
