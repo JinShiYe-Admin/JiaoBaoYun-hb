@@ -158,15 +158,16 @@ div>.icon-xiangce:before,
 	border-radius: 50%;
 }
 
-.icon-xianshi {
+.icon-chakan {
 	float: right;
+	color: #B7B7B7;
 }
 
 .icon-support {
 	float: right;
 }
 
-.icon-xianshi,
+.icon-chakan,
 .icon-support {
 	padding-right: .5rem;
 }
@@ -220,19 +221,13 @@ div>.icon-xiangce:before,
 	color: #f85977;
 }
 
-/*.mui-popover .mui-table-view {
-	width: 100%;
-}*/
 
-.mui-popover .mui-table-view-cell {
-	/*min-width: 30%;
-	max-width: 40%;*/
-	/*text-align: center;*/
-	display: inline-block;
-}
 
 .mui-popover {
-	width: 200px;
+	width: 120px;
+}
+.mui-popover p{
+	color: #808080;
 }
 .mui-grid-view.mui-grid-9 .mui-table-view-cell{
 	padding: 0;
@@ -250,4 +245,11 @@ div>.icon-xiangce:before,
 }
 .mui-table-view:after{
 	height: 0;
+}
+.mui-popover .mui-table-view-cell{
+	width: 100%;
+}
+.mui-popover .mui-table-view-cell:before{
+	height: 1px !important;
+	background-color:#B7B7B7 !important;
 }

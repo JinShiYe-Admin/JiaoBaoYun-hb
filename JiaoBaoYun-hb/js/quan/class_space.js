@@ -87,7 +87,7 @@ var class_space = (function(mod) {
 			'</div>' +
 			'<p class="chat-bottom">' + events.shortForDate(item.PublishDate) +
 			'<a href="#popover" tabId="' + item.TabId + '" class="mui-icon iconfont icon-support ' + setIsLike(item.IsLike) + '">(' + item.LikeCnt +
-			')</a><span tabId="' + item.TabId + '" class="mui-icon iconfont icon-xianshi">(' + item.ReadCnt + ')</span></p>' +
+			')</a><span tabId="' + item.TabId + '" class="mui-icon iconfont icon-chakan">(' + item.ReadCnt + ')</span></p>' +
 			'</div></div>';
 		return inner;
 	}
@@ -362,12 +362,14 @@ var setListener = function(userId) {
 		//未点赞
 		if(jQuery(this).hasClass('isNotLike')) {
 			zan.isLike = false;
-			zan.innerText = '点赞';
-			zan.className = "mui-icon iconfont icon-dianzan";
+			console.log("赞的innerHTML"+zan.innerHTML);
+			zan.querySelector(".pop-p").innerHTML = '<span id="pop-zan" class="mui-icon iconfont icon-dianzan1 isNotLike"></span>点赞';
+//			document.querySelector("#pop-zan").className = "mui-icon iconfont icon-dianzan1 isNotLike";
 		} else { //已点赞
 			zan.isLike = true;
-			zan.innerText = '取消点赞';
-			zan.className = "mui-icon iconfont icon-quxiaozan";
+			zan.querySelector(".pop-p").innerHTML = '<span id="pop-zan" class="mui-icon iconfont icon-dianzan1 isLike"></span>取消点赞';
+//			zan.querySelector(".pop-p").innerText = '取消点赞';
+//			document.querySelector("#pop-zan").className = "mui-icon iconfont icon-dianzan1 isLike";
 		}
 
 	})
