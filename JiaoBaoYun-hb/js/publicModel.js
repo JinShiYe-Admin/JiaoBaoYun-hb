@@ -342,6 +342,7 @@ var publicModel = (function($, mod) {
 	//符合条件问题--求知
 	mod.model_QZAsk = {
 		TabId:'',//问题表ID
+		AskSFlag	:'',//问题来源,1 为外部导入数据
 		AskTitle	:'',//问题标题
 		AskNote:'',//问题说明
 		AskEncAddr:'',//问题附件地址,多个的情况例如：1.jpg|2.jpg
@@ -353,6 +354,7 @@ var publicModel = (function($, mod) {
 		AskTime:'',//提问时间
 		IsAnonym:'',//是否匿名
 		AnswerId	:'',//回答ID
+		AnswerSFlag:'',//回答来源,1 为外部导入数据
 		AnswerContent:'',//回答内容
 		IsLikeNum:'',//回答点赞数
 		AnswerEncAddr:'',//回答附件,多个的情况例如：1.jpg|2.jpg
@@ -367,6 +369,7 @@ var publicModel = (function($, mod) {
 	//某个问题的详情--求知
 	mod.model_QZAskDetail = {
 		TabId:'',//	问题ID
+		AskSFlag:'',//问题来源,1 为外部导入数据
 		AskTitle:'',//问题标题
 		AskNote:'',//问题说明
 		AskEncAddr:'',//问题附件地址,多个的情况例如：1.jpg|2.jpg
@@ -393,6 +396,7 @@ var publicModel = (function($, mod) {
 	//回答详情--求知
 	mod.model_QZAnswer = {
 		AnswerId	:'',//回答ID
+		AnswerSFlag:'',//回答来源,1 为外部导入数据
 		AnswerContent:'',//	回答内容
 		AnswerEncAddr:'',//回答附件地址,多个的情况例如：1.jpg|2.jpg
 		AnswerThumbnail:'',//回答缩略图
@@ -408,6 +412,7 @@ var publicModel = (function($, mod) {
 	//某个回答的详情--求知
 	mod.model_QZAnswersDetail = {
 		AnswerId:'',//回答ID
+		AnswerSFlag:'',//回答来源,1 为外部导入数据
 		TabId:'',//	回答ID
 		AskId:'',//	问题ID
 		AskTitle:'',//	问题标题
@@ -451,6 +456,7 @@ var publicModel = (function($, mod) {
 		MsgTime:'',//消息时间	String		否	从属Data
 		AskTitle:'',//问题标题	String		否	从属Data
 		AnswerContent:'',//回答内容	String		否	从属Data
+		AnswerSFlag:'',//回答来源,1 为外部导入数据
 		ContentId:''//内容ID	int		否	从属Data,1,2，3的内容ID是回答ID；4,5,6的内容ID是评论ID；7的内容ID是问题ID；8的内容ID是用户ID
 	}
 	
@@ -461,6 +467,7 @@ var publicModel = (function($, mod) {
 		AnswerId:'',//	回答ID	int
 		AnswerContent:'',//	回答内容	String
 		CommentId:'',//	评论ID	int
+		AnswerSFlag:'',//回答来源,1 为外部导入数据
 		CommentContent:'',//	评论内容	String
 		CommentDate:'',//评论时间
 		AskChannel:'',//	问题话题
