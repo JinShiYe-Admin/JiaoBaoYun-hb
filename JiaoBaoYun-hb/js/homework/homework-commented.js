@@ -27,6 +27,7 @@ mui.plusReady(function() {
 		homeworkResult.HomeworkResult.Result = e.detail.data.answer;
 		var imgFiles = e.detail.data.Files
 		document.getElementById('brief-imgs-stu').innerHTML = getImgsInner(imgFiles)
+		homeworkResult.HomeworkResult.Files = imgFiles;
 	})
 	//跳转到修改作业界面
 	events.addTap('modifyHomework', function() {

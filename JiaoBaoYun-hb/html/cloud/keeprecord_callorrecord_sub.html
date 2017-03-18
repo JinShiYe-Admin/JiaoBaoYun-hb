@@ -233,6 +233,10 @@
 
 				//图片查看控件
 				previewImage = mui.previewImage();
+
+				mui('body').on('tap', 'img', function() {
+					document.activeElement.blur();
+				});
 				//---从父页面获取数据---start---
 				main = plus.webview.currentWebview(); //获取当前窗体对象
 				subData = main.data; //接收页面传入的参数值
@@ -304,10 +308,6 @@
 				//监听记事的输入
 				document.getElementById('textarea_record').addEventListener('input', function() {
 					changeCommit();
-				});
-
-				mui('#top').on('tap', '.record-picture-num', function() {
-					previewImage.open(document.getElementById("1"));
 				});
 
 				/**

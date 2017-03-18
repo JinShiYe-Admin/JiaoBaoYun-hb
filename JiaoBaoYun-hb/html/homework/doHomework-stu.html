@@ -228,7 +228,8 @@
 						CloudFileUtil.files = [];
 						events.clearChild(document.getElementById('pictures'));
 						events.fireToPageNone('homework-tea-sub.html', 'homeworkDone');
-						events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, homeworkModel, { HomeworkResultId: data.RspData.HomeworkResultId, workType: 1 }));
+						
+						events.openNewWindowWithData('homework-commented.html', jQuery.extend({}, homeworkModel, { HomeworkResultId: data.RspData.HomeworkResultId, workType: 1 }));
 					} else {
 						mui.toast(data.RspTxt);
 					}

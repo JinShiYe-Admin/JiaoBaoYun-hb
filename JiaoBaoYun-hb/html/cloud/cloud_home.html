@@ -413,6 +413,8 @@
 							} else if(!reg.test(e.value)) {
 								//特殊字符
 								mui.toast('名字中不能包含这些字符 \ / : * ? " < > | ');
+							} else if(e.value.length > 20) {
+								mui.toast('名字最多20个字');
 							} else {
 								//27.用户云盘文件上传或创建文件夹
 								//所需参数
@@ -449,11 +451,7 @@
 					}, 'div');
 					var input = document.querySelector('.mui-popup-input input');
 					input.type = 'text';
-					document.querySelector('.mui-popup-input input').addEventListener('input', function() {
-						if(this.value.length > 20) {
-							this.value = this.value.slice(0, 20);
-						}
-					});
+					input.maxLength = 20;
 				});
 
 				//---云盘end---

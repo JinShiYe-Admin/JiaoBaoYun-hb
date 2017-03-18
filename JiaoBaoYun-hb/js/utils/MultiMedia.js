@@ -109,6 +109,7 @@ var MultiMedia = (function($, mod) {
 
 		if(this.options.Picture) {
 			document.getElementById('MultiMedia_Picture_Header').addEventListener('tap', function() {
+				document.activeElement.blur();
 				if(self.data.PicturesNum > 0) {
 					self.pictureActionSheet();
 				} else {
@@ -117,6 +118,7 @@ var MultiMedia = (function($, mod) {
 			});
 
 			mui('#MultiMedia_Picture_Footer').on('tap', '.multimedia-picture-delete', function() {
+				document.activeElement.blur();
 				var id = this.id.replace('MultiMedia_Picture_Delete_', '');
 				var parent = this.parentNode;
 				//删除数组
@@ -135,11 +137,13 @@ var MultiMedia = (function($, mod) {
 		}
 		if(this.options.Audio) {
 			document.getElementById('MultiMedia_Audio_Header').addEventListener('tap', function() {
+				document.activeElement.blur();
 				mui.toast('语音功能暂未开放');
 			});
 		}
 		if(this.options.Video) {
 			document.getElementById('MultiMedia_Video_Header').addEventListener('tap', function() {
+				document.activeElement.blur();
 				mui.toast('视频功能暂未开放');
 			});
 		}

@@ -14,14 +14,6 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<link rel="stylesheet" href="../../css/cloud/file.css" />
-		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
-		<script type="text/javascript" src="../../js/utils/cryption.js"></script>
-		<script type="text/javascript" src="../../js/utils/events.js"></script>
-		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
-		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
-		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
-		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
 		<style>
 			#sliderSegmentedControl {
 				background-color: white;
@@ -281,6 +273,14 @@
 				</div>
 			</div>
 		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
+		<script type="text/javascript" src="../../js/utils/cryption.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
+		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
+		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
 		<script type="text/javascript">
 			mui.init({
 				gestureConfig: {
@@ -485,6 +485,23 @@
 					} else {
 						mui.toast('未找到对应的上传任务');
 						console.log('未找到对应的上传任务');
+					}
+				});
+
+				//上传中列表的任务
+				mui('#upload').on('longtap', '.mui-table-view-cell', function() {
+					var id = this.getAttribute('id'); //元素id
+					var error = this.getAttribute('data-error'); //文件本地路径
+					console.log('uploaded:' + id + "|" + error);
+					if(error) {
+						var btnArray = ['否', '是'];
+						mui.confirm('确认删除任务？', '提示', btnArray, function(e) {
+							if(e.index == 1) { //是
+								document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+							} else {
+
+							}
+						});
 					}
 				});
 
@@ -883,8 +900,7 @@
 										}
 									});
 									document.getElementById("up_btn_" + upload.__UUID__).style.display = 'none';
-									document.getElementById("up_" + upload.__UUID__).parentNode.removeChild(document.getElementById("up_" + upload.__UUID__));
-									addFile(comData, fPath, fname);
+									addFile(comData, fPath, fname, upload.__UUID__);
 								} else {
 									mui.each(uploadList, function(index, element) {
 										if(element.id == upload.id) {
@@ -892,6 +908,7 @@
 											return false;
 										}
 									});
+									document.getElementById("up_" + upload.__UUID__).setAttribute('data-error', true);
 									document.getElementById("up_btn_" + upload.__UUID__).style.display = 'none';
 									//document.getElementById("up_" + upload.__UUID__).parentNode.removeChild(document.getElementById("up_" + upload.__UUID__));
 									document.getElementById("up_waiting_" + upload.__UUID__).innerText = '上传失败';
@@ -920,7 +937,7 @@
 										document.getElementById("up_waiting_" + id).innerText = '开始请求';
 										break;
 									case 2: //上传任务请求已经建立
-										document.getElementById("up_waiting_" + id).innerText = '请求已经建立';
+										//document.getElementById("up_waiting_" + id).innerText = '请求已经建立';
 										console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
 										break;
 									case 3: //上传任务提交数据
@@ -1121,7 +1138,7 @@
 				 * @param {Object} filePath 本地文件路径
 				 *  @param {Object} fname 本地文件名
 				 */
-				function addFile(comData, filePath, fname) {
+				function addFile(comData, filePath, fname, id) {
 					console.log('addFile:' + JSON.stringify(comData));
 					//27.用户云盘文件上传或创建文件夹
 					//所需参数
@@ -1139,8 +1156,11 @@
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							mui.toast(comData.fname + comData.ftype + ' 上传成功');
+							document.getElementById("up_" + id).parentNode.removeChild(document.getElementById("up_" + id));
 							copyFileToUpload(filePath, fname);
 						} else {
+							document.getElementById("up_waiting_" + id).innerText = '上传失败';
+							document.getElementById("up_" + id).setAttribute('data-error', true);
 							if(data.RspCode == 8) {
 								mui.toast('上传失败 ' + fname + ' ' + data.RspTxt + '');
 							} else {

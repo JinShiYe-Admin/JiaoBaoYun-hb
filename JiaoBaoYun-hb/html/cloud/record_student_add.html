@@ -69,6 +69,9 @@
 
 			mui.plusReady(function() {
 				mui.previewImage();
+				mui('body').on('tap', 'img', function() {
+					document.activeElement.blur();
+				});
 				events.blurBack();
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				mainData = main.data; //接收页面传入的参数值
