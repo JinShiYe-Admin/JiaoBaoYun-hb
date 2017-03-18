@@ -3782,7 +3782,8 @@
 					"fonts/fangzheng.ttf",
 					"image/utils/default_personalimage.png",
 					"image/dynamic/icon_praise_small.png",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"css/show/show.css"
 				],
 				"refer": [],
 				"priority": 0
