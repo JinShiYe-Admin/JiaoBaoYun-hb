@@ -2440,7 +2440,9 @@
 					"js/utils/CloudFileUtil.js",
 					"js/qiniu/qiniu.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/homework/homework-commented.html"
+				],
 				"priority": 0
 			},
 			"html/homework/homeworkRecord-sub.html": {

@@ -14,6 +14,7 @@ html,body,.mui-content{
 	border-color:  #1DB8F1;
 }
 .comment-area{
+	margin-top: 1rem;
 	border: solid thin lightgray;
 }
 .homework-container{
@@ -21,8 +22,9 @@ html,body,.mui-content{
 }
 .comment-item{
 	background-color:#f2f3f5 ;
-	padding: .5rem;
-	margin:-1rem,0 ;
+	padding: .5rem 1rem;
+	/*margin:-1rem,0 ;*/
+	margin: 0 -1rem;
 	color: #383838;
 }
 .result-text{
@@ -52,8 +54,11 @@ html,body,.mui-content{
 .homework-info p,.stu-name{
 	color: #404040;
 }
-.student-info{
-	border-bottom: solid 1px #DEDFE0;
+.the-line{
+	height:1px;
+	background-color: #DEDFE0;
+	margin: 0 -1rem;
+/*	border-bottom: solid 1px ;*/
 }
 .homework-info,.result-text{
 	padding: 15px 0;

@@ -587,7 +587,9 @@
 			"js/qiniu/qiniu.js",
 			"css/mui.min.css"
 		],
-		"refer": []
+		"refer": [
+			"html/homework/homework-commented.html"
+		]
 	},
 	"html/homework/publish-answer.html": {
 		"resources": [
@@ -1356,7 +1358,25 @@
 			"css/iconfont/iconfont.css",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.zoom.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"js/mui.previewimage.js",
+			"js/publicHomeworkProtocol.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": []
 	},
