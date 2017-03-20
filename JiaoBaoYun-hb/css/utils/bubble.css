@@ -11,7 +11,7 @@
         border-radius: 5px;
         padding:2.5%;
         margin:2.5%;
-        border: 1px solid #E4E4E4;
+     /*   border: 1px solid #E4E4E4;*/
     }
     .chat_content_top{
     	width: 95%;
@@ -102,7 +102,7 @@
         pointer-events: none;
     }
     .chat_content_left:before {
-        border-right-color: #cccccc;
+        /*border-right-color: #cccccc;*/
         z-index: 1;
     }
     .chat_content_left:after {

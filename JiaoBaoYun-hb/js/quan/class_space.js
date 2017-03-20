@@ -418,7 +418,8 @@ var setListener = function(userId) {
 	document.getElementById('check').addEventListener('tap', function() {
 		events.fireToPageWithData('classSpace-persons.html', 'personsList', {
 			type: 1,
-			classSpaceId: parseInt(zanSpan.getAttribute('tabId'))
+			classSpaceId: parseInt(zanSpan.getAttribute('tabId')),
+			classId:postData.classId//id
 		})
 		mui('.mui-popover').popover('toggle');
 	})
@@ -438,7 +439,8 @@ var setListener = function(userId) {
 		if(!secondTime) {
 			events.fireToPageWithData('classSpace-persons.html', 'personsList', {
 				type: 0,
-				classSpaceId: parseInt(this.getAttribute('tabId')) //id
+				classSpaceId: parseInt(this.getAttribute('tabId')),
+				classId:postData.classId//id
 			});
 		}
 

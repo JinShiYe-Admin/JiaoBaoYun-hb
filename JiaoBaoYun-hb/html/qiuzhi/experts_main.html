@@ -124,6 +124,10 @@
 				width: 20px !important;*/
 			}
 
+			.mui-btn {
+				background-color: #1DB8F1 !important;
+			}
+
 			.expert-answer {
 				/*专家回答数*/
 				color: #B7B7B7;
@@ -153,8 +157,8 @@
 
 			.expert-invited {
 				/*已被邀请按钮*/
-				background-color: #d4d4d4;
-				border: 1px solid #d4d4d4;
+				background-color: #d4d4d4 !important;
+				border: 1px solid #d4d4d4 !important;
 				padding-top: 3px;
 				padding-bottom: 3px;
 			}
@@ -219,7 +223,9 @@
 		//启用双击监听
 		mui.init({
 			gestureConfig: {
-				doubletap: true
+				doubletap: true,
+				hold: true,
+				release: true
 			}
 		});
 
@@ -242,15 +248,8 @@
 					<div id="sliderGroup" class="mui-slider-group">\
 					</div>\
 				</div>';
-
-			//			document.getElementById("sliderSegmentedControl").style.width = document.body.querySelector('.more-navigation').offsetLeft + 'px';
-
 			//顶部增加话题和底部列表的框架
 			addChannels(mainData.channelInfo, mainData.allChannels, function() {
-				//				var gallery = mui('.mui-slider');
-				//				gallery.slider({
-				//					interval: 0 //自动轮播周期，若为0则不自动播放，默认为0；
-				//				});
 
 				mui('#slider').slider();
 				//创建下拉上拉刷新控件
@@ -303,6 +302,16 @@
 				console.log('transportData ' + JSON.stringify(transportData));
 				events.openNewWindowWithData('qiuzhi-newQ.html', transportData);
 			});
+
+			//			mui('#sliderGroup').on('hold', '.expert-ask', function() {
+			//				this.style.backgroundColor='#1DB8F1';
+			//				console.log('hole expert-ask');
+			//			});
+			//
+			//			mui('#sliderGroup').on('release', '.expert-ask', function() {
+			//				var element = this.parentNode.parentNode;
+			//				console.log('release expert-ask');
+			//			});
 
 			//点击邀请
 			mui('#sliderGroup').on('tap', '.expert-invite', function() {

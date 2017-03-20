@@ -72,11 +72,12 @@
 					changeIndexHeader();
 				});
 				window.addEventListener('infoChanged', function() {
+					var cityID = sliderId.replace('top_', '');
 					console.log('重现显示展现界面')
 					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 					pageIndex = 1;
 					pullFlag = 0;
-					requestData(cities[0].acode, 1);
+					requestData(cityID, 1);
 				});
 
 				//---订制城市---start---

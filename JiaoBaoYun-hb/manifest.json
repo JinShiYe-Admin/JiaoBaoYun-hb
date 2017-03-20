@@ -844,7 +844,8 @@
 					"html/quan/studentdynamic_main.html",
 					"html/mine/qun_manage.html",
 					"html/mine/qun_manage_main.html",
-					"html/quan/zone_main.html"
+					"html/quan/zone_main.html",
+					"html/mine/qun_manage_1.html"
 				],
 				"priority": 0
 			},
@@ -1589,7 +1590,9 @@
 					"css/utils/preview.css",
 					"js/utils/cryption.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/cloud/storage_show_imge.html"
+				],
 				"priority": 0
 			},
 			"html/mine/group-info.html": {
@@ -3790,7 +3793,9 @@
 					"fonts/iconfont.ttf",
 					"css/show/show.css"
 				],
-				"refer": [],
+				"refer": [
+					"html/show/add-comment.html"
+				],
 				"priority": 0
 			},
 			"html/mine/qun_manage_info_change_post.html": {
@@ -3823,6 +3828,25 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/cloud/storage_show_imge.html": {
+				"resources": [
+					"js/utils/cryption.js",
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"fonts/mui.ttf",
+					"css/utils/common.css",
+					"css/utils/preview.css",
+					"js/cloud/mui.previewimage.js",
+					"js/mui.zoom.js",
+					"js/mui.min.js",
+					"fonts/fangzheng.ttf",
+					"js/utils/CloudFileUtil.js",
+					"css/mui.min.css",
+					"js/qiniu/qiniu.js"
 				],
 				"refer": [],
 				"priority": 0
