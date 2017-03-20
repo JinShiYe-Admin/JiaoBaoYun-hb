@@ -109,12 +109,12 @@ mui.plusReady(function() {
 
 	});
 	tab_div.addEventListener('hold', function() {
-		console.log('tab_div-hold');
+		//console.log('tab_div-hold');
 		tab_div.style.background = '#DDDDDD';
 		tab_font.style.color = 'white';
 	});
 	tab_div.addEventListener('release', function() {
-		console.log('tab_div-release');
+		//console.log('tab_div-release');
 		tab_div.style.background = 'white';
 		tab_font.style.color = 'gray';
 	});
@@ -224,8 +224,8 @@ function setAskFocus(askId, status) {
 			//刷新界面显示
 			if(document.getElementById("guanzhu").innerText == '关注') {
 				document.getElementById("guanzhu").innerText = '已关注';
-				document.getElementById("guanzhu").style.background = '#b7b7b7';
-				document.getElementById("guanzhu").style.border = '#b7b7b7';
+				document.getElementById("guanzhu").style.background = '#e4e4e4';
+				document.getElementById("guanzhu").style.border = '#e4e4e4';
 			} else {
 				document.getElementById("guanzhu").innerText = '关注';
 				document.getElementById("guanzhu").style.background = '#1db8F1';
