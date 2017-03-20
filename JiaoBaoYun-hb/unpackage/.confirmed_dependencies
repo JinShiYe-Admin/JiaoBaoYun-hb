@@ -92,7 +92,8 @@
 			"html/quan/studentdynamic_main.html",
 			"html/cloud/app_notes_main.html",
 			"html/quan/zone_main.html",
-			"html/mine/qun_manage_info.html"
+			"html/mine/qun_manage_info.html",
+			"html/mine/qun_manage_1.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -872,7 +873,10 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"fonts/fangzheng.ttf",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/mui.min.js"
 		],
 		"refer": [
 			"html/register/modify_password.html",
@@ -1835,6 +1839,29 @@
 			"js/utils/CloudFileUtil.js",
 			"css/mui.min.css",
 			"js/qiniu/qiniu.js"
+		]
+	},
+	"html/mine/qun_manage_invite.html": {
+		"resources": [
+			"image/utils/default_personalimage.png",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	}
 }

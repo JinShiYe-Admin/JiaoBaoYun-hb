@@ -844,7 +844,8 @@
 					"html/quan/studentdynamic_main.html",
 					"html/mine/qun_manage.html",
 					"html/mine/qun_manage_main.html",
-					"html/quan/zone_main.html"
+					"html/quan/zone_main.html",
+					"html/mine/qun_manage_1.html"
 				],
 				"priority": 0
 			},
