@@ -3789,7 +3789,9 @@
 					"fonts/iconfont.ttf",
 					"css/show/show.css"
 				],
-				"refer": [],
+				"refer": [
+					"html/show/add-comment.html"
+				],
 				"priority": 0
 			},
 			"html/mine/qun_manage_info_change_post.html": {

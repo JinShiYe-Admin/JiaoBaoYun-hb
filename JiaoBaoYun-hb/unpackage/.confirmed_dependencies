@@ -192,7 +192,8 @@
 		"refer": [
 			"html/utils/customizeCity.html",
 			"html/show/add-comment.html",
-			"html/quan/zone_main.html"
+			"html/quan/zone_main.html",
+			"html/quan/space-detail.html"
 		]
 	},
 	"html/register/register_phoneNumber.html": {
@@ -1668,7 +1669,9 @@
 			"fonts/iconfont.ttf",
 			"css/show/show.css"
 		],
-		"refer": []
+		"refer": [
+			"html/show/add-comment.html"
+		]
 	},
 	"html/cloud/app_notes_main.html": {
 		"resources": [

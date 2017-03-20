@@ -189,7 +189,7 @@
 
 	<body>
 		<!--下拉刷新容器-->
-		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		<div  class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
 				<!--数据列表-->
 				<ul class="mui-table-view">
@@ -211,17 +211,18 @@
 		var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
 		var publisherId;
 		mui.init({
-			pullRefresh: {
-				container: '#pullrefresh',
-				down: {
-					callback: pulldownRefresh
-				},
+//			pullRefresh: {
+//				container: '#pullrefresh',
+//				down: {
+//					callback: pulldownRefresh
+//				},
 //				up: {
 //					contentrefresh: '',
 //					callback: pullupRefresh
 //				}
-			}
+//			}
 		});
+		mui('.mui-scroll-wrapper').scroll();
 		var SCREEN_WIDTH;
 		mui.plusReady(function() {
 			SCREEN_WIDTH = plus.screen.resolutionWidth;
