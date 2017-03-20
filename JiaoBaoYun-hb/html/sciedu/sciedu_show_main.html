@@ -24,49 +24,49 @@
 			mui.init();
 			mui.plusReady(function() {
 
-				var wd = events.showWaiting();
+				//var wd = events.showWaiting();
 
 				//---获取数据---start---
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var data = main.data; //接收A页面传入参数值
 				console.log('main-data:' + JSON.stringify(data));
 
-				var sub = plus.webview.create(data.turl, data.turl, {
-					top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px',
-					bottom: '0px'
-				});
-				sub.addEventListener("loading", function() { //Webview窗口页面开始加载事件
-					console.log('sub loading');
-//					wd.close();
-				});
-
-				sub.addEventListener("error", function() { //Webview窗口错误事件
-					console.log('sub error');
-					wd.close();
-					mui.toast('加载失败');
-				});
-
-				sub.addEventListener("loaded", function() { //Webview窗口页面加载完成事件
-					console.log('sub loaded');
-					wd.close();
-				});
-
-				main.append(sub);
-
-				//				mui.openWindow({
-				//					url: data.turl,
-				//					id: data.turl,
-				//					styles: {
-				//						top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px', //设置距离顶部的距离
-				//						bottom: '0px'
-				//					},
-				//					waiting: {
-				//						title: '正在加载...'
-				//					},
-				//					show: {
-				//						aniShow: 'none'
-				//					}
+				//				var sub = plus.webview.create(data.turl, data.turl, {
+				//					top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px',
+				//					bottom: '0px'
 				//				});
+				//				sub.addEventListener("loading", function() { //Webview窗口页面开始加载事件
+				//					console.log('sub loading');
+				////					wd.close();
+				//				});
+				//
+				//				sub.addEventListener("error", function() { //Webview窗口错误事件
+				//					console.log('sub error');
+				//					wd.close();
+				//					mui.toast('加载失败');
+				//				});
+				//
+				//				sub.addEventListener("loaded", function() { //Webview窗口页面加载完成事件
+				//					console.log('sub loaded');
+				//					wd.close();
+				//				});
+				//
+				//				main.append(sub);
+
+				mui.openWindow({
+					url: data.turl,
+					id: data.turl,
+					styles: {
+						top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px', //设置距离顶部的距离
+						bottom: '0px'
+					},
+					waiting: {
+						title: '正在加载...'
+					},
+					show: {
+						aniShow: 'none'
+					}
+				});
 				//---获取数据---end---
 			});
 		</script>

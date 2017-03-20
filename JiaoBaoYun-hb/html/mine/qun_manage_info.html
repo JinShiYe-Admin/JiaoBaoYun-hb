@@ -168,6 +168,14 @@
 						post: false, //是否post
 						listener: [{ webid: 'qun_manage_info.html', winid: 'valueChange' }] //监听
 					});
+
+					qname.disabled = 'disabled';
+					qnote.disabled = 'disabled';
+
+					setTimeout(function() {
+						qname.disabled = false;
+						qnote.disabled = false;
+					}, 1000);
 				});
 
 				document.getElementById("commit").addEventListener('tap', function() {
@@ -301,14 +309,17 @@
 								mui.back();
 							} else {
 								uploadQunHeadImge(wd, data.RspData, qunImgPath, function(successCB) {
-									changInfo({
-										gid: gid, //群id
-										gname: gname, //群名
-										gnote: gnote, //群说明
-										gimg: successCB, //群头像
-									});
-									mui.toast('创建群成功');
-									mui.back();
+									setTimeout(function() {
+										changInfo({
+											gid: gid, //群id
+											gname: gname, //群名
+											gnote: gnote, //群说明
+											gimg: successCB, //群头像
+										});
+										mui.toast('创建群成功');
+										wd.close();
+										mui.back();
+									}, 2000);
 								}, function(errorCB) {
 									changInfo({
 										gid: gid, //群id
@@ -317,6 +328,7 @@
 										gimg: '', //群头像
 									});
 									mui.toast('创建群成功,上传群头像失败：' + JSON.stringify(errorCB));
+									wd.close();
 									mui.back();
 								});
 							}
@@ -399,7 +411,6 @@
 												rid: qunId, //要修改的群id
 												vtp: 'gimg', //更改项，指更改用户信息的相应项,对应后面的vvl值,gimg(头像),gname(群名),gnote(群说明)
 												vvl: gimgPath, //要修改成的值
-
 											};
 											//返回值model：model_groupList
 											// 等待的对话框
@@ -412,7 +423,6 @@
 													errorCallBack();
 													mui.toast(data.RspTxt);
 												}
-												wd.close();
 												wd2.close();
 											});
 										} else { //上传失败

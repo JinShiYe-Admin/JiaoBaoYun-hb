@@ -3131,7 +3131,8 @@
 					"js/publicProtocol.js",
 					"js/mui.min.js",
 					"fonts/mui.ttf",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [],
 				"priority": 0

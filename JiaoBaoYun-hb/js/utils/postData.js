@@ -8,7 +8,7 @@ function postData(url, data, callback, waitingDialog) {
 		dataType: 'json',
 		type: 'post',
 		contentType: "application/json",
-		timeout: 60000,
+		timeout: 30000,
 		success: function(data) {
 			//			console.log('data.RspCode:' + data.RspCode + 'data.data:' + data.data);
 			if(data.RspCode == 6) {
@@ -57,7 +57,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 			dataType: 'json',
 			type: 'post',
 			contentType: "application/json",
-			timeout: 60000,
+			timeout: 30000,
 			//			success: callback,
 			success: function(data) {
 				//				console.log('data.RspCode:' + data.RspCode + 'data.data:' + data.data);
