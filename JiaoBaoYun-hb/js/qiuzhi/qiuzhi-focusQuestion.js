@@ -178,7 +178,7 @@ var createList = function(listContainer, record) {
 
 		'</div>' +
 		'<div class="ask-container ">' +
-		'<h5 class="single-line ask-title " >' + record.AskTitle + '</h5>' +
+		'<h5 class="single-line ask-title " style="font-size: 1.6rem;" >' + record.AskTitle + '</h5>' +
 
 		'</div>' +
 		'<p>' + record.FocusNum + '关注·' + record.AnswerNum + '回答' + '</p>' +
