@@ -216,10 +216,10 @@
 				down: {
 					callback: pulldownRefresh
 				},
-				up: {
-					contentrefresh: '',
-					callback: pullupRefresh
-				}
+//				up: {
+//					contentrefresh: '',
+//					callback: pullupRefresh
+//				}
 			}
 		});
 		var SCREEN_WIDTH;
@@ -793,12 +793,11 @@
 			function pulldownRefresh() {
 				setTimeout(function() {
 					var comData = {
-						userId: personalUTID, //用户ID
-						userSpaceId: datasource.PublisherId, //发布用户ID
-
-						pageIndex: '1', //当前页数
-						pageSize: '10' //每页记录数
-					};
+				userId: datasource2.PublisherId, //用户ID
+				userSpaceId: datasource2.TabId, //发布用户ID
+				pageIndex: '1', //当前页数
+				pageSize: '100' //每页记录数
+			};
 					//请求数据
 					requestData(comData);
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
