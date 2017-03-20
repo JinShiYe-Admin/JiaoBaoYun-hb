@@ -311,7 +311,8 @@
 			"js/cloud/AndroidFileSystem.js",
 			"css/cloud/file.css",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/cloud/storage_transport.html",
@@ -576,7 +577,15 @@
 			"js/utils/RSAEncrypt.js",
 			"js/utils/compress.js",
 			"js/utils/camera.js",
-			"js/libs/myStorage/myStorage.js"
+			"js/libs/myStorage/myStorage.js",
+			"js/utils/cryption.js",
+			"js/utils/events.js",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"css/utils/common.css",
+			"js/utils/CloudFileUtil.js",
+			"js/qiniu/qiniu.js",
+			"css/mui.min.css"
 		],
 		"refer": []
 	},
