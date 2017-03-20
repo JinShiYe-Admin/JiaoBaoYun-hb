@@ -253,3 +253,7 @@ div>.icon-xiangce:before,
 	height: 1px !important;
 	background-color:#B7B7B7 !important;
 }
+.divider-line{
+	background-color: #E4E4E4;
+	height: 1px;
+}

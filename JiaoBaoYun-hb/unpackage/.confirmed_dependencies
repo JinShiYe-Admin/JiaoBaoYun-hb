@@ -731,7 +731,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
 			"js/storageKeyName.js",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"fonts/mui.ttf"
 		],
 		"refer": []
 	},
