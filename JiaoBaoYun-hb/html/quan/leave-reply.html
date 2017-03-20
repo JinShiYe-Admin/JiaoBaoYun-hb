@@ -13,6 +13,24 @@
 		<!--公用事件js文件-->
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<style type="text/css">
+			.input-content {
+				width: 100%;
+				height: 20rem;
+				background-color: white;
+				border-color: #E4E4E4;
+			}
+			/**
+ * 输入内容样式
+ */
+			
+			textarea {
+				border-radius: 5px 5px 0 0;
+				border-color: transparent;
+				width: 100%;
+				height: 20rem;
+			}
+		</style>
 
 	</head>
 
@@ -24,7 +42,7 @@
 		</header>
 		<div class="mui-content mo-background-color">
 			<div class="input-content">
-				<textarea id='content' class="mui-input-clear question" placeholder="留言..." style="height: 200px;"></textarea>
+				<textarea id='content' class="mui-input-clear" placeholder="留言..." style="height: 200px;"></textarea>
 			</div>
 		</div>
 	</body>
@@ -33,11 +51,11 @@
 			var httpData = plus.webview.currentWebview().data;
 			var leaveContent = document.getElementById('content');
 			events.addTap('publish', function() {
-				var tempText= leaveContent.value;
-				if(!tempText||tempText=='') {
+				var tempText = leaveContent.value;
+				if(!tempText || tempText == '') {
 					mui.toast('请输入留言');
 					return;
-				}else{
+				} else {
 					tempText = replaceAllBL(tempText);
 				}
 				httpData.msgContent = tempText;
@@ -50,7 +68,7 @@
 					if(data.RspCode == 0) {
 						mui.toast('成功')
 						leaveContent.value = '';
-						events.fireToPageNone('leaveNew.html','refreshLeaveList');
+						events.fireToPageNone('leaveNew.html', 'refreshLeaveList');
 						mui.back();
 					} else {
 						mui.toast(data.RspTxt);
