@@ -195,6 +195,7 @@ var dynamiclistitem = (function($, mod) {
 		} else {}
 		var commentList = InteractionData[3]; //评论列表数组
 
+
 		//[commentList]:评论列表1.评论[commenter,content]评论者，评论内容
 		//						2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
 
@@ -223,7 +224,6 @@ var dynamiclistitem = (function($, mod) {
 		} else {
 			html7 = '</div><div class="mui-media-body"><p>浏览' + viewCount + '次</p></div></div>';
 		}
-
 		var html8 = '<div id="line" class="mui-col-sm-12 mui-col-xs-12 "><div class="mui-media-body dynamic-line"></div></div>';
 
 		html = html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8;
@@ -265,7 +265,7 @@ var dynamiclistitem = (function($, mod) {
 					var tempModel = element.Replys;
 					var html1 = '<div id="replyComment' + data[4] + idFlag + id + '-' + index + '-' + i + '" class="mui-media-body replyComment">';
 					var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].UserIdName + '</font>';
-					var html3 = '<font class="common-font-family-Regular" style = "font-size:14px">回复</font>';
+					var html3 = '<font class="common-font-family-Regular" >回复</font>';
 					var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].ReplyIdName + '</font>';
 					var html5 = '<font class="common-font-family-Regular" style = "font-size:14px">：' + tempModel[i].CommentContent + '</font></div>';
 					replyComment = replyComment + html1 + html2 + html3 + html4 + html5;
@@ -278,7 +278,8 @@ var dynamiclistitem = (function($, mod) {
 			htmlCommentList2 = htmlCommentList2 + firstComment + replyComment;
 		});
 		if(commentList.length > 20 && (!document.getElementById("spaceDetail"))) {
-			showAll = '<div id="show2' + data[4] + idFlag + id + '" class="showAll show2" style="color:gray;">展开全部</div>'
+			console.log('评论大于20')
+			showAll = '<div id="show2' + data[4] + idFlag + id + '" class=" show2" style="color:gray;">展开全部</div>'
 		} else {
 			showAll = '';
 		}

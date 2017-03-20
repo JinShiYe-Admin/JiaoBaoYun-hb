@@ -190,7 +190,9 @@
 			"js/storageKeyName.js"
 		],
 		"refer": [
-			"html/utils/customizeCity.html"
+			"html/utils/customizeCity.html",
+			"html/show/add-comment.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/register/register_phoneNumber.html": {
@@ -311,7 +313,8 @@
 			"js/cloud/AndroidFileSystem.js",
 			"css/cloud/file.css",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/cloud/storage_transport.html",
@@ -496,7 +499,8 @@
 			"js/publicProtocol.js",
 			"js/mui.min.js",
 			"css/mui.min.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": []
 	},
@@ -576,9 +580,19 @@
 			"js/utils/RSAEncrypt.js",
 			"js/utils/compress.js",
 			"js/utils/camera.js",
-			"js/libs/myStorage/myStorage.js"
+			"js/libs/myStorage/myStorage.js",
+			"js/utils/cryption.js",
+			"js/utils/events.js",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"css/utils/common.css",
+			"js/utils/CloudFileUtil.js",
+			"js/qiniu/qiniu.js",
+			"css/mui.min.css"
 		],
-		"refer": []
+		"refer": [
+			"html/homework/homework-commented.html"
+		]
 	},
 	"html/homework/publish-answer.html": {
 		"resources": [
@@ -717,7 +731,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
 			"js/storageKeyName.js",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"fonts/mui.ttf"
 		],
 		"refer": []
 	},
@@ -1347,7 +1362,25 @@
 			"css/iconfont/iconfont.css",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.zoom.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"js/mui.previewimage.js",
+			"js/publicHomeworkProtocol.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": []
 	},
@@ -1568,7 +1601,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
 	},
@@ -1758,5 +1792,29 @@
 			"css/utils/common.css"
 		],
 		"refer": []
+	},
+	"html/show/add-comment.html": {
+		"resources": [
+			"css/iconfont/iconfont.css",
+			"css/quan/custom-textarea.css",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
+		]
 	}
 }

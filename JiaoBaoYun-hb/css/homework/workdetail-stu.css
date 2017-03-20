@@ -59,6 +59,7 @@ html,body,.mui-content{
 }
 .brief-title,.brief-content{
 	color: #404040;
+	word-wrap: break-word;
 }
 .work-detail{
 	margin-bottom: 8.8rem;

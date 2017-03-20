@@ -9,6 +9,24 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<!--<link rel="stylesheet" type="text/css" href="../../css/quan/custom-textarea.css" />-->
+		<style type="text/css">
+			.input-content {
+				width: 100%;
+				height: 20rem;
+				background-color: white;
+				border-color: #E4E4E4;
+			}
+			/**
+ * 输入内容样式
+ */
+			
+			textarea {
+				border-radius: 5px 5px 0 0;
+				border-color: transparent;
+				width: 100%;
+				height: 20rem;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -19,7 +37,7 @@
 		</header>
 		<div class="mui-content">
 			<div class="input-content">
-				<textarea id="answerContent" placeholder="修改简介,最多100字" oninput="if(value.length>100)value=value.slice(0,100)" ></textarea>
+				<textarea id="answerContent" placeholder="修改简介,最多100字" oninput="if(value.length>100)value=value.slice(0,100)"></textarea>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -32,11 +50,11 @@
 			mui.plusReady(function() {
 				var data = plus.webview.currentWebview().data;
 				var answerContent = document.getElementById("answerContent");
-					answerContent.innerHTML = data;
+				answerContent.innerHTML = data;
 				jQuery('#answerContent').prop("maxLength", "4000");
 				window.addEventListener('modifyExpertNote', function(event) {
 					expertModel = event.detail.data;
-					
+
 				});
 				//提交按钮
 				events.addTap('submitBtn', function() {
@@ -45,8 +63,8 @@
 						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 						//需要加密的数据
 						var comData = {
-							userId: personalUTID,//用户ID
-							userNote:answerContent//用户简介,500
+							userId: personalUTID, //用户ID
+							userNote: answerContent //用户简介,500
 						};
 						// 等待的对话框
 						var wd = events.showWaiting();

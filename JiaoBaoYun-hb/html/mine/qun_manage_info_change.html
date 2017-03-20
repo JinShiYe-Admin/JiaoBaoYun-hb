@@ -172,6 +172,14 @@
 						post: true, //是否post
 						listener: [subData.listener, { webid: 'qun_manage_info_change.html', winid: 'valueChange' }]
 					});
+
+					qname.disabled = 'disabled';
+					qnote.disabled = 'disabled';
+
+					setTimeout(function() {
+						qname.disabled = false;
+						qnote.disabled = false;
+					}, 1000);
 				});
 
 				//修改群信息成功后修改界面的值

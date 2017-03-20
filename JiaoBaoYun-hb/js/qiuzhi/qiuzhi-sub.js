@@ -274,6 +274,7 @@ var setChannelList = function(data) {
 	}
 }
 var getInnerHTML = function(cell) {
+	console.log("回答内容："+cell.AnswerContent);
 	var inner = '<div>' +
 		'<div class="channel-info">' +
 		'<p class="channel-title"><img src="' + getChannelIcon(cell) + '" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
@@ -282,7 +283,7 @@ var getInnerHTML = function(cell) {
 		'<h5 class="single-line ask-title" askId="' + cell.TabId + '">' + cell.AskTitle + '</h5>';
 	if(cell.AnswerContent && cell.AnswerContent.length > 0) {
 		inner += '<div class="answer-container"><div class="imgs-container">' + getImgs(cell) + '</div>' +
-			'<p class="answer-content triple-line" answerInfo="' + cell.AnswerId + '">' + isAnonymity(cell)+":"+cell.AnswerContent + '</p>' +
+			'<p class="answer-content triple-line" answerInfo="' + cell.AnswerId + '">' + isAnonymity(cell)+":"+cell.AnswerContent.replace(/<[^>]*>/g,'') + '</p>' +
 			'</div></div>' +
 			'<div class="extra-info"></div>' +
 			'<p class="question-bottom">' + cell.IsLikeNum + '赞·' + cell.CommentNum + '评论·' + setFocusCondition(cell) + '</p></div>'

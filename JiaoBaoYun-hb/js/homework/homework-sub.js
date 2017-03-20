@@ -51,6 +51,7 @@ mui.plusReady(function() {
 		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 		//获取个人身份角色
 		role = e.detail.data.role;
+		console.log("角色："+role);
 		//老师
 		if(role == 2) {
 			mui("#popover").popover('hide');
@@ -271,6 +272,7 @@ var initializeClassesIndex = function(i) {
  * @param {Object} callback
  */
 var requireHomeWork = function(classModel, callback) {
+	console.log("请求作业数据："+123);
 	var comData = {};
 	if(role == 2) {
 		comData.teacherId = personalUTID;

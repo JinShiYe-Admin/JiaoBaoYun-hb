@@ -168,6 +168,14 @@
 						post: false, //是否post
 						listener: [{ webid: 'qun_manage_info.html', winid: 'valueChange' }] //监听
 					});
+
+					qname.disabled = 'disabled';
+					qnote.disabled = 'disabled';
+
+					setTimeout(function() {
+						qname.disabled = false;
+						qnote.disabled = false;
+					}, 1000);
 				});
 
 				document.getElementById("commit").addEventListener('tap', function() {

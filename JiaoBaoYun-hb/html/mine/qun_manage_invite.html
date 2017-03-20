@@ -280,6 +280,12 @@
 				 * 通过用户账号和手机号搜索用户
 				 */
 				function searchUser() {
+					chooseInfo = '0'; //记录选择的资料
+					chooseInfoElementId = ''; //记录选择的资料元素Id
+					document.getElementById("bot").style.display = 'none';
+					document.getElementById("unick").innerText = '';
+					document.getElementById("uimg").src = '../../image/utils/default_personalimage.png';
+					document.getElementById("row_data").innerHTML = '';
 					var searchValue = input_search.value;
 					console.log('searchValue:' + searchValue);
 					var uid = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uid; //账号电话
@@ -313,26 +319,14 @@
 								userData = null;
 								userData = data.RspData[0];
 								console.log('搜索结果:' + JSON.stringify(userData));
-
-								//if(userData.unick == null) {
-								//document.getElementById("unick").innerText = userData.uid;
-								//} else {
 								document.getElementById("unick").innerText = userData.unick; //昵称
-								//}
-
 								document.getElementById("uimg").src = updateHeadImg(userData.uimg, 2);
-
 								document.getElementById("bot").style.display = 'inline';
-								document.getElementById("row_data").innerHTML = '';
 								getUserInfo(); //查询资料
 							} else if(data.RspCode == 9999) {
-								document.getElementById("bot").style.display = 'none';
-								document.getElementById("unick").innerText = '';
-								document.getElementById("uimg").src = '../../image/utils/default_personalimage.png';
 								userData = null;
 								console.log('该用户不存在-userData:' + JSON.stringify(userData));
 								mui.toast('该用户不存在');
-
 							} else {
 								userData = null;
 								mui.toast(data.RspTxt);
@@ -465,8 +459,8 @@
 						wd.close();
 						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
-							chooseInfo = '0'; //记录选择的资料
-							chooseInfoElementId = ''; //记录选择的资料元素Id
+							//chooseInfo = '0'; //记录选择的资料
+							//chooseInfoElementId = ''; //记录选择的资料元素Id
 							mui.toast('已发送邀请');
 						} else if(data.RspCode == 9) {
 							if(data.RspTxt == '已有相同记录') {
