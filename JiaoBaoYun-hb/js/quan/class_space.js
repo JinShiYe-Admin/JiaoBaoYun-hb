@@ -142,7 +142,7 @@ var class_space = (function(mod) {
 				var personalData = pInfo.RspData;
 				for(var i in list) {
 					for(var j in personalData) {
-						if(list[i].PublisherId == personalData[j].utid) {
+						if(list[i].PublisherId == personalData[j].utid&&personalData[j].mstype==2) {
 							jQuery.extend(list[i], personalData[j]);
 							break;
 						}
@@ -424,7 +424,7 @@ var setListener = function(userId) {
 	})
 	var firstTime = null;
 
-	mui('.mui-table-view').on('tap', '.icon-xianshi', function() {
+	mui('.mui-table-view').on('tap', '.icon-chakan', function() {
 		var secondTime = null;
 		if(firstTime) {
 			secondTime = '123456';
