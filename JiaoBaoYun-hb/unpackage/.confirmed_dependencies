@@ -349,7 +349,9 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
 		],
-		"refer": []
+		"refer": [
+			"html/cloud/storage_show_imge.html"
+		]
 	},
 	"html/qiuzhi/qiuzhi_home.html": {
 		"resources": [
@@ -1816,6 +1818,23 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/cloud/storage_show_imge.html": {
+		"resources": [
+			"js/utils/cryption.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"fonts/mui.ttf",
+			"css/utils/common.css",
+			"css/utils/preview.css",
+			"js/cloud/mui.previewimage.js",
+			"js/mui.zoom.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/utils/CloudFileUtil.js",
+			"css/mui.min.css",
+			"js/qiniu/qiniu.js"
 		]
 	}
 }
