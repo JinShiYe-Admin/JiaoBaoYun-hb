@@ -8,6 +8,11 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<style>
+			.mui-pull {
+				font-weight: normal;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -28,7 +33,7 @@
 				var data = main.data; //接收A页面传入参数值
 				//从搜索界面跳转的数据，TabId是问题id，得转换为话题id
 				var temp0 = data.channelInfo.AskChannelId;
-				if (temp0>0) {
+				if(temp0 > 0) {
 					data.channelInfo.TabId = temp0;
 				}
 				console.log('qiuzhi-question.html:' + JSON.stringify(data));
