@@ -10,10 +10,10 @@
 	width: 80%;
 }
 
-
+/*回复或评论内容*/
 .comment-content {
-	font-size: 1.6rem;
-	color: #323232;
+	font-size: 1.4rem;
+	color: #474747;
 	padding: .5rem;
 }
 
