@@ -102,6 +102,7 @@
 				//---订制城市---end---
 				//评论后，返回，刷新界面
 				window.addEventListener('refreshShow', function(data) {
+					personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
 					var citycode = sliderId.replace('top_', '');
 					var tempData = data.detail;
 					console.log(JSON.stringify(tempData));
