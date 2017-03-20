@@ -195,6 +195,7 @@ var dynamiclistitem = (function($, mod) {
 		} else {}
 		var commentList = InteractionData[3]; //评论列表数组
 
+
 		//[commentList]:评论列表1.评论[commenter,content]评论者，评论内容
 		//						2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
 
@@ -277,7 +278,8 @@ var dynamiclistitem = (function($, mod) {
 			htmlCommentList2 = htmlCommentList2 + firstComment + replyComment;
 		});
 		if(commentList.length > 20 && (!document.getElementById("spaceDetail"))) {
-			showAll = '<div id="show2' + data[4] + idFlag + id + '" class="showAll show2" style="color:gray;">展开全部</div>'
+			console.log('评论大于20')
+			showAll = '<div id="show2' + data[4] + idFlag + id + '" class=" show2" style="color:gray;">展开全部</div>'
 		} else {
 			showAll = '';
 		}
