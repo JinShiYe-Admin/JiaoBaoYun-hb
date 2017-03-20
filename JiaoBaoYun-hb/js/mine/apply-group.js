@@ -12,6 +12,7 @@ var myGroups = []; //我现所在群信息
 var groupRoles = []; //群角色
 var choseGroupId; //选中申请的群Id
 mui.plusReady(function() {
+	events.blurBack();
 	//设置最大长度
 	jQuery("#extra-input").prop("maxLength", 20);
 	list = document.getElementById('groups-container');
