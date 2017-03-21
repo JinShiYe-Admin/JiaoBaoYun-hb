@@ -6,7 +6,7 @@ var Statusbar = (function() {
 	var barHeight = function() {
 		//判断当前是否为沉浸式状态栏模式，返回true或者false
 		var isImmersedStatusbar = plus.navigator.isImmersedStatusbar();
-		if(isImmersedStatusbar) {
+		if(1) {
 			//是沉浸式状态栏模式
 			localStorage.setItem('$Statusbar', plus.navigator.getStatusbarHeight() + 'px'); //系统状态栏高度
 			localStorage.setItem('StatusHeightNo',plus.navigator.getStatusbarHeight());//数值

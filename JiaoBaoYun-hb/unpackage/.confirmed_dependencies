@@ -203,7 +203,18 @@
 			"fonts/fangzheng.ttf",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"html/register/js/mui.enterfocus.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/sortSign.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/myStorage/myStorage.js"
 		],
 		"refer": [
 			"html/register/yanZhengMa.html"
@@ -302,11 +313,24 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"fonts/iconfont.ttf",
+			"fonts/fangzheng.ttf",
+			"js/publicHomeworkProtocol.js",
+			"css/homework/subjects-icon.css",
+			"image/homework/need-submit.png",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/h5fresh.js",
+			"image/homework/submitted.png"
 		],
 		"refer": [
 			"html/homework/publish-answer.html",
-			"html/homework/homework-tea-sub.html"
+			"html/homework/homework-tea-sub.html",
+			"html/homework/doHomework-stu.html",
+			"html/homework/homework-publish.html",
+			"html/homework/workdetail-stu.html",
+			"html/homework/workdetailTea-temporary.html",
+			"html/homework/workdetail-tea.html"
 		]
 	},
 	"html/cloud/storage_upload.html": {
@@ -736,7 +760,8 @@
 			"js/utils/RSAEncrypt.js",
 			"js/storageKeyName.js",
 			"js/utils/events.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"image/homework/need-submit.png"
 		],
 		"refer": []
 	},
@@ -763,7 +788,23 @@
 			"css/homework/subjects-icon.css",
 			"js/publicHomeworkProtocol.js",
 			"fonts/fangzheng.ttf",
-			"js/storageKeyName.js"
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": []
 	},
@@ -1822,7 +1863,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js"
-		]
+		],
+		"refer": []
 	},
 	"html/cloud/storage_show_imge.html": {
 		"resources": [
@@ -1839,7 +1881,8 @@
 			"js/utils/CloudFileUtil.js",
 			"css/mui.min.css",
 			"js/qiniu/qiniu.js"
-		]
+		],
+		"refer": []
 	},
 	"html/mine/qun_manage_invite.html": {
 		"resources": [
@@ -1862,6 +1905,7 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
-		]
+		],
+		"refer": []
 	}
 }

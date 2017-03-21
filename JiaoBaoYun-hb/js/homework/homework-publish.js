@@ -10,7 +10,10 @@ var subjectsContainer = document.getElementById('subjects');
 var personalUTID;
 mui.init();
 mui.plusReady(function() {
+	mui(".mui-scroll-wrapper").scroll();
 	events.blurBack();
+	 var webHeight=plus.android.invoke(plus.android.currentWebview(),"getHeight");
+	 console.log("屏幕宽度："+webHeight);
 	events.preload('classes-select.html', 200);
 	window.addEventListener('postClasses', function(e) {
 		CloudFileUtil.files = [];
@@ -96,6 +99,11 @@ mui.plusReady(function() {
 			mui.toast('上传图片附件不得多于9张！');
 		}
 	});
+	events.softIn("publish-content");
+	window.onresize=function(){
+		console.log("resize");
+		mui(".mui-scroll-wrapper").scroll().refresh();
+	}
 	//相机按钮
 	events.addTap('getImg', function() {
 		if(CloudFileUtil.files.length < 9) {
@@ -325,6 +333,7 @@ var requirePostGUInfo = function(wd, callback) {
 
 //12.发布作业
 function requestPublishHomework() {
+	var emptyClasses=[];
 	var realClasses=[];
 	for(var i in selectClassArray){
 		if(selectClassArray[i].isSelected){
@@ -346,6 +355,9 @@ function requestPublishHomework() {
 			for(var m in tempClassModel.studentArray) {
 				var tempStuModel = tempClassModel.studentArray[m];
 				tempStuArray.push(tempClassModel.gid + '|' + tempStuModel.utid);
+			}
+			if(tempClassModel.studentArray.length==0){
+				emptyClasses.push(tempClassModel);
 			}
 		}
 	}
@@ -381,8 +393,13 @@ function requestPublishHomework() {
 			submitOnLine = true;
 			events.clearChild(subjectsContainer);
 			events.clearChild(document.getElementById('classes'));
-			events.fireToPageNone('homework-tea-sub.html', 'homeworkPublished');
-			mui.toast('发布作业成功！');
+			events.fireToPageNone('homework-tea.html', 'homeworkPublished');
+			console.log("空值的班级："+JSON.stringify(emptyClasses))
+			var toastInfo="";
+			for(var j in emptyClasses){
+				toastInfo+=emptyClasses[j].gname+" ";
+			}
+			mui.toast(toastInfo+'班级无发布作业对象，发布失败，其他班级发布作业成功！');
 			mui.back();
 		} else {
 			mui.toast(data.RspTxt);

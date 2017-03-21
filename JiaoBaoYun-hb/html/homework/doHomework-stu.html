@@ -227,7 +227,7 @@
 						textView.blur();
 						CloudFileUtil.files = [];
 						events.clearChild(document.getElementById('pictures'));
-						events.fireToPageNone('homework-tea-sub.html', 'homeworkDone');
+						events.fireToPageNone('homework-tea.html', 'homeworkDone');
 						
 						events.openNewWindowWithData('homework-commented.html', jQuery.extend({}, homeworkModel, { HomeworkResultId: data.RspData.HomeworkResultId, workType: 1 }));
 					} else {

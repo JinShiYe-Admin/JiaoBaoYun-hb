@@ -1041,11 +1041,22 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/utils/switch-mine.js",
-					null
+					null,
+					"fonts/fangzheng.ttf",
+					"js/publicHomeworkProtocol.js",
+					"css/homework/subjects-icon.css",
+					"image/homework/need-submit.png",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/utils/h5fresh.js",
+					"image/homework/submitted.png"
 				],
 				"refer": [
 					"html/homework/homework-publish.html",
-					"html/homework/publish-answer.html"
+					"html/homework/publish-answer.html",
+					"html/homework/doHomework-stu.html",
+					"html/homework/workdetail-stu.html",
+					"html/homework/workdetailTea-temporary.html",
+					"html/homework/workdetail-tea.html"
 				],
 				"priority": 0
 			},
@@ -2507,7 +2518,8 @@
 					"js/mui.zoom.js",
 					"js/mui.previewimage.js",
 					"css/utils/preview.css",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"html/homework/pic-detail.html"
@@ -3870,5 +3882,5 @@
 				"image/cloud.png"
 			]
 		}
-	},"fullscreen":false
+	},"fullscreen":true
 }

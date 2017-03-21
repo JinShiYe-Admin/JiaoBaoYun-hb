@@ -13,6 +13,7 @@ var groupRoles = []; //群角色
 var choseGroupId; //选中申请的群Id
 mui.plusReady(function() {
 	events.blurBack();
+	events.softIn("extra-input");
 	//设置最大长度
 	jQuery("#extra-input").prop("maxLength", 20);
 	list = document.getElementById('groups-container');
@@ -91,6 +92,7 @@ var setListListener = function() {
 	mui('.mui-table-view').on('tap', '.apply-group', function() {
 		choseGroupId = parseInt(this.getAttribute('gid'));
 		document.querySelector('#search-group').blur();
+		mui('.mui-popover').popover('toggle')
 		console.log('选中的申请的群id：' + choseGroupId);
 		resetRoles();
 	})
@@ -179,7 +181,7 @@ var createInner = function(cell) {
 		return '<a>' +
 			'<img src="' + getGimg(cell) + '"/>' + cell.gname + '<p>已入群</p></a>'
 	} else {
-		return '<a href="#chose-roles" class="apply-group" gid="' + cell.gid + '">' +
+		return '<a href="" class="apply-group" gid="' + cell.gid + '">' +
 			'<img src="' + getGimg(cell) + '"/>' + cell.gname + '</a>'
 	}
 }

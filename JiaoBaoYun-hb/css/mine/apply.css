@@ -222,3 +222,12 @@ a>p {
 	color: #323232 !important;
 	padding-right: 1rem;
 }
+.btn-applied{
+	
+}
+.center-popover{
+	position: fixed;
+	top: 90px;
+	left: 5%;
+	width: 90%;
+}

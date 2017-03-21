@@ -36,7 +36,7 @@ var events = (function(mod) {
 		var targetPage = plus.webview.getWebviewById(tarPageIds[tarPageIds.length - 1]);
 		console.log('targetPage是否存在:' + Boolean(targetPage))
 		if(targetPage) {
-			targetPage.show('slide-in-right',250);
+			targetPage.show('slide-in-right', 250);
 		} else {
 			mui.openWindow({
 				url: tarPagePath,
@@ -81,7 +81,7 @@ var events = (function(mod) {
 				top: '0px',
 				bottom: '0px'
 			},
-			createNew:true,
+			createNew: true,
 		});
 	};
 	/**
@@ -178,12 +178,14 @@ var events = (function(mod) {
 					id: tarPage.split('/')[tarPage.split('/').length - 1], //默认使用当前页面的url作为id
 					styles: { //窗口参数
 						top: '0px',
-						bottom: '0px'
+						bottom: '0px',
+						softinputMode: "adjustResize"
 					},
 					show: {
 						anishow: 'slide-in-right',
 						duration: 250
 					},
+
 					waiting: {
 						title: '正在加载...'
 					}
@@ -480,6 +482,23 @@ var events = (function(mod) {
 			}
 		}
 		return format;
+	}
+	mod.softIn = function(id) {
+		if(plus.os.name == "Android") {
+			document.getElementById(id).onfocus = function() {
+				screen.height = plus.screen.resolutionHeight * plus.screen.scale
+				var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight")
+				console.log('状态栏高度:' + plus.navigator.getStatusbarHeight() + "屏幕高度：" + screen.height + "浏览器高度：" + webHeight);
+				var scrollHeight = parseInt(webHeight) - parseInt(screen.height) - parseInt(plus.navigator.getStatusbarHeight());
+				console.log("实际高度：" + scrollHeight)
+				//		document.querySelector(".mui-input-group").style.marginBottom=scrollHeight+"px";
+				document.body.clientHeight = scrollHeight;
+				mui(".mui-scroll-wrapper").scroll().scrollTo(0, -document.getElementById(id).offsetTop);
+			}
+			document.getElementById(id).onblur = function() {
+				mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0);
+			}
+		}
 	}
 	return mod;
 
