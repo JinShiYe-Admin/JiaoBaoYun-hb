@@ -68,10 +68,10 @@
 					li.innerHTML =
 						'<img class="mui-media-object mui-pull-left" style = "width:50px;height:43px;border-radius: 50%;" src="' + updateHeadImg(datasource[i].uimg, 2) + '">' +
 						'<div class="mui-media-body">' +
-						events.shortForString(datasource[i].unick, 12) + '<font style="color:gray"> 回答数:<span style="color:red">' + datasource[i].AnswerNum + '</span>' +
+						events.shortForString(datasource[i].unick, 12) + '<font style="color:gray"> 回答数: <span style="color:red">' + datasource[i].AnswerNum + '</span>' +
 						'</font><p class="mui-ellipsis">' + events.shortForString(datasource[i].UserNote, 18) + '</p></div>' +
 						'<div class="mui-checkbox" style="float:right;">' +
-						'<input class = "checkbox" value="' + i + '" type="checkbox" style="margin-top: -37px;">' +
+						'<input class = "checkbox" value="' + i + '" type="checkbox" style="margin-top: -37px;margin-right: -20px;">' +
 						'</div>'
 					ul.appendChild(li);
 				}
