@@ -64,6 +64,7 @@
 			/*mui(".mui-scroll-wrapper").scroll();*/
 			//传值接收方法
 			mui.plusReady(function() {
+				events.blurBack();
 				jQuery('#answerContent').prop("maxLength", "4000");
 				window.addEventListener('qiuzhi-addAnswer', function(event) {
 					CloudFileUtil.files = [];
