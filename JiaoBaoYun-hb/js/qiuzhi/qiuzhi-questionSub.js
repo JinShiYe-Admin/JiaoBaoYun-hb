@@ -169,7 +169,7 @@ mui.plusReady(function() {
 			} else {
 				document.getElementById("question_content").style.webkitLineClamp = '3';
 			}
-			mui('.mui-scroll-wrapper').scroll().scrollTo(0,0,0);//00毫秒滚动到顶
+			//mui('.mui-scroll-wrapper').scroll().scrollTo(0,0,0);//00毫秒滚动到顶
 		}
 	});
 });
