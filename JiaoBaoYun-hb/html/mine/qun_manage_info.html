@@ -309,17 +309,15 @@
 								mui.back();
 							} else {
 								uploadQunHeadImge(wd, data.RspData, qunImgPath, function(successCB) {
-									setTimeout(function() {
-										changInfo({
-											gid: gid, //群id
-											gname: gname, //群名
-											gnote: gnote, //群说明
-											gimg: successCB, //群头像
-										});
-										mui.toast('创建群成功');
-										wd.close();
-										mui.back();
-									}, 2000);
+									changInfo({
+										gid: gid, //群id
+										gname: gname, //群名
+										gnote: gnote, //群说明
+										gimg: successCB, //群头像
+									});
+									mui.toast('创建群成功');
+									wd.close();
+									mui.back();
 								}, function(errorCB) {
 									changInfo({
 										gid: gid, //群id
@@ -398,33 +396,35 @@
 										console.log('上传任务完成:' + status);
 										console.log('上传任务完成:' + JSON.stringify(upload));
 										if(status == 200) { //上传任务成功
-											//头像类型,个人头像0，资料头像1，群头像2
-											var thumb = QNUptoken.Data.OtherKey[configure.thumbKey]; //缩略图地址
-											var domain = QNUptoken.Data.Domain + QNUptoken.Data.Key; //文件地址
-											console.log(thumb);
-											console.log(domain);
-											var myDate = new Date();
-											var gimgPath = thumb + '?' + myDate.getTime();
-											//8.用户修改群各项信息
-											//需要参数
-											var comData2 = {
-												rid: qunId, //要修改的群id
-												vtp: 'gimg', //更改项，指更改用户信息的相应项,对应后面的vvl值,gimg(头像),gname(群名),gnote(群说明)
-												vvl: gimgPath, //要修改成的值
-											};
-											//返回值model：model_groupList
-											// 等待的对话框
-											var wd2 = events.showWaiting();
-											postDataPro_PostReGinfo(comData2, wd2, function(data) {
-												console.log('8_PostReGinfo:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-												if(data.RspCode == 0) {
-													successCallBack(gimgPath);
-												} else {
-													errorCallBack();
-													mui.toast(data.RspTxt);
-												}
-												wd2.close();
-											});
+											setTimeout(function() {
+												//头像类型,个人头像0，资料头像1，群头像2
+												var thumb = QNUptoken.Data.OtherKey[configure.thumbKey]; //缩略图地址
+												var domain = QNUptoken.Data.Domain + QNUptoken.Data.Key; //文件地址
+												console.log(thumb);
+												console.log(domain);
+												var myDate = new Date();
+												var gimgPath = domain + '?' + myDate.getTime();
+												//8.用户修改群各项信息
+												//需要参数
+												var comData2 = {
+													rid: qunId, //要修改的群id
+													vtp: 'gimg', //更改项，指更改用户信息的相应项,对应后面的vvl值,gimg(头像),gname(群名),gnote(群说明)
+													vvl: gimgPath, //要修改成的值
+												};
+												//返回值model：model_groupList
+												// 等待的对话框
+												var wd2 = events.showWaiting();
+												postDataPro_PostReGinfo(comData2, wd2, function(data) {
+													console.log('8_PostReGinfo:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+													if(data.RspCode == 0) {
+														successCallBack(gimgPath);
+													} else {
+														errorCallBack();
+														mui.toast(data.RspTxt);
+													}
+													wd2.close();
+												});
+											}, 2000);
 										} else { //上传失败
 											errorCallBack(upload.responseText);
 											wd.close();

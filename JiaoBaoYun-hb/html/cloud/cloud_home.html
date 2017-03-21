@@ -1203,19 +1203,17 @@
 					wd.close();
 					if(data.RspCode == 0) {
 						noReadModel.parents_noReads = data.RspData.NoReadCnts; //家长圈未读数数组
-					} else {
-
-					}
-					console.log(JSON.stringify(noReadModel));
-					for(var i = 0; i < noReadModel.parents_noReads.length; i++) {
-						if(noReadModel.parents_noReads[i] != 0) {
-							document.getElementById("tarClass1_" + gidArr[i]).style.display = 'inline';
+						console.log(JSON.stringify(noReadModel));
+						for(var i = 0; i < noReadModel.parents_noReads.length; i++) {
+							if(noReadModel.parents_noReads[i] != 0) {
+								document.getElementById("tarClass1_" + gidArr[i]).style.display = 'inline';
+							}
 						}
-					}
+					} else {}
 					console.log('获取所有群的未读数_getNoReadCntForClassByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-
-				})
+				});
 			}
+
 			var sendMessageToHomework = function(teacherClasses, studentClasses) {
 				if(homeworkReady) {
 					events.closeWaiting();
