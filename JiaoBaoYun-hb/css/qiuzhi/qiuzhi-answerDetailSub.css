@@ -103,7 +103,6 @@
 .comments-info {
 	position: relative;
 	min-height: 45px;
-	padding: 0 10px;
 	background-color: #EFEFF4;
 }
 
@@ -111,6 +110,7 @@
 	font-size: 14px;
 	padding-top: 10px;
 	color: #808080;
+	margin-left: 10px;
 }
 
 .order-selector {
@@ -118,6 +118,10 @@
 	right: 0;
 	padding: 6px 0;
 	color: #808080;
+	font-size: 14px;
+	margin-right: 10px;
+}
+.mui-icon-arrowdown{
 	font-size: 14px;
 }
 
@@ -147,7 +151,7 @@
 	border: 0;
 	padding: 0;
 	color: white;
-	background-color: #b7b7b7;
+	background-color: #E4E4E4;
 }
 
 .question-content>p {
@@ -175,6 +179,7 @@
 .comment-words {
 	word-wrap: break-word;
 	color: #808080;
+	text-align: justify;
 }
 
 .answer-comment {

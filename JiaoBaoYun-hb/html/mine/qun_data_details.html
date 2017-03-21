@@ -496,21 +496,8 @@
 								console.log('学生详细信息:data.RspData.length' + data.RspData.length);
 								mui.each(data.RspData, function(index, item) {
 									//console.log('data.RspData:' + JSON.stringify(item));
-									if(item.utid != null && item.utid != '' && stuid == item.stuid) {
-
-										if(item.umstype == 3) {
-											console.log('学生详细信息:' + JSON.stringify(item));
-											//关联的学生账号
-											stuData.push(item); //记录获取的学生资料
-											//stu_utid.value = item.utid;
-											mainData.stuname = item.stuname;
-											stu_name.value = mainData.stuname;
-											stu_ugname.value = item.ugname;
-											utidArray.push({
-												utid: item.utid,
-												dataType: '3'
-											});
-										} else if(item.umstype == 0) {
+									if(stuid == item.stuid) {
+										if(item.umstype == 0) {
 											console.log('家长详细信息:' + JSON.stringify(item));
 											parData.push(item);
 											addParents(item);
@@ -518,6 +505,21 @@
 												utid: item.utid,
 												dataType: '0'
 											});
+										}
+										if(item.stumstype == 3 && item.umstype == 3) {
+											console.log('学生详细信息:' + JSON.stringify(item));
+											//关联的学生账号
+											stuData.push(item); //记录获取的学生资料
+											//stu_utid.value = item.utid;
+											mainData.stuname = item.stuname;
+											stu_name.value = mainData.stuname;
+											stu_ugname.value = item.ugname;
+											if(item.utid != null && item.utid != '') {
+												utidArray.push({
+													utid: item.utid,
+													dataType: '3'
+												});
+											}
 										}
 									}
 								});
