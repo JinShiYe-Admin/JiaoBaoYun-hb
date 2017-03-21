@@ -1175,7 +1175,8 @@
     ],
     "refer": [
       "html/quan/space-detail.html",
-      "html/show/add-comment.html"
+      "html/show/add-comment.html",
+      "html/quan/zone_main.html"
     ]
   },
   "html/qiuzhi/qiuzhi-question.html": {
