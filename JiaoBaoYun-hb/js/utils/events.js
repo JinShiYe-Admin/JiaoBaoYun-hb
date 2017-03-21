@@ -498,6 +498,14 @@ var events = (function(mod) {
 			document.getElementById(id).onblur = function() {
 				mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0);
 			}
+			document.getElementById(id).oninput=function(){
+				mui(".mui-scroll-wrapper").scroll().scrollTo(0, -document.getElementById(id).offsetTop);
+			}
+//			window.addEventListener('resize', function() {
+//				screen.height = plus.screen.resolutionHeight * plus.screen.scale
+//				var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight")
+//				console.log('状态栏高度:' + plus.navigator.getStatusbarHeight() + "屏幕高度：" + screen.height + "浏览器高度：" + webHeight);
+//			})
 		}
 	}
 	return mod;
