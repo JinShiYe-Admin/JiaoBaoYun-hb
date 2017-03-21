@@ -318,17 +318,19 @@ mui.plusReady(function() {
 		});
 	var firstTime = null;
 	mui('.mui-table-view').on('tap', '.head-portrait', function() {
-		var id = this.getAttribute('headId');
-		console.log(id);
+//		console.log(id);
 		var secondTime = null;
-		firstTime = "123";
 		if(firstTime) {
 			secondTime = "123456";
+		}else{
+			firstTime = "123";
 		}
 		setTimeout(function() {
 			firstTime = null;
 		}, 1000)
+		console.log("firstTime:"+firstTime+"secondTime:"+secondTime);
 		if(!secondTime) {
+			var id = this.getAttribute('headId');
 			mui.openWindow({
 				url: 'zone_main.html',
 				id: 'zone_main.html',
