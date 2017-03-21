@@ -154,13 +154,14 @@ mui.plusReady(function() {
 		var str = this.innerText;
 		//console.log('showAll' + str);
 		if(str == '显示全部') {
-			showAll.innerText = '收起';
 			addImages(1);
 			if(askModel.AskSFlag && askModel.AskSFlag == 1) { //旧数据
 				document.getElementById("question_content").style.height = 'auto';
 			} else {
 				document.getElementById("question_content").style.webkitLineClamp = 'inherit';
 			}
+			this.style.display = 'none';
+			showAll.innerText = '收起';
 		} else if(str == '收起') {
 			showAll.innerText = '显示全部';
 			addImages(0);
@@ -493,7 +494,7 @@ function questionImages(type, AskEncAddr, AskThumbnail) {
 function questionContent(content, flag) {
 	var height_0;
 	var height_1;
-	if(flag == 1) {//求知旧数据
+	if(flag == 1) { //求知旧数据
 		document.getElementById("question_content").style.lineHeight = '20px';
 		document.getElementById("question_content").innerHTML = content;
 		height_0 = document.getElementById("question_content").offsetHeight;
