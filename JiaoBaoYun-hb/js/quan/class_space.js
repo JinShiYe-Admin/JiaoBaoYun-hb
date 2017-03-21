@@ -142,7 +142,7 @@ var class_space = (function(mod) {
 				var personalData = pInfo.RspData;
 				for(var i in list) {
 					for(var j in personalData) {
-						if(list[i].PublisherId == personalData[j].utid&&personalData[j].mstype==2) {
+						if(list[i].PublisherId == personalData[j].utid&&(personalData[j].mstype==1||personalData[j].mstype==2)) {
 							jQuery.extend(list[i], personalData[j]);
 							break;
 						}
