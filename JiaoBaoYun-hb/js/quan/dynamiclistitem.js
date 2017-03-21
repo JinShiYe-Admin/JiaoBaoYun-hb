@@ -277,7 +277,7 @@ var dynamiclistitem = (function($, mod) {
 
 			htmlCommentList2 = htmlCommentList2 + firstComment + replyComment;
 		});
-		if(commentList.length > 20 && (!document.getElementById("spaceDetail"))) {
+		if(commentNum > 20 && (!document.getElementById("spaceDetail"))) {
 			console.log('评论大于20')
 			showAll = '<div id="show2' + data[4] + idFlag + id + '" class=" show2" style="color:gray;">展开全部</div>'
 		} else {
