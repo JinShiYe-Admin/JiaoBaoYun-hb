@@ -550,9 +550,11 @@ var setPublishedData = function(publishedData) {
 				list.appendChild(li);
 			}
 		})
-		events.closeWaiting();
+		
+	}else{
+		mui.toast("暂无作业！");
 	}
-
+	events.closeWaiting();
 }
 /**
  * 
@@ -675,7 +677,7 @@ var getHomeworkIcon = function(subject) {
  */
 var setHomeworkData = function(homeworkData) {
 	//		var homeworkData = studentHash.get(selectGId);
-	if(homeworkData) {
+	if(homeworkData&&homeworkData.length>0) {
 		homeworkData.forEach(function(DateHM, i) {
 			var divider = document.createElement('li');
 			divider.className = 'mui-table-view-divider';
@@ -707,9 +709,10 @@ var setHomeworkData = function(homeworkData) {
 
 			}
 		})
-		events.closeWaiting();
+	}else{
+		mui.toast("暂无作业！")
 	}
-
+	events.closeWaiting();	
 }
 /**
  * 
