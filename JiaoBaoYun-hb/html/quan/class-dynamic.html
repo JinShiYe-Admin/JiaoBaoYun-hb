@@ -21,9 +21,10 @@
 			<a id="publish" class="mui-icon mui-pull-right mui-plus-visible" style="padding-left: 30px;padding-top: 15px;font-size: 16px;">发布</a>
 		</header>
 		<div class="mui-content">
-			<div class="input-content">
-				<textarea id="input-content" placeholder="请输入内容" value=""></textarea>
-				<!--一期暂时不插入图片-->
+			<!--<div class="input-content">-->
+			<textarea id="input-content" placeholder="请输入内容" value=""></textarea>
+			<!--一期暂时不插入图片-->
+			<div class="extras-info">
 				<div id="take_pic" class="take_pic">
 					<a class="mui-icon iconfont icon-xiangji1"></a>
 				</div>
@@ -34,6 +35,7 @@
 					<a class="mui-icon iconfont icon-tuku"></a>
 				</div>
 			</div>
+			<!--</div>-->
 			<div id="pictures" class="img-container temWork-teaHint"></div>
 		</div>
 	</body>
@@ -57,19 +59,19 @@
 		mui.plusReady(function() {
 			//返回时，取消键盘
 			events.blurBack();
-			var curPage=plus.webview.currentWebview();
-			var groupInfo=curPage.data;
+			var curPage = plus.webview.currentWebview();
+			var groupInfo = curPage.data;
 			CloudFileUtil.files = [];
 			events.clearChild(document.getElementById('pictures'));
 			getGroupPersons(groupInfo.classId);
 			//界面监听传值
-//			window.addEventListener('postGroupInfo', function(e) {
-//				
-//				groupInfo = e.detail.data;
-//				console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
-//				
-//				
-//			});
+			//			window.addEventListener('postGroupInfo', function(e) {
+			//				
+			//				groupInfo = e.detail.data;
+			//				console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
+			//				
+			//				
+			//			});
 			/**
 			 * 加载监听
 			 */
@@ -151,7 +153,7 @@
 													type: 1
 												}
 												CloudFileUtil.setPic(img); //放置图片
-											}else{
+											} else {
 												mui.toast(uploadData.responseText);
 											}
 											picCount++;

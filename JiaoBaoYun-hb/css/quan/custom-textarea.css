@@ -7,7 +7,12 @@
 	background-color: white;
 	border-color: #E4E4E4;
 }
-
+.extras-info{
+	margin-top: -20px;
+	padding-top: 20px;
+	height: 5rem;
+	background-color: white;
+}
 
 /**
  * 输入内容样式

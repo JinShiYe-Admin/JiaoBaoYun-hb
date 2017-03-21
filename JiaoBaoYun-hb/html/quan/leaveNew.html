@@ -319,7 +319,7 @@
 				li.className = 'mui-table-view-cell ableSelectedCell';
 				li.id = 'reply' + index
 				if(datasource.ReplyId == 0) {
-					if(datasource.UserId != userId) {
+					if(datasource.UserId != personalUTID) {
 						li.innerHTML = '<div style="padding:12px">' +
 							'<div class="mui-media-body mui-pull-left">' +
 							'<img class=" dynamic-personal-image" src="' + datasource.uimg + '">' +
@@ -346,7 +346,7 @@
 					listContainer.insertBefore(li, listContainer.childNodes[0]);
 
 				} else {
-					if(datasource.UserId != userId) {
+					if(datasource.UserId != personalUTID) {
 						li.innerHTML = '<div style="padding:12px">' +
 							'<div class="mui-media-body mui-pull-left">' +
 							'<img class=" dynamic-personal-image" src="' + datasource.uimg + '">' +
