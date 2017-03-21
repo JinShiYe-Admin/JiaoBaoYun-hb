@@ -77,6 +77,7 @@
 //					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
 //						item.style.display = 'inline-block';
 //					})
+					document.getElementById('answerContent').value="";
 					document.getElementById('answerContent').placeholder = "添加回答,最多4000字";
 					jQuery('#answerContent').prop("maxLength", "4000"); //设置最长
 					var askTitle = document.getElementById("askTitle");
@@ -87,6 +88,7 @@
 					CloudFileUtil.files = [];
 					events.clearChild(document.getElementById('pictures'))
 					type = 1;
+					document.getElementById('answerContent').value="";
 					document.getElementById('title').innerText = '我要评论';
 					document.getElementById('answerContent').placeholder = "添加评论,最多300字";
 					jQuery('#answerContent').prop("maxLength", "300"); //设置最长
@@ -100,6 +102,7 @@
 				window.addEventListener("comment-reply", function(e) {
 					console.log('回复评论要加载的值：' + JSON.stringify(e.detail.data));
 					type = 2;
+					document.getElementById('answerContent').value="";
 					jQuery('#answerContent').prop("maxLength", "300"); //设置最长
 					document.getElementById('title').innerText = '回复评论';
 					commentInfo = e.detail.data;
