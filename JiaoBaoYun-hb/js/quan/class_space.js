@@ -77,7 +77,7 @@ var class_space = (function(mod) {
 	var createInnerHtml = function(item, index) {
 		console.log("加载的数据：" + JSON.stringify(item));
 		var inner = '<div><div class="mui-pull-left head-img" >' +
-			'<img class="head-portrait" headId="' + item.utid + '" src="' + updateHeadImg(item.uimg,2) + '"/>' +
+			'<img class="head-portrait" headId="' + item.utid + '" src="' + updateHeadImg(item.uimg, 2) + '"/>' +
 			'<p class="single-line">' + events.shortForString(getName(item), 6) + '</p>' +
 			'</div>' +
 			'<div class="chat_content_left">' +
@@ -142,7 +142,7 @@ var class_space = (function(mod) {
 				var personalData = pInfo.RspData;
 				for(var i in list) {
 					for(var j in personalData) {
-						if(list[i].PublisherId == personalData[j].utid&&(personalData[j].mstype==1||personalData[j].mstype==2)) {
+						if(list[i].PublisherId == personalData[j].utid && (personalData[j].mstype == 1 || personalData[j].mstype == 2)) {
 							jQuery.extend(list[i], personalData[j]);
 							break;
 						}
@@ -229,12 +229,12 @@ var class_space = (function(mod) {
 			container.appendChild(li);
 		}
 	}
-//	var getUImg = function(uimg) {
-//		if(!uimg || uimg == null) {
-//			uimg = storageKeyName.DEFAULTPERSONALHEADIMAGE;
-//		}
-//		return uimg;
-//	}
+	//	var getUImg = function(uimg) {
+	//		if(!uimg || uimg == null) {
+	//			uimg = storageKeyName.DEFAULTPERSONALHEADIMAGE;
+	//		}
+	//		return uimg;
+	//	}
 	/**
 	 * 
 	 * @param {Object} cell
@@ -316,23 +316,35 @@ mui.plusReady(function() {
 				class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 			}
 		});
+	var firstTime = null;
 	mui('.mui-table-view').on('tap', '.head-portrait', function() {
-		var id = this.getAttribute('headId');
-		console.log(id);
-		mui.openWindow({
-			url: 'zone_main.html',
-			id: 'zone_main.html',
-			styles: {
-				top: '0px', //设置距离顶部的距离
-				bottom: '0px'
-			},
-			extras: {
-				data: id,
-				NoReadCnt: 0,
-				flag: 0
-			}
-
-		});
+//		console.log(id);
+		var secondTime = null;
+		if(firstTime) {
+			secondTime = "123456";
+		}else{
+			firstTime = "123";
+		}
+		setTimeout(function() {
+			firstTime = null;
+		}, 1000)
+		console.log("firstTime:"+firstTime+"secondTime:"+secondTime);
+		if(!secondTime) {
+			var id = this.getAttribute('headId');
+			mui.openWindow({
+				url: 'zone_main.html',
+				id: 'zone_main.html',
+				styles: {
+					top: '0px', //设置距离顶部的距离
+					bottom: '0px'
+				},
+				extras: {
+					data: id,
+					NoReadCnt: 0,
+					flag: 0
+				}
+			});
+		}
 	})
 });
 var setReaded = function(userId, classId) {
@@ -362,14 +374,14 @@ var setListener = function(userId) {
 		//未点赞
 		if(jQuery(this).hasClass('isNotLike')) {
 			zan.isLike = false;
-			console.log("赞的innerHTML"+zan.innerHTML);
+			console.log("赞的innerHTML" + zan.innerHTML);
 			zan.querySelector(".pop-p").innerHTML = '<span id="pop-zan" class="mui-icon iconfont icon-dianzan1 isNotLike"></span>点赞';
-//			document.querySelector("#pop-zan").className = "mui-icon iconfont icon-dianzan1 isNotLike";
+			//			document.querySelector("#pop-zan").className = "mui-icon iconfont icon-dianzan1 isNotLike";
 		} else { //已点赞
 			zan.isLike = true;
 			zan.querySelector(".pop-p").innerHTML = '<span id="pop-zan" class="mui-icon iconfont icon-dianzan1 isLike"></span>取消点赞';
-//			zan.querySelector(".pop-p").innerText = '取消点赞';
-//			document.querySelector("#pop-zan").className = "mui-icon iconfont icon-dianzan1 isLike";
+			//			zan.querySelector(".pop-p").innerText = '取消点赞';
+			//			document.querySelector("#pop-zan").className = "mui-icon iconfont icon-dianzan1 isLike";
 		}
 
 	})
@@ -419,7 +431,7 @@ var setListener = function(userId) {
 		events.fireToPageWithData('classSpace-persons.html', 'personsList', {
 			type: 1,
 			classSpaceId: parseInt(zanSpan.getAttribute('tabId')),
-			classId:postData.classId//id
+			classId: postData.classId //id
 		})
 		mui('.mui-popover').popover('toggle');
 	})
@@ -435,12 +447,12 @@ var setListener = function(userId) {
 		setTimeout(function() {
 			firstTime = null;
 		}, 1000)
-		console.log("第一次："+firstTime+"第二次："+secondTime);
+		console.log("第一次：" + firstTime + "第二次：" + secondTime);
 		if(!secondTime) {
 			events.fireToPageWithData('classSpace-persons.html', 'personsList', {
 				type: 0,
 				classSpaceId: parseInt(this.getAttribute('tabId')),
-				classId:postData.classId//id
+				classId: postData.classId //id
 			});
 		}
 
