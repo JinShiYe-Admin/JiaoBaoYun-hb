@@ -483,7 +483,9 @@ var setListeners = function() {
 		events.fireToPageWithData('qiuzhi-addAnswer.html', 'add-comment', answerData);
 	})
 	events.addTap('anthor-portrait', function() {
-		events.openNewWindowWithData("expert-detail.html", jQuery.extend(answerData, { UserId: answerData.utid, uimg: answerData.UserImg, unick: answerData.UserName }))
+		if(!answerData.IsAnonym){
+			events.openNewWindowWithData("expert-detail.html", jQuery.extend(answerData, { UserId: answerData.utid, uimg: answerData.UserImg, unick: answerData.UserName }))
+		}
 	})
 	//评论头像点击事件
 	mui('.mui-table-view').on('tap', '.head-img', function() {

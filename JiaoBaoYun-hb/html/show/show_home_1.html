@@ -469,12 +469,13 @@
 					if(data.RspCode == 0) {
 						page.totalPage = data.RspData.TotalPage;
 					}
-					document.getElementById("bot_" + cityCode).setAttribute('data-page', JSON.stringify(page))
-					if(pageIndex == 1) { //获取的第一页的内容
-						//清空对应的界面
-						document.getElementById("bot_ul_" + cityCode).innerHTML = '';
+					if(document.getElementById("bot_" + cityCode)) {
+						document.getElementById("bot_" + cityCode).setAttribute('data-page', JSON.stringify(page))
+						if(pageIndex == 1) { //获取的第一页的内容
+							//清空对应的界面
+							document.getElementById("bot_ul_" + cityCode).innerHTML = '';
+						}
 					}
-
 					if(data.RspCode == 0 && data.RspData.Data.length > 0) {
 						totalPage = data.RspData.TotalPage;
 						getPersonIds(data.RspData.Data, cityCode);
@@ -1065,13 +1066,15 @@
 				//				var table = document.body.querySelector('.mui-table-view');
 				var id = 'bot_' + sliderId.replace('top_', '');
 				var table = document.getElementById("bot_ul_" + cityCode)
-				table.setAttribute('data-info', JSON.stringify(data));
-				table.innerHTML = ''
+				if(table) {
+					table.setAttribute('data-info', JSON.stringify(data));
+					table.innerHTML = ''
 
-				for(var i = 0; i < data.length; i++) {
-					id = i;
-					var data1 = addData(i, cityCode);
-					dynamiclistitem.addItem(table, data1, id);
+					for(var i = 0; i < data.length; i++) {
+						id = i;
+						var data1 = addData(i, cityCode);
+						dynamiclistitem.addItem(table, data1, id);
+					}
 				}
 				dynamiclistitem.questionContent();
 				events.fireToPageNone('index.html', 'closeWaiting');

@@ -84,7 +84,7 @@ mui.plusReady(function() {
 		requireHomeWork(selectGContainer.classInfo, setData);
 	}, {
 		style: 'circle',
-		offset:"50px"
+		offset: "50px"
 	});
 	/**监听父页面的图标事件*/
 	window.addEventListener('togglePop', function(e) {
@@ -120,6 +120,7 @@ mui.plusReady(function() {
 
 	//角色选择的监听
 	roles.addEventListener("toggle", function(event) {
+		events.showWaiting();
 		if(event.detail.isActive) {
 			role = 30;
 			//			btn_more.style.display='block';
@@ -165,7 +166,7 @@ mui.plusReady(function() {
 	//设置监听
 	setListener();
 	//下拉刷新
-//	addPullFresh();
+	//	addPullFresh();
 	pullUpRefresh();
 })
 /**
@@ -180,13 +181,24 @@ var roleChanged = function() {
 		mui("#popover").popover('hide');
 		publish.style.display = 'block';
 		selectGId = teacherClasses[0].gid;
-		requireHomeWork(teacherClasses[0], setData);
+		//		requireHomeWork(teacherClasses[0], setData);
+		//如果数据已存在
+		if(teacherHash.get(selectGId)) {
+			setPublishedData(teacherHash.get(selectGId));
+			//如果数据不存在
+		} else {
+			requireHomeWork(teacherClasses[0], setData);
+		}
 	} else {
 		publish.style.display = 'none';
 		selectGId = studentClasses[0].gid;
-		requireHomeWork(studentClasses[0], setData);
+		//		requireHomeWork(studentClasses[0], setData);
+		if(studentHash.get(selectGId)) {
+			setHomeworkData(studentHash.get(selectGId));
+		} else {
+			requireHomeWork(studentClasses[0], setData);
+		}
 	}
-
 }
 /**
  * 获取作业详情
@@ -387,6 +399,7 @@ var initializeClassesIndex = function(i) {
  * @param {Object} callback
  */
 var requireHomeWork = function(classModel, callback) {
+	events.closeWaiting();
 	console.log("请求作业数据：" + 123);
 	var comData = {};
 	if(role == 2) {
@@ -396,10 +409,10 @@ var requireHomeWork = function(classModel, callback) {
 	}
 	comData.classId = classModel.gid;
 	comData.pageIndex = classModel.pageIndex;
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	var wd = events.showWaiting();
 	if(role == 2) {
 		postDataPro_GetHomeworkList(comData, wd, function(data) {
-			wd.close();
+			//			wd.close();
 			console.log('老师、作业主界面获取的作业列表：' + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				totalPageCount = data.RspData.PageCount;
@@ -408,12 +421,13 @@ var requireHomeWork = function(classModel, callback) {
 				callback(data.RspData.Dates)
 			} else {
 				mui.toast(data.RspTxt);
+				wd.close();
 			}
 
 		})
-	} else {
+	} else { //家长学生
 		postDataPro_GetHomeworkListStu(comData, wd, function(data) {
-			wd.close();
+			//			wd.close();
 			console.log('学生、作业主界面获取的作业列表：' + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				totalPageCount = data.RspData.PageCount;
@@ -444,7 +458,7 @@ var requireHomeWork = function(classModel, callback) {
 					};
 					//21.通过用户ID或ID串获取用户资料
 					postDataPro_PostUinf(comData1, wd, function(data1) {
-						wd.close();
+						//						wd.close();
 						console.log('通过用户ID或ID串获取用户资料：' + JSON.stringify(data1));
 						if(data1.RspCode == 0) {
 							//循环遍历
@@ -474,6 +488,8 @@ var requireHomeWork = function(classModel, callback) {
 							selectGContainer.classInfo.totalPageCount = totalPageCount;
 							setHashData(comData, data);
 							callback(data.RspData.Dates)
+							//						}else{
+							//							wd.close();
 						}
 					});
 				} else { //没有临时作业
@@ -482,6 +498,7 @@ var requireHomeWork = function(classModel, callback) {
 					callback(data.RspData.Dates)
 				}
 			} else {
+				wd.close();
 				mui.toast(data.RspTxt);
 			}
 		})
@@ -506,7 +523,7 @@ var setData = function(data) {
 var setPublishedData = function(publishedData) {
 	//		events.clearChild(list);
 	//		var publishedData = teacherHash.get(selectGId);
-	if(publishedData&&publishedData.length>0) {
+	if(publishedData && publishedData.length > 0) {
 		console.log('发布作业的Id：' + selectGId + ';老师作业的数据：' + JSON.stringify(publishedData));
 		publishedData.forEach(function(DateHM, i) {
 			var divider = document.createElement('li');
@@ -533,6 +550,7 @@ var setPublishedData = function(publishedData) {
 				list.appendChild(li);
 			}
 		})
+		events.closeWaiting();
 	}
 
 }
@@ -689,6 +707,7 @@ var setHomeworkData = function(homeworkData) {
 
 			}
 		})
+		events.closeWaiting();
 	}
 
 }
