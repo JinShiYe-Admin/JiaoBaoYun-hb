@@ -246,7 +246,7 @@ var dynamiclistitem = (function($, mod) {
 		var commentNum = 0;
 		$.each(commentList, function(index, element) {
 			commentNum++;
-			if(commentNum > 20) {
+			if(commentNum > 20&&(!document.getElementById("spaceDetail"))) {
 				return false;
 			}
 			var firstComment = '';
@@ -259,7 +259,7 @@ var dynamiclistitem = (function($, mod) {
 			if(element.Replys && element.Replys.length != 0) {
 				for(var i = 0; i < element.Replys.length; i++) {
 					commentNum++
-					if(commentNum > 20) {
+					if(commentNum > 20&&(!document.getElementById("spaceDetail"))) {
 						return false;
 					}
 					var tempModel = element.Replys;
