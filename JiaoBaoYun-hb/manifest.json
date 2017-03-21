@@ -1048,7 +1048,8 @@
 					"image/homework/need-submit.png",
 					"js/libs/crypto-js/crypto-js.js",
 					"js/utils/h5fresh.js",
-					"image/homework/submitted.png"
+					"image/homework/submitted.png",
+					"image/homework/commented.png"
 				],
 				"refer": [
 					"html/homework/homework-publish.html",
@@ -1056,7 +1057,8 @@
 					"html/homework/doHomework-stu.html",
 					"html/homework/workdetail-stu.html",
 					"html/homework/workdetailTea-temporary.html",
-					"html/homework/workdetail-tea.html"
+					"html/homework/workdetail-tea.html",
+					"html/homework/homework-commented.html"
 				],
 				"priority": 0
 			},
