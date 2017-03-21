@@ -159,7 +159,21 @@
 					mui('#sliderGroup').on('tap', '.mui-table-view-cell', function() {
 						var id = this.getAttribute('id');
 						var turl = this.getAttribute('data-turl');
-						console.log(id + '|' + turl);
+						var dataHistory = this.getAttribute('data-seHistory');
+						var tabid = this.getAttribute('data-tabid');
+						console.log(id + ' ' + turl + ' ' + dataHistory + ' ' + tabid);
+						if(dataHistory != 'true') { //不是历史记录
+							//console.log('dataHistory ' + dataHistory);
+							this.setAttribute('data-seHistory', true);
+							var personalUID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uid;
+							var History = window.myStorage.getItem(window.storageKeyName.seHistory + '_' + personalUID);
+							History[History.length] = tabid;
+							if(History.length > 100) {
+								History.splice(0, 1); //删掉第一个
+							}
+							window.myStorage.setItem(window.storageKeyName.seHistory + '_' + personalUID, History);
+							//console.log('tap seHistory ' + JSON.stringify(History));
+						}
 						document.getElementById("title_" + id).style.color = 'darkgray';
 						events.openNewWindowWithData('sciedu_show_main.html', {
 							turl: turl
@@ -251,11 +265,10 @@
 								var page = JSON.parse(element.getAttribute('data-page'));
 								console.log('down ' + JSON.stringify(info));
 								console.log('down ' + JSON.stringify(page));
+								//获取数据
+								requestCityNews(info.acode, 1);
 								setTimeout(function() {
-									//获取数据
-									requestCityNews(info.acode, 1);
-									//结束下拉刷新
-									self.endPullDownToRefresh();
+									self.endPullDownToRefresh(); //结束下拉刷新
 								}, 1000);
 							}
 						},
@@ -270,12 +283,9 @@
 								console.log('up ' + JSON.stringify(info));
 								console.log('up ' + JSON.stringify(page));
 								if(page) {
-									setTimeout(function() {
-										requestCityNews(info.acode, page.pageIndex + 1);
-										self.endPullUpToRefresh();
-									}, 1000);
+									requestCityNews(info.acode, page.pageIndex + 1);
 								} else {
-									self.endPullUpToRefresh();
+
 								}
 							}
 						}
@@ -294,13 +304,23 @@
 			 * @param {Object} data 新闻数据
 			 */
 			function addItems(cityCode, data) {
+				var personalUID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uid;
+				var seHistory = [];
+				if(window.myStorage.getItem(window.storageKeyName.seHistory + '_' + personalUID)) { //如果没有这个人的记录，则创建一份空记录
+					seHistory = window.myStorage.getItem(window.storageKeyName.seHistory + '_' + personalUID);
+					//window.myStorage.setItem(window.storageKeyName.seHistory + '_' + personalUID, []);
+					//console.log('addItems seHistory ' + JSON.stringify(seHistory));
+				} else {
+					window.myStorage.setItem(window.storageKeyName.seHistory + '_' + personalUID, []);
+				}
+
 				var placeholder = '../../' + window.storageKeyName.DEFAULTSCIEDUIMAGELOAD;
-				//console.log('placeholder ' + placeholder);
 				var lazyLoad = mui("#bot_ul_" + cityCode).imageLazyload({
 					placeholder: placeholder.toString(),
 					autoDestroy: false, //元素加载完后是否自动销毁当前插件对象
 				}); //懒加载控件
 				for(var i = 0; i < data.length; i++) {
+					//console.log('addItems ' + JSON.stringify(data[i]));
 					var tips = data[i].tips;
 					var tipsList = tips.split('|');
 					var date = tipsList[0].split(' ')[0]; //日期
@@ -318,6 +338,14 @@
 						dataStr = date;
 					}
 					data[i].tips = from + ' | ' + dataStr;
+					data[i].seHistory = false;
+					for(var j = 0; j < seHistory.length; j++) {
+						//console.log(data[i].tabid);
+						if(data[i].tabid == seHistory[j]) {
+							data[i].seHistory = true; //是历史记录
+							break;
+						}
+					}
 					SciEduHomeItem.addItem(document.getElementById("bot_ul_" + cityCode), data[i], function() {
 						lazyLoad.refresh(true);
 					});
@@ -434,6 +462,10 @@
 							tempRefresh = pullToRefresh[i];
 						}
 					}
+					if(page.pageIndex != 1) { //结束上拉加载更多
+						tempRefresh.refresh.endPullUpToRefresh(); //结束上拉加载更多
+					}
+
 					if(page.pageIndex >= page.totalPage) {
 						//没有下一页
 						tempRefresh.refresh.endPullUpToRefresh(true);

@@ -130,11 +130,11 @@
 				<!--数据列表-->
 				<div id="top">
 					<div id="add">
-						<span class="mui-icon mui-icon-camera" style="color: #A9A9A9;margin-left: 5%;position: absolute;line-height: 37px;margin-top: 1px;"></span>
-						<div style="color: #007AFF;line-height: 40px;margin-left: 12%;display: inline;font-size: 20px;margin-top: 4px;">
+						<span class="mui-icon mui-icon-camera" style="color: #A9A9A9;margin-left: 3%;position: absolute;line-height: 37px;margin-top: 2px;"></span>
+						<div style="color: #007AFF;line-height: 40px;margin-left: 10%;display: inline;font-size: 20px;margin-top: 4px;">
 							丨
 						</div>
-						<div style="color: #A9A9A9;position: absolute;left: 18%;display: inline;line-height: 40px;margin-top: 1.5px;font-size: 15px;">
+						<div style="color: #A9A9A9;position: absolute;left: 16%;display: inline;line-height: 37px;margin-top: 1.5px;font-size: 15px;">
 							记录生活，留下美好...
 						</div>
 					</div>
@@ -161,6 +161,7 @@
 		var pullRefresh; //下拉，上拉控件
 
 		mui.plusReady(function() {
+			//---初始化界面---start---
 			previewImage = mui.previewImage();
 
 			var deceleration = mui.os.ios ? 0.003 : 0.0009;
@@ -199,14 +200,14 @@
 					}
 				}
 			});
-			//---初始化界面---start---
+
 			var myDate = new Date();
 			var month = myDate.getMonth() + 1;
 			if(month.length = 1) {
 				month = '0' + month;
 			}
 			today = myDate.getFullYear() + '-' + month + '-' + myDate.getDate();
-
+			//var scroll = mui('#pullrefresh').scroll(); //滑动控件
 			//---初始化界面---end---
 			//请求数据
 			requestData(1);
@@ -222,12 +223,22 @@
 			mui('#list').on('tap', '.show-all', function() {
 				var str = this.innerText;
 				var id = this.id.replace('_show', '');
+				var content = document.getElementById(id + "_content");
+				//var offsetHeight = content.getAttribute('data-offsetHeight');
+				//console.log('0 ' + content.id + ' ' + content.offsetHeight + ' ');
+
 				if(str == '显示全部') {
 					this.innerText = '收起';
-					document.getElementById(id + "_content").style.webkitLineClamp = 'inherit';
+					content.style.webkitLineClamp = 'inherit';
 				} else if(str == '收起') {
+					//					console.log('1 ' + content.id + ' ' + offsetHeight + ' ' + content.offsetHeight + ' ' + content.clientY);
+					//					console.log(scroll.y);
+					//					if(scroll.y != 0) {
+					//						scroll.scrollTo(0, scroll.y + (content.offsetHeight - offsetHeight), 100); //100毫秒滚动到顶
+					//					}
+					//scroll.refresh();
 					this.innerText = '显示全部';
-					document.getElementById(id + "_content").style.webkitLineClamp = '3';
+					content.style.webkitLineClamp = '3';
 				}
 			});
 
@@ -235,6 +246,14 @@
 			mui('#list').on('tap', '.record-picture-num', function() {
 				previewImage.open(document.getElementById("img_" + this.getAttribute('data-id')));
 			});
+
+			//滚动监听
+			//document.getElementById("pullrefresh").addEventListener('scroll', function() {
+				//console.log(scroll.x + "  " + scroll.y);
+				//var content=document.getElementById("21423_content");
+
+				//console.log(content.offsetHeight);
+			//});
 		});
 
 		//请求数据
@@ -402,6 +421,7 @@
 				if(height_0 > height_1) {
 					//内容高度大于三行
 					document.getElementById(data.TabId + "_show").style.display = 'inline';
+					contentEl.setAttribute('data-offsetHeight', contentEl.offsetHeight);
 				}
 			}
 			markDate = dateItem;

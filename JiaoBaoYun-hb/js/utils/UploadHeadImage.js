@@ -292,7 +292,7 @@ var UploadHeadImage = (function($, mod) {
 	 */
 	function changeQunHeadImge(wd, domain, thumb) {
 		var myDate = new Date();
-		var imgeURL = thumb + '?' + myDate.getTime();
+		var imgeURL = domain + '?' + myDate.getTime();
 		//8.用户修改群各项信息
 		//需要参数
 		var comData2 = {
@@ -325,7 +325,7 @@ var UploadHeadImage = (function($, mod) {
 	 */
 	function changeHeadImge(wd, domain, thumb) {
 		var myDate = new Date();
-		var imgeURL = thumb + '?' + myDate.getTime();
+		var imgeURL = domain + '?' + myDate.getTime();
 		//6.用户修改各项用户信息
 		//调用方法
 		var comData = {
@@ -351,7 +351,7 @@ var UploadHeadImage = (function($, mod) {
 	 */
 	function changeSutHeadImge(wd, domain, thumb) {
 		var myDate = new Date();
-		var stuImgePath = thumb + '?' + myDate.getTime();
+		var stuImgePath = domain + '?' + myDate.getTime();
 		//23.通过用户资料ID或关联ID更改各类型资料
 		//所需参数
 		var comData = {
