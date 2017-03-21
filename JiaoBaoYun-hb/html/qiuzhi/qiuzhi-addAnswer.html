@@ -20,9 +20,9 @@
 
 		<div class="mui-scroll-wrapper mui-content">
 			<div class="mui-scroll">
-				<p id="askTitle" style="font-size: 14px;margin-top: 12px;word-wrap: break-word;padding: 0 15px;text-align: justify;"></p>
-				<div class="input-content">
-					<textarea id="answerContent" class="input-content" placeholder="添加回答,最多4000字"></textarea>
+				<!--<p id="askTitle" style="font-size: 14px;margin-top: 12px;word-wrap: break-word;padding: 0 15px;text-align: justify;"></p>-->
+				<!--<div class="input-content">-->
+					<textarea id="answerContent" class="" placeholder="添加回答,最多4000字"></textarea>
 					<div class="extras-info">
 						<div id="take_pic" class="take_pic file-extras">
 							<a class="mui-icon iconfont icon-xiangji1"></a>
@@ -39,7 +39,7 @@
 							<input id="checkbox" name="checkbox" value="" type="checkbox">
 						</div>
 					</div>
-				</div>
+				<!--</div>-->
 
 				<div id="pictures" style="width: 100%;"></div>
 			</div>
@@ -61,7 +61,7 @@
 			var answerInfo; //答案信息
 			var commentInfo; //评论信息
 			var type = 0; //0：回答问题，1：评论答案 2：评论回复
-			mui(".mui-scroll-wrapper").scroll();
+			/*mui(".mui-scroll-wrapper").scroll();*/
 			//传值接收方法
 			mui.plusReady(function() {
 				jQuery('#answerContent').prop("maxLength", "4000");
@@ -80,8 +80,8 @@
 					document.getElementById('answerContent').value="";
 					document.getElementById('answerContent').placeholder = "添加回答,最多4000字";
 					jQuery('#answerContent').prop("maxLength", "4000"); //设置最长
-					var askTitle = document.getElementById("askTitle");
-					askTitle.innerHTML = askModel.AskTitle;
+//					var askTitle = document.getElementById("askTitle");
+//					askTitle.innerHTML = askModel.AskTitle;
 				});
 				//加载评论
 				window.addEventListener('add-comment', function(e) {
@@ -97,7 +97,7 @@
 //						item.style.display = 'none';
 //					})
 					answerInfo = e.detail.data;
-					document.getElementById('askTitle').innerText = "";
+//					document.getElementById('askTitle').innerText = "";
 				})
 				window.addEventListener("comment-reply", function(e) {
 					console.log('回复评论要加载的值：' + JSON.stringify(e.detail.data));
@@ -106,7 +106,7 @@
 					jQuery('#answerContent').prop("maxLength", "300"); //设置最长
 					document.getElementById('title').innerText = '回复评论';
 					commentInfo = e.detail.data;
-					document.getElementById('askTitle').innerText = commentInfo.CommentContent;
+//					document.getElementById('askTitle').innerText = commentInfo.CommentContent;
 					document.getElementById('answerContent').placeholder = "添加评论回复,最多300字";
 					document.querySelector(".extras-info").style.display="none";
 //					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
