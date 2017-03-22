@@ -51,7 +51,7 @@ var events = (function(mod) {
 				styles: {
 					top: '0px',
 					bottom: '0px',
-					softinputMode: "adjustResize"
+//					softinputMode: "adjustResize"
 				}
 			})
 		}
@@ -81,7 +81,7 @@ var events = (function(mod) {
 			styles: {
 				top: '0px',
 				bottom: '0px',
-				softinputMode: "adjustResize"
+//				softinputMode: "adjustResize"
 			},
 			createNew: true,
 		});
@@ -181,7 +181,7 @@ var events = (function(mod) {
 					styles: { //窗口参数
 						top: '0px',
 						bottom: '0px',
-						softinputMode: "adjustResize"
+//						softinputMode: "adjustResize"
 					},
 					show: {
 						anishow: 'slide-in-right',

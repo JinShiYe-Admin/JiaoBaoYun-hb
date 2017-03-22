@@ -350,24 +350,23 @@
 			}
 
 			/**
-			 * 添加一条记录
+			 * 添加新闻
 			 * @param {Object} cityCode 城市代码
 			 * @param {Object} data 新闻数据
 			 */
 			function addItems(cityCode, data) {
 				var personalUID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uid;
 				var seHistory = [];
-				if(window.myStorage.getItem(window.storageKeyName.seHistory + '_' + personalUID)) { //如果没有这个人的记录，则创建一份空记录
+				//如果没有这个人的记录，则创建一份空记录
+				if(window.myStorage.getItem(window.storageKeyName.seHistory + '_' + personalUID)) {
 					seHistory = window.myStorage.getItem(window.storageKeyName.seHistory + '_' + personalUID);
-					//window.myStorage.setItem(window.storageKeyName.seHistory + '_' + personalUID, []);
-					//console.log('addItems seHistory ' + JSON.stringify(seHistory));
 				} else {
 					window.myStorage.setItem(window.storageKeyName.seHistory + '_' + personalUID, []);
 				}
 
 				var placeholder = '../../' + window.storageKeyName.DEFAULTSCIEDUIMAGELOAD;
 				var lazyLoad = mui("#bot_ul_" + cityCode).imageLazyload({
-					placeholder: placeholder.toString(),
+					placeholder: placeholder.toString(),//缩略图
 					autoDestroy: false, //元素加载完后是否自动销毁当前插件对象
 				}); //懒加载控件
 				for(var i = 0; i < data.length; i++) {
@@ -389,11 +388,10 @@
 						dataStr = date;
 					}
 					data[i].tips = from + ' | ' + dataStr;
-					data[i].seHistory = false;
+					data[i].seHistory = false;//默认都未读
 					for(var j = 0; j < seHistory.length; j++) {
-						//console.log(data[i].tabid);
 						if(data[i].tabid == seHistory[j]) {
-							data[i].seHistory = true; //是历史记录
+							data[i].seHistory = true; //是历史记录，则设为已读
 							break;
 						}
 					}
@@ -401,7 +399,6 @@
 						lazyLoad.refresh(true);
 					});
 				}
-				console.log(document.getElementById("content").innerHTML);
 			}
 
 			/**
