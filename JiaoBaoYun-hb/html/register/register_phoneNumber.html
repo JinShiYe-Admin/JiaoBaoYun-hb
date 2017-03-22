@@ -65,6 +65,7 @@
 //					console.log('验证码 flag=' + regFlag);
 //				});
 				var curPage = plus.webview.currentWebview();
+				regFlag = curPage.data;
 				phoneNum.value = '';
 //				events.preload('yanZhengMa.html');
 				events.addTap('register', function() {

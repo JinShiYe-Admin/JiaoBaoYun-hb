@@ -101,7 +101,7 @@ mui.plusReady(function() {
 	});
 	events.softIn("publish-content");
 	window.onresize=function(){
-		console.log("resize");
+		console.log("resize0000");
 		mui(".mui-scroll-wrapper").scroll().refresh();
 	}
 	//相机按钮
