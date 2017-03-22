@@ -18,33 +18,43 @@
 	box-shadow: 0 0 1px 1px rgba(130, 130, 130, .7)
 }
 
+.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+	border-top: none;
+	border-bottom: none;
+}
+
 .mine-indicator.mine-active {
 	background-color: white;
 }
-.btn-attention{
+
+.btn-attention {
 	/*border: none;
 	margin-top: 5px;
 	min-width: 7rem;
 	max-width: 25%;*/
-	text-align:center;
+	text-align: center;
 	width: 55px;
 	height: 28px;
-	border: 0;padding: 0;
+	border: 0;
+	padding: 0;
 	color: white;
-	background-color:#1db8F1;
+	background-color: #1db8F1;
 }
-.btn-attentioned{
+
+.btn-attentioned {
 	/*border: none;
 	margin-top: 5px;
 	min-width: 7rem;
 	max-width: 25%;*/
-	text-align:center;
+	text-align: center;
 	width: 55px;
 	height: 28px;
-	border: 0;padding: 0;
+	border: 0;
+	padding: 0;
 	color: white;
-	background-color:#b7b7b7;
+	background-color: #b7b7b7;
 }
+
 .ellipsis-show {
 	/*内容*/
 	display: -webkit-box;
@@ -253,6 +263,7 @@ footer {
 	display: inline-block;
 	width: 20%;
 }
+
 .showAll {
 	display: none;
 	color: #D7D7D7;
