@@ -94,15 +94,15 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row" data-value='gname'>
 					<label>群名称：</label>
-					<input id="gname" type="text" placeholder="请为你们的群起一个给力的名字吧！" oninput="if(value.length>20)value=value.slice(0,20)">
+					<input id="gname" type="text" onfocus="this.blur();" placeholder="请为你们的群起一个给力的名字吧！">
 				</div>
 				<div class="mui-input-row" data-value='gnote'>
 					<label>群说明：</label>
-					<input id="gnote" type="text" placeholder="请简单介绍一下本群！" oninput="if(value.length>30)value=value.slice(0,30)">
+					<input id="gnote" type="text" onfocus="this.blur();" placeholder="请简单介绍一下本群！">
 				</div>
 				<div class="mui-input-row" data-value='qunremark' style="display: none;">
 					<label>群备注：</label>
-					<input id="qunremark" type="text" oninput="if(value.length>30)value=value.slice(0,30)">
+					<input id="qunremark" type="text" onfocus="this.blur();">
 				</div>
 			</form>
 			<button id="commit" type="button" class="mui-btn mui-btn-blue mui-btn-block">提交</button>
@@ -162,6 +162,10 @@
 							console.log('修改群资料的类型选择出错');
 							break;
 					}
+
+					qname.disabled = true;
+					qnote.disabled = true;
+
 					events.openNewWindowWithData('qun_manage_info_change_post.html', {
 						type: type, //修改的类型
 						value: value, //修改的值
@@ -169,13 +173,10 @@
 						listener: [{ webid: 'qun_manage_info.html', winid: 'valueChange' }] //监听
 					});
 
-					qname.disabled = 'disabled';
-					qnote.disabled = 'disabled';
-
 					setTimeout(function() {
 						qname.disabled = false;
 						qnote.disabled = false;
-					}, 1000);
+					}, 1500);
 				});
 
 				document.getElementById("commit").addEventListener('tap', function() {
