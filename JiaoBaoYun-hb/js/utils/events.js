@@ -486,29 +486,29 @@ var events = (function(mod) {
 		return format;
 	}
 	mod.softIn = function(id) {
-		if(plus.os.name == "Android") {
-			document.getElementById(id).onfocus = function() {
-				screen.height = plus.screen.resolutionHeight * plus.screen.scale
-				var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight")
-				console.log('状态栏高度:' + plus.navigator.getStatusbarHeight() + "屏幕高度：" + screen.height + "浏览器高度：" + webHeight);
-				var scrollHeight = parseInt(webHeight) - parseInt(screen.height) - parseInt(plus.navigator.getStatusbarHeight());
-				console.log("实际高度：" + scrollHeight)
-				//		document.querySelector(".mui-input-group").style.marginBottom=scrollHeight+"px";
-				document.body.clientHeight = scrollHeight;
-				mui(".mui-scroll-wrapper").scroll().scrollTo(0, -document.getElementById(id).offsetTop);
-			}
-			document.getElementById(id).onblur = function() {
-				mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0);
-			}
-			document.getElementById(id).oninput=function(){
-				mui(".mui-scroll-wrapper").scroll().scrollTo(0, -document.getElementById(id).offsetTop);
-			}
+//		if(plus.os.name == "Android") {
+//			document.getElementById(id).onfocus = function() {
+//				screen.height = plus.screen.resolutionHeight * plus.screen.scale
+//				var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight")
+//				console.log('状态栏高度:' + plus.navigator.getStatusbarHeight() + "屏幕高度：" + screen.height + "浏览器高度：" + webHeight);
+//				var scrollHeight = parseInt(webHeight) - parseInt(screen.height) - parseInt(plus.navigator.getStatusbarHeight());
+//				console.log("实际高度：" + scrollHeight)
+//				//		document.querySelector(".mui-input-group").style.marginBottom=scrollHeight+"px";
+//				document.body.clientHeight = scrollHeight;
+//				mui(".mui-scroll-wrapper").scroll().scrollTo(0, -document.getElementById(id).offsetTop);
+//			}
+//			document.getElementById(id).onblur = function() {
+//				mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0);
+//			}
+//			document.getElementById(id).oninput=function(){
+//				mui(".mui-scroll-wrapper").scroll().scrollTo(0, -document.getElementById(id).offsetTop);
+//			}
 //			window.addEventListener('resize', function() {
 //				screen.height = plus.screen.resolutionHeight * plus.screen.scale
 //				var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight")
 //				console.log('状态栏高度:' + plus.navigator.getStatusbarHeight() + "屏幕高度：" + screen.height + "浏览器高度：" + webHeight);
 //			})
-		}
+//		}
 	}
 	return mod;
 
