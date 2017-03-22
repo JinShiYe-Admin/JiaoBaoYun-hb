@@ -17,7 +17,7 @@
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
 		<script type="text/javascript" src="../../js/utils/UploadHeadImage.js"></script>
-		<script type="text/javascript" src="../../js/utils/compress.js" ></script>
+		<script type="text/javascript" src="../../js/utils/compress.js"></script>
 		<style>
 			body,
 			.mui-content {
@@ -89,15 +89,15 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row" data-value='gname'>
 					<label>群名称：</label>
-					<input id="gname" type="text" class="mui-input-clear" placeholder="请为你们的群起一个给力的名字吧！">
+					<input id="gname" type="text" onfocus="this.blur();" placeholder="请为你们的群起一个给力的名字吧！">
 				</div>
 				<div class="mui-input-row" data-value='gnote'>
 					<label>群说明：</label>
-					<input id="gnote" type="text" class="mui-input-clear" placeholder="请简单介绍一下本群！">
+					<input id="gnote" type="text" onfocus="this.blur();" placeholder="请简单介绍一下本群！">
 				</div>
-				<div class="mui-input-row" data-value='qunremark'style="display: none;">
+				<div class="mui-input-row" data-value='qunremark' style="display: none;">
 					<label>群备注：</label>
-					<input id="qunremark" type="text" class="mui-input-clear">
+					<input id="qunremark" type="text" onfocus="this.blur();" class="mui-input-clear">
 				</div>
 			</form>
 		</div>
@@ -165,6 +165,10 @@
 							console.log('修改群资料的类型选择出错');
 							break;
 					}
+
+					qname.disabled = true;
+					qnote.disabled = true;
+
 					events.openNewWindowWithData('qun_manage_info_change_post.html', {
 						gid: subData.gid, //群id
 						type: type, //修改的类型
@@ -173,13 +177,10 @@
 						listener: [subData.listener, { webid: 'qun_manage_info_change.html', winid: 'valueChange' }]
 					});
 
-					qname.disabled = 'disabled';
-					qnote.disabled = 'disabled';
-
 					setTimeout(function() {
 						qname.disabled = false;
 						qnote.disabled = false;
-					}, 1000);
+					}, 1500);
 				});
 
 				//修改群信息成功后修改界面的值
