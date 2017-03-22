@@ -15,7 +15,11 @@
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
-
+		<style type="text/css">
+			.mui-bar-nav {
+				box-shadow: none;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -215,7 +219,7 @@
 					createNew: true,
 
 				});
-//				events.openNewWindowWithData('AttentionPersons.html', { expertInfo: ExpertsInfo, type: 1 });
+				//				events.openNewWindowWithData('AttentionPersons.html', { expertInfo: ExpertsInfo, type: 1 });
 				console.log('关注他的人');
 			})
 			events.addTap('focusBtn', function() {
@@ -326,7 +330,12 @@
 			nodes.AskNum.innerHTML = ExpertsInfo.AskNum + '<span class="mui-icon mui-icon-forward"></span>';
 			//如果是自己，显示编辑简介按钮
 			if(ExpertsInfo.UserId == personalUTID) {
-				nodes.UserNote.innerHTML = ExpertsInfo.UserNote + ' ' + '<img id="bianji" style = "width:20px;height:20px;"  src="../../image/qiuzhi/bianji1.png" />';
+				if(ExpertsInfo.UserNote == '') {
+					nodes.UserNote.innerHTML = '<img id="bianji" style = "width:20px;height:20px;"  src="../../image/qiuzhi/bianji1.png" />' + ' ' + '编辑简介';
+				} else {
+					nodes.UserNote.innerHTML = ExpertsInfo.UserNote + ' ' + '<img id="bianji" style = "width:20px;height:20px;"  src="../../image/qiuzhi/bianji1.png" />';
+				}
+
 			} else {
 				nodes.UserNote.innerHTML = ExpertsInfo.UserNote;
 			}
