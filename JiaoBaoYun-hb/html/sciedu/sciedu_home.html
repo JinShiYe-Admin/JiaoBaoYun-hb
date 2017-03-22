@@ -39,17 +39,68 @@
 				/*底部加载更多区域*/
 				background-color: white;
 			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border-top: none;
+				border-bottom: none;
+			}
 		</style>
 	</head>
 
 	<body>
 		<div id="content" class="mui-content">
-			<!--<div id="slider" class="mui-slider mui-fullscreen">
-				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div id="topList" class="mui-scroll">
+			<!--<div id="slider" class="mui-slider mui-fullscreen" data-slider="1">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" data-scroll="2">
+					<div id="topList" class="mui-scroll" style="transform: translate3d(0px, 0px, 0px) translateZ(0px);">
+						<a class="mui-control-item mui-active" id="top_370100" href="#bot_370100">济南市</a>
+						<a class="mui-control-item" id="top_450100" href="#bot_450100">南宁市</a>
 					</div>
 				</div>
-				<div id="sliderGroup" class="mui-slider-group">
+				<div id="sliderGroup" class="mui-slider-group" style="transform: translate3d(0px, 0px, 0px) translateZ(0px);">
+					<div class="mui-slider-item mui-control-content mui-active" id="bot_370100" data-info="{&quot;acode&quot;:&quot;370100&quot;,&quot;aname&quot;:&quot;济南市&quot;}" data-page="{&quot;pageIndex&quot;:1,&quot;totalPage&quot;:1}">
+						<div id="bot_sw_370100" class="mui-scroll-wrapper" data-scroll="3">
+							<div id="bot_sc_370100" class="mui-scroll" data-pulltorefresh="5" style="transform: translate3d(0px, 0px, 0px) translateZ(0px);">
+								<ul id="bot_ul_370100" class="mui-table-view" data-imagelazyload="7">
+									<li class="mui-table-view-cell mui-media" data-tabid="2" data-turl="http://edu.dzwww.com/dzjyxw/sdjx/201701/t20170116_15435620.html" data-sehistory="false" id="0">
+										<div id="mediaBody_0" class="mui-media-body secedu-body">
+											<div id="title_0" class="secedu-title" style="">山东省教育厅召开2016年度基层党组织书记抓党建述职会议</div>
+											<div class="mui-row">
+												<div class="mui-col-xs-4 mui-col-sm-4"><img id="image_3_0_0" data-lazyload="http://www.sdedu.gov.cn/sdjy/_gzdt/955491/2017011314295856228.JPG" data-lazyload-id="0" style="height: 73.3333px;"></div>
+												<div class="mui-col-xs-4 mui-col-sm-4"><img id="image_3_1_0" data-lazyload="http://www.sdedu.gov.cn/sdjy/_gzdt/955491/2017011314294783143.JPG" data-lazyload-id="1" style="height: 73.3333px;"></div>
+												<div class="mui-col-xs-4 mui-col-sm-4"><img id="image_3_2_0" data-lazyload="http://www.sdedu.gov.cn/sdjy/_gzdt/955491/2017011314295282818.JPG" data-lazyload-id="2" style="height: 73.3333px;"></div>
+											</div>
+											<div id="from_0" class="secedu-from">来源: 山东省教育厅 | 2017-01-16</div>
+										</div>
+									</li>
+									<li class="mui-table-view-cell mui-media" data-tabid="1" data-turl="http://edu.dezhoudaily.com/jyxw/2017/01/2017-01-121249509.html" data-sehistory="false" id="1">
+										<div id="mediaBody_1" class="mui-media-body secedu-body">
+											<div id="title_1" class="secedu-title" style="">山东：中高考将增加法治知识内容</div>
+											<div id="from_1" class="secedu-from">来源：中国教育在线 | 2017-01-12</div>
+										</div>
+									</li>
+								</ul>
+								<div class="mui-pull-bottom-tips">
+									<div class="mui-pull-bottom-wrapper"><span class="mui-pull-loading"></span></div>
+								</div>
+							</div>
+							<div class="mui-scrollbar mui-scrollbar-vertical">
+								<div class="mui-scrollbar-indicator" style="transition-duration: 0ms; display: none; height: 519px; transform: translate3d(0px, 0px, 0px) translateZ(0px);"></div>
+							</div>
+						</div>
+					</div>
+					<div class="mui-slider-item mui-control-content" id="bot_450100" data-info="{&quot;acode&quot;:&quot;450100&quot;,&quot;aname&quot;:&quot;南宁市&quot;}">
+						<div id="bot_sw_450100" class="mui-scroll-wrapper" data-scroll="4">
+							<div id="bot_sc_450100" class="mui-scroll" data-pulltorefresh="6" style="transform: translate3d(0px, 0px, 0px) translateZ(0px);">
+								<ul id="bot_ul_450100" class="mui-table-view"> </ul>
+								<div class="mui-pull-bottom-tips">
+									<div class="mui-pull-bottom-wrapper"><span class="mui-pull-loading"></span></div>
+								</div>
+							</div>
+							<div class="mui-scrollbar mui-scrollbar-vertical">
+								<div class="mui-scrollbar-indicator" style="transition-duration: 0ms; display: none; height: 519px; transform: translate3d(0px, 0px, 0px) translateZ(0px);"></div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>-->
 		</div>
@@ -350,6 +401,7 @@
 						lazyLoad.refresh(true);
 					});
 				}
+				console.log(document.getElementById("content").innerHTML);
 			}
 
 			/**
