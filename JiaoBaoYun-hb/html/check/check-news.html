@@ -1,14 +1,14 @@
+<!--审核界面-->
 <!DOCTYPE html>
 <html>
 
 	<head>
 		<meta charset="utf-8">
-		<title>Hello MUI</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
-		<link rel="stylesheet" href="../../css/utils/common.css"/>
+		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/check/check-news.css" />
 	</head>
 
@@ -18,7 +18,10 @@
 			<h1 class="mui-title">审核新闻</h1>
 		</header>
 		<div class="mui-content">
-			<div><p class="display-inlineBlock">请选择地区：</p><a>全国<span class="mui-icon mui-icon-arrowdown"></span></a></div>
+			<div>
+				<p class="display-inlineBlock">请选择地区：</p>
+				<a id="choose-area" class="choose-area" value="0">全国<span class="mui-icon mui-icon-arrowdown"></span></a>
+			</div>
 			<div id="slider" class="mui-slider">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div class="mui-scroll">
@@ -49,7 +52,7 @@
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul class="mui-table-view">
-									
+
 								</ul>
 							</div>
 						</div>
@@ -58,7 +61,7 @@
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul class="mui-table-view">
-			
+
 								</ul>
 							</div>
 						</div>
