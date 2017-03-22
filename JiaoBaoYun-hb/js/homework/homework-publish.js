@@ -395,11 +395,16 @@ function requestPublishHomework() {
 			events.clearChild(document.getElementById('classes'));
 			events.fireToPageNone('homework-tea.html', 'homeworkPublished');
 			console.log("空值的班级："+JSON.stringify(emptyClasses))
-			var toastInfo="";
+			var toastInfo=[];
 			for(var j in emptyClasses){
-				toastInfo+=emptyClasses[j].gname+" ";
+				
+				toastInfo.push(emptyClasses[j].gname);
 			}
-			mui.toast(toastInfo+'班级无发布作业对象，发布失败，其他班级发布作业成功！');
+			if(toastInfo.length>0){
+				mui.toast(toastInfo.toString()+'班级无发布作业对象，发布失败，其他班级发布作业成功！');
+			}else{
+				mui.toast("发布作业成功！")
+			}
 			mui.back();
 		} else {
 			mui.toast(data.RspTxt);

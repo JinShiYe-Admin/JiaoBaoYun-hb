@@ -132,6 +132,7 @@ var addListener = function() {
 	 * 点击接受按钮事件
 	 */
 	mui('.mui-table-view').on('tap', '.btn-apply', function() {
+		var appButton=this;
 		//获取群申请记录id;
 		gutid = parseInt(this.getAttribute('gutid'));
 		//获取要申请的群id
@@ -145,8 +146,10 @@ var addListener = function() {
 			wd.close();
 			if(data.RspCode = '0000') {
 				mui.toast('您已同意入群');
-				events.clearChild(list);
-				getData('inv', []);
+//				events.clearChild(list);
+//				getData('inv', []);
+				console.log(appButton.parentElement.className);
+				list.removeChild(appButton.parentElement);
 				events.fireToPageNone('mine.html', 'newsChanged');
 				events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 			} else {
