@@ -39,11 +39,16 @@
 				setContents(curPage.data, title, inText, pInfo)
 				var save = document.getElementById('save');
 				save.addEventListener('tap', function() {
+					
 					console.log('save is clicked');
 					postInfo(curPage.data, inText, pInfo, curPage);
 				})
 			})
 			var postInfo = function(no, inText, pInfo, curpage) {
+				if (inText.value.length == 0) {
+					mui.toast('不能为空');
+					return;
+				}
 				var vtpKey = '';
 				switch(no) {
 					case 0:

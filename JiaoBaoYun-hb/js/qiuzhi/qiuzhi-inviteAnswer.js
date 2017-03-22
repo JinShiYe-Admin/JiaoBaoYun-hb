@@ -62,16 +62,18 @@ mui.plusReady(function() {
 				if(pageIndex <= totalPageCount) {
 					//36.获取某个用户的被邀请问题列表
 					getInviteAsksByUser(ExpertsInfo.UserId);
+					setTimeout(function() {
+						//结束下拉刷新
+						self.endPullUpToRefresh();
+						if(mui(".mui-table-view-cell").length < 10) {
+							mui(".mui-pull-loading")[0].innerHTML = "";
+						}
+					}, 1000);
 				} else {
-					mui.toast('没有更多了');
-				}
-				setTimeout(function() {
 					//结束下拉刷新
 					self.endPullUpToRefresh();
-					if(mui(".mui-table-view-cell").length < 10) {
-						mui(".mui-pull-loading")[0].innerHTML = "";
-					}
-				}, 1000);
+					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
+				}
 			}
 		}
 	});

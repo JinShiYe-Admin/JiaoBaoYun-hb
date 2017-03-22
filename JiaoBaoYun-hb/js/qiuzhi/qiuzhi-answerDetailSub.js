@@ -270,12 +270,10 @@ function setUserFocus(userId, item) {
 			//刷新界面显示
 			if(item.isLike) {
 				item.innerText = '关注';
-				mui.toast('取消关注成功！');
 				item.isLike = 0;
 				item.className = "mui-btn mui-pull-right btn-attention"
 			} else {
 				item.innerText = '已关注';
-				mui.toast('关注成功！')
 				item.isLike = 1;
 				item.className = "mui-btn mui-pull-right btn-attentioned"
 			}
@@ -567,7 +565,6 @@ var setZanIconCondition = function(item) {
 	if(item.isLike) {
 		item.className = "mui-icon iconfont icon-support isNotLike ";
 		item.isLike = 0;
-		mui.toast('已取消点赞');
 		console.log('顺序：' + JSON.stringify(item.order))
 		if(item.order || item.order == 0) {
 			if(typeof(item.order) == "string") {
@@ -588,7 +585,6 @@ var setZanIconCondition = function(item) {
 	} else {
 		item.className = "mui-icon iconfont icon-support isLike";
 		item.isLike = 1;
-		mui.toast('点赞成功');
 		console.log('顺序：' + JSON.stringify(item.order))
 		if(item.order || item.order == 0) {
 			if(typeof(item.order) == "string") {
