@@ -143,10 +143,12 @@ mui.plusReady(function() {
 	mui('#answer_bottom').on('tap', '.mui-media-object', function() {
 		var element = this.parentNode;
 		var info = JSON.parse(element.getAttribute('data-info'));
-		info.UserId = info.utid;
 		console.log(JSON.stringify(info));
-		//跳转页面
-		events.openNewWindowWithData('expert-detail.html', info);
+		if(info.IsAnonym != 1) {
+			info.UserId = info.utid;
+			//跳转页面
+			events.openNewWindowWithData('expert-detail.html', info);
+		}
 	});
 
 	var showAll = document.getElementById("showAll");

@@ -68,7 +68,7 @@
 				phoneNum.value = '';
 //				events.preload('yanZhengMa.html');
 				events.addTap('register', function() {
-
+					document.activeElement.blur();
 					if(!phoneNum.value) {
 						mui.toast('请输入手机号码');
 						return;

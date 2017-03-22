@@ -20,35 +20,35 @@
 			<a id="publish" class="mui-icon mui-pull-right mui-plus-visible" style="padding-left: 30px;padding-top: 15px;font-size: 16px;">发布</a>
 		</header>
 		<div class="mui-scroll-wrapper mui-content">
-				<div class="mui-scroll">
-			<div class="input-content">
-				<textarea id="input-content" placeholder="这一刻的想法"></textarea>
-				<div id="take_pic" class="take_pic">
-					<a class="mui-icon iconfont icon-xiangji1"></a>
+			<div class="mui-scroll">
+				<div class="input-content">
+					<textarea id="input-content" placeholder="这一刻的想法" style="border-bottom-color: #e4e4e4;"></textarea>
+					<div id="take_pic" class="take_pic">
+						<a class="mui-icon iconfont icon-xiangji1"></a>
+					</div>
+					<div id="take_camero" class="take_camero">
+						<a class="mui-icon iconfont icon-shipin"></a>
+					</div>
+					<div id="get_gallery" class="get_gallery">
+						<a class="mui-icon iconfont icon-tuku"></a>
+					</div>
 				</div>
-				<div id="take_camero" class="take_camero">
-					<a class="mui-icon iconfont icon-shipin"></a>
-				</div>
-				<div id="get_gallery" class="get_gallery">
-					<a class="mui-icon iconfont icon-tuku"></a>
-				</div>
-			</div>
 
-			<div>
-				<p style="margin-left: 10px;font-size: 15px;height: 30px;padding-top: 5px;">发布到:</p>
-			</div>
-			<div style="margin-left: 10px;">
-				<div id="zoneiv" class="mui-checkbox mui-left mui-disabled" style="width:100; height:30px; float:left; display:inline;margin-left: -20px;">
-					<label style="font-size: 15px;">空间</label>
-					<input id="zone" name="checkbox" value="0" type="checkbox" disabled="disabled" style="margin-top: -7px;" checked>
+				<div>
+					<p style="margin-left: 10px;font-size: 15px;height: 30px;padding-top: 5px; background-color: #f2f3f5;">发布到:</p>
 				</div>
-				<div id="showDiv"  class="mui-checkbox mui-left" style="width:100; height:30px; float:left; display:inline; ">
-					<label style="font-size: 15px;">展现</label>
-					<input id="show" name="checkbox" value="1" type="checkbox"  style="margin-top: -7px;" checked>
+				<div style="margin-left: 10px;">
+					<div id="zoneiv" class="mui-checkbox mui-left mui-disabled" style="width:100; height:30px; float:left; display:inline;margin-left: -20px;">
+						<label style="font-size: 15px;">空间</label>
+						<input id="zone" name="checkbox" value="0" type="checkbox" disabled="disabled" style="margin-top: -7px;" checked>
+					</div>
+					<div id="showDiv" class="mui-checkbox mui-left" style="width:100; height:30px; float:left; display:inline; ">
+						<label style="font-size: 15px;">展现</label>
+						<input id="show" name="checkbox" value="1" type="checkbox" style="margin-top: -7px;" checked>
+					</div>
 				</div>
+				<div id="pictures" style="float: left;background-color: transparent;width: 320px;"></div>
 			</div>
-			<div id="pictures" style="float: left;background-color: transparent;width: 320px;"></div>
-		</div>
 		</div>
 
 	</body>
@@ -87,10 +87,10 @@
 			title.innerText = userInfo.unick;
 			if(pageFlag == 'jxq') {
 				console.log('jxq')
-//				document.getElementById("show").checked = false;
-			}else{
+				//				document.getElementById("show").checked = false;
+			} else {
 				console.log('zx')
-//				document.getElementById("show").checked = true;
+				//				document.getElementById("show").checked = true;
 			}
 
 			//				events.addTap('take_pic', function() {
@@ -153,8 +153,7 @@
 
 			//发布按钮
 			events.addTap('publish', function() {
-				
-				
+
 				var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				console.log(tempInfo.uarea.acode)
 
@@ -173,18 +172,18 @@
 				var pubScopes;
 				var chenckBox1 = document.getElementById('zone')
 				var chenckBox2 = document.getElementById('show')
-				if(chenckBox1.checked&&chenckBox2.checked){
+				if(chenckBox1.checked && chenckBox2.checked) {
 					pubScopes = '[1,2]';
-				}else if(!chenckBox1.checked&&chenckBox2.checked){
+				} else if(!chenckBox1.checked && chenckBox2.checked) {
 					pubScopes = '[2]';
-				}else{
+				} else {
 					pubScopes = '[1]';
 				}
-//				if(!chenckBox.checked) {
-//					pubScopes = '[1]';
-//				} else {
-//					pubScopes = '[1,2]';
-//				}
+				//				if(!chenckBox.checked) {
+				//					pubScopes = '[1]';
+				//				} else {
+				//					pubScopes = '[1,2]';
+				//				}
 				var pubArea;
 				var TAs = getTypeAddress();
 				if(tempInfo.uarea.acode == undefined) {
@@ -341,11 +340,11 @@
 		var imgs = [];
 
 		//删除图标的点击事件
-//		mui('#pictures').on('tap', '.icon-guanbi', function() {
-//			imgs.splice(imgs.indexOf(this.parentElement.img), 1);
-//			//删除图片111
-//			pictures.removeChild(this.parentElement);
-//		})
+		//		mui('#pictures').on('tap', '.icon-guanbi', function() {
+		//			imgs.splice(imgs.indexOf(this.parentElement.img), 1);
+		//			//删除图片111
+		//			pictures.removeChild(this.parentElement);
+		//		})
 		/**
 		 * 获取接口数据文件及缩略图
 		 * encType: '',//附件类型,1图片2音视频3仅文字

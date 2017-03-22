@@ -93,6 +93,7 @@
 				regFlag = phoneNum.flag;
 				
 				events.addTap('register', function() {
+					document.activeElement.blur();
 					//先本地判断验证码
 					//					if(document.getElementById("yanzheng").value != '123456') {
 					//						mui.toast('验证码错误');

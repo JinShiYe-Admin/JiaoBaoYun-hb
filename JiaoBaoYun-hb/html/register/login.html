@@ -368,6 +368,7 @@ none; margin-top: -15px;">登录</button>
 					}
 					//登录按钮
 					loginButton.addEventListener('tap', function(event) {
+						document.activeElement.blur();
 						if(!accountBox.value) {
 							mui.toast('请输入账号')
 							return;
@@ -385,6 +386,7 @@ none; margin-top: -15px;">登录</button>
 					});
 					//遇到登录问题
 					moreButton.addEventListener('tap', function(event) {
+						document.activeElement.blur();
 						var btnArray = [{
 							title: "通过短信验证码登录"
 						}];
@@ -422,6 +424,7 @@ none; margin-top: -15px;">登录</button>
 					//					}, false);
 					//注册账号
 					regButton.addEventListener('tap', function(event) {
+						document.activeElement.blur();
 						//flag为0，表示是注册账号
 						events.openNewWindowWithData('register_phoneNumber.html', '0');
 //						events.fireToPage('register_phoneNumber.html', 'registerFlag', function() {
