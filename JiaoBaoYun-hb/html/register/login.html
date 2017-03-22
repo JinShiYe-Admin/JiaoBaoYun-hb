@@ -260,7 +260,7 @@ none; margin-top: -15px;">登录</button>
 						});
 					}
 					//---设置沉浸式---end---
-					events.preload('register_phoneNumber.html');
+//					events.preload('register_phoneNumber.html');
 					plus.screen.lockOrientation("portrait-primary");
 					var settings = app.getSettings();
 					var state = app.getState();
@@ -399,9 +399,10 @@ none; margin-top: -15px;">登录</button>
 									break;
 								case 1: //通过短信验证码登录
 									//flag为1，表示是验证码登录
-									events.fireToPage('register_phoneNumber.html', 'registerFlag', function() {
-										return 1;
-									});
+									events.openNewWindowWithData('register_phoneNumber.html', '1');
+//									events.fireToPage('register_phoneNumber.html', 'registerFlag', function() {
+//										return 1;
+//									});
 									break;
 								case 2:
 									break;
@@ -422,9 +423,10 @@ none; margin-top: -15px;">登录</button>
 					//注册账号
 					regButton.addEventListener('tap', function(event) {
 						//flag为0，表示是注册账号
-						events.fireToPage('register_phoneNumber.html', 'registerFlag', function() {
-							return 0;
-						});
+						events.openNewWindowWithData('register_phoneNumber.html', '0');
+//						events.fireToPage('register_phoneNumber.html', 'registerFlag', function() {
+//							return 0;
+//						});
 					}, false);
 					//					forgetButton.addEventListener('tap', function(event) {
 					//						$.openWindow({

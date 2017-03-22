@@ -59,12 +59,14 @@
 				var regFlag;
 				//获取到手机号
 				var phoneNum = document.getElementById("phoneNumber");
-				window.addEventListener('registerFlag', function(event) {
-					regFlag = event.detail.data;
-					phoneNum.value = '';
-					console.log('验证码 flag=' + regFlag);
-				});
-				events.preload('yanZhengMa.html');
+//				window.addEventListener('registerFlag', function(event) {
+//					regFlag = event.detail.data;
+//					phoneNum.value = '';
+//					console.log('验证码 flag=' + regFlag);
+//				});
+				var curPage = plus.webview.currentWebview();
+				phoneNum.value = '';
+//				events.preload('yanZhengMa.html');
 				events.addTap('register', function() {
 
 					if(!phoneNum.value) {
@@ -119,9 +121,10 @@
 									phone: phoneNum.value,
 									flag: regFlag
 								};
-								events.fireToPage('yanZhengMa.html', 'yanzhengma', function() {
-									return tempValue;
-								});
+								events.openNewWindowWithData('yanZhengMa.html', tempValue);
+//								events.fireToPage('yanZhengMa.html', 'yanzhengma', function() {
+//									return tempValue;
+//								});
 								//								console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 								if(data.RspCode != 0000) {
 									mui.toast(data.RspTxt);

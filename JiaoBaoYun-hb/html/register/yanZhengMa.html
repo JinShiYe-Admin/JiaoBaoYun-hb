@@ -78,13 +78,20 @@
 				phoneNumBox.value = '';
 				var codeBox = document.getElementById("yanzheng");
 
-				window.addEventListener('yanzhengma', function(event) {
-					var temp = event.detail.data;
-					console.log('传值的电话号码为：' + JSON.stringify(event.detail));
-					codeBox.value = '';
-					phoneNumBox.value = temp.phone;
-					regFlag = temp.flag;
-				});
+//				window.addEventListener('yanzhengma', function(event) {
+//					var temp = event.detail.data;
+//					console.log('传值的电话号码为：' + JSON.stringify(event.detail));
+//					codeBox.value = '';
+//					phoneNumBox.value = temp.phone;
+//					regFlag = temp.flag;
+//				});
+				var curPage = plus.webview.currentWebview();
+				phoneNum = curPage.data;
+				console.log('phoneNum:'+JSON.stringify(phoneNum));
+				codeBox.value = '';
+				phoneNumBox.value = phoneNum.phone;
+				regFlag = phoneNum.flag;
+				
 				events.addTap('register', function() {
 					//先本地判断验证码
 					//					if(document.getElementById("yanzheng").value != '123456') {
@@ -159,9 +166,9 @@
 											events.openNewWindow('../index/index.html');
 										} else {
 											//跳转到修改密码界面
-											var temp;
-											events.openNewWindowWithData('modify_password.html', temp);
-											events.fireToPageNone('modify_password.html', 'registerPW');
+//											var temp;
+											events.openNewWindowWithData('modify_password.html', '0');
+//											events.fireToPageNone('modify_password.html', 'registerPW');
 										}
 									} else {
 										mui.toast(data.RspTxt);
@@ -200,9 +207,9 @@
 											//存储到手机本地
 											window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 											//跳转到修改密码界面
-											var temp;
-											events.openNewWindowWithData('modify_password.html', temp);
-											events.fireToPageNone('modify_password.html', 'registerPW');
+//											var temp;
+											events.openNewWindowWithData('modify_password.html', '0');
+//											events.fireToPageNone('modify_password.html', 'registerPW');
 											//										events.fireToPageNone('../quan/tab-zone.html','infoChanged');
 										}
 									} else {

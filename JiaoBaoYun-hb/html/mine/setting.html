@@ -50,10 +50,11 @@
 //					mui.toast('此功能暂未开放');
 //				});
 				//修改密码
-				events.preload('../register/modify_password.html');
+//				events.preload('../register/modify_password.html');
 				events.addTap('change-passwords', function() {
-						events.fireToPageNone('../register/modify_password.html', 'changePasswords');
-						plus.webview.getWebviewById('modify_password.html').show()
+//						events.fireToPageNone('../register/modify_password.html', 'changePasswords');
+//						plus.webview.getWebviewById('modify_password.html').show();
+						events.openNewWindowWithData('../register/modify_password.html', '1');
 //						events.openNewWindowWithData('QRCode.html');
 //						events.openNewWindowWithData('ReadQRCode.html');
 					})
@@ -104,8 +105,8 @@
 									});
 
 								} else { //无密码
-									events.fireToPageNone('../register/modify_password.html', 'settingPW');
-									events.openNewWindowWithData('modify_password.html', '');
+//									events.fireToPageNone('../register/modify_password.html', 'settingPW');
+									events.openNewWindowWithData('../register/modify_password.html', '2');
 								}
 
 								break;
