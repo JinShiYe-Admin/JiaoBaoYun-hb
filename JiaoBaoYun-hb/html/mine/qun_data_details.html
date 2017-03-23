@@ -12,10 +12,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
-		<!--<link rel="stylesheet" href="../../css/mui.picker.min.css" />-->
-		<!--<link rel="stylesheet" href="../../css/mui.poppicker.css" />-->
 		<script src="../../js/mui.min.js"></script>
-		<!--<script type="text/javascript" src="../../js/mui.picker.min.js"></script>-->
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 
@@ -506,7 +503,7 @@
 												dataType: '0'
 											});
 										}
-										if(item.stumstype == 3 && item.umstype == 3) {
+										if(item.stumstype == 3) {
 											console.log('学生详细信息:' + JSON.stringify(item));
 											//关联的学生账号
 											stuData.push(item); //记录获取的学生资料
@@ -514,7 +511,7 @@
 											mainData.stuname = item.stuname;
 											stu_name.value = mainData.stuname;
 											stu_ugname.value = item.ugname;
-											if(item.utid != null && item.utid != '') {
+											if(item.utid != null && item.utid != '' && item.umstype == 3) {
 												utidArray.push({
 													utid: item.utid,
 													dataType: '3'
