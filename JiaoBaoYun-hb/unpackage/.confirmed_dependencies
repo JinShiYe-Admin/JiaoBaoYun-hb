@@ -1,1 +1,634 @@
-null
+{
+	"html/cloud/cloud_home.html": {
+		"resources": [
+			"image/cloud/cloud_0_ban_1.png",
+			"js/mui.pullToRefresh.js",
+			"image/cloud/cloud_0_biji.png",
+			"css/utils/MUI-pullToRefresh.css",
+			"js/mui.pullToRefresh.material.js",
+			"image/cloud/cloud_0_dangan.png",
+			"css/cloud/file.css",
+			"js/cloud/cloud.js",
+			"image/cloud/cloud_0_zuoye.png",
+			"image/cloud/cloud_0_banjiguanli.png",
+			"image/cloud/cloud_0_jishi.png",
+			"image/cloud/cloud_0_tuku.png",
+			"image/cloud/cloud_0_xinjian_4.png",
+			"image/cloud/cloud_0_tongxunlu.png",
+			"image/cloud/cloud_0_jia_0.png",
+			"image/cloud/cloud_0_wenjianjia_1.png",
+			"image/utils/default_personalimage.png"
+		],
+		"refer": [
+			"html/cloud/storage_upload_choose.html",
+			"html/homework/homework-tea.html",
+			"html/cloud/storage_upload.html",
+			"html/cloud/storage_main.html",
+			"html/quan/class_space.html"
+		]
+	},
+	"html/sciedu/sciedu_home.html": {
+		"resources": [
+			"css/utils/pullToRefresh.css",
+			"js/sciedu/SciEduHomeItem.js",
+			"js/mui.lazyload.js",
+			"js/mui.lazyload.img.js",
+			"css/sciedu/sciedu.css",
+			"js/mui.pullToRefresh.js",
+			"js/mui.pullToRefresh.material.js",
+			"/image/utils/default_load_2.gif"
+		],
+		"refer": [
+			"html/utils/customizeCity.html",
+			"html/sciedu/sciedu_show_main.html"
+		]
+	},
+	"html/cloud/storage_upload_choose.html": {
+		"resources": [
+			"js/utils/compress.js",
+			"image/cloud/A_folder.png",
+			"js/cloud/AndroidFileSystem.js"
+		]
+	},
+	"html/index/mine.html": {
+		"resources": [
+			"image/mine/setting.png",
+			"image/mine/data.png",
+			"image/utils/default_personalimage.png",
+			"image/mine/group-manage.png",
+			"image/mine/new-message.png",
+			"css/home/index-menu.css",
+			"image/mine/about.png",
+			"image/mine/my-space.png",
+			"image/mine/my-points.png"
+		],
+		"refer": [
+			"html/quan/zone_main.html",
+			"html/check/check-news.html",
+			"html/mine/about.html",
+			"html/mine/setting.html"
+		]
+	},
+	"html/show/show_home_1.html": {
+		"resources": [
+			"js/utils/native.js",
+			"js/mui.zoom.js",
+			"js/quan/dynamiclistitem.js",
+			"js/mui.previewimage.js",
+			"css/icons-extra.css",
+			"css/utils/preview.css",
+			"js/show/show-sub.js",
+			"css/show/show.css",
+			"image/utils/default_personalimage.png",
+			"image/dynamic/icon_praise_small.png",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/index/index.html": {
+		"resources": [
+			"html/cloud/cloud_home.html",
+			"css/iconfont/iconfont.css",
+			"css/utils/slide_navigatian.css",
+			"fonts/mui.ttf",
+			"js/publicHomeworkProtocol.js",
+			"fonts/iconfont.ttf",
+			"js/main/slide_navigation.js",
+			"css/home/index.css",
+			"js/index.js"
+		],
+		"refer": [
+			"html/cloud/cloud_home.html",
+			"html/sciedu/sciedu_home.html",
+			"html/index/mine.html",
+			"html/show/show_home_1.html",
+			"html/qiuzhi/qiuzhi_home.html",
+			"html/qiuzhi/expert-detail.html",
+			"html/quan/aboutme.html"
+		]
+	},
+	"html/register/login.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/utils/Statusbar.js",
+			"js/utils/app-update.js",
+			"css/utils/common.css",
+			"html/register/js/app.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
+			"html/register/js/mui.enterfocus.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/sortSign.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		],
+		"refer": [
+			"html/index/index.html"
+		]
+	},
+	"html/cloud/storage_main.html": {
+		"resources": [
+			"js/utils/cryption.js",
+			"js/utils/CloudFileUtil.js",
+			"js/qiniu/qiniu.js"
+		]
+	},
+	"html/qiuzhi/qiuzhi_home.html": {
+		"resources": [
+			"js/publicQiuzhiProtocol.js",
+			"js/qiuzhi/qiuzhi-home.js",
+			"css/qiuzhi/qiuzhi.css",
+			"html/qiuzhi/qiuzhi-sub.html",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-sub.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi-answerDetailSub.html": {
+		"resources": [
+			"css/qiuzhi/qiuzhi-answerDetailSub.css",
+			"js/qiuzhi/qiuzhi-answerDetailSub.js",
+			"js/publicQiuzhiProtocol.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/mui.zoom.js",
+			"js/mui.min.js",
+			"js/mui.previewimage.js",
+			"js/utils/signHmacSHA1.js",
+			"fonts/iconfont.ttf",
+			"js/utils/postData.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"css/utils/preview.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-addAnswer.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi-answerDetail.html": {
+		"resources": [
+			"html/qiuzhi/qiuzhi-answerDetailSub.html"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-answerDetailSub.html"
+		]
+	},
+	"html/homework/workdetailTea-temSub.html": {
+		"resources": [
+			"js/homework/homework_detail.js",
+			"css/homework/workdetail.css",
+			"js/publicHomeworkProtocol.js"
+		]
+	},
+	"html/homework/homework-tea.html": {
+		"resources": [
+			"css/homework/homework.css",
+			"js/homework/homework.js",
+			"js/utils/switch-mine.js",
+			"js/utils/h5fresh.js",
+			"css/homework/subjects-icon.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/homework/doHomework-stu.html",
+			"html/homework/publish-answer.html",
+			"html/homework/homework-publish.html",
+			"html/homework/workdetail-stu.html",
+			"html/homework/workdetailTea-temporary.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi-sub.html": {
+		"resources": [
+			"image/qiuzhi/add-question.png.png",
+			"css/qiuzhi/qiuzhi-sub.css",
+			"js/qiuzhi/qiuzhi-sub.js",
+			"js/utils/h5fresh.js",
+			"image/utils/default_personalimage.png",
+			"image/qiuzhi/expert_more.png",
+			"image/qiuzhi/channel-edu.png",
+			"image/qiuzhi/channel-science.png",
+			"image/qiuzhi/channel-health.png",
+			"image/qiuzhi/channel-food.png",
+			"image/qiuzhi/channel-others.png"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-answerDetail.html",
+			"html/qiuzhi/qiuzhi-question.html"
+		]
+	},
+	"html/homework/doHomework-stu.html": {
+		"resources": [
+			"js/cloud/mui.previewimage.js"
+		]
+	},
+	"html/homework/publish-answer.html": {
+		"resources": [
+			"image/homework/xiangji.png",
+			"css/homework/publish-answer.css",
+			"image/homework/temWork-teaHint.png",
+			"js/utils/load.js",
+			"js/homework/publish-answer.js",
+			"js/libs/CryptoJS/components/mode-ecb-min.js",
+			"js/utils/camera.js",
+			"js/libs/CryptoJS/rollups/tripledes.js",
+			"js/utils/files.js"
+		]
+	},
+	"html/homework/homework-publish.html": {
+		"resources": [
+			"js/common.js",
+			"css/homework/homework-publish.css",
+			"css/quan/custom-textarea.css",
+			"js/utils/audio.js",
+			"js/homework/homework-publish.js",
+			"image/homework/arrow-down.png",
+			"js/utils/cryption.js",
+			"fonts/mui.ttf",
+			"js/utils/CloudFileUtil.js",
+			"js/utils/compress.js",
+			"js/utils/camera.js",
+			"js/qiniu/qiniu.js"
+		],
+		"refer": [
+			"html/homework/classes-select.html"
+		]
+	},
+	"html/homework/classes-select.html": {
+		"resources": [
+			"css/homework/classes-select.css"
+		]
+	},
+	"html/homework/workdetail-stu.html": {
+		"resources": [
+			"js/homework/workdetail-stu.js",
+			"css/homework/workdetail-stu.css"
+		]
+	},
+	"html/quan/zone_main.html": {
+		"resources": [
+			"html/quan/zonep_sub.html",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		],
+		"refer": [
+			"html/quan/zonep_sub.html"
+		]
+	},
+	"html/homework/workdetailTea-temporary.html": {
+		"resources": [
+			"html/homework/workdetailTea-temSub.html"
+		],
+		"refer": [
+			"html/homework/workdetailTea-temSub.html"
+		]
+	},
+	"html/cloud/storage_upload.html": {
+		"refer": [
+			"html/cloud/storage_transport.html",
+			"html/cloud/storage_main_choose.html"
+		],
+		"resources": [
+			"image/cloud/A_folder.png",
+			"js/cloud/AndroidFileSystem.js"
+		]
+	},
+	"html/check/area-choose.html": {
+		"resources": [
+			"css/check/area-choose.css",
+			"js/check/area-choose.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/check/news-detail.html": {
+		"resources": [
+			"js/check/news-detail.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"fonts/fangzheng.ttf",
+			"js/storageKeyName.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/check/check-news.html": {
+		"resources": [
+			"js/mui.pullToRefresh.js",
+			"css/check/check-news.css",
+			"js/mui.pullToRefresh.material.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/check/check-news.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/check/area-choose.html",
+			"html/check/news-detail.html"
+		]
+	},
+	"html/quan/zonep_sub.html": {
+		"resources": [
+			"image/dynamic/icon_praise_small.png",
+			"js/mui.zoom.js",
+			"js/utils/native.js",
+			"fonts/fangzheng.ttf",
+			"js/quan/dynamiclistitem.js",
+			"js/mui.previewimage.js",
+			"js/mui.lazyload.js",
+			"css/utils/preview.css",
+			"css/icons-extra.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/mui.lazyload.img.js"
+		]
+	},
+	"html/qiuzhi/qiuzhi-addAnswer.html": {
+		"resources": [
+			"css/qiuzhi/qiuzhi-addAnswer.css",
+			"js/utils/cryption.js",
+			"js/publicQiuzhiProtocol.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"fonts/mui.ttf",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/jquery.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/camera.js",
+			"js/utils/CloudFileUtil.js",
+			"js/utils/compress.js",
+			"js/qiniu/qiniu.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/utils/customizeCity.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/qiuzhi/expert-detail.html": {
+		"resources": [
+			"js/publicQiuzhiProtocol.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"image/qiuzhi/expertBG.jpg",
+			"image/qiuzhi/comment.png",
+			"js/libs/myStorage/myStorage.js",
+			"image/qiuzhi/yaoqing.png",
+			"image/qiuzhi/answer.png",
+			"css/iconfont/iconfont.css",
+			"image/qiuzhi/question.png",
+			"js/mui.min.js",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js",
+			"image/qiuzhi/bianji1.png"
+		],
+		"refer": [
+			"html/qiuzhi/focus-question.html"
+		]
+	},
+	"html/qiuzhi/focus-question.html": {
+		"resources": [
+			"js/mui.pullToRefresh.js",
+			"css/qiuzhi/qiuzhi-sub.css",
+			"js/mui.pullToRefresh.material.js",
+			"js/qiuzhi/qiuzhi-focusQuestion.js"
+		]
+	},
+	"html/quan/class-group.html": {
+		"resources": [
+			"fonts/fangzheng.ttf",
+			"js/quan/class-group1.js"
+		],
+		"refer": [
+			"html/quan/group-pInfo.html"
+		]
+	},
+	"html/quan/classSpace-persons.html": {
+		"resources": [
+			"js/utils/grideControl.js",
+			"js/quan/classSpace-persons.js"
+		]
+	},
+	"html/quan/group-pInfo.html": {
+		"resources": [
+			"image/utils/default_personalimage.png",
+			"css/quan/group-pInfo.css",
+			"js/quan/group-pInfo.js"
+		],
+		"refer": [
+			"html/quan/edit-remark.html"
+		]
+	},
+	"html/quan/classSpace-sub.html": {
+		"resources": [
+			"js/utils/urlBrief.js",
+			"js/mui.pullToRefresh.js",
+			"js/mui.zoom.js",
+			"css/utils/bubble.css",
+			"js/mui.pullToRefresh.material.js",
+			"js/quan/class_space.js",
+			"js/mui.previewimage.js",
+			"js/utils/h5fresh.js",
+			"css/utils/preview.css"
+		],
+		"refer": [
+			"html/quan/classSpace-persons.html"
+		]
+	},
+	"html/quan/class_space.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"html/quan/classSpace-sub.html",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"css/quan/class_space.css"
+		],
+		"refer": [
+			"html/quan/class-group.html",
+			"html/quan/classSpace-sub.html"
+		]
+	},
+	"html/mine/about.html": {
+		"resources": [
+			"image/mine/jiaobaoyun.png"
+		]
+	},
+	"html/mine/setting.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/quan/aboutme.html": {
+		"resources": [
+			"html/quan/aboutme_sub.html"
+		],
+		"refer": [
+			"html/quan/aboutme_sub.html"
+		]
+	},
+	"html/quan/aboutme_sub.html": {
+		"resources": [
+			"css/quan/about-me.css",
+			"js/quan/about-me.js"
+		]
+	},
+	"html/qiuzhi/qiuzhi-question.html": {
+		"resources": [
+			"html/qiuzhi/qiuzhi-questionSub.html"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-questionSub.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi-questionSub.html": {
+		"resources": [
+			"js/qiuzhi/qiuzhi-questionSub.js",
+			"css/qiuzhi/qiuzhi-questionSub.css"
+		]
+	}
+}

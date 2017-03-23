@@ -22,28 +22,28 @@
 				<p class="display-inlineBlock">请选择地区：</p>
 				<a id="choose-area" class="choose-area" value="0">全国<span class="mui-icon mui-icon-arrowdown"></span></a>
 			</div>
-			<div id="slider" class="mui-slider">
+			<div id="slider" class="mui-slider margin-full">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div class="mui-scroll">
-						<a class="mui-control-item mui-active" href="#news-all">
+						<a class="mui-control-item mui-active" href="#news-all" value="-1">
 							全部
 						</a>
-						<a class="mui-control-item" href="#news-uncheck">
+						<a class="mui-control-item" href="#news-uncheck" value="0">
 							未审
 						</a>
-						<a class="mui-control-item" href="#news-passed">
+						<a class="mui-control-item" href="#news-passed" value="1">
 							已通过
 						</a>
-						<a class="mui-control-item" href="#news-unpass">
+						<a class="mui-control-item" href="#news-unpass" value="2">
 							未通过
 						</a>
 					</div>
 				</div>
-				<div class="mui-slider-group">
+				<div class="mui-slider-group" style="min-height: 500px;">
 					<div id="news-all" class="mui-slider-item mui-control-content mui-active">
-						<div id="scroll1" class="mui-scroll-wrapper">
+						<div  class="mui-scroll-wrapper">
 							<div class="mui-scroll">
-								<ul class="mui-table-view">
+								<ul id="all-list" class="mui-table-view">
 								</ul>
 							</div>
 						</div>
@@ -51,7 +51,7 @@
 					<div id="news-uncheck" class="mui-slider-item mui-control-content">
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
-								<ul class="mui-table-view">
+								<ul id="uncheck-list" class="mui-table-view">
 
 								</ul>
 							</div>
@@ -60,7 +60,7 @@
 					<div id="news-passed" class="mui-slider-item mui-control-content">
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
-								<ul class="mui-table-view">
+								<ul id="passed-list" class="mui-table-view">
 
 								</ul>
 							</div>
@@ -69,7 +69,7 @@
 					<div id="news-unpass" class="mui-slider-item mui-control-content">
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
-								<ul class="mui-table-view">
+								<ul id="unpass-list" class="mui-table-view">
 								</ul>
 							</div>
 						</div>

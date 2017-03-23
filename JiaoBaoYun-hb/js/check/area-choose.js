@@ -16,7 +16,7 @@ mui.plusReady(function() {
 	//	curCityCode=plus.webview.currentWebview().data;
 	//	getEreas(0);
 	setListener();
-
+	rewriteBack();
 })
 /**
  * 重写返回上级界面的方法
@@ -120,7 +120,12 @@ var setProvinces = function(selectPros) {
 	var list_container = document.getElementById("list-container");
 	for(var i in selectPros) {
 		var li = document.createElement("li");
-		li.className = "mui-table-view-cell";
+		if(selectPros[i].acode==curAreaInfo.acode){
+			li.className="mui-table-view-cell mui-selected"
+			checkedProButton=li;         
+		}else{
+			li.className = "mui-table-view-cell";
+		}
 		li.innerHTML = createProvinceInner(selectPros[i]);
 		list_container.appendChild(li);
 		li.id = selectPros[i].acode;
@@ -213,7 +218,12 @@ var setAfterProvince = function(cities, fragment) {
 var createCitiesInner = function(container, cities) {
 	for(var i in cities) {
 		var div = document.createElement("div");
-		div.className = "city-container single-line";
+		if(cities[i].acode==curAreaInfo.acode){
+			div.className="city-container single-line selected-city";
+			selectCityContainer=div;
+		}else{
+			div.className = "city-container single-line";
+		}
 		div.innerText = cities[i].aname;
 		container.appendChild(div);
 		div.areaInfo = cities[i];

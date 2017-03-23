@@ -2115,7 +2115,8 @@
 					"html/quan/zone_main.html",
 					"html/mine/qun_manage_main.html",
 					"html/mine/about.html",
-					"html/mine/qun_manage_1.html"
+					"html/mine/qun_manage_1.html",
+					"html/check/check-news.html"
 				],
 				"priority": 0
 			},
@@ -3378,7 +3379,8 @@
 					"js/utils/RSAEncrypt.js",
 					"fonts/fangzheng.ttf",
 					"image/qiuzhi/bianji.png",
-					"image/qiuzhi/expertBG.jpg"
+					"image/qiuzhi/expertBG.jpg",
+					"image/qiuzhi/bianji1.png"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-expertAllAnswer.html",
@@ -3451,7 +3453,10 @@
 					"js/publicProtocol.js",
 					"js/mui.min.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/utils/customizeCity.html",
+					"html/sciedu/sciedu_show_main.html"
+				],
 				"priority": 0
 			},
 			"html/show/show_home_1.html": {
@@ -3862,6 +3867,87 @@
 					"js/qiniu/qiniu.js"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"html/check/area-choose.html": {
+				"resources": [
+					"css/check/area-choose.css",
+					"js/check/area-choose.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/check/news-detail.html": {
+				"resources": [
+					"js/check/news-detail.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"fonts/fangzheng.ttf",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/check/check-news.html": {
+				"resources": [
+					"js/mui.pullToRefresh.js",
+					"css/check/check-news.css",
+					"js/mui.pullToRefresh.material.js",
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/check/check-news.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"fonts/fangzheng.ttf",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [
+					"html/check/area-choose.html",
+					"html/check/news-detail.html"
+				],
 				"priority": 0
 			}
 		},
