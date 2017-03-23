@@ -19,6 +19,26 @@
 		<script src="../../js/mui.min.js"></script>
 
 		<style type="text/css">
+			.btn-alert{
+				float: right;
+				width:50px;
+				height:30px;
+				padding:1px 0 0 1px;
+				font-size:12px;
+				margin-top:-7px;
+				color:#00a5df;
+				border-color:#e4e4e4
+			}
+			.btn-alerted{
+				float: right;
+				width:50px;
+				height:30px;
+				padding:1px 0 0 1px;
+				font-size:12px;
+				margin-top:-7px;
+				color:gray;
+				border-color:transparent
+			}
 			/*.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
@@ -76,16 +96,16 @@
 						<img>
 						<span id="img" class=" iconfont subject-icon" style="margin-left: -10px;"></span>
 						</img>
-						<div class="mui-media-body" style="margin-top: -20px" ;>
+						<div class="mui-media-body" style="margin-top: -18px" ;>
 							<h5 id="homeworkTitle" style="color: #404040;"></h5>
-							<p id="publishDate" class='mui-ellipsis' style="color: #747474;">发布时间：</p>
+							<p id="publishDate" class='mui-ellipsis' style="color: #B7B7B7;">发布时间：</p>
 						</div>
 						<div style="margin-top: 12px;">
 							<hr style="height:1px;border:none;border-top:1px solid #ededed;" />
 						</div>
 
 						<div id='content' class="mui-media-body">
-							<div id="homeWorkContent" class="ellipsis-show">
+							<div id="homeWorkContent" class="ellipsis-show" style="font-size: 15px;color: #808080;">
 							</div>
 							<div id="showAll">显示全部</div>
 							<!--<p id="homeWorkContent"></p>-->
@@ -378,7 +398,7 @@
 				var dateArr = homeworkModel.Date.split(' ');
 				homeworkModel.Date = dateArr[0];
 				var unick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户id
-				homeworkDetailNodes.publishDate.innerHTML = unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.Date + '</span>'
+				homeworkDetailNodes.publishDate.innerHTML =events.shortForString(unick, 12)  + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.Date + '</span>'
 
 				homeworkDetailNodes.content.innerText = homeworkDetailModel.Contents;
 				document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkDetailModel.File);
@@ -420,23 +440,26 @@
 					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" style = "width:50px;height:50px;border-radius: 50%;" src="' + headImg + '" />' +
 						'<div class="mui-media-body">' + events.shortForString(uploadArray[i].ugnick, 12) +
 						'<div class="mui-media-body mui-pull-right" ' +
-						'<p id="isCommented' + i + '" style="font-size: 13px;">' + IsCommented + '<span class="mui-icon mui-icon-forward"></span></p></div>' +
+						'<p id="isCommented' + i + '" style="font-size: 13px;color:#808080">' + IsCommented + '<span class="mui-icon iconfont icon-fanhui2" style="color:#b7b7b7"></span></p></div>' +
 						'</div>'
 
 					homeworkDetailNodes.finishedList.appendChild(li);
 				}
 				for(var i = 0; i < remainArray.length; i++) {
 					var disabled;
+					var btn_class;
 
 					if(remainArray[i].IsAlertChecked == true) {
 						alert = '已查阅';
 						allAlertFlag++;
 					} else if(remainArray[i].IsAlerted == false) {
 						alert = '提醒';
+						btn_class = "btn-alert"
 						disabled = '';
 					} else {
 						alert = '已提醒';
 						disabled = 'disabled';
+						btn_class = "btn-alerted"
 						allAlertFlag++;
 					}
 					var headImg = updateHeadImg(remainArray[i].uimg, 2)
@@ -445,7 +468,7 @@
 
 					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image"  style = "width:50px;height:50px ;border-radius: 50%;" src="' + headImg + '" />' +
 						'<div class="mui-media-body">' +
-						'<div style = "padding-top:10px">' + events.shortForString(remainArray[i].ugnick, 12) + '<button id="alert' + i + '" style="float: right;width:50px;height:30px;padding:1px 0 0 1px;font-size:12px;margin-top:-7px;" onclick="alertStu(this)"' + disabled + '>' +
+						'<div style = "padding-top:10px">' + events.shortForString(remainArray[i].ugnick, 12) + '<button id="alert' + i + '" class="'+btn_class+'" onclick="alertStu(this)"' + disabled + '>' +
 						alert +
 						'</button>' + '</div>' +
 						'</div>';
@@ -511,16 +534,21 @@
 						if(alertBtn.id == 'alertAll') {
 							homeworkDetailNodes.alertAllBtn.innerHTML = '一键提醒'
 							alertBtn.setAttribute('disabled', 'disabled');
+							
 							allAlertFlag = remainArray.length;
 						} else {
 							alertBtn.innerHTML = '已提醒'
+							alertBtn.className = 'btn-alerted'
 							alertBtn.setAttribute('disabled', 'disabled');
+							
 							allAlertFlag++;
 						}
 						if(allAlertFlag == remainArray.length) {
 							homeworkDetailNodes.alertAllBtn.disabled = 'disabled';
+							
 							for(var i = 0; i < remainArray.length; i++) {
 								var alertButton = document.getElementById("alert" + i);
+								alertButton.className = 'btn-alerted'
 								alertButton.disabled = 'disabled';
 								alertButton.innerHTML = '已提醒';
 

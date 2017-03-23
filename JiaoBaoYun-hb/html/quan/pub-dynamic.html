@@ -10,7 +10,12 @@
 		<link href="../../css/quan/custom-textarea.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/homework/publish-answer.css" rel="stylesheet" />
-
+		<style type="text/css">
+			.mui-checkbox input[type=checkbox]:checked:before,
+			.mui-radio input[type=radio]:checked:before {
+				color: #1db8f1
+			}
+		</style>
 	</head>
 
 	<body style="background-color: white;">
@@ -20,33 +25,33 @@
 			<a id="publish" class="mui-icon mui-pull-right mui-plus-visible" style="padding-left: 30px;padding-top: 15px;font-size: 16px;">发布</a>
 		</header>
 		<div class=" mui-content">
-				<div class="input-content">
-					<textarea id="input-content" placeholder="这一刻的想法" style="border-bottom-color: #e4e4e4;"></textarea>
-					<div id="take_pic" class="take_pic">
-						<a class="mui-icon iconfont icon-xiangji1"></a>
-					</div>
-					<div id="take_camero" class="take_camero">
-						<a class="mui-icon iconfont icon-shipin"></a>
-					</div>
-					<div id="get_gallery" class="get_gallery">
-						<a class="mui-icon iconfont icon-tuku"></a>
-					</div>
+			<div class="input-content">
+				<textarea id="input-content" placeholder="这一刻的想法" style="border-bottom-color: #e4e4e4;"></textarea>
+				<div id="take_pic" class="take_pic">
+					<a class="mui-icon iconfont icon-xiangji1"></a>
 				</div>
+				<div id="take_camero" class="take_camero">
+					<a class="mui-icon iconfont icon-shipin"></a>
+				</div>
+				<div id="get_gallery" class="get_gallery">
+					<a class="mui-icon iconfont icon-tuku"></a>
+				</div>
+			</div>
 
-				<div>
-					<p style="margin-left: 10px;font-size: 15px;height: 30px;padding-top: 5px; background-color: #f2f3f5;">发布到:</p>
+			<div>
+				<p style="margin-left: 10px;font-size: 15px;height: 30px;padding-top: 5px; background-color: #f2f3f5;">发布到:</p>
+			</div>
+			<div style="margin-left: 10px;">
+				<div id="zoneiv" class="mui-checkbox mui-left mui-disabled" style="width:100; height:30px; float:left; display:inline;margin-left: -20px;">
+					<label style="font-size: 15px;">空间</label>
+					<input id="zone" name="checkbox" value="0" type="checkbox" disabled="disabled" style="margin-top: -7px;" checked>
 				</div>
-				<div style="margin-left: 10px;">
-					<div id="zoneiv" class="mui-checkbox mui-left mui-disabled" style="width:100; height:30px; float:left; display:inline;margin-left: -20px;">
-						<label style="font-size: 15px;">空间</label>
-						<input id="zone" name="checkbox" value="0" type="checkbox" disabled="disabled" style="margin-top: -7px;" checked>
-					</div>
-					<div id="showDiv" class="mui-checkbox mui-left" style="width:100; height:30px; float:left; display:inline; ">
-						<label style="font-size: 15px;">展现</label>
-						<input id="show" name="checkbox" value="1" type="checkbox" style="margin-top: -7px;" checked>
-					</div>
+				<div id="showDiv" class="mui-checkbox mui-left" style="width:100; height:30px; float:left; display:inline; ">
+					<label style="font-size: 15px;">展现</label>
+					<input id="show" name="checkbox" value="1" type="checkbox" style="margin-top: -7px;" checked>
 				</div>
-				<div id="pictures" style="float: left;background-color: transparent;width: 320px;"></div>
+			</div>
+			<div id="pictures" style="float: left;background-color: transparent;width: 320px;"></div>
 		</div>
 
 	</body>
