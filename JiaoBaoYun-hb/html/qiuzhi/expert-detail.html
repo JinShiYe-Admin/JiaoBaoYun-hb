@@ -38,7 +38,7 @@
 					<img id="expertImg" style="width: 50px;height: 50px;border-radius: 50%;" src="../../image/utils/default_personalimage.png" />
 				</div>
 				<div style="text-align: center;">
-					<h4 id="ExpertChannels" style="color: #d2e156;"></h4>
+					<h4 id="ExpertChannels" style="color: #e8fa50;font-size::16px;font-family:'楷体';font-weight:500;"></h4>
 				</div>
 				<div style="margin-bottom: 10px;">
 					<p id="UserNote" style="margin: 5px;font-size: 15px;text-align: center;color: white;"></p>
@@ -75,7 +75,7 @@
 				</div>
 			</div>
 			<div style="width: device-width;margin-top: 60px;margin-left: 20px;margin-bottom: 20px;margin-right: 20px;">
-				<a id="IsLikeNum" class="mui-icon iconfont icon-support dynamic-icon-praise" style="color: #e4e4e4;margin-top: 5px;"></a>
+				<a class="mui-icon iconfont icon-support dynamic-icon-praise" style="color: #e4e4e4;margin-top: 5px;"></a><span id="IsLikeNum" style="padding-left: 10px;"></span>
 				<button id="focusBtn" class="mui-btn mui-btn-green btn-commit mui-pull-right" style="background-color: #1db8F1;border-color:#1db8F1 ;height: 30px;width: 55px;border: 0;padding: 0;">关注</button>
 			</div>
 			<div>
@@ -327,7 +327,7 @@
 		};
 
 		function addData() {
-			nodes.AskNum.innerHTML = ExpertsInfo.AskNum + '<span class="mui-icon mui-icon-forward"></span>';
+			nodes.AskNum.innerHTML = ExpertsInfo.AskNum + '<span class="mui-icon  iconfont icon-fanhui2"></span>';
 			//如果是自己，显示编辑简介按钮
 			if(ExpertsInfo.UserId == personalUTID) {
 				if(ExpertsInfo.UserNote == '') {
@@ -342,16 +342,16 @@
 
 			nodes.FocusManNum.innerText = ExpertsInfo.FocusManNum;
 			nodes.ExpertChannels.innerText = ExpertsInfo.ExpertChannelNames;
-			nodes.IsLikeNum.innerHTML = '<span style="color: #808080;">' + ExpertsInfo.IsLikeNum + '</span>';
+			nodes.IsLikeNum.innerHTML = ExpertsInfo.IsLikeNum;
 			nodes.FocusAskNum.innerText = ExpertsInfo.FocusAskNum;
-			nodes.CommentNum.innerHTML = ExpertsInfo.CommentNum + '<span class="mui-icon mui-icon-forward"></span>';
+			nodes.CommentNum.innerHTML = ExpertsInfo.CommentNum + '<span class="mui-icon  iconfont icon-fanhui2"></span>';
 			console.log(nodes.CommentNum.innerHTML)
 			nodes.IsFocusedManNum.innerText = ExpertsInfo.IsFocusedManNum;
-			nodes.AnswerNum.innerHTML = ExpertsInfo.AnswerNum + '<span class="mui-icon mui-icon-forward"></span>';
+			nodes.AnswerNum.innerHTML = ExpertsInfo.AnswerNum + '<span class="mui-icon  iconfont icon-fanhui2"></span>';
 			console.log(nodes.AnswerNum.innerHTML)
 			var inviteNumLi = document.getElementById("inviteNumLi");
 			if(ExpertsInfo.IsExpert == 1) {
-				nodes.inviteNum.innerHTML = ExpertsInfo.InviteNum + '<span class="mui-icon mui-icon-forward"></span>';
+				nodes.inviteNum.innerHTML = ExpertsInfo.InviteNum + '<span class="mui-icon  iconfont icon-fanhui2"></span>';
 			} else {
 				inviteNumLi.parentNode.removeChild(inviteNumLi);
 			}

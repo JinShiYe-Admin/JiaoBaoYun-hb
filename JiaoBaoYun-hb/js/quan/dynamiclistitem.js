@@ -52,7 +52,7 @@ var dynamiclistitem = (function($, mod) {
 		var html2 = '<img id="headImg' + data[4] + idFlag + id + '" class=" dynamic-personal-image" style="width:50px;height:50px;border-radius: 50%;" src="' + InfoList[0] + '"></div>';
 		var html3 = '<div class="mui-media-body dynamic-padding-left-10px">' + closeempty;
 		//姓名
-		var html4 = '<h6 style = "color:black;font-size:16px">' + InfoList[1] + '</h6>';
+		var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:16px;margin-top:10px">' + InfoList[1] + '</p>';
 		//时间
 		var html5 = '<p>' + InfoList[2] + '</p></div></div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext ">';
@@ -111,12 +111,12 @@ var dynamiclistitem = (function($, mod) {
 		//		}
 
 		if(ImageNum == 1) { //一张图片时
-			var html1 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-image-div" style="padding:10px;height: ' + SCREEN_WIDTH * 2 / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) + 'px;">';
+			var html1 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-image-div" style="margin-top:-16px;padding:3px;height: ' + SCREEN_WIDTH * 2 / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) + 'px;">';
 			var html2 = '<img class="dynamic-image" style= "height: ' + SCREEN_WIDTH * 2 / 3 + 'px;" src="' + ImageUrlList[0] + '" data-preview-src="' + EncAddrList[0] + '" data-preview-group="' + citycode + 'cellImageType' + id + '"/></div>';
 			html = html1 + html2;
 		} else if(ImageNum == 2) { //两张图片时
 			$.each(ImageUrlList, function(index, element) {
-				var html1 = '<div class="mui-col-sm-6 mui-col-xs-6 dynamic-image-div" style="padding:10px;height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;width: ' + (SCREEN_WIDTH - 20) / 2 + 'px;">';
+				var html1 = '<div class="mui-col-sm-6 mui-col-xs-6 dynamic-image-div" style="margin-top:-16px;padding:3px;height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;width: ' + (SCREEN_WIDTH - 20) / 2 + 'px;">';
 				var html2 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;" src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + citycode + 'cellImageType' + id + '"/>' + '</div>';
 				html = html + html1 + html2;
 			});
@@ -127,10 +127,10 @@ var dynamiclistitem = (function($, mod) {
 				var html3 = '';
 
 				if(index < 8) {
-					html1 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
+					html1 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="margin-top:-16px;height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
 					html2 = '<img class="dynamic-image" style= "padding-top:3px;height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;" src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + citycode + 'cellImageType' + id + '"/></div>';
 				} else if(index == 8) {
-					var html4 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
+					var html4 = '<div class="mui-col-sm-4 mui-col-xs-4 dynamic-image-div" style="margin-top:-16px;height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
 					var html5 = '';
 					//蒙版
 					if(ImageNum > 9) {
@@ -206,16 +206,16 @@ var dynamiclistitem = (function($, mod) {
 		var html1 = '<div class="mui-col-sm-12 mui-fcol-xs-12"><div class="mui-media-body">';
 		var html2 = '</div></div>'
 		//		var html2 = '<p><span class="mui-icon mui-icon-image"></span>' + introduce + '</p></div></div>';
-		var html3 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div class="mui-media-body mui-pull-right">';
+		var html3 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div class="mui-media-body mui-pull-right" style="margin-right:-15px">';
 		var html4;
 		if(zonepArray[id].IsLike != 0) {
-			html4 = '<a id="praise' + data[4] + idFlag + id + '" style = "color: rgb(0,165,224)"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
+			html4 = '<a id="praise' + data[4] + idFlag + id + '" style = "color: rgb(26,155,255)"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
 
 		} else {
-			html4 = '<a id="praise' + data[4] + idFlag + id + '" style = "color: #8F8F94"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
+			html4 = '<a id="praise' + data[4] + idFlag + id + '" style = "color: #b7b7b7"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
 		}
 
-		var html5 = '<a id="comment' + data[4] + idFlag + id + '" style = "color: #8F8F94;" class="mui-icon iconfont icon-xiaoxizhongxin dynamic-icon-comment"></a>';
+		var html5 = '<a id="comment' + data[4] + idFlag + id + '" style = "color: #b7b7b7;" class="mui-icon iconfont icon-xiaoxizhongxin dynamic-icon-comment"></a>';
 		//				var html6 = '<img src="../../image/dynamic/icon_forward.png" class="dynamic-icon-forward" />';
 		var html6 = '<font style="padding-right:7px"></font>';
 		var html7
@@ -224,17 +224,23 @@ var dynamiclistitem = (function($, mod) {
 		} else {
 			html7 = '</div><div class="mui-media-body"><p>浏览' + viewCount + '次</p></div></div>';
 		}
-		var html8 = '<div id="line" class="mui-col-sm-12 mui-col-xs-12 "><div class="mui-media-body dynamic-line"></div></div>';
+		var html8;
+		if(praiseList.length>0||commentList.length>0){//有点赞或者评论时显示分割线
+			html8 = '<div  class="mui-col-sm-12 mui-col-xs-12 "><div id="line'+ data[4] + idFlag +id+'" class="mui-media-body dynamic-line"></div></div>';
+		}else{
+			html8 = '<div  class="mui-col-sm-12 mui-col-xs-12 "><div id="line'+ data[4] + idFlag +id+'" class="mui-media-body dynamic-line mui-hidden"></div></div>';
+		}
+//		var html8 = '<div id="line" class="mui-col-sm-12 mui-col-xs-12 "><div class="mui-media-body dynamic-line"></div></div>';
 
 		html = html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8;
 		if(praiseList.length > 0 && praiseList.length <= 19) {
 			var praiseListStr = praiseList.join('、');
-			var html3 = '<img id = "praiseImg" src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />' + '<font class="common-font-family-Regular dynamic-praise-name praiseName">' + praiseListStr + '</font>';
+			var html3 = '<img id = "praiseImg' + data[4] + idFlag + id + '" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' + '<font class="common-font-family-Regular dynamic-praise-name praiseName">' + praiseListStr + '</font>';
 			htmlPraiseList = htmlPraiseList + html3 + '</div></div>';
 		} else if(praiseList.length > 19) {
 			praiseList = praiseList.slice(0, 20);
 			var praiseListStr = praiseList.join('、');
-			var html3 = '<img id = "praiseImg" src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />' + '<font class="common-font-family-Regular dynamic-praise-name praiseName">' + praiseListStr + '</font>';
+			var html3 = '<img id = "praiseImg' + data[4] + idFlag + id + '" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' + '<font class="common-font-family-Regular dynamic-praise-name praiseName">' + praiseListStr + '</font>';
 			htmlPraiseList = htmlPraiseList + html3 + '</div></div>';
 		} else {
 			htmlPraiseList = htmlPraiseList + '</div></div>';
