@@ -279,7 +279,7 @@ var CloudFileUtil = (function($, mod) {
 					if(thumbType == 'avi' || thumbType == 'mp4' || thumbType == 'flv' || thumbType == 'swf' || thumbType == '3gp' || thumbType == 'rm') {
 						//视频
 						configure.thumbKey = Qiniu.URLSafeBase64Encode(imageThumb + ":" + thumbSpace + thumbName + '.png');
-						ops = "vframe/png/offset/1/w/" + maxWidth + "/h/" + maxHeight + "|saveas/" + configure.thumbKey;
+						ops = "vframe/png/offset/1/w/400/h/300|saveas/" + configure.thumbKey;
 					} else {
 						//图片
 						if(appId == 5) { //头像
