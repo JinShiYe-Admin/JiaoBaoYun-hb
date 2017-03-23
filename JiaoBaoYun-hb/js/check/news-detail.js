@@ -1,7 +1,7 @@
 mui.init();
 var newsDetail;
 mui.plusReady(function(){
-	events.fireToPageNone("check-news.html","detailReady");
+	mui.fire(plus.webview.currentWebview().opener(),"subReady",0);
 	window.addEventListener("newsDetail",function(e){
 		newsDetail=e.detail.data;
 		console.log("获取的新闻详情："+JSON.stringify(newsDetail));

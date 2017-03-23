@@ -30,7 +30,7 @@ mui.plusReady(function() {
 	//	expertId = expertInfo.UserId;
 	requireData(type);
 	setListener();
-	
+
 	//阻尼系数、初始化刷新加载更多
 	var deceleration = mui.os.ios ? 0.003 : 0.0009;
 	mui('.mui-scroll-wrapper').scroll({
@@ -63,16 +63,18 @@ mui.plusReady(function() {
 				if(pageIndex <= totalPageCount) {
 					//获取关注人数据
 					requireData(type);
+					setTimeout(function() {
+						//结束下拉刷新
+						self.endPullUpToRefresh();
+						if(mui(".mui-table-view-cell").length < 10) {
+							mui(".mui-pull-loading")[0].innerHTML = "";
+						}
+					}, 1000);
 				} else {
-					mui.toast('没有更多了');
-				}
-				setTimeout(function() {
 					//结束下拉刷新
 					self.endPullUpToRefresh();
-					if(mui(".mui-table-view-cell").length < 10) {
-						mui(".mui-pull-loading")[0].innerHTML = "";
-					}
-				}, 1000);
+					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
+				}
 			}
 		}
 	});
@@ -346,14 +348,14 @@ var setListener = function() {
 				bottom: '0px'
 			},
 
-			extras:{
+			extras: {
 				data: info
 			},
 			createNew: true,
 
 		});
-//		events.openNewWindowWithData('expert-detail.html', JSON.stringify(info));
-//		events.fireToPageWithData('expert-detail.html', 'expert-detail', info);
+		//		events.openNewWindowWithData('expert-detail.html', JSON.stringify(info));
+		//		events.fireToPageWithData('expert-detail.html', 'expert-detail', info);
 	});
 }
 ///**

@@ -78,27 +78,27 @@
 				phoneNumBox.value = '';
 				var codeBox = document.getElementById("yanzheng");
 
-//				window.addEventListener('yanzhengma', function(event) {
-//					var temp = event.detail.data;
-//					console.log('传值的电话号码为：' + JSON.stringify(event.detail));
-//					codeBox.value = '';
-//					phoneNumBox.value = temp.phone;
-//					regFlag = temp.flag;
-//				});
+				//				window.addEventListener('yanzhengma', function(event) {
+				//					var temp = event.detail.data;
+				//					console.log('传值的电话号码为：' + JSON.stringify(event.detail));
+				//					codeBox.value = '';
+				//					phoneNumBox.value = temp.phone;
+				//					regFlag = temp.flag;
+				//				});
 				var curPage = plus.webview.currentWebview();
 				phoneNum = curPage.data;
-				console.log('phoneNum:'+JSON.stringify(phoneNum));
+				console.log('phoneNum:' + JSON.stringify(phoneNum));
 				codeBox.value = '';
 				phoneNumBox.value = phoneNum.phone;
 				regFlag = phoneNum.flag;
-				
+
 				events.addTap('register', function() {
 					document.activeElement.blur();
 					//先本地判断验证码
-					//					if(document.getElementById("yanzheng").value != '123456') {
-					//						mui.toast('验证码错误');
-					//						return;
-					//					}
+					if(document.getElementById("yanzheng").value.length == 0) {
+						mui.toast('请输入验证码');
+						return;
+					}
 					//需要加密的数据
 					var enData = {
 						uid: document.getElementById("phoneNumber").value,
@@ -167,9 +167,9 @@
 											events.openNewWindow('../index/index.html');
 										} else {
 											//跳转到修改密码界面
-//											var temp;
+											//											var temp;
 											events.openNewWindowWithData('modify_password.html', '0');
-//											events.fireToPageNone('modify_password.html', 'registerPW');
+											//											events.fireToPageNone('modify_password.html', 'registerPW');
 										}
 									} else {
 										mui.toast(data.RspTxt);
@@ -208,9 +208,9 @@
 											//存储到手机本地
 											window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 											//跳转到修改密码界面
-//											var temp;
+											//											var temp;
 											events.openNewWindowWithData('modify_password.html', '0');
-//											events.fireToPageNone('modify_password.html', 'registerPW');
+											//											events.fireToPageNone('modify_password.html', 'registerPW');
 											//										events.fireToPageNone('../quan/tab-zone.html','infoChanged');
 										}
 									} else {

@@ -10,13 +10,15 @@
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/qiuzhi/qiuzhi-expertAllComment.css" rel="stylesheet" />
 		<style>
-			.mui-table-view{
+			.mui-table-view {
 				background: #F2F3F5;
 			}
-			.mui-table-view-cell{
+			
+			.mui-table-view-cell {
 				background: white;
 				margin-bottom: 5px;
 			}
+			
 			.mui-table-view-cell p:last-child,
 			p:first-child {
 				-webkit-line-clamp: 3;
@@ -122,7 +124,7 @@
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					var index = this.id.replace('li', '');
 					events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', answerArray[index]);
-					plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right",250);
+					plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right", 250);
 				});
 
 				//阻尼系数、初始化刷新加载更多
@@ -159,16 +161,18 @@
 							if(pageIndex <= totalPageCount) {
 								//33.获取某个用户的评论列表
 								getCommentsByUser(ExpertsInfo.UserId);
+								setTimeout(function() {
+									//结束下拉刷新
+									self.endPullUpToRefresh();
+									if(mui(".mui-table-view-cell").length < 10) {
+										mui(".mui-pull-loading")[0].innerHTML = "";
+									}
+								}, 1000);
 							} else {
-								mui.toast('没有更多了');
-							}
-							setTimeout(function() {
 								//结束下拉刷新
 								self.endPullUpToRefresh();
-								if(mui(".mui-table-view-cell").length < 10) {
-									mui(".mui-pull-loading")[0].innerHTML = "";
-								}
-							}, 1000);
+								mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
+							}
 						}
 					}
 				});
@@ -197,12 +201,15 @@
 							//清除节点
 							document.getElementById('list-container').innerHTML = "";
 							answerArray = data.RspData.Data;
-							if (data.RspData.Data.length==0) {
+							if(data.RspData.Data.length == 0) {
 								mui.toast('没有数据');
 							}
 						} else { //加载更多
 							//合并数组
 							answerArray = answerArray.concat(data.RspData.Data);
+						}
+						if(mui(".mui-table-view-cell").length < 10) {
+							mui(".mui-pull-loading")[0].innerHTML = "";
 						}
 						setAnswerRecord(data.RspData.Data);
 					} else {

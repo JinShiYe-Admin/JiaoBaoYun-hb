@@ -67,16 +67,18 @@ mui.plusReady(function() {
 					flagRef = 1;
 					//26.获取某个用户的关注问题列表
 					getFocusAsksByUser(ExpertsInfoModel.UserId);
+					setTimeout(function() {
+						//结束下拉刷新
+						self.endPullUpToRefresh();
+						if(mui(".mui-table-view-cell").length < 10) {
+							mui(".mui-pull-loading")[0].innerHTML = "";
+						}
+					}, 1000);
 				} else {
-					mui.toast('没有更多了');
-				}
-				setTimeout(function() {
 					//结束下拉刷新
 					self.endPullUpToRefresh();
-					if(mui(".mui-table-view-cell").length < 10) {
-						mui(".mui-pull-loading")[0].innerHTML = "";
-					}
-				}, 1000);
+					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
+				}
 			}
 		}
 	});

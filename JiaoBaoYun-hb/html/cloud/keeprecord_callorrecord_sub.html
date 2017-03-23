@@ -223,11 +223,10 @@
 			var commit = false; //是否允许提交
 			var call_type = ''; //记录最后点击的点到类型
 			var call_input = ''; //记录点到的备注
-			var commitNum = 0; //记录发布请求的次数
 			var previewImage; //查看图片的控件
 			var pathList = []; //记录需要删掉的图片和缩略图
-			var waiting = []; //记录等待框
-
+			var strParent = ''; //家长
+			var strUser = ''; //推送用户
 			mui.plusReady(function() {
 				//events.closeWaiting();
 
@@ -344,40 +343,46 @@
 										parentIds.push(item.utid);
 									}
 								});
-								var strParent = arrayToStr(parentIds);
-								var strUser = arrayToStr(userIds);
-
-								if(multiMedia.data.PictureArray.length != 0) {
-									var wd_2 = events.showWaiting('上传中...');
-									commitNum++;
-									uploadFile(wd_2, strParent, strUser); //上传文件
-									waiting.push(wd_2);
-								} else if(document.getElementById("textarea_record").value.replace(/(^\s*)|(\s*$)/g, "") != "") {
-									var wd_1 = events.showWaiting();
-									commitNum++;
-									addNotes(2, strParent, strUser, {
-										encType: '3', //附件类型,1图片2音视频3仅文字
-										encAddr: '', //附件地址
-										encImg: '', //附件缩略图地址
-									}, wd_1); //增加记事
-									waiting.push(wd_1);
-								}
-
-								if(call_type != '') {
-									var wd_0 = events.showWaiting();
-									commitNum++;
+								strParent = arrayToStr(parentIds); //家长
+								strUser = arrayToStr(userIds); //推送用户
+								var wd_0 = events.showWaiting();
+								if(call_type != '') { //有点到
 									addNotes(1, strParent, strUser, {
 										encType: '3', //附件类型,1图片2音视频3仅文字
 										encAddr: '', //附件地址
 										encImg: '', //附件缩略图地址
-									}, wd_0); //增加点到
-									waiting.push(wd_0);
+									}, wd_0, function() {
+										if(multiMedia.data.PictureArray.length != 0) { //有文件
+											uploadFile(wd_0, strParent, strUser); //上传文件
+										} else if(document.getElementById("textarea_record").value.replace(/(^\s*)|(\s*$)/g, "") != "") { //没有文件只有文字
+											addNotes(2, strParent, strUser, {
+												encType: '3', //附件类型,1图片2音视频3仅文字
+												encAddr: '', //附件地址
+												encImg: '', //附件缩略图地址
+											}, wd_0, function() {
+												finishCommit(wd_0);
+											});
+										} else { //没有记事
+											finishCommit(wd_0);
+										}
+									});
+								} else { //没有点到
+									//增加记事
+									if(multiMedia.data.PictureArray.length != 0) {
+										uploadFile(wd_0, strParent, strUser); //上传文件
+									} else if(document.getElementById("textarea_record").value.replace(/(^\s*)|(\s*$)/g, "") != "") {
+										addNotes(2, strParent, strUser, {
+											encType: '3', //附件类型,1图片2音视频3仅文字
+											encAddr: '', //附件地址
+											encImg: '', //附件缩略图地址
+										}, wd_0, function() {
+											finishCommit(wd_0);
+										});
+									}
 								}
-
 							} else {
 								mui.toast(data.RspTxt);
 							}
-
 						});
 					}
 				});
@@ -405,13 +410,14 @@
 			 * @param {Object} userIds 推送用户ID
 			 * @param {Object} data 相应的数据
 			 * @param {Object} wd 等待框
+			 * @param {Object} callback 完成的回调
 			 * data={ 必填
 			 * 	encType: '', //附件类型,1图片2音视频3仅文字
 			 * 	encAddr: '', //附件地址
 			 * 	encImg: '', //附件缩略图地址
 			 * }
 			 */
-			function addNotes(type, parentIds, userIds, data, wd) {
+			function addNotes(type, parentIds, userIds, data, wd, callback) {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 				var personalUNICK = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
 				var teacherId = personalUTID; //发布教师ID
@@ -452,7 +458,7 @@
 				// 等待的对话框
 				postDataPro_addNote(comData, wd, function(data) {
 					console.log('8.新增某学生点到记事信息:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					commitNum--;
+					callback();
 					if(data.RspCode == 0) {
 						console.log('新增点到记事信息成功：' + JSON.stringify(data.RspData.Result));
 						if(noteType == 1) { //点到
@@ -476,21 +482,22 @@
 								BatchDelete(pathList);
 							}
 						}
-						console.log('新增点到记事信息:' + data.RspTxt);
-					}
-					if(commitNum == 0) {
-						setTimeout(function() {
-							TotalPage = 1; //总页数
-							TotalCnt = 0; //总记录数
-							getNotes(1, 10);
-							changeCommit();
-							for(var i = 0; i < waiting.length; i++) {
-								waiting[i].close();
-							}
-							waiting = [];
-						}, 1000);
 					}
 				});
+			}
+
+			/**
+			 * 完成所有的提交后执行的方法
+			 * @param {Object} wd
+			 */
+			function finishCommit(wd) {
+				setTimeout(function() {
+					wd.close();
+					TotalPage = 1; //总页数
+					TotalCnt = 0; //总记录数
+					getNotes(1, 10);
+					changeCommit();
+				}, 1000);
 			}
 
 			/**
@@ -674,7 +681,9 @@
 											encType: '1', //附件类型,1图片2音视频3仅文字
 											encAddr: encAddrStr, //附件地址
 											encImg: encImgrStr, //附件缩略图地址
-										}, waiting); //增加记事
+										}, waiting, function() {
+											finishCommit(waiting);
+										}); //增加记事
 									}
 								} else {
 									uploadErrorNum++;

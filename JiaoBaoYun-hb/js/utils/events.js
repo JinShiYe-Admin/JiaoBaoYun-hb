@@ -51,7 +51,7 @@ var events = (function(mod) {
 				styles: {
 					top: '0px',
 					bottom: '0px',
-					softinputMode: "adjustResize"
+//					softinputMode: "adjustResize"
 				}
 			})
 		}
@@ -81,7 +81,7 @@ var events = (function(mod) {
 			styles: {
 				top: '0px',
 				bottom: '0px',
-				softinputMode: "adjustResize"
+//				softinputMode: "adjustResize"
 			},
 			createNew: true,
 		});
@@ -172,6 +172,7 @@ var events = (function(mod) {
 		if(!interval) {
 			interval = 0;
 		}
+		console.log("预加载的页面："+tarPage)
 		if(!plus.webview.getWebviewById(tarPage)) {
 			//初始化预加载详情页面
 			setTimeout(function() {
@@ -181,7 +182,7 @@ var events = (function(mod) {
 					styles: { //窗口参数
 						top: '0px',
 						bottom: '0px',
-						softinputMode: "adjustResize"
+//						softinputMode: "adjustResize"
 					},
 					show: {
 						anishow: 'slide-in-right',
@@ -264,7 +265,7 @@ var events = (function(mod) {
 		if(!datas) {
 			datas = null;
 		}
-		console.log('tarPage:' + tarPage);
+//		console.log('tarPage:' + tarPage);
 		var targetPage = null;
 		//获得目标页面
 		if(!targetPage) {
