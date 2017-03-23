@@ -42,31 +42,29 @@ var SciEduHomeItem = (function(mod) {
 		}
 	}
 
+	//没有图片
 	function addItem_0(element, data, li, callBack) {
-		var temp_0 = [];
 		var html_style = '';
 		if(data.seHistory) {
 			html_style = 'color:darkgray;';
 		}
-		temp_0[temp_0.length] = '<div id="mediaBody_' + li.id + '" class="mui-media-body secedu-body">';
-		temp_0[temp_0.length] = '<div id="title_' + li.id + '" class="secedu-title" style="' + html_style + '">' + data.title + '</div>';
-		temp_0[temp_0.length] = '<div id="from_' + li.id + '" class="secedu-from">' + data.tips + '</div></div>';
-		li.innerHTML = temp_0.join('');
+		li.innerHTML = '<div id="mediaBody_' + li.id + '" class="mui-media-body secedu-body">' +
+			'<div id="title_' + li.id + '" class="secedu-title" style="' + html_style + '">' + data.title + '</div>' +
+			'<div id="from_' + li.id + '" class="secedu-from">' + data.tips + '</div></div>';
 		element.appendChild(li);
 		callBack();
 	}
 
+	//一张图片
 	function addItem_1(element, data, li, callBack) {
-		var temp_1 = [];
 		var html_style = '';
 		if(data.seHistory) {
 			html_style = 'color:darkgray;';
 		}
-		temp_1[temp_1.length] = '<div id="mediaBody_' + li.id + '" class="mui-media-body secedu-body">';
-		temp_1[temp_1.length] = '<img id="image_' + li.id + '" class="mui-pull-right" style="width:30%" data-lazyload="' + data.timgs[0] + '">';
-		temp_1[temp_1.length] = '<div id="title_' + li.id + '" class="secedu-title" style="' + html_style + '">' + data.title + '</div>';
-		temp_1[temp_1.length] = '<div id="from_' + li.id + '" class="secedu-from">' + data.tips + '</div></div>';
-		li.innerHTML = temp_1.join('');
+		li.innerHTML = '<div id="mediaBody_' + li.id + '" class="mui-media-body secedu-body">' +
+			'<img id="image_' + li.id + '" class="mui-pull-right" style="width:30%" data-lazyload="' + data.timgs[0] + '">' +
+			'<div id="title_' + li.id + '" class="secedu-title" style="' + html_style + '">' + data.title + '</div>' +
+			'<div id="from_' + li.id + '" class="secedu-from">' + data.tips + '</div></div>';
 		element.appendChild(li);
 		var image = document.getElementById("image_" + li.id);
 		image.style.height = (image.parentNode.offsetWidth * 0.3 * (2 / 3)) + 'px';
@@ -74,23 +72,21 @@ var SciEduHomeItem = (function(mod) {
 		callBack();
 	}
 
+	//三张图片
 	function addItem_3(element, data, li, callBack) {
-		var temp_3 = [];
 		var html_style = '';
 		if(data.seHistory) {
 			html_style = 'color:darkgray;';
 		}
-		temp_3[temp_3.length] = '<div id="mediaBody_' + li.id + '" class="mui-media-body secedu-body">';
-		temp_3[temp_3.length] = '<div id="title_' + li.id + '" class="secedu-title" style="' + html_style + '">' + data.title + '</div>';
-		temp_3[temp_3.length] = '<div class="mui-row">';
-		temp_3[temp_3.length] = '<div class="mui-col-xs-4 mui-col-sm-4">';
-		temp_3[temp_3.length] = '<img id="image_3_0_' + li.id + '" data-lazyload="' + data.timgs[0] + '">';
-		temp_3[temp_3.length] = '</div><div class="mui-col-xs-4 mui-col-sm-4">';
-		temp_3[temp_3.length] = '<img id="image_3_1_' + li.id + '" data-lazyload="' + data.timgs[1] + '">';
-		temp_3[temp_3.length] = '</div><div class="mui-col-xs-4 mui-col-sm-4">';
-		temp_3[temp_3.length] = '<img id="image_3_2_' + li.id + '" data-lazyload="' + data.timgs[2] + '">';
-		temp_3[temp_3.length] = '</div></div><div id="from_' + li.id + '" class="secedu-from">' + data.tips + '</div></div>';
-		li.innerHTML = temp_3.join('');
+		li.innerHTML = '<div id="mediaBody_' + li.id + '" class="mui-media-body secedu-body">' +
+			'<div id="title_' + li.id + '" class="secedu-title" style="' + html_style + '">' + data.title + '</div>' +
+			'<div class="mui-row"><div class="mui-col-xs-4 mui-col-sm-4">' +
+			'<img id="image_3_0_' + li.id + '" data-lazyload="' + data.timgs[0] + '">' +
+			'</div><div class="mui-col-xs-4 mui-col-sm-4">' +
+			'<img id="image_3_1_' + li.id + '" data-lazyload="' + data.timgs[1] + '">' +
+			'</div><div class="mui-col-xs-4 mui-col-sm-4">' +
+			'<img id="image_3_2_' + li.id + '" data-lazyload="' + data.timgs[2] + '">' +
+			'</div></div><div id="from_' + li.id + '" class="secedu-from">' + data.tips + '</div></div>';
 		element.appendChild(li);
 		var image_3_0 = document.getElementById("image_3_0_" + li.id);
 		var parentNode = image_3_0.parentNode;
