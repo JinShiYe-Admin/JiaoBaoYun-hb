@@ -142,7 +142,7 @@
 			.dynamic-praise-name,
 			.dynamic-comment-name {
 				/*点赞者和评论者的名字*/
-				color: #1277C7;
+				color: #1A9BFF;
 			}
 			
 			.replyComment {
@@ -395,7 +395,11 @@
 			window.addEventListener('refreshZonep', function(data) {
 				var tempData = data.detail;
 				console.log(JSON.stringify(tempData));
+				var index = 'line' + tempIndex;
+				console.log(index)
+				
 				if(tempData.flag == '评论') {
+					document.getElementById(index).className = 'mui-media-body dynamic-line';
 					var div = document.createElement("div");
 					var index = zonepArray[tempIndex].Comments.length
 					div.id = 'replyComment' + tempIndex + '-' + index + '-' + '评论'
@@ -568,8 +572,9 @@
 				click.push('点赞');
 				personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 				var index = this.id.replace('praise', '');
+
 				var color = this.style.color;
-				if(color == 'rgb(143, 143, 148)') {
+				if(color == 'rgb(183, 183, 183)') {
 					var comData = {
 						userId: personalUTID, //用户ID
 						userSpaceId: zonepArray[index].TabId, //用户空间ID
@@ -579,8 +584,9 @@
 						wd.close();
 						if(data.RspCode == 0) {
 							console.log('index=' + index)
+							document.getElementById("line" + index).className = 'mui-media-body dynamic-line'
 							var a = document.getElementById("praise" + index);
-							a.style.color = 'rgb(0, 165, 224)'
+							a.style.color = 'rgb(26, 155, 255)'
 							//							mui.toast('点赞成功');
 							var PraiseList = document.getElementById("PraiseList" + index);
 							console.log(PraiseList.innerHTML);
@@ -592,7 +598,7 @@
 								console.log(praiseName.innerHTML);
 							} else {
 
-								PraiseList.innerHTML = '<img id= "praiseImg" src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />' +
+								PraiseList.innerHTML = '<img id= "praiseImg' + index + '" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' +
 									'<font class="common-font-family-Regular dynamic-praise-name">' + personalunick + '</font>';
 							}
 						} else {
@@ -612,7 +618,7 @@
 						wd.close();
 						if(data.RspCode == 0) {
 							var a = document.getElementById("praise" + index);
-							a.style.color = 'rgb(143, 143, 148)'
+							a.style.color = 'rgb(183, 183, 183)'
 							//							mui.toast('取消点赞成功');
 							var PraiseList = document.getElementById("PraiseList" + index);
 							var praiseName = PraiseList.getElementsByTagName("font")[0];
@@ -622,10 +628,11 @@
 								praiseName.innerHTML = praiseName.innerHTML.replace(personalunick + '、', '');
 							} else {
 								console.log('一个人点赞')
-
-								console.log(PraiseList.outerHTML);
+								if(!document.getElementById("commentList0")){
+									document.getElementById("line" + index).className = 'mui-media-body dynamic-line mui-hidden'
+								}
 								PraiseList.removeChild(praiseName);
-								var praiseImg = document.getElementById("praiseImg");
+								var praiseImg = document.getElementById("praiseImg" + index);
 								PraiseList.removeChild(praiseImg);
 
 							}

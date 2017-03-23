@@ -532,7 +532,7 @@
 					personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 					var index = this.id.replace('praise', '');
 					var color = this.style.color;
-					if(color == 'rgb(143, 143, 148)') {
+					if(color == 'rgb(183, 183, 183)') {
 						var comData = {
 							userId: personalUTID, //用户ID
 							userSpaceId: datasource.TabId, //用户空间ID
@@ -543,7 +543,7 @@
 							if(data.RspCode == 0) {
 								console.log('index=' + index)
 								var a = document.getElementById("praise" + index);
-								a.style.color = 'rgb(0, 165, 224)'
+								a.style.color = 'rgb(26, 155, 255)'
 								//							mui.toast('点赞成功');
 								var PraiseList = document.getElementById("PraiseList" + index);
 								console.log(PraiseList.innerHTML);
@@ -555,7 +555,7 @@
 									console.log(praiseName.innerHTML);
 								} else {
 
-									PraiseList.innerHTML = '<img id= "praiseImg" src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />' +
+									PraiseList.innerHTML = '<img id= "praiseImg" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' +
 										'<font class="common-font-family-Regular dynamic-praise-name">' + personalunick + '</font>';
 								}
 							} else {
@@ -575,7 +575,7 @@
 							wd.close();
 							if(data.RspCode == 0) {
 								var a = document.getElementById("praise" + index);
-								a.style.color = 'rgb(143, 143, 148)'
+								a.style.color = 'rgb(183, 183, 183)'
 								//							mui.toast('取消点赞成功');
 								var PraiseList = document.getElementById("PraiseList" + index);
 								var praiseName = PraiseList.getElementsByTagName("font")[0];

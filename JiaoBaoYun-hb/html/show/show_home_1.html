@@ -77,7 +77,12 @@
 					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 					pageIndex = 1;
 					pullFlag = 0;
-					requestData(cityID, 1);
+					if(cityID==0){
+						getFocusByUser()
+					}else{
+						requestData(cityID, 1);
+					}
+					
 				});
 
 				//---订制城市---start---
@@ -107,7 +112,9 @@
 					var citycode = sliderId.replace('top_', '');
 					var tempData = data.detail;
 					console.log(JSON.stringify(tempData));
+					
 					if(tempData.flag == '评论') {
+						document.getElementById('line' + citycode + 'zx' + tempIndex).className = 'mui-media-body dynamic-line';
 						var div = document.createElement("div");
 						var index = zonepArray[tempIndex].Comments.length
 						div.id = 'replyComment' + citycode + 'zx' + tempIndex + '-' + index + '-' + '评论'
@@ -548,7 +555,9 @@
 					console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						if(data.RspData.Data.length == 0) {
-							mui.toast('暂无动态')
+							mui.toast('暂无内容')
+							var table = document.getElementById("bot_ul_0")
+							table.innerHTML = '';
 							return;
 						}
 						var tempModel = cities[cities.length - 1];
@@ -843,6 +852,18 @@
 								var btn = document.getElementById(tempId);
 								btn.innerHTML = '已关注'
 								btn.className = 'mui-btn mui-pull-right btn-attentioned'
+								var pageID = sliderId.replace('top_', '')
+								setTimeout(function() {
+									//获取数据
+									if(pageID != 0) { //定制的城市
+										requestData(pageID, 1);
+									} else { //关注的人数据
+										//81.（用户空间）获取用户所有关注的用户
+										getFocusByUser();
+									}
+									//结束下拉刷新
+									self.endPullDownToRefresh();
+								}, 1000);
 							}
 
 						})
@@ -869,6 +890,19 @@
 							var btn = document.getElementById(tempId);
 							btn.innerHTML = '关注'
 							btn.className = 'mui-btn mui-pull-right btn-attention'
+							var pageID = sliderId.replace('top_', '')
+							setTimeout(function() {
+								//获取数据
+								if(pageID != 0) { //定制的城市
+									requestData(pageID, 1);
+								} else { //关注的人数据
+									//81.（用户空间）获取用户所有关注的用户
+									getFocusByUser();
+								}
+								//结束下拉刷新
+								self.endPullDownToRefresh();
+							}, 1000);
+
 						}
 
 					})
@@ -880,7 +914,7 @@
 					var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
 					var index = this.id.replace('praise' + pageID + 'zx', '');
 					var color = this.style.color;
-					if(color == 'rgb(143, 143, 148)') {
+					if(color == 'rgb(183, 183, 183)') {
 						var comData = {
 							userId: personalUTID, //用户ID
 							userSpaceId: zonepArray[index].TabId, //用户空间ID
@@ -890,7 +924,7 @@
 							wd.close();
 							if(data.RspCode == 0) {
 								var a = document.getElementById("praise" + pageID + 'zx' + index);
-								a.style.color = 'rgb(0, 165, 224)'
+								a.style.color = 'rgb(26, 155, 255)'
 								//					mui.toast('点赞成功');
 								var PraiseList = document.getElementById("PraiseList" + pageID + 'zx' + index);
 								var praiseNameList = PraiseList.getElementsByTagName("font");
@@ -899,8 +933,9 @@
 									//						praiseName.innerHTML = praiseName.innerHTML + '、' + personalunick;
 									praiseName.innerHTML = personalunick + '、' + praiseName.innerHTML;
 								} else {
-
-									PraiseList.innerHTML = '<img id= "praiseImg" src="../../image/dynamic/icon_praise_small.png" class="dynamic-icon-praise-small mui-pull-left" />' +
+									var citycode = sliderId.replace('top_', '');
+									document.getElementById('line' + citycode + 'zx' + index).className = 'mui-media-body dynamic-line';
+									PraiseList.innerHTML = '<img id= "praiseImg' + pageID + 'zx' + index + '" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' +
 										'<font class="common-font-family-Regular dynamic-praise-name">' + personalunick + '</font>';
 								}
 							} else {
@@ -920,7 +955,7 @@
 							wd.close();
 							if(data.RspCode == 0) {
 								var a = document.getElementById("praise" + pageID + 'zx' + index);
-								a.style.color = 'rgb(143, 143, 148)'
+								a.style.color = 'rgb(183, 183, 183)'
 								//					mui.toast('取消点赞成功');
 								var PraiseList = document.getElementById("PraiseList" + pageID + 'zx' + index);
 								var praiseName = PraiseList.getElementsByTagName("font")[0];
@@ -931,9 +966,10 @@
 
 								} else {
 									console.log('一个人点赞')
-
+									var citycode = sliderId.replace('top_', '');
+									document.getElementById('line' + citycode + 'zx' + index).className = 'mui-media-body dynamic-line mui-hidden';
 									PraiseList.removeChild(praiseName);
-									var praiseImg = document.getElementById("praiseImg");
+									var praiseImg = document.getElementById("praiseImg" + pageID + 'zx' + index);
 									PraiseList.removeChild(praiseImg);
 
 								}
@@ -1094,7 +1130,7 @@
 				var tempModel = zonepArray[index];
 				tempModel.PublisherImg = updateHeadImg(tempModel.PublisherImg, 2)
 				var personalImage = tempModel.PublisherImg;
-				var personalName = events.shortForString(tempModel.PublisherName, 12);
+				var personalName = events.shortForString(tempModel.PublisherName, 20);
 
 				var time = modifyTimeFormat(tempModel.PublishDate);
 				var contentText = tempModel.MsgContent;
