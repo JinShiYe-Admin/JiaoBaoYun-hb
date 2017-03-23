@@ -443,7 +443,8 @@
 				],
 				"refer": [
 					"html/quan/leave.html",
-					"html/quan/pub-dynamic.html"
+					"html/quan/pub-dynamic.html",
+					"html/quan/leaveNew.html"
 				],
 				"priority": 0
 			},
@@ -486,7 +487,8 @@
 					"js/mui.previewimage.js",
 					"js/mui.lazyload.js",
 					"css/utils/preview.css",
-					"js/mui.lazyload.img.js"
+					"js/mui.lazyload.img.js",
+					"image/dynamic/praise.png"
 				],
 				"refer": [
 					"html/quan/space-detail.html",
@@ -3487,7 +3489,9 @@
 					"js/libs/jquery.js",
 					"js/libs/RSA/BigInt.js",
 					"js/libs/RSA/RSA.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"image/dynamic/praise.png",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/utils/customizeCity.html",
@@ -3860,6 +3864,16 @@
 					"js/utils/CloudFileUtil.js",
 					"css/mui.min.css",
 					"js/qiniu/qiniu.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/leaveNew.html": {
+				"resources": [
+					"css/quan/about-me.css",
+					"js/mui.pullToRefresh.js",
+					"css/utils/bubble.css",
+					"js/mui.pullToRefresh.material.js"
 				],
 				"refer": [],
 				"priority": 0
