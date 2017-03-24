@@ -9,10 +9,14 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<style>
 			.check-container {
+				padding: 10px 15px;
 				position: fixed;
 				bottom: 0;
 				height: 50px;
 				width: 100%;
+			}
+			.check-status{
+				padding-top: 5px;
 			}
 		</style>
 	</head>
@@ -24,17 +28,13 @@
 		</header>
 		<!--下拉刷新容器-->
 		<div class="mui-content">
-
 			<div id="news-detail">
-
 			</div>
 			<div class="check-container">
 				<p id="check-status" class="check-status display-inlineBlock"></p>
-				<button id="pass-button" type="button" class="mui-btn mui-btn-primary mui-pull-right">通过</button>
-				<button id="refuse-button" type="button" class="mui-btn mui-btn-primary mui-pull-right">拒绝</button>
+				<input id="pass-button" type="button" class="mui-btn mui-btn-primary mui-pull-right" value="显示"></input>
+				<input id="refuse-button" type="button" class="mui-btn mui-btn-primary mui-pull-right" value="屏蔽"></input>
 			</div>
-			<!-- <a href="#sheet" id="openSheet" class="mui-btn mui-btn-primary mui-btn-block">打开操作表</a>-->
-
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>

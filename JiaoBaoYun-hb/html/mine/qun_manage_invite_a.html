@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<style>
+			body,
+			.mui-content {
+				background-color: white;
+			}
+
+			.mui-input-row {
+				/*搜索区域*/
+				margin: 10px;
+				border: 1px solid #E4E4E4;
+				border-radius: 3px;
+			}
+
+			.mui-input-row .mui-input-clear~.mui-icon-clear {
+				/*删除按钮*/
+				color: #e4e4e4;
+				right: 18%;
+			}
+
+			.mui-input-row label {
+				/*搜索按钮*/
+				float: right;
+				padding: 6px 0px;
+				margin-top: 6px;
+				text-align: center;
+				width: 18%;
+				border-left: 1px solid #E4E4E4;
+				color: #00A5E0;
+				font-size: 15px;
+			}
+
+			.mui-input-row label~input {
+				/*输入框*/
+				float: left;
+				width: 82%;
+				padding: 10px 10px;
+				padding-right: 35px;
+				color: #323232;
+			}
+
+			input::-webkit-input-placeholder {
+				color: #808080;
+				/* WebKit browsers */
+			}
+
+			input:-moz-placeholder {
+				color: #808080=;
+				/* Mozilla Firefox 4 to 18 */
+			}
+
+			input::-moz-placeholder {
+				color: #808080=;
+				/* Mozilla Firefox 19+ */
+			}
+
+			input:-ms-input-placeholder {
+				color: #808080;
+				/* Internet Explorer 10+ */
+			}
+
+			#nouser {
+				/*无此用户*/
+				text-align: center;
+				color: #808080;
+				visibility: hidden;
+				z-index: 1;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">邀请成员</h1>
+		</header>
+		<div class="mui-content">
+			<div id="inputArea" class="mui-input-row">
+				<label>搜索</label>
+				<input type="text" class="mui-input-clear" placeholder="请输入账号或手机号">
+			</div>
+			<div id="nouser">
+				<img id="nouser_img" src="../../image/mine/invite_none_0.png" />
+				<div>无此用户，请重新输入~~~</div>
+			</div>
+
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			var inputArea = document.getElementById("inputArea"); //搜索区域
+			var screenOption = {
+				height: localStorage.getItem('resolutionHeight') - localStorage.getItem('getStatusbarHeight'), //屏幕高度-状态栏高度
+				width: localStorage.getItem('resolutionWidth') //屏幕宽度
+			}; //屏幕参数
+			var main; //获取当前窗体对象
+			var mainData; //接收传入参数值
+
+			window.onload = function() {
+				init(); //初始化界面
+			}
+
+			mui.init();
+			mui.plusReady(function() {
+				initData(); //初始化数据
+			});
+
+			/**
+			 * 初始化数据
+			 */
+			function initData() {
+				main = plus.webview.currentWebview(); //获取当前窗体对象
+				mainData = main.data; //接收传入参数值
+				//var data = {
+				//gid: show, //群ID
+				//gname: item.gname, //群名
+				//mstype: type, //被邀请成为的类型
+				//vtp: item.mstype //邀请人的类型（用户管理角色,0家长,1管理员,2老师,3学生）
+				//}
+				console.log('邀请群成员获得的数据:' + JSON.stringify(mainData));
+			}
+
+			/**
+			 * 初始化界面
+			 */
+			function init() {
+				showNoUser(0); //无此用户
+			}
+
+			/**
+			 * 显示无此用户
+			 * @param {Object} key 1,显示
+			 */
+			function showNoUser(key) {
+				var nouser = document.getElementById("nouser");
+				var nouser_img = document.getElementById("nouser_img");
+				var height = screenOption.height - inputArea.offsetHeight - inputArea.offsetTop - 10;
+				nouser.style.height = height + 'px';
+				nouser_img.style.height = height / 2 + 'px';
+				nouser_img.style.marginTop = height / 6 + 'px';
+				if(key == 1) {
+					nouser.style.visibility = 'visible';
+				} else {
+					nouser.style.visibility = 'hidden';
+				}
+			}
+		</script>
+	</body>
+
+</html>
