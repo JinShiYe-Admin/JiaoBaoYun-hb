@@ -124,7 +124,20 @@ var manageGroupPersonData = function(data) {
 }
 var addListener = function() {
 	events.addTap('personal-space', function() {
-		events.openNewWindowWithData('zone_main.html', pInfo.utid);
+		mui.openWindow({
+				url: 'zone_main.html',
+				id: 'zone_main.html',
+				styles: {
+					top: '0px', //设置距离顶部的距离
+					bottom: '0px'
+				},
+				extras: {
+					data: pInfo.utid,
+					NoReadCnt: 0,
+					flag: 0
+				}
+			});
+//		events.openNewWindowWithData('zone_main.html', {data:pInfo.utid,flag: 0});
 	});
 
 	events.addTap('person-gData', function() {

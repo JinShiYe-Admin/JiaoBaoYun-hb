@@ -1,6 +1,6 @@
 /*!
  * =====================================================
- * Mui v3.5.0 (http://dev.dcloud.net.cn/mui)
+ * Mui v3.6.0 (http://dev.dcloud.net.cn/mui)
  * =====================================================
  */
 
@@ -1772,7 +1772,7 @@ input[type=submit]:enabled:active {
 	content: '';
 	-webkit-transform: scaleY(.5);
 	transform: scaleY(.5);
-	background-color: #c8c7cc;
+	background-color: #c8c7cc
 }
 
 .mui-table-view:before {
@@ -2549,9 +2549,9 @@ select:focus {
 	content: '';
 	-webkit-transform: scaleY(.5);
 	transform: scaleY(.5);
-	background-color: ;
+	background-color: #c8c7cc
 }
- 
+
 .mui-input-row label {
 	font-family: 'Helvetica Neue', Helvetica, sans-serif;
 	line-height: 1.1;

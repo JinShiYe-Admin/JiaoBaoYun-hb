@@ -169,32 +169,6 @@
 				<span id="addfolder" class="mui-icon iconfont iconfont-color icon-newfolder mui-pull-right" style="margin-right: 15px;line-height: 45px;"> 文件夹</span>
 			</div>
 			<div id="all">
-				<!--<div id="fid_fid" style="display: ;">
-					<div class="mui-scroll-wrapper">
-						<div class="mui-scroll">
-							<ul id="ul_fid" class="mui-table-view">
-								<li class="mui-table-view-cell mui-media">
-									<span class="mui-navigate-right mui-media-object mui-pull-right"></span>
-									<span class="mui-icon iconfont iconfont-color icon-trash mui-media-object mui-pull-right" style="margin-right: 15px;"></span>
-									<span class="mui-icon iconfont iconfont-color icon-download mui-media-object mui-pull-right" style="margin-right: 15px;"></span>
-									<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">
-									<div class="mui-media-body">
-										<p class="mui-ellipsis-2">文件夹名字</p>
-									</div>
-								</li>
-								<li class="mui-table-view-cell mui-media">
-									<span class="mui-media-object mui-pull-right"></span>
-									<span class="mui-icon iconfont iconfont-color icon-trash mui-media-object mui-pull-right" style="margin-right: 15px;"></span>
-									<span class="mui-icon iconfont iconfont-color icon-download mui-media-object mui-pull-right" style="margin-right: 15px;"></span>
-									<span class="mui-media-object mui-icon iconfont iconfont-size icon-excel mui-pull-left"></span>
-									<div class="mui-media-body">
-										<p class="mui-ellipsis-2">文件名字</p>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>-->
 			</div>
 		</div>
 		<script type="text/javascript">
@@ -346,12 +320,14 @@
 							mui('#scroll_' + show.pid + ' ul').each(function(index, element) {
 								element.className = 'mui-table-view move-in-left';
 							});
+							back = false;
 
 							setTimeout(function() { //动画结束后
 								//隐藏当前界面
 								document.getElementById("pid_" + showPid).style.display = 'none';
 								document.getElementById("title").innerText = show.pname;
 								showPid = show.pid;
+								back = true;
 							}, 400);
 						}
 					}
@@ -397,13 +373,13 @@
 									fpath: fpath //图片的七牛路径
 								});
 							}
+						} else if(type == 'html5-video') {
+							events.openNewWindowWithData('storage_show_video.html', {
+								fpath: fpath //视频的七牛路径
+							});
 						}
 					}
 				});
-
-				//				mui('#all').on('tap', 'img', function() {
-				//					console.log('img');
-				//				});
 
 				/**
 				 * 长按文件或文件夹
@@ -661,12 +637,6 @@
 						//请求数据
 						requestData(comData, data.title);
 					}
-					//var ul = document.getElementById("ul_file_0");
-					//console.log(ul.innerHTML);
-					//					var lazyLoad = mui('.mui-scroll-wrapper').imageLazyload({
-					//						placeholder: '../../image/utils/loading_128px.png',
-					//						destroy: false
-					//					});
 				}
 
 				/**
@@ -734,15 +704,10 @@
 							var pathList2 = pathList[pathList.length - 1].split('.');
 							var fileName = pathList2[0];
 							var path = window.storageKeyName.QNPB + 'yuncunc/' + window.storageKeyName.CLOUDSTORAGETHUMB + fileName + '.png'
-							//console.log('path:' + path);
 							if(type != '') {
 								html3 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
 							} else { //七牛能生成缩略图的图片或视频
-								//console.log('path:' + path);
 								html3 = '<img class="mui-media-object cloud-bottom-imge mui-pull-left" src="' + path + '"/>';
-
-								//html3 = '<img class="mui-media-object cloud-bottom-imge mui-pull-left" data-lazyload="' + path + '"/>';
-								//console.log(html3);
 							}
 							html4 = '<div class="mui-media-body">\
 								<div id="fname_' + data.fid + '" class="mui-ellipsis-2">' + data.fname + data.ftype + '</div>\
@@ -777,6 +742,7 @@
 						wd.close();
 						console.log('26.postDataPro_PostDiFi用户云盘顶层文件及文件夹获取:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0 || data.RspCode == 9) {
+							back = false;
 							if(data.RspCode == 9) {
 								mui.toast('文件夹为空');
 							}
@@ -788,11 +754,6 @@
 							if(document.getElementById("pid_" + pid) == null) {
 								console.log('获取数据pid_' + pid + '==null');
 								addbot(pid); //增加对应的文件夹
-								//							var fData2 = {
-								//								pid: pid, //上层id
-								//								fdata: tempRspData //本层数据
-								//							}
-								//							topFolderData.push(fData2);
 								mui.each(tempRspData, function(index, item) {
 									additem(item);
 								});
@@ -816,6 +777,7 @@
 							var showPidTimeOut = showPid;
 							setTimeout(function() {
 								document.getElementById("pid_" + showPidTimeOut).style.display = 'none';
+								back = true;
 							}, 400);
 
 							document.getElementById("pid_" + pid).style.display = 'inline';
@@ -830,16 +792,11 @@
 								pname: pname //上层文件夹名字
 							}
 							showPidList.push(pData2);
-							//							var lazyLoad = mui('.mui-scroll-wrapper').imageLazyload({
-							//								placeholder: '../../image/utils/loading_128px.png',
-							//								destroy: false
-							//							});
 						} else {
 							mui.toast(data.RspTxt);
 						}
 					});
 				}
-
 			});
 		</script>
 	</body>

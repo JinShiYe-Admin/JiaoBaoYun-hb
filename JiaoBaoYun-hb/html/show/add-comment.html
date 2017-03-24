@@ -40,10 +40,36 @@
 		var personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 		mui.plusReady(function() {
 			var data = plus.webview.currentWebview().data;
-			console.log('传到评论界面的数据：'+JSON.stringify(data));
+			console.log('传到评论界面的数据：' + JSON.stringify(data));
 			var tempIndex = data.tempIndex;
 			var zonepArray = data.zonepArray;
-			console.log(tempIndex+'-----',zonepArray.length)
+			if(tempIndex.indexOf('-') >= 0) {
+
+				var indexArr = tempIndex.split('-');
+				var id = indexArr[0];
+				var commentId = indexArr[1];
+				var replyId = indexArr[2];
+
+				var tempModel = zonepArray[id].Comments[commentId];
+				if(!tempModel) {
+					mui.toast('不可以回复自己');
+					return;
+				}
+				console.log(JSON.stringify(tempModel));
+				var upperId = tempModel.TabId;
+				var replyUserId;
+				var ReplyIdName;
+				if(replyId == '评论') {
+					replyUserId = tempModel.UserId
+					ReplyIdName = tempModel.UserIdName
+				} else {
+					replyUserId = tempModel.Replys[replyId].UserId;
+					ReplyIdName = tempModel.Replys[replyId].UserIdName;
+				}
+				document.getElementById("msg-content").placeholder = '@'+ReplyIdName+'（字数不超过200字)'
+
+			}
+			console.log(tempIndex + '-----', zonepArray.length)
 			events.addTap('btn-reply', function() {
 
 				var replyName = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick
@@ -63,7 +89,7 @@
 						var replyId = indexArr[2];
 
 						var tempModel = zonepArray[id].Comments[commentId];
-						if(!tempModel){
+						if(!tempModel) {
 							mui.toast('不可以回复自己');
 							return;
 						}
@@ -78,7 +104,7 @@
 							replyUserId = tempModel.Replys[replyId].UserId;
 							ReplyIdName = tempModel.Replys[replyId].UserIdName;
 						}
-						if(personalUTID==replyUserId){
+						if(personalUTID == replyUserId) {
 							mui.toast('不可以回复自己');
 							return;
 						}
@@ -95,15 +121,15 @@
 						postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
 							wd.close();
 							console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow',{
-								tempIndex:tempIndex,
-								content:inputComment.value,
-								flag:'评论回复'
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow', {
+								tempIndex: tempIndex,
+								content: inputComment.value,
+								flag: '评论回复'
 							})
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep',{
-								tempIndex:tempIndex,
-								content:inputComment.value,
-								flag:'评论回复'
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep', {
+								tempIndex: tempIndex,
+								content: inputComment.value,
+								flag: '评论回复'
 							})
 							mui.back();
 
@@ -119,15 +145,15 @@
 						postDataPro_addUserSpaceComment(comData, wd, function(data) {
 							wd.close();
 							console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow',{
-								tempIndex:tempIndex,
-								content:inputComment.value,
-								flag:'评论'
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow', {
+								tempIndex: tempIndex,
+								content: inputComment.value,
+								flag: '评论'
 							})
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep',{
-								tempIndex:tempIndex,
-								content:inputComment.value,
-								flag:'评论'
+							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep', {
+								tempIndex: tempIndex,
+								content: inputComment.value,
+								flag: '评论'
 							})
 							mui.back();
 
