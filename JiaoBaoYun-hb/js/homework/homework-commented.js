@@ -26,6 +26,7 @@ mui.plusReady(function() {
 		homeworkDetailNodes.stuResult.innerText = e.detail.data.answer;
 		homeworkResult.HomeworkResult.Result = e.detail.data.answer;
 		var imgFiles = e.detail.data.Files
+		console.log(JSON.stringify(imgFiles))
 		document.getElementById('brief-imgs-stu').innerHTML = getImgsInner(imgFiles)
 		homeworkResult.HomeworkResult.Files = imgFiles;
 	})
@@ -376,11 +377,15 @@ var getImgsInner = function(imgs) {
 			if(!imgs[i].Url){
 				imgs[i].Url = imgs[i].url
 			}
+			if(!imgs[i].FileType){
+				imgs[i].FileType = imgs[i].type
+			}
 			
 			imgInner += '<img class="homework-img" style="width:' + img_width + 'px;height:'+img_width+'px;" src="' + imgs[i].ThumbUrl +
 				'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + imgs[i].FileType + '"/>';
 		}
 	}
+	console.log(imgInner)
 	return imgInner;
 }
 //刷新普通作业界面

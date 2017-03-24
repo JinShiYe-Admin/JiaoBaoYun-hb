@@ -290,13 +290,17 @@
 			function Trim(str) {
 				return str.replace(/(^\s*)|(\s*$)/g, "");
 			}
+			events.addTap('channal',function(){
+				document.activeElement.blur();
+			})
 			//选择话题
 			mui('.mui-popover').on('tap', 'li', function(e) {
+				
 				document.getElementById("channal").innerHTML = this.children[0].innerHTML;
 				askChannel = this.id;
 				console.log('askChannel=' + askChannel);
 				if(flag == 0) {
-					//2.获取符合条件的专家信息
+					//2.获取符合条件的专家信息111
 					getExpertsArray(askChannel, '[0]');
 				} else {
 					getExpertsArray(askChannel, UserId);
