@@ -25,11 +25,12 @@ var repliedItem; //回复的对象
 var aboutMeArray = [];
 mui.init();
 mui.plusReady(function() {
+	events.preload("../homework/workdetail-stu.html", 100);
 	var pInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 	personalUTID = pInfo.utid;
 	pId = parseInt(pInfo.utid);
 	pName = pInfo.unick;
-//	initNativeObjects();
+	//	initNativeObjects();
 	//页码1
 	pageIndex = 1;
 	//请求并放置数据
@@ -51,9 +52,13 @@ var setData = function(data) {
 		if(cell.MsgType != 6 && cell.MsgType != 3) {
 			li.querySelector('.reply').cell = cell;
 		}
+
 		list.appendChild(li);
-		if(li.querySelector(".refer-content")){
-			li.querySelector(".refer-content").info=cell;
+		if(li.querySelector(".refer-content")) {
+			li.querySelector(".refer-content").info = cell;
+		}
+		if(li.querySelector(".work-notice")) {
+			li.querySelector(".work-notice").info = cell;
 		}
 	})
 }
@@ -75,7 +80,7 @@ var createInner = function(cell) {
 			'</div>' +
 			//最新内容
 			'<p class="comment-content break-words">' + ifHave(cellData.content) + '</p>' +
-			ifHaveReferContent(cellData,cell) +
+			ifHaveReferContent(cellData, cell) +
 			'<div class="extras">' + ifHave(cellData.messages) + '</div>';
 	} else {
 		var inner = '<a><div class="cell-title">' +
@@ -86,7 +91,7 @@ var createInner = function(cell) {
 			'<p class="title-words">' + events.shortForDate(cellData.time) + '</p>' +
 			'</div>' +
 			'</div>' +
-			'<p class="comment-content">' + ifHave(cellData.UserContent) + '</p>' +
+			'<p class="comment-content work-notice">' + ifHave(cellData.UserContent) + '</p>' +
 			//		'<div class="refer-content">' + '<span>' + cellData.UserOwnerNick + ':</span>' + ifHave(cellData.referContent) + '</div>' +
 			//		'<div class="extras">' + ifHave(cellData.messages) + '</div>'
 			'</a>';
@@ -99,16 +104,16 @@ var zanNoReply = function(msgType) {
 	}
 	return '<span class="reply">回复</span>';
 }
-var ifHaveReferContent = function(cellData,cell) {
+var ifHaveReferContent = function(cellData, cell) {
 	if(cellData.referContent) {
-		return '<div class="refer-content">'+addEncImg(cell.EncImgAddr)+'<div class="refer-words triple-line extra-words break-words">' + '<span>' + events.shortForString(cellData.UserOwnerNick,6)  + ':</span>' + cellData.referContent + '</div></div>'
+		return '<div class="refer-content">' + addEncImg(cell.EncImgAddr) + '<div class="refer-words triple-line extra-words break-words">' + '<span>' + events.shortForString(cellData.UserOwnerNick, 6) + ':</span>' + cellData.referContent + '</div></div>'
 	} else {
 		return '';
 	}
 }
-var addEncImg=function(encImg){
-	if(encImg&&encImg.length>0){
-		return '<img class="refer-img display-inlineBlock" src="'+encImg.split("|")[0]+'"/>';
+var addEncImg = function(encImg) {
+	if(encImg && encImg.length > 0) {
+		return '<img class="refer-img display-inlineBlock" src="' + encImg.split("|")[0] + '"/>';
 	}
 	return '';
 }
@@ -118,13 +123,13 @@ var addReplyView = function() {
 	 */
 	mui('.mui-table-view').on('tap', '.reply', function() {
 		var replyContainer = document.getElementById('footer');
-//		replyContainer.style.display = 'block';
-//		showSoftInput('#msg-content');
+		//		replyContainer.style.display = 'block';
+		//		showSoftInput('#msg-content');
 		repliedCell = this.cell;
 		repliedItem = this.parentElement.parentElement.querySelector(".extras");
 		console.log('点击的回复包含数据：' + JSON.stringify(repliedCell));
 		msgType = this.cell.MsgType;
-//		document.getElementById('msg-content').value = '';
+		//		document.getElementById('msg-content').value = '';
 		events.openNewWindowWithData('reply-aboutMe.html', repliedCell);
 		//		replyContainer.style.top=(plus.screen.resolutionHeight-replyContainer.offsetHeight);
 	})
@@ -144,19 +149,45 @@ var addReplyView = function() {
 			extras: {
 				data: id,
 				NoReadCnt: 0,
-				flag:0
+				flag: 0
 			}
 
 		});
 	})
 }
-var setListener=function(){
-	mui(".mui-table-view").on("tap",".refer-content",function(){
-		this.info.PublisherId = this.info.UserId 
-		this.info.PublisherName = this.info.UserName 
+var setListener = function() {
+	mui(".mui-table-view").on("tap", ".refer-content", function() {
+		this.info.PublisherId = this.info.UserId
+		this.info.PublisherName = this.info.UserName
 		this.info.TabId = this.info.SpaceId
 		console.log(JSON.stringify(this.info));
-		events.openNewWindowWithData('../quan/space-detail.html', jQuery.extend(this.info,{focusFlag:0}))
+		events.openNewWindowWithData('../quan/space-detail.html', jQuery.extend(this.info, { focusFlag: 0 }))
+	})
+	mui(".mui-table-view").on("tap", ".work-notice", function() {
+		var curNotice=this.info;
+		getHomeworkResult(this.info,function(data){
+			if(data.HomeworkResult.UploadTime){
+				events.openNewWindowWithData('../homework/homework-commented.html', jQuery.extend(curNotice,data,{ HomeworkResultId: data.HomeworkResult.HomeworkResultId, workType: 1 }));
+//				events.fireToPageWithData("../homework/homework-commented.html","workNotice",jQuery.extend(this.info,data))
+			}else{
+				events.fireToPageWithData("../homework/workdetail-stu.html", "workNotice", curNotice);
+			}
+		});		
+	});
+}
+var getHomeworkResult = function(workInfo,callback) {
+	var personalId=myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+	var wd=events.showWaiting();
+	postDataPro_GetHomeworkResultStu({
+		studentId: personalId, //学生Id
+		classId: workInfo.ClassId, //班级群Id；
+		homeworkId: workInfo.HomeworkId //作业id；
+	},wd,function(data){
+		wd.close();
+		console.log("获取当前作业结果："+JSON.stringify(data))
+		if(data.RspCode==0){
+			callback(data.RspData);
+		}
 	})
 }
 /**
@@ -467,7 +498,7 @@ var requireHomeworkAlert = function(aboutMeData) {
 		console.log('与我相关界面获取的作业提醒：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			alertTotalPage = data.RspData.TotalPage;
-			if(totalPage==0&&alertTotalPage==0){
+			if(totalPage == 0 && alertTotalPage == 0) {
 				mui.toast('暂无数据！')
 				return;
 			}
@@ -483,7 +514,7 @@ var requireHomeworkAlert = function(aboutMeData) {
 			allData.sort(function(a, b) {
 				return -((new Date(a.MsgDate.replace(/-/g, '/')).getTime()) - (new Date(b.MsgDate.replace(/-/g, '/')).getTime()));
 			})
-			
+
 			console.log('与我相关界面获取的所有数据:' + JSON.stringify(allData))
 			//获取人员信息
 			getRoleInfos(allData);

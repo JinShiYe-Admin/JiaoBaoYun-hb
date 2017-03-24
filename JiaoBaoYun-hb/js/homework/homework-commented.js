@@ -68,7 +68,11 @@ mui.plusReady(function() {
 	mui.back = function() {
 		console.log('返回上级页面的id:' + plus.webview.currentWebview().opener().id);
 		if(homeworkModel.workType == 1) {
-			plus.webview.getWebviewById('homework-tea.html').show();
+			if(plus.webview.getWebviewById('homework-tea.html').isReady){
+				plus.webview.getWebviewById('homework-tea.html').show();
+			}else{
+				_back();
+			}	
 		} else {
 			_back();
 		}
