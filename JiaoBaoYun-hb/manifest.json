@@ -3873,7 +3873,7 @@
 				"refer": [],
 				"priority": 0
 			},
-<<<<<<< HEAD
+
 			"html/check/area-choose.html": {
 				"resources": [
 					"css/check/area-choose.css",
@@ -3953,16 +3953,6 @@
 					"html/check/area-choose.html",
 					"html/check/news-detail.html"
 				],
-=======
-			"html/quan/leaveNew.html": {
-				"resources": [
-					"css/quan/about-me.css",
-					"js/mui.pullToRefresh.js",
-					"css/utils/bubble.css",
-					"js/mui.pullToRefresh.material.js"
-				],
-				"refer": [],
->>>>>>> origin/master
 				"priority": 0
 			}
 		},

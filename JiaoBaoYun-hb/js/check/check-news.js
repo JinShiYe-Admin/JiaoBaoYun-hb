@@ -241,6 +241,7 @@
 		})
 		mui(".mui-table-view").on("tap", ".check-button", function() {
 			newsDetail = this.parentElement.parentElement.querySelector(".news-container").newsInfo;
+			var clickedButton=this;
 			plus.nativeUI.actionSheet({
 				cancel: "取消",
 				buttons: [{
@@ -252,10 +253,10 @@
 				console.log(e.index);
 				switch(parseInt(e.index)) {
 					case 1: //通过
-						checkNews(1);
+						checkNews(1,clickedButton);
 						break;
 					case 2: //拒绝
-						checkNews(2);
+						checkNews(2,clickedButton);
 						break;
 					default:
 						break;
