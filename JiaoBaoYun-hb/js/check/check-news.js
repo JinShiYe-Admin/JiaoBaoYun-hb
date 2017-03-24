@@ -39,6 +39,12 @@
 		window.addEventListener("choseArea", function(e) {
 			console.log("获取选中的城市：" + JSON.stringify(e.detail));
 			if(e.detail.acode != curAreaInfo.acode) {
+				//选择城市后界面滚到前面
+
+				//				$.each(document.querySelectorAll('.mui-scroll-wrapper'),function(index,item){
+				//					console.log('当前选项：'+this.className)
+				//					this.querySelector(".mui-table-view").scrollTo(0,0);
+				//				})
 				curAreaInfo = e.detail;
 				clearAll();
 				setCurArea();
@@ -48,14 +54,14 @@
 		/**
 		 * 监听
 		 */
-		window.addEventListener("checkedNews",function(e){
-			var checkedNews=e.detail;
-			if(checkedNews.Ischeck!=newsDetail.Ischeck){
-				newsDetail=checkedNews;
-				console.log("当前页面的类名称："+clickedCell.className)
-				
-				setChangedButton(newsDetail.Ischeck,clickedCell);
-				changeList(newsDetail.Ischeck,clickedCell);
+		window.addEventListener("checkedNews", function(e) {
+			var checkedNews = e.detail;
+			if(checkedNews.Ischeck != newsDetail.Ischeck) {
+				newsDetail = checkedNews;
+				console.log("当前页面的类名称：" + clickedCell.className)
+
+				setChangedButton(newsDetail.Ischeck, clickedCell);
+				changeList(newsDetail.Ischeck, clickedCell);
 			}
 		})
 		//清空所有控件
@@ -67,6 +73,10 @@
 			document.getElementById("uncheck-list").innerHTML = "";
 			document.getElementById("passed-list").innerHTML = "";
 			document.getElementById("refused-list").innerHTML = "";
+			mui(".news-all").scroll().scrollTo(0, 0, 100);
+			mui(".news-uncheck").scroll().scrollTo(0, 0, 100);
+			mui(".news-passed").scroll().scrollTo(0, 0, 100);
+			mui(".news-unpass").scroll().scrollTo(0, 0, 100);
 		}
 		/**
 		 * 子页面加载完成事件
@@ -175,13 +185,17 @@
 			default:
 				break;
 		}
-		for(var i in data) {
-			var li = document.createElement("li");
-			li.className = "mui-table-view-cell";
-			li.innerHTML = createInner(data[i]);
-			console.log(li.innerHTML);
-			list_container.appendChild(li);
-			li.querySelector(".news-container").newsInfo = data[i];
+		for(var m in data) {
+			if(data[m]) {
+				console.log("整个数据：" + JSON.stringify(data))
+				console.log("要放置的数据：" + m + ":" + JSON.stringify(data[m]))
+				var li = document.createElement("li");
+				li.className = "mui-table-view-cell";
+				li.innerHTML = createInner(data[m]);
+				console.log(li.innerHTML);
+				list_container.appendChild(li);
+				li.querySelector(".news-container").newsInfo = data[m];
+			}
 		}
 	}
 	/**
@@ -190,7 +204,7 @@
 	 */
 	var createInner = function(item) {
 		var inner = '<div class="list-news"><div class="news-container">' + getImgs(item) +
-			'<div class="news-words"><p class="words-title">' +getStatus(item)+ item.title +
+			'<div class="news-words"><p class="words-title">' + getStatus(item) + item.title +
 			'</p><p class="words-info">' + item.tips + '</p></div></div><div class="check-container">' + setCheckButton(item) + '</div></div>'
 		return inner;
 	}
@@ -198,13 +212,13 @@
 	 * 获取状态
 	 * @param {Object} item
 	 */
-	var getStatus=function(item){
-		switch (item.Ischeck){
+	var getStatus = function(item) {
+		switch(item.Ischeck) {
 			case 0:
-			return '<span class="check-status" style="color:blue">[待审核]</span>';
-			
+				return '<span class="check-status" style="color:blue">[待审核]</span>';
+
 			case 1:
-			return '<span class="check-status" style="color:green">[已显示]</span>';
+				return '<span class="check-status" style="color:green">[已显示]</span>';
 				break;
 			case 2:
 				return '<span class="check-status" style="color:red">[已屏蔽]</span>';
@@ -288,7 +302,7 @@
 		});
 		mui(".mui-table-view").on("tap", ".news-container", function() {
 			newsDetail = this.newsInfo;
-			clickedCell=this.parentElement.parentElement.querySelector('input[type="button"]');
+			clickedCell = this.parentElement.parentElement.querySelector('input[type="button"]');
 			sendMessageToPre();
 		})
 		mui(".mui-table-view").on("tap", ".check-button", function() {
@@ -339,7 +353,7 @@
 			if(data.RspCode == 0) {
 				newsDetail.Ischeck = type;
 				setChangedButton(type, checkItem);
-				changeList(type,checkItem)
+				changeList(type, checkItem)
 			} else {
 				mui.toast("审核失败，打回重审");
 			}
@@ -347,17 +361,17 @@
 	}
 	var setChangedButton = function(type, checkItem) {
 		checkItem.parentElement.parentElement.querySelector(".news-container").newsInfo = newsDetail;
-		
+
 		switch(type) {
 			case 1: //通过 
-				checkItem.parentElement.parentElement.querySelector(".check-status").innerText="[已显示]";
-				checkItem.parentElement.parentElement.querySelector(".check-status").style.color="green";
+				checkItem.parentElement.parentElement.querySelector(".check-status").innerText = "[已显示]";
+				checkItem.parentElement.parentElement.querySelector(".check-status").style.color = "green";
 				checkItem.className = "passed-button";
 				checkItem.value = "屏蔽";
 				break;
 			case 2: //拒绝
-				checkItem.parentElement.parentElement.querySelector(".check-status").innerText="[已屏蔽]"
-				checkItem.parentElement.parentElement.querySelector(".check-status").style.color="red";
+				checkItem.parentElement.parentElement.querySelector(".check-status").innerText = "[已屏蔽]"
+				checkItem.parentElement.parentElement.querySelector(".check-status").style.color = "red";
 				checkItem.className = "refused-button";
 				checkItem.value = "显示";
 				break;
