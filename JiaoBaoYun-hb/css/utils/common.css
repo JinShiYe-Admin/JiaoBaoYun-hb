@@ -2,6 +2,11 @@
  * 共同的样式
  */
 
+/*去掉导航条阴影*/
+.mui-bar-nav {
+	box-shadow: none;
+}
+
 .common-background-bar {
 	/*背景颜色*/
 	background: white;

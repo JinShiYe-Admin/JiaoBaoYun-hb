@@ -619,6 +619,7 @@
 					console.log('download:' + this.getAttribute('id') + '|' + this.getAttribute('data-id'));
 					var id = this.getAttribute('id'); //元素id
 					var downid = this.getAttribute('data-id'); //任务id
+					var downError = this.getAttribute('data-error') || false; //任务失败
 					var dtask = null;
 					var num = '';
 					mui.each(downloadList, function(index, item) {
@@ -657,6 +658,15 @@
 
 								document.getElementById("down_" + downid).parentNode.removeChild(document.getElementById("down_" + downid)); //删除元素
 								mui.toast('删除下载任务成功');
+							} else {
+
+							}
+						});
+					} else if(downError) {
+						var btnArray = ['否', '是'];
+						mui.confirm('确认删除任务？', '提示', btnArray, function(e) {
+							if(e.index == 1) { //是
+								document.getElementById(id).parentNode.removeChild(document.getElementById(id));
 							} else {
 
 							}
@@ -762,6 +772,7 @@
 									console.log("请求上传或者下载文件系统失败: " + JSON.stringify(errorCB));
 								});
 							} else {
+								document.getElementById("down_" + download.id).setAttribute('data-error', true);
 								document.getElementById("down_btn_" + download.id).style.display = 'none';
 								//document.getElementById("down_" + download.id).parentNode.removeChild(document.getElementById("down_" + download.id));
 								document.getElementById("down_waiting_" + download.id).innerText = '下载失败';
@@ -796,7 +807,9 @@
 									document.getElementById("down_waiting_" + id).innerText = '请求已经接收';
 									break;
 								case 3: //下载任务接收数据
-									document.getElementById("down_waiting_" + id).innerText = '下载中';
+									if(document.getElementById("down_waiting_" + id) != null) {
+										document.getElementById("down_waiting_" + id).innerText = '下载中';
+									}
 									//console.log('下载任务接收数据:|id:' + id + '|downloadSize:' + downloadSize + '|totalSize:' + totalSize + '|uploadState:' + downloadState);
 									//document.getElementById("down_btn_" + id).innerText = '暂停';
 									//document.getElementById("down_btn_" + id).value = '3';
