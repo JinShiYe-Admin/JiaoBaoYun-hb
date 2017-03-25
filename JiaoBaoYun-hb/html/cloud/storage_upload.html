@@ -140,7 +140,7 @@
 				events.preload('storage_main_choose.html'); //预加载选择云存储的文件
 				events.preload('storage_transport.html'); //预加载传输列表
 
-//				console.log('选择上传的文件');
+				//				console.log('选择上传的文件');
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var subData = null; //记录从父页面获取的数据
 				var pid = ''; //文件的上层ID
@@ -343,7 +343,12 @@
 								//console.log("getMetadata:" + JSON.stringify(succesCB));
 								console.log("readFileSize：" + AndroidFileSystem.readSize(succesCB.size));
 								//限制50M
-								if(succesCB.size <= (50 * 1024 * 1024)) {
+								if(succesCB.size > (50 * 1024 * 1024)) {
+									mui.toast('上传文件不得大于50M');
+								} else if(succesCB.size == 0) {
+									mui.toast('请选择大于0B的文件');
+								} else {
+
 									if(upFile == null) { //当前页面没选上传的文件
 										upFile = { //记录上传的文件
 											folderid: showFolderId, //所属文件夹id
@@ -378,15 +383,6 @@
 											changeUpBtnColor();
 										}
 									}
-									//跳转到传输列表
-									//									events.fireToPageWithData('storage_transport.html', 'addUpload', {
-									//										path: fid, //路径
-									//										fname: fname, //文件名
-									//										metadata: succesCB, //文件信息
-									//										pid: pid //云盘文件夹父ID
-									//									});
-								} else {
-									mui.toast('上传文件不得大于50M');
 								}
 							}, function(errorCB) {
 								mui.toast('获取目录或文件的属性失败');
@@ -451,7 +447,7 @@
 						//属性：
 						//name: 文件系统的名称
 						//root: 文件系统中的目录对象，用于管理特定的本地目录
-//						console.log("请求文件系统" + succesCB.name + "成功");
+						//						console.log("请求文件系统" + succesCB.name + "成功");
 						//console.log("文件系统的名称:" + succesCB.name);
 						//console.log("文件系统中的目录对象:" + succesCB.root.fullPath);
 						var LocalURL = succesCB.root.toLocalURL();
@@ -466,7 +462,7 @@
 							getDirectory(succesCB2, 'download', function(succesCB3) {
 								//创建上传文件夹
 								getDirectory(succesCB2, 'upload', function(succesCB3) {
-//									console.log("DOCUMENTSPATH: " + window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH));
+									//									console.log("DOCUMENTSPATH: " + window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH));
 								});
 							});
 						});
@@ -527,7 +523,7 @@
 						create: true,
 						exclusive: false
 					}, function(succesCB) {
-//						console.log("创建或打开子目录" + name + "成功");
+						//						console.log("创建或打开子目录" + name + "成功");
 						//console.log("文件系统的名称:" + succesCB.name);
 						//console.log("文件系统中的目录对象:" + succesCB.fullPath);
 						succesCallBack(succesCB);
