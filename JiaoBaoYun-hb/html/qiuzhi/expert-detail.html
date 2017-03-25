@@ -41,7 +41,7 @@
 					<h4 id="ExpertChannels" style="color: #e8fa50;font-size::16px;font-family:'楷体';font-weight:500;"></h4>
 				</div>
 				<div style="margin-bottom: 10px;">
-					<p id="UserNote" style="margin: 5px;font-size: 15px;text-align: center;color: white;"></p>
+					<p id="UserNote" style="margin: 5px;font-size: 14px;font-family:'楷体';line-height: 18px;text-align: center;color: white;"></p>
 				</div>
 
 				<!--<textarea  id="UserNote" id='leaveTitle'  onblur="inputOnblur(this)" class="mui-input-clear question" placeholder="" style="min-height: 30px;height: 30px;；width: 100%;background-color: transparent;font-size: 15px;border-color:transparent ;"></textarea>-->
@@ -327,13 +327,13 @@
 		};
 
 		function addData() {
-			nodes.AskNum.innerHTML = ExpertsInfo.AskNum + '<span class="mui-icon  iconfont icon-fanhui2"></span>';
+			nodes.AskNum.innerHTML = ExpertsInfo.AskNum + '<span class="mui-icon  iconfont icon-fanhui2" style="color:#b7b7b7;"></span>';
 			//如果是自己，显示编辑简介按钮
 			if(ExpertsInfo.UserId == personalUTID) {
 				if(ExpertsInfo.UserNote == '') {
-					nodes.UserNote.innerHTML = '<img id="bianji" style = "width:20px;height:20px;"  src="../../image/qiuzhi/bianji1.png" />' + ' ' + '编辑简介';
+					nodes.UserNote.innerHTML = '<img id="bianji" style = "width:13px;height:13px;"  src="../../image/qiuzhi/bianji1.png" />' + ' ' + '编辑简介';
 				} else {
-					nodes.UserNote.innerHTML = ExpertsInfo.UserNote + ' ' + '<img id="bianji" style = "width:20px;height:20px;"  src="../../image/qiuzhi/bianji1.png" />';
+					nodes.UserNote.innerHTML = ExpertsInfo.UserNote + ' ' + '<img id="bianji" style = "width:13px;height:13px;"  src="../../image/qiuzhi/bianji1.png" />';
 				}
 
 			} else {
@@ -344,14 +344,14 @@
 			nodes.ExpertChannels.innerText = ExpertsInfo.ExpertChannelNames;
 			nodes.IsLikeNum.innerHTML = ExpertsInfo.IsLikeNum;
 			nodes.FocusAskNum.innerText = ExpertsInfo.FocusAskNum;
-			nodes.CommentNum.innerHTML = ExpertsInfo.CommentNum + '<span class="mui-icon  iconfont icon-fanhui2"></span>';
+			nodes.CommentNum.innerHTML = ExpertsInfo.CommentNum + '<span class="mui-icon  iconfont icon-fanhui2" style="color:#b7b7b7"></span>';
 			console.log(nodes.CommentNum.innerHTML)
 			nodes.IsFocusedManNum.innerText = ExpertsInfo.IsFocusedManNum;
-			nodes.AnswerNum.innerHTML = ExpertsInfo.AnswerNum + '<span class="mui-icon  iconfont icon-fanhui2"></span>';
+			nodes.AnswerNum.innerHTML = ExpertsInfo.AnswerNum + '<span class="mui-icon  iconfont icon-fanhui2" style="color:#b7b7b7"></span>';
 			console.log(nodes.AnswerNum.innerHTML)
 			var inviteNumLi = document.getElementById("inviteNumLi");
 			if(ExpertsInfo.IsExpert == 1) {
-				nodes.inviteNum.innerHTML = ExpertsInfo.InviteNum + '<span class="mui-icon  iconfont icon-fanhui2"></span>';
+				nodes.inviteNum.innerHTML = ExpertsInfo.InviteNum + '<span class="mui-icon  iconfont icon-fanhui2" style="color:#b7b7b7"></span>';
 			} else {
 				inviteNumLi.parentNode.removeChild(inviteNumLi);
 			}
