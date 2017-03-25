@@ -167,10 +167,10 @@ var setListener = function() {
 		var curNotice=this.info;
 		getHomeworkResult(this.info,function(data){
 			if(data.HomeworkResult.UploadTime){
-				events.openNewWindowWithData('../homework/homework-commented.html', jQuery.extend(curNotice,data,{ HomeworkResultId: data.HomeworkResult.HomeworkResultId, workType: 1 }));
+				events.openNewWindowWithData('../homework/homework-commented.html', jQuery.extend(curNotice,data,{ HomeworkResultId: data.HomeworkResult.HomeworkResultId, workType: 1,isNotice:true }));
 //				events.fireToPageWithData("../homework/homework-commented.html","workNotice",jQuery.extend(this.info,data))
 			}else{
-				events.fireToPageWithData("../homework/workdetail-stu.html", "workNotice", curNotice);
+				events.fireToPageWithData("../homework/workdetail-stu.html", "workNotice", jQuery.extend(curNotice,{isNotice:true}));
 			}
 		});		
 	});
