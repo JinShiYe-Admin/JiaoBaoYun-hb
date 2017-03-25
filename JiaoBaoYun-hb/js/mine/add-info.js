@@ -37,10 +37,10 @@ mui.plusReady(function() {
 	 * 加载无资料选项
 	 */
 var addNoData = function() {
-		var li = document.createElement('li');
-		li.className = "mui-table-view-divider";
-		li.innerText = '无资料';
-		list.appendChild(li);
+//		var li = document.createElement('li');
+//		li.className = "mui-table-view-divider";
+//		li.innerText = '无资料';
+//		list.appendChild(li);
 		var li1 = document.createElement('li');
 		li1.className = "mui-table-view-cell mui-selected";
 		li1.innerHTML = '<a class="mui-navigate-right">无可绑定资料</a>';
