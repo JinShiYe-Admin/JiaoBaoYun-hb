@@ -77,12 +77,12 @@
 					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 					pageIndex = 1;
 					pullFlag = 0;
-					if(cityID==0){
+					if(cityID == 0) {
 						getFocusByUser()
-					}else{
+					} else {
 						requestData(cityID, 1);
 					}
-					
+
 				});
 
 				//---订制城市---start---
@@ -112,7 +112,7 @@
 					var citycode = sliderId.replace('top_', '');
 					var tempData = data.detail;
 					console.log(JSON.stringify(tempData));
-					
+
 					if(tempData.flag == '评论') {
 						document.getElementById('line' + citycode + 'zx' + tempIndex).className = 'mui-media-body dynamic-line';
 						var div = document.createElement("div");
@@ -967,7 +967,13 @@
 								} else {
 									console.log('一个人点赞')
 									var citycode = sliderId.replace('top_', '');
-									document.getElementById('line' + citycode + 'zx' + index).className = 'mui-media-body dynamic-line mui-hidden';
+									var comment0 = document.getElementById('replyComment' + citycode + 'zx' + index + '-0-评论');
+									if(comment0) {
+										document.getElementById('line' + citycode + 'zx' + index).className = 'mui-media-body dynamic-line';
+									} else {
+										document.getElementById('line' + citycode + 'zx' + index).className = 'mui-media-body dynamic-line mui-hidden';
+									}
+
 									PraiseList.removeChild(praiseName);
 									var praiseImg = document.getElementById("praiseImg" + pageID + 'zx' + index);
 									PraiseList.removeChild(praiseImg);

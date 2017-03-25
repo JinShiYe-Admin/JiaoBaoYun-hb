@@ -628,8 +628,11 @@
 								praiseName.innerHTML = praiseName.innerHTML.replace(personalunick + '、', '');
 							} else {
 								console.log('一个人点赞')
-								console.log(document.getElementById("commentList0"));
-								if(document.getElementById("commentList0")){
+								
+								var comment0 = document.getElementById('"replyComment'+index+'-0-评论"');
+								if(comment0){
+									document.getElementById("line" + index).className = 'mui-media-body dynamic-line'
+								}else{
 									document.getElementById("line" + index).className = 'mui-media-body dynamic-line mui-hidden'
 								}
 								PraiseList.removeChild(praiseName);

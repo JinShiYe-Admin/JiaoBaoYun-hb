@@ -232,6 +232,7 @@ var dynamiclistitem = (function($, mod) {
 		}
 
 		//评论列表
+		console.log('commentList'+data[4] + idFlag + id);
 		var htmlCommentList1 = '<div id="commentList' + data[4] + idFlag + id + '" class="mui-col-sm-12 mui-col-xs-12">';
 		var htmlCommentList2 = '';
 		var commentNum = 0;
