@@ -4,6 +4,16 @@ mui.init();
 mui.plusReady(function() {
 	events.preload('doHomework-stu.html', 200);
 	mui.previewImage();//加载预览功能
+	window.addEventListener("workNotice",function(e){
+		console.log("作业提醒传过来的数值："+JSON.stringify(e.detail.data));
+		homeworkInfo=e.detail.data;
+		homeworkInfo.gid=homeworkInfo.ClassId;
+		homeworkInfo.TeacherId=homeworkInfo.UserId;
+		document.querySelector('.homework-brief').className = 'homework-brief submitOnline';
+		document.querySelector('.startWork-container').style.display = 'block';
+		mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
+		requestHomeWorkInfo(homeworkInfo);
+	})
 	window.addEventListener('workDetail', function(e) {
 		mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
 		personalUTID=parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)

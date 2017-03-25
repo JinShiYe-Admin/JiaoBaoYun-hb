@@ -98,6 +98,7 @@ mui.plusReady(function() {
 	var btn_more = document.getElementById('more');
 	btn_more.style.display = 'none';
 	window.addEventListener('postClasses', function(e) {
+		plus.webview.currentWebview().isReady=true;
 		var data = e.detail.data;
 		console.log('作业主界面获取信息：' + JSON.stringify(e.detail.data));
 		studentClasses = data.studentClasses;
