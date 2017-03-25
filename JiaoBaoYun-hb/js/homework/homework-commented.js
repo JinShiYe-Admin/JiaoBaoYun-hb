@@ -22,6 +22,7 @@ mui.plusReady(function() {
 	mui.previewImage();
 	//修改答案后刷新界面
 	window.addEventListener('refreshAnswer', function(e) {
+		console.log(JSON.stringify(e.detail.data))
 		homeworkDetailNodes.stuResult.innerText = e.detail.data.answer;
 		homeworkResult.HomeworkResult.Result = e.detail.data.answer;
 		var imgFiles = e.detail.data.Files
@@ -150,6 +151,9 @@ function requestHomeworkDetail() {
 }
 //获取学生个人资料
 function getStuName() {
+	if(!homeworkModel.gid){
+		homeworkModel.gid =homeworkModel.ClassId
+	}
 	var tempData = {
 		top: '-1', //选择条数
 		vvl: homeworkModel.gid, //群ID，查询的值
@@ -179,6 +183,9 @@ function getStuName() {
 }
 //3.获取作业结果和评价；学生
 function requestGetHomeworkResultStu() {
+	if(!homeworkModel.gid){
+		homeworkModel.gid =homeworkModel.ClassId
+	}
 	//所需参数
 	var comData = {
 		studentId: personalUTID, //学生Id
@@ -194,6 +201,9 @@ function requestGetHomeworkResultStu() {
 		console.log('3.postDataPro_GetHomeworkResultStu:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			homeworkResult = data.RspData;
+			if(!homeworkModel.TeacherId){
+				homeworkModel.TeacherId = homeworkModel.UserId
+			}
 			//查找老师info
 			requestTeaInfo(homeworkModel.TeacherId);
 			refreshUI();
@@ -395,6 +405,9 @@ var getImgsInner = function(imgs) {
 function refreshUI() {
 	var className = 'iconfont subject-icon ' + getHomeworkIcon(homeworkModel.Subject);
 	homeworkDetailNodes.img.className = className
+	if(!homeworkModel.HomeworkTitle){
+		homeworkModel.HomeworkTitle = homeworkModel.Homework.HomeworkTitle
+	}
 	homeworkDetailNodes.title.innerText = homeworkModel.HomeworkTitle;
 	homeworkDetailNodes.publishDate.innerText = homeworkModel.HomeworkTitle;
 	var HomeworkContents = homeworkResult.Homework.Contents;
