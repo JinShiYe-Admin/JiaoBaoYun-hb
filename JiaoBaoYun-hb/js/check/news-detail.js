@@ -9,7 +9,7 @@ mui.plusReady(function() {
 		setData();
 	})
 	plus.webview.currentWebview().addEventListener("hide", function() {
-		console.log("隐藏页面")
+		console.log("隐藏页面");
 		plus.webview.getWebviewById(newsDetail.turl).close();
 	})
 	setListener();
@@ -31,6 +31,7 @@ var setCheckInfo = function() {
 	var checkInfo;
 	var refuseButton = document.getElementById("refuse-button");
 	var passButton = document.getElementById("pass-button");
+	console.log(JSON.stringify(newsDetail));
 	switch(newsDetail.Ischeck) {
 		case 0:
 			checkInfo = "未审"
@@ -38,12 +39,12 @@ var setCheckInfo = function() {
 			passButton.style.display = "inline-block";
 			break;
 		case 1:
-			checkInfo = "已通过";
+			checkInfo = "已显示";
 			refuseButton.style.display = "inline-block";
 			passButton.style.display = "none";
 			break;
 		case 2:
-			checkInfo = "已拒绝";
+			checkInfo = "已屏蔽";
 			refuseButton.style.display = "none";
 			passButton.style.display = "inline-block";
 			break;

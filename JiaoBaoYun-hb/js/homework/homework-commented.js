@@ -5,27 +5,27 @@ var homeworkModel = {};
 mui('.mui-scroll-wrapper').scroll();
 mui.plusReady(function() {
 	var data = plus.webview.currentWebview().data;
-		homeworkModel = data;
-		resetData(); //数据初始化
-		console.log('学生查看作业结果界面：' + JSON.stringify(homeworkModel));
-		if(homeworkModel.workType == 0) {
-			document.getElementById("modifyHomework").hidden = 'hidden'
-			//			document.getElementById("list").hidden = 'hidden';
-			getAnswerResultStu();
-		} else {
-			document.getElementById("list").hidden = '';
-			requestHomeworkDetail();
-			requestGetHomeworkResultStu();
-		}
-		getStuName();
+	homeworkModel = data;
+	resetData(); //数据初始化
+	console.log('学生查看作业结果界面：' + JSON.stringify(homeworkModel));
+	if(homeworkModel.workType == 0) {
+		document.getElementById("modifyHomework").hidden = 'hidden'
+		//			document.getElementById("list").hidden = 'hidden';
+		getAnswerResultStu();
+	} else {
+		document.getElementById("list").hidden = '';
+		requestHomeworkDetail();
+		requestGetHomeworkResultStu();
+	}
+	getStuName();
 
-	
 	mui.previewImage();
 	//修改答案后刷新界面
 	window.addEventListener('refreshAnswer', function(e) {
 		homeworkDetailNodes.stuResult.innerText = e.detail.data.answer;
 		homeworkResult.HomeworkResult.Result = e.detail.data.answer;
 		var imgFiles = e.detail.data.Files
+		console.log(JSON.stringify(imgFiles))
 		document.getElementById('brief-imgs-stu').innerHTML = getImgsInner(imgFiles)
 		homeworkResult.HomeworkResult.Files = imgFiles;
 	})
@@ -66,12 +66,16 @@ mui.plusReady(function() {
 	var _back = mui.back;
 	mui.back = function() {
 		console.log('返回上级页面的id:' + plus.webview.currentWebview().opener().id);
-		if(homeworkModel.workType == 1) {
-			plus.webview.getWebviewById('homework-tea.html').show();
+		if(homeworkModel.isNotice) {
+			plus.webview.getWebviewById('aboutme.html').show();
+//			_back();
 		} else {
-			_back();
+			if(homeworkModel.workType == 1) {
+				plus.webview.getWebviewById('homework-tea.html').show();
+			} else {
+				_back();
+			}
 		}
-
 	}
 });
 //重置数据
@@ -138,7 +142,7 @@ function requestHomeworkDetail() {
 		console.log('2.postDataPro_GetHomework:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			//修改界面
-	document.getElementById('brief-imgs').innerHTML = getImgsInner(data.RspData.File);
+			document.getElementById('brief-imgs').innerHTML = getImgsInner(data.RspData.File);
 		} else {
 			mui.toast(data.RspTxt);
 		}
@@ -366,21 +370,25 @@ var getMatchedImgs = function(files) {
 }
 var getImgsInner = function(imgs) {
 	var imgInner = '';
-	var win_height=document.getElementById('brief-imgs').offsetWidth;
-	var img_width = win_height/3;
+	var win_height = document.getElementById('brief-imgs').offsetWidth;
+	var img_width = win_height / 3;
 	if(imgs && imgs.length > 0) {
 		for(var i in imgs) {
-			if(!imgs[i].ThumbUrl){
+			if(!imgs[i].ThumbUrl) {
 				imgs[i].ThumbUrl = imgs[i].thumb
 			}
-			if(!imgs[i].Url){
+			if(!imgs[i].Url) {
 				imgs[i].Url = imgs[i].url
 			}
-			
-			imgInner += '<img class="homework-img" style="width:' + img_width + 'px;height:'+img_width+'px;" src="' + imgs[i].ThumbUrl +
+			if(!imgs[i].FileType) {
+				imgs[i].FileType = imgs[i].type
+			}
+
+			imgInner += '<img class="homework-img" style="width:' + img_width + 'px;height:' + img_width + 'px;" src="' + imgs[i].ThumbUrl +
 				'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + imgs[i].FileType + '"/>';
 		}
 	}
+	console.log(imgInner)
 	return imgInner;
 }
 //刷新普通作业界面

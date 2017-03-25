@@ -18,30 +18,38 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left common-color-white"></a>
 			<h1 class="mui-title common-color-white common-font-family-Regular">与我相关</h1>
 		</header>
-		
+
 		<div class="mui-content"></div>
-		
+
 	</body>
 	<script src="../../js/utils/events.js"></script>
 	<script type="text/javascript">
 		events.initSubPage('aboutme_sub.html');
-		mui.plusReady(function(){
+		mui.plusReady(function() {
 			events.changeTopPocket();
+			var _back = mui.back;
+			mui.back = function() {
+				if(plus.webview.currentWebview().opener().id = "homework-commented.html") {
+					plus.webview.getWebviewById('index.html').show();
+				} else {
+					_back();
+				}
+			}
 		})
 		//启用双击监听
-//		mui.init({
-//			gestureConfig: {
-//				doubletap: true
-//			},
-//			subpages: [{
-//				url: 'aboutme_sub.html',
-//				id: 'aboutme_sub.html',
-//				styles: {
-//					top: '45px',
-//					bottom: localStorage.getItem('$Statusbar'),
-//				}
-//			}]
-//		});
+		//		mui.init({
+		//			gestureConfig: {
+		//				doubletap: true
+		//			},
+		//			subpages: [{
+		//				url: 'aboutme_sub.html',
+		//				id: 'aboutme_sub.html',
+		//				styles: {
+		//					top: '45px',
+		//					bottom: localStorage.getItem('$Statusbar'),
+		//				}
+		//			}]
+		//		});
 
 		var contentWebview = null;
 		document.querySelector('header').addEventListener('doubletap', function() {
