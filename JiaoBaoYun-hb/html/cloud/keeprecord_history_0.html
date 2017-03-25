@@ -25,10 +25,9 @@
 				font-size: 15px;
 				word-break: break-all;
 			}
-
-			.mui-table-view-cell.mui-active {
-				/*background-color: white*/
-			}
+			/*.mui-table-view-cell.mui-active {*/
+			/*background-color: white*/
+			/*}*/
 
 			.mui-table-view:before {
 				height: 0px;
@@ -150,7 +149,11 @@
 
 		<!--<script type="text/javascript" src="../../js/mui.picker.min.js" ></script>-->
 		<script type="text/javascript">
-			mui.init();
+			mui.init({
+				gestureConfig: {
+					doubletap: true,
+				}
+			});
 			var previewImage; //查看图片的控件
 			var pullRefresh; //下拉，上拉控件
 			var main; //获取当前窗体对象
@@ -207,6 +210,7 @@
 					previewImage.open(document.getElementById("img_" + this.getAttribute('data-id')))
 				});
 
+				//显示全部
 				mui('#data_scroll').on('tap', '.show-all', function() {
 					var str = this.innerText;
 					var id = this.id.replace('_show', '');
@@ -217,6 +221,12 @@
 						this.innerText = '显示全部';
 						document.getElementById(id + "_content").style.webkitLineClamp = '3';
 					}
+				});
+
+				//双击标题返回列表顶部
+				document.getElementById('title').addEventListener('doubletap', function() {
+					var scrollTop = mui('#pullrefresh').scroll(); //话题列表区域
+					scrollTop.scrollTo(0, 0, 100);
 				});
 			});
 
@@ -251,7 +261,7 @@
 					if(pageIndex == 1) { //下拉刷新或者获取的第一页的内容
 						//清空对应的界面
 						document.getElementById('data_scroll').innerHTML = '';
-						markDate = '';//日期
+						markDate = ''; //日期
 					} else { //上拉加载更多
 						pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
 					}
