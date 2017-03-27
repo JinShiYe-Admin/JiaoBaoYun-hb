@@ -16,13 +16,13 @@
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
 		<script type="text/javascript" src="../../js/utils/cryption.js"></script>
-		<script type="text/javascript" src="../../js/utils/camera.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
 		<script type="text/javascript" src="../../js/utils/UploadHeadImage.js"></script>
 		<script type="text/javascript" src="../../js/utils/compress.js"></script>
+		<script type="text/javascript" src="../../js/utils/MultiMedia.js"></script>
 		<style>
 			body,
 			.mui-content {
@@ -199,12 +199,12 @@
 				 * 从相册选择图片
 				 */
 				function fromPic() {
-					plus.gallery.pick(function(file) {
+					MultiMedia.galleryPickTrue(function(file) {
 						var wd = events.showWaiting('处理中...');
 						console.log('从相册选取图片成功,图片的路径为：' + file);
 						var myDate = new Date();
 						var dst = '_documents/' + myDate.getTime() + '.png';
-						compress.compressImageTo_1MB({
+						compress.compressImageTo_512KB({
 							path: file,
 							dst: dst
 						}, function(event) {
@@ -215,26 +215,10 @@
 						}, function(error) {
 							wd.close();
 						});
-
 					}, function(error) {
-						//从相册选取图片失败的回调
 						var code = error.code; // 错误编码
 						var message = error.message; // 错误描述信息
-						if(mui.os.ios) {
-							if(code != -2) {
-								mui.toast('从相册选取图片失败！' + '错误编码：' + code + '描述信息：' + message);
-								console.log('从相册选取图片失败！' + JSON.stringify(error));
-							} else {
-								console.log('未选取图片');
-							}
-						} else if(mui.os.android) {
-							if(code != 12) {
-								mui.toast('从相册选取图片失败！' + '错误编码：' + code + '描述信息：' + message);
-								console.log('从相册选取图片失败！' + JSON.stringify(error));
-							} else {
-								console.log('未选取图片:' + JSON.stringify(error));
-							}
-						}
+						mui.toast('从相册选取图片失败 ' + '错误编码 ' + code + '描述信息 ' + message);
 					});
 				}
 
@@ -242,10 +226,10 @@
 				 * 通过相机拍照
 				 */
 				function fromCamera() {
-					camera.getPic(camera.getCamera(), function(path) {
+					MultiMedia.cameraTake(function(path) {
 						var wd = events.showWaiting('处理中...');
 						//压缩图片并且在新页面显示压缩后的图片
-						compress.compressImageTo_1MB({
+						compress.compressImageTo_512KB({
 							path: path,
 							dst: path
 						}, function(event) {

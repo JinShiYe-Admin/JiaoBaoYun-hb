@@ -423,7 +423,7 @@ var getPicInner = function(data) {
 //		}
 		console.log("图片宽度设置：" + pic_width)
 		for(var i in picPaths) {
-			picInner += '<img src="' + picPaths[i] + '" class="answer-img" style="width:' + pic_width + 'px;height: ' + pic_width + 'px;" ' +
+			picInner += '<img class="answer-img" retry="0" src="' + picPaths[i] + '" class="answer-img" style="width:' + pic_width + 'px;height: ' + pic_width + 'px;" ' +
 				'" data-preview-src="' + picBigPaths[i] + '" data-preview-group="'+data.AnswerId+'"/>';
 		}
 		console.log('图片路径：' + picInner);
@@ -514,6 +514,16 @@ var setListeners = function() {
 //		events.clearChild(document.getElementById('list-container'));
 //		refreshUI(answerData);
 //	}
+mui("#answer-imgs").on("error",".answer-img",function(){
+	var retry=parseInt(this.getAttribute("retry"));
+	if(retry==0){
+		++retry;
+		 this.attr("retry", retry);
+           this.attr('src',this.attr('src'));
+	}else{
+		this.attr("src","../../image/utils/load-img-error.png");
+	}
+})
 }
 /**
  * 设置是否点赞

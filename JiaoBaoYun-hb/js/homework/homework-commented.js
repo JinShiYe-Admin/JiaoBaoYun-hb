@@ -18,7 +18,7 @@ mui.plusReady(function() {
 		requestGetHomeworkResultStu();
 	}
 	getStuName();
-
+	events.areaInScroll();
 	mui.previewImage();
 	//修改答案后刷新界面
 	window.addEventListener('refreshAnswer', function(e) {

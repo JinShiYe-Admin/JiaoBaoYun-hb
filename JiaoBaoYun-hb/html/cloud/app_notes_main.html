@@ -7,6 +7,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="author" content="莫尚霖,email:444811716@qq.com" />
+		<meta name="description" content="笔记" />
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/utils/preview.css" />
@@ -211,7 +213,6 @@
 				month = '0' + month;
 			}
 			today = myDate.getFullYear() + '-' + month + '-' + myDate.getDate();
-			//var scroll = mui('#pullrefresh').scroll(); //滑动控件
 			//---初始化界面---end---
 			//请求数据
 			requestData(1);
@@ -224,25 +225,26 @@
 				requestData(1);
 			});
 
+			//显示全部，收起
 			mui('#list').on('tap', '.show-all', function() {
 				var str = this.innerText;
 				var id = this.id.replace('_show', '');
 				var content = document.getElementById(id + "_content");
-				//var offsetHeight = content.getAttribute('data-offsetHeight');
-				//console.log('0 ' + content.id + ' ' + content.offsetHeight + ' ');
-
 				if(str == '显示全部') {
 					this.innerText = '收起';
 					content.style.webkitLineClamp = 'inherit';
 				} else if(str == '收起') {
-					//					console.log('1 ' + content.id + ' ' + offsetHeight + ' ' + content.offsetHeight + ' ' + content.clientY);
-					//					console.log(scroll.y);
-					//					if(scroll.y != 0) {
-					//						scroll.scrollTo(0, scroll.y + (content.offsetHeight - offsetHeight), 100); //100毫秒滚动到顶
-					//					}
-					//scroll.refresh();
+					var offsetHeight_0 = content.offsetHeight;
 					this.innerText = '显示全部';
 					content.style.webkitLineClamp = '3';
+					var offsetHeight_1 = content.offsetHeight;
+					var scroll = mui('#pullrefresh').scroll(); //滑动控件
+					var move = scroll.y + (offsetHeight_0 - offsetHeight_1);
+					if(move >= 0) {
+						mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 0);
+					} else {
+						mui('.mui-scroll-wrapper').scroll().scrollTo(0, move, 0);
+					}
 				}
 			});
 
@@ -251,18 +253,9 @@
 				previewImage.open(document.getElementById("img_" + this.getAttribute('data-id')));
 			});
 
-			//滚动监听
-			//document.getElementById("pullrefresh").addEventListener('scroll', function() {
-			//console.log(scroll.x + "  " + scroll.y);
-			//var content=document.getElementById("21423_content");
-
-			//console.log(content.offsetHeight);
-			//});
-
 			//双击标题返回列表顶部
 			document.getElementById('title').addEventListener('doubletap', function() {
-				var scrollTop = mui('#pullrefresh').scroll(); //话题列表区域
-				scrollTop.scrollTo(0, 0, 100);
+				mui('#pullrefresh').scroll().scrollTo(0, 0, 100);
 			});
 		});
 

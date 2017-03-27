@@ -43,8 +43,17 @@
 		<!--共用协议-->
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			mui.init();
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
 			mui.plusReady(function() {
+//				window.addEventListener("swiperight", function(e) {
+//					console.log('侧滑。。。');
+//                      //默认滑动角度在-45度到45度之间，都会触发右滑菜单，为避免误操作，可自定义限制滑动角度；
+//                      if (Math.abs(e.detail.angle) < 30) {
+//                          self.close();
+//                      }
+//                  });
 				//隐私
 //				events.addTap('yinsi', function() {
 //					mui.toast('此功能暂未开放');

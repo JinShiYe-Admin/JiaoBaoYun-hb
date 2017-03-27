@@ -188,7 +188,7 @@ var MultiMedia = (function($, mod) {
 	proto.pictureTake = function() {
 		var self = this;
 		var options = this.options;
-		self.cameraTake(function(path) {
+		mod.cameraTake(function(path) {
 			//console.log('pictureTake :' + path);
 			var wd = events.showWaiting('处理中...');
 			var myDate = new Date();
@@ -220,7 +220,7 @@ var MultiMedia = (function($, mod) {
 		//console.log('picturesPick');
 		var self = this;
 		var options = this.options;
-		self.galleryPick('image', true, NumPick, function(event) {
+		mod.galleryPickFalse('image', true, NumPick, function(event) {
 			var wd = events.showWaiting('处理中...');
 			var files = event.files; // 保存多选的图片或视频文件路径
 			var myDate = new Date();
@@ -265,127 +265,6 @@ var MultiMedia = (function($, mod) {
 			var message = error.message; // 错误描述信息
 			mui.toast('从相册选取图片失败 ' + '错误编码 ' + code + '描述信息 ' + message);
 		});
-	}
-
-	/**
-	 * 调用系统方法相册选择照片或视频
-	 * @param {Object} filter 相册选择文件过滤类型,图片文件（“image”）,视频文件（“video”）,所有文件（“none”）
-	 * @param {Object} multiple 是否是多选，多选true
-	 * @param {Object} maximum 最多选择的图片数量，单选设置1
-	 * @param {Object} successCB 选择照片成功的回调
-	 * @param {Object} errorCB 选择照片失败的回调
-	 */
-	proto.galleryPick = function(filter, multiple, maximum, successCB, errorCB) {
-		//console.log('galleryPick | filter ' + filter + ' | multiple ' + multiple + ' | maximum ' + maximum);
-		plus.gallery.pick(function(event) {
-			successCB(event);
-		}, function(error) {
-			var code = error.code; // 错误编码
-			var message = error.message; // 错误描述信息
-			if(mui.os.ios) { //苹果
-				if(code != -2) {
-					console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
-					errorCB({
-						code: code, // 错误编码
-						message: 'ios ' + message // 错误描述信息
-					});
-				} else {
-					console.log('未选取图片 ' + JSON.stringify(error));
-				}
-			} else if(mui.os.android) { //安卓
-				if(code != 12) {
-					console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
-					errorCB({
-						code: code, // 错误编码
-						message: 'android ' + message // 错误描述信息
-					});
-				} else {
-					console.log('未选取图片 ' + JSON.stringify(error));
-				}
-			} else { //其他
-				errorCB({
-					code: code, // 错误编码
-					message: 'os ' + message // 错误描述信息
-				});
-			}
-		}, {
-			filter: filter,
-			maximum: maximum,
-			multiple: multiple,
-			onmaxed: function() {
-				mui.alert('图片数量超出限制');
-			},
-			system: false //多选必须设置的参数
-		});
-	}
-
-	/**
-	 * 拍照
-	 * @param {Object} successCB 成功的回调
-	 * @param {Object} errorCB 失败的回调
-	 */
-	proto.cameraTake = function(successCB, errorCB) {
-		//获取设备默认的摄像头对象
-		var cmr = plus.camera.getCamera();
-		//获取摄像头支持的拍照分辨率。“WIDTH*Height”，如“400*800”
-		//属性类型为String[]，若不支持此属性则返回空数组对象
-		var res = cmr.supportedImageResolutions[0]; //[0]:最高的分辨率模式
-		//获取摄像头支持的拍照文件格式。文件格式后缀名，如“jpg”、“png”、“bmp”
-		//属性类型为String[]，若不支持此属性则返回空数组对象
-		var fmt = cmr.supportedImageFormats[0];
-		//console.log('支持的拍照分辨率:' + JSON.stringify(cmr.supportedImageResolutions));
-		//console.log('支持的拍照文件格式:' + JSON.stringify(cmr.supportedImageFormats));
-		//console.log("选择的拍照分辨率: " + res + ", 选择的文件格式: " + fmt);
-		//进行拍照操作cmr.captureImage( successCB, errorCB, option );
-		//摄像头资源为独占资源，如果其它程序或页面已经占用摄像头，再次操作则失败
-		//successCB: ( CameraSuccessCallback ) 必选 拍照操作成功的回调函数
-		//errorCB: ( CameraErrorCallback ) 可选 拍照操作失败的回调函数
-		//option: ( CameraOption ) 必选 摄像头拍照参数
-		cmr.captureImage(function(capturedFile) {
-				//拍照成功的回调
-				//console.log('拍照成功,图片的路径为 ' + capturedFile);
-				//capturedFile ：图片的路径
-				//将本地URL路径转换成平台绝对路径
-				var path = 'file://' + plus.io.convertLocalFileSystemURL(capturedFile);
-				//console.log('转换成平台绝对路径,图片的路径为 ' + path);
-				successCB(path);
-			},
-			function(error) {
-				// 拍照失败的回调
-				var code = error.code; // error.code（Number类型）获取错误编码
-				var message = error.message; // error.message（String类型）获取错误描述信息。
-				if(mui.os.ios) {
-					if(code !== 2) {
-						errorCB({
-							code: code, // 错误编码
-							message: 'ios ' + message // 错误描述信息
-						});
-
-						mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
-						console.log('### ERROR ### 拍照失败 ' + JSON.stringify(error));
-					} else {
-						console.log('未拍取图片 ' + JSON.stringify(error));
-					}
-				} else if(mui.os.android) {
-					if(code !== 11) {
-						errorCB({
-							code: code, // 错误编码
-							message: 'android ' + message // 错误描述信息
-						});
-						console.log('### ERROR ### 拍照失败 ' + JSON.stringify(error));
-					} else {
-						console.log('未拍取图片 ' + JSON.stringify(error));
-					}
-				} else {
-					errorCB({
-						code: code, // 错误编码
-						message: 'os ' + message // 错误描述信息
-					});
-				}
-			}, {
-				format: fmt
-			}
-		);
 	}
 
 	/**
@@ -491,6 +370,194 @@ var MultiMedia = (function($, mod) {
 	//返回一个多媒体对象
 	mod.getMultiMedia = function() {
 		return MultiMediaApi;
+	}
+
+	/**
+	 * 调使用5+统一相册选择界面选择照片或视频
+	 * @param {Object} filter 相册选择文件过滤类型,图片文件（“image”）,视频文件（“video”）,所有文件（“none”）
+	 * @param {Object} multiple 是否是多选，多选true
+	 * @param {Object} maximum 最多选择的图片数量，单选设置1
+	 * @param {Object} successCB 选择照片成功的回调
+	 * @param {Object} errorCB 选择照片失败的回调
+	 */
+	mod.galleryPickFalse = function(filter, multiple, maximum, successCB, errorCB) {
+		//console.log('galleryPickFalse | filter ' + filter + ' | multiple ' + multiple + ' | maximum ' + maximum);
+		try {
+			plus.gallery.pick(function(event) {
+				successCB(event);
+			}, function(error) {
+				var code = error.code; // 错误编码
+				var message = error.message; // 错误描述信息
+				if(plus.os.name == 'iOS') { //苹果
+					if(code != -2) {
+						console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
+						errorCB({
+							code: code, // 错误编码
+							message: 'ios ' + message // 错误描述信息
+						});
+					} else {
+						console.log('未选取图片 ' + JSON.stringify(error));
+					}
+				} else if(plus.os.name == 'Android') { //安卓
+					if(code != 12) {
+						console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
+						errorCB({
+							code: code, // 错误编码
+							message: 'android ' + message // 错误描述信息
+						});
+					} else {
+						console.log('未选取图片 ' + JSON.stringify(error));
+					}
+				} else { //其他
+					errorCB({
+						code: code, // 错误编码
+						message: plus.os.name + ' ' + message // 错误描述信息
+					});
+				}
+			}, {
+				filter: filter,
+				maximum: maximum,
+				multiple: multiple,
+				onmaxed: function() {
+					mui.alert('图片数量超出限制');
+				},
+				system: false //多选必须设置的参数
+			});
+		} catch(e) {
+			alert('### ERROR ### 调用5+相册异常 name:' + e.name + " message:" + e.message);
+			errorCB({
+				code: 'ERROR', // 错误编码
+				message: '调用5+相册异常' // 错误描述信息
+			});
+		}
+	}
+
+	/**
+	 *  系统自带相册选择控件
+	 */
+	mod.galleryPickTrue = function(successCB, errorCB) {
+		try {
+			plus.gallery.pick(function(file) {
+				//console.log('从相册选取图片成功,图片的路径为：' + file);
+				successCB(file) //压缩图片
+			}, function(error) {
+				var code = error.code; // 错误编码
+				var message = error.message; // 错误描述信息
+				if(plus.os.name == 'iOS') { //苹果
+					if(code != -2) {
+						console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
+						errorCB({
+							code: code, // 错误编码
+							message: 'ios ' + message // 错误描述信息
+						});
+					} else {
+						console.log('未选取图片 ' + JSON.stringify(error));
+					}
+				} else if(plus.os.name == 'Android') { //安卓
+					if(code != 12) {
+						console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
+						errorCB({
+							code: code, // 错误编码
+							message: 'android ' + message // 错误描述信息
+						});
+					} else {
+						console.log('未选取图片 ' + JSON.stringify(error));
+					}
+				} else { //其他
+					errorCB({
+						code: code, // 错误编码
+						message: plus.os.name + ' ' + message // 错误描述信息
+					});
+				}
+			});
+		} catch(e) {
+			alert('### ERROR ### 调用系统相册异常 name:' + e.name + " message:" + e.message);
+			errorCB({
+				code: 'ERROR', // 错误编码
+				message: '调用系统相册异常' // 错误描述信息
+			});
+		}
+	}
+
+	/**
+	 * 拍照
+	 * @param {Object} successCB 成功的回调
+	 * @param {Object} errorCB 失败的回调
+	 */
+	mod.cameraTake = function(successCB, errorCB) {
+		//获取设备默认的摄像头对象
+		var cmr = plus.camera.getCamera();
+		if(cmr) {
+			//获取摄像头支持的拍照分辨率。“WIDTH*Height”，如“400*800”
+			//属性类型为String[]，若不支持此属性则返回空数组对象
+			//var res = cmr.supportedImageResolutions[0]; //[0]:最高的分辨率模式
+			//获取摄像头支持的拍照文件格式。文件格式后缀名，如“jpg”、“png”、“bmp”
+			//属性类型为String[]，若不支持此属性则返回空数组对象
+			//var fmt = cmr.supportedImageFormats[0];
+			//console.log('支持的拍照分辨率:' + JSON.stringify(cmr.supportedImageResolutions));
+			//console.log('支持的拍照文件格式:' + JSON.stringify(cmr.supportedImageFormats));
+			//console.log("选择的拍照分辨率: " + res + ", 选择的文件格式: " + fmt);
+			//进行拍照操作cmr.captureImage( successCB, errorCB, option );
+			//摄像头资源为独占资源，如果其它程序或页面已经占用摄像头，再次操作则失败
+			//successCB: ( CameraSuccessCallback ) 必选 拍照操作成功的回调函数
+			//errorCB: ( CameraErrorCallback ) 可选 拍照操作失败的回调函数
+			//option: ( CameraOption ) 必选 摄像头拍照参数
+			try {
+				cmr.captureImage(function(capturedFile) {
+						//拍照成功的回调
+						//console.log('拍照成功,图片的路径为 ' + capturedFile);
+						//capturedFile ：图片的路径
+						//将本地URL路径转换成平台绝对路径
+						var path = 'file://' + plus.io.convertLocalFileSystemURL(capturedFile);
+						//console.log('转换成平台绝对路径,图片的路径为 ' + path);
+						successCB(path);
+					},
+					function(error) {
+						// 拍照失败的回调
+						var code = error.code; // error.code（Number类型）获取错误编码
+						var message = error.message; // error.message（String类型）获取错误描述信息。
+						if(plus.os.name == 'iOS') {
+							if(code !== 2) {
+								errorCB({
+									code: code, // 错误编码
+									message: 'iOS ' + message // 错误描述信息
+								});
+
+								mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
+								console.log('### ERROR ### 拍照失败 ' + JSON.stringify(error));
+							} else {
+								console.log('未拍取图片 ' + JSON.stringify(error));
+							}
+						} else if(plus.os.name == 'Android') {
+							if(code !== 11) {
+								errorCB({
+									code: code, // 错误编码
+									message: 'Android ' + message // 错误描述信息
+								});
+								console.log('### ERROR ### 拍照失败 ' + JSON.stringify(error));
+							} else {
+								console.log('未拍取图片 ' + JSON.stringify(error));
+							}
+						} else {
+							errorCB({
+								code: code, // 错误编码
+								message: plus.os.name + ' ' + message // 错误描述信息
+							});
+						}
+					}, {});
+			} catch(e) {
+				alert('### ERROR ### 拍照异常 name:' + e.name + " message:" + e.message);
+				errorCB({
+					code: 'ERROR', // 错误编码
+					message: '拍照异常' // 错误描述信息
+				});
+			}
+		} else {
+			errorCB({
+				code: 'NULL', // 错误编码
+				message: '获取摄像头失败' // 错误描述信息
+			});
+		}
 	}
 
 	return mod;

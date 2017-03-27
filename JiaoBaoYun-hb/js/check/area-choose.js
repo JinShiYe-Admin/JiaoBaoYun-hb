@@ -16,19 +16,19 @@ mui.plusReady(function() {
 	//	curCityCode=plus.webview.currentWebview().data;
 	//	getEreas(0);
 	setListener();
-	rewriteBack();
+//	rewriteBack();
 })
 /**
  * 重写返回上级界面的方法
  */
-var rewriteBack = function() {
-	var _back = mui.back;
-	mui.back = function() {
-		//向上级页面传递所选地区
-		mui.fire(plus.webview.currentWebview().opener(), "choseArea", curAreaInfo);
-		_back();
-	}
-}
+//var rewriteBack = function() {
+//	var _back = mui.back;
+//	mui.back = function() {
+//		//向上级页面传递所选地区
+//		mui.fire(plus.webview.currentWebview().opener(), "choseArea", curAreaInfo);
+//		_back();
+//	}
+//}
 /**
  * 设置监听
  */
@@ -54,6 +54,10 @@ var setListener = function() {
 		}
 		curAreaInfo = selectCityContainer.areaInfo;
 		console.log("当前选中地区的信息："+JSON.stringify(curAreaInfo));
+	})
+	document.getElementById("chose-area").addEventListener("tap",function(){
+		mui.fire(plus.webview.currentWebview().opener(), "choseArea", curAreaInfo);
+		mui.back();
 	})
 }
 
