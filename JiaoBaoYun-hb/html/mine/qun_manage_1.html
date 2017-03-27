@@ -321,7 +321,9 @@
 				//点击资料
 				mui('#slider_group').on('tap', '.mui-table-view-cell', function() {
 					//是否是人员资料
+					var self = this;
 					if(mainData.type == 1) {
+						self.disabled = true;
 						console.log(this.getAttribute('data-info'));
 						var passData = JSON.parse(this.getAttribute('data-info'));
 						passData.gname = mainData.gname; //群名称
@@ -344,6 +346,9 @@
 						}
 						passData.mstype = 1; //管理员
 						events.openNewWindowWithData('qun_data_details.html', passData);
+						setTimeout(function() {
+							self.disabled = false;
+						}, 1500);
 					}
 				});
 
