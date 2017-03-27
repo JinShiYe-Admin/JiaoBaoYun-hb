@@ -121,7 +121,6 @@
 						div.className = 'mui-media-body replyComment'
 						div.innerHTML = '<font class="common-font-family-Regular dynamic-comment-name ">' + personalunick + '</font>' +
 							'<font class="common-font-family-Regular" style = "font-size:14px">：' + tempData.content + '</font>'
-						var commentList = document.getElementById("commentList" + citycode + 'zx' + tempData.tempIndex);
 						commentList.appendChild(div);
 					} else if(tempData.flag == '评论回复') {
 						var indexArr = tempIndex.split('-');
