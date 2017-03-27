@@ -440,43 +440,53 @@
 			 * 获取创建的群
 			 */
 			function getCGQun() {
-				var wd = events.showWaiting();
-				//9.获取用户群
-				//获取个人信息
-				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-				//需要参数
-				var getQunData = {
-					vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
-					vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
-				};
-				postDataPro_PostGList(getQunData, wd, function(data) {
-					console.log('9.获取用户创建的群success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					if(data.RspCode == 0) {
-						document.getElementById("noqun").style.display = 'none';
-						document.getElementById("qun_sw").style.visibility = 'visible';
-						document.getElementById("slider_group").style.visibility = 'visible';
-						var tempList = data.RspData;
-						for(var i = 0; i < tempList.length; i++) {
-							addQunItem(tempList[i], i, tempList.length);
+				try {
+					var wd = events.showWaiting();
+					//9.获取用户群
+					//获取个人信息
+					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+					//需要参数
+					var getQunData = {
+						vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
+						vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
+					};
+					postDataPro_PostGList(getQunData, wd, function(data) {
+						try {
+							console.log('9.获取用户创建的群success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode == 0) {
+								document.getElementById("noqun").style.display = 'none';
+								document.getElementById("qun_sw").style.visibility = 'visible';
+								document.getElementById("slider_group").style.visibility = 'visible';
+								var tempList = data.RspData;
+								for(var i = 0; i < tempList.length; i++) {
+									addQunItem(tempList[i], i, tempList.length);
+								}
+								mui(".mui-scroll-wrapper").scroll({
+									scrollY: true, //是否竖向滚动
+									scrollX: false, //是否横向滚动
+									indicators: true, //是否显示滚动条
+									deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+									bounce: false, //是否启用回弹
+								});
+							} else if(data.RspCode == 9) { //未获取到数据
+								document.getElementById("noqun").style.visibility = 'hidden';
+								document.getElementById("noqun").style.display = 'inline';
+								document.getElementById("noqun").style.left = (plus.screen.resolutionWidth - document.getElementById("noqun").offsetWidth) / 2 + 'px';
+								document.getElementById("noqun").style.visibility = 'visible';
+								mui.toast('群:查询为空');
+							} else {
+								mui.toast(data.RspTxt);
+							}
+							wd.close();
+						} catch(e) {
+							events.closeWaiting();
+							alert('### ERROR ### 获取用户创建的群的回调 name:' + e.name + " message:" + e.message);
 						}
-						mui(".mui-scroll-wrapper").scroll({
-							scrollY: true, //是否竖向滚动
-							scrollX: false, //是否横向滚动
-							indicators: true, //是否显示滚动条
-							deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
-							bounce: false, //是否启用回弹
-						});
-					} else if(data.RspCode == 9) { //未获取到数据
-						document.getElementById("noqun").style.visibility = 'hidden';
-						document.getElementById("noqun").style.display = 'inline';
-						document.getElementById("noqun").style.left = (plus.screen.resolutionWidth - document.getElementById("noqun").offsetWidth) / 2 + 'px';
-						document.getElementById("noqun").style.visibility = 'visible';
-						mui.toast('群:查询为空');
-					} else {
-						mui.toast(data.RspTxt);
-					}
-					wd.close();
-				});
+					});
+				} catch(e) {
+					events.closeWaiting();
+					alert('### ERROR ### 获取用户创建的群 name:' + e.name + " message:" + e.message);
+				}
 			}
 
 			/**

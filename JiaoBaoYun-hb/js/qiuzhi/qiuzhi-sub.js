@@ -5,14 +5,19 @@ var pageIndex = 1; //当前页数
 var totalPage; //总页数
 var channelInfo; //选择的话题
 var allChannels; //所有的话题
-var answerIsReady = false;
+var answerIsReady = false; //页面已就绪
 mui.init();
+var lazyLoadApi = mui('#pullrefresh').imageLazyload({
+	autoDestroy: false,
+	placeholder: '../../image/utils/default_load_2.gif'
+});
 mui.plusReady(function() {
 	mui.fire(plus.webview.getWebviewById('qiuzhi_home.html'), 'subIsReady');
 	events.preload("qiuzhi-answerDetail.html", 80);
 	window.addEventListener('answerIsReady', function() {
 		answerIsReady = true;
 	})
+
 	window.addEventListener('channelInfo', function(e) {
 
 		console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
@@ -36,7 +41,7 @@ mui.plusReady(function() {
 		getExpertsArray(channelInfo.TabId);
 
 	});
-	window.addEventListener("refreshQuestionList",function(){
+	window.addEventListener("refreshQuestionList", function() {
 		pageIndex = 1;
 		//清理问题列表
 		events.clearChild(document.getElementById('list-container'));
@@ -197,9 +202,9 @@ function requestChannelList(channelInfo) {
 		console.log('获取所有符合条件问题:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			totalPage = data.RspData.totalPage;
-//			var datas = data.RspData.Data;
+			//			var datas = data.RspData.Data;
 			getIds(data.RspData.Data)
-//			setChannelList();
+			//			setChannelList();
 		} else {
 			mui.toast(data.RspTxt);
 		}
@@ -270,11 +275,16 @@ var setChannelList = function(data) {
 		if(li.querySelector('.answer-img')) {
 			li.querySelector('.answer-img').style.width = "100%";
 		}
+		if(li.querySelector(".clip-img")){
+			li.querySelector(".clip-img").style.width=li.querySelector(".imgs-container").offsetWidth+"px";
+			li.querySelector(".clip-img").style.height=li.querySelector(".imgs-container").offsetWidth*0.45+"px";
+		}
 		li.querySelector('.focus-status').questionInfo = data[i];
 	}
+	lazyLoadApi.refresh(true);
 }
 var getInnerHTML = function(cell) {
-	console.log("回答内容："+cell.AnswerContent);
+	console.log("回答内容：" + cell.AnswerContent);
 	var inner = '<div>' +
 		'<div class="channel-info">' +
 		'<p class="channel-title"><img src="' + getChannelIcon(cell) + '" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
@@ -283,7 +293,7 @@ var getInnerHTML = function(cell) {
 		'<h5 class="single-line ask-title" askId="' + cell.TabId + '">' + cell.AskTitle + '</h5>';
 	if(cell.AnswerContent && cell.AnswerContent.length > 0) {
 		inner += '<div class="answer-container"><div class="imgs-container">' + getImgs(cell) + '</div>' +
-			'<p class="answer-content triple-line" answerInfo="' + cell.AnswerId + '">' + isAnonymity(cell)+":"+cell.AnswerContent.replace(/<[^>]*>/g,'') + '</p>' +
+			'<p class="answer-content triple-line" answerInfo="' + cell.AnswerId + '">' + isAnonymity(cell) + ":" + cell.AnswerContent.replace(/<[^>]*>/g, '') + '</p>' +
 			'</div></div>' +
 			'<div class="extra-info"></div>' +
 			'<p class="question-bottom">' + cell.IsLikeNum + '赞·' + cell.CommentNum + '评论·' + setFocusCondition(cell) + '</p></div>'
@@ -292,8 +302,8 @@ var getInnerHTML = function(cell) {
 	}
 	return inner;
 }
-var isAnonymity=function(cell){
-	if(cell.IsAnonym){
+var isAnonymity = function(cell) {
+	if(cell.IsAnonym) {
 		return "匿名用户"
 	}
 	return cell.AnswerManName;
@@ -308,8 +318,7 @@ var getImgs = function(cell) {
 	if(cell.AnswerCutImg && cell.AnswerCutImg != "") {
 		var imgArray = cell.AnswerEncAddr.split('|');
 		var clipImg = cell.AnswerCutImg;
-		imgInner = '<img src="' + clipImg + '" class="answer-img"' +
-			'" data-preview-src="' + imgArray[0] + '" data-preview-group="' + clipImg + '"/>';
+		imgInner = '<img class="clip-img" data-lazyload="' + clipImg + '"/>';
 		return imgInner;
 	}
 	return '';
@@ -414,10 +423,10 @@ var setQuestionFocus = function(item) {
 	}, wd, function(data) {
 		wd.close();
 		if(data.RspCode == 0 && data.RspData.Result) {
-			if(questionInfo.IsFocused) {//原来是已关注
+			if(questionInfo.IsFocused) { //原来是已关注
 				item.questionInfo.IsFocused = 0;
 				item.innerText = "关注问题";
-			} else {//原来是未关注
+			} else { //原来是未关注
 				item.questionInfo.IsFocused = 1;
 				item.innerText = "已关注";
 			}
@@ -436,12 +445,12 @@ var fireToPageReady = function(type, options) {
 		if(answerIsReady) { //求知回答界面已加载完毕
 			events.closeWaiting();
 			events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', options);
-			plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right",250);
+			plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right", 250);
 		} else {
 			setTimeout(function() {
 				events.showWaiting();
 				fireToPageReady(type, options);
-			}, 500)
+			}, 500);
 		}
 	}
 }

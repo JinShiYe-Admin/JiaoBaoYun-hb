@@ -511,6 +511,17 @@ var events = (function(mod) {
 //			})
 //		}
 	}
+	/**
+	 * 设置监听，解决area与scroll冲突问题
+	 */
+	mod.areaInScroll=function(){
+		window.addEventListener("touchmove",function(e){
+			var target=e.target;
+			if(target&&target.tagName=='TEXTAREA'){
+				e.stopPropagation();
+			}
+		},true);
+	}
 	return mod;
 
 })(events || {});

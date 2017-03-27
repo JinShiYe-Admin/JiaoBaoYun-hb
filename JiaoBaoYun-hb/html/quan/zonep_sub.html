@@ -28,7 +28,7 @@
 				color: #D7D7D7;
 				margin-top: 10px;
 			}
-
+			
 			.ellipsis-show {
 				/*内容*/
 				display: -webkit-box;
@@ -39,17 +39,16 @@
 				-webkit-line-clamp: inherit;
 				-webkit-box-orient: vertical;
 			}
-
 			
 			.mui-table-view-cell:active {
 				background-color: #FFFFFF;
 			}
-
+			
 			.mui-table-view {
 				background: #EFEFF4;
 				/*背景色透明*/
 			}
-
+			
 			.mui-table-view-cell {
 				background: white;
 				/*cell 背景设为白色*/
@@ -57,43 +56,43 @@
 				/*内边距为0*/
 				margin-bottom: 10px;
 			}
-
+			
 			.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
 				height: 0px;
 				/*去掉横线*/
 			}
-
+			
 			.mui-table-view-cell {
 				background-color: #fff;
 				margin-top: 1rem;
 			}
-
+			
 			.mui-row-padding-8px {
 				padding: 8px;
 				/*内边距为8px*/
 				padding: 12px;
 			}
-
+			
 			.dynamic-personal-image {
 				/*个人头像圆形*/
 				border-radius: 50%;
 				width: 50px;
 				height: 50px;
 			}
-
+			
 			.dynamic-image-div {
 				/*内容中图片之间的内边距*/
 				padding: 1px;
 			}
-
+			
 			.dynamic-image {
 				/*内容的图片占全部空间*/
 				width: 100%;
 				height: 100%;
 			}
-
+			
 			.dynamic-icon,
 			.dynamic-icon-praise,
 			.dynamic-icon-comment,
@@ -103,13 +102,13 @@
 				width: 30px;
 				margin-left: 25px;
 			}
-
+			
 			.dynamic-icon-Level {
 				/*等级图标*/
 				height: 20px;
 				margin-left: 10px;
 			}
-
+			
 			.dynamic-icon-praise-small {
 				/*点赞列表的小图标*/
 				height: 15px;
@@ -117,38 +116,38 @@
 				margin-right: 5px;
 				margin-bottom: 0px;
 			}
-
+			
 			.dynamic-margin-top-10px {
 				margin-top: 10px;
 			}
-
+			
 			.dynamic-padding-left-10px {
 				padding-left: 10px;
 			}
-
+			
 			.dynamic-line {
 				/*点赞列表上面的横线*/
 				height: 1px;
 				width: 100%;
 				background: #e4e4e4;
 			}
-
+			
 			.dynamic-contenttext {
 				/*动态内容*/
 				font-family: '微软雅黑 Regular', '微软雅黑';
 				/*字体样式*/
 			}
-
+			
 			.dynamic-praise-name,
 			.dynamic-comment-name {
 				/*点赞者和评论者的名字*/
 				color: #1A9BFF;
 			}
-
+			
 			.replyComment {
 				padding-top: 5px;
 			}
-
+			
 			.dynamic-comment-btn {
 				/*底部的评论按钮*/
 				width: 100%;
@@ -156,7 +155,7 @@
 				border-width: 1px;
 				border-color: #e4e4e4;
 			}
-
+			
 			.dynamic-image-more {
 				/*更多图片*/
 				position: absolute;
@@ -223,13 +222,16 @@
 		var totalCnt = 0; //当前留言的总条数
 		var flag = 2; //判断是加载更多1，还是刷新2
 		var zonepArray = []; //页码请求到要显示的数据，array[model_userNoteInfo]
+		var isPersonal; //判断是个人空间还是多用户空间
 
 		//请求数据
 		function requestData(comData) {
 			if(gid) {
+				isPersonal = 1;
 				getBottomList();
-			} else {
 
+			} else {
+				isPersonal = 0;
 				// 等待的对话框
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 
@@ -397,7 +399,7 @@
 				console.log(JSON.stringify(tempData));
 				var index = 'line' + tempIndex;
 				console.log(index)
-				
+
 				if(tempData.flag == '评论') {
 					document.getElementById(index).className = 'mui-media-body dynamic-line';
 					var div = document.createElement("div");
@@ -442,23 +444,25 @@
 			})
 
 			mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
-				var index = this.id.replace('headImg', '');
-				mui.openWindow({
-					url: 'zone_main.html',
-					id: 'zone_main.html',
-					styles: {
-						top: '0px', //设置距离顶部的距离
-						bottom: '0px'
-					},
+				if(isPersonal == 1) {
+					var index = this.id.replace('headImg', '');
+					mui.openWindow({
+						url: 'zone_main.html',
+						id: 'zone_main.html',
+						styles: {
+							top: '0px', //设置距离顶部的距离
+							bottom: '0px'
+						},
 
-					extras: {
-						data: zonepArray[index].PublisherId,
-						NoReadCnt: 0,
-						flag: '0'
-					},
-					createNew: true,
+						extras: {
+							data: zonepArray[index].PublisherId,
+							NoReadCnt: 0,
+							flag: '0'
+						},
+						createNew: true,
 
-				});
+					});
+				}
 
 			})
 			var click = []; //记录被点击的li的id和被点击元素
@@ -628,11 +632,11 @@
 								praiseName.innerHTML = praiseName.innerHTML.replace(personalunick + '、', '');
 							} else {
 								console.log('一个人点赞')
-								
-								var comment0 = document.getElementById('"replyComment'+index+'-0-评论"');
-								if(comment0){
+
+								var comment0 = document.getElementById('"replyComment' + index + '-0-评论"');
+								if(comment0) {
 									document.getElementById("line" + index).className = 'mui-media-body dynamic-line'
-								}else{
+								} else {
 									document.getElementById("line" + index).className = 'mui-media-body dynamic-line mui-hidden'
 								}
 								PraiseList.removeChild(praiseName);

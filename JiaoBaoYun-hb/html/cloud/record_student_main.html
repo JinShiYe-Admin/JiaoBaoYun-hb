@@ -157,7 +157,11 @@
 	<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
 	<script type="text/javascript">
 		//启用双击监听
-		mui.init();
+		mui.init({
+			gestureConfig: {
+				doubletap: true,
+			}
+		});
 
 		var markDate = ''; //记录日期
 		var today = ''; //记录今天日期
@@ -248,6 +252,12 @@
 					this.innerText = '显示全部';
 					document.getElementById(id + "_content").style.webkitLineClamp = '3';
 				}
+			});
+
+			//双击标题返回列表顶部
+			document.getElementById('title').addEventListener('doubletap', function() {
+				var scrollTop = mui('#pullrefresh').scroll(); //话题列表区域
+				scrollTop.scrollTo(0, 0, 100);
 			});
 		});
 
