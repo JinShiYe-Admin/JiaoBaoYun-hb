@@ -280,7 +280,7 @@ var requestTeaInfo = function(teaId) {
 					var dateArr = homeworkModel.UploadTime.split(' ');
 					homeworkModel.UploadTime = dateArr[0];
 
-					homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime + '</span>'
+					homeworkDetailNodes.publishDate.innerHTML = events.shortForString(data.RspData[0].unick, 12)  + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime + '</span>'
 				}
 				homeworkDetailNodes.title.innerText = data.RspData[0].unick;
 				homeworkDetailNodes.content.innerText = '';
