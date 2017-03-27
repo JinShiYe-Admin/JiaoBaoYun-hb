@@ -1,9 +1,12 @@
-var personalUTID;
-var homeworkInfo;
-mui.init();
+var personalUTID;//个人utid
+var homeworkInfo;//作业信息
+mui.init();//加载mui
+//plusready事件的监听回调
 mui.plusReady(function() {
+	//预加载做作业界面
 	events.preload('doHomework-stu.html', 200);
 	mui.previewImage();//加载预览功能
+	//监听与我相关中作业提醒传过来的事件
 	window.addEventListener("workNotice",function(e){
 		console.log("作业提醒传过来的数值："+JSON.stringify(e.detail.data));
 		homeworkInfo=e.detail.data;
@@ -14,6 +17,7 @@ mui.plusReady(function() {
 		mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
 		requestHomeWorkInfo(homeworkInfo);
 	})
+	//学生作业列表界面传过来的作业详情
 	window.addEventListener('workDetail', function(e) {
 		mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
 		personalUTID=parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)
@@ -29,6 +33,7 @@ mui.plusReady(function() {
 		requestHomeWorkInfo(homeworkInfo);
 		
 	})
+	//作业已提交
 	window.addEventListener('workSubmitted', function() {
 		document.querySelector('.homework-brief').className = 'homework-brief isSubmitted';
 	})
@@ -37,6 +42,10 @@ mui.plusReady(function() {
 		events.fireToPageWithData('doHomework-stu.html', 'homeworkInfo', homeworkInfo);
 	})
 });
+/**
+ * 请求作业数据
+ * @param {Object} homeWorkInfo 传过来的作业数据
+ */
 var requestHomeWorkInfo = function(homeWorkInfo) {
 	var wd=events.showWaiting();
 	postDataPro_GetHomeworkStu({
@@ -54,6 +63,10 @@ var requestHomeWorkInfo = function(homeWorkInfo) {
 		requestTeaInfo(homeworkInfo.TeacherId);
 	})
 }
+/**
+ * 请求老师信息
+ * @param {Object} teaId 根据老师id获取老师id
+ */
 var requestTeaInfo = function(teaId) {
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataPro_PostUinf({
@@ -70,6 +83,9 @@ var requestTeaInfo = function(teaId) {
 		}
 	})
 }
+/**
+ * 放置作业内容
+ */
 var setContentView = function() {
 	console.log('学生作业详情界面获取老师后的信息：' + JSON.stringify(homeworkInfo));
 	document.querySelector('.subject-icon').className = "subject-icon iconfont " + getHomeworkIcon(homeworkInfo.Subject);
@@ -79,6 +95,11 @@ var setContentView = function() {
 	document.querySelector('.publish-date').innerText = homeworkInfo.Date.split(' ')[0];
 	document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkInfo.File,homeworkInfo.HomeworkId);
 }
+/**
+ * 放置图片
+ * @param {Object} imgs
+ * @param {Object} id
+ */
 var getImgsInner = function(imgs,id) {
 	var imgInner = '';
 	var win_height=document.getElementById('brief-imgs').offsetWidth;
@@ -114,6 +135,10 @@ function requestHomeworkDetail() {
 var setHomworkDetail = function(workDetail) {
 
 }
+/**
+ * 作业icon
+ * @param {Object} subject
+ */
 var getHomeworkIcon = function(subject) {
 	var subjectIcon = '';
 	switch(subject) {

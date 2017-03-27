@@ -163,10 +163,8 @@
 	<script type="text/javascript" src="../../js/mui.previewimage.js"></script>
 	<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 	<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
-	<script type="text/javascript" src="../../js/utils/compress.js" ></script>
+	<script type="text/javascript" src="../../js/utils/compress.js"></script>
 	<script type="text/javascript">
-		//启用双击监听
-		mui.init();
 		var main; //获取当前窗体对象
 		var mainData; //页面传入值
 		var markDate = ''; //记录日期
@@ -174,6 +172,13 @@
 		var year = ''; //记录年份
 		var previewImage; //查看图片的控件
 		var pullRefresh; //下拉，上拉控件
+
+		//启用双击监听
+		mui.init({
+			gestureConfig: {
+				doubletap: true,
+			}
+		});
 
 		mui.plusReady(function() {
 			previewImage = mui.previewImage();
@@ -265,6 +270,11 @@
 				}
 			});
 
+			//双击标题返回列表顶部
+			document.getElementById('title').addEventListener('doubletap', function() {
+				var scrollTop = mui('#pullrefresh').scroll(); //话题列表区域
+				scrollTop.scrollTo(0, 0, 100);
+			});
 		});
 
 		/**

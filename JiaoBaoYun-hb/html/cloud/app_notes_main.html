@@ -122,7 +122,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">我的云盘—笔记</h1>
+			<h1 id="title" class="mui-title">我的云盘—笔记</h1>
 		</header>
 
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="z-index: 1;">
@@ -153,7 +153,11 @@
 	<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 	<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
 	<script type="text/javascript">
-		mui.init();
+		mui.init({
+			gestureConfig: {
+				doubletap: true,
+			}
+		});
 		var markDate = ''; //记录日期
 		var today = ''; //记录今天日期
 		var year = ''; //记录年份
@@ -249,11 +253,17 @@
 
 			//滚动监听
 			//document.getElementById("pullrefresh").addEventListener('scroll', function() {
-				//console.log(scroll.x + "  " + scroll.y);
-				//var content=document.getElementById("21423_content");
+			//console.log(scroll.x + "  " + scroll.y);
+			//var content=document.getElementById("21423_content");
 
-				//console.log(content.offsetHeight);
+			//console.log(content.offsetHeight);
 			//});
+
+			//双击标题返回列表顶部
+			document.getElementById('title').addEventListener('doubletap', function() {
+				var scrollTop = mui('#pullrefresh').scroll(); //话题列表区域
+				scrollTop.scrollTo(0, 0, 100);
+			});
 		});
 
 		//请求数据

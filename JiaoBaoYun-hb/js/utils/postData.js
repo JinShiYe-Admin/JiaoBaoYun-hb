@@ -52,33 +52,38 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 		var urlArr = url.split('/');
 		console.log('postData.tempData:' + urlArr[urlArr.length - 1] + JSON.stringify(tempData));
 		//发送协议
-		mui.ajax(url, {
-			data: JSON.stringify(tempData),
-			dataType: 'json',
-			type: 'post',
-			contentType: "application/json",
-			timeout: 30000,
-			//			success: callback,
-			success: function(data) {
-				//				console.log('data.RspCode:' + data.RspCode + 'data.data:' + data.data);
-				if(data.RspCode == 6) {
-					renewToken();
-				} else {
+		try {
+			mui.ajax(url, {
+				data: JSON.stringify(tempData),
+				dataType: 'json',
+				type: 'post',
+				contentType: "application/json",
+				timeout: 30000,
+				//			success: callback,
+				success: function(data) {
+					//				console.log('data.RspCode:' + data.RspCode + 'data.data:' + data.data);
+					if(data.RspCode == 6) {
+						renewToken();
+					} else {
+						callback(data);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					var data = {
+						RspCode: '404',
+						RspData: '',
+						RspTxt: '网络连接失败，请重新尝试一下'
+					}
+					console.log('' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
 					callback(data);
+					waitingDialog.close();
+					//mui.toast("网络连接失败，请重新尝试一下");
 				}
-			},
-			error: function(xhr, type, errorThrown) {
-				var data = {
-					RspCode: '404',
-					RspData: '',
-					RspTxt: '网络连接失败，请重新尝试一下'
-				}
-				console.log('' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
-				callback(data);
-				waitingDialog.close();
-				//mui.toast("网络连接失败，请重新尝试一下");
-			}
-		});
+			});
+		} catch(e) {
+			plus.nativeUI.closeWaiting();
+			alert('### ERROR ### 发送协议 name:' + e.name + " message:" + e.message);
+		}
 	});
 }
 

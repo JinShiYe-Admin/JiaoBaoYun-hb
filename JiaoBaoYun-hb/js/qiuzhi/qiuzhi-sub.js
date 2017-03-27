@@ -5,7 +5,7 @@ var pageIndex = 1; //当前页数
 var totalPage; //总页数
 var channelInfo; //选择的话题
 var allChannels; //所有的话题
-var answerIsReady = false;
+var answerIsReady = false;//页面已就绪
 mui.init();
 mui.plusReady(function() {
 	mui.fire(plus.webview.getWebviewById('qiuzhi_home.html'), 'subIsReady');
@@ -441,7 +441,7 @@ var fireToPageReady = function(type, options) {
 			setTimeout(function() {
 				events.showWaiting();
 				fireToPageReady(type, options);
-			}, 500)
+			}, 500);
 		}
 	}
 }

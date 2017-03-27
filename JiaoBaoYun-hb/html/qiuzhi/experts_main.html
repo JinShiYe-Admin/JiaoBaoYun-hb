@@ -224,8 +224,6 @@
 		mui.init({
 			gestureConfig: {
 				doubletap: true,
-				hold: true,
-				release: true
 			}
 		});
 
@@ -302,16 +300,6 @@
 				console.log('transportData ' + JSON.stringify(transportData));
 				events.openNewWindowWithData('qiuzhi-newQ.html', transportData);
 			});
-
-			//			mui('#sliderGroup').on('hold', '.expert-ask', function() {
-			//				this.style.backgroundColor='#1DB8F1';
-			//				console.log('hole expert-ask');
-			//			});
-			//
-			//			mui('#sliderGroup').on('release', '.expert-ask', function() {
-			//				var element = this.parentNode.parentNode;
-			//				console.log('release expert-ask');
-			//			});
 
 			//点击邀请
 			mui('#sliderGroup').on('tap', '.expert-invite', function() {
