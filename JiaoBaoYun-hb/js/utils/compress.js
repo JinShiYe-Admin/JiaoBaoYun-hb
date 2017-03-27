@@ -69,8 +69,10 @@ var compress = (function(mod) {
 	}
 	var getSavePath = function(picPath) {
 		var picPaths = picPath.split('/');
-		picPaths.splice(picPaths.length - 1, 0, "savePath");
-		return picPaths.join('/');
+		console.log("路径："+picPaths[picPaths.length-1])
+		var compressPath="_doc/savepath/"+picPaths[picPaths.length-1]
+//		picPaths.splice(picPaths.length - 1, 0, "savePath");
+		return compressPath;
 	}
 
 	/**
