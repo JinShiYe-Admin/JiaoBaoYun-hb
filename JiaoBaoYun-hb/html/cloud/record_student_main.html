@@ -7,6 +7,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="author" content="莫尚霖,email:444811716@qq.com" />
+		<meta name="description" content="学生档案" />
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/utils/preview.css" />
@@ -242,15 +244,26 @@
 				previewImage.open(document.getElementById("img_" + this.getAttribute('data-id')))
 			});
 
+			//显示全部，收起
 			mui('#ul_table').on('tap', '.show-all', function() {
 				var str = this.innerText;
 				var id = this.id.replace('_show', '');
+				var content = document.getElementById(id + "_content");
 				if(str == '显示全部') {
 					this.innerText = '收起';
-					document.getElementById(id + "_content").style.webkitLineClamp = 'inherit';
+					content.style.webkitLineClamp = 'inherit';
 				} else if(str == '收起') {
+					var offsetHeight_0 = content.offsetHeight;
 					this.innerText = '显示全部';
-					document.getElementById(id + "_content").style.webkitLineClamp = '3';
+					content.style.webkitLineClamp = '3';
+					var offsetHeight_1 = content.offsetHeight;
+					var scroll = mui('#pullrefresh').scroll(); //滑动控件
+					var move = scroll.y + (offsetHeight_0 - offsetHeight_1);
+					if(move >= 0) {
+						mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 0);
+					} else {
+						mui('.mui-scroll-wrapper').scroll().scrollTo(0, move, 0);
+					}
 				}
 			});
 
