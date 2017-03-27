@@ -5,6 +5,7 @@
 /*去掉导航条阴影*/
 .mui-bar-nav {
 	box-shadow: none;
+	height: 45px;
 }
 
 .common-background-bar {
