@@ -80,98 +80,96 @@ var UploadHeadImage = (function($, mod) {
 	//拍照
 	function camera() {
 
-		//获取设备默认的摄像头对象
 		var cmr = plus.camera.getCamera();
-		//获取摄像头支持的拍照分辨率。“WIDTH*Height”，如“400*800”
-		//属性类型为String[]，若不支持此属性则返回空数组对象
-		var res = cmr.supportedImageResolutions[0]; //[0]:最高的分辨率模式
-
-		//获取摄像头支持的拍照文件格式。文件格式后缀名，如“jpg”、“png”、“bmp”
-		//属性类型为String[]，若不支持此属性则返回空数组对象
-		var fmt = cmr.supportedImageFormats[0];
-
-		//				console.log('支持的拍照分辨率:' + JSON.stringify(cmr.supportedImageResolutions));
-		//				console.log('支持的拍照文件格式:' + JSON.stringify(cmr.supportedImageFormats));
-		//				console.log("选择的拍照分辨率: " + res + ", 选择的文件格式: " + fmt);
-
-		//进行拍照操作cmr.captureImage( successCB, errorCB, option );
-		//摄像头资源为独占资源，如果其它程序或页面已经占用摄像头，再次操作则失败
-		//successCB: ( CameraSuccessCallback ) 必选 拍照操作成功的回调函数
-		//errorCB: ( CameraErrorCallback ) 可选 拍照操作失败的回调函数
-		//option: ( CameraOption ) 必选 摄像头拍照参数
-		cmr.captureImage(function(capturedFile) {
-				//拍照成功的回调
-				//capturedFile ：图片的路径
-				//显示等待窗口
-				var wd = events.showWaiting();
-				//console.log('拍照成功,图片的路径为：' + capturedFile);
-				//将本地URL路径转换成平台绝对路径
-				//capturedFile = 'file://' + plus.io.convertLocalFileSystemURL(capturedFile);
-				//console.log('转换成平台绝对路径,图片的路径为：' + capturedFile);
-				compressImage(wd, capturedFile) //压缩图片
-			},
-			function(error) {
-				// 拍照失败的回调
-				var code = error.code; // error.code（Number类型）获取错误编码
-				var message = error.message; // error.message（String类型）获取错误描述信息。
-				if(mui.os.ios) {
-					if(code !== 2) {
-						mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
-						console.log('拍照失败！' + JSON.stringify(error));
-					} else {
-						console.log('未拍取图片');
-					}
-				} else if(mui.os.android) {
-					if(code !== 11) {
-						mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
-						console.log('拍照失败！' + JSON.stringify(error));
-					} else {
-						console.log('未拍取图片:' + JSON.stringify(error));
-					}
-				}
-			}, {
-				//						resolution: res,
-				format: fmt
+		if(cmr) {
+			try {
+				cmr.captureImage(function(capturedFile) {
+						//拍照成功的回调
+						//capturedFile ：图片的路径
+						//显示等待窗口
+						var wd = events.showWaiting();
+						//console.log('拍照成功,图片的路径为：' + capturedFile);
+						//将本地URL路径转换成平台绝对路径
+						//capturedFile = 'file://' + plus.io.convertLocalFileSystemURL(capturedFile);
+						//console.log('转换成平台绝对路径,图片的路径为：' + capturedFile);
+						compressImage(wd, capturedFile) //压缩图片
+					},
+					function(error) {
+						// 拍照失败的回调
+						var code = error.code; // error.code（Number类型）获取错误编码
+						var message = error.message; // error.message（String类型）获取错误描述信息。
+						if(mui.os.ios) {
+							if(code !== 2) {
+								mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
+								console.log('拍照失败！' + JSON.stringify(error));
+							} else {
+								console.log('未拍取图片');
+							}
+						} else if(mui.os.android) {
+							if(code !== 11) {
+								mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
+								console.log('拍照失败！' + JSON.stringify(error));
+							} else {
+								console.log('未拍取图片:' + JSON.stringify(error));
+							}
+						}
+					}, {}
+				);
+			} catch(e) {
+				alert('### ERROR ### 拍照异常 name:' + e.name + " message:" + e.message);
+				errorCB({
+					code: 'ERROR', // 错误编码
+					message: '拍照异常' // 错误描述信息
+				});
 			}
-		);
+		} else {
+			errorCB({
+				code: 'NULL', // 错误编码
+				message: '获取摄像头失败' // 错误描述信息
+			});
+		}
 	}
 
 	//相册
 	function pick() {
-
-		plus.gallery.pick(function(file) {
-
-			//显示等待窗口
-			var wd = events.showWaiting();
-			console.log('从相册选取图片成功,图片的路径为：' + file);
-			//openImage(file); //打开新页面查看图片
-			compressImage(wd, file) //压缩图片
-		}, function(error) {
-			//从相册选取图片失败的回调
-			var code = error.code; // 错误编码
-			var message = error.message; // 错误描述信息
-			if(mui.os.ios) {
-				if(code != -2) {
-					mui.toast('从相册选取图片失败！' + '错误编码：' + code + '描述信息：' + message);
-					console.log('从相册选取图片失败！' + JSON.stringify(error));
-				} else {
-					console.log('未选取图片');
+		try {
+			plus.gallery.pick(function(file) {
+				var wd = events.showWaiting();
+				console.log('从相册选取图片成功,图片的路径为：' + file);
+				compressImage(wd, file) //压缩图片
+			}, function(error) {
+				//从相册选取图片失败的回调
+				var code = error.code; // 错误编码
+				var message = error.message; // 错误描述信息
+				if(mui.os.ios) {
+					if(code != -2) {
+						mui.toast('从相册选取图片失败！' + '错误编码：' + code + '描述信息：' + message);
+						console.log('从相册选取图片失败！' + JSON.stringify(error));
+					} else {
+						console.log('未选取图片');
+					}
+				} else if(mui.os.android) {
+					if(code != 12) {
+						mui.toast('从相册选取图片失败！' + '错误编码：' + code + '描述信息：' + message);
+						console.log('从相册选取图片失败！' + JSON.stringify(error));
+					} else {
+						console.log('未选取图片:' + JSON.stringify(error));
+					}
 				}
-			} else if(mui.os.android) {
-				if(code != 12) {
-					mui.toast('从相册选取图片失败！' + '错误编码：' + code + '描述信息：' + message);
-					console.log('从相册选取图片失败！' + JSON.stringify(error));
-				} else {
-					console.log('未选取图片:' + JSON.stringify(error));
-				}
-			}
-		});
+			});
+		} catch(e) {
+			alert('### ERROR ### 调用系统相册异常 name:' + e.name + " message:" + e.message);
+			errorCB({
+				code: 'ERROR', // 错误编码
+				message: '调用系统相册异常' // 错误描述信息
+			});
+		}
 	}
 
 	//压缩图片并且在新页面显示压缩后的图片
 	function compressImage(wd, filepath) {
 		//console.log('压缩图片,图片的路径为：' + filepath);
-		compress.compressImageTo_1MB({
+		compress.compressImageTo_512KB({
 			path: filepath,
 			dst: '_documents/' + fileName
 		}, function(event) {
