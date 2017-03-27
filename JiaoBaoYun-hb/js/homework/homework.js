@@ -47,15 +47,15 @@ var setChoices = function(title, roles, btn_m) {
 		title.style.display = 'none';
 		roles.style.display = 'inline-block';
 		//		btn_m.style.display = 'none';
-		role = 2;//老师
-	//老师角色
+		role = 2; //老师
+		//老师角色
 	} else if(teacherClasses.length > 0) {
 		title.style.display = 'inline-block';
 		roles.style.display = 'none';
 		title.innerText = '我发布的';
-		role = 2;//老师
+		role = 2; //老师
 		//		btn_m.style.display = 'none';
-	//家长角色
+		//家长角色
 	} else if(studentClasses.length > 0) {
 		title.style.display = 'inline-block';
 		roles.style.display = 'none';
@@ -107,7 +107,7 @@ mui.plusReady(function() {
 	btn_more.style.display = 'none';
 	//cloud界面传过来的事件和数据
 	window.addEventListener('postClasses', function(e) {
-		plus.webview.currentWebview().isReady=true;
+		plus.webview.currentWebview().isReady = true;
 		var data = e.detail.data;
 		console.log('作业主界面获取信息：' + JSON.stringify(e.detail.data));
 		//学生角色所在班级数组
@@ -135,10 +135,10 @@ mui.plusReady(function() {
 	roles.addEventListener("toggle", function(event) {
 		events.showWaiting();
 		if(event.detail.isActive) {
-			role = 30;//学生or家长
+			role = 30; //学生or家长
 			//			btn_more.style.display='block';
 		} else {
-			role = 2;//老师
+			role = 2; //老师
 			//			btn_more.style.display='none';
 		}
 		//角色转换
@@ -192,7 +192,7 @@ var roleChanged = function() {
 	console.log('作业子页面获取的角色变换值roleChanged：' + role);
 	setClasses(role);
 	events.clearChild(list);
-	if(role == 2) {//老师角色
+	if(role == 2) { //老师角色
 		mui("#popover").popover('hide');
 		publish.style.display = 'block';
 		selectGId = teacherClasses[0].gid;
@@ -204,11 +204,11 @@ var roleChanged = function() {
 		} else {
 			requireHomeWork(teacherClasses[0], setData);
 		}
-	} else {//学生or家长角色
+	} else { //学生or家长角色
 		publish.style.display = 'none';
 		selectGId = studentClasses[0].gid;
 		//		requireHomeWork(studentClasses[0], setData);
-		if(studentHash.get(selectGId)) {//获取数据
+		if(studentHash.get(selectGId)) { //获取数据
 			setHomeworkData(studentHash.get(selectGId));
 		} else {
 			requireHomeWork(studentClasses[0], setData);
@@ -307,7 +307,13 @@ var setListener = function() {
 	var publish = document.getElementById('iconPublish');
 	//常规作业点击事件
 	mui('.mui-table-view').on('tap', '.publishedHomework', function() {
+		var self = this
+		self.disabled = true;
 		events.openNewWindowWithData('workdetail-tea.html', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+		setTimeout(function() {
+			self.disabled = false;
+		}, 1500);
+
 		//		plus.webview.getWebviewById("workdetail-tea.html").show();
 	})
 	//临时作业点击事件
@@ -541,8 +547,8 @@ var setPublishedData = function(publishedData) {
 				list.appendChild(li);
 			}
 		})
-		
-	}else{
+
+	} else {
 		mui.toast("暂无作业！");
 	}
 	events.closeWaiting();
@@ -698,7 +704,7 @@ var getHomeworkIcon = function(subject) {
  */
 var setHomeworkData = function(homeworkData) {
 	//		var homeworkData = studentHash.get(selectGId);
-	if(homeworkData&&homeworkData.length>0) {
+	if(homeworkData && homeworkData.length > 0) {
 		homeworkData.forEach(function(DateHM, i) {
 			var divider = document.createElement('li');
 			divider.className = 'mui-table-view-divider';
@@ -730,10 +736,10 @@ var setHomeworkData = function(homeworkData) {
 
 			}
 		})
-	}else{
+	} else {
 		mui.toast("暂无作业！")
 	}
-	events.closeWaiting();	
+	events.closeWaiting();
 }
 /**
  * 以键值对的形式放置数据
