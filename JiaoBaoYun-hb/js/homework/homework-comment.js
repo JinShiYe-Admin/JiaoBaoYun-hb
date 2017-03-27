@@ -28,6 +28,7 @@ mui.plusReady(function() {
 	//设置最大长度为1000
 	jQuery('.comment-area').prop("maxLength",1000);
 	setListener();
+	events.areaInScroll();
 })
 
 var setStuInfo = function() {

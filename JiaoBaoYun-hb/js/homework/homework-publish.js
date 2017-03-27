@@ -11,9 +11,10 @@ var personalUTID;
 mui.init();
 mui.plusReady(function() {
 	mui(".mui-scroll-wrapper").scroll();
+	mui.previewImage();
 	events.blurBack();
-	 var webHeight=plus.android.invoke(plus.android.currentWebview(),"getHeight");
-	 console.log("屏幕宽度："+webHeight);
+	var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight");
+	console.log("屏幕宽度：" + webHeight);
 	events.preload('classes-select.html', 200);
 	window.addEventListener('postClasses', function(e) {
 		CloudFileUtil.files = [];
@@ -37,6 +38,7 @@ mui.plusReady(function() {
 		events.fireToPageWithData('classes-select.html', 'postClasses', selectClassArray);
 	})
 	CloudFileUtil.setDelPicListener();
+	events.areaInScroll();
 	/**
 	 * 监听选择班级后的返回数据
 	 */
@@ -100,7 +102,7 @@ mui.plusReady(function() {
 		}
 	});
 	events.softIn("publish-content");
-	window.onresize=function(){
+	window.onresize = function() {
 		console.log("resize0000");
 		mui(".mui-scroll-wrapper").scroll().refresh();
 	}
@@ -154,10 +156,10 @@ mui.plusReady(function() {
 	});
 	setListener();
 })
-var setListener=function(){
-//	jQuery("#input-content").focus(function(){
-//		mui.scrollTo(document.querySelector("#input-content"))
-//	})
+var setListener = function() {
+	//	jQuery("#input-content").focus(function(){
+	//		mui.scrollTo(document.querySelector("#input-content"))
+	//	})
 }
 //17.获取所有科目列表
 function requestSubjectList(callback) {
@@ -333,14 +335,14 @@ var requirePostGUInfo = function(wd, callback) {
 
 //12.发布作业
 function requestPublishHomework() {
-	var emptyClasses=[];
-	var realClasses=[];
-	for(var i in selectClassArray){
-		if(selectClassArray[i].isSelected){
+	var emptyClasses = [];
+	var realClasses = [];
+	for(var i in selectClassArray) {
+		if(selectClassArray[i].isSelected) {
 			realClasses.push(selectClassArray[i]);
 		}
 	}
-	if(realClasses.length==0){
+	if(realClasses.length == 0) {
 		mui.toast('当前未选择班级！');
 		return;
 	}
@@ -356,7 +358,7 @@ function requestPublishHomework() {
 				var tempStuModel = tempClassModel.studentArray[m];
 				tempStuArray.push(tempClassModel.gid + '|' + tempStuModel.utid);
 			}
-			if(tempClassModel.studentArray.length==0){
+			if(tempClassModel.studentArray.length == 0) {
 				emptyClasses.push(tempClassModel);
 			}
 		}
@@ -394,15 +396,15 @@ function requestPublishHomework() {
 			events.clearChild(subjectsContainer);
 			events.clearChild(document.getElementById('classes'));
 			events.fireToPageNone('homework-tea.html', 'homeworkPublished');
-			console.log("空值的班级："+JSON.stringify(emptyClasses))
-			var toastInfo=[];
-			for(var j in emptyClasses){
-				
+			console.log("空值的班级：" + JSON.stringify(emptyClasses))
+			var toastInfo = [];
+			for(var j in emptyClasses) {
+
 				toastInfo.push(emptyClasses[j].gname);
 			}
-			if(toastInfo.length>0){
-				mui.toast(toastInfo.toString()+'班级无发布作业对象，发布失败，其他班级发布作业成功！');
-			}else{
+			if(toastInfo.length > 0) {
+				mui.toast(toastInfo.toString() + '班级无发布作业对象，发布失败，其他班级发布作业成功！');
+			} else {
 				mui.toast("发布作业成功！")
 			}
 			mui.back();
