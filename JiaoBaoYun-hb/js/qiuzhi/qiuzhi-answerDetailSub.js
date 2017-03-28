@@ -352,6 +352,11 @@ var setQuestion = function(datasource) {
 	var p = document.createElement('p');
 	p.innerHTML = datasource.AnswerContent;
 	questionContainer.appendChild(p);
+//	p.querySelectorAll("img").for
+	jQuery("#question-content img").each(function(index,ele){
+		this.style.width="100%";
+		this.style.height="auto";
+	})
 	events.clearChild(document.getElementById('answer-imgs'));
 	if(datasource.AnswerEncAddr) {
 		document.getElementById('answer-imgs').innerHTML = getPicInner(datasource);
@@ -394,7 +399,7 @@ var setAnswerManInfo = function(datasource) {
 		document.getElementById('btn-focus').style.display = 'none';
 	} else {
 		document.getElementById('anthor-portrait').src = updateHeadImg(datasource.uimg, 2);
-		document.getElementById("anthor-name").innerText = events.shortForString(datasource.unick,10) ;
+		document.getElementById("anthor-name").innerText = events.shortForString(datasource.unick.replace(/[\r\n]/g,""),10) ;
 		document.getElementById("anthor-info").style.display="inline-block"
 		document.getElementById("anthor-info").innerText = events.shortForString(datasource.AnswerManNote ? datasource.AnswerManNote : "暂无简介",12);
 		if(datasource.AnswerMan == selfId) { //如果专家是自己，隐藏关注按钮
