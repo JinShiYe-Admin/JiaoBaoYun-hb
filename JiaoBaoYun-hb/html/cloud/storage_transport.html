@@ -281,6 +281,7 @@
 		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
 		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
+		<script type="text/javascript" src="../../js/utils/playutil.js"></script>
 		<script type="text/javascript">
 			mui.init({
 				gestureConfig: {
@@ -511,9 +512,8 @@
 					var parentNode2 = parentNode.parentNode;
 					var id = parentNode2.getAttribute('id');
 					var fpath = parentNode2.getAttribute('data-fpath');
-					plus.runtime.openFile(fpath, '', function(error) {
-						console.log('打开文件失败:' + JSON.stringify(error));
-						mui.toast('打开文件失败:调用第三方程序失败')
+					playutil.openFile(fpath, function(text) {
+						mui.toast(text);
 					});
 				});
 
@@ -608,9 +608,8 @@
 					var parentNode2 = parentNode.parentNode;
 					var id = parentNode2.getAttribute('id');
 					var fpath = parentNode2.getAttribute('data-fpath');
-					plus.runtime.openFile(fpath, '', function(error) {
-						console.log('打开文件失败:' + JSON.stringify(error));
-						mui.toast('打开文件失败:未能识别能打开文件的第三方程序')
+					playutil.openFile(fpath, function(text) {
+						mui.toast(text);
 					});
 				});
 
