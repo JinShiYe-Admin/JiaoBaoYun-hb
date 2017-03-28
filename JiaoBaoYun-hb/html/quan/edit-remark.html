@@ -13,6 +13,27 @@
 			input[type=text] {
 				border: none;
 			}
+			.input-container{
+				height: 46px;
+				display: flex;
+				display: -webkit-flex;
+				background-color: white;
+				border-bottom: 1px green solid;
+			}
+			.remark-input{
+				width: 50%;
+				flex-grow: 1;
+			}
+			.input-left{
+				align-self: flex-end;
+				padding-right: 10px;
+			}
+			textarea{
+				border: none;
+			}
+			p{
+				margin-bottom: 0;
+			}
 		</style>
 	</head>
 
@@ -23,16 +44,21 @@
 			<a id="save-remark" class="mui-pull-right">保存</a>
 		</header>
 		<div class="mui-content">
-			<input id="remark-input" type="text" maxlength="20" placeholder="请输入,最多20字!" />
+			<div class="input-container">
+			<textarea id="remark-input" class="remark-input" type="text" maxlength="20" style="height: 45px;min-height: 45px;" placeholder="请输入,最多20字!" ></textarea>
+			<p class="input-left">20</p>
+			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/utils/self-adaptive-input.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript">
 			mui.init()
 			var remarkInfo;
 			var type = 0; //修改东西0备注1昵称
 			mui.plusReady(function() {
+				autoTextArea.set( document.querySelector(".input-container"),document.getElementById("remark-input"),document.querySelector(".input-left"),20);
 				events.blurBack();
 				window.addEventListener('editRemark', function(e) {
 					type = 0;
@@ -41,6 +67,7 @@
 					document.getElementById('remark-input').value = remarkInfo.bunick ? remarkInfo.bunick : "";
 					document.getElementById('remark-input').placeholder="群昵称："+remarkInfo.ugname+ "(请输入备注,最多20字!)"
 					document.querySelector('.mui-title').innerText = '编辑备注';
+					setBackHeight();
 				})
 				window.addEventListener('editNick', function(e) {
 					type = 1;
@@ -49,6 +76,7 @@
 					document.getElementById('remark-input').value = remarkInfo.ugname;
 					document.getElementById('remark-input').placeholder="请输入群昵称，最多20字";
 					document.querySelector('.mui-title').innerText = '编辑群昵称';
+					setBackHeight();
 				})
 
 				var save = document.getElementById('save-remark');
@@ -70,6 +98,12 @@
 						}
 					})
 			})
+			var setBackHeight=function(){
+				 document.querySelector(".input-container").style.height="46px";
+				 document.getElementById("remark-input").style.height="45px";
+				 document.querySelector(".input-left").innerText=20-document.getElementById("remark-input").value.length;
+				 autoTextArea.change(document.querySelector(".input-container"),document.getElementById("remark-input"),document.querySelector(".input-left"),20);
+			}
 			var delRemark = function() {
 				var wd = events.showWaiting();
 				postDataPro_PostUmkD({

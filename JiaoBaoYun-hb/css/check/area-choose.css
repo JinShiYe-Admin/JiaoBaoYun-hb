@@ -25,6 +25,10 @@
 .selected-city{
 	border-color:#0ABAF5;
 }
+
 .mui-table-view-cell{
-	background-color: #E4E4E4;
+	background-color: #efeff4;
+}
+.mui-table-view-cell:nth-child(1){
+	background-color: white;
 }
