@@ -402,7 +402,7 @@
 						case 2:
 							if(newsData["2"]) {
 								newsData["2"].splice(0, 0, newsDetail);
-								document.getElementById("passed-list").insertBefore(cell, document.getElementById("refused-list").firstElementChild);
+								document.getElementById("refused-list").insertBefore(cell, document.getElementById("refused-list").firstElementChild);
 							}
 							break;
 						default:
@@ -415,7 +415,7 @@
 				document.getElementById("passed-list").removeChild(cell);
 				if(newsData["2"]) {
 					newsData["2"].splice(0, 0, newsDetail);
-					document.getElementById("passed-list").insertBefore(cell, document.getElementById("refused-list").firstElementChild);
+					document.getElementById("refused-list").insertBefore(cell, document.getElementById("refused-list").firstElementChild);
 				}
 				break;
 			case "2":

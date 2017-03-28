@@ -16,14 +16,11 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">审核新闻</h1>
+			<a id="choose-area" class="mui-pull-right choose-area" value="0" style="padding-top: 0;">全国<span class="mui-icon mui-icon-arrowdown"></span></a>
 		</header>
-		<div class="mui-content mui-fullscreen">
-			<div>
-				<p class="display-inlineBlock">请选择地区：</p>
-				<a id="choose-area" class="choose-area" value="0">全国<span class="mui-icon mui-icon-arrowdown"></span></a>
-			</div>
-			<div id="slider" class="mui-slider margin-full">
-				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 45px;">
+		<div class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					
 						<a class="mui-control-item mui-active" href="#news-all" value="-1">
 							全部
@@ -38,6 +35,7 @@
 							已屏蔽
 						</a>
 				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-3"></div>
 				<div class="mui-slider-group">
 					<div id="news-all" class="mui-slider-item mui-control-content mui-active">
 						<div  class="news-all mui-scroll-wrapper">
@@ -51,7 +49,6 @@
 						<div class="news-uncheck mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul id="uncheck-list" class="mui-table-view">
-
 								</ul>
 							</div>
 						</div>

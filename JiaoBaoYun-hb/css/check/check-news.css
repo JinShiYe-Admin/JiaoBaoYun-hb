@@ -116,9 +116,6 @@ body {
 	left: 0
 }
 
-
-
-
 .mui-control-content .mui-loading {
 	margin-top: 50px;
 }
@@ -131,4 +128,26 @@ body {
 	display: flex;
 	display: -webkit-flex;
 	align-items: center;
+}
+
+.mui-segmented-control.mui-segmented-control-inverted~.mui-slider-progress-bar {
+	background-color: #1DB8F1;
+}
+.check-button{
+	border-color:#B7B7B7 ;
+	color: #1db8f1;
+}
+.passed-button{
+	border-color:#B7B7B7;
+	color: #808080;
+}
+.refused-button{
+	border-color:#1db8f1;
+	color:#1db8f1;
+}
+.words-title{
+	color: #323232;
+}
+.words-info{
+	color: #B7B7B7;
 }
