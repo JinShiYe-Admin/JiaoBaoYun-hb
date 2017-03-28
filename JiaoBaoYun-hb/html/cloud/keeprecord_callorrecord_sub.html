@@ -694,6 +694,7 @@
 									if(pathList.length != 0) {
 										BatchDelete(pathList);
 									}
+									changeCommit();
 									waiting.close();
 								}
 							}, function(upload, status) {

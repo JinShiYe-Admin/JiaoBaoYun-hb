@@ -223,6 +223,7 @@
 									if(pathList.length != 0) {
 										BatchDelete(pathList);
 									}
+									document.getElementById("finish").disabled = false;
 									wd.close();
 								}
 							}, function(upload, status) {

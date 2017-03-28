@@ -86,7 +86,12 @@
 				if(plus.os.name == 'Android') {
 					check = playutil.checkVideo();
 					console.log('checkVideo ' + check);
-//					check = false;
+					//注意事项，Android上使用video标签播放视频时，务必打开硬件加速，否则只有声音没有画面。
+					//因为在Android5的部分rom上是默认关闭硬件加速的，此时需强制打开硬件加速。创建webview时style里有个hardwareAccelerated参数，设置为true。
+					if(!plus.webview.defaultHardwareAccelerated()) {
+						var webview = plus.webview.currentWebview(); //获取当前窗体对象
+						webview.style.hardwareAccelerated = true; //安卓必须开启硬件加速
+					}
 				}
 				var screenOption = {
 					height: plus.screen.resolutionHeight - plus.navigator.getStatusbarHeight(), //屏幕高度-状态栏高度
