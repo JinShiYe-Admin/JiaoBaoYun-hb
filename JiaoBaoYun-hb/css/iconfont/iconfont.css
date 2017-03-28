@@ -109,6 +109,8 @@
 
 .icon-download:before { content: "\e63b"; }
 
+.icon-yuyin2:before { content: "\e658"; }
+
 .icon-yunpan:before { content: "\e607"; }
 
 .icon-fanhui2:before { content: "\e651"; }
@@ -253,3 +255,6 @@
 
 .icon-shanchu2:before { content: "\e647"; }
 
+.icon-shipin2:before { content: "\e65e1"; }
+
+.icon-xiangji2:before { content: "\e65e2"; }

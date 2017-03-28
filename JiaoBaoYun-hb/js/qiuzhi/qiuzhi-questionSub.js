@@ -255,6 +255,8 @@ function pulldownRefresh() {
 		answerFlag = 0;
 		//5.获取某个问题的详情
 		requestAskDetail();
+		//重置显示全部
+		document.getElementById("showAll").innerText = '显示全部';
 	}, 1500);
 }
 

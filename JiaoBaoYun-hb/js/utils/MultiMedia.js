@@ -1,8 +1,12 @@
+/**
+ * 录音，拍照，录像控件
+ * @author 莫尚霖
+ */
 var MultiMedia = (function($, mod) {
 
-	var html_picture_header = '<span id="MultiMedia_Picture_Header" class="mui-icon iconfont icon-xiangji"></span>'; //相机图标
-	var html_audio_header = '<span id="MultiMedia_Audio_Header" class="mui-icon iconfont icon-yuyin"></span>'; //语音图标
-	var html_video_header = '<span id="MultiMedia_Video_Header" class="mui-icon iconfont icon-shipin"></span>'; //相机图标
+	var html_picture_header = '<span id="MultiMedia_Picture_Header" class="mui-icon iconfont icon-xiangji2"></span>'; //相机图标
+	var html_audio_header = '<span id="MultiMedia_Audio_Header" class="mui-icon iconfont icon-yuyin2"></span>'; //语音图标
+	var html_video_header = '<span id="MultiMedia_Video_Header" class="mui-icon iconfont icon-shipin2"></span>'; //视频图标
 	var html_picture_footer = '<div id="MultiMedia_Picture_Footer"></div>'; //放置图片
 	var html_audio_footer = '<div id="MultiMedia_Audio_Footer"></div>'; //放置音频
 	var html_video_footer = '<div id="MultiMedia_Video_Footer"></div>'; //放置视频
@@ -144,7 +148,13 @@ var MultiMedia = (function($, mod) {
 		if(this.options.Video) {
 			document.getElementById('MultiMedia_Video_Header').addEventListener('tap', function() {
 				document.activeElement.blur();
-				mui.toast('视频功能暂未开放');
+				mui.toast('录制视频功能暂未开放');
+//				RecordVideo.recordVideo({}, function(fpath) {
+//					mui.toast('录制视频成功');
+//					console.log(fpath);
+//				}, function(err) {
+//					mui.toast('录制视频失败 ' + JSON.stringify(err));
+//				});
 			});
 		}
 	}
