@@ -450,13 +450,13 @@ var getPicInner = function(data) {
 var createCommentsInner = function(cell) {
 	var headImg = cell.UserImg;
 	var personName = cell.UserName;
-	var inner = '<div class="table-view-cell">' +
+	var inner = '<div class="table-view-cell"><div class="comments-cell">' +
 		'<div class="img-container"><img class="head-img" src="' + headImg + '"/></div>' +
 		'<div class="comment-container">' +
 		'<h5 class="comment-personName single-line">' + setName(cell) + '</h5>' +
-		'<p class="comment-words">' + cell.CommentContent + '</p>' +
-		'<p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p>' +
-		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>'
+		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>'+
+		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
+		console.log("当前评论内容："+inner)
 	return inner;
 }
 var setName = function(cell) {
