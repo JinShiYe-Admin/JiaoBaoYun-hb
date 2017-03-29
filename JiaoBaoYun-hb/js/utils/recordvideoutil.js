@@ -16,13 +16,13 @@ var RecordVideo = (function(mod) {
 		} else if(plus.os.name == 'iOS') {
 			errorCB({
 				code: plus.os.name, // 错误编码
-				message: '不支持该系统' // 错误描述信息
+				message: '功能暂未开放' // 错误描述信息
 			});
 			//mod.recordVideoiOS(data, successCB, errorCB);
 		} else {
 			errorCB({
 				code: plus.os.name, // 错误编码
-				message: '不支持该系统' // 错误描述信息
+				message: '功能暂未开放' // 错误描述信息
 			});
 		}
 	}
