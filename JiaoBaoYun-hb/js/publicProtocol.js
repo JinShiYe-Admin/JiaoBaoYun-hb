@@ -747,6 +747,24 @@ var postDataPro_PostTnewsE = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINURL + 'PostTnewsE', enData, commonData, 1, wd, callback);
 }
 
+//50.更改用户绑定
+//所需参数
+//		var comData = {
+//			uuid:'',//用户设备号,用户设备号
+//			appid:'',//应用ID,应用ID
+//			token:''//用户令牌,	用户的令牌
+//		};
+//		var enData = {
+//			utid	:'',//用户表ID,RSA加密	,用户utid
+//			uid:'',//手机号,RSA加密,	要更改为手机号
+//			code	:'',//验证码,RSA加密,	加密后的验证码
+//		};
+//返回值：
+var postDataPro_PostBindMobile = function(commonData, enData, wd, callback) {
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostBindMobile', enData, commonData, 0, wd, callback);
+}
+
 //---------------------------------------家校圈-----------------------------------------------------------------------------------------------------------
 //家校圈接口
 
@@ -1856,7 +1874,7 @@ var postDataPro_getNotesByUserForMutiStudent = function(commonData, wd, callback
 //所需参数
 //		var comData = {
 //			userId:'',//用户ID
-//			area:'',//区域
+//			area:'',//区域，0 全部区域
 //			pageIndex:'',//当前页数
 //			pageSize:''//每页记录数
 //		};

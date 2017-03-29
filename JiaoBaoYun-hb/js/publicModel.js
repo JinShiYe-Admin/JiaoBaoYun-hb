@@ -12,7 +12,7 @@ var publicModel = (function($, mod) {
 	mod.model_personalInfo = {
 		utid:'',//用户表ID
 		uid:'',//电话号码
-		uname:'',//姓名
+		uname:'',//姓名,账号,只能修改一次,且只能字母开头,字母与数字,定了就不能修改
 		uimg:'',//用户头像地址
 		unick:'',//用户昵称
 		usex:'',//用户性别
@@ -199,7 +199,7 @@ var publicModel = (function($, mod) {
 		EncType:'',//附件类型
 		EncAddr:'',//附件地址，多个的情况例如：1.jpg|2.jpg
 		EncImgAddr:'',//附件缩略图
-		
+		PubArea:'',//发布区域
 		//个人信息,2,7,
 		StudentId:'',//学生ID
 		
