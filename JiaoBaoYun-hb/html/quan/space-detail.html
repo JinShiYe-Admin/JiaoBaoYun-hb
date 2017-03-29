@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<title>空间</title>
@@ -184,9 +183,9 @@
 	</body>
 
 	<script>
-		var pageFlag = 1
-		var datasource = {};
-		var datasource2={};
+		var pageFlag = 1;//是展现还是个人空间
+		var datasource = {};//此界面的数据
+		var preModel={};//上个界面传过来的数据
 		zonepArray = [];
 		idFlag = 'zx';
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
@@ -199,17 +198,17 @@
 		var SCREEN_WIDTH;
 		mui.plusReady(function() {
 			SCREEN_WIDTH = plus.screen.resolutionWidth;
-			datasource2 = plus.webview.currentWebview().data
+			preModel = plus.webview.currentWebview().data
 
-			publisherId = datasource2.publisherId
-			console.log('上个界面传过来的值' + JSON.stringify(datasource2));
+			publisherId = preModel.publisherId
+			console.log('上个界面传过来的值' + JSON.stringify(preModel));
 			mui.previewImage();
 
 			var comData = {
 				userId: personalUTID, //用户ID
-				userSpaceId: datasource2.TabId, //发布用户ID
+				userSpaceId: preModel.TabId, //发布用户ID
 				pageIndex: '1', //当前页数
-				pageSize: '100' //每页记录数
+				pageSize: '1000' //每页记录数
 			};
 			requestData(comData);
 			window.addEventListener('refreshZonep', function(data) {
@@ -361,7 +360,7 @@
 				InfoList.push(personalName);
 				InfoList.push(time);
 				InfoList.push(contentText);
-				InfoList.push(datasource2.IsFocused);
+				InfoList.push(datasource.IsFocused);
 				if(tempModel.EncImgAddr != '') {
 					var EncImgAddrs = tempModel.EncImgAddr.split('|');
 					var EncAddr = tempModel.EncAddr.split('|');
@@ -407,7 +406,7 @@
 				InteractionList.push(viewCount);
 				InteractionList.push(praiseList);
 				InteractionList.push(commentList);
-				if(datasource2.focusFlag == 0) {
+				if(preModel.focusFlag == 0) {
 					pageFlag = 0
 					Data = [InfoList, ImageList, InteractionList, EncAddrList, '']
 
@@ -721,6 +720,10 @@
 							var btn = document.getElementById(tempId);
 							btn.innerHTML = '已关注'
 							btn.className = 'mui-btn mui-pull-right btn-attentioned'
+							mui.fire(plus.webview.currentWebview().opener(), 'changeFocus', {
+							data:datasource.PublisherId,
+							IsFocused:1
+						})
 						}
 
 					})
@@ -744,6 +747,10 @@
 						var btn = document.getElementById(tempId);
 						btn.innerHTML = '关注'
 						btn.className = 'mui-btn mui-pull-right btn-attention'
+						mui.fire(plus.webview.currentWebview().opener(), 'changeFocus', {
+							data:datasource.PublisherId,
+							IsFocused:0
+						})
 					}
 
 				})
@@ -754,8 +761,8 @@
 			function pulldownRefresh() {
 				setTimeout(function() {
 					var comData = {
-				userId: datasource2.PublisherId, //用户ID
-				userSpaceId: datasource2.TabId, //发布用户ID
+				userId: preModel.PublisherId, //用户ID
+				userSpaceId: preModel.TabId, //发布用户ID
 				pageIndex: '1', //当前页数
 				pageSize: '100' //每页记录数
 			};

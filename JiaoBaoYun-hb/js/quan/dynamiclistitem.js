@@ -37,9 +37,19 @@ var dynamiclistitem = (function($, mod) {
 			}
 		} else {
 			if(InfoList[4] == 0) {
-				closeempty = '<button id="btn-focus' + data[4] + idFlag + id + '" type="button" class="mui-btn mui-pull-right btn-attention" style="width: 55px;">关注</button>'
+				if(!document.getElementById("spaceDetail")) {
+					closeempty = '<a data-is-focus=0  id ="btn-focus' + data[4] + idFlag + id + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray"></a>';
+
+				} else {
+					closeempty = '<button id="btn-focus' + data[4] + idFlag + id + '" type="button" class="mui-btn mui-pull-right btn-attention" style="width: 55px;">关注</button>'
+				}
 			} else {
-				closeempty = '<button id="btn-focus' + data[4] + idFlag + id + '" type="button" class="mui-btn mui-pull-right btn-attentioned style="width: 55px;">已关注</button>'
+				if(!document.getElementById("spaceDetail")) {
+					closeempty = '<a data-is-focus=1  id ="btn-focus' + data[4] + idFlag + id + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray"></a>';
+
+				} else {
+					closeempty = '<button id="btn-focus' + data[4] + idFlag + id + '" type="button" class="mui-btn mui-pull-right btn-attentioned" style="width: 55px;">已关注</button>'
+				}
 
 			}
 
@@ -122,8 +132,8 @@ var dynamiclistitem = (function($, mod) {
 			});
 		} else if(ImageNum >= 3) { //大于两张图片时
 			$.each(ImageUrlList, function(index, element) {
-				var	html1 = '<div class="mui-col-sm-4 mui-col-xs-4" style="height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
-				var	html2 = '<img class="dynamic-image" style="height: ' + (SCREEN_WIDTH - 30) / 3 + 'px;width: ' + (SCREEN_WIDTH - 30) / 3 + 'px;"  src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + citycode + 'cellImageType' + id + '"/></div>';
+				var html1 = '<div class="mui-col-sm-4 mui-col-xs-4" style="height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
+				var html2 = '<img class="dynamic-image" style="height: ' + (SCREEN_WIDTH - 30) / 3 + 'px;width: ' + (SCREEN_WIDTH - 30) / 3 + 'px;"  src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + citycode + 'cellImageType' + id + '"/></div>';
 				html = html + html1 + html2;
 			});
 		}
@@ -180,7 +190,6 @@ var dynamiclistitem = (function($, mod) {
 		} else {}
 		var commentList = InteractionData[3]; //评论列表数组
 
-
 		//[commentList]:评论列表1.评论[commenter,content]评论者，评论内容
 		//						2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
 
@@ -210,12 +219,12 @@ var dynamiclistitem = (function($, mod) {
 			html7 = '</div><div class="mui-media-body"><p>浏览' + viewCount + '次</p></div></div>';
 		}
 		var html8;
-		if(praiseList.length>0||commentList.length>0){//有点赞或者评论时显示分割线
-			html8 = '<div  class="mui-col-sm-12 mui-col-xs-12 "><div id="line'+ data[4] + idFlag +id+'" class="mui-media-body dynamic-line"></div></div>';
-		}else{
-			html8 = '<div  class="mui-col-sm-12 mui-col-xs-12 "><div id="line'+ data[4] + idFlag +id+'" class="mui-media-body dynamic-line mui-hidden"></div></div>';
+		if(praiseList.length > 0 || commentList.length > 0) { //有点赞或者评论时显示分割线
+			html8 = '<div  class="mui-col-sm-12 mui-col-xs-12 "><div id="line' + data[4] + idFlag + id + '" class="mui-media-body dynamic-line"></div></div>';
+		} else {
+			html8 = '<div  class="mui-col-sm-12 mui-col-xs-12 "><div id="line' + data[4] + idFlag + id + '" class="mui-media-body dynamic-line mui-hidden"></div></div>';
 		}
-//		var html8 = '<div id="line" class="mui-col-sm-12 mui-col-xs-12 "><div class="mui-media-body dynamic-line"></div></div>';
+		//		var html8 = '<div id="line" class="mui-col-sm-12 mui-col-xs-12 "><div class="mui-media-body dynamic-line"></div></div>';
 
 		html = html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8;
 		if(praiseList.length > 0 && praiseList.length <= 19) {
@@ -237,7 +246,7 @@ var dynamiclistitem = (function($, mod) {
 		var commentNum = 0;
 		$.each(commentList, function(index, element) {
 			commentNum++;
-			if(commentNum > 20&&(!document.getElementById("spaceDetail"))) {
+			if(commentNum > 20 && (!document.getElementById("spaceDetail"))) {
 				return false;
 			}
 			var firstComment = '';
@@ -250,7 +259,7 @@ var dynamiclistitem = (function($, mod) {
 			if(element.Replys && element.Replys.length != 0) {
 				for(var i = 0; i < element.Replys.length; i++) {
 					commentNum++
-					if(commentNum > 20&&(!document.getElementById("spaceDetail"))) {
+					if(commentNum > 20 && (!document.getElementById("spaceDetail"))) {
 						return false;
 					}
 					var tempModel = element.Replys;
@@ -275,7 +284,7 @@ var dynamiclistitem = (function($, mod) {
 			showAll = '';
 		}
 
-		htmlCommentList = htmlCommentList1 + htmlCommentList2 +showAll+ '</div>';
+		htmlCommentList = htmlCommentList1 + htmlCommentList2 + showAll + '</div>';
 
 		html = html + htmlPraiseList + htmlCommentList //+ showAll //+ htmlCommentBtn;
 
