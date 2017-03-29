@@ -38,7 +38,7 @@ var dynamiclistitem = (function($, mod) {
 		} else {
 			if(InfoList[4] == 0) {
 				if(!document.getElementById("spaceDetail")) {
-					closeempty = '<a data-is-focus=0  id ="btn-focus' + data[4] + idFlag + id + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray"></a>';
+					closeempty = '<a data-is-focus=0  id ="btn-focus' + data[4] + idFlag + id + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray margin-top:20px"></a>';
 
 				} else {
 					closeempty = '<button id="btn-focus' + data[4] + idFlag + id + '" type="button" class="mui-btn mui-pull-right btn-attention" style="width: 55px;">关注</button>'
@@ -62,7 +62,7 @@ var dynamiclistitem = (function($, mod) {
 		var html2 = '<img id="headImg' + data[4] + idFlag + id + '" class=" dynamic-personal-image" style="width:50px;height:50px;border-radius: 50%;" src="' + InfoList[0] + '"></div>';
 		var html3 = '<div class="mui-media-body dynamic-padding-left-10px">' + closeempty;
 		//姓名
-		var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:16px;margin-top:10px">' + InfoList[1] + '</p>';
+		var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:16px;margin-top:2px">' + InfoList[1] + '</p>';
 		//时间
 		var html5 = '<p>' + InfoList[2] + '</p></div></div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext ">';

@@ -76,13 +76,13 @@
 					var IsFocused = e.detail.IsFocused;
 					console.log(JSON.stringify(e.detail))
 					console.log(JSON.stringify(datasource))
-					for(var item1 in datasource){
+					for(var item1 in datasource) {
 						var tempArray = datasource[item1]
 						console.log(JSON.stringify(tempArray))
-						for(var i in tempArray ){
+						for(var i in tempArray) {
 							console.log(JSON.stringify(tempArray[i]))
-							if(tempArray[i].PublisherId == publisherID){
-								tempArray[i].IsFocused=IsFocused
+							if(tempArray[i].PublisherId == publisherID) {
+								tempArray[i].IsFocused = IsFocused
 							}
 						}
 					}
@@ -237,7 +237,7 @@
 								//81.（用户空间）获取用户所有关注的用户
 								getFocusByUser();
 							}
-						}else{
+						} else {
 							console.log(JSON.stringify(datasource))
 							zonepArray = datasource[sliderId];
 						}
@@ -419,14 +419,20 @@
 				//44.获取个人的订制城市
 				postDataPro_PostUTcity(comData, waitingDia, function(data) {
 					var eduArray = [];
+					var tempArray=[];
 					console.log('获取个人的订制城市展现频道:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
+						eduArray.push({
+							acode: 0,
+							aname: '全部',
+							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+						});
 						if(data.RspData[0].citys) {
 							//先通过‘|’将返回值分为数组
-							eduArray = data.RspData[0].citys.split('|');
+							tempArray = data.RspData[0].citys.split('|');
 							//遍历此数组
-							for(var m in eduArray) {
-								var tempStr = eduArray[m];
+							for(var m in tempArray) {
+								var tempStr = tempArray[m];
 								//初始化model
 								var model_area = {
 									acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
@@ -438,9 +444,11 @@
 								var tempArea = tempStr.split('_');
 								model_area.acode = tempArea[0];
 								model_area.aname = tempArea[1];
-								//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
-								eduArray.splice(m, 1, model_area);
+								//将对应的这个数组的str和model对换，将数组中的值，替换为model数组1
+								tempArray.splice(m, 1, model_area);
+								
 							}
+							eduArray=eduArray.concat(tempArray)
 							console.log('修改后的最终值为:' + JSON.stringify(eduArray));
 						}
 					} else {
@@ -448,10 +456,12 @@
 						//						mui.toast(data.RspTxt);
 					}
 					//如果定制城市为空
+
 					if(eduArray.length == 0) {
 						var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
 						console.log(JSON.stringify(uarea));
 						//加入手机号所在城市
+
 						eduArray.push({
 							acode: uarea.acode,
 							aname: uarea.aname,
@@ -460,7 +470,7 @@
 					}
 					//加入关注的人数据
 					eduArray.push({
-						acode: 0,
+						acode: 1,
 						aname: '我关注的人',
 						aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
 						index: 1, //请求第几页数据
@@ -478,6 +488,9 @@
 				/**
 				 * 请求区域内的动态
 				 */
+				if(cityCode==1){
+					cityCode=0;
+				}
 				postDataPro_getUserSpacesByArea({
 					userId: personalUTID, //用户ID
 					area: cityCode, //区域
@@ -574,7 +587,7 @@
 					if(data.RspCode == 0) {
 						if(data.RspData.Data.length == 0) {
 							mui.toast('暂无内容')
-							var table = document.getElementById("bot_ul_0")
+							var table = document.getElementById("bot_ul_1")
 							table.innerHTML = '';
 							return;
 						}
@@ -640,7 +653,6 @@
 											//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
 											if(tempModel.utid == tempModel0.LikeUsers[item2]) {
 												tempModel0.LikeUsers.splice(item2, 1, tempModel);
-												console.log(JSON.stringify('点赞的人=' + tempModel0.LikeUsers));
 											}
 										}
 										//对比id是否一致
@@ -690,9 +702,8 @@
 								zonepArray = zonepArray.concat(tempRspData);
 							}
 							datasource[sliderId] = zonepArray;
-							console.log('总数据：'+JSON.stringify(datasource));
 							console.log("重组后的数据：" + JSON.stringify(zonepArray));
-							setData(zonepArray, 0);
+							setData(zonepArray, 1);
 						});
 					} else {
 						mui.toast(data.RspTxt);
@@ -742,14 +753,14 @@
 					var pageID = sliderId.replace('top_', '')
 					var tempId = this.id;
 					var index = this.id.replace('btn-focus' + pageID + 'zx', '');
-					console.log('index='+index)
+					console.log('index=' + index)
 					var isFocus = zonepArray[index].IsFocused;
-//					var isFocus = jQuery('#'+this.id).data('isFocus');
-					var title,status;
-					if(isFocus==0){
+					//					var isFocus = jQuery('#'+this.id).data('isFocus');
+					var title, status;
+					if(isFocus == 0) {
 						title = '关注'
 						status = 1;
-					}else{
+					} else {
 						title = '已关注'
 						status = 0;
 					}
@@ -758,7 +769,7 @@
 						cancel: "取消",
 						buttons: btnArray
 					}, function(e) {
-						var flag = e.index;
+						var flag = e.index;                                                                            
 						switch(flag) {
 							case 0:
 								break;
@@ -781,16 +792,16 @@
 											setTimeout(function() {
 												//获取数据
 												if(pageID != 0) { //定制的城市
-													for(var i=0;i<zonepArray.length;i++){
-														if(zonepArray[index].PublisherId==zonepArray[i].PublisherId){
-															if(isFocus==0){
-																zonepArray[i].IsFocused=1;
+													for(var i = 0; i < zonepArray.length; i++) {
+														if(zonepArray[index].PublisherId == zonepArray[i].PublisherId) {
+															if(isFocus == 0) {
+																zonepArray[i].IsFocused = 1;
 																datasource[sliderId] = zonepArray
-															}else{
-																zonepArray[i].IsFocused=0;
+															} else {
+																zonepArray[i].IsFocused = 0;
 																datasource[sliderId] = zonepArray
 															}
-															
+
 														}
 													}
 												} else { //关注的人数据
@@ -1135,7 +1146,6 @@
 							zonepArray = data;
 						}
 						datasource[sliderId] = zonepArray;
-						console.log('总数据：'+JSON.stringify(datasource));
 						console.log("重组后的数据：" + JSON.stringify(zonepArray));
 						setData(zonepArray, cityCode);
 					} else {
