@@ -51,6 +51,7 @@
 		<script type="text/javascript" src="../../js/mui.zoom.js"></script>
 		<script type="text/javascript" src="../../js/mui.previewimage.js"></script>
 		<script type="text/javascript" src="../../js/utils/compress.js"></script>
+		<script type="text/javascript" src="../../js/utils/recordvideoutil.js" ></script>
 		<script type="text/javascript">
 			mui.init();
 			var multiMedia; //多媒体控件
@@ -73,12 +74,15 @@
 					Key: personalUTID, //utid
 					Picture: true, //是否显示图片图标
 					Audio: true, //是否显示音频图标
+					Video: true, //是否显示视频图标
 					TotalPicture: 9, //图片的个数
 					TotalAudio: 1, //音频的个数
+					TotalVideo: 1, //视频的个数
 				});
 
 				//完成
 				document.getElementById('finish').addEventListener('tap', function() {
+					document.activeElement.blur();
 					if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0) { //为空不允许发送
 						mui.toast('笔记不能为空');
 					} else if(notes.value.length > 2000) {

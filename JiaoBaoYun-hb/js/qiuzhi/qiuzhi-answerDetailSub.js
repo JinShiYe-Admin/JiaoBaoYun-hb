@@ -352,6 +352,11 @@ var setQuestion = function(datasource) {
 	var p = document.createElement('p');
 	p.innerHTML = datasource.AnswerContent;
 	questionContainer.appendChild(p);
+//	p.querySelectorAll("img").for
+	jQuery("#question-content img").each(function(index,ele){
+		this.style.width="100%";
+		this.style.height="auto";
+	})
 	events.clearChild(document.getElementById('answer-imgs'));
 	if(datasource.AnswerEncAddr) {
 		document.getElementById('answer-imgs').innerHTML = getPicInner(datasource);
@@ -394,7 +399,7 @@ var setAnswerManInfo = function(datasource) {
 		document.getElementById('btn-focus').style.display = 'none';
 	} else {
 		document.getElementById('anthor-portrait').src = updateHeadImg(datasource.uimg, 2);
-		document.getElementById("anthor-name").innerText = events.shortForString(datasource.unick,10) ;
+		document.getElementById("anthor-name").innerText = events.shortForString(datasource.unick.replace(/[\r\n]/g,""),10) ;
 		document.getElementById("anthor-info").style.display="inline-block"
 		document.getElementById("anthor-info").innerText = events.shortForString(datasource.AnswerManNote ? datasource.AnswerManNote : "暂无简介",12);
 		if(datasource.AnswerMan == selfId) { //如果专家是自己，隐藏关注按钮
@@ -445,13 +450,13 @@ var getPicInner = function(data) {
 var createCommentsInner = function(cell) {
 	var headImg = cell.UserImg;
 	var personName = cell.UserName;
-	var inner = '<div class="table-view-cell">' +
+	var inner = '<div class="table-view-cell"><div class="comments-cell">' +
 		'<div class="img-container"><img class="head-img" src="' + headImg + '"/></div>' +
 		'<div class="comment-container">' +
 		'<h5 class="comment-personName single-line">' + setName(cell) + '</h5>' +
-		'<p class="comment-words">' + cell.CommentContent + '</p>' +
-		'<p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p>' +
-		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>'
+		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>'+
+		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
+		console.log("当前评论内容："+inner)
 	return inner;
 }
 var setName = function(cell) {

@@ -324,6 +324,7 @@ var events = (function(mod) {
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		events.fireToPageNone('../show/show_home_1.html', 'infoChanged');
 		events.fireToPageNone('qiuzhi_home.html', 'infoChanged');
+		events.fireToPageNone('aboutme_sub.html', 'infoChanged');
 	}
 	mod.shortForString = function(str, len) {
 		if(str.length > len + 2) {
@@ -518,7 +519,11 @@ var events = (function(mod) {
 		window.addEventListener("touchmove",function(e){
 			var target=e.target;
 			if(target&&target.tagName=='TEXTAREA'){
-				e.stopPropagation();
+				if(target.scrollHeight>target.clientHeight){
+					e.stopPropagation();
+				}else{
+					target.dispatchEvent(e);
+				}
 			}
 		},true);
 	}

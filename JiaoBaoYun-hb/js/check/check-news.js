@@ -197,6 +197,7 @@
 				li.querySelector(".news-container").newsInfo = data[m];
 			}
 		}
+		jQuery("img.news-img").lazyload();
 	}
 	/**
 	 * 
@@ -246,7 +247,7 @@
 	var getImgs = function(item) {
 		if(item.timgs) {
 			var imgs = item.timgs.split("|");
-			return '<img class="news-img" src="' + imgs[0] + '"/>';
+			return '<img class="news-img" src="../../image/utils/default_load_2.gif"  data-original="' + imgs[0] + '"/>';
 		}
 		return '';
 	}

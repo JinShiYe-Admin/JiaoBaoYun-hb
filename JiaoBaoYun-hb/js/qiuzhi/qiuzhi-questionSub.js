@@ -255,6 +255,8 @@ function pulldownRefresh() {
 		answerFlag = 0;
 		//5.获取某个问题的详情
 		requestAskDetail();
+		//重置显示全部
+		document.getElementById("showAll").innerText = '显示全部';
 	}, 1500);
 }
 
@@ -397,7 +399,8 @@ function cleanQuestion() {
 function addQuestion(data) {
 	console.log('addQuestion:' + JSON.stringify(data));
 	questionTitle(data.AskTitle);
-	if(data.AskEncAddr != '') {
+
+	if(data.AskSFlag != 1 && data.AskEncAddr != '') {
 		AskEncAddr = data.AskEncAddr.split('|'); //图片原图
 		AskThumbnail = data.AskThumbnail.split('|'); //图片缩略图
 		addImages(0);
