@@ -164,7 +164,8 @@
       "js/mui.lazyload.img.js",
       "css/sciedu/sciedu.css",
       "js/storageKeyName.js",
-      "/image/utils/default_load_2.gif"
+      "/image/utils/default_load_2.gif",
+      "js/libs/crypto-js/crypto-js.js"
     ],
     "refer": [
       "html/utils/customizeCity.html",
@@ -397,7 +398,8 @@
       "image/utils/default_personalimage.png"
     ],
     "refer": [
-      "html/qiuzhi/qiuzhi-answerDetail.html"
+      "html/qiuzhi/qiuzhi-answerDetail.html",
+      "html/qiuzhi/qiuzhi-question.html"
     ]
   },
   "html/homework/doHomework-stu.html": {
@@ -1069,7 +1071,9 @@
       "js/utils/RSAEncrypt.js",
       "js/mine/account-info.js"
     ],
-    "refer": []
+    "refer": [
+      "html/mine/edit-info.html"
+    ]
   },
   "html/mine/qun_manage_invite_a.html": {
     "resources": [
@@ -1270,7 +1274,17 @@
   },
   "html/check/news-detail.html": {
     "resources": [
-      "js/check/news-detail.js"
+      "js/check/news-detail.js",
+      "js/libs/jquery.js",
+      "js/storageKeyName.js",
+      "js/libs/RSA/BigInt.js",
+      "js/libs/RSA/Barrett.js",
+      "js/libs/crypto-js/require.js",
+      "js/utils/signHmacSHA1.js",
+      "js/libs/RSA/RSA.js",
+      "js/utils/postData.js",
+      "js/utils/RSAEncrypt.js",
+      "js/libs/myStorage/myStorage.js"
     ],
     "refer": []
   },
@@ -1337,5 +1351,45 @@
     "refer": [
       "html/homework/homework-comment.html"
     ]
+  },
+  "html/mine/edit-info.html": {
+    "resources": [
+      "css/mine/edit-info.css"
+    ],
+    "refer": []
+  },
+  "html/qiuzhi/qiuzhi-question.html": {
+    "resources": [
+      "js/mui.min.js",
+      "html/qiuzhi/qiuzhi-questionSub.html",
+      "js/utils/events.js",
+      "css/mui.min.css",
+      "css/utils/common.css"
+    ],
+    "refer": [
+      "html/qiuzhi/qiuzhi-questionSub.html"
+    ]
+  },
+  "html/qiuzhi/qiuzhi-questionSub.html": {
+    "resources": [
+      "js/publicQiuzhiProtocol.js",
+      "js/qiuzhi/qiuzhi-questionSub.js",
+      "js/storageKeyName.js",
+      "js/libs/RSA/Barrett.js",
+      "js/libs/crypto-js/require.js",
+      "js/libs/myStorage/myStorage.js",
+      "js/libs/crypto-js/crypto-js.js",
+      "js/publicProtocol.js",
+      "js/libs/jquery.js",
+      "js/mui.zoom.js",
+      "js/libs/RSA/BigInt.js",
+      "css/qiuzhi/qiuzhi-questionSub.css",
+      "js/mui.previewimage.js",
+      "js/utils/signHmacSHA1.js",
+      "js/libs/RSA/RSA.js",
+      "js/utils/postData.js",
+      "js/utils/RSAEncrypt.js"
+    ],
+    "refer": []
   }
 }

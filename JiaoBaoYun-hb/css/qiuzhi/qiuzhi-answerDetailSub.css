@@ -79,14 +79,14 @@
 }
 
 .questionContent-container {
-	padding: 0 10px;
+	padding: 0 15px;
 	padding-top: 40px;
 	/*	border-bottom: solid gray 1px;*/
 	background-color: white;
 }
 
 .question-container {
-	padding: 5px 10px 40px 5px;
+	padding: 15px 15px 40px 15px;
 	/*padding-top:5px;
 	padding-bottom: 40px;*/
 	border-bottom: solid 1px #F2F3F5;
@@ -150,9 +150,10 @@
 	background-color: #E4E4E4;
 }
 
-.question-content>p {
+.question-content p {
 	word-wrap: break-word;
 	font-size: 14px;
+	text-align: justify;
 }
 
 
@@ -257,6 +258,7 @@
 	line-height: 1.1;
 	color: #323232;
 	padding-left: 5px;
+	font-size: 1.5rem;
 }
 
 .mui-popover {
