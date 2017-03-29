@@ -94,7 +94,8 @@
       "js/publicProtocol.js",
       "js/mui.zoom.js",
       "image/utils/default_personalimage.png",
-      "js/libs/crypto-js/crypto-js.js"
+      "js/libs/crypto-js/crypto-js.js",
+      "js/libs/myStorage/myStorage.js"
     ],
     "refer": [
       "html/qiuzhi/qiuzhi-addAnswer.html"
@@ -177,7 +178,8 @@
       "js/mui.min.js",
       "fonts/mui.ttf",
       "css/mui.min.css",
-      "css/utils/common.css"
+      "css/utils/common.css",
+      "fonts/iconfont.ttf"
     ],
     "refer": [
       "html/qiuzhi/qiuzhi-answerDetailSub.html"
@@ -220,7 +222,8 @@
       "js/mui.lazyload.img.js",
       "js/libs/crypto-js/crypto-js.js",
       "image/utils/default_personalimage.png",
-      "image/dynamic/praise.png"
+      "image/dynamic/praise.png",
+      "css/utils/pullToRefresh.css"
     ],
     "refer": []
   },
@@ -237,7 +240,23 @@
       "image/mine/about.png",
       "image/mine/my-space.png",
       "js/libs/crypto-js/crypto-js.js",
-      "image/mine/my-points.png"
+      "image/mine/my-points.png",
+      "js/utils/events.js",
+      "js/libs/RSA/Barrett.js",
+      "js/libs/myStorage/myStorage.js",
+      "css/iconfont/iconfont.css",
+      "js/mui.min.js",
+      "js/utils/signHmacSHA1.js",
+      "js/utils/postData.js",
+      "js/storageKeyName.js",
+      "js/libs/crypto-js/require.js",
+      "css/utils/common.css",
+      "js/publicProtocol.js",
+      "js/libs/jquery.js",
+      "js/libs/RSA/BigInt.js",
+      "css/mui.min.css",
+      "js/libs/RSA/RSA.js",
+      "js/utils/RSAEncrypt.js"
     ],
     "refer": [
       "html/mine/about.html",
@@ -268,7 +287,8 @@
       "js/libs/RSA/RSA.js",
       "js/utils/postData.js",
       "js/utils/RSAEncrypt.js",
-      "js/libs/myStorage/myStorage.js"
+      "js/libs/myStorage/myStorage.js",
+      "js/storageKeyName.js"
     ],
     "refer": []
   },
@@ -463,7 +483,9 @@
       "js/cloud/AndroidFileSystem.js",
       "css/cloud/file.css",
       "css/mui.min.css",
-      "css/utils/common.css"
+      "css/utils/common.css",
+      "js/mui.min.js",
+      "js/utils/events.js"
     ],
     "refer": []
   },
