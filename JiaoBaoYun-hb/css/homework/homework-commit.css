@@ -1,67 +1,94 @@
 /**
  * 提交评论按钮样式
  */
-html,body,.mui-content{
+
+html,
+body,
+.mui-content {
 	background-color: white;
 }
-.btn-submit{
+
+.btn-submit {
 	/*position: absolute;*/
-	margin-left: 5%;
-	width: 90%;
+	width: 100%;
 	height: 4rem;
 	margin-bottom: 1rem;
 	background-color: #1DB8F1;
-	border-color:  #1DB8F1;
+	border-color: #1DB8F1;
 }
-.comment-area{
+
+.comment-area {
 	margin-top: 1rem;
-	border: solid thin lightgray;
+	padding: 10px;
+	border: solid 1px #E4E4E4;
 }
-.homework-container{
+
+.homework-container {
 	min-height: 20rem;
 }
-.comment-item{
-	background-color:#f2f3f5 ;
-	padding: .5rem 1rem;
+
+.comment-item {
+	background-color: #f2f3f5;
+	padding:5px 15px;
 	/*margin:-1rem,0 ;*/
-	margin: 0 -1rem;
+	margin: 0 -15px;
 	color: #383838;
+	font-size: 16px;
+	letter-spacing: 1px;
 }
-.result-text{
+
+.student-info {
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
+}
+
+.result-text {
 	min-height: 4rem;
 }
-.mui-scroll{
-	padding: 1rem;
-}
-.stuInfo-img{
-	display: inline-block;
-	width: 4rem;
-	height: 4rem;
+
+.stuInfo-img {
+	width: 40px;
+	height: 40px;
 	border-radius: 50%;
-	margin-right: 1rem;
-	max-width: 20%;
 }
-.stuInfo-words{
-	display: inline-block;
-	width: 80%;
+
+.stuInfo-words {
+	padding:10px 5px 0;
+	width: 50%;
+	flex-grow: 1;
 }
-.student-info{
-	padding-top: 1rem;
-}
-.answer-img{
+
+.answer-img {
 	padding: .5rem;
 }
-.homework-info p,.stu-name{
+
+.homework-info p,
+.stu-name {
 	color: #404040;
 }
-.the-line{
-	height:1px;
-	background-color: #DEDFE0;
-	margin: 0 -1rem;
-/*	border-bottom: solid 1px ;*/
+
+.stu-name {
+	color: #323232;
 }
-.homework-info,.result-text{
-	padding: 15px 0;
+.submit-time{
+	color: #B7B7B7;
 }
 
+.the-line {
+	height: 1px;
+	background-color: #E4E4E4;
+	margin: 0 -15px;
+}
 
+.homework-info,
+.result-text {
+	padding: 10px 0;
+}
+.mui-scroll{
+	padding: 0 15px;
+}
+.work-result{
+	font-size: 14px;
+	color: #474747;
+}
