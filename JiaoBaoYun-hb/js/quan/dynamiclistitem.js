@@ -38,7 +38,7 @@ var dynamiclistitem = (function($, mod) {
 		} else {
 			if(InfoList[4] == 0) {
 				if(!document.getElementById("spaceDetail")) {
-					closeempty = '<a data-is-focus=0  id ="btn-focus' + data[4] + idFlag + id + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray margin-top:20px"></a>';
+					closeempty = '<a data-is-focus=0  id ="btn-focus' + data[4] + idFlag + id + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray "></a>';
 
 				} else {
 					closeempty = '<button id="btn-focus' + data[4] + idFlag + id + '" type="button" class="mui-btn mui-pull-right btn-attention" style="width: 55px;">关注</button>'
