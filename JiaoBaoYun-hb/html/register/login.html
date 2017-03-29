@@ -213,25 +213,7 @@ none; margin-top: -15px;">登录</button>
 				});
 				$.plusReady(function() {
 					//---设置沉浸式---start---
-					Statusbar.barHeight(); //设置距离顶部的高度
-					var header = document.querySelector('header');
-					if(header) {
-						if(mui.os.android) {
-							//console.log('window.header');
-							var headerNum = localStorage.getItem('StatusHeightNo') * 1 + 45;
-							//设置顶部导航高度（状态栏）
-							header.style.height = headerNum + 'px';
-							header.style.paddingTop = localStorage.getItem('$Statusbar');
-							//mui.alert(headerNum, 'header-height');
-							//mui.alert(localStorage.getItem('StatusbarStr'), 'header-paddingTop');
-							var content = document.querySelector(".mui-content");
-							//设置顶部导航高度（状态栏）
-							if(content) {
-								//console.log('window.content');
-								content.style.marginTop = localStorage.getItem('$Statusbar');
-							}
-						}
-					}
+					Statusbar.barHeight(); //获取一些硬件参数
 
 					if(plus.os.name == "Android") {
 						//47.获取APP版本号

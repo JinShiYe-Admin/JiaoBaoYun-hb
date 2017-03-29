@@ -109,6 +109,8 @@
 
 .icon-download:before { content: "\e63b"; }
 
+.icon-yuyin2:before { content: "\e658"; }
+
 .icon-yunpan:before { content: "\e607"; }
 
 .icon-fanhui2:before { content: "\e651"; }
@@ -122,6 +124,8 @@
 .icon-dongtai1:before { content: "\e671"; }
 
 .icon-chakan:before { content: "\e697"; }
+
+.icon-xiajiantou:before { content: "\e649"; }
 
 .icon-liulan:before { content: "\e635"; }
 
@@ -253,3 +257,8 @@
 
 .icon-shanchu2:before { content: "\e647"; }
 
+.icon-shipin2:before { content: "\e65e1"; }
+
+.icon-xiangji2:before { content: "\e65e2"; }
+
+.icon-yuyin3:before { content: "\e65e3"; }

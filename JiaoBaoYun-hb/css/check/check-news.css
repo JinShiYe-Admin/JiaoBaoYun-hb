@@ -133,15 +133,15 @@ body {
 .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-progress-bar {
 	background-color: #1DB8F1;
 }
-.check-button{
+input[type="button"].check-button{
 	border-color:#B7B7B7 ;
 	color: #1db8f1;
 }
-.passed-button{
+input[type="button"].passed-button{
 	border-color:#B7B7B7;
 	color: #808080;
 }
-.refused-button{
+input[type="button"].refused-button{
 	border-color:#1db8f1;
 	color:#1db8f1;
 }

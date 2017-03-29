@@ -4,14 +4,25 @@
 #MultiMedia_Audio_Header,
 #MultiMedia_Video_Header {
 	font-size: 30px;
-	/*background: red;*/
+	/*background: wheat;*/
 	margin-left: 15px;
-	color: gray;
+	color: #b7b7b7;
+}
+#MultiMedia_Picture_Header,{
+	/*相机*/
+	position: absolute;
+	padding-top: 2px;
+}
+#MultiMedia_Video_Header{
+	/*视频*/
+	position: absolute;
+	padding-top: 2px;
+	padding-left: 2px;
 }
 
-.multimedia-body {
-	background-color: white;
-}
+/*.multimedia-body {
+	background-color: red;
+}*/
 
 .multimedia-header {
 	/*图标*/

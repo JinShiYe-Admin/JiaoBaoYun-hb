@@ -15,27 +15,21 @@
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<link rel="stylesheet" href="../../css/cloud/file.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/utils/MUI-pullToRefresh.css" />
-		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/mui.pullToRefresh.js"></script>
-		<script src="../../js/mui.pullToRefresh.material.js"></script>
-		<script type="text/javascript" src="../../js/utils/events.js"></script>
-		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
-		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
 		<style>
 			.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-			
+
 			.mui-table-view {
 				/*background-color: white;*/
 			}
-			
+
 			.cloud-item {
 				background-color: white;
 			}
-			
+
 			.cloud-item-left {
 				width: 16%;
 				border-right: 1px solid #D9D9D9;
@@ -44,47 +38,47 @@
 				font-weight: bold;
 				font-size: 1.6rem;
 			}
-			
+
 			.cloud-item-right {
 				/*margin-left: 16%;*/
 				width: 84%;
 				float: right;
 			}
-			
+
 			#cloudstorage_0,
 			#cloudrecord_0,
 			#cloudapps_0 {
 				/*每一项的第一行*/
 				/*background-color: red;*/
 			}
-			
+
 			#cloudstorage_1,
 			#cloudrecord_1,
 			#cloudapps_1 {
 				/*每一项的第二行*/
 				/*background-color: blue;*/
 			}
-			
+
 			.mui-plus-pullrefresh .mui-scroll {
 				position: absolute;
 				/*width: 100%;*/
 			}
-			
+
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				color: black;
 				border: none;
 			}
-			
+
 			.mui-table-view-cell {
 				display: inline-block;
 				width: auto;
 				padding: 1px 1px;
 			}
-			
+
 			.mui-slider-indicator .mui-table-view-cell.mui-active {
 				background: white;
 			}
-			
+
 			.cloud-red-point {
 				position: absolute;
 				background: red;
@@ -93,27 +87,27 @@
 				border-radius: 50%;
 				display: none;
 			}
-			
+
 			img {
 				border-radius: 50%;
 			}
-			
+
 			#cloudstorage_1 img {
 				border-radius: 0px;
 			}
-			
+
 			.icon-jiaxiabiao {
 				color: #0ABAF5;
 			}
-			
+
 			.icon-banxiabiao {
 				color: #FFBA00;
 			}
-			
+
 			.icon-re {
 				color: #FD681E;
 			}
-			
+
 			.icon-re,
 			.icon-banxiabiao,
 			.icon-jiaxiabiao {
@@ -121,7 +115,7 @@
 				border: none !important;
 				top: 0px;
 			}
-			
+
 			.mui-popup-input input {
 				/*popup 输入框*/
 				height: 34px;
@@ -151,7 +145,7 @@
 			</div>
 			<!--家校互动-->
 			<div id="cloudrecord" class="cloud-item">
-				<div class="cloud-item-left">
+				<div id="cloudrecordname" class="cloud-item-left">
 					家<br />校<br />互<br />动
 				</div>
 				<div class="cloud-item-right">
@@ -165,9 +159,9 @@
 			</div>
 			<!--应用-->
 			<div id="cloudapps" class="cloud-item">
-				<font class="cloud-item-left">
+				<div id="cloudappsname" class="cloud-item-left">
 					应<br/>用
-				</font>
+				</div>
 				<div class="cloud-item-right mui-table-view">
 					<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 						<div id="cloudapps_0" class="mui-scroll">
@@ -180,19 +174,7 @@
 				</div>
 			</div>
 		</div>
-
 		<script type="text/javascript">
-			mui.init();
-
-			//声明变量
-			//文件存储数组
-			var fileArray = [];
-			//获取所有的群
-			var datasource = [];
-			//获取学生列表
-			var topStudentArr = [];
-			//未读数model
-			var noReadModel = {};
 			//每一行的高度
 			var cloudItemHeight = 0;
 			//第一行和第三行的比重
@@ -211,21 +193,82 @@
 			var maxWidth = 0;
 			//每个图标中图标图片的宽度
 			var imgeWith = 0.6;
+
+			init(); //初始化界面
+
+			/**
+			 * 初始化界面
+			 */
+			function init() {
+				//屏幕宽度
+				var screenWidth = localStorage.getItem('resolutionWidth') * 1;
+				//webview高度
+				var webHeight = localStorage.getItem('resolutionHeight') * 1 - (localStorage.getItem('getStatusbarHeight') * 1 + 45 + 50);
+
+				//每一行的高度
+				cloudItemHeight = (webHeight * 1 - (webHeight * 0.015 * 4)) / (cloudFirst + cloudSecond + cloudThird);
+				//左侧文字宽度
+				var nameWidth = document.getElementById("cloudstoragename").offsetWidth;
+				//console.log('nameWidth:' + nameWidth);
+				//每个图标的宽度
+				maxWidth = (screenWidth * 1 - nameWidth * 1 - 5) / 4.5;
+
+				var allItem = document.querySelectorAll('.cloud-item');
+				for(var i = 0; i < allItem.length; i++) {
+					var sliderHeight = 0;
+					if(allItem[i].id == 'cloudrecord') { //家校互动
+						allItem[i].style.height = (cloudItemHeight * cloudSecond) + 'px';
+						cloudSecondItemHeight = allItem[i].offsetHeight;
+						sliderHeight = cloudSecondItemHeight;
+					} else if(allItem[i].id == 'cloudstorage') {
+						allItem[i].style.height = (cloudItemHeight * cloudFirst) + 'px';
+						cloudFirstItemHeight = allItem[i].offsetHeight;
+						sliderHeight = cloudFirstItemHeight;
+					} else if(allItem[i].id == 'cloudapps') {
+						allItem[i].style.height = (cloudItemHeight * cloudThird) + 'px';
+						cloudThirdItemHeight = allItem[i].offsetHeight;
+						sliderHeight = cloudThirdItemHeight;
+					}
+					allItem[i].style.marginTop = (webHeight * 0.015) + 'px';
+					allItem[i].style.marginBottom = (webHeight * 0.015) + 'px';
+					allItem[i].children[0].style.marginTop = (allItem[i].offsetHeight - allItem[i].children[0].offsetHeight) / 2 + 'px';
+					allItem[i].children[1].children[0].style.height = sliderHeight / 2 + 'px';
+					allItem[i].children[1].children[1].style.height = sliderHeight / 2 + 'px';
+					allItem[i].children[1].children[0].children[0].style.height = sliderHeight / 2 + 'px';
+					allItem[i].children[1].children[1].children[0].style.height = sliderHeight / 2 + 'px';
+				}
+				document.getElementById("refreshContainer").style.visibility = 'visible';
+			}
+		</script>
+
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.pullToRefresh.js"></script>
+		<script src="../../js/mui.pullToRefresh.material.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
+		<script type="text/javascript">
+			//声明变量
+			//文件存储数组
+			var fileArray = [];
+			//获取所有的群
+			var datasource = [];
+			//获取学生列表
+			var topStudentArr = [];
+			//未读数model
+			var noReadModel = {};
+
 			var homeworkReady = false;
+
+			mui.init();
 			mui.plusReady(function() {
-				events.preload("../homework/homework-tea.html", 300);
-				events.preload('storage_main.html'); //预加载云存储
-				events.preload('storage_upload.html'); //预加载上传文件选择
-				events.preload('storage_upload_choose.html'); //预加载选择上传文件的方式
-				window.addEventListener("homeworkReady", function() {
-					homeworkReady = true;
-				})
+
 				//下拉刷新
 				mui(".cloud-item-right .mui-scroll-wrapper .mui-scroll").pullToRefresh({
 					down: {
 						callback: function() {
 							var self = this;
-							console.log("下拉刷新");
+							//console.log("下拉刷新");
 							events.fireToPageNone('../index/index.html', 'aboutmNoRead');
 							//文件存储数组
 							fileArray = [];
@@ -241,55 +284,18 @@
 						}
 					},
 				});
-
-				//---调整界面---start---
-
-				//屏幕宽度
-				var screenWidth = plus.screen.resolutionWidth;
-				//webview高度
-				var webHeight = plus.screen.resolutionHeight - (plus.navigator.getStatusbarHeight() + 45 + 50);
-				//console.log('webHeight:' + webHeight);
-				//每一行的高度
-				cloudItemHeight = (webHeight * 1 - (webHeight * 0.015 * 4)) / (cloudFirst + cloudSecond + cloudThird);
-				//左侧文字宽度
-				var nameWidth = document.getElementById("cloudstoragename").offsetWidth;
-				//console.log('nameWidth:' + nameWidth);
-				//每个图标的宽度
-				maxWidth = (screenWidth * 1 - nameWidth * 1 - 5) / 4.5;
-				console.log('maxWidth:' + maxWidth);
-				mui('.cloud-item').each(function(index, element) {
-					var sliderHeight = 0;
-					if(element.id == 'cloudrecord') { //家校互动
-						element.style.height = (cloudItemHeight * cloudSecond) + 'px';
-						cloudSecondItemHeight = element.offsetHeight;
-						sliderHeight = cloudSecondItemHeight;
-					} else if(element.id == 'cloudstorage') {
-						element.style.height = (cloudItemHeight * cloudFirst) + 'px';
-						cloudFirstItemHeight = element.offsetHeight;
-						sliderHeight = cloudFirstItemHeight;
-					} else if(element.id == 'cloudapps') {
-						element.style.height = (cloudItemHeight * cloudThird) + 'px';
-						cloudThirdItemHeight = element.offsetHeight;
-						sliderHeight = cloudThirdItemHeight;
-					}
-					element.style.marginTop = (webHeight * 0.015) + 'px';
-					element.style.marginBottom = (webHeight * 0.015) + 'px';
-
-					//每一项左侧的文字垂直居中
-					element.firstElementChild.style.marginTop = (element.offsetHeight - element.firstElementChild.offsetHeight) / 2 + 'px';
-					//设置右侧左右滑动的高度
-					element.lastElementChild.firstElementChild.style.height = sliderHeight / 2 + 'px';
-					element.lastElementChild.lastElementChild.style.height = sliderHeight / 2 + 'px';
-					element.lastElementChild.firstElementChild.firstElementChild.style.height = sliderHeight / 2 + 'px';
-					element.lastElementChild.lastElementChild.firstElementChild.style.height = sliderHeight / 2 + 'px';
-				});
-				document.getElementById("refreshContainer").style.visibility = 'visible';
-				//---调整界面---end---
-
 				//-----------设置数据start---------------
 				addcloudapps_0(); //应用
 				changeData();
 				//-----------设置数据end---------------
+				events.preload("../homework/homework-tea.html", 300);
+				events.preload('storage_main.html'); //预加载云存储
+				events.preload('storage_upload.html'); //预加载上传文件选择
+				events.preload('storage_upload_choose.html'); //预加载选择上传文件的方式
+
+				window.addEventListener("homeworkReady", function() {
+					homeworkReady = true;
+				});
 
 				//重新登录或者自动登录后获取的信息
 				window.addEventListener('infoChanged', function() {
@@ -301,7 +307,7 @@
 				window.addEventListener('stuImgeChanged', function(e) {
 					//设置页面信息
 					var data = e.detail;
-					console.log(JSON.stringify(data));
+					//console.log(JSON.stringify(data));
 					document.getElementById("student_imge_" + data.id).src = data.img;
 				});
 
@@ -355,7 +361,7 @@
 						var b = plus.navigator.getStatusbarHeight(); //状态栏高度
 						var c = plus.screen.resolutionHeight; //屏幕高度
 						var d = (c - a - b);
-						console.log('webview高度：' + a + " 状态栏高度：" + b + " 屏幕高度：" + c + " 输入法高度:" + d)
+						//console.log('webview高度：' + a + " 状态栏高度：" + b + " 屏幕高度：" + c + " 输入法高度:" + d)
 						if(a < androidHeight) {
 							//键盘弹出
 							self.setStyle({
@@ -367,24 +373,28 @@
 							});
 						}
 					}, false);
-				} 
+				}
 				//-----------设置数据end-----------------
 
 				//-----------设置监听start---------------
-
 				//---云盘start---
 				//云盘第一行
 				mui('#cloudstorage_0').on('tap', '.mui-table-view-cell', function() {
 					var id = this.id;
+					var self = this;
 					if(id == 'shoujitongxunlu') { //手机通讯录
 						mui.toast('手机通讯录功能暂未开放');
 					} else if(id == 'shoujituku') { //手机图库
 						mui.toast('手机图库功能暂未开放');
 					} else { //档案
+						self.disabled = true;
 						events.openNewWindowWithData('record_student_main.html', {
 							StudentId: this.getAttribute('StudentId'), //学生ID
 							StudentName: this.getAttribute('StudentName') //学生姓名
 						});
+						setTimeout(function() {
+							self.disabled = false;
+						}, 1500);
 					}
 				});
 
@@ -458,18 +468,16 @@
 				//---家校互动---start---
 				mui('#cloudrecord_0').on('tap', '.mui-table-view-cell', function() {
 					var id = this.id;
+					var self = this;
+					self.disabled = true;
 					if(id == 'homework') { //作业
 						requestClassData();
 					} else if(id == 'manage') { //班级管理
 						events.openNewWindowWithData('/html/mine/qun_manage_1.html', {
 							type: '1' //0群管理,1人员资料
 						});
-						//events.openNewWindow('/html/mine/qun_manage.html');
-						//events.openNewWindow('/html/mine/qun_data.html');
 					} else { //学生
-						console.log('学生');
 						var index = this.id.replace('studentsdynamic', '');
-						console.log('studentsdynamic====' + index)
 						var stuid = this.getAttribute('data-stuid');
 						document.getElementById("studyn_redpoint_" + stuid).style.display = 'none';
 						mui.openWindow({
@@ -489,9 +497,14 @@
 							},
 						});
 					}
+					setTimeout(function() {
+						self.disabled = false;
+					}, 1500);
 				});
 
 				mui('#cloudrecord_1').on('tap', '.mui-table-view-cell', function() {
+					var self = this;
+					self.disabled = true;
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					var id = this.id;
 					var gid = this.getAttribute('data-gid');
@@ -500,9 +513,9 @@
 					} else { //班级
 						var type = this.getAttribute('type');
 						if(type == 0) {
-							console.log('班级');
+							//console.log('班级');
 							var index = this.id.replace('tarClass', '');
-							console.log('index：' + index);
+							//console.log('index：' + index);
 							document.getElementById("tarClass_" + gid).style.display = 'none';
 							mui.openWindow({
 								url: '../quan/class_space.html',
@@ -540,20 +553,25 @@
 							});
 						}
 					}
+					setTimeout(function() {
+						self.disabled = false;
+					}, 1500);
 				});
 				//---家校互动---end---
 
 				//---应用---start---
 				mui('#cloudapps').on('tap', '.mui-table-view-cell', function() {
+					var self = this;
+					self.disabled = true;
 					var value = this.getAttribute("value");
-					switch(value) {
-						case "0": //笔记
-							events.openNewWindow('app_notes_main.html');
-							break;
-						case "1": //记事
-							events.openNewWindow('app_keeprecord.html');
-							break;
+					if(value == '0') { //笔记
+						events.openNewWindow('app_notes_main.html');
+					} else if(value == '1') { //记事
+						events.openNewWindow('app_keeprecord.html');
 					}
+					setTimeout(function() {
+						self.disabled = false;
+					}, 1500);
 				});
 				//---应用---end---
 
@@ -764,7 +782,6 @@
 						var path = window.storageKeyName.QNPB + 'yuncunc/' + window.storageKeyName.CLOUDSTORAGETHUMB + fileName + '.png'
 						if(type == 'QN_video' || type == 'QN_img') {
 							html1 = '<img src="' + path + '" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>';
-							//html1 = '<span class="mui-icon iconfont ' + type + '" style="border:none;font-size:' + (maxWidth * imgeWith) + 'px;"></span>';
 						} else { //七牛能生成缩略图的图片或视频
 							html1 = '<img src="../../image/cloud/' + type + '" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>';
 						}

@@ -24,24 +24,6 @@
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 
 		<style>
-			/*.btn-attention {
-				border: none;
-				margin-top: 5px;
-				min-width: 7rem;
-				max-width: 25%;
-				color: white;
-				background-color: #1db8F1;
-			}
-			
-			.btn-attentioned {
-				border: none;
-				margin-top: 5px;
-				min-width: 7rem;
-				max-width: 25%;
-				color: white;
-				background-color: #b7b7b7;
-			}*/
-			
 			.ellipsis-show {
 				/*内容*/
 				display: -webkit-box;
@@ -211,16 +193,7 @@
 		var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
 		var publisherId;
 		mui.init({
-//			pullRefresh: {
-//				container: '#pullrefresh',
-//				down: {
-//					callback: pulldownRefresh
-//				},
-//				up: {
-//					contentrefresh: '',
-//					callback: pullupRefresh
-//				}
-//			}
+
 		});
 		mui('.mui-scroll-wrapper').scroll();
 		var SCREEN_WIDTH;
@@ -306,17 +279,14 @@
 								var tempModel0 = tempRspData;
 								//遍历点赞的人
 								for(var item2 in tempModel0.LikeUsers) {
-									//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
 									if(tempModel.utid == tempModel0.LikeUsers[item2]) {
 										tempModel0.LikeUsers.splice(item2, 1, tempModel);
 									}
 								}
 								//对比id是否一致
 								if(tempModel0.PublisherId == tempModel.utid) {
-									console.log('kkkkkkkkkk='+tempModel0.PublisherId)
 									//合并
 									tempModel0 = $.extend(tempModel0, tempModel);
-									console.log(JSON.stringify(tempModel0))
 								}
 								//循环当前model中的回复数组
 								for(var item1 in tempModel0.Comments) {
@@ -351,7 +321,6 @@
 							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 							datasource = tempRspData
 							zonepArray.push(datasource);
-							console.log(JSON.stringify(datasource))
 							setSpaceDetail(datasource);
 
 						} else {
@@ -453,8 +422,9 @@
 			}
 
 			function addComment() {
+				
 				events.openNewWindowWithData('../show/add-comment.html', {
-					tempIndex: '0',
+					tempIndex: tempIndex,
 					zonepArray: zonepArray
 				})
 
@@ -501,9 +471,7 @@
 									//						var wobj = plus.webview.currentWebview();
 									//						wobj.reload(true);
 									var deleteNode = document.getElementById(index);
-									console.log(deleteNode.parentNode.innerHTML);
 									deleteNode.parentNode.removeChild(deleteNode);
-									console.log(deleteNode.parentNode);
 									zonepArray.splice(index, 1)
 								} else {
 									mui.toast(data.RspTxt);
@@ -541,18 +509,14 @@
 						postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
 							wd.close();
 							if(data.RspCode == 0) {
-								console.log('index=' + index)
 								var a = document.getElementById("praise" + index);
 								a.style.color = 'rgb(26, 155, 255)'
 								//							mui.toast('点赞成功');
 								var PraiseList = document.getElementById("PraiseList" + index);
-								console.log(PraiseList.innerHTML);
 								var praiseNameList = PraiseList.getElementsByTagName("font");
-								console.log(praiseNameList.length)
 								if(praiseNameList.length > 0) {
 									var praiseName = praiseNameList[0];
 									praiseName.innerHTML = personalunick + '、' + praiseName.innerHTML;
-									console.log(praiseName.innerHTML);
 								} else {
 
 									PraiseList.innerHTML = '<img id= "praiseImg" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' +
@@ -587,7 +551,6 @@
 								} else {
 									console.log('一个人点赞')
 
-									console.log(PraiseList.outerHTML);
 									PraiseList.removeChild(praiseName);
 									var praiseImg = document.getElementById("praiseImg");
 									PraiseList.removeChild(praiseImg);
@@ -612,27 +575,21 @@
 				//			评论
 				mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
 					//				click.push('评论');
-					tempIndex = this.id.replace('comment', '');
-					console.log('tempIndex====' + tempIndex)
+					tempIndex = this.id.replace('comment' + '0zx', '');
+					tempIndex = tempIndex.replace('comment', '');
+					tempIndex = tempIndex.replace('zx', '');
 					addComment();
 
 					window.event.stopPropagation()
 
 				});
-				//底部评论按钮
-				mui('.mui-table-view').on('tap', '.dynamic-comment-btn', function() {
-					tempIndex = this.id.replace('bottomComment', '');
-					console.log('tap====' + tempIndex)
-					addComment();
 
-					window.event.stopPropagation()
-				});
 
 				//			回复评论
 				mui('.mui-table-view').on('tap', '.replyComment', function() {
-
-					tempIndex = this.id.replace('replyComment', '');
-					console.log('tempIndex====' + tempIndex)
+					tempIndex = this.id.replace('replyComment' + '0zx', '');
+					tempIndex = tempIndex.replace('replyComment', '');
+					tempIndex = tempIndex.replace('zx', '');
 					addComment();
 
 					window.event.stopPropagation()
