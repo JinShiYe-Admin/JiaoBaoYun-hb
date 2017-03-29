@@ -75,7 +75,8 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 id="title" class="mui-title"></h1>
-			<a id="addData" class="mui-icon iconfont icon-ruqun mui-pull-right" style="display: none;"></a>
+			<a id="changeInfo" class="mui-icon iconfont icon-qunziliao mui-pull-right" style="display: none;"></a>
+			<a id="addData" class="mui-icon iconfont icon-ruqun mui-pull-right" style="display: none;margin-right: 5px;"></a>
 		</header>
 		<div id="content" class="mui-content">
 			<span id="noqun" class="mui-icon mui-icon-plus qun-add" style="display: none;position: absolute;top: 80px;">新增群按钮</span>
@@ -190,14 +191,34 @@
 				});
 
 				//长按修改群信息
-				mui('#qunList').on('longtap', '.mui-control-item', function() {
-					var id = this.id;
-					var info = JSON.parse(this.getAttribute('data-info'));
-					console.log(id + '|' + JSON.stringify(info));
-					events.openNewWindowWithData('qun_manage_info_change.html', {
-						gid: info.gid, //群ID
-						listener: { webid: 'qun_manage_1.html', winid: 'changeQunInfo' } //webview的id
-					});
+				//				mui('#qunList').on('longtap', '.mui-control-item', function() {
+				//					var id = this.id;
+				//					var info = JSON.parse(this.getAttribute('data-info'));
+				//					console.log(id + '|' + JSON.stringify(info));
+				//					events.openNewWindowWithData('qun_manage_info_change.html', {
+				//						gid: info.gid, //群ID
+				//						listener: { webid: 'qun_manage_1.html', winid: 'changeQunInfo' } //webview的id
+				//					});
+				//				});
+
+				//点击修改群信息
+				document.getElementById('changeInfo').addEventListener('tap', function() {
+					var qunEle = mui('.mui-control-item.mui-active')[0];
+					if(qunEle) {
+						document.getElementById('changeInfo').disabled = true;
+						var id = qunEle.id;
+						var info = JSON.parse(qunEle.getAttribute('data-info'));
+						console.log(id + '|' + JSON.stringify(info));
+						events.openNewWindowWithData('qun_manage_info_change.html', {
+							gid: info.gid, //群ID
+							listener: { webid: 'qun_manage_1.html', winid: 'changeQunInfo' } //webview的id
+						});
+						setTimeout(function() {
+							document.getElementById('changeInfo').disabled = false;
+						}, 1500);
+					} else {
+						mui.toast('未获取到群信息');
+					}
 				});
 
 				//创建一个群
@@ -462,6 +483,7 @@
 								document.getElementById("noqun").style.display = 'none';
 								document.getElementById("qun_sw").style.visibility = 'visible';
 								document.getElementById("slider_group").style.visibility = 'visible';
+								document.getElementById("changeInfo").style.display = 'inline';
 								var tempList = data.RspData;
 								for(var i = 0; i < tempList.length; i++) {
 									addQunItem(tempList[i], i, tempList.length);

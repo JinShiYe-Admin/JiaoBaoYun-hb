@@ -399,7 +399,8 @@ function cleanQuestion() {
 function addQuestion(data) {
 	console.log('addQuestion:' + JSON.stringify(data));
 	questionTitle(data.AskTitle);
-	if(data.AskEncAddr != '') {
+
+	if(data.AskEncAddr != '' && data.AskSFlag != 1) {
 		AskEncAddr = data.AskEncAddr.split('|'); //图片原图
 		AskThumbnail = data.AskThumbnail.split('|'); //图片缩略图
 		addImages(0);
