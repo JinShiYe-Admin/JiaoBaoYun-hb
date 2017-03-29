@@ -74,7 +74,7 @@
 		<script type="text/javascript">
 			mui.init();
 			//倒计时
-			var wait = 60;
+			var wait = 300;
 			var comData; //从上个界面获取验证码的参数
 			//获取个人信息
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
@@ -150,7 +150,7 @@
 						mui.toast(data.RspTxt);
 					} else {
 						//验证码倒计时
-						wait = 60;
+						wait = 300;
 						time(document.getElementById("get_code"));
 					}
 				});
