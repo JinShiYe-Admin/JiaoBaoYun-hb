@@ -100,7 +100,7 @@ var RecordVideo = (function(mod) {
 
 		try {
 			var main = plus.android.runtimeMainActivity();
-			main.startActivityForResult(intent, 0);
+			main.startActivityForResult(intent, window.storageKeyName.CODERECORDVIDEO);
 			//第一个参数：一个Intent对象，用于携带将跳转至下一个界面中使用的数据，使用putExtra(A,B)方法，此处存储的数据类型特别多，基本类型全部支持。
 			//第二个参数：如果> = 0,当Activity结束时requestCode将归还在onActivityResult()中。以便确定返回的数据是从哪个Activity中返回，用来标识目标activity。
 			//与下面的resultCode功能一致，感觉Android就是为了保证数据的严格一致性特地设置了两把锁，来保证数据的发送，目的地的严格一致性。
@@ -118,7 +118,7 @@ var RecordVideo = (function(mod) {
 				//第二个参数： 这整数resultCode是由子Activity通过其setResult() 方法返回。 适用于多个activity都返回数据时， 来标识到底是哪一个activity返回的值。
 				//第三个参数： 一个Intent对象， 带有返回的数据。 可以通过data.getXxxExtra()方法来获取指定数据类型的数据，
 				//停止录像
-				if(requestCode == 0) { //拍照的Activity的code
+				if(requestCode == window.storageKeyName.CODERECORDVIDEO) { //拍照的Activity的code
 					if(resultCode == -1) { //成功
 						console.log('录像成功 ' + outPutPath);
 						successCB(outPutPath); //返回录像文件的位置

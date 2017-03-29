@@ -148,13 +148,13 @@ var MultiMedia = (function($, mod) {
 		if(this.options.Video) {
 			document.getElementById('MultiMedia_Video_Header').addEventListener('tap', function() {
 				document.activeElement.blur();
-				mui.toast('录制视频功能暂未开放');
-//				RecordVideo.recordVideo({}, function(fpath) {
-//					mui.toast('录制视频成功');
-//					console.log(fpath);
-//				}, function(err) {
-//					mui.toast('录制视频失败 ' + JSON.stringify(err));
-//				});
+				//mui.toast('录制视频功能暂未开放');
+				RecordVideo.recordVideo({}, function(fpath) {
+					mui.toast('录制视频成功');
+					console.log(fpath);
+				}, function(err) {
+					mui.toast('录制视频失败 ' + JSON.stringify(err));
+				});
 			});
 		}
 	}
