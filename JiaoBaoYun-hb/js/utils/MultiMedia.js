@@ -5,7 +5,7 @@
 var MultiMedia = (function($, mod) {
 
 	var html_picture_header = '<span id="MultiMedia_Picture_Header" class="mui-icon iconfont icon-xiangji2"></span>'; //相机图标
-	var html_audio_header = '<span id="MultiMedia_Audio_Header" class="mui-icon iconfont icon-yuyin2"></span>'; //语音图标
+	var html_audio_header = '<span id="MultiMedia_Audio_Header" class="mui-icon iconfont icon-yuyin3"></span>'; //语音图标
 	var html_video_header = '<span id="MultiMedia_Video_Header" class="mui-icon iconfont icon-shipin2"></span>'; //视频图标
 	var html_picture_footer = '<div id="MultiMedia_Picture_Footer"></div>'; //放置图片
 	var html_audio_footer = '<div id="MultiMedia_Audio_Footer"></div>'; //放置音频

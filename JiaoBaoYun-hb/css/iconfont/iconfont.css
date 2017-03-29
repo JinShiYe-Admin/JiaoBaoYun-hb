@@ -125,6 +125,8 @@
 
 .icon-chakan:before { content: "\e697"; }
 
+.icon-xiajiantou:before { content: "\e649"; }
+
 .icon-liulan:before { content: "\e635"; }
 
 .icon-liaotian1:before { content: "\e601"; }
@@ -258,3 +260,5 @@
 .icon-shipin2:before { content: "\e65e1"; }
 
 .icon-xiangji2:before { content: "\e65e2"; }
+
+.icon-yuyin3:before { content: "\e65e3"; }
