@@ -265,7 +265,6 @@ mui.plusReady(function() {
 	 * @param {Object} container
 	 */
 	var addAboutMe = function(container) {
-		console.log(11111)
 		var aboutme = document.createElement('a');
 		aboutme.className = 'mui-icon  mui-pull-right mui-plus-visible';
 		aboutme.id = 'aboutme'
@@ -288,7 +287,6 @@ mui.plusReady(function() {
 		
 		aboutme.appendChild(span)
 		container.appendChild(aboutme);
-		console.log(container.innerHTML)
 		events.addTap('aboutme', function() {
 			events.openNewWindow('../quan/aboutme.html')
 			var noRead = document.getElementById('aboutme_noRead');
