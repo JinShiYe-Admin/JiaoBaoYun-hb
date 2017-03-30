@@ -208,6 +208,8 @@
 
 					//点击每一项的监听
 					mui('#sliderGroup').on('tap', '.mui-table-view-cell', function() {
+						var self = this;
+						self.disabled = true;
 						var id = this.getAttribute('id');
 						var turl = this.getAttribute('data-turl');
 						var dataHistory = this.getAttribute('data-seHistory');
@@ -229,6 +231,9 @@
 						events.openNewWindowWithData('sciedu_show_main.html', {
 							turl: turl
 						});
+						setTimeout(function() {
+							self.disabled = false;
+						}, 1500);
 					});
 
 					//获取定制的城市
@@ -366,7 +371,7 @@
 
 				var placeholder = '../../' + window.storageKeyName.DEFAULTSCIEDUIMAGELOAD;
 				var lazyLoad = mui("#bot_ul_" + cityCode).imageLazyload({
-					placeholder: placeholder.toString(),//缩略图
+					placeholder: placeholder.toString(), //缩略图
 					autoDestroy: false, //元素加载完后是否自动销毁当前插件对象
 				}); //懒加载控件
 				for(var i = 0; i < data.length; i++) {
@@ -388,7 +393,7 @@
 						dataStr = date;
 					}
 					data[i].tips = from + ' | ' + dataStr;
-					data[i].seHistory = false;//默认都未读
+					data[i].seHistory = false; //默认都未读
 					for(var j = 0; j < seHistory.length; j++) {
 						if(data[i].tabid == seHistory[j]) {
 							data[i].seHistory = true; //是历史记录，则设为已读

@@ -185,6 +185,8 @@
 
 				//点击提交
 				document.getElementById('commit').addEventListener('tap', function() {
+					var self = this;
+					self.disabled = true;
 					var tempCities = []; //选取的城市
 					commitCities = [];
 					var tempCityArray = cityArray;
@@ -248,6 +250,9 @@
 							uareaPostReUinf(commitSrt);
 						}
 					}
+					setTimeout(function() {
+						self.disabled = false;
+					}, 1500);
 				});
 
 				//---监听---end---
