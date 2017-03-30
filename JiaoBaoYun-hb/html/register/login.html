@@ -338,7 +338,8 @@ none; margin-top: -15px;">登录</button>
 										events.infoChanged();
 										console.log('登录保存的个人信息：' + JSON.stringify(tempInfo))
 										//跳到主界面
-										events.openNewWindow('../index/index.html');
+//										events.openNewWindow('../index/index.html');
+										events.openNewWindow('../index/index.html', '');
 									} else {
 										mui.toast(data.RspTxt);
 									}

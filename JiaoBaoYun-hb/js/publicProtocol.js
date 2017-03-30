@@ -1681,7 +1681,7 @@ var postDataPro_addNewClassInfo = function(commonData, wd, callback) {
 //		var comData = {
 //			classId: ''//班级ID，新建班级时调用
 //		};
-//返回Users，列表数据	Array
+//返回Users，列表数据	Array[UserId	:用户ID,ReadDate:访问时间]
 var postDataPro_getReadUserBySpaceId = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
@@ -1710,7 +1710,7 @@ var postDataPro_getNotesForClass = function(commonData, wd, callback) {
 //		var comData = {
 //			classSpaceId: ''//班级空间ID
 //		};
-//返回Users，列表数据	Array
+//返回Users，列表数据	Array[UserId	:用户ID,ReadDate:访问时间]
 var postDataPro_getReadUserBySpaceId = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
@@ -1723,7 +1723,7 @@ var postDataPro_getReadUserBySpaceId = function(commonData, wd, callback) {
 //		var comData = {
 //			classSpaceId: ''//班级空间ID
 //		};
-//返回Users，列表数据	Array
+//返回Users，列表数据	Array[UserId:用户ID,LikeDate:点赞时间]
 var postDataPro_getIsLikeUsersById = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
@@ -1920,7 +1920,7 @@ var postDataPro_setUserFocus = function(commonData, wd, callback) {
 var comData = {
 	userId: '' //用户ID
 };
-//返回：Users，列表数据，Array
+//返回：Users，列表数据，Array[UserId:用户ID,FocusDate:关注时间]
 var postDataPro_getFocusByUser = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
