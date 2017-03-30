@@ -99,6 +99,7 @@
 .question-container>.question-title {
 	font-size: 1.7rem;
 	color: #323232;
+	text-align: justify;
 }
 
 .comments-info {
