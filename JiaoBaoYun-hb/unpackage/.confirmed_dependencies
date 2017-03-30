@@ -229,7 +229,9 @@
       "css/utils/pullToRefresh.css",
       "js/mui.pullToRefresh.material.js",
       "js/mui.lazyload.js",
-      "js/libs/myStorage/myStorage.js"
+      "js/libs/myStorage/myStorage.js",
+      "css/utils/common.css",
+      "css/mui.min.css"
     ],
     "refer": []
   },
@@ -400,7 +402,9 @@
       "image/qiuzhi/channel-health.png",
       "js/libs/crypto-js/crypto-js.js",
       "image/qiuzhi/channel-food.png",
-      "image/utils/default_personalimage.png"
+      "image/utils/default_personalimage.png",
+      "image/utils/default_load_2.gif",
+      "image/qiuzhi/channel-others.png"
     ],
     "refer": [
       "html/qiuzhi/qiuzhi-answerDetail.html",
@@ -759,7 +763,9 @@
       "js/utils/RSAEncrypt.js",
       "image/dynamic/praise.png"
     ],
-    "refer": []
+    "refer": [
+      "html/show/add-comment.html"
+    ]
   },
   "html/quan/aboutme.html": {
     "resources": [
@@ -851,7 +857,9 @@
       "js/utils/signHmacSHA1.js",
       "js/libs/RSA/RSA.js",
       "js/utils/postData.js",
-      "js/utils/RSAEncrypt.js"
+      "js/utils/RSAEncrypt.js",
+      "js/libs/angular.min.js",
+      "js/libs/crypto-js/crypto-js.js"
     ],
     "refer": []
   },
@@ -1483,6 +1491,12 @@
       "js/qiniu/qiniu.js",
       "css/mui.min.css",
       "js/libs/crypto-js/crypto-js.js"
+    ],
+    "refer": []
+  },
+  "html/show/add-comment.html": {
+    "resources": [
+      "css/quan/custom-textarea.css"
     ],
     "refer": []
   }

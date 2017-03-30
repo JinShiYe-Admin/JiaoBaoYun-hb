@@ -2752,7 +2752,8 @@
 					"fonts/mui.ttf",
 					"image/qiuzhi/add-question.png.png",
 					"js/mui.lazyload.js",
-					"js/mui.lazyload.img.js"
+					"js/mui.lazyload.img.js",
+					"image/utils/default_load_2.gif"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
@@ -3164,7 +3165,8 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"fonts/fangzheng.ttf",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"js/libs/angular.min.js"
 				],
 				"refer": [],
 				"priority": 0
