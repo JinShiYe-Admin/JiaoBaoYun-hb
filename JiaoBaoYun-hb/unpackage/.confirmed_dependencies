@@ -918,7 +918,8 @@
       "js/libs/RSA/RSA.js",
       "js/utils/postData.js",
       "js/utils/RSAEncrypt.js",
-      "css/quan/class_space.css"
+      "css/quan/class_space.css",
+      "image/utils/default_personalimage.png"
     ],
     "refer": [
       "html/quan/classSpace-persons.html",

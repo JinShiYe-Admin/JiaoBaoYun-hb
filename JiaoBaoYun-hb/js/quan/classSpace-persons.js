@@ -143,7 +143,7 @@ var setData=function(infos){
 
 }
 var createInner=function(person){
-	return '<div class="person-cell"><img src="'+person.uimg+'"/><div class="person-info"><h6>'+
+	return '<div class="person-cell"><img src="'+updateHeadImg(person.uimg,2)+'"/><div class="person-info"><h6>'+
 	getName(person)+'</h6><p>'+events.shortForDate(getTime(person))+'</p></div></div>'
 }
 var getName=function(person){
