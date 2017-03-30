@@ -60,7 +60,8 @@
 				padding-right: 30px;
 			}
 
-			input[type=text],input[type=tel] {
+			input[type=text],
+			input[type=tel] {
 				font-size: 14px;
 				line-height: 40px;
 				color: #666666;
@@ -76,6 +77,7 @@
 				/*删除按钮*/
 				color: #e4e4e4;
 			}
+
 			input::-webkit-input-placeholder {
 				color: #999999;
 				font-size: 14px;
@@ -659,13 +661,30 @@
 									var uData = element;
 									if(element2.dataType == '3') { //学生
 										console.log('学生账号 ' + JSON.stringify(uData));
-										stu_unick.value = uData.unick;
-										stu_uname.value = uData.uname;
+										stu_unick.value = uData.unick;//昵称
+										stu_uname.value = uData.uname;//账号
+										stu_phone.value = uData.uid;//手机号
+										if(uData.usex == 1) {//性别
+											stu_gender.value = '男';
+										} else if(uData.usex == 2) {
+											stu_gender.value = '女';
+										} else {
+											stu_gender.value = '';
+										}
 									} else if(element2.dataType == '0') { //家长
 										document.getElementById("par_uname_" + uData.utid).value = uData.uname;
+										document.getElementById("par_phone_" + uData.utid).value = uData.uid;
 									} else if(element2.dataType == '2') { //教师
-										tea_unick.value = uData.unick;
-										tea_uname.value = uData.uname;
+										tea_unick.value = uData.unick;//昵称
+										tea_uname.value = uData.uname;//账号
+										tea_phone.value = uData.uid;//手机号
+										if(uData.usex == 1) {//性别
+											tea_gender.value = '男';
+										} else if(uData.usex == 2) {
+											tea_gender.value = '女';
+										} else {
+											tea_gender.value = '';
+										}
 									} else {
 										console.log('账号:设置类型出错');
 									}
