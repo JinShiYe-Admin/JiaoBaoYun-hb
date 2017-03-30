@@ -563,7 +563,9 @@
       "js/utils/RSAEncrypt.js",
       "css/homework/subjects-icon.css",
       "fonts/mui.ttf",
-      "css/iconfont/iconfont.css"
+      "css/iconfont/iconfont.css",
+      "image/homework/need-submit.png",
+      "js/libs/crypto-js/crypto-js.js"
     ],
     "refer": []
   },
@@ -1492,7 +1494,8 @@
     "resources": [
       "js/qiniu/qiniu.js",
       "css/mui.min.css",
-      "js/libs/crypto-js/crypto-js.js"
+      "js/libs/crypto-js/crypto-js.js",
+      "css/utils/common.css"
     ],
     "refer": []
   },
