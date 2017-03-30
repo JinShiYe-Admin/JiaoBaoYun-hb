@@ -53,7 +53,6 @@
 			var sliderId = ''; //记录显示的城市
 			var index; //获取index的webview
 			var personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid; //用户utid
-			var userIDs; //关注的用户
 			var SCREEN_WIDTH; //屏幕宽度
 			mui.plusReady(function() {
 				SCREEN_WIDTH = plus.screen.resolutionWidth;
@@ -71,25 +70,22 @@
 					//改变顶部的城市
 					changeIndexHeader();
 				});
+				//详情页改变关注状态 修改本页面数据
 				window.addEventListener('changeFocus', function(e) {
-					var publisherID = e.detail.data;
-					var IsFocused = e.detail.IsFocused;
-					console.log(JSON.stringify(e.detail))
-					console.log(JSON.stringify(datasource))
+					var publisherID = e.detail.data;//被修改的人ID
+					var IsFocused = e.detail.IsFocused;//关注状态
 					for(var item1 in datasource) {
 						var tempArray = datasource[item1]
-						console.log(JSON.stringify(tempArray))
 						for(var i in tempArray) {
-							console.log(JSON.stringify(tempArray[i]))
 							if(tempArray[i].PublisherId == publisherID) {
 								tempArray[i].IsFocused = IsFocused
 							}
 						}
 					}
 				})
+				//发布动态后刷新
 				window.addEventListener('infoChanged', function() {
 					var cityID = sliderId.replace('top_', '');
-					console.log('重现显示展现界面')
 					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 					pageIndex = 1;
 					pullFlag = 0;
@@ -180,12 +176,12 @@
 					}
 
 				})
-				//退出登录清理科教界面
+				//退出登录清理展现界面
 				window.addEventListener('cleanShowHome', function() {
 
 					console.log('重新登录')
 					cities = []; //存储当前定制的城市
-					show = true; //是否显示科教的内容
+					show = true; //是否显示展现的内容
 					pullToRefresh = [] //存储下拉上拉的控件
 					sliderId = ''; //记录显示的城市
 					document.getElementById("content").innerHTML = ''; //清理界面
@@ -212,7 +208,7 @@
 						</div>\
 					</div>';
 					show = false;
-					//滑动底部列表
+					//滑动底部列表 城市下面相应的点激活
 					document.querySelector('.mui-slider').addEventListener('slide', function() {
 						console.log('slide ' + event.detail.slideNumber);
 						mui('.mui-control-item').each(function(index, element) {
@@ -483,14 +479,10 @@
 			}
 
 			var requestData = function(cityCode, pageIndex) {
-				console.log('网络请求')
 				var wd = events.showWaiting();
 				/**
 				 * 请求区域内的动态
 				 */
-				if(cityCode==1){
-					cityCode=0;
-				}
 				postDataPro_getUserSpacesByArea({
 					userId: personalUTID, //用户ID
 					area: cityCode, //区域
@@ -506,6 +498,11 @@
 					};
 					if(data.RspCode == 0) {
 						page.totalPage = data.RspData.TotalPage;
+						totalPage = data.RspData.TotalPage;
+						if(data.RspData.Data.length > 0){
+							getPersonIds(data.RspData.Data, cityCode);
+						}
+						
 					}
 					if(document.getElementById("bot_" + cityCode)) {
 						document.getElementById("bot_" + cityCode).setAttribute('data-page', JSON.stringify(page))
@@ -513,14 +510,6 @@
 							//清空对应的界面
 							document.getElementById("bot_ul_" + cityCode).innerHTML = '';
 						}
-					}
-					if(data.RspCode == 0 && data.RspData.Data.length > 0) {
-						totalPage = data.RspData.TotalPage;
-						getPersonIds(data.RspData.Data, cityCode);
-					} else {
-						//var table = document.body.querySelector('.mui-table-view');
-						//table.innerHTML = ''
-						//events.fireToPageNone('index.html', 'closeWaiting');
 					}
 
 					//设置上拉下拉控件的状态
@@ -558,11 +547,17 @@
 					console.log('81.（用户空间）获取用户所有关注的用户：' + JSON.stringify(data));
 					wd.close();
 					if(data.RspCode == 0) {
-						userIDs = data.RspData.Users;
 						var tempModel = cities[cities.length - 1];
+						var Users =  data.RspData.Users;
+						userIDs=[];
+						for(var item in Users){
+							userIDs.push(Users[item].UserId)
+						}
+						tempModel.userIDs = userIDs;
 						tempModel.index = 1;
 						tempModel.isRefresh = 0; //是刷新0，还是加载更多1
 						//74.(用户空间）获取多用户空间所有用户动态列表
+							console.log(JSON.stringify(tempModel))
 						getAllUserSpacesByUser(tempModel);
 					} else {
 						mui.toast(data.RspTxt);
@@ -571,12 +566,12 @@
 			}
 
 			//74.(用户空间）获取多用户空间所有用户动态列表
-			function getAllUserSpacesByUser(tempModel9) {
+			function getAllUserSpacesByUser(paraModel) {
 				//所需参数
 				var comData = {
 					userId: personalUTID, //用户ID,登录用户
-					publisherIds: arrayToStr(userIDs), //发布者ID,例如[1,2,3]
-					pageIndex: tempModel9.index, //当前页数
+					publisherIds: arrayToStr(paraModel.userIDs), //发布者ID,例如[1,2,3]
+					pageIndex: paraModel.index, //当前页数
 					pageSize: 10 //每页记录数
 				};
 				// 等待的对话框
@@ -594,7 +589,7 @@
 						var tempModel = cities[cities.length - 1];
 						tempModel.index++;
 						//								setUserSpaceReadByUser();
-						totalCnt = data.RspData.TotalCnt;
+						totalPage = data.RspData.totalPage;
 						var tempRspData = data.RspData.Data;
 						//获取当前回调留言的个人信息，主要是头像、昵称
 						var tempArray = [];
@@ -696,7 +691,7 @@
 
 							var table = document.body.querySelector('.mui-table-view');
 							//判断是加载更多1，还是刷新0
-							if(tempModel9.isRefresh == 0) {
+							if(paraModel.isRefresh == 0) {
 								zonepArray = tempRspData
 							} else {
 								zonepArray = zonepArray.concat(tempRspData);

@@ -332,7 +332,7 @@ var events = (function(mod) {
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		events.fireToPageNone('../index/index.html', 'infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
-		events.fireToPageNone('../show/show_home_1.html', 'infoChanged');
+		//		events.fireToPageNone('../show/show_home_1.html', 'infoChanged');
 		events.fireToPageNone('qiuzhi_home.html', 'infoChanged');
 		events.fireToPageNone('aboutme_sub.html', 'infoChanged');
 	}
@@ -537,6 +537,22 @@ var events = (function(mod) {
 			}
 		}, true);
 	}
+
+	/**
+	 * 获得元素的文本
+	 * @param {Object} content
+	 */
+	mod.htmlGetText = function(data) {
+		var ele = document.createElement('div');
+		ele.style.display = 'none';
+		ele.id = "html_get_text";
+		document.body.appendChild(ele);
+		ele.innerHTML = data;
+		var content = jQuery('#html_get_text').text(); //获得文字
+		ele.parentNode.removeChild(ele);
+		return content;
+	}
+
 	return mod;
 
 })(events || {});

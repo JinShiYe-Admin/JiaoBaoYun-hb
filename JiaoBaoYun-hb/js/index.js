@@ -5,7 +5,7 @@
  */
 
 mui.init();
-var noReadCount=0;
+var noReadCount = 0;
 mui.plusReady(function() {
 	//	events.preload("../qiuzhi/expert-detail.html",100);
 	var waitingDia = events.showWaiting();
@@ -29,7 +29,7 @@ mui.plusReady(function() {
 		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
-		document.querySelector('img').src = updateHeadImg(img,2);
+		document.querySelector('img').src = updateHeadImg(img, 2);
 	});
 	window.addEventListener('closeWaiting', function() {
 		waitingDia.close();
@@ -86,7 +86,7 @@ mui.plusReady(function() {
 	//选项卡点击事件
 	mui('.mui-bar-tab').on('tap', 'a', function(e) {
 		var targetTab = this.getAttribute('href');
-		console.log("活动的页面："+activeTab)
+		console.log("活动的页面：" + activeTab)
 		if(targetTab == activeTab) {
 			return;
 		}
@@ -265,7 +265,6 @@ mui.plusReady(function() {
 	 * @param {Object} container
 	 */
 	var addAboutMe = function(container) {
-		console.log(11111)
 		var aboutme = document.createElement('a');
 		aboutme.className = 'mui-icon  mui-pull-right mui-plus-visible';
 		aboutme.id = 'aboutme'
@@ -277,23 +276,21 @@ mui.plusReady(function() {
 		span.className = 'mui-badge mui-badge-danger'
 		span.style.marginLeft = "-15px";
 		span.style.marginTop = "4px";
-		if(noReadCount==0){
+		if(noReadCount == 0) {
 			span.style.visibility = 'hidden'
 			span.innerHTML = '3'
-		}else{
+		} else {
 			span.style.visibility = 'visible'
 			span.innerHTML = noReadCount
 		}
-		
-		
+
 		aboutme.appendChild(span)
 		container.appendChild(aboutme);
-		console.log(container.innerHTML)
 		events.addTap('aboutme', function() {
 			events.openNewWindow('../quan/aboutme.html')
 			var noRead = document.getElementById('aboutme_noRead');
 			noRead.style.visibility = 'hidden';
-			noReadCount=0;
+			noReadCount = 0;
 
 		})
 	}
@@ -319,7 +316,12 @@ mui.plusReady(function() {
 		a.className = 'mui-icon mui-icon mui-icon-list mui-pull-left';
 		a.style.marginTop = "2px";
 		a.addEventListener('tap', function() {
+			var self = this;
+			self.disabled = true;
 			events.fireToPageNone(id, 'tapTitleLeft');
+			setTimeout(function() {
+				self.disabled = false;
+			}, 1500);
 		});
 		container.appendChild(a)
 	}
@@ -329,7 +331,7 @@ mui.plusReady(function() {
 		events.openNewWindow('../quan/aboutme.html')
 		var noRead = document.getElementById('aboutme_noRead');
 		noRead.style.visibility = 'hidden';
-		noReadCount=0;
+		noReadCount = 0;
 
 	})
 	var pubDynamic = document.getElementById('pubDynamic');
