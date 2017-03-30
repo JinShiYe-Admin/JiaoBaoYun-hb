@@ -1787,7 +1787,8 @@
 				],
 				"refer": [
 					"html/register/modify_password.html",
-					"html/register/login.html"
+					"html/register/login.html",
+					"html/register/register_phoneNumber.html"
 				],
 				"priority": 0
 			},

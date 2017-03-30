@@ -82,13 +82,14 @@ var class_space = (function(mod) {
 			'</div>' +
 			'<div class="chat_content_left">' +
 			'<div class="chat-body"><p class="chat-words">' +
-			item.MsgContent + '</p>' +
+			item.MsgContent + '</p><div class="class-imgs">' +
 			createImgsInner(item, index) +
-			'</div>' +
+			'</div></div>' +
 			'<p class="chat-bottom">' + events.shortForDate(item.PublishDate) +
-			'<a href="#popover" tabId="' + item.TabId + '" class="mui-icon iconfont icon-support ' + setIsLike(item.IsLike) + '">(' + item.LikeCnt +
-			')</a><span tabId="' + item.TabId + '" class="mui-icon iconfont icon-chakan">(' + item.ReadCnt + ')</span></p>' +
+			'<a href="#popover" tabId="' + item.TabId + '" class="bottom-zan mui-icon iconfont icon-support ' + setIsLike(item.IsLike) + '">(' + item.LikeCnt +
+			')</a><span tabId="' + item.TabId + '" class="bottom-chakan mui-icon iconfont icon-chakan">(' + item.ReadCnt + ')</span></p>' +
 			'</div></div>';
+			console.log("加载的数据："+inner);
 		return inner;
 	}
 	var getName = function(item) {
@@ -229,12 +230,6 @@ var class_space = (function(mod) {
 			container.appendChild(li);
 		}
 	}
-	//	var getUImg = function(uimg) {
-	//		if(!uimg || uimg == null) {
-	//			uimg = storageKeyName.DEFAULTPERSONALHEADIMAGE;
-	//		}
-	//		return uimg;
-	//	}
 	/**
 	 * 
 	 * @param {Object} cell
@@ -244,6 +239,7 @@ var class_space = (function(mod) {
 		//		var percent = 0.00;
 		var win_width = document.querySelector(".mui-table-view").offsetWidth;
 		var img_width = (win_width - 20) * 0.7 / 3;
+		console.log('图片宽度：'+img_width);
 		if(cell.EncImgAddr) {
 			var imgs = cell.EncImgAddr.split('|');
 			var trueImgs = cell.EncAddr.split('|');
@@ -251,11 +247,11 @@ var class_space = (function(mod) {
 			for(var i in imgs) {
 				if(imgs.length <= 3 && imgs.length > 0) {
 					//					percent = 100 / (imgs.length);
-					imgInner += '<img src="' + imgs[i] + '" style="width:' + img_width + 'px; height:' + img_width + 'px;padding:2px;"' +
-						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"/>'
+					imgInner += '<img class="display-inlineBlock" src="' + imgs[i] + '" style="width:' + img_width + 'px; height:' + img_width + 'px;padding:0 2px;"' +
+						' data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"/>'
 				} else {
-					imgInner += '<img src="' + imgs[i] + '" style="width:' + img_width + 'px; height:' + img_width + 'px;padding:2px;"' +
-						'" data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"/>'
+					imgInner += '<img class="display-inlineBlock" src="' + imgs[i] + '" style="width:' + img_width + 'px; height:' + img_width + 'px;padding:0 2px;"' +
+						' data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"/>'
 				}
 			}
 		}
@@ -267,20 +263,9 @@ var class_space = (function(mod) {
 var pageIndex = 1;
 var pageSize = 10;
 var postData;
-//h5fresh.addPullUpFresh("#refreshContainer", function() {
-//	mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
-//	if(pageIndex < class_space.totalPagNo) {
-//		pageIndex++;
-//		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-//	}
-//})
+
 mui.plusReady(function() {
 	mui.previewImage();
-	//	h5fresh.addRefresh(function() {
-	//		events.clearChild(document.getElementById('classSpace_list'));
-	//		pageIndex = 1;
-	//		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-	//	}, { style: "circle" })
 	postData = plus.webview.currentWebview().data;
 	postData.userId = parseInt(postData.userId);
 	events.preload('classSpace-persons.html', 200);
@@ -376,12 +361,9 @@ var setListener = function(userId) {
 			zan.isLike = false;
 			console.log("赞的innerHTML" + zan.innerHTML);
 			zan.querySelector(".pop-p").innerHTML = '<span id="pop-zan" class="mui-icon iconfont icon-dianzan1 isNotLike"></span>点赞';
-			//			document.querySelector("#pop-zan").className = "mui-icon iconfont icon-dianzan1 isNotLike";
 		} else { //已点赞
 			zan.isLike = true;
 			zan.querySelector(".pop-p").innerHTML = '<span id="pop-zan" class="mui-icon iconfont icon-dianzan1 isLike"></span>取消点赞';
-			//			zan.querySelector(".pop-p").innerText = '取消点赞';
-			//			document.querySelector("#pop-zan").className = "mui-icon iconfont icon-dianzan1 isLike";
 		}
 
 	})
