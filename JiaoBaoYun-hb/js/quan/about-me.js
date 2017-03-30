@@ -15,8 +15,6 @@ var alertTotalPage = 0;
 var personalUTID;
 //判断是加载更多1，还是刷新2
 var flag = 2;
-var pId;
-var pName;
 var msgType = 0; //消息类型
 var comData = {}; //回复传值
 var repliedCell;
@@ -28,8 +26,6 @@ mui.plusReady(function() {
 	events.preload("../homework/workdetail-stu.html", 100);
 	var pInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 	personalUTID = pInfo.utid;
-	pId = parseInt(pInfo.utid);
-	pName = pInfo.unick;
 	//	initNativeObjects();
 	//页码1
 	pageIndex = 1;
@@ -198,9 +194,14 @@ var addReplyLisetner = function() {
 		var replyValue = e.detail;
 		var p = document.createElement('p');
 		p.className = "extra-words break-words";
-		p.innerHTML = '<span>' + pName + '</span>回复<span>' + events.shortForString(repliedCell.MaxUserName, 6) + ':</span>' + replyValue;
+		p.innerHTML = '<span>' + myStorage.getItem(storageKeyName.PERSONALINFO).unick + '</span>回复<span>' + events.shortForString(repliedCell.MaxUserName, 6) + ':</span>' + replyValue;
 		repliedItem.appendChild(p);
 	});
+	window.addEventListener('infoChanged',function(){
+		pageIndex = 1;
+		document.getElementById('list-container').innerHTML='';
+		requestData();
+	})
 }
 /**
  * 
@@ -400,7 +401,7 @@ var getRoleInfos = function(tempRspData) {
 };
 var setCommentMsgReadByUser = function() {
 	var comData = {
-		userId: personalUTID, //用户ID
+		userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //用户ID
 		spaceTypes: '[4,5,6,7,8]'
 	}
 	var wd;
@@ -457,7 +458,7 @@ events.initRefresh('list-container',
  */
 var requireAboutMe = function() {
 	var comData = {
-		userId: personalUTID, //用户ID
+		userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //用户ID
 		pageIndex: pageIndex + '', //当前页数
 		pageSize: pageCount + '' //每页记录数
 	};
@@ -490,7 +491,7 @@ var requireHomeworkAlert = function(aboutMeData) {
 	//pageIndex，页码，从1开始；
 	//pageSize，每页记录数；
 	postDataPro_GetHomeworkAlert({
-		userId: personalUTID,
+		userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid,
 		pageIndex: pageIndex,
 		pageSize: 5
 	}, wd, function(data) {

@@ -272,7 +272,7 @@ var requestTeaInfo = function(teaId) {
 				if(homeworkModel.UploadTime) {
 					var dateArr = homeworkModel.UploadTime.split(' ');
 					homeworkModel.UploadTime = dateArr[0];
-					homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime + '</span>'
+					homeworkDetailNodes.publishDate.innerHTML = events.shortForString(data.RspData[0].unick, 12) + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime + '</span>'
 
 				} else {
 					console.log(homeworkResult.SubmitTime);
@@ -291,7 +291,7 @@ var requestTeaInfo = function(teaId) {
 				homeworkResult.HomeworkResult.UploadTime = dateArr[0];
 				console.log('1111111===' + data.RspData[0].unick)
 
-				homeworkDetailNodes.publishDate.innerHTML = data.RspData[0].unick + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkResult.HomeworkResult.UploadTime + '</span>'
+				homeworkDetailNodes.publishDate.innerHTML = events.shortForString(data.RspData[0].unick, 12) + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkResult.HomeworkResult.UploadTime + '</span>'
 
 			}
 			requireTeachersAnswer();

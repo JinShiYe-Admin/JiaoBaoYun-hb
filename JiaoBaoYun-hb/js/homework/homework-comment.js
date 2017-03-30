@@ -124,7 +124,8 @@ var setHomeWorkInfo = function() {
 	document.getElementById('submit-time').innerText = workInfo.UploadTime;
 	var homeworkInfo = document.getElementById('homework-info');
 	events.clearChild(homeworkInfo);
-	var p = document.createElement('p')
+	var p = document.createElement('p');
+	p.className="work-result";
 	p.innerText = workInfo.Result;
 	homeworkInfo.appendChild(p);
 	if(workInfo.IsCommented) {

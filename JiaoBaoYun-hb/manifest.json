@@ -3,7 +3,7 @@
 	"id": "H56171390",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "教宝云",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.0.0",/*应用版本名称*/
+		"name": "13.2.3.2017.0329_beta",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -439,7 +439,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/quan/leave.html",
@@ -1097,7 +1098,10 @@
 					"js/utils/compress.js",
 					"js/qiniu/qiniu.js",
 					"fonts/fangzheng.ttf",
-					"image/homework/arrow-down.png"
+					"image/homework/arrow-down.png",
+					"css/utils/preview.css",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js"
 				],
 				"refer": [
 					"html/homework/classes-select.html"
@@ -1927,7 +1931,8 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"css/mine/apply.css",
 					"image/utils/default_personalimage.png",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"image/mine/invite_none_0.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -2104,7 +2109,8 @@
 					"image/mine/about.png",
 					"image/mine/my-space.png",
 					"image/mine/my-points.png",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"image/mine/news-check.png"
 				],
 				"refer": [
 					"html/mine/approval-apply.html",
@@ -2171,7 +2177,8 @@
 					"js/utils/RSAEncrypt.js",
 					"js/utils/events.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"js/utils/self-adaptive-input.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2417,7 +2424,10 @@
 					"css/mui.min.css",
 					"js/storageKeyName.js",
 					"js/utils/cryption.js",
-					"js/qiniu/qiniu.js"
+					"js/qiniu/qiniu.js",
+					"fonts/fangzheng.ttf",
+					"js/utils/events.js",
+					"js/utils/playutil.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2739,7 +2749,9 @@
 					"fonts/fangzheng.ttf",
 					"image/qiuzhi/channel-science.png",
 					"fonts/mui.ttf",
-					"image/qiuzhi/add-question.png.png"
+					"image/qiuzhi/add-question.png.png",
+					"js/mui.lazyload.js",
+					"js/mui.lazyload.img.js"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
@@ -3348,7 +3360,8 @@
 					"html/mine/qun_manage_info.html",
 					"html/mine/qun_manage_invite.html",
 					"html/mine/qun_data_create.html",
-					"html/mine/qun_data_details.html"
+					"html/mine/qun_data_details.html",
+					"html/mine/qun_manage_invite_a.html"
 				],
 				"priority": 0
 			},
@@ -3453,7 +3466,8 @@
 					"js/storageKeyName.js",
 					"js/utils/events.js",
 					"js/publicProtocol.js",
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"js/libs/myStorage/myStorage.js"
 				],
 				"refer": [
 					"html/utils/customizeCity.html",
@@ -3550,7 +3564,15 @@
 					"js/utils/events.js",
 					"css/mui.min.css",
 					"js/libs/crypto-js/require.js",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3813,7 +3835,8 @@
 					"image/utils/default_personalimage.png",
 					"image/dynamic/icon_praise_small.png",
 					"fonts/iconfont.ttf",
-					"css/show/show.css"
+					"css/show/show.css",
+					"image/dynamic/praise.png"
 				],
 				"refer": [
 					"html/show/add-comment.html"
@@ -3946,12 +3969,53 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/libs/jquery.lazyload.min.js",
+					"image/utils/default_load_2.gif"
 				],
 				"refer": [
 					"html/check/area-choose.html",
 					"html/check/news-detail.html"
 				],
+				"priority": 0
+			},
+			"html/mine/qun_manage_invite_a.html": {
+				"resources": [
+					"image/mine/invite_none_0.png",
+					"image/utils/default_personalimage.png",
+					"js/storageKeyName.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"fonts/fangzheng.ttf",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [
+					"html/mine/qun_manage_invite_info.html"
+				],
+				"priority": 0
+			},
+			"html/sciedu/sciedu_show_main.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"css/utils/common.css"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},

@@ -52,6 +52,7 @@ textarea {
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 			var userOwnerId = plus.webview.currentWebview().data;
 			var leaveContent = document.getElementById('content');
+			
 			events.addTap('publish', function() {
 				var tempText= leaveContent.value;
 				if(!tempText||tempText=='') {
@@ -61,7 +62,7 @@ textarea {
 					mui.toast('不能超过300字');
 					return;
 				}else{
-					tempText = replaceAllBL(tempText);
+//					tempText = replaceAllBL(tempText);
 				}
 				console.log(tempText);
 				var httpData = {
