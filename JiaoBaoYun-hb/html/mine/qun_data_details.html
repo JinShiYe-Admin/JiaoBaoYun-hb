@@ -63,13 +63,41 @@
 			input[type=text],input[type=tel] {
 				font-size: 14px;
 				line-height: 40px;
-				color: #808080;
+				color: #666666;
 			}
 
 			.text-color-disabled,
 			.text-color-disabled .mui-input-row label,
 			.text-color-disabled .mui-input-row label~input {
-				color: #B7B7B7;
+				color: #CCCCCC;
+			}
+
+			.mui-input-row .mui-input-clear~.mui-icon-clear {
+				/*删除按钮*/
+				color: #e4e4e4;
+			}
+			input::-webkit-input-placeholder {
+				color: #999999;
+				font-size: 14px;
+				/* WebKit browsers */
+			}
+
+			input:-moz-placeholder {
+				color: #999999;
+				font-size: 14px;
+				/* Mozilla Firefox 4 to 18 */
+			}
+
+			input::-moz-placeholder {
+				color: #999999;
+				font-size: 14px;
+				/* Mozilla Firefox 19+ */
+			}
+
+			input:-ms-input-placeholder {
+				color: #999999;
+				font-size: 14px;
+				/* Internet Explorer 10+ */
 			}
 		</style>
 	</head>
