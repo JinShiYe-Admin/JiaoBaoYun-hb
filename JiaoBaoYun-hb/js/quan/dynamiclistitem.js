@@ -182,19 +182,20 @@ var dynamiclistitem = (function($, mod) {
 		var viewCount = InteractionData[1]; //浏览次数
 		var praiseList = InteractionData[2].reverse(); //点赞列表数组
 
-		if(praiseList.length > 20) {
-			praiseList[19] = praiseList[19] + '等' + praiseList.length + '人觉得很赞';
-		} else {}
+//		if(praiseList.length > 20) {
+//			praiseList[19].unick = praiseList[19].unick + '等' + praiseList.length + '人觉得很赞';
+//		} else {}
+		
 		var commentList = InteractionData[3]; //评论列表数组
 
 		//[commentList]:评论列表1.评论[commenter,content]评论者，评论内容
 		//						2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
 
 		var html = '';
-		var htmlPraiseList = '<div  class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div id= "PraiseList' + data[4] + idFlag + id + '" class="mui-media-body">'; //点赞列表
+		var htmlPraiseList = '<div  class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div id= "PraiseList' + data[4] + idFlag + id + '" class="PraiseList mui-media-body mui-col-sm-12 mui-col-xs-12">'; //点赞列表
 		var htmlCommentList = ''; //评论列表
 
-		var html1 = '<div class="mui-col-sm-12 mui-fcol-xs-12"><div class="mui-media-body">';
+		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body">';
 		var html2 = '</div></div>'
 		//		var html2 = '<p><span class="mui-icon mui-icon-image"></span>' + introduce + '</p></div></div>';
 		var html3 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div class="mui-media-body mui-pull-right" style="margin-right:-15px">';
@@ -226,14 +227,22 @@ var dynamiclistitem = (function($, mod) {
 		//		var html8 = '<div id="line" class="mui-col-sm-12 mui-col-xs-12 "><div class="mui-media-body dynamic-line"></div></div>';
 		//点赞列表
 		html = html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8;
-		if(praiseList.length > 0 && praiseList.length <= 19) {
-			var praiseListStr = praiseList.join('、');
-			var html3 = '<img id = "praiseImg' + data[4] + idFlag + id + '" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' + '<font class="common-font-family-Regular dynamic-praise-name praiseName">' + praiseListStr + '</font>';
+		var nameArr = []
+		for(var i in praiseList) {
+			var name = praiseList[i].unick;
+			name = '<font class="common-font-family-Regular dynamic-praise-name praiseName" data-info="' + praiseList[i].utid + '">' + name + '</font>'
+			nameArr.push(name);
+			
+		}
+		if(nameArr.length > 0 && nameArr.length <= 19) {
+
+			var praiseListStr = nameArr.join('、');
+			var html3 = '<img id = "praiseImg' + data[4] + idFlag + id + '" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />'  + praiseListStr;
 			htmlPraiseList = htmlPraiseList + html3 + '</div></div>';
-		} else if(praiseList.length > 19) {
-			praiseList = praiseList.slice(0, 20);
-			var praiseListStr = praiseList.join('、');
-			var html3 = '<img id = "praiseImg' + data[4] + idFlag + id + '" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' + '<font class="common-font-family-Regular dynamic-praise-name praiseName">' + praiseListStr + '</font>';
+		} else if(nameArr.length > 19) {
+			nameArr = nameArr.slice(0, 20);
+			var praiseListStr = nameArr.join('、');
+			var html3 = '<img id = "praiseImg' + data[4] + idFlag + id + '" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />'  + praiseListStr+'等'+nameArr.length+'人觉得点赞' ;
 			htmlPraiseList = htmlPraiseList + html3 + '</div></div>';
 		} else {
 			htmlPraiseList = htmlPraiseList + '</div></div>';

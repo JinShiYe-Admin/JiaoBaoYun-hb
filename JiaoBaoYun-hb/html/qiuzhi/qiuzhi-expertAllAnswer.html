@@ -173,8 +173,8 @@
 				getAnswersByUser(ExpertsInfo.UserId);
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					var index = this.id.replace('li', '');
-					events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', answerArray[index]);
-					console.log('传递的answerInfo:' + JSON.stringify(this.answerInfo));
+					events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', JSON.parse(this.dataset.info));
+					console.log('传递的answerInfo:' + this.dataset.info);
 					plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
 				});
 
@@ -293,6 +293,8 @@
 			var createList = function(listContainer, record, index) {
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
+				console.log(JSON.stringify(record))
+				li.dataset.info= (JSON.stringify(record));
 				li.id = 'li' + index;
 				//拼接显示
 				li.innerHTML = '<div class="mui-table">' +

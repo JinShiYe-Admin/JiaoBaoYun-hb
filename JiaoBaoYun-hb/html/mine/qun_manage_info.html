@@ -214,11 +214,10 @@
 							wd.close();
 						}, function(error) {
 							wd.close();
+							mui.toast('压缩失败 ' + '错误编码 ' + error.code + '描述信息 ' + error.message);
 						});
 					}, function(error) {
-						var code = error.code; // 错误编码
-						var message = error.message; // 错误描述信息
-						mui.toast('从相册选取图片失败 ' + '错误编码 ' + code + '描述信息 ' + message);
+						mui.toast('从相册选取图片失败 ' + '错误编码 ' + error.code + '描述信息 ' + error.message);
 					});
 				}
 
@@ -239,6 +238,7 @@
 							wd.close();
 						}, function(error) {
 							wd.close();
+							mui.toast('压缩失败 ' + '错误编码 ' + error.code + '描述信息 ' + error.message);
 						});
 					}, function(error) {
 						var code = error.code; // error.code（Number类型）获取错误编码
@@ -340,137 +340,113 @@
 				 */
 				function uploadQunHeadImge(wd, qunId, qunImge, successCallBack, errorCallBack) {
 					var fileName = 'qunheadimge' + qunId + '.png';
-					plus.zip.compressImage({
-							src: qunImge, //压缩转换原始图片的路径
-							dst: '_documents/' + fileName, //压缩转换目标图片的路径
-							overwrite: true, //覆盖生成新文件,仅在dst制定的路径文件存在时有效
-							format: '.png'
-						},
-						function(event) {
-							//图片压缩成功
-							var target = event.target; // 压缩转换后的图片url路径，以"file://"开头
-							var size = event.size; // 压缩转换后图片的大小，单位为字节（Byte）
-							var width = event.width; // 压缩转换后图片的实际宽度，单位为px
-							var height = event.height; // 压缩转换后图片的实际高度，单位为px
-							console.log('压缩图片成功---target:' + target + '|size:' + AndroidFileSystem.readSize(size) + '|width:' + width + '|height:' + height);
-							//获取七牛上传token的url
-							var getUploadTokenUrl = window.storageKeyName.QNGETUPTOKENHEADIMGE;
-							//私有空间或公有空间
-							var mainSpace = window.storageKeyName.QNPUBSPACE;
-							//头像上传的空间
-							var uploadSpace = window.storageKeyName.HEADIMAGE;
-							var getToken = {
-								type: '0', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件
-								QNFileName: fileName, //str 必填 存放到七牛的文件名
-								appId: 5, //int 必填 项目id
-								mainSpace: mainSpace, //str 必填 私有空间或公有空间
-								uploadSpace: uploadSpace, //str 必填  上传的空间
-							}
+					//获取七牛上传token的url
+					var getUploadTokenUrl = window.storageKeyName.QNGETUPTOKENHEADIMGE;
+					//私有空间或公有空间
+					var mainSpace = window.storageKeyName.QNPUBSPACE;
+					//头像上传的空间
+					var uploadSpace = window.storageKeyName.HEADIMAGE;
+					var getToken = {
+						type: '1', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件
+						QNFileName: fileName, //str 必填 存放到七牛的文件名
+						appId: 5, //int 必填 项目id
+						mainSpace: mainSpace, //str 必填 私有空间或公有空间
+						uploadSpace: uploadSpace, //str 必填  上传的空间
+					}
 
-							CloudFileUtil.getQNUpToken(getUploadTokenUrl, getToken, function(data) {
-								var QNUptoken = data.data; //token数据
-								var configure = data.configure; //获取token的配置信息
-								console.log('七牛上传token:' + JSON.stringify(QNUptoken));
-								if(QNUptoken.Status == 0) { //失败
-									mui.toast('获取上传凭证失败 ' + QNUptoken.Message);
-									console.log('### ERROR ### 请求上传凭证失败' + QNUptoken.Message);
-									wd.close();
-								} else {
-									CloudFileUtil.upload(target, QNUptoken.Data.Token, QNUptoken.Data.Key, function(upload, status) {
-										//上传任务完成的监听
-										console.log('上传任务完成:' + status);
-										console.log('上传任务完成:' + JSON.stringify(upload));
-										if(status == 200) { //上传任务成功
-											setTimeout(function() {
-												//头像类型,个人头像0，资料头像1，群头像2
-												var thumb = QNUptoken.Data.OtherKey[configure.thumbKey]; //缩略图地址
-												var domain = QNUptoken.Data.Domain + QNUptoken.Data.Key; //文件地址
-												console.log(thumb);
-												console.log(domain);
-												var myDate = new Date();
-												var gimgPath = domain + '?' + myDate.getTime();
-												//8.用户修改群各项信息
-												//需要参数
-												var comData2 = {
-													rid: qunId, //要修改的群id
-													vtp: 'gimg', //更改项，指更改用户信息的相应项,对应后面的vvl值,gimg(头像),gname(群名),gnote(群说明)
-													vvl: gimgPath, //要修改成的值
-												};
-												//返回值model：model_groupList
-												// 等待的对话框
-												var wd2 = events.showWaiting();
-												postDataPro_PostReGinfo(comData2, wd2, function(data) {
-													console.log('8_PostReGinfo:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-													if(data.RspCode == 0) {
-														successCallBack(gimgPath);
-													} else {
-														errorCallBack();
-														mui.toast(data.RspTxt);
-													}
-													wd2.close();
-												});
-											}, 2000);
-										} else { //上传失败
-											errorCallBack(upload.responseText);
-											wd.close();
-										}
-									}, function(upload, status) {
-										//上传任务状态监听
-										//上传任务的标识
-										var id = upload.__UUID__;
-										//已完成上传数据的大小
-										var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
-										//上传数据的总大小
-										var totalSize = AndroidFileSystem.readSize(upload.totalSize);
-										//上传任务的状态
-										var uploadState = upload.state;
-										switch(uploadState) {
-											case 0: //上传任务开始调度
-												console.log('上传任务开始调度:|id:' + id + '|uploadState:' + uploadState);
-												break;
-											case 1: //上传任务开始请求
-												console.log('上传任务开始请求:|id:' + id + '|uploadState:' + uploadState);
-												break;
-											case 2: //上传任务请求已经建立
-												console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
-												break;
-											case 3: //上传任务提交数据
-												//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
-												//var num = parseInt(upload.uploadedSize / upload.totalSize * 100) + '%';
-												//console.log(num);
-												//size.setTitle('正在上传 ' + num);
-												break;
-											case 4: //上传任务已完成
-												//console.log('上传任务已完成:|id:' + id + '|uploadState:' + uploadState);
-												break;
-											case 5: //上传任务已暂停
-												console.log('上传任务已暂停:|id:' + id + '|uploadState:' + uploadState);
-												break;
-											default:
-												console.log('上传任务状态监听:其他状态:' + uploadState);
-												break;
-										}
-									}, function(task) {
-										//上传任务创建成功的回调
-										task.start();
-									});
-								}
-							}, function(xhr, type, errorThrown) {
-								wd.close();
-								mui.toast('请求上传凭证失败 ' + type);
-								console.log('### ERROR ### 请求上传凭证失败' + type);
-							});
-						},
-						function(error) {
-							//图片压缩失败
-							var code = error.code; // 错误编码
-							var message = error.message; // 错误描述信息
-							mui.toast('图片压缩失败！' + '错误编码：' + code + '描述信息：' + message);
-							console.log('图片压缩失败！' + JSON.stringify(error));
-							//关闭等待窗口
+					CloudFileUtil.getQNUpToken(getUploadTokenUrl, getToken, function(data) {
+						var QNUptoken = data.data; //token数据
+						var configure = data.configure; //获取token的配置信息
+						console.log('七牛上传token:' + JSON.stringify(QNUptoken));
+						if(QNUptoken.Status == 0) { //失败
+							mui.toast('获取上传凭证失败 ' + QNUptoken.Message);
+							console.log('### ERROR ### 请求上传凭证失败' + QNUptoken.Message);
 							wd.close();
+						} else {
+							CloudFileUtil.upload(qunImge, QNUptoken.Data.Token, QNUptoken.Data.Key, function(upload, status) {
+								//上传任务完成的监听
+								console.log('上传任务完成:' + status);
+								console.log('上传任务完成:' + JSON.stringify(upload));
+								if(status == 200) { //上传任务成功
+									setTimeout(function() {
+										//头像类型,个人头像0，资料头像1，群头像2
+										var thumb = QNUptoken.Data.OtherKey[configure.thumbKey]; //缩略图地址
+										var domain = QNUptoken.Data.Domain + QNUptoken.Data.Key; //文件地址
+										console.log(thumb);
+										console.log(domain);
+										var myDate = new Date();
+										var gimgPath = domain + '?' + myDate.getTime();
+										//8.用户修改群各项信息
+										//需要参数
+										var comData2 = {
+											rid: qunId, //要修改的群id
+											vtp: 'gimg', //更改项，指更改用户信息的相应项,对应后面的vvl值,gimg(头像),gname(群名),gnote(群说明)
+											vvl: gimgPath, //要修改成的值
+										};
+										//返回值model：model_groupList
+										// 等待的对话框
+										var wd2 = events.showWaiting();
+										postDataPro_PostReGinfo(comData2, wd2, function(data) {
+											console.log('8_PostReGinfo:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+											if(data.RspCode == 0) {
+												successCallBack(gimgPath);
+											} else {
+												errorCallBack();
+												mui.toast(data.RspTxt);
+											}
+											wd2.close();
+										});
+									}, 2000);
+								} else { //上传失败
+									errorCallBack(upload.responseText);
+									wd.close();
+								}
+							}, function(upload, status) {
+								//上传任务状态监听
+								//上传任务的标识
+								var id = upload.__UUID__;
+								//已完成上传数据的大小
+								var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
+								//上传数据的总大小
+								var totalSize = AndroidFileSystem.readSize(upload.totalSize);
+								//上传任务的状态
+								var uploadState = upload.state;
+								switch(uploadState) {
+									case 0: //上传任务开始调度
+										console.log('上传任务开始调度:|id:' + id + '|uploadState:' + uploadState);
+										break;
+									case 1: //上传任务开始请求
+										console.log('上传任务开始请求:|id:' + id + '|uploadState:' + uploadState);
+										break;
+									case 2: //上传任务请求已经建立
+										console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
+										break;
+									case 3: //上传任务提交数据
+										//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
+										//var num = parseInt(upload.uploadedSize / upload.totalSize * 100) + '%';
+										//console.log(num);
+										//size.setTitle('正在上传 ' + num);
+										break;
+									case 4: //上传任务已完成
+										//console.log('上传任务已完成:|id:' + id + '|uploadState:' + uploadState);
+										break;
+									case 5: //上传任务已暂停
+										console.log('上传任务已暂停:|id:' + id + '|uploadState:' + uploadState);
+										break;
+									default:
+										console.log('上传任务状态监听:其他状态:' + uploadState);
+										break;
+								}
+							}, function(task) {
+								//上传任务创建成功的回调
+								task.start();
+							});
 						}
-					);
+					}, function(xhr, type, errorThrown) {
+						wd.close();
+						mui.toast('请求上传凭证失败 ' + type);
+						console.log('### ERROR ### 请求上传凭证失败' + type);
+					});
 				}
 			});
 		</script>
