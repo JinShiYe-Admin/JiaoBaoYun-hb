@@ -81,7 +81,7 @@ var class_space = (function(mod) {
 			'<p class="single-line">' + events.shortForString(getName(item), 6) + '</p>' +
 			'</div>' +
 			'<div class="chat_content_left">' +
-			'<div class="chat-body"><p class="chat-words">' +
+			'<div class="chat-body">' + '<p class="chat-words">' +
 			item.MsgContent + '</p><div class="class-imgs">' +
 			createImgsInner(item, index) +
 			'</div></div>' +
@@ -89,7 +89,7 @@ var class_space = (function(mod) {
 			'<a href="#popover" tabId="' + item.TabId + '" class="bottom-zan mui-icon iconfont icon-support ' + setIsLike(item.IsLike) + '">(' + item.LikeCnt +
 			')</a><span tabId="' + item.TabId + '" class="bottom-chakan mui-icon iconfont icon-chakan">(' + item.ReadCnt + ')</span></p>' +
 			'</div></div>';
-			console.log("加载的数据："+inner);
+		console.log("加载的数据：" + inner);
 		return inner;
 	}
 	var getName = function(item) {
@@ -228,7 +228,27 @@ var class_space = (function(mod) {
 			li.className = 'mui-table-view-cell';
 			li.innerHTML = createInnerHtml(list[i], pageIndex * 10 + i);
 			container.appendChild(li);
+			var classWords_container = li.querySelector(".chat-words");
+			if(getLineNo(classWords_container) > 8) {
+				classWords_container.className = "chat-words omit-line-8"
+				//				classWords_container.style.webkitLineClamp="8";
+				var more_span = document.createElement('span');
+				more_span.className = "more-span";
+				more_span.innerText = "展开全部";
+				more_span.addEventListener("tap", function() {
+
+				})
+				li.querySelector(".chat-body").insertBefore(more_span, li.querySelector(".class-imgs"));
+			}
 		}
+	}
+	var getLineNo = function(classWords_container) {
+		var style = window.getComputedStyle(classWords_container, null);
+		var h = parseInt(style.height);
+		var lh = parseInt(style.lineHeight);
+		var ln = parseInt(h / lh);
+		console.log("当前行数：" + ln);
+		return ln;
 	}
 	/**
 	 * 
@@ -239,7 +259,7 @@ var class_space = (function(mod) {
 		//		var percent = 0.00;
 		var win_width = document.querySelector(".mui-table-view").offsetWidth;
 		var img_width = (win_width - 20) * 0.7 / 3;
-		console.log('图片宽度：'+img_width);
+		console.log('图片宽度：' + img_width);
 		if(cell.EncImgAddr) {
 			var imgs = cell.EncImgAddr.split('|');
 			var trueImgs = cell.EncAddr.split('|');
@@ -303,17 +323,17 @@ mui.plusReady(function() {
 		});
 	var firstTime = null;
 	mui('.mui-table-view').on('tap', '.head-portrait', function() {
-//		console.log(id);
+		//		console.log(id);
 		var secondTime = null;
 		if(firstTime) {
 			secondTime = "123456";
-		}else{
+		} else {
 			firstTime = "123";
 		}
 		setTimeout(function() {
 			firstTime = null;
 		}, 1000)
-		console.log("firstTime:"+firstTime+"secondTime:"+secondTime);
+		console.log("firstTime:" + firstTime + "secondTime:" + secondTime);
 		if(!secondTime) {
 			var id = this.getAttribute('headId');
 			mui.openWindow({
@@ -367,6 +387,22 @@ var setListener = function(userId) {
 		}
 
 	})
+	mui('.mui-table-view').on('tap', ".more-span", function() {
+		this.previousSibling.className = "chat-words";
+		this.className="less-span";
+		this.style.display="none";
+		this.innerText="收回展开";
+		
+	})
+	mui('.mui-table-view').on('tap', ".less-span", function() {
+		console.log("当前父页面的className:"+this.parentElement.parentElement.parentElement.parentElement.className)
+		var parent_cell=this.parentElement.parentElement.parentElement.parentElement;
+		var offTopHeight=parent_cell.offsetTop;
+		console.log("此时距顶部的距离offTopHeight："+offTopHeight+"滚动距离："+this.scrollTop+"当前的："+JSON.stringify(parent_cell.offsetParent));
+		this.previousSibling.className = "chat-words omit-line-8";
+		this.className="more-span";
+		this.innerText="展开全部";
+	})
 
 	//点赞
 	document.getElementById('zan').addEventListener('tap', function() {
@@ -379,7 +415,7 @@ var setListener = function(userId) {
 				wd.close();
 				console.log('取消点赞获取的数据:' + JSON.stringify(data))
 				if(data.RspData.Result == 1) {
-//					mui.toast('您已取消点赞');
+					//					mui.toast('您已取消点赞');
 					zanSpan.className = "mui-icon iconfont icon-support isNotLike";
 					console.log('更改是否已点赞状态' + zanSpan.className)
 					zanSpan.innerText = '(' + (parseInt(zanSpan.innerText.replace('(', '').replace(')', '')) - 1) + ')'
@@ -396,7 +432,7 @@ var setListener = function(userId) {
 				wd.close();
 				console.log("点赞后返回数据：" + JSON.stringify(data));
 				if(data.RspData.Result == 1) {
-//					mui.toast('点赞成功！')
+					//					mui.toast('点赞成功！')
 					zanSpan.className = "mui-icon iconfont icon-support isLike";
 					console.log('更改是否已点赞状态' + zanSpan.className)
 					zanSpan.innerText = '(' + (parseInt(zanSpan.innerText.replace('(', '').replace(')', '')) + 1) + ')'
