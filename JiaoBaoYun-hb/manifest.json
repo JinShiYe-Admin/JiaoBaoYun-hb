@@ -494,7 +494,8 @@
 				"refer": [
 					"html/quan/space-detail.html",
 					"html/show/add-comment.html",
-					"html/quan/zone_main.html"
+					"html/quan/zone_main.html",
+					"html/quan/classSpace-persons.html"
 				],
 				"priority": 0
 			},

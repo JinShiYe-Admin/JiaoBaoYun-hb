@@ -8,12 +8,15 @@ mui.plusReady(function() {
 		var title = document.querySelector('.mui-title');
 		document.querySelector("#person-list").innerHTML="";
 //		events.clearChild(document.getElementById('gride'));
-		if(classSpaceInfo.type) { //点赞
+		if(classSpaceInfo.type==1) { //点赞
 			title.innerText = '谁点的赞';
 			getZanPersons(classSpaceInfo.classSpaceId);
-		} else { //查看
+		} else if(classSpaceInfo.type==0){ //查看
 			title.innerText = '谁看过';
 			getChakanPersons(classSpaceInfo.classSpaceId);
+		}else if(classSpaceInfo.type==3){
+			title.innerText = '谁点的赞';
+			setData(classSpaceInfo.zanList);
 		}
 	})
 })
@@ -144,7 +147,7 @@ var setData=function(infos){
 }
 var createInner=function(person){
 	return '<div class="person-cell"><img src="'+updateHeadImg(person.uimg,2)+'"/><div class="person-info"><h6>'+
-	getName(person)+'</h6><p>'+events.shortForDate(getTime(person))+'</p></div></div>'
+	getName(person)+'</h6>'+getTime(person)+'</div></div>'
 }
 var getName=function(person){
 	if(person.bunick){
@@ -156,7 +159,13 @@ var getName=function(person){
 	return person.unick;
 }
 var getTime=function(person){
-	return person.ReadDate?person.ReadDate:person.LikeDate;
+	if(person.ReadDate){
+	  return '<p>'+events.shortForDate(getTime(person))+'</p>'
+	}
+	if(person.LikeDate){
+		return '<p>'+events.shortForDate(getTime(person))+'</p>'
+	}
+	return "";
 }
 /**
  * 获取浏览的信息
