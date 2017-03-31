@@ -242,9 +242,6 @@ a>p {
 	box-shadow: 1px 1px 1px rgba(228, 228, 228, 0.5);
 	border: 1px solid rgba(228, 228, 228, 0.5);
 }
-.mui-table-view-cell{
-	margin: 5px;
-}
 .data-selected{
 	border: 1px solid rgba(29, 184, 241, 0.5);
 }

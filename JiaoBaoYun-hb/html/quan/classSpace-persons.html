@@ -13,6 +13,21 @@
 				height: 4rem;
 				border-radius: 50%;
 			}
+			.person-cell{
+				display: flex;
+				display: -webkit-inline-flex;
+				align-items: center;
+			}
+			.person-info{
+				padding-left: 10px;
+				width: 50%;
+				flex-grow: 1;
+			}
+			.person-cell>img{
+				width: 4rem;
+				height: 4rem;
+				border-radius: 50%;
+			}
 		</style>
 	</head>
 
@@ -23,8 +38,7 @@
 		</header>
 		<div class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<ul id="gride" class="mui-table-view mui-grid-view mui-grid-9 mui-scroll">
-
+				<ul id="person-list" class="mui-table-view">
 				</ul>
 			</div>
 		</div>

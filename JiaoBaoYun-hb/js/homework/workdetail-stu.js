@@ -92,7 +92,7 @@ var setContentView = function() {
 	document.querySelector('.brief-title').innerText = homeworkInfo.HomeworkTitle;
 	document.querySelector('.brief-content').innerText = homeworkInfo.Contents;
 	document.querySelector('.publisher').innerText = events.shortForString(homeworkInfo.unick, 6);
-	document.querySelector('.publish-date').innerText = homeworkInfo.Date.split(' ')[0];
+	document.querySelector('.publish-date').innerText = (homeworkInfo.Date?homeworkInfo.Date:homeworkInfo.MsgDate).split(' ')[0];
 	document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkInfo.File,homeworkInfo.HomeworkId);
 }
 /**
