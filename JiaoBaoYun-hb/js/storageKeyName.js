@@ -8,18 +8,18 @@ var storageKeyName = (function(mod) {
 
 	//---开发---start---
 
-//		mod.MAINURL = 'http://192.168.0.44:8511/api/CloudApi/'; //主url
-//		mod.MAINJIAOXIAOURL = 'http://192.168.0.200:8081/JiaoBaoCloudService/'; //家校圈url
-//		mod.MAINHOMEWORKURL = 'http://192.168.0.44:8513/'; //作业主url
-//		mod.MAINQIUZHI = 'http://192.168.0.200:8081/JiaoBaoCloudService/'; //求知主url
+		mod.MAINURL = 'http://192.168.0.44:8511/api/CloudApi/'; //主url
+		mod.MAINJIAOXIAOURL = 'http://192.168.0.200:8081/JiaoBaoCloudService/'; //家校圈url
+		mod.MAINHOMEWORKURL = 'http://192.168.0.44:8513/'; //作业主url
+		mod.MAINQIUZHI = 'http://192.168.0.200:8081/JiaoBaoCloudService/'; //求知主url
 	//---开发---end---
 
 	//---测试---start---
 
-	mod.MAINURL = 'http://192.168.0.178:8511/api/CloudApi/'; //主url
-	mod.MAINJIAOXIAOURL = 'http://192.168.0.178:8080/JiaoBaoCloudService/'; //家校圈url
-	mod.MAINHOMEWORKURL = 'http://192.168.0.178:8088/'; //作业主url
-	mod.MAINQIUZHI = 'http://192.168.0.178:8080/JiaoBaoCloudService/'; //求知主url
+//	mod.MAINURL = 'http://192.168.0.178:8511/api/CloudApi/'; //主url
+//	mod.MAINJIAOXIAOURL = 'http://192.168.0.178:8080/JiaoBaoCloudService/'; //家校圈url
+//	mod.MAINHOMEWORKURL = 'http://192.168.0.178:8088/'; //作业主url
+//	mod.MAINQIUZHI = 'http://192.168.0.178:8080/JiaoBaoCloudService/'; //求知主url
 //	//---测试---end---
 
 

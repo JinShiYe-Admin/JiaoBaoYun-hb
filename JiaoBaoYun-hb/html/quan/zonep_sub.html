@@ -665,22 +665,22 @@
 				var index = this.id.replace('PraiseList', '')
 				var LikeUsers = zonepArray[index].LikeUsers
 				console.log(JSON.stringify(LikeUsers));
-				events.fireToPageWithData("classSpace-persons.html","personsList",{zanList:LikeUsers,type:3});
-//				mui.openWindow({
-//					url: 'classSpace-persons.html',
-//					id: 'classSpace-persons.html',
-//					styles: {
-//						top: '0px', //设置距离顶部的距离
-//						bottom: '0px'
-//					},
-//
-//					extras: {
-//						data: LikeUsers,
-//
-//					},
-//					createNew: true,
-//
-//				});
+				events.fireToPageWithData("classSpace-persons.html", "personsList", { zanList: LikeUsers, type: 3 });
+				//				mui.openWindow({
+				//					url: 'classSpace-persons.html',
+				//					id: 'classSpace-persons.html',
+				//					styles: {
+				//						top: '0px', //设置距离顶部的距离
+				//						bottom: '0px'
+				//					},
+				//
+				//					extras: {
+				//						data: LikeUsers,
+				//
+				//					},
+				//					createNew: true,
+				//
+				//				});
 				window.event.stopPropagation()
 			})
 			//点击点赞的人跳转到相应界面
@@ -732,6 +732,33 @@
 		}
 
 		function addComment() {
+			if(tempIndex.indexOf('-') >= 0) {
+				var indexArr = tempIndex.split('-');
+				var id = indexArr[0];
+				var commentId = indexArr[1];
+				var replyId = indexArr[2];
+
+				var tempModel = zonepArray[id].Comments[commentId];
+				if(!tempModel) {
+					mui.toast('不可以回复自己');
+					return;
+				}
+				console.log(JSON.stringify(tempModel));
+				var upperId = tempModel.TabId;
+				var replyUserId;
+				var ReplyIdName;
+				if(replyId == '评论') {
+					replyUserId = tempModel.UserId
+					ReplyIdName = tempModel.UserIdName
+				} else {
+					replyUserId = tempModel.Replys[replyId].UserId;
+					ReplyIdName = tempModel.Replys[replyId].UserIdName;
+				}
+				if(personalUTID == replyUserId) {
+					mui.toast('不可以回复自己');
+					return;
+				}
+			}
 			events.openNewWindowWithData('../show/add-comment.html', {
 				tempIndex: tempIndex,
 				zonepArray: zonepArray
