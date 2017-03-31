@@ -197,6 +197,13 @@
 						//总页数
 						totalPageCount = data.RspData.TotalPage;
 						pageIndex++;
+						//如果是旧数据，去掉里面的html标签
+						for (var i = 0; i < data.RspData.Data.length; i++) {
+							var temp = data.RspData.Data[i];
+							if (temp.AnswerSFlag ==1) {
+ 								temp.AnswerContent = events.deleteHtml(temp.AnswerContent);
+							}
+						}
 						if(flagRef == 0) { //刷新
 							//清除节点
 							document.getElementById('list-container').innerHTML = "";

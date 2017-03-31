@@ -9,6 +9,18 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/qiuzhi/qiuzhi-questionSearch.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-table-view-cell p:last-child,
+			p:first-child {
+				-webkit-line-clamp: 3;
+				/*用来限制在一个块元素显示的文本的行数*/
+				display: -webkit-box;
+				/*必须结合的属性，将对象作为弹性伸缩盒子模型显示*/
+				-webkit-box-orient: vertical;
+				/*必须结合的属性 ，设置或检索伸缩盒对象的子元素的排列方式*/
+				overflow: hidden;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -327,6 +339,13 @@
 					wd.close();
 					console.log('4.获取所有符合条件问题:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
+						//如果是旧数据，去掉里面的html标签
+						for (var i = 0; i < data.RspData.Data.length; i++) {
+							var temp = data.RspData.Data[i];
+							if (temp.AnswerSFlag ==1) {
+ 								temp.AnswerContent = events.deleteHtml(temp.AnswerContent);
+							}
+						}
 						totalPageCount = data.RspData.totalPage;
 						setQuestionRecord(data.RspData.Data);
 						pageIndex++;
@@ -376,7 +395,7 @@
 				//	<p>57赞·3评论·关注</p>
 				//</li>
 				//li.innerHTML = "<p>" + record.CommentContent + "</p><div><p><img src='"+record.qChannelImg+"'>["+record.qChannel+"]"+record.AskTitle+"</p><p>"+record.AnswerContent+"</p></div><p>"+record.LikeNum+" 赞 · "+record.cCreatTime + " ·"+record.CommentId+" 关注</p>";
-				li.innerHTML = "<p>" + record.AskTitle.replace(keyWord,"<span>"+keyWord+"</span>") + "</p><p>" + record.AnswerContent + "</p><p>" + record.IsLikeNum + "赞·" + record.CommentNum + "评论</p>";
+				li.innerHTML = "<p>" + record.AskTitle.replace(keyWord,"<span>"+keyWord+"</span>") + "</p><p class = 'triple-line'>" + record.AnswerContent + "</p><p>" + record.IsLikeNum + "赞·" + record.CommentNum + "评论</p>";
 				listContainer.appendChild(li);
 			}
 			

@@ -683,11 +683,7 @@
 					"js/utils/CloudFileUtil.js",
 					"js/qiniu/qiniu.js",
 					"js/utils/compress.js",
-					"fonts/fangzheng.ttf",
-					"/storage/emulated/0/Tencent/TIMfile_recv/%DTPM%7DIV)030IUBXJ%7DUM%Z9.png",
-					"/storage/emulated/0/Tencent/TIMfile_recv/%%7B%7D32Z3H~)Q@~F0~K3[U@]6.png",
-					"/storage/emulated/0/Tencent/TIMfile_recv/%2PLKECVOE6LS%7BQ8W4%7D%7B$L3.png",
-					"/storage/emulated/0/Tencent/TIMfile_recv/%S]0@_9]P%7B07KEYX(U2X%7DTT.png"
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -1791,8 +1787,7 @@
 				],
 				"refer": [
 					"html/register/modify_password.html",
-					"html/register/login.html",
-					"html/register/register_phoneNumber.html"
+					"html/register/login.html"
 				],
 				"priority": 0
 			},
@@ -2756,8 +2751,7 @@
 					"fonts/mui.ttf",
 					"image/qiuzhi/add-question.png.png",
 					"js/mui.lazyload.js",
-					"js/mui.lazyload.img.js",
-					"image/utils/default_load_2.gif"
+					"js/mui.lazyload.img.js"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
@@ -3169,8 +3163,7 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"fonts/fangzheng.ttf",
-					"image/utils/default_personalimage.png",
-					"js/libs/angular.min.js"
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [],
 				"priority": 0
