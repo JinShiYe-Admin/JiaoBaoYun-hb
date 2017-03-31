@@ -514,13 +514,21 @@ var MultiMedia = (function($, mod) {
 			//option: ( CameraOption ) 必选 摄像头拍照参数
 			try {
 				cmr.captureImage(function(capturedFile) {
-						//拍照成功的回调
-						//console.log('拍照成功,图片的路径为 ' + capturedFile);
-						//capturedFile ：图片的路径
-						//将本地URL路径转换成平台绝对路径
-						var path = 'file://' + plus.io.convertLocalFileSystemURL(capturedFile);
-						//console.log('转换成平台绝对路径,图片的路径为 ' + path);
-						successCB(path);
+						try {
+							//拍照成功的回调
+							//console.log('拍照成功,图片的路径为 ' + capturedFile);
+							//capturedFile ：图片的路径
+							//将本地URL路径转换成平台绝对路径
+							var path = 'file://' + plus.io.convertLocalFileSystemURL(capturedFile);
+							//console.log('转换成平台绝对路径,图片的路径为 ' + path);
+							successCB(path);
+						} catch(e) {
+							alert('### ERROR ### 拍照成功的回调异常 name:' + e.name + " message:" + e.message);
+							errorCB({
+								code: 'ERROR', // 错误编码
+								message: '拍照成功的回调异常' // 错误描述信息
+							});
+						}
 					},
 					function(error) {
 						// 拍照失败的回调

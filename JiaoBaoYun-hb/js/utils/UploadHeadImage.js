@@ -176,6 +176,7 @@ var UploadHeadImage = (function($, mod) {
 			uploadHeadImge(wd, event.target);
 		}, function(error) {
 			wd.close();
+			mui.toast('压缩失败 ' + '错误编码 ' + error.code + '描述信息 ' + error.message);
 		});
 	}
 
@@ -194,7 +195,7 @@ var UploadHeadImage = (function($, mod) {
 	 */
 	function uploadHeadImge(wd, fPath) {
 		var getToken = {
-			type: '0', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件
+			type: '1', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件
 			QNFileName: fileName, //str 必填 存放到七牛的文件名
 			appId: 5, //int 必填 项目id
 			mainSpace: mainSpace, //str 必填 私有空间或公有空间
@@ -215,22 +216,24 @@ var UploadHeadImage = (function($, mod) {
 					console.log('上传任务完成:' + JSON.stringify(upload));
 					if(status == 200) { //上传任务成功
 						//头像类型,个人头像0，资料头像1，群头像2
-						var thumb = QNUptoken.Data.OtherKey[configure.thumbKey]; //缩略图地址
+						var thumb = ''; //QNUptoken.Data.OtherKey[configure.thumbKey]; //缩略图地址
 						var domain = QNUptoken.Data.Domain + QNUptoken.Data.Key; //文件地址
-						console.log(thumb);
+						//console.log(thumb);
 						console.log(domain);
-						switch(imageType) {
-							case 0: //个人头像
-								changeHeadImge(wd, domain, thumb);
-								break;
-							case 1: //资料头像
-								changeSutHeadImge(wd, domain, thumb);
-								break;
-							case 2: //群头像
-								changeQunHeadImge(wd, domain, thumb);
-							default:
-								break;
-						}
+						setTimeout(function() {
+							switch(imageType) {
+								case 0: //个人头像
+									changeHeadImge(wd, domain, thumb);
+									break;
+								case 1: //资料头像
+									changeSutHeadImge(wd, domain, thumb);
+									break;
+								case 2: //群头像
+									changeQunHeadImge(wd, domain, thumb);
+								default:
+									break;
+							}
+						}, 2000);
 					} else { //上传失败
 						errorCallBack(upload.responseText);
 						wd.close();
@@ -286,7 +289,7 @@ var UploadHeadImage = (function($, mod) {
 	/**
 	 * 修改群头像
 	 * @param { Object } domain 头像在七牛上的文件地址
-	 * @param { Object } thumb 头像在七牛上的文件缩略图地址
+	 * @param { Object } thumb 头像在七牛上的文件缩略图地址(无效)
 	 */
 	function changeQunHeadImge(wd, domain, thumb) {
 		var myDate = new Date();
@@ -319,7 +322,7 @@ var UploadHeadImage = (function($, mod) {
 	/**
 	 * 修改个人头像
 	 * @param { Object } domain 头像在七牛上的文件地址
-	 * @param { Object } thumb 头像在七牛上的文件缩略图地址
+	 * @param { Object } thumb 头像在七牛上的文件缩略图地址(无效)
 	 */
 	function changeHeadImge(wd, domain, thumb) {
 		var myDate = new Date();
@@ -345,7 +348,7 @@ var UploadHeadImage = (function($, mod) {
 	/**
 	 * 修改学生资料头像
 	 * @param {Object} domain 头像在七牛上的文件地址
-	 * @param {Object} thumb 头像在七牛上的文件缩略图地址
+	 * @param {Object} thumb 头像在七牛上的文件缩略图地址(无效)
 	 */
 	function changeSutHeadImge(wd, domain, thumb) {
 		var myDate = new Date();
