@@ -181,9 +181,6 @@ var dynamiclistitem = (function($, mod) {
 		var introduce = InteractionData[0]; //信息说明
 		var viewCount = InteractionData[1]; //浏览次数
 		var praiseList = InteractionData[2].reverse(); //点赞列表数组
-		//		for(var i=0;i<20;i++){
-		//			praiseList.push('情人'+i+'号')
-		//		}
 
 		if(praiseList.length > 20) {
 			praiseList[19] = praiseList[19] + '等' + praiseList.length + '人觉得很赞';
@@ -202,10 +199,11 @@ var dynamiclistitem = (function($, mod) {
 		//		var html2 = '<p><span class="mui-icon mui-icon-image"></span>' + introduce + '</p></div></div>';
 		var html3 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div class="mui-media-body mui-pull-right" style="margin-right:-15px">';
 		var html4;
-		if(zonepArray[id].IsLike != 0) {
+		//点赞状态
+		if(zonepArray[id].IsLike != 0) { //已点赞
 			html4 = '<a id="praise' + data[4] + idFlag + id + '" style = "color: rgb(26,155,255)"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
 
-		} else {
+		} else { //为点赞
 			html4 = '<a id="praise' + data[4] + idFlag + id + '" style = "color: #b7b7b7"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
 		}
 
@@ -213,19 +211,20 @@ var dynamiclistitem = (function($, mod) {
 		//				var html6 = '<img src="../../image/dynamic/icon_forward.png" class="dynamic-icon-forward" />';
 		var html6 = '<font style="padding-right:7px"></font>';
 		var html7
-		if(pageFlag == 1) {
+		if(pageFlag == 1) { //展现界面
 			html7 = '</div><div class="mui-media-body"><p></p></div></div>';
-		} else {
+		} else { //空间界面
 			html7 = '</div><div class="mui-media-body"><p>浏览' + viewCount + '次</p></div></div>';
 		}
 		var html8;
+
 		if(praiseList.length > 0 || commentList.length > 0) { //有点赞或者评论时显示分割线
 			html8 = '<div  class="mui-col-sm-12 mui-col-xs-12 "><div id="line' + data[4] + idFlag + id + '" class="mui-media-body dynamic-line"></div></div>';
 		} else {
 			html8 = '<div  class="mui-col-sm-12 mui-col-xs-12 "><div id="line' + data[4] + idFlag + id + '" class="mui-media-body dynamic-line mui-hidden"></div></div>';
 		}
 		//		var html8 = '<div id="line" class="mui-col-sm-12 mui-col-xs-12 "><div class="mui-media-body dynamic-line"></div></div>';
-
+		//点赞列表
 		html = html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8;
 		if(praiseList.length > 0 && praiseList.length <= 19) {
 			var praiseListStr = praiseList.join('、');
@@ -252,7 +251,7 @@ var dynamiclistitem = (function($, mod) {
 			var firstComment = '';
 			var replyComment = '';
 			var html1 = '<div id="replyComment' + data[4] + idFlag + id + '-' + index + '-' + '评论' + '" class="mui-media-body replyComment">';
-			var html2 = '<font class="common-font-family-Regular dynamic-comment-name ">' + element.UserIdName + '</font>';
+			var html2 = '<font data-info=' + element.UserId + ' class="common-font-family-Regular dynamic-comment-name ">' + element.UserIdName + '</font>';
 			var html3 = '<font class="common-font-family-Regular" style = "font-size:14px">：' + element.CommentContent + '</font>';
 			firstComment = html1 + html2 + html3;
 
@@ -264,9 +263,9 @@ var dynamiclistitem = (function($, mod) {
 					}
 					var tempModel = element.Replys;
 					var html1 = '<div id="replyComment' + data[4] + idFlag + id + '-' + index + '-' + i + '" class="mui-media-body replyComment">';
-					var html2 = '<font class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].UserIdName + '</font>';
+					var html2 = '<font data-info=' + tempModel[i].UserId + ' class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].UserIdName + '</font>';
 					var html3 = '<font class="common-font-family-Regular" >回复</font>';
-					var html4 = '<font class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].ReplyIdName + '</font>';
+					var html4 = '<font data-info=' + tempModel[i].ReplyId + ' class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].ReplyIdName + '</font>';
 					var html5 = '<font class="common-font-family-Regular" style = "font-size:14px">：' + tempModel[i].CommentContent + '</font></div>';
 					replyComment = replyComment + html1 + html2 + html3 + html4 + html5;
 				}
