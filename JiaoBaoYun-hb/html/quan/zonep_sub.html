@@ -658,7 +658,7 @@
 				}
 				window.event.stopPropagation()
 			});
-			//点赞人多余20人 点击跳转到点赞的人的列表界面
+			//点击点赞人那一行 跳转到点赞的人的列表界面
 			mui('.mui-table-view').on('tap', '.PraiseList', function() {
 				console.log('跳转到点赞人列表界面')
 				var index = this.id.replace('PraiseList', '')

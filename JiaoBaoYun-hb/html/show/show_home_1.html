@@ -1003,6 +1003,75 @@
 
 					})
 				})
+							//点击点赞人那一行 跳转到点赞的人的列表界面
+				mui('.mui-table-view').on('tap', '.PraiseList', function() {
+					console.log('跳转到点赞人列表界面')
+					var cityID = sliderId.replace('top_', '');
+					var index = this.id.replace('PraiseList' + cityID + 'zx', '');
+					var LikeUsers = zonepArray[index].LikeUsers
+					console.log(JSON.stringify(LikeUsers))
+					mui.openWindow({
+						url: '../quan/classSpace-persons.html',
+						id: '../quan/classSpace-persons.html',
+						styles: {
+							top: '0px', //设置距离顶部的距离
+							bottom: '0px'
+						},
+
+						extras: {
+							data: LikeUsers,
+
+						},
+						createNew: true,
+
+					});
+					window.event.stopPropagation()
+				})
+				//点击点赞的人跳转到相应界面
+				mui('.mui-table-view').on('tap', '.praiseName', function() {
+					console.log('点赞者id' + this.dataset.info);
+					mui.openWindow({
+						url: '../quan/zone_main.html',
+						id: '../quan/zone_main.html',
+						styles: {
+							top: '0px', //设置距离顶部的距离
+							bottom: '0px'
+						},
+
+						extras: {
+							data: this.dataset.info,
+							NoReadCnt: 0,
+							flag: '0'
+						},
+						createNew: true,
+
+					});
+					window.event.stopPropagation()
+				});
+							//点击评论者名字
+			mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
+				console.log('评论者id' + this.dataset.info);
+				mui.openWindow({
+					url: '../quan/zone_main.html',
+					id: '../quan/zone_main.html',
+					styles: {
+						top: '0px', //设置距离顶部的距离
+						bottom: '0px'
+					},
+
+					extras: {
+						data: this.dataset.info,
+						NoReadCnt: 0,
+						flag: '0'
+					},
+					createNew: true,
+
+				});
+				window.event.stopPropagation()
+
+			})
+
+			
 				//点赞和取消点赞
 				mui('#sliderGroup').on('tap', '.dynamic-icon-praise', function() {
 					var pageID = sliderId.replace('top_', '')
@@ -1260,7 +1329,7 @@
 				var praiseList = [];
 				if(tempModel.LikeUsers.length != 0) {
 					for(var i = 0; i < tempModel.LikeUsers.length; i++)
-						praiseList.push(tempModel.LikeUsers[i].unick);
+						praiseList.push(tempModel.LikeUsers[i]);
 				}
 
 				//[commentList]:评论列表
