@@ -166,10 +166,15 @@ div>.icon-xiangce:before,
 .icon-support {
 	float: right;
 }
-
-.icon-chakan,
-.icon-support {
-	padding-right: .5rem;
+.icon-dianzan1:before,
+.icon-liulan:before,
+.icon-chakan:before,
+.icon-support:before {
+	margin-right: 5px;
+}
+.bottom-chakan,
+.bottom-zan{
+	margin-right: 10px;
 }
 
 .mui-table-view-cell {
@@ -205,9 +210,21 @@ div>.icon-xiangce:before,
 	color: #000000;
 	font-size: 1.0rem;
 	padding-bottom: .2rem;
+	text-align: justify;
 }
-
+.omit-line-8{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/*white-space: nowrap;*/
+	display: -webkit-box;
+	-webkit-line-clamp: 8;
+	-webkit-box-orient: vertical;
+}
+.more-span{
+	color: #12B7F5;
+}
 .chat-bottom {
+	padding-top: 10px;
 	white-space: nowrap;
 }
 
@@ -257,3 +274,4 @@ div>.icon-xiangce:before,
 	background-color: #E4E4E4;
 	height: 1px;
 }
+

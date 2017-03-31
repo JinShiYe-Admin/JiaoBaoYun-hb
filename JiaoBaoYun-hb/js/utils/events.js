@@ -3,6 +3,16 @@
  */
 
 var events = (function(mod) {
+
+	//去掉所有html标签
+	mod.deleteHtml = function(text) {
+//		var dd = text.replace(/<\/?.+?>/g, "");
+//		var dds = dd.replace(/ /g, "");
+		var reTag = /<(?:.|\s)*?>/g;
+   		return text.replace(reTag,"");
+//		return dds;
+	}
+
 	/**
 	 * 绑定监听
 	 * @param {Object} id 绑定dom的Id
@@ -51,7 +61,7 @@ var events = (function(mod) {
 				styles: {
 					top: '0px',
 					bottom: '0px',
-//					softinputMode: "adjustResize"
+					//					softinputMode: "adjustResize"
 				}
 			})
 		}
@@ -81,7 +91,7 @@ var events = (function(mod) {
 			styles: {
 				top: '0px',
 				bottom: '0px',
-//				softinputMode: "adjustResize"
+				//				softinputMode: "adjustResize"
 			},
 			createNew: true,
 		});
@@ -172,7 +182,7 @@ var events = (function(mod) {
 		if(!interval) {
 			interval = 0;
 		}
-		console.log("预加载的页面："+tarPage)
+		console.log("预加载的页面：" + tarPage)
 		if(!plus.webview.getWebviewById(tarPage)) {
 			//初始化预加载详情页面
 			setTimeout(function() {
@@ -182,7 +192,7 @@ var events = (function(mod) {
 					styles: { //窗口参数
 						top: '0px',
 						bottom: '0px',
-//						softinputMode: "adjustResize"
+						//						softinputMode: "adjustResize"
 					},
 					show: {
 						anishow: 'slide-in-right',
@@ -265,7 +275,7 @@ var events = (function(mod) {
 		if(!datas) {
 			datas = null;
 		}
-//		console.log('tarPage:' + tarPage);
+		//		console.log('tarPage:' + tarPage);
 		var targetPage = null;
 		//获得目标页面
 		if(!targetPage) {
@@ -322,7 +332,7 @@ var events = (function(mod) {
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		events.fireToPageNone('../index/index.html', 'infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
-//		events.fireToPageNone('../show/show_home_1.html', 'infoChanged');
+		//		events.fireToPageNone('../show/show_home_1.html', 'infoChanged');
 		events.fireToPageNone('qiuzhi_home.html', 'infoChanged');
 		events.fireToPageNone('aboutme_sub.html', 'infoChanged');
 	}
@@ -426,8 +436,9 @@ var events = (function(mod) {
 		}, 200);
 	}
 	mod.getFileNameByPath = function(filePath) {
-		var filePaths = filePath.split("/");
-		return new Date().getTime() + filePaths[filePaths.length - 1];
+		var filePaths = filePath.split(".");
+		var fileName=filePaths[filePaths.length - 1];
+		return new Date().getTime() + parseInt(Math.random()*1000)+'.'+fileName;
 	}
 
 	/**
@@ -488,45 +499,61 @@ var events = (function(mod) {
 		return format;
 	}
 	mod.softIn = function(id) {
-//		if(plus.os.name == "Android") {
-//			document.getElementById(id).onfocus = function() {
-//				screen.height = plus.screen.resolutionHeight * plus.screen.scale
-//				var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight")
-//				console.log('状态栏高度:' + plus.navigator.getStatusbarHeight() + "屏幕高度：" + screen.height + "浏览器高度：" + webHeight);
-//				var scrollHeight = parseInt(webHeight) - parseInt(screen.height) - parseInt(plus.navigator.getStatusbarHeight());
-//				console.log("实际高度：" + scrollHeight)
-//				//		document.querySelector(".mui-input-group").style.marginBottom=scrollHeight+"px";
-//				document.body.clientHeight = scrollHeight;
-//				mui(".mui-scroll-wrapper").scroll().scrollTo(0, -document.getElementById(id).offsetTop);
-//			}
-//			document.getElementById(id).onblur = function() {
-//				mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0);
-//			}
-//			document.getElementById(id).oninput=function(){
-//				mui(".mui-scroll-wrapper").scroll().scrollTo(0, -document.getElementById(id).offsetTop);
-//			}
-//			window.addEventListener('resize', function() {
-//				screen.height = plus.screen.resolutionHeight * plus.screen.scale
-//				var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight")
-//				console.log('状态栏高度:' + plus.navigator.getStatusbarHeight() + "屏幕高度：" + screen.height + "浏览器高度：" + webHeight);
-//			})
-//		}
+		//		if(plus.os.name == "Android") {
+		//			document.getElementById(id).onfocus = function() {
+		//				screen.height = plus.screen.resolutionHeight * plus.screen.scale
+		//				var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight")
+		//				console.log('状态栏高度:' + plus.navigator.getStatusbarHeight() + "屏幕高度：" + screen.height + "浏览器高度：" + webHeight);
+		//				var scrollHeight = parseInt(webHeight) - parseInt(screen.height) - parseInt(plus.navigator.getStatusbarHeight());
+		//				console.log("实际高度：" + scrollHeight)
+		//				//		document.querySelector(".mui-input-group").style.marginBottom=scrollHeight+"px";
+		//				document.body.clientHeight = scrollHeight;
+		//				mui(".mui-scroll-wrapper").scroll().scrollTo(0, -document.getElementById(id).offsetTop);
+		//			}
+		//			document.getElementById(id).onblur = function() {
+		//				mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0);
+		//			}
+		//			document.getElementById(id).oninput=function(){
+		//				mui(".mui-scroll-wrapper").scroll().scrollTo(0, -document.getElementById(id).offsetTop);
+		//			}
+		//			window.addEventListener('resize', function() {
+		//				screen.height = plus.screen.resolutionHeight * plus.screen.scale
+		//				var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight")
+		//				console.log('状态栏高度:' + plus.navigator.getStatusbarHeight() + "屏幕高度：" + screen.height + "浏览器高度：" + webHeight);
+		//			})
+		//		}
 	}
 	/**
 	 * 设置监听，解决area与scroll冲突问题
 	 */
-	mod.areaInScroll=function(){
-		window.addEventListener("touchmove",function(e){
-			var target=e.target;
-			if(target&&target.tagName=='TEXTAREA'){
-				if(target.scrollHeight>target.clientHeight){
+	mod.areaInScroll = function() {
+		window.addEventListener("touchmove", function(e) {
+			var target = e.target;
+			if(target && target.tagName == 'TEXTAREA') {
+				if(target.scrollHeight > target.clientHeight) {
 					e.stopPropagation();
-				}else{
+				} else {
 					target.dispatchEvent(e);
 				}
 			}
-		},true);
+		}, true);
 	}
+
+	/**
+	 * 获得元素的文本
+	 * @param {Object} content
+	 */
+	mod.htmlGetText = function(data) {
+		var ele = document.createElement('div');
+		ele.style.display = 'none';
+		ele.id = "html_get_text";
+		document.body.appendChild(ele);
+		ele.innerHTML = data;
+		var content = jQuery('#html_get_text').text(); //获得文字
+		ele.parentNode.removeChild(ele);
+		return content;
+	}
+
 	return mod;
 
 })(events || {});

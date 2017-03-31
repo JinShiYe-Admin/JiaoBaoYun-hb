@@ -557,9 +557,9 @@ function cleanAnswer() {
  * @param {Object} data 回答数组
  */
 function addAnswer(data) {
-	mui.each(data, function(index, element) {
-		answerList(element);
-	});
+	for(var i = 0; i < data.length; i++) {
+		answerList(data[i]);
+	}
 }
 
 /**
@@ -567,6 +567,7 @@ function addAnswer(data) {
  * @param {Object} answershu 一个回答的数据
  */
 function answerList(data) {
+
 	var li = document.createElement('li');
 	li.className = 'mui-table-view-cell mui-media';
 	li.id = 'answer_' + data.AnswerId;
@@ -577,5 +578,12 @@ function answerList(data) {
 		'<div id="answer_content_' + data.AnswerId + '" class="ellipsis-3"></div>' +
 		'<div class="answer-info">' + data.IsLikeNum + '赞同·' + data.CommentNum + '评论·' + modifyTimeFormat(data.AnswerTime) + '</div>';
 	document.getElementById("answer_bottom").appendChild(li);
-	document.getElementById("answer_content_" + data.AnswerId).innerText = data.AnswerContent;
+	if(data.AnswerSFlag != 1) { //不是旧数据
+		document.getElementById("answer_content_" + data.AnswerId).innerText = data.AnswerContent;
+	} else {
+		var content_0 = events.htmlGetText(data.AnswerContent);
+		var content_1 = content_0.replace(/\s+/g, ""); //替换所有空格
+		document.getElementById("answer_content_" + data.AnswerId).innerText = content_1;
+	}
+
 }
