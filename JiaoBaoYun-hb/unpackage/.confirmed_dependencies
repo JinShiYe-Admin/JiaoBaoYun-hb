@@ -1148,7 +1148,8 @@
       "js/libs/RSA/RSA.js",
       "js/utils/postData.js",
       "js/utils/RSAEncrypt.js",
-      "fonts/fangzheng.ttf"
+      "fonts/fangzheng.ttf",
+      "image/utils/default_personalimage.png"
     ],
     "refer": [
       "html/mine/add-info.html",
@@ -1168,7 +1169,8 @@
       "js/libs/RSA/RSA.js",
       "js/utils/postData.js",
       "js/utils/RSAEncrypt.js",
-      "js/libs/myStorage/myStorage.js"
+      "js/libs/myStorage/myStorage.js",
+      "fonts/fangzheng.ttf"
     ],
     "refer": []
   },

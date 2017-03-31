@@ -2751,7 +2751,8 @@
 					"fonts/mui.ttf",
 					"image/qiuzhi/add-question.png.png",
 					"js/mui.lazyload.js",
-					"js/mui.lazyload.img.js"
+					"js/mui.lazyload.img.js",
+					"image/utils/default_load_2.gif"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",

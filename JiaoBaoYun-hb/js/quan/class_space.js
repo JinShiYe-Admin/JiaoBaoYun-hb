@@ -389,19 +389,20 @@ var setListener = function(userId) {
 	})
 	mui('.mui-table-view').on('tap', ".more-span", function() {
 		this.previousSibling.className = "chat-words";
-		this.className="less-span";
-		this.style.display="none";
-		this.innerText="收回展开";
-		
+		this.className = "less-span";
+		//		this.style.display="none";
+		this.innerText = "收回展开";
+
 	})
 	mui('.mui-table-view').on('tap', ".less-span", function() {
-		console.log("当前父页面的className:"+this.parentElement.parentElement.parentElement.parentElement.className)
-		var parent_cell=this.parentElement.parentElement.parentElement.parentElement;
-		var offTopHeight=parent_cell.offsetTop;
-		console.log("此时距顶部的距离offTopHeight："+offTopHeight+"滚动距离："+this.scrollTop+"当前的："+JSON.stringify(parent_cell.offsetParent));
+		console.log("当前父页面的className:" + this.parentElement.parentElement.parentElement.parentElement.className)
+		var parent_cell = this.parentElement.parentElement.parentElement.parentElement;
+		var offTopHeight = parent_cell.offsetTop;
+		console.log("此时距顶部的距离offTopHeight：" + offTopHeight + "滚动距离：" + document.querySelector(".mui-content").scrollTop + "当前的：" + JSON.stringify(parent_cell.offsetParent));
 		this.previousSibling.className = "chat-words omit-line-8";
-		this.className="more-span";
-		this.innerText="展开全部";
+		this.className = "more-span";
+		this.innerText = "展开全部";
+		window.scrollTo(0,offTopHeight,200);
 	})
 
 	//点赞
