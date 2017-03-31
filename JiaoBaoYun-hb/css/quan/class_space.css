@@ -220,7 +220,7 @@ div>.icon-xiangce:before,
 	-webkit-line-clamp: 8;
 	-webkit-box-orient: vertical;
 }
-.more-span{
+.more-span,.less-span{
 	color: #12B7F5;
 }
 .chat-bottom {
