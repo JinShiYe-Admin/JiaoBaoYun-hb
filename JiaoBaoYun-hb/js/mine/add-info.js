@@ -30,8 +30,8 @@ mui.plusReady(function() {
 		//清空所有子元素
 		events.clearChild(list);
 		document.getElementById("list-container2").innerHTML = "";
-		document.getElementById("list-container2").style.display="block";
-		document.querySelector(".no-data").style.display="none";
+		document.getElementById("list-container2").style.display = "block";
+		document.querySelector(".no-data").style.display = "none";
 		//加载元素无可用资料
 		addNoData();
 		//根据不同身份,请求数据，并保存至界面
@@ -107,16 +107,16 @@ var setData = function(type, data) {
 				document.getElementById("list-container2").appendChild(li);
 			}
 		})
-		if(document.getElementById("list-container2").firstElementChild){
+		if(document.getElementById("list-container2").firstElementChild) {
 			createFirstChild(type);
-			document.querySelector(".no-data").style.display="none";
-		}else{
-			document.getElementById("list-container2").style.display="none";
-			document.querySelector(".no-data").style.display="-webkit-flex";
+			document.querySelector(".no-data").style.display = "none";
+		} else {
+			document.getElementById("list-container2").style.display = "none";
+			document.querySelector(".no-data").style.display = "-webkit-flex";
 		}
 	} else {
-		document.getElementById("list-container2").style.display="none";
-		document.querySelector(".no-data").style.display="-webkit-flex";
+		document.getElementById("list-container2").style.display = "none";
+		document.querySelector(".no-data").style.display = "-webkit-flex";
 	}
 	//两个身份，学生身份请求完毕，请求老师身份
 	if(roles.length > 1 && type == 0) {
@@ -133,7 +133,7 @@ var setData = function(type, data) {
  * @param {Object} item 单元数据
  */
 var createInner = function(type, item) {
-	return '<a class="data-container" stuid="' + item.stuid + 'mstype="' + type + '">' +
+	return '<a class="data-container" stuid="' + item.stuid + '" mstype="' + type + '">' +
 		'<img src="' + updateHeadImg(item.stuimg, 2) + '"/>' +
 		'<div class="mui-media-body">' + item.stuname + '</div>' +
 		'</a>';
@@ -188,6 +188,9 @@ var addListener = function() {
 		}
 		this.className = "data-container data-selected";
 		selectedDataContainer = this;
+		choseId = parseInt(this.getAttribute("stuid"));
+		mstype=parseInt(this.getAttribute("mstype"));
+		console.log("当前选择的id:"+choseId+"；当前类型 :"+this.getAttribute("mstype"));
 	})
 }
 /**
@@ -224,7 +227,7 @@ var postJoinDo = function(type) {
 	postDataPro_PostJoinDo({
 			gutid: gutid,
 			stat: 1,
-			mstype: type + '',
+			mstype: type,
 			lnkinfid: choseId,
 			urel: getRelation(type)
 		},

@@ -145,10 +145,7 @@ var appUpdate = (function(mod) {
 	var onStateChanged = function(download, status) {
 		//		console.log("当前下载状态：" + download.state + ":" + status + ":" + download.totalSize)
 		if(download.state == 3) {
-			//			mod.fileSize=download.totalSize;
-			if(!myStorage.getItem("loadFileSize")) {
-				myStorage.setItem("loadFileSize", download.totalSize);
-			}
+			myStorage.setItem("loadFileSize", download.totalSize);
 		}
 	}
 	/**
