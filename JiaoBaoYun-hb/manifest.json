@@ -3219,7 +3219,8 @@
 					"css/utils/common.css",
 					"image/mine/jiaobaoyun.png",
 					"js/utils/events.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"html/mine/function.html"

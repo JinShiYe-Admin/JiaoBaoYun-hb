@@ -2,14 +2,15 @@
  * 更新版本模块
  */
 var appUpdate = (function(mod) {
+	mod.fileSize;
 	/**
 	 * 获取版本信息后，判断是否更新
 	 * @param {Object} versionInfo 服务器返回的版本信息
 	 */
 	mod.getAppVersion = function(versionInfo) {
 		plus.runtime.getProperty(plus.runtime.appid, function(inf) {
-			
-			mod.appVersion = getBigVersion(inf.version,plus.runtime.version) ;
+			mod.appVersion = getBigVersion(inf.version, plus.runtime.version);
+			mod.appVersion = "13.2.3"
 			console.log('应用版本号:' + plus.runtime.version + ',资源升级版本号:' + inf.version)
 			console.log("当前应用版本：" + mod.appVersion);
 			console.log("服务端应用版本：" + JSON.stringify(versionInfo))
@@ -126,17 +127,29 @@ var appUpdate = (function(mod) {
 	 */
 	function downWgt(wgtUrl) {
 		//		plus.nativeUI.showWaiting("下载wgt文件...");
-		plus.downloader.createDownload(wgtUrl, {
+		var dtask = plus.downloader.createDownload(wgtUrl, {
 			filename: "_doc/update/"
 		}, function(d, status) {
+			console.log("当前下载状态：" + status);
 			if(status == 200) {
 				console.log("下载wgt成功：" + d.filename);
 				installWgt(d.filename); // 安装wgt包
 			} else {
 				console.log("下载wgt失败！");
-//				plus.nativeUI.alert("下载wgt失败！");
+				//				plus.nativeUI.alert("下载wgt失败！");
 			}
-		}).start();
+		});
+		dtask.addEventListener("statechanged", onStateChanged, false);
+		dtask.start();
+	}
+	var onStateChanged = function(download, status) {
+		//		console.log("当前下载状态：" + download.state + ":" + status + ":" + download.totalSize)
+		if(download.state == 3) {
+			//			mod.fileSize=download.totalSize;
+			if(!myStorage.getItem("loadFileSize")) {
+				myStorage.setItem("loadFileSize", download.totalSize);
+			}
+		}
 	}
 	/**
 	 * 装载正整包
@@ -171,14 +184,39 @@ var appUpdate = (function(mod) {
 		var filePath = "_doc/update/" + fileUrl.split('/')[fileUrl.split('/').length - 1]
 		plus.io.resolveLocalFileSystemURL(filePath, function(entry) {
 			// 可通过entry对象操作test.html文件 
-			console.log('存在文件！');
-			if(type) {
-				setDialog("新版app文件已下载，是否安装？", function() {
-					installApk(filePath);
-				})
-			} else {
-				installWgt(filePath);
-			}
+			console.log('存在文件！' + entry.isFile);
+			entry.getMetadata(function(metadata) {
+				if(myStorage.getItem("loadFileSize") == metadata.szie) {
+					console.log("Remove succeeded");
+					if(type) {
+						setDialog("新版app文件已下载，是否安装？", function() {
+							installApk(filePath);
+						})
+					} else {
+						installWgt(filePath);
+					}
+				} else {
+					entry.remove(function(entry) {
+						if(type) {
+							downApk(fileUrl);
+						} else {
+							downWgt(fileUrl)
+						}
+					}, function(e) {
+						alert(e.message);
+					});
+
+				}
+			}, function() {
+				console.log("文件错误");
+			});
+			//			if(type) {
+			//				setDialog("新版app文件已下载，是否安装？", function() {
+			//					installApk(filePath);
+			//				})
+			//			} else {
+			//				installWgt(filePath);
+			//			}
 		}, function(e) {
 			if(type) {
 				downApk(fileUrl);
