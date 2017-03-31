@@ -148,7 +148,6 @@ var appUpdate = (function(mod) {
 			if(!myStorage.getItem("loadFileSize")||myStorage.getItem("loadFileSize")!=download.totalSize){
 				myStorage.setItem("loadFileSize", download.totalSize);
 			}
-			
 		}
 	}
 	/**
