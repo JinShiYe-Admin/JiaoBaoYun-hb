@@ -377,6 +377,7 @@
 
 		var id = 0; //cell的id
 		mui.plusReady(function() {
+			events.preload("classSpace-persons.html");
 			SCREEN_WIDTH = plus.screen.resolutionWidth;
 			gid = plus.webview.currentWebview().data.classId
 			mui.previewImage();
@@ -658,27 +659,28 @@
 				}
 				window.event.stopPropagation()
 			});
-			//点击点赞人那一行 跳转到点赞的人的列表界面
+			//点赞人多余20人 点击跳转到点赞的人的列表界面
 			mui('.mui-table-view').on('tap', '.PraiseList', function() {
 				console.log('跳转到点赞人列表界面')
 				var index = this.id.replace('PraiseList', '')
 				var LikeUsers = zonepArray[index].LikeUsers
-				console.log(JSON.stringify(LikeUsers))
-				mui.openWindow({
-					url: 'classSpace-persons.html',
-					id: 'classSpace-persons.html',
-					styles: {
-						top: '0px', //设置距离顶部的距离
-						bottom: '0px'
-					},
-
-					extras: {
-						data: LikeUsers,
-
-					},
-					createNew: true,
-
-				});
+				console.log(JSON.stringify(LikeUsers));
+				events.fireToPageWithData("classSpace-persons.html","personsList",{zanList:LikeUsers,type:3});
+//				mui.openWindow({
+//					url: 'classSpace-persons.html',
+//					id: 'classSpace-persons.html',
+//					styles: {
+//						top: '0px', //设置距离顶部的距离
+//						bottom: '0px'
+//					},
+//
+//					extras: {
+//						data: LikeUsers,
+//
+//					},
+//					createNew: true,
+//
+//				});
 				window.event.stopPropagation()
 			})
 			//点击点赞的人跳转到相应界面
