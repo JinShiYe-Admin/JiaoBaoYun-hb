@@ -179,6 +179,7 @@
 			var pathList = []; //记录需要删掉的图片和缩略图
 			var QNUptoken; //token数据
 			var uploadNum = 0; //记录上传的次数
+			var hideOption; //隐藏键盘的数据
 
 			var multiMedia; //多媒体选取控件
 			var previewImage; //查看图片的控件
@@ -274,6 +275,8 @@
 					}
 				});
 
+				hideOption = events.initHideKeyBoard();//获取配置信息
+
 				getNotes(1); //获取数据
 			}
 
@@ -332,7 +335,7 @@
 
 				//新增点到或记事
 				document.getElementById('commit').addEventListener('tap', function() {
-					events.hideKeyBoard();
+					events.hideKeyBoard(hideOption);
 					if(!commit) {
 						console.log('不允许发布');
 					} else if(document.getElementById("input_call").value.length > 20) {

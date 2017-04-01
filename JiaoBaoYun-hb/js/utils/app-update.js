@@ -209,13 +209,6 @@ var appUpdate = (function(mod) {
 			}, function() {
 				console.log("文件错误");
 			});
-			//			if(type) {
-			//				setDialog("新版app文件已下载，是否安装？", function() {
-			//					installApk(filePath);
-			//				})
-			//			} else {
-			//				installWgt(filePath);
-			//			}
 		}, function(e) {
 			if(type) {
 				downApk(fileUrl);

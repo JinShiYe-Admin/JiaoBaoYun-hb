@@ -556,21 +556,37 @@ var events = (function(mod) {
 	}
 
 	/**
-	 * 强制隐藏键盘
+	 * 初始化强制隐藏键盘
 	 * @author 莫尚霖
 	 */
-	mod.hideKeyBoard = function() {
-		document.activeElement.blur();
+	mod.initHideKeyBoard = function() {
 		if(plus.os.name == 'Android') {
 			var Context = plus.android.importClass("android.content.Context");
 			var InputMethodManager = plus.android.importClass("android.view.inputmethod.InputMethodManager");
 			var main = plus.android.runtimeMainActivity();
-			var inputmanger = main.getSystemService(Context.INPUT_METHOD_SERVICE);
-			if(inputmanger.isActive()) {
-				//如果开启
-				//关闭软键盘，开启方法相同，这个方法是切换开启与关闭状态的
-				inputmanger.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
+			var inputManger = main.getSystemService(Context.INPUT_METHOD_SERVICE);
+			var Focus = plus.android.invoke(main, 'getCurrentFocus');
+			//console.log('invoke ' + plus.android.invoke(main, 'getCurrentFocus'));
+			//console.log('invoke ' + plus.android.invoke(Focus, 'getWindowToken'));
+			var WindowToken = plus.android.invoke(Focus, 'getWindowToken');
+			var hideOption = {
+				manger: inputManger,
+				token: WindowToken,
+				type: InputMethodManager.HIDE_NOT_ALWAYS
 			}
+			return hideOption;
+		}
+	}
+
+	/**
+	 * 强制隐藏键盘需要和initHideKeyBoard配合使用
+	 * @author 莫尚霖
+	 * @param {Object} hideOption initHideKeyBoard 返回的数据
+	 */
+	mod.hideKeyBoard = function(hideOption) {
+		document.activeElement.blur();
+		if(plus.os.name == 'Android') {
+			hideOption.manger.hideSoftInputFromWindow(hideOption.token, hideOption.type);
 		}
 	}
 
