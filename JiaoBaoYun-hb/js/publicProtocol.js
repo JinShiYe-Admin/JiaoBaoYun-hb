@@ -1219,13 +1219,13 @@ var postDataPro_getIsLikeUserSpaceByUser = function(commonData, wd, callback) {
 //		var comData = {
 //			userSpaceId: ''//用户空间ID
 //		};
-//返回值：数组、UserId--用户ID
-//var postDataPro_getIsLikeUsersById=function(commonData, wd, callback) {
-//	//需要加密的数据
-//	var enData = {};
-//	//发送网络请求，data为网络返回值
-//	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getIsLikeUsersById', enData, commonData, 2, wd, callback);
-//}
+//返回值：数组、[UserId:用户ID，LikeDate	:点赞时间]
+var postDataPro_getIsLikeUsersById=function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getIsLikeUsersById', enData, commonData, 2, wd, callback);
+}
 
 //33.屏蔽（用户空间）获取用户用户空间所有未读评论回复条数
 //所需参数
