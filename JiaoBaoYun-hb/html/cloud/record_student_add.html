@@ -120,7 +120,7 @@
 
 				//完成
 				document.getElementById('commit').addEventListener('tap', function() {
-					document.activeElement.blur();
+					events.hideKeyBoard();
 					var msgContent = textArea.value;
 					if(msgContent.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0) {
 						mui.toast('记事不能为空');
