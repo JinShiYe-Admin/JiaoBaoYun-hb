@@ -160,10 +160,10 @@ var getName=function(person){
 }
 var getTime=function(person){
 	if(person.ReadDate){
-	  return '<p>'+events.shortForDate(getTime(person))+'</p>'
+	  return '<p>'+events.shortForDate(person.ReadDate)+'</p>'
 	}
 	if(person.LikeDate){
-		return '<p>'+events.shortForDate(getTime(person))+'</p>'
+		return '<p>'+events.shortForDate(person.LikeDate)+'</p>'
 	}
 	return "";
 }
