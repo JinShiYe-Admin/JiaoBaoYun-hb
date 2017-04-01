@@ -101,7 +101,7 @@
 
 				//完成
 				document.getElementById('finish').addEventListener('tap', function() {
-					document.activeElement.blur();
+					events.hideKeyBoard();
 					if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0) { //为空不允许发送
 						mui.toast('笔记不能为空');
 					} else if(notes.value.length > 2000) {

@@ -332,6 +332,7 @@
 
 				//新增点到或记事
 				document.getElementById('commit').addEventListener('tap', function() {
+					events.hideKeyBoard();
 					if(!commit) {
 						console.log('不允许发布');
 					} else if(document.getElementById("input_call").value.length > 20) {
@@ -339,7 +340,6 @@
 					} else if(document.getElementById("textarea_record").value.length > 500) {
 						mui.toast('记事最多500字');
 					} else {
-						document.activeElement.blur();
 						commit = false;
 						var parentIds = []; //家长列表
 						var userIds = []; //推送用户ID
