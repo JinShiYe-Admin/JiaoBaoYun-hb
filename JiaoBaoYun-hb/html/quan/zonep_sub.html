@@ -256,8 +256,12 @@
 							//将当前model中id塞到数组
 							tempArray.push(tempModel0.PublisherId);
 							//合并数组,点赞的人
-							tempArray = tempArray.concat(tempModel0.LikeUsers);
-							tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
+							for(var i in tempModel0.LikeUsers){
+								tempArray = tempArray.concat(tempModel0.LikeUsers[i].userid);
+//								tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
+							}
+							
+							
 							//循环当前model中的回复数组
 							for(var item1 in tempModel0.Comments) {
 								//回复中的model
@@ -301,8 +305,9 @@
 										//遍历点赞的人
 										for(var item2 in tempModel0.LikeUsers) {
 											//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
-											if(tempModel.utid == tempModel0.LikeUsers[item2]) {
-												tempModel0.LikeUsers.splice(item2, 1, tempModel);
+											if(tempModel.utid == tempModel0.LikeUsers[item2].userid) {
+//												tempModel0.LikeUsers.splice(item2, 1, tempModel);
+												tempModel0.LikeUsers[item2] = $.extend(tempModel0.LikeUsers[item2], tempModel);
 											}
 										}
 										//对比id是否一致
@@ -665,22 +670,22 @@
 				var index = this.id.replace('PraiseList', '')
 				var LikeUsers = zonepArray[index].LikeUsers
 				console.log(JSON.stringify(LikeUsers));
-				events.fireToPageWithData("classSpace-persons.html","personsList",{zanList:LikeUsers,type:3});
-//				mui.openWindow({
-//					url: 'classSpace-persons.html',
-//					id: 'classSpace-persons.html',
-//					styles: {
-//						top: '0px', //设置距离顶部的距离
-//						bottom: '0px'
-//					},
-//
-//					extras: {
-//						data: LikeUsers,
-//
-//					},
-//					createNew: true,
-//
-//				});
+				events.fireToPageWithData("classSpace-persons.html", "personsList", { zanList: LikeUsers, type: 3 });
+				//				mui.openWindow({
+				//					url: 'classSpace-persons.html',
+				//					id: 'classSpace-persons.html',
+				//					styles: {
+				//						top: '0px', //设置距离顶部的距离
+				//						bottom: '0px'
+				//					},
+				//
+				//					extras: {
+				//						data: LikeUsers,
+				//
+				//					},
+				//					createNew: true,
+				//
+				//				});
 				window.event.stopPropagation()
 			})
 			//点击点赞的人跳转到相应界面
@@ -732,6 +737,33 @@
 		}
 
 		function addComment() {
+			if(tempIndex.indexOf('-') >= 0) {
+				var indexArr = tempIndex.split('-');
+				var id = indexArr[0];
+				var commentId = indexArr[1];
+				var replyId = indexArr[2];
+
+				var tempModel = zonepArray[id].Comments[commentId];
+				if(!tempModel) {
+					mui.toast('不可以回复自己');
+					return;
+				}
+				console.log(JSON.stringify(tempModel));
+				var upperId = tempModel.TabId;
+				var replyUserId;
+				var ReplyIdName;
+				if(replyId == '评论') {
+					replyUserId = tempModel.UserId
+					ReplyIdName = tempModel.UserIdName
+				} else {
+					replyUserId = tempModel.Replys[replyId].UserId;
+					ReplyIdName = tempModel.Replys[replyId].UserIdName;
+				}
+				if(personalUTID == replyUserId) {
+					mui.toast('不可以回复自己');
+					return;
+				}
+			}
 			events.openNewWindowWithData('../show/add-comment.html', {
 				tempIndex: tempIndex,
 				zonepArray: zonepArray

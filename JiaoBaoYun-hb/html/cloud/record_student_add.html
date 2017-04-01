@@ -62,24 +62,42 @@
 
 		<script type="text/javascript">
 			mui.init();
-			var multiMedia; //多媒体控件
 			var mainData; //记录数据
-			var textArea; //输入框
 			var pathList = []; //记录需要删掉的图片和缩略图
+			var QNUptoken; //token数据
+			var uploadNum = 0; //记录上传的次数
+
+			var multiMedia; //多媒体控件
+			var textArea = document.getElementById("textarea_record"); //输入框
 
 			mui.plusReady(function() {
-				mui.previewImage();
-				mui('body').on('tap', 'img', function() {
-					document.activeElement.blur();
-				});
-				events.blurBack();
+				//events.closeWaiting();
+				initData(); //初始化数据
+				init(); //初始化控件
+				initListener() //初始化监听
+			});
+
+			/**
+			 * 初始化数据
+			 */
+			function initData() {
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				mainData = main.data; //接收页面传入的参数值
-				console.log('从父页面获取的数据:' + JSON.stringify(mainData));
+				console.log(main.id + ' ' + JSON.stringify(mainData));
 				document.getElementById("title").innerText = mainData.data.StudentName;
-				textArea = document.getElementById("textarea_record");
-				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+			}
 
+			/**
+			 * 初始化控件
+			 */
+			function init() {
+				events.blurBack();
+
+				//图片查看控件
+				mui.previewImage();
+
+				//多媒体控件
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 				//---从父页面获取数据---end---
 				multiMedia = MultiMedia.multiMedia({
 					MultiMediaId: 'MultiMedia', //存放多媒体对象控件的id
@@ -89,8 +107,20 @@
 					TotalPicture: 9, //图片的个数
 					TotalAudio: 1, //音频的个数
 				});
+			}
 
+			/*
+			 * 初始化监听
+			 */
+			function initListener() {
+				//点击图片收回键盘
+				mui('body').on('tap', 'img', function() {
+					document.activeElement.blur();
+				});
+
+				//完成
 				document.getElementById('commit').addEventListener('tap', function() {
+					events.hideKeyBoard();
 					var msgContent = textArea.value;
 					if(msgContent.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0) {
 						mui.toast('记事不能为空');
@@ -106,7 +136,7 @@
 						}
 					}
 				});
-			});
+			}
 
 			/**
 			 * 新增一条档案
@@ -137,19 +167,24 @@
 				postDataPro_addStudentFile(comData, wd, function(data) {
 					console.log('70_addStudentFile_新增某学生档案.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
-						console.log('新增成功：' + JSON.stringify(data.RspData.Result));
-						events.fireToPageNone('record_student_main.html', 'refreshView');
-						mui.toast('发布成功');
-						mui.back();
+						setTimeout(function() {
+							wd.close();
+							pathList = [];
+							mui.toast('发布成功');
+							events.fireToPageNone('record_student_main.html', 'refreshView');
+							mui.back();
+						}, 2000);
 					} else {
 						mui.toast(data.RspTxt);
 						document.getElementById("commit").disabled = false;
 						if(pathList.length != 0) {
-							BatchDelete(pathList);
+							BatchDelete(pathList, wd);
+						} else {
+							wd.close();
 						}
-						pathList = [];
+						mui.toast('发布失败 ' + JSON.stringify(data));
 					}
-					wd.close();
+
 				});
 			}
 
@@ -172,21 +207,15 @@
 					uploadSpace: uploadSpace, //str 必填  上传的空间
 				}
 
-				var uploadNum = pathArray.length; //记录上传的次数
-				var uploadErrorNum = 0; //上传失败的次数
-				var encAddr = []; //附件地址
-				var encImg = []; //附件缩略图地址
+				uploadNum = pathArray.length; //记录上传的次数
+
 				CloudFileUtil.getQNUpToken(getUpTokenUrl, getToken, function(data) {
-					var QNUptoken = data.data; //token数据
-					var configure = data.configure; //获取token的配置信息
-					console.log('七牛上传凭证:' + JSON.stringify(QNUptoken));
-					console.log('七牛配置信息:' + JSON.stringify(configure));
-					if(QNUptoken.Status == 0) { //失败
-						mui.toast('获取上传凭证失败 ' + QNUptoken.Message);
-						console.log('### ERROR ### 请求上传凭证失败 ' + QNUptoken.Message);
-						wd.close();
-					} else {
-						console.log('获取上传凭证成功');
+					console.log('获取上传凭证 ' + JSON.stringify(data));
+					if(data.data.Status == 1) {
+						QNUptoken = data.data; //token数据
+						var configure = data.configure; //获取token的配置信息
+						console.log('七牛上传凭证:' + JSON.stringify(QNUptoken));
+						console.log('七牛配置信息:' + JSON.stringify(configure));
 						//记录图片和缩略图地址
 						for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
 							for(var i = 0; i < QNUptoken.Data.length; i++) {
@@ -197,116 +226,145 @@
 								if(multiMedia.data.PictureArray[j].id == fileId) {
 									multiMedia.data.PictureArray[j].domain = QNUptoken.Data[i].Domain + QNUptoken.Data[i].Key;
 									multiMedia.data.PictureArray[j].thumb = QNUptoken.Data[i].OtherKey[configure.thumbKey[i]];
-									pathList.push(multiMedia.data.PictureArray[j].domain);
-									pathList.push(multiMedia.data.PictureArray[j].thumb);
-									encAddr.push(multiMedia.data.PictureArray[j].domain);
-									encImg.push(multiMedia.data.PictureArray[j].thumb);
 								}
 							}
 						}
 						wd.setTitle('上传中...');
-						for(var i = 0; i < QNUptoken.Data.length; i++) {
-							var filePath = QNUptoken.Data[i].P_Key.split("/");
-							var fileName = filePath[filePath.length - 1];
-							//获取路径
-							var fPath = '';
-							for(var k = 0; k < pathArray.length; k++) {
-								var path = pathArray[k].split("/");
-								var name = path[path.length - 1];
-								if(fileName == name) {
-									fPath = pathArray[k];
-								}
-							}
-							CloudFileUtil.upload(fPath, QNUptoken.Data[i].Token, QNUptoken.Data[i].Key, function(upload, status) {
-								//上传任务完成的监听
-								console.log('上传任务完成' + status + '|' + JSON.stringify(upload));
-								if(status == 200) {
-									console.log('上传成功');
-									uploadNum--;
-									if(uploadNum == 0) {
-										console.log('所有上传都成功');
-										var encAddrStr = encAddr.join('|');
-										var encImgrStr = encImg.join('|');
-										addRecorc(wd, '1', encAddrStr, encImgrStr);
-									}
-								} else {
-									uploadErrorNum++;
-								}
-								if((uploadNum != 0 || uploadErrorNum != 0) && (uploadNum - uploadErrorNum) == 0) {
-									mui.toast('上传失败');
-									console.log('上传失败');
-									if(pathList.length != 0) {
-										BatchDelete(pathList);
-									}
-									document.getElementById("commit").disabled = false;
-									wd.close();
-								}
-							}, function(upload, status) {
-								var id = upload.__UUID__;
-								var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
-								var totalSize = AndroidFileSystem.readSize(upload.totalSize);
-								var uploadState = upload.state;
-								switch(uploadState) {
-									case 0: //上传任务开始调度
-										console.log('上传任务开始调度:|id:' + id + '|uploadState:' + uploadState);
-										break;
-									case 1: //上传任务开始请求
-										console.log('上传任务开始请求:|id:' + id + '|uploadState:' + uploadState);
-										break;
-									case 2: //上传任务请求已经建立
-										console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
-										break;
-									case 3: //上传任务提交数据
-										//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
-										break;
-									case 4: //上传任务已完成
-										console.log('上传任务已完成:|id:' + id + '|uploadState:' + uploadState);
-										break;
-									case 5: //上传任务已暂停
-										console.log('上传任务已暂停:|id:' + id + '|uploadState:' + uploadState);
-										break;
-									default:
-										console.log('上传任务状态监听:其他状态' + uploadState);
-										break;
-								}
-							}, function(task) {
-								//上传任务创建成功的回调
-								task.start();
-							});
-						}
+						taskCreate(wd);
+					} else {
+						console.log('### ERROR ### 获取上传凭证失败 ### ' + data.data.Message);
+						document.getElementById("commit").disabled = false;
+						wd.close();
+						mui.toast('获取上传凭证失败 ' + data.data.Message);
 					}
 				}, function(xhr, type, errorThrown) {
-					mui.toast('请求上传凭证失败 ' + type);
-					console.log('请求上传凭证失败 ' + type);
+					console.log('### ERROR ### 请求上传凭证失败 ###  ' + type);
+					document.getElementById("commit").disabled = false;
 					wd.close();
+					mui.toast('请求上传凭证失败 ' + type);
 				});
 			}
 
 			/**
 			 * 删除上传失败的文件
 			 */
-			function BatchDelete(pathList) {
+			function BatchDelete(paths, wd) {
 				var batchDelete = {
 					appId: 6, //int 必填 项目id
-					urls: pathList //array 必填 需要获取下载token文件的路径
+					urls: paths //array 必填 需要获取下载token文件的路径
 				}
 				/**
 				 * 七牛批量删除
 				 */
 				CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, batchDelete, function(data) {
+						console.log('七牛删除 ' + JSON.stringify(data));
 						if(data.Status == 1) {
-							//mui.toast('七牛删除成功');
-							console.log('七牛删除成功:' + JSON.stringify(data));
+							pathList = [];
 						} else {
+							console.log('### ERROR ### 七牛删除失败 ### ' + JSON.stringify(data));
 							mui.toast('删除失败' + JSON.stringify(data));
-							console.log('七牛删除:' + JSON.stringify(data));
 						}
+						wd.close();
 					},
 					function(xhr, type, errorThrown) {
+						console.log('### ERROR ### 请求七牛删除失败 ### ' + JSON.stringify(type));
 						mui.toast('请求删除失败' + JSON.stringify(type));
-						console.log('七牛删除失败:' + JSON.stringify(type));
+						wd.close();
 					}
 				);
+			}
+
+			/**
+			 * 创建上传任务并且逐个任务执行
+			 */
+			function taskCreate(wd) {
+				for(var i = 0; i < QNUptoken.Data.length; i++) {
+					if(QNUptoken.Data[i].task == undefined) {
+						var filePath = QNUptoken.Data[i].P_Key.split("/");
+						var fileName = filePath[filePath.length - 1];
+						//获取路径
+						var fPath = '';
+						var num; //记录第几张图片
+						for(var k = 0; k < multiMedia.data.PictureArray.length; k++) {
+							var path = multiMedia.data.PictureArray[k].path.split("/");
+							var name = path[path.length - 1];
+							if(fileName == name) {
+								num = k;
+								fPath = multiMedia.data.PictureArray[k].path;
+								break;
+							}
+						}
+						CloudFileUtil.upload(fPath, QNUptoken.Data[i].Token, QNUptoken.Data[i].Key, function(upload, status) {
+							//上传任务完成的监听
+							console.log('上传任务完成' + status + '|' + JSON.stringify(upload));
+							if(status == 200) {
+								console.log('上传成功');
+								QNUptoken.Data[i].task = true;
+								uploadNum--;
+								var title = '上传 ' + (QNUptoken.Data.length - uploadNum) + "/" + (QNUptoken.Data.length);
+								wd.setTitle(title);
+								//记录失败后需要删除的文件
+								pathList.push(multiMedia.data.PictureArray[num].domain);
+								pathList.push(multiMedia.data.PictureArray[num].thumb);
+								if(uploadNum == 0) {
+									console.log('所有上传都成功');
+									var encAddr = []; //附件地址
+									var encImg = []; //附件缩略图地址
+									for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
+										encAddr.push(multiMedia.data.PictureArray[j].domain);
+										encImg.push(multiMedia.data.PictureArray[j].thumb);
+									}
+									var encAddrStr = encAddr.join('|');
+									var encImgrStr = encImg.join('|');
+									addRecorc(wd, '1', encAddrStr, encImgrStr);
+								} else {
+									taskCreate(wd);
+								}
+							} else {
+								console.log('### ERROR ### 上传失败 ### ' + status + ' ' + JSON.stringify(upload));
+								document.getElementById("commit").disabled = false;
+								mui.toast('上传失败 ' + status + ' ' + upload.responseText);
+								if(pathList.length != 0) {
+									BatchDelete(pathList, wd);
+								} else {
+									wd.close();
+								}
+							}
+						}, function(upload, status) {
+							//var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
+							//var totalSize = AndroidFileSystem.readSize(upload.totalSize);
+							switch(upload.state) {
+								case 0: //上传任务开始调度
+									console.log('上传任务开始调度:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
+									break;
+								case 1: //上传任务开始请求
+									console.log('上传任务开始请求:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
+									break;
+								case 2: //上传任务请求已经建立
+									console.log('上传任务请求已经建立:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
+									break;
+								case 3: //上传任务提交数据
+									//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + upload.state);
+									break;
+								case 4: //上传任务已完成
+									console.log('上传任务已完成:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
+									break;
+								case 5: //上传任务已暂停
+									console.log('上传任务已暂停:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
+									break;
+								default:
+									console.log('上传任务状态监听:其他状态' + upload.state);
+									break;
+							}
+						}, function(task) {
+							//上传任务创建成功的回调
+							task.start();
+						});
+
+						//停止本次循环
+						break;
+					}
+				}
 			}
 		</script>
 	</body>

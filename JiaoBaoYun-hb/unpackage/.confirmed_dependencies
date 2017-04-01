@@ -254,7 +254,9 @@
 			"fonts/fangzheng.ttf",
 			"fonts/iconfont.ttf"
 		],
-		"refer": []
+		"refer": [
+			"html/quan/classSpace-persons.html"
+		]
 	},
 	"html/index/mine.html": {
 		"resources": [

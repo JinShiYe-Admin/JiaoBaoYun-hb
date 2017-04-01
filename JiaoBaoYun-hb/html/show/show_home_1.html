@@ -55,6 +55,8 @@
 			var personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid; //用户utid
 			var SCREEN_WIDTH; //屏幕宽度
 			mui.plusReady(function() {
+				events.preload("../quan/classSpace-persons.html");
+
 				SCREEN_WIDTH = plus.screen.resolutionWidth;
 				mui.previewImage(); //浏览图片详情
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
@@ -72,8 +74,8 @@
 				});
 				//详情页改变关注状态 修改本页面数据
 				window.addEventListener('changeFocus', function(e) {
-					var publisherID = e.detail.data;//被修改的人ID
-					var IsFocused = e.detail.IsFocused;//关注状态
+					var publisherID = e.detail.data; //被修改的人ID
+					var IsFocused = e.detail.IsFocused; //关注状态
 					for(var item1 in datasource) {
 						var tempArray = datasource[item1]
 						for(var i in tempArray) {
@@ -89,7 +91,7 @@
 					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 					pageIndex = 1;
 					pullFlag = 0;
-					if(cityID == 0) {
+					if(cityID == 1) {
 						getFocusByUser()
 					} else {
 						requestData(cityID, 1);
@@ -126,6 +128,7 @@
 					console.log(JSON.stringify(tempData));
 
 					if(tempData.flag == '评论') {
+						var commentList = document.getElementById("commentList" + citycode + 'zx' + tempIndex);
 						document.getElementById('line' + citycode + 'zx' + tempIndex).className = 'mui-media-body dynamic-line';
 						var div = document.createElement("div");
 						var index = zonepArray[tempIndex].Comments.length
@@ -359,13 +362,24 @@
 									setTimeout(function() {
 										if(info.aflag == 0) { //定制的城市
 											requestData(info.acode, page.pageIndex + 1);
-										} else { //关注的人数据
+											self.endPullUpToRefresh();
+										} else {
+
+											//关注的人数据
 											var tempModel = cities[cities.length - 1];
-											tempModel.isRefresh = 1; //是刷新0，还是加载更多1
-											//74.(用户空间）获取多用户空间所有用户动态列表
-											getAllUserSpacesByUser(tempModel);
+											if(tempModel.index <= tempModel.totalPage) {
+												tempModel.isRefresh = 1; //是刷新0，还是加载更多1
+												//74.(用户空间）获取多用户空间所有用户动态列表
+												getAllUserSpacesByUser(tempModel);
+												self.endPullUpToRefresh();
+											} else {
+												tempModel.index--;
+												//没有下一页
+												self.endPullUpToRefresh(true);
+											}
+
 										}
-										self.endPullUpToRefresh();
+
 									}, 1000);
 								} else {
 									self.endPullUpToRefresh();
@@ -415,7 +429,7 @@
 				//44.获取个人的订制城市
 				postDataPro_PostUTcity(comData, waitingDia, function(data) {
 					var eduArray = [];
-					var tempArray=[];
+					var tempArray = [];
 					console.log('获取个人的订制城市展现频道:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						eduArray.push({
@@ -423,7 +437,7 @@
 							aname: '全部',
 							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
 						});
-						if(data.RspData[0].citys) {
+						if(data.RspData[0].citys && data.RspData[0].citys != "") {
 							//先通过‘|’将返回值分为数组
 							tempArray = data.RspData[0].citys.split('|');
 							//遍历此数组
@@ -442,20 +456,39 @@
 								model_area.aname = tempArea[1];
 								//将对应的这个数组的str和model对换，将数组中的值，替换为model数组1
 								tempArray.splice(m, 1, model_area);
-								
+
 							}
-							eduArray=eduArray.concat(tempArray)
+							eduArray = eduArray.concat(tempArray)
 							console.log('修改后的最终值为:' + JSON.stringify(eduArray));
+						} else {
+							eduArray = [];
+							//如果定制城市为空
+							var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
+							console.log(JSON.stringify(uarea));
+							eduArray.push({
+								acode: 0,
+								aname: '全部',
+								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+							});
+							//加入手机号所在城市
+
+							eduArray.push({
+								acode: uarea.acode,
+								aname: uarea.aname,
+								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+							});
 						}
 					} else {
+						console.log('无定制城市')
 						eduArray = [];
-						//						mui.toast(data.RspTxt);
-					}
-					//如果定制城市为空
-
-					if(eduArray.length == 0) {
+						//如果定制城市为空
 						var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
 						console.log(JSON.stringify(uarea));
+						eduArray.push({
+							acode: 0,
+							aname: '全部',
+							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+						});
 						//加入手机号所在城市
 
 						eduArray.push({
@@ -463,6 +496,8 @@
 							aname: uarea.aname,
 							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
 						});
+
+						//						mui.toast(data.RspTxt);
 					}
 					//加入关注的人数据
 					eduArray.push({
@@ -472,6 +507,7 @@
 						index: 1, //请求第几页数据
 						isRefresh: 0 //是刷新0，还是加载更多1
 					});
+					console.log(JSON.stringify(eduArray));
 					cities = eduArray.slice(0); //拷贝数组
 					callBack(cities);
 					waitingDia.close();
@@ -499,10 +535,10 @@
 					if(data.RspCode == 0) {
 						page.totalPage = data.RspData.TotalPage;
 						totalPage = data.RspData.TotalPage;
-						if(data.RspData.Data.length > 0){
+						if(data.RspData.Data.length > 0) {
 							getPersonIds(data.RspData.Data, cityCode);
 						}
-						
+
 					}
 					if(document.getElementById("bot_" + cityCode)) {
 						document.getElementById("bot_" + cityCode).setAttribute('data-page', JSON.stringify(page))
@@ -548,16 +584,16 @@
 					wd.close();
 					if(data.RspCode == 0) {
 						var tempModel = cities[cities.length - 1];
-						var Users =  data.RspData.Users;
-						userIDs=[];
-						for(var item in Users){
+						var Users = data.RspData.Users;
+						userIDs = [];
+						for(var item in Users) {
 							userIDs.push(Users[item].UserId)
 						}
 						tempModel.userIDs = userIDs;
 						tempModel.index = 1;
 						tempModel.isRefresh = 0; //是刷新0，还是加载更多1
 						//74.(用户空间）获取多用户空间所有用户动态列表
-							console.log(JSON.stringify(tempModel))
+						console.log(JSON.stringify(tempModel))
 						getAllUserSpacesByUser(tempModel);
 					} else {
 						mui.toast(data.RspTxt);
@@ -589,7 +625,7 @@
 						var tempModel = cities[cities.length - 1];
 						tempModel.index++;
 						//								setUserSpaceReadByUser();
-						totalPage = data.RspData.totalPage;
+						tempModel.totalPage = data.RspData.totalPage;
 						var tempRspData = data.RspData.Data;
 						//获取当前回调留言的个人信息，主要是头像、昵称
 						var tempArray = [];
@@ -602,7 +638,11 @@
 							//合并数组,点赞的人
 							tempArray = tempArray.concat(tempModel0.LikeUsers);
 							console.log(JSON.stringify(tempModel0.LikeUsers));
-							tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
+							for(var i in tempModel0.LikeUsers){
+								tempArray = tempArray.concat(tempModel0.LikeUsers[i].userid);
+//								tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
+							}
+//							tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
 							//循环当前model中的回复数组
 							for(var item1 in tempModel0.Comments) {
 								//回复中的model
@@ -646,8 +686,9 @@
 										//遍历点赞的人
 										for(var item2 in tempModel0.LikeUsers) {
 											//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
-											if(tempModel.utid == tempModel0.LikeUsers[item2]) {
-												tempModel0.LikeUsers.splice(item2, 1, tempModel);
+											if(tempModel.utid == tempModel0.LikeUsers[item2].userid) {
+//												tempModel0.LikeUsers.splice(item2, 1, tempModel);
+												tempModel0.LikeUsers[item2] = $.extend(tempModel0.LikeUsers[item2], tempModel);
 											}
 										}
 										//对比id是否一致
@@ -748,7 +789,6 @@
 					var pageID = sliderId.replace('top_', '')
 					var tempId = this.id;
 					var index = this.id.replace('btn-focus' + pageID + 'zx', '');
-					console.log('index=' + index)
 					var isFocus = zonepArray[index].IsFocused;
 					//					var isFocus = jQuery('#'+this.id).data('isFocus');
 					var title, status;
@@ -756,7 +796,7 @@
 						title = '关注'
 						status = 1;
 					} else {
-						title = '已关注'
+						title = '取消关注'
 						status = 0;
 					}
 					var btnArray = [{ title: title, style: "destructive" }];
@@ -764,7 +804,7 @@
 						cancel: "取消",
 						buttons: btnArray
 					}, function(e) {
-						var flag = e.index;                                                                            
+						var flag = e.index;
 						switch(flag) {
 							case 0:
 								break;
@@ -786,7 +826,7 @@
 											var pageID = sliderId.replace('top_', '')
 											setTimeout(function() {
 												//获取数据
-												if(pageID != 0) { //定制的城市
+												if(pageID != 1) { //定制的城市
 													for(var i = 0; i < zonepArray.length; i++) {
 														if(zonepArray[index].PublisherId == zonepArray[i].PublisherId) {
 															if(isFocus == 0) {
@@ -946,12 +986,12 @@
 							console.log(JSON.stringify(data))
 							if(data.RspCode == 0) {
 								var btn = document.getElementById(tempId);
-								btn.innerHTML = '已关注'
+								btn.innerHTML = '取消关注'
 								btn.className = 'mui-btn mui-pull-right btn-attentioned'
 								var pageID = sliderId.replace('top_', '')
 								setTimeout(function() {
 									//获取数据
-									if(pageID != 0) { //定制的城市
+									if(pageID != 1) { //定制的城市
 										requestData(pageID, 1);
 									} else { //关注的人数据
 										//81.（用户空间）获取用户所有关注的用户
@@ -963,7 +1003,7 @@
 							}
 
 						})
-					}) //点击已关注
+					}) //点击取消关注
 				mui('#sliderGroup').on('tap', '.btn-attentioned', function() {
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
 
@@ -987,9 +1027,10 @@
 							btn.innerHTML = '关注'
 							btn.className = 'mui-btn mui-pull-right btn-attention'
 							var pageID = sliderId.replace('top_', '')
+							console.log('hhhhhhhhhh='+pageID)
 							setTimeout(function() {
 								//获取数据
-								if(pageID != 0) { //定制的城市
+								if(pageID != 1) { //定制的城市
 									requestData(pageID, 1);
 								} else { //关注的人数据
 									//81.（用户空间）获取用户所有关注的用户
@@ -1003,6 +1044,60 @@
 
 					})
 				})
+				//点击点赞人那一行 跳转到点赞的人的列表界面
+				mui('.mui-table-view').on('tap', '.PraiseList', function() {
+					console.log('跳转到点赞人列表界面')
+					var cityID = sliderId.replace('top_', '');
+					var index = this.id.replace('PraiseList' + cityID + 'zx', '');
+					var LikeUsers = zonepArray[index].LikeUsers
+					console.log(JSON.stringify(LikeUsers))
+					events.fireToPageWithData("../quan/classSpace-persons.html", "personsList", { zanList: LikeUsers, type: 3 });
+					window.event.stopPropagation()
+				})
+				//点击点赞的人跳转到相应界面
+				mui('.mui-table-view').on('tap', '.praiseName', function() {
+					console.log('点赞者id' + this.dataset.info);
+					mui.openWindow({
+						url: '../quan/zone_main.html',
+						id: '../quan/zone_main.html',
+						styles: {
+							top: '0px', //设置距离顶部的距离
+							bottom: '0px'
+						},
+
+						extras: {
+							data: this.dataset.info,
+							NoReadCnt: 0,
+							flag: '0'
+						},
+						createNew: true,
+
+					});
+					window.event.stopPropagation()
+				});
+				//点击评论者名字
+				mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
+					console.log('评论者id' + this.dataset.info);
+					mui.openWindow({
+						url: '../quan/zone_main.html',
+						id: '../quan/zone_main.html',
+						styles: {
+							top: '0px', //设置距离顶部的距离
+							bottom: '0px'
+						},
+
+						extras: {
+							data: this.dataset.info,
+							NoReadCnt: 0,
+							flag: '0'
+						},
+						createNew: true,
+
+					});
+					window.event.stopPropagation()
+
+				})
+
 				//点赞和取消点赞
 				mui('#sliderGroup').on('tap', '.dynamic-icon-praise', function() {
 					var pageID = sliderId.replace('top_', '')
@@ -1094,8 +1189,12 @@
 				var personIds = [];
 				for(var i in data) {
 					personIds.push(data[i].PublisherId);
-					data[i].LikeUsers = arrayDupRemoval(data[i].LikeUsers);
-					personIds = personIds.concat(data[i].LikeUsers);
+					for(var item in data[i].LikeUsers){
+						personIds = personIds.concat(data[i].LikeUsers[item].userid);
+					}
+					
+//					data[i].LikeUsers = arrayDupRemoval(data[i].LikeUsers);
+//					personIds = personIds.concat(data[i].LikeUsers);
 
 					if(data[i].Comments) {
 						for(var j in data[i].Comments) {
@@ -1162,7 +1261,7 @@
 						}
 						//遍历点赞的人
 						for(var item2 in data[i].LikeUsers) {
-							if(personsData[j].utid == data[i].LikeUsers[item2]) {
+							if(personsData[j].utid == data[i].LikeUsers[item2].userid) {
 								data[i].LikeUsers[item2] = mui.extend(data[i].LikeUsers[item2], personsData[j])
 							}
 
@@ -1260,7 +1359,7 @@
 				var praiseList = [];
 				if(tempModel.LikeUsers.length != 0) {
 					for(var i = 0; i < tempModel.LikeUsers.length; i++)
-						praiseList.push(tempModel.LikeUsers[i].unick);
+						praiseList.push(tempModel.LikeUsers[i]);
 				}
 
 				//[commentList]:评论列表
@@ -1287,6 +1386,33 @@
 			}
 
 			function addComment() {
+				if(tempIndex.indexOf('-') >= 0) {
+					var indexArr = tempIndex.split('-');
+					var id = indexArr[0];
+					var commentId = indexArr[1];
+					var replyId = indexArr[2];
+
+					var tempModel = zonepArray[id].Comments[commentId];
+					if(!tempModel) {
+						mui.toast('不可以回复自己');
+						return;
+					}
+					console.log(JSON.stringify(tempModel));
+					var upperId = tempModel.TabId;
+					var replyUserId;
+					var ReplyIdName;
+					if(replyId == '评论') {
+						replyUserId = tempModel.UserId
+						ReplyIdName = tempModel.UserIdName
+					} else {
+						replyUserId = tempModel.Replys[replyId].UserId;
+						ReplyIdName = tempModel.Replys[replyId].UserIdName;
+					}
+					if(personalUTID == replyUserId) {
+						mui.toast('不可以回复自己');
+						return;
+					}
+				}
 				events.openNewWindowWithData('add-comment.html', {
 					tempIndex: tempIndex,
 					zonepArray: zonepArray
