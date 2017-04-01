@@ -964,7 +964,8 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"js/libs/jquery.js",
 					"css/utils/common.css",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"js/publicProtocol.js"
 				],
 				"refer": [
 					"html/index.html",
@@ -1897,7 +1898,8 @@
 					"html/cloud/cloud_home.html",
 					"css/utils/slide_navigatian.css",
 					"html/scienceeducation/scienceeducation_home.html",
-					"html/sciedu/sciedu_home.html"
+					"html/sciedu/sciedu_home.html",
+					null
 				],
 				"refer": [
 					"html/mine.html",
