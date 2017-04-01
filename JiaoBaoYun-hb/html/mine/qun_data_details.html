@@ -124,25 +124,25 @@
 					<li class="mui-table-view-cell text-color-disabled">
 						<div class="mui-input-row">
 							<label>昵称:</label>
-							<input id="stu_unick" type="text" class="input-disabled">
+							<input id="stu_unick" type="text" readonly="readonly">
 						</div>
 					</li>
 					<li class="mui-table-view-cell text-color-disabled">
 						<div class="mui-input-row">
 							<label>学生账号:</label>
-							<input id="stu_uname" type="text" class="input-disabled">
+							<input id="stu_uname" type="text" readonly="readonly">
 						</div>
 					</li>
 					<li class="mui-table-view-cell text-color-disabled">
 						<div class="mui-input-row">
 							<label>学生电话:</label>
-							<input id="stu_phone" type="text" class="input-disabled">
+							<input id="stu_phone" type="text" readonly="readonly">
 						</div>
 					</li>
 					<li class="mui-table-view-cell text-color-disabled">
 						<div class="mui-input-row ">
 							<label>性别:</label>
-							<input id="stu_gender" type="text" class="input-disabled">
+							<input id="stu_gender" type="text" readonly="readonly">
 						</div>
 					</li>
 				</ul>
@@ -160,46 +160,46 @@
 					<li class="mui-table-view-cell text-color-disabled">
 						<div class="mui-input-row">
 							<label>昵称:</label>
-							<input id="tea_unick" type="text" class="input-disabled">
+							<input id="tea_unick" type="text" readonly="readonly">
 						</div>
 					</li>
 					<li class="mui-table-view-cell text-color-disabled">
 						<div class="mui-input-row">
 							<label>账号:</label>
-							<input id="tea_uname" type="text" class="input-disabled">
+							<input id="tea_uname" type="text" readonly="readonly">
 						</div>
 					</li>
 					<li class="mui-table-view-cell text-color-disabled">
 						<div class="mui-input-row">
 							<label>手机号:</label>
-							<input id="tea_phone" type="text" class="input-disabled">
+							<input id="tea_phone" type="text" readonly="readonly">
 						</div>
 					</li>
 					<li class="mui-table-view-cell text-color-disabled">
 						<div class="mui-input-row">
 							<label>性别:</label>
-							<input id="tea_gender" type="text" class="input-disabled">
+							<input id="tea_gender" type="text" readonly="readonly">
 						</div>
 					</li>
-					<li class="mui-table-view-cell">
+					<li id="tea_job_li" class="mui-table-view-cell">
 						<div class="mui-input-row">
 							<label>职位:</label>
 							<input id="tea_job" type="text" maxlength="10" placeholder="职位最多10个字">
 						</div>
 					</li>
-					<li class="mui-table-view-cell">
+					<li id="tea_sub_li" class="mui-table-view-cell">
 						<div class="mui-input-row">
 							<label>科目:</label>
 							<input id="tea_sub" type="text" maxlength="10" placeholder="科目最多10个字">
 						</div>
 					</li>
-					<li class="mui-table-view-cell">
+					<li id="tea_title_li" class="mui-table-view-cell">
 						<div class="mui-input-row">
 							<label>职称:</label>
 							<input id="tea_title" type="text" maxlength="10" placeholder="职称最多10个字">
 						</div>
 					</li>
-					<li class="mui-table-view-cell">
+					<li id="tea_expsch_li" class="mui-table-view-cell">
 						<div class="mui-input-row">
 							<label>教龄:</label>
 							<input id="tea_expsch" type="tel" placeholder="教龄0-99">
@@ -511,8 +511,6 @@
 									utid: teaData.utid,
 									dataType: '2'
 								}]); //查找关联的老师账号信息
-							}else{
-								inputSetDisabled();
 							}
 						} else if(type == 3) { //学生
 							var utidArray = [];
@@ -553,8 +551,6 @@
 
 							if(utidArray.length != 0) {
 								getUserData(utidArray); //获取关联账号的信息
-							} else {
-								inputSetDisabled();
 							}
 						}
 					} else {
@@ -572,10 +568,14 @@
 									expsch: '', //教龄,老师必填,其他留空
 									sub: '', //科目,老师必填,其他留空
 								}
-								tea_job.disabled = true; //老师职位
-								tea_sub.disabled = true; //老师科目
-								tea_title.disabled = true; //老师职称
-								tea_expsch.disabled = true; //老师教龄
+								tea_job.readOnly = 'readonly'; //老师职位
+								tea_sub.readOnly = 'readonly'; //老师科目
+								tea_title.readOnly = 'readonly'; //老师职称
+								tea_expsch.readOnly = 'readonly'; //老师教龄
+								document.getElementById("tea_job_li").className = 'mui-table-view-cell text-color-disabled';
+								document.getElementById("tea_sub_li").className = 'mui-table-view-cell text-color-disabled';
+								document.getElementById("tea_title_li").className = 'mui-table-view-cell text-color-disabled';
+								document.getElementById("tea_expsch_li").className = 'mui-table-view-cell text-color-disabled';
 							} else if(type == 3) { //学生
 								stu_name.value = mainData.stuname;
 							}
@@ -595,13 +595,13 @@
 				var html1 = '<li class="mui-table-view-cell text-color-disabled">\
 									<div class="mui-input-row">\
 										<label>家长昵称:</label>\
-										<input id="par_ugname_' + data.utid + '" type="text"  value="' + data.ugname + '" class="input-disabled">\
+										<input id="par_ugname_' + data.utid + '" type="text"  value="' + data.ugname + '" readonly="readonly">\
 									</div>\
 								</li>\
 								<li class="mui-table-view-cell text-color-disabled">\
 									<div class="mui-input-row">\
 										<label>家长账号:</label>\
-										<input id="par_uname_' + data.utid + '" type="text"  class="input-disabled">\
+										<input id="par_uname_' + data.utid + '" type="text"  readonly="readonly">\
 									</div>\
 								</li>';
 				var html2 = '<li class="mui-table-view-cell">\
@@ -613,7 +613,7 @@
 				var html3 = '<li class="mui-table-view-cell text-color-disabled">\
 									<div class="mui-input-row">\
 										<label>家长电话:</label>\
-										<input id="par_phone_' + data.utid + '" type="text"  class="input-disabled">\
+										<input id="par_phone_' + data.utid + '" type="text"  readonly="readonly">\
 									</div>\
 								</li >\
 								<div style="height:1px;width:100%;"></div>';
@@ -749,7 +749,6 @@
 							});
 						});
 					}
-					inputSetDisabled();
 					wd.close();
 				});
 			}
@@ -890,18 +889,6 @@
 					}
 					wd.close();
 				});
-			}
-
-			/**
-			 * 禁止某些input不允许输入
-			 * 因为iOS兼容性问题，input设置了disabled后无法设置value,所以在获得数据后再设置disabled
-			 */
-			function inputSetDisabled() {
-				console.log('inputSetDisabled');
-				var disabledArray = document.querySelectorAll('.input-disabled');
-				for(var i = 0; i < disabledArray.length; i++) {
-					disabledArray[i].readOnly='readonly';
-				}
 			}
 		</script>
 	</body>
