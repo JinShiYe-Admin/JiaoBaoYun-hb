@@ -55,6 +55,8 @@
 			var personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid; //用户utid
 			var SCREEN_WIDTH; //屏幕宽度
 			mui.plusReady(function() {
+				events.preload("../quan/classSpace-persons.html");
+
 				SCREEN_WIDTH = plus.screen.resolutionWidth;
 				mui.previewImage(); //浏览图片详情
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
@@ -72,8 +74,8 @@
 				});
 				//详情页改变关注状态 修改本页面数据
 				window.addEventListener('changeFocus', function(e) {
-					var publisherID = e.detail.data;//被修改的人ID
-					var IsFocused = e.detail.IsFocused;//关注状态
+					var publisherID = e.detail.data; //被修改的人ID
+					var IsFocused = e.detail.IsFocused; //关注状态
 					for(var item1 in datasource) {
 						var tempArray = datasource[item1]
 						for(var i in tempArray) {
@@ -126,6 +128,7 @@
 					console.log(JSON.stringify(tempData));
 
 					if(tempData.flag == '评论') {
+						var commentList = document.getElementById("commentList" + citycode + 'zx' + tempIndex);
 						document.getElementById('line' + citycode + 'zx' + tempIndex).className = 'mui-media-body dynamic-line';
 						var div = document.createElement("div");
 						var index = zonepArray[tempIndex].Comments.length
@@ -415,7 +418,7 @@
 				//44.获取个人的订制城市
 				postDataPro_PostUTcity(comData, waitingDia, function(data) {
 					var eduArray = [];
-					var tempArray=[];
+					var tempArray = [];
 					console.log('获取个人的订制城市展现频道:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						eduArray.push({
@@ -442,9 +445,9 @@
 								model_area.aname = tempArea[1];
 								//将对应的这个数组的str和model对换，将数组中的值，替换为model数组1
 								tempArray.splice(m, 1, model_area);
-								
+
 							}
-							eduArray=eduArray.concat(tempArray)
+							eduArray = eduArray.concat(tempArray)
 							console.log('修改后的最终值为:' + JSON.stringify(eduArray));
 						}
 					} else {
@@ -499,10 +502,10 @@
 					if(data.RspCode == 0) {
 						page.totalPage = data.RspData.TotalPage;
 						totalPage = data.RspData.TotalPage;
-						if(data.RspData.Data.length > 0){
+						if(data.RspData.Data.length > 0) {
 							getPersonIds(data.RspData.Data, cityCode);
 						}
-						
+
 					}
 					if(document.getElementById("bot_" + cityCode)) {
 						document.getElementById("bot_" + cityCode).setAttribute('data-page', JSON.stringify(page))
@@ -548,16 +551,16 @@
 					wd.close();
 					if(data.RspCode == 0) {
 						var tempModel = cities[cities.length - 1];
-						var Users =  data.RspData.Users;
-						userIDs=[];
-						for(var item in Users){
+						var Users = data.RspData.Users;
+						userIDs = [];
+						for(var item in Users) {
 							userIDs.push(Users[item].UserId)
 						}
 						tempModel.userIDs = userIDs;
 						tempModel.index = 1;
 						tempModel.isRefresh = 0; //是刷新0，还是加载更多1
 						//74.(用户空间）获取多用户空间所有用户动态列表
-							console.log(JSON.stringify(tempModel))
+						console.log(JSON.stringify(tempModel))
 						getAllUserSpacesByUser(tempModel);
 					} else {
 						mui.toast(data.RspTxt);
@@ -764,7 +767,7 @@
 						cancel: "取消",
 						buttons: btnArray
 					}, function(e) {
-						var flag = e.index;                                                                            
+						var flag = e.index;
 						switch(flag) {
 							case 0:
 								break;
@@ -1003,6 +1006,60 @@
 
 					})
 				})
+				//点击点赞人那一行 跳转到点赞的人的列表界面
+				mui('.mui-table-view').on('tap', '.PraiseList', function() {
+					console.log('跳转到点赞人列表界面')
+					var cityID = sliderId.replace('top_', '');
+					var index = this.id.replace('PraiseList' + cityID + 'zx', '');
+					var LikeUsers = zonepArray[index].LikeUsers
+					console.log(JSON.stringify(LikeUsers))
+					events.fireToPageWithData("../quan/classSpace-persons.html", "personsList", { zanList: LikeUsers, type: 3 });
+					window.event.stopPropagation()
+				})
+				//点击点赞的人跳转到相应界面
+				mui('.mui-table-view').on('tap', '.praiseName', function() {
+					console.log('点赞者id' + this.dataset.info);
+					mui.openWindow({
+						url: '../quan/zone_main.html',
+						id: '../quan/zone_main.html',
+						styles: {
+							top: '0px', //设置距离顶部的距离
+							bottom: '0px'
+						},
+
+						extras: {
+							data: this.dataset.info,
+							NoReadCnt: 0,
+							flag: '0'
+						},
+						createNew: true,
+
+					});
+					window.event.stopPropagation()
+				});
+				//点击评论者名字
+				mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
+					console.log('评论者id' + this.dataset.info);
+					mui.openWindow({
+						url: '../quan/zone_main.html',
+						id: '../quan/zone_main.html',
+						styles: {
+							top: '0px', //设置距离顶部的距离
+							bottom: '0px'
+						},
+
+						extras: {
+							data: this.dataset.info,
+							NoReadCnt: 0,
+							flag: '0'
+						},
+						createNew: true,
+
+					});
+					window.event.stopPropagation()
+
+				})
+
 				//点赞和取消点赞
 				mui('#sliderGroup').on('tap', '.dynamic-icon-praise', function() {
 					var pageID = sliderId.replace('top_', '')
@@ -1260,7 +1317,7 @@
 				var praiseList = [];
 				if(tempModel.LikeUsers.length != 0) {
 					for(var i = 0; i < tempModel.LikeUsers.length; i++)
-						praiseList.push(tempModel.LikeUsers[i].unick);
+						praiseList.push(tempModel.LikeUsers[i]);
 				}
 
 				//[commentList]:评论列表
@@ -1287,6 +1344,33 @@
 			}
 
 			function addComment() {
+				if(tempIndex.indexOf('-') >= 0) {
+					var indexArr = tempIndex.split('-');
+					var id = indexArr[0];
+					var commentId = indexArr[1];
+					var replyId = indexArr[2];
+
+					var tempModel = zonepArray[id].Comments[commentId];
+					if(!tempModel) {
+						mui.toast('不可以回复自己');
+						return;
+					}
+					console.log(JSON.stringify(tempModel));
+					var upperId = tempModel.TabId;
+					var replyUserId;
+					var ReplyIdName;
+					if(replyId == '评论') {
+						replyUserId = tempModel.UserId
+						ReplyIdName = tempModel.UserIdName
+					} else {
+						replyUserId = tempModel.Replys[replyId].UserId;
+						ReplyIdName = tempModel.Replys[replyId].UserIdName;
+					}
+					if(personalUTID == replyUserId) {
+						mui.toast('不可以回复自己');
+						return;
+					}
+				}
 				events.openNewWindowWithData('add-comment.html', {
 					tempIndex: tempIndex,
 					zonepArray: zonepArray

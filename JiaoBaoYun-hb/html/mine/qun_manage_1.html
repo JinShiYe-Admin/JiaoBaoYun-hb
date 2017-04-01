@@ -190,17 +190,6 @@
 					}
 				});
 
-				//长按修改群信息
-				//				mui('#qunList').on('longtap', '.mui-control-item', function() {
-				//					var id = this.id;
-				//					var info = JSON.parse(this.getAttribute('data-info'));
-				//					console.log(id + '|' + JSON.stringify(info));
-				//					events.openNewWindowWithData('qun_manage_info_change.html', {
-				//						gid: info.gid, //群ID
-				//						listener: { webid: 'qun_manage_1.html', winid: 'changeQunInfo' } //webview的id
-				//					});
-				//				});
-
 				//点击修改群信息
 				document.getElementById('changeInfo').addEventListener('tap', function() {
 					var qunEle = mui('.mui-control-item.mui-active')[0];
@@ -910,9 +899,9 @@
 					if(data.RspCode == 0) {
 						var tempList = data.RspData;
 						for(var i = 0; i < tempList.length; i++) {
-							console.log('tempList ' + gId + '|' + JSON.stringify(tempList[i]));
+							console.log('tempList 1| gid ' + gId + '|' + JSON.stringify(tempList[i]));
 							if(gId == tempList[i].gid && tempList[i].umstype == 0) { //用户在群类型为家长
-								console.log('tempList2' + JSON.stringify(tempList[i]));
+								console.log('tempList 2|' + JSON.stringify(tempList[i]));
 								var same = false
 								for(var j = 0; j < parList.length; j++) {
 									if(tempList[i].stuid == parList[j].stuid) { //显示一个家长

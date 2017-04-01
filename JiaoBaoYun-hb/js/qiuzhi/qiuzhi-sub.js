@@ -284,7 +284,7 @@ var setChannelList = function(data) {
 	lazyLoadApi.refresh(true);
 }
 var getInnerHTML = function(cell) {
-	console.log("回答内容：" + cell.AnswerContent);
+//	console.log("回答内容：" + cell.AnswerContent);
 	var inner = '<div>' +
 		'<div class="channel-info">' +
 		'<p class="channel-title"><img src="' + getChannelIcon(cell) + '" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
