@@ -6,11 +6,11 @@ var events = (function(mod) {
 
 	//去掉所有html标签
 	mod.deleteHtml = function(text) {
-//		var dd = text.replace(/<\/?.+?>/g, "");
-//		var dds = dd.replace(/ /g, "");
+		//		var dd = text.replace(/<\/?.+?>/g, "");
+		//		var dds = dd.replace(/ /g, "");
 		var reTag = /<(?:.|\s)*?>/g;
-   		return text.replace(reTag,"");
-//		return dds;
+		return text.replace(reTag, "");
+		//		return dds;
 	}
 
 	/**
@@ -437,8 +437,8 @@ var events = (function(mod) {
 	}
 	mod.getFileNameByPath = function(filePath) {
 		var filePaths = filePath.split(".");
-		var fileName=filePaths[filePaths.length - 1];
-		return new Date().getTime() + parseInt(Math.random()*1000)+'.'+fileName;
+		var fileName = filePaths[filePaths.length - 1];
+		return new Date().getTime() + parseInt(Math.random() * 1000) + '.' + fileName;
 	}
 
 	/**
@@ -541,6 +541,7 @@ var events = (function(mod) {
 
 	/**
 	 * 获得元素的文本
+	 * @author 莫尚霖
 	 * @param {Object} content
 	 */
 	mod.htmlGetText = function(data) {
@@ -552,6 +553,41 @@ var events = (function(mod) {
 		var content = jQuery('#html_get_text').text(); //获得文字
 		ele.parentNode.removeChild(ele);
 		return content;
+	}
+
+	/**
+	 * 初始化强制隐藏键盘
+	 * @author 莫尚霖
+	 */
+	mod.initHideKeyBoard = function() {
+		if(plus.os.name == 'Android') {
+			var Context = plus.android.importClass("android.content.Context");
+			var InputMethodManager = plus.android.importClass("android.view.inputmethod.InputMethodManager");
+			var main = plus.android.runtimeMainActivity();
+			var inputManger = main.getSystemService(Context.INPUT_METHOD_SERVICE);
+			var Focus = plus.android.invoke(main, 'getCurrentFocus');
+			//console.log('invoke ' + plus.android.invoke(main, 'getCurrentFocus'));
+			//console.log('invoke ' + plus.android.invoke(Focus, 'getWindowToken'));
+			var WindowToken = plus.android.invoke(Focus, 'getWindowToken');
+			var hideOption = {
+				manger: inputManger,
+				token: WindowToken,
+				type: InputMethodManager.HIDE_NOT_ALWAYS
+			}
+			return hideOption;
+		}
+	}
+
+	/**
+	 * 强制隐藏键盘需要和initHideKeyBoard配合使用
+	 * @author 莫尚霖
+	 * @param {Object} hideOption initHideKeyBoard 返回的数据
+	 */
+	mod.hideKeyBoard = function(hideOption) {
+		document.activeElement.blur();
+		if(plus.os.name == 'Android') {
+			hideOption.manger.hideSoftInputFromWindow(hideOption.token, hideOption.type);
+		}
 	}
 
 	return mod;

@@ -236,8 +236,12 @@
 					//将当前model中id塞到数组
 					tempArray.push(tempModel0.PublisherId);
 					//合并数组,点赞的人
-					tempArray = tempArray.concat(tempModel0.LikeUsers);
-					tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
+					//					tempArray = tempArray.concat(tempModel0.LikeUsers);
+					for(var i in tempModel0.LikeUsers) {
+						tempArray = tempArray.concat(tempModel0.LikeUsers[i].userid);
+						//								tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
+					}
+					//					tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
 					//循环当前model中的回复数组
 					for(var item1 in tempModel0.Comments) {
 						//回复中的model
@@ -279,8 +283,10 @@
 								var tempModel0 = tempRspData;
 								//遍历点赞的人
 								for(var item2 in tempModel0.LikeUsers) {
-									if(tempModel.utid == tempModel0.LikeUsers[item2]) {
-										tempModel0.LikeUsers.splice(item2, 1, tempModel);
+									//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
+									if(tempModel.utid == tempModel0.LikeUsers[item2].userid) {
+										//												tempModel0.LikeUsers.splice(item2, 1, tempModel);
+										tempModel0.LikeUsers[item2] = $.extend(tempModel0.LikeUsers[item2], tempModel);
 									}
 								}
 								//对比id是否一致

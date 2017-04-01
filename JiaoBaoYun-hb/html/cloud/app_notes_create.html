@@ -57,6 +57,7 @@
 			var pathList = []; //记录需要删掉的图片和缩略图
 			var QNUptoken; //token数据
 			var uploadNum = 0; //记录上传的次数
+			var hideOption; //隐藏键盘的数据
 
 			var multiMedia; //多媒体控件
 			var notes = document.getElementById("notes"); //输入框
@@ -88,6 +89,8 @@
 					TotalAudio: 1, //音频的个数
 					//					TotalVideo: 1, //视频的个数
 				});
+
+				hideOption = events.initHideKeyBoard();//获取配置信息
 			}
 
 			/*
@@ -101,7 +104,7 @@
 
 				//完成
 				document.getElementById('finish').addEventListener('tap', function() {
-					document.activeElement.blur();
+					events.hideKeyBoard(hideOption);
 					if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0) { //为空不允许发送
 						mui.toast('笔记不能为空');
 					} else if(notes.value.length > 2000) {

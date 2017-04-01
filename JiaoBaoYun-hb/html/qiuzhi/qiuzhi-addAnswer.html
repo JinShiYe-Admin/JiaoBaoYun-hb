@@ -22,23 +22,23 @@
 			<div class="mui-scroll">
 				<!--<p id="askTitle" style="font-size: 14px;margin-top: 12px;word-wrap: break-word;padding: 0 15px;text-align: justify;"></p>-->
 				<!--<div class="input-content">-->
-					<textarea id="answerContent" class="" placeholder="添加回答,最多4000字"></textarea>
-					<div class="extras-info">
-						<div id="take_pic" class="take_pic file-extras">
-							<a class="mui-icon iconfont icon-xiangji1"></a>
+				<textarea id="answerContent" class="" placeholder="添加回答,最多4000字"></textarea>
+				<div class="extras-info">
+					<div id="take_pic" class="take_pic file-extras">
+						<a class="mui-icon iconfont icon-xiangji1"></a>
 
-						</div>
-						<div id="take_camero" class="take_camero file-extras">
-							<a class="mui-icon iconfont icon-shipin"></a>
-						</div>
-						<div id="get_gallery" class="get_gallery file-extras">
-							<a class="mui-icon iconfont icon-tuku"></a>
-						</div>
-						<div class="mui-input-row mui-checkbox mui-left file-extras" style="float: right;width: 100px;margin-top: -40px;margin-left: -100px;">
-							<label style="font-size: 12px;">匿名</label>
-							<input id="checkbox" name="checkbox" value="" type="checkbox">
-						</div>
 					</div>
+					<div id="take_camero" class="take_camero file-extras">
+						<a class="mui-icon iconfont icon-shipin"></a>
+					</div>
+					<div id="get_gallery" class="get_gallery file-extras">
+						<a class="mui-icon iconfont icon-tuku"></a>
+					</div>
+					<div class="mui-input-row mui-checkbox mui-left file-extras" style="float: right;width: 100px;margin-top: -40px;margin-left: -100px;">
+						<label style="font-size: 12px;">匿名</label>
+						<input id="checkbox" name="checkbox" value="" type="checkbox">
+					</div>
+				</div>
 				<!--</div>-->
 
 				<div id="pictures" style="width: 100%;"></div>
@@ -74,45 +74,45 @@
 					document.getElementById('title').innerText = '我要回答';
 					//匿名默认未选择
 					document.getElementById('checkbox').checked = false;
-					document.querySelector(".extras-info").style.display="block";
-//					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
-//						item.style.display = 'inline-block';
-//					})
-					document.getElementById('answerContent').value="";
+					document.querySelector(".extras-info").style.display = "block";
+					//					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
+					//						item.style.display = 'inline-block';
+					//					})
+					document.getElementById('answerContent').value = "";
 					document.getElementById('answerContent').placeholder = "添加回答,最多4000字";
 					jQuery('#answerContent').prop("maxLength", "4000"); //设置最长
-//					var askTitle = document.getElementById("askTitle");
-//					askTitle.innerHTML = askModel.AskTitle;
+					//					var askTitle = document.getElementById("askTitle");
+					//					askTitle.innerHTML = askModel.AskTitle;
 				});
 				//加载评论
 				window.addEventListener('add-comment', function(e) {
 					CloudFileUtil.files = [];
 					events.clearChild(document.getElementById('pictures'))
 					type = 1;
-					document.getElementById('answerContent').value="";
+					document.getElementById('answerContent').value = "";
 					document.getElementById('title').innerText = '我要评论';
 					document.getElementById('answerContent').placeholder = "添加评论,最多300字";
 					jQuery('#answerContent').prop("maxLength", "300"); //设置最长
-					document.querySelector(".extras-info").style.display="none";
-//					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
-//						item.style.display = 'none';
-//					})
+					document.querySelector(".extras-info").style.display = "none";
+					//					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
+					//						item.style.display = 'none';
+					//					})
 					answerInfo = e.detail.data;
-//					document.getElementById('askTitle').innerText = "";
+					//					document.getElementById('askTitle').innerText = "";
 				})
 				window.addEventListener("comment-reply", function(e) {
 					console.log('回复评论要加载的值：' + JSON.stringify(e.detail.data));
 					type = 2;
-					document.getElementById('answerContent').value="";
+					document.getElementById('answerContent').value = "";
 					jQuery('#answerContent').prop("maxLength", "300"); //设置最长
 					document.getElementById('title').innerText = '回复评论';
 					commentInfo = e.detail.data;
-//					document.getElementById('askTitle').innerText = commentInfo.CommentContent;
+					//					document.getElementById('askTitle').innerText = commentInfo.CommentContent;
 					document.getElementById('answerContent').placeholder = "添加评论回复,最多300字";
-					document.querySelector(".extras-info").style.display="none";
-//					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
-//						item.style.display = 'none';
-//					})
+					document.querySelector(".extras-info").style.display = "none";
+					//					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
+					//						item.style.display = 'none';
+					//					})
 				})
 				setListener();
 			});
@@ -335,7 +335,17 @@
 						if(data.RspData.Result) {
 							document.getElementById('answerContent').value = '';
 							mui.toast('评论成功！')
-							events.fireToPageNone('qiuzhi-answerDetailSub.html', 'commentAdded');
+							events.fireToPageNone('qiuzhi-answerDetailSub.html', 'commentAdded', {
+								commentInfo: {
+									userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //	用户ID
+									answerId: answerId, //回答ID
+									commentId: data.RspData.Result //评论ID
+								},
+								upperInfo: {
+									upperId: upperId,
+									replyId: replyId
+								}
+							});
 							mui.back();
 						}
 					} else {

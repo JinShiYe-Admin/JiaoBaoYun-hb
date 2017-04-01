@@ -66,6 +66,7 @@
 			var pathList = []; //记录需要删掉的图片和缩略图
 			var QNUptoken; //token数据
 			var uploadNum = 0; //记录上传的次数
+			var hideOption; //隐藏键盘的数据
 
 			var multiMedia; //多媒体控件
 			var textArea = document.getElementById("textarea_record"); //输入框
@@ -107,6 +108,8 @@
 					TotalPicture: 9, //图片的个数
 					TotalAudio: 1, //音频的个数
 				});
+
+				hideOption = events.initHideKeyBoard(); //获取配置信息
 			}
 
 			/*
@@ -120,7 +123,7 @@
 
 				//完成
 				document.getElementById('commit').addEventListener('tap', function() {
-					document.activeElement.blur();
+					events.hideKeyBoard(hideOption);
 					var msgContent = textArea.value;
 					if(msgContent.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0) {
 						mui.toast('记事不能为空');
