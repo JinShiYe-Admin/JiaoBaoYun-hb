@@ -897,9 +897,10 @@
 			 * 因为iOS兼容性问题，input设置了disabled后无法设置value,所以在获得数据后再设置disabled
 			 */
 			function inputSetDisabled() {
+				console.log('inputSetDisabled');
 				var disabledArray = document.querySelectorAll('.input-disabled');
 				for(var i = 0; i < disabledArray.length; i++) {
-					disabledArray[i].disabled = true;
+					disabledArray[i].readOnly='readonly';
 				}
 			}
 		</script>
