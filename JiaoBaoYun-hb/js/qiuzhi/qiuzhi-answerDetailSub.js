@@ -5,6 +5,8 @@ var answerInfo; //回答详情
 var answerData; //答案数据
 var selfId;
 var flag = 1; //1为加载数据 0 为重置顺序
+var upperInfo;
+var parentContainer;
 /**
  * 加载刷新
  */
@@ -28,7 +30,7 @@ mui.plusReady(function() {
 	mui.previewImage();
 	events.preload('qiuzhi-addAnswer.html');
 	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'), "answerIsReady");
-	plus.webview.currentWebview().opener().addEventListener("hide",function(){
+	plus.webview.currentWebview().opener().addEventListener("hide", function() {
 		mui.previewImage().close();
 		console.log("求知回答页面已隐藏")
 		events.clearChild(document.getElementById('list-container'));
@@ -36,7 +38,7 @@ mui.plusReady(function() {
 		mui('#popover').popover('hide');
 	})
 	//加载监听
-	window.addEventListener('answerInfo', function(e) {                                                                                                                                                                                                                                                                                                                                                    
+	window.addEventListener('answerInfo', function(e) {
 		flag = 1;
 		selfId = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 		mui('#refreshContainer').pullRefresh().refresh(true);
@@ -44,24 +46,16 @@ mui.plusReady(function() {
 		pageIndex = 1;
 		totalPageCount = 1;
 		answerInfo = e.detail.data;
-		type = 2;//倒序
+		type = 2; //倒序
 		setTolerantChecked(type);
 		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
 		var answerId = answerInfo.AnswerId;
 		events.clearChild(document.getElementById('list-container'));
 		requestAnswerDetail(answerId);
 	});
-	window.addEventListener('commentAdded', function() {
-		flag = 1;
-		selfId = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
-		mui('#refreshContainer').pullRefresh().refresh(true);
-		answerData = {};
-		pageIndex = 1;
-		totalPageCount = 0
-		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
-		var answerId = answerInfo.AnswerId;
-		events.clearChild(document.getElementById('list-container'));
-		requestAnswerDetail(answerId);
+	window.addEventListener('commentAdded', function(e) {
+		var commentedInfo = e.detail.data;
+		getComment(commentedInfo);
 	})
 	setListeners();
 
@@ -82,18 +76,119 @@ mui.plusReady(function() {
 	//		}
 	//	});
 })
+var getComment = function(commentedInfo) {
+	var wd = events.showWaiting();
+	postDataQZPro_getCommentById(commentedInfo.commentInfo, wd, function(data) {
+		wd.close();
+		console.log("获取的评论数据：" + JSON.stringify(data))
+		if(data.RspCode == 0) {
+			rechargeComment(data.RspData, commentedInfo)
+		}
+	})
+}
+var rechargeComment = function(comData, commentedInfo) {
+	var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
+	comData.UserName = personalInfo.unick;
+	comData.UserImg = personalInfo.uimg;
+	comData.TabId = commentedInfo.commentInfo.commentId
+	if(upperInfo) {
+		comData.UpperId = upperInfo.UpperId ? upperInfo.UpperId : upperInfo.TabId;
+		comData.ReplyId = upperInfo.UserId;
+		comData.ReplyName = upperInfo.UserName;
+	} else {
+		comData.UpperId = 0;
+	}
+	var commentList, order;
+	if(parentContainer) {
+		console.log('上级评论类名：' + parentContainer.className);
+		if(parentContainer.querySelector(".mui-table-view")) {
+			commentList = parentContainer.querySelector(".mui-table-view");
+		} else {
+			var list = document.createElement('ul');
+			list.className = "mui-table-view inner-table-view";
+			parentContainer.appendChild(list);
+			commentList = list;
+		}
+		order = 0;
+	} else {
+		commentList = document.querySelector(".mui-table-view");
+		order = type - 1;
+	}
+	insertComment(commentList, comData, order);
+}
+var insertComment = function(commentList, commentData, order) {
+	var index;
+	if(parentContainer) {
+		var commentInfo = parentContainer.querySelector(".comment-words").commentInfo;
+		index = commentInfo.Replys.length;
+		createCell(commentList, commentData, index, order);
+	} else {
+		if(type == 2) {
+			index = 0
+			changeOrder();
+			createCell(commentList, commentData, index, order);
+			console.log("answerData的长度：" + answerData.Data.length);
+			if(answerData.Data.length > 0 && answerData.Data.length % 10 == 0) {
+				console.log("####################################################")
+				document.getElementById("list-container").removeChild(document.getElementById("list-container").lastElementChild);
+			}
+		} else { //顺序；
+			index = answerData.Data.length;
+			if(index % 10 > 0) {
+				createCell(commentList, commentData, index, order);
+			}
+		}
+	}
+	insertCommentData(commentData);
+	console.log("获取的上级评论信息：" + JSON.stringify(commentInfo));
+}
+var changeOrder = function() {
+	document.querySelectorAll('.icon-support').forEach(function(item) {
+		console.log("当前：" + item.innerHTML);
+		if(item.order || item.order == 0) {
+			var order = item.order;
+			if(typeof(order) == "string") {
+				var orders = order.split("-");
+				this.order = parseInt(orders[0]) + 1 + '-' + orders[1];
+			} else {
+				this.order += 1;
+			}
+		}
+	});
+}
+var insertCommentData = function(commentData) {
+	if(parentContainer) {
+		var index = parseInt(parentContainer.querySelector(".icon-support").order);
+		answerData.Data[index].Replys.push(commentData)
+	} else {
+		answerData.CommentNum+=1;
+		document.getElementById("comments-no").innerText="评论(" + answerData.CommentNum + ")";
+		//倒序
+		if(type == 2) {
+			answerData.Data.splice(0, 0, commentData);
+			if(answerData.Data.length > 0 && answerData.Data.length % 10 == 0) {
+				answerData.Data.splice(answerData.Data.length - 1, 1);
+			}
+		} else { //顺序
+			if(!(answerData.Data.length > 0 && answerData.Data % 10 == 0)) {
+				answerData.Data.push(commentData);
+			}
+		}
+	}
+	console.log("改变后的数据："+JSON.stringify(answerData))
+}
 /**
  * 2倒序 1顺序
  */
-var setTolerantChecked=function(orderType){
-	if(orderType==1){
-		document.getElementById("sequence-order").className="mui-table-view-cell mui-selected"
-		document.getElementById('reverse-order').className="mui-table-view-cell";
-		document.getElementById("order-selector").innerHTML='顺序排列<span class="mui-icon mui-icon-arrowdown"></span>';
-	}else{
-		document.getElementById("sequence-order").className="mui-table-view-cell"
-		document.getElementById('reverse-order').className="mui-table-view-cell mui-selected";
-		document.getElementById("order-selector").innerHTML='倒序排列<span class="mui-icon mui-icon-arrowdown"></span>';
+var setTolerantChecked = function(orderType) {
+	if(orderType == 1) {
+		document.getElementById("sequence-order").className = "mui-table-view-cell mui-selected"
+		document.getElementById('reverse-order').className = "mui-table-view-cell";
+		document.getElementById("order-selector").innerHTML = '顺序排列<span class="mui-icon mui-icon-arrowdown"></span>';
+	} else {
+		document.getElementById("sequence-order").className = "mui-table-view-cell"
+		document.getElementById('reverse-order').className = "mui-table-view-cell mui-selected";
+		document.getElementById("order-selector").innerHTML = '倒序排列<span class="mui-icon mui-icon-arrowdown"></span>';
 	}
 }
 //8.获取某个回答的详情
@@ -299,46 +394,51 @@ var createList = function(ul, dataArray) {
 	console.log(JSON.stringify(dataArray))
 	if(dataArray && dataArray.length > 0) {
 		for(var i in dataArray) {
-			var li = document.createElement('li');
-			li.className = 'mui-table-view-cell';
-			li.innerHTML = createCommentsInner(dataArray[i]);
-			ul.appendChild(li);
-
-			var comment_container = li.querySelector('.comment-words');
-			comment_container.commentInfo = dataArray[i];
-			var comments_zan = li.querySelector('.icon-support');
-			li.querySelector('.head-img').info = dataArray[i];
-			comments_zan.isLike = dataArray[i].IsLiked;
-			comments_zan.commentId = dataArray[i].TabId;
-			if(dataArray[i].IsLiked) {
-				comments_zan.className = "mui-icon iconfont icon-support isLike"
-			} else {
-				comments_zan.className = "mui-icon iconfont icon-support isNotLike"
-			}
-			var repliesContainer = comments_zan.parentElement.parentElement.parentElement.parentElement;
-			console.log('className:' + repliesContainer.className)
-			if(flag) {
-				if(repliesContainer.className == ("mui-table-view inner-table-view")) {
-					comments_zan.order = repliesContainer.parentElement.querySelector('.icon-support').order + "-" + i;
-				} else {
-					comments_zan.order = (parseInt(pageIndex) - 1) * 10 + parseInt(i);
-				}
-			} else {
-				if(repliesContainer.className == ("mui-table-view inner-table-view")) {
-					comments_zan.order = repliesContainer.parentElement.querySelector('.icon-support').order + '-' + i;
-				} else {
-					comments_zan.order = parseInt(i);
-				}
-
-			}
-			if(dataArray[i].Replys && dataArray[i].Replys.length > 0) {
-				var sul = document.createElement('ul');
-				sul.className = "mui-table-view inner-table-view";
-				li.appendChild(sul)
-				createList(sul, dataArray[i].Replys)
-			}
-
+			createCell(ul, dataArray[i], i);
 		}
+	}
+}
+var createCell = function(ul, cellData, i, order) {
+	var li = document.createElement('li');
+	li.className = 'mui-table-view-cell';
+	li.innerHTML = createCommentsInner(cellData);
+	if(order && ul.firstElementChild) {
+		ul.insertBefore(li, ul.firstElementChild);
+	} else {
+		ul.appendChild(li);
+	}
+	var comment_container = li.querySelector('.comment-words');
+	comment_container.commentInfo = cellData;
+	var comments_zan = li.querySelector('.icon-support');
+	li.querySelector('.head-img').info = cellData;
+	comments_zan.isLike = cellData.IsLiked;
+	comments_zan.commentId = cellData.TabId;
+	if(cellData.IsLiked) {
+		comments_zan.className = "mui-icon iconfont icon-support isLike"
+	} else {
+		comments_zan.className = "mui-icon iconfont icon-support isNotLike"
+	}
+	var repliesContainer = comments_zan.parentElement.parentElement.parentElement.parentElement;
+	console.log('className:' + repliesContainer.className)
+	if(flag) {
+		if(repliesContainer.className == ("mui-table-view inner-table-view")) {
+			comments_zan.order = repliesContainer.parentElement.querySelector('.icon-support').order + "-" + i;
+		} else {
+			comments_zan.order = (parseInt(pageIndex) - 1) * 10 + parseInt(i);
+		}
+	} else {
+		if(repliesContainer.className == ("mui-table-view inner-table-view")) {
+			comments_zan.order = repliesContainer.parentElement.querySelector('.icon-support').order + '-' + i;
+		} else {
+			comments_zan.order = parseInt(i);
+		}
+
+	}
+	if(cellData.Replys && cellData.Replys.length > 0) {
+		var sul = document.createElement('ul');
+		sul.className = "mui-table-view inner-table-view";
+		li.appendChild(sul)
+		createList(sul, cellData.Replys)
 	}
 }
 /**
@@ -352,10 +452,10 @@ var setQuestion = function(datasource) {
 	var p = document.createElement('p');
 	p.innerHTML = datasource.AnswerContent;
 	questionContainer.appendChild(p);
-//	p.querySelectorAll("img").for
-	jQuery("#question-content img").each(function(index,ele){
-		this.style.width="100%";
-		this.style.height="auto";
+	//	p.querySelectorAll("img").for
+	jQuery("#question-content img").each(function(index, ele) {
+		this.style.width = "100%";
+		this.style.height = "auto";
 	})
 	events.clearChild(document.getElementById('answer-imgs'));
 	if(datasource.AnswerEncAddr) {
@@ -373,10 +473,10 @@ var setQuestion = function(datasource) {
 /**
  * 无数据
  */
-var setOriginalCondition=function(){
+var setOriginalCondition = function() {
 	document.getElementById('anthor-portrait').src = "../../image/utils/default_personalimage.png";
 	document.getElementById("anthor-name").innerText = "";
-	document.getElementById("anthor-info").style.display="none"
+	document.getElementById("anthor-info").style.display = "none"
 	document.getElementById('btn-focus').style.display = 'none';
 	document.getElementById('btn-focus').style.display = "inline-block";
 	document.getElementById('answer-time').innerText = '';
@@ -384,7 +484,7 @@ var setOriginalCondition=function(){
 	events.clearChild(document.getElementById('answer-imgs'));
 	var questionContainer = document.getElementById('question-content');
 	events.clearChild(questionContainer);
-	document.getElementById('comments-no').innerText='';
+	document.getElementById('comments-no').innerText = '';
 }
 /**
  * 设置回答人信息
@@ -395,13 +495,13 @@ var setAnswerManInfo = function(datasource) {
 	if(datasource.IsAnonym) {
 		document.getElementById('anthor-portrait').src = "../../image/utils/default_personalimage.png";
 		document.getElementById("anthor-name").innerText = "匿名用户";
-		document.getElementById("anthor-info").style.display="none"
+		document.getElementById("anthor-info").style.display = "none"
 		document.getElementById('btn-focus').style.display = 'none';
 	} else {
 		document.getElementById('anthor-portrait').src = updateHeadImg(datasource.uimg, 2);
-		document.getElementById("anthor-name").innerText = events.shortForString(datasource.unick.replace(/[\r\n]/g,""),10) ;
-		document.getElementById("anthor-info").style.display="inline-block"
-		document.getElementById("anthor-info").innerText = events.shortForString(datasource.AnswerManNote ? datasource.AnswerManNote : "暂无简介",12);
+		document.getElementById("anthor-name").innerText = events.shortForString(datasource.unick.replace(/[\r\n]/g, ""), 10);
+		document.getElementById("anthor-info").style.display = "inline-block"
+		document.getElementById("anthor-info").innerText = events.shortForString(datasource.AnswerManNote ? datasource.AnswerManNote : "暂无简介", 12);
 		if(datasource.AnswerMan == selfId) { //如果专家是自己，隐藏关注按钮
 			document.getElementById('btn-focus').style.display = "none";
 		} else { //不是自己，显示关注按钮
@@ -423,13 +523,13 @@ var getPicInner = function(data) {
 		var picInner = '';
 		var win_width = document.getElementById('answer-imgs').offsetWidth;
 		var pic_width = win_width / 3;
-//		if(picPaths.length < 3) {
-//			pic_width = win_width / picPaths.length;
-//		}
+		//		if(picPaths.length < 3) {
+		//			pic_width = win_width / picPaths.length;
+		//		}
 		console.log("图片宽度设置：" + pic_width)
 		for(var i in picPaths) {
 			picInner += '<img class="answer-img" retry="0" src="' + picPaths[i] + '" class="answer-img" style="width:' + pic_width + 'px;height: ' + pic_width + 'px;" ' +
-				'" data-preview-src="' + picBigPaths[i] + '" data-preview-group="'+data.AnswerId+'"/>';
+				'" data-preview-src="' + picBigPaths[i] + '" data-preview-group="' + data.AnswerId + '"/>';
 		}
 		console.log('图片路径：' + picInner);
 		return picInner;
@@ -448,19 +548,20 @@ var getPicInner = function(data) {
  * Replys	下级回复列表	Array		否	从属Comments
  */
 var createCommentsInner = function(cell) {
+	console.log("要放置的数据：" + JSON.stringify(cell))
 	var headImg = cell.UserImg;
 	var personName = cell.UserName;
 	var inner = '<div class="table-view-cell"><div class="comments-cell">' +
 		'<div class="img-container"><img class="head-img" src="' + headImg + '"/></div>' +
 		'<div class="comment-container">' +
 		'<h5 class="comment-personName single-line">' + setName(cell) + '</h5>' +
-		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>'+
+		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>' +
 		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
-		console.log("当前评论内容："+inner)
+	console.log("当前评论内容：" + inner)
 	return inner;
 }
 var setName = function(cell) {
-	if(cell.ReplyId != 0) {
+	if(cell.ReplyId) {
 		return cell.UserName + '回复' + cell.ReplyName;
 	}
 	return cell.UserName;
@@ -484,9 +585,11 @@ var setListeners = function() {
 	})
 	events.addTap('answer-comment', function() {
 		events.fireToPageWithData('qiuzhi-addAnswer.html', 'add-comment', answerData);
+		upperInfo = null;
+		parentContainer = null;
 	})
 	events.addTap('anthor-portrait', function() {
-		if(!answerData.IsAnonym){
+		if(!answerData.IsAnonym) {
 			events.openNewWindowWithData("expert-detail.html", jQuery.extend(answerData, { UserId: answerData.utid, uimg: answerData.UserImg, unick: answerData.UserName }))
 		}
 	})
@@ -498,37 +601,43 @@ var setListeners = function() {
 	})
 	mui('.mui-table-view').on('tap', ".comment-words", function() {
 		console.log("评论信息：" + JSON.stringify(this.commentInfo));
+		upperInfo = this.commentInfo;
+		if(upperInfo.UpperId) {
+			parentContainer = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+		} else {
+			parentContainer = this.parentElement.parentElement.parentElement;
+		}
 		events.fireToPageWithData('qiuzhi-addAnswer.html', 'comment-reply', jQuery.extend(this.commentInfo, { AnswerId: answerData.AnswerId }));
 	})
 	//设置选择监听
-	document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected',function(e){
-			console.log("当前选中的为："+JSON.stringify(e.detail.el.value));
-			type=parseInt(e.detail.el.value);
-			setTolerantChecked(type);
-			flag=0;
-			mui('#popover').popover('hide');
-			answerData.Data.reverse();
-			events.clearChild(document.getElementById('list-container'));
-			refreshUI(answerData);
-		});
-//	document.getElementById('order-selector').onchange = function() {
-//		type = parseInt(this.options[this.options.selectedIndex].value);
-//		flag = 0;
-//		console.log('获取的类型：' + type);
-//		answerData.Data.reverse();
-//		events.clearChild(document.getElementById('list-container'));
-//		refreshUI(answerData);
-//	}
-mui("#answer-imgs").on("error",".answer-img",function(){
-	var retry=parseInt(this.getAttribute("retry"));
-	if(retry==0){
-		++retry;
-		 this.attr("retry", retry);
-           this.attr('src',this.attr('src'));
-	}else{
-		this.attr("src","../../image/utils/load-img-error.png");
-	}
-})
+	document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected', function(e) {
+		console.log("当前选中的为：" + JSON.stringify(e.detail.el.value));
+		type = parseInt(e.detail.el.value);
+		setTolerantChecked(type);
+		flag = 0;
+		mui('#popover').popover('hide');
+		answerData.Data.reverse();
+		events.clearChild(document.getElementById('list-container'));
+		refreshUI(answerData);
+	});
+	//	document.getElementById('order-selector').onchange = function() {
+	//		type = parseInt(this.options[this.options.selectedIndex].value);
+	//		flag = 0;
+	//		console.log('获取的类型：' + type);
+	//		answerData.Data.reverse();
+	//		events.clearChild(document.getElementById('list-container'));
+	//		refreshUI(answerData);
+	//	}
+	mui("#answer-imgs").on("error", ".answer-img", function() {
+		var retry = parseInt(this.getAttribute("retry"));
+		if(retry == 0) {
+			++retry;
+			this.attr("retry", retry);
+			this.attr('src', this.attr('src'));
+		} else {
+			this.attr("src", "../../image/utils/load-img-error.png");
+		}
+	})
 }
 /**
  * 设置是否点赞
@@ -587,6 +696,7 @@ var setZanIconCondition = function(item) {
 				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum -= 1;
 				item.innerText = replaceBigNo(answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum);
 			} else {
+				console.log("点赞的数据："+answerData.Data[item.order])
 				answerData.Data[item.order].IsLiked = 0;
 				answerData.Data[item.order].LikeNum -= 1;
 				item.innerText = replaceBigNo(answerData.Data[item.order].LikeNum);
@@ -607,6 +717,7 @@ var setZanIconCondition = function(item) {
 				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum += 1;
 				item.innerText = replaceBigNo(answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum);
 			} else {
+				console.log("点赞的数据："+JSON.stringify(answerData.Data[item.order]))
 				answerData.Data[item.order].IsLiked = 1;
 				answerData.Data[item.order].LikeNum += 1;
 				item.innerText = replaceBigNo(answerData.Data[item.order].LikeNum);

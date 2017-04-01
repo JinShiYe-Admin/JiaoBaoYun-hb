@@ -1102,7 +1102,11 @@
 					"image/homework/arrow-down.png",
 					"css/utils/preview.css",
 					"js/mui.zoom.js",
-					"js/mui.previewimage.js"
+					"js/mui.previewimage.js",
+					"/storage/emulated/0/Tencent/TIMfile_recv/%DTPM%7DIV)030IUBXJ%7DUM%Z9.png",
+					"/storage/emulated/0/Tencent/TIMfile_recv/%%7B%7D32Z3H~)Q@~F0~K3[U@]6.png",
+					"/storage/emulated/0/Tencent/TIMfile_recv/%S]0@_9]P%7B07KEYX(U2X%7DTT.png",
+					"/storage/emulated/0/Tencent/TIMfile_recv/%2PLKECVOE6LS%7BQ8W4%7D%7B$L3.png"
 				],
 				"refer": [
 					"html/homework/classes-select.html"
@@ -2759,7 +2763,8 @@
 					"fonts/mui.ttf",
 					"image/qiuzhi/add-question.png.png",
 					"js/mui.lazyload.js",
-					"js/mui.lazyload.img.js"
+					"js/mui.lazyload.img.js",
+					"image/utils/default_load_2.gif"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
@@ -2970,7 +2975,8 @@
 					"css/mui.min.css",
 					"css/utils/common.css",
 					"css/iconfont/iconfont.css",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -3477,7 +3483,15 @@
 					"js/utils/events.js",
 					"js/publicProtocol.js",
 					"js/mui.min.js",
-					"js/libs/myStorage/myStorage.js"
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
 					"html/utils/customizeCity.html",
@@ -3520,7 +3534,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/RSAEncrypt.js",
 					"image/dynamic/praise.png",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"html/utils/customizeCity.html",
@@ -3582,7 +3597,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
