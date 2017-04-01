@@ -964,7 +964,8 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"js/libs/jquery.js",
 					"css/utils/common.css",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"js/publicProtocol.js"
 				],
 				"refer": [
 					"html/index.html",
@@ -1893,7 +1894,8 @@
 					"html/cloud/cloud_home.html",
 					"css/utils/slide_navigatian.css",
 					"html/scienceeducation/scienceeducation_home.html",
-					"html/sciedu/sciedu_home.html"
+					"html/sciedu/sciedu_home.html",
+					null
 				],
 				"refer": [
 					"html/mine.html",
@@ -2759,7 +2761,8 @@
 					"fonts/mui.ttf",
 					"image/qiuzhi/add-question.png.png",
 					"js/mui.lazyload.js",
-					"js/mui.lazyload.img.js"
+					"js/mui.lazyload.img.js",
+					"image/utils/default_load_2.gif"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
@@ -3526,7 +3529,8 @@
 					"html/utils/customizeCity.html",
 					"html/quan/space-detail.html",
 					"html/show/add-comment.html",
-					"html/quan/zone_main.html"
+					"html/quan/zone_main.html",
+					"html/quan/classSpace-persons.html"
 				],
 				"priority": 0
 			},

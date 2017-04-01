@@ -28,7 +28,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a class="mui-icon mui-icon-left-nav mui-pull-left" href="javascript:returnLeft();"></a>
+			<a class="mui-icon mui-icon-left-nav" href="javascript:returnLeft();"></a>
 			<h1 class="mui-title"></h1>
 		</header>
 		<div class="mui-content">
@@ -74,17 +74,17 @@
 		<script type="text/javascript">
 			mui.init();
 			//倒计时
-			var wait = 300;
+			var wait = 180;
 			var comData; //从上个界面获取验证码的参数
 			//获取个人信息
-			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+			var personalUTID;
 
 			//验证码倒计时
 			function time(btnObj) {
 				if(wait == 0) {
 					btnObj.style.color = '#576b95';
 					btnObj.removeAttribute("disabled");
-					btnObj.textContent = "登录遇到问题？";
+					btnObj.textContent = "收不到验证码？";
 				} else {
 					btnObj.style.color = '#7f7f7f';
 					btnObj.setAttribute("disabled", true);
@@ -97,8 +97,18 @@
 			}
 			//nav返回按钮
 			function returnLeft() {
-				mui.confirm('', '验证码短信可能略有延迟，确定返回并重新开始？', ['取消', '确认'], function(e) {
+//				var btnArray = ['否', '是'];
+//              mui.confirm('MUI是个好框架，确认？', 'Hello MUI', btnArray, function(e) {
+//                  if (e.index == 1) {
+//                      mui.back();
+//                  } else {
+//                      
+//                  }
+//              });
+
+				mui.confirm(' ','验证码短信可能略有延迟，确定返回并重新开始？',['取消', '确认'],function (e) {
 					var index = e.index;
+					console.log('index:'+index);
 					switch(index) {
 						case 0: //取消
 							break;
@@ -106,7 +116,19 @@
 							mui.back();
 							break;
 					}
-				}, 'div');
+				});
+				
+//				mui.confirm(' ', '验证码短信可能略有延迟，确定返回并重新开始？', ['取消', '确认'], function(e) {
+//					var index = e.index;
+//					console.log('index:'+index);
+//					switch(index) {
+//						case 0: //取消
+//							break;
+//						case 1: //返回
+//							mui.back();
+//							break;
+//					}
+//				},'div');
 			}
 			//遇到登录问题
 			document.getElementById("get_code").addEventListener('tap', function(event) {
@@ -150,13 +172,14 @@
 						mui.toast(data.RspTxt);
 					} else {
 						//验证码倒计时
-						wait = 300;
+						wait = 180;
 						time(document.getElementById("get_code"));
 					}
 				});
 			}
 			mui.plusReady(function() {
 				var regFlag; //0注册，1验证码登录，2更改绑定手机号
+				personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				var phoneNumBox = document.getElementById("phoneNumber");
 				phoneNumBox.value = '';
 				var codeBox = document.getElementById("yanzheng");

@@ -55,8 +55,9 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			//存储个人信息
-			var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+			var tempInfo;
 			mui.plusReady(function() {
+				tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				console.log('tempInfo.uid:' + tempInfo.uid);
 				document.getElementById('change_phoneNum').innerText = tempInfo.uid;
 				//点击绑定手机cell，弹出
