@@ -347,7 +347,8 @@
 
 				var self = plus.webview.currentWebview();
 				var androidHeight;
-				console.log('getStyle ' + JSON.stringify(self.getStyle()));
+				//console.log('getStyle ' + JSON.stringify(self.getStyle()));
+				console.log('clientHeight '+ document.body.clientHeight);
 				if(mui.os.android) {
 					androidHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight");
 				}
@@ -355,12 +356,13 @@
 				//防止 父页面选项卡被输入法撑起
 				if(mui.os.android) {
 					window.addEventListener('resize', function() {
-						console.log('resize getStyle ' + JSON.stringify(self.getStyle()));
-						console.log('androidHeight ' + androidHeight);
+						console.log('clientHeight '+ document.body.clientHeight);
+						//console.log('resize getStyle ' + JSON.stringify(self.getStyle()));
+						//console.log('androidHeight ' + androidHeight);
 						var a = plus.android.invoke(plus.android.currentWebview(), "getHeight"); //webview高度
-						var b = plus.navigator.getStatusbarHeight(); //状态栏高度
-						var c = plus.screen.resolutionHeight; //屏幕高度
-						var d = (c - a - b);
+						//var b = plus.navigator.getStatusbarHeight(); //状态栏高度
+						//var c = plus.screen.resolutionHeight; //屏幕高度
+						//var d = (c - a - b);
 						//console.log('webview高度：' + a + " 状态栏高度：" + b + " 屏幕高度：" + c + " 输入法高度:" + d)
 						if(a < androidHeight) {
 							//键盘弹出
@@ -374,6 +376,7 @@
 						}
 					}, false);
 				}
+
 				//-----------设置数据end-----------------
 
 				//-----------设置监听start---------------
