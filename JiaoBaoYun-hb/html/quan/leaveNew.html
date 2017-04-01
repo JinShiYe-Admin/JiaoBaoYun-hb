@@ -128,7 +128,6 @@
 				/*点赞者和评论者的名字*/
 				color: #1277C7;
 			}
-
 		</style>
 
 	</head>
@@ -379,8 +378,8 @@
 					scroll.reLayout();
 					//滚动到底部
 					scroll.scrollToBottom(100);
-				}else{
-					
+				} else {
+
 				}
 
 			}
@@ -396,6 +395,10 @@
 			mui('.mui-table-view').on('tap', '.ableSelectedCell', function() {
 				cellIndex = this.id.replace('reply', '');
 
+				if(leaveArray[cellIndex].UserId == personalUTID) {
+					mui.toast('不可以回复自己')
+					return;
+				}
 				console.log(cellIndex);
 				var data = {
 					userId: personalUTID,

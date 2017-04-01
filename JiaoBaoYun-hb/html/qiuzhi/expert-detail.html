@@ -250,7 +250,7 @@
 					addData();
 					//修改nav显示昵称
 					var titleTemp = document.getElementById("title");
-					titleTemp.innerText = ExpertsInfo.unick;
+					titleTemp.innerText =events.shortForString(ExpertsInfo.unick.replace(/[\r\n]/g,""),10) ;
 				} else {
 					mui.toast(data.RspTxt);
 				}
@@ -335,11 +335,21 @@
 				}
 
 			} else {
-				nodes.UserNote.innerHTML = ExpertsInfo.UserNote;
+				if(ExpertsInfo.UserNote == '') {
+					nodes.UserNote.innerHTML = '暂无简介';
+				} else {
+					nodes.UserNote.innerHTML = ExpertsInfo.UserNote;
+				}
 			}
 
 			nodes.FocusManNum.innerText = ExpertsInfo.FocusManNum;
-			nodes.ExpertChannels.innerText = ExpertsInfo.ExpertChannelNames;
+			
+			if(ExpertsInfo.ExpertChannelNames.length==0){
+//				nodes.ExpertChannels.innerText = '无话题'
+			}else{
+				nodes.ExpertChannels.innerText = ExpertsInfo.ExpertChannelNames;
+			}
+			
 			nodes.IsLikeNum.innerHTML = ExpertsInfo.IsLikeNum;
 			nodes.FocusAskNum.innerText = ExpertsInfo.FocusAskNum;
 			nodes.CommentNum.innerHTML = ExpertsInfo.CommentNum + '<span class="mui-icon  iconfont icon-fanhui2" style="color:#b7b7b7"></span>';

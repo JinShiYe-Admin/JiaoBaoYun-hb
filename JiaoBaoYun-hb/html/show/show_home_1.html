@@ -362,13 +362,23 @@
 									setTimeout(function() {
 										if(info.aflag == 0) { //定制的城市
 											requestData(info.acode, page.pageIndex + 1);
-										} else { //关注的人数据
+										} else {
+
+											//关注的人数据
 											var tempModel = cities[cities.length - 1];
-											tempModel.isRefresh = 1; //是刷新0，还是加载更多1
-											//74.(用户空间）获取多用户空间所有用户动态列表
-											getAllUserSpacesByUser(tempModel);
+											if(tempModel.index <= tempModel.totalPage) {
+												tempModel.isRefresh = 1; //是刷新0，还是加载更多1
+												//74.(用户空间）获取多用户空间所有用户动态列表
+												getAllUserSpacesByUser(tempModel);
+												self.endPullUpToRefresh();
+											} else {
+												tempModel.index--;
+												//没有下一页
+												self.endPullUpToRefresh(true);
+											}
+
 										}
-										self.endPullUpToRefresh();
+
 									}, 1000);
 								} else {
 									self.endPullUpToRefresh();
@@ -459,6 +469,11 @@
 					if(eduArray.length == 0) {
 						var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
 						console.log(JSON.stringify(uarea));
+						//						eduArray.push({
+						//							acode: 0,
+						//							aname: '全部',
+						//							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+						//						});
 						//加入手机号所在城市
 
 						eduArray.push({
@@ -592,7 +607,7 @@
 						var tempModel = cities[cities.length - 1];
 						tempModel.index++;
 						//								setUserSpaceReadByUser();
-						totalPage = data.RspData.totalPage;
+						tempModel.totalPage = data.RspData.totalPage;
 						var tempRspData = data.RspData.Data;
 						//获取当前回调留言的个人信息，主要是头像、昵称
 						var tempArray = [];
