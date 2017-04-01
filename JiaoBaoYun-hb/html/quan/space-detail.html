@@ -238,7 +238,7 @@
 					//合并数组,点赞的人
 					//					tempArray = tempArray.concat(tempModel0.LikeUsers);
 					for(var i in tempModel0.LikeUsers) {
-						tempArray = tempArray.concat(tempModel0.LikeUsers[i].userid);
+						tempArray = tempArray.concat(tempModel0.LikeUsers[i].userId);
 						//								tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
 					}
 					//					tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
@@ -284,7 +284,7 @@
 								//遍历点赞的人
 								for(var item2 in tempModel0.LikeUsers) {
 									//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
-									if(tempModel.utid == tempModel0.LikeUsers[item2].userid) {
+									if(tempModel.utid == tempModel0.LikeUsers[item2].userId) {
 										//												tempModel0.LikeUsers.splice(item2, 1, tempModel);
 										tempModel0.LikeUsers[item2] = $.extend(tempModel0.LikeUsers[item2], tempModel);
 									}
