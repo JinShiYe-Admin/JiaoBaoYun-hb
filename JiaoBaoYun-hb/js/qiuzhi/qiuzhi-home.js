@@ -1,11 +1,17 @@
+/**
+ * 求知主界面逻辑
+ */
 events.initSubPage('qiuzhi-sub.html', '', -(localStorage.getItem('StatusHeightNo') * 1 + 5));
 var allChannels; //所有话题
 var channelInfo;//当前话题
-var subPageReady=false;
+var subPageReady=false;//子页面是否已触发plusReady事件
 mui.plusReady(function() {
+	//初始化为空
 	document.getElementById('subjects-container').innerHTML = '';
 	document.getElementById("sliderGroup").innerHTML = '';
+	//获取当前页面
 	var curPage = plus.webview.currentWebview();
+	//当前页面加载显示监听
 	curPage.addEventListener("show", function(e) {
 		//document.getElementById('subjects-container').innerHTML = '';
 		if(allChannels && allChannels.length > 0) {
@@ -18,13 +24,16 @@ mui.plusReady(function() {
 			requestAllChannels(setChannels);
 		}
 	});
+	//当前页面加载自定义方法的监听
 	window.addEventListener('infoChanged', function() {
 		mui('#slider_sw').scroll().scrollTo(0, 0, 0);
 		requestAllChannels(setChannels);
 	})
+	//当前页面获取子页面已健在完毕的监听
 	window.addEventListener("subIsReady",function(){
 		subPageReady=true;
 	})
+	//本页面子控件的各种监听事件
 	setListener();
 })
 //1.获取所有话题
@@ -98,6 +107,9 @@ var judgeWebReady=function(){
 		setTimeout(judgeWebReady,500);
 	}
 }
+/**
+ * 各频道的点击监听事件
+ */
 var setListener = function() {
 	mui('#subjects-container').on('tap', '.mui-control-item', function() {
 		channelInfo= this.info;

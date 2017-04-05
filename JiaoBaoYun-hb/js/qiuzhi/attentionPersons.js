@@ -1,3 +1,4 @@
+//关注他的人和他关注的人界面逻辑
 mui.init();
 var pageIndex = 1; //页码
 var selfId; //本人id
@@ -10,7 +11,7 @@ mui.plusReady(function() {
 	expertInfo = plus.webview.currentWebview().expertInfo;
 	console.log("获取的专家信息：" + JSON.stringify(expertInfo));
 	type = plus.webview.currentWebview().type;
-	if(type) {
+	if(type) {//类型 0 他关注的人 1 关注他的人
 		if(expertInfo.UserId == selfId) {
 			document.getElementById("title").innerText = "关注我的人";
 		} else {
@@ -26,10 +27,10 @@ mui.plusReady(function() {
 	}
 	console.log('获取的专家信息：' + JSON.stringify(expertInfo));
 	flagRef = 0;
-	pageIndex = 1;
+	pageIndex = 1;//当前页面
 	//	expertId = expertInfo.UserId;
-	requireData(type);
-	setListener();
+	requireData(type);//根据类型获取数据
+	setListener();//设置监听
 
 	//阻尼系数、初始化刷新加载更多
 	var deceleration = mui.os.ios ? 0.003 : 0.0009;
@@ -314,8 +315,11 @@ var setButtonInfoType = function(item) {
 			break;
 	}
 }
-
+/**
+ * 设置监听
+ */
 var setListener = function() {
+	//不同状况下关注/取消关注按钮的点击事件
 	mui('.mui-table-view').on('tap', '.mui-btn', function() {
 		var focusType;
 		switch(this.personInfo.FocusType) {
@@ -354,21 +358,5 @@ var setListener = function() {
 			createNew: true,
 
 		});
-		//		events.openNewWindowWithData('expert-detail.html', JSON.stringify(info));
-		//		events.fireToPageWithData('expert-detail.html', 'expert-detail', info);
 	});
 }
-///**
-// * 上拉加载的实现方法
-// */
-//var pullUpFresh = function() {
-//	document.addEventListener("plusscrollbottom", function() {
-//		console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPageCount);
-//		if(pageIndex < totalPageCount) {
-//			pageIndex++;
-//			requestData();
-//		} else {
-//			mui.toast('没有更多了');
-//		}
-//	}, false);
-//}
