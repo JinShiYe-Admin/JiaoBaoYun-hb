@@ -1000,7 +1000,9 @@
 			"js/libs/myStorage/myStorage.js"
 		],
 		"refer": [
-			"html/quan/edit-remark.html"
+			"html/quan/edit-remark.html",
+			"html/mine/qun_data_details.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/quan/classSpace-sub.html": {
@@ -1919,6 +1921,12 @@
 			"css/mui.min.css",
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/mine/qun_data_details.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	}
 }

@@ -91,6 +91,7 @@ var rechargeComment = function(comData, commentedInfo) {
 	comData.UserName = personalInfo.unick;
 	comData.UserImg = personalInfo.uimg;
 	comData.TabId = commentedInfo.commentInfo.commentId
+	comData.Replys=[];
 	if(upperInfo) {
 		comData.UpperId = upperInfo.UpperId ? upperInfo.UpperId : upperInfo.TabId;
 		comData.ReplyId = upperInfo.UserId;
@@ -120,6 +121,7 @@ var insertComment = function(commentList, commentData, order) {
 	var index;
 	if(parentContainer) {
 		var commentInfo = parentContainer.querySelector(".comment-words").commentInfo;
+		console.log("获取的品论信息："+JSON.stringify(commentInfo));
 		index = commentInfo.Replys.length;
 		createCell(commentList, commentData, index, order);
 	} else {

@@ -6,11 +6,9 @@
 	margin-left: 10px;
 }
 
-
 /**
  * 输入内容父控件div
  */
-
 .input-content {
 	position: absolute;
 	top: 45px;
