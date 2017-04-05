@@ -165,9 +165,6 @@ var getTime=function(person){
 	if(person.LikeDate){
 		return '<p>'+events.shortForDate(person.LikeDate)+'</p>'
 	}
-	if(person.operDate){
-		return '<p>'+events.shortForDate(person.LikeDate)+'</p>'
-	}
 	return "";
 }
 /**
