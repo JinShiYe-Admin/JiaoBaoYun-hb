@@ -1332,7 +1332,8 @@
 					"css/utils/common.css",
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"js/publicProtocol.js"
+					"js/publicProtocol.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/index.html",
@@ -2268,7 +2269,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"html/cloud/storage_main_choose.html",

@@ -417,7 +417,7 @@ var setListener = function(userId) {
 				console.log('取消点赞获取的数据:' + JSON.stringify(data))
 				if(data.RspData.Result == 1) {
 					//					mui.toast('您已取消点赞');
-					zanSpan.className = "mui-icon iconfont icon-support isNotLike";
+					zanSpan.className = "bottom-zan mui-icon iconfont icon-support isNotLike";
 					console.log('更改是否已点赞状态' + zanSpan.className)
 					zanSpan.innerText = '(' + (parseInt(zanSpan.innerText.replace('(', '').replace(')', '')) - 1) + ')'
 				} else {
@@ -434,7 +434,7 @@ var setListener = function(userId) {
 				console.log("点赞后返回数据：" + JSON.stringify(data));
 				if(data.RspData.Result == 1) {
 					//					mui.toast('点赞成功！')
-					zanSpan.className = "mui-icon iconfont icon-support isLike";
+					zanSpan.className = "bottom-zan mui-icon iconfont icon-support isLike";
 					console.log('更改是否已点赞状态' + zanSpan.className)
 					zanSpan.innerText = '(' + (parseInt(zanSpan.innerText.replace('(', '').replace(')', '')) + 1) + ')'
 				} else {
