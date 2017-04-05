@@ -85,20 +85,20 @@
 		<script type="text/javascript" charset="utf-8">
 			mui.init({
 				keyEventBind: {
-					backbutton: false,
-					menubutton: false
+					backbutton: false,//android返回键不可用
+					menubutton: false//android系统按钮不可用
 				}
 			});
 			mui('.mui-scroll-wrapper').scroll({
-				indicators: true, //是否显示滚动条
+				indicators: true, //显示滚动条
 			});
 			//获得侧滑主窗口webview对象
 			var main = null;
 			var info = null;
 			mui.plusReady(function() {
-
 				var curPage = plus.webview.currentWebview();
 				main = curPage.opener();
+				//当前页面加载显示的监听
 				curPage.addEventListener("show", function(e) {
 					mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100); //100毫秒滚动到顶
 				})
@@ -109,17 +109,17 @@
 				events.addTap('title', function() {
 					if(plus.os.name == 'Android') {
 						setTimeout(function() {
-							closeMenu();
+							closeMenu();//关闭侧滑菜单
 						}, 250);
 					} else {
-						closeMenu();
+						closeMenu();//关闭侧滑菜单
 					}
+					//打开账户信息新页面
 					events.openNewWindow('/html/mine/account-info.html')
 				})
-
+				//侧滑菜单各项点击事件
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
-
 					console.log('click position:' + this.getAttribute('position'))
 					console.log("系统名称：" + plus.os.name);
 					switch(parseInt(this.getAttribute('position'))) {

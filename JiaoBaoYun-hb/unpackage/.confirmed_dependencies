@@ -696,7 +696,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/myStorage/myStorage.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"fonts/iconfont.ttf"
 		],
 		"refer": [
 			"html/cloud/storage_transport.html",
