@@ -116,6 +116,7 @@ var appUpdate = (function(mod) {
 					mui.toast("Download failed: " + status);
 				}
 			});
+			dtask.addEventListener("statechanged", onStateChanged, false);
 			dtask.start();
 			console.log("开始下载!")
 		}
@@ -184,7 +185,7 @@ var appUpdate = (function(mod) {
 			// 可通过entry对象操作test.html文件 
 			console.log('存在文件！' + entry.isFile);
 			entry.getMetadata(function(metadata) {
-				if(myStorage.getItem("loadFileSize") == metadata.szie) {
+				if(myStorage.getItem("loadFileSize") == metadata.size) {
 					console.log("Remove succeeded");
 					if(type) {
 						setDialog("新版app文件已下载，是否安装？", function() {
@@ -198,7 +199,7 @@ var appUpdate = (function(mod) {
 						if(type) {
 							downApk(fileUrl);
 						} else {
-							downWgt(fileUrl)
+							downWgt(fileUrl);
 						}
 					}, function(e) {
 						alert(e.message);
