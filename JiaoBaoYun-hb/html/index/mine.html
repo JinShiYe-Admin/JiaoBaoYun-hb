@@ -193,9 +193,11 @@
 					}
 				});
 			})
+			//个人信息改变
 			window.addEventListener('infoChanged', function() {
 				getInfo()
 			})
+			//新消息数量改变
 			window.addEventListener('newsChanged', function() {
 				getNewsAmount();
 			})
@@ -244,6 +246,7 @@
 					}
 				});
 			}
+			//放置数量
 			var setAmount = function(data) {
 				var amount = 0;
 				data.forEach(function(cell) {
