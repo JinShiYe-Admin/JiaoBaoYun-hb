@@ -1332,7 +1332,8 @@
 					"css/utils/common.css",
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"js/publicProtocol.js"
+					"js/publicProtocol.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/index.html",
