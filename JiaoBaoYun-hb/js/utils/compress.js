@@ -34,42 +34,62 @@ var compress = (function(mod) {
 		});
 
 	}
-	
-	mod.compressPics = function(picPaths, callback) {
-		
-			var compressedPaths = [];
-			var compressCount = 0;
-			var widths = [];
-			mod.compressPIC(picPaths[compressCount], function(event) {
-				compressCount++;
-				compressedPaths.push(event.target);
-				widths.push(event.width);
-				if(compressCount>picPaths.length){
-					callback(compressedPaths, widths);
-					
-				}else {
-					mod.compressPIC
-				}
-//				if(picPaths.length == 1) {
-//					callback(compressedPaths, widths);
-//				} else {
-//					for(var i in picPaths) {
-//						if(parseInt(i)) {
-//							mod.compressPIC(picPaths[i], function(event) {
-//								compressCount++;
-//								compressedPaths.push(event.target);
-//								widths.push(event.width);
-//								if(compressCount == picPaths.length) {
-//									console.log('压缩后的图片：' + JSON.stringify(compressedPaths));
-//									console.log('压缩前的图片：' + JSON.stringify(picPaths))
-//									console.log('全部压缩成功');
-//									callback(compressedPaths, widths);
-//								}
-//							})
-//						}
-//					}
-//				}
+	mod.compressPIC_recursive = function(picPath, callback1) {
+console.log('雅俗图片')
+		var options = {
+			src: picPath, //压缩转换原始图片的路径
+			dst: getSavePath(picPath), //压缩转换目标图片的路径
+			overwrite: true
+		}
+		console.log(123)
+		//获取图片类型
+		getPicType(picPath, function(picType) {
+			if(picType) { //宽>=长
+				options.width = "1024px";
+				options.height = "auto";
+			} else { //宽<长
+				options.width = "auto";
+				options.height = "1024px";
+			}
+			console.log(JSON.stringify(options))
+			//压缩图片
+			plus.zip.compressImage(options,
+				function(event) {
+					console.log('压缩图片成功:' + JSON.stringify(event));
+					compressCount++;
+					console.log('compressCount=' + compressCount)
+					compressedPaths.push(event.target);
+					widths.push(event.width);
+					if(compressCount < paths.length) {
+						mod.compressPIC_recursive(paths[compressCount],callback1);
+					} else {
+						callback1(compressedPaths, widths);
+
+					}
+				},
+				function(error) {
+					//图片压缩失败
+					var code = error.code; // 错误编码
+					var message = error.message; // 错误描述信息
+					mui.toast('图片压缩失败！' + '错误编码：' + code + '描述信息：' + message);
+					console.log('图片压缩失败！' + JSON.stringify(error));
+					plus.nativeUI.closeWaiting();
+				})
 		});
+
+	}
+	var paths = [];
+	compressedPaths = [];
+	var compressCount = 0;
+	var widths = [];
+	mod.compressPics = function(picPaths, callback) {
+		paths = [];
+		compressedPaths = [];
+		compressCount = 0;
+		widths = [];
+		paths = picPaths;
+		mod.compressPIC_recursive(picPaths[0], callback);
+
 	}
 	var getPicType = function(picPath, callback) {
 		var picType;

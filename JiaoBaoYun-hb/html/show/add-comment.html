@@ -66,7 +66,7 @@
 					replyUserId = tempModel.Replys[replyId].UserId;
 					ReplyIdName = tempModel.Replys[replyId].UserIdName;
 				}
-				document.getElementById("msg-content").placeholder = '@'+ReplyIdName+'（字数不超过200字)'
+				document.getElementById("msg-content").placeholder = '@' + ReplyIdName + '（字数不超过200字)'
 
 			}
 			console.log(tempIndex + '-----', zonepArray.length)
@@ -121,17 +121,21 @@
 						postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
 							wd.close();
 							console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow', {
-								tempIndex: tempIndex,
-								content: inputComment.value,
-								flag: '评论回复'
-							})
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep', {
-								tempIndex: tempIndex,
-								content: inputComment.value,
-								flag: '评论回复'
-							})
-							mui.back();
+							if(data.RspCode == 0) {
+								mui.fire(plus.webview.currentWebview().opener(), 'refreshShow', {
+									tempIndex: tempIndex,
+									content: inputComment.value,
+									flag: '评论回复'
+								})
+								mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep', {
+									tempIndex: tempIndex,
+									content: inputComment.value,
+									flag: '评论回复'
+								})
+								mui.back();
+							}else{
+								mui.toast(data.RspTxt)
+							}
 
 						})
 					} else {
@@ -145,17 +149,21 @@
 						postDataPro_addUserSpaceComment(comData, wd, function(data) {
 							wd.close();
 							console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshShow', {
-								tempIndex: tempIndex,
-								content: inputComment.value,
-								flag: '评论'
-							})
-							mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep', {
-								tempIndex: tempIndex,
-								content: inputComment.value,
-								flag: '评论'
-							})
-							mui.back();
+							if(data.RspCode == 0) {
+								mui.fire(plus.webview.currentWebview().opener(), 'refreshShow', {
+									tempIndex: tempIndex,
+									content: inputComment.value,
+									flag: '评论'
+								})
+								mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep', {
+									tempIndex: tempIndex,
+									content: inputComment.value,
+									flag: '评论'
+								})
+								mui.back();
+							}else{
+								mui.toast(data.RspTxt)
+							}
 
 						})
 					}
