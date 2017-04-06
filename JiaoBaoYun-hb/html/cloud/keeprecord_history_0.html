@@ -343,9 +343,9 @@
 							<div class="mui-media-body mui-pull-right history-time">' + timeItem + '</div>\
 							<div id="' + data.TabId + '_content' + '" class="mui-media-body history-content ellipsis-show"></div><div id="' + data.TabId + '_show' + '" class="show-all">显示全部</div>';
 				var html_media = ''; //多媒体
-				var width = (document.getElementById("data_scroll").offsetWidth - 30) * 0.32;
-				var height = width * 3 / 4;
-				var marginBottom = (document.getElementById("data_scroll").offsetWidth - 30) * 0.02;
+				var width = parseInt((document.getElementById("data_scroll").offsetWidth - 30) * 0.32);
+				var height = parseInt(width * 3 / 4);
+				var marginBottom = parseInt((document.getElementById("data_scroll").offsetWidth - 30) * 0.02);
 				var marginRight;
 
 				var title = ''; //标题
@@ -371,7 +371,7 @@
 							html_2 = '<div data-id="' + data.TabId + '_' + i + '" class="record-picture-num" style="line-height: ' + (height + 1) + 'px;">+' + (imageArray.length - 3) + '</div>'
 						}
 						html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px;' + html_3 + '">\
-									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-' + width + ')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-' + height + ')/2+\'px\';}">\
+									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'))" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-' + width + ')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-' + height + ')/2+\'px\';}">\
 								</div>';
 					}
 					html_media = html_0 + html_1 + '</div>';

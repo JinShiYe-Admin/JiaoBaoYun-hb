@@ -275,7 +275,7 @@
 					}
 				});
 
-				hideOption = events.initHideKeyBoard();//获取配置信息
+				hideOption = events.initHideKeyBoard(); //获取配置信息
 
 				getNotes(1); //获取数据
 			}
@@ -556,9 +556,9 @@
 					}
 				}
 
-				var width = (document.getElementById("top").offsetWidth - 30) * 0.32;
-				var height = width * 3 / 4;
-				var marginBottom = (document.getElementById("top").offsetWidth - 30) * 0.02;
+				var width = parseInt((document.getElementById("top").offsetWidth - 30) * 0.32);
+				var height = parseInt(width * 3 / 4);
+				var marginBottom = parseInt((document.getElementById("top").offsetWidth - 30) * 0.02);
 				var marginRight;
 				if(data.EncType == 1) { //附件类型,1图片2音视频3仅文字
 					var imageArray = data.EncAddr.split('|');
@@ -572,8 +572,9 @@
 						} else {
 							marginRight = marginBottom;
 						}
+
 						html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px; margin-bottom: ' + marginBottom + 'px;">\
-									<img src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-' + width + ')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-' + height + ')/2+\'px\';}">\
+									<img src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'))" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-' + width + ')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-' + height + ')/2+\'px\';}">\
 								</div>';
 					}
 					mediaStr = html_0 + html_1 + '</div>';
