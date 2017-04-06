@@ -6,11 +6,9 @@
 	margin-left: 10px;
 }
 
-
 /**
  * 输入内容父控件div
  */
-
 .input-content {
 	position: absolute;
 	top: 45px;
@@ -219,6 +217,7 @@ div>.icon-xiangce:before,
 	display: -webkit-box;
 	-webkit-line-clamp: 8;
 	-webkit-box-orient: vertical;
+	text-align: inherit;
 }
 .more-span,.less-span{
 	font-size: 1.0rem;

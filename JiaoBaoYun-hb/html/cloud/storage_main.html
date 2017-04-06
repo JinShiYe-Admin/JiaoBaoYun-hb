@@ -179,7 +179,8 @@
 				}
 			});
 			mui.plusReady(function() {
-				//				console.log('云存储');
+				events.preload('storage_upload.html'); //预加载上传文件选择
+				events.preload('storage_upload_choose.html'); //预加载选择上传文件的方式
 				//---初始化---start---
 				var topFolderData = []; //记录顶层的所有的文件和文件夹
 				var showPid = ''; //当前展示的界面的父id

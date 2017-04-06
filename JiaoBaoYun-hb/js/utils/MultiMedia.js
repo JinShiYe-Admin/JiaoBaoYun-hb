@@ -92,8 +92,8 @@ var MultiMedia = (function($, mod) {
 		if(this.options.Picture) {
 			this.data.PicturesNum = options.TotalPicture; //可以选取图片的剩余数量
 			this.data.PictureArray = []; //已选取的图片路径
-			this.data.PictureWith = document.getElementById(this.options.Id).offsetWidth * 0.2;
-			this.data.PictureMarginLeft = document.getElementById(this.options.Id).offsetWidth * 0.04;
+			this.data.PictureWith = parseInt(document.getElementById(this.options.Id).offsetWidth * 0.2);
+			this.data.PictureMarginLeft = parseInt(document.getElementById(this.options.Id).offsetWidth * 0.04);
 		}
 		if(this.options.Audio) {
 			this.data.Audios = options.TotalAudio;
@@ -306,11 +306,11 @@ var MultiMedia = (function($, mod) {
 			var element = document.createElement('div');
 			element.className = 'multimedia-picture-area';
 			//删除按钮
-			var html_0 = '<a id="MultiMedia_Picture_Delete_' + images.id + '" class="mui-icon iconfont icon-guanbi multimedia-picture-delete" style="margin-left: ' + (width + marginLeft / 2) + 'px;margin-top:' + (marginLeft / 2) + 'px;"></a>'
+			var html_0 = '<a id="MultiMedia_Picture_Delete_' + images.id + '" class="mui-icon iconfont icon-guanbi multimedia-picture-delete" style="margin-left: ' + parseInt(width + marginLeft / 2) + 'px;margin-top:' + parseInt(marginLeft / 2) + 'px;"></a>'
 			//显示图片的区域
 			var html_1 = '<div class="multimedia-picture" style="width: ' + widthStr + '; height: ' + widthStr + '; margin-left: ' + marginLeftStr + '; margin-top: ' + marginLeftStr + ';">'
 			//图片
-			var html_2 = '<img src="' + paths[i] + '" data-preview-src="' + paths[i] + '" data-preview-group="' + group + '" style="width:100%;visibility: hidden;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + widthStr + '\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-' + width + ')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-' + width + ')/2+\'px\';}this.style.visibility=\'visible\';" />';
+			var html_2 = '<img src="' + paths[i] + '" data-preview-src="' + paths[i] + '" data-preview-group="' + group + '" style="width:100%;visibility: hidden;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + widthStr + '\';this.style.width=\'initial\';this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + width + ')/2)+\'px\';}this.style.visibility=\'visible\';" />';
 			var html_3 = '</div>'
 			element.innerHTML = html_0 + html_1 + html_2 + html_3;
 			footer.appendChild(element);

@@ -1,3 +1,4 @@
+<!--与我相关界面-->
 <!DOCTYPE html>
 <html>
 
@@ -27,6 +28,7 @@
 		events.initSubPage('aboutme_sub.html');
 		mui.plusReady(function() {
 			events.changeTopPocket();
+			//重写系统返回方法
 			var _back = mui.back;
 			mui.back = function() {
 				if(plus.webview.currentWebview().opener().id = "homework-commented.html") {
@@ -36,22 +38,8 @@
 				}
 			}
 		})
-		//启用双击监听
-		//		mui.init({
-		//			gestureConfig: {
-		//				doubletap: true
-		//			},
-		//			subpages: [{
-		//				url: 'aboutme_sub.html',
-		//				id: 'aboutme_sub.html',
-		//				styles: {
-		//					top: '45px',
-		//					bottom: localStorage.getItem('$Statusbar'),
-		//				}
-		//			}]
-		//		});
-
 		var contentWebview = null;
+		//双击标题栏事件
 		document.querySelector('header').addEventListener('doubletap', function() {
 			if(contentWebview == null) {
 				contentWebview = plus.webview.currentWebview().children()[0];

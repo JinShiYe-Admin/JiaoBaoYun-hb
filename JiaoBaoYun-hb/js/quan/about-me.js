@@ -21,6 +21,7 @@ var repliedCell;
 var repliedItem; //回复的对象
 //页码请求到要显示的数据，array[model_userSpaceAboutMe]
 var aboutMeArray = [];
+var isShowing=false;
 mui.init();
 mui.plusReady(function() {
 	events.preload("../homework/workdetail-stu.html", 100);
@@ -152,6 +153,12 @@ var addReplyView = function() {
 	})
 }
 var setListener = function() {
+	plus.webview.currentWebview().addEventListener("show",function(){
+		isShowing=true;
+	})
+	plus.webview.currentWebview().addEventListener("hide",function(){
+		isShowing=false;
+	})
 	mui(".mui-table-view").on("tap", ".refer-content", function() {
 		this.info.PublisherId = this.info.UserId
 		this.info.PublisherName = this.info.UserName
@@ -500,7 +507,9 @@ var requireHomeworkAlert = function(aboutMeData) {
 		if(data.RspCode == 0) {
 			alertTotalPage = data.RspData.TotalPage;
 			if(totalPage == 0 && alertTotalPage == 0) {
-				mui.toast('暂无数据！')
+				if(isShowing){
+					mui.toast('暂无数据！');
+				}
 				return;
 			}
 			if(!aboutMeData) {

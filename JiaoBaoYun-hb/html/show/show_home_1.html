@@ -636,10 +636,10 @@
 							//将当前model中id塞到数组
 							tempArray.push(tempModel0.PublisherId);
 							//合并数组,点赞的人
-							tempArray = tempArray.concat(tempModel0.LikeUsers);
-							console.log(JSON.stringify(tempModel0.LikeUsers));
+//							tempArray = tempArray.concat(tempModel0.LikeUsers);
+//							console.log(JSON.stringify(tempModel0.LikeUsers));
 							for(var i in tempModel0.LikeUsers){
-								tempArray = tempArray.concat(tempModel0.LikeUsers[i].userid);
+								tempArray = tempArray.concat(tempModel0.LikeUsers[i].userId);
 //								tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
 							}
 //							tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
@@ -686,13 +686,14 @@
 										//遍历点赞的人
 										for(var item2 in tempModel0.LikeUsers) {
 											//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
-											if(tempModel.utid == tempModel0.LikeUsers[item2].userid) {
+											if(tempModel.utid == tempModel0.LikeUsers[item2].userId) {
 //												tempModel0.LikeUsers.splice(item2, 1, tempModel);
 												tempModel0.LikeUsers[item2] = $.extend(tempModel0.LikeUsers[item2], tempModel);
 											}
 										}
 										//对比id是否一致
 										if(tempModel0.PublisherId == tempModel.utid) {
+											
 											//合并
 											tempModel0 = $.extend(tempModel0, tempModel);
 											tempModel0.PublisherName = tempModel0.unick
@@ -1189,8 +1190,9 @@
 				var personIds = [];
 				for(var i in data) {
 					personIds.push(data[i].PublisherId);
+					
 					for(var item in data[i].LikeUsers){
-						personIds = personIds.concat(data[i].LikeUsers[item].userid);
+						personIds = personIds.concat(data[i].LikeUsers[item].userId);
 					}
 					
 //					data[i].LikeUsers = arrayDupRemoval(data[i].LikeUsers);
@@ -1261,7 +1263,7 @@
 						}
 						//遍历点赞的人
 						for(var item2 in data[i].LikeUsers) {
-							if(personsData[j].utid == data[i].LikeUsers[item2].userid) {
+							if(personsData[j].utid == data[i].LikeUsers[item2].userId) {
 								data[i].LikeUsers[item2] = mui.extend(data[i].LikeUsers[item2], personsData[j])
 							}
 
@@ -1331,6 +1333,7 @@
 				var tempModel = zonepArray[index];
 				tempModel.PublisherImg = updateHeadImg(tempModel.PublisherImg, 2)
 				var personalImage = tempModel.PublisherImg;
+				console.log('tempMode='+JSON.stringify(tempModel));
 				var personalName = events.shortForString(tempModel.PublisherName, 20);
 
 				var time = modifyTimeFormat(tempModel.PublishDate);
