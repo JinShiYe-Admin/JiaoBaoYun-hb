@@ -75,22 +75,6 @@
 		var utids = [];
 		var pageFlag;;
 		mui.plusReady(function() {
-			
-		plus.io.resolveLocalFileSystemURL("_doc", function(entry) {
-			// 可通过entry对象操作test.html文件 
-			entry.getMetadata(function(metadata) {
-				plus.console.log("Last Modified: " + metadata.modificationTime);
-				entry.getDirectory("savepath", { create: true, exclusive: false }, function(dir) {
-					console.log("Directory Entry Name: " + dir.name);
-				}, function() {
-					alert(e.message);
-				});
-			}, function(e) {
-				alert(e.message);
-			});
-		}, function(e) {
-			alert("Resolve file URL failed: " + e.message);
-		});
 	
 			pageFlag = plus.webview.currentWebview().data
 			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
