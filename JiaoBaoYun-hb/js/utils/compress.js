@@ -35,7 +35,6 @@ var compress = (function(mod) {
 
 	}
 	mod.compressPIC_recursive = function(picPath, callback1) {
-console.log('雅俗图片')
 		var options = {
 			src: picPath, //压缩转换原始图片的路径
 			dst: getSavePath(picPath), //压缩转换目标图片的路径
@@ -57,7 +56,6 @@ console.log('雅俗图片')
 				function(event) {
 					console.log('压缩图片成功:' + JSON.stringify(event));
 					compressCount++;
-					console.log('compressCount=' + compressCount)
 					compressedPaths.push(event.target);
 					widths.push(event.width);
 					if(compressCount < paths.length) {

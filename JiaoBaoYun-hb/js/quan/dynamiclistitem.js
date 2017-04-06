@@ -38,17 +38,17 @@ var dynamiclistitem = (function($, mod) {
 		} else {
 			if(InfoList[4] == 0) {
 				if(!document.getElementById("spaceDetail")) {
-					closeempty = '<a data-is-focus=0  id ="btn-focus' + data[4] + idFlag + id + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:20px;height:20px;"></a>';
+					closeempty = '<a data-is-focus=0  id ="btn-focus' + data[4] + idFlag + id + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:30px;height:30px;padding:5px"></a>';
 
 				} else {
-					closeempty = '<button id="btn-focus' + data[4] + idFlag + id + '" type="button" class="mui-btn mui-pull-right btn-attention" style="width: 55px;">关注</button>'
+//					closeempty = '<button id="btn-focus' + data[4] + idFlag + id + '" type="button" class="mui-btn mui-pull-right btn-attention" style="width: 55px;">关注</button>'
 				}
 			} else {
 				if(!document.getElementById("spaceDetail")) {
-					closeempty = '<a data-is-focus=1  id ="btn-focus' + data[4] + idFlag + id + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:20px;height:20px;"></a>';
+					closeempty = '<a data-is-focus=1  id ="btn-focus' + data[4] + idFlag + id + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:30px;height:30px;padding:5px"></a>';
 
 				} else {
-					closeempty = '<button id="btn-focus' + data[4] + idFlag + id + '" type="button" class="mui-btn mui-pull-right btn-attentioned" style="width: 55px;">已关注</button>'
+//					closeempty = '<button id="btn-focus' + data[4] + idFlag + id + '" type="button" class="mui-btn mui-pull-right btn-attentioned" style="width: 55px;">已关注</button>'
 				}
 
 			}
