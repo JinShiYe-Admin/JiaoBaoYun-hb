@@ -25,11 +25,10 @@
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
 		<script>
-			/*预加载界面*/
-			//			mui.init();
+			//plusReady事件
 			mui.plusReady(function() {
 				events.changeTopPocket();
-//				events.preload('class-dynamic.html');
+				//预加载班级群组
 				events.preload('class-group.html');
 				var write = document.getElementById('write');
 				var data = plus.webview.currentWebview().data;
@@ -45,21 +44,28 @@
 						}
 					}
 				});
+				//班级名称
 				var className = plus.webview.currentWebview().className;
 				document.getElementById('title').innerText = getHeadText(className);
-				setTimeout(function() {
-					events.addTap('group', function() {
+				//群组按钮点击事件
+				events.addTap('group', function() {
+					events.showWaiting();
+					setTimeout(function() {
 						events.fireToPageWithData('class-group.html', 'postGroupInfo', {
 							classId: data.classId,
 							className: className
 						});
-					})
-				}, 1000);
+						events.closeWaiting();
+					}, 1000);
+				})
+				//发布班级动态的点击事件
 				events.addTap('write', function() {
 					events.openNewWindowWithData('class-dynamic.html', data)
 				})
+				//加载子页面
 				events.initSubPage('classSpace-sub.html', data);
 			})
+			//获取标题栏名称
 			var getHeadText = function(className) {
 				if(className.length > 8) {
 					className = className.substring(0, 10) + '...'

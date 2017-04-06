@@ -456,7 +456,8 @@
 			"html/qiuzhi/qiuzhi-answerDetail.html",
 			"html/qiuzhi/qiuzhi-question.html",
 			"html/qiuzhi/experts_main.html",
-			"html/qiuzhi/expert-detail.html"
+			"html/qiuzhi/expert-detail.html",
+			"html/qiuzhi/qiuzhi-newQ.html"
 		]
 	},
 	"html/homework/doHomework-stu.html": {
@@ -1000,7 +1001,9 @@
 			"js/libs/myStorage/myStorage.js"
 		],
 		"refer": [
-			"html/quan/edit-remark.html"
+			"html/quan/edit-remark.html",
+			"html/mine/qun_data_details.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/quan/classSpace-sub.html": {
@@ -1919,6 +1922,39 @@
 			"css/mui.min.css",
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/mine/qun_data_details.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/qiuzhi/qiuzhi-newQ.html": {
+		"resources": [
+			"js/utils/cryption.js",
+			"js/publicQiuzhiProtocol.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/camera.js",
+			"js/utils/CloudFileUtil.js",
+			"js/utils/compress.js",
+			"css/mui.min.css",
+			"css/qiuzhi/qiuzhi-questionSub.css",
+			"js/qiniu/qiniu.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }

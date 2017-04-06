@@ -193,6 +193,8 @@
 			var maxWidth = 0;
 			//每个图标中图标图片的宽度
 			var imgeWith = 0.6;
+			//宽度和高度
+			var initStyle;
 
 			init(); //初始化界面
 
@@ -211,31 +213,33 @@
 				var nameWidth = document.getElementById("cloudstoragename").offsetWidth;
 				//console.log('nameWidth:' + nameWidth);
 				//每个图标的宽度
-				maxWidth = (screenWidth * 1 - nameWidth * 1 - 5) / 4.5;
+				maxWidth = parseInt((screenWidth * 1 - nameWidth * 1 - 5) / 4.5);
+
+				initStyle = parseInt(maxWidth * imgeWith);
 
 				var allItem = document.querySelectorAll('.cloud-item');
 				for(var i = 0; i < allItem.length; i++) {
 					var sliderHeight = 0;
 					if(allItem[i].id == 'cloudrecord') { //家校互动
-						allItem[i].style.height = (cloudItemHeight * cloudSecond) + 'px';
+						allItem[i].style.height = parseInt(cloudItemHeight * cloudSecond) + 'px';
 						cloudSecondItemHeight = allItem[i].offsetHeight;
 						sliderHeight = cloudSecondItemHeight;
 					} else if(allItem[i].id == 'cloudstorage') {
-						allItem[i].style.height = (cloudItemHeight * cloudFirst) + 'px';
+						allItem[i].style.height = parseInt(cloudItemHeight * cloudFirst) + 'px';
 						cloudFirstItemHeight = allItem[i].offsetHeight;
 						sliderHeight = cloudFirstItemHeight;
 					} else if(allItem[i].id == 'cloudapps') {
-						allItem[i].style.height = (cloudItemHeight * cloudThird) + 'px';
+						allItem[i].style.height = parseInt(cloudItemHeight * cloudThird) + 'px';
 						cloudThirdItemHeight = allItem[i].offsetHeight;
 						sliderHeight = cloudThirdItemHeight;
 					}
-					allItem[i].style.marginTop = (webHeight * 0.015) + 'px';
-					allItem[i].style.marginBottom = (webHeight * 0.015) + 'px';
-					allItem[i].children[0].style.marginTop = (allItem[i].offsetHeight - allItem[i].children[0].offsetHeight) / 2 + 'px';
-					allItem[i].children[1].children[0].style.height = sliderHeight / 2 + 'px';
-					allItem[i].children[1].children[1].style.height = sliderHeight / 2 + 'px';
-					allItem[i].children[1].children[0].children[0].style.height = sliderHeight / 2 + 'px';
-					allItem[i].children[1].children[1].children[0].style.height = sliderHeight / 2 + 'px';
+					allItem[i].style.marginTop = parseInt(webHeight * 0.015) + 'px';
+					allItem[i].style.marginBottom = parseInt(webHeight * 0.015) + 'px';
+					allItem[i].children[0].style.marginTop = parseInt(allItem[i].offsetHeight - allItem[i].children[0].offsetHeight) / 2 + 'px';
+					allItem[i].children[1].children[0].style.height = parseInt(sliderHeight / 2) + 'px';
+					allItem[i].children[1].children[1].style.height = parseInt(sliderHeight / 2) + 'px';
+					allItem[i].children[1].children[0].children[0].style.height = parseInt(sliderHeight / 2) + 'px';
+					allItem[i].children[1].children[1].children[0].style.height = parseInt(sliderHeight / 2) + 'px';
 				}
 				document.getElementById("refreshContainer").style.visibility = 'visible';
 			}
@@ -290,8 +294,6 @@
 				//-----------设置数据end---------------
 				events.preload("../homework/homework-tea.html", 300);
 				events.preload('storage_main.html'); //预加载云存储
-				events.preload('storage_upload.html'); //预加载上传文件选择
-				events.preload('storage_upload_choose.html'); //预加载选择上传文件的方式
 
 				window.addEventListener("homeworkReady", function() {
 					homeworkReady = true;
@@ -348,7 +350,7 @@
 				var self = plus.webview.currentWebview();
 				var androidHeight;
 				//console.log('getStyle ' + JSON.stringify(self.getStyle()));
-				console.log('clientHeight '+ document.body.clientHeight);
+				console.log('clientHeight ' + document.body.clientHeight);
 				if(mui.os.android) {
 					androidHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight");
 				}
@@ -356,7 +358,7 @@
 				//防止 父页面选项卡被输入法撑起
 				if(mui.os.android) {
 					window.addEventListener('resize', function() {
-						console.log('clientHeight '+ document.body.clientHeight);
+						console.log('clientHeight ' + document.body.clientHeight);
 						//console.log('resize getStyle ' + JSON.stringify(self.getStyle()));
 						//console.log('androidHeight ' + androidHeight);
 						var a = plus.android.invoke(plus.android.currentWebview(), "getHeight"); //webview高度
@@ -774,7 +776,7 @@
 					var html2 = ''; //名字
 					var fname = ''; //文件名
 					if(data.ftype == '.file') { //文件夹
-						html1 = '<img src="../../image/cloud/cloud_0_wenjianjia_1.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>';
+						html1 = '<img src="../../image/cloud/cloud_0_wenjianjia_1.png" style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>';
 						html2 = '<p id="fname_' + data.fid + '" class="mui-ellipsis"></p>';
 						fname = data.fname;
 					} else { //文件
@@ -784,9 +786,9 @@
 						var fileName = pathList2[0];
 						var path = window.storageKeyName.QNPB + 'yuncunc/' + window.storageKeyName.CLOUDSTORAGETHUMB + fileName + '.png'
 						if(type == 'QN_video' || type == 'QN_img') {
-							html1 = '<img src="' + path + '" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>';
+							html1 = '<img src="' + path + '" style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>';
 						} else { //七牛能生成缩略图的图片或视频
-							html1 = '<img src="../../image/cloud/' + type + '" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>';
+							html1 = '<img src="../../image/cloud/' + type + '" style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>';
 						}
 						html2 = '<p id="fname_' + data.fid + '" class="mui-ellipsis"></p>';
 						fname = data.fname + data.ftype;
@@ -808,7 +810,7 @@
 					var li = document.createElement('li');
 					li.id = 'addFolder';
 					li.className = 'mui-table-view-cell';
-					li.innerHTML = '<img src="../../image/cloud/cloud_0_xinjian_4.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/><p class="mui-ellipsis">新建文件夹</p>';
+					li.innerHTML = '<img src="../../image/cloud/cloud_0_xinjian_4.png" style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/><p class="mui-ellipsis">新建文件夹</p>';
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudFirstItemHeight + 'px';
 					document.getElementById("cloudstorage_1").appendChild(li);
@@ -823,7 +825,7 @@
 					var li = document.createElement('li');
 					li.id = 'shoujitongxunlu';
 					li.className = 'mui-table-view-cell';
-					li.innerHTML = '<img src="../../image/cloud/cloud_0_tongxunlu.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
+					li.innerHTML = '<img src="../../image/cloud/cloud_0_tongxunlu.png" style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>\
 									   <p class="mui-ellipsis">手机通讯录</p>';
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudFirstItemHeight / 2 + 'px';
@@ -834,7 +836,7 @@
 					var li2 = document.createElement('li');
 					li2.id = 'shoujituku';
 					li2.className = 'mui-table-view-cell';
-					li2.innerHTML = '<img src="../../image/cloud/cloud_0_tuku.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
+					li2.innerHTML = '<img src="../../image/cloud/cloud_0_tuku.png" style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>\
 									   <p class="mui-ellipsis">手机图库</p>';
 					li2.style.width = maxWidth + 'px';
 					li2.style.height = cloudFirstItemHeight / 2 + 'px';
@@ -852,7 +854,7 @@
 					li.className = 'mui-table-view-cell';
 					li.setAttribute('StudentId', data.StudentId); //学生ID
 					li.setAttribute('StudentName', data.StudentName); //学生姓名
-					li.innerHTML = '<img src="../../image/cloud/cloud_0_dangan.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
+					li.innerHTML = '<img src="../../image/cloud/cloud_0_dangan.png" style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>\
 									   <p class="mui-ellipsis">' + data.StudentName + '档案</p>';
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudFirstItemHeight / 2 + 'px';
@@ -870,7 +872,7 @@
 					li.className = 'mui-table-view-cell';
 					li.setAttribute('value', 0);
 					li.innerHTML = '<span class="mui-icon iconfont icon-re" style="left:' + (maxWidth * imgeWith * (4 / 5)) + 'px;font-size:' + maxWidth * imgeWith * (5 / 7) + 'px;"></span>\
-									<img src="../../image/cloud/cloud_0_zuoye.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
+									<img src="../../image/cloud/cloud_0_zuoye.png" style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>\
 									<p class="mui-ellipsis">作业</p>';
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudSecondItemHeight / 2 + 'px';
@@ -882,7 +884,7 @@
 					li2.id = 'manage';
 					li2.className = 'mui-table-view-cell';
 					li2.setAttribute('value', 1);
-					li2.innerHTML = '<img src="../../image/cloud/cloud_0_banjiguanli.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
+					li2.innerHTML = '<img src="../../image/cloud/cloud_0_banjiguanli.png" style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>\
 									   <p class="mui-ellipsis">人员资料</p>';
 					li2.style.width = maxWidth + 'px';
 					li2.style.height = cloudSecondItemHeight / 2 + 'px';
@@ -899,7 +901,7 @@
 					li.id = 'studentsdynamic' + id_index;
 					li.setAttribute('data-stuid', data.stuid);
 					var html0 = '<div id="studyn_redpoint_' + data.stuid + '" class="cloud-red-point" style="left:' + (maxWidth - 20) + 'px' + ';"></div>';
-					li.innerHTML = html0 + '<img id="student_imge_' + data.stuid + '" src="' + updateHeadImg(data.stuimg, 2) + '"style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
+					li.innerHTML = html0 + '<img id="student_imge_' + data.stuid + '" src="' + updateHeadImg(data.stuimg, 2) + '"style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>\
 									   <p id="studyn_' + id_index + '" class="mui-ellipsis"></p>';
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudSecondItemHeight / 2 + 'px';
@@ -938,7 +940,7 @@
 
 						html1 = html0 + '<img src="../../image/cloud/cloud_0_ban_1.png" style="margin-left:' + (maxWidth / 2.5) + 'px;position: absolute;margin-top: ' + (maxWidth * 0.35) + 'px;height: ' + (maxWidth * imgeWith * 0.5) + 'px;width: ' + (maxWidth * imgeWith * 0.5) + 'px;"/>';
 						//html1 = html0 + '<span class="mui-icon iconfont icon-banxiabiao" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
-						li.innerHTML = html1 + '<img src="' + updateHeadImg(data.gimg, 2) + '"style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
+						li.innerHTML = html1 + '<img src="' + updateHeadImg(data.gimg, 2) + '"style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>\
 									   <p id="tarClass_gname_' + data.gid + '" class="mui-ellipsis"></p>';
 						gnameId = 'tarClass_gname_' + data.gid;
 						gname = data.gname;
@@ -948,7 +950,7 @@
 						html1 = html0 + '<img src="../../image/cloud/cloud_0_jia_0.png" style="margin-left:' + (maxWidth / 2.5) + 'px;position: absolute;margin-top: ' + (maxWidth * 0.35) + 'px;height: ' + (maxWidth * imgeWith * 0.5) + 'px;width: ' + (maxWidth * imgeWith * 0.5) + 'px;"/>';
 
 						//html1 = html0 + '<span class="mui-icon iconfont icon-jiaxiabiao" style="top:' + (maxWidth * imgeWith * 0.6) + 'px;left:' + (maxWidth * imgeWith * 0.6) + 'px;"></span>';
-						li.innerHTML = html1 + '<img src="' + updateHeadImg(data.gimg, 2) + '"style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
+						li.innerHTML = html1 + '<img src="' + updateHeadImg(data.gimg, 2) + '"style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>\
 									   <p id="tarClass1_gname_' + data.gid + '" class="mui-ellipsis"></p>';
 						gnameId = 'tarClass1_gname_' + data.gid;
 						gname = '家长(' + data.gname + ')';
@@ -968,7 +970,7 @@
 					var li = document.createElement('li');
 					li.id = 'noclass';
 					li.className = 'mui-table-view-cell';
-					li.innerHTML = '<img src="../../image/quan/add.png"style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
+					li.innerHTML = '<img src="../../image/quan/add.png"style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>\
 									   <p class="mui-ellipsis">创建班级</p>';
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudSecondItemHeight + 'px';
@@ -985,7 +987,7 @@
 					li.id = 'notes';
 					li.className = 'mui-table-view-cell';
 					li.setAttribute('value', 0);
-					li.innerHTML = '<img src="../../image/cloud/cloud_0_biji.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
+					li.innerHTML = '<img src="../../image/cloud/cloud_0_biji.png" style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>\
 									   <p class="mui-ellipsis">笔记</p>';
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudThirdItemHeight / 2 + 'px';
@@ -996,7 +998,7 @@
 					li2.id = 'note';
 					li2.className = 'mui-table-view-cell';
 					li2.setAttribute('value', 1);
-					li2.innerHTML = '<img src="../../image/cloud/cloud_0_jishi.png" style="height: ' + (maxWidth * imgeWith) + 'px;width: ' + (maxWidth * imgeWith) + 'px;"/>\
+					li2.innerHTML = '<img src="../../image/cloud/cloud_0_jishi.png" style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>\
 									   <p class="mui-ellipsis">记事</p>';
 					li2.style.width = maxWidth + 'px';
 					li2.style.height = cloudThirdItemHeight / 2 + 'px';

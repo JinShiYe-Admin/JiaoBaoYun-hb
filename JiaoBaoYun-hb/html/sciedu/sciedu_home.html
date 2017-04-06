@@ -107,8 +107,8 @@
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
-		<script type="text/javascript" src="../../js/mui.lazyload.js"></script>
-		<script type="text/javascript" src="../../js/mui.lazyload.img.js"></script>
+		<!--<script type="text/javascript" src="../../js/mui.lazyload.js"></script>-->
+		<!--<script type="text/javascript" src="../../js/mui.lazyload.img.js"></script>-->
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
@@ -121,6 +121,7 @@
 			var pullToRefresh = [] //存储下拉上拉的控件
 			var sliderId = ''; //记录显示的城市
 			var index; //获取index的webview
+			var showImage = []; //存储需要显示的图片的路径
 			mui.plusReady(function() {
 				//events.closeWaiting();
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
@@ -245,13 +246,47 @@
 							mui('#slider').slider();
 							//循环初始化所有下拉刷新，上拉加载。
 							pullRefresh(function() {
+								//设置监听上下滑动
+								mui('#sliderGroup .mui-scroll-wrapper').each(function(index, element) {
+									element.addEventListener('scrollstart', function(e) {
+										console.log('scrollstart');
+										setTimeout(function() {
+											var cityId = sliderId.replace('top_', '');
+											var imageArray = mui('#bot_ul_' + cityId + ' img');
+											var scroll = mui('#bot_sw_' + cityId).scroll();
+											if(scroll.y == scroll.maxScrollY) {
+												//滑动到底部
+												return false;
+											}
+											showImage=[];
+											for(var i = 0; i < imageArray.length; i++) {
+												var path = imageArray[i].src;
+												var num = path.indexOf('http://');
+												if(num == 0) {
+													//加载了网络的图片
+													//console.log(imageArray[i].id);
+													var placeholder = '../../' + window.storageKeyName.DEFAULTIMAGELOAD;
+													//var placeholder = '';
+													imageArray[i].src = placeholder;
+												}
+											}
+										}, 200);
+
+									});
+									//element.addEventListener('scroll', function(e) {
+									//console.log('---scroll---');
+									//});
+									element.addEventListener('scrollend', function(e) {
+										console.log('scrollend');
+										showScrollImage();
+									});
+								});
 								requestCityNews(cities[0].acode, 1);
 							});
 						});
 					});
 				}
 			}
-
 			/**
 			 * 顶部增加定制的城市和底部列表的框架
 			 * @param {Object} data 定制的城市
@@ -369,11 +404,6 @@
 					window.myStorage.setItem(window.storageKeyName.seHistory + '_' + personalUID, []);
 				}
 
-				var placeholder = '../../' + window.storageKeyName.DEFAULTSCIEDUIMAGELOAD;
-				var lazyLoad = mui("#bot_ul_" + cityCode).imageLazyload({
-					placeholder: placeholder.toString(), //缩略图
-					autoDestroy: false, //元素加载完后是否自动销毁当前插件对象
-				}); //懒加载控件
 				for(var i = 0; i < data.length; i++) {
 					//console.log('addItems ' + JSON.stringify(data[i]));
 					var tips = data[i].tips;
@@ -401,9 +431,10 @@
 						}
 					}
 					SciEduHomeItem.addItem(document.getElementById("bot_ul_" + cityCode), data[i], function() {
-						lazyLoad.refresh(true);
+
 					});
 				}
+				showScrollImage();
 			}
 
 			/**
@@ -564,6 +595,74 @@
 							//console.log("evalJS " + evalJS);
 							index.evalJS(evalJS);
 						}
+					}
+				}
+			}
+
+			/**
+			 * 加载完数据后显示需要显示的图片
+			 */
+			function showScrollImage() {
+				var cityId = sliderId.replace('top_', '');
+				var ul = document.getElementById("bot_ul_" + cityId);
+				var cell = mui('#bot_ul_' + cityId + ' .mui-table-view-cell');
+				var scroll = mui('#bot_sw_' + cityId).scroll();
+				var y = scroll.y * (-1); //滚动的距离
+				console.log('offsetHeight ' + ul.offsetHeight);
+				console.log('y ' + y + ' ' + scroll.maxScrollY);
+
+				var ul_offsetHeight = ul.offsetHeight; //所有cell的高度
+				var height = 0; //cell高度累加
+				var clientHeight = document.documentElement.clientHeight; //webview显示的高度
+
+				var idArrary = []; //存储显示的li的id
+
+				//获得需要显示图片的cell
+				for(var i = 0; i < cell.length; i++) {
+					var half = parseInt(cell[i].offsetHeight * 0.5);
+					var height_0 = height + half;
+					height = height + cell[i].offsetHeight * 1;
+					//console.log(cell[i].id + ' half:' + half + ' height_0:' + height_0 + ' height:' + height);
+					if((height_0 > y && ((height - half * 2 - y) < clientHeight))) {
+						//console.log('index:' + index + ' id:' + cell[i].id);
+						idArrary.push(cell[i].id);
+					}
+				}
+
+				//获得cell里的图片id
+				showImage = [];
+				for(var i = 0; i < idArrary.length; i++) {
+					var title = document.getElementById('title_' + idArrary[i]);
+					var li_imageArray = mui('#mediaBody_' + idArrary[i] + ' img');
+					//console.log('idArrary ' + idArrary[i] + ' li_imageArray:' + li_imageArray.length + ' title:' + title.innerText);
+					for(var j = 0; j < li_imageArray.length; j++) {
+						showImage.push({
+							id: li_imageArray[j].id
+						});
+					}
+				}
+
+				//显示图片
+				console.log('showImage ' + showImage.length);
+				setTimeout(function() {
+					showImages();
+				}, 500);
+			}
+
+			/**
+			 * 显示需要显示的图片
+			 */
+			function showImages() {
+				for(var i = 0; i < showImage.length; i++) {
+					if(showImage[i].show == undefined) {
+						var imge = document.getElementById(showImage[i].id);
+						var path = imge.getAttribute('data-lazyload');
+						imge.src = path;
+						showImage[i].show = true; //已经显示了
+						setTimeout(function() {
+							showImages();
+						}, 100);
+						break; //停止本次循环
 					}
 				}
 			}

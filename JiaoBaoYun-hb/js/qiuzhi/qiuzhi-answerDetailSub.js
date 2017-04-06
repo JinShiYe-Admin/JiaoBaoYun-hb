@@ -86,44 +86,58 @@ var getComment = function(commentedInfo) {
 		}
 	})
 }
+/**
+ * 重组数据
+ * @param {Object} comData 评论信息
+ * @param {Object} commentedInfo 上个界面传过来的评论信息
+ */
 var rechargeComment = function(comData, commentedInfo) {
 	var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
-	comData.UserName = personalInfo.unick;
-	comData.UserImg = personalInfo.uimg;
-	comData.TabId = commentedInfo.commentInfo.commentId
-	if(upperInfo) {
+	comData.UserName = personalInfo.unick;//昵称
+	comData.UserImg = personalInfo.uimg;//头像
+	comData.TabId = commentedInfo.commentInfo.commentId//评论id
+	comData.Replys=[];//回复列表
+	if(upperInfo) {//有上级评论
 		comData.UpperId = upperInfo.UpperId ? upperInfo.UpperId : upperInfo.TabId;
 		comData.ReplyId = upperInfo.UserId;
 		comData.ReplyName = upperInfo.UserName;
-	} else {
+	} else {//无上级评论
 		comData.UpperId = 0;
 	}
 	var commentList, order;
-	if(parentContainer) {
+	if(parentContainer) {//评论的上级评论container
 		console.log('上级评论类名：' + parentContainer.className);
 		if(parentContainer.querySelector(".mui-table-view")) {
 			commentList = parentContainer.querySelector(".mui-table-view");
-		} else {
+		} else {//无上级评论
 			var list = document.createElement('ul');
 			list.className = "mui-table-view inner-table-view";
 			parentContainer.appendChild(list);
 			commentList = list;
 		}
-		order = 0;
+		order = 0;//评论排序 0 ：顺序 1 倒序
 	} else {
 		commentList = document.querySelector(".mui-table-view");
 		order = type - 1;
 	}
+	//插入评论
 	insertComment(commentList, comData, order);
 }
+/**
+ * 插入评论
+ * @param {Object} commentList 要加载评论界面的父界面
+ * @param {Object} commentData 评论信息
+ * @param {Object} order 顺序 0 倒序 1
+ */
 var insertComment = function(commentList, commentData, order) {
 	var index;
 	if(parentContainer) {
 		var commentInfo = parentContainer.querySelector(".comment-words").commentInfo;
+		console.log("获取的品论信息："+JSON.stringify(commentInfo));
 		index = commentInfo.Replys.length;
 		createCell(commentList, commentData, index, order);
 	} else {
-		if(type == 2) {
+		if(type == 2) {//倒序
 			index = 0
 			changeOrder();
 			createCell(commentList, commentData, index, order);
@@ -139,9 +153,13 @@ var insertComment = function(commentList, commentData, order) {
 			}
 		}
 	}
+	//将数据加载到本页面数据
 	insertCommentData(commentData);
 	console.log("获取的上级评论信息：" + JSON.stringify(commentInfo));
 }
+/**
+ * 插入新数据后更改数据
+ */
 var changeOrder = function() {
 	document.querySelectorAll('.icon-support').forEach(function(item) {
 		console.log("当前：" + item.innerHTML);
@@ -156,6 +174,10 @@ var changeOrder = function() {
 		}
 	});
 }
+/**
+ * 加载评论数据
+ * @param {Object} commentData
+ */
 var insertCommentData = function(commentData) {
 	if(parentContainer) {
 		var index = parseInt(parentContainer.querySelector(".icon-support").order);
@@ -390,6 +412,11 @@ function refreshUI(datasource) {
 	var ul = document.getElementById('list-container');
 	createList(ul, datasource.Data);
 }
+/**
+ * 创建列表
+ * @param {Object} ul
+ * @param {Object} dataArray
+ */
 var createList = function(ul, dataArray) {
 	console.log(JSON.stringify(dataArray))
 	if(dataArray && dataArray.length > 0) {
@@ -398,6 +425,13 @@ var createList = function(ul, dataArray) {
 		}
 	}
 }
+/**
+ * 创建子cell
+ * @param {Object} ul  列表
+ * @param {Object} cellData 单个cell数据
+ * @param {Object} i 位置
+ * @param {Object} order 顺序
+ */
 var createCell = function(ul, cellData, i, order) {
 	var li = document.createElement('li');
 	li.className = 'mui-table-view-cell';
@@ -729,8 +763,12 @@ var setZanIconCondition = function(item) {
 		}
 	}
 }
+/**
+ * 
+ * @param {Object} no 点赞数量 如果大于100放置99+
+ */
 var replaceBigNo = function(no) {
-	if(no > 100) {
+	if(no > 99) {
 		return '99+'
 	}
 	return no;

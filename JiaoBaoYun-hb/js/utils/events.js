@@ -61,7 +61,7 @@ var events = (function(mod) {
 				styles: {
 					top: '0px',
 					bottom: '0px',
-					//					softinputMode: "adjustResize"
+					softinputMode: "adjustResize"
 				}
 			})
 		}
@@ -91,7 +91,7 @@ var events = (function(mod) {
 			styles: {
 				top: '0px',
 				bottom: '0px',
-				//				softinputMode: "adjustResize"
+				softinputMode: "adjustResize"
 			},
 			createNew: true,
 		});
@@ -192,7 +192,7 @@ var events = (function(mod) {
 					styles: { //窗口参数
 						top: '0px',
 						bottom: '0px',
-						//						softinputMode: "adjustResize"
+						softinputMode: "adjustResize"
 					},
 					show: {
 						anishow: 'slide-in-right',
@@ -403,7 +403,8 @@ var events = (function(mod) {
 	mod.createSubAppendMain = function(mainWebviewObject, subPageUrl, data, loadedCallBack) {
 		var sub = plus.webview.create(subPageUrl, subPageUrl.split('/')[subPageUrl.split('/').length - 1], {
 			top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px',
-			bottom: '0px'
+			bottom: '0px',
+			softinputMode: "adjustResize"
 		}, {
 			data: data
 		});
