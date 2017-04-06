@@ -591,6 +591,17 @@ var events = (function(mod) {
 		}
 	}
 
+	/**
+	 * 图片只加载一遍 onerror
+	 * @author 莫尚霖
+	 * @param {Object} image 加载失败的图片元素
+	 * @param {Object} path 图片加载失败后显示的图片
+	 */
+	mod.imageOnError = function(image, path) {
+		image.src = path;
+		image.onerror = null;
+	}
+
 	return mod;
 
 })(events || {});
