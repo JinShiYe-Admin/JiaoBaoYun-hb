@@ -34,25 +34,44 @@ var compress = (function(mod) {
 		});
 
 	}
+	mod.createPath = function(callback) {
+		plus.io.resolveLocalFileSystemURL("_doc", function(entry) {
+			// 可通过entry对象操作test.html文件 
+			entry.getMetadata(function(metadata) {
+				plus.console.log("Last Modified: " + metadata.modificationTime);
+				entry.getDirectory("savepath", { create: true, exclusive: false }, function(dir) {
+					console.log("Directory Entry Name: " + dir.name);
+					callback();
+				}, function() {
+					alert(e.message);
+				});
+			}, function(e) {
+				alert(e.message);
+			});
+		}, function(e) {
+			alert("Resolve file URL failed: " + e.message);
+		});
+	}
 	mod.compressPics = function(picPaths, callback) {
-		var compressedPaths = [];
-		//		var trueComPaths=[];
-		var compressCount = 0;
-		var widths = [];
-		for(var i in picPaths) {
-			mod.compressPIC(picPaths[i], function(event) {
-				compressCount++;
-				compressedPaths.push(event.target);
-				widths.push(event.width);
-				if(compressCount == picPaths.length) {
-					console.log('压缩后的图片：' + JSON.stringify(compressedPaths));
-					console.log('压缩前的图片：' + JSON.stringify(picPaths))
-					console.log('全部压缩成功');
-					callback(compressedPaths, widths);
-				}
-			})
-		}
-
+		mod.createPath(function() {
+			var compressedPaths = [];
+			//		var trueComPaths=[];
+			var compressCount = 0;
+			var widths = [];
+			for(var i in picPaths) {
+				mod.compressPIC(picPaths[i], function(event) {
+					compressCount++;
+					compressedPaths.push(event.target);
+					widths.push(event.width);
+					if(compressCount == picPaths.length) {
+						console.log('压缩后的图片：' + JSON.stringify(compressedPaths));
+						console.log('压缩前的图片：' + JSON.stringify(picPaths))
+						console.log('全部压缩成功');
+						callback(compressedPaths, widths);
+					}
+				})
+			}
+		});
 	}
 	var getPicType = function(picPath, callback) {
 		var picType;
@@ -69,9 +88,9 @@ var compress = (function(mod) {
 	}
 	var getSavePath = function(picPath) {
 		var picPaths = picPath.split('/');
-		console.log("路径："+picPaths[picPaths.length-1])
-		var compressPath="_doc/savepath/"+picPaths[picPaths.length-1]
-//		picPaths.splice(picPaths.length - 1, 0, "savePath");
+		console.log("路径：" + picPaths[picPaths.length - 1])
+		var compressPath = "_doc/savepath/" + picPaths[picPaths.length - 1]
+		//		picPaths.splice(picPaths.length - 1, 0, "savePath");
 		return compressPath;
 	}
 
