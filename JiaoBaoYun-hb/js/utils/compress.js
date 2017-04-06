@@ -55,22 +55,34 @@ var compress = (function(mod) {
 	mod.compressPics = function(picPaths, callback) {
 		mod.createPath(function() {
 			var compressedPaths = [];
-			//		var trueComPaths=[];
 			var compressCount = 0;
 			var widths = [];
-			for(var i in picPaths) {
-				mod.compressPIC(picPaths[i], function(event) {
-					compressCount++;
-					compressedPaths.push(event.target);
-					widths.push(event.width);
-					if(compressCount == picPaths.length) {
-						console.log('压缩后的图片：' + JSON.stringify(compressedPaths));
-						console.log('压缩前的图片：' + JSON.stringify(picPaths))
-						console.log('全部压缩成功');
-						callback(compressedPaths, widths);
+			mod.compressPIC(picPaths[0], function(event) {
+				compressCount++;
+				compressedPaths.push(event.target);
+				widths.push(event.width);
+				if(picPaths.length == 1) {
+					callback(compressedPaths, widths);
+				} else {
+					for(var i in picPaths) {
+						if(parseInt(i)) {
+							mod.compressPIC(picPaths[i], function(event) {
+								compressCount++;
+								compressedPaths.push(event.target);
+								widths.push(event.width);
+								if(compressCount == picPaths.length) {
+									console.log('压缩后的图片：' + JSON.stringify(compressedPaths));
+									console.log('压缩前的图片：' + JSON.stringify(picPaths))
+									console.log('全部压缩成功');
+									callback(compressedPaths, widths);
+								}
+							})
+						}
 					}
-				})
-			}
+				}
+
+			})
+
 		});
 	}
 	var getPicType = function(picPath, callback) {
