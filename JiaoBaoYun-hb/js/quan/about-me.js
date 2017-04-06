@@ -328,7 +328,7 @@ var getCellData = function(cell) {
 		default:
 			break;
 	}
-	cellData.time = cell.MsgDate;
+	cellData.time = cell.MaxDate;
 	if(cellData.MsgType != 6) {
 		var messages = '';
 		if(cellData.MsgType != 4) {
@@ -516,13 +516,13 @@ var requireHomeworkAlert = function(aboutMeData) {
 				aboutMeData = [];
 			}
 			for(var i in data.RspData.Data) {
-				data.RspData.Data[i].MsgDate = new Date(data.RspData.Data[i].MsgDate).Format('yyyy-MM-dd HH:mm:ss')
+				data.RspData.Data[i].MaxDate = new Date(data.RspData.Data[i].MsgDate).Format('yyyy-MM-dd HH:mm:ss')
 			}
 			//拼接数据
 			var allData = aboutMeData.concat(data.RspData.Data);
 			//数据排序
 			allData.sort(function(a, b) {
-				return -((new Date(a.MsgDate.replace(/-/g, '/')).getTime()) - (new Date(b.MsgDate.replace(/-/g, '/')).getTime()));
+				return Date.parse(b.MaxDate.replace(/-/g, '/')) - Date.parse(a.MaxDate.replace(/-/g, '/'));
 			})
 
 			console.log('与我相关界面获取的所有数据:' + JSON.stringify(allData))
