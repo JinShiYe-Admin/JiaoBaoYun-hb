@@ -413,7 +413,10 @@
 			"js/utils/events.js",
 			"fonts/mui.ttf"
 		],
-		"refer": []
+		"refer": [
+			"html/cloud/storage_upload_choose.html",
+			"html/cloud/storage_upload.html"
+		]
 	},
 	"html/qiuzhi/qiuzhi-sub.html": {
 		"resources": [
@@ -1498,7 +1501,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/jquery.lazyload.min.js",
-			"image/utils/default_load_2.gif"
+			"image/utils/default_load_2.gif",
+			"js/utils/h5fresh.js"
 		],
 		"refer": [
 			"html/check/area-choose.html",

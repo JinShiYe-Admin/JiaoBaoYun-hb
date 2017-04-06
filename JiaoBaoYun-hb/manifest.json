@@ -1616,7 +1616,9 @@
 					"js/utils/cryption.js"
 				],
 				"refer": [
-					"html/cloud/storage_show_imge.html"
+					"html/cloud/storage_show_imge.html",
+					"html/cloud/storage_upload_choose.html",
+					"html/cloud/storage_upload.html"
 				],
 				"priority": 0
 			},
@@ -4002,7 +4004,8 @@
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
 					"js/libs/jquery.lazyload.min.js",
-					"image/utils/default_load_2.gif"
+					"image/utils/default_load_2.gif",
+					"js/utils/h5fresh.js"
 				],
 				"refer": [
 					"html/check/area-choose.html",
