@@ -39,6 +39,12 @@
 		window.addEventListener("choseArea", function(e) {
 			console.log("获取选中的城市：" + JSON.stringify(e.detail));
 			if(e.detail.acode != curAreaInfo.acode) {
+				//选择城市后界面滚到前面
+
+				//				$.each(document.querySelectorAll('.mui-scroll-wrapper'),function(index,item){
+				//					console.log('当前选项：'+this.className)
+				//					this.querySelector(".mui-table-view").scrollTo(0,0);
+				//				})
 				curAreaInfo = e.detail;
 				clearAll();
 				setCurArea();
@@ -84,63 +90,39 @@
 			}
 		})
 		setListener();
-		h5fresh.addRefresh(function() {
-			var self = this;
-			//这个不对
-			//			var ul = self.element.querySelector('.mui-table-view');
-			clearAll();
-			requestAreaNews();
-		}, {
-			style: "circle",
-			height: "90px"
-		});
-		document.addEventListener("plusscrollbottom", function() {
-			if(newsPage[checkType]) {
-				if(newsPage[checkType].PageIndex < newsPage[checkType].PageCount) {
-					pageIndex = newsPage[checkType].PageIndex + 1;
-					requestAreaNews();
-				} else {
-					mui.toast("没有更多数据了！")
-				}
-			} else {
-				mui.toast("暂无数据！");
-			}
-		},false)
 		//循环初始化所有下拉刷新，上拉加载。
-		//		$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
-		//			$(pullRefreshEl).pullToRefresh({
-		//				down: {
-		//					callback: function() {
-		//						var self = this;
-		//						var ul = self.element.querySelector('.mui-table-view');
-		//						clearAll();
-		//						requestAreaNews();
-		//						setTimeout(function() {
-		//							self.endPullDownToRefresh();
-		//						}, 1000);
-		//					}
-		//				},
-		//				up: {
-		//					callback: function() {
-		//						var self = this;
-		//						if(newsPage[checkType]) {
-		////							self.endPullUpToRefresh(newsPage[checkType].PageIndex >= newsPage[checkType].PageCount)
-		//							if(newsPage[checkType].PageIndex < newsPage[checkType].PageCount) {
-		//								pageIndex = newsPage[checkType].PageIndex + 1;
-		//								requestAreaNews();
-		//								setTimeout(function() {
-		//									self.endPullUpToRefresh();
-		//								}, 1000);
-		//							}else{
-		//								self.endPullUpToRefresh(true);
-		//							}
-		//						} else {
-		//							self.endPullUpToRefresh();
-		//						}
-		//					}
-		//				}
-		//			});
-		//		});
+		$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+			$(pullRefreshEl).pullToRefresh({
+				down: {
+					callback: function() {
+						var self = this;
+						var ul = self.element.querySelector('.mui-table-view');
+						clearAll();
+						requestAreaNews();
+						setTimeout(function() {
+							self.endPullDownToRefresh();
+						}, 1000);
+					}
+				},
+				up: {
+					callback: function() {
+						var self = this;
+						if(newsPage[checkType]) {
+							self.endPullUpToRefresh(newsPage[checkType].PageIndex >= newsPage[checkType].PageCount)
+							if(newsPage[checkType].PageIndex < newsPage[checkType].PageCount) {
+								pageIndex = newsPage[checkType].PageIndex + 1;
+								requestAreaNews();
+								setTimeout(function() {
+									self.endPullUpToRefresh();
+								}, 1000);
+							}
+						} else {
+							self.endPullUpToRefresh(true);
+						}
+					}
+				}
+			});
+		});
 	});
 	/**
 	 * 获取新新闻信息

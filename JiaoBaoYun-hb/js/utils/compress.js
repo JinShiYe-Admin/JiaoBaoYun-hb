@@ -34,55 +34,41 @@ var compress = (function(mod) {
 		});
 
 	}
-	mod.createPath = function(callback) {
-		plus.io.resolveLocalFileSystemURL("_doc", function(entry) {
-			// 可通过entry对象操作test.html文件 
-			entry.getMetadata(function(metadata) {
-				plus.console.log("Last Modified: " + metadata.modificationTime);
-				entry.getDirectory("savepath", { create: true, exclusive: false }, function(dir) {
-					console.log("Directory Entry Name: " + dir.name);
-					callback();
-				}, function() {
-					alert(e.message);
-				});
-			}, function(e) {
-				alert(e.message);
-			});
-		}, function(e) {
-			alert("Resolve file URL failed: " + e.message);
-		});
-	}
+	
 	mod.compressPics = function(picPaths, callback) {
-		mod.createPath(function() {
+		
 			var compressedPaths = [];
 			var compressCount = 0;
 			var widths = [];
-			mod.compressPIC(picPaths[0], function(event) {
+			mod.compressPIC(picPaths[compressCount], function(event) {
 				compressCount++;
 				compressedPaths.push(event.target);
 				widths.push(event.width);
-				if(picPaths.length == 1) {
+				if(compressCount>picPaths.length){
 					callback(compressedPaths, widths);
-				} else {
-					for(var i in picPaths) {
-						if(parseInt(i)) {
-							mod.compressPIC(picPaths[i], function(event) {
-								compressCount++;
-								compressedPaths.push(event.target);
-								widths.push(event.width);
-								if(compressCount == picPaths.length) {
-									console.log('压缩后的图片：' + JSON.stringify(compressedPaths));
-									console.log('压缩前的图片：' + JSON.stringify(picPaths))
-									console.log('全部压缩成功');
-									callback(compressedPaths, widths);
-								}
-							})
-						}
-					}
+					
+				}else {
+					mod.compressPIC
 				}
-
-			})
-
+//				if(picPaths.length == 1) {
+//					callback(compressedPaths, widths);
+//				} else {
+//					for(var i in picPaths) {
+//						if(parseInt(i)) {
+//							mod.compressPIC(picPaths[i], function(event) {
+//								compressCount++;
+//								compressedPaths.push(event.target);
+//								widths.push(event.width);
+//								if(compressCount == picPaths.length) {
+//									console.log('压缩后的图片：' + JSON.stringify(compressedPaths));
+//									console.log('压缩前的图片：' + JSON.stringify(picPaths))
+//									console.log('全部压缩成功');
+//									callback(compressedPaths, widths);
+//								}
+//							})
+//						}
+//					}
+//				}
 		});
 	}
 	var getPicType = function(picPath, callback) {
