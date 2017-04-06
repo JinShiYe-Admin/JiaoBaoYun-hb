@@ -108,16 +108,20 @@
 					callback: function() {
 						var self = this;
 						if(newsPage[checkType]) {
-							self.endPullUpToRefresh(newsPage[checkType].PageIndex >= newsPage[checkType].PageCount)
+						/*	self.endPullUpToRefresh(newsPage[checkType].PageIndex >= newsPage[checkType].PageCount)*/
 							if(newsPage[checkType].PageIndex < newsPage[checkType].PageCount) {
 								pageIndex = newsPage[checkType].PageIndex + 1;
 								requestAreaNews();
 								setTimeout(function() {
 									self.endPullUpToRefresh();
 								}, 1000);
+							}else{
+								self.endPullUpToRefresh();
+								mui.toast("没有更多了！");
 							}
 						} else {
-							self.endPullUpToRefresh(true);
+							self.endPullUpToRefresh();
+							mui.toast("没有数据！");
 						}
 					}
 				}
