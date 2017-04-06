@@ -107,7 +107,7 @@ var CloudFileUtil = (function($, mod) {
 				data: configure.options,
 				dataType: 'json', //服务器返回json格式数据
 				type: 'post', //HTTP请求类型
-				timeout: 60000, //超时时间设置为10秒
+				timeout: 60000, //超时时间设置为60秒
 				//			headers: {
 				//				'Content-Type': 'application/json'
 				//			},
@@ -312,7 +312,7 @@ var CloudFileUtil = (function($, mod) {
 						height: maxHeight //缩略图最大高度
 					}
 				}
-				configure.thumbKey=[];
+				configure.thumbKey = [];
 				for(var i = 0; i < fileList.length; i++) {
 					var QNFileName; //文件名
 					var param = {};
@@ -447,7 +447,7 @@ var CloudFileUtil = (function($, mod) {
 		}
 		var QNFileName = events.getFileNameByPath(picPath);
 		var opsData = getOptions(manageOptions, saveSpace, mainSpace, QNFileName);
-		console.log("设定的参数："+JSON.stringify(opsData));
+		console.log("设定的参数：" + JSON.stringify(opsData));
 		var ops = opsData.ops;
 		if(opsData.thumbKey) {
 			data.thumbKey = opsData.thumbKey;
@@ -661,7 +661,7 @@ var CloudFileUtil = (function($, mod) {
 			data: data, //请求参数
 			dataType: 'json', //服务器返回json格式数据
 			type: 'post', //HTTP请求类型
-			timeout: 60000, //超时时间设置为10秒
+			timeout: 60000, //超时时间设置为60秒
 			success: function(data) {
 				//服务器返回响应
 				successCB(data);
@@ -872,7 +872,7 @@ var CloudFileUtil = (function($, mod) {
 				data: configure.options,
 				dataType: 'json', //服务器返回json格式数据
 				type: 'post', //HTTP请求类型
-				timeout: 60000, //超时时间设置为10秒
+				timeout: 60000, //超时时间设置为60秒
 				//			headers: {
 				//				'Content-Type': 'application/json'
 				//			},
@@ -892,6 +892,37 @@ var CloudFileUtil = (function($, mod) {
 	}
 
 	/**
+	 * 查询持久化数据处理的状态
+	 * @param {Object} persistentId 数据处理的进程ID
+	 * @param {Object} successCB 请求成功的回调
+	 * @param {Object} errorCB 请求失败的回调
+	 */
+	mod.persistentStatusSearch = function(persistentId, successCB, errorCB) {
+		var successCB = successCB || mui.noop();
+		var errorCB = errorCB || mui.noop();
+		if(persistentId) {
+			var url = 'http://api.qiniu.com/status/get/prefop?id=' + persistentId;
+			mui.ajax(url, {
+				dataType: 'json', //服务器返回json格式数据
+				timeout: 60000, //超时时间设置为60秒
+				type: 'get', //HTTP请求类型
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				success: function(data) {
+					successCB(data);
+				},
+				error: function(xhr, type, errorThrown) {
+					//异常处理
+					errorCB({ xhr: xhr, type: type, errorThrown: errorThrown });
+				}
+			});
+		} else {
+			errorCB('### ERROR ### persistentId参数错误');
+		}
+	}
+
+	/**
 	 * 在界面上放置图片
 	 * @author 安琪
 	 * @param {Object} img
@@ -901,11 +932,11 @@ var CloudFileUtil = (function($, mod) {
 		mod.files.push(img);
 		//	picPath=camero.getAbsolutePath(picPath);
 		var pictures = document.getElementById('pictures');
-		var win_width=pictures.offsetWidth;
-		var div_width=(win_width)/4;
+		var win_width = pictures.offsetWidth;
+		var div_width = (win_width) / 4;
 		var div = document.createElement('div');
-		div.style.width=div_width+"px";
-		div.style.height=div_width+"px";
+		div.style.width = div_width + "px";
+		div.style.height = div_width + "px";
 		div.img = img;
 		div.className = 'img-div';
 		if(flag) {
