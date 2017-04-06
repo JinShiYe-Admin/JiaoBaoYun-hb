@@ -11,16 +11,6 @@
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/homework/publish-answer.css" rel="stylesheet" />
 		<style type="text/css">
-			html,
-			body {
-				height: 100%;
-				margin: 0px;
-				/*padding: 0px;*/
-				overflow: hidden;
-				-webkit-touch-callout: none;
-				/*-webkit-user-select: none;*/
-			}
-			
 			.mui-checkbox input[type=checkbox]:checked:before,
 			.mui-radio input[type=radio]:checked:before {
 				color: #1db8f1
@@ -85,6 +75,7 @@
 		var utids = [];
 		var pageFlag;;
 		mui.plusReady(function() {
+	
 			pageFlag = plus.webview.currentWebview().data
 			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
 

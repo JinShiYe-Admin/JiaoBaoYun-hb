@@ -72,9 +72,8 @@ body,
 	background-color: white;
 }
 
-.mui-table-view-cell,
 .mui-table-view-cell:active {
-	background-color: rgb(235, 234, 241);
+	background-color: #FFFFFF;
 }
 
 .mui-table-view {

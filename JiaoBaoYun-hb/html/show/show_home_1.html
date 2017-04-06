@@ -840,6 +840,11 @@
 
 														}
 													}
+													if(status==0){
+														mui.toast("取消关注成功")
+													}else{
+														mui.toast("关注成功")
+													}
 												} else { //关注的人数据
 													//81.（用户空间）获取用户所有关注的用户
 													getFocusByUser();
