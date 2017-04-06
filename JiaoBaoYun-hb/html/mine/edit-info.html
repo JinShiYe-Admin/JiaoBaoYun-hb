@@ -10,7 +10,7 @@
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/mine/edit-info.css" rel="stylesheet" />
 	</head>
-
+ 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
@@ -18,7 +18,10 @@
 			<a id="save" class="mui-pull-right">保存</a>
 		</header>
 		<div class="mui-content">
-			<input id="input-content" type="text" maxlength="10" class="mui-input-clear" placeholder="带清除按钮的输入框">
+			<div class="input-container">
+			<textarea id="input-content" class="remark-input" type="text" maxlength="20" style="height: 42px;min-height: 42px;" placeholder="请输入,最多20字!" ></textarea>
+			<p class="input-left">20</p>
+			</div>
 		</div>
 
 		<script src="../../js/mui.min.js"></script>
@@ -26,6 +29,7 @@
 		<script src="../../js/storageKeyName.js"></script>
 		<script src="../../js/libs/myStorage/myStorage.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/utils/self-adaptive-input.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
 			mui.init()
@@ -90,6 +94,12 @@
 					}
 				})
 			}
+			var setBackHeight=function(length){
+				 document.querySelector(".input-container").style.height="46px";
+				 document.getElementById("input-content").style.height="45px";
+				 document.querySelector(".input-left").innerText=length-document.getElementById("input-content").value.length;
+				 autoTextArea.change(document.querySelector(".input-container"),document.getElementById("input-content"),document.querySelector(".input-left"),length);
+			}
 			var setContents = function(no, title, inText, pInfo) {
 				console.log(no)
 				switch(no) {
@@ -102,6 +112,8 @@
 							title.innerText = '填写昵称'
 						}
 						inText.placeholder = '请输入昵称,最多20字'
+						autoTextArea.set( document.querySelector(".input-container"),document.getElementById("input-content"),document.querySelector(".input-left"),20);
+						setBackHeight(20);
 						break;
 					case 1:
 						inText.style.maxlength = 100;
@@ -123,6 +135,8 @@
 							title.innerText = '填写签名'
 						}
 						inText.placeholder = '请输入签名,最多30字'
+						autoTextArea.set( document.querySelector(".input-container"),document.getElementById("input-content"),document.querySelector(".input-left"),30);
+						setBackHeight(30);
 						break;
 					case 10:
 						jQuery('#input-content').prop("maxLength", "20");
@@ -130,6 +144,8 @@
 							title.innerText = '填写用户名';
 						}
 						inText.placeholder = '请填写用户名，只能填写一次，最多20字'
+						autoTextArea.set( document.querySelector(".input-container"),document.getElementById("input-content"),document.querySelector(".input-left"),20);
+						setBackHeight(20);
 						break;
 					default:
 						break;
