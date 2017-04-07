@@ -23,9 +23,9 @@ body,
 	border: solid 1px #E4E4E4;
 }
 
-.homework-container {
+/*.homework-container {
 	min-height: 20rem;
-}
+}*/
 
 .comment-item {
 	background-color: #f2f3f5;
@@ -91,4 +91,15 @@ body,
 .work-result{
 	font-size: 14px;
 	color: #474747;
+}
+.change-holder{
+	width: 60px;
+	height: 30px;
+	border: solid 1px gray;
+	text-align: center;
+	border-radius: 15px;
+	padding-top: 5px;
+}
+.change-comment{
+	font-size: 20px;
 }

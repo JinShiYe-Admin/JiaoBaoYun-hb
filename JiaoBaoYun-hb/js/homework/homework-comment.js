@@ -70,6 +70,9 @@ var setListener = function() {
 		}
 
 	})
+	document.querySelector('.change-holder').addEventListener("tap",function(){
+		events.openNewWindowWithData('change-comment.html',workInfo)
+	})
 }
 /**
  * 获取普通作业老师评论
@@ -130,8 +133,13 @@ var setHomeWorkInfo = function() {
 	homeworkInfo.appendChild(p);
 	if(workInfo.IsCommented) {
 		document.getElementById('comment-area').value = workInfo.Comment;
+		document.querySelector('.comment-holder').style.display="none";
+		document.querySelector(".commented-holder").style.display="block";
+		document.querySelector(".commented-words").innerText=workInfo.Comment;
 	} else {
 		document.getElementById('comment-area').value = null;
+		document.querySelector('.comment-holder').style.display="block";
+		document.querySelector(".commented-holder").style.display="none";
 	}
 	if(workInfo.stuFiles && workInfo.stuFiles.length > 0) {
 		createAnswerImgs(homeworkInfo, workInfo.stuFiles, 3);

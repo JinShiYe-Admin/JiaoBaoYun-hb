@@ -13,8 +13,8 @@ mui.plusReady(function() {
 	mui(".mui-scroll-wrapper").scroll();
 	mui.previewImage();
 	events.blurBack();
-	var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight");
-	console.log("屏幕宽度：" + webHeight);
+//	var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight");
+//	console.log("屏幕宽度：" + webHeight);
 	events.preload('classes-select.html', 200);
 	window.addEventListener('postClasses', function(e) {
 		CloudFileUtil.files = [];
