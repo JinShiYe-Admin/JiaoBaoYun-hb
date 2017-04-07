@@ -42,13 +42,13 @@ var freshContent = function() {
 		}
 		if(groupRoles.length == 0) {
 			document.querySelector('.quit-container').style.display = 'none';
-			document.querySelector('.mui-content').style.marginBottom="0"
-		} else if(groupRoles.length == 1 && isMaster) {
+			document.querySelector('.mui-content').style.marginBottom="0";
+		} else if(groupRoles.length == 1 &&groupRoles[0]==0&& isMaster) {
 			document.querySelector('.quit-container').style.display = 'none';
-			document.querySelector('.mui-content').style.marginBottom="0"
+			document.querySelector('.mui-content').style.marginBottom="0";
 		} else {
 			document.querySelector('.quit-container').style.display = 'block';
-			document.querySelector('.mui-content').style.marginBottom="5rem"
+			document.querySelector('.mui-content').style.marginBottom="5rem";
 		}
 	})
 }
