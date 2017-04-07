@@ -17,14 +17,17 @@ mui.plusReady(function() {
 	window.addEventListener('answerIsReady', function() {
 		answerIsReady = true;
 	})
-
 	window.addEventListener('channelInfo', function(e) {
-
 		console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
 		pageIndex = 1; //当前页数
 		totalPage = 0; //总页数
 		channelInfo = e.detail.data.curChannel; //选择的话题
 		allChannels = e.detail.data.allChannels; //所有的话题
+		document.getElementById('list-container').innerHTML = "";
+		var scrollApi = mui('.mui-scroll-wrapper').scroll(); //获取插件对象
+		scrollApi.refresh(); //刷新
+		scrollApi.scrollTo(0, 0); //滚动至顶部
+		console.log("高度："+document.querySelector(".mui-scroll-wrapper").offsetHeight);
 		//话题--求知
 		//		mod.model_Channel = {
 		//			TabId: '', //话题ID
@@ -34,7 +37,8 @@ mui.plusReady(function() {
 		//获取所有符合条件问题
 		requestChannelList(channelInfo);
 		//清理问题列表
-		events.clearChild(document.getElementById('list-container'));
+
+		//		events.clearChild(document.getElementById('list-container'));
 		//清理专家列表
 		resetExpertsList();
 		//2.获取符合条件的专家信息

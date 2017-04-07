@@ -685,7 +685,9 @@
 					"js/utils/CloudFileUtil.js",
 					"js/qiniu/qiniu.js",
 					"js/utils/compress.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"/storage/emulated/0/tencent/TIMfile_recv/%S]0@_9]P%7B07KEYX(U2X%7DTT.png",
+					"/storage/emulated/0/tencent/TIMfile_recv/%2PLKECVOE6LS%7BQ8W4%7D%7B$L3.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -2636,7 +2638,26 @@
 					"fonts/mui.ttf",
 					"js/utils/events.js",
 					"css/mui.min.css",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"js/mui.pullToRefresh.js",
+					"css/utils/pullToRefresh.css",
+					"js/storageKeyName.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/preview.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.zoom.js",
+					"fonts/fangzheng.ttf",
+					"js/libs/RSA/BigInt.js",
+					"js/mui.previewimage.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0

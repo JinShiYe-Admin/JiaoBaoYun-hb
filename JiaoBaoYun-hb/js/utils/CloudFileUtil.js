@@ -402,7 +402,7 @@ var CloudFileUtil = (function($, mod) {
 		var thumbSpace = saveSpace + 'thumb/';
 		var QNFileName = events.getFileNameByPath(picPath);
 		data.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
-		var ops = "imageView2/2/w/" + maxSize + "/h/" + maxSize + "/format/png|saveas/" + data.thumbKey;
+		var ops = "imageView2/1/w/" + maxSize + "/h/" + maxSize + "/format/png|saveas/" + data.thumbKey;
 		var param = {
 			Bucket: mainSpace,
 			Key: saveSpace + QNFileName,
@@ -482,7 +482,7 @@ var CloudFileUtil = (function($, mod) {
 			case 0: //缩略图
 				var thumbSpace = saveSpace + 'thumb/';
 				returnData.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
-				returnData.ops = "imageView2/2/w/" + manageOptions.thumbSize.width + "/h/" + manageOptions.thumbSize.height + "/format/png|saveas/" + returnData.thumbKey;
+				returnData.ops = "imageView2/1/w/" + manageOptions.thumbSize.width + "/h/" + manageOptions.thumbSize.height + "/format/png|saveas/" + returnData.thumbKey;
 				break;
 			case 1: //裁剪
 				var clipSpace = saveSpace + 'clip/';
@@ -494,7 +494,7 @@ var CloudFileUtil = (function($, mod) {
 				returnData.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + QNFileName);
 				var clipSpace = saveSpace + 'clip/';
 				returnData.clipKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + clipSpace + QNFileName);
-				returnData.ops = "imageView2/2/w/" + manageOptions.thumbSize.width + "/h/" + manageOptions.thumbSize.height + "/format/png|saveas/" + returnData.thumbKey +
+				returnData.ops = "imageView2/1/w/" + manageOptions.thumbSize.width + "/h/" + manageOptions.thumbSize.height + "/format/png|saveas/" + returnData.thumbKey +
 					";imageMogr2/gravity/Center/crop/!" + getIfExist(manageOptions.cropSize.width) + "x" + getIfExist(manageOptions.cropSize.height) + "/format/png|saveas/" + returnData.clipKey;
 				break;
 			default:
@@ -633,7 +633,7 @@ var CloudFileUtil = (function($, mod) {
 			data.thumbKeys.push(thumbKey);
 			param.Key = saveSpace + QNFileName;
 			console.log('key:' + param.Key);
-			param.Pops = "imageView2/2/w/" + maxSize + "/h/" + maxSize + "/format/png|saveas/" + thumbKey;
+			param.Pops = "imageView2/1/w/" + maxSize + "/h/" + maxSize + "/format/png|saveas/" + thumbKey;
 			param.NotifyUrl = '';
 			params.push(param);
 		}

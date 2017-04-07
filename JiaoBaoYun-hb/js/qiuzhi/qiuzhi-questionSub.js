@@ -1,6 +1,7 @@
 /**
- * 问题界面逻辑
+ * 问题子页面界面逻辑
  */
+//加载刷新控件
 mui.init({
 	pullRefresh: {
 		container: '#refreshContainer',

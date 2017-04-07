@@ -153,7 +153,8 @@
 			"html/cloud/storage_main.html",
 			"html/quan/class_space.html",
 			"html/quan/zone_main.html",
-			"html/quan/studentdynamic_main.html"
+			"html/quan/studentdynamic_main.html",
+			"html/cloud/record_student_main.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -257,7 +258,8 @@
 			"fonts/iconfont.ttf"
 		],
 		"refer": [
-			"html/quan/classSpace-persons.html"
+			"html/quan/classSpace-persons.html",
+			"html/utils/customizeCity.html"
 		]
 	},
 	"html/index/mine.html": {
@@ -355,7 +357,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"js/storageKeyName.js",
 			"image/homework/submitted.png",
-			"image/homework/need-submit.png"
+			"image/homework/need-submit.png",
+			"image/homework/commented.png"
 		],
 		"refer": [
 			"html/homework/doHomework-stu.html",
@@ -1748,7 +1751,9 @@
 			"/storage/emulated/0/Tencent/TIMfile_recv/%DTPM%7DIV)030IUBXJ%7DUM%Z9.png",
 			"/storage/emulated/0/Tencent/TIMfile_recv/%%7B%7D32Z3H~)Q@~F0~K3[U@]6.png",
 			"/storage/emulated/0/Tencent/TIMfile_recv/%2PLKECVOE6LS%7BQ8W4%7D%7B$L3.png",
-			"/storage/emulated/0/Tencent/TIMfile_recv/%S]0@_9]P%7B07KEYX(U2X%7DTT.png"
+			"/storage/emulated/0/Tencent/TIMfile_recv/%S]0@_9]P%7B07KEYX(U2X%7DTT.png",
+			"/storage/emulated/0/tencent/TIMfile_recv/%S]0@_9]P%7B07KEYX(U2X%7DTT.png",
+			"/storage/emulated/0/tencent/TIMfile_recv/%2PLKECVOE6LS%7BQ8W4%7D%7B$L3.png"
 		],
 		"refer": []
 	},
@@ -1824,9 +1829,12 @@
 			"js/qiniu/qiniu.js",
 			"css/mui.min.css",
 			"js/libs/RSA/RSA.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
-		"refer": []
+		"refer": [
+			"html/mine/qun_manage_info_change_post.html"
+		]
 	},
 	"html/mine/qun_manage_info_change.html": {
 		"resources": [
@@ -1984,6 +1992,40 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/mine/qun_manage_invite_info.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/cloud/record_student_main.html": {
+		"resources": [
+			"js/mui.pullToRefresh.js",
+			"css/utils/pullToRefresh.css",
+			"js/storageKeyName.js",
+			"js/mui.pullToRefresh.material.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"css/utils/preview.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.zoom.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/mui.previewimage.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	}
 }
