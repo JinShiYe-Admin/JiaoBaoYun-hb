@@ -252,11 +252,17 @@ mui.plusReady(function() {
 		pubDynamic.innerHTML = '晒一晒'
 		container.appendChild(pubDynamic);
 		events.addTap('pubDynamic', function() {
+			var self = this
+			self.disabled = true;
+
 			if(name == 'jxq') {
 				events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
 			} else {
 				events.openNewWindowWithData('../quan/pub-dynamic.html', 'zx');
 			}
+			setTimeout(function() {
+				self.disabled = false;
+			}, 1500);
 
 		})
 	}
@@ -336,7 +342,12 @@ mui.plusReady(function() {
 	})
 	var pubDynamic = document.getElementById('pubDynamic');
 	events.addTap('pubDynamic', function() {
+		var self = this
+		self.disabled = true;
 		events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
+		setTimeout(function() {
+			self.disabled = false;
+		}, 1500);
 	});
 
 	//自定义事件，模拟点击“首页选项卡”

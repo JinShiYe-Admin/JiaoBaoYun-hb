@@ -275,16 +275,16 @@ var setChannelList = function(data) {
 		if(li.querySelector('.answer-img')) {
 			li.querySelector('.answer-img').style.width = "100%";
 		}
-		if(li.querySelector(".clip-img")){
-			li.querySelector(".clip-img").style.width=li.querySelector(".imgs-container").offsetWidth+"px";
-			li.querySelector(".clip-img").style.height=li.querySelector(".imgs-container").offsetWidth*0.45+"px";
+		if(li.querySelector(".clip-img")) {
+			li.querySelector(".clip-img").style.width = li.querySelector(".imgs-container").offsetWidth + "px";
+			li.querySelector(".clip-img").style.height = li.querySelector(".imgs-container").offsetWidth * 0.45 + "px";
 		}
 		li.querySelector('.focus-status').questionInfo = data[i];
 	}
 	lazyLoadApi.refresh(true);
 }
 var getInnerHTML = function(cell) {
-//	console.log("回答内容：" + cell.AnswerContent);
+	//	console.log("回答内容：" + cell.AnswerContent);
 	var inner = '<div>' +
 		'<div class="channel-info">' +
 		'<p class="channel-title"><img src="' + getChannelIcon(cell) + '" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
@@ -371,7 +371,12 @@ var pullUpFresh = function() {
 var setListener = function() {
 	events.addTap('submit-question', function() {
 		console.log(JSON.stringify(allChannels))
+		var self = this
+		self.disabled = true;
 		events.openNewWindowWithData('qiuzhi-newQ.html', { curChannel: channelInfo, allChannels: allChannels });
+		setTimeout(function() {
+			self.disabled = false;
+		}, 1500);
 	});
 
 	//标题点击事件
