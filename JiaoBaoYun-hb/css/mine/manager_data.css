@@ -28,7 +28,15 @@
 .data-parent {
 	width: 45%;
 }
-.mui-navigate-right{
+
+.data-name,
+.data-type,
+.data-parent {
+	font-size: 15px;
+	color: #474747;
+}
+
+.mui-navigate-right {
 	font-size: 23px;
 }
 
