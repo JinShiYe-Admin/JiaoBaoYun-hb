@@ -126,25 +126,25 @@
 						<div id="calltype" style="width: 100%;height: 36px;">
 							<div class="mui-input-row mui-checkbox mui-left">
 								<label>旷课</label>
-								<input id="cb_2" value="2" name="checkbox" type="checkbox">
+								<input id="cb_2" value="2" name="checkbox" type="checkbox" disabled>
 							</div>
 							<div class="mui-input-row mui-checkbox mui-left" style="left: 25%;">
 								<label>请假</label>
-								<input id="cb_5" value="5" name="checkbox" type="checkbox">
+								<input id="cb_5" value="5" name="checkbox" type="checkbox" disabled>
 							</div>
 							<div class="mui-input-row mui-checkbox mui-left" style="left:50%;">
 								<label>迟到</label>
-								<input id="cb_3" value="3" name="checkbox" type="checkbox">
+								<input id="cb_3" value="3" name="checkbox" type="checkbox" disabled>
 							</div>
 							<div class="mui-input-row mui-checkbox mui-left" style="left: 70%;">
 								<label>早退</label>
-								<input id="cb_4" value="4" name="checkbox" type="checkbox">
+								<input id="cb_4" value="4" name="checkbox" type="checkbox" disabled>
 							</div>
 						</div>
-						<input id="input_call" type="text" class="mui-input-clear" placeholder="备注,最多20字" maxlength="20" style="margin-bottom: 10px;">
+						<input id="input_call" type="text" class="mui-input-clear" placeholder="备注,最多20字" maxlength="20" style="margin-bottom: 10px;" disabled>
 					</div>
 					<div id="record" style="background: white;margin-top: 10px;padding-top: 10px;padding-bottom: 10px;">
-						<textarea id="textarea_record" rows="4" placeholder="记事,最多500字" maxlength="500" style="margin-bottom: 4px;"></textarea>
+						<textarea id="textarea_record" rows="4" placeholder="记事,最多500字" maxlength="500" style="margin-bottom: 4px;" disabled></textarea>
 						<div id="MultiMedia">
 						</div>
 					</div>
@@ -415,6 +415,12 @@
 					var scrollTop = mui('#pullrefresh').scroll(); //话题列表区域
 					scrollTop.scrollTo(0, 0, 100);
 				});
+
+				//有的手机加载慢，设置监听后才允许点击
+				var ids = ['cb_2', 'cb_3', 'cb_4', 'cb_5', 'input_call', 'textarea_record'];
+				for(var i = 0; i < ids.length; i++) {
+					document.getElementById(ids[i]).disabled = false;
+				}
 			}
 
 			/**
@@ -556,9 +562,9 @@
 					}
 				}
 
-				var width = parseInt((document.getElementById("top").offsetWidth - 30) * 0.32);
+				var width = Math.ceil((document.getElementById("top").offsetWidth - 30) * 0.32);
 				var height = parseInt(width * 3 / 4);
-				var marginBottom = parseInt((document.getElementById("top").offsetWidth - 30) * 0.02);
+				var marginBottom = Math.floor((document.getElementById("top").offsetWidth - 30) * 0.02);
 				var marginRight;
 				if(data.EncType == 1) { //附件类型,1图片2音视频3仅文字
 					var imageArray = data.EncAddr.split('|');
@@ -574,7 +580,7 @@
 						}
 
 						html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px; margin-bottom: ' + marginBottom + 'px;">\
-									<img src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'))" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-' + width + ')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-' + height + ')/2+\'px\';}">\
+									<img src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width: 100%" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'))" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<'+height+'){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';}this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + height + ')/2)+\'px\';}">\
 								</div>';
 					}
 					mediaStr = html_0 + html_1 + '</div>';

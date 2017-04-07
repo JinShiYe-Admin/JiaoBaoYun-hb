@@ -24,7 +24,7 @@
 		</header>
 		<div class="mui-content">
 			<!--<div class="input-content">-->
-			<textarea id="input-content" placeholder="请输入内容" value=""></textarea>
+			<textarea id="input-content" placeholder="请输入内容,最多2000字！" value=""></textarea>
 			<!--一期暂时不插入图片-->
 			<div class="extras-info">
 				<!--拍照-->
@@ -66,6 +66,7 @@
 		mui.plusReady(function() {
 			//返回时，取消键盘
 			events.blurBack();
+			jQuery("#input-content").prop("maxLength",2000)
 			var curPage = plus.webview.currentWebview();
 			var groupInfo = curPage.data;
 			CloudFileUtil.files = [];

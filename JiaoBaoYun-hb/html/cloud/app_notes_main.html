@@ -363,9 +363,9 @@
 
 			var html_media = ''; //多媒体
 
-			var width = parseInt((document.getElementById(dateItem).offsetWidth * 0.8 - 32) * 0.32);
+			var width = Math.ceil((document.getElementById(dateItem).offsetWidth * 0.8 - 32) * 0.32);
 			var height = parseInt(width * 3 / 4);
-			var marginBottom = parseInt((document.getElementById(dateItem).offsetWidth * 0.8 - 32) * 0.02);
+			var marginBottom = Math.ceil((document.getElementById(dateItem).offsetWidth * 0.8 - 32) * 0.02);
 			var marginRight;
 
 			if(data.EncType == 1) { //附件类型,1图片2音视频3仅文字
@@ -389,7 +389,7 @@
 						html_2 = '<div data-id="' + data.TabId + '_' + i + '" class="record-picture-num" style="line-height: ' + (height + 1) + 'px;">+' + (imageArray.length - 3) + '</div>'
 					}
 					html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px;' + html_3 + '">\
-									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'))" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';this.style.marginLeft=-(this.offsetWidth-' + width + ')/2+\'px\';}else{this.style.marginTop=-(this.offsetHeight-' + height + ')/2+\'px\';}">\
+									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'))" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<'+height+'){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';}this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + height + ')/2)+\'px\';}">\
 								</div>';
 				}
 				html_media = html_0 + html_1 + '</div>';
