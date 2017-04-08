@@ -33,12 +33,15 @@ mui.plusReady(function() {
 	plus.webview.currentWebview().opener().addEventListener("hide", function() {
 		mui.previewImage().close();
 		console.log("求知回答页面已隐藏")
-		events.clearChild(document.getElementById('list-container'));
-		setOriginalCondition();
+//		events.clearChild(document.getElementById('list-container'));
+//		setOriginalCondition();
 		mui('#popover').popover('hide');
 	})
 	//加载监听
 	window.addEventListener('answerInfo', function(e) {
+		if(answerInfo&&e.detail.data.AnswerId==answerInfo.AnswerId){
+			return;
+		}
 		flag = 1;
 		selfId = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 		mui('#refreshContainer').pullRefresh().refresh(true);
@@ -50,7 +53,7 @@ mui.plusReady(function() {
 		setTolerantChecked(type);
 		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
 		var answerId = answerInfo.AnswerId;
-		events.clearChild(document.getElementById('list-container'));
+		document.getElementById('list-container').innerHTML="";
 		requestAnswerDetail(answerId);
 	});
 	window.addEventListener('commentAdded', function(e) {
@@ -93,29 +96,29 @@ var getComment = function(commentedInfo) {
  */
 var rechargeComment = function(comData, commentedInfo) {
 	var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
-	comData.UserName = personalInfo.unick;//昵称
-	comData.UserImg = personalInfo.uimg;//头像
-	comData.TabId = commentedInfo.commentInfo.commentId//评论id
-	comData.Replys=[];//回复列表
-	if(upperInfo) {//有上级评论
+	comData.UserName = personalInfo.unick; //昵称
+	comData.UserImg = personalInfo.uimg; //头像
+	comData.TabId = commentedInfo.commentInfo.commentId //评论id
+	comData.Replys = []; //回复列表
+	if(upperInfo) { //有上级评论
 		comData.UpperId = upperInfo.UpperId ? upperInfo.UpperId : upperInfo.TabId;
 		comData.ReplyId = upperInfo.UserId;
 		comData.ReplyName = upperInfo.UserName;
-	} else {//无上级评论
+	} else { //无上级评论
 		comData.UpperId = 0;
 	}
 	var commentList, order;
-	if(parentContainer) {//评论的上级评论container
+	if(parentContainer) { //评论的上级评论container
 		console.log('上级评论类名：' + parentContainer.className);
 		if(parentContainer.querySelector(".mui-table-view")) {
 			commentList = parentContainer.querySelector(".mui-table-view");
-		} else {//无上级评论
+		} else { //无上级评论
 			var list = document.createElement('ul');
 			list.className = "mui-table-view inner-table-view";
 			parentContainer.appendChild(list);
 			commentList = list;
 		}
-		order = 0;//评论排序 0 ：顺序 1 倒序
+		order = 0; //评论排序 0 ：顺序 1 倒序
 	} else {
 		commentList = document.querySelector(".mui-table-view");
 		order = type - 1;
@@ -133,11 +136,11 @@ var insertComment = function(commentList, commentData, order) {
 	var index;
 	if(parentContainer) {
 		var commentInfo = parentContainer.querySelector(".comment-words").commentInfo;
-		console.log("获取的品论信息："+JSON.stringify(commentInfo));
+		console.log("获取的品论信息：" + JSON.stringify(commentInfo));
 		index = commentInfo.Replys.length;
 		createCell(commentList, commentData, index, order);
 	} else {
-		if(type == 2) {//倒序
+		if(type == 2) { //倒序
 			index = 0
 			changeOrder();
 			createCell(commentList, commentData, index, order);
@@ -161,7 +164,7 @@ var insertComment = function(commentList, commentData, order) {
  * 插入新数据后更改数据
  */
 var changeOrder = function() {
-	document.querySelectorAll('.icon-support').forEach(function(item) {
+	[].forEach.call(document.querySelectorAll('.icon-support'), function(item) {
 		console.log("当前：" + item.innerHTML);
 		if(item.order || item.order == 0) {
 			var order = item.order;
@@ -172,7 +175,7 @@ var changeOrder = function() {
 				this.order += 1;
 			}
 		}
-	});
+	})
 }
 /**
  * 加载评论数据
@@ -183,8 +186,8 @@ var insertCommentData = function(commentData) {
 		var index = parseInt(parentContainer.querySelector(".icon-support").order);
 		answerData.Data[index].Replys.push(commentData)
 	} else {
-		answerData.CommentNum+=1;
-		document.getElementById("comments-no").innerText="评论(" + answerData.CommentNum + ")";
+		answerData.CommentNum += 1;
+		document.getElementById("comments-no").innerText = "评论(" + answerData.CommentNum + ")";
 		//倒序
 		if(type == 2) {
 			answerData.Data.splice(0, 0, commentData);
@@ -197,7 +200,7 @@ var insertCommentData = function(commentData) {
 			}
 		}
 	}
-	console.log("改变后的数据："+JSON.stringify(answerData))
+	console.log("改变后的数据：" + JSON.stringify(answerData))
 }
 /**
  * 2倒序 1顺序
@@ -730,7 +733,7 @@ var setZanIconCondition = function(item) {
 				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum -= 1;
 				item.innerText = replaceBigNo(answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum);
 			} else {
-				console.log("点赞的数据："+answerData.Data[item.order])
+				console.log("点赞的数据：" + answerData.Data[item.order])
 				answerData.Data[item.order].IsLiked = 0;
 				answerData.Data[item.order].LikeNum -= 1;
 				item.innerText = replaceBigNo(answerData.Data[item.order].LikeNum);
@@ -751,7 +754,7 @@ var setZanIconCondition = function(item) {
 				answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum += 1;
 				item.innerText = replaceBigNo(answerData.Data[parseInt(item.order.split('-')[0])].Replys[parseInt(item.order.split('-')[1])].LikeNum);
 			} else {
-				console.log("点赞的数据："+JSON.stringify(answerData.Data[item.order]))
+				console.log("点赞的数据：" + JSON.stringify(answerData.Data[item.order]))
 				answerData.Data[item.order].IsLiked = 1;
 				answerData.Data[item.order].LikeNum += 1;
 				item.innerText = replaceBigNo(answerData.Data[item.order].LikeNum);

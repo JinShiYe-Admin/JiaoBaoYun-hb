@@ -10,15 +10,18 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<style>
+			html{
+				background-color: white;
+			}
 			input[type=text] {
 				border: none;
 			}
 			.input-container{
-				height: 46px;
+				height: 43px;
 				display: flex;
 				display: -webkit-flex;
 				background-color: white;
-				border-bottom: 1px green solid;
+				border-bottom: 1px #00A5E0 solid;
 			}
 			.remark-input{
 				width: 50%;
@@ -45,7 +48,7 @@
 		</header>
 		<div class="mui-content">
 			<div class="input-container">
-			<textarea id="remark-input" class="remark-input" type="text" maxlength="20" style="height: 45px;min-height: 45px;" placeholder="请输入,最多20字!" ></textarea>
+			<textarea id="remark-input" class="remark-input" type="text" maxlength="20" style="height: 42px;min-height: 42px;" placeholder="请输入,最多20字!" ></textarea>
 			<p class="input-left">20</p>
 			</div>
 		</div>
@@ -84,6 +87,9 @@
 					function() {
 						var inputValue = getInputValue();
 						if(inputValue && inputValue.length > 0) {
+							if(events.limitInput(inputValue,20)){
+								return;
+							}
 							if(type == 0) {
 								editRemark(inputValue);
 							} else {

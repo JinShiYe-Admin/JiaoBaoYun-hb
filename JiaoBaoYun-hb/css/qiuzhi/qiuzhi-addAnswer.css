@@ -10,7 +10,7 @@
 .extras-info{
 	margin-top: -7px;
 	padding-top: 20px;
-	height: 5rem;
+	height: 70px;
 	background-color: white;
 }
 
@@ -32,12 +32,20 @@ textarea {
 
 .take_pic,
 .take_camero,
-.get_gallery {
-	width: 6rem;
-	height: 4rem;
-	padding-left: 1rem;
-	padding-top: 0.7rem;
+.get_gallery,
+.get_record {
+	width: 60px;
+	height: 40px;
+	padding-left: 10px;
+	padding-top: 10px;
 	float: left;
+	margin-top: -15px;
+}
+.isAnonymity{
+	width: 100px;
+	height: 40px;
+	padding-top: 10px;
+	float: right;
 	margin-top: -15px;
 }
 /**
@@ -47,8 +55,9 @@ div>.icon-xiangji:before,
 .icon-xiangce:before,
 .icon-tuku:before,
 .icon-shipin:before,
+.icon-yuyin3:before,
 .icon-xiangji1:before {
-	font-size: 3.0rem;
+	font-size: 40px;
 	color: #B7B7B7;
 }
 .img-div{

@@ -757,7 +757,7 @@ var setHashData = function(comData, data) {
 		if(role == 2) {
 			teacherHash.put(comData.classId, teacherHash.get(comData.classId).concat(data.RspData.Dates));
 		} else {
-			studentHash.put(comData.classId, teacherHash.get(comData.classId).concat(data.RspData.Dates));
+			studentHash.put(comData.classId, studentHash.get(comData.classId).concat(data.RspData.Dates));
 		}
 	}
 }

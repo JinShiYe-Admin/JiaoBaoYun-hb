@@ -160,9 +160,9 @@ var setListener = function() {
 		isShowing=false;
 	})
 	mui(".mui-table-view").on("tap", ".refer-content", function() {
-		this.info.PublisherId = this.info.UserId
-		this.info.PublisherName = this.info.UserName
-		this.info.TabId = this.info.SpaceId
+		this.info.PublisherId = this.info.UserId;
+		this.info.PublisherName = this.info.UserName;
+		this.info.TabId = this.info.SpaceId;
 		console.log(JSON.stringify(this.info));
 		events.openNewWindowWithData('../quan/space-detail.html', jQuery.extend(this.info, { focusFlag: 0 }))
 	})
@@ -328,7 +328,7 @@ var getCellData = function(cell) {
 		default:
 			break;
 	}
-	cellData.time = cell.MsgDate;
+	cellData.time = cell.MaxDate;
 	if(cellData.MsgType != 6) {
 		var messages = '';
 		if(cellData.MsgType != 4) {
@@ -516,13 +516,13 @@ var requireHomeworkAlert = function(aboutMeData) {
 				aboutMeData = [];
 			}
 			for(var i in data.RspData.Data) {
-				data.RspData.Data[i].MsgDate = new Date(data.RspData.Data[i].MsgDate).Format('yyyy-MM-dd HH:mm:ss')
+				data.RspData.Data[i].MaxDate = new Date(data.RspData.Data[i].MsgDate).Format('yyyy-MM-dd HH:mm:ss')
 			}
 			//拼接数据
 			var allData = aboutMeData.concat(data.RspData.Data);
 			//数据排序
 			allData.sort(function(a, b) {
-				return -((new Date(a.MsgDate.replace(/-/g, '/')).getTime()) - (new Date(b.MsgDate.replace(/-/g, '/')).getTime()));
+				return Date.parse(b.MaxDate.replace(/-/g, '/')) - Date.parse(a.MaxDate.replace(/-/g, '/'));
 			})
 
 			console.log('与我相关界面获取的所有数据:' + JSON.stringify(allData))

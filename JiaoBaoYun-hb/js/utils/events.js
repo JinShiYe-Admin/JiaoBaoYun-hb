@@ -591,6 +591,29 @@ var events = (function(mod) {
 		}
 	}
 
+	/**
+	 * 图片只加载一遍 onerror
+	 * @author 莫尚霖
+	 * @param {Object} image 加载失败的图片元素
+	 * @param {Object} path 图片加载失败后显示的图片
+	 */
+	mod.imageOnError = function(image, path) {
+		image.src = path;
+		image.onerror = null;
+	}
+	/**
+	 * 限制文字长度模块
+	 * @param {Object} inputValue 输入的value
+	 * @param {Object} length 限制的长度
+	 */
+	mod.limitInput=function(inputValue,length){
+		if(inputValue.length>length){
+			mui.toast("输入已超过"+length+"字，请删除多余字符");
+			return true;
+		}
+		return false;
+	}
+
 	return mod;
 
 })(events || {});

@@ -489,7 +489,8 @@
 					"js/mui.lazyload.js",
 					"css/utils/preview.css",
 					"js/mui.lazyload.img.js",
-					"image/dynamic/praise.png"
+					"image/dynamic/praise.png",
+					"css/show/show.css"
 				],
 				"refer": [
 					"html/quan/space-detail.html",
@@ -684,7 +685,9 @@
 					"js/utils/CloudFileUtil.js",
 					"js/qiniu/qiniu.js",
 					"js/utils/compress.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"/storage/emulated/0/tencent/TIMfile_recv/%S]0@_9]P%7B07KEYX(U2X%7DTT.png",
+					"/storage/emulated/0/tencent/TIMfile_recv/%2PLKECVOE6LS%7BQ8W4%7D%7B$L3.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -1107,7 +1110,11 @@
 					"/storage/emulated/0/Tencent/TIMfile_recv/%DTPM%7DIV)030IUBXJ%7DUM%Z9.png",
 					"/storage/emulated/0/Tencent/TIMfile_recv/%%7B%7D32Z3H~)Q@~F0~K3[U@]6.png",
 					"/storage/emulated/0/Tencent/TIMfile_recv/%S]0@_9]P%7B07KEYX(U2X%7DTT.png",
-					"/storage/emulated/0/Tencent/TIMfile_recv/%2PLKECVOE6LS%7BQ8W4%7D%7B$L3.png"
+					"/storage/emulated/0/Tencent/TIMfile_recv/%2PLKECVOE6LS%7BQ8W4%7D%7B$L3.png",
+					"/storage/emulated/0/tencent/TIMfile_recv/%DTPM%7DIV)030IUBXJ%7DUM%Z9.png",
+					"/storage/emulated/0/tencent/TIMfile_recv/%S]0@_9]P%7B07KEYX(U2X%7DTT.png",
+					"/storage/emulated/0/tencent/TIMfile_recv/%%7B%7D32Z3H~)Q@~F0~K3[U@]6.png",
+					"/storage/emulated/0/tencent/TIMfile_recv/%2PLKECVOE6LS%7BQ8W4%7D%7B$L3.png"
 				],
 				"refer": [
 					"html/homework/classes-select.html"
@@ -1404,7 +1411,9 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"css/utils/common.css",
-					"css/iconfont/iconfont.css"
+					"css/iconfont/iconfont.css",
+					"js/utils/self-adaptive-input.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -2633,7 +2642,26 @@
 					"fonts/mui.ttf",
 					"js/utils/events.js",
 					"css/mui.min.css",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"js/mui.pullToRefresh.js",
+					"css/utils/pullToRefresh.css",
+					"js/storageKeyName.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/preview.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.zoom.js",
+					"fonts/fangzheng.ttf",
+					"js/libs/RSA/BigInt.js",
+					"js/mui.previewimage.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2791,7 +2819,8 @@
 					"fonts/iconfont.ttf",
 					"css/utils/common.css",
 					"html/qiuzhi/qiuzhi-questionSub.html",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/qiuzhi/experts_main.html"
@@ -3497,7 +3526,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"/image/utils/default_load_2_1.gif"
 				],
 				"refer": [
 					"html/utils/customizeCity.html",

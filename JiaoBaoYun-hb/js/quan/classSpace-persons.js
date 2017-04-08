@@ -136,6 +136,12 @@ var rechargeInfo = function(groupPersons, infos) {
 	setData(infos);
 }
 var setData=function(infos){
+	infos.sort(function(a,b){
+		if(a.ReadDate){
+			return Date.parse(b.ReadDate)-Date.parse(a.ReadDate)
+		}
+		return Date.parse(b.LikeDate)-Date.parse(a.LikeDate)
+	})
 	var list=document.getElementById("person-list");
 	for(var i in infos){
 		var li=document.createElement("li");

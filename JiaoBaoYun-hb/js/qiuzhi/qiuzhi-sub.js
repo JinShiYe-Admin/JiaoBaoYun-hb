@@ -17,14 +17,17 @@ mui.plusReady(function() {
 	window.addEventListener('answerIsReady', function() {
 		answerIsReady = true;
 	})
-
 	window.addEventListener('channelInfo', function(e) {
-
 		console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
 		pageIndex = 1; //当前页数
 		totalPage = 0; //总页数
 		channelInfo = e.detail.data.curChannel; //选择的话题
 		allChannels = e.detail.data.allChannels; //所有的话题
+		document.getElementById('list-container').innerHTML = "";
+		var scrollApi = mui('.mui-scroll-wrapper').scroll(); //获取插件对象
+		scrollApi.refresh(); //刷新
+		scrollApi.scrollTo(0, 0); //滚动至顶部
+		console.log("高度："+document.querySelector(".mui-scroll-wrapper").offsetHeight);
 		//话题--求知
 		//		mod.model_Channel = {
 		//			TabId: '', //话题ID
@@ -34,7 +37,8 @@ mui.plusReady(function() {
 		//获取所有符合条件问题
 		requestChannelList(channelInfo);
 		//清理问题列表
-		events.clearChild(document.getElementById('list-container'));
+
+		//		events.clearChild(document.getElementById('list-container'));
 		//清理专家列表
 		resetExpertsList();
 		//2.获取符合条件的专家信息
@@ -275,16 +279,16 @@ var setChannelList = function(data) {
 		if(li.querySelector('.answer-img')) {
 			li.querySelector('.answer-img').style.width = "100%";
 		}
-		if(li.querySelector(".clip-img")){
-			li.querySelector(".clip-img").style.width=li.querySelector(".imgs-container").offsetWidth+"px";
-			li.querySelector(".clip-img").style.height=li.querySelector(".imgs-container").offsetWidth*0.45+"px";
+		if(li.querySelector(".clip-img")) {
+			li.querySelector(".clip-img").style.width = li.querySelector(".imgs-container").offsetWidth + "px";
+			li.querySelector(".clip-img").style.height = li.querySelector(".imgs-container").offsetWidth * 0.45 + "px";
 		}
 		li.querySelector('.focus-status').questionInfo = data[i];
 	}
 	lazyLoadApi.refresh(true);
 }
 var getInnerHTML = function(cell) {
-//	console.log("回答内容：" + cell.AnswerContent);
+	//	console.log("回答内容：" + cell.AnswerContent);
 	var inner = '<div>' +
 		'<div class="channel-info">' +
 		'<p class="channel-title"><img src="' + getChannelIcon(cell) + '" class="channel-icon"/>来自话题:' + cell.AskChannel + '</p>' +
@@ -371,7 +375,12 @@ var pullUpFresh = function() {
 var setListener = function() {
 	events.addTap('submit-question', function() {
 		console.log(JSON.stringify(allChannels))
+		var self = this
+		self.disabled = true;
 		events.openNewWindowWithData('qiuzhi-newQ.html', { curChannel: channelInfo, allChannels: allChannels });
+		setTimeout(function() {
+			self.disabled = false;
+		}, 1500);
 	});
 
 	//标题点击事件
