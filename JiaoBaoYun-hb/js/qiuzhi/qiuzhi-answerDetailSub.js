@@ -33,12 +33,15 @@ mui.plusReady(function() {
 	plus.webview.currentWebview().opener().addEventListener("hide", function() {
 		mui.previewImage().close();
 		console.log("求知回答页面已隐藏")
-		events.clearChild(document.getElementById('list-container'));
-		setOriginalCondition();
+//		events.clearChild(document.getElementById('list-container'));
+//		setOriginalCondition();
 		mui('#popover').popover('hide');
 	})
 	//加载监听
 	window.addEventListener('answerInfo', function(e) {
+		if(answerInfo&&e.detail.data.AnswerId==answerInfo.AnswerId){
+			return;
+		}
 		flag = 1;
 		selfId = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 		mui('#refreshContainer').pullRefresh().refresh(true);
@@ -50,7 +53,7 @@ mui.plusReady(function() {
 		setTolerantChecked(type);
 		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
 		var answerId = answerInfo.AnswerId;
-		events.clearChild(document.getElementById('list-container'));
+		document.getElementById('list-container').innerHTML="";
 		requestAnswerDetail(answerId);
 	});
 	window.addEventListener('commentAdded', function(e) {
