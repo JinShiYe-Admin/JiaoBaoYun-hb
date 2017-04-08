@@ -5,6 +5,7 @@
 var MultiMedia = (function($, mod) {
 
 	var html_picture_header = '<span id="MultiMedia_Picture_Header" class="mui-icon iconfont icon-xiangji2"></span>'; //相机图标
+	var html_tuku_header = '<span id="MultiMedia_Tuku_Header" class="mui-icon iconfont icon-tuku"></span>'; //图库图标
 	var html_audio_header = '<span id="MultiMedia_Audio_Header" class="mui-icon iconfont icon-yuyin3"></span>'; //语音图标
 	var html_video_header = '<span id="MultiMedia_Video_Header" class="mui-icon iconfont icon-shipin2"></span>'; //视频图标
 	var html_picture_footer = '<div id="MultiMedia_Picture_Footer"></div>'; //放置图片
@@ -49,7 +50,8 @@ var MultiMedia = (function($, mod) {
 		//console.log('MultiMedia-init');
 		var options = this.options;
 		var str_div_0 = '<div id="MultiMedia_Body" class="multimedia-body"><div id="MultiMedia_Header" class="multimedia-header">'
-		var str_pic_0 = ''; //图片按钮
+		var str_pic_0 = ''; //相机按钮
+		var str_tuku_0 = ''; //图库按钮
 		var str_aud_0 = ''; //音频按钮
 		var str_vid_0 = ''; //视频按钮
 		var srt_div_1 = '</div><div id="MultiMedia_Footer" class="multimedia-footer">';
@@ -61,6 +63,7 @@ var MultiMedia = (function($, mod) {
 		if(this.options.Picture) {
 			str_pic_0 = html_picture_header;
 			str_pic_1 = html_picture_footer;
+			str_tuku_0 = html_tuku_header;
 		}
 		if(this.options.Audio) {
 			str_aud_0 = html_audio_header;
@@ -72,7 +75,7 @@ var MultiMedia = (function($, mod) {
 		}
 		div.id = this.options.Id;
 		div.style.width = '100%';
-		div.innerHTML = str_div_0 + str_aud_0 + str_pic_0 + str_vid_0 + srt_div_1 + str_pic_1 + str_aud_1 + str_vid_1 + srt_div_2;
+		div.innerHTML = str_div_0 + str_pic_0 + str_tuku_0 + str_aud_0 + str_vid_0 + srt_div_1 + str_pic_1 + str_aud_1 + str_vid_1 + srt_div_2;
 
 		if(this.options.MultiMediaId != '') {
 			var el = document.getElementById(this.options.MultiMediaId);
@@ -115,7 +118,16 @@ var MultiMedia = (function($, mod) {
 			document.getElementById('MultiMedia_Picture_Header').addEventListener('tap', function() {
 				document.activeElement.blur();
 				if(self.data.PicturesNum > 0) {
-					self.pictureActionSheet();
+					self.pictureActionSheet(0);
+				} else {
+					mui.alert('图片超出限制');
+				}
+			});
+
+			document.getElementById('MultiMedia_Tuku_Header').addEventListener('tap', function() {
+				document.activeElement.blur();
+				if(self.data.PicturesNum > 0) {
+					self.pictureActionSheet(1);
 				} else {
 					mui.alert('图片超出限制');
 				}
@@ -142,19 +154,19 @@ var MultiMedia = (function($, mod) {
 		if(this.options.Audio) {
 			document.getElementById('MultiMedia_Audio_Header').addEventListener('tap', function() {
 				document.activeElement.blur();
-				mui.toast('语音功能暂未开放');
+				mui.toast('录制语音功能暂未开放');
 			});
 		}
 		if(this.options.Video) {
 			document.getElementById('MultiMedia_Video_Header').addEventListener('tap', function() {
 				document.activeElement.blur();
-				//mui.toast('录制视频功能暂未开放');
-				RecordVideo.recordVideo({}, function(fpath) {
-					mui.toast('录制视频成功');
-					console.log(fpath);
-				}, function(err) {
-					mui.toast('录制视频失败 ' + JSON.stringify(err));
-				});
+				mui.toast('录制视频功能暂未开放');
+				//				RecordVideo.recordVideo({}, function(fpath) {
+				//					mui.toast('录制视频成功');
+				//					console.log(fpath);
+				//				}, function(err) {
+				//					mui.toast('录制视频失败 ' + JSON.stringify(err));
+				//				});
 			});
 		}
 	}
@@ -162,34 +174,18 @@ var MultiMedia = (function($, mod) {
 	/**
 	 * 显示图片的选择方式
 	 */
-	proto.pictureActionSheet = function() {
+	proto.pictureActionSheet = function(type) {
 		//console.log('pictureActionSheet');
 		var self = this;
 		var NumPick = self.data.PicturesNum;
-		//console.log('NumPick ' + NumPick);
-		var btnArray = btnArray = [{
-			title: "拍取照片"
-		}, {
-			title: "从相册选取照片"
-		}];
-		plus.nativeUI.actionSheet({
-			title: '选择文件的方式',
-			cancel: "取消",
-			buttons: btnArray
-		}, function(e) {
-			var index = e.index;
-			//console.log('选择文件的方式:' + index);
-			switch(index) {
-				case 1: //拍取照片
-					self.pictureTake();
-					break;
-				case 2: //从相册选取照片
-					self.picturesPick(NumPick);
-					break;
-				default:
-					break;
-			}
-		});
+		var type = type || 0;
+		if(type == 0) {
+			//拍取照片
+			self.pictureTake();
+		} else {
+			//从相册选取照片
+			self.picturesPick(NumPick);
+		}
 	}
 
 	/**
