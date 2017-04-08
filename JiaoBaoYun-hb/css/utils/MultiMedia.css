@@ -1,23 +1,27 @@
 /*多媒体控件样式*/
 
 #MultiMedia_Picture_Header,
+#MultiMedia_Tuku_Header,
 #MultiMedia_Audio_Header,
 #MultiMedia_Video_Header {
 	font-size: 30px;
 	/*background: wheat;*/
 	margin-left: 15px;
 	color: #b7b7b7;
+	padding: 0px;
 }
 #MultiMedia_Picture_Header,{
 	/*相机*/
-	position: absolute;
 	padding-top: 2px;
+	padding-left: 0px;
 }
-#MultiMedia_Video_Header{
+/*#MultiMedia_Video_Header{*/
 	/*视频*/
-	position: absolute;
-	padding-top: 2px;
-	padding-left: 4px;
+/*}*/
+
+#MultiMedia_Audio_Header{
+	/*语音*/
+	padding-top: 1px;
 }
 
 /*.multimedia-body {

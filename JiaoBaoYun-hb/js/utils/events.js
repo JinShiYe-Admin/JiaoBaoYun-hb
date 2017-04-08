@@ -413,6 +413,8 @@ var events = (function(mod) {
 			mainWebviewObject.append(sub);
 			loadedCallBack(sub);
 		});
+
+		return sub;
 	}
 
 	/**

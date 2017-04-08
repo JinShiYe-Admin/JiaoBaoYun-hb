@@ -22,7 +22,6 @@
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
-
 			mui.init();
 			mui.plusReady(function() {
 				events.blurBack();
@@ -33,10 +32,11 @@
 				var data = main.data; //接收A页面传入参数值
 				console.log('main-data:' + JSON.stringify(data));
 
-				var sub = plus.webview.create(data.turl, data.turl, {
-					top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px',
-					bottom: '0px'
+				var sub = events.createSubAppendMain(main, data.turl, {}, function() {
+					console.log('sub loaded');
+					mui("#loading").button('reset'); //切换为reset状态
 				});
+
 				sub.addEventListener("loading", function() { //Webview窗口页面开始加载事件
 					console.log('sub loading');
 				});
@@ -46,13 +46,6 @@
 					mui("#loading").button('reset'); //切换为reset状态
 					mui.toast('加载失败');
 				});
-
-				sub.addEventListener("loaded", function() { //Webview窗口页面加载完成事件
-					console.log('sub loaded');
-					mui("#loading").button('reset'); //切换为reset状态
-				});
-
-				main.append(sub);
 
 				//				mui.openWindow({
 				//					url: data.turl,
