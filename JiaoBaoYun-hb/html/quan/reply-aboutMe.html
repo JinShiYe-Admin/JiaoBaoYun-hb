@@ -46,12 +46,15 @@
 			var groupInfo;
 			var curPage=plus.webview.currentWebview();
 			var replyToInfo = curPage.data;
-			//最大长度2000字
-			jQuery('#input-content').prop('maxlength',200)
+			//最大长度300字
+			jQuery('#input-content').prop('maxLength',300)
 			//发布事件的监听
 			events.addTap('publish', function() {
 				var inputContainer=document.getElementById('input-content');
 				if(inputContainer.value&&inputContainer.value.length>0){
+						if(events.limitInput(inputContainer.value,300)){
+							return;
+						}
 						postReply(inputContainer.value,replyToInfo,function(data){
 							mui.toast("回复成功");
 							mui.fire(curPage.opener(),'hasReplied',inputContainer.value);

@@ -13,6 +13,8 @@ mui.plusReady(function() {
 	mui(".mui-scroll-wrapper").scroll();
 	mui.previewImage();
 	events.blurBack();
+	//最大长度500
+	jQuery('#publish-content').prop("maxLength",500);
 //	var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight");
 //	console.log("屏幕宽度：" + webHeight);
 	events.preload('classes-select.html', 200);
@@ -154,6 +156,10 @@ mui.plusReady(function() {
 		//			})
 		mui.toast('功能暂未开放！');
 	});
+	//录音按钮
+	events.addTap("get_record",function(){
+		mui.toast("功能暂未开放！")
+	})
 	setListener();
 })
 var setListener = function() {
@@ -260,6 +266,9 @@ var setSubmitEvent = function() {
 				var content = document.getElementById('publish-content').value;
 				//判断是否有发送内容
 				if(content) {
+					if(events.limitInput(content,500)){
+						return;
+					}
 					//12.发布作业
 					requestPublishHomework()
 				} else {

@@ -601,6 +601,18 @@ var events = (function(mod) {
 		image.src = path;
 		image.onerror = null;
 	}
+	/**
+	 * 
+	 * @param {Object} inputValue
+	 * @param {Object} length
+	 */
+	mod.limitInput=function(inputValue,length){
+		if(inputValue.length>length){
+			mui.toast("输入已超过"+length+"字，请删除多余字符");
+			return true;
+		}
+		return false;
+	}
 
 	return mod;
 

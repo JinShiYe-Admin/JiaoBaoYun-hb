@@ -51,6 +51,9 @@ var setListener = function() {
 	events.addTap('btn-comment', function() {
 		var commentValue = document.getElementById('comment-area').value;
 		if(commentValue) {
+			if(events.limitInput(commentValue,2000)){
+				return;
+			}
 			if(workInfo.workType == 0) {
 				if(workInfo.IsCommented) {
 					modifyAnswerComment(commentValue);

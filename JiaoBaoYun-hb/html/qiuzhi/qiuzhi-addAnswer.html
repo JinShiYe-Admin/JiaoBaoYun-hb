@@ -1,6 +1,7 @@
 <!--求知回答问题，添加评论界面-->
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -22,7 +23,7 @@
 			<div class="mui-scroll">
 				<!--<p id="askTitle" style="font-size: 14px;margin-top: 12px;word-wrap: break-word;padding: 0 15px;text-align: justify;"></p>-->
 				<!--<div class="input-content">-->
-					<!--输入框-->
+				<!--输入框-->
 				<textarea id="answerContent" class="" placeholder="添加回答,最多4000字"></textarea>
 				<!--额外附件-->
 				<div class="extras-info">
@@ -30,16 +31,22 @@
 						<a class="mui-icon iconfont icon-xiangji1"></a>
 
 					</div>
-					<div id="take_camero" class="take_camero file-extras">
-						<a class="mui-icon iconfont icon-shipin"></a>
-					</div>
 					<div id="get_gallery" class="get_gallery file-extras">
 						<a class="mui-icon iconfont icon-tuku"></a>
 					</div>
-					<div class="mui-input-row mui-checkbox mui-left file-extras" style="float: right;width: 100px;margin-top: -40px;margin-left: -100px;">
-						<label style="font-size: 12px;">匿名</label>
-						<input id="checkbox" name="checkbox" value="" type="checkbox">
+					<div id="get_record" class="get_record file-extras">
+						<a class="mui-icon iconfont icon-yuyin3"></a>
 					</div>
+					<div id="take_camero" class="take_camero file-extras">
+						<a class="mui-icon iconfont icon-shipin"></a>
+					</div>
+					<div class="isAnonymity">
+						<div class="mui-input-row mui-checkbox mui-left file-extras">
+							<label style="font-size: 12px;">匿名</label>
+							<input id="checkbox" name="checkbox" value="" type="checkbox">
+						</div>
+					</div>
+
 				</div>
 				<!--</div>-->
 				<!--显示附件控件-->
@@ -187,6 +194,9 @@
 				events.addTap('take_camero', function() {
 					mui.toast('此功能暂未开放');
 				});
+				events.addTap('get_record', function() {
+					mui.toast('此功能暂未开放');
+				})
 				//相册
 				events.addTap('get_gallery', function() {
 					if(CloudFileUtil.files.length < 9) {
@@ -292,7 +302,7 @@
 					thumbnail: getTypeAddress(CloudFileUtil.files).encImg,
 					cutImg: getTypeAddress(CloudFileUtil.files).clipAddress,
 					answerMan: personalUTID, //回答人
-					isAnonym: isAnonymNo//
+					isAnonym: isAnonymNo //
 				};
 				// 等待的对话框
 				var wd = events.showWaiting();

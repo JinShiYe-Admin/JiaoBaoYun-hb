@@ -31,14 +31,18 @@
 				<div id="take_pic" class="take_pic">
 					<a class="mui-icon iconfont icon-xiangji1"></a>
 				</div>
-				<!--录像-->
-				<div id="take_camero" class="take_camero">
-					<a class="mui-icon iconfont icon-shipin"></a>
-				</div>
 				<!--相册-->
 				<div id="get_gallery" class="get_gallery">
 					<a class="mui-icon iconfont icon-tuku"></a>
 				</div>
+				<div id="get_record" class="get_record">
+					<a class="mui-icon iconfont icon-yuyin3"></a>
+				</div>
+				<!--录像-->
+				<div id="take_camero" class="take_camero">
+					<a class="mui-icon iconfont icon-shipin"></a>
+				</div>
+				
 			</div>
 			<!--附件显示控件-->
 			<div id="pictures" class="img-container temWork-teaHint"></div>
@@ -119,6 +123,10 @@
 			events.addTap('take_camero', function() {
 				mui.toast('功能暂未开放！');
 			});
+			//录音按钮
+			events.addTap('get_record', function() {
+				mui.toast('功能暂未开放！');
+			});
 			/**
 			 * 相册选择按钮
 			 */
@@ -183,6 +191,9 @@
 					return;
 				} else {
 					tempText = replaceAllBL(tempText);
+				}
+				if(events.limitInput(tempText,2000)){
+					return;
 				}
 				var TAs = getTypeAddress();
 				var postData = new Object();

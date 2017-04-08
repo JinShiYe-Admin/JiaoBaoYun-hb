@@ -55,15 +55,25 @@
 				switch(no) {
 					case 0:
 						vtpKey = 'unick';
+						if(events.limitInput(inText.value,20)){
+							return;
+						}
 						break;
 					case 1:
 						vtpKey = 'uemail';
 						break;
 					case 2:
 						vtpKey = 'utxt';
+						if(events.limitInput(inText.value,30)){
+							return;
+						}
 						break;
 					case 10:
 						vtpKey = 'uname';
+						if(events.limitInput(inText.value,20)){
+							return;
+						}
+						break;
 					default:
 						break;
 				}

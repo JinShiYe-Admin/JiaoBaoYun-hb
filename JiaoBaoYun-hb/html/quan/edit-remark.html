@@ -87,6 +87,9 @@
 					function() {
 						var inputValue = getInputValue();
 						if(inputValue && inputValue.length > 0) {
+							if(events.limitInput(inputValue,20)){
+								return;
+							}
 							if(type == 0) {
 								editRemark(inputValue);
 							} else {

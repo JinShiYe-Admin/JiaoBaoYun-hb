@@ -1110,7 +1110,11 @@
 					"/storage/emulated/0/Tencent/TIMfile_recv/%DTPM%7DIV)030IUBXJ%7DUM%Z9.png",
 					"/storage/emulated/0/Tencent/TIMfile_recv/%%7B%7D32Z3H~)Q@~F0~K3[U@]6.png",
 					"/storage/emulated/0/Tencent/TIMfile_recv/%S]0@_9]P%7B07KEYX(U2X%7DTT.png",
-					"/storage/emulated/0/Tencent/TIMfile_recv/%2PLKECVOE6LS%7BQ8W4%7D%7B$L3.png"
+					"/storage/emulated/0/Tencent/TIMfile_recv/%2PLKECVOE6LS%7BQ8W4%7D%7B$L3.png",
+					"/storage/emulated/0/tencent/TIMfile_recv/%DTPM%7DIV)030IUBXJ%7DUM%Z9.png",
+					"/storage/emulated/0/tencent/TIMfile_recv/%S]0@_9]P%7B07KEYX(U2X%7DTT.png",
+					"/storage/emulated/0/tencent/TIMfile_recv/%%7B%7D32Z3H~)Q@~F0~K3[U@]6.png",
+					"/storage/emulated/0/tencent/TIMfile_recv/%2PLKECVOE6LS%7BQ8W4%7D%7B$L3.png"
 				],
 				"refer": [
 					"html/homework/classes-select.html"
@@ -2815,7 +2819,8 @@
 					"fonts/iconfont.ttf",
 					"css/utils/common.css",
 					"html/qiuzhi/qiuzhi-questionSub.html",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/qiuzhi/experts_main.html"
