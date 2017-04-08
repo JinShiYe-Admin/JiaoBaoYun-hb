@@ -269,12 +269,21 @@
 					if(answerContent) {
 						switch(type) {
 							case 0:
+								if(events.limitInput(answerContent, 4000)) {
+									return;
+								}
 								addAnswer(answerContent);
 								break;
 							case 1:
+								if(events.limitInput(answerContent, 300)) {
+									return;
+								}
 								addComment(answerContent);
 								break;
 							case 2:
+								if(events.limitInput(answerContent, 300)) {
+									return;
+								}
 								addComment(answerContent, commentInfo);
 								break;
 							default:

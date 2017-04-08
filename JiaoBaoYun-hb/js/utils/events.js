@@ -602,9 +602,9 @@ var events = (function(mod) {
 		image.onerror = null;
 	}
 	/**
-	 * 
-	 * @param {Object} inputValue
-	 * @param {Object} length
+	 * 限制文字长度模块
+	 * @param {Object} inputValue 输入的value
+	 * @param {Object} length 限制的长度
 	 */
 	mod.limitInput=function(inputValue,length){
 		if(inputValue.length>length){
