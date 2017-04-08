@@ -16,9 +16,10 @@
 			<a id="submit-change" class="mui-pull-right">提交</a>
 		</header>
 		<div class="mui-content">
-		    <textarea class="input-area" name="" rows="10" cols=""></textarea>
+		    <textarea class="input-area" name="" rows="10" cols="" placeholder="请输入评论，最多1000字"></textarea>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/publicHomeworkProtocol.js"></script>
 		<script type="text/javascript">
@@ -26,10 +27,15 @@
 			mui.plusReady(function() {
 				events.blurBack();
 				var workInfo = plus.webview.currentWebview().data;
+				console.log("作业修改评论界面获取的数据："+JSON.stringify(workInfo))
+				document.querySelector(".input-area").value=workInfo.Comment;
 				jQuery(".input-area").prop("maxLength",1000);
-				events.addTap(".submit-change", function() {
+				events.addTap("submit-change", function() {
 					var value=document.querySelector(".input-area").value;
 					if(value){
+						if(events.limitInput(value,1000)){
+							return;
+						}
 						modifyHomeworkComment(value)
 					}				
 				})
@@ -40,7 +46,7 @@
 			var modifyHomeworkComment = function(commentValue) {
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_ModifyHomeworkResultComment({
-					teacherId: personalUTID,
+					teacherId: myStorage.getItem(storageKeyName.PERSONALINFO).utid,
 					homeworkResultId: workInfo.HomeworkResultId,
 					studentId: workInfo.utid,
 					classId: workInfo.gid,
@@ -51,6 +57,7 @@
 					console.log('老师评价页面获取老师更改普通作业评论的结果：' + JSON.stringify(data));
 					if(data.RspCode == '0000') {
 						mui.toast('修改评论成功！')
+						mui.fireToPage(plus.webview.currentWebview().opener(),"commetChanged",commentValue)
 						mui.back();
 					} else {
 						mui.toast(data.RspTxt);

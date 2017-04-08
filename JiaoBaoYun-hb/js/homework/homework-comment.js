@@ -25,6 +25,11 @@ mui.plusReady(function() {
 			requireHomeworkResult();
 		}
 	})
+	window.addEventListener("commetChanged",function(e){
+		var commentValue=e.detail;
+		document.getElementById('result-text').innerText=commentValue;
+		workInfo.Comment=commentValue;
+	})
 	//设置最大长度为1000
 	jQuery('.comment-area').prop("maxLength",1000);
 	setListener();
