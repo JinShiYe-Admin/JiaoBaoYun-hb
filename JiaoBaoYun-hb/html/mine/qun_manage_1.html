@@ -16,6 +16,8 @@
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
 				border-right: 1px solid #b7b7b7;
 				color: #323232;
+				line-height: inherit;
+				margin-top: 9px;
 			}
 
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item:last-child {
@@ -32,19 +34,17 @@
 			}
 
 			.mui-segmented-control.mui-scroll-wrapper .mui-scroll {
-				height: auto;
-				border-top: 8px solid transparent;
-				border-bottom: 8px solid transparent;
+				height: 38px;
 			}
 
 			.mui-slider-indicator .mui-icon.mui-icon-plus {
 				position: relative;
 				border: none;
-				font-size: 25px;
+				font-size: 26px;
 				color: #C7C7CC;
 				line-height: inherit;
 				margin: 0px;
-				top: -4px;
+				top: -3px;
 			}
 
 			.mui-popover {
@@ -82,10 +82,11 @@
 			<span id="noqun" class="mui-icon mui-icon-plus qun-add" style="display: none;position: absolute;top: 80px;">新增群按钮</span>
 			<div id="qun_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="visibility: hidden;">
 				<div id="qunList" class="mui-scroll">
-					<div id="qunAdd" class="mui-icon mui-icon-plus qun-add" style="margin-top: 3px;"></div>
+					<a id="qunAdd" class="mui-icon mui-icon-plus qun-add"></a>
 				</div>
 			</div>
-			<div id="slider_group" class="mui-slider-group" style="visibility: hidden;">
+			<div id="slider_group" class="mui-slider-group" style="visibility: visible;margin-top: 0px;">
+
 			</div>
 			<div id="popover" class="mui-popover">
 				<ul class="mui-table-view">
@@ -131,14 +132,12 @@
 			var inviteOrCreate; //记录点击邀请或创建资料时的数据
 
 			mui.plusReady(function() {
-				document.getElementById("content").style.marginTop = localStorage.getItem('StatusHeightNo') * 1 + 1 + 'px'
-
 				if(plus.webview.getWebviewById('group-pInfo.html') == null) {
 					events.preload('../quan/group-pInfo.html');
 				}
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				mainData = main.data; //接收页面传入参数值
-				console.log('qun_manage_1.html:' + JSON.stringify(mainData));
+				console.log(main.id + ' ' + JSON.stringify(mainData));
 
 				var mstype = 'parents'; //被邀请成为的类型
 
@@ -160,7 +159,6 @@
 
 				//屏幕高度
 				var screenHeight = plus.screen.resolutionHeight;
-				//console.log('screenHeight ' + screenHeight);
 				botHeight = screenHeight * 1 - (plus.navigator.getStatusbarHeight() + 45 + 38);
 				console.log('botHeight ' + botHeight + '|' + plus.screen.resolutionWidth * 0.8);
 
@@ -477,6 +475,7 @@
 								for(var i = 0; i < tempList.length; i++) {
 									addQunItem(tempList[i], i, tempList.length);
 								}
+								//console.log(document.getElementById("qun_sw").innerHTML);
 								mui(".mui-scroll-wrapper").scroll({
 									scrollY: true, //是否竖向滚动
 									scrollX: false, //是否横向滚动
@@ -901,7 +900,7 @@
 						for(var i = 0; i < tempList.length; i++) {
 							console.log('tempList 1| gid ' + gId + '|' + JSON.stringify(tempList[i]));
 							if(gId == tempList[i].gid && tempList[i].umstype == 0) { //用户在群类型为家长
-								console.log('tempList 2|' + JSON.stringify(tempList[i]));
+								//console.log('tempList 2|' + JSON.stringify(tempList[i]));
 								var same = false
 								for(var j = 0; j < parList.length; j++) {
 									if(tempList[i].stuid == parList[j].stuid) { //显示一个家长
@@ -937,7 +936,7 @@
 			 * @param {Object} parList
 			 */
 			function getUid(parList) {
-				console.log('getUid');
+				//console.log('getUid');
 				var wd = events.showWaiting();
 				var tempUtidArray = [];
 				for(var i = 0; i < parList.length; i++) {
@@ -956,7 +955,7 @@
 							for(var j = 0; j < parList.length; j++) {
 								if(tempList[i].utid == parList[j].utid) {
 									parList[j].uid = tempList[i].uid;
-									console.log("parent_" + parList[j].gid + '_' + parList[j].stuid);
+									//console.log("parent_" + parList[j].gid + '_' + parList[j].stuid);
 									document.getElementById("parent_" + parList[j].gid + '_' + parList[j].stuid).innerText = '家长:' + tempList[i].uid;
 								}
 							}

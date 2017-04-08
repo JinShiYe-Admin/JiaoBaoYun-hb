@@ -30,7 +30,8 @@ textarea {
 
 .take_pic,
 .take_camero,
-.get_gallery {
+.get_gallery,
+.get_record {
 	width: 6rem;
 	height: 4rem;
 	padding-left: 1rem;
@@ -45,7 +46,8 @@ div>.icon-xiangji:before,
 .icon-xiangce:before,
 .icon-tuku:before,
 .icon-shipin:before,
-.icon-xiangji1:before {
+.icon-xiangji1:before,
+.icon-yuyin3:before {
 	font-size: 3.0rem;
 	color: #B7B7B7;
 }

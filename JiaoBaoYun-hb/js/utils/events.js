@@ -601,6 +601,18 @@ var events = (function(mod) {
 		image.src = path;
 		image.onerror = null;
 	}
+	/**
+	 * 限制文字长度模块
+	 * @param {Object} inputValue 输入的value
+	 * @param {Object} length 限制的长度
+	 */
+	mod.limitInput=function(inputValue,length){
+		if(inputValue.length>length){
+			mui.toast("输入已超过"+length+"字，请删除多余字符");
+			return true;
+		}
+		return false;
+	}
 
 	return mod;
 

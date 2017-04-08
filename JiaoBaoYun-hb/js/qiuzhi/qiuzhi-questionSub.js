@@ -326,23 +326,23 @@ function requestAskDetail() {
 				//				wd.close();
 				console.log('获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 				if(data1.RspCode == 0) {
-					//循环当前的个人信息返回值数组
-					for(var i in data1.RspData) {
-						//当前model
-						var tempModel = data1.RspData[i];
-						//更新头像
-						tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
-						//循环回调数组
-						for(var item in tempRspData) {
-							//当前循环的model
-							var tempModel0 = tempRspData[item];
-							//判断是否为匿名
-							if(tempModel0.IsAnonym == 1) {
-								tempModel.uimg = updateHeadImg('', 2);
-								tempModel.unick = '匿名用户';
-							}
+					//循环回调数组
+					for(var item in tempRspData) {
+						//当前循环的model
+						var tempModel0 = tempRspData[item];
+						//循环当前的个人信息返回值数组
+						for(var i in data1.RspData) {
+							//当前model
+							var tempModel = data1.RspData[i];
+							//更新头像
+							tempModel.uimg = updateHeadImg(tempModel.uimg, 2);
 							//对比id是否一致
 							if(tempModel0.AnswerMan == tempModel.utid) {
+								//判断是否为匿名
+								if(tempModel0.IsAnonym == 1) {
+									tempModel.uimg = updateHeadImg('', 2);
+									tempModel.unick = '匿名用户';
+								}
 								//合并
 								tempModel0 = $.extend(tempModel0, tempModel);
 							}

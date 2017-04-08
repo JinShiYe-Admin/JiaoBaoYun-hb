@@ -398,7 +398,6 @@ var setListener = function(userId) {
 		console.log("当前父页面的className:" + this.parentElement.parentElement.parentElement.parentElement.className)
 		var parent_cell = this.parentElement.parentElement.parentElement.parentElement;
 		var offTopHeight = parent_cell.offsetTop;
-		console.log("此时距顶部的距离offTopHeight：" + offTopHeight + "滚动距离：" + document.querySelector(".mui-content").scrollTop + "当前的：" + JSON.stringify(parent_cell.offsetParent));
 		this.previousSibling.className = "chat-words omit-line-8";
 		this.className = "more-span";
 		this.innerText = "展开全部";

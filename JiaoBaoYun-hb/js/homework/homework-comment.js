@@ -25,6 +25,11 @@ mui.plusReady(function() {
 			requireHomeworkResult();
 		}
 	})
+	window.addEventListener("commetChanged",function(e){
+		var commentValue=e.detail;
+		document.getElementById('result-text').innerText=commentValue;
+		workInfo.Comment=commentValue;
+	})
 	//设置最大长度为1000
 	jQuery('.comment-area').prop("maxLength",1000);
 	setListener();
@@ -51,6 +56,9 @@ var setListener = function() {
 	events.addTap('btn-comment', function() {
 		var commentValue = document.getElementById('comment-area').value;
 		if(commentValue) {
+			if(events.limitInput(commentValue,2000)){
+				return;
+			}
 			if(workInfo.workType == 0) {
 				if(workInfo.IsCommented) {
 					modifyAnswerComment(commentValue);

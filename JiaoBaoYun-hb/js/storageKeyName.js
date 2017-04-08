@@ -7,6 +7,7 @@ var storageKeyName = (function(mod) {
 	mod.SEHISTORY = 'seHistory'; //科教历史记录
 
 	//---开发---start---
+	mod.MAINEDU = 'http://192.168.0.44:8511/'; //科教图片url
 		mod.MAINURL = 'http://192.168.0.44:8511/api/CloudApi/'; //主url
 		mod.MAINJIAOXIAOURL = 'http://192.168.0.200:8081/JiaoBaoCloudService/'; //家校圈url
 		mod.MAINHOMEWORKURL = 'http://192.168.0.44:8513/'; //作业主url
@@ -14,6 +15,7 @@ var storageKeyName = (function(mod) {
 	//---开发---end---
 
 	//---测试---start---
+//	mod.MAINEDU = 'http://192.168.0.178:8511/'; //科教图片url
 //	mod.MAINURL = 'http://192.168.0.178:8511/api/CloudApi/'; //主url
 //	mod.MAINJIAOXIAOURL = 'http://192.168.0.178:8080/JiaoBaoCloudService/'; //家校圈url
 //	mod.MAINHOMEWORKURL = 'http://192.168.0.178:8088/'; //作业主url
@@ -22,6 +24,7 @@ var storageKeyName = (function(mod) {
 
 
 	//---外网---start---
+//		mod.MAINEDU = 'http://114.215.222.186:8002/'; //科教图片url
 //		mod.MAINURL = 'http://114.215.222.186:8002/api/CloudApi/'; //主url
 //		mod.MAINJIAOXIAOURL = 'http://114.215.222.194:8080/JiaoBaoCloudService/'; //家校圈url
 //		mod.MAINHOMEWORKURL = 'http://114.215.222.186:8001/'; //作业主url
@@ -77,11 +80,11 @@ var storageKeyName = (function(mod) {
 	//---七牛空间和接口---测试---end---
 
 	//---外网---start---
-	//		mod.QNPB='http://qn-educds. .net/';//公开空间域名
-	//		mod.QNGETUPTOKENHEADIMGE = 'http://114.215.222.186:8003/GetTokenProfilePhoto.ashx'; //获取上传个人头像，群头像，资料头像到七牛的token的url
-	//		mod.QNGETUPTOKENFILE = 'http://114.215.222.186:8003/QiuToken.ashx'; //获取上传文件（云存储）到七牛的token的url
-	//		mod.QNGETDOWNTOKENFILE = 'http://114.215.222.186:8003/GetToken.ashx?geturl='; //获取下载文件（云存储）的token的url，url+七牛文件url
-	//		mod.QNGETTOKENDELETE = 'http://114.215.222.186:8003/BatchDelete.ashx'; //获取批量（或者一个）删除七牛文件的token的url
+//			mod.QNPB='http://qn-educds. .net/';//公开空间域名
+//			mod.QNGETUPTOKENHEADIMGE = 'http://114.215.222.186:8003/GetTokenProfilePhoto.ashx'; //获取上传个人头像，群头像，资料头像到七牛的token的url
+//			mod.QNGETUPTOKENFILE = 'http://114.215.222.186:8003/QiuToken.ashx'; //获取上传文件（云存储）到七牛的token的url
+//			mod.QNGETDOWNTOKENFILE = 'http://114.215.222.186:8003/GetToken.ashx?geturl='; //获取下载文件（云存储）的token的url，url+七牛文件url
+//			mod.QNGETTOKENDELETE = 'http://114.215.222.186:8003/BatchDelete.ashx'; //获取批量（或者一个）删除七牛文件的token的url
 	//---外网---end---
 	//---七牛---end---
 	mod.DOCUMENTSPATH = 'DOCUMENTSPATH'; //记录document的地址
