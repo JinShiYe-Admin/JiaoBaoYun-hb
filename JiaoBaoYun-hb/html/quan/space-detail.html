@@ -456,81 +456,105 @@
 			});
 			//点赞和取消点赞
 			mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
-				click.push('点赞');
-				personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
-				var index = this.id.replace('praise', '');
-				var color = this.style.color;
-				if(color == 'rgb(183, 183, 183)') {
-					var comData = {
-						userId: personalUTID, //用户ID
-						userSpaceId: datasource.TabId, //用户空间ID
-					};
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-					postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
-						wd.close();
-						if(data.RspCode == 0) {
-							document.getElementById("line" + index).className = 'mui-media-body dynamic-line'
-							var a = document.getElementById("praise" + index);
-							a.style.color = 'rgb(26, 155, 255)'
-							//							mui.toast('点赞成功');
-							var PraiseList = document.getElementById("PraiseList" + index);
-							var praiseNameList = PraiseList.getElementsByTagName("font");
-							if(praiseNameList.length > 0) {
-								var praiseName = praiseNameList[0];
-								praiseName.innerHTML = personalunick + '、' + praiseName.innerHTML;
-							} else {
+		click.push('点赞');
+		var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
+		personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+		var index = this.id.replace('praise', '');
 
-								PraiseList.innerHTML = '<img id= "praiseImg" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' +
-									'<font class="common-font-family-Regular dynamic-praise-name">' + personalunick + '</font>';
-							}
-						} else {
-							mui.toast(data.RspTxt);
-						}
+		var color = this.style.color;
+		if(color == 'rgb(183, 183, 183)') {
+			var comData = {
+				userId: personalUTID, //用户ID
+				userSpaceId: datasource.TabId, //用户空间ID
+			};
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
+				wd.close();
+				if(data.RspCode == 0) {
+					console.log('index=' + index)
+					document.getElementById("line" + index).className = 'mui-media-body dynamic-line'
+					var a = document.getElementById("praise" + index);
+					a.style.color = 'rgb(26, 155, 255)'
+					//							mui.toast('点赞成功');
+					var PraiseList = document.getElementById("PraiseList" + index);
+					var praiseNameList = PraiseList.getElementsByTagName("font");
+					datasource.LikeUsers.unshift(userInfo) //把当前用户信息放到数组LikeUsers第一位
+					if(praiseNameList.length > 0) {
+						console.log(PraiseList.innerHTML);
+						PraiseList.innerHTML = PraiseList.innerHTML.replace('mui-pull-left">', 'mui-pull-left">' + '<font class="common-font-family-Regular dynamic-praise-name praiseName" data-info="' + userInfo.utid + '">' + personalunick + '</font>、')
+					console.log(PraiseList.innerHTML);
+					} else {
 
-					})
-
+						PraiseList.innerHTML = '<img id= "praiseImg' + index + '" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' +
+							'<font class="common-font-family-Regular dynamic-praise-name praiseName" data-info="' + userInfo.utid + '">' + personalunick + '</font>';
+					}
 				} else {
-
-					var comData = {
-						userId: personalUTID, //用户ID
-						userSpaceId: datasource.TabId, //用户空间ID
-					};
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-					postDataPro_delUserSpaceLikeByUser(comData, wd, function(data) {
-						wd.close();
-						if(data.RspCode == 0) {
-							var a = document.getElementById("praise" + index);
-							a.style.color = 'rgb(183, 183, 183)'
-							//							mui.toast('取消点赞成功');
-							var PraiseList = document.getElementById("PraiseList" + index);
-							var praiseName = PraiseList.getElementsByTagName("font")[0];
-							if(praiseName.innerHTML.indexOf('、') > -1) {
-								console.log('多个人点赞')
-								praiseName.innerHTML = praiseName.innerHTML.replace('、' + personalunick, '');
-								0
-								praiseName.innerHTML = praiseName.innerHTML.replace(personalunick + '、', '');
-							} else {
-								console.log('一个人点赞')
-								var comment0 = document.getElementById('"replyCommentzx' + index + '-0-评论"');
-								if(comment0) {
-									document.getElementById("line" + index).className = 'mui-media-body dynamic-line'
-								} else {
-									document.getElementById("line" + index).className = 'mui-media-body dynamic-line mui-hidden'
-								}
-								PraiseList.removeChild(praiseName);
-								var praiseImg = document.getElementById("praiseImg");
-								PraiseList.removeChild(praiseImg);
-
-							}
-						} else {
-							mui.toast(data.RspTxt);
-						}
-
-					})
-
+					mui.toast(data.RspTxt);
 				}
 
-			});
+			})
+
+		} else {
+
+			var comData = {
+				userId: personalUTID, //用户ID
+				userSpaceId: datasource.TabId, //用户空间ID
+			};
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_delUserSpaceLikeByUser(comData, wd, function(data) {
+				wd.close();
+				if(data.RspCode == 0) {
+					var a = document.getElementById("praise" + index);
+					a.style.color = 'rgb(183, 183, 183)'
+					//							mui.toast('取消点赞成功');
+					var PraiseList = document.getElementById("PraiseList" + index);
+					var praiseName = PraiseList.getElementsByTagName("font");
+					var tempLikeUser = datasource.LikeUsers
+					for(var i in tempLikeUser) {
+						if(tempLikeUser[i].utid == userInfo.utid) {
+							tempLikeUser.splice(i, 1);
+							console.log(JSON.stringify(tempLikeUser))
+						}
+					}
+					console.log(praiseName.length)
+					if(praiseName.length > 1) {
+						console.log('多个人点赞')
+						for(var i=0; i < praiseName.length; i++) {
+
+							if(praiseName[i].dataset.info == userInfo.utid) {
+								PraiseList.innerHTML = PraiseList.innerHTML.replace('<font class="common-font-family-Regular dynamic-praise-name praiseName" data-info="' + userInfo.utid + '">' + personalunick + '</font>、','')
+
+							}
+						}
+
+					} else {
+						console.log('一个人点赞')
+
+						var comment0 = document.getElementById('"replyComment' + index + '-0-评论"');
+						if(comment0) {
+							document.getElementById("line" + index).className = 'mui-media-body dynamic-line'
+						} else {
+							document.getElementById("line" + index).className = 'mui-media-body dynamic-line mui-hidden'
+						}
+						for(var i=0;i<praiseName.length;i++) {
+							if(praiseName[i].dataset.info == userInfo.utid) {
+								PraiseList.removeChild(praiseName[i]);
+							}
+						}
+
+						var praiseImg = document.getElementById("praiseImg" + index);
+						PraiseList.removeChild(praiseImg);
+
+					}
+				} else {
+					mui.toast(data.RspTxt);
+				}
+
+			})
+
+		}
+		window.event.stopPropagation()
+	});
 			mui('.mui-table-view').on('tap', '.dynamic-praise-name', function() {
 				click.push('点赞者：' + this.innerText);
 			});

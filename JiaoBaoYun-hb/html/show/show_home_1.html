@@ -636,13 +636,13 @@
 							//将当前model中id塞到数组
 							tempArray.push(tempModel0.PublisherId);
 							//合并数组,点赞的人
-//							tempArray = tempArray.concat(tempModel0.LikeUsers);
-//							console.log(JSON.stringify(tempModel0.LikeUsers));
-							for(var i in tempModel0.LikeUsers){
+							//							tempArray = tempArray.concat(tempModel0.LikeUsers);
+							//							console.log(JSON.stringify(tempModel0.LikeUsers));
+							for(var i in tempModel0.LikeUsers) {
 								tempArray = tempArray.concat(tempModel0.LikeUsers[i].userId);
-//								tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
+								//								tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
 							}
-//							tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
+							//							tempModel0.LikeUsers = arrayDupRemoval(tempModel0.LikeUsers);
 							//循环当前model中的回复数组
 							for(var item1 in tempModel0.Comments) {
 								//回复中的model
@@ -687,13 +687,13 @@
 										for(var item2 in tempModel0.LikeUsers) {
 											//										console.log('item2;;;;;==' + tempModel.utid + ',' + tempModel0.LikeUsers[item2]);
 											if(tempModel.utid == tempModel0.LikeUsers[item2].userId) {
-//												tempModel0.LikeUsers.splice(item2, 1, tempModel);
+												//												tempModel0.LikeUsers.splice(item2, 1, tempModel);
 												tempModel0.LikeUsers[item2] = $.extend(tempModel0.LikeUsers[item2], tempModel);
 											}
 										}
 										//对比id是否一致
 										if(tempModel0.PublisherId == tempModel.utid) {
-											
+
 											//合并
 											tempModel0 = $.extend(tempModel0, tempModel);
 											tempModel0.PublisherName = tempModel0.unick
@@ -840,9 +840,9 @@
 
 														}
 													}
-													if(status==0){
+													if(status == 0) {
 														mui.toast("取消关注成功")
-													}else{
+													} else {
 														mui.toast("关注成功")
 													}
 												} else { //关注的人数据
@@ -1033,7 +1033,7 @@
 							btn.innerHTML = '关注'
 							btn.className = 'mui-btn mui-pull-right btn-attention'
 							var pageID = sliderId.replace('top_', '')
-							console.log('hhhhhhhhhh='+pageID)
+							console.log('hhhhhhhhhh=' + pageID)
 							setTimeout(function() {
 								//获取数据
 								if(pageID != 1) { //定制的城市
@@ -1106,6 +1106,7 @@
 
 				//点赞和取消点赞
 				mui('#sliderGroup').on('tap', '.dynamic-icon-praise', function() {
+					var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
 					var pageID = sliderId.replace('top_', '')
 					click.push('点赞');
 					var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
@@ -1125,15 +1126,17 @@
 								//					mui.toast('点赞成功');
 								var PraiseList = document.getElementById("PraiseList" + pageID + 'zx' + index);
 								var praiseNameList = PraiseList.getElementsByTagName("font");
+								zonepArray[index].LikeUsers.unshift(userInfo) //把当前用户信息放到数组LikeUsers第一位
+
 								if(praiseNameList.length > 0) {
-									var praiseName = praiseNameList[0];
-									//						praiseName.innerHTML = praiseName.innerHTML + '、' + personalunick;
-									praiseName.innerHTML = personalunick + '、' + praiseName.innerHTML;
+									console.log(PraiseList.innerHTML);
+									PraiseList.innerHTML = PraiseList.innerHTML.replace('mui-pull-left">', 'mui-pull-left">' + '<font class="common-font-family-Regular dynamic-praise-name praiseName" data-info="' + userInfo.utid + '">' + personalunick + '</font>、')
+									console.log(PraiseList.innerHTML);
 								} else {
 									var citycode = sliderId.replace('top_', '');
 									document.getElementById('line' + citycode + 'zx' + index).className = 'mui-media-body dynamic-line';
 									PraiseList.innerHTML = '<img id= "praiseImg' + pageID + 'zx' + index + '" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' +
-										'<font class="common-font-family-Regular dynamic-praise-name">' + personalunick + '</font>';
+										'<font class="common-font-family-Regular dynamic-praise-name praiseName" data-info="' + userInfo.utid + '">' + personalunick + '</font>';
 								}
 							} else {
 								mui.toast(data.RspTxt);
@@ -1155,11 +1158,23 @@
 								a.style.color = 'rgb(183, 183, 183)'
 								//					mui.toast('取消点赞成功');
 								var PraiseList = document.getElementById("PraiseList" + pageID + 'zx' + index);
-								var praiseName = PraiseList.getElementsByTagName("font")[0];
-								if(praiseName.innerHTML.indexOf('、') > -1) {
+								var praiseName = PraiseList.getElementsByTagName("font");
+								var tempLikeUser = zonepArray[index].LikeUsers
+								for(var i in tempLikeUser) {
+									if(tempLikeUser[i].utid == userInfo.utid) {
+										tempLikeUser.splice(i, 1);
+										console.log(JSON.stringify(tempLikeUser))
+									}
+								}
+								if(praiseName.length > 1) {
 									console.log('多个人点赞')
-									praiseName.innerHTML = praiseName.innerHTML.replace('、' + personalunick, '');
-									praiseName.innerHTML = praiseName.innerHTML.replace(personalunick + '、', '');
+									for(var i = 0; i < praiseName.length; i++) {
+
+										if(praiseName[i].dataset.info == userInfo.utid) {
+											PraiseList.innerHTML = PraiseList.innerHTML.replace('<font class="common-font-family-Regular dynamic-praise-name praiseName" data-info="' + userInfo.utid + '">' + personalunick + '</font>、', '')
+
+										}
+									}
 
 								} else {
 									console.log('一个人点赞')
@@ -1170,8 +1185,12 @@
 									} else {
 										document.getElementById('line' + citycode + 'zx' + index).className = 'mui-media-body dynamic-line mui-hidden';
 									}
+									for(var i = 0; i < praiseName.length; i++) {
+										if(praiseName[i].dataset.info == userInfo.utid) {
+											PraiseList.removeChild(praiseName[i]);
+										}
+									}
 
-									PraiseList.removeChild(praiseName);
 									var praiseImg = document.getElementById("praiseImg" + pageID + 'zx' + index);
 									PraiseList.removeChild(praiseImg);
 
@@ -1195,13 +1214,13 @@
 				var personIds = [];
 				for(var i in data) {
 					personIds.push(data[i].PublisherId);
-					
-					for(var item in data[i].LikeUsers){
+
+					for(var item in data[i].LikeUsers) {
 						personIds = personIds.concat(data[i].LikeUsers[item].userId);
 					}
-					
-//					data[i].LikeUsers = arrayDupRemoval(data[i].LikeUsers);
-//					personIds = personIds.concat(data[i].LikeUsers);
+
+					//					data[i].LikeUsers = arrayDupRemoval(data[i].LikeUsers);
+					//					personIds = personIds.concat(data[i].LikeUsers);
 
 					if(data[i].Comments) {
 						for(var j in data[i].Comments) {
@@ -1338,7 +1357,7 @@
 				var tempModel = zonepArray[index];
 				tempModel.PublisherImg = updateHeadImg(tempModel.PublisherImg, 2)
 				var personalImage = tempModel.PublisherImg;
-				console.log('tempMode='+JSON.stringify(tempModel));
+				console.log('tempMode=' + JSON.stringify(tempModel));
 				var personalName = events.shortForString(tempModel.PublisherName, 20);
 
 				var time = modifyTimeFormat(tempModel.PublishDate);

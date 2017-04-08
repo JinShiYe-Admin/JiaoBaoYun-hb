@@ -1,4 +1,3 @@
-
 .mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
 	border-top: none;
 	border-bottom: none;
@@ -205,8 +204,20 @@ body,
 	height: 45px;
 	width: 60px;
 }
+
 .showAll {
 	display: none;
 	color: #D7D7D7;
 	margin-top: 10px;
+}
+
+.record-imge {
+	width: 100%;
+}
+
+.record-picture {
+	overflow: hidden;
+	position: relative;
+	float: left;
+	text-align: center;
 }
