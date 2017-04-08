@@ -11,6 +11,29 @@
 			.mui-btn {
 				padding: 10px;
 			}
+			
+			/*修改input中placeholder的颜色*/
+			 ::-webkit-input-placeholder {
+				/* WebKit browsers */
+				color: #999999;
+			}
+			
+			 :-moz-placeholder {
+				/* Mozilla Firefox 4 to 18 */
+				color: #999999;
+				opacity: 1;
+			}
+			
+			 ::-moz-placeholder {
+				/* Mozilla Firefox 19+ */
+				color: #999999;
+				opacity: 1;
+			}
+			
+			 :-ms-input-placeholder {
+				/* Internet Explorer 10+ */
+				color: #999999;
+			}
 		</style>
 	</head>
 
@@ -20,15 +43,15 @@
 			<h1 class="mui-title" id="navTitle"></h1>
 		</header>
 		<div class="mui-content">
-			<div id="tishi" style="padding: 30px;text-align: center;">
-				<a style="color: black;font-size: 20px;" id="tishiContent">请输入你的手机号</a>
+			<div id="tishi" style="padding: 28px;text-align: center;">
+				<a style="color: #000000;font-size: 20px;" id="tishiContent">请输入您的手机号</a>
 			</div>
-			<form class="mui-input-group">
-				<div class="mui-input-row">
-					<label style="font-size: 15px;">手机号</label>
-					<input type="number" id="phoneNumber" placeholder="请输入手机号 ">
-				</div>
-			</form>
+			<!--<form class="mui-input-group" style="border:0px 0px 0px 0px;">-->
+			<div class="mui-input-row" style="background-color: white;">
+				<label style="font-size: 15px;">手机号</label>
+				<input type="tel" id="phoneNumber" placeholder="请输入手机号" place>
+			</div>
+			<!--</form>-->
 			<div class="mui-content-padded">
 				<button id='register' class="mui-btn mui-btn-block mui-btn-primary" style="background: #13b7f6; border: none ; ">下一步</button>
 			</div>
@@ -71,7 +94,7 @@
 				} else { //更改绑定手机号2
 					navTitle.innerText = '更换手机号';
 					tishiContent.innerText = '更换手机后，下次登录可使用新手机号登录。当前手机号:' + tempInfo.uid;
-					tishiContent.style.color = '#7f7f7f';
+					//					tishiContent.style.color = '#7f7f7f';
 				}
 				phoneNum.value = '';
 				//				events.preload('yanZhengMa.html');
@@ -113,43 +136,43 @@
 					}
 					// 等待的对话框
 					var wd = events.showWaiting();
-						//发送网络请求，data为网络返回值
-						postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData0, comData, 0, wd, function(data) {
-							wd.close();
-							console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							if(data.RspCode == 0) {
-								//存储到手机本地
-								window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
-								//获取验证码协议
-								//需要加密的数据
-								var enData = {
-									uid: document.getElementById("phoneNumber").value
-								};
-								//发送网络请求，data为网络返回值
-								postDataEncry(storageKeyName.MAINURL + 'PostCode', enData, comData, 0, wd, function(data) {
-									//成功，关闭等待框
-									wd.close();
-									//console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-									if(data.RspCode != 0000) {
-										mui.toast(data.RspTxt);
-										return;
-									} else {
-										//将输入的手机号，传到验证码界面
-										var tempValue = {
-											phone: phoneNum.value,
-											flag: regFlag
-										};
-										var tempV = {
-											tempValue: tempValue,
-											comData: comData
-										}
-										events.openNewWindowWithData('yanZhengMa.html', tempV);
+					//发送网络请求，data为网络返回值
+					postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData0, comData, 0, wd, function(data) {
+						wd.close();
+						console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							//存储到手机本地
+							window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+							//获取验证码协议
+							//需要加密的数据
+							var enData = {
+								uid: document.getElementById("phoneNumber").value
+							};
+							//发送网络请求，data为网络返回值
+							postDataEncry(storageKeyName.MAINURL + 'PostCode', enData, comData, 0, wd, function(data) {
+								//成功，关闭等待框
+								wd.close();
+								//console.log('11111success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								if(data.RspCode != 0000) {
+									mui.toast(data.RspTxt);
+									return;
+								} else {
+									//将输入的手机号，传到验证码界面
+									var tempValue = {
+										phone: phoneNum.value,
+										flag: regFlag
+									};
+									var tempV = {
+										tempValue: tempValue,
+										comData: comData
 									}
-								});
-							} else {
-								mui.toast(data.RspTxt);
-							}
-						});
+									events.openNewWindowWithData('yanZhengMa.html', tempV);
+								}
+							});
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					});
 				});
 			});
 		</script>

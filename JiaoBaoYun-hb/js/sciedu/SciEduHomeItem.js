@@ -18,8 +18,15 @@ var SciEduHomeItem = (function(mod) {
 	 */
 	mod.addItem = function(element, data, callBack) {
 		var tempImgs = [];
+
 		for(var i = 0; i < data.timgs.length; i++) {
 			if(data.timgs[i] != '' && data.timgs[i] != 'null') {
+				var tempStr = data.timgs[i];
+				//返回大于等于0的整数值，若不包含""则返回"-1。
+				if(tempStr.indexOf("~") >= 0 ){
+					data.timgs[i]=data.timgs[i].replace("~/","");
+					data.timgs[i] = storageKeyName.MAINEDU + data.timgs[i];
+				} 
 				tempImgs.push(data.timgs[i]);
 			}
 		}

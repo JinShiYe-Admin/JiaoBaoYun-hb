@@ -7,6 +7,17 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-table-view-cell:after,before {
+				background-color: #dddddd;
+			}
+			.mui-table-view:before {
+				background-color: #dddddd;
+			}
+			.mui-table-view:after {
+				background-color: #dddddd;
+			}
+		</style>
 
 	</head>
 
@@ -73,6 +84,7 @@
 								case 1: //返回
 									//flag为2，表示是更改绑定手机
 									events.openNewWindowWithData('../register/register_phoneNumber.html', '2');
+
 									break;
 							}
 						}, 'div');
@@ -129,6 +141,7 @@
 											window.myStorage.setItem(window.storageKeyName.PERSONALINFO, null);
 											//退出登录
 											events.logOff();
+											plus.webview.currentWebview().close();
 											//											plus.runtime.quit();
 											//跳转到登录界面
 											events.openNewWindowWithData('../../html/register/login.html', '');
