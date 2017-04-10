@@ -19,19 +19,7 @@ var teacherClasses = []; //老师身份关联班级
 var studentClasses = []; //学生身份关联班级
 var role = 2; //老师角色 30为家长+学生角色
 var publish;
-//加载子页面
-//events.initSubPage('homework-tea-sub.html');
-//mui.plusReady(function() {
-//
-//})
-//向子页面传递数据
-//var sendMsgToSub = function() {
-//	events.fireToPageNone("homework-tea-sub.html", 'workContent', {
-//		role: role,
-//		studentClasses: studentClasses,
-//		teacherClasses: teacherClasses
-//	});
-//}
+
 /**
  * 设置标题栏
  * @param {Object} title 标题
