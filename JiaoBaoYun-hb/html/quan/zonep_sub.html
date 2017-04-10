@@ -225,8 +225,7 @@
 			SCREEN_WIDTH = plus.screen.resolutionWidth;
 			gid = plus.webview.currentWebview().data.classId
 			mui.previewImage();
-			
-			
+
 			publisherId = plus.webview.currentWebview().data; //发布者id
 
 			tempPage = 1; //页码，请求第几页数据
@@ -289,12 +288,18 @@
 					tempDiv.appendChild(div)
 
 				} else {
+					var comData = {
+						userId: personalUTID, //用户ID
+						publisherId: publisherId, //发布用户ID
+						noteType: '2', //信息类型,1云笔记,2个人空间动态
+						pageIndex: '1', //当前页数
+						pageSize: '10' //每页记录数
+					};
 					requestData(comData)
 				}
 
 			})
 		}
-
 
 		//加载数据
 		function addData(index) {

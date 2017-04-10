@@ -605,13 +605,24 @@ var dynamiclistitem = (function($, mod) {
 		div.style.marginTop = '-10px'
 		div.innerHTML = html;
 		liElement.appendChild(div);
-		//		if(ImageNum == 1) {
-		//			var img = div.getElementsByClassName('dynamic-image')[0];
-		//			console.log(img.outerHTML);　　
-		//			var width = img.naturalWidth;　　
-		//			var height = img.naturalHeight;
-		//			console.log('width=' + width + '-----' + 'height=' + height);
-		//		}
+//				if(ImageNum == 1) {
+//					var img = div.getElementsByClassName('dynamic-image')[0];
+//					console.log(img.outerHTML);　　
+//					var width = img.naturalWidth;　　
+//					var height = img.naturalHeight;
+//					
+//					if(width<height){
+//						console.log('width=' + width + '-----' + 'height=' + height);
+//						var tempwidth = (SCREEN_WIDTH - 20) / 2;
+//						img.setAttribute('width',tempwidth+'px');
+//						img.setAttribute('height',tempwidth/width*height+'px')
+//					}else{
+//						console.log('width=' + width + '-----' + 'height=' + height);
+//						var tempHeight = (SCREEN_WIDTH - 20);
+//						img.setAttribute('height',tempHeight+'px');
+//						img.setAttribute('width',tempHeight/height*width+'px')
+//					}
+//				}
 
 		mod.addInteraction(ulElement, liElement, data);
 	};
