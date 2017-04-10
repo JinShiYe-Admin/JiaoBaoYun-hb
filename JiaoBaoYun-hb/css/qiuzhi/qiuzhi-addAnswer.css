@@ -9,8 +9,8 @@
 }
 .extras-info{
 	margin-top: -7px;
-	padding-top: 20px;
-	height: 70px;
+	padding-top: 10px;
+	height: 50px;
 	background-color: white;
 }
 
@@ -34,7 +34,7 @@ textarea {
 .take_camero,
 .get_gallery,
 .get_record {
-	width: 60px;
+	width: 50px;
 	height: 40px;
 	padding-left: 10px;
 	padding-top: 10px;
