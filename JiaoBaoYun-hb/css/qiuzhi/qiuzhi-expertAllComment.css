@@ -12,6 +12,12 @@
 	background-color: #f7f8fa;
 	padding: 0 1rem;
 }
+/*.mui-table-view-cell div {
+	background-color: red;
+				padding-bottom: 10px;
+				padding-top: 5px;
+				width: 100%;
+			}*/
 .mui-table-view-cell p:nth-child(1)
 {
 	color: #808080;
