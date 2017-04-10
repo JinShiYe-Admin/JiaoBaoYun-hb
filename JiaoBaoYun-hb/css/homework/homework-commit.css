@@ -10,7 +10,8 @@ body,
 
 .btn-submit {
 	/*position: absolute;*/
-	width: 100%;
+	width: 90%;
+	margin-left: 5%;
 	height: 4rem;
 	margin-bottom: 1rem;
 	background-color: #1DB8F1;
@@ -20,18 +21,19 @@ body,
 .comment-area {
 	margin-top: 1rem;
 	padding: 10px;
-	border: solid 1px #E4E4E4;
+	border-bottom: solid 1px #E4E4E4;
+	border-top: solid 1px #E4E4E4;
 }
 
-/*.homework-container {
-	min-height: 20rem;
-}*/
+.homework-container {
+	padding: 0 15px;
+}
 
 .comment-item {
 	background-color: #f2f3f5;
-	padding:5px 15px;
+	padding:10px 15px;
 	/*margin:-1rem,0 ;*/
-	margin: 0 -15px;
+/*	margin: 0 -15px;*/
 	color: #383838;
 	font-size: 16px;
 	letter-spacing: 1px;
@@ -41,6 +43,7 @@ body,
 	display: flex;
 	display: -webkit-flex;
 	align-items: center;
+	padding: 10px 0;
 }
 
 .result-text {
@@ -63,9 +66,10 @@ body,
 	padding: .5rem;
 }
 
-.homework-info p,
-.stu-name {
+.homework-info p{
+	letter-spacing: 1px;
 	color: #404040;
+	font-size: 1.3rem;
 }
 
 .stu-name {
@@ -78,16 +82,16 @@ body,
 .the-line {
 	height: 1px;
 	background-color: #E4E4E4;
-	margin: 0 -15px;
+	/*margin: 0 -15px;*/
 }
 
 .homework-info,
 .result-text {
 	padding: 10px 0;
 }
-.mui-scroll{
+/*.mui-scroll{
 	padding: 0 15px;
-}
+}*/
 .work-result{
 	font-size: 14px;
 	color: #474747;
@@ -102,4 +106,7 @@ body,
 }
 .change-comment{
 	font-size: 20px;
+}
+.commented-holder{
+	padding: 0 15px;
 }
