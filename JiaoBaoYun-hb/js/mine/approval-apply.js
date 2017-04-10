@@ -15,11 +15,13 @@ var gutid = 0; //申请记录id
 var gid = 0; //群id
 var defaultRole = 0; //默认角色
 var stuname = '';
+var wd;
 mui.plusReady(function() {
 	//预加载界面
 	events.preload('add-info.html', 200);
 	//	getData('inv', setData);
 	//获取数据，并填充
+	wd=events.showWaiting();
 	getData('inv', []);
 	//checkBox加载监听
 	getChecked()
@@ -32,12 +34,14 @@ mui.plusReady(function() {
 	 */
 	window.addEventListener('appPassed', function(e) {
 		console.log('接受邀请');
-		events.clearChild(list);
+		list.innerHTML="";
+		wd=events.showWaiting();
 		getData('inv', []);
 	})
 	window.addEventListener('applied', function(e) {
 		console.log('申请入群');
-		events.clearChild(list);
+		list.innerHTML="";
+		wd=events.showWaiting();
 		getData('inv', []);
 	})
 })
@@ -49,11 +53,11 @@ mui.plusReady(function() {
 var getData = function(type, records) {
 	console.log("申请记录：" + JSON.stringify(records));
 	//获取申请人
-	var wd = events.showWaiting();
+//	var wd = events.showWaiting();
 	postDataPro_PostGrInv({
 		vtp: type
 	}, wd, function(data) {
-		wd.close();
+//		wd.close();
 		console.log('申请人数据：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			if(type == 'inv') {
@@ -74,10 +78,10 @@ var getData = function(type, records) {
  * 获取申请记录
  */
 var getApplyRecord = function(records) {
-	var wd = events.showWaiting();
+//	var wd = events.showWaiting();
 	console.log("申请记录：" + JSON.stringify(records));
 	postDataPro_PostMJoin({}, wd, function(data) {
-		wd.close();
+//		wd.close();
 		console.log('获取的我的群申请记录：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			records = records.concat(data.RspData);
@@ -107,7 +111,6 @@ var setData = function(records) {
 	//	apply_container.setAttribute("id","btn-apply")
 	apply_container.innerHTML = '<div id="btn-apply" class="apply-search"><p><span class="mui-icon mui-icon-search"></span>&nbsp;&nbsp;申请加入班级</p><div>'
 	list.appendChild(apply_container);
-
 	if(records.length > 0) {
 		var divider = document.createElement('li');
 		divider.className = "mui-table-view-divider";
@@ -121,7 +124,7 @@ var setData = function(records) {
 			list.appendChild(li);
 		})
 	}
-
+	events.closeWaiting();
 }
 /**
  * 加载监听

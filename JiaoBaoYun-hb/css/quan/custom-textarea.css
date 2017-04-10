@@ -57,10 +57,10 @@ div>.icon-xiangji:before,
 	float: left;
 	text-align: center;
 }
-.img-div img{
+/*.img-div img{
 	padding-top: 0.5rem;
 	width: 80%;
-}
+}*/
 .icon-guanbi{
 	position: absolute;
 	top: 0;
@@ -74,8 +74,8 @@ div>.icon-xiangji:before,
 	background-color: transparent;
 }
 .img-div img{
-	padding-top: 0.5rem;
-	width: 80%;
+	width: 100%;
+	height: 100%;
 }
 .icon-guanbi{
 	position: absolute;

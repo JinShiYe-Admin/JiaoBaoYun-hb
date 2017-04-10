@@ -173,7 +173,6 @@ var class_space = (function(mod) {
 					}
 					var realIds = events.arraySingleItem(personIds);
 					requireInfos(realIds);
-					//					setData();
 				})
 
 			} else {
@@ -391,8 +390,7 @@ var setListener = function(userId) {
 		this.previousSibling.className = "chat-words";
 		this.className = "less-span";
 		//		this.style.display="none";
-		this.innerText = "收回展开";
-
+		this.innerText = "收回";
 	})
 	mui('.mui-table-view').on('tap', ".less-span", function() {
 		console.log("当前父页面的className:" + this.parentElement.parentElement.parentElement.parentElement.className)

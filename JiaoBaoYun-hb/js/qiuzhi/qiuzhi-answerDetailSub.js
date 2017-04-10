@@ -7,18 +7,21 @@ var selfId;
 var flag = 1; //1为加载数据 0 为重置顺序
 var upperInfo;
 var parentContainer;
+var wd;
 /**
  * 加载刷新
  */
 events.initRefresh('list-container', function() {
 	flag = 1;
 	pageIndex = 1;
+	wd=events.showWaiting();
 	requestAnswerDetail(answerInfo.AnswerId);
 }, function() {
 	mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
 	if(pageIndex < totalPageCount) {
 		pageIndex++;
 		flag = 1;
+		wd=events.showWaiting();
 		requestAnswerDetail(answerInfo.AnswerId);
 	}
 })
@@ -54,6 +57,7 @@ mui.plusReady(function() {
 		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
 		var answerId = answerInfo.AnswerId;
 		document.getElementById('list-container').innerHTML="";
+		wd=events.showWaiting();
 		requestAnswerDetail(answerId);
 	});
 	window.addEventListener('commentAdded', function(e) {
@@ -86,6 +90,8 @@ var getComment = function(commentedInfo) {
 		console.log("获取的评论数据：" + JSON.stringify(data))
 		if(data.RspCode == 0) {
 			rechargeComment(data.RspData, commentedInfo)
+		}else{
+			events.closeWaiting();
 		}
 	})
 }
@@ -227,10 +233,10 @@ function requestAnswerDetail(answerId) {
 		pageSize: '10' //每页记录数,传入0，获取总记录数
 	};
 	// 等待的对话框
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+//	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//8.获取某个回答的详情
 	postDataQZPro_getAnswerById(comData, wd, function(data) {
-		wd.close();
+//		wd.close();
 		console.log('8.获取某个回答的详情:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			var datasource = data.RspData;
@@ -238,6 +244,7 @@ function requestAnswerDetail(answerId) {
 			getInfos(datasource);
 		} else {
 			mui.toast(data.RspTxt);
+			events.closeWaiting();
 		}
 	});
 }
@@ -280,14 +287,12 @@ var requireInfos = function(datasource, pInfos) {
 		vtp: 'g' //查询类型,p(个人)g(id串)
 	}
 	//21.通过用户ID获取用户资料
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataPro_PostUinf(tempData, wd, function(data) {
-		wd.close();
 		console.log('获取的个人信息:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			refreshUI(rechargeInfos(datasource, data.RspData));
 		} else {
-
+			events.closeWaiting()
 		}
 	})
 
@@ -414,6 +419,7 @@ function refreshUI(datasource) {
 	}
 	var ul = document.getElementById('list-container');
 	createList(ul, datasource.Data);
+	events.closeWaiting();
 }
 /**
  * 创建列表

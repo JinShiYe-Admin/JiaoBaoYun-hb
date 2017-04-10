@@ -38,12 +38,11 @@
 		<script type="text/javascript" src="../../js/show/show-sub.js"></script>
 		<script type="text/javascript">
 			mui.init();
+			idFlag = 'zx';
 			var datasource = {}; //数据源
-			var idFlag = 'zx'; //判断是展现还是空间
 			var pageIndex = 1; //第几页
 			var totalPage = 0; //总页数
 			var id = 0; //cell的id
-			var pageFlag = 1; //判断是展现还是空间
 			var pullFlag = 0; //判断是上拉刷新还是下拉加载更多
 			var zonepArray; //当前数组
 			var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
@@ -255,7 +254,7 @@
 							pullRefresh(function() {
 								requestData(cities[0].acode, 1);
 							});
-							addSomeEvent();
+							dynamiclistitem.addSomeEvent()
 						});
 					});
 				}
@@ -531,6 +530,7 @@
 					var page = {
 						pageIndex: pageIndex, //当前页数
 						totalPage: 0 //总页数
+						
 					};
 					if(data.RspCode == 0) {
 						page.totalPage = data.RspData.TotalPage;
@@ -677,8 +677,6 @@
 								for(var i in data1.RspData) {
 									//当前model
 									var tempModel = data1.RspData[i];
-									//更新头像
-									tempModel.PublisherImg = updateHeadImg(tempModel.uimg, 2);
 									//循环留言数组
 									for(var item in tempRspData) {
 										//当前循环的model
@@ -696,7 +694,6 @@
 
 											//合并
 											tempModel0 = $.extend(tempModel0, tempModel);
-											tempModel0.PublisherName = tempModel0.unick
 										}
 										//循环当前model中的回复数组
 										for(var item1 in tempModel0.Comments) {
@@ -783,429 +780,6 @@
 				}
 			}
 
-			function addSomeEvent() {
-				mui('.mui-table-view').on('tap', '.icon-xiajiantou', function() {
-					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
-
-					var pageID = sliderId.replace('top_', '')
-					var tempId = this.id;
-					var index = this.id.replace('btn-focus' + pageID + 'zx', '');
-					var isFocus = zonepArray[index].IsFocused;
-					//					var isFocus = jQuery('#'+this.id).data('isFocus');
-					var title, status;
-					if(isFocus == 0) {
-						title = '关注'
-						status = 1;
-					} else {
-						title = '取消关注'
-						status = 0;
-					}
-					var btnArray = [{ title: title, style: "destructive" }];
-					plus.nativeUI.actionSheet({
-						cancel: "取消",
-						buttons: btnArray
-					}, function(e) {
-						var flag = e.index;
-						switch(flag) {
-							case 0:
-								break;
-							case 1:
-								{
-									//80.（用户空间）设置某用户的关注
-									//所需参数
-									var comData = {
-										userId: personalUTID, //用户ID
-										focusId: zonepArray[index].PublisherId, //关注ID
-										status: status //关注状态，0 不关注，1 关注
-									};
-									//返回：1为正确
-									var wd = events.showWaiting();
-									postDataPro_setUserFocus(comData, wd, function(data) {
-										wd.close();
-										console.log(JSON.stringify(data))
-										if(data.RspCode == 0) {
-											var pageID = sliderId.replace('top_', '')
-											setTimeout(function() {
-												//获取数据
-												if(pageID != 1) { //定制的城市
-													for(var i = 0; i < zonepArray.length; i++) {
-														if(zonepArray[index].PublisherId == zonepArray[i].PublisherId) {
-															if(isFocus == 0) {
-																zonepArray[i].IsFocused = 1;
-																datasource[sliderId] = zonepArray
-															} else {
-																zonepArray[i].IsFocused = 0;
-																datasource[sliderId] = zonepArray
-															}
-
-														}
-													}
-													if(status == 0) {
-														mui.toast("取消关注成功")
-													} else {
-														mui.toast("关注成功")
-													}
-												} else { //关注的人数据
-													//81.（用户空间）获取用户所有关注的用户
-													getFocusByUser();
-												}
-											}, 1000);
-										}
-
-									})
-
-								}
-								break;
-						}
-					});
-				});
-
-				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-
-					var toast = '';
-					mui.each(click, function(index, element) {
-						toast = toast + element;
-					});
-					var id = this.getAttribute('id');
-
-					click.push(id);
-					click = [];
-				});
-				mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
-					var cityID = sliderId.replace('top_', '');
-					var index = this.id.replace('headImg' + cityID + 'zx', '');
-					mui.openWindow({
-						url: '../quan/zone_main.html',
-						id: '../quan/zone_main.html',
-						styles: {
-							top: '0px', //设置距离顶部的距离
-							bottom: '0px'
-						},
-
-						extras: {
-							data: zonepArray[index].PublisherId,
-							NoReadCnt: 0,
-							flag: '0'
-						},
-						createNew: true,
-
-					});
-
-				})
-				mui('.mui-table-view').on('tap', '.question_content', function() {
-
-					var toast = '';
-					mui.each(click, function(index, element) {
-						toast = toast + element;
-					});
-					var id = this.getAttribute('id');
-					var cityID = sliderId.replace('top_', '');
-					var index = this.id.replace('question_content' + cityID + 'zx', '');
-					zonepArray[index].focusFlag = 1;
-
-					events.openNewWindowWithData('../quan/space-detail.html', zonepArray[index])
-					click.push(id);
-					//								mui.toast('li-id:' + click[click.length - 1] + '-' + toast);
-					click = [];
-				});
-				mui('.mui-table-view').on('tap', '.show', function() {
-
-					var toast = '';
-					mui.each(click, function(index, element) {
-						toast = toast + element;
-					});
-					var id = this.getAttribute('id');
-					var cityID = sliderId.replace('top_', '');
-					var index = this.id.replace('show' + cityID + 'zx', '');
-					zonepArray[index].focusFlag = 1;
-
-					events.openNewWindowWithData('../quan/space-detail.html', zonepArray[index])
-					click.push(id);
-					click = [];
-				})
-				mui('.mui-table-view').on('tap', '.show2', function() {
-
-					var toast = '';
-					mui.each(click, function(index, element) {
-						toast = toast + element;
-					});
-					var id = this.getAttribute('id');
-					var cityID = sliderId.replace('top_', '');
-					var index = this.id.replace('show2' + cityID + 'zx', '');
-					zonepArray[index].focusFlag = 1;
-
-					events.openNewWindowWithData('../quan/space-detail.html', zonepArray[index])
-					click.push(id);
-					click = [];
-				})
-				//			评论
-				mui('#sliderGroup').on('tap', '.dynamic-icon-comment', function() {
-					//				click.push('评论');
-					var pageID = sliderId.replace('top_', '')
-					tempIndex = this.id.replace('comment' + pageID + 'zx', '');
-					addComment();
-
-					window.event.stopPropagation()
-
-				});
-				//底部评论按钮
-				mui('#sliderGroup').on('tap', '.dynamic-comment-btn', function() {
-					var pageID = sliderId.replace('top_', '')
-					console.log(pageID)
-					tempIndex = this.id.replace('bottomComment' + pageID + 'zx', '');
-					addComment();
-
-					window.event.stopPropagation()
-				});
-
-				//			回复评论
-				mui('#sliderGroup').on('tap', '.replyComment', function() {
-					var pageID = sliderId.replace('top_', '')
-					tempIndex = this.id.replace('replyComment' + pageID + 'zx', '');
-					console.log('tempIndex====' + tempIndex)
-					addComment();
-
-					window.event.stopPropagation()
-
-				});
-
-				var click = []; //记录被点击的li的id和被点击元素
-				//点击关注
-				mui('#sliderGroup').on('tap', '.btn-attention',
-					function() {
-						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
-
-						var pageID = sliderId.replace('top_', '')
-						var tempId = this.id;
-						var index = this.id.replace('btn-focus' + pageID + 'zx', '');
-						//80.（用户空间）设置某用户的关注
-						//所需参数
-						var comData = {
-							userId: personalUTID, //用户ID
-							focusId: zonepArray[index].PublisherId, //关注ID
-							status: '1' //关注状态，0 不关注，1 关注
-						};
-						//返回：1为正确
-						var wd = events.showWaiting();
-						postDataPro_setUserFocus(comData, wd, function(data) {
-							wd.close();
-							console.log(JSON.stringify(data))
-							if(data.RspCode == 0) {
-								var btn = document.getElementById(tempId);
-								btn.innerHTML = '取消关注'
-								btn.className = 'mui-btn mui-pull-right btn-attentioned'
-								var pageID = sliderId.replace('top_', '')
-								setTimeout(function() {
-									//获取数据
-									if(pageID != 1) { //定制的城市
-										requestData(pageID, 1);
-									} else { //关注的人数据
-										//81.（用户空间）获取用户所有关注的用户
-										getFocusByUser();
-									}
-									//结束下拉刷新
-									self.endPullDownToRefresh();
-								}, 1000);
-							}
-
-						})
-					}) //点击取消关注
-				mui('#sliderGroup').on('tap', '.btn-attentioned', function() {
-					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
-
-					var pageID = sliderId.replace('top_', '')
-					var tempId = this.id;
-					var index = this.id.replace('btn-focus' + pageID + 'zx', '');
-					//80.（用户空间）设置某用户的关注
-					//所需参数
-					var comData = {
-						userId: personalUTID, //用户ID
-						focusId: zonepArray[index].PublisherId, //关注ID
-						status: '0' //关注状态，0 不关注，1 关注
-					};
-					//返回：1为正确
-					var wd = events.showWaiting();
-					postDataPro_setUserFocus(comData, wd, function(data) {
-						wd.close();
-						console.log(JSON.stringify(data))
-						if(data.RspCode == 0) {
-							var btn = document.getElementById(tempId);
-							btn.innerHTML = '关注'
-							btn.className = 'mui-btn mui-pull-right btn-attention'
-							var pageID = sliderId.replace('top_', '')
-							console.log('hhhhhhhhhh=' + pageID)
-							setTimeout(function() {
-								//获取数据
-								if(pageID != 1) { //定制的城市
-									requestData(pageID, 1);
-								} else { //关注的人数据
-									//81.（用户空间）获取用户所有关注的用户
-									getFocusByUser();
-								}
-								//结束下拉刷新
-								self.endPullDownToRefresh();
-							}, 1000);
-
-						}
-
-					})
-				})
-				//点击点赞人那一行 跳转到点赞的人的列表界面
-				mui('.mui-table-view').on('tap', '.PraiseList', function() {
-					console.log('跳转到点赞人列表界面')
-					var cityID = sliderId.replace('top_', '');
-					var index = this.id.replace('PraiseList' + cityID + 'zx', '');
-					var LikeUsers = zonepArray[index].LikeUsers
-					console.log(JSON.stringify(LikeUsers))
-					events.fireToPageWithData("../quan/classSpace-persons.html", "personsList", { zanList: LikeUsers, type: 3 });
-					window.event.stopPropagation()
-				})
-				//点击点赞的人跳转到相应界面
-				mui('.mui-table-view').on('tap', '.praiseName', function() {
-					console.log('点赞者id' + this.dataset.info);
-					mui.openWindow({
-						url: '../quan/zone_main.html',
-						id: '../quan/zone_main.html',
-						styles: {
-							top: '0px', //设置距离顶部的距离
-							bottom: '0px'
-						},
-
-						extras: {
-							data: this.dataset.info,
-							NoReadCnt: 0,
-							flag: '0'
-						},
-						createNew: true,
-
-					});
-					window.event.stopPropagation()
-				});
-				//点击评论者名字
-				mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
-					console.log('评论者id' + this.dataset.info);
-					mui.openWindow({
-						url: '../quan/zone_main.html',
-						id: '../quan/zone_main.html',
-						styles: {
-							top: '0px', //设置距离顶部的距离
-							bottom: '0px'
-						},
-
-						extras: {
-							data: this.dataset.info,
-							NoReadCnt: 0,
-							flag: '0'
-						},
-						createNew: true,
-
-					});
-					window.event.stopPropagation()
-
-				})
-
-				//点赞和取消点赞
-				mui('#sliderGroup').on('tap', '.dynamic-icon-praise', function() {
-					var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
-					var pageID = sliderId.replace('top_', '')
-					click.push('点赞');
-					var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
-					var index = this.id.replace('praise' + pageID + 'zx', '');
-					var color = this.style.color;
-					if(color == 'rgb(183, 183, 183)') {
-						var comData = {
-							userId: personalUTID, //用户ID
-							userSpaceId: zonepArray[index].TabId, //用户空间ID
-						};
-						var wd = events.showWaiting();
-						postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
-							wd.close();
-							if(data.RspCode == 0) {
-								var a = document.getElementById("praise" + pageID + 'zx' + index);
-								a.style.color = 'rgb(26, 155, 255)'
-								//					mui.toast('点赞成功');
-								var PraiseList = document.getElementById("PraiseList" + pageID + 'zx' + index);
-								var praiseNameList = PraiseList.getElementsByTagName("font");
-								zonepArray[index].LikeUsers.unshift(userInfo) //把当前用户信息放到数组LikeUsers第一位
-
-								if(praiseNameList.length > 0) {
-									console.log(PraiseList.innerHTML);
-									PraiseList.innerHTML = PraiseList.innerHTML.replace('mui-pull-left">', 'mui-pull-left">' + '<font class="common-font-family-Regular dynamic-praise-name praiseName" data-info="' + userInfo.utid + '">' + personalunick + '</font>、')
-									console.log(PraiseList.innerHTML);
-								} else {
-									var citycode = sliderId.replace('top_', '');
-									document.getElementById('line' + citycode + 'zx' + index).className = 'mui-media-body dynamic-line';
-									PraiseList.innerHTML = '<img id= "praiseImg' + pageID + 'zx' + index + '" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' +
-										'<font class="common-font-family-Regular dynamic-praise-name praiseName" data-info="' + userInfo.utid + '">' + personalunick + '</font>';
-								}
-							} else {
-								mui.toast(data.RspTxt);
-							}
-
-						})
-
-					} else {
-
-						var comData = {
-							userId: personalUTID, //用户ID
-							userSpaceId: zonepArray[index].TabId, //用户空间ID
-						};
-						var wd = events.showWaiting();
-						postDataPro_delUserSpaceLikeByUser(comData, wd, function(data) {
-							wd.close();
-							if(data.RspCode == 0) {
-								var a = document.getElementById("praise" + pageID + 'zx' + index);
-								a.style.color = 'rgb(183, 183, 183)'
-								//					mui.toast('取消点赞成功');
-								var PraiseList = document.getElementById("PraiseList" + pageID + 'zx' + index);
-								var praiseName = PraiseList.getElementsByTagName("font");
-								var tempLikeUser = zonepArray[index].LikeUsers
-								for(var i in tempLikeUser) {
-									if(tempLikeUser[i].utid == userInfo.utid) {
-										tempLikeUser.splice(i, 1);
-										console.log(JSON.stringify(tempLikeUser))
-									}
-								}
-								if(praiseName.length > 1) {
-									console.log('多个人点赞')
-									for(var i = 0; i < praiseName.length; i++) {
-
-										if(praiseName[i].dataset.info == userInfo.utid) {
-											PraiseList.innerHTML = PraiseList.innerHTML.replace('<font class="common-font-family-Regular dynamic-praise-name praiseName" data-info="' + userInfo.utid + '">' + personalunick + '</font>、', '')
-
-										}
-									}
-
-								} else {
-									console.log('一个人点赞')
-									var citycode = sliderId.replace('top_', '');
-									var comment0 = document.getElementById('replyComment' + citycode + 'zx' + index + '-0-评论');
-									if(comment0) {
-										document.getElementById('line' + citycode + 'zx' + index).className = 'mui-media-body dynamic-line';
-									} else {
-										document.getElementById('line' + citycode + 'zx' + index).className = 'mui-media-body dynamic-line mui-hidden';
-									}
-									for(var i = 0; i < praiseName.length; i++) {
-										if(praiseName[i].dataset.info == userInfo.utid) {
-											PraiseList.removeChild(praiseName[i]);
-										}
-									}
-
-									var praiseImg = document.getElementById("praiseImg" + pageID + 'zx' + index);
-									PraiseList.removeChild(praiseImg);
-
-								}
-							} else {
-								mui.toast(data.RspTxt);
-							}
-
-						})
-
-					}
-
-				});
-
-			}
 
 			/* 获取所有人的id
 			 * @param {Object} data
@@ -1282,8 +856,8 @@
 				for(var i in data) {
 					for(var j in personsData) {
 						if(data[i].PublisherId == personsData[j].utid) {
-							data[i].PublisherName = personsData[j].unick;
-							data[i].PublisherImg = personsData[j].uimg;
+							data[i].unick = personsData[j].unick;
+							data[i].uimg = personsData[j].uimg;
 						}
 						//遍历点赞的人
 						for(var item2 in data[i].LikeUsers) {
@@ -1334,9 +908,8 @@
 					table.innerHTML = ''
 
 					for(var i = 0; i < data.length; i++) {
-						id = i;
 						var data1 = addData(i, cityCode);
-						dynamiclistitem.addItem(table, data1, id);
+						dynamiclistitem.addItem(table, data1);
 					}
 				}
 				dynamiclistitem.questionContent();
@@ -1344,72 +917,14 @@
 			}
 			//加载数据
 			function addData(index, cityCode) {
-				//[[InfoList],[ImageList],[InteractionList]]动态的信息
-				var datasource1 = [];
-				var InfoList = []; //头部和内容
-				var ImageList = []; //内容的图片
-				var EncAddrList = [];
-				var InteractionList = []; //底部内容
-
-				//个人信息和内容
-				//[personalImage,personalName,time,contentText]个人头像，姓名，发布时间，动态内容的文字
-				//判断img是否为null，或者空
-				var tempModel = zonepArray[index];
-				tempModel.PublisherImg = updateHeadImg(tempModel.PublisherImg, 2)
-				var personalImage = tempModel.PublisherImg;
-				console.log('tempMode=' + JSON.stringify(tempModel));
-				var personalName = events.shortForString(tempModel.PublisherName, 20);
-
-				var time = modifyTimeFormat(tempModel.PublishDate);
-				var contentText = tempModel.MsgContent;
-				InfoList.push(personalImage);
-				InfoList.push(personalName);
-				InfoList.push(time);
-				InfoList.push(contentText);
-				InfoList.push(tempModel.IsFocused);
-
-				//内容的图片
-				if(tempModel.EncImgAddr != '') {
-					var EncImgAddrs = tempModel.EncImgAddr.split('|');
-					var EncAddr = tempModel.EncAddr.split('|');
-					//内容的图片
-					for(var i = 0; i < EncImgAddrs.length; i++) {
-						ImageList.push(EncImgAddrs[i])
-						EncAddrList.push(EncAddr[i]);
-					}
-				}
-
-				//底部
-				//[introduce，viewCount，[praiseList],[commentList]]信息说明，浏览次数，点赞列表数组，评论列表数组
-				var introduce = '上传了' + ImageList.length + '张图片到相册《手机相册》';
-				var viewCount = tempModel.ReadCnt;
-				var praiseList = [];
-				if(tempModel.LikeUsers.length != 0) {
-					for(var i = 0; i < tempModel.LikeUsers.length; i++)
-						praiseList.push(tempModel.LikeUsers[i]);
-				}
-
-				//[commentList]:评论列表
-				//1.评论[commenter,content]，评论者，评论内容
-				//2.回复[replyer，commenter，replyContent]回复者，评论者，回复的内容
-				var commentList = [];
-
-				for(var i = 0; i < tempModel.Comments.length; i++) {
-
-					var tempComment = tempModel.Comments[i];
-					commentList.push(tempComment);
-
-				}
-
-				InteractionList.push(introduce);
-				InteractionList.push(viewCount);
-				InteractionList.push(praiseList);
-				InteractionList.push(commentList);
-
-				datasource1 = [InfoList, ImageList, InteractionList, EncAddrList, cityCode]
-
-				//				console.log('datasource' + JSON.stringify(datasource))1
-				return datasource1;
+				var data = zonepArray[index];
+				data.IsFocused = 1;
+				data.cityCode = cityCode;
+				data.pageFlag = 1;
+				data.idFlag = 'zx';
+				data.id = index;
+				data.id_name = data.cityCode + data.idFlag + data.id;
+				return dynamiclistitem.addData(data);
 			}
 
 			function addComment() {
