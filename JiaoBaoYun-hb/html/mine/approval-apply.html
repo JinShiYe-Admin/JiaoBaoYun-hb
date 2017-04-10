@@ -29,30 +29,31 @@
 				</ul>
 			</div>
 		</div>
-		<div id="chose-roles" class="mui-popover">
-			<!--<div class="mui-popover-arrow"></div>-->
-			<form class="mui-input-group">
-				<fieldset id="">
-					<legend>选择身份:</legend>
-					<div class="div-chose">
-						<input id="check-parents" name="checkbox1" type="radio" value="0">
-						<label>家长</label>
-					</div>
-					<div class="div-chose">
-						<input id="check-tea" name="checkbox1" type="radio" value="2">
-						<label>老师</label>
-					</div>
-					<div class="div-chose">
-						<input id="check-stu" name="checkbox1" type="radio" value="3">
-						<label>学生</label>
-					</div>
-					<div class="buttons">
-						<button id="btn-sure" type="button" class="mui-btn mui-btn-green btn-sure">确认</button>
-						<button id="btn-cancle" type="button" class="mui-btn mui-btn-green btn-cancel">取消</button>
-					</div>
+		<div id="chose-roles" class="mui-popover center-popover">
+			<div class="pop-title">
+				<div class="title-left"></div>
+				<div class="title-middle">请选择身份</div>
+				<span id="btn-cancle" class="title-right iconfont icon-guanbi1"></span>
+			</div>
+			<div class="chose-container">
+				<div class="div-chose">
+					<input id="check-parents" name="checkbox1" type="radio" value="0">
+					<label>家长</label>
+				</div>
+				<div class="div-chose">
+					<input id="check-tea" name="checkbox1" type="radio" value="2">
+					<label>老师</label>
+				</div>
+				<div class="div-chose">
+					<input id="check-stu" name="checkbox1" type="radio" value="3">
+					<label>学生</label>
+				</div>
+			</div>
 
-				</fieldset>
-			</form>
+			<div class="buttons">
+				<button id="btn-sure" type="button" class="mui-btn mui-btn-green btn-sure">确认</button>
+				<!--<button  type="button" class="mui-btn mui-btn-green btn-cancel">取消</button>-->
+			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/publicProtocol.js"></script>

@@ -167,6 +167,7 @@ var addListener = function() {
 	 * 我点击接受后选择身份
 	 */
 	mui('.mui-table-view').on('tap', '.btn-openPopover', function() {
+		mui(".mui-popover").popover("show");
 		//清空选中身份信息
 		groupRoles = [];
 		//获取默认身份
@@ -290,7 +291,7 @@ var getInnerHTML = function(item) {
 				'<p class="single-line class-title">'+ item.gname+'</p>' +
 				'<p class="single-line apply-message">' + events.shortForString(item.invname, 6) + hasRemark(item) + '</p>' +
 				'</div>' +
-				'<a href="#chose-roles" class = "mui-btn mui-btn-green btn-openPopover" ' +
+				'<a href="" class = "mui-btn mui-btn-green btn-openPopover" ' +
 				' gutid="' + item.gutid + '" mstype="' + item.mstype + '" gid="' + item.gid + '" stuname="' + item.stuname + '">接受</a></a>'
 		}
 	} else {
