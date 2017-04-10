@@ -22,6 +22,7 @@ var repliedItem; //回复的对象
 //页码请求到要显示的数据，array[model_userSpaceAboutMe]
 var aboutMeArray = [];
 var isShowing=false;
+var wd;
 mui.init();
 mui.plusReady(function() {
 	events.preload("../homework/workdetail-stu.html", 100);
@@ -180,7 +181,6 @@ var setListener = function() {
 }
 var getHomeworkResult = function(workInfo,callback) {
 	var personalId=myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-	var wd=events.showWaiting();
 	postDataPro_GetHomeworkResultStu({
 		studentId: personalId, //学生Id
 		classId: workInfo.ClassId, //班级群Id；
@@ -360,6 +360,7 @@ var getCellData = function(cell) {
  * @param {Object} callback 请求数据后的回调
  */
 function requestData() {
+	wd=events.showWaiting();
 	if(pageIndex > 1) {
 		if(pageIndex <= totalPage) {
 			requireAboutMe();
@@ -392,7 +393,6 @@ var getRoleInfos = function(tempRspData) {
 			vtp: 'g' //查询类型,p(个人)g(id串)
 		}
 		console.log('tempData:' + JSON.stringify(tempData));
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		//21.通过用户ID获取用户资料
 		postDataPro_PostUinf(tempData, wd, function(infos) {
 			wd.close();
@@ -401,8 +401,9 @@ var getRoleInfos = function(tempRspData) {
 				var rechargedData = replenishData(tempRspData, infos.RspData);
 				console.log('最终数据：' + JSON.stringify(rechargedData));
 				setData(rechargedData);
+			}else{
+				mui.toast(data.RspTxt);
 			}
-
 		});
 	}
 };
@@ -411,7 +412,6 @@ var setCommentMsgReadByUser = function() {
 		userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //用户ID
 		spaceTypes: '[4,5,6,7,8]'
 	}
-	var wd;
 	postDataPro_setCommentMsgReadByUser(comData, wd, function(data) {
 		console.log('与我相关设置成已读success:RspCode:' + JSON.stringify(data));
 	})
@@ -469,10 +469,9 @@ var requireAboutMe = function() {
 		pageIndex: pageIndex + '', //当前页数
 		pageSize: pageCount + '' //每页记录数
 	};
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//56.（用户空间）获取与我相关
 	postDataPro_getAboutMe(comData, wd, function(data) {
-		wd.close();
+		
 		console.log('获取的与我相关的数据：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			setCommentMsgReadByUser();
@@ -482,8 +481,8 @@ var requireAboutMe = function() {
 			} else {
 				getRoleInfos(data.RspData.Data)
 			}
-
 		} else {
+			wd.close();
 			mui.toast(data.RspTxt);
 		}
 	});
@@ -493,7 +492,6 @@ var requireAboutMe = function() {
  * @param {Object} aboutMeData 与我相关的数据
  */
 var requireHomeworkAlert = function(aboutMeData) {
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//	userId，学生/家长Id；
 	//pageIndex，页码，从1开始；
 	//pageSize，每页记录数；
@@ -502,7 +500,6 @@ var requireHomeworkAlert = function(aboutMeData) {
 		pageIndex: pageIndex,
 		pageSize: 5
 	}, wd, function(data) {
-		wd.close();
 		console.log('与我相关界面获取的作业提醒：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			alertTotalPage = data.RspData.TotalPage;
@@ -529,6 +526,7 @@ var requireHomeworkAlert = function(aboutMeData) {
 			//获取人员信息
 			getRoleInfos(allData);
 		} else {
+			wd.close();
 			mui.toast(data.RspTxt);
 		}
 	})

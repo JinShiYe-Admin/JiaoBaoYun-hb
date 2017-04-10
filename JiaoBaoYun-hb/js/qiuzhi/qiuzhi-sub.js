@@ -6,6 +6,9 @@ var totalPage; //总页数
 var channelInfo; //选择的话题
 var allChannels; //所有的话题
 var answerIsReady = false; //页面已就绪
+var wd;
+var getExperTime = null;
+var getChannelTime = null;
 mui.init();
 var lazyLoadApi = mui('#pullrefresh').imageLazyload({
 	autoDestroy: false,
@@ -27,18 +30,12 @@ mui.plusReady(function() {
 		var scrollApi = mui('.mui-scroll-wrapper').scroll(); //获取插件对象
 		scrollApi.refresh(); //刷新
 		scrollApi.scrollTo(0, 0); //滚动至顶部
-		console.log("高度："+document.querySelector(".mui-scroll-wrapper").offsetHeight);
-		//话题--求知
-		//		mod.model_Channel = {
-		//			TabId: '', //话题ID
-		//			ChannelCode: '', //话题编号
-		//			ChannelName: '' //话题名称
-		//		}
+		console.log("高度：" + document.querySelector(".mui-scroll-wrapper").offsetHeight);
+		getChannelTime = null;
+		getExperTime = null;
+		wd=events.showWaiting();
 		//获取所有符合条件问题
 		requestChannelList(channelInfo);
-		//清理问题列表
-
-		//		events.clearChild(document.getElementById('list-container'));
 		//清理专家列表
 		resetExpertsList();
 		//2.获取符合条件的专家信息
@@ -51,6 +48,9 @@ mui.plusReady(function() {
 		events.clearChild(document.getElementById('list-container'));
 		//清理专家列表
 		resetExpertsList();
+		getChannelTime = null;
+		getExperTime = null;
+		wd=events.showWaiting();
 		//2.获取符合条件的专家信息
 		getExpertsArray(channelInfo.TabId);
 		//刷新的界面实现逻辑
@@ -61,9 +61,12 @@ mui.plusReady(function() {
 	h5fresh.addRefresh(function() {
 		pageIndex = 1;
 		//清理问题列表
-		events.clearChild(document.getElementById('list-container'));
+		document.getElementById('list-container').innerHTML = "";
 		//清理专家列表
 		resetExpertsList();
+		getChannelTime = null;
+		getExperTime = null;
+		wd=events.showWaiting();
 		//2.获取符合条件的专家信息
 		getExpertsArray(channelInfo.TabId);
 		//刷新的界面实现逻辑
@@ -89,7 +92,7 @@ function getExpertsArray(channelId) {
 		pageSize: '10' //每页记录数,传入0，获取总记录数
 	};
 	// 等待的对话框
-	var wd = events.showWaiting();
+	//	var wd = events.showWaiting();
 	//2.获取符合条件的专家信息
 	postDataQZPro_getExpertsByCondition(comData, wd, function(data) {
 		console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
@@ -115,9 +118,10 @@ function getExpertsArray(channelId) {
 			}
 			console.log('tempData:' + JSON.stringify(tempData));
 			// 等待的对话框
-			var wd2 = events.showWaiting();
+			//			var wd2 = events.showWaiting();
 			//21.通过用户ID获取用户资料
-			postDataPro_PostUinf(tempData, wd2, function(data1) {
+			postDataPro_PostUinf(tempData, wd, function(data1) {
+				getExperTime = Date.now();
 				console.log('21.获取个人资料success:RspCode:' + data1.RspCode + ',RspData:' + JSON.stringify(data1.RspData) + ',RspTxt:' + data1.RspTxt);
 				if(data1.RspCode == 0) {
 					//循环当前的个人信息返回值数组
@@ -143,12 +147,15 @@ function getExpertsArray(channelId) {
 				for(var i = 0; i < tempRspData.length; i++) {
 					expertsItem(channelId, tempRspData[i]);
 				}
-				wd2.close();
+				if(getChannelTime) {
+					events.closeWaiting();
+				}
+				//				wd2.close();
 			});
 		} else {
 			mui.toast(data.RspTxt);
 		}
-		wd.close();
+		//		wd.close();
 	});
 };
 
@@ -199,10 +206,10 @@ function requestChannelList(channelInfo) {
 		pageSize: 10 //每页记录数,传入0，获取总记录数
 	};
 	// 等待的对话框
-	var wd = events.showWaiting();
+	//	var wd = events.showWaiting();
 	//4.获取所有符合条件问题
 	postDataQZPro_getAsksByCondition(comData, wd, function(data) {
-		wd.close();
+		//		wd.close();
 		console.log('获取所有符合条件问题:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			totalPage = data.RspData.totalPage;
@@ -236,9 +243,8 @@ var requireInfos = function(datas, pInfos) {
 			vtp: 'g' //查询类型,p(个人)g(id串)
 		}
 		//21.通过用户ID获取用户资料
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+		//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 		postDataPro_PostUinf(tempData, wd, function(data) {
-			wd.close();
 			console.log('获取的个人信息:' + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				rechargeInfos(datas, data.RspData);
@@ -286,6 +292,10 @@ var setChannelList = function(data) {
 		li.querySelector('.focus-status').questionInfo = data[i];
 	}
 	lazyLoadApi.refresh(true);
+	getChannelTime = Date.now();
+	if(getExperTime) {
+		events.closeWaiting();
+	}
 }
 var getInnerHTML = function(cell) {
 	//	console.log("回答内容：" + cell.AnswerContent);
