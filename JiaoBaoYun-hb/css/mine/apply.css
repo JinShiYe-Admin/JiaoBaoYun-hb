@@ -141,13 +141,11 @@ body {
 }*/
 
 .btn-sure {
-	margin-left: 30%;
-	width: 20%;
+	margin-left: 10%;
+	width: 80%;
 }
 
-.btn-cancel {
-	width: 20%;
-}
+
 
 fieldset {
 	background: transparent;
@@ -155,18 +153,18 @@ fieldset {
 }
 
 legend {
-	font-size: 2rem;
-	padding: 1rem;
-	padding-bottom: 1.5rem;
+	font-size: 20px;
 }
 
 .buttons {
-	padding-top: 1.5rem;
+	padding: 1.5rem 0;
 }
 
-.mui-popover {
+/*.mui-popover {
 	width: 90%;
-}
+	top: 100px;
+	left: 5%;
+}*/
 
 a>p {
 	display: inline-block;
@@ -233,7 +231,7 @@ a>p {
 
 .center-popover {
 	position: fixed;
-	top: 90px;
+	top: 120px;
 	left: 5%;
 	width: 90%;
 }
@@ -261,4 +259,34 @@ a>p {
 }
 .no-img{
 	width: 50%;
+}
+
+.pop-title{
+	width: 100%;
+	height: 40px;
+	background-color: #F2F3F5;
+	line-height: normal;
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
+}
+.title-left{
+	width: 5px;
+	height: 40px;
+	background-color: #1DB8F1;
+}
+.title-middle{
+	width: 50%;
+	padding-left: 5px;
+	flex-grow: 1;
+	font-size: 20px;
+}
+.title-right{
+	padding: 5px;
+}
+.chose-container{
+	padding-top: 15px;
+}
+.mui-popover{
+	border-radius: 0;
 }
