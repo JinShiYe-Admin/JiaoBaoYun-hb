@@ -132,18 +132,31 @@
 				}
 			});
 			var botHeight; //群底部列表的高度
+			var main; //获取当前窗体对象
 			var mainData; //接收页面传入参数值
 			var inviteOrCreate; //记录点击邀请或创建资料时的数据
+			var mstype = 'parents'; //被邀请成为的类型
 
 			mui.plusReady(function() {
+				initData();
+				getCGQun();
+			});
+
+			/**
+			 * 初始化数据
+			 */
+			function initData() {
+
 				if(plus.webview.getWebviewById('group-pInfo.html') == null) {
 					events.preload('../quan/group-pInfo.html');
 				}
-				var main = plus.webview.currentWebview(); //获取当前窗体对象
+				main = plus.webview.currentWebview(); //获取当前窗体对象
 				mainData = main.data; //接收页面传入参数值
 				console.log(main.id + ' ' + JSON.stringify(mainData));
 
-				var mstype = 'parents'; //被邀请成为的类型
+				//屏幕高度
+				var screenHeight = localStorage.getItem('resolutionHeight') * 1;
+				botHeight = screenHeight * 1 - (localStorage.getItem('getStatusbarHeight') * 1 + 45 + 38);
 
 				var link = document.createElement("link");
 				link.type = "text/css";
@@ -152,22 +165,24 @@
 					link.href = "../../css/mine/manager_member.css";
 					document.getElementById("title").innerText = '群管理';
 					document.getElementById("slider_group").style.textAlign = 'center';
-					document.getElementById("parents_la").style.width = plus.screen.resolutionWidth * 0.8 + 'px';
-					document.getElementById("teacher_la").style.width = plus.screen.resolutionWidth * 0.8 + 'px';
-					document.getElementById("student_la").style.width = plus.screen.resolutionWidth * 0.8 + 'px';
+					var sWidth = parseInt(localStorage.getItem('resolutionWidth') * 0.8);
+					document.getElementById("parents_la").style.width = sWidth + 'px';
+					document.getElementById("teacher_la").style.width = sWidth + 'px';
+					document.getElementById("student_la").style.width = sWidth + 'px';
+					initMemberListener(); //初始化成员的监听
 				} else {
 					link.href = "../../css/mine/manager_data.css";
 					document.getElementById("title").innerText = '人员资料';
+					initDataListener(); //初始化人员资料的监听
 				}
 				document.getElementsByTagName("head")[0].appendChild(link);
+				initQunListener();
+			}
 
-				//屏幕高度
-				var screenHeight = plus.screen.resolutionHeight;
-				botHeight = screenHeight * 1 - (plus.navigator.getStatusbarHeight() + 45 + 38);
-				console.log('botHeight ' + botHeight + '|' + plus.screen.resolutionWidth * 0.8);
-
-				getCGQun();
-
+			/**
+			 * 初始化与群有关的监听
+			 */
+			function initQunListener() {
 				//创建群
 				mui('.mui-content').on('tap', '.qun-add', function() {
 					events.openNewWindow('qun_manage_info.html');
@@ -241,7 +256,12 @@
 						element.setAttribute('data-info', JSON.stringify(info));
 					}
 				});
+			}
 
+			/**
+			 * 初始化成员的监听
+			 */
+			function initMemberListener() {
 				//点击成员
 				mui('#slider_group').on('tap', '.member-item', function() {
 					//console.log('member-item ' + this.getAttribute('data-info'));
@@ -332,7 +352,12 @@
 					}
 					mui('#popover').popover('hide');
 				});
+			}
 
+			/**
+			 * 初始化人员资料的监听
+			 */
+			function initDataListener() {
 				//点击资料
 				mui('#slider_group').on('tap', '.mui-table-view-cell', function() {
 					//是否是人员资料
@@ -452,9 +477,7 @@
 					info.stuname = data.stuname;
 					element.setAttribute('data-info', JSON.stringify(info));
 				});
-			});
-
-			//---界面---群框架--start---
+			}
 
 			/**
 			 * 获取创建的群
@@ -584,8 +607,6 @@
 					getAllData(data.gid);
 				}
 			}
-
-			//---界面---群框架--start---
 
 			//---成员---start---
 
@@ -775,11 +796,11 @@
 			 * 删除成员
 			 * @param {Object} gid 群id
 			 * @param {Object} utid 用户utid
-			 *  @param {Object} mstype 用户类型
+			 *  @param {Object} utype 用户类型
 			 */
-			function delMember(gid, utid, mstype) {
-				if(document.getElementById(gid + '_' + mstype + '_' + utid)) {
-					var element = document.getElementById(gid + '_' + mstype + '_' + utid);
+			function delMember(gid, utid, utype) {
+				if(document.getElementById(gid + '_' + utype + '_' + utid)) {
+					var element = document.getElementById(gid + '_' + utype + '_' + utid);
 					var parNode = element.parentNode;
 					parNode.removeChild(element);
 				}
