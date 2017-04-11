@@ -14,9 +14,9 @@ mui.plusReady(function() {
 	mui.previewImage();
 	events.blurBack();
 	//最大长度500
-	jQuery('#publish-content').prop("maxLength",500);
-//	var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight");
-//	console.log("屏幕宽度：" + webHeight);
+	jQuery('#publish-content').prop("maxLength", 500);
+	//	var webHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight");
+	//	console.log("屏幕宽度：" + webHeight);
 	events.preload('classes-select.html', 200);
 	window.addEventListener('postClasses', function(e) {
 		CloudFileUtil.files = [];
@@ -157,7 +157,7 @@ mui.plusReady(function() {
 		mui.toast('功能暂未开放！');
 	});
 	//录音按钮
-	events.addTap("get_record",function(){
+	events.addTap("get_record", function() {
 		mui.toast("功能暂未开放！")
 	})
 	setListener();
@@ -266,7 +266,7 @@ var setSubmitEvent = function() {
 				var content = document.getElementById('publish-content').value;
 				//判断是否有发送内容
 				if(content) {
-					if(events.limitInput(content,500)){
+					if(events.limitInput(content, 500)) {
 						return;
 					}
 					//12.发布作业
@@ -397,18 +397,11 @@ function requestPublishHomework() {
 		wd.close();
 		console.log('发布作业界面发布作业回调：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
-			CloudFileUtil.files = [];
-			events.clearChild(document.getElementById('pictures'));
-			//提示成功，清空界面数据
-			document.getElementById('publish-content').value = '';
-			submitOnLine = true;
-			events.clearChild(subjectsContainer);
-			events.clearChild(document.getElementById('classes'));
+
 			events.fireToPageNone('homework-tea.html', 'homeworkPublished');
 			console.log("空值的班级：" + JSON.stringify(emptyClasses))
 			var toastInfo = [];
 			for(var j in emptyClasses) {
-
 				toastInfo.push(emptyClasses[j].gname);
 			}
 			if(toastInfo.length > 0) {
@@ -417,6 +410,15 @@ function requestPublishHomework() {
 				mui.toast("发布作业成功！")
 			}
 			mui.back();
+			setTimeout(function() {
+				//提示成功，清空界面数据
+				CloudFileUtil.files = [];
+				submitOnLine = true;
+				document.getElementById('publish-content').value = '';
+				events.clearChild(document.getElementById('pictures'));
+				events.clearChild(subjectsContainer);
+				events.clearChild(document.getElementById('classes'));
+			}, 1000)
 		} else {
 			mui.toast(data.RspTxt);
 		}
