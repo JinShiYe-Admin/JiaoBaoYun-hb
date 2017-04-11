@@ -60,32 +60,32 @@ div>.icon-xiangji:before,
 	font-size: 30px;
 	color: #B7B7B7;
 }
-.img-div{
+/*.img-div{
 	position: relative;
 	width: 25%;
 	float: left;
 	text-align: center;
-}
-.img-div img{
+}*/
+/*.img-div img{
 	padding-top: 0.5rem;
 	width: 80%;
-}
-.icon-guanbi{
+}*/
+/*.icon-guanbi{
 	position: absolute;
 	top: 0;
 	right: 0;
-}
-.img-div{
+}*/
+/*.img-div{
 	position: relative;
 	width: 25%;
 	float: left;
 	text-align: center;
 	background-color: transparent;
-}
-.img-div img{
+}*/
+/*.img-div img{
 	padding-top: 0.5rem;
 	width: 80%;
-}
+}*/
 .icon-guanbi{
 	position: absolute;
 	top: 0;
