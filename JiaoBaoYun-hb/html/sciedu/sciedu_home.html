@@ -50,12 +50,12 @@
 				position: relative;
 			}
 
-			.show-picture img {
+			/*.show-picture img {
 				position: absolute;
 				top: 50%;
 				left: 50%;
 				transform: translate(-50%, -50%);
-			}
+			}*/
 		</style>
 	</head>
 
@@ -89,6 +89,7 @@
 
 				//Webview窗口显示事件
 				main.addEventListener("show", function(e) {
+					//alert('### 硬件加速 ### ' + main.id + ' ' + main.isHardwareAccelerated());
 					console.log("show " + main.id + '|' + index.id + "|" + sliderId + '|' + cities.length);
 					initBody();
 					changeIndexHeader();
@@ -208,7 +209,7 @@
 							pullRefresh(function() {
 								//设置监听上下滑动
 								mui('#sliderGroup .mui-scroll-wrapper').each(function(index, element) {
-									element.addEventListener('scrollstart', function(e) {
+									element.addEventListener('scrollend', function(e) {
 										//console.log('scrollstart');
 										var cityCode = sliderId.replace('top_', '');
 										var placeholder = '../../' + window.storageKeyName.DEFAULTSCIEDUIMAGELOAD;
@@ -375,6 +376,7 @@
 						lazyLoad.refresh(true);
 					});
 				}
+				lazyLoad.refresh(true);
 				//console.log(document.getElementById("bot_" + cityCode).innerHTML);
 			}
 
