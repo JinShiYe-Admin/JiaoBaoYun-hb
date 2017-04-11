@@ -54,6 +54,11 @@
 				top: 30%;
 			}
 
+			.mui-popover-li {
+				height: 45px;
+				line-height: 45px;
+			}
+
 			.mui-checkbox {
 				position: absolute;
 			}
@@ -86,41 +91,25 @@
 				</div>
 			</div>
 			<div id="slider_group" class="mui-slider-group" style="visibility: visible;margin-top: 0px;">
-				<!--<div id="qun_bot_217" class="mui-slider-item mui-control-content mui-active">
-					<div class="mui-scroll-wrapper" style="height:537px;background-color:white;">
-						<div class="mui-scroll">
-							<ul id="qun_bot_ul_217" class="mui-table-view">
-								<li class="mui-table-view-cell mui-media member-add" style="text-align: right;">
-									<span class="mui-media-body mui-icon iconfont icon-yaoqing0"></span>
-									<div class="mui-media-body mui-ellipsis">邀请</div>
-								</li>
-								<li id="217_1_7" data-info="{&quot;gid&quot;:217,&quot;gutid&quot;:447,&quot;utid&quot;:7,&quot;ugname&quot;:&quot;群主&quot;,&quot;ugnick&quot;:&quot;森&quot;,&quot;uimg&quot;:null,&quot;mstype&quot;:1}" class="mui-table-view-cell mui-media member-item">
-									<img src="../../image/utils/default_personalimage.png">
-									<div id="name_217_1_7" class="mui-media-body mui-ellipsis" style="color: red;">[老师]群主</div>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>-->
 			</div>
 			<div id="popover" class="mui-popover">
 				<ul class="mui-table-view">
 					<div style="height: 40px;line-height: 40px;font-size: 16px;">
 						选择身份:
 					</div>
-					<li style="height: 45px;line-height: 45px;">
+					<li class="mui-popover-li">
 						<div class="mui-input-row mui-checkbox mui-left">
 							<label id="parents_la" class="mui-ellipsis" style="text-align: left;">家长</label>
 							<input id="parents" name="Checkbox" type="checkbox" checked>
 						</div>
 					</li>
-					<li style="height: 45px;line-height: 45px;">
+					<li class="mui-popover-li">
 						<div class="mui-input-row mui-checkbox mui-left">
 							<label id="teacher_la" class="mui-ellipsis" style="text-align: left;">老师</label>
 							<input id="teacher" name="Checkbox" type="checkbox">
 						</div>
 					</li>
-					<li style="height: 45px;line-height: 45px;">
+					<li class="mui-popover-li">
 						<div class="mui-input-row mui-checkbox mui-left">
 							<label id="student_la" class="mui-ellipsis" style="text-align: left;">学生</label>
 							<input id="student" name="Checkbox" type="checkbox">
@@ -213,7 +202,10 @@
 						console.log(id + '|' + JSON.stringify(info));
 						events.openNewWindowWithData('qun_manage_info_change.html', {
 							gid: info.gid, //群ID
-							listener: { webid: 'qun_manage_1.html', winid: 'changeQunInfo' } //webview的id
+							listener: {
+								webid: 'qun_manage_1.html',
+								winid: 'changeQunInfo'
+							} //webview的id
 						});
 						setTimeout(function() {
 							document.getElementById('changeInfo').disabled = false;
@@ -545,7 +537,7 @@
 				if(mainData.type == 0) {
 					invite = '<ul id="qun_bot_ul_' + data.gid + '" class="mui-table-view">\
 								<li class="mui-table-view-cell mui-media member-add">\
-									<span class="mui-media-body mui-icon mui-icon-plus"></span>\
+									<span class="mui-media-body mui-icon iconfont icon-yaoqing0"></span>\
 									<div class="mui-media-body mui-ellipsis ">邀请</div>\
 								</li>\
 							</ul>';

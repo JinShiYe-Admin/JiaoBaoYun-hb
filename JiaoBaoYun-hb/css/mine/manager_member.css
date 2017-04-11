@@ -10,7 +10,7 @@
 }
 
 .mui-table-view-cell {
-	padding: 11px 4px;
+	padding: 11px 0px;
 }
 
 .member-item,
@@ -24,6 +24,9 @@
 	font-size: 40px;
 	/*font-weight: 600;*/
 	color: #CECECE;
+	padding-top: 8px;
+	margin-bottom: 4px;
+
 }
 
 .mui-ellipsis {
@@ -35,7 +38,8 @@ img {
 	border-radius: 50%;
 	height: 40px;
 	width: 40px;
+	margin-top: 5px;
+	margin-bottom: 8px;
 }
-
 
 /*---成员---end---*/
