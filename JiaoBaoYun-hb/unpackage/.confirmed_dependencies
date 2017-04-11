@@ -144,7 +144,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"js/publicProtocol.js",
 			"image/cloud/cloud_0_wenjianjia_1.png",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"image/cloud/cloud_0_unknow_0.png"
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
@@ -1771,7 +1772,26 @@
 	},
 	"html/show/add-comment.html": {
 		"resources": [
-			"css/quan/custom-textarea.css"
+			"css/quan/custom-textarea.css",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
 	},
