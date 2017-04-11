@@ -9,6 +9,8 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<link href="../../css/utils/preview.css" rel="stylesheet" />
+		<link href="../../css/quan/custom-textarea.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../../css/qiuzhi/qiuzhi-addAnswer.css" />
 	</head>
 
@@ -65,6 +67,8 @@
 		<script src="../../js/utils/cryption.js" type="text/javascript" charset="utf-8"></script>
 		<!--压缩文件js-->
 		<script src="../../js/utils/compress.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.zoom.js"></script>
+		<script src="../../js/mui.previewimage.js"></script>
 		<!--上传至七牛云js-->
 		<script src="../../js/utils/CloudFileUtil.js" type="text/javascript" charset="utf-8"></script>
 		<!--求知接口js-->
@@ -81,6 +85,7 @@
 			//传值接收方法
 			mui.plusReady(function() {
 				events.blurBack();
+				mui.previewImage();
 				jQuery('#answerContent').prop("maxLength", "4000");
 				window.addEventListener('qiuzhi-addAnswer', function(event) {
 					CloudFileUtil.files = [];

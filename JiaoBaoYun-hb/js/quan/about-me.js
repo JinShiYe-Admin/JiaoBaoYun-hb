@@ -504,6 +504,7 @@ var requireHomeworkAlert = function(aboutMeData) {
 		if(data.RspCode == 0) {
 			alertTotalPage = data.RspData.TotalPage;
 			if(totalPage == 0 && alertTotalPage == 0) {
+				wd.close();
 				if(isShowing){
 					mui.toast('暂无数据！');
 				}

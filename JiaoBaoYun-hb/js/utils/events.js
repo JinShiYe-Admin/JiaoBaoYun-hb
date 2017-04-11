@@ -58,11 +58,7 @@ var events = (function(mod) {
 				waiting: {
 					title: '正在加载...'
 				},
-				styles: {
-					top: '0px',
-					bottom: '0px',
-					softinputMode: "adjustResize"
-				}
+				styles: mod.getWebStyle()
 			})
 		}
 
@@ -88,12 +84,7 @@ var events = (function(mod) {
 			waiting: {
 				title: '正在加载...'
 			},
-			styles: {
-				top: '0px',
-				bottom: '0px',
-				softinputMode: "adjustResize"
-			},
-			createNew: true,
+			styles: mod.getWebStyle()
 		});
 	};
 	/**
@@ -107,6 +98,9 @@ var events = (function(mod) {
 		}
 		height = height ? height : 0;
 		bottom = bottom ? bottom : 0;
+		var styles = mod.getWebStyle();
+		styles.top = (localStorage.getItem('StatusHeightNo') * 1 + 45 + height) + 'px';
+		styles.bottom = bottom + 'px';
 		mui.init({
 			gestureConfig: {
 				doubletap: true //启用双击监听
@@ -114,10 +108,7 @@ var events = (function(mod) {
 			subpages: [{
 				url: subPage,
 				id: subPage.split('/')[subPage.split('/').length - 1],
-				styles: {
-					top: (localStorage.getItem('StatusHeightNo') * 1 + 45 + height) + 'px',
-					bottom: bottom + 'px',
-				},
+				styles: styles,
 				extras: {
 					data: datas
 				}
@@ -189,11 +180,7 @@ var events = (function(mod) {
 				mui.preload({
 					url: tarPage,
 					id: tarPage.split('/')[tarPage.split('/').length - 1], //默认使用当前页面的url作为id
-					styles: { //窗口参数
-						top: '0px',
-						bottom: '0px',
-						softinputMode: "adjustResize"
-					},
+					styles: mod.getWebStyle(),
 					show: {
 						anishow: 'slide-in-right',
 						duration: 250
@@ -401,11 +388,9 @@ var events = (function(mod) {
 	 * @param {Object} loadedCallBack 子页面加载完成的回调
 	 */
 	mod.createSubAppendMain = function(mainWebviewObject, subPageUrl, data, loadedCallBack) {
-		var sub = plus.webview.create(subPageUrl, subPageUrl.split('/')[subPageUrl.split('/').length - 1], {
-			top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px',
-			bottom: '0px',
-			softinputMode: "adjustResize"
-		}, {
+		var styles = mod.getWebStyle();
+		styles.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
+		var sub = plus.webview.create(subPageUrl, subPageUrl.split('/')[subPageUrl.split('/').length - 1], styles, {
 			data: data
 		});
 
@@ -608,12 +593,25 @@ var events = (function(mod) {
 	 * @param {Object} inputValue 输入的value
 	 * @param {Object} length 限制的长度
 	 */
-	mod.limitInput=function(inputValue,length){
-		if(inputValue.length>length){
-			mui.toast("输入已超过"+length+"字，请删除多余字符");
+	mod.limitInput = function(inputValue, length) {
+		if(inputValue.length > length) {
+			mui.toast("输入已超过" + length + "字，请删除多余字符");
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * 默认webview的样式
+	 */
+	mod.getWebStyle = function() {
+		var styles = {
+			top: '0px',
+			bottom: '0px',
+			softinputMode: "adjustResize",
+			hardwareAccelerated: false
+		};
+		return styles;
 	}
 
 	return mod;

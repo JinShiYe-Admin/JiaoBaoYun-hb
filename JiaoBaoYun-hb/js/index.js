@@ -47,10 +47,10 @@ mui.plusReady(function() {
 	//	var titles = ['首页', '科教', '展现', '求知'];
 	//设置子页面距离顶部的位置
 
-	var subpage_style = {
-		top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px', //设置距离顶部的距离
-		bottom: '50px',
-	};
+	var subpage_style = events.getWebStyle();
+
+	subpage_style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
+	subpage_style.bottom = '50px';
 
 	var aniShow = {};
 
