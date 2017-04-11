@@ -326,7 +326,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/myStorage/myStorage.js",
-			"js/storageKeyName.js"
+			"js/storageKeyName.js",
+			"fonts/iconfont.ttf"
 		],
 		"refer": []
 	},
@@ -814,7 +815,8 @@
 			"fonts/fangzheng.ttf"
 		],
 		"refer": [
-			"html/quan/zonep_sub.html"
+			"html/quan/zonep_sub.html",
+			"html/quan/leaveNew.html"
 		]
 	},
 	"html/quan/zonep_sub.html": {
@@ -1969,13 +1971,15 @@
 			"css/mui.min.css",
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js"
-		]
+		],
+		"refer": []
 	},
 	"html/mine/qun_data_details.html": {
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css"
-		]
+		],
+		"refer": []
 	},
 	"html/qiuzhi/qiuzhi-newQ.html": {
 		"resources": [
@@ -2007,13 +2011,15 @@
 			"fonts/iconfont.ttf",
 			"fonts/mui.ttf",
 			"fonts/fangzheng.ttf"
-		]
+		],
+		"refer": []
 	},
 	"html/mine/qun_manage_invite_info.html": {
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css"
-		]
+		],
+		"refer": []
 	},
 	"html/cloud/record_student_main.html": {
 		"resources": [
@@ -2041,7 +2047,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
-		]
+		],
+		"refer": []
 	},
 	"html/homework/change-comment.html": {
 		"resources": [
@@ -2063,12 +2070,20 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
-		]
+		],
+		"refer": []
 	},
 	"html/cloud/app_notes_main.html": {
 		"resources": [
 			"image/cloud/notes_bg2.jpg",
 			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": []
+	},
+	"html/quan/leaveNew.html": {
+		"resources": [
+			"css/quan/about-me.css",
+			"css/utils/bubble.css"
 		]
 	}
 }

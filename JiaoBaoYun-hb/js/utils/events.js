@@ -92,8 +92,7 @@ var events = (function(mod) {
 				top: '0px',
 				bottom: '0px',
 				softinputMode: "adjustResize"
-			},
-			createNew: true,
+			}
 		});
 	};
 	/**

@@ -91,6 +91,8 @@
 
 .icon-qun:before { content: "\e60f"; }
 
+.icon-guanbi1:before { content: "\e64e"; }
+
 .icon-biji2:before { content: "\e659"; }
 
 .icon-shubendisc:before { content: "\e682"; }
@@ -266,3 +268,5 @@
 .icon-adddata0:before { content: "\e65a"; }
 
 .icon-changeinfo0:before { content: "\e65c"; }
+
+.icon-yaoqing0:before { content: "\e65e4"; }
