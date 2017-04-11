@@ -25,9 +25,9 @@ mui.plusReady(function() {
 			requireHomeworkResult();
 		}
 	})
-	window.addEventListener("commetChanged",function(e){
+	window.addEventListener("commentChanged",function(e){
 		var commentValue=e.detail;
-		document.getElementById('result-text').innerText=commentValue;
+		document.getElementById('commented-words').innerText=commentValue;
 		workInfo.Comment=commentValue;
 	})
 	//设置最大长度为1000
@@ -59,7 +59,7 @@ var setListener = function() {
 			if(events.limitInput(commentValue,2000)){
 				return;
 			}
-			if(workInfo.workType == 0) {
+			if(workInfo.workType&&workInfo.workType == 0) {
 				if(workInfo.IsCommented) {
 					modifyAnswerComment(commentValue);
 				} else {
