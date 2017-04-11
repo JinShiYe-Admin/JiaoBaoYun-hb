@@ -348,7 +348,7 @@
 					//头像上传的空间
 					var uploadSpace = window.storageKeyName.HEADIMAGE;
 					var getToken = {
-						type: '1', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件
+						type: '0', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件
 						QNFileName: fileName, //str 必填 存放到七牛的文件名
 						appId: 5, //int 必填 项目id
 						mainSpace: mainSpace, //str 必填 私有空间或公有空间
@@ -376,7 +376,7 @@
 										console.log(thumb);
 										console.log(domain);
 										var myDate = new Date();
-										var gimgPath = domain + '?' + myDate.getTime();
+										var gimgPath = thumb + '?' + myDate.getTime();
 										//8.用户修改群各项信息
 										//需要参数
 										var comData2 = {
