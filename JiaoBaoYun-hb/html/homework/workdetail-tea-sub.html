@@ -121,7 +121,7 @@
 				</ul>
 				<!--<div><img src="../../image/homework/math.png"></img>数学作业</div>-->
 				<!--滑动组件-->
-				<div id="slider" class="mui-slider">
+				<div id="slider" class="mui-slider mui-hidden">
 					<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
 						<!--已完成选项卡-->
 						<a id="item1" class="mui-control-item mui-active" href="#div-finished">
@@ -277,9 +277,9 @@
 					if(data.RspCode == 0) {
 						homeworkDetailModel = data.RspData;
 						if(homeworkDetailModel.SubmitOnline == true) {
-							mui('.mui-slider')[0].style.visibility = 'visible';
+							homeworkDetailNodes.slider.className = 'mui-slider';
 						} else {
-							mui('.mui-slider')[0].style.visibility = 'hidden';
+							homeworkDetailNodes.slider.className = 'mui-slider mui-hidden';
 						}
 						//修改界面
 						refreshhomeworkDetail();
@@ -477,6 +477,7 @@
 					homeworkDetailNodes.unfinishedList.appendChild(li);
 
 				}
+
 				if(allAlertFlag == remainArray.length) {
 					homeworkDetailNodes.alertAllBtn.disabled = 'disabled';
 				}
