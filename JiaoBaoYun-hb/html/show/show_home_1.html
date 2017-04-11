@@ -616,6 +616,7 @@
 					wd1.close();
 					console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
+						
 						if(data.RspData.Data.length == 0) {
 							mui.toast('暂无内容')
 							var table = document.getElementById("bot_ul_1")
@@ -631,6 +632,7 @@
 						var tempArray = [];
 						//先遍历回调数组，获取
 						for(var item in tempRspData) {
+							tempRspData[item].IsFocused=1;
 							//当前循环的model
 							var tempModel0 = tempRspData[item];
 							//将当前model中id塞到数组
@@ -918,7 +920,6 @@
 			//加载数据
 			function addData(index, cityCode) {
 				var data = zonepArray[index];
-				data.IsFocused = 1;
 				data.cityCode = cityCode;
 				data.pageFlag = 1;
 				data.idFlag = 'zx';

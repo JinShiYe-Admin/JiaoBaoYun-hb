@@ -43,6 +43,7 @@ var dynamiclistitem = (function($, mod) {
 			var isFocus = zonepArray[index].IsFocused;
 			//					var isFocus = jQuery('#'+this.id).data('isFocus');
 			var title, status;
+			console.log(this.id)
 			if(isFocus == 0) {
 				title = '关注'
 				status = 1;
@@ -75,6 +76,7 @@ var dynamiclistitem = (function($, mod) {
 								console.log(JSON.stringify(data))
 								if(data.RspCode == 0) {
 									var pageID = sliderId.replace('top_', '')
+									console.log('pageID=' + pageID)
 									setTimeout(function() {
 										//获取数据
 										if(pageID != 1) { //定制的城市
@@ -90,6 +92,7 @@ var dynamiclistitem = (function($, mod) {
 
 												}
 											}
+											console.log('status=' + status)
 											if(status == 0) {
 												mui.toast("取消关注成功")
 											} else {
@@ -417,6 +420,34 @@ var dynamiclistitem = (function($, mod) {
 			}
 
 		});
+		//删除动态
+		mui('.mui-table-view').on('tap', '.mui-icon-closeempty', function() {
+			var btnArray = ['取消', '确定'];
+			var closeId = this.id;
+			mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
+				if(e.index == 1) {
+					var index = closeId.replace('delete', '');
+					console.log(closeId);
+					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var comData = {
+						userSpaceId: zonepArray[index].TabId //用户空间ID
+					};
+					postDataPro_delUserSpaceById(comData, wd, function(data) {
+						wd.close();
+						if(data.RspCode == 0) {
+							mui.toast('已删除');
+
+							var deleteNode = document.getElementById(index);
+							deleteNode.parentNode.removeChild(deleteNode);
+							zonepArray.splice(index, 1)
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					})
+				}
+			})
+		})
+
 	}
 
 	mod.addData = function(data) {
@@ -504,15 +535,19 @@ var dynamiclistitem = (function($, mod) {
 				closeempty = '';
 			}
 		} else {
-			if(data.IsFocused = 0) {
+			if(data.IsFocused == 0) {
+
 				if(!document.getElementById("spaceDetail")) {
+					console.log('关注')
 					closeempty = '<a data-is-focus=0  id ="btn-focus' + data.id_name + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:30px;height:30px;padding:5px"></a>';
 
 				} else {
 					//					closeempty = '<button id="btn-focus' + data.id_name + '" type="button" class="mui-btn mui-pull-right btn-attention" style="width: 55px;">关注</button>'
 				}
 			} else {
+
 				if(!document.getElementById("spaceDetail")) {
+					console.log('已关注')
 					closeempty = '<a data-is-focus=1  id ="btn-focus' + data.id_name + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:30px;height:30px;padding:5px"></a>';
 
 				} else {
@@ -527,7 +562,7 @@ var dynamiclistitem = (function($, mod) {
 
 		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body mui-pull-left">';
 		//头像
-		var html2 = '<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:50px;height:50px;border-radius: 50%;" src="' + data.personalImage + '"></div>';
+		var html2 = '<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:40px;height:40px;border-radius: 50%;" src="' + data.personalImage + '"></div>';
 		var html3 = '<div class="mui-media-body dynamic-padding-left-10px">' + closeempty;
 		//姓名
 		var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:16px;margin-top:2px">' + data.personalName + '</p>';
@@ -605,24 +640,24 @@ var dynamiclistitem = (function($, mod) {
 		div.style.marginTop = '-10px'
 		div.innerHTML = html;
 		liElement.appendChild(div);
-//				if(ImageNum == 1) {
-//					var img = div.getElementsByClassName('dynamic-image')[0];
-//					console.log(img.outerHTML);　　
-//					var width = img.naturalWidth;　　
-//					var height = img.naturalHeight;
-//					
-//					if(width<height){
-//						console.log('width=' + width + '-----' + 'height=' + height);
-//						var tempwidth = (SCREEN_WIDTH - 20) / 2;
-//						img.setAttribute('width',tempwidth+'px');
-//						img.setAttribute('height',tempwidth/width*height+'px')
-//					}else{
-//						console.log('width=' + width + '-----' + 'height=' + height);
-//						var tempHeight = (SCREEN_WIDTH - 20);
-//						img.setAttribute('height',tempHeight+'px');
-//						img.setAttribute('width',tempHeight/height*width+'px')
-//					}
-//				}
+		//				if(ImageNum == 1) {
+		//					var img = div.getElementsByClassName('dynamic-image')[0];
+		//					console.log(img.outerHTML);　　
+		//					var width = img.naturalWidth;　　
+		//					var height = img.naturalHeight;
+		//					
+		//					if(width<height){
+		//						console.log('width=' + width + '-----' + 'height=' + height);
+		//						var tempwidth = (SCREEN_WIDTH - 20) / 2;
+		//						img.setAttribute('width',tempwidth+'px');
+		//						img.setAttribute('height',tempwidth/width*height+'px')
+		//					}else{
+		//						console.log('width=' + width + '-----' + 'height=' + height);
+		//						var tempHeight = (SCREEN_WIDTH - 20);
+		//						img.setAttribute('height',tempHeight+'px');
+		//						img.setAttribute('width',tempHeight/height*width+'px')
+		//					}
+		//				}
 
 		mod.addInteraction(ulElement, liElement, data);
 	};
@@ -667,7 +702,6 @@ var dynamiclistitem = (function($, mod) {
 		var html3 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div class="mui-media-body mui-pull-right" style="margin-right:-15px">';
 		var html4;
 		//点赞状态
-		console.log('data.id_name=' + data.id_name)
 		if(data.IsLike != 0) { //已点赞
 			html4 = '<a id="praise' + data.id_name + '" style = "color: rgb(26,155,255)"  class="mui-icon iconfont icon-support dynamic-icon-praise"></a>';
 

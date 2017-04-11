@@ -391,6 +391,29 @@
 				getUserSpaceMsgsById(userId);
 
 			})
+			mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
+			var li = this.parentElement.parentElement.parentElement;
+			var index = li.id.replace('reply','');
+			console.log(JSON.stringify(leaveArray))
+			mui.openWindow({
+				url: '../quan/zone_main.html',
+				id: '../quan/zone_main.html',
+				styles: {
+					top: '0px', //设置距离顶部的距离
+					bottom: '0px'
+				},
+
+				extras: {
+					data: leaveArray[index].utid,
+					NoReadCnt: 0,
+					flag: '0'
+				},
+				createNew: true,
+
+			});
+			window.event.stopPropagation()
+
+		})
 			//点击回复
 			mui('.mui-table-view').on('tap', '.ableSelectedCell', function() {
 				cellIndex = this.id.replace('reply', '');

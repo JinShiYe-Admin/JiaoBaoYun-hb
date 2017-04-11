@@ -109,8 +109,8 @@ body,
 .dynamic-personal-image {
 	/*个人头像圆形*/
 	border-radius: 50%;
-	width: 50px !important;
-	height: 50px;
+	width: 40px ;
+	height: 40px;
 }
 
 .dynamic-image-div {
