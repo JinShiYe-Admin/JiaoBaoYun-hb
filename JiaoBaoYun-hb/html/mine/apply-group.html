@@ -10,6 +10,7 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/mine/search.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<!--申请样式表-->
 		<link href="../../css/mine/apply.css" rel="stylesheet" />
 	</head>
@@ -41,7 +42,7 @@
 			</div>
 		</div>
 		<!--申请入群弹出框-->
-		<div id="chose-roles" class="mui-popover center-popover">
+		<!--<div id="chose-roles" class="mui-popover center-popover">
 			<form class="mui-input-group">
 				<fieldset id="">
 					<legend>选择身份:</legend>
@@ -60,13 +61,39 @@
 					<textarea id="extra-input" class="extra-input" placeholder="请输入备注信息，最多20字"></textarea>
 					<div class="buttons">
 						<!--确定按钮-->
-						<button id="btn-sure" type="button" class="mui-btn mui-btn-green btn-sure">确认</button>
+						<!--<button id="btn-sure" type="button" class="mui-btn mui-btn-green btn-sure">确认</button>-->
 						<!--取消按钮-->
-						<button id="btn-cancle" type="button" class="mui-btn mui-btn-green btn-cancel">取消</button>
-					</div>
+						<!--<button id="btn-cancle" type="button" class="mui-btn mui-btn-green btn-cancel">取消</button>-->
+					<!--</div>
 				</fieldset>
 			</form>
 
+		</div>-->
+			<div id="chose-roles" class="mui-popover center-popover">
+			<div class="pop-title">
+				<div class="title-left"></div>
+				<div class="title-middle">请选择身份</div>
+				<span id="btn-cancle" class="title-right iconfont icon-guanbi1"></span>
+			</div>
+			<div class="chose-container">
+				<div class="div-chose">
+					<input id="check-parents" name="checkbox1" type="radio" value="0">
+					<label>家长</label>
+				</div>
+				<div class="div-chose">
+					<input id="check-tea" name="checkbox1" type="radio" value="2">
+					<label>老师</label>
+				</div>
+				<div class="div-chose">
+					<input id="check-stu" name="checkbox1" type="radio" value="3">
+					<label>学生</label>
+				</div>
+			</div>
+			<textarea id="extra-input" class="extra-input" placeholder="请输入备注信息，最多20字"></textarea>
+			<div class="buttons">
+				<button id="btn-sure" type="button" class="mui-btn mui-btn-green btn-sure">确认</button>
+				<!--<button  type="button" class="mui-btn mui-btn-green btn-cancel">取消</button>-->
+			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>

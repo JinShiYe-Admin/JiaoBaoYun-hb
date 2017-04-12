@@ -219,7 +219,7 @@ var defaultCheck = function(type) {
  * 获取选中身份数组
  */
 var getChecked = function() {
-	mui('.mui-input-group').on('change', 'input', function() {
+	mui('.chose-container').on('change', 'input', function() {
 		if(this.checked) {
 			var choseRole = parseInt(this.value);
 		}

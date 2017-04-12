@@ -80,8 +80,8 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 id="title" class="mui-title"></h1>
-			<a id="changeInfo" class="mui-icon iconfont icon-changeinfo0 mui-pull-right" style="display: none;"></a>
-			<a id="addData" class="mui-icon iconfont icon-adddata0 mui-pull-right" style="display: none;margin-right: 5px;"></a>
+			<a id="changeInfo" class="mui-icon iconfont icon-changeinfo1 mui-pull-right" style="display: none;"></a>
+			<a id="addData" class="mui-icon iconfont icon-adddata1 mui-pull-right" style="display: none;margin-right: 5px;"></a>
 		</header>
 		<div id="content" class="mui-content">
 			<span id="noqun" class="mui-icon mui-icon-plus qun-add" style="display: none;position: absolute;top: 80px;">新增群按钮</span>
@@ -821,15 +821,33 @@
 				element.id = data.gid + '_' + data.stuid;
 				element.setAttribute('data-info', JSON.stringify(data));
 				element.className = 'mui-table-view-cell';
+				var phoneId = '';
+				var showType = type;
+				if(type == '老师' || type == '管理员') {
+					showType = '老师';
+					phoneId = 'teacher_' + data.gid + '_' + data.stuid;
+				} else {
+					phoneId = 'parent_' + data.gid + '_' + data.stuid;
+				}
 				element.innerHTML = '<div class="mui-navigate-right">\
 										<div id="name_' + data.gid + '_' + data.stuid + '" class="mui-ellipsis  data-name"></div>\
-										<div class="mui-ellipsis  data-type">' + type + '</div>\
-										<div id="parent_' + data.gid + '_' + data.stuid + '" class="mui-ellipsis  data-parent"></div>\
+										<div class="mui-ellipsis  data-type">' + showType + '</div>\
+										<div id="' + phoneId + '" class="mui-ellipsis  data-parent"></div>\
 									</div>';
+
 				if(type == '老师') {
-					document.getElementById("qun_bot_tea_ul_" + data.gid).appendChild(element);
+					var table_ul = document.getElementById("qun_bot_tea_ul_" + data.gid);
+					table_ul.appendChild(element);
+				} else if(type == '管理员') {
+					var table_ul = document.getElementById("qun_bot_tea_ul_" + data.gid);
+					if(table_ul.children[0]) {
+						table_ul.insertBefore(element, table_ul.children[0]);
+					} else {
+						table_ul.appendChild(element);
+					}
 				} else {
-					document.getElementById("qun_bot_stu_ul_" + data.gid).appendChild(element);
+					var table_ul = document.getElementById("qun_bot_stu_ul_" + data.gid);
+					table_ul.appendChild(element);
 				}
 
 				//资料名称为空
@@ -846,9 +864,9 @@
 			 */
 			function getAllData(gid) {
 				var wd = events.showWaiting();
-				var stuList = []; //学生列表
-				var adminList = []; //管理员列表
-				var teaList = []; //老师列表
+				//var stuList = []; //学生列表
+				//var adminList = []; //管理员列表
+				//var teaList = []; //老师列表
 				//16.通过群ID获取群对象资料
 				//需要参数
 				var getMemData = {
@@ -863,16 +881,23 @@
 
 					if(data.RspCode == 0) {
 						var tempList = data.RspData;
+						var stuid = []; //资料id
 						for(var i = 0; i < tempList.length; i++) {
 							switch(tempList[i].mstype) {
-								case 1:
-									adminList.push(tempList[i]);
+								case 1: //管理员
+									//adminList.push(tempList[i]);
+									addDataItem(tempList[i], '管理员');
+									stuid.push(tempList[i].stuid);
 									break;
-								case 2:
-									teaList.push(tempList[i]);
+								case 2: //老师
+									//teaList.push(tempList[i]);
+									addDataItem(tempList[i], '老师');
+									stuid.push(tempList[i].stuid);
 									break;
-								case 3:
-									stuList.push(tempList[i]);
+								case 3: //学生
+									//stuList.push(tempList[i]);
+									addDataItem(tempList[i], '学生');
+									stuid.push(tempList[i].stuid);
 									break;
 								default:
 									console.log('用户在群类型异常');
@@ -884,18 +909,18 @@
 					} else {
 						mui.toast(data.RspTxt);
 					}
-					var stuid = []; //资料id
-					for(var i = 0; i < adminList.length; i++) {
-						addDataItem(adminList[i], '老师');
-					}
-					for(var i = 0; i < teaList.length; i++) {
-						addDataItem(teaList[i], '老师');
-					}
-					for(var i = 0; i < stuList.length; i++) {
-						//console.log('stuList[i] ' + JSON.stringify(stuList[i]));
-						addDataItem(stuList[i], '学生');
-						stuid.push(stuList[i].stuid);
-					}
+
+					//					for(var i = 0; i < adminList.length; i++) {
+					//						addDataItem(adminList[i], '老师');
+					//					}
+					//					for(var i = 0; i < teaList.length; i++) {
+					//						addDataItem(teaList[i], '老师');
+					//					}
+					//					for(var i = 0; i < stuList.length; i++) {
+					//						//console.log('stuList[i] ' + JSON.stringify(stuList[i]));
+					//						addDataItem(stuList[i], '学生');
+					//						stuid.push(stuList[i].stuid);
+					//					}
 
 					//获取学生关联的人员
 					var stuids = stuid.join(',');
@@ -926,7 +951,7 @@
 					if(data.RspCode == 0) {
 						var tempList = data.RspData;
 						for(var i = 0; i < tempList.length; i++) {
-							console.log('tempList 1| gid ' + gId + '|' + JSON.stringify(tempList[i]));
+							//console.log('tempList 1| gid ' + gId + '|' + JSON.stringify(tempList[i]));
 							if(gId == tempList[i].gid && tempList[i].umstype == 0) { //用户在群类型为家长
 								//console.log('tempList 2|' + JSON.stringify(tempList[i]));
 								var same = false
@@ -937,12 +962,21 @@
 								}
 								if(!same) {
 									parList.push({
-										gid: tempList[i].gid, //utid
+										gid: tempList[i].gid, //gid
 										utid: tempList[i].utid, //utid
 										stuid: tempList[i].stuid, //资料id
-										ugname: tempList[i].ugname //群昵称
+										ugname: tempList[i].ugname, //群昵称
+										umstype: tempList[i].umstype //用户在群类型为家长
 									});
 								}
+							} else if(gId == tempList[i].gid && (tempList[i].umstype == 1 || tempList[i].umstype == 2)) {
+								parList.push({
+									gid: tempList[i].gid, //gid
+									utid: tempList[i].utid, //utid
+									stuid: tempList[i].stuid, //资料id
+									ugname: tempList[i].ugname, //群昵称
+									umstype: tempList[i].umstype //用户在群类型为管理员或老师
+								});
 							}
 						}
 					} else {
@@ -983,8 +1017,14 @@
 							for(var j = 0; j < parList.length; j++) {
 								if(tempList[i].utid == parList[j].utid) {
 									parList[j].uid = tempList[i].uid;
-									//console.log("parent_" + parList[j].gid + '_' + parList[j].stuid);
-									document.getElementById("parent_" + parList[j].gid + '_' + parList[j].stuid).innerText = '家长:' + tempList[i].uid;
+									if(parList[j].umstype == 0) {
+										//console.log("parent_" + parList[j].gid + '_' + parList[j].stuid);
+										document.getElementById("parent_" + parList[j].gid + '_' + parList[j].stuid).innerText = '家长:' + tempList[i].uid;
+									} else {
+										//console.log("teacher_" + parList[j].gid + '_' + parList[j].stuid);
+										document.getElementById("teacher_" + parList[j].gid + '_' + parList[j].stuid).innerText = '电话:' + tempList[i].uid;
+
+									}
 								}
 							}
 						}

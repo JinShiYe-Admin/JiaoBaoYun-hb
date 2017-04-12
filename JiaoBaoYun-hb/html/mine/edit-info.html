@@ -35,6 +35,7 @@
 			mui.plusReady(function() {
 				events.blurBack();
 				var pInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
+				console.log("要输入的个人信息："+JSON.stringify(pInfo))
 				var curPage = plus.webview.currentWebview();
 				var title = document.getElementById('title');
 				var btn_save = document.getElementById('save');

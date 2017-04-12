@@ -254,6 +254,7 @@
 				var user = document.getElementById("user");
 				var data_li = document.getElementById("data_li");
 				var data_sw = document.getElementById("data_sw");
+				var commit_div = document.getElementById("commit_div");
 				//var height = screenOption.height - inputArea.offsetHeight - inputArea.offsetTop - 10;
 				var height = screenOption.height;
 				nouser.style.height = (height - user.offsetHeight - data_li.offsetHeight - 1) + 'px';
@@ -262,7 +263,7 @@
 				nouser_img.style.marginTop = height / 6 + 'px';
 				data_sw.style.top = (user.offsetHeight + user.offsetTop) + 'px';
 				data_sw.style.height = (screenOption.height - data_sw.offsetTop - 61) + 'px';
-				document.getElementById("commit_div").style.marginTop = data_sw.offsetHeight + 'px';
+				commit_div.style.marginTop = data_sw.offsetHeight + 'px';
 				//showNoUser(1, 1);
 			}
 
@@ -319,6 +320,7 @@
 			 * 初始化监听
 			 */
 			function initListener() {
+
 				events.blurBack();
 
 				//搜索
@@ -355,9 +357,15 @@
 					}
 				});
 
+				//确认邀请
 				document.getElementById('commit').addEventListener('tap', function() {
 					console.log('确认');
 					invite();
+				});
+
+				//资料区域开始滚动
+				document.getElementById('data_sw').addEventListener('scrollstart', function() {
+					document.getElementById("input_search").blur();
 				});
 			}
 

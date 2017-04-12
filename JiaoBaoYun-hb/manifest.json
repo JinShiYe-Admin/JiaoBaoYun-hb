@@ -2011,7 +2011,9 @@
 					"js/utils/events.js",
 					"html/mine/apply-group.html",
 					"fonts/fangzheng.ttf",
-					"css/mine/search.css"
+					"css/mine/search.css",
+					"css/iconfont/iconfont.css",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [],
 				"priority": 0

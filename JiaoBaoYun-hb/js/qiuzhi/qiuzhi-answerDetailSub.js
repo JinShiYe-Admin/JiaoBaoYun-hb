@@ -461,9 +461,10 @@ var createCell = function(ul, cellData, i, order) {
 	} else {
 		comments_zan.className = "mui-icon iconfont icon-support isNotLike"
 	}
-	var repliesContainer = comments_zan.parentElement.parentElement.parentElement.parentElement;
+	var repliesContainer = comments_zan.parentElement.parentElement.parentElement.parentElement.parentElement;
 	console.log('className:' + repliesContainer.className)
 	if(flag) {
+		console.log("repliesContainer的className:"+repliesContainer.className)
 		if(repliesContainer.className == ("mui-table-view inner-table-view")) {
 			comments_zan.order = repliesContainer.parentElement.querySelector('.icon-support').order + "-" + i;
 		} else {
