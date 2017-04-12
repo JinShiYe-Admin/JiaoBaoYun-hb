@@ -42,9 +42,7 @@ mui.plusReady(function() {
 	})
 	//加载监听
 	window.addEventListener('answerInfo', function(e) {
-		if(answerInfo&&e.detail.data.AnswerId==answerInfo.AnswerId){
-			return;
-		}
+		
 		flag = 1;
 		selfId = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 		mui('#refreshContainer').pullRefresh().refresh(true);
@@ -52,7 +50,10 @@ mui.plusReady(function() {
 		pageIndex = 1;
 		totalPageCount = 1;
 		answerInfo = e.detail.data;
-		type = 2; //倒序
+		//如果跟上次进入的是同一个回答 则不更改顺序
+		if(!(answerInfo&&e.detail.data.AnswerId==answerInfo.AnswerId)){
+			type = 2; //倒序
+		}
 		setTolerantChecked(type);
 		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
 		var answerId = answerInfo.AnswerId;
