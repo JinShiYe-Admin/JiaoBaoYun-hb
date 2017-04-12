@@ -21,6 +21,12 @@ var autoTextArea = (function(mod) {
 		addEvent('propertychange', mod.change); //ie输入事件
 		addEvent('input', mod.change); //输入事件
 		addEvent('focus', mod.change); //获取焦点事件
+		elem.onkeydown=function(event){
+			console.log("键盘输入事件："+JSON.stringify(event))
+			if(event.keyCode==13){
+				return false;
+			}
+		}
 		mod.change(parentElem, elem, leftElem, maxWords);
 	};
 	//获取样式

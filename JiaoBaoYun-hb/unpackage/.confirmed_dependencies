@@ -156,7 +156,8 @@
 			"html/quan/zone_main.html",
 			"html/quan/studentdynamic_main.html",
 			"html/cloud/record_student_main.html",
-			"html/cloud/app_notes_main.html"
+			"html/cloud/app_notes_main.html",
+			"html/mine/qun_manage_1.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -1164,7 +1165,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"image/utils/default_personalimage.png",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"css/mine/manager_data.css"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",
@@ -1437,7 +1439,8 @@
 		],
 		"refer": [
 			"html/qiuzhi/focus-question.html",
-			"html/qiuzhi/qiuzhi-expertAllAnswer.html"
+			"html/qiuzhi/qiuzhi-expertAllAnswer.html",
+			"html/qiuzhi/modifyExpertNote.html"
 		]
 	},
 	"html/sciedu/sciedu_show_main.html": {
