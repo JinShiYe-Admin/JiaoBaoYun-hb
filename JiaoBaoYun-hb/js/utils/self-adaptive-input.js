@@ -53,15 +53,16 @@ var autoTextArea = (function(mod) {
 //		elem._length = elem.value ? elem.value.length : 0;
 		//边距=上内边距+下内边距
 		padding = parseInt(getStyle(elem, 'paddingTop')) + parseInt(getStyle(elem, 'paddingBottom'));
-
+//		jQuery(elem).prop("maxLength",maxWords+elem.value.length-jQuery.trim(elem.value).length)
 		//scrollTop
 		scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
 		//输入框初始高度
 		elem.style.height = minHeight + 'px';
 		parentElem.style.height = minHeight + 1 + 'px';
-		console.log("输入框初始高度：" + minHeight)
+		console.log("输入框初始高度：" + minHeight);
+		
 		//如果滚动高度大于最小宽度
-		leftElem.innerText = maxWords - jQuery.trim(elem.value).length;
+		leftElem.innerText = maxWords - elem.value.length;
 		if(elem.scrollHeight > minHeight) {
 			console.log("输入框实际高度：" + elem.scrollHeight);
 
@@ -82,7 +83,7 @@ var autoTextArea = (function(mod) {
 			document.documentElement.scrollTop = scrollTop; //同上
 			elem.currHeight = parseInt(style.height); //当前高度
 		};
-		elem.value=jQuery.trim(elem.value);
+		elem.value=elem.value.replace(/\/n/g,"");
 	};
 	return mod;
 })(autoTextArea || {});

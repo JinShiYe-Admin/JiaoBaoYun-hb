@@ -1707,7 +1707,9 @@
 			"js/mui.min.js",
 			"css/mui.min.css",
 			"image/utils/default_personalimage.png",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"css/iconfont/iconfont.css",
+			"fonts/iconfont.ttf"
 		],
 		"refer": []
 	},

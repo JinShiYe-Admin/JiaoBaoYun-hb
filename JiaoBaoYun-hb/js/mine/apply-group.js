@@ -247,7 +247,7 @@ var getChecked = function() {
 	var check_tea = document.getElementById('check-tea');
 	//学生选择按钮
 	var check_stu = document.getElementById('check-stu');
-	mui('.mui-input-group').on('change', 'input', function() {
+	mui('.chose-container').on('change', 'input', function() {
 		if(this.checked) {
 			var choseRole = parseInt(this.value);
 			var extra_input = document.getElementById('extra-input');
