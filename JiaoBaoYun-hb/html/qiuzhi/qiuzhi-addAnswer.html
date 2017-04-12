@@ -328,6 +328,7 @@
 						mui.toast('回答成功');
 						document.getElementById("answerContent").value = '';
 						events.fireToPageNone('qiuzhi-questionSub.html', 'answerAdded');
+						events.fireToPageNone('expert-detail.html', 'refresh_expertdetail');
 						mui.back();
 					} else {
 						mui.toast(data.RspTxt);
@@ -372,6 +373,7 @@
 						if(data.RspData.Result) {
 							document.getElementById('answerContent').value = '';
 							mui.toast('评论成功！')
+							events.fireToPageNone('expert-detail.html', 'refresh_expertdetail');
 							events.fireToPageNone('qiuzhi-answerDetailSub.html', 'commentAdded', {
 								commentInfo: {
 									userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //	用户ID

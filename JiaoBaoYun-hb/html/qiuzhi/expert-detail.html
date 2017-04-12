@@ -96,7 +96,7 @@
 						<div>
 							<p id="CommentNum" style="font-size: 13px;margin-top: -20px;color: #808080;" class="mui-pull-right"><span class="mui-icon mui-icon-forward"></span></p>
 					</li>
-					<li id="inviteNumLi" class="mui-table-view-cell mui-media ">
+					<li id="inviteNumLi" class="mui-table-view-cell mui-media mui-hidden ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/qiuzhi/yaoqing.png" />
 						<div class="mui-media-body" id="titleFlag5" style="color: #323232;">邀请他回答</div>
 						<div>
@@ -359,9 +359,10 @@
 			console.log(nodes.AnswerNum.innerHTML)
 			var inviteNumLi = document.getElementById("inviteNumLi");
 			if(ExpertsInfo.IsExpert == 1) {
+				inviteNumLi.className = 'mui-table-view-cell '
 				nodes.inviteNum.innerHTML = ExpertsInfo.InviteNum + '<span class="mui-icon  iconfont icon-fanhui2" style="color:#b7b7b7"></span>';
 			} else {
-				inviteNumLi.parentNode.removeChild(inviteNumLi);
+				inviteNumLi.className = 'mui-table-view-cell mui-media mui-hidden '
 			}
 
 		}

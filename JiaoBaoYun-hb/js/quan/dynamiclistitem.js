@@ -464,7 +464,6 @@ var dynamiclistitem = (function($, mod) {
 		} else {
 			tempModel.personalName = events.shortForString(tempModel.unick, 15);
 		}
-
 		tempModel.PublishDate = modifyTimeFormat(tempModel.PublishDate);
 
 		if(tempModel.EncImgAddr != '') {
@@ -538,7 +537,6 @@ var dynamiclistitem = (function($, mod) {
 			if(data.IsFocused == 0) {
 
 				if(!document.getElementById("spaceDetail")) {
-					console.log('关注')
 					closeempty = '<a data-is-focus=0  id ="btn-focus' + data.id_name + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:30px;height:30px;padding:5px"></a>';
 
 				} else {
@@ -547,7 +545,6 @@ var dynamiclistitem = (function($, mod) {
 			} else {
 
 				if(!document.getElementById("spaceDetail")) {
-					console.log('已关注')
 					closeempty = '<a data-is-focus=1  id ="btn-focus' + data.id_name + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:30px;height:30px;padding:5px"></a>';
 
 				} else {
