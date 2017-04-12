@@ -274,6 +274,12 @@ div>.icon-xiangce:before,
 	background-color: #E4E4E4;
 	height: 1px;
 }
+.div-chose {
+	display: inline-block;
+	width: 32%;
+	text-align: center;
+	font-size: 1.6rem;
+}
 .center-popover {
 	position: fixed;
 	top: 120px;
@@ -335,4 +341,7 @@ div>.icon-xiangce:before,
 }
 .mui-btn-green {
 	background-color: #1DB8F1;
+}
+.chose-container{
+	padding: 15px 0;
 }

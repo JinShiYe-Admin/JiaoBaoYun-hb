@@ -738,7 +738,9 @@
 					"js/quan/class-group1.js",
 					"fonts/fangzheng.ttf",
 					"css/mine/apply.css",
-					"image/quan/add.png"
+					"image/quan/add.png",
+					"css/iconfont/iconfont.css",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"html/quan/group-pInfo.html",

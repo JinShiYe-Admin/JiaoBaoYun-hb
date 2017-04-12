@@ -965,7 +965,10 @@
 			"js/utils/events.js",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mine/apply.css",
-			"image/quan/add.png"
+			"image/quan/add.png",
+			"image/utils/default_personalimage.png",
+			"css/iconfont/iconfont.css",
+			"fonts/iconfont.ttf"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",

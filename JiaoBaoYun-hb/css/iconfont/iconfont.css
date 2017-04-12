@@ -17,6 +17,8 @@
 
 .icon-zone:before { content: "\e64c"; }
 
+.icon-moreandroid:before { content: "\e6a5"; }
+
 .icon-guanbi:before { content: "\e614"; }
 
 .icon-shexiangji:before { content: "\e60e"; }
@@ -274,4 +276,3 @@
 .icon-yaoqing0:before { content: "\e664"; }
 
 .icon-adddata1:before { content: "\e65d"; }
-

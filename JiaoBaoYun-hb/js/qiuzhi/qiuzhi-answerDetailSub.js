@@ -784,3 +784,23 @@ var replaceBigNo = function(no) {
 	}
 	return no;
 }
+var showActionSheet=function(){
+		var btnArray = [{title:"更改答案"},{title:"删除答案"}];
+			plus.nativeUI.actionSheet( {
+				cancel:"取消",
+				buttons:btnArray
+			}, function(e){
+				var index = e.index;
+				switch (index){
+					case 0:
+						text += "取消";
+						break;
+					case 1:
+						
+						break;
+					case 2:
+						
+						break;
+				}
+			} );
+}
