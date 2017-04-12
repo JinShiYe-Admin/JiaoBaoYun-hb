@@ -14,6 +14,7 @@ var choseGroupId; //选中申请的群Id
 mui.plusReady(function() {
 	events.blurBack();
 	events.softIn("extra-input");
+	events.fobidEnter(document.getElementById("extra-input"));
 	//设置最大长度
 	jQuery("#extra-input").prop("maxLength", 20);
 	list = document.getElementById('groups-container');
@@ -139,7 +140,7 @@ var setButtonsListener = function() {
 }
 var getExtraInfo = function() {
 	if(document.getElementById('extra-input').value) {
-		return document.getElementById('extra-input').value;
+		return jQuery.trim(document.getElementById('extra-input').value.replace(/\/n/g,""));
 	}
 	return "";
 }
