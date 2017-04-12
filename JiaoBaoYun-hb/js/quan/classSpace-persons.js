@@ -16,7 +16,8 @@ mui.plusReady(function() {
 			getChakanPersons(classSpaceInfo.classSpaceId);
 		}else if(classSpaceInfo.type==3){
 			title.innerText = '谁点的赞';
-			setData(classSpaceInfo.zanList);
+			getZonePersons(classSpaceInfo.userSpaceId)
+//			setData(classSpaceInfo.spaceID);
 		}
 	})
 })
@@ -28,6 +29,26 @@ var getZanPersons = function(classSpaceId) {
 	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	postDataPro_getIsLikeUsersById({
 		classSpaceId: classSpaceId
+	}, wd, function(data) {
+		wd.close();
+		console.log('获取的点赞列表数据：' + JSON.stringify(data));
+		if(data.RspCode == 0) {
+			if(data.RspData.Users.length > 0) {
+				getPersonsInfo(data.RspData.Users);
+			} else {
+				mui.toast("没啥人点赞")
+			}
+		} else {
+			mui.toast('你逮到我啦，有错误')
+		}
+
+	})
+}
+//获取用户空间所有点赞用户
+var getZonePersons = function(userSpaceId) {
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	postDataPro_getUserIsLikeUsersById({
+		userSpaceId: userSpaceId
 	}, wd, function(data) {
 		wd.close();
 		console.log('获取的点赞列表数据：' + JSON.stringify(data));
@@ -65,7 +86,11 @@ var getPersonsInfo = function(users) {
 					}
 				}
 			}
+			if(classSpaceInfo.type==3){
+				setData(data.RspData);
+			}else{
 			getGroupUsers(userIds,data.RspData);
+			}
 		} else {
 			mui.toast(data.RspTxt);
 		}
