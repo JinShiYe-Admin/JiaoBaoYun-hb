@@ -37,6 +37,7 @@
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 		<script type="text/javascript" src="../../js/show/show-sub.js"></script>
 		<script type="text/javascript">
+			var isPersonal=1;
 			mui.init();
 			idFlag = 'zx';
 			var datasource = {}; //数据源
@@ -525,7 +526,7 @@
 					pageSize: 10 //每页记录数
 				}, wd, function(data) {
 					events.closeWaiting();
-					console.log('展示获取的数据：' + JSON.stringify(data));
+//					console.log('展示获取的数据：' + JSON.stringify(data));
 					//记录页数
 					var page = {
 						pageIndex: pageIndex, //当前页数
@@ -535,6 +536,7 @@
 					if(data.RspCode == 0) {
 						page.totalPage = data.RspData.TotalPage;
 						totalPage = data.RspData.TotalPage;
+						
 						if(data.RspData.Data.length > 0) {
 							getPersonIds(data.RspData.Data, cityCode);
 						}
@@ -728,18 +730,21 @@
 									}
 								}
 							}
-							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+//							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 
 							var table = document.body.querySelector('.mui-table-view');
 							//判断是加载更多1，还是刷新0
+							var tempLenth;
 							if(paraModel.isRefresh == 0) {
+								tempLenth=0;
 								zonepArray = tempRspData
 							} else {
+								tempLenth=zonepArray.length;
 								zonepArray = zonepArray.concat(tempRspData);
 							}
 							datasource[sliderId] = zonepArray;
-							console.log("重组后的数据：" + JSON.stringify(zonepArray));
-							setData(zonepArray, 1);
+//							console.log("重组后的数据：" + JSON.stringify(zonepArray));
+							setData(zonepArray, 1,tempLenth);
 						});
 					} else {
 						mui.toast(data.RspTxt);
@@ -832,18 +837,21 @@
 					vtp: 'g' //查询类型,p(个人)g(id串)
 				}, wd, function(personsData) {
 					wd.close();
-					console.log('展示子页面获取的个人信息：' + JSON.stringify(personsData));
+//					console.log('展示子页面获取的个人信息：' + JSON.stringify(personsData));
 					if(personsData.RspCode == 0) {
 						data = rechargeData(data, personsData.RspData)
+						var tempLength;
 						if(pullFlag == 1) {
+							tempLength = zonepArray.length;
 							//合并数组
 							zonepArray = zonepArray.concat(data);
 						} else {
+							tempLength = 0;
 							zonepArray = data;
 						}
 						datasource[sliderId] = zonepArray;
-						console.log("重组后的数据：" + JSON.stringify(zonepArray));
-						setData(zonepArray, cityCode);
+//						console.log("重组后的数据：" + JSON.stringify(zonepArray));
+						setData(zonepArray, cityCode,tempLength);
 					} else {
 						events.fireToPageNone('index.html', 'closeWaiting');
 					}
@@ -901,15 +909,15 @@
 			 * 放置数据
 			 * @param {Object} data
 			 */
-			var setData = function(data, cityCode) {
+			var setData = function(data, cityCode,len) {
 				//				var table = document.body.querySelector('.mui-table-view');
 				var id = 'bot_' + sliderId.replace('top_', '');
 				var table = document.getElementById("bot_ul_" + cityCode)
 				if(table) {
 					table.setAttribute('data-info', JSON.stringify(data));
-					table.innerHTML = ''
+//					table.innerHTML = ''
 
-					for(var i = 0; i < data.length; i++) {
+					for(var i = len; i < data.length; i++) {
 						var data1 = addData(i, cityCode);
 						dynamiclistitem.addItem(table, data1);
 					}

@@ -113,24 +113,26 @@ var dynamiclistitem = (function($, mod) {
 			});
 		});
 		mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
-			var cityID = sliderId.replace('top_', '');
-			var index = this.id.replace('headImg' + cityID + idFlag, '');
-			mui.openWindow({
-				url: '../quan/zone_main.html',
-				id: '../quan/zone_main.html',
-				styles: {
-					top: '0px', //设置距离顶部的距离
-					bottom: '0px'
-				},
+			if(isPersonal == 1) {
+				var cityID = sliderId.replace('top_', '');
+				var index = this.id.replace('headImg' + cityID + idFlag, '');
+				mui.openWindow({
+					url: '../quan/zone_main.html',
+					id: '../quan/zone_main.html',
+					styles: {
+						top: '0px', //设置距离顶部的距离
+						bottom: '0px'
+					},
 
-				extras: {
-					data: zonepArray[index].PublisherId,
-					NoReadCnt: 0,
-					flag: '0'
-				},
-				createNew: true,
+					extras: {
+						data: zonepArray[index].PublisherId,
+						NoReadCnt: 0,
+						flag: '0'
+					},
+					createNew: true,
 
-			});
+				});
+			}
 
 		})
 		mui('.mui-table-view').on('tap', '.question_content', function() {
