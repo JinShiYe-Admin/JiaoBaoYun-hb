@@ -141,8 +141,8 @@ body {
 }*/
 
 .btn-sure {
-	margin-left: 10%;
-	width: 80%;
+	margin-left: 5%;
+	width: 90%;
 }
 
 
@@ -223,6 +223,7 @@ a>p {
 	min-height: 50px;
 	border: solid 1px #E4E4E4 !important;
 	border-radius: 0;
+	padding: 10px;
 }
 
 .class-title {
@@ -275,7 +276,7 @@ a>p {
 	align-items: center;
 }
 .title-left{
-	width: 5px;
+	width: 3px;
 	height: 30px;
 	background-color: #1DB8F1;
 }
@@ -287,7 +288,7 @@ a>p {
 	color:#323232 ;
 }
 .title-right{
-	padding: 5px;
+	padding: 10px;
 }
 .chose-container{
 	padding: 15px 0;
@@ -297,4 +298,15 @@ a>p {
 }
 .icon-guanbi1{
 	color: #D2D2D2;
+	font-size: 24px;
+}
+.pop-hint{
+	font-size: 17px;
+	color: #323232;
+	margin-left: 20px;
+	margin-bottom: 14px;
+}
+.div-chose>label{
+	color: #808080;
+	font-size: 16px;
 }

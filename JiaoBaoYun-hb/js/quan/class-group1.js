@@ -1,5 +1,7 @@
 mui.init();
 var groupRoles;
+var choseRole;
+var isMaster;
 mui('.mui-scroll-wrapper').scroll({
 	indicators: true, //是否显示滚动条
 });
@@ -17,20 +19,73 @@ mui.plusReady(function() {
 		}
 	})
 	window.addEventListener('groupInfoChanged', function() {
-			freshContent();
+		freshContent();
 	})
 	mui('#gride').on('tap', '.mui-table-view-cell', function() {
-		events.fireToPageWithData('group-pInfo.html', 'postPInfo', jQuery.extend({}, this.info, { isMaster: isMaster }));
+		if(this.info.invitable) {
+			mui(".mui-popover").popover("show");
+		} else {
+			events.fireToPageWithData('group-pInfo.html', 'postPInfo', jQuery.extend({}, this.info, {
+				isMaster: isMaster
+			}));
+		}
 	})
 	events.addTap('quit-group', function() {
 		showChoices();
 	})
+	mui(".chose-container").on("change", "input", function() {
+		if(this.checked) {
+			choseRole = parseInt(this.value);
+		}
+	})
+	setButtonsListener();
 })
+/**
+ * 设置弹出框的监听事件
+ */
+var setButtonsListener = function() {
+//	document.getElementById('search-btn').addEventListener('tap', searchGroup)
+	//确定按钮
+	var btn_sure = document.getElementById('btn-sure');
+	//取消按钮
+	var btn_cancel = document.getElementById('btn-cancle');
+	//确定按钮加载监听
+	btn_sure.addEventListener('tap', function() {
+		if(choseRole == null) {
+			mui.toast("请选择邀请类型！")
+			return;
+		}
+		events.openNewWindowWithData('../mine/qun_manage_invite_a.html', {
+			gid: groupId, //群ID
+			gname: groupName, //群名
+			mstype: choseRole, //被邀请成为的类型
+			vtp: '1' //邀请人的类型（用户管理角色,0家长,1管理员,2老师,3学生）
+		});
+		mui('.mui-popover').popover("hide");
+		resetRole();
+	});
+	//取消按钮加载监听
+	btn_cancel.addEventListener('tap', function() {
+		mui('.mui-popover').popover('hide');
+		resetRole();
+	})
+}
+/**
+ * 重置角色选择
+ */
+var resetRole = function() {
+	choseRole = null;
+	//家长选择按钮
+	document.getElementById('check-parents').checked = false;
+	//老师选择按钮
+	document.getElementById('check-tea').checked = false;
+	//学生选择按钮
+	document.getElementById('check-stu').checked = false;
+}
 var freshContent = function() {
 	groupRoles = [];
 	allcount = 0;
 	getUserInGroup(-1, function(data) {
-		getGroupAllInfo();
 		groupRoles = data;
 		console.log('班级群组界面获取的用户在群中的信息:' + JSON.stringify(groupRoles));
 		for(var i in groupRoles) {
@@ -42,14 +97,15 @@ var freshContent = function() {
 		}
 		if(groupRoles.length == 0) {
 			document.querySelector('.quit-container').style.display = 'none';
-			document.querySelector('.mui-content').style.marginBottom="0";
-		} else if(groupRoles.length == 1 &&groupRoles[0]==0&& isMaster) {
+			document.querySelector('.mui-content').style.marginBottom = "0";
+		} else if(groupRoles.length == 1 && groupRoles[0] == 0 && isMaster) {
 			document.querySelector('.quit-container').style.display = 'none';
-			document.querySelector('.mui-content').style.marginBottom="0";
+			document.querySelector('.mui-content').style.marginBottom = "0";
 		} else {
 			document.querySelector('.quit-container').style.display = 'block';
-			document.querySelector('.mui-content').style.marginBottom="5rem";
+			document.querySelector('.mui-content').style.marginBottom = "5rem";
 		}
+		getGroupAllInfo();
 	})
 }
 /**
@@ -120,13 +176,13 @@ var addRemarkData = function(list, remarkList) {
 					break;
 				}
 			}
-//			if(!hasBunick) {
-//				list[i].bunick = list[i].ugname;
-//			}
+			//			if(!hasBunick) {
+			//				list[i].bunick = list[i].ugname;
+			//			}
 		}
 	} else {
 		list.forEach(function(cell, i) {
-//			list[i].bunick = cell.ugname;
+			//			list[i].bunick = cell.ugname;
 			list[i] = setOrder(cell);
 		})
 	}
@@ -176,7 +232,13 @@ var getRemarkData = function(list, callback) {
  * @param {Object} array 元素数组，包括图标和标题
  */
 var createGride = function(gride, array) {
-
+	if(isMaster) {
+		array.unshift({
+			uimg: "../../image/quan/add.png",
+			bunick: "邀请",
+			invitable: true
+		})
+	}
 	//数组遍历
 	array.forEach(
 		/**
@@ -187,16 +249,16 @@ var createGride = function(gride, array) {
 		 */
 		function(cell, index, array) {
 			var li = document.createElement('li'); //子元素
-//			var bgColor = getRandomColor(); //获取背景色
+			//			var bgColor = getRandomColor(); //获取背景色
 			if(array.length <= 3) { //数组小于等于3，每行3个图标
 				li.className = "mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4";
 			} else { //数组大于3，每行四个图标
 				li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
 			}
 			cell.gname = groupName;
-//			if(!cell.bunick) {
-//				cell.bunick = cell.ugnick;
-//			}
+			//			if(!cell.bunick) {
+			//				cell.bunick = cell.ugnick;
+			//			}
 			li.info = cell;
 			//子控件的innerHTML
 			li.innerHTML = '<a class="gride-inner" href="#">' +
@@ -206,11 +268,11 @@ var createGride = function(gride, array) {
 			gride.appendChild(li);
 		})
 }
-var setBeunick=function(item){
-	if(item.bunick){
+var setBeunick = function(item) {
+	if(item.bunick) {
 		return item.bunick;
 	}
-	return  item.ugname;
+	return item.ugname;
 }
 var setMasterNameClass = function(info) {
 	if(info.mstype == 1) {

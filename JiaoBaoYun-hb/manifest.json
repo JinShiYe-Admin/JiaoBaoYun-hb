@@ -737,10 +737,13 @@
 					"js/utils/events.js",
 					"js/quan/class-group.js",
 					"js/quan/class-group1.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"css/mine/apply.css",
+					"image/quan/add.png"
 				],
 				"refer": [
-					"html/quan/group-pInfo.html"
+					"html/quan/group-pInfo.html",
+					"html/mine/qun_manage_invite_a.html"
 				],
 				"priority": 0
 			},

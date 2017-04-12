@@ -963,10 +963,13 @@
 			"js/utils/RSAEncrypt.js",
 			"css/quan/class_space.css",
 			"js/utils/events.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mine/apply.css",
+			"image/quan/add.png"
 		],
 		"refer": [
-			"html/quan/group-pInfo.html"
+			"html/quan/group-pInfo.html",
+			"html/mine/qun_manage_invite_a.html"
 		]
 	},
 	"html/quan/classSpace-persons.html": {
