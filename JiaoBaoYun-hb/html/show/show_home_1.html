@@ -528,7 +528,7 @@
 					pageSize: 10 //每页记录数
 				}, wd, function(data) {
 					events.closeWaiting();
-					//					console.log('展示获取的数据：' + JSON.stringify(data));
+										console.log('展示获取的数据：' + JSON.stringify(data));
 					//记录页数
 					var page = {
 						pageIndex: pageIndex, //当前页数
@@ -851,7 +851,7 @@
 							zonepArray = data;
 						}
 						datasource[sliderId] = zonepArray;
-						//						console.log("重组后的数据：" + JSON.stringify(zonepArray));
+												console.log("重组后的数据：" + JSON.stringify(zonepArray));
 						setData(zonepArray, cityCode, tempLength);
 					} else {
 						events.fireToPageNone('index.html', 'closeWaiting');

@@ -281,8 +281,8 @@ var dynamiclistitem = (function($, mod) {
 			console.log('跳转到点赞人列表界面')
 			var cityID = sliderId.replace('top_', '');
 			var index = this.id.replace('PraiseList' + cityID + idFlag, '');
-			var LikeUsers = zonepArray[index].LikeUsers
-			events.fireToPageWithData("../quan/classSpace-persons.html", "personsList", { zanList: LikeUsers, type: 3 });
+			var userSpaceId = zonepArray[index].TabId
+			events.fireToPageWithData("../quan/classSpace-persons.html", "personsList", { userSpaceId: userSpaceId, type: 3 });
 			window.event.stopPropagation()
 		})
 		//点击点赞的人跳转到相应界面
