@@ -195,7 +195,7 @@ var UploadHeadImage = (function($, mod) {
 	 */
 	function uploadHeadImge(wd, fPath) {
 		var getToken = {
-			type: '1', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件
+			type: '0', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件
 			QNFileName: fileName, //str 必填 存放到七牛的文件名
 			appId: 5, //int 必填 项目id
 			mainSpace: mainSpace, //str 必填 私有空间或公有空间
@@ -216,7 +216,7 @@ var UploadHeadImage = (function($, mod) {
 					console.log('上传任务完成:' + JSON.stringify(upload));
 					if(status == 200) { //上传任务成功
 						//头像类型,个人头像0，资料头像1，群头像2
-						var thumb = ''; //QNUptoken.Data.OtherKey[configure.thumbKey]; //缩略图地址
+						var thumb = QNUptoken.Data.OtherKey[configure.thumbKey]; //缩略图地址
 						var domain = QNUptoken.Data.Domain + QNUptoken.Data.Key; //文件地址
 						//console.log(thumb);
 						console.log(domain);
@@ -293,7 +293,7 @@ var UploadHeadImage = (function($, mod) {
 	 */
 	function changeQunHeadImge(wd, domain, thumb) {
 		var myDate = new Date();
-		var imgeURL = domain + '?' + myDate.getTime();
+		var imgeURL = thumb + '?' + myDate.getTime();
 		//8.用户修改群各项信息
 		//需要参数
 		var comData2 = {
@@ -326,7 +326,7 @@ var UploadHeadImage = (function($, mod) {
 	 */
 	function changeHeadImge(wd, domain, thumb) {
 		var myDate = new Date();
-		var imgeURL = domain + '?' + myDate.getTime();
+		var imgeURL = thumb + '?' + myDate.getTime();
 		//6.用户修改各项用户信息
 		//调用方法
 		var comData = {
@@ -352,7 +352,7 @@ var UploadHeadImage = (function($, mod) {
 	 */
 	function changeSutHeadImge(wd, domain, thumb) {
 		var myDate = new Date();
-		var stuImgePath = domain + '?' + myDate.getTime();
+		var stuImgePath = thumb + '?' + myDate.getTime();
 		//23.通过用户资料ID或关联ID更改各类型资料
 		//所需参数
 		var comData = {

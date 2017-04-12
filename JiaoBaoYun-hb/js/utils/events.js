@@ -613,6 +613,18 @@ var events = (function(mod) {
 		};
 		return styles;
 	}
+	/**
+	 * 禁止使用回车
+	 * @param {Object} elem  禁止使用回车的元素
+	 */
+	mod.fobidEnter = function(elem) {
+		elem.onkeydown = function(event) {
+			console.log("键盘输入事件：" + JSON.stringify(event.keyCode))
+			if(event.keyCode == 13) {
+				return false;
+			}
+		}
+	}
 
 	return mod;
 

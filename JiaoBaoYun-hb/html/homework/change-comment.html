@@ -24,9 +24,10 @@
 		<script src="../../js/publicHomeworkProtocol.js"></script>
 		<script type="text/javascript">
 			mui.init()
+			var workInfo;
 			mui.plusReady(function() {
 				events.blurBack();
-				var workInfo = plus.webview.currentWebview().data;
+				workInfo = plus.webview.currentWebview().data;
 				console.log("作业修改评论界面获取的数据："+JSON.stringify(workInfo))
 				document.querySelector(".input-area").value=workInfo.Comment;
 				jQuery(".input-area").prop("maxLength",1000);
@@ -57,7 +58,7 @@
 					console.log('老师评价页面获取老师更改普通作业评论的结果：' + JSON.stringify(data));
 					if(data.RspCode == '0000') {
 						mui.toast('修改评论成功！')
-						mui.fireToPage(plus.webview.currentWebview().opener(),"commetChanged",commentValue)
+						mui.fire(plus.webview.currentWebview().opener(),"commentChanged",commentValue)
 						mui.back();
 					} else {
 						mui.toast(data.RspTxt);

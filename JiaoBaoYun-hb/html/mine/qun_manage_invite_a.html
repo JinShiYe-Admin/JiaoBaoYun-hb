@@ -13,59 +13,45 @@
 				background-color: white;
 			}
 
+			.mui-bar .mui-title {
+				right: 0px;
+				height: 100%;
+			}
+
 			.mui-input-row {
 				/*搜索区域*/
-				margin: 10px;
-				border: 1px solid #E4E4E4;
-				border-radius: 3px;
+				height: 100%;
 			}
 
 			.mui-input-row .mui-input-clear~.mui-icon-clear {
 				/*删除按钮*/
 				color: #e4e4e4;
-				right: 18%;
+				right: 15% !important;
+				top: 13px !important;
 			}
 
 			.mui-input-row label {
 				/*搜索按钮*/
 				float: right;
-				padding: 6px 0px;
+				padding: 10px 0px;
 				margin-top: 6px;
 				text-align: center;
-				width: 18%;
-				border-left: 1px solid #E4E4E4;
-				color: #00A5E0;
+				width: 15%;
+				color: white;
 				font-size: 15px;
 			}
 
 			.mui-input-row label~input {
 				/*输入框*/
 				float: left;
-				width: 82%;
-				padding: 10px 10px;
+				width: 85%;
+				background-color: white;
+				padding-left: 10px;
 				padding-right: 35px;
 				color: #323232;
-				/*height: 40px;*/
-			}
-
-			input::-webkit-input-placeholder {
-				color: #808080;
-				/* WebKit browsers */
-			}
-
-			input:-moz-placeholder {
-				color: #808080;
-				/* Mozilla Firefox 4 to 18 */
-			}
-
-			input::-moz-placeholder {
-				color: #808080;
-				/* Mozilla Firefox 19+ */
-			}
-
-			input:-ms-input-placeholder {
-				color: #808080;
-				/* Internet Explorer 10+ */
+				border-radius: 50px;
+				height: 33px;
+				margin-top: 6px;
 			}
 
 			#nouser {
@@ -83,7 +69,6 @@
 				/*搜索结果区域*/
 				z-index: 2;
 				color: #808080;
-				padding-top: 8px;
 				visibility: hidden;
 				margin-bottom: 1px;
 			}
@@ -191,13 +176,14 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">邀请成员</h1>
-		</header>
-		<div class="mui-content">
+			<h1 class="mui-title">
 			<div id="inputArea" class="mui-input-row">
 				<label id="label_search">搜索</label>
 				<input id="input_search" type="text" class="mui-input-clear" maxlength="20" placeholder="请输入账号或手机号">
 			</div>
+		</h1>
+		</header>
+		<div class="mui-content">
 			<div id="nouser">
 				<img id="nouser_img" src="../../image/mine/invite_none_0.png" />
 				<div id="nouser_text"></div>
@@ -262,13 +248,14 @@
 			 * 初始化界面
 			 */
 			function init() {
-				var inputArea = document.getElementById("inputArea"); //搜索区域
+				//var inputArea = document.getElementById("inputArea"); //搜索区域
 				var nouser = document.getElementById("nouser");
 				var nouser_img = document.getElementById("nouser_img");
 				var user = document.getElementById("user");
 				var data_li = document.getElementById("data_li");
 				var data_sw = document.getElementById("data_sw");
-				var height = screenOption.height - inputArea.offsetHeight - inputArea.offsetTop - 10;
+				//var height = screenOption.height - inputArea.offsetHeight - inputArea.offsetTop - 10;
+				var height = screenOption.height;
 				nouser.style.height = (height - user.offsetHeight - data_li.offsetHeight - 1) + 'px';
 				nouser.style.marginTop = user.offsetHeight + data_li.offsetHeight + 'px';
 				nouser_img.style.height = height / 2 + 'px';

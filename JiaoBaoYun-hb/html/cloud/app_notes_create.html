@@ -148,7 +148,7 @@
 				postDataPro_addUserSpace(comData, wd, function(data) {
 					console.log('38postDataPro_addUserSpace（用户空间）新增某用户空间信息 （云笔记）.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
-						if(persistentId.length != 0) {
+						if(persistentId && persistentId.length != 0) {
 							wd.setTitle('处理中...');
 							setTimeout(function() {
 								waittingThumb(wd);
