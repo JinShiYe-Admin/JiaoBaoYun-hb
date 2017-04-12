@@ -174,7 +174,18 @@
 		var pullRefresh; //下拉，上拉控件
 
 		mui.plusReady(function() {
-			previewImage = mui.previewImage();
+			initData();
+			initControl();
+			initListener();
+
+			//获取数据
+			requestData(1);
+		});
+
+		/**
+		 * 初始化数据
+		 */
+		function initData() {
 			main = plus.webview.currentWebview(); //获取当前窗体对象
 			mainData = main.data; //页面传入参数值
 			console.log(main.id + ' ' + JSON.stringify(mainData));
@@ -187,7 +198,13 @@
 			today = myDate.getFullYear() + '-' + month + '-' + myDate.getDate();
 
 			document.body.querySelector('.mui-title').innerText = '云盘--' + mainData.StudentName + '档案';
+		}
 
+		/**
+		 * 初始化控件
+		 */
+		function initControl() {
+			previewImage = mui.previewImage(); //初始化显示图片的控件
 			var deceleration = mui.os.ios ? 0.003 : 0.0009;
 			mui('.mui-scroll-wrapper').scroll({
 				bounce: false,
@@ -223,10 +240,12 @@
 					}
 				}
 			});
+		}
 
-			//获取数据
-			requestData(1);
-
+		/**
+		 * 初始化监听
+		 */
+		function initListener() {
 			//添加档案
 			document.getElementById('add').addEventListener('tap', function() {
 				events.openNewWindowWithData('record_student_add.html', {
@@ -272,7 +291,7 @@
 				var scrollTop = mui('#pullrefresh').scroll(); //话题列表区域
 				scrollTop.scrollTo(0, 0, 100);
 			});
-		});
+		}
 
 		//请求数据
 		function requestData(pageIndex) {
@@ -399,7 +418,7 @@
 						html_2 = '<div data-id="' + data.TabId + '_' + i + '" class="record-picture-num" style="line-height: ' + (height + 1) + 'px;">+' + (imageArray.length - 3) + '</div>'
 					}
 					html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px;' + html_3 + '">\
-									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'))" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<'+height+'){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';}this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + height + ')/2)+\'px\';}">\
+									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;visibility: hidden;" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'));this.style.visibility=\'visible\';" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<' + height + '){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';}this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + height + ')/2)+\'px\';};this.style.visibility=\'visible\';">\
 								</div>';
 				}
 				html_media = html_0 + html_1 + '</div>';
