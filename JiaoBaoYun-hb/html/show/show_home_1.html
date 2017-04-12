@@ -37,7 +37,7 @@
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 		<script type="text/javascript" src="../../js/show/show-sub.js"></script>
 		<script type="text/javascript">
-			var isPersonal=1;
+			var isPersonal = 1;
 			mui.init();
 			idFlag = 'zx';
 			var datasource = {}; //数据源
@@ -61,7 +61,9 @@
 				mui.previewImage(); //浏览图片详情
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				index = plus.webview.getWebviewById('index.html'); //
-
+				main.addEventListener("hide", function(e) {
+					mui.getPreviewImage().close()
+				})
 				//Webview窗口显示事件
 				main.addEventListener("show", function(e) {
 					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
@@ -72,7 +74,7 @@
 					//改变顶部的城市
 					changeIndexHeader();
 				});
-				//详情页改变关注状态 修改本页面数据
+				//详情页改变关注状态 修改本页面数据111
 				window.addEventListener('changeFocus', function(e) {
 					var publisherID = e.detail.data; //被修改的人ID
 					var IsFocused = e.detail.IsFocused; //关注状态
@@ -526,17 +528,17 @@
 					pageSize: 10 //每页记录数
 				}, wd, function(data) {
 					events.closeWaiting();
-//					console.log('展示获取的数据：' + JSON.stringify(data));
+					//					console.log('展示获取的数据：' + JSON.stringify(data));
 					//记录页数
 					var page = {
 						pageIndex: pageIndex, //当前页数
 						totalPage: 0 //总页数
-						
+
 					};
 					if(data.RspCode == 0) {
 						page.totalPage = data.RspData.TotalPage;
 						totalPage = data.RspData.TotalPage;
-						
+
 						if(data.RspData.Data.length > 0) {
 							getPersonIds(data.RspData.Data, cityCode);
 						}
@@ -618,7 +620,7 @@
 					wd1.close();
 					console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
-						
+
 						if(data.RspData.Data.length == 0) {
 							mui.toast('暂无内容')
 							var table = document.getElementById("bot_ul_1")
@@ -634,7 +636,7 @@
 						var tempArray = [];
 						//先遍历回调数组，获取
 						for(var item in tempRspData) {
-							tempRspData[item].IsFocused=1;
+							tempRspData[item].IsFocused = 1;
 							//当前循环的model
 							var tempModel0 = tempRspData[item];
 							//将当前model中id塞到数组
@@ -730,21 +732,21 @@
 									}
 								}
 							}
-//							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+							//							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 
 							var table = document.body.querySelector('.mui-table-view');
 							//判断是加载更多1，还是刷新0
 							var tempLenth;
 							if(paraModel.isRefresh == 0) {
-								tempLenth=0;
+								tempLenth = 0;
 								zonepArray = tempRspData
 							} else {
-								tempLenth=zonepArray.length;
+								tempLenth = zonepArray.length;
 								zonepArray = zonepArray.concat(tempRspData);
 							}
 							datasource[sliderId] = zonepArray;
-//							console.log("重组后的数据：" + JSON.stringify(zonepArray));
-							setData(zonepArray, 1,tempLenth);
+							//							console.log("重组后的数据：" + JSON.stringify(zonepArray));
+							setData(zonepArray, 1, tempLenth);
 						});
 					} else {
 						mui.toast(data.RspTxt);
@@ -786,7 +788,6 @@
 					}
 				}
 			}
-
 
 			/* 获取所有人的id
 			 * @param {Object} data
@@ -837,7 +838,7 @@
 					vtp: 'g' //查询类型,p(个人)g(id串)
 				}, wd, function(personsData) {
 					wd.close();
-//					console.log('展示子页面获取的个人信息：' + JSON.stringify(personsData));
+					//					console.log('展示子页面获取的个人信息：' + JSON.stringify(personsData));
 					if(personsData.RspCode == 0) {
 						data = rechargeData(data, personsData.RspData)
 						var tempLength;
@@ -850,8 +851,8 @@
 							zonepArray = data;
 						}
 						datasource[sliderId] = zonepArray;
-//						console.log("重组后的数据：" + JSON.stringify(zonepArray));
-						setData(zonepArray, cityCode,tempLength);
+						//						console.log("重组后的数据：" + JSON.stringify(zonepArray));
+						setData(zonepArray, cityCode, tempLength);
 					} else {
 						events.fireToPageNone('index.html', 'closeWaiting');
 					}
@@ -909,13 +910,13 @@
 			 * 放置数据
 			 * @param {Object} data
 			 */
-			var setData = function(data, cityCode,len) {
+			var setData = function(data, cityCode, len) {
 				//				var table = document.body.querySelector('.mui-table-view');
 				var id = 'bot_' + sliderId.replace('top_', '');
 				var table = document.getElementById("bot_ul_" + cityCode)
 				if(table) {
 					table.setAttribute('data-info', JSON.stringify(data));
-//					table.innerHTML = ''
+					//					table.innerHTML = ''
 
 					for(var i = len; i < data.length; i++) {
 						var data1 = addData(i, cityCode);
