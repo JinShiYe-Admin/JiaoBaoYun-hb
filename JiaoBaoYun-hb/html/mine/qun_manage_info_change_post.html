@@ -80,10 +80,9 @@
 				document.getElementById("input_num").innerText = maxLength - subData.value.length;
 
 				document.getElementById('input').addEventListener('input', function() {
-					var value = this.value.replace(/\r|\n/g, '');
-					this.value = value;
-					document.getElementById("input_num").innerText = maxLength - value.length;
-
+//					var value = this.value.replace(/\r|\n/g, '');
+//					this.value = value;
+					document.getElementById("input_num").innerText = maxLength - this.value.length;
 				});
 				document.getElementById('save').addEventListener('tap', function() {
 					var vvl = document.getElementById("input").value;
