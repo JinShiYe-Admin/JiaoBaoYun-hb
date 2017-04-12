@@ -61,7 +61,7 @@ var autoTextArea = (function(mod) {
 		parentElem.style.height = minHeight + 1 + 'px';
 		console.log("输入框初始高度：" + minHeight)
 		//如果滚动高度大于最小宽度
-		leftElem.innerText = maxWords - elem.value.length;
+		leftElem.innerText = maxWords - jQuery.trim(elem.value).length;
 		if(elem.scrollHeight > minHeight) {
 			console.log("输入框实际高度：" + elem.scrollHeight);
 
@@ -82,6 +82,7 @@ var autoTextArea = (function(mod) {
 			document.documentElement.scrollTop = scrollTop; //同上
 			elem.currHeight = parseInt(style.height); //当前高度
 		};
+		elem.value=jQuery.trim(elem.value);
 	};
 	return mod;
 })(autoTextArea || {});
