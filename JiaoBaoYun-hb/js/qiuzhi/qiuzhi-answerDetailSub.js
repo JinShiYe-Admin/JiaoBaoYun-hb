@@ -171,14 +171,14 @@ var insertComment = function(commentList, commentData, order) {
  */
 var changeOrder = function() {
 	[].forEach.call(document.querySelectorAll('.icon-support'), function(item) {
-		console.log("当前：" + item.innerHTML);
+		console.log("当前顺序：" + item.order);
 		if(item.order || item.order == 0) {
 			var order = item.order;
 			if(typeof(order) == "string") {
 				var orders = order.split("-");
-				this.order = parseInt(orders[0]) + 1 + '-' + orders[1];
+				item.order = parseInt(orders[0]) + 1 + '-' + orders[1];
 			} else {
-				this.order += 1;
+				item.order += 1;
 			}
 		}
 	})
