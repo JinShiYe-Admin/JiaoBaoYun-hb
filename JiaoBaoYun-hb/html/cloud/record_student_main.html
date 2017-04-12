@@ -144,7 +144,90 @@
 			<div class="mui-scroll">
 				<!--数据列表-->
 				<ul class="mui-table-view" id="ul_table">
-
+					<!--<div class="dynamic-date-parent" id="2017-04-12">
+						<div class="dynamic-date-year-parent">
+							<div class="dynamic-date-year"></div>
+						</div>
+						<div class="mui-row" id="344_row" style="background: wheat;">
+							<div class="mui-col-sm-3 mui-col-xs-3">
+								<div class="dynamic-date">
+									<div style="font-size:2.5rem;">今天</div>
+									<div style="margin-left:2px;font-size:1.4rem;"></div>
+								</div>
+							</div>
+							<div class="mui-col-sm-9 mui-col-xs-9">
+								<div class="mui-table-view-cell">
+									<div id="344_content" class="dynamic-ellipsis-show" style="-webkit-line-clamp: 3;">假的假的逗逗你</div>
+									<div id="344_show" class="show-all">显示全部</div>
+									<div style="margin-top:0px;">
+										<div class="dynamic-name">【济南市家长】</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mui-row">
+							<div class="mui-col-sm-3 mui-col-xs-3">
+								<div class="dynamic-date">
+									<div style="font-size:2.5rem;"></div>
+									<div style="margin-left:2px;font-size:1.4rem;"></div>
+								</div>
+							</div>
+							<div class="mui-col-sm-9 mui-col-xs-9">
+								<div class="mui-table-view-cell">
+									<div id="343_content" class="dynamic-ellipsis-show" style="display: none;"></div>
+									<div id="343_show" class="show-all">显示全部</div>
+									<div class="record-imge" style="height=594px">
+										<div class="record-picture" style="width: 79px; height: 59px; margin-right: 4px;"> <img id="img_343_0" src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/0_0_9714919835630737.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/0_0_9714919835630737.png" data-preview-group="343" style="width:100%;visibility: hidden;" onerror="events.imageOnError(this,this.getAttribute('data-preview-src'));this.style.visibility='visible';" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<59){this.style.height='59px';this.style.width='initial';}this.style.marginLeft=-parseInt((this.offsetWidth-79)/2)+'px';}else{this.style.marginTop=-parseInt((this.offsetHeight-59)/2)+'px';};this.style.visibility='visible';"> </div>
+									</div>
+									<div style="margin-top:63px;">
+										<div class="dynamic-name">【济南市家长】</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="dynamic-date-parent" id="2017-04-06">
+						<div class="dynamic-date-year-parent">
+							<div class="dynamic-date-year"></div>
+						</div>
+						<div class="mui-row" id="342_row">
+							<div class="mui-col-sm-3 mui-col-xs-3">
+								<div class="dynamic-date">
+									<div style="font-size:2.5rem;">06</div>
+									<div style="margin-left:2px;font-size:1.4rem;">04月</div>
+								</div>
+							</div>
+							<div class="mui-col-sm-9 mui-col-xs-9">
+								<div class="mui-table-view-cell">
+									<div id="344_content" class="dynamic-ellipsis-show" style="-webkit-line-clamp: 3;">假的假的逗逗你</div>
+									<div id="344_show" class="show-all">显示全部</div>
+									<div style="margin-top:0px;">
+										<div class="dynamic-name">【济南市家长】</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mui-row">
+							<div class="mui-col-sm-3 mui-col-xs-3">
+								<div class="dynamic-date">
+									<div style="font-size:2.5rem;"></div>
+									<div style="margin-left:2px;font-size:1.4rem;"></div>
+								</div>
+							</div>
+							<div class="mui-col-sm-9 mui-col-xs-9">
+								<div class="mui-table-view-cell">
+									<div id="343_content" class="dynamic-ellipsis-show" style="display: none;"></div>
+									<div id="343_show" class="show-all">显示全部</div>
+									<div class="record-imge" style="height=594px">
+										<div class="record-picture" style="width: 79px; height: 59px; margin-right: 4px;"> <img id="img_343_0" src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/0_0_9714919835630737.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/0_0_9714919835630737.png" data-preview-group="343" style="width:100%;visibility: hidden;" onerror="events.imageOnError(this,this.getAttribute('data-preview-src'));this.style.visibility='visible';" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<59){this.style.height='59px';this.style.width='initial';}this.style.marginLeft=-parseInt((this.offsetWidth-79)/2)+'px';}else{this.style.marginTop=-parseInt((this.offsetHeight-59)/2)+'px';};this.style.visibility='visible';"> </div>
+									</div>
+									<div style="margin-top:63px;">
+										<div class="dynamic-name">【济南市家长】</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>-->
 				</ul>
 			</div>
 		</div>
@@ -173,11 +256,17 @@
 		var mainData //当前web的数据
 		var pullRefresh; //下拉，上拉控件
 
+//		window.onload = function() {
+//			var date_0 = document.getElementById("344_row");
+//			date_0.style.paddingRight = '10%';
+//			var date_0 = document.getElementById("342_row");
+//			date_0.style.paddingRight = '10%';
+//		}
+
 		mui.plusReady(function() {
 			initData();
 			initControl();
 			initListener();
-
 			//获取数据
 			requestData(1);
 		});
@@ -236,6 +325,7 @@
 							requestData(page.pageIndex + 1);
 						} else {
 							mui.toast('数据异常，请下拉刷新后重新尝试');
+							pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
 						}
 					}
 				}
@@ -330,7 +420,7 @@
 					for(var i = 0; i < tempRspData.length; i++) {
 						createNotes(tempRspData[i])
 					}
-					//console.log(document.getElementById("ul_table").innerHTML);
+					console.log(document.getElementById("ul_table").innerHTML);
 
 				} else {
 					mui.toast(data.RspTxt);
