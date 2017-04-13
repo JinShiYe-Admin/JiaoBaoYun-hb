@@ -65,6 +65,17 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 					if(data.RspCode == 6) {
 						renewToken();
 					} else {
+						//如果是21号协议，21.通过用户ID或ID串获取用户资料，判断返回值中，人员有没有名称，没有的话，主动给添加一个‘新用户’，
+						if (urlArr[urlArr.length - 1] == 'PostUinf') {
+							//找到当前的数组
+							var tempArray = data.RspData;
+							for (var item in tempArray) {
+								var model = tempArray[item];
+								if (model.unick==''||model.unick==undefined) {
+									model.unick = '新用户';
+								}
+							}
+						}
 						callback(data);
 					}
 				},
