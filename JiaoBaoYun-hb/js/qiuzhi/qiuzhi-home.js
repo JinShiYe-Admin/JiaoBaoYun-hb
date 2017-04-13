@@ -3,8 +3,8 @@
  */
 events.initSubPage('qiuzhi-sub.html', '', -(localStorage.getItem('StatusHeightNo') * 1 + 5));
 var allChannels; //所有话题
-var channelInfo;//当前话题
-var subPageReady=false;//子页面是否已触发plusReady事件
+var channelInfo; //当前话题
+var subPageReady = false; //子页面是否已触发plusReady事件
 mui.plusReady(function() {
 	//初始化为空
 	document.getElementById('subjects-container').innerHTML = '';
@@ -15,10 +15,10 @@ mui.plusReady(function() {
 	curPage.addEventListener("show", function(e) {
 		//document.getElementById('subjects-container').innerHTML = '';
 		if(allChannels && allChannels.length > 0) {
-				if(!channelInfo){//如果当前频道不存在
-					channelInfo=allChannels[0];//
-					judgeWebReady();
-				}
+			if(!channelInfo) { //如果当前频道不存在
+				channelInfo = allChannels[0]; //
+				judgeWebReady();
+			}
 		} else {
 			mui('#slider_sw').scroll().scrollTo(0, 0, 0);
 			requestAllChannels(setChannels);
@@ -30,8 +30,8 @@ mui.plusReady(function() {
 		requestAllChannels(setChannels);
 	})
 	//当前页面获取子页面已健在完毕的监听
-	window.addEventListener("subIsReady",function(){
-		subPageReady=true;
+	window.addEventListener("subIsReady", function() {
+		subPageReady = true;
 	})
 	//本页面子控件的各种监听事件
 	setListener();
@@ -92,19 +92,19 @@ var setChannels = function(subjectArr) {
 		subjects.appendChild(a);
 		document.getElementById("sliderGroup").appendChild(elementBot);
 	}
-//	document.body.querySelector('.main-navigation').style.width = document.body.querySelector('.more-navigation').offsetLeft + 'px';
+	//	document.body.querySelector('.main-navigation').style.width = document.body.querySelector('.more-navigation').offsetLeft + 'px';
 	mui('#slider').slider();
-	channelInfo=allChannels[0];
+	channelInfo = allChannels[0];
 	judgeWebReady();
 }
 /**
  * 判断子页面是否已触发plusReady事件
  */
-var judgeWebReady=function(){
-	if(subPageReady){
+var judgeWebReady = function() {
+	if(subPageReady) {
 		events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: channelInfo, allChannels: allChannels });
-	}else{
-		setTimeout(judgeWebReady,500);
+	} else {
+		setTimeout(judgeWebReady, 500);
 	}
 }
 /**
@@ -112,7 +112,7 @@ var judgeWebReady=function(){
  */
 var setListener = function() {
 	mui('#subjects-container').on('tap', '.mui-control-item', function() {
-		channelInfo= this.info;
+		channelInfo = this.info;
 		events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: channelInfo, allChannels: allChannels });
 	});
 }

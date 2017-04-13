@@ -299,9 +299,9 @@
 				//拼接显示
 				li.innerHTML = '<div class="mui-table">' +
 					'<div class="mui-table-cell mui-col-xs-12">' +
-					'<h4 class="mui-ellipsis">' +
+					'<h4 id="askTitle" class="mui-ellipsis">' +
 					record.AskTitle +
-					'</h4><h5 style="letter-spacing :0.3px;">' +
+					'</h4><h5 id="answerContent" style="letter-spacing :0.3px;">' +
 					record.AnswerContent +
 					'</h5>' +
 					'<p class="mui-h6 mui-ellipsis">' + record.IsLikeNum + '赞 · ' + record.CommentNum + '评论 · ' + modifyTimeFormat(record.AnswerTime) +

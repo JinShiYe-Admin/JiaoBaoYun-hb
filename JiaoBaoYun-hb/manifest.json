@@ -736,10 +736,17 @@
 					"js/utils/events.js",
 					"js/quan/class-group.js",
 					"js/quan/class-group1.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"css/mine/apply.css",
+					"image/quan/add.png",
+					"css/iconfont/iconfont.css",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
-					"html/quan/group-pInfo.html"
+					"html/quan/group-pInfo.html",
+					"html/mine/qun_manage_invite_a.html",
+					"html/quan/edit-remark.html",
+					"html/quan/group-allMembers.html"
 				],
 				"priority": 0
 			},
@@ -4115,6 +4122,34 @@
 				"resources": [
 					"css/quan/about-me.css",
 					"css/utils/bubble.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/group-allMembers.html": {
+				"resources": [
+					"css/mui.min.css",
+					"js/libs/crypto-js/crypto-js.js",
+					"css/utils/common.css",
+					"js/quan/class-group1.js",
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"fonts/fangzheng.ttf",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"css/quan/class_space.css",
+					"js/quan/group-allMembers.js",
+					"fonts/mui.ttf",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [],
 				"priority": 0

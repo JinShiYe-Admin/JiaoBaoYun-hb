@@ -8,12 +8,15 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<style type="text/css">
-			.mui-table-view-cell:after,before {
+			.mui-table-view-cell:after,
+			before {
 				background-color: #dddddd;
 			}
+			
 			.mui-table-view:before {
 				background-color: #dddddd;
 			}
+			
 			.mui-table-view:after {
 				background-color: #dddddd;
 			}
@@ -61,6 +64,7 @@
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<!--共用协议-->
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/qiuzhi/delContent_pop.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
@@ -144,7 +148,7 @@
 											//											plus.runtime.quit();
 											//跳转到登录界面
 											events.openNewWindowWithData('../../html/register/login.html', '');
-//											plus.webview.currentWebview().close();
+											//											plus.webview.currentWebview().close();
 										} else {
 											mui.toast(data.RspTxt);
 										}

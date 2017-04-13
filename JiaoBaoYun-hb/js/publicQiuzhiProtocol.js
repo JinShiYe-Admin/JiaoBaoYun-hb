@@ -565,18 +565,17 @@ var postDataQZPro_getInviteAsksByUser = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getInviteAsksByUser', enData, commonData, 2, wd, callback);
 }
 
-//1.获取所有话题
+//37.删除某个用户的某条提问
 //所需参数
 //		var comData = {
-//			pageIndex: '',//当前页数
-//			pageSize:''//每页记录数,传入0，获取总记录数
+//			askId: ''//提问ID
 //		};
-//返回值：model_Channel
-var postDataQZPro_getAllChannels = function(commonData, wd, callback) {
+//返回值：1为正确
+var postDataQZPro_delAskById = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getAllChannels', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/delAskById', enData, commonData, 2, wd, callback);
 }
 
 //1.获取所有话题

@@ -2,7 +2,9 @@
  * 共同的样式
  */
 
+
 /*去掉导航条阴影*/
+
 .mui-bar-nav {
 	box-shadow: none;
 	height: 45px;
@@ -51,6 +53,18 @@
 	padding: 0px;
 	font-weight: 500;
 	float: right;
+	color: white;
+}
+
+.title-text-pull-left {
+	/*顶部导航左侧文字*/
+	font-size: 17px;
+	line-height: 44px;
+	position: absolute;
+	left: 10px;
+	padding: 0px;
+	font-weight: 500;
+	float: left;
 	color: white;
 }
 

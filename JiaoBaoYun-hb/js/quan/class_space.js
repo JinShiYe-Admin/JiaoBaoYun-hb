@@ -149,7 +149,9 @@ var class_space = (function(mod) {
 						}
 					}
 				}
-				postDataPro_PostUmk({ vvl: ids.toString() }, wd, function(remarkData) {
+				postDataPro_PostUmk({
+					vvl: ids.toString()
+				}, wd, function(remarkData) {
 					console.log('获取的备注信息：' + JSON.stringify(remarkData));
 					wd.close();
 					if(remarkData.RspCode == 0) {
@@ -234,11 +236,12 @@ var class_space = (function(mod) {
 				var more_span = document.createElement('span');
 				more_span.className = "more-span";
 				more_span.innerText = "展开全部";
-				more_span.addEventListener("tap", function() {
-
-				})
+				//				more_span.addEventListener("tap", function() {
+				//
+				//				})
 				li.querySelector(".chat-body").insertBefore(more_span, li.querySelector(".class-imgs"));
 			}
+			classWords_container.info = list[i];
 		}
 	}
 	var getLineNo = function(classWords_container) {
@@ -368,7 +371,40 @@ var setReaded = function(userId, classId) {
 		}
 	})
 }
+/**
+ * 修改动态
+ */
+//var changeDynamic=function(){
+//	
+//}
+/**
+ * 删除动态
+ */
+//var delDynamic=function(){
+//	
+//}
+/**
+ * 增回单条数据
+ */
+var addSingleDynamic=function(){
+	if(pageIndex<class_space.totalPagNo){
+		class_space.getList(postData, pageIndex*10, 1, class_space.replaceUrl);
+	}
+}
 var setListener = function(userId) {
+//	mui(".mui-table-view").on("tap", ".chat-words", function() {
+//		console.log("点击的动态详情："+JSON.stringify(this.info));
+//		if(this.info.utid==myStorage.getItem(storageKeyName.PERSONALINFO).utid){
+//			var btnArray=[{
+//				title:"修改动态"
+//			},{
+//				title:"删除动态",
+//				dia:1
+//			}];
+//			var cbArray=[changeDynamic,delDynamic]
+//			events.showActionSheet(btnArray,cbArray);
+//		}
+//	})
 	var zan = document.getElementById('zan');
 	/**
 	 * 未点赞按钮点击事件
@@ -399,7 +435,7 @@ var setListener = function(userId) {
 		this.previousSibling.className = "chat-words omit-line-8";
 		this.className = "more-span";
 		this.innerText = "展开全部";
-		window.scrollTo(0,offTopHeight,200);
+		window.scrollTo(0, offTopHeight, 200);
 	})
 
 	//点赞
