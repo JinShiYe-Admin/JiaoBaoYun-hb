@@ -240,7 +240,7 @@ var events = (function(mod) {
 	mod.fireToPageWithData = function(tarPage, listener, datas) {
 
 		tarPage = tarPage.split('/')[tarPage.split('/').length - 1];
-		console.log('tarPage:' + tarPage);
+		console.log('tarPage:' + tarPage+",listener:"+listener);
 		var targetPage = null;
 		//获得目标页面
 		if(!targetPage) {
@@ -624,6 +624,111 @@ var events = (function(mod) {
 				return false;
 			}
 		}
+	}
+	/**
+	 * actionsheet
+	 * @param {Object} titleArray 各选项 格式如下[{title:选项1,dia：1需要显示dialog},{title:选项1,dia：0 或不填需要显示dialog}]
+	 * @param {Object} cbArray 各选项回调方法数组，确认选择后的回调函数
+	 */
+	mod.showActionSheet=function(btnArray,cbArray){
+		var len=btnArray.length;
+		plus.nativeUI.actionSheet({
+			buttons:btnArray,
+			cancel:"取消"
+		},function(e){
+			var index=e.index;
+			if(index>0){
+				if(btnArray[index-1].dia){
+					mod.setDialog(btnArray[index-1].title,"确认删除？",cbArray[index-1],"已取消删除")
+				}else{
+					cbArray[index-1];
+				}
+			}
+		})
+	}
+
+	/**
+	 * 关闭某个webview
+	 * @author 莫尚霖
+	 * @param {Object} webview webview的id或object
+	 * @param {Object} num 动画，默认页面从屏幕中横向向右侧滑动到屏幕外关闭
+	 */
+	mod.closeWebview = function(webview, num) {
+		//关闭已经打开的Webview窗口，需先获取窗口对象或窗口id，并可指定关闭窗口的动画
+		//若操作窗口对象已经关闭，则无任何效果。
+		//使用窗口id时，则查找对应id的窗口，如果有多个相同id的窗口则操作最先打开的窗口，若没有查找到对应id的WebviewObject对象，则无任何效果。
+		plus.webview.close(webview, mod.getAniClose(num));
+	}
+
+	/**
+	 * 获取关闭的动画
+	 * @author 莫尚霖
+	 * @param {Object} num 类型，默认slide-out-right
+	 */
+	mod.getAniClose = function(num) {
+		var aniClose = '';
+		var type = num || 2;//默认2
+		switch(type) {
+			case 0:
+				aniClose = 'auto';
+				//自动选择显示窗口相对于的动画效果。
+				break;
+			case 1:
+				aniClose = 'none';
+				//立即关闭页面，无任何动画效果。 此效果忽略动画时间参数，立即关闭。
+				break;
+			case 2:
+				aniClose = 'slide-out-right';
+				//页面从屏幕中横向向右侧滑动到屏幕外关闭。
+				//Android - 2.2+ (支持): 默认动画时间为200ms。
+				//iOS - 5.1.1+ (支持): 默认动画时间为300ms。
+				break;
+			case 3:
+				aniClose = 'slide-out-left';
+				//页面从屏幕中横向向左侧滑动到屏幕外关闭。
+				//Android - 2.2+ (支持): 默认动画时间为200ms。
+				//iOS - 5.1.1+ (支持): 默认动画时间为300ms。
+				break;
+			case 4:
+				aniClose = 'slide-out-top';
+				//页页面从屏幕中竖向向上侧滑动到屏幕外关闭。
+				//Android - 2.2+ (支持): 默认动画时间为200ms。
+				//iOS - 5.1.1+ (支持): 默认动画时间为300ms。
+				break;
+			case 5:
+				aniClose = 'slide-out-bottom';
+				//页面从屏幕中竖向向下侧滑动到屏幕外关闭。
+				//Android - 2.2+ (支持): 默认动画时间为200ms。
+				//iOS - 5.1.1+ (支持): 默认动画时间为300ms。
+				break;
+			case 6:
+				aniClose = 'fade-out';
+				//页面从不透明到透明逐渐隐藏关闭。
+				//Android - 2.2+ (支持): 默认动画时间为200ms。
+				//iOS - 5.1.1+ (支持): 默认动画时间为300ms。
+				break;
+			case 7:
+				aniClose = 'zoom-in';
+				//页面逐渐向页面中心缩小关闭。
+				//Android - 2.2+ (支持): 默认动画时间为100ms。
+				//iOS - 5.1.1+ (支持): 默认动画时间为100ms。
+				break;
+			case 8:
+				aniClose = 'zoom-fade-in';
+				//页面逐渐向页面中心缩小并且从不透明到透明逐渐隐藏关闭。
+				//Android - 2.2+ (支持): 默认动画时间为100ms。
+				//iOS - 5.1.1+ (支持): 默认动画时间为100ms。
+				break;
+			case 9:
+				aniClose = 'pop-out';
+				//页面从屏幕右侧滑出消失，同时上一个页面带阴影效果从屏幕左侧滑入显示。
+				//Android - 2.2+ (支持): 默认动画时间为200ms。
+				//iOS - 5.1.1+ (支持): 默认动画时间为300ms。
+				break;
+			default:
+				break;
+		}
+		return aniClose;
 	}
 
 	return mod;

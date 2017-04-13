@@ -12,9 +12,9 @@
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/quan/class_space.css" rel="stylesheet" />
 		<style>
-			.mui-table-view-cell {
+			/*.mui-table-view-cell {
 				padding: 0rem;
-			}
+			}*/
 			
 			html,
 			body {
@@ -39,6 +39,27 @@
 				<ul id="gride" class="mui-table-view mui-grid-view mui-grid-9" style="background-color: transparent;">
 
 				</ul>
+				<div id="show-all" class="more-container display-none">
+					<p>查看全部群成员<span class="mui-icon mui-icon-arrowright more-arrow"></span></p>
+				</div>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							群二维码
+							<img id="qun-code" class="qun-code" src="" alt="群二维码" />
+						</a>
+					</li>
+					<div style="width: 100%;background-color: #E4E4E4;height: 1px;"></div>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							群说明
+							<p id="group-info" class="group-info"></p>
+						</a>
+					</li>
+				</ul>
+				<div class="quit-container display-none">
+					<button id="quit-group" type="button" class="mui-btn mui-btn-danger group-button  ">退出</button>
+				</div>
 			</div>
 		</div>
 		<div id="chose-roles" class="mui-popover center-popover">
@@ -61,14 +82,11 @@
 					<label>学生</label>
 				</div>
 			</div>
-		<!--	<textarea id="extra-input" class="extra-input" placeholder="请输入备注信息，最多20字"></textarea>-->
+			<!--	<textarea id="extra-input" class="extra-input" placeholder="请输入备注信息，最多20字"></textarea>-->
 			<div class="buttons">
 				<button id="btn-sure" type="button" class="mui-btn mui-btn-green btn-sure">确认</button>
 				<!--<button  type="button" class="mui-btn mui-btn-green btn-cancel">取消</button>-->
 			</div>
-		</div>
-		<div class="quit-container display-none">
-			<button id="quit-group" type="button" class="mui-btn mui-btn-danger group-button  ">退出</button>
 		</div>
 
 	</body>

@@ -308,7 +308,7 @@
 						showPidList.pop(); //清除最后一个历史记录
 						if(showPidList.length == 0) {
 							events.fireToPageNone('../cloud/cloud_home.html', 'cloudDataChange')
-							plus.webview.hide(main, 'pop-out');
+							plus.webview.hide(main, events.getAniClose());
 						} else {
 							//从屏幕右边移出当前界面
 							mui('#scroll_' + showPid + ' ul').each(function(index, element) {

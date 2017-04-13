@@ -1,25 +1,27 @@
 mui.init();
-var groupRoles;
-var choseRole;
 var isMaster;
-var allGroupInfos;
 mui('.mui-scroll-wrapper').scroll({
 	indicators: true, //是否显示滚动条
 });
 mui.plusReady(function() {
-	events.preload('group-pInfo.html');
-	events.preload("edit-remark.html", 100);
-	window.addEventListener('postGroupInfo', function(e) {
-		masterInfo = null;
-		isMaster = false;
-		console.log('班级群组界面获取的数据：' + JSON.stringify(e.detail.data));
-		if(e.detail.data) {
-			groupId = e.detail.data.classId;
-			groupName = e.detail.data.className;
-			document.getElementById('title').innerText = getHeadText(groupName);
-			freshContent();
-		}
-	})
+	var grouInfo=plus.webview.currentWebview().data;
+	groupId = grouInfo.classId;
+	groupName = grouInfo.className;
+	masterInfo = null;
+	isMaster = false;
+	document.getElementById('title').innerText = getHeadText(groupName);
+	freshContent();
+//	window.addEventListener('postGroupInfo', function(e) {
+//		masterInfo = null;
+//		isMaster = false;
+//		console.log('班级群组界面获取的数据：' + JSON.stringify(e.detail.data));
+//		if(e.detail.data) {
+//			groupId = e.detail.data.classId;
+//			groupName = e.detail.data.className;
+//			document.getElementById('title').innerText = getHeadText(groupName);
+//			freshContent();
+//		}
+//	})
 	window.addEventListener('groupInfoChanged', function() {
 		freshContent();
 	})
@@ -27,13 +29,9 @@ mui.plusReady(function() {
 		console.log(JSON.stringify(e.detail));
 	})
 	mui('#gride').on('tap', '.mui-table-view-cell', function() {
-		if(this.info.invitable) {
-			mui(".mui-popover").popover("show");
-		} else {
 			events.fireToPageWithData('group-pInfo.html', 'postPInfo', jQuery.extend({}, this.info, {
 				isMaster: isMaster
 			}));
-		}
 	})
 	events.addTap('quit-group', function() {
 		showChoices();
@@ -43,7 +41,7 @@ mui.plusReady(function() {
 			choseRole = parseInt(this.value);
 		}
 	})
-	setButtonsListener();
+//	setButtonsListener();
 })
 var getGroupInfo = function() {
 	var wd1 = events.showWaiting();
@@ -58,54 +56,7 @@ var getGroupInfo = function() {
 		}
 	})
 }
-/**
- * 设置弹出框的监听事件
- */
-var setButtonsListener = function() {
-	//	document.getElementById('search-btn').addEventListener('tap', searchGroup)
-	//确定按钮
-	var btn_sure = document.getElementById('btn-sure');
-	//取消按钮
-	var btn_cancel = document.getElementById('btn-cancle');
-	//确定按钮加载监听
-	btn_sure.addEventListener('tap', function() {
-		if(choseRole == null) {
-			mui.toast("请选择邀请类型！")
-			return;
-		}
-		events.openNewWindowWithData('../mine/qun_manage_invite_a.html', {
-			gid: groupId, //群ID
-			gname: groupName, //群名
-			mstype: choseRole, //被邀请成为的类型
-			vtp: '1' //邀请人的类型（用户管理角色,0家长,1管理员,2老师,3学生）
-		});
-		mui('.mui-popover').popover("hide");
-		resetRole();
-	});
-	//取消按钮加载监听
-	btn_cancel.addEventListener('tap', function() {
-		mui('.mui-popover').popover('hide');
-		resetRole();
-	})
-	document.getElementById("group-info").addEventListener("tap", function() {
-		events.fireToPageWithData("edit-remark.html", "editGroupInfo", {
-			gid: groupId,
-			info: document.getElementById("group-info").innerText
-		})
-	});
-	/**
-	 * 二维码点击事件
-	 */
-	document.getElementById("qun-code").addEventListener("tap", function() {
 
-	})
-	document.getElementById("show-all").addEventListener("tap", function() {
-		events.openNewWindowWithData("group-allMembers.html", {
-			classId:groupId,
-			className:groupName
-		});
-	})
-}
 /**
  * 重置角色选择
  */
@@ -274,20 +225,6 @@ var getRemarkData = function(list, callback) {
  * @param {Object} array 元素数组，包括图标和标题
  */
 var createGride = function(gride, array) {
-	if(isMaster) {
-		array.unshift({
-			uimg: "../../image/quan/add.png",
-			bunick: "邀请",
-			invitable: true
-		})
-	}
-	var showAll = document.getElementById("show-all");
-	if(array.length > 16) {
-		showAll.style.display="block";
-		array.splice(16);
-	}else{
-		showAll.style.display="none";
-	}
 	//数组遍历
 	array.forEach(
 		/**
@@ -304,7 +241,6 @@ var createGride = function(gride, array) {
 			} else { //数组大于3，每行四个图标
 				li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
 			}
-			li.style.padding="0";
 			cell.gname = groupName;
 			//			if(!cell.bunick) {
 			//				cell.bunick = cell.ugnick;
