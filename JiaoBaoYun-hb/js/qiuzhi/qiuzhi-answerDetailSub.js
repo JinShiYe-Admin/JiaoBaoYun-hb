@@ -6,7 +6,7 @@ var answerData; //答案数据
 var selfId;
 var flag = 1; //1为加载数据 0 为重置顺序
 var upperInfo;
-var parentContainer;
+var parentContainer;//评论父控件
 var wd;
 /**
  * 加载刷新
@@ -80,6 +80,9 @@ mui.plusReady(function() {
 	})
 	setListeners();
 })
+/**
+ * 更改状态 并通知父页面
+ */
 var setChangeCondition = function() {
 	var moreShow = 0;
 	if(answerInfo.AnswerMan == selfId) {
@@ -93,16 +96,25 @@ var setChangeCondition = function() {
  * 修改回答
  */
 var changeAnswer = function() {
+	//修改答案
 
 }
 /**
  * 删除回答
  */
 var delAnswer = function() {
-
+	//删除回答，并返回上级页面
+	
 }
+/**
+ * 删除评论吧
+ */
 var delComment = function() {
-
+	if(upperInfo.UpperId){//存在上级评论id 直接删除本cell
+		
+	}else{//不存在，删除本cell后增加单条评论
+		
+	}
 }
 var changeComment=function(){
 	
