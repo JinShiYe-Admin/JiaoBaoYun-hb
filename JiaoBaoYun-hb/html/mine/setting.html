@@ -79,15 +79,6 @@
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					var index = this.id.replace('li', '');
 					console.log('index:' + index);
-					var tempData = {
-						flag: 5,
-						id: 2,
-						title: '弹出框中，显示的标题',
-						delFlag: 1
-					}
-					delContent_pop(tempData, function(data) {
-						console.log('datadata='+data);
-					});
 					if(index == '0') {
 						mui.confirm(tempInfo.uid, '您已绑定手机号', ['取消', '更换'], function(e) {
 							var index = e.index;
