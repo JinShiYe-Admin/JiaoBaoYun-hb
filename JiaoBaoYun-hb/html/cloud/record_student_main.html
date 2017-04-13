@@ -15,7 +15,8 @@
 		<link rel="stylesheet" href="../../css/utils/pullToRefresh.css" />
 		<style>
 			body,
-			.mui-content {
+			.mui-content,
+			.mui-scroll-wrapper {
 				background-color: white;
 			}
 
@@ -131,104 +132,80 @@
 				/*底部加载更多区域*/
 				background-color: white;
 			}
+
+			.mui-checkbox input[type=checkbox]:checked:before,
+			.mui-radio input[type=radio]:checked:before {
+				color: #13b7f6;
+			}
+
+			.mui-checkbox label {
+				width: 0px;
+				/*padding-right: 28px;*/
+			}
+
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				right: 0px;
+			}
+
+			.mui-input-row {
+				position: absolute;
+				right: 0px;
+				width: 28px;
+				display: none;
+			}
+
+			#commit_div {
+				/*底部按钮区域*/
+				position: absolute;
+				display: none;
+				bottom: 0px;
+				width: 100%;
+				background-color: white;
+				border-top: 1px solid rgba(228, 228, 228, 0.4);
+				padding-top: 10px;
+			}
+
+			#commit {
+				/*底部按钮*/
+				width: 95%;
+				left: 2.5%;
+				padding: 6px 12px 7px;
+			}
+
+			.mui-scroll-wrapper {
+				top: 44px;
+			}
+
+			.mui-btn-blue {
+				background-color: #1DB8F1;
+				border: 1px solid #1DB8F1;
+			}
+
+			.mui-btn-blue:active {
+				background-color: #e4e4e4 !important;
+				border: 1px solid #e4e4e4 !important;
+			}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 id="title" class="mui-title" style="text-align: left;color: white;"></h1>
+			<div id="cancel" class="title-text-pull-left" style="display: none;">取消</div>
+			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title" style="color: white;"></h1>
 			<div id="add" class="title-text-pull-right">添加</div>
 		</header>
-		<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="z-index: 1;">
-			<div class="mui-scroll">
-				<!--数据列表-->
-				<ul class="mui-table-view" id="ul_table">
-					<!--<div class="dynamic-date-parent" id="2017-04-12">
-						<div class="dynamic-date-year-parent">
-							<div class="dynamic-date-year"></div>
-						</div>
-						<div class="mui-row" id="344_row" style="background: wheat;">
-							<div class="mui-col-sm-3 mui-col-xs-3">
-								<div class="dynamic-date">
-									<div style="font-size:2.5rem;">今天</div>
-									<div style="margin-left:2px;font-size:1.4rem;"></div>
-								</div>
-							</div>
-							<div class="mui-col-sm-9 mui-col-xs-9">
-								<div class="mui-table-view-cell">
-									<div id="344_content" class="dynamic-ellipsis-show" style="-webkit-line-clamp: 3;">假的假的逗逗你</div>
-									<div id="344_show" class="show-all">显示全部</div>
-									<div style="margin-top:0px;">
-										<div class="dynamic-name">【济南市家长】</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="mui-row">
-							<div class="mui-col-sm-3 mui-col-xs-3">
-								<div class="dynamic-date">
-									<div style="font-size:2.5rem;"></div>
-									<div style="margin-left:2px;font-size:1.4rem;"></div>
-								</div>
-							</div>
-							<div class="mui-col-sm-9 mui-col-xs-9">
-								<div class="mui-table-view-cell">
-									<div id="343_content" class="dynamic-ellipsis-show" style="display: none;"></div>
-									<div id="343_show" class="show-all">显示全部</div>
-									<div class="record-imge" style="height=594px">
-										<div class="record-picture" style="width: 79px; height: 59px; margin-right: 4px;"> <img id="img_343_0" src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/0_0_9714919835630737.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/0_0_9714919835630737.png" data-preview-group="343" style="width:100%;visibility: hidden;" onerror="events.imageOnError(this,this.getAttribute('data-preview-src'));this.style.visibility='visible';" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<59){this.style.height='59px';this.style.width='initial';}this.style.marginLeft=-parseInt((this.offsetWidth-79)/2)+'px';}else{this.style.marginTop=-parseInt((this.offsetHeight-59)/2)+'px';};this.style.visibility='visible';"> </div>
-									</div>
-									<div style="margin-top:63px;">
-										<div class="dynamic-name">【济南市家长】</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="dynamic-date-parent" id="2017-04-06">
-						<div class="dynamic-date-year-parent">
-							<div class="dynamic-date-year"></div>
-						</div>
-						<div class="mui-row" id="342_row">
-							<div class="mui-col-sm-3 mui-col-xs-3">
-								<div class="dynamic-date">
-									<div style="font-size:2.5rem;">06</div>
-									<div style="margin-left:2px;font-size:1.4rem;">04月</div>
-								</div>
-							</div>
-							<div class="mui-col-sm-9 mui-col-xs-9">
-								<div class="mui-table-view-cell">
-									<div id="344_content" class="dynamic-ellipsis-show" style="-webkit-line-clamp: 3;">假的假的逗逗你</div>
-									<div id="344_show" class="show-all">显示全部</div>
-									<div style="margin-top:0px;">
-										<div class="dynamic-name">【济南市家长】</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="mui-row">
-							<div class="mui-col-sm-3 mui-col-xs-3">
-								<div class="dynamic-date">
-									<div style="font-size:2.5rem;"></div>
-									<div style="margin-left:2px;font-size:1.4rem;"></div>
-								</div>
-							</div>
-							<div class="mui-col-sm-9 mui-col-xs-9">
-								<div class="mui-table-view-cell">
-									<div id="343_content" class="dynamic-ellipsis-show" style="display: none;"></div>
-									<div id="343_show" class="show-all">显示全部</div>
-									<div class="record-imge" style="height=594px">
-										<div class="record-picture" style="width: 79px; height: 59px; margin-right: 4px;"> <img id="img_343_0" src="http://qn-kfpb.jiaobaowang.net/jxq/Record/thumb/0_0_9714919835630737.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Record/0_0_9714919835630737.png" data-preview-group="343" style="width:100%;visibility: hidden;" onerror="events.imageOnError(this,this.getAttribute('data-preview-src'));this.style.visibility='visible';" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<59){this.style.height='59px';this.style.width='initial';}this.style.marginLeft=-parseInt((this.offsetWidth-79)/2)+'px';}else{this.style.marginTop=-parseInt((this.offsetHeight-59)/2)+'px';};this.style.visibility='visible';"> </div>
-									</div>
-									<div style="margin-top:63px;">
-										<div class="dynamic-name">【济南市家长】</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>-->
-				</ul>
+		<div class="mui-content">
+			<div id="pullrefresh" class="mui-scroll-wrapper" style="z-index: 1;">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<ul class="mui-table-view" id="ul_table">
+					</ul>
+				</div>
+			</div>
+			<div id="commit_div">
+				<button id="commit" type="button" class="mui-btn mui-btn-blue mui-btn-block">删除</button>
 			</div>
 		</div>
 	</body>
@@ -245,6 +222,7 @@
 		mui.init({
 			gestureConfig: {
 				doubletap: true,
+				longtap: true,
 			}
 		});
 
@@ -255,13 +233,12 @@
 		var main; //当前web
 		var mainData //当前web的数据
 		var pullRefresh; //下拉，上拉控件
-
-//		window.onload = function() {
-//			var date_0 = document.getElementById("344_row");
-//			date_0.style.paddingRight = '10%';
-//			var date_0 = document.getElementById("342_row");
-//			date_0.style.paddingRight = '10%';
-//		}
+		var deleteRecord = false; //是否切换到了删除状态
+		var offsetWidth = document.getElementById('ul_table').offsetWidth;
+		var imageWidth = parseInt((offsetWidth * 0.77 - 30) * 0.32);
+		var imageHeight = parseInt(imageWidth * 3 / 4);
+		var marginBottom = parseInt((offsetWidth * 0.77 - 30) * 0.02);
+		var checkRight = parseInt((offsetWidth * 0.12 - 15) / 2);
 
 		mui.plusReady(function() {
 			initData();
@@ -305,13 +282,17 @@
 				down: {
 					callback: function() {
 						var self = this;
-						var element = document.getElementById('pullrefresh');
-						var page = JSON.parse(element.getAttribute('data-page'));
-						console.log('down ' + JSON.stringify(page));
-						requestData(1);
-						setTimeout(function() {
+						if(!deleteRecord) {
+							var element = document.getElementById('pullrefresh');
+							var page = JSON.parse(element.getAttribute('data-page'));
+							console.log('down ' + JSON.stringify(page));
+							requestData(1);
+							setTimeout(function() {
+								self.endPullDownToRefresh(); //结束下拉刷新
+							}, 1000);
+						} else {
 							self.endPullDownToRefresh(); //结束下拉刷新
-						}, 1000);
+						}
 					}
 				},
 				up: {
@@ -336,11 +317,29 @@
 		 * 初始化监听
 		 */
 		function initListener() {
-			//添加档案
+			//添加档案或全选
 			document.getElementById('add').addEventListener('tap', function() {
-				events.openNewWindowWithData('record_student_add.html', {
-					data: mainData
-				});
+				var name = this.innerText;
+				if(name == '添加') {
+					events.openNewWindowWithData('record_student_add.html', {
+						data: mainData
+					});
+				} else if(name == '全选') {
+					var checkArray = document.querySelectorAll('.mui-checkbox');
+					for(var i = 0; i < checkArray.length; i++) {
+						checkArray[i].querySelector('input').checked = true;
+					}
+					this.innerText = '全不选';
+					document.getElementById("title").innerText = '已选定' + checkArray.length + '个';
+				} else if(name == '全不选') {
+					var checkArray = document.querySelectorAll('.mui-checkbox');
+					for(var i = 0; i < checkArray.length; i++) {
+						checkArray[i].querySelector('input').checked = false;
+					}
+					this.innerText = '全选';
+					document.getElementById("title").innerText = '已选定0个';
+
+				}
 			});
 
 			//下拉刷新的监听
@@ -381,6 +380,53 @@
 				var scrollTop = mui('#pullrefresh').scroll(); //话题列表区域
 				scrollTop.scrollTo(0, 0, 100);
 			});
+
+			//长按内容
+			mui('#ul_table').on('longtap', '.mui-table-view-cell', function() {
+				if(!deleteRecord) {
+					//切换到删除状态
+					deleteRecord = true;
+					//禁用上拉下拉控件
+					document.getElementById("pullrefresh").style.zIndex = 2;
+					pullRefresh.endPullUpToRefresh(true);
+					//调整顶部导航
+					showAddOrDel(1);
+					//修改安卓返回功能键
+					//显示选择按钮
+					var rowArray = document.querySelectorAll('.mui-row');
+					for(var i = 0; i < rowArray.length; i++) {
+						rowArray[i].style.paddingRight = '12%';
+						var checkBox = rowArray[i].querySelector('.mui-checkbox');
+						checkBox.querySelector('input').checked = false;
+						checkBox.style.display = 'inline';
+					}
+				}
+			});
+
+			/**
+			 * 退出删除状态
+			 */
+			document.getElementById('cancel').addEventListener('tap', function() {
+				//退出删除状态
+				deleteRecord = false;
+				document.getElementById("pullrefresh").style.zIndex = 1;
+				//调整顶部导航和删除按钮
+				showAddOrDel(0);
+				//修改安卓返回功能键
+				//隐藏选择按钮
+				var rowArray = document.querySelectorAll('.mui-row');
+				for(var i = 0; i < rowArray.length; i++) {
+					rowArray[i].style.paddingRight = '0px';
+					rowArray[i].querySelector('.mui-checkbox').style.display = 'none';
+				}
+				//调整scroll
+				//启用上拉下拉控件
+				var page = JSON.parse(document.getElementById('pullrefresh').getAttribute('data-page'));
+				if(page.pageIndex < page.totalPage) {
+					pullRefresh.refresh(true);
+				}
+
+			});
 		}
 
 		//请求数据
@@ -420,8 +466,6 @@
 					for(var i = 0; i < tempRspData.length; i++) {
 						createNotes(tempRspData[i])
 					}
-					console.log(document.getElementById("ul_table").innerHTML);
-
 				} else {
 					mui.toast(data.RspTxt);
 				}
@@ -482,16 +526,13 @@
 
 			var html_media = ''; //多媒体
 			var nameMarginTop = 0; //发布者距离顶部的高度
-			var width = parseInt((document.getElementById(dateItem).offsetWidth * 0.77 - 30) * 0.32);
-			var height = parseInt(width * 3 / 4);
-			var marginBottom = parseInt((document.getElementById(dateItem).offsetWidth * 0.77 - 30) * 0.02);
 			var marginRight;
 
 			if(data.EncType == 1) { //附件类型,1图片2音视频3仅文字
-				nameMarginTop = height + marginBottom;
+				nameMarginTop = imageHeight + marginBottom;
 				var imageArray = data.EncAddr.split('|');
 				var thumbArray = data.EncImgAddr.split('|');
-				var html_0 = '<div class="record-imge" style="height=' + height + marginBottom + 'px' + '">';
+				var html_0 = '<div class="record-imge" style="height=' + imageHeight + marginBottom + 'px' + '">';
 				var html_1 = '';
 				var html_2 = ''; //显示剩余的图片数量
 				var html_3 = ''; //是否显示图片
@@ -505,10 +546,10 @@
 						html_3 = 'display: none;';
 					}
 					if(i == 2 && imageArray.length > 3) {
-						html_2 = '<div data-id="' + data.TabId + '_' + i + '" class="record-picture-num" style="line-height: ' + (height + 1) + 'px;">+' + (imageArray.length - 3) + '</div>'
+						html_2 = '<div data-id="' + data.TabId + '_' + i + '" class="record-picture-num" style="line-height: ' + (imageHeight + 1) + 'px;">+' + (imageArray.length - 3) + '</div>'
 					}
-					html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px;' + html_3 + '">\
-									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;visibility: hidden;" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'));this.style.visibility=\'visible\';" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<' + height + '){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';}this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + height + ')/2)+\'px\';};this.style.visibility=\'visible\';">\
+					html_1 = html_1 + '<div class="record-picture" style="width: ' + imageWidth + 'px; height: ' + imageHeight + 'px; margin-right: ' + marginRight + 'px;' + html_3 + '">\
+									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;visibility: hidden;" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'));this.style.visibility=\'visible\';" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<' + imageHeight + '){this.style.height=\'' + imageHeight + 'px\';this.style.width=\'initial\';}this.style.marginLeft=-parseInt((this.offsetWidth-' + imageWidth + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + imageHeight + ')/2)+\'px\';};this.style.visibility=\'visible\';">\
 								</div>';
 				}
 				html_media = html_0 + html_1 + '</div>';
@@ -527,6 +568,10 @@
 											<div id="' + data.TabId + '_show" class="show-all">显示全部</div>' + html_media + '\
 											<div style="margin-top:' + nameMarginTop + 'px;" ><div class="dynamic-name">' + data.PublisherName + '</div></div>\
 										</div>\
+									</div>\
+									<div class="mui-input-row mui-checkbox " style="margin-right: ' + checkRight + 'px;">\
+										<label>&nbsp;</label>\
+										<input name="Checkbox" type="checkbox">\
 									</div>';
 			document.getElementById(dateItem).appendChild(element);
 
@@ -555,6 +600,28 @@
 				}
 			}
 			markDate = dateItem;
+		}
+
+		/**
+		 * 显示添加或删除
+		 * @param {Object} type 0,显示添加;1,显示删除
+		 */
+		function showAddOrDel(type) {
+			if(type == 0) { //添加
+				document.getElementById("back").style.display = 'inline';
+				document.getElementById("cancel").style.display = 'none';
+				document.getElementById("commit_div").style.display = 'none';
+				document.getElementById("pullrefresh").style.bottom = '0px';
+				document.getElementById("add").innerText = '添加';
+				document.getElementById("title").innerText = '云盘--' + mainData.StudentName + '档案';
+			} else { //删除
+				document.getElementById("back").style.display = 'none';
+				document.getElementById("cancel").style.display = 'inline';
+				document.getElementById("commit_div").style.display = 'inline';
+				document.getElementById("pullrefresh").style.bottom = '61px';
+				document.getElementById("add").innerText = '全选';
+				document.getElementById("title").innerText = '已选定0个';
+			}
 		}
 	</script>
 
