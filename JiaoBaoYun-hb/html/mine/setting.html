@@ -8,12 +8,15 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<style type="text/css">
-			.mui-table-view-cell:after,before {
+			.mui-table-view-cell:after,
+			before {
 				background-color: #dddddd;
 			}
+			
 			.mui-table-view:before {
 				background-color: #dddddd;
 			}
+			
 			.mui-table-view:after {
 				background-color: #dddddd;
 			}
@@ -61,6 +64,7 @@
 		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
 		<!--共用协议-->
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/qiuzhi/delContent_pop.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
@@ -75,6 +79,15 @@
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					var index = this.id.replace('li', '');
 					console.log('index:' + index);
+					var tempData = {
+						flag: 5,
+						id: 2,
+						title: '弹出框中，显示的标题',
+						delFlag: 1
+					}
+					delContent_pop(tempData, function(data) {
+						console.log('datadata='+data);
+					});
 					if(index == '0') {
 						mui.confirm(tempInfo.uid, '您已绑定手机号', ['取消', '更换'], function(e) {
 							var index = e.index;
@@ -144,7 +157,7 @@
 											//											plus.runtime.quit();
 											//跳转到登录界面
 											events.openNewWindowWithData('../../html/register/login.html', '');
-//											plus.webview.currentWebview().close();
+											//											plus.webview.currentWebview().close();
 										} else {
 											mui.toast(data.RspTxt);
 										}
