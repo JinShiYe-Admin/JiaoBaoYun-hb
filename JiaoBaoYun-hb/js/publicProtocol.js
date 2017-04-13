@@ -1220,7 +1220,7 @@ var postDataPro_getIsLikeUserSpaceByUser = function(commonData, wd, callback) {
 //			userSpaceId: ''//用户空间ID
 //		};
 //返回值：数组、[UserId:用户ID，LikeDate	:点赞时间]
-var postDataPro_getIsLikeUsersById=function(commonData, wd, callback) {
+var postDataPro_getUserIsLikeUsersById=function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值

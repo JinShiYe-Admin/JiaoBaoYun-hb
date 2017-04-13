@@ -42,9 +42,7 @@ mui.plusReady(function() {
 	})
 	//加载监听
 	window.addEventListener('answerInfo', function(e) {
-		if(answerInfo&&e.detail.data.AnswerId==answerInfo.AnswerId){
-			return;
-		}
+		
 		flag = 1;
 		selfId = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 		mui('#refreshContainer').pullRefresh().refresh(true);
@@ -52,7 +50,10 @@ mui.plusReady(function() {
 		pageIndex = 1;
 		totalPageCount = 1;
 		answerInfo = e.detail.data;
-		type = 2; //倒序
+		//如果跟上次进入的是同一个回答 则不更改顺序
+		if(!(answerInfo&&e.detail.data.AnswerId==answerInfo.AnswerId)){
+			type = 2; //倒序
+		}
 		setTolerantChecked(type);
 		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
 		var answerId = answerInfo.AnswerId;
@@ -171,14 +172,14 @@ var insertComment = function(commentList, commentData, order) {
  */
 var changeOrder = function() {
 	[].forEach.call(document.querySelectorAll('.icon-support'), function(item) {
-		console.log("当前：" + item.innerHTML);
+		console.log("当前顺序：" + item.order);
 		if(item.order || item.order == 0) {
 			var order = item.order;
 			if(typeof(order) == "string") {
 				var orders = order.split("-");
-				this.order = parseInt(orders[0]) + 1 + '-' + orders[1];
+				item.order = parseInt(orders[0]) + 1 + '-' + orders[1];
 			} else {
-				this.order += 1;
+				item.order += 1;
 			}
 		}
 	})
@@ -461,9 +462,10 @@ var createCell = function(ul, cellData, i, order) {
 	} else {
 		comments_zan.className = "mui-icon iconfont icon-support isNotLike"
 	}
-	var repliesContainer = comments_zan.parentElement.parentElement.parentElement.parentElement;
+	var repliesContainer = comments_zan.parentElement.parentElement.parentElement.parentElement.parentElement;
 	console.log('className:' + repliesContainer.className)
 	if(flag) {
+		console.log("repliesContainer的className:"+repliesContainer.className)
 		if(repliesContainer.className == ("mui-table-view inner-table-view")) {
 			comments_zan.order = repliesContainer.parentElement.querySelector('.icon-support').order + "-" + i;
 		} else {
@@ -781,4 +783,24 @@ var replaceBigNo = function(no) {
 		return '99+'
 	}
 	return no;
+}
+var showActionSheet=function(){
+		var btnArray = [{title:"更改答案"},{title:"删除答案"}];
+			plus.nativeUI.actionSheet( {
+				cancel:"取消",
+				buttons:btnArray
+			}, function(e){
+				var index = e.index;
+				switch (index){
+					case 0:
+						text += "取消";
+						break;
+					case 1:
+						
+						break;
+					case 2:
+						
+						break;
+				}
+			} );
 }

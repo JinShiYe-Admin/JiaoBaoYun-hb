@@ -14,6 +14,7 @@ var choseGroupId; //选中申请的群Id
 mui.plusReady(function() {
 	events.blurBack();
 	events.softIn("extra-input");
+	events.fobidEnter(document.getElementById("extra-input"));
 	//设置最大长度
 	jQuery("#extra-input").prop("maxLength", 20);
 	list = document.getElementById('groups-container');
@@ -139,7 +140,7 @@ var setButtonsListener = function() {
 }
 var getExtraInfo = function() {
 	if(document.getElementById('extra-input').value) {
-		return document.getElementById('extra-input').value;
+		return jQuery.trim(document.getElementById('extra-input').value.replace(/\/n/g,""));
 	}
 	return "";
 }
@@ -247,7 +248,7 @@ var getChecked = function() {
 	var check_tea = document.getElementById('check-tea');
 	//学生选择按钮
 	var check_stu = document.getElementById('check-stu');
-	mui('.mui-input-group').on('change', 'input', function() {
+	mui('.chose-container').on('change', 'input', function() {
 		if(this.checked) {
 			var choseRole = parseInt(this.value);
 			var extra_input = document.getElementById('extra-input');

@@ -144,7 +144,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"js/publicProtocol.js",
 			"image/cloud/cloud_0_wenjianjia_1.png",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"image/cloud/cloud_0_unknow_0.png"
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
@@ -155,7 +156,8 @@
 			"html/quan/zone_main.html",
 			"html/quan/studentdynamic_main.html",
 			"html/cloud/record_student_main.html",
-			"html/cloud/app_notes_main.html"
+			"html/cloud/app_notes_main.html",
+			"html/mine/qun_manage_1.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -961,10 +963,16 @@
 			"js/utils/RSAEncrypt.js",
 			"css/quan/class_space.css",
 			"js/utils/events.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mine/apply.css",
+			"image/quan/add.png",
+			"image/utils/default_personalimage.png",
+			"css/iconfont/iconfont.css",
+			"fonts/iconfont.ttf"
 		],
 		"refer": [
-			"html/quan/group-pInfo.html"
+			"html/quan/group-pInfo.html",
+			"html/mine/qun_manage_invite_a.html"
 		]
 	},
 	"html/quan/classSpace-persons.html": {
@@ -1163,7 +1171,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"image/utils/default_personalimage.png",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"css/mine/manager_data.css"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",
@@ -1436,7 +1445,8 @@
 		],
 		"refer": [
 			"html/qiuzhi/focus-question.html",
-			"html/qiuzhi/qiuzhi-expertAllAnswer.html"
+			"html/qiuzhi/qiuzhi-expertAllAnswer.html",
+			"html/qiuzhi/modifyExpertNote.html"
 		]
 	},
 	"html/sciedu/sciedu_show_main.html": {
@@ -1564,7 +1574,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"fonts/iconfont.ttf"
 		],
 		"refer": [
 			"html/homework/change-comment.html"
@@ -1702,7 +1713,9 @@
 			"js/mui.min.js",
 			"css/mui.min.css",
 			"image/utils/default_personalimage.png",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"css/iconfont/iconfont.css",
+			"fonts/iconfont.ttf"
 		],
 		"refer": []
 	},
@@ -1771,7 +1784,26 @@
 	},
 	"html/show/add-comment.html": {
 		"resources": [
-			"css/quan/custom-textarea.css"
+			"css/quan/custom-textarea.css",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
 	},
@@ -2069,7 +2101,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
 	},

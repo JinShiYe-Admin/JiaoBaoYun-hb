@@ -88,12 +88,15 @@
 			</div>
 			<ul class="mui-table-view" id="file">
 				<!--<li class="mui-table-view-cell mui-media">
-						<span class="mui-media-object mui-pull-right mui-icon mui-icon-closeempty"></span>
-						<span class="mui-media-object mui-icon iconfont icon-imge mui-pull-left"></span>
-						<div class="mui-media-body">
-							<div class="mui-ellipsis">文件名字</div>
-						</div>
-					</li>-->
+					<span class="mui-media-object mui-pull-right mui-icon mui-icon-closeempty"></span>
+					<span class="mui-media-object mui-icon iconfont icon-imge mui-pull-left"></span>
+					<div class="mui-media-object mui-pull-left" style="overflow: hidden;">
+						<img style="width: 100%;" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<42){this.style.height='42px';this.style.width='initial';}this.style.marginLeft=-parseInt((this.offsetWidth-42)/2)+'px';}else{this.style.marginTop=-parseInt((this.offsetHeight-42)/2)+'px';}" src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2277942808,1417432970&fm=23&gp=0.jpg">
+					</div>
+					<div class="mui-media-body">
+						<div class="mui-ellipsis">文件名字</div>
+					</div>
+				</li>-->
 			</ul>
 		</div>
 
@@ -378,7 +381,10 @@
 					var html1 = '';
 					html1 = '<span class="mui-media-object mui-icon iconfont icon-imge mui-pull-left"></span>';
 					if(fPath != undefined) {
-						html1 = '<img class="mui-media-object mui-pull-left" src="' + fPath + '">';
+						html1 = '<div class="mui-media-object mui-pull-left" style="overflow: hidden;">\
+									<img style="width: 100%;" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<42){this.style.height=\'42px\';this.style.width=\'initial\';}this.style.marginLeft=-parseInt((this.offsetWidth-42)/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-42)/2)+\'px\';}" src="' + fPath + '">\
+								</div>';
+						//html1 = '<div style="overflow: hidden;"><img class="mui-media-object mui-pull-left" src="' + fPath + '"></div>';
 					}
 					li.innerHTML = '<span id="closeempty" class="mui-media-object mui-pull-right mui-icon mui-icon-closeempty"></span>\
 									' + html1 + '\

@@ -287,7 +287,7 @@ var CloudFileUtil = (function($, mod) {
 						} else if(appId == 4) { //云存储
 							configure.thumbKey = Qiniu.URLSafeBase64Encode(imageThumb + ":" + thumbSpace + thumbName + '.png');
 						}
-						ops = "imageView2/2/w/" + maxWidth + "/h/" + maxHeight + "/format/png|saveas/" + configure.thumbKey;
+						ops = "imageView2/1/w/" + maxWidth + "/h/" + maxHeight + "/format/png|saveas/" + configure.thumbKey;
 					}
 				}
 

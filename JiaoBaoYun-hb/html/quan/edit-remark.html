@@ -54,8 +54,8 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/utils/self-adaptive-input.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/utils/self-adaptive-input.js"></script>
 		<script type="text/javascript">
 			mui.init()
 			var remarkInfo;
@@ -167,7 +167,10 @@
 				})
 			}
 			var getInputValue = function() {
-				return document.getElementById('remark-input').value;
+				if(document.getElementById('remark-input').value){
+					return jQuery.trim(document.getElementById('remark-input').value.replace(/\/n/g,""));
+				}
+				return "";
 			}
 		</script>
 	</body>

@@ -17,6 +17,8 @@
 
 .icon-zone:before { content: "\e64c"; }
 
+.icon-moreandroid:before { content: "\e6a5"; }
+
 .icon-guanbi:before { content: "\e614"; }
 
 .icon-shexiangji:before { content: "\e60e"; }
@@ -265,8 +267,12 @@
 
 .icon-yuyin3:before { content: "\e65e3"; }
 
+.icon-changeinfo1:before { content: "\e652"; }
+
 .icon-adddata0:before { content: "\e65a"; }
 
 .icon-changeinfo0:before { content: "\e65c"; }
 
-.icon-yaoqing0:before { content: "\e65e4"; }
+.icon-yaoqing0:before { content: "\e664"; }
+
+.icon-adddata1:before { content: "\e65d"; }

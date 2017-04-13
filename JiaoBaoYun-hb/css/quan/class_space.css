@@ -274,4 +274,74 @@ div>.icon-xiangce:before,
 	background-color: #E4E4E4;
 	height: 1px;
 }
-
+.div-chose {
+	display: inline-block;
+	width: 32%;
+	text-align: center;
+	font-size: 1.6rem;
+}
+.center-popover {
+	position: fixed;
+	top: 120px;
+	left: 5%;
+	width: 90%;
+	background-color: white;
+}
+.pop-title{
+	width: 100%;
+	height: 40px;
+	background-color: #F2F3F5;
+	line-height: normal;
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
+}
+.title-left{
+	width: 3px;
+	height: 30px;
+	background-color: #1DB8F1;
+}
+.title-middle{
+	width: 50%;
+	padding-left: 5px;
+	flex-grow: 1;
+	font-size: 20px;
+	color:#323232 ;
+}
+.title-right{
+	padding: 10px;
+}
+.chose-container{
+	padding: 15px 0;
+}
+.mui-popover{
+	border-radius: 0;
+}
+.icon-guanbi1{
+	color: #D2D2D2;
+	font-size: 24px;
+}
+.pop-hint{
+	font-size: 17px;
+	color: #323232;
+	margin-left: 20px;
+	margin-bottom: 14px;
+}
+.div-chose>label{
+	color: #808080;
+	font-size: 16px;
+}
+.buttons {
+	background-color: white;
+	padding-bottom: 15px;
+}
+.btn-sure {
+	margin-left: 5%;
+	width: 90%;
+}
+.mui-btn-green {
+	background-color: #1DB8F1;
+}
+.chose-container{
+	padding: 15px 0;
+}

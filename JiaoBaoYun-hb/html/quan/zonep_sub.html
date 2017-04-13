@@ -188,29 +188,9 @@
 								}
 							}
 							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+							PostUmk(tempArray.join(), tempRspData);
 
-							var table = document.body.querySelector('.mui-table-view');
-							//判断是加载更多1，还是刷新2
-							if(flag == 1) {
-								var tempLength = zonepArray.length;
-								//合并数组
-								zonepArray = zonepArray.concat(tempRspData);
-								mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
-								for(var i = tempLength; i < zonepArray.length; i++) {
-									var data = addData(i);
-									dynamiclistitem.addItem(table, data);
-								}
-								dynamiclistitem.questionContent();
-							} else {
-								tempPage = 1;
-								zonepArray = tempRspData;
-								table.innerHTML = '';
-								for(var i = 0; i < zonepArray.length; i++) {
-									var data = addData(i);
-									dynamiclistitem.addItem(table, data);
-								}
-								dynamiclistitem.questionContent();
-							}
+
 						});
 					} else {
 						mui.toast(data.RspTxt);
@@ -225,7 +205,6 @@
 			SCREEN_WIDTH = plus.screen.resolutionWidth;
 			gid = plus.webview.currentWebview().data.classId
 			mui.previewImage();
-
 			publisherId = plus.webview.currentWebview().data; //发布者id
 
 			tempPage = 1; //页码，请求第几页数据
@@ -582,10 +561,9 @@
 				if(data.RspCode == 0) {
 					for(var j = 0; j < tempRspData.length; j++) {
 						for(var k = 0; k < data.RspData.length; k++) {
-							console.log(tempRspData[j].utid + '-------' + data.RspData[k].butid)
+//							console.log(tempRspData[j].utid + '-------' + data.RspData[k].butid)
 							if(tempRspData[j].utid == data.RspData[k].butid) {
 								tempRspData[j].ugname = data.RspData[k].bunick;
-								console.log(JSON.stringify(tempRspData))
 							}
 						}
 
@@ -594,6 +572,7 @@
 				} else if(data.RspCode == 0009) {
 
 				}
+				
 				var table = document.body.querySelector('.mui-table-view');
 				//判断是加载更多1，还是刷新2
 				if(flag == 1) {
@@ -611,13 +590,13 @@
 					tempPage = 1;
 					zonepArray = tempRspData;
 
-					console.log('zoneArray=' + JSON.stringify(zonepArray))
 					table.innerHTML = '';
 					for(var i = 0; i < zonepArray.length; i++) {
 						var data = addData(i);
 						dynamiclistitem.addItem(table, data);
 					}
 				}
+				dynamiclistitem.questionContent();
 			})
 		}
 		//失去焦点事件

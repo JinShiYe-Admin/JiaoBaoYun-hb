@@ -113,24 +113,26 @@ var dynamiclistitem = (function($, mod) {
 			});
 		});
 		mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
-			var cityID = sliderId.replace('top_', '');
-			var index = this.id.replace('headImg' + cityID + idFlag, '');
-			mui.openWindow({
-				url: '../quan/zone_main.html',
-				id: '../quan/zone_main.html',
-				styles: {
-					top: '0px', //设置距离顶部的距离
-					bottom: '0px'
-				},
+			if(isPersonal == 1) {
+				var cityID = sliderId.replace('top_', '');
+				var index = this.id.replace('headImg' + cityID + idFlag, '');
+				mui.openWindow({
+					url: '../quan/zone_main.html',
+					id: '../quan/zone_main.html',
+					styles: {
+						top: '0px', //设置距离顶部的距离
+						bottom: '0px'
+					},
 
-				extras: {
-					data: zonepArray[index].PublisherId,
-					NoReadCnt: 0,
-					flag: '0'
-				},
-				createNew: true,
+					extras: {
+						data: zonepArray[index].PublisherId,
+						NoReadCnt: 0,
+						flag: '0'
+					},
+					createNew: true,
 
-			});
+				});
+			}
 
 		})
 		mui('.mui-table-view').on('tap', '.question_content', function() {
@@ -279,8 +281,8 @@ var dynamiclistitem = (function($, mod) {
 			console.log('跳转到点赞人列表界面')
 			var cityID = sliderId.replace('top_', '');
 			var index = this.id.replace('PraiseList' + cityID + idFlag, '');
-			var LikeUsers = zonepArray[index].LikeUsers
-			events.fireToPageWithData("../quan/classSpace-persons.html", "personsList", { zanList: LikeUsers, type: 3 });
+			var userSpaceId = zonepArray[index].TabId
+			events.fireToPageWithData("../quan/classSpace-persons.html", "personsList", { userSpaceId: userSpaceId, type: 3 });
 			window.event.stopPropagation()
 		})
 		//点击点赞的人跳转到相应界面
@@ -464,7 +466,6 @@ var dynamiclistitem = (function($, mod) {
 		} else {
 			tempModel.personalName = events.shortForString(tempModel.unick, 15);
 		}
-
 		tempModel.PublishDate = modifyTimeFormat(tempModel.PublishDate);
 
 		if(tempModel.EncImgAddr != '') {
@@ -538,7 +539,6 @@ var dynamiclistitem = (function($, mod) {
 			if(data.IsFocused == 0) {
 
 				if(!document.getElementById("spaceDetail")) {
-					console.log('关注')
 					closeempty = '<a data-is-focus=0  id ="btn-focus' + data.id_name + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:30px;height:30px;padding:5px"></a>';
 
 				} else {
@@ -547,7 +547,6 @@ var dynamiclistitem = (function($, mod) {
 			} else {
 
 				if(!document.getElementById("spaceDetail")) {
-					console.log('已关注')
 					closeempty = '<a data-is-focus=1  id ="btn-focus' + data.id_name + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:30px;height:30px;padding:5px"></a>';
 
 				} else {

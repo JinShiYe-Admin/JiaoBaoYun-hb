@@ -331,11 +331,11 @@ var getCellData = function(cell) {
 	cellData.time = cell.MaxDate;
 	if(cellData.MsgType != 6) {
 		var messages = '';
-		if(cellData.MsgType != 4) {
+//		if(cellData.MsgType != 4) {
 			if(cell.Content) {
 				messages += ('<p class="extra-words break-words"><span>' + events.shortForString(cell.UserName, 6) + ':</span>' + cell.Content + '</p>')
 			}
-		}
+//		}
 
 		if(cell.MsgArray && cell.MsgArray.length > 0) {
 			cell.MsgArray.forEach(function(msg, i, msgArray) {
