@@ -14,14 +14,14 @@ var wd;
 events.initRefresh('list-container', function() {
 	flag = 1;
 	pageIndex = 1;
-	wd=events.showWaiting();
+	wd = events.showWaiting();
 	requestAnswerDetail(answerInfo.AnswerId);
 }, function() {
 	mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
 	if(pageIndex < totalPageCount) {
 		pageIndex++;
 		flag = 1;
-		wd=events.showWaiting();
+		wd = events.showWaiting();
 		requestAnswerDetail(answerInfo.AnswerId);
 	}
 })
@@ -36,13 +36,12 @@ mui.plusReady(function() {
 	plus.webview.currentWebview().opener().addEventListener("hide", function() {
 		mui.previewImage().close();
 		console.log("求知回答页面已隐藏")
-//		events.clearChild(document.getElementById('list-container'));
-//		setOriginalCondition();
+		//		events.clearChild(document.getElementById('list-container'));
+		//		setOriginalCondition();
 		mui('#popover').popover('hide');
 	})
 	//加载监听
 	window.addEventListener('answerInfo', function(e) {
-		
 		flag = 1;
 		selfId = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 		mui('#refreshContainer').pullRefresh().refresh(true);
@@ -50,40 +49,64 @@ mui.plusReady(function() {
 		pageIndex = 1;
 		totalPageCount = 1;
 		answerInfo = e.detail.data;
+		setChangeCondition();
+		console.log("获取的回答详情：" + JSON.stringify(answerInfo));
 		//如果跟上次进入的是同一个回答 则不更改顺序
-		if(!(answerInfo&&e.detail.data.AnswerId==answerInfo.AnswerId)){
+		if(!(answerInfo && e.detail.data.AnswerId == answerInfo.AnswerId)) {
 			type = 2; //倒序
 		}
 		setTolerantChecked(type);
 		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
 		var answerId = answerInfo.AnswerId;
-		document.getElementById('list-container').innerHTML="";
-		wd=events.showWaiting();
+		document.getElementById('list-container').innerHTML = "";
+		wd = events.showWaiting();
 		requestAnswerDetail(answerId);
 	});
 	window.addEventListener('commentAdded', function(e) {
 		var commentedInfo = e.detail.data;
 		getComment(commentedInfo);
 	})
+	window.addEventListener("showActionSheet", function() {
+		var btnArray = [{
+			title: "更改答案"
+		}, {
+			title: "删除答案",
+			dia: 1 //是否显示dialogh
+		}];
+		var cbArray = [changeAnswer,
+			delAnswer
+		];
+		events.showActionSheet(btnArray, cbArray);
+	})
 	setListeners();
-
-	//点击关注按钮
-	//	mui('.mui-table-view').on('tap', '#focusBtn', function() {
-	//		if(this.innerText == '关注') {
-	//			setUserFocus(answerInfo.AnswerMan, 1, this);
-	//		} else {
-	//			setUserFocus(answerInfo.AnswerMan, 0, this);
-	//		}
-	//	})
-	//	events.addTap('focusBtn', function() {
-	//		console.log('点击关注');
-	//		if(this.innerText == '关注') {
-	//			setUserFocus(answerInfo.AnswerMan, 1);
-	//		} else {
-	//			setUserFocus(answerInfo.AnswerMan, 0);
-	//		}
-	//	});
 })
+var setChangeCondition = function() {
+	var moreShow = 0;
+	if(answerInfo.AnswerMan == selfId) {
+		moreShow = 1;
+	} else {
+		moreShow = 0;
+	}
+	mui.fire(plus.webview.currentWebview().opener(), "moreShow", moreShow);
+}
+/**
+ * 修改回答
+ */
+var changeAnswer = function() {
+
+}
+/**
+ * 删除回答
+ */
+var delAnswer = function() {
+
+}
+var delComment = function() {
+
+}
+var changeComment=function(){
+	
+}
 var getComment = function(commentedInfo) {
 	var wd = events.showWaiting();
 	postDataQZPro_getCommentById(commentedInfo.commentInfo, wd, function(data) {
@@ -91,7 +114,7 @@ var getComment = function(commentedInfo) {
 		console.log("获取的评论数据：" + JSON.stringify(data))
 		if(data.RspCode == 0) {
 			rechargeComment(data.RspData, commentedInfo)
-		}else{
+		} else {
 			events.closeWaiting();
 		}
 	})
@@ -234,10 +257,10 @@ function requestAnswerDetail(answerId) {
 		pageSize: '10' //每页记录数,传入0，获取总记录数
 	};
 	// 等待的对话框
-//	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 	//8.获取某个回答的详情
 	postDataQZPro_getAnswerById(comData, wd, function(data) {
-//		wd.close();
+		//		wd.close();
 		console.log('8.获取某个回答的详情:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			var datasource = data.RspData;
@@ -465,7 +488,7 @@ var createCell = function(ul, cellData, i, order) {
 	var repliesContainer = comments_zan.parentElement.parentElement.parentElement.parentElement.parentElement;
 	console.log('className:' + repliesContainer.className)
 	if(flag) {
-		console.log("repliesContainer的className:"+repliesContainer.className)
+		console.log("repliesContainer的className:" + repliesContainer.className)
 		if(repliesContainer.className == ("mui-table-view inner-table-view")) {
 			comments_zan.order = repliesContainer.parentElement.querySelector('.icon-support').order + "-" + i;
 		} else {
@@ -616,6 +639,9 @@ var setName = function(cell) {
  * 设置监听
  */
 var setListeners = function() {
+//	plus.webview.currentWebview().opener().querySelector(".icon-moreandroid").addEventListener("tap", function() {
+//
+//	});
 	//评论的点赞按钮点击事件
 	mui(".mui-table-view").on('tap', '.support-container', function() {
 		setIsLikeComment(this.querySelector('.icon-support'));
@@ -635,14 +661,22 @@ var setListeners = function() {
 	})
 	events.addTap('anthor-portrait', function() {
 		if(!answerData.IsAnonym) {
-			events.openNewWindowWithData("expert-detail.html", jQuery.extend(answerData, { UserId: answerData.utid, uimg: answerData.UserImg, unick: answerData.UserName }))
+			events.openNewWindowWithData("expert-detail.html", jQuery.extend(answerData, {
+				UserId: answerData.utid,
+				uimg: answerData.UserImg,
+				unick: answerData.UserName
+			}))
 		}
 	})
 	//评论头像点击事件
 	mui('.mui-table-view').on('tap', '.head-img', function() {
 		var info = this.info;
 		console.log(JSON.stringify(info));
-		events.openNewWindowWithData("expert-detail.html", jQuery.extend(info, { UserId: info.utid, uimg: info.UserImg, unick: info.UserName }))
+		events.openNewWindowWithData("expert-detail.html", jQuery.extend(info, {
+			UserId: info.utid,
+			uimg: info.UserImg,
+			unick: info.UserName
+		}))
 	})
 	mui('.mui-table-view').on('tap', ".comment-words", function() {
 		console.log("评论信息：" + JSON.stringify(this.commentInfo));
@@ -652,7 +686,23 @@ var setListeners = function() {
 		} else {
 			parentContainer = this.parentElement.parentElement.parentElement;
 		}
-		events.fireToPageWithData('qiuzhi-addAnswer.html', 'comment-reply', jQuery.extend(this.commentInfo, { AnswerId: answerData.AnswerId }));
+		if(upperInfo.UserId == myStorage.getItem(storageKeyName.PERSONALINFO).utid) {
+				var btnArray = [{
+			title: "更改评论"
+		}, {
+			title: "删除评论",
+			dia: 1 //是否显示dialogh
+		}];
+		var cbArray = [changeComment,
+			delComment
+		];
+		events.showActionSheet(btnArray, cbArray);
+		} else {
+			events.fireToPageWithData('qiuzhi-addAnswer.html', 'comment-reply', jQuery.extend(this.commentInfo, {
+				AnswerId: answerData.AnswerId
+			}));
+		}
+
 	})
 	//设置选择监听
 	document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected', function(e) {
@@ -784,23 +834,24 @@ var replaceBigNo = function(no) {
 	}
 	return no;
 }
-var showActionSheet=function(){
-		var btnArray = [{title:"更改答案"},{title:"删除答案"}];
-			plus.nativeUI.actionSheet( {
-				cancel:"取消",
-				buttons:btnArray
-			}, function(e){
-				var index = e.index;
-				switch (index){
-					case 0:
-						text += "取消";
-						break;
-					case 1:
-						
-						break;
-					case 2:
-						
-						break;
-				}
-			} );
+var showActionSheet = function(btnArray, callback) {
+	plus.nativeUI.actionSheet({
+		cancel: "取消",
+		buttons: btnArray
+	}, function(e) {
+		var index = e.index;
+		switch(index) {
+			case 0:
+				text += "取消";
+				break;
+			case 1:
+
+				break;
+			case 2:
+				events.setDialog("删除动态", "确认删除？", callback, "取消删除")
+				break;
+			default:
+				break;
+		}
+	});
 }

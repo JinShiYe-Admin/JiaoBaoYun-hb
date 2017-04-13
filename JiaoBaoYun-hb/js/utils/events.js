@@ -240,7 +240,7 @@ var events = (function(mod) {
 	mod.fireToPageWithData = function(tarPage, listener, datas) {
 
 		tarPage = tarPage.split('/')[tarPage.split('/').length - 1];
-		console.log('tarPage:' + tarPage);
+		console.log('tarPage:' + tarPage+",listener:"+listener);
 		var targetPage = null;
 		//获得目标页面
 		if(!targetPage) {
@@ -624,6 +624,27 @@ var events = (function(mod) {
 				return false;
 			}
 		}
+	}
+	/**
+	 * actionsheet
+	 * @param {Object} titleArray 各选项 格式如下[{title:选项1,dia：1需要显示dialog},{title:选项1,dia：0 或不填需要显示dialog}]
+	 * @param {Object} cbArray 各选项回调方法数组，确认选择后的回调函数
+	 */
+	mod.showActionSheet=function(btnArray,cbArray){
+		var len=btnArray.length;
+		plus.nativeUI.actionSheet({
+			buttons:btnArray,
+			cancel:"取消"
+		},function(e){
+			var index=e.index;
+			if(index>0){
+				if(btnArray[index-1].dia){
+					mod.setDialog(btnArray[index-1].title,"确认删除？",cbArray[index-1],"已取消删除")
+				}else{
+					cbArray[index-1];
+				}
+			}
+		})
 	}
 
 	/**

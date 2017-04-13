@@ -15,6 +15,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">回答</h1>
+			<a class="mui-icon iconfont icon-moreandroid mui-pull-right display-none"></a>
 		</header>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
@@ -28,6 +29,18 @@
 //					console.log("hide")
 //					events.fireToPageNone('qiuzhi-answerDetailSub.html','closePreview')
 //				})
+				var more=document.querySelector(".icon-moreandroid");	
+				more.addEventListener("tap",function(){
+					mui.fire(plus.webview.getWebviewById("qiuzhi-answerDetailSub.html"),"showActionSheet");
+				})
+				window.addEventListener("moreShow",function(e){
+					var isShow=e.detail;
+					if(isShow){
+						more.style.display="inline-block";
+					}else{
+						more.style.display="none";
+					}
+				})
 			})
 		</script>
 	</body>
