@@ -1,7 +1,7 @@
 //在求知中，详情页，进行删除操作时调用
 
 //data{
-//flag:求知：删除提问1，删除回答2，删除评论3；班级空间：删除动态4；个人空间：删除动态5，删除评论6
+//flag:求知：删除提问1，删除回答2，删除评论3；班级空间：删除班级动态4；个人空间：删除个人动态5，删除个人动态评论6
 //comData:协议需要参数
 //title:弹出框中，显示的标题
 //delFlag:删除确认弹出框格式，1从下弹出，2中间confirm
@@ -79,11 +79,35 @@ var delContent_req = function(data, callback) {
 				mui.toast(data.RspTxt);
 			}
 		});
-	} else if(data.flag == 4) { //删除动态4
+	} else if(data.flag == 4) { //删除班级动态4
+		//24.（班级空间）删除某班级空间
+		postDataPro_delClassSpaceById(data.comData, wd, function(data) {
+			wd.close();
+			console.log('24.（班级空间）删除某班级空间:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			callback(data.RspCode);
+			if(data.RspCode == 0) {
+
+			} else {
+				mui.toast(data.RspTxt);
+			}
+		});
+	}else if(data.flag == 5) { //删除个人动态5
 		//46.（用户空间）删除某用户空间
 		postDataPro_delUserSpaceById(data.comData, wd, function(data) {
 			wd.close();
 			console.log('46.（用户空间）删除某用户空间:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			callback(data.RspCode);
+			if(data.RspCode == 0) {
+
+			} else {
+				mui.toast(data.RspTxt);
+			}
+		});
+	}else if(data.flag == 6) { //删除个人动态评论6
+		//47.（用户空间）删除某条用户空间评论
+		postDataPro_delUserSpaceCommentById(data.comData, wd, function(data) {
+			wd.close();
+			console.log('47.（用户空间）删除某条用户空间评论:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			callback(data.RspCode);
 			if(data.RspCode == 0) {
 
