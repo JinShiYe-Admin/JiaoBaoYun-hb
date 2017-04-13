@@ -238,7 +238,7 @@
 		var imageWidth = parseInt((offsetWidth * 0.77 - 30) * 0.32);
 		var imageHeight = parseInt(imageWidth * 3 / 4);
 		var marginBottom = parseInt((offsetWidth * 0.77 - 30) * 0.02);
-		var checkRight = parseInt((offsetWidth * 0.12 - 15) / 2);
+		var checkRight = parseInt((offsetWidth * 0.12 - 18) / 2);
 
 		mui.plusReady(function() {
 			initData();
@@ -311,6 +311,15 @@
 					}
 				}
 			});
+
+			//修改安卓返回功能键
+			mui.back = function() {
+				if(deleteRecord) {
+					quitDel();
+				} else {
+					events.closeWebview(main);
+				}
+			}
 		}
 
 		/**
@@ -407,25 +416,7 @@
 			 * 退出删除状态
 			 */
 			document.getElementById('cancel').addEventListener('tap', function() {
-				//退出删除状态
-				deleteRecord = false;
-				document.getElementById("pullrefresh").style.zIndex = 1;
-				//调整顶部导航和删除按钮
-				showAddOrDel(0);
-				//修改安卓返回功能键
-				//隐藏选择按钮
-				var rowArray = document.querySelectorAll('.mui-row');
-				for(var i = 0; i < rowArray.length; i++) {
-					rowArray[i].style.paddingRight = '0px';
-					rowArray[i].querySelector('.mui-checkbox').style.display = 'none';
-				}
-				//调整scroll
-				//启用上拉下拉控件
-				var page = JSON.parse(document.getElementById('pullrefresh').getAttribute('data-page'));
-				if(page.pageIndex < page.totalPage) {
-					pullRefresh.refresh(true);
-				}
-
+				quitDel();
 			});
 		}
 
@@ -621,6 +612,29 @@
 				document.getElementById("pullrefresh").style.bottom = '61px';
 				document.getElementById("add").innerText = '全选';
 				document.getElementById("title").innerText = '已选定0个';
+			}
+		}
+
+		/**
+		 * 退出删除状态
+		 */
+		function quitDel() {
+			//退出删除状态
+			deleteRecord = false;
+			document.getElementById("pullrefresh").style.zIndex = 1;
+			//调整顶部导航和删除按钮
+			showAddOrDel(0);
+			//隐藏选择按钮
+			var rowArray = document.querySelectorAll('.mui-row');
+			for(var i = 0; i < rowArray.length; i++) {
+				rowArray[i].style.paddingRight = '0px';
+				rowArray[i].querySelector('.mui-checkbox').style.display = 'none';
+			}
+			//调整scroll
+			//启用上拉下拉控件
+			var page = JSON.parse(document.getElementById('pullrefresh').getAttribute('data-page'));
+			if(page.pageIndex < page.totalPage) {
+				pullRefresh.refresh(true);
 			}
 		}
 	</script>
