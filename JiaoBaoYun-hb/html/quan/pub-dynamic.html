@@ -30,11 +30,15 @@
 				<div id="take_pic" class="take_pic">
 					<a class="mui-icon iconfont icon-xiangji1"></a>
 				</div>
-				<div id="take_camero" class="take_camero">
-					<a class="mui-icon iconfont icon-shipin"></a>
-				</div>
+				
 				<div id="get_gallery" class="get_gallery">
 					<a class="mui-icon iconfont icon-tuku"></a>
+				</div>
+				<div id="get_record" class="get_record">
+					<a class="mui-icon iconfont icon-yuyin3"></a>
+				</div>
+				<div id="take_camero" class="take_camero">
+					<a class="mui-icon iconfont icon-shipin"></a>
 				</div>
 			</div>
 
@@ -104,6 +108,11 @@
 			////					});
 			//				});
 			CloudFileUtil.setDelPicListener();
+						//录音按钮
+			events.addTap('get_record', function() {
+				mui.toast('功能暂未开放！');
+			});
+
 			events.addTap('take_camero', function() {
 				mui.toast('此功能暂未开放');
 				//					camera.getVideo(camera.getCamera(), function(path) {1
