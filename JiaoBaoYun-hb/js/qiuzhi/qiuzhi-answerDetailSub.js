@@ -103,15 +103,30 @@ var changeAnswer = function() {
  * 删除回答
  */
 var delAnswer = function() {
+	var wd1=events.showWaiting();
 	//删除回答，并返回上级页面
-	
+	postDataQZPro_delAnswerById({answerId:answerInfo.AnswerId},wd1,function(data){
+		wd1.close();
+		console.log("删除回答的接口："+JSON.stringify(data));
+		if(data.RspCode==0){
+//			mui.fire(plus.webview.currentWebview().opener(),"answerDeled",answerInfo)
+			mui.back();
+		}else{
+			mui.toast("删除回答失败");
+		}
+	})
 }
 /**
  * 删除评论吧
  */
 var delComment = function() {
+	var wd1=events.showWaiting();
+		postDataQZPro_delCommentById({commentId:upperInfo.TabId},wd1,function(data){
+			console.log("删除评论后返回的数值："+JSON.stringify(data));
+			wd1.close();
+		})
 	if(upperInfo.UpperId){//存在上级评论id 直接删除本cell
-		
+	
 	}else{//不存在，删除本cell后增加单条评论
 		
 	}
@@ -274,7 +289,7 @@ function requestAnswerDetail(answerId) {
 	postDataQZPro_getAnswerById(comData, wd, function(data) {
 		//		wd.close();
 		console.log('8.获取某个回答的详情:' + JSON.stringify(data));
-		if(data.RspCode == 0) {
+		if(data.RspCode == 0&&data.RspData.AnswerId) {
 			var datasource = data.RspData;
 			totalPageCount = datasource.TotalPage;
 			getInfos(datasource);

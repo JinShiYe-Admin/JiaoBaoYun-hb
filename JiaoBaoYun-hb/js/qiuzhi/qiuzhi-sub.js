@@ -33,7 +33,7 @@ mui.plusReady(function() {
 		console.log("高度：" + document.querySelector(".mui-scroll-wrapper").offsetHeight);
 		getChannelTime = null;
 		getExperTime = null;
-		wd=events.showWaiting();
+		wd = events.showWaiting();
 		//获取所有符合条件问题
 		requestChannelList(channelInfo);
 		//清理专家列表
@@ -50,7 +50,7 @@ mui.plusReady(function() {
 		resetExpertsList();
 		getChannelTime = null;
 		getExperTime = null;
-		wd=events.showWaiting();
+		wd = events.showWaiting();
 		//2.获取符合条件的专家信息
 		getExpertsArray(channelInfo.TabId);
 		//刷新的界面实现逻辑
@@ -66,7 +66,7 @@ mui.plusReady(function() {
 		resetExpertsList();
 		getChannelTime = null;
 		getExperTime = null;
-		wd=events.showWaiting();
+		wd = events.showWaiting();
 		//2.获取符合条件的专家信息
 		getExpertsArray(channelInfo.TabId);
 		//刷新的界面实现逻辑
@@ -387,7 +387,10 @@ var setListener = function() {
 		console.log(JSON.stringify(allChannels))
 		var self = this
 		self.disabled = true;
-		events.openNewWindowWithData('qiuzhi-newQ.html', { curChannel: channelInfo, allChannels: allChannels });
+		events.openNewWindowWithData('qiuzhi-newQ.html', {
+			curChannel: channelInfo,
+			allChannels: allChannels
+		});
 		setTimeout(function() {
 			self.disabled = false;
 		}, 1500);
@@ -404,7 +407,11 @@ var setListener = function() {
 
 	//点击回答
 	mui('.mui-table-view').on('tap', '.answer-container', function() {
-		fireToPageReady(1, this.answerInfo)
+		var postData=this.answerInfo;
+		requestAnswerDetail(postData.AnswerId,function(){
+			fireToPageReady(1, postData)
+		})
+		
 		//		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', this.answerInfo);
 		//		console.log('传递的answerInfo:' + JSON.stringify(this.answerInfo));
 		//		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
@@ -472,4 +479,28 @@ var fireToPageReady = function(type, options) {
 			}, 500);
 		}
 	}
+}
+//8.获取某个回答的详情
+function requestAnswerDetail(answerId,callback) {
+	//所需参数
+	var comData = {
+		userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid,
+		answerId: answerId, //回答ID
+		orderType: 1, //评论排序方式,1 时间正序排序,2 时间倒序排序
+		pageIndex: 1, //当前页数
+		pageSize: '0' //每页记录数,传入0，获取总记录数
+	};
+	// 等待的对话框
+		var wd1 = events.showWaiting();
+	//8.获取某个回答的详情
+	postDataQZPro_getAnswerById(comData, wd1, function(data) {
+				wd1.close();
+		console.log('8.获取某个回答的详情:' + JSON.stringify(data));
+		if(data.RspCode == 0&&data.RspData.AnswerId) {
+			callback();
+		} else {
+			mui.toast("数据已删除！");
+			events.closeWaiting();
+		}
+	});
 }

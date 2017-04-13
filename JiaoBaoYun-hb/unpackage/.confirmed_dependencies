@@ -789,7 +789,8 @@
 			"js/publicQiuzhiProtocol.js",
 			"js/utils/events.js",
 			"js/libs/myStorage/myStorage.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/quan/custom-textarea.css"
 		],
 		"refer": []
 	},
