@@ -71,7 +71,7 @@ mui.plusReady(function() {
 			title: "更改答案"
 		}, {
 			title: "删除答案",
-			dia: 1 //是否显示dialogh
+			dia: 1 //是否显示dialog
 		}];
 		var cbArray = [changeAnswer,
 			delAnswer
