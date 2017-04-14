@@ -138,6 +138,8 @@
 			</div>-->
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
 			var main; //当前webview
 			var monthsArray = []; //记录最近12个月的月份
@@ -147,6 +149,9 @@
 			mui.plusReady(function() {
 				initData();
 				showMonths();
+				//获取数据
+				var month = monthsArray[monthsArray.length - 1];
+				requestData(month.beginDate, month.id);
 			});
 
 			/**
@@ -171,7 +176,7 @@
 						i_days = getDays(i_year, i_month);
 						monthsArray.push({
 							id: i_year.toString() + i_month.toString() + i_days.toString(),
-							time: i_year.toString() + i_month.toString() + '01',
+							beginDate: i_year.toString() + i_month.toString() + '01',
 							name: i + '月'
 						});
 					} else {
@@ -179,14 +184,14 @@
 						i_days = getDays(i_year, i_month);
 						monthsArray.splice((i - month - 1), 0, {
 							id: i_year.toString() + i_month.toString() + i_days.toString(),
-							time: i_year.toString() + i_month.toString() + '01',
+							beginDate: i_year.toString() + i_month.toString() + '01',
 							name: i + '月'
 						});
 					}
 				}
-				for(var i = 0; i < monthsArray.length; i++) {
-					console.log('monthsArray[' + i + '] ' + JSON.stringify(monthsArray[i]));
-				}
+				//				for(var i = 0; i < monthsArray.length; i++) {
+				//					console.log('monthsArray[' + i + '] ' + JSON.stringify(monthsArray[i]));
+				//				}
 			}
 
 			/**
@@ -245,7 +250,7 @@
 					//顶部月份
 					elementTop.id = monthsArray[i].id;
 					elementTop.href = '#' + monthsArray[i].id + '_bottom';
-					elementTop.value = monthsArray[i].time;
+					elementTop.value = monthsArray[i].beginDate;
 					elementTop.innerText = monthsArray[i].name;
 					fragmentTop.appendChild(elementTop);
 					//底部区域
@@ -307,6 +312,29 @@
 					indicators: true, //是否显示滚动条
 					deceleration: deceleration, //阻尼系数,系数越小滑动越灵敏
 					bounce: false, //是否启用回弹
+				});
+			}
+
+			/**
+			 * 请求数据
+			 */
+			function requestData(beginDate, endDate) {
+				//84.（点到记事）获取某班级的点到情况统计
+				var comData = {
+					classId: main.data.gid, //班级ID
+					beginDate: beginDate, //起始日期,例如20170101
+					endDate: endDate, //终止日期,例如20170131
+					publisherId: '0' //发布者ID,0代表全部
+				};
+				var wd = events.showWaiting();
+				postDataPro_getCheckStatisticForClass(comData, wd, function(data) {
+					console.log('84.getCheckStatisticForClass:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+
+					} else {
+						mui.toast(data.RspTxt);
+					}
+					wd.close();
 				});
 			}
 		</script>
