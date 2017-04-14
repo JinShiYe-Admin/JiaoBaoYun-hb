@@ -180,7 +180,7 @@ mui.plusReady(function() {
 			wd.close();
 			console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
-				getHomeworkAlert(data.RspData.NoReadCnt);
+//				getHomeworkAlert(data.RspData.NoReadCnt);
 			} else {
 				//				mui.toast(data.RspTxt);
 			}
@@ -235,8 +235,8 @@ mui.plusReady(function() {
 	 * @param {Object} container
 	 */
 	var addZoneIcon = function(container) {
-		addShai(container, 'jxq');
-		addAboutMe(container);
+//		addShai(container, 'jxq');
+//		addAboutMe(container);
 	}
 	/**
 	 * 加载晒一晒

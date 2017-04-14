@@ -18,8 +18,9 @@
 		<style>
 			#topPopover {
 				position: fixed;
-				top: 16px;
+				top: 6px;
 				right: 6px;
+				width: 90px;
 			}
 			
 			#topPopover .mui-popover-arrow {
@@ -28,14 +29,15 @@
 			}
 			
 			.mui-popover {
-				height: 100px;
+				height: 80px;
+				width: 50;
 			}
 			
-			.mui-table-view:before,
+			/*.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
 				height: 0px;
-			}
+			}*/
 			
 			.mui-table-view {
 				/*background-color: white;*/
@@ -84,11 +86,12 @@
 				border: none;
 			}
 			
-			.mui-table-view-cell {
+			#refreshContainer .mui-table-view-cell {
 				display: inline-block;
 				width: auto;
 				padding: 1px 1px;
 			}
+			
 			
 			.mui-slider-indicator .mui-table-view-cell.mui-active {
 				background: white;
@@ -190,15 +193,16 @@
 				</div>
 			</div>
 		</div>
-		<div id="topPopover" class="mui-popover" style="background-color: red;">
-			<ul class="mui-table-view">
-				<li class="mui-table-view-cell">
+		<div id="topPopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<ul class="mui-table-view" >
+				<li id="pubDynamic" class="mui-table-view-cell" >
 					<a href="#">晒一晒</a>
 				</li>
-				<li class="mui-table-view-cell">
+				<li id="aboutme" class="mui-table-view-cell">
 					<a href="#">与我相关</a>
 				</li>
-				<li class="mui-table-view-cell">
+				<li id="Scan" class="mui-table-view-cell">
 					<a href="#">扫一扫</a>
 				</li>
 			</ul>
@@ -346,15 +350,24 @@
 				events.preload("../homework/homework-tea.html", 300);
 				events.preload('storage_main.html'); //预加载云存储
 				window.addEventListener("topPopover", function(e) {
-//					mui('#topPopover').popover('show',document.getElementById("refreshContainer"));
 					var flag = e.detail.data;
-					mui('#topPopover').popover('show')
+					mui('#topPopover').popover('toggle')
 					if(flag == true) {
 						console.log('关闭topPopover')
 					} else {
 						console.log('打开topPopover')
 					}
 				});
+				mui('.mui-popover').on('tap', 'li', function(e) {
+					mui('#topPopover').popover('toggle')
+					if(this.id == 'pubDynamic'){
+						events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
+					}else if(this.id == 'aboutme'){
+						events.openNewWindow('../quan/aboutme.html')
+					}else{
+						
+					}
+				})
 				window.addEventListener("homeworkReady", function() {
 					homeworkReady = true;
 				});
