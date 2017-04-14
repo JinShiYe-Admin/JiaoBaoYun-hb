@@ -109,7 +109,7 @@ mui.plusReady(function() {
 			}
 		}
 		if(title.innerHTML == '云盘') {
-			title.innerHTML = '';
+			title.innerHTML = '云盘';
 		}
 		changRightIcons(targetTab);
 		var targetSplit = targetTab.split('/');
@@ -331,6 +331,12 @@ mui.plusReady(function() {
 		});
 		container.appendChild(a)
 	}
+	flag = false
+	events.addTap('plus', function() {
+		flag = !flag;
+		console.log(flag)
+		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover', flag)
+	})
 
 	var aboutme = document.getElementById('aboutme');
 	events.addTap('aboutme', function() {
