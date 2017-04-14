@@ -21,23 +21,36 @@
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script type="text/javascript">
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
 			});
 			var scan = null; //扫描控件
-			var QRCodeModel//扫描到的数据，组成model
+			var QRCodeModel //扫描到的数据，组成model
 			mui.plusReady(function() {
 				startRecognize();
 			});
 			// 条码识别成功事件
 			function onmarked(type, result) {
 				scan.cancel();
+				console.log('扫描到的信息为:' + result);
 				var text = '未知: ';
 				switch(type) {
 					case plus.barcode.QR:
 						text = 'QR: '; // 二维码
+						//将result用@分为数组，判断第一个是1的话，为申请加入群
+						var QRCodeArr = result.split('@');
+						if(QRCodeArr[0] == 1) { //1为申请加入群
+							QRCodeModel.flag = QRCodeArr[0]; //1代表申请加入群
+							QRCodeModel.gid = QRCodeArr[1]; //班级id
+							QRCodeModel.gname = QRCodeArr[2]; //班级名称
+							QRCodeModel.gimg = QRCodeArr[3]; //班级头像
+							QRCodeModel.gnote = QRCodeArr[4]; //班级说明
+							console.log('QRCodeModel=' + JSON.stringify(QRCodeModel));
+						} else {
+							mui.toast('扫描结果为:' + result);
+						}
 						break;
 					case plus.barcode.EAN13:
 						text = 'EAN13: ';
@@ -46,25 +59,13 @@
 						text = 'EAN8: ';
 						break;
 				}
-				console.log('扫描到的信息为:' + result);
-				//将result用@分为数组，判断第一个是1的话，为申请加入群
-				var QRCodeArr = result.split('@');
-				if (QRCodeArr[0]==1) {//1为申请加入群
-					QRCodeModel.flag = QRCodeArr[0];//1代表申请加入群
-					QRCodeModel.gid = QRCodeArr[1];//班级id
-					QRCodeModel.gname = QRCodeArr[2];//班级名称
-					QRCodeModel.gimg = QRCodeArr[3];//班级头像
-					QRCodeModel.gnote = QRCodeArr[4];//班级说明
-					console.log('QRCodeModel='+JSON.stringify(QRCodeModel));
-				} else{
-					mui.toast('扫描结果为:'+result);
+
+				// 创建扫描控件
+				function startRecognize() {
+					scan = new plus.barcode.Barcode('bcid');
+					scan.onmarked = onmarked;
+					scan.start(); //开始扫描
 				}
-			// 创建扫描控件
-			function startRecognize() {
-				scan = new plus.barcode.Barcode('bcid');
-				scan.onmarked = onmarked;
-				scan.start(); //开始扫描
-			}
 		</script>
 	</body>
 
