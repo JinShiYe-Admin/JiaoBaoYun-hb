@@ -3,6 +3,7 @@ var groupRoles;
 var choseRole;
 var isMaster;
 var allGroupInfos;
+var groupModel;//群信息model
 mui('.mui-scroll-wrapper').scroll({
 	indicators: true, //是否显示滚动条
 });
@@ -53,6 +54,12 @@ var getGroupInfo = function() {
 	}, wd1, function(data) {
 		wd1.close();
 		console.log("获取的群信息：" + JSON.stringify(data));
+		groupModel = data.RspData[0];
+		groupModel.gimg = updateHeadImg(groupModel.gimg,2);
+		if (groupModel.gnote == null||groupModel.gnote.length == 0) {
+			groupModel.gnote = '暂无说明';
+		}
+		
 		if(data.RspCode == 0) {
 			document.getElementById("group-info").innerText = data.RspData[0].gnote ? data.RspData[0].gnote : "暂无说明";
 		}
@@ -97,7 +104,8 @@ var setButtonsListener = function() {
 	 * 二维码点击事件
 	 */
 	document.getElementById("qun-code").addEventListener("tap", function() {
-
+		console.log('groupId='+groupId);
+		events.openNewWindowWithData('../mine/QRCode.html', groupModel);
 	})
 	document.getElementById("show-all").addEventListener("tap", function() {
 		events.openNewWindowWithData("group-allMembers.html", {
