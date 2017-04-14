@@ -317,7 +317,7 @@
 		this.refresh(index, this.groups[group]);
 	};
 	proto.open = function(index, group) {
-		mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+		mui('#refreshContainer').pullRefresh().setStopped(true);
 		if (this.isShown()) {
 			return;
 		}
@@ -333,7 +333,7 @@
 		}
 	};
 	proto.close = function(index, group) {
-		mui('#pullrefresh').pullRefresh().refresh();
+		mui('#refreshContainer').pullRefresh().setStopped(false);
 		if (!this.isShown()) {
 			return;
 		}

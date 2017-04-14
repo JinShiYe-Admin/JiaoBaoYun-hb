@@ -18,9 +18,9 @@
 		</header>
 		<div class="mui-content">
 			<div class="group-info">
-				<img class="group-img" src="" />
-				<h5 class="group-name"></h5>
-				<p class="group-info"></p>
+				<img id="group-img" class="group-img" src="../../image/utils/default_personalimage.png" />
+				<h6 id="group-name" class="group-name">001</h6>
+				<p id="group-info" class="group-info"></p>
 			</div>
 			<div class="chooseRole-container">
 				<p class="choose-hint">请选择您的身份：</p>
@@ -43,19 +43,23 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript">
 			var choseRole; //选择的角色
 			var groupInfo; //群组信息
 			mui.init()
 			mui.plusReady(function() {
 				groupInfo = plus.webview.currentWebview().data;
+				console.log("获取的数据："+JSON.stringify(groupInfo))
 				setData()
 				setListener();
 			})
 			var setData=function(){
-				document.querySelector(".group-img").src=groupInfo.gimg;
-				document.querySelector(".group-name").innerText=groupInfo.gname;
-				document.querySelector(".group-info").innerText=groupInfo.gnote;
+				document.getElementById("group-img").src=updateHeadImg(groupInfo.gimg,2);
+				console.log("获取的头像："+updateHeadImg(groupInfo.gimg,2));
+				document.getElementById("group-name").innerText=groupInfo.gname;
+				document.getElementById("group-info").innerText=groupInfo.gnote;
 			}
 			var setListener = function() {
 				mui(".chose-container").on("change", "input", function() {

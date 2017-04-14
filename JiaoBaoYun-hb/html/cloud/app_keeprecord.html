@@ -194,9 +194,9 @@
 				document.getElementById('history').addEventListener('tap', function() {
 					var passData = show; //群id
 					var memList = [];
-					console.log('passData:' + JSON.stringify(passData));
+					//console.log('passData:' + JSON.stringify(passData));
 					mui.each(qunMemList, function(index, item) {
-						console.log('qunMemList:' + JSON.stringify(item));
+						//console.log('qunMemList:' + JSON.stringify(item));
 						if(item.gid == show) {
 							memList = item.mem;
 							return false;
@@ -211,7 +211,10 @@
 
 				//统计
 				document.getElementById('statistics').addEventListener('tap', function() {
-					console.log('tongji');
+					//跳到统计
+					events.openNewWindowWithData('app_statistics.html', {
+						gid: show //群id
+					});
 				});
 
 				//切换显示选中的群

@@ -161,6 +161,8 @@
 			var main; //获取当前窗体对象
 			var mainData; //接收A页面传入参数值
 			var markDate = ''; //记录日期
+			var myDate = new Date();
+			var year = myDate.getFullYear(); //今年
 			mui.plusReady(function() {
 				previewImage = mui.previewImage();
 				main = plus.webview.currentWebview(); //获取当前窗体对象
@@ -326,16 +328,23 @@
 			 */
 			function createItem(data) {
 				//console.log('createItem ' + JSON.stringify(data));
-				var date = data.PublishDate.split(' '); //发布的日期和时间
-				var dateItem = date[0].replace(/-/g, '/'); //替换横杠为斜杠
-				var time = date[1].split(':');
+				var Date = data.PublishDate.split(' '); //发布的日期和时间
+				var dateItem = Date[0];
+				var time = Date[1].split(':');
 				var timeItem = time[0] + ':' + time[1];
 				if(markDate != dateItem) { //新的日期
 					markDate = dateItem;
 					var element = document.createElement('ul');
 					element.className = 'mui-table-view';
 					element.id = dateItem;
-					element.innerHTML = '<div class="mui-table-view-cell history-date">' + dateItem + '</div><div id="' + dateItem + '_data"></div>';
+					var mTime = dateItem.split('-');
+					if(mTime[0] == year) {//记录是今年
+						mTime[0] = '';
+					} else {
+						mTime[0] = mTime[0] + '年';
+					}
+					var showTime = mTime[0] + mTime[1] + '月' + mTime[2] + '日';
+					element.innerHTML = '<div class="mui-table-view-cell history-date">' + showTime + '</div><div id="' + dateItem + '_data"></div>';
 					document.getElementById("data_scroll").appendChild(element);
 				}
 
@@ -371,7 +380,7 @@
 							html_2 = '<div data-id="' + data.TabId + '_' + i + '" class="record-picture-num" style="line-height: ' + (height + 1) + 'px;">+' + (imageArray.length - 3) + '</div>'
 						}
 						html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px;' + html_3 + '">\
-									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'))" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<'+height+'){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';}this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + height + ')/2)+\'px\';}">\
+									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'))" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<' + height + '){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';}this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + height + ')/2)+\'px\';}">\
 								</div>';
 					}
 					html_media = html_0 + html_1 + '</div>';
