@@ -40,12 +40,12 @@ var delContent_pop = function(data, callback) {
 	}
 }
 
-var delContent_req = function(data, callback) {
+var delContent_req = function(data1, callback) {
 	// 等待的对话框
 	var wd = events.showWaiting();
-	if(data.flag == 1) { //删除提问1
+	if(data1.flag == 1) { //删除提问1
 		//37.删除某个用户的某条提问
-		postDataQZPro_delAskById(data.comData, wd, function(data) {
+		postDataQZPro_delAskById(data1.comData, wd, function(data) {
 			wd.close();
 			console.log('37.删除某个用户的某条提问:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			callback(data.RspCode);
@@ -55,9 +55,9 @@ var delContent_req = function(data, callback) {
 				mui.toast(data.RspTxt);
 			}
 		});
-	} else if(data.flag == 2) { //删除回答2
+	} else if(data1.flag == 2) { //删除回答2
 		//11.删除某个用户的某条回答
-		postDataQZPro_delAnswerById(data.comData, wd, function(data) {
+		postDataQZPro_delAnswerById(data1.comData, wd, function(data) {
 			wd.close();
 			console.log('11.删除某个用户的某条回答:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			callback(data.RspCode);
@@ -67,9 +67,9 @@ var delContent_req = function(data, callback) {
 				mui.toast(data.RspTxt);
 			}
 		});
-	} else if(data.flag == 3) { //删除评论3
+	} else if(data1.flag == 3) { //删除评论3
 		//18.删除某条回答的评论
-		postDataQZPro_delCommentById(data.comData, wd, function(data) {
+		postDataQZPro_delCommentById(data1.comData, wd, function(data) {
 			wd.close();
 			console.log('18.删除某条回答的评论:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			callback(data.RspCode);
@@ -79,9 +79,9 @@ var delContent_req = function(data, callback) {
 				mui.toast(data.RspTxt);
 			}
 		});
-	} else if(data.flag == 4) { //删除班级动态4
+	} else if(data1.flag == 4) { //删除班级动态4
 		//24.（班级空间）删除某班级空间
-		postDataPro_delClassSpaceById(data.comData, wd, function(data) {
+		postDataPro_delClassSpaceById(data1.comData, wd, function(data) {
 			wd.close();
 			console.log('24.（班级空间）删除某班级空间:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			callback(data.RspCode);
@@ -91,9 +91,9 @@ var delContent_req = function(data, callback) {
 				mui.toast(data.RspTxt);
 			}
 		});
-	}else if(data.flag == 5) { //删除个人动态5
+	}else if(data1.flag == 5) { //删除个人动态5
 		//46.（用户空间）删除某用户空间
-		postDataPro_delUserSpaceById(data.comData, wd, function(data) {
+		postDataPro_delUserSpaceById(data1.comData, wd, function(data) {
 			wd.close();
 			console.log('46.（用户空间）删除某用户空间:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			callback(data.RspCode);
@@ -103,11 +103,11 @@ var delContent_req = function(data, callback) {
 				mui.toast(data.RspTxt);
 			}
 		});
-	}else if(data.flag == 6) { //删除个人动态评论6
+	}else if(data1.flag == 6) { //删除个人动态评论6
 		//47.（用户空间）删除某条用户空间评论
 		postDataPro_delUserSpaceCommentById(data.comData, wd, function(data) {
 			wd.close();
-			console.log('47.（用户空间）删除某条用户空间评论:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			console.log('47.（用户空间）删除某条用户空间评论:' + data1.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			callback(data.RspCode);
 			if(data.RspCode == 0) {
 

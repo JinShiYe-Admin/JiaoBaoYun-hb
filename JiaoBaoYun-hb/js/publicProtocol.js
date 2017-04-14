@@ -1735,7 +1735,8 @@ var postDataPro_getIsLikeUsersById = function(commonData, wd, callback) {
 //所需参数
 //		var comData = {
 //			parentId: '',//家长ID
-//			studentName:'',//学生ID
+//			docId:'',//文件夹ID
+//			docType:'',//文件夹类型,1 普通档案,2 档案文件夹
 //			pageIndex:'',//当前页数
 //			pageSize:''//每页记录数
 //		};

@@ -6,7 +6,7 @@ var answerData; //答案数据
 var selfId;
 var flag = 1; //1为加载数据 0 为重置顺序
 var upperInfo;
-var parentContainer;//评论父控件
+var parentContainer; //评论父控件
 var wd;
 /**
  * 加载刷新
@@ -15,14 +15,14 @@ events.initRefresh('list-container', function() {
 	flag = 1;
 	pageIndex = 1;
 	wd = events.showWaiting();
-	requestAnswerDetail(answerInfo.AnswerId);
+	requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
 }, function() {
 	mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
 	if(pageIndex < totalPageCount) {
 		pageIndex++;
 		flag = 1;
 		wd = events.showWaiting();
-		requestAnswerDetail(answerInfo.AnswerId);
+		requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
 	}
 })
 
@@ -60,15 +60,15 @@ mui.plusReady(function() {
 		var answerId = answerInfo.AnswerId;
 		document.getElementById('list-container').innerHTML = "";
 		wd = events.showWaiting();
-		requestAnswerDetail(answerId);
+		requestAnswerDetail(answerId, pageIndex, 10, getInfos);
 	});
 	window.addEventListener('commentAdded', function(e) {
 		var commentedInfo = e.detail.data;
-		getComment(commentedInfo);
+		getComment(commentedInfo.commentInfo);
 	})
 	window.addEventListener("showActionSheet", function() {
 		var btnArray = [{
-			title: "更改答案"
+			title: "修改答案"
 		}, {
 			title: "删除答案",
 			dia: 1 //是否显示dialog
@@ -97,37 +97,98 @@ var setChangeCondition = function() {
  */
 var changeAnswer = function() {
 	//修改答案
-
+	mui.toast("功能暂未开放，请稍候");
 }
 /**
  * 删除回答
  */
 var delAnswer = function() {
+	var wd1 = events.showWaiting();
 	//删除回答，并返回上级页面
-	
+	postDataQZPro_delAnswerById({
+		answerId: answerInfo.AnswerId
+	}, wd1, function(data) {
+		wd1.close();
+		console.log("删除回答的接口：" + JSON.stringify(data));
+		if(data.RspCode == 0) {
+			//			mui.fire(plus.webview.currentWebview().opener(),"answerDeled",answerInfo)
+			mui.back();
+		} else {
+			mui.toast("删除回答失败");
+		}
+	})
 }
 /**
  * 删除评论吧
  */
 var delComment = function() {
-	if(upperInfo.UpperId){//存在上级评论id 直接删除本cell
-		
-	}else{//不存在，删除本cell后增加单条评论
-		
+	var wd1 = events.showWaiting();
+	postDataQZPro_delCommentById({
+		commentId: upperInfo.TabId
+	}, wd1, function(data) {
+		console.log("删除评论后返回的数值：" + JSON.stringify(data));
+		wd1.close();
+		if(data.RspCode == 0&&data.RspData.Result) {
+			resetSiblingOrder(delCommentContainer);
+			delCommentData();
+			if(upperInfo.UpperId) { //存在上级评论id 直接删除本cell
+				parentContainer.querySelector(".inner-table-view").removeChild(delCommentContainer);
+				if(!parentContainer.querySelector(".inner-table-view").firstElementChild){
+					parentContainer.removeChild(parentContainer.querySelector(".inner-table-view"));
+				}
+			} else { //不存在，删除本cell后增加单条评论
+				document.querySelector("#list-container").removeChild(delCommentContainer);
+				if(pageIndex < totalPageCount) {
+					requestAnswerDetail(answerInfo.AnswerId, pageIndex * 10, 1, getInfos);
+				}
+			}
+		}
+
+	})
+
+}
+/**
+ * 删除answerData的数据
+ */
+var delCommentData = function() {
+	var delCmOrder = delCommentContainer.querySelector(".icon-support").order;
+	if(typeof(delCmOrder) == "string") {
+		var delOrders = delCmOrder.split("-");
+		answerData.Data[parseInt(delOrders[0])].Replys.splice(parseInt(delOrders[1]), 1);
+	} else {
+		answerData.Data.splice(delCmOrder, 1);
+		console.log("删除的位置：" + delCmOrder + ",删除后的数据：" + JSON.stringify(answerData));
 	}
 }
-var changeComment=function(){
-	
+var resetSiblingOrder = function(container) {
+	if(container.nextElementSibling) {
+		var nextElm = container.nextElementSibling;
+		var sibOrder = nextElm.querySelector(".icon-support").order;
+		if(typeof(sibOrder) == "string") {
+			var orders = sibOrder.split("-");
+			nextElm.querySelector(".icon-support").order = orders[0] + "-" + (parseInt(orders[1]) - 1);
+		} else {
+			nextElm.querySelector(".icon-support").order = sibOrder - 1;
+		}
+		resetSiblingOrder(nextElm);
+	}
 }
-var getComment = function(commentedInfo) {
-	var wd = events.showWaiting();
-	postDataQZPro_getCommentById(commentedInfo.commentInfo, wd, function(data) {
-		wd.close();
+var changeComment = function() {
+
+}
+var getComment = function(commentInfo, deledCB) {
+	var wd1 = events.showWaiting();
+	postDataQZPro_getCommentById(commentInfo, wd1, function(data) {
+		wd1.close();
 		console.log("获取的评论数据：" + JSON.stringify(data))
 		if(data.RspCode == 0) {
-			rechargeComment(data.RspData, commentedInfo)
+			if(!deledCB) {
+				rechargeComment(data.RspData, commentInfo)
+			} else {
+				deledCB(0)
+			}
 		} else {
-			events.closeWaiting();
+			deledCB(1);
 		}
 	})
 }
@@ -136,11 +197,11 @@ var getComment = function(commentedInfo) {
  * @param {Object} comData 评论信息
  * @param {Object} commentedInfo 上个界面传过来的评论信息
  */
-var rechargeComment = function(comData, commentedInfo) {
+var rechargeComment = function(comData, commentInfo) {
 	var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
 	comData.UserName = personalInfo.unick; //昵称
 	comData.UserImg = personalInfo.uimg; //头像
-	comData.TabId = commentedInfo.commentInfo.commentId //评论id
+	comData.TabId = commentInfo.commentId //评论id
 	comData.Replys = []; //回复列表
 	if(upperInfo) { //有上级评论
 		comData.UpperId = upperInfo.UpperId ? upperInfo.UpperId : upperInfo.TabId;
@@ -259,14 +320,14 @@ var setTolerantChecked = function(orderType) {
 	}
 }
 //8.获取某个回答的详情
-function requestAnswerDetail(answerId) {
+function requestAnswerDetail(answerId, pageIndex, pageSize, callback) {
 	//所需参数
 	var comData = {
 		userId: selfId,
 		answerId: answerId, //回答ID
 		orderType: type, //评论排序方式,1 时间正序排序,2 时间倒序排序
 		pageIndex: pageIndex, //当前页数
-		pageSize: '10' //每页记录数,传入0，获取总记录数
+		pageSize: pageSize //每页记录数,传入0，获取总记录数
 	};
 	// 等待的对话框
 	//	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -274,10 +335,10 @@ function requestAnswerDetail(answerId) {
 	postDataQZPro_getAnswerById(comData, wd, function(data) {
 		//		wd.close();
 		console.log('8.获取某个回答的详情:' + JSON.stringify(data));
-		if(data.RspCode == 0) {
+		if(data.RspCode == 0 && data.RspData.AnswerId) {
 			var datasource = data.RspData;
-			totalPageCount = datasource.TotalPage;
-			getInfos(datasource);
+			totalPageCount = Math.ceil(datasource.TotalPage*(pageSize/10));
+			callback(datasource, pageIndex);
 		} else {
 			mui.toast(data.RspTxt);
 			events.closeWaiting();
@@ -288,7 +349,7 @@ function requestAnswerDetail(answerId) {
  * 获取个人信息
  * @param {Object} datasource
  */
-var getInfos = function(datasource) {
+var getInfos = function(datasource, pageIndex) {
 	var pInfos = [];
 	pInfos.push(datasource.AnswerMan);
 	for(var i in datasource.Data) {
@@ -308,14 +369,14 @@ var getInfos = function(datasource) {
 		}
 	}
 	pInfos = events.arraySingleItem(pInfos);
-	requireInfos(datasource, pInfos);
+	requireInfos(datasource, pInfos, pageIndex);
 }
 /**
  * 
  * @param {Object} datasource
  * @param {Object} pInfos
  */
-var requireInfos = function(datasource, pInfos) {
+var requireInfos = function(datasource, pInfos, pageIndex) {
 
 	//发送获取用户资料申请
 	var tempData = {
@@ -326,7 +387,7 @@ var requireInfos = function(datasource, pInfos) {
 	postDataPro_PostUinf(tempData, wd, function(data) {
 		console.log('获取的个人信息:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
-			refreshUI(rechargeInfos(datasource, data.RspData));
+			refreshUI(rechargeInfos(datasource, data.RspData, pageIndex));
 		} else {
 			events.closeWaiting()
 		}
@@ -338,7 +399,7 @@ var requireInfos = function(datasource, pInfos) {
  * @param {Object} datasource
  * @param {Object} infos
  */
-var rechargeInfos = function(datasource, infos) {
+var rechargeInfos = function(datasource, infos, pageIndex) {
 	for(var j in infos) {
 		var info = infos[j];
 		if(datasource.AnswerMan == info.utid) {
@@ -651,9 +712,9 @@ var setName = function(cell) {
  * 设置监听
  */
 var setListeners = function() {
-//	plus.webview.currentWebview().opener().querySelector(".icon-moreandroid").addEventListener("tap", function() {
-//
-//	});
+	//	plus.webview.currentWebview().opener().querySelector(".icon-moreandroid").addEventListener("tap", function() {
+	//
+	//	});
 	//评论的点赞按钮点击事件
 	mui(".mui-table-view").on('tap', '.support-container', function() {
 		setIsLikeComment(this.querySelector('.icon-support'));
@@ -690,30 +751,45 @@ var setListeners = function() {
 			unick: info.UserName
 		}))
 	})
+	//评论信息
 	mui('.mui-table-view').on('tap', ".comment-words", function() {
 		console.log("评论信息：" + JSON.stringify(this.commentInfo));
+		var item = this;
 		upperInfo = this.commentInfo;
-		if(upperInfo.UpperId) {
-			parentContainer = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-		} else {
-			parentContainer = this.parentElement.parentElement.parentElement;
+		var comdata = {
+			userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //	用户ID
+			answerId: answerInfo.AnswerId, //回答ID
+			commentId: upperInfo.TabId //评论ID
 		}
-		if(upperInfo.UserId == myStorage.getItem(storageKeyName.PERSONALINFO).utid) {
-				var btnArray = [{
-			title: "更改评论"
-		}, {
-			title: "删除评论",
-			dia: 1 //是否显示dialogh
-		}];
-		var cbArray = [changeComment,
-			delComment
-		];
-		events.showActionSheet(btnArray, cbArray);
-		} else {
-			events.fireToPageWithData('qiuzhi-addAnswer.html', 'comment-reply', jQuery.extend(this.commentInfo, {
-				AnswerId: answerData.AnswerId
-			}));
-		}
+		getComment(comdata, function(isDel) {
+			if(isDel) {
+				mui.toast("评论已删除！");
+			} else {
+				if(upperInfo.UpperId) {
+					parentContainer = item.parentElement.parentElement.parentElement.parentElement.parentElement;
+				} else {
+					parentContainer = item.parentElement.parentElement.parentElement;
+				}
+				if(upperInfo.UserId == myStorage.getItem(storageKeyName.PERSONALINFO).utid) {
+					delCommentContainer = item.parentElement.parentElement.parentElement;
+					var btnArray = [{
+						title: "更改评论"
+					}, {
+						title: "删除评论",
+						dia: 1 //是否显示dialogh
+					}];
+					var cbArray = [changeComment,
+						delComment
+					];
+					events.showActionSheet(btnArray, cbArray);
+				} else {
+					delCommentContainer = null;
+					events.fireToPageWithData('qiuzhi-addAnswer.html', 'comment-reply', jQuery.extend(item.commentInfo, {
+						AnswerId: answerData.AnswerId
+					}));
+				}
+			}
+		})
 
 	})
 	//设置选择监听
@@ -724,7 +800,7 @@ var setListeners = function() {
 		flag = 0;
 		mui('#popover').popover('hide');
 		answerData.Data.reverse();
-		events.clearChild(document.getElementById('list-container'));
+		document.getElementById('list-container').innerHTML = "";
 		refreshUI(answerData);
 	});
 	//	document.getElementById('order-selector').onchange = function() {

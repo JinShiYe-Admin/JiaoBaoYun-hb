@@ -179,11 +179,11 @@
 					应<br/>用
 				</div>
 				<div class="cloud-item-right mui-table-view">
-					<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div id="cloudapps_0_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 						<div id="cloudapps_0" class="mui-scroll">
 						</div>
 					</div>
-					<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div id="cloudapps_1_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 						<div id="cloudapps_1" class="mui-scroll">
 						</div>
 					</div>
@@ -249,26 +249,48 @@
 				var allItem = document.querySelectorAll('.cloud-item');
 				for(var i = 0; i < allItem.length; i++) {
 					var sliderHeight = 0;
-					if(allItem[i].id == 'cloudrecord') { //家校互动
-						allItem[i].style.height = parseInt(cloudItemHeight * cloudSecond) + 'px';
-						cloudSecondItemHeight = allItem[i].offsetHeight;
-						sliderHeight = cloudSecondItemHeight;
-					} else if(allItem[i].id == 'cloudstorage') {
+					var name = '';
+					var sw_0 = '';
+					var sw_1 = '';
+					var scroll_0 = '';
+					var scroll_1 = '';
+					if(allItem[i].id == 'cloudstorage') { //云存储
 						allItem[i].style.height = parseInt(cloudItemHeight * cloudFirst) + 'px';
 						cloudFirstItemHeight = allItem[i].offsetHeight;
 						sliderHeight = cloudFirstItemHeight;
-					} else if(allItem[i].id == 'cloudapps') {
+						name = 'cloudstoragename';
+						sw_0 = 'cloudstorage_0_sw';
+						sw_1 = 'cloudstorage_1_sw';
+						scroll_0 = 'cloudstorage_0';
+						scroll_1 = 'cloudstorage_1';
+					} else if(allItem[i].id == 'cloudrecord') { //家校互动
+						allItem[i].style.height = parseInt(cloudItemHeight * cloudSecond) + 'px';
+						cloudSecondItemHeight = allItem[i].offsetHeight;
+						sliderHeight = cloudSecondItemHeight;
+						name = 'cloudrecordname';
+						sw_0 = 'cloudrecord_0_sw';
+						sw_1 = 'cloudrecord_1_sw';
+						scroll_0 = 'cloudrecord_0';
+						scroll_1 = 'cloudrecord_1';
+					} else if(allItem[i].id == 'cloudapps') { //应用
 						allItem[i].style.height = parseInt(cloudItemHeight * cloudThird) + 'px';
 						cloudThirdItemHeight = allItem[i].offsetHeight;
 						sliderHeight = cloudThirdItemHeight;
+						name = 'cloudappsname';
+						sw_0 = 'cloudapps_0_sw';
+						sw_1 = 'cloudapps_1_sw';
+						scroll_0 = 'cloudapps_0';
+						scroll_1 = 'cloudapps_1';
 					}
-					allItem[i].style.marginTop = parseInt(webHeight * 0.015) + 'px';
-					allItem[i].style.marginBottom = parseInt(webHeight * 0.015) + 'px';
-					allItem[i].children[0].style.marginTop = parseInt(allItem[i].offsetHeight - allItem[i].children[0].offsetHeight) / 2 + 'px';
-					allItem[i].children[1].children[0].style.height = parseInt(sliderHeight / 2) + 'px';
-					allItem[i].children[1].children[1].style.height = parseInt(sliderHeight / 2) + 'px';
-					allItem[i].children[1].children[0].children[0].style.height = parseInt(sliderHeight / 2) + 'px';
-					allItem[i].children[1].children[1].children[0].style.height = parseInt(sliderHeight / 2) + 'px';
+					var style_0 = parseInt(webHeight * 0.015) + 1 + 'px';
+					var style_1 = parseInt(sliderHeight / 2) + 'px'
+					allItem[i].style.marginTop = style_0;
+					allItem[i].style.marginBottom = style_0;
+					document.getElementById(name).style.marginTop = parseInt(allItem[i].offsetHeight - allItem[i].children[0].offsetHeight) / 2 + 'px';
+					document.getElementById(sw_0).style.height = style_1;
+					document.getElementById(sw_1).style.height = style_1;
+					document.getElementById(scroll_0).style.height = style_1;
+					document.getElementById(scroll_1).style.height = style_1;
 				}
 				document.getElementById("refreshContainer").style.visibility = 'visible';
 			}
@@ -296,8 +318,11 @@
 			mui.init();
 			mui.plusReady(function() {
 
+				addcloudapps_0(); //应用
+				changeData();
+
 				//下拉刷新
-				mui(".cloud-item-right .mui-scroll-wrapper .mui-scroll").pullToRefresh({
+				mui("#refreshContainer").pullToRefresh({
 					down: {
 						callback: function() {
 							var self = this;
@@ -317,10 +342,7 @@
 						}
 					},
 				});
-				//-----------设置数据start---------------
-				addcloudapps_0(); //应用
-				changeData();
-				//-----------设置数据end---------------
+
 				events.preload("../homework/homework-tea.html", 300);
 				events.preload('storage_main.html'); //预加载云存储
 				window.addEventListener("topPopover", function(e) {
@@ -343,19 +365,16 @@
 					events.fireToPageNone('storage_upload.html', 'createFolder'); //在程序中创建utid的文件夹和对应的上传下载文件夹
 				});
 
-				//修改用户信息
+				//修改学生头像
 				window.addEventListener('stuImgeChanged', function(e) {
 					//设置页面信息
 					var data = e.detail;
-					//console.log(JSON.stringify(data));
 					document.getElementById("student_imge_" + data.id).src = data.img;
 				});
 
 				//修改云存储信息
 				window.addEventListener('cloudDataChange', function() {
 					//设置页面信息
-					//var scroll = mui('#cloudstorage_1_sw').scroll();
-					//scroll.scrollTo(0, 0, 100); //100毫秒滚动到顶
 					changeCloudData();
 				});
 
@@ -381,7 +400,7 @@
 						var element = document.getElementById(id[i]);
 						element.innerHTML = '';
 						var scroll = mui('#' + id[i] + '_sw').scroll();
-						scroll.scrollTo(0, 0, 100); //100毫秒滚动到顶
+						scroll.scrollTo(0, 0, 0); //100毫秒滚动到顶
 					}
 				});
 
@@ -635,13 +654,13 @@
 				 */
 				function changeData() {
 					document.getElementById("cloudstorage_0").innerHTML = '';
-					document.getElementById("cloudstorage_1").innerHTML = '';
 					//重置滑动组件
 					resetScroll();
 					//26.用户云盘顶层文件及文件夹获取
 					postFirstFile();
 					//73.（云档案）按家长获取学生档案姓名
 					//postUserStudent();
+					addcloudstorage_0_0(); //手机通讯录，手机图库
 					//获取学生
 					getStuList();
 					//获取班级
@@ -734,18 +753,15 @@
 					// 等待的对话框
 					var wd = events.showWaiting();
 					postDataPro_PostDiFi(comData, wd, function(data) {
-						document.getElementById("cloudstorage_1").innerHTML = '';;
-						addStorageIcon();
+						document.getElementById("cloudstorage_1").innerHTML = '';
 						console.log('26.postDataPro_PostDiFi_用户云盘顶层文件及文件夹获取_RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							//给存储数组赋值
-							if(data.RspData != null && data.RspData != '') {
+							if(data.RspData) {
 								fileArray = data.RspData;
 							} else {
 								fileArray = [];
 							}
-							//清掉所有文件夹
-							document.getElementById("cloudstorage_1").innerHTML = '';;
 							//循环将获取到的值塞入界面
 							var folder = 0;
 							mui.each(data.RspData, function(index, element) {
@@ -761,12 +777,12 @@
 									addStorageFolder(element);
 								}
 							});
-							addStorageIcon();
-						} else if(data.RspCode == 9) {
-
 						} else {
-							mui.toast(data.RspTxt);
+							if(data.RspCode != 9){
+								mui.toast(data.RspTxt);
+							}
 						}
+						addStorageIcon();
 						wd.close();
 					});
 				}
@@ -880,7 +896,6 @@
 					li2.style.height = cloudFirstItemHeight / 2 + 'px';
 					document.getElementById("cloudstorage_0").appendChild(li2);
 					li2.style.paddingTop = (cloudFirstItemHeight / 2 - (li2.lastElementChild.offsetHeight + li2.lastElementChild.offsetTop - li2.firstElementChild.offsetTop)) / 2 + 'px';
-
 				}
 
 				/**
