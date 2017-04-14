@@ -97,7 +97,8 @@ var setChangeCondition = function() {
  */
 var changeAnswer = function() {
 	//修改答案
-	mui.toast("功能暂未开放，请稍候");
+//	mui.toast("功能暂未开放，请稍候");
+	events.fireToPageWithData("qiuzhi-addAnswer.html","changeAnswer",answerInfo);
 }
 /**
  * 删除回答
@@ -173,9 +174,17 @@ var resetSiblingOrder = function(container) {
 		resetSiblingOrder(nextElm);
 	}
 }
+/**
+ * 修改评论
+ */
 var changeComment = function() {
-
+	mui.toast("功能暂未开放，请稍候！")
 }
+/**
+ * 获取单条评论
+ * @param {Object} commentInfo
+ * @param {Object} deledCB
+ */
 var getComment = function(commentInfo, deledCB) {
 	var wd1 = events.showWaiting();
 	postDataQZPro_getCommentById(commentInfo, wd1, function(data) {

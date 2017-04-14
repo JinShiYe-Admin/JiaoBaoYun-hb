@@ -3386,7 +3386,10 @@
 					"js/utils/compress.js",
 					"js/qiniu/qiniu.js",
 					"fonts/iconfont.ttf",
-					"css/qiuzhi/qiuzhi-addAnswer.css"
+					"css/qiuzhi/qiuzhi-addAnswer.css",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js",
+					"css/utils/preview.css"
 				],
 				"refer": [],
 				"priority": 0
