@@ -73,9 +73,7 @@ mui.plusReady(function() {
 			title: "删除答案",
 			dia: 1 //是否显示dialog
 		}];
-		var cbArray = [changeAnswer,
-			delAnswer
-		];
+		var cbArray = [changeAnswer,delAnswer];
 		events.showActionSheet(btnArray, cbArray);
 	})
 	setListeners();
@@ -97,7 +95,6 @@ var setChangeCondition = function() {
  */
 var changeAnswer = function() {
 	//修改答案
-//	mui.toast("功能暂未开放，请稍候");
 	events.fireToPageWithData("qiuzhi-addAnswer.html","changeAnswer",answerInfo);
 }
 /**

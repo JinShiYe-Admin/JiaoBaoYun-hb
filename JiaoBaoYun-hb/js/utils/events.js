@@ -637,11 +637,12 @@ var events = (function(mod) {
 			cancel:"取消"
 		},function(e){
 			var index=e.index;
+				console.log("点击的index:"+index);
 			if(index>0){
 				if(btnArray[index-1].dia){
 					mod.setDialog(btnArray[index-1].title,"确认删除？",cbArray[index-1],"已取消删除")
 				}else{
-					cbArray[index-1];
+					cbArray[index-1]();
 				}
 			}
 		})
