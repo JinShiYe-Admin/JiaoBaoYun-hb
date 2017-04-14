@@ -1809,7 +1809,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"js/qiuzhi/delContent_pop.js"
 				],
 				"refer": [
 					"html/register/modify_password.html",
