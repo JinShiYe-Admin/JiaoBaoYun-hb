@@ -317,6 +317,7 @@
 		this.refresh(index, this.groups[group]);
 	};
 	proto.open = function(index, group) {
+		mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
 		if (this.isShown()) {
 			return;
 		}
@@ -332,6 +333,7 @@
 		}
 	};
 	proto.close = function(index, group) {
+		mui('#pullrefresh').pullRefresh().refresh();
 		if (!this.isShown()) {
 			return;
 		}

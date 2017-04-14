@@ -16,7 +16,7 @@
 			<h1 class="mui-title">扫描二维码</h1>
 		</header>
 		<div class="mui-content">
-			<div id="bcid" style="height:460px; width:320px;"></div>
+			<div id="bcid" style="height: 480px;width: 320px;"></div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
@@ -27,7 +27,13 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			var scan = null; //扫描控件
-			var QRCodeModel //扫描到的数据，组成model
+			var QRCodeModel = {
+				flag: '',
+				gid: '',
+				gname: '',
+				gimg: '',
+				gnote: ''
+			}; //扫描到的数据，组成model
 			mui.plusReady(function() {
 				startRecognize();
 			});
@@ -39,18 +45,6 @@
 				switch(type) {
 					case plus.barcode.QR:
 						text = 'QR: '; // 二维码
-						//将result用@分为数组，判断第一个是1的话，为申请加入群
-						var QRCodeArr = result.split('@');
-						if(QRCodeArr[0] == 1) { //1为申请加入群
-							QRCodeModel.flag = QRCodeArr[0]; //1代表申请加入群
-							QRCodeModel.gid = QRCodeArr[1]; //班级id
-							QRCodeModel.gname = QRCodeArr[2]; //班级名称
-							QRCodeModel.gimg = QRCodeArr[3]; //班级头像
-							QRCodeModel.gnote = QRCodeArr[4]; //班级说明
-							console.log('QRCodeModel=' + JSON.stringify(QRCodeModel));
-						} else {
-							mui.toast('扫描结果为:' + result);
-						}
 						break;
 					case plus.barcode.EAN13:
 						text = 'EAN13: ';
@@ -59,13 +53,34 @@
 						text = 'EAN8: ';
 						break;
 				}
-
-				// 创建扫描控件
-				function startRecognize() {
-					scan = new plus.barcode.Barcode('bcid');
-					scan.onmarked = onmarked;
-					scan.start(); //开始扫描
+				//将result用@分为数组，判断第一个是1的话，为申请加入群
+				var QRCodeArr = result.split('@');
+				if(QRCodeArr.length > 0) {
+					var temp = QRCodeArr[0];
+					var temp1 = QRCodeArr[1];
+					var temp2 = unescape(QRCodeArr[2]);
+					var temp3 = QRCodeArr[3];
+					var temp4 = unescape(QRCodeArr[4]);
+					console.log('tempretemp=' + temp + ',' + JSON.stringify(QRCodeArr));
+					if(temp == 1) { //1为申请加入群
+						QRCodeModel.flag = temp; //1代表申请加入群
+						QRCodeModel.gid = temp1; //班级id
+						QRCodeModel.gname = temp2; //班级名称
+						QRCodeModel.gimg = temp3; //班级头像
+						QRCodeModel.gnote = temp4; //班级说明
+						console.log('QRCodeModel=' + JSON.stringify(QRCodeModel));
+						events.openNewWindowWithData('../mine/apply-bycode.html', QRCodeModel);
+					} else {
+						mui.toast('扫描结果为:' + result);
+					}
 				}
+			}
+			// 创建扫描控件
+			function startRecognize() {
+				scan = new plus.barcode.Barcode('bcid');
+				scan.onmarked = onmarked;
+				scan.start(); //开始扫描
+			}
 		</script>
 	</body>
 

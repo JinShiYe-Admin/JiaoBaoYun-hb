@@ -55,7 +55,6 @@ var getGroupInfo = function() {
 		wd1.close();
 		console.log("获取的群信息：" + JSON.stringify(data));
 		groupModel = data.RspData[0];
-		groupModel.gimg = updateHeadImg(groupModel.gimg,2);
 		if (groupModel.gnote == null||groupModel.gnote.length == 0) {
 			groupModel.gnote = '暂无说明';
 		}
@@ -104,7 +103,6 @@ var setButtonsListener = function() {
 	 * 二维码点击事件
 	 */
 	document.getElementById("qun-code").addEventListener("tap", function() {
-		console.log('groupId='+groupId);
 		events.openNewWindowWithData('../mine/QRCode.html', groupModel);
 	})
 	document.getElementById("show-all").addEventListener("tap", function() {
