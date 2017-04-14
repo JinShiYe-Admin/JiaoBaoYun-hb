@@ -75,7 +75,12 @@
 		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
 
 		<script type="text/javascript">
-			mui.init();
+			mui.init({
+				beforeback:function(){
+					document.getElementById("pictures").innerHTML="";
+					return true;
+				}
+			});
 			//将传值到的标题显示
 			var askModel; //问题model
 			var answerInfo; //答案信息
@@ -89,7 +94,7 @@
 				jQuery('#answerContent').prop("maxLength", "4000");
 				window.addEventListener('qiuzhi-addAnswer', function(event) {
 					CloudFileUtil.files = [];
-					events.clearChild(document.getElementById('pictures'));
+					document.getElementById('pictures').innerHTML="";
 					type = 0;
 					askModel = event.detail.data;
 					document.getElementById('title').innerText = '我要回答';
@@ -108,7 +113,7 @@
 				//加载评论
 				window.addEventListener('add-comment', function(e) {
 					CloudFileUtil.files = [];
-					events.clearChild(document.getElementById('pictures'))
+					document.getElementById('pictures').innerHTML="";
 					type = 1;
 					document.getElementById('answerContent').value = "";
 					document.getElementById('title').innerText = '我要评论';
