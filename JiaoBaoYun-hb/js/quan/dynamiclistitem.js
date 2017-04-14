@@ -1,10 +1,11 @@
 var dynamiclistitem = (function($, mod) {
 	mod.addComment = function() {
+		//回复评论时 判断是否为自己
 		if(tempIndex.indexOf('-') >= 0) {
 			var indexArr = tempIndex.split('-');
-			var id = indexArr[0];
-			var commentId = indexArr[1];
-			var replyId = indexArr[2];
+			var id = indexArr[0]; //动态的id
+			var commentId = indexArr[1]; //第几个评论
+			var replyId = indexArr[2]; //回复的id
 
 			var tempModel = zonepArray[id].Comments[commentId];
 			if(!tempModel) {
@@ -12,18 +13,62 @@ var dynamiclistitem = (function($, mod) {
 				return;
 			}
 			console.log(JSON.stringify(tempModel));
-			var upperId = tempModel.TabId;
-			var replyUserId;
-			var ReplyIdName;
+			var upperId = tempModel.TabId; //添加的评论的上级评论ID
+			var replyUserId; //回复者ID
+			var ReplyIdName; //回复者名字
+			var currCommentID;
 			if(replyId == '评论') {
 				replyUserId = tempModel.UserId
 				ReplyIdName = tempModel.UserIdName
+				currCommentID = tempModel.TabId
 			} else {
 				replyUserId = tempModel.Replys[replyId].UserId;
 				ReplyIdName = tempModel.Replys[replyId].UserIdName;
+				currCommentID = tempModel.Replys[replyId].TabId
 			}
-			if(personalUTID == replyUserId) {
-				mui.toast('不可以回复自己');
+			console.log('personalUTID=' + personalUTID + '----' + 'replyUserId' + replyUserId)
+			if(personalUTID == replyUserId) { //
+				var btnArray = ['取消', '确定'];
+				var closeId = this.id;
+				mui.confirm('确定删除此条评论？', '提醒', btnArray, function(e) {
+					if(e.index == 1) {
+						//47.（用户空间）删除某条用户空间评论
+						//所需参数
+						var comData = {
+							userSpaceCommentId: currCommentID //用户空间评论ID
+						};
+						//1为正确
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						postDataPro_delUserSpaceCommentById(comData, wd, function(data) {
+							wd.close();
+							console.log('删除空间评论_delUserSpaceCommentById' + JSON.stringify(data));
+							if(data.RspCode == 0) {
+								mui.toast('已删除');
+								if(replyId == '评论') {
+									var pageID = sliderId.replace('top_', '')
+									var commentId = 'replyComment' + pageID + idFlag + tempIndex;
+									console.log('commentId=' + commentId)
+									var deleteNode = document.getElementById(commentId);
+									console.log(deleteNode.innerHTML);
+									deleteNode.parentNode.removeChild(deleteNode);
+									//tempModel.Replys[replyId].splice(index, 1)
+								} else {
+									var pageID = sliderId.replace('top_', '')
+									var commentId = 'replyComment' + pageID + idFlag + tempIndex;
+									console.log('commentId=' + commentId)
+									var deleteNode = document.getElementById(commentId);
+									console.log(deleteNode.innerHTML);
+									deleteNode.parentNode.removeChild(deleteNode);
+									//tempModel.Replys[replyId].splice(index, 1)
+								}
+
+							} else {
+								mui.toast(data.RspTxt)
+							}
+						})
+					}
+				})
+
 				return;
 			}
 		}
@@ -41,16 +86,23 @@ var dynamiclistitem = (function($, mod) {
 			var tempId = this.id;
 			var index = this.id.replace('btn-focus' + pageID + idFlag, '');
 			var isFocus = zonepArray[index].IsFocused;
+			var userId = zonepArray[index].PublisherId;
+
 			//					var isFocus = jQuery('#'+this.id).data('isFocus');
 			var title, status;
 			console.log(this.id)
-			if(isFocus == 0) {
-				title = '关注'
-				status = 1;
+			if(personalUTID == userId) {
+				title = '删除'
 			} else {
-				title = '取消关注'
-				status = 0;
+				if(isFocus == 0) {
+					title = '关注'
+					status = 1;
+				} else {
+					title = '取消关注'
+					status = 0;
+				}
 			}
+
 			var btnArray = [{ title: title, style: "destructive" }];
 			plus.nativeUI.actionSheet({
 				cancel: "取消",
@@ -62,6 +114,31 @@ var dynamiclistitem = (function($, mod) {
 						break;
 					case 1:
 						{
+							if(personalUTID == userId) {
+								var btnArray = ['取消', '确定'];
+								mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
+									if(e.index == 1) {
+										var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+										var comData = {
+											userSpaceId: zonepArray[index].TabId //用户空间ID
+										};
+										postDataPro_delUserSpaceById(comData, wd, function(data) {
+											wd.close();
+											if(data.RspCode == 0) {
+												mui.toast('已删除');
+
+												var deleteNode = document.getElementById(index);
+												deleteNode.parentNode.removeChild(deleteNode);
+												zonepArray.splice(index, 1)
+											} else {
+												mui.toast(data.RspTxt);
+											}
+										})
+									}
+								})
+
+								return;
+							}
 							//80.（用户空间）设置某用户的关注
 							//所需参数
 							var comData = {
@@ -174,6 +251,7 @@ var dynamiclistitem = (function($, mod) {
 		//			评论
 		mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
 			var pageID = sliderId.replace('top_', '')
+			console.log('id=' + this.id)
 			tempIndex = this.id.replace('comment' + pageID + idFlag, '');
 			mod.addComment();
 			window.event.stopPropagation()
@@ -529,9 +607,9 @@ var dynamiclistitem = (function($, mod) {
 	mod.addInfo = function(ulElement, liElement, data) {
 		var closeempty = '';
 		if(data.pageFlag == 0) {
-			if(personalUTID == publisherId) {
-				closeempty = '<a id ="delete' + data.id + '" class="mui-icon mui-icon-closeempty mui-pull-right" ></a>';
-
+			console.log('personalUTID='+personalUTID+'----'+'PublisherId='+data.PublisherId)
+			if(personalUTID == data.PublisherId) {
+				closeempty = '<a data-is-focus=0  id ="btn-focus' + data.id_name + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:30px;height:30px;padding:5px"></a>';
 			} else {
 				closeempty = '';
 			}
@@ -698,7 +776,7 @@ var dynamiclistitem = (function($, mod) {
 
 		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body">';
 		var html2 = '</div></div>'
-		var html3 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div class="mui-media-body mui-pull-right" style="margin-right:-15px">';
+		var html3 = '<div class="mui-col-sm-12 mui-col-xs-12 dynamic-margin-top-10px"><div class="mui-media-body mui-pull-right" style="margin-right:-15px;margin-top:10px">';
 		var html4;
 		//点赞状态
 		if(data.IsLike != 0) { //已点赞
@@ -714,7 +792,7 @@ var dynamiclistitem = (function($, mod) {
 		if(data.pageFlag == 1) { //展现界面
 			html7 = '</div><div class="mui-media-body"><p></p></div></div>';
 		} else { //空间界面
-			html7 = '</div><div class="mui-media-body"><p>浏览' + viewCount + '次</p></div></div>';
+			html7 = '</div><div class="mui-media-body" style="margin-top:5px"><p>浏览' + viewCount + '次</p></div></div>';
 		}
 		var html8;
 

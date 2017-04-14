@@ -17,19 +17,25 @@
 
 		<link href="../../css/homework/subjects-icon.css" rel="stylesheet" />
 		<script src="../../js/mui.min.js"></script>
-
+		<style type="text/css">
+			/*.mui-table-view:before,
+			.mui-table-view:after
+			 {
+				height: 0px;
+			}*/
+		</style>
 	</head>
 
 	<body>
 		<nav id="alertBar" class="mui-bar mui-bar-tab" style="visibility: hidden;height: 60px;">
 			<hr style="margin-top: -1px; height:1px;border:none;border-top:1px solid #ededed;" />
 			<div align="center" style="margin-top: -5px;">
-				<button id="alertAll" type="button" class="mui-btn mui-btn-blue " style="border-radius: 5px;width: 95%;background-color: #00a5e0;border-color:#00a5e0 ;height: 40px">一键提醒</button>
+				<button id="alertAll" type="button" class="mui-btn mui-btn-blue " style="border-radius: 2px;width: 95%;background-color: #00a5e0;border-color:#00a5e0 ;height: 40px">一键提醒</button>
 			</div>
 		</nav>
 		<div class="mui-content mui-scroll-wrapper" style="background-color: white;">
 			<div class="mui-scroll">
-				<ul class="mui-table-view">
+				<ul class="mui-table-view"  >
 					<li class="mui-table-view-cell mui-media ">
 						<img>
 						<span id="img" class=" iconfont subject-icon" style="margin-left: -10px;"></span>
@@ -43,11 +49,11 @@
 						</div>
 
 						<div id='content' class="mui-media-body">
-							<div id="homeWorkContent" class="ellipsis-show" style="font-size: 15px;color: #808080;">
+							<div id="homeWorkContent" class="ellipsis-show" style="font-size: 14px;color: #474747;">
 							</div>
 							<div id="showAll">显示全部</div>
 							<!--<p id="homeWorkContent"></p>-->
-							<div id="brief-imgs" class="brief-imgs">
+							<div id="brief-imgs" class="brief-imgs" style="margin-top: 5px;">
 							</div>
 						</div>
 
@@ -57,34 +63,40 @@
 
 					</li>
 				</ul>
+				<div style="margin-top: -10px;">
+					<hr style="height:1px;border:none;border-top:10px solid #f2f3f5;" />
+				</div>
 				<!--<div><img src="../../image/homework/math.png"></img>数学作业</div>-->
 				<!--滑动组件-->
 				<!--<div id="slider" class="mui-slider mui-hidden">-->
-					<div id="sliderSegmentedControl" class=" mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
-						<!--已完成选项卡-->
-						<a id="item1" class="mui-control-item mui-active" href="#div-finished">
-							已完成(0)
-						</a>
-						<!--未完成选项卡-->
-						<a id="item2" class="mui-control-item" href="#div-unfinish">
-							未完成(0)
-						</a>
+				<div id="sliderSegmentedControl" class=" mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+					<!--已完成选项卡-->
+					<a id="item1" class="mui-control-item mui-active" href="#div-finished">
+						已完成(0)
+					</a>
+					<!--未完成选项卡-->
+					<a id="item2" class="mui-control-item" href="#div-unfinish">
+						未完成(0)
+					</a>
+				</div>
+				<!--<div style="margin-top: 0px;">
+					<hr style="height:1px;border:none;border-top:1px solid #c8c7cc;" />
+				</div>-->
+				<!--<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="background-color: #00a5e0;margin-bottom: -2px;"></div>-->
+				<!--滑动内容-->
+				<div class="mui-slider-group">
+					<div id="div-finished" class="mui-slider-item mui-control-content mui-active">
+						<ul id="finished-list" class="mui-table-view">
+						</ul>
 					</div>
-					<!--<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="background-color: #00a5e0;margin-bottom: -2px;"></div>-->
-					<!--滑动内容-->
-					<div class="mui-slider-group">
-						<div id="div-finished" class="mui-slider-item mui-control-content mui-active">
-							<ul id="finished-list" class="mui-table-view">
-							</ul>
-						</div>
-						<div id="div-unfinish" class="mui-slider-item mui-control-content">
-							<ul id="unfinished-list" class="mui-table-view">
+					<div id="div-unfinish" class="mui-slider-item mui-control-content">
+						<ul id="unfinished-list" class="mui-table-view">
 
-							</ul>
+						</ul>
 
-						</div>
 					</div>
 				</div>
+			</div>
 			<!--</div>-->
 
 		</div>
@@ -135,19 +147,19 @@
 			var remainArray = [];
 
 			mui.plusReady(function() {
-				mui('.mui-segmented-control').on('tap','a',function(){
-									if(this.id == 'item1') {
-					console.log('已完成');
-					homeworkDetailNodes.alertBar.style.visibility = 'hidden';
-				} else if(this.id == 'item2') {
-					console.log('未完成');
-					if(remainArray.length == 0) {
+				mui('.mui-segmented-control').on('tap', 'a', function() {
+					if(this.id == 'item1') {
+						console.log('已完成');
 						homeworkDetailNodes.alertBar.style.visibility = 'hidden';
-					} else {
-						homeworkDetailNodes.alertBar.style.visibility = 'visible';
-					}
+					} else if(this.id == 'item2') {
+						console.log('未完成');
+						if(remainArray.length == 0) {
+							homeworkDetailNodes.alertBar.style.visibility = 'hidden';
+						} else {
+							homeworkDetailNodes.alertBar.style.visibility = 'visible';
+						}
 
-				}
+					}
 				})
 				mui.previewImage();
 				resetData();
@@ -228,11 +240,11 @@
 					console.log('2.postDataPro_GetHomework:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						homeworkDetailModel = data.RspData;
-//						if(homeworkDetailModel.SubmitOnline == true) {
-//							homeworkDetailNodes.slider.className = 'mui-slider';
-//						} else {
-//							homeworkDetailNodes.slider.className = 'mui-slider mui-hidden';
-//						}
+						//						if(homeworkDetailModel.SubmitOnline == true) {
+						//							homeworkDetailNodes.slider.className = 'mui-slider';
+						//						} else {
+						//							homeworkDetailNodes.slider.className = 'mui-slider mui-hidden';
+						//						}
 						//修改界面
 						refreshhomeworkDetail();
 						var height_0;
@@ -344,7 +356,7 @@
 				var dateArr = homeworkModel.Date.split(' ');
 				homeworkModel.Date = dateArr[0];
 				var unick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户id
-				homeworkDetailNodes.publishDate.innerHTML =events.shortForString(unick, 12)  + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.Date + '</span>'
+				homeworkDetailNodes.publishDate.innerHTML = events.shortForString(unick, 12) + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.Date + '</span>'
 
 				homeworkDetailNodes.content.innerText = homeworkDetailModel.Contents;
 				document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkDetailModel.File);
@@ -383,7 +395,7 @@
 					li.workInfo.workType = 1;
 					mui.extend(li.workInfo, homeworkDetailModel)
 					li.className = 'mui-table-view-cell mui-media isCommented'
-					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" style = "width:50px;height:50px;border-radius: 50%;" src="' + headImg + '" />' +
+					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" style = "width:40px;height:40px;border-radius: 50%;" src="' + headImg + '" />' +
 						'<div class="mui-media-body">' + events.shortForString(uploadArray[i].ugnick, 12) +
 						'<div class="mui-media-body mui-pull-right" ' +
 						'<p id="isCommented' + i + '" style="font-size: 13px;color:#808080">' + IsCommented + '<span class="mui-icon iconfont icon-fanhui2" style="color:#b7b7b7"></span></p></div>' +
@@ -414,9 +426,9 @@
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell mui-media'
 
-					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image"  style = "width:50px;height:50px ;border-radius: 50%;" src="' + headImg + '" />' +
+					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image"  style = "width:40px;height:40px ;border-radius: 50%;" src="' + headImg + '" />' +
 						'<div class="mui-media-body">' +
-						'<div style = "padding-top:10px">' + events.shortForString(remainArray[i].ugnick, 12) + '<button id="alert' + i + '" class="'+btn_class+'" onclick="alertStu(this)"' + disabled + '>' +
+						'<div style = "padding-top:10px">' + events.shortForString(remainArray[i].ugnick, 12) + '<button id="alert' + i + '" class="' + btn_class + '" onclick="alertStu(this)"' + disabled + '>' +
 						alert +
 						'</button>' + '</div>' +
 						'</div>';
@@ -427,20 +439,20 @@
 					homeworkDetailNodes.alertAllBtn.disabled = 'disabled';
 				}
 			}
-//			document.getElementById('slider').addEventListener('slide', function(e) {
-//				if(e.detail.slideNumber === 0) {
-//					console.log('已完成');
-//					homeworkDetailNodes.alertBar.style.visibility = 'hidden';
-//				} else if(e.detail.slideNumber === 1) {
-//					console.log('未完成');
-//					if(remainArray.length == 0) {
-//						homeworkDetailNodes.alertBar.style.visibility = 'hidden';
-//					} else {
-//						homeworkDetailNodes.alertBar.style.visibility = 'visible';
-//					}
-//
-//				}
-//			});
+			//			document.getElementById('slider').addEventListener('slide', function(e) {
+			//				if(e.detail.slideNumber === 0) {
+			//					console.log('已完成');
+			//					homeworkDetailNodes.alertBar.style.visibility = 'hidden';
+			//				} else if(e.detail.slideNumber === 1) {
+			//					console.log('未完成');
+			//					if(remainArray.length == 0) {
+			//						homeworkDetailNodes.alertBar.style.visibility = 'hidden';
+			//					} else {
+			//						homeworkDetailNodes.alertBar.style.visibility = 'visible';
+			//					}
+			//
+			//				}
+			//			});
 
 			mui('.mui-table-view').on('tap', '.isCommented', function() {
 				events.fireToPageNone('homework-comment.html', 'workInfo', this.workInfo);
@@ -482,18 +494,18 @@
 						if(alertBtn.id == 'alertAll') {
 							homeworkDetailNodes.alertAllBtn.innerHTML = '一键提醒'
 							alertBtn.setAttribute('disabled', 'disabled');
-							
+
 							allAlertFlag = remainArray.length;
 						} else {
 							alertBtn.innerHTML = '已提醒'
 							alertBtn.className = 'btn-alerted'
 							alertBtn.setAttribute('disabled', 'disabled');
-							
+
 							allAlertFlag++;
 						}
 						if(allAlertFlag == remainArray.length) {
 							homeworkDetailNodes.alertAllBtn.disabled = 'disabled';
-							
+
 							for(var i = 0; i < remainArray.length; i++) {
 								var alertButton = document.getElementById("alert" + i);
 								alertButton.className = 'btn-alerted'

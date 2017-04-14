@@ -23,7 +23,7 @@
 
 	</head>
 
-	<body>
+	<body style="background-color: white;">
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">问题</h1>
@@ -35,39 +35,38 @@
 
 			</ul>
 		</div>
-		<div class="mui-content">
-			<form name="form1" action="" method="post">
-				<textarea id="askTitle" name="topic" placeholder="标题（请以？号结尾,最多30字）" style="height: 40px;margin-top: 5px;"></textarea>
-			</form>
-			<p style="margin-left: 10px;font-size: 14px;margin-top: -12px;">请添加问题的补充说明</p>
-			<div class="input-content">
-				<textarea id="askNote" placeholder="请输入内容（最多2000字）"></textarea>
+		<div class="mui-content" style="background-color: white;">
+			<textarea id="askTitle" name="topic" placeholder="标题（请以？号结尾,最多30字）" style="height: 40px;margin-top: 5px;border-bottom-color: #e4e4e4;"></textarea>
+			<div class="input-content" style="margin-top: -20px;border-color: white;height: 20rem;">
+				<textarea id="askNote" placeholder="请输入内容（最多2000字）" style="border-color: white;height: 15rem;"></textarea>
 				<div id="take_pic" class="take_pic">
 					<a class="mui-icon iconfont icon-xiangji1"></a>
+				</div>
+
+				<div id="get_gallery" class="get_gallery">
+					<a class="mui-icon iconfont icon-tuku"></a>
+				</div>
+				<div id="get_record" class="get_record">
+					<a class="mui-icon iconfont icon-yuyin3"></a>
 				</div>
 				<div id="take_camero" class="take_camero">
 					<a class="mui-icon iconfont icon-shipin"></a>
 				</div>
-				<div id="get_gallery" class="get_gallery">
-					<a class="mui-icon iconfont icon-tuku"></a>
-				</div>
 
 			</div>
-
-			<p style="margin-top: 10px;margin-left: 10px;font-size: 14px;width: 150px;">选择话题:
+			<hr style="margin-top: 5px; height:1px;border:none;border-top:1px solid #e4e4e4;" />
+			<p style="margin-top: 10px;margin-left: 12px;font-size: 14px;width: 150px;color: black;">选择话题:
 				<a id="channal" style="margin-left: 4px;" href="#popover">
 					请选择
 				</a>
 			</p>
-			<p id="atExpert" style="margin-top: 10px;margin-left: 10px;font-size: 14px;">邀请专家：
-				<font id="selectedExpert" style="color: dodgerblue;"></font><span class="mui-icon mui-icon-forward mui-pull-right"></span></p>
+			<hr style="margin-top: 5px; height:1px;border:none;border-top:1px solid #e4e4e4;" />
+			<p id="atExpert" style="margin-top: 10px;margin-left: 12px;font-size: 14px;color: black;">邀请专家：
+				<font id="selectedExpert" style="color: dodgerblue;"></font><span class="mui-icon mui-icon-forward mui-pull-right" style="color: #b7b7b7;"></span></p>
+			<hr style="margin-top: 5px; height:1px;border:none;border-top:1px solid #e4e4e4;" />
 			<div id="pictures" style="width: 100%;"></div>
-			<!--<div class="mui-input-row mui-checkbox mui-left" style="float: right;width: 100px;margin-top: -35px;margin-left: -100px;">
-				<label>匿名</label>
-				<input id="checkbox" name="checkbox" value="" type="checkbox">
-			</div>-->
+
 		</div>
-		<!--<ul id="ExpertList" class="mui-table-view"><ul/>-->
 
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
@@ -179,7 +178,7 @@
 					mui.toast('请选择话题')
 					return;
 				}
-								mui.openWindow({
+				mui.openWindow({
 					url: 'atExpert.html',
 					id: 'atExpert.html',
 					styles: {
@@ -188,15 +187,18 @@
 					},
 
 					extras: {
-						data:datasource,
-						selectedExpert:selectedExpert
-						
+						data: datasource,
+						selectedExpert: selectedExpert
+
 					},
 					createNew: true,
 
 				});
-//				events.openNewWindowWithData('atExpert.html', datasource)
+				//				events.openNewWindowWithData('atExpert.html', datasource)
 			})
+			events.addTap('get_record', function() {
+				mui.toast('功能暂未开放！');
+			});
 			events.addTap('take_camero', function() {
 				mui.toast('此功能暂未开放');
 				//				camera.getVideo(camera.getCamera(), function(path) {
@@ -227,8 +229,8 @@
 				tempText = Trim(askNote.value);
 				console.log('textView.value===' + tempText)
 				if(!tempText || tempText == '') {
-//					mui.toast('请输入补充说明');
-//					return;
+					//					mui.toast('请输入补充说明');
+					//					return;
 				} else if(tempText.length > 2000) {
 					mui.toast('内容不能超过2000字');
 					return;
@@ -290,12 +292,12 @@
 			function Trim(str) {
 				return str.replace(/(^\s*)|(\s*$)/g, "");
 			}
-			events.addTap('channal',function(){
+			events.addTap('channal', function() {
 				document.activeElement.blur();
 			})
 			//选择话题
 			mui('.mui-popover').on('tap', 'li', function(e) {
-				
+
 				document.getElementById("channal").innerHTML = this.children[0].innerHTML;
 				askChannel = this.id;
 				console.log('askChannel=' + askChannel);
@@ -324,7 +326,7 @@
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				//2.获取符合条件的专家信息
 				postDataQZPro_getExpertsByCondition(comData, wd, function(data) {
-					
+
 					console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						//添加人员信息
@@ -475,7 +477,7 @@
 
 									//上传文件
 									CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
-								
+
 										console.log(JSON.stringify(uploadData));
 										var img = { //图片信息
 											url: tokenInfo.Domain + tokenInfo.Key,
