@@ -45,7 +45,9 @@
 		<script type="text/javascript">
 			var curPage = plus.webview.currentWebview();
 			var groupModel = curPage.data;//群model
-			var qrcodeUrl = '1@'+groupModel.gid+'@'+groupModel.gname+'@'+groupModel.gimg+'@'+groupModel.gnote;//code1，代表是群二维码
+			var temp0 = escape(groupModel.gname,'UTF-8');
+			var temp1 = escape(groupModel.gnote,'UTF-8');
+			var qrcodeUrl = '1@'+groupModel.gid+'@'+temp0+'@'+groupModel.gimg+'@'+temp1;//code1，代表是群二维码
 			document.getElementById("groupImg").src = groupModel.gimg;
 			document.getElementById("groupName").innerText = groupModel.gname;
 			
