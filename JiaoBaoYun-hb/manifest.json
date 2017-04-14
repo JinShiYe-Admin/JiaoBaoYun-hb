@@ -840,7 +840,10 @@
 					"js/mui.pullToRefresh.js",
 					"css/utils/MUI-pullToRefresh.css",
 					"js/mui.pullToRefresh.material.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"image/quan/share.png",
+					"image/quan/aboutme.png",
+					"image/quan/Scan.png"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
