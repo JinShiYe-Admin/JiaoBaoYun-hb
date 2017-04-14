@@ -26,7 +26,7 @@ mui.plusReady(function() {
 
 	slideNavigation.add('mine.html', 200)
 	window.addEventListener('infoChanged', function() {
-		getAboutMe();
+//		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 		document.querySelector('img').src = updateHeadImg(img, 2);
@@ -35,10 +35,10 @@ mui.plusReady(function() {
 		waitingDia.close();
 	})
 	window.addEventListener('aboutmNoRead', function() {
-		getAboutMe();
+//		getAboutMe();
 	});
 
-	getAboutMe(); //获取与我相关未读数
+//	getAboutMe(); //获取与我相关未读数
 
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
@@ -109,7 +109,7 @@ mui.plusReady(function() {
 			}
 		}
 		if(title.innerHTML == '云盘') {
-			title.innerHTML = '';
+			title.innerHTML = '云盘';
 		}
 		changRightIcons(targetTab);
 		var targetSplit = targetTab.split('/');
@@ -180,7 +180,7 @@ mui.plusReady(function() {
 			wd.close();
 			console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
-//				getHomeworkAlert(data.RspData.NoReadCnt);
+				getHomeworkAlert(data.RspData.NoReadCnt);
 			} else {
 				//				mui.toast(data.RspTxt);
 			}
@@ -205,7 +205,7 @@ mui.plusReady(function() {
 
 		switch(targetTab) {
 			case '../cloud/cloud_home.html': //首页
-				addZoneIcon(iconContainer);
+				addPlus(iconContainer,'jxq');
 				slideNavigation.addSlideIcon();
 				slideNavigation.iconAddEvent();
 				break;
@@ -231,14 +231,6 @@ mui.plusReady(function() {
 	}
 
 	/**
-	 * 修改首页顶部导航
-	 * @param {Object} container
-	 */
-	var addZoneIcon = function(container) {
-//		addShai(container, 'jxq');
-//		addAboutMe(container);
-	}
-	/**
 	 * 加载晒一晒
 	 * @param {Object} container
 	 */
@@ -254,7 +246,6 @@ mui.plusReady(function() {
 		events.addTap('pubDynamic', function() {
 			var self = this
 			self.disabled = true;
-
 			if(name == 'jxq') {
 				events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
 			} else {
@@ -266,40 +257,20 @@ mui.plusReady(function() {
 
 		})
 	}
-	/**
-	 * 加载与我相关
-	 * @param {Object} container
-	 */
-	var addAboutMe = function(container) {
-		var aboutme = document.createElement('a');
-		aboutme.className = 'mui-icon  mui-pull-right mui-plus-visible';
-		aboutme.id = 'aboutme'
-		aboutme.innerHTML = '@与我相关'
-		aboutme.style.fontSize = '16px'
-		aboutme.style.paddingTop = '15px'
-		var span = document.createElement('span');
-		span.id = id = 'aboutme_noRead';
-		span.className = 'mui-badge mui-badge-danger'
-		span.style.marginLeft = "-15px";
-		span.style.marginTop = "4px";
-		if(noReadCount == 0) {
-			span.style.visibility = 'hidden'
-			span.innerHTML = '3'
-		} else {
-			span.style.visibility = 'visible'
-			span.innerHTML = noReadCount
+var	addPlus = function(container,name){
+		var plus = document.createElement('a');
+		plus.className = 'mui-icon mui-pull-right mui-icon-plusempty';
+		plus.id = 'plus'
+		container.appendChild(plus);
+		events.addTap('plus', function() {
+		if(name == 'jxq') {
+			events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
+		}else{
+			events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
 		}
-
-		aboutme.appendChild(span)
-		container.appendChild(aboutme);
-		events.addTap('aboutme', function() {
-			events.openNewWindow('../quan/aboutme.html')
-			var noRead = document.getElementById('aboutme_noRead');
-			noRead.style.visibility = 'hidden';
-			noReadCount = 0;
-
-		})
-	}
+		
+	})
+		}
 	var addQiuZhiExpertSearch = function(container) {
 		var pubDynamic = document.createElement('a');
 		pubDynamic.id = 'expertSearch'
@@ -331,36 +302,8 @@ mui.plusReady(function() {
 		});
 		container.appendChild(a)
 	}
-
-	var aboutme = document.getElementById('aboutme');
-	events.addTap('aboutme', function() {
-		events.openNewWindow('../quan/aboutme.html')
-		var noRead = document.getElementById('aboutme_noRead');
-		noRead.style.visibility = 'hidden';
-		noReadCount = 0;
-
+	//首页加号点击事件
+	events.addTap('plus', function() {
+		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
 	})
-	var pubDynamic = document.getElementById('pubDynamic');
-	events.addTap('pubDynamic', function() {
-		var self = this
-		self.disabled = true;
-		events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
-		setTimeout(function() {
-			self.disabled = false;
-		}, 1500);
-	});
-
-	//自定义事件，模拟点击“首页选项卡”
-	document.addEventListener('gohome', function() {
-		var defaultTab = document.getElementById("defaultTab");
-		//模拟首页点击
-		mui.trigger(defaultTab, 'tap');
-		//切换选项卡高亮
-		var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
-		if(defaultTab !== current) {
-			current.classList.remove('mui-active');
-			defaultTab.classList.add('mui-active');
-		}
-	});
-
 });
