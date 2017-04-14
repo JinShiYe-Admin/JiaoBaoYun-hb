@@ -135,28 +135,42 @@
 					//						item.style.display = 'none';
 					//					})
 				})
-				window.addEventListener("changeAnswer",function(e){
-					console.log("要获取的回答详情："+JSON.stringify(e.detail.data));
+				window.addEventListener("changeAnswer", function(e) {
+					type=3;
+					console.log("要获取的回答详情：" + JSON.stringify(e.detail.data));
 					document.getElementById('title').innerText = '修改回答';
 					//匿名默认未选择
 					document.querySelector(".extras-info").style.display = "block";
 					//					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
 					//						item.style.display = 'inline-block';
 					//					})
-					
+
 					document.getElementById('answerContent').placeholder = "修改回答,最多4000字";
 					jQuery('#answerContent').prop("maxLength", "4000"); //设置最长
-					var answerInfo=e.detail.data;
+					var answerInfo = e.detail.data;
 					setAnswerInfo(answerInfo);
 				})
 				setListener();
 			});
-			var setAnswerInfo=function(answerInfo){
+			var setAnswerInfo = function(answerInfo) {
 				document.getElementById('answerContent').value = answerInfo.AnswerContent;
-				document.getElementById('checkbox').checked = answerInfo.IsAnonym?true:false;
-				if(answerInfo.AnswerThumbnail){
-					var imgs=answerInfo.AnswerThumbnail.split("|");
-					var bigImgs=answerInfo.AnswerEncAddr.split("|");
+				document.getElementById('checkbox').checked = answerInfo.IsAnonym ? true : false;
+				if(answerInfo.AnswerThumbnail) {
+					var imgs = answerInfo.AnswerThumbnail.split("|");
+					var bigImgs = answerInfo.AnswerEncAddr.split("|");
+					var files = [];
+					for(var i in imgs) {
+						var img = {
+							url: bigImgs[i],
+							thumb : imgs[i],
+							order : parseInt(i),
+							type :1
+						};
+						files.push(img);
+					}
+					for(var i in files){
+						CloudFileUtil.setPic(files[i], 1);
+					}
 				}
 			}
 			//设置监听
@@ -313,6 +327,12 @@
 								}
 								addComment(answerContent, commentInfo);
 								break;
+							case 3:
+							if(events.limitInput(answerContent,4000)) {
+									return;
+								}
+								changeAnswer();
+							break;
 							default:
 								break;
 						}
@@ -320,6 +340,12 @@
 						mui.toast('请输入内容');
 					}
 				});
+			}
+			/**
+			 * 修改回答
+			 */
+			var changeAnswer=function(){
+				
 			}
 			/**
 			 * 回答问题
