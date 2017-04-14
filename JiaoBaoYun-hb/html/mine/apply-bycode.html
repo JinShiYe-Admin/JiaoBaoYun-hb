@@ -23,7 +23,7 @@
 				<p class="group-info"></p>
 			</div>
 			<div class="chooseRole-container">
-				<p>请选择您的身份：</p>
+				<p class="choose-hint">请选择您的身份：</p>
 				<div class="chose-container">
 					<div class="div-chose ">
 						<input id="check-parents" name="checkbox1" type="radio" value="0">
@@ -64,6 +64,10 @@
 					}
 				})
 				document.getElementById("apply-group").addEventListener("tap", function() {
+					if(!choseRole){
+						mui.toast("请选择身份！")
+						return;
+					}
 					if(events.limitInput(getExtraInfo(), 20)) {
 						mui.toast("已超出字数限制，请删除多余字符！");
 						return;
