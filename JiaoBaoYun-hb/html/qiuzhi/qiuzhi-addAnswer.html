@@ -135,8 +135,30 @@
 					//						item.style.display = 'none';
 					//					})
 				})
+				window.addEventListener("changeAnswer",function(e){
+					console.log("要获取的回答详情："+JSON.stringify(e.detail.data));
+					document.getElementById('title').innerText = '修改回答';
+					//匿名默认未选择
+					document.querySelector(".extras-info").style.display = "block";
+					//					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
+					//						item.style.display = 'inline-block';
+					//					})
+					
+					document.getElementById('answerContent').placeholder = "修改回答,最多4000字";
+					jQuery('#answerContent').prop("maxLength", "4000"); //设置最长
+					var answerInfo=e.detail.data;
+					setAnswerInfo(answerInfo);
+				})
 				setListener();
 			});
+			var setAnswerInfo=function(answerInfo){
+				document.getElementById('answerContent').value = answerInfo.AnswerContent;
+				document.getElementById('checkbox').checked = answerInfo.IsAnonym?true:false;
+				if(answerInfo.AnswerThumbnail){
+					var imgs=answerInfo.AnswerThumbnail.split("|");
+					var bigImgs=answerInfo.AnswerEncAddr.split("|");
+				}
+			}
 			//设置监听
 			var setListener = function() {
 				//拍照

@@ -790,7 +790,10 @@
 			"js/utils/events.js",
 			"js/libs/myStorage/myStorage.js",
 			"js/libs/crypto-js/crypto-js.js",
-			"css/quan/custom-textarea.css"
+			"css/quan/custom-textarea.css",
+			"js/mui.zoom.js",
+			"js/mui.previewimage.js",
+			"css/utils/preview.css"
 		],
 		"refer": []
 	},
@@ -1144,7 +1147,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/qiuzhi/delContent_pop.js"
 		],
 		"refer": [
 			"html/register/login.html",

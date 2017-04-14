@@ -10,9 +10,6 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
-		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/utils/events.js"></script>
-		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<style>
 			body,
 			.mui-content {
@@ -66,7 +63,7 @@
 
 			.keep-box-shadow-border {
 				/*边框和阴影*/
-				box-shadow: 0px 1px 5px rgba(136,136,136,0.5);
+				box-shadow: 0px 1px 5px rgba(136, 136, 136, 0.5);
 				padding: 3px;
 			}
 
@@ -91,7 +88,8 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<p class="mui-title common-color-white">云盘—记事</p>
-			<span id="history" class=" mui-icon iconfont icon-lishijilu mui-pull-right" style="color: white;display:none;margin-top: 2px;padding-right: 14px;"></span>
+			<a id="history" class=" mui-icon iconfont icon-lishijilu mui-pull-right" style="color: white;display:none;padding-right: 14px;"></a>
+			<div id="statistics" class="title-text-pull-right" style="margin-right: 40px;display:none;">统计</div>
 		</header>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider" style="display:none;">
@@ -159,6 +157,9 @@
 			</div>-->
 
 		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript">
 			mui.init({
 				gestureConfig: {
@@ -172,7 +173,7 @@
 				var closeShow = false; //删除按钮是否显示
 				var content = document.body.querySelector('.mui-content');
 				var qunlist = document.getElementById("qunlist"); //群名称显示栏
-				document.querySelector(".mui-content").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1-4) + 'px';
+				document.querySelector(".mui-content").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 - 4) + 'px';
 				document.querySelector("#scrollwrapper").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 90) + 'px';
 
 				mui(".mui-scroll-wrapper").scroll({
@@ -206,6 +207,11 @@
 						data: passData, //群id
 						mem: memList //群成员
 					});
+				});
+
+				//统计
+				document.getElementById('statistics').addEventListener('tap', function() {
+					console.log('tongji');
 				});
 
 				//切换显示选中的群
@@ -344,10 +350,12 @@
 							//未获取到数据
 							mui.toast('没有管理的群');
 							document.getElementById("history").style.display = 'none';
+							document.getElementById("statistics").style.display = 'none';
 							document.body.querySelector('.mui-slider').style.display = 'none';
 						} else {
 							//获取到数据
 							document.getElementById("history").style.display = 'inline';
+							document.getElementById("statistics").style.display = 'inline';
 							document.body.querySelector('.mui-slider').style.display = 'inline';
 							document.getElementById("scrollwrapper").style.background = 'white';
 							mui.each(qunList, function(index, item) {
@@ -473,7 +481,7 @@
 								}
 							});
 						} else {
-							if(data.RspCode != 9){
+							if(data.RspCode != 9) {
 								mui.toast(data.RspTxt);
 							}
 						}
