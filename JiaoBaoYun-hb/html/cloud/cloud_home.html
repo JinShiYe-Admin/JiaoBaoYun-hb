@@ -197,15 +197,15 @@
 		<div id="topPopover" class="mui-popover">
 			<div class="mui-popover-arrow"></div>
 			<ul class="mui-table-view" >
-				<li id="AnswerLi" class="mui-table-view-cell mui-media ">
+				<li id="pubDynamic" class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/quan/share.png" />
 						<div class="mui-media-body" id="titleFlag2" style="color: #323232;">晒一晒</div>
 					</li>
-				<li id="AnswerLi" class="mui-table-view-cell mui-media ">
+				<li id="aboutme" class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/quan/aboutme.png" />
 						<div class="mui-media-body" id="titleFlag2" style="color: #323232;">与我相关</div>
 					</li>
-				<li id="AnswerLi" class="mui-table-view-cell mui-media ">
+				<li id="Scan" class="mui-table-view-cell mui-media ">
 						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/quan/Scan.png" />
 						<div class="mui-media-body" id="titleFlag2" style="color: #323232;">扫一扫</div>
 					</li>
@@ -357,6 +357,7 @@
 					mui('#topPopover').popover('toggle')
 				});
 				mui('.mui-popover').on('tap', 'li', function(e) {
+					console.log(1111)
 					mui('#topPopover').popover('toggle')
 					if(this.id == 'pubDynamic'){
 						events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
