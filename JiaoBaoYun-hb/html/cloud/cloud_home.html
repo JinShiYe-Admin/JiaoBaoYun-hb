@@ -20,17 +20,18 @@
 				position: fixed;
 				top: 6px;
 				right: 6px;
-				width: 90px;
+				width: 120px;
 			}
 			
 			#topPopover .mui-popover-arrow {
 				left: auto;
 				right: 6px;
+				/*top:5px;*/
 			}
 			
 			.mui-popover {
 				height: 80px;
-				width: 50;
+				width: 120;
 			}
 			
 			/*.mui-table-view:before,
@@ -196,15 +197,18 @@
 		<div id="topPopover" class="mui-popover">
 			<div class="mui-popover-arrow"></div>
 			<ul class="mui-table-view" >
-				<li id="pubDynamic" class="mui-table-view-cell" >
-					<a href="#">晒一晒</a>
-				</li>
-				<li id="aboutme" class="mui-table-view-cell">
-					<a href="#">与我相关</a>
-				</li>
-				<li id="Scan" class="mui-table-view-cell">
-					<a href="#">扫一扫</a>
-				</li>
+				<li id="AnswerLi" class="mui-table-view-cell mui-media ">
+						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/quan/share.png" />
+						<div class="mui-media-body" id="titleFlag2" style="color: #323232;">晒一晒</div>
+					</li>
+				<li id="AnswerLi" class="mui-table-view-cell mui-media ">
+						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/quan/aboutme.png" />
+						<div class="mui-media-body" id="titleFlag2" style="color: #323232;">与我相关</div>
+					</li>
+				<li id="AnswerLi" class="mui-table-view-cell mui-media ">
+						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/quan/Scan.png" />
+						<div class="mui-media-body" id="titleFlag2" style="color: #323232;">扫一扫</div>
+					</li>
 			</ul>
 		</div>
 		<script type="text/javascript">
@@ -350,13 +354,7 @@
 				events.preload("../homework/homework-tea.html", 300);
 				events.preload('storage_main.html'); //预加载云存储
 				window.addEventListener("topPopover", function(e) {
-					var flag = e.detail.data;
 					mui('#topPopover').popover('toggle')
-					if(flag == true) {
-						console.log('关闭topPopover')
-					} else {
-						console.log('打开topPopover')
-					}
 				});
 				mui('.mui-popover').on('tap', 'li', function(e) {
 					mui('#topPopover').popover('toggle')
