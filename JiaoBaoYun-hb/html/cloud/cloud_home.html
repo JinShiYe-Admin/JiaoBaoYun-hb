@@ -16,35 +16,20 @@
 		<link rel="stylesheet" href="../../css/cloud/file.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/utils/MUI-pullToRefresh.css" />
 		<style>
-			#topPopover {
-				position: fixed;
-				top: 16px;
-				right: 6px;
-			}
-			
-			#topPopover .mui-popover-arrow {
-				left: auto;
-				right: 6px;
-			}
-			
-			.mui-popover {
-				height: 100px;
-			}
-			
 			.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-			
+
 			.mui-table-view {
 				/*background-color: white;*/
 			}
-			
+
 			.cloud-item {
 				background-color: white;
 			}
-			
+
 			.cloud-item-left {
 				width: 16%;
 				border-right: 1px solid #D9D9D9;
@@ -53,47 +38,47 @@
 				font-weight: bold;
 				font-size: 1.6rem;
 			}
-			
+
 			.cloud-item-right {
 				/*margin-left: 16%;*/
 				width: 84%;
 				float: right;
 			}
-			
+
 			#cloudstorage_0,
 			#cloudrecord_0,
 			#cloudapps_0 {
 				/*每一项的第一行*/
 				/*background-color: red;*/
 			}
-			
+
 			#cloudstorage_1,
 			#cloudrecord_1,
 			#cloudapps_1 {
 				/*每一项的第二行*/
 				/*background-color: blue;*/
 			}
-			
+
 			.mui-plus-pullrefresh .mui-scroll {
 				position: absolute;
 				/*width: 100%;*/
 			}
-			
+
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				color: black;
 				border: none;
 			}
-			
+
 			.mui-table-view-cell {
 				display: inline-block;
 				width: auto;
 				padding: 1px 1px;
 			}
-			
+
 			.mui-slider-indicator .mui-table-view-cell.mui-active {
 				background: white;
 			}
-			
+
 			.cloud-red-point {
 				position: absolute;
 				background: red;
@@ -102,27 +87,27 @@
 				border-radius: 50%;
 				display: none;
 			}
-			
+
 			img {
 				border-radius: 50%;
 			}
-			
+
 			#cloudstorage_1 img {
 				border-radius: 0px;
 			}
-			
+
 			.icon-jiaxiabiao {
 				color: #0ABAF5;
 			}
-			
+
 			.icon-banxiabiao {
 				color: #FFBA00;
 			}
-			
+
 			.icon-re {
 				color: #FD681E;
 			}
-			
+
 			.icon-re,
 			.icon-banxiabiao,
 			.icon-jiaxiabiao {
@@ -130,7 +115,7 @@
 				border: none !important;
 				top: 0px;
 			}
-			
+
 			.mui-popup-input input {
 				/*popup 输入框*/
 				height: 34px;
@@ -141,7 +126,6 @@
 	</head>
 
 	<body>
-
 		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" style="visibility:hidden ;z-index:0">
 			<!--存储-->
 			<div id="cloudstorage" class="cloud-item">
@@ -189,19 +173,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div id="topPopover" class="mui-popover" style="background-color: red;">
-			<ul class="mui-table-view">
-				<li class="mui-table-view-cell">
-					<a href="#">晒一晒</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a href="#">与我相关</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a href="#">扫一扫</a>
-				</li>
-			</ul>
 		</div>
 		<script type="text/javascript">
 			//每一行的高度
@@ -345,16 +316,7 @@
 
 				events.preload("../homework/homework-tea.html", 300);
 				events.preload('storage_main.html'); //预加载云存储
-				window.addEventListener("topPopover", function(e) {
-//					mui('#topPopover').popover('show',document.getElementById("refreshContainer"));
-					var flag = e.detail.data;
-					mui('#topPopover').popover('show')
-					if(flag == true) {
-						console.log('关闭topPopover')
-					} else {
-						console.log('打开topPopover')
-					}
-				});
+
 				window.addEventListener("homeworkReady", function() {
 					homeworkReady = true;
 				});

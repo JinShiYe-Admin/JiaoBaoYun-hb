@@ -2,7 +2,6 @@ var dynamiclistitem = (function($, mod) {
 	mod.addComment = function() {
 		//回复评论时 判断是否为自己
 		if(tempIndex.indexOf('-') >= 0) {
-			console.log(tempIndex)
 			var indexArr = tempIndex.split('-');
 			var id = indexArr[0]; //动态的id
 			var commentId = indexArr[1]; //第几个评论
@@ -29,59 +28,44 @@ var dynamiclistitem = (function($, mod) {
 			}
 			console.log('personalUTID=' + personalUTID + '----' + 'replyUserId' + replyUserId)
 			if(personalUTID == replyUserId) { //
-				var btnArray = [{ title: '删除', style: "destructive" }];
-				plus.nativeUI.actionSheet({
-					cancel: "取消",
-					buttons: btnArray
-				}, function(e) {
-					var flag = e.index;
-					switch(flag) {
-						case 0:
-							break;
-						case 1:
-							{
-								var btnArray = ['取消', '确定'];
-								var closeId = this.id;
-								mui.confirm('确定删除此条评论？', '提醒', btnArray, function(e) {
-									if(e.index == 1) {
-										//47.（用户空间）删除某条用户空间评论
-										//所需参数
-										var comData = {
-											userSpaceCommentId: currCommentID //用户空间评论ID
-										};
-										//1为正确
-										var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-										postDataPro_delUserSpaceCommentById(comData, wd, function(data) {
-											wd.close();
-											console.log('删除空间评论_delUserSpaceCommentById' + JSON.stringify(data));
-											if(data.RspCode == 0) {
-												mui.toast('已删除');
-												if(replyId == '评论') {
-													var pageID = sliderId.replace('top_', '')
-													var commentId = 'replyComment' + pageID + idFlag + tempIndex;
-													console.log('commentId=' + commentId)
-													var deleteNode = document.getElementById(commentId);
-													console.log(deleteNode.innerHTML);
-													deleteNode.parentNode.removeChild(deleteNode);
-													//tempModel.Replys[replyId].splice(index, 1)
-												} else {
-													var pageID = sliderId.replace('top_', '')
-													var commentId = 'replyComment' + pageID + idFlag + tempIndex;
-													console.log('commentId=' + commentId)
-													var deleteNode = document.getElementById(commentId);
-													console.log(deleteNode.innerHTML);
-													deleteNode.parentNode.removeChild(deleteNode);
-													//tempModel.Replys[replyId].splice(index, 1)
-												}
+				var btnArray = ['取消', '确定'];
+				var closeId = this.id;
+				mui.confirm('确定删除此条评论？', '提醒', btnArray, function(e) {
+					if(e.index == 1) {
+						//47.（用户空间）删除某条用户空间评论
+						//所需参数
+						var comData = {
+							userSpaceCommentId: currCommentID //用户空间评论ID
+						};
+						//1为正确
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						postDataPro_delUserSpaceCommentById(comData, wd, function(data) {
+							wd.close();
+							console.log('删除空间评论_delUserSpaceCommentById' + JSON.stringify(data));
+							if(data.RspCode == 0) {
+								mui.toast('已删除');
+								if(replyId == '评论') {
+									var pageID = sliderId.replace('top_', '')
+									var commentId = 'replyComment' + pageID + idFlag + tempIndex;
+									console.log('commentId=' + commentId)
+									var deleteNode = document.getElementById(commentId);
+									console.log(deleteNode.innerHTML);
+									deleteNode.parentNode.removeChild(deleteNode);
+									//tempModel.Replys[replyId].splice(index, 1)
+								} else {
+									var pageID = sliderId.replace('top_', '')
+									var commentId = 'replyComment' + pageID + idFlag + tempIndex;
+									console.log('commentId=' + commentId)
+									var deleteNode = document.getElementById(commentId);
+									console.log(deleteNode.innerHTML);
+									deleteNode.parentNode.removeChild(deleteNode);
+									//tempModel.Replys[replyId].splice(index, 1)
+								}
 
-											} else {
-												mui.toast(data.RspTxt)
-											}
-										})
-									}
-								})
+							} else {
+								mui.toast(data.RspTxt)
 							}
-							break;
+						})
 					}
 				})
 
@@ -623,7 +607,7 @@ var dynamiclistitem = (function($, mod) {
 	mod.addInfo = function(ulElement, liElement, data) {
 		var closeempty = '';
 		if(data.pageFlag == 0) {
-			console.log('personalUTID=' + personalUTID + '----' + 'PublisherId=' + data.PublisherId)
+			console.log('personalUTID='+personalUTID+'----'+'PublisherId='+data.PublisherId)
 			if(personalUTID == data.PublisherId) {
 				closeempty = '<a data-is-focus=0  id ="btn-focus' + data.id_name + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:30px;height:30px;padding:5px"></a>';
 			} else {

@@ -122,24 +122,15 @@
 							wd.close();
 							console.log('添加空间评论回复_addUserSpaceCommentReply' + JSON.stringify(data));
 							if(data.RspCode == 0) {
-								var Reply = {
-									TabId:data.RspData.Result,
-									ReplyId:replyUserId,
-									UserId:personalUTID,
-									UpperId:upperId,
-									CommentContent:inputComment.value
-								}
 								mui.fire(plus.webview.currentWebview().opener(), 'refreshShow', {
 									tempIndex: tempIndex,
 									content: inputComment.value,
-									flag: '评论回复',
-									Reply:Reply
+									flag: '评论回复'
 								})
 								mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep', {
 									tempIndex: tempIndex,
 									content: inputComment.value,
-									flag: '评论回复',
-									Reply:Reply
+									flag: '评论回复'
 								})
 								mui.back();
 							}else{
@@ -159,25 +150,15 @@
 							wd.close();
 							console.log('添加空间评论_addUserSpaceComment' + JSON.stringify(data));
 							if(data.RspCode == 0) {
-								var Comment = {
-									TabId:data.RspData.Result,
-									Replys:[],
-									ReplyId:0,
-									UserId:personalUTID,
-									UpperId:0,
-									
-								}
 								mui.fire(plus.webview.currentWebview().opener(), 'refreshShow', {
 									tempIndex: tempIndex,
 									content: inputComment.value,
-									flag: '评论',
-									Comment:Comment
+									flag: '评论'
 								})
 								mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep', {
 									tempIndex: tempIndex,
 									content: inputComment.value,
-									flag: '评论',
-									Comment:Comment
+									flag: '评论'
 								})
 								mui.back();
 							}else{

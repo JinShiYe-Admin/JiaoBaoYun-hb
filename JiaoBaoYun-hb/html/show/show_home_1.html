@@ -139,7 +139,6 @@
 						div.innerHTML = '<font class="common-font-family-Regular dynamic-comment-name ">' + personalunick + '</font>' +
 							'<font class="common-font-family-Regular" style = "font-size:14px">：' + tempData.content + '</font>'
 						commentList.appendChild(div);
-						zonepArray[tempIndex].Comments.push(tempData.Comment)
 					} else if(tempData.flag == '评论回复') {
 						var indexArr = tempIndex.split('-');
 						var id = indexArr[0];
@@ -149,21 +148,16 @@
 						var tempModel = zonepArray[id].Comments[commentId];
 						var replyUserId;
 						var ReplyIdName;
-						var nextReplyId;
 						if(replyId == '评论') {
 							replyUserId = tempModel.UserId
 							ReplyIdName = tempModel.UserIdName
-							nextReplyId = 0
 						} else {
 							replyUserId = tempModel.Replys[replyId].UserId;
 							ReplyIdName = tempModel.Replys[replyId].UserIdName;
-							nextReplyId = replyId+1;
 						}
-						console.log('nextReplyId='+nextReplyId)
-						
 						var commentList = document.getElementById("commentList" + citycode + 'zx' + id);
 						var div = document.createElement("div");
-						div.id = 'replyComment' + citycode + 'zx' + id + '-' + commentId + '-' + nextReplyId;
+						div.id = 'replyComment' + citycode + 'zx' + id + '-' + commentId + '-' + replyId;
 						div.className = 'mui-media-body replyComment';
 						div.innerHTML = '<font class="common-font-family-Regular dynamic-comment-name">' + personalunick + '</font>' +
 							'<font class="common-font-family-Regular" style = "font-size:14px">回复</font>' +
@@ -171,7 +165,6 @@
 							'<font class="common-font-family-Regular" style = "font-size:14px">：' + tempData.content + '</font></div>'
 						var tempDiv = document.getElementById('replyComment' + citycode + 'zx' + id + '-' + commentId + '-' + '评论')
 						tempDiv.appendChild(div)
-						zonepArray[id].Comments[commentId].Replys.push(tempData.Reply);
 
 					} else {
 
