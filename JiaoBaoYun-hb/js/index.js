@@ -7,6 +7,7 @@
 mui.init();
 var noReadCount = 0;
 mui.plusReady(function() {
+	console.log(11111)
 	//	events.preload("../qiuzhi/expert-detail.html",100);
 	var waitingDia = events.showWaiting();
 	//安卓的连续点击两次退出程序
@@ -132,7 +133,13 @@ mui.plusReady(function() {
 
 	});
 
-	function getHomeworkAlert(NoReadCnt) {
+	
+	//首页加号点击事件
+	events.addTap('add', function() {
+		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
+	})
+});
+function getHomeworkAlert(NoReadCnt) {
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 		//56.（用户空间）获取与我相关
 		//所需参数
@@ -258,11 +265,11 @@ mui.plusReady(function() {
 		})
 	}
 var	addPlus = function(container,name){
-		var plus = document.createElement('a');
-		plus.className = 'mui-icon mui-pull-right mui-icon-plusempty';
-		plus.id = 'plus'
-		container.appendChild(plus);
-		events.addTap('plus', function() {
+		var add = document.createElement('a');
+		add.className = 'mui-icon mui-pull-right mui-icon-plusempty';
+		add.id = 'add'
+		container.appendChild(add);
+		events.addTap('add', function() {
 		if(name == 'jxq') {
 			events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
 		}else{
@@ -302,8 +309,3 @@ var	addPlus = function(container,name){
 		});
 		container.appendChild(a)
 	}
-	//首页加号点击事件
-	events.addTap('plus', function() {
-		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
-	})
-});

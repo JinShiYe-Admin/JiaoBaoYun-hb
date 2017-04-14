@@ -145,7 +145,10 @@
 			"js/publicProtocol.js",
 			"image/cloud/cloud_0_wenjianjia_1.png",
 			"js/utils/events.js",
-			"image/cloud/cloud_0_unknow_0.png"
+			"image/cloud/cloud_0_unknow_0.png",
+			"image/quan/share.png",
+			"image/quan/aboutme.png",
+			"image/quan/Scan.png"
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
