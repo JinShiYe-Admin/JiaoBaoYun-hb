@@ -27,6 +27,7 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			var scan = null; //扫描控件
+			var QRCodeModel//扫描到的数据，组成model
 			mui.plusReady(function() {
 				startRecognize();
 			});
@@ -46,31 +47,18 @@
 						break;
 				}
 				console.log('扫描到的信息为:' + result);
-				//19.用户申请入群
-				var unick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
-				//所需参数
-				var comData = {
-					gid: result, //群ID
-					beinvnick: unick, //申请人昵称
-					mstype: '3', //申请成为，0家长,2老师,3学生
-					urel: '' //备注，与资料关系，与资料关系,一般申请加入家长的时候填写,如爸爸,妈妈,其他类型留空
-				};
-				// 等待的对话框
-				var wd = events.showWaiting();
-				//19.用户申请入群
-				postDataPro_PostJoinGuser(comData, wd, function(data) {
-					wd.close();
-					console.log('19.用户申请入群:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					if(data.RspCode == 0) {
-						mui.toast('成功提交入群申请');
-						scan.cancel();
-						mui.back();
-					} else {
-						mui.toast(data.RspTxt);
-						scan.start(); //开始扫描
-					}
-				});
-			}
+				//将result用@分为数组，判断第一个是1的话，为申请加入群
+				var QRCodeArr = result.split('@');
+				if (QRCodeArr[0]==1) {//1为申请加入群
+					QRCodeModel.flag = QRCodeArr[0];//1代表申请加入群
+					QRCodeModel.gid = QRCodeArr[1];//班级id
+					QRCodeModel.gname = QRCodeArr[2];//班级名称
+					QRCodeModel.gimg = QRCodeArr[3];//班级头像
+					QRCodeModel.gnote = QRCodeArr[4];//班级说明
+					console.log('QRCodeModel='+JSON.stringify(QRCodeModel));
+				} else{
+					mui.toast('扫描结果为:'+result);
+				}
 			// 创建扫描控件
 			function startRecognize() {
 				scan = new plus.barcode.Barcode('bcid');

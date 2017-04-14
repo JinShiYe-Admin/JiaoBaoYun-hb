@@ -28,10 +28,11 @@
 
 		</div>-->
 		
-		<div class="mui-content mui-fullscreen" style="background: black;"> 
+		<div class="mui-content mui-fullscreen" style="background: white;"> 
 			<div id=""  style="background: white; margin: 2.5rem; position: absolute;top: 5.3rem;right: 0;bottom: 7.5rem;left: 0;">
 				<div style="padding: 1.8rem;">
-					<img src="../../image/cloud/cloud_0_banjiguanli.png" style="width: 4.5rem;height: 4.5rem;float: left;"><span style="line-height: 4.5rem;margin-left: 1rem;">weijjj</span>
+					<img id="groupImg" style="width: 4.5rem;height: 4.5rem;float: left;">
+					<span id="groupName" style="line-height: 4.5rem;margin-left: 1rem;"></span>
 				</div>
 				<div class="qrcode" style="background: white;text-align: center;padding: 1rem;width: 100%;height: 100%;"></div>
 			</div>
@@ -42,8 +43,13 @@
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
 
 		<script type="text/javascript">
-			var qrcodeUrl = '12'; //要加入的群号
-
+			var curPage = plus.webview.currentWebview();
+			var groupModel = curPage.data;//群model
+			var qrcodeUrl = '1@'+groupModel.gid+'@'+groupModel.gname+'@'+groupModel.gimg+'@'+groupModel.gnote;//code1，代表是群二维码
+			document.getElementById("groupImg").src = groupModel.gimg;
+			document.getElementById("groupName").innerText = groupModel.gname;
+			
+			console.log('qrcodeUrl='+qrcodeUrl);
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
 			});
