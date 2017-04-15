@@ -74,18 +74,23 @@ mui.plusReady(function() {
 							console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
 							if(datas.Status == 1) { //成功
 								var tokenInfos = datas.Data; //参数信息
+								var imgs=[];
 								//上传图片
-								CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status) {
+								CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status,index) {
 									console.log(JSON.stringify(uploadData));
-									var img = {
+									 imgs[index] = {
 										url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
 										thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
 										type: 1
 									}
 									picCount++;
-									CloudFileUtil.setPic(img); //放置图片
+								
 									if(picCount == compressedPaths.length) { //所有图片已上传
 										plus.nativeUI.closeWaiting(); //关闭等待框
+										for(var i in imgs){
+											CloudFileUtil.setPic(imgs[i]); //放置图片
+										}
+										
 									}
 								});
 

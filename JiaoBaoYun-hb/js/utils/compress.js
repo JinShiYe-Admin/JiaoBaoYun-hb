@@ -62,7 +62,6 @@ var compress = (function(mod) {
 						mod.compressPIC_recursive(paths[compressCount],callback1);
 					} else {
 						callback1(compressedPaths, widths);
-
 					}
 				},
 				function(error) {

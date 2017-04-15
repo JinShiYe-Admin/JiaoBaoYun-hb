@@ -765,34 +765,37 @@ var CloudFileUtil = (function($, mod) {
 	 */
 	mod.uploadFiles = function(fileNames, tokenInfos, callback) {
 		plus.uploader.clear();
-		var tasks = [];
+
 		for(var i in tokenInfos) {
 			//console.log('upload:' + fPath);
-			var task = plus.uploader.createUpload("http://upload.qiniu.com/", {
-					method: "POST"
-				},
-				/**
-				 * 上传任务完成的监听
-				 * @param {Object} upload 上传任务对象
-				 * @param {Object} status 上传结果状态码，HTTP传输协议状态码，如果未获取传输状态则其值则为0，如上传成功其值通常为200。
-				 */
-				function(upload, status) {
-					callback(upload, status);
-				}
-			);
-			task.addData("key", tokenInfos[i].Key);
-			//task.addData("scope", scope + ':' + type);
-			task.addData("token", tokenInfos[i].Token);
-			task.addFile(fileNames[i], {
-				"key": 'file',
-				"name": "file"
-			});
-
-			//上传状态变化的监听
-			task.addEventListener("statechanged", onStateChanged, false);
-			tasks.push(task);
+			createTask(tokenInfos[i],fileNames[i],i,callback);
 		}
 		plus.uploader.startAll();
+	}
+
+	function createTask(tokenInfo, fileName,index,callback) {
+		var task = plus.uploader.createUpload("http://upload.qiniu.com/", {
+				method: "POST"
+			},
+			/**
+			 * 上传任务完成的监听
+			 * @param {Object} upload 上传任务对象
+			 * @param {Object} status 上传结果状态码，HTTP传输协议状态码，如果未获取传输状态则其值则为0，如上传成功其值通常为200。
+			 */
+			function(upload, status) {
+				callback(upload, status,index);
+			}
+		);
+		task.addData("key", tokenInfo.Key);
+		//task.addData("scope", scope + ':' + type);
+		task.addData("token", tokenInfo.Token);
+		task.addFile(fileName, {
+			"key": 'file',
+			"name": "file"
+		});
+
+		//上传状态变化的监听
+		task.addEventListener("statechanged", onStateChanged, false);
 	}
 	// 监听上传任务状态
 	function onStateChanged(upload, status) {
@@ -914,7 +917,11 @@ var CloudFileUtil = (function($, mod) {
 				},
 				error: function(xhr, type, errorThrown) {
 					//异常处理
-					errorCB({ xhr: xhr, type: type, errorThrown: errorThrown });
+					errorCB({
+						xhr: xhr,
+						type: type,
+						errorThrown: errorThrown
+					});
 				}
 			});
 		} else {
@@ -943,28 +950,28 @@ var CloudFileUtil = (function($, mod) {
 			div.innerHTML = '<img style="width:90%;height:90%" src="' + img.thumb + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
 				'<a class="mui-icon iconfont icon-guanbi"></a>';
 		} else {
-			div.innerHTML = '<div class="clip-container"  style="width:'+div_width*0.9+';height:'+div_width*0.9+';margin:5%;overflow:hidden;display:inline-block backgroud:blue"><img src="' + img.url + '" style="visibility:hidden;" data-preview-src="' + img.url + '" data-preview-group="1"/></div>' +
+			div.innerHTML = '<div class="clip-container"  style="width:' + div_width * 0.9 + ';height:' + div_width * 0.9 + ';margin:5%;overflow:hidden;display:inline-block backgroud:blue"><img src="' + img.url + '" style="visibility:hidden;" data-preview-src="' + img.url + '" data-preview-group="1"/></div>' +
 				'<a class="mui-icon iconfont icon-guanbi"></a>';
 		}
 		console.log("放置的图片信息:" + JSON.stringify(img));
 		pictures.appendChild(div);
-		if(div.querySelector(".clip-container")){
-			div.querySelector("img").onload=function(){
-				console.log("图片宽度："+this.width+",图片高度："+this.height);
-				var marginSize=Math.abs(this.width-this.height)/2;
-				console.log("margin值："+marginSize+"px");
-				if(this.width>this.height){
-					this.style.height=this.width+"px";
-					this.style.width="initial";
-					this.style.marginLeft=-marginSize+"px";
-					this.style.marginRight=-marginSize+"px";
-					this.style.visibility="visible";
-				}else{
-					this.style.height="initial";
-					this.style.width=this.width+"px";
-					this.style.marginTop=-marginSize+"px";
-					this.style.marginBottom=-marginSize+"px";
-					this.style.visibility="visible";
+		if(div.querySelector(".clip-container")) {
+			div.querySelector("img").onload = function() {
+				console.log("图片宽度：" + this.width + ",图片高度：" + this.height);
+				var marginSize = Math.abs(this.width - this.height) / 2;
+				console.log("margin值：" + marginSize + "px");
+				if(this.width > this.height) {
+					this.style.height = this.width + "px";
+					this.style.width = "initial";
+					this.style.marginLeft = -marginSize + "px";
+					this.style.marginRight = -marginSize + "px";
+					this.style.visibility = "visible";
+				} else {
+					this.style.height = "initial";
+					this.style.width = this.width + "px";
+					this.style.marginTop = -marginSize + "px";
+					this.style.marginBottom = -marginSize + "px";
+					this.style.visibility = "visible";
 				}
 			}
 		}
@@ -1008,6 +1015,28 @@ var CloudFileUtil = (function($, mod) {
 			var pictures = document.getElementById('pictures');
 			pictures.removeChild(this.parentElement);
 		})
+	}
+	/**
+	 * 修改顺序
+	 * @param {Object} imgs
+	 * @param {Object} compressedPaths
+	 */
+	mod.rechargeImgsOrder = function(imgs, compressedPaths) {
+		var orderedImgs = [];
+		for(var i in imgs) {
+			for(var j in compressedPaths) {
+				console.log("获取的文件名：" + getLastName(imgs[i].url) + "压缩文件的文件名：" + getLastName(compressedPaths[j]));
+				if(getLastName(imgs[i].url) == getLastName(compressedPaths[j])) {
+					orderedImgs[j] = imgs[i];
+					break;
+				}
+			}
+		}
+		return orderedImgs;
+	}
+	var getLastName = function(path) {
+		var paths = path.split("/");
+		return paths[paths.length - 1];
 	}
 	return mod;
 })(mui, window.ColudFileUtil || {});
