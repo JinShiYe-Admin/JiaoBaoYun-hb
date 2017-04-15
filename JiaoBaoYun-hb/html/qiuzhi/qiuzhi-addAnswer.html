@@ -76,8 +76,8 @@
 
 		<script type="text/javascript">
 			mui.init({
-				beforeback:function(){
-					document.getElementById("pictures").innerHTML="";
+				beforeback: function() {
+					document.getElementById("pictures").innerHTML = "";
 					return true;
 				}
 			});
@@ -94,7 +94,7 @@
 				jQuery('#answerContent').prop("maxLength", "4000");
 				window.addEventListener('qiuzhi-addAnswer', function(event) {
 					CloudFileUtil.files = [];
-					document.getElementById('pictures').innerHTML="";
+					document.getElementById('pictures').innerHTML = "";
 					type = 0;
 					askModel = event.detail.data;
 					document.getElementById('title').innerText = '我要回答';
@@ -113,7 +113,7 @@
 				//加载评论
 				window.addEventListener('add-comment', function(e) {
 					CloudFileUtil.files = [];
-					document.getElementById('pictures').innerHTML="";
+					document.getElementById('pictures').innerHTML = "";
 					type = 1;
 					document.getElementById('answerContent').value = "";
 					document.getElementById('title').innerText = '我要评论';
@@ -141,7 +141,7 @@
 					//					})
 				})
 				window.addEventListener("changeAnswer", function(e) {
-					type=3;
+					type = 3;
 					console.log("要获取的回答详情：" + JSON.stringify(e.detail.data));
 					document.getElementById('title').innerText = '修改回答';
 					//匿名默认未选择
@@ -167,13 +167,13 @@
 					for(var i in imgs) {
 						var img = {
 							url: bigImgs[i],
-							thumb : imgs[i],
-							order : parseInt(i),
-							type :1
+							thumb: imgs[i],
+							order: parseInt(i),
+							type: 1
 						};
 						files.push(img);
 					}
-					for(var i in files){
+					for(var i in files) {
 						CloudFileUtil.setPic(files[i], 1);
 					}
 				}
@@ -277,22 +277,25 @@
 										console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
 										if(datas.Status == 1) { //成功
 											var tokenInfos = datas.Data; //参数信息
+											var imgs = [];
 											//上传图片
-											CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status) {
+											CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status, index) {
 												console.log(JSON.stringify(uploadData));
-												var img = {
+												imgs[index] = {
 													url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
-													thumb: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key.replace(saveSpace, saveSpace + "thumb/"),
-													clip: tokenInfos[0].Domain + tokenInfos[0].Key.replace(saveSpace, saveSpace + "clip/"),
+													thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
 													type: 1
-												};
+												}
 												picCount++;
-												//放置图片
-												CloudFileUtil.setPic(img); //放置图片
+
 												if(picCount == compressedPaths.length) { //所有图片已上传
 													plus.nativeUI.closeWaiting(); //关闭等待框
+													for(var i in imgs) {
+														CloudFileUtil.setPic(imgs[i]); //放置图片
+													}
+
 												}
-											})
+											});
 										}
 									})
 								},
@@ -333,11 +336,11 @@
 								addComment(answerContent, commentInfo);
 								break;
 							case 3:
-							if(events.limitInput(answerContent,4000)) {
+								if(events.limitInput(answerContent, 4000)) {
 									return;
 								}
 								changeAnswer();
-							break;
+								break;
 							default:
 								break;
 						}
@@ -349,8 +352,8 @@
 			/**
 			 * 修改回答
 			 */
-			var changeAnswer=function(){
-				
+			var changeAnswer = function() {
+
 			}
 			/**
 			 * 回答问题
