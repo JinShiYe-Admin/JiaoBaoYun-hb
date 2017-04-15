@@ -67,13 +67,26 @@ mui.plusReady(function() {
 		getComment(commentedInfo.commentInfo);
 	})
 	window.addEventListener("showActionSheet", function() {
-		var btnArray = [{
-			title: "修改答案"
-		}, {
-			title: "删除答案",
-			dia: 1 //是否显示dialog
-		}];
-		var cbArray = [changeAnswer,delAnswer];
+		var btnArray;
+		var cbArray;
+		if(answerData.CommentNum) {
+			btnArray = [{
+				title: "修改答案"
+			}, {
+				title: "屏蔽答案",
+				dia: 1 //是否显示dialog
+			}];
+			cbArray = [changeAnswer, shieldAnswer];
+		} else {
+			btnArray = [{
+				title: "修改答案"
+			}, {
+				title: "删除答案",
+				dia: 1 //是否显示dialog
+			}];
+			cbArray = [changeAnswer, delAnswer];
+		}
+
 		events.showActionSheet(btnArray, cbArray);
 	})
 	setListeners();
@@ -95,7 +108,10 @@ var setChangeCondition = function() {
  */
 var changeAnswer = function() {
 	//修改答案
-	events.fireToPageWithData("qiuzhi-addAnswer.html","changeAnswer",answerInfo);
+	events.fireToPageWithData("qiuzhi-addAnswer.html", "changeAnswer", answerInfo);
+}
+var shieldAnswer=function(){
+	mui.toast("功能暂未开放，请稍候！")
 }
 /**
  * 删除回答
@@ -126,12 +142,12 @@ var delComment = function() {
 	}, wd1, function(data) {
 		console.log("删除评论后返回的数值：" + JSON.stringify(data));
 		wd1.close();
-		if(data.RspCode == 0&&data.RspData.Result) {
+		if(data.RspCode == 0 && data.RspData.Result) {
 			resetSiblingOrder(delCommentContainer);
 			delCommentData();
 			if(upperInfo.UpperId) { //存在上级评论id 直接删除本cell
 				parentContainer.querySelector(".inner-table-view").removeChild(delCommentContainer);
-				if(!parentContainer.querySelector(".inner-table-view").firstElementChild){
+				if(!parentContainer.querySelector(".inner-table-view").firstElementChild) {
 					parentContainer.removeChild(parentContainer.querySelector(".inner-table-view"));
 				}
 			} else { //不存在，删除本cell后增加单条评论
@@ -343,7 +359,7 @@ function requestAnswerDetail(answerId, pageIndex, pageSize, callback) {
 		console.log('8.获取某个回答的详情:' + JSON.stringify(data));
 		if(data.RspCode == 0 && data.RspData.AnswerId) {
 			var datasource = data.RspData;
-			totalPageCount = Math.ceil(datasource.TotalPage*(pageSize/10));
+			totalPageCount = Math.ceil(datasource.TotalPage * (pageSize / 10));
 			callback(datasource, pageIndex);
 		} else {
 			mui.toast(data.RspTxt);
