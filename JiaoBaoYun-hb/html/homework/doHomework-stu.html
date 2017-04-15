@@ -38,7 +38,7 @@
 				<div id="take_camero" class="take_camero">
 					<a class="mui-icon iconfont icon-shipin"></a>
 				</div>
-				
+
 			</div>
 			<div id="pictures" class="img-container temWork-teaHint"></div>
 		</div>
@@ -73,7 +73,7 @@
 			mui.plusReady(function() {
 				//加载预览方法
 				mui.previewImage();
-				jQuery("#input-content").prop("maxLength",2000);
+				jQuery("#input-content").prop("maxLength", 2000);
 				//加载监听
 				window.addEventListener('homeworkInfo', function(e) {
 					CloudFileUtil.files = [];
@@ -162,7 +162,7 @@
 					mui.toast('功能暂未开放！');
 				});
 				//录音按钮
-				events.addTap("get_record",function(){
+				events.addTap("get_record", function() {
 					mui.toast('功能暂未开放！');
 				})
 				//相册按钮
@@ -182,18 +182,23 @@
 										console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
 										if(datas.Status == 1) { //成功
 											var tokenInfos = datas.Data; //参数信息
+											var imgs = [];
 											//上传图片
-											CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status) {
+											CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status, index) {
 												console.log(JSON.stringify(uploadData));
-												var img = {
+												imgs[index] = {
 													url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
 													thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
 													type: 1
 												}
 												picCount++;
-												CloudFileUtil.setPic(img); //放置图片
+
 												if(picCount == compressedPaths.length) { //所有图片已上传
 													plus.nativeUI.closeWaiting(); //关闭等待框
+													for(var i in imgs) {
+														CloudFileUtil.setPic(imgs[i]); //放置图片
+													}
+
 												}
 											});
 
@@ -218,17 +223,17 @@
 				var tempText = textView.value;
 
 				console.log('textView.value===' + tempText)
-				if(tempText){
-					tempText=tempText.trim();
+				if(tempText) {
+					tempText = tempText.trim();
 				}
 				if(!tempText || tempText == '') {
 					mui.toast('请输入作业内容');
 					return;
 				} else {
-					if(events.limitInput(tempText,1000)){
+					if(events.limitInput(tempText, 1000)) {
 						return;
 					}
-//					tempText = replaceAllBL(tempText);
+					//					tempText = replaceAllBL(tempText);
 				}
 				for(var i in CloudFileUtil.files) {
 					CloudFileUtil.files[i].order = i;
@@ -257,7 +262,10 @@
 						events.clearChild(document.getElementById('pictures'));
 						events.fireToPageNone('homework-tea.html', 'homeworkDone');
 						document.activeElement.blur();
-						events.openNewWindowWithData('homework-commented.html', jQuery.extend({}, homeworkModel, { HomeworkResultId: data.RspData.HomeworkResultId, workType: 1 }));
+						events.openNewWindowWithData('homework-commented.html', jQuery.extend({}, homeworkModel, {
+							HomeworkResultId: data.RspData.HomeworkResultId,
+							workType: 1
+						}));
 					} else {
 						mui.toast(data.RspTxt);
 					}
@@ -297,7 +305,7 @@
 						mui.toast('修改作业答案成功！')
 						events.fireToPageNone('homework-commented.html', 'refreshAnswer', {
 							answer: textView.value,
-							Files:CloudFileUtil.files
+							Files: CloudFileUtil.files
 						});
 						CloudFileUtil.files = [];
 						//清空输入框
