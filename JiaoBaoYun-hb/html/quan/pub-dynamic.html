@@ -30,7 +30,7 @@
 				<div id="take_pic" class="take_pic">
 					<a class="mui-icon iconfont icon-xiangji1"></a>
 				</div>
-				
+
 				<div id="get_gallery" class="get_gallery">
 					<a class="mui-icon iconfont icon-tuku"></a>
 				</div>
@@ -79,7 +79,7 @@
 		var utids = [];
 		var pageFlag;;
 		mui.plusReady(function() {
-	
+
 			pageFlag = plus.webview.currentWebview().data
 			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
 
@@ -108,7 +108,7 @@
 			////					});
 			//				});
 			CloudFileUtil.setDelPicListener();
-						//录音按钮
+			//录音按钮
 			events.addTap('get_record', function() {
 				mui.toast('功能暂未开放！');
 			});
@@ -133,18 +133,23 @@
 									console.log("传回来的值：" + JSON.stringify(datas)) //回调数据
 									if(datas.Status == 1) { //成功
 										var tokenInfos = datas.Data; //参数信息
+										var imgs = [];
 										//上传图片
-										CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status) {
+										CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status, index) {
 											console.log(JSON.stringify(uploadData));
-											var img = {
+											imgs[index] = {
 												url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
 												thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
 												type: 1
 											}
 											picCount++;
-											CloudFileUtil.setPic(img); //放置图片
+
 											if(picCount == compressedPaths.length) { //所有图片已上传
 												plus.nativeUI.closeWaiting(); //关闭等待框
+												for(var i in imgs) {
+													CloudFileUtil.setPic(imgs[i]); //放置图片
+												}
+
 											}
 										});
 
