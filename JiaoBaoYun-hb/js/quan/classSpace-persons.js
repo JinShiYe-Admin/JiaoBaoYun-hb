@@ -113,7 +113,28 @@ var getGroupUsers = function(userIds, infos) {
 		wd.close();
 		console.log('获取的用户信息：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
-			getRemark(userIds, data.RspData, infos);
+			var groupInfos=data.RspData;
+			var realGroupInfos=groupInfos.filter(function(groupInfo,index,groupInfos){
+				if(groupInfo.mstype==0){
+					for(var i in groupInfos){
+						if(i!=index&&groupInfos[i].utid==groupInfo.utid){
+							return false;//除家长外还有其他身份 删除家长身份
+						}
+					}
+					return true;
+				}else{
+					if(groupInfo.mstype==2){
+						for(var i in groupInfos){
+							if(groupInfos[i].mstype==1&&groupInfos[i].utid==groupInfo.utid){
+								return false;//除老师外还有群主身份，删除老师身份
+							}
+						}
+						return true;
+					}
+					return true;
+				}
+			})
+			getRemark(userIds, realGroupInfos, infos);
 		} else {
 			mui.toast(data.RspTxt);
 		}
