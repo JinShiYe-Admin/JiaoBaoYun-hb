@@ -832,7 +832,7 @@ var dynamiclistitem = (function($, mod) {
 		} else if(nameArr.length > 19) {
 			nameArr = nameArr.slice(0, 20);
 			var praiseListStr = nameArr.join('、');
-			var html3 = '<img id = "praiseImg' + data.id_name + '" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' + praiseListStr + '等' + nameArr.length + '人觉得点赞';
+			var html3 = '<img id = "praiseImg' + data.id_name + '" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' + praiseListStr + '等' + praiseList.length + '人觉得点赞';
 			htmlPraiseList = htmlPraiseList + html3 + '</div></div>';
 		} else {
 			htmlPraiseList = htmlPraiseList + '</div></div>';

@@ -312,11 +312,13 @@
 					if(nodes.focusBtn.innerText == '已关注') {
 						nodes.focusBtn.innerText = '关注';
 						nodes.focusBtn.style.background = '#1db8F1';
+						nodes.focusBtn.style.color = 'white'
 						nodes.focusBtn.style.border = '#1db8F1';
 					} else {
 						nodes.focusBtn.innerText = '已关注';
-						nodes.focusBtn.style.background = '#b7b7b7';
-						nodes.focusBtn.style.border = '#b7b7b7';
+						nodes.focusBtn.style.color = 'lightgrey'
+						nodes.focusBtn.style.background = '#e4e4e4';
+						nodes.focusBtn.style.border = 'lightgrey';
 					}
 				} else {
 					mui.toast(data.RspTxt);
