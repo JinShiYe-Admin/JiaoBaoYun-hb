@@ -692,7 +692,8 @@
 			"js/libs/myStorage/myStorage.js",
 			"css/iconfont/iconfont.css",
 			"js/mui.min.js",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"fonts/iconfont.ttf"
 		],
 		"refer": []
 	},

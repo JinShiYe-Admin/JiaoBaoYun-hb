@@ -2469,7 +2469,8 @@
 					"js/qiniu/qiniu.js",
 					"fonts/fangzheng.ttf",
 					"js/utils/events.js",
-					"js/utils/playutil.js"
+					"js/utils/playutil.js",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [],
 				"priority": 0

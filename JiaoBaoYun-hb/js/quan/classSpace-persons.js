@@ -1,4 +1,10 @@
-mui.init();
+mui.init({
+	beforeback:function(){
+		document.querySelector("#person-list").innerHTML="";
+		mui(".mui-scroll-wrapper").scroll().scrollTo(0,0);
+		return true;
+	}
+});
 mui(".mui-scroll-wrapper").scroll();
 var classSpaceInfo;
 mui.plusReady(function() {
