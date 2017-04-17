@@ -166,7 +166,7 @@ var delContent_req = function(data1, btn, callback) {
 		});
 	} else if(operationFlag == 10) { //删除档案内容
 		//85.（云档案）按ID删除学生档案内容
-		postDataQZPro_setAnswerOffById(data.comData, wd, function(data) {
+		postDataPro_delStudentFileByIds(data.comData, wd, function(data) {
 			wd.close();
 			console.log('85.（云档案）按ID删除学生档案内容:' + data1.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
