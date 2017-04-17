@@ -76,10 +76,10 @@
 
 		<script type="text/javascript">
 			mui.init({
-				beforeback: function() {
-					document.getElementById("pictures").innerHTML = "";
-					return true;
-				}
+//				beforeback: function() {
+//					document.getElementById("pictures").innerHTML = "";
+//					return true;
+//				}
 			});
 			//将传值到的标题显示
 			var askModel; //问题model
@@ -91,7 +91,10 @@
 			mui.plusReady(function() {
 				events.blurBack();
 				mui.previewImage();
-				jQuery('#answerContent').prop("maxLength", "4000");
+				plus.webview.currentWebview().addEventListener("hide",function(){
+					document.getElementById("pictures").innerHTML="";
+					document.getElementById("answerContent").value="";
+				})
 				window.addEventListener('qiuzhi-addAnswer', function(event) {
 					CloudFileUtil.files = [];
 					document.getElementById('pictures').innerHTML = "";
