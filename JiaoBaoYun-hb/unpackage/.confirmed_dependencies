@@ -1249,7 +1249,8 @@
 			"css/mui.min.css",
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
-			"js/mine/account-info.js"
+			"js/mine/account-info.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/mine/edit-info.html",
@@ -1666,7 +1667,9 @@
 			"css/iconfont/iconfont.css",
 			"fonts/mui.ttf",
 			"fonts/iconfont.ttf",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"js/storageKeyName.js",
+			"js/libs/myStorage/myStorage.js"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-questionSub.html",

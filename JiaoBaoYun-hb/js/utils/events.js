@@ -84,6 +84,7 @@ var events = (function(mod) {
 			waiting: {
 				title: '正在加载...'
 			},
+			createNew:true,
 			styles: mod.getWebStyle()
 		});
 	};

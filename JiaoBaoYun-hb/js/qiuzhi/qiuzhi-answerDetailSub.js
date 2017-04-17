@@ -112,7 +112,21 @@ var changeAnswer = function() {
 	events.fireToPageWithData("qiuzhi-addAnswer.html", "changeAnswer", answerInfo);
 }
 var shieldAnswer = function() {
-	mui.toast("功能暂未开放，请稍候！")
+//	mui.toast("功能暂未开放，请稍候！");
+	var wd1=events.showWaiting();
+	postDataQZPro_setAnswerOffById({
+		answerId: answerInfo.AnswerId,
+		status: 1
+	}, wd1, function(data) {
+		wd1.close();
+		console.log("屏蔽后返回的数据:" + JSON.stringify(data));
+		if(data.RspCode==0&&data.RspData.Result){
+			mui.toast("回答已屏蔽！");
+			mui.back();
+		}else{
+			mui.toast("屏蔽回答失败！");
+		}
+	})
 }
 /**
  * 删除回答
