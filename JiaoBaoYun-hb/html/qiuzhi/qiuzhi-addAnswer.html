@@ -76,10 +76,10 @@
 
 		<script type="text/javascript">
 			mui.init({
-//				beforeback: function() {
-//					document.getElementById("pictures").innerHTML = "";
-//					return true;
-//				}
+				//				beforeback: function() {
+				//					document.getElementById("pictures").innerHTML = "";
+				//					return true;
+				//				}
 			});
 			//将传值到的标题显示
 			var askModel; //问题model
@@ -91,9 +91,9 @@
 			mui.plusReady(function() {
 				events.blurBack();
 				mui.previewImage();
-				plus.webview.currentWebview().addEventListener("hide",function(){
-					document.getElementById("pictures").innerHTML="";
-					document.getElementById("answerContent").value="";
+				plus.webview.currentWebview().addEventListener("hide", function() {
+					document.getElementById("pictures").innerHTML = "";
+					document.getElementById("answerContent").value = "";
 				})
 				window.addEventListener('qiuzhi-addAnswer', function(event) {
 					CloudFileUtil.files = [];
@@ -284,11 +284,21 @@
 											//上传图片
 											CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status, index) {
 												console.log(JSON.stringify(uploadData));
-												imgs[index] = {
-													url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
-													thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
-													type: 1
+												if(index == 0) {
+													imgs[index] = {
+														url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
+														thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
+														clip: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "clip/"),
+														type: 1
+													}
+												} else {
+													imgs[index] = {
+														url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
+														thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
+														type: 1
+													}
 												}
+
 												picCount++;
 
 												if(picCount == compressedPaths.length) { //所有图片已上传
@@ -356,19 +366,23 @@
 			 * 修改回答
 			 */
 			var changeAnswer = function(answerContent) {
-				var wd1=events.showWaiting();
-				var comData={
-					answerId: answerInfo.AnswerId,//回答ID
-					answerContent:answerContent,//回答内容,4000
-					encAddr:''//附件地址,300,多个的情况例如：1.jpg|2.jpg
+				var wd1 = events.showWaiting();
+				var comData = {
+					answerId: answerInfo.AnswerId, //回答ID
+					answerContent: answerContent, //回答内容,4000
+					encAddr: getTypeAddress(CloudFileUtil.files).encAddr, //附件地址,300,多个的情况例如：1.jpg|2.jpg
+					thumbnail: getTypeAddress(CloudFileUtil.files).encImg,
+					cutImg: getTypeAddress(CloudFileUtil.files).clipAddress
 				};
-				postDataQZPro_setAnswerById(comData,wd1,function(data){
+				postDataQZPro_setAnswerById(comData, wd1, function(data) {
 					wd1.close();
-					console.log("更改回答的值："+JSON.stringify(data));
-					if(data.RspCode==0&&data.RspData.Result){
-						mui.fire(plus.webview.currentWebview().opener(),"answerChanged",comData);
+					console.log("更改回答的值：" + JSON.stringify(data));
+					if(data.RspCode == 0 && data.RspData.Result) {
+						comData.AnswerThumbnail = comData.thumbnail;
+						comData.AnswerEncAddr = comData.encAddr;
+						mui.fire(plus.webview.currentWebview().opener(), "answerChanged", comData);
 						mui.back();
-					}else{
+					} else {
 						mui.toast("更改回答失败！");
 					}
 				})
@@ -481,11 +495,14 @@
 				var encAddrs = [];
 				var encImgs = [];
 				var theFile;
+				console.log("要处理的上传图片：" + JSON.stringify(CloudFileUtil.files))
 				if(CloudFileUtil.files.length > 0) { //如果存在附件
 					for(var i in CloudFileUtil.files) {
 						theFile = CloudFileUtil.files[i];
 						if(i == 0) {
 							TAs.encType = theFile.type;
+						}
+						if(theFile.clip&&!TAs.clipAddress){
 							TAs.clipAddress = theFile.clip;
 						}
 						encAddrs.push(theFile.url);
