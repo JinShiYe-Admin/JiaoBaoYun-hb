@@ -1,7 +1,7 @@
 //在求知中，详情页，进行删除操作时调用
 
 //data{
-//	flag:求知：提问1，回答2，评论3；班级空间：班级动态4；个人空间：个人动态5，个人动态评论6，档案7
+//	flag:求知：提问1，回答2，评论3；班级空间：班级动态4；个人空间：个人动态5，个人动态评论6，档案:个人档案7，档案内容10，
 //	comData:协议需要参数
 //	title:弹出框中，显示的标题
 //	buttons:弹出的列表,格式为：[{title:标题，btnFlag:要做的操作}]，btnFlag：1删除，2修改，3屏蔽，4取消屏蔽，5重命名
@@ -140,7 +140,7 @@ var delContent_req = function(data1, btn, callback) {
 				mui.toast(data.RspTxt);
 			}
 		});
-	} else if(operationFlag == 7) { //删除档案
+	} else if(operationFlag == 7) { //删除个人档案
 		//90.（云档案）删除档案文件夹
 		postDataPro_delStudentDoc(data.comData, wd, function(data) {
 			wd.close();
@@ -157,6 +157,18 @@ var delContent_req = function(data1, btn, callback) {
 		postDataQZPro_setAnswerOffById(data.comData, wd, function(data) {
 			wd.close();
 			console.log('38.屏蔽某个用户的某条回答:' + data1.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			if(data.RspCode == 0) {
+				temp.data = data;
+				callback(temp);
+			} else {
+				mui.toast(data.RspTxt);
+			}
+		});
+	} else if(operationFlag == 10) { //删除档案内容
+		//85.（云档案）按ID删除学生档案内容
+		postDataQZPro_setAnswerOffById(data.comData, wd, function(data) {
+			wd.close();
+			console.log('85.（云档案）按ID删除学生档案内容:' + data1.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				temp.data = data;
 				callback(temp);
