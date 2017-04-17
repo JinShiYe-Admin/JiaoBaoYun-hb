@@ -94,3 +94,19 @@ body,
 .mui-table-view {
 	margin-bottom: 35px;
 }
+.title h4{
+	font-size: 1.7rem;
+	line-height: 2.0rem;
+	letter-spacing: 0.1rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+}
+.title p{
+	
+	line-height: 1.8rem;
+
+	
+}
