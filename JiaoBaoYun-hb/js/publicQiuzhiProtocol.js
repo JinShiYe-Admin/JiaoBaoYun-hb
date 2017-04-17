@@ -172,6 +172,8 @@ var postDataQZPro_addAnswer = function(commonData, wd, callback) {
 //		var comData = {
 //			answerId: '',//回答ID
 //			answerContent:'',//回答内容,4000
+//			thumbnail:'',//缩略图，3000
+//			cutImg:'',//剪切图，3000
 //			encAddr:''//附件地址,300,多个的情况例如：1.jpg|2.jpg
 //		};
 //返回值：1为正确
