@@ -229,6 +229,8 @@
 		var mainData //当前web的数据
 		var pullRefresh; //下拉，上拉控件
 		var deleteRecord = false; //是否切换到了删除状态
+		//var studentFile = {} //存储获取的记录
+
 		var offsetWidth = document.getElementById('ul_table').offsetWidth;
 		var imageWidth = parseInt((offsetWidth * 0.77 - 30) * 0.32);
 		var imageHeight = parseInt(imageWidth * 3 / 4);
@@ -258,7 +260,7 @@
 			}
 			today = myDate.getFullYear() + '-' + month + '-' + myDate.getDate();
 
-			document.body.querySelector('.mui-title').innerText = '云盘--' + mainData.StudentName + '档案';
+			document.body.querySelector('.mui-title').innerText = '云盘--' + mainData.DocName + '档案';
 		}
 
 		/**
@@ -382,8 +384,7 @@
 
 			//双击标题返回列表顶部
 			document.getElementById('title').addEventListener('doubletap', function() {
-				var scrollTop = mui('#pullrefresh').scroll(); //话题列表区域
-				scrollTop.scrollTo(0, 0, 100);
+				mui('#pullrefresh').scroll().scrollTo(0, 0, 100);
 			});
 
 			//长按内容
@@ -438,7 +439,8 @@
 			var userId = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 			var comData = {
 				parentId: userId, //家长ID
-				studentName: mainData.StudentName, //学生ID
+				docId: mainData.DocId, //文件夹ID
+				docType: mainData.DocType, //文件夹类型
 				pageIndex: pageIndex, //当前页数
 				pageSize: '10' //每页记录数
 			};
@@ -446,47 +448,43 @@
 			var wd = events.showWaiting();
 			//69.（云档案）按家长获取学生档案
 			postDataPro_getStudentFile(comData, wd, function(data) {
-				console.log('69.postDataPro_getStudentFile:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
+				console.log('69 按家长获取学生档案 getStudentFile ' + JSON.stringify(data));
+				//记录页数
+				var page = {
+					pageIndex: pageIndex, //当前页数
+					totalPage: 0 //总页数
+				};
+
+				document.getElementById('pullrefresh').setAttribute('data-page', JSON.stringify(page))
+				if(page.pageIndex == 1) { //下拉刷新或者获取的第一页的内容
+					//清空对应的界面
+					document.getElementById('ul_table').innerHTML = '';
+					year = ''; //清空年份
+					markDate = ''; //清空年份
+					//studentFile = {} //清空记录
+				} else { //上拉加载更多
+					pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
+				}
+
 				if(data.RspCode == 0) {
-					var tempRspData = data.RspData.Data;
-					//记录页数
-					var page = {
-						pageIndex: pageIndex, //当前页数
-						totalPage: 0 //总页数
-					};
-					if(data.RspCode == 0) {
-						page.totalPage = data.RspData.TotalPage;
-					}
-					document.getElementById('pullrefresh').setAttribute('data-page', JSON.stringify(page))
-					if(page.pageIndex == 1) { //下拉刷新或者获取的第一页的内容
-						//清空对应的界面
-						document.getElementById('ul_table').innerHTML = '';
-						year = ''; //清空年份
-						markDate = ''; //清空年份
-					} else { //上拉加载更多
-						pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
-					}
-
-					for(var i = 0; i < tempRspData.length; i++) {
-						createNotes(tempRspData[i])
-					}
-
-					if(page.pageIndex && page.pageIndex >= page.totalPage) {
-						//没有下一页
-						pullRefresh.endPullUpToRefresh(true);
-					} else {
-						if(page.pageIndex == 1) {
-							//获取第一页的数据更新当前控件
-							pullRefresh.refresh(true);
-						}
+					page.totalPage = data.RspData.TotalPage;
+					for(var i = 0; i < data.RspData.Data.length; i++) {
+						createNotes(data.RspData.Data[i])
 					}
 				} else {
 					mui.toast(data.RspTxt);
 				}
 
-				setTimeout(function() {
-					wd.close();
-				}, 500);
+				if(page.pageIndex >= page.totalPage) {
+					//没有下一页
+					pullRefresh.endPullUpToRefresh(true);
+				} else {
+					if(page.pageIndex == 1) {
+						//获取第一页的数据更新当前控件
+						pullRefresh.refresh(true);
+					}
+				}
+				wd.close();
 			});
 		}
 
@@ -496,6 +494,7 @@
 		 */
 		function createNotes(data) {
 			//console.log('createNotes ' + JSON.stringify(data));
+			//studentFile[data.TabId] = data;
 
 			var date = data.PublishDate.split(' '); //发布的日期和时间
 			var dateItem = date[0]; //日期
@@ -619,7 +618,7 @@
 				document.getElementById("commit_div").style.display = 'none';
 				document.getElementById("pullrefresh").style.bottom = '0px';
 				document.getElementById("add").innerText = '添加';
-				document.getElementById("title").innerText = '云盘--' + mainData.StudentName + '档案';
+				document.getElementById("title").innerText = '云盘--' + mainData.DocName + '档案';
 			} else { //删除
 				document.getElementById("back").style.display = 'none';
 				document.getElementById("cancel").style.display = 'inline';

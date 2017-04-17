@@ -319,6 +319,8 @@
 			var noReadModel = {};
 
 			var homeworkReady = false;
+			//存储档案文件夹
+			var studentDoc = {};
 
 			mui.init({
 				gestureConfig: {
@@ -458,10 +460,9 @@
 						mui.toast('手机图库功能暂未开放');
 					} else { //档案
 						self.disabled = true;
-						events.openNewWindowWithData('record_student_main.html', {
-							StudentId: this.getAttribute('StudentId'), //学生ID
-							StudentName: this.getAttribute('StudentName') //学生姓名
-						});
+						var data = studentDoc[id.replace('data_', '')];
+						console.log(JSON.stringify(data));
+						events.openNewWindowWithData('record_student_main.html', data);
 						setTimeout(function() {
 							self.disabled = false;
 						}, 1500);
@@ -696,11 +697,8 @@
 				function changeData() {
 					//26.用户云盘顶层文件及文件夹获取
 					postFirstFile();
-					document.getElementById("cloudstorage_0").innerHTML = '';
-					//73.（云档案）按家长获取学生档案姓名
-					//postUserStudent();
-					//手机通讯录，手机图库
-					addcloudstorage_0_0();
+					//91.（云档案）按家长获取档案文件夹
+					postUserStudent();
 					//假数据
 					//addcloudstorage_0_1({
 					//	StudentId: 0,
@@ -834,10 +832,10 @@
 					});
 				}
 
-				//73.（云档案）按家长获取学生档案姓名
+				//91.（云档案）按家长获取档案文件夹
 				function postUserStudent() {
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-					//73.（云档案）按家长获取学生档案姓名
+					//91.（云档案）按家长获取档案文件夹
 					//所需参数
 					var comData = {
 						parentId: personalUTID //家长ID
@@ -845,21 +843,23 @@
 					//返回学生姓名数组
 					// 等待的对话框
 					var wd = events.showWaiting();
-					//addcloudstorage_0_0(); //手机通讯录，手机图库
-					postDataPro_getStudentName(comData, wd, function(data) {
-						console.log('73.云档案）按家长获取学生档案姓名postDataPro_getStudentName:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					postDataPro_getStudentDocByParent(comData, wd, function(data) {
+						console.log('按家长获取档案文件夹getStudentDocByParent:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						document.getElementById("cloudstorage_0").innerHTML = '';
 						addcloudstorage_0_0(); //手机通讯录，手机图库
+						studentDoc = {};
 						if(data.RspCode == 0) {
 							//设置页面显示
-							mui.each(data.RspData.Students, function(index, item) {
-								console.log('学生档案：' + index + '|' + JSON.stringify(item));
-								if(item.StudentName != '') {
-									addcloudstorage_0_1(item);
+							for(var i = 0; i < data.RspData.Data.length; i++) {
+								//console.log('学生档案 ' + i + '|' + JSON.stringify(data.RspData.Data[i]));
+								if(data.RspData.Data[i].DocName) {
+									addcloudstorage_0_1(data.RspData.Data[i]);
 								}
-							});
-						} else if(data.RspCode == 9) {} else {
-							mui.toast(data.RspTxt);
+							}
+						} else {
+							if(data.RspCode != 9) {
+								mui.toast(data.RspTxt);
+							}
 						}
 						wd.close();
 					});
@@ -950,16 +950,17 @@
 				 * @param {Object} data
 				 */
 				function addcloudstorage_0_1(data) {
+					var id = data.DocType + '_' + data.DocId;
+					studentDoc[id] = data;
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell';
-					li.id = 'data_' + data.StudentId;
-					li.setAttribute('StudentId', data.StudentId); //学生ID
-					li.setAttribute('StudentName', data.StudentName); //学生姓名
+					li.id = 'data_' + id;
 					li.innerHTML = '<img src="../../image/cloud/cloud_0_dangan.png" style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>\
-									   <p class="mui-ellipsis" id="data_name_' + data.StudentId + '">' + data.StudentName + '档案</p>';
+									   <p class="mui-ellipsis" id="data_name_' + id + '"></p>';
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudFirstItemHeight / 2 + 'px';
 					document.getElementById("cloudstorage_0").appendChild(li);
+					document.getElementById("data_name_" + id).innerText = data.DocName + '档案';
 					li.style.paddingTop = (cloudFirstItemHeight / 2 - (li.lastElementChild.offsetHeight + li.lastElementChild.offsetTop - li.firstElementChild.offsetTop)) / 2 + 'px';
 				}
 
