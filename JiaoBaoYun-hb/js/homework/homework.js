@@ -97,7 +97,7 @@ mui.plusReady(function() {
 //	window.addEventListener('postClasses', function(e) {
 //		plus.webview.currentWebview().isReady = true;
 		var data = plus.webview.currentWebview().data;
-		console.log('作业主界面获取信息：' + JSON.stringify(e.detail.data));
+//		console.log('作业主界面获取信息：' + JSON.stringify(e.detail.data));
 		//学生角色所在班级数组
 		studentClasses = data.studentClasses;
 		//老师角色所在班级数组
