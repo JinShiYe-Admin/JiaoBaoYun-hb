@@ -40,6 +40,7 @@ var AskThumbnail = []; //提问图片缩略图
 var mainData; //记录获取的数据
 mui.plusReady(function() {
 	mui.previewImage();
+	events.limitPreviewPullDown("refreshContainer");
 	var main = plus.webview.currentWebview(); //获取当前窗体对象
 	mainData = main.data; //接收A页面传入参数值
 	console.log('qiuzhi-questionSub.html:' + JSON.stringify(mainData));

@@ -125,8 +125,8 @@ var events = (function(mod) {
 	mod.initRefresh = function(id, fresh, addMore) {
 
 		mui.init({
-			gestureConfig:{
-				longtap:true
+			gestureConfig: {
+				longtap: true
 			},
 			pullRefresh: {
 				container: '#refreshContainer',
@@ -243,7 +243,7 @@ var events = (function(mod) {
 	mod.fireToPageWithData = function(tarPage, listener, datas) {
 
 		tarPage = tarPage.split('/')[tarPage.split('/').length - 1];
-		console.log('tarPage:' + tarPage+",listener:"+listener);
+		console.log('tarPage:' + tarPage + ",listener:" + listener);
 		var targetPage = null;
 		//获得目标页面
 		if(!targetPage) {
@@ -633,19 +633,19 @@ var events = (function(mod) {
 	 * @param {Object} titleArray 各选项 格式如下[{title:选项1,dia：1需要显示dialog},{title:选项1,dia：0 或不填需要显示dialog}]
 	 * @param {Object} cbArray 各选项回调方法数组，确认选择后的回调函数
 	 */
-	mod.showActionSheet=function(btnArray,cbArray){
-		var len=btnArray.length;
+	mod.showActionSheet = function(btnArray, cbArray) {
+		var len = btnArray.length;
 		plus.nativeUI.actionSheet({
-			buttons:btnArray,
-			cancel:"取消"
-		},function(e){
-			var index=e.index;
-				console.log("点击的index:"+index);
-			if(index>0){
-				if(btnArray[index-1].dia){
-					mod.setDialog(btnArray[index-1].title,"确定？",cbArray[index-1],"已取消删除")
-				}else{
-					cbArray[index-1]();
+			buttons: btnArray,
+			cancel: "取消"
+		}, function(e) {
+			var index = e.index;
+			console.log("点击的index:" + index);
+			if(index > 0) {
+				if(btnArray[index - 1].dia) {
+					mod.setDialog(btnArray[index - 1].title, "确定？", cbArray[index - 1], "已取消删除")
+				} else {
+					cbArray[index - 1]();
 				}
 			}
 		})
@@ -671,7 +671,7 @@ var events = (function(mod) {
 	 */
 	mod.getAniClose = function(num) {
 		var aniClose = '';
-		var type = num || 2;//默认2
+		var type = num || 2; //默认2
 		switch(type) {
 			case 0:
 				aniClose = 'auto';
@@ -734,24 +734,78 @@ var events = (function(mod) {
 		}
 		return aniClose;
 	}
-	var firstTime=null;
+	var firstTime = null;
 	/**
 	 * 一段时间内只允许运行一次方法,可用于打开新界面
 	 * @param {Function} callback 要运行的方法 
 	 */
-	mod.singleInstanceInPeriod=function(callback){
-		var secondTime=null;
-		if(!firstTime){
-			firstTime="1234";
-		}else{
-			secondTime="123";
+	mod.singleInstanceInPeriod = function(callback) {
+		var secondTime = null;
+		if(!firstTime) {
+			firstTime = "1234";
+		} else {
+			secondTime = "123";
 		}
-		setTimeout(function(){
-			firstTime=null;
-		},1000)
-		if(!secondTime){
+		setTimeout(function() {
+			firstTime = null;
+		}, 1000)
+		if(!secondTime) {
 			callback();
 		}
+	}
+	mod.limitPreviewPullDown = function(refreshId) {
+		mui.getPreviewImage().open = function(index, group) {
+			mui('#' + refreshId).pullRefresh().setStopped(true);
+			if(this.isShown()) {
+				return;
+			}
+			if(typeof index === "number") {
+				group = group || defaultGroupName;
+				this.addImages(group, index); //刷新当前group
+				this.openByGroup(index, group);
+			} else {
+				group = index.getAttribute('data-preview-group');
+				group = group || defaultGroupName;
+				this.addImages(group, index); //刷新当前group
+				this.openByGroup(this.groups[group].indexOf(index.__mui_img_data), group);
+			}
+		};
+		mui.getPreviewImage().close = function(index, group) {
+			if(mui('#' + refreshId).length>0) {
+				mui('#' + refreshId).pullRefresh().setStopped(false);
+			}
+			if(!this.isShown()) {
+				return;
+			}
+			this.element.classList.remove(mui.className('preview-in'));
+			this.element.classList.add(mui.className('preview-out'));
+			var itemEl = this.scroller.querySelector(mui.classSelector('.slider-item:nth-child(' + (this.lastIndex + 1) + ')'));
+			var imgEl = itemEl.querySelector('img');
+			if(imgEl) {
+				imgEl.classList.add(mui.className('transitioning'));
+				var itemData = this.currentGroup[this.lastIndex];
+				var posi = this._getPosition(itemData);
+				var sLeft = posi.left;
+				var sTop = posi.top;
+				if(sTop > window.innerHeight || sLeft > window.innerWidth || sTop < 0 || sLeft < 0) { //out viewport
+					imgEl.style.opacity = 0;
+					imgEl.style.webkitTransitionDuration = '0.5s';
+					imgEl.style.webkitTransform = 'scale(' + itemData.sScale + ')';
+				} else {
+					if(this.options.zoom) {
+						mui(imgEl.parentNode.parentNode).zoom().toggleZoom(0);
+					}
+					imgEl.style.webkitTransitionDuration = '0.5s';
+					imgEl.style.webkitTransform = 'translate3d(' + posi.x + 'px,' + posi.y + 'px,0) scale(' + itemData.sScale + ')';
+				}
+			}
+			var zoomers = this.element.querySelectorAll($.classSelector('.zoom-wrapper'));
+			for(var i = 0, len = zoomers.length; i < len; i++) {
+				mui(zoomers[i]).zoom().destroy();
+			}
+			mui(this.element).slider().destroy();
+			//		this.empty();
+		};
 	}
 	return mod;
 

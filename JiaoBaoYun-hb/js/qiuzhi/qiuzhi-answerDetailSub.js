@@ -31,6 +31,7 @@ events.initRefresh('list-container', function() {
  */
 mui.plusReady(function() {
 	mui.previewImage();
+	events.limitPreviewPullDown("refreshContainer");
 	events.preload('qiuzhi-addAnswer.html');
 	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'), "answerIsReady");
 	plus.webview.currentWebview().opener().addEventListener("hide", function() {
