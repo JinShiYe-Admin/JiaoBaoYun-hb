@@ -134,6 +134,9 @@ var shieldAnswer = function() {
 		if(data.RspCode==0&&data.RspData.Result){
 			mui.toast("回答已屏蔽！");
 			mui.fire(plus.webview.getWebviewById("qiuzhi-questionSub.html"),"answerShield");
+			if(plus.webview.getWebviewById("qiuzhi-expertAllAnswer.html")){
+				mui.fire(plus.webview.getWebviewById("qiuzhi-expertAllAnswer.html"),"answerShield");
+			}
 			mui.back();
 		}else{
 			mui.toast("屏蔽回答失败！");
