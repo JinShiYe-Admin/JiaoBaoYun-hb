@@ -59,6 +59,9 @@
 					contentrefresh: '正在加载...',
 					callback: pullupRefresh
 				}
+			},
+			gestureConfig:{
+				longtap:true
 			}
 		});
 
@@ -591,7 +594,6 @@
 				} else {
 					tempPage = 1;
 					zonepArray = tempRspData;
-
 					table.innerHTML = '';
 					for(var i = 0; i < zonepArray.length; i++) {
 						var data = addData(i);
