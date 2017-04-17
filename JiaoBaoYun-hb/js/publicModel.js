@@ -215,6 +215,7 @@ var publicModel = (function($, mod) {
 		LikeCnt:'',//点赞次数
 		//28
 		LikeUsers:'',//点赞列表
+		InShow:'',//是否展现
 		Comments:'',//评论列表
 		
 		EncTypeStr:'',//附件类型说明，

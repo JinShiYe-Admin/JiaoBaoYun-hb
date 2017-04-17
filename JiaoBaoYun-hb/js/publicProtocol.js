@@ -1956,12 +1956,12 @@ var postDataPro_getUserSpaceByUser = function(commonData, wd, callback) {
 //			publisherId:''//发布者ID,0代表全部
 //		};
 //返回：[{CheckType:点到情况,CheckTypeStr:点到情况说明,CheckNum:此情况数量}]
-var postDataPro_getCheckStatisticForStudent = function(commonData, wd, callback) {
-	//需要加密的数据
-	var enData = {};
-	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'note/getCheckStatisticForStudent', enData, commonData, 2, wd, callback);
-}
+//var postDataPro_getCheckStatisticForStudent = function(commonData, wd, callback) {
+//	//需要加密的数据
+//	var enData = {};
+//	//发送网络请求，data为网络返回值
+//	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'note/getCheckStatisticForStudent', enData, commonData, 2, wd, callback);
+//}
 
 //84.（点到记事）获取某班级的点到情况统计
 //所需参数
@@ -1972,12 +1972,12 @@ var postDataPro_getCheckStatisticForStudent = function(commonData, wd, callback)
 //			publisherId:''//发布者ID,0代表全部
 //		};
 //返回：
-var postDataPro_getCheckStatisticForClass = function(commonData, wd, callback) {
-	//需要加密的数据
-	var enData = {};
-	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'note/getCheckStatisticForClass', enData, commonData, 2, wd, callback);
-}
+//var postDataPro_getCheckStatisticForClass = function(commonData, wd, callback) {
+//	//需要加密的数据
+//	var enData = {};
+//	//发送网络请求，data为网络返回值
+//	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'note/getCheckStatisticForClass', enData, commonData, 2, wd, callback);
+//}
 
 //85.（云档案）按ID删除学生档案内容
 //所需参数
@@ -2014,12 +2014,12 @@ var postDataPro_setStudentFileInfoName = function(commonData, wd, callback) {
 //			docName:''//档案文件夹名称
 //		};
 //返回：1为正确
-var postDataPro_addStudentDocInfo = function(commonData, wd, callback) {
-	//需要加密的数据
-	var enData = {};
-	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'file/addStudentDocInfo', enData, commonData, 2, wd, callback);
-}
+//var postDataPro_addStudentDocInfo = function(commonData, wd, callback) {
+//	//需要加密的数据
+//	var enData = {};
+//	//发送网络请求，data为网络返回值
+//	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'file/addStudentDocInfo', enData, commonData, 2, wd, callback);
+//}
 
 //88.（云档案）合并档案到档案文件夹
 //所需参数
@@ -2028,12 +2028,12 @@ var postDataPro_addStudentDocInfo = function(commonData, wd, callback) {
 //			docId:''//档案文件夹ID
 //		};
 //返回：1为正确
-var postDataPro_addStudentFileToDoc = function(commonData, wd, callback) {
-	//需要加密的数据
-	var enData = {};
-	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'file/addStudentFileToDoc', enData, commonData, 2, wd, callback);
-}
+//var postDataPro_addStudentFileToDoc = function(commonData, wd, callback) {
+//	//需要加密的数据
+//	var enData = {};
+//	//发送网络请求，data为网络返回值
+//	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'file/addStudentFileToDoc', enData, commonData, 2, wd, callback);
+//}
 
 //89.（云档案）拆离档案从档案文件夹
 //所需参数
@@ -2042,17 +2042,18 @@ var postDataPro_addStudentFileToDoc = function(commonData, wd, callback) {
 //			docId:''//档案文件夹ID
 //		};
 //返回：1为正确
-var postDataPro_delStudentFileFromDoc = function(commonData, wd, callback) {
-	//需要加密的数据
-	var enData = {};
-	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'file/delStudentFileFromDoc', enData, commonData, 2, wd, callback);
-}
+//var postDataPro_delStudentFileFromDoc = function(commonData, wd, callback) {
+//	//需要加密的数据
+//	var enData = {};
+//	//发送网络请求，data为网络返回值
+//	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'file/delStudentFileFromDoc', enData, commonData, 2, wd, callback);
+//}
 
 //90.（云档案）删除档案文件夹
 //所需参数
 //		var comData = {
-//			docId:''//档案文件夹ID
+//			docId:'',//档案文件夹ID
+//			docType:''//档案类型,1 普通档案,2 档案文件夹
 //		};
 //返回：1为正确
 var postDataPro_delStudentDoc = function(commonData, wd, callback) {
@@ -2081,9 +2082,42 @@ var postDataPro_getStudentDocByParent = function(commonData, wd, callback) {
 //			docId:''//档案文件夹Id
 //		};
 //返回：FileIds:档案ID,Array,例如[1,2,3]
-var postDataPro_getStudentFileFromDoc = function(commonData, wd, callback) {
+//var postDataPro_getStudentFileFromDoc = function(commonData, wd, callback) {
+//	//需要加密的数据
+//	var enData = {};
+//	//发送网络请求，data为网络返回值
+//	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'file/getStudentFileFromDoc', enData, commonData, 2, wd, callback);
+//}
+
+//93.（点到记事）获取班级统计月份的点到记事统计
+//所需参数
+//		var comData = {
+//			classId:'',//班级ID
+//			studentIds:'',//学生ID,array,例如[1,2,3]
+//			qryMonth:''//查询月份,例如201701
+//		};
+//返回：
+var postDataPro_getMonthStatisticForMonth = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'file/getStudentFileFromDoc', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'note/getMonthStatisticForMonth', enData, commonData, 2, wd, callback);
+}
+
+//94.（点到记事）获取某学生的点到记事统计
+//所需参数
+//		var comData = {
+//			studentId:'',//学生ID
+//			classId:'',//班级ID
+//			qryMonth:'',/查询月份,例如201701
+//			checkType:'',//点到情况
+//			pageIndex:'',//当前页数
+//			pageSize:''//每页记录数
+//		};
+//返回：
+var postDataPro_getNotesStatisticForStudent = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'note/getNotesStatisticForStudent', enData, commonData, 2, wd, callback);
 }

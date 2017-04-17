@@ -65,6 +65,7 @@
 		<!--共用协议-->
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/qiuzhi/delContent_pop.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/qiuzhi/delContent_pop.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
@@ -80,6 +81,27 @@
 					var index = this.id.replace('li', '');
 					console.log('index:' + index);
 					if(index == '0') {
+//												var data1 = {
+//													flag: 2, //flag:求知：提问1，回答2，评论3；班级空间：班级动态4；个人空间：个人动态5，个人动态评论6，档案7
+//													comData: {
+//														id: '111'
+//													}, //协议需要参数
+//													title: '弹出的显示标题', //弹出框中，显示的标题
+//													buttons: [{
+//														title: '删除',
+//														btnFlag: 1
+//													}, {
+//														title: '修改',
+//														btnFlag: 2
+//													}, {
+//														title: '重命名',
+//														btnFlag: 5
+//													}], //弹出的列表,格式为：[{title:标题，btnFlag:要做的操作}]，btnFlag：1删除，2修改，3屏蔽，4取消屏蔽，5重命名
+//													delFlag: 1 //删除确认弹出框格式，1从下弹出，2中间confirm
+//												};
+//												delContent_pop(data1, function(data) {
+//													console.log('返回值为：'+JSON.stringify(data));
+//												});
 						mui.confirm(tempInfo.uid, '您已绑定手机号', ['取消', '更换'], function(e) {
 							var index = e.index;
 							switch(index) {
