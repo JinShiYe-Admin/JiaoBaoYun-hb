@@ -64,7 +64,15 @@ mui.plusReady(function() {
 		//5.获取某个问题的详情
 		requestAskDetail();
 	});
-
+	window.addEventListener("manageQuestion", function() {
+		console.log("获取的manageQuestion监听")
+		var titles = [{
+			title: "删除问题",
+			dia: 1
+		}]
+		var cbArr = [delQuestion];
+		events.showActionSheet(titles, cbArr);
+	})
 	mui('#popover').on('tap', '.mui-table-view-cell', function() {
 		console.log('选择排序' + this.id + '|' + this.value + '|' + this.getAttribute('data-value'));
 
@@ -177,6 +185,23 @@ mui.plusReady(function() {
 		}
 	});
 });
+var delQuestion = function() {
+	mui.toast("功能暂未开放，请稍候！");
+	var wd1=events.showWaiting();
+	//37.删除某个用户的某条提问
+	postDataQZPro_delAskById({
+		askId: askID//提问ID
+	}, wd1, function(data) {
+		wd1.close();
+		console.log('37.删除某个用户的某条提问:'+JSON.stringify(data));
+		if(data.RspCode == 0&&data.RspData.Result) {
+			mui.toast("删除问题成功！");
+			mui.back();
+		} else {
+			mui.toast("删除问题失败！");
+		}
+	});
+}
 
 //13.获取是否已对某个问题关注
 function getAskFocusByUser(askId) {

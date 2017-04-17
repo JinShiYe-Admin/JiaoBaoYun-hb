@@ -125,6 +125,9 @@ var events = (function(mod) {
 	mod.initRefresh = function(id, fresh, addMore) {
 
 		mui.init({
+			gestureConfig:{
+				longtap:true
+			},
 			pullRefresh: {
 				container: '#refreshContainer',
 				down: {
@@ -640,7 +643,7 @@ var events = (function(mod) {
 				console.log("点击的index:"+index);
 			if(index>0){
 				if(btnArray[index-1].dia){
-					mod.setDialog(btnArray[index-1].title,"确认删除？",cbArray[index-1],"已取消删除")
+					mod.setDialog(btnArray[index-1].title,"确定？",cbArray[index-1],"已取消删除")
 				}else{
 					cbArray[index-1]();
 				}
@@ -731,7 +734,25 @@ var events = (function(mod) {
 		}
 		return aniClose;
 	}
-
+	var firstTime=null;
+	/**
+	 * 一段时间内只允许运行一次方法,可用于打开新界面
+	 * @param {Function} callback 要运行的方法 
+	 */
+	mod.singleInstanceInPeriod=function(callback){
+		var secondTime=null;
+		if(!firstTime){
+			firstTime="1234";
+		}else{
+			secondTime="123";
+		}
+		setTimeout(function(){
+			firstTime=null;
+		},1000)
+		if(!secondTime){
+			callback();
+		}
+	}
 	return mod;
 
 })(events || {});
