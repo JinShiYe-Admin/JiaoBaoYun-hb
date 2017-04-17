@@ -395,23 +395,28 @@ var setListener = function() {
 			self.disabled = false;
 		}, 1500);
 	});
-
 	//标题点击事件
 	mui('.mui-table-view').on('tap', '.ask-title', function() {
-		events.openNewWindowWithData('qiuzhi-question.html', {
-			askID: this.getAttribute('askId'), //问题id
-			channelInfo: channelInfo, //当前话题
-			allChannels: allChannels //全部话题
-		});
+		var item = this;
+		requireQuestionInfo(item.getAttribute('askId'), function(questionInfo) {
+			events.singleInstanceInPeriod(function() {
+				events.openNewWindowWithData('qiuzhi-question.html', {
+					askID: item.getAttribute('askId'), //问题id
+					channelInfo: channelInfo, //当前话题
+					allChannels: allChannels,//全部话题
+					questionInfo:questionInfo//当前问题
+				});
+			})
+		})
 	});
 
 	//点击回答
 	mui('.mui-table-view').on('tap', '.answer-container', function() {
-		var postData=this.answerInfo;
-		requestAnswerDetail(postData.AnswerId,function(){
+		var postData = this.answerInfo;
+		requestAnswerDetail(postData.AnswerId, function() {
 			fireToPageReady(1, postData)
 		})
-		
+
 		//		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', this.answerInfo);
 		//		console.log('传递的answerInfo:' + JSON.stringify(this.answerInfo));
 		//		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
@@ -432,8 +437,30 @@ var setListener = function() {
 			events.openNewWindowWithData('expert-detail.html', JSON.parse(this.getAttribute('data-info')));
 		}
 	});
+	//求知关注
 	mui(".mui-table-view").on('tap', '.focus-status', function() {
-		setQuestionFocus(this);
+		var item=this;
+		requireQuestionInfo(item.questionInfo.TabId,function(data){
+			setQuestionFocus(item);
+		});
+	})
+}
+var requireQuestionInfo = function(askId, callback) {
+	var wd1 = events.showWaiting();
+	postDataQZPro_getAskById({
+		userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //用户ID
+		askId: askId, //问题ID
+		orderType: 1, //回答排序方式,1 按时间排序,2 按质量排序：点赞数+评论数
+		pageIndex: 1, //当前页数
+		pageSize: 1 //每页记录数,传入0，获取总记录数
+	}, wd1, function(data) {
+		wd1.close();
+		console.log("获取的问题数据：" + JSON.stringify(data));
+		if(data.RspCode == 0) {
+			callback(data);
+		} else {
+			mui.toast("问题已删除!");
+		}
 	})
 }
 //关注问题
@@ -481,7 +508,7 @@ var fireToPageReady = function(type, options) {
 	}
 }
 //8.获取某个回答的详情
-function requestAnswerDetail(answerId,callback) {
+function requestAnswerDetail(answerId, callback) {
 	//所需参数
 	var comData = {
 		userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid,
@@ -491,12 +518,12 @@ function requestAnswerDetail(answerId,callback) {
 		pageSize: '0' //每页记录数,传入0，获取总记录数
 	};
 	// 等待的对话框
-		var wd1 = events.showWaiting();
+	var wd1 = events.showWaiting();
 	//8.获取某个回答的详情
 	postDataQZPro_getAnswerById(comData, wd1, function(data) {
-				wd1.close();
+		wd1.close();
 		console.log('8.获取某个回答的详情:' + JSON.stringify(data));
-		if(data.RspCode == 0&&data.RspData.AnswerId) {
+		if(data.RspCode == 0 && data.RspData.AnswerId) {
 			callback();
 		} else {
 			mui.toast("数据已删除！");
