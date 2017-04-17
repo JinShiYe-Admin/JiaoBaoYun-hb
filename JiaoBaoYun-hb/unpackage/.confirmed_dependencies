@@ -366,7 +366,8 @@
 			"js/storageKeyName.js",
 			"image/homework/submitted.png",
 			"image/homework/need-submit.png",
-			"image/homework/commented.png"
+			"image/homework/commented.png",
+			"fonts/fangzheng.ttf"
 		],
 		"refer": [
 			"html/homework/doHomework-stu.html",

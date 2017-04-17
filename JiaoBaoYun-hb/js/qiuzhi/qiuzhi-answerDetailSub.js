@@ -30,8 +30,11 @@ events.initRefresh('list-container', function() {
  * 
  */
 mui.plusReady(function() {
+	//增加图片预览功能
 	mui.previewImage();
+	//限制下拉刷新
 	events.limitPreviewPullDown("refreshContainer");
+	//预加载回答问题界面
 	events.preload('qiuzhi-addAnswer.html');
 	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'), "answerIsReady");
 	plus.webview.currentWebview().opener().addEventListener("hide", function() {
@@ -63,9 +66,17 @@ mui.plusReady(function() {
 		wd = events.showWaiting();
 		requestAnswerDetail(answerId, pageIndex, 10, getInfos);
 	});
+	//监听评论加载
 	window.addEventListener('commentAdded', function(e) {
 		var commentedInfo = e.detail.data;
 		getComment(commentedInfo.commentInfo);
+	})
+	//监听 修改答案后的传回来的值
+	window.addEventListener("answerChanged",function(e){
+		var changedData=e.detail;
+		document.getElementById('answer-imgs').innerHTML="";
+		document.getElementById("question-content").innerText=changedData.answerContent;
+		document.getElementById("answer-imgs").innerHTML=getPicInner(changedData)
 	})
 	window.addEventListener("showActionSheet", function() {
 		var btnArray;
@@ -166,6 +177,7 @@ var delComment = function() {
 					parentContainer.removeChild(parentContainer.querySelector(".inner-table-view"));
 				}
 			} else { //不存在，删除本cell后增加单条评论
+				document.getElementById("comments-no").innerText= "评论(" + answerData.CommentNum + ")";
 				document.querySelector("#list-container").removeChild(delCommentContainer);
 				if(pageIndex < totalPageCount) {
 					requestAnswerDetail(answerInfo.AnswerId, pageIndex * 10, 1, getInfos);
@@ -186,6 +198,7 @@ var delCommentData = function() {
 		answerData.Data[parseInt(delOrders[0])].Replys.splice(parseInt(delOrders[1]), 1);
 	} else {
 		answerData.Data.splice(delCmOrder, 1);
+		answerData.CommentNum=answerData.CommentNum-1;
 		console.log("删除的位置：" + delCmOrder + ",删除后的数据：" + JSON.stringify(answerData));
 	}
 }
@@ -616,7 +629,7 @@ var createCell = function(ul, cellData, i, order) {
 		var sul = document.createElement('ul');
 		sul.className = "mui-table-view inner-table-view";
 		li.appendChild(sul)
-		createList(sul, cellData.Replys)
+		createList(sul, cellData.Replys);
 	}
 }
 /**
@@ -635,7 +648,7 @@ var setQuestion = function(datasource) {
 		this.style.width = "100%";
 		this.style.height = "auto";
 	})
-	events.clearChild(document.getElementById('answer-imgs'));
+	document.getElementById('answer-imgs').innerHTML="";
 	if(datasource.AnswerEncAddr) {
 		document.getElementById('answer-imgs').innerHTML = getPicInner(datasource);
 	}
@@ -850,14 +863,10 @@ var setListeners = function() {
 				if(upperInfo.UserId == myStorage.getItem(storageKeyName.PERSONALINFO).utid) {
 					delCommentContainer = item.parentElement.parentElement.parentElement;
 					var btnArray = [{
-						title: "更改评论"
-					}, {
 						title: "删除评论",
 						dia: 1 //是否显示dialogh
 					}];
-					var cbArray = [changeComment,
-						delComment
-					];
+					var cbArray = [delComment];
 					events.showActionSheet(btnArray, cbArray);
 				} else {
 					delCommentContainer = null;
