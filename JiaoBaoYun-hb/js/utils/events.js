@@ -753,9 +753,15 @@ var events = (function(mod) {
 			callback();
 		}
 	}
+	/**
+	 * 限制预览下拉刷新
+	 * @param {Object} refreshId 刷新控件ID
+	 */
 	mod.limitPreviewPullDown = function(refreshId) {
 		mui.getPreviewImage().open = function(index, group) {
-			mui('#' + refreshId).pullRefresh().setStopped(true);
+			if(mui('#' + refreshId).length>0) {
+				mui('#' + refreshId).pullRefresh().setStopped(true);
+			}
 			if(this.isShown()) {
 				return;
 			}
@@ -799,7 +805,7 @@ var events = (function(mod) {
 					imgEl.style.webkitTransform = 'translate3d(' + posi.x + 'px,' + posi.y + 'px,0) scale(' + itemData.sScale + ')';
 				}
 			}
-			var zoomers = this.element.querySelectorAll($.classSelector('.zoom-wrapper'));
+			var zoomers = this.element.querySelectorAll(mui.classSelector('.zoom-wrapper'));
 			for(var i = 0, len = zoomers.length; i < len; i++) {
 				mui(zoomers[i]).zoom().destroy();
 			}
