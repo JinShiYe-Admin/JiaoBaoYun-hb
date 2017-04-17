@@ -352,7 +352,7 @@
 					},
 				});
 
-				events.preload("../homework/homework-tea.html", 300);
+//				events.preload("../homework/homework-tea.html", 300);
 				events.preload('storage_main.html', 300); //预加载云存储
 				window.addEventListener("topPopover", function(e) {
 					mui('#topPopover').popover('toggle')
@@ -368,9 +368,9 @@
 						events.openNewWindowWithData('../mine/ReadQRCode.html', '');
 					}
 				})
-				window.addEventListener("homeworkReady", function() {
-					homeworkReady = true;
-				});
+//				window.addEventListener("homeworkReady", function() {
+//					homeworkReady = true;
+//				});
 
 				//重新登录或者自动登录后获取的信息
 				window.addEventListener('infoChanged', function() {
@@ -779,7 +779,11 @@
 							}
 							if(teacherClasses.length > 0 || studentClasses.length > 0) {
 								console.log('teacherClasses:' + teacherClasses.length + ',' + studentClasses.length);
-								sendMessageToHomework(teacherClasses, studentClasses);
+//								sendMessageToHomework(teacherClasses, studentClasses);
+								events.openNewWindowWithData("../homework/homework-tea.html",{
+									teacherClasses: teacherClasses,
+									studentClasses: studentClasses
+								});
 							} else {
 								mui.toast('您还未加入班级');
 							}
@@ -1339,20 +1343,20 @@
 				});
 			}
 
-			var sendMessageToHomework = function(teacherClasses, studentClasses) {
-				if(homeworkReady) {
-					events.closeWaiting();
-					events.fireToPageWithData('../homework/homework-tea.html', 'postClasses', {
-						teacherClasses: teacherClasses,
-						studentClasses: studentClasses
-					})
-				} else {
-					events.showWaiting();
-					setTimeout(function() {
-						sendMessageToHomework(teacherClasses, studentClasses)
-					}, 500);
-				}
-			}
+//			var sendMessageToHomework = function(teacherClasses, studentClasses) {
+//				if(homeworkReady) {
+//					events.closeWaiting();
+//					events.fireToPageWithData('../homework/homework-tea.html', 'postClasses', {
+//						teacherClasses: teacherClasses,
+//						studentClasses: studentClasses
+//					})
+//				} else {
+//					events.showWaiting();
+//					setTimeout(function() {
+//						sendMessageToHomework(teacherClasses, studentClasses)
+//					}, 500);
+//				}
+//			}
 
 			/**
 			 * 修改档案的名称
