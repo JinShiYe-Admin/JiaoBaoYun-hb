@@ -239,7 +239,7 @@
 						'<font class="common-font-family-Regular" style = "font-size:14px">：' + tempData.content + '</font>'
 					var commentList = document.getElementById("commentList" + tempData.tempIndex);
 					commentList.appendChild(div);
-//					zonepArray[tempIndex].Comments.push()
+					zonepArray[tempIndex].Comments.push(tempData.Comment)
 				} else if(tempData.flag == '评论回复') {
 					var indexArr = tempIndex.split('-');
 					var id = indexArr[0];
@@ -266,6 +266,7 @@
 						'<font class="common-font-family-Regular" style = "font-size:14px">：' + tempData.content + '</font></div>'
 					var tempDiv = document.getElementById('replyComment' + id + '-' + commentId + '-' + '评论')
 					tempDiv.appendChild(div)
+					zonepArray[id].Comments[commentId].Replys.push(tempData.Reply);
 
 				} else {
 					var comData = {

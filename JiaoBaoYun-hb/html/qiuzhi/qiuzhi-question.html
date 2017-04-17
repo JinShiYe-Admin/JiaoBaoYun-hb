@@ -19,11 +19,13 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">提问</h1>
+			<a id="manage-question" class="mui-icon iconfont icon-moreandroid mui-pull-right display-none" style="display: none;"></a>
 			<a class="mui-icon iconfont icon-ruqun mui-pull-right" id="addExpert"></a>
 		</header>
 		<div class="mui-content"></div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/libs/myStorage/myStorage.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
@@ -36,7 +38,14 @@
 				if(temp0 > 0) {
 					data.channelInfo.TabId = temp0;
 				}
-				console.log('qiuzhi-question.html:' + JSON.stringify(data));
+				var questionInfo=data.questionInfo;
+				console.log("获取的questionInfo:"+JSON.stringify(questionInfo));
+				if(questionInfo.RspData.AskMan==myStorage.getItem(storageKeyName.PERSONALINFO).utid&&questionInfo.RspData.AnswerNum==0){
+					document.getElementById("manage-question").style.display="inline-block";
+				}else{
+					document.getElementById("manage-question").style.display="none";
+				}
+				console.log('qiuzhi-question.html:获取的问题数据' + JSON.stringify(data));
 				events.createSubAppendMain(main, 'qiuzhi-questionSub.html', data, function(sub) {
 					setTimeout(function() {
 						wd.close();
@@ -48,6 +57,10 @@
 				events.addTap('addExpert', function() {
 					events.openNewWindowWithData('experts_main.html', data);
 				});
+				events.addTap("manage-question",function(){
+					console.log("求知问题界面向子页面传值")
+					events.fireToPageNone("qiuzhi-questionSub.html","manageQuestion");
+				})
 			});
 		</script>
 	</body>

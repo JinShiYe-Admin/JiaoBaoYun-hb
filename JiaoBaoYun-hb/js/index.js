@@ -266,7 +266,10 @@ function getHomeworkAlert(NoReadCnt) {
 	}
 var	addPlus = function(container,name){
 		var add = document.createElement('a');
-		add.className = 'mui-icon mui-pull-right mui-icon-plusempty';
+		add.className = 'mui-icon iconfont icon-jiahao mui-pull-right mui-icon-plusempty';
+		add.style.fontSize = '15px'
+		add.style.marginTop = '5px'
+		add.style.marginRight = '-5px'
 		add.id = 'add'
 		container.appendChild(add);
 		events.addTap('add', function() {

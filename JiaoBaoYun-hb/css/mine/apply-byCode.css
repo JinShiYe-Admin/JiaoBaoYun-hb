@@ -54,3 +54,15 @@
 .choose-hint{
 	padding-left: 5%;
 }
+.group-info{
+	padding-top: 15px;
+	background-color: white;
+}
+.chooseRole-container{
+	padding: 10px 0 0;
+	background-color: white;
+}
+.chooseRole-container>p{
+	font-size: 16px;
+	color: #323232;
+}

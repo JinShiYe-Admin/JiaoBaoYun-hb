@@ -160,7 +160,8 @@
 			"html/quan/studentdynamic_main.html",
 			"html/cloud/record_student_main.html",
 			"html/cloud/app_notes_main.html",
-			"html/mine/qun_manage_1.html"
+			"html/mine/qun_manage_1.html",
+			"html/mine/ReadQRCode.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -691,7 +692,8 @@
 			"js/libs/myStorage/myStorage.js",
 			"css/iconfont/iconfont.css",
 			"js/mui.min.js",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"fonts/iconfont.ttf"
 		],
 		"refer": []
 	},
@@ -981,7 +983,8 @@
 			"html/quan/group-pInfo.html",
 			"html/mine/qun_manage_invite_a.html",
 			"html/quan/edit-remark.html",
-			"html/quan/group-allMembers.html"
+			"html/quan/group-allMembers.html",
+			"html/mine/QRCode.html"
 		]
 	},
 	"html/quan/classSpace-persons.html": {
@@ -1006,7 +1009,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/angular.min.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": []
 	},
@@ -1665,7 +1669,8 @@
 			"fonts/fangzheng.ttf"
 		],
 		"refer": [
-			"html/qiuzhi/qiuzhi-questionSub.html"
+			"html/qiuzhi/qiuzhi-questionSub.html",
+			"html/qiuzhi/experts_main.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-questionSub.html": {
@@ -2153,6 +2158,65 @@
 			"js/quan/group-allMembers.js",
 			"fonts/mui.ttf",
 			"image/utils/default_personalimage.png"
+		]
+	},
+	"html/mine/QRCode.html": {
+		"resources": [
+			"js/utils/jquery.qrcode.min.js",
+			"js/utils/jquery-1.8.3.min.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"image/utils/default_personalimage.png",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/mine/apply-bycode.html": {
+		"resources": [
+			"css/mine/apply-byCode.css",
+			"fonts/fangzheng.ttf",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"image/utils/default_personalimage.png",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/mine/ReadQRCode.html": {
+		"refer": [
+			"html/mine/apply-bycode.html"
+		],
+		"resources": [
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/jquery.js",
+			"fonts/mui.ttf"
 		]
 	}
 }

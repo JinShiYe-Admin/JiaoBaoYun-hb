@@ -18,36 +18,36 @@
 		<style>
 			#topPopover {
 				position: fixed;
-				top: 6px;
+				top: 10px;
 				right: 6px;
 				width: 120px;
 			}
-			
+
 			#topPopover .mui-popover-arrow {
 				left: auto;
 				right: 6px;
-				/*top:5px;*/
+				top: -25px;
 			}
-			
+
 			.mui-popover {
 				height: 80px;
 				width: 120;
 			}
-			
-			/*.mui-table-view:before,
-			.mui-table-view:after,
-			.mui-table-view-cell:after {
+
+			#refreshContainer .mui-table-view:before,
+			#refreshContainer .mui-table-view:after,
+			#refreshContainer .mui-table-view-cell:after {
 				height: 0px;
-			}*/
-			
-			.mui-table-view {
-				/*background-color: white;*/
 			}
-			
+
+			#refreshContainer .mui-table-view {
+				background-color: white;
+			}
+
 			.cloud-item {
 				background-color: white;
 			}
-			
+
 			.cloud-item-left {
 				width: 16%;
 				border-right: 1px solid #D9D9D9;
@@ -56,48 +56,45 @@
 				font-weight: bold;
 				font-size: 1.6rem;
 			}
-			
+
 			.cloud-item-right {
 				/*margin-left: 16%;*/
 				width: 84%;
 				float: right;
 			}
-			
-			#cloudstorage_0,
-			#cloudrecord_0,
-			#cloudapps_0 {
-				/*每一项的第一行*/
-				/*background-color: red;*/
-			}
-			
-			#cloudstorage_1,
-			#cloudrecord_1,
-			#cloudapps_1 {
-				/*每一项的第二行*/
-				/*background-color: blue;*/
-			}
-			
+			/*#cloudstorage_0,*/
+			/*#cloudrecord_0,*/
+			/*#cloudapps_0 {*/
+			/*每一项的第一行*/
+			/*background-color: red;*/
+			/*}*/
+			/*#cloudstorage_1,*/
+			/*#cloudrecord_1,*/
+			/*#cloudapps_1 {*/
+			/*每一项的第二行*/
+			/*background-color: blue;*/
+			/*}*/
+
 			.mui-plus-pullrefresh .mui-scroll {
 				position: absolute;
 				/*width: 100%;*/
 			}
-			
+
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				color: black;
 				border: none;
 			}
-			
+
 			#refreshContainer .mui-table-view-cell {
 				display: inline-block;
 				width: auto;
 				padding: 1px 1px;
 			}
-			
-			
+
 			.mui-slider-indicator .mui-table-view-cell.mui-active {
 				background: white;
 			}
-			
+
 			.cloud-red-point {
 				position: absolute;
 				background: red;
@@ -106,27 +103,27 @@
 				border-radius: 50%;
 				display: none;
 			}
-			
+
 			img {
 				border-radius: 50%;
 			}
-			
+
 			#cloudstorage_1 img {
 				border-radius: 0px;
 			}
-			
+
 			.icon-jiaxiabiao {
 				color: #0ABAF5;
 			}
-			
+
 			.icon-banxiabiao {
 				color: #FFBA00;
 			}
-			
+
 			.icon-re {
 				color: #FD681E;
 			}
-			
+
 			.icon-re,
 			.icon-banxiabiao,
 			.icon-jiaxiabiao {
@@ -134,7 +131,7 @@
 				border: none !important;
 				top: 0px;
 			}
-			
+
 			.mui-popup-input input {
 				/*popup 输入框*/
 				height: 34px;
@@ -196,19 +193,19 @@
 		</div>
 		<div id="topPopover" class="mui-popover">
 			<div class="mui-popover-arrow"></div>
-			<ul class="mui-table-view" >
+			<ul class="mui-table-view">
 				<li id="pubDynamic" class="mui-table-view-cell mui-media ">
-						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/quan/share.png" />
-						<div class="mui-media-body" id="titleFlag2" style="color: #323232;">晒一晒</div>
-					</li>
+					<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/quan/share.png" />
+					<div class="mui-media-body" id="titleFlag2" style="color: #323232;">晒一晒</div>
+				</li>
 				<li id="aboutme" class="mui-table-view-cell mui-media ">
-						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/quan/aboutme.png" />
-						<div class="mui-media-body" id="titleFlag2" style="color: #323232;">与我相关</div>
-					</li>
+					<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/quan/aboutme.png" />
+					<div class="mui-media-body" id="titleFlag2" style="color: #323232;">与我相关</div>
+				</li>
 				<li id="Scan" class="mui-table-view-cell mui-media ">
-						<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/quan/Scan.png" />
-						<div class="mui-media-body" id="titleFlag2" style="color: #323232;">扫一扫</div>
-					</li>
+					<img class="mui-media-object mui-pull-left" style="width: 20px ;height: 20px;" src="../../image/quan/Scan.png" />
+					<div class="mui-media-body" id="titleFlag2" style="color: #323232;">扫一扫</div>
+				</li>
 			</ul>
 		</div>
 		<script type="text/javascript">
@@ -323,12 +320,14 @@
 
 			var homeworkReady = false;
 
-			mui.init();
+			mui.init({
+				gestureConfig: {
+					longtap: true,
+				}
+			});
 			mui.plusReady(function() {
-
-				addcloudapps_0(); //应用
 				changeData();
-
+				addcloudapps_0(); //应用
 				//下拉刷新
 				mui("#refreshContainer").pullToRefresh({
 					down: {
@@ -352,18 +351,18 @@
 				});
 
 				events.preload("../homework/homework-tea.html", 300);
-				events.preload('storage_main.html'); //预加载云存储
+				events.preload('storage_main.html', 300); //预加载云存储
 				window.addEventListener("topPopover", function(e) {
 					mui('#topPopover').popover('toggle')
 				});
 				mui('.mui-popover').on('tap', 'li', function(e) {
 					console.log(1111)
 					mui('#topPopover').popover('toggle')
-					if(this.id == 'pubDynamic'){
+					if(this.id == 'pubDynamic') {
 						events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
-					}else if(this.id == 'aboutme'){
+					} else if(this.id == 'aboutme') {
 						events.openNewWindow('../quan/aboutme.html')
-					}else{
+					} else {
 						events.openNewWindowWithData('../mine/ReadQRCode.html', '');
 					}
 				})
@@ -419,13 +418,10 @@
 				var self = plus.webview.currentWebview();
 				var androidHeight;
 				//console.log('getStyle ' + JSON.stringify(self.getStyle()));
-				console.log('clientHeight ' + document.body.clientHeight);
-				if(mui.os.android) {
-					androidHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight");
-				}
-
+				//console.log('clientHeight ' + document.body.clientHeight);
 				//防止 父页面选项卡被输入法撑起
 				if(mui.os.android) {
+					androidHeight = plus.android.invoke(plus.android.currentWebview(), "getHeight");
 					window.addEventListener('resize', function() {
 						console.log('clientHeight ' + document.body.clientHeight);
 						//console.log('resize getStyle ' + JSON.stringify(self.getStyle()));
@@ -469,6 +465,39 @@
 						setTimeout(function() {
 							self.disabled = false;
 						}, 1500);
+					}
+				});
+
+				//云盘第一行,长按档案
+				mui('#cloudstorage_0').on('longtap', '.mui-table-view-cell', function(event) {
+					var id = this.id;
+					if(id != 'shoujitongxunlu' && id != 'shoujituku') { //档案
+						var data = {
+							StudentId: this.getAttribute('StudentId'), //学生ID
+							StudentName: this.getAttribute('StudentName') //学生姓名
+						}
+						console.log(JSON.stringify(data));
+						var btnArray = [{
+							title: "重命名"
+						}, {
+							title: "删除"
+						}];
+						plus.nativeUI.actionSheet({
+							title: "档案操作",
+							cancel: "取消",
+							buttons: btnArray
+						}, function(e) {
+							switch(e.index) {
+								case 1: //修改档案名称
+									changeDataName(data, event);
+									break;
+								case 2: //删除档案
+									deleteData(data);
+									break;
+								default:
+									break;
+							}
+						});
 					}
 				});
 
@@ -665,18 +694,24 @@
 				 * 修改云盘的文件，档案数据
 				 */
 				function changeData() {
-					document.getElementById("cloudstorage_0").innerHTML = '';
-					//重置滑动组件
-					resetScroll();
 					//26.用户云盘顶层文件及文件夹获取
 					postFirstFile();
+					document.getElementById("cloudstorage_0").innerHTML = '';
 					//73.（云档案）按家长获取学生档案姓名
 					//postUserStudent();
-					addcloudstorage_0_0(); //手机通讯录，手机图库
+					//手机通讯录，手机图库
+					addcloudstorage_0_0();
+					//假数据
+					//addcloudstorage_0_1({
+					//	StudentId: 0,
+					//	StudentName: '9527'
+					//});
 					//获取学生
 					getStuList();
 					//获取班级
 					getGroupList();
+					//重置滑动组件
+					resetScroll();
 				}
 
 				/**
@@ -790,7 +825,7 @@
 								}
 							});
 						} else {
-							if(data.RspCode != 9){
+							if(data.RspCode != 9) {
 								mui.toast(data.RspTxt);
 							}
 						}
@@ -917,10 +952,11 @@
 				function addcloudstorage_0_1(data) {
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell';
+					li.id = 'data_' + data.StudentId;
 					li.setAttribute('StudentId', data.StudentId); //学生ID
 					li.setAttribute('StudentName', data.StudentName); //学生姓名
 					li.innerHTML = '<img src="../../image/cloud/cloud_0_dangan.png" style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>\
-									   <p class="mui-ellipsis">' + data.StudentName + '档案</p>';
+									   <p class="mui-ellipsis" id="data_name_' + data.StudentId + '">' + data.StudentName + '档案</p>';
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudFirstItemHeight / 2 + 'px';
 					document.getElementById("cloudstorage_0").appendChild(li);
@@ -1315,6 +1351,54 @@
 						sendMessageToHomework(teacherClasses, studentClasses)
 					}, 500);
 				}
+			}
+
+			/**
+			 * 修改档案的名称
+			 * @param {Object} dataInfo
+			 */
+			function changeDataName(dataInfo, event) {
+				console.log('修改档案名称');
+				event.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+				var btnArray = ['取消', '确定'];
+				mui.prompt('', '档案名称,最多10个字', '重命名', btnArray, function(e) {
+					if(e.index == 1) { //点击确定
+						console.log(e.value);
+						if(e.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
+							mui.toast('档案名称不能为空');
+						} else if(dataInfo.StudentName == e.value) {
+							//未做修改
+							document.activeElement.blur();
+							mui.closePopups();
+						} else if(e.value.length > 10) {
+							mui.toast('档案名称最多10个字');
+						} else {
+							//发送修改协议
+							//成功的回调
+							mui.toast('档案重命名成功');
+							document.getElementById('data_' + dataInfo.StudentId).setAttribute('StudentName', e.value);
+							document.getElementById('data_name_' + dataInfo.StudentId).innerText = e.value + '档案';
+							document.activeElement.blur();
+							mui.closePopups();
+						}
+						return false;
+					} else {
+						//点击取消
+						document.activeElement.blur();
+					}
+				}, 'div');
+				var input = document.querySelector('.mui-popup-input input');
+				input.type = 'text';
+				input.maxLength = 10;
+				input.value = dataInfo.StudentName;
+			}
+
+			/**
+			 * 删除档案
+			 * @param {Object} dataInfo
+			 */
+			function deleteData(dataInfo) {
+				console.log('删除档案');
 			}
 		</script>
 	</body>
