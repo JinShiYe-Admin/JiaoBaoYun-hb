@@ -473,10 +473,7 @@
 				mui('#cloudstorage_0').on('longtap', '.mui-table-view-cell', function(event) {
 					var id = this.id;
 					if(id != 'shoujitongxunlu' && id != 'shoujituku') { //档案
-						var data = {
-							StudentId: this.getAttribute('StudentId'), //学生ID
-							StudentName: this.getAttribute('StudentName') //学生姓名
-						}
+						var data = studentDoc[id.replace('data_', '')];
 						console.log(JSON.stringify(data));
 						var btnArray = [{
 							title: "重命名"
@@ -848,7 +845,7 @@
 					// 等待的对话框
 					var wd = events.showWaiting();
 					postDataPro_getStudentDocByParent(comData, wd, function(data) {
-						console.log('91.按家长获取档案文件夹getStudentDocByParent:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						console.log('91 按家长获取档案文件夹 getStudentDocByParent ' + JSON.stringify(data));
 						document.getElementById("cloudstorage_0").innerHTML = '';
 						addcloudstorage_0_0(); //手机通讯录，手机图库
 						studentDoc = {};

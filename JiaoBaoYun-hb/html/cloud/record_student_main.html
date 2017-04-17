@@ -177,7 +177,8 @@
 				top: 44px;
 			}
 
-			.mui-btn-block.delete-no {
+			.mui-btn-block.delete-no,
+			.mui-btn-block.delete-no:active {
 				background-color: #e4e4e4;
 				border: 1px solid #e4e4e4;
 			}
@@ -213,6 +214,10 @@
 	<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 	<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
 	<script type="text/javascript" src="../../js/qiuzhi/delContent_pop.js"></script>
+	<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
+	<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
+	<script type="text/javascript" src="../../js/utils/cryption.js"></script>
+
 	<script type="text/javascript">
 		//启用双击监听
 		mui.init({
@@ -230,7 +235,8 @@
 		var mainData //当前web的数据
 		var pullRefresh; //下拉，上拉控件
 		var deleteRecord = false; //是否切换到了删除状态
-		//var studentFile = {} //存储获取的记录
+		var studentFile = {}; //存储获取的记录
+		var qnDelFileArray = []; //记录删除记录时七牛的文件路径
 
 		var offsetWidth = document.getElementById('ul_table').offsetWidth;
 		var imageWidth = parseInt((offsetWidth * 0.77 - 30) * 0.32);
@@ -432,14 +438,17 @@
 					for(var i = 0; i < checked.length; i++) {
 						idsArray[idsArray.length] = checked[i].value;
 					}
-					var ids = arrayToStr(idsArray);
-					delRecord(ids);
+					delRecord(idsArray);
 				}
 			});
 		}
 
-		//请求数据
-		function requestData(pageIndex) {
+		/**
+		 * 请求数据
+		 * @param {Object} pageIndex 页码
+		 * @param {Object} wd 等待框
+		 */
+		function requestData(pageIndex, wait) {
 			var userId = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 			var comData = {
 				parentId: userId, //家长ID
@@ -449,7 +458,7 @@
 				pageSize: '10' //每页记录数
 			};
 			// 等待的对话框
-			var wd = events.showWaiting();
+			var wd = wait || events.showWaiting();
 			//69.（云档案）按家长获取学生档案
 			postDataPro_getStudentFile(comData, wd, function(data) {
 				console.log('69 按家长获取学生档案 getStudentFile ' + JSON.stringify(data));
@@ -465,7 +474,7 @@
 					document.getElementById('ul_table').innerHTML = '';
 					year = ''; //清空年份
 					markDate = ''; //清空年份
-					//studentFile = {} //清空记录
+					studentFile = {} //清空记录
 				} else { //上拉加载更多
 					pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
 				}
@@ -501,7 +510,7 @@
 		 */
 		function createNotes(data) {
 			//console.log('createNotes ' + JSON.stringify(data));
-			//studentFile[data.TabId] = data;
+			studentFile[data.TabId] = data;
 
 			var date = data.PublishDate.split(' '); //发布的日期和时间
 			var dateItem = date[0]; //日期
@@ -557,7 +566,7 @@
 						html_3 = 'display: none;';
 					}
 					if(i == 2 && imageArray.length > 3) {
-						html_2 = '<div data-id="' + data.TabId + '_' + i + '" class="record-picture-num" style="border: 1px solid blue;line-height: ' + (imageHeight + 1) + 'px;background:red;">+' + (imageArray.length - 3) + '</div>'
+						html_2 = '<div data-id="' + data.TabId + '_' + i + '" class="record-picture-num" style="line-height: ' + (imageHeight + 1) + 'px;">+' + (imageArray.length - 3) + '</div>'
 					}
 					html_1 = html_1 + '<div class="record-picture" style="width: 32%;height:' + imageHeight + 'px;margin-right: ' + marginRight + ';' + html_3 + '">\
 									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;visibility: hidden;" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'));this.style.visibility=\'visible\';" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<this.parentNode.offsetHeight){this.style.height=this.parentNode.offsetHeight+\'px\';this.style.width=\'initial\';}this.style.marginLeft=-parseInt((this.offsetWidth-this.parentNode.offsetWidth)/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-this.parentNode.offsetHeight)/2)+\'px\';};this.style.visibility=\'visible\';">\
@@ -712,38 +721,88 @@
 
 		/**
 		 * 删除记录
-		 * @param {Object} data
+		 * @param {Object} idsArray
 		 */
-		function delRecord(data) {
-			console.log('delRecord ' + data);
+		function delRecord(idsArray) {
+			var ids = arrayToStr(idsArray);
+			//console.log('delRecord ' + ids);
 			var data1 = {
 				flag: 10, //flag:求知：提问1，回答2，评论3；班级空间：班级动态4；个人空间：个人动态5，个人动态评论6，档案7
 				comData: {
-					ids: data
+					ids: ids
 				}, //协议需要参数
 				buttons: [{
 					title: '确认',
 					btnFlag: 1
 				}],
-				title: '确认删除档案记录', //弹出框中，显示的标题
+				title: '确认删除?', //弹出框中，显示的标题
 				delFlag: 2 //删除确认弹出框格式，1从下弹出，2中间confirm
 			};
 			delContent_pop(data1, function(data) {
 				console.log('delContent_pop 返回值为 ' + JSON.stringify(data));
 				var temp = data.data;
-				if(data.flag == 1) {
-					if(temp.RspCode == 0 && temp.RspData.Result == 1) {
-						mui.toast('删除成功');
-						//退出删除状态
-						quitDel();
-						//获取数据
-						requestData(1);
-					} else {
-						mui.toast('删除失败 ' + temp.RspTxt);
+				if(data.flag == 1 && temp.RspCode == 0 && temp.RspData.Result == 1) {
+					//删除成功
+					for(var i = 0; i < idsArray.length; i++) {
+						var cellData = studentFile[idsArray[i]];
+						console.log('cellData ' + JSON.stringify(cellData));
+						if(cellData.EncAddr != '') { //有附件
+							var EncAddrArray = cellData.EncAddr.split('|');
+							var EncImgAddrArray = cellData.EncImgAddr.split('|');
+							qnDelFileArray = qnDelFileArray.concat(EncAddrArray, EncImgAddrArray);
+						}
 					}
+
+					if(qnDelFileArray.length != 0) {
+						BatchDelete(data.wd);
+					} else {
+						delSuccess(data.wd);
+					}
+				} else {
+					events.closeWaiting(data.wd);
+					mui.toast('删除失败 ' + temp.RspTxt);
 				}
 			});
+		}
 
+		/**
+		 * 删除对应的七牛文件
+		 */
+		function BatchDelete(wd) {
+			var batchDelete = {
+				appId: 6, //int 必填 项目id
+				urls: qnDelFileArray //array 必填 需要获取下载token文件的路径
+			}
+			/**
+			 * 七牛批量删除
+			 */
+			CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, batchDelete, function(data) {
+					console.log('云端文件删除 ' + JSON.stringify(data));
+					if(data.Status == 1) {
+						qnDelFileArray = [];
+					} else {
+						console.log('### ERROR ### 七牛删除失败 ### ' + JSON.stringify(data));
+						mui.toast('云端文件删除失败 ' + JSON.stringify(data));
+					}
+					delSuccess(wd);
+				},
+				function(xhr, type, errorThrown) {
+					console.log('### ERROR ### 请求七牛删除失败 ### ' + JSON.stringify(type));
+					mui.toast('请求删除云端文件失败 ' + JSON.stringify(type));
+					delSuccess(wd);
+				}
+			);
+		}
+
+		/**
+		 * 删除的所有逻辑处理完后执行的方法
+		 */
+		function delSuccess(wd) {
+			mui.toast('记录删除成功');
+			//退出删除状态
+			quitDel();
+			//获取数据
+			requestData(1, wd);
 		}
 	</script>
 
