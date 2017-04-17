@@ -130,9 +130,9 @@ var delContent_req = function(data1, btn, callback) {
 		});
 	} else if(operationFlag == 6) { //删除个人动态评论6
 		//47.（用户空间）删除某条用户空间评论
-		postDataPro_delUserSpaceCommentById(data.comData, wd, function(data) {
+		postDataPro_delUserSpaceCommentById(data1.comData, wd, function(data) {
 			wd.close();
-			console.log('47.（用户空间）删除某条用户空间评论:' + data1.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			console.log('47.（用户空间）删除某条用户空间评论:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				temp.data = data;
 				callback(temp);
@@ -142,9 +142,9 @@ var delContent_req = function(data1, btn, callback) {
 		});
 	} else if(operationFlag == 7) { //删除个人档案
 		//90.（云档案）删除档案文件夹
-		postDataPro_delStudentDoc(data.comData, wd, function(data) {
+		postDataPro_delStudentDoc(data1.comData, wd, function(data) {
 			wd.close();
-			console.log('90.（云档案）删除档案文件夹:' + data1.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			console.log('90.（云档案）删除档案文件夹:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				temp.data = data;
 				callback(temp);
@@ -154,9 +154,9 @@ var delContent_req = function(data1, btn, callback) {
 		});
 	} else if(operationFlag == 8||operationFlag == 9) { //屏蔽回答8，取消屏蔽回答9
 		//38.屏蔽某个用户的某条回答
-		postDataQZPro_setAnswerOffById(data.comData, wd, function(data) {
+		postDataQZPro_setAnswerOffById(data1.comData, wd, function(data) {
 			wd.close();
-			console.log('38.屏蔽某个用户的某条回答:' + data1.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			console.log('38.屏蔽某个用户的某条回答:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				temp.data = data;
 				callback(temp);
@@ -166,9 +166,9 @@ var delContent_req = function(data1, btn, callback) {
 		});
 	} else if(operationFlag == 10) { //删除档案内容
 		//85.（云档案）按ID删除学生档案内容
-		postDataPro_delStudentFileByIds(data.comData, wd, function(data) {
+		postDataPro_delStudentFileByIds(data1.comData, wd, function(data) {
 			wd.close();
-			console.log('85.（云档案）按ID删除学生档案内容:' + data1.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			console.log('85.（云档案）按ID删除学生档案内容:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				temp.data = data;
 				callback(temp);
