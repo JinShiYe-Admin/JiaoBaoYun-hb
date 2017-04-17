@@ -115,7 +115,7 @@ var shieldAnswer = function() {
 //	mui.toast("功能暂未开放，请稍候！");
 	var wd1=events.showWaiting();
 	postDataQZPro_setAnswerOffById({
-		answerId: answerInfo.AnswerId
+		answerId: answerInfo.AnswerId,
 		status: 1
 	}, wd1, function(data) {
 		wd1.close();

@@ -366,9 +366,9 @@
 						events.openNewWindowWithData('../mine/ReadQRCode.html', '');
 					}
 				})
-				window.addEventListener("homeworkReady", function() {
-					homeworkReady = true;
-				});
+//				window.addEventListener("homeworkReady", function() {
+//					homeworkReady = true;
+//				});
 
 				//重新登录或者自动登录后获取的信息
 				window.addEventListener('infoChanged', function() {
@@ -785,7 +785,7 @@
 								events.openNewWindowWithData("../homework/homework-tea.html",{
 									teacherClasses: teacherClasses,
 									studentClasses: studentClasses
-								})
+								});
 							} else {
 								mui.toast('您还未加入班级');
 							}
