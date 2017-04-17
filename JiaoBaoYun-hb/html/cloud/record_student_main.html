@@ -212,6 +212,7 @@
 	<script type="text/javascript" src="../../js/mui.previewimage.js"></script>
 	<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 	<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
+	<script type="text/javascript" src="../../js/qiuzhi/delContent_pop.js"></script>
 	<script type="text/javascript">
 		//启用双击监听
 		mui.init({
@@ -259,8 +260,8 @@
 				month = '0' + month;
 			}
 			today = myDate.getFullYear() + '-' + month + '-' + myDate.getDate();
-
-			document.body.querySelector('.mui-title').innerText = '云盘--' + mainData.DocName + '档案';
+			var name = mainData.DocName || mainData.StudentName;
+			document.body.querySelector('.mui-title').innerText = '云盘--' + name + '档案';
 		}
 
 		/**
@@ -427,9 +428,12 @@
 				if(className == 'mui-btn mui-btn-red mui-btn-block') { //允许删除
 					//选择删除
 					var checked = document.querySelectorAll('.mui-checkbox input[type=checkbox]:checked');
+					var idsArray = [];
 					for(var i = 0; i < checked.length; i++) {
-						console.log('删除 ' + checked[i].value);
+						idsArray[idsArray.length] = checked[i].value;
 					}
+					var ids = arrayToStr(idsArray);
+					delRecord(ids);
 				}
 			});
 		}
@@ -469,7 +473,10 @@
 				if(data.RspCode == 0) {
 					page.totalPage = data.RspData.TotalPage;
 					for(var i = 0; i < data.RspData.Data.length; i++) {
-						createNotes(data.RspData.Data[i])
+						createNotes(data.RspData.Data[i]);
+					}
+					if(data.RspData.TotalPage == 0) {
+						mui.toast('档案为空');
 					}
 				} else {
 					mui.toast(data.RspTxt);
@@ -618,7 +625,8 @@
 				document.getElementById("commit_div").style.display = 'none';
 				document.getElementById("pullrefresh").style.bottom = '0px';
 				document.getElementById("add").innerText = '添加';
-				document.getElementById("title").innerText = '云盘--' + mainData.DocName + '档案';
+				var name = mainData.DocName || mainData.StudentName;
+				document.getElementById("title").innerText = '云盘--' + name + '档案';
 			} else { //删除
 				document.getElementById("back").style.display = 'none';
 				document.getElementById("cancel").style.display = 'inline';
@@ -700,6 +708,42 @@
 			} else {
 				document.getElementById("commit").className = 'mui-btn mui-btn-red mui-btn-block';
 			}
+		}
+
+		/**
+		 * 删除记录
+		 * @param {Object} data
+		 */
+		function delRecord(data) {
+			console.log('delRecord ' + data);
+			var data1 = {
+				flag: 10, //flag:求知：提问1，回答2，评论3；班级空间：班级动态4；个人空间：个人动态5，个人动态评论6，档案7
+				comData: {
+					ids: data
+				}, //协议需要参数
+				buttons: [{
+					title: '确认',
+					btnFlag: 1
+				}],
+				title: '确认删除档案记录', //弹出框中，显示的标题
+				delFlag: 2 //删除确认弹出框格式，1从下弹出，2中间confirm
+			};
+			delContent_pop(data1, function(data) {
+				console.log('delContent_pop 返回值为 ' + JSON.stringify(data));
+				var temp = data.data;
+				if(data.flag == 1) {
+					if(temp.RspCode == 0 && temp.RspData.Result == 1) {
+						mui.toast('删除成功');
+						//退出删除状态
+						quitDel();
+						//获取数据
+						requestData(1);
+					} else {
+						mui.toast('删除失败 ' + temp.RspTxt);
+					}
+				}
+			});
+
 		}
 	</script>
 

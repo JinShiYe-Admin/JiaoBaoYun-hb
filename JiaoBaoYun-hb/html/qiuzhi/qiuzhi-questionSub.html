@@ -193,7 +193,7 @@
 				margin-left: 10px;
 				margin-right: 10px;
 			}
-
+			.tab_div,
 			#tab_div {
 				line-height: 34px;
 				border: 1px solid #E4E4E4;
@@ -220,9 +220,10 @@
 	</head>
 
 	<body>
-		<nav class="mui-bar mui-bar-tab">
-			<div id="tab_div">
-				<font id="tab_font"><span class="mui-icon iconfont icon-xie mui-pull-left"></span>请输入问题的答案</font>
+		<nav id="manage-container" class="mui-bar mui-bar-tab">
+			<div class="tab_div" style="border: 0;">
+				<font  id=""><p>自己的回答已屏蔽<span id="cancel-shield" class="mui-pull-right">取消</span></p></font>
+				<!--<font id="tab_font"><span class="mui-icon iconfont icon-xie mui-pull-left"></span>请输入问题的答案</font>-->
 			</div>
 		</nav>
 		<!--下拉刷新容器-->

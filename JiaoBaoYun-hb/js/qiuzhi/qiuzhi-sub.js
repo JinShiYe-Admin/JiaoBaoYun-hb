@@ -21,6 +21,7 @@ mui.plusReady(function() {
 		answerIsReady = true;
 	})
 	window.addEventListener('channelInfo', function(e) {
+		
 		console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
 		pageIndex = 1; //当前页数
 		totalPage = 0; //总页数

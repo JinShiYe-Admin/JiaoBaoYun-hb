@@ -85,7 +85,8 @@
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				mainData = main.data; //接收页面传入的参数值
 				console.log(main.id + ' ' + JSON.stringify(mainData));
-				document.getElementById("title").innerText = mainData.data.DocName;
+				var title = mainData.data.DocName || mainData.data.StudentName;
+				document.getElementById("title").innerText = title;
 			}
 
 			/**
@@ -135,7 +136,7 @@
 						var wd = events.showWaiting();
 						document.getElementById("commit").disabled = true;
 						if(multiMedia.data.PictureArray.length == 0) { //没有传附件
-							addRecorc(wd, '3', '', '');
+							addRecorcd(wd, '3', '', '');
 						} else {
 							uploadFile(wd);
 						}
@@ -150,35 +151,40 @@
 			 * @param {Object} encAddr 附件地址
 			 * @param {Object} encImg 附件缩略图地址
 			 */
-			function addRecorc(wd, encType, encAddr, encImg) {
+			function addRecorcd(wd, encType, encAddr, encImg) {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 				var personalUNICK = '【' + window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick + '家长】';
-
+				var studentName = mainData.data.DocName || mainData.data.StudentName;
 				//70.（云档案）新增某学生档案
 				//所需参数
 				var comData = {
 					parentId: personalUTID, //家长ID,
 					studentId: mainData.data.StudentId, //	学生ID,
-					studentName: mainData.data.StudentName, //学生姓名,
-					className: '', //	班级名称,
+					studentName: studentName, //学生姓名,
+					className: mainData.data.ClassName, //	班级名称,
 					msgContent: textArea.value, //记事内容,
 					encType: encType, //附件类型,1图片2音视频3仅文字
 					encAddr: encAddr, //附件地址,多个的情况例如：1.jpg|2.jpg
 					encImg: encImg, //附件缩略图地址,
 					publisherName: personalUNICK, //	发布者姓名,
 					noteType: '2', //点到记事类型,1点到2记事
-					checkType: '0' //点到类型,1 正常2 旷课3 迟到4 早退5 其他
+					checkType: '0', //点到类型,1 正常2 旷课3 迟到4 早退5 其他
+					classId: mainData.data.ClassId //班级ID
 				};
 				postDataPro_addStudentFile(comData, wd, function(data) {
 					console.log('70_addStudentFile_新增某学生档案.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
+						var time = 2000;
+						if(comData.encType == 3) {
+							time = 0;
+						}
 						setTimeout(function() {
 							wd.close();
 							pathList = [];
 							mui.toast('发布成功');
 							events.fireToPageNone('record_student_main.html', 'refreshView');
 							mui.back();
-						}, 2000);
+						}, time);
 					} else {
 						mui.toast(data.RspTxt);
 						document.getElementById("commit").disabled = false;
@@ -321,7 +327,7 @@
 									}
 									var encAddrStr = encAddr.join('|');
 									var encImgrStr = encImg.join('|');
-									addRecorc(wd, '1', encAddrStr, encImgrStr);
+									addRecorcd(wd, '1', encAddrStr, encImgrStr);
 								} else {
 									taskCreate(wd);
 								}
