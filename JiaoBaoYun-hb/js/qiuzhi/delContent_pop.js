@@ -97,10 +97,9 @@ var delContent_req = function(data1, btn, callback) {
 		postDataQZPro_delCommentById(data1.comData, wd, function(data) {
 			wd.close();
 			console.log('18.删除某条回答的评论:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-			temp.data = data;
-			callback(temp);
 			if(data.RspCode == 0) {
-
+				temp.data = data;
+				callback(temp);
 			} else {
 				mui.toast(data.RspTxt);
 			}
@@ -110,10 +109,9 @@ var delContent_req = function(data1, btn, callback) {
 		postDataPro_delClassSpaceById(data1.comData, wd, function(data) {
 			wd.close();
 			console.log('24.（班级空间）删除某班级空间:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-			temp.data = data;
-			callback(temp);
 			if(data.RspCode == 0) {
-
+				temp.data = data;
+				callback(temp);
 			} else {
 				mui.toast(data.RspTxt);
 			}
@@ -123,10 +121,9 @@ var delContent_req = function(data1, btn, callback) {
 		postDataPro_delUserSpaceById(data1.comData, wd, function(data) {
 			wd.close();
 			console.log('46.（用户空间）删除某用户空间:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-			temp.data = data;
-			callback(temp);
 			if(data.RspCode == 0) {
-
+				temp.data = data;
+				callback(temp);
 			} else {
 				mui.toast(data.RspTxt);
 			}
@@ -136,15 +133,38 @@ var delContent_req = function(data1, btn, callback) {
 		postDataPro_delUserSpaceCommentById(data.comData, wd, function(data) {
 			wd.close();
 			console.log('47.（用户空间）删除某条用户空间评论:' + data1.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-			temp.data = data;
-			callback(temp);
 			if(data.RspCode == 0) {
-
+				temp.data = data;
+				callback(temp);
 			} else {
 				mui.toast(data.RspTxt);
 			}
 		});
-	} else {
+	} else if(operationFlag == 7) { //删除档案
+		//90.（云档案）删除档案文件夹
+		postDataPro_delStudentDoc(data.comData, wd, function(data) {
+			wd.close();
+			console.log('90.（云档案）删除档案文件夹:' + data1.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			if(data.RspCode == 0) {
+				temp.data = data;
+				callback(temp);
+			} else {
+				mui.toast(data.RspTxt);
+			}
+		});
+	} else if(operationFlag == 8||operationFlag == 9) { //屏蔽回答8，取消屏蔽回答9
+		//38.屏蔽某个用户的某条回答
+		postDataQZPro_setAnswerOffById(data.comData, wd, function(data) {
+			wd.close();
+			console.log('38.屏蔽某个用户的某条回答:' + data1.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			if(data.RspCode == 0) {
+				temp.data = data;
+				callback(temp);
+			} else {
+				mui.toast(data.RspTxt);
+			}
+		});
+	}  else {
 		wd.close();
 		callback('啥都不返回');
 	}
