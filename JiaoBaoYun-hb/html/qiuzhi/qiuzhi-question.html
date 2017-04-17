@@ -43,6 +43,8 @@
 				console.log("获取的questionInfo:"+JSON.stringify(questionInfo));
 				if(questionInfo.RspData.AskMan==myStorage.getItem(storageKeyName.PERSONALINFO).utid&&questionInfo.RspData.AnswerNum==0){
 					document.getElementById("manage-question").style.display="inline-block";
+//				}else if(quetionInfo.RspData.AnswerId&&quetionInfo.RspData.IsAnswerOff){
+					
 				}else{
 					document.getElementById("manage-question").style.display="none";
 				}

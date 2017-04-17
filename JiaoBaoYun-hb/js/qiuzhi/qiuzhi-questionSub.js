@@ -46,7 +46,8 @@ mui.plusReady(function() {
 	console.log('qiuzhi-questionSub.html:' + JSON.stringify(mainData));
 
 	events.preload('qiuzhi-addAnswer.html');
-
+	askModel = mainData.questionInfo.RspData;
+	setCondition();
 	askID = mainData.askID;
 	//5.获取某个问题的详情
 	requestAskDetail();
@@ -74,6 +75,18 @@ mui.plusReady(function() {
 		var cbArr = [delQuestion];
 		events.showActionSheet(titles, cbArr);
 	})
+	window.addEventListener("answerShield", function() {
+		//获取的第几页回复
+		answerIndex = 1;
+		//答案回复的总页数
+		answerPageCount = 0;
+		//回复数组,切换排序方式后，清空数组
+		answerArray = [];
+		//刷新0，还是加载更多1
+		answerFlag = 0;
+		//5.获取某个问题的详情
+		requestAskDetail();
+	})
 	mui('#popover').on('tap', '.mui-table-view-cell', function() {
 		console.log('选择排序' + this.id + '|' + this.value + '|' + this.getAttribute('data-value'));
 
@@ -96,38 +109,8 @@ mui.plusReady(function() {
 		mui('#popover').popover('hide');
 	});
 
-	//---点击效果---start---
-	var tab_div = document.getElementById("tab_div");
-	var tab_font = document.getElementById("tab_font");
-	tab_div.addEventListener('tap', function() {
-		console.log('tab_div-tap');
-		if(askModel.IsAnswered == 1) {
-			mui.toast('已经回答过此问题');
-			return;
-		}
-		tab_div.style.background = '#DDDDDD';
-		tab_font.style.color = 'white';
-		setTimeout(function() {
-			tab_div.style.background = 'white';
-			tab_font.style.color = 'gray';
-		}, 80);
-		//点击跳转到回答界面
 
-		events.fireToPage('qiuzhi-addAnswer.html', 'qiuzhi-addAnswer', function() {
-			return askModel;
-		});
 
-	});
-	tab_div.addEventListener('hold', function() {
-		//console.log('tab_div-hold');
-		tab_div.style.background = '#DDDDDD';
-		tab_font.style.color = 'white';
-	});
-	tab_div.addEventListener('release', function() {
-		//console.log('tab_div-release');
-		tab_div.style.background = 'white';
-		tab_font.style.color = 'gray';
-	});
 	//---点击效果---end---
 
 	events.addTap('guanzhu', function() {
@@ -138,7 +121,7 @@ mui.plusReady(function() {
 			setAskFocus(askID, 0);
 		}
 	});
-
+	
 	//点击回答
 	mui('#answer_bottom').on('tap', '.ellipsis-3', function() {
 		var element = this.parentNode;
@@ -186,16 +169,75 @@ mui.plusReady(function() {
 		}
 	});
 });
+/**
+ * 根据状况低端按钮显示
+ */
+var setCondition = function() {
+	var manageContainer = document.getElementById("manage-container");
+	if(askModel.AnswerId && askModel.IsAnswerOff) { //已回答且已隐藏
+		manageContainer.style.display = "block";
+		manageContainer.innerHTML = '<div class="tab_div" style="border: 0;">' +
+			'<font  id=""><p style="text-align:center;font-size:16px;color:#323232">回答已屏蔽<span id="cancel-shield" style="color:#13b7f6" class="mui-pull-right">撤销</span></p></font>' +
+			'</div>';
+	} else if(askModel.IsAnswered) { //已回答
+		manageContainer.style.display = "none";
+		manageContainer.innerHTML="";
+	} else {
+		manageContainer.style.display = "block";
+		manageContainer.innerHTML = '<div id="tab_div">' +
+			'<font id="tab_font"><span class="mui-icon iconfont icon-xie mui-pull-left"></span>请输入问题的答案</font>' +
+			'</div>';
+	}
+		//---点击效果---start---
+	var tab_div = document.getElementById("tab_div");
+	if(tab_div) {
+		var tab_font = document.getElementById("tab_font");
+		tab_div.addEventListener('tap', function() {
+			console.log('tab_div-tap');
+			if(askModel.IsAnswered == 1) {
+				mui.toast('已经回答过此问题');
+				return;
+			}
+			tab_div.style.background = '#DDDDDD';
+			tab_font.style.color = 'white';
+			setTimeout(function() {
+				tab_div.style.background = 'white';
+				tab_font.style.color = 'gray';
+			}, 80);
+			//点击跳转到回答界面
+
+			events.fireToPage('qiuzhi-addAnswer.html', 'qiuzhi-addAnswer', function() {
+				return askModel;
+			});
+
+		});
+		tab_div.addEventListener('hold', function() {
+			//console.log('tab_div-hold');
+			tab_div.style.background = '#DDDDDD';
+			tab_font.style.color = 'white';
+		});
+		tab_div.addEventListener('release', function() {
+			//console.log('tab_div-release');
+			tab_div.style.background = 'white';
+			tab_font.style.color = 'gray';
+		});
+	}
+	events.addTap("cancel-shield", function() {
+		console.log("取消屏蔽点击事件！");
+		shieldAnswer();
+	})
+
+}
 var delQuestion = function() {
 	mui.toast("功能暂未开放，请稍候！");
-	var wd1=events.showWaiting();
+	var wd1 = events.showWaiting();
 	//37.删除某个用户的某条提问
 	postDataQZPro_delAskById({
-		askId: askID//提问ID
+		askId: askID //提问ID
 	}, wd1, function(data) {
 		wd1.close();
-		console.log('37.删除某个用户的某条提问:'+JSON.stringify(data));
-		if(data.RspCode == 0&&data.RspData.Result) {
+		console.log('37.删除某个用户的某条提问:' + JSON.stringify(data));
+		if(data.RspCode == 0 && data.RspData.Result) {
 			mui.toast("删除问题成功！");
 			mui.back();
 		} else {
@@ -203,7 +245,33 @@ var delQuestion = function() {
 		}
 	});
 }
-
+var shieldAnswer = function() {
+	//	mui.toast("功能暂未开放，请稍候！");
+	var wd1 = events.showWaiting();
+	postDataQZPro_setAnswerOffById({
+		answerId: askModel.AnswerId,
+		status: 0
+	}, wd1, function(data) {
+		wd1.close();
+		console.log("屏蔽后返回的数据:" + JSON.stringify(data));
+		if(data.RspCode == 0 && data.RspData.Result) {
+			mui.toast("已取消屏蔽！");
+			//			document.getElementById("manage-container").style.display = "none";
+			//获取的第几页回复
+			answerIndex = 1;
+			//答案回复的总页数
+			answerPageCount = 0;
+			//回复数组,切换排序方式后，清空数组
+			answerArray = [];
+			//刷新0，还是加载更多1
+			answerFlag = 0;
+			//5.获取某个问题的详情
+			requestAskDetail();
+		} else {
+			mui.toast("屏蔽回答失败！");
+		}
+	})
+}
 //13.获取是否已对某个问题关注
 function getAskFocusByUser(askId) {
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
@@ -325,9 +393,9 @@ function requestAskDetail() {
 		console.log('5.获取某个问题的详情:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			askModel = data.RspData;
+			setCondition();
 			answerPageCount = data.RspData.TotalPage; //回答总页数
 			answerIndex++;
-
 			//回调中的临时数据
 			var tempRspData = data.RspData.Data;
 			//获取当前回调的个人信息，主要是头像、昵称

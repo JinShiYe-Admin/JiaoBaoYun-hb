@@ -39,7 +39,7 @@ mui.plusReady(function() {
 	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'), "answerIsReady");
 	plus.webview.currentWebview().opener().addEventListener("hide", function() {
 		mui.previewImage().close();
-		console.log("求知回答页面已隐藏")
+		console.log("求知回答页面已隐藏");
 		//		events.clearChild(document.getElementById('list-container'));
 		//		setOriginalCondition();
 		mui('#popover').popover('hide');
@@ -133,6 +133,7 @@ var shieldAnswer = function() {
 		console.log("屏蔽后返回的数据:" + JSON.stringify(data));
 		if(data.RspCode==0&&data.RspData.Result){
 			mui.toast("回答已屏蔽！");
+			mui.fire(plus.webview.getWebviewById("qiuzhi-questionSub.html"),"answerShield");
 			mui.back();
 		}else{
 			mui.toast("屏蔽回答失败！");
