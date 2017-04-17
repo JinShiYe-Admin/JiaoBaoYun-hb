@@ -307,6 +307,8 @@
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
+		<script type="text/javascript" src="../../js/qiuzhi/delContent_pop.js"></script>
+
 		<script type="text/javascript">
 			//声明变量
 			//文件存储数组
@@ -473,29 +475,7 @@
 				mui('#cloudstorage_0').on('longtap', '.mui-table-view-cell', function(event) {
 					var id = this.id;
 					if(id != 'shoujitongxunlu' && id != 'shoujituku') { //档案
-						var data = studentDoc[id.replace('data_', '')];
-						console.log(JSON.stringify(data));
-						var btnArray = [{
-							title: "重命名"
-						}, {
-							title: "删除"
-						}];
-						plus.nativeUI.actionSheet({
-							title: "档案操作",
-							cancel: "取消",
-							buttons: btnArray
-						}, function(e) {
-							switch(e.index) {
-								case 1: //修改档案名称
-									changeDataName(data, event);
-									break;
-								case 2: //删除档案
-									deleteData(data);
-									break;
-								default:
-									break;
-							}
-						});
+						longTapData(id, event);
 					}
 				});
 
@@ -1355,6 +1335,40 @@
 			//			}
 
 			/**
+			 * 长按某个档案
+			 * @param {Object} id
+			 * @param {Object} event
+			 */
+			function longTapData(id, event) {
+				var cellData = studentDoc[id.replace('data_', '')];
+				console.log('cellData ' + JSON.stringify(cellData));
+				var data1 = {
+					flag: 7, //flag:求知：提问1，回答2，评论3；班级空间：班级动态4；个人空间：个人动态5，个人动态评论6，档案7
+					comData: {
+						docId: cellData.DocId, //档案文件夹ID
+						docType: cellData.DocType //档案类型
+					}, //协议需要参数
+					title: '档案操作', //弹出框中，显示的标题
+					buttons: [{
+						title: '重命名',
+						btnFlag: 5
+					}, {
+						title: '删除',
+						btnFlag: 1
+					}], //弹出的列表,格式为：[{title:标题，btnFlag:要做的操作}]，btnFlag：1删除，2修改，3屏蔽，4取消屏蔽，5重命名
+					delFlag: 1 //删除确认弹出框格式，1从下弹出，2中间confirm
+				};
+				delContent_pop(data1, function(data) {
+					console.log('delContent_pop 返回值为 ' + JSON.stringify(data));
+					if(data.flag == 5) { //重命名
+						changeDataName(cellData, event);
+					} else if(data.flag == 1) { //删除
+						deleteData(data);
+					}
+				});
+			}
+
+			/**
 			 * 修改档案的名称
 			 * @param {Object} dataInfo
 			 */
@@ -1374,13 +1388,28 @@
 						} else if(e.value.length > 10) {
 							mui.toast('档案名称最多10个字');
 						} else {
-							//发送修改协议
-							//成功的回调
-							mui.toast('档案重命名成功');
-							document.getElementById('data_' + dataInfo.StudentId).setAttribute('StudentName', e.value);
-							document.getElementById('data_name_' + dataInfo.StudentId).innerText = e.value + '档案';
-							document.activeElement.blur();
-							mui.closePopups();
+							var wd = events.showWaiting();
+							var comData = {
+								fileInfoId: dataInfo.DocId, //档案ID
+								fileInfoName: e.value, //档案新名称
+								fileInfoType: dataInfo.DocType, //档案类型
+							}
+							//86.（云档案）修改档案名称
+							postDataPro_setStudentFileInfoName(comData, wd, function(data) {
+								console.log('86 修改档案名称 setStudentFileInfoName ' + JSON.stringify(data));
+								if(data.RspCode == 0 && data.RspData.Result == 1) {
+									//成功的回调
+									mui.toast('档案重命名成功');
+									var id = dataInfo.DocType + '_' + dataInfo.DocId;
+									studentDoc[id].DocName = e.value;
+									document.getElementById('data_name_' + id).innerText = e.value + '档案';
+									document.activeElement.blur();
+									mui.closePopups();
+								} else {
+									mui.toast(data.RspTxt);
+								}
+								wd.close();
+							})
 						}
 						return false;
 					} else {
