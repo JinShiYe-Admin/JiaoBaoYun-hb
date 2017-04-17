@@ -398,12 +398,13 @@ var setListener = function() {
 	//标题点击事件
 	mui('.mui-table-view').on('tap', '.ask-title', function() {
 		var item = this;
-		requireQuestionInfo(item.getAttribute('askId'), function(questionData) {
+		requireQuestionInfo(item.getAttribute('askId'), function(questionInfo) {
 			events.singleInstanceInPeriod(function() {
 				events.openNewWindowWithData('qiuzhi-question.html', {
 					askID: item.getAttribute('askId'), //问题id
 					channelInfo: channelInfo, //当前话题
-					allChannels: allChannels //全部话题
+					allChannels: allChannels,//全部话题
+					questionInfo:questionInfo//当前问题
 				});
 			})
 		})
