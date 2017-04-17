@@ -357,23 +357,25 @@
 
 			//显示全部，收起
 			mui('#ul_table').on('tap', '.show-all', function() {
-				var str = this.innerText;
-				var id = this.id.replace('_show', '');
-				var content = document.getElementById(id + "_content");
-				if(str == '显示全部') {
-					this.innerText = '收起';
-					content.style.webkitLineClamp = 'inherit';
-				} else if(str == '收起') {
-					var offsetHeight_0 = content.offsetHeight;
-					this.innerText = '显示全部';
-					content.style.webkitLineClamp = '3';
-					var offsetHeight_1 = content.offsetHeight;
-					var scroll = mui('#pullrefresh').scroll(); //滑动控件
-					var move = scroll.y + (offsetHeight_0 - offsetHeight_1);
-					if(move >= 0) {
-						mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 0);
-					} else {
-						mui('.mui-scroll-wrapper').scroll().scrollTo(0, move, 0);
+				if(!deleteRecord) { //不是删除状态
+					var str = this.innerText;
+					var id = this.id.replace('_show', '');
+					var content = document.getElementById(id + "_content");
+					if(str == '显示全部') {
+						this.innerText = '收起';
+						content.style.webkitLineClamp = 'inherit';
+					} else if(str == '收起') {
+						var offsetHeight_0 = content.offsetHeight;
+						this.innerText = '显示全部';
+						content.style.webkitLineClamp = '3';
+						var offsetHeight_1 = content.offsetHeight;
+						var scroll = mui('#pullrefresh').scroll(); //滑动控件
+						var move = scroll.y + (offsetHeight_0 - offsetHeight_1);
+						if(move >= 0) {
+							mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 0);
+						} else {
+							mui('.mui-scroll-wrapper').scroll().scrollTo(0, move, 0);
+						}
 					}
 				}
 			});
@@ -402,7 +404,7 @@
 						var checkBox = rowArray[i].querySelector('.mui-checkbox');
 						checkBox.querySelector('input').checked = false;
 						//垂直居中显示
-						checkBox.style.marginTop = (checkBox.parentNode.offsetHeight - checkBox.offsetHeight - 32) / 2 + 'px';
+						checkBox.style.marginTop = (checkBox.parentNode.offsetHeight - checkBox.offsetHeight - 35) / 2 + 'px';
 						checkBox.style.display = 'inline';
 					}
 				}
@@ -560,6 +562,7 @@
 
 			var element = document.createElement('div');
 			element.className = 'mui-row';
+			element.id = 'row_' + data.TabId;
 			element.innerHTML = '<div class="mui-col-sm-3 mui-col-xs-3">\
 										<div class="dynamic-date">\
 											<div style="font-size:2.5rem;">' + timeItem_day + '</div><div style="margin-left:2px;font-size:1.4rem;">' + timeItem_month + '</div>\
@@ -637,6 +640,21 @@
 			document.getElementById("pullrefresh").style.zIndex = 1;
 			//调整顶部导航和删除按钮
 			showAddOrDel(0);
+			//获取当前显示的cell
+			//			var scroll = mui('#pullrefresh').scroll();
+			//			var cells = mui('.mui-row');
+			//			var y = scroll.y * (-1); //滚动的距离
+			//			var height = 0; //计算cells的高度
+			//			var topCellId; //当前顶部显示的cellId
+			//			for(var i = 0; i < cells.length; i++) {
+			//				height = height + cells[i].offsetHeight;
+			//				if(height >= y) {
+			//					topCellId = cells[i].id;
+			//					//console.log(cells[i].innerText);
+			//					break;
+			//				}
+			//			}
+			//console.log(height + ' ' + y + ' ' + topCellId);
 			//隐藏选择按钮
 			var rowArray = document.querySelectorAll('.mui-row');
 			for(var i = 0; i < rowArray.length; i++) {
@@ -649,6 +667,17 @@
 			if(page.pageIndex < page.totalPage) {
 				pullRefresh.refresh(true);
 			}
+			//移动到之前显示的cell的位置
+			//			height = 0
+			//			for(var i = 0; i < cells.length; i++) {
+			//				if(cells[i].id != topCellId) {
+			//					height = height + cells[i].offsetHeight;
+			//				} else {
+			//					break;
+			//				}
+			//			}
+			//			console.log(-height + ' ' + scroll.y * (-1));
+			//			scroll.scrollTo(0, -height, 0);
 		}
 
 		/**
