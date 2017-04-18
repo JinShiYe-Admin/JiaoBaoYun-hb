@@ -172,7 +172,7 @@ var slideNavigation = (function($) {
 			var a = document.createElement('img');
 			a.id = 'headimge';
 			a.className = 'mui-pull-left mui-plus-visible img-icon';
-			console.log('第一次加載的圖片地址：' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg);
+//			console.log('第一次加載的圖片地址：' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg);
 			var path = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 			a.src = path ? path : storageKeyName.DEFAULTPERSONALHEADIMAGE;
 			console.log('首页左上角头像:' + a.src);

@@ -483,7 +483,8 @@
 			"html/qiuzhi/qiuzhi-question.html",
 			"html/qiuzhi/experts_main.html",
 			"html/qiuzhi/expert-detail.html",
-			"html/qiuzhi/qiuzhi-newQ.html"
+			"html/qiuzhi/qiuzhi-newQ.html",
+			"html/register/login.html"
 		]
 	},
 	"html/homework/doHomework-stu.html": {
