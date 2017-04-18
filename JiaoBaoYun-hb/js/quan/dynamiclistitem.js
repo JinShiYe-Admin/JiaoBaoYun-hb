@@ -218,8 +218,6 @@ var dynamiclistitem = (function($, mod) {
 			});
 		});
 		mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
-			//判断是否是游客身份登录
-			events.judgeLoginMode();
 			if(isPersonal == 1) {
 				var cityID = sliderId.replace('top_', '');
 				var index = this.id.replace('headImg' + cityID + idFlag, '');
@@ -243,8 +241,6 @@ var dynamiclistitem = (function($, mod) {
 
 		})
 		mui('.mui-table-view').on('tap', '.question_content', function() {
-			//判断是否是游客身份登录
-			events.judgeLoginMode();
 			var cityID = sliderId.replace('top_', '');
 			var index = this.id.replace('question_content' + cityID + idFlag, '');
 			if(idFlag == '') {
@@ -256,8 +252,6 @@ var dynamiclistitem = (function($, mod) {
 			events.openNewWindowWithData('../quan/space-detail.html', zonepArray[index])
 		});
 		mui('.mui-table-view').on('tap', '.show', function() {
-			//判断是否是游客身份登录
-			events.judgeLoginMode();
 			var cityID = sliderId.replace('top_', '');
 			var index = this.id.replace('show' + cityID + idFlag, '');
 			if(idFlag == '') {
@@ -269,8 +263,6 @@ var dynamiclistitem = (function($, mod) {
 
 		})
 		mui('.mui-table-view').on('tap', '.show2', function() {
-			//判断是否是游客身份登录
-			events.judgeLoginMode();
 			var cityID = sliderId.replace('top_', '');
 			var index = this.id.replace('show2' + cityID + idFlag, '');
 			if(idFlag == '') {
@@ -401,8 +393,6 @@ var dynamiclistitem = (function($, mod) {
 		})
 		//点击点赞人那一行 跳转到点赞的人的列表界面
 		mui('.mui-table-view').on('tap', '.PraiseList', function() {
-			//判断是否是游客身份登录
-			events.judgeLoginMode();
 			console.log('跳转到点赞人列表界面')
 			var cityID = sliderId.replace('top_', '');
 			var index = this.id.replace('PraiseList' + cityID + idFlag, '');
@@ -412,8 +402,6 @@ var dynamiclistitem = (function($, mod) {
 		})
 		//点击点赞的人跳转到相应界面
 		mui('.mui-table-view').on('tap', '.praiseName', function() {
-			//判断是否是游客身份登录
-			events.judgeLoginMode();
 			console.log('点赞者id' + this.dataset.info);
 			mui.openWindow({
 				url: '../quan/zone_main.html',
@@ -435,8 +423,6 @@ var dynamiclistitem = (function($, mod) {
 		});
 		//点击评论者名字
 		mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
-			//判断是否是游客身份登录
-			events.judgeLoginMode();
 			console.log('评论者id' + this.dataset.info);
 			mui.openWindow({
 				url: '../quan/zone_main.html',

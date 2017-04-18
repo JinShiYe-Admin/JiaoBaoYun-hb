@@ -385,6 +385,8 @@ var pullUpFresh = function() {
  */
 var setListener = function() {
 	events.addTap('submit-question', function() {
+		//判断是否是游客身份登录
+		events.judgeLoginMode();
 		console.log(JSON.stringify(allChannels))
 		var self = this
 		self.disabled = true;
@@ -440,6 +442,8 @@ var setListener = function() {
 	});
 	//求知关注
 	mui(".mui-table-view").on('tap', '.focus-status', function() {
+		//判断是否是游客身份登录
+		events.judgeLoginMode();
 		var item=this;
 		requireQuestionInfo(item.questionInfo.TabId,function(data){
 			setQuestionFocus(item);
