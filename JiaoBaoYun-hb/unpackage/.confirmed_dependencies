@@ -57,7 +57,8 @@
 			"fonts/mui.ttf",
 			"js/utils/signHmacSHA1.js",
 			"js/libs/crypto-js/crypto-js.js",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"html/show/show_home_1.html"
 		],
 		"refer": [
 			"html/sciedu/sciedu_home.html",
@@ -192,7 +193,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"/image/utils/default_load_2_1.gif"
+			"/image/utils/default_load_2_1.gif",
+			"fonts/fangzheng.ttf"
 		],
 		"refer": [
 			"html/utils/customizeCity.html",
@@ -1478,7 +1480,8 @@
 			"html/qiuzhi/focus-question.html",
 			"html/qiuzhi/qiuzhi-expertAllAnswer.html",
 			"html/qiuzhi/modifyExpertNote.html",
-			"html/qiuzhi/qiuzhi-expertAllComment.html"
+			"html/qiuzhi/qiuzhi-expertAllComment.html",
+			"html/qiuzhi/expert-ask.html"
 		]
 	},
 	"html/sciedu/sciedu_show_main.html": {
@@ -2301,6 +2304,16 @@
 		"resources": [
 			"css/qiuzhi/qiuzhi-expertAllComment.css",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/qiuzhi/expert-ask.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-question.html"
 		]
 	}
 }
