@@ -164,7 +164,8 @@
 			"html/cloud/app_notes_main.html",
 			"html/mine/qun_manage_1.html",
 			"html/mine/ReadQRCode.html",
-			"html/quan/pub-dynamic.html"
+			"html/quan/pub-dynamic.html",
+			"html/quan/aboutme.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -664,7 +665,9 @@
 			"css/mui.min.css",
 			"fonts/iconfont.ttf"
 		],
-		"refer": []
+		"refer": [
+			"html/homework/doHomework-stu.html"
+		]
 	},
 	"html/homework/workdetailTea-temporary.html": {
 		"resources": [
@@ -962,7 +965,8 @@
 		],
 		"refer": [
 			"html/quan/reply-aboutMe.html",
-			"html/quan/space-detail.html"
+			"html/quan/space-detail.html",
+			"html/homework/workdetail-stu.html"
 		]
 	},
 	"html/quan/class-group.html": {
