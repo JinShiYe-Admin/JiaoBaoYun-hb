@@ -844,7 +844,8 @@
 					"fonts/fangzheng.ttf",
 					"image/quan/share.png",
 					"image/quan/aboutme.png",
-					"image/quan/Scan.png"
+					"image/quan/Scan.png",
+					"js/qiuzhi/delContent_pop.js"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -1924,7 +1925,8 @@
 					"css/utils/slide_navigatian.css",
 					"html/scienceeducation/scienceeducation_home.html",
 					"html/sciedu/sciedu_home.html",
-					null
+					null,
+					"html/show/show_home_1.html"
 				],
 				"refer": [
 					"html/mine.html",
@@ -1935,7 +1937,6 @@
 					"html/quan/pub-dynamic.html",
 					"html/show/show_home.html",
 					"html/qiuzhi/qiuzhi_home.html",
-					"html/show/show_home_1.html",
 					"html/qiuzhi/expert-detail.html",
 					"html/qiuzhi/qiuzhi-questionSearch.html"
 				],
@@ -3552,7 +3553,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"/image/utils/default_load_2_1.gif"
+					"/image/utils/default_load_2_1.gif",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/utils/customizeCity.html",
@@ -3818,7 +3820,9 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/qiuzhi/qiuzhi-question.html"
+				],
 				"priority": 0
 			},
 			"html/qiuzhi/atExpert.html": {

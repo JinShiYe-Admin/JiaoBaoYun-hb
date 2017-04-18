@@ -85,12 +85,16 @@
 			mui.plusReady(function() {
 				//events.closeWaiting();
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				index = plus.webview.getWebviewById('index.html'); //
-
+				index =main.parent(); //
+				console.log("iddddddddddddddddddddddddd"+index.id);
+				if(!myStorage.getItem(storageKeyName.PERSONALINFO).utid){
+					initBody();
+					changeIndexHeader();
+				}
 				//Webview窗口显示事件
 				main.addEventListener("show", function(e) {
 					//alert('### 硬件加速 ### ' + main.id + ' ' + main.isHardwareAccelerated());
-					console.log("show " + main.id + '|' + index.id + "|" + sliderId + '|' + cities.length);
+//					console.log("show " + main.id + '|' + index.id + "|" + sliderId + '|' + cities.length);
 					initBody();
 					changeIndexHeader();
 				});

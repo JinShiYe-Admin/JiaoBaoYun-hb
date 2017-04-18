@@ -266,7 +266,7 @@ var events = (function(mod) {
 		if(!datas) {
 			datas = null;
 		}
-		//		console.log('tarPage:' + tarPage);
+		console.log('tarPage:' + tarPage);
 		var targetPage = null;
 		//获得目标页面
 		if(!targetPage) {
