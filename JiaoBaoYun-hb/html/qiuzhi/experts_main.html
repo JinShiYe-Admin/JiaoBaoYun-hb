@@ -21,28 +21,28 @@
 			.mui-content {
 				background-color: white;
 			}
-			
+
 			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
 				color: #222222;
 			}
-			
+
 			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				border-bottom: 2px solid #1db8f5;
 				color: #00A5E0;
 			}
-			
+
 			.mui-scroll-wrapper {
 				background-color: white;
 			}
-			
+
 			.mui-segmented-control.mui-scroll-wrapper {
 				height: 40px;
 			}
-			
+
 			.mui-slider-indicator.mui-segmented-control {
 				background-color: #F5F5F5;
 			}
-			
+
 			.more-navigation {
 				position: absolute;
 				height: 40px;
@@ -55,39 +55,39 @@
 				z-index: 2;
 				background-color: #F5F5F5;
 			}
-			
+
 			.more-navigation p {
 				line-height: 50%;
 				color: #222222;
 			}
-			
+
 			.more-navigation a {
 				color: #222222;
 			}
-			
+
 			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
 				border-top: none;
 				border-bottom: none;
 			}
-			
+
 			.mui-table-view-cell:before,
 			.mui-table-view-cell:after {
 				left: 0px;
 			}
-			
+
 			.mui-slider .mui-slider-group .mui-slider-item .mui-table-view-cell:after {
 				height: 1px;
 			}
-			
+
 			.mui-pull-bottom-wrapper {
 				/*底部加载更多区域*/
 				background-color: white;
 			}
-			
+
 			.mui-table-view-cell {
 				line-height: 25px;
 			}
-			
+
 			.mui-slider .mui-slider-group .mui-slider-item img {
 				height: 40px;
 				width: 40px;
@@ -96,55 +96,55 @@
 				min-height: 40px;
 				min-width: 40px;
 			}
-			
+
 			.mui-media-object.expert-headimg {
 				/*专家头像*/
 				border-radius: 50% !important;
 				margin-top: 11px;
 				margin-bottom: 13px;
 			}
-			
+
 			.expert-info {
 				/*专家信息*/
 				margin-top: 10px;
 				font-size: 15px;
 			}
-			
+
 			.expert-name {
 				/*专家姓名*/
 				width: 35%;
 				color: #323232;
 				margin-right: 10px;
 			}
-			
+
 			.mui-media-object.expert-level {
 				/*专家等级*/
 				display: none;
 				/*height: 20px !important;
 				width: 20px !important;*/
 			}
-			
+
 			.mui-btn {
 				background-color: #1DB8F1 !important;
 			}
-			
+
 			.expert-answer {
 				/*专家回答数*/
 				color: #B7B7B7;
 			}
-			
+
 			.expert-answernum {
 				/*专家回答数*/
 				color: red;
 			}
-			
+
 			.expert-ask,
 			.expert-invite,
 			.expert-invited {
 				margin-top: 16px;
 				color: white;
 			}
-			
+
 			.expert-ask,
 			.expert-invite {
 				/*提问按钮*/
@@ -154,7 +154,7 @@
 				padding-top: 3px;
 				padding-bottom: 3px;
 			}
-			
+
 			.expert-invited {
 				/*已被邀请按钮*/
 				background-color: #d4d4d4 !important;
@@ -162,7 +162,7 @@
 				padding-top: 3px;
 				padding-bottom: 3px;
 			}
-			
+
 			.expert-usernote {
 				/*专家简介*/
 				line-height: 16px;
@@ -280,9 +280,7 @@
 			//点击提问
 			mui('#sliderGroup').on('tap', '.expert-ask', function() {
 				//判断是否是游客身份登录
-				if(events.judgeLoginMode()) {
-					return;
-				}
+				if (events.judgeLoginMode()) {return;}
 				var element = this.parentNode.parentNode;
 				//专家的信息
 				var expert = JSON.parse(element.getAttribute('data-info'));

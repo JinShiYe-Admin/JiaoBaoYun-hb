@@ -115,7 +115,7 @@ mui.plusReady(function() {
 
 	events.addTap('guanzhu', function() {
 		//判断是否是游客身份登录
-		events.judgeLoginMode();
+		if (events.judgeLoginMode()) {return;}
 		console.log('点击关注');
 		if(this.innerText == '关注') {
 			setAskFocus(askID, 1);
@@ -127,7 +127,7 @@ mui.plusReady(function() {
 	//点击回答
 	mui('#answer_bottom').on('tap', '.ellipsis-3', function() {
 		//判断是否是游客身份登录
-		events.judgeLoginMode();
+		if (events.judgeLoginMode()) {return;}
 		var element = this.parentNode;
 		var info = JSON.parse(element.getAttribute('data-info'))
 		console.log(JSON.stringify(info));

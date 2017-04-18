@@ -8,7 +8,6 @@ mui.init();
 var loginRoleType; //登录角色0为游客1为用户
 var noReadCount = 0;
 mui.plusReady(function() {
-
 	//	events.preload("../qiuzhi/expert-detail.html",100);
 	var waitingDia = events.showWaiting();
 	//安卓的连续点击两次退出程序
@@ -33,7 +32,11 @@ mui.plusReady(function() {
 		//		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
-		document.querySelector('img').src = updateHeadImg(img, 2);
+		var imgNode = document.querySelector('img');
+		if(imgNode){
+			imgNode.src = updateHeadImg(img, 2);
+		}
+		
 	});
 	window.addEventListener("login",function(){
 //		loginRoleType=1;
@@ -68,6 +71,7 @@ mui.plusReady(function() {
 		});
 	})
 	setListener();
+
 });
 //加载子页面
 var addSubPages = function() {
@@ -107,6 +111,7 @@ var addSubPages = function() {
 		}
 	}
 	events.closeWaiting();
+
 
 }
 //加载监听
@@ -278,22 +283,23 @@ var addShai = function(container, name) {
 	pubDynamic.style.fontSize = '16px'
 	pubDynamic.innerHTML = '晒一晒'
 	container.appendChild(pubDynamic);
-	events.addTap('pubDynamic', function() {
-		//判断是否是游客身份登录
-		events.judgeLoginMode();
-		var self = this
-		self.disabled = true;
-		if(name == 'jxq') {
-			events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
-		} else {
-			events.openNewWindowWithData('../quan/pub-dynamic.html', 'zx');
-		}
-		setTimeout(function() {
-			self.disabled = false;
-		}, 1500);
-
-	})
+	events.addTap('pubDynamic',
+		function() {
+			//判断是否是游客身份登录
+			if(events.judgeLoginMode()) { return; }
+			var self = this
+			self.disabled = true;
+			if(name == 'jxq') {
+				events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
+			} else {
+				events.openNewWindowWithData('../quan/pub-dynamic.html', 'zx');
+			}
+			setTimeout(function() {
+				self.disabled = false;
+			}, 1500);
+		})
 }
+
 var addPlus = function(container, name) {
 	var add = document.createElement('a');
 	add.className = 'mui-icon iconfont icon-jiahao mui-pull-right mui-icon-plusempty';
@@ -305,11 +311,11 @@ var addPlus = function(container, name) {
 	events.addTap('add', function() {
 		if(name == 'jxq') {
 			//判断是否是游客身份登录
-			events.judgeLoginMode();
+			if(events.judgeLoginMode()) { return; }
 			events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
 		} else {
 			//判断是否是游客身份登录
-			events.judgeLoginMode();
+			if(events.judgeLoginMode()) { return; }
 			events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
 		}
 
@@ -336,10 +342,13 @@ var addListIcon = function(container, id) {
 	var a = document.createElement('a');
 	a.className = 'mui-icon mui-icon mui-icon-list mui-pull-left';
 	a.style.marginTop = "2px";
-	console.log("加载顶部导航！")
 	a.addEventListener('tap', function() {
 		//判断是否是游客身份登录
+<<<<<<< HEAD
 		//		events.judgeLoginMode();
+=======
+		if(events.judgeLoginMode()) { return; }
+>>>>>>> origin/master
 		var self = this;
 		self.disabled = true;
 		events.fireToPageNone(id, 'tapTitleLeft');
@@ -370,4 +379,5 @@ var setConditionbyRole = function(role) {
 		plus.webview.hide("cloud_home.html");
 		changRightIcons("../sciedu/sciedu_home.html")
 	}
+
 }
