@@ -84,7 +84,7 @@ var events = (function(mod) {
 			waiting: {
 				title: '正在加载...'
 			},
-			createNew:true,
+			createNew: true,
 			styles: mod.getWebStyle()
 		});
 	};
@@ -760,7 +760,7 @@ var events = (function(mod) {
 	 */
 	mod.limitPreviewPullDown = function(refreshId) {
 		mui.getPreviewImage().open = function(index, group) {
-			if(mui('#' + refreshId).length>0) {
+			if(mui('#' + refreshId).length > 0) {
 				mui('#' + refreshId).pullRefresh().setStopped(true);
 			}
 			if(this.isShown()) {
@@ -778,7 +778,7 @@ var events = (function(mod) {
 			}
 		};
 		mui.getPreviewImage().close = function(index, group) {
-			if(mui('#' + refreshId).length>0) {
+			if(mui('#' + refreshId).length > 0) {
 				mui('#' + refreshId).pullRefresh().setStopped(false);
 			}
 			if(!this.isShown()) {
@@ -813,6 +813,10 @@ var events = (function(mod) {
 			mui(this.element).slider().destroy();
 			//		this.empty();
 		};
+		//判断是否是游客身份登录
+		mod.judgeLoginMode = function() {
+			console.log('判断是否是游客身份登录');
+		}
 	}
 	return mod;
 

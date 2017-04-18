@@ -25,6 +25,7 @@ var delContent_pop = function(data, callback) {
 				}
 				if(tempbtn.btnFlag == 1) { //删除
 					data.buttons = [tempbtn];
+					data.title = '确定删除？';
 					data.delFlag = 2;
 					delContent_pop(data, callback);
 				} else if(tempbtn.btnFlag == 2) { //修改
