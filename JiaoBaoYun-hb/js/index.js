@@ -28,13 +28,17 @@ mui.plusReady(function() {
 	};
 	addSubPages();
 	console.log("加载图标");
-	slideNavigation.add('mine.html', 200);
+//	slideNavigation.add('mine.html', 200);
 	window.addEventListener('infoChanged', function() {
 		//		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 		document.querySelector('img').src = updateHeadImg(img, 2);
 	});
+	window.addEventListener("login",function(){
+//		loginRoleType=1;
+//		setConditionbyRole(loginRoleType);
+	})
 	window.addEventListener('closeWaiting', function() {
 		events.closeWaiting();
 	})
@@ -63,8 +67,9 @@ mui.plusReady(function() {
 			}
 		});
 	})
-
+	setListener();
 });
+//加载子页面
 var addSubPages = function() {
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
@@ -92,8 +97,6 @@ var addSubPages = function() {
 	}
 	//当前激活选项
 	activeTab = subpages[Index];
-	var title = document.getElementById("title");
-
 	//去掉展现和科教城市下面的点
 	var idSlider = ['sciEduSlider', 'showSlider'];
 	//去掉展现和科教城市下面的点
@@ -104,9 +107,12 @@ var addSubPages = function() {
 		}
 	}
 	events.closeWaiting();
-	//	if(!role) {
-	//		changRightIcons("../sciedu/sciedu_home.html");
-	//	}
+
+}
+//加载监听
+var setListener=function(){
+	var title = document.getElementById("title");
+	var aniShow = {};
 	//选项卡点击事件
 	mui('.mui-bar-tab').on('tap', 'a', function(e) {
 		var targetTab = this.getAttribute('href');
@@ -132,9 +138,6 @@ var addSubPages = function() {
 				element.parentNode.removeChild(element);
 			}
 		}
-		//		if(title.innerHTML == '云盘') {
-		//			title.innerHTML = '云盘';
-		//		}
 		//更改按钮
 		changRightIcons(targetTab);
 		var targetSplit = targetTab.split('/');
@@ -347,6 +350,7 @@ var addListIcon = function(container, id) {
 	container.appendChild(a)
 }
 var setConditionbyRole = function(role) {
+	console.log("获取的身份信息："+JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
 	var cloudIcon = document.getElementById("defaultTab");
 	var sceIcon = document.getElementById("tabclass");
 	if(role) { //正常用户
