@@ -925,7 +925,7 @@ var events = (function(mod) {
 		} else { //游客身份，用默认账号密码登录，要有交互，就得先跳转到登录界面
 			var info = {
 				account: '00000000000',
-				password: ''
+				password: '123'
 			}
 			events.loginBtn(info, callback);
 		}
@@ -945,79 +945,85 @@ var events = (function(mod) {
 		// 等待的对话框
 		var wd = events.showWaiting();
 		//发送网络请求，data为网络返回值
-		postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData0, comData0, 0, wd, function(data) {
-			console.log('PostShakeHand:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-			if(data.RspCode == 0) {
-				//存储到手机本地
-				window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
-				//账号密码登录协议
-				//需要加密的数据
-				var enData = {
-					uid: loginInfo.account, //用户手机号或账号或email
-					pw: loginInfo.password
-				};
-				//不需要加密的数据
-				var comData = {
-					uuid: plus.device.uuid,
-					shaketype: 'login', //注册(reg),登录(login),修改密码(repw)
-					appid: plus.runtime.appid,
-					vtp: 'mb' //mb(手机号),nm(账号或邮箱)
-				};
-				console.log('endata:' + JSON.stringify(enData) + 'comdata:' + JSON.stringify(comData));
-				//发送网络请求，data为网络返回值
-				postDataEncry(storageKeyName.MAINURL + 'PostLogin', enData, comData, 0, wd, function(data) {
-					wd.close();
-					wd.close();
-					console.log('账号密码登录s1111111e:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					if(data.RspCode != 0000) {
-						mui.toast(data.RspTxt);
-						return;
-					} else {
-						mui.toast('登录成功')
-						//存储到手机本地
-						data.RspData.ispw = '1';
-						if(!data.RspData.uimg) {
-							data.RspData.uimg = '../../image/utils/default_personalimage.png';
-						}
-						//解析省市代码
-						if(data.RspData.uarea.length > 0) {
-							var tempArray = data.RspData.uarea.split('|');
-							if(tempArray.length > 0) {
-								var temp0 = tempArray[0].split(' ');
-								var temp1 = tempArray[1].split(' ');
-								var model_area = {
-									procode: temp0[0], //省份code，自己添加的参数
-									proname: temp1[0], //省份名称，自己添加的参数
-									acode: temp0[1], //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
-									aname: temp1[1], //节点名称--城市名称
-									atype: '' //节点类型,0省1城市2区县
-								}
-								data.RspData.uarea = model_area;
-							}
-						}
-						window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
-						console.log('登录保存的个人信息：' + JSON.stringify(data.RspData));
-						//
-						events.infoChanged();
-						//存储自动登录
-						//跳到主界面
-						var tempValue = {
-							flag: 0, //游客登录
-							value: 1 //登录成功
-						}
-						callback(tempValue);
-						//						events.openNewWindow('../index/index.html', '');
-					}
-				});
-			} else {
+		//		postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData0, comData0, 0, wd, function(data) {
+		//			console.log('PostShakeHand:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		//			if(data.RspCode == 0) {
+		//存储到手机本地
+//		window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+		//账号密码登录协议
+		//需要加密的数据
+		var enData = {
+			
+		};
+		//不需要加密的数据
+		var comData = {
+			uid: loginInfo.account, //用户手机号或账号或email
+			pw: loginInfo.password,
+			uuid: plus.device.uuid,
+			shaketype: 'login', //注册(reg),登录(login),修改密码(repw)
+			appid: plus.runtime.appid,
+			vtp: 'mb' //mb(手机号),nm(账号或邮箱)
+		};
+		console.log('endata:' + JSON.stringify(enData) + 'comdata:' + JSON.stringify(comData));
+		//发送网络请求，data为网络返回值
+		postDataEncry(storageKeyName.MAINURL + 'PostLogin', enData, comData, 0, wd, function(data) {
+			wd.close();
+			wd.close();
+			console.log('账号密码登录s1111111e:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			if(data.RspCode != 0000) {
 				var tempValue = {
 					flag: 0, //游客登录
 					value: 0 //登录失败
 				}
 				callback(tempValue);
 				mui.toast(data.RspTxt);
+				return;
+			} else {
+//				mui.toast('登录成功')
+				//存储到手机本地
+				data.RspData.ispw = '1';
+				if(!data.RspData.uimg) {
+					data.RspData.uimg = '../../image/utils/default_personalimage.png';
+				}
+				//解析省市代码
+				if(data.RspData.uarea.length > 0) {
+					var tempArray = data.RspData.uarea.split('|');
+//					if(tempArray.length > 0) {
+//						var temp0 = tempArray[0].split(' ');
+//						var temp1 = tempArray[1].split(' ');
+//						var model_area = {
+//							procode: temp0[0], //省份code，自己添加的参数
+//							proname: temp1[0], //省份名称，自己添加的参数
+//							acode: temp0[1], //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
+//							aname: temp1[1], //节点名称--城市名称
+//							atype: '' //节点类型,0省1城市2区县
+//						}
+//						data.RspData.uarea = model_area;
+//					}
+				}
+				window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
+				console.log('登录保存的个人信息：' + JSON.stringify(data.RspData));
+				//
+				events.infoChanged();
+				//存储自动登录
+				//跳到主界面
+				var tempValue = {
+					flag: 0, //游客登录
+					value: 1 //登录成功
+				}
+				callback(tempValue);
+				//						events.openNewWindow('../index/index.html', '');
 			}
 		});
+		//			} else {
+		//				var tempValue = {
+		//					flag: 0, //游客登录
+		//					value: 0 //登录失败
+		//				}
+		//				callback(tempValue);
+		//				mui.toast(data.RspTxt);
+		//			}
+		//		});
 	}
 
 	return mod;
