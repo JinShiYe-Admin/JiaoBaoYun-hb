@@ -107,7 +107,7 @@ var dynamiclistitem = (function($, mod) {
 	mod.addSomeEvent = function() {
 		mui('.mui-table-view').on('tap', '.icon-xiajiantou', function() {
 			//判断是否是游客身份登录
-			events.judgeLoginMode();
+			if (events.judgeLoginMode()) {return;}
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
 
 			var pageID = sliderId.replace('top_', '')
@@ -276,7 +276,7 @@ var dynamiclistitem = (function($, mod) {
 		//			评论
 		mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
 			//判断是否是游客身份登录
-			events.judgeLoginMode();
+			if (events.judgeLoginMode()) {return;}
 			var pageID = sliderId.replace('top_', '')
 			console.log('id=' + this.id)
 			tempIndex = this.id.replace('comment' + pageID + idFlag, '');
@@ -288,18 +288,17 @@ var dynamiclistitem = (function($, mod) {
 		//			回复评论
 		mui('.mui-table-view').on('tap', '.replyComment', function() {
 			//判断是否是游客身份登录
-			events.judgeLoginMode();
+			if (events.judgeLoginMode()) {return;}
 			var pageID = sliderId.replace('top_', '')
 			tempIndex = this.id.replace('replyComment' + pageID + idFlag, '');
 			mod.addComment('tap');
-
 			window.event.stopPropagation()
 
 		});
 		//			删除评论
 		mui('.mui-table-view').on('longtap', '.replyComment', function() {
 			//判断是否是游客身份登录
-			events.judgeLoginMode();
+			if (events.judgeLoginMode()) {return;}
 			console.log('长按删除评论')
 			var pageID = sliderId.replace('top_', '')
 			tempIndex = this.id.replace('replyComment' + pageID + idFlag, '');
@@ -313,7 +312,7 @@ var dynamiclistitem = (function($, mod) {
 		mui('.mui-table-view').on('tap', '.btn-attention',
 			function() {
 				//判断是否是游客身份登录
-				events.judgeLoginMode();
+				if (events.judgeLoginMode()) {return;}
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
 
 				var pageID = sliderId.replace('top_', '')
@@ -352,7 +351,7 @@ var dynamiclistitem = (function($, mod) {
 			}) //点击取消关注
 		mui('.mui-table-view').on('tap', '.btn-attentioned', function() {
 			//判断是否是游客身份登录
-			events.judgeLoginMode();
+			if (events.judgeLoginMode()) {return;}
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
 
 			var pageID = sliderId.replace('top_', '')
@@ -446,7 +445,7 @@ var dynamiclistitem = (function($, mod) {
 		//点赞和取消点赞
 		mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
 			//判断是否是游客身份登录
-			events.judgeLoginMode();
+			if (events.judgeLoginMode()) {return;}
 			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
 			var pageID = sliderId.replace('top_', '')
 			var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
@@ -542,7 +541,7 @@ var dynamiclistitem = (function($, mod) {
 		//删除动态
 		mui('.mui-table-view').on('tap', '.mui-icon-closeempty', function() {
 			//判断是否是游客身份登录
-			events.judgeLoginMode();
+			if (events.judgeLoginMode()) {return;}
 			var btnArray = ['取消', '确定'];
 			var closeId = this.id;
 			mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
