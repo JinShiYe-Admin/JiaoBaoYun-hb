@@ -2068,7 +2068,7 @@ var postDataPro_delStudentDoc = function(commonData, wd, callback) {
 //		var comData = {
 //			parentId:''//家长ID
 //		};
-//返回：{DocId:文件夹ID,DocName:文件夹名称,DocType:文件夹类型(1 为普通档案,2 为档案文件夹)}
+//返回：{DocId:文件夹ID,DocName:文件夹名称,DocType:文件夹类型(1 为普通档案,2 为档案文件夹)，StudentId:学生ID,StudentName	:学生姓名}
 var postDataPro_getStudentDocByParent = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};

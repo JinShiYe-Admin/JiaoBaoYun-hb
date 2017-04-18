@@ -307,6 +307,8 @@
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
+		<script type="text/javascript" src="../../js/qiuzhi/delContent_pop.js"></script>
+
 		<script type="text/javascript">
 			//声明变量
 			//文件存储数组
@@ -319,6 +321,8 @@
 			var noReadModel = {};
 
 			var homeworkReady = false;
+			//存储档案文件夹
+			var studentDoc = {};
 
 			mui.init({
 				gestureConfig: {
@@ -350,7 +354,7 @@
 					},
 				});
 
-				events.preload("../homework/homework-tea.html", 300);
+				//				events.preload("../homework/homework-tea.html", 300);
 				events.preload('storage_main.html', 300); //预加载云存储
 				window.addEventListener("topPopover", function(e) {
 					mui('#topPopover').popover('toggle')
@@ -366,9 +370,9 @@
 						events.openNewWindowWithData('../mine/ReadQRCode.html', '');
 					}
 				})
-				window.addEventListener("homeworkReady", function() {
-					homeworkReady = true;
-				});
+				//				window.addEventListener("homeworkReady", function() {
+				//					homeworkReady = true;
+				//				});
 
 				//重新登录或者自动登录后获取的信息
 				window.addEventListener('infoChanged', function() {
@@ -458,10 +462,9 @@
 						mui.toast('手机图库功能暂未开放');
 					} else { //档案
 						self.disabled = true;
-						events.openNewWindowWithData('record_student_main.html', {
-							StudentId: this.getAttribute('StudentId'), //学生ID
-							StudentName: this.getAttribute('StudentName') //学生姓名
-						});
+						var data = studentDoc[id.replace('data_', '')];
+						console.log(JSON.stringify(data));
+						events.openNewWindowWithData('record_student_main.html', data);
 						setTimeout(function() {
 							self.disabled = false;
 						}, 1500);
@@ -472,32 +475,7 @@
 				mui('#cloudstorage_0').on('longtap', '.mui-table-view-cell', function(event) {
 					var id = this.id;
 					if(id != 'shoujitongxunlu' && id != 'shoujituku') { //档案
-						var data = {
-							StudentId: this.getAttribute('StudentId'), //学生ID
-							StudentName: this.getAttribute('StudentName') //学生姓名
-						}
-						console.log(JSON.stringify(data));
-						var btnArray = [{
-							title: "重命名"
-						}, {
-							title: "删除"
-						}];
-						plus.nativeUI.actionSheet({
-							title: "档案操作",
-							cancel: "取消",
-							buttons: btnArray
-						}, function(e) {
-							switch(e.index) {
-								case 1: //修改档案名称
-									changeDataName(data, event);
-									break;
-								case 2: //删除档案
-									deleteData(data);
-									break;
-								default:
-									break;
-							}
-						});
+						longTapData(id, event);
 					}
 				});
 
@@ -696,11 +674,8 @@
 				function changeData() {
 					//26.用户云盘顶层文件及文件夹获取
 					postFirstFile();
-					document.getElementById("cloudstorage_0").innerHTML = '';
-					//73.（云档案）按家长获取学生档案姓名
-					//postUserStudent();
-					//手机通讯录，手机图库
-					addcloudstorage_0_0();
+					//91.（云档案）按家长获取档案文件夹
+					postUserStudent();
 					//假数据
 					//addcloudstorage_0_1({
 					//	StudentId: 0,
@@ -781,7 +756,11 @@
 							}
 							if(teacherClasses.length > 0 || studentClasses.length > 0) {
 								console.log('teacherClasses:' + teacherClasses.length + ',' + studentClasses.length);
-								sendMessageToHomework(teacherClasses, studentClasses);
+								//								sendMessageToHomework(teacherClasses, studentClasses);
+								events.openNewWindowWithData("../homework/homework-tea.html", {
+									teacherClasses: teacherClasses,
+									studentClasses: studentClasses
+								});
 							} else {
 								mui.toast('您还未加入班级');
 							}
@@ -834,10 +813,10 @@
 					});
 				}
 
-				//73.（云档案）按家长获取学生档案姓名
+				//91.（云档案）按家长获取档案文件夹
 				function postUserStudent() {
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-					//73.（云档案）按家长获取学生档案姓名
+					//91.（云档案）按家长获取档案文件夹
 					//所需参数
 					var comData = {
 						parentId: personalUTID //家长ID
@@ -845,21 +824,21 @@
 					//返回学生姓名数组
 					// 等待的对话框
 					var wd = events.showWaiting();
-					//addcloudstorage_0_0(); //手机通讯录，手机图库
-					postDataPro_getStudentName(comData, wd, function(data) {
-						console.log('73.云档案）按家长获取学生档案姓名postDataPro_getStudentName:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					postDataPro_getStudentDocByParent(comData, wd, function(data) {
+						console.log('91 按家长获取档案文件夹 getStudentDocByParent ' + JSON.stringify(data));
 						document.getElementById("cloudstorage_0").innerHTML = '';
 						addcloudstorage_0_0(); //手机通讯录，手机图库
+						studentDoc = {};
 						if(data.RspCode == 0) {
 							//设置页面显示
-							mui.each(data.RspData.Students, function(index, item) {
-								console.log('学生档案：' + index + '|' + JSON.stringify(item));
-								if(item.StudentName != '') {
-									addcloudstorage_0_1(item);
-								}
-							});
-						} else if(data.RspCode == 9) {} else {
-							mui.toast(data.RspTxt);
+							for(var i = 0; i < data.RspData.Data.length; i++) {
+								//console.log('学生档案 ' + i + '|' + JSON.stringify(data.RspData.Data[i]));
+								addcloudstorage_0_1(data.RspData.Data[i]);
+							}
+						} else {
+							if(data.RspCode != 9) {
+								mui.toast(data.RspTxt);
+							}
 						}
 						wd.close();
 					});
@@ -950,16 +929,18 @@
 				 * @param {Object} data
 				 */
 				function addcloudstorage_0_1(data) {
+					var id = data.DocType + '_' + data.DocId;
+					studentDoc[id] = data;
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell';
-					li.id = 'data_' + data.StudentId;
-					li.setAttribute('StudentId', data.StudentId); //学生ID
-					li.setAttribute('StudentName', data.StudentName); //学生姓名
+					li.id = 'data_' + id;
 					li.innerHTML = '<img src="../../image/cloud/cloud_0_dangan.png" style="height: ' + initStyle + 'px;width: ' + initStyle + 'px;"/>\
-									   <p class="mui-ellipsis" id="data_name_' + data.StudentId + '">' + data.StudentName + '档案</p>';
+									   <p class="mui-ellipsis" id="data_name_' + id + '"></p>';
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudFirstItemHeight / 2 + 'px';
 					document.getElementById("cloudstorage_0").appendChild(li);
+					var name = data.DocName || data.StudentName;
+					document.getElementById("data_name_" + id).innerText = name + '档案';
 					li.style.paddingTop = (cloudFirstItemHeight / 2 - (li.lastElementChild.offsetHeight + li.lastElementChild.offsetTop - li.firstElementChild.offsetTop)) / 2 + 'px';
 				}
 
@@ -1338,19 +1319,53 @@
 				});
 			}
 
-			var sendMessageToHomework = function(teacherClasses, studentClasses) {
-				if(homeworkReady) {
-					events.closeWaiting();
-					events.fireToPageWithData('../homework/homework-tea.html', 'postClasses', {
-						teacherClasses: teacherClasses,
-						studentClasses: studentClasses
-					})
-				} else {
-					events.showWaiting();
-					setTimeout(function() {
-						sendMessageToHomework(teacherClasses, studentClasses)
-					}, 500);
-				}
+			//			var sendMessageToHomework = function(teacherClasses, studentClasses) {
+			//				if(homeworkReady) {
+			//					events.closeWaiting();
+			//					events.fireToPageWithData('../homework/homework-tea.html', 'postClasses', {
+			//						teacherClasses: teacherClasses,
+			//						studentClasses: studentClasses
+			//					})
+			//				} else {
+			//					events.showWaiting();
+			//					setTimeout(function() {
+			//						sendMessageToHomework(teacherClasses, studentClasses)
+			//					}, 500);
+			//				}
+			//			}
+
+			/**
+			 * 长按某个档案
+			 * @param {Object} id
+			 * @param {Object} event
+			 */
+			function longTapData(id, event) {
+				var cellData = studentDoc[id.replace('data_', '')];
+				console.log('cellData ' + JSON.stringify(cellData));
+				var data1 = {
+					flag: 7, //flag:求知：提问1，回答2，评论3；班级空间：班级动态4；个人空间：个人动态5，个人动态评论6，档案7
+					comData: {
+						docId: cellData.DocId, //档案文件夹ID
+						docType: cellData.DocType //档案类型
+					}, //协议需要参数
+					title: '档案操作', //弹出框中，显示的标题
+					buttons: [{
+						title: '重命名',
+						btnFlag: 5
+					}, {
+						title: '删除',
+						btnFlag: 1
+					}], //弹出的列表,格式为：[{title:标题，btnFlag:要做的操作}]，btnFlag：1删除，2修改，3屏蔽，4取消屏蔽，5重命名
+					delFlag: 1 //删除确认弹出框格式，1从下弹出，2中间confirm
+				};
+				delContent_pop(data1, function(data) {
+					console.log('delContent_pop 返回值为 ' + JSON.stringify(data));
+					if(data.flag == 5) { //重命名
+						changeDataName(cellData, event);
+					} else if(data.flag == 1) { //删除
+						deleteData(data);
+					}
+				});
 			}
 
 			/**
@@ -1373,13 +1388,28 @@
 						} else if(e.value.length > 10) {
 							mui.toast('档案名称最多10个字');
 						} else {
-							//发送修改协议
-							//成功的回调
-							mui.toast('档案重命名成功');
-							document.getElementById('data_' + dataInfo.StudentId).setAttribute('StudentName', e.value);
-							document.getElementById('data_name_' + dataInfo.StudentId).innerText = e.value + '档案';
-							document.activeElement.blur();
-							mui.closePopups();
+							var wd = events.showWaiting();
+							var comData = {
+								fileInfoId: dataInfo.DocId, //档案ID
+								fileInfoName: e.value, //档案新名称
+								fileInfoType: dataInfo.DocType, //档案类型
+							}
+							//86.（云档案）修改档案名称
+							postDataPro_setStudentFileInfoName(comData, wd, function(data) {
+								console.log('86 修改档案名称 setStudentFileInfoName ' + JSON.stringify(data));
+								if(data.RspCode == 0 && data.RspData.Result == 1) {
+									//成功的回调
+									mui.toast('档案重命名成功');
+									var id = dataInfo.DocType + '_' + dataInfo.DocId;
+									studentDoc[id].DocName = e.value;
+									document.getElementById('data_name_' + id).innerText = e.value + '档案';
+									document.activeElement.blur();
+									mui.closePopups();
+								} else {
+									mui.toast(data.RspTxt);
+								}
+								wd.close();
+							})
 						}
 						return false;
 					} else {

@@ -171,6 +171,11 @@
 				pageIndex = 1;
 				flagRef = 0;
 				getAnswersByUser(ExpertsInfo.UserId);
+				window.addEventListener("answerShield",function(){
+					pageIndex = 1;
+					flagRef = 0;
+					getAnswersByUser(ExpertsInfo.UserId);
+				})
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					var index = this.id.replace('li', '');
 					events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', JSON.parse(this.dataset.info));

@@ -389,7 +389,8 @@ var publicModel = (function($, mod) {
 		Data:'',//	回答列表,Array[model_QZAnswer]
 		IsFocused:'',//	是否已关注
 		IsAnswered:'',//	是否已回答
-		
+		AnswerId	:'',//本人回答ID，未回答时为0
+		IsAnswerOff:'',//回答是否被屏蔽,1 已屏蔽,0 未屏蔽
 		AskChannel:'',//	问题话题
 		AskId:''//问题ID
 	}

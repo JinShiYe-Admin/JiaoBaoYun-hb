@@ -94,17 +94,18 @@ mui.plusReady(function() {
 	//隐藏更多按钮
 	btn_more.style.display = 'none';
 	//cloud界面传过来的事件和数据
-	window.addEventListener('postClasses', function(e) {
-		plus.webview.currentWebview().isReady = true;
-		var data = e.detail.data;
-		console.log('作业主界面获取信息：' + JSON.stringify(e.detail.data));
-		//学生角色所在班级数组
-		studentClasses = data.studentClasses;
-		//老师角色所在班级数组
-		teacherClasses = data.teacherClasses;
-		//设置界面
-		setChoices(title, roles, btn_more);
-	})
+	//	window.addEventListener('postClasses', function(e) {
+	//		plus.webview.currentWebview().isReady = true;
+	var data = plus.webview.currentWebview().data;
+	//		console.log('作业主界面获取信息：' + JSON.stringify(e.detail.data));
+	//学生角色所在班级数组
+	studentClasses = data.studentClasses;
+	//老师角色所在班级数组
+	teacherClasses = data.teacherClasses;
+	console.log("传过来的值：" + JSON.stringify(data));
+	//设置界面
+	setChoices(title, roles, btn_more);
+	//	})
 	//三道杠的点击事件
 	//	events.addTap('more', function() {
 	//			//通知子页面，显示、关闭菜单 
