@@ -272,7 +272,8 @@
 			"html/quan/classSpace-persons.html",
 			"html/utils/customizeCity.html",
 			"html/quan/space-detail.html",
-			"html/quan/zone_main.html"
+			"html/quan/zone_main.html",
+			"html/show/add-comment.html"
 		]
 	},
 	"html/index/mine.html": {
