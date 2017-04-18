@@ -996,14 +996,14 @@ var events = (function(mod) {
 //					if(tempArray.length > 0) {
 //						var temp0 = tempArray[0].split(' ');
 //						var temp1 = tempArray[1].split(' ');
-//						var model_area = {
-//							procode: temp0[0], //省份code，自己添加的参数
-//							proname: temp1[0], //省份名称，自己添加的参数
-//							acode: temp0[1], //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
-//							aname: temp1[1], //节点名称--城市名称
-//							atype: '' //节点类型,0省1城市2区县
-//						}
-//						data.RspData.uarea = model_area;
+						var model_area = {
+							procode: '00', //省份code，自己添加的参数
+							proname: '全国', //省份名称，自己添加的参数
+							acode: '000000', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
+							aname: '全国', //节点名称--城市名称
+							atype: '' //节点类型,0省1城市2区县
+						}
+						data.RspData.uarea = model_area;
 //					}
 				}
 				window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);

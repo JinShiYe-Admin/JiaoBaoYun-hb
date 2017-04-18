@@ -8,6 +8,34 @@ mui.init();
 var loginRoleType; //登录角色0为游客1为用户
 var noReadCount = 0;
 mui.plusReady(function() {
+	//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
+	var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+	console.log('person==='+JSON.stringify(personal));
+	if(personal && personal.utid != 0) { //有账号，正常登录
+
+	} else {
+		var model_area = {
+			procode: '00', //省份code，自己添加的参数
+			proname: '全国', //省份名称，自己添加的参数
+			acode: '000000', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
+			aname: '全国', //节点名称--城市名称
+			atype: '' //节点类型,0省1城市2区县
+		}
+		var personal1 = {
+			utid: '0', //用户表ID
+			uid: '00000000000', //电话号码
+			uname: '游客', //姓名,账号,只能修改一次,且只能字母开头,字母与数字,定了就不能修改
+			uimg: '../../image/utils/default_personalimage.png', //用户头像地址
+			unick: '游客', //用户昵称
+			usex: '', //用户性别
+			utxt: '', //用户签名
+			uarea: model_area, //用户区域,省代码 市代码|省名称 市名称
+			token: '', //用户令牌
+			ispw: '', //0无密码，1有密码
+			isLogin: '' //是否登录，0没有登录过，1有登录过
+		}
+		window.myStorage.setItem(window.storageKeyName.PERSONALINFO, personal1);
+	}
 	//	events.preload("../qiuzhi/expert-detail.html",100);
 	var waitingDia = events.showWaiting();
 	//安卓的连续点击两次退出程序
@@ -34,14 +62,14 @@ mui.plusReady(function() {
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 		var imgNode = document.querySelector('img');
-		if(imgNode){
+		if(imgNode) {
 			imgNode.src = updateHeadImg(img, 2);
 		}
 
 	});
-	window.addEventListener("login",function(){
+	window.addEventListener("login", function() {
 		console.log("login");
-		loginRoleType=1;
+		loginRoleType = 1;
 		setConditionbyRole(loginRoleType);
 	})
 	window.addEventListener('closeWaiting', function() {
@@ -51,26 +79,26 @@ mui.plusReady(function() {
 		//		getAboutMe();
 	});
 	events.defaultLogin(function(data) {
-			console.log("自动登录获取的值：" + JSON.stringify(data));
-			if(data.value) {
-				loginRoleType = data.flag;
-				setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-			} else { //登录失败
-				mui.toast("登录失败，请检查网络！");
-			}
-		});
+		console.log("自动登录获取的值：" + JSON.stringify(data));
+		if(data.value) {
+			loginRoleType = data.flag;
+			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+		} else { //登录失败
+			mui.toast("登录失败，请检查网络！");
+		}
+	});
 	plus.webview.currentWebview().addEventListener("show", function() {
 		console.log("index的show事件");
 		//自动登录
-//		events.defaultLogin(function(data) {
-//			console.log("自动登录获取的值：" + JSON.stringify(data));
-//			if(data.value) {
-//				loginRoleType = data.flag;
-//				setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-//			} else { //登录失败
-//				mui.toast("登录失败，请检查网络！");
-//			}
-//		});
+		//		events.defaultLogin(function(data) {
+		//			console.log("自动登录获取的值：" + JSON.stringify(data));
+		//			if(data.value) {
+		//				loginRoleType = data.flag;
+		//				setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+		//			} else { //登录失败
+		//				mui.toast("登录失败，请检查网络！");
+		//			}
+		//		});
 	})
 	setListener();
 
@@ -114,10 +142,9 @@ var addSubPages = function() {
 	}
 	events.closeWaiting();
 
-
 }
 //加载监听
-var setListener=function(){
+var setListener = function() {
 	var title = document.getElementById("title");
 	var aniShow = {};
 	//选项卡点击事件
@@ -360,23 +387,23 @@ var addListIcon = function(container, id) {
 	container.appendChild(a);
 }
 var setConditionbyRole = function(role) {
-	console.log("获取的身份信息："+JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
+	console.log("获取的身份信息：" + JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
 	var cloudIcon = document.getElementById("defaultTab");
 	var sceIcon = document.getElementById("tabclass");
 	if(role) { //正常用户
 		cloudIcon.style.display = "table-cell";
-//		cloudIcon.className = "mui-tab-item mui-active";
-//		sceIcon.className = "mui-tab-item";
-//		plus.webview.show("cloud_home.html");
-//		activeTab=plus.webview.getWebviewById("cloud_home.html");
-//		plus.webview.hide("sciedu_home.html");
-//		changRightIcons("../cloud/cloud_home.html")
+		//		cloudIcon.className = "mui-tab-item mui-active";
+		//		sceIcon.className = "mui-tab-item";
+		//		plus.webview.show("cloud_home.html");
+		//		activeTab=plus.webview.getWebviewById("cloud_home.html");
+		//		plus.webview.hide("sciedu_home.html");
+		//		changRightIcons("../cloud/cloud_home.html")
 	} else { //游客
 		cloudIcon.style.display = "none";
 		cloudIcon.className = "mui-tab-item";
 		sceIcon.className = "mui-tab-item mui-active";
 		plus.webview.show("sciedu_home.html");
-		activeTab=plus.webview.getWebviewById("sciedu_home.html");
+		activeTab = plus.webview.getWebviewById("sciedu_home.html");
 		plus.webview.hide("cloud_home.html");
 		changRightIcons("../sciedu/sciedu_home.html")
 	}
