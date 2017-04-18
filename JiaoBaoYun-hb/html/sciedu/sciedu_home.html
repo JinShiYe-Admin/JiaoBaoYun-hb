@@ -429,8 +429,8 @@
 						var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
 						console.log(JSON.stringify(uarea));
 						eduArray.push({
-							acode: uarea.acode,
-							aname: uarea.aname
+							acode: uarea.acode?uarea.acode:0,
+							aname: uarea.aname?uarea.aname:"全国"
 						});
 					}
 					cities = eduArray.slice(0); //拷贝数组
