@@ -947,30 +947,34 @@ var CloudFileUtil = (function($, mod) {
 		div.img = img;
 		div.className = 'img-div';
 		if(flag) {
-			div.innerHTML = '<img style="width:90%;height:90%" src="' + img.thumb + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
+			div.innerHTML = '<img style="width:90%;height:90%;margin:5%;" src="' + img.thumb + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
 				'<a class="mui-icon iconfont icon-guanbi"></a>';
 		} else {
-			div.innerHTML = '<div class="clip-container"  style="width:' + div_width * 0.9 + ';height:' + div_width * 0.9 + ';margin:5%;overflow:hidden;display:inline-block backgroud:blue"><img src="' + img.url + '" style="visibility:hidden;" data-preview-src="' + img.url + '" data-preview-group="1"/></div>' +
+			div.innerHTML = '<div class="clip-container"  style="width:' + div_width * 0.9 + 'px;height:' + div_width * 0.9 + 'px;margin:5%;overflow:hidden;display:inline-block backgroud:blue"><img src="' + img.url + '" style="visibility:hidden;" data-preview-src="' + img.url + '" data-preview-group="1"/></div>' +
 				'<a class="mui-icon iconfont icon-guanbi"></a>';
 		}
 		console.log("放置的图片信息:" + JSON.stringify(img));
 		pictures.appendChild(div);
 		if(div.querySelector(".clip-container")) {
-			div.querySelector("img").onload = function() {
-				console.log("图片宽度：" + this.width + ",图片高度：" + this.height);
-				var marginSize = Math.abs(this.width - this.height) / 2;
+			div.querySelector("img").onload = function(event) {
+				console.log(JSON.stringify(event))
+				console.log("图片宽度：" + this.naturalWidth + ",图片高度：" +  this.naturalHeight);
+				var marginSize = Math.abs(this.naturalWidth - this.naturalHeight) / 2;
+				
 				console.log("margin值：" + marginSize + "px");
-				if(this.width > this.height) {
+				if(this.naturalWidth > this.naturalHeight) {
+					var realMarginSize=marginSize/this.naturalHeight*this.width;
 					this.style.height = this.width + "px";
 					this.style.width = "initial";
-					this.style.marginLeft = -marginSize + "px";
-					this.style.marginRight = -marginSize + "px";
+					this.style.marginLeft = -realMarginSize + "px";
+					this.style.marginRight = -realMarginSize + "px";
 					this.style.visibility = "visible";
 				} else {
+					var realMarginSize=marginSize/this.naturalWidth*this.width;
 					this.style.height = "initial";
 					this.style.width = this.width + "px";
-					this.style.marginTop = -marginSize + "px";
-					this.style.marginBottom = -marginSize + "px";
+					this.style.marginTop = -realMarginSize + "px";
+					this.style.marginBottom = -realMarginSize + "px";
 					this.style.visibility = "visible";
 				}
 			}
