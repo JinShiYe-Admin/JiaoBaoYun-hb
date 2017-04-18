@@ -251,6 +251,8 @@ function getHomeworkAlert(NoReadCnt) {
 		pubDynamic.innerHTML = '晒一晒'
 		container.appendChild(pubDynamic);
 		events.addTap('pubDynamic', function() {
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			var self = this
 			self.disabled = true;
 			if(name == 'jxq') {
@@ -274,8 +276,12 @@ var	addPlus = function(container,name){
 		container.appendChild(add);
 		events.addTap('add', function() {
 		if(name == 'jxq') {
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
 		}else{
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
 		}
 		
@@ -291,6 +297,8 @@ var	addPlus = function(container,name){
 		pubDynamic.innerHTML = '搜索'
 		container.appendChild(pubDynamic);
 		events.addTap('expertSearch', function() {
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			events.openNewWindowWithData('../qiuzhi/qiuzhi-questionSearch.html', 'jxq');
 		})
 	}
@@ -303,6 +311,8 @@ var	addPlus = function(container,name){
 		a.className = 'mui-icon mui-icon mui-icon-list mui-pull-left';
 		a.style.marginTop = "2px";
 		a.addEventListener('tap', function() {
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			var self = this;
 			self.disabled = true;
 			events.fireToPageNone(id, 'tapTitleLeft');
