@@ -259,7 +259,6 @@ var changRightIcons = function(targetTab) {
 	}
 }
 
-<<<<<<< HEAD
 	/**
 	 * 加载晒一晒
 	 * @param {Object} container
@@ -286,37 +285,7 @@ var changRightIcons = function(targetTab) {
 			setTimeout(function() {
 				self.disabled = false;
 			}, 1500);
-=======
-/**
- * 加载晒一晒
- * @param {Object} container
- */
-var addShai = function(container, name) {
-	var pubDynamic = document.createElement('a');
-	pubDynamic.id = 'pubDynamic'
-	pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
-	pubDynamic.style.paddingLeft = '30px'
-	pubDynamic.style.paddingTop = '15px'
-	pubDynamic.style.fontSize = '16px'
-	pubDynamic.innerHTML = '晒一晒'
-	container.appendChild(pubDynamic);
-	events.addTap('pubDynamic', function() {
-		//判断是否是游客身份登录
-		events.judgeLoginMode();
-		var self = this
-		self.disabled = true;
-		if(name == 'jxq') {
-			events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
-		} else {
-			events.openNewWindowWithData('../quan/pub-dynamic.html', 'zx');
-		}
-		setTimeout(function() {
-			self.disabled = false;
-		}, 1500);
->>>>>>> e69a94330d69fd3e34ee404ca4fb4279249cc6f0
 
-	})
-}
 var addPlus = function(container, name) {
 	var add = document.createElement('a');
 	add.className = 'mui-icon iconfont icon-jiahao mui-pull-right mui-icon-plusempty';
@@ -351,27 +320,6 @@ var addQiuZhiExpertSearch = function(container) {
 		events.openNewWindowWithData('../qiuzhi/qiuzhi-questionSearch.html', 'jxq');
 	})
 }
-/**
- * 修改科教，展现的顶部导航
- * @param {Object} container
- */
-var addListIcon = function(container, id) {
-	var a = document.createElement('a');
-	a.className = 'mui-icon mui-icon mui-icon-list mui-pull-left';
-	a.style.marginTop = "2px";
-	console.log("加载顶部导航！")
-	a.addEventListener('tap', function() {
-		//判断是否是游客身份登录
-//		events.judgeLoginMode();
-		var self = this;
-		self.disabled = true;
-		events.fireToPageNone(id, 'tapTitleLeft');
-		setTimeout(function() {
-			self.disabled = false;
-		}, 1500);
-	});
-	container.appendChild(a)
-}
 var setConditionbyRole = function(role) {
 	var cloudIcon = document.getElementById("defaultTab");
 	var sceIcon = document.getElementById("tabclass");
@@ -384,7 +332,6 @@ var setConditionbyRole = function(role) {
 		cloudIcon.className = "mui-tab-item";
 		sceIcon.className = "mui-tab-item mui-active";
 	}
-<<<<<<< HEAD
 	/**
 	 * 修改科教，展现的顶部导航
 	 * @param {Object} container
@@ -405,6 +352,4 @@ var setConditionbyRole = function(role) {
 		});
 		container.appendChild(a)
 	}
-=======
 }
->>>>>>> e69a94330d69fd3e34ee404ca4fb4279249cc6f0
