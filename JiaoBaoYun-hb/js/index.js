@@ -43,14 +43,18 @@ mui.plusReady(function() {
 		//		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
-		document.querySelector('img').src = updateHeadImg(img, 2);
+		var imgNode = document.querySelector('img');
+		if(imgNode){
+			imgNode.src = updateHeadImg(img, 2);
+		}
+		
 	});
 	window.addEventListener('closeWaiting', function() {
 		events.closeWaiting();
 	})
 	window.addEventListener('aboutmNoRead', function() {
 		//		getAboutMe();
-	});	
+	});
 });
 var addSubPages = function(role) {
 	//设置默认打开首页显示的子页序号；
@@ -76,10 +80,10 @@ var addSubPages = function(role) {
 				mui.extend(aniShow, temp);
 			}
 		} else {
-			if(i==1){
+			if(i == 1) {
 				temp[subpages[i]] = "true";
 				mui.extend(aniShow, temp);
-			}else{
+			} else {
 				sub.hide();
 			}
 		}
@@ -101,7 +105,7 @@ var addSubPages = function(role) {
 		}
 	}
 	events.closeWaiting();
-	if(!role){
+	if(!role) {
 		changRightIcons("../sciedu/sciedu_home.html");
 	}
 	//选项卡点击事件
@@ -129,9 +133,9 @@ var addSubPages = function(role) {
 				element.parentNode.removeChild(element);
 			}
 		}
-//		if(title.innerHTML == '云盘') {
-//			title.innerHTML = '云盘';
-//		}
+		//		if(title.innerHTML == '云盘') {
+		//			title.innerHTML = '云盘';
+		//		}
 		//更改按钮
 		changRightIcons(targetTab);
 		var targetSplit = targetTab.split('/');
@@ -153,9 +157,9 @@ var addSubPages = function(role) {
 		activeTab = targetTab;
 	});
 	//首页加号点击事件
-//	events.addTap('add', function() {
-//		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
-//	})
+	//	events.addTap('add', function() {
+	//		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
+	//	})
 }
 
 function getHomeworkAlert(NoReadCnt) {
@@ -229,10 +233,10 @@ var changRightIcons = function(targetTab) {
 	while(title_left.firstElementChild) {
 		title_left.removeChild(title_left.firstElementChild);
 	};
-	var title=document.getElementById("title");
+	var title = document.getElementById("title");
 	switch(targetTab) {
 		case '../cloud/cloud_home.html': //首页
-			title.innerText="云盘";
+			title.innerText = "云盘";
 			addPlus(iconContainer, 'jxq');
 			slideNavigation.addSlideIcon();
 			slideNavigation.iconAddEvent();
@@ -245,7 +249,7 @@ var changRightIcons = function(targetTab) {
 			addShai(iconContainer, 'zx');
 			break;
 		case '../qiuzhi/qiuzhi_home.html': //求知
-			title.innerText="求知";
+			title.innerText = "求知";
 			slideNavigation.addSlideIcon();
 			addQiuZhiExpertSearch(iconContainer);
 			document.querySelector('.img-icon').addEventListener('tap', function(e) {
@@ -259,22 +263,23 @@ var changRightIcons = function(targetTab) {
 	}
 }
 
-	/**
-	 * 加载晒一晒
-	 * @param {Object} container
-	 */
-	var addShai = function(container, name) {
-		var pubDynamic = document.createElement('a');
-		pubDynamic.id = 'pubDynamic'
-		pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
-		pubDynamic.style.paddingLeft = '30px'
-		pubDynamic.style.paddingTop = '15px'
-		pubDynamic.style.fontSize = '16px'
-		pubDynamic.innerHTML = '晒一晒'
-		container.appendChild(pubDynamic);
-		events.addTap('pubDynamic', function() {
+/**
+ * 加载晒一晒
+ * @param {Object} container
+ */
+var addShai = function(container, name) {
+	var pubDynamic = document.createElement('a');
+	pubDynamic.id = 'pubDynamic'
+	pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
+	pubDynamic.style.paddingLeft = '30px'
+	pubDynamic.style.paddingTop = '15px'
+	pubDynamic.style.fontSize = '16px'
+	pubDynamic.innerHTML = '晒一晒'
+	container.appendChild(pubDynamic);
+	events.addTap('pubDynamic',
+		function() {
 			//判断是否是游客身份登录
-			if (events.judgeLoginMode()) {return;}
+			if(events.judgeLoginMode()) { return; }
 			var self = this
 			self.disabled = true;
 			if(name == 'jxq') {
@@ -285,6 +290,8 @@ var changRightIcons = function(targetTab) {
 			setTimeout(function() {
 				self.disabled = false;
 			}, 1500);
+		})
+}
 
 var addPlus = function(container, name) {
 	var add = document.createElement('a');
@@ -297,11 +304,11 @@ var addPlus = function(container, name) {
 	events.addTap('add', function() {
 		if(name == 'jxq') {
 			//判断是否是游客身份登录
-			if (events.judgeLoginMode()) {return;}
+			if(events.judgeLoginMode()) { return; }
 			events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
 		} else {
 			//判断是否是游客身份登录
-			if (events.judgeLoginMode()) {return;}
+			if(events.judgeLoginMode()) { return; }
 			events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
 		}
 
@@ -320,6 +327,26 @@ var addQiuZhiExpertSearch = function(container) {
 		events.openNewWindowWithData('../qiuzhi/qiuzhi-questionSearch.html', 'jxq');
 	})
 }
+/**
+ * 修改科教，展现的顶部导航
+ * @param {Object} container
+ */
+var addListIcon = function(container, id) {
+	var a = document.createElement('a');
+	a.className = 'mui-icon mui-icon mui-icon-list mui-pull-left';
+	a.style.marginTop = "2px";
+	a.addEventListener('tap', function() {
+		//判断是否是游客身份登录
+		if(events.judgeLoginMode()) { return; }
+		var self = this;
+		self.disabled = true;
+		events.fireToPageNone(id, 'tapTitleLeft');
+		setTimeout(function() {
+			self.disabled = false;
+		}, 1500);
+	});
+	container.appendChild(a)
+}
 var setConditionbyRole = function(role) {
 	var cloudIcon = document.getElementById("defaultTab");
 	var sceIcon = document.getElementById("tabclass");
@@ -332,24 +359,5 @@ var setConditionbyRole = function(role) {
 		cloudIcon.className = "mui-tab-item";
 		sceIcon.className = "mui-tab-item mui-active";
 	}
-	/**
-	 * 修改科教，展现的顶部导航
-	 * @param {Object} container
-	 */
-	var addListIcon = function(container, id) {
-		var a = document.createElement('a');
-		a.className = 'mui-icon mui-icon mui-icon-list mui-pull-left';
-		a.style.marginTop = "2px";
-		a.addEventListener('tap', function() {
-			//判断是否是游客身份登录
-			if (events.judgeLoginMode()) {return;}
-			var self = this;
-			self.disabled = true;
-			events.fireToPageNone(id, 'tapTitleLeft');
-			setTimeout(function() {
-				self.disabled = false;
-			}, 1500);
-		});
-		container.appendChild(a)
-	}
+
 }
