@@ -344,11 +344,7 @@ var addListIcon = function(container, id) {
 	a.style.marginTop = "2px";
 	a.addEventListener('tap', function() {
 		//判断是否是游客身份登录
-<<<<<<< HEAD
-		//		events.judgeLoginMode();
-=======
 		if(events.judgeLoginMode()) { return; }
->>>>>>> origin/master
 		var self = this;
 		self.disabled = true;
 		events.fireToPageNone(id, 'tapTitleLeft');
