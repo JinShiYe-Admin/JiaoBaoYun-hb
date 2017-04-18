@@ -39,8 +39,9 @@ mui.plusReady(function() {
 		
 	});
 	window.addEventListener("login",function(){
-//		loginRoleType=1;
-//		setConditionbyRole(loginRoleType);
+		console.log("login");
+		loginRoleType=1;
+		setConditionbyRole(loginRoleType);
 	})
 	window.addEventListener('closeWaiting', function() {
 		events.closeWaiting();
@@ -51,7 +52,7 @@ mui.plusReady(function() {
 	events.defaultLogin(function(data) {
 			console.log("自动登录获取的值：" + JSON.stringify(data));
 			if(data.value) {
-				loginRoleType = data.type;
+				loginRoleType = data.flag;
 				setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
 			} else { //登录失败
 				mui.toast("登录失败，请检查网络！");
@@ -60,15 +61,15 @@ mui.plusReady(function() {
 	plus.webview.currentWebview().addEventListener("show", function() {
 		console.log("index的show事件");
 		//自动登录
-		events.defaultLogin(function(data) {
-			console.log("自动登录获取的值：" + JSON.stringify(data));
-			if(data.value) {
-				loginRoleType = data.type;
-				setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-			} else { //登录失败
-				mui.toast("登录失败，请检查网络！");
-			}
-		});
+//		events.defaultLogin(function(data) {
+//			console.log("自动登录获取的值：" + JSON.stringify(data));
+//			if(data.value) {
+//				loginRoleType = data.flag;
+//				setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+//			} else { //登录失败
+//				mui.toast("登录失败，请检查网络！");
+//			}
+//		});
 	})
 	setListener();
 
@@ -352,20 +353,20 @@ var addListIcon = function(container, id) {
 			self.disabled = false;
 		}, 1500);
 	});
-	container.appendChild(a)
+	container.appendChild(a);
 }
 var setConditionbyRole = function(role) {
 	console.log("获取的身份信息："+JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
 	var cloudIcon = document.getElementById("defaultTab");
 	var sceIcon = document.getElementById("tabclass");
 	if(role) { //正常用户
-		cloudIcon.style.display = "inline-block";
-		cloudIcon.className = "mui-tab-item mui-active";
-		sceIcon.className = "mui-tab-item";
-		plus.webview.show("cloud_home.html");
-		activeTab=plus.webview.getWebviewById("cloud_home.html");
-		plus.webview.hide("sciedu_home.html");
-		changRightIcons("../cloud/cloud_home.html")
+		cloudIcon.style.display = "table-cell";
+//		cloudIcon.className = "mui-tab-item mui-active";
+//		sceIcon.className = "mui-tab-item";
+//		plus.webview.show("cloud_home.html");
+//		activeTab=plus.webview.getWebviewById("cloud_home.html");
+//		plus.webview.hide("sciedu_home.html");
+//		changRightIcons("../cloud/cloud_home.html")
 	} else { //游客
 		cloudIcon.style.display = "none";
 		cloudIcon.className = "mui-tab-item";
