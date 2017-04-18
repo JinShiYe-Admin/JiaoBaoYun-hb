@@ -87,7 +87,7 @@
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				index =main.parent(); //
 				console.log("iddddddddddddddddddddddddd"+index.id);
-				if(!myStorage.getItem(storageKeyName.PERSONALINFO).utid){
+				if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)){
 					initBody();
 					changeIndexHeader();
 				}

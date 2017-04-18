@@ -525,7 +525,12 @@ var events = (function(mod) {
 				if(target.scrollHeight > target.clientHeight) {
 					e.stopPropagation();
 				} else {
-					target.dispatchEvent(e);
+					try{
+						target.dispatchEvent(e);
+					}catch(ev){
+						//TODO handle the exception
+					}
+					
 				}
 			}
 		}, true);
