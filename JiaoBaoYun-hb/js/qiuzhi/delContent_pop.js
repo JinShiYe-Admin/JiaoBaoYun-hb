@@ -25,6 +25,7 @@ var delContent_pop = function(data, callback) {
 				}
 				if(tempbtn.btnFlag == 1) { //删除
 					data.buttons = [tempbtn];
+					data.title = '确定删除？';
 					data.delFlag = 2;
 					delContent_pop(data, callback);
 				} else if(tempbtn.btnFlag == 2) { //修改
@@ -45,7 +46,7 @@ var delContent_pop = function(data, callback) {
 			}
 		});
 	} else { //2从中间弹出confirm
-		mui.confirm('', '确定删除？', ['取消', '确定'], function(e) {
+		mui.confirm('', data.title, ['取消', '确定'], function(e) {
 			var index = e.index;
 			switch(index) {
 				case 0: //取消
