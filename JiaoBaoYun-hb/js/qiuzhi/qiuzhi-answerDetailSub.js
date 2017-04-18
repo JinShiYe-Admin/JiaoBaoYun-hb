@@ -774,17 +774,25 @@ var setListeners = function() {
 	//	});
 	//评论的点赞按钮点击事件
 	mui(".mui-table-view").on('tap', '.support-container', function() {
+		//判断是否是游客身份登录
+		events.judgeLoginMode();
 		setIsLikeComment(this.querySelector('.icon-support'));
 	})
 	//回答的点赞按钮的点赞事件
 	events.addTap('support-answer', function() {
+		//判断是否是游客身份登录
+		events.judgeLoginMode();
 		setIsLikeAnswer(this.querySelector('.icon-support'));
 	})
 	//按钮点击事件关注事件
 	events.addTap('btn-focus', function() {
+		//判断是否是游客身份登录
+		events.judgeLoginMode();
 		setUserFocus(answerData.AnswerMan, this)
 	})
 	events.addTap('answer-comment', function() {
+		//判断是否是游客身份登录
+		events.judgeLoginMode();
 		events.fireToPageWithData('qiuzhi-addAnswer.html', 'add-comment', answerData);
 		upperInfo = null;
 		parentContainer = null;

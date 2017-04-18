@@ -46,7 +46,7 @@ mui.plusReady(function() {
 	console.log('qiuzhi-questionSub.html:' + JSON.stringify(mainData));
 
 	events.preload('qiuzhi-addAnswer.html');
-	askModel = mainData.questionInfo.RspData;
+	askModel = mainData.channelInfo;
 	setCondition();
 	askID = mainData.askID;
 	//5.获取某个问题的详情
@@ -114,6 +114,8 @@ mui.plusReady(function() {
 	//---点击效果---end---
 
 	events.addTap('guanzhu', function() {
+		//判断是否是游客身份登录
+		events.judgeLoginMode();
 		console.log('点击关注');
 		if(this.innerText == '关注') {
 			setAskFocus(askID, 1);
@@ -124,6 +126,8 @@ mui.plusReady(function() {
 	
 	//点击回答
 	mui('#answer_bottom').on('tap', '.ellipsis-3', function() {
+		//判断是否是游客身份登录
+		events.judgeLoginMode();
 		var element = this.parentNode;
 		var info = JSON.parse(element.getAttribute('data-info'))
 		console.log(JSON.stringify(info));
