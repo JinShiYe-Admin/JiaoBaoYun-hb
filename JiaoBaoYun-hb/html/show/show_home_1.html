@@ -63,7 +63,7 @@
 				SCREEN_WIDTH = plus.screen.resolutionWidth;
 				mui.previewImage(); //浏览图片详情
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				index = plus.webview.getWebviewById('index.html'); //
+				index =main.parent(); //
 				main.addEventListener("hide", function(e) {
 					mui.getPreviewImage().close()
 				})
