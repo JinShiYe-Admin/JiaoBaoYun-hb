@@ -106,6 +106,8 @@ var dynamiclistitem = (function($, mod) {
 	}
 	mod.addSomeEvent = function() {
 		mui('.mui-table-view').on('tap', '.icon-xiajiantou', function() {
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
 
 			var pageID = sliderId.replace('top_', '')
@@ -216,6 +218,8 @@ var dynamiclistitem = (function($, mod) {
 			});
 		});
 		mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			if(isPersonal == 1) {
 				var cityID = sliderId.replace('top_', '');
 				var index = this.id.replace('headImg' + cityID + idFlag, '');
@@ -239,7 +243,8 @@ var dynamiclistitem = (function($, mod) {
 
 		})
 		mui('.mui-table-view').on('tap', '.question_content', function() {
-
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			var cityID = sliderId.replace('top_', '');
 			var index = this.id.replace('question_content' + cityID + idFlag, '');
 			if(idFlag == '') {
@@ -251,7 +256,8 @@ var dynamiclistitem = (function($, mod) {
 			events.openNewWindowWithData('../quan/space-detail.html', zonepArray[index])
 		});
 		mui('.mui-table-view').on('tap', '.show', function() {
-
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			var cityID = sliderId.replace('top_', '');
 			var index = this.id.replace('show' + cityID + idFlag, '');
 			if(idFlag == '') {
@@ -263,7 +269,8 @@ var dynamiclistitem = (function($, mod) {
 
 		})
 		mui('.mui-table-view').on('tap', '.show2', function() {
-
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			var cityID = sliderId.replace('top_', '');
 			var index = this.id.replace('show2' + cityID + idFlag, '');
 			if(idFlag == '') {
@@ -276,6 +283,8 @@ var dynamiclistitem = (function($, mod) {
 		})
 		//			评论
 		mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			var pageID = sliderId.replace('top_', '')
 			console.log('id=' + this.id)
 			tempIndex = this.id.replace('comment' + pageID + idFlag, '');
@@ -286,6 +295,8 @@ var dynamiclistitem = (function($, mod) {
 
 		//			回复评论
 		mui('.mui-table-view').on('tap', '.replyComment', function() {
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			var pageID = sliderId.replace('top_', '')
 			tempIndex = this.id.replace('replyComment' + pageID + idFlag, '');
 			mod.addComment('tap');
@@ -295,6 +306,8 @@ var dynamiclistitem = (function($, mod) {
 		});
 		//			删除评论
 		mui('.mui-table-view').on('longtap', '.replyComment', function() {
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			console.log('长按删除评论')
 			var pageID = sliderId.replace('top_', '')
 			tempIndex = this.id.replace('replyComment' + pageID + idFlag, '');
@@ -307,6 +320,8 @@ var dynamiclistitem = (function($, mod) {
 		//点击关注
 		mui('.mui-table-view').on('tap', '.btn-attention',
 			function() {
+				//判断是否是游客身份登录
+				events.judgeLoginMode();
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
 
 				var pageID = sliderId.replace('top_', '')
@@ -344,6 +359,8 @@ var dynamiclistitem = (function($, mod) {
 				})
 			}) //点击取消关注
 		mui('.mui-table-view').on('tap', '.btn-attentioned', function() {
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
 
 			var pageID = sliderId.replace('top_', '')
@@ -384,6 +401,8 @@ var dynamiclistitem = (function($, mod) {
 		})
 		//点击点赞人那一行 跳转到点赞的人的列表界面
 		mui('.mui-table-view').on('tap', '.PraiseList', function() {
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			console.log('跳转到点赞人列表界面')
 			var cityID = sliderId.replace('top_', '');
 			var index = this.id.replace('PraiseList' + cityID + idFlag, '');
@@ -393,6 +412,8 @@ var dynamiclistitem = (function($, mod) {
 		})
 		//点击点赞的人跳转到相应界面
 		mui('.mui-table-view').on('tap', '.praiseName', function() {
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			console.log('点赞者id' + this.dataset.info);
 			mui.openWindow({
 				url: '../quan/zone_main.html',
@@ -414,6 +435,8 @@ var dynamiclistitem = (function($, mod) {
 		});
 		//点击评论者名字
 		mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			console.log('评论者id' + this.dataset.info);
 			mui.openWindow({
 				url: '../quan/zone_main.html',
@@ -436,6 +459,8 @@ var dynamiclistitem = (function($, mod) {
 		})
 		//点赞和取消点赞
 		mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
 			var pageID = sliderId.replace('top_', '')
 			var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
@@ -530,6 +555,8 @@ var dynamiclistitem = (function($, mod) {
 		});
 		//删除动态
 		mui('.mui-table-view').on('tap', '.mui-icon-closeempty', function() {
+			//判断是否是游客身份登录
+			events.judgeLoginMode();
 			var btnArray = ['取消', '确定'];
 			var closeId = this.id;
 			mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
@@ -669,12 +696,12 @@ var dynamiclistitem = (function($, mod) {
 		//头像
 		var html2 = '<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:40px;height:40px;border-radius: 50%;" src="' + data.personalImage + '"></div>';
 		var html3 = '<div class="mui-media-body dynamic-padding-left-10px">' + closeempty;
-		if(data.InShow=='1'){
-					//姓名
-		var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:16px;margin-top:2px">' + data.personalName + ' <span class="mui-icon iconfont icon-dongtai1" style="width:20px;height:20px;font-size:14px;color:rgb(26,155,255)"></span></p>';
-		}else{
-					//姓名
-		var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:16px;margin-top:2px">' + data.personalName + '</p>';
+		if(data.InShow == '1') {
+			//姓名
+			var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:16px;margin-top:2px">' + data.personalName + ' <span class="mui-icon iconfont icon-dongtai1" style="width:20px;height:20px;font-size:14px;color:rgb(26,155,255)"></span></p>';
+		} else {
+			//姓名
+			var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:16px;margin-top:2px">' + data.personalName + '</p>';
 		}
 
 		//时间
