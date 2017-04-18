@@ -844,7 +844,8 @@
 					"fonts/fangzheng.ttf",
 					"image/quan/share.png",
 					"image/quan/aboutme.png",
-					"image/quan/Scan.png"
+					"image/quan/Scan.png",
+					"js/qiuzhi/delContent_pop.js"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -863,7 +864,8 @@
 					"html/mine/qun_manage_main.html",
 					"html/quan/zone_main.html",
 					"html/mine/qun_manage_1.html",
-					"html/mine/ReadQRCode.html"
+					"html/mine/ReadQRCode.html",
+					"html/quan/pub-dynamic.html"
 				],
 				"priority": 0
 			},

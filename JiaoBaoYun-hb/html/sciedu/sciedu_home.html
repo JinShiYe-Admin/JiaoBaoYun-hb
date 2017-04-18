@@ -170,6 +170,8 @@
 
 					//点击每一项的监听
 					mui('#sliderGroup').on('tap', '.mui-table-view-cell', function() {
+						//判断是否是游客身份登录
+						events.judgeLoginMode();
 						var self = this;
 						self.disabled = true;
 						var id = this.getAttribute('id');

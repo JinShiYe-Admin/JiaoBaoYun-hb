@@ -148,7 +148,8 @@
 			"image/cloud/cloud_0_unknow_0.png",
 			"image/quan/share.png",
 			"image/quan/aboutme.png",
-			"image/quan/Scan.png"
+			"image/quan/Scan.png",
+			"js/qiuzhi/delContent_pop.js"
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
@@ -161,7 +162,8 @@
 			"html/cloud/record_student_main.html",
 			"html/cloud/app_notes_main.html",
 			"html/mine/qun_manage_1.html",
-			"html/mine/ReadQRCode.html"
+			"html/mine/ReadQRCode.html",
+			"html/quan/pub-dynamic.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
