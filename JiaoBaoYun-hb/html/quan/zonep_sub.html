@@ -396,7 +396,6 @@
 				console.log('通过群ID获取群的正常用户_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					datasource = data.RspData;
-					console.log(JSON.stringify(datasource));
 					var userIds = [];
 					for(var i = 0; i < datasource.length; i++) {
 						//群用户id数组

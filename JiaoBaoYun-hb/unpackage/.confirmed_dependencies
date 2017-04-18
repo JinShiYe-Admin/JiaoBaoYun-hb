@@ -509,9 +509,12 @@
 			"js/libs/RSA/Barrett.js",
 			"fonts/fangzheng.ttf",
 			"js/libs/RSA/BigInt.js",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"js/libs/crypto-js/crypto-js.js"
 		],
-		"refer": []
+		"refer": [
+			"html/homework/homework-commented.html"
+		]
 	},
 	"html/homework/publish-answer.html": {
 		"resources": [
@@ -2226,7 +2229,32 @@
 	},
 	"html/homework/homework-commented.html": {
 		"resources": [
-			"js/homework/homework-commented.js"
+			"js/homework/homework-commented.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/mui.zoom.js",
+			"js/mui.min.js",
+			"js/mui.previewimage.js",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"css/utils/preview.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/publicHomeworkProtocol.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js",
+			"css/homework/subjects-icon.css"
 		]
 	}
 }
