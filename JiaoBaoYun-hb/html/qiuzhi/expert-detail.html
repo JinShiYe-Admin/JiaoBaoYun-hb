@@ -180,7 +180,7 @@
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 				if(ExpertsInfo.UserId == personalUTID) {
 					//判断是否是游客身份登录
-					events.judgeLoginMode();
+					if (events.judgeLoginMode()) {return;}
 					events.openNewWindowWithData('modifyExpertNote.html', ExpertsInfo.UserNote);
 				}
 
@@ -224,7 +224,7 @@
 			})
 			events.addTap('focusBtn', function() {
 				//判断是否是游客身份登录
-				events.judgeLoginMode();
+				if (events.judgeLoginMode()) {return;}
 				console.log('点击关注');
 				if(this.innerText == '关注') {
 					setUserFocus(ExpertsInfo.UserId, 1);

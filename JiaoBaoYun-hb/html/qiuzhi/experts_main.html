@@ -280,7 +280,7 @@
 			//点击提问
 			mui('#sliderGroup').on('tap', '.expert-ask', function() {
 				//判断是否是游客身份登录
-				events.judgeLoginMode();
+				if (events.judgeLoginMode()) {return;}
 				var element = this.parentNode.parentNode;
 				//专家的信息
 				var expert = JSON.parse(element.getAttribute('data-info'));

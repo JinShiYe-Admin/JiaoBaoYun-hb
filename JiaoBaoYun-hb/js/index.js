@@ -252,7 +252,7 @@ function getHomeworkAlert(NoReadCnt) {
 		container.appendChild(pubDynamic);
 		events.addTap('pubDynamic', function() {
 			//判断是否是游客身份登录
-			events.judgeLoginMode();
+			if (events.judgeLoginMode()) {return;}
 			var self = this
 			self.disabled = true;
 			if(name == 'jxq') {
@@ -277,11 +277,11 @@ var	addPlus = function(container,name){
 		events.addTap('add', function() {
 		if(name == 'jxq') {
 			//判断是否是游客身份登录
-			events.judgeLoginMode();
+			if (events.judgeLoginMode()) {return;}
 			events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
 		}else{
 			//判断是否是游客身份登录
-			events.judgeLoginMode();
+			if (events.judgeLoginMode()) {return;}
 			events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
 		}
 		
@@ -310,7 +310,7 @@ var	addPlus = function(container,name){
 		a.style.marginTop = "2px";
 		a.addEventListener('tap', function() {
 			//判断是否是游客身份登录
-			events.judgeLoginMode();
+			if (events.judgeLoginMode()) {return;}
 			var self = this;
 			self.disabled = true;
 			events.fireToPageNone(id, 'tapTitleLeft');
