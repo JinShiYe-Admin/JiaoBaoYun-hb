@@ -166,6 +166,8 @@
 			mui.plusReady(function() {
 				userId = plus.webview.currentWebview().data;
 				events.addTap('pubLeave', function() {
+					//判断是否是游客身份登录
+					events.judgeLoginMode();
 					console.log(JSON.stringify(userId))
 					events.openNewWindowWithData('../quan/pub-leave.html', userId);
 				})
@@ -416,6 +418,8 @@
 		})
 			//点击回复
 			mui('.mui-table-view').on('tap', '.ableSelectedCell', function() {
+				//判断是否是游客身份登录
+				events.judgeLoginMode();
 				cellIndex = this.id.replace('reply', '');
 
 				if(leaveArray[cellIndex].UserId == personalUTID) {

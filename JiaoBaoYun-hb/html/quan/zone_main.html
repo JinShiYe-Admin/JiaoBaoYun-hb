@@ -71,6 +71,8 @@
 				events.openNewWindowWithData('../quan/leaveNew.html', data);
 			})
 			events.addTap('pub-dynamic', function() {
+				//判断是否是游客身份登录
+				events.judgeLoginMode();
 				var pubDynamic = document.getElementById("pub-dynamic")
 				events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
 			})
