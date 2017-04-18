@@ -254,15 +254,14 @@
 				//66.（点到记事）获取针对某班的点到记事列表
 				//所需参数
 				var comData = {
-					classId: mainData.data, //班级ID
+					classId: mainData.gid, //班级ID
 					pageIndex: pageIndex, //当前页数
 					pageSize: pageSize, //每页记录数
 					publisherId: personalUTID //发布者ID,0代表全部
 				};
 				var wd = events.showWaiting();
 				postDataPro_getNotesForClass(comData, wd, function(data) {
-					console.log('66.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-
+					console.log('66 获取针对某班的点到记事列表 getNotesForClass ' + JSON.stringify(data));
 					//记录页数
 					var page = {
 						pageIndex: pageIndex, //当前页数
@@ -282,18 +281,9 @@
 
 					if(data.RspCode == 0) {
 						var tempRspData = data.RspData.Data;
-						for(var i = 0; i < tempRspData.length; i++) {
-							for(var j = 0; j < mainData.mem.length; j++) {
-								if(tempRspData[i].StudentId == mainData.mem[j].stuid) {
-									mui.extend(tempRspData[i], {
-										stuname: mainData.mem[j].stuname
-									});
-								}
-							}
-						}
-
 						//生成界面
 						for(var i = 0; i < tempRspData.length; i++) {
+							mui.extend(tempRspData[i], mainData.qunDataInfos[tempRspData[i].StudentId]);
 							createItem(tempRspData[i]);
 						}
 						//console.log(document.getElementById("data_scroll").innerHTML)
@@ -316,9 +306,8 @@
 						}
 					}
 
-					setTimeout(function() {
-						wd.close();
-					}, 500)
+					wd.close();
+					events.closeWaiting();
 				});
 			}
 
@@ -338,7 +327,7 @@
 					element.className = 'mui-table-view';
 					element.id = dateItem;
 					var mTime = dateItem.split('-');
-					if(mTime[0] == year) {//记录是今年
+					if(mTime[0] == year) { //记录是今年
 						mTime[0] = '';
 					} else {
 						mTime[0] = mTime[0] + '年';
