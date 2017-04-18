@@ -77,6 +77,9 @@ mui.plusReady(function() {
 		document.getElementById('answer-imgs').innerHTML="";
 		document.getElementById("question-content").innerText=changedData.answerContent;
 		document.getElementById("answer-imgs").innerHTML=getPicInner(changedData)
+		answerInfo.AnswerThumbnail=changedData.AnswerThumbnail;
+		answerInfo.AnswerEncAddr=changedData.AnswerEncAddr;
+		answerInfo.AnswerContent=changedData.answerContent;
 	})
 	window.addEventListener("showActionSheet", function() {
 		var btnArray;

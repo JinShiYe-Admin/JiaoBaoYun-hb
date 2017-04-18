@@ -38,7 +38,10 @@
 		<script type="text/javascript" src="../../js/show/show-sub.js"></script>
 		<script type="text/javascript">
 			var isPersonal = 1;
-			mui.init();
+			mui.init({
+			gestureConfig:{
+				longtap:true
+			}});
 			idFlag = 'zx';
 			var datasource = {}; //数据源
 			var pageIndex = 1; //第几页
@@ -535,7 +538,7 @@
 					pageSize: 10 //每页记录数
 				}, wd, function(data) {
 					events.closeWaiting();
-										console.log('展示获取的数据：' + JSON.stringify(data));
+					console.log('展示获取的数据：' + JSON.stringify(data));
 					//记录页数
 					var page = {
 						pageIndex: pageIndex, //当前页数
@@ -802,6 +805,7 @@
 			var getPersonIds = function(data, cityCode) {
 				var personIds = [];
 				for(var i in data) {
+					data[i].InShow = "1";
 					personIds.push(data[i].PublisherId);
 
 					for(var item in data[i].LikeUsers) {
@@ -884,7 +888,6 @@
 							}
 
 						}
-
 						if(data[i].Comments.length > 0) {
 							for(var m in data[i].Comments) {
 								if(data[i].Comments[m].UserId == personsData[j].utid) {

@@ -1,5 +1,5 @@
 var dynamiclistitem = (function($, mod) {
-	mod.addComment = function() {
+	mod.addComment = function(gesture) {
 		//回复评论时 判断是否为自己
 		if(tempIndex.indexOf('-') >= 0) {
 			console.log(tempIndex)
@@ -10,7 +10,9 @@ var dynamiclistitem = (function($, mod) {
 
 			var tempModel = zonepArray[id].Comments[commentId];
 			if(!tempModel) {
-				mui.toast('不可以回复自己');
+				if(gesture == 'tap') {
+					mui.toast('不可以回复自己');
+				}
 				return;
 			}
 			console.log(JSON.stringify(tempModel));
@@ -27,8 +29,18 @@ var dynamiclistitem = (function($, mod) {
 				ReplyIdName = tempModel.Replys[replyId].UserIdName;
 				currCommentID = tempModel.Replys[replyId].TabId
 			}
-			console.log('personalUTID=' + personalUTID + '----' + 'replyUserId' + replyUserId)
-			if(personalUTID == replyUserId) { //
+			//			console.log('personalUTID=' + personalUTID + '----' + 'replyUserId' + replyUserId)
+			if(gesture == 'tap' && personalUTID == replyUserId) {
+				mui.toast('不可以回复自己');
+				return;
+			}
+			if(gesture == 'longtap' && personalUTID != tempModel.PublisherId && personalUTID != replyUserId) {
+				console.log('不做任何操作')
+				return;
+			}
+
+			if(gesture == 'longtap' && (personalUTID == tempModel.PublisherId || personalUTID == replyUserId)) { //
+				console.log('长按删除')
 				var btnArray = [{ title: '删除', style: "destructive" }];
 				plus.nativeUI.actionSheet({
 					cancel: "取消",
@@ -267,24 +279,26 @@ var dynamiclistitem = (function($, mod) {
 			var pageID = sliderId.replace('top_', '')
 			console.log('id=' + this.id)
 			tempIndex = this.id.replace('comment' + pageID + idFlag, '');
-			mod.addComment();
+			mod.addComment('tap');
 			window.event.stopPropagation()
 
-		});
-		//底部评论按钮
-		mui('.mui-table-view').on('tap', '.dynamic-comment-btn', function() {
-			var pageID = sliderId.replace('top_', '')
-			console.log(pageID)
-			tempIndex = this.id.replace('bottomComment' + pageID + idFlag, '');
-			mod.addComment();
-			window.event.stopPropagation()
 		});
 
 		//			回复评论
 		mui('.mui-table-view').on('tap', '.replyComment', function() {
 			var pageID = sliderId.replace('top_', '')
 			tempIndex = this.id.replace('replyComment' + pageID + idFlag, '');
-			mod.addComment();
+			mod.addComment('tap');
+
+			window.event.stopPropagation()
+
+		});
+		//			删除评论
+		mui('.mui-table-view').on('longtap', '.replyComment', function() {
+			console.log('长按删除评论')
+			var pageID = sliderId.replace('top_', '')
+			tempIndex = this.id.replace('replyComment' + pageID + idFlag, '');
+			mod.addComment('longtap');
 
 			window.event.stopPropagation()
 
@@ -621,7 +635,7 @@ var dynamiclistitem = (function($, mod) {
 	mod.addInfo = function(ulElement, liElement, data) {
 		var closeempty = '';
 		if(data.pageFlag == 0) {
-			console.log('personalUTID=' + personalUTID + '----' + 'PublisherId=' + data.PublisherId)
+			//			console.log('personalUTID=' + personalUTID + '----' + 'PublisherId=' + data.PublisherId)
 			if(personalUTID == data.PublisherId) {
 				closeempty = '<a data-is-focus=0  id ="btn-focus' + data.id_name + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:30px;height:30px;padding:5px"></a>';
 			} else {
@@ -655,8 +669,14 @@ var dynamiclistitem = (function($, mod) {
 		//头像
 		var html2 = '<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:40px;height:40px;border-radius: 50%;" src="' + data.personalImage + '"></div>';
 		var html3 = '<div class="mui-media-body dynamic-padding-left-10px">' + closeempty;
-		//姓名
+		if(data.InShow=='1'){
+					//姓名
+		var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:16px;margin-top:2px">' + data.personalName + ' <span class="mui-icon iconfont icon-dongtai1" style="width:20px;height:20px;font-size:14px;color:rgb(26,155,255)"></span></p>';
+		}else{
+					//姓名
 		var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:16px;margin-top:2px">' + data.personalName + '</p>';
+		}
+
 		//时间
 		var html5 = '<p>' + data.PublishDate + '</p></div></div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext ">';

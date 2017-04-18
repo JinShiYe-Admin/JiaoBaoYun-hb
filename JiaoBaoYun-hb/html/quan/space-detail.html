@@ -53,7 +53,9 @@
 		var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
 		var publisherId;
 		mui.init({
-
+			gestureConfig:{
+				longtap:true
+			}
 		});
 		mui('.mui-scroll-wrapper').scroll();
 		var SCREEN_WIDTH;
@@ -233,6 +235,7 @@
 
 			var table = document.body.querySelector('.mui-table-view');
 			table.innerHTML = '';
+			data.InShow = preModel.InShow;
 			if(preModel.focusFlag == 0) {
 				idFlag = '';
 				data.focusFlag = 0;
