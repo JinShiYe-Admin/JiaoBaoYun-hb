@@ -142,7 +142,7 @@ mui.plusReady(function() {
 					mui('#workPage-roles').switch().toggle();
 				}
 			}
-			plus.webview.getWebviewById('index.html').show();
+			plus.webview.getLaunchWebview().show();
 		} else {
 			_back();
 		}
