@@ -137,6 +137,7 @@ body,
 .dynamic-icon-Level {
 	/*等级图标*/
 	height: 20px;
+	width: 20px;
 	margin-left: 10px;
 }
 

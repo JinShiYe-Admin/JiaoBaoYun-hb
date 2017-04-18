@@ -374,7 +374,8 @@
 			"html/homework/homework-publish.html",
 			"html/homework/workdetail-stu.html",
 			"html/homework/workdetailTea-temporary.html",
-			"html/homework/workdetail-tea.html"
+			"html/homework/workdetail-tea.html",
+			"html/homework/homework-commented.html"
 		]
 	},
 	"html/cloud/storage_main_choose.html": {
@@ -2217,6 +2218,11 @@
 			"js/utils/RSAEncrypt.js",
 			"js/libs/jquery.js",
 			"fonts/mui.ttf"
+		]
+	},
+	"html/homework/homework-commented.html": {
+		"resources": [
+			"js/homework/homework-commented.js"
 		]
 	}
 }

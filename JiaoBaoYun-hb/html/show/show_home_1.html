@@ -805,7 +805,7 @@
 			var getPersonIds = function(data, cityCode) {
 				var personIds = [];
 				for(var i in data) {
-					data.InShow = "1";
+					data[i].InShow = "1";
 					personIds.push(data[i].PublisherId);
 
 					for(var item in data[i].LikeUsers) {
@@ -888,7 +888,6 @@
 							}
 
 						}
-
 						if(data[i].Comments.length > 0) {
 							for(var m in data[i].Comments) {
 								if(data[i].Comments[m].UserId == personsData[j].utid) {
