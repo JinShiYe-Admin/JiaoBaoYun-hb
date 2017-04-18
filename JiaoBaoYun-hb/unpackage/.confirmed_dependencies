@@ -1179,7 +1179,8 @@
 		],
 		"refer": [
 			"html/register/login.html",
-			"html/register/register_phoneNumber.html"
+			"html/register/register_phoneNumber.html",
+			"html/index/index.html"
 		]
 	},
 	"html/mine/qun_manage_1.html": {
