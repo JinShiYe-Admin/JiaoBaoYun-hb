@@ -843,6 +843,79 @@ var events = (function(mod) {
 			return;
 		}
 	}
+
+	//刚启动时，如果有账号，token续订登录，如果没有，游客登录
+	mod.defaultLogin = function() {
+		console.log('判断上次有么有账号登录');
+		//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
+		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+		if(personal) { //有账号，正常登录
+			//需要参数
+			var comData = {
+				uuid: plus.device.uuid,
+				utid: personal.utid,
+				appid: plus.runtime.appid
+			};
+			// 等待的对话框
+			var wd = events.showWaiting();
+			//token续订
+			postDataPro_PostTokenRenew(comData, wd, function(data0) {
+				wd.close();
+				console.log('token续订success:RspCode:' + data0.RspCode + ',RspData:' + JSON.stringify(data0.RspData) + ',RspTxt:' + data0.RspTxt);
+				if(data0.RspCode == 0) {
+					//获取个人信息
+					var comData1 = {
+						vvl: personal.utid, //用户id，查询的值,p传个人ID,g传ID串
+						vtp: 'p' //查询类型,p(个人)g(id串)
+					};
+					//21.通过用户ID获取用户资料
+					postDataPro_PostUinf(comData1, wd, function(data) {
+						wd.close();
+						console.log('获取个人信息000:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							var tepI0000 = data.RspData[0];
+							//存储个人信息
+							var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+							tempInfo.token = data0.RspData;
+							tempInfo.uname = tepI0000.uname;
+							tempInfo.unick = tepI0000.unick;
+							tempInfo.usex = tepI0000.usex;
+							tempInfo.utxt = tepI0000.utxt;
+							//解析省市代码
+							console.log('9999=' + tepI0000.uarea);
+							if(tepI0000.uarea != null) {
+								var tempArray = tepI0000.uarea.split('|');
+								if(tempArray.length > 0) {
+									var temp0 = tempArray[0].split(' ');
+									var temp1 = tempArray[1].split(' ');
+									var model_area = {
+										procode: temp0[0], //省份code，自己添加的参数
+										proname: temp1[0], //省份名称，自己添加的参数
+										acode: temp0[1], //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
+										aname: temp1[1], //节点名称--城市名称
+										atype: '' //节点类型,0省1城市2区县
+									}
+									tempInfo.uarea = model_area;
+								}
+							}
+							window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
+							//
+							events.infoChanged();
+							console.log('登录保存的个人信息：' + JSON.stringify(tempInfo))
+							//跳到主界面
+//							events.openNewWindow('../index/index.html', '');
+						} else {
+							mui.toast(data.RspTxt);
+						}
+					});
+				} else {
+					mui.toast(data0.RspTxt);
+				}
+			});
+		} else { //游客身份，要有交互，就得先跳转到登录界面
+			
+		}
+	}
 	return mod;
 
 })(events || {});
