@@ -405,9 +405,9 @@ var setListener = function() {
 			events.singleInstanceInPeriod(function() {
 				events.openNewWindowWithData('qiuzhi-question.html', {
 					askID: item.getAttribute('askId'), //问题id
-					channelInfo: channelInfo, //当前话题
-					allChannels: allChannels,//全部话题
-					questionInfo:questionInfo//当前问题
+					channelInfo: questionInfo, //当前话题
+					allChannels: allChannels//全部话题
+//					questionInfo:questionInfo//当前问题
 				});
 			})
 		})
@@ -462,7 +462,7 @@ var requireQuestionInfo = function(askId, callback) {
 		wd1.close();
 		console.log("获取的问题数据：" + JSON.stringify(data));
 		if(data.RspCode == 0) {
-			callback(data);
+			callback(data.RspData);
 		} else {
 			mui.toast("问题已删除!");
 		}

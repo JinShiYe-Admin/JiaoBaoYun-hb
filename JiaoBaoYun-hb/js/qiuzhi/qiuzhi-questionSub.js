@@ -46,7 +46,7 @@ mui.plusReady(function() {
 	console.log('qiuzhi-questionSub.html:' + JSON.stringify(mainData));
 
 	events.preload('qiuzhi-addAnswer.html');
-	askModel = mainData.questionInfo.RspData;
+	askModel = mainData.channelInfo;
 	setCondition();
 	askID = mainData.askID;
 	//5.获取某个问题的详情
