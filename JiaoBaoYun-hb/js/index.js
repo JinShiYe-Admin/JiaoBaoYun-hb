@@ -25,9 +25,10 @@ mui.plusReady(function() {
 		}, 1000);
 		return false;
 	};
+	Statusbar.barHeight(); //获取一些硬件参数
 	addSubPages();
 	console.log("加载图标");
-//	slideNavigation.add('mine.html', 200);
+	slideNavigation.add('mine.html', 200);
 	window.addEventListener('infoChanged', function() {
 		//		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
@@ -36,7 +37,7 @@ mui.plusReady(function() {
 		if(imgNode){
 			imgNode.src = updateHeadImg(img, 2);
 		}
-		
+
 	});
 	window.addEventListener("login",function(){
 		console.log("login");
@@ -269,6 +270,9 @@ var changRightIcons = function(targetTab) {
 		default:
 			break;
 	}
+	events.addTap('add', function() {
+		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
+	})
 }
 
 /**

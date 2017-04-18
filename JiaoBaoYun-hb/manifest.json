@@ -864,7 +864,9 @@
 					"html/mine/qun_manage_main.html",
 					"html/quan/zone_main.html",
 					"html/mine/qun_manage_1.html",
-					"html/mine/ReadQRCode.html"
+					"html/mine/ReadQRCode.html",
+					"html/quan/aboutme.html",
+					"html/quan/pub-dynamic.html"
 				],
 				"priority": 0
 			},
@@ -1559,7 +1561,8 @@
 				"refer": [
 					"html/quan/zone_main.html",
 					"html/quan/reply-aboutMe.html",
-					"html/quan/space-detail.html"
+					"html/quan/space-detail.html",
+					"html/homework/workdetail-stu.html"
 				],
 				"priority": 0
 			},
