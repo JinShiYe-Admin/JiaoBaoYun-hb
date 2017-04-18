@@ -170,7 +170,8 @@
 											//											plus.runtime.quit();
 											//跳转到登录界面
 //											events.openNewWindowWithData('../../html/register/login.html', '');
-											events.openNewWindowWithData('../../html/index/index.html', 'quit');
+											mui.fire(plus.webview.getLaunchWebview(), 'quit');
+											plus.webview.getLaunchWebview().show();
 											//											plus.webview.currentWebview().close();
 										} else {
 											mui.toast(data.RspTxt);
