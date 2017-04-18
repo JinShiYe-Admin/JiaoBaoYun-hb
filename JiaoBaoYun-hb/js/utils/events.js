@@ -813,9 +813,17 @@ var events = (function(mod) {
 			mui(this.element).slider().destroy();
 			//		this.empty();
 		};
-		//判断是否是游客身份登录
-		mod.judgeLoginMode = function() {
-			console.log('判断是否是游客身份登录');
+
+	}
+	//判断是否是游客身份登录，页面中有用户操作时调用
+	mod.judgeLoginMode = function() {
+		console.log('判断是否是游客身份登录');
+		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+		if(personal.utid > 0) { //有账号，正常登录
+
+		} else { //游客身份，要有交互，就得先跳转到登录界面
+			
+			return;
 		}
 	}
 	return mod;
