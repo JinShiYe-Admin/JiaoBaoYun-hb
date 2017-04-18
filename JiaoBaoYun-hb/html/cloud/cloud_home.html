@@ -815,15 +815,11 @@
 
 				//91.（云档案）按家长获取档案文件夹
 				function postUserStudent() {
+					var wd = events.showWaiting();
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-					//91.（云档案）按家长获取档案文件夹
-					//所需参数
 					var comData = {
 						parentId: personalUTID //家长ID
 					};
-					//返回学生姓名数组
-					// 等待的对话框
-					var wd = events.showWaiting();
 					postDataPro_getStudentDocByParent(comData, wd, function(data) {
 						console.log('91 按家长获取档案文件夹 getStudentDocByParent ' + JSON.stringify(data));
 						document.getElementById("cloudstorage_0").innerHTML = '';
@@ -836,9 +832,7 @@
 								addcloudstorage_0_1(data.RspData.Data[i]);
 							}
 						} else {
-							if(data.RspCode != 9) {
-								mui.toast(data.RspTxt);
-							}
+							mui.toast(data.RspTxt);
 						}
 						wd.close();
 					});
@@ -1363,14 +1357,15 @@
 					if(data.flag == 5) { //重命名
 						changeDataName(cellData, event);
 					} else if(data.flag == 1) { //删除
-						deleteData(data);
+						deleteData(cellData, data);
+					} else {
+						events.closeWaiting(data.wd);
 					}
 				});
 			}
 
 			/**
 			 * 修改档案的名称
-			 * @param {Object} dataInfo
 			 */
 			function changeDataName(dataInfo, event) {
 				console.log('修改档案名称');
@@ -1378,10 +1373,10 @@
 				var btnArray = ['取消', '确定'];
 				mui.prompt('', '档案名称,最多10个字', '重命名', btnArray, function(e) {
 					if(e.index == 1) { //点击确定
-						console.log(e.value);
+						//console.log(e.value);
 						if(e.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
 							mui.toast('档案名称不能为空');
-						} else if(dataInfo.StudentName == e.value) {
+						} else if(dataInfo.DocName == e.value) {
 							//未做修改
 							document.activeElement.blur();
 							mui.closePopups();
@@ -1420,15 +1415,23 @@
 				var input = document.querySelector('.mui-popup-input input');
 				input.type = 'text';
 				input.maxLength = 10;
-				input.value = dataInfo.StudentName;
+				input.value = dataInfo.DocName || dataInfo.StudentName;
 			}
 
 			/**
 			 * 删除档案
-			 * @param {Object} dataInfo
 			 */
-			function deleteData(dataInfo) {
-				console.log('删除档案');
+			function deleteData(cellInfo, dataInfo) {
+				if(dataInfo.data.RspCode == 0 && dataInfo.data.RspData.Result == 1) {
+					mui.toast('删除成功');
+					var cell = document.getElementById("data_" + cellInfo.DocType + "_" + cellInfo.DocId);
+					cell.parentNode.removeChild(cell);
+					delete studentDoc[cellInfo.DocType + "_" + cellInfo.DocId];//删除对应保存的数据
+					events.closeWaiting(dataInfo.wd);
+				} else {
+					events.closeWaiting(dataInfo.wd);
+					mui.toast('删除失败 ' + temp.RspTxt);
+				}
 			}
 		</script>
 	</body>
