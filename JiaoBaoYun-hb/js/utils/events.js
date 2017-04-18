@@ -820,7 +820,7 @@ var events = (function(mod) {
 		console.log('判断是否是游客身份登录');
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		if(personal.utid > 0) { //有账号，正常登录
-
+			return false;
 		} else { //游客身份，要有交互，就得先跳转到登录界面
 			var targetHTML = '../register/login.html';
 			var passData = '';
@@ -840,7 +840,7 @@ var events = (function(mod) {
 				createNew: true,
 				styles: mod.getWebStyle()
 			});
-			return;
+			return true;
 		}
 	}
 
@@ -849,7 +849,7 @@ var events = (function(mod) {
 		console.log('判断上次有么有账号登录');
 		//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-		if(personal) { //有账号，正常登录
+		if(personal&&personal.utid!=0) { //有账号，正常登录
 			//需要参数
 			var comData = {
 				uuid: plus.device.uuid,

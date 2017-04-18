@@ -16,7 +16,7 @@
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
-			
+
 		</style>
 	</head>
 
@@ -180,7 +180,10 @@
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 				if(ExpertsInfo.UserId == personalUTID) {
 					//判断是否是游客身份登录
-					events.judgeLoginMode();
+					//判断是否是游客身份登录
+					if(events.judgeLoginMode()) {
+						return;
+					}
 					events.openNewWindowWithData('modifyExpertNote.html', ExpertsInfo.UserNote);
 				}
 
@@ -201,7 +204,10 @@
 						top: '0px', //设置距离顶部的距离
 						bottom: '0px'
 					},
-					extras: { expertInfo: ExpertsInfo, type: 0 },
+					extras: {
+						expertInfo: ExpertsInfo,
+						type: 0
+					},
 					createNew: true,
 
 				});
@@ -215,7 +221,10 @@
 						top: '0px', //设置距离顶部的距离
 						bottom: '0px'
 					},
-					extras: { expertInfo: ExpertsInfo, type: 1 },
+					extras: {
+						expertInfo: ExpertsInfo,
+						type: 1
+					},
 					createNew: true,
 
 				});
@@ -224,7 +233,10 @@
 			})
 			events.addTap('focusBtn', function() {
 				//判断是否是游客身份登录
-				events.judgeLoginMode();
+				//判断是否是游客身份登录
+				if(events.judgeLoginMode()) {
+					return;
+				}
 				console.log('点击关注');
 				if(this.innerText == '关注') {
 					setUserFocus(ExpertsInfo.UserId, 1);
@@ -254,7 +266,7 @@
 					addData();
 					//修改nav显示昵称
 					var titleTemp = document.getElementById("title");
-					titleTemp.innerText =events.shortForString(ExpertsInfo.unick.replace(/[\r\n]/g,""),10) ;
+					titleTemp.innerText = events.shortForString(ExpertsInfo.unick.replace(/[\r\n]/g, ""), 10);
 				} else {
 					mui.toast(data.RspTxt);
 				}
@@ -349,13 +361,13 @@
 			}
 
 			nodes.FocusManNum.innerText = ExpertsInfo.FocusManNum;
-			
-			if(ExpertsInfo.ExpertChannelNames.length==0){
-//				nodes.ExpertChannels.innerText = '无话题'
-			}else{
+
+			if(ExpertsInfo.ExpertChannelNames.length == 0) {
+				//				nodes.ExpertChannels.innerText = '无话题'
+			} else {
 				nodes.ExpertChannels.innerText = ExpertsInfo.ExpertChannelNames;
 			}
-			
+
 			nodes.IsLikeNum.innerHTML = ExpertsInfo.IsLikeNum;
 			nodes.FocusAskNum.innerText = ExpertsInfo.FocusAskNum;
 			nodes.CommentNum.innerHTML = ExpertsInfo.CommentNum + '<span class="mui-icon  iconfont icon-fanhui2" style="color:#b7b7b7"></span>';
