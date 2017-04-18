@@ -291,6 +291,7 @@ var	addPlus = function(container,name){
 		pubDynamic.innerHTML = '搜索'
 		container.appendChild(pubDynamic);
 		events.addTap('expertSearch', function() {
+			events.judgeLoginMode();
 			events.openNewWindowWithData('../qiuzhi/qiuzhi-questionSearch.html', 'jxq');
 		})
 	}

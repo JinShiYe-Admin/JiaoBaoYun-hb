@@ -135,7 +135,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">登录</h1>
-			<h1 class="mui-icon mui-icon-left-nav mui-pull-left" id="cancelBtn" style="text-align: right;right: 10px;font-size: 15px;">取消</h1>
+			<h1 class="mui-icon mui-icon-right-nav mui-pull-right" id="cancelBtn" style="text-align: right;right: 10px;font-size: 15px;">取消</h1>
 		</header>
 		<div class="mui-content">
 			<div align="center">
@@ -449,6 +449,13 @@ none; margin-top: -15px;">登录</button>
 						}, 1000);
 						return false;
 					};
+				});
+				
+				//取消按钮
+				events.addTap('cancelBtn', function() {
+					document.activeElement.blur();
+					console.log('点击取消按钮');
+					
 				});
 
 				function loginBtn(loginInfo) {

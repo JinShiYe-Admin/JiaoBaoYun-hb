@@ -822,7 +822,24 @@ var events = (function(mod) {
 		if(personal.utid > 0) { //有账号，正常登录
 
 		} else { //游客身份，要有交互，就得先跳转到登录界面
-			
+			var targetHTML = '../register/login.html';
+			var passData = '';
+			mui.openWindow({
+				url: targetHTML,
+				id: targetHTML.split('/')[targetHTML.split('/').length - 1],
+				extras: {
+					data: passData
+				},
+				show: {
+					anishow: 'slide-in-bottom',
+					duration: 250
+				},
+				waiting: {
+					title: '正在加载...'
+				},
+				createNew: true,
+				styles: mod.getWebStyle()
+			});
 			return;
 		}
 	}
