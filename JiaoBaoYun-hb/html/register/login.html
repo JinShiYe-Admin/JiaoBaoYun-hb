@@ -185,7 +185,6 @@ none; margin-top: -15px;">登录</button>
 		</div>
 		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript" src="../../js/utils/Statusbar.js"></script>
 		<script src="../../js/utils/events.js" type="text/javascript" charset="utf-8"></script>
 		<!--本地存储-->
 		<script src="../../js/libs/myStorage/myStorage.js" type="text/javascript" charset="utf-8"></script>
@@ -215,7 +214,6 @@ none; margin-top: -15px;">登录</button>
 				});
 				$.plusReady(function() {
 					//---设置沉浸式---start---
-					Statusbar.barHeight(); //获取一些硬件参数
 
 					if(plus.os.name == "Android") {
 						//47.获取APP版本号
@@ -448,7 +446,7 @@ none; margin-top: -15px;">登录</button>
 //						return false;
 //					};
 				});
-				
+
 				//取消按钮
 				events.addTap('cancelBtn', function() {
 					document.activeElement.blur();

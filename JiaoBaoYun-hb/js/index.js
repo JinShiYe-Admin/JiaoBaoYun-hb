@@ -25,6 +25,7 @@ mui.plusReady(function() {
 		}, 1000);
 		return false;
 	};
+	Statusbar.barHeight(); //获取一些硬件参数
 	addSubPages();
 	console.log("加载图标");
 //	slideNavigation.add('mine.html', 200);
@@ -36,7 +37,7 @@ mui.plusReady(function() {
 		if(imgNode){
 			imgNode.src = updateHeadImg(img, 2);
 		}
-		
+
 	});
 	window.addEventListener("login",function(){
 		console.log("login");
