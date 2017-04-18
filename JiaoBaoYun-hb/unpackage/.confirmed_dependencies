@@ -58,7 +58,9 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/crypto-js/crypto-js.js",
 			"js/mui.min.js",
-			"html/show/show_home_1.html"
+			"html/show/show_home_1.html",
+			"js/utils/Statusbar.js",
+			"html/sciedu/sciedu_home.html"
 		],
 		"refer": [
 			"html/sciedu/sciedu_home.html",
