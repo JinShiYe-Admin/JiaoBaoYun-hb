@@ -531,7 +531,8 @@ none; margin-top: -15px;">登录</button>
 									//									window.myStorage.setItem(window.storageKeyName.AUTOLOGIN, loginInfo);
 //									events.openNewWindow('../index/index.html', 'login');
 									mui.fire(plus.webview.getLaunchWebview(), 'login');
-									plus.webview.getLaunchWebview().show();
+//									plus.webview.getLaunchWebview().show('slide-in-right', 250);
+									mui.back();
 								}
 							});
 						} else {

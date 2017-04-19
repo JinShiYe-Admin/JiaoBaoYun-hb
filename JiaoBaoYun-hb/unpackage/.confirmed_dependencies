@@ -1183,7 +1183,8 @@
 		"refer": [
 			"html/register/login.html",
 			"html/register/register_phoneNumber.html",
-			"html/index/index.html"
+			"html/index/index.html",
+			"html/register/modify_password.html"
 		]
 	},
 	"html/mine/qun_manage_1.html": {
@@ -2022,7 +2023,10 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"html/register/js/mui.enterfocus.js",
+			"js/utils/sortSign.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/index/index.html"
