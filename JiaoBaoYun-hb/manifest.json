@@ -1932,7 +1932,8 @@
 					"html/sciedu/sciedu_home.html",
 					null,
 					"html/show/show_home_1.html",
-					"html/qiuzhi/qiuzhi_home.html"
+					"html/qiuzhi/qiuzhi_home.html",
+					"js/utils/app-update.js"
 				],
 				"refer": [
 					"html/mine.html",
@@ -2886,7 +2887,8 @@
 					"js/mui.previewimage.js"
 				],
 				"refer": [
-					"html/qiuzhi/qiuzhi-addAnswer.html"
+					"html/qiuzhi/qiuzhi-addAnswer.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},
@@ -3078,7 +3080,8 @@
 				"refer": [
 					"html/qiuzhi/qiuzhi-addAnswer.html",
 					"html/quan/zone_main.html",
-					"html/qiuzhi/expert-detail.html"
+					"html/qiuzhi/expert-detail.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},
@@ -3487,7 +3490,8 @@
 					"html/qiuzhi/heAttentionPersons.html",
 					"html/qiuzhi/qiuzhi-inviteAnswer.html",
 					"html/qiuzhi/expert-ask.html",
-					"html/qiuzhi/modifyExpertNote.html"
+					"html/qiuzhi/modifyExpertNote.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},
@@ -3950,7 +3954,9 @@
 					"image/dynamic/praise.png"
 				],
 				"refer": [
-					"html/show/add-comment.html"
+					"html/show/add-comment.html",
+					"html/register/login.html",
+					"html/quan/zone_main.html"
 				],
 				"priority": 0
 			},

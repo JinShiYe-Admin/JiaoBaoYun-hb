@@ -523,12 +523,12 @@ var events = (function(mod) {
 				if(target.scrollHeight > target.clientHeight) {
 					e.stopPropagation();
 				} else {
-					try{
+					try {
 						target.dispatchEvent(e);
-					}catch(ev){
+					} catch(ev) {
 						//TODO handle the exception
 					}
-					
+
 				}
 			}
 		}, true);
@@ -825,6 +825,7 @@ var events = (function(mod) {
 		if(personal.utid > 0) { //有账号，正常登录
 			return false;
 		} else { //游客身份，要有交互，就得先跳转到登录界面
+
 			var targetHTML = '../register/login.html';
 			var passData = '';
 			mui.openWindow({
@@ -846,13 +847,12 @@ var events = (function(mod) {
 			return true;
 		}
 	}
-
 	//刚启动时，如果有账号，token续订登录，如果没有，游客登录
 	mod.defaultLogin = function(callback) {
 		console.log('判断上次有么有账号登录');
 		//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-		if(personal&&personal.utid!=0) { //有账号，正常登录
+		if(personal && personal.utid != 0) { //有账号，正常登录
 			//需要参数
 			var comData = {
 				uuid: plus.device.uuid,
@@ -952,11 +952,11 @@ var events = (function(mod) {
 		//			console.log('PostShakeHand:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		//			if(data.RspCode == 0) {
 		//存储到手机本地
-//		window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
+		//		window.myStorage.setItem(window.storageKeyName.SHAKEHAND, data.RspData);
 		//账号密码登录协议
 		//需要加密的数据
 		var enData = {
-			
+
 		};
 		//不需要加密的数据
 		var comData = {
@@ -982,7 +982,7 @@ var events = (function(mod) {
 				mui.toast(data.RspTxt);
 				return;
 			} else {
-//				mui.toast('登录成功')
+				//				mui.toast('登录成功')
 				//存储到手机本地
 				data.RspData.ispw = '1';
 				if(!data.RspData.uimg) {
@@ -991,18 +991,18 @@ var events = (function(mod) {
 				//解析省市代码
 				if(data.RspData.uarea.length > 0) {
 					var tempArray = data.RspData.uarea.split('|');
-//					if(tempArray.length > 0) {
-//						var temp0 = tempArray[0].split(' ');
-//						var temp1 = tempArray[1].split(' ');
-						var model_area = {
-							procode: '00', //省份code，自己添加的参数
-							proname: '全国', //省份名称，自己添加的参数
-							acode: '000000', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
-							aname: '全国', //节点名称--城市名称
-							atype: '' //节点类型,0省1城市2区县
-						}
-						data.RspData.uarea = model_area;
-//					}
+					//					if(tempArray.length > 0) {
+					//						var temp0 = tempArray[0].split(' ');
+					//						var temp1 = tempArray[1].split(' ');
+					var model_area = {
+						procode: '00', //省份code，自己添加的参数
+						proname: '全国', //省份名称，自己添加的参数
+						acode: '000000', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
+						aname: '全国', //节点名称--城市名称
+						atype: '' //节点类型,0省1城市2区县
+					}
+					data.RspData.uarea = model_area;
+					//					}
 				}
 				window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 				console.log('登录保存的个人信息：' + JSON.stringify(data.RspData));
@@ -1018,17 +1018,33 @@ var events = (function(mod) {
 				//						events.openNewWindow('../index/index.html', '');
 			}
 		});
-		//			} else {
-		//				var tempValue = {
-		//					flag: 0, //游客登录
-		//					value: 0 //登录失败
-		//				}
-		//				callback(tempValue);
-		//				mui.toast(data.RspTxt);
-		//			}
-		//		});
 	}
-
+	mod.hidePagesExIndex = function() {
+		var wvs = plus.webview.all();
+		for(var i in wvs) {
+			console.log("webview的id:" + wvs[i].id)
+			switch(wvs[i].id) {
+				case plus.webview.getLaunchWebview().id:
+				case "cloud_home.html":
+				case "sciedu_home.html":
+				case "show_home_1.html":
+				case "mine.html":
+				case "cloud_home.html":
+				case "qiuzhi_home.html":
+				case "qiuzhi-sub.html":
+				case plus.webview.currentWebview().id:
+					break;
+				default:
+					if(!wvs[i].parent()) {
+						wvs[i].hide();
+					}
+					break;
+			}
+			//			if(wvs[i]!=plus.webview.getLaunchWebview()||wvs[i].parent()!=plus.webview.getLaunchWebview()){
+			//				wvs[i].hide();
+			//			}
+		}
+	}
 	return mod;
 
 })(events || {});

@@ -215,32 +215,7 @@ none; margin-top: -15px;">登录</button>
 				$.plusReady(function() {
 					//---设置沉浸式---start---
 
-					if(plus.os.name == "Android") {
-						//47.获取APP版本号
-						console.log('plus.os.name:' + plus.os.name);
-						var tempVVL = 'android';
-						if(plus.os.name == 'iOS') {
-							tempVVL = 'ios';
-						}
-						//所需参数
-						var comData9 = {
-							uuid: plus.device.uuid, //用户设备号
-							appid: plus.runtime.appid, //应用ID
-							vvl: tempVVL //安卓：android,苹果：ios
-						};
-						// 等待的对话框
-						var wd_0 = events.showWaiting();
-						postDataPro_PostVerInfo(comData9, wd_0, function(data) {
-							wd_0.close();
-							console.log('获取APP版本号:' + JSON.stringify(data));
-							if(data.RspCode == 0) {
-								appUpdate.getAppVersion(JSON.parse(data.RspData));
-								console.log('获取APP版本号:' + JSON.stringify(data.RspData));
-							} else {
-								mui.toast(data.RspTxt);
-							}
-						});
-					}
+			
 					//---设置沉浸式---end---
 //					events.preload('register_phoneNumber.html');
 					plus.screen.lockOrientation("portrait-primary");
@@ -452,7 +427,7 @@ none; margin-top: -15px;">登录</button>
 				//取消按钮
 				events.addTap('cancelBtn', function() {
 					document.activeElement.blur();
-					console.log('点击取消按钮');
+					console.log('获取登录界面的opener:'+plus.webview.currentWebview().opener().id);
 					mui.back();
 				});
 
@@ -523,15 +498,12 @@ none; margin-top: -15px;">登录</button>
 									}
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 									console.log('登录保存的个人信息：' + JSON.stringify(data.RspData));
-									//
+									//退出 界面更新
 									events.logOff();
 									events.infoChanged();
-									//存储自动登录
-									//									loginInfo.auto = 1;
-									//									window.myStorage.setItem(window.storageKeyName.AUTOLOGIN, loginInfo);
-//									events.openNewWindow('../index/index.html', 'login');
 									mui.fire(plus.webview.getLaunchWebview(), 'login');
-									plus.webview.getLaunchWebview().show();
+									events.hidePagesExIndex();
+									mui.back();
 								}
 							});
 						} else {

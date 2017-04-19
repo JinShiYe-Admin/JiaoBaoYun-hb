@@ -193,7 +193,7 @@
 											//跳转到登录界面
 											//											events.openNewWindowWithData('../../html/register/login.html', '');
 											mui.fire(plus.webview.getLaunchWebview(), 'quit');
-											plus.webview.getLaunchWebview().show();
+											mui.back();
 											//											plus.webview.currentWebview().close();
 										} else {
 											mui.toast(data.RspTxt);
