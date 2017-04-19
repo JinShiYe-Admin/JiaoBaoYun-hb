@@ -1942,7 +1942,8 @@
 					"html/quan/pub-dynamic.html",
 					"html/show/show_home.html",
 					"html/qiuzhi/expert-detail.html",
-					"html/qiuzhi/qiuzhi-questionSearch.html"
+					"html/qiuzhi/qiuzhi-questionSearch.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},
@@ -3610,7 +3611,8 @@
 					"html/quan/space-detail.html",
 					"html/show/add-comment.html",
 					"html/quan/zone_main.html",
-					"html/quan/classSpace-persons.html"
+					"html/quan/classSpace-persons.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},
@@ -4176,9 +4178,12 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/register/login.html"
+				],
 				"priority": 0
 			},
 			"html/quan/group-allMembers.html": {

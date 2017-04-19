@@ -72,7 +72,8 @@
 			"html/quan/pub-dynamic.html",
 			"html/qiuzhi/expert-detail.html",
 			"html/qiuzhi/qiuzhi-questionSearch.html",
-			"html/cloud/cloud_home.html"
+			"html/cloud/cloud_home.html",
+			"html/register/login.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-answerDetailSub.html": {
@@ -277,7 +278,8 @@
 			"html/utils/customizeCity.html",
 			"html/quan/space-detail.html",
 			"html/quan/zone_main.html",
-			"html/show/add-comment.html"
+			"html/show/add-comment.html",
+			"html/register/login.html"
 		]
 	},
 	"html/index/mine.html": {
@@ -2192,7 +2194,11 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/register/login.html"
 		]
 	},
 	"html/quan/group-allMembers.html": {
