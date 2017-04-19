@@ -51,6 +51,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 		// 等待的对话框
 		var urlArr = url.split('/');
 		console.log('postData.tempData:' + urlArr[urlArr.length - 1] + JSON.stringify(tempData));
+		console.log(plus.webview.currentWebview().id);
 		//发送协议
 		try {
 			mui.ajax(url, {

@@ -276,6 +276,7 @@ var changRightIcons = function(targetTab) {
 		title_left.removeChild(title_left.firstElementChild);
 	};
 	var title = document.getElementById("title");
+	title.innerText = "";
 	switch(targetTab) {
 		case '../cloud/cloud_home.html': //首页
 			title.innerText = "云盘";
