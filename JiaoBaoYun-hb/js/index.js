@@ -56,8 +56,8 @@ mui.plusReady(function() {
 		return false;
 	};
 	Statusbar.barHeight(); //获取一些硬件参数
-	addSubPages();//加载子页面
-	slideNavigation.add('mine.html', 200);//加载侧滑导航栏
+	addSubPages(); //加载子页面
+	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
 	window.addEventListener('infoChanged', function() {
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
@@ -291,6 +291,10 @@ var changRightIcons = function(targetTab) {
 			slideNavigation.addSlideIcon();
 			addQiuZhiExpertSearch(iconContainer);
 			document.querySelector('.img-icon').addEventListener('tap', function(e) {
+				//判断是否是游客身份登录
+				if(events.judgeLoginMode()) {
+					return;
+				}
 				var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
 				personalInfo.UserId = personalInfo.utid;
 				events.openNewWindowWithData('../qiuzhi/expert-detail.html', personalInfo);

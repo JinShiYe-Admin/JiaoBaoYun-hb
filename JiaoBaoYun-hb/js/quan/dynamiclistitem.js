@@ -29,17 +29,17 @@ var dynamiclistitem = (function($, mod) {
 				ReplyIdName = tempModel.Replys[replyId].UserIdName;
 				currCommentID = tempModel.Replys[replyId].TabId
 			}
-			//			console.log('personalUTID=' + personalUTID + '----' + 'replyUserId' + replyUserId)
+						console.log('personalUTID=' + personalUTID + '----' + 'replyUserId=' + replyUserId+'PublisherId='+zonepArray[id].PublisherId)
 			if(gesture == 'tap' && personalUTID == replyUserId) {
 				mui.toast('不可以回复自己');
 				return;
 			}
-			if(gesture == 'longtap' && personalUTID != tempModel.PublisherId && personalUTID != replyUserId) {
+			if(gesture == 'longtap' && personalUTID != zonepArray[id].PublisherId && personalUTID != replyUserId) {
 				console.log('不做任何操作')
 				return;
 			}
 
-			if(gesture == 'longtap' && (personalUTID == tempModel.PublisherId || personalUTID == replyUserId)) { //
+			if(gesture == 'longtap' && (personalUTID == zonepArray[id].PublisherId || personalUTID == replyUserId)) { //
 				console.log('长按删除')
 				var btnArray = [{ title: '删除', style: "destructive" }];
 				plus.nativeUI.actionSheet({
