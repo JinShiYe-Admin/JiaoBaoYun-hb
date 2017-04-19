@@ -303,9 +303,9 @@ var changRightIcons = function(targetTab) {
 		default:
 			break;
 	}
-	events.addTap('add', function() {
-		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
-	})
+//	events.addTap('add', function() {
+//		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
+//	})
 }
 
 /**
