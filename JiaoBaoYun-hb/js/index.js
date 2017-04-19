@@ -75,8 +75,15 @@ mui.plusReady(function() {
 		setConditionbyRole(loginRoleType);
 	})
 	window.addEventListener("quit", function() {
-		loginRoleType = 0;
-		setConditionbyRole(loginRoleType);
+		events.defaultLogin(function(data) {
+			console.log("自动登录获取的值：" + JSON.stringify(data));
+			if(data.value) {
+				loginRoleType = data.flag;
+				setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+			} else { //登录失败
+				mui.toast("登录失败，请检查网络！");
+			}
+		});
 	})
 	window.addEventListener('closeWaiting', function() {
 		events.closeWaiting();
@@ -304,9 +311,9 @@ var changRightIcons = function(targetTab) {
 		default:
 			break;
 	}
-//	events.addTap('add', function() {
-//		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
-//	})
+	//	events.addTap('add', function() {
+	//		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
+	//	})
 }
 
 /**
