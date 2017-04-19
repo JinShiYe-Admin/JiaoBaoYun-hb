@@ -136,13 +136,15 @@ mui.plusReady(function() {
 	//重写返回按钮
 	var _back = mui.back;
 	mui.back = function() {
-		if(plus.webview.currentWebview().opener().id = "homework-commented.html") {
+		console.log("作业界面的打开界面id:"+plus.webview.currentWebview().opener().id)
+		if(plus.webview.currentWebview().opener().id =="homework-commented.html") {
 			if(teacherClasses.length > 0 && studentClasses.length > 0) {
 				if(roles.classList.contains("mui-active")) {
 					mui('#workPage-roles').switch().toggle();
 				}
 			}
-			plus.webview.getLaunchWebview().show('slide-in-right', 250);
+			events.hidePagesExIndex();
+//			plus.webview.getLaunchWebview().show('slide-in-right', 250);
 		} else {
 			_back();
 		}
