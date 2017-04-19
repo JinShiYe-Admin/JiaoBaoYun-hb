@@ -845,7 +845,8 @@
 					"image/quan/share.png",
 					"image/quan/aboutme.png",
 					"image/quan/Scan.png",
-					"js/qiuzhi/delContent_pop.js"
+					"js/qiuzhi/delContent_pop.js",
+					null
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
