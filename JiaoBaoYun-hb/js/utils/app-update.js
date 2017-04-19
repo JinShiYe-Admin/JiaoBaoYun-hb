@@ -3,6 +3,32 @@
  */
 var appUpdate = (function(mod) {
 	mod.fileSize;
+	mod.androidUpdateApp = function() {
+		//版本升级模块
+		if(plus.os.name == "Android") {
+			//47.获取APP版本号
+			console.log('plus.os.name:' + plus.os.name);
+			var tempVVL = 'android';
+			//所需参数
+			var comData9 = {
+				uuid: plus.device.uuid, //用户设备号
+				appid: plus.runtime.appid, //应用ID
+				vvl: tempVVL //安卓：android,苹果：ios
+			};
+			// 等待的对话框
+			var wd_0 = events.showWaiting();
+			postDataPro_PostVerInfo(comData9, wd_0, function(data) {
+				wd_0.close();
+				console.log('获取APP版本号:' + JSON.stringify(data));
+				if(data.RspCode == 0) {
+					mod.getAppVersion(JSON.parse(data.RspData));
+					console.log('获取APP版本号:' + JSON.stringify(data.RspData));
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		}
+	}
 	/**
 	 * 获取版本信息后，判断是否更新
 	 * @param {Object} versionInfo 服务器返回的版本信息
@@ -104,7 +130,9 @@ var appUpdate = (function(mod) {
 		if(plus.os.name == "Android") {
 			console.log("下载APK路径：" + ApkUrl)
 			var url = "_doc/update/"; // 下载文件地址
-			var dtask = plus.downloader.createDownload(ApkUrl, { filename: "_doc/update/" }, function(d, status) {
+			var dtask = plus.downloader.createDownload(ApkUrl, {
+				filename: "_doc/update/"
+			}, function(d, status) {
 				console.log("下载状态：" + status);
 				if(status == 200) { // 下载成功
 					var path = d.filename;
@@ -145,7 +173,7 @@ var appUpdate = (function(mod) {
 	var onStateChanged = function(download, status) {
 		//		console.log("当前下载状态：" + download.state + ":" + status + ":" + download.totalSize)
 		if(download.state == 3) {
-			if(!myStorage.getItem("loadFileSize")||myStorage.getItem("loadFileSize")!=download.totalSize){
+			if(!myStorage.getItem("loadFileSize") || myStorage.getItem("loadFileSize") != download.totalSize) {
 				myStorage.setItem("loadFileSize", download.totalSize);
 			}
 		}
@@ -167,7 +195,9 @@ var appUpdate = (function(mod) {
 	 * @param {Object} path
 	 */
 	function installWgt(path) {
-		plus.runtime.install(path, { force: true }, function() {
+		plus.runtime.install(path, {
+			force: true
+		}, function() {
 			console.log("安装wgt文件成功！");
 		}, function(e) {
 			plus.nativeUI.closeWaiting();
