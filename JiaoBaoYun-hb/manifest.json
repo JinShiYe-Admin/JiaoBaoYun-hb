@@ -3490,7 +3490,8 @@
 					"html/qiuzhi/heAttentionPersons.html",
 					"html/qiuzhi/qiuzhi-inviteAnswer.html",
 					"html/qiuzhi/expert-ask.html",
-					"html/qiuzhi/modifyExpertNote.html"
+					"html/qiuzhi/modifyExpertNote.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},

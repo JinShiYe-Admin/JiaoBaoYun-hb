@@ -1497,7 +1497,8 @@
 			"html/qiuzhi/qiuzhi-expertAllAnswer.html",
 			"html/qiuzhi/modifyExpertNote.html",
 			"html/qiuzhi/qiuzhi-expertAllComment.html",
-			"html/qiuzhi/expert-ask.html"
+			"html/qiuzhi/expert-ask.html",
+			"html/register/login.html"
 		]
 	},
 	"html/sciedu/sciedu_show_main.html": {
