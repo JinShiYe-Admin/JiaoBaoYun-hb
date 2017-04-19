@@ -4,13 +4,15 @@
  * 描述：index.html作为父页面，通过控制底部选项卡控制四个子页面切换
  */
 
-mui.init();
+mui.init({
+	statusBarBackground: '#13b7f6'
+});
 var loginRoleType; //登录角色0为游客1为用户
 var noReadCount = 0;
 mui.plusReady(function() {
 	//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
 	var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-	console.log('person==='+JSON.stringify(personal));
+	console.log('person===' + JSON.stringify(personal));
 	if(personal && personal.utid != 0) { //有账号，正常登录
 
 	} else {
@@ -72,7 +74,7 @@ mui.plusReady(function() {
 		loginRoleType = 1;
 		setConditionbyRole(loginRoleType);
 	})
-	window.addEventListener("quit",function(){
+	window.addEventListener("quit", function() {
 		loginRoleType = 0;
 		setConditionbyRole(loginRoleType);
 	})
@@ -322,7 +324,9 @@ var addShai = function(container, name) {
 	events.addTap('pubDynamic',
 		function() {
 			//判断是否是游客身份登录
-			if(events.judgeLoginMode()) { return; }
+			if(events.judgeLoginMode()) {
+				return;
+			}
 			var self = this
 			self.disabled = true;
 			if(name == 'jxq') {
@@ -347,11 +351,15 @@ var addPlus = function(container, name) {
 	events.addTap('add', function() {
 		if(name == 'jxq') {
 			//判断是否是游客身份登录
-			if(events.judgeLoginMode()) { return; }
+			if(events.judgeLoginMode()) {
+				return;
+			}
 			events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
 		} else {
 			//判断是否是游客身份登录
-			if(events.judgeLoginMode()) { return; }
+			if(events.judgeLoginMode()) {
+				return;
+			}
 			events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
 		}
 
@@ -380,7 +388,9 @@ var addListIcon = function(container, id) {
 	a.style.marginTop = "2px";
 	a.addEventListener('tap', function() {
 		//判断是否是游客身份登录
-		if(events.judgeLoginMode()) { return; }
+		if(events.judgeLoginMode()) {
+			return;
+		}
 		var self = this;
 		self.disabled = true;
 		events.fireToPageNone(id, 'tapTitleLeft');
@@ -394,19 +404,19 @@ var setConditionbyRole = function(role) {
 	console.log("获取的身份信息：" + JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
 	var cloudIcon = document.getElementById("defaultTab");
 	var sceIcon = document.getElementById("tabclass");
-	document.querySelector(".mui-tab-item.mui-active").className="mui-tab-item";
+	document.querySelector(".mui-tab-item.mui-active").className = "mui-tab-item";
 	if(role) { //正常用户
 		cloudIcon.style.display = "table-cell";
 		cloudIcon.className = "mui-tab-item mui-active";
 		sceIcon.className = "mui-tab-item";
 		plus.webview.show("cloud_home.html");
-		activeTab="../cloud/cloud_home.html";
+		activeTab = "../cloud/cloud_home.html";
 		plus.webview.hide("sciedu_home.html");
 		changRightIcons("../cloud/cloud_home.html");
 	} else { //游客
-		cloudIcon.style.display = "none";                                                                                                                      
+		cloudIcon.style.display = "none";
 		cloudIcon.className = "mui-tab-item";
-		sceIcon.className = "mui-tab-item mui-active";                                 
+		sceIcon.className = "mui-tab-item mui-active";
 		plus.webview.show("sciedu_home.html");
 		activeTab = "../sciedu/sciedu_home.html";
 		plus.webview.hide("cloud_home.html");
