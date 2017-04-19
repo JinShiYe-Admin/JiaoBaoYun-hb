@@ -61,7 +61,8 @@
 			"html/show/show_home_1.html",
 			"js/utils/Statusbar.js",
 			"html/sciedu/sciedu_home.html",
-			"html/qiuzhi/qiuzhi_home.html"
+			"html/qiuzhi/qiuzhi_home.html",
+			"js/utils/app-update.js"
 		],
 		"refer": [
 			"html/sciedu/sciedu_home.html",
@@ -108,7 +109,8 @@
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-addAnswer.html",
-			"html/qiuzhi/expert-detail.html"
+			"html/qiuzhi/expert-detail.html",
+			"html/register/login.html"
 		]
 	},
 	"html/cloud/cloud_home.html": {
@@ -927,7 +929,8 @@
 			"image/dynamic/praise.png"
 		],
 		"refer": [
-			"html/show/add-comment.html"
+			"html/show/add-comment.html",
+			"html/register/login.html"
 		]
 	},
 	"html/quan/aboutme.html": {
@@ -1739,7 +1742,9 @@
 			"js/utils/events.js",
 			"image/utils/default_personalimage.png"
 		],
-		"refer": []
+		"refer": [
+			"html/register/login.html"
+		]
 	},
 	"html/mine/apply-group.html": {
 		"resources": [

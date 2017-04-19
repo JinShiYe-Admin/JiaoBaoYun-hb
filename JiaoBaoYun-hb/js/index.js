@@ -10,6 +10,33 @@ mui.init({
 var loginRoleType; //登录角色0为游客1为用户
 var noReadCount = 0;
 mui.plusReady(function() {
+	//版本升级模块
+	if(plus.os.name == "Android") {
+		//47.获取APP版本号
+		console.log('plus.os.name:' + plus.os.name);
+		var tempVVL = 'android';
+		if(plus.os.name == 'iOS') {
+			tempVVL = 'ios';
+		}
+		//所需参数
+		var comData9 = {
+			uuid: plus.device.uuid, //用户设备号
+			appid: plus.runtime.appid, //应用ID
+			vvl: tempVVL //安卓：android,苹果：ios
+		};
+		// 等待的对话框
+		var wd_0 = events.showWaiting();
+		postDataPro_PostVerInfo(comData9, wd_0, function(data) {
+			wd_0.close();
+			console.log('获取APP版本号:' + JSON.stringify(data));
+			if(data.RspCode == 0) {
+				appUpdate.getAppVersion(JSON.parse(data.RspData));
+				console.log('获取APP版本号:' + JSON.stringify(data.RspData));
+			} else {
+				mui.toast(data.RspTxt);
+			}
+		});
+	}
 	//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
 	var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 	console.log('person===' + JSON.stringify(personal));

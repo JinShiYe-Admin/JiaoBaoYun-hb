@@ -109,13 +109,13 @@ mui.plusReady(function() {
 		mui('#popover').popover('hide');
 	});
 
-
-
 	//---点击效果---end---
 
 	events.addTap('guanzhu', function() {
 		//判断是否是游客身份登录
-		if (events.judgeLoginMode()) {return;}
+		if(events.judgeLoginMode()) {
+			return;
+		}
 		console.log('点击关注');
 		if(this.innerText == '关注') {
 			setAskFocus(askID, 1);
@@ -123,11 +123,9 @@ mui.plusReady(function() {
 			setAskFocus(askID, 0);
 		}
 	});
-	
+
 	//点击回答
 	mui('#answer_bottom').on('tap', '.ellipsis-3', function() {
-		//判断是否是游客身份登录
-		if (events.judgeLoginMode()) {return;}
 		var element = this.parentNode;
 		var info = JSON.parse(element.getAttribute('data-info'))
 		console.log(JSON.stringify(info));
@@ -185,18 +183,22 @@ var setCondition = function() {
 			'</div>';
 	} else if(askModel.IsAnswered) { //已回答
 		manageContainer.style.display = "none";
-		manageContainer.innerHTML="";
+		manageContainer.innerHTML = "";
 	} else {
 		manageContainer.style.display = "block";
 		manageContainer.innerHTML = '<div id="tab_div">' +
 			'<font id="tab_font"><span class="mui-icon iconfont icon-xie mui-pull-left"></span>请输入问题的答案</font>' +
 			'</div>';
 	}
-		//---点击效果---start---
+	//---点击效果---start---
 	var tab_div = document.getElementById("tab_div");
 	if(tab_div) {
 		var tab_font = document.getElementById("tab_font");
 		tab_div.addEventListener('tap', function() {
+			//判断是否是游客身份登录
+			if(events.judgeLoginMode()) {
+				return;
+			}
 			console.log('tab_div-tap');
 			if(askModel.IsAnswered == 1) {
 				mui.toast('已经回答过此问题');
