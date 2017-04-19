@@ -72,6 +72,10 @@ mui.plusReady(function() {
 		loginRoleType = 1;
 		setConditionbyRole(loginRoleType);
 	})
+	window.addEventListener("quit",function(){
+		loginRoleType = 0;
+		setConditionbyRole(loginRoleType);
+	})
 	window.addEventListener('closeWaiting', function() {
 		events.closeWaiting();
 	})
@@ -392,18 +396,18 @@ var setConditionbyRole = function(role) {
 	var sceIcon = document.getElementById("tabclass");
 	if(role) { //正常用户
 		cloudIcon.style.display = "table-cell";
-		//		cloudIcon.className = "mui-tab-item mui-active";
-		//		sceIcon.className = "mui-tab-item";
-		//		plus.webview.show("cloud_home.html");
-		//		activeTab=plus.webview.getWebviewById("cloud_home.html");
-		//		plus.webview.hide("sciedu_home.html");
-		//		changRightIcons("../cloud/cloud_home.html")
+		cloudIcon.className = "mui-tab-item mui-active";
+		sceIcon.className = "mui-tab-item";
+		plus.webview.show("cloud_home.html");
+		activeTab="../cloud/cloud_home.html";
+		plus.webview.hide("sciedu_home.html");
+		changRightIcons("../cloud/cloud_home.html");
 	} else { //游客
 		cloudIcon.style.display = "none";
 		cloudIcon.className = "mui-tab-item";
 		sceIcon.className = "mui-tab-item mui-active";
 		plus.webview.show("sciedu_home.html");
-		activeTab = plus.webview.getWebviewById("sciedu_home.html");
+		activeTab = "../sciedu/sciedu_home.html";
 		plus.webview.hide("cloud_home.html");
 		changRightIcons("../sciedu/sciedu_home.html")
 	}

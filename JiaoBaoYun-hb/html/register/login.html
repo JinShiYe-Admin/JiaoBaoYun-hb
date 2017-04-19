@@ -524,6 +524,7 @@ none; margin-top: -15px;">登录</button>
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 									console.log('登录保存的个人信息：' + JSON.stringify(data.RspData));
 									//
+									events.logOff();
 									events.infoChanged();
 									//存储自动登录
 									//									loginInfo.auto = 1;

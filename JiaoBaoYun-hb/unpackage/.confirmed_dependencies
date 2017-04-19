@@ -60,7 +60,8 @@
 			"js/mui.min.js",
 			"html/show/show_home_1.html",
 			"js/utils/Statusbar.js",
-			"html/sciedu/sciedu_home.html"
+			"html/sciedu/sciedu_home.html",
+			"html/qiuzhi/qiuzhi_home.html"
 		],
 		"refer": [
 			"html/sciedu/sciedu_home.html",

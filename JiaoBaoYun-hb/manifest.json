@@ -1930,7 +1930,8 @@
 					"html/scienceeducation/scienceeducation_home.html",
 					"html/sciedu/sciedu_home.html",
 					null,
-					"html/show/show_home_1.html"
+					"html/show/show_home_1.html",
+					"html/qiuzhi/qiuzhi_home.html"
 				],
 				"refer": [
 					"html/mine.html",
@@ -1940,7 +1941,6 @@
 					"html/index/mine.html",
 					"html/quan/pub-dynamic.html",
 					"html/show/show_home.html",
-					"html/qiuzhi/qiuzhi_home.html",
 					"html/qiuzhi/expert-detail.html",
 					"html/qiuzhi/qiuzhi-questionSearch.html"
 				],
