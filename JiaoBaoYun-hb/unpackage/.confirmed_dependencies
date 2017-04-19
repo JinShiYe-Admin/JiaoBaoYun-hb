@@ -930,7 +930,8 @@
 		],
 		"refer": [
 			"html/show/add-comment.html",
-			"html/register/login.html"
+			"html/register/login.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/quan/aboutme.html": {
