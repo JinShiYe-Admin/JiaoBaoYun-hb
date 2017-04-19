@@ -346,6 +346,7 @@
 					} else if(document.getElementById("textarea_record").value.length > 500) {
 						mui.toast('记事最多500字');
 					} else {
+						var wd = events.showWaiting();
 						commit = false;
 						var parentIds = []; //家长列表
 						var userIds = []; //推送用户ID
@@ -355,11 +356,7 @@
 							vtp: 'Id',
 							vvl: mainData.stuid, //群成员群ID，stuid
 						};
-						//返回值model：model_userDataInfo
-						// 等待的对话框
-						var wd = events.showWaiting();
 						postDataPro_PostStuU(comData, wd, function(data) {
-							wd.close();
 							console.log('30_PostStuU通过资料ID获取关联的人员.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0 || data.RspCode == 9) {
 								mui.each(data.RspData, function(index, item) {
@@ -371,43 +368,43 @@
 								});
 								strParent = arrayToStr(parentIds); //家长
 								strUser = arrayToStr(userIds); //推送用户
-								var wd_0 = events.showWaiting();
 								if(call_type != '') { //有点到
 									addNotes(1, strParent, strUser, {
 										encType: '3', //附件类型,1图片2音视频3仅文字
 										encAddr: '', //附件地址
 										encImg: '', //附件缩略图地址
-									}, wd_0, function() {
+									}, wd, function() {
 										if(multiMedia.data.PictureArray.length != 0) { //有文件
-											uploadFile(wd_0, strParent, strUser); //上传文件
+											uploadFile(wd, strParent, strUser); //上传文件
 										} else if(document.getElementById("textarea_record").value.replace(/(^\s*)|(\s*$)/g, "") != "") { //没有文件只有文字
 											addNotes(2, strParent, strUser, {
 												encType: '3', //附件类型,1图片2音视频3仅文字
 												encAddr: '', //附件地址
 												encImg: '', //附件缩略图地址
-											}, wd_0, function() {
-												finishCommit(wd_0);
+											}, wd, function() {
+												finishCommit(wd);
 											});
 										} else { //没有记事
-											finishCommit(wd_0);
+											finishCommit(wd);
 										}
 									});
 								} else { //没有点到
 									//增加记事
 									if(multiMedia.data.PictureArray.length != 0) {
-										uploadFile(wd_0, strParent, strUser); //上传文件
+										uploadFile(wd, strParent, strUser); //上传文件
 									} else if(document.getElementById("textarea_record").value.replace(/(^\s*)|(\s*$)/g, "") != "") {
 										addNotes(2, strParent, strUser, {
 											encType: '3', //附件类型,1图片2音视频3仅文字
 											encAddr: '', //附件地址
 											encImg: '', //附件缩略图地址
-										}, wd_0, function() {
-											finishCommit(wd_0);
+										}, wd, function() {
+											finishCommit(wd);
 										});
 									}
 								}
 							} else {
 								mui.toast(data.RspTxt);
+								wd.close();
 							}
 						});
 					}
