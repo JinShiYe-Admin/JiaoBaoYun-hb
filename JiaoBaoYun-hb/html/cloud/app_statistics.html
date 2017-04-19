@@ -309,6 +309,8 @@
 				//点击不是0的统计数据
 				mui('#sliderGroup').on('tap', '.mui-table-view-cell', function() {
 					//console.log('not-zero-num ' + this.id);
+					var self = this;
+					self.disabled = true;
 					var ids = this.id.split('_');
 					var checkType = ids[0];
 					var month = ids[1];
@@ -327,6 +329,9 @@
 						//dataIdArray: main.data.dataIdArray, //Key
 						//qunDataInfos: main.data.qunDataInfos, //群对象的资料
 					});
+					setTimeout(function() {
+						self.disabled = false;
+					}, 1500);
 				});
 			}
 
@@ -383,7 +388,7 @@
 			function showData(month, data) {
 				//console.log('showData ' + month);
 				for(var i = 0; i < data.length; i++) {
-					console.log(JSON.stringify(data[i]));
+					//console.log(JSON.stringify(data[i]));
 					var id = month + '_' + data[i].StudentId;
 					var html_name = 'mui-ellipsis';
 					//有点到记事数据

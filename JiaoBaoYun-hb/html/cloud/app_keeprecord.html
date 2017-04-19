@@ -112,22 +112,32 @@
 				//顶部导航历史按钮
 				document.getElementById('history').addEventListener('tap', function() {
 					//跳到历史记录
+					var self = this;
+					self.disabled = true;
 					events.openNewWindowWithData('keeprecord_history_0.html', {
 						type: 'history', //显示的类型
 						gid: show, //群id
 						dataIdArray: qunInfos[show].dataIdArray, //Key
 						qunDataInfos: qunInfos[show].qunDataInfos, //群对象的资料
 					});
+					setTimeout(function() {
+						self.disabled = false;
+					}, 1500);
 				});
 
 				//统计
 				document.getElementById('statistics').addEventListener('tap', function() {
 					//跳到统计
+					var self = this;
+					self.disabled = true;
 					events.openNewWindowWithData('app_statistics.html', {
 						gid: show, //群id
 						dataIdArray: qunInfos[show].dataIdArray, //Key
 						qunDataInfos: qunInfos[show].qunDataInfos, //群对象的资料
 					});
+					setTimeout(function() {
+						self.disabled = false;
+					}, 1500);
 				});
 
 				//切换显示选中的群
@@ -147,6 +157,8 @@
 
 				//监听点击成员
 				mui('.mui-content').on('tap', '.mui-table-view-cell', function() {
+					var self = this;
+					self.disabled = true;
 					var ids = this.id.split('_');
 					console.log(ids[0] + ' ' + ids[1] + ' ' + ids[2]);
 					var gid = ids[1]; //群id
@@ -159,6 +171,9 @@
 						stuid: stuid,
 						stuname: stuname
 					});
+					setTimeout(function() {
+						self.disabled = false;
+					}, 1500);
 				});
 			}
 
