@@ -452,9 +452,7 @@
 					pageIndex: pageIndex, //当前页数
 					totalPage: 0 //总页数
 				};
-				if(data.RspCode == 0) {
-					page.totalPage = data.RspData.TotalPage;
-				}
+
 				if(pageIndex == 1) { //下拉刷新或者获取的第一页的内容
 					//清空对应的界面
 					document.getElementById('data_table').innerHTML = '';
@@ -464,6 +462,7 @@
 				}
 
 				if(data.RspCode == 0) {
+					page.totalPage = data.RspData.TotalPage;
 					var tempRspData = data.RspData.Data;
 					//生成界面
 					if(mainData.type == 'history') {
