@@ -581,7 +581,7 @@ function refreshUI(datasource) {
  * @param {Object} dataArray
  */
 var createList = function(ul, dataArray) {
-	console.log(JSON.stringify(dataArray))
+	console.log(JSON.stringify(dataArray));
 	if(dataArray && dataArray.length > 0) {
 		for(var i in dataArray) {
 			createCell(ul, dataArray[i], i);

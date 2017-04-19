@@ -10,39 +10,12 @@ mui.init({
 var loginRoleType; //登录角色0为游客1为用户
 var noReadCount = 0;
 mui.plusReady(function() {
-	//版本升级模块
-	if(plus.os.name == "Android") {
-		//47.获取APP版本号
-		console.log('plus.os.name:' + plus.os.name);
-		var tempVVL = 'android';
-		if(plus.os.name == 'iOS') {
-			tempVVL = 'ios';
-		}
-		//所需参数
-		var comData9 = {
-			uuid: plus.device.uuid, //用户设备号
-			appid: plus.runtime.appid, //应用ID
-			vvl: tempVVL //安卓：android,苹果：ios
-		};
-		// 等待的对话框
-		var wd_0 = events.showWaiting();
-		postDataPro_PostVerInfo(comData9, wd_0, function(data) {
-			wd_0.close();
-			console.log('获取APP版本号:' + JSON.stringify(data));
-			if(data.RspCode == 0) {
-				appUpdate.getAppVersion(JSON.parse(data.RspData));
-				console.log('获取APP版本号:' + JSON.stringify(data.RspData));
-			} else {
-				mui.toast(data.RspTxt);
-			}
-		});
-	}
+	//android更新app
+	appUpdate.androidUpdateApp();
 	//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
 	var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 	console.log('person===' + JSON.stringify(personal));
-	if(personal && personal.utid != 0) { //有账号，正常登录
-
-	} else {
+	if(!personal) { //没有账号 设置游客账号信息，并保存到本地
 		var model_area = {
 			procode: '00', //省份code，自己添加的参数
 			proname: '全国', //省份名称，自己添加的参数
@@ -83,24 +56,23 @@ mui.plusReady(function() {
 		return false;
 	};
 	Statusbar.barHeight(); //获取一些硬件参数
-	addSubPages();
-	console.log("加载图标");
-	slideNavigation.add('mine.html', 200);
+	addSubPages(); //加载子页面
+	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
 	window.addEventListener('infoChanged', function() {
-		//		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 		var imgNode = document.querySelector('img');
 		if(imgNode) {
 			imgNode.src = updateHeadImg(img, 2);
 		}
-
 	});
+	//登录的监听
 	window.addEventListener("login", function() {
 		console.log("login");
 		loginRoleType = 1;
 		setConditionbyRole(loginRoleType);
 	})
+	//退出的监听
 	window.addEventListener("quit", function() {
 		events.defaultLogin(function(data) {
 			console.log("自动登录获取的值：" + JSON.stringify(data));
@@ -112,12 +84,14 @@ mui.plusReady(function() {
 			}
 		});
 	})
+	//关闭等待框
 	window.addEventListener('closeWaiting', function() {
 		events.closeWaiting();
 	})
 	window.addEventListener('aboutmNoRead', function() {
 		//		getAboutMe();
 	});
+	//默认自动登录
 	events.defaultLogin(function(data) {
 		console.log("自动登录获取的值：" + JSON.stringify(data));
 		if(data.value) {
@@ -127,19 +101,7 @@ mui.plusReady(function() {
 			mui.toast("登录失败，请检查网络！");
 		}
 	});
-	plus.webview.currentWebview().addEventListener("show", function() {
-		console.log("index的show事件");
-		//自动登录
-		//		events.defaultLogin(function(data) {
-		//			console.log("自动登录获取的值：" + JSON.stringify(data));
-		//			if(data.value) {
-		//				loginRoleType = data.flag;
-		//				setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-		//			} else { //登录失败
-		//				mui.toast("登录失败，请检查网络！");
-		//			}
-		//		});
-	})
+	//加载监听
 	setListener();
 
 });
@@ -181,7 +143,6 @@ var addSubPages = function() {
 		}
 	}
 	events.closeWaiting();
-
 }
 //加载监听
 var setListener = function() {
@@ -237,7 +198,7 @@ var setListener = function() {
 		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
 	})
 }
-
+//获取作业的提醒
 function getHomeworkAlert(NoReadCnt) {
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 	//56.（用户空间）获取与我相关
@@ -330,6 +291,10 @@ var changRightIcons = function(targetTab) {
 			slideNavigation.addSlideIcon();
 			addQiuZhiExpertSearch(iconContainer);
 			document.querySelector('.img-icon').addEventListener('tap', function(e) {
+				//判断是否是游客身份登录
+				if(events.judgeLoginMode()) {
+					return;
+				}
 				var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
 				personalInfo.UserId = personalInfo.utid;
 				events.openNewWindowWithData('../qiuzhi/expert-detail.html', personalInfo);
@@ -374,7 +339,7 @@ var addShai = function(container, name) {
 			}, 1500);
 		})
 }
-
+//云盘首页加载plus
 var addPlus = function(container, name) {
 	var add = document.createElement('a');
 	add.className = 'mui-icon iconfont icon-jiahao mui-pull-right mui-icon-plusempty';
@@ -400,6 +365,7 @@ var addPlus = function(container, name) {
 
 	})
 }
+//求知加载搜索按钮
 var addQiuZhiExpertSearch = function(container) {
 	var pubDynamic = document.createElement('a');
 	pubDynamic.id = 'expertSearch'
@@ -435,6 +401,7 @@ var addListIcon = function(container, id) {
 	});
 	container.appendChild(a);
 }
+//根据登录角色不同，更改界面显示
 var setConditionbyRole = function(role) {
 	console.log("获取的身份信息：" + JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
 	var cloudIcon = document.getElementById("defaultTab");
