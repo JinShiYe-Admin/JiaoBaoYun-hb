@@ -58,6 +58,7 @@ mui.plusReady(function() {
 		//如果跟上次进入的是同一个回答 则不更改顺序
 		if(!(answerInfo && e.detail.data.AnswerId == answerInfo.AnswerId)) {
 			type = 2; //倒序
+			mui(".mui-scroll-wrapper").scroll().scrollTo(0,0)
 		}
 		setTolerantChecked(type);
 		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
