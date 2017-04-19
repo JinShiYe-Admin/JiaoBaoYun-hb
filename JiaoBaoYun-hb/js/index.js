@@ -402,14 +402,16 @@ var setConditionbyRole = function(role) {
 	console.log("获取的身份信息：" + JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
 	var cloudIcon = document.getElementById("defaultTab");
 	var sceIcon = document.getElementById("tabclass");
+	var active_tab=document.querySelector(".mui-tab-item.mui-active").getAttribute('href');
+	plus.webview.hide(active_tab.split("/")[active_tab.split("/").length-1]);
 	document.querySelector(".mui-tab-item.mui-active").className = "mui-tab-item";
+	
 	if(role) { //正常用户
 		cloudIcon.style.display = "table-cell";
 		cloudIcon.className = "mui-tab-item mui-active";
 		sceIcon.className = "mui-tab-item";
 		plus.webview.show("cloud_home.html");
 		activeTab = "../cloud/cloud_home.html";
-		plus.webview.hide("sciedu_home.html");
 		changRightIcons("../cloud/cloud_home.html");
 	} else { //游客
 		cloudIcon.style.display = "none";
@@ -417,7 +419,6 @@ var setConditionbyRole = function(role) {
 		sceIcon.className = "mui-tab-item mui-active";
 		plus.webview.show("sciedu_home.html");
 		activeTab = "../sciedu/sciedu_home.html";
-		plus.webview.hide("cloud_home.html");
 		changRightIcons("../sciedu/sciedu_home.html");
 	}
 

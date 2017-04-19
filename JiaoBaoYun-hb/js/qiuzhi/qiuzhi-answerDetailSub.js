@@ -749,7 +749,7 @@ var getPicInner = function(data) {
 var createCommentsInner = function(cell) {
 	console.log("要放置的数据：" + JSON.stringify(cell))
 	var headImg = cell.UserImg;
-	var personName = cell.UserName;
+	var personName = cell.UserName?cell.UserName:"新用户";
 	var inner = '<div class="table-view-cell"><div class="comments-cell">' +
 		'<div class="img-container"><img class="head-img" src="' + headImg + '"/></div>' +
 		'<div class="comment-container">' +
