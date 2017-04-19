@@ -53,11 +53,11 @@
 			th {
 				border: 1px solid #E4E4E4;
 				font-size: 15px;
-				padding: 5px;
+				padding: 5px !important;
 				width: 20%;
 			}
 
-			.not-zero {
+			.not-zero-num {
 				color: #00A5E0;
 			}
 
@@ -294,16 +294,39 @@
 			 * 初始化监听
 			 */
 			function initListener() {
-				//滑动底部列表
+				//滑动底部列表或者点击顶部月份
 				document.getElementById("slider").addEventListener('slide', function() {
 					console.log('slide ' + event.detail.slideNumber);
 					var month = monthsArray[event.detail.slideNumber];
-					var element=document.getElementById(month.id);
+					var element = document.getElementById(month.id);
 					var value = element.getAttribute('data-get');
 					console.log(JSON.stringify(month) + ' ' + value);
 					if(!value) {
 						requestData(month.id);
 					}
+				});
+
+				//点击不是0的统计数据
+				mui('#sliderGroup').on('tap', '.mui-table-view-cell', function() {
+					//console.log('not-zero-num ' + this.id);
+					var ids = this.id.split('_');
+					var checkType = ids[0];
+					var month = ids[1];
+					var stuid = ids[2];
+					console.log('mui-table-view-cell ' + checkType + ' ' + month + ' ' + stuid);
+					//跳到统计详情
+					events.openNewWindowWithData('keeprecord_history_0.html', {
+						type: 'statistics', //显示的类型
+						gid: main.data.gid, //群id
+						statistics: {
+							checkType: checkType,
+							month: month,
+							//stuid: stuid
+						}, //
+						stu: main.data.qunDataInfos[stuid] //选择的学生
+						//dataIdArray: main.data.dataIdArray, //Key
+						//qunDataInfos: main.data.qunDataInfos, //群对象的资料
+					});
 				});
 			}
 
@@ -358,29 +381,33 @@
 			 * 显示数据
 			 */
 			function showData(month, data) {
-				console.log('showData ' + month);
+				//console.log('showData ' + month);
 				for(var i = 0; i < data.length; i++) {
-					//console.log(JSON.stringify(data[i]));
+					console.log(JSON.stringify(data[i]));
 					var id = month + '_' + data[i].StudentId;
+					var html_name = 'mui-ellipsis';
+					//有点到记事数据
+					if(data[i].Notes.length != 0) {
+						html_name = 'mui-ellipsis mui-table-view-cell';
+					}
 					var element = document.createElement('tr');
 					//1 正常2 旷课3 迟到4 早退5请假6 其他
-					element.innerHTML = '<td id="name_' + id + '" class="mui-ellipsis"></td>\
+					element.innerHTML = '<td id="0_' + id + '" class="' + html_name + '"></td>\
 					<td id="2_' + id + '" class="mui-ellipsis">0</td>\
 					<td id="5_' + id + '" class="mui-ellipsis">0</td>\
 					<td id="3_' + id + '" class="mui-ellipsis">0</td>\
 					<td id="4_' + id + '" class="mui-ellipsis">0</td>';
 
 					document.getElementById("table_" + month).appendChild(element);
-					document.getElementById("name_" + id).innerText = main.data.qunDataInfos[data[i].StudentId].stuname;
+					document.getElementById("0_" + id).innerText = main.data.qunDataInfos[data[i].StudentId].stuname;
 					for(var j = 0; j < data[i].Notes.length; j++) {
 						if(data[i].Notes[j].CheckNum) {
 							var td = document.getElementById(data[i].Notes[j].CheckType + '_' + id);
-							td.className = 'mui-ellipsis mui-table-view-cell not-zero';
+							td.className = 'mui-ellipsis mui-table-view-cell not-zero-num';
 							td.innerText = data[i].Notes[j].CheckNum;
 						}
 					}
 				}
-				events.closeWaiting();
 			}
 		</script>
 	</body>

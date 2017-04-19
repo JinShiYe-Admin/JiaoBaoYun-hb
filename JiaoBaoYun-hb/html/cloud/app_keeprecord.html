@@ -113,6 +113,7 @@
 				document.getElementById('history').addEventListener('tap', function() {
 					//跳到历史记录
 					events.openNewWindowWithData('keeprecord_history_0.html', {
+						type: 'history', //显示的类型
 						gid: show, //群id
 						dataIdArray: qunInfos[show].dataIdArray, //Key
 						qunDataInfos: qunInfos[show].qunDataInfos, //群对象的资料
