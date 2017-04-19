@@ -81,27 +81,27 @@
 					var index = this.id.replace('li', '');
 					console.log('index:' + index);
 					if(index == '0') {
-//												var data1 = {
-//													flag: 2, //flag:求知：提问1，回答2，评论3；班级空间：班级动态4；个人空间：个人动态5，个人动态评论6，档案7
-//													comData: {
-//														id: '111'
-//													}, //协议需要参数
-//													title: '弹出的显示标题', //弹出框中，显示的标题
-//													buttons: [{
-//														title: '删除',
-//														btnFlag: 1
-//													}, {
-//														title: '修改',
-//														btnFlag: 2
-//													}, {
-//														title: '重命名',
-//														btnFlag: 5
-//													}], //弹出的列表,格式为：[{title:标题，btnFlag:要做的操作}]，btnFlag：1删除，2修改，3屏蔽，4取消屏蔽，5重命名
-//													delFlag: 1 //删除确认弹出框格式，1从下弹出，2中间confirm
-//												};
-//												delContent_pop(data1, function(data) {
-//													console.log('返回值为：'+JSON.stringify(data));
-//												});
+						//												var data1 = {
+						//													flag: 2, //flag:求知：提问1，回答2，评论3；班级空间：班级动态4；个人空间：个人动态5，个人动态评论6，档案7
+						//													comData: {
+						//														id: '111'
+						//													}, //协议需要参数
+						//													title: '弹出的显示标题', //弹出框中，显示的标题
+						//													buttons: [{
+						//														title: '删除',
+						//														btnFlag: 1
+						//													}, {
+						//														title: '修改',
+						//														btnFlag: 2
+						//													}, {
+						//														title: '重命名',
+						//														btnFlag: 5
+						//													}], //弹出的列表,格式为：[{title:标题，btnFlag:要做的操作}]，btnFlag：1删除，2修改，3屏蔽，4取消屏蔽，5重命名
+						//													delFlag: 1 //删除确认弹出框格式，1从下弹出，2中间confirm
+						//												};
+						//												delContent_pop(data1, function(data) {
+						//													console.log('返回值为：'+JSON.stringify(data));
+						//												});
 						mui.confirm(tempInfo.uid, '您已绑定手机号', ['取消', '更换'], function(e) {
 							var index = e.index;
 							switch(index) {
@@ -164,14 +164,34 @@
 										if(data.RspCode == 0) {
 											tempInfo.isLogin = 1;
 											//修改自动登录值
-											window.myStorage.setItem(window.storageKeyName.PERSONALINFO, null);
+											var model_area = {
+												procode: '00', //省份code，自己添加的参数
+												proname: '全国', //省份名称，自己添加的参数
+												acode: '000000', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
+												aname: '全国', //节点名称--城市名称
+												atype: '' //节点类型,0省1城市2区县
+											}
+											var personal1 = {
+												utid: '0', //用户表ID
+												uid: '00000000000', //电话号码
+												uname: '游客', //姓名,账号,只能修改一次,且只能字母开头,字母与数字,定了就不能修改
+												uimg: '../../image/utils/default_personalimage.png', //用户头像地址
+												unick: '游客', //用户昵称
+												usex: '', //用户性别
+												utxt: '', //用户签名
+												uarea: model_area, //用户区域,省代码 市代码|省名称 市名称
+												token: '', //用户令牌
+												ispw: '', //0无密码，1有密码
+												isLogin: '' //是否登录，0没有登录过，1有登录过
+											}
+											window.myStorage.setItem(window.storageKeyName.PERSONALINFO, personal1);
 											//退出登录
 											events.logOff();
 											events.infoChanged();
-											
+
 											//											plus.runtime.quit();
 											//跳转到登录界面
-//											events.openNewWindowWithData('../../html/register/login.html', '');
+											//											events.openNewWindowWithData('../../html/register/login.html', '');
 											mui.fire(plus.webview.getLaunchWebview(), 'quit');
 											plus.webview.getLaunchWebview().show();
 											//											plus.webview.currentWebview().close();
