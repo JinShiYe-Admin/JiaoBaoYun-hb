@@ -75,8 +75,8 @@ mui.plusReady(function() {
 	//监听 修改答案后的传回来的值
 	window.addEventListener("answerChanged",function(e){
 		var changedData=e.detail;
-		document.getElementById('answer-imgs').innerHTML="";
-		document.getElementById("question-content").innerText=changedData.answerContent;
+//		document.getElementById('answer-imgs').innerHTML="";
+		document.getElementById("question-content").innerHTML=changedData.answerContent;
 		document.getElementById("answer-imgs").innerHTML=getPicInner(changedData)
 		answerInfo.AnswerThumbnail=changedData.AnswerThumbnail;
 		answerInfo.AnswerEncAddr=changedData.AnswerEncAddr;
@@ -645,7 +645,7 @@ var createCell = function(ul, cellData, i, order) {
  * @param {Object} datasource
  */
 var setQuestion = function(datasource) {
-	document.querySelector('.question-title').innerText = datasource.AskTitle;
+	document.querySelector('.question-title').innerHTML = datasource.AskTitle;
 	var questionContainer = document.getElementById('question-content');
 	events.clearChild(questionContainer);
 	var p = document.createElement('p');

@@ -540,7 +540,7 @@ function addImages(num) {
  * @param {Object} title 问题标题
  */
 function questionTitle(title) {
-	document.getElementById("question_title").innerText = title;
+	document.getElementById("question_title").innerHTML = title;
 }
 
 /**
@@ -610,7 +610,7 @@ function questionContent(content, flag) {
 			document.getElementById("showAll").style.display = 'inline';
 		}
 	} else {
-		document.getElementById("question_content").innerText = content;
+		document.getElementById("question_content").innerHTML = content;
 		document.getElementById("question_content").style.webkitLineClamp = '4';
 		height_0 = document.getElementById("question_content").offsetHeight;
 		document.getElementById("question_content").style.webkitLineClamp = '3';
@@ -680,7 +680,7 @@ function answerList(data) {
 		'<div class="answer-info">' + data.IsLikeNum + '赞同·' + data.CommentNum + '评论·' + modifyTimeFormat(data.AnswerTime) + '</div>';
 	document.getElementById("answer_bottom").appendChild(li);
 	if(data.AnswerSFlag != 1) { //不是旧数据
-		document.getElementById("answer_content_" + data.AnswerId).innerText = data.AnswerContent;
+		document.getElementById("answer_content_" + data.AnswerId).innerHTML = data.AnswerContent;
 	} else {
 		var content_0 = events.htmlGetText(data.AnswerContent);
 		var content_1 = content_0.replace(/\s+/g, ""); //替换所有空格

@@ -182,9 +182,9 @@ var setListener = function() {
 			plus.webview.show(targetSplit[targetSplit.length - 1]);
 		} else {
 			//否则，使用fade-in动画，且保存变量
-			var temp = {};
-			temp[targetTab] = "true";
-			mui.extend(aniShow, temp);
+//			var temp = {};
+//			temp[targetTab] = "true";
+//			mui.extend(aniShow, temp);
 			plus.webview.show(targetSplit[targetSplit.length - 1], "fade-in", 300);
 		}
 		var activeSplit = activeTab.split('/');
@@ -413,17 +413,15 @@ var setConditionbyRole = function(role) {
 	if(role) { //正常用户
 		cloudIcon.style.display = "table-cell";
 		cloudIcon.className = "mui-tab-item mui-active";
-		sceIcon.className = "mui-tab-item";
-		plus.webview.show("cloud_home.html");
+		plus.webview.show("cloud_home.html","fade-in",300);
 		activeTab = "../cloud/cloud_home.html";
 		changRightIcons("../cloud/cloud_home.html");
 	} else { //游客
 		cloudIcon.style.display = "none";
-		cloudIcon.className = "mui-tab-item";
 		sceIcon.className = "mui-tab-item mui-active";
-		plus.webview.show("sciedu_home.html");
+		plus.webview.show("sciedu_home.html","fade-in",300);
 		activeTab = "../sciedu/sciedu_home.html";
-		changRightIcons("../sciedu/sciedu_home.html");
+		changRightIcons("../sciedu/sciedu_home.html"); 
 	}
 
 }

@@ -41,7 +41,7 @@
 				}
 				var questionInfo=data.channelInfo;
 				console.log("获取的questionInfo:"+JSON.stringify(questionInfo));
-				if(questionInfo.AskMan==myStorage.getItem(storageKeyName.PERSONALINFO).utid&&questionInfo.AnswerNum==0){
+				if(questionInfo.AskMan==myStorage.getItem(storageKeyName.PERSONALINFO).utid&&(questionInfo.AnswerNum+questionInfo.AnswerOffNum)==0){
 					document.getElementById("manage-question").style.display="inline-block";
 //				}else if(quetionInfo.RspData.AnswerId&&quetionInfo.RspData.IsAnswerOff){
 					
