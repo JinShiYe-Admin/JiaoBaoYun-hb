@@ -511,7 +511,7 @@
 							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
 						});
 						var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-						console.log('person==='+JSON.stringify(personal));
+						console.log('person===' + JSON.stringify(personal));
 						if(personal && personal.utid != 0) { //有账号，正常登录
 							//加入手机号所在城市
 							eduArray.push({
@@ -559,6 +559,13 @@
 
 					};
 					if(data.RspCode == 0) {
+						if(document.getElementById("bot_" + cityCode)) {
+							document.getElementById("bot_" + cityCode).setAttribute('data-page', JSON.stringify(page))
+							if(pageIndex == 1) { //获取的第一页的内容
+								//清空对应的界面
+								document.getElementById("bot_ul_" + cityCode).innerHTML = '';
+							}
+						}
 						page.totalPage = data.RspData.TotalPage;
 						totalPage = data.RspData.TotalPage;
 
@@ -567,14 +574,6 @@
 						}
 
 					}
-					if(document.getElementById("bot_" + cityCode)) {
-						document.getElementById("bot_" + cityCode).setAttribute('data-page', JSON.stringify(page))
-						if(pageIndex == 1) { //获取的第一页的内容
-							//清空对应的界面
-							document.getElementById("bot_ul_" + cityCode).innerHTML = '';
-						}
-					}
-
 					//设置上拉下拉控件的状态
 					var tempRefresh;
 					for(var i = 0; i < pullToRefresh.length; i++) {
@@ -659,6 +658,7 @@
 						var tempArray = [];
 						//先遍历回调数组，获取
 						for(var item in tempRspData) {
+							tempRspData[item].InShow = 0;
 							tempRspData[item].IsFocused = 1;
 							//当前循环的model
 							var tempModel0 = tempRspData[item];
@@ -818,7 +818,7 @@
 			var getPersonIds = function(data, cityCode) {
 				var personIds = [];
 				for(var i in data) {
-					data[i].InShow = "1";
+//					data[i].InShow = "1";
 					personIds.push(data[i].PublisherId);
 
 					for(var item in data[i].LikeUsers) {

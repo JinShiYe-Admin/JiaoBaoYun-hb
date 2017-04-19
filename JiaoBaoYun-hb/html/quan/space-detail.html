@@ -235,7 +235,12 @@
 
 			var table = document.body.querySelector('.mui-table-view');
 			table.innerHTML = '';
-			data.InShow = preModel.InShow;
+			if(preModel.focusFlag==1){
+				data.InShow = '1';
+			}else{
+				data.InShow = preModel.InShow ;
+			}
+			
 			if(preModel.focusFlag == 0) {
 				idFlag = '';
 				data.focusFlag = 0;
