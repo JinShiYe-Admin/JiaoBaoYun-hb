@@ -39,9 +39,10 @@
 		<script type="text/javascript">
 			var isPersonal = 1;
 			mui.init({
-			gestureConfig:{
-				longtap:true
-			}});
+				gestureConfig: {
+					longtap: true
+				}
+			});
 			idFlag = 'zx';
 			var datasource = {}; //数据源
 			var pageIndex = 1; //第几页
@@ -63,7 +64,7 @@
 				SCREEN_WIDTH = plus.screen.resolutionWidth;
 				mui.previewImage(); //浏览图片详情
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				index =main.parent(); //
+				index = main.parent(); //
 				main.addEventListener("hide", function(e) {
 					mui.getPreviewImage().close()
 				})
@@ -160,10 +161,10 @@
 						} else {
 							replyUserId = tempModel.Replys[replyId].UserId;
 							ReplyIdName = tempModel.Replys[replyId].UserIdName;
-							nextReplyId = replyId+1;
+							nextReplyId = replyId + 1;
 						}
-						console.log('nextReplyId='+nextReplyId)
-						
+						console.log('nextReplyId=' + nextReplyId)
+
 						var commentList = document.getElementById("commentList" + citycode + 'zx' + id);
 						var div = document.createElement("div");
 						div.id = 'replyComment' + citycode + 'zx' + id + '-' + commentId + '-' + nextReplyId;
@@ -501,24 +502,27 @@
 							aname: '全部',
 							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
 						});
-						//加入手机号所在城市
-
-						eduArray.push({
-							acode: uarea.acode,
-							aname: uarea.aname,
-							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
-						});
+						var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+						if(personal && personal.utid != 0) { //有账号，正常登录
+							//加入手机号所在城市
+							eduArray.push({
+								acode: uarea.acode,
+								aname: uarea.aname,
+								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+							});
+							//加入关注的人数据
+							eduArray.push({
+								acode: 1,
+								aname: '我关注的人',
+								aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
+								index: 1, //请求第几页数据
+								isRefresh: 0 //是刷新0，还是加载更多1
+							});
+						}
 
 						//						mui.toast(data.RspTxt);
 					}
-					//加入关注的人数据
-					eduArray.push({
-						acode: 1,
-						aname: '我关注的人',
-						aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
-						index: 1, //请求第几页数据
-						isRefresh: 0 //是刷新0，还是加载更多1
-					});
+
 					console.log(JSON.stringify(eduArray));
 					cities = eduArray.slice(0); //拷贝数组
 					callBack(cities);
@@ -862,7 +866,7 @@
 							zonepArray = data;
 						}
 						datasource[sliderId] = zonepArray;
-												console.log("重组后的数据：" + JSON.stringify(zonepArray));
+						console.log("重组后的数据：" + JSON.stringify(zonepArray));
 						setData(zonepArray, cityCode, tempLength);
 					} else {
 						events.fireToPageNone('index.html', 'closeWaiting');
