@@ -125,6 +125,12 @@ mui.plusReady(function() {
 			loginRoleType = data.flag;
 			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
 		} else { //登录失败
+			if(parseInt(personal.utid)){
+				loginRoleType=1;
+			}else{
+				loginRoleType=0;
+			}
+			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
 			mui.toast("登录失败，请检查网络！");
 		}
 	});
