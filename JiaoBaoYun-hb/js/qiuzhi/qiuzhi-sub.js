@@ -34,7 +34,9 @@ mui.plusReady(function() {
 		console.log("高度：" + document.querySelector(".mui-scroll-wrapper").offsetHeight);
 		getChannelTime = null;
 		getExperTime = null;
-		wd = events.showWaiting();
+		if(plus.networkinfo.getCurrentType() != plus.networkinfo.CONNECTION_NONE){
+			wd = events.showWaiting();
+		}
 		//获取所有符合条件问题
 		requestChannelList(channelInfo);
 		//清理专家列表
