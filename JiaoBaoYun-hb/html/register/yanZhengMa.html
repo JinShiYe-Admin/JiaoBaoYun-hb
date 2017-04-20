@@ -97,18 +97,18 @@
 			}
 			//nav返回按钮
 			function returnLeft() {
-//				var btnArray = ['否', '是'];
-//              mui.confirm('MUI是个好框架，确认？', 'Hello MUI', btnArray, function(e) {
-//                  if (e.index == 1) {
-//                      mui.back();
-//                  } else {
-//                      
-//                  }
-//              });
+				//				var btnArray = ['否', '是'];
+				//              mui.confirm('MUI是个好框架，确认？', 'Hello MUI', btnArray, function(e) {
+				//                  if (e.index == 1) {
+				//                      mui.back();
+				//                  } else {
+				//                      
+				//                  }
+				//              });
 
-				mui.confirm(' ','验证码短信可能略有延迟，确定返回并重新开始？',['取消', '确认'],function (e) {
+				mui.confirm(' ', '验证码短信可能略有延迟，确定返回并重新开始？', ['取消', '确认'], function(e) {
 					var index = e.index;
-					console.log('index:'+index);
+					console.log('index:' + index);
 					switch(index) {
 						case 0: //取消
 							break;
@@ -117,18 +117,18 @@
 							break;
 					}
 				});
-				
-//				mui.confirm(' ', '验证码短信可能略有延迟，确定返回并重新开始？', ['取消', '确认'], function(e) {
-//					var index = e.index;
-//					console.log('index:'+index);
-//					switch(index) {
-//						case 0: //取消
-//							break;
-//						case 1: //返回
-//							mui.back();
-//							break;
-//					}
-//				},'div');
+
+				//				mui.confirm(' ', '验证码短信可能略有延迟，确定返回并重新开始？', ['取消', '确认'], function(e) {
+				//					var index = e.index;
+				//					console.log('index:'+index);
+				//					switch(index) {
+				//						case 0: //取消
+				//							break;
+				//						case 1: //返回
+				//							mui.back();
+				//							break;
+				//					}
+				//				},'div');
 			}
 			//遇到登录问题
 			document.getElementById("get_code").addEventListener('tap', function(event) {
@@ -239,7 +239,7 @@
 								var targetPage = plus.webview.getWebviewById(tarPageIds[tarPageIds.length - 1]);
 								console.log('targetPage是否存在:' + Boolean(targetPage))
 								if(targetPage) {
-									targetPage.evalJS('document.getElementById("change_phoneNum").innerText ='+personalUTID.uid);
+									targetPage.evalJS('document.getElementById("change_phoneNum").innerText =' + personalUTID.uid);
 									targetPage.show('slide-in-left', 250);
 									mui.toast('重新绑定成功');
 								}
@@ -301,7 +301,12 @@
 											events.infoChanged();
 											if(data.RspData.ispw == 1) {
 												//跳转到主界面
-												events.openNewWindow('../index/index.html');
+												//退出 界面更新
+												events.logOff();
+												events.infoChanged();
+												mui.fire(plus.webview.getLaunchWebview(), 'login');
+												events.hidePagesExIndex();
+												mui.back();
 											} else {
 												//跳转到修改密码界面
 												events.openNewWindowWithData('modify_password.html', '0');
