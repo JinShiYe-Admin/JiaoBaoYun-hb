@@ -72,6 +72,8 @@
 						events.openNewWindowWithData('../mine/apply-bycode.html', QRCodeModel);
 					} else {
 						mui.toast('扫描结果为:' + result);
+						//如果格式不符合，重新扫描
+						scan.start(); //开始扫描
 					}
 				}
 			}
