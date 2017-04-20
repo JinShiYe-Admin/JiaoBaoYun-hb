@@ -40,8 +40,8 @@ mui.plusReady(function() {
 	plus.webview.currentWebview().opener().addEventListener("hide", function() {
 		mui.previewImage().close();
 		console.log("求知回答页面已隐藏");
-		//		events.clearChild(document.getElementById('list-container'));
-		//		setOriginalCondition();
+				events.clearChild(document.getElementById('list-container'));
+				setOriginalCondition();
 		mui('#popover').popover('hide');
 	})
 	//加载监听
@@ -53,6 +53,7 @@ mui.plusReady(function() {
 		pageIndex = 1;
 		totalPageCount = 1;
 		answerInfo = e.detail.data;
+		document.getElementById('question-content').innerHTML="";
 		setChangeCondition();
 		console.log("获取的回答详情：" + JSON.stringify(answerInfo));
 		//如果跟上次进入的是同一个回答 则不更改顺序
@@ -81,6 +82,11 @@ mui.plusReady(function() {
 		answerInfo.AnswerThumbnail=changedData.AnswerThumbnail;
 		answerInfo.AnswerEncAddr=changedData.AnswerEncAddr;
 		answerInfo.AnswerContent=changedData.answerContent;
+		answerInfo.AnswerCutImg=changedData.AnswerCutImg;
+		answerData.AnswerThumbnail=changedData.AnswerThumbnail;
+		answerData.AnswerEncAddr=changedData.AnswerEncAddr;
+		answerData.AnswerContent=changedData.answerContent;
+		answerData.AnswerCutImg=changedData.AnswerCutImg;
 	})
 	window.addEventListener("showActionSheet", function() {
 		var btnArray;
@@ -647,7 +653,7 @@ var createCell = function(ul, cellData, i, order) {
 var setQuestion = function(datasource) {
 	document.querySelector('.question-title').innerHTML = datasource.AskTitle;
 	var questionContainer = document.getElementById('question-content');
-	events.clearChild(questionContainer);
+	console.log("放置数据？？？？？？？？？")
 	var p = document.createElement('p');
 	p.innerHTML = datasource.AnswerContent;
 	questionContainer.appendChild(p);

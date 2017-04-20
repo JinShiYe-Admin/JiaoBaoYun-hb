@@ -532,11 +532,11 @@ var CloudFileUtil = (function($, mod) {
 		var QNFileName; //文件名
 		var params = [];
 		for(var i in picPaths) {
-			if(parseInt(i) == 0) {
+//			if(parseInt(i) == 0) {
 				uploadOptions[i].type = 10;
-			} else {
-				uploadOptions[i].type = 0;
-			}
+//			} else {
+//				uploadOptions[i].type = 0;
+//			}
 			var param = {};
 			param.Bucket = mainSpace;
 			//获取文件路径

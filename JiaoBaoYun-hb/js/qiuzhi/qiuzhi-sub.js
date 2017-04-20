@@ -332,8 +332,8 @@ var setFocusCondition = function(cell) {
 var getImgs = function(cell) {
 	if(cell.AnswerCutImg && cell.AnswerCutImg != "") {
 		var imgArray = cell.AnswerEncAddr.split('|');
-		var clipImg = cell.AnswerCutImg;
-		imgInner = '<img class="clip-img" data-lazyload="' + clipImg + '"/>';
+		var clipImgs = cell.AnswerCutImg.split("|");
+		imgInner = '<img class="clip-img" data-lazyload="' + clipImgs[0] + '"/>';
 		return imgInner;
 	}
 	return '';
