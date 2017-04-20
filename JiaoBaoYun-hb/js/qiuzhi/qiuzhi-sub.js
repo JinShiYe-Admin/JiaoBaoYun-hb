@@ -280,12 +280,12 @@ var rechargeInfos = function(datas, infos) {
 var setChannelList = function(data) {
 	console.log('求知主界面加载的数据信息：' + JSON.stringify(data));
 	var list = document.getElementById('list-container');
-	var fragemnt = document.createDocumentFragment();
+//	var fragemnt = document.createDocumentFragment();
 	for(var i in data) {
 		var li = document.createElement('li');
 		li.className = "mui-table-view-cell";
 		li.innerHTML = getInnerHTML(data[i]);
-		fragemnt.appendChild(li);
+		list.appendChild(li);
 		if(li.querySelector('.answer-container')) {
 			li.querySelector('.answer-container').answerInfo = data[i];
 		}
@@ -298,7 +298,7 @@ var setChannelList = function(data) {
 		}
 		li.querySelector('.focus-status').questionInfo = data[i];
 	}
-	list.appendChild(fragemnt);
+//	list.appendChild(fragemnt);
 	lazyLoadApi.refresh(true);
 	getChannelTime = Date.now();
 	if(getExperTime) {
