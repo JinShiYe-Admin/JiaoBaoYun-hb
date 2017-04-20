@@ -162,7 +162,8 @@
 										wd.close();
 										console.log('注销success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 										if(data.RspCode == 0) {
-											events.defaultLogin(data {
+											window.myStorage.setItem(window.storageKeyName.PERSONALINFO, null);
+											events.defaultLogin(function(data) {
 												if(data.value) {
 													//退出登录
 													events.logOff();
