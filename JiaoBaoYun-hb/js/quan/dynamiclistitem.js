@@ -152,12 +152,13 @@ var dynamiclistitem = (function($, mod) {
 										};
 										postDataPro_delUserSpaceById(comData, wd, function(data) {
 											wd.close();
+											console.log(JSON.stringify(data))
 											if(data.RspCode == 0) {
 												mui.toast('已删除');
 
 												var deleteNode = document.getElementById(index);
 												deleteNode.parentNode.removeChild(deleteNode);
-												zonepArray.splice(index, 1)
+//												zonepArray.splice(index, 1)
 											} else {
 												mui.toast(data.RspTxt);
 											}
