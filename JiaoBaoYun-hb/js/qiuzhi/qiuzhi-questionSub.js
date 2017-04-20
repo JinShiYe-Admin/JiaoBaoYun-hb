@@ -682,11 +682,11 @@ function answerList(data,fragment) {
 		'<div class="answer-info">' + data.IsLikeNum + '赞同·' + data.CommentNum + '评论·' + modifyTimeFormat(data.AnswerTime) + '</div>';
 	fragment.appendChild(li);
 	if(data.AnswerSFlag != 1) { //不是旧数据
-		document.getElementById("answer_content_" + data.AnswerId).innerHTML = data.AnswerContent;
+		fragment.getElementById("answer_content_" + data.AnswerId).innerHTML = data.AnswerContent;
 	} else {
 		var content_0 = events.htmlGetText(data.AnswerContent);
 		var content_1 = content_0.replace(/\s+/g, ""); //替换所有空格
-		document.getElementById("answer_content_" + data.AnswerId).innerText = content_1;
+		fragment.getElementById("answer_content_" + data.AnswerId).innerText = content_1;
 	}
 
 }
