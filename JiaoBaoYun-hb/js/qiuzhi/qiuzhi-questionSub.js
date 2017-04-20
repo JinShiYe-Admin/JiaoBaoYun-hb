@@ -658,16 +658,18 @@ function cleanAnswer() {
  * @param {Object} data 回答数组
  */
 function addAnswer(data) {
+	var fragment=document.createDocumentFragment();
 	for(var i = 0; i < data.length; i++) {
-		answerList(data[i]);
+		answerList(data[i],fragment);
 	}
+	document.getElementById("answer_bottom").appendChild(fragment);
 }
 
 /**
  * 放置回答列表的一项
  * @param {Object} answershu 一个回答的数据
  */
-function answerList(data) {
+function answerList(data,fragment) {
 
 	var li = document.createElement('li');
 	li.className = 'mui-table-view-cell mui-media';
@@ -678,7 +680,7 @@ function answerList(data) {
 		'<div class="mui-ellipsis">' + data.unick + '</div>' +
 		'<div id="answer_content_' + data.AnswerId + '" class="ellipsis-3"></div>' +
 		'<div class="answer-info">' + data.IsLikeNum + '赞同·' + data.CommentNum + '评论·' + modifyTimeFormat(data.AnswerTime) + '</div>';
-	document.getElementById("answer_bottom").appendChild(li);
+	fragment.appendChild(li);
 	if(data.AnswerSFlag != 1) { //不是旧数据
 		document.getElementById("answer_content_" + data.AnswerId).innerHTML = data.AnswerContent;
 	} else {
