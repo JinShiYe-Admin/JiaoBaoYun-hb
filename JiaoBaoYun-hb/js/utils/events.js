@@ -321,7 +321,7 @@ var events = (function(mod) {
 	mod.infoChanged = function() {
 		events.fireToPageNone('mine.html', 'infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
-		events.fireToPageNone('../index/index.html', 'infoChanged');
+		mui.fire(plus.webview.getLaunchWebview(), 'infoChanged');
 		events.fireToPageNone('qiuzhi_home.html', 'infoChanged');
 		events.fireToPageNone('aboutme_sub.html', 'infoChanged');
 	}
