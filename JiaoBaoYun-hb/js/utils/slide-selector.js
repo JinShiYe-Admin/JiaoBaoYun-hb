@@ -149,7 +149,7 @@ var slide_selector = (function(mod) {
 	}
 	var sendPageChanged = function() {
 		getCurrentCity();
-		events.fireToPageNone('../index/index.html', 'showCity', curCity)
+		mui.fire(plus.webview.getLaunchWebview(), 'showCity', curCity)
 	}
 
 	/**

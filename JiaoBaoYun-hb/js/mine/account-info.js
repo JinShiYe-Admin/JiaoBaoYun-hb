@@ -75,7 +75,7 @@ mui.plusReady(function() {
 				wd.close();
 			}
 			events.fireToPageNone('mine.html', 'infoChanged');
-			events.fireToPageNone('../index/index.html', 'infoChanged');
+			mui.fire(plus.webview.currentWebview(), 'infoChanged');
 			events.fireToPageNone('classSpace-sub.html', 'infoChanged');
 		}, 2000);
 	}, function(errorCB) {
