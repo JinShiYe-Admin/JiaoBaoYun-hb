@@ -21,7 +21,7 @@ mui.plusReady(function() {
 		answerIsReady = true;
 	})
 	window.addEventListener('channelInfo', function(e) {
-		
+
 		console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
 		pageIndex = 1; //当前页数
 		totalPage = 0; //总页数
@@ -34,7 +34,7 @@ mui.plusReady(function() {
 		console.log("高度：" + document.querySelector(".mui-scroll-wrapper").offsetHeight);
 		getChannelTime = null;
 		getExperTime = null;
-		if(plus.networkinfo.getCurrentType() != plus.networkinfo.CONNECTION_NONE){
+		if(plus.networkinfo.getCurrentType() != plus.networkinfo.CONNECTION_NONE) {
 			wd = events.showWaiting();
 		}
 		//获取所有符合条件问题
@@ -53,7 +53,9 @@ mui.plusReady(function() {
 		resetExpertsList();
 		getChannelTime = null;
 		getExperTime = null;
-		wd = events.showWaiting();
+		if(plus.networkinfo.getCurrentType() != plus.networkinfo.CONNECTION_NONE) {
+			wd = events.showWaiting();
+		}
 		//2.获取符合条件的专家信息
 		getExpertsArray(channelInfo.TabId);
 		//刷新的界面实现逻辑
@@ -69,11 +71,12 @@ mui.plusReady(function() {
 		resetExpertsList();
 		getChannelTime = null;
 		getExperTime = null;
-		wd = events.showWaiting();
-		//2.获取符合条件的专家信息
-		getExpertsArray(channelInfo.TabId);
-		//刷新的界面实现逻辑
-		requestChannelList(channelInfo);
+		if(plus.networkinfo.getCurrentType() != plus.networkinfo.CONNECTION_NONE) {
+			wd = events.showWaiting(); //2.获取符合条件的专家信息
+			getExpertsArray(channelInfo.TabId);
+			//刷新的界面实现逻辑
+			requestChannelList(channelInfo);
+		}
 	}, {
 		style: 'circle',
 	});
@@ -234,7 +237,7 @@ var getIds = function(datas) {
 	requireInfos(datas, events.arraySingleItem(personIds));
 }
 /**
- * 
+ *
  * @param {Object} datasource
  * @param {Object} pInfos
  */
@@ -277,12 +280,12 @@ var rechargeInfos = function(datas, infos) {
 var setChannelList = function(data) {
 	console.log('求知主界面加载的数据信息：' + JSON.stringify(data));
 	var list = document.getElementById('list-container');
-	var fragemnt=document.createDocumentFragment();
+//	var fragemnt = document.createDocumentFragment();
 	for(var i in data) {
 		var li = document.createElement('li');
 		li.className = "mui-table-view-cell";
 		li.innerHTML = getInnerHTML(data[i]);
-		fragemnt.appendChild(li);
+		list.appendChild(li);
 		if(li.querySelector('.answer-container')) {
 			li.querySelector('.answer-container').answerInfo = data[i];
 		}
@@ -295,7 +298,7 @@ var setChannelList = function(data) {
 		}
 		li.querySelector('.focus-status').questionInfo = data[i];
 	}
-	list.appendChild(fragemnt);
+//	list.appendChild(fragemnt);
 	lazyLoadApi.refresh(true);
 	getChannelTime = Date.now();
 	if(getExperTime) {
@@ -390,7 +393,9 @@ var pullUpFresh = function() {
 var setListener = function() {
 	events.addTap('submit-question', function() {
 		//判断是否是游客身份登录
-		if (events.judgeLoginMode()) {return;}
+		if(events.judgeLoginMode()) {
+			return;
+		}
 		console.log(JSON.stringify(allChannels))
 		var self = this
 		self.disabled = true;
@@ -410,8 +415,8 @@ var setListener = function() {
 				events.openNewWindowWithData('qiuzhi-question.html', {
 					askID: item.getAttribute('askId'), //问题id
 					channelInfo: questionInfo, //当前话题
-					allChannels: allChannels//全部话题
-//					questionInfo:questionInfo//当前问题
+					allChannels: allChannels //全部话题
+					//					questionInfo:questionInfo//当前问题
 				});
 			})
 		})
@@ -447,9 +452,11 @@ var setListener = function() {
 	//求知关注
 	mui(".mui-table-view").on('tap', '.focus-status', function() {
 		//判断是否是游客身份登录
-		if (events.judgeLoginMode()) {return;}
-		var item=this;
-		requireQuestionInfo(item.questionInfo.TabId,function(data){
+		if(events.judgeLoginMode()) {
+			return;
+		}
+		var item = this;
+		requireQuestionInfo(item.questionInfo.TabId, function(data) {
 			setQuestionFocus(item);
 		});
 	})
