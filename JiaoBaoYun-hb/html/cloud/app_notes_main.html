@@ -363,7 +363,7 @@
 
 			var width = Math.ceil((document.getElementById(dateItem).offsetWidth * 0.8 - 32) * 0.32);
 			var height = parseInt(width * 3 / 4);
-			var marginBottom = Math.ceil((document.getElementById(dateItem).offsetWidth * 0.8 - 32) * 0.02);
+			var marginBottom = Math.floor((document.getElementById(dateItem).offsetWidth * 0.8 - 32) * 0.02);
 			var marginRight;
 
 			if(data.EncType == 1) { //附件类型,1图片2音视频3仅文字
