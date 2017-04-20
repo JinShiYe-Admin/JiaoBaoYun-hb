@@ -903,13 +903,15 @@ var events = (function(mod) {
 							}
 							window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
 							//
-							events.infoChanged();
 							console.log('登录保存的个人信息：' + JSON.stringify(tempInfo))
 							//跳到主界面
 							var tempValue = {
 								flag: 1, //正常用户登录
 								value: 1 //登录成功
 							}
+							//退出登录
+							events.logOff();
+							events.infoChanged();
 							callback(tempValue);
 							//							events.openNewWindow('../index/index.html', '');
 						} else {
@@ -1007,6 +1009,8 @@ var events = (function(mod) {
 				window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 				console.log('登录保存的个人信息：' + JSON.stringify(data.RspData));
 				//
+				//退出登录
+				events.logOff();
 				events.infoChanged();
 				//存储自动登录
 				//跳到主界面
