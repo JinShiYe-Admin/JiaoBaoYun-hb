@@ -341,7 +341,7 @@
 						callback: function() {
 							var self = this;
 							//console.log("下拉刷新");
-							events.fireToPageNone('../index/index.html', 'aboutmNoRead');
+							mui.fire(plus.webview.getLaunchWebview(), 'aboutmNoRead');
 							//文件存储数组
 							fileArray = [];
 							//获取所有的群

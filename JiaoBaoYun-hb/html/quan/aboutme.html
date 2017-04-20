@@ -32,7 +32,8 @@
 			var _back = mui.back;
 			mui.back = function() {
 				if(plus.webview.currentWebview().opener().id = "homework-commented.html") {
-					plus.webview.getWebviewById('index.html').show();
+					events.hidePagesExIndex();
+					_back();
 				} else {
 					_back();
 				}

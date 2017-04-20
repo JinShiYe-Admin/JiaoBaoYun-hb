@@ -798,7 +798,7 @@ function pulldownRefresh() {
 		isRefresh = 1; //是否下拉刷新--1：下拉刷新 0：不是下拉刷新
 		selectCell = {}; //选择的cell
 		getStuList();
-		events.fireToPageNone('../index/index.html', 'aboutmNoRead');
+		mui.fire(plus.webview.getLaunchWebview(), 'aboutmNoRead');
 		//		events.fireToPageNone('../index/index.html', 'newMessage');
 		var ws = plus.webview.currentWebview();
 		ws.endPullToRefresh(); //refresh completed
