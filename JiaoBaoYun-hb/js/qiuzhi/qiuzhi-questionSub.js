@@ -235,7 +235,7 @@ var setCondition = function() {
 
 }
 var delQuestion = function() {
-	mui.toast("功能暂未开放，请稍候！");
+//	mui.toast("功能暂未开放，请稍候！");
 	var wd1 = events.showWaiting();
 	//37.删除某个用户的某条提问
 	postDataQZPro_delAskById({
