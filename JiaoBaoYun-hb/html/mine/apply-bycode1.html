@@ -1,0 +1,43 @@
+<!--申请入群界面-->
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<!--<link href="../../css/mine/apply-byCode.css" rel="stylesheet" />-->
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">扫描结果</h1>
+		</header>
+		<div class="mui-content">
+			<div class="group-info">
+				<h6 id="group-info" class="group-info"></h6>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript">
+			var groupInfo; //群组信息
+			mui.init({
+				beforeback:function(){
+					plus.webview.currentWebview().opener().close();
+					return true;
+				}
+			})
+			mui.plusReady(function() {
+				groupInfo = plus.webview.currentWebview().data;
+				console.log("获取的数据："+JSON.stringify(groupInfo));
+				document.getElementById("group-info").innerText = groupInfo;
+			})
+		</script>
+	</body>
+
+</html>

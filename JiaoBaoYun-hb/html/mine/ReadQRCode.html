@@ -71,7 +71,8 @@
 						console.log('QRCodeModel=' + JSON.stringify(QRCodeModel));
 						events.openNewWindowWithData('../mine/apply-bycode.html', QRCodeModel);
 					} else {
-						mui.toast('扫描结果为:' + result);
+//						mui.toast('扫描结果为:' + result);
+						events.openNewWindowWithData('../mine/apply-bycode1.html', result);
 					}
 				}
 			}
