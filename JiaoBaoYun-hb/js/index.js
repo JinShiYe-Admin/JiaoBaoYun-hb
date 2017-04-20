@@ -9,6 +9,7 @@ mui.init({
 });
 var loginRoleType = 0; //登录角色0为游客1为用户
 var noReadCount = 0;
+var loginFlag = 0; //判断有没有登录过，0没有，1登录过
 mui.plusReady(function() {
 	document.addEventListener("netchange", wainshow, false);
 
@@ -20,20 +21,22 @@ mui.plusReady(function() {
 			mui.toast("网络异常，请检查网络设置！");
 		} else {
 			console.log('网络连接拉！！！！');
-			events.defaultLogin(function(data) {
-				console.log("自动登录获取的值：" + JSON.stringify(data));
-				if(personal && personal.utid != 0) { //有账号，正常登录
-					if(data.flag != loginRoleType) {
-						loginRoleType = data.flag;
-						setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+			if(loginFlag == 0) {
+				events.defaultLogin(function(data) {
+					console.log("自动登录获取的值：" + JSON.stringify(data));
+					if(personal && personal.utid != 0) { //有账号，正常登录
+						if(data.flag != loginRoleType) {
+							loginRoleType = data.flag;
+							setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+						}
+					} else {
+						if(data.value) {
+							loginRoleType = data.flag;
+							setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+						}
 					}
-				} else {
-					if(data.value) {
-						loginRoleType = data.flag;
-						setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-					}
-				}
-			});
+				});
+			}
 		}
 	}
 
@@ -122,13 +125,14 @@ mui.plusReady(function() {
 	events.defaultLogin(function(data) {
 		console.log("自动登录获取的值：" + JSON.stringify(data));
 		if(data.value) {
+			loginFlag = 1;
 			loginRoleType = data.flag;
 			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
 		} else { //登录失败
-			if(parseInt(personal.utid)){
-				loginRoleType=1;
-			}else{
-				loginRoleType=0;
+			if(parseInt(personal.utid)) {
+				loginRoleType = 1;
+			} else {
+				loginRoleType = 0;
 			}
 			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
 			mui.toast("登录失败，请检查网络！");
