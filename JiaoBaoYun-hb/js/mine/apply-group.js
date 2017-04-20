@@ -76,6 +76,7 @@ var searchGroup = function() {
  * @param {Object} data 返回数据
  */
 var setData = function(data) {
+	var fragment=document.createDocumentFragment();
 	console.log('界面显示Data:' + JSON.stringify(data));
 	data.forEach(function(cell, i, data) {
 		var li = document.createElement('li');
@@ -83,7 +84,10 @@ var setData = function(data) {
 		li.gid = cell.gid;
 		li.innerHTML = createInner(cell);
 		console.log(i + createInner(cell))
-		list.appendChild(li);
+		fragment.appendChild(li);
+		if(i==data.length-1){
+			list.appendChild(fragment);
+		}
 	})
 }
 /**

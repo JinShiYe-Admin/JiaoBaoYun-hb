@@ -15,10 +15,6 @@ mui.plusReady(function() {
 		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 		setStuInfo();
 		setCondition();
-		//{"IconUrl":null,"IsCommented":false,"StudentId":1,"StudentName":null,
-		//"ClassId":78,"HomeworkId":165,
-		//"gid":78,"gutid":160,"utid":1,"ugname":"遥不可及","ugnick":"遥不可及",
-		//"uimg":"http://oh2zmummr.bkt.clouddn.com/headimge1.png?1480991289388","mstype":3} at js/homework/homework-comment.js:5
 		if(workInfo.workType == 0) { //临时作业
 			requireAnswerResult();
 		} else { //普通作业
@@ -35,13 +31,18 @@ mui.plusReady(function() {
 	setListener();
 	events.areaInScroll();
 })
-
+/**
+ * 放置学生信息
+ */
 var setStuInfo = function() {
 	var uimg = workInfo.uimg;
 	var ugnick = workInfo.ugnick;
 	document.getElementById('stu-head').src = updateHeadImg(uimg, 2);
 	document.getElementById('stu-name').innerText = ugnick;
 }
+/**
+ * 根据情况不同设置
+ */
 var setCondition = function() {
 	var btn_comment = document.getElementById('btn-comment');
 	//是否已评论
@@ -52,6 +53,9 @@ var setCondition = function() {
 	}
 	
 }
+/**
+ * 设置监听
+ */
 var setListener = function() {
 	events.addTap('btn-comment', function() {
 		var commentValue = document.getElementById('comment-area').value;
@@ -108,6 +112,9 @@ var requireHomeworkResult = function() {
 		requireHomeworkInfo();
 	})
 }
+/**
+ * 获取作业详情
+ */
 var requireHomeworkInfo = function() {
 	var wd = events.showWaiting();
 	postDataPro_GetHomework({
@@ -152,9 +159,6 @@ var setHomeWorkInfo = function() {
 	if(workInfo.stuFiles && workInfo.stuFiles.length > 0) {
 		createAnswerImgs(homeworkInfo, workInfo.stuFiles, 3);
 	}
-//	if(workInfo.teaFiles&&workInfo.teaFiles.length>0){
-//		createAnswerImgs(homeworkInfo,workInfo.teaFiles,2);
-//	}
 }
 /**
  * 获取临时作业老师评论

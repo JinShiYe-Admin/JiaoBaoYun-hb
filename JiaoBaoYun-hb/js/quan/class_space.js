@@ -224,11 +224,12 @@ var class_space = (function(mod) {
 	}
 	var setData = function() {
 		var container = document.getElementById('classSpace_list');
+		var fragment=document.createDocumentFragment();
 		for(var i in list) {
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell';
 			li.innerHTML = createInnerHtml(list[i], pageIndex * 10 + i);
-			container.appendChild(li);
+			fragment.appendChild(li);
 			var classWords_container = li.querySelector(".chat-words");
 			if(getLineNo(classWords_container) > 8) {
 				classWords_container.className = "chat-words omit-line-8"
