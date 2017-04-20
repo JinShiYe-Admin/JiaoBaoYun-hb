@@ -10,6 +10,26 @@ mui.init({
 var loginRoleType; //登录角色0为游客1为用户
 var noReadCount = 0;
 mui.plusReady(function() {
+	document.addEventListener("netchange", wainshow, false);
+
+	function wainshow() {
+		if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+			console.log('没有网络！！！！');
+			mui.toast("网络异常，请检查网络设置！");
+		} else {
+			console.log('网络连接拉！！！！');
+			events.defaultLogin(function(data) {
+			console.log("自动登录获取的值：" + JSON.stringify(data));
+			if(data.value) {
+				loginRoleType = data.flag;
+				setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+			} else { //登录失败
+				mui.toast("登录失败，请检查网络！");
+			}
+		});
+		}
+	}
+
 	//android更新app
 	appUpdate.androidUpdateApp();
 	//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
@@ -182,9 +202,9 @@ var setListener = function() {
 			plus.webview.show(targetSplit[targetSplit.length - 1]);
 		} else {
 			//否则，使用fade-in动画，且保存变量
-//			var temp = {};
-//			temp[targetTab] = "true";
-//			mui.extend(aniShow, temp);
+			//			var temp = {};
+			//			temp[targetTab] = "true";
+			//			mui.extend(aniShow, temp);
 			plus.webview.show(targetSplit[targetSplit.length - 1], "fade-in", 300);
 		}
 		var activeSplit = activeTab.split('/');
@@ -406,22 +426,22 @@ var setConditionbyRole = function(role) {
 	console.log("获取的身份信息：" + JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
 	var cloudIcon = document.getElementById("defaultTab");
 	var sceIcon = document.getElementById("tabclass");
-	var active_tab=document.querySelector(".mui-tab-item.mui-active").getAttribute('href');
-	plus.webview.hide(active_tab.split("/")[active_tab.split("/").length-1]);
+	var active_tab = document.querySelector(".mui-tab-item.mui-active").getAttribute('href');
+	plus.webview.hide(active_tab.split("/")[active_tab.split("/").length - 1]);
 	document.querySelector(".mui-tab-item.mui-active").className = "mui-tab-item";
-	
+
 	if(role) { //正常用户
 		cloudIcon.style.display = "table-cell";
 		cloudIcon.className = "mui-tab-item mui-active";
-		plus.webview.show("cloud_home.html","fade-in",300);
+		plus.webview.show("cloud_home.html", "fade-in", 300);
 		activeTab = "../cloud/cloud_home.html";
 		changRightIcons("../cloud/cloud_home.html");
 	} else { //游客
 		cloudIcon.style.display = "none";
 		sceIcon.className = "mui-tab-item mui-active";
-		plus.webview.show("sciedu_home.html","fade-in",300);
+		plus.webview.show("sciedu_home.html", "fade-in", 300);
 		activeTab = "../sciedu/sciedu_home.html";
-		changRightIcons("../sciedu/sciedu_home.html"); 
+		changRightIcons("../sciedu/sciedu_home.html");
 	}
 
 }
