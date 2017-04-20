@@ -74,15 +74,15 @@ mui.plusReady(function() {
 	})
 	//退出的监听
 	window.addEventListener("quit", function() {
-		events.defaultLogin(function(data) {
-			console.log("自动登录获取的值：" + JSON.stringify(data));
-			if(data.value) {
-				loginRoleType = data.flag;
+//		events.defaultLogin(function(data) {
+//			console.log("自动登录获取的值：" + JSON.stringify(data));
+//			if(data.value) {
+				loginRoleType = 0;
 				setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-			} else { //登录失败
-				mui.toast("登录失败，请检查网络！");
-			}
-		});
+//			} else { //登录失败
+//				mui.toast("登录失败，请检查网络！");
+//			}
+//		});
 	})
 	//关闭等待框
 	window.addEventListener('closeWaiting', function() {
