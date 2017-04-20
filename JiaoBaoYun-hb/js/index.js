@@ -13,20 +13,22 @@ mui.plusReady(function() {
 	document.addEventListener("netchange", wainshow, false);
 
 	function wainshow() {
+		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+
 		if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
 			console.log('没有网络！！！！');
 			mui.toast("网络异常，请检查网络设置！");
 		} else {
 			console.log('网络连接拉！！！！');
 			events.defaultLogin(function(data) {
-			console.log("自动登录获取的值：" + JSON.stringify(data));
-			if(data.value) {
-				loginRoleType = data.flag;
-				setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-			} else { //登录失败
-				mui.toast("登录失败，请检查网络！");
-			}
-		});
+				console.log("自动登录获取的值：" + JSON.stringify(data));
+				if(personal && personal.utid != 0) { //有账号，正常登录
+					if(data.value) {
+						loginRoleType = data.flag;
+						setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+					}
+				}
+			});
 		}
 	}
 
@@ -94,15 +96,15 @@ mui.plusReady(function() {
 	})
 	//退出的监听
 	window.addEventListener("quit", function() {
-//		events.defaultLogin(function(data) {
-//			console.log("自动登录获取的值：" + JSON.stringify(data));
-//			if(data.value) {
-				loginRoleType = 0;
-				setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-//			} else { //登录失败
-//				mui.toast("登录失败，请检查网络！");
-//			}
-//		});
+		//		events.defaultLogin(function(data) {
+		//			console.log("自动登录获取的值：" + JSON.stringify(data));
+		//			if(data.value) {
+		loginRoleType = 0;
+		setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+		//			} else { //登录失败
+		//				mui.toast("登录失败，请检查网络！");
+		//			}
+		//		});
 	})
 	//关闭等待框
 	window.addEventListener('closeWaiting', function() {
