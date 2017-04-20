@@ -7,7 +7,7 @@
 mui.init({
 	statusBarBackground: '#13b7f6'
 });
-var loginRoleType; //登录角色0为游客1为用户
+var loginRoleType = 0; //登录角色0为游客1为用户
 var noReadCount = 0;
 mui.plusReady(function() {
 	document.addEventListener("netchange", wainshow, false);
@@ -23,6 +23,11 @@ mui.plusReady(function() {
 			events.defaultLogin(function(data) {
 				console.log("自动登录获取的值：" + JSON.stringify(data));
 				if(personal && personal.utid != 0) { //有账号，正常登录
+					if(data.flag != loginRoleType) {
+						loginRoleType = data.flag;
+						setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+					}
+				} else {
 					if(data.value) {
 						loginRoleType = data.flag;
 						setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
