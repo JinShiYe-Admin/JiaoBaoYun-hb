@@ -244,6 +244,7 @@ var class_space = (function(mod) {
 			}
 			classWords_container.info = list[i];
 		}
+		container.appendChild(fragment);
 	}
 	var getLineNo = function(classWords_container) {
 		var style = window.getComputedStyle(classWords_container, null);
