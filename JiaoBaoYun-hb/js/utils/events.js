@@ -850,6 +850,14 @@ var events = (function(mod) {
 	//刚启动时，如果有账号，token续订登录，如果没有，游客登录
 	mod.defaultLogin = function(callback) {
 		console.log('判断上次有么有账号登录');
+		if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+			var tempValue = {
+				flag: 1, //正常用户登录
+				value: -1 //没有网络
+			}
+			callback(tempValue);
+			return;
+		}
 		//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		if(personal && personal.utid != 0) { //有账号，正常登录
