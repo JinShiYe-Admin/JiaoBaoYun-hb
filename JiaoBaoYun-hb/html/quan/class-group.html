@@ -21,7 +21,6 @@
 				min-height: 100%;
 				/*background-color: white;*/
 			}
-			
 			/*.mui-content {
 				background-color: white;
 			}*/
@@ -47,14 +46,14 @@
 					<li id="qun-code" class="mui-table-view-cell">
 						<a class="mui-navigate-right">
 							群二维码
-							<span id="data-info" class="mui-badge single-line iconfont icon-erweima" style="background-color: transparent;"></span>
+							<span id="data-info" class="mui-badge single-line iconfont icon-erweima" style="background-color: transparent;color: #B7B7B7;"></span>
 						</a>
 					</li>
 					<div style="width: 100%;background-color: #E4E4E4;height: 1px;"></div>
 					<li class="mui-table-view-cell">
 						<a class="mui-navigate-right">
 							群说明
-							<p id="group-info" class="group-info"></p>
+							<p id="group-info" class="group-info">你好好好哦啊哦啊哦啊哦哦嗷嗷嗷的回复京东方简称甲亢地方就才看到女魔</p>
 						</a>
 					</li>
 				</ul>
@@ -63,30 +62,27 @@
 				</div>
 			</div>
 		</div>
-		<div id="chose-roles" class="mui-popover center-popover">
-			<div class="pop-title">
-				<div class="title-left"></div>
-				<div class="title-middle">请选择身份</div>
-				<span id="btn-cancle" class="title-right iconfont icon-guanbi1"></span>
+		<div id="chose-roles" class="mui-popover center-popover group-pop">
+			<div class="center-title">选择身份:</div>
+			<div class="group-choose">
+				<form class="mui-input-group">
+					<div class="mui-input-row mui-radio mui-left">
+						<label>邀请[家长]入群</label>
+						<input id="check-parents" name="radio1" type="radio" value="0">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>邀请[老师]入群</label>
+						<input id="check-tea" name="radio1" type="radio" value="2">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>邀请[学生]入群</label>
+						<input id="check-stu" name="radio1" type="radio" value="3">
+					</div>
+				</form>
 			</div>
-			<div class="chose-container">
-				<div class="div-chose">
-					<input id="check-parents" name="checkbox1" type="radio" value="0">
-					<label>家长</label>
-				</div>
-				<div class="div-chose">
-					<input id="check-tea" name="checkbox1" type="radio" value="2">
-					<label>老师</label>
-				</div>
-				<div class="div-chose">
-					<input id="check-stu" name="checkbox1" type="radio" value="3">
-					<label>学生</label>
-				</div>
-			</div>
-			<!--	<textarea id="extra-input" class="extra-input" placeholder="请输入备注信息，最多20字"></textarea>-->
-			<div class="buttons">
-				<button id="btn-sure" type="button" class="mui-btn mui-btn-green btn-sure">确认</button>
-				<!--<button  type="button" class="mui-btn mui-btn-green btn-cancel">取消</button>-->
+			<div class="buttons-container">
+				<button id="btn-sure" type="button" class="mui-btn mui-btn-primary btn-aplly">确认</button>
+				<button id="btn-cancle" type="button" class="mui-btn mui-btn-primary mui-btn-outlined  btn-cancel">取消</button>
 			</div>
 		</div>
 
