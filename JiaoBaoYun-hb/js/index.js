@@ -39,7 +39,7 @@ mui.plusReady(function() {
 	}
 
 	//android更新app
-	appUpdate.androidUpdateApp();
+	appUpdate.updateApp();
 	//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
 	var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 	console.log('person===' + JSON.stringify(personal));

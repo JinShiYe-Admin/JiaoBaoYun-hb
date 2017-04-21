@@ -15,7 +15,6 @@ var totalPageCount;
 var clickItem; //点击的子控件
 var publish;
 mui.init();
-
 //mui的plusready监听
 mui.plusReady(function() {
 	publish = document.getElementById('iconPublish');
@@ -44,7 +43,7 @@ mui.plusReady(function() {
 		mui("#popover").popover('toggle');
 	});
 	//预加载发布作业界面
-	events.preload('publish-answer.html');
+//	events.preload('publish-answer.html');
 	mui('.mui-scrollbar-horizontal').scroll();
 	//标题
 	var title = document.getElementById('workPage-title');
@@ -54,11 +53,7 @@ mui.plusReady(function() {
 	var btn_more = document.getElementById('more');
 	//隐藏更多按钮
 	btn_more.style.display = 'none';
-	//cloud界面传过来的事件和数据
-	//	window.addEventListener('postClasses', function(e) {
-	//		plus.webview.currentWebview().isReady = true;
 	var data = plus.webview.currentWebview().data;
-	//		console.log('作业主界面获取信息：' + JSON.stringify(e.detail.data));
 	//学生角色所在班级数组
 	studentClasses = data.studentClasses;
 	//老师角色所在班级数组
@@ -66,12 +61,6 @@ mui.plusReady(function() {
 	console.log("传过来的值：" + JSON.stringify(data));
 	//设置界面
 	setChoices(title, roles, btn_more);
-	//	})
-	//三道杠的点击事件
-	//	events.addTap('more', function() {
-	//			//通知子页面，显示、关闭菜单 
-	//			events.fireToPageNone('homework-tea-sub.html', 'togglePop');
-	//		})
 	//相机点击事件
 	events.addTap('icon-camero', function() {
 		events.fireToPageWithData('publish-answer.html', 'roleInfo', {
@@ -115,13 +104,13 @@ mui.plusReady(function() {
 		clickItem.innerHTML = createStuHomeworkInner(clickItem.homeworkInfo);
 	})
 	//错题本按钮监听事件
-	events.addTap('err', function() {
-		events.openNewWindow('workstu-err.html')
-	})
+//	events.addTap('err', function() {
+//		events.openNewWindow('workstu-err.html')
+//	})
 	//作业记录按钮监听事件
-	events.addTap('record', function() {
-		events.openNewWindow('homework-record.html')
-	})
+//	events.addTap('record', function() {
+//		events.openNewWindow('homework-record.html')
+//	})
 	//老师作业发布完成，刷新界面
 	window.addEventListener('homeworkPublished', function() {
 		teacherHash = newHashMap();
