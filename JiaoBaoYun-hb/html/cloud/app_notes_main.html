@@ -118,6 +118,16 @@
 				/*底部加载更多区域*/
 				background-color: white;
 			}
+
+			.notes-none {
+				/*没有笔记*/
+				text-align: center;
+				color: #808080;
+			}
+
+			.notes-none img {
+				width: 50%;
+			}
 		</style>
 	</head>
 
@@ -140,7 +150,7 @@
 							记录生活，留下美好...
 						</div>
 					</div>
-					<img src="../../image/cloud/notes_bg2.jpg" style="width: 100%;" onload="document.getElementById('add').style.top=(this.offsetHeight-(this.offsetHeight/2))+'px';" />
+					<img id="add_notes" src="../../image/cloud/notes_bg2.jpg" style="width: 100%;" onload="document.getElementById('add').style.top=(this.offsetHeight-(this.offsetHeight/2))+'px';" />
 					<ul id="list" class="mui-table-view">
 					</ul>
 				</div>
@@ -155,76 +165,107 @@
 	<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 	<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
 	<script type="text/javascript">
-		mui.init({
-			gestureConfig: {
-				doubletap: true,
-			}
-		});
 		var markDate = ''; //记录日期
 		var today = ''; //记录今天日期
 		var year = ''; //记录年份
 		var previewImage; //查看图片的控件
 		var pullRefresh; //下拉，上拉控件
+		var userId = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+		var page; //记录页数
+
+		mui.init({
+			gestureConfig: {
+				doubletap: true,
+			}
+		});
+
+		initListener();
 
 		mui.plusReady(function() {
-			//---初始化界面---start---
-			previewImage = mui.previewImage();
+			var wd = events.showWaiting();
+			initData();
+			initControl();
+			initMuiListener();
+			//请求数据
+			requestData(1, wd);
+		});
 
-			var deceleration = mui.os.ios ? 0.003 : 0.0009;
-			mui('.mui-scroll-wrapper').scroll({
-				bounce: false,
-				indicators: true, //是否显示滚动条
-				deceleration: deceleration
+		/**
+		 * 初始化监听
+		 */
+		function initListener() {
+			//增加笔记
+			document.getElementById('add').addEventListener('tap', function() {
+				events.openNewWindow('app_notes_create.html');
 			});
 
-			//初始化下拉，上拉控件
-			pullRefresh = mui('.mui-scroll-wrapper .mui-scroll').pullToRefresh({
-				down: {
-					callback: function() {
-						var self = this;
-						var element = document.getElementById('pullrefresh');
-						var page = JSON.parse(element.getAttribute('data-page'));
-						console.log('down ' + JSON.stringify(page));
-						requestData(1);
-						setTimeout(function() {
-							self.endPullDownToRefresh(); //结束下拉刷新
-						}, 1000);
-					}
-				},
-				up: {
-					contentinit: '', //默认没有更多显示空白
-					callback: function() {
-						var self = this;
-						var element = document.getElementById('pullrefresh');
-						var page = JSON.parse(element.getAttribute('data-page'));
-						console.log('up ' + JSON.stringify(page));
-						if(page) {
-							requestData(page.pageIndex + 1);
-						} else {
-							mui.toast('数据异常，请下拉刷新后重新尝试');
-						}
-					}
-				}
+			//刷新界面
+			window.addEventListener('refreshView', function() {
+				requestData(1);
 			});
 
+			//双击标题返回列表顶部
+			document.getElementById('title').addEventListener('doubletap', function() {
+				mui('#pullrefresh').scroll().scrollTo(0, 0, 100);
+			});
+		}
+
+		/**
+		 * 初始化数据
+		 */
+		function initData() {
 			var myDate = new Date();
 			var month = myDate.getMonth() + 1;
 			if(month.length = 1) {
 				month = '0' + month;
 			}
 			today = myDate.getFullYear() + '-' + month + '-' + myDate.getDate();
-			//---初始化界面---end---
-			//请求数据
-			requestData(1);
+		}
 
-			document.getElementById('add').addEventListener('tap', function() {
-				events.openNewWindow('app_notes_create.html');
+		/**
+		 * 初始化控件
+		 */
+		function initControl() {
+			//初始化图片查看控件
+			previewImage = mui.previewImage();
+			//初始化下拉，上拉控件
+			var deceleration = mui.os.ios ? 0.003 : 0.0009;
+			mui('.mui-scroll-wrapper').scroll({
+				bounce: false,
+				indicators: true, //是否显示滚动条
+				deceleration: deceleration
 			});
-
-			window.addEventListener('refreshView', function() {
-				requestData(1);
+			pullRefresh = mui('.mui-scroll-wrapper .mui-scroll').pullToRefresh({
+				down: {
+					callback: function() {
+						console.log('down ' + JSON.stringify(page));
+						requestData(1);
+						setTimeout(function() {
+							pullRefresh.endPullDownToRefresh(); //结束下拉刷新
+						}, 1000);
+					}
+				},
+				up: {
+					contentinit: '', //默认没有更多显示空白
+					callback: function() {
+						console.log('up ' + JSON.stringify(page));
+						if(page) {
+							requestData(page.pageIndex + 1);
+						} else {
+							mui.toast('数据异常，请下拉刷新后重新尝试');
+						}
+						setTimeout(function() {
+							pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
+						}, 1000);
+					}
+				}
 			});
+		}
 
+		/**
+		 * 初始化MUI监听
+		 */
+		function initMuiListener() {
 			//显示全部，收起
 			mui('#list').on('tap', '.show-all', function() {
 				var str = this.innerText;
@@ -252,17 +293,11 @@
 			mui('#list').on('tap', '.record-picture-num', function() {
 				previewImage.open(document.getElementById("img_" + this.getAttribute('data-id')));
 			});
-
-			//双击标题返回列表顶部
-			document.getElementById('title').addEventListener('doubletap', function() {
-				mui('#pullrefresh').scroll().scrollTo(0, 0, 100);
-			});
-		});
+		}
 
 		//请求数据
-		function requestData(pageIndex) {
-			var userId = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-
+		function requestData(pageIndex, wd) {
+			var wd = wd || events.showWaiting();
 			var comData = {
 				userId: userId, //用户ID
 				publisherId: userId, //发布用户ID
@@ -270,55 +305,47 @@
 				pageIndex: pageIndex, //当前页数
 				pageSize: '10' //每页记录数
 			};
-			// 等待的对话框
-			var wd = events.showWaiting();
 			//28.（用户空间）获取用户针对某用户的空间列表
 			postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
-				console.log('28.postDataPro_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt + data.RspData.TotalCnt);
-
-				//记录页数
-				var page = {
-					pageIndex: pageIndex, //当前页数
-					totalPage: 0 //总页数
-				};
-				if(data.RspCode == 0) {
-					page.totalPage = data.RspData.TotalPage;
+				console.log('28 获取用户针对某用户的空间列表 getUserSpacesByUserForPublisher ' + JSON.stringify(data));
+				if(pageIndex == 1) { //下拉刷新或者获取的第一页的内容
+					pullRefresh.refresh(true); //更新当前控件
+				} else {
+					pullRefresh.endPullUpToRefresh(); //结束上拉刷新
 				}
-				document.getElementById('pullrefresh').setAttribute('data-page', JSON.stringify(page))
-				if(page.pageIndex == 1) { //下拉刷新或者获取的第一页的内容
-					//清空对应的界面
-					document.getElementById('list').innerHTML = '';
-					year = ''; //清空年份
-					markDate = ''; //日期
-				} else { //上拉加载更多
-					pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
-				}
-
-				if(data.RspCode == 0) {
-					var tempRspData = data.RspData.Data;
-					for(var i = 0; i < tempRspData.length; i++) {
-						createNotes(tempRspData[i]);
+				if(data.RspCode == 0) { //成功获取
+					if(pageIndex == 1) { //成功获取第一页的数据
+						document.getElementById('list').innerHTML = '';
+						year = ''; //清空年份
+						markDate = ''; //日期
 					}
 					//console.log(document.getElementById("list").innerHTML);
 					if(data.RspData.Data.length == 0 && pageIndex == 1) {
-						mui.toast('笔记为空');
+						//第一页的数据为空
+						notesNone(); //显示无笔记界面
+						pullRefresh.options.up.contentnomore = ''; //隐藏提示
+					} else {
+						pullRefresh.options.up.contentnomore = '没有更多数据了';
+						for(var i = 0; i < data.RspData.Data.length; i++) {
+							createNotes(data.RspData.Data[i]);
+						}
+					}
+					//记录页数
+					page = {
+						pageIndex: pageIndex, //当前页数
+						totalPage: data.RspData.TotalPage //总页数
+					};
+					console.log('page ' + JSON.stringify(page));
+					if(page.pageIndex >= page.totalPage) {
+						//没有下一页
+						console.log('没有下一页');
+						pullRefresh.endPullUpToRefresh(true);
 					}
 				} else {
 					mui.toast(data.RspTxt);
 				}
 
-				console.log('page ' + JSON.stringify(page));
-				if(page.pageIndex >= page.totalPage) {
-					//没有下一页
-					console.log('没有下一页');
-					pullRefresh.endPullUpToRefresh(true);
-				} else {
-					if(page.pageIndex == 1) {
-						//获取第一页的数据更新当前控件
-						pullRefresh.refresh(true);
-					}
-				}
-				wd.close();
+				events.closeWaiting(wd);
 			});
 		}
 
@@ -426,6 +453,17 @@
 				}
 			}
 			markDate = dateItem;
+		}
+
+		/**
+		 * 没有笔记
+		 */
+		function notesNone() {
+			document.getElementById("list").innerHTML = '\
+				<div id="notes_none" class="notes-none">\
+					<img src="../../image/qiuzhi/qiuzhi_noanswer.png" />\
+					<div>您还没有笔记，快来填充您的笔记吧~~~~</div>\
+				</div>';
 		}
 	</script>
 
