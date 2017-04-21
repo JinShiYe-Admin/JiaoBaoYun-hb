@@ -2,11 +2,11 @@
  * 提交评论按钮样式
  */
 
-/*html,
+html,
 body,
 .mui-content {
-	background-color: white;
-}*/
+	background-color: #F2F3F5;
+}
 
 .btn-submit {
 	/*position: absolute;*/
@@ -37,7 +37,7 @@ body,
 	/*margin:-1rem,0 ;*/
 /*	margin: 0 -15px;*/
 	color: #383838;
-	font-size: 16px;
+	font-size: 1.3rem;
 	letter-spacing: 1px;
 }
 
@@ -67,13 +67,13 @@ h6{
 }
 
 .answer-img {
-	padding: .5rem;
+	padding: 0 2px;
 }
 
 .homework-info p{
 	letter-spacing: 1px;
 	color: #323232;
-	font-size: 1.7rem;
+	font-size: 1.6rem;
 }
 
 .stu-name {
@@ -107,13 +107,14 @@ h6{
 	width: 60px;
 	height: 30px;
 	color: #808080;
-	border: solid 1px #B7B7B7;
+	border: solid 1px #E4E4E4;
 	text-align: center;
 	border-radius: 15px;
 	padding-top: 5px;
 }
 .change-comment{
 	font-size: 20px;
+	color: #808080;
 }
 .commented-holder{
 	position: relative;
@@ -123,7 +124,11 @@ h6{
 	border-bottom: solid 1px #E4E4E4;
 }
 .commented-words{
-	font-size: 1.7rem;
+	font-size: 1.6rem;
 	color: #323232;
 	text-align: justify;
 }
+.answer-imgs{
+	line-height: 20px;
+}
+

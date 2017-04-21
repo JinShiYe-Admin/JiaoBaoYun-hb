@@ -472,6 +472,14 @@
 
 							}
 							eduArray = eduArray.concat(tempArray)
+							//加入关注的人数据
+							eduArray.push({
+								acode: 1,
+								aname: '我关注的人',
+								aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
+								index: 1, //请求第几页数据
+								isRefresh: 0 //是刷新0，还是加载更多1
+							});
 							console.log('修改后的最终值为:' + JSON.stringify(eduArray));
 						} else {
 							eduArray = [];

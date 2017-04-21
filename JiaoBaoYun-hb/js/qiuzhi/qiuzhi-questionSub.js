@@ -235,7 +235,7 @@ var setCondition = function() {
 
 }
 var delQuestion = function() {
-//	mui.toast("功能暂未开放，请稍候！");
+	//	mui.toast("功能暂未开放，请稍候！");
 	var wd1 = events.showWaiting();
 	//37.删除某个用户的某条提问
 	postDataQZPro_delAskById({
@@ -274,7 +274,7 @@ var shieldAnswer = function() {
 			//5.获取某个问题的详情
 			requestAskDetail();
 		} else {
-			mui.toast("屏蔽回答失败！");
+			mui.toast("取消屏蔽失败！");
 		}
 	})
 }
@@ -460,14 +460,13 @@ function requestAskDetail() {
 					//生成新界面
 					addQuestion(data.RspData);
 					if(tempRspData.length == 0) { //没有人回答
-						mui.toast('没有人回答该提问');
+						answerNone();
 						mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
 					} else {
 						mui('#refreshContainer').pullRefresh().enablePullupToRefresh(false); //启用上拉加载更多
 					}
 				} else {
 					answerArray = answerArray.concat(tempRspData);
-
 					mui('#refreshContainer').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
 				}
 				//刷新界面
@@ -507,10 +506,10 @@ function addQuestion(data) {
 		addImages(0);
 	}
 	if(data.AskSFlag && data.AskSFlag == 1) { //问题来源,1 为外部导入数据
-		console.log('AskSFlag111111111');
+		console.log('AskSFlag 1 外部导入数据');
 		questionContent(data.AskNote, 1);
 	} else {
-		console.log('AskSFlag00000000000');
+		console.log('AskSFlag 0 新增数据');
 		questionContent(data.AskNote, 0);
 	}
 	questionInfo(data.ReadNum, data.FocusNum);
@@ -647,6 +646,8 @@ function answerShu(answershu) {
 function cleanAnswer() {
 	//回答列表
 	document.getElementById("answer_bottom").innerHTML = '';
+	document.querySelector('body').style.backgroundColor = '#efeff4';
+	document.querySelector('.mui-content').style.backgroundColor = '#efeff4';
 	//	//排序类型
 	//	document.getElementById("ordertype").innerText = '按质量排序';
 	//	document.getElementById("ordertype_2_icon").style.display = 'inline';
@@ -658,9 +659,9 @@ function cleanAnswer() {
  * @param {Object} data 回答数组
  */
 function addAnswer(data) {
-	var fragment=document.createDocumentFragment();
+	var fragment = document.createDocumentFragment();
 	for(var i = 0; i < data.length; i++) {
-		answerList(data[i],fragment);
+		answerList(data[i], fragment);
 	}
 	document.getElementById("answer_bottom").appendChild(fragment);
 }
@@ -669,7 +670,7 @@ function addAnswer(data) {
  * 放置回答列表的一项
  * @param {Object} answershu 一个回答的数据
  */
-function answerList(data,fragment) {
+function answerList(data, fragment) {
 
 	var li = document.createElement('li');
 	li.className = 'mui-table-view-cell mui-media';
@@ -689,4 +690,18 @@ function answerList(data,fragment) {
 		fragment.getElementById("answer_content_" + data.AnswerId).innerText = content_1;
 	}
 
+}
+
+/**
+ * 没有人回答该问题
+ */
+function answerNone() {
+	console.log('answerNone');
+	document.querySelector('body').style.backgroundColor = 'white';
+	document.querySelector('.mui-content').style.backgroundColor = 'white';
+	document.getElementById("answer_bottom").innerHTML = '\
+		<div id="answer_none" class="answer-none">\
+			<img src="../../image/qiuzhi/qiuzhi_noanswer.png" />\
+			<div>暂无人回答此问题，快来回答吧~~~~</div>\
+		</div>';
 }

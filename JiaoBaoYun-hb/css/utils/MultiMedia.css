@@ -10,28 +10,37 @@
 	color: #b7b7b7;
 	padding: 0px;
 }
-#MultiMedia_Picture_Header,{
+
+#MultiMedia_Picture_Header,
+{
 	/*相机*/
 	padding-top: 2px;
 	padding-left: 0px;
 }
+
+
 /*#MultiMedia_Video_Header{*/
-	/*视频*/
+
+
+/*视频*/
+
+
 /*}*/
 
-#MultiMedia_Audio_Header{
+#MultiMedia_Audio_Header {
 	/*语音*/
 	padding-top: 1px;
 }
 
-/*.multimedia-body {
-	background-color: red;
-}*/
+.multimedia-body {
+	background-color: white;
+}
 
 .multimedia-header {
 	/*图标*/
-	margin-top: 5px;
-	margin-bottom: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: white;
 }
 
 .multimedia-picture-area {

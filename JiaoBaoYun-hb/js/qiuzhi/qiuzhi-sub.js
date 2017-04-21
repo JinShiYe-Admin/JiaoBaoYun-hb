@@ -383,7 +383,9 @@ var pullUpFresh = function() {
 			pageIndex++;
 			requestChannelList(channelInfo);
 		} else {
-			mui.toast('到底啦，别拉了！');
+			if(plus.webview.currentWebview().isVisible()){
+				mui.toast('到底啦，别拉了！');
+			}
 		}
 	}, false);
 }
