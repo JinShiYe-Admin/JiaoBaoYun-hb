@@ -35,7 +35,8 @@
 					<h6 id="groupName" style="margin-left: 1rem;color: #323232;"></h6>
 					<p id="group-info" style="margin-left: 40px;"></p>
 				</div>
-				<div class="qrcode" style="background: white;text-align: center;padding: 1rem;width: 100%;height: 80%;"></div>
+				<div class="qrcode" style="background: white;text-align: center;padding: 1rem;width: 100%;height: auto;"></div>
+				<h6 id="tishi" style="text-align: center;color: black;"></h6>
 			</div>
 
 		</div>
@@ -54,22 +55,17 @@
 				var groupModel = curPage.data; //群model
 				var temp0 = escape(groupModel.gname, 'UTF-8');
 				var temp1 = escape(groupModel.gnote, 'UTF-8');
-//				var mytime = getNowFormatDate();
-//				console.log('myDate==' + mytime);
 				qrcodeUrl = 'jby1@' + groupModel.gid + '@' + temp0 + '@' + groupModel.gimg + '@' + temp1+ '@' +events.getNowFormatDate(); //code1，代表是群二维码
 				document.getElementById("groupImg").style.display = 'inline-block';
 				document.getElementById("groupImg").src = updateHeadImg(groupModel.gimg, 2);
 				document.getElementById("groupName").innerText = groupModel.gname;
 				document.getElementById("group-info").innerText = groupModel.gnote;
 				console.log('qrcodeUrl=' + qrcodeUrl);
+				//计算7天后的时间
+				var yesterdsay = new Date(new Date().getTime() + 86400000*7);
+				var date0= events.format(yesterdsay,"yyyy-MM-dd"); 
+				document.getElementById("tishi").innerText = '二维码七日内有效('+date0+'前)';
 				makrQRCode();
-//				var years = 1000 * 60 * 60 * 24;
-//				var tempValue = Date.UTC(2000, 1, 1, 10, 10, 20, 30);
-//				console.log('tempValue=' + tempValue + ',' + tempValue / years);
-//				var tempValue1 = Date.UTC(2000, 1, 2, 20, 10);
-//				console.log('tempValue1=' + tempValue1 + ',' + tempValue1 / years + ',' + (tempValue1 - tempValue) / years);
-//				var tempValue2 = Date.UTC(mytime);
-//				console.log('tempValue2=' + tempValue2);
 			});
 
 			// 制作二维码

@@ -167,11 +167,12 @@
 				}
 			});
 			mui.plusReady(function() {
+				var wd = events.showWaiting();
 				initData();
 				initControl();
 				initListener();
 				//获取数据
-				requestData(1);
+				requestData(1, wd);
 			});
 
 			/**
@@ -193,36 +194,36 @@
 			 * 初始化控件
 			 */
 			function initControl() {
+				//初始化图片查看控件
 				previewImage = mui.previewImage();
 
+				//初始化下拉，上拉控件
 				var deceleration = mui.os.ios ? 0.003 : 0.0009;
 				mui('.mui-scroll-wrapper').scroll({
 					bounce: false,
 					indicators: true, //是否显示滚动条
 					deceleration: deceleration
 				});
-
-				//初始化下拉，上拉控件
 				pullRefresh = mui('.mui-scroll-wrapper .mui-scroll').pullToRefresh({
 					down: {
 						callback: function() {
-							var self = this;
 							requestData(1);
 							setTimeout(function() {
-								//获取数据
-								self.endPullDownToRefresh(); //结束下拉刷新
+								pullRefresh.endPullDownToRefresh(); //结束下拉刷新
 							}, 1000);
 						}
 					},
 					up: {
 						contentinit: '', //默认没有更多显示空白
 						callback: function() {
-							var self = this;
 							if(page) {
 								requestData(page.pageIndex + 1);
 							} else {
 								mui.toast('数据异常，请下拉刷新后重新尝试');
 							}
+							setTimeout(function() {
+								endPullUp();
+							}, 1000);
 						}
 					}
 				});
@@ -271,8 +272,8 @@
 			 * 获取针对某班的点到记事列表
 			 * @param {Object} pageIndex 当前页数
 			 */
-			function requestData(pageIndex) {
-				var wd = events.showWaiting();
+			function requestData(pageIndex, wd) {
+				var wd = wd || events.showWaiting();
 				if(mainData.type == 'history') {
 					//66.（点到记事）获取针对某班的点到记事列表
 					var comData = {
@@ -447,22 +448,20 @@
 			 * @param {Object} data
 			 */
 			function requestDataCallBack(pageIndex, wd, data) {
-				//记录页数
-				page = {
-					pageIndex: pageIndex, //当前页数
-					totalPage: 0 //总页数
-				};
+				if(data.RspCode == 0) { //成功获取
+					//记录页数
+					page = {
+						pageIndex: pageIndex, //当前页数
+						totalPage: data.RspData.TotalPage //总页数
+					};
+					console.log('page ' + JSON.stringify(page));
+					if(pageIndex == 1) { //下拉刷新或者获取的第一页的内容
+						document.getElementById('data_table').innerHTML = '';
+						markDate = ''; //日期
+						pullRefresh.refresh(true); //更新当前控件
+					}
+					endPullUp();
 
-				if(pageIndex == 1) { //下拉刷新或者获取的第一页的内容
-					//清空对应的界面
-					document.getElementById('data_table').innerHTML = '';
-					markDate = ''; //日期
-				} else { //上拉加载更多
-					pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
-				}
-
-				if(data.RspCode == 0) {
-					page.totalPage = data.RspData.TotalPage;
 					var tempRspData = data.RspData.Data;
 					//生成界面
 					if(mainData.type == 'history') {
@@ -504,17 +503,6 @@
 				} else {
 					mui.toast(data.RspTxt);
 				}
-				console.log('page ' + JSON.stringify(page));
-				if(page.pageIndex >= page.totalPage) {
-					//没有下一页
-					console.log('没有下一页');
-					pullRefresh.endPullUpToRefresh(true);
-				} else {
-					if(pageIndex == 1) {
-						//获取第一页的数据更新当前控件
-						pullRefresh.refresh(true);
-					}
-				}
 
 				if(mainData.type == 'history') {
 					wd.close();
@@ -548,6 +536,18 @@
 					}
 					callback();
 				});
+			}
+
+			/**
+			 * 结束上拉加载更多
+			 */
+			function endPullUp() {
+				if(page && page.pageIndex >= page.totalPage) {
+					console.log('没有下一页');
+					pullRefresh.endPullUpToRefresh(true);
+				} else {
+					pullRefresh.endPullUpToRefresh();
+				}
 			}
 		</script>
 	</body>
