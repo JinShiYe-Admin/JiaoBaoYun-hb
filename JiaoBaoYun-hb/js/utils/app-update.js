@@ -8,6 +8,9 @@ var appUpdate = (function(mod) {
 		//47.获取APP版本号
 		console.log('plus.os.name:' + plus.os.name);
 		var tempVVL = 'android';
+		if(plus.os.ios){
+			tempVVL="ios";
+		}
 		//所需参数
 		var comData9 = {
 			uuid: plus.device.uuid, //用户设备号
