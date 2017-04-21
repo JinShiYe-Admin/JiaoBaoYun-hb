@@ -40,8 +40,8 @@ mui.plusReady(function() {
 	plus.webview.currentWebview().opener().addEventListener("hide", function() {
 		mui.previewImage().close();
 		console.log("求知回答页面已隐藏");
-				events.clearChild(document.getElementById('list-container'));
-				setOriginalCondition();
+		events.clearChild(document.getElementById('list-container'));
+		setOriginalCondition();
 		mui('#popover').popover('hide');
 	})
 	//加载监听
@@ -53,13 +53,13 @@ mui.plusReady(function() {
 		pageIndex = 1;
 		totalPageCount = 1;
 		answerInfo = e.detail.data;
-		document.getElementById('question-content').innerHTML="";
+		document.getElementById('question-content').innerHTML = "";
 		setChangeCondition();
 		console.log("获取的回答详情：" + JSON.stringify(answerInfo));
 		//如果跟上次进入的是同一个回答 则不更改顺序
 		if(!(answerInfo && e.detail.data.AnswerId == answerInfo.AnswerId)) {
 			type = 2; //倒序
-			mui(".mui-scroll-wrapper").scroll().scrollTo(0,0)
+			mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0)
 		}
 		setTolerantChecked(type);
 		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
@@ -74,19 +74,19 @@ mui.plusReady(function() {
 		getComment(commentedInfo.commentInfo);
 	})
 	//监听 修改答案后的传回来的值
-	window.addEventListener("answerChanged",function(e){
-		var changedData=e.detail;
-//		document.getElementById('answer-imgs').innerHTML="";
-		document.getElementById("question-content").innerHTML=changedData.answerContent;
-		document.getElementById("answer-imgs").innerHTML=getPicInner(changedData)
-		answerInfo.AnswerThumbnail=changedData.AnswerThumbnail;
-		answerInfo.AnswerEncAddr=changedData.AnswerEncAddr;
-		answerInfo.AnswerContent=changedData.answerContent;
-		answerInfo.AnswerCutImg=changedData.AnswerCutImg;
-		answerData.AnswerThumbnail=changedData.AnswerThumbnail;
-		answerData.AnswerEncAddr=changedData.AnswerEncAddr;
-		answerData.AnswerContent=changedData.answerContent;
-		answerData.AnswerCutImg=changedData.AnswerCutImg;
+	window.addEventListener("answerChanged", function(e) {
+		var changedData = e.detail;
+		//		document.getElementById('answer-imgs').innerHTML="";
+		document.getElementById("question-content").innerHTML = changedData.answerContent;
+		document.getElementById("answer-imgs").innerHTML = getPicInner(changedData)
+		answerInfo.AnswerThumbnail = changedData.AnswerThumbnail;
+		answerInfo.AnswerEncAddr = changedData.AnswerEncAddr;
+		answerInfo.AnswerContent = changedData.answerContent;
+		answerInfo.AnswerCutImg = changedData.AnswerCutImg;
+		answerData.AnswerThumbnail = changedData.AnswerThumbnail;
+		answerData.AnswerEncAddr = changedData.AnswerEncAddr;
+		answerData.AnswerContent = changedData.answerContent;
+		answerData.AnswerCutImg = changedData.AnswerCutImg;
 	})
 	window.addEventListener("showActionSheet", function() {
 		var btnArray;
@@ -133,22 +133,22 @@ var changeAnswer = function() {
 	events.fireToPageWithData("qiuzhi-addAnswer.html", "changeAnswer", answerInfo);
 }
 var shieldAnswer = function() {
-//	mui.toast("功能暂未开放，请稍候！");
-	var wd1=events.showWaiting();
+	//	mui.toast("功能暂未开放，请稍候！");
+	var wd1 = events.showWaiting();
 	postDataQZPro_setAnswerOffById({
 		answerId: answerInfo.AnswerId,
 		status: 1
 	}, wd1, function(data) {
 		wd1.close();
 		console.log("屏蔽后返回的数据:" + JSON.stringify(data));
-		if(data.RspCode==0&&data.RspData.Result){
+		if(data.RspCode == 0 && data.RspData.Result) {
 			mui.toast("回答已屏蔽！");
-			mui.fire(plus.webview.getWebviewById("qiuzhi-questionSub.html"),"answerShield");
-			if(plus.webview.getWebviewById("qiuzhi-expertAllAnswer.html")){
-				mui.fire(plus.webview.getWebviewById("qiuzhi-expertAllAnswer.html"),"answerShield");
+			mui.fire(plus.webview.getWebviewById("qiuzhi-questionSub.html"), "answerShield");
+			if(plus.webview.getWebviewById("qiuzhi-expertAllAnswer.html")) {
+				mui.fire(plus.webview.getWebviewById("qiuzhi-expertAllAnswer.html"), "answerShield");
 			}
 			mui.back();
-		}else{
+		} else {
 			mui.toast("屏蔽回答失败！");
 		}
 	})
@@ -191,7 +191,7 @@ var delComment = function() {
 					parentContainer.removeChild(parentContainer.querySelector(".inner-table-view"));
 				}
 			} else { //不存在，删除本cell后增加单条评论
-				document.getElementById("comments-no").innerText= "评论(" + answerData.CommentNum + ")";
+				document.getElementById("comments-no").innerText = "评论(" + answerData.CommentNum + ")";
 				document.querySelector("#list-container").removeChild(delCommentContainer);
 				if(pageIndex < totalPageCount) {
 					requestAnswerDetail(answerInfo.AnswerId, pageIndex * 10, 1, getInfos);
@@ -212,7 +212,7 @@ var delCommentData = function() {
 		answerData.Data[parseInt(delOrders[0])].Replys.splice(parseInt(delOrders[1]), 1);
 	} else {
 		answerData.Data.splice(delCmOrder, 1);
-		answerData.CommentNum=answerData.CommentNum-1;
+		answerData.CommentNum = answerData.CommentNum - 1;
 		console.log("删除的位置：" + delCmOrder + ",删除后的数据：" + JSON.stringify(answerData));
 	}
 }
@@ -662,7 +662,7 @@ var setQuestion = function(datasource) {
 		this.style.width = "100%";
 		this.style.height = "auto";
 	})
-	document.getElementById('answer-imgs').innerHTML="";
+	document.getElementById('answer-imgs').innerHTML = "";
 	if(datasource.AnswerEncAddr) {
 		document.getElementById('answer-imgs').innerHTML = getPicInner(datasource);
 	}
@@ -755,7 +755,7 @@ var getPicInner = function(data) {
 var createCommentsInner = function(cell) {
 	console.log("要放置的数据：" + JSON.stringify(cell))
 	var headImg = cell.UserImg;
-	var personName = cell.UserName?cell.UserName:"新用户";
+	var personName = cell.UserName ? cell.UserName : "新用户";
 	var inner = '<div class="table-view-cell"><div class="comments-cell">' +
 		'<div class="img-container"><img class="head-img" src="' + headImg + '"/></div>' +
 		'<div class="comment-container">' +
@@ -782,24 +782,32 @@ var setListeners = function() {
 	//评论的点赞按钮点击事件
 	mui(".mui-table-view").on('tap', '.support-container', function() {
 		//判断是否是游客身份登录
-		if (events.judgeLoginMode()) {return;}
+		if(events.judgeLoginMode()) {
+			return;
+		}
 		setIsLikeComment(this.querySelector('.icon-support'));
 	})
 	//回答的点赞按钮的点赞事件
 	events.addTap('support-answer', function() {
 		//判断是否是游客身份登录
-		if (events.judgeLoginMode()) {return;}
+		if(events.judgeLoginMode()) {
+			return;
+		}
 		setIsLikeAnswer(this.querySelector('.icon-support'));
 	})
 	//按钮点击事件关注事件
 	events.addTap('btn-focus', function() {
 		//判断是否是游客身份登录
-		if (events.judgeLoginMode()) {return;}
+		if(events.judgeLoginMode()) {
+			return;
+		}
 		setUserFocus(answerData.AnswerMan, this)
 	})
 	events.addTap('answer-comment', function() {
 		//判断是否是游客身份登录
-		if (events.judgeLoginMode()) {return;}
+		if(events.judgeLoginMode()) {
+			return;
+		}
 		events.fireToPageWithData('qiuzhi-addAnswer.html', 'add-comment', answerData);
 		upperInfo = null;
 		parentContainer = null;
@@ -825,6 +833,10 @@ var setListeners = function() {
 	})
 	//评论信息
 	mui('.mui-table-view').on('tap', ".comment-words", function() {
+		//判断是否是游客身份登录
+		if(events.judgeLoginMode()) {
+			return;
+		}
 		console.log("评论信息：" + JSON.stringify(this.commentInfo));
 		var item = this;
 		upperInfo = this.commentInfo;
