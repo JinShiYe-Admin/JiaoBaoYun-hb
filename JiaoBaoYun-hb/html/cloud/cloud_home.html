@@ -690,6 +690,9 @@
 				 * 修改云盘的文件，档案数据
 				 */
 				function changeData() {
+					if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)){
+						return;
+					}
 					//26.用户云盘顶层文件及文件夹获取
 					postFirstFile();
 					//91.（云档案）按家长获取档案文件夹

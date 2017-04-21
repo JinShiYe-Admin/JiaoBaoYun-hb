@@ -173,7 +173,8 @@
 			"html/mine/qun_manage_1.html",
 			"html/mine/ReadQRCode.html",
 			"html/quan/pub-dynamic.html",
-			"html/quan/aboutme.html"
+			"html/quan/aboutme.html",
+			"html/mine/qun_manage_info.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
