@@ -83,7 +83,9 @@ var setListener = function() {
 
 	})
 	document.querySelector('.change-holder').addEventListener("tap",function(){
-		events.openNewWindowWithData('change-comment.html',workInfo)
+		events.singleInstanceInPeriod(function(){
+			events.openNewWindowWithData('change-comment.html',workInfo)
+		})
 	})
 }
 /**
