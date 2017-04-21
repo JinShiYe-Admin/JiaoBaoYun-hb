@@ -274,7 +274,7 @@ var shieldAnswer = function() {
 			//5.获取某个问题的详情
 			requestAskDetail();
 		} else {
-			mui.toast("屏蔽回答失败！");
+			mui.toast("取消屏蔽失败！");
 		}
 	})
 }
