@@ -87,6 +87,7 @@ mui.plusReady(function() {
 	addSubPages(); //加载子页面
 	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
 	window.addEventListener('infoChanged', function() {
+		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 		var imgNode = document.querySelector('img');
@@ -117,7 +118,7 @@ mui.plusReady(function() {
 		events.closeWaiting();
 	})
 	window.addEventListener('aboutmNoRead', function() {
-		//		getAboutMe();
+				getAboutMe();
 	});
 	//	//默认自动登录
 	events.defaultLogin(function(data) {
@@ -248,16 +249,10 @@ function getHomeworkAlert(NoReadCnt) {
 		wd.close();
 		console.log('postDataPro_GetHomeworkAlertCount:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
-			var noRead = document.getElementById('aboutme_noRead');
 			NoReadCnt = data.RspData.NoReadCnt + NoReadCnt;
 			noReadCount = NoReadCnt;
-			if(NoReadCnt == 0) {
-				noRead.innerHTML = NoReadCnt;
-				noRead.style.visibility = 'hidden';
-			} else {
-				noRead.style.visibility = 'visible';
-				noRead.innerHTML = NoReadCnt;
-			}
+			events.fireToPageWithData('../cloud/cloud_home.html', 'NoReadCnt',NoReadCnt)
+
 		} else {
 			//				mui.toast(data.RspTxt);
 		}

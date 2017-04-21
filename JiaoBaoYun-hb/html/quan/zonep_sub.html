@@ -25,10 +25,10 @@
 
 	</head>
 
-	<body  style="background-color: #f2f3f5;">
+	<body style="background-color: #f2f3f5;">
 
 		<!--下拉刷新容器-->
-		<div id="pullrefresh" class="mui-content mui-scroll-wrapper" >
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
 				<!--数据列表-->
 				<ul class="mui-table-view">
@@ -60,8 +60,8 @@
 					callback: pullupRefresh
 				}
 			},
-			gestureConfig:{
-				longtap:true
+			gestureConfig: {
+				longtap: true
 			}
 		});
 
@@ -193,7 +193,6 @@
 							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 							PostUmk(tempArray.join(), tempRspData);
 
-
 						});
 					} else {
 						mui.toast(data.RspTxt);
@@ -272,6 +271,9 @@
 					zonepArray[id].Comments[commentId].Replys.push(tempData.Reply);
 
 				} else {
+					flag = 2; //下拉刷新
+					totalCnt = 0; //总页数
+					tempPage = 1; //刷新时将页码归1
 					var comData = {
 						userId: personalUTID, //用户ID
 						publisherId: publisherId, //发布用户ID
@@ -280,6 +282,7 @@
 						pageSize: '10' //每页记录数
 					};
 					requestData(comData)
+					window.scrollTo(0, 0);
 				}
 
 			})
@@ -565,7 +568,7 @@
 				if(data.RspCode == 0) {
 					for(var j = 0; j < tempRspData.length; j++) {
 						for(var k = 0; k < data.RspData.length; k++) {
-//							console.log(tempRspData[j].utid + '-------' + data.RspData[k].butid)
+							//							console.log(tempRspData[j].utid + '-------' + data.RspData[k].butid)
 							if(tempRspData[j].utid == data.RspData[k].butid) {
 								tempRspData[j].ugname = data.RspData[k].bunick;
 							}
@@ -576,7 +579,7 @@
 				} else if(data.RspCode == 0009) {
 
 				}
-				
+
 				var table = document.body.querySelector('.mui-table-view');
 				//判断是加载更多1，还是刷新2
 				if(flag == 1) {
@@ -600,6 +603,7 @@
 					}
 				}
 				dynamiclistitem.questionContent();
+
 			})
 		}
 		//失去焦点事件

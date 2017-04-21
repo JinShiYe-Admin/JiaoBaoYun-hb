@@ -97,10 +97,12 @@
 					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 					pageIndex = 1;
 					pullFlag = 0;
+					totalPage = 0;
 					if(cityID == 1) {
 						getFocusByUser()
 					} else {
 						requestData(cityID, 1);
+						window.scrollTo(0, 0);
 					}
 
 				});
@@ -826,7 +828,7 @@
 			var getPersonIds = function(data, cityCode) {
 				var personIds = [];
 				for(var i in data) {
-//					data[i].InShow = "1";
+					//					data[i].InShow = "1";
 					personIds.push(data[i].PublisherId);
 
 					for(var item in data[i].LikeUsers) {

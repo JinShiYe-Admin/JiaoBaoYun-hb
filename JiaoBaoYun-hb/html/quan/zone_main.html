@@ -35,6 +35,12 @@
 		mui.init({
 
 		})
+		 //重写系统返回方法
+			var old_back = mui.back;
+			mui.back = function() {
+			events.closeWaiting();
+			old_back()
+			}
 		mui.plusReady(function() {
 
 			events.changeTopPocket();
