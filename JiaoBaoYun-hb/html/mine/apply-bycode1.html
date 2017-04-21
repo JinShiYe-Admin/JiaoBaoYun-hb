@@ -35,8 +35,12 @@
 			mui.plusReady(function() {
 				groupInfo = plus.webview.currentWebview().data;
 				console.log("获取的数据："+JSON.stringify(groupInfo));
-				document.getElementById("group-info").innerText = groupInfo;
-			})
+				if (groupInfo.flag==0) {//不识别的二维码
+					document.getElementById("group-info").innerText = groupInfo.result;
+				}else{//二维码已过期
+					
+				}
+			});
 		</script>
 	</body>
 

@@ -405,7 +405,7 @@ var addQiuZhiExpertSearch = function(container) {
 	pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
 	pubDynamic.style.paddingLeft = '30px'
 	pubDynamic.style.paddingTop = '15px'
-	pubDynamic.style.fontSize = '16px'
+	pubDynamic.style.fontSize = '14px'
 	pubDynamic.innerHTML = '搜索'
 	container.appendChild(pubDynamic);
 	events.addTap('expertSearch', function() {
