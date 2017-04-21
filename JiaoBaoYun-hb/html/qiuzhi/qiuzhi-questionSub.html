@@ -12,9 +12,9 @@
 		<link href="../../css/qiuzhi/qiuzhi-questionSub.css" rel="stylesheet" />
 		<style>
 			/*body,
-            .mui-content {
-                background: #E4E4E4;
-            }*/
+			.mui-content {
+				background-color: #efeff4;
+			}*/
 
 			.mui-table-view {
 				margin-top: 0px;
@@ -187,15 +187,17 @@
 			}
 
 			.icon-xie {
-				color: gray;
-				line-height: 34px;
+				color: #B7B7B7;
+				line-height: 32px;
 				padding: 0px !important;
 				margin-left: 10px;
 				margin-right: 10px;
+				font-size: 20px !important;
 			}
+
 			.tab_div,
 			#tab_div {
-				line-height: 34px;
+				line-height: 35px;
 				border: 1px solid #E4E4E4;
 				margin-left: 10px;
 				margin-right: 10px;
@@ -216,18 +218,31 @@
 			.mui-pull {
 				font-weight: normal;
 			}
+
+			.answer-none {
+				/*无人回答*/
+				text-align: center;
+				background-color: white;
+				color: lightgray;
+			}
+
+			.answer-none img {
+				width: 50%;
+			}
 		</style>
 	</head>
 
 	<body>
 		<nav id="manage-container" class="mui-bar mui-bar-tab">
 			<div class="tab_div" style="border: 0;">
-				<font  id=""><p>自己的回答已屏蔽<span id="cancel-shield" class="mui-pull-right">取消</span></p></font>
+				<font id="">
+					<p>自己的回答已屏蔽<span id="cancel-shield" class="mui-pull-right">取消</span></p>
+				</font>
 				<!--<font id="tab_font"><span class="mui-icon iconfont icon-xie mui-pull-left"></span>请输入问题的答案</font>-->
 			</div>
 		</nav>
 		<!--下拉刷新容器-->
-		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		<div id="refreshContainer" class="mui-content mui-fullscreen mui-scroll-wrapper">
 			<div class="mui-scroll">
 				<!--数据列表-->
 				<ul class="mui-table-view">

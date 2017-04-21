@@ -9,6 +9,7 @@ mui.init({
 });
 var loginRoleType = 0; //登录角色0为游客1为用户
 var noReadCount = 0;
+var aniShow = {};
 mui.plusReady(function() {
 	document.addEventListener("netchange", wainshow, false);
 
@@ -118,17 +119,17 @@ mui.plusReady(function() {
 	window.addEventListener('aboutmNoRead', function() {
 		//		getAboutMe();
 	});
-	//默认自动登录
+	//	//默认自动登录
 	events.defaultLogin(function(data) {
 		console.log("自动登录获取的值：" + JSON.stringify(data));
-		if(data.value==1) {
+		if(data.value == 1) {
 			loginRoleType = data.flag;
 			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-		} else if(data.value==-1) { //登录失败
-			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)){
-				loginRoleType=1;
-			}else{
-				loginRoleType=0;
+		} else if(data.value == -1) { //登录失败
+			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
+				loginRoleType = 1;
+			} else {
+				loginRoleType = 0;
 			}
 			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
 			mui.toast("登录失败，请检查网络！");
@@ -149,7 +150,7 @@ var addSubPages = function() {
 	var subpage_style = events.getWebStyle();
 	subpage_style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
 	subpage_style.bottom = '50px';
-	var aniShow = {};
+
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
 	var self = plus.webview.currentWebview();
 	for(var i = 0; i < 4; i++) {
@@ -180,7 +181,7 @@ var addSubPages = function() {
 //加载监听
 var setListener = function() {
 	var title = document.getElementById("title");
-	var aniShow = {};
+	//	var aniShow = {};
 	//选项卡点击事件
 	mui('.mui-bar-tab').on('tap', 'a', function(e) {
 		var targetTab = this.getAttribute('href');
@@ -215,9 +216,9 @@ var setListener = function() {
 			plus.webview.show(targetSplit[targetSplit.length - 1]);
 		} else {
 			//否则，使用fade-in动画，且保存变量
-			//			var temp = {};
-			//			temp[targetTab] = "true";
-			//			mui.extend(aniShow, temp);
+			var temp = {};
+			temp[targetTab] = "true";
+			mui.extend(aniShow, temp);
 			plus.webview.show(targetSplit[targetSplit.length - 1], "fade-in", 300);
 		}
 		var activeSplit = activeTab.split('/');

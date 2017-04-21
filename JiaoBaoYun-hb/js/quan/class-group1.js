@@ -3,7 +3,7 @@ var groupRoles;
 var choseRole;
 var isMaster;
 var allGroupInfos;
-var groupModel;//群信息model
+var groupModel; //群信息model
 mui('.mui-scroll-wrapper').scroll({
 	indicators: true, //是否显示滚动条
 });
@@ -39,7 +39,7 @@ mui.plusReady(function() {
 	events.addTap('quit-group', function() {
 		showChoices();
 	})
-	mui(".chose-container").on("change", "input", function() {
+	mui(".mui-input-group").on("change", "input", function() {
 		if(this.checked) {
 			choseRole = parseInt(this.value);
 		}
@@ -55,10 +55,10 @@ var getGroupInfo = function() {
 		wd1.close();
 		console.log("获取的群信息：" + JSON.stringify(data));
 		groupModel = data.RspData[0];
-		if (groupModel.gnote == null||groupModel.gnote.length == 0) {
+		if(groupModel.gnote == null || groupModel.gnote.length == 0) {
 			groupModel.gnote = '暂无说明';
 		}
-		
+
 		if(data.RspCode == 0) {
 			document.getElementById("group-info").innerText = data.RspData[0].gnote ? data.RspData[0].gnote : "暂无说明";
 		}
@@ -107,8 +107,8 @@ var setButtonsListener = function() {
 	})
 	document.getElementById("show-all").addEventListener("tap", function() {
 		events.openNewWindowWithData("group-allMembers.html", {
-			classId:groupId,
-			className:groupName
+			classId: groupId,
+			className: groupName
 		});
 	})
 }
@@ -141,13 +141,13 @@ var freshContent = function() {
 		}
 		if(groupRoles.length == 0) {
 			document.querySelector('.quit-container').style.display = 'none';
-//			document.querySelector('.mui-content').style.marginBottom = "0";
+			//			document.querySelector('.mui-content').style.marginBottom = "0";
 		} else if(groupRoles.length == 1 && groupRoles[0] == 0 && isMaster) {
 			document.querySelector('.quit-container').style.display = 'none';
-//			document.querySelector('.mui-content').style.marginBottom = "0";
+			//			document.querySelector('.mui-content').style.marginBottom = "0";
 		} else {
 			document.querySelector('.quit-container').style.display = 'block';
-//			document.querySelector('.mui-content').style.marginBottom = "5rem";
+			//			document.querySelector('.mui-content').style.marginBottom = "5rem";
 		}
 		getGroupAllInfo();
 	})
@@ -202,7 +202,7 @@ var getRemarkInfos = function(data) {
 		events.clearChild(gride);
 		console.log('最终呈现的数据：' + JSON.stringify(list));
 		list = resortArray(list);
-		allGroupInfos=list;
+		allGroupInfos = list;
 		createGride(gride, list);
 	})
 }
@@ -280,19 +280,27 @@ var getRemarkData = function(list, callback) {
  * @param {Object} array 元素数组，包括图标和标题
  */
 var createGride = function(gride, array) {
+	var showAll = document.getElementById("show-all");
 	if(isMaster) {
-		array.unshift({
+		if(array.length > 15) {
+			showAll.style.display = "block";
+			array.splice(15);
+		} else {
+			showAll.style.display = "none";
+		}
+		array.push({
 			uimg: "../../image/quan/add.png",
 			bunick: "邀请",
 			invitable: true
 		})
-	}
-	var showAll = document.getElementById("show-all");
-	if(array.length > 16) {
-		showAll.style.display="block";
-		array.splice(16);
-	}else{
-		showAll.style.display="none";
+	} else {
+		if(array.length > 16) {
+			showAll.style.display = "block";
+
+			array.splice(16);
+		} else {
+			showAll.style.display = "none";
+		}
 	}
 	//数组遍历
 	array.forEach(
@@ -310,7 +318,7 @@ var createGride = function(gride, array) {
 			} else { //数组大于3，每行四个图标
 				li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
 			}
-			li.style.padding="0";
+			li.style.padding = "0";
 			cell.gname = groupName;
 			//			if(!cell.bunick) {
 			//				cell.bunick = cell.ugnick;
