@@ -255,7 +255,7 @@
 							mui.toast('数据异常，请下拉刷新后重新尝试');
 						}
 						setTimeout(function() {
-							pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
+							endPullUp();
 						}, 1000);
 					}
 				}
@@ -308,17 +308,21 @@
 			//28.（用户空间）获取用户针对某用户的空间列表
 			postDataPro_getUserSpacesByUserForPublisher(comData, wd, function(data) {
 				console.log('28 获取用户针对某用户的空间列表 getUserSpacesByUserForPublisher ' + JSON.stringify(data));
-				if(pageIndex == 1) { //下拉刷新或者获取的第一页的内容
-					pullRefresh.refresh(true); //更新当前控件
-				} else {
-					pullRefresh.endPullUpToRefresh(); //结束上拉刷新
-				}
 				if(data.RspCode == 0) { //成功获取
-					if(pageIndex == 1) { //成功获取第一页的数据
+					//记录页数
+					page = {
+						pageIndex: pageIndex, //当前页数
+						totalPage: data.RspData.TotalPage //总页数
+					};
+					console.log('page ' + JSON.stringify(page));
+					if(pageIndex == 1) { //下拉刷新或者获取的第一页的内容
 						document.getElementById('list').innerHTML = '';
 						year = ''; //清空年份
 						markDate = ''; //日期
+						pullRefresh.refresh(true); //更新当前控件
 					}
+					endPullUp();
+
 					//console.log(document.getElementById("list").innerHTML);
 					if(data.RspData.Data.length == 0 && pageIndex == 1) {
 						//第一页的数据为空
@@ -329,17 +333,6 @@
 						for(var i = 0; i < data.RspData.Data.length; i++) {
 							createNotes(data.RspData.Data[i]);
 						}
-					}
-					//记录页数
-					page = {
-						pageIndex: pageIndex, //当前页数
-						totalPage: data.RspData.TotalPage //总页数
-					};
-					console.log('page ' + JSON.stringify(page));
-					if(page.pageIndex >= page.totalPage) {
-						//没有下一页
-						console.log('没有下一页');
-						pullRefresh.endPullUpToRefresh(true);
 					}
 				} else {
 					mui.toast(data.RspTxt);
@@ -464,6 +457,18 @@
 					<img src="../../image/qiuzhi/qiuzhi_noanswer.png" />\
 					<div>您还没有笔记，快来填充您的笔记吧~~~~</div>\
 				</div>';
+		}
+
+		/**
+		 * 结束上拉加载更多
+		 */
+		function endPullUp() {
+			if(page && page.pageIndex >= page.totalPage) {
+				console.log('没有下一页');
+				pullRefresh.endPullUpToRefresh(true);
+			} else {
+				pullRefresh.endPullUpToRefresh();
+			}
 		}
 	</script>
 

@@ -231,7 +231,6 @@
 			pullRefresh = mui('.mui-scroll-wrapper .mui-scroll').pullToRefresh({
 				down: {
 					callback: function() {
-						var self = this;
 						console.log('down ' + JSON.stringify(page));
 						getNotes(1);
 						setTimeout(function() {
@@ -241,13 +240,15 @@
 				},
 				up: {
 					callback: function() {
-						var self = this;
 						console.log('up ' + JSON.stringify(page));
 						if(page) {
 							getNotes(page.pageIndex + 1);
 						} else {
 							mui.toast('数据异常，请下拉刷新后重新尝试');
 						}
+						setTimeout(function() {
+							endPullUp();
+						}, 1000);
 					}
 				}
 			});
@@ -328,50 +329,39 @@
 			//4.（点到记事）获取用户针对某学生的点到记事列表
 			postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
 				console.log('4 获取用户针对某学生的点到记事列表 getNotesByUserForStudent' + JSON.stringify(data));
-				//记录页数
-				page = {
-					pageIndex: pageIndex, //当前页数
-					totalPage: 0 //总页数
-				};
-
-				if(pageIndex == 1) { //下拉刷新或者获取的第一页的内容
-					//清空对应的界面
-					document.getElementById('ul_table').innerHTML = '';
-					year = ''; //清空年份
-					markDate = ''; //清空年份
-					var comData2 = {
-						userId: userId, //用户ID----utid
-						classId: mainData.classId, //班级ID----
-						studentId: mainData.studentId //学生ID----stuid
-					};
-					postDataPro_setNoteReadByUser(comData2, wd, function(data2) {
-						console.log('10 修改某用户针对某学生所有点到记事阅读状态为已读 setNoteReadByUser' + JSON.stringify(data2));
-					});
-				} else { //上拉加载更多
-					pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
-				}
-
 				if(data.RspCode == 0) {
-					page.totalPage = data.RspData.TotalPage;
-					var tempRspData = data.RspData.Data;
-					for(var i = 0; i < tempRspData.length; i++) {
-						createNotes(tempRspData[i])
+					//记录页数
+					page = {
+						pageIndex: pageIndex, //当前页数
+						totalPage: data.RspData.TotalPage //总页数
+					};
+					console.log('page ' + JSON.stringify(page));
+					if(pageIndex == 1) { //下拉刷新或者获取的第一页的内容
+						//清空对应的界面
+						document.getElementById('ul_table').innerHTML = '';
+						year = ''; //清空年份
+						markDate = ''; //清空年份
+						var comData2 = {
+							userId: userId, //用户ID----utid
+							classId: mainData.classId, //班级ID----
+							studentId: mainData.studentId //学生ID----stuid
+						};
+						postDataPro_setNoteReadByUser(comData2, wd, function(data2) {
+							console.log('10 修改某用户针对某学生所有点到记事阅读状态为已读 setNoteReadByUser' + JSON.stringify(data2));
+						});
+						pullRefresh.refresh(true); //更新当前控件
 					}
-				} else {
-					mui.toast('获取点到记事列表:' + data.RspTxt);
-					console.log('获取用户针对某学生的点到记事列表:' + data.RspTxt);
-				}
+					endPullUp();
 
-				console.log('page ' + JSON.stringify(page));
-				if(page.pageIndex >= page.totalPage) {
-					//没有下一页
-					console.log('没有下一页');
-					pullRefresh.endPullUpToRefresh(true);
-				} else {
-					if(page.pageIndex == 1) {
-						//获取第一页的数据更新当前控件
-						pullRefresh.refresh(true);
+					if(data.RspData.Data.length == 0 && pageIndex == 1) {
+						mui.toast('学生动态为空');
+					} else {
+						for(var i = 0; i < data.RspData.Data.length; i++) {
+							createNotes(data.RspData.Data[i]);
+						}
 					}
+				} else {
+					mui.toast(data.RspTxt);
 				}
 				wd.close();
 			});
@@ -483,6 +473,18 @@
 				}
 			}
 			markDate = dateItem;
+		}
+
+		/**
+		 * 结束上拉加载更多
+		 */
+		function endPullUp() {
+			if(page && page.pageIndex >= page.totalPage) {
+				console.log('没有下一页');
+				pullRefresh.endPullUpToRefresh(true);
+			} else {
+				pullRefresh.endPullUpToRefresh();
+			}
 		}
 	</script>
 
