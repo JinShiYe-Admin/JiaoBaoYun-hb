@@ -141,11 +141,8 @@ var setHomeWorkInfo = function() {
 	console.log("要放置的作业数据："+JSON.stringify(workInfo))
 	document.getElementById('submit-time').innerText = workInfo.UploadTime;
 	var homeworkInfo = document.getElementById('homework-info');
-	events.clearChild(homeworkInfo);
-	var p = document.createElement('p');
-	p.className="work-result";
-	p.innerText = workInfo.Result;
-	homeworkInfo.appendChild(p);
+	document.querySelector(".answer-info").innerText=workInfo.Result;
+	document.getElementById("answer-imgs").innerHTML="";
 	if(workInfo.IsCommented) {
 		document.getElementById('comment-area').value = workInfo.Comment;
 		document.querySelector('.comment-holder').style.display="none";
@@ -201,7 +198,7 @@ var setAnswerInfo = function() {
 	console.log('要放置的临时作业数据：' + JSON.stringify(workInfo));
 	document.getElementById('submit-time').innerText = workInfo.stuUploadTime;
 	var homeworkInfo = document.getElementById('homework-info');
-	events.clearChild(homeworkInfo);
+//	events.clearChild(homeworkInfo);
 	ceateAnswerPinfo(homeworkInfo, 30);
 	createAnswerImgs(homeworkInfo, workInfo.stuFiles, 0);
 	ceateAnswerPinfo(homeworkInfo, 2);
@@ -233,16 +230,17 @@ var ceateAnswerPinfo = function(homeworkInfo, type) {
  * @param {Object} type 0 学生 1 老师
  */
 var createAnswerImgs = function(homeworkInfo, imgs, type) {
-	var div = document.createElement('div');
+//	var div = document.createElement('div');
 	var win_width=document.getElementById("homework-info").offsetWidth;
-	var img_width=(win_width-15)/3;
+	var img_width=(win_width)/3;
 	var imgsInner = '';
 	for(var i in imgs) {
 		imgsInner += '<img class="answer-img" src="' + imgs[i].ThumbUrl +'" style="width:'+img_width+'px;height:'+img_width+'px;"'+
-			'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + homeworkInfo.HomeworkResultId + '"/>';
+			'data-preview-src="' + imgs[i].Url + '" data-preview-group="' + homeworkInfo.HomeworkResultId + '"/>';
 	}
-	div.innerHTML = imgsInner;
-	homeworkInfo.appendChild(div);
+//	div.innerHTML = imgsInner;
+	console.log("图片的innerHTML："+imgsInner);
+	document.getElementById("answer-imgs").innerHTML=imgsInner;
 }
 /**
  * 获取老师的临时作业答案

@@ -3,6 +3,7 @@ var groupRoles;
 var choseRole;
 var isMaster;
 var allGroupInfos;
+var groupNote;//群说明
 var groupModel; //群信息model
 mui('.mui-scroll-wrapper').scroll({
 	indicators: true, //是否显示滚动条
@@ -61,6 +62,7 @@ var getGroupInfo = function() {
 
 		if(data.RspCode == 0) {
 			document.getElementById("group-info").innerText = data.RspData[0].gnote ? data.RspData[0].gnote : "暂无说明";
+			groupNote=data.RspData[0].gnote;
 		}
 	})
 }
@@ -96,7 +98,7 @@ var setButtonsListener = function() {
 	document.getElementById("group-info").addEventListener("tap", function() {
 		events.fireToPageWithData("edit-remark.html", "editGroupInfo", {
 			gid: groupId,
-			info: document.getElementById("group-info").innerText
+			info: groupNote
 		})
 	});
 	/**

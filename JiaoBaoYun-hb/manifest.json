@@ -3076,7 +3076,8 @@
 					"js/mui.zoom.js",
 					"fonts/fangzheng.ttf",
 					"js/mui.previewimage.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/qiuzhi/qiuzhi_noanswer.png"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-addAnswer.html",

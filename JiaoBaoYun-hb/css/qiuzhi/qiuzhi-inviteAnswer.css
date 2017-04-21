@@ -1,5 +1,12 @@
 .Ask-Title {
 	color: #323232;
+	-webkit-line-clamp: 3;
+	/*用来限制在一个块元素显示的文本的行数*/
+	display: -webkit-box;
+	/*必须结合的属性，将对象作为弹性伸缩盒子模型显示*/
+	-webkit-box-orient: vertical;
+	/*必须结合的属性 ，设置或检索伸缩盒对象的子元素的排列方式*/
+	overflow: hidden;
 }
 
 .mui-scroll-wrapper {
@@ -10,6 +17,7 @@
 	border-bottom: #e4e4e4 solid 1px;
 	padding: 0;
 }
+
 .cell-container {
 	margin-left: 15px;
 	display: flex;
@@ -24,7 +32,8 @@
 	border-radius: 50%;
 	display: block;
 }
-.invite-info{
+
+.invite-info {
 	width: 50%;
 	flex-grow: 1;
 	padding-right: 15px;
@@ -126,6 +135,3 @@
 .mui-table-view-cell:after {
 	height: 0px;
 }
-
-
-

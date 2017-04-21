@@ -77,7 +77,7 @@ input[type=text] {
 	display: flex;
 	display: -webkit-flex;
 	background-color: white;
-	border-bottom: 1px #00A5E0 solid;
+/*	border-bottom: 1px #00A5E0 solid;*/
 }
 
 .remark-input {

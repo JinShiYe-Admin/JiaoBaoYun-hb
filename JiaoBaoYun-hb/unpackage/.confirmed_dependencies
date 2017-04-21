@@ -105,7 +105,8 @@
 			"js/mui.zoom.js",
 			"image/utils/default_personalimage.png",
 			"js/libs/crypto-js/crypto-js.js",
-			"js/libs/myStorage/myStorage.js"
+			"js/libs/myStorage/myStorage.js",
+			"image/qiuzhi/qiuzhi_noanswer.png"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-addAnswer.html",
@@ -1908,26 +1909,7 @@
 			"css/qiuzhi/qiuzhi-inviteAnswer.css",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
-			"css/utils/common.css",
-			"js/mui.pullToRefresh.js",
-			"js/publicQiuzhiProtocol.js",
-			"js/mui.pullToRefresh.material.js",
-			"js/storageKeyName.js",
-			"fonts/mui.ttf",
-			"js/utils/events.js",
-			"js/libs/RSA/Barrett.js",
-			"js/libs/crypto-js/require.js",
-			"js/libs/myStorage/myStorage.js",
-			"css/iconfont/iconfont.css",
-			"js/publicProtocol.js",
-			"js/libs/jquery.js",
-			"js/mui.min.js",
-			"fonts/fangzheng.ttf",
-			"js/libs/RSA/BigInt.js",
-			"js/utils/signHmacSHA1.js",
-			"js/libs/RSA/RSA.js",
-			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"css/utils/common.css"
 		],
 		"refer": []
 	},

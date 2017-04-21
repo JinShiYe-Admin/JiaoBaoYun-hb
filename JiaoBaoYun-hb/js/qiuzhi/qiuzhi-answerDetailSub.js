@@ -215,6 +215,7 @@ var delCommentData = function() {
 		answerData.CommentNum = answerData.CommentNum - 1;
 		console.log("删除的位置：" + delCmOrder + ",删除后的数据：" + JSON.stringify(answerData));
 	}
+	setCommentContainer(!(answerData.Data.length>0));
 }
 var resetSiblingOrder = function(container) {
 	if(container.nextElementSibling) {
@@ -366,6 +367,9 @@ var insertCommentData = function(commentData) {
 				answerData.Data.push(commentData);
 			}
 		}
+	}
+	if(answerData.Data.length>0){
+		setCommentContainer();
 	}
 	console.log("改变后的数据：" + JSON.stringify(answerData))
 }
@@ -579,8 +583,29 @@ function refreshUI(datasource) {
 		setAnswerManInfo(datasource);
 	}
 	var ul = document.getElementById('list-container');
-	createList(ul, datasource.Data);
+	if(datasource.Data.length>0){
+		setCommentContainer();
+		createList(ul, datasource.Data);
+	}else{
+		setCommentContainer(1)
+	}
 	events.closeWaiting();
+}
+/**
+ * 
+ * @param {Object} showType 0显示列表 1显示没评论图片
+ */
+var setCommentContainer=function(showType){
+	var ul = document.getElementById('list-container');
+	var noCom=document.querySelector(".answer-noComment");
+	if(showType){
+		ul.style.display="none";
+		noCom.style.display="block";
+	}else{
+		ul.style.display="block";
+		noCom.style.display="none";
+	}
+	
 }
 /**
  * 创建列表

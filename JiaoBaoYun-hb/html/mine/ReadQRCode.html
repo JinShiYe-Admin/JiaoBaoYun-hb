@@ -57,22 +57,44 @@
 				var QRCodeArr = result.split('@');
 				if(QRCodeArr.length > 0) {
 					var temp = QRCodeArr[0];
-					var temp1 = QRCodeArr[1];
-					var temp2 = unescape(QRCodeArr[2]);
-					var temp3 = QRCodeArr[3];
-					var temp4 = unescape(QRCodeArr[4]);
 					console.log('tempretemp=' + temp + ',' + JSON.stringify(QRCodeArr));
-					if(temp == 1) { //1为申请加入群
+
+					if(temp == 'jby1') { //1为申请加入群
+						var temp1 = QRCodeArr[1];
+						var temp2 = unescape(QRCodeArr[2]);
+						var temp3 = QRCodeArr[3];
+						var temp4 = unescape(QRCodeArr[4]);
+						var temp5 = unescape(QRCodeArr[5]);
 						QRCodeModel.flag = temp; //1代表申请加入群
 						QRCodeModel.gid = temp1; //班级id
 						QRCodeModel.gname = temp2; //班级名称
 						QRCodeModel.gimg = temp3; //班级头像
 						QRCodeModel.gnote = temp4; //班级说明
+						QRCodeModel.statrDate = temp5; //班级说明
 						console.log('QRCodeModel=' + JSON.stringify(QRCodeModel));
-						events.openNewWindowWithData('../mine/apply-bycode.html', QRCodeModel);
+						//如果匹配格式，计算是否超时7天
+						var tempArr0 = temp5.split(','); //
+						var tempDate0 = Date.UTC(tempArr0[0], tempArr0[1], tempArr0[2], tempArr0[3], tempArr0[4]);
+						//当前时间
+						var tempArr1 = events.getNowFormatDate().split(','); //
+						var tempDate1 = Date.UTC(tempArr1[0], tempArr1[1], tempArr1[2], tempArr1[3], tempArr1[4]);
+						//计算时间间隔，天数
+						var datas = (tempDate1 - tempDate0) / (1000 * 60 * 60 * 24);
+						if(datas >= 7) {
+							var tempdata = {
+								flag: 1,
+								result: '二维码已过期'
+							}
+							events.openNewWindowWithData('../mine/apply-bycode1.html', result);
+						} else { //没超过7天
+							events.openNewWindowWithData('../mine/apply-bycode.html', QRCodeModel);
+						}
 					} else {
-//						mui.toast('扫描结果为:' + result);
-						events.openNewWindowWithData('../mine/apply-bycode1.html', result);
+						var tempdata = {
+							flag: 0,
+							result: result
+						}
+						events.openNewWindowWithData('../mine/apply-bycode1.html', tempdata);
 					}
 				}
 			}

@@ -39,7 +39,7 @@ mui.plusReady(function() {
 	}
 
 	//android更新app
-	appUpdate.androidUpdateApp();
+	appUpdate.updateApp();
 	//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
 	var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 	console.log('person===' + JSON.stringify(personal));
@@ -401,7 +401,7 @@ var addQiuZhiExpertSearch = function(container) {
 	pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
 	pubDynamic.style.paddingLeft = '30px'
 	pubDynamic.style.paddingTop = '15px'
-	pubDynamic.style.fontSize = '16px'
+	pubDynamic.style.fontSize = '14px'
 	pubDynamic.innerHTML = '搜索'
 	container.appendChild(pubDynamic);
 	events.addTap('expertSearch', function() {
