@@ -3248,7 +3248,9 @@
 					"fonts/fangzheng.ttf",
 					"image/utils/default_personalimage.png"
 				],
-				"refer": [],
+				"refer": [
+					"html/quan/zone_main.html"
+				],
 				"priority": 0
 			},
 			"html/mine/qun_manage_sub.html": {
@@ -4284,8 +4286,7 @@
 					"fonts/mui.ttf"
 				],
 				"refer": [
-					"html/mine/apply-bycode.html",
-					"html/mine/apply-bycode1.html"
+					"html/mine/apply-bycode.html"
 				],
 				"priority": 0
 			}
