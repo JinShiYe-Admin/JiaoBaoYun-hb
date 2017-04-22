@@ -2300,7 +2300,8 @@
 	},
 	"html/mine/ReadQRCode.html": {
 		"refer": [
-			"html/mine/apply-bycode.html"
+			"html/mine/apply-bycode.html",
+			"html/mine/apply-bycode1.html"
 		],
 		"resources": [
 			"js/storageKeyName.js",
