@@ -446,20 +446,23 @@ var setConditionbyRole = function(role) {
 		cloudIcon.style.display = "table-cell";
 		cloudIcon.className = "mui-tab-item mui-active";
 		activeTab = "../cloud/cloud_home.html";
-		var temp = {};
-		temp[activeTab] = "true";
-		mui.extend(aniShow, temp);
-		plus.webview.show("cloud_home.html", "fade-in", 300);
-		changRightIcons("../cloud/cloud_home.html");
 	} else { //游客
 		cloudIcon.style.display = "none";
 		sceIcon.className = "mui-tab-item mui-active";
 		activeTab = "../sciedu/sciedu_home.html";
-		var temp = {};
-		temp[activeTab] = "true";
-		mui.extend(aniShow, temp);
-		plus.webview.show("sciedu_home.html", "fade-in", 300);
-		changRightIcons("../sciedu/sciedu_home.html");
 	}
-
+	//显示活动的界面
+	setActivePage();
+}
+/**
+ * 显示活动的界面
+ */
+var setActivePage = function() {
+	var temp = {};
+	temp[activeTab] = "true";
+	mui.extend(aniShow, temp);
+	var splitActiveTabs=activeTab.split("/");
+	var activeId=splitActiveTabs[splitActiveTabs.length-1];
+	plus.webview.show(activeId, "fade-in", 300);
+	changRightIcons(activeTab);
 }

@@ -3,7 +3,7 @@
 	"id": "H56171390",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "教宝云",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "17.0.1.2017.0422_beta",/*应用版本名称*/
+		"name": "1.0.1",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -156,12 +156,12 @@
 					"ldpi": "unpackage/res/icons/48x48.png", /*大屏程序图标，分辨率：48x48*/
 					"hdpi": "unpackage/res/icons/72x72.png", /*高分屏程序图标，分辨率：72x72*/
 					"xhdpi": "unpackage/res/icons/96x96.png",/*720P高分屏程序图标，分辨率：96x96*/
-					"xxhdpi": "unpackage/res/icons/144x144.png","xxxhdpi":"unpackage/res/icons/192x192.png"
+					"xxhdpi": "unpackage/res/icons/144x144.png"
 				}
 			},
 			"splashscreen": {
 				"ios": {
-					"iphone": {"retina55":"/Users/a111/Downloads/教宝云启动页/教宝云启动页/ios_1242-2208.png","retina47":"/Users/a111/Downloads/教宝云启动页/教宝云启动页/ios_750-1334.png","retina40":"/Users/a111/Downloads/教宝云启动页/教宝云启动页/ios_640-1136.png","retina35":"/Users/a111/Downloads/教宝云启动页/教宝云启动页/ios_640-960.png"
+					"iphone": {
 						 /*iPhone3启动图片选，分辨率：320x480*/
 						/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
 
@@ -177,7 +177,7 @@
 						"landscape-retina7": ""
 					}
 				},
-				"android": {"hdpi":"/Users/a111/Downloads/教宝云启动页/教宝云启动页/Android_480-762.png","xhdpi":"/Users/a111/Downloads/教宝云启动页/教宝云启动页/Android_720-1242.png","xxhdpi":"/Users/a111/Downloads/教宝云启动页/教宝云启动页/Android_1080-1882.png"
+				"android": {
 					 /*普通屏启动图片，分辨率：240x282*/
 					 /*大屏启动图片，分辨率：320x442*/
 					 /*高分屏启动图片，分辨率：480x762*/
