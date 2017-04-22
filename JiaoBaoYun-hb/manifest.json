@@ -3248,7 +3248,9 @@
 					"fonts/fangzheng.ttf",
 					"image/utils/default_personalimage.png"
 				],
-				"refer": [],
+				"refer": [
+					"html/quan/zone_main.html"
+				],
 				"priority": 0
 			},
 			"html/mine/qun_manage_sub.html": {

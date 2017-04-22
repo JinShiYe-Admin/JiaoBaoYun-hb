@@ -1,7 +1,7 @@
 mui.init({
-	beforeback:function(){
-		document.querySelector("#person-list").innerHTML="";
-		mui(".mui-scroll-wrapper").scroll().scrollTo(0,0);
+	beforeback: function() {
+		document.querySelector("#person-list").innerHTML = "";
+		mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0);
 		return true;
 	}
 });
@@ -12,19 +12,38 @@ mui.plusReady(function() {
 		console.log('传过来的数值:' + JSON.stringify(e.detail.data));
 		classSpaceInfo = e.detail.data;
 		var title = document.querySelector('.mui-title');
-		document.querySelector("#person-list").innerHTML="";
-//		events.clearChild(document.getElementById('gride'));
-		if(classSpaceInfo.type==1) { //点赞
+		document.querySelector("#person-list").innerHTML = "";
+		//		events.clearChild(document.getElementById('gride'));
+		if(classSpaceInfo.type == 1) { //点赞
 			title.innerText = '谁点的赞';
 			getZanPersons(classSpaceInfo.classSpaceId);
-		} else if(classSpaceInfo.type==0){ //查看
+		} else if(classSpaceInfo.type == 0) { //查看
 			title.innerText = '谁看过';
 			getChakanPersons(classSpaceInfo.classSpaceId);
-		}else if(classSpaceInfo.type==3){
+		} else if(classSpaceInfo.type == 3) {
 			title.innerText = '谁点的赞';
 			getZonePersons(classSpaceInfo.userSpaceId)
-//			setData(classSpaceInfo.spaceID);
+			//			setData(classSpaceInfo.spaceID);
 		}
+	})
+	mui(".mui-table-view").on("tap", ".mui-table-view-cell", function() {
+		var info = this.info;
+		events.singleInstanceInPeriod(function() {
+			mui.openWindow({
+				url: 'zone_main.html',
+				id: 'zone_main.html',
+				styles: {
+					top: '0px', //设置距离顶部的距离
+					bottom: '0px'
+				},
+				extras: {
+					data: info.utid,
+					NoReadCnt: 0,
+					flag: 0
+				}
+			});
+		})
+
 	})
 })
 /**
@@ -72,8 +91,8 @@ var getZonePersons = function(userSpaceId) {
 }
 //获取人员基本信息
 var getPersonsInfo = function(users) {
-	var userIds=[];
-	for(var i in users){
+	var userIds = [];
+	for(var i in users) {
 		userIds.push(users[i].UserId);
 	}
 	var infos = [];
@@ -85,17 +104,17 @@ var getPersonsInfo = function(users) {
 		wd.close();
 		console.log("获取的个人信息：" + JSON.stringify(data))
 		if(data.RspCode == 0) {
-			for(var i in users){
-				for(var j in data.RspData){
-					if(users[i].UserId==data.RspData[j].utid){
-						jQuery.extend(data.RspData[j],users[i]);
+			for(var i in users) {
+				for(var j in data.RspData) {
+					if(users[i].UserId == data.RspData[j].utid) {
+						jQuery.extend(data.RspData[j], users[i]);
 					}
 				}
 			}
-			if(classSpaceInfo.type==3){
+			if(classSpaceInfo.type == 3) {
 				setData(data.RspData);
-			}else{
-			getGroupUsers(userIds,data.RspData);
+			} else {
+				getGroupUsers(userIds, data.RspData);
 			}
 		} else {
 			mui.toast(data.RspTxt);
@@ -119,20 +138,20 @@ var getGroupUsers = function(userIds, infos) {
 		wd.close();
 		console.log('获取的用户信息：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
-			var groupInfos=data.RspData;
-			var realGroupInfos=groupInfos.filter(function(groupInfo,index,groupInfos){
-				if(groupInfo.mstype==0){
-					for(var i in groupInfos){
-						if(i!=index&&groupInfos[i].utid==groupInfo.utid){
-							return false;//除家长外还有其他身份 删除家长身份
+			var groupInfos = data.RspData;
+			var realGroupInfos = groupInfos.filter(function(groupInfo, index, groupInfos) {
+				if(groupInfo.mstype == 0) {
+					for(var i in groupInfos) {
+						if(i != index && groupInfos[i].utid == groupInfo.utid) {
+							return false; //除家长外还有其他身份 删除家长身份
 						}
 					}
 					return true;
-				}else{
-					if(groupInfo.mstype==2){
-						for(var i in groupInfos){
-							if(groupInfos[i].mstype==1&&groupInfos[i].utid==groupInfo.utid){
-								return false;//除老师外还有群主身份，删除老师身份
+				} else {
+					if(groupInfo.mstype == 2) {
+						for(var i in groupInfos) {
+							if(groupInfos[i].mstype == 1 && groupInfos[i].utid == groupInfo.utid) {
+								return false; //除老师外还有群主身份，删除老师身份
 							}
 						}
 						return true;
@@ -182,46 +201,47 @@ var rechargeInfo = function(groupPersons, infos) {
 			}
 		}
 	}
-	
-//	var gride = document.getElementById('gride');
+
+	//	var gride = document.getElementById('gride');
 	console.log("最终要放置的数据：" + JSON.stringify(infos))
 	setData(infos);
 }
-var setData=function(infos){
-	infos.sort(function(a,b){
-		if(a.ReadDate){
-			return Date.parse(b.ReadDate)-Date.parse(a.ReadDate)
+var setData = function(infos) {
+	infos.sort(function(a, b) {
+		if(a.ReadDate) {
+			return Date.parse(b.ReadDate) - Date.parse(a.ReadDate)
 		}
-		return Date.parse(b.LikeDate)-Date.parse(a.LikeDate)
+		return Date.parse(b.LikeDate) - Date.parse(a.LikeDate)
 	})
-	var list=document.getElementById("person-list");
-	for(var i in infos){
-		var li=document.createElement("li");
-		li.className="mui-table-view-cell";
-		li.innerHTML=createInner(infos[i]);
+	var list = document.getElementById("person-list");
+	for(var i in infos) {
+		var li = document.createElement("li");
+		li.className = "mui-table-view-cell";
+		li.innerHTML = createInner(infos[i]);
 		list.appendChild(li);
+		li.info = infos[i];
 	}
 
 }
-var createInner=function(person){
-	return '<div class="person-cell"><img src="'+updateHeadImg(person.uimg,2)+'"/><div class="person-info"><h6>'+
-	getName(person)+'</h6>'+getTime(person)+'</div></div>'
+var createInner = function(person) {
+	return '<div class="person-cell"><img src="' + updateHeadImg(person.uimg, 2) + '"/><div class="person-info"><h6>' +
+		getName(person) + '</h6>' + getTime(person) + '</div></div>'
 }
-var getName=function(person){
-	if(person.bunick){
+var getName = function(person) {
+	if(person.bunick) {
 		return person.bunick;
 	}
-	if(person.ugname){
+	if(person.ugname) {
 		return person.ugname;
 	}
 	return person.unick;
 }
-var getTime=function(person){
-	if(person.ReadDate){
-	  return '<p>'+events.shortForDate(person.ReadDate)+'</p>'
+var getTime = function(person) {
+	if(person.ReadDate) {
+		return '<p>' + events.shortForDate(person.ReadDate) + '</p>'
 	}
-	if(person.LikeDate){
-		return '<p>'+events.shortForDate(person.LikeDate)+'</p>'
+	if(person.LikeDate) {
+		return '<p>' + events.shortForDate(person.LikeDate) + '</p>'
 	}
 	return "";
 }
