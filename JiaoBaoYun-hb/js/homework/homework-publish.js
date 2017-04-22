@@ -11,6 +11,7 @@ var personalUTID;
 mui.init();
 mui.plusReady(function() {
 	mui(".mui-scroll-wrapper").scroll();
+	mui.fire(plus.webview.currentWebview().opener(),"publishIsReady");
 	mui.previewImage();
 	events.blurBack();
 	//最大长度500

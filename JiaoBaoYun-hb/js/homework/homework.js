@@ -14,6 +14,7 @@ var list; //数据列表
 var totalPageCount;
 var clickItem; //点击的子控件
 var publish;
+var publishIsReady=false;
 mui.init();
 //mui的plusready监听
 mui.plusReady(function() {
@@ -62,13 +63,13 @@ mui.plusReady(function() {
 	//设置界面
 	setChoices(title, roles, btn_more);
 	//相机点击事件
-	events.addTap('icon-camero', function() {
-		events.fireToPageWithData('publish-answer.html', 'roleInfo', {
-			role: role,
-			studentClasses: studentClasses,
-			teacherClasses: teacherClasses
-		})
-	})
+//	events.addTap('icon-camero', function() {
+//		events.fireToPageWithData('publish-answer.html', 'roleInfo', {
+//			role: role,
+//			studentClasses: studentClasses,
+//			teacherClasses: teacherClasses
+//		})
+//	})
 
 	//角色选择的监听
 	roles.addEventListener("toggle", function(event) {
@@ -102,6 +103,9 @@ mui.plusReady(function() {
 		clickItem.homeworkInfo.IsSubmitted = true;
 		clickItem.className = 'mui-table-view-cell stuHomework ' + getBackGround(clickItem.homeworkInfo);
 		clickItem.innerHTML = createStuHomeworkInner(clickItem.homeworkInfo);
+	})
+	window.addEventListener("publishIsReady",function(){
+		publishIsReady=true;
 	})
 	//错题本按钮监听事件
 //	events.addTap('err', function() {
@@ -246,7 +250,7 @@ var setListener = function() {
 	var publish = document.getElementById('iconPublish');
 	//常规作业点击事件
 	mui('.mui-table-view').on('tap', '.publishedHomework', function() {
-		var self = this
+		var self = this;
 		self.disabled = true;
 		events.openNewWindowWithData('workdetail-tea.html', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 		setTimeout(function() {
@@ -286,8 +290,17 @@ var setListener = function() {
 //	})
 	//发布作业界面
 	publish.addEventListener('tap', function() {
-		events.fireToPageWithData('homework-publish.html', 'postClasses', teacherClasses);
+		events.showWaiting();
+		openPublish();
 	})
+}
+var openPublish=function(){
+	if(publishIsReady){
+		events.fireToPageWithData('homework-publish.html', 'postClasses', teacherClasses);
+		events.closeWaiting();
+	}else{
+		setTimeout(openPublish,500);
+	}
 }
 /**
  * 放置班级列表数据
