@@ -478,6 +478,17 @@
 						console.log('科教新闻最终值为 ' + JSON.stringify(tempArr));
 						//生成每一项
 						addItems(cityCode, tempArr);
+					}else if(data.RspCode == 9){
+						//记录页数
+						pageAndInfo[cityCode].page = {
+							pageIndex: pageIndex, //当前页数
+							totalPage: 0 //总页数
+						};
+						console.log('ipr ' + JSON.stringify(pageAndInfo[cityCode].page));
+						if(pageIndex == 1) { //获取的第一页的内容
+							pageAndInfo[cityCode].refresh.refresh(true); //更新当前控件
+						}
+						endPullUp(cityCode);
 					} else {
 						mui.toast(data.RspTxt);
 					}
