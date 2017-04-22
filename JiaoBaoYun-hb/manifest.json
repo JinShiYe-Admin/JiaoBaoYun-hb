@@ -2885,7 +2885,8 @@
 					"css/utils/preview.css",
 					"js/mui.zoom.js",
 					"fonts/fangzheng.ttf",
-					"js/mui.previewimage.js"
+					"js/mui.previewimage.js",
+					"image/qiuzhi/qiuzhi_noanswer.png"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-addAnswer.html",
@@ -4283,7 +4284,8 @@
 					"fonts/mui.ttf"
 				],
 				"refer": [
-					"html/mine/apply-bycode.html"
+					"html/mine/apply-bycode.html",
+					"html/mine/apply-bycode1.html"
 				],
 				"priority": 0
 			}

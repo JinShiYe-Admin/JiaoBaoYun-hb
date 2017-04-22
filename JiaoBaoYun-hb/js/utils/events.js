@@ -739,6 +739,7 @@ var events = (function(mod) {
 		return aniClose;
 	}
 	var firstTime = null;
+
 	/**
 	 * 一段时间内只允许运行一次方法,可用于打开新界面
 	 * @param {Function} callback 要运行的方法 
@@ -752,7 +753,8 @@ var events = (function(mod) {
 		}
 		setTimeout(function() {
 			firstTime = null;
-		}, 1000)
+		}, 5000)
+		console.log("第一次是否存在：" + firstTime + "第二次是否存在：" + secondTime);
 		if(!secondTime) {
 			callback();
 		}

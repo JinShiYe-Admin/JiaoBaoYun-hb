@@ -1746,7 +1746,8 @@
 			"css/mui.min.css",
 			"fonts/iconfont.ttf",
 			"js/utils/events.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"image/qiuzhi/qiuzhi_noanswer.png"
 		],
 		"refer": [
 			"html/register/login.html"
@@ -2302,7 +2303,8 @@
 	},
 	"html/mine/ReadQRCode.html": {
 		"refer": [
-			"html/mine/apply-bycode.html"
+			"html/mine/apply-bycode.html",
+			"html/mine/apply-bycode1.html"
 		],
 		"resources": [
 			"js/storageKeyName.js",

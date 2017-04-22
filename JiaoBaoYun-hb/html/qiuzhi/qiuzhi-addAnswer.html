@@ -369,13 +369,14 @@
 			 * 修改回答
 			 */
 			var changeAnswer = function(answerContent) {
-
+				var anonymIsChecked=document.getElementById('checkbox').checked;
 				var comData = {
 					answerId: answerInfo.AnswerId, //回答ID
 					answerContent: answerContent, //回答内容,4000
 					encAddr: getTypeAddress(CloudFileUtil.files).encAddr, //附件地址,300,多个的情况例如：1.jpg|2.jpg
-					thumbnail: getTypeAddress(CloudFileUtil.files).encImg,
-					cutImg: getTypeAddress(CloudFileUtil.files).clipAddress
+					thumbnail: getTypeAddress(CloudFileUtil.files).encImg,//缩略图
+					cutImg: getTypeAddress(CloudFileUtil.files).clipAddress,//裁剪地址
+					isAnonym:anonymIsChecked?1:0//是否匿名
 				};
 				if(!comData.cutImg) {
 					comData.cutImg="";

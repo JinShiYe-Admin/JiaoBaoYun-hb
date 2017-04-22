@@ -124,7 +124,7 @@ mui.plusReady(function() {
 		if(data.value == 1) {
 			loginRoleType = data.flag;
 			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-			appUpdate.updateApp();
+			setTimeout(appUpdate.updateApp,5000);
 		} else if(data.value == -1) { //登录失败
 			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
 				loginRoleType = 1;
@@ -262,6 +262,9 @@ function getHomeworkAlert(NoReadCnt) {
 //获取与我相关
 function getAboutMe() {
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+	if(personalUTID==0){
+		return;
+	}
 	//56.（用户空间）获取与我相关
 	//所需参数
 	var comData = {
