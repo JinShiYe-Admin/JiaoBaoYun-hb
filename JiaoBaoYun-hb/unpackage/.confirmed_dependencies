@@ -1502,7 +1502,8 @@
 			"html/qiuzhi/modifyExpertNote.html",
 			"html/qiuzhi/qiuzhi-expertAllComment.html",
 			"html/qiuzhi/expert-ask.html",
-			"html/register/login.html"
+			"html/register/login.html",
+			"html/qiuzhi/qiuzhi-inviteAnswer.html"
 		]
 	},
 	"html/sciedu/sciedu_show_main.html": {
@@ -2386,6 +2387,12 @@
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-question.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi-inviteAnswer.html": {
+		"resources": [
+			"js/qiuzhi/qiuzhi-inviteAnswer.js",
+			"css/qiuzhi/qiuzhi-inviteAnswer.css"
 		]
 	}
 }
