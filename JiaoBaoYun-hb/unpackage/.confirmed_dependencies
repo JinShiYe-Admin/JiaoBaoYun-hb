@@ -1745,7 +1745,8 @@
 			"css/mui.min.css",
 			"fonts/iconfont.ttf",
 			"js/utils/events.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"image/qiuzhi/qiuzhi_noanswer.png"
 		],
 		"refer": [
 			"html/register/login.html"
