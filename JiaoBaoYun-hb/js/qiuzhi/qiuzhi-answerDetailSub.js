@@ -268,7 +268,7 @@ var getComment = function(commentInfo, deledCB) {
 var rechargeComment = function(comData, commentInfo) {
 	var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
 	comData.UserName = personalInfo.unick; //昵称
-	comData.UserImg = personalInfo.uimg; //头像
+	comData.UserImg = updateHeadImg(personalInfo.uimg,2); //头像
 	comData.TabId = commentInfo.commentId //评论id
 	comData.Replys = []; //回复列表
 	if(upperInfo) { //有上级评论
