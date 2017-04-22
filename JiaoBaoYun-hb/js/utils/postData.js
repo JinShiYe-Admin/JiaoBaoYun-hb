@@ -88,6 +88,15 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 									model.unick = '新用户';
 								}
 							}
+						}else if(urlArr[urlArr.length - 1] == 'PostGusers') {
+							//找到当前的数组
+							var tempArray = data.RspData;
+							for(var item in tempArray) {
+								var model = tempArray[item];
+								if(model.ugnick == '' || model.ugnick == undefined) {
+									model.ugnick = '新用户';
+								}
+							}
 						}
 						callback(data);
 					}
