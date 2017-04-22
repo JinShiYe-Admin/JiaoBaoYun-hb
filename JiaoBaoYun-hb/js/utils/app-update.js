@@ -8,7 +8,7 @@ var appUpdate = (function(mod) {
 		//47.获取APP版本号
 		console.log('plus.os.name:' + plus.os.name);
 		var tempVVL = 'android';
-		if(plus.os.ios){
+		if(plus.os.name == 'iOS'){
 			tempVVL="ios";
 		}
 		//所需参数
@@ -21,7 +21,7 @@ var appUpdate = (function(mod) {
 		var wd_0 = events.showWaiting();
 		postDataPro_PostVerInfo(comData9, wd_0, function(data) {
 			wd_0.close();
-			console.log('获取APP版本号:' + JSON.stringify(data));
+			console.log('获取APP版本号0:' + JSON.stringify(data));
 			if(data.RspCode == 0) {
 				mod.getAppVersion(JSON.parse(data.RspData));
 				console.log('获取APP版本号:' + JSON.stringify(data.RspData));
