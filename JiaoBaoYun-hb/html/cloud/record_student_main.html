@@ -237,7 +237,7 @@
 		var deleteRecord = false; //是否切换到了删除状态
 		var studentFile = {}; //存储获取的记录
 		var qnDelFileArray = []; //记录删除记录时七牛的文件路径
-
+		var page; //记录页数
 		var offsetWidth = document.getElementById('ul_table').offsetWidth;
 		var imageWidth = parseInt((offsetWidth * 0.77 - 30) * 0.32);
 		var imageHeight = parseInt(imageWidth * 3 / 4);
@@ -285,33 +285,29 @@
 			pullRefresh = mui('.mui-scroll-wrapper .mui-scroll').pullToRefresh({
 				down: {
 					callback: function() {
-						var self = this;
 						if(!deleteRecord) {
-							var element = document.getElementById('pullrefresh');
-							var page = JSON.parse(element.getAttribute('data-page'));
 							console.log('down ' + JSON.stringify(page));
 							requestData(1);
 							setTimeout(function() {
-								self.endPullDownToRefresh(); //结束下拉刷新
+								pullRefresh.endPullDownToRefresh(); //结束下拉刷新
 							}, 1000);
 						} else {
-							self.endPullDownToRefresh(); //结束下拉刷新
+							pullRefresh.endPullDownToRefresh(); //结束下拉刷新
 						}
 					}
 				},
 				up: {
 					contentinit: '', //默认没有更多显示空白
 					callback: function() {
-						var self = this;
-						var element = document.getElementById('pullrefresh');
-						var page = JSON.parse(element.getAttribute('data-page'));
 						console.log('up ' + JSON.stringify(page));
 						if(page) {
 							requestData(page.pageIndex + 1);
 						} else {
 							mui.toast('数据异常，请下拉刷新后重新尝试');
-							pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
 						}
+						setTimeout(function() {
+							endPullUp();
+						}, 1000);
 					}
 				}
 			});
@@ -462,43 +458,31 @@
 			//69.（云档案）按家长获取学生档案
 			postDataPro_getStudentFile(comData, wd, function(data) {
 				console.log('69 按家长获取学生档案 getStudentFile ' + JSON.stringify(data));
-				//记录页数
-				var page = {
-					pageIndex: pageIndex, //当前页数
-					totalPage: 0 //总页数
-				};
-
-				document.getElementById('pullrefresh').setAttribute('data-page', JSON.stringify(page))
-				if(page.pageIndex == 1) { //下拉刷新或者获取的第一页的内容
-					//清空对应的界面
-					document.getElementById('ul_table').innerHTML = '';
-					year = ''; //清空年份
-					markDate = ''; //清空年份
-					studentFile = {} //清空记录
-				} else { //上拉加载更多
-					pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
-				}
-
 				if(data.RspCode == 0) {
-					page.totalPage = data.RspData.TotalPage;
-					for(var i = 0; i < data.RspData.Data.length; i++) {
-						createNotes(data.RspData.Data[i]);
+					//记录页数
+					page = {
+						pageIndex: pageIndex, //当前页数
+						totalPage: data.RspData.TotalPage //总页数
+					};
+					console.log('page ' + JSON.stringify(page));
+					if(pageIndex == 1) { //下拉刷新或者获取的第一页的内容
+						//清空对应的界面
+						document.getElementById('ul_table').innerHTML = '';
+						year = ''; //清空年份
+						markDate = ''; //清空年份
+						studentFile = {} //清空记录
+						pullRefresh.refresh(true); //更新当前控件
 					}
-					if(data.RspData.TotalPage == 0) {
+					endPullUp();
+					if(data.RspData.Data.length == 0 && pageIndex == 1) {
 						mui.toast('档案为空');
+					} else {
+						for(var i = 0; i < data.RspData.Data.length; i++) {
+							createNotes(data.RspData.Data[i]);
+						}
 					}
 				} else {
 					mui.toast(data.RspTxt);
-				}
-
-				if(page.pageIndex >= page.totalPage) {
-					//没有下一页
-					pullRefresh.endPullUpToRefresh(true);
-				} else {
-					if(page.pageIndex == 1) {
-						//获取第一页的数据更新当前控件
-						pullRefresh.refresh(true);
-					}
 				}
 				wd.close();
 			});
@@ -679,7 +663,6 @@
 			}
 			//调整scroll
 			//启用上拉下拉控件
-			var page = JSON.parse(document.getElementById('pullrefresh').getAttribute('data-page'));
 			if(page.pageIndex < page.totalPage) {
 				pullRefresh.refresh(true);
 			}
@@ -803,6 +786,18 @@
 			quitDel();
 			//获取数据
 			requestData(1, wd);
+		}
+
+		/**
+		 * 结束上拉加载更多
+		 */
+		function endPullUp() {
+			if(page && page.pageIndex >= page.totalPage) {
+				console.log('没有下一页');
+				pullRefresh.endPullUpToRefresh(true);
+			} else {
+				pullRefresh.endPullUpToRefresh();
+			}
 		}
 	</script>
 

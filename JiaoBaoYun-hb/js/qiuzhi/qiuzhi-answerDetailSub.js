@@ -83,10 +83,13 @@ mui.plusReady(function() {
 		answerInfo.AnswerEncAddr = changedData.AnswerEncAddr;
 		answerInfo.AnswerContent = changedData.answerContent;
 		answerInfo.AnswerCutImg = changedData.AnswerCutImg;
+		answerInfo.IsAnonym=changedData.isAnonym;
 		answerData.AnswerThumbnail = changedData.AnswerThumbnail;
 		answerData.AnswerEncAddr = changedData.AnswerEncAddr;
 		answerData.AnswerContent = changedData.answerContent;
 		answerData.AnswerCutImg = changedData.AnswerCutImg;
+		answerData.IsAnonym=changedData.isAnonym;
+		setAnswerManInfo(answerData);
 	})
 	window.addEventListener("showActionSheet", function() {
 		var btnArray;

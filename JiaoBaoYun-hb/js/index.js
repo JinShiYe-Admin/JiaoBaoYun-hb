@@ -38,8 +38,6 @@ mui.plusReady(function() {
 		}
 	}
 
-	//android更新app
-	appUpdate.updateApp();
 	//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
 	var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 	console.log('person===' + JSON.stringify(personal));
@@ -126,6 +124,7 @@ mui.plusReady(function() {
 		if(data.value == 1) {
 			loginRoleType = data.flag;
 			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+			appUpdate.updateApp();
 		} else if(data.value == -1) { //登录失败
 			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
 				loginRoleType = 1;
@@ -135,6 +134,7 @@ mui.plusReady(function() {
 			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
 			mui.toast("登录失败，请检查网络！");
 		}
+		//android更新app
 	});
 	//加载监听
 	setListener();

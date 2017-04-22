@@ -7,13 +7,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="author" content="莫尚霖,email:444811716@qq.com" />
+		<meta name="description" content="发布点到记事" />
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/utils/pullToRefresh.css" />
 		<link rel="stylesheet" href="../../css/utils/preview.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<link rel="stylesheet" href="../../css/utils/MultiMedia.css" />
-		<!--<link rel="stylesheet" href="../../css/mui.picker.min.css" />-->
 		<style>
 			.mui-table-view {
 				background: transparent;
@@ -181,7 +182,8 @@
 			var QNUptoken; //token数据
 			var uploadNum = 0; //记录上传的次数
 			var hideOption; //隐藏键盘的数据
-
+			var page; //记录页数
+			var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 			var multiMedia; //多媒体选取控件
 			var previewImage; //查看图片的控件
 			var pullRefresh; //下拉，上拉控件
@@ -194,9 +196,12 @@
 			});
 
 			mui.plusReady(function() {
+				var wd = events.showWaiting();
 				initData(); //初始化数据
 				init(); //初始化界面
 				initListener(); //初始化监听
+
+				getNotes(1, wd); //获取数据
 			});
 
 			/**
@@ -213,17 +218,15 @@
 			 * 初始化界面
 			 */
 			function init() {
-
 				events.blurBack();
 
 				//图片查看控件
 				previewImage = mui.previewImage();
 
 				//设置多媒体控件
-				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 				multiMedia = MultiMedia.multiMedia({
 					MultiMediaId: 'MultiMedia', //存放多媒体对象控件的id
-					Key: personalUTID, //utid
+					Key: personal.utid, //utid
 					Picture: true, //是否显示图片图标
 					Audio: true, //是否显示音频图标
 					Video: true, //是否显示视频图标
@@ -251,36 +254,29 @@
 				pullRefresh = mui('.mui-scroll-wrapper .mui-scroll').pullToRefresh({
 					down: {
 						callback: function() {
-							var self = this;
-							var element = document.getElementById('top');
-							var page = JSON.parse(element.getAttribute('data-page'));
 							console.log('down ' + JSON.stringify(page));
 							getNotes(1);
 							setTimeout(function() {
-								//获取数据
-								self.endPullDownToRefresh(); //结束下拉刷新
+								pullRefresh.endPullDownToRefresh(); //结束下拉刷新
 							}, 1000);
 						}
 					},
 					up: {
 						contentinit: '', //默认没有更多显示空白
 						callback: function() {
-							var self = this;
-							var element = document.getElementById('top');
-							var page = JSON.parse(element.getAttribute('data-page'));
 							console.log('up ' + JSON.stringify(page));
 							if(page) {
 								getNotes(page.pageIndex + 1);
 							} else {
 								mui.toast('数据异常，请下拉刷新后重新尝试');
 							}
+							setTimeout(function() {
+								endPullUp();
+							}, 1000);
 						}
 					}
 				});
-
 				hideOption = events.initHideKeyBoard(); //获取配置信息
-
-				getNotes(1); //获取数据
 			}
 
 			/**
@@ -453,11 +449,7 @@
 			 * }
 			 */
 			function addNotes(type, parentIds, userIds, data, wd, callback) {
-				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-				var personalUNICK = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
-				var teacherId = personalUTID; //发布教师ID
-				var publisherName = '【' + personalUNICK + '老师】【' + mainData.gname + '】' //发布者姓名
-				//var publisherName = personalUNICK; //发布者姓名
+				var publisherName = '【' + personal.utid + '老师】【' + mainData.gname + '】' //发布者姓名
 				var noteType = type; //点到记事类型1点到2记事
 				var checkType = ''; //点到类型
 				var msgContent = ''; //内容
@@ -480,7 +472,7 @@
 					encType: encType, //附件类型,1图片2音视频3仅文字
 					encAddr: encAddr, //附件地址
 					encImg: encImg, //附件缩略图地址
-					teacherId: teacherId, //发布教师ID
+					teacherId: personal.utid, //发布教师ID
 					noteType: noteType, //点到记事类型1点到2记事
 					checkType: checkType, //点到类型,1 正常2 旷课3 迟到4 早退5请假6 其他
 					studentName: mainData.stuname, //学生姓名
@@ -580,7 +572,7 @@
 						}
 
 						html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px; margin-bottom: ' + marginBottom + 'px;">\
-									<img src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width: 100%" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'))" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<'+height+'){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';}this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + height + ')/2)+\'px\';}">\
+									<img src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width: 100%" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'))" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<' + height + '){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';}this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + height + ')/2)+\'px\';}">\
 								</div>';
 					}
 					mediaStr = html_0 + html_1 + '</div>';
@@ -595,64 +587,45 @@
 			 * 获取用户针对某学生的点到记事列表
 			 * @param {Object} pageIndex 当前页数
 			 */
-			function getNotes(pageIndex) {
-				// 等待的对话框
-				var wd = events.showWaiting();
-				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-				var userId = personalUTID; //发布教师ID
-				//4.（点到记事）获取用户针对某学生的点到记事列表
-				//所需参数
+			function getNotes(pageIndex, wd) {
+				var wd = wd || events.showWaiting();
 				var comData = {
-					userId: userId, //用户ID----utid
+					userId: personal.utid, //用户ID----utid
 					studentId: mainData.stuid, //学生ID----stuid
 					classId: mainData.gid, //班级ID
 					pageIndex: pageIndex, //当前页数
 					pageSize: 10, //每页记录数
-					publisherId: userId //发布者ID,0代表全部
+					publisherId: personal.utid //发布者ID,0代表全部
 				};
-				//console.log('发送获取记事列表请求的数据:' + JSON.stringify(comData));
+				//4.（点到记事）获取用户针对某学生的点到记事列表
 				postDataPro_getNotesByUserForStudent(comData, wd, function(data) {
-					console.log('4.取记事列表:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					//记录页数
-					var page = {
-						pageIndex: pageIndex, //当前页数
-						totalPage: 0 //总页数
-					};
+					console.log('4 取记事列表 getNotesByUserForStudent' + JSON.stringify(data));
 					if(data.RspCode == 0) {
-						page.totalPage = data.RspData.TotalPage;
-					}
-					document.getElementById('top').setAttribute('data-page', JSON.stringify(page))
-					if(pageIndex == 1) { //获取的第一页的内容
-						//清空对应的界面
-						document.getElementById('top').innerHTML = '';
-					} else { //上拉加载更多
-						pullRefresh.endPullUpToRefresh(); //结束上拉加载更多
-					}
-
-					if(data.RspCode == 0) {
-						for(var i = 0; i < data.RspData.Data.length; i++) {
-							createNotes(data.RspData.Data[i]);
+						//记录页数
+						page = {
+							pageIndex: pageIndex, //当前页数
+							totalPage: data.RspData.TotalPage //总页数
+						};
+						console.log('page ' + JSON.stringify(page));
+						if(pageIndex == 1) { //下拉刷新或者获取的第一页的内容
+							//清空对应的界面
+							document.getElementById('top').innerHTML = '';
+							pullRefresh.refresh(true); //更新当前控件
 						}
+						endPullUp();
+
 						//console.log(document.getElementById("top").innerHTML);
 						if(data.RspData.Data.length == 0 && pageIndex == 1) {
 							mui.toast('点到记事为空');
+						} else {
+							for(var i = 0; i < data.RspData.Data.length; i++) {
+								createNotes(data.RspData.Data[i]);
+							}
 						}
 					} else {
 						mui.toast('获取点到记事列表 ' + data.RspTxt);
-						console.log('### ERROR ### 获取点到记事列表 ### ' + data.RspTxt);
 					}
-					console.log('page ' + JSON.stringify(page));
-					if(page.pageIndex >= page.totalPage) {
-						//没有下一页
-						console.log('没有下一页');
-						pullRefresh.endPullUpToRefresh(true);
-					} else {
-						if(page.pageIndex == 1) {
-							//获取第一页的数据更新当前控件
-							pullRefresh.refresh(true);
-						}
-					}
-					wd.close();
+					events.closeWaiting(wd);
 				});
 			}
 
@@ -664,20 +637,18 @@
 				for(var i = 0; i < multiMedia.data.PictureArray.length; i++) {
 					pathArray.push(multiMedia.data.PictureArray[i].path);
 				}
-				var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENFILE; //获取token路径
-				var mainSpace = window.storageKeyName.QNPUBSPACE; //公开空间
-				var uploadSpace = window.storageKeyName.RECORD; //记事空间
+
 				var getToken = {
 					type: '2', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件；2上传需要生成缩略图的多个文件
 					appId: 6, //int 必填 项目id
 					fileArray: pathArray, //array 选填  type为2时有效，多个文件的路径
-					mainSpace: mainSpace, //str 必填 文件存放在私有空间或公有空间
-					uploadSpace: uploadSpace, //str 必填  上传的空间
+					mainSpace: window.storageKeyName.QNPUBSPACE, //str 必填 文件存放在私有空间或公有空间
+					uploadSpace: window.storageKeyName.RECORD, //str 必填  上传的空间
 				}
 
 				uploadNum = pathArray.length; //记录上传的次数
 
-				CloudFileUtil.getQNUpToken(getUpTokenUrl, getToken, function(data) {
+				CloudFileUtil.getQNUpToken(window.storageKeyName.QNGETUPTOKENFILE, getToken, function(data) {
 					console.log('获取上传凭证 ' + JSON.stringify(data));
 					if(data.data.Status == 1) { //成功
 						console.log('获取上传凭证成功');
@@ -841,6 +812,18 @@
 						});
 						break;
 					}
+				}
+			}
+
+			/**
+			 * 结束上拉加载更多
+			 */
+			function endPullUp() {
+				if(page && page.pageIndex >= page.totalPage) {
+					console.log('没有下一页');
+					pullRefresh.endPullUpToRefresh(true);
+				} else {
+					pullRefresh.endPullUpToRefresh();
 				}
 			}
 		</script>

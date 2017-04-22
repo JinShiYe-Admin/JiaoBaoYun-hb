@@ -93,17 +93,17 @@
 				})
 				//发布动态后刷新
 				window.addEventListener('infoChanged', function() {
-					var cityID = sliderId.replace('top_', '');
-					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-					pageIndex = 1;
-					pullFlag = 0;
-					totalPage = 0;
-					if(cityID == 1) {
-						getFocusByUser()
-					} else {
-						requestData(cityID, 1);
-						window.scrollTo(0, 0);
-					}
+//					var cityID = sliderId.replace('top_', '');
+//					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+//					pageIndex = 1;
+//					pullFlag = 0;
+//					totalPage = 0;
+//					if(cityID == 1) {
+//						getFocusByUser()
+//					} else {
+//						requestData(cityID, 1);
+//						window.scrollTo(0, 1);
+//					}
 
 				});
 

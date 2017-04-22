@@ -173,7 +173,8 @@
 			"html/mine/qun_manage_1.html",
 			"html/mine/ReadQRCode.html",
 			"html/quan/pub-dynamic.html",
-			"html/quan/aboutme.html"
+			"html/quan/aboutme.html",
+			"html/mine/qun_manage_info.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -1744,7 +1745,8 @@
 			"css/mui.min.css",
 			"fonts/iconfont.ttf",
 			"js/utils/events.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"image/qiuzhi/qiuzhi_noanswer.png"
 		],
 		"refer": [
 			"html/register/login.html"
