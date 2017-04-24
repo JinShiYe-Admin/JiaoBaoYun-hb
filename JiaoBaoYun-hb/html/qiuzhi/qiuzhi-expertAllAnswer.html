@@ -171,15 +171,20 @@
 				pageIndex = 1;
 				flagRef = 0;
 				getAnswersByUser(ExpertsInfo.UserId);
-				window.addEventListener("answerShield",function(){
+				window.addEventListener("answerShield", function() {
 					pageIndex = 1;
 					flagRef = 0;
 					getAnswersByUser(ExpertsInfo.UserId);
 				})
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					var index = this.id.replace('li', '');
-					events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', JSON.parse(this.dataset.info));
 					console.log('传递的answerInfo:' + this.dataset.info);
+					var tempModel = answerArray[index];
+					//判断回答或则问题是否还存在,flag=1为提问，=2为回答，id为对应id
+					if(events.askDetailOrAnswerDetail(2, tempModel.AnswerId)) {
+						return;
+					}
+					events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', JSON.parse(this.dataset.info));
 					plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
 				});
 
@@ -299,7 +304,7 @@
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell';
 				console.log(JSON.stringify(record))
-				li.dataset.info= (JSON.stringify(record));
+				li.dataset.info = (JSON.stringify(record));
 				li.id = 'li' + index;
 				//拼接显示
 				li.innerHTML = '<div class="mui-table">' +

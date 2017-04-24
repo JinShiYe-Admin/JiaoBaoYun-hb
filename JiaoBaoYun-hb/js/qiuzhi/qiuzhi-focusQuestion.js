@@ -25,6 +25,10 @@ mui.plusReady(function() {
 		var parent = this.parentNode.parentNode.parentNode;
 		var info = JSON.parse(parent.getAttribute('data-info'));
 		console.log('dianji 关注的问题标题' + JSON.stringify(info));
+		//判断回答或则问题是否还存在,flag=1为提问，=2为回答，id为对应id
+		if(events.askDetailOrAnswerDetail(1, info.AskId)) {
+			return;
+		}
 		//跳转界面
 		events.openNewWindowWithData('qiuzhi-question.html', {
 			askID: info.AskId, //问题id

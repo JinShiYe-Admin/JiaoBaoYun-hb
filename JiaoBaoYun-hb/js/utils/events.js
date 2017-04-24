@@ -1081,6 +1081,53 @@ var events = (function(mod) {
 			seperator2 + date.getSeconds();
 		return currentdate;
 	}
+
+	
+	//判断回答或则问题是否还存在,flag=1为提问，=2为回答，id为对应id
+	mod.askDetailOrAnswerDetail = function(flag, id) {
+		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+		if(flag == 1) { //提问
+			//需要加密的数据
+			var comData = {
+				userId: personalUTID, //用户ID
+				askId: id, //问题ID
+				orderType: 1, //回答排序方式,1 按时间排序,2 按质量排序：点赞数+评论数
+				pageIndex: '1', //当前页数
+				pageSize: '1' //每页记录数,传入0，获取总记录数
+			};
+			// 等待的对话框
+			var wd = events.showWaiting();
+			//5.获取某个问题的详情
+			postDataQZPro_getAskById(comData, wd, function(data) {
+				wd.close();
+				console.log('5.获取某个问题的详情:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 1016) {
+					mui.toast('该提问已不存在');
+					return true;
+				}
+			});
+		} else if(flag == 2){ //回答
+			var comData = {
+				userId: personalUTID, //用户ID
+				answerId: id, //回答ID
+				orderType: '1', //评论排序方式,1 时间正序排序,2 时间倒序排序
+				pageIndex: '1', //当前页数
+				pageSize: '1' //每页记录数,传入0，获取总记录数
+			};
+			// 等待的对话框
+			var wd = events.showWaiting();
+			//8.获取某个回答的详情
+			postDataQZPro_getAnswerById(comData, wd, function(data) {
+				wd.close();
+				console.log('8.获取某个回答的详情:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 1017) {
+					mui.toast('该回答已不存在');
+					return true;
+				}
+			});
+		}
+		return false;
+	}
 	return mod;
 
 })(events || {});

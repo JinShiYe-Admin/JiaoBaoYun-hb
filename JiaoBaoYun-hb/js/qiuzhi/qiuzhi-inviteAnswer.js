@@ -19,6 +19,10 @@ mui.plusReady(function() {
 		var index = this.id.replace('li', '');
 		var modelTemp = answerArray[index];
 		console.log('dianji 标题' + JSON.stringify(modelTemp));
+		//判断回答或则问题是否还存在,flag=1为提问，=2为回答，id为对应id
+		if(events.askDetailOrAnswerDetail(1, modelTemp.AskId)) {
+			return;
+		}
 		//跳转界面
 		events.openNewWindowWithData('qiuzhi-question.html', {
 			askID: modelTemp.AskId, //问题id
