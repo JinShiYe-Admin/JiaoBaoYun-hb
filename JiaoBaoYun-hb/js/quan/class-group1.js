@@ -341,7 +341,10 @@ var setBeunick = function(item) {
 	if(item.bunick) {
 		return item.bunick;
 	}
-	return item.ugname;
+	if(item.ugname){
+		return item.ugname;
+	}
+	return item.ugnick;
 }
 var setMasterNameClass = function(info) {
 	if(info.mstype == 1) {

@@ -328,7 +328,8 @@
 			"html/mine/qun_manage_1.html",
 			"html/mine/account-info.html",
 			"html/mine/approval-apply.html",
-			"html/check/check-news.html"
+			"html/check/check-news.html",
+			"html/mine/qun_manage_a.html"
 		]
 	},
 	"html/homework/workdetailTea-temSub.html": {
@@ -2440,6 +2441,36 @@
 			"js/utils/CloudFileUtil.js",
 			"js/qiniu/qiniu.js",
 			"js/mui.previewimage.js"
+		]
+	},
+	"html/mine/qun_manage_a.html": {
+		"resources": [
+			"css/iconfont/iconfont.css",
+			"js/publicProtocol.js",
+			"js/mui.min.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"css/mui.min.css",
+			"js/libs/RSA/RSA.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"image/utils/default_personalimage.png",
+			"js/libs/jquery.js",
+			"fonts/fangzheng.ttf",
+			"fonts/mui.ttf",
+			"js/libs/crypto-js/require.js",
+			"fonts/iconfont.ttf",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"css/mine/manager_member.css",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/quan/group-pInfo.html",
+			"html/mine/qun_manage_invite_a.html"
 		]
 	}
 }

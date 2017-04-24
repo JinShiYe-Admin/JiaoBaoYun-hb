@@ -93,11 +93,25 @@ var manageAccountInfo = function(data) {
 //		document.getElementById('info-name').innerText = pInfo.uname;
 		document.getElementById('info-nick').innerText =pInfo.unick;
 		//如果存在备注 就放置备注 否则 放置群昵称
-		document.getElementById('person-remark').innerText=pInfo.bunick?pInfo.bunick:pInfo.ugname;
+		console.log("获取的群昵称："+getNameInGroup(pInfo));
+		document.getElementById('person-remark').innerText=getNameInGroup(pInfo);
 		document.getElementById('data-info').innerText = pInfo.uid;
 		document.getElementById('person-space').innerText = isSelf?"我的空间": events.shortForString(pInfo.unick,10) + '的空间' ;
 		document.getElementById('person-area').innerText=pInfo.uarea.split("|")[1];
 	}
+/**
+ *	获取群昵称
+ * @param {Object} pInfo
+ */
+var getNameInGroup=function(pInfo){
+	if(pInfo.bunick){
+		return pInfo.bunick;
+	}
+	if(pInfo.ugname){
+		return pInfo.ugname;
+	}
+	return pInfo.ugnick;
+}
 	/**
 	 *40.通过用户ID获取用户各项资料
 	 * @param {Object} callback
