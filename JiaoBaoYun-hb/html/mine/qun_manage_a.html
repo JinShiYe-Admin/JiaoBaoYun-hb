@@ -5,10 +5,21 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="author" content="莫尚霖,email:444811716@qq.com" />
+		<meta name="description" content="群管理和人员资料" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<style>
+			body,
+			.mui-content {
+				background-color: white;
+			}
+
+			.mui-segmented-control.mui-segmented-control-inverted {
+				background-color: #efeff4;
+			}
+
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				border-bottom: none;
 			}
@@ -73,6 +84,20 @@
 			.mui-radio input[type=radio]:checked:before {
 				color: #1A9BFF;
 			}
+
+			#noqun {
+				display: none;
+				padding-top: 20px;
+				text-align: center;
+				font-size: 13px;
+				color: #808080;
+			}
+
+			.icon-tianjia {
+				color: #1DB8F1;
+				font-size: 40px;
+				margin-top: 25px;
+			}
 		</style>
 	</head>
 
@@ -84,7 +109,10 @@
 			<a id="addData" class="mui-icon iconfont icon-adddata1 mui-pull-right" style="display: none;margin-right: 5px;"></a>
 		</header>
 		<div id="content" class="mui-content">
-			<span id="noqun" class="mui-icon mui-icon-plus qun-add" style="display: none;position: absolute;top: 80px;">新增群按钮</span>
+			<div id="noqun">
+				<div>现在还没有群请点击以下按钮创建群。</div>
+				<span class="mui-icon iconfont icon-tianjia qun-add"></span>
+			</div>
 			<div id="qun_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="visibility: hidden;">
 				<div id="qunList" class="mui-scroll">
 					<a id="qunAdd" class="mui-icon mui-icon-plus qun-add"></a>
@@ -218,7 +246,7 @@
 						events.openNewWindowWithData('qun_manage_info_change.html', {
 							gid: info.gid, //群ID
 							listener: {
-								webid: 'qun_manage_1.html',
+								webid: 'qun_manage_a.html',
 								winid: 'changeQunInfo'
 							} //webview的id
 						});
@@ -483,55 +511,39 @@
 			 * 获取创建的群
 			 */
 			function getCGQun() {
-				try {
-					var wd = events.showWaiting();
-					//9.获取用户群
-					//获取个人信息
-					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-					//需要参数
-					var getQunData = {
-						vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
-						vvl: personalUTID, //查询的各项，对应人的utid，可以是查询的任何人
-					};
-					postDataPro_PostGList(getQunData, wd, function(data) {
-						try {
-							console.log('9.获取用户创建的群success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-							if(data.RspCode == 0) {
-								document.getElementById("noqun").style.display = 'none';
-								document.getElementById("qun_sw").style.visibility = 'visible';
-								document.getElementById("slider_group").style.visibility = 'visible';
-								document.getElementById("changeInfo").style.display = 'inline';
-								var tempList = data.RspData;
-								for(var i = 0; i < tempList.length; i++) {
-									addQunItem(tempList[i], i, tempList.length);
-								}
-								//console.log(document.getElementById("qun_sw").innerHTML);
-								mui(".mui-scroll-wrapper").scroll({
-									scrollY: true, //是否竖向滚动
-									scrollX: false, //是否横向滚动
-									indicators: true, //是否显示滚动条
-									deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
-									bounce: false, //是否启用回弹
-								});
-							} else if(data.RspCode == 9) { //未获取到数据
-								document.getElementById("noqun").style.visibility = 'hidden';
-								document.getElementById("noqun").style.display = 'inline';
-								document.getElementById("noqun").style.left = (plus.screen.resolutionWidth - document.getElementById("noqun").offsetWidth) / 2 + 'px';
-								document.getElementById("noqun").style.visibility = 'visible';
-								mui.toast('群:查询为空');
-							} else {
-								mui.toast(data.RspTxt);
-							}
-							wd.close();
-						} catch(e) {
-							events.closeWaiting();
-							alert('### ERROR ### 获取用户创建的群的回调 name:' + e.name + " message:" + e.message);
+				var wd = events.showWaiting();
+				var getQunData = {
+					vtp: 'cg', //要获取的项:cg(创建的群),ug(参与群),mg(协管的群),ag(所有的群)
+					vvl: window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid, //查询的各项，对应人的utid，可以是查询的任何人
+				};
+				//9.获取用户群
+				postDataPro_PostGList(getQunData, wd, function(data) {
+					console.log('9 获取用户群 创建的群 PostGList' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						document.getElementById("noqun").style.display = 'none';
+						document.getElementById("qun_sw").style.visibility = 'visible';
+						document.getElementById("slider_group").style.visibility = 'visible';
+						document.getElementById("changeInfo").style.display = 'inline';
+						var tempList = data.RspData;
+						for(var i = 0; i < tempList.length; i++) {
+							addQunItem(tempList[i], i, tempList.length);
 						}
-					});
-				} catch(e) {
-					events.closeWaiting();
-					alert('### ERROR ### 获取用户创建的群 name:' + e.name + " message:" + e.message);
-				}
+						//console.log(document.getElementById("qun_sw").innerHTML);
+						mui(".mui-scroll-wrapper").scroll({
+							scrollY: true, //是否竖向滚动
+							scrollX: false, //是否横向滚动
+							indicators: true, //是否显示滚动条
+							deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+							bounce: false, //是否启用回弹
+						});
+					} else if(data.RspCode == 9) { //未获取到数据
+						document.getElementById("noqun").style.display = 'block';
+						mui.toast('创建的群' + data.RspTxt);
+					} else {
+						mui.toast(data.RspTxt);
+					}
+					wd.close();
+				});
 			}
 
 			/**

@@ -144,9 +144,19 @@
 						</div>
 						<input id="input_call" type="text" class="mui-input-clear" placeholder="备注,最多20字" maxlength="20" style="margin-bottom: 10px;" disabled>
 					</div>
-					<div id="record" style="background: white;margin-top: 10px;padding-top: 10px;padding-bottom: 10px;">
-						<textarea id="textarea_record" rows="4" placeholder="记事,最多500字" maxlength="500" style="margin-bottom: 4px;" disabled></textarea>
+					<div id="record" style="background: white;margin-top: 10px;padding-top: 10px;line-height: 0px;">
+						<textarea id="textarea_record" rows="4" placeholder="记事,最多500字" maxlength="500" disabled></textarea>
 						<div id="MultiMedia">
+							<!--<div id="_MSL_MultiMedia" style="width: 100%;">
+								<div id="MultiMedia_Body" class="multimedia-body">
+									<div id="MultiMedia_Header" class="multimedia-header"><span id="MultiMedia_Picture_Header" class="mui-icon iconfont icon-xiangji2"></span><span id="MultiMedia_Tuku_Header" class="mui-icon iconfont icon-tuku"></span><span id="MultiMedia_Audio_Header" class="mui-icon iconfont icon-yuyin3"></span><span id="MultiMedia_Video_Header" class="mui-icon iconfont icon-shipin2"></span></div>
+									<div id="MultiMedia_Footer" class="multimedia-footer">
+										<div id="MultiMedia_Picture_Footer"></div>
+										<div id="MultiMedia_Audio_Footer"></div>
+										<div id="MultiMedia_Video_Footer"></div>
+									</div>
+								</div>
+							</div>-->
 						</div>
 					</div>
 					<div id="top" style="margin-top: 10px;">
@@ -169,7 +179,6 @@
 		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
 		<script type="text/javascript" src="../../js/utils/compress.js"></script>
-		<!--<script type="text/javascript" src="../../js/mui.picker.min.js" ></script>-->
 		<script type="text/javascript">
 			var main; //获取当前窗体对象
 			var mainData; //接收页面传入的参数值
@@ -234,6 +243,7 @@
 					TotalAudio: 1, //音频的个数
 					TotalVideo: 1, //视频的个数
 				});
+				//console.log(document.getElementById("MultiMedia").innerHTML);
 
 				/**
 				 * 图片数量发送改变的回调
