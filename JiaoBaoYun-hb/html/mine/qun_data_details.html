@@ -783,7 +783,7 @@
 					if(data.RspCode == 0) {
 						mui.toast('修改学生姓名 ' + stuName + ' 成功');
 						console.log('修改学生姓名 ' + stuName + ' 成功');
-						events.fireToPageNone('qun_manage_1.html', 'changeName', {
+						events.fireToPageNone('qun_manage_a.html', 'changeName', {
 							vtp: 'stu', //更新资料类型,stu:学生,tec:老师,gen:家长关系
 							gid: gid, //群id
 							stuid: stuid, //资料ID,更新学生老师必填,关系留0
@@ -875,7 +875,7 @@
 					if(data.RspCode == 0) {
 						mui.toast('修改老师资料成功');
 						console.log('修改老师资料成功');
-						events.fireToPageNone('qun_manage_1.html', 'changeName', {
+						events.fireToPageNone('qun_manage_a.html', 'changeName', {
 							vtp: 'tec', //更新资料类型,stu:学生,tec:老师,gen:家长关系
 							gid: gid, //群id
 							stuid: stuid, //资料ID,更新学生老师必填,关系留0

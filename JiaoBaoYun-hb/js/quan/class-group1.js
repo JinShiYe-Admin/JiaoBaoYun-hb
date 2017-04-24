@@ -1,9 +1,14 @@
-mui.init();
-var groupRoles;
-var choseRole;
-var isMaster;
-var allGroupInfos;
-var groupNote;//群说明
+mui.init({
+	beforeback: function() {
+		document.getElementById("info-container").style.display = "none";
+		return true;
+	}
+});
+var groupRoles;//本人在群的各种身份
+var choseRole;//选择的角色
+var isMaster;//是否为群主
+var allGroupInfos;//群组内所有成员信息
+var groupNote; //群说明
 var groupModel; //群信息model
 mui('.mui-scroll-wrapper').scroll({
 	indicators: true, //是否显示滚动条
@@ -18,6 +23,7 @@ mui.plusReady(function() {
 		if(e.detail.data) {
 			groupId = e.detail.data.classId;
 			groupName = e.detail.data.className;
+			setPopGroupName();
 			document.getElementById('title').innerText = getHeadText(groupName);
 			freshContent();
 		}
@@ -47,6 +53,14 @@ mui.plusReady(function() {
 	})
 	setButtonsListener();
 })
+var setPopGroupName = function() {
+	document.querySelector(".parents-label").innerText = "邀请[家长]入群-" + groupName;
+	document.querySelector(".stu-label").innerText = "邀请[学生]入群-" + groupName;
+	document.querySelector(".tea-label").innerText = "邀请[老师]入群-" + groupName;
+}
+/**
+ * 
+ */
 var getGroupInfo = function() {
 	var wd1 = events.showWaiting();
 	postDataPro_PostGList({
@@ -56,13 +70,9 @@ var getGroupInfo = function() {
 		wd1.close();
 		console.log("获取的群信息：" + JSON.stringify(data));
 		groupModel = data.RspData[0];
-		if(groupModel.gnote == null || groupModel.gnote.length == 0) {
-			groupModel.gnote = '暂无说明';
-		}
-
 		if(data.RspCode == 0) {
 			document.getElementById("group-info").innerText = data.RspData[0].gnote ? data.RspData[0].gnote : "暂无说明";
-			groupNote=data.RspData[0].gnote;
+			groupNote = data.RspData[0].gnote;
 		}
 	})
 }
@@ -282,6 +292,7 @@ var getRemarkData = function(list, callback) {
  * @param {Object} array 元素数组，包括图标和标题
  */
 var createGride = function(gride, array) {
+	var fragment=document.createDocumentFragment();
 	var showAll = document.getElementById("show-all");
 	if(isMaster) {
 		if(array.length > 15) {
@@ -304,35 +315,27 @@ var createGride = function(gride, array) {
 			showAll.style.display = "none";
 		}
 	}
-	//数组遍历
-	array.forEach(
-		/**
-		 * 创建子元素
-		 * @param {Object} map 数组元素
-		 * @param {Object} index 数组序号
-		 * @param {Object} array 数组
-		 */
-		function(cell, index, array) {
-			var li = document.createElement('li'); //子元素
-			//			var bgColor = getRandomColor(); //获取背景色
-			if(array.length <= 3) { //数组小于等于3，每行3个图标
-				li.className = "mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4";
-			} else { //数组大于3，每行四个图标
-				li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
-			}
-			li.style.padding = "0";
-			cell.gname = groupName;
-			//			if(!cell.bunick) {
-			//				cell.bunick = cell.ugnick;
-			//			}
-			li.info = cell;
-			//子控件的innerHTML
-			li.innerHTML = '<a class="gride-inner" href="#">' +
-				'<img class="circular-square" src="' + updateHeadImg(cell.uimg, 2) + '"/></br>' +
-				'<small class="' + setMasterNameClass(cell) + '">' + getRoleInGroup(cell) + setBeunick(cell) + '</small>' +
-				'</a>';
-			gride.appendChild(li);
-		})
+	for(var i in array) {
+		var cell = array[i];
+		var li = document.createElement('li'); //子元素
+		if(array.length <= 3) { //数组小于等于3，每行3个图标
+			li.className = "mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4";
+		} else { //数组大于3，每行四个图标
+			li.className = "mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3";
+		}
+		li.style.padding = "0";
+		cell.gname = groupName;
+		li.info = cell;
+		//子控件的innerHTML
+		li.innerHTML = '<a class="gride-inner" href="#">' +
+			'<img class="circular-square" src="' + updateHeadImg(cell.uimg, 2) + '"/></br>' +
+			'<small class="' + setMasterNameClass(cell) + '">' + getRoleInGroup(cell) + setBeunick(cell) + '</small>' +
+			'</a>';
+		fragment.appendChild(li);
+	}
+	gride.appendChild(fragment);
+	fragment=null;
+	document.getElementById("info-container").style.display = "block";
 }
 var setBeunick = function(item) {
 	if(item.bunick) {

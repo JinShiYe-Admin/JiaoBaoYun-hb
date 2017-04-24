@@ -15,57 +15,57 @@
 				margin: 0px;
 				padding: 0px;
 			}
-
+			
 			.mui-content {
 				height: 100%;
 			}
-
+			
 			.area {
 				margin: 20px auto 0px auto;
 			}
-
+			
 			.mui-input-group {
 				margin-top: 3px;
 			}
-
+			
 			.mui-input-group:first-child {
 				margin-top: 20px;
 			}
-
+			
 			.mui-input-group label {
 				width: 22%;
 			}
-
+			
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				width: 78%;
 			}
-
+			
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
 				top: 6px;
 			}
-
+			
 			.mui-content-padded {
 				margin-top: 25px;
 			}
-
+			
 			.mui-btn {
 				padding: 10px;
 			}
-
+			
 			.link-area {
 				display: block;
 				margin-top: 25px;
 				text-align: center;
 			}
-
+			
 			.spliter {
 				color: #bbb;
 				padding: 0px 8px;
 			}
-
+			
 			.oauth-area {
 				position: absolute;
 				bottom: 20px;
@@ -75,7 +75,7 @@
 				padding: 0px;
 				margin: 0px;
 			}
-
+			
 			.oauth-area .oauth-btn {
 				display: inline-block;
 				width: 50px;
@@ -88,11 +88,11 @@
 				border: solid 1px #13b7f6;
 				border-radius: 25px;
 			}
-
+			
 			.oauth-area .oauth-btn:active {
 				border: solid 1px #aaa;
 			}
-
+			
 			.oauth-area .oauth-btn.disabled {
 				background-color: #ddd;
 			}
@@ -100,28 +100,28 @@
 			 * athor:xbs
 			 *
 			 */
-
+			
 			.mui-input-group:after {
 				background-color: #fff;
 			}
-
+			
 			.mui-input-group:before {
 				background-color: #fff;
 			}
-
+			
 			.row1:after {
 				background-color: #e4e4e4;
 			}
-
+			
 			input::-webkit-input-placeholder {
 				color: #808080;
 			}
-
+			
 			.regesterAndForget {
 				color: #00A5E0;
 				font-size: 1.2em;
 			}
-
+			
 			.head-portrait {
 				width: 70px;
 				height: 70px;
@@ -167,11 +167,11 @@
 				<button id='login' class="mui-btn mui-btn-block mui-btn-primary" style="background: #13b7f6; border:
 
 none; margin-top: -15px;">登录</button>
-					<!--<div class="link-area">-->
-					<!--<a id='forgetPassword' class="regesterAndForget">忘记密码?</a>-->
-					<!--<span class="spliter">|</span>-->
-					<a id='reg' class="regesterAndForget" style="float: right;">注册账号</a>
-					<!--</div>-->
+				<!--<div class="link-area">-->
+				<!--<a id='forgetPassword' class="regesterAndForget">忘记密码?</a>-->
+				<!--<span class="spliter">|</span>-->
+				<a id='reg' class="regesterAndForget" style="float: right;">注册账号</a>
+				<!--</div>-->
 
 			</div>
 
@@ -215,9 +215,8 @@ none; margin-top: -15px;">登录</button>
 				$.plusReady(function() {
 					//---设置沉浸式---start---
 
-			
 					//---设置沉浸式---end---
-//					events.preload('register_phoneNumber.html');
+					//					events.preload('register_phoneNumber.html');
 					plus.screen.lockOrientation("portrait-primary");
 					var settings = app.getSettings();
 					var state = app.getState();
@@ -257,75 +256,75 @@ none; margin-top: -15px;">登录</button>
 					accountBox.value = '';
 					passwordBox.value = '';
 					//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
-//					var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-//					if(personal) {
-//						accountBox.value = personal.uid;
-//						passwordBox.value = '123456';
-//						//需要参数
-//						var comData = {
-//							uuid: plus.device.uuid,
-//							utid: personal.utid,
-//							appid: plus.runtime.appid
-//						};
-//						// 等待的对话框
-//						var wd = events.showWaiting();
-//						//token续订
-//						postDataPro_PostTokenRenew(comData, wd, function(data0) {
-//							wd.close();
-//							console.log('token续订success:RspCode:' + data0.RspCode + ',RspData:' + JSON.stringify(data0.RspData) + ',RspTxt:' + data0.RspTxt);
-//							if(data0.RspCode == 0) {
-//								//								window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data0.RspData;
-//								//获取个人信息
-//								var comData1 = {
-//									vvl: personal.utid, //用户id，查询的值,p传个人ID,g传ID串
-//									vtp: 'p' //查询类型,p(个人)g(id串)
-//								};
-//								//21.通过用户ID获取用户资料
-//								postDataPro_PostUinf(comData1, wd, function(data) {
-//									wd.close();
-//									console.log('获取个人信息000:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-//									if(data.RspCode == 0) {
-//										var tepI0000 = data.RspData[0];
-//										//存储个人信息
-//										var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-//										tempInfo.token = data0.RspData;
-//										tempInfo.uname = tepI0000.uname;
-//										tempInfo.unick = tepI0000.unick;
-//										tempInfo.usex = tepI0000.usex;
-//										tempInfo.utxt = tepI0000.utxt;
-//										//解析省市代码
-//										console.log('9999=' + tepI0000.uarea);
-//										if(tepI0000.uarea != null) {
-//											var tempArray = tepI0000.uarea.split('|');
-//											if(tempArray.length > 0) {
-//												var temp0 = tempArray[0].split(' ');
-//												var temp1 = tempArray[1].split(' ');
-//												var model_area = {
-//													procode: temp0[0], //省份code，自己添加的参数
-//													proname: temp1[0], //省份名称，自己添加的参数
-//													acode: temp0[1], //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
-//													aname: temp1[1], //节点名称--城市名称
-//													atype: '' //节点类型,0省1城市2区县
-//												}
-//												tempInfo.uarea = model_area;
-//											}
-//										}
-//										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
-//										//
-//										events.infoChanged();
-//										console.log('登录保存的个人信息：' + JSON.stringify(tempInfo))
-//										//跳到主界面
-////										events.openNewWindow('../index/index.html');
-//										events.openNewWindow('../index/index.html', '');
-//									} else {
-//										mui.toast(data.RspTxt);
-//									}
-//								});
-//							} else {
-//								mui.toast(data0.RspTxt);
-//							}
-//						});
-//					}
+					//					var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+					//					if(personal) {
+					//						accountBox.value = personal.uid;
+					//						passwordBox.value = '123456';
+					//						//需要参数
+					//						var comData = {
+					//							uuid: plus.device.uuid,
+					//							utid: personal.utid,
+					//							appid: plus.runtime.appid
+					//						};
+					//						// 等待的对话框
+					//						var wd = events.showWaiting();
+					//						//token续订
+					//						postDataPro_PostTokenRenew(comData, wd, function(data0) {
+					//							wd.close();
+					//							console.log('token续订success:RspCode:' + data0.RspCode + ',RspData:' + JSON.stringify(data0.RspData) + ',RspTxt:' + data0.RspTxt);
+					//							if(data0.RspCode == 0) {
+					//								//								window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data0.RspData;
+					//								//获取个人信息
+					//								var comData1 = {
+					//									vvl: personal.utid, //用户id，查询的值,p传个人ID,g传ID串
+					//									vtp: 'p' //查询类型,p(个人)g(id串)
+					//								};
+					//								//21.通过用户ID获取用户资料
+					//								postDataPro_PostUinf(comData1, wd, function(data) {
+					//									wd.close();
+					//									console.log('获取个人信息000:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					//									if(data.RspCode == 0) {
+					//										var tepI0000 = data.RspData[0];
+					//										//存储个人信息
+					//										var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+					//										tempInfo.token = data0.RspData;
+					//										tempInfo.uname = tepI0000.uname;
+					//										tempInfo.unick = tepI0000.unick;
+					//										tempInfo.usex = tepI0000.usex;
+					//										tempInfo.utxt = tepI0000.utxt;
+					//										//解析省市代码
+					//										console.log('9999=' + tepI0000.uarea);
+					//										if(tepI0000.uarea != null) {
+					//											var tempArray = tepI0000.uarea.split('|');
+					//											if(tempArray.length > 0) {
+					//												var temp0 = tempArray[0].split(' ');
+					//												var temp1 = tempArray[1].split(' ');
+					//												var model_area = {
+					//													procode: temp0[0], //省份code，自己添加的参数
+					//													proname: temp1[0], //省份名称，自己添加的参数
+					//													acode: temp0[1], //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
+					//													aname: temp1[1], //节点名称--城市名称
+					//													atype: '' //节点类型,0省1城市2区县
+					//												}
+					//												tempInfo.uarea = model_area;
+					//											}
+					//										}
+					//										window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo);
+					//										//
+					//										events.infoChanged();
+					//										console.log('登录保存的个人信息：' + JSON.stringify(tempInfo))
+					//										//跳到主界面
+					////										events.openNewWindow('../index/index.html');
+					//										events.openNewWindow('../index/index.html', '');
+					//									} else {
+					//										mui.toast(data.RspTxt);
+					//									}
+					//								});
+					//							} else {
+					//								mui.toast(data0.RspTxt);
+					//							}
+					//						});
+					//					}
 					//登录按钮
 					loginButton.addEventListener('tap', function(event) {
 						document.activeElement.blur();
@@ -362,9 +361,9 @@ none; margin-top: -15px;">登录</button>
 								case 1: //通过短信验证码登录
 									//flag为1，表示是验证码登录
 									events.openNewWindowWithData('register_phoneNumber.html', '1');
-//									events.fireToPage('register_phoneNumber.html', 'registerFlag', function() {
-//										return 1;
-//									});
+									//									events.fireToPage('register_phoneNumber.html', 'registerFlag', function() {
+									//										return 1;
+									//									});
 									break;
 								case 2:
 									break;
@@ -410,24 +409,24 @@ none; margin-top: -15px;">登录</button>
 					}, false);
 					//
 					var backButtonPress = 0;
-//					$.back = function(event) {
-//						backButtonPress++;
-//						if(backButtonPress > 1) {
-//							plus.runtime.quit();
-//						} else {
-//							plus.nativeUI.toast('再按一次退出应用');
-//						}
-//						setTimeout(function() {
-//							backButtonPress = 0;
-//						}, 1000);
-//						return false;
-//					};
+					//					$.back = function(event) {
+					//						backButtonPress++;
+					//						if(backButtonPress > 1) {
+					//							plus.runtime.quit();
+					//						} else {
+					//							plus.nativeUI.toast('再按一次退出应用');
+					//						}
+					//						setTimeout(function() {
+					//							backButtonPress = 0;
+					//						}, 1000);
+					//						return false;
+					//					};
 				});
 
 				//取消按钮
 				events.addTap('cancelBtn', function() {
 					document.activeElement.blur();
-					console.log('获取登录界面的opener:'+plus.webview.currentWebview().opener().id);
+					console.log('获取登录界面的opener:' + plus.webview.currentWebview().opener().id);
 					mui.back();
 				});
 
@@ -446,7 +445,7 @@ none; margin-top: -15px;">登录</button>
 					var wd = events.showWaiting();
 					//发送网络请求，data为网络返回值
 					postDataEncry(storageKeyName.MAINURL + 'PostShakeHand', enData0, comData0, 0, wd, function(data) {
-//						wd.close();
+						//						wd.close();
 						console.log('PostShakeHand:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
 							//存储到手机本地
@@ -479,6 +478,9 @@ none; margin-top: -15px;">登录</button>
 									data.RspData.ispw = '1';
 									if(!data.RspData.uimg) {
 										data.RspData.uimg = '../../image/utils/default_personalimage.png';
+									}
+									if(data.RspData.unick == '' || data.RspData.unick == undefined) {
+										data.RspData.unick = '新用户';
 									}
 									//解析省市代码
 									if(data.RspData.uarea.length > 0) {
