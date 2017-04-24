@@ -1000,6 +1000,9 @@ var events = (function(mod) {
 				if(!data.RspData.uimg) {
 					data.RspData.uimg = '../../image/utils/default_personalimage.png';
 				}
+				if(data.RspData.unick == '' || data.RspData.unick == undefined) {
+					data.RspData.unick = '新用户';
+				}
 				//解析省市代码
 				if(data.RspData.uarea.length > 0) {
 					var tempArray = data.RspData.uarea.split('|');
