@@ -380,6 +380,7 @@ var pullUpFresh = function() {
 	document.addEventListener("plusscrollbottom", function() {
 		console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
 		if(pageIndex < totalPage) {
+			wd = events.showWaiting(); 
 			pageIndex++;
 			requestChannelList(channelInfo);
 		} else {

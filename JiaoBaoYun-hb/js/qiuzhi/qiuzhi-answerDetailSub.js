@@ -681,6 +681,7 @@ var createCell = function(ul, cellData, i, order) {
 var setQuestion = function(datasource) {
 	document.querySelector('.question-title').innerHTML = datasource.AskTitle;
 	var questionContainer = document.getElementById('question-content');
+	document.getElementById('question-content').innerHTML="";
 	console.log("放置数据？？？？？？？？？")
 	var p = document.createElement('p');
 	p.innerHTML = datasource.AnswerContent;

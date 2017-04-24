@@ -1,7 +1,7 @@
 /**
  * fieldset取消边框
  */
-html{
+html,.mui-content{
 	background-color: white;
 }
 fieldset {

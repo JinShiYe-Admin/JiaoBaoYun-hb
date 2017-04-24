@@ -282,8 +282,8 @@ div>.icon-xiangce:before,
 .center-popover {
 	position: fixed;
 	top: 120px;
-	left: 5%;
-	width: 90%;
+	left: 10%;
+	width: 80%;
 	background-color: white;
 }
 .pop-title{
@@ -370,6 +370,10 @@ div>.icon-xiangce:before,
 	content: '\e442';
 	color: #12B7F5;
 }
+.mui-radio label{
+	color: #B7B7B7;
+	font-size: 14px;
+}
 .mui-input-group .mui-input-row:after{
 	height: 0;
 }
@@ -379,13 +383,14 @@ div>.icon-xiangce:before,
 }
 .center-title{
 	padding-top: 5px;
+	line-height: 30px;
 	text-align: center;
-	font-size: 18px;
+	font-size: 16px;
 }
 .buttons-container{
 	text-align: center;
-	padding-bottom: 5px;
+	padding: 0 0 10px;
 }
 .group-pop{
-	border-radius:15px;
+	border-radius:5px;
 }

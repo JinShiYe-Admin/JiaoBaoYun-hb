@@ -85,7 +85,7 @@ mui.plusReady(function() {
 	addSubPages(); //加载子页面
 	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
 	window.addEventListener('infoChanged', function() {
-		getAboutMe();
+		//		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 		var imgNode = document.querySelector('img');
@@ -116,7 +116,7 @@ mui.plusReady(function() {
 		events.closeWaiting();
 	})
 	window.addEventListener('aboutmNoRead', function() {
-				getAboutMe();
+		//				getAboutMe();
 	});
 	//	//默认自动登录
 	events.defaultLogin(function(data) {
@@ -124,7 +124,7 @@ mui.plusReady(function() {
 		if(data.value == 1) {
 			loginRoleType = data.flag;
 			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-			setTimeout(appUpdate.updateApp,5000);
+			setTimeout(appUpdate.updateApp, 5000);
 		} else if(data.value == -1) { //登录失败
 			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
 				loginRoleType = 1;
@@ -229,9 +229,9 @@ var setListener = function() {
 		activeTab = targetTab;
 	});
 	//首页加号点击事件
-	events.addTap('add', function() {
-		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
-	})
+	//	events.addTap('add', function() {
+	//		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
+	//	})
 }
 //获取作业的提醒
 function getHomeworkAlert(NoReadCnt) {
@@ -251,7 +251,7 @@ function getHomeworkAlert(NoReadCnt) {
 		if(data.RspCode == 0) {
 			NoReadCnt = data.RspData.NoReadCnt + NoReadCnt;
 			noReadCount = NoReadCnt;
-			events.fireToPageWithData('../cloud/cloud_home.html', 'NoReadCnt',NoReadCnt)
+			events.fireToPageWithData('../cloud/cloud_home.html', 'NoReadCnt', NoReadCnt)
 
 		} else {
 			//				mui.toast(data.RspTxt);
@@ -262,7 +262,7 @@ function getHomeworkAlert(NoReadCnt) {
 //获取与我相关
 function getAboutMe() {
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
-	if(personalUTID==0){
+	if(personalUTID == 0) {
 		return;
 	}
 	//56.（用户空间）获取与我相关
@@ -445,15 +445,24 @@ var setConditionbyRole = function(role) {
 	if(role) { //正常用户
 		cloudIcon.style.display = "table-cell";
 		cloudIcon.className = "mui-tab-item mui-active";
-		plus.webview.show("cloud_home.html", "fade-in", 300);
 		activeTab = "../cloud/cloud_home.html";
-		changRightIcons("../cloud/cloud_home.html");
 	} else { //游客
 		cloudIcon.style.display = "none";
 		sceIcon.className = "mui-tab-item mui-active";
-		plus.webview.show("sciedu_home.html", "fade-in", 300);
 		activeTab = "../sciedu/sciedu_home.html";
-		changRightIcons("../sciedu/sciedu_home.html");
 	}
-
+	//显示活动的界面
+	setActivePage();
+}
+/**
+ * 显示活动的界面
+ */
+var setActivePage = function() {
+	var temp = {};
+	temp[activeTab] = "true";
+	mui.extend(aniShow, temp);
+	var splitActiveTabs=activeTab.split("/");
+	var activeId=splitActiveTabs[splitActiveTabs.length-1];
+	plus.webview.show(activeId, "fade-in", 300);
+	changRightIcons(activeTab);
 }
