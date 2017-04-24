@@ -227,40 +227,46 @@ var dynamiclistitem = (function($, mod) {
 			});
 		});
 		mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
-			if(isPersonal == 1) {
-				var cityID = sliderId.replace('top_', '');
-				var index = this.id.replace('headImg' + cityID + idFlag, '');
-				mui.openWindow({
-					url: '../quan/zone_main.html',
-					id: '../quan/zone_main.html',
-					styles: {
-						top: '0px', //设置距离顶部的距离
-						bottom: '0px'
-					},
+			var id = this.id;
+			events.singleInstanceInPeriod(function() {
+				if(isPersonal == 1) {
+					var cityID = sliderId.replace('top_', '');
+					var index = id.replace('headImg' + cityID + idFlag, '');
+					mui.openWindow({
+						url: '../quan/zone_main.html',
+						id: '../quan/zone_main.html',
+						styles: {
+							top: '0px', //设置距离顶部的距离
+							bottom: '0px'
+						},
 
-					extras: {
-						data: zonepArray[index].PublisherId,
-						NoReadCnt: 0,
-						flag: '0'
-					},
-					createNew: true,
+						extras: {
+							data: zonepArray[index].PublisherId,
+							NoReadCnt: 0,
+							flag: '0'
+						},
+						createNew: true,
 
-				});
-			}
+					});
+				}
+			})
 
 		})
 		mui('.mui-table-view').on('tap', '.question_content', function() {
-			if(!document.getElementById("spaceDetail")) {
-				var cityID = sliderId.replace('top_', '');
-				var index = this.id.replace('question_content' + cityID + idFlag, '');
-				if(idFlag == '') {
-					zonepArray[index].focusFlag = 0;
-				} else {
-					zonepArray[index].focusFlag = 1;
-				}
+			var id = this.id;
+			events.singleInstanceInPeriod(function() {
+				if(!document.getElementById("spaceDetail")) {
+					var cityID = sliderId.replace('top_', '');
+					var index = id.replace('question_content' + cityID + idFlag, '');
+					if(idFlag == '') {
+						zonepArray[index].focusFlag = 0;
+					} else {
+						zonepArray[index].focusFlag = 1;
+					}
 
-				events.openNewWindowWithData('../quan/space-detail.html', zonepArray[index])
-			}
+					events.openNewWindowWithData('../quan/space-detail.html', zonepArray[index])
+				}
+			})
 
 		});
 		mui('.mui-table-view').on('tap', '.show', function() {

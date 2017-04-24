@@ -11,7 +11,7 @@ mui.plusReady(function() {
 	expertInfo = plus.webview.currentWebview().expertInfo;
 	console.log("获取的专家信息：" + JSON.stringify(expertInfo));
 	type = plus.webview.currentWebview().type;
-	if(type) {//类型 0 他关注的人 1 关注他的人
+	if(type) { //类型 0 他关注的人 1 关注他的人
 		if(expertInfo.UserId == selfId) {
 			document.getElementById("title").innerText = "关注我的人";
 		} else {
@@ -27,10 +27,10 @@ mui.plusReady(function() {
 	}
 	console.log('获取的专家信息：' + JSON.stringify(expertInfo));
 	flagRef = 0;
-	pageIndex = 1;//当前页面
+	pageIndex = 1; //当前页面
 	//	expertId = expertInfo.UserId;
-	requireData(type);//根据类型获取数据
-	setListener();//设置监听
+	requireData(type); //根据类型获取数据
+	setListener(); //设置监听
 
 	//阻尼系数、初始化刷新加载更多
 	var deceleration = mui.os.ios ? 0.003 : 0.0009;
@@ -321,6 +321,10 @@ var setButtonInfoType = function(item) {
 var setListener = function() {
 	//不同状况下关注/取消关注按钮的点击事件
 	mui('.mui-table-view').on('tap', '.mui-btn', function() {
+		//判断是否是游客身份登录
+		if(events.judgeLoginMode()) {
+			return;
+		}
 		var focusType;
 		switch(this.personInfo.FocusType) {
 			case 0:
