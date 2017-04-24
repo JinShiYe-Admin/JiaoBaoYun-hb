@@ -18,6 +18,7 @@ mui.plusReady(function() {
 		if(e.detail.data) {
 			groupId = e.detail.data.classId;
 			groupName = e.detail.data.className;
+			setPopGroupName();
 			document.getElementById('title').innerText = getHeadText(groupName);
 			freshContent();
 		}
@@ -47,6 +48,14 @@ mui.plusReady(function() {
 	})
 	setButtonsListener();
 })
+var setPopGroupName=function(){
+	document.querySelector(".parents-label").innerText="邀请[家长]入群-"+groupName;
+	document.querySelector(".stu-label").innerText="邀请[学生]入群-"+groupName;
+	document.querySelector(".tea-label").innerText="邀请[老师]入群-"+groupName;
+}
+/**
+ * 
+ */
 var getGroupInfo = function() {
 	var wd1 = events.showWaiting();
 	postDataPro_PostGList({

@@ -47,7 +47,7 @@ input[type=submit]:enabled:active {
 	background-color: #ffffff;
 	text-align: left;
 	border-radius: 50px;
-	padding: 0 1.5rem;
+	padding: 0 1rem;
 	margin-top: 8px;
 	margin-bottom: 0.7rem;
 	color: #000000;
@@ -67,15 +67,20 @@ input[type=submit]:enabled:active {
 }
 
 .search-input {
-	max-width: 80%;
+	max-width: 75%;
 }
 
 .mui-input-clear::-webkit-input-placeholder {
 	text-align: left;
 	padding-left: .5rem;
-	font-size: 1.2rem;
+	font-size: 14px;
+	color: #B7B7B7;
 }
 
 .mui-input-row.mui-search .mui-icon-clear {
 	right: 20%;
+}
+input[type=search] {
+	font-size: 15px;
+	color: #323232;
 }

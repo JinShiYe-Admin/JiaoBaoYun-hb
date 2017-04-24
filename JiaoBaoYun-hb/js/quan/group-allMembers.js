@@ -33,9 +33,9 @@ mui.plusReady(function() {
 				isMaster: isMaster
 			}));
 	})
-	events.addTap('quit-group', function() {
-		showChoices();
-	})
+//	events.addTap('quit-group', function() {
+//		showChoices();
+//	})
 	mui(".chose-container").on("change", "input", function() {
 		if(this.checked) {
 			choseRole = parseInt(this.value);
@@ -83,16 +83,6 @@ var freshContent = function() {
 				groupRoles.splice(i, 1);
 				break;
 			}
-		}
-		if(groupRoles.length == 0) {
-			document.querySelector('.quit-container').style.display = 'none';
-//			document.querySelector('.mui-content').style.marginBottom = "0";
-		} else if(groupRoles.length == 1 && groupRoles[0] == 0 && isMaster) {
-			document.querySelector('.quit-container').style.display = 'none';
-//			document.querySelector('.mui-content').style.marginBottom = "0";
-		} else {
-			document.querySelector('.quit-container').style.display = 'block';
-//			document.querySelector('.mui-content').style.marginBottom = "5rem";
 		}
 		getGroupAllInfo();
 	})

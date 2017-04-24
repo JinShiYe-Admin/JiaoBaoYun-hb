@@ -235,7 +235,7 @@ a>p {
 
 .center-popover {
 	position: fixed;
-	top: 120px;
+	top: 25%;
 	left: 5%;
 	width: 90%;
 	background-color: white;
@@ -303,10 +303,13 @@ a>p {
 .pop-hint{
 	font-size: 17px;
 	color: #323232;
-	margin-left: 20px;
-	margin-bottom: 14px;
+	/*margin-left: 20px;*/
+	margin: 10px 10px 0px;
 }
 .div-chose>label{
 	color: #808080;
 	font-size: 16px;
+}
+.apply-group img{
+	margin-right: 5px;
 }
