@@ -392,7 +392,7 @@
 						mui.fire(plus.webview.currentWebview().opener(), "answerChanged", comData);
 						mui.back();
 					} else {
-						mui.toast("更改回答失败！");
+						mui.toast(data.RspTxt);
 					}
 				})
 			}
@@ -465,7 +465,7 @@
 					replyId: replyId //回复用户ID,新增评论的话传0，回复评论传用户Id
 				}, wd, function(data) {
 					wd.close();
-					console.log('评论结果:' + JSON.stringify(data))
+ 
 					if(data.RspCode == 0) {
 						if(data.RspData.Result) {
 							document.getElementById('answerContent').value = '';
@@ -485,7 +485,7 @@
 							mui.back();
 						}
 					} else {
-						mui.toast('评论失败，请重新提交评论！');
+						mui.toast(data.RspTxt);
 					}
 				})
 			}

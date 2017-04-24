@@ -39,21 +39,17 @@
 		<div class="mui-content">
 			<textarea id="notes" maxlength="2000" placeholder="✎ 分享你的学习与生活...,最多2000字"></textarea>
 			<div id="MultiMedia">
+				<!--<div id="_MSL_MultiMedia" style="width: 100%;">
+					<div id="MultiMedia_Body" class="multimedia-body">
+						<div id="MultiMedia_Header" class="multimedia-header"><span id="MultiMedia_Picture_Header" class="mui-icon iconfont icon-xiangji2"></span><span id="MultiMedia_Tuku_Header" class="mui-icon iconfont icon-tuku"></span><span id="MultiMedia_Audio_Header" class="mui-icon iconfont icon-yuyin3"></span><span id="MultiMedia_Video_Header" class="mui-icon iconfont icon-shipin2"></span></div>
+						<div id="MultiMedia_Footer" class="multimedia-footer">
+							<div id="MultiMedia_Picture_Footer"></div>
+							<div id="MultiMedia_Audio_Footer"></div>
+							<div id="MultiMedia_Video_Footer"></div>
+						</div>
+					</div>
+				</div>-->
 			</div>
-			<!--<div id="_MSL_MultiMedia" style="width: 100%;">
-				<div id="MultiMedia_Body" class="multimedia-body" style=";">
-					<div id="MultiMedia_Header" class="multimedia-header" style="margin: 0px;">
-						<span id="MultiMedia_Picture_Header" class="mui-icon iconfont icon-xiangji2"></span><span id="MultiMedia_Tuku_Header" class="mui-icon iconfont icon-tuku"></span>
-						<span id="MultiMedia_Audio_Header" class="mui-icon iconfont icon-yuyin3"></span>
-						<span id="MultiMedia_Video_Header" class="mui-icon iconfont icon-shipin2"></span>
-					</div>
-					<div id="MultiMedia_Footer" class="multimedia-footer">
-						<div id="MultiMedia_Picture_Footer"></div>
-						<div id="MultiMedia_Audio_Footer"></div>
-						<div id="MultiMedia_Video_Footer"></div>
-					</div>
-				</div>
-			</div>-->
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
@@ -94,10 +90,9 @@
 				mui.previewImage();
 
 				//多媒体控件
-				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 				multiMedia = MultiMedia.multiMedia({
 					MultiMediaId: 'MultiMedia', //存放多媒体对象控件的id
-					Key: personalUTID, //utid
+					Key: window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid, //utid
 					Picture: true, //是否显示图片图标
 					Audio: true, //是否显示音频图标
 					Video: true, //是否显示视频图标
@@ -105,6 +100,7 @@
 					TotalAudio: 1, //音频的个数
 					TotalVideo: 1, //视频的个数
 				});
+				//console.log(document.getElementById("MultiMedia").innerHTML);
 
 				hideOption = events.initHideKeyBoard(); //获取配置信息
 			}
@@ -145,11 +141,10 @@
 			 * @param {Object} encImg 附件缩略图地址
 			 */
 			function addNote(wd, encType, encAddr, encImg) {
-				var userId = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 				//38.（用户空间）新增某用户空间信息 （云笔记）
 				//所需参数
 				var comData = {
-					userId: userId, //用户ID
+					userId: window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid, //用户ID
 					msgContent: notes.value, //记事内容
 					encType: encType, //附件类型，1图片2音视频3仅文字
 					encAddr: encAddr, //附件地址

@@ -321,8 +321,6 @@
 						markDate = ''; //日期
 						pullRefresh.refresh(true); //更新当前控件
 					}
-					endPullUp();
-
 					//console.log(document.getElementById("list").innerHTML);
 					if(data.RspData.Data.length == 0 && pageIndex == 1) {
 						//第一页的数据为空
@@ -334,6 +332,7 @@
 							createNotes(data.RspData.Data[i]);
 						}
 					}
+					endPullUp();
 				} else {
 					mui.toast(data.RspTxt);
 				}

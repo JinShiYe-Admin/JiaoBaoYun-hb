@@ -235,7 +235,7 @@ a>p {
 
 .center-popover {
 	position: fixed;
-	top: 120px;
+	top: 25%;
 	left: 5%;
 	width: 90%;
 	background-color: white;
@@ -291,7 +291,7 @@ a>p {
 	padding: 10px;
 }
 .chose-container{
-	padding: 15px 0;
+	padding: 15px 0 10px;
 }
 .mui-popover{
 	border-radius: 0;
@@ -303,10 +303,35 @@ a>p {
 .pop-hint{
 	font-size: 17px;
 	color: #323232;
-	margin-left: 20px;
-	margin-bottom: 14px;
+	/*margin-left: 20px;*/
+	margin: 10px 15px 0px;
 }
 .div-chose>label{
 	color: #808080;
 	font-size: 16px;
+}
+.apply-group img{
+	margin-right: 5px;
+}
+.mui-radio input[type=radio]:before{
+	content: '\e411';
+}
+.mui-radio input[type=radio]:checked:before {
+	content: '\e442';
+	color: #12B7F5;
+}
+.mui-input-group .mui-input-row:after{
+	height: 0;
+}
+.mui-input-group:first-child:before,
+.mui-input-group:last-child:after{
+	height: 0;
+}
+.mui-input-group:before,
+.mui-input-group:after{
+	height: 0;
+}
+.mui-radio label{
+	font-size: 14px;
+	color: #808080;
 }

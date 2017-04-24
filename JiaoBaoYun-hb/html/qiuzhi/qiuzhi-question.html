@@ -20,7 +20,7 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">提问</h1>
 			<a id="manage-question" class="mui-icon iconfont icon-moreandroid mui-pull-right display-none" style="display: none;"></a>
-			<a class="mui-icon iconfont icon-ruqun mui-pull-right" id="addExpert"></a>
+			<a class="mui-icon iconfont icon-adddata1 mui-pull-right" id="addExpert"></a>
 		</header>
 		<div class="mui-content"></div>
 		<script src="../../js/mui.min.js"></script>
@@ -29,6 +29,7 @@
 		<script src="../../js/storageKeyName.js"></script>
 		<script type="text/javascript">
 			mui.init();
+			var questionInfo;
 			mui.plusReady(function() {
 				var wd = events.showWaiting();
 				//---获取数据并传递数据---start---
@@ -39,15 +40,9 @@
 				if(temp0 > 0) {
 					data.channelInfo.TabId = temp0;
 				}
-				var questionInfo=data.channelInfo;
-				console.log("获取的questionInfo:"+JSON.stringify(questionInfo));
-				if(questionInfo.AskMan==myStorage.getItem(storageKeyName.PERSONALINFO).utid&&(questionInfo.AnswerNum+questionInfo.AnswerOffNum)==0){
-					document.getElementById("manage-question").style.display="inline-block";
-//				}else if(quetionInfo.RspData.AnswerId&&quetionInfo.RspData.IsAnswerOff){
-					
-				}else{
-					document.getElementById("manage-question").style.display="none";
-				}
+				questionInfo = data.channelInfo;
+				console.log("获取的questionInfo:" + JSON.stringify(questionInfo));
+				setIcon();
 				console.log('qiuzhi-question.html:获取的问题数据' + JSON.stringify(data));
 				events.createSubAppendMain(main, 'qiuzhi-questionSub.html', data, function(sub) {
 					setTimeout(function() {
@@ -55,16 +50,26 @@
 					}, 250);
 					events.changeTopPocket();
 				});
-
+				window.addEventListener("questionInfo",function(e){
+					questionInfo=e.detail;
+					setIcon();
+				})
 				//点击右上角邀请专家按钮
 				events.addTap('addExpert', function() {
 					events.openNewWindowWithData('experts_main.html', data);
 				});
-				events.addTap("manage-question",function(){
+				events.addTap("manage-question", function() {
 					console.log("求知问题界面向子页面传值")
-					events.fireToPageNone("qiuzhi-questionSub.html","manageQuestion");
+					events.fireToPageNone("qiuzhi-questionSub.html", "manageQuestion");
 				})
 			});
+			var setIcon = function() {
+				if(questionInfo.AskMan == myStorage.getItem(storageKeyName.PERSONALINFO).utid && (questionInfo.AnswerNum + questionInfo.AnswerOffNum) == 0) {
+					document.getElementById("manage-question").style.display = "inline-block";
+				} else {
+					document.getElementById("manage-question").style.display = "none";
+				}
+			}
 		</script>
 	</body>
 

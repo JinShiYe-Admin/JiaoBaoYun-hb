@@ -394,3 +394,7 @@ div>.icon-xiangce:before,
 .group-pop{
 	border-radius:5px;
 }
+.show-all-words{
+	letter-spacing: 1px;
+	padding: 10px 0 20px;
+}

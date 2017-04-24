@@ -86,6 +86,18 @@ mui.plusReady(function() {
 		answerFlag = 0;
 		//5.获取某个问题的详情
 		requestAskDetail();
+	});
+	window.addEventListener("answerDeled", function() {
+		//获取的第几页回复
+		answerIndex = 1;
+		//答案回复的总页数
+		answerPageCount = 0;
+		//回复数组,切换排序方式后，清空数组
+		answerArray = [];
+		//刷新0，还是加载更多1
+		answerFlag = 0;
+		//5.获取某个问题的详情
+		requestAskDetail();
 	})
 	mui('#popover').on('tap', '.mui-table-view-cell', function() {
 		console.log('选择排序' + this.id + '|' + this.value + '|' + this.getAttribute('data-value'));
@@ -129,9 +141,11 @@ mui.plusReady(function() {
 		var element = this.parentNode;
 		var info = JSON.parse(element.getAttribute('data-info'))
 		console.log(JSON.stringify(info));
-		//跳转页面
-		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', info);
-		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right", 250);
+		requestAnswerDetail(info.AnswerId, function(answerInfo) {
+			//跳转页面
+			events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', answerInfo);
+			plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right", 250);
+		})
 	});
 
 	//点击回答者头像
@@ -247,7 +261,7 @@ var delQuestion = function() {
 			mui.toast("删除问题成功！");
 			mui.back();
 		} else {
-			mui.toast("删除问题失败！");
+			mui.toast(data.RspTxt);
 		}
 	});
 }
@@ -399,6 +413,7 @@ function requestAskDetail() {
 		console.log('5.获取某个问题的详情:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			askModel = data.RspData;
+			noticeQuestionInfo(askModel);
 			setCondition();
 			answerPageCount = data.RspData.TotalPage; //回答总页数
 			answerIndex++;
@@ -479,7 +494,9 @@ function requestAskDetail() {
 		}
 	});
 }
-
+var noticeQuestionInfo = function(questionInfo) {
+	mui.fire(plus.webview.currentWebview().parent(), "questionInfo", questionInfo);
+}
 /**
  *清空问题的所有信息，和回答数
  */
@@ -690,6 +707,30 @@ function answerList(data, fragment) {
 		fragment.getElementById("answer_content_" + data.AnswerId).innerText = content_1;
 	}
 
+}
+
+function requestAnswerDetail(answerId, callback) {
+	//所需参数
+	var comData = {
+		userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid,
+		answerId: answerId, //回答ID
+		orderType: 1, //评论排序方式,1 时间正序排序,2 时间倒序排序
+		pageIndex: 1, //当前页数
+		pageSize: 1 //每页记录数,传入0，获取总记录数
+	};
+	// 等待的对话框
+	var wd1 = events.showWaiting();
+	//8.获取某个回答的详情
+	postDataQZPro_getAnswerById(comData, wd1, function(data) {
+		wd1.close();
+		console.log('8.获取某个回答的详情:' + JSON.stringify(data));
+		if(data.RspCode == 0 && data.RspData.AnswerId) {
+			callback(data.RspData);
+		} else {
+			mui.toast(data.RspTxt);
+			events.closeWaiting();
+		}
+	});
 }
 
 /**

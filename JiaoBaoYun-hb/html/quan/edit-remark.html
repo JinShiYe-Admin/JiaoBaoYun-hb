@@ -95,10 +95,9 @@
 					jQuery("#edit-remark").prop("maxlength",30);
 					type = 2;
 					groupInfo = e.detail.data;
-//					console.log('备注传过来的值' + JSON.stringify(remarkInfo));
 					document.getElementById('remark-input').value =groupInfo.info;
 					document.getElementById('remark-input').placeholder = "请输入群说明，最多30字";
-					document.querySelector('.mui-title').innerText = '编辑群说明';
+					document.querySelector('.mui-title').innerText = '群说明';
 					autoTextArea.set(document.querySelector(".input-container"), document.getElementById("remark-input"), document.querySelector(".input-left"), 30);
 					setBackHeight(30);
 				})

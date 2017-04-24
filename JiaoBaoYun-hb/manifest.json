@@ -2168,7 +2168,8 @@
 					"html/mine/qun_manage_main.html",
 					"html/mine/about.html",
 					"html/mine/qun_manage_1.html",
-					"html/check/check-news.html"
+					"html/check/check-news.html",
+					"html/mine/qun_manage_a.html"
 				],
 				"priority": 0
 			},
@@ -3219,7 +3220,20 @@
 					"fonts/mui.ttf",
 					"js/utils/events.js",
 					"css/mui.min.css",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"js/mui.pullToRefresh.js",
+					"css/utils/pullToRefresh.css",
+					"js/utils/cryption.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/utils/MultiMedia.js",
+					"css/utils/MultiMedia.css",
+					"js/cloud/AndroidFileSystem.js",
+					"css/utils/preview.css",
+					"js/mui.zoom.js",
+					"js/utils/compress.js",
+					"js/utils/CloudFileUtil.js",
+					"js/qiniu/qiniu.js",
+					"js/mui.previewimage.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -4287,6 +4301,37 @@
 				],
 				"refer": [
 					"html/mine/apply-bycode.html"
+				],
+				"priority": 0
+			},
+			"html/mine/qun_manage_a.html": {
+				"resources": [
+					"css/iconfont/iconfont.css",
+					"js/publicProtocol.js",
+					"js/mui.min.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"css/mui.min.css",
+					"js/libs/RSA/RSA.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"image/utils/default_personalimage.png",
+					"js/libs/jquery.js",
+					"fonts/fangzheng.ttf",
+					"fonts/mui.ttf",
+					"js/libs/crypto-js/require.js",
+					"fonts/iconfont.ttf",
+					"js/utils/signHmacSHA1.js",
+					"js/utils/postData.js",
+					"css/mine/manager_member.css",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [
+					"html/quan/group-pInfo.html",
+					"html/mine/qun_manage_invite_a.html"
 				],
 				"priority": 0
 			}

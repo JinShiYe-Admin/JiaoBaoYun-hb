@@ -29,27 +29,26 @@
 				</ul>
 			</div>
 		</div>
-		<div id="chose-roles" class="mui-popover center-popover">
+		<div id="chose-roles" class="mui-popover center-popover" style="top: 35%;">
 			<div class="pop-title">
 				<div class="title-left"></div>
 				<div class="title-middle">请选择身份</div>
 				<span id="btn-cancle" class="title-right iconfont icon-guanbi1"></span>
 			</div>
-			<div class="chose-container">
-				<div class="div-chose">
-					<input id="check-parents" name="checkbox1" type="radio" value="0">
-					<label>家长</label>
-				</div>
-				<div class="div-chose">
-					<input id="check-tea" name="checkbox1" type="radio" value="2">
-					<label>老师</label>
-				</div>
-				<div class="div-chose">
-					<input id="check-stu" name="checkbox1" type="radio" value="3">
-					<label>学生</label>
-				</div>
-			</div>
-
+			<form class="mui-input-group chose-container">
+					<div class="mui-input-row mui-radio mui-left display-inlineBlock">
+						<label class="parents-label mui-ellipsis">家长</label>
+						<input id="check-parents" name="radio1" type="radio" value="0">
+					</div>
+					<div class="mui-input-row mui-radio mui-left display-inlineBlock">
+						<label class="tea-label mui-ellipsis">老师</label>
+						<input id="check-tea" name="radio1" type="radio" value="2">
+					</div>
+					<div class="mui-input-row mui-radio mui-left display-inlineBlock">
+						<label class="stu-label mui-ellipsis">学生</label>
+						<input id="check-stu" name="radio1" type="radio" value="3">
+					</div>
+				</form>
 			<div class="buttons">
 				<button id="btn-sure" type="button" class="mui-btn mui-btn-green btn-sure">确认</button>
 				<!--<button  type="button" class="mui-btn mui-btn-green btn-cancel">取消</button>-->
