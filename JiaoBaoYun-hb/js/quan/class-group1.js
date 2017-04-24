@@ -56,10 +56,6 @@ var getGroupInfo = function() {
 		wd1.close();
 		console.log("获取的群信息：" + JSON.stringify(data));
 		groupModel = data.RspData[0];
-		if(groupModel.gnote == null || groupModel.gnote.length == 0) {
-			groupModel.gnote = '暂无说明';
-		}
-
 		if(data.RspCode == 0) {
 			document.getElementById("group-info").innerText = data.RspData[0].gnote ? data.RspData[0].gnote : "暂无说明";
 			groupNote=data.RspData[0].gnote;
