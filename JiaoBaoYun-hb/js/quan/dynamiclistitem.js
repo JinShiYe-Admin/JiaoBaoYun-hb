@@ -138,7 +138,6 @@ var dynamiclistitem = (function($, mod) {
 
 			var btnArray = [{
 				title: title,
-				style: "destructive"
 			}];
 			plus.nativeUI.actionSheet({
 				cancel: "取消",
@@ -331,6 +330,21 @@ var dynamiclistitem = (function($, mod) {
 			window.event.stopPropagation()
 
 		});
+		var grayFlag = 0;
+		mui('.mui-table-view').on('touchstart', '.replyComment', function() {
+			console.log('touchstart---' + this.id)
+			if(grayFlag == 0) {
+				this.style.backgroundColor = 'lightgray'
+				grayFlag = 1;
+			}
+
+		});
+		mui('.mui-table-view').on('touchend', '.replyComment', function() {
+			console.log('touchend---' + this.id)
+			grayFlag = 0;
+			this.style.backgroundColor = 'white'
+		});
+
 		//
 		//点击关注
 		mui('.mui-table-view').on('tap', '.btn-attention',

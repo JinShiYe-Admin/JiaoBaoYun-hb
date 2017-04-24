@@ -349,8 +349,8 @@ var addShai = function(container, name) {
 	pubDynamic.id = 'pubDynamic'
 	pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
 	pubDynamic.style.paddingLeft = '30px'
-	pubDynamic.style.paddingTop = '15px'
-	pubDynamic.style.fontSize = '16px'
+	pubDynamic.style.paddingTop = '18px'
+	pubDynamic.style.fontSize = '14px'
 	pubDynamic.innerHTML = '晒一晒'
 	container.appendChild(pubDynamic);
 	events.addTap('pubDynamic',
