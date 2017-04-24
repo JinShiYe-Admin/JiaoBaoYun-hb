@@ -83,12 +83,12 @@ mui.plusReady(function() {
 		answerInfo.AnswerEncAddr = changedData.AnswerEncAddr;
 		answerInfo.AnswerContent = changedData.answerContent;
 		answerInfo.AnswerCutImg = changedData.AnswerCutImg;
-		answerInfo.IsAnonym=changedData.isAnonym;
+		answerInfo.IsAnonym = changedData.isAnonym;
 		answerData.AnswerThumbnail = changedData.AnswerThumbnail;
 		answerData.AnswerEncAddr = changedData.AnswerEncAddr;
 		answerData.AnswerContent = changedData.answerContent;
 		answerData.AnswerCutImg = changedData.AnswerCutImg;
-		answerData.IsAnonym=changedData.isAnonym;
+		answerData.IsAnonym = changedData.isAnonym;
 		setAnswerManInfo(answerData);
 	})
 	window.addEventListener("showActionSheet", function() {
@@ -168,10 +168,12 @@ var delAnswer = function() {
 		wd1.close();
 		console.log("删除回答的接口：" + JSON.stringify(data));
 		if(data.RspCode == 0) {
-			//			mui.fire(plus.webview.currentWebview().opener(),"answerDeled",answerInfo)
+			if(plus.webview.getWebviewById("qiuzhi-questionSub.html")) {
+				mui.fire(plus.webview.getWebviewById("qiuzhi-questionSub.html"), "answerDeled", answerInfo);
+			};
 			mui.back();
 		} else {
-			mui.toast("删除回答失败");
+			mui.toast(data.RspTxt);
 		}
 	})
 }
@@ -218,7 +220,7 @@ var delCommentData = function() {
 		answerData.CommentNum = answerData.CommentNum - 1;
 		console.log("删除的位置：" + delCmOrder + ",删除后的数据：" + JSON.stringify(answerData));
 	}
-	setCommentContainer(!(answerData.Data.length>0));
+	setCommentContainer(!(answerData.Data.length > 0));
 }
 var resetSiblingOrder = function(container) {
 	if(container.nextElementSibling) {
@@ -268,7 +270,7 @@ var getComment = function(commentInfo, deledCB) {
 var rechargeComment = function(comData, commentInfo) {
 	var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
 	comData.UserName = personalInfo.unick; //昵称
-	comData.UserImg = updateHeadImg(personalInfo.uimg,2); //头像
+	comData.UserImg = updateHeadImg(personalInfo.uimg, 2); //头像
 	comData.TabId = commentInfo.commentId //评论id
 	comData.Replys = []; //回复列表
 	if(upperInfo) { //有上级评论
@@ -371,7 +373,7 @@ var insertCommentData = function(commentData) {
 			}
 		}
 	}
-	if(answerData.Data.length>0){
+	if(answerData.Data.length > 0) {
 		setCommentContainer();
 	}
 	console.log("改变后的数据：" + JSON.stringify(answerData))
@@ -586,10 +588,10 @@ function refreshUI(datasource) {
 		setAnswerManInfo(datasource);
 	}
 	var ul = document.getElementById('list-container');
-	if(datasource.Data.length>0){
+	if(datasource.Data.length > 0) {
 		setCommentContainer();
 		createList(ul, datasource.Data);
-	}else{
+	} else {
 		setCommentContainer(1)
 	}
 	events.closeWaiting();
@@ -598,17 +600,17 @@ function refreshUI(datasource) {
  * 
  * @param {Object} showType 0显示列表 1显示没评论图片
  */
-var setCommentContainer=function(showType){
+var setCommentContainer = function(showType) {
 	var ul = document.getElementById('list-container');
-	var noCom=document.querySelector(".answer-noComment");
-	if(showType){
-		ul.style.display="none";
-		noCom.style.display="block";
-	}else{
-		ul.style.display="block";
-		noCom.style.display="none";
+	var noCom = document.querySelector(".answer-noComment");
+	if(showType) {
+		ul.style.display = "none";
+		noCom.style.display = "block";
+	} else {
+		ul.style.display = "block";
+		noCom.style.display = "none";
 	}
-	
+
 }
 /**
  * 创建列表
@@ -681,7 +683,7 @@ var createCell = function(ul, cellData, i, order) {
 var setQuestion = function(datasource) {
 	document.querySelector('.question-title').innerHTML = datasource.AskTitle;
 	var questionContainer = document.getElementById('question-content');
-	document.getElementById('question-content').innerHTML="";
+	document.getElementById('question-content').innerHTML = "";
 	console.log("放置数据？？？？？？？？？")
 	var p = document.createElement('p');
 	p.innerHTML = datasource.AnswerContent;
@@ -874,35 +876,23 @@ var setListeners = function() {
 			answerId: answerInfo.AnswerId, //回答ID
 			commentId: upperInfo.TabId //评论ID
 		}
-		getComment(comdata, function(isDel) {
-			if(isDel) {
-				mui.toast("评论已删除！");
-			} else {
-				if(upperInfo.UpperId) {
-					parentContainer = item.parentElement.parentElement.parentElement.parentElement.parentElement;
+		if(upperInfo.UserId != myStorage.getItem(storageKeyName.PERSONALINFO).utid) {
+			getComment(comdata, function(isDel) {
+				if(isDel) {
+					mui.toast("评论已删除！");
 				} else {
-					parentContainer = item.parentElement.parentElement.parentElement;
-				}
-				if(upperInfo.UserId == myStorage.getItem(storageKeyName.PERSONALINFO).utid) {
-					//					delCommentContainer = item.parentElement.parentElement.parentElement;
-					//					var btnArray = [{
-					//						title: "更改评论"
-					//					}, {
-					//						title: "删除评论",
-					//						dia: 1 //是否显示dialogh
-					//					}];
-					//					var cbArray = [changeComment,
-					//						delComment
-					//					];
-					//					events.showActionSheet(btnArray, cbArray);
-				} else {
+					if(upperInfo.UpperId) {
+						parentContainer = item.parentElement.parentElement.parentElement.parentElement.parentElement;
+					} else {
+						parentContainer = item.parentElement.parentElement.parentElement;
+					}
 					delCommentContainer = null;
 					events.fireToPageWithData('qiuzhi-addAnswer.html', 'comment-reply', jQuery.extend(item.commentInfo, {
 						AnswerId: answerData.AnswerId
 					}));
 				}
-			}
-		})
+			})
+		}
 
 	})
 	mui('.mui-table-view').on('longtap', ".comment-words", function() {
@@ -914,16 +904,16 @@ var setListeners = function() {
 			answerId: answerInfo.AnswerId, //回答ID
 			commentId: upperInfo.TabId //评论ID
 		}
-		getComment(comdata, function(isDel) {
-			if(isDel) {
-				mui.toast("评论已删除！");
-			} else {
-				if(upperInfo.UpperId) {
-					parentContainer = item.parentElement.parentElement.parentElement.parentElement.parentElement;
+		if(upperInfo.UserId == myStorage.getItem(storageKeyName.PERSONALINFO).utid) {
+			getComment(comdata, function(isDel) {
+				if(isDel) {
+					mui.toast("评论已删除！");
 				} else {
-					parentContainer = item.parentElement.parentElement.parentElement;
-				}
-				if(upperInfo.UserId == myStorage.getItem(storageKeyName.PERSONALINFO).utid) {
+					if(upperInfo.UpperId) {
+						parentContainer = item.parentElement.parentElement.parentElement.parentElement.parentElement;
+					} else {
+						parentContainer = item.parentElement.parentElement.parentElement;
+					}
 					delCommentContainer = item.parentElement.parentElement.parentElement;
 					var btnArray = [{
 						title: "删除评论",
@@ -931,14 +921,9 @@ var setListeners = function() {
 					}];
 					var cbArray = [delComment];
 					events.showActionSheet(btnArray, cbArray);
-				} else {
-					delCommentContainer = null;
-					//					events.fireToPageWithData('qiuzhi-addAnswer.html', 'comment-reply', jQuery.extend(item.commentInfo, {
-					//						AnswerId: answerData.AnswerId
-					//					}));
 				}
-			}
-		})
+			})
+		}
 
 	});
 	//设置选择监听
@@ -952,14 +937,6 @@ var setListeners = function() {
 		document.getElementById('list-container').innerHTML = "";
 		refreshUI(answerData);
 	});
-	//	document.getElementById('order-selector').onchange = function() {
-	//		type = parseInt(this.options[this.options.selectedIndex].value);
-	//		flag = 0;
-	//		console.log('获取的类型：' + type);
-	//		answerData.Data.reverse();
-	//		events.clearChild(document.getElementById('list-container'));
-	//		refreshUI(answerData);
-	//	}
 	mui("#answer-imgs").on("error", ".answer-img", function() {
 		var retry = parseInt(this.getAttribute("retry"));
 		if(retry == 0) {

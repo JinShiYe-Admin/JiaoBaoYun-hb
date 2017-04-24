@@ -1,8 +1,8 @@
 var video=(function(mod){
 	mod.playInAndroid=function(videoAddress){
 		if(plus.os.android){
-			var Intent=plus.android.importClass("android.content.intent");
-			var Uri=plus.android.importClass("android.net.uri");
+			var Intent=plus.android.importClass("android.content.Intent");
+			var Uri=plus.android.importClass("android.net.Uri");
 			var main=plus.android.runtimeMainActivity();
 			var intent=new Intent(Intent.ACTION_VIEW);
 			var uri=Uri.parse(videoAddress);

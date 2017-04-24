@@ -534,7 +534,7 @@ function requestAnswerDetail(answerId, callback) {
 		answerId: answerId, //回答ID
 		orderType: 1, //评论排序方式,1 时间正序排序,2 时间倒序排序
 		pageIndex: 1, //当前页数
-		pageSize: '0' //每页记录数,传入0，获取总记录数
+		pageSize: 1 //每页记录数,传入0，获取总记录数
 	};
 	// 等待的对话框
 	var wd1 = events.showWaiting();
@@ -545,7 +545,7 @@ function requestAnswerDetail(answerId, callback) {
 		if(data.RspCode == 0 && data.RspData.AnswerId) {
 			callback();
 		} else {
-			mui.toast("数据已删除！");
+			mui.toast("该回答已被屏蔽或删除 ！");
 			events.closeWaiting();
 		}
 	});
