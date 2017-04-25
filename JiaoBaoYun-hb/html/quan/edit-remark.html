@@ -70,7 +70,7 @@
 			mui.plusReady(function() {
 				events.blurBack();
 				window.addEventListener('editRemark', function(e) {
-					jQuery("#edit-remark").prop("maxlength",20);
+					jQuery("#remark-input").prop("maxLength",20);
 					autoTextArea.set(document.querySelector(".input-container"), document.getElementById("remark-input"), document.querySelector(".input-left"), 20);
 					type = 0;
 					remarkInfo = e.detail.data;
@@ -81,7 +81,7 @@
 					setBackHeight(20);
 				})
 				window.addEventListener('editNick', function(e) {
-					jQuery("#edit-remark").prop("maxlength",20);
+					jQuery("#remark-input").prop("maxLength",20);
 					autoTextArea.set(document.querySelector(".input-container"), document.getElementById("remark-input"), document.querySelector(".input-left"), 20);
 					type = 1;
 					remarkInfo = e.detail.data;
@@ -92,7 +92,7 @@
 					setBackHeight(20);
 				})
 				window.addEventListener('editGroupInfo', function(e) {
-					jQuery("#edit-remark").prop("maxlength",30);
+					jQuery("#remark-input").prop("maxLength",30);
 					type = 2;
 					groupInfo = e.detail.data;
 					document.getElementById('remark-input').value =groupInfo.info;
@@ -166,7 +166,7 @@
 					if(data.RspCode == 0) {
 						mui.toast("删除备注成功！")
 						document.getElementById('remark-input').value = "";
-						mui.fire(plus.webview.currentWebview().opener(), 'remarkChanged');
+						mui.fire(plus.webview.getWebviewById("group-pInfo.html"), 'remarkChanged');
 						mui.back();
 					} else {
 						mui.toast("失败，请重试")
@@ -185,7 +185,7 @@
 					if(data.RspCode == 0) {
 						remarkInfo.ugname = inputValue;
 						document.getElementById('remark-input').value = "";
-						mui.fire(plus.webview.currentWebview().opener(), 'nickChanged', remarkInfo);
+						mui.fire(plus.webview.getWebviewById("group-pInfo.html"), 'nickChanged', remarkInfo);
 						mui.toast('修改群昵称成功！');
 						mui.back();
 					} else {
@@ -204,7 +204,8 @@
 					console.log('修改群备注的返回值：' + JSON.stringify(data))
 					if(data.RspCode == '0000') {
 						document.getElementById('remark-input').value = "";
-						mui.fire(plus.webview.currentWebview().opener(), 'remarkChanged');
+						mui.fire(plus.webview.getWebviewById("group-pInfo.html"), 'remarkChanged');
+						console.log("上级页面的id"+plus.webview.currentWebview().opener().id)
 						mui.toast('修改备注成功！');
 						mui.back();
 					} else {

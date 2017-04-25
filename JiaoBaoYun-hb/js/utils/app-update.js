@@ -75,7 +75,7 @@ var appUpdate = (function(mod) {
 			//询问是否更新
 			setDialog('教宝云有新版本，是否下载？', function() {
 				console.log("下载APK路径：" + version.baseverurl)
-				if(plus.os.android){
+				if(plus.os.name="Android"){
 					resolveFile(version.baseverurl, 1);
 				}else{
 					
@@ -85,7 +85,7 @@ var appUpdate = (function(mod) {
 			})
 		} else if(appVersionMinMax.max == newestVersionMinMax.max) {
 			if(appVersionMinMax.min < newestVersionMinMax.min) { //在线更新
-				if(plus.os.android){
+				if(plus.os.name="Android"){
 					resolveFile(version.addverurl, 0);
 				}else{
 					setDialog('教宝云有新版本，是否下载？',function(){
