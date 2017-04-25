@@ -234,7 +234,7 @@
 						console.log('down ' + JSON.stringify(page));
 						getNotes(1);
 						setTimeout(function() {
-							self.endPullDownToRefresh(); //结束下拉刷新
+							pullRefresh.endPullDownToRefresh(); //结束下拉刷新
 						}, 1000);
 					}
 				},
