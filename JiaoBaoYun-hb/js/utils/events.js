@@ -522,16 +522,15 @@ var events = (function(mod) {
 			if(target && target.tagName == 'TEXTAREA') {
 				if(target.scrollHeight > target.clientHeight) {
 					e.stopPropagation();
-				} else {
-					try {
-						target.dispatchEvent(e);
-					} catch(ev) {
-						//TODO handle the exception
-					}
-
+//				} else {
+//					try {
+//						target.dispatchEvent(e);
+//					} catch(ev) {
+//						//TODO handle the exception
+//					}
 				}
 			}
-		}, true);
+		},{passive: true});
 	}
 
 	/**

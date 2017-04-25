@@ -25,6 +25,7 @@ mui.plusReady(function() {
 	})
 	addListener();
 	window.addEventListener('remarkChanged',function(){
+		console.log("修改备注");
 		isSelf=false;
 		getRemark();
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');

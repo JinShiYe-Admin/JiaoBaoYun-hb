@@ -1,6 +1,7 @@
 mui.init({
 	beforeback: function() {
 		document.getElementById("info-container").style.display = "none";
+		mui(".mui-scroll-wrapper").scroll().scrollTo(0,0);
 		return true;
 	}
 });

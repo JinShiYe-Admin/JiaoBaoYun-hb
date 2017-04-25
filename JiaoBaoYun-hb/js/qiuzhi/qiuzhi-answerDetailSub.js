@@ -152,7 +152,7 @@ var shieldAnswer = function() {
 			}
 			mui.back();
 		} else {
-			mui.toast("屏蔽回答失败！");
+			mui.toast(data.RspTxt);
 		}
 	})
 }
@@ -382,6 +382,8 @@ var insertCommentData = function(commentData) {
  * 2倒序 1顺序
  */
 var setTolerantChecked = function(orderType) {
+	document.getElementById('list-container').style.display="none";
+	document.querySelector(".answer-noComment").style.display="none";
 	if(orderType == 1) {
 		document.getElementById("sequence-order").className = "mui-table-view-cell mui-selected"
 		document.getElementById('reverse-order').className = "mui-table-view-cell";
@@ -415,6 +417,9 @@ function requestAnswerDetail(answerId, pageIndex, pageSize, callback) {
 		} else {
 			mui.toast(data.RspTxt);
 			events.closeWaiting();
+			if(data.RspCode==1017){
+				mui.back();
+			}
 		}
 	});
 }
