@@ -94,7 +94,7 @@ mui.plusReady(function() {
 	window.addEventListener("showActionSheet", function() {
 		var btnArray;
 		var cbArray;
-		if(answerData.CommentNum) {
+		if(answerData.CommentNum+answerData.IsLikeNum) {
 			btnArray = [{
 				title: "修改答案"
 			}, {

@@ -4328,11 +4328,15 @@
 					"js/utils/postData.js",
 					"css/mine/manager_member.css",
 					"js/utils/RSAEncrypt.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/utils/cryption.js",
+					"js/utils/CloudFileUtil.js",
+					"js/qiniu/qiniu.js"
 				],
 				"refer": [
 					"html/quan/group-pInfo.html",
-					"html/mine/qun_manage_invite_a.html"
+					"html/mine/qun_manage_invite_a.html",
+					"html/mine/qun_manage_info.html"
 				],
 				"priority": 0
 			},
@@ -4341,7 +4345,11 @@
 					"js/cloud/order-member.js",
 					"css/cloud/order-member.css",
 					"css/mui.min.css",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"image/utils/default_personalimage.png",
+					"js/mui.min.js",
+					"fonts/fangzheng.ttf",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0
