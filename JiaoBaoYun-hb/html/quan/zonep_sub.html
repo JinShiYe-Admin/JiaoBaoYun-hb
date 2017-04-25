@@ -366,8 +366,8 @@
 			//			setTimeout(function() {
 			flag = 1; //上拉加载更多
 			if(tempPage * 10 > totalCnt || tempPage * 10 == totalCnt) {
-				mui.toast('没有更多了...');
-				mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+//				mui.toast('没有更多了...');
+				mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
 			} else {
 				tempPage++;
 				var comData = {
