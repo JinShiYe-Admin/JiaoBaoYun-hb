@@ -74,7 +74,8 @@
 			"html/qiuzhi/expert-detail.html",
 			"html/qiuzhi/qiuzhi-questionSearch.html",
 			"html/cloud/cloud_home.html",
-			"html/register/login.html"
+			"html/register/login.html",
+			"html/cloud/order-member.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-answerDetailSub.html": {
@@ -2471,6 +2472,14 @@
 		"refer": [
 			"html/quan/group-pInfo.html",
 			"html/mine/qun_manage_invite_a.html"
+		]
+	},
+	"html/cloud/order-member.html": {
+		"resources": [
+			"js/cloud/order-member.js",
+			"css/cloud/order-member.css",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	}
 }

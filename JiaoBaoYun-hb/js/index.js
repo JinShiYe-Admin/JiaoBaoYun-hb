@@ -305,6 +305,7 @@ var changRightIcons = function(targetTab) {
 		case '../cloud/cloud_home.html': //首页
 			title.innerText = "云盘";
 			addPlus(iconContainer, 'jxq');
+			addOrder(iconContainer);
 			slideNavigation.addSlideIcon();
 			slideNavigation.iconAddEvent();
 			break;
@@ -367,6 +368,18 @@ var addShai = function(container, name) {
 				self.disabled = false;
 			}, 1500);
 		})
+}
+var addOrder = function(container) {
+	var a = document.createElement('a');
+	a.className = 'mui-icon mui-icon mui-icon-list mui-pull-right';
+	a.id = 'order';
+	container.appendChild(a);
+	a.addEventListener("tap", function() {
+		if(events.judgeLoginMode()) {
+			return;
+		}
+		events.openNewWindow("../cloud/order-member.html");
+	})
 }
 //云盘首页加载plus
 var addPlus = function(container, name) {

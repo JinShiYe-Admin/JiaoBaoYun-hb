@@ -1946,7 +1946,8 @@
 					"html/show/show_home.html",
 					"html/qiuzhi/expert-detail.html",
 					"html/qiuzhi/qiuzhi-questionSearch.html",
-					"html/register/login.html"
+					"html/register/login.html",
+					"html/cloud/order-member.html"
 				],
 				"priority": 0
 			},
@@ -4333,6 +4334,16 @@
 					"html/quan/group-pInfo.html",
 					"html/mine/qun_manage_invite_a.html"
 				],
+				"priority": 0
+			},
+			"html/cloud/order-member.html": {
+				"resources": [
+					"js/cloud/order-member.js",
+					"css/cloud/order-member.css",
+					"css/mui.min.css",
+					"css/utils/common.css"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},
