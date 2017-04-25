@@ -24,7 +24,6 @@
 
 				<a id="leave" style="visibility:hidden" class="mui-icon iconfont icon-jiujiajingicon02-copy mui-pull-right""></a>
 				<a id="pub-dynamic" style="visibility:hidden" class="mui-icon iconfont icon-fabu mui-pull-right mui-plus-visible" >&nbsp&nbsp;</a>
-				<!--<a id="pub-dynamic" class="mui-icon mui-icon-compose  mui-pull-right " style="padding-left: 20px;"></a>-->
 			</div>
 		</header>
 
@@ -54,7 +53,7 @@
 				'zonep_sub.html', 
 				{
 					top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px',
-					bottom: '0px',
+					bottom: '0px'
 				},
 				{
 					data: data,
@@ -75,12 +74,14 @@
 			//			var tempview =  plus.webview.getWebviewById('zonep_sub.html');
 			events.addTap('leave', function() {
 				events.openNewWindowWithData('../quan/leaveNew.html', data);
+				events.fireToPageNone('zonep_sub.html','hidePreImage')
 			})
 			events.addTap('pub-dynamic', function() {
 				//判断是否是游客身份登录
 				if (events.judgeLoginMode()) {return;}
 				var pubDynamic = document.getElementById("pub-dynamic")
 				events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
+				events.fireToPageNone('zonep_sub.html','hidePreImage')
 			})
 		})
 	</script>

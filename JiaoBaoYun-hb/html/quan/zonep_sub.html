@@ -225,6 +225,10 @@
 
 		});
 		var addListener = function() {
+			
+			window.addEventListener('hidePreImage', function(data) {
+				mui.getPreviewImage().close();
+			})
 			window.addEventListener('refreshZonep', function(data) {
 				var tempData = data.detail;
 				console.log(JSON.stringify(tempData));
