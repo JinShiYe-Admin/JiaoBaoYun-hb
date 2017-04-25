@@ -866,7 +866,7 @@
 				//16.通过群ID获取群对象资料
 				postDataPro_PostGUInf(getMemData, wd, function(data) {
 					console.log('16 通过群ID获取群对象资料 PostGUInf ' + JSON.stringify(data));
-					if(data.RspCode == 0 || data.RspCode == 9) {
+					if(data.RspCode == 0) {
 						for(var i = 0; i < data.RspData.length; i++) {
 							var value = data.RspData[i].stuid;
 							tempArray.push(value);
@@ -888,9 +888,6 @@
 							}
 							events.closeWaiting(wd);
 						});
-						if(data.RspCode == 9) {
-							mui.toast(data.RspTxt);
-						}
 					} else {
 						mui.toast(data.RspTxt);
 						wd.close();
