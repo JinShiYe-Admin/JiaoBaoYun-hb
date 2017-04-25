@@ -1,0 +1,42 @@
+.deal-container {
+	border: solid 1px #12B7F5;
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
+	height: 40px;
+	margin-top: 10px;
+}
+
+.duration-price {
+	padding: 0px 10px;
+	flex-grow: 1;
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+p {
+	margin: 0;
+}
+
+.vertical-line {
+	width: 1px;
+	height: 30px;
+	background-color: #12B7F5;
+}
+.deal-button{
+	margin: 0 10px;
+	width: 60px;
+	height: 30px;
+}
+ input[type=button]{
+ 	font-size: 12px;
+ 	padding: 0;
+ }
+.mui-control-content{
+	padding: 10px 15px;
+}
+.mui-control-content:first-child{
+	margin-top: 0;
+}

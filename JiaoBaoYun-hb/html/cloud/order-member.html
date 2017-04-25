@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/cloud/order-member.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">订购会员</h1>
+		</header>
+		<!--下拉刷新容器-->
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="personInfo-container">
+
+				</div>
+				<div id="slider" class="mui-slider">
+					<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control">
+						<a class="mui-control-item mui-active" href="#item1mobile">
+							普通会员
+						</a>
+						<a class="mui-control-item" href="#item2mobile">
+							超级会员
+						</a>
+					</div>
+					<!--<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>-->
+					<div class="mui-slider-group">
+						<div id="normal-deal" class="mui-slider-item mui-control-content mui-active">
+							<div class="deal-container">
+								<div class="duration-price"><p class="duration-info display-inlineBlock">3个月</p><p class="price-info display-inlineBlock">24元</p></div>
+								<div class="vertical-line"></div>
+								<input class="deal-button" type="button" value="开通" style="background-color: #12B7F5;color: white;" />
+							</div>
+							<div class="deal-container">
+								<div class="duration-price"><p class="duration-info display-inlineBlock">3个月</p><p class="price-info display-inlineBlock">24元</p></div>
+								<div class="vertical-line"></div>
+								<input class="deal-button" type="button" value="开通" style="background-color: #12B7F5;color: white;" />
+							</div>
+							<div class="deal-container">
+								<div class="duration-price"><p class="duration-info display-inlineBlock">3个月</p><p class="price-info display-inlineBlock">24元</p></div>
+								<div class="vertical-line"></div>
+								<input class="deal-button" type="button" value="开通" style="background-color: #12B7F5;color: white;" />
+							</div>
+						</div>
+						<div id="super-deal" class="mui-slider-item mui-control-content">
+							<div id="scroll2" class="mui-scroll-wrapper">
+								<div class="mui-scroll">
+									<div class="mui-loading">
+										<div class="mui-spinner">
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!--权益-->
+				<div class="privilege-container">
+
+				</div>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							积分兑换
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							常见问题
+						</a>
+					</li>
+				</ul>
+				<!--开通说明-->
+				<div>
+					<h6>开通说明</h6>
+					<ul>
+						<li>开通后5分钟内生效</li>
+						<li>购买后若无法正常使用，可稍候重试，或重启APP解决</li>
+						<li>若有疑问，可联系教宝云客服(8:30-17：30)</li>
+						<li>客服QQ:88888 &nbsp;&nbsp; 客服电话：0531-1234567</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<!--订购会员-->
+		<script src="../../js/cloud/order-member.js"></script>
+	</body>
+
+</html>

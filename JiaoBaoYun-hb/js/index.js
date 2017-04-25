@@ -37,11 +37,11 @@ mui.plusReady(function() {
 		}
 		window.myStorage.setItem(window.storageKeyName.PERSONALINFO, personal);
 	}
-//	if(parseInt(personal.utid)) {
-//		document.getElementById("defaultTab").style.display = "table-cell";
-//	} else {
-//		document.getElementById("defaultTab").style.display = "none";
-//	}
+	//	if(parseInt(personal.utid)) {
+	//		document.getElementById("defaultTab").style.display = "table-cell";
+	//	} else {
+	//		document.getElementById("defaultTab").style.display = "none";
+	//	}
 	document.addEventListener("netchange", wainshow, false);
 
 	function wainshow() {
@@ -89,7 +89,7 @@ mui.plusReady(function() {
 	addSubPages(); //加载子页面
 	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
 	window.addEventListener('infoChanged', function() {
-		//		getAboutMe();
+		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
 		var imgNode = document.querySelector('img');
@@ -105,22 +105,15 @@ mui.plusReady(function() {
 	})
 	//退出的监听
 	window.addEventListener("quit", function() {
-		//		events.defaultLogin(function(data) {
-		//			console.log("自动登录获取的值：" + JSON.stringify(data));
-		//			if(data.value) {
 		loginRoleType = 0;
 		setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-		//			} else { //登录失败
-		//				mui.toast("登录失败，请检查网络！");
-		//			}
-		//		});
 	})
 	//关闭等待框
 	window.addEventListener('closeWaiting', function() {
 		events.closeWaiting();
 	})
 	window.addEventListener('aboutmNoRead', function() {
-		//				getAboutMe();
+		getAboutMe();
 	});
 	//	//默认自动登录
 	events.defaultLogin(function(data) {
