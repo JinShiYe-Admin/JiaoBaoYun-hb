@@ -491,6 +491,9 @@ function requestAskDetail() {
 		} else {
 			wd.close();
 			mui.toast(data.RspTxt);
+			if(data.RspCode==1016){
+				mui.back();
+			}
 		}
 	});
 }
