@@ -4351,6 +4351,21 @@
 					"fonts/fangzheng.ttf",
 					"fonts/mui.ttf"
 				],
+				"refer": [
+					"html/cloud/member-pay.html"
+				],
+				"priority": 0
+			},
+			"html/cloud/member-pay.html": {
+				"resources": [
+					"css/iconfont/iconfont.css",
+					"js/mui.min.js",
+					"fonts/fangzheng.ttf",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"fonts/iconfont.ttf",
+					"css/utils/common.css"
+				],
 				"refer": [],
 				"priority": 0
 			}

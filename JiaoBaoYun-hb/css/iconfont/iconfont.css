@@ -263,6 +263,8 @@
 
 .icon-shanchu2:before { content: "\e647"; }
 
+.icon-zhifubao:before { content: "\e677"; }
+
 .icon-shipin2:before { content: "\e65e1"; }
 
 .icon-xiangji2:before { content: "\e65e2"; }
@@ -276,6 +278,8 @@
 .icon-changeinfo0:before { content: "\e65c"; }
 
 .icon-yaoqing0:before { content: "\e664"; }
+
+.icon-weixinzhifu:before { content: "\e796"; }
 
 .icon-adddata1:before { content: "\e65d"; }
 
