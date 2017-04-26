@@ -751,7 +751,7 @@ var events = (function(mod) {
 			firstTime = "1234";
 			setTimeout(function() {
 				firstTime = null;
-			}, 5000);
+			}, 2000);
 		} else {
 			secondTime = "123";
 		}
@@ -767,17 +767,40 @@ var events = (function(mod) {
 	 * @param {Object} data
 	 */
 	mod.singleWebviewInPeriod = function(clickedItem, webviewUrl, data) {
-		clickedItem.disabled=true;
+		mod.showWaiting();
 		if(!data) {
 			data = {};
 		}
+		console.log("当前点击控件是否可点击：" + clickedItem.disabled);
 		var webviewSites = webviewUrl.split("/");
 		var webviewId = webviewSites[webviewSites.length - 1];
-		var targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(), {data:data});
-		targetWebview.onloaded=function(){
-			clickedItem.disabled=false;
-			targetWebview.show("slide-in-right",250);
+		var targetWebview = plus.webview.getWebviewById(webviewId);
+		if(!targetWebview) {
+			targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(), {
+				data: data
+			});
+//		}else{
+//			mod.closeWaiting();
+//			targetWebview.reload();
 		}
+		targetWebview.onloaded = function() {
+			targetWebview.show("slide-in-right", 250);
+			setItemAble(clickedItem, targetWebview);
+		}
+	}
+	var setItemAble = function(item, targetWeb) {
+		console.log("当前点击控件是否可点击：" + item.disabled);
+		console.log("targetWeb是否已显示：" + targetWeb.isVisible());
+		setTimeout(function() {
+			if(targetWeb.isVisible()) {
+				setTimeout(function() {
+					mod.closeWaiting();
+					item.disabled = false;
+				}, 500)
+			} else {
+				setItemAble(item, targetWeb);
+			}
+		}, 500);
 	}
 	/**
 	 * 限制预览下拉刷新
