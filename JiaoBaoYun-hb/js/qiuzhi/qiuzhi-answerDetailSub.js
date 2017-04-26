@@ -602,6 +602,7 @@ function refreshUI(datasource) {
 	} else {
 		setTimeout(function(){
 			setCommentContainer(1)
+		},100)
 	}
 	events.closeWaiting();
 }
