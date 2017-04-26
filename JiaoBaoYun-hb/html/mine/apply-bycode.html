@@ -49,22 +49,22 @@
 			var choseRole; //选择的角色
 			var groupInfo; //群组信息
 			mui.init({
-				beforeback:function(){
+				beforeback: function() {
 					plus.webview.currentWebview().opener().close();
 					return true;
 				}
 			})
 			mui.plusReady(function() {
 				groupInfo = plus.webview.currentWebview().data;
-				console.log("获取的数据："+JSON.stringify(groupInfo))
+				console.log("获取的数据：" + JSON.stringify(groupInfo))
 				setData()
 				setListener();
 			})
-			var setData=function(){
-				document.getElementById("group-img").src=updateHeadImg(groupInfo.gimg,2);
-				console.log("获取的头像："+updateHeadImg(groupInfo.gimg,2));
-				document.getElementById("group-name").innerText=groupInfo.gname;
-				document.getElementById("group-info").innerText=groupInfo.gnote;
+			var setData = function() {
+				document.getElementById("group-img").src = updateHeadImg(groupInfo.gimg, 2);
+				console.log("获取的头像：" + updateHeadImg(groupInfo.gimg, 2));
+				document.getElementById("group-name").innerText = groupInfo.gname;
+				document.getElementById("group-info").innerText = groupInfo.gnote;
 			}
 			var setListener = function() {
 				mui(".chose-container").on("change", "input", function() {
@@ -73,8 +73,8 @@
 					}
 				})
 				document.getElementById("apply-group").addEventListener("tap", function() {
-					console.log("choseRole:"+choseRole)
-					if(!(choseRole>-1)){
+					console.log("choseRole:" + choseRole)
+					if(!(choseRole > -1)) {
 						mui.toast("请选择身份！")
 						return;
 					}
@@ -82,8 +82,26 @@
 						mui.toast("已超出字数限制，请删除多余字符！");
 						return;
 					}
-					applyGroup();
-				})
+					var isMaster=false;
+					events.getUserInGroup(groupInfo.gid, function(data) {
+						console.log("本人在群里的身份：" + JSON.stringify(data));
+						if(data.RspCode == 0) {
+							for(var i in data.RspData) {
+								if(data.RspData[i].mstype == 1) {
+									isMaster = true;
+									break;
+								}
+							}
+							if(isMaster && (choseRole == 2 || choseRole == 3)) {
+								mui.toast("违反身份规则，无法申请！")
+							} else {
+								applyGroup();
+							}
+						} else {
+							applyGroup();
+						}
+					});
+				});
 			}
 			var applyGroup = function() {
 				var wd = events.showWaiting();

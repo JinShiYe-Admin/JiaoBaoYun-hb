@@ -323,18 +323,21 @@
 				switch(mainData.mstype) { //被邀请成为类型（0家长,2老师,3学生）
 					case 'student':
 					case 3:
+					case '3':
 						mainData.typestr = '学生';
 						mainData.type = '3';
 						mainData.mstype = 'student';
 						break;
 					case 'teacher':
 					case 2:
+					case '2':
 						mainData.typestr = '老师';
 						mainData.type = '2';
 						mainData.mstype = 'teacher';
 						break;
 					case 'parents':
 					case 0:
+					case '0':
 						mainData.typestr = '家长';
 						mainData.mstype = 'parents';
 						mainData.type = '0';
@@ -375,13 +378,13 @@
 				mui('#row_data').on('tap', '.mui-table-view-cell', function() {
 					document.activeElement.blur(); //隐藏键盘
 					var self = this;
-					console.log(self.id);
+					console.log(self.id + ' ' + clickId);
 					if(clickId == '') { //第一次点击资料
-						clickId = self.id;
 						self.className = 'mui-table-view-cell data-item data-item-click';
+						clickId = self.id;
 					} else if(clickId == self.id) { //点击同一个资料
 						self.className = 'mui-table-view-cell data-item';
-						clickId == '';
+						clickId = '';
 					} else {
 						document.getElementById(clickId).className = 'mui-table-view-cell data-item';
 						self.className = 'mui-table-view-cell data-item data-item-click';
