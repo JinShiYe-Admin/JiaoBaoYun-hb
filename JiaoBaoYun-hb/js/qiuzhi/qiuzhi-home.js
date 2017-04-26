@@ -13,7 +13,6 @@ mui.plusReady(function() {
 	var curPage = plus.webview.currentWebview();
 	//当前页面加载显示监听
 	curPage.addEventListener("show", function(e) {
-		//document.getElementById('subjects-container').innerHTML = '';
 		if(allChannels && allChannels.length > 0) {
 			if(!channelInfo) { //如果当前频道不存在
 				channelInfo = allChannels[0]; //

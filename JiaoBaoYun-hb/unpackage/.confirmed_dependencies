@@ -778,7 +778,8 @@
 			"js/utils/RSAEncrypt.js",
 			"css/iconfont/iconfont.css",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/mui.min.js"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-sub.html"
