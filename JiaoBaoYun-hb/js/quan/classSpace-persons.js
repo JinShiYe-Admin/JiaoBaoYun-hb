@@ -28,21 +28,24 @@ mui.plusReady(function() {
 	})
 	mui(".mui-table-view").on("tap", ".mui-table-view-cell", function() {
 		var info = this.info;
-		events.singleInstanceInPeriod(function() {
-			mui.openWindow({
-				url: 'zone_main.html',
-				id: 'zone_main.html',
-				styles: {
-					top: '0px', //设置距离顶部的距离
-					bottom: '0px'
-				},
-				extras: {
-					data: info.utid,
-					NoReadCnt: 0,
-					flag: 0
-				}
-			});
-		})
+		var self = this;
+		self.disabled = true;
+		mui.openWindow({
+			url: 'zone_main.html',
+			id: 'zone_main.html',
+			styles: {
+				top: '0px', //设置距离顶部的距离
+				bottom: '0px'
+			},
+			extras: {
+				data: info.utid,
+				NoReadCnt: 0,
+				flag: 0
+			}
+		});
+		setTimeout(function() {
+			self.disabled = false;
+		}, 1500);
 
 	})
 })
