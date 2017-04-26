@@ -773,7 +773,7 @@ var events = (function(mod) {
 		}
 		var webviewSites = webviewUrl.split("/");
 		var webviewId = webviewSites[webviewSites.length - 1];
-		var targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(), data);
+		var targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(), {data:data});
 		targetWebview.onloaded=function(){
 			clickedItem.disabled=false;
 			targetWebview.show("slide-in-right",250);
