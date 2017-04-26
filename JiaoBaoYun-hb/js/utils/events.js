@@ -749,15 +749,34 @@ var events = (function(mod) {
 		var secondTime = null;
 		if(!firstTime) {
 			firstTime = "1234";
+			setTimeout(function() {
+				firstTime = null;
+			}, 5000);
 		} else {
 			secondTime = "123";
 		}
-		setTimeout(function() {
-			firstTime = null;
-		}, 5000)
 		console.log("第一次是否存在：" + firstTime + "第二次是否存在：" + secondTime);
 		if(!secondTime) {
 			callback();
+		}
+	}
+	/**
+	 * 打开新页面
+	 * @param {Object} clickedItem
+	 * @param {Object} webviewUrl
+	 * @param {Object} data
+	 */
+	mod.singleWebviewInPeriod = function(clickedItem, webviewUrl, data) {
+		clickedItem.disabled=true;
+		if(!data) {
+			data = "";
+		}
+		var webviewSites = webviewUrl.split("/");
+		var webviewId = webviewSites[webviewSites.length - 1];
+		clickedItem.disabled = true;
+		var targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(), data);
+		targetWebview.onloaded=function(){
+			clickedItem.disabled=false;
 		}
 	}
 	/**
@@ -1141,12 +1160,12 @@ var events = (function(mod) {
 		}, wd, function(data) {
 			wd.close();
 			callback(data);
-//			console.log('用户在群的身份 ' + JSON.stringify(data));
-//			if(data.RspCode == '0000') {
-//				if(callback) {
-//					
-//				}
-//			}
+			//			console.log('用户在群的身份 ' + JSON.stringify(data));
+			//			if(data.RspCode == '0000') {
+			//				if(callback) {
+			//					
+			//				}
+			//			}
 		})
 	}
 	return mod;
