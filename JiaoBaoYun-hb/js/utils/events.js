@@ -769,7 +769,7 @@ var events = (function(mod) {
 	mod.singleWebviewInPeriod = function(clickedItem, webviewUrl, data) {
 		clickedItem.disabled=true;
 		if(!data) {
-			data = "";
+			data = {};
 		}
 		var webviewSites = webviewUrl.split("/");
 		var webviewId = webviewSites[webviewSites.length - 1];
