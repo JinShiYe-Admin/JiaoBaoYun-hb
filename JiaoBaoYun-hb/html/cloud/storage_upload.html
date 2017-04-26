@@ -285,7 +285,7 @@
 					});
 					folderList = tempList;
 					//选择的文件处理
-					if(upFile.fileid) {
+					if(upFile && upFile.fileid) {
 						if(document.getElementById(upFile.fileid) != null) {
 							//将上次选择的文件置为未选中状态
 							document.getElementById(upFile.fileid).style.background = 'white';

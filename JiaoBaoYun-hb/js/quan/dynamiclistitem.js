@@ -1,5 +1,5 @@
 var dynamiclistitem = (function($, mod) {
-	mod.addComment = function(gesture) {
+	mod.addComment = function(gesture, commentNode) {
 		//回复评论时 判断是否为自己
 		if(tempIndex.indexOf('-') >= 0) {
 			console.log(tempIndex)
@@ -15,7 +15,7 @@ var dynamiclistitem = (function($, mod) {
 				}
 				return;
 			}
-			console.log(JSON.stringify(tempModel));
+			//			console.log(JSON.stringify(tempModel));
 			var upperId = tempModel.TabId; //添加的评论的上级评论ID
 			var replyUserId; //回复者ID
 			var ReplyIdName; //回复者名字
@@ -29,7 +29,7 @@ var dynamiclistitem = (function($, mod) {
 				ReplyIdName = tempModel.Replys[replyId].UserIdName;
 				currCommentID = tempModel.Replys[replyId].TabId
 			}
-			console.log('personalUTID=' + personalUTID + '----' + 'replyUserId=' + replyUserId + 'PublisherId=' + zonepArray[id].PublisherId)
+			//			console.log('personalUTID=' + personalUTID + '----' + 'replyUserId=' + replyUserId + 'PublisherId=' + zonepArray[id].PublisherId)
 			if(gesture == 'tap' && personalUTID == replyUserId) {
 				mui.toast('不可以回复自己');
 				return;
@@ -40,7 +40,8 @@ var dynamiclistitem = (function($, mod) {
 			}
 
 			if(gesture == 'longtap' && (personalUTID == zonepArray[id].PublisherId || personalUTID == replyUserId)) { //
-				console.log('长按删除')
+				//				console.log('长按删除')
+				commentNode.style.backgroundColor = 'lightgray'
 				var btnArray = [{
 					title: '删除',
 					style: "destructive"
@@ -52,6 +53,11 @@ var dynamiclistitem = (function($, mod) {
 					var flag = e.index;
 					switch(flag) {
 						case 0:
+							{
+								commentNode.style.backgroundColor = 'white'
+								console.log('取消或点击空白----' + commentNode.id + '变为白色')
+								grayFlag = 0;
+							}
 							break;
 						case 1:
 							{
@@ -108,6 +114,13 @@ var dynamiclistitem = (function($, mod) {
 
 	}
 	mod.addSomeEvent = function() {
+		window.addEventListener('deleteDynamic', function(data) {
+			var index = data.detail
+			console.log('删除动态的监听'+JSON.stringify(index))
+			var deleteNode = document.getElementById(index);
+			deleteNode.parentNode.removeChild(deleteNode);
+			
+		})
 		mui('.mui-table-view').on('tap', '.icon-xiajiantou', function() {
 			//判断是否是游客身份登录
 			if(events.judgeLoginMode()) {
@@ -165,6 +178,10 @@ var dynamiclistitem = (function($, mod) {
 
 												var deleteNode = document.getElementById(index);
 												deleteNode.parentNode.removeChild(deleteNode);
+												if(document.getElementById("spaceDetail")) {
+													mui.fire(plus.webview.currentWebview().opener(),'deleteDynamic',preModel.tempIndex)
+													mui.back()
+												}
 												//												zonepArray.splice(index, 1)
 											} else {
 												mui.toast(data.RspTxt);
@@ -227,45 +244,53 @@ var dynamiclistitem = (function($, mod) {
 		});
 		mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
 			var id = this.id;
-			events.singleInstanceInPeriod(function() {
-				if(isPersonal == 1) {
-					var cityID = sliderId.replace('top_', '');
-					var index = id.replace('headImg' + cityID + idFlag, '');
-					mui.openWindow({
-						url: '../quan/zone_main.html',
-						id: '../quan/zone_main.html',
-						styles: {
-							top: '0px', //设置距离顶部的距离
-							bottom: '0px'
-						},
+			var self = this;
+			self.disabled = true;
+			if(isPersonal == 1) {
+				var cityID = sliderId.replace('top_', '');
+				var index = id.replace('headImg' + cityID + idFlag, '');
+				mui.openWindow({
+					url: '../quan/zone_main.html',
+					id: '../quan/zone_main.html',
+					styles: {
+						top: '0px', //设置距离顶部的距离
+						bottom: '0px'
+					},
 
-						extras: {
-							data: zonepArray[index].PublisherId,
-							NoReadCnt: 0,
-							flag: '0'
-						},
-						createNew: true,
+					extras: {
+						data: zonepArray[index].PublisherId,
+						NoReadCnt: 0,
+						flag: '0'
+					},
+					createNew: true,
 
-					});
-				}
-			})
+				});
+			}
+			setTimeout(function() {
+				self.disabled = false;
+			}, 1500);
 
 		})
 		mui('.mui-table-view').on('tap', '.question_content', function() {
 			var id = this.id;
-			events.singleInstanceInPeriod(function() {
-				if(!document.getElementById("spaceDetail")) {
-					var cityID = sliderId.replace('top_', '');
-					var index = id.replace('question_content' + cityID + idFlag, '');
-					if(idFlag == '') {
-						zonepArray[index].focusFlag = 0;
-					} else {
-						zonepArray[index].focusFlag = 1;
-					}
-
-					events.openNewWindowWithData('../quan/space-detail.html', zonepArray[index])
+			var self = this;
+			self.disabled = true;
+			if(!document.getElementById("spaceDetail")) {
+				var cityID = sliderId.replace('top_', '');
+				var index = id.replace('question_content' + cityID + idFlag, '');
+				zonepArray[index].tempIndex = index;
+				if(idFlag == '') {
+					zonepArray[index].focusFlag = 0;
+				} else {
+					zonepArray[index].focusFlag = 1;
 				}
-			})
+
+				events.openNewWindowWithData('../quan/space-detail.html', zonepArray[index])
+
+			}
+			setTimeout(function() {
+				self.disabled = false;
+			}, 1500);
 
 		});
 		mui('.mui-table-view').on('tap', '.show', function() {
@@ -322,17 +347,17 @@ var dynamiclistitem = (function($, mod) {
 			if(events.judgeLoginMode()) {
 				return;
 			}
-			console.log('长按删除评论')
+			//			console.log('长按删除评论')
 			var pageID = sliderId.replace('top_', '')
 			tempIndex = this.id.replace('replyComment' + pageID + idFlag, '');
-			mod.addComment('longtap');
+			mod.addComment('longtap', this);
 
 			window.event.stopPropagation()
 
 		});
 		var grayFlag = 0;
 		mui('.mui-table-view').on('touchstart', '.replyComment', function() {
-			console.log('touchstart---' + this.id)
+			console.log('touchstart---' + this.id + '变为灰色')
 			if(grayFlag == 0) {
 				this.style.backgroundColor = 'lightgray'
 				grayFlag = 1;
@@ -340,7 +365,7 @@ var dynamiclistitem = (function($, mod) {
 
 		});
 		mui('.mui-table-view').on('touchend', '.replyComment', function() {
-			console.log('touchend---' + this.id)
+			console.log('touchend---' + this.id + '变为白色')
 			grayFlag = 0;
 			this.style.backgroundColor = 'white'
 		});
@@ -489,8 +514,10 @@ var dynamiclistitem = (function($, mod) {
 		})
 		//点赞和取消点赞
 		mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
+			var wd = events.showWaiting();
 			//判断是否是游客身份登录
 			if(events.judgeLoginMode()) {
+				wd.close();
 				return;
 			}
 			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
@@ -503,9 +530,8 @@ var dynamiclistitem = (function($, mod) {
 					userId: userInfo.utid, //用户ID
 					userSpaceId: zonepArray[index].TabId, //用户空间ID
 				};
-				var wd = events.showWaiting();
+
 				postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
-					wd.close();
 					if(data.RspCode == 0) {
 						var a = document.getElementById("praise" + pageID + idFlag + index);
 						a.style.color = 'rgb(26, 155, 255)'
@@ -521,6 +547,7 @@ var dynamiclistitem = (function($, mod) {
 							PraiseList.innerHTML = '<img id= "praiseImg' + pageID + idFlag + index + '" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' +
 								'<font class="common-font-family-Regular dynamic-praise-name praiseName" data-info="' + userInfo.utid + '">' + personalunick + '</font>';
 						}
+						wd.close();
 					} else {
 						mui.toast(data.RspTxt);
 					}
@@ -533,9 +560,8 @@ var dynamiclistitem = (function($, mod) {
 					userId: userInfo.utid, //用户ID
 					userSpaceId: zonepArray[index].TabId, //用户空间ID
 				};
-				var wd = events.showWaiting();
 				postDataPro_delUserSpaceLikeByUser(comData, wd, function(data) {
-					wd.close();
+
 					if(data.RspCode == 0) {
 						var a = document.getElementById("praise" + pageID + idFlag + index);
 						a.style.color = 'rgb(183, 183, 183)'
@@ -576,6 +602,7 @@ var dynamiclistitem = (function($, mod) {
 							PraiseList.removeChild(praiseImg);
 
 						}
+						wd.close();
 					} else {
 						mui.toast(data.RspTxt);
 					}

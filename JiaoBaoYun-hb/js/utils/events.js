@@ -749,16 +749,58 @@ var events = (function(mod) {
 		var secondTime = null;
 		if(!firstTime) {
 			firstTime = "1234";
+			setTimeout(function() {
+				firstTime = null;
+			}, 2000);
 		} else {
 			secondTime = "123";
 		}
-		setTimeout(function() {
-			firstTime = null;
-		}, 5000)
 		console.log("第一次是否存在：" + firstTime + "第二次是否存在：" + secondTime);
 		if(!secondTime) {
 			callback();
 		}
+	}
+	/**
+	 * 打开新页面
+	 * @param {Object} clickedItem
+	 * @param {Object} webviewUrl
+	 * @param {Object} data
+	 */
+	mod.singleWebviewInPeriod = function(clickedItem, webviewUrl, data) {
+		mod.showWaiting();
+		if(!data) {
+			data = {};
+		}
+		console.log("当前点击控件是否可点击：" + clickedItem.disabled);
+		var webviewSites = webviewUrl.split("/");
+		var webviewId = webviewSites[webviewSites.length - 1];
+		var targetWebview = plus.webview.getWebviewById(webviewId);
+		if(!targetWebview) {
+			targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(), {
+				data: data
+			});
+//		}else{
+//			mod.closeWaiting();
+//			targetWebview.reload();
+		}
+		targetWebview.onloaded = function() {
+			targetWebview.show("slide-in-right", 250);
+			setItemAble(clickedItem, targetWebview);
+		}
+	}
+	var setItemAble = function(item, targetWeb) {
+		console.log("当前点击控件是否可点击：" + item.disabled);
+		console.log("targetWeb是否已显示：" + targetWeb.isVisible());
+		setTimeout(function() {
+			if(targetWeb.isVisible()) {
+				setTimeout(function() {
+					mod.closeWaiting();
+					item.disabled = false;
+				}, 500)
+			} else {
+				setItemAble(item, targetWeb);
+			}
+		}, 500);
 	}
 	/**
 	 * 限制预览下拉刷新
@@ -1141,12 +1183,12 @@ var events = (function(mod) {
 		}, wd, function(data) {
 			wd.close();
 			callback(data);
-//			console.log('用户在群的身份 ' + JSON.stringify(data));
-//			if(data.RspCode == '0000') {
-//				if(callback) {
-//					
-//				}
-//			}
+			//			console.log('用户在群的身份 ' + JSON.stringify(data));
+			//			if(data.RspCode == '0000') {
+			//				if(callback) {
+			//					
+			//				}
+			//			}
 		})
 	}
 	return mod;

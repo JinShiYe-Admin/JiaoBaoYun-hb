@@ -27,6 +27,17 @@
 				border-bottom: 1px solid lightgray;
 				margin-bottom: 0px;
 			}
+
+			.mui-popover {
+				width: 100%;
+				height: 100%;
+				border-radius: initial;
+			}
+
+			.mui-backdrop {
+				/*选择排序的遮罩*/
+				/*background-color: black;*/
+			}
 		</style>
 	</head>
 
@@ -36,391 +47,380 @@
 			<h1 class="mui-title" style="color: white;">笔记</h1>
 			<div id="finish" class="title-text-pull-right">完成</div>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content mui-fullscreen">
 			<textarea id="notes" maxlength="2000" placeholder="✎ 分享你的学习与生活...,最多2000字"></textarea>
 			<div id="MultiMedia">
-				<!--<div id="_MSL_MultiMedia" style="width: 100%;">
-					<div id="MultiMedia_Body" class="multimedia-body">
-						<div id="MultiMedia_Header" class="multimedia-header"><span id="MultiMedia_Picture_Header" class="mui-icon iconfont icon-xiangji2"></span><span id="MultiMedia_Tuku_Header" class="mui-icon iconfont icon-tuku"></span><span id="MultiMedia_Audio_Header" class="mui-icon iconfont icon-yuyin3"></span><span id="MultiMedia_Video_Header" class="mui-icon iconfont icon-shipin2"></span></div>
-						<div id="MultiMedia_Footer" class="multimedia-footer">
-							<div id="MultiMedia_Picture_Footer"></div>
-							<div id="MultiMedia_Audio_Footer"></div>
-							<div id="MultiMedia_Video_Footer"></div>
-						</div>
-					</div>
-				</div>-->
 			</div>
-		</div>
-		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
-		<script type="text/javascript" src="../../js/utils/events.js"></script>
-		<script type="text/javascript" src="../../js/utils/MultiMedia.js"></script>
-		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
-		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
-		<script type="text/javascript" src="../../js/utils/cryption.js"></script>
-		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
-		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
-		<script type="text/javascript" src="../../js/mui.zoom.js"></script>
-		<script type="text/javascript" src="../../js/mui.previewimage.js"></script>
-		<script type="text/javascript" src="../../js/utils/compress.js"></script>
-		<script type="text/javascript" src="../../js/utils/recordvideoutil.js"></script>
-		<script type="text/javascript">
-			mui.init();
-			var pathList = []; //记录需要删掉的图片和缩略图
-			var QNUptoken; //token数据
-			var uploadNum = 0; //记录上传的次数
-			var hideOption; //隐藏键盘的数据
-			var persistentId; //记录persistentId
-			var multiMedia; //多媒体控件
-			var notes = document.getElementById("notes"); //输入框
+			<script src="../../js/mui.min.js"></script>
+			<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+			<script type="text/javascript" src="../../js/utils/events.js"></script>
+			<script type="text/javascript" src="../../js/utils/MultiMedia.js"></script>
+			<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
+			<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
+			<script type="text/javascript" src="../../js/utils/cryption.js"></script>
+			<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
+			<script type="text/javascript" src="../../js/storageKeyName.js"></script>
+			<script type="text/javascript" src="../../js/mui.zoom.js"></script>
+			<script type="text/javascript" src="../../js/mui.previewimage.js"></script>
+			<script type="text/javascript" src="../../js/utils/compress.js"></script>
+			<script type="text/javascript" src="../../js/utils/recordvideoutil.js"></script>
+			<script type="text/javascript" src="../../js/utils/playutil.js" ></script>
+			<script type="text/javascript">
+				mui.init();
+				var pathList = []; //记录需要删掉的图片和缩略图
+				var QNUptoken; //token数据
+				var uploadNum = 0; //记录上传的次数
+				var hideOption; //隐藏键盘的数据
+				var persistentId; //记录persistentId
+				var multiMedia; //多媒体控件
+				var notes = document.getElementById("notes"); //输入框
 
-			mui.plusReady(function() {
-				//events.closeWaiting();
-				init(); //初始化控件
-				initListener(); //初始化监听
-			});
-
-			/*
-			 * 初始化控件
-			 */
-			function init() {
-				events.blurBack();
-
-				//图片查看控件
-				mui.previewImage();
-
-				//多媒体控件
-				multiMedia = MultiMedia.multiMedia({
-					MultiMediaId: 'MultiMedia', //存放多媒体对象控件的id
-					Key: window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid, //utid
-					Picture: true, //是否显示图片图标
-					Audio: true, //是否显示音频图标
-					Video: true, //是否显示视频图标
-					TotalPicture: 9, //图片的个数
-					TotalAudio: 1, //音频的个数
-					TotalVideo: 1, //视频的个数
-				});
-				//console.log(document.getElementById("MultiMedia").innerHTML);
-
-				hideOption = events.initHideKeyBoard(); //获取配置信息
-			}
-
-			/*
-			 * 初始化监听
-			 */
-			function initListener() {
-				//点击图片收回键盘
-				mui('body').on('tap', 'img', function() {
-					document.activeElement.blur();
+				mui.plusReady(function() {
+					//events.closeWaiting();
+					init(); //初始化控件
+					initListener(); //初始化监听
 				});
 
-				//完成
-				document.getElementById('finish').addEventListener('tap', function() {
-					events.hideKeyBoard(hideOption);
-					if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0) { //为空不允许发送
-						mui.toast('笔记不能为空');
-					} else if(notes.value.length > 2000) {
-						mui.toast('笔记最多2000字');
-					} else {
-						var wd = events.showWaiting();
-						document.getElementById("finish").disabled = true;
-						if(multiMedia.data.PictureArray.length == 0) { //没有传附件
-							addNote(wd, '3', '', '');
-						} else {
-							uploadFile(wd); //上传文件
-						}
-					}
-				});
-			}
-
-			/**
-			 * 增加笔记
-			 * @param {Object} wd 等待框
-			 * @param {Object} encType 附件类型，1图片2音视频3仅文字
-			 * @param {Object} encAddr 附件地址
-			 * @param {Object} encImg 附件缩略图地址
-			 */
-			function addNote(wd, encType, encAddr, encImg) {
-				//38.（用户空间）新增某用户空间信息 （云笔记）
-				//所需参数
-				var comData = {
-					userId: window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid, //用户ID
-					msgContent: notes.value, //记事内容
-					encType: encType, //附件类型，1图片2音视频3仅文字
-					encAddr: encAddr, //附件地址
-					encImg: encImg, //附件缩略图地址
-					encIntro: '', //附件简介
-					noteType: '1', //信息类型,1云笔记2个人空间
-					userIds: '[]', //推送用户ID
-					pubScopes: '[1]', //1 家校圈 必选,2 展现 可选例如[1,2]
-					pubArea: '' //具体到市级代码
-				};
-
-				postDataPro_addUserSpace(comData, wd, function(data) {
-					console.log('38postDataPro_addUserSpace（用户空间）新增某用户空间信息 （云笔记）.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					if(data.RspCode == 0) {
-						if(persistentId && persistentId.length != 0) {
-							wd.setTitle('处理中...');
-							setTimeout(function() {
-								waittingThumb(wd);
-							}, 2000);
-						} else {
-							mui.toast('发布成功');
-							pathList = [];
-							events.fireToPageNone('app_notes_main.html', 'refreshView');
-							wd.close();
-							mui.back();
-						}
-					} else {
-						document.getElementById("finish").disabled = false;
-						if(pathList.length != 0) {
-							BatchDelete(pathList, wd);
-						} else {
-							wd.close();
-						}
-						mui.toast('发布失败 ' + JSON.stringify(data));
-					}
-				});
-			}
-
-			/**
-			 * 上传文件
-			 */
-			function uploadFile(wd) {
-				var fileArray = [];
-				for(var i = 0; i < multiMedia.data.PictureArray.length; i++) {
-					fileArray.push(multiMedia.data.PictureArray[i].path);
-				}
-
-				var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENFILE; //获取token路径
-				var mainSpace = window.storageKeyName.QNPUBSPACE; //公开空间
-				var uploadSpace = window.storageKeyName.NOTE; //笔记空间
-				var getToken = {
-					type: '2', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件；2上传需要生成缩略图的多个文件
-					appId: 6, //int 必填 项目id
-					fileArray: fileArray, //array 选填  type为2时有效，多个文件的路径
-					mainSpace: mainSpace, //str 必填 文件存放在私有空间或公有空间
-					uploadSpace: uploadSpace, //str 必填  上传的空间
-				}
-
-				uploadNum = multiMedia.data.PictureArray.length; //记录上传的次数
-
-				CloudFileUtil.getQNUpToken(getUpTokenUrl, getToken, function(data) {
-					console.log('获取上传凭证 ' + JSON.stringify(data));
-					if(data.data.Status == 1) { //成功
-						QNUptoken = data.data; //token数据
-						persistentId = [];
-						var configure = data.configure; //获取token的配置信息
-						console.log('七牛上传凭证:' + JSON.stringify(QNUptoken));
-						console.log('七牛配置信息:' + JSON.stringify(configure));
-						//记录图片和缩略图地址
-						for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
-							for(var i = 0; i < QNUptoken.Data.length; i++) {
-								//console.log(JSON.stringify(QNUptoken.Data[i]));
-								var filePath = QNUptoken.Data[i].P_Key.split("/");
-								var fileName = filePath[filePath.length - 1];
-								var fileId = fileName.split("_")[0];
-								if(multiMedia.data.PictureArray[j].id == fileId) {
-									multiMedia.data.PictureArray[j].domain = QNUptoken.Data[i].Domain + QNUptoken.Data[i].Key;
-									multiMedia.data.PictureArray[j].thumb = QNUptoken.Data[i].OtherKey[configure.thumbKey[i]];
-								}
-							}
-						}
-						wd.setTitle('上传中...');
-						//开始执行上传任务
-						taskCreate(wd);
-					} else {
-						console.log('### ERROR ### 获取上传凭证失败 ### ' + data.data.Message);
-						document.getElementById("finish").disabled = false;
-						wd.close();
-						mui.toast('获取上传凭证失败 ' + data.data.Message);
-					}
-				}, function(xhr, type, errorThrown) {
-					console.log('### ERROR ### 请求上传凭证失败 ###  ' + type);
-					document.getElementById("finish").disabled = false;
-					wd.close();
-					mui.toast('请求上传凭证失败 ' + type);
-				});
-			}
-
-			/**
-			 * 删除上传失败的文件
-			 */
-			function BatchDelete(paths, wd) {
-				var batchDelete = {
-					appId: 6, //int 必填 项目id
-					urls: paths //array 必填 需要获取下载token文件的路径
-				}
-				/**
-				 * 七牛批量删除
+				/*
+				 * 初始化控件
 				 */
-				CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, batchDelete, function(data) {
-						console.log('七牛删除 ' + JSON.stringify(data));
-						if(data.Status == 1) {
-							pathList = [];
-						} else {
-							console.log('### ERROR ### 七牛删除失败 ### ' + JSON.stringify(data));
-							mui.toast('删除失败' + JSON.stringify(data));
-						}
-						wd.close();
-					},
-					function(xhr, type, errorThrown) {
-						console.log('### ERROR ### 请求七牛删除失败 ### ' + JSON.stringify(type));
-						mui.toast('请求删除失败' + JSON.stringify(type));
-						wd.close();
-					}
-				);
-			}
+				function init() {
+					events.blurBack();
 
-			/**
-			 * 创建上传任务并且逐个任务执行
-			 */
-			function taskCreate(wd) {
-				for(var i = 0; i < QNUptoken.Data.length; i++) {
-					if(QNUptoken.Data[i].task == undefined) {
-						var filePath = QNUptoken.Data[i].P_Key.split("/");
-						var fileName = filePath[filePath.length - 1];
-						//获取路径
-						var fPath = '';
-						var num; //记录第几张图片
-						for(var k = 0; k < multiMedia.data.PictureArray.length; k++) {
-							var path = multiMedia.data.PictureArray[k].path.split("/");
-							var name = path[path.length - 1];
-							if(fileName == name) {
-								num = k;
-								fPath = multiMedia.data.PictureArray[k].path;
-								break;
-							}
-						}
-						CloudFileUtil.upload(fPath, QNUptoken.Data[i].Token, QNUptoken.Data[i].Key, function(upload, status) {
-							//上传任务完成的监听
-							console.log('上传任务完成' + status + '|' + JSON.stringify(upload));
-							if(status == 200) {
-								console.log('上传成功');
-								QNUptoken.Data[i].task = true;
-								QNUptoken.Data[i].persistentId = JSON.parse(upload.responseText).persistentId;
-								uploadNum--;
-								var title = '上传 ' + (QNUptoken.Data.length - uploadNum) + "/" + (QNUptoken.Data.length);
-								wd.setTitle(title);
-								//记录失败后需要删除的文件
-								pathList.push(multiMedia.data.PictureArray[num].domain);
-								pathList.push(multiMedia.data.PictureArray[num].thumb);
-								if(persistentId.length < 3) { //前三张
-									persistentId[persistentId.length] = {
-										id: QNUptoken.Data[i].persistentId
-									};
-								}
-								if(uploadNum == 0) {
-									console.log('所有上传都成功');
-									var encAddr = []; //附件地址
-									var encImg = []; //附件缩略图地址
-									for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
-										encAddr.push(multiMedia.data.PictureArray[j].domain);
-										encImg.push(multiMedia.data.PictureArray[j].thumb);
-									}
-									var encAddrStr = encAddr.join('|');
-									var encImgrStr = encImg.join('|');
-									addNote(wd, '1', encAddrStr, encImgrStr);
+					//图片查看控件
+					mui.previewImage();
 
-								} else {
-									taskCreate(wd);
-								}
-							} else {
-								console.log('### ERROR ### 上传失败 ### ' + status + ' ' + JSON.stringify(upload));
-								document.getElementById("finish").disabled = false;
-								mui.toast('上传失败 ' + status + ' ' + upload.responseText);
-								if(pathList.length != 0) {
-									BatchDelete(pathList, wd);
-								} else {
-									wd.close();
-								}
-							}
-						}, function(upload, status) {
-							//var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
-							//var totalSize = AndroidFileSystem.readSize(upload.totalSize);
-							switch(upload.state) {
-								case 0: //上传任务开始调度
-									console.log('上传任务开始调度:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
-									break;
-								case 1: //上传任务开始请求
-									console.log('上传任务开始请求:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
-									break;
-								case 2: //上传任务请求已经建立
-									console.log('上传任务请求已经建立:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
-									break;
-								case 3: //上传任务提交数据
-									//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + upload.state);
-									break;
-								case 4: //上传任务已完成
-									console.log('上传任务已完成:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
-									break;
-								case 5: //上传任务已暂停
-									console.log('上传任务已暂停:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
-									break;
-								default:
-									console.log('上传任务状态监听:其他状态' + upload.state);
-									break;
-							}
-						}, function(task) {
-							//上传任务创建成功的回调
-							task.start();
-						});
+					//多媒体控件
+					multiMedia = MultiMedia.multiMedia({
+						MultiMediaId: 'MultiMedia', //存放多媒体对象控件的id
+						Key: window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid, //utid
+						Picture: true, //是否显示图片图标
+						Audio: true, //是否显示音频图标
+						Video: true, //是否显示视频图标
+						TotalPicture: 9, //图片的个数
+						TotalAudio: 1, //音频的个数
+						TotalVideo: 2, //视频的个数
+					});
 
-						//停止本次循环
-						break;
-					}
+					hideOption = events.initHideKeyBoard(); //获取配置信息
 				}
-			}
 
-			/**
-			 * 查询已生成缩略图
-			 * @param {Object} wd 等待框
-			 */
-			function waittingThumb(wd) {
-				console.log('waittingThumb');
-				for(var i = 0; i < persistentId.length; i++) {
-					if(persistentId[i].code == undefined) {
-						CloudFileUtil.persistentStatusSearch(persistentId[i].id, function(data) {
-							//wd.close();
-							console.log('waittingThumb success' + JSON.stringify(data));
-							if(data.items.length != 0) {
-								var item = data.items[0];
-								if(item.code == 0 || item.code == 3 || item.code == 4) {
-									//0 表示成功，1 表示等待处理，2 表示正在处理，3 表示处理失败，4 表示回调失败
-									persistentId[i].code = item.code;
-								} else if(item.code == 3) {
-									mui.toast('生成缩略图失败 ' + item.error);
-								}
-							}
+				/*
+				 * 初始化监听
+				 */
+				function initListener() {
+					//点击图片收回键盘
+					mui('body').on('tap', 'img', function() {
+						document.activeElement.blur();
+					});
 
-							var allCallback = true;
-							for(var j = 0; j < persistentId.length; j++) {
-								if(persistentId[j].code == undefined) {
-									allCallback = false;
-									setTimeout(function() {
-										waittingThumb(wd);
-									}, 100);
-									break;
-								}
+					//完成
+					document.getElementById('finish').addEventListener('tap', function() {
+						events.hideKeyBoard(hideOption);
+						if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0) { //为空不允许发送
+							mui.toast('笔记不能为空');
+						} else if(notes.value.length > 2000) {
+							mui.toast('笔记最多2000字');
+						} else {
+							var wd = events.showWaiting();
+							document.getElementById("finish").disabled = true;
+							if(multiMedia.data.PictureArray.length == 0) { //没有传附件
+								addNote(wd, '3', '', '');
+							} else {
+								uploadFile(wd); //上传文件
 							}
-							//所有的图片都生成了缩略图
-							if(allCallback) {
+						}
+					});
+				}
+
+				/**
+				 * 增加笔记
+				 * @param {Object} wd 等待框
+				 * @param {Object} encType 附件类型，1图片2音视频3仅文字
+				 * @param {Object} encAddr 附件地址
+				 * @param {Object} encImg 附件缩略图地址
+				 */
+				function addNote(wd, encType, encAddr, encImg) {
+					//38.（用户空间）新增某用户空间信息 （云笔记）
+					//所需参数
+					var comData = {
+						userId: window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid, //用户ID
+						msgContent: notes.value, //记事内容
+						encType: encType, //附件类型，1图片2音视频3仅文字
+						encAddr: encAddr, //附件地址
+						encImg: encImg, //附件缩略图地址
+						encIntro: '', //附件简介
+						noteType: '1', //信息类型,1云笔记2个人空间
+						userIds: '[]', //推送用户ID
+						pubScopes: '[1]', //1 家校圈 必选,2 展现 可选例如[1,2]
+						pubArea: '' //具体到市级代码
+					};
+
+					postDataPro_addUserSpace(comData, wd, function(data) {
+						console.log('38postDataPro_addUserSpace（用户空间）新增某用户空间信息 （云笔记）.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+						if(data.RspCode == 0) {
+							if(persistentId && persistentId.length != 0) {
+								wd.setTitle('处理中...');
+								setTimeout(function() {
+									waittingThumb(wd);
+								}, 2000);
+							} else {
 								mui.toast('发布成功');
 								pathList = [];
 								events.fireToPageNone('app_notes_main.html', 'refreshView');
 								wd.close();
 								mui.back();
 							}
-						}, function(data) {
+						} else {
+							document.getElementById("finish").disabled = false;
+							if(pathList.length != 0) {
+								BatchDelete(pathList, wd);
+							} else {
+								wd.close();
+							}
+							mui.toast('发布失败 ' + JSON.stringify(data));
+						}
+					});
+				}
+
+				/**
+				 * 上传文件
+				 */
+				function uploadFile(wd) {
+					var fileArray = [];
+					for(var i = 0; i < multiMedia.data.PictureArray.length; i++) {
+						fileArray.push(multiMedia.data.PictureArray[i].path);
+					}
+
+					var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENFILE; //获取token路径
+					var mainSpace = window.storageKeyName.QNPUBSPACE; //公开空间
+					var uploadSpace = window.storageKeyName.NOTE; //笔记空间
+					var getToken = {
+						type: '2', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件；2上传需要生成缩略图的多个文件
+						appId: 6, //int 必填 项目id
+						fileArray: fileArray, //array 选填  type为2时有效，多个文件的路径
+						mainSpace: mainSpace, //str 必填 文件存放在私有空间或公有空间
+						uploadSpace: uploadSpace, //str 必填  上传的空间
+					}
+
+					uploadNum = multiMedia.data.PictureArray.length; //记录上传的次数
+
+					CloudFileUtil.getQNUpToken(getUpTokenUrl, getToken, function(data) {
+						console.log('获取上传凭证 ' + JSON.stringify(data));
+						if(data.data.Status == 1) { //成功
+							QNUptoken = data.data; //token数据
+							persistentId = [];
+							var configure = data.configure; //获取token的配置信息
+							console.log('七牛上传凭证:' + JSON.stringify(QNUptoken));
+							console.log('七牛配置信息:' + JSON.stringify(configure));
+							//记录图片和缩略图地址
+							for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
+								for(var i = 0; i < QNUptoken.Data.length; i++) {
+									//console.log(JSON.stringify(QNUptoken.Data[i]));
+									var filePath = QNUptoken.Data[i].P_Key.split("/");
+									var fileName = filePath[filePath.length - 1];
+									var fileId = fileName.split("_")[0];
+									if(multiMedia.data.PictureArray[j].id == fileId) {
+										multiMedia.data.PictureArray[j].domain = QNUptoken.Data[i].Domain + QNUptoken.Data[i].Key;
+										multiMedia.data.PictureArray[j].thumb = QNUptoken.Data[i].OtherKey[configure.thumbKey[i]];
+									}
+								}
+							}
+							wd.setTitle('上传中...');
+							//开始执行上传任务
+							taskCreate(wd);
+						} else {
+							console.log('### ERROR ### 获取上传凭证失败 ### ' + data.data.Message);
+							document.getElementById("finish").disabled = false;
 							wd.close();
-							console.log('waittingThumb error' + JSON.stringify(data));
-							mui.toast('请求查询缩略图是否生成异常');
-						});
-						break;
+							mui.toast('获取上传凭证失败 ' + data.data.Message);
+						}
+					}, function(xhr, type, errorThrown) {
+						console.log('### ERROR ### 请求上传凭证失败 ###  ' + type);
+						document.getElementById("finish").disabled = false;
+						wd.close();
+						mui.toast('请求上传凭证失败 ' + type);
+					});
+				}
+
+				/**
+				 * 删除上传失败的文件
+				 */
+				function BatchDelete(paths, wd) {
+					var batchDelete = {
+						appId: 6, //int 必填 项目id
+						urls: paths //array 必填 需要获取下载token文件的路径
+					}
+					/**
+					 * 七牛批量删除
+					 */
+					CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, batchDelete, function(data) {
+							console.log('七牛删除 ' + JSON.stringify(data));
+							if(data.Status == 1) {
+								pathList = [];
+							} else {
+								console.log('### ERROR ### 七牛删除失败 ### ' + JSON.stringify(data));
+								mui.toast('删除失败' + JSON.stringify(data));
+							}
+							wd.close();
+						},
+						function(xhr, type, errorThrown) {
+							console.log('### ERROR ### 请求七牛删除失败 ### ' + JSON.stringify(type));
+							mui.toast('请求删除失败' + JSON.stringify(type));
+							wd.close();
+						}
+					);
+				}
+
+				/**
+				 * 创建上传任务并且逐个任务执行
+				 */
+				function taskCreate(wd) {
+					for(var i = 0; i < QNUptoken.Data.length; i++) {
+						if(QNUptoken.Data[i].task == undefined) {
+							var filePath = QNUptoken.Data[i].P_Key.split("/");
+							var fileName = filePath[filePath.length - 1];
+							//获取路径
+							var fPath = '';
+							var num; //记录第几张图片
+							for(var k = 0; k < multiMedia.data.PictureArray.length; k++) {
+								var path = multiMedia.data.PictureArray[k].path.split("/");
+								var name = path[path.length - 1];
+								if(fileName == name) {
+									num = k;
+									fPath = multiMedia.data.PictureArray[k].path;
+									break;
+								}
+							}
+							CloudFileUtil.upload(fPath, QNUptoken.Data[i].Token, QNUptoken.Data[i].Key, function(upload, status) {
+								//上传任务完成的监听
+								console.log('上传任务完成' + status + '|' + JSON.stringify(upload));
+								if(status == 200) {
+									console.log('上传成功');
+									QNUptoken.Data[i].task = true;
+									QNUptoken.Data[i].persistentId = JSON.parse(upload.responseText).persistentId;
+									uploadNum--;
+									var title = '上传 ' + (QNUptoken.Data.length - uploadNum) + "/" + (QNUptoken.Data.length);
+									wd.setTitle(title);
+									//记录失败后需要删除的文件
+									pathList.push(multiMedia.data.PictureArray[num].domain);
+									pathList.push(multiMedia.data.PictureArray[num].thumb);
+									if(persistentId.length < 3) { //前三张
+										persistentId[persistentId.length] = {
+											id: QNUptoken.Data[i].persistentId
+										};
+									}
+									if(uploadNum == 0) {
+										console.log('所有上传都成功');
+										var encAddr = []; //附件地址
+										var encImg = []; //附件缩略图地址
+										for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
+											encAddr.push(multiMedia.data.PictureArray[j].domain);
+											encImg.push(multiMedia.data.PictureArray[j].thumb);
+										}
+										var encAddrStr = encAddr.join('|');
+										var encImgrStr = encImg.join('|');
+										addNote(wd, '1', encAddrStr, encImgrStr);
+
+									} else {
+										taskCreate(wd);
+									}
+								} else {
+									console.log('### ERROR ### 上传失败 ### ' + status + ' ' + JSON.stringify(upload));
+									document.getElementById("finish").disabled = false;
+									mui.toast('上传失败 ' + status + ' ' + upload.responseText);
+									if(pathList.length != 0) {
+										BatchDelete(pathList, wd);
+									} else {
+										wd.close();
+									}
+								}
+							}, function(upload, status) {
+								//var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
+								//var totalSize = AndroidFileSystem.readSize(upload.totalSize);
+								switch(upload.state) {
+									case 0: //上传任务开始调度
+										console.log('上传任务开始调度:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
+										break;
+									case 1: //上传任务开始请求
+										console.log('上传任务开始请求:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
+										break;
+									case 2: //上传任务请求已经建立
+										console.log('上传任务请求已经建立:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
+										break;
+									case 3: //上传任务提交数据
+										//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + upload.state);
+										break;
+									case 4: //上传任务已完成
+										console.log('上传任务已完成:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
+										break;
+									case 5: //上传任务已暂停
+										console.log('上传任务已暂停:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
+										break;
+									default:
+										console.log('上传任务状态监听:其他状态' + upload.state);
+										break;
+								}
+							}, function(task) {
+								//上传任务创建成功的回调
+								task.start();
+							});
+
+							//停止本次循环
+							break;
+						}
 					}
 				}
-			}
-		</script>
+
+				/**
+				 * 查询已生成缩略图
+				 * @param {Object} wd 等待框
+				 */
+				function waittingThumb(wd) {
+					console.log('waittingThumb');
+					for(var i = 0; i < persistentId.length; i++) {
+						if(persistentId[i].code == undefined) {
+							CloudFileUtil.persistentStatusSearch(persistentId[i].id, function(data) {
+								//wd.close();
+								console.log('waittingThumb success' + JSON.stringify(data));
+								if(data.items.length != 0) {
+									var item = data.items[0];
+									if(item.code == 0 || item.code == 3 || item.code == 4) {
+										//0 表示成功，1 表示等待处理，2 表示正在处理，3 表示处理失败，4 表示回调失败
+										persistentId[i].code = item.code;
+									} else if(item.code == 3) {
+										mui.toast('生成缩略图失败 ' + item.error);
+									}
+								}
+
+								var allCallback = true;
+								for(var j = 0; j < persistentId.length; j++) {
+									if(persistentId[j].code == undefined) {
+										allCallback = false;
+										setTimeout(function() {
+											waittingThumb(wd);
+										}, 100);
+										break;
+									}
+								}
+								//所有的图片都生成了缩略图
+								if(allCallback) {
+									mui.toast('发布成功');
+									pathList = [];
+									events.fireToPageNone('app_notes_main.html', 'refreshView');
+									wd.close();
+									mui.back();
+								}
+							}, function(data) {
+								wd.close();
+								console.log('waittingThumb error' + JSON.stringify(data));
+								mui.toast('请求查询缩略图是否生成异常');
+							});
+							break;
+						}
+					}
+				}
+			</script>
 	</body>
 
 </html>

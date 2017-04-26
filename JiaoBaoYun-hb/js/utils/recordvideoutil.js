@@ -88,22 +88,22 @@ var RecordVideo = (function(mod) {
 
 	/**
 	 * 录制视频Android
-	 * @param {Object} data json
+	 * @param {Object} options json
 	 * @param {Object} successCB 成功的回调
 	 * @param {Object} errorCB 失败的回调
 	 */
-	mod.recordVideoAndroid = function(data, successCB, errorCB) {
-
+	mod.recordVideoAndroid = function(options, successCB, errorCB) {
+		console.log('recordVideoAndroid  ' + JSON.stringify(options));
 		var File = plus.android.importClass("java.io.File");
 		var Uri = plus.android.importClass("android.net.Uri");
 		var MediaStore = plus.android.importClass("android.provider.MediaStore");
 		var Intent = plus.android.importClass("android.content.Intent");
 		var intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-		var file = new File(data.outPutPath);
+		var file = new File(options.outPutPath);
 		var outPutUri = Uri.fromFile(file);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri); //录像输出位置
 		//intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); //0 最低质量, 1高质量(不设置,10M;0,几百KB;1,50M)
-		intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, data.time); //控制录制时间单位秒
+		intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, options.time); //控制录制时间单位秒
 
 		var main = plus.android.runtimeMainActivity();
 		main.startActivityForResult(intent, window.storageKeyName.CODERECORDVIDEO);
@@ -116,10 +116,11 @@ var RecordVideo = (function(mod) {
 			//第二个参数： 这整数resultCode是由子Activity通过其setResult() 方法返回。 适用于多个activity都返回数据时， 来标识到底是哪一个activity返回的值。
 			//第三个参数： 一个Intent对象， 带有返回的数据。 可以通过data.getXxxExtra()方法来获取指定数据类型的数据，
 			//停止录像
+			console.log('停止录像  ' + JSON.stringify(data));
 			if(requestCode == window.storageKeyName.CODERECORDVIDEO) { //拍照的Activity的code
 				if(resultCode == -1) { //成功
-					console.log('录像成功 ' + outPutPath);
-					successCB(outPutPath); //返回录像文件的位置
+					console.log('录像成功 ' + options.outPutPath);
+					successCB(options.outPutPath); //返回录像文件的位置
 				} else if(resultCode == 0) { //未录像
 					console.log('未录像');
 				} else {
