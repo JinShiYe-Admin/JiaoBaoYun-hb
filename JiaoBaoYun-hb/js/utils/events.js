@@ -522,15 +522,17 @@ var events = (function(mod) {
 			if(target && target.tagName == 'TEXTAREA') {
 				if(target.scrollHeight > target.clientHeight) {
 					e.stopPropagation();
-//				} else {
-//					try {
-//						target.dispatchEvent(e);
-//					} catch(ev) {
-//						//TODO handle the exception
-//					}
+					//				} else {
+					//					try {
+					//						target.dispatchEvent(e);
+					//					} catch(ev) {
+					//						//TODO handle the exception
+					//					}
 				}
 			}
-		},{passive: true});
+		}, {
+			passive: true
+		});
 	}
 
 	/**
@@ -747,15 +749,34 @@ var events = (function(mod) {
 		var secondTime = null;
 		if(!firstTime) {
 			firstTime = "1234";
+			setTimeout(function() {
+				firstTime = null;
+			}, 5000);
 		} else {
 			secondTime = "123";
 		}
-		setTimeout(function() {
-			firstTime = null;
-		}, 5000)
 		console.log("第一次是否存在：" + firstTime + "第二次是否存在：" + secondTime);
 		if(!secondTime) {
 			callback();
+		}
+	}
+	/**
+	 * 打开新页面
+	 * @param {Object} clickedItem
+	 * @param {Object} webviewUrl
+	 * @param {Object} data
+	 */
+	mod.singleWebviewInPeriod = function(clickedItem, webviewUrl, data) {
+		clickedItem.disabled=true;
+		if(!data) {
+			data = {};
+		}
+		var webviewSites = webviewUrl.split("/");
+		var webviewId = webviewSites[webviewSites.length - 1];
+		var targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(), data);
+		targetWebview.onloaded=function(){
+			clickedItem.disabled=false;
+			targetWebview.show("slide-in-right",250);
 		}
 	}
 	/**
@@ -1081,7 +1102,6 @@ var events = (function(mod) {
 		return currentdate;
 	}
 
-	
 	//判断回答或则问题是否还存在,flag=1为提问，=2为回答，id为对应id
 	mod.askDetailOrAnswerDetail = function(flag, id) {
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
@@ -1105,7 +1125,7 @@ var events = (function(mod) {
 					return true;
 				}
 			});
-		} else if(flag == 2){ //回答
+		} else if(flag == 2) { //回答
 			var comData = {
 				userId: personalUTID, //用户ID
 				answerId: id, //回答ID
@@ -1126,6 +1146,27 @@ var events = (function(mod) {
 			});
 		}
 		return false;
+	}
+	/**
+	 * 获取用户在群组中的信息
+	 * @param {Object} mstype
+	 * @param {Object} callback
+	 */
+	mod.getUserInGroup = function(groupId, callback) {
+		var wd = events.showWaiting();
+		postDataPro_PostGuI({
+			vvl: groupId,
+			vtp: -1
+		}, wd, function(data) {
+			wd.close();
+			callback(data);
+			//			console.log('用户在群的身份 ' + JSON.stringify(data));
+			//			if(data.RspCode == '0000') {
+			//				if(callback) {
+			//					
+			//				}
+			//			}
+		})
 	}
 	return mod;
 

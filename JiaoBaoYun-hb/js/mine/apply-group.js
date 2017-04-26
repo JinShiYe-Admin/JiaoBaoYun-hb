@@ -76,7 +76,7 @@ var searchGroup = function() {
  * @param {Object} data 返回数据
  */
 var setData = function(data) {
-	var fragment=document.createDocumentFragment();
+	var fragment = document.createDocumentFragment();
 	console.log('界面显示Data:' + JSON.stringify(data));
 	data.forEach(function(cell, i, data) {
 		var li = document.createElement('li');
@@ -85,7 +85,7 @@ var setData = function(data) {
 		li.innerHTML = createInner(cell);
 		console.log(i + createInner(cell))
 		fragment.appendChild(li);
-		if(i==data.length-1){
+		if(i == data.length - 1) {
 			list.appendChild(fragment);
 		}
 	})
@@ -114,25 +114,27 @@ var setButtonsListener = function() {
 	//确定按钮加载监听
 	btn_sure.addEventListener('tap', function() {
 		if(groupRoles.length > 0) {
-			var myNick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_PostJoinGuser({
-				gid: choseGroupId,
-				beinvnick: myNick,
-				mstype: groupRoles[0],
-				urel: getExtraInfo()
-			}, wd, function(data) {
-				groupRoles = [];
-				wd.close();
-				console.log('申请入群获取的数据：' + JSON.stringify(data));
-				if(data.RspCode == '0000') {
-					mui.toast('申请成功！');
-					events.fireToPageNone('/html/mine/approval-apply.html', 'applied')
-				} else {
-					mui.toast("申请失败:" + data.RspTxt)
+			var role=groupRoles[0];
+			var isMaster=false;
+			events.getUserInGroup(choseGroupId, function(data) {
+				console.log("本人在群里的身份：" + JSON.stringify(data));
+				if(data.RspCode==0){
+					for(var i in data.RspData){
+						if(data.RspData[i].mstype==1){
+							isMaster=true;
+							break;
+						}
+					}
+					if(isMaster&&(role==2||role==3)){
+						mui.toast("违反身份规则，无法申请！")
+					}else{
+						applyGroup();
+					}
+				}else{
+					applyGroup();
 				}
-				mui('.mui-popover').popover('toggle');
-			})
+			});
+
 		} else {
 			mui.toast('请选择入群身份');
 		}
@@ -142,9 +144,30 @@ var setButtonsListener = function() {
 		mui('.mui-popover').popover('toggle')
 	})
 }
+var applyGroup = function() {
+	var myNick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick;
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	postDataPro_PostJoinGuser({
+		gid: choseGroupId,
+		beinvnick: myNick,
+		mstype: groupRoles[0],
+		urel: getExtraInfo()
+	}, wd, function(data) {
+		groupRoles = [];
+		wd.close();
+		console.log('申请入群获取的数据：' + JSON.stringify(data));
+		if(data.RspCode == '0000') {
+			mui.toast('申请成功！');
+			events.fireToPageNone('/html/mine/approval-apply.html', 'applied')
+		} else {
+			mui.toast("申请失败:" + data.RspTxt)
+		}
+		mui('.mui-popover').popover('toggle');
+	})
+}
 var getExtraInfo = function() {
 	if(document.getElementById('extra-input').value) {
-		return jQuery.trim(document.getElementById('extra-input').value.replace(/\/n/g,""));
+		return jQuery.trim(document.getElementById('extra-input').value.replace(/\/n/g, ""));
 	}
 	return "";
 }

@@ -1,21 +1,26 @@
-.personInfo-container{
+.personInfo-container {
 	padding: 10px 15px;
 	background-color: white;
 }
-.head-portrait{
+
+.head-portrait {
 	width: 4rem;
 	height: 4rem;
 	vertical-align: middle;
 	margin-right: 10px;
 }
-.deal-choose-container{
+
+.deal-choose-container {
 	background-color: white;
 	margin-top: 10px;
+	/*padding: 0 15px;*/
 }
-.normal-super{
+
+.normal-super {
 	width: 80%;
-	margin:10px 10%;
+	margin: 10px 10%;
 }
+
 .deal-container {
 	border: solid 1px #12B7F5;
 	display: flex;
@@ -43,60 +48,78 @@ p {
 	height: 30px;
 	background-color: #12B7F5;
 }
-.deal-button{
+
+.deal-line {
+	margin: 0 15px;
+}
+
+.deal-button {
 	margin: 0 10px;
 	width: 60px;
 	height: 30px;
 }
- input[type=button]{
- 	font-size: 12px;
- 	padding: 0;
- }
-.mui-control-content{
+
+input[type=button] {
+	font-size: 12px;
+	padding: 0;
+}
+
+.mui-control-content {
 	padding: 10px 15px;
 }
-.mui-control-content:first-child{
+
+.mui-control-content:first-child {
 	margin-top: 0;
 }
-.mui-table-view.mui-grid-view .mui-table-view-cell{
+
+.mui-table-view.mui-grid-view .mui-table-view-cell {
 	text-align: left;
 }
-.mui-grid-view.mui-grid-9{
+
+.mui-grid-view.mui-grid-9 {
 	border: 0;
 }
-.mui-grid-view.mui-grid-9:after{
+
+.mui-grid-view.mui-grid-9:after {
 	height: 0;
 }
-.mui-grid-view.mui-grid-9 .mui-table-view-cell{
+
+.mui-grid-view.mui-grid-9 .mui-table-view-cell {
 	background-color: white;
 	border: 0;
 	padding: 0;
 }
-.mui-grid-view.mui-grid-9 .mui-media .mui-icon{
+
+.mui-grid-view.mui-grid-9 .mui-media .mui-icon {
 	font-size: 2.2rem;
 }
-.privilege-container{
+
+.privilege-container {
 	background-color: white;
 	padding: 10px 15px;
 	margin-top: 10px;
 }
-.privilege-head{
+
+.privilege-head {
 	width: 100%;
 	text-align: center;
 	font-size: 16px;
-	padding-bottom: 10px ;
+	padding-bottom: 10px;
 }
-.across-line{
+
+.across-line {
 	height: 1px;
-	margin: 0 15px;
 	background-color: #12B7F5;
 }
-.extra-container{
+
+.extra-container {
 	margin-top: 10px;
 }
-.info-intro{
+
+.info-intro {
 	padding: 10px 15px 0;
 }
-.info-words{
+
+.info-words {
 	padding-right: 15px;
 }

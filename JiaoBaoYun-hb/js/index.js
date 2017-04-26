@@ -92,9 +92,11 @@ mui.plusReady(function() {
 		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
 		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
-		var imgNode = document.querySelector('img');
+		var imgNode = document.getElementById("index-header").querySelector('img');
 		if(imgNode) {
-			imgNode.src = updateHeadImg(img, 2);
+			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)){
+				imgNode.src = updateHeadImg(img, 2);
+			}
 		}
 	});
 	//登录的监听
@@ -371,7 +373,8 @@ var addShai = function(container, name) {
 }
 var addOrder = function(container) {
 	var a = document.createElement('a');
-	a.className = 'mui-icon mui-icon mui-icon-list mui-pull-right';
+	a.className = 'mui-icon iconfont icon-iconhexinhuiyuan mui-pull-right';
+	a.style.marginRight="5px";
 	a.id = 'order';
 	container.appendChild(a);
 	a.addEventListener("tap", function() {
