@@ -72,36 +72,37 @@
 			});
 			//存储个人信息
 			var tempInfo;
+
+			//			var wxChannel = null; // 微信支付
+			//			var aliChannel = null; // 支付宝支付
+			//			var channel = null;
+
 			mui.plusReady(function() {
 				tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				console.log('tempInfo.uid:' + tempInfo.uid);
 				document.getElementById('change_phoneNum').innerText = tempInfo.uid;
+				// 获取支付通道
+				//				plus.payment.getChannels(function(channels) {
+				//					console.log('channels=' + JSON.stringify(channels));
+				//					alert("通道="+JSON.stringify(channels));
+				//					for (var i in channels) {
+				//						var temp = channels[i];
+				//						if (temp.id == 'alipay') {
+				//							aliChannel = temp;
+				//						} else if (temp.id == 'wxpay') {
+				//							wxChannel = temp;
+				//						}
+				//					}
+				//				}, function(e) {
+				//					alert("获取支付通道失败：" + e.message);
+				//				});
 				//点击绑定手机cell，弹出
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
+					//					console.log("微信");
+					//					pay('wxpay');
 					var index = this.id.replace('li', '');
 					console.log('index:' + index);
 					if(index == '0') {
-						//												var data1 = {
-						//													flag: 2, //flag:求知：提问1，回答2，评论3；班级空间：班级动态4；个人空间：个人动态5，个人动态评论6，档案7
-						//													comData: {
-						//														id: '111'
-						//													}, //协议需要参数
-						//													title: '弹出的显示标题', //弹出框中，显示的标题
-						//													buttons: [{
-						//														title: '删除',
-						//														btnFlag: 1
-						//													}, {
-						//														title: '修改',
-						//														btnFlag: 2
-						//													}, {
-						//														title: '重命名',
-						//														btnFlag: 5
-						//													}], //弹出的列表,格式为：[{title:标题，btnFlag:要做的操作}]，btnFlag：1删除，2修改，3屏蔽，4取消屏蔽，5重命名
-						//													delFlag: 1 //删除确认弹出框格式，1从下弹出，2中间confirm
-						//												};
-						//												delContent_pop(data1, function(data) {
-						//													console.log('返回值为：'+JSON.stringify(data));
-						//												});
 						mui.confirm(tempInfo.uid, '您已绑定手机号', ['取消', '更换'], function(e) {
 							var index = e.index;
 							switch(index) {
@@ -127,6 +128,49 @@
 				//				events.addTap('yinsi', function() {
 				//					mui.toast('此功能暂未开放');
 				//				});
+				var ALIPAYSERVER = 'http://demo.dcloud.net.cn/helloh5/payment/alipay.php?total=1';
+				//		var WXPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/wxpay.php?total=1';
+				var WXPAYSERVER = 'https://jsypay.jiaobaowang.net/example/AppServer.aspx?body="教宝云-会员"&attach="附件数据"&total_fee=201';
+				//2. 发起支付请求
+				function pay(id) {
+					// 从服务器请求支付订单
+					var PAYSERVER = '';
+					if(id == 'alipay') {
+						PAYSERVER = ALIPAYSERVER;
+						channel = aliChannel;
+					} else if(id == 'wxpay') {
+						PAYSERVER = WXPAYSERVER;
+						channel = wxChannel;
+					} else {
+						plus.nativeUI.alert("不支持此支付通道！", null, "捐赠");
+						return;
+					}
+					var xhr = new XMLHttpRequest();
+					xhr.onreadystatechange = function() {
+						console.log('xhr=' + JSON.stringify(xhr));
+						switch(xhr.readyState) {
+							case 4:
+								if(xhr.status == 200) {
+									alert("获取订单信=" + JSON.stringify(xhr));
+									plus.payment.request(channel, xhr.responseText, function(result) {
+										plus.nativeUI.alert("支付成功！", function() {
+											back();
+										});
+									}, function(error) {
+										console.log('error' + JSON.stringify(error));
+										plus.nativeUI.alert("支付失败：" + error.code);
+									});
+								} else {
+									alert("获取订单信息失败！");
+								}
+								break;
+							default:
+								break;
+						}
+					}
+					xhr.open('GET', PAYSERVER);
+					xhr.send();
+				}
 				//修改密码
 				events.addTap('change-passwords', function() {
 					events.openNewWindowWithData('../register/modify_password.html', '1');
