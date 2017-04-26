@@ -19,6 +19,7 @@ var RecordVideo = (function(mod) {
 			outPutPath: outPutPath,
 			time: time
 		}, data);
+		console.log('recordVideo initOption ' + JSON.stringify(options));
 		return options;
 	}
 
@@ -93,7 +94,6 @@ var RecordVideo = (function(mod) {
 	 * @param {Object} errorCB 失败的回调
 	 */
 	mod.recordVideoAndroid = function(options, successCB, errorCB) {
-		console.log('recordVideoAndroid  ' + JSON.stringify(options));
 		var File = plus.android.importClass("java.io.File");
 		var Uri = plus.android.importClass("android.net.Uri");
 		var MediaStore = plus.android.importClass("android.provider.MediaStore");

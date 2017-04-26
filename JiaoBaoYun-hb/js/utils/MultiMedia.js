@@ -254,18 +254,14 @@ var MultiMedia = (function($, mod) {
 		var options = this.options;
 		document.activeElement.blur();
 		var id = element.id.replace('MultiMedia_Video_Play_', '');
-		var fpath;
+		var videoOption;
 		for(var i = 0; i < self.data.VideoArray.length; i++) {
 			if(self.data.VideoArray[i].id == id) {
-				fpath = self.data.VideoArray[i].path;
+				videoOption = self.data.VideoArray[i];
 				break;
 			}
 		}
-		if(plus.os.name == 'Android') {
-			playutil.openFile(fpath, function(text) {
-				mui.toast(text);
-			});
-		}
+		self.videoPlayCallBack(videoOption);
 	}
 
 	/**
@@ -517,6 +513,10 @@ var MultiMedia = (function($, mod) {
 	 * 视频数量变化的回调
 	 */
 	proto.videoChangeCallBack = function() {}
+	/**
+	 * 播放某个视频的回调
+	 */
+	proto.videoPlayCallBack = function(data) {}
 
 	var MultiMediaApi = null; //声明一个null的变量，用来存储多媒体对象
 
@@ -672,6 +672,10 @@ var MultiMedia = (function($, mod) {
 				}
 			}, {}
 		);
+	}
+
+	mod.showVideo=function(path,thumb){
+
 	}
 
 	return mod;
