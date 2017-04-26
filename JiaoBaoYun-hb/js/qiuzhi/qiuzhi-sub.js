@@ -280,7 +280,7 @@ var rechargeInfos = function(datas, infos) {
 var setChannelList = function(data) {
 	console.log('求知主界面加载的数据信息：' + JSON.stringify(data));
 	var list = document.getElementById('list-container');
-//	var fragemnt = document.createDocumentFragment();
+	//	var fragemnt = document.createDocumentFragment();
 	for(var i in data) {
 		var li = document.createElement('li');
 		li.className = "mui-table-view-cell";
@@ -298,7 +298,7 @@ var setChannelList = function(data) {
 		}
 		li.querySelector('.focus-status').questionInfo = data[i];
 	}
-//	list.appendChild(fragemnt);
+	//	list.appendChild(fragemnt);
 	lazyLoadApi.refresh(true);
 	getChannelTime = Date.now();
 	if(getExperTime) {
@@ -380,11 +380,11 @@ var pullUpFresh = function() {
 	document.addEventListener("plusscrollbottom", function() {
 		console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
 		if(pageIndex < totalPage) {
-			wd = events.showWaiting(); 
+			wd = events.showWaiting();
 			pageIndex++;
 			requestChannelList(channelInfo);
 		} else {
-			if(plus.webview.currentWebview().isVisible()){
+			if(plus.webview.currentWebview().isVisible()) {
 				mui.toast('到底啦，别拉了！');
 			}
 		}
@@ -413,17 +413,15 @@ var setListener = function() {
 	//标题点击事件
 	mui('.mui-table-view').on('tap', '.ask-title', function() {
 		var item = this;
+		item.disabled=true;
 		requireQuestionInfo(item.getAttribute('askId'), function(questionInfo) {
-			events.singleInstanceInPeriod(function() {
-				events.openNewWindowWithData('qiuzhi-question.html', {
-					askID: item.getAttribute('askId'), //问题id
-					channelInfo: questionInfo, //当前话题
-					allChannels: allChannels //全部话题
-					//					questionInfo:questionInfo//当前问题
-				});
-			})
-		})
-	});
+			events.singleWebviewInPeriod(item, "qiuzhi-question.html", {
+				askID: item.getAttribute('askId'), //问题id
+				channelInfo: questionInfo, //当前话题
+				allChannels: allChannels //全部话题
+			});
+		});
+	})
 
 	//点击回答
 	mui('.mui-table-view').on('tap', '.answer-container', function() {
@@ -431,10 +429,6 @@ var setListener = function() {
 		requestAnswerDetail(postData.AnswerId, function() {
 			fireToPageReady(1, postData)
 		})
-
-		//		events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', this.answerInfo);
-		//		console.log('传递的answerInfo:' + JSON.stringify(this.answerInfo));
-		//		plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
 	});
 
 	//点击专家列表
