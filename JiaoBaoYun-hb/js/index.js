@@ -371,7 +371,8 @@ var addShai = function(container, name) {
 }
 var addOrder = function(container) {
 	var a = document.createElement('a');
-	a.className = 'mui-icon mui-icon mui-icon-list mui-pull-right';
+	a.className = 'mui-icon iconfont icon-iconhexinhuiyuan mui-pull-right';
+	a.style.marginRight="5px";
 	a.id = 'order';
 	container.appendChild(a);
 	a.addEventListener("tap", function() {
