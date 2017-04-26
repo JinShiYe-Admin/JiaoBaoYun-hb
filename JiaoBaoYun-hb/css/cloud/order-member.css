@@ -1,125 +1,151 @@
-.personInfo-container {
-	padding: 10px 15px;
-	background-color: white;
-}
-
-.head-portrait {
-	width: 4rem;
-	height: 4rem;
-	vertical-align: middle;
-	margin-right: 10px;
-}
-
-.deal-choose-container {
-	background-color: white;
-	margin-top: 10px;
-	/*padding: 0 15px;*/
-}
-
-.normal-super {
-	width: 80%;
-	margin: 10px 10%;
-}
-
-.deal-container {
-	border: solid 1px #12B7F5;
-	display: flex;
-	display: -webkit-flex;
-	align-items: center;
-	height: 40px;
-	margin-top: 10px;
-}
-
-.duration-price {
-	padding: 0px 10px;
-	flex-grow: 1;
-	display: flex;
-	display: -webkit-flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
-p {
-	margin: 0;
-}
-
-.vertical-line {
-	width: 1px;
-	height: 30px;
-	background-color: #12B7F5;
-}
-
-.deal-line {
-	margin: 0 15px;
-}
-
-.deal-button {
-	margin: 0 10px;
-	width: 60px;
-	height: 30px;
-}
-
-input[type=button] {
-	font-size: 12px;
-	padding: 0;
-}
-
-.mui-control-content {
-	padding: 10px 15px;
-}
-
-.mui-control-content:first-child {
-	margin-top: 0;
-}
-
-.mui-table-view.mui-grid-view .mui-table-view-cell {
-	text-align: left;
-}
-
-.mui-grid-view.mui-grid-9 {
-	border: 0;
-}
-
-.mui-grid-view.mui-grid-9:after {
-	height: 0;
-}
-
-.mui-grid-view.mui-grid-9 .mui-table-view-cell {
-	background-color: white;
-	border: 0;
-	padding: 0;
-}
-
-.mui-grid-view.mui-grid-9 .mui-media .mui-icon {
-	font-size: 2.2rem;
-}
-
-.privilege-container {
-	background-color: white;
-	padding: 10px 15px;
-	margin-top: 10px;
-}
-
-.privilege-head {
-	width: 100%;
-	text-align: center;
-	font-size: 16px;
-	padding-bottom: 10px;
-}
-
-.across-line {
-	height: 1px;
-	background-color: #12B7F5;
-}
-
-.extra-container {
-	margin-top: 10px;
-}
-
-.info-intro {
-	padding: 10px 15px 0;
-}
-
-.info-words {
-	padding-right: 15px;
-}
+	.personInfo-container {
+		padding: 10px 15px;
+		background-color: white;
+	}
+	
+	.head-portrait {
+		width: 4rem;
+		height: 4rem;
+		vertical-align: middle;
+		margin-right: 10px;
+	}
+	
+	.person-name {
+		color: #323232;
+	}
+	
+	.deal-choose-container {
+		background-color: white;
+		margin-top: 10px;
+		/*padding: 0 15px;*/
+	}
+	
+	.mui-segmented-control {
+		border: 1px solid #1DB8F1;
+	}
+	
+	.mui-segmented-control .mui-control-item.mui-active {
+		color: #fff;
+		background-color: #1DB8F1;
+	}
+	
+	.mui-segmented-control .mui-control-item {
+		color: #1DB8F1;
+		border-color: #1DB8F1;
+		border-left: 1px solid #1DB8F1;
+	}
+	
+	.normal-super {
+		width: 80%;
+		margin: 10px 10%;
+	}
+	
+	.deal-container {
+		border: solid 1px #12B7F5;
+		display: flex;
+		display: -webkit-flex;
+		align-items: center;
+		height: 40px;
+		margin-top: 10px;
+		border-radius: 4px;
+	}
+	
+	.duration-price {
+		padding: 0px 10px;
+		flex-grow: 1;
+		display: flex;
+		display: -webkit-flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.duration-info{
+		color: #323232;
+	}
+	.price-info{
+		color: #ff6633;
+	}
+	p {
+		margin: 0;
+	}
+	
+	.vertical-line {
+		width: 1px;
+		height: 30px;
+		background-color: #12B7F5;
+	}
+	
+	.deal-line {
+		margin: 0 15px;
+	}
+	
+	.deal-button {
+		margin: 0 10px;
+		width: 60px;
+		height: 30px;
+	}
+	
+	input[type=button] {
+		font-size: 12px;
+		padding: 0 0 2px 0;
+		border: none;
+	}
+	
+	.mui-control-content {
+		padding: 10px 15px;
+	}
+	
+	.mui-control-content:first-child {
+		margin-top: 0;
+	}
+	
+	.mui-table-view.mui-grid-view .mui-table-view-cell {
+		text-align: left;
+	}
+	
+	.mui-grid-view.mui-grid-9 {
+		border: 0;
+	}
+	
+	.mui-grid-view.mui-grid-9:after {
+		height: 0;
+	}
+	
+	.mui-grid-view.mui-grid-9 .mui-table-view-cell {
+		background-color: white;
+		border: 0;
+		padding: 0;
+	}
+	
+	.mui-grid-view.mui-grid-9 .mui-media .mui-icon {
+		font-size: 2.2rem;
+	}
+	
+	.privilege-container {
+		background-color: white;
+		padding: 10px 15px;
+		margin-top: 10px;
+	}
+	
+	.privilege-head {
+		width: 100%;
+		text-align: center;
+		font-size: 16px;
+		padding-bottom: 10px;
+	}
+	
+	.across-line {
+		height: 1px;
+		background-color: #E4E4E4;
+	}
+	
+	.extra-container {
+		margin-top: 10px;
+	}
+	
+	.info-intro {
+		padding: 10px 15px 0;
+	}
+	
+	.info-words {
+		padding-right: 15px;
+	}
