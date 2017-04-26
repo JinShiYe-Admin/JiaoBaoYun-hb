@@ -773,10 +773,10 @@ var events = (function(mod) {
 		}
 		var webviewSites = webviewUrl.split("/");
 		var webviewId = webviewSites[webviewSites.length - 1];
-		clickedItem.disabled = true;
 		var targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(), data);
 		targetWebview.onloaded=function(){
 			clickedItem.disabled=false;
+			targetWebview.show("slide-in-right",250);
 		}
 	}
 	/**
