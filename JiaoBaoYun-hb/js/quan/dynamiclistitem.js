@@ -114,6 +114,13 @@ var dynamiclistitem = (function($, mod) {
 
 	}
 	mod.addSomeEvent = function() {
+		window.addEventListener('deleteDynamic', function(data) {
+			var index = data.detail
+			console.log('删除动态的监听'+JSON.stringify(index))
+			var deleteNode = document.getElementById(index);
+			deleteNode.parentNode.removeChild(deleteNode);
+			
+		})
 		mui('.mui-table-view').on('tap', '.icon-xiajiantou', function() {
 			//判断是否是游客身份登录
 			if(events.judgeLoginMode()) {
@@ -171,6 +178,10 @@ var dynamiclistitem = (function($, mod) {
 
 												var deleteNode = document.getElementById(index);
 												deleteNode.parentNode.removeChild(deleteNode);
+												if(document.getElementById("spaceDetail")) {
+													mui.fire(plus.webview.currentWebview().opener(),'deleteDynamic',preModel.tempIndex)
+													mui.back()
+												}
 												//												zonepArray.splice(index, 1)
 											} else {
 												mui.toast(data.RspTxt);
@@ -233,45 +244,53 @@ var dynamiclistitem = (function($, mod) {
 		});
 		mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
 			var id = this.id;
-			events.singleInstanceInPeriod(function() {
-				if(isPersonal == 1) {
-					var cityID = sliderId.replace('top_', '');
-					var index = id.replace('headImg' + cityID + idFlag, '');
-					mui.openWindow({
-						url: '../quan/zone_main.html',
-						id: '../quan/zone_main.html',
-						styles: {
-							top: '0px', //设置距离顶部的距离
-							bottom: '0px'
-						},
+			var self = this;
+			self.disabled = true;
+			if(isPersonal == 1) {
+				var cityID = sliderId.replace('top_', '');
+				var index = id.replace('headImg' + cityID + idFlag, '');
+				mui.openWindow({
+					url: '../quan/zone_main.html',
+					id: '../quan/zone_main.html',
+					styles: {
+						top: '0px', //设置距离顶部的距离
+						bottom: '0px'
+					},
 
-						extras: {
-							data: zonepArray[index].PublisherId,
-							NoReadCnt: 0,
-							flag: '0'
-						},
-						createNew: true,
+					extras: {
+						data: zonepArray[index].PublisherId,
+						NoReadCnt: 0,
+						flag: '0'
+					},
+					createNew: true,
 
-					});
-				}
-			})
+				});
+			}
+			setTimeout(function() {
+				self.disabled = false;
+			}, 1500);
 
 		})
 		mui('.mui-table-view').on('tap', '.question_content', function() {
 			var id = this.id;
-			events.singleInstanceInPeriod(function() {
-				if(!document.getElementById("spaceDetail")) {
-					var cityID = sliderId.replace('top_', '');
-					var index = id.replace('question_content' + cityID + idFlag, '');
-					if(idFlag == '') {
-						zonepArray[index].focusFlag = 0;
-					} else {
-						zonepArray[index].focusFlag = 1;
-					}
-
-					events.openNewWindowWithData('../quan/space-detail.html', zonepArray[index])
+			var self = this;
+			self.disabled = true;
+			if(!document.getElementById("spaceDetail")) {
+				var cityID = sliderId.replace('top_', '');
+				var index = id.replace('question_content' + cityID + idFlag, '');
+				zonepArray[index].tempIndex = index;
+				if(idFlag == '') {
+					zonepArray[index].focusFlag = 0;
+				} else {
+					zonepArray[index].focusFlag = 1;
 				}
-			})
+
+				events.openNewWindowWithData('../quan/space-detail.html', zonepArray[index])
+
+			}
+			setTimeout(function() {
+				self.disabled = false;
+			}, 1500);
 
 		});
 		mui('.mui-table-view').on('tap', '.show', function() {
@@ -511,7 +530,7 @@ var dynamiclistitem = (function($, mod) {
 					userId: userInfo.utid, //用户ID
 					userSpaceId: zonepArray[index].TabId, //用户空间ID
 				};
-				
+
 				postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
 					if(data.RspCode == 0) {
 						var a = document.getElementById("praise" + pageID + idFlag + index);
@@ -542,7 +561,7 @@ var dynamiclistitem = (function($, mod) {
 					userSpaceId: zonepArray[index].TabId, //用户空间ID
 				};
 				postDataPro_delUserSpaceLikeByUser(comData, wd, function(data) {
-					
+
 					if(data.RspCode == 0) {
 						var a = document.getElementById("praise" + pageID + idFlag + index);
 						a.style.color = 'rgb(183, 183, 183)'
