@@ -38,6 +38,10 @@
 				height: 80px;
 				width: 150;
 			}
+			.mui-backdrop {
+				/*选择排序的遮罩*/
+				background-color: rgba(0, 0, 0, .05);
+			}
 
 			#refreshContainer .mui-table-view:before,
 			#refreshContainer .mui-table-view:after,
@@ -375,10 +379,16 @@
 					}
 				})
 				window.addEventListener("topPopover", function(e) {
-					mui('#topPopover').popover('toggle')
+					var flag = e.detail.data.flag;
+					console.log('flag='+JSON.stringify(flag))
+					if(flag==0){
+						mui('#topPopover').popover('toggle')
+					}else{
+						mui('#topPopover').popover('hide')
+					}
+					
 				});
 				mui('.mui-popover').on('tap', 'li', function(e) {
-					console.log(1111)
 					mui('#topPopover').popover('toggle')
 					if(this.id == 'pubDynamic') {
 						events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
