@@ -1276,8 +1276,13 @@
 
 						//显示未读的红点
 						for(var i = 0; i < noReadModel.stu_noReads.length; i++) {
+							var tempValue = noReadModel.stu_noReads[i];
+							console.log('tempValue=='+tempValue);
 							if(noReadModel.stu_noReads[i] != 0) {
-								document.getElementById("studyn_redpoint_" + stuIds[i]).style.display = 'inline';
+								var redpoint=document.getElementById("studyn_redpoint_" + stuIds[i]);
+								if(redpoint){
+									redpoint.style.display = 'inline';
+								}			
 							}
 						}
 					} else {}
