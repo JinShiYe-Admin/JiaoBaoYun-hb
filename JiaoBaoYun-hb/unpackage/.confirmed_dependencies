@@ -176,7 +176,8 @@
 			"html/quan/pub-dynamic.html",
 			"html/quan/aboutme.html",
 			"html/mine/qun_manage_info.html",
-			"html/cloud/app_keeprecord.html"
+			"html/cloud/app_keeprecord.html",
+			"html/mine/qun_manage_a.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -2088,7 +2089,8 @@
 	"html/mine/qun_data_details.html": {
 		"resources": [
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
 	},
@@ -2473,12 +2475,14 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"js/utils/cryption.js",
 			"js/utils/CloudFileUtil.js",
-			"js/qiniu/qiniu.js"
+			"js/qiniu/qiniu.js",
+			"css/mine/manager_data.css"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",
 			"html/mine/qun_manage_invite_a.html",
-			"html/mine/qun_manage_info.html"
+			"html/mine/qun_manage_info.html",
+			"html/mine/qun_data_details.html"
 		]
 	},
 	"html/cloud/order-member.html": {

@@ -30,6 +30,10 @@
 		<script type="text/javascript">
 			mui.init();
 			var questionInfo;
+			var _oldBack=mui.back;
+			mui.back=function(){
+				
+			}
 			mui.plusReady(function() {
 				var wd = events.showWaiting();
 				//---获取数据并传递数据---start---
@@ -53,6 +57,8 @@
 				window.addEventListener("questionInfo",function(e){
 					questionInfo=e.detail;
 					setIcon();
+		            events.closeWaiting();
+					mui.back=_oldBack;
 				})
 				//点击右上角邀请专家按钮
 				events.addTap('addExpert', function() {
