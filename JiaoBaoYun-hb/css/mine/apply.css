@@ -228,7 +228,6 @@ a>p {
 	padding-right: 1rem;
 }
 
-
 .center-popover {
 	position: fixed;
 	top: 25%;
@@ -270,9 +269,12 @@ a>p {
 	height: 30px;
 	background-color: #F2F3F5;
 	line-height: normal;
-	display: flex;
-	display: -webkit-flex;
 	align-items: center;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
 }
 
 .title-left {
@@ -287,6 +289,11 @@ a>p {
 	flex-grow: 1;
 	font-size: 16px;
 	color: #323232;
+	-webkit-box-flex-grow: 1;
+	-moz-box-flex-grow: 1;
+	-webkit-flex-grow: 1;
+	-ms-flex-grow: 1;
+	flex-grow: 1;
 }
 
 .title-right {
@@ -317,9 +324,11 @@ a>p {
 	color: #808080;
 	font-size: 14px;
 }
-.mui-radio label{
+
+.mui-radio label {
 	font-size: 14px;
 }
+
 .apply-group img {
 	margin-right: 5px;
 }
@@ -358,20 +367,25 @@ a>p {
 	padding-right: 15px;
 	padding-left: 40px;
 }
+
 .mui-input-row label {
 	padding: 6px 5px;
 }
-.mui-input-row.mui-radio{
+
+.mui-input-row.mui-radio {
 	width: 32%;
 }
-.mui-input-group .mui-input-row{
+
+.mui-input-group .mui-input-row {
 	height: 28px;
 }
-textarea{
+
+textarea {
 	margin-bottom: 0;
 	padding: 5px 5px;
 	font-size: 14px;
 }
-textarea:-webkit-input-placeholder{
+
+textarea:-webkit-input-placeholder {
 	font-size: 5px;
 }
