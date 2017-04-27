@@ -522,10 +522,10 @@ var dynamiclistitem = (function($, mod) {
 		})
 		//点赞和取消点赞
 		mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
-			var wd //= events.showWaiting();
+			var wd = events.showWaiting();
 			//判断是否是游客身份登录
 			if(events.judgeLoginMode()) {
-//				wd.close();
+				wd.close();
 				return;
 			}
 			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
@@ -571,24 +571,25 @@ var dynamiclistitem = (function($, mod) {
 							mui.fire(plus.webview.currentWebview().opener(), 'praise', {
 								index: preModel.tempIndex
 							})
-						} else if(zonepArray[index].pageFlag == 1) {
-							for(var slider_id in datasource) {
-								if(slider_id == sliderId){
-									continue;
-								}
-								var tempArr = datasource[slider_id]
-								var citycode = slider_id.replace('top_', '');
-								for(var j in tempArr) {
-									var tempModel = tempArr[j];
-									if(tempModel.PublisherId == tempData.PublisherId) {
-										var tempA = document.getElementById("praise" + citycode + idFlag + index);
-										//模拟点击点赞按钮
-										mui.trigger(tempA, 'tap');
-									}
-								}
-							}
 						}
-//						wd.close();
+//						else if(zonepArray[index].pageFlag == 1) {
+//							for(var slider_id in datasource) {
+//								if(slider_id == sliderId){
+//									continue;
+//								}
+//								var tempArr = datasource[slider_id]
+//								var citycode = slider_id.replace('top_', '');
+//								for(var j in tempArr) {
+//									var tempModel = tempArr[j];
+//									if(tempModel.PublisherId == tempData.PublisherId) {
+//										var tempA = document.getElementById("praise" + citycode + idFlag + index);
+//										//模拟点击点赞按钮
+//										mui.trigger(tempA, 'tap');
+//									}
+//								}
+//							}
+//						}
+						wd.close();
 					} else {
 						mui.toast(data.RspTxt);
 					}
@@ -647,24 +648,25 @@ var dynamiclistitem = (function($, mod) {
 							mui.fire(plus.webview.currentWebview().opener(), 'praise', {
 								index: preModel.tempIndex
 							})
-						} else if(zonepArray[index].pageFlag == 1) {
-							for(var slider_id in datasource) {
-								if(slider_id == sliderId){
-									continue;
-								}
-								var tempArr = datasource[slider_id]
-								var citycode = slider_id.replace('top_', '');
-								for(var j in tempArr) {
-									var tempModel = tempArr[j];
-									if(tempModel.PublisherId == tempData.PublisherId) {
-										var tempA = document.getElementById("praise" + citycode + idFlag + index);
-										//模拟点击点赞按钮
-										mui.trigger(tempA, 'tap');
-									}
-								}
-							}
 						}
-//						wd.close();
+//						else if(zonepArray[index].pageFlag == 1) {
+//							for(var slider_id in datasource) {
+//								if(slider_id == sliderId){
+//									continue;
+//								}
+//								var tempArr = datasource[slider_id]
+//								var citycode = slider_id.replace('top_', '');
+//								for(var j in tempArr) {
+//									var tempModel = tempArr[j];
+//									if(tempModel.PublisherId == tempData.PublisherId) {
+//										var tempA = document.getElementById("praise" + citycode + idFlag + index);
+//										//模拟点击点赞按钮
+//										mui.trigger(tempA, 'tap');
+//									}
+//								}
+//							}
+//						}
+						wd.close();
 					} else {
 						mui.toast(data.RspTxt);
 					}
