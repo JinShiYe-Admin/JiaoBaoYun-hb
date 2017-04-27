@@ -119,10 +119,6 @@
 		padding: 10px 15px;
 	}
 	
-	.mui-control-content:first-child {
-		margin-top: 0;
-	}
-	
 	.mui-table-view.mui-grid-view .mui-table-view-cell {
 		text-align: left;
 	}
@@ -174,4 +170,7 @@
 	
 	.info-words {
 		padding-right: 15px;
+	}
+	.mui-slider-item.mui-control-content>:first-child {
+		margin-top: 0px;
 	}

@@ -471,8 +471,9 @@ var MultiMedia = (function($, mod) {
 		video.src = path;
 		video.onloadeddata = function() {
 			var canvas = document.createElement('canvas');
-			canvas.width = video.videoWidth;
-			canvas.height = video.videoHeight;
+			canvas.width = video.videoWidth / 2;
+			canvas.height = video.videoHeight / 2;
+			console.log('canvas ' + canvas.width + ' ' + canvas.height)
 			canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 			var thumb = canvas.toDataURL("image/png");
 			//增加视频
@@ -481,7 +482,9 @@ var MultiMedia = (function($, mod) {
 				path: path, //视频路径
 				localthumb: thumb, //视频本地的缩略图地址
 				domain: '', //视频地址
-				thumb: '' //视频缩略图地址
+				thumb: '', //视频缩略图地址
+				width: canvas.width, //视频缩略图宽
+				height: canvas.height //视频缩略图高
 			};
 			self.data.VideoNum--;
 			self.data.VideoArray.push(videos);
@@ -503,6 +506,19 @@ var MultiMedia = (function($, mod) {
 			self.videoChangeCallBack();
 			callback();
 		}
+	}
+
+	/**
+	 * 清空视频区域和初始化数据
+	 */
+	proto.videoRefresh = function() {
+		var self = this;
+		var options = this.options;
+		self.data.VideoNum = options.TotalPicture; //可以选取图片的剩余数量
+		self.data.VideoArray = []; //已选取的图片路径
+		var footer = document.getElementById("MultiMedia_Video_Footer");
+		footer.innerHTML = '';
+		self.changeFooterHeight(0, self.data.VideoArray.length);
 	}
 
 	/**
@@ -674,7 +690,7 @@ var MultiMedia = (function($, mod) {
 		);
 	}
 
-	mod.showVideo=function(path,thumb){
+	mod.showVideo = function(path, thumb) {
 
 	}
 
