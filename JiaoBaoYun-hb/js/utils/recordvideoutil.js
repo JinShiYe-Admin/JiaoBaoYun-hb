@@ -120,7 +120,8 @@ var RecordVideo = (function(mod) {
 			if(requestCode == window.storageKeyName.CODERECORDVIDEO) { //拍照的Activity的code
 				if(resultCode == -1) { //成功
 					console.log('录像成功 ' + options.outPutPath);
-					successCB(options.outPutPath); //返回录像文件的位置
+					var path = 'file://' + options.outPutPath;
+					successCB(path); //返回录像文件的位置
 				} else if(resultCode == 0) { //未录像
 					console.log('未录像');
 				} else {

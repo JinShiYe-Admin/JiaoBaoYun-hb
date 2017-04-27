@@ -210,9 +210,6 @@ var MultiMedia = (function($, mod) {
 			RecordVideo.recordVideo({}, function(fpath) {
 				var wd = events.showWaiting('处理中...');
 				console.log('录制视频成功 ' + fpath);
-				if(plus.os.name == 'Android') {
-					fpath = 'file://' + fpath;
-				}
 				self.addVideos(fpath, function() {
 					wd.close();
 				});
