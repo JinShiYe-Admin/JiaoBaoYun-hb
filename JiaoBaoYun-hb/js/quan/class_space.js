@@ -11,15 +11,19 @@ var class_space = (function(mod) {
 	mod.getList = function(postData, pageIndex, pageSize, callback) {
 		postData.pageIndex = pageIndex;
 		postData.pageSize = pageSize;
-		var wd = events.showWaiting();
+		mod.wd = events.showWaiting();
 		postDataPro_getClassSpacesByUserForClass(postData, wd, function(pagedata) {
-			wd.close();
+//			wd.close();
 			if(pagedata.RspCode == 0 && pagedata.RspData.Data.length > 0) {
 				console.log('获取的班级动态：' + JSON.stringify(pagedata));
 				mod.totalPagNo = pagedata.RspData.TotalPage;
 				list = pagedata.RspData.Data;
+				if(pageIndex==1){
+					setReaded(postData.userId, postData.classId,mod.wd);	
+				}
 				callback();
 			} else {
+				mod.wd.close();
 				if(pageIndex == 1) {
 					mui.toast("暂无班级动态！");
 				}
@@ -32,10 +36,7 @@ var class_space = (function(mod) {
 	 * 更换url 然后创建listView
 	 * @param {Object} list
 	 */
-	var i = 0;
 	mod.replaceUrl = function() {
-		getUrlBrief();
-		i = 0;
 		createListView();
 	}
 	/**
@@ -135,8 +136,8 @@ var class_space = (function(mod) {
 			vvl: postData.classId.toString(), //群ID或IDS,查询的值,多个用逗号隔开
 			vvl1: -1 //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 		};
-		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
-		postDataPro_PostGusers(comData, wd, function(pInfo) {
+//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
+		postDataPro_PostGusers(comData, mod.wd, function(pInfo) {
 			console.log('获取的个人信息:' + JSON.stringify(pInfo))
 			//			wd.close();
 			if(pInfo.RspCode == '0000') {
@@ -151,9 +152,9 @@ var class_space = (function(mod) {
 				}
 				postDataPro_PostUmk({
 					vvl: ids.toString()
-				}, wd, function(remarkData) {
+				}, mod.wd, function(remarkData) {
 					console.log('获取的备注信息：' + JSON.stringify(remarkData));
-					wd.close();
+//					wd.close();
 					if(remarkData.RspCode == 0) {
 						var buData = remarkData.RspData;
 						for(var i in list) {
@@ -197,14 +198,14 @@ var class_space = (function(mod) {
 				vtp: 'g' //查询类型,p(个人)g(id串)
 			}
 			//21.通过用户ID获取用户资料
-			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_PostUinf(tempData, wd, function(data) {
-				wd.close();
+//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_PostUinf(tempData,mod.wd, function(data) {
+//				wd.close();
 				console.log('获取的个人信息:' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					rechargeInfos(data.RspData);
 				} else {
-					//				setChannelList(datas);
+					setData();
 				}
 			})
 		} else {
@@ -244,6 +245,7 @@ var class_space = (function(mod) {
 			}
 			classWords_container.info = list[i];
 		}
+		mod.wd.close();
 //		container.appendChild(fragment);
 	}
 	var getLineNo = function(classWords_container) {
@@ -287,13 +289,13 @@ var class_space = (function(mod) {
 var pageIndex = 1;
 var pageSize = 10;
 var postData;
-
+var wd;
 mui.plusReady(function() {
 	mui.previewImage();
 	postData = plus.webview.currentWebview().data;
 	postData.userId = parseInt(postData.userId);
 	events.preload('classSpace-persons.html', 200);
-	setReaded(postData.userId, postData.classId);
+//	setReaded(postData.userId, postData.classId);
 	console.log('班级空间获取值：' + JSON.stringify(postData));
 	class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 	setListener(postData.userId);
@@ -301,7 +303,7 @@ mui.plusReady(function() {
 	window.addEventListener('infoChanged', function() {
 		mui('#refreshContainer').pullRefresh().refresh(true);
 		pageIndex = 1;
-		setReaded(postData.userId, postData.classId);
+//		setReaded(postData.userId, postData.classId);
 		var container = document.getElementById('classSpace_list');
 		events.clearChild(container);
 		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
@@ -311,7 +313,7 @@ mui.plusReady(function() {
 	 */
 	events.initRefresh('classSpace_list',
 		function() {
-			setReaded(postData.userId, postData.classId);
+//			setReaded(postData.userId, postData.classId);
 			pageIndex = 1;
 			var container = document.getElementById('classSpace_list');
 			events.clearChild(container);
@@ -356,8 +358,8 @@ mui.plusReady(function() {
 		}
 	})
 });
-var setReaded = function(userId, classId) {
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+var setReaded = function(userId, classId,wd) {
+//	var wd1 = events.showWaiting();
 	postDataPro_setClassSpaceReadByUser({
 		userId: userId,
 		classId: classId

@@ -326,6 +326,10 @@ var events = (function(mod) {
 		events.fireToPageNone('aboutme_sub.html', 'infoChanged');
 	}
 	mod.shortForString = function(str, len) {
+		if(!str){
+			str="";
+			console.log("数据错误，请查找！");
+		}
 		if(str.length > len + 2) {
 			return str.substring(0, len) + "...";
 		}
