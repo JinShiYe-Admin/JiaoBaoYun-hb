@@ -115,7 +115,7 @@
 				 */
 				multiMedia.videoPlayCallBack = function(data) {
 					if(plus.os.name == 'Android') {
-						playutil.openFile(data.path, function(text) {
+						playutil.openFileAndroid(data.path, function(text) {
 							mui.toast(text);
 						});
 					} else if(plus.os.name == 'iOS') {
