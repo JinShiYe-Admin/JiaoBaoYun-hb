@@ -85,7 +85,6 @@
 			var notes = document.getElementById("notes"); //输入框
 
 			mui.plusReady(function() {
-				//events.closeWaiting();
 				init(); //初始化控件
 				initListener(); //初始化监听
 			});
@@ -108,7 +107,7 @@
 					Video: true, //是否显示视频图标
 					TotalPicture: 9, //图片的个数
 					TotalAudio: 1, //音频的个数
-					TotalVideo: 2, //视频的个数
+					TotalVideo: 1, //视频的个数
 				});
 				/**
 				 * 播放视频
@@ -124,12 +123,12 @@
 						video.src = data.path;
 						video.poster = data.localthumb;
 						mui('#videoPopover').popover('show');
-						video.play();
 						var mask = mui.createMask(function() {
 							video.pause();
 							mui('#videoPopover').popover('hide');
 						});
 						mask.show();
+						video.play();
 					}
 				}
 				hideOption = events.initHideKeyBoard(); //获取配置信息
@@ -153,14 +152,14 @@
 				//完成
 				document.getElementById('finish').addEventListener('tap', function() {
 					events.hideKeyBoard(hideOption);
-					if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0) { //为空不允许发送
+					if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0 && multiMedia.data.VideoArray.length == 0) { //为空不允许发送
 						mui.toast('笔记不能为空');
 					} else if(notes.value.length > 2000) {
 						mui.toast('笔记最多2000字');
 					} else {
 						var wd = events.showWaiting();
 						document.getElementById("finish").disabled = true;
-						if(multiMedia.data.PictureArray.length == 0) { //没有传附件
+						if(multiMedia.data.PictureArray.length == 0 && multiMedia.data.VideoArray.length == 0) { //没有传附件
 							addNote(wd, '3', '', '');
 						} else {
 							uploadFile(wd); //上传文件
@@ -184,7 +183,7 @@
 					msgContent: notes.value, //记事内容
 					encType: encType, //附件类型，1图片2音视频3仅文字
 					encAddr: encAddr, //附件地址
-					encImg: encImg, //附件缩略图地址
+					encImg: encImg, //附件缩略图地址0
 					encIntro: '', //附件简介
 					noteType: '1', //信息类型,1云笔记2个人空间
 					userIds: '[]', //推送用户ID
@@ -223,23 +222,30 @@
 			 * 上传文件
 			 */
 			function uploadFile(wd) {
-				var fileArray = [];
-				for(var i = 0; i < multiMedia.data.PictureArray.length; i++) {
-					fileArray.push(multiMedia.data.PictureArray[i].path);
-				}
-
 				var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENFILE; //获取token路径
 				var mainSpace = window.storageKeyName.QNPUBSPACE; //公开空间
 				var uploadSpace = window.storageKeyName.NOTE; //笔记空间
 				var getToken = {
 					type: '2', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件；2上传需要生成缩略图的多个文件
 					appId: 6, //int 必填 项目id
-					fileArray: fileArray, //array 选填  type为2时有效，多个文件的路径
+					fileArray: [], //array 选填  type为2时有效，多个文件的路径
 					mainSpace: mainSpace, //str 必填 文件存放在私有空间或公有空间
 					uploadSpace: uploadSpace, //str 必填  上传的空间
 				}
-
-				uploadNum = multiMedia.data.PictureArray.length; //记录上传的次数
+				var fileArray = [];
+				if(multiMedia.data.PictureArray.length !== 0) { //图片
+					uploadNum = multiMedia.data.PictureArray.length; //记录上传的次数
+					for(var i = 0; i < multiMedia.data.PictureArray.length; i++) {
+						fileArray.push(multiMedia.data.PictureArray[i].path);
+					}
+				} else if(multiMedia.data.VideoArray.length !== 0) { //视频
+					getToken.type = '3';
+					uploadNum = multiMedia.data.VideoArray.length; //记录上传的次数
+					for(var i = 0; i < multiMedia.data.VideoArray.length; i++) {
+						fileArray.push(multiMedia.data.VideoArray[i]);
+					}
+				}
+				getToken.fileArray = fileArray;
 
 				CloudFileUtil.getQNUpToken(getUpTokenUrl, getToken, function(data) {
 					console.log('获取上传凭证 ' + JSON.stringify(data));
@@ -249,16 +255,34 @@
 						var configure = data.configure; //获取token的配置信息
 						console.log('七牛上传凭证:' + JSON.stringify(QNUptoken));
 						console.log('七牛配置信息:' + JSON.stringify(configure));
-						//记录图片和缩略图地址
-						for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
-							for(var i = 0; i < QNUptoken.Data.length; i++) {
-								//console.log(JSON.stringify(QNUptoken.Data[i]));
-								var filePath = QNUptoken.Data[i].P_Key.split("/");
-								var fileName = filePath[filePath.length - 1];
-								var fileId = fileName.split("_")[0];
-								if(multiMedia.data.PictureArray[j].id == fileId) {
-									multiMedia.data.PictureArray[j].domain = QNUptoken.Data[i].Domain + QNUptoken.Data[i].Key;
-									multiMedia.data.PictureArray[j].thumb = QNUptoken.Data[i].OtherKey[configure.thumbKey[i]];
+
+						if(multiMedia.data.PictureArray.length !== 0) { //图片
+							//记录图片和缩略图地址
+							for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
+								for(var i = 0; i < QNUptoken.Data.length; i++) {
+									//console.log(JSON.stringify(QNUptoken.Data[i]));
+									var filePath = QNUptoken.Data[i].P_Key.split("/");
+									var fileName = filePath[filePath.length - 1];
+									var fileId = fileName.split("_")[0];
+									if(multiMedia.data.PictureArray[j].id == fileId) {
+										multiMedia.data.PictureArray[j].domain = QNUptoken.Data[i].Domain + QNUptoken.Data[i].Key;
+										multiMedia.data.PictureArray[j].thumb = QNUptoken.Data[i].OtherKey[configure.thumbKey[i]];
+									}
+								}
+							}
+						} else if(multiMedia.data.VideoArray.length !== 0) { //视频
+							//记录视频和缩略图地址
+							for(var j = 0; j < multiMedia.data.VideoArray.length; j++) {
+								var videoPath = multiMedia.data.VideoArray[j].path.split("/");
+								var videoName = videoPath[videoPath.length - 1];
+								for(var i = 0; i < QNUptoken.Data.length; i++) {
+									//console.log(JSON.stringify(QNUptoken.Data[i]));
+									var filePath = QNUptoken.Data[i].P_Key.split("/");
+									var fileName = filePath[filePath.length - 1];
+									if(videoName == fileName) {
+										multiMedia.data.VideoArray[j].domain = QNUptoken.Data[i].Domain + QNUptoken.Data[i].Key;
+										multiMedia.data.VideoArray[j].thumb = QNUptoken.Data[i].OtherKey[configure.thumbKey[i]];
+									}
 								}
 							}
 						}
@@ -319,13 +343,25 @@
 						//获取路径
 						var fPath = '';
 						var num; //记录第几张图片
-						for(var k = 0; k < multiMedia.data.PictureArray.length; k++) {
-							var path = multiMedia.data.PictureArray[k].path.split("/");
-							var name = path[path.length - 1];
-							if(fileName == name) {
-								num = k;
-								fPath = multiMedia.data.PictureArray[k].path;
-								break;
+						if(multiMedia.data.PictureArray.length !== 0) { //图片
+							for(var k = 0; k < multiMedia.data.PictureArray.length; k++) {
+								var path = multiMedia.data.PictureArray[k].path.split("/");
+								var name = path[path.length - 1];
+								if(fileName == name) {
+									num = k;
+									fPath = multiMedia.data.PictureArray[k].path;
+									break;
+								}
+							}
+						} else if(multiMedia.data.VideoArray.length !== 0) { //视频
+							for(var k = 0; k < multiMedia.data.VideoArray.length; k++) {
+								var path = multiMedia.data.VideoArray[k].path.split("/");
+								var name = path[path.length - 1];
+								if(fileName == name) {
+									num = k;
+									fPath = multiMedia.data.VideoArray[k].path;
+									break;
+								}
 							}
 						}
 						CloudFileUtil.upload(fPath, QNUptoken.Data[i].Token, QNUptoken.Data[i].Key, function(upload, status) {
@@ -339,8 +375,14 @@
 								var title = '上传 ' + (QNUptoken.Data.length - uploadNum) + "/" + (QNUptoken.Data.length);
 								wd.setTitle(title);
 								//记录失败后需要删除的文件
-								pathList.push(multiMedia.data.PictureArray[num].domain);
-								pathList.push(multiMedia.data.PictureArray[num].thumb);
+								if(multiMedia.data.PictureArray.length !== 0) { //图片
+									pathList.push(multiMedia.data.PictureArray[num].domain);
+									pathList.push(multiMedia.data.PictureArray[num].thumb);
+								} else if(multiMedia.data.VideoArray.length !== 0) { //视频
+									pathList.push(multiMedia.data.VideoArray[num].domain);
+									pathList.push(multiMedia.data.VideoArray[num].thumb);
+								}
+
 								if(persistentId.length < 3) { //前三张
 									persistentId[persistentId.length] = {
 										id: QNUptoken.Data[i].persistentId
@@ -350,13 +392,23 @@
 									console.log('所有上传都成功');
 									var encAddr = []; //附件地址
 									var encImg = []; //附件缩略图地址
-									for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
-										encAddr.push(multiMedia.data.PictureArray[j].domain);
-										encImg.push(multiMedia.data.PictureArray[j].thumb);
+									if(multiMedia.data.PictureArray.length !== 0) { //图片
+										for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
+											encAddr.push(multiMedia.data.PictureArray[j].domain);
+											encImg.push(multiMedia.data.PictureArray[j].thumb);
+										}
+										var encAddrStr = encAddr.join('|');
+										var encImgrStr = encImg.join('|');
+										addNote(wd, '1', encAddrStr, encImgrStr);
+									} else if(multiMedia.data.VideoArray.length !== 0) { //视频
+										for(var j = 0; j < multiMedia.data.VideoArray.length; j++) {
+											encAddr.push(multiMedia.data.VideoArray[j].domain);
+											encImg.push(multiMedia.data.VideoArray[j].thumb);
+										}
+										var encAddrStr = encAddr.join('|');
+										var encImgrStr = encImg.join('|');
+										addNote(wd, '2', encAddrStr, encImgrStr);
 									}
-									var encAddrStr = encAddr.join('|');
-									var encImgrStr = encImg.join('|');
-									addNote(wd, '1', encAddrStr, encImgrStr);
 
 								} else {
 									taskCreate(wd);

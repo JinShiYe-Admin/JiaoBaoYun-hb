@@ -176,7 +176,7 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} successCB 成功的回调successCB(data)
 	 * @param {Object} errorCB 失败的回调errorCB(xhr, type, errorThrown);
 	 * data={
-	 * 	type:'',//str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件；2上传需要生成缩略图的多个文件
+	 * 	type:'',//str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件；2上传需要生成缩略图的多个文件;3上传需要生成缩略图的多个视频文件
 	 *  QNFileName:'',//str 必填 存放到七牛的文件名
 	 * 	fileArray:[],//array 选填  type为2时有效，多个文件的路径
 	 *  appId:'' , //int 必填 项目id
@@ -202,6 +202,7 @@ var CloudFileUtil = (function($, mod) {
 		var configure = {}; //配置的数据
 		var maxWidth = '200'; //type为0时 缩略图默认宽为200
 		var maxHeight = '200'; //type为0时 缩略图默认高为200
+
 		if(data) {
 			if(data.type) {
 				type = data.type
@@ -215,7 +216,7 @@ var CloudFileUtil = (function($, mod) {
 						}
 					}
 				}
-				if(type == 2) {
+				if(type == 2 || type == 3) {
 					if(data.fileArray) {
 						fileList = data.fileArray;
 					}
@@ -266,90 +267,121 @@ var CloudFileUtil = (function($, mod) {
 				saveSpace = data.uploadSpace;
 			}
 		}
-		if((type == '0' || type == '1' || type == '2') && desKey != '' && mainSpace != '' && saveSpace != '') {
-			var thumbSpace = ''; //缩略图的七牛空间
-			var ops = '' //七牛预持久化命令
-			if(type == '0' || type == '1') {
-				if(type == '0') {
-					thumbSpace = saveSpace + 'Thumb/'; //缩略图的七牛空间
-					var temp = QNFileName.split('.');
-					console.log(JSON.stringify(temp));
-					var thumbName = temp[0];
-					var thumbType = temp[1];
-					if(thumbType == 'avi' || thumbType == 'mp4' || thumbType == 'flv' || thumbType == 'swf' || thumbType == '3gp' || thumbType == 'rm') {
-						//视频
+
+		var thumbSpace = ''; //缩略图的七牛空间
+		var ops = '' //七牛预持久化命令
+		if(type == '0' || type == '1') {
+			if(type == '0') {
+				thumbSpace = saveSpace + 'Thumb/'; //缩略图的七牛空间
+				var temp = QNFileName.split('.');
+				console.log(JSON.stringify(temp));
+				var thumbName = temp[0];
+				var thumbType = temp[1];
+				if(thumbType == 'avi' || thumbType == 'mp4' || thumbType == 'flv' || thumbType == 'swf' || thumbType == '3gp' || thumbType == 'rm') {
+					//视频
+					configure.thumbKey = Qiniu.URLSafeBase64Encode(imageThumb + ":" + thumbSpace + thumbName + '.png');
+					ops = "vframe/png/offset/1/w/400/h/300|saveas/" + configure.thumbKey;
+				} else {
+					//图片
+					if(appId == 5) { //头像
+						configure.thumbKey = Qiniu.URLSafeBase64Encode(imageThumb + ":" + thumbSpace + QNFileName);
+					} else if(appId == 4) { //云存储
 						configure.thumbKey = Qiniu.URLSafeBase64Encode(imageThumb + ":" + thumbSpace + thumbName + '.png');
-						ops = "vframe/png/offset/1/w/400/h/300|saveas/" + configure.thumbKey;
-					} else {
-						//图片
-						if(appId == 5) { //头像
-							configure.thumbKey = Qiniu.URLSafeBase64Encode(imageThumb + ":" + thumbSpace + QNFileName);
-						} else if(appId == 4) { //云存储
-							configure.thumbKey = Qiniu.URLSafeBase64Encode(imageThumb + ":" + thumbSpace + thumbName + '.png');
-						}
-						ops = "imageView2/1/w/" + maxWidth + "/h/" + maxHeight + "/format/png|saveas/" + configure.thumbKey;
 					}
-				}
-
-				var param = {
-					Bucket: mainSpace,
-					Key: saveSpace + QNFileName,
-					Pops: ops,
-					NotifyUrl: ''
-				}
-				console.log("参数数据：" + JSON.stringify(param));
-
-				configure.options = {
-					AppID: appId,
-					Param: encryptByDES(desKey, JSON.stringify(param))
-				}
-			} else if(type == '2') {
-				var params = [];
-				var uploadOptions = { //上传七牛后的处理参数
-					type: 0, //处理类型 0：缩略图 1 裁剪 10 缩略图+裁剪
-					thumbSize: {
-						width: maxWidth, //缩略图最大宽度
-						height: maxHeight //缩略图最大高度
-					}
-				}
-				configure.thumbKey = [];
-				for(var i = 0; i < fileList.length; i++) {
-					var QNFileName; //文件名
-					var param = {};
-					param.Bucket = mainSpace;
-					//获取文件路径
-					var filePaths = fileList[i].split("/");
-					QNFileName = filePaths[filePaths.length - 1];
-					param.Key = saveSpace + QNFileName;
-					console.log('key:' + param.Key);
-					//获取处理参数
-					var opsData = getOptions(uploadOptions, saveSpace, mainSpace, QNFileName);
-					param.Pops = opsData.ops;
-					param.NotifyUrl = '';
-					//保存空间值
-					params.push(param);
-					configure.thumbKey.push(opsData.thumbKey);
-				}
-
-				configure.options = {
-					AppID: appId,
-					Param: encryptByDES(desKey, JSON.stringify(params))
+					ops = "imageView2/1/w/" + maxWidth + "/h/" + maxHeight + "/format/png|saveas/" + configure.thumbKey;
 				}
 			}
 
-			console.log("参数数据：" + JSON.stringify(configure.options))
-			//获取token
-			mod.getQNUpTokenWithManage(url, configure.options, function(data) {
-				successCB({
-					configure: configure,
-					data: data
-				});
-			}, function(xhr, type, errorThrown) {
-				errorCB(xhr, type, errorThrown);
-			});
-		} else {
-			errorCB('### ERROR ### 配置获取七牛上传token参数错误');
+			var param = {
+				Bucket: mainSpace,
+				Key: saveSpace + QNFileName,
+				Pops: ops,
+				NotifyUrl: ''
+			}
+			console.log("参数数据：" + JSON.stringify(param));
+
+			configure.options = {
+				AppID: appId,
+				Param: encryptByDES(desKey, JSON.stringify(param))
+			}
+		} else if(type == '2') { //多个图片文件
+			var params = [];
+			configure.thumbKey = [];
+			var uploadOptions = { //上传七牛后的处理参数
+				type: 0, //处理类型 0：缩略图 1 裁剪 10 缩略图+裁剪
+				thumbSize: {
+					width: maxWidth, //缩略图最大宽度
+					height: maxHeight //缩略图最大高度
+				}
+			}
+			for(var i = 0; i < fileList.length; i++) {
+				var QNFileName; //文件名
+				var param = {};
+				param.Bucket = mainSpace;
+				//获取文件路径
+				var filePaths = fileList[i].split("/");
+				QNFileName = filePaths[filePaths.length - 1];
+				param.Key = saveSpace + QNFileName;
+				console.log('key:' + param.Key);
+				//获取处理参数
+				var opsData = getOptions(uploadOptions, saveSpace, mainSpace, QNFileName);
+				param.Pops = opsData.ops;
+				param.NotifyUrl = '';
+				//保存空间值
+				params.push(param);
+				configure.thumbKey.push(opsData.thumbKey);
+			}
+
+			configure.options = {
+				AppID: appId,
+				Param: encryptByDES(desKey, JSON.stringify(params))
+			}
+		} else if(type == '3') { //多个视频文件
+			var params = [];
+			configure.thumbKey = [];
+
+			for(var i = 0; i < fileList.length; i++) {
+				var uploadOptions = { //上传七牛后的处理参数
+					type: 2, //处理类型 0：缩略图 1 裁剪 10 缩略图+裁剪
+					thumbSize: {
+						width: fileList[i].width, //缩略图最大宽度
+						height: fileList[i].height //缩略图最大高度
+					}
+				}
+				var QNFileName; //文件名
+				var param = {};
+				param.Bucket = mainSpace;
+				//获取文件路径
+				var filePaths = fileList[i].path.split("/");
+				QNFileName = filePaths[filePaths.length - 1];
+				param.Key = saveSpace + QNFileName;
+				console.log('key:' + param.Key);
+				//获取处理参数
+				var opsData = getOptions(uploadOptions, saveSpace, mainSpace, QNFileName);
+				param.Pops = opsData.ops;
+				param.NotifyUrl = '';
+				//保存空间值
+				params.push(param);
+				configure.thumbKey.push(opsData.thumbKey);
+			}
+
+			configure.options = {
+				AppID: appId,
+				Param: encryptByDES(desKey, JSON.stringify(params))
+			}
 		}
+
+		console.log("参数数据：" + JSON.stringify(configure.options))
+		//获取token
+		mod.getQNUpTokenWithManage(url, configure.options, function(data) {
+			successCB({
+				configure: configure,
+				data: data
+			});
+		}, function(xhr, type, errorThrown) {
+			errorCB(xhr, type, errorThrown);
+		});
+
 	}
 
 	/**
@@ -488,6 +520,15 @@ var CloudFileUtil = (function($, mod) {
 				var clipSpace = saveSpace + 'clip/';
 				returnData.clipKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + clipSpace + QNFileName);
 				returnData.ops = "imageMogr2/gravity/Center/crop/!" + getIfExist(manageOptions.cropSize.width) + "x" + getIfExist(manageOptions.cropSize.height) + "/format/png|saveas/" + returnData.clipKey;
+				break;
+			case 2: //视频
+				var thumbSpace = saveSpace + 'thumb/';
+				var width = manageOptions.thumbSize.width || 400;
+				var height = manageOptions.thumbSize.height || 300;
+				var tempFileName = QNFileName.split('.');
+				var thumbName = tempFileName[0];
+				returnData.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + thumbName + '.png');
+				returnData.ops = "vframe/png/offset/1/w/" + width + "/h/" + height + "|saveas/" + returnData.thumbKey;
 				break;
 			case 10: //缩略图+裁剪
 				var thumbSpace = saveSpace + 'thumb/';
@@ -764,12 +805,12 @@ var CloudFileUtil = (function($, mod) {
 
 		for(var i in tokenInfos) {
 			//console.log('upload:' + fPath);
-			createTask(tokenInfos[i],fileNames[i],i,callback);
+			createTask(tokenInfos[i], fileNames[i], i, callback);
 		}
 		plus.uploader.startAll();
 	}
 
-	function createTask(tokenInfo, fileName,index,callback) {
+	function createTask(tokenInfo, fileName, index, callback) {
 		var task = plus.uploader.createUpload("http://upload.qiniu.com/", {
 				method: "POST"
 			},
@@ -779,7 +820,7 @@ var CloudFileUtil = (function($, mod) {
 			 * @param {Object} status 上传结果状态码，HTTP传输协议状态码，如果未获取传输状态则其值则为0，如上传成功其值通常为200。
 			 */
 			function(upload, status) {
-				callback(upload, status,index);
+				callback(upload, status, index);
 			}
 		);
 		task.addData("key", tokenInfo.Key);
@@ -954,19 +995,19 @@ var CloudFileUtil = (function($, mod) {
 		if(div.querySelector(".clip-container")) {
 			div.querySelector("img").onload = function(event) {
 				console.log(JSON.stringify(event))
-				console.log("图片宽度：" + this.naturalWidth + ",图片高度：" +  this.naturalHeight);
+				console.log("图片宽度：" + this.naturalWidth + ",图片高度：" + this.naturalHeight);
 				var marginSize = Math.abs(this.naturalWidth - this.naturalHeight) / 2;
-				
+
 				console.log("margin值：" + marginSize + "px");
 				if(this.naturalWidth > this.naturalHeight) {
-					var realMarginSize=marginSize/this.naturalHeight*this.width;
+					var realMarginSize = marginSize / this.naturalHeight * this.width;
 					this.style.height = this.width + "px";
 					this.style.width = "initial";
 					this.style.marginLeft = -realMarginSize + "px";
 					this.style.marginRight = -realMarginSize + "px";
 					this.style.visibility = "visible";
 				} else {
-					var realMarginSize=marginSize/this.naturalWidth*this.width;
+					var realMarginSize = marginSize / this.naturalWidth * this.width;
 					this.style.height = "initial";
 					this.style.width = this.width + "px";
 					this.style.marginTop = -realMarginSize + "px";
