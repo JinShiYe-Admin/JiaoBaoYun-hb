@@ -116,6 +116,7 @@ var slideNavigation = (function($) {
 				if(showMenu) {
 					closeMenu();
 				} else {
+					events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover',{flag:1})
 					openMenu();
 				}
 			});

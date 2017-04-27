@@ -104,6 +104,7 @@
 			"autoclose": true,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
 			"waiting": true
 		},
+		"allowsInlineMediaPlayback": true,/*设置ios下允许内联播放*/
 		"hardwareAccelerated":false,
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
@@ -868,7 +869,8 @@
 					"html/mine/qun_manage_1.html",
 					"html/mine/ReadQRCode.html",
 					"html/quan/aboutme.html",
-					"html/quan/pub-dynamic.html"
+					"html/quan/pub-dynamic.html",
+					"html/mine/qun_manage_a.html"
 				],
 				"priority": 0
 			},
@@ -4331,12 +4333,14 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"js/utils/cryption.js",
 					"js/utils/CloudFileUtil.js",
-					"js/qiniu/qiniu.js"
+					"js/qiniu/qiniu.js",
+					"css/mine/manager_data.css"
 				],
 				"refer": [
 					"html/quan/group-pInfo.html",
 					"html/mine/qun_manage_invite_a.html",
-					"html/mine/qun_manage_info.html"
+					"html/mine/qun_manage_info.html",
+					"html/mine/qun_data_details.html"
 				],
 				"priority": 0
 			},

@@ -191,11 +191,15 @@ var setListener = function() {
 			return;
 		}
 		var idSlider = []; //去掉展现和科教城市下面的点
+		if((activeTab=='../cloud/cloud_home.html')&&(this.querySelector('.mui-tab-label').innerHTML != '云盘')){
+				events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover',{flag:1})
+			}
 		if(this.querySelector('.mui-tab-label').innerHTML == '展现') {
 			idSlider = ['sciEduSlider'];
 		} else if(this.querySelector('.mui-tab-label').innerHTML == '科教') {
 			idSlider = ['showSlider'];
 		} else {
+			
 			//更换标题
 			title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
 			//去掉展现和科教城市下面的点
@@ -384,6 +388,7 @@ var addOrder = function(container) {
 		if(events.judgeLoginMode()) {
 			return;
 		}
+		events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover',{flag:1})
 		events.openNewWindow("../cloud/order-member.html");
 	})
 }
@@ -402,13 +407,13 @@ var addPlus = function(container, name) {
 			if(events.judgeLoginMode()) {
 				return;
 			}
-			events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
+			events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover',{flag:0})
 		} else {
 			//判断是否是游客身份登录
 			if(events.judgeLoginMode()) {
 				return;
 			}
-			events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
+			events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover',{flag:0})
 		}
 
 	})
