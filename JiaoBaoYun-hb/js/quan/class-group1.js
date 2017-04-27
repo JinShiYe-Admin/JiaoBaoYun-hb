@@ -1,6 +1,8 @@
 mui.init({
 	beforeback: function() {
 		document.getElementById("info-container").style.display = "none";
+		document.querySelector('.quit-container').style.display = 'none';
+		document.getElementById("show-all").style.display="none";
 		mui(".mui-scroll-wrapper").scroll().scrollTo(0,0);
 		return true;
 	}
@@ -153,13 +155,16 @@ var freshContent = function() {
 			}
 		}
 		if(groupRoles.length == 0) {
-			document.querySelector('.quit-container').style.display = 'none';
+			isShowButton=false;
+//			document.querySelector('.quit-container').style.display = 'none';
 			//			document.querySelector('.mui-content').style.marginBottom = "0";
 		} else if(groupRoles.length == 1 && groupRoles[0] == 0 && isMaster) {
-			document.querySelector('.quit-container').style.display = 'none';
+			isShowButton=false;
+//			document.querySelector('.quit-container').style.display = 'none';
 			//			document.querySelector('.mui-content').style.marginBottom = "0";
 		} else {
-			document.querySelector('.quit-container').style.display = 'block';
+			isShowButton=true;
+//			document.querySelector('.quit-container').style.display = 'block';
 			//			document.querySelector('.mui-content').style.marginBottom = "5rem";
 		}
 		getGroupAllInfo();
@@ -237,13 +242,9 @@ var addRemarkData = function(list, remarkList) {
 					break;
 				}
 			}
-			//			if(!hasBunick) {
-			//				list[i].bunick = list[i].ugname;
-			//			}
 		}
 	} else {
 		list.forEach(function(cell, i) {
-			//			list[i].bunick = cell.ugname;
 			list[i] = setOrder(cell);
 		})
 	}
@@ -297,9 +298,10 @@ var createGride = function(gride, array) {
 	var showAll = document.getElementById("show-all");
 	if(isMaster) {
 		if(array.length > 15) {
-			showAll.style.display = "block";
+			isShowAll=true;
 			array.splice(15);
 		} else {
+			isShowAll=false;
 			showAll.style.display = "none";
 		}
 		array.push({
@@ -309,10 +311,10 @@ var createGride = function(gride, array) {
 		})
 	} else {
 		if(array.length > 16) {
-			showAll.style.display = "block";
-
+			isShowAll=true;
 			array.splice(16);
 		} else {
+			isShowAll=false;
 			showAll.style.display = "none";
 		}
 	}
@@ -336,6 +338,12 @@ var createGride = function(gride, array) {
 	}
 	gride.appendChild(fragment);
 	fragment=null;
+	if(isShowAll){
+		showAll.style.display = "block";
+	}
+	if(isShowButton){
+		document.querySelector('.quit-container').style.display = 'block';
+	}
 	document.getElementById("info-container").style.display = "block";
 }
 var setBeunick = function(item) {
