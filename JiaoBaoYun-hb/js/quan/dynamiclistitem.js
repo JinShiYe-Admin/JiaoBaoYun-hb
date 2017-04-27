@@ -114,12 +114,19 @@ var dynamiclistitem = (function($, mod) {
 
 	}
 	mod.addSomeEvent = function() {
+		window.addEventListener('praise', function(data) {
+			var pageID = sliderId.replace('top_', '')
+			var index = data.detail.index;
+			var a = document.getElementById("praise" + pageID + idFlag + index);
+			//模拟点击点赞按钮
+			mui.trigger(a, 'tap');
+		})
 		window.addEventListener('deleteDynamic', function(data) {
 			var index = data.detail
-			console.log('删除动态的监听'+JSON.stringify(index))
+			console.log('删除动态的监听' + JSON.stringify(index))
 			var deleteNode = document.getElementById(index);
 			deleteNode.parentNode.removeChild(deleteNode);
-			
+
 		})
 		mui('.mui-table-view').on('tap', '.icon-xiajiantou', function() {
 			//判断是否是游客身份登录
@@ -179,7 +186,7 @@ var dynamiclistitem = (function($, mod) {
 												var deleteNode = document.getElementById(index);
 												deleteNode.parentNode.removeChild(deleteNode);
 												if(document.getElementById("spaceDetail")) {
-													mui.fire(plus.webview.currentWebview().opener(),'deleteDynamic',preModel.tempIndex)
+													mui.fire(plus.webview.currentWebview().opener(), 'deleteDynamic', preModel.tempIndex)
 													mui.back()
 												}
 												//												zonepArray.splice(index, 1)
@@ -279,6 +286,7 @@ var dynamiclistitem = (function($, mod) {
 				var cityID = sliderId.replace('top_', '');
 				var index = id.replace('question_content' + cityID + idFlag, '');
 				zonepArray[index].tempIndex = index;
+				tempIndex = index;
 				if(idFlag == '') {
 					zonepArray[index].focusFlag = 0;
 				} else {
@@ -514,21 +522,33 @@ var dynamiclistitem = (function($, mod) {
 		})
 		//点赞和取消点赞
 		mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
-			var wd = events.showWaiting();
+			var wd //= events.showWaiting();
 			//判断是否是游客身份登录
 			if(events.judgeLoginMode()) {
-				wd.close();
+//				wd.close();
 				return;
 			}
 			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
 			var pageID = sliderId.replace('top_', '')
 			var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
-			var index = this.id.replace('praise' + pageID + idFlag, '');
+			var tempData;
+			var index;
+//
+//			var tempPageID = this.id.match(/praise(\S*)zx/)[1];
+//			console.log('tempPageID='+tempPageID)
+//			if(tempPageID==pageID){
+				index = this.id.replace('praise' + pageID + idFlag, '');
+//
+				tempData = zonepArray[index];
+//			}else{
+// 
+//			}
 			var color = this.style.color;
+			
 			if(color == 'rgb(183, 183, 183)') {
 				var comData = {
 					userId: userInfo.utid, //用户ID
-					userSpaceId: zonepArray[index].TabId, //用户空间ID
+					userSpaceId: tempData.TabId, //用户空间ID
 				};
 
 				postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
@@ -537,7 +557,7 @@ var dynamiclistitem = (function($, mod) {
 						a.style.color = 'rgb(26, 155, 255)'
 						var PraiseList = document.getElementById("PraiseList" + pageID + idFlag + index);
 						var praiseNameList = PraiseList.getElementsByTagName("font");
-						zonepArray[index].LikeUsers.unshift(userInfo) //把当前用户信息放到数组LikeUsers第一位
+						tempData.LikeUsers.unshift(userInfo) //把当前用户信息放到数组LikeUsers第一位
 
 						if(praiseNameList.length > 0) {
 							PraiseList.innerHTML = PraiseList.innerHTML.replace('mui-pull-left">', 'mui-pull-left">' + '<font class="common-font-family-Regular dynamic-praise-name praiseName" data-info="' + userInfo.utid + '">' + personalunick + '</font>、')
@@ -547,7 +567,28 @@ var dynamiclistitem = (function($, mod) {
 							PraiseList.innerHTML = '<img id= "praiseImg' + pageID + idFlag + index + '" src="../../image/dynamic/praise.png" class="dynamic-icon-praise-small mui-pull-left" />' +
 								'<font class="common-font-family-Regular dynamic-praise-name praiseName" data-info="' + userInfo.utid + '">' + personalunick + '</font>';
 						}
-						wd.close();
+						if(document.getElementById("spaceDetail")) {
+							mui.fire(plus.webview.currentWebview().opener(), 'praise', {
+								index: preModel.tempIndex
+							})
+						} else if(zonepArray[index].pageFlag == 1) {
+							for(var slider_id in datasource) {
+								if(slider_id == sliderId){
+									continue;
+								}
+								var tempArr = datasource[slider_id]
+								var citycode = slider_id.replace('top_', '');
+								for(var j in tempArr) {
+									var tempModel = tempArr[j];
+									if(tempModel.PublisherId == tempData.PublisherId) {
+										var tempA = document.getElementById("praise" + citycode + idFlag + index);
+										//模拟点击点赞按钮
+										mui.trigger(tempA, 'tap');
+									}
+								}
+							}
+						}
+//						wd.close();
 					} else {
 						mui.toast(data.RspTxt);
 					}
@@ -558,7 +599,7 @@ var dynamiclistitem = (function($, mod) {
 
 				var comData = {
 					userId: userInfo.utid, //用户ID
-					userSpaceId: zonepArray[index].TabId, //用户空间ID
+					userSpaceId: tempData.TabId, //用户空间ID
 				};
 				postDataPro_delUserSpaceLikeByUser(comData, wd, function(data) {
 
@@ -567,7 +608,7 @@ var dynamiclistitem = (function($, mod) {
 						a.style.color = 'rgb(183, 183, 183)'
 						var PraiseList = document.getElementById("PraiseList" + pageID + idFlag + index);
 						var praiseName = PraiseList.getElementsByTagName("font");
-						var tempLikeUser = zonepArray[index].LikeUsers
+						var tempLikeUser = tempData.LikeUsers
 						for(var i in tempLikeUser) {
 							if(tempLikeUser[i].utid == userInfo.utid) {
 								tempLikeUser.splice(i, 1);
@@ -602,7 +643,28 @@ var dynamiclistitem = (function($, mod) {
 							PraiseList.removeChild(praiseImg);
 
 						}
-						wd.close();
+						if(document.getElementById("spaceDetail")) {
+							mui.fire(plus.webview.currentWebview().opener(), 'praise', {
+								index: preModel.tempIndex
+							})
+						} else if(zonepArray[index].pageFlag == 1) {
+							for(var slider_id in datasource) {
+								if(slider_id == sliderId){
+									continue;
+								}
+								var tempArr = datasource[slider_id]
+								var citycode = slider_id.replace('top_', '');
+								for(var j in tempArr) {
+									var tempModel = tempArr[j];
+									if(tempModel.PublisherId == tempData.PublisherId) {
+										var tempA = document.getElementById("praise" + citycode + idFlag + index);
+										//模拟点击点赞按钮
+										mui.trigger(tempA, 'tap');
+									}
+								}
+							}
+						}
+//						wd.close();
 					} else {
 						mui.toast(data.RspTxt);
 					}
