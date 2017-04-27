@@ -93,7 +93,7 @@ var MultiMedia = (function($, mod) {
 		this.data = {};
 		var options = this.options;
 		if(this.options.Picture) {
-			this.data.PicturesNum = options.TotalPicture; //可以选取图片的剩余数量
+			this.data.PictureNum = options.TotalPicture; //可以选取图片的剩余数量
 			this.data.PictureArray = []; //已选取的图片路径
 			this.data.PictureWith = parseInt(document.getElementById(this.options.Id).offsetWidth * 0.2);
 			this.data.PictureMarginLeft = parseInt(document.getElementById(this.options.Id).offsetWidth * 0.04);
@@ -103,8 +103,10 @@ var MultiMedia = (function($, mod) {
 			this.data.AudioArray = [];
 		}
 		if(this.options.Video) {
-			this.data.Videos = options.TotalVideo;
+			this.data.VideoNum = options.TotalVideo; //可以选取视频的剩余数量
 			this.data.VideoArray = [];
+			this.data.VideoWith = parseInt(document.getElementById(this.options.Id).offsetWidth * 0.2);
+			this.data.VideoMarginLeft = parseInt(document.getElementById(this.options.Id).offsetWidth * 0.04);
 		}
 	}
 
@@ -113,62 +115,153 @@ var MultiMedia = (function($, mod) {
 		//console.log('MultiMedia-initEvent');
 		var self = this;
 		var options = this.options;
-
+		//图片
 		if(this.options.Picture) {
+			//相机
 			document.getElementById('MultiMedia_Picture_Header').addEventListener('tap', function() {
-				document.activeElement.blur();
-				if(self.data.PicturesNum > 0) {
-					self.pictureActionSheet(0);
-				} else {
-					mui.alert('图片超出限制');
-				}
+				self.initImageEvent(0);
 			});
-
+			//图库
 			document.getElementById('MultiMedia_Tuku_Header').addEventListener('tap', function() {
-				document.activeElement.blur();
-				if(self.data.PicturesNum > 0) {
-					self.pictureActionSheet(1);
-				} else {
-					mui.alert('图片超出限制');
-				}
+				self.initImageEvent(1);
 			});
 
+			//显示图片区域，删除按钮的监听
 			mui('#MultiMedia_Picture_Footer').on('tap', '.multimedia-picture-delete', function() {
-				document.activeElement.blur();
-				var id = this.id.replace('MultiMedia_Picture_Delete_', '');
-				var parent = this.parentNode;
-				//删除数组
-				for(var i = 0; i < self.data.PictureArray.length; i++) {
-					if(self.data.PictureArray[i].id == id) {
-						self.data.PictureArray.splice(i, 1);
-						self.data.PicturesNum++;
-					}
-				}
-				//删除界面的图片
-				parent.parentNode.removeChild(parent);
-				//调整界面高度
-				self.changePictureFooter(self.data.PictureArray.length);
-				self.imageChangeCallBack();
+				self.initDelImageEvent(this);
 			});
 		}
+
+		//音频
 		if(this.options.Audio) {
 			document.getElementById('MultiMedia_Audio_Header').addEventListener('tap', function() {
 				document.activeElement.blur();
 				mui.toast('录制语音功能暂未开放');
 			});
 		}
+
+		//视频
 		if(this.options.Video) {
 			document.getElementById('MultiMedia_Video_Header').addEventListener('tap', function() {
-				document.activeElement.blur();
-				//mui.toast('录制视频功能暂未开放');
-				RecordVideo.recordVideo({}, function(fpath) {
-					mui.toast('录制视频成功');
-					console.log(fpath);
-				}, function(err) {
-					mui.toast('录制视频失败 ' + JSON.stringify(err));
-				});
+				self.initVideoEvent();
+			});
+
+			//显示视频区域，删除按钮的监听
+			mui('#MultiMedia_Video_Footer').on('tap', '.multimedia-picture-delete', function() {
+				self.initDelVideoEvent(this);
+			});
+
+			//显示视频区域，播放按钮的监听
+			mui('#MultiMedia_Video_Footer').on('tap', '.multimedia-video-play', function() {
+				self.initPlayVideoEvent(this);
 			});
 		}
+	}
+
+	//初始化图片选择的监听
+	proto.initImageEvent = function(type) {
+		var self = this;
+		var options = this.options;
+		document.activeElement.blur();
+		//已经录制了视频
+		if(options.Video && self.data.VideoNum * 1 < options.TotalVideo) {
+			mui.toast('图片与视频不能同时添加');
+			return false;
+		}
+		if(self.data.PictureNum > 0) {
+			self.pictureActionSheet(type);
+		} else {
+			mui.toast('图片数量超出限制');
+		}
+	}
+
+	//初始化删除选择的图片的监听
+	proto.initDelImageEvent = function(element) {
+		var self = this;
+		var options = this.options;
+		document.activeElement.blur();
+		var id = element.id.replace('MultiMedia_Picture_Delete_', '');
+		var parent = element.parentNode;
+		//删除数组
+		for(var i = 0; i < self.data.PictureArray.length; i++) {
+			if(self.data.PictureArray[i].id == id) {
+				self.data.PictureArray.splice(i, 1);
+				self.data.PictureNum++;
+			}
+		}
+		//删除界面的图片
+		parent.parentNode.removeChild(parent);
+		//调整界面高度
+		self.changeFooterHeight(0, self.data.PictureArray.length);
+		self.imageChangeCallBack();
+	}
+
+	//初始化录制视频的监听
+	proto.initVideoEvent = function() {
+		var self = this;
+		var options = this.options;
+		document.activeElement.blur();
+		//已经选择了图片
+		if(options.Picture && self.data.PictureNum * 1 < options.TotalPicture) {
+			mui.toast('图片与视频不能同时添加');
+			return false;
+		}
+		if(self.data.VideoNum > 0) {
+			RecordVideo.recordVideo({}, function(fpath) {
+				var wd = events.showWaiting('处理中...');
+				console.log('录制视频成功 ' + fpath);
+				if(plus.os.name == 'Android') {
+					fpath = 'file://' + fpath;
+				}
+				self.addVideos(fpath, function() {
+					wd.close();
+				});
+			}, function(err) {
+				mui.toast('录制视频失败 ' + JSON.stringify(err));
+			});
+		} else {
+			mui.toast('视频数量超出限制');
+		}
+	}
+
+	//初始化删除录制的视频的监听
+	proto.initDelVideoEvent = function(element) {
+		var self = this;
+		var options = this.options;
+		document.activeElement.blur();
+		var id = element.id.replace('MultiMedia_Video_Delete_', '');
+		var parent = element.parentNode;
+		//删除数组
+		for(var i = 0; i < self.data.VideoArray.length; i++) {
+			if(self.data.VideoArray[i].id == id) {
+				self.data.VideoArray.splice(i, 1);
+				self.data.PictureNum++;
+			}
+		}
+		//删除界面的视频
+		parent.parentNode.removeChild(parent);
+		//调整界面高度
+		self.changeFooterHeight(1, self.data.VideoArray.length);
+		self.videoChangeCallBack();
+	}
+
+	/**
+	 * 播放视频的监听
+	 * @param {Object} element
+	 */
+	proto.initPlayVideoEvent = function(element) {
+		var self = this;
+		var options = this.options;
+		document.activeElement.blur();
+		var id = element.id.replace('MultiMedia_Video_Play_', '');
+		var videoOption;
+		for(var i = 0; i < self.data.VideoArray.length; i++) {
+			if(self.data.VideoArray[i].id == id) {
+				videoOption = self.data.VideoArray[i];
+				break;
+			}
+		}
+		self.videoPlayCallBack(videoOption);
 	}
 
 	/**
@@ -177,7 +270,7 @@ var MultiMedia = (function($, mod) {
 	proto.pictureActionSheet = function(type) {
 		//console.log('pictureActionSheet');
 		var self = this;
-		var NumPick = self.data.PicturesNum;
+		var NumPick = self.data.PictureNum;
 		var type = type || 0;
 		if(type == 0) {
 			//拍取照片
@@ -265,7 +358,6 @@ var MultiMedia = (function($, mod) {
 					wd.close();
 				});
 			}
-
 		}, function(error) {
 			var code = error.code; // 错误编码
 			var message = error.message; // 错误描述信息
@@ -283,7 +375,6 @@ var MultiMedia = (function($, mod) {
 		var width = self.data.PictureWith;
 		var widthStr = self.data.PictureWith + 'px';
 		var marginLeft = self.data.PictureMarginLeft;
-		var marginLeftStr = self.data.PictureMarginLeft + 'px';
 		var footer = document.getElementById("MultiMedia_Picture_Footer");
 		var group = 'MultiMedia_Picture';
 		for(var i = 0; i < paths.length; i++) {
@@ -297,14 +388,14 @@ var MultiMedia = (function($, mod) {
 				domain: '', //图片地址
 				thumb: '' //图片缩略图地址
 			};
-			self.data.PicturesNum--;
+			self.data.PictureNum--;
 			self.data.PictureArray.push(images);
 			var element = document.createElement('div');
 			element.className = 'multimedia-picture-area';
 			//删除按钮
 			var html_0 = '<a id="MultiMedia_Picture_Delete_' + images.id + '" class="mui-icon iconfont icon-guanbi multimedia-picture-delete" style="margin-left: ' + parseInt(width + marginLeft / 2) + 'px;margin-top:' + parseInt(marginLeft / 2) + 'px;"></a>'
 			//显示图片的区域
-			var html_1 = '<div class="multimedia-picture" style="width: ' + widthStr + '; height: ' + widthStr + '; margin-left: ' + marginLeftStr + '; margin-top: ' + marginLeftStr + ';">'
+			var html_1 = '<div class="multimedia-picture" style="width: ' + width + 'px; height: ' + width + 'px; margin-left: ' + marginLeft + 'px; margin-top: ' + marginLeft + 'px;">'
 			//图片
 			var html_2 = '<img src="' + paths[i] + '" data-preview-src="' + paths[i] + '" data-preview-group="' + group + '" style="width:100%;visibility: hidden;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + widthStr + '\';this.style.width=\'initial\';this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + width + ')/2)+\'px\';}this.style.visibility=\'visible\';" />';
 			var html_3 = '</div>'
@@ -313,22 +404,31 @@ var MultiMedia = (function($, mod) {
 			self.imageChangeCallBack();
 		}
 		//console.log(document.getElementById("MultiMedia").innerHTML);
-		self.changePictureFooter(self.data.PictureArray.length);
+		self.changeFooterHeight(0, self.data.PictureArray.length);
 	}
 
 	/**
-	 * 调整图片区域的高度
-	 * @param {Object} length 图片的数量
+	 * 调整图片,视频区域的高度
+	 * @param {Object} type 元素的类型0图片;1视频
+	 * @param {Object} length 元素的数量
 	 */
-	proto.changePictureFooter = function(length) {
+	proto.changeFooterHeight = function(type, length) {
 		var self = this;
 		var options = this.options;
-		var width = self.data.PictureWith;
-		var marginLeft = self.data.PictureMarginLeft;
-		var footer = document.getElementById("MultiMedia_Picture_Footer");
-
-		var num = length;
-
+		var width;
+		var marginLeft;
+		var footer;
+		var type = type || 0;
+		if(type == 0) { //图片区域
+			width = self.data.PictureWith;
+			marginLeft = self.data.PictureMarginLeft;
+			footer = document.getElementById("MultiMedia_Picture_Footer");
+		} else { //视频
+			width = self.data.VideoWith;
+			marginLeft = self.data.VideoMarginLeft;
+			footer = document.getElementById("MultiMedia_Video_Footer");
+		}
+		var num = length || 0;
 		if(num == 0) { //0张
 			footer.style.height = '0px';
 		} else if(num > 0 && num < 5) { //1-4张,一行
@@ -338,15 +438,8 @@ var MultiMedia = (function($, mod) {
 		} else if(num > 8 && num < 13) { //9-12张，三行
 			footer.style.height = width * 3 + marginLeft * 4 + 'px';
 		} else {
-			console.log('### ERROR ### 图片数量超过 12 张，放置图片的区域未设置相应的高度');
+			console.log('### ERROR ### 数量超过 12，放置的区域未设置相应的高度');
 		}
-	}
-
-	/**
-	 * 图片数量变化的回调
-	 */
-	proto.imageChangeCallBack = function() {
-
 	}
 
 	/**
@@ -355,12 +448,75 @@ var MultiMedia = (function($, mod) {
 	proto.imageRefresh = function() {
 		var self = this;
 		var options = this.options;
-		self.data.PicturesNum = options.TotalPicture; //可以选取图片的剩余数量
+		self.data.PictureNum = options.TotalPicture; //可以选取图片的剩余数量
 		self.data.PictureArray = []; //已选取的图片路径
 		var footer = document.getElementById("MultiMedia_Picture_Footer");
 		footer.innerHTML = '';
-		self.changePictureFooter(self.data.PictureArray.length);
+		self.changeFooterHeight(0, self.data.PictureArray.length);
 	}
+
+	/**
+	 * 显示录制的视频
+	 * @param {Object} path 视频路径
+	 */
+	proto.addVideos = function(path, callback) {
+		var self = this;
+		var options = this.options;
+		var width = self.data.VideoWith;
+		var marginLeft = self.data.VideoMarginLeft;
+		var footer = document.getElementById("MultiMedia_Video_Footer");
+		var pathArray = path.split('/');
+		//生成缩略图
+		var video = document.createElement("video");
+		video.src = path;
+		video.onloadeddata = function() {
+			var canvas = document.createElement('canvas');
+			canvas.width = video.videoWidth;
+			canvas.height = video.videoHeight;
+			canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+			var thumb = canvas.toDataURL("image/png");
+			//增加视频
+			var videos = {
+				id: pathArray[pathArray.length - 1], //视频Id
+				path: path, //视频路径
+				localthumb: thumb, //视频本地的缩略图地址
+				domain: '', //视频地址
+				thumb: '' //视频缩略图地址
+			};
+			self.data.VideoNum--;
+			self.data.VideoArray.push(videos);
+			//显示视频
+			var element = document.createElement('div');
+			element.className = 'multimedia-picture-area';
+			//删除按钮
+			var html_0 = '<a id="MultiMedia_Video_Delete_' + videos.id + '" class="mui-icon iconfont icon-guanbi multimedia-picture-delete" style="margin-left: ' + parseInt(width + marginLeft / 2) + 'px;margin-top:' + parseInt(marginLeft / 2) + 'px;"></a>'
+			//显示视频缩略图的区域
+			var html_1 = '<div class="multimedia-picture" style="width: ' + width + 'px; height: ' + width + 'px; margin-left: ' + marginLeft + 'px; margin-top: ' + marginLeft + 'px;">'
+			//播放按钮
+			var html_2 = '<img id="MultiMedia_Video_Play_' + videos.id + '" class="multimedia-video-play" src="../../image/utils/playvideo.png" style="width: ' + parseInt(width / 2) + 'px; height: ' + parseInt(width / 2) + 'px;left: ' + parseInt(width / 4) + 'px;top: ' + parseInt(width / 4) + 'px; "/>';
+			//视频缩略图
+			var html_3 = '<img src="' + videos.localthumb + '" style="width:100%;visibility: hidden;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + width + 'px\';this.style.width=\'initial\';this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + width + ')/2)+\'px\';}this.style.visibility=\'visible\';" />';
+			var html_4 = '</div>'
+			element.innerHTML = html_0 + html_1 + html_2 + html_3 + html_4;
+			footer.appendChild(element);
+			self.changeFooterHeight(1, self.data.VideoArray.length);
+			self.videoChangeCallBack();
+			callback();
+		}
+	}
+
+	/**
+	 * 图片数量变化的回调
+	 */
+	proto.imageChangeCallBack = function() {}
+	/**
+	 * 视频数量变化的回调
+	 */
+	proto.videoChangeCallBack = function() {}
+	/**
+	 * 播放某个视频的回调
+	 */
+	proto.videoPlayCallBack = function(data) {}
 
 	var MultiMediaApi = null; //声明一个null的变量，用来存储多媒体对象
 
@@ -388,101 +544,85 @@ var MultiMedia = (function($, mod) {
 	 */
 	mod.galleryPickFalse = function(filter, multiple, maximum, successCB, errorCB) {
 		//console.log('galleryPickFalse | filter ' + filter + ' | multiple ' + multiple + ' | maximum ' + maximum);
-		try {
-			plus.gallery.pick(function(event) {
-				successCB(event);
-			}, function(error) {
-				var code = error.code; // 错误编码
-				var message = error.message; // 错误描述信息
-				if(plus.os.name == 'iOS') { //苹果
-					if(code != -2) {
-						console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
-						errorCB({
-							code: code, // 错误编码
-							message: 'ios ' + message // 错误描述信息
-						});
-					} else {
-						console.log('未选取图片 ' + JSON.stringify(error));
-					}
-				} else if(plus.os.name == 'Android') { //安卓
-					if(code != 12) {
-						console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
-						errorCB({
-							code: code, // 错误编码
-							message: 'android ' + message // 错误描述信息
-						});
-					} else {
-						console.log('未选取图片 ' + JSON.stringify(error));
-					}
-				} else { //其他
+		plus.gallery.pick(function(event) {
+			successCB(event);
+		}, function(error) {
+			var code = error.code; // 错误编码
+			var message = error.message; // 错误描述信息
+			if(plus.os.name == 'iOS') { //苹果
+				if(code != -2) {
+					console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
 					errorCB({
 						code: code, // 错误编码
-						message: plus.os.name + ' ' + message // 错误描述信息
+						message: 'ios ' + message // 错误描述信息
 					});
+				} else {
+					console.log('未选取图片 ' + JSON.stringify(error));
 				}
-			}, {
-				filter: filter,
-				maximum: maximum,
-				multiple: multiple,
-				onmaxed: function() {
-					mui.alert('图片数量超出限制');
-				},
-				system: false //多选必须设置的参数
-			});
-		} catch(e) {
-			alert('### ERROR ### 调用5+相册异常 name:' + e.name + " message:" + e.message);
-			errorCB({
-				code: 'ERROR', // 错误编码
-				message: '调用5+相册异常' // 错误描述信息
-			});
-		}
+			} else if(plus.os.name == 'Android') { //安卓
+				if(code != 12) {
+					console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
+					errorCB({
+						code: code, // 错误编码
+						message: 'android ' + message // 错误描述信息
+					});
+				} else {
+					console.log('未选取图片 ' + JSON.stringify(error));
+				}
+			} else { //其他
+				errorCB({
+					code: code, // 错误编码
+					message: plus.os.name + ' ' + message // 错误描述信息
+				});
+			}
+		}, {
+			filter: filter,
+			maximum: maximum,
+			multiple: multiple,
+			onmaxed: function() {
+				mui.alert('图片数量超出限制');
+			},
+			system: false //多选必须设置的参数
+		});
 	}
 
 	/**
 	 *  系统自带相册选择控件
 	 */
 	mod.galleryPickTrue = function(successCB, errorCB) {
-		try {
-			plus.gallery.pick(function(file) {
-				//console.log('从相册选取图片成功,图片的路径为：' + file);
-				successCB(file) //压缩图片
-			}, function(error) {
-				var code = error.code; // 错误编码
-				var message = error.message; // 错误描述信息
-				if(plus.os.name == 'iOS') { //苹果
-					if(code != -2) {
-						console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
-						errorCB({
-							code: code, // 错误编码
-							message: 'ios ' + message // 错误描述信息
-						});
-					} else {
-						console.log('未选取图片 ' + JSON.stringify(error));
-					}
-				} else if(plus.os.name == 'Android') { //安卓
-					if(code != 12) {
-						console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
-						errorCB({
-							code: code, // 错误编码
-							message: 'android ' + message // 错误描述信息
-						});
-					} else {
-						console.log('未选取图片 ' + JSON.stringify(error));
-					}
-				} else { //其他
+		plus.gallery.pick(function(file) {
+			//console.log('从相册选取图片成功,图片的路径为：' + file);
+			successCB(file) //压缩图片
+		}, function(error) {
+			var code = error.code; // 错误编码
+			var message = error.message; // 错误描述信息
+			if(plus.os.name == 'iOS') { //苹果
+				if(code != -2) {
+					console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
 					errorCB({
 						code: code, // 错误编码
-						message: plus.os.name + ' ' + message // 错误描述信息
+						message: 'ios ' + message // 错误描述信息
 					});
+				} else {
+					console.log('未选取图片 ' + JSON.stringify(error));
 				}
-			});
-		} catch(e) {
-			alert('### ERROR ### 调用系统相册异常 name:' + e.name + " message:" + e.message);
-			errorCB({
-				code: 'ERROR', // 错误编码
-				message: '调用系统相册异常' // 错误描述信息
-			});
-		}
+			} else if(plus.os.name == 'Android') { //安卓
+				if(code != 12) {
+					console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
+					errorCB({
+						code: code, // 错误编码
+						message: 'android ' + message // 错误描述信息
+					});
+				} else {
+					console.log('未选取图片 ' + JSON.stringify(error));
+				}
+			} else { //其他
+				errorCB({
+					code: code, // 错误编码
+					message: plus.os.name + ' ' + message // 错误描述信息
+				});
+			}
+		});
 	}
 
 	/**
@@ -493,85 +633,49 @@ var MultiMedia = (function($, mod) {
 	mod.cameraTake = function(successCB, errorCB) {
 		//获取设备默认的摄像头对象
 		var cmr = plus.camera.getCamera();
-		if(cmr) {
-			//获取摄像头支持的拍照分辨率。“WIDTH*Height”，如“400*800”
-			//属性类型为String[]，若不支持此属性则返回空数组对象
-			//var res = cmr.supportedImageResolutions[0]; //[0]:最高的分辨率模式
-			//获取摄像头支持的拍照文件格式。文件格式后缀名，如“jpg”、“png”、“bmp”
-			//属性类型为String[]，若不支持此属性则返回空数组对象
-			//var fmt = cmr.supportedImageFormats[0];
-			//console.log('支持的拍照分辨率:' + JSON.stringify(cmr.supportedImageResolutions));
-			//console.log('支持的拍照文件格式:' + JSON.stringify(cmr.supportedImageFormats));
-			//console.log("选择的拍照分辨率: " + res + ", 选择的文件格式: " + fmt);
-			//进行拍照操作cmr.captureImage( successCB, errorCB, option );
-			//摄像头资源为独占资源，如果其它程序或页面已经占用摄像头，再次操作则失败
-			//successCB: ( CameraSuccessCallback ) 必选 拍照操作成功的回调函数
-			//errorCB: ( CameraErrorCallback ) 可选 拍照操作失败的回调函数
-			//option: ( CameraOption ) 必选 摄像头拍照参数
-			try {
-				cmr.captureImage(function(capturedFile) {
-						try {
-							//拍照成功的回调
-							//console.log('拍照成功,图片的路径为 ' + capturedFile);
-							//capturedFile ：图片的路径
-							//将本地URL路径转换成平台绝对路径
-							var path = 'file://' + plus.io.convertLocalFileSystemURL(capturedFile);
-							//console.log('转换成平台绝对路径,图片的路径为 ' + path);
-							successCB(path);
-						} catch(e) {
-							alert('### ERROR ### 拍照成功的回调异常 name:' + e.name + " message:" + e.message);
-							errorCB({
-								code: 'ERROR', // 错误编码
-								message: '拍照成功的回调异常' // 错误描述信息
-							});
-						}
-					},
-					function(error) {
-						// 拍照失败的回调
-						var code = error.code; // error.code（Number类型）获取错误编码
-						var message = error.message; // error.message（String类型）获取错误描述信息。
-						if(plus.os.name == 'iOS') {
-							if(code !== 2) {
-								errorCB({
-									code: code, // 错误编码
-									message: 'iOS ' + message // 错误描述信息
-								});
+		cmr.captureImage(function(capturedFile) {
+				//将本地URL路径转换成平台绝对路径
+				var path = 'file://' + plus.io.convertLocalFileSystemURL(capturedFile);
+				//console.log('转换成平台绝对路径,图片的路径为 ' + path);
+				successCB(path);
+			},
+			function(error) {
+				// 拍照失败的回调
+				var code = error.code; // error.code（Number类型）获取错误编码
+				var message = error.message; // error.message（String类型）获取错误描述信息。
+				if(plus.os.name == 'iOS') {
+					if(code !== 2) {
+						errorCB({
+							code: code, // 错误编码
+							message: 'iOS ' + message // 错误描述信息
+						});
+						mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
+						console.log('### ERROR ### 拍照失败 ' + JSON.stringify(error));
+					} else {
+						console.log('未拍取图片 ' + JSON.stringify(error));
+					}
+				} else if(plus.os.name == 'Android') {
+					if(code !== 11) {
+						errorCB({
+							code: code, // 错误编码
+							message: 'Android ' + message // 错误描述信息
+						});
+						console.log('### ERROR ### 拍照失败 ' + JSON.stringify(error));
+					} else {
+						console.log('未拍取图片 ' + JSON.stringify(error));
+					}
+				} else {
+					errorCB({
+						code: code, // 错误编码
+						message: plus.os.name + ' ' + message // 错误描述信息
+					});
+				}
+			}, {}
+		);
+	}
 
-								mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
-								console.log('### ERROR ### 拍照失败 ' + JSON.stringify(error));
-							} else {
-								console.log('未拍取图片 ' + JSON.stringify(error));
-							}
-						} else if(plus.os.name == 'Android') {
-							if(code !== 11) {
-								errorCB({
-									code: code, // 错误编码
-									message: 'Android ' + message // 错误描述信息
-								});
-								console.log('### ERROR ### 拍照失败 ' + JSON.stringify(error));
-							} else {
-								console.log('未拍取图片 ' + JSON.stringify(error));
-							}
-						} else {
-							errorCB({
-								code: code, // 错误编码
-								message: plus.os.name + ' ' + message // 错误描述信息
-							});
-						}
-					}, {});
-			} catch(e) {
-				alert('### ERROR ### 拍照异常 name:' + e.name + " message:" + e.message);
-				errorCB({
-					code: 'ERROR', // 错误编码
-					message: '拍照异常' // 错误描述信息
-				});
-			}
-		} else {
-			errorCB({
-				code: 'NULL', // 错误编码
-				message: '获取摄像头失败' // 错误描述信息
-			});
-		}
+	mod.showVideo=function(path,thumb){
+
 	}
 
 	return mod;

@@ -74,7 +74,8 @@
 			"html/qiuzhi/expert-detail.html",
 			"html/qiuzhi/qiuzhi-questionSearch.html",
 			"html/cloud/cloud_home.html",
-			"html/register/login.html"
+			"html/register/login.html",
+			"html/cloud/order-member.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-answerDetailSub.html": {
@@ -777,7 +778,8 @@
 			"js/utils/RSAEncrypt.js",
 			"css/iconfont/iconfont.css",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/mui.min.js"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-sub.html"
@@ -1044,9 +1046,7 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"image/utils/default_personalimage.png"
 		],
-		"refer": [
-			"html/quan/zone_main.html"
-		]
+		"refer": []
 	},
 	"html/quan/group-pInfo.html": {
 		"resources": [
@@ -2473,6 +2473,28 @@
 		"refer": [
 			"html/quan/group-pInfo.html",
 			"html/mine/qun_manage_invite_a.html"
+		]
+	},
+	"html/cloud/order-member.html": {
+		"resources": [
+			"js/cloud/order-member.js",
+			"css/cloud/order-member.css",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/cloud/member-pay.html"
+		]
+	},
+	"html/cloud/member-pay.html": {
+		"resources": [
+			"css/iconfont/iconfont.css",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf",
+			"css/utils/common.css"
 		]
 	}
 }

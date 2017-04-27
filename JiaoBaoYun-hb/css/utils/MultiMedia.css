@@ -60,3 +60,8 @@
 	position: absolute;
 	z-index: 2;
 }
+
+.multimedia-video-play {
+	/*播放视频*/
+	position: absolute;
+}

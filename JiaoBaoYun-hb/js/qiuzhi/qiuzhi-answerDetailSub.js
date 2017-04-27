@@ -41,6 +41,7 @@ mui.plusReady(function() {
 		mui.previewImage().close();
 		console.log("求知回答页面已隐藏");
 		events.clearChild(document.getElementById('list-container'));
+		hideBottom();
 		setOriginalCondition();
 		mui('#popover').popover('hide');
 	})
@@ -52,15 +53,15 @@ mui.plusReady(function() {
 		answerData = {};
 		pageIndex = 1;
 		totalPageCount = 1;
-		answerInfo = e.detail.data;
 		document.getElementById('question-content').innerHTML = "";
-		setChangeCondition();
 		console.log("获取的回答详情：" + JSON.stringify(answerInfo));
+		console.log("获取的数据："+JSON.stringify(e.detail.data));
 		//如果跟上次进入的是同一个回答 则不更改顺序
 		if(!(answerInfo && e.detail.data.AnswerId == answerInfo.AnswerId)) {
 			type = 2; //倒序
-			mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0)
 		}
+		answerInfo = e.detail.data;
+		setChangeCondition();
 		setTolerantChecked(type);
 		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
 		var answerId = answerInfo.AnswerId;
@@ -378,12 +379,14 @@ var insertCommentData = function(commentData) {
 	}
 	console.log("改变后的数据：" + JSON.stringify(answerData))
 }
+var hideBottom=function(){
+	document.getElementById('list-container').style.display="none";
+	document.querySelector(".answer-noComment").style.display="none";
+}
 /**
  * 2倒序 1顺序
  */
 var setTolerantChecked = function(orderType) {
-	document.getElementById('list-container').style.display="none";
-	document.querySelector(".answer-noComment").style.display="none";
 	if(orderType == 1) {
 		document.getElementById("sequence-order").className = "mui-table-view-cell mui-selected"
 		document.getElementById('reverse-order').className = "mui-table-view-cell";
@@ -594,10 +597,12 @@ function refreshUI(datasource) {
 	}
 	var ul = document.getElementById('list-container');
 	if(datasource.Data.length > 0) {
-		setCommentContainer();
 		createList(ul, datasource.Data);
+		setCommentContainer();
 	} else {
-		setCommentContainer(1)
+		setTimeout(function(){
+			setCommentContainer(1)
+		},100)
 	}
 	events.closeWaiting();
 }

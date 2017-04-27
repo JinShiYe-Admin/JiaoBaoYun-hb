@@ -27,6 +27,19 @@
 				border-bottom: 1px solid lightgray;
 				margin-bottom: 0px;
 			}
+
+			.mui-popover {
+				width: 100%;
+				height: 0px;
+				border-radius: initial;
+				background-color: transparent;
+				border: none;
+				box-shadow: none;
+			}
+
+			.mui-backdrop {
+				background-color: black;
+			}
 		</style>
 	</head>
 
@@ -36,21 +49,17 @@
 			<h1 class="mui-title" style="color: white;">笔记</h1>
 			<div id="finish" class="title-text-pull-right">完成</div>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content mui-fullscreen">
 			<textarea id="notes" maxlength="2000" placeholder="✎ 分享你的学习与生活...,最多2000字"></textarea>
 			<div id="MultiMedia">
-				<!--<div id="_MSL_MultiMedia" style="width: 100%;">
-					<div id="MultiMedia_Body" class="multimedia-body">
-						<div id="MultiMedia_Header" class="multimedia-header"><span id="MultiMedia_Picture_Header" class="mui-icon iconfont icon-xiangji2"></span><span id="MultiMedia_Tuku_Header" class="mui-icon iconfont icon-tuku"></span><span id="MultiMedia_Audio_Header" class="mui-icon iconfont icon-yuyin3"></span><span id="MultiMedia_Video_Header" class="mui-icon iconfont icon-shipin2"></span></div>
-						<div id="MultiMedia_Footer" class="multimedia-footer">
-							<div id="MultiMedia_Picture_Footer"></div>
-							<div id="MultiMedia_Audio_Footer"></div>
-							<div id="MultiMedia_Video_Footer"></div>
-						</div>
-					</div>
-				</div>-->
 			</div>
 		</div>
+		<div id="videoPopover" class="mui-popover">
+			<video id="video" style="position: absolute;z-index: 999;">
+				您的浏览器不支持 video 标签。
+			</video>
+		</div>
+
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
@@ -64,6 +73,7 @@
 		<script type="text/javascript" src="../../js/mui.previewimage.js"></script>
 		<script type="text/javascript" src="../../js/utils/compress.js"></script>
 		<script type="text/javascript" src="../../js/utils/recordvideoutil.js"></script>
+		<script type="text/javascript" src="../../js/utils/playutil.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			var pathList = []; //记录需要删掉的图片和缩略图
@@ -98,11 +108,37 @@
 					Video: true, //是否显示视频图标
 					TotalPicture: 9, //图片的个数
 					TotalAudio: 1, //音频的个数
-					TotalVideo: 1, //视频的个数
+					TotalVideo: 2, //视频的个数
 				});
-				//console.log(document.getElementById("MultiMedia").innerHTML);
-
+				/**
+				 * 播放视频
+				 * @param {Object} data
+				 */
+				multiMedia.videoPlayCallBack = function(data) {
+					if(plus.os.name == 'Android') {
+						playutil.openFile(data.path, function(text) {
+							mui.toast(text);
+						});
+					} else if(plus.os.name == 'iOS') {
+						var video = document.getElementById("video");
+						video.src = data.path;
+						video.poster = data.localthumb;
+						mui('#videoPopover').popover('show');
+						video.play();
+						var mask = mui.createMask(function() {
+							video.pause();
+							mui('#videoPopover').popover('hide');
+						});
+						mask.show();
+					}
+				}
 				hideOption = events.initHideKeyBoard(); //获取配置信息
+
+				//初始播放器
+				var video = document.getElementById("video");
+				video.style.width = plus.screen.resolutionWidth + 'px';
+				video.style.height = parseInt(plus.screen.resolutionWidth * 3 / 4) + 'px';
+				video.style.marginTop = (plus.screen.resolutionHeight - 45 - plus.navigator.getStatusbarHeight() - parseInt(plus.screen.resolutionWidth * 3 / 4)) / 2 + 'px';
 			}
 
 			/*
