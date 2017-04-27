@@ -96,6 +96,7 @@ mui.plusReady(function() {
 		if(imgNode) {
 			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)){
 				imgNode.src = updateHeadImg(img, 2);
+				imgNode.style.display="inline-block";
 			}
 		}
 	});
@@ -310,6 +311,7 @@ var changRightIcons = function(targetTab) {
 			addOrder(iconContainer);
 			slideNavigation.addSlideIcon();
 			slideNavigation.iconAddEvent();
+			document.querySelector('.img-icon').style.display="inline-block";
 			break;
 		case '../sciedu/sciedu_home.html': //科教
 			addListIcon(title_left, '../sciedu/sciedu_home.html');
@@ -321,6 +323,7 @@ var changRightIcons = function(targetTab) {
 		case '../qiuzhi/qiuzhi_home.html': //求知
 			title.innerText = "求知";
 			slideNavigation.addSlideIcon();
+			document.querySelector('.img-icon').style.display="inline-block";
 			addQiuZhiExpertSearch(iconContainer);
 			document.querySelector('.img-icon').addEventListener('tap', function(e) {
 				//判断是否是游客身份登录

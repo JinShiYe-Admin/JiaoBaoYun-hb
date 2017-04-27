@@ -778,7 +778,8 @@
 			"js/utils/RSAEncrypt.js",
 			"css/iconfont/iconfont.css",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/mui.min.js"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-sub.html"
@@ -1045,7 +1046,9 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"image/utils/default_personalimage.png"
 		],
-		"refer": []
+		"refer": [
+			"html/quan/zone_main.html"
+		]
 	},
 	"html/quan/group-pInfo.html": {
 		"resources": [
@@ -2467,11 +2470,15 @@
 			"js/utils/postData.js",
 			"css/mine/manager_member.css",
 			"js/utils/RSAEncrypt.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/cryption.js",
+			"js/utils/CloudFileUtil.js",
+			"js/qiniu/qiniu.js"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",
-			"html/mine/qun_manage_invite_a.html"
+			"html/mine/qun_manage_invite_a.html",
+			"html/mine/qun_manage_info.html"
 		]
 	},
 	"html/cloud/order-member.html": {
@@ -2479,7 +2486,12 @@
 			"js/cloud/order-member.js",
 			"css/cloud/order-member.css",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"image/utils/default_personalimage.png",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"fonts/mui.ttf",
+			"js/utils/events.js"
 		],
 		"refer": [
 			"html/cloud/member-pay.html"
@@ -2493,6 +2505,12 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"fonts/iconfont.ttf",
+			"css/utils/common.css"
+		]
+	},
+	"html/mine/qun_manage_info_change_post.html": {
+		"resources": [
+			"css/mui.min.css",
 			"css/utils/common.css"
 		]
 	}

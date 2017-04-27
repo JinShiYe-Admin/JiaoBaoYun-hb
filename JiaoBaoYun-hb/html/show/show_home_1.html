@@ -93,17 +93,17 @@
 				})
 				//发布动态后刷新
 				window.addEventListener('infoChanged', function() {
-//					var cityID = sliderId.replace('top_', '');
-//					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-//					pageIndex = 1;
-//					pullFlag = 0;
-//					totalPage = 0;
-//					if(cityID == 1) {
-//						getFocusByUser()
-//					} else {
-//						requestData(cityID, 1);
-//						window.scrollTo(0, 1);
-//					}
+					//					var cityID = sliderId.replace('top_', '');
+					//					personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+					//					pageIndex = 1;
+					//					pullFlag = 0;
+					//					totalPage = 0;
+					//					if(cityID == 1) {
+					//						getFocusByUser()
+					//					} else {
+					//						requestData(cityID, 1);
+					//						window.scrollTo(0, 1);
+					//					}
 
 				});
 
@@ -146,10 +146,21 @@
 						commentList.appendChild(div);
 						zonepArray[tempIndex].Comments.push(tempData.Comment)
 					} else if(tempData.flag == '评论回复') {
-						var indexArr = tempIndex.split('-');
-						var id = indexArr[0];
-						var commentId = indexArr[1];
-						var replyId = indexArr[2];
+						var id;
+						var commentId;
+						var replyId;
+						if(tempIndex.indexOf('-') >= 0) {
+							var indexArr = tempIndex.split('-');
+							id = indexArr[0];
+							commentId = indexArr[1];
+							replyId = indexArr[2];
+						} else {
+							var indexArr = tempIndex.split('-');
+							id = indexArr[0];
+							indexArr = tempData.tempIndex.split('-');
+							commentId = indexArr[1];
+							replyId = indexArr[2];
+						}
 
 						var tempModel = zonepArray[id].Comments[commentId];
 						var replyUserId;

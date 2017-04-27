@@ -135,7 +135,19 @@
 									flag: '评论回复',
 									Reply:Reply
 								})
+								mui.fire(plus.webview.currentWebview().opener().opener(), 'refreshShow', {
+									tempIndex: tempIndex,
+									content: inputComment.value,
+									flag: '评论回复',
+									Reply:Reply
+								})
 								mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep', {
+									tempIndex: tempIndex,
+									content: inputComment.value,
+									flag: '评论回复',
+									Reply:Reply
+								})
+								mui.fire(plus.webview.currentWebview().opener().opener(), 'refreshZonep', {
 									tempIndex: tempIndex,
 									content: inputComment.value,
 									flag: '评论回复',
@@ -173,7 +185,19 @@
 									flag: '评论',
 									Comment:Comment
 								})
+								mui.fire(plus.webview.currentWebview().opener().opener(), 'refreshShow', {
+									tempIndex: tempIndex,
+									content: inputComment.value,
+									flag: '评论',
+									Comment:Comment
+								})
 								mui.fire(plus.webview.currentWebview().opener(), 'refreshZonep', {
+									tempIndex: tempIndex,
+									content: inputComment.value,
+									flag: '评论',
+									Comment:Comment
+								})
+								mui.fire(plus.webview.currentWebview().opener().opener(), 'refreshZonep', {
 									tempIndex: tempIndex,
 									content: inputComment.value,
 									flag: '评论',

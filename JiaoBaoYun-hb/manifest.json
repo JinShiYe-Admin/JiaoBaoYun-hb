@@ -4349,7 +4349,8 @@
 					"image/utils/default_personalimage.png",
 					"js/mui.min.js",
 					"fonts/fangzheng.ttf",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/utils/events.js"
 				],
 				"refer": [
 					"html/cloud/member-pay.html"
