@@ -216,12 +216,11 @@
 			}
 		});
 
-		initListener();
 		mui.plusReady(function() {
 			var wd = events.showWaiting();
 			initData();
 			initControl();
-			initMuiListener();
+			initListener();
 			//请求数据
 			requestData(1, wd);
 		});
@@ -244,69 +243,7 @@
 			document.getElementById('title').addEventListener('doubletap', function() {
 				mui('#pullrefresh').scroll().scrollTo(0, 0, 100);
 			});
-		}
 
-		/**
-		 * 初始化数据
-		 */
-		function initData() {
-			var myDate = new Date();
-			var month = myDate.getMonth() + 1;
-			if(month.length = 1) {
-				month = '0' + month;
-			}
-			today = myDate.getFullYear() + '-' + month + '-' + myDate.getDate();
-		}
-
-		/**
-		 * 初始化控件
-		 */
-		function initControl() {
-			//初始化图片查看控件
-			previewImage = mui.previewImage();
-			//初始化下拉，上拉控件
-			var deceleration = mui.os.ios ? 0.003 : 0.0009;
-			mui('.mui-scroll-wrapper').scroll({
-				bounce: false,
-				indicators: true, //是否显示滚动条
-				deceleration: deceleration
-			});
-			pullRefresh = mui('.mui-scroll-wrapper .mui-scroll').pullToRefresh({
-				down: {
-					callback: function() {
-						console.log('down ' + JSON.stringify(page));
-						requestData(1);
-						setTimeout(function() {
-							pullRefresh.endPullDownToRefresh(); //结束下拉刷新
-						}, 1000);
-					}
-				},
-				up: {
-					contentinit: '', //默认没有更多显示空白
-					callback: function() {
-						console.log('up ' + JSON.stringify(page));
-						if(page) {
-							requestData(page.pageIndex + 1);
-						} else {
-							mui.toast('数据异常，请下拉刷新后重新尝试');
-						}
-						setTimeout(function() {
-							endPullUp();
-						}, 1000);
-					}
-				}
-			});
-			//初始播放器
-			var video = document.getElementById("video");
-			video.style.width = plus.screen.resolutionWidth + 'px';
-			video.style.height = parseInt(plus.screen.resolutionWidth * 3 / 4) + 'px';
-			video.style.marginTop = (plus.screen.resolutionHeight - 45 - plus.navigator.getStatusbarHeight() - parseInt(plus.screen.resolutionWidth * 3 / 4)) / 2 + 'px';
-		}
-
-		/**
-		 * 初始化MUI监听
-		 */
-		function initMuiListener() {
 			//显示全部，收起
 			mui('#list').on('tap', '.show-all', function() {
 				var str = this.innerText;
@@ -357,6 +294,64 @@
 			});
 		}
 
+		/**
+		 * 初始化数据
+		 */
+		function initData() {
+			var myDate = new Date();
+			var month = myDate.getMonth() + 1;
+			if(month.length = 1) {
+				month = '0' + month;
+			}
+			today = myDate.getFullYear() + '-' + month + '-' + myDate.getDate();
+		}
+
+		/**
+		 * 初始化控件
+		 */
+		function initControl() {
+			//初始化图片查看控件
+			previewImage = mui.previewImage();
+			//初始化下拉，上拉控件
+			var deceleration = mui.os.ios ? 0.003 : 0.0009;
+			mui('.mui-scroll-wrapper').scroll({
+				bounce: false,
+				indicators: true, //是否显示滚动条
+				deceleration: deceleration
+			});
+			pullRefresh = mui('.mui-scroll-wrapper .mui-scroll').pullToRefresh({
+				down: {
+					callback: function() {
+						console.log('down ' + JSON.stringify(page));
+						requestData(1);
+						setTimeout(function() {
+							pullRefresh.endPullDownToRefresh(); //结束下拉刷新
+						}, 1000);
+					}
+				},
+				up: {
+					contentinit: '', //默认没有更多显示空白
+					contentnomore: '', //隐藏没有更多提示
+					callback: function() {
+						console.log('up ' + JSON.stringify(page));
+						if(page) {
+							requestData(page.pageIndex + 1);
+						} else {
+							mui.toast('数据异常，请下拉刷新后重新尝试');
+						}
+						setTimeout(function() {
+							endPullUp();
+						}, 1000);
+					}
+				}
+			});
+			//初始化播放器
+			var video = document.getElementById("video");
+			video.style.width = plus.screen.resolutionWidth + 'px';
+			video.style.height = parseInt(plus.screen.resolutionWidth * 3 / 4) + 'px';
+			video.style.marginTop = (plus.screen.resolutionHeight - 45 - plus.navigator.getStatusbarHeight() - parseInt(plus.screen.resolutionWidth * 3 / 4)) / 2 + 'px';
+		}
+
 		//请求数据
 		function requestData(pageIndex, wd) {
 			var wd = wd || events.showWaiting();
@@ -391,9 +386,7 @@
 					if(data.RspData.Data.length == 0 && pageIndex == 1) {
 						//第一页的数据为空
 						notesNone(); //显示无笔记界面
-						pullRefresh.options.up.contentnomore = ''; //隐藏提示
 					} else {
-						pullRefresh.options.up.contentnomore = '没有更多数据了';
 						for(var i = 0; i < data.RspData.Data.length; i++) {
 							createNotes(data.RspData.Data[i]);
 						}
@@ -575,11 +568,22 @@
 		function videoThumbError(img) {
 			var ids = img.id.split('_');
 			var id = ids[2];
+			var info = notes.noteValue[id];
 			var play = document.getElementById("video_play_" + id);
 			var play_width = play.style.width.replace('px', '');
+			var video = document.createElement("video");
+			video.src = info.EncAddr;
+			video.onloadeddata = function() {
+				var canvas = document.createElement('canvas');
+				canvas.width = video.videoWidth / 2;
+				canvas.height = video.videoHeight / 2;
+				canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+				var thumb = canvas.toDataURL("image/png");
+				img.src = thumb;
+			}
+			img.parentNode.style.minHeight = play_width + 'px';
 			img.style.visibility = 'visible';
 			play.style.visibility = 'visible';
-			img.parentNode.style.height = play_width + 'px';
 		}
 	</script>
 
