@@ -249,6 +249,8 @@
 	<script type="text/javascript" src="../../js/utils/cryption.js"></script>
 	<script type="text/javascript" src="../../js/utils/recordvideoutil.js"></script>
 	<script type="text/javascript" src="../../js/utils/playutil.js"></script>
+	<script type="text/javascript" src="../../js/utils/showvideoutil.js"></script>
+
 	<script type="text/javascript">
 		//启用双击监听
 		mui.init({
@@ -355,10 +357,7 @@
 			}
 
 			//初始化播放器
-			var video = document.getElementById("video");
-			video.style.width = plus.screen.resolutionWidth + 'px';
-			video.style.height = parseInt(plus.screen.resolutionWidth * 3 / 4) + 'px';
-			video.style.marginTop = (plus.screen.resolutionHeight - 45 - plus.navigator.getStatusbarHeight() - parseInt(plus.screen.resolutionWidth * 3 / 4)) / 2 + 'px';
+			ShowVideoUtil.initVideo(document.getElementById("video"));
 		}
 
 		/**
@@ -487,11 +486,7 @@
 			mui('#ul_table').on('tap', '.video-play', function() {
 				if(!deleteRecord) { //不是删除状态
 					var ids = this.id.split('_');
-					var info = studentFile[ids[2]];
-					showVideo({
-						path: info.EncAddr,
-						localthumb: info.EncImgAddr
-					});
+					ShowVideoUtil.showVideo(document.getElementById("video"), 'videoPopover', studentFile[ids[2]].EncAddr, studentFile[ids[2]].EncImgAddr);
 				}
 			});
 		}
@@ -872,22 +867,7 @@
 		 */
 		function videoThumbLoad(img) {
 			var ids = img.id.split('_');
-			var id = ids[2];
-			var height = img.offsetHeight;
-			var width = img.offsetWidth;
-			if(width > height) {
-				img.style.width = '100%';
-				img.style.height = 'initial';
-				height = img.offsetHeight;
-				width = img.offsetWidth;
-			}
-			var play = document.getElementById("video_play_" + id);
-			var play_width = play.style.width.replace('px', '');
-			play.style.marginLeft = (width * 1 - play_width * 1) / 2 + 'px';
-			play.style.marginTop = (height * 1 - play_width * 1) / 2 + 'px';
-			//img.parentNode.style.height = height + 'px';
-			img.style.visibility = 'visible';
-			play.style.visibility = 'visible';
+			ShowVideoUtil.videoThumbLoad(img, document.getElementById("video_play_" + ids[2]));
 		}
 
 		/**
@@ -896,46 +876,7 @@
 		 */
 		function videoThumbError(img) {
 			var ids = img.id.split('_');
-			var id = ids[2];
-			var info = studentFile[id];
-			var play = document.getElementById("video_play_" + id);
-			var play_width = play.style.width.replace('px', '');
-			var video = document.createElement("video");
-			video.src = info.EncAddr;
-			video.onloadeddata = function() {
-				var canvas = document.createElement('canvas');
-				canvas.width = video.videoWidth / 2;
-				canvas.height = video.videoHeight / 2;
-				canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-				var thumb = canvas.toDataURL("image/png");
-				img.src = thumb;
-			}
-			img.parentNode.style.minHeight = play_width + 'px';
-			img.style.visibility = 'visible';
-			play.style.visibility = 'visible';
-		}
-
-		/**
-		 * 播放视频
-		 * @param {Object} data
-		 */
-		function showVideo(data) {
-			if(plus.os.name == 'Android') {
-				playutil.openFileAndroid(data.path, function(text) {
-					mui.toast(text);
-				});
-			} else if(plus.os.name == 'iOS') {
-				var video = document.getElementById("video");
-				video.src = data.path;
-				video.poster = data.localthumb;
-				mui('#videoPopover').popover('show');
-				var mask = mui.createMask(function() {
-					video.pause();
-					mui('#videoPopover').popover('hide');
-				});
-				mask.show();
-				video.play();
-			}
+			ShowVideoUtil.videoThumbError(img, document.getElementById("video_play_" + ids[2]), studentFile[ids[2]].EncAddr);
 		}
 	</script>
 

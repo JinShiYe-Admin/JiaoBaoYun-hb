@@ -197,6 +197,8 @@
 	<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 	<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
 	<script type="text/javascript" src="../../js/utils/playutil.js"></script>
+	<script type="text/javascript" src="../../js/utils/showvideoutil.js"></script>
+
 	<script type="text/javascript">
 		var markDate = ''; //记录日期
 		var today = ''; //记录今天日期
@@ -272,25 +274,10 @@
 				previewImage.open(document.getElementById("img_" + this.getAttribute('data-id')));
 			});
 
+			//播放视频
 			mui('#list').on('tap', '.video-play', function() {
 				var ids = this.id.split('_');
-				var info = notes.noteValue[ids[2]];
-				if(plus.os.name == 'Android') {
-					playutil.openFileAndroid(info.EncAddr, function(text) {
-						mui.toast(text);
-					});
-				} else if(plus.os.name == 'iOS') {
-					var video = document.getElementById("video");
-					video.src = info.EncAddr;
-					video.poster = info.EncImgAddr;
-					mui('#videoPopover').popover('show');
-					var mask = mui.createMask(function() {
-						video.pause();
-						mui('#videoPopover').popover('hide');
-					});
-					mask.show();
-					video.play();
-				}
+				ShowVideoUtil.showVideo(document.getElementById("video"), 'videoPopover', notes.noteValue[ids[2]].EncAddr, notes.noteValue[ids[2]].EncImgAddr);
 			});
 		}
 
@@ -345,11 +332,9 @@
 					}
 				}
 			});
+
 			//初始化播放器
-			var video = document.getElementById("video");
-			video.style.width = plus.screen.resolutionWidth + 'px';
-			video.style.height = parseInt(plus.screen.resolutionWidth * 3 / 4) + 'px';
-			video.style.marginTop = (plus.screen.resolutionHeight - 45 - plus.navigator.getStatusbarHeight() - parseInt(plus.screen.resolutionWidth * 3 / 4)) / 2 + 'px';
+			ShowVideoUtil.initVideo(document.getElementById("video"));
 		}
 
 		//请求数据
@@ -395,7 +380,6 @@
 				} else {
 					mui.toast(data.RspTxt);
 				}
-
 				events.closeWaiting(wd);
 			});
 		}
@@ -474,7 +458,7 @@
 				var play_width = parseInt(document.getElementById(dateItem).offsetWidth * 0.14);
 				var html_0 = '<div class="record-video">\
 								<img id="video_play_' + data.TabId + '" style="width:' + play_width + 'px;height:' + play_width + 'px;" class="video-play" src="../../image/utils/playvideo.png" />\
-								<img id="video_thumb_' + data.TabId + '" class="video-thumb" src="' + data.EncImgAddr + '" onload="videoThumbLoad(this);" onerror="videoThumbError(this);">\
+								<img id="video_thumb_' + data.TabId + '" class="video-thumb" src="' + data.EncImgAddr + '" onload="videoThumbLoad(this);"  onerror="videoThumbError(this);">\
 							</div>';
 				html_media = html_0;
 			}
@@ -543,22 +527,7 @@
 		 */
 		function videoThumbLoad(img) {
 			var ids = img.id.split('_');
-			var id = ids[2];
-			var height = img.offsetHeight;
-			var width = img.offsetWidth;
-			if(width > height) {
-				img.style.width = '100%';
-				img.style.height = 'initial';
-				height = img.offsetHeight;
-				width = img.offsetWidth;
-			}
-			img.parentNode.style.height = height + 'px';
-			var play = document.getElementById("video_play_" + id);
-			var play_width = play.style.width.replace('px', '');
-			play.style.marginLeft = (width * 1 - play_width * 1) / 2 + 'px';
-			play.style.marginTop = (height * 1 - play_width * 1) / 2 + 'px';
-			img.style.visibility = 'visible';
-			play.style.visibility = 'visible';
+			ShowVideoUtil.videoThumbLoad(img, document.getElementById("video_play_" + ids[2]), 1);
 		}
 
 		/**
@@ -567,23 +536,7 @@
 		 */
 		function videoThumbError(img) {
 			var ids = img.id.split('_');
-			var id = ids[2];
-			var info = notes.noteValue[id];
-			var play = document.getElementById("video_play_" + id);
-			var play_width = play.style.width.replace('px', '');
-			var video = document.createElement("video");
-			video.src = info.EncAddr;
-			video.onloadeddata = function() {
-				var canvas = document.createElement('canvas');
-				canvas.width = video.videoWidth / 2;
-				canvas.height = video.videoHeight / 2;
-				canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-				var thumb = canvas.toDataURL("image/png");
-				img.src = thumb;
-			}
-			img.parentNode.style.minHeight = play_width + 'px';
-			img.style.visibility = 'visible';
-			play.style.visibility = 'visible';
+			ShowVideoUtil.videoThumbError(img, document.getElementById("video_play_" + ids[2]), notes.noteValue[ids[2]].EncAddr);
 		}
 	</script>
 

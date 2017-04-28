@@ -687,10 +687,6 @@ var MultiMedia = (function($, mod) {
 		);
 	}
 
-	mod.showVideo = function(path, thumb) {
-
-	}
-
 	return mod;
 
 })(mui, window.MultiMedia || {});

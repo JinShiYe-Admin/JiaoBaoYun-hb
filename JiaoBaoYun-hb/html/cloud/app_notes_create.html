@@ -74,6 +74,7 @@
 		<script type="text/javascript" src="../../js/utils/compress.js"></script>
 		<script type="text/javascript" src="../../js/utils/recordvideoutil.js"></script>
 		<script type="text/javascript" src="../../js/utils/playutil.js"></script>
+		<script type="text/javascript" src="../../js/utils/showvideoutil.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			var pathList = []; //记录需要删掉的图片和缩略图
@@ -109,35 +110,19 @@
 					TotalAudio: 1, //音频的个数
 					TotalVideo: 1, //视频的个数
 				});
+
 				/**
 				 * 播放视频
 				 * @param {Object} data
 				 */
 				multiMedia.videoPlayCallBack = function(data) {
-					if(plus.os.name == 'Android') {
-						playutil.openFileAndroid(data.path, function(text) {
-							mui.toast(text);
-						});
-					} else if(plus.os.name == 'iOS') {
-						var video = document.getElementById("video");
-						video.src = data.path;
-						video.poster = data.localthumb;
-						mui('#videoPopover').popover('show');
-						var mask = mui.createMask(function() {
-							video.pause();
-							mui('#videoPopover').popover('hide');
-						});
-						mask.show();
-						video.play();
-					}
+					ShowVideoUtil.showVideo(document.getElementById("video"), 'videoPopover', data.path, data.localthumb);
 				}
+
 				hideOption = events.initHideKeyBoard(); //获取配置信息
 
 				//初始化播放器
-				var video = document.getElementById("video");
-				video.style.width = plus.screen.resolutionWidth + 'px';
-				video.style.height = parseInt(plus.screen.resolutionWidth * 3 / 4) + 'px';
-				video.style.marginTop = (plus.screen.resolutionHeight - 45 - plus.navigator.getStatusbarHeight() - parseInt(plus.screen.resolutionWidth * 3 / 4)) / 2 + 'px';
+				ShowVideoUtil.initVideo(document.getElementById("video"));
 			}
 
 			/*
