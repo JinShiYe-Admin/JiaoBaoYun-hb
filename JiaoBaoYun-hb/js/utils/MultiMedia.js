@@ -232,7 +232,7 @@ var MultiMedia = (function($, mod) {
 		for(var i = 0; i < self.data.VideoArray.length; i++) {
 			if(self.data.VideoArray[i].id == id) {
 				self.data.VideoArray.splice(i, 1);
-				self.data.PictureNum++;
+				self.data.VideoNum++;
 			}
 		}
 		//删除界面的视频
@@ -511,11 +511,11 @@ var MultiMedia = (function($, mod) {
 	proto.videoRefresh = function() {
 		var self = this;
 		var options = this.options;
-		self.data.VideoNum = options.TotalPicture; //可以选取图片的剩余数量
+		self.data.VideoNum = options.TotalVideo; //可以选取图片的剩余数量
 		self.data.VideoArray = []; //已选取的图片路径
 		var footer = document.getElementById("MultiMedia_Video_Footer");
 		footer.innerHTML = '';
-		self.changeFooterHeight(0, self.data.VideoArray.length);
+		self.changeFooterHeight(1, self.data.VideoArray.length);
 	}
 
 	/**

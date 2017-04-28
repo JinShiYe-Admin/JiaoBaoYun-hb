@@ -91,26 +91,11 @@
 				document.getElementById("input").placeholder = document.getElementById("title").innerText + ',最多' + maxLength + '字';
 				document.getElementById("input").value = subData.value;
 				input_num.innerText = maxLength - subData.value.length;
-
+				changeRows(subData.value);
 				document.getElementById('input').addEventListener('input', function() {
-					console.log('input');
 					var value = this.value.replace(/\r|\n/g, '');
 					this.value = value;
-					text_div.innerText = value;
-					var height_1 = text_div.offsetHeight;
-					console.log('text_height ' + text_height);
-					console.log('height_1 ' + height_1);
-					if(text_height >= height_1) {
-						rows = 1;
-						this.rows = 1;
-					} else if(text_height < height_1) {
-						rows = parseInt(height_1 / text_height);
-						this.rows = rows;
-					}
-
-					input_num.innerText = maxLength - this.value.length;
-					input_num.style.top = document.getElementById("input").offsetHeight - document.getElementById("input_num").offsetHeight + 'px';
-
+					changeRows(value);
 				});
 				document.getElementById('save').addEventListener('tap', function() {
 					var vvl = document.getElementById("input").value;
@@ -168,6 +153,24 @@
 						}
 					}
 				});
+
+				/**
+				 * 修改行数
+				 * @param {Object} value
+				 */
+				function changeRows(value) {
+					text_div.innerText = value;
+					var height_1 = text_div.offsetHeight;
+					if(text_height >= height_1) {
+						rows = 1;
+						document.getElementById("input").rows = 1;
+					} else if(text_height < height_1) {
+						rows = parseInt(height_1 / text_height);
+						document.getElementById("input").rows = rows;
+					}
+					input_num.innerText = maxLength - value.length;
+					input_num.style.top = document.getElementById("input").offsetHeight - document.getElementById("input_num").offsetHeight + 'px';
+				}
 			});
 		</script>
 	</body>
