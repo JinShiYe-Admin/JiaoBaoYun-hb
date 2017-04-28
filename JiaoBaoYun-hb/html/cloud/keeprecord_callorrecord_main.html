@@ -303,11 +303,6 @@
 				multiMedia.videoPlayCallBack = function(data) {
 					showVideo(data);
 				}
-				//初始化播放器
-				var video = document.getElementById("video");
-				video.style.width = plus.screen.resolutionWidth + 'px';
-				video.style.height = parseInt(plus.screen.resolutionWidth * 3 / 4) + 'px';
-				video.style.marginTop = (plus.screen.resolutionHeight - 45 - plus.navigator.getStatusbarHeight() - parseInt(plus.screen.resolutionWidth * 3 / 4)) / 2 + 'px';
 
 				//初始化下拉，上拉控件
 				var deceleration = mui.os.ios ? 0.003 : 0.0009;
@@ -344,6 +339,11 @@
 					}
 				});
 				hideOption = events.initHideKeyBoard(); //获取配置信息
+				//初始化播放器
+				var video = document.getElementById("video");
+				video.style.width = plus.screen.resolutionWidth + 'px';
+				video.style.height = parseInt(plus.screen.resolutionWidth * 3 / 4) + 'px';
+				video.style.marginTop = (plus.screen.resolutionHeight - 45 - plus.navigator.getStatusbarHeight() - parseInt(plus.screen.resolutionWidth * 3 / 4)) / 2 + 'px';
 			}
 
 			/**
@@ -1010,7 +1010,7 @@
 			function videoThumbError(img) {
 				var ids = img.id.split('_');
 				var id = ids[2];
-				var info = studentFile[id];
+				var info = records.recordValue[id];
 				var play = document.getElementById("video_play_" + id);
 				var play_width = play.style.width.replace('px', '');
 				var video = document.createElement("video");

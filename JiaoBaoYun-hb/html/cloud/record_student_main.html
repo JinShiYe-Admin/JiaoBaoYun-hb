@@ -330,6 +330,7 @@
 				},
 				up: {
 					contentinit: '', //默认没有更多显示空白
+					contentnomore: '', //隐藏没有更多提示
 					callback: function() {
 						console.log('up ' + JSON.stringify(page));
 						if(page) {
@@ -353,12 +354,11 @@
 				}
 			}
 
-			//初始播放器
+			//初始化播放器
 			var video = document.getElementById("video");
 			video.style.width = plus.screen.resolutionWidth + 'px';
 			video.style.height = parseInt(plus.screen.resolutionWidth * 3 / 4) + 'px';
 			video.style.marginTop = (plus.screen.resolutionHeight - 45 - plus.navigator.getStatusbarHeight() - parseInt(plus.screen.resolutionWidth * 3 / 4)) / 2 + 'px';
-
 		}
 
 		/**

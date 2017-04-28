@@ -216,12 +216,11 @@
 			}
 		});
 
-		initListener();
 		mui.plusReady(function() {
 			var wd = events.showWaiting();
 			initData();
 			initControl();
-			initMuiListener();
+			initListener();
 			//请求数据
 			requestData(1, wd);
 		});
@@ -243,6 +242,55 @@
 			//双击标题返回列表顶部
 			document.getElementById('title').addEventListener('doubletap', function() {
 				mui('#pullrefresh').scroll().scrollTo(0, 0, 100);
+			});
+
+			//显示全部，收起
+			mui('#list').on('tap', '.show-all', function() {
+				var str = this.innerText;
+				var id = this.id.replace('_show', '');
+				var content = document.getElementById(id + "_content");
+				if(str == '显示全部') {
+					this.innerText = '收起';
+					content.style.webkitLineClamp = 'inherit';
+				} else if(str == '收起') {
+					var offsetHeight_0 = content.offsetHeight;
+					this.innerText = '显示全部';
+					content.style.webkitLineClamp = '3';
+					var offsetHeight_1 = content.offsetHeight;
+					var scroll = mui('#pullrefresh').scroll(); //滑动控件
+					var move = scroll.y + (offsetHeight_0 - offsetHeight_1);
+					if(move >= 0) {
+						mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 0);
+					} else {
+						mui('.mui-scroll-wrapper').scroll().scrollTo(0, move, 0);
+					}
+				}
+			});
+
+			//点击图片的数字
+			mui('#list').on('tap', '.record-picture-num', function() {
+				previewImage.open(document.getElementById("img_" + this.getAttribute('data-id')));
+			});
+
+			mui('#list').on('tap', '.video-play', function() {
+				var ids = this.id.split('_');
+				var info = notes.noteValue[ids[2]];
+				if(plus.os.name == 'Android') {
+					playutil.openFileAndroid(info.EncAddr, function(text) {
+						mui.toast(text);
+					});
+				} else if(plus.os.name == 'iOS') {
+					var video = document.getElementById("video");
+					video.src = info.EncAddr;
+					video.poster = info.EncImgAddr;
+					mui('#videoPopover').popover('show');
+					var mask = mui.createMask(function() {
+						video.pause();
+						mui('#videoPopover').popover('hide');
+					});
+					mask.show();
+					video.play();
+				}
 			});
 		}
 
@@ -302,60 +350,6 @@
 			video.style.width = plus.screen.resolutionWidth + 'px';
 			video.style.height = parseInt(plus.screen.resolutionWidth * 3 / 4) + 'px';
 			video.style.marginTop = (plus.screen.resolutionHeight - 45 - plus.navigator.getStatusbarHeight() - parseInt(plus.screen.resolutionWidth * 3 / 4)) / 2 + 'px';
-		}
-
-		/**
-		 * 初始化MUI监听
-		 */
-		function initMuiListener() {
-			//显示全部，收起
-			mui('#list').on('tap', '.show-all', function() {
-				var str = this.innerText;
-				var id = this.id.replace('_show', '');
-				var content = document.getElementById(id + "_content");
-				if(str == '显示全部') {
-					this.innerText = '收起';
-					content.style.webkitLineClamp = 'inherit';
-				} else if(str == '收起') {
-					var offsetHeight_0 = content.offsetHeight;
-					this.innerText = '显示全部';
-					content.style.webkitLineClamp = '3';
-					var offsetHeight_1 = content.offsetHeight;
-					var scroll = mui('#pullrefresh').scroll(); //滑动控件
-					var move = scroll.y + (offsetHeight_0 - offsetHeight_1);
-					if(move >= 0) {
-						mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 0);
-					} else {
-						mui('.mui-scroll-wrapper').scroll().scrollTo(0, move, 0);
-					}
-				}
-			});
-
-			//点击图片的数字
-			mui('#list').on('tap', '.record-picture-num', function() {
-				previewImage.open(document.getElementById("img_" + this.getAttribute('data-id')));
-			});
-
-			mui('#list').on('tap', '.video-play', function() {
-				var ids = this.id.split('_');
-				var info = notes.noteValue[ids[2]];
-				if(plus.os.name == 'Android') {
-					playutil.openFileAndroid(info.EncAddr, function(text) {
-						mui.toast(text);
-					});
-				} else if(plus.os.name == 'iOS') {
-					var video = document.getElementById("video");
-					video.src = info.EncAddr;
-					video.poster = info.EncImgAddr;
-					mui('#videoPopover').popover('show');
-					var mask = mui.createMask(function() {
-						video.pause();
-						mui('#videoPopover').popover('hide');
-					});
-					mask.show();
-					video.play();
-				}
-			});
 		}
 
 		//请求数据
@@ -574,7 +568,7 @@
 		function videoThumbError(img) {
 			var ids = img.id.split('_');
 			var id = ids[2];
-			var info = studentFile[id];
+			var info = notes.noteValue[id];
 			var play = document.getElementById("video_play_" + id);
 			var play_width = play.style.width.replace('px', '');
 			var video = document.createElement("video");
