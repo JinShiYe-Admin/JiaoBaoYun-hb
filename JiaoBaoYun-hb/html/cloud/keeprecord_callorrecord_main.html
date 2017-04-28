@@ -225,9 +225,9 @@
 			var hideOption; //隐藏键盘的数据
 			var page; //记录页数
 			var records = {
-				recordKey: [], //记录笔记的Key
-				recordValue: {} //记录笔记的Value
-			}; //记录所有的笔记
+				recordKey: [], //记录点到记事的Key
+				recordValue: {} //记录点到记事的Value
+			}; //记录所有的点到记事
 			var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 			var multiMedia; //多媒体选取控件
 			var previewImage; //查看图片的控件
@@ -303,7 +303,7 @@
 				multiMedia.videoPlayCallBack = function(data) {
 					showVideo(data);
 				}
-				//初始播放器
+				//初始化播放器
 				var video = document.getElementById("video");
 				video.style.width = plus.screen.resolutionWidth + 'px';
 				video.style.height = parseInt(plus.screen.resolutionWidth * 3 / 4) + 'px';
@@ -703,9 +703,9 @@
 						console.log('page ' + JSON.stringify(page));
 						if(pageIndex == 1) { //下拉刷新或者获取的第一页的内容
 							records = {
-								recordKey: [], //记录笔记的Key
-								recordValue: {} //记录笔记的Value
-							}; //记录所有的笔记
+								recordKey: [], //记录点到记事的Key
+								recordValue: {} //记录点到记事的Value
+							}; //记录所有的点到记事
 							//清空对应的界面
 							document.getElementById('top').innerHTML = '';
 							pullRefresh.refresh(true); //更新当前控件
@@ -849,7 +849,7 @@
 						var fileName = filePath[filePath.length - 1];
 						//获取路径
 						var fPath = '';
-						var num; //记录第几张图片
+						var num; //记录第几个文件
 						if(multiMedia.data.PictureArray.length !== 0) { //图片
 							for(var k = 0; k < multiMedia.data.PictureArray.length; k++) {
 								var path = multiMedia.data.PictureArray[k].path.split("/");
@@ -1010,7 +1010,9 @@
 			function videoThumbError(img) {
 				var ids = img.id.split('_');
 				var id = ids[2];
-				var info = records.recordValue[ids[2]];
+				var info = studentFile[id];
+				var play = document.getElementById("video_play_" + id);
+				var play_width = play.style.width.replace('px', '');
 				var video = document.createElement("video");
 				video.src = info.EncAddr;
 				video.onloadeddata = function() {
@@ -1020,10 +1022,8 @@
 					canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 					var thumb = canvas.toDataURL("image/png");
 					img.src = thumb;
-					img.parentNode.style.minHeight = play_width + 'px';
 				}
-				var play = document.getElementById("video_play_" + id);
-				var play_width = play.style.width.replace('px', '');
+				img.parentNode.style.minHeight = play_width + 'px';
 				img.style.visibility = 'visible';
 				play.style.visibility = 'visible';
 			}

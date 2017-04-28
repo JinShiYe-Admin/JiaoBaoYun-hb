@@ -297,7 +297,7 @@
 					}
 				}
 			});
-			//初始播放器
+			//初始化播放器
 			var video = document.getElementById("video");
 			video.style.width = plus.screen.resolutionWidth + 'px';
 			video.style.height = parseInt(plus.screen.resolutionWidth * 3 / 4) + 'px';
@@ -574,7 +574,9 @@
 		function videoThumbError(img) {
 			var ids = img.id.split('_');
 			var id = ids[2];
-			var info = notes.noteValue[ids[2]];
+			var info = studentFile[id];
+			var play = document.getElementById("video_play_" + id);
+			var play_width = play.style.width.replace('px', '');
 			var video = document.createElement("video");
 			video.src = info.EncAddr;
 			video.onloadeddata = function() {
@@ -584,13 +586,10 @@
 				canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 				var thumb = canvas.toDataURL("image/png");
 				img.src = thumb;
-				img.parentNode.style.minHeight = play_width + 'px';
 			}
-			var play = document.getElementById("video_play_" + id);
-			var play_width = play.style.width.replace('px', '');
+			img.parentNode.style.minHeight = play_width + 'px';
 			img.style.visibility = 'visible';
 			play.style.visibility = 'visible';
-			img.parentNode.style.height = play_width + 'px';
 		}
 	</script>
 

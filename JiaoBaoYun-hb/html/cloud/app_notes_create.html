@@ -133,7 +133,7 @@
 				}
 				hideOption = events.initHideKeyBoard(); //获取配置信息
 
-				//初始播放器
+				//初始化播放器
 				var video = document.getElementById("video");
 				video.style.width = plus.screen.resolutionWidth + 'px';
 				video.style.height = parseInt(plus.screen.resolutionWidth * 3 / 4) + 'px';
@@ -338,7 +338,7 @@
 						var fileName = filePath[filePath.length - 1];
 						//获取路径
 						var fPath = '';
-						var num; //记录第几张图片
+						var num; //记录第几个文件
 						if(multiMedia.data.PictureArray.length !== 0) { //图片
 							for(var k = 0; k < multiMedia.data.PictureArray.length; k++) {
 								var path = multiMedia.data.PictureArray[k].path.split("/");
@@ -394,7 +394,7 @@
 											encAddr.push(multiMedia.data.PictureArray[j].domain);
 											encImg.push(multiMedia.data.PictureArray[j].thumb);
 										}
-										type = '2';
+										type = '1';
 									} else if(multiMedia.data.VideoArray.length !== 0) { //视频
 										for(var j = 0; j < multiMedia.data.VideoArray.length; j++) {
 											encAddr.push(multiMedia.data.VideoArray[j].domain);
