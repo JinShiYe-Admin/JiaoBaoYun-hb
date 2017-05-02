@@ -11,11 +11,11 @@ var loginRoleType = 0; //登录角色0为游客1为用户
 var noReadCount = 0;
 var aniShow = {};
 mui.plusReady(function() {
-	var personalInfo=myStorage.getItem(storageKeyName.PERSONALINFO);
-	if(parseInt(personalInfo.utid)){
-		loginRoleType=1
-	}else{
-		loginRoleType=0;
+	var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
+	if(parseInt(personalInfo.utid)) {
+		loginRoleType = 1
+	} else {
+		loginRoleType = 0;
 	}
 	//	events.preload("../qiuzhi/expert-detail.html",100);
 	var waitingDia = events.showWaiting();
@@ -37,20 +37,20 @@ mui.plusReady(function() {
 	Statusbar.barHeight(); //获取一些硬件参数
 	addSubPages(); //加载子页面
 	setConditionbyRole(loginRoleType);
-//	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
+	//	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
 	window.addEventListener('infoChanged', function() {
-		events.fireToPageNone("cloud_home.html","infoChanged");
-		events.fireToPageNone("qiuzhi_home.html","infoChanged");
-//		getAboutMe();
-//		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
-//		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
-//		var imgNode = document.getElementById("index-header").querySelector('img');
-//		if(imgNode) {
-//			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)){
-//				imgNode.src = updateHeadImg(img, 2);
-//				imgNode.style.display="inline-block";
-//			}
-//		}
+		events.fireToPageNone("cloud_home.html", "infoChanged");
+		events.fireToPageNone("qiuzhi_home.html", "infoChanged");
+		//		getAboutMe();
+		//		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
+		//		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
+		//		var imgNode = document.getElementById("index-header").querySelector('img');
+		//		if(imgNode) {
+		//			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)){
+		//				imgNode.src = updateHeadImg(img, 2);
+		//				imgNode.style.display="inline-block";
+		//			}
+		//		}
 	});
 	//登录的监听
 	window.addEventListener("login", function() {
@@ -67,27 +67,27 @@ mui.plusReady(function() {
 	window.addEventListener('closeWaiting', function() {
 		events.closeWaiting();
 	})
-//	window.addEventListener('aboutmNoRead', function() {
-//		getAboutMe();
-//	});
+	//	window.addEventListener('aboutmNoRead', function() {
+	//		getAboutMe();
+	//	});
 	//	//默认自动登录
-//	events.defaultLogin(function(data) {
-//		console.log("自动登录获取的值：" + JSON.stringify(data));
-//		if(data.value == 1) {
-//			loginRoleType = data.flag;
-//			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-//			setTimeout(appUpdate.updateApp, 5000);
-//		} else if(data.value == -1) { //登录失败
-//			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
-//				loginRoleType = 1;
-//			} else {
-//				loginRoleType = 0;
-//			}
-//			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-//			mui.toast("登录失败，请检查网络！");
-//		}
-//		//android更新app
-//	});
+	//	events.defaultLogin(function(data) {
+	//		console.log("自动登录获取的值：" + JSON.stringify(data));
+	//		if(data.value == 1) {
+	//			loginRoleType = data.flag;
+	//			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+	//			setTimeout(appUpdate.updateApp, 5000);
+	//		} else if(data.value == -1) { //登录失败
+	//			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
+	//				loginRoleType = 1;
+	//			} else {
+	//				loginRoleType = 0;
+	//			}
+	//			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+	//			mui.toast("登录失败，请检查网络！");
+	//		}
+	//		//android更新app
+	//	});
 	//加载监听
 	setListener();
 
@@ -132,10 +132,17 @@ var setListener = function() {
 		var targetTab = this.getAttribute('href');
 		console.log("活动的页面：" + activeTab)
 		if(targetTab == activeTab) {
+			if(activeTab == '../cloud/cloud_home.html') {
+				events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {})
+			}
 			return;
 		}
+
+		if(activeTab == '../cloud/cloud_home.html') {
+			events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {})
+		}
 		//更改按钮
-//		changRightIcons(targetTab);
+		//		changRightIcons(targetTab);
 		var targetSplit = targetTab.split('/');
 		//显示目标选项卡
 		//若为iOS平台或非首次显示，则直接显示
@@ -352,7 +359,7 @@ var setConditionbyRole = function(role) {
 	var cloudIcon = document.getElementById("defaultTab");
 	var sceIcon = document.getElementById("tabclass");
 	var active_tab = document.querySelector(".mui-tab-item.mui-active").getAttribute('href');
-	console.log("要隐藏的界面："+active_tab)
+	console.log("要隐藏的界面：" + active_tab)
 	plus.webview.hide(active_tab.split("/")[active_tab.split("/").length - 1]);
 	document.querySelector(".mui-tab-item.mui-active").className = "mui-tab-item";
 
@@ -377,7 +384,7 @@ var setActivePage = function() {
 	mui.extend(aniShow, temp);
 	var splitActiveTabs = activeTab.split("/");
 	var activeId = splitActiveTabs[splitActiveTabs.length - 1];
-	console.log("要显示的界面："+activeTab);
+	console.log("要显示的界面：" + activeTab);
 	plus.webview.show(activeId, "fade-in", 300);
-//	changRightIcons(activeTab);
+	//	changRightIcons(activeTab);
 }
