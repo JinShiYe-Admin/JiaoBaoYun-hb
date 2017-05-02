@@ -1,7 +1,7 @@
 /**
  * 求知主界面逻辑
  */
-events.initSubPage('qiuzhi-sub.html');
+events.initSubPage('qiuzhi-sub.html',"",40);
 var allChannels; //所有话题
 var channelInfo; //当前话题
 var subPageReady = false; //子页面是否已触发plusReady事件
@@ -94,6 +94,7 @@ var setChannels = function(subjectArr) {
 	//	document.body.querySelector('.main-navigation').style.width = document.body.querySelector('.more-navigation').offsetLeft + 'px';
 	mui('#slider').slider();
 	channelInfo = allChannels[0];
+	console.log("获取频道信息："+JSON.stringify(channelInfo));
 	judgeWebReady();
 }
 /**
