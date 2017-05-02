@@ -101,7 +101,10 @@ var setChannels = function(subjectArr) {
  */
 var judgeWebReady = function() {
 	if(subPageReady) {
-		events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: channelInfo, allChannels: allChannels });
+		events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', {
+			curChannel: channelInfo,
+			allChannels: allChannels
+		});
 	} else {
 		setTimeout(judgeWebReady, 500);
 	}
@@ -112,6 +115,12 @@ var judgeWebReady = function() {
 var setListener = function() {
 	mui('#subjects-container').on('tap', '.mui-control-item', function() {
 		channelInfo = this.info;
-		events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: channelInfo, allChannels: allChannels });
+		events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', {
+			curChannel: channelInfo,
+			allChannels: allChannels
+		});
 	});
+	events.addTap('expertSearch', function() {
+		events.openNewWindowWithData('../qiuzhi/qiuzhi-questionSearch.html', 'jxq');
+	})
 }

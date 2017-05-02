@@ -92,7 +92,7 @@ var addSubPages = function() {
 	//	var titles = ['首页', '科教', '展现', '求知'];
 	//设置子页面距离顶部的位置
 	var subpage_style = events.getWebStyle();
-	subpage_style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
+	subpage_style.top = (localStorage.getItem('StatusHeightNo') * 1) + 'px';
 	subpage_style.bottom = '50px';
 
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
@@ -112,14 +112,14 @@ var addSubPages = function() {
 	//当前激活选项
 	activeTab = subpages[Index];
 	//去掉展现和科教城市下面的点
-	var idSlider = ['sciEduSlider', 'showSlider'];
-	//去掉展现和科教城市下面的点
-	for(var i = 0; i < idSlider.length; i++) {
-		var element = document.getElementById(idSlider[i]);
-		if(element) {
-			element.parentNode.removeChild(element);
-		}
-	}
+//	var idSlider = ['sciEduSlider', 'showSlider'];
+//	//去掉展现和科教城市下面的点
+//	for(var i = 0; i < idSlider.length; i++) {
+//		var element = document.getElementById(idSlider[i]);
+//		if(element) {
+//			element.parentNode.removeChild(element);
+//		}
+//	}
 	events.closeWaiting();
 }
 //加载监听
@@ -134,29 +134,29 @@ var setListener = function() {
 			return;
 		}
 		var idSlider = []; //去掉展现和科教城市下面的点
-		if((activeTab=='../cloud/cloud_home.html')&&(this.querySelector('.mui-tab-label').innerHTML != '云盘')){
-				events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover',{flag:1})
-			}
-		if(this.querySelector('.mui-tab-label').innerHTML == '展现') {
-			idSlider = ['sciEduSlider'];
-		} else if(this.querySelector('.mui-tab-label').innerHTML == '科教') {
-			idSlider = ['showSlider'];
-		} else {
-			
-			//更换标题
-			title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
-			//去掉展现和科教城市下面的点
-			idSlider = ['sciEduSlider', 'showSlider'];
-		}
-		//去掉展现和科教城市下面的点
-		for(var i = 0; i < idSlider.length; i++) {
-			var element = document.getElementById(idSlider[i]);
-			if(element) {
-				element.parentNode.removeChild(element);
-			}
-		}
+//		if((activeTab=='../cloud/cloud_home.html')&&(this.querySelector('.mui-tab-label').innerHTML != '云盘')){
+//				events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover',{flag:1})
+//			}
+//		if(this.querySelector('.mui-tab-label').innerHTML == '展现') {
+//			idSlider = ['sciEduSlider'];
+//		} else if(this.querySelector('.mui-tab-label').innerHTML == '科教') {
+//			idSlider = ['showSlider'];
+//		} else {
+//			
+//			//更换标题
+//			title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
+//			//去掉展现和科教城市下面的点
+//			idSlider = ['sciEduSlider', 'showSlider'];
+//		}
+//		//去掉展现和科教城市下面的点
+//		for(var i = 0; i < idSlider.length; i++) {
+//			var element = document.getElementById(idSlider[i]);
+//			if(element) {
+//				element.parentNode.removeChild(element);
+//			}
+//		}
 		//更改按钮
-		changRightIcons(targetTab);
+//		changRightIcons(targetTab);
 		var targetSplit = targetTab.split('/');
 		//显示目标选项卡
 		//若为iOS平台或非首次显示，则直接显示
@@ -181,222 +181,222 @@ var setListener = function() {
 	//	})
 }
 //获取作业的提醒
-function getHomeworkAlert(NoReadCnt) {
-	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
-	//56.（用户空间）获取与我相关
-	//所需参数
-	var comData = {
-		userId: personalUTID, //用户ID
-		pageSize: '1' //每页记录数
-	};
-	//返回model：model_homeSchoolList，model_userSpaceAboutMe
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	//24.获取与我相关
-	postDataPro_GetHomeworkAlertCount(comData, wd, function(data) {
-		wd.close();
-		console.log('postDataPro_GetHomeworkAlertCount:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-		if(data.RspCode == 0) {
-			NoReadCnt = data.RspData.NoReadCnt + NoReadCnt;
-			noReadCount = NoReadCnt;
-			events.fireToPageWithData('../cloud/cloud_home.html', 'NoReadCnt', NoReadCnt)
-
-		} else {
-			//				mui.toast(data.RspTxt);
-		}
-	});
-}
+//function getHomeworkAlert(NoReadCnt) {
+//	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+//	//56.（用户空间）获取与我相关
+//	//所需参数
+//	var comData = {
+//		userId: personalUTID, //用户ID
+//		pageSize: '1' //每页记录数
+//	};
+//	//返回model：model_homeSchoolList，model_userSpaceAboutMe
+//	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+//	//24.获取与我相关
+//	postDataPro_GetHomeworkAlertCount(comData, wd, function(data) {
+//		wd.close();
+//		console.log('postDataPro_GetHomeworkAlertCount:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//		if(data.RspCode == 0) {
+//			NoReadCnt = data.RspData.NoReadCnt + NoReadCnt;
+//			noReadCount = NoReadCnt;
+//			events.fireToPageWithData('../cloud/cloud_home.html', 'NoReadCnt', NoReadCnt)
+//
+//		} else {
+//			//				mui.toast(data.RspTxt);
+//		}
+//	});
+//}
 
 //获取与我相关
-function getAboutMe() {
-	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
-	if(personalUTID == 0) {
-		return;
-	}
-	//56.（用户空间）获取与我相关
-	//所需参数
-	var comData = {
-		userId: personalUTID, //用户ID
-		pageIndex: '1', //当前页数
-		pageSize: '1' //每页记录数
-	};
-	//返回model：model_homeSchoolList，model_userSpaceAboutMe
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	//24.获取与我相关
-	postDataPro_getAboutMe(comData, wd, function(data) {
-		wd.close();
-		console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-		if(data.RspCode == 0) {
-			getHomeworkAlert(data.RspData.NoReadCnt);
-		} else {
-			//				mui.toast(data.RspTxt);
-		}
-	});
-}
+//function getAboutMe() {
+//	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+//	if(personalUTID == 0) {
+//		return;
+//	}
+//	//56.（用户空间）获取与我相关
+//	//所需参数
+//	var comData = {
+//		userId: personalUTID, //用户ID
+//		pageIndex: '1', //当前页数
+//		pageSize: '1' //每页记录数
+//	};
+//	//返回model：model_homeSchoolList，model_userSpaceAboutMe
+//	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+//	//24.获取与我相关
+//	postDataPro_getAboutMe(comData, wd, function(data) {
+//		wd.close();
+//		console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//		if(data.RspCode == 0) {
+//			getHomeworkAlert(data.RspData.NoReadCnt);
+//		} else {
+//			//				mui.toast(data.RspTxt);
+//		}
+//	});
+//}
 
 /**
  * 修改顶部导航
  * @param {Object} title 标题
  */
-var changRightIcons = function(targetTab) {
-	console.log("更改标题栏的图标")
-	//顶部导航右侧区域
-	var iconContainer = document.getElementById('random_icon');
-	while(iconContainer.firstElementChild) {
-		iconContainer.removeChild(iconContainer.firstElementChild);
-	}
-	//顶部导航左侧区域
-	var title_left = document.getElementById("title_left");
-	while(title_left.firstElementChild) {
-		title_left.removeChild(title_left.firstElementChild);
-	};
-	var title = document.getElementById("title");
-	title.innerText = "";
-	switch(targetTab) {
-		case '../cloud/cloud_home.html': //首页
-			title.innerText = "云盘";
-			addPlus(iconContainer, 'jxq');
-			addOrder(iconContainer);
-			slideNavigation.addSlideIcon();
-			slideNavigation.iconAddEvent();
-			document.querySelector('.img-icon').style.display="inline-block";
-			break;
-		case '../sciedu/sciedu_home.html': //科教
-			addListIcon(title_left, '../sciedu/sciedu_home.html');
-			break;
-		case '../show/show_home_1.html': //展现
-			addListIcon(title_left, '../show/show_home_1.html');
-			addShai(iconContainer, 'zx');
-			break;
-		case '../qiuzhi/qiuzhi_home.html': //求知
-			title.innerText = "求知";
-			slideNavigation.addSlideIcon();
-			document.querySelector('.img-icon').style.display="inline-block";
-			addQiuZhiExpertSearch(iconContainer);
-			document.querySelector('.img-icon').addEventListener('tap', function(e) {
-				//判断是否是游客身份登录
-				if(events.judgeLoginMode()) {
-					return;
-				}
-				var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
-				personalInfo.UserId = personalInfo.utid;
-				events.openNewWindowWithData('../qiuzhi/expert-detail.html', personalInfo);
-			})
-			break;
-		default:
-			break;
-	}
-	//	events.addTap('add', function() {
-	//		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
-	//	})
-}
+//var changRightIcons = function(targetTab) {
+//	console.log("更改标题栏的图标")
+//	//顶部导航右侧区域
+//	var iconContainer = document.getElementById('random_icon');
+//	while(iconContainer.firstElementChild) {
+//		iconContainer.removeChild(iconContainer.firstElementChild);
+//	}
+//	//顶部导航左侧区域
+//	var title_left = document.getElementById("title_left");
+//	while(title_left.firstElementChild) {
+//		title_left.removeChild(title_left.firstElementChild);
+//	};
+//	var title = document.getElementById("title");
+//	title.innerText = "";
+////	switch(targetTab) {
+////		case '../cloud/cloud_home.html': //首页
+////			title.innerText = "云盘";
+////			addPlus(iconContainer, 'jxq');
+////			addOrder(iconContainer);
+////			slideNavigation.addSlideIcon();
+////			slideNavigation.iconAddEvent();
+////			document.querySelector('.img-icon').style.display="inline-block";
+////			break;
+////		case '../sciedu/sciedu_home.html': //科教
+////			addListIcon(title_left, '../sciedu/sciedu_home.html');
+////			break;
+////		case '../show/show_home_1.html': //展现
+////			addListIcon(title_left, '../show/show_home_1.html');
+////			addShai(iconContainer, 'zx');
+////			break;
+////		case '../qiuzhi/qiuzhi_home.html': //求知
+////			title.innerText = "求知";
+////			slideNavigation.addSlideIcon();
+////			document.querySelector('.img-icon').style.display="inline-block";
+////			addQiuZhiExpertSearch(iconContainer);
+////			document.querySelector('.img-icon').addEventListener('tap', function(e) {
+////				//判断是否是游客身份登录
+////				if(events.judgeLoginMode()) {
+////					return;
+////				}
+////				var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
+////				personalInfo.UserId = personalInfo.utid;
+////				events.openNewWindowWithData('../qiuzhi/expert-detail.html', personalInfo);
+////			})
+////			break;
+////		default:
+////			break;
+////	}
+//	//	events.addTap('add', function() {
+//	//		events.fireToPageNone('../cloud/cloud_home.html', 'topPopover')
+//	//	})
+//}
 
-/**
- * 加载晒一晒
- * @param {Object} container
- */
-var addShai = function(container, name) {
-	var pubDynamic = document.createElement('a');
-	pubDynamic.id = 'pubDynamic'
-	pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
-	pubDynamic.style.paddingLeft = '30px'
-	pubDynamic.style.paddingTop = '18px'
-	pubDynamic.style.fontSize = '14px'
-	pubDynamic.innerHTML = '晒一晒'
-	container.appendChild(pubDynamic);
-	events.addTap('pubDynamic',
-		function() {
-			//判断是否是游客身份登录
-			if(events.judgeLoginMode()) {
-				return;
-			}
-			var self = this
-			self.disabled = true;
-			if(name == 'jxq') {
-				events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
-			} else {
-				events.openNewWindowWithData('../quan/pub-dynamic.html', 'zx');
-			}
-			setTimeout(function() {
-				self.disabled = false;
-			}, 1500);
-		})
-}
-var addOrder = function(container) {
-	var a = document.createElement('a');
-	a.className = 'mui-icon iconfont icon-iconhexinhuiyuan mui-pull-right';
-	a.style.marginRight="5px";
-	a.id = 'order';
-	container.appendChild(a);
-	a.addEventListener("tap", function() {
-		if(events.judgeLoginMode()) {
-			return;
-		}
-		events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover',{flag:1})
-		events.openNewWindow("../cloud/order-member.html");
-	})
-}
+///**
+// * 加载晒一晒
+// * @param {Object} container
+// */
+//var addShai = function(container, name) {
+//	var pubDynamic = document.createElement('a');
+//	pubDynamic.id = 'pubDynamic'
+//	pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
+//	pubDynamic.style.paddingLeft = '30px'
+//	pubDynamic.style.paddingTop = '18px'
+//	pubDynamic.style.fontSize = '14px'
+//	pubDynamic.innerHTML = '晒一晒'
+//	container.appendChild(pubDynamic);
+//	events.addTap('pubDynamic',
+//		function() {
+//			//判断是否是游客身份登录
+//			if(events.judgeLoginMode()) {
+//				return;
+//			}
+//			var self = this
+//			self.disabled = true;
+//			if(name == 'jxq') {
+//				events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
+//			} else {
+//				events.openNewWindowWithData('../quan/pub-dynamic.html', 'zx');
+//			}
+//			setTimeout(function() {
+//				self.disabled = false;
+//			}, 1500);
+//		})
+//}
+//var addOrder = function(container) {
+//	var a = document.createElement('a');
+//	a.className = 'mui-icon iconfont icon-iconhexinhuiyuan mui-pull-right';
+//	a.style.marginRight="5px";
+//	a.id = 'order';
+//	container.appendChild(a);
+//	a.addEventListener("tap", function() {
+//		if(events.judgeLoginMode()) {
+//			return;
+//		}
+//		events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover',{flag:1})
+//		events.openNewWindow("../cloud/order-member.html");
+//	})
+//}
 //云盘首页加载plus
-var addPlus = function(container, name) {
-	var add = document.createElement('a');
-	add.className = 'mui-icon iconfont icon-jiahao mui-pull-right mui-icon-plusempty';
-	add.style.fontSize = '15px'
-	add.style.marginTop = '5px'
-	add.style.marginRight = '-5px'
-	add.id = 'add'
-	container.appendChild(add);
-	events.addTap('add', function() {
-		if(name == 'jxq') {
-			//判断是否是游客身份登录
-			if(events.judgeLoginMode()) {
-				return;
-			}
-			events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover',{flag:0})
-		} else {
-			//判断是否是游客身份登录
-			if(events.judgeLoginMode()) {
-				return;
-			}
-			events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover',{flag:0})
-		}
-
-	})
-}
+//var addPlus = function(container, name) {
+//	var add = document.createElement('a');
+//	add.className = 'mui-icon iconfont icon-jiahao mui-pull-right mui-icon-plusempty';
+//	add.style.fontSize = '15px'
+//	add.style.marginTop = '5px'
+//	add.style.marginRight = '-5px'
+//	add.id = 'add'
+//	container.appendChild(add);
+//	events.addTap('add', function() {
+//		if(name == 'jxq') {
+//			//判断是否是游客身份登录
+//			if(events.judgeLoginMode()) {
+//				return;
+//			}
+//			events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover',{flag:0})
+//		} else {
+//			//判断是否是游客身份登录
+//			if(events.judgeLoginMode()) {
+//				return;
+//			}
+//			events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover',{flag:0})
+//		}
+//
+//	})
+//}
 //求知加载搜索按钮
-var addQiuZhiExpertSearch = function(container) {
-	var pubDynamic = document.createElement('a');
-	pubDynamic.id = 'expertSearch'
-	pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
-	pubDynamic.style.paddingLeft = '30px'
-	pubDynamic.style.paddingTop = '15px'
-	pubDynamic.style.fontSize = '14px'
-	pubDynamic.innerHTML = '搜索'
-	container.appendChild(pubDynamic);
-	events.addTap('expertSearch', function() {
-		events.openNewWindowWithData('../qiuzhi/qiuzhi-questionSearch.html', 'jxq');
-	})
-}
+//var addQiuZhiExpertSearch = function(container) {
+//	var pubDynamic = document.createElement('a');
+//	pubDynamic.id = 'expertSearch'
+//	pubDynamic.className = 'mui-icon mui-pull-right mui-plus-visible';
+//	pubDynamic.style.paddingLeft = '30px'
+//	pubDynamic.style.paddingTop = '15px'
+//	pubDynamic.style.fontSize = '14px'
+//	pubDynamic.innerHTML = '搜索'
+//	container.appendChild(pubDynamic);
+//	events.addTap('expertSearch', function() {
+//		events.openNewWindowWithData('../qiuzhi/qiuzhi-questionSearch.html', 'jxq');
+//	})
+//}
 /**
  * 修改科教，展现的顶部导航
  * @param {Object} container
  */
-var addListIcon = function(container, id) {
-	var a = document.createElement('a');
-	a.className = 'mui-icon mui-icon mui-icon-list mui-pull-left';
-	a.style.marginTop = "2px";
-	a.addEventListener('tap', function() {
-		//判断是否是游客身份登录
-		if(events.judgeLoginMode()) {
-			return;
-		}
-		var self = this;
-		self.disabled = true;
-		events.fireToPageNone(id, 'tapTitleLeft');
-		setTimeout(function() {
-			self.disabled = false;
-		}, 1500);
-	});
-	container.appendChild(a);
-}
+//var addListIcon = function(container, id) {
+//	var a = document.createElement('a');
+//	a.className = 'mui-icon mui-icon mui-icon-list mui-pull-left';
+//	a.style.marginTop = "2px";
+//	a.addEventListener('tap', function() {
+//		//判断是否是游客身份登录
+//		if(events.judgeLoginMode()) {
+//			return;
+//		}
+//		var self = this;
+//		self.disabled = true;
+//		events.fireToPageNone(id, 'tapTitleLeft');
+//		setTimeout(function() {
+//			self.disabled = false;
+//		}, 1500);
+//	});
+//	container.appendChild(a);
+//}
 //根据登录角色不同，更改界面显示
 var setConditionbyRole = function(role) {
 	console.log("获取的身份信息：" + JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
