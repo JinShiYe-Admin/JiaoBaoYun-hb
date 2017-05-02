@@ -95,7 +95,8 @@ var renewToken = function() {
 	postDataPro_PostTokenRenew(comData, wd, function(data) {
 		wd.close();
 		if(data.RspCode == 0) {
-			window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data.RspData;
+			personalUTID.token = data.RspData;
+			window.myStorage.setItem(window.storageKeyName.PERSONALINFO, personalUTID);
 		} else {
 			mui.toast(data.RspTxt);
 		}
