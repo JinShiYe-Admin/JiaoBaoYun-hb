@@ -11,13 +11,12 @@ var loginRoleType = 0; //登录角色0为游客1为用户
 var noReadCount = 0;
 var aniShow = {};
 mui.plusReady(function() {
-	var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
-	if(parseInt(personalInfo.utid)) {
-		loginRoleType = 1
-	} else {
-		loginRoleType = 0;
+	var personalInfo=myStorage.getItem(storageKeyName.PERSONALINFO);
+	if(parseInt(personalInfo.utid)){
+		loginRoleType=1
+	}else{
+		loginRoleType=0;
 	}
-	setConditionbyRole(loginRoleType);
 	//	events.preload("../qiuzhi/expert-detail.html",100);
 	var waitingDia = events.showWaiting();
 	//安卓的连续点击两次退出程序
@@ -37,20 +36,21 @@ mui.plusReady(function() {
 	};
 	Statusbar.barHeight(); //获取一些硬件参数
 	addSubPages(); //加载子页面
-	//	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
+	setConditionbyRole(loginRoleType);
+//	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
 	window.addEventListener('infoChanged', function() {
-		events.fireToPageNone("cloud_home.html", "infoChanged");
-		events.fireToPageNone("qiuzhi_home.html", "infoChanged");
-		//		getAboutMe();
-		//		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
-		//		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
-		//		var imgNode = document.getElementById("index-header").querySelector('img');
-		//		if(imgNode) {
-		//			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)){
-		//				imgNode.src = updateHeadImg(img, 2);
-		//				imgNode.style.display="inline-block";
-		//			}
-		//		}
+		events.fireToPageNone("cloud_home.html","infoChanged");
+		events.fireToPageNone("qiuzhi_home.html","infoChanged");
+//		getAboutMe();
+//		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
+//		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
+//		var imgNode = document.getElementById("index-header").querySelector('img');
+//		if(imgNode) {
+//			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)){
+//				imgNode.src = updateHeadImg(img, 2);
+//				imgNode.style.display="inline-block";
+//			}
+//		}
 	});
 	//登录的监听
 	window.addEventListener("login", function() {
@@ -67,27 +67,27 @@ mui.plusReady(function() {
 	window.addEventListener('closeWaiting', function() {
 		events.closeWaiting();
 	})
-	//	window.addEventListener('aboutmNoRead', function() {
-	//		getAboutMe();
-	//	});
+//	window.addEventListener('aboutmNoRead', function() {
+//		getAboutMe();
+//	});
 	//	//默认自动登录
-	//	events.defaultLogin(function(data) {
-	//		console.log("自动登录获取的值：" + JSON.stringify(data));
-	//		if(data.value == 1) {
-	//			loginRoleType = data.flag;
-	//			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-	//			setTimeout(appUpdate.updateApp, 5000);
-	//		} else if(data.value == -1) { //登录失败
-	//			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
-	//				loginRoleType = 1;
-	//			} else {
-	//				loginRoleType = 0;
-	//			}
-	//			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-	//			mui.toast("登录失败，请检查网络！");
-	//		}
-	//		//android更新app
-	//	});
+//	events.defaultLogin(function(data) {
+//		console.log("自动登录获取的值：" + JSON.stringify(data));
+//		if(data.value == 1) {
+//			loginRoleType = data.flag;
+//			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+//			setTimeout(appUpdate.updateApp, 5000);
+//		} else if(data.value == -1) { //登录失败
+//			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
+//				loginRoleType = 1;
+//			} else {
+//				loginRoleType = 0;
+//			}
+//			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+//			mui.toast("登录失败，请检查网络！");
+//		}
+//		//android更新app
+//	});
 	//加载监听
 	setListener();
 
@@ -121,14 +121,6 @@ var addSubPages = function() {
 	//当前激活选项
 	activeTab = subpages[Index];
 	//去掉展现和科教城市下面的点
-	//	var idSlider = ['sciEduSlider', 'showSlider'];
-	//	//去掉展现和科教城市下面的点
-	//	for(var i = 0; i < idSlider.length; i++) {
-	//		var element = document.getElementById(idSlider[i]);
-	//		if(element) {
-	//			element.parentNode.removeChild(element);
-	//		}
-	//	}
 	events.closeWaiting();
 }
 //加载监听
@@ -140,36 +132,10 @@ var setListener = function() {
 		var targetTab = this.getAttribute('href');
 		console.log("活动的页面：" + activeTab)
 		if(targetTab == activeTab) {
-			if(activeTab == '../cloud/cloud_home.html') {
-				events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {})
-			}
-
 			return;
 		}
-		var idSlider = []; //去掉展现和科教城市下面的点
-		if(activeTab == '../cloud/cloud_home.html') {
-			events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {})
-		}
-		//		if(this.querySelector('.mui-tab-label').innerHTML == '展现') {
-		//			idSlider = ['sciEduSlider'];
-		//		} else if(this.querySelector('.mui-tab-label').innerHTML == '科教') {
-		//			idSlider = ['showSlider'];
-		//		} else {
-		//			
-		//			//更换标题
-		//			title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
-		//			//去掉展现和科教城市下面的点
-		//			idSlider = ['sciEduSlider', 'showSlider'];
-		//		}
-		//		//去掉展现和科教城市下面的点
-		//		for(var i = 0; i < idSlider.length; i++) {
-		//			var element = document.getElementById(idSlider[i]);
-		//			if(element) {
-		//				element.parentNode.removeChild(element);
-		//			}
-		//		}
 		//更改按钮
-		//		changRightIcons(targetTab);
+//		changRightIcons(targetTab);
 		var targetSplit = targetTab.split('/');
 		//显示目标选项卡
 		//若为iOS平台或非首次显示，则直接显示
@@ -257,11 +223,6 @@ var setListener = function() {
 //	while(iconContainer.firstElementChild) {
 //		iconContainer.removeChild(iconContainer.firstElementChild);
 //	}
-//	//顶部导航左侧区域
-//	var title_left = document.getElementById("title_left");
-//	while(title_left.firstElementChild) {
-//		title_left.removeChild(title_left.firstElementChild);
-//	};
 //	var title = document.getElementById("title");
 //	title.innerText = "";
 ////	switch(targetTab) {
@@ -273,11 +234,7 @@ var setListener = function() {
 ////			slideNavigation.iconAddEvent();
 ////			document.querySelector('.img-icon').style.display="inline-block";
 ////			break;
-////		case '../sciedu/sciedu_home.html': //科教
-////			addListIcon(title_left, '../sciedu/sciedu_home.html');
-////			break;
 ////		case '../show/show_home_1.html': //展现
-////			addListIcon(title_left, '../show/show_home_1.html');
 ////			addShai(iconContainer, 'zx');
 ////			break;
 ////		case '../qiuzhi/qiuzhi_home.html': //求知
@@ -388,34 +345,14 @@ var setListener = function() {
 //		events.openNewWindowWithData('../qiuzhi/qiuzhi-questionSearch.html', 'jxq');
 //	})
 //}
-/**
- * 修改科教，展现的顶部导航
- * @param {Object} container
- */
-//var addListIcon = function(container, id) {
-//	var a = document.createElement('a');
-//	a.className = 'mui-icon mui-icon mui-icon-list mui-pull-left';
-//	a.style.marginTop = "2px";
-//	a.addEventListener('tap', function() {
-//		//判断是否是游客身份登录
-//		if(events.judgeLoginMode()) {
-//			return;
-//		}
-//		var self = this;
-//		self.disabled = true;
-//		events.fireToPageNone(id, 'tapTitleLeft');
-//		setTimeout(function() {
-//			self.disabled = false;
-//		}, 1500);
-//	});
-//	container.appendChild(a);
-//}
+
 //根据登录角色不同，更改界面显示
 var setConditionbyRole = function(role) {
 	console.log("获取的身份信息：" + JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
 	var cloudIcon = document.getElementById("defaultTab");
 	var sceIcon = document.getElementById("tabclass");
 	var active_tab = document.querySelector(".mui-tab-item.mui-active").getAttribute('href');
+	console.log("要隐藏的界面："+active_tab)
 	plus.webview.hide(active_tab.split("/")[active_tab.split("/").length - 1]);
 	document.querySelector(".mui-tab-item.mui-active").className = "mui-tab-item";
 
@@ -440,7 +377,7 @@ var setActivePage = function() {
 	mui.extend(aniShow, temp);
 	var splitActiveTabs = activeTab.split("/");
 	var activeId = splitActiveTabs[splitActiveTabs.length - 1];
-	console.log("要显示的界面：" + activeTab);
+	console.log("要显示的界面："+activeTab);
 	plus.webview.show(activeId, "fade-in", 300);
-	//	changRightIcons(activeTab);
+//	changRightIcons(activeTab);
 }
