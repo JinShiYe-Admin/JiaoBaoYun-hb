@@ -17,7 +17,6 @@ mui.plusReady(function() {
 	}else{
 		loginRoleType=0;
 	}
-	setConditionbyRole(loginRoleType);
 	//	events.preload("../qiuzhi/expert-detail.html",100);
 	var waitingDia = events.showWaiting();
 	//安卓的连续点击两次退出程序
@@ -37,6 +36,7 @@ mui.plusReady(function() {
 	};
 	Statusbar.barHeight(); //获取一些硬件参数
 	addSubPages(); //加载子页面
+	setConditionbyRole(loginRoleType);
 //	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
 	window.addEventListener('infoChanged', function() {
 		events.fireToPageNone("cloud_home.html","infoChanged");
@@ -352,6 +352,7 @@ var setConditionbyRole = function(role) {
 	var cloudIcon = document.getElementById("defaultTab");
 	var sceIcon = document.getElementById("tabclass");
 	var active_tab = document.querySelector(".mui-tab-item.mui-active").getAttribute('href');
+	console.log("要隐藏的界面："+active_tab)
 	plus.webview.hide(active_tab.split("/")[active_tab.split("/").length - 1]);
 	document.querySelector(".mui-tab-item.mui-active").className = "mui-tab-item";
 
