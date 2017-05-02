@@ -11,63 +11,6 @@ var loginRoleType = 0; //登录角色0为游客1为用户
 var noReadCount = 0;
 var aniShow = {};
 mui.plusReady(function() {
-	//如果之前登录成功，则重新获取token，获取个人信息，则为登录成功
-	var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-	console.log('person===' + JSON.stringify(personal));
-	if(!personal) { //没有账号 设置游客账号信息，并保存到本地
-		var model_area = {
-			procode: '00', //省份code，自己添加的参数
-			proname: '全国', //省份名称，自己添加的参数
-			acode: '000000', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码--城市代码
-			aname: '全国', //节点名称--城市名称
-			atype: '' //节点类型,0省1城市2区县
-		}
-		personal = {
-			utid: '0', //用户表ID
-			uid: '00000000000', //电话号码
-			uname: '游客', //姓名,账号,只能修改一次,且只能字母开头,字母与数字,定了就不能修改
-			uimg: '../../image/utils/default_personalimage.png', //用户头像地址
-			unick: '游客', //用户昵称
-			usex: '', //用户性别
-			utxt: '', //用户签名
-			uarea: model_area, //用户区域,省代码 市代码|省名称 市名称
-			token: '', //用户令牌
-			ispw: '', //0无密码，1有密码
-			isLogin: '' //是否登录，0没有登录过，1有登录过
-		}
-		window.myStorage.setItem(window.storageKeyName.PERSONALINFO, personal);
-	}
-	//	if(parseInt(personal.utid)) {
-	//		document.getElementById("defaultTab").style.display = "table-cell";
-	//	} else {
-	//		document.getElementById("defaultTab").style.display = "none";
-	//	}
-	document.addEventListener("netchange", wainshow, false);
-
-	function wainshow() {
-		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-
-		if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
-			console.log('没有网络！！！！');
-			mui.toast("网络异常，请检查网络设置！");
-		} else {
-			console.log('网络连接拉！！！！');
-			events.defaultLogin(function(data) {
-				console.log("自动登录获取的值：" + JSON.stringify(data));
-				if(personal && personal.utid != 0) { //有账号，正常登录
-					if(data.flag != loginRoleType) {
-						loginRoleType = data.flag;
-						setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-					}
-				} else {
-					if(data.value) {
-						loginRoleType = data.flag;
-						setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-					}
-				}
-			});
-		}
-	}
 	//	events.preload("../qiuzhi/expert-detail.html",100);
 	var waitingDia = events.showWaiting();
 	//安卓的连续点击两次退出程序
@@ -119,23 +62,23 @@ mui.plusReady(function() {
 		getAboutMe();
 	});
 	//	//默认自动登录
-	events.defaultLogin(function(data) {
-		console.log("自动登录获取的值：" + JSON.stringify(data));
-		if(data.value == 1) {
-			loginRoleType = data.flag;
-			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-			setTimeout(appUpdate.updateApp, 5000);
-		} else if(data.value == -1) { //登录失败
-			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
-				loginRoleType = 1;
-			} else {
-				loginRoleType = 0;
-			}
-			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
-			mui.toast("登录失败，请检查网络！");
-		}
-		//android更新app
-	});
+//	events.defaultLogin(function(data) {
+//		console.log("自动登录获取的值：" + JSON.stringify(data));
+//		if(data.value == 1) {
+//			loginRoleType = data.flag;
+//			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+//			setTimeout(appUpdate.updateApp, 5000);
+//		} else if(data.value == -1) { //登录失败
+//			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
+//				loginRoleType = 1;
+//			} else {
+//				loginRoleType = 0;
+//			}
+//			setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+//			mui.toast("登录失败，请检查网络！");
+//		}
+//		//android更新app
+//	});
 	//加载监听
 	setListener();
 
