@@ -55,6 +55,10 @@
 	</head>
 
 	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="changeCity" class="mui-icon mui-icon mui-icon-list mui-pull-left"></a>
+			<h1 id="title" class="mui-title"></h1>
+		</header>
 		<div id="content" class="mui-content"></div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
@@ -69,7 +73,6 @@
 			var cities = []; //存储当前定制的城市
 			var show = true; //是否显示科教的内容
 			var sliderId = ''; //记录显示的城市
-			var index; //获取index的webview
 			var pageAndInfo = {}; //保存对应的城市信息和页码
 			//pageAndInfo={
 			//	info:{},//城市信息
@@ -89,13 +92,12 @@
 			function initData(wd) {
 				var initwd = wd || events.showWaiting();
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				index = main.parent();
 
 				//游客身份
 				if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
 					initBody(initwd);
 					changeIndexHeader();
-				}else{
+				} else {
 					initwd.close();
 				}
 				//Webview窗口显示事件
@@ -110,7 +112,7 @@
 			 */
 			function initListener() {
 				//进入订制城市界面
-				window.addEventListener('tapTitleLeft', function() {
+				document.getElementById('changeCity').addEventListener('tap', function() {
 					events.openNewWindowWithData('../utils/customizeCity.html', {
 						id: '0', //0科教，1展现
 						webid: '../sciedu/sciedu_home.html', //当前webview的id
@@ -136,10 +138,12 @@
 					show = true; //是否显示科教的内容
 					sliderId = ''; //记录显示的城市
 					pageAndInfo = {}; //保存对应的城市信息和页码
-					document.getElementById("content").innerHTML = ''; //清理界面
-					var evalJS = "var sciEduSlider=document.getElementById('sciEduSlider');if(sciEduSlider){sciEduSlider.parentNode.removeChild(sciEduSlider);}";
-					if(index) {
-						index.evalJS(evalJS);
+					//清理界面
+					document.getElementById("content").innerHTML = '';
+					document.getElementById("title").innerHTML = '';
+					var sciEduSlider = document.getElementById('sciEduSlider');
+					if(sciEduSlider) {
+						sciEduSlider.parentNode.removeChild(sciEduSlider);
 					}
 				});
 			}
@@ -478,7 +482,7 @@
 						console.log('科教新闻最终值为 ' + JSON.stringify(tempArr));
 						//生成每一项
 						addItems(cityCode, tempArr);
-					}else if(data.RspCode == 9){
+					} else if(data.RspCode == 9) {
 						//记录页数
 						pageAndInfo[cityCode].page = {
 							pageIndex: pageIndex, //当前页数
@@ -514,15 +518,19 @@
 								}
 							}
 							str = str + '</div>';
-							var str_0 = "document.getElementById('title').innerText = '" + cities[i].aname + "';";
-							var str_1 = "var sciEduSlider = document.getElementById('sciEduSlider');";
-							var str_2 = "if(sciEduSlider) {sciEduSlider.innerHTML = '" + str + "';} else {";
-							var str_3 = "var element = document.createElement('div');element.id = 'sciEduSlider';element.className = 'mui-slider';";
-							var str_4 = "element.style.height = '45px';element.style.top = '" + (localStorage.getItem('StatusHeightNo') * 1 + 10) + "px';";
-							var str_5 = "element.innerHTML = '" + str + "';document.querySelector('header').appendChild(element);}";
-							var evalJS = str_0 + str_1 + str_2 + str_3 + str_4 + str_5;
-							//console.log("evalJS " + evalJS);
-							index.evalJS(evalJS);
+							document.getElementById('title').innerText = cities[i].aname;
+							var sciEduSlider = document.getElementById('sciEduSlider');
+							if(sciEduSlider) {
+								sciEduSlider.innerHTML = str
+							} else {
+								var element = document.createElement('div');
+								element.id = 'sciEduSlider';
+								element.className = 'mui-slider';
+								element.style.height = '45px';
+								element.style.top = (localStorage.getItem('StatusHeightNo') * 1 + 10) + 'px';
+								element.innerHTML = str;
+								document.querySelector('header').appendChild(element);
+							}
 						}
 					}
 				}

@@ -121,14 +121,6 @@ var addSubPages = function() {
 	//当前激活选项
 	activeTab = subpages[Index];
 	//去掉展现和科教城市下面的点
-//	var idSlider = ['sciEduSlider', 'showSlider'];
-//	//去掉展现和科教城市下面的点
-//	for(var i = 0; i < idSlider.length; i++) {
-//		var element = document.getElementById(idSlider[i]);
-//		if(element) {
-//			element.parentNode.removeChild(element);
-//		}
-//	}
 	events.closeWaiting();
 }
 //加载监听
@@ -142,28 +134,6 @@ var setListener = function() {
 		if(targetTab == activeTab) {
 			return;
 		}
-		var idSlider = []; //去掉展现和科教城市下面的点
-//		if((activeTab=='../cloud/cloud_home.html')&&(this.querySelector('.mui-tab-label').innerHTML != '云盘')){
-//				events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover',{flag:1})
-//			}
-//		if(this.querySelector('.mui-tab-label').innerHTML == '展现') {
-//			idSlider = ['sciEduSlider'];
-//		} else if(this.querySelector('.mui-tab-label').innerHTML == '科教') {
-//			idSlider = ['showSlider'];
-//		} else {
-//			
-//			//更换标题
-//			title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
-//			//去掉展现和科教城市下面的点
-//			idSlider = ['sciEduSlider', 'showSlider'];
-//		}
-//		//去掉展现和科教城市下面的点
-//		for(var i = 0; i < idSlider.length; i++) {
-//			var element = document.getElementById(idSlider[i]);
-//			if(element) {
-//				element.parentNode.removeChild(element);
-//			}
-//		}
 		//更改按钮
 //		changRightIcons(targetTab);
 		var targetSplit = targetTab.split('/');
@@ -253,11 +223,6 @@ var setListener = function() {
 //	while(iconContainer.firstElementChild) {
 //		iconContainer.removeChild(iconContainer.firstElementChild);
 //	}
-//	//顶部导航左侧区域
-//	var title_left = document.getElementById("title_left");
-//	while(title_left.firstElementChild) {
-//		title_left.removeChild(title_left.firstElementChild);
-//	};
 //	var title = document.getElementById("title");
 //	title.innerText = "";
 ////	switch(targetTab) {
@@ -269,11 +234,7 @@ var setListener = function() {
 ////			slideNavigation.iconAddEvent();
 ////			document.querySelector('.img-icon').style.display="inline-block";
 ////			break;
-////		case '../sciedu/sciedu_home.html': //科教
-////			addListIcon(title_left, '../sciedu/sciedu_home.html');
-////			break;
 ////		case '../show/show_home_1.html': //展现
-////			addListIcon(title_left, '../show/show_home_1.html');
 ////			addShai(iconContainer, 'zx');
 ////			break;
 ////		case '../qiuzhi/qiuzhi_home.html': //求知
@@ -384,28 +345,7 @@ var setListener = function() {
 //		events.openNewWindowWithData('../qiuzhi/qiuzhi-questionSearch.html', 'jxq');
 //	})
 //}
-/**
- * 修改科教，展现的顶部导航
- * @param {Object} container
- */
-//var addListIcon = function(container, id) {
-//	var a = document.createElement('a');
-//	a.className = 'mui-icon mui-icon mui-icon-list mui-pull-left';
-//	a.style.marginTop = "2px";
-//	a.addEventListener('tap', function() {
-//		//判断是否是游客身份登录
-//		if(events.judgeLoginMode()) {
-//			return;
-//		}
-//		var self = this;
-//		self.disabled = true;
-//		events.fireToPageNone(id, 'tapTitleLeft');
-//		setTimeout(function() {
-//			self.disabled = false;
-//		}, 1500);
-//	});
-//	container.appendChild(a);
-//}
+
 //根据登录角色不同，更改界面显示
 var setConditionbyRole = function(role) {
 	console.log("获取的身份信息：" + JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
