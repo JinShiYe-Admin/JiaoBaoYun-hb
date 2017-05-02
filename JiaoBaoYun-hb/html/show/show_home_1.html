@@ -40,6 +40,8 @@
 		<header class="mui-bar mui-bar-nav">
 			<a id="changeCity" class="mui-icon mui-icon mui-icon-list mui-pull-left"></a>
 			<h1 id="title" class="mui-title"></h1>
+			<a id="pubDynamic" class="mui-icon mui-pull-right mui-plus-visible" style="padding-left: 30px;font-size: 14px;margin-top:8px ;">晒一晒</a>
+
 			<div id="showSlider" class="mui-slider"></div>
 
 		</header>
@@ -89,6 +91,19 @@
 				mui.previewImage(); //浏览图片详情
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				index = main.parent(); //
+				events.addTap('pubDynamic',
+					function() {
+						//判断是否是游客身份登录
+						if(events.judgeLoginMode()) {
+							return;
+						}
+						var self = this
+						self.disabled = true;
+						events.openNewWindowWithData('../quan/pub-dynamic.html', 'zx');
+						setTimeout(function() {
+							self.disabled = false;
+						}, 1500);
+					})
 				main.addEventListener("hide", function(e) {
 					mui.getPreviewImage().close()
 				})
