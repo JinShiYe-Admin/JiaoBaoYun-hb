@@ -321,7 +321,7 @@ var events = (function(mod) {
 	mod.infoChanged = function() {
 		events.fireToPageNone('mine.html', 'infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
-		mui.fire(plus.webview.getLaunchWebview(), 'infoChanged');
+		mui.fire(plus.webview.getWebviewById("index.html"), 'infoChanged');
 		events.fireToPageNone('qiuzhi_home.html', 'infoChanged');
 		events.fireToPageNone('aboutme_sub.html', 'infoChanged');
 	}
@@ -526,12 +526,6 @@ var events = (function(mod) {
 			if(target && target.tagName == 'TEXTAREA') {
 				if(target.scrollHeight > target.clientHeight) {
 					e.stopPropagation();
-					//				} else {
-					//					try {
-					//						target.dispatchEvent(e);
-					//					} catch(ev) {
-					//						//TODO handle the exception
-					//					}
 				}
 			}
 		}, {
@@ -1092,7 +1086,7 @@ var events = (function(mod) {
 		for(var i in wvs) {
 			console.log("webview的id:" + wvs[i].id)
 			switch(wvs[i].id) {
-				case plus.webview.getLaunchWebview().id:
+				case "index.html":
 				case "cloud_home.html":
 				case "sciedu_home.html":
 				case "show_home_1.html":
@@ -1108,9 +1102,6 @@ var events = (function(mod) {
 					}
 					break;
 			}
-			//			if(wvs[i]!=plus.webview.getLaunchWebview()||wvs[i].parent()!=plus.webview.getLaunchWebview()){
-			//				wvs[i].hide();
-			//			}
 		}
 	}
 

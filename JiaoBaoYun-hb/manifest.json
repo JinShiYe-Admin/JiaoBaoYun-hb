@@ -847,7 +847,8 @@
 					"image/quan/aboutme.png",
 					"image/quan/Scan.png",
 					"js/qiuzhi/delContent_pop.js",
-					null
+					null,
+					"js/main/slide_navigation.js"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -2791,7 +2792,8 @@
 				],
 				"refer": [
 					"html/qiuzhi/expert-detail.html",
-					"html/qiuzhi/qiuzhi-questionSearch.html"
+					"html/qiuzhi/qiuzhi-questionSearch.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},

@@ -160,7 +160,8 @@
       "image/quan/Scan.png",
       "js/qiuzhi/delContent_pop.js",
       "image/cloud/cloud_0_txt_0.png",
-      "fonts/mui.ttf"
+      "fonts/mui.ttf",
+      "js/main/slide_navigation.js"
     ],
     "refer": [
       "html/cloud/storage_upload_choose.html",
@@ -787,7 +788,8 @@
     "refer": [
       "html/qiuzhi/qiuzhi-sub.html",
       "html/qiuzhi/expert-detail.html",
-      "html/qiuzhi/qiuzhi-questionSearch.html"
+      "html/qiuzhi/qiuzhi-questionSearch.html",
+      "html/register/login.html"
     ]
   },
   "html/homework/classes-select.html": {

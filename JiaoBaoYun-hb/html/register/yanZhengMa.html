@@ -304,7 +304,7 @@
 												//退出 界面更新
 												events.logOff();
 												events.infoChanged();
-												mui.fire(plus.webview.getLaunchWebview(), 'login');
+												mui.fire(plus.webview.getWebviewById("index.html"), 'login');
 												events.hidePagesExIndex();
 												mui.back();
 											} else {

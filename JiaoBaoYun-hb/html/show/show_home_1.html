@@ -898,7 +898,7 @@
 						console.log("重组后的数据：" + JSON.stringify(zonepArray));
 						setData(zonepArray, cityCode, tempLength);
 					} else {
-						mui.fire(plus.webview.getLaunchWebview(), 'closeWaiting');
+						mui.fire(plus.webview.getWebviewById("index.html"), 'closeWaiting');
 					}
 				})
 			}
@@ -967,7 +967,7 @@
 					}
 				}
 				dynamiclistitem.questionContent();
-				mui.fire(plus.webview.getLaunchWebview(), 'closeWaiting');
+				mui.fire(plus.webview.getWebviewById("index.html"), 'closeWaiting');
 			}
 			//加载数据
 			function addData(index, cityCode) {
