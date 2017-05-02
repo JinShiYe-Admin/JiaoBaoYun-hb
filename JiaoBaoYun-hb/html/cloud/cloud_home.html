@@ -23,7 +23,7 @@
 			
 			#topPopover {
 				position: fixed;
-				top: 10px;
+				top: 46px;
 				right: 6px;
 				width: 150px;
 			}
@@ -31,7 +31,6 @@
 			#topPopover .mui-popover-arrow {
 				left: auto;
 				right: 6px;
-				top: -25px;
 			}
 			
 			.mui-popover {
@@ -154,8 +153,9 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-icon img-icon"><img src="../../image/utils/default_personalimage.png" style="width: 30px;height: 30px;border-radius: 50%;" /></a>
+			
 			<h1 class="mui-title">云盘</h1>
-			<a id="add" class="mui-icon mui-pull-right iconfont icon-jiahao"></a>
+			<a id="add" class="mui-icon iconfont icon-jiahao mui-pull-right mui-icon-plusempty" style="font-size: 15px;margin-top:5px ;margin-right:-5px" ></a>
 			<a class="mui-icon iconfont icon-iconhexinhuiyuan mui-pull-right" style="margin-right: 5px;"></a>
 		</header>
 		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" style="visibility:hidden ;z-index:0">
@@ -225,6 +225,7 @@
 			</ul>
 		</div>
 		<script src="../../js/main/slide_navigation.js"></script>
+		<script type="text/javascript" src="../../js/publicHomeworkProtocol.js"></script>
 		<script type="text/javascript">
 			//每一行的高度
 			var cloudItemHeight = 0;
@@ -246,6 +247,7 @@
 			var imgeWith = 0.6;
 			//宽度和高度
 			var initStyle;
+			var noReadCount=0;
 
 			init(); //初始化界面
 
@@ -383,28 +385,13 @@
 
 				//				events.preload("../homework/homework-tea.html", 300);
 				events.preload('storage_main.html', 300); //预加载云存储
-				//设置与我相关未读数
-				window.addEventListener("NoReadCnt", function(e) {
-					var NoReadCnt = e.detail.data;
-					var noRead = document.getElementById('aboutme_noRead');
-					if(NoReadCnt == 0) {
-						noRead.innerHTML = NoReadCnt;
-						noRead.style.visibility = 'hidden';
-					} else {
-						noRead.style.visibility = 'visible';
-						noRead.innerHTML = NoReadCnt;
-					}
+
+				events.addTap('add', function() {
+					mui('#topPopover').popover('toggle')
 				})
 				//监听popover的显示和隐藏
 				window.addEventListener("topPopover", function(e) {
-					var flag = e.detail.data.flag;
-					console.log('flag=' + JSON.stringify(flag))
-					if(flag == 0) {
-						mui('#topPopover').popover('toggle')
-					} else {
 						mui('#topPopover').popover('hide')
-					}
-
 				});
 				//点击popover里cell
 				mui('.mui-popover').on('tap', 'li', function(e) {
@@ -728,6 +715,8 @@
 					if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
 						return;
 					}
+					getAboutMe();
+					
 					//26.用户云盘顶层文件及文件夹获取
 					postFirstFile();
 					//91.（云档案）按家长获取档案文件夹
@@ -1373,6 +1362,64 @@
 					console.log('获取所有群的未读数_getNoReadCntForClassByUser:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				});
 			}
+			//获取与我相关
+function getAboutMe() {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+	if(personalUTID == 0) {
+		return;
+	}
+	//56.（用户空间）获取与我相关
+	//所需参数
+	var comData = {
+		userId: personalUTID, //用户ID
+		pageIndex: '1', //当前页数
+		pageSize: '1' //每页记录数
+	};
+	//返回model：model_homeSchoolList，model_userSpaceAboutMe
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//24.获取与我相关
+	postDataPro_getAboutMe(comData, wd, function(data) {
+		wd.close();
+		console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+			getHomeworkAlert(data.RspData.NoReadCnt);
+		} else {
+			//				mui.toast(data.RspTxt);
+		}
+	});
+}
+//获取作业的提醒
+function getHomeworkAlert(NoReadCnt) {
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+	//56.（用户空间）获取与我相关
+	//所需参数
+	var comData = {
+		userId: personalUTID, //用户ID
+		pageSize: '1' //每页记录数
+	};
+	//返回model：model_homeSchoolList，model_userSpaceAboutMe
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	//24.获取与我相关
+	postDataPro_GetHomeworkAlertCount(comData, wd, function(data) {
+		wd.close();
+		console.log('postDataPro_GetHomeworkAlertCount:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+			NoReadCnt = data.RspData.NoReadCnt + NoReadCnt;
+			noReadCount = NoReadCnt;
+			var noRead = document.getElementById('aboutme_noRead');
+					if(NoReadCnt == 0) {
+						noRead.innerHTML = NoReadCnt;
+						noRead.style.visibility = 'hidden';
+					} else {
+						noRead.style.visibility = 'visible';
+						noRead.innerHTML = NoReadCnt;
+					}
+
+		} else {
+			//				mui.toast(data.RspTxt);
+		}
+	});
+}
 
 			//			var sendMessageToHomework = function(teacherClasses, studentClasses) {
 			//				if(homeworkReady) {
