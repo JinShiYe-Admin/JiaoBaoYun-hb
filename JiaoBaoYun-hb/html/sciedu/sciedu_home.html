@@ -452,6 +452,15 @@
 							acode: uarea.acode ? uarea.acode : 0,
 							aname: uarea.aname ? uarea.aname : "全国"
 						});
+
+						//游客身份
+						if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
+							var localCity = window.myStorage.getItem(window.storageKeyName.SECITY);
+							if(localCity && localCity.length != 0) {
+								console.log('游客订制的科教城市 ' + JSON.stringify(localCity))
+								eduArray = localCity;
+							}
+						}
 					}
 					cities = eduArray.slice(0); //拷贝数组
 					callBack(cities, waitingDia);

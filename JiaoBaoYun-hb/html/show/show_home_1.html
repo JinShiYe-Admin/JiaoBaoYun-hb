@@ -591,7 +591,18 @@
 								index: 1, //请求第几页数据
 								isRefresh: 0 //是刷新0，还是加载更多1
 							});
+						}else{
+							
 						}
+												//游客身份
+						if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
+							var localCity = window.myStorage.getItem(window.storageKeyName.SHOWCITY);
+							if(localCity && localCity.length != 0) {
+								console.log('游客订制的展现城市 ' + JSON.stringify(localCity))
+								eduArray = eduArray.concat(localCity)
+							}
+						}
+
 
 						//						mui.toast(data.RspTxt);
 					}
