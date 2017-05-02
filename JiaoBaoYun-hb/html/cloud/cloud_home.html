@@ -350,17 +350,39 @@
 			});
 			mui.plusReady(function() {
 				slideNavigation.add('../index/mine.html', 200);
+				setIcons();
 				changeData();
 				addcloudapps_0(); //应用
-				document.querySelector(".icon-iconhexinhuiyuan").addEventListener("tap", function() {
+				var navigationbar = plus.webview.currentWebview().getNavigationbar();
+				navigationbar.addEventListener("click", function(e) {
+					var winWidth = document.body.clientWidth;
+					console.log("获取屏幕宽度：" + document.body.clientWidth);
+					console.log("订购会员界面事件监听：" + JSON.stringify(e));
 					if(events.judgeLoginMode()) {
 						return;
 					}
-					events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {
-						flag: 1
-					})
-					events.openNewWindow("../cloud/order-member.html");
-				})
+					if(e.clientX > (winWidth - 75) && e.clientX < (winWidth - 45)) {
+						events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {
+							flag: 1
+						})
+						events.openNewWindow("../cloud/order-member.html");
+					} else if(e.clientX > winWidth - 45) {
+
+					} else if(e.clientX > 0 && e.clientX < 45) {
+						if(slideNavigation.showMenu) {
+							slideNavigation.closeMenu();
+						} else {
+							events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {
+								flag: 1
+							})
+							slideNavigation.openMenu();
+						}
+					}
+
+				}, false)
+				//				window.addEventListener("infoChanged", function() {
+				//					document.querySelector(".img-icon>img").src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2)
+				//				})
 				//下拉刷新
 				mui("#refreshContainer").pullToRefresh({
 					down: {
@@ -1540,6 +1562,45 @@ function getHomeworkAlert(NoReadCnt) {
 					events.closeWaiting(dataInfo.wd);
 					mui.toast('删除失败 ' + temp.RspTxt);
 				}
+			}
+			var setIcons = function() {
+				var navigationbar = plus.webview.currentWebview().getNavigationbar();
+				//				var width=navigationbar.;
+				//				console.log("获取的宽度："+width);
+				var leftDrawStyle = {
+					id: "personalImg",
+					tag: "img",
+					position: {
+						top: "5px",
+						left: "10px",
+						width: "35px",
+						height: "35px"
+					},
+					src: updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2)
+				}
+				var rightDrawStyles = [{
+					id: "orderMember",
+					tag: "img",
+					position: {
+						top: "7.5px",
+						right: "45px",
+						width: "30px",
+						height: "30px"
+					},
+					src: "../../image/cloud/png-icon-order.png"
+				}, {
+					id: "cloudMore",
+					tag: "img",
+					position: {
+						top: "10px",
+						right: "10px",
+						width: "25px",
+						height: "25px"
+					},
+					src: "../../image/cloud/png-icon-more.png"
+				}]
+				rightDrawStyles.push(leftDrawStyle);
+				navigationbar.draw(rightDrawStyles)
 			}
 		</script>
 	</body>
