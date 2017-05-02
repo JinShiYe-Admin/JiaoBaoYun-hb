@@ -14,10 +14,11 @@ function postData(url, data, callback, waitingDialog) {
 		dataType: 'json',
 		type: 'post',
 		contentType: "application/json",
-		timeout: 30000,
+		timeout: 300000,
 		success: function(data) {
-			//			console.log('data.RspCode:' + data.RspCode + 'data.data:' + data.data);
+			console.log('data.RspCode:' + data.RspCode + 'data.data:' + data.data);
 			if(data.RspCode == 6) {
+				waitingDialog.close();
 				renewToken();
 			} else {
 				callback(data);
@@ -26,12 +27,13 @@ function postData(url, data, callback, waitingDialog) {
 		error: function(xhr, type, errorThrown) {
 			//			waitingDialog.close();
 			//			mui.alert("网络连接失败，请重新尝试一下", "错误", "OK", null);
+			console.log('网络连接失：' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
 			var data = {
 				RspCode: '404',
 				RspData: '',
 				RspTxt: '网络连接失败，请重新尝试一下'
 			}
-			console.log('' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
+			
 			callback(data);
 			waitingDialog.close();
 		}
@@ -71,11 +73,12 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 				dataType: 'json',
 				type: 'post',
 				contentType: "application/json",
-				timeout: 30000,
+				timeout: 300000,
 				//			success: callback,
 				success: function(data) {
-					//				console.log('data.RspCode:' + data.RspCode + 'data.data:' + data.data);
+					console.log('data.RspCode:' + data.RspCode + 'data.data:' + data.data+','+url);
 					if(data.RspCode == 6) {
+						waitingDialog.close();
 						renewToken();
 					} else {
 						//如果是21号协议，21.通过用户ID或ID串获取用户资料，判断返回值中，人员有没有名称，没有的话，主动给添加一个‘新用户’，
@@ -102,12 +105,13 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 					}
 				},
 				error: function(xhr, type, errorThrown) {
+					console.log('网络连接失败:' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
 					var data = {
 						RspCode: '404',
 						RspData: '',
 						RspTxt: '网络连接失败，请重新尝试一下'
 					}
-					console.log('' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
+					
 					callback(data);
 					waitingDialog.close();
 					//mui.toast("网络连接失败，请重新尝试一下");

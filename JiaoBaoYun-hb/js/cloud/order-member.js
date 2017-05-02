@@ -7,8 +7,9 @@ function setListeners(){
 	mui(".mui-slider-item.mui-control-content").on("tap",".deal-button",function(){
 		this.disabled=true;
 		events.singleWebviewInPeriod(this,"member-pay.html",{
-			period:"",
-			count:10
+			memberName:'普通会员',
+			memberTime:'3个月',
+			memberPay:'12'
 		})
 	})
 }

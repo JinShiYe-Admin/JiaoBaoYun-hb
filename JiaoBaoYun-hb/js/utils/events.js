@@ -914,6 +914,7 @@ var events = (function(mod) {
 			var comData = {
 				uuid: plus.device.uuid,
 				utid: personal.utid,
+				token: personal.token,
 				appid: plus.runtime.appid
 			};
 			// 等待的对话框
