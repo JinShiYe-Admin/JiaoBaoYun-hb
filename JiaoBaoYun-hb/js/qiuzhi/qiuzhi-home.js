@@ -1,7 +1,7 @@
 /**
  * 求知主界面逻辑
  */
-events.initSubPage('qiuzhi-sub.html', '', -(localStorage.getItem('StatusHeightNo') * 1 + 5));
+events.initSubPage('qiuzhi-sub.html',"",40);
 var allChannels; //所有话题
 var channelInfo; //当前话题
 var subPageReady = false; //子页面是否已触发plusReady事件
@@ -94,6 +94,7 @@ var setChannels = function(subjectArr) {
 	//	document.body.querySelector('.main-navigation').style.width = document.body.querySelector('.more-navigation').offsetLeft + 'px';
 	mui('#slider').slider();
 	channelInfo = allChannels[0];
+	console.log("获取频道信息："+JSON.stringify(channelInfo));
 	judgeWebReady();
 }
 /**
@@ -101,7 +102,10 @@ var setChannels = function(subjectArr) {
  */
 var judgeWebReady = function() {
 	if(subPageReady) {
-		events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: channelInfo, allChannels: allChannels });
+		events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', {
+			curChannel: channelInfo,
+			allChannels: allChannels
+		});
 	} else {
 		setTimeout(judgeWebReady, 500);
 	}
@@ -112,6 +116,21 @@ var judgeWebReady = function() {
 var setListener = function() {
 	mui('#subjects-container').on('tap', '.mui-control-item', function() {
 		channelInfo = this.info;
-		events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', { curChannel: channelInfo, allChannels: allChannels });
+		events.fireToPageNone('qiuzhi-sub.html', 'channelInfo', {
+			curChannel: channelInfo,
+			allChannels: allChannels
+		});
 	});
+	events.addTap('expertSearch', function() {
+		events.openNewWindowWithData('../qiuzhi/qiuzhi-questionSearch.html', 'jxq');
+	});
+	document.querySelector('.img-icon').addEventListener('tap', function(e) {
+		//判断是否是游客身份登录
+		if(events.judgeLoginMode()) {
+			return;
+		}
+		var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
+		personalInfo.UserId = personalInfo.utid;
+		events.openNewWindowWithData('../qiuzhi/expert-detail.html', personalInfo);
+	})
 }

@@ -10,7 +10,7 @@
 	"icons": {
 		"72": "icon.png"
 	},
-    "launch_path": "html/index/index.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+    "launch_path": "html/index/firstPage.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
 	"developer": {
 		"name": "",/*开发者名称*/
 		"email": "",/*开发者邮箱地址*/
@@ -869,7 +869,8 @@
 					"html/mine/ReadQRCode.html",
 					"html/quan/aboutme.html",
 					"html/quan/pub-dynamic.html",
-					"html/mine/qun_manage_a.html"
+					"html/mine/qun_manage_a.html",
+					"html/index/mine.html"
 				],
 				"priority": 0
 			},
@@ -2788,7 +2789,10 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"fonts/fangzheng.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"html/qiuzhi/expert-detail.html",
+					"html/qiuzhi/qiuzhi-questionSearch.html"
+				],
 				"priority": 0
 			},
 			"html/qiuzhi/qiuzhi-sub.html": {
@@ -4371,6 +4375,30 @@
 					"css/utils/common.css"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"html/index/firstPage.html": {
+				"resources": [
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"image/ios_1242-2208.png"
+				],
+				"refer": [
+					"html/index/index.html"
+				],
 				"priority": 0
 			}
 		},

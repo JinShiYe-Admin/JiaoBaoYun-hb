@@ -152,7 +152,11 @@
 	</head>
 
 	<body>
-
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-icon img-icon"><img src="../../image/utils/default_personalimage.png" style="width: 30px;height: 30px;border-radius: 50%;"/></a>
+		    <h1 class="mui-title">云盘</h1>
+		    <a id="add" class="mui-icon mui-pull-right iconfont icon-jiahao"></a>
+		</header>
 		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" style="visibility:hidden ;z-index:0">
 			<!--存储-->
 			<div id="cloudstorage" class="cloud-item">
@@ -219,6 +223,7 @@
 				</li>
 			</ul>
 		</div>
+		<script src="../../js/main/slide_navigation.js"></script>
 		<script type="text/javascript">
 			//每一行的高度
 			var cloudItemHeight = 0;
@@ -341,6 +346,7 @@
 				}
 			});
 			mui.plusReady(function() {
+				slideNavigation.add('../index/mine.html', 200);
 				changeData();
 				addcloudapps_0(); //应用
 				//下拉刷新

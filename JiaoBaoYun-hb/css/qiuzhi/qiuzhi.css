@@ -46,3 +46,6 @@
 	border-top: none;
 	border-bottom: none;
 }
+.mui-fullscreen-header{
+	top: 100px;
+}

@@ -81,12 +81,13 @@ var modifyTimeFormat = function(str) {
 //修改本地存储中的值，返回值
 //window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data.RspData;
 var renewToken = function() {
-	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 	//需要加密的数据
 	var enData = {};
 	var comData = {
 		uuid: plus.device.uuid,
-		utid: personalUTID,
+		utid: personalUTID.utid,
+		token: personalUTID.token,
 		appid: plus.runtime.appid
 	};
 	// 等待的对话框
@@ -94,7 +95,8 @@ var renewToken = function() {
 	postDataPro_PostTokenRenew(comData, wd, function(data) {
 		wd.close();
 		if(data.RspCode == 0) {
-			window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data.RspData;
+			personalUTID.token = data.RspData;
+			window.myStorage.setItem(window.storageKeyName.PERSONALINFO, personalUTID);
 		} else {
 			mui.toast(data.RspTxt);
 		}
@@ -178,6 +180,7 @@ var postDataPro_PostGList = function(commonData, wd, callback) {
 //		var comData = {
 //			uuid: plus.device.uuid,
 //			utid: personalUTID,
+//			token:token,
 //			appid: plus.runtime.appid
 //		};
 //修改本地存储中的值，返回值
@@ -1220,7 +1223,7 @@ var postDataPro_getIsLikeUserSpaceByUser = function(commonData, wd, callback) {
 //			userSpaceId: ''//用户空间ID
 //		};
 //返回值：数组、[UserId:用户ID，LikeDate	:点赞时间]
-var postDataPro_getUserIsLikeUsersById=function(commonData, wd, callback) {
+var postDataPro_getUserIsLikeUsersById = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值

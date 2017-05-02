@@ -914,6 +914,7 @@ var events = (function(mod) {
 			var comData = {
 				uuid: plus.device.uuid,
 				utid: personal.utid,
+				token: personal.token,
 				appid: plus.runtime.appid
 			};
 			// 等待的对话框
@@ -922,6 +923,9 @@ var events = (function(mod) {
 			postDataPro_PostTokenRenew(comData, wd, function(data0) {
 				wd.close();
 				console.log('token续订success:RspCode:' + data0.RspCode + ',RspData:' + JSON.stringify(data0.RspData) + ',RspTxt:' + data0.RspTxt);
+				var tempInfo00 = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+				tempInfo00.token = data0.RspData;
+				window.myStorage.setItem(window.storageKeyName.PERSONALINFO, tempInfo00);
 				if(data0.RspCode == 0) {
 					//获取个人信息
 					var comData1 = {
