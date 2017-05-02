@@ -871,7 +871,8 @@
 					"html/quan/aboutme.html",
 					"html/quan/pub-dynamic.html",
 					"html/mine/qun_manage_a.html",
-					"html/index/mine.html"
+					"html/index/mine.html",
+					"html/cloud/order-member.html"
 				],
 				"priority": 0
 			},

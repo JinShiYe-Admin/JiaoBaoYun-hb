@@ -153,9 +153,10 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-icon img-icon"><img src="../../image/utils/default_personalimage.png" style="width: 30px;height: 30px;border-radius: 50%;"/></a>
-		    <h1 class="mui-title">云盘</h1>
-		    <a id="add" class="mui-icon mui-pull-right iconfont icon-jiahao"></a>
+			<a class="mui-icon img-icon"><img src="../../image/utils/default_personalimage.png" style="width: 30px;height: 30px;border-radius: 50%;" /></a>
+			<h1 class="mui-title">云盘</h1>
+			<a id="add" class="mui-icon mui-pull-right iconfont icon-jiahao"></a>
+			<a class="mui-icon iconfont icon-iconhexinhuiyuan mui-pull-right" style="margin-right: 5px;"></a>
 		</header>
 		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" style="visibility:hidden ;z-index:0">
 			<!--存储-->
@@ -349,6 +350,15 @@
 				slideNavigation.add('../index/mine.html', 200);
 				changeData();
 				addcloudapps_0(); //应用
+				document.querySelector(".icon-iconhexinhuiyuan").addEventListener("tap", function() {
+					if(events.judgeLoginMode()) {
+						return;
+					}
+					events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {
+						flag: 1
+					})
+					events.openNewWindow("../cloud/order-member.html");
+				})
 				//下拉刷新
 				mui("#refreshContainer").pullToRefresh({
 					down: {
@@ -1289,12 +1299,12 @@
 						//显示未读的红点
 						for(var i = 0; i < noReadModel.stu_noReads.length; i++) {
 							var tempValue = noReadModel.stu_noReads[i];
-							console.log('tempValue=='+tempValue);
+							console.log('tempValue==' + tempValue);
 							if(noReadModel.stu_noReads[i] != 0) {
-								var redpoint=document.getElementById("studyn_redpoint_" + stuIds[i]);
-								if(redpoint){
+								var redpoint = document.getElementById("studyn_redpoint_" + stuIds[i]);
+								if(redpoint) {
 									redpoint.style.display = 'inline';
-								}			
+								}
 							}
 						}
 					} else {}

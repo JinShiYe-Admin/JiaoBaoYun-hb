@@ -39,16 +39,18 @@ mui.plusReady(function() {
 	addSubPages(); //加载子页面
 //	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
 	window.addEventListener('infoChanged', function() {
-		getAboutMe();
-		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
-		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
-		var imgNode = document.getElementById("index-header").querySelector('img');
-		if(imgNode) {
-			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)){
-				imgNode.src = updateHeadImg(img, 2);
-				imgNode.style.display="inline-block";
-			}
-		}
+		events.fireToPageNone("cloud_home.html","infoChanged");
+		events.fireToPageNone("qiuzhi_home.html","infoChanged");
+//		getAboutMe();
+//		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
+//		var img = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
+//		var imgNode = document.getElementById("index-header").querySelector('img');
+//		if(imgNode) {
+//			if(parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)){
+//				imgNode.src = updateHeadImg(img, 2);
+//				imgNode.style.display="inline-block";
+//			}
+//		}
 	});
 	//登录的监听
 	window.addEventListener("login", function() {
@@ -65,9 +67,9 @@ mui.plusReady(function() {
 	window.addEventListener('closeWaiting', function() {
 		events.closeWaiting();
 	})
-	window.addEventListener('aboutmNoRead', function() {
-		getAboutMe();
-	});
+//	window.addEventListener('aboutmNoRead', function() {
+//		getAboutMe();
+//	});
 	//	//默认自动登录
 //	events.defaultLogin(function(data) {
 //		console.log("自动登录获取的值：" + JSON.stringify(data));
