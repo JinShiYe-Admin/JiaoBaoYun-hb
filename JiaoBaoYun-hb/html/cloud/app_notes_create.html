@@ -74,6 +74,7 @@
 		<script type="text/javascript" src="../../js/utils/compress.js"></script>
 		<script type="text/javascript" src="../../js/utils/recordvideoutil.js"></script>
 		<script type="text/javascript" src="../../js/utils/playutil.js"></script>
+		<script type="text/javascript" src="../../js/utils/showvideoutil.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			var pathList = []; //记录需要删掉的图片和缩略图
@@ -109,35 +110,19 @@
 					TotalAudio: 1, //音频的个数
 					TotalVideo: 1, //视频的个数
 				});
+
 				/**
 				 * 播放视频
 				 * @param {Object} data
 				 */
 				multiMedia.videoPlayCallBack = function(data) {
-					if(plus.os.name == 'Android') {
-						playutil.openFile(data.path, function(text) {
-							mui.toast(text);
-						});
-					} else if(plus.os.name == 'iOS') {
-						var video = document.getElementById("video");
-						video.src = data.path;
-						video.poster = data.localthumb;
-						mui('#videoPopover').popover('show');
-						var mask = mui.createMask(function() {
-							video.pause();
-							mui('#videoPopover').popover('hide');
-						});
-						mask.show();
-						video.play();
-					}
+					ShowVideoUtil.showVideo(document.getElementById("video"), 'videoPopover', data.path, data.localthumb);
 				}
+
 				hideOption = events.initHideKeyBoard(); //获取配置信息
 
-				//初始播放器
-				var video = document.getElementById("video");
-				video.style.width = plus.screen.resolutionWidth + 'px';
-				video.style.height = parseInt(plus.screen.resolutionWidth * 3 / 4) + 'px';
-				video.style.marginTop = (plus.screen.resolutionHeight - 45 - plus.navigator.getStatusbarHeight() - parseInt(plus.screen.resolutionWidth * 3 / 4)) / 2 + 'px';
+				//初始化播放器
+				ShowVideoUtil.initVideo(document.getElementById("video"));
 			}
 
 			/*
@@ -222,32 +207,28 @@
 			 * 上传文件
 			 */
 			function uploadFile(wd) {
-				var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENFILE; //获取token路径
-				var mainSpace = window.storageKeyName.QNPUBSPACE; //公开空间
-				var uploadSpace = window.storageKeyName.NOTE; //笔记空间
 				var getToken = {
 					type: '2', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件；2上传需要生成缩略图的多个文件
 					appId: 6, //int 必填 项目id
 					fileArray: [], //array 选填  type为2时有效，多个文件的路径
-					mainSpace: mainSpace, //str 必填 文件存放在私有空间或公有空间
-					uploadSpace: uploadSpace, //str 必填  上传的空间
+					mainSpace: window.storageKeyName.QNPUBSPACE, //str 必填 文件存放在私有空间或公有空间
+					uploadSpace: window.storageKeyName.NOTE, //str 必填  上传的空间
 				}
 				var fileArray = [];
 				if(multiMedia.data.PictureArray.length !== 0) { //图片
-					uploadNum = multiMedia.data.PictureArray.length; //记录上传的次数
 					for(var i = 0; i < multiMedia.data.PictureArray.length; i++) {
 						fileArray.push(multiMedia.data.PictureArray[i].path);
 					}
 				} else if(multiMedia.data.VideoArray.length !== 0) { //视频
 					getToken.type = '3';
-					uploadNum = multiMedia.data.VideoArray.length; //记录上传的次数
 					for(var i = 0; i < multiMedia.data.VideoArray.length; i++) {
 						fileArray.push(multiMedia.data.VideoArray[i]);
 					}
 				}
 				getToken.fileArray = fileArray;
+				uploadNum = fileArray.length; //记录上传的次数
 
-				CloudFileUtil.getQNUpToken(getUpTokenUrl, getToken, function(data) {
+				CloudFileUtil.getQNUpToken(window.storageKeyName.QNGETUPTOKENFILE, getToken, function(data) {
 					console.log('获取上传凭证 ' + JSON.stringify(data));
 					if(data.data.Status == 1) { //成功
 						QNUptoken = data.data; //token数据
@@ -342,7 +323,7 @@
 						var fileName = filePath[filePath.length - 1];
 						//获取路径
 						var fPath = '';
-						var num; //记录第几张图片
+						var num; //记录第几个文件
 						if(multiMedia.data.PictureArray.length !== 0) { //图片
 							for(var k = 0; k < multiMedia.data.PictureArray.length; k++) {
 								var path = multiMedia.data.PictureArray[k].path.split("/");
@@ -392,24 +373,23 @@
 									console.log('所有上传都成功');
 									var encAddr = []; //附件地址
 									var encImg = []; //附件缩略图地址
+									var type;
 									if(multiMedia.data.PictureArray.length !== 0) { //图片
 										for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
 											encAddr.push(multiMedia.data.PictureArray[j].domain);
 											encImg.push(multiMedia.data.PictureArray[j].thumb);
 										}
-										var encAddrStr = encAddr.join('|');
-										var encImgrStr = encImg.join('|');
-										addNote(wd, '1', encAddrStr, encImgrStr);
+										type = '1';
 									} else if(multiMedia.data.VideoArray.length !== 0) { //视频
 										for(var j = 0; j < multiMedia.data.VideoArray.length; j++) {
 											encAddr.push(multiMedia.data.VideoArray[j].domain);
 											encImg.push(multiMedia.data.VideoArray[j].thumb);
 										}
-										var encAddrStr = encAddr.join('|');
-										var encImgrStr = encImg.join('|');
-										addNote(wd, '2', encAddrStr, encImgrStr);
+										type = '2';
 									}
-
+									var encAddrStr = encAddr.join('|');
+									var encImgrStr = encImg.join('|');
+									addNote(wd, type, encAddrStr, encImgrStr);
 								} else {
 									taskCreate(wd);
 								}
@@ -424,8 +404,6 @@
 								}
 							}
 						}, function(upload, status) {
-							//var uploadedSize = AndroidFileSystem.readSize(upload.uploadedSize);
-							//var totalSize = AndroidFileSystem.readSize(upload.totalSize);
 							switch(upload.state) {
 								case 0: //上传任务开始调度
 									console.log('上传任务开始调度:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);

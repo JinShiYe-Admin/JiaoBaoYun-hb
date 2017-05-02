@@ -127,6 +127,31 @@
 				/*统计详情发布者*/
 				color: #13b7f6;
 			}
+
+			.video-thumb {
+				/*视频缩略图*/
+				width: 50%;
+				visibility: hidden;
+			}
+
+			.video-play {
+				/*播放按钮*/
+				position: absolute;
+				visibility: hidden;
+			}
+
+			.mui-popover {
+				width: 100%;
+				height: 0px;
+				border-radius: initial;
+				background-color: transparent;
+				border: none;
+				box-shadow: none;
+			}
+
+			.mui-backdrop {
+				background-color: black;
+			}
 		</style>
 	</head>
 
@@ -142,6 +167,11 @@
 				</div>
 			</div>
 		</div>
+		<div id="videoPopover" class="mui-popover">
+			<video id="video" style="position: absolute;z-index: 999;">
+				您的浏览器不支持 video 标签。
+			</video>
+		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
@@ -149,6 +179,8 @@
 		<script type="text/javascript" src="../../js/mui.previewimage.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/utils/playutil.js"></script>
+		<script type="text/javascript" src="../../js/utils/showvideoutil.js"></script>
 		<script type="text/javascript">
 			var previewImage; //查看图片的控件
 			var pullRefresh; //下拉，上拉控件
@@ -160,6 +192,10 @@
 			var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 			var publisherNick = {}; //记录发布者的昵称
 			publisherNick[personal.utid] = personal.unick;
+			var records = {
+				recordKey: [], //记录点到记事的Key
+				recordValue: {} //记录点到记事的Value
+			}; //记录所有的点到记事
 
 			mui.init({
 				gestureConfig: {
@@ -215,6 +251,7 @@
 					},
 					up: {
 						contentinit: '', //默认没有更多显示空白
+						contentnomore: '', //隐藏没有更多提示
 						callback: function() {
 							if(page) {
 								requestData(page.pageIndex + 1);
@@ -227,6 +264,8 @@
 						}
 					}
 				});
+				//初始化播放器
+				ShowVideoUtil.initVideo(document.getElementById("video"));
 			}
 
 			/**
@@ -265,6 +304,14 @@
 				document.getElementById('title').addEventListener('doubletap', function() {
 					var scrollTop = mui('#pullrefresh').scroll(); //话题列表区域
 					scrollTop.scrollTo(0, 0, 100);
+				});
+
+				/**
+				 * 播放视频
+				 */
+				mui('#data_table').on('tap', '.video-play', function() {
+					var ids = this.id.split('_');
+					ShowVideoUtil.showVideo(document.getElementById("video"), 'videoPopover', records.recordValue[ids[2]].EncAddr, records.recordValue[ids[2]].EncImgAddr);
 				});
 			}
 
@@ -309,6 +356,8 @@
 			 */
 			function createItem(data) {
 				//console.log('createItem ' + JSON.stringify(data));
+				records.recordKey.push(data.TabId);
+				records.recordValue[data.TabId] = data;
 				var Date = data.PublishDate.split(' '); //发布的日期和时间
 				var dateItem = Date[0];
 				var time = Date[1].split(':');
@@ -383,6 +432,13 @@
 								</div>';
 					}
 					html_media = html_0 + html_1 + '</div>';
+				} else if(data.EncType == 2) { //视频
+					var play_width = parseInt((document.getElementById("data_table").offsetWidth - 30) * 0.14);
+					var html_0 = '<div class="record-video">\
+								<img id="video_play_' + data.TabId + '" style="width:' + play_width + 'px;height:' + play_width + 'px;" class="video-play" src="../../image/utils/playvideo.png" />\
+								<img id="video_thumb_' + data.TabId + '" class="video-thumb" src="' + data.EncImgAddr + '" onload="videoThumbLoad(this);" onerror="videoThumbError(this);">\
+							</div>';
+					html_media = html_0;
 				}
 				var element_1 = document.createElement('li');
 				element_1.className = 'mui-table-view-cell';
@@ -459,6 +515,10 @@
 						document.getElementById('data_table').innerHTML = '';
 						markDate = ''; //日期
 						pullRefresh.refresh(true); //更新当前控件
+						records = {
+							recordKey: [], //记录点到记事的Key
+							recordValue: {} //记录点到记事的Value
+						}; //记录所有的点到记事
 					}
 					endPullUp();
 
@@ -548,6 +608,24 @@
 				} else {
 					pullRefresh.endPullUpToRefresh();
 				}
+			}
+
+			/**
+			 * 视频的缩略图加载成功
+			 * @param {Object} img
+			 */
+			function videoThumbLoad(img) {
+				var ids = img.id.split('_');
+				ShowVideoUtil.videoThumbLoad(img, document.getElementById("video_play_" + ids[2]));
+			}
+
+			/**
+			 * 视频的缩略图加载失败
+			 * @param {Object} img
+			 */
+			function videoThumbError(img) {
+				var ids = img.id.split('_');
+				ShowVideoUtil.videoThumbError(img, document.getElementById("video_play_" + ids[2]), records.recordValue[ids[2]].EncAddr);
 			}
 		</script>
 	</body>
