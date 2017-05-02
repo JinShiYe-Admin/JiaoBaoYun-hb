@@ -51,6 +51,21 @@
 				overflow: hidden;
 				position: relative;
 			}
+
+			#sciEduSlider {
+				position: absolute;
+				top: 10px;
+				height: 45px;
+				left: 0px;
+			}
+
+			#sciEduSlider .mui-slider-indicator .mui-indicator {
+				margin: 0px 2px;
+			}
+
+			.mui-title {
+				z-index: 3;
+			}
 		</style>
 	</head>
 
@@ -58,6 +73,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a id="changeCity" class="mui-icon mui-icon mui-icon-list mui-pull-left"></a>
 			<h1 id="title" class="mui-title"></h1>
+			<div id="sciEduSlider" class="mui-slider"></div>
 		</header>
 		<div id="content" class="mui-content"></div>
 		<script src="../../js/mui.min.js"></script>
@@ -79,7 +95,11 @@
 			//	page:{},//页码
 			//	refresh:{}//下拉上拉控件
 			//}
-			mui.init();
+			mui.init({
+				gestureConfig: {
+					doubletap: true,
+				}
+			});
 			mui.plusReady(function() {
 				var wd = events.showWaiting();
 				initListener();
@@ -130,7 +150,6 @@
 					pageAndInfo = {}; //保存对应的城市信息和页码
 					initBody();
 				});
-				//---订制城市---end---
 
 				//退出登录清理科教界面
 				window.addEventListener('cleanSicEduHome', function() {
@@ -140,11 +159,12 @@
 					pageAndInfo = {}; //保存对应的城市信息和页码
 					//清理界面
 					document.getElementById("content").innerHTML = '';
-					document.getElementById("title").innerHTML = '';
-					var sciEduSlider = document.getElementById('sciEduSlider');
-					if(sciEduSlider) {
-						sciEduSlider.parentNode.removeChild(sciEduSlider);
-					}
+					changeIndexHeader();
+				});
+
+				//双击title滚动到顶部
+				document.getElementById('title').addEventListener('doubletap', function() {
+					mui('#bot_sw_' + sliderId).scroll().scrollTo(0, 0, 100);
 				});
 			}
 
@@ -166,7 +186,7 @@
 					</div>';
 					show = false;
 					//滑动底部列表
-					document.querySelector('.mui-slider').addEventListener('slide', function(event) {
+					document.getElementById("slider").addEventListener('slide', function(event) {
 						console.log('slide ' + event.detail.slideNumber);
 						var city = cities[event.detail.slideNumber];
 						sliderId = city.acode;
@@ -519,22 +539,12 @@
 							}
 							str = str + '</div>';
 							document.getElementById('title').innerText = cities[i].aname;
-							var sciEduSlider = document.getElementById('sciEduSlider');
-							if(sciEduSlider) {
-								sciEduSlider.innerHTML = str
-							} else {
-								var element = document.createElement('div');
-								element.id = 'sciEduSlider';
-								element.className = 'mui-slider';
-								element.style.height = '45px';
-								element.style.top = (localStorage.getItem('StatusHeightNo') * 1 + 10) + 'px';
-								element.innerHTML = str;
-								document.querySelector('header').appendChild(element);
-							}
+							document.getElementById('sciEduSlider').innerHTML = str;
 						}
 					}
 				}
 			}
+
 			/**
 			 * 结束上拉加载更多
 			 */
