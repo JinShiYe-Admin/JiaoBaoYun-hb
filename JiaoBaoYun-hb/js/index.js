@@ -11,6 +11,13 @@ var loginRoleType = 0; //登录角色0为游客1为用户
 var noReadCount = 0;
 var aniShow = {};
 mui.plusReady(function() {
+	var personalInfo=myStorage.getItem(storageKeyName.PERSONALINFO);
+	if(parseInt(personalInfo.utid)){
+		loginRoleType=1
+	}else{
+		loginRoleType=0;
+	}
+	setConditionbyRole(loginRoleType);
 	//	events.preload("../qiuzhi/expert-detail.html",100);
 	var waitingDia = events.showWaiting();
 	//安卓的连续点击两次退出程序
@@ -30,7 +37,7 @@ mui.plusReady(function() {
 	};
 	Statusbar.barHeight(); //获取一些硬件参数
 	addSubPages(); //加载子页面
-	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
+//	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
 	window.addEventListener('infoChanged', function() {
 		getAboutMe();
 		console.log('監聽：infoChanged:' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg)
@@ -428,5 +435,5 @@ var setActivePage = function() {
 	var splitActiveTabs = activeTab.split("/");
 	var activeId = splitActiveTabs[splitActiveTabs.length - 1];
 	plus.webview.show(activeId, "fade-in", 300);
-	changRightIcons(activeTab);
+//	changRightIcons(activeTab);
 }

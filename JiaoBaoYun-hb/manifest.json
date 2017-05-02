@@ -869,7 +869,8 @@
 					"html/mine/ReadQRCode.html",
 					"html/quan/aboutme.html",
 					"html/quan/pub-dynamic.html",
-					"html/mine/qun_manage_a.html"
+					"html/mine/qun_manage_a.html",
+					"html/index/mine.html"
 				],
 				"priority": 0
 			},
@@ -2788,7 +2789,10 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"fonts/fangzheng.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"html/qiuzhi/expert-detail.html",
+					"html/qiuzhi/qiuzhi-questionSearch.html"
+				],
 				"priority": 0
 			},
 			"html/qiuzhi/qiuzhi-sub.html": {
@@ -4392,7 +4396,9 @@
 					"js/utils/RSAEncrypt.js",
 					"image/ios_1242-2208.png"
 				],
-				"refer": [],
+				"refer": [
+					"html/index/index.html"
+				],
 				"priority": 0
 			}
 		},

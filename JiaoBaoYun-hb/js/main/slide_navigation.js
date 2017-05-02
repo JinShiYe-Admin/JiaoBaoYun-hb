@@ -1,4 +1,4 @@
-var slideNavigation = (function($) {
+var slideNavigation = (function() {
 	var menu = null, //预加载界面设置
 		main = null; //主界面
 	var showMenu = false; //是否显示主界面界面
@@ -10,7 +10,7 @@ var slideNavigation = (function($) {
 	 */
 	var add = function(tarpage, interval) {
 			//加载主界面左上角图标
-			addSlideIcon();
+//			addSlideIcon();
 			//设置显示方向，添加监听，关闭侧滑
 			setCondition();
 			//预加载侧滑界面
@@ -30,7 +30,7 @@ var slideNavigation = (function($) {
 			plus.screen.lockOrientation("portrait-primary");
 			//点击主界面时，关闭侧滑
 			main = plus.webview.currentWebview();
-			main.addEventListener('maskClick', closeMenu);
+			main.parent().addEventListener('maskClick', closeMenu);
 		}
 		/**
 		 * 打开侧滑
@@ -49,7 +49,7 @@ var slideNavigation = (function($) {
 				}); //menu设置透明遮罩防止点击
 				menu.show('none', 0, function() {
 					//主窗体开始侧滑并显示遮罩
-					main.setStyle({
+					main.parent().setStyle({
 						mask: 'rgba(0,0,0,0.4)',
 //						left: '70%',
 //						transition: {
@@ -85,7 +85,7 @@ var slideNavigation = (function($) {
 				//关闭遮罩；
 				//主窗体开始侧滑；
 				isInTransition = true;
-				main.setStyle({
+				main.parent().setStyle({
 					mask: 'none',
 //					left: '0',
 //					transition: {
@@ -168,19 +168,19 @@ var slideNavigation = (function($) {
 		/**
 		 * 加载主界面左上角图标
 		 */
-	var addSlideIcon = function() {
-			var title_left = document.getElementById("title_left");
-			var a = document.createElement('img');
-			a.id = 'headimge';
-			a.className = 'mui-pull-left  img-icon display-none';
-			console.log('第一次加載的圖片地址：' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg);
-			var path = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
-			a.src = path ? path : storageKeyName.DEFAULTPERSONALHEADIMAGE;
-//			console.log('首页左上角头像:' + a.src);
-			//在第一个位置中插入元素
-			title_left.appendChild(a);
-//			a.style.display="none";
-		}
+//	var addSlideIcon = function() {
+//			var title_left = document.getElementById("title_left");
+//			var a = document.createElement('img');
+//			a.id = 'headimge';
+//			a.className = 'mui-pull-left  img-icon display-none';
+//			console.log('第一次加載的圖片地址：' + myStorage.getItem(storageKeyName.PERSONALINFO).uimg);
+//			var path = myStorage.getItem(storageKeyName.PERSONALINFO).uimg;
+//			a.src = path ? path : storageKeyName.DEFAULTPERSONALHEADIMAGE;
+////			console.log('首页左上角头像:' + a.src);
+//			//在第一个位置中插入元素
+//			title_left.appendChild(a);
+////			a.style.display="none";
+//		}
 		//安卓系统返回按钮
 	var getBack = function() {
 		//		console.log("show:" + showMenu)
@@ -199,7 +199,6 @@ var slideNavigation = (function($) {
 	}
 	return {
 		add: add,
-		addSlideIcon: addSlideIcon,
 		iconAddEvent: iconAddEvent
 	};
-})(mui)
+})()

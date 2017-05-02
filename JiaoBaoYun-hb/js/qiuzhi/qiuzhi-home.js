@@ -1,7 +1,7 @@
 /**
  * 求知主界面逻辑
  */
-events.initSubPage('qiuzhi-sub.html', '', -(localStorage.getItem('StatusHeightNo') * 1 + 5));
+events.initSubPage('qiuzhi-sub.html');
 var allChannels; //所有话题
 var channelInfo; //当前话题
 var subPageReady = false; //子页面是否已触发plusReady事件
