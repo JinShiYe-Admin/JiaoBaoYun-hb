@@ -106,15 +106,15 @@ var addSubPages = function() {
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
 	var self = plus.webview.currentWebview();
 	for(var i = 0; i < 4; i++) {
-		if(i == 0) {
-			subpage_style.navigationbar = {
-				backgroundColor: "#13b7f6",
-				titleColor: "#FFFFFF"
-			};
-			subpage_style.navigationbar.titleText = titles[i];
-		}else{
-			delete subpage_style.navigationbar
-		}
+//		if(i == 0) {
+//			subpage_style.navigationbar = {
+//				backgroundColor: "#13b7f6",
+//				titleColor: "#FFFFFF"
+//			};
+//			subpage_style.navigationbar.titleText = titles[i];
+//		}else{
+//			delete subpage_style.navigationbar
+//		}
 		console.log("子页面样式：" + JSON.stringify(subpage_style));
 		var temp = {};
 		var sub = plus.webview.create(subpages[i], subpages[i].split('/')[subpages[i].split('/').length - 1], subpage_style);

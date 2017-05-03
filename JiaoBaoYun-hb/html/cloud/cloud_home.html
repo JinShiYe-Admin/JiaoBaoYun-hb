@@ -151,13 +151,13 @@
 	</head>
 
 	<body>
-		<!--<header class="mui-bar mui-bar-nav">
+		<header class="mui-bar mui-bar-nav">
 			<a class="mui-icon img-icon"><img src="../../image/utils/default_personalimage.png" style="width: 30px;height: 30px;border-radius: 50%;" /></a>
-			
+
 			<h1 class="mui-title">云盘</h1>
-			<!--<a id="add" class="mui-icon iconfont icon-jiahao mui-pull-right mui-icon-plusempty" style="font-size: 15px;margin-top:5px ;margin-right:-5px" ></a>
-			<a class="mui-icon iconfont icon-iconhexinhuiyuan mui-pull-right" style="margin-right: 5px;"></a>-->
-		<!--</header>-->
+			<a id="add" class="mui-icon iconfont icon-jiahao mui-pull-right mui-icon-plusempty" style="font-size: 15px;margin-top:5px ;margin-right:-5px"></a>
+			<a class="mui-icon iconfont icon-iconhexinhuiyuan mui-pull-right" style="margin-right: 5px;"></a>
+		</header>
 		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" style="visibility:hidden ;z-index:0">
 			<!--存储-->
 			<div id="cloudstorage" class="cloud-item">
@@ -247,7 +247,7 @@
 			var imgeWith = 0.6;
 			//宽度和高度
 			var initStyle;
-			var noReadCount=0;
+			var noReadCount = 0;
 
 			init(); //初始化界面
 
@@ -350,39 +350,58 @@
 			});
 			mui.plusReady(function() {
 				slideNavigation.add('../index/mine.html', 200);
-				setIcons();
+				//				setIcons();
 				changeData();
 				addcloudapps_0(); //应用
-				var navigationbar = plus.webview.currentWebview().getNavigationbar();
-				navigationbar.addEventListener("click", function(e) {
-					var winWidth = document.body.clientWidth;
-					console.log("获取屏幕宽度：" + document.body.clientWidth);
-					console.log("订购会员界面事件监听：" + JSON.stringify(e));
+				document.querySelector(".img-icon").addEventListener("tap", function() {
+					if(slideNavigation.showMenu) {
+						slideNavigation.closeMenu();
+					} else {
+//						events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {
+//							flag: 1
+//						})
+						slideNavigation.openMenu();
+					}
+				})
+				//				var navigationbar = plus.webview.currentWebview().getNavigationbar();
+				//				navigationbar.addEventListener("click", function(e) {
+				//					var winWidth = document.body.clientWidth;
+				//					console.log("获取屏幕宽度：" + document.body.clientWidth);
+				//					console.log("订购会员界面事件监听：" + JSON.stringify(e));
+				//					if(events.judgeLoginMode()) {
+				//						return;
+				//					}
+				//					if(e.clientX > (winWidth - 75) && e.clientX < (winWidth - 45)) {
+				//						events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {
+				//							flag: 1
+				//						})
+				//						events.openNewWindow("../cloud/order-member.html");
+				//					} else if(e.clientX > winWidth - 45) {
+				//
+				//					} else if(e.clientX > 0 && e.clientX < 45) {
+				//						if(slideNavigation.showMenu) {
+				//							slideNavigation.closeMenu();
+				//						} else {
+				//							events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {
+				//								flag: 1
+				//							})
+				//							slideNavigation.openMenu();
+				//						}
+				//					}
+				//
+				//				}, false)
+				document.querySelector(".icon-iconhexinhuiyuan").addEventListener("tap", function() {
 					if(events.judgeLoginMode()) {
 						return;
 					}
-					if(e.clientX > (winWidth - 75) && e.clientX < (winWidth - 45)) {
-						events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {
-							flag: 1
-						})
-						events.openNewWindow("../cloud/order-member.html");
-					} else if(e.clientX > winWidth - 45) {
-
-					} else if(e.clientX > 0 && e.clientX < 45) {
-						if(slideNavigation.showMenu) {
-							slideNavigation.closeMenu();
-						} else {
-							events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {
-								flag: 1
-							})
-							slideNavigation.openMenu();
-						}
-					}
-
-				}, false)
-				//				window.addEventListener("infoChanged", function() {
-				//					document.querySelector(".img-icon>img").src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2)
-				//				})
+					events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {
+						flag: 1
+					})
+					events.openNewWindow("../cloud/order-member.html");
+				})
+				window.addEventListener("infoChanged", function() {
+					document.querySelector(".img-icon>img").src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2)
+				})
 				//下拉刷新
 				mui("#refreshContainer").pullToRefresh({
 					down: {
@@ -413,7 +432,7 @@
 				})
 				//监听popover的显示和隐藏
 				window.addEventListener("topPopover", function(e) {
-						mui('#topPopover').popover('hide')
+					mui('#topPopover').popover('hide')
 				});
 				//点击popover里cell
 				mui('.mui-popover').on('tap', 'li', function(e) {
@@ -738,7 +757,7 @@
 						return;
 					}
 					getAboutMe();
-					
+
 					//26.用户云盘顶层文件及文件夹获取
 					postFirstFile();
 					//91.（云档案）按家长获取档案文件夹
@@ -1385,63 +1404,63 @@
 				});
 			}
 			//获取与我相关
-function getAboutMe() {
-	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
-	if(personalUTID == 0) {
-		return;
-	}
-	//56.（用户空间）获取与我相关
-	//所需参数
-	var comData = {
-		userId: personalUTID, //用户ID
-		pageIndex: '1', //当前页数
-		pageSize: '1' //每页记录数
-	};
-	//返回model：model_homeSchoolList，model_userSpaceAboutMe
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	//24.获取与我相关
-	postDataPro_getAboutMe(comData, wd, function(data) {
-		wd.close();
-		console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-		if(data.RspCode == 0) {
-			getHomeworkAlert(data.RspData.NoReadCnt);
-		} else {
-			//				mui.toast(data.RspTxt);
-		}
-	});
-}
-//获取作业的提醒
-function getHomeworkAlert(NoReadCnt) {
-	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
-	//56.（用户空间）获取与我相关
-	//所需参数
-	var comData = {
-		userId: personalUTID, //用户ID
-		pageSize: '1' //每页记录数
-	};
-	//返回model：model_homeSchoolList，model_userSpaceAboutMe
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	//24.获取与我相关
-	postDataPro_GetHomeworkAlertCount(comData, wd, function(data) {
-		wd.close();
-		console.log('postDataPro_GetHomeworkAlertCount:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-		if(data.RspCode == 0) {
-			NoReadCnt = data.RspData.NoReadCnt + NoReadCnt;
-			noReadCount = NoReadCnt;
-			var noRead = document.getElementById('aboutme_noRead');
-					if(NoReadCnt == 0) {
-						noRead.innerHTML = NoReadCnt;
-						noRead.style.visibility = 'hidden';
+			function getAboutMe() {
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+				if(personalUTID == 0) {
+					return;
+				}
+				//56.（用户空间）获取与我相关
+				//所需参数
+				var comData = {
+					userId: personalUTID, //用户ID
+					pageIndex: '1', //当前页数
+					pageSize: '1' //每页记录数
+				};
+				//返回model：model_homeSchoolList，model_userSpaceAboutMe
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//24.获取与我相关
+				postDataPro_getAboutMe(comData, wd, function(data) {
+					wd.close();
+					console.log('postDataPro_getAboutMe:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						getHomeworkAlert(data.RspData.NoReadCnt);
 					} else {
-						noRead.style.visibility = 'visible';
-						noRead.innerHTML = NoReadCnt;
+						//				mui.toast(data.RspTxt);
 					}
+				});
+			}
+			//获取作业的提醒
+			function getHomeworkAlert(NoReadCnt) {
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
+				//56.（用户空间）获取与我相关
+				//所需参数
+				var comData = {
+					userId: personalUTID, //用户ID
+					pageSize: '1' //每页记录数
+				};
+				//返回model：model_homeSchoolList，model_userSpaceAboutMe
+				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				//24.获取与我相关
+				postDataPro_GetHomeworkAlertCount(comData, wd, function(data) {
+					wd.close();
+					console.log('postDataPro_GetHomeworkAlertCount:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						NoReadCnt = data.RspData.NoReadCnt + NoReadCnt;
+						noReadCount = NoReadCnt;
+						var noRead = document.getElementById('aboutme_noRead');
+						if(NoReadCnt == 0) {
+							noRead.innerHTML = NoReadCnt;
+							noRead.style.visibility = 'hidden';
+						} else {
+							noRead.style.visibility = 'visible';
+							noRead.innerHTML = NoReadCnt;
+						}
 
-		} else {
-			//				mui.toast(data.RspTxt);
-		}
-	});
-}
+					} else {
+						//				mui.toast(data.RspTxt);
+					}
+				});
+			}
 
 			//			var sendMessageToHomework = function(teacherClasses, studentClasses) {
 			//				if(homeworkReady) {
