@@ -139,17 +139,14 @@ var setListener = function() {
 	//选项卡点击事件
 	mui('.mui-bar-tab').on('tap', 'a', function(e) {
 		var targetTab = this.getAttribute('href');
-		console.log("活动的页面：" + activeTab)
-		if(targetTab == activeTab) {
-			if(activeTab == '../cloud/cloud_home.html') {
-				events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {})
-			}
-			return;
-		}
-
 		if(activeTab == '../cloud/cloud_home.html') {
 			events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {})
 		}
+		console.log("活动的页面：" + activeTab)
+		if(targetTab == activeTab) {
+			return;
+		}
+		
 		//更改按钮
 		//		changRightIcons(targetTab);
 		var targetSplit = targetTab.split('/');
