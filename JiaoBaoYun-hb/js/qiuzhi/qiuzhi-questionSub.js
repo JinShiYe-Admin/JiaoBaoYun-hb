@@ -621,7 +621,7 @@ function questionContent(content, flag) {
 	var height_1;
 	if(flag == 1) { //求知旧数据
 		document.getElementById("question_content").style.lineHeight = '20px';
-		document.getElementById("question_content").innerHTML = content;
+		document.getElementById("question_content").innerHTML = content.replace(/\n/g,"<br/>");
 		height_0 = document.getElementById("question_content").offsetHeight;
 		if(height_0 > 60) {
 			document.getElementById("question_content").style.lineHeight = '20px';
