@@ -16,6 +16,10 @@
 				background: white;
 			}
 
+			.mui-fullscreen {
+				top: 45px !important;
+			}
+
 			.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
@@ -24,37 +28,41 @@
 
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
 				border-right: 1px solid #b7b7b7;
-				line-height: normal;
-				margin-top: 10px;
+				line-height: inherit;
+				margin-top: 8px;
 			}
 
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item:last-child {
 				border-right: none;
 			}
 
-			.mui-segmented-control.mui-segmented-control-inverted {
-				border-left: 3px solid #64A1EB;
-				margin-top: 5px;
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border: none;
 			}
 
-			.mui-table-view-cell {
+			.mui-segmented-control.mui-segmented-control-inverted {
+				border-left: 3px solid #64A1EB;
+				background-color: #EFEFF4;
+			}
+
+			.mui-col-xs-3 {
 				padding: 10px 8px;
 			}
 
 			.qun-data {
-				/*群成员*/
+				/*群资料头像*/
 				text-align: center;
-				height: 75px;
 			}
 
 			.qun-data img {
-				/*添加成员按钮图标*/
+				/*群资料头像*/
 				border-radius: 50%;
-				height: 40px;
-				width: 40px;
+				height: 40px !important;
+				width: 40px !important;
+				margin-top: 8px;
 			}
 
-			.keep-box-shadow-border {
+			.box-shadow-border {
 				/*边框和阴影*/
 				box-shadow: 0px 1px 5px rgba(136, 136, 136, 0.5);
 				padding: 3px;
@@ -69,39 +77,19 @@
 			<a id="history" class="mui-icon iconfont icon-lishijilu1 mui-pull-right" style="color: white;padding-right: 15px;display:none;"></a>
 			<a id="statistics" class="mui-icon iconfont icon-tongji mui-pull-right" style="margin-right: 5px;display:none;"></a>
 		</header>
-		<div class="mui-content">
-			<div id="slider" class="mui-slider" style="display:none;">
-				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="background:#EFEFEF;">
-					<div id="qunlist" class="mui-scroll">
-					</div>
-				</div>
-			</div>
-			<div id="scrollwrapper" class="mui-scroll-wrapper">
-				<div class="mui-scroll">
-					<div id="all_mem"></div>
-				</div>
-			</div>
+		<div id="content" class="mui-content">
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript">
-			mui.init();
-
-			(function init() {
-				//初始化界面
-				document.querySelector(".mui-content").style.marginTop = (localStorage.getItem('StatusHeightNo') * 1 - 4) + 'px';
-				document.querySelector("#scrollwrapper").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 90) + 'px';
-			})();
 			var show = ''; //记录当前展示的群id
 			var qunIdArray = []; //记录所有群的id
 			var qunInfos = {}; //记录所有群的信息
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-
+			mui.init();
 			mui.plusReady(function() {
 				var wd = events.showWaiting();
-				initScroll();
-				initListener();
 				getQunMemCG(wd); //获取群
 			});
 
@@ -141,11 +129,8 @@
 				});
 
 				//切换显示选中的群
-				mui('#qunlist').on('tap', 'a', function() {
-					var gid = this.id.replace('top_', '');
-					mui('#scrollwrapper').scroll().scrollTo(0, 0, 100); //100毫秒滚动到顶
-					document.getElementById('bottom_' + show).style.display = 'none';
-					document.getElementById("bottom_" + gid).style.display = 'inline';
+				document.getElementById("slider").addEventListener('slide', function() {
+					var gid = qunIdArray[event.detail.slideNumber];
 					var qun = qunInfos[gid];
 					if(!qun.getdata) { //没有获取资料
 						getData(gid);
@@ -159,7 +144,7 @@
 				mui('.mui-content').on('tap', '.mui-table-view-cell', function() {
 					var self = this;
 					self.disabled = true;
-					var ids = this.id.split('_');
+					var ids = this.parentNode.id.split('_');
 					console.log(ids[0] + ' ' + ids[1] + ' ' + ids[2]);
 					var gid = ids[1]; //群id
 					var stuid = ids[2]; //资料id
@@ -174,19 +159,6 @@
 					setTimeout(function() {
 						self.disabled = false;
 					}, 1500);
-				});
-			}
-
-			/**
-			 * 初始化滚动
-			 */
-			function initScroll() {
-				mui(".mui-scroll-wrapper").scroll({
-					scrollY: true, //是否竖向滚动
-					scrollX: false, //是否横向滚动
-					indicators: true, //是否显示滚动条
-					deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
-					bounce: true, //是否启用回弹
 				});
 			}
 
@@ -241,6 +213,7 @@
 							mui.toast(data.RspTxt);
 						}
 					}
+
 					if(qunIdArray.length == 0) {
 						//没有管理的群
 						mui.toast('没有管理的群');
@@ -249,8 +222,6 @@
 						//有管理的群
 						document.getElementById("history").style.display = 'inline';
 						document.getElementById("statistics").style.display = 'inline';
-						document.body.querySelector('.mui-slider').style.display = 'inline';
-						document.getElementById("scrollwrapper").style.background = 'white';
 						addQun();
 						getData(qunIdArray[0], wd); //通过群ID获取群的正常用户
 					}
@@ -258,37 +229,77 @@
 			}
 
 			/**
-			 * 群栏添加群，对应的成员栏添加默认界面
+			 * 生成滑动控件并显示群
 			 */
 			function addQun() {
+				//生成滑动控件
+				document.getElementById("content").innerHTML = '<div id="slider" class="mui-slider mui-fullscreen">\
+									<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">\
+										<div id="qun_data" class="mui-scroll">\
+										</div>\
+									</div>\
+									<div id="sliderGroup" class="mui-slider-group">\
+									</div>\
+								</div>';
 				for(var i = 0; i < qunIdArray.length; i++) {
 					var qun = qunInfos[qunIdArray[i]];
 					//console.log('addQun ' + JSON.stringify(qun));
-					//顶部添加群
-					var element_0 = document.createElement('a');
-					element_0.id = 'top_' + qun.gid;
-					element_0.innerText = qun.gname;
-					if(i == 0) {
-						//第一个群
+					//顶部群名称
+					var elementTop = document.createElement('a');
+					//底部群资料
+					var elementBottom = document.createElement('div');
+					if(i == 0) { //第一个群
 						show = qun.gid;
-						element_0.className = 'mui-control-item mui-active';
+						elementTop.className = 'mui-control-item mui-active';
+						elementBottom.className = 'mui-slider-item mui-control-content mui-active';
 					} else {
-						element_0.className = 'mui-control-item';
+						elementTop.className = 'mui-control-item';
+						elementBottom.className = 'mui-slider-item mui-control-content';
 					}
-					document.getElementById("qunlist").appendChild(element_0);
-
-					//成员栏添加默认元素
-					var element_1 = document.createElement('div');
-					element_1.id = 'bottom_' + qun.gid;
-					if(i == 0) {
-						//第一个群
-						element_1.style.display = "inline";
-					} else {
-						element_1.style.display = "none";
-					}
-					element_1.innerHTML = '<ul class="mui-table-view"><div class="mui-row" id="row_' + qun.gid + '"></div></ul>'
-					document.getElementById("all_mem").appendChild(element_1);
+					//顶部群名称
+					elementTop.id = 'top_' + qun.gid;
+					elementTop.href = '#' + 'bottom_' + qun.gid;
+					elementTop.innerText = qun.gname;
+					//底部区域
+					elementBottom.id = 'bottom_' + qun.gid;
+					elementBottom.innerHTML = '<div class="mui-scroll-wrapper">\
+													<div class="mui-scroll">\
+														<ul class="mui-table-view">\
+															<div id="row_' + qun.gid + '" class="mui-row">\
+															</div>\
+														</ul>\
+													</div>\
+												</div>';
+					document.getElementById("qun_data").appendChild(elementTop);
+					document.getElementById("sliderGroup").appendChild(elementBottom);
 				}
+				initScroll();
+				initListener();
+			}
+
+			/**
+			 * 初始化滑动滚动控件
+			 */
+			function initScroll() {
+				//初始化slider控件
+				mui('.mui-slider').slider();
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				//顶部群名称
+				mui("#sliderSegmentedControl").scroll({
+					scrollY: false, //是否竖向滚动
+					scrollX: true, //是否横向滚动
+					indicators: false, //是否显示滚动条
+					deceleration: deceleration, //阻尼系数,系数越小滑动越灵敏
+					bounce: true, //是否启用回弹
+				});
+				//底部群资料
+				mui(".mui-slider-group .mui-scroll-wrapper").scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false, //是否横向滚动
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration, //阻尼系数,系数越小滑动越灵敏
+					bounce: true, //是否启用回弹
+				});
 			}
 
 			/**
@@ -296,15 +307,15 @@
 			 * @param {Object} qunId 群
 			 */
 			function addData(qunId) {
-				console.log(JSON.stringify(qunInfos[qunId]));
+				//console.log(JSON.stringify(qunInfos[qunId]));
 				var dataIdArray = qunInfos[qunId].dataIdArray;
 				for(var i = 0; i < dataIdArray.length; i++) {
 					var data = qunInfos[qunId].qunDataInfos[dataIdArray[i]];
 					var element = document.createElement('li');
 					var elementId = data.gid + '_' + data.stuid;
 					element.id = 'data_' + elementId;
-					element.className = 'mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3';
-					var html = '<div class="keep-box-shadow-border qun-data">\
+					element.className = 'mui-col-xs-3 mui-col-sm-3';
+					var html = '<div class="mui-table-view-cell qun-data box-shadow-border">\
 									<img src="' + updateHeadImg(data.stuimg, 2) + '" />\
 									<p id="stuname_' + elementId + '" class="mui-ellipsis"></p>\
 								</div>';

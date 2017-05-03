@@ -17,10 +17,35 @@
 		<link rel="stylesheet" type="text/css" href="../../css/icons-extra.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<link rel="stylesheet" href="../../css/show/show.css" />
+		<style type="text/css">
+			#showSlider {
+				position: absolute;
+				top: 10px;
+				height: 45px;
+				left: 0px;
+			}
+			
+			#showSlider .mui-slider-indicator .mui-indicator {
+				margin: 0px 2px;
+			}
+			
+			.mui-title {
+				z-index: 3;
+			}
+		</style>
 
 	</head>
 
 	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="changeCity" class="mui-icon mui-icon mui-icon-list mui-pull-left"></a>
+			<h1 id="title" class="mui-title"></h1>
+			<a id="pubDynamic" class="mui-icon mui-pull-right mui-plus-visible" style="padding-left: 30px;font-size: 14px;margin-top:8px ;">晒一晒</a>
+
+			<div id="showSlider" class="mui-slider"></div>
+
+		</header>
+
 		<div id="content" class="mui-content">
 
 		</div>
@@ -40,7 +65,8 @@
 			var isPersonal = 1;
 			mui.init({
 				gestureConfig: {
-					longtap: true
+					longtap: true,
+					doubletap: true,
 				}
 			});
 			idFlag = 'zx';
@@ -65,6 +91,19 @@
 				mui.previewImage(); //浏览图片详情
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				index = main.parent(); //
+				events.addTap('pubDynamic',
+					function() {
+						//判断是否是游客身份登录
+						if(events.judgeLoginMode()) {
+							return;
+						}
+						var self = this
+						self.disabled = true;
+						events.openNewWindowWithData('../quan/pub-dynamic.html', 'zx');
+						setTimeout(function() {
+							self.disabled = false;
+						}, 1500);
+					})
 				main.addEventListener("hide", function(e) {
 					mui.getPreviewImage().close()
 				})
@@ -109,7 +148,7 @@
 
 				//---订制城市---start---
 				//进入订制城市界面
-				window.addEventListener('tapTitleLeft', function() {
+				document.getElementById('changeCity').addEventListener('tap', function() {
 					events.openNewWindowWithData('../utils/customizeCity.html', {
 						id: '1', //0科教，1展现
 						webid: '../show/show_home_1.html', //当前webview的id
@@ -212,12 +251,17 @@
 					show = true; //是否显示展现的内容
 					pullToRefresh = [] //存储下拉上拉的控件
 					sliderId = ''; //记录显示的城市
-					document.getElementById("content").innerHTML = ''; //清理界面
-					var evalJS = "var showSlider=document.getElementById('showSlider');if(showSlider){showSlider.parentNode.removeChild(showSlider);}";
-					index.evalJS(evalJS);
+					//清理界面
+					document.getElementById("content").innerHTML = '';
+					changeIndexHeader();
+
+				});
+				//双击title滚动到顶部
+				document.getElementById('title').addEventListener('doubletap', function() {
+					mui('#bot_sw_' + sliderId).scroll().scrollTo(0, 0, 100);
 				});
 
-			});
+			})
 
 			/**
 			 * 初始化主体
@@ -237,7 +281,7 @@
 					</div>';
 					show = false;
 					//滑动底部列表 城市下面相应的点激活
-					document.querySelector('.mui-slider').addEventListener('slide', function() {
+					document.getElementById("slider").addEventListener('slide', function(event) {
 						console.log('slide ' + event.detail.slideNumber);
 						mui('.mui-control-item').each(function(index, element) {
 							if(index == event.detail.slideNumber) {
@@ -547,7 +591,18 @@
 								index: 1, //请求第几页数据
 								isRefresh: 0 //是刷新0，还是加载更多1
 							});
+						}else{
+							
 						}
+												//游客身份
+						if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
+							var localCity = window.myStorage.getItem(window.storageKeyName.SHOWCITY);
+							if(localCity && localCity.length != 0) {
+								console.log('游客订制的展现城市 ' + JSON.stringify(localCity))
+								eduArray = eduArray.concat(localCity)
+							}
+						}
+
 
 						//						mui.toast(data.RspTxt);
 					}
@@ -818,15 +873,9 @@
 							}
 
 							str = str + '</div>';
-							var str_0 = "document.getElementById('title').innerText = '" + cities[i].aname + "';";
-							var str_1 = "var showSlider = document.getElementById('showSlider');";
-							var str_2 = "if(showSlider) {showSlider.innerHTML = '" + str + "';} else {";
-							var str_3 = "var element = document.createElement('div');element.id = 'showSlider';element.className = 'mui-slider';";
-							var str_4 = "element.style.height = '45px';element.style.top = '" + (localStorage.getItem('StatusHeightNo') * 1 + 10) + "px';";
-							var str_5 = "element.innerHTML = '" + str + "';document.querySelector('header').appendChild(element);}";
-							var evalJS = str_0 + str_1 + str_2 + str_3 + str_4 + str_5;
-							//console.log("evalJS " + evalJS);
-							index.evalJS(evalJS);
+							document.getElementById('title').innerText = cities[i].aname;
+							document.getElementById('showSlider').innerHTML = str;
+
 						}
 					}
 				}
@@ -898,7 +947,7 @@
 						console.log("重组后的数据：" + JSON.stringify(zonepArray));
 						setData(zonepArray, cityCode, tempLength);
 					} else {
-						mui.fire(plus.webview.getLaunchWebview(), 'closeWaiting');
+						mui.fire(plus.webview.getWebviewById("index.html"), 'closeWaiting');
 					}
 				})
 			}
@@ -967,7 +1016,7 @@
 					}
 				}
 				dynamiclistitem.questionContent();
-				mui.fire(plus.webview.getLaunchWebview(), 'closeWaiting');
+				mui.fire(plus.webview.getWebviewById("index.html"), 'closeWaiting');
 			}
 			//加载数据
 			function addData(index, cityCode) {

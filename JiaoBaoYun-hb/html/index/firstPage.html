@@ -67,12 +67,12 @@
 				events.defaultLogin(function(data) {
 					console.log("自动登录获取的值1111：" + JSON.stringify(data));
 					if(data.value == 1) {
-						events.openNewWindowWithData('index.html', '0');
+						events.openNewWindow('index.html');
 					} else if(data.value == -1) { //登录失败,用游客登录
 						defalutPerson();
 						events.defaultLogin(function(data) {
 							if(data.value == 1) {
-								events.openNewWindowWithData('index.html', '0');
+								events.openNewWindow('index.html');
 							} else if(data.value == -1) { //登录失败
 								
 							}

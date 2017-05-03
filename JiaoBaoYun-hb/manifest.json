@@ -847,7 +847,8 @@
 					"image/quan/aboutme.png",
 					"image/quan/Scan.png",
 					"js/qiuzhi/delContent_pop.js",
-					null
+					null,
+					"js/main/slide_navigation.js"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -870,7 +871,8 @@
 					"html/quan/aboutme.html",
 					"html/quan/pub-dynamic.html",
 					"html/mine/qun_manage_a.html",
-					"html/index/mine.html"
+					"html/index/mine.html",
+					"html/cloud/order-member.html"
 				],
 				"priority": 0
 			},
@@ -2787,11 +2789,13 @@
 					"css/iconfont/iconfont.css",
 					"fonts/iconfont.ttf",
 					"js/libs/crypto-js/crypto-js.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [
 					"html/qiuzhi/expert-detail.html",
-					"html/qiuzhi/qiuzhi-questionSearch.html"
+					"html/qiuzhi/qiuzhi-questionSearch.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},
@@ -3590,7 +3594,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"/image/utils/default_load_2_1.gif",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"html/utils/customizeCity.html",

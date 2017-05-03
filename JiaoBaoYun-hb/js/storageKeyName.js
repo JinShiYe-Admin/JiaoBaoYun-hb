@@ -69,8 +69,10 @@ var storageKeyName = (function(mod) {
 	mod.PERSONALINFO = 'personalInfo1111'; //个人信息，登录成功后返回值
 	mod.SHAKEHAND = 'ShakeHand'; //公钥，登录时，返回的握手信息，
 	mod.AUTOLOGIN = 'autoLogin'; //登录信息
-	mod.SEHISTORY = 'seHistory'; //科教历史记录
 	mod.DOCUMENTSPATH = 'DOCUMENTSPATH'; //记录document的地址
+	mod.SEHISTORY = 'seHistory'; //科教历史记录
+	mod.SECITY='seCity';//科教订制的城市
+	mod.SHOWCITY='showCity';//展现订制的城市
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url
 	mod.MAINHOMEWORKURLSTUDENT = mod.MAINHOMEWORKURL + 'StudentService.svc/'; //学生作业url

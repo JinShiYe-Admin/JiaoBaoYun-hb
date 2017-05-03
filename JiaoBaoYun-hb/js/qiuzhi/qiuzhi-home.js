@@ -1,7 +1,7 @@
 /**
  * 求知主界面逻辑
  */
-events.initSubPage('qiuzhi-sub.html');
+events.initSubPage('qiuzhi-sub.html', "", 40);
 var allChannels; //所有话题
 var channelInfo; //当前话题
 var subPageReady = false; //子页面是否已触发plusReady事件
@@ -25,6 +25,7 @@ mui.plusReady(function() {
 	});
 	//当前页面加载自定义方法的监听
 	window.addEventListener('infoChanged', function() {
+		document.querySelector(".img-icon>img").src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2)
 		mui('#slider_sw').scroll().scrollTo(0, 0, 0);
 		requestAllChannels(setChannels);
 	})
@@ -94,6 +95,7 @@ var setChannels = function(subjectArr) {
 	//	document.body.querySelector('.main-navigation').style.width = document.body.querySelector('.more-navigation').offsetLeft + 'px';
 	mui('#slider').slider();
 	channelInfo = allChannels[0];
+	console.log("获取频道信息：" + JSON.stringify(channelInfo));
 	judgeWebReady();
 }
 /**

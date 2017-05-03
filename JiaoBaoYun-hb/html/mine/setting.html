@@ -212,7 +212,7 @@
 													//退出登录
 													events.logOff();
 													events.infoChanged();
-													mui.fire(plus.webview.getLaunchWebview(), 'quit');
+													mui.fire(plus.webview.getWebviewById("index.html"), 'quit');
 													mui.back();
 												}
 											});
