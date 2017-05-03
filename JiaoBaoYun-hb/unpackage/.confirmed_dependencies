@@ -211,7 +211,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"/image/utils/default_load_2_1.gif",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/utils/customizeCity.html",
@@ -784,7 +785,8 @@
 			"css/iconfont/iconfont.css",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-sub.html",

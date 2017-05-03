@@ -112,6 +112,8 @@ var addSubPages = function() {
 				titleColor: "#FFFFFF"
 			};
 			subpage_style.navigationbar.titleText = titles[i];
+		}else{
+			delete subpage_style.navigationbar
 		}
 		console.log("子页面样式：" + JSON.stringify(subpage_style));
 		var temp = {};
