@@ -80,7 +80,7 @@ var modifyTimeFormat = function(str) {
 //10.Token续订(之前有过相同登陆数据的才能续订成功)
 //修改本地存储中的值，返回值
 //window.myStorage.getItem(window.storageKeyName.PERSONALINFO).token = data.RspData;
-var renewToken = function() {
+var renewToken = function(tempFlag, url, encryData, commonData, flag, waitingDialog, callback) {
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 	//需要加密的数据
 	var enData = {};
@@ -97,6 +97,9 @@ var renewToken = function() {
 		if(data.RspCode == 0) {
 			personalUTID.token = data.RspData;
 			window.myStorage.setItem(window.storageKeyName.PERSONALINFO, personalUTID);
+			if (tempFlag == 1) {
+				postDataEncry(url, encryData, commonData, flag, waitingDialog, callback);
+			}
 		} else {
 			mui.toast(data.RspTxt);
 		}

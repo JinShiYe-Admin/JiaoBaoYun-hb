@@ -19,7 +19,7 @@ function postData(url, data, callback, waitingDialog) {
 			console.log('data.RspCode:' + data.RspCode + 'data.RspData:' + JSON.stringify(data.RspData));
 			if(data.RspCode == 6) {
 				waitingDialog.close();
-				renewToken();
+				renewToken(0, 'encryData', 'commonData', 'flag', 'waitingDialog', 'callback');
 			} else {
 				callback(data);
 			}
@@ -79,7 +79,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 					console.log('data.RspCode:' + data.RspCode + ',data.RspData:' + JSON.stringify(data.RspData)+','+url);
 					if(data.RspCode == 6) {
 						waitingDialog.close();
-						renewToken();
+						renewToken(1, url, {}, commonData, flag, waitingDialog, callback);
 					} else {
 						//如果是21号协议，21.通过用户ID或ID串获取用户资料，判断返回值中，人员有没有名称，没有的话，主动给添加一个‘新用户’，
 						if(urlArr[urlArr.length - 1] == 'PostUinf') {
