@@ -49,7 +49,7 @@
 						<a class="mui-navigate-right"><span class="iconfont icon-weixinzhifu" style="color: #1afa29;font-size:22px;padding-right: 5px;vertical-align: middle;"></span>微信支付</a>
 					</li>
 				</ul>
-				<button class="mui-btn mui-btn-primary" style="width: 90%;margin-left: 5%;margin-top: 20px;">确认支付</button>
+				<button class="mui-btn mui-btn-primary" style="width: 90%;margin-left: 5%;margin-top: 20px; background-color: #1DB8F1;border: 0;">确认支付</button>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -58,9 +58,9 @@
 			mui.plusReady(function() {
 				var tempModel = plus.webview.currentWebview().data;
 				console.log('tempModel=' + JSON.stringify(tempModel));
-				document.getElementById("memberType").innerText = tempModel.memberName;
+				document.getElementById("memberType").innerText = tempModel.memberName?"超级会员":"普通会员";
 				document.getElementById("memberTime").innerText = tempModel.memberTime;
-				document.getElementById("memberPay").innerText = '￥'+tempModel.memberPay;
+				document.getElementById("memberPay").innerText = tempModel.memberPay;
 			});
 		</script>
 	</body>
