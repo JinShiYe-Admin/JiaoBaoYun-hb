@@ -97,7 +97,7 @@ var addSubPages = function() {
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
-	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show_home_1.html', '../qiuzhi/qiuzhi_home.html'];
+	var subpages = ['../cloud/app_keeprecord.html', '../sciedu/sciedu_home.html', '../show/show_home_1.html', '../qiuzhi/qiuzhi_home.html'];
 	var titles = ['云盘', '科教', '展现', '求知'];
 	//设置子页面距离顶部的位置
 	var subpage_style = events.getWebStyle();
@@ -139,14 +139,17 @@ var setListener = function() {
 	//选项卡点击事件
 	mui('.mui-bar-tab').on('tap', 'a', function(e) {
 		var targetTab = this.getAttribute('href');
+		console.log("活动的页面：" + activeTab)
+		if(targetTab == activeTab) {
+			if(activeTab == '../cloud/cloud_home.html') {
+				events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {})
+			}
+			return;
+		}
+
 		if(activeTab == '../cloud/cloud_home.html') {
 			events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {})
 		}
-		console.log("活动的页面：" + activeTab)
-		if(targetTab == activeTab) {
-			return;
-		}
-		
 		//更改按钮
 		//		changRightIcons(targetTab);
 		var targetSplit = targetTab.split('/');
@@ -372,7 +375,7 @@ var setConditionbyRole = function(role) {
 	if(role) { //正常用户
 		cloudIcon.style.display = "table-cell";
 		cloudIcon.className = "mui-tab-item mui-active";
-		activeTab = "../cloud/cloud_home.html";
+		activeTab = "../cloud/app_keeprecord.html";
 	} else { //游客
 		cloudIcon.style.display = "none";
 		sceIcon.className = "mui-tab-item mui-active";
