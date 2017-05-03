@@ -708,7 +708,7 @@ var setQuestion = function(datasource) {
 	document.getElementById('question-content').innerHTML = "";
 	console.log("放置数据？？？？？？？？？")
 	var p = document.createElement('p');
-	p.innerHTML = datasource.AnswerContent;
+	p.innerHTML = datasource.AnswerContent.replace(/\n/g,"<br/>");
 	questionContainer.appendChild(p);
 	//	p.querySelectorAll("img").for
 	jQuery("#question-content img").each(function(index, ele) {

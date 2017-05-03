@@ -838,7 +838,8 @@
 			"css/quan/custom-textarea.css",
 			"js/mui.zoom.js",
 			"js/mui.previewimage.js",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"js/utils/recordvideoutil.js"
 		],
 		"refer": []
 	},

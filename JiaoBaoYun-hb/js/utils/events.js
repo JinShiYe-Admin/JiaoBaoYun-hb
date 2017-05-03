@@ -1187,8 +1187,8 @@ var events = (function(mod) {
 	/**
 	 * 
 	 */
-	mod.getUtid=function(){
-		var personInfo=myStorage.getItem(storageKeyName.PERSONALINFO);
+	mod.getUtid = function() {
+		var personInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
 		return parseInt(personInfo.utid);
 	}
 	/**
@@ -1196,16 +1196,18 @@ var events = (function(mod) {
 	 * @param {Object} key 本地存储的key值
 	 * @param {Object} value 要判断的值 为基本数据类型
 	 */
-	mod.isExistInStorageArray=function(key,value){
-		var sArray=myStorage.getItem(key);
-		if(sArray&&sArray.length>0){
-			if(sArray.indexOf(value)>=0){
-				return [sArray,sArray.indexOf(value)]
-			}else{
-				return [sArray,-1]
+	mod.isExistInStorageArray = function(key, value) {
+		var sArray = myStorage.getItem(key);
+		if(sArray && sArray.length > 0) {
+			if(sArray.indexOf(value) >= 0) {
+				return [sArray, sArray.indexOf(value)]
+			} else {
+				return [sArray, -1]
 			}
-		}else{
-			return [[],-1]
+		} else {
+			return [
+				[], -1
+			]
 		}
 	}
 	/**
@@ -1213,17 +1215,24 @@ var events = (function(mod) {
 	 * @param {Object} key 本地存储的key值
 	 * @param {Object} value 要存储或删除的值 为基本数据类型
 	 */
-	mod.toggleStorageArray=function(key,value){
-		var arrayData=mod.isExistInStorageArray(key,value);
-		if(arrayData[1]>=0){
-			arrayData[0].splice(arrayData[1],1);
-			myStorage.setItem(key,arrayData[0])
+	mod.toggleStorageArray = function(key, value) {
+		var arrayData = mod.isExistInStorageArray(key, value);
+		if(arrayData[1] >= 0) {
+			arrayData[0].splice(arrayData[1], 1);
+			myStorage.setItem(key, arrayData[0])
 			return true;
-		}else{
+		} else {
 			arrayData[0].push(value);
-			myStorage.setItem(key,arrayData[0])
+			myStorage.setItem(key, arrayData[0])
 			return false;
 		}
+	}
+	/**
+	 * 
+	 * @param {Object} string
+	 */
+	mod.trim = function(string) {
+		return string.replace(/^\s+|\s+$/g, '');
 	}
 	return mod;
 
