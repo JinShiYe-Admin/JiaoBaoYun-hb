@@ -394,6 +394,10 @@ var setActivePage = function() {
 	var splitActiveTabs = activeTab.split("/");
 	var activeId = splitActiveTabs[splitActiveTabs.length - 1];
 	console.log("要显示的界面：" + activeTab);
-	plus.webview.show(activeId, "fade-in", 300);
+	if(mui.os.ios){
+		plus.webview.show(activeId);
+	}else{
+		plus.webview.show(activeId, "fade-in", 300);
+	}
 	//	changRightIcons(activeTab);
 }
