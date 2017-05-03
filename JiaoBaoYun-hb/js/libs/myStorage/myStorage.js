@@ -181,4 +181,4 @@
 		cb && cb();
 	};
 	win.myStorage = myStorage;
-}(window, mui));
+})(window, mui);

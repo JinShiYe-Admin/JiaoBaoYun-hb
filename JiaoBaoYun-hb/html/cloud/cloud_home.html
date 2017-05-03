@@ -1566,7 +1566,7 @@ function getHomeworkAlert(NoReadCnt) {
 			var setIcons = function() {
 				var navigationbar = plus.webview.currentWebview().getNavigationbar();
 				//				var width=navigationbar.;
-				//				console.log("获取的宽度："+width);
+				console.log("****************获取的宽度：");
 				var leftDrawStyle = {
 					id: "personalImg",
 					tag: "img",
@@ -1577,7 +1577,7 @@ function getHomeworkAlert(NoReadCnt) {
 						height: "35px"
 					},
 					src: updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2)
-				}
+				};
 				var rightDrawStyles = [{
 					id: "orderMember",
 					tag: "img",
