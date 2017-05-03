@@ -418,32 +418,14 @@
 				var comData = {
 					vvl: '0' //订制频道,0科教频道,1展示频道,其他待定
 				};
+				var eduArray = [];
 				//44.获取个人的订制城市
-				postDataPro_PostUTcity(comData, waitingDia, function(data) {
-					var eduArray = [];
-					console.log('44 获取个人的订制城市 PostUTcity ' + JSON.stringify(data));
-					if(data.RspCode == 0) {
-						if(data.RspData[0].citys) {
-							//先通过‘|’将返回值分为数组
-							eduArray = data.RspData[0].citys.split('|');
-							//遍历此数组
-							for(var m in eduArray) {
-								var tempStr = eduArray[m];
-								//初始化model
-								var model_area = {
-									acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
-									aname: '', //节点名称
-								};
-								console.log('tempStr:' + tempStr);
-								//将分成的每个值，再通过‘_’拆分为model
-								var tempArea = tempStr.split('_');
-								model_area.acode = tempArea[0];
-								model_area.aname = tempArea[1];
-								//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
-								eduArray.splice(m, 1, model_area);
-							}
-							console.log('修改后的最终值为:' + JSON.stringify(eduArray));
-						}
+				//游客身份
+				if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
+					var localCity = window.myStorage.getItem(window.storageKeyName.SECITY);
+					if(localCity && localCity.length != 0) {
+						console.log('游客订制的科教城市 ' + JSON.stringify(localCity))
+						eduArray = localCity;
 					}
 					if(eduArray.length == 0) {
 						var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
@@ -452,19 +434,50 @@
 							acode: uarea.acode ? uarea.acode : 0,
 							aname: uarea.aname ? uarea.aname : "全国"
 						});
-
-						//游客身份
-						if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
-							var localCity = window.myStorage.getItem(window.storageKeyName.SECITY);
-							if(localCity && localCity.length != 0) {
-								console.log('游客订制的科教城市 ' + JSON.stringify(localCity))
-								eduArray = localCity;
-							}
-						}
 					}
 					cities = eduArray.slice(0); //拷贝数组
 					callBack(cities, waitingDia);
-				});
+				} else {
+					postDataPro_PostUTcity(comData, waitingDia, function(data) {
+						console.log('44 获取个人的订制城市 PostUTcity ' + JSON.stringify(data));
+						if(data.RspCode == 0) {
+							if(data.RspData[0].citys) {
+								//先通过‘|’将返回值分为数组
+								eduArray = data.RspData[0].citys.split('|');
+								//遍历此数组
+								for(var m in eduArray) {
+									var tempStr = eduArray[m];
+									//初始化model
+									var model_area = {
+										acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
+										aname: '', //节点名称
+									};
+									console.log('tempStr:' + tempStr);
+									//将分成的每个值，再通过‘_’拆分为model
+									var tempArea = tempStr.split('_');
+									model_area.acode = tempArea[0];
+									model_area.aname = tempArea[1];
+									//将对应的这个数组的str和model对换，将数组中的值，替换为model数组
+									eduArray.splice(m, 1, model_area);
+								}
+								console.log('修改后的最终值为:' + JSON.stringify(eduArray));
+							}
+						}
+
+						if(eduArray.length == 0) {
+							var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
+							console.log('个人账号地区的城市 ' + JSON.stringify(uarea));
+							eduArray.push({
+								acode: uarea.acode ? uarea.acode : 0,
+								aname: uarea.aname ? uarea.aname : "全国"
+							});
+						}
+
+						cities = eduArray.slice(0); //拷贝数组
+						callBack(cities, waitingDia);
+					});
+				}
+
 			}
 
 			/**
