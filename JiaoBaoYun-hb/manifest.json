@@ -1938,8 +1938,7 @@
 					null,
 					"html/show/show_home_1.html",
 					"html/qiuzhi/qiuzhi_home.html",
-					"js/utils/app-update.js",
-					"html/cloud/app_keeprecord.html"
+					"js/utils/app-update.js"
 				],
 				"refer": [
 					"html/mine.html",
@@ -4400,8 +4399,7 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"image/ios_1242-2208.png",
-					"js/utils/app-update.js"
+					"image/ios_1242-2208.png"
 				],
 				"refer": [
 					"html/index/index.html"

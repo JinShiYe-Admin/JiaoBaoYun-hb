@@ -62,8 +62,7 @@
 			"js/utils/Statusbar.js",
 			"html/sciedu/sciedu_home.html",
 			"html/qiuzhi/qiuzhi_home.html",
-			"js/utils/app-update.js",
-			"html/cloud/app_keeprecord.html"
+			"js/utils/app-update.js"
 		],
 		"refer": [
 			"html/sciedu/sciedu_home.html",
@@ -76,8 +75,7 @@
 			"html/qiuzhi/qiuzhi-questionSearch.html",
 			"html/cloud/cloud_home.html",
 			"html/register/login.html",
-			"html/cloud/order-member.html",
-			"html/cloud/app_keeprecord.html"
+			"html/cloud/order-member.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-answerDetailSub.html": {
@@ -2609,8 +2607,7 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"image/ios_1242-2208.png",
-			"js/utils/app-update.js"
+			"image/ios_1242-2208.png"
 		],
 		"refer": [
 			"html/index/index.html"
