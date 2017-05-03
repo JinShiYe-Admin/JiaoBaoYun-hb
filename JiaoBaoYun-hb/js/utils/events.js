@@ -326,8 +326,8 @@ var events = (function(mod) {
 		events.fireToPageNone('aboutme_sub.html', 'infoChanged');
 	}
 	mod.shortForString = function(str, len) {
-		if(!str){
-			str="";
+		if(!str) {
+			str = "";
 			console.log("数据错误，请查找！");
 		}
 		if(str.length > len + 2) {
@@ -777,9 +777,9 @@ var events = (function(mod) {
 			targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(), {
 				data: data
 			});
-//		}else{
-//			mod.closeWaiting();
-//			targetWebview.reload();
+			//		}else{
+			//			mod.closeWaiting();
+			//			targetWebview.reload();
 		}
 		targetWebview.onloaded = function() {
 			targetWebview.show("slide-in-right", 250);
@@ -1182,13 +1182,48 @@ var events = (function(mod) {
 		}, wd, function(data) {
 			wd.close();
 			callback(data);
-			//			console.log('用户在群的身份 ' + JSON.stringify(data));
-			//			if(data.RspCode == '0000') {
-			//				if(callback) {
-			//					
-			//				}
-			//			}
 		})
+	}
+	/**
+	 * 
+	 */
+	mod.getUtid=function(){
+		var personInfo=myStorage.getItem(storageKeyName.PERSONALINFO);
+		return parseInt(personInfo.utid);
+	}
+	/**
+	 * 判断是在本地有存储
+	 * @param {Object} key 本地存储的key值
+	 * @param {Object} value 要判断的值 为基本数据类型
+	 */
+	mod.isExistInStorageArray=function(key,value){
+		var sArray=myStorage.getItem(key);
+		if(sArray&&sArray.length>0){
+			if(sArray.indexOf(value)>=0){
+				return [sArray,sArray.indexOf(value)]
+			}else{
+				return [sArray,-1]
+			}
+		}else{
+			return [[],-1]
+		}
+	}
+	/**
+	 * 存储或删除值
+	 * @param {Object} key 本地存储的key值
+	 * @param {Object} value 要存储或删除的值 为基本数据类型
+	 */
+	mod.toggleStorageArray=function(key,value){
+		var arrayData=mod.isExistInStorageArray(key,value);
+		if(arrayData[1]>=0){
+			arrayData[0].splice(arrayData[1],1);
+			myStorage.setItem(key,arrayData[0])
+			return true;
+		}else{
+			arrayData[0].push(value);
+			myStorage.setItem(key,arrayData[0])
+			return false;
+		}
 	}
 	return mod;
 

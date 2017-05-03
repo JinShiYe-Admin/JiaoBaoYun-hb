@@ -55,7 +55,7 @@ mui.plusReady(function() {
 		totalPageCount = 1;
 		document.getElementById('question-content').innerHTML = "";
 		console.log("获取的回答详情：" + JSON.stringify(answerInfo));
-		console.log("获取的数据："+JSON.stringify(e.detail.data));
+		console.log("获取的数据：" + JSON.stringify(e.detail.data));
 		//如果跟上次进入的是同一个回答 则不更改顺序
 		if(!(answerInfo && e.detail.data.AnswerId == answerInfo.AnswerId)) {
 			type = 2; //倒序
@@ -95,7 +95,7 @@ mui.plusReady(function() {
 	window.addEventListener("showActionSheet", function() {
 		var btnArray;
 		var cbArray;
-		if(answerData.CommentNum+answerData.IsLikeNum) {
+		if(answerData.CommentNum + answerData.IsLikeNum) {
 			btnArray = [{
 				title: "修改答案"
 			}, {
@@ -379,9 +379,9 @@ var insertCommentData = function(commentData) {
 	}
 	console.log("改变后的数据：" + JSON.stringify(answerData))
 }
-var hideBottom=function(){
-	document.getElementById('list-container').style.display="none";
-	document.querySelector(".answer-noComment").style.display="none";
+var hideBottom = function() {
+	document.getElementById('list-container').style.display = "none";
+	document.querySelector(".answer-noComment").style.display = "none";
 }
 /**
  * 2倒序 1顺序
@@ -420,7 +420,7 @@ function requestAnswerDetail(answerId, pageIndex, pageSize, callback) {
 		} else {
 			mui.toast(data.RspTxt);
 			events.closeWaiting();
-			if(data.RspCode==1017){
+			if(data.RspCode == 1017) {
 				mui.back();
 			}
 		}
@@ -524,34 +524,46 @@ var rechargeInfos = function(datasource, infos, pageIndex) {
 
 //22.获取是否已对某个用户关注
 function getUserFocus(userId) {
-	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
-	//需要加密的数据
-	var comData = {
-		userId: personalUTID, //用户ID
-		focusUserId: userId //关注用户ID
-	};
-	// 等待的对话框
-	var wd = events.showWaiting();
-	//22.获取是否已对某个用户关注
-	postDataQZPro_getUserFocusByUser(comData, wd, function(data) {
-		wd.close();
-		console.log('22.获取是否已对某个用户关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-		if(data.RspCode == 0) {
-			var btn_focus = document.getElementById('btn-focus')
-			//修改界面显示
-			if(data.RspData.Result) {
-				btn_focus.innerText = '已关注';
-				btn_focus.isLike = 1;
-				btn_focus.className = "mui-btn mui-pull-right btn-attentioned";
+	var btn_focus = document.getElementById('btn-focus')
+	if(events.getUtid()) {
+		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+		//需要加密的数据
+		var comData = {
+			userId: personalUTID, //用户ID
+			focusUserId: userId //关注用户ID
+		};
+		// 等待的对话框
+		var wd = events.showWaiting();
+		//22.获取是否已对某个用户关注
+		postDataQZPro_getUserFocusByUser(comData, wd, function(data) {
+			wd.close();
+			console.log('22.获取是否已对某个用户关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			if(data.RspCode == 0) {
+				//修改界面显示
+				if(data.RspData.Result) {
+					btn_focus.innerText = '已关注';
+					btn_focus.isLike = 1;
+					btn_focus.className = "mui-btn mui-pull-right btn-attentioned";
+				} else {
+					btn_focus.innerText = '关注';
+					btn_focus.isLike = 0;
+					btn_focus.className = "mui-btn mui-pull-right btn-attention"
+				}
 			} else {
-				btn_focus.innerText = '关注';
-				btn_focus.isLike = 0;
-				btn_focus.className = "mui-btn mui-pull-right btn-attention"
+				mui.toast(data.RspTxt);
 			}
-		} else {
-			mui.toast(data.RspTxt);
+		});
+	}else{
+		var arrayData=events.isExistInStorageArray(storageKeyName.FOCUSEPERSEN,parseInt(userId));
+		if(arrayData[1]>=0){
+			btn_focus.innerText = '已关注';
+			btn_focus.className = "mui-btn mui-pull-right btn-attentioned";
+		}else{
+			btn_focus.innerText = '关注';
+			btn_focus.className = "mui-btn mui-pull-right btn-attention"
 		}
-	});
+	}
+
 };
 
 //23.设置对某个用户的关注
@@ -600,9 +612,9 @@ function refreshUI(datasource) {
 		createList(ul, datasource.Data);
 		setCommentContainer();
 	} else {
-		setTimeout(function(){
+		setTimeout(function() {
 			setCommentContainer(1)
-		},100)
+		}, 100)
 	}
 	events.closeWaiting();
 }
@@ -812,7 +824,6 @@ var setName = function(cell) {
 	}
 	return cell.UserName;
 }
-
 /**
  * 设置监听
  */
@@ -823,9 +834,9 @@ var setListeners = function() {
 	//评论的点赞按钮点击事件
 	mui(".mui-table-view").on('tap', '.support-container', function() {
 		//判断是否是游客身份登录
-		if(events.judgeLoginMode()) {
-			return;
-		}
+		//		if(events.judgeLoginMode()) {
+		//			return;
+		//		}
 		setIsLikeComment(this.querySelector('.icon-support'));
 	})
 	//回答的点赞按钮的点赞事件
@@ -838,11 +849,20 @@ var setListeners = function() {
 	})
 	//按钮点击事件关注事件
 	events.addTap('btn-focus', function() {
-		//判断是否是游客身份登录
-		if(events.judgeLoginMode()) {
-			return;
+		var item=this;
+		if(events.getUtid()) {
+			setUserFocus(answerData.AnswerMan, this)
+		} else {
+			var isExist = events.toggleStorageArray(storageKeyName.FOCUSEPERSEN, parseInt(answerData.AnswerMan));
+			if(isExist) {
+				item.innerText = '关注';
+				item.className = "mui-btn mui-pull-right btn-attention"
+			} else {
+				item.innerText = '已关注';
+				item.className = "mui-btn mui-pull-right btn-attentioned"
+			}
 		}
-		setUserFocus(answerData.AnswerMan, this)
+
 	})
 	events.addTap('answer-comment', function() {
 		//判断是否是游客身份登录

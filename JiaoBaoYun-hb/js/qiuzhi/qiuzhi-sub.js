@@ -331,10 +331,22 @@ var isAnonymity = function(cell) {
 	return cell.AnswerManName;
 }
 var setFocusCondition = function(cell) {
-	if(cell.IsFocused) {
-		return '<span class="focus-status">已关注<span>';
+	if(events.getUtid()) {
+		if(cell.IsFocused) {
+			return '<span class="focus-status">已关注<span>';
+		}
+		return '<span class="focus-status">关注问题<span>';
+	} else {
+		var localFocusArray = myStorage.getItem(storageKeyName.FOCUSEQUESTION);
+		if(localFocusArray && localFocusArray.length > 0) {
+			if(localFocusArray.indexOf(parseInt(cell.TabId))) {
+				return '<span class="focus-status">已关注<span>';
+			}
+			return '<span class="focus-status">关注问题<span>';
+		}
+		return '<span class="focus-status">关注问题<span>';
 	}
-	return '<span class="focus-status">关注问题<span>';
+
 }
 var getImgs = function(cell) {
 	if(cell.AnswerCutImg && cell.AnswerCutImg != "") {
@@ -413,7 +425,7 @@ var setListener = function() {
 	//标题点击事件
 	mui('.mui-table-view').on('tap', '.ask-title', function() {
 		var item = this;
-		item.disabled=true;
+		item.disabled = true;
 		requireQuestionInfo(item.getAttribute('askId'), function(questionInfo) {
 			events.singleWebviewInPeriod(item, "qiuzhi-question.html", {
 				askID: item.getAttribute('askId'), //问题id
@@ -449,12 +461,23 @@ var setListener = function() {
 	//求知关注
 	mui(".mui-table-view").on('tap', '.focus-status', function() {
 		//判断是否是游客身份登录
-		if(events.judgeLoginMode()) {
-			return;
-		}
+		//		if(events.judgeLoginMode()) {
+		//			return;
+		//		} 
 		var item = this;
 		requireQuestionInfo(item.questionInfo.TabId, function(data) {
-			setQuestionFocus(item);
+			console.log("获取的个人id"+events.getUtid());
+			if(events.getUtid()) {
+				setQuestionFocus(item);
+			} else {
+				var isExist=events.toggleStorageArray(storageKeyName.FOCUSEQUESTION, parseInt(item.questionInfo.TabId));
+				console.log("获取存储在本地的数组："+myStorage.getItem(storageKeyName.FOCUSEQUESTION));
+				if(isExist){
+					item.innerText = "关注问题";
+				}else{
+					item.innerText = "已关注";
+				}
+			}
 		});
 	})
 }

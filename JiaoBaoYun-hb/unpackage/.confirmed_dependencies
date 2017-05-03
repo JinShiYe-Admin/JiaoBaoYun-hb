@@ -2607,7 +2607,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"image/ios_1242-2208.png"
+			"image/ios_1242-2208.png",
+			"js/utils/app-update.js"
 		],
 		"refer": [
 			"html/index/index.html"
