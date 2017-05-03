@@ -142,10 +142,12 @@ var slideNavigation = (function(mod) {
 	 * @param {Object} interval 延迟加载时间间隔
 	 */
 	var preloadSlideNag = function(tarpage, interval) {
+		var tarIds=tarpage.split("/");
+		var tarId=tarIds[tarIds.length-1];
 		//延迟加载
 		setTimeout(function() {
 			menu = mui.preload({
-				id: tarpage,
+				id: tarId,
 				url: tarpage,
 				styles: {
 					left: 0,

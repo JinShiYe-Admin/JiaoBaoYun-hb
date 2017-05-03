@@ -147,6 +147,9 @@
 				border-color: #E4E4E4;
 				margin-top: 5px;
 			}
+			.mui-bar-nav.mui-bar .mui-icon{
+				padding-top: 7px;
+			}
 		</style>
 	</head>
 
@@ -351,6 +354,7 @@
 			mui.plusReady(function() {
 				slideNavigation.add('../index/mine.html', 200);
 				//				setIcons();
+				document.querySelector(".img-icon>img").src=updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg,2);
 				changeData();
 				addcloudapps_0(); //应用
 				document.querySelector(".img-icon").addEventListener("tap", function() {

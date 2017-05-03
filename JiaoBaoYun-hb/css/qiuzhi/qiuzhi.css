@@ -46,6 +46,11 @@
 	border-top: none;
 	border-bottom: none;
 }
-.mui-fullscreen-header{
+
+.mui-fullscreen-header {
 	top: 100px;
+}
+
+.mui-bar-nav.mui-bar .mui-icon {
+	padding-top: 7px;
 }

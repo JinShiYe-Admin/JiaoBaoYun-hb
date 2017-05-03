@@ -9,6 +9,8 @@ mui.plusReady(function() {
 	//初始化为空
 	document.getElementById('subjects-container').innerHTML = '';
 	document.getElementById("sliderGroup").innerHTML = '';
+	console.log("个人信息："+JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)))
+	document.querySelector(".img-icon>img").src=updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg,2);
 	//获取当前页面
 	var curPage = plus.webview.currentWebview();
 	//当前页面加载显示监听

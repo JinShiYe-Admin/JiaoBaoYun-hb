@@ -319,7 +319,7 @@ var events = (function(mod) {
 		return r;
 	}
 	mod.infoChanged = function() {
-		events.fireToPageNone('mine.html', 'infoChanged');
+		events.fireToPageNone('../../index/mine.html', 'infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		mui.fire(plus.webview.getWebviewById("index.html"), 'infoChanged');
 		events.fireToPageNone('qiuzhi_home.html', 'infoChanged');
