@@ -337,14 +337,12 @@ var setFocusCondition = function(cell) {
 		}
 		return '<span class="focus-status">关注问题<span>';
 	} else {
-		var localFocusArray = myStorage.getItem(storageKeyName.FOCUSEQUESTION);
-		if(localFocusArray && localFocusArray.length > 0) {
-			if(localFocusArray.indexOf(parseInt(cell.TabId))) {
-				return '<span class="focus-status">已关注<span>';
-			}
+		var arrayData=events.isExistInStorageArray(storageKeyName.FOCUSEQUESTION,cell.TabId)
+		if(arrayData[1]>=0){
+			return '<span class="focus-status">已关注<span>';
+		}else{
 			return '<span class="focus-status">关注问题<span>';
 		}
-		return '<span class="focus-status">关注问题<span>';
 	}
 
 }
