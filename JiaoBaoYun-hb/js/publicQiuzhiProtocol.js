@@ -99,6 +99,7 @@ var postDataQZPro_getAskById = function(commonData, wd, callback) {
 //		var comData = {
 //			askTitle: '',//问题标题,200
 //			askNote:'',//问题说明,2000
+//			encType:'',//附件类型,1图片,2视频,3仅文字,4音频,5图文混排
 //			encAddr:'',//附件地址,300,多个的情况例如：1.jpg|2.jpg
 //			thumbnail: '',//缩略图,3000,
 //			cutImg: '',//剪切图,3000,
@@ -153,6 +154,7 @@ var postDataQZPro_getAnswerById = function(commonData, wd, callback) {
 //		var comData = {
 //			askId: '',//问题ID
 //			answerContent: '',//回答内容,4000
+//			encType:'',//附件类型,1图片,2视频,3仅文字,4音频,5图文混排
 //			encAddr: '',//附件地址,300,多个的情况例如：1.jpg|2.jpg
 //			thumbnail:'',//缩略图,3000
 //			cutImg:'',//剪切图,3000

@@ -373,6 +373,8 @@ var publicModel = (function($, mod) {
 		AskSFlag:'',//问题来源,1 为外部导入数据
 		AskTitle:'',//问题标题
 		AskNote:'',//问题说明
+		AskEncType:'',//问题附件类型
+		AskEncTypeStr:'',//问题附件类型说明
 		AskEncAddr:'',//问题附件地址,多个的情况例如：1.jpg|2.jpg
 		AskThumbnail:'',//问题缩略图
 		AskCutImg:'',//问题剪切图
@@ -421,6 +423,8 @@ var publicModel = (function($, mod) {
 		AskChannelId:'',//问题话题ID
 		AskChannel:'',//	问题话题
 		AnswerContent:'',//	回答内容
+		AnswerEncType:'',//回答附件类型
+		AnswerEncTypeStr	:'',//回答附件类型说明
 		AnswerEncAddr:'',//回答附件地址,多个的情况例如：1.jpg|2.jpg
 		AnswerThumbnail:'',//回答缩略图
 		AnswerCutImg:'',//回答剪切图
