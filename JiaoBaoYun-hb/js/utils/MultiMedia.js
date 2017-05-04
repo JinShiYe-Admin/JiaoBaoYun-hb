@@ -136,7 +136,16 @@ var MultiMedia = (function($, mod) {
 		if(this.options.Audio) {
 			document.getElementById('MultiMedia_Audio_Header').addEventListener('tap', function() {
 				document.activeElement.blur();
+//				var main = plus.webview.currentWebview();
+//				events.openNewWindowWithData('../utils/record_audio.html', {
+//					webid: main.id,
+//					winid: 'MultiMediaRecordAudio'
+//				});
 				mui.toast('录制语音功能暂未开放');
+			});
+
+			window.addEventListener('MultiMediaRecordAudio', function(e) {
+				console.log('MultiMediaRecordAudio ' + e.detail.data);
 			});
 		}
 
