@@ -129,10 +129,6 @@ var dynamiclistitem = (function($, mod) {
 
 		})
 		mui('.mui-table-view').on('tap', '.icon-xiajiantou', function() {
-			//判断是否是游客身份登录
-			if(events.judgeLoginMode()) {
-				return;
-			}
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
 
 			var pageID = sliderId.replace('top_', '')
