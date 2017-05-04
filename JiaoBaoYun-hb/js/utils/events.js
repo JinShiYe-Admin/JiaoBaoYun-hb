@@ -1214,16 +1214,21 @@ var events = (function(mod) {
 	 * 存储或删除值
 	 * @param {Object} key 本地存储的key值
 	 * @param {Object} value 要存储或删除的值 为基本数据类型
+	 * @param {Boolean} isDel 是否是删除
 	 */
-	mod.toggleStorageArray = function(key, value) {
+	mod.toggleStorageArray = function(key, value, isDel) {
 		var arrayData = mod.isExistInStorageArray(key, value);
-		if(arrayData[1] >= 0) {
-			arrayData[0].splice(arrayData[1], 1);
-			myStorage.setItem(key, arrayData[0])
+		if(isDel) {
+			if(arrayData[1] >= 0) { //有
+				arrayData[0].splice(arrayData[1], 1);
+				myStorage.setItem(key, arrayData[0]);
+			}
 			return true;
 		} else {
-			arrayData[0].push(value);
-			myStorage.setItem(key, arrayData[0])
+			if(arrayData < 0) {
+				arrayData[0].push(value);
+				myStorage.setItem(key, arrayData[0]);
+			}
 			return false;
 		}
 	}

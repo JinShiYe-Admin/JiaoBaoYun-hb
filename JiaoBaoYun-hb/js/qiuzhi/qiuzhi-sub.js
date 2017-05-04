@@ -468,9 +468,10 @@ var setListener = function() {
 			if(events.getUtid()) {
 				setQuestionFocus(item);
 			} else {
-				var isExist=events.toggleStorageArray(storageKeyName.FOCUSEQUESTION, parseInt(item.questionInfo.TabId));
+				var isDel=item.innerText == "关注问题"?0:1;
+				events.toggleStorageArray(storageKeyName.FOCUSEQUESTION, parseInt(item.questionInfo.TabId),isDel);
 				console.log("获取存储在本地的数组："+myStorage.getItem(storageKeyName.FOCUSEQUESTION));
-				if(isExist){
+				if(isDel){
 					item.innerText = "关注问题";
 				}else{
 					item.innerText = "已关注";
