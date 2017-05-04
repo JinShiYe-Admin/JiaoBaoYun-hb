@@ -12,7 +12,7 @@ var RecordVideo = (function(mod) {
 		//设置录像文件的路径
 		var myDate = new Date();
 		//路径
-		var outPutPath = plus.io.convertLocalFileSystemURL('_documents/' + myDate.getTime() + '.mp4');
+		var outPutPath = plus.io.convertLocalFileSystemURL('_documents/' + myDate.getTime() + parseInt(Math.random() * 1000) + '.mp4');
 		//时间
 		var time = 10; //默认10s
 		var options = mui.extend(true, {
