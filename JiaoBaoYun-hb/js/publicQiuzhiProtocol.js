@@ -122,6 +122,9 @@ var postDataQZPro_addAsk = function(commonData, wd, callback) {
 //			askId: '',//问题ID
 //			askTitle: '',//问题标题,200
 //			askNote:'',//问题说明,2000
+//			encType:'',//附件类型，1图片，2视频，3仅文字，4音频，5图文混排
+//			thumbnail:'',//缩略图，3000
+//			cutImg:'',//剪切图，3000
 //			encAddr:''//附件地址,300,多个的情况例如：1.jpg|2.jpg
 //		};
 //返回值：1为正确
@@ -174,6 +177,7 @@ var postDataQZPro_addAnswer = function(commonData, wd, callback) {
 //		var comData = {
 //			answerId: '',//回答ID
 //			answerContent:'',//回答内容,4000
+//			encType:'',//附件类型，1图片，2视频，3仅文字，4音频，5图文混排
 //			thumbnail:'',//缩略图，3000
 //			cutImg:'',//剪切图，3000
 //			encAddr:''//附件地址,300,多个的情况例如：1.jpg|2.jpg
@@ -596,16 +600,15 @@ var postDataQZPro_setAnswerOffById = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/setAnswerOffById', enData, commonData, 2, wd, callback);
 }
 
-//1.获取所有话题
+//39.获取问题列表
 //所需参数
 //		var comData = {
-//			pageIndex: '',//当前页数
-//			pageSize:''//每页记录数,传入0，获取总记录数
+//			askIds:''//问题ID列表，Array，	例如[1,2,3]
 //		};
 //返回值：model_Channel
-var postDataQZPro_getAllChannels = function(commonData, wd, callback) {
+var postDataQZPro_getAskByIds = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getAllChannels', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getAskByIds', enData, commonData, 2, wd, callback);
 }
