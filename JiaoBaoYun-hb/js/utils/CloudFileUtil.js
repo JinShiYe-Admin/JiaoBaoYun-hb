@@ -455,7 +455,6 @@ var CloudFileUtil = (function($, mod) {
 	 * @author 安琪
 	 * @param {Object} picPath 图片本地路径
 	 * @param {Object} appId AppID
-	 * @param {Object} maxSize 最大长宽
 	 * @param {Object} spaceType 空间类型0：公共空间 1:私有空间
 	 * @param {Object} saveSpace 上传的空间
 	 * @param {Object} manageOptions 处理参数{
@@ -1057,27 +1056,6 @@ var CloudFileUtil = (function($, mod) {
 			pictures.removeChild(this.parentElement);
 		})
 	}
-	/**
-	 * 修改顺序
-	 * @param {Object} imgs
-	 * @param {Object} compressedPaths
-	 */
-	mod.rechargeImgsOrder = function(imgs, compressedPaths) {
-		var orderedImgs = [];
-		for(var i in imgs) {
-			for(var j in compressedPaths) {
-				console.log("获取的文件名：" + getLastName(imgs[i].url) + "压缩文件的文件名：" + getLastName(compressedPaths[j]));
-				if(getLastName(imgs[i].url) == getLastName(compressedPaths[j])) {
-					orderedImgs[j] = imgs[i];
-					break;
-				}
-			}
-		}
-		return orderedImgs;
-	}
-	var getLastName = function(path) {
-		var paths = path.split("/");
-		return paths[paths.length - 1];
-	}
+
 	return mod;
 })(mui, window.ColudFileUtil || {});
