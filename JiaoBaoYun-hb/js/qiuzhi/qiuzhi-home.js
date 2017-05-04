@@ -128,10 +128,6 @@ var setListener = function() {
 		events.openNewWindowWithData('../qiuzhi/qiuzhi-questionSearch.html', 'jxq');
 	});
 	document.querySelector('.img-icon').addEventListener('tap', function(e) {
-		//判断是否是游客身份登录
-		if(events.judgeLoginMode()) {
-			return;
-		}
 		var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
 		personalInfo.UserId = personalInfo.utid;
 		events.openNewWindowWithData('../qiuzhi/expert-detail.html', personalInfo);

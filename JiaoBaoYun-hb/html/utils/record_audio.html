@@ -1,0 +1,222 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="author" content="莫尚霖,email:444811716@qq.com" />
+		<meta name="description" content="录制音频" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<style>
+			.mui-content {
+				text-align: center;
+				/*visibility: hidden;*/
+			}
+
+			.icon-yuyin2 {
+				color: #808080;
+				/*background-color: rgba(0, 0, 0, 0.3);*/
+			}
+
+			#canvas {
+				position: absolute;
+				left: 0px;
+				/*background-color: rgba(0, 0, 0, 0.3);*/
+			}
+
+			#time {
+				color: #323232;
+				font-size: 17px;
+			}
+
+			#bottom {
+				/*background-color: rgba(0, 0, 0, 0.3);*/
+				display: inline-block;
+			}
+
+			.mui-btn-red {
+				border: 5px solid #B7B7B7;
+				background-color: red;
+				border-radius: 50%;
+				height: 50px;
+				width: 50px;
+			}
+
+			.white-block-background {
+				display: inline-block;
+				background: #B7B7B7;
+				border-radius: 50%;
+				height: 50px;
+				width: 50px;
+				display: none;
+			}
+
+			.circle-white-block {
+				border: none;
+				background-color: white;
+				border-radius: initial;
+				height: 30px;
+				width: 30px;
+				margin-top: 10px;
+			}
+
+			.mui-btn-red.circle-white-block:active {
+				border: none;
+				margin-top: 0px;
+				background-color: white;
+				border-radius: 50%;
+				height: 50px !important;
+				width: 50px !important;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title">音频录制</h1>
+		</header>
+		<div id="content" class="mui-content">
+			<canvas id="canvas"></canvas>
+			<span id="yuyin" class="mui-icon iconfont icon-yuyin2"></span>
+			<div id="time">00:00</div>
+			<div id="bottom">
+				<button id="redCircle" type="button" class="mui-btn mui-btn-red">
+				</button>
+				<div id="whiteBlockBackground" class="white-block-background">
+					<button id="whiteBlock" type="button" class="mui-btn mui-btn-red circle-white-block">
+					</button>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/recordaudioutil.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var main; //存储当前webview
+			var recordAudio; //存储录音对象
+			var timeCount = 0; //记录录制的时间
+			var timeId; //计时器的id
+
+			var yuyin = document.getElementById("yuyin");
+			var canvas = document.getElementById("canvas");
+			var time = document.getElementById("time");
+			var bottom = document.getElementById("bottom");
+
+			var width = parseInt(localStorage.getItem('resolutionWidth') * 0.5);
+			var lineHeight = parseInt((localStorage.getItem('resolutionHeight') * 1 - localStorage.getItem('getStatusbarHeight') * 1 - 45) / 2);
+			var marginTop = parseInt(lineHeight / 10);
+			var ctx = canvas.getContext("2d");
+			var circle; //圆的参数
+			init();
+
+			/**
+			 * 初始化界面
+			 */
+			function init() {
+				yuyin.style.marginTop = marginTop + 'px';
+				yuyin.style.fontSize = width + 'px';
+				yuyin.style.lineHeight = lineHeight + 'px';
+
+				canvas.setAttribute('width', localStorage.getItem('resolutionWidth') * 4 + 'px');
+				canvas.setAttribute('height', lineHeight * 4 + 'px');
+				canvas.style.width = localStorage.getItem('resolutionWidth') + 'px';
+				canvas.style.height = lineHeight + 'px';
+				canvas.style.marginTop = marginTop + 'px';
+
+				bottom.style.marginTop = lineHeight / 4 + 'px';
+
+				//开始一个新的绘制路径
+				ctx.beginPath();
+				//设置弧线的颜色
+				ctx.strokeStyle = "#808080";
+				ctx.lineWidth = width * 0.15;
+				circle = {
+					x: localStorage.getItem('resolutionWidth') * 2, //圆心的x轴坐标值
+					y: lineHeight * 2, //圆心的y轴坐标值
+					r: lineHeight * 1.4 //圆的半径
+				};
+				ctx.arc(circle.x, circle.y, circle.r, Math.PI * (-0.5), Math.PI * 2, false);
+				//按照指定的路径绘制弧线
+				ctx.stroke();
+				ctx.closePath();
+
+				//				ctx.beginPath();
+				//				ctx.strokeStyle = "#1DB8F1";
+				//				ctx.arc(circle.x, circle.y, circle.r, Math.PI * (-0.5), Math.PI * (1), false);
+				//				ctx.stroke();
+
+				document.getElementById("content").style.visibility = 'visible';
+			}
+
+			mui.plusReady(function() {
+				initData();
+				initListener();
+			});
+
+			/**
+			 * 初始化数据
+			 */
+			function initData() {
+				main = plus.webview.currentWebview();
+				console.log(JSON.stringify(main.data));
+			}
+
+			/**
+			 * 初始化监听
+			 */
+			function initListener() {
+				//红色开始录制按钮
+				document.getElementById('redCircle').addEventListener('tap', function() {
+					//startRecordAudio();
+					this.style.display = 'none';
+					document.getElementById("whiteBlockBackground").style.display = 'inline-block';
+				});
+				document.getElementById('whiteBlock').addEventListener('tap', function() {
+					console.log('stopRecordAudio');
+					document.getElementById("whiteBlockBackground").style.display = 'none';
+					document.getElementById("redCircle").style.display = 'inline';
+				});
+			}
+
+			/**
+			 * 开始录制音频
+			 */
+			function startRecordAudio() {
+				recordAudio = RecordAudio.recordAudio({
+					time: 10000
+				}, function(fpath) {
+					console.log('录制音频成功 ' + fpath);
+					stopCount();
+				}, function(err) {
+					mui.toast('录制音频失败 ' + JSON.stringify(err));
+				});
+				if(recordAudio != null) {
+					showTime();
+				}
+			}
+
+			/**
+			 * 显示录制的时间
+			 */
+			function showTime() {
+				time.innerHTML = timeCount;
+				timeCount = timeCount + 1;
+				timeId = setTimeout(function() {
+					showTime();
+				}, 1000);
+			}
+
+			/**
+			 * 停止计时
+			 */
+			function stopCount() {
+				clearTimeout(timeId)
+			}
+		</script>
+	</body>
+
+</html>
