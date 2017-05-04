@@ -75,6 +75,7 @@ var storageKeyName = (function(mod) {
 	mod.SHOWCITY='showCity';//展现订制的城市
 	mod.FOCUSEPERSEN="foucusPersen";//求知关注的人
 	mod.FOCUSEQUESTION="focusQuestion";//求知关注的问题
+	mod.SHOWFOCUSEPERSEN="showfoucusPersen";//展现关注的人
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url
 	mod.MAINHOMEWORKURLSTUDENT = mod.MAINHOMEWORKURL + 'StudentService.svc/'; //学生作业url
