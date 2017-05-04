@@ -2,7 +2,7 @@
 
 var storageKeyName = (function(mod) {
 
-	var Key = 0; //0,开发;1,测试;2,外网
+	var Key = 1; //0,开发;1,测试;2,外网
 
 	if(Key == 0) {
 		//---开发---start---
@@ -73,6 +73,8 @@ var storageKeyName = (function(mod) {
 	mod.SEHISTORY = 'seHistory'; //科教历史记录
 	mod.SECITY='seCity';//科教订制的城市
 	mod.SHOWCITY='showCity';//展现订制的城市
+	mod.FOCUSEPERSEN="foucusPersen";//求知关注的人
+	mod.FOCUSEQUESTION="focusQuestion";//求知关注的问题
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url
 	mod.MAINHOMEWORKURLSTUDENT = mod.MAINHOMEWORKURL + 'StudentService.svc/'; //学生作业url

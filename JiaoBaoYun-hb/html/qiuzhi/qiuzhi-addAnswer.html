@@ -69,6 +69,7 @@
 		<script src="../../js/utils/compress.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.zoom.js"></script>
 		<script src="../../js/mui.previewimage.js"></script>
+		<script src="../../js/utils/recordvideoutil.js"></script>
 		<!--上传至七牛云js-->
 		<script src="../../js/utils/CloudFileUtil.js" type="text/javascript" charset="utf-8"></script>
 		<!--求知接口js-->
@@ -239,7 +240,11 @@
 				});
 				//录像
 				events.addTap('take_camero', function() {
-					mui.toast('此功能暂未开放');
+					RecordVideo.recordVideo({},function(path){
+						console.log("保存在本地的路径："+path);
+					},function(errData){
+						console.log(errData.code);
+					})
 				});
 				events.addTap('get_record', function() {
 					mui.toast('此功能暂未开放');
@@ -326,6 +331,7 @@
 				//提交按钮
 				events.addTap('submitBtn', function() {
 					var answerContent = jQuery.trim(document.getElementById("answerContent").value);
+					answerContent=events.trim(answerContent);
 					if(answerContent) {
 						switch(type) {
 							case 0:

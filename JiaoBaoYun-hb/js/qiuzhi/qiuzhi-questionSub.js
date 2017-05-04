@@ -125,14 +125,27 @@ mui.plusReady(function() {
 
 	events.addTap('guanzhu', function() {
 		//判断是否是游客身份登录
-		if(events.judgeLoginMode()) {
-			return;
-		}
-		console.log('点击关注');
-		if(this.innerText == '关注') {
-			setAskFocus(askID, 1);
+		//		if(events.judgeLoginMode()) {
+		//			return;
+		//		}
+		if(events.getUtid()) {
+			console.log('点击关注');
+			if(this.innerText == '关注') {
+				setAskFocus(askID, 1);
+			} else {
+				setAskFocus(askID, 0);
+			}
 		} else {
-			setAskFocus(askID, 0);
+			var isExist = events.toggleStorageArray(storageKeyName.FOCUSEQUESTION, parseInt(askID));
+			if(isExist) {
+				document.getElementById("guanzhu").innerText = '关注';
+				document.getElementById("guanzhu").style.background = '#1db8F1';
+				document.getElementById("guanzhu").style.border = '#1db8F1';
+			} else {
+				document.getElementById("guanzhu").innerText = '已关注';
+				document.getElementById("guanzhu").style.background = '#e4e4e4';
+				document.getElementById("guanzhu").style.border = '#e4e4e4';
+			}
 		}
 	});
 
@@ -294,33 +307,46 @@ var shieldAnswer = function() {
 }
 //13.获取是否已对某个问题关注
 function getAskFocusByUser(askId) {
-	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
-	//需要加密的数据
-	var comData = {
-		userId: personalUTID, //用户ID
-		askId: askId //问题ID
-	};
-	// 等待的对话框
-	var wd = events.showWaiting();
-	//13.获取是否已对某个问题关注
-	postDataQZPro_getAskFocusByUser(comData, wd, function(data) {
-		wd.close();
-		console.log('13.获取是否已对某个问题关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-		if(data.RspCode == 0) {
-			//刷新界面
-			if(data.RspData.Result == 0) {
-				document.getElementById("guanzhu").innerText = '关注';
-				document.getElementById("guanzhu").style.background = '#1db8F1';
-				document.getElementById("guanzhu").style.border = '#1db8F1';
+	if(events.getUtid()) {
+		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
+		//需要加密的数据
+		var comData = {
+			userId: personalUTID, //用户ID
+			askId: askId //问题ID
+		};
+		// 等待的对话框
+		var wd = events.showWaiting();
+		//13.获取是否已对某个问题关注
+		postDataQZPro_getAskFocusByUser(comData, wd, function(data) {
+			wd.close();
+			console.log('13.获取是否已对某个问题关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			if(data.RspCode == 0) {
+				//刷新界面
+				if(data.RspData.Result == 0) {
+					document.getElementById("guanzhu").innerText = '关注';
+					document.getElementById("guanzhu").style.background = '#1db8F1';
+					document.getElementById("guanzhu").style.border = '#1db8F1';
+				} else {
+					document.getElementById("guanzhu").innerText = '已关注';
+					document.getElementById("guanzhu").style.background = '#b7b7b7';
+					document.getElementById("guanzhu").style.border = '#b7b7b7';
+				}
 			} else {
-				document.getElementById("guanzhu").innerText = '已关注';
-				document.getElementById("guanzhu").style.background = '#b7b7b7';
-				document.getElementById("guanzhu").style.border = '#b7b7b7';
+				mui.toast(data.RspTxt);
 			}
+		});
+	} else {
+		var arrayData = events.isExistInStorageArray(storageKeyName.FOCUSEQUESTION, parseInt(askId));
+		if(arrayData[1] >= 0) {
+			document.getElementById("guanzhu").innerText = '已关注';
+			document.getElementById("guanzhu").style.background = '#b7b7b7';
+			document.getElementById("guanzhu").style.border = '#b7b7b7';
 		} else {
-			mui.toast(data.RspTxt);
+			document.getElementById("guanzhu").innerText = '关注';
+			document.getElementById("guanzhu").style.background = '#1db8F1';
+			document.getElementById("guanzhu").style.border = '#1db8F1';
 		}
-	});
+	}
 };
 
 //14.设置某个问题的关注，0 不关注,1 关注
@@ -491,7 +517,7 @@ function requestAskDetail() {
 		} else {
 			wd.close();
 			mui.toast(data.RspTxt);
-			if(data.RspCode==1016){
+			if(data.RspCode == 1016) {
 				mui.back();
 			}
 		}
@@ -629,7 +655,7 @@ function questionContent(content, flag) {
 			document.getElementById("showAll").style.display = 'inline';
 		}
 	} else {
-		document.getElementById("question_content").innerHTML = content;
+		document.getElementById("question_content").innerHTML = content.replace(/\n/g, "<br/>");
 		document.getElementById("question_content").style.webkitLineClamp = '4';
 		height_0 = document.getElementById("question_content").offsetHeight;
 		document.getElementById("question_content").style.webkitLineClamp = '3';
@@ -703,7 +729,7 @@ function answerList(data, fragment) {
 		'<div class="answer-info">' + data.IsLikeNum + '赞同·' + data.CommentNum + '评论·' + modifyTimeFormat(data.AnswerTime) + '</div>';
 	fragment.appendChild(li);
 	if(data.AnswerSFlag != 1) { //不是旧数据
-		fragment.getElementById("answer_content_" + data.AnswerId).innerHTML = data.AnswerContent;
+		fragment.getElementById("answer_content_" + data.AnswerId).innerHTML = data.AnswerContent.replace(/\n/g, "<br/>");
 	} else {
 		var content_0 = events.htmlGetText(data.AnswerContent);
 		var content_1 = content_0.replace(/\s+/g, ""); //替换所有空格

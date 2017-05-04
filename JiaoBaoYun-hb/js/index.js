@@ -396,5 +396,4 @@ var setActivePage = function() {
 	}else{
 		plus.webview.show(activeId, "fade-in", 300);
 	}
-	//	changRightIcons(activeTab);
 }
