@@ -140,7 +140,7 @@
 					//					})
 				})
 				window.addEventListener("changeAnswer", function(e) {
-					CloudFileUtil.files=[];
+					CloudFileUtil.files = [];
 					type = 3;
 					console.log("要获取的回答详情：" + JSON.stringify(e.detail.data));
 					document.getElementById('title').innerText = '修改回答';
@@ -166,13 +166,13 @@
 					var cutImgs = answerInfo.AnswerCutImg.split("|");
 					var files = [];
 					for(var i in imgs) {
-							var img = {
-								url: bigImgs[i],
-								thumb: imgs[i],
-								clip: cutImgs[i],
-								order: parseInt(i),
-								type: 1
-							};
+						var img = {
+							url: bigImgs[i],
+							thumb: imgs[i],
+							clip: cutImgs[i],
+							order: parseInt(i),
+							type: 1
+						};
 						files.push(img);
 					}
 					for(var i in files) {
@@ -240,9 +240,22 @@
 				});
 				//录像
 				events.addTap('take_camero', function() {
-					RecordVideo.recordVideo({},function(path){
-						console.log("保存在本地的路径："+path);
-					},function(errData){
+					RecordVideo.recordVideo({}, function(path) {
+						console.log("保存在本地的路径：" + path);
+						var saveSpace = storageKeyName.KNOWLEDGE;
+						var options = {
+							type: 2,
+							thumbSize: {
+								width: 200,
+								height: 200
+							},
+							cropSize: {
+								width: event.width,
+								height: event.width * 0.45
+							}
+						}
+						var data = CloudFileUtil.getSingleImgUploadOptions(path, 7, 0, saveSpace, options);
+					}, function(errData) {
 						console.log(errData.code);
 					})
 				});
@@ -287,20 +300,20 @@
 											//上传图片
 											CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status, index) {
 												console.log(JSON.stringify(uploadData));
-//												if(index == 0) {
-													imgs[index] = {
-														url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
-														thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
-														clip: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "clip/"),
-														type: 1
-													}
-//												} else {
-//													imgs[index] = {
-//														url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
-//														thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
-//														type: 1
-//													}
-//												}
+												//												if(index == 0) {
+												imgs[index] = {
+													url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
+													thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
+													clip: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "clip/"),
+													type: 1
+												}
+												//												} else {
+												//													imgs[index] = {
+												//														url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
+												//														thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
+												//														type: 1
+												//													}
+												//												}
 
 												picCount++;
 
@@ -331,7 +344,7 @@
 				//提交按钮
 				events.addTap('submitBtn', function() {
 					var answerContent = jQuery.trim(document.getElementById("answerContent").value);
-					answerContent=events.trim(answerContent);
+					answerContent = events.trim(answerContent);
 					if(answerContent) {
 						switch(type) {
 							case 0:
@@ -370,17 +383,17 @@
 			 * 修改回答
 			 */
 			var changeAnswer = function(answerContent) {
-				var anonymIsChecked=document.getElementById('checkbox').checked;
+				var anonymIsChecked = document.getElementById('checkbox').checked;
 				var comData = {
 					answerId: answerInfo.AnswerId, //回答ID
 					answerContent: answerContent, //回答内容,4000
 					encAddr: getTypeAddress(CloudFileUtil.files).encAddr, //附件地址,300,多个的情况例如：1.jpg|2.jpg
-					thumbnail: getTypeAddress(CloudFileUtil.files).encImg,//缩略图
-					cutImg: getTypeAddress(CloudFileUtil.files).clipAddress,//裁剪地址
-					isAnonym:anonymIsChecked?1:0//是否匿名
+					thumbnail: getTypeAddress(CloudFileUtil.files).encImg, //缩略图
+					cutImg: getTypeAddress(CloudFileUtil.files).clipAddress, //裁剪地址
+					isAnonym: anonymIsChecked ? 1 : 0 //是否匿名
 				};
 				if(!comData.cutImg) {
-					comData.cutImg="";
+					comData.cutImg = "";
 				}
 				var wd1 = events.showWaiting();
 				postDataQZPro_setAnswerById(comData, wd1, function(data) {
@@ -389,7 +402,7 @@
 					if(data.RspCode == 0 && data.RspData.Result) {
 						comData.AnswerThumbnail = comData.thumbnail;
 						comData.AnswerEncAddr = comData.encAddr;
-						comData.AnswerCutImg=comData.cutImg;
+						comData.AnswerCutImg = comData.cutImg;
 						mui.fire(plus.webview.currentWebview().opener(), "answerChanged", comData);
 						mui.back();
 					} else {
@@ -466,7 +479,7 @@
 					replyId: replyId //回复用户ID,新增评论的话传0，回复评论传用户Id
 				}, wd, function(data) {
 					wd.close();
- 
+
 					if(data.RspCode == 0) {
 						if(data.RspData.Result) {
 							document.getElementById('answerContent').value = '';
@@ -504,18 +517,18 @@
 				var encType;
 				var encAddrs = [];
 				var encImgs = [];
-				var clipImgs=[];
+				var clipImgs = [];
 				var theFile;
 				console.log("要处理的上传图片：" + JSON.stringify(CloudFileUtil.files))
 				if(CloudFileUtil.files.length > 0) { //如果存在附件
 					for(var i in CloudFileUtil.files) {
 						theFile = CloudFileUtil.files[i];
-//						if(i == 0) {
-//							TAs.encType = theFile.type;
-//							if(theFile.clip) {
-//								TAs.clipAddress = theFile.clip;
-//							}
-//						}
+						//						if(i == 0) {
+						//							TAs.encType = theFile.type;
+						//							if(theFile.clip) {
+						//								TAs.clipAddress = theFile.clip;
+						//							}
+						//						}
 						encAddrs.push(theFile.url);
 						encImgs.push(theFile.thumb);
 						clipImgs.push(theFile.clip);
@@ -524,7 +537,7 @@
 					console.log(JSON.stringify(encImgs));
 					TAs.encAddr = encAddrs.join('|');
 					TAs.encImg = encImgs.join('|');
-					TAs.clipAddress=clipImgs.join("|");
+					TAs.clipAddress = clipImgs.join("|");
 				} else { //不存在附件
 					TAs.encType = 0;
 					TAs.encAddr = '';
@@ -533,49 +546,49 @@
 				}
 				return TAs;
 			}
-//			var clipSinglePic = function(theFile, width, callback) {
-//				//				var compressedPaths = [theFile.url];
-//				var localPath = theFile.url;
-//				console.log("要更改的路径："+localPath);
-//				var options = {
-//					type: 1,
-//					thumbSize: {
-//						width: 200,
-//						height: 200
-//					},
-//					cropSize: {
-//						width: event.width,
-//						height: event.width * 0.45
-//					}
-//				}
-//				var saveSpace = storageKeyName.KNOWLEDGE; //保存空间
-//				var data = CloudFileUtil.getSingleImgUploadOptions(localPath, 7, 0, saveSpace, options);
-//				console.log("获取的参数："+JSON.stringify(data));
-//				//								var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 7, 200, 0, saveSpace); //获取获取token的各参数
-//				CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-//					console.log("获取的数据：" + JSON.stringify(datas));
-//					if(datas.Status == 1) {
-//						var tokenInfo = datas.Data;
-//
-//						//上传文件
-//						CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
-//							console.log(JSON.stringify(uploadData));
-//							var img = { //图片信息
-//								url: tokenInfo.Domain + tokenInfo.Key,
-//								clip: tokenInfo.OtherKey[data.clipKey],
-//								type: 1
-//							}
-//							console.log("获取的图片信息：" + JSON.stringify(img));
-//							//关闭等待框
-//							plus.nativeUI.closeWaiting();
-//						});
-//					}
-//
-//				}, function(xhr, type, errorThrown) {
-//					console.log("错误类型：" + type + errorThrown);
-//					plus.nativeUI.closeWaiting(); //关闭等待框
-//				});
-//			}
+			//			var clipSinglePic = function(theFile, width, callback) {
+			//				//				var compressedPaths = [theFile.url];
+			//				var localPath = theFile.url;
+			//				console.log("要更改的路径："+localPath);
+			//				var options = {
+			//					type: 1,
+			//					thumbSize: {
+			//						width: 200,
+			//						height: 200
+			//					},
+			//					cropSize: {
+			//						width: event.width,
+			//						height: event.width * 0.45
+			//					}
+			//				}
+			//				var saveSpace = storageKeyName.KNOWLEDGE; //保存空间
+			//				var data = CloudFileUtil.getSingleImgUploadOptions(localPath, 7, 0, saveSpace, options);
+			//				console.log("获取的参数："+JSON.stringify(data));
+			//				//								var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 7, 200, 0, saveSpace); //获取获取token的各参数
+			//				CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+			//					console.log("获取的数据：" + JSON.stringify(datas));
+			//					if(datas.Status == 1) {
+			//						var tokenInfo = datas.Data;
+			//
+			//						//上传文件
+			//						CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
+			//							console.log(JSON.stringify(uploadData));
+			//							var img = { //图片信息
+			//								url: tokenInfo.Domain + tokenInfo.Key,
+			//								clip: tokenInfo.OtherKey[data.clipKey],
+			//								type: 1
+			//							}
+			//							console.log("获取的图片信息：" + JSON.stringify(img));
+			//							//关闭等待框
+			//							plus.nativeUI.closeWaiting();
+			//						});
+			//					}
+			//
+			//				}, function(xhr, type, errorThrown) {
+			//					console.log("错误类型：" + type + errorThrown);
+			//					plus.nativeUI.closeWaiting(); //关闭等待框
+			//				});
+			//			}
 		</script>
 	</body>
 

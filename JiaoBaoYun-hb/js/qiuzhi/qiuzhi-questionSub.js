@@ -136,8 +136,9 @@ mui.plusReady(function() {
 				setAskFocus(askID, 0);
 			}
 		} else {
-			var isExist = events.toggleStorageArray(storageKeyName.FOCUSEQUESTION, parseInt(askID));
-			if(isExist) {
+			var isDel = this.innerText == '关注'?0:1;
+			events.toggleStorageArray(storageKeyName.FOCUSEQUESTION,parseInt(askID),isDel);
+			if(isDel) {
 				document.getElementById("guanzhu").innerText = '关注';
 				document.getElementById("guanzhu").style.background = '#1db8F1';
 				document.getElementById("guanzhu").style.border = '#1db8F1';

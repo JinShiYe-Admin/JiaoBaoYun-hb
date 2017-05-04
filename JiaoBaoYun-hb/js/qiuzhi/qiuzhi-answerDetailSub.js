@@ -853,8 +853,9 @@ var setListeners = function() {
 		if(events.getUtid()) {
 			setUserFocus(answerData.AnswerMan, this)
 		} else {
-			var isExist = events.toggleStorageArray(storageKeyName.FOCUSEPERSEN, parseInt(answerData.AnswerMan));
-			if(isExist) {
+			var isDel=item.innerText == "关注"?0:1;
+			events.toggleStorageArray(storageKeyName.FOCUSEPERSEN, parseInt(answerData.AnswerMan,isDel);
+			if(isDel) {
 				item.innerText = '关注';
 				item.className = "mui-btn mui-pull-right btn-attention"
 			} else {
