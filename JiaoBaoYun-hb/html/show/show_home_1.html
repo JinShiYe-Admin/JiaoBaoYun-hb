@@ -229,7 +229,6 @@
 						zonepArray[id].Comments[commentId].Replys.push(tempData.Reply);
 
 					} else {
-
 						console.log(JSON.stringify(data.detail))
 						personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 						pageIndex = 1;
@@ -238,7 +237,21 @@
 							requestData(id, 1);
 						} else { //关注的人数据
 							//81.（用户空间）获取用户所有关注的用户
-							getFocusByUser();
+							if(personalUTID == 0) {
+								var showfocusperson = window.myStorage.getItem(window.storageKeyName.SHOWFOCUSEPERSEN);
+								var tempModel = cities[cities.length - 1];
+								userIDs = showfocusperson;
+								var tempArr = [];
+								tempModel.userIDs = userIDs?userIDs:tempArr;
+								tempModel.index = 1;
+								tempModel.isRefresh = 0; //是刷新0，还是加载更多1
+								//74.(用户空间）获取多用户空间所有用户动态列表
+								console.log(JSON.stringify(tempModel))
+								getAllUserSpacesByUser(tempModel);
+							} else {
+								getFocusByUser();
+							}
+
 						}
 					}
 
@@ -302,9 +315,22 @@
 							if(info.aflag == 0) { //定制的城市
 								requestData(info.acode, 1);
 							} else { //关注的人数据
-								//81.（用户空间）获取用户所有关注的用户
+							//81.（用户空间）获取用户所有关注的用户
+							if(personalUTID == 0) {
+								var showfocusperson = window.myStorage.getItem(window.storageKeyName.SHOWFOCUSEPERSEN);
+								var tempModel = cities[cities.length - 1];
+								userIDs = showfocusperson;
+								tempModel.userIDs = userIDs;
+								tempModel.index = 1;
+								tempModel.isRefresh = 0; //是刷新0，还是加载更多1
+								//74.(用户空间）获取多用户空间所有用户动态列表
+								console.log(JSON.stringify(tempModel))
+								getAllUserSpacesByUser(tempModel);
+							} else {
 								getFocusByUser();
 							}
+
+						}
 						} else {
 							console.log(JSON.stringify(datasource))
 							zonepArray = datasource[sliderId];
@@ -405,9 +431,22 @@
 									if(info.aflag == 0) { //定制的城市
 										requestData(info.acode, 1);
 									} else { //关注的人数据
-										//81.（用户空间）获取用户所有关注的用户
-										getFocusByUser();
-									}
+							//81.（用户空间）获取用户所有关注的用户
+							if(personalUTID == 0) {
+								var showfocusperson = window.myStorage.getItem(window.storageKeyName.SHOWFOCUSEPERSEN);
+								var tempModel = cities[cities.length - 1];
+								userIDs = showfocusperson;
+								tempModel.userIDs = userIDs;
+								tempModel.index = 1;
+								tempModel.isRefresh = 0; //是刷新0，还是加载更多1
+								//74.(用户空间）获取多用户空间所有用户动态列表
+								console.log(JSON.stringify(tempModel))
+								getAllUserSpacesByUser(tempModel);
+							} else {
+								getFocusByUser();
+							}
+
+						}
 									//结束下拉刷新
 									self.endPullDownToRefresh();
 								}, 1000);
@@ -501,11 +540,6 @@
 					var tempArray = [];
 					console.log('获取个人的订制城市展现频道:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
-						eduArray.push({
-							acode: 0,
-							aname: '全部',
-							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
-						});
 						if(data.RspData[0].citys && data.RspData[0].citys != "") {
 							//先通过‘|’将返回值分为数组
 							tempArray = data.RspData[0].citys.split('|');
@@ -528,6 +562,11 @@
 
 							}
 							eduArray = eduArray.concat(tempArray)
+							eduArray.push({
+							acode: 0,
+							aname: '全部',
+							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+						});
 							//加入关注的人数据
 							eduArray.push({
 								acode: 1,
@@ -542,16 +581,17 @@
 							//如果定制城市为空
 							var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
 							console.log(JSON.stringify(uarea));
-							eduArray.push({
-								acode: 0,
-								aname: '全部',
-								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
-							});
+							
 							//加入手机号所在城市
 
 							eduArray.push({
 								acode: uarea.acode,
 								aname: uarea.aname,
+								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+							});
+							eduArray.push({
+								acode: 0,
+								aname: '全部',
 								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
 							});
 							//加入关注的人数据
@@ -569,11 +609,7 @@
 						//如果定制城市为空
 						var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
 						console.log(JSON.stringify(uarea));
-						eduArray.push({
-							acode: 0,
-							aname: '全部',
-							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
-						});
+						
 						var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 						console.log('person===' + JSON.stringify(personal));
 						if(personal && personal.utid != 0) { //有账号，正常登录
@@ -583,7 +619,21 @@
 								aname: uarea.aname,
 								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
 							});
-							//加入关注的人数据
+							eduArray.push({
+							acode: 0,
+							aname: '全部',
+							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+						});
+							
+						} else {
+							eduArray.push({
+							acode: 0,
+							aname: '全部',
+							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+						});
+
+						}
+						//加入关注的人数据
 							eduArray.push({
 								acode: 1,
 								aname: '我关注的人',
@@ -591,18 +641,14 @@
 								index: 1, //请求第几页数据
 								isRefresh: 0 //是刷新0，还是加载更多1
 							});
-						}else{
-							
-						}
-												//游客身份
+						//游客身份
 						if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
 							var localCity = window.myStorage.getItem(window.storageKeyName.SHOWCITY);
 							if(localCity && localCity.length != 0) {
 								console.log('游客订制的展现城市 ' + JSON.stringify(localCity))
-								eduArray = eduArray.concat(localCity)
+								eduArray = localCity.concat(eduArray)
 							}
 						}
-
 
 						//						mui.toast(data.RspTxt);
 					}

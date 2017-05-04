@@ -165,6 +165,14 @@ var dynamiclistitem = (function($, mod) {
 						break;
 					case 1:
 						{
+							//判断是否是游客身份登录
+							if(personalUTID==0) {
+								var isDel = title == '关注' ? 0 : 1;
+								events.toggleStorageArray(storageKeyName.SHOWFOCUSEPERSEN, parseInt(userId), isDel);
+								return;
+							}else{
+								
+							}
 							if(personalUTID == userId) {
 								var btnArray = ['取消', '确定'];
 								mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
@@ -529,18 +537,18 @@ var dynamiclistitem = (function($, mod) {
 			var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
 			var tempData;
 			var index;
-//
-//			var tempPageID = this.id.match(/praise(\S*)zx/)[1];
-//			console.log('tempPageID='+tempPageID)
-//			if(tempPageID==pageID){
-				index = this.id.replace('praise' + pageID + idFlag, '');
-//
-				tempData = zonepArray[index];
-//			}else{
-// 
-//			}
+			//
+			//			var tempPageID = this.id.match(/praise(\S*)zx/)[1];
+			//			console.log('tempPageID='+tempPageID)
+			//			if(tempPageID==pageID){
+			index = this.id.replace('praise' + pageID + idFlag, '');
+			//
+			tempData = zonepArray[index];
+			//			}else{
+			// 
+			//			}
 			var color = this.style.color;
-			
+
 			if(color == 'rgb(183, 183, 183)') {
 				var comData = {
 					userId: userInfo.utid, //用户ID
@@ -568,23 +576,23 @@ var dynamiclistitem = (function($, mod) {
 								index: preModel.tempIndex
 							})
 						}
-//						else if(zonepArray[index].pageFlag == 1) {
-//							for(var slider_id in datasource) {
-//								if(slider_id == sliderId){
-//									continue;
-//								}
-//								var tempArr = datasource[slider_id]
-//								var citycode = slider_id.replace('top_', '');
-//								for(var j in tempArr) {
-//									var tempModel = tempArr[j];
-//									if(tempModel.PublisherId == tempData.PublisherId) {
-//										var tempA = document.getElementById("praise" + citycode + idFlag + index);
-//										//模拟点击点赞按钮
-//										mui.trigger(tempA, 'tap');
-//									}
-//								}
-//							}
-//						}
+						//						else if(zonepArray[index].pageFlag == 1) {
+						//							for(var slider_id in datasource) {
+						//								if(slider_id == sliderId){
+						//									continue;
+						//								}
+						//								var tempArr = datasource[slider_id]
+						//								var citycode = slider_id.replace('top_', '');
+						//								for(var j in tempArr) {
+						//									var tempModel = tempArr[j];
+						//									if(tempModel.PublisherId == tempData.PublisherId) {
+						//										var tempA = document.getElementById("praise" + citycode + idFlag + index);
+						//										//模拟点击点赞按钮
+						//										mui.trigger(tempA, 'tap');
+						//									}
+						//								}
+						//							}
+						//						}
 						wd.close();
 					} else {
 						mui.toast(data.RspTxt);
@@ -645,23 +653,23 @@ var dynamiclistitem = (function($, mod) {
 								index: preModel.tempIndex
 							})
 						}
-//						else if(zonepArray[index].pageFlag == 1) {
-//							for(var slider_id in datasource) {
-//								if(slider_id == sliderId){
-//									continue;
-//								}
-//								var tempArr = datasource[slider_id]
-//								var citycode = slider_id.replace('top_', '');
-//								for(var j in tempArr) {
-//									var tempModel = tempArr[j];
-//									if(tempModel.PublisherId == tempData.PublisherId) {
-//										var tempA = document.getElementById("praise" + citycode + idFlag + index);
-//										//模拟点击点赞按钮
-//										mui.trigger(tempA, 'tap');
-//									}
-//								}
-//							}
-//						}
+						//						else if(zonepArray[index].pageFlag == 1) {
+						//							for(var slider_id in datasource) {
+						//								if(slider_id == sliderId){
+						//									continue;
+						//								}
+						//								var tempArr = datasource[slider_id]
+						//								var citycode = slider_id.replace('top_', '');
+						//								for(var j in tempArr) {
+						//									var tempModel = tempArr[j];
+						//									if(tempModel.PublisherId == tempData.PublisherId) {
+						//										var tempA = document.getElementById("praise" + citycode + idFlag + index);
+						//										//模拟点击点赞按钮
+						//										mui.trigger(tempA, 'tap');
+						//									}
+						//								}
+						//							}
+						//						}
 						wd.close();
 					} else {
 						mui.toast(data.RspTxt);

@@ -1225,7 +1225,7 @@ var events = (function(mod) {
 			}
 			return true;
 		} else {
-			if(arrayData < 0) {
+			if(arrayData[1] < 0) {
 				arrayData[0].push(value);
 				myStorage.setItem(key, arrayData[0]);
 			}
