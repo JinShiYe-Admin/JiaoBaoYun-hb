@@ -981,6 +981,17 @@
 					if(personsData.RspCode == 0) {
 						data = rechargeData(data, personsData.RspData)
 						var tempLength;
+						for(var i in data){
+							var showfocusperson = window.myStorage.getItem(window.storageKeyName.SHOWFOCUSEPERSEN);
+							if(showfocusperson){
+								for(var j in showfocusperson){
+								if(showfocusperson[j]==data[i].PublisherId){
+									data[i].IsFocused=1;
+								}
+							}
+							}
+							
+						}
 						if(pullFlag == 1) {
 							tempLength = zonepArray.length;
 							//合并数组
@@ -989,6 +1000,7 @@
 							tempLength = 0;
 							zonepArray = data;
 						}
+						
 						datasource[sliderId] = zonepArray;
 						console.log("重组后的数据：" + JSON.stringify(zonepArray));
 						setData(zonepArray, cityCode, tempLength);
@@ -1053,12 +1065,18 @@
 				var id = 'bot_' + sliderId.replace('top_', '');
 				var table = document.getElementById("bot_ul_" + cityCode)
 				if(table) {
+					if(len==0){
+						table.innerHTML =''
+					}
+//					console.log('===='+len+table.innerHTML)
 					table.setAttribute('data-info', JSON.stringify(data));
 					//					table.innerHTML = ''
 
 					for(var i = len; i < data.length; i++) {
+						
 						var data1 = addData(i, cityCode);
 						dynamiclistitem.addItem(table, data1);
+//						console.log('===='+len+table.innerHTML)
 					}
 				}
 				dynamiclistitem.questionContent();
