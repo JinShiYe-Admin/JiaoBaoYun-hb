@@ -252,7 +252,7 @@
 				nodes.titleFlag4.innerHTML = '我的评论';
 				var focusequestion = window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION);
 				var focuseperson = window.myStorage.getItem(window.storageKeyName.FOCUSEPERSEN);
-				console.log('focusequestion=' + focusequestion)
+				console.log('focusequestion=' + focusequestion+','+JSON.stringify(focusequestion));
 				nodes.FocusAskNum.innerHTML = focusequestion ? focusequestion.length : 0;
 				nodes.FocusManNum.innerHTML = focuseperson ? focuseperson.length : 0;
 				return;
