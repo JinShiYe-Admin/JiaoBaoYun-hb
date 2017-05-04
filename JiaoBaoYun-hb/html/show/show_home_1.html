@@ -540,11 +540,6 @@
 					var tempArray = [];
 					console.log('获取个人的订制城市展现频道:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
-						eduArray.push({
-							acode: 0,
-							aname: '全部',
-							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
-						});
 						if(data.RspData[0].citys && data.RspData[0].citys != "") {
 							//先通过‘|’将返回值分为数组
 							tempArray = data.RspData[0].citys.split('|');
@@ -567,6 +562,11 @@
 
 							}
 							eduArray = eduArray.concat(tempArray)
+							eduArray.push({
+							acode: 0,
+							aname: '全部',
+							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+						});
 							//加入关注的人数据
 							eduArray.push({
 								acode: 1,
@@ -581,16 +581,17 @@
 							//如果定制城市为空
 							var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
 							console.log(JSON.stringify(uarea));
-							eduArray.push({
-								acode: 0,
-								aname: '全部',
-								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
-							});
+							
 							//加入手机号所在城市
 
 							eduArray.push({
 								acode: uarea.acode,
 								aname: uarea.aname,
+								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+							});
+							eduArray.push({
+								acode: 0,
+								aname: '全部',
 								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
 							});
 							//加入关注的人数据
@@ -608,11 +609,7 @@
 						//如果定制城市为空
 						var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
 						console.log(JSON.stringify(uarea));
-						eduArray.push({
-							acode: 0,
-							aname: '全部',
-							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
-						});
+						
 						var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 						console.log('person===' + JSON.stringify(personal));
 						if(personal && personal.utid != 0) { //有账号，正常登录
@@ -622,8 +619,18 @@
 								aname: uarea.aname,
 								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
 							});
+							eduArray.push({
+							acode: 0,
+							aname: '全部',
+							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+						});
 							
 						} else {
+							eduArray.push({
+							acode: 0,
+							aname: '全部',
+							aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+						});
 
 						}
 						//加入关注的人数据
@@ -639,7 +646,7 @@
 							var localCity = window.myStorage.getItem(window.storageKeyName.SHOWCITY);
 							if(localCity && localCity.length != 0) {
 								console.log('游客订制的展现城市 ' + JSON.stringify(localCity))
-								eduArray = eduArray.concat(localCity)
+								eduArray = localCity.concat(eduArray)
 							}
 						}
 
