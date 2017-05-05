@@ -75,7 +75,8 @@
 			<h1 id="title" class="mui-title"></h1>
 			<div id="sciEduSlider" class="mui-slider"></div>
 		</header>
-		<div id="content" class="mui-content"></div>
+		<div id="content" class="mui-content">
+		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
@@ -100,6 +101,7 @@
 					doubletap: true,
 				}
 			});
+
 			mui.plusReady(function() {
 				var wd = events.showWaiting();
 				initListener();
@@ -405,7 +407,7 @@
 						lazyLoad.refresh(true);
 					});
 				}
-				lazyLoad.refresh(true);
+				//lazyLoad.refresh(true);
 				//console.log(document.getElementById("bot_" + cityCode).innerHTML);
 			}
 

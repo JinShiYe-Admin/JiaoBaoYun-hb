@@ -16,7 +16,6 @@ var SciEduHomeItem = (function(mod) {
 	 */
 	mod.addItem = function(element, data, callBack) {
 		var tempImgs = [];
-
 		for(var i = 0; i < data.timgs.length; i++) {
 			if(data.timgs[i] != '' && data.timgs[i] != 'null') {
 				var tempStr = data.timgs[i];
@@ -64,7 +63,6 @@ var SciEduHomeItem = (function(mod) {
 
 	//一张图片
 	function addItem_1(element, data, li, callBack) {
-		//data.timgs[0] = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1491818983269&di=143c55562264268bbf346f456842f5a1&imgtype=0&src=http%3A%2F%2Fpic14.nipic.com%2F20110516%2F3101644_221206899369_2.jpg';
 		var html_style = '';
 		if(data.seHistory) {
 			html_style = 'color:darkgray;';
@@ -78,15 +76,19 @@ var SciEduHomeItem = (function(mod) {
 		var show = document.getElementById("show_" + li.id);
 		show.style.height = parseInt(show.parentNode.offsetWidth * 0.3 * (2 / 3)) + 'px';
 		show.style.marginTop = parseInt((show.parentNode.offsetHeight - show.offsetHeight - 10) / 2) + 'px';
+
+		var height = document.getElementById("mediaBody_" + li.id).offsetHeight;
+		var tips = document.getElementById("from_" + li.id);
+		var marginTop = height - (3 + tips.offsetTop + tips.offsetHeight);
+		if(marginTop > 0) {
+			document.getElementById("title_" + li.id).style.marginTop = marginTop + 'px';
+		}
 		callBack();
 	}
 
 	//三张图片
 	function addItem_3(element, data, li, callBack) {
 		var html_style = '';
-		//data.timgs[0] = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1491818983269&di=143c55562264268bbf346f456842f5a1&imgtype=0&src=http%3A%2F%2Fpic14.nipic.com%2F20110516%2F3101644_221206899369_2.jpg';
-		//data.timgs[1] = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1491818983269&di=143c55562264268bbf346f456842f5a1&imgtype=0&src=http%3A%2F%2Fpic14.nipic.com%2F20110516%2F3101644_221206899369_2.jpg';
-		//data.timgs[2] = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1491818983269&di=143c55562264268bbf346f456842f5a1&imgtype=0&src=http%3A%2F%2Fpic14.nipic.com%2F20110516%2F3101644_221206899369_2.jpg';
 		if(data.seHistory) {
 			html_style = 'color:darkgray;';
 		}

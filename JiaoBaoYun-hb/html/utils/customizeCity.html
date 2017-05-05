@@ -77,6 +77,9 @@
 							</li>
 						</div>-->
 					</div>
+					<div id="myCityTitle" class="city-p" style="display: none;">已选城市</div>
+					<div id="myCity" class="mui-row" style="display: none;">
+					</div>
 					<div id="allCity">
 						<div class="city-p">山东省</div>
 						<div id="City_37" class=" mui-row">
@@ -114,7 +117,7 @@
 			var cities = []; //传值的当前已经选择的城市
 			var cityArray = []; //获取到的所有城市
 			var commitCities = []; //提交的城市
-
+			var selectId = ''; //修改账号地区时记录选择的元素id（acode）
 			mui.plusReady(function() {
 				var wd = events.showWaiting();
 				initData();
@@ -140,12 +143,14 @@
 				//自己当前手机号对应的城市(可能修改后的)，从内存中获取
 				var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				addBeforeCity(tempInfo.uarea);
-				var selectId = '';
+
 				if(main.data.id == 'uarea') { //uarea账号地区
 					document.getElementById("title").innerText = '所在地';
-					selectId = main.data.cities[0].acode; //修改账号地区时记录选择的元素id（acode）
+					selectId = main.data.cities[0].acode;
 				} else {
 					document.getElementById("title").innerText = '订制城市';
+					document.getElementById("myCityTitle").style.display = 'inline-block';
+					document.getElementById("myCity").style.display = 'inline';
 				}
 			}
 
@@ -194,7 +199,7 @@
 					var tempCities = []; //选取的城市
 					commitCities = [];
 					var tempCityArray = cityArray;
-					var localCity=[];//存到本地的城市，游客使用
+					var localCity = []; //存到本地的城市，游客使用
 					//获取被选中的元素
 					mui('.city-select').each(function(index, element) {
 						var elementAcode = element.getAttribute('data-acode'); //城市代码
@@ -204,8 +209,8 @@
 								element2.index = commitCities.length;
 								commitCities.push(element2); //设置提交的城市
 								localCity.push({
-									acode:element2.acode,
-									aname:element2.aname
+									acode: element2.acode,
+									aname: element2.aname
 								})
 								return false;
 							}
@@ -234,7 +239,7 @@
 							if(main.data.id == '0') { //科教
 								window.myStorage.setItem(window.storageKeyName.SECITY, localCity);
 							} else if(main.data.id == '1') { //展现
-								for(var i in localCity){
+								for(var i in localCity) {
 									localCity[i].aflag = 0;
 								}
 								console.log(JSON.stringify(localCity))
@@ -289,11 +294,12 @@
 			 * 初始化滚动
 			 */
 			function initScroll() {
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
 				mui(".mui-scroll-wrapper").scroll({
 					scrollY: true, //是否竖向滚动
 					scrollX: false, //是否横向滚动
 					indicators: true, //是否显示滚动条
-					deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+					deceleration: deceleration, //阻尼系数,系数越小滑动越灵敏
 					bounce: true, //是否启用回弹
 				});
 			}
