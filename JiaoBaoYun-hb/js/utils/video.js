@@ -27,11 +27,11 @@ var video=(function(mod){
 //		player.removeAttribute("autoplay");
 	}
 	mod.playVideo=function(videoPath,thumbPath){
-//		if(plus.os.name=="Android"){
-//			mod.playInAndroid(videoPath,thumbPath);
-//		}else{
+		if(plus.os.name=="Android"){
+			mod.playInAndroid(videoPath,thumbPath);
+		}else{
 			mod.playInHTML(videoPath,thumbPath);
-//		}
+		}
 	}
 	mod.initVideo=function(){
 		var content=document.body;
