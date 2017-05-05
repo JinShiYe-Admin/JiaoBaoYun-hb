@@ -155,6 +155,7 @@ var events = (function(mod) {
 				//加载新控件
 				fresh();
 				mui('#refreshContainer').pullRefresh().endPulldownToRefresh(); //refresh completed
+				mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
 				mui('#refreshContainer').pullRefresh().refresh(true);
 			}, 150);
 		}
@@ -1238,6 +1239,13 @@ var events = (function(mod) {
 	 */
 	mod.trim = function(string) {
 		return string.replace(/^\s+|\s+$/g, '');
+	}
+	mod.showNoDataToast=function(pageIndex){
+		if(pageIndex==1){
+			mui.toast("暂无数据！");
+		}else{
+			mui.toast("没有更多啦！");
+		}
 	}
 	return mod;
 

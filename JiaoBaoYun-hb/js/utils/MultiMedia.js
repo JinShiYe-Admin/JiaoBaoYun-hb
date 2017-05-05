@@ -144,9 +144,10 @@ var MultiMedia = (function($, mod) {
 				mui.toast('录制语音功能暂未开放');
 			});
 
-			window.addEventListener('MultiMediaRecordAudio', function(e) {
-				console.log('MultiMediaRecordAudio ' + e.detail.data);
-			});
+//			window.addEventListener('MultiMediaRecordAudio', function(e) {
+//				var data=e.detail.data;
+//				console.log('MultiMediaRecordAudio ' + JSON.stringify(data));
+//			});
 		}
 
 		//视频

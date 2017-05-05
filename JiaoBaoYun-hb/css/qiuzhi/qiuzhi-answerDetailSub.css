@@ -97,7 +97,7 @@
 /*问题标题*/
 
 .question-container>.question-title {
-	font-size: 1.7rem;
+	font-size: 1.6rem;
 	color: #323232;
 	text-align: justify;
 }
@@ -111,7 +111,7 @@
 .comment-no {
 	font-size: 14px;
 	padding-top: 12px;
-	color: #808080;
+	color: #323232;
 	margin-left: 10px;
 }
 
@@ -155,7 +155,7 @@
 	word-wrap: break-word;
 	font-size: 14px;
 	text-align: justify;
-	color: #474747;
+	color: #808080;
 }
 
 
@@ -196,7 +196,7 @@
 }
 
 .anthor-intro {
-	color: #808080;
+	color: #B7B7B7;
 	font-size: 1.3rem;
 	flex-basis: auto;
 	/*line-height: 1.2;*/
@@ -240,6 +240,9 @@
 .comment-container {
 	width: 50%;
 	flex-grow: 1;
+}
+.answer-time{
+	color: #B7B7B7;
 }
 
 .support-container {
