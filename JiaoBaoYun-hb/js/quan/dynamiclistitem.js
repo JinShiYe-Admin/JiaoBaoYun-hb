@@ -165,6 +165,84 @@ var dynamiclistitem = (function($, mod) {
 						break;
 					case 1:
 						{
+							//判断是否是游客身份登录
+							if(personalUTID == 0) {
+								var isDel = title == '关注' ? 0 : 1;
+								events.toggleStorageArray(storageKeyName.SHOWFOCUSEPERSEN, parseInt(userId), isDel);
+								var pageID = sliderId.replace('top_', '')
+								console.log('pageID=' + pageID)
+								setTimeout(function() {
+									//获取数据
+									if(pageID != 1) { //定制的城市
+										for(var item in datasource) {
+											var tempArr = datasource[item]
+											for(var j in tempArr) {
+												if(zonepArray[index].PublisherId == tempArr[j].PublisherId) {
+													if(isFocus == 0) {
+														tempArr[j].IsFocused = 1;
+														datasource[item] = tempArr
+													} else {
+														tempArr[j].IsFocused = 0;
+														datasource[item] = tempArr
+													}
+
+												}
+
+											}
+										}
+										//										for(var i = 0; i < zonepArray.length; i++) {
+										//											if(zonepArray[index].PublisherId == zonepArray[i].PublisherId) {
+										//												if(isFocus == 0) {
+										//													zonepArray[i].IsFocused = 1;
+										//													datasource[sliderId] = zonepArray
+										//												} else {
+										//													zonepArray[i].IsFocused = 0;
+										//													datasource[sliderId] = zonepArray
+										//												}
+										//
+										//											}
+										//										}
+										console.log('status=' + status)
+										if(status == 0) {
+											mui.toast("取消关注成功")
+										} else {
+											mui.toast("关注成功")
+										}
+									} else { //关注的人数据
+										//81.（用户空间）获取用户所有关注的用户
+
+										var showfocusperson = window.myStorage.getItem(window.storageKeyName.SHOWFOCUSEPERSEN);
+										var tempModel = cities[cities.length - 1];
+										userIDs = showfocusperson;
+										tempModel.userIDs = userIDs;
+										tempModel.index = 1;
+										tempModel.isRefresh = 0; //是刷新0，还是加载更多1
+										//74.(用户空间）获取多用户空间所有用户动态列表
+										console.log(JSON.stringify(tempModel))
+										getAllUserSpacesByUser(tempModel);
+										for(var item in datasource) {
+											var tempArr = datasource[item]
+											for(var j in tempArr) {
+												if(zonepArray[index].PublisherId == tempArr[j].PublisherId) {
+													if(isFocus == 0) {
+														tempArr[j].IsFocused = 1;
+														datasource[item] = tempArr
+													} else {
+														tempArr[j].IsFocused = 0;
+														datasource[item] = tempArr
+													}
+
+												}
+
+											}
+										}
+
+									}
+								}, 1000);
+								return;
+							} else {
+
+							}
 							if(personalUTID == userId) {
 								var btnArray = ['取消', '确定'];
 								mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
@@ -213,18 +291,22 @@ var dynamiclistitem = (function($, mod) {
 									setTimeout(function() {
 										//获取数据
 										if(pageID != 1) { //定制的城市
-											for(var i = 0; i < zonepArray.length; i++) {
-												if(zonepArray[index].PublisherId == zonepArray[i].PublisherId) {
+											for(var item in datasource) {
+											var tempArr = datasource[item]
+											for(var j in tempArr) {
+												if(zonepArray[index].PublisherId == tempArr[j].PublisherId) {
 													if(isFocus == 0) {
-														zonepArray[i].IsFocused = 1;
-														datasource[sliderId] = zonepArray
+														tempArr[j].IsFocused = 1;
+														datasource[item] = tempArr
 													} else {
-														zonepArray[i].IsFocused = 0;
-														datasource[sliderId] = zonepArray
+														tempArr[j].IsFocused = 0;
+														datasource[item] = tempArr
 													}
 
 												}
+
 											}
+										}
 											console.log('status=' + status)
 											if(status == 0) {
 												mui.toast("取消关注成功")
@@ -529,18 +611,18 @@ var dynamiclistitem = (function($, mod) {
 			var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
 			var tempData;
 			var index;
-//
-//			var tempPageID = this.id.match(/praise(\S*)zx/)[1];
-//			console.log('tempPageID='+tempPageID)
-//			if(tempPageID==pageID){
-				index = this.id.replace('praise' + pageID + idFlag, '');
-//
-				tempData = zonepArray[index];
-//			}else{
-// 
-//			}
+			//
+			//			var tempPageID = this.id.match(/praise(\S*)zx/)[1];
+			//			console.log('tempPageID='+tempPageID)
+			//			if(tempPageID==pageID){
+			index = this.id.replace('praise' + pageID + idFlag, '');
+			//
+			tempData = zonepArray[index];
+			//			}else{
+			// 
+			//			}
 			var color = this.style.color;
-			
+
 			if(color == 'rgb(183, 183, 183)') {
 				var comData = {
 					userId: userInfo.utid, //用户ID
@@ -568,23 +650,23 @@ var dynamiclistitem = (function($, mod) {
 								index: preModel.tempIndex
 							})
 						}
-//						else if(zonepArray[index].pageFlag == 1) {
-//							for(var slider_id in datasource) {
-//								if(slider_id == sliderId){
-//									continue;
-//								}
-//								var tempArr = datasource[slider_id]
-//								var citycode = slider_id.replace('top_', '');
-//								for(var j in tempArr) {
-//									var tempModel = tempArr[j];
-//									if(tempModel.PublisherId == tempData.PublisherId) {
-//										var tempA = document.getElementById("praise" + citycode + idFlag + index);
-//										//模拟点击点赞按钮
-//										mui.trigger(tempA, 'tap');
-//									}
-//								}
-//							}
-//						}
+						//						else if(zonepArray[index].pageFlag == 1) {
+						//							for(var slider_id in datasource) {
+						//								if(slider_id == sliderId){
+						//									continue;
+						//								}
+						//								var tempArr = datasource[slider_id]
+						//								var citycode = slider_id.replace('top_', '');
+						//								for(var j in tempArr) {
+						//									var tempModel = tempArr[j];
+						//									if(tempModel.PublisherId == tempData.PublisherId) {
+						//										var tempA = document.getElementById("praise" + citycode + idFlag + index);
+						//										//模拟点击点赞按钮
+						//										mui.trigger(tempA, 'tap');
+						//									}
+						//								}
+						//							}
+						//						}
 						wd.close();
 					} else {
 						mui.toast(data.RspTxt);
@@ -645,23 +727,23 @@ var dynamiclistitem = (function($, mod) {
 								index: preModel.tempIndex
 							})
 						}
-//						else if(zonepArray[index].pageFlag == 1) {
-//							for(var slider_id in datasource) {
-//								if(slider_id == sliderId){
-//									continue;
-//								}
-//								var tempArr = datasource[slider_id]
-//								var citycode = slider_id.replace('top_', '');
-//								for(var j in tempArr) {
-//									var tempModel = tempArr[j];
-//									if(tempModel.PublisherId == tempData.PublisherId) {
-//										var tempA = document.getElementById("praise" + citycode + idFlag + index);
-//										//模拟点击点赞按钮
-//										mui.trigger(tempA, 'tap');
-//									}
-//								}
-//							}
-//						}
+						//						else if(zonepArray[index].pageFlag == 1) {
+						//							for(var slider_id in datasource) {
+						//								if(slider_id == sliderId){
+						//									continue;
+						//								}
+						//								var tempArr = datasource[slider_id]
+						//								var citycode = slider_id.replace('top_', '');
+						//								for(var j in tempArr) {
+						//									var tempModel = tempArr[j];
+						//									if(tempModel.PublisherId == tempData.PublisherId) {
+						//										var tempA = document.getElementById("praise" + citycode + idFlag + index);
+						//										//模拟点击点赞按钮
+						//										mui.trigger(tempA, 'tap');
+						//									}
+						//								}
+						//							}
+						//						}
 						wd.close();
 					} else {
 						mui.toast(data.RspTxt);

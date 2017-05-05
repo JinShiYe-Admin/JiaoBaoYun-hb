@@ -29,7 +29,14 @@ mui.plusReady(function() {
 	flagRef = 0;
 	pageIndex = 1; //当前页面
 	//	expertId = expertInfo.UserId;
-	requireData(type); //根据类型获取数据
+	if(events.getUtid()) {
+		//已经登录
+		requireData(type); //根据类型获取数据
+	} else {
+		//游客身份、获取关注的人
+		requireDataNotLogin();
+	}
+
 	setListener(); //设置监听
 
 	//阻尼系数、初始化刷新加载更多
@@ -48,8 +55,13 @@ mui.plusReady(function() {
 				console.log("下拉刷新");
 				pageIndex = 1;
 				flagRef = 0;
-				//获取关注人数据
-				requireData(type);
+				if(events.getUtid()) {
+					//已经登录
+					requireData(type); //根据类型获取数据
+				} else {
+					//游客身份、获取关注的人
+					requireDataNotLogin();
+				}
 				setTimeout(function() {
 					//结束下拉刷新
 					self.endPullDownToRefresh();
@@ -61,27 +73,40 @@ mui.plusReady(function() {
 				var self = this;
 				console.log("上拉加载更多");
 				flagRef = 1;
-				if(pageIndex <= totalPageCount) {
-					//获取关注人数据
-					requireData(type);
-					setTimeout(function() {
+				if(events.getUtid()) {
+					//已经登录
+					if(pageIndex <= totalPageCount) {
+						//获取关注人数据
+						requireData(type);
+						setTimeout(function() {
+							//结束下拉刷新
+							self.endPullUpToRefresh();
+							if(mui(".mui-table-view-cell").length < 10) {
+								mui(".mui-pull-loading")[0].innerHTML = "";
+							}
+						}, 1000);
+					} else {
 						//结束下拉刷新
 						self.endPullUpToRefresh();
-						if(mui(".mui-table-view-cell").length < 10) {
-							mui(".mui-pull-loading")[0].innerHTML = "";
-						}
-					}, 1000);
+						mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
+					}
 				} else {
-					//结束下拉刷新
+					//游客身份、结束下拉刷新
 					self.endPullUpToRefresh();
 					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
 				}
+
 			}
 		}
 	});
 })
+//游客获取关注的人
+var requireDataNotLogin = function() {
+
+}
+
 /**
- * 获取关注人数据
+ * 获取关注人数据--登录
  */
 var requireData = function() {
 	var wd = events.showWaiting();

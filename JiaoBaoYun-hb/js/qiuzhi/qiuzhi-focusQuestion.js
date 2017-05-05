@@ -17,8 +17,13 @@ mui.plusReady(function() {
 		document.getElementById('list-container').innerHTML = "";
 		pageIndex = 1;
 		flagRef = 0;
-		//26.获取某个用户的关注问题列表
-		getFocusAsksByUser(ExpertsInfoModel.UserId);
+		if(events.getUtid()) {
+			//26.获取某个用户的关注问题列表
+			getFocusAsksByUser(ExpertsInfoModel.UserId);
+		} else {
+			//游客身份、获取关注的问题
+			getFocusAsksByUserNotLogin();
+		}
 	});
 
 	mui('.mui-table-view').on('tap', '.ask-title', function() {
@@ -55,8 +60,14 @@ mui.plusReady(function() {
 				console.log("下拉刷新");
 				pageIndex = 1;
 				flagRef = 0;
-				//26.获取某个用户的关注问题列表
-				getFocusAsksByUser(ExpertsInfoModel.UserId);
+				if(events.getUtid()) {
+					//26.获取某个用户的关注问题列表
+					getFocusAsksByUser(ExpertsInfoModel.UserId);
+				} else {
+					//游客身份、获取关注的问题
+					getFocusAsksByUserNotLogin();
+				}
+
 				setTimeout(function() {
 					//结束下拉刷新
 					self.endPullDownToRefresh();
@@ -67,27 +78,67 @@ mui.plusReady(function() {
 			callback: function() {
 				var self = this;
 				console.log("上拉加载更多");
-				if(pageIndex <= totalPageCount) {
-					flagRef = 1;
-					//26.获取某个用户的关注问题列表
-					getFocusAsksByUser(ExpertsInfoModel.UserId);
-					setTimeout(function() {
+				if(events.getUtid()) {
+					if(pageIndex <= totalPageCount) {
+						flagRef = 1;
+						//26.获取某个用户的关注问题列表
+						getFocusAsksByUser(ExpertsInfoModel.UserId);
+						setTimeout(function() {
+							//结束下拉刷新
+							self.endPullUpToRefresh();
+							if(mui(".mui-table-view-cell").length < 10) {
+								mui(".mui-pull-loading")[0].innerHTML = "";
+							}
+						}, 1000);
+					} else {
 						//结束下拉刷新
 						self.endPullUpToRefresh();
-						if(mui(".mui-table-view-cell").length < 10) {
-							mui(".mui-pull-loading")[0].innerHTML = "";
-						}
-					}, 1000);
+						mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
+					}
 				} else {
-					//结束下拉刷新
+					//游客身份、结束下拉刷新
 					self.endPullUpToRefresh();
 					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
 				}
+
 			}
 		}
 	});
-
 });
+
+//游客身份、获取关注的问题
+function getFocusAsksByUserNotLogin() {
+	//需要加密的数据
+	var comData = {
+		askIds: JSON.stringify(window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION)) //问题ID列表，Array，	例如[1,2,3]
+	};
+	// 等待的对话框
+	var wd = events.showWaiting();
+	//39.获取问题列表
+	postDataQZPro_getAskByIds(comData, wd, function(data) {
+		wd.close();
+		console.log('39.获取问题列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		if(data.RspCode == 0) {
+			//如果是旧数据，去掉里面的html标签
+			for(var i = 0; i < data.RspData.Data.length; i++) {
+				var temp = data.RspData.Data[i];
+				if(temp.AskSFlag == 1) {
+					temp.AskTitle = events.deleteHtml(temp.AskTitle);
+				}
+			}
+			questionArray = data.RspData.Data;
+			if(data.RspData.Data.length == 0) {
+				mui.toast('没有数据');
+			}
+			if(mui(".mui-table-view-cell").length < 10) {
+				mui(".mui-pull-loading")[0].innerHTML = "";
+			}
+			setQuestionRecord(data.RspData.Data);
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	});
+}
 
 //26.获取某个用户的关注问题列表
 function getFocusAsksByUser(userId) {

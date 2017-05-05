@@ -14,7 +14,7 @@ var RecordAudio = (function(mod) {
 		var format = 'amr';
 		//路径
 		var filename = '_documents/' + myDate.getTime() + parseInt(Math.random() * 1000) + '.' + format;
-		var time = 301000; //五分钟
+		var time = 300000; //五分钟
 		var options = mui.extend(true, {
 			filename: filename,
 			format: format,
@@ -39,7 +39,7 @@ var RecordAudio = (function(mod) {
 				message: '获取录音对象失败' // 错误描述信息
 			});
 		} else {
-			var timeId;
+			var timeOutId;
 			//开始录制
 			recorder.record(options, function(recordFile) {
 				//录音操作保存的音频文件路径
@@ -50,9 +50,9 @@ var RecordAudio = (function(mod) {
 					message: error.message // 错误描述信息
 				});
 			});
-			timeId = setTimeout(function() {
+			timeOutId = setTimeout(function() {
 				recorder.stop();
-			}, options.time);
+			}, options.time + 1000);
 		}
 		return recorder;
 	}

@@ -8,6 +8,7 @@ var flag = 1; //1为加载数据 0 为重置顺序
 var upperInfo;
 var parentContainer; //评论父控件
 var wd;
+video.initVideo();
 /**
  * 加载刷新
  */
@@ -23,9 +24,11 @@ events.initRefresh('list-container', function() {
 		flag = 1;
 		wd = events.showWaiting();
 		requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
+	}else{
+		mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+		events.showNoDataToast(pageIndex);
 	}
 })
-
 /**
  * 
  */
@@ -49,6 +52,7 @@ mui.plusReady(function() {
 	window.addEventListener('answerInfo', function(e) {
 		flag = 1;
 		selfId = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
+		mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
 		mui('#refreshContainer').pullRefresh().refresh(true);
 		answerData = {};
 		pageIndex = 1;
@@ -628,6 +632,7 @@ var setCommentContainer = function(showType) {
 	if(showType) {
 		ul.style.display = "none";
 		noCom.style.display = "block";
+		mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
 	} else {
 		ul.style.display = "block";
 		noCom.style.display = "none";
@@ -791,8 +796,8 @@ var getPicInner = function(data) {
 				console.log('图片路径：' + picInner);
 				return picInner;
 			case 2:
-				picInner+='<div style="background-image:url('+data.AnswerCutImg+');background-repeat:no-repeat;background-position:center;background-size:contain;width:'+win_width+'px;height:'+win_width*0.45+
-				'px;text-align:center;"><img style="margin:auto 0;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
+				picInner+='<div class="video-container" style="background-image:url('+data.AnswerCutImg+');background-repeat:no-repeat;background-position:center;background-size:contain;width:'+win_width+'px;height:'+win_width*0.45+
+				'px;text-align:center;"><img style="width: 22.5%; margin:11.25% 0;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
 				console.log("获取的图片控件："+picInner)
 			    return picInner;
 			default:
@@ -933,6 +938,9 @@ var setListeners = function() {
 			})
 		}
 
+	})
+	mui("#answer-imgs").on("tap",".video-container",function(){
+		video.playVideo(answerData.AnswerEncAddr,answerData.AnswerThumbnail);
 	})
 	mui('.mui-table-view').on('longtap', ".comment-words", function() {
 		console.log("评论信息：" + JSON.stringify(this.commentInfo));
