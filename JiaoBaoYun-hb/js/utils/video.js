@@ -27,11 +27,11 @@ var video=(function(mod){
 //		player.removeAttribute("autoplay");
 	}
 	mod.playVideo=function(videoPath,thumbPath){
-		if(plus.os.name=="Android"){
-			mod.playInAndroid(videoPath,thumbPath);
-		}else{
+//		if(plus.os.name=="Android"){
+//			mod.playInAndroid(videoPath,thumbPath);
+//		}else{
 			mod.playInHTML(videoPath,thumbPath);
-		}
+//		}
 	}
 	mod.initVideo=function(){
 		var content=document.body;
@@ -41,6 +41,9 @@ var video=(function(mod){
 		var div=document.createElement("div");
 		div.className="mui-popover";
 		div.id="pop-video";
+		div.style.cssText="position:fixed;width:"+win_width+"px;height:"+(win_width/4)*3+"px;top:20%;background-color:#000000;"
+		console.log("视频信息："+win_width);
+//		document.querySelector(".mui-backdrop").style.backgroundColor="#000000";
 		div.innerHTML='<video id="video-player" style="width:'+win_width+'px;height:'+win_width/4*3+
 			'px;">your browser does not support the video tag</video>';
 //		console.log("fragment.innerHTML"+fragment.innerHTML);
