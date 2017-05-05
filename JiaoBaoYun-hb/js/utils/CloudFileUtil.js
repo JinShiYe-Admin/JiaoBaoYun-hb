@@ -835,7 +835,7 @@ var CloudFileUtil = (function($, mod) {
 	}
 	// 监听上传任务状态
 	function onStateChanged(upload, status) {
-		console.log('mui上传状态：' + upload.state)
+		//		console.log('mui上传状态：' + upload.state)
 		if(upload.state == 4 && status == 200) {
 			// 上传完成
 			//			console.log("Upload success: " + upload.getFileName());
@@ -987,44 +987,65 @@ var CloudFileUtil = (function($, mod) {
 				div.innerHTML = '<img style="width:90%;height:90%;margin:5%;" src="' + img.thumb + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
 					'<a class="mui-icon iconfont icon-guanbi"></a>';
 			} else {
-				div.innerHTML = '<div class="clip-container"  style="width:' + div_width * 0.9 + 'px;height:' + div_width * 0.9 + 'px;margin:5%;overflow:hidden;display:inline-block backgroud:blue"><img src="' + img.url + '" style="visibility:hidden;" data-preview-src="' + img.url + '" data-preview-group="1"/></div>' +
+				div.innerHTML = '<div class="clip-container"  style="width:' + div_width * 0.9 + 'px;height:' + div_width * 0.9 + 'px;margin:5%;overflow:hidden;display:inline-block;backgroud:blue"><img src="' +
+					img.url + '" style="visibility:hidden;" data-preview-src="' + img.url + '" data-preview-group="1"/></div>' +
 					'<a class="mui-icon iconfont icon-guanbi"></a>';
 			}
-		} else {
-			if(flag) {
-				div.innerHTML = '<img style="width:90%;height:90%;margin:5%;" src="../../image/utils/playvideo.png" style="backgroud-image:url('+img.thumb+');"/>' +
+		} else if(img.type == 2) {
+			if(flag) { //获取的
+				div.innerHTML = '<div class="clip-container video-container"  style="width:' + div_width * 0.9 + 'px;height:' + div_width * 0.9 + 'px;margin:5%;overflow:hidden;display:inline-block;background-image:url(' +
+					img.thumb +
+					');background-size:cover;"><img src="../../image/utils/playvideo.png" style="width:50%;height:50%;margin:25%" /></div>' +
 					'<a class="mui-icon iconfont icon-guanbi"></a>';
-			} else {
-				div.innerHTML = '<div class="clip-container"  style="width:' + div_width * 0.9 + 'px;height:' + div_width * 0.9 + 'px;margin:5%;overflow:hidden;display:inline-block;backgroud:blue"><img src="../../image/utils/playvideo.png" style="width:50%;padding:25%;backgroud-img:'+thumb+';"/></div>' +
+//				div.innerHTML = '<img style="width:90%;height:90%;margin:5%;" src="../../image/utils/playvideo.png" style="backgroud-image:url(' + img.thumb + ');"/>' +
+//					'<a class="mui-icon iconfont icon-guanbi"></a>';
+			} else { //上传模式
+				console.log("缩略图信息：" + thumb);
+				div.innerHTML = '<div class="clip-container video-container"  style="width:' + div_width * 0.9 + 'px;height:' + div_width * 0.9 + 'px;margin:5%;overflow:hidden;display:inline-block;background-image:url(' +
+					thumb +
+					');background-size:cover;"><img src="../../image/utils/playvideo.png" style="width:50%;height:50%;margin:25%" /></div>' +
 					'<a class="mui-icon iconfont icon-guanbi"></a>';
 			}
 		}
 		console.log("放置的图片信息:" + JSON.stringify(img));
 		pictures.appendChild(div);
-		if(div.querySelector(".clip-container")) {
-			div.querySelector("img").onload = function(event) {
-				console.log(JSON.stringify(event))
-				console.log("图片宽度：" + this.naturalWidth + ",图片高度：" + this.naturalHeight);
-				var marginSize = Math.abs(this.naturalWidth - this.naturalHeight) / 2;
+		switch(img.type) {
+			case 1: //图片
+				if(div.querySelector(".clip-container")) {
+					div.querySelector("img").onload = function(event) {
+						console.log(JSON.stringify(event))
 
-				console.log("margin值：" + marginSize + "px");
-				if(this.naturalWidth > this.naturalHeight) {
-					var realMarginSize = marginSize / this.naturalHeight * this.width;
-					this.style.height = this.width + "px";
-					this.style.width = "initial";
-					this.style.marginLeft = -realMarginSize + "px";
-					this.style.marginRight = -realMarginSize + "px";
-					this.style.visibility = "visible";
-				} else {
-					var realMarginSize = marginSize / this.naturalWidth * this.width;
-					this.style.height = "initial";
-					this.style.width = this.width + "px";
-					this.style.marginTop = -realMarginSize + "px";
-					this.style.marginBottom = -realMarginSize + "px";
-					this.style.visibility = "visible";
+						var marginSize = Math.abs(this.naturalWidth - this.naturalHeight) / 2;
+
+						console.log("margin值：" + marginSize + "px");
+						if(this.naturalWidth > this.naturalHeight) {
+							var realMarginSize = marginSize / this.naturalHeight * this.width;
+							this.style.height = this.width + "px";
+							this.style.width = "initial";
+							this.style.marginLeft = -realMarginSize + "px";
+							this.style.marginRight = -realMarginSize + "px";
+							this.style.visibility = "visible";
+						} else {
+							var realMarginSize = marginSize / this.naturalWidth * this.width;
+							this.style.height = "initial";
+							this.style.width = this.width + "px";
+							this.style.marginTop = -realMarginSize + "px";
+							this.style.marginBottom = -realMarginSize + "px";
+							this.style.visibility = "visible";
+						}
+					}
 				}
-			}
+				break;
+			case 2: //视频
+				if(!thumb){
+					thumb=false;
+				}
+				div.querySelector(".video-container").data = [img, thumb];
+				break;
+			default:
+				break;
 		}
+
 	}
 
 	/**
@@ -1064,6 +1085,19 @@ var CloudFileUtil = (function($, mod) {
 			//删除图片
 			var pictures = document.getElementById('pictures');
 			pictures.removeChild(this.parentElement);
+		})
+	}
+	mod.setPlayVideoListener = function() {
+		mui('#pictures').on('tap', '.video-container', function() {
+			var videoPath,thumb;
+			if(this.data[0].localPath){
+				videoPath=this.data[0].localPath;
+				thumb=this.data[1];
+			}else{
+				videoPath=this.data[0].url;
+				thumb=this.data[0].thumb;
+			}
+			video.playVideo(videoPath,thumb);
 		})
 	}
 

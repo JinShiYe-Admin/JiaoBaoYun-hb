@@ -337,23 +337,41 @@ var setFocusCondition = function(cell) {
 		}
 		return '<span class="focus-status">关注问题<span>';
 	} else {
-		var arrayData=events.isExistInStorageArray(storageKeyName.FOCUSEQUESTION,cell.TabId)
-		if(arrayData[1]>=0){
+		var arrayData = events.isExistInStorageArray(storageKeyName.FOCUSEQUESTION, cell.TabId)
+		if(arrayData[1] >= 0) {
 			return '<span class="focus-status">已关注<span>';
-		}else{
+		} else {
 			return '<span class="focus-status">关注问题<span>';
 		}
 	}
 
 }
 var getImgs = function(cell) {
-	if(cell.AnswerCutImg && cell.AnswerCutImg != "") {
-		var imgArray = cell.AnswerEncAddr.split('|');
-		var clipImgs = cell.AnswerCutImg.split("|");
-		imgInner = '<img class="clip-img" data-lazyload="' + clipImgs[0] + '"/>';
-		return imgInner;
+	var imgInner;
+	switch(cell.AnswerEncType) {
+		case 1:
+			if(cell.AnswerCutImg && cell.AnswerCutImg != "") {
+				var imgArray = cell.AnswerEncAddr.split('|');
+				var clipImgs = cell.AnswerCutImg.split("|");
+				imgInner = '<img class="clip-img" data-lazyload="' + clipImgs[0] + '"/>';
+				return imgInner;
+			}
+			return "";
+		case 2:
+			if(cell.AnswerCutImg && cell.AnswerCutImg != "") {
+				var win_width=document.body.offsetWidth-30;
+				var imgArray = cell.AnswerEncAddr.split('|');
+				var clipImgs = cell.AnswerCutImg.split("|");
+				imgInner='<div class="video-container" style="background-image:url('+cell.AnswerCutImg+');background-size:contain;width:'+win_width+'px;height:'+win_width*0.45+
+				'px;text-align:center;"><img style="width: 22.5%; margin:11.25% 0;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
+				return imgInner;
+			}
+			return "";
+			break;
+		default:
+			return '';
 	}
-	return '';
+
 }
 /**
  *
@@ -464,16 +482,16 @@ var setListener = function() {
 		//		} 
 		var item = this;
 		requireQuestionInfo(item.questionInfo.TabId, function(data) {
-			console.log("获取的个人id"+events.getUtid());
+			console.log("获取的个人id" + events.getUtid());
 			if(events.getUtid()) {
 				setQuestionFocus(item);
 			} else {
-				var isDel=item.innerText == "关注问题"?0:1;
-				events.toggleStorageArray(storageKeyName.FOCUSEQUESTION, parseInt(item.questionInfo.TabId),isDel);
-				console.log("获取存储在本地的数组："+myStorage.getItem(storageKeyName.FOCUSEQUESTION));
-				if(isDel){
+				var isDel = item.innerText == "关注问题" ? 0 : 1;
+				events.toggleStorageArray(storageKeyName.FOCUSEQUESTION, parseInt(item.questionInfo.TabId), isDel);
+				console.log("获取存储在本地的数组：" + myStorage.getItem(storageKeyName.FOCUSEQUESTION));
+				if(isDel) {
 					item.innerText = "关注问题";
-				}else{
+				} else {
 					item.innerText = "已关注";
 				}
 			}

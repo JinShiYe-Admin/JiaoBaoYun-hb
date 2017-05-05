@@ -71,12 +71,14 @@
 		<script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/utils/recordvideoutil.js"></script>
 		<script src="../../js/utils/load.js"></script>
+		<script src="../../js/utils/video.js"></script>
 		<!--上传至七牛云js-->
 		<script src="../../js/utils/CloudFileUtil.js" type="text/javascript" charset="utf-8"></script>
 		<!--求知接口js-->
 		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
 
 		<script type="text/javascript">
+			video.initVideo();
 			mui.init();
 			//将传值到的标题显示
 			var askModel; //问题model
@@ -147,10 +149,6 @@
 					document.getElementById('title').innerText = '修改回答';
 					//匿名默认未选择
 					document.querySelector(".extras-info").style.display = "block";
-					//					[].forEach.call(document.querySelectorAll('.file-extras'), function(item) {
-					//						item.style.display = 'inline-block';
-					//					})
-
 					document.getElementById('answerContent').placeholder = "修改回答,最多4000字";
 					jQuery('#answerContent').prop("maxLength", "4000"); //设置最长
 					answerInfo = e.detail.data;
@@ -161,6 +159,13 @@
 			var setAnswerInfo = function(answerInfo) {
 				document.getElementById('answerContent').value = answerInfo.AnswerContent;
 				document.getElementById('checkbox').checked = answerInfo.IsAnonym ? true : false;
+//				switch (answerInfo.AnswerEncType){
+//					case 1://图片
+//						break;
+//					case 2:
+//					default:
+//						break;
+//				}
 				if(answerInfo.AnswerThumbnail) {
 					var imgs = answerInfo.AnswerThumbnail.split("|");
 					var bigImgs = answerInfo.AnswerEncAddr.split("|");
@@ -172,7 +177,7 @@
 							thumb: imgs[i],
 							clip: cutImgs[i],
 							order: parseInt(i),
-							type: 1
+							type: answerInfo.AnswerEncType
 						};
 						files.push(img);
 					}
@@ -241,6 +246,19 @@
 				});
 				//录像
 				events.addTap('take_camero', function() {
+					if(CloudFileUtil.files.length > 0) {
+						switch(CloudFileUtil.files[0].type) {
+							case 1:
+								mui.toast("只能上传一种附件！");
+								break;
+							case 2:
+								mui.toast("只能上传一个视频！");
+								break;
+							default:
+								break;
+						}
+						return;
+					}
 					RecordVideo.recordVideo({}, function(path) {
 						events.showWaiting();
 						console.log("保存在本地的路径：" + path);
@@ -255,19 +273,20 @@
 									var tokenInfo = datas.Data;
 									//上传文件
 									CloudFileUtil.uploadFile(tokenInfo, path, function(uploadData, status) {
-										console.log("获取的上传数据："+JSON.stringify(uploadData));
-										console.log("获取的token信息："+JSON.stringify(tokenInfo));
+										console.log("获取的上传数据：" + JSON.stringify(uploadData));
+										console.log("获取的token信息：" + JSON.stringify(tokenInfo));
 										var img = { //图片信息
 											url: tokenInfo.Domain + tokenInfo.Key,
 											thumb: tokenInfo.OtherKey[data.thumbKey],
-											clip: tokenInfo.OtherKey[data.thumbKey]+"?imageMogr2/gravity/Center/crop/!"+mData.options.thumbSize.width+"x"+mData.options.thumbSize.width*0.45,
+											clip: tokenInfo.OtherKey[data.thumbKey] + "?imageMogr2/gravity/Center/crop/!" + mData.options.thumbSize.width + "x" + mData.options.thumbSize.width * 0.45,
+											localPath:path,
 											type: 2
 										}
-//										console.log("获取的图片信息：" + JSON.stringify(img));
+										//										console.log("获取的图片信息：" + JSON.stringify(img));
 										//关闭等待框
 										plus.nativeUI.closeWaiting();
 										//放置图片
-										CloudFileUtil.setPic(img,0,thumb);
+										CloudFileUtil.setPic(img, 0, thumb);
 									});
 								}
 
@@ -285,6 +304,10 @@
 				})
 				//相册
 				events.addTap('get_gallery', function() {
+					if(CloudFileUtil.files.length > 0 && CloudFileUtil.files[0].type != 1) {
+						mui.toast("只允许上传一种附件！");
+						return;
+					}
 					if(CloudFileUtil.files.length < 9) {
 						var picCount = 0; //上传图片计数
 						gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
@@ -435,7 +458,7 @@
 				var comData = {
 					askId: askModel.TabId, //问题ID
 					answerContent: answerContent, //回答内容,4000
-					encType:getTypeAddress(CloudFileUtil.files).encType,
+					encType: getTypeAddress(CloudFileUtil.files).encType,
 					encAddr: getTypeAddress(CloudFileUtil.files).encAddr, //附件地址,300,多个的情况例如：1.jpg|2.jpg
 					thumbnail: getTypeAddress(CloudFileUtil.files).encImg,
 					cutImg: getTypeAddress(CloudFileUtil.files).clipAddress,
@@ -519,6 +542,8 @@
 
 			//删除图标的点击事件
 			CloudFileUtil.setDelPicListener();
+			//播放视频按钮
+			CloudFileUtil.setPlayVideoListener();
 			/**
 			 * 获取接口数据文件及缩略图
 			 * encType: '',//附件类型,1图片2音视频3仅文字
@@ -535,8 +560,8 @@
 				if(CloudFileUtil.files.length > 0) { //如果存在附件
 					for(var i in CloudFileUtil.files) {
 						var theFile = CloudFileUtil.files[i];
-						if(i==0){
-							TAs.encType=theFile.type;
+						if(i == 0) {
+							TAs.encType = theFile.type;
 						}
 						//						if(i == 0) {
 						//							TAs.encType = theFile.type;
@@ -561,49 +586,6 @@
 				}
 				return TAs;
 			}
-			//			var clipSinglePic = function(theFile, width, callback) {
-			//				//				var compressedPaths = [theFile.url];
-			//				var localPath = theFile.url;
-			//				console.log("要更改的路径："+localPath);
-			//				var options = {
-			//					type: 1,
-			//					thumbSize: {
-			//						width: 200,
-			//						height: 200
-			//					},
-			//					cropSize: {
-			//						width: event.width,
-			//						height: event.width * 0.45
-			//					}
-			//				}
-			//				var saveSpace = storageKeyName.KNOWLEDGE; //保存空间
-			//				var data = CloudFileUtil.getSingleImgUploadOptions(localPath, 7, 0, saveSpace, options);
-			//				console.log("获取的参数："+JSON.stringify(data));
-			//				//								var data = CloudFileUtil.getMultipleUploadDataOptions(compressedPaths, 7, 200, 0, saveSpace); //获取获取token的各参数
-			//				CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-			//					console.log("获取的数据：" + JSON.stringify(datas));
-			//					if(datas.Status == 1) {
-			//						var tokenInfo = datas.Data;
-			//
-			//						//上传文件
-			//						CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
-			//							console.log(JSON.stringify(uploadData));
-			//							var img = { //图片信息
-			//								url: tokenInfo.Domain + tokenInfo.Key,
-			//								clip: tokenInfo.OtherKey[data.clipKey],
-			//								type: 1
-			//							}
-			//							console.log("获取的图片信息：" + JSON.stringify(img));
-			//							//关闭等待框
-			//							plus.nativeUI.closeWaiting();
-			//						});
-			//					}
-			//
-			//				}, function(xhr, type, errorThrown) {
-			//					console.log("错误类型：" + type + errorThrown);
-			//					plus.nativeUI.closeWaiting(); //关闭等待框
-			//				});
-			//			}
 		</script>
 	</body>
 

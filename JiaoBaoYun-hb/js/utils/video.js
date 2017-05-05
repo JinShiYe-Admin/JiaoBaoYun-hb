@@ -45,7 +45,7 @@ var video=(function(mod){
 			'px;">your browser does not support the video tag</video>';
 //		console.log("fragment.innerHTML"+fragment.innerHTML);
 		content.insertBefore(div,content.querySelector(".mui-content"));
-		console.log("加完标签后的内容："+content.innerHTML);
+//		console.log("加完标签后的内容："+content.innerHTML);
 	}
 	return mod;
 })(video||{})
