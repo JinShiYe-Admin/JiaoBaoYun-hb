@@ -70,6 +70,7 @@
 		<script src="../../js/mui.zoom.js"></script>
 		<script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/utils/recordvideoutil.js"></script>
+		<script src="../../js/utils/load.js"></script>
 		<!--上传至七牛云js-->
 		<script src="../../js/utils/CloudFileUtil.js" type="text/javascript" charset="utf-8"></script>
 		<!--求知接口js-->
@@ -241,20 +242,40 @@
 				//录像
 				events.addTap('take_camero', function() {
 					RecordVideo.recordVideo({}, function(path) {
+						events.showWaiting();
 						console.log("保存在本地的路径：" + path);
-						var saveSpace = storageKeyName.KNOWLEDGE;
-						var options = {
-							type: 2,
-							thumbSize: {
-								width: 200,
-								height: 200
-							},
-							cropSize: {
-								width: event.width,
-								height: event.width * 0.45
-							}
-						}
-						var data = CloudFileUtil.getSingleImgUploadOptions(path, 7, 0, saveSpace, options);
+						load.getManageOptions(2, path, function(mData, thumb) {
+							console.log("视频获取的各项参数：" + JSON.stringify(data));
+							mData.saveSpace = storageKeyName.KNOWLEDGE;
+							mData.spaceId = 7;
+							var data = CloudFileUtil.getSingleImgUploadOptions(path, mData.spaceId, mData.spaceType, mData.saveSpace, mData.options);
+							CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+								console.log("获取的数据：" + JSON.stringify(datas));
+								if(datas.Status == 1) {
+									var tokenInfo = datas.Data;
+									//上传文件
+									CloudFileUtil.uploadFile(tokenInfo, path, function(uploadData, status) {
+										console.log("获取的上传数据："+JSON.stringify(uploadData));
+										console.log("获取的token信息："+JSON.stringify(tokenInfo));
+										var img = { //图片信息
+											url: tokenInfo.Domain + tokenInfo.Key,
+											thumb: tokenInfo.OtherKey[data.thumbKey],
+											clip: tokenInfo.OtherKey[data.thumbKey]+"?imageMogr2/gravity/Center/crop/!"+mData.options.thumbSize.width+"x"+mData.options.thumbSize.width*0.45,
+											type: 2
+										}
+//										console.log("获取的图片信息：" + JSON.stringify(img));
+										//关闭等待框
+										plus.nativeUI.closeWaiting();
+										//放置图片
+										CloudFileUtil.setPic(img,0,thumb);
+									});
+								}
+
+							}, function(xhr, type, errorThrown) {
+								console.log("错误类型：" + type + errorThrown);
+								plus.nativeUI.closeWaiting(); //关闭等待框
+							});
+						})
 					}, function(errData) {
 						console.log(errData.code);
 					})
@@ -300,21 +321,12 @@
 											//上传图片
 											CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status, index) {
 												console.log(JSON.stringify(uploadData));
-												//												if(index == 0) {
 												imgs[index] = {
 													url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
 													thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
 													clip: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "clip/"),
 													type: 1
 												}
-												//												} else {
-												//													imgs[index] = {
-												//														url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
-												//														thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
-												//														type: 1
-												//													}
-												//												}
-
 												picCount++;
 
 												if(picCount == compressedPaths.length) { //所有图片已上传
@@ -423,6 +435,7 @@
 				var comData = {
 					askId: askModel.TabId, //问题ID
 					answerContent: answerContent, //回答内容,4000
+					encType:getTypeAddress(CloudFileUtil.files).encType,
 					encAddr: getTypeAddress(CloudFileUtil.files).encAddr, //附件地址,300,多个的情况例如：1.jpg|2.jpg
 					thumbnail: getTypeAddress(CloudFileUtil.files).encImg,
 					cutImg: getTypeAddress(CloudFileUtil.files).clipAddress,
@@ -518,11 +531,13 @@
 				var encAddrs = [];
 				var encImgs = [];
 				var clipImgs = [];
-				var theFile;
 				console.log("要处理的上传图片：" + JSON.stringify(CloudFileUtil.files))
 				if(CloudFileUtil.files.length > 0) { //如果存在附件
 					for(var i in CloudFileUtil.files) {
-						theFile = CloudFileUtil.files[i];
+						var theFile = CloudFileUtil.files[i];
+						if(i==0){
+							TAs.encType=theFile.type;
+						}
 						//						if(i == 0) {
 						//							TAs.encType = theFile.type;
 						//							if(theFile.clip) {

@@ -55,19 +55,19 @@ var load = (function(mod) {
 	}
 	/**
 	 * 
-	 * @param {Object} type
-	 * @param {Object} saveSpace
-	 * @param {Object} isClip
+	 * @param {Object} type 图片
+	 * @param {Object} filePath
+	 * @param {Object} callback 回调函数
+	 * @param {Object} extras 额外数据
 	 */
-	mod.getManageOptions = function(type,saveSpace,isClip) {
+	mod.getManageOptions = function(type, filePath,callback,extras) {
 		var data = {};
-		data.spaceId = spaceId;
-		data.saveSpace = saveSpace;
+//		data.spaceId = spaceId;
 		data.spaceType = 0; //公共空间
 		switch(type) {
 			case 1: //图片
 				data.options = {
-					type:0,
+					type: 0,
 					thumbSize: {
 						width: 200,
 						height: 200
@@ -77,11 +77,24 @@ var load = (function(mod) {
 						height: event.width * 0.45
 					}
 				}
-				if(isClip){
-					data.options.type=10;
+				if(isClip) {
+					data.options.type = 10;
 				}
+				callback(data);
 				break;
 			case 2: //视频
+				mod.getVideoThumb(filePath, function(thumb,width,height) {
+					data.options = {
+						type: 2,
+						thumbSize: {
+							width: width,
+							height: height
+						},
+						cropSize: {
+						}
+					}
+					callback(data,thumb);
+				})
 				break;
 			case 3: //文字
 				break;
@@ -89,6 +102,20 @@ var load = (function(mod) {
 				break;
 			default:
 				break;
+		}
+	}
+	mod.getVideoThumb = function(videoPath, callback) {
+		var video = document.createElement("video");
+		video.src = videoPath;
+		video.onloadeddata = function() {
+			var canvas = document.createElement('canvas');
+			canvas.width = video.videoWidth / 2;
+			canvas.height = video.videoHeight / 2;
+			console.log('canvas ' + canvas.width + ' ' + canvas.height)
+			canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+			var thumb = canvas.toDataURL("image/png");
+			video = null;
+			callback(thumb, canvas.width*2, canvas.height*2);
 		}
 	}
 	/**

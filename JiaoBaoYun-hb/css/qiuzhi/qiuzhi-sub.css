@@ -138,7 +138,6 @@ p {
 .ask-title {
 	font-size: 1.6rem;
 	font-family: "楷体";
-	font-weight: bold;
 	color: #323232;
 }
 
@@ -156,12 +155,12 @@ p {
 
 .mui-content,
 .mui-table-view {
-	background-color: #F8F9FB;
+	background-color: #F2F3F5;
 }
 
 .mui-table-view-cell {
 	background-color: #fff;
-	margin-top: .6rem;
+	margin-top: 8px;
 }
 
 #experts_sw .mui-control-item {

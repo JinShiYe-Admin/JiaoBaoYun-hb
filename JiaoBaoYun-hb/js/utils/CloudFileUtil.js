@@ -835,7 +835,7 @@ var CloudFileUtil = (function($, mod) {
 	}
 	// 监听上传任务状态
 	function onStateChanged(upload, status) {
-		//		console.log('mui上传状态：' + upload.state)
+		console.log('mui上传状态：' + upload.state)
 		if(upload.state == 4 && status == 200) {
 			// 上传完成
 			//			console.log("Upload success: " + upload.getFileName());
@@ -884,7 +884,7 @@ var CloudFileUtil = (function($, mod) {
 					case 6: //家校圈
 						desKey = "jxq789!@";
 						break;
-					case 7: //家校圈
+					case 7: //求知	
 						desKey = "qz123qwe";
 						break;
 					default:
@@ -971,7 +971,7 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} img
 	 * @flag {Object} 1获取的 0：上传模式
 	 */
-	mod.setPic = function(img, flag) {
+	mod.setPic = function(img, flag, thumb) {
 		mod.files.push(img);
 		//	picPath=camero.getAbsolutePath(picPath);
 		var pictures = document.getElementById('pictures');
@@ -982,12 +982,22 @@ var CloudFileUtil = (function($, mod) {
 		div.style.height = div_width + "px";
 		div.img = img;
 		div.className = 'img-div';
-		if(flag) {
-			div.innerHTML = '<img style="width:90%;height:90%;margin:5%;" src="' + img.thumb + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
-				'<a class="mui-icon iconfont icon-guanbi"></a>';
+		if(img.type == 1) {
+			if(flag) {
+				div.innerHTML = '<img style="width:90%;height:90%;margin:5%;" src="' + img.thumb + '" data-preview-src="' + img.url + '" data-preview-group="1"/>' +
+					'<a class="mui-icon iconfont icon-guanbi"></a>';
+			} else {
+				div.innerHTML = '<div class="clip-container"  style="width:' + div_width * 0.9 + 'px;height:' + div_width * 0.9 + 'px;margin:5%;overflow:hidden;display:inline-block backgroud:blue"><img src="' + img.url + '" style="visibility:hidden;" data-preview-src="' + img.url + '" data-preview-group="1"/></div>' +
+					'<a class="mui-icon iconfont icon-guanbi"></a>';
+			}
 		} else {
-			div.innerHTML = '<div class="clip-container"  style="width:' + div_width * 0.9 + 'px;height:' + div_width * 0.9 + 'px;margin:5%;overflow:hidden;display:inline-block backgroud:blue"><img src="' + img.url + '" style="visibility:hidden;" data-preview-src="' + img.url + '" data-preview-group="1"/></div>' +
-				'<a class="mui-icon iconfont icon-guanbi"></a>';
+			if(flag) {
+				div.innerHTML = '<img style="width:90%;height:90%;margin:5%;" src="../../image/utils/playvideo.png" style="backgroud-image:url('+img.thumb+');"/>' +
+					'<a class="mui-icon iconfont icon-guanbi"></a>';
+			} else {
+				div.innerHTML = '<div class="clip-container"  style="width:' + div_width * 0.9 + 'px;height:' + div_width * 0.9 + 'px;margin:5%;overflow:hidden;display:inline-block;backgroud:blue"><img src="../../image/utils/playvideo.png" style="width:50%;padding:25%;backgroud-img:'+thumb+';"/></div>' +
+					'<a class="mui-icon iconfont icon-guanbi"></a>';
+			}
 		}
 		console.log("放置的图片信息:" + JSON.stringify(img));
 		pictures.appendChild(div);

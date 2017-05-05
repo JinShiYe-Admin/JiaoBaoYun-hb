@@ -553,12 +553,12 @@ function getUserFocus(userId) {
 				mui.toast(data.RspTxt);
 			}
 		});
-	}else{
-		var arrayData=events.isExistInStorageArray(storageKeyName.FOCUSEPERSEN,parseInt(userId));
-		if(arrayData[1]>=0){
+	} else {
+		var arrayData = events.isExistInStorageArray(storageKeyName.FOCUSEPERSEN, parseInt(userId));
+		if(arrayData[1] >= 0) {
 			btn_focus.innerText = '已关注';
 			btn_focus.className = "mui-btn mui-pull-right btn-attentioned";
-		}else{
+		} else {
 			btn_focus.innerText = '关注';
 			btn_focus.className = "mui-btn mui-pull-right btn-attention"
 		}
@@ -708,7 +708,7 @@ var setQuestion = function(datasource) {
 	document.getElementById('question-content').innerHTML = "";
 	console.log("放置数据？？？？？？？？？")
 	var p = document.createElement('p');
-	p.innerHTML = datasource.AnswerContent.replace(/\n/g,"<br/>");
+	p.innerHTML = datasource.AnswerContent.replace(/\n/g, "<br/>");
 	questionContainer.appendChild(p);
 	//	p.querySelectorAll("img").for
 	jQuery("#question-content img").each(function(index, ele) {
@@ -780,17 +780,25 @@ var getPicInner = function(data) {
 		var picBigPaths = data.AnswerEncAddr.split('|');
 		var picInner = '';
 		var win_width = document.getElementById('answer-imgs').offsetWidth;
-		var pic_width = win_width / 3;
-		//		if(picPaths.length < 3) {
-		//			pic_width = win_width / picPaths.length;
-		//		}
-		console.log("图片宽度设置：" + pic_width)
-		for(var i in picPaths) {
-			picInner += '<img class="answer-img" retry="0" src="' + picPaths[i] + '" class="answer-img" style="width:' + pic_width + 'px;height: ' + pic_width + 'px;" ' +
-				'" data-preview-src="' + picBigPaths[i] + '" data-preview-group="' + data.AnswerId + '"/>';
+		switch(data.AnswerEncType) {
+			case 1: //图片
+				var pic_width = win_width / 3;
+				console.log("图片宽度设置：" + pic_width)
+				for(var i in picPaths) {
+					picInner += '<img class="answer-img" retry="0" src="' + picPaths[i] + '" style="width:' + pic_width + 'px;height: ' + pic_width + 'px;" ' +
+						'" data-preview-src="' + picBigPaths[i] + '" data-preview-group="' + data.AnswerId + '"/>';
+				}
+				console.log('图片路径：' + picInner);
+				return picInner;
+			case 2:
+				picInner+='<div style="background-image:url('+data.AnswerCutImg+');background-repeat:no-repeat;background-position:center;background-size:contain;width:'+win_width+'px;height:'+win_width*0.45+
+				'px;text-align:center;"><img style="margin:auto 0;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
+				console.log("获取的图片控件："+picInner)
+			    return picInner;
+			default:
+				break;
 		}
-		console.log('图片路径：' + picInner);
-		return picInner;
+
 	}
 	return ''
 }
@@ -849,18 +857,18 @@ var setListeners = function() {
 	})
 	//按钮点击事件关注事件
 	events.addTap('btn-focus', function() {
-		var item=this;
+		var item = this;
 		if(events.getUtid()) {
 			setUserFocus(answerData.AnswerMan, this)
 		} else {
-			var isDel=item.innerText == "关注"?0:1;
-			events.toggleStorageArray(storageKeyName.FOCUSEPERSEN, parseInt(answerData.AnswerMan),isDel);
+			var isDel = item.innerText == "关注" ? 0 : 1;
+			events.toggleStorageArray(storageKeyName.FOCUSEPERSEN, parseInt(answerData.AnswerMan), isDel);
 			if(isDel) {
 				item.innerText = '关注';
-				item.className = "mui-btn mui-pull-right btn-attention"
+				item.className = "mui-btn mui-pull-right btn-attention";
 			} else {
 				item.innerText = '已关注';
-				item.className = "mui-btn mui-pull-right btn-attentioned"
+				item.className = "mui-btn mui-pull-right btn-attentioned";
 			}
 		}
 
