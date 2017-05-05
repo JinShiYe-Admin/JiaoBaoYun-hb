@@ -332,6 +332,7 @@
 						},
 						up: {
 							contentinit: '',
+							contentnomore: '', //隐藏没有更多提示
 							callback: function() {
 								var wd = events.showWaiting();
 								var ipr = pageAndInfo[sliderId];
@@ -429,14 +430,10 @@
 						console.log('游客订制的科教城市 ' + JSON.stringify(localCity))
 						eduArray = localCity;
 					}
-					if(eduArray.length == 0) {
-						var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
-						console.log('个人账号地区的城市 ' + JSON.stringify(uarea));
-						eduArray.push({
-							acode: uarea.acode ? uarea.acode : 0,
-							aname: uarea.aname ? uarea.aname : "全国"
-						});
-					}
+					eduArray.push({
+						acode: '000000',
+						aname: "全国"
+					});
 					cities = eduArray.slice(0); //拷贝数组
 					callBack(cities, waitingDia);
 				} else {
@@ -470,10 +467,14 @@
 							var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
 							console.log('个人账号地区的城市 ' + JSON.stringify(uarea));
 							eduArray.push({
-								acode: uarea.acode ? uarea.acode : 0,
-								aname: uarea.aname ? uarea.aname : "全国"
+								acode: uarea.acode,
+								aname: uarea.aname
 							});
 						}
+						eduArray.push({
+							acode: '000000',
+							aname: "全国"
+						});
 
 						cities = eduArray.slice(0); //拷贝数组
 						callBack(cities, waitingDia);
