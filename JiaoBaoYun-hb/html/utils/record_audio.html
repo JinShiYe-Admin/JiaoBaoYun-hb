@@ -165,6 +165,7 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/utils/recordaudioutil.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js" ></script>
 		<script type="text/javascript">
 			mui.init();
 			var main; //存储当前webview
@@ -235,6 +236,20 @@
 			function initData() {
 				main = plus.webview.currentWebview();
 				console.log(JSON.stringify(main.data));
+				var oldBack = mui.back;
+				mui.back = function() {
+					audioBack();
+					oldBack();
+				}
+			}
+
+			/**
+			 * 返回上一个页面
+			 */
+			function audioBack() {
+				stopRecordAudio(); //停止录制
+				stopCount(); //停止计时
+				audioStop(); //停止播放
 			}
 
 			/**
@@ -261,7 +276,7 @@
 						pauseAudio.style.display = 'inline-block';
 						if(pause) { //暂停状态
 							audioResume();
-							stopCount();
+							playSetInterval();
 						} else {
 							//播放音频
 							audioPlay(function() {
@@ -280,6 +295,7 @@
 					} else if(this.id == 'pauseAudio') {
 						//暂停播放
 						audioPause();
+						pauseCount();
 						playAudio.style.display = 'inline-block';
 					}
 				});
@@ -288,8 +304,16 @@
 				mui('#audioControl').on('tap', '.bottom-text', function() {
 					if(this.id == 'cancle') {
 						console.log('取消');
+						audioStop();
+						stopCount();
+						initProgressBar();
+						initTime();
+						document.getElementById("audioControl").style.display = 'none';
+						document.getElementById("redCircle").style.display = 'inline';
 					} else if(this.id == 'confirm') {
 						console.log('确定');
+						events.fireToPageNone(main.data.webid, main.data.winid, audioOption);
+						mui.back();
 					}
 				});
 			}
@@ -299,7 +323,7 @@
 			 */
 			function startRecordAudio() {
 				recordAudio = RecordAudio.recordAudio({
-					time: 12000
+//					time: 12000
 				}, function(fpath) {
 					console.log('录制音频成功 ' + fpath);
 					audioOption.fpath = fpath;
@@ -312,7 +336,7 @@
 				});
 				if(recordAudio != null) {
 					timeId = setInterval(function() {
-						showTime(12);
+						showTime(300);
 					}, 1000);
 				}
 			}
@@ -352,6 +376,16 @@
 					timeId = null;
 					recordAudio = null;
 					timeCount = 0;
+				}
+			}
+
+			/**
+			 * 暂停计时
+			 */
+			function pauseCount() {
+				if(timeId) {
+					clearInterval(timeId);
+					timeId = null;
 				}
 			}
 
@@ -441,7 +475,17 @@
 					mui.toast('播放失败 ' + e.message);
 					errorCB(e);
 				});
+				playSetInterval();
+			}
 
+			/**
+			 * 创建播放音频的计时器
+			 */
+			function playSetInterval() {
+				if(timeId) {
+					clearInterval(timeId);
+					timeId = null;
+				}
 				timeId = setInterval(function() {
 					var audioTime = audioPlayer.getDuration();
 					if(!isNaN(audioTime) && audioTime != -1) {
@@ -456,17 +500,31 @@
 			 * 暂停播放
 			 */
 			function audioPause() {
+				console.log('audioPause');
 				if(audioPlayer) {
 					audioPlayer.pause();
 					pause = true;
 				}
 			}
+
 			/**
 			 * 恢复播放
 			 */
 			function audioResume() {
+				console.log('audioPause');
 				if(audioPlayer) {
 					audioPlayer.resume();
+					pause = false;
+				}
+			}
+
+			/**
+			 * 停止播放
+			 */
+			function audioStop() {
+				console.log('audioStop');
+				if(audioPlayer) {
+					audioPlayer.stop();
 					pause = false;
 				}
 			}
