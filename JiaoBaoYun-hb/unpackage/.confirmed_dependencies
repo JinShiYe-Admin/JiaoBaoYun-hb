@@ -106,7 +106,10 @@
       "css/icons-extra.css",
       "css/utils/preview.css",
       "js/show/show-sub.js",
-      "css/show/show.css"
+      "css/show/show.css",
+      "css/utils/pullToRefresh.css",
+      "js/mui.lazyload.js",
+      "js/mui.lazyload.img.js"
     ],
     "refer": [
       "html/quan/classSpace-persons.html"
@@ -214,7 +217,8 @@
       "css/qiuzhi/qiuzhi-addAnswer.css",
       "css/mui.min.css",
       "css/utils/common.css",
-      "css/utils/preview.css"
+      "css/utils/preview.css",
+      "js/libs/crypto-js/crypto-js.js"
     ],
     "refer": []
   },
