@@ -102,7 +102,9 @@ mui.plusReady(function() {
 })
 //游客获取关注的人
 var requireDataNotLogin = function() {
-
+	var persons = data.RspData.Data; //关注人数据
+	var personIds = window.myStorage.getItem(window.storageKeyName.FOCUSEPERSEN);
+	requirePersonInfo(personIds, persons);
 }
 
 /**

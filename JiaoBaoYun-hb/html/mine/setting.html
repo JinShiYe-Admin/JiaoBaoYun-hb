@@ -73,9 +73,9 @@
 			//存储个人信息
 			var tempInfo;
 
-						var wxChannel = null; // 微信支付
-						var aliChannel = null; // 支付宝支付
-						var channel = null;
+			var wxChannel = null; // 微信支付
+			var aliChannel = null; // 支付宝支付
+			var channel = null;
 
 			mui.plusReady(function() {
 				tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
@@ -173,8 +173,42 @@
 				}
 				//修改密码
 				events.addTap('change-passwords', function() {
+//					loadURL();
 					events.openNewWindowWithData('../register/modify_password.html', '1');
 				});
+
+				function loadURL() {
+					// 导入UIAlertView类  
+//					var UIAlertView = plus.ios.importClass("UIAlertView");
+					// 创建UIAlertView类的实例对象  
+//					var view = new UIAlertView();
+					// 设置提示对话上的内容  
+//					view.initWithTitlemessagedelegatecancelButtonTitleotherButtonTitles("自定义标题" // 提示框标题  
+//						, "使用NJS的原生弹出框，可自定义弹出框的标题、按钮" // 提示框上显示的内容  
+//						, null // 操作提示框后的通知代理对象，暂不设置  
+//						, "确定(或者其他字符)" // 提示框上取消按钮的文字  
+//						, null); // 提示框上其它按钮的文字，设置为null表示不显示  
+					// 调用show方法显示提示对话框，在JS中使用()语法调用对象的方法  
+//					view.initWithTitlemessagedelegatecancelButtonTitleotherButtonTitles("大标题","小标题",null,"取消按钮",null);
+//					view.show();
+
+//var NjsHello = plus.ios.importClass("UIButton");
+//// 创建对象的实例
+//var hello = new NjsHello();
+//console.log('hello='+JSON.stringify(hello));
+					
+					// NewViewController为应用内创建的原生的ViewController类名,所调用页面的内容需要在原生代码中完成
+//										var newVCobj = plus.ios.newObject("NewViewController");
+//										var UIApplicationClass = plus.ios.importClass("UIApplication");
+//										var UIAppObj = UIApplicationClass.sharedApplication();
+//										var del = plus.ios.invoke(UIAppObj, "delegate");
+//										// 如果当前应用delegate对象包含UIWindow对象并且变量名命名为“window”可以这么写，
+//										// 否则需要根据实际代码情况修改
+//										// 应用的delegate对象也可以添加一个返回UIViewController的方法
+//										var appWindowObj = plus.ios.invoke(del, "index");
+//										var appRootController = plus.ios.invoke(appWindowObj, "rootViewController");
+//										plus.ios.invoke(appRootController, "presentViewController:animated:completion:", newVCobj, "YES", null);
+				}
 				//退出
 				events.addTap('quit', function() {
 					console.log('2222');
