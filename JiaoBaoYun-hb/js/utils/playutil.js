@@ -172,5 +172,25 @@ var playutil = (function(mod) {
 		return MIMEType;
 	}
 
+	/**
+	 * 根据时间返回对应的百分比
+	 * @param {Object} num
+	 * @return percent 百分比
+	 */
+	mod.audioTimePercent = function(num) {
+		num = num || 1; //默认1s
+		if(num <= 1) {
+			return 25;
+		} else if(1 < num && num <= 10) {
+			return 25 + ((num - 1) / 9) * 25;
+		} else if(10 < num && num <= 60) {
+			return 50 + ((num - 10) / 50) * 25;
+		} else if(60 < num && num <= 300) {
+			return 75 + ((num - 60) / 240) * 25;
+		} else {
+			return 100;
+		}
+	}
+
 	return mod;
 })(window.playutil || {});
