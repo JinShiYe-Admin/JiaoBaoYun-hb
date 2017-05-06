@@ -297,6 +297,7 @@
 						})
 					}, function(errData) {
 						console.log(errData.code);
+						mui.toast(errData.message);
 					})
 				});
 				events.addTap('get_record', function() {

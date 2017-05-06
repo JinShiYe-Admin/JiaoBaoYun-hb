@@ -65,6 +65,9 @@
 	<script src="../../js/utils/files.js"></script>
 	<script src="../../js/utils/ASFiles.js"></script>
 	<script src="../../js/publicProtocol.js"></script>
+	<script src="../../js/utils/recordvideoutil.js"></script>
+	<script src="../../js/utils/load.js"></script>
+	<script src="../../js/utils/video.js"></script>
 	<script src="../../js/utils/CloudFileUtil.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/utils/compress.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/utils/cryption.js" type="text/javascript" charset="utf-8"></script>
@@ -114,11 +117,60 @@
 			});
 
 			events.addTap('take_camero', function() {
-				mui.toast('此功能暂未开放');
-				//					camera.getVideo(camera.getCamera(), function(path) {1
+					if(CloudFileUtil.files.length > 0) {
+						switch(CloudFileUtil.files[0].type) {
+							case 1:
+								mui.toast("只能上传一种附件！");
+								break;
+							case 2:
+								mui.toast("只能上传一个视频！");
+								break;
+							default:
+								break;
+						}
+						return;
+					}
+					RecordVideo.recordVideo({}, function(path) {
+						events.showWaiting();
+						console.log("保存在本地的路径：" + path);
+						load.getManageOptions(2, path, function(mData, thumb) {
+							console.log("视频获取的各项参数：" + JSON.stringify(data));
+							mData.saveSpace = storageKeyName.PERSONALSPACE;
+							mData.spaceId = 6;
+							var data = CloudFileUtil.getSingleImgUploadOptions(path, mData.spaceId, mData.spaceType, mData.saveSpace, mData.options);
+							CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+								console.log("获取的数据：" + JSON.stringify(datas));
+								if(datas.Status == 1) {
+									var tokenInfo = datas.Data;
+									//上传文件
+									CloudFileUtil.uploadFile(tokenInfo, path, function(uploadData, status) {
+										console.log("获取的上传数据：" + JSON.stringify(uploadData));
+										console.log("获取的token信息：" + JSON.stringify(tokenInfo));
+										var img = { //图片信息
+											url: tokenInfo.Domain + tokenInfo.Key,
+											thumb: tokenInfo.OtherKey[data.thumbKey],
+											clip: tokenInfo.OtherKey[data.thumbKey] + "?imageMogr2/gravity/Center/crop/!" + mData.options.thumbSize.width + "x" + mData.options.thumbSize.width * 0.45,
+											localPath:path,
+											type: 2
+										}
+										//										console.log("获取的图片信息：" + JSON.stringify(img));
+										//关闭等待框
+										plus.nativeUI.closeWaiting();
+										//放置图片
+										CloudFileUtil.setPic(img, 0, thumb);
+									});
+								}
 
-				//					});
-			});
+							}, function(xhr, type, errorThrown) {
+								console.log("错误类型：" + type + errorThrown);
+								plus.nativeUI.closeWaiting(); //关闭等待框
+							});
+						})
+					}, function(errData) {
+						console.log(errData.code);
+						mui.toast(errData.message);
+					})
+				});
 			events.addTap('get_gallery', function() {
 				if(CloudFileUtil.files.length < 9) {
 					var picCount = 0; //上传图片计数
