@@ -424,6 +424,7 @@
 					answerId: answerInfo.AnswerId, //回答ID
 					answerContent: answerContent, //回答内容,4000
 					encType:getTypeAddress(CloudFileUtil.files).encType,//文件类型
+					encLen:0,
 					encAddr: getTypeAddress(CloudFileUtil.files).encAddr, //附件地址,300,多个的情况例如：1.jpg|2.jpg
 					thumbnail: getTypeAddress(CloudFileUtil.files).encImg, //缩略图
 					cutImg: getTypeAddress(CloudFileUtil.files).clipAddress, //裁剪地址
@@ -462,6 +463,7 @@
 					askId: askModel.TabId, //问题ID
 					answerContent: answerContent, //回答内容,4000
 					encType: getTypeAddress(CloudFileUtil.files).encType,
+					encLen:0,
 					encAddr: getTypeAddress(CloudFileUtil.files).encAddr, //附件地址,300,多个的情况例如：1.jpg|2.jpg
 					thumbnail: getTypeAddress(CloudFileUtil.files).encImg,
 					cutImg: getTypeAddress(CloudFileUtil.files).clipAddress,

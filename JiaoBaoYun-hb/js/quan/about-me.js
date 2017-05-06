@@ -104,14 +104,19 @@ var zanNoReply = function(msgType) {
 }
 var ifHaveReferContent = function(cellData, cell) {
 	if(cellData.referContent) {
-		return '<div class="refer-content">' + addEncImg(cell.EncImgAddr) + '<div class="refer-words triple-line extra-words break-words">' + '<span>' + events.shortForString(cellData.UserOwnerNick, 6) + ':</span>' + cellData.referContent + '</div></div>'
+		return '<div class="refer-content">' + addEncImg(cell) + '<div class="refer-words triple-line extra-words break-words">' + '<span>' + events.shortForString(cellData.UserOwnerNick, 6) + ':</span>' + cellData.referContent + '</div></div>'
 	} else {
 		return '';
 	}
 }
-var addEncImg = function(encImg) {
-	if(encImg && encImg.length > 0) {
-		return '<img class="refer-img display-inlineBlock" src="' + encImg.split("|")[0] + '"/>';
+var addEncImg = function(cell) {
+	if(cell.EncImgAddr &&cell.EncImgAddr.length > 0) {
+		if(cell.EncType==1){
+			return '<img class="refer-img display-inlineBlock" src="' + cell.EncImgAddr.split("|")[0] + '"/>';
+		}
+		if(cell.encType==2){
+			return '<div class="refer-img display-inlineBlock" style="backgroud-image:url(' + cell.EncImgAddr + ');background-size:cover;"><img src="../../image/utils/payvideo.png" style="width:50%;margin:25%;"/></div>';
+		}
 	}
 	return '';
 }
