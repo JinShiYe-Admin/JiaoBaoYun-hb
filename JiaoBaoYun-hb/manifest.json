@@ -491,7 +491,8 @@
 					"css/utils/preview.css",
 					"js/mui.lazyload.img.js",
 					"image/dynamic/praise.png",
-					"css/show/show.css"
+					"css/show/show.css",
+					"js/utils/video.js"
 				],
 				"refer": [
 					"html/quan/space-detail.html",
@@ -3443,7 +3444,8 @@
 					"css/utils/preview.css",
 					"js/utils/recordvideoutil.js",
 					"js/utils/load.js",
-					"image/utils/playvideo.png"
+					"image/utils/playvideo.png",
+					"js/utils/video.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3645,7 +3647,8 @@
 					"js/utils/RSAEncrypt.js",
 					"image/dynamic/praise.png",
 					"fonts/fangzheng.ttf",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/utils/video.js"
 				],
 				"refer": [
 					"html/utils/customizeCity.html",

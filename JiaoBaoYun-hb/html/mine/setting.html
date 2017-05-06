@@ -82,39 +82,40 @@
 				console.log('tempInfo.uid:' + tempInfo.uid);
 				document.getElementById('change_phoneNum').innerText = tempInfo.uid;
 				// 获取支付通道
-//								plus.payment.getChannels(function(channels) {
-//									console.log('channels=' + JSON.stringify(channels));
-//									alert("通道="+JSON.stringify(channels));
-//									for (var i in channels) {
-//										var temp = channels[i];
-//										if (temp.id == 'alipay') {
-//											aliChannel = temp;
-//										} else if (temp.id == 'wxpay') {
-//											wxChannel = temp;
-//										}
-//									}
-//								}, function(e) {
-//									alert("获取支付通道失败：" + e.message);
-//								});
+				plus.payment.getChannels(function(channels) {
+					console.log('channels=' + JSON.stringify(channels));
+					alert("通道=" + JSON.stringify(channels));
+					for(var i in channels) {
+						var temp = channels[i];
+						if(temp.id == 'alipay') {
+							aliChannel = temp;
+						} else if(temp.id == 'wxpay') {
+							wxChannel = temp;
+						}
+					}
+				}, function(e) {
+					alert("获取支付通道失败：" + e.message);
+				});
 				//点击绑定手机cell，弹出
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-//										console.log("ali");
-//										pay('alipay');
+
 					var index = this.id.replace('li', '');
 					console.log('index:' + index);
 					if(index == '0') {
-						mui.confirm(tempInfo.uid, '您已绑定手机号', ['取消', '更换'], function(e) {
-							var index = e.index;
-							switch(index) {
-								case 0: //取消
-									break;
-								case 1: //返回
-									//flag为2，表示是更改绑定手机
-									events.openNewWindowWithData('../register/register_phoneNumber.html', '2');
-
-									break;
-							}
-						}, 'div');
+						console.log("ali");
+						pay('alipay');
+						//											mui.confirm(tempInfo.uid, '您已绑定手机号', ['取消', '更换'], function(e) {
+						//												var index = e.index;
+						//												switch(index) {
+						//													case 0: //取消
+						//														break;
+						//													case 1: //返回
+						//														//flag为2，表示是更改绑定手机
+						//														events.openNewWindowWithData('../register/register_phoneNumber.html', '2');
+						//					
+						//														break;
+						//												}
+						//											}, 'div');
 					}
 				});
 				//				window.addEventListener("swiperight", function(e) {
@@ -128,7 +129,7 @@
 				//				events.addTap('yinsi', function() {
 				//					mui.toast('此功能暂未开放');
 				//				});
-				var ALIPAYSERVER = 'http://jsypay.jiaobaowang.net/jsypay/alipay/sys/aliappserver.ashx';
+				var ALIPAYSERVER = 'https://jsypay.jiaobaowang.net/jsypay/alipay/sys/aliappserver.ashx';
 				//		var WXPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/wxpay.php?total=1';
 				var WXPAYSERVER = 'https://jsypay.jiaobaowang.net/example/AppServer.aspx?body="教宝云-会员"&attach="附件数据"&total_fee=201';
 				//2. 发起支付请求
@@ -151,6 +152,7 @@
 						switch(xhr.readyState) {
 							case 4:
 								if(xhr.status == 200) {
+									alert("PAYSERVER=" + PAYSERVER+','+JSON.stringify(channel));
 									alert("获取订单信=" + JSON.stringify(xhr));
 									plus.payment.request(channel, xhr.responseText, function(result) {
 										plus.nativeUI.alert("支付成功！", function() {
@@ -173,41 +175,55 @@
 				}
 				//修改密码
 				events.addTap('change-passwords', function() {
-//					loadURL();
-					events.openNewWindowWithData('../register/modify_password.html', '1');
+					loadURL();
+					//					events.openNewWindowWithData('../register/modify_password.html', '1');
 				});
 
 				function loadURL() {
-					// 导入UIAlertView类  
-//					var UIAlertView = plus.ios.importClass("UIAlertView");
-					// 创建UIAlertView类的实例对象  
-//					var view = new UIAlertView();
-					// 设置提示对话上的内容  
-//					view.initWithTitlemessagedelegatecancelButtonTitleotherButtonTitles("自定义标题" // 提示框标题  
-//						, "使用NJS的原生弹出框，可自定义弹出框的标题、按钮" // 提示框上显示的内容  
-//						, null // 操作提示框后的通知代理对象，暂不设置  
-//						, "确定(或者其他字符)" // 提示框上取消按钮的文字  
-//						, null); // 提示框上其它按钮的文字，设置为null表示不显示  
-					// 调用show方法显示提示对话框，在JS中使用()语法调用对象的方法  
-//					view.initWithTitlemessagedelegatecancelButtonTitleotherButtonTitles("大标题","小标题",null,"取消按钮",null);
-//					view.show();
-
-//var NjsHello = plus.ios.importClass("UIButton");
-//// 创建对象的实例
-//var hello = new NjsHello();
-//console.log('hello='+JSON.stringify(hello));
-					
-					// NewViewController为应用内创建的原生的ViewController类名,所调用页面的内容需要在原生代码中完成
-//										var newVCobj = plus.ios.newObject("NewViewController");
-//										var UIApplicationClass = plus.ios.importClass("UIApplication");
-//										var UIAppObj = UIApplicationClass.sharedApplication();
-//										var del = plus.ios.invoke(UIAppObj, "delegate");
-//										// 如果当前应用delegate对象包含UIWindow对象并且变量名命名为“window”可以这么写，
-//										// 否则需要根据实际代码情况修改
-//										// 应用的delegate对象也可以添加一个返回UIViewController的方法
-//										var appWindowObj = plus.ios.invoke(del, "index");
-//										var appRootController = plus.ios.invoke(appWindowObj, "rootViewController");
-//										plus.ios.invoke(appRootController, "presentViewController:animated:completion:", newVCobj, "YES", null);
+					// 初始化图片选择控制器
+					//					UIImagePickerController * controller = [
+					//						[UIImagePickerController alloc] init
+					//					];
+					var tempC1 = plus.ios.importClass('UIImagePickerController');
+					var tempC = new tempC1();
+					/*设置媒体来源，即调用出来的UIImagePickerController所显示出来的界面，有一下三种来源
+					 typedef NS_ENUM(NSInteger, UIImagePickerControllerSourceType) {
+					     UIImagePickerControllerSourceTypePhotoLibrary,
+					     UIImagePickerControllerSourceTypeCamera,
+					  UIImagePickerControllerSourceTypeSavedPhotosAlbum
+					 };分别表示：图片列表，摄像头，相机相册*/
+					//					[controller setSourceType: UIImagePickerControllerSourceTypeCamera];
+//					plus.ios.invoke(tempC, 'setSourceType', 'UIImagePickerControllerSourceTypeCamera');
+					tempC.setSourceType('UIImagePickerControllerSourceTypeCamera');
+					// 设置所支持的媒体功能，即只能拍照，或则只能录像，或者两者都可以
+					//					NSString * requiredMediaType = (NSString * ) kUTTypeImage;
+					//					NSString * requiredMediaType1 = (NSString * ) kUTTypeMovie;
+					var tempType = 'kUTTypeMovie';
+					//					NSArray * arrMediaTypes = [NSArray arrayWithObjects: requiredMediaType, requiredMediaType1, nil];
+					var arrMediaTypes = plus.ios.importClass('NSArray');
+					arrMediaTypes.arrayWithObjects(tempType);
+					//					[controller setMediaTypes: arrMediaTypes];
+//					plus.ios.invoke(tempC, 'setMediaTypes', arrMediaTypes);
+					tempC.setMediaTypes(arrMediaTypes);
+					// 设置录制视频的质量
+					//					[controller setVideoQuality: UIImagePickerControllerQualityTypeHigh];
+//					plus.ios.invoke(tempC, 'setVideoQuality', 'UIImagePickerControllerQualityTypeHigh');
+//					tempC.setVideoQuality('UIImagePickerControllerQualityTypeHigh');
+					//设置最长摄像时间
+					//					[controller setVideoMaximumDuration: 10. f];
+//					plus.ios.invoke(tempC, 'setVideoMaximumDuration', 10);
+//					tempC.setVideoMaximumDuration(10);
+					// 设置是否可以管理已经存在的图片或者视频
+					//					[controller setAllowsEditing: YES];
+					// 设置代理
+					//					[controller setDelegate: self];
+					//					[self presentViewController: controller animated: YES completion: nil];
+//					var wv = plus.ios.currentWebview();
+//					var main = plus.android.runtimeMainActivity();
+//					var main = plus.ios.runtimeMainActivity();
+//					main.presentViewControlleranimatedcompletion(tempC, true, null);
+//					UINavigationController * viewController = (UINavigationController*)view.reactViewController;
+//					[viewController.navigationController pushViewController:[AiMeiViewController new] animated:YES];
 				}
 				//退出
 				events.addTap('quit', function() {
