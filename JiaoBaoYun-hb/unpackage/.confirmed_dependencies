@@ -14,7 +14,8 @@
 			"image/qiuzhi/channel-food.png",
 			"js/libs/crypto-js/crypto-js.js",
 			"image/utils/playvideo.png",
-			"image/qiuzhi/channel-science.png"
+			"image/qiuzhi/channel-science.png",
+			"image/qiuzhi/channel-others.png"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-answerDetail.html",
@@ -118,7 +119,9 @@
 			"js/mui.lazyload.js",
 			"js/mui.lazyload.img.js",
 			"image/dynamic/praise.png",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html"
