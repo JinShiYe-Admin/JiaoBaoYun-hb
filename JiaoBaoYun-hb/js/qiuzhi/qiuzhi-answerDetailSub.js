@@ -85,11 +85,13 @@ mui.plusReady(function() {
 		document.getElementById("question-content").innerHTML = changedData.answerContent;
 		document.getElementById("answer-imgs").innerHTML = getPicInner(changedData)
 		answerInfo.AnswerThumbnail = changedData.AnswerThumbnail;
+		answerInfo.AnswerEncType=changedData.AnswerEncType;
 		answerInfo.AnswerEncAddr = changedData.AnswerEncAddr;
 		answerInfo.AnswerContent = changedData.answerContent;
 		answerInfo.AnswerCutImg = changedData.AnswerCutImg;
 		answerInfo.IsAnonym = changedData.isAnonym;
 		answerData.AnswerThumbnail = changedData.AnswerThumbnail;
+		answerData.AnswerEncType=changedData.AnswerEncType;
 		answerData.AnswerEncAddr = changedData.AnswerEncAddr;
 		answerData.AnswerContent = changedData.answerContent;
 		answerData.AnswerCutImg = changedData.AnswerCutImg;
@@ -796,7 +798,7 @@ var getPicInner = function(data) {
 				console.log('图片路径：' + picInner);
 				return picInner;
 			case 2:
-				picInner+='<div class="video-container" style="background-image:url('+data.AnswerCutImg+');background-repeat:no-repeat;background-position:center;background-size:contain;width:'+win_width+'px;height:'+win_width*0.45+
+				picInner+='<div class="video-container" style="background-image:url('+data.AnswerCutImg+');background-repeat:no-repeat;background-position:center;background-size:cover;width:'+win_width+'px;height:'+win_width*0.45+
 				'px;text-align:center;"><img style="width: 22.5%; margin:11.25% 0;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
 				console.log("获取的图片控件："+picInner)
 			    return picInner;

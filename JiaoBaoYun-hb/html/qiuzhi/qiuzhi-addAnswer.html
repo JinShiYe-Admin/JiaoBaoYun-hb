@@ -422,6 +422,7 @@
 				var comData = {
 					answerId: answerInfo.AnswerId, //回答ID
 					answerContent: answerContent, //回答内容,4000
+					encType:getTypeAddress(CloudFileUtil.files).encType,//文件类型
 					encAddr: getTypeAddress(CloudFileUtil.files).encAddr, //附件地址,300,多个的情况例如：1.jpg|2.jpg
 					thumbnail: getTypeAddress(CloudFileUtil.files).encImg, //缩略图
 					cutImg: getTypeAddress(CloudFileUtil.files).clipAddress, //裁剪地址
@@ -435,6 +436,7 @@
 					wd1.close();
 					console.log("更改回答的值：" + JSON.stringify(data));
 					if(data.RspCode == 0 && data.RspData.Result) {
+						comData.AnswerEncType=comData.encType;
 						comData.AnswerThumbnail = comData.thumbnail;
 						comData.AnswerEncAddr = comData.encAddr;
 						comData.AnswerCutImg = comData.cutImg;
