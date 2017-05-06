@@ -169,8 +169,10 @@ mui.plusReady(function() {
 		console.log(JSON.stringify(info));
 		if(info.IsAnonym != 1) {
 			info.UserId = info.utid;
-			//跳转页面
-			events.openNewWindowWithData('expert-detail.html', info);
+			this.disabled=true;
+			events.singleWebviewInPeriod(this,"expert-detail.html",info);
+//			//跳转页面
+//			events.openNewWindowWithData('expert-detail.html', info);
 		}
 	});
 

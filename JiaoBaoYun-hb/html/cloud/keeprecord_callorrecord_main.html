@@ -273,10 +273,10 @@
 					MultiMediaId: 'MultiMedia', //存放多媒体对象控件的id
 					Key: personal.utid, //utid
 					Picture: true, //是否显示图片图标
-//					Audio: true, //是否显示音频图标
+					//					Audio: true, //是否显示音频图标
 					Video: true, //是否显示视频图标
 					TotalPicture: 9, //图片的个数
-//					TotalAudio: 1, //音频的个数
+					//					TotalAudio: 1, //音频的个数
 					TotalVideo: 1, //视频的个数
 				});
 
@@ -549,7 +549,8 @@
 					publisherName: publisherName, //发布者姓名
 					parentIds: parentIds, //家长列表
 					className: mainData.gname, //班级名称
-					userIds: userIds //推送用户ID
+					userIds: userIds, //推送用户ID
+					encLen: 0 //音视频时长
 				};
 				//console.log('新增记事发送的数据:' + JSON.stringify(comData));
 				// 等待的对话框

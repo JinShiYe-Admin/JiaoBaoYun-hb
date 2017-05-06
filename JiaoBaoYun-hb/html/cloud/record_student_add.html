@@ -199,7 +199,8 @@
 					publisherName: personalUNICK, //	发布者姓名,
 					noteType: '2', //点到记事类型,1点到2记事
 					checkType: '0', //点到类型,1 正常2 旷课3 迟到4 早退5 其他
-					classId: mainData.data.ClassId //班级ID
+					classId: mainData.data.ClassId, //班级ID
+					encLen: 0 //音视频时长
 				};
 				postDataPro_addStudentFile(comData, wd, function(data) {
 					console.log('70_addStudentFile_新增某学生档案.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);

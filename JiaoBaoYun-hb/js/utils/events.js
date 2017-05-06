@@ -778,9 +778,6 @@ var events = (function(mod) {
 			targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(), {
 				data: data
 			});
-			//		}else{
-			//			mod.closeWaiting();
-			//			targetWebview.reload();
 		}
 		targetWebview.onloaded = function() {
 			targetWebview.show("slide-in-right", 250);

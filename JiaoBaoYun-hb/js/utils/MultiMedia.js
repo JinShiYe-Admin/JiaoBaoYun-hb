@@ -99,8 +99,10 @@ var MultiMedia = (function($, mod) {
 			this.data.PictureMarginLeft = parseInt(document.getElementById(this.options.Id).offsetWidth * 0.04);
 		}
 		if(this.options.Audio) {
-			this.data.Audios = options.TotalAudio;
+			this.data.AudioNum = options.TotalAudio; //可以录制音频的剩余数量
 			this.data.AudioArray = [];
+			this.data.AudioWith = parseInt(document.getElementById(this.options.Id).offsetWidth * 0.2);
+			this.data.AudioMarginLeft = parseInt(document.getElementById(this.options.Id).offsetWidth * 0.04);
 		}
 		if(this.options.Video) {
 			this.data.VideoNum = options.TotalVideo; //可以选取视频的剩余数量
@@ -114,7 +116,6 @@ var MultiMedia = (function($, mod) {
 	proto.initEvent = function() {
 		//console.log('MultiMedia-initEvent');
 		var self = this;
-		var options = this.options;
 		//图片
 		if(this.options.Picture) {
 			//相机
@@ -134,20 +135,20 @@ var MultiMedia = (function($, mod) {
 
 		//音频
 		if(this.options.Audio) {
+			//录制音频
 			document.getElementById('MultiMedia_Audio_Header').addEventListener('tap', function() {
 				document.activeElement.blur();
-//				var main = plus.webview.currentWebview();
-//				events.openNewWindowWithData('../utils/record_audio.html', {
-//					webid: main.id,
-//					winid: 'MultiMediaRecordAudio'
-//				});
-				mui.toast('录制语音功能暂未开放');
+				self.initAudioEvent();
 			});
 
-//			window.addEventListener('MultiMediaRecordAudio', function(e) {
-//				var data=e.detail.data;
-//				console.log('MultiMediaRecordAudio ' + JSON.stringify(data));
-//			});
+			//录制完成的回调
+			window.addEventListener('MultiMediaRecordAudio', function(e) {
+				self.addAudios(e.detail.data);
+			});
+
+			mui('#MultiMedia_Audio_Footer').on('tap', '.multimedia-audio-icon-closeempty', function() {
+				self.initDelAudioEvent(this);
+			});
 		}
 
 		//视频
@@ -171,11 +172,15 @@ var MultiMedia = (function($, mod) {
 	//初始化图片选择的监听
 	proto.initImageEvent = function(type) {
 		var self = this;
-		var options = this.options;
 		document.activeElement.blur();
 		//已经录制了视频
-		if(options.Video && self.data.VideoNum * 1 < options.TotalVideo) {
+		if(self.options.Video && self.data.VideoNum * 1 < self.options.TotalVideo) {
 			mui.toast('图片与视频不能同时添加');
+			return false;
+		}
+		//已经录制了音频
+		if(self.options.Audio && self.data.AudioNum * 1 < self.options.TotalAudio) {
+			mui.toast('图片与音频不能同时添加');
 			return false;
 		}
 		if(self.data.PictureNum > 0) {
@@ -188,7 +193,6 @@ var MultiMedia = (function($, mod) {
 	//初始化删除选择的图片的监听
 	proto.initDelImageEvent = function(element) {
 		var self = this;
-		var options = this.options;
 		document.activeElement.blur();
 		var id = element.id.replace('MultiMedia_Picture_Delete_', '');
 		var parent = element.parentNode;
@@ -209,11 +213,15 @@ var MultiMedia = (function($, mod) {
 	//初始化录制视频的监听
 	proto.initVideoEvent = function() {
 		var self = this;
-		var options = this.options;
 		document.activeElement.blur();
 		//已经选择了图片
-		if(options.Picture && self.data.PictureNum * 1 < options.TotalPicture) {
-			mui.toast('图片与视频不能同时添加');
+		if(self.options.Picture && self.data.PictureNum * 1 < self.options.TotalPicture) {
+			mui.toast('视频与图片不能同时添加');
+			return false;
+		}
+		//已经录制了音频
+		if(self.options.Audio && self.data.AudioNum * 1 < self.options.TotalAudio) {
+			mui.toast('视频与音频不能同时添加');
 			return false;
 		}
 		if(self.data.VideoNum > 0) {
@@ -234,7 +242,6 @@ var MultiMedia = (function($, mod) {
 	//初始化删除录制的视频的监听
 	proto.initDelVideoEvent = function(element) {
 		var self = this;
-		var options = this.options;
 		document.activeElement.blur();
 		var id = element.id.replace('MultiMedia_Video_Delete_', '');
 		var parent = element.parentNode;
@@ -258,7 +265,6 @@ var MultiMedia = (function($, mod) {
 	 */
 	proto.initPlayVideoEvent = function(element) {
 		var self = this;
-		var options = this.options;
 		document.activeElement.blur();
 		var id = element.id.replace('MultiMedia_Video_Play_', '');
 		var videoOption;
@@ -271,6 +277,53 @@ var MultiMedia = (function($, mod) {
 		self.videoPlayCallBack(videoOption);
 	}
 
+	/**
+	 * 录制音频的监听
+	 * @param {Object} element
+	 */
+	proto.initAudioEvent = function(element) {
+		var self = this;
+		document.activeElement.blur();
+		//已经选择了图片
+		if(self.options.Picture && self.data.PictureNum * 1 < self.options.TotalPicture) {
+			mui.toast('音频与图片不能同时添加');
+			return false;
+		}
+		//已经录制了视频
+		if(self.options.Video && self.data.VideoNum * 1 < self.options.TotalVideo) {
+			mui.toast('音频与视频不能同时添加');
+			return false;
+		}
+		if(self.data.AudioNum > 0) {
+			var main = plus.webview.currentWebview();
+			events.openNewWindowWithData('../utils/record_audio.html', {
+				webid: main.id,
+				winid: 'MultiMediaRecordAudio'
+			});
+		} else {
+			mui.toast('音频数量超出限制');
+		}
+	}
+
+	/**
+	 * 删除音频的监听
+	 * @param {Object} element
+	 */
+	proto.initDelAudioEvent = function(element) {
+		var self = this;
+		var parent = element.parentNode;
+		console.log(parent.id);
+		var ids = parent.id.split('-');
+		var fpath = ids[0];
+		//删除数组
+		for(var i = 0; i < self.data.AudioArray.length; i++) {
+			if(self.data.AudioArray[i].fpath == fpath) {
+				self.data.AudioArray.splice(i, 1);
+				self.data.AudioNum++;
+			}
+		}
+		parent.parentNode.removeChild(parent);
+	}
 	/**
 	 * 显示图片的选择方式
 	 */
@@ -293,12 +346,11 @@ var MultiMedia = (function($, mod) {
 	 */
 	proto.pictureTake = function() {
 		var self = this;
-		var options = this.options;
 		mod.cameraTake(function(path) {
 			//console.log('pictureTake :' + path);
 			var wd = events.showWaiting('处理中...');
 			var myDate = new Date();
-			var fileName = options.Key + myDate.getTime() + (Math.floor(Math.random() * 10)) + '.png';
+			var fileName = self.options.Key + myDate.getTime() + (Math.floor(Math.random() * 10)) + '.png';
 			var dst = '_documents/' + imageId + '_' + fileName;
 			imageId++;
 			compress.compressImageTo_1MB({
@@ -325,7 +377,6 @@ var MultiMedia = (function($, mod) {
 	proto.picturesPick = function(NumPick) {
 		//console.log('picturesPick');
 		var self = this;
-		var options = this.options;
 		mod.galleryPickFalse('image', true, NumPick, function(event) {
 			var wd = events.showWaiting('处理中...');
 			var files = event.files; // 保存多选的图片或视频文件路径
@@ -333,7 +384,7 @@ var MultiMedia = (function($, mod) {
 			var num = 0;
 			var tempArrary = [];
 			for(var i = 0; i < files.length; i++) {
-				var fileName = imageId + '_' + i + '_' + options.Key + myDate.getTime() + (Math.floor(Math.random() * 10)) + '.png';
+				var fileName = imageId + '_' + i + '_' + self.options.Key + myDate.getTime() + (Math.floor(Math.random() * 10)) + '.png';
 				imageId++;
 				var dst = '_documents/' + fileName;
 				tempArrary.push({
@@ -378,7 +429,6 @@ var MultiMedia = (function($, mod) {
 	 */
 	proto.addImages = function(paths) {
 		var self = this;
-		var options = this.options;
 		var width = self.data.PictureWith;
 		var widthStr = self.data.PictureWith + 'px';
 		var marginLeft = self.data.PictureMarginLeft;
@@ -421,7 +471,6 @@ var MultiMedia = (function($, mod) {
 	 */
 	proto.changeFooterHeight = function(type, length) {
 		var self = this;
-		var options = this.options;
 		var width;
 		var marginLeft;
 		var footer;
@@ -454,8 +503,7 @@ var MultiMedia = (function($, mod) {
 	 */
 	proto.imageRefresh = function() {
 		var self = this;
-		var options = this.options;
-		self.data.PictureNum = options.TotalPicture; //可以选取图片的剩余数量
+		self.data.PictureNum = self.options.TotalPicture; //可以选取图片的剩余数量
 		self.data.PictureArray = []; //已选取的图片路径
 		var footer = document.getElementById("MultiMedia_Picture_Footer");
 		footer.innerHTML = '';
@@ -468,7 +516,6 @@ var MultiMedia = (function($, mod) {
 	 */
 	proto.addVideos = function(path, callback) {
 		var self = this;
-		var options = this.options;
 		var width = self.data.VideoWith;
 		var marginLeft = self.data.VideoMarginLeft;
 		var footer = document.getElementById("MultiMedia_Video_Footer");
@@ -520,12 +567,39 @@ var MultiMedia = (function($, mod) {
 	 */
 	proto.videoRefresh = function() {
 		var self = this;
-		var options = this.options;
-		self.data.VideoNum = options.TotalVideo; //可以选取图片的剩余数量
+		self.data.VideoNum = self.options.TotalVideo; //可以选取图片的剩余数量
 		self.data.VideoArray = []; //已选取的图片路径
 		var footer = document.getElementById("MultiMedia_Video_Footer");
 		footer.innerHTML = '';
 		self.changeFooterHeight(1, self.data.VideoArray.length);
+	}
+
+	/**
+	 * 显示录制的音频
+	 * @param {Object} data 音频路径和时间
+	 */
+	proto.addAudios = function(data) {
+		console.log('addAudios ' + JSON.stringify(data));
+		var self = this;
+		var width = self.data.AudioWith;
+		var marginLeft = self.data.AudioMarginLeft;
+		var footer = document.getElementById("MultiMedia_Audio_Footer");
+		var time = playutil.audioTimePercent(data.time);
+		self.data.AudioNum--;
+		self.data.AudioArray.push(data);
+		//显示音频
+		var element = document.createElement('div');
+		element.id = data.fpath + '-' + data.time;
+		element.className = 'multimedia-audio-area';
+		element.innerHTML = '<span class="mui-icon mui-icon-closeempty multimedia-audio-icon-closeempty"></span>\
+							<button type="button" class="mui-btn mui-btn-grey mui-btn-outlined multimedia-audio-button" style="width: ' + time + '%;">\
+								<div class="multimedia-audio-triangle multimedia-audio-triangle-out"></div>\
+								<div class="multimedia-audio-triangle multimedia-audio-triangle-in"></div>\
+								<div class="multimedia-audio-time">' + data.time + '\'\'</div>\
+								<span class="mui-icon mui-icon-mic multimedia-audio-icon"></span>\
+							</button>';
+		footer.appendChild(element);
+		self.audioChangeCallBack();
 	}
 
 	/**
@@ -536,6 +610,10 @@ var MultiMedia = (function($, mod) {
 	 * 视频数量变化的回调
 	 */
 	proto.videoChangeCallBack = function() {}
+	/**
+	 * 音频数量变化的回调
+	 */
+	proto.audioChangeCallBack = function() {}
 	/**
 	 * 播放某个视频的回调
 	 */
