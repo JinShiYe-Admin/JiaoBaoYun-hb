@@ -2902,7 +2902,8 @@
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-addAnswer.html",
-					"html/register/login.html"
+					"html/register/login.html",
+					"html/qiuzhi/expert-detail.html"
 				],
 				"priority": 0
 			},

@@ -891,22 +891,24 @@ var setListeners = function() {
 	})
 	events.addTap('anthor-portrait', function() {
 		if(!answerData.IsAnonym) {
-			events.openNewWindowWithData("expert-detail.html", jQuery.extend(answerData, {
+			this.disabled=true;
+			events.singleWebviewInPeriod(this,"expert-detail.html",jQuery.extend(answerData, {
 				UserId: answerData.utid,
 				uimg: answerData.UserImg,
 				unick: answerData.UserName
-			}))
+			}));
 		}
 	})
 	//评论头像点击事件
 	mui('.mui-table-view').on('tap', '.head-img', function() {
 		var info = this.info;
+		this.disabled=true;
 		console.log(JSON.stringify(info));
-		events.openNewWindowWithData("expert-detail.html", jQuery.extend(info, {
+		events.singleWebviewInPeriod(this,"expert-detail.html", jQuery.extend(info, {
 			UserId: info.utid,
 			uimg: info.UserImg,
 			unick: info.UserName
-		}))
+		}));
 	})
 	//评论信息
 	mui('.mui-table-view').on('tap', ".comment-words", function() {
