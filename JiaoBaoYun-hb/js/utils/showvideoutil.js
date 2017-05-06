@@ -104,6 +104,7 @@ var ShowVideoUtil = (function(mod) {
 				mui('#' + videoPopoverId).popover('hide');
 			});
 			mask.show();
+			document.querySelector('.mui-backdrop').style.background = 'black';
 			videoElement.play();
 		}
 	}

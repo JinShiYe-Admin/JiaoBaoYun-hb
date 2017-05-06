@@ -146,8 +146,19 @@ var MultiMedia = (function($, mod) {
 				self.addAudios(e.detail.data);
 			});
 
+			//删除音频
 			mui('#MultiMedia_Audio_Footer').on('tap', '.multimedia-audio-icon-closeempty', function() {
 				self.initDelAudioEvent(this);
+			});
+
+			//播放音频
+			mui('#MultiMedia_Audio_Footer').on('tap', '.multimedia-audio-button', function() {
+				self.initPlayAudioEvent(this);
+			});
+
+			self.addAudios({
+				"fpath": "_documents/1494038595866387.amr",
+				"time": 16
 			});
 		}
 
@@ -312,32 +323,41 @@ var MultiMedia = (function($, mod) {
 	proto.initDelAudioEvent = function(element) {
 		var self = this;
 		var parent = element.parentNode;
-		console.log(parent.id);
 		var ids = parent.id.split('-');
-		var fpath = ids[0];
 		//删除数组
 		for(var i = 0; i < self.data.AudioArray.length; i++) {
-			if(self.data.AudioArray[i].fpath == fpath) {
+			if(self.data.AudioArray[i].fpath == ids[0]) {
 				self.data.AudioArray.splice(i, 1);
 				self.data.AudioNum++;
 			}
 		}
 		parent.parentNode.removeChild(parent);
 	}
+
+	/**
+	 * 播放某个音频
+	 * @param {Object} element
+	 */
+	proto.initPlayAudioEvent = function(element) {
+		var ids = element.parentNode.id.split('-');
+		this.audioPlayCallBack({
+			fpath: ids[0],
+			time: ids[1]
+		});
+	}
+
 	/**
 	 * 显示图片的选择方式
 	 */
 	proto.pictureActionSheet = function(type) {
 		//console.log('pictureActionSheet');
-		var self = this;
-		var NumPick = self.data.PictureNum;
-		var type = type || 0;
+		type = type || 0;
 		if(type == 0) {
 			//拍取照片
-			self.pictureTake();
+			this.pictureTake();
 		} else {
 			//从相册选取照片
-			self.picturesPick(NumPick);
+			this.picturesPick(this.data.PictureNum);
 		}
 	}
 
@@ -615,9 +635,13 @@ var MultiMedia = (function($, mod) {
 	 */
 	proto.audioChangeCallBack = function() {}
 	/**
-	 * 播放某个视频的回调
+	 * 播放某个视频
 	 */
 	proto.videoPlayCallBack = function(data) {}
+	/**
+	 * 播放某个音频
+	 */
+	proto.audioPlayCallBack = function(data) {}
 
 	var MultiMediaApi = null; //声明一个null的变量，用来存储多媒体对象
 
