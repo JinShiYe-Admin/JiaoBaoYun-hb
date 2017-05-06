@@ -219,6 +219,7 @@ var publicModel = (function($, mod) {
 		Comments:'',//评论列表
 		
 		EncTypeStr:'',//附件类型说明，
+		EncLen:'',//音视频时长
 		NoteTypeStr:'',//点到记事类型说明,信息类型说明
 		CheckTypeStr:'',//点到情况说明
 		
@@ -274,6 +275,8 @@ var publicModel = (function($, mod) {
 		SpaceId:'',//空间动态ID	int		否	从属Data
 		MsgContent:'',//	动态内容	String		否	从属Data
 		EncType:'',//附件类型	int		否	从属Data
+		EncTypeStr:'',//附件类型说明
+		EncLen:'',//音视频时长
 		EncAddr:'',//附件地址	String		否	从属Data
 		EncImgAddr:''//附件缩略图地址	String		否	从属Data
 
@@ -299,6 +302,7 @@ var publicModel = (function($, mod) {
 		EncAddr:'',//附件地址,多个的情况例如：1.jpg|2.jpg
 		EncImgAddr:'',//	附件缩略图
 		EncTypeStr:'',//	附件类型说明
+		EncLen:'',//音视频时长
 		CheckTypeStr:'',//点到情况说明
 		NoteTypeStr:''//	点到记事类型说明
 	}

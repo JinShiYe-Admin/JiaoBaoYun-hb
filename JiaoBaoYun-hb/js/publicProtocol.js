@@ -878,8 +878,9 @@ var postDataPro_getNotesByUserForStudent = function(commonData, wd, callback) {
 //			studentId: '',//用户ID----stuid
 //			classId:'',//班级ID----
 //			msgContent: '',//记事内容
-//			encType: '',//附件类型,1图片2音视频
-//			encAddr: '',//附件地址
+//			encType:'',//附件类型,1图片2音视频
+//			encLen:'',//音视频时长
+//			encAddr:'',//附件地址
 //			encImg: '',//附件缩略图地址
 //			teacherId: '',//发布教师ID
 //			noteType: '',//点到记事类型1点到2记事3仅文字
@@ -1055,6 +1056,7 @@ var postDataPro_getClassSpacesByUserForClass = function(commonData, wd, callback
 //			classId: '',//班级ID
 //			msgContent: '',//记事内容
 //			encType: '',//附件类型,1图片2音视频3仅文字
+//			encLen: '',//音视频时长
 //			encAddr: '',//附件地址
 //			encImg: '',//附件缩略图地址
 //			teacherId: '',//发布教师ID
@@ -1305,6 +1307,7 @@ var postDataPro_getUserSpacesByUser = function(commonData, wd, callback) {
 //			userId: '',//用户ID
 //			msgContent:'',//记事内容
 //			encType:'',//附件类型，1图片2音视频3仅文字
+//			encLen: '',//音视频时长
 //			encAddr:'',//附件地址
 //			encImg:'',//附件缩略图地址
 //			encIntro:'',//附件简介
@@ -1703,7 +1706,7 @@ var postDataPro_getReadUserBySpaceId = function(commonData, wd, callback) {
 //			pageSize:'',//每页记录数
 //			publisherId:''//发布者ID,0代表全部
 //		};
-//返回model_userNoteInfo
+//返回:model_userNoteInfo
 var postDataPro_getNotesForClass = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
@@ -1746,7 +1749,7 @@ var postDataPro_getIsLikeUsersById = function(commonData, wd, callback) {
 //			pageIndex:'',//当前页数
 //			pageSize:''//每页记录数
 //		};
-//返回model_getStudentFile
+//返回:model_getStudentFile
 var postDataPro_getStudentFile = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
@@ -1763,6 +1766,7 @@ var postDataPro_getStudentFile = function(commonData, wd, callback) {
 //			className: '',//	班级名称,
 //			msgContent: '',//记事内容,
 //			encType: '',//附件类型,1图片2音视频3仅文字
+//			encLen: '',//音视频时长
 //			encAddr: '',//附件地址,多个的情况例如：1.jpg|2.jpg
 //			encImg: '',//附件缩略图地址,
 //			publisherName: '',//	发布者姓名,
