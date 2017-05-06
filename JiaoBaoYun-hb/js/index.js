@@ -131,6 +131,7 @@ var addSubPages = function() {
 	activeTab = subpages[Index];
 	//去掉展现和科教城市下面的点
 	events.closeWaiting();
+	mui.fire(plus.webview.getLaunchWebview(),"indexReady");
 }
 //加载监听
 var setListener = function() {

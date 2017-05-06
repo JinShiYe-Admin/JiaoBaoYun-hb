@@ -84,6 +84,19 @@ var storageKeyName = (function(mod) {
 	mod.SIGNKEY = 'jsy309'; //签名密钥
 
 	//---七牛---start---
+	//七牛上传空间key值
+	//资源平台
+	mod.QNPUBZYKEY="jsy8004";
+	//教宝云作业
+	mod.QNPUBJBYZYKEY="zy309309!";
+	//教宝云盘
+	mod.QNPUBJBYPKEY="jbyp@2017";
+	//教宝云用户管理
+	mod.QUPUBJBMANKEY="jbman456";
+	//家校圈
+	mod.QNPUBJXQKEY="jxq789!@";
+	//求知
+	mod.QNPUBQZKEY="qz123qwe";
 
 	//七牛存储子空间（文件二级文件名）
 	mod.QNPUBSPACE = "pb"; //七牛公开空间
