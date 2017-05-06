@@ -60,32 +60,33 @@ var CloudFileUtil = (function($, mod) {
 		if(data) {
 			if(data.appId) {
 				appId = data.appId;
-				switch(appId) {
-					case 0:
-						break;
-					case 1:
-						break;
-					case 2: //资源平台
-						desKey = "jsy8004";
-						break;
-					case 3: //教宝云作业
-						desKey = "zy309309!";
-						break;
-					case 4: //教宝云盘
-						desKey = "jbyp@2017";
-						break;
-					case 5: //教宝云用户管理
-						desKey = "jbman456";
-						break;
-					case 6: //家校圈
-						desKey = "jxq789!@";
-						break;
-					case 7: //求知
-						desKey = "qz123qwe";
-						break;
-					default:
-						break;
-				}
+				desKey=getAppKey(appId);
+//				switch(appId) {
+//					case 0:
+//						break;
+//					case 1:
+//						break;
+//					case 2: //资源平台
+//						desKey = "jsy8004";
+//						break;
+//					case 3: //教宝云作业
+//						desKey = "zy309309!";
+//						break;
+//					case 4: //教宝云盘
+//						desKey = "jbyp@2017";
+//						break;
+//					case 5: //教宝云用户管理
+//						desKey = "jbman456";
+//						break;
+//					case 6: //家校圈
+//						desKey = "jxq789!@";
+//						break;
+//					case 7: //求知
+//						desKey = "qz123qwe";
+//						break;
+//					default:
+//						break;
+//				}
 			}
 			if(data.urls) {
 				urls = data.urls;
@@ -227,32 +228,33 @@ var CloudFileUtil = (function($, mod) {
 			}
 			if(data.appId) {
 				appId = data.appId;
-				switch(data.appId) {
-					case 0:
-						break;
-					case 1:
-						break;
-					case 2: //资源平台
-						desKey = "jsy8004";
-						break;
-					case 3: //教宝云作业
-						desKey = "zy309309!";
-						break;
-					case 4: //教宝云盘
-						desKey = "jbyp@2017"
-						break;
-					case 5: //教宝云用户管理
-						desKey = "jbman456"
-						break;
-					case 6: //家校圈
-						desKey = "jxq789!@";
-						break;
-					case 7: //求知
-						desKey = "qz123qwe";
-						break;
-					default:
-						break;
-				}
+				desKey=getAppKey(appId);
+//				switch(data.appId) {
+//					case 0:
+//						break;
+//					case 1:
+//						break;
+//					case 2: //资源平台
+//						desKey = "jsy8004";
+//						break;
+//					case 3: //教宝云作业
+//						desKey = "zy309309!";
+//						break;
+//					case 4: //教宝云盘
+//						desKey = "jbyp@2017"
+//						break;
+//					case 5: //教宝云用户管理
+//						desKey = "jbman456"
+//						break;
+//					case 6: //家校圈
+//						desKey = "jxq789!@";
+//						break;
+//					case 7: //求知
+//						desKey = "qz123qwe";
+//						break;
+//					default:
+//						break;
+//				}
 			}
 			if(data.mainSpace) {
 				mainSpace = data.mainSpace;
@@ -397,33 +399,7 @@ var CloudFileUtil = (function($, mod) {
 	 */
 	mod.getSingleUploadDataOptions = function(picPath, appId, maxSize, spaceType, uploadSpace) {
 		var data = {};
-		var desKey;
-		switch(appId) {
-			case 0:
-				break;
-			case 1:
-				break;
-			case 2: //资源平台
-				desKey = "jsy8004";
-				break;
-			case 3: //教宝云作业
-				desKey = "zy309309!";
-				break;
-			case 4: //教宝云盘
-				desKey = "jbyp@2017";
-				break;
-			case 5: //教宝云用户管理
-				desKey = "jbman456";
-				break;
-			case 6: //家校圈
-				desKey = "jxq789!@";
-				break;
-			case 7: //家校圈
-				desKey = "qz123qwe";
-				break;
-			default:
-				break;
-		}
+		var desKey=getAppKey(appId);
 		var mainSpace;
 		if(spaceType) {
 			mainSpace = storageKeyName.QNPRISPACE; //七牛私有空间
@@ -603,29 +579,29 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} appId app的id
 	 */
 	var getAppKey = function(appId) {
-		var desKey;
+		var desKey="";
 		switch(appId) {
 			case 0:
 				break;
 			case 1:
 				break;
 			case 2: //资源平台
-				desKey = "jsy8004";
+				desKey = storageKeyName.QNPUBZYKEY;
 				break;
 			case 3: //教宝云作业
-				desKey = "zy309309!";
+				desKey = storageKeyName.QNPUBJBYZYKEY;
 				break;
 			case 4: //教宝云盘
-				desKey = "jbyp@2017";
+				desKey = storageKeyName.QNPUBJBYPKEY;
 				break;
 			case 5: //教宝云用户管理
-				desKey = "jbman456";
+				desKey = storageKeyName.QUPUBJBMANKEY;
 				break;
 			case 6: //家校圈
-				desKey = "jxq789!@";
+				desKey = storageKeyName.QNPUBJXQKEY;
 				break;
-			case 7: //家校圈
-				desKey = "qz123qwe";
+			case 7: //求知
+				desKey = storageKeyName.QNPUBQZKEY;
 				break;
 			default:
 				break;
