@@ -830,6 +830,11 @@ var createCommentsInner = function(cell) {
 		'<h5 class="comment-personName single-line">' + setName(cell) + '</h5>' +
 		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>' +
 		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
+	var inner='<div class="table-view-cell"><div class="comments-cell">'+
+		'<h5 class="comment-personName single-line"><img class="head-img" src="'+headImg+'"/>'+setName(cell)+'</h5>'+
+		'<div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>' +
+		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
+		
 	console.log("当前评论内容：" + inner)
 	return inner;
 }
@@ -891,22 +896,24 @@ var setListeners = function() {
 	})
 	events.addTap('anthor-portrait', function() {
 		if(!answerData.IsAnonym) {
-			events.openNewWindowWithData("expert-detail.html", jQuery.extend(answerData, {
+			this.disabled=true;
+			events.singleWebviewInPeriod(this,"expert-detail.html",jQuery.extend(answerData, {
 				UserId: answerData.utid,
 				uimg: answerData.UserImg,
 				unick: answerData.UserName
-			}))
+			}));
 		}
 	})
 	//评论头像点击事件
 	mui('.mui-table-view').on('tap', '.head-img', function() {
 		var info = this.info;
+		this.disabled=true;
 		console.log(JSON.stringify(info));
-		events.openNewWindowWithData("expert-detail.html", jQuery.extend(info, {
+		events.singleWebviewInPeriod(this,"expert-detail.html", jQuery.extend(info, {
 			UserId: info.utid,
 			uimg: info.UserImg,
 			unick: info.UserName
-		}))
+		}));
 	})
 	//评论信息
 	mui('.mui-table-view').on('tap', ".comment-words", function() {

@@ -908,9 +908,9 @@ var dynamiclistitem = (function($, mod) {
 		}
 
 		//时间
-		var html5 = '<p>' + data.PublishDate + '</p></div></div>';
+		var html5 = '<p style = "color:#b7b7b7;font-size:14px">' + data.PublishDate + '</p></div></div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext ">';
-		var html7 = '<div id="question_content' + data.id_name + '" style = "color:black;font-size:14px" class="ellipsis-show question_content">';
+		var html7 = '<div id="question_content' + data.id_name + '" style = "color:#808080;font-size:14px" class="ellipsis-show question_content">';
 		//内容
 		var html8 = data.MsgContent;
 		var html99 = '<div id="show' + data.id_name + '" class="showAll show" style="color:gray;">展开全部</div>'
