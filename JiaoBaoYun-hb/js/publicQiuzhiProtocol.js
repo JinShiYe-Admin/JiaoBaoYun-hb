@@ -100,6 +100,7 @@ var postDataQZPro_getAskById = function(commonData, wd, callback) {
 //			askTitle: '',//问题标题,200
 //			askNote:'',//问题说明,2000
 //			encType:'',//附件类型,1图片,2视频,3仅文字,4音频,5图文混排
+//			encLen:'',//音视频时长
 //			encAddr:'',//附件地址,300,多个的情况例如：1.jpg|2.jpg
 //			thumbnail: '',//缩略图,3000,
 //			cutImg: '',//剪切图,3000,
@@ -123,6 +124,7 @@ var postDataQZPro_addAsk = function(commonData, wd, callback) {
 //			askTitle: '',//问题标题,200
 //			askNote:'',//问题说明,2000
 //			encType:'',//附件类型，1图片，2视频，3仅文字，4音频，5图文混排
+//			encLen:'',//音视频时长
 //			thumbnail:'',//缩略图，3000
 //			cutImg:'',//剪切图，3000
 //			encAddr:''//附件地址,300,多个的情况例如：1.jpg|2.jpg
@@ -158,6 +160,7 @@ var postDataQZPro_getAnswerById = function(commonData, wd, callback) {
 //			askId: '',//问题ID
 //			answerContent: '',//回答内容,4000
 //			encType:'',//附件类型,1图片,2视频,3仅文字,4音频,5图文混排
+//			encLen:'',//音视频时长
 //			encAddr: '',//附件地址,300,多个的情况例如：1.jpg|2.jpg
 //			thumbnail:'',//缩略图,3000
 //			cutImg:'',//剪切图,3000
@@ -178,6 +181,7 @@ var postDataQZPro_addAnswer = function(commonData, wd, callback) {
 //			answerId: '',//回答ID
 //			answerContent:'',//回答内容,4000
 //			encType:'',//附件类型，1图片，2视频，3仅文字，4音频，5图文混排
+//			encLen:'',//音视频时长
 //			thumbnail:'',//缩略图，3000
 //			cutImg:'',//剪切图，3000
 //			encAddr:''//附件地址,300,多个的情况例如：1.jpg|2.jpg
@@ -611,4 +615,17 @@ var postDataQZPro_getAskByIds = function(commonData, wd, callback) {
 	var enData = {};
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getAskByIds', enData, commonData, 2, wd, callback);
+}
+
+//40.获取用户列表
+//所需参数
+//		var comData = {
+//			userIds:''//用户ID列表,Array,例如[1,2,3]
+//		};
+//返回值：[{UserId:用户ID,UserNote:用户简介}]
+var postDataQZPro_getUsersByIds = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINQIUZHI + 'askAnswer/getUsersByIds', enData, commonData, 2, wd, callback);
 }
