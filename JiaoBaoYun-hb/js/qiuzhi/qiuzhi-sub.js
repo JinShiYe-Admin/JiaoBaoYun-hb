@@ -462,17 +462,20 @@ var setListener = function() {
 
 	//点击专家列表
 	mui('#experts_sc').on('tap', '.mui-control-item', function() {
+		this.disabled=true;
 		//console.log('点击专家列表 ' + this.id);
 		//console.log('当前话题的信息 ' + JSON.stringify(channelInfo));
 		if(this.id == 'allExpert') { //查看某个话题的全部专家
-			events.openNewWindowWithData('experts_main.html', {
+			events.singleWebviewInPeriod(this,'experts_main.html', {
 				askID: '0',
 				channelInfo: channelInfo, //当前话题
 				allChannels: allChannels //所有话题
-			});
+			})
+//			events.openNewWindowWithData();
 		} else { //查看某个话题的某个专家
 			//console.log('当前专家的信息 ' + JSON.stringify(JSON.parse(this.getAttribute('data-info'))));
-			events.openNewWindowWithData('expert-detail.html', JSON.parse(this.getAttribute('data-info')));
+			events.singleWebviewInPeriod(this,'expert-detail.html', JSON.parse(this.getAttribute('data-info')))
+//			events.openNewWindowWithData();
 		}
 	});
 	//求知关注
