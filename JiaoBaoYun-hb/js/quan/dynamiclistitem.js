@@ -114,6 +114,10 @@ var dynamiclistitem = (function($, mod) {
 
 	}
 	mod.addSomeEvent = function() {
+		mui(".mui-table-view").on("tap",".video-container",function(){
+			console.log(this.getAttribute('videourl')+this.getAttribute('thb'))
+		video.playVideo(this.getAttribute('videourl'),this.getAttribute('thb'));
+	})
 		window.addEventListener('praise', function(data) {
 			var pageID = sliderId.replace('top_', '')
 			var index = data.detail.index;
@@ -956,9 +960,9 @@ var dynamiclistitem = (function($, mod) {
 		//			ImageNum=0;
 		//		}
 
-		if(ImageNum == 1) { //一张图片时
+		if(ImageNum == 1) { //一张图片时1
 			if(data.EncType==2){
-				var html1 = '<div class="video-container" style="vidoeurl:' + EncAddrList[0] + ';height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url('+ImageUrlList[0]+');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
+				var html1 = '<div class="video-container" thb='+ImageUrlList[0]+' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url('+ImageUrlList[0]+');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
 				var html2 = '<img  style= "height: ' + SCREEN_WIDTH * 1 / 5 + 'px;width: ' + SCREEN_WIDTH * 1 / 5 + 'px;margin-top:55px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
 				html = html1 + html2;
 			} else {

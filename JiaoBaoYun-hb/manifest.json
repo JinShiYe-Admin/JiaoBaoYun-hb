@@ -492,7 +492,8 @@
 					"js/mui.lazyload.img.js",
 					"image/dynamic/praise.png",
 					"css/show/show.css",
-					"js/utils/video.js"
+					"js/utils/video.js",
+					"image/utils/playvideo.png"
 				],
 				"refer": [
 					"html/quan/space-detail.html",
@@ -3046,7 +3047,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"image/utils/delete.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -3653,7 +3655,9 @@
 					"image/dynamic/praise.png",
 					"fonts/fangzheng.ttf",
 					"fonts/iconfont.ttf",
-					"js/utils/video.js"
+					"js/utils/video.js",
+					"image/utils/playvideo.png",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"html/utils/customizeCity.html",
@@ -3661,7 +3665,8 @@
 					"html/show/add-comment.html",
 					"html/quan/zone_main.html",
 					"html/quan/classSpace-persons.html",
-					"html/register/login.html"
+					"html/register/login.html",
+					"html/quan/pub-dynamic.html"
 				],
 				"priority": 0
 			},
