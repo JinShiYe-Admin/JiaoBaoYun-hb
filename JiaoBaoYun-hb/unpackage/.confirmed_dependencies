@@ -52,13 +52,15 @@
 			"image/cloud/cloud_0_zuoye.png",
 			"image/cloud/cloud_0_tuku.png",
 			"image/cloud/cloud_0_tongxunlu.png",
-			"image/cloud/cloud_0_dangan.png"
+			"image/cloud/cloud_0_dangan.png",
+			"image/cloud/cloud_0_wenjianjia_1.png"
 		],
 		"refer": [
 			"html/index/mine.html",
 			"html/cloud/storage_main.html",
 			"html/homework/homework-tea.html",
-			"html/quan/class_space.html"
+			"html/quan/class_space.html",
+			"html/cloud/order-member.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -69,7 +71,13 @@
 			"js/mui.lazyload.img.js",
 			"css/sciedu/sciedu.css",
 			"/image/utils/default_load_2.gif",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/mui.pullToRefresh.js",
+			"js/mui.pullToRefresh.material.js",
+			"fonts/mui.ttf",
+			"css/utils/common.css",
+			"fonts/fangzheng.ttf",
+			"css/mui.min.css"
 		],
 		"refer": []
 	},
@@ -156,7 +164,8 @@
 			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
-			"html/qiuzhi/qiuzhi-sub.html"
+			"html/qiuzhi/qiuzhi-sub.html",
+			"html/qiuzhi/expert-detail.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-answerDetailSub.html": {
@@ -212,7 +221,10 @@
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
 		],
-		"refer": []
+		"refer": [
+			"html/mine/about.html",
+			"html/mine/setting.html"
+		]
 	},
 	"html/cloud/storage_transport.html": {
 		"resources": [
@@ -311,7 +323,8 @@
 			"css/homework/subjects-icon.css",
 			"js/libs/crypto-js/crypto-js.js",
 			"image/homework/commented.png",
-			"image/homework/need-submit.png"
+			"image/homework/need-submit.png",
+			"image/homework/submitted.png"
 		],
 		"refer": [
 			"html/homework/workdetail-stu.html",
@@ -430,7 +443,46 @@
 			"image/qiuzhi/bianji1.png"
 		],
 		"refer": [
-			"html/qiuzhi/focus-question.html"
+			"html/qiuzhi/focus-question.html",
+			"html/qiuzhi/AttentionPersons.html"
+		]
+	},
+	"html/cloud/member-pay.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/cloud/order-member.html": {
+		"resources": [
+			"js/cloud/order-member.js",
+			"css/cloud/order-member.css",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/cloud/member-pay.html"
+		]
+	},
+	"html/mine/about.html": {
+		"resources": [
+			"image/mine/jiaobaoyun.png",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/mine/setting.html": {
+		"resources": [
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/qiuzhi/AttentionPersons.html": {
+		"resources": [
+			"css/qiuzhi/attention-persons.css",
+			"js/qiuzhi/attentionPersons.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }
