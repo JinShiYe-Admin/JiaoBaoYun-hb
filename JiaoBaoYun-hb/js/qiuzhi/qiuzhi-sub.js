@@ -423,14 +423,11 @@ var pullUpFresh = function() {
  */
 var setListener = function() {
 	events.addTap('submit-question', function() {
-		var self = this;
-		self.disabled=true;
 		//判断是否是游客身份登录
-		if(events.judgeLoginMode(self)) {
+		if(events.judgeLoginMode(this)) {
 			return;
 		}
-		console.log(JSON.stringify(allChannels))
-		
+		console.log(JSON.stringify(allChannels));
 		events.singleWebviewInPeriod(self,"qiuzhi-newQ.html",{
 			curChannel: channelInfo,
 			allChannels: allChannels

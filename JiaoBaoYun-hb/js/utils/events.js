@@ -860,7 +860,12 @@ var events = (function(mod) {
 
 	}
 	//判断是否是游客身份登录，页面中有用户操作时调用
+	/**
+	 * 
+	 * @param {Object} item 点击的控件
+	 */
 	mod.judgeLoginMode = function(item) {
+		item.disabled=true;//禁掉事件
 		console.log('判断是否是游客身份登录');
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		if(personal.utid > 0) { //有账号，正常登录
