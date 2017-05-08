@@ -30,7 +30,8 @@ var video=(function(mod){
 		if(plus.os.name=="Android"){
 			mod.playInAndroid(videoPath,thumbPath);
 		}else{
-			mod.playInHTML(videoPath,thumbPath);
+//			mod.playInHTML(videoPath,thumbPath);
+			mui.toast("功能暂未开放！")
 		}
 	}
 	mod.initVideo=function(){

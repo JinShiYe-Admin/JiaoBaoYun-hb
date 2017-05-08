@@ -226,7 +226,8 @@
 		],
 		"refer": [
 			"html/mine/about.html",
-			"html/mine/setting.html"
+			"html/mine/setting.html",
+			"html/mine/approval-apply.html"
 		]
 	},
 	"html/cloud/storage_transport.html": {
@@ -332,12 +333,18 @@
 		"refer": [
 			"html/homework/workdetail-stu.html",
 			"html/homework/doHomework-stu.html",
-			"html/homework/homework-publish.html"
+			"html/homework/homework-publish.html",
+			"html/homework/workdetail-tea.html",
+			"html/homework/homework-commented.html"
 		]
 	},
 	"html/homework/doHomework-stu.html": {
 		"resources": [
-			"js/cloud/mui.previewimage.js"
+			"js/cloud/mui.previewimage.js",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/homework/homework-commented.html"
 		]
 	},
 	"html/homework/homework-publish.html": {
@@ -365,7 +372,9 @@
 			"css/homework/workdetail-stu.css",
 			"css/utils/preview.css",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"css/homework/subjects-icon.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/quan/class-group.html": {
@@ -381,7 +390,9 @@
 		"resources": [
 			"js/utils/urlBrief.js",
 			"css/utils/bubble.css",
-			"js/quan/class_space.js"
+			"js/quan/class_space.js",
+			"css/utils/preview.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/quan/class_space.html": {
@@ -402,13 +413,16 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/quan/custom-textarea.css"
 		]
 	},
 	"html/quan/group-pInfo.html": {
 		"resources": [
 			"css/quan/group-pInfo.css",
-			"js/quan/group-pInfo.js"
+			"js/quan/group-pInfo.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/quan/edit-remark.html": {
@@ -448,7 +462,8 @@
 		],
 		"refer": [
 			"html/qiuzhi/focus-question.html",
-			"html/qiuzhi/AttentionPersons.html"
+			"html/qiuzhi/AttentionPersons.html",
+			"html/register/login.html"
 		]
 	},
 	"html/cloud/member-pay.html": {
@@ -477,7 +492,9 @@
 	},
 	"html/mine/setting.html": {
 		"resources": [
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/qiuzhi/AttentionPersons.html": {
@@ -498,6 +515,64 @@
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-question.html"
+		]
+	},
+	"html/homework/workdetail-tea.html": {
+		"resources": [
+			"css/mui.min.css",
+			"html/homework/workdetail-tea-sub.html",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/homework/workdetail-tea-sub.html"
+		]
+	},
+	"html/homework/homework-comment.html": {
+		"resources": [
+			"css/homework/homework-commit.css",
+			"js/homework/homework-comment.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/homework/workdetail-tea-sub.html": {
+		"resources": [
+			"js/homework/homework_detail.js",
+			"css/homework/subjects-icon.css",
+			"css/homework/workdetail.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/homework/homework-comment.html"
+		]
+	},
+	"html/homework/homework-commented.html": {
+		"resources": [
+			"js/homework/homework-commented.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/homework/subjects-icon.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/mine/approval-apply.html": {
+		"resources": [
+			"js/mine/approval-apply.js",
+			"css/mine/apply.css",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/mine/add-info.html"
+		]
+	},
+	"html/mine/add-info.html": {
+		"resources": [
+			"js/mine/add-info.js",
+			"image/mine/invite_none_0.png"
 		]
 	}
 }
