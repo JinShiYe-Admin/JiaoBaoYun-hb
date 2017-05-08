@@ -635,6 +635,7 @@ var dynamiclistitem = (function($, mod) {
 
 				postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
 					if(data.RspCode == 0) {
+						document.getElementById("bottomDiv"+pageID+idFlag+index).style.paddingBottom='12px';
 						var a = document.getElementById("praise" + pageID + idFlag + index);
 						a.style.color = 'rgb(26, 155, 255)'
 						var PraiseList = document.getElementById("PraiseList" + pageID + idFlag + index);
@@ -708,12 +709,14 @@ var dynamiclistitem = (function($, mod) {
 							}
 
 						} else {
+							
 							console.log('一个人点赞')
 							var citycode = sliderId.replace('top_', '');
 							var comment0 = document.getElementById('replyComment' + pageID + idFlag + index + '-0-评论');
 							if(comment0) {
 								document.getElementById('line' + pageID + idFlag + index).className = 'mui-media-body dynamic-line';
 							} else {
+								document.getElementById("bottomDiv"+pageID+idFlag+index).style.paddingBottom='0px';
 								document.getElementById('line' + pageID + idFlag + index).className = 'mui-media-body dynamic-line mui-hidden';
 							}
 							for(var i = 0; i < praiseName.length; i++) {
@@ -1149,7 +1152,13 @@ var dynamiclistitem = (function($, mod) {
 
 		var div = document.createElement('div');
 		div.className = 'mui-row mui-row-padding-8px';
+		div.id = 'bottomDiv'+data.id_name;
 		div.style.marginTop = '-25px'
+		if(praiseList.length>0||commentList.length>0){
+			
+		}else{
+			div.style.paddingBottom = '0px'
+		}
 		div.innerHTML = html;
 		liElement.appendChild(div);
 		ulElement.appendChild(liElement);
