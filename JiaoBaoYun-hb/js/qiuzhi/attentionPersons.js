@@ -6,6 +6,8 @@ var expertInfo; //专家信息
 var type; //类型 0 他关注的人 1 关注他的人
 var totalPageCount = 0;
 var flagRef = 0;
+var customerPersons;
+var isSelf = false; //是否为自己的关注列表 和被关注列表
 mui.plusReady(function() {
 	selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	expertInfo = plus.webview.currentWebview().expertInfo;
@@ -13,12 +15,16 @@ mui.plusReady(function() {
 	type = plus.webview.currentWebview().type;
 	if(type) { //类型 0 他关注的人 1 关注他的人
 		if(expertInfo.UserId == selfId) {
+			isSelf = true;
 			document.getElementById("title").innerText = "关注我的人";
 		} else {
 			document.getElementById("title").innerText = "关注他的人";
 		}
 	} else {
 		if(expertInfo.UserId == selfId) {
+			customerPersons = myStorage.getItem(storageKeyName.FOCUSEPERSEN);
+			customerPersons.reverse();
+			isSelf = true;
 			document.getElementById("title").innerText = "我关注的人";
 		} else {
 			document.getElementById("title").innerText = "他关注的人";
@@ -28,15 +34,7 @@ mui.plusReady(function() {
 	console.log('获取的专家信息：' + JSON.stringify(expertInfo));
 	flagRef = 0;
 	pageIndex = 1; //当前页面
-	//	expertId = expertInfo.UserId;
-	if(events.getUtid()) {
-		//已经登录
-		requireData(type); //根据类型获取数据
-	} else {
-		//游客身份、获取关注的人
-		requireDataNotLogin();
-	}
-
+	requireData(type); //根据类型获取数据
 	setListener(); //设置监听
 
 	//阻尼系数、初始化刷新加载更多
@@ -55,13 +53,7 @@ mui.plusReady(function() {
 				console.log("下拉刷新");
 				pageIndex = 1;
 				flagRef = 0;
-				if(events.getUtid()) {
-					//已经登录
-					requireData(type); //根据类型获取数据
-				} else {
-					//游客身份、获取关注的人
-					requireDataNotLogin();
-				}
+				requireData(type); //根据类型获取数据
 				setTimeout(function() {
 					//结束下拉刷新
 					self.endPullDownToRefresh();
@@ -73,6 +65,7 @@ mui.plusReady(function() {
 				var self = this;
 				console.log("上拉加载更多");
 				flagRef = 1;
+				pageIndex++;
 				if(events.getUtid()) {
 					//已经登录
 					if(pageIndex <= totalPageCount) {
@@ -101,43 +94,35 @@ mui.plusReady(function() {
 	});
 })
 //游客获取关注的人
-var requireDataNotLogin = function() {
-	var personIds = window.myStorage.getItem(window.storageKeyName.FOCUSEPERSEN);
-	var wd = events.showWaiting();
-	//40.获取用户列表
+var requireExperts = function() {
+	var personIds = customerPersons.splice((pageIndex - 1) * 10, pageIndex * 10);
+	var wd1 = events.showWaiting();
 	postDataQZPro_getUsersByIds({
-			userIds:JSON.stringify(personIds)//用户ID列表,Array,例如[1,2,3]
-		}, wd, function(data) {
-			console.log('40.获取用户列表：' + JSON.stringify(data));
-			wd.close();
-			if(data.RspCode == 0) {
-				var persons = data.RspData.Data; //关注人数据
-				var personIds = [];
-				//遍历获取关注人id数组
-				for(var i in persons) {
-					persons[i].FocusType = 1;
-					personIds.push(persons[i].UserId);
-				}
-				//通过id数组，获取人员资料，并重组
-				if(personIds.length > 0) {
-					requirePersonInfo(personIds, persons);
-				}
-				if(mui(".mui-table-view-cell").length < 10) {
-					mui(".mui-pull-loading")[0].innerHTML = "";
-				}
-			}
-		})
+		userIds: personIds
+	}, wd1, function(data) {
+		wd1.close();
+		JSON.stringify("获取的人员信息：" + data);
+		if(data.RspCode == 0) {
+			totalPageCount = Math.ceil(customerPersons.length / 10);
+			requirePersonInfo(personIds, data.RspData);
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	})
 }
-
 /**
  * 获取关注人数据--登录
  */
 var requireData = function() {
-	var wd = events.showWaiting();
+	
 	if(pageIndex == 1) {
 		events.clearChild(document.getElementById('list-container'));
 	}
-	if(type) {
+	if(type) { //关注专家的人
+		if(isSelf){
+			return;
+		}
+		var wd = events.showWaiting();
 		postDataQZPro_getIsFocusedByUser({
 			userId: selfId,
 			focusId: expertInfo.UserId,
@@ -167,12 +152,23 @@ var requireData = function() {
 			}
 		})
 	} else {
-		getFocusUsersByUser(expertInfo.UserId);
+		//我关注的人
+		if(events.getUtid() && !isSelf) {
+			getFocusUsersByUser(expertInfo.UserId);
+		} else {
+			if(customerPersons && customerPersons.length > 0) {
+				requireExperts();
+			} else {
+				mui.toast("没有关注的人")
+			}
+		}
+
 	}
 
 }
 //27.获取某个用户的关注人列表
 function getFocusUsersByUser(focusId) {
+
 	//	personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 	//需要加密的数据
 	var comData = {
@@ -190,15 +186,7 @@ function getFocusUsersByUser(focusId) {
 		if(data.RspCode == 0 && data.RspData.TotalPage > 0) {
 			//总页数
 			totalPageCount = data.RspData.TotalPage;
-			pageIndex++;
-			//			if(flagRef == 0) { //刷新
 			personArray = data.RspData.Data;
-			//清除节点
-			//				document.getElementById('list-container').innerHTML = "";
-			//			} else { //加载更多
-			//				//合并数组
-			//				personArray = personArray.concat(data.RspData.Data);
-			//			}
 			var personIds = [];
 			//遍历获取关注人id数组
 			for(var i in personArray) {
@@ -265,6 +253,14 @@ var setData = function(persons) {
 		li.className = 'mui-table-view-cell';
 		li.innerHTML = createInner(persons[i]);
 		list.appendChild(li);
+		if(!events.getUtid()) { //游客登录
+			var dataArr = events.isExistInStorageArray(storageKeyName.FOCUSEPERSEN, parseInt(persons[i].UserId));
+			if(dataArr[1] >= 0) {
+				persons[i].FocusType = 1;
+			} else {
+				persons[i].FocusType = 0;
+			}
+		}
 		li.querySelector('.mui-btn').personInfo = persons[i];
 	}
 }
@@ -321,26 +317,38 @@ var getButtonContent = function(focusType) {
  */
 var setFocus = function(item, type) {
 	console.log(JSON.stringify(item.personInfo));
-	var wd = events.showWaiting();
-	postDataQZPro_setUserFocus({
-		userId: selfId, //用户ID
-		focusUserId: item.personInfo.UserId, //关注用户ID
-		status: type //关注状态,0 不关注,1 关注
-	}, wd, function(data) {
-		console.log('获取的关注结果：' + JSON.stringify(data));
-		wd.close();
-		if(data.RspCode == 0 && data.RspData.Result == 1) {
-			if(type) {
-				mui.toast('关注成功！')
+	if(events.getUtid()) {
+		var wd = events.showWaiting();
+		postDataQZPro_setUserFocus({
+			userId: selfId, //用户ID
+			focusUserId: item.personInfo.UserId, //关注用户ID
+			status: type //关注状态,0 不关注,1 关注
+		}, wd, function(data) {
+			console.log('获取的关注结果：' + JSON.stringify(data));
+			wd.close();
+			if(data.RspCode == 0 && data.RspData.Result == 1) {
+				if(type) {
+					mui.toast('关注成功！')
+				} else {
+					mui.toast('取消关注成功！')
+				}
+				setButtonInfoType(item);
+				var buttonInfo = getButtonContent(item.personInfo.FocusType);
+				item.innerHTML = buttonInfo.inner;
+				item.className = 'mui-btn mui-btn-outlined ' + buttonInfo.classInfo;
 			} else {
-				mui.toast('取消关注成功！')
+				mui.toast(data.RspTxt);
 			}
-			setButtonInfoType(item);
-			var buttonInfo = getButtonContent(item.personInfo.FocusType);
-			item.innerHTML = buttonInfo.inner;
-			item.className = 'mui-btn mui-btn-outlined ' + buttonInfo.classInfo;
-		}
-	})
+			item.disabled = false;
+		})
+	} else {
+		events.toggleStorageArray(storageKeyName.FOCUSEPERSEN, parseInt(item.personInfo.UserId), !type)
+		setButtonInfoType(item);
+		var buttonInfo = getButtonContent(item.personInfo.FocusType);
+		item.innerHTML = buttonInfo.inner;
+		item.className = 'mui-btn mui-btn-outlined ' + buttonInfo.classInfo;
+	}
+
 }
 /**
  *	关注状态关注的
@@ -370,22 +378,33 @@ var setButtonInfoType = function(item) {
 var setListener = function() {
 	//不同状况下关注/取消关注按钮的点击事件
 	mui('.mui-table-view').on('tap', '.mui-btn', function() {
+		this.disabled = true;
+		var item = this;
 		//判断是否是游客身份登录
-		if(events.judgeLoginMode()) {
-			return;
-		}
+		//		if(events.judgeLoginMode()) {
+		//			return;
+		//		}
 		var focusType;
-		switch(this.personInfo.FocusType) {
-			case 0:
-			case 2:
-				focusType = 1;
-				break;
-			case 1:
-			case 3:
+		if(events.getUtid()) {
+			switch(this.personInfo.FocusType) {
+				case 0:
+				case 2:
+					focusType = 1;
+					break;
+				case 1:
+				case 3:
+					focusType = 0;
+					break;
+				default:
+					break;
+			}
+		} else {
+			var dataArr = events.isExistInStorageArray(storageKeyName.FOCUSEPERSEN, parseInt(item.personInfo.UserId));
+			if(dataArr[1] >= 0) {
 				focusType = 0;
-				break;
-			default:
-				break;
+			} else {
+				focusType = 1;
+			}
 		}
 		setFocus(this, focusType);
 	});
