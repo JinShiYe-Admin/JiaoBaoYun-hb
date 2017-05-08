@@ -860,15 +860,31 @@ var events = (function(mod) {
 
 	}
 	//判断是否是游客身份登录，页面中有用户操作时调用
-	mod.judgeLoginMode = function(item) {
+	mod.judgeLoginMode = function() {
 		console.log('判断是否是游客身份登录');
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		if(personal.utid > 0) { //有账号，正常登录
 			return false;
 		} else { //游客身份，要有交互，就得先跳转到登录界面
+
 			var targetHTML = '../register/login.html';
 			var passData = '';
-			mod.singleWebviewInPeriod(item,targetHTML,passData);
+			mui.openWindow({
+				url: targetHTML,
+				id: targetHTML.split('/')[targetHTML.split('/').length - 1],
+				extras: {
+					data: passData
+				},
+				show: {
+					anishow: 'slide-in-bottom',
+					duration: 250
+				},
+				waiting: {
+					title: '正在加载...'
+				},
+				createNew: true,
+				styles: mod.getWebStyle()
+			});
 			return true;
 		}
 	}

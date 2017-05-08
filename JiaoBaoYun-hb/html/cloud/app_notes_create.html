@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<link rel="stylesheet" href="../../css/utils/MultiMedia.css" />
 		<link rel="stylesheet" href="../../css/utils/preview.css" />
+		<link rel="stylesheet" href="../../css/utils/audiopopover.css" />
 
 		<style type="text/css">
 			body,
@@ -40,13 +41,6 @@
 			.mui-backdrop {
 				background-color: transparent;
 			}
-
-			.audio-show {
-				width: 70%;
-				background-color: white;
-				margin-left: 15%;
-				box-shadow: 0px 1px 5px rgba(136, 136, 136, 0.5);
-			}
 		</style>
 	</head>
 
@@ -67,9 +61,22 @@
 			</video>
 		</div>
 		<div id="audioPopover" class="mui-popover">
-			<div id="audioShow" class="audio-show"></div>
+			<div id="audio_show" class="audio-show">
+				<span id="audio_icon" class="mui-icon mui-icon-mic audio-icon"></span>
+				<canvas id="audio_canvas" class="audio-canvas"></canvas>
+				<span id="audio_close" class="mui-icon iconfont icon-guanbi"></span>
+				<div id="audio_time" class="audio-time">00:00</div>
+				<div id="audio_control" class="audio-control">
+					<div id="audio_play" class="audio-control-background audio-control-play">
+						<div></div>
+					</div>
+					<div id="audio_pause" class="audio-control-background audio-control-pause">
+						<div></div>
+						<div></div>
+					</div>
+				</div>
+			</div>
 		</div>
-
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
@@ -85,6 +92,7 @@
 		<script type="text/javascript" src="../../js/utils/recordvideoutil.js"></script>
 		<script type="text/javascript" src="../../js/utils/playutil.js"></script>
 		<script type="text/javascript" src="../../js/utils/showvideoutil.js"></script>
+		<script type="text/javascript" src="../../js/utils/showaudio.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			var pathList = []; //记录需要删掉的图片和缩略图
@@ -95,25 +103,19 @@
 			var multiMedia; //多媒体控件
 			var notes = document.getElementById("notes"); //输入框
 
-			mui.plusReady(function() {
-				showAudio();
+			var audio_show = document.getElementById("audio_show");
+			var audio_icon = document.getElementById("audio_icon");
+			var audio_canvas = document.getElementById("audio_canvas");
+			var audio_play = document.getElementById("audio_play");
+			var audio_pause = document.getElementById("audio_pause");
+			var audio_time = document.getElementById("audio_time");
+			var audio_option; //圆的参数
+			var audio_canvastx = audio_canvas.getContext("2d");
 
+			mui.plusReady(function() {
 				init(); //初始化控件
 				initListener(); //初始化监听
 			});
-
-			function showAudio() {
-				var audioShow = document.getElementById("audioShow");
-				audioShow.style.height = plus.screen.resolutionHeight / 2 + 'px';
-				audioShow.style.marginTop = plus.screen.resolutionHeight / 5 + 'px';
-				mui('#audioPopover').popover('show');
-				var mask = mui.createMask(function() {
-					console.log('hide');
-					mui('#audioPopover').popover('hide');
-				});
-				mask.show();
-				document.querySelector('.mui-backdrop').style.background = 'rgba(255, 255, 255, 0.5)';
-			}
 
 			/*
 			 * 初始化控件
@@ -129,10 +131,10 @@
 					MultiMediaId: 'MultiMedia', //存放多媒体对象控件的id
 					Key: window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid, //utid
 					Picture: true, //是否显示图片图标
-					Audio: true, //是否显示音频图标
+//					Audio: true, //是否显示音频图标
 					Video: true, //是否显示视频图标
 					TotalPicture: 9, //图片的个数
-					TotalAudio: 1, //音频的个数
+//					TotalAudio: 1, //音频的个数
 					TotalVideo: 1, //视频的个数
 				});
 
@@ -150,13 +152,20 @@
 				 */
 				multiMedia.audioPlayCallBack = function(data) {
 					console.log('audioPlayCallBack ' + JSON.stringify(data));
-					showAudio();
+					ShowAudioUtil.initAudio(data);
 				}
 
-				hideOption = events.initHideKeyBoard(); //获取配置信息
-
-				//初始化播放器
+				//初始化视频播放器
 				ShowVideoUtil.initVideo(document.getElementById("video"));
+				//初始化音频播放器
+				audio_option = {
+					x: localStorage.getItem('resolutionWidth') * 1.4, //圆心的x轴坐标值
+					y: (plus.screen.resolutionHeight / 3 * 2), //圆心的y轴坐标值
+					r: plus.screen.resolutionHeight * 0.25 * 1.5 //圆的半径
+				};
+				ShowAudioUtil.initAudioPopover();
+				//获取配置信息
+				hideOption = events.initHideKeyBoard();
 			}
 
 			/*

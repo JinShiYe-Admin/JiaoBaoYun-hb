@@ -54,8 +54,7 @@
 			"image/cloud/cloud_0_tuku.png",
 			"image/cloud/cloud_0_tongxunlu.png",
 			"image/cloud/cloud_0_dangan.png",
-			"image/cloud/cloud_0_wenjianjia_1.png",
-			"image/quan/add.png"
+			"image/cloud/cloud_0_wenjianjia_1.png"
 		],
 		"refer": [
 			"html/index/mine.html",
@@ -84,9 +83,7 @@
 			"fonts/fangzheng.ttf",
 			"css/mui.min.css"
 		],
-		"refer": [
-			"html/utils/customizeCity.html"
-		]
+		"refer": []
 	},
 	"html/quan/classSpace-persons.html": {
 		"resources": [
@@ -697,13 +694,6 @@
 		"refer": [
 			"html/check/area-choose.html",
 			"html/check/news-detail.html"
-		]
-	},
-	"html/utils/customizeCity.html": {
-		"resources": [
-			"css/mui.min.css",
-			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }
