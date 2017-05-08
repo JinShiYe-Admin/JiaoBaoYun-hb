@@ -389,7 +389,7 @@
 		 * @param {Object} item
 		 */
 		function createNotes(data) {
-			//console.log('createNotes ' + JSON.stringify(data));
+			console.log('createNotes ' + JSON.stringify(data));
 			notes.noteKey.push(data.TabId);
 			notes.noteValue[data.TabId] = data;
 			var date = data.PublishDate.split(' '); //发布的日期和时间

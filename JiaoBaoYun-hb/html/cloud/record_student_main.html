@@ -269,7 +269,7 @@
 		var pullRefresh; //下拉，上拉控件
 		var deleteRecord = false; //是否切换到了删除状态
 		var studentFile = {}; //存储获取的记录
-		var qnDelFileArray = []; //记录删除记录时七牛的文件路径
+		//var qnDelFileArray = []; //记录删除记录时七牛的文件路径
 		var page; //记录页数
 		var offsetWidth = document.getElementById('ul_table').offsetWidth;
 		var imageWidth = parseInt((offsetWidth * 0.77 - 30) * 0.32);
@@ -793,15 +793,15 @@
 						if(cellData.EncAddr != '') { //有附件
 							var EncAddrArray = cellData.EncAddr.split('|');
 							var EncImgAddrArray = cellData.EncImgAddr.split('|');
-							qnDelFileArray = qnDelFileArray.concat(EncAddrArray, EncImgAddrArray);
+							//qnDelFileArray = qnDelFileArray.concat(EncAddrArray, EncImgAddrArray);
 						}
 					}
 
-					if(qnDelFileArray.length != 0) {
-						BatchDelete(data.wd);
-					} else {
+//					if(qnDelFileArray.length != 0) {
+//						BatchDelete(data.wd);
+//					} else {
 						delSuccess(data.wd);
-					}
+//					}
 				} else {
 					events.closeWaiting(data.wd);
 					mui.toast('删除失败 ' + temp.RspTxt);
@@ -809,34 +809,34 @@
 			});
 		}
 
-		/**
-		 * 删除对应的七牛文件
-		 */
-		function BatchDelete(wd) {
-			var batchDelete = {
-				appId: 6, //int 必填 项目id
-				urls: qnDelFileArray //array 必填 需要获取下载token文件的路径
-			}
-			/**
-			 * 七牛批量删除
-			 */
-			CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, batchDelete, function(data) {
-					console.log('云端文件删除 ' + JSON.stringify(data));
-					if(data.Status == 1) {
-						qnDelFileArray = [];
-					} else {
-						console.log('### ERROR ### 七牛删除失败 ### ' + JSON.stringify(data));
-						mui.toast('云端文件删除失败 ' + JSON.stringify(data));
-					}
-					delSuccess(wd);
-				},
-				function(xhr, type, errorThrown) {
-					console.log('### ERROR ### 请求七牛删除失败 ### ' + JSON.stringify(type));
-					mui.toast('请求删除云端文件失败 ' + JSON.stringify(type));
-					delSuccess(wd);
-				}
-			);
-		}
+//		/**
+//		 * 删除对应的七牛文件
+//		 */
+//		function BatchDelete(wd) {
+//			var batchDelete = {
+//				appId: 6, //int 必填 项目id
+//				urls: qnDelFileArray //array 必填 需要获取下载token文件的路径
+//			}
+//			/**
+//			 * 七牛批量删除
+//			 */
+//			CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, batchDelete, function(data) {
+//					console.log('云端文件删除 ' + JSON.stringify(data));
+//					if(data.Status == 1) {
+//						qnDelFileArray = [];
+//					} else {
+//						console.log('### ERROR ### 七牛删除失败 ### ' + JSON.stringify(data));
+//						mui.toast('云端文件删除失败 ' + JSON.stringify(data));
+//					}
+//					delSuccess(wd);
+//				},
+//				function(xhr, type, errorThrown) {
+//					console.log('### ERROR ### 请求七牛删除失败 ### ' + JSON.stringify(type));
+//					mui.toast('请求删除云端文件失败 ' + JSON.stringify(type));
+//					delSuccess(wd);
+//				}
+//			);
+//		}
 
 		/**
 		 * 删除的所有逻辑处理完后执行的方法

@@ -155,11 +155,6 @@ var MultiMedia = (function($, mod) {
 			mui('#MultiMedia_Audio_Footer').on('tap', '.multimedia-audio-button', function() {
 				self.initPlayAudioEvent(this);
 			});
-
-			self.addAudios({
-				"fpath": "_documents/1494038595866387.amr",
-				"time": 16
-			});
 		}
 
 		//视频
@@ -237,11 +232,14 @@ var MultiMedia = (function($, mod) {
 		}
 		if(self.data.VideoNum > 0) {
 			RecordVideo.recordVideo({}, function(fpath) {
-				var wd = events.showWaiting('处理中...');
-				console.log('录制视频成功 ' + fpath);
-				self.addVideos(fpath, function() {
-					wd.close();
-				});
+				if(self.data.VideoNum > 0) {
+					self.data.VideoNum--;
+					var wd = events.showWaiting('处理中...');
+					console.log('录制视频成功 ' + fpath);
+					self.addVideos(fpath, function() {
+						wd.close();
+					});
+				}
 			}, function(err) {
 				mui.toast('录制视频失败 ' + JSON.stringify(err));
 			});
@@ -545,9 +543,8 @@ var MultiMedia = (function($, mod) {
 		video.src = path;
 		video.onloadeddata = function() {
 			var canvas = document.createElement('canvas');
-			canvas.width = video.videoWidth / 2;
-			canvas.height = video.videoHeight / 2;
-			console.log('canvas ' + canvas.width + ' ' + canvas.height)
+			canvas.width = video.videoWidth;
+			canvas.height = video.videoHeight;
 			canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 			var thumb = canvas.toDataURL("image/png");
 			//增加视频
@@ -558,9 +555,9 @@ var MultiMedia = (function($, mod) {
 				domain: '', //视频地址
 				thumb: '', //视频缩略图地址
 				width: canvas.width, //视频缩略图宽
-				height: canvas.height //视频缩略图高
+				height: canvas.height, //视频缩略图高
+				duration: video.duration.toFixed(2) //视频时长
 			};
-			self.data.VideoNum--;
 			self.data.VideoArray.push(videos);
 			//显示视频
 			var element = document.createElement('div');
