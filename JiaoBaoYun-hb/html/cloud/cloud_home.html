@@ -362,47 +362,17 @@
 					if(slideNavigation.showMenu) {
 						slideNavigation.closeMenu();
 					} else {
-						//						events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {
-						//							flag: 1
-						//						})
 						slideNavigation.openMenu();
 					}
 				})
-				//				var navigationbar = plus.webview.currentWebview().getNavigationbar();
-				//				navigationbar.addEventListener("click", function(e) {
-				//					var winWidth = document.body.clientWidth;
-				//					console.log("获取屏幕宽度：" + document.body.clientWidth);
-				//					console.log("订购会员界面事件监听：" + JSON.stringify(e));
-				//					if(events.judgeLoginMode()) {
-				//						return;
-				//					}
-				//					if(e.clientX > (winWidth - 75) && e.clientX < (winWidth - 45)) {
-				//						events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {
-				//							flag: 1
-				//						})
-				//						events.openNewWindow("../cloud/order-member.html");
-				//					} else if(e.clientX > winWidth - 45) {
-				//
-				//					} else if(e.clientX > 0 && e.clientX < 45) {
-				//						if(slideNavigation.showMenu) {
-				//							slideNavigation.closeMenu();
-				//						} else {
-				//							events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {
-				//								flag: 1
-				//							})
-				//							slideNavigation.openMenu();
-				//						}
-				//					}
-				//
-				//				}, false)
 				document.querySelector(".icon-iconhexinhuiyuan").addEventListener("tap", function() {
-					if(events.judgeLoginMode()) {
+					if(events.judgeLoginMode(this)) {
 						return;
 					}
-					events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {
+					events.fireToPageWithData('cloud_home.html', 'topPopover', {
 						flag: 1
 					})
-					events.openNewWindow("../cloud/order-member.html");
+					events.singleWebviewInPeriod(this,"order-member.html");
 				})
 				window.addEventListener("infoChanged", function() {
 					document.querySelector(".img-icon>img").src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2)

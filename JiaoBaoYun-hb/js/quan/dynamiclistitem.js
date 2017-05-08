@@ -114,10 +114,10 @@ var dynamiclistitem = (function($, mod) {
 
 	}
 	mod.addSomeEvent = function() {
-		mui(".mui-table-view").on("tap",".video-container",function(){
-			console.log(this.getAttribute('videourl')+this.getAttribute('thb'))
-		video.playVideo(this.getAttribute('videourl'),this.getAttribute('thb'));
-	})
+		mui(".mui-table-view").on("tap", ".video-container", function() {
+			console.log(this.getAttribute('videourl') + this.getAttribute('thb'))
+			video.playVideo(this.getAttribute('videourl'), this.getAttribute('thb'));
+		})
 		window.addEventListener('praise', function(data) {
 			var pageID = sliderId.replace('top_', '')
 			var index = data.detail.index;
@@ -296,21 +296,21 @@ var dynamiclistitem = (function($, mod) {
 										//获取数据
 										if(pageID != 1) { //定制的城市
 											for(var item in datasource) {
-											var tempArr = datasource[item]
-											for(var j in tempArr) {
-												if(zonepArray[index].PublisherId == tempArr[j].PublisherId) {
-													if(isFocus == 0) {
-														tempArr[j].IsFocused = 1;
-														datasource[item] = tempArr
-													} else {
-														tempArr[j].IsFocused = 0;
-														datasource[item] = tempArr
+												var tempArr = datasource[item]
+												for(var j in tempArr) {
+													if(zonepArray[index].PublisherId == tempArr[j].PublisherId) {
+														if(isFocus == 0) {
+															tempArr[j].IsFocused = 1;
+															datasource[item] = tempArr
+														} else {
+															tempArr[j].IsFocused = 0;
+															datasource[item] = tempArr
+														}
+
 													}
 
 												}
-
 											}
-										}
 											console.log('status=' + status)
 											if(status == 0) {
 												mui.toast("取消关注成功")
@@ -408,9 +408,10 @@ var dynamiclistitem = (function($, mod) {
 		//			评论
 		mui('.mui-table-view').on('tap', '.dynamic-icon-comment', function() {
 			//判断是否是游客身份登录
-			if(events.judgeLoginMode()) {
+			if(events.judgeLoginMode(this)) {
 				return;
 			}
+			this.disabled = false;
 			var pageID = sliderId.replace('top_', '')
 			console.log('id=' + this.id)
 			tempIndex = this.id.replace('comment' + pageID + idFlag, '');
@@ -422,9 +423,10 @@ var dynamiclistitem = (function($, mod) {
 		//			回复评论
 		mui('.mui-table-view').on('tap', '.replyComment', function() {
 			//判断是否是游客身份登录
-			if(events.judgeLoginMode()) {
+			if(events.judgeLoginMode(this)) {
 				return;
 			}
+			this.disabled = false;
 			var pageID = sliderId.replace('top_', '')
 			tempIndex = this.id.replace('replyComment' + pageID + idFlag, '');
 			mod.addComment('tap');
@@ -434,9 +436,10 @@ var dynamiclistitem = (function($, mod) {
 		//			删除评论
 		mui('.mui-table-view').on('longtap', '.replyComment', function() {
 			//判断是否是游客身份登录
-			if(events.judgeLoginMode()) {
+			if(events.judgeLoginMode(this)) {
 				return;
 			}
+			this.disabled = false;
 			//			console.log('长按删除评论')
 			var pageID = sliderId.replace('top_', '')
 			tempIndex = this.id.replace('replyComment' + pageID + idFlag, '');
@@ -462,53 +465,55 @@ var dynamiclistitem = (function($, mod) {
 
 		//
 		//点击关注
-		mui('.mui-table-view').on('tap', '.btn-attention',
-			function() {
-				//判断是否是游客身份登录
-				if(events.judgeLoginMode()) {
-					return;
-				}
-				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
-
-				var pageID = sliderId.replace('top_', '')
-				var tempId = this.id;
-				var index = this.id.replace('btn-focus' + pageID + idFlag, '');
-				//80.（用户空间）设置某用户的关注
-				//所需参数
-				var comData = {
-					userId: personalUTID, //用户ID
-					focusId: zonepArray[index].PublisherId, //关注ID
-					status: '1' //关注状态，0 不关注，1 关注
-				};
-				//返回：1为正确
-				var wd = events.showWaiting();
-				postDataPro_setUserFocus(comData, wd, function(data) {
-					wd.close();
-					if(data.RspCode == 0) {
-						var btn = document.getElementById(tempId);
-						btn.innerHTML = '取消关注'
-						btn.className = 'mui-btn mui-pull-right btn-attentioned'
-						var pageID = sliderId.replace('top_', '')
-						setTimeout(function() {
-							//获取数据
-							if(pageID != 1) { //定制的城市
-								requestData(pageID, 1);
-							} else { //关注的人数据
-								//81.（用户空间）获取用户所有关注的用户
-								getFocusByUser();
-							}
-							//结束下拉刷新
-							self.endPullDownToRefresh();
-						}, 1000);
-					}
-
-				})
-			}) //点击取消关注
-		mui('.mui-table-view').on('tap', '.btn-attentioned', function() {
+		mui('.mui-table-view').on('tap', '.btn-attention', function() {
 			//判断是否是游客身份登录
-			if(events.judgeLoginMode()) {
+			if(events.judgeLoginMode(this)) {
 				return;
 			}
+			var item=this;
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
+
+			var pageID = sliderId.replace('top_', '')
+			var tempId = this.id;
+			var index = this.id.replace('btn-focus' + pageID + idFlag, '');
+			//80.（用户空间）设置某用户的关注
+			//所需参数
+			var comData = {
+				userId: personalUTID, //用户ID
+				focusId: zonepArray[index].PublisherId, //关注ID
+				status: '1' //关注状态，0 不关注，1 关注
+			};
+			//返回：1为正确
+			var wd = events.showWaiting();
+			postDataPro_setUserFocus(comData, wd, function(data) {
+				wd.close();
+				item.disabled=false;
+				if(data.RspCode == 0) {
+					var btn = document.getElementById(tempId);
+					btn.innerHTML = '取消关注'
+					btn.className = 'mui-btn mui-pull-right btn-attentioned'
+					var pageID = sliderId.replace('top_', '')
+					setTimeout(function() {
+						//获取数据
+						if(pageID != 1) { //定制的城市
+							requestData(pageID, 1);
+						} else { //关注的人数据
+							//81.（用户空间）获取用户所有关注的用户
+							getFocusByUser();
+						}
+						//结束下拉刷新
+						self.endPullDownToRefresh();
+					}, 1000);
+				}
+
+			})
+		}) //点击取消关注
+		mui('.mui-table-view').on('tap', '.btn-attentioned', function() {
+			//判断是否是游客身份登录
+			if(events.judgeLoginMode(this)) {
+				return;
+			}
+			var item=this;
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
 
 			var pageID = sliderId.replace('top_', '')
@@ -525,7 +530,8 @@ var dynamiclistitem = (function($, mod) {
 			var wd = events.showWaiting();
 			postDataPro_setUserFocus(comData, wd, function(data) {
 				wd.close();
-				console.log(JSON.stringify(data))
+				console.log(JSON.stringify(data));
+				item.disabled=false;
 				if(data.RspCode == 0) {
 					var btn = document.getElementById(tempId);
 					btn.innerHTML = '关注'
@@ -604,27 +610,22 @@ var dynamiclistitem = (function($, mod) {
 		})
 		//点赞和取消点赞
 		mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
-			var wd = events.showWaiting();
+			
 			//判断是否是游客身份登录
-			if(events.judgeLoginMode()) {
-				wd.close();
+			if(events.judgeLoginMode(this)) {
 				return;
 			}
+			var item=this;
+			var wd = events.showWaiting();
 			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
 			var pageID = sliderId.replace('top_', '')
 			var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
 			var tempData;
 			var index;
-			//
-			//			var tempPageID = this.id.match(/praise(\S*)zx/)[1];
-			//			console.log('tempPageID='+tempPageID)
-			//			if(tempPageID==pageID){
+
 			index = this.id.replace('praise' + pageID + idFlag, '');
-			//
 			tempData = zonepArray[index];
-			//			}else{
-			// 
-			//			}
+
 			var color = this.style.color;
 
 			if(color == 'rgb(183, 183, 183)') {
@@ -635,7 +636,7 @@ var dynamiclistitem = (function($, mod) {
 
 				postDataPro_setUserSpaceLikeByUser(comData, wd, function(data) {
 					if(data.RspCode == 0) {
-						document.getElementById("bottomDiv"+pageID+idFlag+index).style.paddingBottom='12px';
+						document.getElementById("bottomDiv" + pageID + idFlag + index).style.paddingBottom = '12px';
 						var a = document.getElementById("praise" + pageID + idFlag + index);
 						a.style.color = 'rgb(26, 155, 255)'
 						var PraiseList = document.getElementById("PraiseList" + pageID + idFlag + index);
@@ -655,28 +656,11 @@ var dynamiclistitem = (function($, mod) {
 								index: preModel.tempIndex
 							})
 						}
-						//						else if(zonepArray[index].pageFlag == 1) {
-						//							for(var slider_id in datasource) {
-						//								if(slider_id == sliderId){
-						//									continue;
-						//								}
-						//								var tempArr = datasource[slider_id]
-						//								var citycode = slider_id.replace('top_', '');
-						//								for(var j in tempArr) {
-						//									var tempModel = tempArr[j];
-						//									if(tempModel.PublisherId == tempData.PublisherId) {
-						//										var tempA = document.getElementById("praise" + citycode + idFlag + index);
-						//										//模拟点击点赞按钮
-						//										mui.trigger(tempA, 'tap');
-						//									}
-						//								}
-						//							}
-						//						}
 						wd.close();
 					} else {
 						mui.toast(data.RspTxt);
 					}
-
+					item.disabled=false;
 				})
 
 			} else {
@@ -709,14 +693,14 @@ var dynamiclistitem = (function($, mod) {
 							}
 
 						} else {
-							
+
 							console.log('一个人点赞')
 							var citycode = sliderId.replace('top_', '');
 							var comment0 = document.getElementById('replyComment' + pageID + idFlag + index + '-0-评论');
 							if(comment0) {
 								document.getElementById('line' + pageID + idFlag + index).className = 'mui-media-body dynamic-line';
 							} else {
-								document.getElementById("bottomDiv"+pageID+idFlag+index).style.paddingBottom='0px';
+								document.getElementById("bottomDiv" + pageID + idFlag + index).style.paddingBottom = '0px';
 								document.getElementById('line' + pageID + idFlag + index).className = 'mui-media-body dynamic-line mui-hidden';
 							}
 							for(var i = 0; i < praiseName.length; i++) {
@@ -734,28 +718,11 @@ var dynamiclistitem = (function($, mod) {
 								index: preModel.tempIndex
 							})
 						}
-						//						else if(zonepArray[index].pageFlag == 1) {
-						//							for(var slider_id in datasource) {
-						//								if(slider_id == sliderId){
-						//									continue;
-						//								}
-						//								var tempArr = datasource[slider_id]
-						//								var citycode = slider_id.replace('top_', '');
-						//								for(var j in tempArr) {
-						//									var tempModel = tempArr[j];
-						//									if(tempModel.PublisherId == tempData.PublisherId) {
-						//										var tempA = document.getElementById("praise" + citycode + idFlag + index);
-						//										//模拟点击点赞按钮
-						//										mui.trigger(tempA, 'tap');
-						//									}
-						//								}
-						//							}
-						//						}
 						wd.close();
 					} else {
 						mui.toast(data.RspTxt);
 					}
-
+					item.disabled=false;
 				})
 
 			}
@@ -764,9 +731,10 @@ var dynamiclistitem = (function($, mod) {
 		//删除动态
 		mui('.mui-table-view').on('tap', '.mui-icon-closeempty', function() {
 			//判断是否是游客身份登录
-			if(events.judgeLoginMode()) {
+			if(events.judgeLoginMode(this)) {
 				return;
 			}
+			var item=this;
 			var btnArray = ['取消', '确定'];
 			var closeId = this.id;
 			mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
@@ -779,6 +747,7 @@ var dynamiclistitem = (function($, mod) {
 					};
 					postDataPro_delUserSpaceById(comData, wd, function(data) {
 						wd.close();
+						item.disabled=false;
 						if(data.RspCode == 0) {
 							mui.toast('已删除');
 
@@ -789,6 +758,8 @@ var dynamiclistitem = (function($, mod) {
 							mui.toast(data.RspTxt);
 						}
 					})
+				}else{
+					item.disabled=false;
 				}
 			})
 		})
@@ -964,15 +935,15 @@ var dynamiclistitem = (function($, mod) {
 		//		}
 
 		if(ImageNum == 1) { //一张图片时1
-			if(data.EncType==2){
-				var html1 = '<div class="video-container" thb='+ImageUrlList[0]+' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url('+ImageUrlList[0]+');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
+			if(data.EncType == 2) {
+				var html1 = '<div class="video-container" thb=' + ImageUrlList[0] + ' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url(' + ImageUrlList[0] + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
 				var html2 = '<img  style= "height: ' + SCREEN_WIDTH * 1 / 5 + 'px;width: ' + SCREEN_WIDTH * 1 / 5 + 'px;margin-top:55px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
 				html = html1 + html2;
 			} else {
 
-			var html1 = '<div>';
-			var html2 = '<img class="dynamic-image"  style= "height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;" src="' + ImageUrlList[0] + '" data-preview-src="' + EncAddrList[0] + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/></div>';
-			html = html1 + html2;
+				var html1 = '<div>';
+				var html2 = '<img class="dynamic-image"  style= "height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;" src="' + ImageUrlList[0] + '" data-preview-src="' + EncAddrList[0] + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/></div>';
+				html = html1 + html2;
 			}
 		} else if(ImageNum == 2) { //两张图片时
 			$.each(ImageUrlList, function(index, element) {
@@ -1152,11 +1123,11 @@ var dynamiclistitem = (function($, mod) {
 
 		var div = document.createElement('div');
 		div.className = 'mui-row mui-row-padding-8px';
-		div.id = 'bottomDiv'+data.id_name;
+		div.id = 'bottomDiv' + data.id_name;
 		div.style.marginTop = '-25px'
-		if(praiseList.length>0||commentList.length>0){
-			
-		}else{
+		if(praiseList.length > 0 || commentList.length > 0) {
+
+		} else {
 			div.style.paddingBottom = '0px'
 		}
 		div.innerHTML = html;

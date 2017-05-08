@@ -423,13 +423,14 @@ var pullUpFresh = function() {
  */
 var setListener = function() {
 	events.addTap('submit-question', function() {
+		var self = this;
+		self.disabled = true;
 		//判断是否是游客身份登录
-		if(events.judgeLoginMode()) {
+		if(events.judgeLoginMode(self)) {
 			return;
 		}
 		console.log(JSON.stringify(allChannels))
-		var self = this
-		self.disabled = true;
+		
 		events.openNewWindowWithData('qiuzhi-newQ.html', {
 			curChannel: channelInfo,
 			allChannels: allChannels

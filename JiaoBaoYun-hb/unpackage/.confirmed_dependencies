@@ -476,7 +476,9 @@
 		"refer": [
 			"html/qiuzhi/focus-question.html",
 			"html/qiuzhi/AttentionPersons.html",
-			"html/register/login.html"
+			"html/register/login.html",
+			"html/qiuzhi/qiuzhi-expertAllAnswer.html",
+			"html/qiuzhi/expert-ask.html"
 		]
 	},
 	"html/cloud/member-pay.html": {
@@ -694,6 +696,11 @@
 		"refer": [
 			"html/check/area-choose.html",
 			"html/check/news-detail.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi-expertAllAnswer.html": {
+		"resources": [
+			"css/qiuzhi/qiuzhi-inviteAnswer.css"
 		]
 	}
 }

@@ -279,8 +279,9 @@
 
 			//点击提问
 			mui('#sliderGroup').on('tap', '.expert-ask', function() {
+				var item=this;
 				//判断是否是游客身份登录
-				if(events.judgeLoginMode()) {
+				if(events.judgeLoginMode(item)) {
 					return;
 				}
 				var element = this.parentNode.parentNode;
@@ -302,13 +303,14 @@
 					allChannels: allChannels
 				}
 				console.log('transportData ' + JSON.stringify(transportData));
-				events.openNewWindowWithData('qiuzhi-newQ.html', transportData);
+				events.singleWebviewInPeriod(item,'qiuzhi-newQ.html', transportData)
 			});
 
 			//点击邀请
 			mui('#sliderGroup').on('tap', '.expert-invite', function() {
+				var item=this;
 				//判断是否是游客身份登录
-				if(events.judgeLoginMode()) {
+				if(events.judgeLoginMode(item)) {
 					return;
 				}
 				var element = this.parentNode.parentNode;
@@ -336,6 +338,7 @@
 				var wd = events.showWaiting();
 				//34.邀请某人回答
 				postDataQZPro_addInvite(comData, wd, function(data) {
+					item.disabled=false;
 					console.log('34.邀请某人回答:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						if(data.RspData.Result == 1) {
