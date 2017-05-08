@@ -24,6 +24,7 @@ mui.plusReady(function() {
 		if(expertInfo.UserId == selfId) {
 			customerPersons = myStorage.getItem(storageKeyName.FOCUSEPERSEN);
 			customerPersons.reverse();
+			console.log("获取的游客关注的人："+JSON.stringify(customerPersons));
 			isSelf = true;
 			document.getElementById("title").innerText = "我关注的人";
 		} else {
@@ -95,16 +96,16 @@ mui.plusReady(function() {
 })
 //游客获取关注的人
 var requireExperts = function() {
-	var personIds = customerPersons.splice((pageIndex - 1) * 10, pageIndex * 10);
+	var personIds = customerPersons.slice((pageIndex - 1) * 10, pageIndex * 10);
 	var wd1 = events.showWaiting();
 	postDataQZPro_getUsersByIds({
-		userIds: personIds
+		userIds: JSON.stringify(personIds)
 	}, wd1, function(data) {
 		wd1.close();
 		JSON.stringify("获取的人员信息：" + data);
 		if(data.RspCode == 0) {
 			totalPageCount = Math.ceil(customerPersons.length / 10);
-			requirePersonInfo(personIds, data.RspData);
+			requirePersonInfo(personIds, data.RspData.Data);
 		} else {
 			mui.toast(data.RspTxt);
 		}
@@ -114,12 +115,12 @@ var requireExperts = function() {
  * 获取关注人数据--登录
  */
 var requireData = function() {
-	
+
 	if(pageIndex == 1) {
 		events.clearChild(document.getElementById('list-container'));
 	}
 	if(type) { //关注专家的人
-		if(isSelf){
+		if(isSelf) {
 			return;
 		}
 		var wd = events.showWaiting();
@@ -153,9 +154,10 @@ var requireData = function() {
 		})
 	} else {
 		//我关注的人
-		if(events.getUtid() && !isSelf) {
+		if(events.getUtid()||!isSelf) {
 			getFocusUsersByUser(expertInfo.UserId);
 		} else {
+			console.log("本地关注的人："+JSON.stringify(customerPersons));
 			if(customerPersons && customerPersons.length > 0) {
 				requireExperts();
 			} else {
@@ -248,11 +250,6 @@ var setData = function(persons) {
 	console.log("要放置的个人数据：" + JSON.stringify(persons));
 	var list = document.getElementById('list-container');
 	for(var i in persons) {
-		var li = document.createElement('li');
-		li.setAttribute('data-info', JSON.stringify(persons[i]));
-		li.className = 'mui-table-view-cell';
-		li.innerHTML = createInner(persons[i]);
-		list.appendChild(li);
 		if(!events.getUtid()) { //游客登录
 			var dataArr = events.isExistInStorageArray(storageKeyName.FOCUSEPERSEN, parseInt(persons[i].UserId));
 			if(dataArr[1] >= 0) {
@@ -261,8 +258,14 @@ var setData = function(persons) {
 				persons[i].FocusType = 0;
 			}
 		}
+		var li = document.createElement('li');
+		li.setAttribute('data-info', JSON.stringify(persons[i]));
+		li.className = 'mui-table-view-cell';
+		li.innerHTML = createInner(persons[i]);
+		list.appendChild(li);
 		li.querySelector('.mui-btn').personInfo = persons[i];
 	}
+	console.log("加载完数据后的attentionPersons:"+JSON.stringify(customerPersons));
 }
 /**
  * 放置关注人数据
@@ -342,11 +345,13 @@ var setFocus = function(item, type) {
 			item.disabled = false;
 		})
 	} else {
-		events.toggleStorageArray(storageKeyName.FOCUSEPERSEN, parseInt(item.personInfo.UserId), !type)
+		events.toggleStorageArray(storageKeyName.FOCUSEPERSEN, parseInt(item.personInfo.UserId), !type);
+		customerPersons=myStorage.getItem(storageKeyName.FOCUSEPERSEN);
 		setButtonInfoType(item);
 		var buttonInfo = getButtonContent(item.personInfo.FocusType);
 		item.innerHTML = buttonInfo.inner;
 		item.className = 'mui-btn mui-btn-outlined ' + buttonInfo.classInfo;
+		item.disabled=false;
 	}
 
 }

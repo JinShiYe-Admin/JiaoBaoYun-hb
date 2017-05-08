@@ -129,7 +129,9 @@
 			"image/dynamic/praise.png",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/utils/video.js",
+			"css/iconfont/iconfont.css"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html"
@@ -165,7 +167,8 @@
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-sub.html",
-			"html/qiuzhi/expert-detail.html"
+			"html/qiuzhi/expert-detail.html",
+			"html/qiuzhi/qiuzhi-questionSearch.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-answerDetailSub.html": {
@@ -419,7 +422,8 @@
 			"js/utils/sortSign.js",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"html/register/js/app.js"
+			"html/register/js/app.js",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/qiuzhi/focus-question.html": {
@@ -483,6 +487,17 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/qiuzhi/qiuzhi-questionSearch.html": {
+		"resources": [
+			"css/qiuzhi/qiuzhi-questionSearch.css",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-question.html"
 		]
 	}
 }
