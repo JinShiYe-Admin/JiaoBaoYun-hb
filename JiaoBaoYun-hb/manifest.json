@@ -492,7 +492,8 @@
 					"js/mui.lazyload.img.js",
 					"image/dynamic/praise.png",
 					"css/show/show.css",
-					"js/utils/video.js"
+					"js/utils/video.js",
+					"image/utils/playvideo.png"
 				],
 				"refer": [
 					"html/quan/space-detail.html",

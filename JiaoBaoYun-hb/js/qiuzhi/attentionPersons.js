@@ -120,7 +120,8 @@ var requireData = function() {
 		events.clearChild(document.getElementById('list-container'));
 	}
 	if(type) { //关注专家的人
-		if(isSelf) {
+		//如果是自己 且为游客
+		if(isSelf&&events.getUtid()==0) {
 			return;
 		}
 		var wd = events.showWaiting();
