@@ -94,15 +94,6 @@ mui.plusReady(function() {
 	});
 })
 //游客获取关注的人
-//var requireDataNotLogin = function() {
-////	var persons = data.RspData.Data; //关注人数据
-//	customerPersons = window.myStorage.getItem(window.storageKeyName.FOCUSEPERSEN);
-//	customerPersons.reverse();
-//	var personIds=customerPersons.slice((pageIndex-1)*10,pageIndex*10);
-//	requireExperts(personIds);
-////	requirePersonInfo(personIds, persons);
-//}
-//
 var requireExperts = function() {
 	var personIds = customerPersons.splice((pageIndex - 1) * 10, pageIndex * 10);
 	var wd1 = events.showWaiting();

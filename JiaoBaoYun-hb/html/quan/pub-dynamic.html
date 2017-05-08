@@ -111,6 +111,8 @@
 			////					});
 			//				});
 			CloudFileUtil.setDelPicListener();
+			CloudFileUtil.setPlayVideoListener();
+			
 			//录音按钮
 			events.addTap('get_record', function() {
 				mui.toast('功能暂未开放！');
@@ -269,6 +271,7 @@
 					encType: TAs.encType,
 					encAddr: TAs.encAddr,
 					encImg: TAs.encImg,
+					encLen:0,
 					encIntro: '',
 					pubScopes: pubScopes,
 					pubArea: pubArea

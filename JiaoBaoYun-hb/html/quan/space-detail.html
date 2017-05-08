@@ -21,6 +21,7 @@
 		<script type="text/javascript" src="../../js/mui.lazyload.img.js"></script>
 		<script src="../../js/mui.zoom.js"></script>
 		<script src="../../js/mui.previewimage.js"></script>
+		<script src="../../js/utils/video.js"></script>
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 
 	</head>
@@ -53,8 +54,8 @@
 		var personalunick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户昵称
 		var publisherId;
 		mui.init({
-			gestureConfig:{
-				longtap:true
+			gestureConfig: {
+				longtap: true
 			}
 		});
 		mui('.mui-scroll-wrapper').scroll();
@@ -185,9 +186,9 @@
 
 							}
 							console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
-							
+
 							PostUmk(tempArray.join(), tempRspData);
-//							setSpaceDetail(datasource);
+							//							setSpaceDetail(datasource);
 
 						} else {
 							mui.toast(data.RspTxt);
@@ -208,7 +209,7 @@
 				wd.close();
 				console.log('获取多用户备注_PostUmk:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
-					console.log('tempRspData='+JSON.stringify(tempRspData))
+					console.log('tempRspData=' + JSON.stringify(tempRspData))
 					for(var j = 0; j < tempRspData.length; j++) {
 						for(var k = 0; k < data.RspData.length; k++) {
 							console.log(tempRspData[j].utid + '-------' + data.RspData[k].butid)
@@ -235,12 +236,12 @@
 
 			var table = document.body.querySelector('.mui-table-view');
 			table.innerHTML = '';
-			if(preModel.focusFlag==1){
+			if(preModel.focusFlag == 1) {
 				data.InShow = '0';
-			}else{
-				data.InShow = preModel.InShow ;
+			} else {
+				data.InShow = preModel.InShow;
 			}
-			
+
 			if(preModel.focusFlag == 0) {
 				idFlag = '';
 				data.focusFlag = 0;

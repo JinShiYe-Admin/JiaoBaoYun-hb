@@ -114,6 +114,10 @@ var dynamiclistitem = (function($, mod) {
 
 	}
 	mod.addSomeEvent = function() {
+		mui(".mui-table-view").on("tap",".video-container",function(){
+			console.log(this.getAttribute('videourl')+this.getAttribute('thb'))
+		video.playVideo(this.getAttribute('videourl'),this.getAttribute('thb'));
+	})
 		window.addEventListener('praise', function(data) {
 			var pageID = sliderId.replace('top_', '')
 			var index = data.detail.index;
@@ -956,10 +960,17 @@ var dynamiclistitem = (function($, mod) {
 		//			ImageNum=0;
 		//		}
 
-		if(ImageNum == 1) { //一张图片时
+		if(ImageNum == 1) { //一张图片时1
+			if(data.EncType==2){
+				var html1 = '<div class="video-container" thb='+ImageUrlList[0]+' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url('+ImageUrlList[0]+');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
+				var html2 = '<img  style= "height: ' + SCREEN_WIDTH * 1 / 5 + 'px;width: ' + SCREEN_WIDTH * 1 / 5 + 'px;margin-top:55px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
+				html = html1 + html2;
+			} else {
+
 			var html1 = '<div>';
 			var html2 = '<img class="dynamic-image"  style= "height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;" src="' + ImageUrlList[0] + '" data-preview-src="' + EncAddrList[0] + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/></div>';
 			html = html1 + html2;
+			}
 		} else if(ImageNum == 2) { //两张图片时
 			$.each(ImageUrlList, function(index, element) {
 				var html1 = '<div class="mui-col-sm-6 mui-col-xs-6 dynamic-image-div" style="height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;width: ' + (SCREEN_WIDTH - 20) / 2 + 'px;">';
