@@ -354,6 +354,7 @@ function getAskFocusByUser(askId) {
 
 //14.设置某个问题的关注，0 不关注,1 关注
 function setAskFocus(askId, status) {
+	document.getElementById("guanzhu").disabled=true;
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 	//需要加密的数据
 	var comData = {
@@ -362,10 +363,11 @@ function setAskFocus(askId, status) {
 		status: status //关注状态,0 不关注,1 关注
 	};
 	// 等待的对话框
-	var wd = events.showWaiting();
+	var wd1 = events.showWaiting();
 	//14.设置某个问题的关注
-	postDataQZPro_setAskFocus(comData, wd, function(data) {
-		wd.close();
+	postDataQZPro_setAskFocus(comData, wd1, function(data) {
+		wd1.close();
+		document.getElementById("guanzhu").disabled=false;
 		console.log('14.设置某个问题的关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			//刷新界面显示

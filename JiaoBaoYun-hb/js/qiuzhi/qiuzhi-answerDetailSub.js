@@ -574,6 +574,7 @@ function getUserFocus(userId) {
 
 //23.设置对某个用户的关注
 function setUserFocus(userId, item) {
+	item.disabled=true;
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 	//需要加密的数据
 	var comData = {
@@ -582,10 +583,11 @@ function setUserFocus(userId, item) {
 		status: item.isLike ? 0 : 1 //关注状态,0 不关注,1 关注
 	};
 	// 等待的对话框
-	var wd = events.showWaiting();
+	var wd1 = events.showWaiting();
 	//23.设置对某个用户的关注
-	postDataQZPro_setUserFocus(comData, wd, function(data) {
-		wd.close();
+	postDataQZPro_setUserFocus(comData, wd1, function(data) {
+		wd1.close();
+		item.disabled=false;
 		console.log('23.设置对某个用户的关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			//刷新界面显示

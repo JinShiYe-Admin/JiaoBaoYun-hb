@@ -481,6 +481,7 @@ var setListener = function() {
 		//			return;
 		//		} 
 		var item = this;
+		item.disabled=true;
 		requireQuestionInfo(item.questionInfo.TabId, function(data) {
 			console.log("获取的个人id" + events.getUtid());
 			if(events.getUtid()) {
@@ -494,6 +495,7 @@ var setListener = function() {
 				} else {
 					item.innerText = "已关注";
 				}
+				item.disabled=false;
 			}
 		});
 	})
@@ -539,6 +541,7 @@ var setQuestionFocus = function(item) {
 		} else {
 			mui.toast('设置关注失败');
 		}
+		item.disabled=false;
 	})
 }
 /**

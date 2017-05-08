@@ -111,6 +111,8 @@
 			////					});
 			//				});
 			CloudFileUtil.setDelPicListener();
+			CloudFileUtil.setPlayVideoListener();
+			
 			//录音按钮
 			events.addTap('get_record', function() {
 				mui.toast('功能暂未开放！');
@@ -229,7 +231,7 @@
 
 				var textView = document.getElementById('input-content');
 				var tempText = Trim(textView.value);
-				console.log('textView.value===' + tempText)
+				
 				if(!tempText || tempText == '') {
 					mui.toast('请输入内容');
 					return;
@@ -237,8 +239,9 @@
 					mui.toast('不能超过2000字');
 					return;
 				} else {
-					tempText = replaceAllBL(tempText)
+//					tempText = replaceAllBL(tempText)
 				}
+				console.log(tempText.length)
 				var pubScopes;
 				var chenckBox1 = document.getElementById('zone')
 				var chenckBox2 = document.getElementById('show')
@@ -269,6 +272,7 @@
 					encType: TAs.encType,
 					encAddr: TAs.encAddr,
 					encImg: TAs.encImg,
+					encLen:0,
 					encIntro: '',
 					pubScopes: pubScopes,
 					pubArea: pubArea

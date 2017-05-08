@@ -211,7 +211,9 @@ var pullUpRefresh = function() {
 			selectGContainer.classInfo.pageIndex++;
 			requireHomeWork(selectGContainer.classInfo, setData);
 		} else {
-			mui.toast('到底啦，别拉了！');
+			if(plus.webview.currentWebview().isVisible()){
+				mui.toast('到底啦，别拉了！');
+			}
 		}
 	}, false);
 }
