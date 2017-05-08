@@ -423,18 +423,20 @@ var pullUpFresh = function() {
  */
 var setListener = function() {
 	events.addTap('submit-question', function() {
-		var self = this;
-		self.disabled=true;
 		//判断是否是游客身份登录
-		if(events.judgeLoginMode(self)) {
+		if(events.judgeLoginMode()) {
 			return;
 		}
 		console.log(JSON.stringify(allChannels))
-		
-		events.singleWebviewInPeriod(self,"qiuzhi-newQ.html",{
+		var self = this
+		self.disabled = true;
+		events.openNewWindowWithData('qiuzhi-newQ.html', {
 			curChannel: channelInfo,
 			allChannels: allChannels
-		})
+		});
+		setTimeout(function() {
+			self.disabled = false;
+		}, 1500);
 	});
 	//标题点击事件
 	mui('.mui-table-view').on('tap', '.ask-title', function() {
