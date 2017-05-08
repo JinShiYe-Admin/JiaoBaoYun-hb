@@ -619,7 +619,8 @@
 					"css/utils/preview.css",
 					"js/libs/crypto-js/crypto-js.js",
 					"fonts/fangzheng.ttf",
-					"js/utils/compress.js"
+					"js/utils/compress.js",
+					"js/utils/showvideoutil.js"
 				],
 				"refer": [
 					"html/quan/studentpersonalimge.html"

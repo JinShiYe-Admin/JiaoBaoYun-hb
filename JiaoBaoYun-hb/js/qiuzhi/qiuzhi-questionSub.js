@@ -366,7 +366,7 @@ function setAskFocus(askId, status) {
 	var wd1 = events.showWaiting();
 	//14.设置某个问题的关注
 	postDataQZPro_setAskFocus(comData, wd1, function(data) {
-		wd1.close();
+		wd1 .close();
 		document.getElementById("guanzhu").disabled=false;
 		console.log('14.设置某个问题的关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {

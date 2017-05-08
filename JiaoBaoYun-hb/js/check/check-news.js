@@ -251,7 +251,7 @@
 	var getImgs = function(item) {
 		if(item.timgs) {
 			var imgs = item.timgs.split("|");
-			return '<img class="news-img" src="../../image/utils/default_load_2.gif"  data-original="' + imgs[0] + '"/>';
+			return '<img class="news-img" src="../../image/utils/default_load_2.gif"  data-original="' + imgs[0].replace(/^~\//g,storageKeyName.MAINEDU) + '"/>';
 		}
 		return '';
 	}
