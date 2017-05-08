@@ -38,7 +38,14 @@
 			}
 
 			.mui-backdrop {
-				background-color: black;
+				background-color: transparent;
+			}
+
+			.audio-show {
+				width: 70%;
+				background-color: white;
+				margin-left: 15%;
+				box-shadow: 0px 1px 5px rgba(136, 136, 136, 0.5);
 			}
 		</style>
 	</head>
@@ -58,6 +65,9 @@
 			<video id="video" style="position: absolute;z-index: 999;">
 				您的浏览器不支持 video 标签。
 			</video>
+		</div>
+		<div id="audioPopover" class="mui-popover">
+			<div id="audioShow" class="audio-show"></div>
 		</div>
 
 		<script src="../../js/mui.min.js"></script>
@@ -86,9 +96,24 @@
 			var notes = document.getElementById("notes"); //输入框
 
 			mui.plusReady(function() {
+				showAudio();
+
 				init(); //初始化控件
 				initListener(); //初始化监听
 			});
+
+			function showAudio() {
+				var audioShow = document.getElementById("audioShow");
+				audioShow.style.height = plus.screen.resolutionHeight / 2 + 'px';
+				audioShow.style.marginTop = plus.screen.resolutionHeight / 5 + 'px';
+				mui('#audioPopover').popover('show');
+				var mask = mui.createMask(function() {
+					console.log('hide');
+					mui('#audioPopover').popover('hide');
+				});
+				mask.show();
+				document.querySelector('.mui-backdrop').style.background = 'rgba(255, 255, 255, 0.5)';
+			}
 
 			/*
 			 * 初始化控件
@@ -117,6 +142,15 @@
 				 */
 				multiMedia.videoPlayCallBack = function(data) {
 					ShowVideoUtil.showVideo(document.getElementById("video"), 'videoPopover', data.path, data.localthumb);
+				}
+
+				/**
+				 * 播放音频
+				 * @param {Object} data
+				 */
+				multiMedia.audioPlayCallBack = function(data) {
+					console.log('audioPlayCallBack ' + JSON.stringify(data));
+					showAudio();
 				}
 
 				hideOption = events.initHideKeyBoard(); //获取配置信息

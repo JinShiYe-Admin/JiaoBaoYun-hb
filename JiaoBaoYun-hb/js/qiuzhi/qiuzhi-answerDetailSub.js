@@ -830,6 +830,11 @@ var createCommentsInner = function(cell) {
 		'<h5 class="comment-personName single-line">' + setName(cell) + '</h5>' +
 		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>' +
 		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
+	var inner='<div class="table-view-cell"><div class="comments-cell">'+
+		'<h5 class="comment-personName single-line"><img class="head-img" src="'+headImg+'"/>'+setName(cell)+'</h5>'+
+		'<div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>' +
+		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
+		
 	console.log("当前评论内容：" + inner)
 	return inner;
 }

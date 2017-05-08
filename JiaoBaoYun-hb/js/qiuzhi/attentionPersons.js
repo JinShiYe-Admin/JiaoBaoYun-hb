@@ -102,9 +102,31 @@ mui.plusReady(function() {
 })
 //游客获取关注的人
 var requireDataNotLogin = function() {
-	var persons = data.RspData.Data; //关注人数据
 	var personIds = window.myStorage.getItem(window.storageKeyName.FOCUSEPERSEN);
-	requirePersonInfo(personIds, persons);
+	var wd = events.showWaiting();
+	//40.获取用户列表
+	postDataQZPro_getUsersByIds({
+			userIds:JSON.stringify(personIds)//用户ID列表,Array,例如[1,2,3]
+		}, wd, function(data) {
+			console.log('40.获取用户列表：' + JSON.stringify(data));
+			wd.close();
+			if(data.RspCode == 0) {
+				var persons = data.RspData.Data; //关注人数据
+				var personIds = [];
+				//遍历获取关注人id数组
+				for(var i in persons) {
+					persons[i].FocusType = 1;
+					personIds.push(persons[i].UserId);
+				}
+				//通过id数组，获取人员资料，并重组
+				if(personIds.length > 0) {
+					requirePersonInfo(personIds, persons);
+				}
+				if(mui(".mui-table-view-cell").length < 10) {
+					mui(".mui-pull-loading")[0].innerHTML = "";
+				}
+			}
+		})
 }
 
 /**

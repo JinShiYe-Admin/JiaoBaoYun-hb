@@ -558,7 +558,8 @@
 			"image/qiuzhi/comment.png",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"image/qiuzhi/bianji1.png"
 		],
 		"refer": [
 			"html/qiuzhi/focus-question.html"
