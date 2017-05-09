@@ -396,19 +396,6 @@ var addSingleDynamic=function(){
 	}
 }
 var setListener = function(userId) {
-//	mui(".mui-table-view").on("tap", ".chat-words", function() {
-//		console.log("点击的动态详情："+JSON.stringify(this.info));
-//		if(this.info.utid==myStorage.getItem(storageKeyName.PERSONALINFO).utid){
-//			var btnArray=[{
-//				title:"修改动态"
-//			},{
-//				title:"删除动态",
-//				dia:1
-//			}];
-//			var cbArray=[changeDynamic,delDynamic]
-//			events.showActionSheet(btnArray,cbArray);
-//		}
-//	})
 	var zan = document.getElementById('zan');
 	/**
 	 * 未点赞按钮点击事件

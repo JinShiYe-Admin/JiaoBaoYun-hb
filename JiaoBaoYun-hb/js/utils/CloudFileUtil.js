@@ -143,7 +143,7 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} successCB 成功的回调successCB(data)
 	 * @param {Object} errorCB 失败的回调errorCB(xhr, type, errorThrown);
 	 * data={
-	 * 	type:'',//str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件；2上传需要生成缩略图的多个文件;3上传需要生成缩略图的多个视频文件
+	 * 	type:'',//str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件；2上传需要生成缩略图的多个文件;3上传需要生成缩略图的多个视频文件；4上传多个音频文件
 	 *  QNFileName:'',//str 必填 存放到七牛的文件名
 	 * 	fileArray:[],//array 选填  type为2时有效，多个文件的路径
 	 *  appId:'' , //int 必填 项目id
@@ -183,7 +183,7 @@ var CloudFileUtil = (function($, mod) {
 						}
 					}
 				}
-				if(type == 2 || type == 3) {
+				if(type == 2 || type == 3 || type == 4) {
 					if(data.fileArray) {
 						fileList = data.fileArray;
 					}
@@ -250,11 +250,7 @@ var CloudFileUtil = (function($, mod) {
 			var params = [];
 			configure.thumbKey = [];
 			var uploadOptions = { //上传七牛后的处理参数
-				type: 0, //处理类型 0：缩略图 1 裁剪 10 缩略图+裁剪
-				thumbSize: {
-					width: maxWidth, //缩略图最大宽度
-					height: maxHeight //缩略图最大高度
-				}
+				type: -1, //处理类型 0：缩略图 1 裁剪 10 缩略图+裁剪
 			}
 			for(var i = 0; i < fileList.length; i++) {
 				var QNFileName; //文件名
@@ -306,6 +302,30 @@ var CloudFileUtil = (function($, mod) {
 				params.push(param);
 				configure.thumbKey.push(opsData.thumbKey);
 			}
+
+			configure.options = {
+				AppID: appId,
+				Param: encryptByDES(desKey, JSON.stringify(params))
+			}
+		} else if(type == '4') { //多个音频文件
+			var params = [];
+
+			for(var i = 0; i < fileList.length; i++) {
+				var QNFileName; //文件名
+				var param = {};
+				param.Bucket = mainSpace;
+				//获取文件路径
+				var filePaths = fileList[i].path.split("/");
+				QNFileName = filePaths[filePaths.length - 1];
+				param.Key = saveSpace + QNFileName;
+				console.log('key:' + param.Key);
+				//获取处理参数
+				param.Pops = '';
+				param.NotifyUrl = '';
+				//保存空间值
+				params.push(param);
+			}
+			console.log("type 4 " + JSON.stringify(params))
 
 			configure.options = {
 				AppID: appId,

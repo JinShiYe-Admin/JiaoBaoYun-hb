@@ -143,6 +143,7 @@ var MultiMedia = (function($, mod) {
 
 			//录制完成的回调
 			window.addEventListener('MultiMediaRecordAudio', function(e) {
+				self.data.AudioNum--;
 				self.addAudios(e.detail.data);
 			});
 
@@ -558,6 +559,7 @@ var MultiMedia = (function($, mod) {
 				height: canvas.height, //视频缩略图高
 				duration: video.duration.toFixed(2) //视频时长
 			};
+			console.log('video ' + video.duration);
 			self.data.VideoArray.push(videos);
 			//显示视频
 			var element = document.createElement('div');
@@ -602,7 +604,6 @@ var MultiMedia = (function($, mod) {
 		var marginLeft = self.data.AudioMarginLeft;
 		var footer = document.getElementById("MultiMedia_Audio_Footer");
 		var time = playutil.audioTimePercent(data.time);
-		self.data.AudioNum--;
 		self.data.AudioArray.push(data);
 		//显示音频
 		var element = document.createElement('div');
@@ -613,7 +614,7 @@ var MultiMedia = (function($, mod) {
 								<div class="multimedia-audio-triangle multimedia-audio-triangle-out"></div>\
 								<div class="multimedia-audio-triangle multimedia-audio-triangle-in"></div>\
 								<div class="multimedia-audio-time">' + data.time + '\'\'</div>\
-								<span class="mui-icon mui-icon-mic multimedia-audio-icon"></span>\
+								<span class="mui-icon iconfont icon-yuyin4 multimedia-audio-icon"></span>\
 							</button>';
 		footer.appendChild(element);
 		self.audioChangeCallBack();
