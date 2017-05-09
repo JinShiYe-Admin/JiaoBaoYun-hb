@@ -319,6 +319,7 @@
 			 * @param {Object} record
 			 */
 			var createList = function(listContainer, datasource, index) {
+				datasource.MsgContent = replaceAllBL(datasource.MsgContent)
 				var li = document.createElement('li');
 				li.className = 'mui-table-view-cell ableSelectedCell';
 				li.id = 'reply' + index

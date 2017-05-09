@@ -16,10 +16,13 @@ var RecordAudio = (function(mod) {
 		var filename = '_documents/' + myDate.getTime() + parseInt(Math.random() * 1000) + '.' + format;
 		var time = 300000; //五分钟
 		var options = mui.extend(true, {
-			filename: filename,
+			filename: '',
 			format: format,
 			time: time
 		}, data);
+		if(options.filename == '') {
+			options.filename = filename;
+		}
 		console.log('recordAudio initOption ' + JSON.stringify(options));
 		return options;
 	}
