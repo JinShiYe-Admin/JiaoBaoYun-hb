@@ -83,7 +83,7 @@ var class_space = (function(mod) {
 			'</div>' +
 			'<div class="chat_content_left">' +
 			'<div class="chat-body">' + '<p class="chat-words">' +
-			item.MsgContent + '</p><div class="class-imgs">' +
+			item.MsgContent.replace(/ /g,"&nbsp").replace(/\n/g,"<br/>") + '</p><div class="class-imgs">' +
 			createImgsInner(item, index) +
 			'</div></div>' +
 			'<p class="chat-bottom">' + events.shortForDate(item.PublishDate) +
