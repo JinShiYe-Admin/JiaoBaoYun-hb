@@ -16,7 +16,7 @@ function postData(url, data, callback, waitingDialog) {
 		contentType: "application/json",
 		timeout: 300000,
 		success: function(data) {
-			console.log('data.RspCode:' + data.RspCode + 'data.RspData:' + JSON.stringify(data.RspData));
+			console.log('data.RspCode:' + data.RspCode + 'data.RspTxt:' + data.RspTxt + 'data.RspData:' + JSON.stringify(data.RspData));
 			if(data.RspCode == 6) {
 				waitingDialog.close();
 				renewToken(0, 'encryData', 'commonData', 'flag', 'waitingDialog', 'callback');
@@ -76,7 +76,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 				timeout: 300000,
 				//			success: callback,
 				success: function(data) {
-					console.log('data.RspCode:' + data.RspCode + ',data.RspData:' + JSON.stringify(data.RspData)+','+url);
+					console.log('data.RspCode:' + data.RspCode + ',data.RspTxt:' + data.RspTxt  + ',data.RspData:' + JSON.stringify(data.RspData)+','+url);
 					if(data.RspCode == 6) {
 						waitingDialog.close();
 						renewToken(1, url, {}, commonData, flag, waitingDialog, callback);

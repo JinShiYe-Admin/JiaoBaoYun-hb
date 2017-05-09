@@ -28,7 +28,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a class="mui-icon mui-icon-left-nav" href="javascript:returnLeft();"></a>
+			<a class="mui-icon mui-icon-left-nav" id="back"></a>
 			<h1 class="mui-title"></h1>
 		</header>
 		<div class="mui-content">
@@ -95,17 +95,11 @@
 					}, 1000)
 				}
 			}
+			document.getElementById('back').addEventListener('tap',function () {
+			        returnLeft();
+			})
 			//nav返回按钮
 			function returnLeft() {
-				//				var btnArray = ['否', '是'];
-				//              mui.confirm('MUI是个好框架，确认？', 'Hello MUI', btnArray, function(e) {
-				//                  if (e.index == 1) {
-				//                      mui.back();
-				//                  } else {
-				//                      
-				//                  }
-				//              });
-
 				mui.confirm(' ', '验证码短信可能略有延迟，确定返回并重新开始？', ['取消', '确认'], function(e) {
 					var index = e.index;
 					console.log('index:' + index);
@@ -118,17 +112,17 @@
 					}
 				});
 
-				//				mui.confirm(' ', '验证码短信可能略有延迟，确定返回并重新开始？', ['取消', '确认'], function(e) {
-				//					var index = e.index;
-				//					console.log('index:'+index);
-				//					switch(index) {
-				//						case 0: //取消
-				//							break;
-				//						case 1: //返回
-				//							mui.back();
-				//							break;
-				//					}
-				//				},'div');
+//								mui.confirm(' ', '验证码短信可能略有延迟，确定返回并重新开始？', ['取消', '确认'], function(e) {
+//									var index = e.index;
+//									console.log('index:'+index);
+//									switch(index) {
+//										case 0: //取消
+//											break;
+//										case 1: //返回
+//											mui.back();
+//											break;
+//									}
+//								},'div');
 			}
 			//遇到登录问题
 			document.getElementById("get_code").addEventListener('tap', function(event) {
