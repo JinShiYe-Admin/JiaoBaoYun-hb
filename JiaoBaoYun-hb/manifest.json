@@ -53,7 +53,9 @@
         "Geolocation": {
             "description": "访问位置信息"
         },
-         "Invocation": {},
+         "Invocation": {
+         	"description": "Native.js"
+         },
         "Messaging": {
             "description": "访问通讯能力"
         },
