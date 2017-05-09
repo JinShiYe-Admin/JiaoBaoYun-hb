@@ -23,7 +23,7 @@ mui.plusReady(function() {
 	//修改答案后刷新界面
 	window.addEventListener('refreshAnswer', function(e) {
 		console.log(JSON.stringify(e.detail.data))
-		homeworkDetailNodes.stuResult.innerText = e.detail.data.answer;
+		homeworkDetailNodes.stuResult.innerHTML = e.detail.data.answer.replace(/ /g,"&nbsp;").replace(/\n/g,"<br/>");
 		homeworkResult.HomeworkResult.Result = e.detail.data.answer;
 		var imgFiles = e.detail.data.Files
 		console.log(JSON.stringify(imgFiles))

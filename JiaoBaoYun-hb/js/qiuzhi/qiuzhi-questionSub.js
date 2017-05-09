@@ -734,11 +734,11 @@ function answerList(data, fragment) {
 		'<div class="answer-info">' + data.IsLikeNum + '赞同·' + data.CommentNum + '评论·' + modifyTimeFormat(data.AnswerTime) + '</div>';
 	fragment.appendChild(li);
 	if(data.AnswerSFlag != 1) { //不是旧数据
-		fragment.getElementById("answer_content_" + data.AnswerId).innerHTML = data.AnswerContent.replace(/\n/g, "<br/>");
+		fragment.querySelector("#answer_content_" + data.AnswerId).innerHTML = data.AnswerContent.replace(/\n/g, "<br/>");
 	} else {
 		var content_0 = events.htmlGetText(data.AnswerContent);
 		var content_1 = content_0.replace(/\s+/g, ""); //替换所有空格
-		fragment.getElementById("answer_content_" + data.AnswerId).innerText = content_1;
+		fragment.querySelector("#answer_content_" + data.AnswerId).innerText = content_1;
 	}
 
 }

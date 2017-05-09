@@ -142,7 +142,10 @@
 			"css/utils/common.css",
 			"js/utils/video.js",
 			"css/iconfont/iconfont.css",
-			"image/utils/playvideo.png"
+			"image/utils/playvideo.png",
+			"js/mui.pullToRefresh.js",
+			"js/mui.pullToRefresh.material.js",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html",
@@ -265,7 +268,8 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"css/utils/preview.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/compress.js"
 		],
 		"refer": []
 	},
@@ -319,7 +323,27 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"css/utils/preview.css",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/publicQiuzhiProtocol.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/myStorage/myStorage.js",
+			"css/iconfont/iconfont.css",
+			"js/mui.zoom.js",
+			"js/mui.min.js",
+			"js/mui.previewimage.js",
+			"js/utils/signHmacSHA1.js",
+			"fonts/iconfont.ttf",
+			"js/utils/postData.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/libs/crypto-js/require.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/qiuzhi/expert-detail.html",
@@ -360,7 +384,9 @@
 		"resources": [
 			"js/cloud/mui.previewimage.js",
 			"js/libs/crypto-js/crypto-js.js",
-			"css/quan/custom-textarea.css"
+			"css/quan/custom-textarea.css",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/homework/homework-commented.html"

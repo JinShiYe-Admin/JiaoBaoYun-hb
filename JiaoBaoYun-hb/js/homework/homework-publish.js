@@ -120,8 +120,11 @@ mui.plusReady(function() {
 //	}
 	//相机按钮
 	events.addTap('getImg', function() {
+		var item=this;
+		jQuery(item).css("pointerEvents","none");
 		if(CloudFileUtil.files.length < 9) {
 			camera.getPic(camera.getCamera(), function(picPath) {
+				jQuery(item).css("pointerEvents","all");
 				plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
 					back: 'none'
 				});
@@ -154,8 +157,11 @@ mui.plusReady(function() {
 						plus.nativeUI.closeWaiting(); //关闭等待框
 					});
 				})
+			},function(err){
+				jQuery(item).css("pointerEvents","all");
 			})
 		} else {
+			jQuery(item).css("pointerEvents","all");
 			mui.toast('上传图片附件不得多于9张！');
 		}
 	})

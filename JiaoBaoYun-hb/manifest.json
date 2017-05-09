@@ -3656,7 +3656,8 @@
 					"fonts/fangzheng.ttf",
 					"fonts/iconfont.ttf",
 					"js/utils/video.js",
-					"image/utils/playvideo.png"
+					"image/utils/playvideo.png",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"html/utils/customizeCity.html",
