@@ -567,6 +567,12 @@ var dynamiclistitem = (function($, mod) {
 		})
 		//点击点赞的人跳转到相应界面
 		mui('.mui-table-view').on('tap', '.praiseName', function() {
+			if(isPersonal==0){
+				if(publisherId==this.dataset.info){
+					window.event.stopPropagation()
+					return;
+				}
+			}
 			console.log('点赞者id' + this.dataset.info);
 			mui.openWindow({
 				url: '../quan/zone_main.html',
@@ -584,10 +590,16 @@ var dynamiclistitem = (function($, mod) {
 				createNew: true,
 
 			});
-			window.event.stopPropagation()
+			
 		});
 		//点击评论者名字
 		mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
+			if(isPersonal==0){
+				if(publisherId==this.dataset.info){
+					window.event.stopPropagation()
+					return;
+				}
+			}
 			console.log('评论者id' + this.dataset.info);
 			mui.openWindow({
 				url: '../quan/zone_main.html',
