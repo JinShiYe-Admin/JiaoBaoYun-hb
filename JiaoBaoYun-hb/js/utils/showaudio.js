@@ -141,8 +141,28 @@ var ShowAudioUtil = (function(mod) {
 		mod.Mask.show();
 		plus.key.addEventListener('backbutton', mod.closeAudio);
 		mod.fOption = data;
-		mod.createPlayer();
-		mod.AudioControlPlay();
+		if(plus.os.name == 'Android') {
+			mod.createPlayer();
+			mod.AudioControlPlay();
+		} else {
+			if(mod.AudioPlayer) {
+				mod.AudioPlayer.pause();
+				mod.AudioPlayer = null;
+			}
+			mod.AudioPlayer = document.createElement('audio');
+			mod.AudioPlayer.src = mod.fOption.fpath;
+			mod.AudioPlayer.preload = 'auto';
+			mod.AudioPlayer.autoplay = 'autoplay';
+			mod.AudioPlayer.addEventListener('loadstart', function() {
+				console.log('loadstart');
+			});
+			mod.AudioPlayer.addEventListener('canplay', function() {
+				console.log('canplay');
+			});
+			mod.AudioPlayer.addEventListener('canplaythrough', function() {
+				console.log('canplaythrough');
+			});
+		}
 	}
 
 	/**
@@ -232,7 +252,11 @@ var ShowAudioUtil = (function(mod) {
 			mod.Mask = null;
 		}
 		if(mod.AudioPlayer != null) {
-			mod.AudioPlayer.stop();
+			if(plus.os.name == 'Android') {
+				mod.AudioPlayer.stop();
+			} else {
+				mod.AudioPlayer.pause();
+			}
 			mod.AudioPlayer = null;
 		}
 		if(mod.intervalId != null) {

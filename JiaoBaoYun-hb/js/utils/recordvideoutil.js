@@ -4,6 +4,7 @@
  */
 var RecordVideo = (function(mod) {
 
+	var recordEnable = true; //是否允许录制
 	/**
 	 * 初始化配置
 	 * @param {Object} data
@@ -30,6 +31,15 @@ var RecordVideo = (function(mod) {
 	 * @param {Object} errorCB 失败的回调
 	 */
 	mod.recordVideo = function(data, successCB, errorCB) {
+		//限制快速多次点击
+		if(!recordEnable) {
+			return false;
+		}
+		recordEnable = false;
+		setTimeout(function() {
+			recordEnable = true;
+		}, 2000);
+
 		var options = mod.initOption(data);
 		if(plus.os.name == 'Android') {
 			mod.recordVideoAndroid(options, successCB, errorCB);
