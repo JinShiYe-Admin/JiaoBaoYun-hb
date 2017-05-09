@@ -12,6 +12,7 @@ var ShowAudioUtil = (function(mod) {
 	var audio_time; //时间
 	var audio_option; //圆的参数
 	var audio_canvastx; //2d画布
+	var audio_audio; //音频标签
 
 	/**
 	 * 音频播放器
@@ -46,6 +47,7 @@ var ShowAudioUtil = (function(mod) {
 		audio_play = data.play;
 		audio_pause = data.pause;
 		audio_time = data.time;
+		audio_audio = data.audio;
 		audio_option; //圆的参数
 		audio_canvastx = audio_canvas.getContext("2d");
 
@@ -159,9 +161,10 @@ var ShowAudioUtil = (function(mod) {
 				mod.AudioPlayer.pause();
 				mod.AudioPlayer = null;
 			}
-			mod.AudioPlayer = new Audio(mod.fOption.fpath);
-			mod.AudioPlayer.preload = 'auto';
+			mod.AudioPlayer = audio_audio;
+			mod.AudioPlayer.src = mod.fOption.fpath;
 			mod.initAudioPlay();
+
 		}
 	}
 
@@ -187,7 +190,9 @@ var ShowAudioUtil = (function(mod) {
 
 		//播放完成
 		mod.AudioPlayer.addEventListener('ended', function() {
-			mod.Mask.close();
+			if(mod.Mask){
+				mod.Mask.close();
+			}
 		});
 	}
 
