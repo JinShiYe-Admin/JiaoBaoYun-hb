@@ -164,13 +164,15 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/utils/recordaudioutil.js"></script>
-		<script type="text/javascript" src="../../js/utils/events.js" ></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			var main; //存储当前webview
 			var recordAudio; //存储录音对象
-			var timeCount = 0; //记录录制的时间
-			var timeId; //计时器的id
+			var timeCount = 0; //显示录制的时间
+			var timeId; //显示录制的时间计时器的id
+			var recordTime = 0; //记录录制的时间
+			var recordTimeId = 0; //记录录制的时间计时器的id
 			var audioOption = {
 				fpath: '', //路径
 				time: 0 //时间
@@ -322,11 +324,16 @@
 			 */
 			function startRecordAudio() {
 				recordAudio = RecordAudio.recordAudio({
-//					time: 12000
+					//					time: 12000
 				}, function(fpath) {
 					console.log('录制音频成功 ' + fpath);
 					audioOption.fpath = fpath;
-					audioOption.time = timeCount;
+					audioOption.time = Math.ceil(recordTime / 10);
+					if(recordTimeId) {
+						clearInterval(recordTimeId);
+						recordTimeId = null;
+						recordTime = 0;
+					}
 					stopCount();
 					showAudio();
 				}, function(err) {
@@ -334,9 +341,20 @@
 					recordError();
 				});
 				if(recordAudio != null) {
+					if(timeId) {
+						clearInterval(timeId);
+						timeId = null;
+					}
 					timeId = setInterval(function() {
 						showTime(300);
 					}, 1000);
+					if(recordTimeId) {
+						clearInterval(recordTimeId);
+						recordTimeId = null;
+					}
+					recordTimeId = setInterval(function() {
+						recordTime = recordTime + 1;
+					}, 100);
 				}
 			}
 
@@ -488,10 +506,10 @@
 				timeId = setInterval(function() {
 					var audioTime = audioPlayer.getDuration();
 					if(!isNaN(audioTime) && audioTime != -1) {
-						audioOption.time = audioTime;
+						audioOption.time = Math.ceil(audioTime);
 					}
 					//console.log('audioTime ' + audioTime);
-					showTime(parseInt(audioOption.time));
+					showTime(audioOption.time);
 				}, 1000);
 			}
 

@@ -22,7 +22,8 @@
 			"html/qiuzhi/qiuzhi-answerDetail.html",
 			"html/qiuzhi/qiuzhi-question.html",
 			"html/qiuzhi/qiuzhi-newQ.html",
-			"html/register/login.html"
+			"html/register/login.html",
+			"html/qiuzhi/expert-detail.html"
 		]
 	},
 	"html/cloud/cloud_home.html": {
@@ -190,7 +191,8 @@
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-addAnswer.html",
-			"html/qiuzhi/expert-detail.html"
+			"html/qiuzhi/expert-detail.html",
+			"html/register/login.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-answerDetail.html": {
@@ -313,7 +315,8 @@
 			"css/utils/common.css"
 		],
 		"refer": [
-			"html/qiuzhi/expert-detail.html"
+			"html/qiuzhi/expert-detail.html",
+			"html/register/login.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-newQ.html": {
@@ -476,7 +479,9 @@
 		"refer": [
 			"html/qiuzhi/focus-question.html",
 			"html/qiuzhi/AttentionPersons.html",
-			"html/register/login.html"
+			"html/register/login.html",
+			"html/qiuzhi/qiuzhi-expertAllAnswer.html",
+			"html/qiuzhi/expert-ask.html"
 		]
 	},
 	"html/cloud/member-pay.html": {
@@ -694,6 +699,11 @@
 		"refer": [
 			"html/check/area-choose.html",
 			"html/check/news-detail.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi-expertAllAnswer.html": {
+		"resources": [
+			"css/qiuzhi/qiuzhi-inviteAnswer.css"
 		]
 	}
 }

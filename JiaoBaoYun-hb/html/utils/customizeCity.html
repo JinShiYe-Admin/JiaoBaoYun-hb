@@ -93,7 +93,7 @@
 		</header>
 		<div class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<ul id="table" class="mui-table-view" style="visibility: hidden;">
+				<ul id="table" class="mui-table-view" style="visibility: ;">
 					<div id="myCityTitle" class="city-p" style="visibility: hidden;background-color: white;text-align: center;color:#323232;">
 						<div class="city-my"></div>
 						<div class="city-my"></div>
@@ -109,8 +109,8 @@
 							<img src="../../image/utils/delete.png" class="city-delete" />
 						</div>-->
 					</div>
-					<div class="city-p">当前城市</div>
-					<div id="beforeCity" class="mui-row">
+					<div id="userCityTitle" class="city-p" style="display: none;">当前城市</div>
+					<div id="userCity" class="mui-row" style="display: none;">
 						<!--<div class="mui-col-xs-4 mui-col-sm-4">
 							<li class="mui-table-view-cell mui-media">
 								<div class="mui-media-body mui-ellipsis">济南市济南市济南市济南市济南市</div>
@@ -202,7 +202,11 @@
 
 				//自己当前手机号对应的城市(可能修改后的)，从内存中获取
 				var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-				addBeforeCity(tempInfo.uarea);
+				if(tempInfo.utid != 0) { //用户显示当前城市
+					document.getElementById("userCityTitle").style.display = 'block';
+					document.getElementById("userCity").style.display = 'inline';
+					addBeforeCity(tempInfo.uarea);
+				}
 
 				if(main.data.id == 'uarea') { //uarea账号地区
 					document.getElementById("title").innerText = '所在地';
@@ -396,7 +400,7 @@
 				div.innerHTML = '<li class="mui-table-view-cell mui-media">\
 									  <div class="mui-media-body mui-ellipsis">' + data.aname + '</div>\
 								   </li>';
-				document.getElementById("beforeCity").appendChild(div);
+				document.getElementById("userCity").appendChild(div);
 			}
 
 			/**

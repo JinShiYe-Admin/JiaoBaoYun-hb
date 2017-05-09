@@ -61,7 +61,7 @@
 			</video>
 		</div>
 		<div id="audioPopover" class="mui-popover">
-			<div id="audio_show" class="audio-show">
+			<div id="audio_show" class="audio-show-popover">
 				<span id="audio_icon" class="mui-icon mui-icon-mic audio-icon"></span>
 				<canvas id="audio_canvas" class="audio-canvas"></canvas>
 				<span id="audio_close" class="mui-icon iconfont icon-guanbi"></span>
@@ -99,18 +99,9 @@
 			var QNUptoken; //token数据
 			var uploadNum = 0; //记录上传的次数
 			var hideOption; //隐藏键盘的数据
-			var persistentId; //记录persistentId
+			//var persistentId; //记录persistentId
 			var multiMedia; //多媒体控件
 			var notes = document.getElementById("notes"); //输入框
-
-			var audio_show = document.getElementById("audio_show");
-			var audio_icon = document.getElementById("audio_icon");
-			var audio_canvas = document.getElementById("audio_canvas");
-			var audio_play = document.getElementById("audio_play");
-			var audio_pause = document.getElementById("audio_pause");
-			var audio_time = document.getElementById("audio_time");
-			var audio_option; //圆的参数
-			var audio_canvastx = audio_canvas.getContext("2d");
 
 			mui.plusReady(function() {
 				init(); //初始化控件
@@ -131,10 +122,10 @@
 					MultiMediaId: 'MultiMedia', //存放多媒体对象控件的id
 					Key: window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid, //utid
 					Picture: true, //是否显示图片图标
-//					Audio: true, //是否显示音频图标
+					Audio: true, //是否显示音频图标
 					Video: true, //是否显示视频图标
 					TotalPicture: 9, //图片的个数
-//					TotalAudio: 1, //音频的个数
+					TotalAudio: 1, //音频的个数
 					TotalVideo: 1, //视频的个数
 				});
 
@@ -163,7 +154,14 @@
 					y: (plus.screen.resolutionHeight / 3 * 2), //圆心的y轴坐标值
 					r: plus.screen.resolutionHeight * 0.25 * 1.5 //圆的半径
 				};
-				ShowAudioUtil.initAudioPopover();
+				ShowAudioUtil.initAudioPopover({
+					show: document.getElementById("audio_show"),
+					icon: document.getElementById("audio_icon"),
+					canvas: document.getElementById("audio_canvas"),
+					play: document.getElementById("audio_play"),
+					pause: document.getElementById("audio_pause"),
+					time: document.getElementById("audio_time")
+				});
 				//获取配置信息
 				hideOption = events.initHideKeyBoard();
 			}
@@ -180,14 +178,14 @@
 				//完成
 				document.getElementById('finish').addEventListener('tap', function() {
 					events.hideKeyBoard(hideOption);
-					if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0 && multiMedia.data.VideoArray.length == 0) { //为空不允许发送
+					if(notes.value.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0 && multiMedia.data.VideoArray.length == 0 && multiMedia.data.AudioArray.length == 0) { //为空不允许发送
 						mui.toast('笔记不能为空');
 					} else if(notes.value.length > 2000) {
 						mui.toast('笔记最多2000字');
 					} else {
 						var wd = events.showWaiting();
 						document.getElementById("finish").disabled = true;
-						if(multiMedia.data.PictureArray.length == 0 && multiMedia.data.VideoArray.length == 0) { //没有传附件
+						if(multiMedia.data.PictureArray.length == 0 && multiMedia.data.VideoArray.length == 0 && multiMedia.data.AudioArray.length == 0) { //没有传附件
 							addNote(wd, '3', '', '');
 						} else {
 							uploadFile(wd); //上传文件
@@ -203,7 +201,7 @@
 			 * @param {Object} encAddr 附件地址
 			 * @param {Object} encImg 附件缩略图地址
 			 */
-			function addNote(wd, encType, encAddr, encImg) {
+			function addNote(wd, encType, encAddr, encImg, encLen) {
 				//38.（用户空间）新增某用户空间信息 （云笔记）
 				//所需参数
 				var comData = {
@@ -217,24 +215,25 @@
 					userIds: '[]', //推送用户ID
 					pubScopes: '[1]', //1 家校圈 必选,2 展现 可选例如[1,2]
 					pubArea: '', //具体到市级代码
-					encLen: 0 //音视频时长
+					encLen: encLen //音视频时长
 				};
-
 				postDataPro_addUserSpace(comData, wd, function(data) {
 					console.log('38postDataPro_addUserSpace（用户空间）新增某用户空间信息 （云笔记）.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
-						if(persistentId && persistentId.length != 0) {
-							wd.setTitle('处理中...');
-							setTimeout(function() {
-								waittingThumb(wd);
-							}, 2000);
-						} else {
+						//						if(persistentId && persistentId.length != 0) {
+						//							wd.setTitle('处理中...');
+						//							setTimeout(function() {
+						//								waittingThumb(wd);
+						//							}, 2000);
+						//						} else {
+						setTimeout(function() {
 							mui.toast('发布成功');
 							pathList = [];
 							events.fireToPageNone('app_notes_main.html', 'refreshView');
 							wd.close();
 							mui.back();
-						}
+						}, 2000);
+						//						}
 					} else {
 						document.getElementById("finish").disabled = false;
 						if(pathList.length != 0) {
@@ -268,6 +267,13 @@
 					for(var i = 0; i < multiMedia.data.VideoArray.length; i++) {
 						fileArray.push(multiMedia.data.VideoArray[i]);
 					}
+				} else if(multiMedia.data.AudioArray.length != 0) { //音频
+					getToken.type = '4';
+					for(var i = 0; i < multiMedia.data.AudioArray.length; i++) {
+						fileArray.push({
+							path: multiMedia.data.AudioArray[i].fpath
+						});
+					}
 				}
 				getToken.fileArray = fileArray;
 				uploadNum = fileArray.length; //记录上传的次数
@@ -276,7 +282,7 @@
 					console.log('获取上传凭证 ' + JSON.stringify(data));
 					if(data.data.Status == 1) { //成功
 						QNUptoken = data.data; //token数据
-						persistentId = [];
+						//persistentId = [];
 						var configure = data.configure; //获取token的配置信息
 						console.log('七牛上传凭证:' + JSON.stringify(QNUptoken));
 						console.log('七牛配置信息:' + JSON.stringify(configure));
@@ -307,6 +313,20 @@
 									if(videoName == fileName) {
 										multiMedia.data.VideoArray[j].domain = QNUptoken.Data[i].Domain + QNUptoken.Data[i].Key;
 										multiMedia.data.VideoArray[j].thumb = QNUptoken.Data[i].OtherKey[configure.thumbKey[i]];
+									}
+								}
+							}
+						} else if(multiMedia.data.AudioArray.length != 0) {
+							//记录音频文件地址
+							for(var j = 0; j < multiMedia.data.AudioArray.length; j++) {
+								var audioPath = multiMedia.data.AudioArray[j].fpath.split("/");
+								var audioName = audioPath[audioPath.length - 1];
+								for(var i = 0; i < QNUptoken.Data.length; i++) {
+									//console.log(JSON.stringify(QNUptoken.Data[i]));
+									var filePath = QNUptoken.Data[i].P_Key.split("/");
+									var fileName = filePath[filePath.length - 1];
+									if(audioName == fileName) {
+										multiMedia.data.AudioArray[j].domain = QNUptoken.Data[i].Domain + QNUptoken.Data[i].Key;
 									}
 								}
 							}
@@ -388,6 +408,16 @@
 									break;
 								}
 							}
+						} else if(multiMedia.data.AudioArray.length !== 0) { //音频
+							for(var k = 0; k < multiMedia.data.AudioArray.length; k++) {
+								var path = multiMedia.data.AudioArray[k].fpath.split("/");
+								var name = path[path.length - 1];
+								if(fileName == name) {
+									num = k;
+									fPath = multiMedia.data.AudioArray[k].fpath;
+									break;
+								}
+							}
 						}
 						CloudFileUtil.upload(fPath, QNUptoken.Data[i].Token, QNUptoken.Data[i].Key, function(upload, status) {
 							//上传任务完成的监听
@@ -395,7 +425,7 @@
 							if(status == 200) {
 								console.log('上传成功');
 								QNUptoken.Data[i].task = true;
-								QNUptoken.Data[i].persistentId = JSON.parse(upload.responseText).persistentId;
+								//QNUptoken.Data[i].persistentId = JSON.parse(upload.responseText).persistentId;
 								uploadNum--;
 								var title = '上传 ' + (QNUptoken.Data.length - uploadNum) + "/" + (QNUptoken.Data.length);
 								wd.setTitle(title);
@@ -406,34 +436,46 @@
 								} else if(multiMedia.data.VideoArray.length !== 0) { //视频
 									pathList.push(multiMedia.data.VideoArray[num].domain);
 									pathList.push(multiMedia.data.VideoArray[num].thumb);
+								} else if(multiMedia.data.AudioArray.length !== 0) { //音频
+									pathList.push(multiMedia.data.AudioArray[num].domain);
 								}
 
-								if(persistentId.length < 3) { //前三张
-									persistentId[persistentId.length] = {
-										id: QNUptoken.Data[i].persistentId
-									};
-								}
+								//								if(persistentId.length < 3) { //前三张
+								//									persistentId[persistentId.length] = {
+								//										id: QNUptoken.Data[i].persistentId
+								//									};
+								//								}
 								if(uploadNum == 0) {
 									console.log('所有上传都成功');
 									var encAddr = []; //附件地址
 									var encImg = []; //附件缩略图地址
+									var encLen = []; //时间长短
 									var type;
 									if(multiMedia.data.PictureArray.length !== 0) { //图片
 										for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
 											encAddr.push(multiMedia.data.PictureArray[j].domain);
 											encImg.push(multiMedia.data.PictureArray[j].thumb);
 										}
+										encLen.push(0);
 										type = '1';
 									} else if(multiMedia.data.VideoArray.length !== 0) { //视频
 										for(var j = 0; j < multiMedia.data.VideoArray.length; j++) {
 											encAddr.push(multiMedia.data.VideoArray[j].domain);
 											encImg.push(multiMedia.data.VideoArray[j].thumb);
+											encLen.push(multiMedia.data.VideoArray[j].duration);
 										}
 										type = '2';
+									} else if(multiMedia.data.AudioArray.length !== 0) { //音频
+										for(var j = 0; j < multiMedia.data.AudioArray.length; j++) {
+											encAddr.push(multiMedia.data.AudioArray[j].domain);
+											encLen.push(multiMedia.data.AudioArray[j].time);
+										}
+										type = '4';
 									}
 									var encAddrStr = encAddr.join('|');
 									var encImgrStr = encImg.join('|');
-									addNote(wd, type, encAddrStr, encImgrStr);
+									var encImgrStr = encImg.join('|');
+									addNote(wd, type, encAddrStr, encImgrStr, encLen[0]);
 								} else {
 									taskCreate(wd);
 								}
@@ -459,7 +501,7 @@
 									console.log('上传任务请求已经建立:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
 									break;
 								case 3: //上传任务提交数据
-									//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + upload.state);
+									console.log('上传任务状态监听:|id:' + upload.__UUID__ + '|uploadedSize:' + upload.uploadedSize + '|totalSize:' + upload.totalSize + '|uploadState:' + upload.state);
 									break;
 								case 4: //上传任务已完成
 									console.log('上传任务已完成:|id:' + upload.__UUID__ + '|uploadState:' + upload.state);
@@ -482,54 +524,54 @@
 				}
 			}
 
-			/**
-			 * 查询已生成缩略图
-			 * @param {Object} wd 等待框
-			 */
-			function waittingThumb(wd) {
-				console.log('waittingThumb');
-				for(var i = 0; i < persistentId.length; i++) {
-					if(persistentId[i].code == undefined) {
-						CloudFileUtil.persistentStatusSearch(persistentId[i].id, function(data) {
-							//wd.close();
-							console.log('waittingThumb success' + JSON.stringify(data));
-							if(data.items.length != 0) {
-								var item = data.items[0];
-								if(item.code == 0 || item.code == 3 || item.code == 4) {
-									//0 表示成功，1 表示等待处理，2 表示正在处理，3 表示处理失败，4 表示回调失败
-									persistentId[i].code = item.code;
-								} else if(item.code == 3) {
-									mui.toast('生成缩略图失败 ' + item.error);
-								}
-							}
-
-							var allCallback = true;
-							for(var j = 0; j < persistentId.length; j++) {
-								if(persistentId[j].code == undefined) {
-									allCallback = false;
-									setTimeout(function() {
-										waittingThumb(wd);
-									}, 100);
-									break;
-								}
-							}
-							//所有的图片都生成了缩略图
-							if(allCallback) {
-								mui.toast('发布成功');
-								pathList = [];
-								events.fireToPageNone('app_notes_main.html', 'refreshView');
-								wd.close();
-								mui.back();
-							}
-						}, function(data) {
-							wd.close();
-							console.log('waittingThumb error' + JSON.stringify(data));
-							mui.toast('请求查询缩略图是否生成异常');
-						});
-						break;
-					}
-				}
-			}
+			//			/**
+			//			 * 查询已生成缩略图
+			//			 * @param {Object} wd 等待框
+			//			 */
+			//			function waittingThumb(wd) {
+			//				console.log('waittingThumb');
+			//				for(var i = 0; i < persistentId.length; i++) {
+			//					if(persistentId[i].code == undefined) {
+			//						CloudFileUtil.persistentStatusSearch(persistentId[i].id, function(data) {
+			//							//wd.close();
+			//							console.log('waittingThumb success' + JSON.stringify(data));
+			//							if(data.items.length != 0) {
+			//								var item = data.items[0];
+			//								if(item.code == 0 || item.code == 3 || item.code == 4) {
+			//									//0 表示成功，1 表示等待处理，2 表示正在处理，3 表示处理失败，4 表示回调失败
+			//									persistentId[i].code = item.code;
+			//								} else if(item.code == 3) {
+			//									mui.toast('生成缩略图失败 ' + item.error);
+			//								}
+			//							}
+			//
+			//							var allCallback = true;
+			//							for(var j = 0; j < persistentId.length; j++) {
+			//								if(persistentId[j].code == undefined) {
+			//									allCallback = false;
+			//									setTimeout(function() {
+			//										waittingThumb(wd);
+			//									}, 100);
+			//									break;
+			//								}
+			//							}
+			//							//所有的图片都生成了缩略图
+			//							if(allCallback) {
+			//								mui.toast('发布成功');
+			//								pathList = [];
+			//								events.fireToPageNone('app_notes_main.html', 'refreshView');
+			//								wd.close();
+			//								mui.back();
+			//							}
+			//						}, function(data) {
+			//							wd.close();
+			//							console.log('waittingThumb error' + JSON.stringify(data));
+			//							mui.toast('请求查询缩略图是否生成异常');
+			//						});
+			//						break;
+			//					}
+			//				}
+			//			}
 		</script>
 	</body>
 

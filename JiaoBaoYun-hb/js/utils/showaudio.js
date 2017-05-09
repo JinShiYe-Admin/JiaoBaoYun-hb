@@ -4,6 +4,15 @@
  */
 var ShowAudioUtil = (function(mod) {
 
+	var audio_show; //音频显示区域
+	var audio_icon; //麦克风图标
+	var audio_canvas; //进度条画布
+	var audio_play; //播放按钮
+	var audio_pause; //暂停按钮
+	var audio_time; //时间
+	var audio_option; //圆的参数
+	var audio_canvastx; //2d画布
+
 	/**
 	 * 音频播放器
 	 */
@@ -30,7 +39,23 @@ var ShowAudioUtil = (function(mod) {
 	/**
 	 * 初始化音频显示
 	 */
-	mod.initAudioPopover = function() {
+	mod.initAudioPopover = function(data) {
+		audio_show = data.show;
+		audio_icon = data.icon;
+		audio_canvas = data.canvas;
+		audio_play = data.play;
+		audio_pause = data.pause;
+		audio_time = data.time;
+		audio_option; //圆的参数
+		audio_canvastx = audio_canvas.getContext("2d");
+
+		//初始化音频播放器
+		audio_option = {
+			x: localStorage.getItem('resolutionWidth') * 1.4, //圆心的x轴坐标值
+			y: (plus.screen.resolutionHeight / 3 * 2), //圆心的y轴坐标值
+			r: plus.screen.resolutionHeight * 0.25 * 1.5 //圆的半径
+		};
+
 		audio_show.style.height = plus.screen.resolutionHeight / 2 + 'px';
 		audio_show.style.marginTop = plus.screen.resolutionHeight / 5 + 'px';
 		//麦克风图标
@@ -76,7 +101,8 @@ var ShowAudioUtil = (function(mod) {
 	 */
 	mod.initListener = function() {
 		//关闭按钮
-		mui('.audio-show').on('tap', '.icon-guanbi', function() {
+		mui('.audio-show-popover').on('tap', '.icon-guanbi', function() {
+			console.log('guanbi')
 			mod.Mask.close();
 		});
 
@@ -115,8 +141,28 @@ var ShowAudioUtil = (function(mod) {
 		mod.Mask.show();
 		plus.key.addEventListener('backbutton', mod.closeAudio);
 		mod.fOption = data;
-		mod.createPlayer();
-		mod.AudioControlPlay();
+		if(plus.os.name == 'Android') {
+			mod.createPlayer();
+			mod.AudioControlPlay();
+		} else {
+			if(mod.AudioPlayer) {
+				mod.AudioPlayer.pause();
+				mod.AudioPlayer = null;
+			}
+			mod.AudioPlayer = document.createElement('audio');
+			mod.AudioPlayer.src = mod.fOption.fpath;
+			mod.AudioPlayer.preload = 'auto';
+			mod.AudioPlayer.autoplay = 'autoplay';
+			mod.AudioPlayer.addEventListener('loadstart', function() {
+				console.log('loadstart');
+			});
+			mod.AudioPlayer.addEventListener('canplay', function() {
+				console.log('canplay');
+			});
+			mod.AudioPlayer.addEventListener('canplaythrough', function() {
+				console.log('canplaythrough');
+			});
+		}
 	}
 
 	/**
@@ -155,10 +201,10 @@ var ShowAudioUtil = (function(mod) {
 		mod.intervalId = setInterval(function() {
 			var audioTime = mod.AudioPlayer.getDuration();
 			if(!isNaN(audioTime) && audioTime != -1) {
-				mod.fOption.time = audioTime;
+				mod.fOption.time = Math.ceil(audioTime);
 			}
 			//console.log('audioTime ' + audioTime);
-			mod.showAudioTime(parseInt(mod.fOption.time));
+			mod.showAudioTime(mod.fOption.time);
 		}, 1000);
 	}
 
@@ -199,7 +245,6 @@ var ShowAudioUtil = (function(mod) {
 	 * 关闭audio
 	 */
 	mod.closeAudio = function() {
-		console.log('closeAudio');
 		mui('#audioPopover').popover('hide');
 		plus.key.removeEventListener('backbutton', ShowAudioUtil.closeAudio);
 		if(mod.Mask != null) {
@@ -207,7 +252,11 @@ var ShowAudioUtil = (function(mod) {
 			mod.Mask = null;
 		}
 		if(mod.AudioPlayer != null) {
-			mod.AudioPlayer.stop();
+			if(plus.os.name == 'Android') {
+				mod.AudioPlayer.stop();
+			} else {
+				mod.AudioPlayer.pause();
+			}
 			mod.AudioPlayer = null;
 		}
 		if(mod.intervalId != null) {

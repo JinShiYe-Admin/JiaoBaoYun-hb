@@ -128,14 +128,16 @@ mui.plusReady(function() {
 		//		if(events.judgeLoginMode()) {
 		//			return;
 		//		}
+		this.disabled=true;
 		if(events.getUtid()) {
 			console.log('点击关注');
 			if(this.innerText == '关注') {
-				setAskFocus(askID, 1);
+				setAskFocus(askID, 1,this);
 			} else {
-				setAskFocus(askID, 0);
+				setAskFocus(askID, 0,this);
 			}
 		} else {
+			this.disabled=false;
 			var isDel = this.innerText == '关注'?0:1;
 			events.toggleStorageArray(storageKeyName.FOCUSEQUESTION,parseInt(askID),isDel);
 			if(isDel) {
@@ -226,12 +228,13 @@ var setCondition = function() {
 		var tab_font = document.getElementById("tab_font");
 		tab_div.addEventListener('tap', function() {
 			//判断是否是游客身份登录
-			if(events.judgeLoginMode()) {
+			if(events.judgeLoginMode(this)) {
 				return;
 			}
 			console.log('tab_div-tap');
 			if(askModel.IsAnswered == 1) {
 				mui.toast('已经回答过此问题');
+				this.disabled=false;
 				return;
 			}
 			tab_div.style.background = '#DDDDDD';
@@ -241,7 +244,7 @@ var setCondition = function() {
 				tab_font.style.color = 'gray';
 			}, 80);
 			//点击跳转到回答界面
-
+			this.disabled=false;
 			events.fireToPage('qiuzhi-addAnswer.html', 'qiuzhi-addAnswer', function() {
 				return askModel;
 			});
@@ -353,7 +356,7 @@ function getAskFocusByUser(askId) {
 };
 
 //14.设置某个问题的关注，0 不关注,1 关注
-function setAskFocus(askId, status) {
+function setAskFocus(askId, status,item) {
 	document.getElementById("guanzhu").disabled=true;
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 	//需要加密的数据
@@ -366,7 +369,8 @@ function setAskFocus(askId, status) {
 	var wd1 = events.showWaiting();
 	//14.设置某个问题的关注
 	postDataQZPro_setAskFocus(comData, wd1, function(data) {
-		wd1 .close();
+		wd1.close();
+		item.disabled=false;
 		document.getElementById("guanzhu").disabled=false;
 		console.log('14.设置某个问题的关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {

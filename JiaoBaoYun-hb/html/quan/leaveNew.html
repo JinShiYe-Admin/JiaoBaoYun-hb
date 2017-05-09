@@ -167,9 +167,12 @@
 				userId = plus.webview.currentWebview().data;
 				events.addTap('pubLeave', function() {
 					//判断是否是游客身份登录
-					if (events.judgeLoginMode()) {return;}
+					if(events.judgeLoginMode(this)) {
+						return;
+					}
 					console.log(JSON.stringify(userId))
-					events.openNewWindowWithData('../quan/pub-leave.html', userId);
+					events.singleWebviewInPeriod(this,'../quan/pub-leave.html', userId);
+//					events.openNewWindowWithData();
 				})
 				personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 				//赋值
@@ -394,32 +397,35 @@
 
 			})
 			mui('.mui-table-view').on('tap', '.dynamic-personal-image', function() {
-			var li = this.parentElement.parentElement.parentElement;
-			var index = li.id.replace('reply','');
-			console.log(JSON.stringify(leaveArray))
-			mui.openWindow({
-				url: '../quan/zone_main.html',
-				id: '../quan/zone_main.html',
-				styles: {
-					top: '0px', //设置距离顶部的距离
-					bottom: '0px'
-				},
+				var li = this.parentElement.parentElement.parentElement;
+				var index = li.id.replace('reply', '');
+				console.log(JSON.stringify(leaveArray))
+				mui.openWindow({
+					url: '../quan/zone_main.html',
+					id: '../quan/zone_main.html',
+					styles: {
+						top: '0px', //设置距离顶部的距离
+						bottom: '0px'
+					},
 
-				extras: {
-					data: leaveArray[index].utid,
-					NoReadCnt: 0,
-					flag: '0'
-				},
-				createNew: true,
+					extras: {
+						data: leaveArray[index].utid,
+						NoReadCnt: 0,
+						flag: '0'
+					},
+					createNew: true,
 
-			});
-			window.event.stopPropagation()
+				});
+				window.event.stopPropagation()
 
-		})
+			})
 			//点击回复
 			mui('.mui-table-view').on('tap', '.ableSelectedCell', function() {
 				//判断是否是游客身份登录
-				if (events.judgeLoginMode()) {return;}
+				if(events.judgeLoginMode(this)) {
+					return;
+				}
+				var item=this;
 				cellIndex = this.id.replace('reply', '');
 
 				if(leaveArray[cellIndex].UserId == personalUTID) {
@@ -433,8 +439,7 @@
 					replyUserId: leaveArray[cellIndex].UserId,
 					userOwnerId: userId,
 				}
-				events.openNewWindowWithData('leave-reply.html', data)
-
+				events.singleWebviewInPeriod(item,'leave-reply.html', data);
 			});
 		</script>
 	</body>

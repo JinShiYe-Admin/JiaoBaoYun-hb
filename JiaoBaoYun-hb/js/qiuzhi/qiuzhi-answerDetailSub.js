@@ -859,19 +859,21 @@ var setListeners = function() {
 		//		if(events.judgeLoginMode()) {
 		//			return;
 		//		}
-		setIsLikeComment(this.querySelector('.icon-support'));
+		this.disabled=true;
+		setIsLikeComment(this);
 	})
 	//回答的点赞按钮的点赞事件
 	events.addTap('support-answer', function() {
 		//判断是否是游客身份登录
-		if(events.judgeLoginMode()) {
+		if(events.judgeLoginMode(this)) {
 			return;
 		}
-		setIsLikeAnswer(this.querySelector('.icon-support'));
+		setIsLikeAnswer(this);
 	})
 	//按钮点击事件关注事件
 	events.addTap('btn-focus', function() {
 		var item = this;
+		item.disabled=true;
 		if(events.getUtid()) {
 			setUserFocus(answerData.AnswerMan, this)
 		} else {
@@ -884,17 +886,19 @@ var setListeners = function() {
 				item.innerText = '已关注';
 				item.className = "mui-btn mui-pull-right btn-attentioned";
 			}
+			item.disabled=false;
 		}
 
 	})
 	events.addTap('answer-comment', function() {
 		//判断是否是游客身份登录
-		if(events.judgeLoginMode()) {
+		if(events.judgeLoginMode(this)) {
 			return;
 		}
 		events.fireToPageWithData('qiuzhi-addAnswer.html', 'add-comment', answerData);
 		upperInfo = null;
 		parentContainer = null;
+		this.disabled=false;
 	})
 	events.addTap('anthor-portrait', function() {
 		if(!answerData.IsAnonym) {
@@ -920,7 +924,7 @@ var setListeners = function() {
 	//评论信息
 	mui('.mui-table-view').on('tap', ".comment-words", function() {
 		//判断是否是游客身份登录
-		if(events.judgeLoginMode()) {
+		if(events.judgeLoginMode(this)) {
 			return;
 		}
 		console.log("评论信息：" + JSON.stringify(this.commentInfo));
@@ -934,6 +938,7 @@ var setListeners = function() {
 		if(upperInfo.UserId != myStorage.getItem(storageKeyName.PERSONALINFO).utid) {
 			getComment(comdata, function(isDel) {
 				if(isDel) {
+					item.disabled=false;
 					mui.toast("评论已删除！");
 				} else {
 					if(upperInfo.UpperId) {
@@ -945,6 +950,7 @@ var setListeners = function() {
 					events.fireToPageWithData('qiuzhi-addAnswer.html', 'comment-reply', jQuery.extend(item.commentInfo, {
 						AnswerId: answerData.AnswerId
 					}));
+					this.disabled=false;
 				}
 			})
 		}
@@ -1010,13 +1016,15 @@ var setListeners = function() {
  * 设置是否点赞
  * @param {Object} 点赞的item
  */
-var setIsLikeAnswer = function(item) {
+var setIsLikeAnswer = function(itemContainer) {
+	var item=itemContainer.querySelector('.icon-support');
 	var wd = events.showWaiting();
 	postDataQZPro_setAnswerLike({
 		answerId: answerData.AnswerId, //回答ID
 		userId: selfId, //点赞用户ID
 		status: item.isLike ? 0 : 1 //点赞状态,0 取消点赞,1 点赞
 	}, wd, function(data) {
+		itemContainer.disabled=false;
 		wd.close();
 		console.log('答案点赞取消点赞结果：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
@@ -1030,7 +1038,8 @@ var setIsLikeAnswer = function(item) {
  * 对评论设置点赞状态
  * @param {Object} 点赞的item
  */
-var setIsLikeComment = function(item) {
+var setIsLikeComment = function(itemContainer) {
+	var item=itemContainer.querySelector(".icon-support")
 	var wd = events.showWaiting();
 	postDataQZPro_setCommentLike({
 		commentId: item.commentId, //评论ID
@@ -1039,6 +1048,7 @@ var setIsLikeComment = function(item) {
 		status: item.isLike ? 0 : 1 //点赞状态，0 取消点赞，1 点赞
 	}, wd, function(data) {
 		wd.close();
+		itemContainer.disabled=false;
 		console.log("评论点赞取消点赞结果：" + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			setZanIconCondition(item);

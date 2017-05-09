@@ -60,33 +60,33 @@ var CloudFileUtil = (function($, mod) {
 		if(data) {
 			if(data.appId) {
 				appId = data.appId;
-				desKey=getAppKey(appId);
-//				switch(appId) {
-//					case 0:
-//						break;
-//					case 1:
-//						break;
-//					case 2: //资源平台
-//						desKey = "jsy8004";
-//						break;
-//					case 3: //教宝云作业
-//						desKey = "zy309309!";
-//						break;
-//					case 4: //教宝云盘
-//						desKey = "jbyp@2017";
-//						break;
-//					case 5: //教宝云用户管理
-//						desKey = "jbman456";
-//						break;
-//					case 6: //家校圈
-//						desKey = "jxq789!@";
-//						break;
-//					case 7: //求知
-//						desKey = "qz123qwe";
-//						break;
-//					default:
-//						break;
-//				}
+				desKey = getAppKey(appId);
+				//				switch(appId) {
+				//					case 0:
+				//						break;
+				//					case 1:
+				//						break;
+				//					case 2: //资源平台
+				//						desKey = "jsy8004";
+				//						break;
+				//					case 3: //教宝云作业
+				//						desKey = "zy309309!";
+				//						break;
+				//					case 4: //教宝云盘
+				//						desKey = "jbyp@2017";
+				//						break;
+				//					case 5: //教宝云用户管理
+				//						desKey = "jbman456";
+				//						break;
+				//					case 6: //家校圈
+				//						desKey = "jxq789!@";
+				//						break;
+				//					case 7: //求知
+				//						desKey = "qz123qwe";
+				//						break;
+				//					default:
+				//						break;
+				//				}
 			}
 			if(data.urls) {
 				urls = data.urls;
@@ -177,7 +177,7 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} successCB 成功的回调successCB(data)
 	 * @param {Object} errorCB 失败的回调errorCB(xhr, type, errorThrown);
 	 * data={
-	 * 	type:'',//str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件；2上传需要生成缩略图的多个文件;3上传需要生成缩略图的多个视频文件
+	 * 	type:'',//str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件；2上传需要生成缩略图的多个文件;3上传需要生成缩略图的多个视频文件；4上传多个音频文件
 	 *  QNFileName:'',//str 必填 存放到七牛的文件名
 	 * 	fileArray:[],//array 选填  type为2时有效，多个文件的路径
 	 *  appId:'' , //int 必填 项目id
@@ -217,7 +217,7 @@ var CloudFileUtil = (function($, mod) {
 						}
 					}
 				}
-				if(type == 2 || type == 3) {
+				if(type == 2 || type == 3 || type == 4) {
 					if(data.fileArray) {
 						fileList = data.fileArray;
 					}
@@ -228,33 +228,33 @@ var CloudFileUtil = (function($, mod) {
 			}
 			if(data.appId) {
 				appId = data.appId;
-				desKey=getAppKey(appId);
-//				switch(data.appId) {
-//					case 0:
-//						break;
-//					case 1:
-//						break;
-//					case 2: //资源平台
-//						desKey = "jsy8004";
-//						break;
-//					case 3: //教宝云作业
-//						desKey = "zy309309!";
-//						break;
-//					case 4: //教宝云盘
-//						desKey = "jbyp@2017"
-//						break;
-//					case 5: //教宝云用户管理
-//						desKey = "jbman456"
-//						break;
-//					case 6: //家校圈
-//						desKey = "jxq789!@";
-//						break;
-//					case 7: //求知
-//						desKey = "qz123qwe";
-//						break;
-//					default:
-//						break;
-//				}
+				desKey = getAppKey(appId);
+				//				switch(data.appId) {
+				//					case 0:
+				//						break;
+				//					case 1:
+				//						break;
+				//					case 2: //资源平台
+				//						desKey = "jsy8004";
+				//						break;
+				//					case 3: //教宝云作业
+				//						desKey = "zy309309!";
+				//						break;
+				//					case 4: //教宝云盘
+				//						desKey = "jbyp@2017"
+				//						break;
+				//					case 5: //教宝云用户管理
+				//						desKey = "jbman456"
+				//						break;
+				//					case 6: //家校圈
+				//						desKey = "jxq789!@";
+				//						break;
+				//					case 7: //求知
+				//						desKey = "qz123qwe";
+				//						break;
+				//					default:
+				//						break;
+				//				}
 			}
 			if(data.mainSpace) {
 				mainSpace = data.mainSpace;
@@ -310,11 +310,7 @@ var CloudFileUtil = (function($, mod) {
 			var params = [];
 			configure.thumbKey = [];
 			var uploadOptions = { //上传七牛后的处理参数
-				type: 0, //处理类型 0：缩略图 1 裁剪 10 缩略图+裁剪
-				thumbSize: {
-					width: maxWidth, //缩略图最大宽度
-					height: maxHeight //缩略图最大高度
-				}
+				type: -1, //处理类型 0：缩略图 1 裁剪 10 缩略图+裁剪
 			}
 			for(var i = 0; i < fileList.length; i++) {
 				var QNFileName; //文件名
@@ -371,6 +367,30 @@ var CloudFileUtil = (function($, mod) {
 				AppID: appId,
 				Param: encryptByDES(desKey, JSON.stringify(params))
 			}
+		} else if(type == '4') { //多个音频文件
+			var params = [];
+
+			for(var i = 0; i < fileList.length; i++) {
+				var QNFileName; //文件名
+				var param = {};
+				param.Bucket = mainSpace;
+				//获取文件路径
+				var filePaths = fileList[i].path.split("/");
+				QNFileName = filePaths[filePaths.length - 1];
+				param.Key = saveSpace + QNFileName;
+				console.log('key:' + param.Key);
+				//获取处理参数
+				param.Pops = '';
+				param.NotifyUrl = '';
+				//保存空间值
+				params.push(param);
+			}
+			console.log("type 4 " + JSON.stringify(params))
+
+			configure.options = {
+				AppID: appId,
+				Param: encryptByDES(desKey, JSON.stringify(params))
+			}
 		}
 
 		console.log("参数数据：" + JSON.stringify(configure.options))
@@ -399,7 +419,7 @@ var CloudFileUtil = (function($, mod) {
 	 */
 	mod.getSingleUploadDataOptions = function(picPath, appId, maxSize, spaceType, uploadSpace) {
 		var data = {};
-		var desKey=getAppKey(appId);
+		var desKey = getAppKey(appId);
 		var mainSpace;
 		if(spaceType) {
 			mainSpace = storageKeyName.QNPRISPACE; //七牛私有空间
@@ -579,7 +599,7 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} appId app的id
 	 */
 	var getAppKey = function(appId) {
-		var desKey="";
+		var desKey = "";
 		switch(appId) {
 			case 0:
 				break;
@@ -860,7 +880,7 @@ var CloudFileUtil = (function($, mod) {
 					case 6: //家校圈
 						desKey = "jxq789!@";
 						break;
-					case 7: //求知	
+					case 7: //求知
 						desKey = "qz123qwe";
 						break;
 					default:
@@ -973,8 +993,8 @@ var CloudFileUtil = (function($, mod) {
 					img.thumb +
 					');background-size:cover;"><img src="../../image/utils/playvideo.png" style="width:50%;height:50%;margin:25%" /></div>' +
 					'<a class="mui-icon iconfont icon-guanbi"></a>';
-//				div.innerHTML = '<img style="width:90%;height:90%;margin:5%;" src="../../image/utils/playvideo.png" style="backgroud-image:url(' + img.thumb + ');"/>' +
-//					'<a class="mui-icon iconfont icon-guanbi"></a>';
+				//				div.innerHTML = '<img style="width:90%;height:90%;margin:5%;" src="../../image/utils/playvideo.png" style="backgroud-image:url(' + img.thumb + ');"/>' +
+				//					'<a class="mui-icon iconfont icon-guanbi"></a>';
 			} else { //上传模式
 				console.log("缩略图信息：" + thumb);
 				div.innerHTML = '<div class="clip-container video-container"  style="width:' + div_width * 0.9 + 'px;height:' + div_width * 0.9 + 'px;margin:5%;overflow:hidden;display:inline-block;background-image:url(' +
@@ -1013,8 +1033,8 @@ var CloudFileUtil = (function($, mod) {
 				}
 				break;
 			case 2: //视频
-				if(!thumb){
-					thumb=false;
+				if(!thumb) {
+					thumb = false;
 				}
 				div.querySelector(".video-container").data = [img, thumb];
 				break;
@@ -1065,15 +1085,15 @@ var CloudFileUtil = (function($, mod) {
 	}
 	mod.setPlayVideoListener = function() {
 		mui('#pictures').on('tap', '.video-container', function() {
-			var videoPath,thumb;
-			if(this.data[0].localPath){
-				videoPath=this.data[0].localPath;
-				thumb=this.data[1];
-			}else{
-				videoPath=this.data[0].url;
-				thumb=this.data[0].thumb;
+			var videoPath, thumb;
+			if(this.data[0].localPath) {
+				videoPath = this.data[0].localPath;
+				thumb = this.data[1];
+			} else {
+				videoPath = this.data[0].url;
+				thumb = this.data[0].thumb;
 			}
-			video.playVideo(videoPath,thumb);
+			video.playVideo(videoPath, thumb);
 		})
 	}
 

@@ -10,9 +10,9 @@ var customerPersons;
 var isSelf = false; //是否为自己的关注列表 和被关注列表
 mui.plusReady(function() {
 	selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
-	expertInfo = plus.webview.currentWebview().expertInfo;
+	expertInfo = plus.webview.currentWebview().data.expertInfo;
 	console.log("获取的专家信息：" + JSON.stringify(expertInfo));
-	type = plus.webview.currentWebview().type;
+	type = plus.webview.currentWebview().data.type;
 	if(type) { //类型 0 他关注的人 1 关注他的人
 		if(expertInfo.UserId == selfId) {
 			isSelf = true;
