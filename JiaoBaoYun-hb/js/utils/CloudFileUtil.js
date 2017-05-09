@@ -250,7 +250,11 @@ var CloudFileUtil = (function($, mod) {
 			var params = [];
 			configure.thumbKey = [];
 			var uploadOptions = { //上传七牛后的处理参数
-				type: -1, //处理类型 0：缩略图 1 裁剪 10 缩略图+裁剪
+				type: 0, //处理类型 0：缩略图 1 裁剪 10 缩略图+裁剪
+				thumbSize: {
+					width: maxWidth, //缩略图最大宽度
+					height: maxHeight //缩略图最大高度
+				}
 			}
 			for(var i = 0; i < fileList.length; i++) {
 				var QNFileName; //文件名
@@ -309,8 +313,11 @@ var CloudFileUtil = (function($, mod) {
 			}
 		} else if(type == '4') { //多个音频文件
 			var params = [];
-
+			configure.thumbKey = [];
 			for(var i = 0; i < fileList.length; i++) {
+				var uploadOptions = { //上传七牛后的处理参数
+					type: 3, //处理类型 0：缩略图 1 裁剪 10 缩略图+裁剪
+				}
 				var QNFileName; //文件名
 				var param = {};
 				param.Bucket = mainSpace;
@@ -320,13 +327,13 @@ var CloudFileUtil = (function($, mod) {
 				param.Key = saveSpace + QNFileName;
 				console.log('key:' + param.Key);
 				//获取处理参数
-				param.Pops = '';
+				var opsData = getOptions(uploadOptions, saveSpace, mainSpace, QNFileName);
+				param.Pops = opsData.ops;
 				param.NotifyUrl = '';
 				//保存空间值
 				params.push(param);
+				configure.thumbKey.push(opsData.thumbKey);
 			}
-			console.log("type 4 " + JSON.stringify(params))
-
 			configure.options = {
 				AppID: appId,
 				Param: encryptByDES(desKey, JSON.stringify(params))
@@ -464,6 +471,14 @@ var CloudFileUtil = (function($, mod) {
 				var thumbName = tempFileName[0];
 				returnData.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + thumbName + '.png');
 				returnData.ops = "vframe/png/offset/1/w/" + width + "/h/" + height + "|saveas/" + returnData.thumbKey;
+				break;
+			case 3: //音频，转格式
+				var thumbSpace = saveSpace + 'thumb/';
+				var tempFileName = QNFileName.split('.');
+				var thumbName = tempFileName[0];
+				returnData.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + thumbName + '.mp3');
+				returnData.ops = "avthumb/mp3/acodec/libmp3lame" + "|saveas/" + returnData.thumbKey;
+				console.log('3 ' + returnData.ops);
 				break;
 			case 10: //缩略图+裁剪
 				var thumbSpace = saveSpace + 'thumb/';
