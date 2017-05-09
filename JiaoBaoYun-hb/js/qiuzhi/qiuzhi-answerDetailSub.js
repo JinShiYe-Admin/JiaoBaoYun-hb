@@ -856,9 +856,9 @@ var setListeners = function() {
 	//评论的点赞按钮点击事件
 	mui(".mui-table-view").on('tap', '.support-container', function() {
 		//判断是否是游客身份登录
-		//		if(events.judgeLoginMode()) {
-		//			return;
-		//		}
+		if(events.judgeLoginMode(this)) {
+			return;
+		}
 		this.disabled=true;
 		setIsLikeComment(this);
 	})

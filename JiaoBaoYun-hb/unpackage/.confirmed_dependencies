@@ -55,7 +55,8 @@
 			"image/cloud/cloud_0_tuku.png",
 			"image/cloud/cloud_0_tongxunlu.png",
 			"image/cloud/cloud_0_dangan.png",
-			"image/cloud/cloud_0_wenjianjia_1.png"
+			"image/cloud/cloud_0_wenjianjia_1.png",
+			"image/quan/add.png"
 		],
 		"refer": [
 			"html/index/mine.html",
@@ -65,7 +66,9 @@
 			"html/cloud/order-member.html",
 			"html/quan/zone_main.html",
 			"html/quan/aboutme.html",
-			"html/quan/studentdynamic_main.html"
+			"html/quan/studentdynamic_main.html",
+			"html/mine/qun_manage_info.html",
+			"html/quan/pub-dynamic.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -84,7 +87,9 @@
 			"fonts/fangzheng.ttf",
 			"css/mui.min.css"
 		],
-		"refer": []
+		"refer": [
+			"html/utils/customizeCity.html"
+		]
 	},
 	"html/quan/classSpace-persons.html": {
 		"resources": [
@@ -136,11 +141,13 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/utils/video.js",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"image/utils/playvideo.png"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html",
-			"html/quan/space-detail.html"
+			"html/quan/space-detail.html",
+			"html/register/login.html"
 		]
 	},
 	"html/index/index.html": {
@@ -584,13 +591,15 @@
 			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
-			"html/mine/add-info.html"
+			"html/mine/add-info.html",
+			"html/mine/apply-group.html"
 		]
 	},
 	"html/mine/add-info.html": {
 		"resources": [
 			"js/mine/add-info.js",
-			"image/mine/invite_none_0.png"
+			"image/mine/invite_none_0.png",
+			"css/mine/apply.css"
 		]
 	},
 	"html/quan/zone_main.html": {
@@ -619,7 +628,8 @@
 			"image/utils/playvideo.png",
 			"css/icons-extra.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"css/show/show.css"
+			"css/show/show.css",
+			"css/utils/preview.css"
 		],
 		"refer": [
 			"html/quan/space-detail.html"
@@ -704,6 +714,40 @@
 	"html/qiuzhi/qiuzhi-expertAllAnswer.html": {
 		"resources": [
 			"css/qiuzhi/qiuzhi-inviteAnswer.css"
+		]
+	},
+	"html/mine/qun_manage_info.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/utils/MultiMedia.js",
+			"css/utils/common.css",
+			"js/utils/UploadHeadImage.js"
+		]
+	},
+	"html/quan/pub-dynamic.html": {
+		"resources": [
+			"css/homework/publish-answer.css",
+			"js/utils/ASFiles.js",
+			"js/utils/files.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/load.js",
+			"css/quan/custom-textarea.css",
+			"js/utils/camera.js",
+			"js/utils/recordvideoutil.js"
+		]
+	},
+	"html/mine/apply-group.html": {
+		"resources": [
+			"css/mine/search.css",
+			"js/mine/apply-group.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/utils/customizeCity.html": {
+		"resources": [
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }
