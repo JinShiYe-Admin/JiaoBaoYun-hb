@@ -1,6 +1,11 @@
 var personalUTID;//个人utid
 var homeworkInfo;//作业信息
-mui.init();//加载mui
+mui.init({
+	beforeback:function(){
+		document.querySelector('.startWork-container').style.display = 'none';
+		return true;
+	}
+});//加载mui
 //plusready事件的监听回调
 mui.plusReady(function() {
 	//预加载做作业界面

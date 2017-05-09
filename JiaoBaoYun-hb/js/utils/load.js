@@ -126,7 +126,6 @@ var load = (function(mod) {
 	mod.upload = function(type, fileData) {
 		switch(type) {
 			case 1: //图片
-
 				break;
 			case 2: //视频
 				break;
@@ -179,16 +178,7 @@ var load = (function(mod) {
 								clip: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "clip/"),
 								type: 1
 							}
-							//												} else {
-							//													imgs[index] = {
-							//														url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
-							//														thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
-							//														type: 1
-							//													}
-							//												}
-
 							picCount++;
-
 							if(picCount == compressedPaths.length) { //所有图片已上传
 								plus.nativeUI.closeWaiting(); //关闭等待框
 								for(var i in imgs) {

@@ -2275,7 +2275,9 @@
 					"css/homework/publish-answer.css",
 					"fonts/fangzheng.ttf",
 					"js/utils/CloudFileUtil.js",
-					"js/qiniu/qiniu.js"
+					"js/qiniu/qiniu.js",
+					"js/utils/load.js",
+					"js/utils/recordvideoutil.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3653,7 +3655,8 @@
 					"image/dynamic/praise.png",
 					"fonts/fangzheng.ttf",
 					"fonts/iconfont.ttf",
-					"js/utils/video.js"
+					"js/utils/video.js",
+					"image/utils/playvideo.png"
 				],
 				"refer": [
 					"html/utils/customizeCity.html",

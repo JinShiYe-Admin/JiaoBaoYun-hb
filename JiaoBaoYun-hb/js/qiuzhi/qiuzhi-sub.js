@@ -156,7 +156,6 @@ function getExpertsArray(channelId) {
 				if(getChannelTime) {
 					events.closeWaiting();
 				}
-				//				wd2.close();
 			});
 		} else {
 			mui.toast(data.RspTxt);

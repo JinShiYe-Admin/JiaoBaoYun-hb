@@ -61,32 +61,6 @@ var CloudFileUtil = (function($, mod) {
 			if(data.appId) {
 				appId = data.appId;
 				desKey = getAppKey(appId);
-				//				switch(appId) {
-				//					case 0:
-				//						break;
-				//					case 1:
-				//						break;
-				//					case 2: //资源平台
-				//						desKey = "jsy8004";
-				//						break;
-				//					case 3: //教宝云作业
-				//						desKey = "zy309309!";
-				//						break;
-				//					case 4: //教宝云盘
-				//						desKey = "jbyp@2017";
-				//						break;
-				//					case 5: //教宝云用户管理
-				//						desKey = "jbman456";
-				//						break;
-				//					case 6: //家校圈
-				//						desKey = "jxq789!@";
-				//						break;
-				//					case 7: //求知
-				//						desKey = "qz123qwe";
-				//						break;
-				//					default:
-				//						break;
-				//				}
 			}
 			if(data.urls) {
 				urls = data.urls;
@@ -94,10 +68,6 @@ var CloudFileUtil = (function($, mod) {
 
 		}
 		if(desKey != '' && urls.length != 0) {
-			//			var param = '';
-			//			var tempSrt = urls.join(',');
-			//			param = '[' + tempSrt + ']';
-			//			console.log("参数数据：" + JSON.stringify(param));
 			configure.options = {
 				AppID: appId,
 				Param: encryptByDES(desKey, JSON.stringify(urls))
@@ -109,11 +79,7 @@ var CloudFileUtil = (function($, mod) {
 				dataType: 'json', //服务器返回json格式数据
 				type: 'post', //HTTP请求类型
 				timeout: 60000, //超时时间设置为60秒
-				//			headers: {
-				//				'Content-Type': 'application/json'
-				//			},
 				success: function(data) {
-					//服务器返回响应
 					//console.log(JSON.stringify(data));
 					successCB(data);
 				},
@@ -229,32 +195,6 @@ var CloudFileUtil = (function($, mod) {
 			if(data.appId) {
 				appId = data.appId;
 				desKey = getAppKey(appId);
-				//				switch(data.appId) {
-				//					case 0:
-				//						break;
-				//					case 1:
-				//						break;
-				//					case 2: //资源平台
-				//						desKey = "jsy8004";
-				//						break;
-				//					case 3: //教宝云作业
-				//						desKey = "zy309309!";
-				//						break;
-				//					case 4: //教宝云盘
-				//						desKey = "jbyp@2017"
-				//						break;
-				//					case 5: //教宝云用户管理
-				//						desKey = "jbman456"
-				//						break;
-				//					case 6: //家校圈
-				//						desKey = "jxq789!@";
-				//						break;
-				//					case 7: //求知
-				//						desKey = "qz123qwe";
-				//						break;
-				//					default:
-				//						break;
-				//				}
 			}
 			if(data.mainSpace) {
 				mainSpace = data.mainSpace;
@@ -504,11 +444,11 @@ var CloudFileUtil = (function($, mod) {
 		return data;
 	}
 	/**
-	 *
+	 *获取参数
 	 * @param {Object} manageOptions 处理参数
-	 * @param {Object} saveSpace 保存空间
-	 * @param {Object} mainSpace 主空间
-	 * @param {Object} QNFileName 文件名
+	 * @param {String} saveSpace 保存空间
+	 * @param {String} mainSpace 主空间
+	 * @param {String} QNFileName 文件名
 	 */
 	var getOptions = function(manageOptions, saveSpace, mainSpace, QNFileName) {
 		var returnData = {};
@@ -557,10 +497,10 @@ var CloudFileUtil = (function($, mod) {
 	 * 需要先加载qiniu.js,cryption.js,events.js,使用实例在publish-answer.js
 	 * 配置获取上传token时需要上传的数据（传多张图片 自定义参数）
 	 * @author 安琪
-	 * @param {Object} picPaths 图片本地路径数组
-	 * @param {Object} appId AppID
-	 * @param {Object} spaceType 空间类型0：公共空间 1:私有空间
-	 * @param {Object} saveSpace 上传的空间
+	 * @param {Array} picPaths 图片本地路径数组
+	 * @param {Int} appId AppID
+	 * @param {int} spaceType 空间类型0：公共空间 1:私有空间
+	 * @param {String} saveSpace 上传的空间
 	 * @param {Object} manageOptions 处理参数{
 	 * 	type:0 // 0生成缩略图1裁剪 10缩略图和裁剪
 	 * 	thumbSize {width height } 生成缩略图大小
@@ -768,12 +708,11 @@ var CloudFileUtil = (function($, mod) {
 	}
 
 	/**
-	 * 单张图片文件上传
-	 * @author 安琪
-	 * @param {Object} path 要上传文件的目标地址
-	 * @param {Object} fileName 本地路径
-	 * @param {Object} QNUptoken 上传token
-	 * @param {Object} callback 回调函数
+	 * 单个文件上传
+	 * @anthor an
+	 * @param {Object} tokenInfo
+	 * @param {String} fileName
+	 * @param {Function} callback
 	 */
 	mod.uploadFile = function(tokenInfo, fileName, callback) {
 		//console.log('upload:' + fPath);
@@ -804,11 +743,10 @@ var CloudFileUtil = (function($, mod) {
 
 	/**
 	 * 多张图片上传
-	 * @author 安琪
-	 * @param {Object} paths 要上传文件的目标地址
-	 * @param {Object} fileNames 本地路径
+	 * @author an
+	 * @param {Array} fileNames 本地路径
 	 * @param {Object} QNUptokens 上传token
-	 * @param {Object} callback 回调函数
+	 * @param {Function} callback 回调函数
 	 */
 	mod.uploadFiles = function(fileNames, tokenInfos, callback) {
 		plus.uploader.clear();
@@ -875,69 +813,36 @@ var CloudFileUtil = (function($, mod) {
 		if(data) {
 			if(data.appId) {
 				appId = data.appId;
-				switch(appId) {
-					case 0:
-						break;
-					case 1:
-						break;
-					case 2: //资源平台
-						desKey = "jsy8004";
-						break;
-					case 3: //教宝云作业
-						desKey = "zy309309!";
-						break;
-					case 4: //教宝云盘
-						desKey = "jbyp@2017";
-						break;
-					case 5: //教宝云用户管理
-						desKey = "jbman456";
-						break;
-					case 6: //家校圈
-						desKey = "jxq789!@";
-						break;
-					case 7: //求知
-						desKey = "qz123qwe";
-						break;
-					default:
-						break;
+				desKey = getAppKey(appId);
+				if(data.urls) {
+					urls = data.urls;
 				}
 			}
-			if(data.urls) {
-				urls = data.urls;
-			}
-
-		}
-		if(desKey != '' && urls.length != 0) {
-			//			var param = '';
-			//			var tempSrt = urls.join(',');
-			//			param = '[' + tempSrt + ']';
-			//			console.log("参数数据：" + JSON.stringify(param));
-			configure.options = {
-				AppID: appId,
-				Param: encryptByDES(desKey, JSON.stringify(urls))
-			}
-			console.log("参数数据：" + JSON.stringify(configure.options));
-			mui.ajax(url, {
-				async: false,
-				data: configure.options,
-				dataType: 'json', //服务器返回json格式数据
-				type: 'post', //HTTP请求类型
-				timeout: 60000, //超时时间设置为60秒
-				//			headers: {
-				//				'Content-Type': 'application/json'
-				//			},
-				success: function(data) {
-					//服务器返回响应
-					//console.log(JSON.stringify(data));
-					successCB(data);
-				},
-				error: function(xhr, type, errorThrown) {
-					//异常处理
-					errorCB(xhr, type, errorThrown);
+			if(desKey && urls.length != 0) {
+				configure.options = {
+					AppID: appId,
+					Param: encryptByDES(desKey, JSON.stringify(urls))
 				}
-			});
-		} else {
-			errorCB('### ERROR ### 配置获取七牛下载token参数错误');
+				console.log("参数数据：" + JSON.stringify(configure.options));
+				mui.ajax(url, {
+					async: false,
+					data: configure.options,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 60000, //超时时间设置为60秒
+					success: function(data) {
+						//服务器返回响应
+						//console.log(JSON.stringify(data));
+						successCB(data);
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理
+						errorCB(xhr, type, errorThrown);
+					}
+				});
+			} else {
+				errorCB('### ERROR ### 配置获取七牛下载token参数错误');
+			}
 		}
 	}
 
@@ -1098,6 +1003,10 @@ var CloudFileUtil = (function($, mod) {
 			pictures.removeChild(this.parentElement);
 		})
 	}
+	/**
+	 * 设置监听 视频播放的监听
+	 * @anthor an
+	 */
 	mod.setPlayVideoListener = function() {
 		mui('#pictures').on('tap', '.video-container', function() {
 			var videoPath, thumb;

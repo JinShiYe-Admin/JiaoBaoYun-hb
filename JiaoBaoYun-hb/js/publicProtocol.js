@@ -17,7 +17,8 @@ document.write('<script src="../../js/utils/signHmacSHA1.js"><\/script>');
 document.write('<script src="../../js/libs/jquery.js"><\/script>');
 //替换字符串中的全部换行符
 var replaceAllBL = function(str) {
-	return str.replace(new RegExp(/(\n)/g), '<br />');
+	var string =  str.replace(/ /g,"&nbsp;")
+	return string.replace(new RegExp(/(\n)/g), '<br />');
 }
 //给数组去重
 var arrayDupRemoval = function(array) {

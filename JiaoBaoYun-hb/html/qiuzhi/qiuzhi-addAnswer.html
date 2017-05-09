@@ -40,7 +40,7 @@
 						<a class="mui-icon iconfont icon-yuyin3"></a>
 					</div>
 					<div id="take_camero" class="take_camero file-extras">
-						<a class="mui-icon iconfont icon-shipin"></a>
+						<a class="mui-icon iconfont icon-shipin" disabled="disabled"></a>
 					</div>
 					<div class="isAnonymity">
 						<div class="mui-input-row mui-checkbox mui-left file-extras">
@@ -69,7 +69,7 @@
 		<script src="../../js/utils/compress.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.zoom.js"></script>
 		<script src="../../js/mui.previewimage.js"></script>
-		<script src="../../js/utils/recordvideoutil.js"></script>
+	<!--	<script src="../../js/utils/recordvideoutil.js"></script>-->
 		<script src="../../js/utils/load.js"></script>
 		<script src="../../js/utils/video.js"></script>
 		<!--上传至七牛云js-->
@@ -190,11 +190,14 @@
 			var setListener = function() {
 				//拍照
 				events.addTap('take_pic', function() {
+					var item=this;
+					jQuery(item).css("pointerEvents","none");
 					if(CloudFileUtil.files.length < 9) {
 						camera.getPic(camera.getCamera(), function(picPath) {
 							plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
 								back: 'none'
 							});
+							jQuery(item).css("pointerEvents","all");
 							var saveSpace = storageKeyName.KNOWLEDGE; //保存空间
 							compress.compressPIC(picPath, function(event) {
 								var localPath = event.target;
@@ -210,8 +213,6 @@
 									}
 								}
 								var data = CloudFileUtil.getSingleImgUploadOptions(localPath, 7, 0, saveSpace, options);
-
-								//								var data = CloudFileUtil.getQNUpTokenWithManage(localPath, 7, 200, 0, );
 								CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
 									console.log("获取的数据：" + JSON.stringify(datas));
 									if(datas.Status == 1) {
@@ -239,13 +240,21 @@
 									plus.nativeUI.closeWaiting(); //关闭等待框
 								});
 							})
+						},function(err){
+							jQuery(item).css("pointerEvents","all");
 						})
 					} else {
 						mui.toast('上传图片附件不得多于9张！');
+						jQuery(item).css("pointerEvents","all");
 					}
 				});
 				//录像
-				events.addTap('take_camero', function() {
+				document.getElementById("take_camero").onclick= function() {
+					var item=this;
+					jQuery("#take_camero").css('pointerEvents', 'none');
+
+					item.setAttribute("disabled","disabled");
+					console.log("item不能点击了！"+item.id); 
 					if(CloudFileUtil.files.length > 0) {
 						switch(CloudFileUtil.files[0].type) {
 							case 1:
@@ -259,7 +268,7 @@
 						}
 						return;
 					}
-					RecordVideo.recordVideo({}, function(path) {
+					video.recordVideo({}, function(path) {
 						events.showWaiting();
 						console.log("保存在本地的路径：" + path);
 						load.getManageOptions(2, path, function(mData, thumb) {
@@ -287,19 +296,25 @@
 										plus.nativeUI.closeWaiting();
 										//放置图片
 										CloudFileUtil.setPic(img, 0, thumb);
+										jQuery("#take_camero").css('pointerEvents', 'all');
 									});
 								}
 
 							}, function(xhr, type, errorThrown) {
 								console.log("错误类型：" + type + errorThrown);
 								plus.nativeUI.closeWaiting(); //关闭等待框
+								jQuery("#take_camero").css('pointerEvents', 'all');
 							});
 						})
 					}, function(errData) {
 						console.log(errData.code);
-						mui.toast(errData.message);
+						if(errData.code!=0){
+							mui.toast(errData.message);
+						}
+						jQuery("#take_camero").css('pointerEvents', 'all');
+						console.log("item能点击了！")
 					})
-				});
+				};
 				events.addTap('get_record', function() {
 					mui.toast('此功能暂未开放');
 				})

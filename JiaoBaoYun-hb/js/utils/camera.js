@@ -9,7 +9,7 @@ var camera = (function(mod) {
 			return cmr;
 		}
 		//拍照
-	mod.getPic = function(cmr, managePic) {
+	mod.getPic = function(cmr, managePic,errBack) {
 			var res = cmr.supportedImageResolutions[0];
 			var fmt = cmr.supportedImageFormats[0];
 			cmr.captureImage(function(path) {
@@ -23,6 +23,9 @@ var camera = (function(mod) {
 					}
 				},
 				function(err) {
+					if(errBack){
+						errBack();
+					}
 					console.log("Capture image failed: " + err.message);
 				}, {
 					format: fmt

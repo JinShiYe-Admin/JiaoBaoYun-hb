@@ -21,9 +21,11 @@ mui.plusReady(function() {
 			document.getElementById("title").innerText = "关注他的人";
 		}
 	} else {
-		if(expertInfo.UserId == selfId) {
+		if(expertInfo.UserId == selfId) {//自己
 			customerPersons = myStorage.getItem(storageKeyName.FOCUSEPERSEN);
-			customerPersons.reverse();
+			if(customerPersons){
+				customerPersons.reverse();
+			}
 			console.log("获取的游客关注的人："+JSON.stringify(customerPersons));
 			isSelf = true;
 			document.getElementById("title").innerText = "我关注的人";
@@ -227,20 +229,22 @@ var requirePersonInfo = function(personIds, persons) {
 			events.closeWaiting();
 			if(data.RspCode == 0) {
 				var personsData = data.RspData;
-				for(var i in persons) {
-					for(var j in personsData) {
-						if(persons[i].UserId == personsData[j].utid) {
-							jQuery.extend(persons[i], personsData[j]);
+				var isInPeson;
+				for(var i  in personsData){
+					isInPerson=false;
+					for(var j in persons){
+						if(persons[j].UserId == personsData[i].utid){
+							isInPerson=true;
+							jQuery.extend(personsData[i],persons[j]);
 							break;
 						}
 					}
 				}
-
 			} else {
 				mui.toast(data.RspTxt);
 			}
 			//放置数据
-			setData(persons);
+			setData(personsData);
 		})
 }
 /**

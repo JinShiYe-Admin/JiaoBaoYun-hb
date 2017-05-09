@@ -124,10 +124,6 @@ mui.plusReady(function() {
 	//---点击效果---end---
 
 	events.addTap('guanzhu', function() {
-		//判断是否是游客身份登录
-		//		if(events.judgeLoginMode()) {
-		//			return;
-		//		}
 		this.disabled=true;
 		if(events.getUtid()) {
 			console.log('点击关注');
