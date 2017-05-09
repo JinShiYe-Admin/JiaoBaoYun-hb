@@ -559,6 +559,9 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/qiuzhi/expert-detail.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-questionSearch.html": {
@@ -743,7 +746,9 @@
 	},
 	"html/qiuzhi/qiuzhi-expertAllAnswer.html": {
 		"resources": [
-			"css/qiuzhi/qiuzhi-inviteAnswer.css"
+			"css/qiuzhi/qiuzhi-inviteAnswer.css",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/mine/qun_manage_info.html": {

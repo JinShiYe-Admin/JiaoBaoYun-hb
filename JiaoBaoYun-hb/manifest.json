@@ -3763,7 +3763,9 @@
 					"image/utils/default_personalimage.png",
 					"fonts/iconfont.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"html/qiuzhi/expert-detail.html"
+				],
 				"priority": 0
 			},
 			"html/qiuzhi/qiuzhi-expertAllComment.html": {

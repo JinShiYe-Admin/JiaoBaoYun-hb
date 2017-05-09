@@ -773,12 +773,9 @@ var events = (function(mod) {
 		console.log("当前点击控件是否可点击：" + clickedItem.disabled);
 		var webviewSites = webviewUrl.split("/");
 		var webviewId = webviewSites[webviewSites.length - 1];
-		var targetWebview = plus.webview.getWebviewById(webviewId);
-		if(!targetWebview) {
-			targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(), {
-				data: data
-			});
-		}
+		var targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(), {
+			data: data
+		});
 		targetWebview.onloaded = function() {
 			targetWebview.show("slide-in-right", 250);
 			setItemAble(clickedItem, targetWebview);
@@ -868,7 +865,7 @@ var events = (function(mod) {
 		} else { //游客身份，要有交互，就得先跳转到登录界面
 			var targetHTML = '../register/login.html';
 			var passData = '';
-			mod.singleWebviewInPeriod(item,targetHTML,passData);
+			mod.singleWebviewInPeriod(item, targetHTML, passData);
 			return true;
 		}
 	}
@@ -1221,10 +1218,10 @@ var events = (function(mod) {
 	mod.trim = function(string) {
 		return string.replace(/^\s+|\s+$/g, '');
 	}
-	mod.showNoDataToast=function(pageIndex){
-		if(pageIndex==1){
+	mod.showNoDataToast = function(pageIndex) {
+		if(pageIndex == 1) {
 			mui.toast("暂无数据！");
-		}else{
+		} else {
 			mui.toast("没有更多啦！");
 		}
 	}
