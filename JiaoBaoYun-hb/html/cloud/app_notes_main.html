@@ -302,7 +302,7 @@
 			mui('#list').on('tap', '.audio-button', function() {
 				var ids = this.id.split('_');
 				ShowAudioUtil.initAudio({
-					fpath: notes.noteValue[ids[2]].EncAddr,
+					fpath: notes.noteValue[ids[2]].EncImgAddr,
 					time: notes.noteValue[ids[2]].EncLen
 				});
 			});
