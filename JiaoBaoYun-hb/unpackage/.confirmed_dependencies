@@ -27,14 +27,17 @@
 			"html/qiuzhi/qiuzhi-questionSub.html"
 		],
 		"resources": [
-			"html/qiuzhi/qiuzhi-questionSub.html"
+			"html/qiuzhi/qiuzhi-questionSub.html",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/qiuzhi/qiuzhi-questionSub.html": {
 		"resources": [
 			"js/libs/crypto-js/crypto-js.js",
 			"js/qiuzhi/qiuzhi-questionSub.js",
-			"css/qiuzhi/qiuzhi-questionSub.css"
+			"css/qiuzhi/qiuzhi-questionSub.css",
+			"css/utils/preview.css"
 		],
 		"refer": [
 			"html/register/login.html"
@@ -445,7 +448,8 @@
 			"js/quan/class-group1.js",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"css/quan/class_space.css"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",
