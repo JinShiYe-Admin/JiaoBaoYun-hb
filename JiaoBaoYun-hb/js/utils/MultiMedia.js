@@ -451,7 +451,6 @@ var MultiMedia = (function($, mod) {
 		var width = self.data.PictureWith;
 		var widthStr = self.data.PictureWith + 'px';
 		var marginLeft = self.data.PictureMarginLeft;
-		var footer = document.getElementById("MultiMedia_Picture_Footer");
 		var group = 'MultiMedia_Picture';
 		for(var i = 0; i < paths.length; i++) {
 			//console.log('addImages ' + paths[i]);
@@ -476,7 +475,7 @@ var MultiMedia = (function($, mod) {
 			var html_2 = '<img src="' + paths[i] + '" data-preview-src="' + paths[i] + '" data-preview-group="' + group + '" style="width:100%;visibility: hidden;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + widthStr + '\';this.style.width=\'initial\';this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + width + ')/2)+\'px\';}this.style.visibility=\'visible\';" />';
 			var html_3 = '</div>'
 			element.innerHTML = html_0 + html_1 + html_2 + html_3;
-			footer.appendChild(element);
+			document.getElementById("MultiMedia_Picture_Footer").appendChild(element);
 			self.imageChangeCallBack();
 		}
 		//console.log(document.getElementById("MultiMedia").innerHTML);
@@ -524,8 +523,7 @@ var MultiMedia = (function($, mod) {
 		var self = this;
 		self.data.PictureNum = self.options.TotalPicture; //可以选取图片的剩余数量
 		self.data.PictureArray = []; //已选取的图片路径
-		var footer = document.getElementById("MultiMedia_Picture_Footer");
-		footer.innerHTML = '';
+		document.getElementById("MultiMedia_Picture_Footer").innerHTML = '';
 		self.changeFooterHeight(0, self.data.PictureArray.length);
 	}
 
@@ -537,12 +535,11 @@ var MultiMedia = (function($, mod) {
 		var self = this;
 		var width = self.data.VideoWith;
 		var marginLeft = self.data.VideoMarginLeft;
-		var footer = document.getElementById("MultiMedia_Video_Footer");
 		var pathArray = path.split('/');
 		//生成缩略图
 		var video = document.createElement("video");
 		video.src = path;
-		video.onloadeddata = function() {
+		video.oncanplaythrough = function() {
 			var canvas = document.createElement('canvas');
 			canvas.width = video.videoWidth;
 			canvas.height = video.videoHeight;
@@ -559,7 +556,6 @@ var MultiMedia = (function($, mod) {
 				height: canvas.height, //视频缩略图高
 				duration: video.duration.toFixed(2) //视频时长
 			};
-			console.log('video ' + video.duration);
 			self.data.VideoArray.push(videos);
 			//显示视频
 			var element = document.createElement('div');
@@ -574,7 +570,7 @@ var MultiMedia = (function($, mod) {
 			var html_3 = '<img src="' + videos.localthumb + '" style="width:100%;visibility: hidden;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + width + 'px\';this.style.width=\'initial\';this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + width + ')/2)+\'px\';}this.style.visibility=\'visible\';" />';
 			var html_4 = '</div>'
 			element.innerHTML = html_0 + html_1 + html_2 + html_3 + html_4;
-			footer.appendChild(element);
+			document.getElementById("MultiMedia_Video_Footer").appendChild(element);
 			self.changeFooterHeight(1, self.data.VideoArray.length);
 			self.videoChangeCallBack();
 			callback();
@@ -588,8 +584,7 @@ var MultiMedia = (function($, mod) {
 		var self = this;
 		self.data.VideoNum = self.options.TotalVideo; //可以选取图片的剩余数量
 		self.data.VideoArray = []; //已选取的图片路径
-		var footer = document.getElementById("MultiMedia_Video_Footer");
-		footer.innerHTML = '';
+		document.getElementById("MultiMedia_Video_Footer").innerHTML = '';
 		self.changeFooterHeight(1, self.data.VideoArray.length);
 	}
 
@@ -602,7 +597,6 @@ var MultiMedia = (function($, mod) {
 		var self = this;
 		var width = self.data.AudioWith;
 		var marginLeft = self.data.AudioMarginLeft;
-		var footer = document.getElementById("MultiMedia_Audio_Footer");
 		var time = playutil.audioTimePercent(data.time);
 		self.data.AudioArray.push(data);
 		//显示音频
@@ -616,7 +610,7 @@ var MultiMedia = (function($, mod) {
 								<div class="multimedia-audio-time">' + data.time + '\'\'</div>\
 								<span class="mui-icon iconfont icon-yuyin4 multimedia-audio-icon"></span>\
 							</button>';
-		footer.appendChild(element);
+		document.getElementById("MultiMedia_Audio_Footer").appendChild(element);
 		self.audioChangeCallBack();
 	}
 
