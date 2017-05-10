@@ -958,7 +958,11 @@ var setListeners = function() {
 
 	})
 	mui("#answer-imgs").on("tap",".video-container",function(){
-		video.playVideo(answerData.AnswerEncAddr,answerData.AnswerThumbnail);
+		var item=this;
+		jQuery(item).css("pointerEvents","none");
+		video.playVideo(answerData.AnswerEncAddr,answerData.AnswerThumbnail,function(){
+			jQuery(item).css("pointerEvents","all");
+		});
 	})
 	mui('.mui-table-view').on('longtap', ".comment-words", function() {
 		console.log("评论信息：" + JSON.stringify(this.commentInfo));
