@@ -64,6 +64,8 @@
 .multimedia-video-play {
 	/*播放视频*/
 	position: absolute;
+	width: 55px;
+	height: 55px;
 }
 
 .multimedia-audio-area {

@@ -204,7 +204,7 @@
 			 * @param {Object} encImg 附件缩略图地址
 			 */
 			function addNote(wd, encType, encAddr, encImg, encLen) {
-				encLen = encLen || 0;
+				encLen = Math.ceil(encLen) || 0;
 				//38.（用户空间）新增某用户空间信息 （云笔记）
 				//所需参数
 				var comData = {
@@ -218,7 +218,7 @@
 					userIds: '[]', //推送用户ID
 					pubScopes: '[1]', //1 家校圈 必选,2 展现 可选例如[1,2]
 					pubArea: '', //具体到市级代码
-					encLen: Math.ceil(encLen) //音视频时长
+					encLen: encLen //音视频时长
 				};
 				postDataPro_addUserSpace(comData, wd, function(data) {
 					console.log('38postDataPro_addUserSpace（用户空间）新增某用户空间信息 （云笔记）.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
