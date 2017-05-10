@@ -802,7 +802,7 @@ var getPicInner = function(data) {
 				return picInner;
 			case 2:
 				picInner+='<div class="video-container" style="background-image:url('+clipImgs[0]+');background-repeat:no-repeat;background-position:center;background-size:cover;width:'+win_width+'px;height:'+win_width*0.45+
-				'px;text-align:center;"><img style="width: 40px;height:40px; margin-top:'+(win_width*0.45-40)/2+'px;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
+				'px;text-align:center;"><img style="width: 55px;height:55px; margin-top:'+(win_width*0.45-55)/2+'px;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
 				console.log("获取的图片控件："+picInner)
 			    return picInner;
 			default:
