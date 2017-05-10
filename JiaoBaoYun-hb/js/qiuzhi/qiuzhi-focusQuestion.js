@@ -17,7 +17,7 @@ mui.plusReady(function() {
 		document.getElementById('list-container').innerHTML = "";
 		pageIndex = 1;
 		flagRef = 0;
-		if(events.getUtid()) {
+		if(ExpertsInfoModel.uid) {
 			//26.获取某个用户的关注问题列表
 			getFocusAsksByUser(ExpertsInfoModel.UserId);
 		} else {
@@ -31,14 +31,15 @@ mui.plusReady(function() {
 		var info = JSON.parse(parent.getAttribute('data-info'));
 		console.log('dianji 关注的问题标题' + JSON.stringify(info));
 		//判断回答或则问题是否还存在,flag=1为提问，=2为回答，id为对应id
-		if(events.askDetailOrAnswerDetail(1, info.AskId)) {
-			return;
-		}
-		//跳转界面
-		events.openNewWindowWithData('qiuzhi-question.html', {
-			askID: info.AskId, //问题id
-			channelInfo: info, //当前话题
-			allChannels: window.myStorage.getItem('allChannels') //全部话题
+		events.askDetailOrAnswerDetail(1, info.AskId, function(data) {
+			if(data) {
+				//跳转界面
+				events.openNewWindowWithData('qiuzhi-question.html', {
+					askID: info.AskId, //问题id
+					channelInfo: info, //当前话题
+					allChannels: window.myStorage.getItem('allChannels') //全部话题
+				});
+			}
 		});
 	});
 
@@ -60,7 +61,7 @@ mui.plusReady(function() {
 				console.log("下拉刷新");
 				pageIndex = 1;
 				flagRef = 0;
-				if(events.getUtid()) {
+				if(ExpertsInfoModel.uid) {
 					//26.获取某个用户的关注问题列表
 					getFocusAsksByUser(ExpertsInfoModel.UserId);
 				} else {
@@ -78,7 +79,7 @@ mui.plusReady(function() {
 			callback: function() {
 				var self = this;
 				console.log("上拉加载更多");
-				if(events.getUtid()) {
+				if(ExpertsInfoModel.uid) {
 					if(pageIndex <= totalPageCount) {
 						flagRef = 1;
 						//26.获取某个用户的关注问题列表

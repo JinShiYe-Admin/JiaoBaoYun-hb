@@ -20,14 +20,15 @@ mui.plusReady(function() {
 		var modelTemp = answerArray[index];
 		console.log('dianji 标题' + JSON.stringify(modelTemp));
 		//判断回答或则问题是否还存在,flag=1为提问，=2为回答，id为对应id
-		if(events.askDetailOrAnswerDetail(1, modelTemp.AskId)) {
-			return;
-		}
-		//跳转界面
-		events.openNewWindowWithData('qiuzhi-question.html', {
-			askID: modelTemp.AskId, //问题id
-			channelInfo: modelTemp, //当前话题
-			allChannels: window.myStorage.getItem('allChannels') //全部话题
+		events.askDetailOrAnswerDetail(1, modelTemp.AskId, function(data) {
+			if(data) {
+				//跳转界面
+				events.openNewWindowWithData('qiuzhi-question.html', {
+					askID: modelTemp.AskId, //问题id
+					channelInfo: modelTemp, //当前话题
+					allChannels: window.myStorage.getItem('allChannels') //全部话题
+				});
+			}
 		});
 	});
 	//36.获取某个用户的被邀请问题列表
@@ -144,7 +145,10 @@ function getInviteAsksByUser(userId) {
 								tempModel0 = $.extend(tempModel0, tempModel);
 							}
 							if(!tempModel0.utid) {
-								tempModel0 = $.extend(tempModel0, { unick: "匿名", uimg: "../../image/utils/default_personalimage.png" });
+								tempModel0 = $.extend(tempModel0, {
+									unick: "匿名",
+									uimg: "../../image/utils/default_personalimage.png"
+								});
 							}
 						}
 

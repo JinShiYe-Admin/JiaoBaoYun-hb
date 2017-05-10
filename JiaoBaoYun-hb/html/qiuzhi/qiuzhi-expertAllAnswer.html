@@ -181,11 +181,13 @@
 					console.log('传递的answerInfo:' + this.dataset.info);
 					var tempModel = answerArray[index];
 					//判断回答或则问题是否还存在,flag=1为提问，=2为回答，id为对应id
-					if(events.askDetailOrAnswerDetail(2, tempModel.AnswerId)) {
-						return;
-					}
-					events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', JSON.parse(this.dataset.info));
-					plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
+					events.askDetailOrAnswerDetail(2, tempModel.AnswerId, function(data) {
+						if(data) {
+							//跳转界面
+							events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', JSON.parse(this.dataset.info));
+							plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
+						}
+					});
 				});
 
 				//阻尼系数、初始化刷新加载更多

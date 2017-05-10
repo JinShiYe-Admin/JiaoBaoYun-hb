@@ -1107,7 +1107,7 @@ var events = (function(mod) {
 	}
 
 	//判断回答或则问题是否还存在,flag=1为提问，=2为回答，id为对应id
-	mod.askDetailOrAnswerDetail = function(flag, id) {
+	mod.askDetailOrAnswerDetail = function(flag, id, callback) {
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 		if(flag == 1) { //提问
 			//需要加密的数据
@@ -1125,8 +1125,11 @@ var events = (function(mod) {
 				wd.close();
 				console.log('5.获取某个问题的详情:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 1016) {
+					console.log('wenti 不存在');
 					mui.toast('该提问已不存在');
-					return true;
+					callback(false);
+				}else{
+					callback(true);
 				}
 			});
 		} else if(flag == 2) { //回答
@@ -1145,11 +1148,12 @@ var events = (function(mod) {
 				console.log('8.获取某个回答的详情:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 1017) {
 					mui.toast('该回答已不存在');
-					return true;
+					callback(false);
+				}else{
+					callback(true);
 				}
 			});
 		}
-		return false;
 	}
 	/**
 	 * 获取用户在群组中的信息

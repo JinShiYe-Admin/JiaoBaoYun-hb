@@ -101,20 +101,20 @@
 					var index = this.id.replace('li', '');
 					console.log('index:' + index);
 					if(index == '0') {
-												console.log("ali");
-												pay('alipay');
-//						mui.confirm(tempInfo.uid, '您已绑定手机号', ['取消', '更换'], function(e) {
-//							var index = e.index;
-//							switch(index) {
-//								case 0: //取消
-//									break;
-//								case 1: //返回
-//									//flag为2，表示是更改绑定手机
-//									events.openNewWindowWithData('../register/register_phoneNumber.html', '2');
-//
-//									break;
-//							}
-//						}, 'div');
+//												console.log("ali");
+//												pay('alipay');
+						mui.confirm(tempInfo.uid, '您已绑定手机号', ['取消', '更换'], function(e) {
+							var index = e.index;
+							switch(index) {
+								case 0: //取消
+									break;
+								case 1: //返回
+									//flag为2，表示是更改绑定手机
+									events.openNewWindowWithData('../register/register_phoneNumber.html', '2');
+
+									break;
+							}
+						}, 'div');
 					}
 				});
 								var ALIPAYSERVER = 'https://jsypay.jiaobaowang.net/jsypay/alipay/sys/aliappserver.ashx';
@@ -177,8 +177,8 @@
 				}
 				//修改密码
 				events.addTap('change-passwords', function() {
-					loadURL();
-					//					events.openNewWindowWithData('../register/modify_password.html', '1');
+//					loadURL();
+					events.openNewWindowWithData('../register/modify_password.html', '1');
 				});
 
 				function loadURL() {
@@ -195,6 +195,21 @@
     					
 //  					[self.audioPlayer play];
 //  					AVAudioPlayer.play;
+					
+					// 导入UIWebview、NSURLRequest、NSURL类
+					
+	var Webview = plus.ios.importClass("UIWebview");
+	var NSURLRequest = plus.ios.import('NSURLRequest');
+	var NSURL = plus.ios.import('NSURL');
+	// 获取当前Webview对象的实例
+	var wv = plus.ios.currentWebview();
+	// 创建请求对象
+	var req = NSURLRequest.requestWithURL(NSURL.URLWithString('http://www.dcloud.io/'));
+	// 跳转页面
+	plus.ios.invoke(wv,"loadRequest:",req);
+	// 释放对象(可选)
+	plus.ios.deleteObject(req);
+	plus.ios.deleteObject(wv);
 					
 //					// NewViewController为应用内创建的原生的ViewController类名,所调用页面的内容需要在原生代码中完成
 //					var newVCobj = plus.ios.newObject("NewViewController");
