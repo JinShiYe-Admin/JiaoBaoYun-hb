@@ -16,7 +16,7 @@ var lazyLoadApi = mui('#pullrefresh').imageLazyload({
 });
 mui.plusReady(function() {
 	mui.fire(plus.webview.getWebviewById('qiuzhi_home.html'), 'subIsReady');
-	mui.fire(plus.webview.getLaunchWebview(),"indexReady");
+	mui.fire(plus.webview.getLaunchWebview(), "indexReady");
 	events.preload("qiuzhi-answerDetail.html", 80);
 	window.addEventListener('answerIsReady', function() {
 		answerIsReady = true;
@@ -359,11 +359,11 @@ var getImgs = function(cell) {
 			return "";
 		case 2:
 			if(cell.AnswerCutImg && cell.AnswerCutImg != "") {
-				var win_width=document.body.offsetWidth-30;
+				var win_width = document.body.offsetWidth - 30;
 				var imgArray = cell.AnswerEncAddr.split('|');
 				var clipImgs = cell.AnswerCutImg.split("|");
-				imgInner='<div class="video-container" style="background-image:url('+clipImgs[0]+');background-size:contain;width:'+win_width+'px;height:'+win_width*0.45+
-				'px;text-align:center;"><img style="width:55px;height:55px;margin-top:'+(win_width*0.45-55)/2+'px;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
+				imgInner = '<div class="video-container" style="background-image:url(' + clipImgs[0] + ');background-size:contain;width:' + win_width + 'px;height:' + win_width * 0.45 +
+					'px;text-align:center;"><img style="width:55px;height:55px;margin-top:' + (win_width * 0.45 - 55) / 2 + 'px;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
 				return imgInner;
 			}
 			return "";
@@ -430,7 +430,7 @@ var setListener = function() {
 			return;
 		}
 		console.log(JSON.stringify(allChannels))
-		
+
 		events.openNewWindowWithData('qiuzhi-newQ.html', {
 			curChannel: channelInfo,
 			allChannels: allChannels
@@ -449,6 +449,8 @@ var setListener = function() {
 				channelInfo: questionInfo, //当前话题
 				allChannels: allChannels //全部话题
 			});
+		},function(){
+			item.disabled=false;
 		});
 	})
 
@@ -462,20 +464,20 @@ var setListener = function() {
 
 	//点击专家列表
 	mui('#experts_sc').on('tap', '.mui-control-item', function() {
-		this.disabled=true;
+		this.disabled = true;
 		//console.log('点击专家列表 ' + this.id);
 		//console.log('当前话题的信息 ' + JSON.stringify(channelInfo));
 		if(this.id == 'allExpert') { //查看某个话题的全部专家
-			events.singleWebviewInPeriod(this,'experts_main.html', {
+			events.singleWebviewInPeriod(this, 'experts_main.html', {
 				askID: '0',
 				channelInfo: channelInfo, //当前话题
 				allChannels: allChannels //所有话题
 			})
-//			events.openNewWindowWithData();
+			//			events.openNewWindowWithData();
 		} else { //查看某个话题的某个专家
 			//console.log('当前专家的信息 ' + JSON.stringify(JSON.parse(this.getAttribute('data-info'))));
-			events.singleWebviewInPeriod(this,'expert-detail.html', JSON.parse(this.getAttribute('data-info')))
-//			events.openNewWindowWithData();
+			events.singleWebviewInPeriod(this, 'expert-detail.html', JSON.parse(this.getAttribute('data-info')))
+			//			events.openNewWindowWithData();
 		}
 	});
 	//求知关注
@@ -485,7 +487,7 @@ var setListener = function() {
 		//			return;
 		//		} 
 		var item = this;
-		item.disabled=true;
+		item.disabled = true;
 		requireQuestionInfo(item.questionInfo.TabId, function(data) {
 			console.log("获取的个人id" + events.getUtid());
 			if(events.getUtid()) {
@@ -499,12 +501,14 @@ var setListener = function() {
 				} else {
 					item.innerText = "已关注";
 				}
-				item.disabled=false;
+				item.disabled = false;
 			}
+		}, function() {
+			item.disabled=false;
 		});
 	})
 }
-var requireQuestionInfo = function(askId, callback) {
+var requireQuestionInfo = function(askId, callback, noneCallback) {
 	var wd1 = events.showWaiting();
 	postDataQZPro_getAskById({
 		userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //用户ID
@@ -519,6 +523,9 @@ var requireQuestionInfo = function(askId, callback) {
 			callback(data.RspData);
 		} else {
 			mui.toast("问题已删除!");
+			if(noneCallback) {
+				noneCallback()
+			}
 		}
 	})
 }
@@ -545,7 +552,7 @@ var setQuestionFocus = function(item) {
 		} else {
 			mui.toast('设置关注失败');
 		}
-		item.disabled=false;
+		item.disabled = false;
 	})
 }
 /**
