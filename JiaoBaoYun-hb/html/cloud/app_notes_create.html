@@ -162,7 +162,7 @@
 					play: document.getElementById("audio_play"),
 					pause: document.getElementById("audio_pause"),
 					time: document.getElementById("audio_time"),
-					audio:document.getElementById("audio_audio")
+					audio: document.getElementById("audio_audio")
 				});
 				//获取配置信息
 				hideOption = events.initHideKeyBoard();
@@ -188,7 +188,7 @@
 						var wd = events.showWaiting();
 						document.getElementById("finish").disabled = true;
 						if(multiMedia.data.PictureArray.length == 0 && multiMedia.data.VideoArray.length == 0 && multiMedia.data.AudioArray.length == 0) { //没有传附件
-							addNote(wd, '3', '', '');
+							addNote(wd, '3', '', '', 0);
 						} else {
 							uploadFile(wd); //上传文件
 						}
@@ -204,12 +204,13 @@
 			 * @param {Object} encImg 附件缩略图地址
 			 */
 			function addNote(wd, encType, encAddr, encImg, encLen) {
+				encLen = encLen || 0;
 				//38.（用户空间）新增某用户空间信息 （云笔记）
 				//所需参数
 				var comData = {
 					userId: window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid, //用户ID
 					msgContent: notes.value, //记事内容
-					encType: encType, //附件类型，1图片2音视频3仅文字
+					encType: encType, //附件类型，1图片2视频3仅文字4音频
 					encAddr: encAddr, //附件地址
 					encImg: encImg, //附件缩略图地址0
 					encIntro: '', //附件简介
@@ -217,17 +218,15 @@
 					userIds: '[]', //推送用户ID
 					pubScopes: '[1]', //1 家校圈 必选,2 展现 可选例如[1,2]
 					pubArea: '', //具体到市级代码
-					encLen: encLen //音视频时长
+					encLen: Math.ceil(encLen) //音视频时长
 				};
 				postDataPro_addUserSpace(comData, wd, function(data) {
 					console.log('38postDataPro_addUserSpace（用户空间）新增某用户空间信息 （云笔记）.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
-						//						if(persistentId && persistentId.length != 0) {
-						//							wd.setTitle('处理中...');
-						//							setTimeout(function() {
-						//								waittingThumb(wd);
-						//							}, 2000);
-						//						} else {
+						var time = 0;
+						if(encType != '3') {
+							time = 2000;
+						}
 						setTimeout(function() {
 							mui.toast('发布成功');
 							pathList = [];
@@ -235,7 +234,7 @@
 							wd.close();
 							mui.back();
 						}, 2000);
-						//						}
+
 					} else {
 						document.getElementById("finish").disabled = false;
 						if(pathList.length != 0) {
