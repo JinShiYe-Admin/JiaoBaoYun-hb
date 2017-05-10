@@ -2277,7 +2277,8 @@
 					"js/utils/CloudFileUtil.js",
 					"js/qiniu/qiniu.js",
 					"js/utils/load.js",
-					"js/utils/recordvideoutil.js"
+					"js/utils/recordvideoutil.js",
+					"js/utils/video.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3048,7 +3049,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"image/utils/delete.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -4001,7 +4003,8 @@
 					"image/dynamic/icon_praise_small.png",
 					"fonts/iconfont.ttf",
 					"css/show/show.css",
-					"image/dynamic/praise.png"
+					"image/dynamic/praise.png",
+					"js/utils/video.js"
 				],
 				"refer": [
 					"html/show/add-comment.html",
