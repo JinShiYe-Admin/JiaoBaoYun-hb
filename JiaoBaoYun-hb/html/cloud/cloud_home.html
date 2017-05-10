@@ -372,7 +372,7 @@
 					events.fireToPageWithData('cloud_home.html', 'topPopover', {
 						flag: 1
 					})
-					events.singleWebviewInPeriod(this,"order-member.html");
+					events.singleWebviewInPeriod(this, "order-member.html");
 				})
 				window.addEventListener("infoChanged", function() {
 					document.querySelector(".img-icon>img").src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2)
@@ -737,11 +737,6 @@
 					postFirstFile();
 					//91.（云档案）按家长获取档案文件夹
 					postUserStudent();
-					//假数据
-					//addcloudstorage_0_1({
-					//	StudentId: 0,
-					//	StudentName: '9527'
-					//});
 					//获取学生
 					getStuList();
 					//获取班级
@@ -851,19 +846,26 @@
 							}
 							//循环将获取到的值塞入界面
 							var folder = 0;
-							mui.each(data.RspData, function(index, element) {
-								if(element.ftype == '.file') {
-									folder++;
-									addStorageFolder(element);
-								}
-							});
 
-							mui.each(data.RspData, function(index, element) {
-								if(element.ftype != '.file') {
+							for(var i = 0; i < data.RspData.length; i++) {
+								if(data.RspData[i].ftype == '.file') {
+									if(folder > 9) {
+										break;
+									}
 									folder++;
-									addStorageFolder(element);
+									addStorageFolder(data.RspData[i]);
 								}
-							});
+							}
+
+							for(var j = 0; j < data.RspData.length; j++) {
+								if(data.RspData[j].ftype != '.file') {
+									if(folder > 9) {
+										break;
+									}
+									folder++;
+									addStorageFolder(data.RspData[j]);
+								}
+							}
 						} else {
 							if(data.RspCode != 9) {
 								mui.toast(data.RspTxt);
