@@ -482,11 +482,21 @@
 				}
 
 				function initANDROID() {
-					//var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					//initElement(window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH) + personalUTID);
-					//console.log('initANDROID:' + window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH));
-					//var fileList = window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH).split('/');
-					initElement('file:///');
+					console.log('initANDROID:' + window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH));
+					var fileList = window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH).split('/');
+					var str = ''
+					for(var i = 0; i < fileList.length; i++) {
+						if(fileList[i] == '') {
+							fileList[i] = '/';
+						}
+						if('Android' == fileList[i]) {
+							break;
+						}
+						str = str + fileList[i] + '/';
+					}
+					initElement(str);
 				}
 
 				function initElement(path) {
