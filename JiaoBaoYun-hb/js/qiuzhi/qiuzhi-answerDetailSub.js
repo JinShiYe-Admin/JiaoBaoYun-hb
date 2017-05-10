@@ -712,12 +712,12 @@ var createCell = function(ul, cellData, i, order) {
  * @param {Object} datasource
  */
 var setQuestion = function(datasource) {
-	document.querySelector('.question-title').innerHTML = datasource.AskTitle;
+	document.querySelector('.question-title').innerHTML = datasource.AskTitle. replace(/ /g,"&nbsp;");
 	var questionContainer = document.getElementById('question-content');
 	document.getElementById('question-content').innerHTML = "";
 	console.log("放置数据？？？？？？？？？")
 	var p = document.createElement('p');
-	p.innerHTML = datasource.AnswerContent.replace(/\n/g, "<br/>");
+	p.innerHTML = datasource.AnswerContent.replace(/ /g,"&nbsp;").replace(/\n/g, "<br/>");
 	questionContainer.appendChild(p);
 	//	p.querySelectorAll("img").for
 	jQuery("#question-content img").each(function(index, ele) {
@@ -836,7 +836,7 @@ var createCommentsInner = function(cell) {
 	var inner='<div class="table-view-cell"><div class="comments-cell">'+
 		'<h5 class="comment-personName single-line"><img class="head-img" src="'+headImg+'"/>'+setName(cell)+'</h5>'+
 		'<div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>' +
-		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
+		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent.replace(/ /g,"&nbsp;").replace(/\n/g,"<br/>") + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
 		
 	console.log("当前评论内容：" + inner)
 	return inner;
