@@ -2,7 +2,8 @@
 	"html/qiuzhi/qiuzhi-sub.html": {
 		"refer": [
 			"html/qiuzhi/qiuzhi-question.html",
-			"html/qiuzhi/qiuzhi-answerDetail.html"
+			"html/qiuzhi/qiuzhi-answerDetail.html",
+			"html/register/login.html"
 		],
 		"resources": [
 			"image/qiuzhi/add-question.png.png",
@@ -78,7 +79,10 @@
 		"refer": [
 			"html/index/mine.html",
 			"html/cloud/storage_main.html",
-			"html/homework/homework-tea.html"
+			"html/homework/homework-tea.html",
+			"html/cloud/order-member.html",
+			"html/quan/studentdynamic_main.html",
+			"html/quan/class_space.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -87,7 +91,9 @@
 			"js/sciedu/SciEduHomeItem.js",
 			"js/mui.lazyload.js",
 			"js/mui.lazyload.img.js",
-			"css/sciedu/sciedu.css"
+			"css/sciedu/sciedu.css",
+			"/image/utils/default_load_2.gif",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
 	},
@@ -134,9 +140,13 @@
 			"image/mine/about.png",
 			"image/mine/my-space.png",
 			"image/mine/my-points.png",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
-		"refer": []
+		"refer": [
+			"html/mine/account-info.html"
+		]
 	},
 	"html/show/show_home_1.html": {
 		"resources": [
@@ -148,7 +158,10 @@
 			"css/icons-extra.css",
 			"css/utils/preview.css",
 			"js/show/show-sub.js",
-			"css/show/show.css"
+			"css/show/show.css",
+			"image/dynamic/praise.png",
+			"image/utils/playvideo.png",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html"
@@ -201,7 +214,10 @@
 	},
 	"html/cloud/storage_upload_choose.html": {
 		"resources": [
-			"js/utils/compress.js"
+			"js/utils/compress.js",
+			"image/cloud/A_folder.png",
+			"css/cloud/file.css",
+			"js/cloud/AndroidFileSystem.js"
 		],
 		"refer": []
 	},
@@ -353,6 +369,99 @@
 		],
 		"refer": [
 			"html/homework/homework-comment.html"
+		]
+	},
+	"html/cloud/storage_main_choose.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		],
+		"refer": []
+	},
+	"html/register/login.html": {
+		"resources": [
+			"html/register/js/mui.enterfocus.js",
+			"js/utils/sortSign.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"html/register/js/app.js",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": []
+	},
+	"html/cloud/order-member.html": {
+		"resources": [
+			"js/cloud/order-member.js",
+			"css/cloud/order-member.css",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/cloud/member-pay.html"
+		]
+	},
+	"html/mine/account-info.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/utils/UploadHeadImage.js",
+			"js/mine/account-info.js"
+		]
+	},
+	"html/cloud/member-pay.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/quan/studentdynamic_main.html": {
+		"resources": [
+			"js/utils/showvideoutil.js",
+			"js/utils/UploadHeadImage.js",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/quan/class-group.html": {
+		"resources": [
+			"js/quan/class-group1.js"
+		],
+		"refer": [
+			"html/quan/group-pInfo.html",
+			"html/quan/edit-remark.html"
+		]
+	},
+	"html/quan/group-pInfo.html": {
+		"resources": [
+			"css/quan/group-pInfo.css",
+			"css/mui.min.css",
+			"js/quan/group-pInfo.js",
+			"css/utils/common.css"
+		]
+	},
+	"html/quan/classSpace-sub.html": {
+		"resources": [
+			"js/utils/urlBrief.js",
+			"css/utils/bubble.css",
+			"js/quan/class_space.js",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/quan/edit-remark.html": {
+		"resources": [
+			"js/utils/self-adaptive-input.js"
+		]
+	},
+	"html/quan/class_space.html": {
+		"resources": [
+			"html/quan/classSpace-sub.html",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/quan/class_space.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/quan/class-group.html",
+			"html/quan/classSpace-sub.html"
 		]
 	}
 }
