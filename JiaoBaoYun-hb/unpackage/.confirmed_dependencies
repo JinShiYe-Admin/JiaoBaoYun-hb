@@ -3,7 +3,8 @@
 		"refer": [
 			"html/qiuzhi/qiuzhi-question.html",
 			"html/qiuzhi/qiuzhi-answerDetail.html",
-			"html/register/login.html"
+			"html/register/login.html",
+			"html/qiuzhi/qiuzhi-newQ.html"
 		],
 		"resources": [
 			"image/qiuzhi/add-question.png.png",
@@ -37,7 +38,9 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"js/qiuzhi/qiuzhi-questionSub.js",
 			"css/qiuzhi/qiuzhi-questionSub.css",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/register/login.html"
@@ -97,7 +100,9 @@
 			"html/quan/studentdynamic_main.html",
 			"html/quan/class_space.html",
 			"html/cloud/record_student_main.html",
-			"html/quan/zone_main.html"
+			"html/quan/zone_main.html",
+			"html/quan/pub-dynamic.html",
+			"html/mine/ReadQRCode.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -161,7 +166,8 @@
 		],
 		"refer": [
 			"html/mine/account-info.html",
-			"html/mine/setting.html"
+			"html/mine/setting.html",
+			"html/mine/qun_manage_a.html"
 		]
 	},
 	"html/show/show_home_1.html": {
@@ -303,7 +309,9 @@
 		"resources": [
 			"css/qiuzhi/qiuzhi-sub.css",
 			"js/qiuzhi/qiuzhi-focusQuestion.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": []
 	},
@@ -517,7 +525,8 @@
 			"css/qiuzhi/attention-persons.css",
 			"css/mui.min.css",
 			"js/qiuzhi/attentionPersons.js",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/mine/setting.html": {
@@ -557,6 +566,38 @@
 			"js/utils/jquery.qrcode.min.js",
 			"css/mui.min.css",
 			"css/utils/common.css"
+		]
+	},
+	"html/mine/qun_manage_a.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/mine/manager_member.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/quan/group-pInfo.html"
+		]
+	},
+	"html/quan/pub-dynamic.html": {
+		"resources": [
+			"css/homework/publish-answer.css",
+			"js/utils/ASFiles.js",
+			"css/quan/custom-textarea.css",
+			"js/utils/files.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/utils/recordvideoutil.js",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/qiuzhi/qiuzhi-newQ.html": {
+		"resources": [
+			"css/quan/custom-textarea.css",
+			"css/qiuzhi/qiuzhi-questionSub.css",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }
