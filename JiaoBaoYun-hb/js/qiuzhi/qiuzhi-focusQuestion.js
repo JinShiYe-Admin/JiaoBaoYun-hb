@@ -17,7 +17,7 @@ mui.plusReady(function() {
 		document.getElementById('list-container').innerHTML = "";
 		pageIndex = 1;
 		flagRef = 0;
-		if(ExpertsInfoModel.uid) {
+		if(ExpertsInfoModel.uid>0) {
 			//26.获取某个用户的关注问题列表
 			getFocusAsksByUser(ExpertsInfoModel.UserId);
 		} else {
@@ -61,7 +61,7 @@ mui.plusReady(function() {
 				console.log("下拉刷新");
 				pageIndex = 1;
 				flagRef = 0;
-				if(ExpertsInfoModel.uid) {
+				if(ExpertsInfoModel.uid>0) {
 					//26.获取某个用户的关注问题列表
 					getFocusAsksByUser(ExpertsInfoModel.UserId);
 				} else {
@@ -79,7 +79,7 @@ mui.plusReady(function() {
 			callback: function() {
 				var self = this;
 				console.log("上拉加载更多");
-				if(ExpertsInfoModel.uid) {
+				if(ExpertsInfoModel.uid>0) {
 					if(pageIndex <= totalPageCount) {
 						flagRef = 1;
 						//26.获取某个用户的关注问题列表
