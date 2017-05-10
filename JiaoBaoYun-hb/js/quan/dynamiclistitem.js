@@ -567,6 +567,7 @@ var dynamiclistitem = (function($, mod) {
 		})
 		//点击点赞的人跳转到相应界面
 		mui('.mui-table-view').on('tap', '.praiseName', function() {
+			window.event.stopPropagation()
 			if(isPersonal==0){
 				if(publisherId==this.dataset.info){
 					window.event.stopPropagation()
@@ -591,6 +592,7 @@ var dynamiclistitem = (function($, mod) {
 
 			});
 			
+			
 		});
 		//点击评论者名字
 		mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
@@ -599,6 +601,10 @@ var dynamiclistitem = (function($, mod) {
 					window.event.stopPropagation()
 					return;
 				}
+			}
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; 
+			if(this.dataset.info==undefined){
+				this.dataset.info=personalUTID
 			}
 			console.log('评论者id' + this.dataset.info);
 			mui.openWindow({
@@ -949,7 +955,7 @@ var dynamiclistitem = (function($, mod) {
 		if(ImageNum == 1) { //一张图片时1
 			if(data.EncType == 2) {
 				var html1 = '<div class="video-container" thb=' + ImageUrlList[0] + ' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url(' + ImageUrlList[0] + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
-				var html2 = '<img  style= "height: ' + SCREEN_WIDTH * 1 / 5 + 'px;width: ' + SCREEN_WIDTH * 1 / 5 + 'px;margin-top:55px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
+				var html2 = '<img  style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:60px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
 				html = html1 + html2;
 			} else {
 

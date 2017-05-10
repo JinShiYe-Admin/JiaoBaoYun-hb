@@ -16,7 +16,7 @@
 		<script src="../../js/utils/app-update.js" type="text/javascript" charset="utf-8"></script>
 
 		<script type="text/javascript">
-			var indexReady=false;
+			var indexReady = false;
 			mui.init({
 				statusBarBackground: '#13b7f6'
 			});
@@ -28,9 +28,10 @@
 					defalutPerson();
 				}
 				document.addEventListener("netchange", wainshow, false);
-				window.addEventListener("indexReady",function(){
-					indexReady=true;
+				window.addEventListener("indexReady", function() {
+					indexReady = true;
 				})
+
 				function wainshow() {
 					var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
@@ -74,9 +75,9 @@
 						events.preload('index.html');
 						events.showWaiting();
 						showIndex();
-//						setTimeout(function() {
-//							events.openNewWindow('index.html');
-//						}, 2000);
+						//						setTimeout(function() {
+						//							events.openNewWindow('index.html');
+						//						}, 2000);
 						//判断是否需要更新
 						setTimeout(appUpdate.updateApp, 5000);
 					} else if(data.value == -1) { //登录失败,用游客登录
@@ -95,12 +96,13 @@
 					//android更新app
 				});
 			});
-			function showIndex(){
-				if(indexReady){
+
+			function showIndex() {
+				if(indexReady) {
 					events.closeWaiting();
-					plus.webview.getWebviewById("index.html").show("slide-in-right",300);
-				}else{
-					setTimeout(showIndex,500);
+					plus.webview.getWebviewById("index.html").show("slide-in-right", 300);
+				} else {
+					setTimeout(showIndex, 500);
 				}
 			}
 			//默认值

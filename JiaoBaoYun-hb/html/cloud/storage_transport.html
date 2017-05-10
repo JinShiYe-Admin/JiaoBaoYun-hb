@@ -949,14 +949,10 @@
 										document.getElementById("up_waiting_" + id).innerText = '开始请求';
 										break;
 									case 2: //上传任务请求已经建立
-										//document.getElementById("up_waiting_" + id).innerText = '请求已经建立';
 										console.log('上传任务请求已经建立:|id:' + id + '|uploadState:' + uploadState);
 										break;
 									case 3: //上传任务提交数据
 										document.getElementById("up_waiting_" + id).innerText = '正在上传';
-										//console.log('上传任务状态监听:|id:' + id + '|uploadedSize:' + uploadedSize + '|totalSize:' + totalSize + '|uploadState:' + uploadState);
-										//document.getElementById("up_btn_" + id).innerText = '暂停';
-										//document.getElementById("up_btn_" + id).value = '3';
 										if(document.getElementById("up_bar_" + id) !== null) {
 											mui("#up_bar_" + id).progressbar().setProgress(upload.uploadedSize / upload.totalSize * 100);
 										}
@@ -968,10 +964,6 @@
 										console.log('上传任务已完成:|id:' + id + '|uploadState:' + uploadState);
 										break;
 									case 5: //上传任务已暂停
-										//document.getElementById("up_btn_" + id).innerText = '继续';
-										//document.getElementById("up_btn_" + id).value = '5';
-										//document.getElementById("up_waiting_" + id).innerText = '已经暂停';
-
 										console.log('上传任务已暂停:|id:' + id + '|uploadState:' + uploadState);
 										break;
 									default:

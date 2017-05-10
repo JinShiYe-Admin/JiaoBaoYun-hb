@@ -107,3 +107,12 @@ body,
 .title p{
 	line-height: 1.8rem;
 }
+.mui-table-view-cell p,
+.mui-table-view-cell .mui-navigate-right>p{
+	font-size: 16px;
+	color: #323232;
+}
+.mui-table-view-cell p>img,
+.mui-table-view-cell .mui-navigate-right>p>img{
+	vertical-align: middle;
+}

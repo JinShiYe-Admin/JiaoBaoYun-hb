@@ -93,7 +93,7 @@
 		</header>
 		<div class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<ul id="table" class="mui-table-view" style="visibility: ;">
+				<ul id="table" class="mui-table-view" style="visibility:hidden ;">
 					<div id="myCityTitle" class="city-p" style="visibility: hidden;background-color: white;text-align: center;color:#323232;">
 						<div class="city-my"></div>
 						<div class="city-my"></div>
@@ -102,12 +102,6 @@
 						<div id="myCityTitle_1" style="display: inline;">已选城市</div>
 					</div>
 					<div id="myCity" class="mui-row" style="visibility: hidden;">
-						<!--<div class="mui-col-xs-4 mui-col-sm-4">
-							<li class="mui-table-view-cell mui-media">
-								<div class="mui-media-body mui-ellipsis">济南市济</div>
-							</li>
-							<img src="../../image/utils/delete.png" class="city-delete" />
-						</div>-->
 					</div>
 					<div id="userCityTitle" class="city-p" style="display: none;">当前城市</div>
 					<div id="userCity" class="mui-row" style="display: none;">
@@ -159,6 +153,8 @@
 			var cityArray = []; //获取到的所有城市
 			var commitCities = []; //提交的城市
 			var selectId = ''; //修改账号地区时记录选择的元素id（acode）
+			var pInfo = myStorage.getItem(window.storageKeyName.PERSONALINFO);
+
 			init();
 
 			/**
@@ -201,11 +197,11 @@
 				//}
 
 				//自己当前手机号对应的城市(可能修改后的)，从内存中获取
-				var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-				if(tempInfo.utid != 0) { //用户显示当前城市
+				//var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+				if(pInfo.utid != 0) { //用户显示当前城市
 					document.getElementById("userCityTitle").style.display = 'block';
 					document.getElementById("userCity").style.display = 'inline';
-					addBeforeCity(tempInfo.uarea);
+					addBeforeCity(pInfo.uarea);
 				}
 
 				if(main.data.id == 'uarea') { //uarea账号地区
@@ -218,7 +214,7 @@
 					document.getElementById("myCityTitle").style.visibility = 'visible';
 					document.getElementById("myCity").style.visibility = 'visible';
 					for(var i = 0; i < main.data.cities.length; i++) {
-						if(main.data.cities[i].acode != 0) {
+						if(main.data.cities[i].acode != 0 && main.data.cities[i].acode != 1) {
 							addChooseCity(main.data.cities[i]);
 						}
 					}
@@ -234,18 +230,23 @@
 				mui('#allCity').on('tap', '.mui-table-view-cell', function() {
 					var classNameArry = this.getAttribute('class').split(' ');
 					var select = false; //被点击的城市是否是选择的
-					mui.each(classNameArry, function(index, element) {
-						if(element == 'city-select') {
+					for(var i = 0; i < classNameArry.length; i++) {
+						if(classNameArry[i] == 'city-select') {
 							select = true;
-							return false;
+							break;
 						}
-					});
+					}
 
 					if(main.data.id == '0' || main.data.id == '1') { //0科教，1展现
 						if(select) {
+							var cityDel = document.querySelectorAll('.city-delete');
+							if(cityDel.length == 1) {
+								return false;
+							}
 							this.className = 'mui-table-view-cell mui-media';
 							var chooseCity = document.getElementById("choose_" + this.id);
 							chooseCity.parentNode.removeChild(chooseCity);
+							cityDel = document.querySelectorAll('.city-delete');
 						} else {
 							if(main.data.id == '1' && mui('.city-select').length > 9) {
 								mui.toast('最多只允许订制10个城市');
@@ -271,9 +272,13 @@
 				});
 
 				//已选城市的删除按钮
-				mui('#myCity').on('tap', 'img', function() {
+				mui('#myCity').on('tap', '.city-delete', function() {
 					var parent = this.parentNode;
 					var code = parent.id.replace('choose_', '');
+					var cityDel = document.querySelectorAll('.city-delete');
+					if(cityDel.length == 1) {
+						return false;
+					}
 					document.getElementById(code).className = 'mui-table-view-cell mui-media';
 					parent.parentNode.removeChild(parent);
 				});
@@ -320,7 +325,7 @@
 							tempCities.splice(m, 1, tempStr1);
 							tempStr = tempCities.join('|');
 						}
-						if(!parseInt((window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid))) {
+						if(!parseInt((pInfo.utid))) {
 							var citiesInfo = {
 								type: main.data.id,
 								cities: commitCities
@@ -433,7 +438,7 @@
 									  <div class="mui-media-body mui-ellipsis">' + data.aname + '</div>\
 								</li>\
 								<img src="../../image/utils/delete.png" class="city-delete" />';
-				document.getElementById("myCity").appendChild(div);
+				document.getElementById("myCity").insertBefore(div, document.getElementById("myAllCity"));
 			}
 
 			//41.获取某个区域下的所有子区域或查询城市
@@ -514,7 +519,6 @@
 					console.log('6.用户修改各项用户信息success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						mui.toast('修改成功');
-						var pInfo = myStorage.getItem(window.storageKeyName.PERSONALINFO);
 						//解析省市代码
 						var tempArray = vvl.split('|');
 						if(tempArray.length > 0) {

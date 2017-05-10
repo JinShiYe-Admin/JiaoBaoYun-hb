@@ -112,7 +112,7 @@ var RecordVideo = (function(mod) {
 		var file = new File(options.outPutPath);
 		var outPutUri = Uri.fromFile(file);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri); //录像输出位置
-		intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0); //0 最低质量, 1高质量(不设置,10M;0,几百KB;1,50M)
+//		intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0); //0 最低质量, 1高质量(不设置,10M;0,几百KB;1,50M)
 		intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, options.time); //控制录制时间单位秒
 
 		var main = plus.android.runtimeMainActivity();

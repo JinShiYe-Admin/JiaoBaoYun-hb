@@ -109,7 +109,7 @@ body,
 .dynamic-personal-image {
 	/*个人头像圆形*/
 	border-radius: 50%;
-	width: 40px ;
+	width: 40px;
 	height: 40px;
 }
 
@@ -221,4 +221,8 @@ body,
 	position: relative;
 	float: left;
 	text-align: center;
+}
+
+.mui-icon-list {
+	margin-top: 2px;
 }

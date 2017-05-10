@@ -80,8 +80,11 @@
 			CloudFileUtil.setDelPicListener();
 			//拍照上传图片至七牛云
 			events.addTap('take_pic', function() {
+				var item=this;
+				jQuery(item).css("pointerEvents","none");
 				if(CloudFileUtil.files.length < 9) {
 					camera.getPic(camera.getCamera(), function(picPath) {
+						jQuery(item).css("pointerEvents","all");
 						plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
 							back: 'none'
 						});
@@ -114,9 +117,12 @@
 								plus.nativeUI.closeWaiting(); //关闭等待框
 							});
 						})
+					},function(err){
+						jQuery(item).css("pointerEvents","all");
 					})
 				} else {
 					mui.toast('上传图片附件不得多于9张！');
+					jQuery(item).css("pointerEvents","all");
 				}
 			});
 			//获取录像按钮

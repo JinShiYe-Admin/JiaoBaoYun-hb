@@ -120,8 +120,11 @@ mui.plusReady(function() {
 //	}
 	//相机按钮
 	events.addTap('getImg', function() {
+		var item=this;
+		jQuery(item).css("pointerEvents","none");
 		if(CloudFileUtil.files.length < 9) {
 			camera.getPic(camera.getCamera(), function(picPath) {
+				jQuery(item).css("pointerEvents","all");
 				plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
 					back: 'none'
 				});
@@ -154,8 +157,11 @@ mui.plusReady(function() {
 						plus.nativeUI.closeWaiting(); //关闭等待框
 					});
 				})
+			},function(err){
+				jQuery(item).css("pointerEvents","all");
 			})
 		} else {
+			jQuery(item).css("pointerEvents","all");
 			mui.toast('上传图片附件不得多于9张！');
 		}
 	})
@@ -274,13 +280,14 @@ var setSubmitEvent = function() {
 			//判断是否选择了班级
 			if(selectClassArray.length > 0) {
 				var content = document.getElementById('publish-content').value;
+				content=events.trim(content);
 				//判断是否有发送内容
 				if(content) {
 					if(events.limitInput(content, 500)) {
 						return;
 					}
 					//12.发布作业
-					requestPublishHomework()
+					requestPublishHomework(content);
 				} else {
 					mui.toast('请输入作业内容')
 				}
@@ -353,7 +360,7 @@ var requirePostGUInfo = function(wd, callback) {
 }
 
 //12.发布作业
-function requestPublishHomework() {
+function requestPublishHomework(workContent) {
 	var emptyClasses = [];
 	var realClasses = [];
 	for(var i in selectClassArray) {
@@ -396,7 +403,7 @@ function requestPublishHomework() {
 		teacherId: personalUTID, //教师Id
 		subjectId: selectSubjectID, //科目Id， 见（一）.17. GetSubjectList()；
 		studentIds: tempStuArray.toString(), //班级Id+学生Id串，班级Id和学生Id以“|“分割，如“班级Id|学生Id”，每对id之间逗号分隔，例如“1|1,1|2”；
-		content: document.getElementById('publish-content').value, //作业内容
+		content:workContent, //作业内容
 		submitOnLine: submitOnLine, //是否需要在线提交；
 		files: CloudFileUtil.files //上传文件的id串，例如“1,2”；
 	};

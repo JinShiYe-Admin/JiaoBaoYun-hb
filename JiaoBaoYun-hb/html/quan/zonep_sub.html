@@ -236,6 +236,7 @@
 				var index = 'line' + tempIndex;
 				console.log(index)
 				if(tempData.flag == '评论') {
+					document.getElementById("bottomDiv" + tempIndex).style.paddingBottom = '12px';
 					document.getElementById(index).className = 'mui-media-body dynamic-line';
 					var div = document.createElement("div");
 					var index = zonepArray[tempIndex].Comments.length
@@ -247,6 +248,7 @@
 					commentList.appendChild(div);
 					zonepArray[tempIndex].Comments.push(tempData.Comment)
 				} else if(tempData.flag == '评论回复') {
+
 					var id;
 					var commentId;
 					var replyId;
@@ -255,36 +257,34 @@
 						id = indexArr[0];
 						commentId = indexArr[1];
 						replyId = indexArr[2];
-						} else {
+					} else {
 						var indexArr = tempIndex.split('-');
 						id = indexArr[0];
 						indexArr = tempData.tempIndex.split('-');
 						commentId = indexArr[1];
 						replyId = indexArr[2];
 					}
-
-						var tempModel = zonepArray[id].Comments[commentId];
-						var replyUserId;
-						var ReplyIdName;
-						if(replyId == '评论') {
-							replyUserId = tempModel.UserId
-							ReplyIdName = tempModel.UserIdName
-						} else {
-							replyUserId = tempModel.Replys[replyId].UserId;
-							ReplyIdName = tempModel.Replys[replyId].UserIdName;
-						}
-						var commentList = document.getElementById("commentList" + id);
-						var div = document.createElement("div");
-						div.id = 'replyComment' + id + '-' + commentId + '-' + replyId;
-						div.className = 'mui-media-body replyComment';
-						div.innerHTML = '<font class="common-font-family-Regular dynamic-comment-name">' + personalunick + '</font>' +
-							'<font class="common-font-family-Regular" style = "font-size:14px">回复</font>' +
-							'<font class="common-font-family-Regular dynamic-comment-name">' + ReplyIdName + '</font>' +
-							'<font class="common-font-family-Regular" style = "font-size:14px">：' + tempData.content + '</font></div>'
-						var tempDiv = document.getElementById('replyComment' + id + '-' + commentId + '-' + '评论')
-						tempDiv.appendChild(div)
-						zonepArray[id].Comments[commentId].Replys.push(tempData.Reply);
-					
+					var tempModel = zonepArray[id].Comments[commentId];
+					var replyUserId;
+					var ReplyIdName;
+					if(replyId == '评论') {
+						replyUserId = tempModel.UserId
+						ReplyIdName = tempModel.UserIdName
+					} else {
+						replyUserId = tempModel.Replys[replyId].UserId;
+						ReplyIdName = tempModel.Replys[replyId].UserIdName;
+					}
+					var commentList = document.getElementById("commentList" + id);
+					var div = document.createElement("div");
+					div.id = 'replyComment' + id + '-' + commentId + '-' + replyId;
+					div.className = 'mui-media-body replyComment';
+					div.innerHTML = '<font class="common-font-family-Regular dynamic-comment-name">' + personalunick + '</font>' +
+						'<font class="common-font-family-Regular" style = "font-size:14px">回复</font>' +
+						'<font class="common-font-family-Regular dynamic-comment-name">' + ReplyIdName + '</font>' +
+						'<font class="common-font-family-Regular" style = "font-size:14px">：' + tempData.content + '</font></div>'
+					var tempDiv = document.getElementById('replyComment' + id + '-' + commentId + '-' + '评论')
+					tempDiv.appendChild(div)
+					zonepArray[id].Comments[commentId].Replys.push(tempData.Reply);
 
 				} else {
 					flag = 2; //下拉刷新

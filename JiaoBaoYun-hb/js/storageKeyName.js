@@ -129,6 +129,7 @@ var storageKeyName = (function(mod) {
 
 	//---Activity的code---start---
 	mod.CODERECORDVIDEO = 0; //录像
+	mod.CODEPLAYVIDEO=1;//播放视频
 	//---Activity的code---end---
 
 	return mod;

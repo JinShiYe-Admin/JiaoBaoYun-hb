@@ -119,6 +119,11 @@
 			});
 
 			events.addTap('take_camero', function() {
+				var item=this;
+					jQuery("#take_camero").css('pointerEvents', 'none');
+
+					item.setAttribute("disabled","disabled");
+					console.log("item不能点击了！"+item.id); 
 					if(CloudFileUtil.files.length > 0) {
 						switch(CloudFileUtil.files[0].type) {
 							case 1:
@@ -160,20 +165,27 @@
 										plus.nativeUI.closeWaiting();
 										//放置图片
 										CloudFileUtil.setPic(img, 0, thumb);
+										jQuery("#take_camero").css('pointerEvents', 'all');
 									});
 								}
 
 							}, function(xhr, type, errorThrown) {
 								console.log("错误类型：" + type + errorThrown);
 								plus.nativeUI.closeWaiting(); //关闭等待框
+								jQuery("#take_camero").css('pointerEvents', 'all');
 							});
 						})
 					}, function(errData) {
 						console.log(errData.code);
 						mui.toast(errData.message);
+						jQuery("#take_camero").css('pointerEvents', 'all');
 					})
 				});
 			events.addTap('get_gallery', function() {
+				if(CloudFileUtil.files.length > 0 && CloudFileUtil.files[0].type != 1) {
+						mui.toast("只允许上传一种附件！");
+						return;
+					}
 				if(CloudFileUtil.files.length < 9) {
 					var picCount = 0; //上传图片计数
 					gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
@@ -375,6 +387,10 @@
 		 * 并显示在界面上
 		 */
 		events.addTap('take_pic', function() {
+			if(CloudFileUtil.files.length > 0 && CloudFileUtil.files[0].type != 1) {
+						mui.toast("只允许上传一种附件！");
+						return;
+					}
 			if(CloudFileUtil.files.length < 9) {
 				camera.getPic(camera.getCamera(), function(picPath) {
 					plus.nativeUI.showWaiting(storageKeyName.WAITING);

@@ -118,8 +118,11 @@
 				CloudFileUtil.setDelPicListener();
 				//发布图片
 				events.addTap('take_pic', function() {
+					var item=this;
+					jQuery(item).css("pointerEvents","none");
 					if(CloudFileUtil.files.length < 9) {
 						camera.getPic(camera.getCamera(), function(picPath) {
+							jQuery(item).css("pointerEvents","all");
 							plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
 								back: 'none'
 							});
@@ -158,8 +161,11 @@
 									plus.nativeUI.closeWaiting(); //关闭等待框
 								});
 							})
+						},function(err){
+							jQuery(item).css("pointerEvents","all");
 						})
 					} else {
+						jQuery(item).css("pointerEvents","all");
 						mui.toast('上传图片附件不得多于9张！');
 					}
 				});
@@ -230,7 +236,7 @@
 
 				console.log('textView.value===' + tempText)
 				if(tempText) {
-					tempText = tempText.trim();
+					tempText = events.trim(tempText);
 				}
 				if(!tempText || tempText == '') {
 					mui.toast('请输入作业内容');
@@ -282,13 +288,15 @@
 			function requestModifyHomeworkResult() {
 				var textView = document.getElementById('input-content');
 				var tempText = textView.value;
-
+				tempText = events.trim(tempText);
 				console.log('textView.value===' + tempText)
 				if(!tempText || tempText == '') {
 					mui.toast('请输入作业内容');
 					return;
 				} else {
-//					tempText = replaceAllBL(tempText);
+					if(events.limitInput(tempText, 1000)) {
+						return;
+					}
 				}
 				for(var i in CloudFileUtil.files) {
 					CloudFileUtil.files[i].order = i;
@@ -310,7 +318,7 @@
 					if(data.RspCode == 0) {
 						mui.toast('修改作业答案成功！')
 						events.fireToPageNone('homework-commented.html', 'refreshAnswer', {
-							answer: textView.value,
+							answer: comData.content,
 							Files: CloudFileUtil.files
 						});
 						CloudFileUtil.files = [];

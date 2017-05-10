@@ -47,7 +47,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title" style="color: white;">笔记</h1>
+			<h1 class="mui-title">笔记</h1>
 			<div id="finish" class="title-text-pull-right">完成</div>
 		</header>
 		<div class="mui-content mui-fullscreen">
@@ -75,6 +75,7 @@
 						<div></div>
 					</div>
 				</div>
+				<audio id="audio_audio" autoplay="autoplay" preload="auto"></audio>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -160,7 +161,8 @@
 					canvas: document.getElementById("audio_canvas"),
 					play: document.getElementById("audio_play"),
 					pause: document.getElementById("audio_pause"),
-					time: document.getElementById("audio_time")
+					time: document.getElementById("audio_time"),
+					audio: document.getElementById("audio_audio")
 				});
 				//获取配置信息
 				hideOption = events.initHideKeyBoard();
@@ -186,7 +188,7 @@
 						var wd = events.showWaiting();
 						document.getElementById("finish").disabled = true;
 						if(multiMedia.data.PictureArray.length == 0 && multiMedia.data.VideoArray.length == 0 && multiMedia.data.AudioArray.length == 0) { //没有传附件
-							addNote(wd, '3', '', '');
+							addNote(wd, '3', '', '', 0);
 						} else {
 							uploadFile(wd); //上传文件
 						}
@@ -202,12 +204,13 @@
 			 * @param {Object} encImg 附件缩略图地址
 			 */
 			function addNote(wd, encType, encAddr, encImg, encLen) {
+				encLen = Math.ceil(encLen) || 0;
 				//38.（用户空间）新增某用户空间信息 （云笔记）
 				//所需参数
 				var comData = {
 					userId: window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid, //用户ID
 					msgContent: notes.value, //记事内容
-					encType: encType, //附件类型，1图片2音视频3仅文字
+					encType: encType, //附件类型，1图片2视频3仅文字4音频
 					encAddr: encAddr, //附件地址
 					encImg: encImg, //附件缩略图地址0
 					encIntro: '', //附件简介
@@ -220,12 +223,10 @@
 				postDataPro_addUserSpace(comData, wd, function(data) {
 					console.log('38postDataPro_addUserSpace（用户空间）新增某用户空间信息 （云笔记）.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
-						//						if(persistentId && persistentId.length != 0) {
-						//							wd.setTitle('处理中...');
-						//							setTimeout(function() {
-						//								waittingThumb(wd);
-						//							}, 2000);
-						//						} else {
+						var time = 0;
+						if(encType != '3') {
+							time = 2000;
+						}
 						setTimeout(function() {
 							mui.toast('发布成功');
 							pathList = [];
@@ -233,7 +234,7 @@
 							wd.close();
 							mui.back();
 						}, 2000);
-						//						}
+
 					} else {
 						document.getElementById("finish").disabled = false;
 						if(pathList.length != 0) {
