@@ -209,7 +209,11 @@
 			events.addTap('publish', function() {
 				requestAddAsk();
 			});
+document.getElementById("askTitle").addEventListener('input',function(){
+	this.value = this.value.replace(new RegExp(/(\n)/g), '')
+	
 
+})
 			//6.新增某个用户提交问题
 			function requestAddAsk() {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
@@ -290,9 +294,9 @@
 					}
 				});
 			}
-			//去除前后空格
+			//去除前后换行符
 			function Trim(str) {
-				return str.replace(/(^\s*)|(\s*$)/g, "");
+				return str.replace(/[\r\n]/g, "");
 			}
 			events.addTap('channal', function() {
 				document.activeElement.blur();
