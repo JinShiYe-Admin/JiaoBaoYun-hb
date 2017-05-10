@@ -154,6 +154,7 @@
 }
 
 .question-content p {
+	padding-top: 13px;
 	word-wrap: break-word;
 	font-size: 14px;
 	text-align: justify;
@@ -181,6 +182,7 @@
 	word-wrap: break-word;
 	color: #808080;
 	text-align: justify;
+	font-size: 14px;
 }
 
 .answer-comment {
@@ -266,7 +268,7 @@
 	line-height: 1.1;
 	color: #323232;
 	padding-left: 5px;
-	font-size: 1.5rem;
+	font-size: 15px;
 	flex-grow: 1;
 }
 
@@ -288,7 +290,9 @@
 	background-color: rgba(0, 0, 0, .05);
 }
 .comment-date{
+	/*padding-top: 13px;*/
 	color: #B7B7B7;
+	font-size: 13px;
 }
 .comments-content{
 	padding-left: 1rem;

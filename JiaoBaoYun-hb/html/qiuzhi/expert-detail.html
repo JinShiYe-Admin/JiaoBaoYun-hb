@@ -190,9 +190,11 @@
 				console.log('他关注的人');
 			})
 			events.addTap('IsFocusedMan', function() {
-				//判断是否是游客身份登录
-				if(events.judgeLoginMode(this)) {
-					return;
+				if(utid == 0 && utid == ExpertsInfo.UserId) {
+					//判断是否是游客身份登录
+					if(events.judgeLoginMode(this)) {
+						return;
+					}
 				}
 				events.singleWebviewInPeriod(this, "AttentionPersons.html", {
 					expertInfo: ExpertsInfo,
