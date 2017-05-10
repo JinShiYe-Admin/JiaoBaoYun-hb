@@ -171,6 +171,7 @@
 					var tempData = data.detail;
 					console.log(JSON.stringify(tempData));
 					if(tempData.flag == '评论') {
+						document.getElementById("bottomDiv" + citycode + 'zx' + tempIndex).style.paddingBottom = '12px';
 						var commentList = document.getElementById("commentList" + citycode + 'zx' + tempIndex);
 						document.getElementById('line' + citycode + 'zx' + tempIndex).className = 'mui-media-body dynamic-line';
 						var div = document.createElement("div");

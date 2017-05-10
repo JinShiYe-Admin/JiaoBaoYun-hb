@@ -567,6 +567,7 @@ var dynamiclistitem = (function($, mod) {
 		})
 		//点击点赞的人跳转到相应界面
 		mui('.mui-table-view').on('tap', '.praiseName', function() {
+			window.event.stopPropagation()
 			if(isPersonal==0){
 				if(publisherId==this.dataset.info){
 					window.event.stopPropagation()
@@ -591,6 +592,7 @@ var dynamiclistitem = (function($, mod) {
 
 			});
 			
+			
 		});
 		//点击评论者名字
 		mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
@@ -599,6 +601,10 @@ var dynamiclistitem = (function($, mod) {
 					window.event.stopPropagation()
 					return;
 				}
+			}
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; 
+			if(this.dataset.info==undefined){
+				this.dataset.info=personalUTID
 			}
 			console.log('评论者id' + this.dataset.info);
 			mui.openWindow({
