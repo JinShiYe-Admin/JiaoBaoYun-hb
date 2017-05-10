@@ -569,7 +569,7 @@ var MultiMedia = (function($, mod) {
 			//显示视频缩略图的区域
 			var html_1 = '<div class="multimedia-picture" style="width: ' + width + 'px; height: ' + width + 'px; margin-left: ' + marginLeft + 'px; margin-top: ' + marginLeft + 'px;">'
 			//播放按钮
-			var html_2 = '<img id="MultiMedia_Video_Play_' + videos.id + '" class="multimedia-video-play" src="../../image/utils/playvideo.png" style="width: ' + parseInt(width / 2) + 'px; height: ' + parseInt(width / 2) + 'px;left: ' + parseInt(width / 4) + 'px;top: ' + parseInt(width / 4) + 'px; "/>';
+			var html_2 = '<img id="MultiMedia_Video_Play_' + videos.id + '" class="multimedia-video-play" src="../../image/utils/playvideo.png" style="width: ' + 30 + 'px; height: ' + 30 + 'px;left: ' + parseInt((width - 30) / 2) + 'px;top: ' + parseInt((width - 30) / 2) + 'px; "/>';
 			//视频缩略图
 			var html_3 = '<img src="' + videos.localthumb + '" style="width:100%;visibility: hidden;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + width + 'px\';this.style.width=\'initial\';this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + width + ')/2)+\'px\';}this.style.visibility=\'visible\';" />';
 			var html_4 = '</div>'

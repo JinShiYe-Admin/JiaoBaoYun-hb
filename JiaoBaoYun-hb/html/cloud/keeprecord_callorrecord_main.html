@@ -656,7 +656,7 @@
 					}
 					mediaStr = html_0 + html_1 + '</div>';
 				} else if(data.EncType == 2) { //视频
-					var play_width = parseInt((document.getElementById("top").offsetWidth - 30) * 0.14);
+					var play_width = 55;
 					var html_0 = '<div class="record-video">\
 								<img id="video_play_' + data.TabId + '" style="width:' + play_width + 'px;height:' + play_width + 'px;" class="video-play" src="../../image/utils/playvideo.png" />\
 								<img id="video_thumb_' + data.TabId + '" class="video-thumb" src="' + data.EncImgAddr + '" onload="videoThumbLoad(this);" onerror="videoThumbError(this);">\

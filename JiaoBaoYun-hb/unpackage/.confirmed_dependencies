@@ -93,7 +93,8 @@
 			"html/cloud/order-member.html",
 			"html/quan/studentdynamic_main.html",
 			"html/quan/class_space.html",
-			"html/cloud/record_student_main.html"
+			"html/cloud/record_student_main.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -229,7 +230,9 @@
 			"js/utils/compress.js",
 			"image/cloud/A_folder.png",
 			"css/cloud/file.css",
-			"js/cloud/AndroidFileSystem.js"
+			"js/cloud/AndroidFileSystem.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": []
 	},
@@ -439,11 +442,15 @@
 	},
 	"html/quan/class-group.html": {
 		"resources": [
-			"js/quan/class-group1.js"
+			"js/quan/class-group1.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",
-			"html/quan/edit-remark.html"
+			"html/quan/edit-remark.html",
+			"html/mine/QRCode.html"
 		]
 	},
 	"html/quan/group-pInfo.html": {
@@ -452,6 +459,9 @@
 			"css/mui.min.css",
 			"js/quan/group-pInfo.js",
 			"css/utils/common.css"
+		],
+		"refer": [
+			"html/quan/edit-remark.html"
 		]
 	},
 	"html/quan/classSpace-sub.html": {
@@ -459,7 +469,8 @@
 			"js/utils/urlBrief.js",
 			"css/utils/bubble.css",
 			"js/quan/class_space.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/utils/preview.css"
 		]
 	},
 	"html/quan/edit-remark.html": {
@@ -477,7 +488,8 @@
 		],
 		"refer": [
 			"html/quan/class-group.html",
-			"html/quan/classSpace-sub.html"
+			"html/quan/classSpace-sub.html",
+			"html/quan/class-dynamic.html"
 		]
 	},
 	"html/cloud/record_student_main.html": {
@@ -509,6 +521,38 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/quan/class-dynamic.html": {
+		"resources": [
+			"css/quan/custom-textarea.css",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/quan/zone_main.html": {
+		"resources": [
+			"css/mui.min.css",
+			"html/quan/zonep_sub.html",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/quan/zonep_sub.html"
+		]
+	},
+	"html/quan/zonep_sub.html": {
+		"resources": [
+			"css/utils/preview.css",
+			"css/icons-extra.css",
+			"css/show/show.css"
+		]
+	},
+	"html/mine/QRCode.html": {
+		"resources": [
+			"js/utils/jquery.qrcode.min.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	}
 }

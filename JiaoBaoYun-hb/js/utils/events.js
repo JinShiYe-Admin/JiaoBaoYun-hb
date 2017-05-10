@@ -113,7 +113,11 @@ var events = (function(mod) {
 				extras: {
 					data: datas
 				}
-			}]
+			}],
+			beforeback:function(){
+				mod.closeWaiting();
+				return true;
+			}
 		});
 	}
 
