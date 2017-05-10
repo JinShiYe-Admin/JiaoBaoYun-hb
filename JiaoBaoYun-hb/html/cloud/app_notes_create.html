@@ -47,7 +47,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title" style="color: white;">笔记</h1>
+			<h1 class="mui-title">笔记</h1>
 			<div id="finish" class="title-text-pull-right">完成</div>
 		</header>
 		<div class="mui-content mui-fullscreen">
@@ -75,6 +75,7 @@
 						<div></div>
 					</div>
 				</div>
+				<audio id="audio_audio" autoplay="autoplay" preload="auto"></audio>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -160,7 +161,8 @@
 					canvas: document.getElementById("audio_canvas"),
 					play: document.getElementById("audio_play"),
 					pause: document.getElementById("audio_pause"),
-					time: document.getElementById("audio_time")
+					time: document.getElementById("audio_time"),
+					audio:document.getElementById("audio_audio")
 				});
 				//获取配置信息
 				hideOption = events.initHideKeyBoard();
