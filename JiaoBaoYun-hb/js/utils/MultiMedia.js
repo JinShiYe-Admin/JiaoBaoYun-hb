@@ -242,7 +242,7 @@ var MultiMedia = (function($, mod) {
 					});
 				}
 			}, function(err) {
-				mui.toast('录制视频失败 ' + JSON.stringify(err));
+				mui.toast(err.message);
 			});
 		} else {
 			mui.toast('视频数量超出限制');
