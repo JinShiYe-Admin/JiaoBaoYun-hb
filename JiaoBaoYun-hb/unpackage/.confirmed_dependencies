@@ -37,7 +37,8 @@
 			"css/utils/common.css",
 			"image/qiuzhi/qiuzhi_noanswer.png",
 			"js/qiuzhi/qiuzhi-answerDetailSub.js",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-addAnswer.html"
