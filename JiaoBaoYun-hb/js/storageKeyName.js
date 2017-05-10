@@ -2,7 +2,7 @@
 
 var storageKeyName = (function(mod) {
 
-	var Key = 1; //0,开发;1,测试;2,外网
+	var Key = 0; //0,开发;1,测试;2,外网
 
 	if(Key == 0) {
 		//---开发---start---
@@ -129,6 +129,7 @@ var storageKeyName = (function(mod) {
 
 	//---Activity的code---start---
 	mod.CODERECORDVIDEO = 0; //录像
+	mod.CODEPLAYVIDEO=1;//播放视频
 	//---Activity的code---end---
 
 	return mod;

@@ -712,12 +712,12 @@ var createCell = function(ul, cellData, i, order) {
  * @param {Object} datasource
  */
 var setQuestion = function(datasource) {
-	document.querySelector('.question-title').innerHTML = datasource.AskTitle;
+	document.querySelector('.question-title').innerHTML = datasource.AskTitle. replace(/ /g,"&nbsp;");
 	var questionContainer = document.getElementById('question-content');
 	document.getElementById('question-content').innerHTML = "";
 	console.log("放置数据？？？？？？？？？")
 	var p = document.createElement('p');
-	p.innerHTML = datasource.AnswerContent.replace(/\n/g, "<br/>");
+	p.innerHTML = datasource.AnswerContent.replace(/ /g,"&nbsp;").replace(/\n/g, "<br/>");
 	questionContainer.appendChild(p);
 	//	p.querySelectorAll("img").for
 	jQuery("#question-content img").each(function(index, ele) {
@@ -787,6 +787,7 @@ var getPicInner = function(data) {
 	if(picAddr && picAddr.length > 0) {
 		var picPaths = picAddr.split('|');
 		var picBigPaths = data.AnswerEncAddr.split('|');
+		var clipImgs = data.AnswerCutImg.split("|");
 		var picInner = '';
 		var win_width = document.getElementById('answer-imgs').offsetWidth;
 		switch(data.AnswerEncType) {
@@ -800,8 +801,8 @@ var getPicInner = function(data) {
 				console.log('图片路径：' + picInner);
 				return picInner;
 			case 2:
-				picInner+='<div class="video-container" style="background-image:url('+data.AnswerCutImg+');background-repeat:no-repeat;background-position:center;background-size:cover;width:'+win_width+'px;height:'+win_width*0.45+
-				'px;text-align:center;"><img style="width: 22.5%; margin:11.25% 0;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
+				picInner+='<div class="video-container" style="background-image:url('+clipImgs[0]+');background-repeat:no-repeat;background-position:center;background-size:cover;width:'+win_width+'px;height:'+win_width*0.45+
+				'px;text-align:center;"><img style="width: 55px;height:55px; margin-top:'+(win_width*0.45-55)/2+'px;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
 				console.log("获取的图片控件："+picInner)
 			    return picInner;
 			default:
@@ -826,16 +827,16 @@ var createCommentsInner = function(cell) {
 	console.log("要放置的数据：" + JSON.stringify(cell))
 	var headImg = cell.UserImg;
 	var personName = cell.UserName ? cell.UserName : "新用户";
-	var inner = '<div class="table-view-cell"><div class="comments-cell">' +
-		'<div class="img-container"><img class="head-img" src="' + headImg + '"/></div>' +
-		'<div class="comment-container">' +
-		'<h5 class="comment-personName single-line">' + setName(cell) + '</h5>' +
-		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>' +
-		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
+//	var inner = '<div class="table-view-cell"><div class="comments-cell">' +
+//		'<div class="img-container"><img class="head-img" src="' + headImg + '"/></div>' +
+//		'<div class="comment-container">' +
+//		'<h5 class="comment-personName single-line">' + setName(cell) + '</h5>' +
+//		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>' +
+//		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
 	var inner='<div class="table-view-cell"><div class="comments-cell">'+
 		'<h5 class="comment-personName single-line"><img class="head-img" src="'+headImg+'"/>'+setName(cell)+'</h5>'+
 		'<div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>' +
-		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
+		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent.replace(/ /g,"&nbsp;").replace(/\n/g,"<br/>") + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
 		
 	console.log("当前评论内容：" + inner)
 	return inner;
@@ -957,7 +958,11 @@ var setListeners = function() {
 
 	})
 	mui("#answer-imgs").on("tap",".video-container",function(){
-		video.playVideo(answerData.AnswerEncAddr,answerData.AnswerThumbnail);
+		var item=this;
+		jQuery(item).css("pointerEvents","none");
+		video.playVideo(answerData.AnswerEncAddr,answerData.AnswerThumbnail,function(){
+			jQuery(item).css("pointerEvents","all");
+		});
 	})
 	mui('.mui-table-view').on('longtap', ".comment-words", function() {
 		console.log("评论信息：" + JSON.stringify(this.commentInfo));
