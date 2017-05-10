@@ -64,7 +64,7 @@ var video = (function(mod) {
 			}
 		};
 	}
-	mod.playInAndroid = function(videoAddress) {
+	mod.playInAndroid = function(videoAddress,thumbPath,playCallback) {
 		if(mui.os.android) {
 			var Intent = plus.android.importClass("android.content.Intent");
 			var Uri = plus.android.importClass("android.net.Uri");
@@ -72,7 +72,15 @@ var video = (function(mod) {
 			var intent = new Intent(Intent.ACTION_VIEW);
 			var uri = Uri.parse(videoAddress);
 			intent.setDataAndType(uri, "video/*");
-			main.startActivity(intent);
+			main.startActivityForResult(intent,storageKeyName.CODEPLAYVIDEO);
+			main.onActivityResult=function(requestCode, resultCode, data){
+				if(requestCode==storageKeyName.CODEPLAYVIDEO){
+					console.log("播放录像的回调code:"+resultCode);
+					if(playCallback){
+						playCallback();
+					}
+				}
+			}
 		} else {
 			console.log("这里不是android,调用错误");
 		}
@@ -91,9 +99,9 @@ var video = (function(mod) {
 		player.poster = "";
 		player.removeAttribute("autoplay");
 	}
-	mod.playVideo = function(videoPath, thumbPath) {
+	mod.playVideo = function(videoPath, thumbPath,playCallback) {
 		if(plus.os.name == "Android") {
-			mod.playInAndroid(videoPath, thumbPath);
+			mod.playInAndroid(videoPath, thumbPath,playCallback);
 		} else {
 			//			mod.playInHTML(videoPath,thumbPath);
 			mui.toast("功能暂未开放！")
