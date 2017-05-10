@@ -6,7 +6,7 @@ var video = (function(mod) {
 		} else {
 			errorCB({
 				code: 999, // 错误编码
-				message: '暂不支持Android以外的系统！' // 错误描述信息
+				message: '此功能暂未开放！' // 错误描述信息
 			});
 		}
 	}
