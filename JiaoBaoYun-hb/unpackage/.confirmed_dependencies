@@ -150,7 +150,8 @@
 		"refer": [
 			"html/quan/classSpace-persons.html",
 			"html/quan/space-detail.html",
-			"html/register/login.html"
+			"html/register/login.html",
+			"html/quan/pub-dynamic.html"
 		]
 	},
 	"html/index/index.html": {
@@ -498,7 +499,8 @@
 			"css/qiuzhi/qiuzhi-sub.css",
 			"css/mui.min.css",
 			"js/qiuzhi/qiuzhi-focusQuestion.js",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/qiuzhi/expert-detail.html": {
@@ -768,7 +770,9 @@
 			"js/utils/load.js",
 			"css/quan/custom-textarea.css",
 			"js/utils/camera.js",
-			"js/utils/recordvideoutil.js"
+			"js/utils/recordvideoutil.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/mine/apply-group.html": {

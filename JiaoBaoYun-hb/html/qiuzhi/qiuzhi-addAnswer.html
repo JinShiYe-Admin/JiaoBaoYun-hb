@@ -18,7 +18,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 id="title" class="mui-title" style="color: white;">我要回答</h1>
-			<h1 id="submitBtn" class="mui-icon mui-icon-right-nav mui-pull-right" style="text-align: right;right: 10px;font-size: 15px;">提交</h1>
+			<a id="submitBtn" class="mui-pull-right" style="text-align: right;right: 10px;font-size: 14px;">提交</a>
 		</header>
 
 		<div class="mui-scroll-wrapper mui-content">
@@ -69,7 +69,7 @@
 		<script src="../../js/utils/compress.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.zoom.js"></script>
 		<script src="../../js/mui.previewimage.js"></script>
-	<!--	<script src="../../js/utils/recordvideoutil.js"></script>-->
+		<!--	<script src="../../js/utils/recordvideoutil.js"></script>-->
 		<script src="../../js/utils/load.js"></script>
 		<script src="../../js/utils/video.js"></script>
 		<!--上传至七牛云js-->
@@ -159,13 +159,6 @@
 			var setAnswerInfo = function(answerInfo) {
 				document.getElementById('answerContent').value = answerInfo.AnswerContent;
 				document.getElementById('checkbox').checked = answerInfo.IsAnonym ? true : false;
-//				switch (answerInfo.AnswerEncType){
-//					case 1://图片
-//						break;
-//					case 2:
-//					default:
-//						break;
-//				}
 				if(answerInfo.AnswerThumbnail) {
 					var imgs = answerInfo.AnswerThumbnail.split("|");
 					var bigImgs = answerInfo.AnswerEncAddr.split("|");
@@ -190,14 +183,18 @@
 			var setListener = function() {
 				//拍照
 				events.addTap('take_pic', function() {
-					var item=this;
-					jQuery(item).css("pointerEvents","none");
+					if(CloudFileUtil.files.length > 0 && CloudFileUtil.files[0].type != 1) {
+						mui.toast("只能上传一种附件！");
+						return;
+					}
+					var item = this;
+					jQuery(item).css("pointerEvents", "none");
 					if(CloudFileUtil.files.length < 9) {
 						camera.getPic(camera.getCamera(), function(picPath) {
 							plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
 								back: 'none'
 							});
-							jQuery(item).css("pointerEvents","all");
+							jQuery(item).css("pointerEvents", "all");
 							var saveSpace = storageKeyName.KNOWLEDGE; //保存空间
 							compress.compressPIC(picPath, function(event) {
 								var localPath = event.target;
@@ -240,21 +237,21 @@
 									plus.nativeUI.closeWaiting(); //关闭等待框
 								});
 							})
-						},function(err){
-							jQuery(item).css("pointerEvents","all");
+						}, function(err) {
+							jQuery(item).css("pointerEvents", "all");
 						})
 					} else {
 						mui.toast('上传图片附件不得多于9张！');
-						jQuery(item).css("pointerEvents","all");
+						jQuery(item).css("pointerEvents", "all");
 					}
 				});
 				//录像
-				document.getElementById("take_camero").onclick= function() {
-					var item=this;
+				document.getElementById("take_camero").onclick = function() {
+					var item = this;
 					jQuery("#take_camero").css('pointerEvents', 'none');
 
-					item.setAttribute("disabled","disabled");
-					console.log("item不能点击了！"+item.id); 
+					item.setAttribute("disabled", "disabled");
+					console.log("item不能点击了！" + item.id);
 					if(CloudFileUtil.files.length > 0) {
 						switch(CloudFileUtil.files[0].type) {
 							case 1:
@@ -288,7 +285,7 @@
 											url: tokenInfo.Domain + tokenInfo.Key,
 											thumb: tokenInfo.OtherKey[data.thumbKey],
 											clip: tokenInfo.OtherKey[data.thumbKey] + "?imageMogr2/gravity/Center/crop/!" + mData.options.thumbSize.width + "x" + mData.options.thumbSize.width * 0.45,
-											localPath:path,
+											localPath: path,
 											type: 2
 										}
 										//										console.log("获取的图片信息：" + JSON.stringify(img));
@@ -308,7 +305,7 @@
 						})
 					}, function(errData) {
 						console.log(errData.code);
-						if(errData.code!=0){
+						if(errData.code != 0) {
 							mui.toast(errData.message);
 						}
 						jQuery("#take_camero").css('pointerEvents', 'all');
@@ -438,8 +435,8 @@
 				var comData = {
 					answerId: answerInfo.AnswerId, //回答ID
 					answerContent: answerContent, //回答内容,4000
-					encType:getTypeAddress(CloudFileUtil.files).encType,//文件类型
-					encLen:0,
+					encType: getTypeAddress(CloudFileUtil.files).encType, //文件类型
+					encLen: 0,
 					encAddr: getTypeAddress(CloudFileUtil.files).encAddr, //附件地址,300,多个的情况例如：1.jpg|2.jpg
 					thumbnail: getTypeAddress(CloudFileUtil.files).encImg, //缩略图
 					cutImg: getTypeAddress(CloudFileUtil.files).clipAddress, //裁剪地址
@@ -453,7 +450,7 @@
 					wd1.close();
 					console.log("更改回答的值：" + JSON.stringify(data));
 					if(data.RspCode == 0 && data.RspData.Result) {
-						comData.AnswerEncType=comData.encType;
+						comData.AnswerEncType = comData.encType;
 						comData.AnswerThumbnail = comData.thumbnail;
 						comData.AnswerEncAddr = comData.encAddr;
 						comData.AnswerCutImg = comData.cutImg;
@@ -478,7 +475,7 @@
 					askId: askModel.TabId, //问题ID
 					answerContent: answerContent, //回答内容,4000
 					encType: getTypeAddress(CloudFileUtil.files).encType,
-					encLen:0,
+					encLen: 0,
 					encAddr: getTypeAddress(CloudFileUtil.files).encAddr, //附件地址,300,多个的情况例如：1.jpg|2.jpg
 					thumbnail: getTypeAddress(CloudFileUtil.files).encImg,
 					cutImg: getTypeAddress(CloudFileUtil.files).clipAddress,

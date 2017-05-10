@@ -16,6 +16,7 @@ var lazyLoadApi = mui('#pullrefresh').imageLazyload({
 });
 mui.plusReady(function() {
 	mui.fire(plus.webview.getWebviewById('qiuzhi_home.html'), 'subIsReady');
+	mui.fire(plus.webview.getLaunchWebview(),"indexReady");
 	events.preload("qiuzhi-answerDetail.html", 80);
 	window.addEventListener('answerIsReady', function() {
 		answerIsReady = true;
@@ -361,8 +362,8 @@ var getImgs = function(cell) {
 				var win_width=document.body.offsetWidth-30;
 				var imgArray = cell.AnswerEncAddr.split('|');
 				var clipImgs = cell.AnswerCutImg.split("|");
-				imgInner='<div class="video-container" style="background-image:url('+cell.AnswerCutImg+');background-size:contain;width:'+win_width+'px;height:'+win_width*0.45+
-				'px;text-align:center;"><img style="width: 22.5%; margin:11.25% 0;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
+				imgInner='<div class="video-container" style="background-image:url('+clipImgs[0]+');background-size:contain;width:'+win_width+'px;height:'+win_width*0.45+
+				'px;text-align:center;"><img style="width:40px;height:40px;margin-top:'+(win_width*0.45-40)/2+'px;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
 				return imgInner;
 			}
 			return "";

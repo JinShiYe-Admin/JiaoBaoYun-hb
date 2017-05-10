@@ -3665,7 +3665,8 @@
 					"html/show/add-comment.html",
 					"html/quan/zone_main.html",
 					"html/quan/classSpace-persons.html",
-					"html/register/login.html"
+					"html/register/login.html",
+					"html/quan/pub-dynamic.html"
 				],
 				"priority": 0
 			},
@@ -3726,7 +3727,8 @@
 					"image/qiuzhi/channel-edu.png",
 					"image/qiuzhi/channel-science.png",
 					"image/qiuzhi/channel-health.png",
-					"image/qiuzhi/channel-food.png"
+					"image/qiuzhi/channel-food.png",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html"
