@@ -415,7 +415,8 @@
 			"css/homework/homework-commit.css",
 			"js/homework/homework-comment.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
 	},
