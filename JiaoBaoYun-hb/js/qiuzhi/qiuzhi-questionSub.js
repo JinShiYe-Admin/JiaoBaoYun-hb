@@ -169,8 +169,6 @@ mui.plusReady(function() {
 			info.UserId = info.utid;
 			this.disabled=true;
 			events.singleWebviewInPeriod(this,"expert-detail.html",info);
-//			//跳转页面
-//			events.openNewWindowWithData('expert-detail.html', info);
 		}
 	});
 
@@ -195,7 +193,6 @@ mui.plusReady(function() {
 			} else {
 				document.getElementById("question_content").style.webkitLineClamp = '3';
 			}
-			//mui('.mui-scroll-wrapper').scroll().scrollTo(0,0,0);//00毫秒滚动到顶
 		}
 	});
 });
@@ -231,6 +228,7 @@ var setCondition = function() {
 			if(askModel.IsAnswered == 1) {
 				mui.toast('已经回答过此问题');
 				this.disabled=false;
+				jQuery(this).css("pointerEvents","all");
 				return;
 			}
 			tab_div.style.background = '#DDDDDD';
@@ -240,6 +238,7 @@ var setCondition = function() {
 				tab_font.style.color = 'gray';
 			}, 80);
 			//点击跳转到回答界面
+			jQuery(this).css("pointerEvents","all");
 			this.disabled=false;
 			events.fireToPage('qiuzhi-addAnswer.html', 'qiuzhi-addAnswer', function() {
 				return askModel;

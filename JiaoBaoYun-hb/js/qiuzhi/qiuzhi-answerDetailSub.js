@@ -900,6 +900,7 @@ var setListeners = function() {
 		upperInfo = null;
 		parentContainer = null;
 		this.disabled=false;
+		jQuery(this).css("pointerEvents","all");
 	})
 	events.addTap('anthor-portrait', function() {
 		if(!answerData.IsAnonym) {

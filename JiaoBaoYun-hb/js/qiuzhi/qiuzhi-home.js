@@ -130,6 +130,6 @@ var setListener = function() {
 	document.querySelector('.img-icon').addEventListener('tap', function(e) {
 		var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
 		personalInfo.UserId = personalInfo.utid;
-		events.openNewWindowWithData('../qiuzhi/expert-detail.html', personalInfo);
+		events.singleWebviewInPeriod(this,'../qiuzhi/expert-detail.html', personalInfo)
 	})
 }
