@@ -200,7 +200,9 @@
 			"js/mui.lazyload.img.js"
 		],
 		"refer": [
-			"html/quan/classSpace-persons.html"
+			"html/quan/classSpace-persons.html",
+			"html/quan/pub-dynamic.html",
+			"html/show/add-comment.html"
 		]
 	},
 	"html/index/index.html": {
@@ -490,7 +492,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"css/quan/class_space.css"
+			"css/quan/class_space.css",
+			"image/quan/add.png"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",
