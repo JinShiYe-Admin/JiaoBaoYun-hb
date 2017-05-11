@@ -332,7 +332,7 @@ var createGride = function(gride, array) {
 		//子控件的innerHTML
 		li.innerHTML = '<a class="gride-inner" href="#">' +
 			'<img class="circular-square" src="' + updateHeadImg(cell.uimg, 2) + '"/></br>' +
-			'<small class="' + setMasterNameClass(cell) + '">' + getRoleInGroup(cell) + setBeunick(cell) + '</small>' +
+			'<small class="group-personName ' + setMasterNameClass(cell) + '">' + getRoleInGroup(cell) + setBeunick(cell) + '</small>' +
 			'</a>';
 		fragment.appendChild(li);
 	}

@@ -133,7 +133,9 @@
 			"css/mui.min.css",
 			"css/utils/common.css"
 		],
-		"refer": []
+		"refer": [
+			"html/quan/zone_main.html"
+		]
 	},
 	"html/index/firstPage.html": {
 		"resources": [
@@ -202,7 +204,8 @@
 		"refer": [
 			"html/quan/classSpace-persons.html",
 			"html/quan/pub-dynamic.html",
-			"html/show/add-comment.html"
+			"html/show/add-comment.html",
+			"html/utils/customizeCity.html"
 		]
 	},
 	"html/index/index.html": {
@@ -427,7 +430,9 @@
 			"js/homework/homework_detail.js",
 			"css/homework/workdetail.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"css/homework/subjects-icon.css"
+			"css/homework/subjects-icon.css",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/homework/homework-comment.html"
@@ -594,7 +599,9 @@
 		"resources": [
 			"css/utils/preview.css",
 			"css/icons-extra.css",
-			"css/show/show.css"
+			"css/show/show.css",
+			"image/dynamic/praise.png",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/mine/QRCode.html": {
@@ -708,7 +715,8 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/delete.png"
 		]
 	},
 	"html/cloud/app_keeprecord.html": {
