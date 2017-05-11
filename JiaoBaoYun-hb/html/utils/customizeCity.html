@@ -239,15 +239,9 @@
 
 					if(main.data.id == '0' || main.data.id == '1') { //0科教，1展现
 						if(select) {
-							var cityDel = document.querySelectorAll('.city-delete');
-							if(cityDel.length == 1) {
-								mui.toast('至少选择一个城市');
-								return false;
-							}
 							this.className = 'mui-table-view-cell mui-media';
 							var chooseCity = document.getElementById("choose_" + this.id);
 							chooseCity.parentNode.removeChild(chooseCity);
-							cityDel = document.querySelectorAll('.city-delete');
 						} else {
 							if(main.data.id == '1' && mui('.city-select').length > 9) {
 								mui.toast('最多只允许订制10个城市');
@@ -260,6 +254,12 @@
 									aname: this.innerText
 								});
 							}
+						}
+						var cityDel = document.querySelectorAll('.city-delete');
+						if(cityDel.length == 0) {
+							document.getElementById("myCityTitle").style.display = 'none';
+						} else {
+							document.getElementById("myCityTitle").style.display = 'inline-block';
 						}
 					} else if(main.data.id == 'uarea') { //uarea账号地区
 						if(!select) {
@@ -276,13 +276,12 @@
 				mui('#myCity').on('tap', '.city-delete', function() {
 					var parent = this.parentNode;
 					var code = parent.id.replace('choose_', '');
-					var cityDel = document.querySelectorAll('.city-delete');
-					if(cityDel.length == 1) {
-						mui.toast('至少选择一个城市');
-						return false;
-					}
 					document.getElementById(code).className = 'mui-table-view-cell mui-media';
 					parent.parentNode.removeChild(parent);
+					var cityDel = document.querySelectorAll('.city-delete');
+					if(cityDel.length == 0) {
+						document.getElementById("myCityTitle").style.display = 'none';
+					}
 				});
 
 				//点击提交
