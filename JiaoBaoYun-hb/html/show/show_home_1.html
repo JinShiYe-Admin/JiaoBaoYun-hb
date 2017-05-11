@@ -179,7 +179,7 @@
 						div.id = 'replyComment' + citycode + 'zx' + tempIndex + '-' + index + '-' + '评论'
 						div.className = 'mui-media-body replyComment'
 						div.innerHTML = '<font class="common-font-family-Regular dynamic-comment-name ">' + personalunick + '</font>' +
-							'<font class="common-font-family-Regular" style = "font-size:14px">：' + tempData.content + '</font>'
+							'<font class="common-font-family-Regular" style = "font-size:14px;color:#B7B7B7">：' + tempData.content + '</font>'
 						commentList.appendChild(div);
 						zonepArray[tempIndex].Comments.push(tempData.Comment)
 					} else if(tempData.flag == '评论回复') {
@@ -221,7 +221,7 @@
 						div.innerHTML = '<font class="common-font-family-Regular dynamic-comment-name">' + personalunick + '</font>' +
 							'<font class="common-font-family-Regular" style = "font-size:14px">回复</font>' +
 							'<font class="common-font-family-Regular dynamic-comment-name">' + ReplyIdName + '</font>' +
-							'<font class="common-font-family-Regular" style = "font-size:14px">：' + tempData.content + '</font></div>'
+							'<font class="common-font-family-Regular" style = "font-size:14px;color:#B7B7B7">：' + tempData.content + '</font></div>'
 						var tempDiv = document.getElementById('replyComment' + citycode + 'zx' + id + '-' + commentId + '-' + '评论')
 						tempDiv.appendChild(div)
 						zonepArray[id].Comments[commentId].Replys.push(tempData.Reply);

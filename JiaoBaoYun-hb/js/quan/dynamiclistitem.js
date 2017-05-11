@@ -909,7 +909,7 @@ var dynamiclistitem = (function($, mod) {
 		var html7 = '<div id="question_content' + data.id_name + '" style = "color:#808080;font-size:14px" class="ellipsis-show question_content">';
 		//内容
 		var html8 = replaceAllBL(data.MsgContent);
-		var html99 = '<div id="show' + data.id_name + '" class="showAll show" style="color:gray;">展开全部</div>'
+		var html99 = '<div id="show' + data.id_name + '" class="showAll show" style="color:#B7B7B7;">展开全部</div>'
 
 		if(document.getElementById("spaceDetail")) {
 			html99 = '';
@@ -1104,7 +1104,7 @@ var dynamiclistitem = (function($, mod) {
 			var replyComment = '';
 			var html1 = '<div id="replyComment' + data.id_name + '-' + index + '-' + '评论' + '" class="mui-media-body replyComment">';
 			var html2 = '<font data-info=' + element.UserId + ' class="common-font-family-Regular dynamic-comment-name ">' + element.UserIdName + '</font>';
-			var html3 = '<font class="common-font-family-Regular" style = "font-size:14px">：' + element.CommentContent + '</font>';
+			var html3 = '<font class="common-font-family-Regular" style = "font-size:14px;color:#B7B7B7">：' + element.CommentContent + '</font>';
 			firstComment = html1 + html2 + html3;
 
 			if(element.Replys && element.Replys.length != 0) {
@@ -1118,7 +1118,7 @@ var dynamiclistitem = (function($, mod) {
 					var html2 = '<font data-info=' + tempModel[i].UserId + ' class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].UserIdName + '</font>';
 					var html3 = '<font class="common-font-family-Regular" >回复</font>';
 					var html4 = '<font data-info=' + tempModel[i].ReplyId + ' class="common-font-family-Regular dynamic-comment-name">' + tempModel[i].ReplyIdName + '</font>';
-					var html5 = '<font class="common-font-family-Regular" style = "font-size:14px">：' + tempModel[i].CommentContent + '</font></div>';
+					var html5 = '<font class="common-font-family-Regular" style = "font-size:14px;color:#B7B7B7">：' + tempModel[i].CommentContent + '</font></div>';
 					replyComment = replyComment + html1 + html2 + html3 + html4 + html5;
 				}
 				replyComment = replyComment + '</div>'
@@ -1130,7 +1130,7 @@ var dynamiclistitem = (function($, mod) {
 		});
 		if(commentNum > 20 && (!document.getElementById("spaceDetail"))) {
 			console.log('评论大于20')
-			showAll = '<div id="show2' + data.id_name + '" class=" show2" style="color:gray;">展开全部</div>'
+			showAll = '<div id="show2' + data.id_name + '" class=" show2" style="color:#B7B7B7;">展开全部</div>'
 		} else {
 			showAll = '';
 		}

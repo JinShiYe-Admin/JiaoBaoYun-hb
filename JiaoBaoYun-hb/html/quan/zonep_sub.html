@@ -89,7 +89,12 @@
 					console.log('获取个人空间列表_getUserSpacesByUserForPublisher:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						if(data.RspData.Data.length == 0) {
-							mui.toast('暂无动态')
+							if(tempPage==1){
+								mui.toast('暂无动态')
+							}else{
+								mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+							}
+							
 							return;
 						}
 						setUserSpaceReadByUser('[' + publisherId + ']');
@@ -243,7 +248,7 @@
 					div.id = 'replyComment' + tempIndex + '-' + index + '-' + '评论'
 					div.className = 'mui-media-body replyComment'
 					div.innerHTML = '<font class="common-font-family-Regular dynamic-comment-name ">' + personalunick + '</font>' +
-						'<font class="common-font-family-Regular" style = "font-size:14px">：' + tempData.content + '</font>'
+						'<font class="common-font-family-Regular" style = "font-size:14px;color:#B7B7B7">：' + tempData.content + '</font>'
 					var commentList = document.getElementById("commentList" + tempData.tempIndex);
 					commentList.appendChild(div);
 					zonepArray[tempIndex].Comments.push(tempData.Comment)
@@ -281,7 +286,7 @@
 					div.innerHTML = '<font class="common-font-family-Regular dynamic-comment-name">' + personalunick + '</font>' +
 						'<font class="common-font-family-Regular" style = "font-size:14px">回复</font>' +
 						'<font class="common-font-family-Regular dynamic-comment-name">' + ReplyIdName + '</font>' +
-						'<font class="common-font-family-Regular" style = "font-size:14px">：' + tempData.content + '</font></div>'
+						'<font class="common-font-family-Regular" style = "font-size:14px;color:#B7B7B7">：' + tempData.content + '</font></div>'
 					var tempDiv = document.getElementById('replyComment' + id + '-' + commentId + '-' + '评论')
 					tempDiv.appendChild(div)
 					zonepArray[id].Comments[commentId].Replys.push(tempData.Reply);
