@@ -10,6 +10,7 @@ mui.init({
 mui.plusReady(function() {
 	//预加载做作业界面
 	events.preload('doHomework-stu.html', 200);
+	mui.fire(plus.webview.getWebviewById("homework-tea.html"),"stuWorkReady");
 	mui.previewImage();//加载预览功能
 	//监听与我相关中作业提醒传过来的事件
 	window.addEventListener("workNotice",function(e){

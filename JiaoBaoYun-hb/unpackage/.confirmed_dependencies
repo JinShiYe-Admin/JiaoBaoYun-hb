@@ -4,7 +4,8 @@
 			"html/qiuzhi/qiuzhi-question.html",
 			"html/qiuzhi/qiuzhi-answerDetail.html",
 			"html/register/login.html",
-			"html/qiuzhi/qiuzhi-newQ.html"
+			"html/qiuzhi/qiuzhi-newQ.html",
+			"html/qiuzhi/expert-detail.html"
 		],
 		"resources": [
 			"image/qiuzhi/add-question.png.png",
@@ -104,7 +105,8 @@
 			"html/cloud/record_student_main.html",
 			"html/quan/zone_main.html",
 			"html/quan/pub-dynamic.html",
-			"html/mine/ReadQRCode.html"
+			"html/mine/ReadQRCode.html",
+			"html/cloud/app_keeprecord.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -175,7 +177,8 @@
 		"refer": [
 			"html/mine/account-info.html",
 			"html/mine/setting.html",
-			"html/mine/qun_manage_a.html"
+			"html/mine/qun_manage_a.html",
+			"html/mine/approval-apply.html"
 		]
 	},
 	"html/show/show_home_1.html": {
@@ -329,7 +332,10 @@
 			"js/qiuzhi/qiuzhi-focusQuestion.js",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"image/qiuzhi/channel-science.png",
+			"image/qiuzhi/channel-health.png",
+			"image/qiuzhi/channel-food.png"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-question.html"
@@ -459,6 +465,9 @@
 			"css/utils/common.css",
 			"js/utils/UploadHeadImage.js",
 			"js/mine/account-info.js"
+		],
+		"refer": [
+			"html/utils/customizeCity.html"
 		]
 	},
 	"html/cloud/member-pay.html": {
@@ -688,6 +697,48 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"image/qiuzhi/channel-food.png",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/utils/customizeCity.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/cloud/app_keeprecord.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/mine/approval-apply.html": {
+		"resources": [
+			"js/mine/approval-apply.js",
+			"css/mine/apply.css",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/mine/add-info.html",
+			"html/mine/apply-group.html"
+		]
+	},
+	"html/mine/add-info.html": {
+		"resources": [
+			"js/mine/add-info.js",
+			"image/mine/invite_none_0.png"
+		]
+	},
+	"html/mine/apply-group.html": {
+		"resources": [
+			"css/mine/search.css",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/mine/apply-group.js",
 			"js/libs/crypto-js/crypto-js.js"
 		]
 	}

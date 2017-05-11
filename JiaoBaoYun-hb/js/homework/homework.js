@@ -15,22 +15,23 @@ var totalPageCount;
 var clickItem; //点击的子控件
 var publish;
 var publishIsReady=false;
+var stuWorkReady=false;
 mui.init();
 //mui的plusready监听
 mui.plusReady(function() {
 	publish = document.getElementById('iconPublish');
 	events.fireToPageNone('../cloud_home.html', 'homeworkReady');
 	//预加载发布作业
-	events.preload('homework-publish.html', 500);
+	events.preload('homework-publish.html', 300);
 	//老师临时作业界面
 //	events.preload('workdetailTea-temporary.html', 300);
 	var stuWorkNavBarStyle={
 		titleText:"作业详情"
 	}
 	//学生作业详情页面
-	events.preload('workdetail-stu.html', 400);
+	events.preload('workdetail-stu.html', 100);
 	//做作业界面
-	events.preload('doHomework-stu.html', 600);
+	events.preload('doHomework-stu.html', 400);
 	//列表
 	list = document.getElementById('list-container');
 	//加载h5下拉刷新方式
@@ -109,6 +110,9 @@ mui.plusReady(function() {
 	})
 	window.addEventListener("publishIsReady",function(){
 		publishIsReady=true;
+	})
+	window.addEventListener("stuWorkReady",function(){
+		stuWorkReady=true;
 	})
 	//错题本按钮监听事件
 //	events.addTap('err', function() {
@@ -225,6 +229,7 @@ var pullUpRefresh = function() {
  * 设置监听
  */
 var setListener = function() {
+	//班级被点击事件
 	mui('.tabs-classes').on('tap', '.mui-control-item', function() {
 		selectGContainer = this;
 		selectGId = this.classInfo.gid;
@@ -264,12 +269,14 @@ var setListener = function() {
 	})
 	//学生作业在线提交点击事件
 	mui('.mui-table-view').on('tap', '.submitOnline', function() {
-		clickItem = this;
-		events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+		events.showWaiting();
+		openStuWork(this);
+		
 	})
 	//学生作业不需要提交点击事件
 	mui('.mui-table-view').on('tap', '.noSubmit', function() {
-		events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+		events.showWaiting();
+		openStuWork(this);
 	})
 	//学生作业已提交点击事件
 	mui('.mui-table-view').on('tap', '.isSubmitted', function() {
@@ -286,6 +293,14 @@ var setListener = function() {
 		events.showWaiting();
 		openPublish();
 	})
+}
+var openStuWork=function(item){
+	if(publishIsReady){
+		events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, item.homeworkInfo, selectGContainer.classInfo));
+		events.closeWaiting();
+	}else{
+		setTimeout(openPublish,500);
+	}
 }
 var openPublish=function(){
 	if(publishIsReady){
