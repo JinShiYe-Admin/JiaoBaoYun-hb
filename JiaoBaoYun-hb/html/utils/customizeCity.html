@@ -241,6 +241,7 @@
 						if(select) {
 							var cityDel = document.querySelectorAll('.city-delete');
 							if(cityDel.length == 1) {
+								mui.toast('至少选择一个城市');
 								return false;
 							}
 							this.className = 'mui-table-view-cell mui-media';
@@ -277,6 +278,7 @@
 					var code = parent.id.replace('choose_', '');
 					var cityDel = document.querySelectorAll('.city-delete');
 					if(cityDel.length == 1) {
+						mui.toast('至少选择一个城市');
 						return false;
 					}
 					document.getElementById(code).className = 'mui-table-view-cell mui-media';
