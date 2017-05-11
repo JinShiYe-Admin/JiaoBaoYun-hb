@@ -184,7 +184,7 @@
 					events.askDetailOrAnswerDetail(2, tempModel.AnswerId, function(data) {
 						if(data) {
 							//跳转界面
-							events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', JSON.parse(this.dataset.info));
+							events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', tempModel);
 							plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
 						}
 					});
@@ -311,9 +311,9 @@
 				//拼接显示
 				li.innerHTML = '<div class="mui-table">' +
 					'<div class="mui-table-cell mui-col-xs-12">' +
-					'<h4 id="askTitle" class="mui-ellipsis">' +
+					'<h4 id="askTitle" class="mui-ellipsis" style="font-weight:normal;">' +
 					record.AskTitle +
-					'</h4><h5 id="answerContent" style="letter-spacing :0.3px;">' +
+					'</h4><h5 id="answerContent" style="letter-spacing :0.3px;color:#808080">' +
 					record.AnswerContent +
 					'</h5>' +
 					'<p class="mui-h6 mui-ellipsis">' + record.IsLikeNum + '赞 · ' + record.CommentNum + '评论 · ' + modifyTimeFormat(record.AnswerTime) +

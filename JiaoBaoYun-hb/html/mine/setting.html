@@ -101,8 +101,8 @@
 					var index = this.id.replace('li', '');
 					console.log('index:' + index);
 					if(index == '0') {
-//												console.log("wxpay");
-//												pay('wxpay');
+//												console.log("alipay");
+//												pay('alipay');
 						mui.confirm(tempInfo.uid, '您已绑定手机号', ['取消', '更换'], function(e) {
 							var index = e.index;
 							switch(index) {
@@ -140,11 +140,12 @@
 						switch(xhr.readyState) {
 							case 4:
 								if(xhr.status == 200) {
-//									var data = htmldecode(xhr.responseText);
-//									alert("PAYSERVER=" + PAYSERVER + ',channel=' + JSON.stringify(channel));
-//									alert("获取订单信=" + JSON.stringify(xhr));
-									plus.payment.request(channel, xhr.responseText, function(result) {
+									var data = htmldecode(xhr.responseText);
+									alert("PAYSERVER=" + PAYSERVER + ',channel=' + JSON.stringify(channel));
+									alert("获取订单信=" + JSON.stringify(xhr));
+									plus.payment.request(channel, data, function(result) {
 										console.log('result='+JSON.stringify(result));
+										alert("result=" + JSON.stringify(result));
 										plus.nativeUI.alert("支付成功！", function() {
 
 										});
