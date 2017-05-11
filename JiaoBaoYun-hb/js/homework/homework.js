@@ -24,6 +24,9 @@ mui.plusReady(function() {
 	events.preload('homework-publish.html', 500);
 	//老师临时作业界面
 //	events.preload('workdetailTea-temporary.html', 300);
+	var stuWorkNavBarStyle={
+		titleText:"作业详情"
+	}
 	//学生作业详情页面
 	events.preload('workdetail-stu.html', 400);
 	//做作业界面
@@ -258,14 +261,7 @@ var setListener = function() {
 		setTimeout(function() {
 			self.disabled = false;
 		}, 1500);
-
-		//		plus.webview.getWebviewById("workdetail-tea.html").show();
 	})
-	//临时作业点击事件
-//	mui('.mui-table-view').on('tap', '.publishedAnswer', function() {
-//		events.fireToPageNone('workdetailTea-temSub.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
-//		plus.webview.getWebviewById("workdetailTea-temporary.html").show();
-//	})
 	//学生作业在线提交点击事件
 	mui('.mui-table-view').on('tap', '.submitOnline', function() {
 		clickItem = this;
@@ -277,19 +273,14 @@ var setListener = function() {
 	})
 	//学生作业已提交点击事件
 	mui('.mui-table-view').on('tap', '.isSubmitted', function() {
-		events.openNewWindowWithData('homework-commented.html', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo))
-		//		events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+		this.disabled=true;
+		events.singleWebviewInPeriod(this,'homework-commented.html',jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 	})
 	//学生作业在已评论点击事件
 	mui('.mui-table-view').on('tap', '.isCommentedBG', function() {
-		events.openNewWindowWithData('homework-commented.html', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo))
-		//		events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+		this.disabled=true;
+		events.singleWebviewInPeriod(this,'homework-commented.html',jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 	})
-	//学生作业在未评论临时作业点击事件
-//	mui('.mui-table-view').on('tap', '.noCommentedBG', function() {
-//		events.openNewWindowWithData('homework-commented.html', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo))
-//		//		events.fireToPageWithData('homework-commented.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
-//	})
 	//发布作业界面
 	publish.addEventListener('tap', function() {
 		events.showWaiting();
