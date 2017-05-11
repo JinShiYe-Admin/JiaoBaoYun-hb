@@ -610,7 +610,7 @@
 			} else if(data.EncType == 2) { //视频
 				var play_width = 55;
 				var html_0 = '<div class="record-video">\
-								<img id="video_play_' + data.TabId + '" style="width:' + play_width + 'px;height:' + play_width + 'px;" class="video-play" src="../../image/utils/playvideo.png" />\
+								<img id="video_play_' + data.TabId + '" style="width:' + play_width + 'px;height:' + play_width + 'px;" class="video-play" onload="videoThumbLoad(this);" src="../../image/utils/playvideo.png" />\
 								<img id="video_thumb_' + data.TabId + '" class="video-thumb" src="' + data.EncImgAddr + '" onload="videoThumbLoad(this);" onerror="videoThumbError(this);">\
 							</div>';
 				html_media = html_0;
@@ -797,11 +797,11 @@
 						}
 					}
 
-//					if(qnDelFileArray.length != 0) {
-//						BatchDelete(data.wd);
-//					} else {
-						delSuccess(data.wd);
-//					}
+					//					if(qnDelFileArray.length != 0) {
+					//						BatchDelete(data.wd);
+					//					} else {
+					delSuccess(data.wd);
+					//					}
 				} else {
 					events.closeWaiting(data.wd);
 					mui.toast('删除失败 ' + temp.RspTxt);
@@ -809,34 +809,34 @@
 			});
 		}
 
-//		/**
-//		 * 删除对应的七牛文件
-//		 */
-//		function BatchDelete(wd) {
-//			var batchDelete = {
-//				appId: 6, //int 必填 项目id
-//				urls: qnDelFileArray //array 必填 需要获取下载token文件的路径
-//			}
-//			/**
-//			 * 七牛批量删除
-//			 */
-//			CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, batchDelete, function(data) {
-//					console.log('云端文件删除 ' + JSON.stringify(data));
-//					if(data.Status == 1) {
-//						qnDelFileArray = [];
-//					} else {
-//						console.log('### ERROR ### 七牛删除失败 ### ' + JSON.stringify(data));
-//						mui.toast('云端文件删除失败 ' + JSON.stringify(data));
-//					}
-//					delSuccess(wd);
-//				},
-//				function(xhr, type, errorThrown) {
-//					console.log('### ERROR ### 请求七牛删除失败 ### ' + JSON.stringify(type));
-//					mui.toast('请求删除云端文件失败 ' + JSON.stringify(type));
-//					delSuccess(wd);
-//				}
-//			);
-//		}
+		//		/**
+		//		 * 删除对应的七牛文件
+		//		 */
+		//		function BatchDelete(wd) {
+		//			var batchDelete = {
+		//				appId: 6, //int 必填 项目id
+		//				urls: qnDelFileArray //array 必填 需要获取下载token文件的路径
+		//			}
+		//			/**
+		//			 * 七牛批量删除
+		//			 */
+		//			CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, batchDelete, function(data) {
+		//					console.log('云端文件删除 ' + JSON.stringify(data));
+		//					if(data.Status == 1) {
+		//						qnDelFileArray = [];
+		//					} else {
+		//						console.log('### ERROR ### 七牛删除失败 ### ' + JSON.stringify(data));
+		//						mui.toast('云端文件删除失败 ' + JSON.stringify(data));
+		//					}
+		//					delSuccess(wd);
+		//				},
+		//				function(xhr, type, errorThrown) {
+		//					console.log('### ERROR ### 请求七牛删除失败 ### ' + JSON.stringify(type));
+		//					mui.toast('请求删除云端文件失败 ' + JSON.stringify(type));
+		//					delSuccess(wd);
+		//				}
+		//			);
+		//		}
 
 		/**
 		 * 删除的所有逻辑处理完后执行的方法
@@ -867,7 +867,16 @@
 		 */
 		function videoThumbLoad(img) {
 			var ids = img.id.split('_');
-			ShowVideoUtil.videoThumbLoad(img, document.getElementById("video_play_" + ids[2]));
+			img.setAttribute('data-load', 1);
+			var img_a;
+			if(ids[1] == 'play') {
+				img_a = document.getElementById("video_thumb_" + ids[2]);
+			} else {
+				img_a = document.getElementById("video_play_" + ids[2]);
+			}
+			if(img.getAttribute('data-load') && img_a.getAttribute('data-load')) {
+				ShowVideoUtil.videoThumbLoad(document.getElementById("video_thumb_" + ids[2]), document.getElementById("video_play_" + ids[2]));
+			}
 		}
 
 		/**

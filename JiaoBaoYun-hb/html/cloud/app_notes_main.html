@@ -370,7 +370,7 @@
 				play: document.getElementById("audio_play"),
 				pause: document.getElementById("audio_pause"),
 				time: document.getElementById("audio_time"),
-				audio:document.getElementById("audio_audio")
+				audio: document.getElementById("audio_audio")
 			});
 		}
 
@@ -494,7 +494,7 @@
 			} else if(data.EncType == 2) { //视频
 				var play_width = 55;
 				var html_0 = '<div class="record-video">\
-								<img id="video_play_' + data.TabId + '" style="width:' + play_width + 'px;height:' + play_width + 'px;" class="video-play" src="../../image/utils/playvideo.png" />\
+								<img id="video_play_' + data.TabId + '" style="width:' + play_width + 'px;height:' + play_width + 'px;" class="video-play" onload="videoThumbLoad(this);" src="../../image/utils/playvideo.png" />\
 								<img id="video_thumb_' + data.TabId + '" class="video-thumb" src="' + data.EncImgAddr + '" onload="videoThumbLoad(this);"  onerror="videoThumbError(this);">\
 							</div>';
 				html_media = html_0;
@@ -574,7 +574,16 @@
 		 */
 		function videoThumbLoad(img) {
 			var ids = img.id.split('_');
-			ShowVideoUtil.videoThumbLoad(img, document.getElementById("video_play_" + ids[2]), 1);
+			img.setAttribute('data-load', 1);
+			var img_a;
+			if(ids[1] == 'play') {
+				img_a = document.getElementById("video_thumb_" + ids[2]);
+			} else {
+				img_a = document.getElementById("video_play_" + ids[2]);
+			}
+			if(img.getAttribute('data-load') && img_a.getAttribute('data-load')) {
+				ShowVideoUtil.videoThumbLoad(document.getElementById("video_thumb_" + ids[2]), document.getElementById("video_play_" + ids[2]), 1);
+			}
 		}
 
 		/**
