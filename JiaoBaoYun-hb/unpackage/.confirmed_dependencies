@@ -191,7 +191,10 @@
 			"css/show/show.css",
 			"image/dynamic/praise.png",
 			"image/utils/playvideo.png",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/utils/pullToRefresh.css",
+			"js/mui.lazyload.js",
+			"js/mui.lazyload.img.js"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html"
@@ -235,7 +238,9 @@
 			"js/publicQiuzhiProtocol.js",
 			"js/qiuzhi/qiuzhi-home.js",
 			"css/qiuzhi/qiuzhi.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-sub.html",
@@ -311,7 +316,11 @@
 		"refer": [
 			"html/qiuzhi/focus-question.html",
 			"html/qiuzhi/AttentionPersons.html",
-			"html/register/login.html"
+			"html/register/login.html",
+			"html/qiuzhi/qiuzhi-expertAllAnswer.html",
+			"html/qiuzhi/expert-ask.html",
+			"html/qiuzhi/qiuzhi-inviteAnswer.html",
+			"html/qiuzhi/qiuzhi-expertAllComment.html"
 		]
 	},
 	"html/qiuzhi/focus-question.html": {
@@ -638,6 +647,47 @@
 	"html/qiuzhi/experts_main.html": {
 		"resources": [
 			"image/qiuzhi/expert_level.png",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/qiuzhi/qiuzhi-expertAllAnswer.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/qiuzhi/qiuzhi-inviteAnswer.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/qiuzhi/expert-ask.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-question.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi-inviteAnswer.html": {
+		"resources": [
+			"js/qiuzhi/qiuzhi-inviteAnswer.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/qiuzhi/qiuzhi-inviteAnswer.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/qiuzhi/qiuzhi-question.html"
+		]
+	},
+	"html/qiuzhi/qiuzhi-expertAllComment.html": {
+		"resources": [
+			"css/qiuzhi/qiuzhi-expertAllComment.css",
+			"image/qiuzhi/channel-science.png",
+			"image/qiuzhi/channel-health.png",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"image/qiuzhi/channel-food.png",
 			"js/libs/crypto-js/crypto-js.js"
 		]
 	}

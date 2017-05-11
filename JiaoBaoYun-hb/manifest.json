@@ -3795,7 +3795,11 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"fonts/mui.ttf",
 					"image/qiuzhi/channel-edu.png",
-					"image/qiuzhi/channel-health.png"
+					"image/qiuzhi/channel-health.png",
+					"image/qiuzhi/channel-science.png",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"image/qiuzhi/channel-food.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -3863,7 +3867,9 @@
 					"js/utils/RSAEncrypt.js",
 					"image/utils/default_personalimage.png"
 				],
-				"refer": [],
+				"refer": [
+					"html/qiuzhi/qiuzhi-question.html"
+				],
 				"priority": 0
 			},
 			"html/qiuzhi/expert-ask.html": {

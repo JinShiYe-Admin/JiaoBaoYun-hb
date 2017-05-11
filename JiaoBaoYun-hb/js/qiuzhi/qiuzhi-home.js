@@ -125,9 +125,13 @@ var setListener = function() {
 		});
 	});
 	events.addTap('expertSearch', function() {
-		events.openNewWindowWithData('../qiuzhi/qiuzhi-questionSearch.html', 'jxq');
+		this.disabled=true;
+		events.singleWebviewInPeriod(this,'../qiuzhi/qiuzhi-questionSearch.html', 'jxq')
+//		events.openNewWindowWithData();
 	});
 	document.querySelector('.img-icon').addEventListener('tap', function(e) {
+		this.disabled=true;
+		jQuery(this).css("pointerEvents","none");
 		var personalInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
 		personalInfo.UserId = personalInfo.utid;
 		events.singleWebviewInPeriod(this,'../qiuzhi/expert-detail.html', personalInfo)
