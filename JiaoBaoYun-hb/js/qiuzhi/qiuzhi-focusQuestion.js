@@ -9,9 +9,9 @@ mui.plusReady(function() {
 	//	mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 	//		events.openNewWindowWithData('../qiuzhi/expert-detail.html', expertData);
 	//	});
-
-	window.addEventListener('focus-question', function(event) {
-		ExpertsInfoModel = event.detail.data;
+	var curPage = plus.webview.currentWebview();
+	ExpertsInfoModel = curPage.data;
+//	window.addEventListener('focus-question', function(event) {
 		console.log('传值的model为=' + JSON.stringify(ExpertsInfoModel));
 		//清除节点
 		document.getElementById('list-container').innerHTML = "";
@@ -24,7 +24,7 @@ mui.plusReady(function() {
 			//游客身份、获取关注的问题
 			getFocusAsksByUserNotLogin();
 		}
-	});
+//	});
 
 	mui('.mui-table-view').on('tap', '.ask-title', function() {
 		var parent = this.parentNode.parentNode.parentNode;
@@ -110,7 +110,7 @@ mui.plusReady(function() {
 //游客身份、获取关注的问题
 function getFocusAsksByUserNotLogin() {
 	console.log('111111=='+window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION));
-	if (window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION) == null||window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION)) {
+	if (window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION) == null||window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION)=='') {
 		mui.toast('没有数据');
 		return;
 	}

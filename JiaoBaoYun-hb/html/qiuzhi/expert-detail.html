@@ -133,7 +133,7 @@
 		var ExpertsInfo;
 		var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 		mui.plusReady(function() {
-			events.preload('focus-question.html', 10);
+//			events.preload('focus-question.html', 10);
 			var main = plus.webview.currentWebview(); //获取当前窗体对象
 			ExpertsInfo = main.data; //接收页面传入参数值，传过来的专家model
 			var utid = window.myStorage.getItem(storageKeyName.PERSONALINFO).utid;
@@ -176,10 +176,10 @@
 			})
 			events.addTap('FocusAsk', function() {
 				console.log('关注的问题');
-				events.fireToPage('focus-question.html', 'focus-question', function() {
-					return ExpertsInfo;
-				})
-
+				events.openNewWindowWithData('focus-question.html', ExpertsInfo);
+//				events.fireToPage('focus-question.html', 'focus-question', function() {
+//					return ExpertsInfo;
+//				})
 			})
 			events.addTap('FocusMan', function() {
 				this.disabled = true;
