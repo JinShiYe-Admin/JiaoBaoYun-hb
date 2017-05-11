@@ -114,7 +114,7 @@ var events = (function(mod) {
 					data: datas
 				}
 			}],
-			beforeback:function(){
+			beforeback: function() {
 				mod.closeWaiting();
 				return true;
 			}
@@ -178,10 +178,18 @@ var events = (function(mod) {
 	 * @param {Object} tarPage 页面路径
 	 * @param {Object} interval 延迟加载时间间隔 单位毫秒 ，不输入默认为0
 	 */
-	mod.preload = function(tarPage, interval) {
+	mod.preload = function(tarPage, interval, navBarStyle) {
+
 		if(!interval) {
 			interval = 0;
 		}
+		var styles
+		if(navBarStyle) {
+			 styles = mod.getNavBarStyle(navBarStyle);
+		} else {
+			styles=mod.getWebStyle();
+		}
+
 		console.log("预加载的页面：" + tarPage)
 		if(!plus.webview.getWebviewById(tarPage)) {
 			//初始化预加载详情页面
@@ -189,7 +197,7 @@ var events = (function(mod) {
 				mui.preload({
 					url: tarPage,
 					id: tarPage.split('/')[tarPage.split('/').length - 1], //默认使用当前页面的url作为id
-					styles: mod.getWebStyle(),
+					styles:styles,
 					show: {
 						anishow: 'slide-in-right',
 						duration: 250
@@ -201,7 +209,23 @@ var events = (function(mod) {
 				})
 			}, interval)
 		}
-
+	}
+	/**
+	 * 获取样式
+	 */
+	mod.getNavBarStyle = function(navBarStyle) {
+		var extraStyle = {
+			backgroundColor: "#13b7f6",
+			titleColor: "#FFFFFF",
+			backButton: {
+				color: "#FFFFFF",
+				colorPressed: "#0000FF"
+			}
+		}
+		mui.extend(navBarStyle, extraStyle);
+		return mui.extend({
+			navigationbar: navBarStyle
+		}, mod.getWebStyle());
 	}
 	/**
 	 * 加载不需要传值的预加载页面
@@ -793,6 +817,7 @@ var events = (function(mod) {
 				setTimeout(function() {
 					mod.closeWaiting();
 					item.disabled = false;
+					jQuery(item).css("pointerEvents","all");
 				}, 500)
 			} else {
 				setItemAble(item, targetWeb);
@@ -862,6 +887,8 @@ var events = (function(mod) {
 	}
 	//判断是否是游客身份登录，页面中有用户操作时调用
 	mod.judgeLoginMode = function(item) {
+		item.disabled=true;
+		jQuery(item).css("pointerEvents","none");
 		console.log('判断是否是游客身份登录');
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		if(personal.utid > 0) { //有账号，正常登录
@@ -1129,7 +1156,7 @@ var events = (function(mod) {
 					console.log('wenti 不存在');
 					mui.toast('该提问已不存在');
 					callback(false);
-				}else{
+				} else {
 					callback(true);
 				}
 			});
@@ -1150,7 +1177,7 @@ var events = (function(mod) {
 				if(data.RspCode == 1017) {
 					mui.toast('该回答已不存在');
 					callback(false);
-				}else{
+				} else {
 					callback(true);
 				}
 			});
