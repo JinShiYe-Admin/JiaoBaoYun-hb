@@ -137,7 +137,7 @@
 						}
 						return;
 					}
-					RecordVideo.recordVideo({}, function(path) {
+					video.recordVideo({}, function(path) {
 						events.showWaiting();
 						console.log("保存在本地的路径：" + path);
 						load.getManageOptions(2, path, function(mData, thumb) {

@@ -110,7 +110,7 @@ mui.plusReady(function() {
 //游客身份、获取关注的问题
 function getFocusAsksByUserNotLogin() {
 	console.log('111111=='+window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION));
-	if (window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION) == null) {
+	if (window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION) == null||window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION)) {
 		mui.toast('没有数据');
 		return;
 	}
