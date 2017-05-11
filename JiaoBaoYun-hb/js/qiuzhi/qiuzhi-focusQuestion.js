@@ -109,6 +109,11 @@ mui.plusReady(function() {
 
 //游客身份、获取关注的问题
 function getFocusAsksByUserNotLogin() {
+	console.log('111111=='+window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION));
+	if (window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION) == null) {
+		mui.toast('没有数据');
+		return;
+	}
 	//需要加密的数据
 	var comData = {
 		askIds: JSON.stringify(window.myStorage.getItem(window.storageKeyName.FOCUSEQUESTION)) //问题ID列表，Array，	例如[1,2,3]
