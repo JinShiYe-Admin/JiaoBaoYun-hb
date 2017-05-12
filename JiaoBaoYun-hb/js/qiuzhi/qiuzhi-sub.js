@@ -437,6 +437,7 @@ var setListener = function() {
 		});
 		setTimeout(function() {
 			self.disabled = false;
+			jQuery(self).css("pointerEvents","all");
 		}, 1500);
 	});
 	//标题点击事件

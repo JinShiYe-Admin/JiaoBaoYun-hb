@@ -339,6 +339,7 @@
 				//34.邀请某人回答
 				postDataQZPro_addInvite(comData, wd, function(data) {
 					item.disabled=false;
+					jQuery(item).css("pointerEvents","all");
 					console.log('34.邀请某人回答:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
 						if(data.RspData.Result == 1) {

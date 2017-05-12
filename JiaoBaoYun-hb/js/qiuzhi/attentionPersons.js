@@ -348,6 +348,7 @@ var setFocus = function(item, type) {
 				mui.toast(data.RspTxt);
 			}
 			item.disabled = false;
+			jQuery(item).css("pointerEvents","all");
 		})
 	} else {
 		events.toggleStorageArray(storageKeyName.FOCUSEPERSEN, parseInt(item.personInfo.UserId), !type);
@@ -357,6 +358,7 @@ var setFocus = function(item, type) {
 		item.innerHTML = buttonInfo.inner;
 		item.className = 'mui-btn mui-btn-outlined ' + buttonInfo.classInfo;
 		item.disabled=false;
+		jQuery(item).css("pointerEvents","all");
 	}
 
 }

@@ -106,7 +106,8 @@
 			"html/quan/zone_main.html",
 			"html/quan/pub-dynamic.html",
 			"html/mine/ReadQRCode.html",
-			"html/cloud/app_keeprecord.html"
+			"html/cloud/app_keeprecord.html",
+			"html/quan/aboutme.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -133,7 +134,9 @@
 			"css/mui.min.css",
 			"css/utils/common.css"
 		],
-		"refer": []
+		"refer": [
+			"html/quan/zone_main.html"
+		]
 	},
 	"html/index/firstPage.html": {
 		"resources": [
@@ -178,7 +181,9 @@
 			"html/mine/account-info.html",
 			"html/mine/setting.html",
 			"html/mine/qun_manage_a.html",
-			"html/mine/approval-apply.html"
+			"html/mine/approval-apply.html",
+			"html/mine/about.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/show/show_home_1.html": {
@@ -200,7 +205,10 @@
 			"js/mui.lazyload.img.js"
 		],
 		"refer": [
-			"html/quan/classSpace-persons.html"
+			"html/quan/classSpace-persons.html",
+			"html/quan/pub-dynamic.html",
+			"html/show/add-comment.html",
+			"html/utils/customizeCity.html"
 		]
 	},
 	"html/index/index.html": {
@@ -364,7 +372,11 @@
 	},
 	"html/homework/doHomework-stu.html": {
 		"resources": [
-			"js/cloud/mui.previewimage.js"
+			"js/cloud/mui.previewimage.js",
+			"css/quan/custom-textarea.css",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/utils/preview.css"
 		],
 		"refer": []
 	},
@@ -398,7 +410,9 @@
 			"css/homework/subjects-icon.css",
 			"js/libs/crypto-js/crypto-js.js"
 		],
-		"refer": []
+		"refer": [
+			"html/homework/doHomework-stu.html"
+		]
 	},
 	"html/homework/workdetail-tea.html": {
 		"resources": [
@@ -415,7 +429,8 @@
 			"css/homework/homework-commit.css",
 			"js/homework/homework-comment.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
 	},
@@ -424,7 +439,9 @@
 			"js/homework/homework_detail.js",
 			"css/homework/workdetail.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"css/homework/subjects-icon.css"
+			"css/homework/subjects-icon.css",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/homework/homework-comment.html"
@@ -489,7 +506,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"css/quan/class_space.css"
+			"css/quan/class_space.css",
+			"image/quan/add.png"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",
@@ -590,7 +608,9 @@
 		"resources": [
 			"css/utils/preview.css",
 			"css/icons-extra.css",
-			"css/show/show.css"
+			"css/show/show.css",
+			"image/dynamic/praise.png",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/mine/QRCode.html": {
@@ -605,7 +625,8 @@
 			"css/mui.min.css",
 			"css/mine/manager_member.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mine/manager_data.css"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html"
@@ -704,7 +725,8 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/delete.png"
 		]
 	},
 	"html/cloud/app_keeprecord.html": {
@@ -740,6 +762,33 @@
 			"css/utils/common.css",
 			"js/mine/apply-group.js",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/quan/aboutme.html": {
+		"resources": [
+			"html/quan/aboutme_sub.html",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		],
+		"refer": [
+			"html/quan/aboutme_sub.html"
+		]
+	},
+	"html/quan/aboutme_sub.html": {
+		"resources": [
+			"css/quan/about-me.css",
+			"js/quan/about-me.js",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/homework/workdetail-stu.html"
+		]
+	},
+	"html/mine/about.html": {
+		"resources": [
+			"image/mine/jiaobaoyun.png",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	}
 }

@@ -412,6 +412,7 @@ var dynamiclistitem = (function($, mod) {
 				return;
 			}
 			this.disabled = false;
+			jQuery(this).css("pointerEvents","all");
 			var pageID = sliderId.replace('top_', '')
 			console.log('id=' + this.id)
 			tempIndex = this.id.replace('comment' + pageID + idFlag, '');
@@ -427,6 +428,7 @@ var dynamiclistitem = (function($, mod) {
 				return;
 			}
 			this.disabled = false;
+			jQuery(this).css("pointerEvents","all");
 			var pageID = sliderId.replace('top_', '')
 			tempIndex = this.id.replace('replyComment' + pageID + idFlag, '');
 			mod.addComment('tap');
@@ -440,6 +442,7 @@ var dynamiclistitem = (function($, mod) {
 				return;
 			}
 			this.disabled = false;
+			jQuery(this).css("pointerEvents","all");
 			//			console.log('长按删除评论')
 			var pageID = sliderId.replace('top_', '')
 			tempIndex = this.id.replace('replyComment' + pageID + idFlag, '');
@@ -488,6 +491,7 @@ var dynamiclistitem = (function($, mod) {
 			postDataPro_setUserFocus(comData, wd, function(data) {
 				wd.close();
 				item.disabled=false;
+				jQuery(item).css("pointerEvents","all");
 				if(data.RspCode == 0) {
 					var btn = document.getElementById(tempId);
 					btn.innerHTML = '取消关注'
@@ -532,6 +536,7 @@ var dynamiclistitem = (function($, mod) {
 				wd.close();
 				console.log(JSON.stringify(data));
 				item.disabled=false;
+				jQuery(item).css("pointerEvents","all");
 				if(data.RspCode == 0) {
 					var btn = document.getElementById(tempId);
 					btn.innerHTML = '关注'
@@ -679,6 +684,7 @@ var dynamiclistitem = (function($, mod) {
 						mui.toast(data.RspTxt);
 					}
 					item.disabled=false;
+					jQuery(item).css("pointerEvents","all");
 				})
 
 			} else {
@@ -741,6 +747,7 @@ var dynamiclistitem = (function($, mod) {
 						mui.toast(data.RspTxt);
 					}
 					item.disabled=false;
+					jQuery(item).css("pointerEvents","all");
 				})
 
 			}
@@ -766,6 +773,7 @@ var dynamiclistitem = (function($, mod) {
 					postDataPro_delUserSpaceById(comData, wd, function(data) {
 						wd.close();
 						item.disabled=false;
+						jQuery(item).css("pointerEvents","all");
 						if(data.RspCode == 0) {
 							mui.toast('已删除');
 
@@ -778,6 +786,7 @@ var dynamiclistitem = (function($, mod) {
 					})
 				}else{
 					item.disabled=false;
+					jQuery(item).css("pointerEvents","all");
 				}
 			})
 		})
@@ -984,25 +993,6 @@ var dynamiclistitem = (function($, mod) {
 		div.style.marginTop = '-10px'
 		div.innerHTML = html;
 		liElement.appendChild(div);
-		//				if(ImageNum == 1) {
-		//					var img = div.getElementsByClassName('dynamic-image')[0];
-		//					console.log(img.outerHTML);　　
-		//					var width = img.naturalWidth;　　
-		//					var height = img.naturalHeight;
-		//					
-		//					if(width<height){
-		//						console.log('width=' + width + '-----' + 'height=' + height);
-		//						var tempwidth = (SCREEN_WIDTH - 20) / 2;
-		//						img.setAttribute('width',tempwidth+'px');
-		//						img.setAttribute('height',tempwidth/width*height+'px')
-		//					}else{
-		//						console.log('width=' + width + '-----' + 'height=' + height);
-		//						var tempHeight = (SCREEN_WIDTH - 20);
-		//						img.setAttribute('height',tempHeight+'px');
-		//						img.setAttribute('width',tempHeight/height*width+'px')
-		//					}
-		//				}
-
 		mod.addInteraction(ulElement, liElement, data);
 	};
 	mod.questionContent = function() {
