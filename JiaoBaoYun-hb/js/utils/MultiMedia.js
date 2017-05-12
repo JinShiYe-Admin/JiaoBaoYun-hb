@@ -599,12 +599,13 @@ var MultiMedia = (function($, mod) {
 		var marginLeft = self.data.AudioMarginLeft;
 		var time = playutil.audioTimePercent(data.time);
 		self.data.AudioArray.push(data);
+		var width_button = (plus.screen.resolutionWidth - 80) * time * 0.01;
 		//显示音频
 		var element = document.createElement('div');
 		element.id = data.fpath + '-' + data.time;
 		element.className = 'multimedia-audio-area';
 		element.innerHTML = '<span class="mui-icon mui-icon-closeempty multimedia-audio-icon-closeempty"></span>\
-							<button type="button" class="mui-btn mui-btn-grey mui-btn-outlined multimedia-audio-button" style="width: ' + time + '%;">\
+							<button type="button" class="mui-btn mui-btn-grey mui-btn-outlined multimedia-audio-button" style="width: ' + width_button + 'px;">\
 								<div class="multimedia-audio-triangle multimedia-audio-triangle-out"></div>\
 								<div class="multimedia-audio-triangle multimedia-audio-triangle-in"></div>\
 								<div class="multimedia-audio-time">' + data.time + '\'\'</div>\

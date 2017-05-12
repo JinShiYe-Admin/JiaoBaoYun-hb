@@ -329,6 +329,9 @@
 					console.log('录制音频成功 ' + fpath);
 					audioOption.fpath = fpath;
 					audioOption.time = Math.ceil(recordTime / 10);
+					if(audioOption.time > 300) {
+						audioOption.time = 300;
+					}
 					if(recordTimeId) {
 						clearInterval(recordTimeId);
 						recordTimeId = null;
