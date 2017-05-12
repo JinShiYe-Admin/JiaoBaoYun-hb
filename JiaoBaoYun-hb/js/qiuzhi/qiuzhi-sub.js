@@ -565,8 +565,7 @@ var fireToPageReady = function(type, options) {
 	if(type) {
 		if(answerIsReady) { //求知回答界面已加载完毕
 			events.closeWaiting();
-			events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', options);
-			plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right", 250);
+			events.fireToPageWithData('qiuzhi-answerDetail.html', 'answerInfo', options);
 		} else {
 			setTimeout(function() {
 				events.showWaiting();

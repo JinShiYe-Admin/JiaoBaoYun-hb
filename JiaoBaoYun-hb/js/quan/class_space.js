@@ -13,13 +13,13 @@ var class_space = (function(mod) {
 		postData.pageSize = pageSize;
 		mod.wd = events.showWaiting();
 		postDataPro_getClassSpacesByUserForClass(postData, wd, function(pagedata) {
-//			wd.close();
+			//			wd.close();
 			if(pagedata.RspCode == 0 && pagedata.RspData.Data.length > 0) {
 				console.log('获取的班级动态：' + JSON.stringify(pagedata));
 				mod.totalPagNo = pagedata.RspData.TotalPage;
 				list = pagedata.RspData.Data;
-				if(pageIndex==1){
-					setReaded(postData.userId, postData.classId,mod.wd);	
+				if(pageIndex == 1) {
+					setReaded(postData.userId, postData.classId, mod.wd);
 				}
 				callback();
 			} else {
@@ -83,7 +83,7 @@ var class_space = (function(mod) {
 			'</div>' +
 			'<div class="chat_content_left">' +
 			'<div class="chat-body">' + '<p class="chat-words">' +
-			item.MsgContent.replace(/ /g,"&nbsp").replace(/\n/g,"<br/>") + '</p><div class="class-imgs">' +
+			item.MsgContent.replace(/ /g, "&nbsp").replace(/\n/g, "<br/>") + '</p><div class="class-imgs">' +
 			createImgsInner(item, index) +
 			'</div></div>' +
 			'<p class="chat-bottom">' + events.shortForDate(item.PublishDate) +
@@ -136,7 +136,7 @@ var class_space = (function(mod) {
 			vvl: postData.classId.toString(), //群ID或IDS,查询的值,多个用逗号隔开
 			vvl1: -1 //群员类型，0家长,1管理员,2老师,3学生,-1取全部
 		};
-//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
+		//		var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING)
 		postDataPro_PostGusers(comData, mod.wd, function(pInfo) {
 			console.log('获取的个人信息:' + JSON.stringify(pInfo))
 			//			wd.close();
@@ -154,7 +154,7 @@ var class_space = (function(mod) {
 					vvl: ids.toString()
 				}, mod.wd, function(remarkData) {
 					console.log('获取的备注信息：' + JSON.stringify(remarkData));
-//					wd.close();
+					//					wd.close();
 					if(remarkData.RspCode == 0) {
 						var buData = remarkData.RspData;
 						for(var i in list) {
@@ -198,9 +198,9 @@ var class_space = (function(mod) {
 				vtp: 'g' //查询类型,p(个人)g(id串)
 			}
 			//21.通过用户ID获取用户资料
-//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-			postDataPro_PostUinf(tempData,mod.wd, function(data) {
-//				wd.close();
+			//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataPro_PostUinf(tempData, mod.wd, function(data) {
+				//				wd.close();
 				console.log('获取的个人信息:' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					rechargeInfos(data.RspData);
@@ -225,7 +225,7 @@ var class_space = (function(mod) {
 	}
 	var setData = function() {
 		var container = document.getElementById('classSpace_list');
-//		var fragment=document.createDocumentFragment();
+		//		var fragment=document.createDocumentFragment();
 		for(var i in list) {
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell';
@@ -246,7 +246,7 @@ var class_space = (function(mod) {
 			classWords_container.info = list[i];
 		}
 		mod.wd.close();
-//		container.appendChild(fragment);
+		//		container.appendChild(fragment);
 	}
 	var getLineNo = function(classWords_container) {
 		var style = window.getComputedStyle(classWords_container, null);
@@ -290,12 +290,29 @@ var pageIndex = 1;
 var pageSize = 10;
 var postData;
 var wd;
+var className;
 mui.plusReady(function() {
 	mui.previewImage();
 	postData = plus.webview.currentWebview().data;
 	postData.userId = parseInt(postData.userId);
+	//班级名称
+	className = plus.webview.currentWebview().className;
+	document.getElementById('title').innerText = getHeadText(className);
+	events.preload('class-group.html');
 	events.preload('classSpace-persons.html', 200);
-//	setReaded(postData.userId, postData.classId);
+	var write = document.getElementById('write');
+	console.log('班级空间：' + JSON.stringify(postData));
+	getUserInGroup(-1, postData.classId, function(data) {
+		groupRoles = data;
+		write.style.display = 'none';
+		console.log('获取本人在群的所有信息：' + JSON.stringify(data));
+		for(var i in groupRoles) {
+			if(groupRoles[i].mstype == 2 || groupRoles[i].mstype == 1) {
+				write.style.display = 'inline-block';
+				break;
+			}
+		}
+	});
 	console.log('班级空间获取值：' + JSON.stringify(postData));
 	class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 	setListener(postData.userId);
@@ -303,30 +320,27 @@ mui.plusReady(function() {
 	window.addEventListener('infoChanged', function() {
 		mui('#refreshContainer').pullRefresh().refresh(true);
 		pageIndex = 1;
-//		setReaded(postData.userId, postData.classId);
+		//		setReaded(postData.userId, postData.classId);
+		var container = document.getElementById('classSpace_list');
+		container.innerHTML="";
+		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+	})
+	h5fresh.addRefresh(function() {
+		pageIndex = 1;
 		var container = document.getElementById('classSpace_list');
 		events.clearChild(container);
 		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-	})
-	/***
-	 * 加载刷新
-	 */
-	events.initRefresh('classSpace_list',
-		function() {
-//			setReaded(postData.userId, postData.classId);
-			pageIndex = 1;
-			var container = document.getElementById('classSpace_list');
-			events.clearChild(container);
+	}, {
+		offset: "45px",
+		style: "circle"
+	});
+	h5fresh.addPullUpFresh("#refreshContainer", function() {
+		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
+		if(pageIndex < class_space.totalPagNo) {
+			pageIndex++;
 			class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-		},
-		function() {
-			console.log('请求页面：page' + pageIndex);
-			mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
-			if(pageIndex < class_space.totalPagNo) {
-				pageIndex++;
-				class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-			}
-		});
+		}
+	});
 	var firstTime = null;
 	mui('.mui-table-view').on('tap', '.head-portrait', function() {
 		//		console.log(id);
@@ -358,8 +372,35 @@ mui.plusReady(function() {
 		}
 	})
 });
-var setReaded = function(userId, classId,wd) {
-//	var wd1 = events.showWaiting();
+/**
+ * 获取用户在群组中的信息
+ * @param {Object} mstype
+ * @param {Object} callback
+ */
+var getUserInGroup = function(mstype, groupId, callback) {
+	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+	postDataPro_PostGuI({
+		vvl: groupId,
+		vtp: mstype
+	}, wd, function(data) {
+		wd.close()
+		console.log('用户在群的身份 ' + JSON.stringify(data));
+		if(data.RspCode == '0000') {
+			callback(data.RspData);
+		} else {
+			mui.toast(data.RspTxt);
+		}
+	})
+}
+//获取标题栏名称
+var getHeadText = function(className) {
+	if(className.length > 8) {
+		className = className.substring(0, 10) + '...'
+	}
+	return className;
+}
+var setReaded = function(userId, classId, wd) {
+	//	var wd1 = events.showWaiting();
 	postDataPro_setClassSpaceReadByUser({
 		userId: userId,
 		classId: classId
@@ -375,27 +416,30 @@ var setReaded = function(userId, classId,wd) {
 		}
 	})
 }
-/**
- * 修改动态
- */
-//var changeDynamic=function(){
-//	
-//}
-/**
- * 删除动态
- */
-//var delDynamic=function(){
-//	
-//}
+
 /**
  * 增回单条数据
  */
-var addSingleDynamic=function(){
-	if(pageIndex<class_space.totalPagNo){
-		class_space.getList(postData, pageIndex*10, 1, class_space.replaceUrl);
+var addSingleDynamic = function() {
+	if(pageIndex < class_space.totalPagNo) {
+		class_space.getList(postData, pageIndex * 10, 1, class_space.replaceUrl);
 	}
 }
 var setListener = function(userId) {
+	events.addTap('write', function() {
+		events.openNewWindowWithData('class-dynamic.html', postData)
+	})
+	//群组按钮点击事件
+	events.addTap('group', function() {
+		events.showWaiting();
+		setTimeout(function() {
+			events.fireToPageWithData('class-group.html', 'postGroupInfo', {
+				classId: postData.classId,
+				className: className
+			});
+			events.closeWaiting();
+		}, 1000);
+	})
 	var zan = document.getElementById('zan');
 	/**
 	 * 未点赞按钮点击事件

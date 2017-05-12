@@ -531,7 +531,10 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"js/quan/class_space.js",
+					"css/utils/bubble.css",
+					"css/utils/preview.css"
 				],
 				"refer": [
 					"html/quan/class-group.html"
@@ -2494,7 +2497,8 @@
 					"fonts/fangzheng.ttf",
 					"js/utils/events.js",
 					"js/utils/playutil.js",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -3070,9 +3074,16 @@
 					"css/utils/common.css",
 					"css/iconfont/iconfont.css",
 					"fonts/iconfont.ttf",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"image/qiuzhi/qiuzhi_noanswer.png",
+					"css/qiuzhi/qiuzhi-answerDetailSub.css",
+					"js/qiuzhi/qiuzhi-answerDetailSub.js",
+					"css/utils/preview.css",
+					"js/libs/crypto-js/crypto-js.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/qiuzhi/qiuzhi-addAnswer.html"
+				],
 				"priority": 0
 			},
 			"html/qiuzhi/qiuzhi-answerDetailSub.html": {

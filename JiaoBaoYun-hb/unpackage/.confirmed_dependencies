@@ -93,7 +93,9 @@
 			"image/cloud/cloud_0_xinjian_4.png",
 			"image/cloud/cloud_0_tongxunlu.png",
 			"image/quan/Scan.png",
-			"image/cloud/cloud_0_wenjianjia_1.png"
+			"image/cloud/cloud_0_wenjianjia_1.png",
+			"image/cloud/cloud_0_unknow_0.png",
+			"image/cloud/cloud_0_txt_0.png"
 		],
 		"refer": [
 			"html/index/mine.html",
@@ -132,7 +134,8 @@
 		"resources": [
 			"js/quan/classSpace-persons.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/quan/zone_main.html"
@@ -236,7 +239,8 @@
 			"js/utils/CloudFileUtil.js",
 			"js/qiniu/qiniu.js",
 			"css/cloud/file.css",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
@@ -274,15 +278,24 @@
 		"resources": [
 			"html/qiuzhi/qiuzhi-answerDetailSub.html",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"image/qiuzhi/qiuzhi_noanswer.png",
+			"css/qiuzhi/qiuzhi-answerDetailSub.css",
+			"js/qiuzhi/qiuzhi-answerDetailSub.js",
+			"css/utils/preview.css",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
-			"html/qiuzhi/qiuzhi-answerDetailSub.html"
+			"html/qiuzhi/qiuzhi-answerDetailSub.html",
+			"html/qiuzhi/qiuzhi-addAnswer.html"
 		]
 	},
 	"html/cloud/storage_transport.html": {
 		"resources": [
-			"js/utils/playutil.js"
+			"js/utils/playutil.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": []
 	},
@@ -546,7 +559,11 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"css/quan/class_space.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/urlBrief.js",
+			"js/quan/class_space.js",
+			"css/utils/bubble.css",
+			"css/utils/preview.css"
 		],
 		"refer": [
 			"html/quan/class-group.html",
