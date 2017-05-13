@@ -448,7 +448,7 @@
 												} else {
 
 												}
-											});
+											}, 'div');
 										}
 									}
 								});
@@ -481,7 +481,7 @@
 								} else {
 
 								}
-							});
+							}, 'div');
 						}
 					} else {
 						mui.toast('未找到对应的上传任务');
@@ -502,7 +502,7 @@
 							} else {
 
 							}
-						});
+						}, 'div');
 					}
 				});
 
@@ -564,7 +564,7 @@
 												} else {
 
 												}
-											});
+											}, 'div');
 										}
 									}
 								});
@@ -660,7 +660,7 @@
 							} else {
 
 							}
-						});
+						}, 'div');
 					} else if(downError) {
 						var btnArray = ['否', '是'];
 						mui.confirm('确认删除任务？', '提示', btnArray, function(e) {
@@ -669,7 +669,7 @@
 							} else {
 
 							}
-						});
+						}, 'div');
 					} else {
 						mui.toast('未找到对应的下载任务');
 						console.log('未找到对应的下载任务');
@@ -714,7 +714,7 @@
 											getQNDownToken(postData.fileUrl, postData.fname, postData.localname);
 										}
 									}
-								});
+								}, 'div');
 							}
 						}
 					});
@@ -1393,7 +1393,7 @@
 						} else {
 
 						}
-					});
+					}, 'div');
 				}
 			});
 		</script>
