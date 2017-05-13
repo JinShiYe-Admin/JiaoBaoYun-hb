@@ -9,44 +9,55 @@ var upperInfo;
 var parentContainer; //评论父控件
 var wd;
 video.initVideo();
-/**
- * 加载刷新
- */
-events.initRefresh('list-container', function() {
-	flag = 1;
-	pageIndex = 1;
-	wd = events.showWaiting();
-	requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
-}, function() {
-	mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
-	if(pageIndex < totalPageCount) {
-		pageIndex++;
-		flag = 1;
-		wd = events.showWaiting();
-		requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
-	} else {
-		mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
-		events.showNoDataToast(pageIndex);
-	}
-})
-/**
- * 
- */
 mui.plusReady(function() {
 	//增加图片预览功能
 	mui.previewImage();
+	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'), "answerIsReady");
 	//限制下拉刷新
-	events.limitPreviewPullDown("refreshContainer");
+		events.limitPreviewPullDown("refreshContainer",1);
+	//	ws=plus.webview.currentWebview();
+	//	ws.setBounce({position:"none"});
+	h5fresh.addRefresh(function() {
+		document.getElementById("list-container").innerHTML = "";
+		flag = 1;
+		pageIndex = 1;
+		wd = events.showWaiting();
+		requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
+	}, {
+		style: "circle",
+		offset: "50px"
+	})
+	h5fresh.addPullUpFresh("#refreshContainer", function() {
+		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
+		if(pageIndex < totalPageCount) {
+			pageIndex++;
+			flag = 1;
+			wd = events.showWaiting();
+			requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
+		}
+	})
 	//预加载回答问题界面
 	events.preload('qiuzhi-addAnswer.html');
-	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'), "answerIsReady");
-	plus.webview.currentWebview().opener().addEventListener("hide", function() {
+
+	plus.webview.currentWebview().addEventListener("hide", function() {
 		mui.previewImage().close();
 		console.log("求知回答页面已隐藏");
 		events.clearChild(document.getElementById('list-container'));
 		hideBottom();
 		setOriginalCondition();
 		mui('#popover').popover('hide');
+	})
+	plus.webview.currentWebview().addEventListener("show", function(e) {
+//		h5fresh.addRefresh(function() {
+//			document.getElementById("list-container").innerHTML = "";
+//			flag = 1;
+//			pageIndex = 1;
+//			wd = events.showWaiting();
+//			requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
+//		}, {
+//			style: "circle",
+//			offset: "50px"
+//		})
 	})
 	//加载监听
 	window.addEventListener('answerInfo', function(e) {
@@ -98,42 +109,18 @@ mui.plusReady(function() {
 		answerData.IsAnonym = changedData.isAnonym;
 		setAnswerManInfo(answerData);
 	})
-	window.addEventListener("showActionSheet", function() {
-		var btnArray;
-		var cbArray;
-		if(answerData.CommentNum + answerData.IsLikeNum) {
-			btnArray = [{
-				title: "修改答案"
-			}, {
-				title: "屏蔽答案",
-				dia: 1 //是否显示dialog
-			}];
-			cbArray = [changeAnswer, shieldAnswer];
-		} else {
-			btnArray = [{
-				title: "修改答案"
-			}, {
-				title: "删除答案",
-				dia: 1 //是否显示dialog
-			}];
-			cbArray = [changeAnswer, delAnswer];
-		}
-
-		events.showActionSheet(btnArray, cbArray);
-	})
 	setListeners();
 })
 /**
  * 更改状态 并通知父页面
  */
 var setChangeCondition = function() {
-	var moreShow = 0;
+	var more = document.querySelector(".icon-moreandroid");
 	if(answerInfo.AnswerMan == selfId) {
-		moreShow = 1;
+		more.style.display = "inline-block";
 	} else {
-		moreShow = 0;
+		more.style.display = "none";
 	}
-	mui.fire(plus.webview.currentWebview().opener(), "moreShow", moreShow);
 }
 /**
  * 修改回答
@@ -851,9 +838,30 @@ var setName = function(cell) {
  * 设置监听
  */
 var setListeners = function() {
-	//	plus.webview.currentWebview().opener().querySelector(".icon-moreandroid").addEventListener("tap", function() {
-	//
-	//	});
+	var more = document.querySelector(".icon-moreandroid");
+	more.addEventListener("tap", function() {
+		var btnArray;
+		var cbArray;
+		if(answerData.CommentNum + answerData.IsLikeNum) {
+			btnArray = [{
+				title: "修改答案"
+			}, {
+				title: "屏蔽答案",
+				dia: 1 //是否显示dialog
+			}];
+			cbArray = [changeAnswer, shieldAnswer];
+		} else {
+			btnArray = [{
+				title: "修改答案"
+			}, {
+				title: "删除答案",
+				dia: 1 //是否显示dialog
+			}];
+			cbArray = [changeAnswer, delAnswer];
+		}
+
+		events.showActionSheet(btnArray, cbArray);
+	})
 	//评论的点赞按钮点击事件
 	mui(".mui-table-view").on('tap', '.support-container', function() {
 		//判断是否是游客身份登录
@@ -888,7 +896,7 @@ var setListeners = function() {
 				item.className = "mui-btn mui-pull-right btn-attentioned";
 			}
 			item.disabled = false;
-			jQuery(item).css("pointerEvents","all");
+			jQuery(item).css("pointerEvents", "all");
 		}
 
 	})
@@ -1037,7 +1045,7 @@ var setIsLikeAnswer = function(itemContainer) {
 		status: item.isLike ? 0 : 1 //点赞状态,0 取消点赞,1 点赞
 	}, wd, function(data) {
 		itemContainer.disabled = false;
-		jQuery(itemContainer).css("pointerEvents","all");
+		jQuery(itemContainer).css("pointerEvents", "all");
 		wd.close();
 		console.log('答案点赞取消点赞结果：' + JSON.stringify(data));
 		if(data.RspCode == 0) {

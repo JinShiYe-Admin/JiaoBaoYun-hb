@@ -1,3 +1,25 @@
+/*header统一样式*/
+
+header:last-of-type {
+	/*背景颜色*/
+	background: #13b7f6;
+	font-family: '微软雅黑 Bold', '微软雅黑';
+}
+
+/*header中的icon 白色*/
+
+header a {
+	color: white;
+	padding-top: 12px;
+	font-size: 14px;
+}
+
+
+/*标题为白色*/
+
+h1:last-of-type {
+	color: white;
+}
 /**
  * 班级空间icon样式
  */
@@ -250,7 +272,7 @@ div>.icon-xiangce:before,
 	border: none;
 }
 .icon-fabu-copy:before,.icon-renren:before{
-	font-size: 2.0rem;
+	font-size: 20px;
 }
 /*.mui-table-view-cell{
 	padding: 0rem;

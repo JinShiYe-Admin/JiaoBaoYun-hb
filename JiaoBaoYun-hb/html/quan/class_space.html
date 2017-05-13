@@ -8,8 +8,14 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
-		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<!--<link href="../../css/utils/common.css" rel="stylesheet" />-->
+		<!--图片预览css-->
+		<link href="../../css/utils/preview.css" rel="stylesheet" />
+		<!--泡泡css-->
+		<link href="../../css/utils/bubble.css" rel="stylesheet" />
+		<!--阿里图标库样式表-->
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<!--班级空间样式表-->
 		<link href="../../css/quan/class_space.css" rel="stylesheet" />
 
 	</head>
@@ -21,79 +27,44 @@
 			<a id="write" class="mui-icon iconfont icon-fabu-copy mui-pull-right"></a>
 			<a id="group" class="mui-icon iconfont icon-renren  mui-pull-right"></a>
 		</header>
-		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/publicProtocol.js"></script>
-		<script>
-			//plusReady事件
-			mui.plusReady(function() {
-				events.changeTopPocket();
-				//预加载班级群组
-				events.preload('class-group.html');
-				var write = document.getElementById('write');
-				var data = plus.webview.currentWebview().data;
-				console.log('班级空间：' + JSON.stringify(data));
-				getUserInGroup(-1, data.classId, function(data) {
-					groupRoles = data;
-					write.style.display = 'none';
-					console.log('获取本人在群的所有信息：' + JSON.stringify(data));
-					for(var i in groupRoles) {
-						if(groupRoles[i].mstype == 2 || groupRoles[i].mstype == 1) {
-							write.style.display = 'inline-block';
-							break;
-						}
-					}
-				});
-				//班级名称
-				var className = plus.webview.currentWebview().className;
-				document.getElementById('title').innerText = getHeadText(className);
-				//群组按钮点击事件
-				events.addTap('group', function() {
-					events.showWaiting();
-					setTimeout(function() {
-						events.fireToPageWithData('class-group.html', 'postGroupInfo', {
-							classId: data.classId,
-							className: className
-						});
-						events.closeWaiting();
-					}, 1000);
-				})
-				//发布班级动态的点击事件
-				events.addTap('write', function() {
-					events.openNewWindowWithData('class-dynamic.html', data)
-				})
-				//加载子页面
-				events.initSubPage('classSpace-sub.html', data);
-			})
-			//获取标题栏名称
-			var getHeadText = function(className) {
-				if(className.length > 8) {
-					className = className.substring(0, 10) + '...'
-				}
-				return className;
-			}
-			/**
-			 * 获取用户在群组中的信息
-			 * @param {Object} mstype
-			 * @param {Object} callback
-			 */
-			var getUserInGroup = function(mstype, groupId, callback) {
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				postDataPro_PostGuI({
-					vvl: groupId,
-					vtp: mstype
-				}, wd, function(data) {
-					wd.close()
-					console.log('用户在群的身份 ' + JSON.stringify(data));
-					if(data.RspCode == '0000') {
-						callback(data.RspData);
-					} else {
-						mui.toast(data.RspTxt);
-					}
-				})
-			}
-		</script>
+			<!--下拉刷新容器-->
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul id="classSpace_list" class="mui-table-view">
+				</ul>
+			</div>
 
+		</div>
+		<!--点赞图标点击后的弹出框-->
+		<div id="popover" class="mui-popover">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a id="zan" class="" href="#">
+						<p class="pop-p"><span id="pop-zan" class="mui-icon iconfont icon-dianzan1 isLike"></span>点赞</p> 
+					</a>
+				</li>
+				<div class="divider-line"></div>
+				<li class="mui-table-view-cell">
+					<a id="check" class=""  href="#"> 
+						<p  class="pop-p"><span id="pop-look" class="mui-icon iconfont icon-liulan isNotLike"></span>查看</p> 
+					</a>
+				</li>
+			</ul>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<!--公共事件js-->
+		<script src="../../js/utils/events.js"></script>
+		<!--接口js-->
+		<script src="../../js/publicProtocol.js"></script>
+		<!--图片预览js-->
+		<script src="../../js/mui.zoom.js"></script>
+		<script src="../../js/mui.previewimage.js"></script>
+		<script src="../../js/utils/h5fresh.js"></script>
+		<!--url跳转-->
+		<script src="../../js/utils/urlBrief.js"></script>
+		<!--班级空间js-->
+		<script src="../../js/quan/class_space.js"></script>
 	</body>
 
 </html>

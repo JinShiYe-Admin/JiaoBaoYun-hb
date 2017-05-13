@@ -163,7 +163,7 @@
 			function init() {
 				var titleWidth = document.getElementById("myCityTitle").offsetWidth;
 				var titleNameWidth = document.getElementById("myCityTitle_1").offsetWidth;
-				console.log(titleWidth + ' ' + titleNameWidth);
+				//console.log(titleWidth + ' ' + titleNameWidth);
 				var cityLine = document.querySelectorAll('.city-my');
 				var cityPoint = document.querySelectorAll('.city-my-point');
 				var width = parseInt(titleWidth / 2 - titleNameWidth);
@@ -217,6 +217,10 @@
 						if(main.data.cities[i].acode != 0 && main.data.cities[i].acode != 1) {
 							addChooseCity(main.data.cities[i]);
 						}
+					}
+					var cityDel = document.querySelectorAll('.city-delete');
+					if(cityDel.length == 0) {
+						document.getElementById("myCityTitle").style.display = 'none';
 					}
 				}
 				document.getElementById("table").style.visibility = 'visible';
