@@ -59,7 +59,7 @@ var compress = (function(mod) {
 					compressedPaths.push(event.target);
 					widths.push(event.width);
 					if(compressCount < paths.length) {
-						mod.compressPIC_recursive(paths[compressCount],callback1);
+						mod.compressPIC_recursive(paths[compressCount], callback1);
 					} else {
 						callback1(compressedPaths, widths);
 					}
@@ -117,9 +117,10 @@ var compress = (function(mod) {
 	 * @param {Object} errorCallBack 失败的回调
 	 */
 	mod.compressImageTo_1MB = function(data, successCallBack, errorCallBack) {
-		var options = {
-			path: data.path, //压缩转换原始图片的路径
-			dst: data.dst, //压缩转换目标图片的路径
+		var options = {}
+		options.path = data.path; //压缩转换原始图片的路径
+		if(data.dst) {
+			options.dst = data.dst; //压缩转换目标图片的路径
 		}
 		console.log('compressImageTo_1MB options ' + JSON.stringify(options));
 		mod.compressImageTo_xx(options, function(event) {
@@ -139,10 +140,11 @@ var compress = (function(mod) {
 	 * @param {Object} errorCallBack 失败的回调
 	 */
 	mod.compressImageTo_512KB = function(data, successCallBack, errorCallBack) {
-		var options = {
-			path: data.path, //压缩转换原始图片的路径
-			dst: data.dst, //压缩转换目标图片的路径
-			sizemax: 524288, //最大文件大小
+		var options = {}
+		options.path = data.path; //压缩转换原始图片的路径
+		options.sizemax = 524288; //最大文件大小
+		if(data.dst) {
+			options.dst = data.dst; //压缩转换目标图片的路径
 		}
 		console.log('compressImageTo_512KB options ' + JSON.stringify(options));
 		mod.compressImageTo_xx(options, function(event) {
@@ -176,11 +178,17 @@ var compress = (function(mod) {
 		}
 		var options = {
 			src: data.path, //压缩转换原始图片的路径
-			dst: data.dst, //压缩转换目标图片的路径
-			overwrite: true, //覆盖生成新文件,仅在dst制定的路径文件存在时有效
 			format: '.png', //压缩转换后的图片格式
 			width: optionWith, //缩放图片的宽度
 			height: optionHeight //(String 类型 )缩放图片的高度
+		}
+		if(data.dst) {
+			options.dst = data.dst; //压缩转换目标图片的路径
+			options.overwrite = true; //覆盖生成新文件,仅在dst制定的路径文件存在时有效
+		} else {
+			var myDate = new Date();
+			options.dst = '_documents/' + myDate.getTime() + '.png'; //压缩转换目标图片的路径
+			options.overwrite = false; //覆盖生成新文件,仅在dst制定的路径文件存在时有效
 		}
 		console.log('compressImageTo_xx options ' + JSON.stringify(options));
 		try {
