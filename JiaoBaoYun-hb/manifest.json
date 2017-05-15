@@ -1537,9 +1537,14 @@
 					"css/utils/common.css",
 					"css/quan/about-me.css",
 					"js/utils/events.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"js/quan/about-me.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/homework/workdetail-stu.html",
+					"html/quan/reply-aboutMe.html"
+				],
 				"priority": 0
 			},
 			"html/quan/aboutme_sub.html": {
@@ -2756,7 +2761,10 @@
 			},
 			"html/quan/pub-leave.html": {
 				"resources": [
-					"css/mui.css"
+					"css/mui.css",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -4271,7 +4279,8 @@
 					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [
-					"html/register/login.html"
+					"html/register/login.html",
+					"html/quan/pub-leave.html"
 				],
 				"priority": 0
 			},
