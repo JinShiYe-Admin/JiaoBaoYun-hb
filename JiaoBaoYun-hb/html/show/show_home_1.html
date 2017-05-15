@@ -38,7 +38,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a id="changeCity" class="mui-icon mui-icon mui-icon-list mui-pull-left"></a>
+			<!--<a id="changeCity" class="mui-icon mui-icon mui-icon-list mui-pull-left"></a>-->
 			<h1 id="title" class="mui-title"></h1>
 			<a id="pubDynamic" class="mui-icon mui-pull-right mui-plus-visible" style="padding-left: 30px;font-size: 14px;margin-top:8px ;">晒一晒</a>
 
@@ -526,41 +526,10 @@
 			 * @param {Object} callBack 成功后的回调
 			 */
 			function requestCustomizationCity(callBack) {
-				//所需参数
-				var comData = {
-					vvl: '1' //订制频道,0科教频道,1展示频道,其他待定
-				};
-				// 等待的对话框
-				var waitingDia = events.showWaiting();
-				//44.获取个人的订制城市
-				postDataPro_PostUTcity(comData, waitingDia, function(data) {
-					var eduArray = [];
-					var tempArray = [];
-					console.log('获取个人的订制城市展现频道:' + JSON.stringify(data));
-					if(data.RspCode == 0) {
-						if(data.RspData[0].citys && data.RspData[0].citys != "") {
-							//先通过‘|’将返回值分为数组
-							tempArray = data.RspData[0].citys.split('|');
-							//遍历此数组
-							for(var m in tempArray) {
-								var tempStr = tempArray[m];
-								//初始化model
-								var model_area = {
-									acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
-									aname: '', //节点名称
-									aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
-								};
-								console.log('tempStr:' + tempStr);
-								//将分成的每个值，再通过‘_’拆分为model
-								var tempArea = tempStr.split('_');
-								model_area.acode = tempArea[0];
-								model_area.aname = tempArea[1];
-								//将对应的这个数组的str和model对换，将数组中的值，替换为model数组1
-								tempArray.splice(m, 1, model_area);
-
-							}
-							eduArray = eduArray.concat(tempArray)
-							eduArray.push({
+				console.log('获取全部-----关注')
+				var eduArray = [];
+				var tempArray = [];
+				eduArray.push({
 								acode: 0,
 								aname: '全部',
 								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
@@ -568,95 +537,146 @@
 							//加入关注的人数据
 							eduArray.push({
 								acode: 1,
-								aname: '我关注的人',
+								aname: '关注',
 								aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
 								index: 1, //请求第几页数据
 								isRefresh: 0 //是刷新0，还是加载更多1
 							});
-							console.log('修改后的最终值为:' + JSON.stringify(eduArray));
-						} else {
-							eduArray = [];
-							//如果定制城市为空
-							var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
-							console.log(JSON.stringify(uarea));
-
-							//加入手机号所在城市
-
-							eduArray.push({
-								acode: uarea.acode,
-								aname: uarea.aname,
-								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
-							});
-							eduArray.push({
-								acode: 0,
-								aname: '全部',
-								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
-							});
-							//加入关注的人数据
-							eduArray.push({
-								acode: 1,
-								aname: '我关注的人',
-								aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
-								index: 1, //请求第几页数据
-								isRefresh: 0 //是刷新0，还是加载更多1
-							});
-						}
-					} else {
-						console.log('无定制城市')
-						eduArray = [];
-						//如果定制城市为空
-						var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
-						console.log(JSON.stringify(uarea));
-
-						var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-						console.log('person===' + JSON.stringify(personal));
-						if(personal && personal.utid != 0) { //有账号，正常登录
-							//加入手机号所在城市
-							eduArray.push({
-								acode: uarea.acode,
-								aname: uarea.aname,
-								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
-							});
-							eduArray.push({
-								acode: 0,
-								aname: '全部',
-								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
-							});
-
-						} else {
-							eduArray.push({
-								acode: 0,
-								aname: '全部',
-								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
-							});
-
-						}
-						//加入关注的人数据
-						eduArray.push({
-							acode: 1,
-							aname: '我关注的人',
-							aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
-							index: 1, //请求第几页数据
-							isRefresh: 0 //是刷新0，还是加载更多1
-						});
-						//游客身份
-						if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
-							var localCity = window.myStorage.getItem(window.storageKeyName.SHOWCITY);
-							if(localCity && localCity.length != 0) {
-								console.log('游客订制的展现城市 ' + JSON.stringify(localCity))
-								eduArray = localCity.concat(eduArray)
-							}
-						}
-
-						//						mui.toast(data.RspTxt);
-					}
-
-					console.log(JSON.stringify(eduArray));
-					cities = eduArray.slice(0); //拷贝数组
+							cities = eduArray.slice(0); //拷贝数组
 					callBack(cities);
-					waitingDia.close();
-				});
 			}
+//			function requestCustomizationCity(callBack) {
+//				//所需参数
+//				var comData = {
+//					vvl: '1' //订制频道,0科教频道,1展示频道,其他待定
+//				};
+//				// 等待的对话框
+//				var waitingDia = events.showWaiting();
+//				//44.获取个人的订制城市
+//				postDataPro_PostUTcity(comData, waitingDia, function(data) {
+//					var eduArray = [];
+//					var tempArray = [];
+//					console.log('获取个人的订制城市展现频道:' + JSON.stringify(data));
+//					if(data.RspCode == 0) {
+//						if(data.RspData[0].citys && data.RspData[0].citys != "") {
+//							//先通过‘|’将返回值分为数组
+//							tempArray = data.RspData[0].citys.split('|');
+//							//遍历此数组
+//							for(var m in tempArray) {
+//								var tempStr = tempArray[m];
+//								//初始化model
+//								var model_area = {
+//									acode: '', //节点代码,通用6位,前两位为省份编码,中间两位为城市编码,后两位为区县编码
+//									aname: '', //节点名称
+//									aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+//								};
+//								console.log('tempStr:' + tempStr);
+//								//将分成的每个值，再通过‘_’拆分为model
+//								var tempArea = tempStr.split('_');
+//								model_area.acode = tempArea[0];
+//								model_area.aname = tempArea[1];
+//								//将对应的这个数组的str和model对换，将数组中的值，替换为model数组1
+//								tempArray.splice(m, 1, model_area);
+//
+//							}
+//							eduArray = eduArray.concat(tempArray)
+//							eduArray.push({
+//								acode: 0,
+//								aname: '全部',
+//								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+//							});
+//							//加入关注的人数据
+//							eduArray.push({
+//								acode: 1,
+//								aname: '我关注的人',
+//								aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
+//								index: 1, //请求第几页数据
+//								isRefresh: 0 //是刷新0，还是加载更多1
+//							});
+//							console.log('修改后的最终值为:' + JSON.stringify(eduArray));
+//						} else {
+//							eduArray = [];
+//							//如果定制城市为空
+//							var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
+//							console.log(JSON.stringify(uarea));
+//
+//							//加入手机号所在城市
+//
+//							eduArray.push({
+//								acode: uarea.acode,
+//								aname: uarea.aname,
+//								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+//							});
+//							eduArray.push({
+//								acode: 0,
+//								aname: '全部',
+//								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+//							});
+//							//加入关注的人数据
+//							eduArray.push({
+//								acode: 1,
+//								aname: '我关注的人',
+//								aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
+//								index: 1, //请求第几页数据
+//								isRefresh: 0 //是刷新0，还是加载更多1
+//							});
+//						}
+//					} else {
+//						console.log('无定制城市')
+//						eduArray = [];
+//						//如果定制城市为空
+//						var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
+//						console.log(JSON.stringify(uarea));
+//
+//						var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+//						console.log('person===' + JSON.stringify(personal));
+//						if(personal && personal.utid != 0) { //有账号，正常登录
+//							//加入手机号所在城市
+//							eduArray.push({
+//								acode: uarea.acode,
+//								aname: uarea.aname,
+//								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+//							});
+//							eduArray.push({
+//								acode: 0,
+//								aname: '全部',
+//								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+//							});
+//
+//						} else {
+//							eduArray.push({
+//								acode: 0,
+//								aname: '全部',
+//								aflag: 0 //0为根据省市编码获取数据，1为获取关注的人的列表
+//							});
+//
+//						}
+//						//加入关注的人数据
+//						eduArray.push({
+//							acode: 1,
+//							aname: '我关注的人',
+//							aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
+//							index: 1, //请求第几页数据
+//							isRefresh: 0 //是刷新0，还是加载更多1
+//						});
+//						//游客身份
+//						if(!parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)) {
+//							var localCity = window.myStorage.getItem(window.storageKeyName.SHOWCITY);
+//							if(localCity && localCity.length != 0) {
+//								console.log('游客订制的展现城市 ' + JSON.stringify(localCity))
+//								eduArray = localCity.concat(eduArray)
+//							}
+//						}
+//
+//						//						mui.toast(data.RspTxt);
+//					}
+//
+//					console.log(JSON.stringify(eduArray));
+//					cities = eduArray.slice(0); //拷贝数组
+//					callBack(cities);
+//					waitingDia.close();
+//				});
+//			}
 
 			var requestData = function(cityCode, pageIndex) {
 				var wd = events.showWaiting();

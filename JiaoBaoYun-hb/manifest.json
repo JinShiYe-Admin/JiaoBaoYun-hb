@@ -3079,7 +3079,12 @@
 					"css/qiuzhi/qiuzhi-answerDetailSub.css",
 					"js/qiuzhi/qiuzhi-answerDetailSub.js",
 					"css/utils/preview.css",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/mui.zoom.js",
+					"js/publicQiuzhiProtocol.js",
+					"js/utils/video.js",
+					"js/mui.previewimage.js",
+					"js/utils/h5fresh.js"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-addAnswer.html"
