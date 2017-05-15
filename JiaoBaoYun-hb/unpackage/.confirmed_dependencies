@@ -224,7 +224,8 @@
 			"js/utils/Statusbar.js",
 			"css/home/index.css",
 			"css/utils/common.css",
-			"js/index.js"
+			"js/index.js",
+			"css/mui.min.css"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",
@@ -497,7 +498,8 @@
 			"js/mine/account-info.js"
 		],
 		"refer": [
-			"html/utils/customizeCity.html"
+			"html/utils/customizeCity.html",
+			"html/mine/edit-info.html"
 		]
 	},
 	"html/cloud/member-pay.html": {
@@ -510,7 +512,9 @@
 		"resources": [
 			"js/utils/showvideoutil.js",
 			"js/utils/UploadHeadImage.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/quan/class-group.html": {
@@ -536,7 +540,9 @@
 			"css/utils/common.css"
 		],
 		"refer": [
-			"html/quan/edit-remark.html"
+			"html/quan/edit-remark.html",
+			"html/quan/zone_main.html",
+			"html/mine/qun_data_details.html"
 		]
 	},
 	"html/quan/classSpace-sub.html": {
@@ -618,7 +624,8 @@
 			"css/utils/common.css"
 		],
 		"refer": [
-			"html/quan/zonep_sub.html"
+			"html/quan/zonep_sub.html",
+			"html/quan/leaveNew.html"
 		]
 	},
 	"html/quan/zonep_sub.html": {
@@ -627,7 +634,10 @@
 			"css/icons-extra.css",
 			"css/show/show.css",
 			"image/dynamic/praise.png",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/playvideo.png",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/mine/QRCode.html": {
@@ -785,10 +795,15 @@
 		"resources": [
 			"html/quan/aboutme_sub.html",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"css/quan/about-me.css",
+			"js/quan/about-me.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
-			"html/quan/aboutme_sub.html"
+			"html/quan/aboutme_sub.html",
+			"html/homework/workdetail-stu.html",
+			"html/quan/reply-aboutMe.html"
 		]
 	},
 	"html/quan/aboutme_sub.html": {
@@ -806,6 +821,44 @@
 			"image/mine/jiaobaoyun.png",
 			"css/mui.min.css",
 			"css/utils/common.css"
+		]
+	},
+	"html/mine/edit-info.html": {
+		"resources": [
+			"js/utils/self-adaptive-input.js",
+			"css/mine/edit-info.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/quan/leaveNew.html": {
+		"resources": [
+			"css/quan/about-me.css",
+			"css/utils/bubble.css"
+		],
+		"refer": [
+			"html/quan/pub-leave.html"
+		]
+	},
+	"html/quan/pub-leave.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/mine/qun_data_details.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/quan/reply-aboutMe.html": {
+		"resources": [
+			"css/quan/custom-textarea.css",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }

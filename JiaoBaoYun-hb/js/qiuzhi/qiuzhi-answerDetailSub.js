@@ -14,11 +14,12 @@ mui.plusReady(function() {
 	mui.previewImage();
 	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'), "answerIsReady");
 	//限制下拉刷新
-		events.limitPreviewPullDown("refreshContainer",1);
+	events.limitPreviewPullDown("refreshContainer", 1);
 	//	ws=plus.webview.currentWebview();
 	//	ws.setBounce({position:"none"});
 	h5fresh.addRefresh(function() {
 		document.getElementById("list-container").innerHTML = "";
+		mui("#refreshContainer").pullRefresh().refresh(true);
 		flag = 1;
 		pageIndex = 1;
 		wd = events.showWaiting();
@@ -46,18 +47,6 @@ mui.plusReady(function() {
 		hideBottom();
 		setOriginalCondition();
 		mui('#popover').popover('hide');
-	})
-	plus.webview.currentWebview().addEventListener("show", function(e) {
-//		h5fresh.addRefresh(function() {
-//			document.getElementById("list-container").innerHTML = "";
-//			flag = 1;
-//			pageIndex = 1;
-//			wd = events.showWaiting();
-//			requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
-//		}, {
-//			style: "circle",
-//			offset: "50px"
-//		})
 	})
 	//加载监听
 	window.addEventListener('answerInfo', function(e) {
