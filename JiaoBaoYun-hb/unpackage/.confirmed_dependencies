@@ -109,7 +109,9 @@
 			"html/quan/pub-dynamic.html",
 			"html/mine/ReadQRCode.html",
 			"html/cloud/app_keeprecord.html",
-			"html/quan/aboutme.html"
+			"html/quan/aboutme.html",
+			"html/mine/qun_manage_a.html",
+			"html/cloud/app_notes_main.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -241,7 +243,9 @@
 			"js/qiniu/qiniu.js",
 			"css/cloud/file.css",
 			"css/utils/preview.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
@@ -537,7 +541,8 @@
 			"css/quan/group-pInfo.css",
 			"css/mui.min.css",
 			"js/quan/group-pInfo.js",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/quan/edit-remark.html",
@@ -556,7 +561,9 @@
 	},
 	"html/quan/edit-remark.html": {
 		"resources": [
-			"js/utils/self-adaptive-input.js"
+			"js/utils/self-adaptive-input.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/quan/class_space.html": {
@@ -656,7 +663,8 @@
 			"css/mine/manager_data.css"
 		],
 		"refer": [
-			"html/quan/group-pInfo.html"
+			"html/quan/group-pInfo.html",
+			"html/mine/qun_manage_info.html"
 		]
 	},
 	"html/quan/pub-dynamic.html": {
@@ -859,6 +867,24 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/cloud/app_notes_main.html": {
+		"resources": [
+			"js/utils/showaudio.js",
+			"image/cloud/notes_bg2.jpg",
+			"js/utils/showvideoutil.js",
+			"css/utils/audiopopover.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/mine/qun_manage_info.html": {
+		"resources": [
+			"js/utils/MultiMedia.js",
+			"js/utils/UploadHeadImage.js"
+		],
+		"refer": [
+			"html/mine/qun_manage_info_change_post.html"
 		]
 	}
 }

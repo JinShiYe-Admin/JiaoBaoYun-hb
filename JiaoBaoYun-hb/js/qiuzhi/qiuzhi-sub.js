@@ -424,7 +424,6 @@ var pullUpFresh = function() {
 var setListener = function() {
 	events.addTap('submit-question', function() {
 		var self = this;
-		self.disabled = true;
 		//判断是否是游客身份登录
 		if(events.judgeLoginMode(self)) {
 			return;
