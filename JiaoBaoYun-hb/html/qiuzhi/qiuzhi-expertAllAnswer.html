@@ -184,8 +184,7 @@
 					events.askDetailOrAnswerDetail(2, tempModel.AnswerId, function(data) {
 						if(data) {
 							//跳转界面
-							events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', tempModel);
-							plus.webview.getWebviewById('qiuzhi-answerDetail.html').show();
+							events.fireToPageWithData('qiuzhi-answerDetail.html', 'answerInfo', tempModel);
 						}
 					});
 				});

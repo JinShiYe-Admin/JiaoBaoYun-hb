@@ -155,8 +155,7 @@ mui.plusReady(function() {
 		console.log(JSON.stringify(info));
 		requestAnswerDetail(info.AnswerId, function(answerInfo) {
 			//跳转页面
-			events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', answerInfo);
-			plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right", 250);
+			events.fireToPageWithData('qiuzhi-answerDetail.html', 'answerInfo', answerInfo);
 		})
 	});
 
