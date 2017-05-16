@@ -95,7 +95,7 @@
 			//				console.log('发布动态页面获取的值：' + JSON.stringify(groupInfo));
 			//			});
 			var title = document.getElementById('title');
-			title.innerText = userInfo.unick;
+			title.innerText = events.shortForString(userInfo.unick, 12)
 			if(pageFlag == 'jxq') {
 				console.log('jxq')
 				//				document.getElementById("show").checked = false;
