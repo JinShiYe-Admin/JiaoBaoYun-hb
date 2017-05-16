@@ -3095,7 +3095,17 @@
 					"js/publicQiuzhiProtocol.js",
 					"js/utils/video.js",
 					"js/mui.previewimage.js",
-					"js/utils/h5fresh.js"
+					"js/utils/h5fresh.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-addAnswer.html"
