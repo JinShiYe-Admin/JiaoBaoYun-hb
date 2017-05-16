@@ -899,5 +899,11 @@
 			"css/mui.min.css",
 			"css/utils/common.css"
 		]
+	},
+	"html/mine/ReadQRCode.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
 	}
 }

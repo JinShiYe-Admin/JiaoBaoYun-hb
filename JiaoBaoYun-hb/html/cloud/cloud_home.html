@@ -411,17 +411,21 @@
 				});
 				//点击popover里cell
 				mui('.mui-popover').on('tap', 'li', function(e) {
+					var targetUrl="";
+					var postdata="";
 					mui('#topPopover').popover('toggle')
 					if(this.id == 'pubDynamic') {
-						events.openNewWindowWithData('../quan/pub-dynamic.html', 'jxq');
+						targetUrl="../quan/pub-dynamic.html";
+						postdata='jxq';
 					} else if(this.id == 'aboutme') {
-						events.openNewWindow('../quan/aboutme.html')
+						targetUrl="../quan/aboutme.html";
 						var noRead = document.getElementById('aboutme_noRead');
 						noRead.innerHTML = 0;
 						noRead.style.visibility = 'hidden';
 					} else {
-						events.openNewWindowWithData('../mine/ReadQRCode.html', '');
+						targetUrl='../mine/ReadQRCode.html';
 					}
+					events.singleWebviewInPeriod(this,targetUrl,postdata);
 				})
 				//				window.addEventListener("homeworkReady", function() {
 				//					homeworkReady = true;
