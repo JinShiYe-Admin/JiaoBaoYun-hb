@@ -145,13 +145,13 @@
 
 				//---订制城市---start---
 				//进入订制城市界面
-				document.getElementById('changeCity').addEventListener('tap', function() {
-					events.openNewWindowWithData('../utils/customizeCity.html', {
-						id: '1', //0科教，1展现
-						webid: '../show/show_home_1.html', //当前webview的id
-						cities: cities //已经定制的城市数组
-					});
-				});
+//				document.getElementById('changeCity').addEventListener('tap', function() {
+//					events.openNewWindowWithData('../utils/customizeCity.html', {
+//						id: '1', //0科教，1展现
+//						webid: '../show/show_home_1.html', //当前webview的id
+//						cities: cities //已经定制的城市数组
+//					});
+//				});
 
 				//退出订制城市界面返回的数据
 				window.addEventListener('customizeCity', function(e) {

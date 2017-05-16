@@ -741,7 +741,7 @@
 					var getDownTokenUrl = window.storageKeyName.QNGETDOWNTOKENFILE;
 					CloudFileUtil.getQNDownToken(getDownTokenUrl, getDownToken, function(data) {
 						console.log('七牛下载token ' + JSON.stringify(data));
-						CloudFileUtil.download(data.Data[0].Value, filename, function(download, status) {
+						CloudFileUtil.download(data.Data[0].Value, fpath, function(download, status) {
 							//下载任务完成的监听
 							console.log('下载任务完成' + status + '|' + JSON.stringify(download));
 							downloading = false;
@@ -761,15 +761,18 @@
 								}
 							});
 							if(status == 200) {
-								mui.toast('下载成功');
-								document.getElementById("down_btn_" + download.id).style.display = 'none';
-								document.getElementById("down_" + download.id).parentNode.removeChild(document.getElementById("down_" + download.id));
+								setTimeout(function() {
+									mui.toast('下载成功');
+									document.getElementById("down_btn_" + download.id).style.display = 'none';
+									document.getElementById("down_" + download.id).parentNode.removeChild(document.getElementById("down_" + download.id));
 
-								plus.io.resolveLocalFileSystemURL(fpath, function(succesCB) {
-									addUpedOrDownedMetadataItem(0, succesCB);
-								}, function(errorCB) {
-									console.log("请求上传或者下载文件系统失败: " + JSON.stringify(errorCB));
-								});
+									plus.io.resolveLocalFileSystemURL(fpath, function(succesCB) {
+										addUpedOrDownedMetadataItem(0, succesCB);
+									}, function(errorCB) {
+										console.log("请求上传或者下载文件系统失败: " + JSON.stringify(errorCB));
+									});
+								}, 1000);
+
 							} else {
 								document.getElementById("down_" + download.id).setAttribute('data-error', true);
 								document.getElementById("down_btn_" + download.id).style.display = 'none';
