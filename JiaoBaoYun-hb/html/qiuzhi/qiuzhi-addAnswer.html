@@ -490,7 +490,7 @@
 					if(data.RspCode == 0) {
 						mui.toast('回答成功');
 						document.getElementById("answerContent").value = '';
-						events.fireToPageNone('qiuzhi-questionSub.html', 'answerAdded');
+						events.fireToPageNone('qiuzhi-question.html', 'answerAdded');
 						events.fireToPageNone('expert-detail.html', 'refresh_expertdetail');
 						mui.back();
 					} else {

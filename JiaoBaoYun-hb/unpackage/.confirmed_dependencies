@@ -33,7 +33,10 @@
 		"resources": [
 			"html/qiuzhi/qiuzhi-questionSub.html",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/qiuzhi/qiuzhi-questionSub.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/qiuzhi/qiuzhi-questionSub.css"
 		]
 	},
 	"html/qiuzhi/qiuzhi-questionSub.html": {
@@ -130,7 +133,10 @@
 			"css/utils/common.css",
 			"fonts/fangzheng.ttf"
 		],
-		"refer": []
+		"refer": [
+			"html/sciedu/sciedu_show_main.html",
+			"html/utils/customizeCity.html"
+		]
 	},
 	"html/quan/classSpace-persons.html": {
 		"resources": [
@@ -886,6 +892,12 @@
 		],
 		"refer": [
 			"html/mine/qun_manage_info_change_post.html"
+		]
+	},
+	"html/sciedu/sciedu_show_main.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	}
 }

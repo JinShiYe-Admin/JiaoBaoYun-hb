@@ -129,7 +129,7 @@ var shieldAnswer = function() {
 		console.log("屏蔽后返回的数据:" + JSON.stringify(data));
 		if(data.RspCode == 0 && data.RspData.Result) {
 			mui.toast("回答已屏蔽！");
-			mui.fire(plus.webview.getWebviewById("qiuzhi-questionSub.html"), "answerShield");
+			mui.fire(plus.webview.getWebviewById("qiuzhi-question.html"), "answerShield");
 			if(plus.webview.getWebviewById("qiuzhi-expertAllAnswer.html")) {
 				mui.fire(plus.webview.getWebviewById("qiuzhi-expertAllAnswer.html"), "answerShield");
 			}
@@ -151,8 +151,8 @@ var delAnswer = function() {
 		wd1.close();
 		console.log("删除回答的接口：" + JSON.stringify(data));
 		if(data.RspCode == 0) {
-			if(plus.webview.getWebviewById("qiuzhi-questionSub.html")) {
-				mui.fire(plus.webview.getWebviewById("qiuzhi-questionSub.html"), "answerDeled", answerInfo);
+			if(plus.webview.getWebviewById("qiuzhi-question.html")) {
+				mui.fire(plus.webview.getWebviewById("qiuzhi-question.html"), "answerDeled", answerInfo);
 			};
 			mui.back();
 		} else {

@@ -2890,7 +2890,10 @@
 					"js/utils/events.js",
 					"fonts/fangzheng.ttf",
 					"js/storageKeyName.js",
-					"js/libs/myStorage/myStorage.js"
+					"js/libs/myStorage/myStorage.js",
+					"js/qiuzhi/qiuzhi-questionSub.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"css/qiuzhi/qiuzhi-questionSub.css"
 				],
 				"refer": [
 					"html/qiuzhi/experts_main.html"
