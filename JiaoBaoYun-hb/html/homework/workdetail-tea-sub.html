@@ -19,8 +19,7 @@
 		<script src="../../js/mui.min.js"></script>
 		<style type="text/css">
 			#content:before,
-			#content:after
-			 {
+			#content:after {
 				height: 0px;
 			}
 		</style>
@@ -35,7 +34,7 @@
 		</nav>
 		<div class="mui-content mui-scroll-wrapper" style="background-color: white;">
 			<div class="mui-scroll">
-				<ul  id="content" class="mui-table-view"  >
+				<ul id="content" class="mui-table-view">
 					<li class="mui-table-view-cell mui-media ">
 						<img>
 						<span id="img" class=" iconfont subject-icon" style="margin-left: -10px;"></span>
@@ -325,6 +324,8 @@
 											tempModel9 = $.extend(tempModel9, tempModel);
 										}
 									}
+									console.log('remainArray=' + JSON.stringify(remainArray))
+
 									//已完成
 									for(var m in uploadArray) {
 										var tempModel9 = uploadArray[m];
@@ -332,6 +333,7 @@
 											//合并
 											tempModel9 = $.extend(tempModel9, tempModel);
 										}
+
 									}
 								}
 							}
@@ -376,8 +378,22 @@
 			}
 
 			function refreshStuList() {
-				homeworkDetailNodes.segItem1.innerHTML = '已完成(' + uploadArray.length + ')';
-				homeworkDetailNodes.segItem2.innerHTML = '未完成(' + remainArray.length + ')';
+				var remainNum = remainArray.length
+				for(var i = 0; i < remainArray.length; i++) {
+					if(!remainArray[i].ugnick) {
+						remainNum--;
+						continue;
+					}
+				}
+				var uploadNum = uploadArray.length
+				for(var i = 0; i < uploadArray.length; i++) {
+					if(!uploadArray[i].ugnick) {
+						uploadNum--;
+						continue;
+					}
+				}
+				homeworkDetailNodes.segItem1.innerHTML = '已完成(' + uploadNum + ')';
+				homeworkDetailNodes.segItem2.innerHTML = '未完成(' + remainNum + ')';
 				homeworkDetailNodes.finishedList.innerHTML = '';
 				homeworkDetailNodes.unfinishedList.innerHTML = '';
 
@@ -404,6 +420,9 @@
 					homeworkDetailNodes.finishedList.appendChild(li);
 				}
 				for(var i = 0; i < remainArray.length; i++) {
+					if(!remainArray[i].ugnick) {
+						continue;
+					}
 					var disabled;
 					var btn_class;
 

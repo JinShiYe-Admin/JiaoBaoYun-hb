@@ -3108,7 +3108,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/storageKeyName.js"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-addAnswer.html"
@@ -4018,7 +4019,10 @@
 					"fonts/iconfont.ttf",
 					"js/utils/MultiMedia.js",
 					"css/utils/MultiMedia.css",
-					"js/cloud/AndroidFileSystem.js"
+					"js/cloud/AndroidFileSystem.js",
+					"js/utils/recordvideoutil.js",
+					"image/utils/playvideo.png",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -4425,7 +4429,8 @@
 					"html/quan/group-pInfo.html",
 					"html/mine/qun_manage_invite_a.html",
 					"html/mine/qun_manage_info.html",
-					"html/mine/qun_data_details.html"
+					"html/mine/qun_data_details.html",
+					"html/mine/qun_data_create.html"
 				],
 				"priority": 0
 			},
