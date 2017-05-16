@@ -533,7 +533,7 @@ var setListener = function(userId) {
 		}
 		setTimeout(function() {
 			firstTime = null;
-		}, 1000)
+		}, 1000);
 		console.log("第一次：" + firstTime + "第二次：" + secondTime);
 		if(!secondTime) {
 			events.fireToPageWithData('classSpace-persons.html', 'personsList', {

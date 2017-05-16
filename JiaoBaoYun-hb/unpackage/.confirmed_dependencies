@@ -143,7 +143,8 @@
 			"js/quan/classSpace-persons.js",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/mine/invite_none_0.png"
 		],
 		"refer": [
 			"html/quan/zone_main.html"

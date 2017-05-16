@@ -50,6 +50,36 @@ mui.plusReady(function() {
 	})
 })
 /**
+ * param {type} 0 有人 1 查看的人 2点赞的人
+ */
+var setBackGround = function(type) {
+	var hintWord = "";
+	var className = "";
+	var wordClassName;
+	switch(type) {
+		case 0:
+			className = "mui-content mui-scroll-wrapper";
+			hintWord = "";
+			wordClassName = "display-none";
+			break;
+		case 1:
+			className = "mui-content mui-scroll-wrapper noOneDisplay";
+			hintWord = "暂时无人查看";
+			wordClassName = "display-block";
+			break;
+		case 2:
+			className = "mui-content mui-scroll-wrapper noOneDisplay";
+			hintWord = "暂时无人点赞";
+			wordClassName = "display-block";
+			break;
+		default:
+			break;
+	}
+	document.querySelector(".mui-content").className = className;
+	document.getElementById("noOne-container").innerText = hintWord;
+	document.getElementById("noOne-container").className = wordClassName;
+}
+/**
  * 获取点赞成员
  * @param {Object} classSpaceId
  */
@@ -63,8 +93,9 @@ var getZanPersons = function(classSpaceId) {
 		if(data.RspCode == 0) {
 			if(data.RspData.Users.length > 0) {
 				getPersonsInfo(data.RspData.Users);
+				setBackGround(0);
 			} else {
-				mui.toast("没啥人点赞")
+				setBackGround(2);
 			}
 		} else {
 			mui.toast('你逮到我啦，有错误')
@@ -83,8 +114,9 @@ var getZonePersons = function(userSpaceId) {
 		if(data.RspCode == 0) {
 			if(data.RspData.Users.length > 0) {
 				getPersonsInfo(data.RspData.Users);
+				setBackGround(0);
 			} else {
-				mui.toast("没啥人点赞")
+				setBackGround(2);
 			}
 		} else {
 			mui.toast('你逮到我啦，有错误')
@@ -262,8 +294,9 @@ var getChakanPersons = function(classSpaceId) {
 		if(data.RspCode == 0) {
 			if(data.RspData.Users.length > 0) {
 				getPersonsInfo(data.RspData.Users);
+				setBackGround(0)
 			} else {
-				mui.toast("没啥人浏览");
+				setBackGround(1);
 			}
 		} else {
 			mui.toast('你逮到我啦，有错误');
