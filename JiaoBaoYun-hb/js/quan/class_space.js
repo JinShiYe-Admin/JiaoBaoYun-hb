@@ -401,10 +401,11 @@ mui.plusReady(function() {
 	 * 视频点击事件
 	 */
 	mui(".mui-table-view").on("tap",".video-container",function(){
-		this.disabled=true;
+		var item=this;
+		item.disabled=true;
 		var videoInfo=this.info;
 		video.playVideo(videoInfo.EncAddr,videoInfo.EncImgAddr,function(){
-			this.disabled=false;
+			item.disabled=false;
 		})
 	})
 });
