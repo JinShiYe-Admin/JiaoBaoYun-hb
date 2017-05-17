@@ -963,7 +963,7 @@ var dynamiclistitem = (function($, mod) {
 		if(ImageNum == 1) { //一张图片时1
 			if(data.EncType == 2) {
 				var html1 = '<div id="video-container' + data.id_name + '" class="video-container" thb=' + ImageUrlList[0] + ' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url(' + ImageUrlList[0] + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
-				var html2 = '<img  style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:60px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
+				var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:60px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
 				html = html1 + html2;
 			} else {
 
@@ -1148,16 +1148,20 @@ var dynamiclistitem = (function($, mod) {
 		div.innerHTML = html;
 		liElement.appendChild(div);
 		ulElement.appendChild(liElement);
-//		var ImageUrlList = data.ImageList; //图片路径数组1
-//		var EncAddrList = data.EncAddrList
-//		var ImageNum = ImageUrlList.length; //图片总数量
-//		if(ImageNum == 1 && data.EncType == 2) {
-//			var tempDiv = document.getElementById("video-container0");
-//			var imgSize = mod.getNaturalSize(ImageUrlList[0])
-//			console.log(imgSize.width + '-----' + imgSize.height);
-//			tempDiv.style.width = imgSize.width / 4 + 'px';
-//			tempDiv.style.height = imgSize.height / 4 + 'px';
-//		}
+		var ImageUrlList = data.ImageList; //图片路径数组1
+		var EncAddrList = data.EncAddrList
+		var ImageNum = ImageUrlList.length; //图片总数量
+		if(ImageNum == 1 && data.EncType == 2) {
+			var tempDiv = document.getElementById("video-container"+data.id_name);
+			var imgSize = mod.getNaturalSize(ImageUrlList[0])
+			console.log(imgSize.width + '-----' + imgSize.height);
+			tempDiv.style.width = imgSize.width / 4 + 'px';
+			tempDiv.style.height = imgSize.height / 4 + 'px';
+			var playvideo = document.getElementById("playvideo"+data.id_name);
+			playvideo.style.marginTop=imgSize.height / 8-25+'px'
+			console.log(playvideo.outerHTML)
+			
+		}
 	};
 
 	return mod;
