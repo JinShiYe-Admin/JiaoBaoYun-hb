@@ -2893,7 +2893,8 @@
 					"js/libs/myStorage/myStorage.js",
 					"js/qiuzhi/qiuzhi-questionSub.js",
 					"js/libs/crypto-js/crypto-js.js",
-					"css/qiuzhi/qiuzhi-questionSub.css"
+					"css/qiuzhi/qiuzhi-questionSub.css",
+					"css/utils/preview.css"
 				],
 				"refer": [
 					"html/qiuzhi/experts_main.html"

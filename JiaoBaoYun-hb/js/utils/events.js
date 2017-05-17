@@ -498,7 +498,7 @@ var events = (function(mod) {
 			} else {
 				mui.toast(cancelLog)
 			}
-		})
+		},"div");
 	}
 
 	mod.format = function(dateTime, format) {
