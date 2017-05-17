@@ -243,6 +243,9 @@ var class_space = (function(mod) {
 				//				})
 				li.querySelector(".chat-body").insertBefore(more_span, li.querySelector(".class-imgs"));
 			}
+			if(li.querySelector(".video-container")){
+				li.querySelector(".video-container").info=list[i];
+			}
 			classWords_container.info = list[i];
 		}
 		mod.wd.close();
@@ -270,22 +273,44 @@ var class_space = (function(mod) {
 			var imgs = cell.EncImgAddr.split('|');
 			var trueImgs = cell.EncAddr.split('|');
 			console.log('要显示的图片地址：' + JSON.stringify(imgs));
-			for(var i in imgs) {
-				if(imgs.length <= 3 && imgs.length > 0) {
-					//					percent = 100 / (imgs.length);
-					imgInner += '<img class="display-inlineBlock" src="' + imgs[i] + '" style="width:' + img_width + 'px; height:' + img_width + 'px;padding:0 2px;"' +
-						' data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"/>'
-				} else {
-					imgInner += '<img class="display-inlineBlock" src="' + imgs[i] + '" style="width:' + img_width + 'px; height:' + img_width + 'px;padding:0 2px;"' +
-						' data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"/>'
+			if(cell.EncType == 1) {
+				for(var i in imgs) {
+					if(imgs.length <= 3 && imgs.length > 0) {
+						//					percent = 100 / (imgs.length);
+						imgInner += '<img class="display-inlineBlock" src="' + imgs[i] + '" style="width:' + img_width + 'px; height:' + img_width + 'px;padding:0 2px;"' +
+							' data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"/>'
+					} else {
+						imgInner += '<img class="display-inlineBlock" src="' + imgs[i] + '" style="width:' + img_width + 'px; height:' + img_width + 'px;padding:0 2px;"' +
+							' data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"/>'
+					}
 				}
+			} else if(cell.EncType == 2) {
 			}
+
 		}
 		console.log(imgInner);
 		return imgInner;
 	}
+
 	return mod;
 })(class_space || {});
+
+function videoImgOnload(event) {
+	var img = event.target;
+	var imgWidth = img.naturalWidth;
+	var imgHeight = img.naturalHeight;
+	console.log("图片的宽度和高度："+imgWidth+"高度："+imgHeight);
+	if(imgWidth >= imgHeight) {
+		img.style.width = img.width+"px";
+		img.style.height =img.height+"px";
+	} else {
+		img.style.width = img.width/2+"px";
+		img.style.height = "initial";
+		img.style.top=-(img.height-img.width)/4+"px";
+		img.style.bottom=-(img.height-img.width)/4+"px";
+		img.style.left=img.width/4+"px";
+	}
+}
 var pageIndex = 1;
 var pageSize = 10;
 var postData;
@@ -322,7 +347,7 @@ mui.plusReady(function() {
 		pageIndex = 1;
 		//		setReaded(postData.userId, postData.classId);
 		var container = document.getElementById('classSpace_list');
-		container.innerHTML="";
+		container.innerHTML = "";
 		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 	})
 	h5fresh.addRefresh(function() {
@@ -370,6 +395,16 @@ mui.plusReady(function() {
 				}
 			});
 		}
+	})
+	/**
+	 * 视频点击事件
+	 */
+	mui(".mui-table-view").on("tap",".video-container",function(){
+		this.disabled=true;
+		var videoInfo=this.info;
+		video.playVideo(videoInfo.EncAddr,videoInfo.EncImgAddr,function(){
+			this.disabled=false;
+		})
 	})
 });
 /**

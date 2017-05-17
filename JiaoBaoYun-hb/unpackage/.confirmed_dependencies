@@ -235,7 +235,8 @@
 			"css/home/index.css",
 			"css/utils/common.css",
 			"js/index.js",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"html/sciedu/sciedu_home.html"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",
@@ -629,7 +630,8 @@
 			"css/quan/custom-textarea.css",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/playvideo.png"
 		]
 	},
 	"html/quan/zone_main.html": {

@@ -796,7 +796,7 @@ var events = (function(mod) {
 	mod.singleWebviewInPeriod = function(clickedItem, webviewUrl, data) {
 		mod.showWaiting();
 		if(!data) {
-			data = {};
+			data = "";
 		}
 		console.log("当前点击控件是否可点击：" + clickedItem.disabled);
 		var webviewSites = webviewUrl.split("/");
