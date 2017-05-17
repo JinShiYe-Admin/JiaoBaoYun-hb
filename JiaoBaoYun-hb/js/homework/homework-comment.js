@@ -1,6 +1,11 @@
 var workInfo;
 var personalUTID;
-mui.init();
+mui.init({
+	beforeback:function(){
+		document.getElementById("answer-imgs").innerHTML = "";
+		return true;
+	}
+});
 mui('.mui-scroll-wrapper').scroll({
 	indicators: true, //是否显示滚动条
 });
