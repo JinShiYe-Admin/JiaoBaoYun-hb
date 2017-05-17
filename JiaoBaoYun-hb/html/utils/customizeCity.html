@@ -296,8 +296,14 @@
 					commitCities = [];
 					var tempCityArray = cityArray;
 					var localCity = []; //存到本地的城市，游客使用
+					var selector;
+					if(main.data.id == '0' || main.data.id == '1') { //0科教，1展现
+						selector = '#myCity .mui-table-view-cell';
+					} else if(main.data.id == 'uarea') {
+						selector = '#allCity .city-select';
+					}
 					//获取被选中的元素
-					mui('#myCity .mui-table-view-cell').each(function(index, element) {
+					mui(selector).each(function(index, element) {
 						var elementAcode = element.getAttribute('data-acode'); //城市代码
 						mui.each(tempCityArray, function(index2, element2) {
 							if(elementAcode == element2.acode) {
@@ -349,7 +355,7 @@
 							requestCitySetting(tempStr);
 						}
 					} else if(main.data.id == 'uarea') { //uarea账号地区
-						if(commitCities.length == 0 || commitCities[0].acode == tempInfo.uarea.acode) {
+						if(commitCities.length == 0 || commitCities[0].acode == pInfo.uarea.acode) {
 							mui.back();
 						} else {
 							var procode = ''; //省份代码
