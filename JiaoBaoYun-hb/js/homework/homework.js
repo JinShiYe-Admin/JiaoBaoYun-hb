@@ -16,6 +16,7 @@ var clickItem; //点击的子控件
 var publish;
 var publishIsReady=false;
 var stuWorkReady=false;
+document.getElementById('tabs-class').style.display="none";
 mui.init();
 //mui的plusready监听
 mui.plusReady(function() {
@@ -141,7 +142,7 @@ var roleChanged = function() {
 	mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
 	console.log('作业子页面获取的角色变换值roleChanged：' + role);
 	setClasses(role);
-	events.clearChild(list);
+	list.innerHTML="";
 	if(role == 2) { //老师角色
 		mui("#popover").popover('hide');
 		publish.style.display = 'block';
@@ -316,7 +317,7 @@ var openPublish=function(){
  */
 var setClasses = function(role) {
 	var tabs = document.getElementById('scroll-class');
-	events.clearChild(tabs);
+	tabs.innerHTML="";
 	var classes;
 	if(role == 2) {
 		classes = teacherClasses;
@@ -335,6 +336,7 @@ var setClasses = function(role) {
 	//第一个子控件 为选中状态
 	tabs.firstElementChild.className = "mui-control-item mui-active";
 	selectGContainer = tabs.firstElementChild;
+	document.getElementById("tabs-class").style.display="block";
 }
 /**
  * 初始化每个班级请求页码为1
@@ -372,7 +374,7 @@ var requireHomeWork = function(classModel, callback) {
 				totalPageCount = data.RspData.PageCount;
 				selectGContainer.classInfo.totalPageCount = totalPageCount;
 				setHashData(comData, data);
-				callback(data.RspData.Dates)
+				callback(data.RspData.Dates,2);
 			} else {
 				mui.toast(data.RspTxt);
 				wd.close();
@@ -441,7 +443,7 @@ var requireHomeWork = function(classModel, callback) {
 							console.log('合并后的数据为：' + JSON.stringify(data));
 							selectGContainer.classInfo.totalPageCount = totalPageCount;
 							setHashData(comData, data);
-							callback(data.RspData.Dates)
+							callback(data.RspData.Dates,30)
 							//						}else{
 							//							wd.close();
 						}
@@ -460,9 +462,18 @@ var requireHomeWork = function(classModel, callback) {
 
 }
 /**
- * 放置数据
+ * 防止作业数据
+ * @param {Object} data 作业数据
+ * @param {Object} type 获取作业身份时的角色类型
  */
-var setData = function(data) {
+var setData = function(data,type) {
+	/**
+	 * 如果角色和数据身份不符，不放置数据
+	 */
+	if(role!=type){
+		events.closeWaiting();
+		return;
+	}
 	//老师角色
 	if(role == 2) {
 		setPublishedData(data);

@@ -111,7 +111,7 @@ var appUpdate = (function(mod) {
 			} else {
 				mui.toast('您已取消下载新版本！')
 			}
-		})
+		},"div");
 	}
 	/**
 	 * 获取大版本号和小版本号

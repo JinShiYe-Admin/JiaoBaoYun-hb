@@ -39,7 +39,8 @@
 			"css/utils/common.css",
 			"js/qiuzhi/qiuzhi-questionSub.js",
 			"js/libs/crypto-js/crypto-js.js",
-			"css/qiuzhi/qiuzhi-questionSub.css"
+			"css/qiuzhi/qiuzhi-questionSub.css",
+			"css/utils/preview.css"
 		]
 	},
 	"html/qiuzhi/qiuzhi-questionSub.html": {

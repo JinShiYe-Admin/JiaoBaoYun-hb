@@ -62,7 +62,6 @@ var setFresh = function() {
 	h5fresh.addRefresh(function() {
 		mui("#refreshContainer").pullRefresh().refresh(true);
 		pageIndex = 1;
-		document.getElementById("list-container").innerHTML="";
 		requestData();
 	}, {
 		style: "circle",
@@ -83,6 +82,9 @@ var setFresh = function() {
  */
 var setData = function(data) {
 	var list = document.getElementById('list-container');
+	if(pageIndex==1){
+		list.innerHTML="";
+	}
 	data.forEach(function(cell, i) {
 		var li = document.createElement('li');
 		li.className = 'mui-table-view-cell';
