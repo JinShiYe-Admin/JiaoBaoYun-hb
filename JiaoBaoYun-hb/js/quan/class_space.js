@@ -285,6 +285,7 @@ var class_space = (function(mod) {
 					}
 				}
 			} else if(cell.EncType == 2) {
+				imgInner += '<img class="video-container"  src="' + imgs[0] + '" style="padding-right:12px;max-width:100%;" onload="videoImgOnload(event)" />'
 			}
 
 		}
