@@ -55,6 +55,8 @@
 	<script src="../../js/qiniu/qiniu.js"></script>
 	<!--相机js-->
 	<script src="../../js/utils/camera.js"></script>
+	<script src="../../js/utils/video.js"></script>
+	<script src="../../js/utils/load.js"></script>
 	<!--压缩js-->
 	<script type="text/javascript" src="../../js/utils/compress.js"></script>
 	<!--加密-->
@@ -78,13 +80,18 @@
 			getGroupPersons(groupInfo.classId);
 			//加载删除附件监听
 			CloudFileUtil.setDelPicListener();
+			CloudFileUtil.setPlayVideoListener();
 			//拍照上传图片至七牛云
 			events.addTap('take_pic', function() {
-				var item=this;
-				jQuery(item).css("pointerEvents","none");
+				if(CloudFileUtil.files.length > 0 && CloudFileUtil.files[0].type != 1) {
+					mui.toast("只能上传一种附件！");
+					return;
+				}
+				var item = this;
+				jQuery(item).css("pointerEvents", "none");
 				if(CloudFileUtil.files.length < 9) {
 					camera.getPic(camera.getCamera(), function(picPath) {
-						jQuery(item).css("pointerEvents","all");
+						jQuery(item).css("pointerEvents", "all");
 						plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
 							back: 'none'
 						});
@@ -117,17 +124,79 @@
 								plus.nativeUI.closeWaiting(); //关闭等待框
 							});
 						})
-					},function(err){
-						jQuery(item).css("pointerEvents","all");
+					}, function(err) {
+						jQuery(item).css("pointerEvents", "all");
 					})
 				} else {
 					mui.toast('上传图片附件不得多于9张！');
-					jQuery(item).css("pointerEvents","all");
+					jQuery(item).css("pointerEvents", "all");
 				}
 			});
 			//获取录像按钮
 			events.addTap('take_camero', function() {
-				mui.toast('功能暂未开放！');
+				var item = this;
+				jQuery(item).css('pointerEvents', 'none');
+				console.log("item不能点击了！" + item.id);
+				if(CloudFileUtil.files.length > 0) {
+					switch(CloudFileUtil.files[0].type) {
+						case 1:
+							mui.toast("只能上传一种附件！");
+							break;
+						case 2:
+							mui.toast("只能上传一个视频！");
+							break;
+						default:
+							break;
+					}
+					jQuery(item).css('pointerEvents', 'all');
+					return;
+				}
+				video.recordVideo({}, function(path) {
+					events.showWaiting();
+					console.log("保存在本地的路径：" + path);
+					load.getManageOptions(2, path, function(mData, thumb) {
+						console.log("视频获取的各项参数：" + JSON.stringify(data));
+						mData.saveSpace = storageKeyName.CLASSSPACE;
+						mData.spaceId = 6;
+						var data = CloudFileUtil.getSingleImgUploadOptions(path, mData.spaceId, mData.spaceType, mData.saveSpace, mData.options);
+						CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+							console.log("获取的数据：" + JSON.stringify(datas));
+							if(datas.Status == 1) {
+								var tokenInfo = datas.Data;
+								//上传文件
+								CloudFileUtil.uploadFile(tokenInfo, path, function(uploadData, status) {
+									console.log("获取的上传数据：" + JSON.stringify(uploadData));
+									console.log("获取的token信息：" + JSON.stringify(tokenInfo));
+									var img = { //图片信息
+										url: tokenInfo.Domain + tokenInfo.Key,
+										thumb: tokenInfo.OtherKey[data.thumbKey],
+										clip: tokenInfo.OtherKey[data.thumbKey] + "?imageMogr2/gravity/Center/crop/!" + mData.options.thumbSize.width + "x" + mData.options.thumbSize.width * 0.45,
+										localPath: path,
+										type: 2
+									}
+									//										console.log("获取的图片信息：" + JSON.stringify(img));
+									//关闭等待框
+									plus.nativeUI.closeWaiting();
+									//放置图片
+									CloudFileUtil.setPic(img, 0, thumb);
+									jQuery("#take_camero").css('pointerEvents', 'all');
+								});
+							}
+
+						}, function(xhr, type, errorThrown) {
+							console.log("错误类型：" + type + errorThrown);
+							plus.nativeUI.closeWaiting(); //关闭等待框
+							jQuery("#take_camero").css('pointerEvents', 'all');
+						});
+					})
+				}, function(errData) {
+					console.log(errData.code);
+					if(errData.code != 0) {
+						mui.toast(errData.message);
+					}
+					jQuery("#take_camero").css('pointerEvents', 'all');
+					console.log("item能点击了！")
+				})
 			});
 			//录音按钮
 			events.addTap('get_record', function() {
@@ -137,6 +206,10 @@
 			 * 相册选择按钮
 			 */
 			events.addTap('get_gallery', function() {
+				if(CloudFileUtil.files.length > 0 && CloudFileUtil.files[0].type != 1) {
+					mui.toast("只允许上传一种附件！");
+					return;
+				}
 				if(CloudFileUtil.files.length < 9) {
 					var picCount = 0; //上传图片计数
 					gallery.getMultiplePic(9 - CloudFileUtil.files.length, function(paths) { //回调函数
@@ -187,8 +260,6 @@
 			});
 			//发布按钮
 			events.addTap('publish', function() {
-
-				//								postDataPro_addClassSpace({classId},)
 				console.log('' + JSON.stringify(groupInfo));
 				var tempText = document.getElementById('input-content').value;
 				if(!tempText || tempText == '') {
@@ -205,7 +276,7 @@
 				postData.classId = groupInfo.classId;
 				postData.msgContent = tempText;
 				postData.encType = TAs.encType;
-				postData.encLen=0;
+				postData.encLen = 0;
 				postData.encAddr = TAs.encAddr;
 				postData.encImg = TAs.encImg;
 				postData.teacherId = parseInt(groupInfo.userId);

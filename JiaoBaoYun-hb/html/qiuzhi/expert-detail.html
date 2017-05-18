@@ -234,6 +234,7 @@
 					return;
 				}
 				this.disabled = false;
+				jQuery(this).css("pointerEvents","all");
 			})
 			events.addTap('ExpertChannels', function() {
 				//判断是否是游客身份登录
@@ -241,6 +242,7 @@
 					return;
 				}
 				this.disabled = false;
+				jQuery(this).css("pointerEvents","all");
 			})
 			if(utid == 0 && utid == ExpertsInfo.UserId) {
 				nodes.expertImg.src = updateHeadImg('', 2);

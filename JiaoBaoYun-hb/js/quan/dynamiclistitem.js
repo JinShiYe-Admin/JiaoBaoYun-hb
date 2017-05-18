@@ -412,6 +412,7 @@ var dynamiclistitem = (function($, mod) {
 				return;
 			}
 			this.disabled = false;
+			jQuery(this).css("pointerEvents", "all");
 			var pageID = sliderId.replace('top_', '')
 			console.log('id=' + this.id)
 			tempIndex = this.id.replace('comment' + pageID + idFlag, '');
@@ -427,6 +428,7 @@ var dynamiclistitem = (function($, mod) {
 				return;
 			}
 			this.disabled = false;
+			jQuery(this).css("pointerEvents", "all");
 			var pageID = sliderId.replace('top_', '')
 			tempIndex = this.id.replace('replyComment' + pageID + idFlag, '');
 			mod.addComment('tap');
@@ -440,6 +442,7 @@ var dynamiclistitem = (function($, mod) {
 				return;
 			}
 			this.disabled = false;
+			jQuery(this).css("pointerEvents", "all");
 			//			console.log('长按删除评论')
 			var pageID = sliderId.replace('top_', '')
 			tempIndex = this.id.replace('replyComment' + pageID + idFlag, '');
@@ -470,7 +473,7 @@ var dynamiclistitem = (function($, mod) {
 			if(events.judgeLoginMode(this)) {
 				return;
 			}
-			var item=this;
+			var item = this;
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
 
 			var pageID = sliderId.replace('top_', '')
@@ -487,7 +490,8 @@ var dynamiclistitem = (function($, mod) {
 			var wd = events.showWaiting();
 			postDataPro_setUserFocus(comData, wd, function(data) {
 				wd.close();
-				item.disabled=false;
+				item.disabled = false;
+				jQuery(item).css("pointerEvents", "all");
 				if(data.RspCode == 0) {
 					var btn = document.getElementById(tempId);
 					btn.innerHTML = '取消关注'
@@ -513,7 +517,7 @@ var dynamiclistitem = (function($, mod) {
 			if(events.judgeLoginMode(this)) {
 				return;
 			}
-			var item=this;
+			var item = this;
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
 
 			var pageID = sliderId.replace('top_', '')
@@ -531,7 +535,8 @@ var dynamiclistitem = (function($, mod) {
 			postDataPro_setUserFocus(comData, wd, function(data) {
 				wd.close();
 				console.log(JSON.stringify(data));
-				item.disabled=false;
+				item.disabled = false;
+				jQuery(item).css("pointerEvents", "all");
 				if(data.RspCode == 0) {
 					var btn = document.getElementById(tempId);
 					btn.innerHTML = '关注'
@@ -568,8 +573,8 @@ var dynamiclistitem = (function($, mod) {
 		//点击点赞的人跳转到相应界面
 		mui('.mui-table-view').on('tap', '.praiseName', function() {
 			window.event.stopPropagation()
-			if(isPersonal==0){
-				if(publisherId==this.dataset.info){
+			if(isPersonal == 0) {
+				if(publisherId == this.dataset.info) {
 					window.event.stopPropagation()
 					return;
 				}
@@ -591,20 +596,19 @@ var dynamiclistitem = (function($, mod) {
 				createNew: true,
 
 			});
-			
-			
+
 		});
 		//点击评论者名字
 		mui('.mui-table-view').on('tap', '.dynamic-comment-name', function() {
-			if(isPersonal==0){
-				if(publisherId==this.dataset.info){
+			if(isPersonal == 0) {
+				if(publisherId == this.dataset.info) {
 					window.event.stopPropagation()
 					return;
 				}
 			}
-			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; 
-			if(this.dataset.info==undefined){
-				this.dataset.info=personalUTID
+			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+			if(this.dataset.info == undefined) {
+				this.dataset.info = personalUTID
 			}
 			console.log('评论者id' + this.dataset.info);
 			mui.openWindow({
@@ -628,12 +632,12 @@ var dynamiclistitem = (function($, mod) {
 		})
 		//点赞和取消点赞
 		mui('.mui-table-view').on('tap', '.dynamic-icon-praise', function() {
-			
+
 			//判断是否是游客身份登录
 			if(events.judgeLoginMode(this)) {
 				return;
 			}
-			var item=this;
+			var item = this;
 			var wd = events.showWaiting();
 			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
 			var pageID = sliderId.replace('top_', '')
@@ -678,7 +682,8 @@ var dynamiclistitem = (function($, mod) {
 					} else {
 						mui.toast(data.RspTxt);
 					}
-					item.disabled=false;
+					item.disabled = false;
+					jQuery(item).css("pointerEvents", "all");
 				})
 
 			} else {
@@ -740,7 +745,8 @@ var dynamiclistitem = (function($, mod) {
 					} else {
 						mui.toast(data.RspTxt);
 					}
-					item.disabled=false;
+					item.disabled = false;
+					jQuery(item).css("pointerEvents", "all");
 				})
 
 			}
@@ -752,7 +758,7 @@ var dynamiclistitem = (function($, mod) {
 			if(events.judgeLoginMode(this)) {
 				return;
 			}
-			var item=this;
+			var item = this;
 			var btnArray = ['取消', '确定'];
 			var closeId = this.id;
 			mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
@@ -765,7 +771,8 @@ var dynamiclistitem = (function($, mod) {
 					};
 					postDataPro_delUserSpaceById(comData, wd, function(data) {
 						wd.close();
-						item.disabled=false;
+						item.disabled = false;
+						jQuery(item).css("pointerEvents", "all");
 						if(data.RspCode == 0) {
 							mui.toast('已删除');
 
@@ -776,8 +783,9 @@ var dynamiclistitem = (function($, mod) {
 							mui.toast(data.RspTxt);
 						}
 					})
-				}else{
-					item.disabled=false;
+				} else {
+					item.disabled = false;
+					jQuery(item).css("pointerEvents", "all");
 				}
 			})
 		})
@@ -954,8 +962,8 @@ var dynamiclistitem = (function($, mod) {
 
 		if(ImageNum == 1) { //一张图片时1
 			if(data.EncType == 2) {
-				var html1 = '<div class="video-container" thb=' + ImageUrlList[0] + ' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url(' + ImageUrlList[0] + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
-				var html2 = '<img  style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:60px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
+				var html1 = '<div id="video-container' + data.id_name + '" class="video-container" thb=' + ImageUrlList[0] + ' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url(' + ImageUrlList[0] + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
+				var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:60px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
 				html = html1 + html2;
 			} else {
 
@@ -984,27 +992,16 @@ var dynamiclistitem = (function($, mod) {
 		div.style.marginTop = '-10px'
 		div.innerHTML = html;
 		liElement.appendChild(div);
-		//				if(ImageNum == 1) {
-		//					var img = div.getElementsByClassName('dynamic-image')[0];
-		//					console.log(img.outerHTML);　　
-		//					var width = img.naturalWidth;　　
-		//					var height = img.naturalHeight;
-		//					
-		//					if(width<height){
-		//						console.log('width=' + width + '-----' + 'height=' + height);
-		//						var tempwidth = (SCREEN_WIDTH - 20) / 2;
-		//						img.setAttribute('width',tempwidth+'px');
-		//						img.setAttribute('height',tempwidth/width*height+'px')
-		//					}else{
-		//						console.log('width=' + width + '-----' + 'height=' + height);
-		//						var tempHeight = (SCREEN_WIDTH - 20);
-		//						img.setAttribute('height',tempHeight+'px');
-		//						img.setAttribute('width',tempHeight/height*width+'px')
-		//					}
-		//				}
-
 		mod.addInteraction(ulElement, liElement, data);
 	};
+	mod.getNaturalSize = function(src) {
+		var img = new Image();
+		img.src = src;
+		return {
+			width: img.width,
+			height: img.height
+		};
+	}
 	mod.questionContent = function() {
 		var height_0;
 		var height_1;
@@ -1151,6 +1148,20 @@ var dynamiclistitem = (function($, mod) {
 		div.innerHTML = html;
 		liElement.appendChild(div);
 		ulElement.appendChild(liElement);
+		var ImageUrlList = data.ImageList; //图片路径数组1
+		var EncAddrList = data.EncAddrList
+		var ImageNum = ImageUrlList.length; //图片总数量
+		if(ImageNum == 1 && data.EncType == 2) {
+			var tempDiv = document.getElementById("video-container"+data.id_name);
+			var imgSize = mod.getNaturalSize(ImageUrlList[0])
+			console.log(imgSize.width + '-----' + imgSize.height);
+			tempDiv.style.width = imgSize.width / 4 + 'px';
+			tempDiv.style.height = imgSize.height / 4 + 'px';
+			var playvideo = document.getElementById("playvideo"+data.id_name);
+			playvideo.style.marginTop=imgSize.height / 8-25+'px'
+			console.log(playvideo.outerHTML)
+			
+		}
 	};
 
 	return mod;

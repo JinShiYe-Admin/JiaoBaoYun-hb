@@ -163,7 +163,7 @@
 			function init() {
 				var titleWidth = document.getElementById("myCityTitle").offsetWidth;
 				var titleNameWidth = document.getElementById("myCityTitle_1").offsetWidth;
-				console.log(titleWidth + ' ' + titleNameWidth);
+				//console.log(titleWidth + ' ' + titleNameWidth);
 				var cityLine = document.querySelectorAll('.city-my');
 				var cityPoint = document.querySelectorAll('.city-my-point');
 				var width = parseInt(titleWidth / 2 - titleNameWidth);
@@ -218,6 +218,10 @@
 							addChooseCity(main.data.cities[i]);
 						}
 					}
+					var cityDel = document.querySelectorAll('.city-delete');
+					if(cityDel.length == 0) {
+						document.getElementById("myCityTitle").style.display = 'none';
+					}
 				}
 				document.getElementById("table").style.visibility = 'visible';
 			}
@@ -239,15 +243,9 @@
 
 					if(main.data.id == '0' || main.data.id == '1') { //0科教，1展现
 						if(select) {
-							var cityDel = document.querySelectorAll('.city-delete');
-							if(cityDel.length == 1) {
-								mui.toast('至少选择一个城市');
-								return false;
-							}
 							this.className = 'mui-table-view-cell mui-media';
 							var chooseCity = document.getElementById("choose_" + this.id);
 							chooseCity.parentNode.removeChild(chooseCity);
-							cityDel = document.querySelectorAll('.city-delete');
 						} else {
 							if(main.data.id == '1' && mui('.city-select').length > 9) {
 								mui.toast('最多只允许订制10个城市');
@@ -260,6 +258,12 @@
 									aname: this.innerText
 								});
 							}
+						}
+						var cityDel = document.querySelectorAll('.city-delete');
+						if(cityDel.length == 0) {
+							document.getElementById("myCityTitle").style.display = 'none';
+						} else {
+							document.getElementById("myCityTitle").style.display = 'inline-block';
 						}
 					} else if(main.data.id == 'uarea') { //uarea账号地区
 						if(!select) {
@@ -276,13 +280,12 @@
 				mui('#myCity').on('tap', '.city-delete', function() {
 					var parent = this.parentNode;
 					var code = parent.id.replace('choose_', '');
-					var cityDel = document.querySelectorAll('.city-delete');
-					if(cityDel.length == 1) {
-						mui.toast('至少选择一个城市');
-						return false;
-					}
 					document.getElementById(code).className = 'mui-table-view-cell mui-media';
 					parent.parentNode.removeChild(parent);
+					var cityDel = document.querySelectorAll('.city-delete');
+					if(cityDel.length == 0) {
+						document.getElementById("myCityTitle").style.display = 'none';
+					}
 				});
 
 				//点击提交
@@ -293,8 +296,14 @@
 					commitCities = [];
 					var tempCityArray = cityArray;
 					var localCity = []; //存到本地的城市，游客使用
+					var selector;
+					if(main.data.id == '0' || main.data.id == '1') { //0科教，1展现
+						selector = '#myCity .mui-table-view-cell';
+					} else if(main.data.id == 'uarea') {
+						selector = '#allCity .city-select';
+					}
 					//获取被选中的元素
-					mui('#myCity .mui-table-view-cell').each(function(index, element) {
+					mui(selector).each(function(index, element) {
 						var elementAcode = element.getAttribute('data-acode'); //城市代码
 						mui.each(tempCityArray, function(index2, element2) {
 							if(elementAcode == element2.acode) {
@@ -346,7 +355,7 @@
 							requestCitySetting(tempStr);
 						}
 					} else if(main.data.id == 'uarea') { //uarea账号地区
-						if(commitCities.length == 0 || commitCities[0].acode == tempInfo.uarea.acode) {
+						if(commitCities.length == 0 || commitCities[0].acode == pInfo.uarea.acode) {
 							mui.back();
 						} else {
 							var procode = ''; //省份代码

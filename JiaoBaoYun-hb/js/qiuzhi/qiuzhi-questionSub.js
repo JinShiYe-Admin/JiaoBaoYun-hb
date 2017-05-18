@@ -1,26 +1,38 @@
+
+var setIcon = function() {
+	if(questionInfo.AskMan == myStorage.getItem(storageKeyName.PERSONALINFO).utid && (questionInfo.AnswerNum + questionInfo.AnswerOffNum) == 0) {
+		document.getElementById("manage-question").style.display = "inline-block";
+	} else {
+		document.getElementById("manage-question").style.display = "none";
+	}
+}
 /**
  * 问题子页面界面逻辑
  */
 //加载刷新控件
-mui.init({
-	pullRefresh: {
-		container: '#refreshContainer',
-		down: {
-			callback: pulldownRefresh
-		},
-		up: {
-			contentrefresh: '正在加载...',
-			callback: pullupRefresh
-		}
-	},
-	gestureConfig: {
-		tap: true,
-		hold: true,
-		release: true
-	}
+//mui.init({
+//	pullRefresh: {
+//		container: '#refreshContainer',
+//		down: {
+//			callback: pulldownRefresh
+//		},
+//		up: {
+//			contentrefresh: '正在加载...',
+//			callback: pullupRefresh
+//		}
+//	},
+////	gestureConfig: {
+////		tap: true,
+////		hold: true,
+////		release: true
+////	}
+//
+//});
+var questionInfo;
+var _oldBack = mui.back;
+mui.back = function() {
 
-});
-
+}
 //问题id
 var askID = 0;
 //取数据的默认排序
@@ -39,11 +51,36 @@ var AskEncAddr = []; //提问图片原图
 var AskThumbnail = []; //提问图片缩略图
 var mainData; //记录获取的数据
 mui.plusReady(function() {
+	//---获取数据并传递数据---start---
+	var main = plus.webview.currentWebview(); //获取当前窗体对象
+	mainData= main.data; //接收A页面传入参数值
+	//从搜索界面跳转的数据，TabId是问题id，得转换为话题id
+	var temp0 = mainData.channelInfo.AskChannelId;
+	if(temp0 > 0) {
+		mainData.channelInfo.TabId = temp0;
+	}
+	questionInfo = mainData.channelInfo;
+	console.log("获取的questionInfo:" + JSON.stringify(questionInfo));
+	setIcon();
+	console.log('qiuzhi-question.html:获取的问题数据' + JSON.stringify(mainData));
+	//点击右上角邀请专家按钮
+	events.addTap('addExpert', function() {
+		events.openNewWindowWithData('experts_main.html', mainData);
+	});
+	events.addTap("manage-question", function() {
+		var titles = [{
+			title: "删除问题",
+			dia: 1
+		}]
+		var cbArr = [delQuestion];
+		events.showActionSheet(titles, cbArr);
+	})
+	setFresh();
 	mui.previewImage();
-	events.limitPreviewPullDown("refreshContainer");
+	events.limitPreviewPullDown("refreshContainer",1);
 	var main = plus.webview.currentWebview(); //获取当前窗体对象
 	mainData = main.data; //接收A页面传入参数值
-	console.log('qiuzhi-questionSub.html:' + JSON.stringify(mainData));
+	console.log('qiuzhi-question.html:' + JSON.stringify(mainData));
 
 	events.preload('qiuzhi-addAnswer.html');
 	askModel = mainData.channelInfo;
@@ -67,13 +104,7 @@ mui.plusReady(function() {
 		requestAskDetail();
 	});
 	window.addEventListener("manageQuestion", function() {
-		console.log("获取的manageQuestion监听")
-		var titles = [{
-			title: "删除问题",
-			dia: 1
-		}]
-		var cbArr = [delQuestion];
-		events.showActionSheet(titles, cbArr);
+		
 	})
 	window.addEventListener("answerShield", function() {
 		//获取的第几页回复
@@ -124,18 +155,18 @@ mui.plusReady(function() {
 	//---点击效果---end---
 
 	events.addTap('guanzhu', function() {
-		this.disabled=true;
+		this.disabled = true;
 		if(events.getUtid()) {
 			console.log('点击关注');
 			if(this.innerText == '关注') {
-				setAskFocus(askID, 1,this);
+				setAskFocus(askID, 1, this);
 			} else {
-				setAskFocus(askID, 0,this);
+				setAskFocus(askID, 0, this);
 			}
 		} else {
-			this.disabled=false;
-			var isDel = this.innerText == '关注'?0:1;
-			events.toggleStorageArray(storageKeyName.FOCUSEQUESTION,parseInt(askID),isDel);
+			this.disabled = false;
+			var isDel = this.innerText == '关注' ? 0 : 1;
+			events.toggleStorageArray(storageKeyName.FOCUSEQUESTION, parseInt(askID), isDel);
 			if(isDel) {
 				document.getElementById("guanzhu").innerText = '关注';
 				document.getElementById("guanzhu").style.background = '#1db8F1';
@@ -155,8 +186,7 @@ mui.plusReady(function() {
 		console.log(JSON.stringify(info));
 		requestAnswerDetail(info.AnswerId, function(answerInfo) {
 			//跳转页面
-			events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', answerInfo);
-			plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right", 250);
+			events.fireToPageWithData('qiuzhi-answerDetail.html', 'answerInfo', answerInfo);
 		})
 	});
 
@@ -167,8 +197,8 @@ mui.plusReady(function() {
 		console.log(JSON.stringify(info));
 		if(info.IsAnonym != 1) {
 			info.UserId = info.utid;
-			this.disabled=true;
-			events.singleWebviewInPeriod(this,"expert-detail.html",info);
+			this.disabled = true;
+			events.singleWebviewInPeriod(this, "expert-detail.html", info);
 		}
 	});
 
@@ -196,6 +226,13 @@ mui.plusReady(function() {
 		}
 	});
 });
+var setFresh=function(){
+	h5fresh.addRefresh(pulldownRefresh,{
+		style:"circle",
+		offset:"50px"
+	});
+	h5fresh.addPullUpFresh("#refreshContainer",pullupRefresh);
+}
 /**
  * 根据状况低端按钮显示
  */
@@ -227,8 +264,8 @@ var setCondition = function() {
 			console.log('tab_div-tap');
 			if(askModel.IsAnswered == 1) {
 				mui.toast('已经回答过此问题');
-				this.disabled=false;
-				jQuery(this).css("pointerEvents","all");
+				this.disabled = false;
+				jQuery(this).css("pointerEvents", "all");
 				return;
 			}
 			tab_div.style.background = '#DDDDDD';
@@ -238,8 +275,8 @@ var setCondition = function() {
 				tab_font.style.color = 'gray';
 			}, 80);
 			//点击跳转到回答界面
-			jQuery(this).css("pointerEvents","all");
-			this.disabled=false;
+			jQuery(this).css("pointerEvents", "all");
+			this.disabled = false;
 			events.fireToPage('qiuzhi-addAnswer.html', 'qiuzhi-addAnswer', function() {
 				return askModel;
 			});
@@ -351,8 +388,8 @@ function getAskFocusByUser(askId) {
 };
 
 //14.设置某个问题的关注，0 不关注,1 关注
-function setAskFocus(askId, status,item) {
-	document.getElementById("guanzhu").disabled=true;
+function setAskFocus(askId, status, item) {
+	document.getElementById("guanzhu").disabled = true;
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 	//需要加密的数据
 	var comData = {
@@ -365,8 +402,8 @@ function setAskFocus(askId, status,item) {
 	//14.设置某个问题的关注
 	postDataQZPro_setAskFocus(comData, wd1, function(data) {
 		wd1.close();
-		item.disabled=false;
-		document.getElementById("guanzhu").disabled=false;
+		item.disabled = false;
+		document.getElementById("guanzhu").disabled = false;
 		console.log('14.设置某个问题的关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			//刷新界面显示
@@ -497,7 +534,7 @@ function requestAskDetail() {
 				console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 				//刷新0，还是加载更多1
 				if(answerFlag == 0) {
-					mui('#refreshContainer').pullRefresh().endPulldownToRefresh(); //下拉刷新结束
+//					mui('#refreshContainer').pullRefresh().endPulldownToRefresh(); //下拉刷新结束
 					answerArray = tempRspData;
 					//清理原界面
 					cleanQuestion();
@@ -512,7 +549,7 @@ function requestAskDetail() {
 					}
 				} else {
 					answerArray = answerArray.concat(tempRspData);
-					mui('#refreshContainer').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
+//					mui('#refreshContainer').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
 				}
 				//刷新界面
 				addAnswer(tempRspData);
@@ -528,7 +565,10 @@ function requestAskDetail() {
 	});
 }
 var noticeQuestionInfo = function(questionInfo) {
-	mui.fire(plus.webview.currentWebview().parent(), "questionInfo", questionInfo);
+	//	mui.fire(plus.webview.currentWebview().parent(), "questionInfo", questionInfo);
+	setIcon();
+	events.closeWaiting();
+	mui.back = _oldBack;
 }
 /**
  *清空问题的所有信息，和回答数
@@ -562,7 +602,7 @@ function addQuestion(data) {
 		console.log('AskSFlag 0 新增数据');
 		questionContent(data.AskNote, 0);
 	}
-	questionInfo(data.ReadNum, data.FocusNum);
+	getQuestionInfo(data.ReadNum, data.FocusNum);
 	answerShu(data.AnswerNum);
 }
 
@@ -677,7 +717,7 @@ function questionContent(content, flag) {
  * @param {Object} liulanshu 问题浏览数
  * @param {Object} guanzhushu 问题关注数
  */
-function questionInfo(liulanshu, guanzhushu) {
+function  getQuestionInfo(liulanshu, guanzhushu) {
 	document.getElementById("liulanshu").innerHTML = '&nbsp;' + liulanshu;
 	document.getElementById("guanzhushu").innerHTML = '&nbsp;' + guanzhushu;
 }

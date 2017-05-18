@@ -248,9 +248,7 @@
 				//录像
 				document.getElementById("take_camero").onclick = function() {
 					var item = this;
-					jQuery("#take_camero").css('pointerEvents', 'none');
-
-					item.setAttribute("disabled", "disabled");
+					jQuery(item).css('pointerEvents', 'none');
 					console.log("item不能点击了！" + item.id);
 					if(CloudFileUtil.files.length > 0) {
 						switch(CloudFileUtil.files[0].type) {
@@ -263,6 +261,7 @@
 							default:
 								break;
 						}
+						jQuery(item).css('pointerEvents', 'all');
 						return;
 					}
 					video.recordVideo({}, function(path) {
@@ -491,7 +490,7 @@
 					if(data.RspCode == 0) {
 						mui.toast('回答成功');
 						document.getElementById("answerContent").value = '';
-						events.fireToPageNone('qiuzhi-questionSub.html', 'answerAdded');
+						events.fireToPageNone('qiuzhi-question.html', 'answerAdded');
 						events.fireToPageNone('expert-detail.html', 'refresh_expertdetail');
 						mui.back();
 					} else {
@@ -538,7 +537,7 @@
 							document.getElementById('answerContent').value = '';
 							mui.toast('评论成功！')
 							events.fireToPageNone('expert-detail.html', 'refresh_expertdetail');
-							events.fireToPageNone('qiuzhi-answerDetailSub.html', 'commentAdded', {
+							events.fireToPageNone('qiuzhi-answerDetail.html', 'commentAdded', {
 								commentInfo: {
 									userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //	用户ID
 									answerId: answerId, //回答ID

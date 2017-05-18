@@ -65,6 +65,7 @@
 
 			.mui-title {
 				z-index: 3;
+				margin: 0px 10px !important;
 			}
 
 			.mui-icon-list {
@@ -436,7 +437,7 @@
 					}
 					eduArray.push({
 						acode: '000000',
-						aname: "全国"
+						aname: "全部"
 					});
 					cities = eduArray.slice(0); //拷贝数组
 					callBack(cities, waitingDia);
@@ -444,6 +445,16 @@
 					postDataPro_PostUTcity(comData, waitingDia, function(data) {
 						console.log('44 获取个人的订制城市 PostUTcity ' + JSON.stringify(data));
 						if(data.RspCode == 0) {
+							if(data.RspData == null) {
+								//从来就没有订制过城市的就强制添加一个账号所在地
+								var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
+								console.log('个人账号地区的城市 ' + JSON.stringify(uarea));
+								eduArray.push({
+									acode: uarea.acode,
+									aname: uarea.aname
+								});
+							}
+
 							if(data.RspData[0].citys) {
 								//先通过‘|’将返回值分为数组
 								eduArray = data.RspData[0].citys.split('|');
@@ -466,18 +477,9 @@
 								console.log('修改后的最终值为:' + JSON.stringify(eduArray));
 							}
 						}
-
-						if(eduArray.length == 0) {
-							var uarea = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uarea;
-							console.log('个人账号地区的城市 ' + JSON.stringify(uarea));
-							eduArray.push({
-								acode: uarea.acode,
-								aname: uarea.aname
-							});
-						}
 						eduArray.push({
 							acode: '000000',
-							aname: "全国"
+							aname: "全部"
 						});
 
 						cities = eduArray.slice(0); //拷贝数组

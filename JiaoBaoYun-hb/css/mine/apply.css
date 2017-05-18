@@ -158,6 +158,10 @@ legend {
 	background-color: white;
 	padding-bottom: 15px;
 }
+.buttons>.btn-sure{
+	height: 40px;
+	font-size: 15px;
+}
 
 
 /*.mui-popover {
@@ -266,7 +270,7 @@ a>p {
 
 .pop-title {
 	width: 100%;
-	height: 30px;
+	height: 40px;
 	background-color: #F2F3F5;
 	line-height: normal;
 	display: -webkit-box;
@@ -283,7 +287,7 @@ a>p {
 
 .title-left {
 	width: 3px;
-	height: 20px;
+	height: 30px;
 	background-color: #1DB8F1;
 }
 
@@ -305,7 +309,7 @@ a>p {
 }
 
 .chose-container {
-	padding: 15px 0 10px;
+	padding: 15px 0 4px;
 }
 
 .mui-popover {
@@ -363,7 +367,7 @@ a>p {
 }
 
 .mui-radio label {
-	font-size: 14px;
+	font-size: 15px;
 	color: #808080;
 }
 

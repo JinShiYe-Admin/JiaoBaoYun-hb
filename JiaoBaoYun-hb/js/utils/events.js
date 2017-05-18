@@ -499,7 +499,7 @@ var events = (function(mod) {
 			} else {
 				mui.toast(cancelLog)
 			}
-		})
+		},"div");
 	}
 
 	mod.format = function(dateTime, format) {
@@ -797,7 +797,7 @@ var events = (function(mod) {
 	mod.singleWebviewInPeriod = function(clickedItem, webviewUrl, data) {
 		mod.showWaiting();
 		if(!data) {
-			data = {};
+			data = "";
 		}
 		console.log("当前点击控件是否可点击：" + clickedItem.disabled);
 		var webviewSites = webviewUrl.split("/");
@@ -828,11 +828,16 @@ var events = (function(mod) {
 	/**
 	 * 限制预览下拉刷新
 	 * @param {Object} refreshId 刷新控件ID
+	 * @param{Int} type 0为默认样式 1为圈圈
 	 */
-	mod.limitPreviewPullDown = function(refreshId) {
+	mod.limitPreviewPullDown = function(refreshId,type) {
 		mui.getPreviewImage().open = function(index, group) {
 			if(mui('#' + refreshId).length > 0) {
-				mui('#' + refreshId).pullRefresh().setStopped(true);
+				if(type){
+					
+				}else{
+					mui('#' + refreshId).pullRefresh().setStopped(true);
+				}
 			}
 			if(this.isShown()) {
 				return;
@@ -849,11 +854,15 @@ var events = (function(mod) {
 			}
 		};
 		mui.getPreviewImage().close = function(index, group) {
-			if(mui('#' + refreshId).length > 0) {
-				mui('#' + refreshId).pullRefresh().setStopped(false);
-			}
 			if(!this.isShown()) {
 				return;
+			}
+			if(mui('#' + refreshId).length > 0) {
+				if(type){
+					
+				}else{
+					mui('#' + refreshId).pullRefresh().setStopped(false);
+				}
 			}
 			this.element.classList.remove(mui.className('preview-in'));
 			this.element.classList.add(mui.className('preview-out'));
@@ -1258,13 +1267,6 @@ var events = (function(mod) {
 	 */
 	mod.trim = function(string) {
 		return string.replace(/^\s+|\s+$/g, '');
-	}
-	mod.showNoDataToast = function(pageIndex) {
-		if(pageIndex == 1) {
-			mui.toast("暂无数据！");
-		} else {
-			mui.toast("没有更多啦！");
-		}
 	}
 	return mod;
 

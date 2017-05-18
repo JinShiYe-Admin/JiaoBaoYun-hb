@@ -9,38 +9,38 @@ var upperInfo;
 var parentContainer; //评论父控件
 var wd;
 video.initVideo();
-/**
- * 加载刷新
- */
-events.initRefresh('list-container', function() {
-	flag = 1;
-	pageIndex = 1;
-	wd = events.showWaiting();
-	requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
-}, function() {
-	mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
-	if(pageIndex < totalPageCount) {
-		pageIndex++;
-		flag = 1;
-		wd = events.showWaiting();
-		requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
-	}else{
-		mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
-		events.showNoDataToast(pageIndex);
-	}
-})
-/**
- * 
- */
 mui.plusReady(function() {
 	//增加图片预览功能
 	mui.previewImage();
+	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'), "answerIsReady");
 	//限制下拉刷新
-	events.limitPreviewPullDown("refreshContainer");
+	events.limitPreviewPullDown("refreshContainer", 1);
+	//	ws=plus.webview.currentWebview();
+	//	ws.setBounce({position:"none"});
+	h5fresh.addRefresh(function() {
+		document.getElementById("list-container").innerHTML = "";
+		mui("#refreshContainer").pullRefresh().refresh(true);
+		flag = 1;
+		pageIndex = 1;
+		wd = events.showWaiting();
+		requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
+	}, {
+		style: "circle",
+		offset: "50px"
+	})
+	h5fresh.addPullUpFresh("#refreshContainer", function() {
+		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
+		if(pageIndex < totalPageCount) {
+			pageIndex++;
+			flag = 1;
+			wd = events.showWaiting();
+			requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
+		}
+	})
 	//预加载回答问题界面
 	events.preload('qiuzhi-addAnswer.html');
-	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'), "answerIsReady");
-	plus.webview.currentWebview().opener().addEventListener("hide", function() {
+
+	plus.webview.currentWebview().addEventListener("hide", function() {
 		mui.previewImage().close();
 		console.log("求知回答页面已隐藏");
 		events.clearChild(document.getElementById('list-container'));
@@ -85,41 +85,18 @@ mui.plusReady(function() {
 		document.getElementById("question-content").innerHTML = changedData.answerContent;
 		document.getElementById("answer-imgs").innerHTML = getPicInner(changedData)
 		answerInfo.AnswerThumbnail = changedData.AnswerThumbnail;
-		answerInfo.AnswerEncType=changedData.AnswerEncType;
+		answerInfo.AnswerEncType = changedData.AnswerEncType;
 		answerInfo.AnswerEncAddr = changedData.AnswerEncAddr;
 		answerInfo.AnswerContent = changedData.answerContent;
 		answerInfo.AnswerCutImg = changedData.AnswerCutImg;
 		answerInfo.IsAnonym = changedData.isAnonym;
 		answerData.AnswerThumbnail = changedData.AnswerThumbnail;
-		answerData.AnswerEncType=changedData.AnswerEncType;
+		answerData.AnswerEncType = changedData.AnswerEncType;
 		answerData.AnswerEncAddr = changedData.AnswerEncAddr;
 		answerData.AnswerContent = changedData.answerContent;
 		answerData.AnswerCutImg = changedData.AnswerCutImg;
 		answerData.IsAnonym = changedData.isAnonym;
 		setAnswerManInfo(answerData);
-	})
-	window.addEventListener("showActionSheet", function() {
-		var btnArray;
-		var cbArray;
-		if(answerData.CommentNum + answerData.IsLikeNum) {
-			btnArray = [{
-				title: "修改答案"
-			}, {
-				title: "屏蔽答案",
-				dia: 1 //是否显示dialog
-			}];
-			cbArray = [changeAnswer, shieldAnswer];
-		} else {
-			btnArray = [{
-				title: "修改答案"
-			}, {
-				title: "删除答案",
-				dia: 1 //是否显示dialog
-			}];
-			cbArray = [changeAnswer, delAnswer];
-		}
-
-		events.showActionSheet(btnArray, cbArray);
 	})
 	setListeners();
 })
@@ -127,13 +104,12 @@ mui.plusReady(function() {
  * 更改状态 并通知父页面
  */
 var setChangeCondition = function() {
-	var moreShow = 0;
+	var more = document.querySelector(".icon-moreandroid");
 	if(answerInfo.AnswerMan == selfId) {
-		moreShow = 1;
+		more.style.display = "inline-block";
 	} else {
-		moreShow = 0;
+		more.style.display = "none";
 	}
-	mui.fire(plus.webview.currentWebview().opener(), "moreShow", moreShow);
 }
 /**
  * 修改回答
@@ -153,7 +129,7 @@ var shieldAnswer = function() {
 		console.log("屏蔽后返回的数据:" + JSON.stringify(data));
 		if(data.RspCode == 0 && data.RspData.Result) {
 			mui.toast("回答已屏蔽！");
-			mui.fire(plus.webview.getWebviewById("qiuzhi-questionSub.html"), "answerShield");
+			mui.fire(plus.webview.getWebviewById("qiuzhi-question.html"), "answerShield");
 			if(plus.webview.getWebviewById("qiuzhi-expertAllAnswer.html")) {
 				mui.fire(plus.webview.getWebviewById("qiuzhi-expertAllAnswer.html"), "answerShield");
 			}
@@ -175,8 +151,8 @@ var delAnswer = function() {
 		wd1.close();
 		console.log("删除回答的接口：" + JSON.stringify(data));
 		if(data.RspCode == 0) {
-			if(plus.webview.getWebviewById("qiuzhi-questionSub.html")) {
-				mui.fire(plus.webview.getWebviewById("qiuzhi-questionSub.html"), "answerDeled", answerInfo);
+			if(plus.webview.getWebviewById("qiuzhi-question.html")) {
+				mui.fire(plus.webview.getWebviewById("qiuzhi-question.html"), "answerDeled", answerInfo);
 			};
 			mui.back();
 		} else {
@@ -574,7 +550,7 @@ function getUserFocus(userId) {
 
 //23.设置对某个用户的关注
 function setUserFocus(userId, item) {
-	item.disabled=true;
+	item.disabled = true;
 	var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //当前登录账号utid
 	//需要加密的数据
 	var comData = {
@@ -587,7 +563,7 @@ function setUserFocus(userId, item) {
 	//23.设置对某个用户的关注
 	postDataQZPro_setUserFocus(comData, wd1, function(data) {
 		wd1.close();
-		item.disabled=false;
+		item.disabled = false;
 		console.log('23.设置对某个用户的关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
 			//刷新界面显示
@@ -712,12 +688,12 @@ var createCell = function(ul, cellData, i, order) {
  * @param {Object} datasource
  */
 var setQuestion = function(datasource) {
-	document.querySelector('.question-title').innerHTML = datasource.AskTitle. replace(/ /g,"&nbsp;");
+	document.querySelector('.question-title').innerHTML = datasource.AskTitle.replace(/ /g, "&nbsp;");
 	var questionContainer = document.getElementById('question-content');
 	document.getElementById('question-content').innerHTML = "";
 	console.log("放置数据？？？？？？？？？")
 	var p = document.createElement('p');
-	p.innerHTML = datasource.AnswerContent.replace(/ /g,"&nbsp;").replace(/\n/g, "<br/>");
+	p.innerHTML = datasource.AnswerContent.replace(/ /g, "&nbsp;").replace(/\n/g, "<br/>");
 	questionContainer.appendChild(p);
 	//	p.querySelectorAll("img").for
 	jQuery("#question-content img").each(function(index, ele) {
@@ -801,10 +777,10 @@ var getPicInner = function(data) {
 				console.log('图片路径：' + picInner);
 				return picInner;
 			case 2:
-				picInner+='<div class="video-container" style="background-image:url('+clipImgs[0]+');background-repeat:no-repeat;background-position:center;background-size:cover;width:'+win_width+'px;height:'+win_width*0.45+
-				'px;text-align:center;"><img style="width: 55px;height:55px; margin-top:'+(win_width*0.45-55)/2+'px;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
-				console.log("获取的图片控件："+picInner)
-			    return picInner;
+				picInner += '<div class="video-container" style="background-image:url(' + clipImgs[0] + ');background-repeat:no-repeat;background-position:center;background-size:cover;width:' + win_width + 'px;height:' + win_width * 0.45 +
+					'px;text-align:center;"><img style="width: 55px;height:55px; margin-top:' + (win_width * 0.45 - 55) / 2 + 'px;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
+				console.log("获取的图片控件：" + picInner)
+				return picInner;
 			default:
 				break;
 		}
@@ -827,17 +803,17 @@ var createCommentsInner = function(cell) {
 	console.log("要放置的数据：" + JSON.stringify(cell))
 	var headImg = cell.UserImg;
 	var personName = cell.UserName ? cell.UserName : "新用户";
-//	var inner = '<div class="table-view-cell"><div class="comments-cell">' +
-//		'<div class="img-container"><img class="head-img" src="' + headImg + '"/></div>' +
-//		'<div class="comment-container">' +
-//		'<h5 class="comment-personName single-line">' + setName(cell) + '</h5>' +
-//		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>' +
-//		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
-	var inner='<div class="table-view-cell"><div class="comments-cell">'+
-		'<h5 class="comment-personName single-line"><img class="head-img" src="'+headImg+'"/>'+setName(cell)+'</h5>'+
+	//	var inner = '<div class="table-view-cell"><div class="comments-cell">' +
+	//		'<div class="img-container"><img class="head-img" src="' + headImg + '"/></div>' +
+	//		'<div class="comment-container">' +
+	//		'<h5 class="comment-personName single-line">' + setName(cell) + '</h5>' +
+	//		'</div><div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>' +
+	//		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
+	var inner = '<div class="table-view-cell"><div class="comments-cell">' +
+		'<h5 class="comment-personName single-line"><img class="head-img" src="' + headImg + '"/>' + setName(cell) + '</h5>' +
 		'<div class="support-container"> <a class="mui-icon iconfont icon-support ">' + replaceBigNo(cell.LikeNum) + '</a></div></div>' +
-		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent.replace(/ /g,"&nbsp;").replace(/\n/g,"<br/>") + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
-		
+		'<div class="comments-content"><p class="comment-words">' + cell.CommentContent.replace(/ /g, "&nbsp;").replace(/\n/g, "<br/>") + '</p><p class="comment-date">' + events.shortForDate(cell.CommentDate) + '</p></div></div>';
+
 	console.log("当前评论内容：" + inner)
 	return inner;
 }
@@ -851,16 +827,37 @@ var setName = function(cell) {
  * 设置监听
  */
 var setListeners = function() {
-	//	plus.webview.currentWebview().opener().querySelector(".icon-moreandroid").addEventListener("tap", function() {
-	//
-	//	});
+	var more = document.querySelector(".icon-moreandroid");
+	more.addEventListener("tap", function() {
+		var btnArray;
+		var cbArray;
+		if(answerData.CommentNum + answerData.IsLikeNum) {
+			btnArray = [{
+				title: "修改答案"
+			}, {
+				title: "屏蔽答案",
+				dia: 1 //是否显示dialog
+			}];
+			cbArray = [changeAnswer, shieldAnswer];
+		} else {
+			btnArray = [{
+				title: "修改答案"
+			}, {
+				title: "删除答案",
+				dia: 1 //是否显示dialog
+			}];
+			cbArray = [changeAnswer, delAnswer];
+		}
+
+		events.showActionSheet(btnArray, cbArray);
+	})
 	//评论的点赞按钮点击事件
 	mui(".mui-table-view").on('tap', '.support-container', function() {
 		//判断是否是游客身份登录
 		if(events.judgeLoginMode(this)) {
 			return;
 		}
-		this.disabled=true;
+		this.disabled = true;
 		setIsLikeComment(this);
 	})
 	//回答的点赞按钮的点赞事件
@@ -874,7 +871,7 @@ var setListeners = function() {
 	//按钮点击事件关注事件
 	events.addTap('btn-focus', function() {
 		var item = this;
-		item.disabled=true;
+		item.disabled = true;
 		if(events.getUtid()) {
 			setUserFocus(answerData.AnswerMan, this)
 		} else {
@@ -887,7 +884,8 @@ var setListeners = function() {
 				item.innerText = '已关注';
 				item.className = "mui-btn mui-pull-right btn-attentioned";
 			}
-			item.disabled=false;
+			item.disabled = false;
+			jQuery(item).css("pointerEvents", "all");
 		}
 
 	})
@@ -899,13 +897,13 @@ var setListeners = function() {
 		events.fireToPageWithData('qiuzhi-addAnswer.html', 'add-comment', answerData);
 		upperInfo = null;
 		parentContainer = null;
-		this.disabled=false;
-		jQuery(this).css("pointerEvents","all");
+		this.disabled = false;
+		jQuery(this).css("pointerEvents", "all");
 	})
 	events.addTap('anthor-portrait', function() {
 		if(!answerData.IsAnonym) {
-			this.disabled=true;
-			events.singleWebviewInPeriod(this,"expert-detail.html",jQuery.extend(answerData, {
+			this.disabled = true;
+			events.singleWebviewInPeriod(this, "expert-detail.html", jQuery.extend(answerData, {
 				UserId: answerData.utid,
 				uimg: answerData.UserImg,
 				unick: answerData.UserName
@@ -915,9 +913,9 @@ var setListeners = function() {
 	//评论头像点击事件
 	mui('.mui-table-view').on('tap', '.head-img', function() {
 		var info = this.info;
-		this.disabled=true;
+		this.disabled = true;
 		console.log(JSON.stringify(info));
-		events.singleWebviewInPeriod(this,"expert-detail.html", jQuery.extend(info, {
+		events.singleWebviewInPeriod(this, "expert-detail.html", jQuery.extend(info, {
 			UserId: info.utid,
 			uimg: info.UserImg,
 			unick: info.UserName
@@ -940,7 +938,8 @@ var setListeners = function() {
 		if(upperInfo.UserId != myStorage.getItem(storageKeyName.PERSONALINFO).utid) {
 			getComment(comdata, function(isDel) {
 				if(isDel) {
-					item.disabled=false;
+					item.disabled = false;
+					jQuery(item).css("pointerEvents", "all");
 					mui.toast("评论已删除！");
 				} else {
 					if(upperInfo.UpperId) {
@@ -952,17 +951,21 @@ var setListeners = function() {
 					events.fireToPageWithData('qiuzhi-addAnswer.html', 'comment-reply', jQuery.extend(item.commentInfo, {
 						AnswerId: answerData.AnswerId
 					}));
-					this.disabled=false;
+					item.disabled = false;
+					jQuery(item).css("pointerEvents", "all");
 				}
 			})
+		} else {
+			item.disabled = false;
+			jQuery(item).css("pointerEvents", "all");
 		}
 
 	})
-	mui("#answer-imgs").on("tap",".video-container",function(){
-		var item=this;
-		jQuery(item).css("pointerEvents","none");
-		video.playVideo(answerData.AnswerEncAddr,answerData.AnswerThumbnail,function(){
-			jQuery(item).css("pointerEvents","all");
+	mui("#answer-imgs").on("tap", ".video-container", function() {
+		var item = this;
+		jQuery(item).css("pointerEvents", "none");
+		video.playVideo(answerData.AnswerEncAddr, answerData.AnswerThumbnail, function() {
+			jQuery(item).css("pointerEvents", "all");
 		});
 	})
 	mui('.mui-table-view').on('longtap', ".comment-words", function() {
@@ -1023,14 +1026,15 @@ var setListeners = function() {
  * @param {Object} 点赞的item
  */
 var setIsLikeAnswer = function(itemContainer) {
-	var item=itemContainer.querySelector('.icon-support');
+	var item = itemContainer.querySelector('.icon-support');
 	var wd = events.showWaiting();
 	postDataQZPro_setAnswerLike({
 		answerId: answerData.AnswerId, //回答ID
 		userId: selfId, //点赞用户ID
 		status: item.isLike ? 0 : 1 //点赞状态,0 取消点赞,1 点赞
 	}, wd, function(data) {
-		itemContainer.disabled=false;
+		itemContainer.disabled = false;
+		jQuery(itemContainer).css("pointerEvents", "all");
 		wd.close();
 		console.log('答案点赞取消点赞结果：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
@@ -1045,7 +1049,7 @@ var setIsLikeAnswer = function(itemContainer) {
  * @param {Object} 点赞的item
  */
 var setIsLikeComment = function(itemContainer) {
-	var item=itemContainer.querySelector(".icon-support")
+	var item = itemContainer.querySelector(".icon-support")
 	var wd = events.showWaiting();
 	postDataQZPro_setCommentLike({
 		commentId: item.commentId, //评论ID
@@ -1054,7 +1058,8 @@ var setIsLikeComment = function(itemContainer) {
 		status: item.isLike ? 0 : 1 //点赞状态，0 取消点赞，1 点赞
 	}, wd, function(data) {
 		wd.close();
-		itemContainer.disabled=false;
+		itemContainer.disabled = false;
+		jQuery(itemContainer).css("pointerEvents", "all");
 		console.log("评论点赞取消点赞结果：" + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			setZanIconCondition(item);

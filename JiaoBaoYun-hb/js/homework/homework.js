@@ -15,22 +15,24 @@ var totalPageCount;
 var clickItem; //点击的子控件
 var publish;
 var publishIsReady=false;
+var stuWorkReady=false;
+document.getElementById('tabs-class').style.display="none";
 mui.init();
 //mui的plusready监听
 mui.plusReady(function() {
 	publish = document.getElementById('iconPublish');
 	events.fireToPageNone('../cloud_home.html', 'homeworkReady');
 	//预加载发布作业
-	events.preload('homework-publish.html', 500);
+	events.preload('homework-publish.html', 300);
 	//老师临时作业界面
 //	events.preload('workdetailTea-temporary.html', 300);
 	var stuWorkNavBarStyle={
 		titleText:"作业详情"
 	}
 	//学生作业详情页面
-	events.preload('workdetail-stu.html', 400);
+	events.preload('workdetail-stu.html', 100);
 	//做作业界面
-	events.preload('doHomework-stu.html', 600);
+	events.preload('doHomework-stu.html', 400);
 	//列表
 	list = document.getElementById('list-container');
 	//加载h5下拉刷新方式
@@ -110,6 +112,9 @@ mui.plusReady(function() {
 	window.addEventListener("publishIsReady",function(){
 		publishIsReady=true;
 	})
+	window.addEventListener("stuWorkReady",function(){
+		stuWorkReady=true;
+	})
 	//错题本按钮监听事件
 //	events.addTap('err', function() {
 //		events.openNewWindow('workstu-err.html')
@@ -137,7 +142,7 @@ var roleChanged = function() {
 	mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
 	console.log('作业子页面获取的角色变换值roleChanged：' + role);
 	setClasses(role);
-	events.clearChild(list);
+	list.innerHTML="";
 	if(role == 2) { //老师角色
 		mui("#popover").popover('hide');
 		publish.style.display = 'block';
@@ -225,6 +230,7 @@ var pullUpRefresh = function() {
  * 设置监听
  */
 var setListener = function() {
+	//班级被点击事件
 	mui('.tabs-classes').on('tap', '.mui-control-item', function() {
 		selectGContainer = this;
 		selectGId = this.classInfo.gid;
@@ -264,12 +270,14 @@ var setListener = function() {
 	})
 	//学生作业在线提交点击事件
 	mui('.mui-table-view').on('tap', '.submitOnline', function() {
-		clickItem = this;
-		events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+		events.showWaiting();
+		openStuWork(this);
+		
 	})
 	//学生作业不需要提交点击事件
 	mui('.mui-table-view').on('tap', '.noSubmit', function() {
-		events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+		events.showWaiting();
+		openStuWork(this);
 	})
 	//学生作业已提交点击事件
 	mui('.mui-table-view').on('tap', '.isSubmitted', function() {
@@ -287,6 +295,14 @@ var setListener = function() {
 		openPublish();
 	})
 }
+var openStuWork=function(item){
+	if(publishIsReady){
+		events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, item.homeworkInfo, selectGContainer.classInfo));
+		events.closeWaiting();
+	}else{
+		setTimeout(openPublish,500);
+	}
+}
 var openPublish=function(){
 	if(publishIsReady){
 		events.fireToPageWithData('homework-publish.html', 'postClasses', teacherClasses);
@@ -301,7 +317,7 @@ var openPublish=function(){
  */
 var setClasses = function(role) {
 	var tabs = document.getElementById('scroll-class');
-	events.clearChild(tabs);
+	tabs.innerHTML="";
 	var classes;
 	if(role == 2) {
 		classes = teacherClasses;
@@ -320,6 +336,7 @@ var setClasses = function(role) {
 	//第一个子控件 为选中状态
 	tabs.firstElementChild.className = "mui-control-item mui-active";
 	selectGContainer = tabs.firstElementChild;
+	document.getElementById("tabs-class").style.display="block";
 }
 /**
  * 初始化每个班级请求页码为1
@@ -357,7 +374,7 @@ var requireHomeWork = function(classModel, callback) {
 				totalPageCount = data.RspData.PageCount;
 				selectGContainer.classInfo.totalPageCount = totalPageCount;
 				setHashData(comData, data);
-				callback(data.RspData.Dates)
+				callback(data.RspData.Dates,2);
 			} else {
 				mui.toast(data.RspTxt);
 				wd.close();
@@ -426,7 +443,7 @@ var requireHomeWork = function(classModel, callback) {
 							console.log('合并后的数据为：' + JSON.stringify(data));
 							selectGContainer.classInfo.totalPageCount = totalPageCount;
 							setHashData(comData, data);
-							callback(data.RspData.Dates)
+							callback(data.RspData.Dates,30)
 							//						}else{
 							//							wd.close();
 						}
@@ -445,9 +462,18 @@ var requireHomeWork = function(classModel, callback) {
 
 }
 /**
- * 放置数据
+ * 防止作业数据
+ * @param {Object} data 作业数据
+ * @param {Object} type 获取作业身份时的角色类型
  */
-var setData = function(data) {
+var setData = function(data,type) {
+	/**
+	 * 如果角色和数据身份不符，不放置数据
+	 */
+	if(role!=type){
+		events.closeWaiting();
+		return;
+	}
 	//老师角色
 	if(role == 2) {
 		setPublishedData(data);

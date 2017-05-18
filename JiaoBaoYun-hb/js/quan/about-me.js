@@ -14,17 +14,35 @@ var alertTotalPage = 0;
 //获取个人信息                                                        
 var personalUTID;
 //判断是加载更多1，还是刷新2
-var flag = 2;
+//var flag = 2;
 var msgType = 0; //消息类型
 var comData = {}; //回复传值
 var repliedCell;
 var repliedItem; //回复的对象
 //页码请求到要显示的数据，array[model_userSpaceAboutMe]
 var aboutMeArray = [];
-var isShowing=false;
+var isShowing = false;
 var wd;
-mui.init();
+//mui.init();
 mui.plusReady(function() {
+	setFresh();
+	//重写系统返回方法
+	var _back = mui.back;
+	mui.back = function() {
+		if(plus.webview.currentWebview().opener().id =="homework-commented.html") {
+			events.hidePagesExIndex();
+			_back();
+		} else {
+			_back();
+		}
+	}
+	var contentWebview = null;
+	//双击标题栏事件
+	document.querySelector('header').addEventListener('doubletap', function() {
+		mui('#pullrefresh').pullRefresh().scrollTo(0, 0, 100);
+	});
+	//放置刷新模块
+
 	events.preload("../homework/workdetail-stu.html", 100);
 	var pInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 	personalUTID = pInfo.utid;
@@ -38,11 +56,35 @@ mui.plusReady(function() {
 	setListener();
 })
 /**
+ * 设置刷新方法
+ */
+var setFresh = function() {
+	h5fresh.addRefresh(function() {
+		mui("#refreshContainer").pullRefresh().refresh(true);
+		pageIndex = 1;
+		requestData();
+	}, {
+		style: "circle",
+		offset: "50px"
+	});
+	h5fresh.addPullUpFresh("#refreshContainer", function() {
+		console.log('请求页面：page：' + pageIndex + ',总页面：' + totalPage + '，作业提醒总页数：' + alertTotalPage);
+		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPage && pageIndex >= alertTotalPage);
+		if(pageIndex < totalPage || pageIndex < alertTotalPage) {
+			pageIndex++;
+			requestData();
+		}
+	});
+}
+/**
  * 界面放置数据
  * @param {Object} data 请求成功后返回的数据
  */
 var setData = function(data) {
 	var list = document.getElementById('list-container');
+	if(pageIndex==1){
+		list.innerHTML="";
+	}
 	data.forEach(function(cell, i) {
 		var li = document.createElement('li');
 		li.className = 'mui-table-view-cell';
@@ -110,11 +152,11 @@ var ifHaveReferContent = function(cellData, cell) {
 	}
 }
 var addEncImg = function(cell) {
-	if(cell.EncImgAddr &&cell.EncImgAddr.length > 0) {
-		if(cell.EncType==1){
+	if(cell.EncImgAddr && cell.EncImgAddr.length > 0) {
+		if(cell.EncType == 1) {
 			return '<img class="refer-img display-inlineBlock" src="' + cell.EncImgAddr.split("|")[0] + '"/>';
 		}
-		if(cell.encType==2){
+		if(cell.encType == 2) {
 			return '<div class="refer-img display-inlineBlock" style="backgroud-image:url(' + cell.EncImgAddr + ');background-size:cover;"><img src="../../image/utils/payvideo.png" style="width:50%;margin:25%;"/></div>';
 		}
 	}
@@ -159,41 +201,49 @@ var addReplyView = function() {
 	})
 }
 var setListener = function() {
-	plus.webview.currentWebview().addEventListener("show",function(){
-		isShowing=true;
+	plus.webview.currentWebview().addEventListener("show", function() {
+		isShowing = true;
 	})
-	plus.webview.currentWebview().addEventListener("hide",function(){
-		isShowing=false;
+	plus.webview.currentWebview().addEventListener("hide", function() {
+		isShowing = false;
 	})
 	mui(".mui-table-view").on("tap", ".refer-content", function() {
 		this.info.PublisherId = this.info.UserId;
 		this.info.PublisherName = this.info.UserName;
 		this.info.TabId = this.info.SpaceId;
 		console.log(JSON.stringify(this.info));
-		events.openNewWindowWithData('../quan/space-detail.html', jQuery.extend(this.info, { focusFlag: 0 }))
+		events.openNewWindowWithData('../quan/space-detail.html', jQuery.extend(this.info, {
+			focusFlag: 0
+		}))
 	})
 	mui(".mui-table-view").on("tap", ".work-notice", function() {
-		var curNotice=this.info;
-		getHomeworkResult(this.info,function(data){
-			if(data.HomeworkResult.UploadTime){
-				events.openNewWindowWithData('../homework/homework-commented.html', jQuery.extend(curNotice,data,{ HomeworkResultId: data.HomeworkResult.HomeworkResultId, workType: 1,isNotice:true }));
-//				events.fireToPageWithData("../homework/homework-commented.html","workNotice",jQuery.extend(this.info,data))
-			}else{
-				events.fireToPageWithData("../homework/workdetail-stu.html", "workNotice", jQuery.extend(curNotice,{isNotice:true}));
+		var curNotice = this.info;
+		getHomeworkResult(this.info, function(data) {
+			if(data.HomeworkResult.UploadTime) {
+				events.openNewWindowWithData('../homework/homework-commented.html', jQuery.extend(curNotice, data, {
+					HomeworkResultId: data.HomeworkResult.HomeworkResultId,
+					workType: 1,
+					isNotice: true
+				}));
+				//				events.fireToPageWithData("../homework/homework-commented.html","workNotice",jQuery.extend(this.info,data))
+			} else {
+				events.fireToPageWithData("../homework/workdetail-stu.html", "workNotice", jQuery.extend(curNotice, {
+					isNotice: true
+				}));
 			}
-		});		
+		});
 	});
 }
-var getHomeworkResult = function(workInfo,callback) {
-	var personalId=myStorage.getItem(storageKeyName.PERSONALINFO).utid;
+var getHomeworkResult = function(workInfo, callback) {
+	var personalId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	postDataPro_GetHomeworkResultStu({
 		studentId: personalId, //学生Id
 		classId: workInfo.ClassId, //班级群Id；
 		homeworkId: workInfo.HomeworkId //作业id；
-	},wd,function(data){
+	}, wd, function(data) {
 		wd.close();
-		console.log("获取当前作业结果："+JSON.stringify(data))
-		if(data.RspCode==0){
+		console.log("获取当前作业结果：" + JSON.stringify(data))
+		if(data.RspCode == 0) {
 			callback(data.RspData);
 		}
 	})
@@ -209,69 +259,12 @@ var addReplyLisetner = function() {
 		p.innerHTML = '<span>' + myStorage.getItem(storageKeyName.PERSONALINFO).unick + '</span>回复<span>' + events.shortForString(repliedCell.MaxUserName, 6) + ':</span>' + replyValue;
 		repliedItem.appendChild(p);
 	});
-	window.addEventListener('infoChanged',function(){
+	window.addEventListener('infoChanged', function() {
 		pageIndex = 1;
-		document.getElementById('list-container').innerHTML='';
+		document.getElementById('list-container').innerHTML = '';
 		requestData();
 	})
 }
-/**
- * 
- * @param {Object} callback
- */
-//var postReply = function(callback) {
-//	var msgContent = document.getElementById('msg-content');
-//	console.log('类型:' + msgType)
-//	switch(msgType) {
-//		//1为其他用户评论
-//		case 1:
-//			//2为评论的回复
-//		case 2:
-//			//3为其他用户点赞
-//		case 3:
-//
-//			var comData = {
-//				userId: pId, //用户ID
-//				upperId: repliedCell.TabId, //上级评论ID
-//				replyUserId: repliedCell.MaxUser, //回复ID
-//				userSpaceId: repliedCell.SpaceId, //用户空间ID
-//				commentContent: msgContent.value //回复内容
-//			};
-//			console.log('开始post回复数据' + JSON.stringify(comData));
-//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-//			postDataPro_addUserSpaceCommentReply(comData, wd, function(data) {
-//				console.log('发布回复后返回的数据：' + JSON.stringify(data))
-//				wd.close();
-//				if(data.RspCode == 0) {
-//					callback();
-//				}
-//			})
-//			break;
-//
-//			//为其他用户留言
-//		case 4:
-//			//5为留言的回复
-//		case 5:
-//			var comData = {
-//				userId: pId, //用户ID
-//				upperId: repliedCell.TabId, //上级评论ID
-//				replyUserId: repliedCell.MaxUser, //回复ID
-//				userOwnerId: repliedCell.UserOwnerId, //用户空间ID
-//				msgContent: msgContent.value //回复内容
-//			};
-//			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-//			postDataPro_addUserSpaceMsgReply(comData, wd, function(data) {
-//				wd.close();
-//				if(data.RspCode == 0) {
-//					callback();
-//				}
-//			})
-//			break;
-//		default:
-//			break;
-//	}
-//}
-
 var ifHave = function(data) {
 	return data ? data : '';
 }
@@ -336,11 +329,11 @@ var getCellData = function(cell) {
 	cellData.time = cell.MaxDate;
 	if(cellData.MsgType != 6) {
 		var messages = '';
-//		if(cellData.MsgType != 4) {
-			if(cell.Content) {
-				messages += ('<p class="extra-words break-words"><span>' + events.shortForString(cell.UserName, 6) + ':</span>' + cell.Content + '</p>')
-			}
-//		}
+		//		if(cellData.MsgType != 4) {
+		if(cell.Content) {
+			messages += ('<p class="extra-words break-words"><span>' + events.shortForString(cell.UserName, 6) + ':</span>' + cell.Content + '</p>')
+		}
+		//		}
 
 		if(cell.MsgArray && cell.MsgArray.length > 0) {
 			cell.MsgArray.forEach(function(msg, i, msgArray) {
@@ -365,7 +358,7 @@ var getCellData = function(cell) {
  * @param {Object} callback 请求数据后的回调
  */
 function requestData() {
-	wd=events.showWaiting();
+	wd = events.showWaiting();
 	if(pageIndex > 1) {
 		if(pageIndex <= totalPage) {
 			requireAboutMe();
@@ -406,7 +399,7 @@ var getRoleInfos = function(tempRspData) {
 				var rechargedData = replenishData(tempRspData, infos.RspData);
 				console.log('最终数据：' + JSON.stringify(rechargedData));
 				setData(rechargedData);
-			}else{
+			} else {
 				mui.toast(data.RspTxt);
 			}
 		});
@@ -450,33 +443,17 @@ var rechargeArraysToHash = function(infos) {
 }
 
 /**
- * 加载刷新
- */
-events.initRefresh('list-container',
-	function() {
-		pageIndex = 1;
-		requestData();
-	},
-	function() {
-		console.log('请求页面：page：' + pageIndex + ',总页面：' + totalPage + '，作业提醒总页数：' + alertTotalPage);
-		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPage && pageIndex >= alertTotalPage);
-		if(pageIndex < totalPage || pageIndex < alertTotalPage) {
-			pageIndex++;
-			requestData();
-		}
-	});
-/**
  * 获取与我相关
  */
 var requireAboutMe = function() {
 	var comData = {
 		userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //用户ID
-		pageIndex: pageIndex + '', //当前页数
-		pageSize: pageCount + '' //每页记录数
+		pageIndex: pageIndex, //当前页数
+		pageSize: pageCount //每页记录数
 	};
 	//56.（用户空间）获取与我相关
 	postDataPro_getAboutMe(comData, wd, function(data) {
-		
+
 		console.log('获取的与我相关的数据：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			setCommentMsgReadByUser();
@@ -510,7 +487,7 @@ var requireHomeworkAlert = function(aboutMeData) {
 			alertTotalPage = data.RspData.TotalPage;
 			if(totalPage == 0 && alertTotalPage == 0) {
 				wd.close();
-				if(isShowing){
+				if(isShowing) {
 					mui.toast('暂无数据！');
 				}
 				return;

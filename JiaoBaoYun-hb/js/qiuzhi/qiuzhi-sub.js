@@ -51,7 +51,7 @@ mui.plusReady(function() {
 		//清理问题列表
 		events.clearChild(document.getElementById('list-container'));
 		//清理专家列表
-		resetExpertsList();
+//		resetExpertsList();
 		getChannelTime = null;
 		getExperTime = null;
 		if(plus.networkinfo.getCurrentType() != plus.networkinfo.CONNECTION_NONE) {
@@ -67,9 +67,9 @@ mui.plusReady(function() {
 	h5fresh.addRefresh(function() {
 		pageIndex = 1;
 		//清理问题列表
-		document.getElementById('list-container').innerHTML = "";
+//		document.getElementById('list-container').innerHTML = "";
 		//清理专家列表
-		resetExpertsList();
+//		resetExpertsList();
 		getChannelTime = null;
 		getExperTime = null;
 		if(plus.networkinfo.getCurrentType() != plus.networkinfo.CONNECTION_NONE) {
@@ -104,6 +104,7 @@ function getExpertsArray(channelId) {
 	postDataQZPro_getExpertsByCondition(comData, wd, function(data) {
 		console.log('2.获取符合条件的专家信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0) {
+			resetExpertsList();
 			//添加人员信息
 			//回调中的临时数据
 			var tempRspData = data.RspData.Data;
@@ -280,6 +281,9 @@ var rechargeInfos = function(datas, infos) {
 var setChannelList = function(data) {
 	console.log('求知主界面加载的数据信息：' + JSON.stringify(data));
 	var list = document.getElementById('list-container');
+	if(pageIndex==1){
+		list.innerHTML="";
+	}
 	//	var fragemnt = document.createDocumentFragment();
 	for(var i in data) {
 		var li = document.createElement('li');
@@ -424,20 +428,16 @@ var pullUpFresh = function() {
 var setListener = function() {
 	events.addTap('submit-question', function() {
 		var self = this;
-		self.disabled = true;
+//		self.disabled=true;
 		//判断是否是游客身份登录
 		if(events.judgeLoginMode(self)) {
 			return;
 		}
 		console.log(JSON.stringify(allChannels))
-
-		events.openNewWindowWithData('qiuzhi-newQ.html', {
+		events.singleWebviewInPeriod(self,'qiuzhi-newQ.html', {
 			curChannel: channelInfo,
 			allChannels: allChannels
 		});
-		setTimeout(function() {
-			self.disabled = false;
-		}, 1500);
 	});
 	//标题点击事件
 	mui('.mui-table-view').on('tap', '.ask-title', function() {
@@ -564,8 +564,7 @@ var fireToPageReady = function(type, options) {
 	if(type) {
 		if(answerIsReady) { //求知回答界面已加载完毕
 			events.closeWaiting();
-			events.fireToPageNone('qiuzhi-answerDetailSub.html', 'answerInfo', options);
-			plus.webview.getWebviewById('qiuzhi-answerDetail.html').show("slide-in-right", 250);
+			events.fireToPageWithData('qiuzhi-answerDetail.html', 'answerInfo', options);
 		} else {
 			setTimeout(function() {
 				events.showWaiting();

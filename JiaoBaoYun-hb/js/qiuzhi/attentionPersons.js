@@ -96,6 +96,36 @@ mui.plusReady(function() {
 		}
 	});
 })
+/**
+ * param {type} 0 有人 1 暂无关注我/他的人 2暂无我/他关注的人
+ */
+var setBackGround = function(type) {
+	var hintWord = "";
+	var className = "";
+	var wordClassName;
+	switch(type) {
+		case 0:
+			className = "mui-content mui-fullscreen";
+			hintWord = "";
+			wordClassName = "display-none";
+			break;
+		case 1:
+			className = "mui-content mui-fullscreen noOneDisplay";
+			hintWord = "暂时关注的人";
+			wordClassName = "display-block";
+			break;
+		case 2:
+			className = "mui-content mui-fullscreen noOneDisplay";
+			hintWord = "暂时关注的人";
+			wordClassName = "display-block";
+			break;
+		default:
+			break;
+	}
+	document.querySelector(".mui-content").className = className;
+	document.getElementById("noOne-container").innerText = hintWord;
+	document.getElementById("noOne-container").className = wordClassName;
+}
 //游客获取关注的人
 var requireExperts = function() {
 	var personIds = customerPersons.slice((pageIndex - 1) * 10, pageIndex * 10);
@@ -124,6 +154,7 @@ var requireData = function() {
 	if(type) { //关注专家的人
 		//如果是自己 且为游客
 		if(isSelf&&events.getUtid()==0) {
+			setBackGround(1);
 			return;
 		}
 		var wd = events.showWaiting();
@@ -136,6 +167,7 @@ var requireData = function() {
 			console.log('获取的关注此专家的人：' + JSON.stringify(data));
 			wd.close();
 			if(data.RspCode == 0 && data.RspData.TotalPage > 0) {
+				setBackGround(0);
 				totalPageCount = data.RspData.TotalPage; //获取总页数
 				pageIndex++;
 				var persons = data.RspData.Data; //关注人数据
@@ -152,7 +184,7 @@ var requireData = function() {
 					mui(".mui-pull-loading")[0].innerHTML = "";
 				}
 			} else {
-				mui.toast("暂无关注他的人");
+				setBackGround(1);
 			}
 		})
 	} else {
@@ -162,9 +194,10 @@ var requireData = function() {
 		} else {
 			console.log("本地关注的人："+JSON.stringify(customerPersons));
 			if(customerPersons && customerPersons.length > 0) {
+				setBackGround(0);
 				requireExperts();
 			} else {
-				mui.toast("没有关注的人")
+				setBackGround(1);
 			}
 		}
 
@@ -189,6 +222,7 @@ function getFocusUsersByUser(focusId) {
 		events.closeWaiting();
 		console.log('27.获取某个用户的关注人列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 		if(data.RspCode == 0 && data.RspData.TotalPage > 0) {
+			setBackGround(0);
 			//总页数
 			totalPageCount = data.RspData.TotalPage;
 			personArray = data.RspData.Data;
@@ -208,7 +242,7 @@ function getFocusUsersByUser(focusId) {
 			if(mui(".mui-table-view-cell").length < 10) {
 				mui(".mui-pull-loading")[0].innerHTML = "";
 			}
-			mui.toast("暂无关注的人");
+			setBackGround(1);
 		}
 	});
 };
@@ -348,6 +382,7 @@ var setFocus = function(item, type) {
 				mui.toast(data.RspTxt);
 			}
 			item.disabled = false;
+			jQuery(item).css("pointerEvents","all");
 		})
 	} else {
 		events.toggleStorageArray(storageKeyName.FOCUSEPERSEN, parseInt(item.personInfo.UserId), !type);
@@ -357,6 +392,7 @@ var setFocus = function(item, type) {
 		item.innerHTML = buttonInfo.inner;
 		item.className = 'mui-btn mui-btn-outlined ' + buttonInfo.classInfo;
 		item.disabled=false;
+		jQuery(item).css("pointerEvents","all");
 	}
 
 }
