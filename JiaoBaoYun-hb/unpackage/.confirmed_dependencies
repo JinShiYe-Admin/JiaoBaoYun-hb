@@ -29,7 +29,8 @@
 	"html/qiuzhi/qiuzhi-question.html": {
 		"refer": [
 			"html/qiuzhi/qiuzhi-questionSub.html",
-			"html/qiuzhi/experts_main.html"
+			"html/qiuzhi/experts_main.html",
+			"html/qiuzhi/qiuzhi-addAnswer.html"
 		],
 		"resources": [
 			"html/qiuzhi/qiuzhi-questionSub.html",
@@ -238,7 +239,8 @@
 			"css/utils/common.css",
 			"js/index.js",
 			"css/mui.min.css",
-			"html/sciedu/sciedu_home.html"
+			"html/sciedu/sciedu_home.html",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",

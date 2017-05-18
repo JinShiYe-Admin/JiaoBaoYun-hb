@@ -2901,7 +2901,8 @@
 					"css/utils/preview.css"
 				],
 				"refer": [
-					"html/qiuzhi/experts_main.html"
+					"html/qiuzhi/experts_main.html",
+					"html/qiuzhi/qiuzhi-addAnswer.html"
 				],
 				"priority": 0
 			},
