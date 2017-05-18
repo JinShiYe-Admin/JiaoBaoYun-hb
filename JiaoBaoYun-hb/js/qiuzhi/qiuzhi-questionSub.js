@@ -53,6 +53,7 @@ mui.plusReady(function() {
 	//---获取数据并传递数据---start---
 	var main = plus.webview.currentWebview(); //获取当前窗体对象
 	mainData = main.data; //接收A页面传入参数值
+	mui(".mui-pull-loading")[0].innerHTML = "";
 	//从搜索界面跳转的数据，TabId是问题id，得转换为话题id
 	var temp0 = mainData.channelInfo.AskChannelId;
 	if(temp0 > 0) {
@@ -230,6 +231,8 @@ var setFresh = function() {
 	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 		down: {
 			callback: function() {
+				var self=this;
+				mui(".mui-pull-loading")[0].innerHTML = "";
 				//清除节点
 				pulldownRefresh();
 				setTimeout(function() {
@@ -253,16 +256,16 @@ var setFresh = function() {
 				} else {
 					//结束下拉刷新
 					self.endPullUpToRefresh();
-					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
+					mui(".mui-pull-loading")[0].innerHTML = "";
 				}
 			}
 		}
 	});
-	h5fresh.addRefresh(pulldownRefresh, {
-		style: "circle",
-		offset: "50px"
-	});
-	h5fresh.addPullUpFresh("#refreshContainer", pullupRefresh);
+//	h5fresh.addRefresh(pulldownRefresh, {
+//		style: "circle",
+//		offset: "50px"
+//	});
+//	h5fresh.addPullUpFresh("#refreshContainer", pullupRefresh);
 }
 /**
  * 根据状况低端按钮显示
