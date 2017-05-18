@@ -53,6 +53,7 @@ mui.plusReady(function() {
 	//---获取数据并传递数据---start---
 	var main = plus.webview.currentWebview(); //获取当前窗体对象
 	mainData = main.data; //接收A页面传入参数值
+	mui(".mui-pull-loading")[0].innerHTML = "";
 	//从搜索界面跳转的数据，TabId是问题id，得转换为话题id
 	var temp0 = mainData.channelInfo.AskChannelId;
 	if(temp0 > 0) {
