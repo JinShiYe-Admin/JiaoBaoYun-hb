@@ -285,7 +285,8 @@ var class_space = (function(mod) {
 					}
 				}
 			} else if(cell.EncType == 2) {
-				imgInner += '<img class="video-container"  src="' + imgs[0] + '" style="padding-right:12px;max-width:100%;" onload="videoImgOnload(event)" />'
+				imgInner += '<div class="video-container"  style="width:'+img_width*3+'px;height:'+img_width*3*0.6+'px;margin-bottom:8px;background-image:url(' + imgs[0] + ');background-color:#101010; background-position:center;background-size:auto 120%;background-repeat:no-repeat;">'+
+				'<img src="../../image/utils/playvideo.png" style="width:36px;height:36px;margin:'+(img_width*3*0.6-36)/2+'px '+(img_width*3-36)/2+'px;"/>'+'</div>'
 			}
 
 		}
