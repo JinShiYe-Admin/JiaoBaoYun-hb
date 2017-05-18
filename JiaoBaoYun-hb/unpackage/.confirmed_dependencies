@@ -628,6 +628,9 @@
 			"js/qiuzhi/attentionPersons.js",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/qiuzhi/expert-detail.html"
 		]
 	},
 	"html/mine/setting.html": {
