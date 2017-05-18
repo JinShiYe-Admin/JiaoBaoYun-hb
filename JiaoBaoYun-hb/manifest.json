@@ -1546,7 +1546,9 @@
 				],
 				"refer": [
 					"html/homework/workdetail-stu.html",
-					"html/quan/reply-aboutMe.html"
+					"html/quan/reply-aboutMe.html",
+					"html/quan/space-detail.html",
+					"html/quan/zone_main.html"
 				],
 				"priority": 0
 			},

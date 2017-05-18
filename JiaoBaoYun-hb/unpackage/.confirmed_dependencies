@@ -101,7 +101,9 @@
 			"image/quan/Scan.png",
 			"image/cloud/cloud_0_wenjianjia_1.png",
 			"image/cloud/cloud_0_unknow_0.png",
-			"image/cloud/cloud_0_txt_0.png"
+			"image/cloud/cloud_0_txt_0.png",
+			"image/cloud/cloud_0_excel_0.png",
+			"image/cloud/cloud_0_word_0.png"
 		],
 		"refer": [
 			"html/index/mine.html",
@@ -673,6 +675,9 @@
 			"image/utils/playvideo.png",
 			"css/mui.min.css",
 			"css/utils/common.css"
+		],
+		"refer": [
+			"html/quan/space-detail.html"
 		]
 	},
 	"html/mine/QRCode.html": {
@@ -842,7 +847,9 @@
 		"refer": [
 			"html/quan/aboutme_sub.html",
 			"html/homework/workdetail-stu.html",
-			"html/quan/reply-aboutMe.html"
+			"html/quan/reply-aboutMe.html",
+			"html/quan/space-detail.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/quan/aboutme_sub.html": {
@@ -928,6 +935,15 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css"
+		]
+	},
+	"html/quan/space-detail.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/icons-extra.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/show/show.css"
 		]
 	}
 }
