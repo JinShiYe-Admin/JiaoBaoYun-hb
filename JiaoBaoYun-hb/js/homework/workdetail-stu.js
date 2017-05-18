@@ -1,23 +1,29 @@
-var personalUTID;//个人utid
-var homeworkInfo;//作业信息
+var personalUTID; //个人utid
+var homeworkInfo; //作业信息
 mui.init({
-	beforeback:function(){
+	beforeback: function() {
 		document.querySelector('.startWork-container').style.display = 'none';
+		document.querySelector('.subject-icon').className = "subject-icon iconfont";
+		document.querySelector('.brief-title').innerText = "";
+		document.querySelector('.brief-content').innerText = "";
+		document.querySelector('.publisher').innerText = "";
+		document.querySelector('.publish-date').innerText = "";
+		document.getElementById('brief-imgs').innerHTML = "";
 		return true;
 	}
-});//加载mui
+}); //加载mui
 //plusready事件的监听回调
 mui.plusReady(function() {
 	//预加载做作业界面
 	events.preload('doHomework-stu.html', 200);
-	mui.fire(plus.webview.getWebviewById("homework-tea.html"),"stuWorkReady");
-	mui.previewImage();//加载预览功能
+	mui.fire(plus.webview.getWebviewById("homework-tea.html"), "stuWorkReady");
+	mui.previewImage(); //加载预览功能
 	//监听与我相关中作业提醒传过来的事件
-	window.addEventListener("workNotice",function(e){
-		console.log("作业提醒传过来的数值："+JSON.stringify(e.detail.data));
-		homeworkInfo=e.detail.data;
-		homeworkInfo.gid=homeworkInfo.ClassId;
-		homeworkInfo.TeacherId=homeworkInfo.UserId;
+	window.addEventListener("workNotice", function(e) {
+		console.log("作业提醒传过来的数值：" + JSON.stringify(e.detail.data));
+		homeworkInfo = e.detail.data;
+		homeworkInfo.gid = homeworkInfo.ClassId;
+		homeworkInfo.TeacherId = homeworkInfo.UserId;
 		document.querySelector('.homework-brief').className = 'homework-brief submitOnline';
 		document.querySelector('.startWork-container').style.display = 'block';
 		mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
@@ -26,7 +32,7 @@ mui.plusReady(function() {
 	//学生作业列表界面传过来的作业详情
 	window.addEventListener('workDetail', function(e) {
 		mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
-		personalUTID=parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)
+		personalUTID = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid)
 		homeworkInfo = e.detail.data;
 		if(homeworkInfo.SubmitOnline) {
 			document.querySelector('.homework-brief').className = 'homework-brief submitOnline';
@@ -37,7 +43,7 @@ mui.plusReady(function() {
 		}
 		console.log('学生作业详情获取的数据：' + JSON.stringify(homeworkInfo));
 		requestHomeWorkInfo(homeworkInfo);
-		
+
 	})
 	//作业已提交
 	window.addEventListener('workSubmitted', function() {
@@ -53,17 +59,17 @@ mui.plusReady(function() {
  * @param {Object} homeWorkInfo 传过来的作业数据
  */
 var requestHomeWorkInfo = function(homeWorkInfo) {
-	var wd=events.showWaiting();
+	var wd = events.showWaiting();
 	postDataPro_GetHomeworkStu({
 		studentId: personalUTID, //学生Id
 		classId: homeWorkInfo.gid, //班级群Id；
-		homeworkId:homeWorkInfo.HomeworkId //作业id；
+		homeworkId: homeWorkInfo.HomeworkId //作业id；
 	}, wd, function(data) {
 		wd.close();
-		console.log("获取的作业信息："+JSON.stringify(data));
-		if(data.RspCode==0){
-			jQuery.extend(homeWorkInfo,data.RspData);
-		}else{
+		console.log("获取的作业信息：" + JSON.stringify(data));
+		if(data.RspCode == 0) {
+			jQuery.extend(homeWorkInfo, data.RspData);
+		} else {
 			console.log("获取作业信息失败!");
 		}
 		requestTeaInfo(homeworkInfo.TeacherId);
@@ -98,21 +104,21 @@ var setContentView = function() {
 	document.querySelector('.brief-title').innerText = homeworkInfo.HomeworkTitle;
 	document.querySelector('.brief-content').innerText = homeworkInfo.Contents;
 	document.querySelector('.publisher').innerText = events.shortForString(homeworkInfo.unick, 6);
-	document.querySelector('.publish-date').innerText = (homeworkInfo.Date?homeworkInfo.Date:homeworkInfo.MsgDate).split(' ')[0];
-	document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkInfo.File,homeworkInfo.HomeworkId);
+	document.querySelector('.publish-date').innerText = (homeworkInfo.Date ? homeworkInfo.Date : homeworkInfo.MsgDate).split(' ')[0];
+	document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkInfo.File, homeworkInfo.HomeworkId);
 }
 /**
  * 放置图片
  * @param {Object} imgs
  * @param {Object} id
  */
-var getImgsInner = function(imgs,id) {
+var getImgsInner = function(imgs, id) {
 	var imgInner = '';
-	var win_height=document.getElementById('brief-imgs').offsetWidth;
-	var img_width = win_height/3;
+	var win_height = document.getElementById('brief-imgs').offsetWidth;
+	var img_width = win_height / 3;
 	if(imgs && imgs.length > 0) {
 		for(var i in imgs) {
-			imgInner += '<img class="homework-img" style="width:' + img_width + 'px;height:'+img_width+'px;" src="' + imgs[i].ThumbUrl +
+			imgInner += '<img class="homework-img" style="width:' + img_width + 'px;height:' + img_width + 'px;" src="' + imgs[i].ThumbUrl +
 				'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + id + '"/>';
 		}
 	}

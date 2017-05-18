@@ -414,7 +414,9 @@
 			"css/utils/common.css",
 			"css/utils/preview.css"
 		],
-		"refer": []
+		"refer": [
+			"html/homework/homework-commented.html"
+		]
 	},
 	"html/homework/homework-publish.html": {
 		"resources": [
