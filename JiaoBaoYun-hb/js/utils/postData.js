@@ -9,12 +9,14 @@ function postData(url, data, callback, waitingDialog) {
 		mui.toast("网络异常，请检查网络设置！");
 		return;
 	}
+	var tepTime = tempTime();
+	console.log('tepTime='+tepTime);
 	mui.ajax(url, {
 		data: JSON.stringify(data),
 		dataType: 'json',
 		type: 'post',
 		contentType: "application/json",
-		timeout: 300000,
+		timeout: tepTime,
 		success: function(data) {
 			console.log('data.RspCode:' + data.RspCode + 'data.RspTxt:' + data.RspTxt + 'data.RspData:' + JSON.stringify(data.RspData));
 			if(data.RspCode == 6) {
@@ -39,6 +41,21 @@ function postData(url, data, callback, waitingDialog) {
 		}
 	});
 }
+
+function tempTime(){
+	switch ( plus.os.name ) {
+        case "Android":
+        		return 30000;
+        break;
+        case "iOS":
+        		return 300000;
+        break;
+        default:
+        // 其它平台
+        break;
+    }
+}
+
 //url,
 //encryData,需要加密的字段
 //commonData,不需要加密的对象
@@ -66,6 +83,8 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 		var urlArr = url.split('/');
 		console.log('postData.tempData:' + urlArr[urlArr.length - 1] + JSON.stringify(tempData));
 		console.log(plus.webview.currentWebview().id);
+		var tepTime = tempTime();
+		console.log('tepTime='+tepTime);
 		//发送协议
 		try {
 			mui.ajax(url, {
@@ -73,7 +92,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 				dataType: 'json',
 				type: 'post',
 				contentType: "application/json",
-				timeout: 300000,
+				timeout: tepTime,
 				//			success: callback,
 				success: function(data) {
 					console.log('data.RspCode:' + data.RspCode + ',data.RspTxt:' + data.RspTxt  + ',data.RspData:' + JSON.stringify(data.RspData)+','+url);

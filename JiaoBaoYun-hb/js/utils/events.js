@@ -185,9 +185,9 @@ var events = (function(mod) {
 		}
 		var styles
 		if(navBarStyle) {
-			 styles = mod.getNavBarStyle(navBarStyle);
+			styles = mod.getNavBarStyle(navBarStyle);
 		} else {
-			styles=mod.getWebStyle();
+			styles = mod.getWebStyle();
 		}
 
 		console.log("预加载的页面：" + tarPage)
@@ -197,7 +197,7 @@ var events = (function(mod) {
 				mui.preload({
 					url: tarPage,
 					id: tarPage.split('/')[tarPage.split('/').length - 1], //默认使用当前页面的url作为id
-					styles:styles,
+					styles: styles,
 					show: {
 						anishow: 'slide-in-right',
 						duration: 250
@@ -469,6 +469,7 @@ var events = (function(mod) {
 	 * @author 莫尚霖
 	 */
 	mod.logOff = function() {
+		console.log('退出登录后执行的方法');
 		//清理上传下载的任务和界面
 		events.fireToPageNone('storage_transport.html', 'removeAllTask');
 		//清理云盘主页
@@ -817,7 +818,7 @@ var events = (function(mod) {
 				setTimeout(function() {
 					mod.closeWaiting();
 					item.disabled = false;
-					jQuery(item).css("pointerEvents","all");
+					jQuery(item).css("pointerEvents", "all");
 				}, 500)
 			} else {
 				setItemAble(item, targetWeb);
@@ -887,8 +888,8 @@ var events = (function(mod) {
 	}
 	//判断是否是游客身份登录，页面中有用户操作时调用
 	mod.judgeLoginMode = function(item) {
-		item.disabled=true;
-		jQuery(item).css("pointerEvents","none");
+		item.disabled = true;
+		jQuery(item).css("pointerEvents", "none");
 		console.log('判断是否是游客身份登录');
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		if(personal.utid > 0) { //有账号，正常登录
@@ -989,6 +990,11 @@ var events = (function(mod) {
 						}
 					});
 				} else {
+					var tempValue = {
+						flag: 1, //正常用户登录
+						value: 0 //登录失败
+					}
+					callback(tempValue);
 					mui.toast(data0.RspTxt);
 				}
 			});

@@ -197,7 +197,8 @@
 			"js/mui.lazyload.img.js"
 		],
 		"refer": [
-			"html/quan/classSpace-persons.html"
+			"html/quan/classSpace-persons.html",
+			"html/quan/space-detail.html"
 		]
 	},
 	"html/index/index.html": {
@@ -688,6 +689,11 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"image/qiuzhi/channel-food.png",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/quan/space-detail.html": {
+		"resources": [
 			"js/libs/crypto-js/crypto-js.js"
 		]
 	}

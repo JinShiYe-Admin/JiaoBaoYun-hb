@@ -72,37 +72,16 @@
 			});
 			//存储个人信息
 			var tempInfo;
-
-//						var wxChannel = null; // 微信支付
-//						var aliChannel = null; // 支付宝支付
-//						var channel = null;
-
 			mui.plusReady(function() {
 				tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				console.log('tempInfo.uid:' + tempInfo.uid);
 				document.getElementById('change_phoneNum').innerText = tempInfo.uid;
-				// 获取支付通道
-//								plus.payment.getChannels(function(channels) {
-//									console.log('channels=' + JSON.stringify(channels));
-////									alert("通道=" + JSON.stringify(channels));
-//									for(var i in channels) {
-//										var temp = channels[i];
-//										if(temp.id == 'alipay') {
-//											aliChannel = temp;
-//										} else if(temp.id == 'wxpay') {
-//											wxChannel = temp;
-//										}
-//									}
-//								}, function(e) {
-//									alert("获取支付通道失败：" + e.message);
-//								});
+				
 				//点击绑定手机cell，弹出
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
 					var index = this.id.replace('li', '');
 					console.log('index:' + index);
 					if(index == '0') {
-//												console.log("alipay");
-//												pay('alipay');
 						mui.confirm(tempInfo.uid, '您已绑定手机号', ['取消', '更换'], function(e) {
 							var index = e.index;
 							switch(index) {
@@ -111,71 +90,11 @@
 								case 1: //返回
 									//flag为2，表示是更改绑定手机
 									events.openNewWindowWithData('../register/register_phoneNumber.html', '2');
-
 									break;
 							}
 						}, 'div');
 					}
 				});
-								var ALIPAYSERVER = 'https://jsypay.jiaobaowang.net/jsypay/alipay/sys/aliappserver.ashx';
-								var WXPAYSERVER = 'https://jsypay.jiaobaowang.net/JSYPAY/WxPay/sys/AppServer.aspx';
-
-				//2. 发起支付请求
-				function pay(id) {
-					// 从服务器请求支付订单
-					var PAYSERVER = '';
-					if(id == 'alipay') {
-						PAYSERVER = ALIPAYSERVER;
-						channel = aliChannel;
-					} else if(id == 'wxpay') {
-						PAYSERVER = WXPAYSERVER;
-						channel = wxChannel;
-					} else {
-						plus.nativeUI.alert("不支持此支付通道！", null, "捐赠");
-						return;
-					}
-					var xhr = new XMLHttpRequest();
-					xhr.onreadystatechange = function() {
-						console.log('xhr=' + JSON.stringify(xhr));
-						switch(xhr.readyState) {
-							case 4:
-								if(xhr.status == 200) {
-									var data = htmldecode(xhr.responseText);
-									alert("PAYSERVER=" + PAYSERVER + ',channel=' + JSON.stringify(channel));
-									alert("获取订单信=" + JSON.stringify(xhr));
-									plus.payment.request(channel, data, function(result) {
-										console.log('result='+JSON.stringify(result));
-										alert("result=" + JSON.stringify(result));
-										plus.nativeUI.alert("支付成功！", function() {
-
-										});
-									}, function(error) {
-										console.log('error' + JSON.stringify(error));
-										plus.nativeUI.alert("支付失败：" + error.code);
-									});
-								} else {
-									alert("获取订单信息失败！");
-								}
-								break;
-							default:
-								break;
-						}
-					}
-					xhr.open('GET', PAYSERVER);
-					xhr.send();
-				};
-
-				function htmlencode(s) {
-					var div = document.createElement('div');
-					div.appendChild(document.createTextNode(s));
-					return div.innerHTML;
-				}
-
-				function htmldecode(s) {
-					var div = document.createElement('div');
-					div.innerHTML = s;
-					return div.innerText || div.textContent;
-				}
 				//修改密码
 				events.addTap('change-passwords', function() {
 //					loadURL();
