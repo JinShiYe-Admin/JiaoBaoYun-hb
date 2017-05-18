@@ -53,9 +53,8 @@
 									events.defaultLogin(function(data) {
 										if(data.value == 1) {
 											events.preload('index.html');
-											setTimeout(function() {
-												events.openNewWindow('index.html');
-											}, 2000);
+											events.showWaiting();
+											showIndex();
 										} else if(data.value == -1) { //登录失败
 
 										}
@@ -111,9 +110,8 @@
 							if(data.value == 1) {
 								loginFlag = 1;
 								events.preload('index.html');
-								setTimeout(function() {
-									events.openNewWindow('index.html');
-								}, 2000);
+								events.showWaiting();
+								showIndex();
 							} else if(data.value == 0) { //登录失败
 								var btn = ["确定"];
 								mui.confirm('可能网络出现问题，请检查网络后重试', '', btn, function(e) {
@@ -128,9 +126,11 @@
 			}
 
 			function showIndex() {
-				if(indexReady) {
+				if(indexReady && plus.webview.currentWebview().canJump) {
 					events.closeWaiting();
-					plus.webview.getWebviewById("index.html").show("slide-in-right", 300);
+					setTimeout(function(){
+						plus.webview.getWebviewById("index.html").show("slide-in-right", 300);
+					},300);
 				} else {
 					setTimeout(showIndex, 500);
 				}

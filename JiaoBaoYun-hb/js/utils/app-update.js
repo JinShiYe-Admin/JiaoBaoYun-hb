@@ -97,7 +97,7 @@ var appUpdate = (function(mod) {
 				
 			}
 		} else {
-
+			plus.webview.currentWebview().canJump=true;
 		}
 	}
 	/**
