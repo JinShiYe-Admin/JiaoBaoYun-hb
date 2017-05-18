@@ -63,6 +63,7 @@ function tempTime(){
 //waitingDialog,等待框
 //callback,返回值
 function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback) {
+	console.log("当前url"+url);
 	if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
 		console.log('没有网络');
 		waitingDialog.close();

@@ -12,7 +12,7 @@ var class_space = (function(mod) {
 		postData.pageIndex = pageIndex;
 		postData.pageSize = pageSize;
 		mod.wd = events.showWaiting();
-		postDataPro_getClassSpacesByUserForClass(postData, wd, function(pagedata) {
+		postDataPro_getClassSpacesByUserForClass(postData,mod.wd, function(pagedata) {
 			//			wd.close();
 			if(pagedata.RspCode == 0 && pagedata.RspData.Data.length > 0) {
 				console.log('获取的班级动态：' + JSON.stringify(pagedata));
@@ -179,7 +179,7 @@ var class_space = (function(mod) {
 				})
 
 			} else {
-				wd.close();
+				mod.wd.close();
 				console.log(pInfo.RspTxt);
 			}
 
