@@ -118,9 +118,16 @@ function getExpertsArray(channelId) {
 			}
 			//给数组去重
 			tempArray = arrayDupRemoval(tempArray);
+			if(tempArray.length==0){
+				getExperTime = Date.now();
+				if(getChannelTime) {
+					events.closeWaiting();
+				}
+				return;
+			}
 			//发送获取用户资料申请
 			var tempData = {
-				vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
+				vvl: tempArray.toString(), //用户id，查询的值,p传个人ID,g传ID串
 				vtp: 'g' //查询类型,p(个人)g(id串)
 			}
 			console.log('tempData:' + JSON.stringify(tempData));
