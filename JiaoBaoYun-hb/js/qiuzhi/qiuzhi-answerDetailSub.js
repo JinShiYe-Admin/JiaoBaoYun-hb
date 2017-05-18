@@ -35,7 +35,7 @@ var setFresh = function() {
 		}
 	});
 }
-setFresh();
+
 var type = 2; //排列顺序类型1为顺序，2为倒序
 var pageIndex = 1; //当前页码
 var totalPageCount = 1; //总页数
@@ -47,34 +47,42 @@ var upperInfo;
 var parentContainer; //评论父控件
 var wd;
 video.initVideo();
+var deceleration = mui.os.ios?0.003:0.0009;
+mui('.mui-scroll-wrapper').scroll({
+	bounce: false,
+	indicators: true, //是否显示滚动条
+	deceleration: deceleration
+});
 mui.plusReady(function() {
+
 	//增加图片预览功能
 	mui.previewImage();
 	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'), "answerIsReady");
+	setFresh();
 	//限制下拉刷新
-//	events.limitPreviewPullDown("refreshContainer", 1);
+	//	events.limitPreviewPullDown("refreshContainer", 1);
 	//	ws=plus.webview.currentWebview();
 	//	ws.setBounce({position:"none"});
-//	h5fresh.addRefresh(function() {
-//		document.getElementById("list-container").innerHTML = "";
-//		mui("#refreshContainer").pullRefresh().refresh(true);
-//		flag = 1;
-//		pageIndex = 1;
-//		wd = events.showWaiting();
-//		requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
-//	}, {
-//		style: "circle",
-//		offset: "50px"
-//	})
-//	h5fresh.addPullUpFresh("#refreshContainer", function() {
-//		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
-//		if(pageIndex < totalPageCount) {
-//			pageIndex++;
-//			flag = 1;
-//			wd = events.showWaiting();
-//			requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
-//		}
-//	})
+	//	h5fresh.addRefresh(function() {
+	//		document.getElementById("list-container").innerHTML = "";
+	//		mui("#refreshContainer").pullRefresh().refresh(true);
+	//		flag = 1;
+	//		pageIndex = 1;
+	//		wd = events.showWaiting();
+	//		requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
+	//	}, {
+	//		style: "circle",
+	//		offset: "50px"
+	//	})
+	//	h5fresh.addPullUpFresh("#refreshContainer", function() {
+	//		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
+	//		if(pageIndex < totalPageCount) {
+	//			pageIndex++;
+	//			flag = 1;
+	//			wd = events.showWaiting();
+	//			requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
+	//		}
+	//	})
 	//预加载回答问题界面
 	events.preload('qiuzhi-addAnswer.html');
 
