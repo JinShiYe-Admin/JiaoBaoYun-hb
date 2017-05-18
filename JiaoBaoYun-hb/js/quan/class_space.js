@@ -345,6 +345,7 @@ var setFresh = function() {
 					class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 				} else {
 					self.endPullUpToRefresh();
+					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
 				}
 
 			}
