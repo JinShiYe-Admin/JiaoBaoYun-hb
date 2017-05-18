@@ -243,8 +243,8 @@ var class_space = (function(mod) {
 				//				})
 				li.querySelector(".chat-body").insertBefore(more_span, li.querySelector(".class-imgs"));
 			}
-			if(li.querySelector(".video-container")){
-				li.querySelector(".video-container").info=list[i];
+			if(li.querySelector(".video-container")) {
+				li.querySelector(".video-container").info = list[i];
 			}
 			classWords_container.info = list[i];
 		}
@@ -285,8 +285,8 @@ var class_space = (function(mod) {
 					}
 				}
 			} else if(cell.EncType == 2) {
-				imgInner += '<div class="video-container"  style="width:'+img_width*3+'px;height:'+img_width*3*0.6+'px;margin-bottom:8px;background-image:url(' + imgs[0] + ');background-color:#101010; background-position:center;background-size:auto 120%;background-repeat:no-repeat;">'+
-				'<img src="../../image/utils/playvideo.png" style="width:36px;height:36px;margin:'+(img_width*3*0.6-36)/2+'px '+(img_width*3-36)/2+'px;"/>'+'</div>'
+				imgInner += '<div class="video-container"  style="width:' + img_width * 3 + 'px;height:' + img_width * 3 * 0.6 + 'px;margin-bottom:8px;background-image:url(' + imgs[0] + ');background-color:#101010; background-position:center;background-size:auto 120%;background-repeat:no-repeat;">' +
+					'<img src="../../image/utils/playvideo.png" style="width:36px;height:36px;margin:' + (img_width * 3 * 0.6 - 36) / 2 + 'px ' + (img_width * 3 - 36) / 2 + 'px;"/>' + '</div>'
 			}
 
 		}
@@ -301,18 +301,57 @@ function videoImgOnload(event) {
 	var img = event.target;
 	var imgWidth = img.naturalWidth;
 	var imgHeight = img.naturalHeight;
-	console.log("图片的宽度和高度："+imgWidth+"高度："+imgHeight);
+	console.log("图片的宽度和高度：" + imgWidth + "高度：" + imgHeight);
 	if(imgWidth >= imgHeight) {
-		img.style.width = img.width+"px";
-		img.style.height =img.height+"px";
+		img.style.width = img.width + "px";
+		img.style.height = img.height + "px";
 	} else {
-		img.style.width = img.width/2+"px";
+		img.style.width = img.width / 2 + "px";
 		img.style.height = "initial";
-		img.style.top=-(img.height-img.width)/4+"px";
-		img.style.bottom=-(img.height-img.width)/4+"px";
-		img.style.left=img.width/4+"px";
+		img.style.top = -(img.height - img.width) / 4 + "px";
+		img.style.bottom = -(img.height - img.width) / 4 + "px";
+		img.style.left = img.width / 4 + "px";
 	}
 }
+mui.init();
+var setFresh = function() {
+	//上拉下拉注册
+	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
+		down: {
+			callback: function() {
+				var self = this;
+				//清除节点
+
+				pageIndex = 1;
+				var container = document.getElementById('classSpace_list');
+				events.clearChild(container);
+				class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+
+				setTimeout(function() {
+					//结束下拉刷新
+					self.endPullDownToRefresh();
+				}, 1000);
+			}
+		},
+		up: {
+			callback: function() {
+				var self = this;
+				//5.获取某个问题的详情
+				if(pageIndex < class_space.totalPagNo) {
+					setTimeout(function() {
+						self.endPullUpToRefresh();
+					}, 1000);
+					pageIndex++;
+					class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
+				} else {
+					self.endPullUpToRefresh();
+				}
+
+			}
+		}
+	});
+}
+setFresh();
 var pageIndex = 1;
 var pageSize = 10;
 var postData;
@@ -352,22 +391,16 @@ mui.plusReady(function() {
 		container.innerHTML = "";
 		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 	})
-	h5fresh.addRefresh(function() {
-		pageIndex = 1;
-		var container = document.getElementById('classSpace_list');
-		events.clearChild(container);
-		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-	}, {
-		offset: "45px",
-		style: "circle"
-	});
-	h5fresh.addPullUpFresh("#refreshContainer", function() {
-		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
-		if(pageIndex < class_space.totalPagNo) {
-			pageIndex++;
-			class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-		}
-	});
+	//	h5fresh.addRefresh(function() {
+	//
+	//	}, {
+	//		offset: "45px",
+	//		style: "circle"
+	//	});
+	//	h5fresh.addPullUpFresh("#refreshContainer", function() {
+	//		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
+	//
+	//	});
 	var firstTime = null;
 	mui('.mui-table-view').on('tap', '.head-portrait', function() {
 		//		console.log(id);
@@ -401,12 +434,12 @@ mui.plusReady(function() {
 	/**
 	 * 视频点击事件
 	 */
-	mui(".mui-table-view").on("tap",".video-container",function(){
-		var item=this;
-		item.disabled=true;
-		var videoInfo=this.info;
-		video.playVideo(videoInfo.EncAddr,videoInfo.EncImgAddr,function(){
-			item.disabled=false;
+	mui(".mui-table-view").on("tap", ".video-container", function() {
+		var item = this;
+		item.disabled = true;
+		var videoInfo = this.info;
+		video.playVideo(videoInfo.EncAddr, videoInfo.EncImgAddr, function() {
+			item.disabled = false;
 		})
 	})
 });

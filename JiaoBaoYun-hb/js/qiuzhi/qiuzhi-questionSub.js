@@ -5,28 +5,43 @@ var setIcon = function() {
 		document.getElementById("manage-question").style.display = "none";
 	}
 }
-/**
- * 问题子页面界面逻辑
- */
-//加载刷新控件
-//mui.init({
-//	pullRefresh: {
-//		container: '#refreshContainer',
-//		down: {
-//			callback: pulldownRefresh
-//		},
-//		up: {
-//			contentrefresh: '正在加载...',
-//			callback: pullupRefresh
-//		}
-//	},
-////	gestureConfig: {
-////		tap: true,
-////		hold: true,
-////		release: true
-////	}
-//
-//});
+mui.init();
+var setFresh = function() {
+	//上拉下拉注册
+	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
+		down: {
+			callback: function() {
+				var self=this;
+				//清除节点
+				pulldownRefresh();
+				setTimeout(function() {
+					//结束下拉刷新
+					self.endPullDownToRefresh();
+				}, 1000);
+			}
+		},
+		up: {
+			callback: function() {
+				var self = this;
+				answerFlag = 1;
+				//判断是否还有更多
+				if(answerIndex <= answerPageCount) {
+					//5.获取某个问题的详情
+					setTimeout(function() {
+						self.endPullUpToRefresh();
+					}, 1000);
+					requestAskDetail();
+
+				} else {
+					//结束下拉刷新
+					self.endPullUpToRefresh();
+					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
+				}
+			}
+		}
+	});
+}
+setFresh();
 var questionInfo;
 var _oldBack = mui.back;
 mui.back = function() {
@@ -53,7 +68,6 @@ mui.plusReady(function() {
 	//---获取数据并传递数据---start---
 	var main = plus.webview.currentWebview(); //获取当前窗体对象
 	mainData = main.data; //接收A页面传入参数值
-	mui(".mui-pull-loading")[0].innerHTML = "";
 	//从搜索界面跳转的数据，TabId是问题id，得转换为话题id
 	var temp0 = mainData.channelInfo.AskChannelId;
 	if(temp0 > 0) {
@@ -75,9 +89,9 @@ mui.plusReady(function() {
 		var cbArr = [delQuestion];
 		events.showActionSheet(titles, cbArr);
 	})
-	setFresh();
+//	setFresh();
 	mui.previewImage();
-	events.limitPreviewPullDown("refreshContainer", 1);
+//	events.limitPreviewPullDown("refreshContainer", 1);
 	var main = plus.webview.currentWebview(); //获取当前窗体对象
 	mainData = main.data; //接收A页面传入参数值
 	console.log('qiuzhi-question.html:' + JSON.stringify(mainData));
@@ -226,45 +240,7 @@ mui.plusReady(function() {
 		}
 	});
 });
-var setFresh = function() {
-	//上拉下拉注册
-	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
-		down: {
-			callback: function() {
-				//清除节点
-				pulldownRefresh();
-				setTimeout(function() {
-					//结束下拉刷新
-					self.endPullDownToRefresh();
-				}, 1000);
-			}
-		},
-		up: {
-			callback: function() {
-				var self = this;
-				answerFlag = 1;
-				//判断是否还有更多
-				if(answerIndex <= answerPageCount) {
-					//5.获取某个问题的详情
-					setTimeout(function() {
-						self.endPullUpToRefresh();
-					}, 1000);
-					requestAskDetail();
 
-				} else {
-					//结束下拉刷新
-					self.endPullUpToRefresh();
-					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
-				}
-			}
-		}
-	});
-	h5fresh.addRefresh(pulldownRefresh, {
-		style: "circle",
-		offset: "50px"
-	});
-	h5fresh.addPullUpFresh("#refreshContainer", pullupRefresh);
-}
 /**
  * 根据状况低端按钮显示
  */
@@ -575,9 +551,9 @@ function requestAskDetail() {
 					addQuestion(data.RspData);
 					if(tempRspData.length == 0) { //没有人回答
 						answerNone();
-						mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+//						mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
 					} else {
-						mui('#refreshContainer').pullRefresh().enablePullupToRefresh(false); //启用上拉加载更多
+//						mui('#refreshContainer').pullRefresh().enablePullupToRefresh(false); //启用上拉加载更多
 					}
 				} else {
 					answerArray = answerArray.concat(tempRspData);
