@@ -336,6 +336,7 @@ var setFresh = function() {
 				setTimeout(function() {
 					//结束下拉刷新
 					self.endPullDownToRefresh();
+					mui(".mui-pull-loading")[0].innerHTML = "上拉显示更多";
 				}, 1000);
 			}
 		},
