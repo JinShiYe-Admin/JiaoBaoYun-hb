@@ -230,8 +230,6 @@ var setFresh = function() {
 	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 		down: {
 			callback: function() {
-				var self=this;
-				mui(".mui-pull-loading")[0].innerHTML = "";
 				//清除节点
 				pulldownRefresh();
 				setTimeout(function() {
@@ -255,16 +253,16 @@ var setFresh = function() {
 				} else {
 					//结束下拉刷新
 					self.endPullUpToRefresh();
-					mui(".mui-pull-loading")[0].innerHTML = "";
+					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
 				}
 			}
 		}
 	});
-//	h5fresh.addRefresh(pulldownRefresh, {
-//		style: "circle",
-//		offset: "50px"
-//	});
-//	h5fresh.addPullUpFresh("#refreshContainer", pullupRefresh);
+	h5fresh.addRefresh(pulldownRefresh, {
+		style: "circle",
+		offset: "50px"
+	});
+	h5fresh.addPullUpFresh("#refreshContainer", pullupRefresh);
 }
 /**
  * 根据状况低端按钮显示
