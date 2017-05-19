@@ -14,7 +14,6 @@ var setFresh = function() {
 				var self = this;
 				//清除节点
 				pulldownRefresh();
-
 				setTimeout(function() {
 					//结束下拉刷新
 					mui(".mui-pull-loading")[0].innerHTML = "上拉显示更多";
@@ -67,6 +66,7 @@ var AskThumbnail = []; //提问图片缩略图
 var mainData; //记录获取的数据
 mui.plusReady(function() {
 	//---获取数据并传递数据---start---
+	mui(".mui-pull-loading")[0].style.display="none";
 	var main = plus.webview.currentWebview(); //获取当前窗体对象
 	mainData = main.data; //接收A页面传入参数值
 	//从搜索界面跳转的数据，TabId是问题id，得转换为话题id
