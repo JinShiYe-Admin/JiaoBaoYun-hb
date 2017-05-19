@@ -379,24 +379,29 @@
 
 			function refreshStuList() {
 				var remainNum = remainArray.length
-				for(var i = 0; i < remainArray.length; i++) {
-					if(!remainArray[i].ugnick) {
-						remainNum--;
-						continue;
-					}
-				}
+				//				for(var i = 0; i < remainArray.length; i++) {
+				//					if(!remainArray[i].ugnick) {
+				//						remainNum--;
+				//						continue;
+				//					}
+				//				}
 				var uploadNum = uploadArray.length
-				for(var i = 0; i < uploadArray.length; i++) {
-					if(!uploadArray[i].ugnick) {
-						uploadNum--;
-						continue;
-					}
-				}
+				//				for(var i = 0; i < uploadArray.length; i++) {
+				//					if(!uploadArray[i].ugnick) {
+				//						uploadNum--;
+				//						continue;
+				//					}
+				//				}
 				homeworkDetailNodes.segItem1.innerHTML = '已完成(' + uploadNum + ')';
 				homeworkDetailNodes.segItem2.innerHTML = '未完成(' + remainNum + ')';
 				homeworkDetailNodes.finishedList.innerHTML = '';
 				homeworkDetailNodes.unfinishedList.innerHTML = '';
-
+				//for(var i = 0; i < uploadArray.length; i++) {
+				//					if(!uploadArray[i].ugnick) {
+				//						uploadArray[i].ugnick = '<p style="color:gray">用户已退群</p>'
+				////						continue;
+				//					}
+				//				}
 				for(var i = 0; i < uploadArray.length; i++) {
 					var IsCommented;
 					if(uploadArray[i].IsCommented == true) {
@@ -410,19 +415,30 @@
 					li.workInfo = uploadArray[i];
 					li.workInfo.workType = 1;
 					mui.extend(li.workInfo, homeworkDetailModel)
-					li.className = 'mui-table-view-cell mui-media isCommented'
-					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" style = "width:40px;height:40px;border-radius: 50%;" src="' + headImg + '" />' +
-						'<div class="mui-media-body">' + events.shortForString(uploadArray[i].ugnick, 12) +
-						'<div class="mui-media-body mui-pull-right" ' +
-						'<p id="isCommented' + i + '" style="font-size: 13px;color:#808080">' + IsCommented + '<span class="mui-icon iconfont icon-fanhui2" style="color:#b7b7b7"></span></p></div>' +
-						'</div>'
 
-					homeworkDetailNodes.finishedList.appendChild(li);
+					if(uploadArray[i].ugnick) {
+						li.className = 'mui-table-view-cell mui-media isCommented'
+						li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" style = "width:40px;height:40px;border-radius: 50%;" src="' + headImg + '" />' +
+							'<div class="mui-media-body">' + events.shortForString(uploadArray[i].ugnick, 12) +
+							'<div class="mui-media-body mui-pull-right" ' +
+							'<p id="isCommented' + i + '" style="font-size: 13px;color:#808080">' + IsCommented + '<span class="mui-icon iconfont icon-fanhui2" style="color:#b7b7b7"></span></p></div>' +
+							'</div>'
+
+						homeworkDetailNodes.finishedList.appendChild(li);
+					} else {
+						li.className = 'mui-table-view-cell mui-media'
+						li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" style = "width:40px;height:40px;border-radius: 50%;" src="' + headImg + '" />' +
+							'<div class="mui-media-body">' + '<span style="color:red">该用户已退群</span>' +
+							'<div class="mui-media-body mui-pull-right" ' +
+							'<p id="isCommented' + i + '" style="font-size: 13px;color:#808080"> </p></div>' +
+							'</div>'
+
+						homeworkDetailNodes.finishedList.appendChild(li);
+
+					}
 				}
 				for(var i = 0; i < remainArray.length; i++) {
-					if(!remainArray[i].ugnick) {
-						continue;
-					}
+
 					var disabled;
 					var btn_class;
 
@@ -444,14 +460,23 @@
 					var headImg = updateHeadImg(remainArray[i].uimg, 2)
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell mui-media'
-
-					li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image"  style = "width:40px;height:40px ;border-radius: 50%;" src="' + headImg + '" />' +
-						'<div class="mui-media-body">' +
-						'<div style = "padding-top:10px">' + events.shortForString(remainArray[i].ugnick, 12) + '<button id="alert' + i + '" class="' + btn_class + '" onclick="alertStu(this)"' + disabled + '>' +
-						alert +
-						'</button>' + '</div>' +
-						'</div>';
-					homeworkDetailNodes.unfinishedList.appendChild(li);
+					if(remainArray[i].ugnick) {
+						li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image"  style = "width:40px;height:40px ;border-radius: 50%;" src="' + headImg + '" />' +
+							'<div class="mui-media-body">' +
+							'<div style = "padding-top:10px">' + events.shortForString(remainArray[i].ugnick, 12) + '<button id="alert' + i + '" class="' + btn_class + '" onclick="alertStu(this)"' + disabled + '>' +
+							alert +
+							'</button>' + '</div>' +
+							'</div>';
+						homeworkDetailNodes.unfinishedList.appendChild(li);
+					} else {
+						li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image"  style = "width:40px;height:40px ;border-radius: 50%;" src="' + headImg + '" />' +
+							'<div class="mui-media-body">' +
+							'<div style = "padding-top:10px">' + '<span style="color:red">该用户已退群</span>' + '<button id="alert' + i + '" class="mui-hidden ' + btn_class + '" onclick="alertStu(this)"' + disabled + '>' +
+							alert +
+							'</button>' + '</div>' +
+							'</div>';
+						homeworkDetailNodes.unfinishedList.appendChild(li);
+					}
 
 				}
 				if(allAlertFlag == remainArray.length) {
