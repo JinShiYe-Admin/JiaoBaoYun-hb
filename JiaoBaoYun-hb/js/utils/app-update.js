@@ -4,12 +4,13 @@
 var appUpdate = (function(mod) {
 	mod.fileSize;
 	mod.updateApp = function() {
+		plus.webview.currentWebview().canJump = false;
 		//版本升级模块
 		//47.获取APP版本号
 		console.log('plus.os.name:' + plus.os.name);
 		var tempVVL = 'android';
-		if(plus.os.name == 'iOS'){
-			tempVVL="ios";
+		if(plus.os.name == 'iOS') {
+			tempVVL = "ios";
 		}
 		//所需参数
 		var comData9 = {
@@ -75,27 +76,28 @@ var appUpdate = (function(mod) {
 			//询问是否更新
 			setDialog('教宝云有新版本，是否下载？', function() {
 				console.log("下载APK路径：" + version.baseverurl)
-				if(plus.os.name="Android"){
+				if(plus.os.name = "Android") {
 					resolveFile(version.baseverurl, 1);
-				}else{
-					
+				} else {
+
 				}
-				
+
 				//				downApk(version.baseverurl);
 			})
 		} else if(appVersionMinMax.max == newestVersionMinMax.max) {
 			if(appVersionMinMax.min < newestVersionMinMax.min) { //在线更新
-				if(plus.os.name="Android"){
+				if(plus.os.name = "Android") {
+					plus.webview.currentWebview().canJump = true;
 					resolveFile(version.addverurl, 0);
-				}else{
-					setDialog('教宝云有新版本，是否下载？',function(){
-						
+				} else {
+					setDialog('教宝云有新版本，是否下载？', function() {
+
 					});
 				}
-				
+
 			}
 		} else {
-
+			plus.webview.currentWebview().canJump = true;
 		}
 	}
 	/**
@@ -106,12 +108,13 @@ var appUpdate = (function(mod) {
 	var setDialog = function(hint, callback) {
 		var btnArray = ['否', '是'];
 		mui.confirm(hint, '教宝云', btnArray, function(e) {
+			plus.webview.currentWebview().canJump = true;
 			if(e.index == 1) {
 				callback();
 			} else {
 				mui.toast('您已取消下载新版本！')
 			}
-		},"div");
+		}, "div");
 	}
 	/**
 	 * 获取大版本号和小版本号

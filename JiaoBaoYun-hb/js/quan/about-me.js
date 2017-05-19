@@ -24,11 +24,10 @@ var setFresh = function() {
 		up: {
 			callback: function() {
 				var self = this;
-				setTimeout(function() {
-					self.endPullUpToRefresh();
-				}, 1000);
-
 				if(pageIndex < totalPage || pageIndex < alertTotalPage) {
+					setTimeout(function() {
+						self.endPullUpToRefresh();
+					}, 1000);
 					pageIndex++;
 					requestData();
 				} else {
