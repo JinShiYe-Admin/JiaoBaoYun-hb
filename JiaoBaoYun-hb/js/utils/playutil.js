@@ -182,11 +182,11 @@ var playutil = (function(mod) {
 		if(num <= 1) {
 			return 25;
 		} else if(1 < num && num <= 10) {
-			return 25 + ((num - 1) / 9) * 25;
+			return 25 + (((num - 1) / 9) * 25).toFixed(2) * 1;
 		} else if(10 < num && num <= 60) {
-			return 50 + ((num - 10) / 50) * 25;
+			return 50 + (((num - 10) / 50) * 25).toFixed(2) * 1;
 		} else if(60 < num && num <= 300) {
-			return 75 + ((num - 60) / 240) * 25;
+			return 75 + (((num - 60) / 240) * 25).toFixed(2) * 1;
 		} else {
 			return 100;
 		}
