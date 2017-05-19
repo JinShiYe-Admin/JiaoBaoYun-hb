@@ -35,6 +35,9 @@ var setFresh = function() {
 				} else {
 					self.endPullUpToRefresh();
 					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
+					if(plus.webview.currentWebview().isVisible()){
+						mui.toast("没有更多了！");
+					}
 				}
 
 			}
