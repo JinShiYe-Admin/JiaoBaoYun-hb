@@ -259,10 +259,26 @@
 			function initListener() {
 				//红色开始录制按钮
 				document.getElementById('redCircle').addEventListener('tap', function() {
-					this.style.display = 'none';
-					document.getElementById("whiteBlockBackground").style.display = 'inline-block';
-					//initProgressBar();
-					startRecordAudio();
+					var checkRecord = plus.navigator.checkPermission('RECORD');
+					console.log('checkRecord ' + checkRecord);
+					if(checkRecord == 'authorized' || plus.os.name == 'Android') {
+						this.style.display = 'none';
+						document.getElementById("whiteBlockBackground").style.display = 'inline-block';
+						//initProgressBar();
+						startRecordAudio();
+					} else {
+						//						if(checkRecord == 'unknown') {
+						//							var tempAudio = plus.audio.getRecorder();
+						//							tempAudio.record({}, function(recordFile) {
+						//								console.log('success ' + recordFile);
+						//							}, function(error) {
+						//								console.log('error ' + JSON.stringify(error));
+						//							});
+						//							tempAudio.stop();
+						//						}
+
+						mui.toast('录音失败,请检查是否开启录音权限');
+					}
 				});
 
 				//白色停止录制按钮
@@ -328,7 +344,13 @@
 				}, function(fpath) {
 					console.log('录制音频成功 ' + fpath);
 					audioOption.fpath = fpath;
-					audioOption.time = Math.ceil(recordTime / 10);
+					var audioTime = Math.ceil(recordTime / 10);
+					if(timeCount > audioTime) {
+						audioOption.time = timeCount;
+					} else {
+						audioOption.time = audioTime;
+					}
+
 					if(audioOption.time > 300) {
 						audioOption.time = 300;
 					}
@@ -507,12 +529,14 @@
 					timeId = null;
 				}
 				timeId = setInterval(function() {
-					var audioTime = audioPlayer.getDuration();
-					if(!isNaN(audioTime) && audioTime != -1) {
-						audioOption.time = Math.ceil(audioTime);
+					if(audioPlayer) {
+						var audioTime = audioPlayer.getDuration();
+						if(!isNaN(audioTime) && audioTime != -1) {
+							audioOption.time = Math.ceil(audioTime);
+						}
+						//console.log('audioTime ' + audioTime);
+						showTime(audioOption.time);
 					}
-					//console.log('audioTime ' + audioTime);
-					showTime(audioOption.time);
 				}, 1000);
 			}
 

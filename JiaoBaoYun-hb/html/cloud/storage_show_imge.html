@@ -124,8 +124,8 @@
 					showImge(fpath, data.Data[0].Value);
 				}, function(xhr, type, errorThrown) {
 					events.closeWaiting();
-					mui.toast('获取文件路径失败：' + type);
-					console.log('获取文件路径失败：' + type);
+					mui.toast('网络连接失败 ' + type);
+					console.log('网络连接失败 ' + type);
 				});
 			}
 

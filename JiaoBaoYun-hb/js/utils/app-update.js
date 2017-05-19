@@ -6,7 +6,6 @@ var appUpdate = (function(mod) {
 	mod.updateApp = function() {
 		//版本升级模块
 		//47.获取APP版本号
-		plus.webview.currentWebview().canJump=false;
 		console.log('plus.os.name:' + plus.os.name);
 		var tempVVL = 'android';
 		if(plus.os.name == 'iOS'){
@@ -88,7 +87,6 @@ var appUpdate = (function(mod) {
 			if(appVersionMinMax.min < newestVersionMinMax.min) { //在线更新
 				if(plus.os.name="Android"){
 					resolveFile(version.addverurl, 0);
-					plus.webview.currentWebview().canJump=true;
 				}else{
 					setDialog('教宝云有新版本，是否下载？',function(){
 						
@@ -97,7 +95,7 @@ var appUpdate = (function(mod) {
 				
 			}
 		} else {
-			plus.webview.currentWebview().canJump=true;
+
 		}
 	}
 	/**
@@ -108,7 +106,6 @@ var appUpdate = (function(mod) {
 	var setDialog = function(hint, callback) {
 		var btnArray = ['否', '是'];
 		mui.confirm(hint, '教宝云', btnArray, function(e) {
-			plus.webview.currentWebview().canJump=true;
 			if(e.index == 1) {
 				callback();
 			} else {
