@@ -115,6 +115,7 @@ var load = (function(mod) {
 			canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 			var thumb = canvas.toDataURL("image/png");
 			video = null;
+			console.log("video的宽度："+canvas.width+"video的高度："+canvas.height);
 			callback(thumb, canvas.width*2, canvas.height*2);
 		}
 	}

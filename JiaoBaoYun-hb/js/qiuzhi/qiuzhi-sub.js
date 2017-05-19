@@ -374,8 +374,8 @@ var getImgs = function(cell) {
 				var win_width = document.body.offsetWidth - 30;
 				var imgArray = cell.AnswerEncAddr.split('|');
 				var clipImgs = cell.AnswerCutImg.split("|");
-				imgInner = '<div class="video-container" style="background-image:url(' + clipImgs[0] + ');background-size:contain;width:' + win_width + 'px;height:' + win_width * 0.45 +
-					'px;text-align:center;"><img style="width:55px;height:55px;margin-top:' + (win_width * 0.45 - 55) / 2 + 'px;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
+				imgInner = '<div class="video-container" style="background-image:url(' + clipImgs[0] + ');width:' + win_width + 'px;height:' + win_width * 0.45 +
+					'px;text-align:center;background-position:center;background-size:cover;"><img style="width:55px;height:55px;margin-top:' + (win_width * 0.45 - 55) / 2 + 'px;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
 				return imgInner;
 			}
 			return "";

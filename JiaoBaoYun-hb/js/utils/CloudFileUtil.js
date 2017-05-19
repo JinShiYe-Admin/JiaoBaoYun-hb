@@ -470,7 +470,7 @@ var CloudFileUtil = (function($, mod) {
 				var tempFileName = QNFileName.split('.');
 				var thumbName = tempFileName[0];
 				returnData.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + thumbName + '.png');
-				returnData.ops = "vframe/png/offset/1/w/" + width + "/h/" + height + "|saveas/" + returnData.thumbKey;
+				returnData.ops = "vframe/png/offset/1|saveas/" + returnData.thumbKey;
 				break;
 			case 3: //音频，转格式
 				var thumbSpace = saveSpace + 'thumb/';
