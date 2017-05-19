@@ -51,7 +51,7 @@ mui.plusReady(function() {
 		//清理问题列表
 		events.clearChild(document.getElementById('list-container'));
 		//清理专家列表
-//		resetExpertsList();
+		//		resetExpertsList();
 		getChannelTime = null;
 		getExperTime = null;
 		if(plus.networkinfo.getCurrentType() != plus.networkinfo.CONNECTION_NONE) {
@@ -67,17 +67,16 @@ mui.plusReady(function() {
 	h5fresh.addRefresh(function() {
 		pageIndex = 1;
 		//清理问题列表
-//		document.getElementById('list-container').innerHTML = "";
+		//		document.getElementById('list-container').innerHTML = "";
 		//清理专家列表
-//		resetExpertsList();
+		//		resetExpertsList();
 		getChannelTime = null;
 		getExperTime = null;
-		if(plus.networkinfo.getCurrentType() != plus.networkinfo.CONNECTION_NONE) {
-			wd = events.showWaiting(); //2.获取符合条件的专家信息
-			getExpertsArray(channelInfo.TabId);
-			//刷新的界面实现逻辑
-			requestChannelList(channelInfo);
-		}
+		wd = events.showWaiting(); //2.获取符合条件的专家信息
+		getExpertsArray(channelInfo.TabId);
+		//刷新的界面实现逻辑
+		requestChannelList(channelInfo);
+
 	}, {
 		style: 'circle',
 	});
@@ -119,9 +118,16 @@ function getExpertsArray(channelId) {
 			}
 			//给数组去重
 			tempArray = arrayDupRemoval(tempArray);
+			if(tempArray.length==0){
+				getExperTime = Date.now();
+				if(getChannelTime) {
+					events.closeWaiting();
+				}
+				return;
+			}
 			//发送获取用户资料申请
 			var tempData = {
-				vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
+				vvl: tempArray.toString(), //用户id，查询的值,p传个人ID,g传ID串
 				vtp: 'g' //查询类型,p(个人)g(id串)
 			}
 			console.log('tempData:' + JSON.stringify(tempData));
@@ -149,6 +155,8 @@ function getExpertsArray(channelId) {
 							}
 						}
 					}
+				} else {
+					mui.toast(data.RspTxt);
 				}
 				console.log('专家循环遍历后的值：' + JSON.stringify(tempRspData));
 				//刷新界面
@@ -281,8 +289,8 @@ var rechargeInfos = function(datas, infos) {
 var setChannelList = function(data) {
 	console.log('求知主界面加载的数据信息：' + JSON.stringify(data));
 	var list = document.getElementById('list-container');
-	if(pageIndex==1){
-		list.innerHTML="";
+	if(pageIndex == 1) {
+		list.innerHTML = "";
 	}
 	//	var fragemnt = document.createDocumentFragment();
 	for(var i in data) {
@@ -428,13 +436,13 @@ var pullUpFresh = function() {
 var setListener = function() {
 	events.addTap('submit-question', function() {
 		var self = this;
-//		self.disabled=true;
+		//		self.disabled=true;
 		//判断是否是游客身份登录
 		if(events.judgeLoginMode(self)) {
 			return;
 		}
 		console.log(JSON.stringify(allChannels))
-		events.singleWebviewInPeriod(self,'qiuzhi-newQ.html', {
+		events.singleWebviewInPeriod(self, 'qiuzhi-newQ.html', {
 			curChannel: channelInfo,
 			allChannels: allChannels
 		});
@@ -449,8 +457,8 @@ var setListener = function() {
 				channelInfo: questionInfo, //当前话题
 				allChannels: allChannels //全部话题
 			});
-		},function(){
-			item.disabled=false;
+		}, function() {
+			item.disabled = false;
 		});
 	})
 
@@ -504,7 +512,7 @@ var setListener = function() {
 				item.disabled = false;
 			}
 		}, function() {
-			item.disabled=false;
+			item.disabled = false;
 		});
 	})
 }

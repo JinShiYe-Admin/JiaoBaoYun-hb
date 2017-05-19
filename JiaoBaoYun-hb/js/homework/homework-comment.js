@@ -1,8 +1,14 @@
 var workInfo;
 var personalUTID;
 mui.init({
-	beforeback:function(){
+	beforeback: function() {
+		document.querySelector(".answer-info").innerText = "";
 		document.getElementById("answer-imgs").innerHTML = "";
+		document.getElementById('submit-time').innerText = "";
+		document.getElementById('stu-head').src = "";
+		document.getElementById('stu-name').innerText = "";
+		document.getElementById('comment-area').value = "";
+		document.querySelector(".commented-words").innerText = "";
 		return true;
 	}
 });
@@ -163,16 +169,16 @@ var setHomeWorkInfo = function() {
 	document.querySelector(".answer-info").innerText = workInfo.Result;
 	document.getElementById("answer-imgs").innerHTML = "";
 	toggleEditContainer(!workInfo.IsCommented)
-//	if() {
-//		document.getElementById('comment-area').value = workInfo.Comment;
-//		document.querySelector('.comment-holder').style.display = "none";
-//		document.querySelector(".commented-holder").style.display = "block";
-//		document.querySelector(".commented-words").innerText = workInfo.Comment;
-//	} else {
-//		document.getElementById('comment-area').value = null;
-//		document.querySelector('.comment-holder').style.display = "block";
-//		document.querySelector(".commented-holder").style.display = "none";
-//	}
+	//	if() {
+	//		document.getElementById('comment-area').value = workInfo.Comment;
+	//		document.querySelector('.comment-holder').style.display = "none";
+	//		document.querySelector(".commented-holder").style.display = "block";
+	//		document.querySelector(".commented-words").innerText = workInfo.Comment;
+	//	} else {
+	//		document.getElementById('comment-area').value = null;
+	//		document.querySelector('.comment-holder').style.display = "block";
+	//		document.querySelector(".commented-holder").style.display = "none";
+	//	}
 	if(workInfo.stuFiles && workInfo.stuFiles.length > 0) {
 		createAnswerImgs(homeworkInfo, workInfo.stuFiles, 3);
 	}
@@ -318,8 +324,8 @@ var commentHomework = function(commentValue) {
 		wd.close();
 		console.log('老师评价页面获取老师评价普通作业的结果:' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
-			workInfo.IsCommented=true;
-			workInfo.Comment=commentValue;
+			workInfo.IsCommented = true;
+			workInfo.Comment = commentValue;
 			events.fireToPageNone(plus.webview.currentWebview().opener().id, 'workCommented');
 			toggleEditContainer(0);
 			mui.toast('评论成功！');
@@ -345,11 +351,11 @@ var commentAnswer = function(commentValue) {
 		console.log('老师评价页面获取的老师评论临时作业的结果：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			events.fireToPageNone('workdetailTea-temSub.html', 'workCommented')
-			workInfo.IsCommented=true;
-			workInfo.Comment=commentValue;
+			workInfo.IsCommented = true;
+			workInfo.Comment = commentValue;
 			toggleEditContainer(0);
 			mui.toast('评论成功！');
-//			mui.back();
+			//			mui.back();
 		} else {
 			mui.toast(data.RspTxt);
 		}
@@ -372,9 +378,9 @@ var modifyHomeworkComment = function(commentValue) {
 		console.log('老师评价页面获取老师更改普通作业评论的结果：' + JSON.stringify(data));
 		if(data.RspCode == '0000') {
 			mui.toast('修改评论成功！')
-			workInfo.Comment=commentValue;
+			workInfo.Comment = commentValue;
 			toggleEditContainer(0);
-//			mui.back();
+			//			mui.back();
 		} else {
 			mui.toast(data.RspTxt);
 		}
