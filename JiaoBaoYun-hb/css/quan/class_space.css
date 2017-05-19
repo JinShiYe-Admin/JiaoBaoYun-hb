@@ -496,3 +496,7 @@ div>.icon-xiangce:before,
 .mui-pull-top-canvas canvas {
 	width: 40px;
 }
+.mui-content.mui-fullscreen{
+	top: 45px;
+}
+

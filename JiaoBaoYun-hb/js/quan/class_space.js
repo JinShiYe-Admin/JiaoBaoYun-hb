@@ -314,6 +314,12 @@ function videoImgOnload(event) {
 	}
 }
 mui.init();
+var deceleration = mui.os.ios?0.003:0.0009;
+mui('.mui-scroll-wrapper').scroll({
+	bounce: false,
+	indicators: true, //是否显示滚动条
+	deceleration: deceleration
+});
 var setFresh = function() {
 	//上拉下拉注册
 	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
@@ -359,7 +365,7 @@ var postData;
 var wd;
 var className;
 mui.plusReady(function() {
-	mui.previewImage();
+//	mui.previewImage();
 	postData = plus.webview.currentWebview().data;
 	postData.userId = parseInt(postData.userId);
 	//班级名称

@@ -38,6 +38,11 @@ var ShowAudioUtil = (function(mod) {
 	mod.timeCount = 0;
 
 	/**
+	 * 0,使用标签；1，使用H5+
+	 */
+	mod.type = 0;
+
+	/**
 	 * 初始化音频显示
 	 */
 	mod.initAudioPopover = function(data) {
@@ -104,16 +109,16 @@ var ShowAudioUtil = (function(mod) {
 	mod.initListener = function() {
 		//关闭按钮
 		mui('.audio-show-popover').on('tap', '.icon-guanbi', function() {
-			console.log('guanbi')
+			console.log('guanbi');
 			mod.Mask.close();
 		});
 
 		//暂停
 		mui('.audio-control').on('tap', '.audio-control-pause', function() {
 			this.style.display = 'none';
-			mod.AudioPlayer.pause();
 			clearInterval(mod.intervalId);
 			mod.intervalId = null;
+			mod.AudioPlayer.pause();
 			audio_play.style.display = 'inline-block';
 			mod.changeProgressBarAndTime();
 		});
@@ -122,11 +127,11 @@ var ShowAudioUtil = (function(mod) {
 		mui('.audio-control').on('tap', '.audio-control-play', function() {
 			this.style.display = 'none';
 			mod.changeProgressBarAndTime();
-			//			if(plus.os.name == 'Android') {
-			//				mod.AudioPlayer.resume();
-			//			} else {
-			mod.AudioPlayer.play();
-			//			}
+			if(mod.type == 1) {
+				mod.AudioPlayer.resume();
+			} else {
+				mod.AudioPlayer.play();
+			}
 			mod.AudioSetInterval();
 			audio_pause.style.display = 'inline-block';
 		});
@@ -135,8 +140,9 @@ var ShowAudioUtil = (function(mod) {
 	/**
 	 * 播放音频
 	 */
-	mod.initAudio = function(data) {
+	mod.initAudio = function(data, type) {
 		console.log('initAudio' + JSON.stringify(data));
+		mod.initCircle();
 		document.activeElement.blur();
 		audio_pause.style.display = 'none';
 		audio_time.innerText = '加载中';
@@ -152,18 +158,18 @@ var ShowAudioUtil = (function(mod) {
 		mod.Mask.show();
 		plus.key.addEventListener('backbutton', mod.closeAudio);
 		mod.fOption = data;
-		//		if(plus.os.name == 'Android') {
-		//			mod.createPlayer();
-		//			mod.AudioControlPlay();
-		//			audio_time.innerText = '00:00';
-		//			audio_pause.style.display = 'inline-block';
-		//		} else {
-		if(mod.AudioPlayer == null) {
-			mod.AudioPlayer = audio_audio;
-			mod.initAudioPlay();
+		if(type == 1) {
+			mod.type = 1;
+			mod.createPlayer();
+			mod.AudioControlPlay();
+		} else {
+			mod.type = 0;
+			if(mod.AudioPlayer == null) {
+				mod.AudioPlayer = audio_audio;
+				mod.initAudioPlay();
+			}
+			mod.AudioPlayer.src = mod.fOption.fpath;
 		}
-		mod.AudioPlayer.src = mod.fOption.fpath;
-		//		}
 	}
 
 	/**
@@ -182,15 +188,13 @@ var ShowAudioUtil = (function(mod) {
 		//加载失败
 		mod.AudioPlayer.addEventListener('error', function(e) {
 			console.log('error');
-			mui.toast('播放失败 ' + e.message);
+			mui.toast('播放失败');
 			mod.Mask.close();
 		});
 
 		//播放完成
 		mod.AudioPlayer.addEventListener('ended', function() {
-			if(mod.Mask) {
-				mod.Mask.close();
-			}
+			mod.closeAudio();
 		});
 	}
 
@@ -216,7 +220,17 @@ var ShowAudioUtil = (function(mod) {
 			mui.toast('播放失败 ' + e.message);
 			mod.Mask.close();
 		});
-		mod.AudioSetInterval();
+		var showControlTime = setInterval(function() {
+			var time = mod.AudioPlayer.getPosition();
+			//console.log('time ' + time);
+			if(time != 0) {
+				audio_time.innerText = '00:00';
+				audio_pause.style.display = 'inline-block';
+				mod.AudioSetInterval();
+				clearInterval(showControlTime);
+			}
+		}, 100);
+
 	}
 
 	/**
@@ -227,17 +241,21 @@ var ShowAudioUtil = (function(mod) {
 			clearInterval(mod.intervalId);
 			mod.intervalId = null;
 		}
+		mod.timeCount = mod.timeCount + 1;
+		mod.showAudioTime(mod.fOption.time);
 		mod.intervalId = setInterval(function() {
-			//			if(plus.os.name == 'Android') {
-			//				var audioTime = mod.AudioPlayer.getDuration();
-			//				if(!isNaN(audioTime) && audioTime != -1) {
-			//					mod.fOption.time = Math.ceil(audioTime);
-			//				}
-			//			} else {
-			var audioTime = mod.AudioPlayer.duration;
-			mod.fOption.time = Math.ceil(audioTime);
-			//			}
+			var audioTime;
+			if(mod.type == 1) {
+				audioTime = mod.AudioPlayer.getDuration();
+				if(!isNaN(audioTime) && audioTime != -1) {
+					mod.fOption.time = Math.ceil(audioTime);
+				}
+			} else {
+				audioTime = mod.AudioPlayer.duration;
+				mod.fOption.time = Math.ceil(audioTime);
+			}
 			//console.log('audioTime ' + audioTime);
+			mod.timeCount = mod.timeCount + 1;
 			mod.showAudioTime(mod.fOption.time);
 		}, 1000);
 	}
@@ -247,10 +265,10 @@ var ShowAudioUtil = (function(mod) {
 	 * @param {Object} count
 	 */
 	mod.showAudioTime = function(count) {
+		console.log('showAudioTime ' + mod.timeCount + ' ' + count);
 		if(mod.timeCount > count) {
 			return false;
 		}
-		mod.timeCount = mod.timeCount + 1;
 		var min = (parseInt(mod.timeCount / 60)).toString(); //分钟
 		var sec = (mod.timeCount - min * 60).toString(); //秒
 		if(min.length == 1) {
@@ -282,41 +300,51 @@ var ShowAudioUtil = (function(mod) {
 	 * 关闭audio
 	 */
 	mod.closeAudio = function() {
-		mui('#audioPopover').popover('hide');
-		plus.key.removeEventListener('backbutton', ShowAudioUtil.closeAudio);
-		if(mod.Mask != null) {
-			mod.Mask.close();
-			mod.Mask = null;
-		}
-		if(mod.AudioPlayer != null) {
-			//			if(plus.os.name == 'Android') {
-			//				mod.AudioPlayer.stop();
-			//			} else {
-			mod.AudioPlayer.pause();
-			//			}
-			//mod.AudioPlayer = null;
-		}
+		console.log('closeAudio');
 		if(mod.intervalId != null) {
 			clearInterval(mod.intervalId);
 			mod.intervalId = null;
 		}
+		if(mod.Mask != null) {
+			mod.Mask.close();
+			mod.Mask = null;
+		}
+
+		mui('#audioPopover').popover('hide');
+		plus.key.removeEventListener('backbutton', ShowAudioUtil.closeAudio);
+
+		if(mod.type == 1) {
+			if(mod.AudioPlayer != null) {
+				mod.AudioPlayer.stop();
+				mod.AudioPlayer = null;
+			}
+		} else {
+			mod.AudioPlayer.pause();
+		}
+
 		//初始化进度和时间
 		mod.initCircle();
 		//初始化按键
 		mod.initButton();
 		mod.timeCount = 0;
-		mod.intervalId = null;
+		mod.type = 0;
 	}
 
 	/**
 	 * 调整时间和进度条的显示
 	 */
 	mod.changeProgressBarAndTime = function() {
-		//		if(plus.os.name == 'Android') {
-		//			mod.timeCount = Math.ceil(mod.AudioPlayer.getPosition());
-		//		} else {
-		mod.timeCount = Math.ceil(mod.AudioPlayer.currentTime);
-		//		}
+		var getTime;
+		if(mod.type == 1) {
+			getTime = Math.ceil(mod.AudioPlayer.getPosition());
+		} else {
+			getTime = Math.ceil(mod.AudioPlayer.currentTime);
+		}
+		if(getTime <= mod.timeCount) {
+			return false;
+		}
+		mod.timeCount = getTime;
+		console.log('changeProgressBarAndTime ' + mod.timeCount);
 		mod.showAudioTime(mod.fOption.time);
 	}
 
