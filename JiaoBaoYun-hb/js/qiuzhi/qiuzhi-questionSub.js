@@ -721,7 +721,7 @@ function questionContent(content, flag) {
 			document.getElementById("showAll").style.display = 'inline';
 		}
 	} else {
-		document.getElementById("question_content").innerHTML = content.replace(/\n/g, "<br/>");
+		document.getElementById("question_content").innerHTML = content.replace(/ /g,"&nbsp;").replace(/\n/g, "<br/>");
 		document.getElementById("question_content").style.webkitLineClamp = '4';
 		height_0 = document.getElementById("question_content").offsetHeight;
 		document.getElementById("question_content").style.webkitLineClamp = '3';
