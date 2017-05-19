@@ -29,7 +29,8 @@
 	"html/qiuzhi/qiuzhi-question.html": {
 		"refer": [
 			"html/qiuzhi/qiuzhi-questionSub.html",
-			"html/qiuzhi/experts_main.html"
+			"html/qiuzhi/experts_main.html",
+			"html/qiuzhi/qiuzhi-addAnswer.html"
 		],
 		"resources": [
 			"html/qiuzhi/qiuzhi-questionSub.html",
@@ -100,7 +101,9 @@
 			"image/quan/Scan.png",
 			"image/cloud/cloud_0_wenjianjia_1.png",
 			"image/cloud/cloud_0_unknow_0.png",
-			"image/cloud/cloud_0_txt_0.png"
+			"image/cloud/cloud_0_txt_0.png",
+			"image/cloud/cloud_0_excel_0.png",
+			"image/cloud/cloud_0_word_0.png"
 		],
 		"refer": [
 			"html/index/mine.html",
@@ -238,7 +241,8 @@
 			"css/utils/common.css",
 			"js/index.js",
 			"css/mui.min.css",
-			"html/sciedu/sciedu_home.html"
+			"html/sciedu/sciedu_home.html",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",
@@ -628,6 +632,9 @@
 			"js/qiuzhi/attentionPersons.js",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/qiuzhi/expert-detail.html"
 		]
 	},
 	"html/mine/setting.html": {
@@ -668,6 +675,9 @@
 			"image/utils/playvideo.png",
 			"css/mui.min.css",
 			"css/utils/common.css"
+		],
+		"refer": [
+			"html/quan/space-detail.html"
 		]
 	},
 	"html/mine/QRCode.html": {
@@ -837,7 +847,9 @@
 		"refer": [
 			"html/quan/aboutme_sub.html",
 			"html/homework/workdetail-stu.html",
-			"html/quan/reply-aboutMe.html"
+			"html/quan/reply-aboutMe.html",
+			"html/quan/space-detail.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/quan/aboutme_sub.html": {
@@ -923,6 +935,15 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css"
+		]
+	},
+	"html/quan/space-detail.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/icons-extra.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"css/show/show.css"
 		]
 	}
 }

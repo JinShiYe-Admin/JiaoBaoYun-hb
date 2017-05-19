@@ -280,7 +280,10 @@
 				mui('#myCity').on('tap', '.city-delete', function() {
 					var parent = this.parentNode;
 					var code = parent.id.replace('choose_', '');
-					document.getElementById(code).className = 'mui-table-view-cell mui-media';
+					var cell = document.getElementById(code);
+					if(cell) {
+						document.getElementById(code).className = 'mui-table-view-cell mui-media';
+					}
 					parent.parentNode.removeChild(parent);
 					var cityDel = document.querySelectorAll('.city-delete');
 					if(cityDel.length == 0) {

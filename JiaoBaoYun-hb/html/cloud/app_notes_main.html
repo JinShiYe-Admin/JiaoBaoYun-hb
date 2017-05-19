@@ -499,9 +499,9 @@
 							</div>';
 				html_media = html_0;
 			} else if(data.EncType == 4) { //音频
-				var audioTime = playutil.audioTimePercent(data.EncLen);
+				var audioTime = (document.getElementById(dateItem).offsetWidth * 0.8 - 40) * 0.01 * playutil.audioTimePercent(data.EncLen);
 				html_media = '<div class="audio-area">\
-								<button id="audio_play_' + data.TabId + '" type="button" class="mui-btn mui-btn-grey mui-btn-outlined audio-button" style="width: ' + audioTime + '%;">\
+								<button id="audio_play_' + data.TabId + '" type="button" class="mui-btn mui-btn-grey mui-btn-outlined audio-button" style="width: ' + audioTime + 'px;">\
 									<div class="audio-triangle audio-triangle-out"></div>\
 									<div class="audio-triangle audio-triangle-in"></div>\
 									<div class="audio-time">' + data.EncLen + '\'\'</div>\
