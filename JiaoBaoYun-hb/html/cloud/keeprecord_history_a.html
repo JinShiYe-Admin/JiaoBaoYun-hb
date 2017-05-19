@@ -555,7 +555,12 @@
 
 					if(data.RspData.Data.length == 0 && pageIndex == 1) {
 						if(mainData.type == 'history') {
-							mui.toast('班级历史记录为空');
+							//mui.toast('历史记录为空');
+							document.getElementById("data_table").innerHTML = '\
+								<div style="text-align: center;color: #808080;">\
+									<img src="../../image/qiuzhi/qiuzhi_noanswer.png" style="width: 50%;margin-top:' + parseInt(plus.screen.resolutionHeight / 5) + 'px ;" />\
+									<div>历史记录为空 </div>\
+								</div>';
 						} else if(mainData.type == 'statistics') {
 							mui.toast('统计详情记录为空');
 						}

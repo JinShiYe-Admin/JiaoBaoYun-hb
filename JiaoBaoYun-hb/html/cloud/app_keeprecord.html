@@ -358,7 +358,12 @@
 						qunInfos[qunId].dataIdArray = dataIdArray;
 						statistics(dataIdArray.length);
 						if(dataIdArray.length == 0) {
-							mui.toast('查询记录为空');
+							//mui.toast('查询记录为空');
+							document.getElementById("row_" + qunId).innerHTML = '\
+								<div style="text-align: center;color: #808080;">\
+									<img src="../../image/qiuzhi/qiuzhi_noanswer.png" style="width: 50%;margin-top:' + parseInt(plus.screen.resolutionHeight / 5) + 'px ;" />\
+									<div>查询记录为空 </div>\
+								</div>';
 						} else {
 							addData(qunId);
 						}
