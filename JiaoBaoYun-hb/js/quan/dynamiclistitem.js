@@ -680,6 +680,7 @@ var dynamiclistitem = (function($, mod) {
 						}
 						wd.close();
 					} else {
+						wd.close();
 						mui.toast(data.RspTxt);
 					}
 					item.disabled = false;
@@ -743,6 +744,7 @@ var dynamiclistitem = (function($, mod) {
 						}
 						wd.close();
 					} else {
+						wd.close();
 						mui.toast(data.RspTxt);
 					}
 					item.disabled = false;
@@ -1132,7 +1134,7 @@ var dynamiclistitem = (function($, mod) {
 			showAll = '';
 		}
 
-		htmlCommentList = htmlCommentList1 + htmlCommentList2 + showAll + '</div>';
+		htmlCommentList = htmlCommentList1 + htmlCommentList2 + showAll + '</div>';  
 
 		html = html + htmlPraiseList + htmlCommentList //+ showAll //+ htmlCommentBtn;
 
