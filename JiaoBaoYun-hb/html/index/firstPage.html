@@ -39,6 +39,9 @@
 						console.log('没有网络！！！！');
 						mui.toast("网络异常，请检查网络设置！");
 					} else {
+						if(!plus.webview.currentWebview().canJump) {
+							appUpdate.updateApp();
+						}
 						console.log('网络连接拉！！！！');
 						//判断上次有没有登录，如果登录，就不执行登录协议
 						if(loginFlag == 0) {
