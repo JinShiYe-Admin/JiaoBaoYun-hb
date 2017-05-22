@@ -42,7 +42,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/libs/jquery.lazyload.min.js"
+			"js/libs/jquery.lazyload.min.js",
+			"image/utils/default_personalimage.png"
 		]
 	},
 	"html/qiuzhi/qiuzhi-question.html": {
@@ -122,7 +123,8 @@
 			"image/cloud/cloud_0_unknow_0.png",
 			"image/cloud/cloud_0_txt_0.png",
 			"image/cloud/cloud_0_excel_0.png",
-			"image/cloud/cloud_0_word_0.png"
+			"image/cloud/cloud_0_word_0.png",
+			"image/quan/add.png"
 		],
 		"refer": [
 			"html/index/mine.html",

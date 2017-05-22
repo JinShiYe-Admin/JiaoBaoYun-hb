@@ -553,12 +553,13 @@ var events = (function(mod) {
 	mod.areaInScroll = function() {
 		window.addEventListener("touchmove", function(e) {
 			var target = e.target;
+			console.log("***tagName"+target.tagName);
 			if(target && target.tagName == 'TEXTAREA') {
 				if(target.scrollHeight > target.clientHeight) {
 					e.stopPropagation();
 				}
 			}
-		},false);
+		},true);
 	}
 
 	/**

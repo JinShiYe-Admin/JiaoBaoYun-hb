@@ -371,7 +371,7 @@ var getImgs = function(cell) {
 				var win_width = document.body.offsetWidth - 30;
 				var imgArray = cell.AnswerEncAddr.split('|');
 				var clipImgs = cell.AnswerCutImg.split("|");
-				imgInner = '<div class="video-container" data-original="'+clipImgs[0]+'" style="background-image:url(../../image/utils/default_load_2.gif);width:' + win_width + 'px;height:' + win_width * 0.45 +
+				imgInner = '<div class="video-container" data-original="'+clipImgs[0]+'" style="background-image:url(../../image/utils/video-loading.gif);width:' + win_width + 'px;height:' + win_width * 0.45 +
 					'px;text-align:center;background-position:center;background-size:cover;"><img style="width:55px;height:55px;margin-top:' + (win_width * 0.45 - 55) / 2 + 'px;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
 				return imgInner;
 			}
@@ -487,10 +487,7 @@ var setListener = function() {
 	});
 	//求知关注
 	mui(".mui-table-view").on('tap', '.focus-status', function() {
-		//判断是否是游客身份登录
-		//		if(events.judgeLoginMode()) {
-		//			return;
-		//		} 
+	 
 		var item = this;
 		item.disabled = true;
 		requireQuestionInfo(item.questionInfo.TabId, function(data) {
@@ -527,7 +524,7 @@ var requireQuestionInfo = function(askId, callback, noneCallback) {
 		if(data.RspCode == 0) {
 			callback(data.RspData);
 		} else {
-			mui.toast("问题已删除!");
+			mui.toast(data.RspTxt)
 			if(noneCallback) {
 				noneCallback()
 			}
@@ -597,7 +594,7 @@ function requestAnswerDetail(answerId, callback) {
 		if(data.RspCode == 0 && data.RspData.AnswerId) {
 			callback();
 		} else {
-			mui.toast("该回答已被屏蔽或删除 ！");
+			mui.toast(data.RspTxt);
 			events.closeWaiting();
 		}
 	});
