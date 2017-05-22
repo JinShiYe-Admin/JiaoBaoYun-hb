@@ -558,9 +558,7 @@ var events = (function(mod) {
 					e.stopPropagation();
 				}
 			}
-		}, {
-			passive: true
-		});
+		},false);
 	}
 
 	/**

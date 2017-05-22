@@ -992,6 +992,9 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/register/yanZhengMa.html"
 		]
 	}
 }
