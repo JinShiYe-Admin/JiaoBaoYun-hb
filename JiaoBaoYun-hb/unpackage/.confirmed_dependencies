@@ -43,14 +43,16 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/jquery.lazyload.min.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"image/utils/video-loading.gif"
 		]
 	},
 	"html/qiuzhi/qiuzhi-question.html": {
 		"refer": [
 			"html/qiuzhi/qiuzhi-questionSub.html",
 			"html/qiuzhi/experts_main.html",
-			"html/qiuzhi/qiuzhi-addAnswer.html"
+			"html/qiuzhi/qiuzhi-addAnswer.html",
+			"html/register/login.html"
 		],
 		"resources": [
 			"html/qiuzhi/qiuzhi-questionSub.html",

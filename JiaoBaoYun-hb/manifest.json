@@ -2872,7 +2872,8 @@
 					"js/mui.lazyload.img.js",
 					"image/utils/default_load_2.gif",
 					"image/utils/playvideo.png",
-					"js/libs/jquery.lazyload.min.js"
+					"js/libs/jquery.lazyload.min.js",
+					"image/utils/video-loading.gif"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
@@ -2905,7 +2906,8 @@
 				],
 				"refer": [
 					"html/qiuzhi/experts_main.html",
-					"html/qiuzhi/qiuzhi-addAnswer.html"
+					"html/qiuzhi/qiuzhi-addAnswer.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},

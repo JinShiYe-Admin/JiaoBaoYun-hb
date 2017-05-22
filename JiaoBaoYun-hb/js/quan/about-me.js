@@ -317,6 +317,8 @@ var getHomeworkResult = function(workInfo, callback) {
 		console.log("获取当前作业结果：" + JSON.stringify(data))
 		if(data.RspCode == 0) {
 			callback(data.RspData);
+//		}else{
+//			mui.toast(data.RspTxt);
 		}
 	})
 }

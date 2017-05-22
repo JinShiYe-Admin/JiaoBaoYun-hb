@@ -207,6 +207,8 @@ var delComment = function() {
 					requestAnswerDetail(answerInfo.AnswerId, pageIndex * 10, 1, getInfos);
 				}
 			}
+		}else{
+			mui.toast(data.RspTxt);
 		}
 
 	})

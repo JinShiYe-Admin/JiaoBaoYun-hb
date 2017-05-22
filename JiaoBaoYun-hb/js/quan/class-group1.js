@@ -2,15 +2,15 @@ mui.init({
 	beforeback: function() {
 		document.getElementById("info-container").style.display = "none";
 		document.querySelector('.quit-container').style.display = 'none';
-		document.getElementById("show-all").style.display="none";
-		mui(".mui-scroll-wrapper").scroll().scrollTo(0,0);
+		document.getElementById("show-all").style.display = "none";
+		mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0);
 		return true;
 	}
 });
-var groupRoles;//本人在群的各种身份
-var choseRole;//选择的角色
-var isMaster;//是否为群主
-var allGroupInfos;//群组内所有成员信息
+var groupRoles; //本人在群的各种身份
+var choseRole; //选择的角色
+var isMaster; //是否为群主
+var allGroupInfos; //群组内所有成员信息
 var groupNote; //群说明
 var groupModel; //群信息model
 mui('.mui-scroll-wrapper').scroll({
@@ -155,16 +155,16 @@ var freshContent = function() {
 			}
 		}
 		if(groupRoles.length == 0) {
-			isShowButton=false;
-//			document.querySelector('.quit-container').style.display = 'none';
+			isShowButton = false;
+			//			document.querySelector('.quit-container').style.display = 'none';
 			//			document.querySelector('.mui-content').style.marginBottom = "0";
 		} else if(groupRoles.length == 1 && groupRoles[0] == 0 && isMaster) {
-			isShowButton=false;
-//			document.querySelector('.quit-container').style.display = 'none';
+			isShowButton = false;
+			//			document.querySelector('.quit-container').style.display = 'none';
 			//			document.querySelector('.mui-content').style.marginBottom = "0";
 		} else {
-			isShowButton=true;
-//			document.querySelector('.quit-container').style.display = 'block';
+			isShowButton = true;
+			//			document.querySelector('.quit-container').style.display = 'block';
 			//			document.querySelector('.mui-content').style.marginBottom = "5rem";
 		}
 		getGroupAllInfo();
@@ -184,12 +184,14 @@ var getUserInGroup = function(mstype, callback) {
 		vvl: groupId,
 		vtp: mstype
 	}, wd, function(data) {
-		wd.close()
+		wd.close();
 		console.log('用户在群的身份 ' + JSON.stringify(data));
-		if(data.RspCode == '0000') {
+		if(data.RspCode == 0) {
 			if(callback) {
 				callback(data.RspData);
 			}
+		} else {
+			mui.toast(data.RspTxt);
 		}
 	})
 }
@@ -206,6 +208,8 @@ var getGroupAllInfo = function() {
 		//成功囘調
 		if(groupData.RspCode == 0) {
 			getRemarkInfos(groupData.RspData);
+		} else {
+			mui.toast(data.RspTxt);
 		}
 	});
 }
@@ -283,9 +287,14 @@ var getRemarkData = function(list, callback) {
 		vvl: utids.toString()
 	}, wd, function(data) {
 		wd.close();
-		console.log('获取的备注信息：' + JSON.stringify(data));
-		var remark = document.getElementById('person-remark');
-		callback(data);
+		if(data.RspCode == 0) {
+			console.log('获取的备注信息：' + JSON.stringify(data));
+			var remark = document.getElementById('person-remark');
+			callback(data);
+		}else{
+			mui.toast(data.RspTxt);
+		}
+
 	})
 }
 /**
@@ -294,14 +303,14 @@ var getRemarkData = function(list, callback) {
  * @param {Object} array 元素数组，包括图标和标题
  */
 var createGride = function(gride, array) {
-	var fragment=document.createDocumentFragment();
+	var fragment = document.createDocumentFragment();
 	var showAll = document.getElementById("show-all");
 	if(isMaster) {
 		if(array.length > 15) {
-			isShowAll=true;
+			isShowAll = true;
 			array.splice(15);
 		} else {
-			isShowAll=false;
+			isShowAll = false;
 			showAll.style.display = "none";
 		}
 		array.push({
@@ -311,10 +320,10 @@ var createGride = function(gride, array) {
 		})
 	} else {
 		if(array.length > 16) {
-			isShowAll=true;
+			isShowAll = true;
 			array.splice(16);
 		} else {
-			isShowAll=false;
+			isShowAll = false;
 			showAll.style.display = "none";
 		}
 	}
@@ -337,11 +346,11 @@ var createGride = function(gride, array) {
 		fragment.appendChild(li);
 	}
 	gride.appendChild(fragment);
-	fragment=null;
-	if(isShowAll){
+	fragment = null;
+	if(isShowAll) {
 		showAll.style.display = "block";
 	}
-	if(isShowButton){
+	if(isShowButton) {
 		document.querySelector('.quit-container').style.display = 'block';
 	}
 	document.getElementById("info-container").style.display = "block";
@@ -350,7 +359,7 @@ var setBeunick = function(item) {
 	if(item.bunick) {
 		return item.bunick;
 	}
-	if(item.ugname){
+	if(item.ugname) {
 		return item.ugname;
 	}
 	return item.ugnick;
