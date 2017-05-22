@@ -102,6 +102,9 @@
 	font-size: 1.6rem;
 	color: #323232;
 	text-align: justify;
+	word-break: break-word;
+	word-wrap: break-word;
+	line-height: 1.2;
 }
 
 .comments-info {

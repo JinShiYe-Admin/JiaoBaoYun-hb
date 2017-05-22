@@ -210,7 +210,8 @@
 			"image/mine/my-points.png",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/mine/account-info.html",
@@ -542,7 +543,9 @@
 			"html/register/js/app.js",
 			"js/libs/crypto-js/crypto-js.js"
 		],
-		"refer": []
+		"refer": [
+			"html/register/register_phoneNumber.html"
+		]
 	},
 	"html/cloud/order-member.html": {
 		"resources": [
@@ -981,6 +984,13 @@
 			"css/icons-extra.css",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/show/show.css"
+		]
+	},
+	"html/register/register_phoneNumber.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }
