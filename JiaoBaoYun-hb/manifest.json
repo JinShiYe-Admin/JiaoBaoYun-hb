@@ -2871,7 +2871,8 @@
 					"js/mui.lazyload.js",
 					"js/mui.lazyload.img.js",
 					"image/utils/default_load_2.gif",
-					"image/utils/playvideo.png"
+					"image/utils/playvideo.png",
+					"js/libs/jquery.lazyload.min.js"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",

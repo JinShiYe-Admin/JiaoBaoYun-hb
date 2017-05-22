@@ -10,17 +10,13 @@ var wd;
 var getExperTime = null;
 var getChannelTime = null;
 mui.init();
-var lazyLoadApi = mui('#pullrefresh').imageLazyload({
-	autoDestroy: false,
-	placeholder: '../../image/utils/default_load_2.gif'
-});
 mui.plusReady(function() {
 	mui.fire(plus.webview.getWebviewById('qiuzhi_home.html'), 'subIsReady');
 	mui.fire(plus.webview.getLaunchWebview(), "indexReady");
 	events.preload("qiuzhi-answerDetail.html", 80);
 	window.addEventListener('answerIsReady', function() {
 		answerIsReady = true;
-	})
+	});
 	window.addEventListener('channelInfo', function(e) {
 
 		console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
@@ -311,7 +307,8 @@ var setChannelList = function(data) {
 		li.querySelector('.focus-status').questionInfo = data[i];
 	}
 	//	list.appendChild(fragemnt);
-	lazyLoadApi.refresh(true);
+	jQuery("img.clip-img").lazyload();
+	jQuery("div.video-container").lazyload();
 	getChannelTime = Date.now();
 	if(getExperTime) {
 		events.closeWaiting();
@@ -365,7 +362,7 @@ var getImgs = function(cell) {
 			if(cell.AnswerCutImg && cell.AnswerCutImg != "") {
 				var imgArray = cell.AnswerEncAddr.split('|');
 				var clipImgs = cell.AnswerCutImg.split("|");
-				imgInner = '<img class="clip-img" data-lazyload="' + clipImgs[0] + '"/>';
+				imgInner = '<img class="clip-img" data-original="'+clipImgs[0]+'" src="../../image/utils/default_load_2.gif"/>';
 				return imgInner;
 			}
 			return "";
@@ -374,7 +371,7 @@ var getImgs = function(cell) {
 				var win_width = document.body.offsetWidth - 30;
 				var imgArray = cell.AnswerEncAddr.split('|');
 				var clipImgs = cell.AnswerCutImg.split("|");
-				imgInner = '<div class="video-container" style="background-image:url(' + clipImgs[0] + ');width:' + win_width + 'px;height:' + win_width * 0.45 +
+				imgInner = '<div class="video-container" data-original="'+clipImgs[0]+'" style="background-image:url(../../image/utils/default_load_2.gif);width:' + win_width + 'px;height:' + win_width * 0.45 +
 					'px;text-align:center;background-position:center;background-size:cover;"><img style="width:55px;height:55px;margin-top:' + (win_width * 0.45 - 55) / 2 + 'px;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
 				return imgInner;
 			}
