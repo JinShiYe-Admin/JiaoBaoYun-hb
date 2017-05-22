@@ -597,7 +597,7 @@
 							publisherNick[data.RspData[i].utid] = data.RspData[i].unick;
 						}
 					} else {
-						mui.toast('查询昵称失败 ' + data.RspTxt);
+						mui.toast(data.RspTxt);
 					}
 					callback();
 				});

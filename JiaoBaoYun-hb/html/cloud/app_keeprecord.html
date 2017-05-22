@@ -216,7 +216,9 @@
 
 					if(qunIdArray.length == 0) {
 						//没有管理的群
-						mui.toast('没有管理的群');
+						if(data.RspCode == 9) {
+							mui.toast('没有管理的群');
+						}
 						wd.close();
 					} else {
 						//有管理的群

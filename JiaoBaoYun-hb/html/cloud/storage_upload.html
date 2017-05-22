@@ -387,16 +387,16 @@
 									}
 								}
 							}, function(errorCB) {
-								mui.toast('获取目录或文件的属性失败');
+								mui.toast('读取文件的信息失败 ' + errorCB.message);
 								console.log("获取目录或文件的属性失败: " + JSON.stringify(errorCB));
 							});
 						}, function(errorCB) {
 							//请求失败的的回调
 							if(errorCB.code == 12) {
-								mui.toast('请求文件系统失败:文件不存在');
-								console.log("请求文件系统失败: " + JSON.stringify(errorCB));
+								mui.toast('文件不存在');
+								console.log("请求文件系统失败 " + JSON.stringify(errorCB));
 							} else {
-								mui.toast('请求文件系统失败:' + JSON.stringify(errorCB));
+								mui.toast('读取文件的信息失败 ' + errorCB.message);
 								console.log("请求文件系统失败: " + JSON.stringify(errorCB));
 							}
 						});
@@ -471,7 +471,7 @@
 
 					}, function(errorCB) {
 						//请求失败的的回调
-						mui.toast("请求文件系统失败: " + JSON.stringify(errorCB));
+						mui.toast("请求文件系统失败 " + errorCB.message);
 						console.log("请求文件系统失败: " + JSON.stringify(errorCB));
 					});
 				}
@@ -518,7 +518,7 @@
 						directoryReader(URL, succesCB); //读取对象
 					}, function(errorCB) {
 						//请求失败的的回调
-						mui.toast('请求文件系统失败:' + JSON.stringify(errorCB));
+						mui.toast('请求文件系统失败 ' + errorCB.message);
 						console.log("请求文件系统失败: " + JSON.stringify(errorCB));
 					});
 				}
@@ -540,7 +540,7 @@
 						//console.log("文件系统中的目录对象:" + succesCB.fullPath);
 						succesCallBack(succesCB);
 					}, function(errorCB) {
-						mui.toast("创建或打开子目录" + name + "失败:" + JSON.stringify(errorCB));
+						mui.toast("创建或打开子目录 " + name + errorCB.message);
 						console.log("创建或打开子目录" + name + "失败: " + JSON.stringify(errorCB));
 						errorCallBack(errorCB);
 					});
@@ -579,9 +579,9 @@
 							bounce: true, //是否启用回弹
 						});
 						//---滑动end---
-
-					}, function(errorCB) {
-						mui.toast("获取当前目录中的所有文件和子目录失败: " + JSON.stringify(errorCB));
+},
+function(errorCB) {
+	mui.toast("读取当前目录中的所有文件和子目录失败 " + errorCB.message);
 						console.log("获取当前目录中的所有文件和子目录失败: " + JSON.stringify(errorCB));
 					});
 				}
