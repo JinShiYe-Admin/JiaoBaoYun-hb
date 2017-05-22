@@ -35,7 +35,7 @@ var setFresh = function() {
 				} else {
 					self.endPullUpToRefresh();
 					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
-					if(plus.webview.currentWebview().isVisible()){
+					if(plus.webview.currentWebview().isVisible()) {
 						mui.toast("没有更多了！");
 					}
 				}
@@ -69,7 +69,7 @@ var AskThumbnail = []; //提问图片缩略图
 var mainData; //记录获取的数据
 mui.plusReady(function() {
 	//---获取数据并传递数据---start---
-	mui(".mui-pull-loading")[0].style.display="none";
+	mui(".mui-pull-loading")[0].style.display = "none";
 	var main = plus.webview.currentWebview(); //获取当前窗体对象
 	mainData = main.data; //接收A页面传入参数值
 	//从搜索界面跳转的数据，TabId是问题id，得转换为话题id
@@ -497,6 +497,10 @@ function requestAskDetail() {
 
 		console.log('5.获取某个问题的详情:' + JSON.stringify(data));
 		if(data.RspCode == 0) {
+			if(data.RspData.AskSFlag == 0 && data.RspData.AskEncType == 5) {
+				//新数据的图文混排，当做旧数据处理
+				data.RspData.AskSFlag = 1;
+			}
 			askModel = data.RspData;
 			noticeQuestionInfo(askModel);
 			setCondition();
@@ -565,9 +569,9 @@ function requestAskDetail() {
 					addQuestion(data.RspData);
 					if(tempRspData.length == 0) { //没有人回答
 						answerNone();
-//						mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+						//						mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
 					} else {
-//						mui('#refreshContainer').pullRefresh().enablePullupToRefresh(false); //启用上拉加载更多
+						//						mui('#refreshContainer').pullRefresh().enablePullupToRefresh(false); //启用上拉加载更多
 					}
 				} else {
 					answerArray = answerArray.concat(tempRspData);
@@ -721,7 +725,7 @@ function questionContent(content, flag) {
 			document.getElementById("showAll").style.display = 'inline';
 		}
 	} else {
-		document.getElementById("question_content").innerHTML = content.replace(/ /g,"&nbsp;").replace(/\n/g, "<br/>");
+		document.getElementById("question_content").innerHTML = content.replace(/ /g, "&nbsp;").replace(/\n/g, "<br/>");
 		document.getElementById("question_content").style.webkitLineClamp = '4';
 		height_0 = document.getElementById("question_content").offsetHeight;
 		document.getElementById("question_content").style.webkitLineClamp = '3';
