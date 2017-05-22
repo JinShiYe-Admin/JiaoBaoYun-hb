@@ -552,7 +552,7 @@ var setQuestionFocus = function(item) {
 				item.innerText = "已关注";
 			}
 		} else {
-			mui.toast('设置关注失败');
+			mui.toast(data.RspTxt);
 		}
 		item.disabled = false;
 	})
