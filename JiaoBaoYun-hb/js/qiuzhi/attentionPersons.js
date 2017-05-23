@@ -236,7 +236,7 @@ function getFocusUsersByUser(focusId) {
 			for(var i in personArray) {
 				personIds.push(personArray[i].UserId);
 			}
-			if(mui(".mui-table-view-cell").length < 10) {
+			if(mui(".mui-table-view-cell").length < 10&&mui(".mui-table-view-cell").length>0) {
 				mui(".mui-pull-loading")[0].innerHTML = "";
 			}
 			//通过id数组，获取人员资料，并重组
@@ -244,8 +244,8 @@ function getFocusUsersByUser(focusId) {
 				requirePersonInfo(personIds, personArray);
 			}
 		} else {
-			if(mui(".mui-table-view-cell").length < 10) {
-				mui(".mui-pull-loading")[0].innerHTML = "";
+			if(mui(".mui-table-view-cell").length < 10&&mui(".mui-table-view-cell").length>0) {
+//				mui(".mui-pull-loading")[0].innerHTML = "";
 			}
 			setBackGround(1);
 		}
