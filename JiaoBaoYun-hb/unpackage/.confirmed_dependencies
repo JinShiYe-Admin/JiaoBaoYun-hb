@@ -330,7 +330,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"css/iconfont/iconfont.css"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-sub.html",
