@@ -1171,6 +1171,9 @@ var events = (function(mod) {
 					console.log('wenti 不存在');
 					mui.toast('该提问已不存在');
 					callback(false);
+				}if(data.RspCode == 404) {
+					mui.toast('网络连接失败，请重新尝试一下');
+					callback(false);
 				} else {
 					callback(true);
 				}
@@ -1191,6 +1194,9 @@ var events = (function(mod) {
 				console.log('8.获取某个回答的详情:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 1017) {
 					mui.toast('该回答已不存在');
+					callback(false);
+				}if(data.RspCode == 404) {
+					mui.toast('网络连接失败，请重新尝试一下');
 					callback(false);
 				} else {
 					callback(true);
