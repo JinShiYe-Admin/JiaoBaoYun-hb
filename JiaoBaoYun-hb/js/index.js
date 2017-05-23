@@ -134,7 +134,7 @@ var setConditionbyRole = function(role) {
 	var cloudIcon = document.getElementById("defaultTab");
 	var sceIcon = document.getElementById("tabclass");
 	var active_tab = document.querySelector(".mui-tab-item.mui-active").getAttribute('href');
-	console.log("要隐藏的界面：" + active_tab)
+	console.log("要隐藏的界面：" + active_tab);
 	plus.webview.hide(active_tab.split("/")[active_tab.split("/").length - 1]);
 	document.querySelector(".mui-tab-item.mui-active").className = "mui-tab-item";
 

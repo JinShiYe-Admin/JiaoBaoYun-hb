@@ -14,7 +14,6 @@
   -webkit-font-smoothing: antialiased;
   /*-moz-osx-font-smoothing: grayscale;*/
 }
-
 .icon-bianji:before { content: "\3486"; }
 
 .icon-close:before { content: "\e646"; }
@@ -236,6 +235,8 @@
 .icon-myQuestion:before { content: "\e644"; }
 
 .icon-wenda-copy:before { content: "\e909"; }
+
+.icon-jiazai:before { content: "\e65e"; }
 
 .icon-qunziliao:before { content: "\e626"; }
 

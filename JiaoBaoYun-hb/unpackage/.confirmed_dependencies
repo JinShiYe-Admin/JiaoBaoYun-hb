@@ -330,7 +330,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"css/iconfont/iconfont.css"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-sub.html",
@@ -373,7 +374,8 @@
 			"js/utils/video.js",
 			"js/mui.previewimage.js",
 			"fonts/iconfont.ttf",
-			"js/utils/h5fresh.js"
+			"js/utils/h5fresh.js",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-answerDetailSub.html",
@@ -690,12 +692,14 @@
 			"js/quan/class_space.js",
 			"css/utils/bubble.css",
 			"css/utils/preview.css",
-			"image/utils/playvideo.png"
+			"image/utils/playvideo.png",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/quan/class-group.html",
 			"html/quan/classSpace-sub.html",
-			"html/quan/class-dynamic.html"
+			"html/quan/class-dynamic.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/cloud/record_student_main.html": {
@@ -825,7 +829,8 @@
 			"css/qiuzhi/qiuzhi-questionSearch.css",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-question.html"
@@ -962,7 +967,9 @@
 		"resources": [
 			"js/utils/self-adaptive-input.js",
 			"css/mine/edit-info.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/quan/leaveNew.html": {

@@ -1,5 +1,5 @@
 var setIcon = function() {
-	if(questionInfo.AskMan == myStorage.getItem(storageKeyName.PERSONALINFO).utid && (questionInfo.AnswerNum + questionInfo.AnswerOffNum) == 0) {
+	if(questionInfo&&questionInfo.AskMan == myStorage.getItem(storageKeyName.PERSONALINFO).utid && (questionInfo.AnswerNum + questionInfo.AnswerOffNum) == 0) {
 		document.getElementById("manage-question").style.display = "inline-block";
 	} else {
 		document.getElementById("manage-question").style.display = "none";
@@ -93,7 +93,7 @@ mui.plusReady(function() {
 		var cbArr = [delQuestion];
 		events.showActionSheet(titles, cbArr);
 	})
-	setFresh();
+//	setFresh();
 	mui.previewImage();
 	events.limitPreviewPullDown("refreshContainer", 1);
 	var main = plus.webview.currentWebview(); //获取当前窗体对象
@@ -569,13 +569,11 @@ function requestAskDetail() {
 					addQuestion(data.RspData);
 					if(tempRspData.length == 0) { //没有人回答
 						answerNone();
-						//						mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
-					} else {
-						//						mui('#refreshContainer').pullRefresh().enablePullupToRefresh(false); //启用上拉加载更多
+//					} else {
+						
 					}
 				} else {
 					answerArray = answerArray.concat(tempRspData);
-					//					mui('#refreshContainer').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
 				}
 				//刷新界面
 				addAnswer(tempRspData);
@@ -583,6 +581,7 @@ function requestAskDetail() {
 			});
 		} else {
 			wd.close();
+			noticeQuestionInfo();
 			mui.toast(data.RspTxt);
 			if(data.RspCode == 1016) {
 				mui.back();
@@ -591,7 +590,6 @@ function requestAskDetail() {
 	});
 }
 var noticeQuestionInfo = function(questionInfo) {
-	//	mui.fire(plus.webview.currentWebview().parent(), "questionInfo", questionInfo);
 	setIcon();
 	events.closeWaiting();
 	mui.back = _oldBack;

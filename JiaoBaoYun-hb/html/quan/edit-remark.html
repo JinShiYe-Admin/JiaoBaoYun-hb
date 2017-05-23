@@ -146,7 +146,7 @@
 						mui.fire(plus.webview.currentWebview().opener(), "groupInfoChanged", inputValue);
 						mui.back();
 					} else {
-						mui.toast("修改失败，请重新来过！");
+						mui.toast(data.RspTxt);
 					}
 				})
 			}
@@ -169,7 +169,7 @@
 						mui.fire(plus.webview.getWebviewById("group-pInfo.html"), 'remarkChanged');
 						mui.back();
 					} else {
-						mui.toast("失败，请重试")
+						mui.toast(data.RspTxt);
 					}
 				})
 			}
@@ -189,7 +189,7 @@
 						mui.toast('修改群昵称成功！');
 						mui.back();
 					} else {
-						mui.toast('修改失败，请重新来过');
+						mui.toast(data.RspTxt);
 					}
 				})
 			}
@@ -209,7 +209,7 @@
 						mui.toast('修改备注成功！');
 						mui.back();
 					} else {
-						mui.toast('修改失败，请重新来过');
+						mui.toast(data.RspTxt);
 					}
 				})
 			}

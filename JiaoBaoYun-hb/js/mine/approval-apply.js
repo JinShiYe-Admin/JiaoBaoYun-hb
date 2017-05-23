@@ -147,7 +147,7 @@ var addListener = function() {
 			stat: 1
 		}, wd, function(data) {
 			wd.close();
-			if(data.RspCode = '0000') {
+			if(data.RspCode == 0) {
 				mui.toast('您已同意入群');
 //				events.clearChild(list);
 //				getData('inv', []);
