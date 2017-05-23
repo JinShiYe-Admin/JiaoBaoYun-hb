@@ -1,9 +1,7 @@
 mui.init();
-var deceleration = mui.os.ios ? 0.003 : 0.0009;
 mui('.mui-scroll-wrapper').scroll({
 	bounce: false,
-	indicators: true, //是否显示滚动条
-	deceleration: deceleration
+	indicators:true//是否显示滚动条
 });
 var setFresh = function() {
 	//上拉下拉注册
@@ -77,8 +75,6 @@ mui.plusReady(function() {
 	window.addEventListener('answerInfo', function(e) {
 		flag = 1;
 		selfId = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
-//		mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
-//		mui('#refreshContainer').pullRefresh().refresh(true);
 		answerData = {};
 		pageIndex = 1;
 		totalPageCount = 1;
@@ -88,6 +84,7 @@ mui.plusReady(function() {
 		//如果跟上次进入的是同一个回答 则不更改顺序
 		if(!(answerInfo && e.detail.data.AnswerId == answerInfo.AnswerId)) {
 			type = 2; //倒序
+			mui(".mui-scroll-wrapper").scroll().scrollTo(0,0,100);
 		}
 		answerInfo = e.detail.data;
 		setChangeCondition();
@@ -210,6 +207,8 @@ var delComment = function() {
 					requestAnswerDetail(answerInfo.AnswerId, pageIndex * 10, 1, getInfos);
 				}
 			}
+		}else{
+			mui.toast(data.RspTxt);
 		}
 
 	})

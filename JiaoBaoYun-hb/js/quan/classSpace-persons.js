@@ -98,7 +98,7 @@ var getZanPersons = function(classSpaceId) {
 				setBackGround(2);
 			}
 		} else {
-			mui.toast('你逮到我啦，有错误')
+			mui.toast(data.RspTxt);
 		}
 
 	})
@@ -299,7 +299,7 @@ var getChakanPersons = function(classSpaceId) {
 				setBackGround(1);
 			}
 		} else {
-			mui.toast('你逮到我啦，有错误');
+			mui.toast(data.RspTxt);
 		}
 	})
 }

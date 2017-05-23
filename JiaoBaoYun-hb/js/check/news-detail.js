@@ -92,7 +92,7 @@ var checkNews = function(checkType) {
 			newsDetail.Ischeck = checkType;
 			setCheckInfo();
 		} else {
-
+			mui.toast(data.RspTxt);
 		}
 	})
 }

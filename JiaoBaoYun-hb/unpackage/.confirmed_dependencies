@@ -41,14 +41,18 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/libs/jquery.lazyload.min.js",
+			"image/utils/default_personalimage.png",
+			"image/utils/video-loading.gif"
 		]
 	},
 	"html/qiuzhi/qiuzhi-question.html": {
 		"refer": [
 			"html/qiuzhi/qiuzhi-questionSub.html",
 			"html/qiuzhi/experts_main.html",
-			"html/qiuzhi/qiuzhi-addAnswer.html"
+			"html/qiuzhi/qiuzhi-addAnswer.html",
+			"html/register/login.html"
 		],
 		"resources": [
 			"html/qiuzhi/qiuzhi-questionSub.html",
@@ -121,7 +125,8 @@
 			"image/cloud/cloud_0_unknow_0.png",
 			"image/cloud/cloud_0_txt_0.png",
 			"image/cloud/cloud_0_excel_0.png",
-			"image/cloud/cloud_0_word_0.png"
+			"image/cloud/cloud_0_word_0.png",
+			"image/quan/add.png"
 		],
 		"refer": [
 			"html/index/mine.html",
@@ -219,7 +224,8 @@
 			"image/mine/my-points.png",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/mine/account-info.html",
@@ -586,7 +592,9 @@
 			"html/register/js/app.js",
 			"js/libs/crypto-js/crypto-js.js"
 		],
-		"refer": []
+		"refer": [
+			"html/register/register_phoneNumber.html"
+		]
 	},
 	"html/cloud/order-member.html": {
 		"resources": [
@@ -1025,6 +1033,16 @@
 			"css/icons-extra.css",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/show/show.css"
+		]
+	},
+	"html/register/register_phoneNumber.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/register/yanZhengMa.html"
 		]
 	}
 }

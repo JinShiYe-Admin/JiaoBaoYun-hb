@@ -217,14 +217,13 @@
 							mui.back();
 						}, time);
 					} else {
-						mui.toast(data.RspTxt);
 						document.getElementById("commit").disabled = false;
 						if(pathList.length != 0) {
 							BatchDelete(pathList, wd);
 						} else {
 							wd.close();
 						}
-						mui.toast('发布失败 ' + JSON.stringify(data));
+						mui.toast(data.RspTxt);
 					}
 
 				});
@@ -298,13 +297,13 @@
 						console.log('### ERROR ### 获取上传凭证失败 ### ' + data.data.Message);
 						document.getElementById("commit").disabled = false;
 						wd.close();
-						mui.toast('获取上传凭证失败 ' + data.data.Message);
+						mui.toast("上传失败 "+data.data.Message);
 					}
 				}, function(xhr, type, errorThrown) {
 					console.log('### ERROR ### 请求上传凭证失败 ###  ' + type);
 					document.getElementById("commit").disabled = false;
 					wd.close();
-					mui.toast('请求上传凭证失败 ' + type);
+					mui.toast('上传失败 ' + type);
 				});
 			}
 
@@ -325,13 +324,11 @@
 							pathList = [];
 						} else {
 							console.log('### ERROR ### 七牛删除失败 ### ' + JSON.stringify(data));
-							mui.toast('删除失败' + JSON.stringify(data));
 						}
 						wd.close();
 					},
 					function(xhr, type, errorThrown) {
 						console.log('### ERROR ### 请求七牛删除失败 ### ' + JSON.stringify(type));
-						mui.toast('请求删除失败' + JSON.stringify(type));
 						wd.close();
 					}
 				);

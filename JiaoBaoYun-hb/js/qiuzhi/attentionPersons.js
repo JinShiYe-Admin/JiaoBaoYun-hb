@@ -8,6 +8,7 @@ var totalPageCount = 0;
 var flagRef = 0;
 var customerPersons;
 var isSelf = false; //是否为自己的关注列表 和被关注列表
+var isSetRefresh;
 mui.plusReady(function() {
 	selfId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	expertInfo = plus.webview.currentWebview().data.expertInfo;
@@ -21,12 +22,12 @@ mui.plusReady(function() {
 			document.getElementById("title").innerText = "关注他的人";
 		}
 	} else {
-		if(expertInfo.UserId == selfId) {//自己
+		if(expertInfo.UserId == selfId) { //自己
 			customerPersons = myStorage.getItem(storageKeyName.FOCUSEPERSEN);
-			if(customerPersons){
+			if(customerPersons) {
 				customerPersons.reverse();
 			}
-			console.log("获取的游客关注的人："+JSON.stringify(customerPersons));
+			console.log("获取的游客关注的人：" + JSON.stringify(customerPersons));
 			isSelf = true;
 			document.getElementById("title").innerText = "我关注的人";
 		} else {
@@ -39,7 +40,6 @@ mui.plusReady(function() {
 	pageIndex = 1; //当前页面
 	requireData(type); //根据类型获取数据
 	setListener(); //设置监听
-
 	//阻尼系数、初始化刷新加载更多
 	var deceleration = mui.os.ios ? 0.003 : 0.0009;
 	mui('.mui-scroll-wrapper').scroll({
@@ -47,7 +47,9 @@ mui.plusReady(function() {
 		indicators: true, //是否显示滚动条
 		deceleration: deceleration
 	});
-
+})
+var setRefresh = function() {
+	isSetRefresh=true;
 	//上拉下拉注册
 	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 		down: {
@@ -95,7 +97,7 @@ mui.plusReady(function() {
 			}
 		}
 	});
-})
+}
 /**
  * param {type} 0 有人 1 暂无关注我/他的人 2暂无我/他关注的人
  */
@@ -108,15 +110,18 @@ var setBackGround = function(type) {
 			className = "mui-content mui-fullscreen";
 			hintWord = "";
 			wordClassName = "display-none";
+			if(!isSetRefresh){
+				setRefresh();
+			}
 			break;
 		case 1:
 			className = "mui-content mui-fullscreen noOneDisplay";
-			hintWord = "暂时关注的人";
+			hintWord = "暂时无人关注";
 			wordClassName = "display-block";
 			break;
 		case 2:
 			className = "mui-content mui-fullscreen noOneDisplay";
-			hintWord = "暂时关注的人";
+			hintWord = "暂时无人关注";
 			wordClassName = "display-block";
 			break;
 		default:
@@ -153,7 +158,7 @@ var requireData = function() {
 	}
 	if(type) { //关注专家的人
 		//如果是自己 且为游客
-		if(isSelf&&events.getUtid()==0) {
+		if(isSelf && events.getUtid() == 0) {
 			setBackGround(1);
 			return;
 		}
@@ -189,10 +194,10 @@ var requireData = function() {
 		})
 	} else {
 		//我关注的人
-		if(events.getUtid()||!isSelf) {
+		if(events.getUtid() || !isSelf) {
 			getFocusUsersByUser(expertInfo.UserId);
 		} else {
-			console.log("本地关注的人："+JSON.stringify(customerPersons));
+			console.log("本地关注的人：" + JSON.stringify(customerPersons));
 			if(customerPersons && customerPersons.length > 0) {
 				setBackGround(0);
 				requireExperts();
@@ -264,12 +269,12 @@ var requirePersonInfo = function(personIds, persons) {
 			if(data.RspCode == 0) {
 				var personsData = data.RspData;
 				var isInPeson;
-				for(var i  in personsData){
-					isInPerson=false;
-					for(var j in persons){
-						if(persons[j].UserId == personsData[i].utid){
-							isInPerson=true;
-							jQuery.extend(personsData[i],persons[j]);
+				for(var i in personsData) {
+					isInPerson = false;
+					for(var j in persons) {
+						if(persons[j].UserId == personsData[i].utid) {
+							isInPerson = true;
+							jQuery.extend(personsData[i], persons[j]);
 							break;
 						}
 					}
@@ -304,7 +309,7 @@ var setData = function(persons) {
 		list.appendChild(li);
 		li.querySelector('.mui-btn').personInfo = persons[i];
 	}
-	console.log("加载完数据后的attentionPersons:"+JSON.stringify(customerPersons));
+	console.log("加载完数据后的attentionPersons:" + JSON.stringify(customerPersons));
 }
 /**
  * 放置关注人数据
@@ -382,17 +387,17 @@ var setFocus = function(item, type) {
 				mui.toast(data.RspTxt);
 			}
 			item.disabled = false;
-			jQuery(item).css("pointerEvents","all");
+			jQuery(item).css("pointerEvents", "all");
 		})
 	} else {
 		events.toggleStorageArray(storageKeyName.FOCUSEPERSEN, parseInt(item.personInfo.UserId), !type);
-		customerPersons=myStorage.getItem(storageKeyName.FOCUSEPERSEN);
+		customerPersons = myStorage.getItem(storageKeyName.FOCUSEPERSEN);
 		setButtonInfoType(item);
 		var buttonInfo = getButtonContent(item.personInfo.FocusType);
 		item.innerHTML = buttonInfo.inner;
 		item.className = 'mui-btn mui-btn-outlined ' + buttonInfo.classInfo;
-		item.disabled=false;
-		jQuery(item).css("pointerEvents","all");
+		item.disabled = false;
+		jQuery(item).css("pointerEvents", "all");
 	}
 
 }

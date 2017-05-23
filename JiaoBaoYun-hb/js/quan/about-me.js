@@ -1,9 +1,7 @@
 mui.init();
-var deceleration = mui.os.ios ? 0.003 : 0.0009;
 mui('.mui-scroll-wrapper').scroll({
 	bounce: false,
-	indicators: true, //是否显示滚动条
-	deceleration: deceleration
+	indicators: true //是否显示滚动条
 });
 var setFresh = function() {
 	//上拉下拉注册
@@ -319,6 +317,8 @@ var getHomeworkResult = function(workInfo, callback) {
 		console.log("获取当前作业结果：" + JSON.stringify(data))
 		if(data.RspCode == 0) {
 			callback(data.RspData);
+//		}else{
+//			mui.toast(data.RspTxt);
 		}
 	})
 }

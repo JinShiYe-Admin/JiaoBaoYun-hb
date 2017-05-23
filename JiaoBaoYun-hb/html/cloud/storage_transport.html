@@ -476,7 +476,7 @@
 										document.getElementById("up_" + upid).parentNode.removeChild(document.getElementById("up_" + upid)); //删除元素
 										mui.toast('删除上传任务成功');
 									} else {
-										mui.toast('删除失败:任务已经开始上传');
+										mui.toast('删除失败 任务已经开始上传');
 									}
 								} else {
 
@@ -485,7 +485,6 @@
 						}
 					} else {
 						mui.toast('未找到对应的上传任务');
-						console.log('未找到对应的上传任务');
 					}
 				});
 
@@ -846,8 +845,7 @@
 							}
 						});
 					}, function(xhr, type, errorThrown) {
-						mui.toast('获取七牛下载token失败：' + type);
-						console.log('获取七牛下载token失败：' + type);
+						mui.toast('下载失败 ' + type);
 					});
 				}
 
@@ -878,7 +876,7 @@
 						var configure = data.configure; //获取token的配置信息
 						console.log('七牛上传token:' + JSON.stringify(QNUptoken));
 						if(QNUptoken.Status == 0) { //失败
-							mui.toast('获取上传凭证失败 ' + QNUptoken.Message);
+							mui.toast('上传失败 ' + QNUptoken.Message);
 							console.log('### ERROR ### 获取上传凭证失败' + QNUptoken.Message);
 						} else {
 							CloudFileUtil.upload(fPath, QNUptoken.Data.Token, QNUptoken.Data.Key, function(upload, status) {
@@ -927,7 +925,7 @@
 									document.getElementById("up_btn_" + upload.__UUID__).style.display = 'none';
 									//document.getElementById("up_" + upload.__UUID__).parentNode.removeChild(document.getElementById("up_" + upload.__UUID__));
 									document.getElementById("up_waiting_" + upload.__UUID__).innerText = '上传失败';
-									mui.toast('上传失败:' + status + ' ' + upload.responseText);
+									mui.toast('上传失败 ' + status + ' ' + upload.responseText);
 								}
 							}, function(upload, status) {
 								//上传任务状态监听
@@ -985,8 +983,7 @@
 							});
 						}
 					}, function(xhr, type, errorThrown) {
-						mui.toast('请求上传凭证失败：' + type);
-						console.log('请求上传凭证失败：' + type);
+						mui.toast('上传失败 ' + type);
 					});
 				}
 
@@ -1171,7 +1168,7 @@
 							if(data.RspCode == 8) {
 								mui.toast('上传失败 ' + fname + ' ' + data.RspTxt + '');
 							} else {
-								mui.toast('上传失败 ' + data.RspTxt);
+								mui.toast(data.RspTxt);
 							}
 							var batchDelete = {
 								appId: 4, //int 必填 项目id
@@ -1182,15 +1179,12 @@
 							 */
 							CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, batchDelete, function(data) {
 									if(data.Status == 1) {
-										//mui.toast('七牛删除成功');
 										console.log('七牛删除成功:' + JSON.stringify(data));
 									} else {
-										mui.toast('七牛删除失败' + JSON.stringify(data));
 										console.log('七牛删除:' + JSON.stringify(data));
 									}
 								},
 								function(xhr, type, errorThrown) {
-									mui.toast('七牛删除失败' + JSON.stringify(type));
 									console.log('七牛删除失败:' + JSON.stringify(type));
 								}
 							);
@@ -1245,6 +1239,11 @@
 							folderUpOrDownDirectoryReader(0, downFolderEntry);
 						}
 					}, function(errorCB) {
+						if(type == 1) { //上传
+							mui.toast('获取上传记录失败 ' + errorCB.message);
+						} else {
+							mui.toast('获取下载记录失败 ' + errorCB.message)
+						}
 						console.log("请求上传或者下载文件系统失败: " + JSON.stringify(errorCB));
 					});
 				}
@@ -1265,7 +1264,11 @@
 							addUpedOrDownedMetadataItem(type, element);
 						});
 					}, function(errorCB) {
-						mui.toast("获取上传或下载记录失败:" + JSON.stringify(errorCB));
+						if(type == 1) { //上传
+							mui.toast('获取上传记录失败 ' + errorCB.message);
+						} else {
+							mui.toast('获取下载记录失败 ' + errorCB.message)
+						}
 						console.log("获取上传或下载记录失败:" + JSON.stringify(errorCB));
 					});
 				}
@@ -1361,12 +1364,12 @@
 								addUploadedItem(succesCB2.toLocalURL(), fname);
 							});
 						}, function(errorCB2) {
-							mui.toast('在本地增加上传记录失败:' + JSON.stringify(errorCB2));
+							mui.toast('增加上传记录失败 ' + errorCB2.message);
 							console.log("拷贝:失败:" + JSON.stringify(errorCB2));
 						});
 					}, function(errorCB) {
 						//请求失败的的回调
-						mui.toast('在本地增加上传记录失败:' + JSON.stringify(errorCB));
+						mui.toast('增加上传记录失败 ' + errorCB.message);
 						console.log("请求被拷贝文件的文件系统失败: " + JSON.stringify(errorCB));
 					});
 				}
@@ -1386,11 +1389,11 @@
 									console.log("删除本地文件成功: " + JSON.stringify(succesCB2));
 									succesCallBack(succesCB2);
 								}, function(errorCB2) {
-									mui.toast('删除本地文件失败');
+									mui.toast('删除本地文件失败 ' + errorCB2.message);
 									console.log("删除本地文件失败: " + JSON.stringify(succesCB2));
 								});
 							}, function(errorCB) {
-								mui.toast('删除本地文件失败');
+								mui.toast('删除本地文件失败 ' + errorCB.message);
 								console.log("获取删除本地文件的文件系统失败: " + JSON.stringify(errorCB));
 							});
 						} else {
