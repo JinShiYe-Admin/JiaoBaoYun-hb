@@ -540,7 +540,8 @@
 					"image/utils/loading.gif"
 				],
 				"refer": [
-					"html/quan/class-group.html"
+					"html/quan/class-group.html",
+					"html/quan/zone_main.html"
 				],
 				"priority": 0
 			},
@@ -3123,7 +3124,8 @@
 					"js/utils/RSAEncrypt.js",
 					"js/storageKeyName.js",
 					"js/mui.pullToRefresh.js",
-					"js/mui.pullToRefresh.material.js"
+					"js/mui.pullToRefresh.material.js",
+					"image/utils/loading.gif"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-addAnswer.html"
@@ -4006,7 +4008,8 @@
 					"js/utils/RSAEncrypt.js",
 					"fonts/iconfont.ttf",
 					"fonts/fangzheng.ttf",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"image/utils/loading.gif"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html"

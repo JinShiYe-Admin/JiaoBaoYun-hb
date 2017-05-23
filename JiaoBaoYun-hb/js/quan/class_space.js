@@ -365,7 +365,7 @@ var postData;
 var wd;
 var className;
 mui.plusReady(function() {
-//	mui.previewImage();
+	mui.previewImage();
 	postData = plus.webview.currentWebview().data;
 	postData.userId = parseInt(postData.userId);
 	//班级名称
