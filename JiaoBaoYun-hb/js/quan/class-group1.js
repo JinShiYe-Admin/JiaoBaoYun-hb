@@ -287,13 +287,13 @@ var getRemarkData = function(list, callback) {
 		vvl: utids.toString()
 	}, wd, function(data) {
 		wd.close();
-		if(data.RspCode == 0) {
+//		if(data.RspCode == 0) {
 			console.log('获取的备注信息：' + JSON.stringify(data));
 			var remark = document.getElementById('person-remark');
 			callback(data);
-		}else{
-			mui.toast(data.RspTxt);
-		}
+//		}else{
+////			mui.toast(data.RspTxt);
+//		}
 
 	})
 }

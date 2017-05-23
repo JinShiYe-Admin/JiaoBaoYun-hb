@@ -657,7 +657,8 @@
 			"css/mui.min.css",
 			"js/quan/group-pInfo.js",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/quan/edit-remark.html",
