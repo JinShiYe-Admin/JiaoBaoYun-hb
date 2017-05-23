@@ -44,7 +44,8 @@
 			"js/utils/RSAEncrypt.js",
 			"js/libs/jquery.lazyload.min.js",
 			"image/utils/default_personalimage.png",
-			"image/utils/video-loading.gif"
+			"image/utils/video-loading.gif",
+			"image/utils/loading.gif"
 		]
 	},
 	"html/qiuzhi/qiuzhi-question.html": {
@@ -61,7 +62,8 @@
 			"js/qiuzhi/qiuzhi-questionSub.js",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/qiuzhi/qiuzhi-questionSub.css",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"js/utils/h5fresh.js"
 		]
 	},
 	"html/qiuzhi/qiuzhi-questionSub.html": {
@@ -331,7 +333,8 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"image/utils/default_personalimage.png",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"fonts/fangzheng.ttf"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-sub.html",
@@ -489,7 +492,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"image/homework/need-submit.png",
 			"image/homework/submitted.png",
-			"image/homework/commented.png"
+			"image/homework/commented.png",
+			"js/utils/h5fresh.js"
 		],
 		"refer": [
 			"html/homework/doHomework-stu.html",
@@ -694,7 +698,8 @@
 			"css/utils/bubble.css",
 			"css/utils/preview.css",
 			"image/utils/playvideo.png",
-			"image/utils/loading.gif"
+			"image/utils/loading.gif",
+			"js/utils/h5fresh.js"
 		],
 		"refer": [
 			"html/quan/class-group.html",

@@ -1,6 +1,44 @@
-/**
- * 求知子页面界面逻辑
- */
+mui.init();
+var freshContainer;
+mui('.mui-scroll-wrapper').scroll({
+	bounce: false,
+	indicators: true //是否显示滚动条
+});
+var setFresh = function() {
+	//上拉下拉注册
+	mui(".scroll-vertical>.mui-scroll").pullToRefresh({
+		down: {
+			callback: function() {
+				freshContainer = this;
+				pageIndex = 1;
+				getChannelTime = null;
+				getExperTime = null;
+				wd = events.showWaiting(); //2.获取符合条件的专家信息
+				getExpertsArray(channelInfo.TabId);
+				//刷新的界面实现逻辑
+				requestChannelList(channelInfo);
+			}
+		},
+		up: {
+			callback: function() {
+				freshContainer = this;
+				console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
+				if(pageIndex < totalPage) {
+					//					setTimeout(function() {
+					//						self.endPullUpToRefresh();
+					//					}, 1500);
+					wd = events.showWaiting();
+					pageIndex++;
+					requestChannelList(channelInfo);
+				} else {
+					freshContainer.endPullUpToRefresh();
+					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
+				}
+			}
+		}
+	});
+}
+setFresh();
 var pageIndex = 1; //当前页数
 var totalPage; //总页数
 var channelInfo; //选择的话题
@@ -9,7 +47,6 @@ var answerIsReady = false; //页面已就绪
 var wd;
 var getExperTime = null;
 var getChannelTime = null;
-mui.init();
 mui.plusReady(function() {
 	mui.fire(plus.webview.getWebviewById('qiuzhi_home.html'), 'subIsReady');
 	mui.fire(plus.webview.getLaunchWebview(), "indexReady");
@@ -18,16 +55,16 @@ mui.plusReady(function() {
 		answerIsReady = true;
 	});
 	window.addEventListener('channelInfo', function(e) {
-
 		console.log('求知子页面获取的 :' + JSON.stringify(e.detail.data))
 		pageIndex = 1; //当前页数
 		totalPage = 0; //总页数
 		channelInfo = e.detail.data.curChannel; //选择的话题
 		allChannels = e.detail.data.allChannels; //所有的话题
 		document.getElementById('list-container').innerHTML = "";
-		var scrollApi = mui('.mui-scroll-wrapper').scroll(); //获取插件对象
-		scrollApi.refresh(); //刷新
-		scrollApi.scrollTo(0, 0); //滚动至顶部
+		mui(".scroll-vertical").scroll().scrollTo(0, 0);
+		if(mui(".mui-pull-loading").length > 0) {
+			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+		}
 		console.log("高度：" + document.querySelector(".mui-scroll-wrapper").offsetHeight);
 		getChannelTime = null;
 		getExperTime = null;
@@ -58,28 +95,14 @@ mui.plusReady(function() {
 		//刷新的界面实现逻辑
 		requestChannelList(channelInfo);
 	})
-
-	//加载h5下拉刷新方式
-	h5fresh.addRefresh(function() {
-		pageIndex = 1;
-		//清理问题列表
-		//		document.getElementById('list-container').innerHTML = "";
-		//清理专家列表
-		//		resetExpertsList();
-		getChannelTime = null;
-		getExperTime = null;
-		wd = events.showWaiting(); //2.获取符合条件的专家信息
-		getExpertsArray(channelInfo.TabId);
-		//刷新的界面实现逻辑
-		requestChannelList(channelInfo);
-
-	}, {
-		style: 'circle',
-	});
 	setListener();
-	pullUpFresh();
 });
 
+function endFresh() {
+	freshContainer.endPullDownToRefresh();
+	mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+	freshContainer.endPullUpToRefresh();
+}
 /**
  * 请求专家数据
  * //2.获取符合条件的专家信息
@@ -114,7 +137,7 @@ function getExpertsArray(channelId) {
 			}
 			//给数组去重
 			tempArray = arrayDupRemoval(tempArray);
-			if(tempArray.length==0){
+			if(tempArray.length == 0) {
 				getExperTime = Date.now();
 				if(getChannelTime) {
 					events.closeWaiting();
@@ -225,9 +248,10 @@ function requestChannelList(channelInfo) {
 		if(data.RspCode == 0) {
 			totalPage = data.RspData.totalPage;
 			//			var datas = data.RspData.Data;
-			getIds(data.RspData.Data)
+			getIds(data.RspData.Data);
 			//			setChannelList();
 		} else {
+			wd.close();
 			mui.toast(data.RspTxt);
 		}
 	});
@@ -313,6 +337,7 @@ var setChannelList = function(data) {
 	if(getExperTime) {
 		events.closeWaiting();
 	}
+	endFresh();
 }
 var getInnerHTML = function(cell) {
 	//	console.log("回答内容：" + cell.AnswerContent);
@@ -362,7 +387,7 @@ var getImgs = function(cell) {
 			if(cell.AnswerCutImg && cell.AnswerCutImg != "") {
 				var imgArray = cell.AnswerEncAddr.split('|');
 				var clipImgs = cell.AnswerCutImg.split("|");
-				imgInner = '<img class="clip-img" data-original="'+clipImgs[0]+'" src="../../image/utils/default_load_2.gif"/>';
+				imgInner = '<img class="clip-img" data-original="' + clipImgs[0] + '" src="../../image/utils/default_load_2.gif"/>';
 				return imgInner;
 			}
 			return "";
@@ -371,7 +396,7 @@ var getImgs = function(cell) {
 				var win_width = document.body.offsetWidth - 30;
 				var imgArray = cell.AnswerEncAddr.split('|');
 				var clipImgs = cell.AnswerCutImg.split("|");
-				imgInner = '<div class="video-container" data-original="'+clipImgs[0]+'" style="background-image:url(../../image/utils/video-loading.gif);width:' + win_width + 'px;height:' + win_width * 0.45 +
+				imgInner = '<div class="video-container" data-original="' + clipImgs[0] + '" style="background-image:url(../../image/utils/video-loading.gif);width:' + win_width + 'px;height:' + win_width * 0.45 +
 					'px;text-align:center;background-position:center;background-size:cover;"><img style="width:55px;height:55px;margin-top:' + (win_width * 0.45 - 55) / 2 + 'px;" class="answer-video" retry="0" src="../../image/utils/playvideo.png"/></div>';
 				return imgInner;
 			}
@@ -409,23 +434,6 @@ var getChannelIcon = function(cell) {
 			break;
 	}
 	return iconSourse;
-}
-/**
- * 上拉加载的实现方法
- */
-var pullUpFresh = function() {
-	document.addEventListener("plusscrollbottom", function() {
-		console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
-		if(pageIndex < totalPage) {
-			wd = events.showWaiting();
-			pageIndex++;
-			requestChannelList(channelInfo);
-		} else {
-			if(plus.webview.currentWebview().isVisible()) {
-				mui.toast('到底啦，别拉了！');
-			}
-		}
-	}, false);
 }
 /**
  * 各种监听事件
@@ -487,7 +495,7 @@ var setListener = function() {
 	});
 	//求知关注
 	mui(".mui-table-view").on('tap', '.focus-status', function() {
-	 
+
 		var item = this;
 		item.disabled = true;
 		requireQuestionInfo(item.questionInfo.TabId, function(data) {
