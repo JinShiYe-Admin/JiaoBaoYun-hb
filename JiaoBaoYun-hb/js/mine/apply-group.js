@@ -241,10 +241,10 @@ var getAllGroups = function(utid, callback, first) {
 	}, wd, function(data) {
 		wd.close();
 		console.log('申请入群获取的群数据：' + JSON.stringify(data));
-		if(data.RspCode == '0000') {
+		if(data.RspCode == 0 {
 			callback(data.RspData);
 		} else {
-			if(!first) {
+			if(data.RspCode!=9) {
 				mui.toast(data.RspTxt);
 			}
 		}
