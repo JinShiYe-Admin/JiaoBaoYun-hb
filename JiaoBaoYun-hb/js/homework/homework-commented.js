@@ -177,6 +177,8 @@ function getStuName() {
 					console.log('homeworkModel=' + JSON.stringify(homeworkModel));
 				}
 			}
+		}else{
+			mui.toast(data.RspTxt);
 		}
 
 	});
@@ -208,7 +210,7 @@ function requestGetHomeworkResultStu() {
 			requestTeaInfo(homeworkModel.TeacherId);
 			refreshUI();
 		} else {
-
+			
 		}
 	});
 }
