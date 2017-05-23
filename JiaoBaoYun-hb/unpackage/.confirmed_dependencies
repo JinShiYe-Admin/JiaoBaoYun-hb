@@ -691,7 +691,8 @@
 			"js/quan/class_space.js",
 			"css/utils/bubble.css",
 			"css/utils/preview.css",
-			"image/utils/playvideo.png"
+			"image/utils/playvideo.png",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/quan/class-group.html",
@@ -963,7 +964,9 @@
 		"resources": [
 			"js/utils/self-adaptive-input.js",
 			"css/mine/edit-info.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/quan/leaveNew.html": {

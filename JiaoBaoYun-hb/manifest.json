@@ -536,7 +536,8 @@
 					"js/quan/class_space.js",
 					"css/utils/bubble.css",
 					"css/utils/preview.css",
-					"image/utils/playvideo.png"
+					"image/utils/playvideo.png",
+					"image/utils/loading.gif"
 				],
 				"refer": [
 					"html/quan/class-group.html"
