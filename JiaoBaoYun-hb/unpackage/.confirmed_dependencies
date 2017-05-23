@@ -154,7 +154,16 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/sciedu/sciedu_show_main.html",
@@ -238,13 +247,34 @@
 			"css/utils/pullToRefresh.css",
 			"js/mui.lazyload.js",
 			"js/mui.lazyload.img.js",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/mui.min.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/mui.pullToRefresh.js",
+			"js/mui.pullToRefresh.material.js",
+			"js/storageKeyName.js",
+			"fonts/mui.ttf",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js",
+			"fonts/fangzheng.ttf",
+			"fonts/iconfont.ttf"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html",
 			"html/quan/pub-dynamic.html",
 			"html/show/add-comment.html",
-			"html/utils/customizeCity.html"
+			"html/utils/customizeCity.html",
+			"html/quan/space-detail.html"
 		]
 	},
 	"html/index/index.html": {
@@ -323,7 +353,21 @@
 			"js/qiuzhi/qiuzhi-answerDetailSub.js",
 			"css/utils/preview.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"js/mui.pullToRefresh.js",
+			"js/publicQiuzhiProtocol.js",
+			"js/storageKeyName.js",
+			"js/mui.pullToRefresh.material.js",
+			"fonts/mui.ttf",
+			"js/utils/events.js",
+			"js/publicProtocol.js",
+			"js/mui.zoom.js",
+			"js/mui.min.js",
+			"fonts/fangzheng.ttf",
+			"js/utils/video.js",
+			"js/mui.previewimage.js",
+			"fonts/iconfont.ttf",
+			"js/utils/h5fresh.js"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-answerDetailSub.html",

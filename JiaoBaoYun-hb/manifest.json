@@ -3117,7 +3117,9 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/storageKeyName.js"
+					"js/storageKeyName.js",
+					"js/mui.pullToRefresh.js",
+					"js/mui.pullToRefresh.material.js"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-addAnswer.html"
