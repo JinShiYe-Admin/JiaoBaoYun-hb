@@ -53,6 +53,8 @@ var getGroupInfo = function() {
 		console.log("获取的群信息：" + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			document.getElementById("group-info").innerText = data.RspData[0].gnote ? data.RspData[0].gnote : "暂无说明";
+		}else{
+			mui.toast(data.RspTxt);
 		}
 	})
 }

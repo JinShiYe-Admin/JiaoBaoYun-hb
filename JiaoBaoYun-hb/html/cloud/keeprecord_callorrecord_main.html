@@ -580,11 +580,10 @@
 						}
 						callback();
 					} else {
+						mui.toast(data.RspTxt);
 						if(noteType == 1) { //点到
-							mui.toast('新增点到失败:' + data.RspTxt);
 							callback();
 						} else {
-							mui.toast('新增记事失败:' + data.RspTxt);
 							if(pathList.length != 0) {
 								BatchDelete(pathList, function() {
 									callback();
@@ -789,13 +788,13 @@
 						taskCreate(waiting);
 					} else {
 						console.log('### ERROR ### 获取上传凭证失败 ### ' + data.data.Message);
-						mui.toast('获取上传凭证失败 ' + data.data.Message);
+						mui.toast('上传失败 ' + data.data.Message);
 						changeCommit();
 						waiting.close();
 					}
 				}, function(xhr, type, errorThrown) {
 					console.log('### ERROR ### 请求上传凭证失败 ### ' + type);
-					mui.toast('请求上传凭证失败 ' + type);
+					mui.toast('上传失败 ' + type);
 					changeCommit();
 					waiting.close();
 				});

@@ -1,3 +1,42 @@
+mui.init();
+mui('.mui-scroll-wrapper').scroll({
+	bounce: false,
+	indicators: true //是否显示滚动条
+});
+var setFresh = function() {
+	//上拉下拉注册
+	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
+		down: {
+			callback: function() {
+				var self = this;
+				pgeIndex = 1;
+				requestData();
+
+				setTimeout(function() {
+					//结束下拉刷新
+					self.endPullDownToRefresh();
+					mui(".mui-pull-loading")[0].innerHTML = "上拉显示更多";
+				}, 1000);
+			}
+		},
+		up: {
+			callback: function() {
+				var self = this;
+				if(pageIndex < totalPage || pageIndex < alertTotalPage) {
+					setTimeout(function() {
+						self.endPullUpToRefresh();
+					}, 1000);
+					pageIndex++;
+					requestData();
+				} else {
+					self.endPullUpToRefresh();
+					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
+				}
+			}
+		}
+	});
+}
+setFresh();
 /**
  * 与我相关界面
  * 逻辑部分
@@ -29,7 +68,7 @@ mui.plusReady(function() {
 	//重写系统返回方法
 	var _back = mui.back;
 	mui.back = function() {
-		if(plus.webview.currentWebview().opener().id =="homework-commented.html") {
+		if(plus.webview.currentWebview().opener().id == "homework-commented.html") {
 			events.hidePagesExIndex();
 			_back();
 		} else {
@@ -58,32 +97,32 @@ mui.plusReady(function() {
 /**
  * 设置刷新方法
  */
-var setFresh = function() {
-	h5fresh.addRefresh(function() {
-		mui("#refreshContainer").pullRefresh().refresh(true);
-		pageIndex = 1;
-		requestData();
-	}, {
-		style: "circle",
-		offset: "50px"
-	});
-	h5fresh.addPullUpFresh("#refreshContainer", function() {
-		console.log('请求页面：page：' + pageIndex + ',总页面：' + totalPage + '，作业提醒总页数：' + alertTotalPage);
-		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPage && pageIndex >= alertTotalPage);
-		if(pageIndex < totalPage || pageIndex < alertTotalPage) {
-			pageIndex++;
-			requestData();
-		}
-	});
-}
+//var setFresh = function() {
+//	h5fresh.addRefresh(function() {
+////		mui("#refreshContainer").pullRefresh().refresh(true);
+//		pageIndex = 1;
+//		requestData();
+//	}, {
+//		style: "circle",
+//		offset: "50px"
+//	});
+//	h5fresh.addPullUpFresh("#refreshContainer", function() {
+//		console.log('请求页面：page：' + pageIndex + ',总页面：' + totalPage + '，作业提醒总页数：' + alertTotalPage);
+//		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPage && pageIndex >= alertTotalPage);
+//		if(pageIndex < totalPage || pageIndex < alertTotalPage) {
+//			pageIndex++;
+//			requestData();
+//		}
+//	});
+//}
 /**
  * 界面放置数据
  * @param {Object} data 请求成功后返回的数据
  */
 var setData = function(data) {
 	var list = document.getElementById('list-container');
-	if(pageIndex==1){
-		list.innerHTML="";
+	if(pageIndex == 1) {
+		list.innerHTML = "";
 	}
 	data.forEach(function(cell, i) {
 		var li = document.createElement('li');
@@ -207,32 +246,65 @@ var setListener = function() {
 	plus.webview.currentWebview().addEventListener("hide", function() {
 		isShowing = false;
 	})
+	/**
+	 * 进入空间详情
+	 */
 	mui(".mui-table-view").on("tap", ".refer-content", function() {
-		this.info.PublisherId = this.info.UserId;
-		this.info.PublisherName = this.info.UserName;
-		this.info.TabId = this.info.SpaceId;
-		console.log(JSON.stringify(this.info));
-		events.openNewWindowWithData('../quan/space-detail.html', jQuery.extend(this.info, {
-			focusFlag: 0
-		}))
+		var item = this;
+		item.disabled = true;
+		var info = {
+			PublisherId: this.info.UserId,
+			PublisherName: this.info.UserName,
+			TabId: this.info.SpaceId
+		}
+		console.log(JSON.stringify(info));
+		getUserSpaceById(info.TabId, function(data) {
+			if(data.RspCode == 0) {
+				events.singleWebviewInPeriod(item, "../quan/space-detail.html", jQuery.extend(info, {
+					focusFlag: 0
+				}));
+			} else {
+				mui.toast(data.RspTxt);
+				item.disabled = false;
+			}
+		})
+
 	})
 	mui(".mui-table-view").on("tap", ".work-notice", function() {
+		var item = this;
+		item.disabled = true;
 		var curNotice = this.info;
 		getHomeworkResult(this.info, function(data) {
 			if(data.HomeworkResult.UploadTime) {
-				events.openNewWindowWithData('../homework/homework-commented.html', jQuery.extend(curNotice, data, {
+				events.singleWebviewInPeriod(item, '../homework/homework-commented.html', jQuery.extend(curNotice, data, {
 					HomeworkResultId: data.HomeworkResult.HomeworkResultId,
 					workType: 1,
 					isNotice: true
 				}));
-				//				events.fireToPageWithData("../homework/homework-commented.html","workNotice",jQuery.extend(this.info,data))
 			} else {
 				events.fireToPageWithData("../homework/workdetail-stu.html", "workNotice", jQuery.extend(curNotice, {
 					isNotice: true
 				}));
+				item.disabled = false;
 			}
 		});
 	});
+}
+/**
+ * 获取单条空间信息
+ * @param {Object} tabId
+ * @param {Object} callback
+ */
+var getUserSpaceById = function(tabId, callback) {
+	postDataPro_getUserSpaceByUser({
+		userId: parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid), //用户ID
+		userSpaceId: tabId, //用户动态ID
+		pageIndex: 1, //评论当前页数
+		pageSize: 1 //评论每页记录数
+	}, events.showWaiting(), function(data) {
+		events.closeWaiting();
+		callback(data);
+	})
 }
 var getHomeworkResult = function(workInfo, callback) {
 	var personalId = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
@@ -245,6 +317,8 @@ var getHomeworkResult = function(workInfo, callback) {
 		console.log("获取当前作业结果：" + JSON.stringify(data))
 		if(data.RspCode == 0) {
 			callback(data.RspData);
+//		}else{
+//			mui.toast(data.RspTxt);
 		}
 	})
 }

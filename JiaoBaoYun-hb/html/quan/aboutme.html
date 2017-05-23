@@ -19,11 +19,13 @@
 			<h1 class="mui-title common-color-white common-font-family-Regular">与我相关</h1>
 		</header>
 		<!--下拉刷新容器-->
-		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
-			<div class="mui-scroll">
-				<!--数据列表-->
-				<ul id="list-container" class="mui-table-view">
-				</ul>
+		<div id="refreshContainer" class="mui-content mui-fullscreen" style="z-index: 0;">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<ul id="list-container" class="mui-table-view">
+					</ul>
+				</div>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -31,6 +33,8 @@
 		<script src="../../js/utils/events.js"></script>
 		<!--h5刷新-->
 		<script src="../../js/utils/h5fresh.js"></script>
+		<script src="../../js/mui.pullToRefresh.js"></script>
+		<script src="../../js/mui.pullToRefresh.material.js"></script>
 		<!--公共接口-->
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<!--作业接口-->

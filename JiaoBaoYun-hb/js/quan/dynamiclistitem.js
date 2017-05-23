@@ -680,6 +680,7 @@ var dynamiclistitem = (function($, mod) {
 						}
 						wd.close();
 					} else {
+						wd.close();
 						mui.toast(data.RspTxt);
 					}
 					item.disabled = false;
@@ -743,6 +744,7 @@ var dynamiclistitem = (function($, mod) {
 						}
 						wd.close();
 					} else {
+						wd.close();
 						mui.toast(data.RspTxt);
 					}
 					item.disabled = false;
@@ -997,6 +999,10 @@ var dynamiclistitem = (function($, mod) {
 	mod.getNaturalSize = function(src) {
 		var img = new Image();
 		img.src = src;
+		console.log('src='+img.src)
+//		while(img.width==0){
+//			console.log(123)
+//		}
 		return {
 			width: img.width,
 			height: img.height
@@ -1132,7 +1138,7 @@ var dynamiclistitem = (function($, mod) {
 			showAll = '';
 		}
 
-		htmlCommentList = htmlCommentList1 + htmlCommentList2 + showAll + '</div>';
+		htmlCommentList = htmlCommentList1 + htmlCommentList2 + showAll + '</div>';  
 
 		html = html + htmlPraiseList + htmlCommentList //+ showAll //+ htmlCommentBtn;
 
@@ -1155,11 +1161,14 @@ var dynamiclistitem = (function($, mod) {
 			var tempDiv = document.getElementById("video-container"+data.id_name);
 			var imgSize = mod.getNaturalSize(ImageUrlList[0])
 			console.log(imgSize.width + '-----' + imgSize.height);
+		if(imgSize.width==0){
+			return;
+		}
 			tempDiv.style.width = imgSize.width / 4 + 'px';
 			tempDiv.style.height = imgSize.height / 4 + 'px';
 			var playvideo = document.getElementById("playvideo"+data.id_name);
 			playvideo.style.marginTop=imgSize.height / 8-25+'px'
-			console.log(playvideo.outerHTML)
+//			console.log(tempDiv.outerHTML)
 			
 		}
 	};

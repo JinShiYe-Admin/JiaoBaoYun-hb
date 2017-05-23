@@ -12,7 +12,7 @@ var class_space = (function(mod) {
 		postData.pageIndex = pageIndex;
 		postData.pageSize = pageSize;
 		mod.wd = events.showWaiting();
-		postDataPro_getClassSpacesByUserForClass(postData, wd, function(pagedata) {
+		postDataPro_getClassSpacesByUserForClass(postData,mod.wd, function(pagedata) {
 			//			wd.close();
 			if(pagedata.RspCode == 0 && pagedata.RspData.Data.length > 0) {
 				console.log('获取的班级动态：' + JSON.stringify(pagedata));
@@ -179,7 +179,7 @@ var class_space = (function(mod) {
 				})
 
 			} else {
-				wd.close();
+				mod.wd.close();
 				console.log(pInfo.RspTxt);
 			}
 
@@ -314,11 +314,10 @@ function videoImgOnload(event) {
 	}
 }
 mui.init();
-var deceleration = mui.os.ios?0.003:0.0009;
 mui('.mui-scroll-wrapper').scroll({
 	bounce: false,
-	indicators: true, //是否显示滚动条
-	deceleration: deceleration
+	indicators: true //是否显示滚动条
+
 });
 var setFresh = function() {
 	//上拉下拉注册
@@ -336,6 +335,7 @@ var setFresh = function() {
 				setTimeout(function() {
 					//结束下拉刷新
 					self.endPullDownToRefresh();
+					mui(".mui-pull-loading")[0].innerHTML = "上拉显示更多";
 				}, 1000);
 			}
 		},

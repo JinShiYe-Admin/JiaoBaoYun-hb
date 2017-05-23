@@ -17,7 +17,7 @@
 
 		<script type="text/javascript">
 			var indexReady = false;
-			var loginFlag = 0;//0没登录，1已登录
+			var loginFlag = 0; //0没登录，1已登录
 			mui.init({
 				statusBarBackground: '#13b7f6'
 			});
@@ -39,29 +39,31 @@
 						console.log('没有网络！！！！');
 						mui.toast("网络异常，请检查网络设置！");
 					} else {
+						if(!plus.webview.currentWebview().canJump) {
+							appUpdate.updateApp();
+						}
 						console.log('网络连接拉！！！！');
 						//判断上次有没有登录，如果登录，就不执行登录协议
-						if (loginFlag == 0) {
+						if(loginFlag == 0) {
 							loginFlag = 1;
 							events.defaultLogin(function(data) {
-							if(data.value == 1) {
-								events.preload('index.html');
-								events.showWaiting();
-								showIndex();
-							} else if(data.value == -1) { //登录失败,用游客登录
-								defalutPerson();
-								events.defaultLogin(function(data) {
-									if(data.value == 1) {
-										events.preload('index.html');
-										setTimeout(function() {
-											events.openNewWindow('index.html');
-										}, 2000);
-									} else if(data.value == -1) { //登录失败
+								if(data.value == 1) {
+									events.preload('index.html');
+									events.showWaiting();
+									showIndex();
+								} else if(data.value == -1) { //登录失败,用游客登录
+									defalutPerson();
+									events.defaultLogin(function(data) {
+										if(data.value == 1) {
+											events.preload('index.html');
+											events.showWaiting();
+											showIndex();
+										} else if(data.value == -1) { //登录失败
 
-									}
-								});
-							}
-						});
+										}
+									});
+								}
+							});
 						}
 					}
 				}
@@ -105,16 +107,14 @@
 						events.defaultLogin(function(data) {
 							if(data.value == 1) {
 								loginFlag = 1;
-								events.preload('index.html');
-								setTimeout(function() {
-									events.openNewWindow('index.html');
-								}, 2000);
+								events.showWaiting();
+								showIndex();
 							} else if(data.value == 0) { //登录失败
 								var btn = ["确定"];
 								mui.confirm('可能网络出现问题，请检查网络后重试', '', btn, function(e) {
 									if(e.index == 0) {
 										login();
-									} 
+									}
 								});
 							}
 						});
@@ -123,7 +123,7 @@
 			}
 
 			function showIndex() {
-				if(indexReady) {
+				if(indexReady && plus.webview.currentWebview().canJump) {
 					events.closeWaiting();
 					plus.webview.getWebviewById("index.html").show("slide-in-right", 300);
 				} else {

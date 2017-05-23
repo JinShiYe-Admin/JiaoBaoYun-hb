@@ -1,3 +1,48 @@
+mui.init();
+mui('.mui-scroll-wrapper').scroll({
+	bounce: false,
+	indicators:true//是否显示滚动条
+});
+var setFresh = function() {
+	//上拉下拉注册
+	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
+		down: {
+			callback: function() {
+				var self = this;
+				//清除节点
+				document.getElementById("list-container").innerHTML = "";
+				flag = 1;
+				pageIndex = 1;
+				wd = events.showWaiting();
+				requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
+
+				setTimeout(function() {
+					//结束下拉刷新
+					self.endPullDownToRefresh();
+					mui(".mui-pull-loading")[0].innerHTML = "上拉显示更多";
+				}, 1000);
+			}
+		},
+		up: {
+			callback: function() {
+				var self = this;
+				if(pageIndex < totalPageCount) {
+					setTimeout(function() {
+						self.endPullUpToRefresh();
+					}, 1000);
+					pageIndex++;
+					flag = 1;
+					wd = events.showWaiting();
+					requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
+				}else{
+					self.endPullUpToRefresh();
+					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
+				}
+			}
+		}
+	});
+}
+setFresh();
 var type = 2; //排列顺序类型1为顺序，2为倒序
 var pageIndex = 1; //当前页码
 var totalPageCount = 1; //总页数
@@ -14,29 +59,7 @@ mui.plusReady(function() {
 	mui.previewImage();
 	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'), "answerIsReady");
 	//限制下拉刷新
-	events.limitPreviewPullDown("refreshContainer", 1);
-	//	ws=plus.webview.currentWebview();
-	//	ws.setBounce({position:"none"});
-	h5fresh.addRefresh(function() {
-		document.getElementById("list-container").innerHTML = "";
-		mui("#refreshContainer").pullRefresh().refresh(true);
-		flag = 1;
-		pageIndex = 1;
-		wd = events.showWaiting();
-		requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
-	}, {
-		style: "circle",
-		offset: "50px"
-	})
-	h5fresh.addPullUpFresh("#refreshContainer", function() {
-		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPageCount);
-		if(pageIndex < totalPageCount) {
-			pageIndex++;
-			flag = 1;
-			wd = events.showWaiting();
-			requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
-		}
-	})
+//	events.limitPreviewPullDown("refreshContainer", 1);
 	//预加载回答问题界面
 	events.preload('qiuzhi-addAnswer.html');
 
@@ -52,8 +75,6 @@ mui.plusReady(function() {
 	window.addEventListener('answerInfo', function(e) {
 		flag = 1;
 		selfId = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
-		mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
-		mui('#refreshContainer').pullRefresh().refresh(true);
 		answerData = {};
 		pageIndex = 1;
 		totalPageCount = 1;
@@ -63,6 +84,7 @@ mui.plusReady(function() {
 		//如果跟上次进入的是同一个回答 则不更改顺序
 		if(!(answerInfo && e.detail.data.AnswerId == answerInfo.AnswerId)) {
 			type = 2; //倒序
+			mui(".mui-scroll-wrapper").scroll().scrollTo(0,0,100);
 		}
 		answerInfo = e.detail.data;
 		setChangeCondition();
@@ -185,6 +207,8 @@ var delComment = function() {
 					requestAnswerDetail(answerInfo.AnswerId, pageIndex * 10, 1, getInfos);
 				}
 			}
+		}else{
+			mui.toast(data.RspTxt);
 		}
 
 	})
@@ -612,7 +636,7 @@ var setCommentContainer = function(showType) {
 	if(showType) {
 		ul.style.display = "none";
 		noCom.style.display = "block";
-		mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+//		mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
 	} else {
 		ul.style.display = "block";
 		noCom.style.display = "none";

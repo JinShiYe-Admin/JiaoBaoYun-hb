@@ -234,14 +234,14 @@
 							var message = error.message; // error.message（String类型）获取错误描述信息。
 							if(mui.os.ios) {
 								if(code !== 2) {
-									mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
+									mui.toast('拍照失败 ' + '错误编码 ' + code + ' 描述信息 ' + message);
 									console.log('拍照失败！' + JSON.stringify(error));
 								} else {
 									console.log('未拍取图片');
 								}
 							} else if(mui.os.android) {
 								if(code !== 11) {
-									mui.toast('拍照失败！' + '错误编码：' + code + ' 描述信息：' + message, '拍照失败');
+									mui.toast('拍照失败 ' + '错误编码 ' + code + ' 描述信息 ' + message);
 									console.log('拍照失败！' + JSON.stringify(error));
 								} else {
 									console.log('未拍取图片:' + JSON.stringify(error));
@@ -265,15 +265,15 @@
 						var message = error.message; // 错误描述信息
 						if(mui.os.ios) {
 							if(code != -2) {
-								mui.toast('从相册选取图片失败！' + '错误编码：' + code + '描述信息：' + message);
-								console.log('从相册选取图片失败！' + JSON.stringify(error));
+								mui.toast('从相册选取图片失败 ' + '错误编码 ' + code + '描述信息 ' + message);
+								console.log('从相册选取图片失败 ' + JSON.stringify(error));
 							} else {
 								console.log('未选取图片');
 							}
 						} else if(mui.os.android) {
 							if(code != 12) {
-								mui.toast('从相册选取图片失败！' + '错误编码：' + code + '描述信息：' + message);
-								console.log('从相册选取图片失败！' + JSON.stringify(error));
+								mui.toast('从相册选取图片失败 ' + '错误编码 ' + code + '描述信息 ' + message);
+								console.log('从相册选取图片失败 ' + JSON.stringify(error));
 							} else {
 								console.log('未选取图片:' + JSON.stringify(error));
 							}
@@ -341,16 +341,16 @@
 								mui.toast('上传文件不得大于50M');
 							}
 						}, function(errorCB) {
-							mui.toast('获取文件的属性失败');
+							mui.toast('读取文件信息失败 ' + errorCB.message);
 							console.log("获取文件的属性失败: " + JSON.stringify(errorCB));
 						});
 					}, function(errorCB) {
 						//请求失败的的回调
 						if(errorCB.code == 12) {
-							mui.toast('请求文件系统失败:文件不存在');
-							console.log("请求文件系统失败: " + JSON.stringify(errorCB));
+							mui.toast('文件不存在');
+							console.log("请求文件系统失败 " + errorCB.message);
 						} else {
-							mui.toast('请求文件系统失败:' + JSON.stringify(errorCB));
+							mui.toast('读取文件失败 ' + errorCB.message);
 							console.log("请求文件系统失败: " + JSON.stringify(errorCB));
 						}
 					});

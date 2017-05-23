@@ -252,8 +252,8 @@
 							} else if(e.value.length > 20) {
 								mui.toast('名字最多20个字');
 							} else {
+								var wd = events.showWaiting();
 								//27.用户云盘文件上传或创建文件夹
-								//所需参数
 								var comData = {
 									pid: showPid, //	父ID，该文件的上层ID
 									fname: e.value, //	文件名称，文件或文件夹名称,文件存扩展名之前的名称
@@ -261,8 +261,6 @@
 									fpath: '', //	文件路径，文件路径,为文件用
 									fsize: '0' //	文件大小，文件用
 								};
-								// 等待的对话框
-								var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 								postDataPro_PostDiFiA(comData, wd, function(data) {
 									wd.close();
 									console.log('27.postDataPro_PostDiFiA:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
@@ -409,13 +407,12 @@
 							} else if(vvl1.length > 20) {
 								mui.toast('名字最多20个字');
 							} else {
+								var wd = events.showWaiting();
 								//28.用户修改文件或文件夹名称
-								//所需参数
 								var comData = {
 									vvl: fid, //文件ID
 									vvl1: vvl1 //文件名称
 								};
-								var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 								postDataPro_PostDiFiE(comData, wd, function(data) {
 									console.log('28.postDataPro_PostDiFiE_用户修改文件或文件夹名称:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 									if(data.RspCode == 0) {
@@ -483,7 +480,6 @@
 					if(ftype == '.file') {
 						//mui.toast('下载文件夹');
 					} else {
-						//plus.nativeUI.showWaiting(storageKeyName.WAITING);
 						events.fireToPageWithData('storage_transport.html', 'addDownload', {
 							pid: pid, //父ID
 							fid: fid, //文件id
@@ -516,14 +512,11 @@
 					var btnArray = ['否', '是'];
 					mui.confirm('删除，确认？', '提示', btnArray, function(e) {
 						if(e.index == 1) { //删除
-
+							var wd = events.showWaiting();
 							//38.用户云盘文件及文件夹删除
-							//所需参数
 							var comData = {
 								vvl: fid //节点ID，
 							};
-							//返回值model_PostDiFi
-							var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 							postDataPro_PostDiFiD(comData, wd, function(data) {
 								console.log('38.postDataPro_PostDiFiD_用户云盘文件及文件夹删除:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 								if(data.RspCode == 0) {
@@ -554,15 +547,12 @@
 										 */
 										CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, batchDelete, function(data) {
 												if(data.Status == 1) {
-													//mui.toast('七牛删除成功');
 													console.log('七牛删除成功:' + JSON.stringify(data));
 												} else {
-													mui.toast('七牛删除失败' + JSON.stringify(data));
 													console.log('七牛删除:' + JSON.stringify(data));
 												}
 											},
 											function(xhr, type, errorThrown) {
-												mui.toast('七牛删除失败' + JSON.stringify(type));
 												console.log('七牛删除失败:' + JSON.stringify(type));
 											}
 										);
@@ -575,7 +565,7 @@
 						} else {
 
 						}
-					},'div');
+					}, 'div');
 				});
 
 				/**
@@ -734,12 +724,7 @@
 				 * @param {Object} pname 上层文件夹名字
 				 */
 				function requestData(comData, pname) {
-					//所需参数
-					//var comData = {
-					//	vvl: '1' //	节点ID，顶层为0
-					//};
-					// 等待的对话框
-					var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+					var wd = events.showWaiting();
 					//26.用户云盘顶层文件及文件夹获取
 					postDataPro_PostDiFi(comData, wd, function(data) {
 						wd.close();

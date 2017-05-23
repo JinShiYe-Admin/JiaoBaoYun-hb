@@ -90,6 +90,8 @@
 						wd.close();
 						if(data.RspCode == 0) {
 							callback();
+						}else{
+							mui.toast(data.RspTxt);
 						}
 					})
 					break;
@@ -110,6 +112,8 @@
 						wd.close();
 						if(data.RspCode == 0) {
 							callback();
+						}else{
+							mui.toast(data.RspTxt);
 						}
 					})
 					break;
