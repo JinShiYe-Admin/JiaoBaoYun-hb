@@ -1,5 +1,6 @@
+var freshContainer;
 var setIcon = function() {
-	if(questionInfo&&questionInfo.AskMan == myStorage.getItem(storageKeyName.PERSONALINFO).utid && (questionInfo.AnswerNum + questionInfo.AnswerOffNum) == 0) {
+	if(questionInfo && questionInfo.AskMan == myStorage.getItem(storageKeyName.PERSONALINFO).utid && (questionInfo.AnswerNum + questionInfo.AnswerOffNum) == 0) {
 		document.getElementById("manage-question").style.display = "inline-block";
 	} else {
 		document.getElementById("manage-question").style.display = "none";
@@ -11,33 +12,33 @@ var setFresh = function() {
 	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 		down: {
 			callback: function() {
-				var self = this;
+				freshContainer = this;
 				//清除节点
 				pulldownRefresh();
-				setTimeout(function() {
-					//结束下拉刷新
-					mui(".mui-pull-loading")[0].innerHTML = "上拉显示更多";
-					self.endPullDownToRefresh();
-				}, 1000);
+				//				setTimeout(function() {
+				//					//结束下拉刷新
+				//					mui(".mui-pull-loading")[0].innerHTML = "上拉显示更多";
+				//					self.endPullDownToRefresh();
+				//				}, 1000);
 			}
 		},
 		up: {
 			callback: function() {
-				var self = this;
+				freshContainer = this;
 				answerFlag = 1;
 				//判断是否还有更多
 				if(answerIndex <= answerPageCount) {
-					setTimeout(function() {
-						self.endPullUpToRefresh();
-					}, 1000);
+					//					setTimeout(function() {
+					//						self.endPullUpToRefresh();
+					//					}, 1000);
 					//5.获取某个问题的详情
 					requestAskDetail();
 				} else {
-					self.endPullUpToRefresh();
+					freshContainer.endPullUpToRefresh();
 					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
-					if(plus.webview.currentWebview().isVisible()) {
-						mui.toast("没有更多了！");
-					}
+					//					if(plus.webview.currentWebview().isVisible()) {
+					//						mui.toast("没有更多了！");
+					//					}
 				}
 
 			}
@@ -69,7 +70,7 @@ var AskThumbnail = []; //提问图片缩略图
 var mainData; //记录获取的数据
 mui.plusReady(function() {
 	//---获取数据并传递数据---start---
-	mui(".mui-pull-loading")[0].style.display = "none";
+	//	mui(".mui-pull-loading")[0].style.display = "none";
 	var main = plus.webview.currentWebview(); //获取当前窗体对象
 	mainData = main.data; //接收A页面传入参数值
 	//从搜索界面跳转的数据，TabId是问题id，得转换为话题id
@@ -93,7 +94,7 @@ mui.plusReady(function() {
 		var cbArr = [delQuestion];
 		events.showActionSheet(titles, cbArr);
 	})
-//	setFresh();
+	//	setFresh();
 	mui.previewImage();
 	events.limitPreviewPullDown("refreshContainer", 1);
 	var main = plus.webview.currentWebview(); //获取当前窗体对象
@@ -244,13 +245,16 @@ mui.plusReady(function() {
 		}
 	});
 });
-//var setFresh = function() {
-//	h5fresh.addRefresh(pulldownRefresh, {
-//		style: "circle",
-//		offset: "50px"
-//	});
-//	h5fresh.addPullUpFresh("#refreshContainer", pullupRefresh);
-//}
+/**
+ * 结束刷新状态；
+ */
+function endFresh() {
+	if(freshContainer) {
+		freshContainer.endPullDownToRefresh();
+		mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+		freshContainer.endPullUpToRefresh();
+	}
+}
 /**
  * 根据状况低端按钮显示
  */
@@ -463,18 +467,18 @@ function pulldownRefresh() {
 /**
  * 上拉加载具体业务实现
  */
-function pullupRefresh() {
-	setTimeout(function() {
-		answerFlag = 1;
-		//判断是否还有更多
-		if(answerIndex <= answerPageCount) {
-			//5.获取某个问题的详情
-			requestAskDetail();
-		} else {
-			mui('#refreshContainer').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
-		}
-	}, 1500);
-}
+//function pullupRefresh() {
+//	setTimeout(function() {
+//		answerFlag = 1;
+//		//判断是否还有更多
+//		if(answerIndex <= answerPageCount) {
+//			//5.获取某个问题的详情
+//			requestAskDetail();
+//		} else {
+//			mui('#refreshContainer').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+//		}
+//	}, 1500);
+//}
 
 /**
  * 请求问题
@@ -569,8 +573,9 @@ function requestAskDetail() {
 					addQuestion(data.RspData);
 					if(tempRspData.length == 0) { //没有人回答
 						answerNone();
-//					} else {
-						
+						mui(".mui-pull-loading")[0].style.display = "none";
+					} else {
+						mui(".mui-pull-loading")[0].style.display = "block";
 					}
 				} else {
 					answerArray = answerArray.concat(tempRspData);
@@ -583,6 +588,7 @@ function requestAskDetail() {
 			wd.close();
 			noticeQuestionInfo();
 			mui.toast(data.RspTxt);
+			endFresh();
 			if(data.RspCode == 1016) {
 				mui.back();
 			}
@@ -778,6 +784,7 @@ function addAnswer(data) {
 		answerList(data[i], fragment);
 	}
 	document.getElementById("answer_bottom").appendChild(fragment);
+	endFresh();
 }
 
 /**

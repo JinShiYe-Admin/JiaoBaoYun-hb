@@ -99,9 +99,11 @@ mui.plusReady(function() {
 });
 
 function endFresh() {
-	freshContainer.endPullDownToRefresh();
-	mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
-	freshContainer.endPullUpToRefresh();
+	if(freshContainer) {
+		freshContainer.endPullDownToRefresh();
+		mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+		freshContainer.endPullUpToRefresh();
+	}
 }
 /**
  * 请求专家数据

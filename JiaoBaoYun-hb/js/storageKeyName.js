@@ -2,7 +2,7 @@
 
 var storageKeyName = (function(mod) {
 
-	var Key = 1; //0,开发;1,测试;2,外网
+	var Key = 0; //0,开发;1,测试;2,外网
 
 	if(Key == 0) {
 		//---开发---start---
@@ -124,7 +124,7 @@ var storageKeyName = (function(mod) {
 	//---默认图片---start---
 	mod.DEFAULTPERSONALHEADIMAGE = '../../image/utils/default_personalimage.png'; //默认的个人头像
 	mod.DEFAULTSCIEDUIMAGELOAD = '/image/utils/default_load_2.gif'; //科教首页，懒加载显示加载中的图片
-	mod.DEFAULTIMAGELOAD = '/image/utils/default_load_2_1.gif'; //压缩后的懒加载默认的图片
+	mod.DEFAULTIMAGELOAD = '/image/utils/default_load_2_1.gif'; // 
 	//---默认图片---end---
 
 	//---Activity的code---start---

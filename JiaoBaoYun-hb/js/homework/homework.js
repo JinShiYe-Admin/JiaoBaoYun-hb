@@ -2,8 +2,43 @@
  * @anthor an
  * 教师作业模块
  */
+mui.init();
+var freshContainer;
+var freshFlag = 0;
+mui('.mui-scroll-wrapper.mui-fullscreen ').scroll({
+	bounce: false,
+	indicators: true //是否显示滚动条
+});
+var setFresh = function() {
+	//上拉下拉注册
+	mui(".mui-scroll-wrapper.mui-fullscreen .mui-scroll").pullToRefresh({
+		down: {
+			callback: function() {
+				freshContainer = this;
+				freshFlag = 1;
+				selectGContainer.classInfo.pageIndex = 1;
+				events.clearChild(list);
+				requireHomeWork(selectGContainer.classInfo, setData);
+			}
+		},
+		up: {
+			callback: function() {
+				freshContainer = this;
+				freshFlag = 2;
+				if(selectGContainer.classInfo.pageIndex < totalPageCount) {
+					selectGContainer.classInfo.pageIndex++;
+					requireHomeWork(selectGContainer.classInfo, setData);
+				} else {
+					freshContainer.endPullUpToRefresh();
+					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
+				}
+			}
+		}
+	});
+}
+setFresh();
 var personalUTID; //个人UTID
-var role=2; //角色 2老師 30 學生/家長
+var role = 2; //角色 2老師 30 學生/家長
 var teacherClasses = []; //老师身份关联班级
 var studentClasses = []; //学生身份关联班级
 var teacherHash; //老师作业键值对
@@ -14,9 +49,9 @@ var list; //数据列表
 var totalPageCount;
 var clickItem; //点击的子控件
 var publish;
-var publishIsReady=false;
-var stuWorkReady=false;
-document.getElementById('tabs-class').style.display="none";
+var publishIsReady = false;
+var stuWorkReady = false;
+//document.getElementById('tabs-class').style.display = "none";
 mui.init();
 //mui的plusready监听
 mui.plusReady(function() {
@@ -25,9 +60,9 @@ mui.plusReady(function() {
 	//预加载发布作业
 	events.preload('homework-publish.html', 300);
 	//老师临时作业界面
-//	events.preload('workdetailTea-temporary.html', 300);
-	var stuWorkNavBarStyle={
-		titleText:"作业详情"
+	//	events.preload('workdetailTea-temporary.html', 300);
+	var stuWorkNavBarStyle = {
+		titleText: "作业详情"
 	}
 	//学生作业详情页面
 	events.preload('workdetail-stu.html', 100);
@@ -36,20 +71,18 @@ mui.plusReady(function() {
 	//列表
 	list = document.getElementById('list-container');
 	//加载h5下拉刷新方式
-	h5fresh.addRefresh(function() {
-		selectGContainer.classInfo.pageIndex = 1;
-		events.clearChild(list);
-		requireHomeWork(selectGContainer.classInfo, setData);
-	}, {
-		style: 'circle',
-		offset: "50px"
-	});
+	//	h5fresh.addRefresh(function() {
+	//
+	//	}, {
+	//		style: 'circle',
+	//		offset: "50px"
+	//	});
 	/**监听父页面的图标事件*/
 	window.addEventListener('togglePop', function(e) {
 		mui("#popover").popover('toggle');
 	});
 	//预加载发布作业界面
-//	events.preload('publish-answer.html');
+	//	events.preload('publish-answer.html');
 	mui('.mui-scrollbar-horizontal').scroll();
 	//标题
 	var title = document.getElementById('workPage-title');
@@ -68,13 +101,13 @@ mui.plusReady(function() {
 	//设置界面
 	setChoices(title, roles, btn_more);
 	//相机点击事件
-//	events.addTap('icon-camero', function() {
-//		events.fireToPageWithData('publish-answer.html', 'roleInfo', {
-//			role: role,
-//			studentClasses: studentClasses,
-//			teacherClasses: teacherClasses
-//		})
-//	})
+	//	events.addTap('icon-camero', function() {
+	//		events.fireToPageWithData('publish-answer.html', 'roleInfo', {
+	//			role: role,
+	//			studentClasses: studentClasses,
+	//			teacherClasses: teacherClasses
+	//		})
+	//	})
 
 	//角色选择的监听
 	roles.addEventListener("toggle", function(event) {
@@ -109,20 +142,20 @@ mui.plusReady(function() {
 		clickItem.className = 'mui-table-view-cell stuHomework ' + getBackGround(clickItem.homeworkInfo);
 		clickItem.innerHTML = createStuHomeworkInner(clickItem.homeworkInfo);
 	})
-	window.addEventListener("publishIsReady",function(){
-		publishIsReady=true;
+	window.addEventListener("publishIsReady", function() {
+		publishIsReady = true;
 	})
-	window.addEventListener("stuWorkReady",function(){
-		stuWorkReady=true;
+	window.addEventListener("stuWorkReady", function() {
+		stuWorkReady = true;
 	})
 	//错题本按钮监听事件
-//	events.addTap('err', function() {
-//		events.openNewWindow('workstu-err.html')
-//	})
+	//	events.addTap('err', function() {
+	//		events.openNewWindow('workstu-err.html')
+	//	})
 	//作业记录按钮监听事件
-//	events.addTap('record', function() {
-//		events.openNewWindow('homework-record.html')
-//	})
+	//	events.addTap('record', function() {
+	//		events.openNewWindow('homework-record.html')
+	//	})
 	//老师作业发布完成，刷新界面
 	window.addEventListener('homeworkPublished', function() {
 		teacherHash = newHashMap();
@@ -133,16 +166,39 @@ mui.plusReady(function() {
 	//设置监听
 	setListener();
 	//上拉加载
-	pullUpRefresh();
+	//	pullUpRefresh();
 })
+/**
+ * 结束刷新状态；
+ * @param {int} 0 不隐藏上拉加载更多     1隐藏上拉加载更多
+ */
+function endFresh(type) {
+	console.log("************************************type:" + type);
+	if(type) {
+		mui(".mui-pull-loading")[0].style.display = "none";
+	} else {
+		mui(".mui-pull-loading")[0].style.display = "block";
+	}
+	if(freshContainer) {
+		if(freshFlag == 1) {
+			freshContainer.endPullDownToRefresh();
+			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+		} else if(freshFlag == 2) {
+			freshContainer.endPullUpToRefresh();
+		}else{
+			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+		}
+		freshFlag = 0;
+	}
+}
 /**
  * 更改角色
  */
 var roleChanged = function() {
-	mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
+	mui('.mui-scroll-wrapper.mui-slider-indicator').scroll().scrollTo(0, 0, 100);
 	console.log('作业子页面获取的角色变换值roleChanged：' + role);
 	setClasses(role);
-	list.innerHTML="";
+	list.innerHTML = "";
 	if(role == 2) { //老师角色
 		mui("#popover").popover('hide');
 		publish.style.display = 'block';
@@ -170,7 +226,7 @@ var roleChanged = function() {
  * 获取作业详情
  */
 var getWorkDetail = function() {
-	mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
+	mui('.mui-scroll-wrapper.mui-slider-indicator').scroll().scrollTo(0, 0, 100);
 	//个人UTID
 	personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
 	//获取个人身份角色
@@ -212,19 +268,12 @@ var getWorkDetail = function() {
 /**
  * 上拉加载方法
  */
-var pullUpRefresh = function() {
-	document.addEventListener("plusscrollbottom", function() {
-		console.log('我在底部pageIndex:' + selectGContainer.classInfo.pageIndex + ',totalPageCount:' + totalPageCount);
-		if(selectGContainer.classInfo.pageIndex < totalPageCount) {
-			selectGContainer.classInfo.pageIndex++;
-			requireHomeWork(selectGContainer.classInfo, setData);
-		} else {
-			if(plus.webview.currentWebview().isVisible()){
-				mui.toast('到底啦，别拉了！');
-			}
-		}
-	}, false);
-}
+//var pullUpRefresh = function() {
+//	document.addEventListener("plusscrollbottom", function() {
+//		console.log('我在底部pageIndex:' + selectGContainer.classInfo.pageIndex + ',totalPageCount:' + totalPageCount);
+//
+//	}, false);
+//}
 
 /**
  * 设置监听
@@ -272,7 +321,7 @@ var setListener = function() {
 	mui('.mui-table-view').on('tap', '.submitOnline', function() {
 		events.showWaiting();
 		openStuWork(this);
-		
+
 	})
 	//学生作业不需要提交点击事件
 	mui('.mui-table-view').on('tap', '.noSubmit', function() {
@@ -281,13 +330,13 @@ var setListener = function() {
 	})
 	//学生作业已提交点击事件
 	mui('.mui-table-view').on('tap', '.isSubmitted', function() {
-		this.disabled=true;
-		events.singleWebviewInPeriod(this,'homework-commented.html',jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+		this.disabled = true;
+		events.singleWebviewInPeriod(this, 'homework-commented.html', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 	})
 	//学生作业在已评论点击事件
 	mui('.mui-table-view').on('tap', '.isCommentedBG', function() {
-		this.disabled=true;
-		events.singleWebviewInPeriod(this,'homework-commented.html',jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
+		this.disabled = true;
+		events.singleWebviewInPeriod(this, 'homework-commented.html', jQuery.extend({}, this.homeworkInfo, selectGContainer.classInfo));
 	})
 	//发布作业界面
 	publish.addEventListener('tap', function() {
@@ -295,20 +344,20 @@ var setListener = function() {
 		openPublish();
 	})
 }
-var openStuWork=function(item){
-	if(publishIsReady){
+var openStuWork = function(item) {
+	if(publishIsReady) {
 		events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, item.homeworkInfo, selectGContainer.classInfo));
 		events.closeWaiting();
-	}else{
-		setTimeout(openPublish,500);
+	} else {
+		setTimeout(openPublish, 500);
 	}
 }
-var openPublish=function(){
-	if(publishIsReady){
+var openPublish = function() {
+	if(publishIsReady) {
 		events.fireToPageWithData('homework-publish.html', 'postClasses', teacherClasses);
 		events.closeWaiting();
-	}else{
-		setTimeout(openPublish,500);
+	} else {
+		setTimeout(openPublish, 500);
 	}
 }
 /**
@@ -317,7 +366,7 @@ var openPublish=function(){
  */
 var setClasses = function(role) {
 	var tabs = document.getElementById('scroll-class');
-	tabs.innerHTML="";
+	tabs.innerHTML = "";
 	var classes;
 	if(role == 2) {
 		classes = teacherClasses;
@@ -336,7 +385,8 @@ var setClasses = function(role) {
 	//第一个子控件 为选中状态
 	tabs.firstElementChild.className = "mui-control-item mui-active";
 	selectGContainer = tabs.firstElementChild;
-	document.getElementById("tabs-class").style.display="block";
+	document.getElementById("tabs-class").style.display = "block";
+	console.log("获取班级控件："+tabs.innerHTML);
 }
 /**
  * 初始化每个班级请求页码为1
@@ -374,8 +424,9 @@ var requireHomeWork = function(classModel, callback) {
 				totalPageCount = data.RspData.PageCount;
 				selectGContainer.classInfo.totalPageCount = totalPageCount;
 				setHashData(comData, data);
-				callback(data.RspData.Dates,2);
+				callback(data.RspData.Dates, 2);
 			} else {
+				endFresh();
 				mui.toast(data.RspTxt);
 				wd.close();
 			}
@@ -443,7 +494,7 @@ var requireHomeWork = function(classModel, callback) {
 							console.log('合并后的数据为：' + JSON.stringify(data));
 							selectGContainer.classInfo.totalPageCount = totalPageCount;
 							setHashData(comData, data);
-							callback(data.RspData.Dates,30)
+							callback(data.RspData.Dates, 30)
 							//						}else{
 							//							wd.close();
 						}
@@ -454,6 +505,7 @@ var requireHomeWork = function(classModel, callback) {
 					callback(data.RspData.Dates)
 				}
 			} else {
+				endFresh();
 				wd.close();
 				mui.toast(data.RspTxt);
 			}
@@ -466,11 +518,11 @@ var requireHomeWork = function(classModel, callback) {
  * @param {Object} data 作业数据
  * @param {Object} type 获取作业身份时的角色类型
  */
-var setData = function(data,type) {
+var setData = function(data, type) {
 	/**
 	 * 如果角色和数据身份不符，不放置数据
 	 */
-	if(role!=type){
+	if(role != type) {
 		events.closeWaiting();
 		return;
 	}
@@ -481,12 +533,13 @@ var setData = function(data,type) {
 	} else {
 		setHomeworkData(data);
 	}
+	endFresh();
 }
 /**
  * 放置我发布的数据
  */
 var setPublishedData = function(publishedData) {
-	var fragment=document.createDocumentFragment();
+	var fragment = document.createDocumentFragment();
 	if(publishedData && publishedData.length > 0) {
 		console.log('发布作业的Id：' + selectGId + ';老师作业的数据：' + JSON.stringify(publishedData));
 		//遍历老师发布的作业
@@ -519,7 +572,7 @@ var setPublishedData = function(publishedData) {
 		})
 
 	} else {
-		mui.toast("暂无作业！");
+//		mui.toast("暂无作业！");
 	}
 	events.closeWaiting();
 	list.appendChild(fragment);
@@ -674,7 +727,7 @@ var getHomeworkIcon = function(subject) {
  * @param {Object} homeworkData 作业数据
  */
 var setHomeworkData = function(homeworkData) {
-	var fragment=document.createDocumentFragment();
+	var fragment = document.createDocumentFragment();
 	if(homeworkData && homeworkData.length > 0) {
 		homeworkData.forEach(function(DateHM, i) {
 			var divider = document.createElement('li');

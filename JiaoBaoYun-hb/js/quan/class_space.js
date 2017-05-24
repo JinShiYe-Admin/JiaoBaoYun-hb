@@ -12,9 +12,9 @@ var class_space = (function(mod) {
 		postData.pageIndex = pageIndex;
 		postData.pageSize = pageSize;
 		mod.wd = events.showWaiting();
-		postDataPro_getClassSpacesByUserForClass(postData,mod.wd, function(pagedata) {
+		postDataPro_getClassSpacesByUserForClass(postData, mod.wd, function(pagedata) {
 			//			wd.close();
-			if(pagedata.RspCode == 0 && pagedata.RspData.Data.length > 0) {
+			if(pagedata.RspCode == 0) {
 				console.log('获取的班级动态：' + JSON.stringify(pagedata));
 				mod.totalPagNo = pagedata.RspData.TotalPage;
 				list = pagedata.RspData.Data;
@@ -24,10 +24,7 @@ var class_space = (function(mod) {
 				callback();
 			} else {
 				mod.wd.close();
-				if(pageIndex == 1) {
-					mui.toast("暂无班级动态！");
-				}
-
+				mui.toast(pagedata.RspTxt);
 			}
 
 		})
@@ -140,7 +137,7 @@ var class_space = (function(mod) {
 		postDataPro_PostGusers(comData, mod.wd, function(pInfo) {
 			console.log('获取的个人信息:' + JSON.stringify(pInfo))
 			//			wd.close();
-			if(pInfo.RspCode == '0000') {
+			if(pInfo.RspCode == 0) {
 				var personalData = pInfo.RspData;
 				for(var i in list) {
 					for(var j in personalData) {
@@ -180,6 +177,7 @@ var class_space = (function(mod) {
 
 			} else {
 				mod.wd.close();
+				endFresh();
 				console.log(pInfo.RspTxt);
 			}
 
@@ -249,7 +247,7 @@ var class_space = (function(mod) {
 			classWords_container.info = list[i];
 		}
 		mod.wd.close();
-		//		container.appendChild(fragment);
+		endFresh();
 	}
 	var getLineNo = function(classWords_container) {
 		var style = window.getComputedStyle(classWords_container, null);
@@ -314,6 +312,8 @@ function videoImgOnload(event) {
 	}
 }
 mui.init();
+var freshContainer;
+var freshFlag = 0; //0啥也不干  1刷新 2加载
 mui('.mui-scroll-wrapper').scroll({
 	bounce: false,
 	indicators: true //是否显示滚动条
@@ -324,33 +324,25 @@ var setFresh = function() {
 	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 		down: {
 			callback: function() {
-				var self = this;
+				freshContainer = this;
+				freshFlag = 1;
 				//清除节点
-
 				pageIndex = 1;
 				var container = document.getElementById('classSpace_list');
 				events.clearChild(container);
 				class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
-
-				setTimeout(function() {
-					//结束下拉刷新
-					self.endPullDownToRefresh();
-					mui(".mui-pull-loading")[0].innerHTML = "上拉显示更多";
-				}, 1000);
 			}
 		},
 		up: {
 			callback: function() {
-				var self = this;
+				freshContainer = this;
+				freshFlag = 2;
 				//5.获取某个问题的详情
 				if(pageIndex < class_space.totalPagNo) {
-					setTimeout(function() {
-						self.endPullUpToRefresh();
-					}, 1000);
 					pageIndex++;
 					class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 				} else {
-					self.endPullUpToRefresh();
+					freshContainer.endPullUpToRefresh();
 					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
 				}
 
@@ -398,16 +390,6 @@ mui.plusReady(function() {
 		container.innerHTML = "";
 		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 	})
-	//	h5fresh.addRefresh(function() {
-	//
-	//	}, {
-	//		offset: "45px",
-	//		style: "circle"
-	//	});
-	//	h5fresh.addPullUpFresh("#refreshContainer", function() {
-	//		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= class_space.totalPagNo);
-	//
-	//	});
 	var firstTime = null;
 	mui('.mui-table-view').on('tap', '.head-portrait', function() {
 		//		console.log(id);
@@ -450,6 +432,29 @@ mui.plusReady(function() {
 		})
 	})
 });
+/**
+ * 结束刷新状态；
+ * @param {int} 0 不隐藏上拉加载更多     1隐藏上拉加载更多
+ */
+function endFresh(type) {
+	console.log("************************************type:" + type);
+	if(type) {
+		mui(".mui-pull-loading")[0].style.display = "none";
+	} else {
+		mui(".mui-pull-loading")[0].style.display = "block";
+	}
+	if(freshContainer) {
+		if(freshFlag == 1) {
+			freshContainer.endPullDownToRefresh();
+			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+		} else if(freshFlag == 2) {
+			freshContainer.endPullUpToRefresh();
+		} else {
+			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+		}
+		freshFlag = 0;
+	}
+}
 /**
  * 获取用户在群组中的信息
  * @param {Object} mstype
