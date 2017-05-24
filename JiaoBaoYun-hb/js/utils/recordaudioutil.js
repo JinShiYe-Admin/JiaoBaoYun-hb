@@ -55,7 +55,7 @@ var RecordAudio = (function(mod) {
 			});
 			timeOutId = setTimeout(function() {
 				recorder.stop();
-			}, options.time + 1000);
+			}, options.time);
 		}
 		return recorder;
 	}
