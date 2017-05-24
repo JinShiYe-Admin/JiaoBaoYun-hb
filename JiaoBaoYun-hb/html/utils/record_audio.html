@@ -268,15 +268,17 @@
 						startRecordAudio();
 					} else {
 						if(plus.os.name == 'iOS') {
-							var tempAudio = plus.audio.getRecorder();
-							tempAudio.record({}, function(recordFile) {
-								console.log('success ' + recordFile);
-							}, function(error) {
-								console.log('error ' + JSON.stringify(error));
-							});
-							tempAudio.stop();
+							if(checkRecord != 'denied') { //没有被拒绝
+								var tempAudio = plus.audio.getRecorder();
+								tempAudio.record({}, function(recordFile) {
+									console.log('success ' + recordFile);
+								}, function(error) {
+									console.log('error ' + JSON.stringify(error));
+								});
+								tempAudio.stop();
+							}
+							mui.toast('录音失败,请检查是否开启录音权限');
 						}
-						mui.toast('录音失败,请检查是否开启录音权限');
 					}
 				});
 
