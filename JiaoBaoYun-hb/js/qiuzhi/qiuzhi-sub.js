@@ -1,5 +1,6 @@
 mui.init();
 var freshContainer;
+var freshFlag = 0; //0 默认 1刷新 2加载更多
 mui('.mui-scroll-wrapper').scroll({
 	bounce: false,
 	indicators: true //是否显示滚动条
@@ -10,6 +11,7 @@ var setFresh = function() {
 		down: {
 			callback: function() {
 				freshContainer = this;
+				freshFlag = 1;
 				pageIndex = 1;
 				getChannelTime = null;
 				getExperTime = null;
@@ -24,9 +26,7 @@ var setFresh = function() {
 				freshContainer = this;
 				console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
 				if(pageIndex < totalPage) {
-					//					setTimeout(function() {
-					//						self.endPullUpToRefresh();
-					//					}, 1500);
+					freshFlag = 2;
 					wd = events.showWaiting();
 					pageIndex++;
 					requestChannelList(channelInfo);
@@ -100,10 +100,16 @@ mui.plusReady(function() {
 
 function endFresh() {
 	if(freshContainer) {
-		freshContainer.endPullDownToRefresh();
-		mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
-		freshContainer.endPullUpToRefresh();
+		if(freshFlag == 1) {
+			freshContainer.endPullDownToRefresh();
+			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+		} else if(freshFlag == 2) {
+			freshContainer.endPullUpToRefresh();
+		} else {
+			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+		}
 	}
+	freshFlag=0;
 }
 /**
  * 请求专家数据
@@ -255,7 +261,7 @@ function requestChannelList(channelInfo) {
 			//			setChannelList();
 		} else {
 			wd.close();
-			if(data.RspCode!=404){
+			if(data.RspCode != 404) {
 				mui.toast(data.RspTxt);
 			}
 			endFresh();

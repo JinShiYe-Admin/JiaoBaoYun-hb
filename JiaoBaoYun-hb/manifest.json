@@ -3135,7 +3135,8 @@
 					"image/utils/loading.gif"
 				],
 				"refer": [
-					"html/qiuzhi/qiuzhi-addAnswer.html"
+					"html/qiuzhi/qiuzhi-addAnswer.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},
@@ -3729,7 +3730,8 @@
 					"fonts/iconfont.ttf",
 					"js/utils/video.js",
 					"image/utils/playvideo.png",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/utils/loading.gif"
 				],
 				"refer": [
 					"html/utils/customizeCity.html",
