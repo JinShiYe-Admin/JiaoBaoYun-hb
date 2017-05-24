@@ -309,7 +309,7 @@
 				console.log('上传并修改资料头像，成功的回调' + JSON.stringify(successCB));
 				mui.toast('资料头像更新成功');
 				//获得主页面的webview
-				var cloud_home = plus.webview.getWebviewById('../cloud/cloud_home.html');
+				var cloud_home = plus.webview.getWebviewById('cloud_home.html');
 				//触发tab-zone页面的setRead事件
 				mui.fire(cloud_home, 'stuImgeChanged', {
 					id: mainData.studentId,
