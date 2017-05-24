@@ -1548,7 +1548,8 @@
 					"js/quan/about-me.js",
 					"js/libs/crypto-js/crypto-js.js",
 					"js/utils/h5fresh.js",
-					"image/utils/loading.gif"
+					"image/utils/loading.gif",
+					"image/utils/playvideo.png"
 				],
 				"refer": [
 					"html/homework/workdetail-stu.html",
