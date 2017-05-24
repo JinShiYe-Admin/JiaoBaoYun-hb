@@ -190,6 +190,7 @@ function getExpertsArray(channelId) {
 			});
 		} else {
 			mui.toast(data.RspTxt);
+			endFresh();
 		}
 		//		wd.close();
 	});
@@ -254,7 +255,10 @@ function requestChannelList(channelInfo) {
 			//			setChannelList();
 		} else {
 			wd.close();
-			mui.toast(data.RspTxt);
+			if(data.RspCode!=404){
+				mui.toast(data.RspTxt);
+			}
+			endFresh();
 		}
 	});
 }

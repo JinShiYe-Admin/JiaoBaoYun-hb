@@ -24,7 +24,9 @@ var class_space = (function(mod) {
 				callback();
 			} else {
 				mod.wd.close();
-				mui.toast(pagedata.RspTxt);
+				if(data.RspTxt!=404){
+					mui.toast(pagedata.RspTxt);
+				}
 			}
 
 		})

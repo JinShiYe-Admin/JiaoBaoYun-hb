@@ -85,6 +85,8 @@ var getApplyRecord = function(records) {
 		console.log('获取的我的群申请记录：' + JSON.stringify(data));
 		if(data.RspCode == 0) {
 			records = records.concat(data.RspData);
+		}else{
+			mui.toast(data.RspTxt);
 		}
 		sortData(records);
 	})

@@ -551,15 +551,28 @@ var events = (function(mod) {
 	 * 设置监听，解决area与scroll冲突问题
 	 */
 	mod.areaInScroll = function() {
+//		window.addEventListener("touchmove", function(e) {
+//			var target = e.target;
+//			console.log("***tagName" + target.tagName);
+//			if(target && target.tagName == 'TEXTAREA') {
+//				if(target.scrollHeight > target.clientHeight) {
+//					e.stopPropagation();
+//				}
+//			}
+//		}, true);
 		window.addEventListener("touchmove", function(e) {
 			var target = e.target;
 			console.log("***tagName" + target.tagName);
 			if(target && target.tagName == 'TEXTAREA') {
 				if(target.scrollHeight > target.clientHeight) {
 					e.stopPropagation();
+				}else{
+
 				}
 			}
-		}, true);
+		}, {
+			passive:true
+		});
 	}
 
 	/**

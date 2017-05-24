@@ -148,14 +148,6 @@ mui.plusReady(function() {
 	window.addEventListener("stuWorkReady", function() {
 		stuWorkReady = true;
 	})
-	//错题本按钮监听事件
-	//	events.addTap('err', function() {
-	//		events.openNewWindow('workstu-err.html')
-	//	})
-	//作业记录按钮监听事件
-	//	events.addTap('record', function() {
-	//		events.openNewWindow('homework-record.html')
-	//	})
 	//老师作业发布完成，刷新界面
 	window.addEventListener('homeworkPublished', function() {
 		teacherHash = newHashMap();
@@ -185,7 +177,7 @@ function endFresh(type) {
 			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
 		} else if(freshFlag == 2) {
 			freshContainer.endPullUpToRefresh();
-		}else{
+		} else {
 			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
 		}
 		freshFlag = 0;
@@ -265,15 +257,6 @@ var getWorkDetail = function() {
 		requireHomeWork(studentClasses[0], setData);
 	}
 }
-/**
- * 上拉加载方法
- */
-//var pullUpRefresh = function() {
-//	document.addEventListener("plusscrollbottom", function() {
-//		console.log('我在底部pageIndex:' + selectGContainer.classInfo.pageIndex + ',totalPageCount:' + totalPageCount);
-//
-//	}, false);
-//}
 
 /**
  * 设置监听
@@ -319,12 +302,14 @@ var setListener = function() {
 	})
 	//学生作业在线提交点击事件
 	mui('.mui-table-view').on('tap', '.submitOnline', function() {
+		var item = this;
+		console.log("我点的是这个")
 		events.showWaiting();
-		openStuWork(this);
-
-	})
+		openStuWork(item);
+	});
 	//学生作业不需要提交点击事件
 	mui('.mui-table-view').on('tap', '.noSubmit', function() {
+
 		events.showWaiting();
 		openStuWork(this);
 	})
@@ -344,12 +329,18 @@ var setListener = function() {
 		openPublish();
 	})
 }
+/**
+ * 学生作业
+ * @param {Object} item
+ */
 var openStuWork = function(item) {
-	if(publishIsReady) {
+	if(stuWorkReady) {
 		events.fireToPageWithData('workdetail-stu.html', 'workDetail', jQuery.extend({}, item.homeworkInfo, selectGContainer.classInfo));
 		events.closeWaiting();
 	} else {
-		setTimeout(openPublish, 500);
+		setTimeout(function() {
+			openStuWork(item);
+		}, 500);
 	}
 }
 var openPublish = function() {
@@ -386,7 +377,7 @@ var setClasses = function(role) {
 	tabs.firstElementChild.className = "mui-control-item mui-active";
 	selectGContainer = tabs.firstElementChild;
 	document.getElementById("tabs-class").style.display = "block";
-	console.log("获取班级控件："+tabs.innerHTML);
+	console.log("获取班级控件：" + tabs.innerHTML);
 }
 /**
  * 初始化每个班级请求页码为1
@@ -572,7 +563,7 @@ var setPublishedData = function(publishedData) {
 		})
 
 	} else {
-//		mui.toast("暂无作业！");
+		//		mui.toast("暂无作业！");
 	}
 	events.closeWaiting();
 	list.appendChild(fragment);

@@ -3,6 +3,12 @@ var homeworkInfo;//作业信息
 mui.init({
 	beforeback:function(){
 		document.querySelector('.startWork-container').style.display = 'none';
+		document.querySelector('.subject-icon').className = "subject-icon";
+		document.querySelector('.brief-title').innerText = "";
+		document.querySelector('.brief-content').innerText = "";
+		document.querySelector('.publisher').innerText ="";
+		document.querySelector('.publish-date').innerText = "";
+		document.getElementById('brief-imgs').innerHTML = "";
 		return true;
 	}
 });//加载mui
@@ -120,27 +126,27 @@ var getImgsInner = function(imgs,id) {
 }
 
 //2.	获取教师发布作业详情，不包括学生提交的答案；
-function requestHomeworkDetail() {
-	personalUTID = myStorage.getItems(storageKeyName.PERSONALINFO);
-	var comData = {
-		studentId: personalUTID, //学生Id
-		classId: homeworkInfo.gid, //班级群Id；
-		homeworkId: homeworkInfo.HomeworkId //作业id；
-	};
-	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-	postDataPro_GetHomeworkStu(comData, wd, function(data) {
-		console.log('学生作业详情获取的作业详情：' + JSON.stringify(data));
-		wd.close();
-		if(data.RspCode == '0000') {
-			setHomworkDetail(data.RspData);
-		} else {
-			mui.toast(data.RspTxt);
-		}
-	})
-}
-var setHomworkDetail = function(workDetail) {
-
-}
+//function requestHomeworkDetail() {
+//	personalUTID = myStorage.getItems(storageKeyName.PERSONALINFO);
+//	var comData = {
+//		studentId: personalUTID, //学生Id
+//		classId: homeworkInfo.gid, //班级群Id；
+//		homeworkId: homeworkInfo.HomeworkId //作业id；
+//	};
+//	var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+//	postDataPro_GetHomeworkStu(comData, wd, function(data) {
+//		console.log('学生作业详情获取的作业详情：' + JSON.stringify(data));
+//		wd.close();
+//		if(data.RspCode == '0000') {
+//			setHomworkDetail(data.RspData);
+//		} else {
+//			mui.toast(data.RspTxt);
+//		}
+//	})
+//}
+//var setHomworkDetail = function(workDetail) {
+//
+//}
 /**
  * 作业icon
  * @param {Object} subject
