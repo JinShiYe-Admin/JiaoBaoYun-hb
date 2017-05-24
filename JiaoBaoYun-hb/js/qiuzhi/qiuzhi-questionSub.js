@@ -15,11 +15,6 @@ var setFresh = function() {
 				freshContainer = this;
 				//清除节点
 				pulldownRefresh();
-				//				setTimeout(function() {
-				//					//结束下拉刷新
-				//					mui(".mui-pull-loading")[0].innerHTML = "上拉显示更多";
-				//					self.endPullDownToRefresh();
-				//				}, 1000);
 			}
 		},
 		up: {
@@ -28,17 +23,10 @@ var setFresh = function() {
 				answerFlag = 1;
 				//判断是否还有更多
 				if(answerIndex <= answerPageCount) {
-					//					setTimeout(function() {
-					//						self.endPullUpToRefresh();
-					//					}, 1000);
-					//5.获取某个问题的详情
 					requestAskDetail();
 				} else {
 					freshContainer.endPullUpToRefresh();
 					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
-					//					if(plus.webview.currentWebview().isVisible()) {
-					//						mui.toast("没有更多了！");
-					//					}
 				}
 
 			}

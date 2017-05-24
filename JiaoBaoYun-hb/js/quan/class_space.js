@@ -24,7 +24,7 @@ var class_space = (function(mod) {
 				callback();
 			} else {
 				mod.wd.close();
-				if(data.RspTxt!=404){
+				if(pagedata.RspTxt!=404){
 					mui.toast(pagedata.RspTxt);
 				}
 			}
