@@ -74,31 +74,29 @@ var appUpdate = (function(mod) {
 		var newestVersionMinMax = getMinMax(newestVersions);
 		if(appVersionMinMax.max < newestVersionMinMax.max) { //整包更新
 			//询问是否更新
-			setDialog('教宝云有新版本，是否下载？', function() {
+			setDialog('教宝云有新版本，是否下载？',"您已取消下载", function() {
 				console.log("下载APK路径：" + version.baseverurl)
 				if(plus.os.name = "Android") {
 					resolveFile(version.baseverurl, 1);
 				} else {
-					plus.webview.currentWebview().canJump = true;
+//					plus.webview.currentWebview().canJump = true;
 				}
-
-				//				downApk(version.baseverurl);
 			})
 		} else if(appVersionMinMax.max == newestVersionMinMax.max) {
 			if(appVersionMinMax.min < newestVersionMinMax.min) { //在线更新
 				if(plus.os.name = "Android") {
-					plus.webview.currentWebview().canJump = true;
+//					plus.webview.currentWebview().canJump = true;
 					resolveFile(version.addverurl, 0);
 				} else {
-					setDialog('教宝云有新版本，是否下载？', function() {
+					setDialog('教宝云有新版本，是否下载？',"您已取消下载",function() {
 
 					});
 				}
 			}else{
-				plus.webview.currentWebview().canJump = true;
+//				plus.webview.currentWebview().canJump = true;
 			}
 		} else {
-			plus.webview.currentWebview().canJump = true;
+//			plus.webview.currentWebview().canJump = true;
 		}
 	}
 	/**
@@ -106,16 +104,16 @@ var appUpdate = (function(mod) {
 	 * @param {Object} hint 提示语
 	 * @param {Object} callback 确认后的回调函数
 	 */
-	var setDialog = function(hint, callback) {
-		var btnArray = ['否', '是'];
+	var setDialog = function(hint,cancelToast,callback) {
+		var btnArray = ['是', '否'];
 		mui.confirm(hint, '教宝云', btnArray, function(e) {
-			if(e.index == 1) {
+			console.log("当前点击的东东："+JSON.stringify(e));
+			if(e.index == 0) {
 				callback();
 			} else {
-				plus.webview.currentWebview().canJump = true;
-				mui.toast('您已取消下载新版本！')
+				mui.toast(cancelToast);
 			}
-		}, "div");
+		});
 	}
 	/**
 	 * 获取大版本号和小版本号
@@ -153,7 +151,7 @@ var appUpdate = (function(mod) {
 				if(status == 200) { // 下载成功
 					var path = d.filename;
 					console.log(d.filename);
-					setDialog("新版app文件已下载，是否安装？", function() {
+					setDialog("新版app文件已下载，是否安装？","您已取消安装", function() {
 						installApk(path);
 					})
 				} else { //下载失败
@@ -234,8 +232,7 @@ var appUpdate = (function(mod) {
 				if(myStorage.getItem("loadFileSize") == metadata.size) {
 					console.log("Remove succeeded:"+myStorage.getItem("loadFileSize"));
 					if(type) {
-						setDialog("新版app文件已下载，是否安装？", function() {
-							plus.webview.currentWebview().canJump = true;
+						setDialog("新版app文件已下载，是否安装？","您已取消安装app", function() {
 							installApk(filePath);
 						})
 					} else {

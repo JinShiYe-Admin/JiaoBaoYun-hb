@@ -123,7 +123,7 @@
 			}
 
 			function showIndex() {
-				if(indexReady && plus.webview.currentWebview().canJump) {
+				if(indexReady) {
 					events.closeWaiting();
 					plus.webview.getWebviewById("index.html").show("slide-in-right", 300);
 				} else {
