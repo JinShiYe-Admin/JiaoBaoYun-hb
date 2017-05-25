@@ -918,11 +918,19 @@ var dynamiclistitem = (function($, mod) {
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext ">';
 		var html7 = '<div id="question_content' + data.id_name + '" style = "color:#808080;font-size:14px" class="ellipsis-show question_content">';
 		//内容
-		var html8 = replaceAllBL(data.MsgContent);
+		var html8
+		if(data.EncType==5){
+			html8 = replaceAllBL(data.MsgContentTxt);
+		}else{
+			html8 = replaceAllBL(data.MsgContent);
+		}
 		var html99 = '<div id="show' + data.id_name + '" class="showAll show" style="color:#B7B7B7;">展开全部</div>'
-
+var mp = data.EncAddr.split('.');
 		if(document.getElementById("spaceDetail")) {
 			html99 = '';
+			if(mp[mp.length-1]=='mp4'){
+				html8 = data.MsgContent
+			}
 		}
 		var html9 = '</div>' + html99 + '</div></div>';
 		html = html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8 + html9;
@@ -961,12 +969,19 @@ var dynamiclistitem = (function($, mod) {
 		//		if(data.pageFlag!=0){
 		//			ImageNum=0;
 		//		}
-
+var mp = data.EncAddr.split('.');
 		if(ImageNum == 1) { //一张图片时1
 			if(data.EncType == 2) {
 				var html1 = '<div id="video-container' + data.id_name + '" class="video-container" thb=' + ImageUrlList[0] + ' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url(' + ImageUrlList[0] + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
 				var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:60px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
 				html = html1 + html2;
+			}else if(mp[mp.length-1]=="mp4"){
+				if(!document.getElementById("spaceDetail")){
+					var html1 = '<div id="video-container' + data.id_name + '" class="video-container" thb=' + ImageUrlList[0] + ' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url(' + ImageUrlList[0] + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
+				var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:60px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
+				html = html1 + html2;
+				}
+				
 			} else {
 
 				var html1 = '<div>';
@@ -1157,7 +1172,8 @@ var dynamiclistitem = (function($, mod) {
 		var ImageUrlList = data.ImageList; //图片路径数组1
 		var EncAddrList = data.EncAddrList
 		var ImageNum = ImageUrlList.length; //图片总数量
-		if(ImageNum == 1 && data.EncType == 2) {
+		var mp = data.EncAddr.split('.');
+		if(ImageNum == 1 && (data.EncType == 2)) {
 			var tempDiv = document.getElementById("video-container"+data.id_name);
 			var imgSize = mod.getNaturalSize(ImageUrlList[0])
 			console.log(imgSize.width + '-----' + imgSize.height);
