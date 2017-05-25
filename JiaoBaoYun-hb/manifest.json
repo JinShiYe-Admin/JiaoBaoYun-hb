@@ -3841,7 +3841,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"image/utils/default_personalimage.png",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"image/utils/loading.gif"
 				],
 				"refer": [
 					"html/qiuzhi/expert-detail.html"

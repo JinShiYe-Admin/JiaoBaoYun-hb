@@ -480,7 +480,8 @@
 			"css/utils/common.css",
 			"image/qiuzhi/channel-science.png",
 			"image/qiuzhi/channel-health.png",
-			"image/qiuzhi/channel-food.png"
+			"image/qiuzhi/channel-food.png",
+			"image/qiuzhi/channel-edu.png"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-question.html"
@@ -745,7 +746,8 @@
 			"js/qiuzhi/attentionPersons.js",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"js/utils/h5fresh.js"
+			"js/utils/h5fresh.js",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/qiuzhi/expert-detail.html"
@@ -1045,7 +1047,8 @@
 			"js/utils/MultiMedia.js",
 			"js/utils/UploadHeadImage.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/mine/qun_manage_info_change_post.html"
@@ -1113,6 +1116,12 @@
 		"refer": [
 			"html/check/area-choose.html",
 			"html/check/news-detail.html"
+		]
+	},
+	"html/mine/qun_manage_info_change_post.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	}
 }
