@@ -928,7 +928,7 @@ var dynamiclistitem = (function($, mod) {
 var mp = data.EncAddr.split('.');
 		if(document.getElementById("spaceDetail")) {
 			html99 = '';
-			if(mp[mp.length-1]=='mp4'){
+			if(data.EncType==5){
 				html8 = data.MsgContent
 			}
 		}
