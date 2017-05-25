@@ -3688,7 +3688,8 @@
 					"js/utils/RSAEncrypt.js",
 					"/image/utils/default_load_2_1.gif",
 					"fonts/fangzheng.ttf",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/utils/loading.gif"
 				],
 				"refer": [
 					"html/utils/customizeCity.html",

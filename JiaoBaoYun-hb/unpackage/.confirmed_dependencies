@@ -173,7 +173,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/sciedu/sciedu_show_main.html",
@@ -1101,7 +1102,9 @@
 	"html/check/area-choose.html": {
 		"resources": [
 			"css/check/area-choose.css",
-			"js/check/area-choose.js"
+			"js/check/area-choose.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/check/news-detail.html": {

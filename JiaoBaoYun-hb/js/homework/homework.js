@@ -70,13 +70,6 @@ mui.plusReady(function() {
 	events.preload('doHomework-stu.html', 400);
 	//列表
 	list = document.getElementById('list-container');
-	//加载h5下拉刷新方式
-	//	h5fresh.addRefresh(function() {
-	//
-	//	}, {
-	//		style: 'circle',
-	//		offset: "50px"
-	//	});
 	/**监听父页面的图标事件*/
 	window.addEventListener('togglePop', function(e) {
 		mui("#popover").popover('toggle');
