@@ -97,7 +97,21 @@ mui.plusReady(function() {
 	})
 	setListener();
 });
-
+/**
+ * 
+ * @param {Object} type
+ */
+function showNoData(type){
+	if(type){
+		document.querySelector(".vertical-list").style.display="none";
+		document.querySelector(".noDataDisplay").style.display="block";
+		mui(".mui-pull-loading")[0].style.display = "none";
+	}else{
+		document.querySelector(".vertical-list").style.display="block";
+		document.querySelector(".noDataDisplay").style.display="none";
+		mui(".mui-pull-loading")[0].style.display = "block";
+	}
+}
 function endFresh() {
 	if(freshContainer) {
 		if(freshFlag == 1) {
@@ -323,6 +337,7 @@ var setChannelList = function(data) {
 	var list = document.getElementById('list-container');
 	if(pageIndex == 1) {
 		list.innerHTML = "";
+		showNoData(data.length==0);
 	}
 	//	var fragemnt = document.createDocumentFragment();
 	for(var i in data) {

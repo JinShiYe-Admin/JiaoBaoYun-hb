@@ -45,7 +45,8 @@
 			"js/libs/jquery.lazyload.min.js",
 			"image/utils/default_personalimage.png",
 			"image/utils/video-loading.gif",
-			"image/utils/loading.gif"
+			"image/utils/loading.gif",
+			"image/qiuzhi/qiuzhi_noanswer.png"
 		]
 	},
 	"html/qiuzhi/qiuzhi-question.html": {
@@ -236,7 +237,8 @@
 			"html/mine/qun_manage_a.html",
 			"html/mine/approval-apply.html",
 			"html/mine/about.html",
-			"html/quan/zone_main.html"
+			"html/quan/zone_main.html",
+			"html/check/check-news.html"
 		]
 	},
 	"html/show/show_home_1.html": {
@@ -644,7 +646,8 @@
 			"js/utils/UploadHeadImage.js",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"image/utils/playvideo.png"
 		]
 	},
 	"html/quan/class-group.html": {
@@ -659,7 +662,8 @@
 		"refer": [
 			"html/quan/group-pInfo.html",
 			"html/quan/edit-remark.html",
-			"html/mine/QRCode.html"
+			"html/mine/QRCode.html",
+			"html/mine/qun_manage_invite_a.html"
 		]
 	},
 	"html/quan/group-pInfo.html": {
@@ -719,7 +723,10 @@
 		"resources": [
 			"js/utils/showvideoutil.js",
 			"js/utils/recordvideoutil.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"image/utils/playvideo.png",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/cloud/record_student_add.html"
@@ -1028,13 +1035,17 @@
 			"image/cloud/notes_bg2.jpg",
 			"js/utils/showvideoutil.js",
 			"css/utils/audiopopover.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/mine/qun_manage_info.html": {
 		"resources": [
 			"js/utils/MultiMedia.js",
-			"js/utils/UploadHeadImage.js"
+			"js/utils/UploadHeadImage.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/mine/qun_manage_info_change_post.html"
@@ -1070,6 +1081,38 @@
 		],
 		"refer": [
 			"html/register/yanZhengMa.html"
+		]
+	},
+	"html/mine/qun_manage_invite_a.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/check/area-choose.html": {
+		"resources": [
+			"css/check/area-choose.css",
+			"js/check/area-choose.js"
+		]
+	},
+	"html/check/news-detail.html": {
+		"resources": [
+			"js/check/news-detail.js"
+		]
+	},
+	"html/check/check-news.html": {
+		"resources": [
+			"css/check/check-news.css",
+			"image/utils/default_load_2.gif",
+			"js/check/check-news.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"image/utils/loading.gif",
+			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/check/area-choose.html",
+			"html/check/news-detail.html"
 		]
 	}
 }

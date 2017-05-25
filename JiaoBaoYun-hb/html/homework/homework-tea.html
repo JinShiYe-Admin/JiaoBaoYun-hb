@@ -43,8 +43,8 @@
 		<div class="mui-content">
 			<!--	<div id="slider" class="mui-slider mui-fullscreen">-->
 			<!--班级选择状态条-->
-			<div id="tabs-class" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted "style="height: 40px;">
-				<div id="scroll-class" class="mui-scroll tabs-classes" >
+			<div id="tabs-class" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted " style="height: 40px;">
+				<div id="scroll-class" class="mui-scroll tabs-classes">
 				</div>
 			</div>
 			<!--</div>-->
@@ -53,12 +53,13 @@
 			<!--下拉刷新容器-->
 			<!--<div id="refreshContainer" class="mui-scroll-wrapper">-->
 			<div class="mui-scroll-wrapper mui-fullscreen">
-				<div class="mui-scroll">
-					<!--数据列表-->
+				<div class="mui-scroll vertical-scroll">
 					<ul id="list-container" class="mui-table-view">
-
 					</ul>
-
+				</div>
+				<div class="noDataDisplay" style="background-color: white; width: 100%;min-height: 500px; text-align: center;display: none;">
+					<img src="../../image/qiuzhi/qiuzhi_noanswer.png" style="width: 50%; margin: 25% 0 15px;" />
+					<p style="font-size: 1.6rem;">暂无作业~~</p>
 				</div>
 			</div>
 		</div>

@@ -71,12 +71,12 @@ mui.plusReady(function() {
 			pInfo.uimg = successCB;
 			myStorage.setItem(storageKeyName.PERSONALINFO, pInfo);
 			document.getElementById("img").src = successCB;
-			document.getElementById("img").onload=function(){
+			document.getElementById("img").onload = function() {
 				wd.close();
 			}
 			events.fireToPageNone('mine.html', 'infoChanged');
 			mui.fire(plus.webview.currentWebview(), 'infoChanged');
-			events.fireToPageNone('classSpace-sub.html', 'infoChanged');
+			events.fireToPageNone('class_space.html', 'infoChanged');
 		}, 2000);
 	}, function(errorCB) {
 		console.log('上传并修改个人头像，失败的回调' + JSON.stringify(errorCB));
