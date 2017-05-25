@@ -538,7 +538,8 @@
 					"css/utils/preview.css",
 					"image/utils/playvideo.png",
 					"image/utils/loading.gif",
-					"js/utils/h5fresh.js"
+					"js/utils/h5fresh.js",
+					"image/mine/invite_none_0.png"
 				],
 				"refer": [
 					"html/quan/class-group.html",

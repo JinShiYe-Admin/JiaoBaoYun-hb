@@ -5,7 +5,8 @@
 			"html/qiuzhi/qiuzhi-answerDetail.html",
 			"html/register/login.html",
 			"html/qiuzhi/qiuzhi-newQ.html",
-			"html/qiuzhi/expert-detail.html"
+			"html/qiuzhi/expert-detail.html",
+			"html/qiuzhi/experts_main.html"
 		],
 		"resources": [
 			"image/qiuzhi/add-question.png.png",
@@ -648,7 +649,8 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"image/utils/playvideo.png"
+			"image/utils/playvideo.png",
+			"css/utils/preview.css"
 		]
 	},
 	"html/quan/class-group.html": {
@@ -711,7 +713,8 @@
 			"css/utils/preview.css",
 			"image/utils/playvideo.png",
 			"image/utils/loading.gif",
-			"js/utils/h5fresh.js"
+			"js/utils/h5fresh.js",
+			"image/mine/invite_none_0.png"
 		],
 		"refer": [
 			"html/quan/class-group.html",
@@ -793,7 +796,8 @@
 			"css/utils/common.css"
 		],
 		"refer": [
-			"html/quan/space-detail.html"
+			"html/quan/space-detail.html",
+			"html/show/add-comment.html"
 		]
 	},
 	"html/mine/QRCode.html": {
@@ -863,7 +867,9 @@
 	"html/qiuzhi/experts_main.html": {
 		"resources": [
 			"image/qiuzhi/expert_level.png",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/qiuzhi/qiuzhi-expertAllAnswer.html": {
@@ -1120,6 +1126,13 @@
 	},
 	"html/mine/qun_manage_info_change_post.html": {
 		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/show/add-comment.html": {
+		"resources": [
+			"css/quan/custom-textarea.css",
 			"css/mui.min.css",
 			"css/utils/common.css"
 		]
