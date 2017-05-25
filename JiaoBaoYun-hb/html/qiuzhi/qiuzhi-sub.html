@@ -1,6 +1,7 @@
 <!--求知子页面-->
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -14,30 +15,33 @@
 
 	<body>
 		<div class="mui-content">
-			<!--专家列表-->
-			<div class="experts-content">
-				<div class="experts-show">
-					<p class="export-show"><span class="mui-icon iconfont icon-zhuanjia expert-icon"></span>&nbsp;&nbsp;专家风采</p>
-				</div>
-				<div id="experts_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div id="experts_sc" class="mui-scroll">
+			<div class="mui-scroll-wrapper scroll-vertical">
+				<div id="pullrefresh" class="mui-scroll">
+					<!--专家列表-->
+					<div class="experts-content">
+						<div class="experts-show">
+							<p class="export-show"><span class="mui-icon iconfont icon-zhuanjia expert-icon"></span>&nbsp;&nbsp;专家风采</p>
+						</div>
+						<div id="experts_sw" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+							<div id="experts_sc" class="mui-scroll">
+							</div>
+						</div>
 					</div>
+					<!--问题列表-->
+
+					<ul id="list-container" class="mui-table-view">
+					</ul>
 				</div>
-			</div>
-			<!--问题列表-->
-			<div id="pullrefresh" class="mui-scroll">
-				<ul id="list-container" class="mui-table-view">
-				</ul>
 			</div>
 			<!--发布问题按钮-->
-			<img id="submit-question"  src="../../image/qiuzhi/add-question.png.png" class="add-question" />
+			<img id="submit-question" src="../../image/qiuzhi/add-question.png.png" class="add-question" />
 		</div>
 		<!--mui.js-->
 		<script src="../../js/mui.min.js"></script>
 		<!--h5刷新-->
-		<script src="../../js/utils/h5fresh.js"></script>
-		<!--<script src="../../js/mui.pullToRefresh.js"></script>
-		<script src="../../js/mui.pullToRefresh.material.js"></script>-->
+		<!--<script src="../../js/utils/h5fresh.js"></script>-->
+		<script src="../../js/mui.pullToRefresh.js"></script>
+		<script src="../../js/mui.pullToRefresh.material.js"></script>
 		<!--公共方法js-->
 		<script src="../../js/utils/events.js"></script>
 		<!--接口js-->

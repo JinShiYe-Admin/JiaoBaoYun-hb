@@ -3,33 +3,28 @@ mui('.mui-scroll-wrapper').scroll({
 	bounce: false,
 	indicators: true //是否显示滚动条
 });
+var freshContainer;
+var freshFlag = 0; //0 1 刷新2加载更多
 var setFresh = function() {
 	//上拉下拉注册
 	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 		down: {
 			callback: function() {
-				var self = this;
+				freshContainer = this;
+				freshFlag = 1;
 				pgeIndex = 1;
 				requestData();
-
-				setTimeout(function() {
-					//结束下拉刷新
-					self.endPullDownToRefresh();
-					mui(".mui-pull-loading")[0].innerHTML = "上拉显示更多";
-				}, 1000);
 			}
 		},
 		up: {
 			callback: function() {
-				var self = this;
+				freshContainer = this;
 				if(pageIndex < totalPage || pageIndex < alertTotalPage) {
-					setTimeout(function() {
-						self.endPullUpToRefresh();
-					}, 1000);
+					freshFlag = 2;
 					pageIndex++;
 					requestData();
 				} else {
-					self.endPullUpToRefresh();
+					freshContainer.endPullUpToRefresh();
 					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
 				}
 			}
@@ -95,26 +90,28 @@ mui.plusReady(function() {
 	setListener();
 })
 /**
- * 设置刷新方法
+ * 结束刷新状态；
+ * @param {int} 0 不隐藏上拉加载更多     1隐藏上拉加载更多
  */
-//var setFresh = function() {
-//	h5fresh.addRefresh(function() {
-////		mui("#refreshContainer").pullRefresh().refresh(true);
-//		pageIndex = 1;
-//		requestData();
-//	}, {
-//		style: "circle",
-//		offset: "50px"
-//	});
-//	h5fresh.addPullUpFresh("#refreshContainer", function() {
-//		console.log('请求页面：page：' + pageIndex + ',总页面：' + totalPage + '，作业提醒总页数：' + alertTotalPage);
-//		mui('#refreshContainer').pullRefresh().endPullupToRefresh(pageIndex >= totalPage && pageIndex >= alertTotalPage);
-//		if(pageIndex < totalPage || pageIndex < alertTotalPage) {
-//			pageIndex++;
-//			requestData();
-//		}
-//	});
-//}
+function endFresh(type) {
+	console.log("************************************type:" + type);
+	if(type) {
+		mui(".mui-pull-loading")[0].style.display = "none";
+	} else {
+		mui(".mui-pull-loading")[0].style.display = "block";
+	}
+	if(freshContainer) {
+		if(freshFlag == 1) {
+			freshContainer.endPullDownToRefresh();
+			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+		} else if(freshFlag == 2) {
+			freshContainer.endPullUpToRefresh();
+		} else {
+			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+		}
+		freshFlag = 0;
+	}
+}
 /**
  * 界面放置数据
  * @param {Object} data 请求成功后返回的数据
@@ -140,6 +137,7 @@ var setData = function(data) {
 			li.querySelector(".work-notice").info = cell;
 		}
 	})
+	endFresh();
 }
 /**
  * 创建Inner
@@ -191,12 +189,13 @@ var ifHaveReferContent = function(cellData, cell) {
 	}
 }
 var addEncImg = function(cell) {
+	console.log("获取的数据："+JSON.stringify(cell));
 	if(cell.EncImgAddr && cell.EncImgAddr.length > 0) {
 		if(cell.EncType == 1) {
 			return '<img class="refer-img display-inlineBlock" src="' + cell.EncImgAddr.split("|")[0] + '"/>';
 		}
-		if(cell.encType == 2) {
-			return '<div class="refer-img display-inlineBlock" style="backgroud-image:url(' + cell.EncImgAddr + ');background-size:cover;"><img src="../../image/utils/payvideo.png" style="width:50%;margin:25%;"/></div>';
+		if(cell.EncType == 2) {
+			return '<div class="refer-img display-inlineBlock" style="background-image:url(' + cell.EncImgAddr + ');background-position:center;background-size:cover;"><img src="../../image/utils/playvideo.png" style="width:50%;margin:25%;"/></div>';
 		}
 	}
 	return '';
@@ -317,8 +316,8 @@ var getHomeworkResult = function(workInfo, callback) {
 		console.log("获取当前作业结果：" + JSON.stringify(data))
 		if(data.RspCode == 0) {
 			callback(data.RspData);
-//		}else{
-//			mui.toast(data.RspTxt);
+			//		}else{
+			//			mui.toast(data.RspTxt);
 		}
 	})
 }
@@ -474,6 +473,7 @@ var getRoleInfos = function(tempRspData) {
 				console.log('最终数据：' + JSON.stringify(rechargedData));
 				setData(rechargedData);
 			} else {
+				endFresh();
 				mui.toast(data.RspTxt);
 			}
 		});
@@ -538,6 +538,7 @@ var requireAboutMe = function() {
 				getRoleInfos(data.RspData.Data)
 			}
 		} else {
+			endFresh();
 			wd.close();
 			mui.toast(data.RspTxt);
 		}

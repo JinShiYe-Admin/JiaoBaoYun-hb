@@ -13,24 +13,24 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<!--alibaba字库-->
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
-			<link href="../../css/homework/subjects-icon.css" rel="stylesheet" />
+		<link href="../../css/homework/subjects-icon.css" rel="stylesheet" />
 		<!--本页面应有样式-->
 		<link href="../../css/homework/homework.css" rel="stylesheet" />
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 id="workPage-title" class="mui-title display-none">我的作业</h1>
-		    <div id="workPage-roles" class="switch-mine display-none">
-		        <div class="switch-handle-mine"></div>
-		    </div>
-		    <!--更多按钮-->
-		   	<a id="more" class="mui-icon  mui-icon-bars mui-pull-right display-none" style="display: none;" href="#popover"></a>
-		   	<!--相机按钮-->
-		    <a id="icon-camero" class="mui-icon iconfont icon-xiangji  mui-pull-right display-none"></a>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="workPage-title" class="mui-title display-none">我的作业</h1>
+			<div id="workPage-roles" class="switch-mine display-none">
+				<div class="switch-handle-mine"></div>
+			</div>
+			<!--更多按钮-->
+			<a id="more" class="mui-icon  mui-icon-bars mui-pull-right display-none" style="display: none;" href="#popover"></a>
+			<!--相机按钮-->
+			<a id="icon-camero" class="mui-icon iconfont icon-xiangji  mui-pull-right display-none"></a>
 		</header>
-			<div id="popover" class="mui-popover">
+		<div id="popover" class="mui-popover">
 			<ul class=" mui-table-view">
 				<li id="err" class="mui-table-view-cell">
 					<a class="mui-icon iconfont icon-shubendisc" href="">错题本</a>
@@ -41,23 +41,26 @@
 			</ul>
 		</div>
 		<div class="mui-content">
-		<!--	<div id="slider" class="mui-slider mui-fullscreen">-->
-				<!--班级选择状态条-->
-				<div id="tabs-class" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted display-none">
-					<div id="scroll-class" class="mui-scroll tabs-classes" >
-
-					</div>
+			<!--	<div id="slider" class="mui-slider mui-fullscreen">-->
+			<!--班级选择状态条-->
+			<div id="tabs-class" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted "style="height: 40px;">
+				<div id="scroll-class" class="mui-scroll tabs-classes" >
 				</div>
+			</div>
 			<!--</div>-->
 			<!--<img id="tempDetail" src="../../image/homework/other.png" />-->
-		</div>
-		<!--下拉刷新容器-->
-		<!--<div id="refreshContainer" class="mui-scroll-wrapper">-->
-		<div class="mui-scroll">
-			<!--数据列表-->
-			<ul id="list-container" class="mui-table-view">
 
-			</ul>
+			<!--下拉刷新容器-->
+			<!--<div id="refreshContainer" class="mui-scroll-wrapper">-->
+			<div class="mui-scroll-wrapper mui-fullscreen">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<ul id="list-container" class="mui-table-view">
+
+					</ul>
+
+				</div>
+			</div>
 		</div>
 		<a id="iconPublish" class="mui-icon iconfont icon-tianjia"></a>
 		<script src="../../js/mui.min.js"></script>
@@ -66,9 +69,11 @@
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/utils/h5fresh.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/mui.pullToRefresh.js"></script>
+		<script src="../../js/mui.pullToRefresh.material.js"></script>
 		<script src="../../js/publicHomeworkProtocol.js"></script>
 		<script src="../../js/homework/homework.js"></script>
-		
+
 	</body>
 
 </html>

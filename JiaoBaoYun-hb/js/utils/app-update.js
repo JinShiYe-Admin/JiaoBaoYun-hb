@@ -79,7 +79,7 @@ var appUpdate = (function(mod) {
 				if(plus.os.name = "Android") {
 					resolveFile(version.baseverurl, 1);
 				} else {
-
+					plus.webview.currentWebview().canJump = true;
 				}
 
 				//				downApk(version.baseverurl);
@@ -94,7 +94,8 @@ var appUpdate = (function(mod) {
 
 					});
 				}
-
+			}else{
+				plus.webview.currentWebview().canJump = true;
 			}
 		} else {
 			plus.webview.currentWebview().canJump = true;
@@ -108,10 +109,10 @@ var appUpdate = (function(mod) {
 	var setDialog = function(hint, callback) {
 		var btnArray = ['否', '是'];
 		mui.confirm(hint, '教宝云', btnArray, function(e) {
-			plus.webview.currentWebview().canJump = true;
 			if(e.index == 1) {
 				callback();
 			} else {
+				plus.webview.currentWebview().canJump = true;
 				mui.toast('您已取消下载新版本！')
 			}
 		}, "div");
@@ -231,9 +232,10 @@ var appUpdate = (function(mod) {
 			console.log('存在文件！' + entry.isFile);
 			entry.getMetadata(function(metadata) {
 				if(myStorage.getItem("loadFileSize") == metadata.size) {
-					console.log("Remove succeeded");
+					console.log("Remove succeeded:"+myStorage.getItem("loadFileSize"));
 					if(type) {
 						setDialog("新版app文件已下载，是否安装？", function() {
+							plus.webview.currentWebview().canJump = true;
 							installApk(filePath);
 						})
 					} else {

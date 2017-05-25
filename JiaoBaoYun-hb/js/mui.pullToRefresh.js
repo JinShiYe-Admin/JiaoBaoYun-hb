@@ -32,10 +32,10 @@
 					auto: false,
 					offset: 100, //距离底部高度(到达该高度即触发)
 					show: true,
-					contentinit: '上拉显示更多',
-					contentdown: '上拉显示更多',
-					contentrefresh: '正在加载...',
-					contentnomore: '没有更多数据了',
+					contentinit: '上拉加载更多',
+					contentdown: '上拉加载更多',
+					contentrefresh: '<img src="../../image/utils/loading.gif" style="width:16px;vertical-align:text-bottom;"/>正在加载...',
+					contentnomore: '没有更多了',
 					callback: false
 				},
 				preventDefaultException: {

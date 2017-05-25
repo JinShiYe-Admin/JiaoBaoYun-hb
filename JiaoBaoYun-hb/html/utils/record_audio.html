@@ -267,17 +267,18 @@
 						//initProgressBar();
 						startRecordAudio();
 					} else {
-						//						if(checkRecord == 'unknown') {
-						//							var tempAudio = plus.audio.getRecorder();
-						//							tempAudio.record({}, function(recordFile) {
-						//								console.log('success ' + recordFile);
-						//							}, function(error) {
-						//								console.log('error ' + JSON.stringify(error));
-						//							});
-						//							tempAudio.stop();
-						//						}
-
-						mui.toast('录音失败,请检查是否开启录音权限');
+						if(plus.os.name == 'iOS') {
+							if(checkRecord != 'denied') { //没有被拒绝
+								var tempAudio = plus.audio.getRecorder();
+								tempAudio.record({}, function(recordFile) {
+									console.log('success ' + recordFile);
+								}, function(error) {
+									console.log('error ' + JSON.stringify(error));
+								});
+								tempAudio.stop();
+							}
+							mui.toast('录音失败,请检查是否开启录音权限');
+						}
 					}
 				});
 
@@ -339,6 +340,14 @@
 			 * 开始录制音频
 			 */
 			function startRecordAudio() {
+				if(timeId) {
+					clearInterval(timeId);
+					timeId = null;
+				}
+				if(recordTimeId) {
+					clearInterval(recordTimeId);
+					recordTimeId = null;
+				}
 				recordAudio = RecordAudio.recordAudio({
 					//					time: 12000
 				}, function(fpath) {
@@ -365,22 +374,15 @@
 					mui.toast('录制音频失败 ' + JSON.stringify(err));
 					recordError();
 				});
-				if(recordAudio != null) {
-					if(timeId) {
-						clearInterval(timeId);
-						timeId = null;
-					}
-					timeId = setInterval(function() {
-						showTime(300);
-					}, 1000);
-					if(recordTimeId) {
-						clearInterval(recordTimeId);
-						recordTimeId = null;
-					}
-					recordTimeId = setInterval(function() {
-						recordTime = recordTime + 1;
-					}, 100);
-				}
+
+				timeId = setInterval(function() {
+					showTime(300);
+				}, 1000);
+
+				recordTimeId = setInterval(function() {
+					recordTime = recordTime + 1;
+				}, 100);
+
 			}
 
 			/**
@@ -397,6 +399,9 @@
 			 */
 			function showTime(count) {
 				timeCount = timeCount + 1;
+				if(timeCount > count) {
+					return false;
+				}
 				var min = (parseInt(timeCount / 60)).toString(); //分钟
 				var sec = (timeCount - min * 60).toString(); //秒
 				if(min.length == 1) {

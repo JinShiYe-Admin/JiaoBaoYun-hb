@@ -1,14 +1,21 @@
-mui.init();
+mui.init({
+	gestureConfig: {
+		longtap: true //默认为false
+	}
+});
+var freshContainer;
+var freshFlag=0; //0 啥也没做 1 刷新 2加载更多
 mui('.mui-scroll-wrapper').scroll({
 	bounce: false,
-	indicators:true//是否显示滚动条
+	indicators: true //是否显示滚动条
 });
 var setFresh = function() {
 	//上拉下拉注册
 	mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 		down: {
 			callback: function() {
-				var self = this;
+				freshContainer = this;
+				freshFlag=1;//刷新
 				//清除节点
 				document.getElementById("list-container").innerHTML = "";
 				flag = 1;
@@ -16,26 +23,27 @@ var setFresh = function() {
 				wd = events.showWaiting();
 				requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
 
-				setTimeout(function() {
-					//结束下拉刷新
-					self.endPullDownToRefresh();
-					mui(".mui-pull-loading")[0].innerHTML = "上拉显示更多";
-				}, 1000);
+//				setTimeout(function() {
+//					//结束下拉刷新
+//					self.endPullDownToRefresh();
+//					mui(".mui-pull-loading")[0].innerHTML = "上拉显示更多";
+//				}, 1000);
 			}
 		},
 		up: {
 			callback: function() {
-				var self = this;
+				freshContainer = this;
+				freshFlag=2;//加载更多
 				if(pageIndex < totalPageCount) {
-					setTimeout(function() {
-						self.endPullUpToRefresh();
-					}, 1000);
+//					setTimeout(function() {
+//						self.endPullUpToRefresh();
+//					}, 1000);
 					pageIndex++;
 					flag = 1;
 					wd = events.showWaiting();
 					requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
-				}else{
-					self.endPullUpToRefresh();
+				} else {
+					freshContainer.endPullUpToRefresh();
 					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
 				}
 			}
@@ -59,7 +67,7 @@ mui.plusReady(function() {
 	mui.previewImage();
 	mui.fire(plus.webview.getWebviewById('qiuzhi-sub.html'), "answerIsReady");
 	//限制下拉刷新
-//	events.limitPreviewPullDown("refreshContainer", 1);
+	//	events.limitPreviewPullDown("refreshContainer", 1);
 	//预加载回答问题界面
 	events.preload('qiuzhi-addAnswer.html');
 
@@ -84,7 +92,7 @@ mui.plusReady(function() {
 		//如果跟上次进入的是同一个回答 则不更改顺序
 		if(!(answerInfo && e.detail.data.AnswerId == answerInfo.AnswerId)) {
 			type = 2; //倒序
-			mui(".mui-scroll-wrapper").scroll().scrollTo(0,0,100);
+			mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0, 100);
 		}
 		answerInfo = e.detail.data;
 		setChangeCondition();
@@ -104,7 +112,7 @@ mui.plusReady(function() {
 	window.addEventListener("answerChanged", function(e) {
 		var changedData = e.detail;
 		//		document.getElementById('answer-imgs').innerHTML="";
-		document.getElementById("question-content").innerHTML = changedData.answerContent;
+		document.getElementById("question-content").innerHTML = changedData.answerContent.replace(/ /g, "&nbsp;").replace(/\n/g, "<br/>");
 		document.getElementById("answer-imgs").innerHTML = getPicInner(changedData)
 		answerInfo.AnswerThumbnail = changedData.AnswerThumbnail;
 		answerInfo.AnswerEncType = changedData.AnswerEncType;
@@ -122,6 +130,27 @@ mui.plusReady(function() {
 	})
 	setListeners();
 })
+/**
+ * 结束刷新状态；
+ * @param {int} 0 不隐藏上拉加载更多     1隐藏上拉加载更多
+ */
+function endFresh(type) {
+	console.log("************************************type:"+type);
+	if(type) {
+		mui(".mui-pull-loading")[0].style.display = "none";
+	} else {
+		mui(".mui-pull-loading")[0].style.display = "block";
+	}
+	if(freshContainer) {
+		if(freshFlag==1){
+			freshContainer.endPullDownToRefresh();
+			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+		}else if(freshFlag==2){
+			freshContainer.endPullUpToRefresh();
+		}
+		freshFlag=0;	
+	}
+}
 /**
  * 更改状态 并通知父页面
  */
@@ -207,7 +236,7 @@ var delComment = function() {
 					requestAnswerDetail(answerInfo.AnswerId, pageIndex * 10, 1, getInfos);
 				}
 			}
-		}else{
+		} else {
 			mui.toast(data.RspTxt);
 		}
 
@@ -229,6 +258,10 @@ var delCommentData = function() {
 	}
 	setCommentContainer(!(answerData.Data.length > 0));
 }
+/**
+ * 调整相邻数据的顺序
+ * @param {Object} container
+ */
 var resetSiblingOrder = function(container) {
 	if(container.nextElementSibling) {
 		var nextElm = container.nextElementSibling;
@@ -419,11 +452,16 @@ function requestAnswerDetail(answerId, pageIndex, pageSize, callback) {
 	postDataQZPro_getAnswerById(comData, wd, function(data) {
 		//		wd.close();
 		console.log('8.获取某个回答的详情:' + JSON.stringify(data));
-		if(data.RspCode == 0 && data.RspData.AnswerId) {
-			var datasource = data.RspData;
-			totalPageCount = Math.ceil(datasource.TotalPage * (pageSize / 10));
-			callback(datasource, pageIndex);
+		if(data.RspCode == 0) {
+			if(data.RspData.AnswerId) {
+				var datasource = data.RspData;
+				totalPageCount = Math.ceil(datasource.TotalPage * (pageSize / 10));
+				callback(datasource, pageIndex);
+			} else {
+				endFresh(1);
+			}
 		} else {
+			endFresh(1);
 			mui.toast(data.RspTxt);
 			events.closeWaiting();
 			if(data.RspCode == 1017) {
@@ -476,6 +514,7 @@ var requireInfos = function(datasource, pInfos, pageIndex) {
 		if(data.RspCode == 0) {
 			refreshUI(rechargeInfos(datasource, data.RspData, pageIndex));
 		} else {
+			endFresh(1);
 			events.closeWaiting()
 		}
 	})
@@ -621,7 +660,7 @@ function refreshUI(datasource) {
 		setCommentContainer();
 	} else {
 		setTimeout(function() {
-			setCommentContainer(1)
+			setCommentContainer(1);
 		}, 100)
 	}
 	events.closeWaiting();
@@ -631,12 +670,14 @@ function refreshUI(datasource) {
  * @param {Object} showType 0显示列表 1显示没评论图片
  */
 var setCommentContainer = function(showType) {
+	showType=showType?showType:0;
+	endFresh(showType);
 	var ul = document.getElementById('list-container');
 	var noCom = document.querySelector(".answer-noComment");
 	if(showType) {
 		ul.style.display = "none";
 		noCom.style.display = "block";
-//		mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+		//		mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
 	} else {
 		ul.style.display = "block";
 		noCom.style.display = "none";

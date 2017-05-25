@@ -499,7 +499,7 @@ var events = (function(mod) {
 			} else {
 				mui.toast(cancelLog)
 			}
-		},"div");
+		}, "div");
 	}
 
 	mod.format = function(dateTime, format) {
@@ -551,15 +551,28 @@ var events = (function(mod) {
 	 * 设置监听，解决area与scroll冲突问题
 	 */
 	mod.areaInScroll = function() {
+//		window.addEventListener("touchmove", function(e) {
+//			var target = e.target;
+//			console.log("***tagName" + target.tagName);
+//			if(target && target.tagName == 'TEXTAREA') {
+//				if(target.scrollHeight > target.clientHeight) {
+//					e.stopPropagation();
+//				}
+//			}
+//		}, true);
 		window.addEventListener("touchmove", function(e) {
 			var target = e.target;
-			console.log("***tagName"+target.tagName);
+			console.log("***tagName" + target.tagName);
 			if(target && target.tagName == 'TEXTAREA') {
 				if(target.scrollHeight > target.clientHeight) {
 					e.stopPropagation();
+				}else{
+
 				}
 			}
-		},true);
+		}, {
+			passive:true
+		});
 	}
 
 	/**
@@ -770,7 +783,7 @@ var events = (function(mod) {
 
 	/**
 	 * 一段时间内只允许运行一次方法,可用于打开新界面
-	 * @param {Function} callback 要运行的方法 
+	 * @param {Function} callback 要运行的方法
 	 */
 	mod.singleInstanceInPeriod = function(callback) {
 		var secondTime = null;
@@ -794,7 +807,7 @@ var events = (function(mod) {
 	 * @param {Object} data
 	 */
 	mod.singleWebviewInPeriod = function(clickedItem, webviewUrl, data) {
-		mod.showWaiting();
+		var waiting = mod.showWaiting();
 		if(!data) {
 			data = "";
 		}
@@ -806,21 +819,21 @@ var events = (function(mod) {
 		});
 		targetWebview.onloaded = function() {
 			targetWebview.show("slide-in-right", 250);
-			setItemAble(clickedItem, targetWebview);
+			setItemAble(clickedItem, targetWebview, waiting);
 		}
 	}
-	var setItemAble = function(item, targetWeb) {
+	var setItemAble = function(item, targetWeb, waiting) {
 		console.log("当前点击控件是否可点击：" + item.disabled);
 		console.log("targetWeb是否已显示：" + targetWeb.isVisible());
 		setTimeout(function() {
 			if(targetWeb.isVisible()) {
 				setTimeout(function() {
-					mod.closeWaiting();
+					mod.closeWaiting(waiting);
 					item.disabled = false;
 					jQuery(item).css("pointerEvents", "all");
 				}, 500)
 			} else {
-				setItemAble(item, targetWeb);
+				setItemAble(item, targetWeb, waiting);
 			}
 		}, 500);
 	}
@@ -829,12 +842,12 @@ var events = (function(mod) {
 	 * @param {Object} refreshId 刷新控件ID
 	 * @param{Int} type 0为默认样式 1为圈圈
 	 */
-	mod.limitPreviewPullDown = function(refreshId,type) {
+	mod.limitPreviewPullDown = function(refreshId, type) {
 		mui.getPreviewImage().open = function(index, group) {
 			if(mui('#' + refreshId).length > 0) {
-				if(type){
-					
-				}else{
+				if(type) {
+
+				} else {
 					mui('#' + refreshId).pullRefresh().setStopped(true);
 				}
 			}
@@ -857,9 +870,9 @@ var events = (function(mod) {
 				return;
 			}
 			if(mui('#' + refreshId).length > 0) {
-				if(type){
-					
-				}else{
+				if(type) {
+
+				} else {
 					mui('#' + refreshId).pullRefresh().setStopped(false);
 				}
 			}
@@ -1170,6 +1183,10 @@ var events = (function(mod) {
 					console.log('wenti 不存在');
 					mui.toast('该提问已不存在');
 					callback(false);
+				}
+				if(data.RspCode == 404) {
+					mui.toast('网络连接失败，请重新尝试一下');
+					callback(false);
 				} else {
 					callback(true);
 				}
@@ -1190,6 +1207,10 @@ var events = (function(mod) {
 				console.log('8.获取某个回答的详情:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 1017) {
 					mui.toast('该回答已不存在');
+					callback(false);
+				}
+				if(data.RspCode == 404) {
+					mui.toast('网络连接失败，请重新尝试一下');
 					callback(false);
 				} else {
 					callback(true);
@@ -1213,7 +1234,7 @@ var events = (function(mod) {
 		})
 	}
 	/**
-	 * 
+	 *
 	 */
 	mod.getUtid = function() {
 		var personInfo = myStorage.getItem(storageKeyName.PERSONALINFO);
@@ -1261,7 +1282,7 @@ var events = (function(mod) {
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @param {Object} string
 	 */
 	mod.trim = function(string) {

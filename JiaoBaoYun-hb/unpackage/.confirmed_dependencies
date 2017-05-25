@@ -44,7 +44,8 @@
 			"js/utils/RSAEncrypt.js",
 			"js/libs/jquery.lazyload.min.js",
 			"image/utils/default_personalimage.png",
-			"image/utils/video-loading.gif"
+			"image/utils/video-loading.gif",
+			"image/utils/loading.gif"
 		]
 	},
 	"html/qiuzhi/qiuzhi-question.html": {
@@ -61,7 +62,9 @@
 			"js/qiuzhi/qiuzhi-questionSub.js",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/qiuzhi/qiuzhi-questionSub.css",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"js/utils/h5fresh.js",
+			"image/utils/loading.gif"
 		]
 	},
 	"html/qiuzhi/qiuzhi-questionSub.html": {
@@ -273,7 +276,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
 			"fonts/fangzheng.ttf",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/quan/classSpace-persons.html",
@@ -330,7 +334,9 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"css/iconfont/iconfont.css",
+			"fonts/fangzheng.ttf"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-sub.html",
@@ -373,11 +379,13 @@
 			"js/utils/video.js",
 			"js/mui.previewimage.js",
 			"fonts/iconfont.ttf",
-			"js/utils/h5fresh.js"
+			"js/utils/h5fresh.js",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-answerDetailSub.html",
-			"html/qiuzhi/qiuzhi-addAnswer.html"
+			"html/qiuzhi/qiuzhi-addAnswer.html",
+			"html/register/login.html"
 		]
 	},
 	"html/cloud/storage_transport.html": {
@@ -487,7 +495,9 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"image/homework/need-submit.png",
 			"image/homework/submitted.png",
-			"image/homework/commented.png"
+			"image/homework/commented.png",
+			"js/utils/h5fresh.js",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/homework/doHomework-stu.html",
@@ -515,7 +525,10 @@
 			"css/quan/custom-textarea.css",
 			"js/homework/homework-publish.js",
 			"image/homework/arrow-down.png",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/utils/preview.css"
 		],
 		"refer": [
 			"html/homework/classes-select.html"
@@ -655,7 +668,8 @@
 			"css/mui.min.css",
 			"js/quan/group-pInfo.js",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/quan/edit-remark.html",
@@ -690,12 +704,15 @@
 			"js/quan/class_space.js",
 			"css/utils/bubble.css",
 			"css/utils/preview.css",
-			"image/utils/playvideo.png"
+			"image/utils/playvideo.png",
+			"image/utils/loading.gif",
+			"js/utils/h5fresh.js"
 		],
 		"refer": [
 			"html/quan/class-group.html",
 			"html/quan/classSpace-sub.html",
-			"html/quan/class-dynamic.html"
+			"html/quan/class-dynamic.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/cloud/record_student_main.html": {
@@ -720,7 +737,8 @@
 			"css/mui.min.css",
 			"js/qiuzhi/attentionPersons.js",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/h5fresh.js"
 		],
 		"refer": [
 			"html/qiuzhi/expert-detail.html"
@@ -825,7 +843,8 @@
 			"css/qiuzhi/qiuzhi-questionSearch.css",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/qiuzhi/qiuzhi-question.html"
@@ -912,7 +931,8 @@
 			"image/mine/invite_none_0.png",
 			"css/mine/apply.css",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/mine/apply-group.html": {
@@ -931,7 +951,10 @@
 			"css/utils/common.css",
 			"css/quan/about-me.css",
 			"js/quan/about-me.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/h5fresh.js",
+			"image/utils/loading.gif",
+			"image/utils/playvideo.png"
 		],
 		"refer": [
 			"html/quan/aboutme_sub.html",
@@ -962,7 +985,9 @@
 		"resources": [
 			"js/utils/self-adaptive-input.js",
 			"css/mine/edit-info.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	},
 	"html/quan/leaveNew.html": {
@@ -1032,7 +1057,8 @@
 			"css/utils/common.css",
 			"css/icons-extra.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"css/show/show.css"
+			"css/show/show.css",
+			"image/dynamic/praise.png"
 		]
 	},
 	"html/register/register_phoneNumber.html": {

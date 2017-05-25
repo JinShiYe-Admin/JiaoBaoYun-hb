@@ -3,7 +3,7 @@
 	"id": "H56171390",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "教宝云",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.0.1",/*应用版本名称*/
+		"name": "21.0.0.2017.0523_beta",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -159,7 +159,7 @@
 					"ldpi": "unpackage/res/icons/48x48.png", /*大屏程序图标，分辨率：48x48*/
 					"hdpi": "unpackage/res/icons/72x72.png", /*高分屏程序图标，分辨率：72x72*/
 					"xhdpi": "unpackage/res/icons/96x96.png",/*720P高分屏程序图标，分辨率：96x96*/
-					"xxhdpi": "unpackage/res/icons/144x144.png"
+					"xxhdpi": "unpackage/res/icons/144x144.png","xxxhdpi":"unpackage/res/icons/192x192.png"
 				}
 			},
 			"splashscreen": {
@@ -536,10 +536,13 @@
 					"js/quan/class_space.js",
 					"css/utils/bubble.css",
 					"css/utils/preview.css",
-					"image/utils/playvideo.png"
+					"image/utils/playvideo.png",
+					"image/utils/loading.gif",
+					"js/utils/h5fresh.js"
 				],
 				"refer": [
-					"html/quan/class-group.html"
+					"html/quan/class-group.html",
+					"html/quan/zone_main.html"
 				],
 				"priority": 0
 			},
@@ -1088,7 +1091,8 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"js/utils/h5fresh.js",
 					"image/homework/submitted.png",
-					"image/homework/commented.png"
+					"image/homework/commented.png",
+					"image/utils/loading.gif"
 				],
 				"refer": [
 					"html/homework/homework-publish.html",
@@ -1542,7 +1546,10 @@
 					"js/utils/events.js",
 					"fonts/fangzheng.ttf",
 					"js/quan/about-me.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/utils/h5fresh.js",
+					"image/utils/loading.gif",
+					"image/utils/playvideo.png"
 				],
 				"refer": [
 					"html/homework/workdetail-stu.html",
@@ -2873,7 +2880,8 @@
 					"image/utils/default_load_2.gif",
 					"image/utils/playvideo.png",
 					"js/libs/jquery.lazyload.min.js",
-					"image/utils/video-loading.gif"
+					"image/utils/video-loading.gif",
+					"image/utils/loading.gif"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
@@ -2902,7 +2910,9 @@
 					"js/qiuzhi/qiuzhi-questionSub.js",
 					"js/libs/crypto-js/crypto-js.js",
 					"css/qiuzhi/qiuzhi-questionSub.css",
-					"css/utils/preview.css"
+					"css/utils/preview.css",
+					"js/utils/h5fresh.js",
+					"image/utils/loading.gif"
 				],
 				"refer": [
 					"html/qiuzhi/experts_main.html",
@@ -3122,10 +3132,12 @@
 					"js/utils/RSAEncrypt.js",
 					"js/storageKeyName.js",
 					"js/mui.pullToRefresh.js",
-					"js/mui.pullToRefresh.material.js"
+					"js/mui.pullToRefresh.material.js",
+					"image/utils/loading.gif"
 				],
 				"refer": [
-					"html/qiuzhi/qiuzhi-addAnswer.html"
+					"html/qiuzhi/qiuzhi-addAnswer.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},
@@ -3719,7 +3731,8 @@
 					"fonts/iconfont.ttf",
 					"js/utils/video.js",
 					"image/utils/playvideo.png",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/utils/loading.gif"
 				],
 				"refer": [
 					"html/utils/customizeCity.html",
@@ -4005,7 +4018,8 @@
 					"js/utils/RSAEncrypt.js",
 					"fonts/iconfont.ttf",
 					"fonts/fangzheng.ttf",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"image/utils/loading.gif"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html"

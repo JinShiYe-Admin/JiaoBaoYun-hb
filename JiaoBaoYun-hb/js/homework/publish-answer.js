@@ -185,6 +185,8 @@ var getStudentClasses = function(callback) {
 			}
 			studentClasses = arraySingleItem(studentClasses);
 			setCondition(30, studentClasses);
+		}else{
+			mui.toast(data.RspTxt);
 		}
 	})
 }
