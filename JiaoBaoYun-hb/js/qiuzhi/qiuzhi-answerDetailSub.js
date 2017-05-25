@@ -837,7 +837,7 @@ var getPicInner = function(data) {
 				console.log("图片宽度设置：" + pic_width)
 				for(var i in picPaths) {
 					picInner += '<img class="answer-img" retry="0" src="' + picPaths[i] + '" style="width:' + pic_width + 'px;height: ' + pic_width + 'px;" ' +
-						'" data-preview-src="' + picBigPaths[i] + '" data-preview-group="' + data.AnswerId + '"/>';
+						' data-preview-src="' + picBigPaths[i] + '" data-preview-group="' + data.AnswerId + '"/>';
 				}
 				console.log('图片路径：' + picInner);
 				return picInner;
