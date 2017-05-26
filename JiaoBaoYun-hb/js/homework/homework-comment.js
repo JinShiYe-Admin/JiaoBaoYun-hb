@@ -2,7 +2,13 @@ var workInfo;
 var personalUTID;
 mui.init({
 	beforeback: function() {
+		document.querySelector(".answer-info").innerText = "";
 		document.getElementById("answer-imgs").innerHTML = "";
+		document.getElementById('submit-time').innerText = "";
+		document.getElementById('stu-head').src = "";
+		document.getElementById('stu-name').innerText = "";
+		document.getElementById('comment-area').value = "";
+		document.querySelector(".commented-words").innerText = "";
 		return true;
 	}
 });
