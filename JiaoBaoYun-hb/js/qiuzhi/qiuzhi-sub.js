@@ -11,6 +11,7 @@ var setFresh = function() {
 		down: {
 			callback: function() {
 				freshContainer = this;
+				oldPageIndex = pageIndex;
 				freshFlag = 1;
 				pageIndex = 1;
 				getChannelTime = null;
@@ -40,6 +41,7 @@ var setFresh = function() {
 }
 setFresh();
 var pageIndex = 1; //当前页数
+var oldPageIndex = 1;
 var totalPage; //总页数
 var channelInfo; //选择的话题
 var allChannels; //所有的话题
@@ -101,17 +103,18 @@ mui.plusReady(function() {
  * 
  * @param {Object} type
  */
-function showNoData(type){
-	if(type){
-		document.querySelector(".vertical-list").style.display="none";
-		document.querySelector(".noDataDisplay").style.display="block";
+function showNoData(type) {
+	if(type) {
+		document.querySelector(".vertical-list").style.display = "none";
+		document.querySelector(".noDataDisplay").style.display = "block";
 		mui(".mui-pull-loading")[0].style.display = "none";
-	}else{
-		document.querySelector(".vertical-list").style.display="block";
-		document.querySelector(".noDataDisplay").style.display="none";
+	} else {
+		document.querySelector(".vertical-list").style.display = "block";
+		document.querySelector(".noDataDisplay").style.display = "none";
 		mui(".mui-pull-loading")[0].style.display = "block";
 	}
 }
+
 function endFresh() {
 	if(freshContainer) {
 		if(freshFlag == 1) {
@@ -123,7 +126,7 @@ function endFresh() {
 			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
 		}
 	}
-	freshFlag=0;
+	freshFlag = 0;
 }
 /**
  * 请求专家数据
@@ -209,7 +212,9 @@ function getExpertsArray(channelId) {
 				}
 			});
 		} else {
-			mui.toast(data.RspTxt);
+			if(data.RspCode != 404) {
+				mui.toast(data.RspTxt);
+			}
 			endFresh();
 		}
 		//		wd.close();
@@ -274,10 +279,14 @@ function requestChannelList(channelInfo) {
 			getIds(data.RspData.Data);
 			//			setChannelList();
 		} else {
-			wd.close();
-			if(data.RspCode != 404) {
-				mui.toast(data.RspTxt);
+			console.log("当前pageIndex:" + pageIndex);
+			if(pageIndex > 1) {
+				pageIndex -= 1;
+			} else {
+				pageIndex = oldPageIndex;
 			}
+			wd.close();
+			mui.toast(data.RspTxt);
 			endFresh();
 		}
 	});
@@ -337,7 +346,7 @@ var setChannelList = function(data) {
 	var list = document.getElementById('list-container');
 	if(pageIndex == 1) {
 		list.innerHTML = "";
-		showNoData(data.length==0);
+		showNoData(data.length == 0);
 	}
 	//	var fragemnt = document.createDocumentFragment();
 	for(var i in data) {

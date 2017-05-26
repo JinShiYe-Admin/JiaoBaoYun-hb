@@ -2,7 +2,13 @@ var workInfo;
 var personalUTID;
 mui.init({
 	beforeback: function() {
+		document.querySelector(".answer-info").innerText = "";
 		document.getElementById("answer-imgs").innerHTML = "";
+		document.getElementById('submit-time').innerText = "";
+		document.getElementById('stu-head').src = "";
+		document.getElementById('stu-name').innerText = "";
+		document.getElementById('comment-area').value = "";
+		document.querySelector(".commented-words").innerText = "";
 		return true;
 	}
 });
@@ -13,6 +19,7 @@ mui.plusReady(function() {
 
 	mui.previewImage();
 	events.softIn("comment-area");
+	mui.fire(plus.webview.getWebviewById("workdetail-tea-sub.html"),"commentIsReady");
 	window.addEventListener('workInfo', function(e) {
 		mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100); //100毫秒滚动到顶
 		workInfo = e.detail.data;
@@ -28,7 +35,7 @@ mui.plusReady(function() {
 	})
 	window.addEventListener("commentChanged", function(e) {
 		var commentValue = e.detail;
-		document.getElementById('commented-words').innerText = commentValue;
+		document.getElementById('commented-words').innerHTML = commentValue.replace(/ /g,"&nbsp;").replace(/\n/g,"<br/>");
 		workInfo.Comment = commentValue;
 	})
 	//设置最大长度为1000
@@ -64,11 +71,12 @@ var setCondition = function() {
 var setListener = function() {
 	events.addTap('btn-comment', function() {
 		var commentValue = document.getElementById('comment-area').value;
+		commentValue = events.trim(commentValue);
 		if(commentValue) {
 			if(events.limitInput(commentValue, 2000)) {
 				return;
 			}
-			if(workInfo.workType && workInfo.workType == 0) {
+			if(workInfo.hasOwnProperty("workType") && workInfo.workType == 0) {
 				if(workInfo.IsCommented) {
 					modifyAnswerComment(commentValue);
 				} else {
@@ -88,23 +96,18 @@ var setListener = function() {
 
 	})
 	document.querySelector('.change-holder').addEventListener("tap", function() {
-		//		events.singleInstanceInPeriod(function(){
-		//			events.openNewWindowWithData('change-comment.html',workInfo)
-		//		})
 		toggleEditContainer(1);
 	})
 }
 var toggleEditContainer = function(isToShow, isFirst) {
 	document.getElementById('comment-area').value = workInfo.Comment;
-	document.querySelector(".commented-words").innerText = workInfo.Comment;
+	document.querySelector(".commented-words").innerHTML = workInfo.Comment.replace(/ /g, "&nbsp;").replace(/\n/g, "<br/>");
 	if(isToShow) {
 		document.querySelector('.comment-holder').style.display = "block";
 		document.querySelector(".commented-holder").style.display = "none";
-		//		mui('.comment-holder').scroll().scrollToBottom();
 	} else {
 		document.querySelector('.comment-holder').style.display = "none";
 		document.querySelector(".commented-holder").style.display = "block";
-		//		mui(".commented-holder").scroll().scrollToBottom();
 	}
 	if(isFirst) {
 		return;
@@ -165,6 +168,8 @@ var requireHomeworkInfo = function() {
 			var homeworkInfo = data.RspData;
 			workInfo.teaFiles = data.RspData.File;
 			jQuery.extend(workInfo, data.RspData);
+			//		}else{
+			//			mui.toast(data.RspTxt);
 		}
 		setHomeWorkInfo(workInfo);
 	})
@@ -179,7 +184,7 @@ var setHomeWorkInfo = function() {
 	console.log("要放置的作业数据：" + JSON.stringify(workInfo))
 	document.getElementById('submit-time').innerText = workInfo.UploadTime;
 	var homeworkInfo = document.getElementById('homework-info');
-	document.querySelector(".answer-info").innerText = workInfo.Result;
+	document.querySelector(".answer-info").innerHTML = workInfo.Result.replace(/ /g, "&nbsp;").replace(/\n/g, "<br/>");
 	document.getElementById("answer-imgs").innerHTML = "";
 	toggleEditContainer(!workInfo.IsCommented, 1)
 	//	if() {
@@ -248,7 +253,7 @@ var setAnswerInfo = function() {
 		document.getElementById('comment-area').value = null;
 	}
 	if(workInfo.QuestionResultStr) {
-		document.getElementById('result-text').innerText = workInfo.QuestionResultStr;
+		document.getElementById('result-text').innerText = workInfo.QuestionResultStr.replace(/ /g, "&nbsp;").replace(/\n/g, "<br/>");
 	} else {
 		document.getElementById('result-text').innerText = null;
 	}
@@ -368,7 +373,6 @@ var commentAnswer = function(commentValue) {
 			workInfo.Comment = commentValue;
 			toggleEditContainer(0);
 			mui.toast('评论成功！');
-			//			mui.back();
 		} else {
 			mui.toast(data.RspTxt);
 		}
@@ -389,11 +393,10 @@ var modifyHomeworkComment = function(commentValue) {
 	}, wd, function(data) {
 		wd.close();
 		console.log('老师评价页面获取老师更改普通作业评论的结果：' + JSON.stringify(data));
-		if(data.RspCode == '0000') {
+		if(data.RspCode == 0) {
 			mui.toast('修改评论成功！')
 			workInfo.Comment = commentValue;
 			toggleEditContainer(0);
-			//			mui.back();
 		} else {
 			mui.toast(data.RspTxt);
 		}
