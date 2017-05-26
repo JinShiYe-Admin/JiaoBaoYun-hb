@@ -973,18 +973,18 @@ var dynamiclistitem = (function($, mod) {
 		//			ImageNum=0;
 		//		}
 		var mp = data.EncAddr.split('.');
-		if(ImageNum == 1) { //一张图片时1
+		if(ImageNum == 1) { //一张图片
 			if(data.EncType == 2) {
 				var html1 = '<div id="video-container' + data.id_name + '" class="video-container" thb=' + ImageUrlList[0] + ' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url(' + ImageUrlList[0] + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
 				var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:60px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
 				html = html1 + html2;
-			} else if(mp[mp.length - 1] == "mp4") {
+
+			} else if(mp[mp.length - 1] == "mp4" && data.EncType == 5) {
 				if(!document.getElementById("spaceDetail")) {
 					var html1 = '<div id="video-container' + data.id_name + '" class="video-container" thb=' + ImageUrlList[0] + ' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url(' + ImageUrlList[0] + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
 					var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:60px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
 					html = html1 + html2;
 				}
-
 			} else {
 
 				var html1 = '<div>';
@@ -993,15 +993,19 @@ var dynamiclistitem = (function($, mod) {
 			}
 		} else if(ImageNum == 2) { //两张图片时
 			$.each(ImageUrlList, function(index, element) {
-				var html1 = '<div class="mui-col-sm-6 mui-col-xs-6 dynamic-image-div" style="height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;width: ' + (SCREEN_WIDTH - 20) / 2 + 'px;">';
-				var html2 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;" src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/>' + '</div>';
-				html = html + html1 + html2;
+				if(!document.getElementById("spaceDetail")) {
+					var html1 = '<div class="mui-col-sm-6 mui-col-xs-6 dynamic-image-div" style="height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;width: ' + (SCREEN_WIDTH - 20) / 2 + 'px;">';
+					var html2 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;" src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/>' + '</div>';
+					html = html + html1 + html2;
+				}
 			});
 		} else if(ImageNum >= 3) { //大于两张图片时
 			$.each(ImageUrlList, function(index, element) {
-				var html1 = '<div class="mui-col-sm-4 mui-col-xs-4" style="height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
-				var html2 = '<img class="dynamic-image" style="height: ' + (SCREEN_WIDTH - 30) / 3 + 'px;width: ' + (SCREEN_WIDTH - 30) / 3 + 'px;"  src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/></div>';
-				html = html + html1 + html2;
+				if(!document.getElementById("spaceDetail")) {
+					var html1 = '<div class="mui-col-sm-4 mui-col-xs-4" style="height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
+					var html2 = '<img class="dynamic-image" style="height: ' + (SCREEN_WIDTH - 30) / 3 + 'px;width: ' + (SCREEN_WIDTH - 30) / 3 + 'px;"  src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/></div>';
+					html = html + html1 + html2;
+				}
 			});
 		}
 
@@ -1016,6 +1020,7 @@ var dynamiclistitem = (function($, mod) {
 	};
 	mod.getNaturalSize = function(src, callback) {
 		var img = new Image();
+		console.log('src======' + src)
 		img.src = src;
 		img.onload = function() {
 			callback({
@@ -1023,12 +1028,11 @@ var dynamiclistitem = (function($, mod) {
 				height: img.height
 			});
 		}
-		//		console.log('src='+img.src)
 
-		//		return {
-		//			width: img.width,
-		//			height: img.height
-		//		};
+		return {
+			width: img.width,
+			height: img.height
+		};
 	}
 	mod.questionContent = function() {
 		var height_0;
@@ -1161,9 +1165,7 @@ var dynamiclistitem = (function($, mod) {
 		}
 
 		htmlCommentList = htmlCommentList1 + htmlCommentList2 + showAll + '</div>';
-
 		html = html + htmlPraiseList + htmlCommentList //+ showAll //+ htmlCommentBtn;
-
 		var div = document.createElement('div');
 		div.className = 'mui-row mui-row-padding-8px';
 		div.id = 'bottomDiv' + data.id_name;
@@ -1180,7 +1182,8 @@ var dynamiclistitem = (function($, mod) {
 		var EncAddrList = data.EncAddrList
 		var ImageNum = ImageUrlList.length; //图片总数量
 		var mp = data.EncAddr.split('.');
-		if(ImageNum == 1 && (data.EncType == 2)) {
+
+		if(ImageNum == 1 && data.EncType == 2) {
 			var tempDiv = document.getElementById("video-container" + data.id_name);
 			var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
 				tempDiv.style.width = imgSize.width / 4 + 'px';
@@ -1188,14 +1191,19 @@ var dynamiclistitem = (function($, mod) {
 				var playvideo = document.getElementById("playvideo" + data.id_name);
 				playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
 			})
-			//			console.log(imgSize.width + '-----' + imgSize.height);
-			//		if(imgSize.width==0){
-			//			return;
-			//		}
 
-			//			console.log(tempDiv.outerHTML)
-
+		} else if((mp[mp.length - 1] == 'mp4') && (data.EncType == 5)) {
+			if(!document.getElementById("spaceDetail")) {
+				var tempDiv = document.getElementById("video-container" + data.id_name);
+				var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
+					tempDiv.style.width = imgSize.width + 'px';
+					tempDiv.style.height = imgSize.height + 'px';
+					var playvideo = document.getElementById("playvideo" + data.id_name);
+					playvideo.style.marginTop = imgSize.height / 2 - 25 + 'px'
+				})
+			}
 		}
+
 	};
 
 	return mod;
