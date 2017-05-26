@@ -289,7 +289,7 @@
 					if(data.RspCode == 0) {
 						mui.toast('发布成功！');
 						document.getElementById('input-content').value = '';
-						events.fireToPageNone('classSpace-sub.html', 'infoChanged');
+						events.fireToPageNone('class_space.html', 'infoChanged');
 						mui.back();
 					} else {
 						mui.toast(data.RspTxt);
@@ -317,7 +317,7 @@
 							personIds.push(person.utid);
 						}
 					})
-				}else{
+				} else {
 					mui.toast(data.RspTxt);
 				}
 

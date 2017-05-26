@@ -30,7 +30,7 @@ mui.plusReady(function() {
 		getRemark();
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		events.fireToPageNone('class-group.html','groupInfoChanged');
-		events.fireToPageNone('classSpace-sub.html','infoChanged');
+		events.fireToPageNone('class_space.html','infoChanged');
 	})
 	window.addEventListener('nickChanged',function(e){
 		isSelf=true;
@@ -38,7 +38,7 @@ mui.plusReady(function() {
 		console.log('修改群昵称后的数据：'+JSON.stringify(pInfo));
 		manageAccountInfo();
 		events.fireToPageNone('class-group.html','groupInfoChanged');
-		events.fireToPageNone('classSpace-sub.html','infoChanged');
+		events.fireToPageNone('class_space.html','infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 	})
 })

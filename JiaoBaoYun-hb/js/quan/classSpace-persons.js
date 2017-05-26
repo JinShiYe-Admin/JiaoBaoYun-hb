@@ -1,6 +1,7 @@
 mui.init({
 	beforeback: function() {
 		document.querySelector("#person-list").innerHTML = "";
+		document.querySelector(".mui-content").className="mui-content mui-scroll-wrapper";
 		mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0);
 		return true;
 	}

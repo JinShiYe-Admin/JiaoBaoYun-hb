@@ -70,13 +70,6 @@ mui.plusReady(function() {
 	events.preload('doHomework-stu.html', 400);
 	//列表
 	list = document.getElementById('list-container');
-	//加载h5下拉刷新方式
-	//	h5fresh.addRefresh(function() {
-	//
-	//	}, {
-	//		style: 'circle',
-	//		offset: "50px"
-	//	});
 	/**监听父页面的图标事件*/
 	window.addEventListener('togglePop', function(e) {
 		mui("#popover").popover('toggle');
@@ -161,16 +154,26 @@ mui.plusReady(function() {
 	//	pullUpRefresh();
 })
 /**
+ * 
+ * @param {Object} type
+ */
+function showNoData(type){
+	if(type){
+		document.querySelector(".vertical-scroll").style.display="none";
+		document.querySelector(".noDataDisplay").style.display="block";
+		mui(".mui-pull-loading")[0].style.display = "none";
+	}else{
+		document.querySelector(".vertical-scroll").style.display="block";
+		document.querySelector(".noDataDisplay").style.display="none";
+		mui(".mui-pull-loading")[0].style.display = "block";
+	}
+}
+/**
  * 结束刷新状态；
  * @param {int} 0 不隐藏上拉加载更多     1隐藏上拉加载更多
  */
 function endFresh(type) {
 	console.log("************************************type:" + type);
-	if(type) {
-		mui(".mui-pull-loading")[0].style.display = "none";
-	} else {
-		mui(".mui-pull-loading")[0].style.display = "block";
-	}
 	if(freshContainer) {
 		if(freshFlag == 1) {
 			freshContainer.endPullDownToRefresh();
@@ -531,7 +534,10 @@ var setData = function(data, type) {
  */
 var setPublishedData = function(publishedData) {
 	var fragment = document.createDocumentFragment();
+	var showType;
+	console.log("要放置的发布作业数据："+JSON.stringify(publishedData));
 	if(publishedData && publishedData.length > 0) {
+		showType=0;
 		console.log('发布作业的Id：' + selectGId + ';老师作业的数据：' + JSON.stringify(publishedData));
 		//遍历老师发布的作业
 		publishedData.forEach(function(DateHM, i) {
@@ -563,8 +569,9 @@ var setPublishedData = function(publishedData) {
 		})
 
 	} else {
-		//		mui.toast("暂无作业！");
+		showType=1;
 	}
+	showNoData(showType);
 	events.closeWaiting();
 	list.appendChild(fragment);
 }
@@ -719,7 +726,9 @@ var getHomeworkIcon = function(subject) {
  */
 var setHomeworkData = function(homeworkData) {
 	var fragment = document.createDocumentFragment();
+	var showType;
 	if(homeworkData && homeworkData.length > 0) {
+		showType=0;
 		homeworkData.forEach(function(DateHM, i) {
 			var divider = document.createElement('li');
 			divider.className = 'mui-table-view-divider';
@@ -752,8 +761,9 @@ var setHomeworkData = function(homeworkData) {
 			}
 		})
 	} else {
-		mui.toast("暂无作业！")
+		showType=1;
 	}
+	showNoData(showType);
 	events.closeWaiting();
 	list.appendChild(fragment);
 }
