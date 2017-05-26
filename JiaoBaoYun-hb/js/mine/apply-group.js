@@ -114,23 +114,23 @@ var setButtonsListener = function() {
 	//确定按钮加载监听
 	btn_sure.addEventListener('tap', function() {
 		if(groupRoles.length > 0) {
-			var role=groupRoles[0];
-			var isMaster=false;
+			var role = groupRoles[0];
+			var isMaster = false;
 			events.getUserInGroup(choseGroupId, function(data) {
 				console.log("本人在群里的身份：" + JSON.stringify(data));
-				if(data.RspCode==0){
-					for(var i in data.RspData){
-						if(data.RspData[i].mstype==1){
-							isMaster=true;
+				if(data.RspCode == 0) {
+					for(var i in data.RspData) {
+						if(data.RspData[i].mstype == 1) {
+							isMaster = true;
 							break;
 						}
 					}
-					if(isMaster&&(role==2||role==3)){
+					if(isMaster && (role == 2 || role == 3)) {
 						mui.toast("违反身份规则，无法申请！")
-					}else{
+					} else {
 						applyGroup();
 					}
-				}else{
+				} else {
 					applyGroup();
 				}
 			});
@@ -241,10 +241,10 @@ var getAllGroups = function(utid, callback, first) {
 	}, wd, function(data) {
 		wd.close();
 		console.log('申请入群获取的群数据：' + JSON.stringify(data));
-		if(data.RspCode == 0 ){
+		if(data.RspCode == 0) {
 			callback(data.RspData);
 		} else {
-			if(data.RspCode!=9) {
+			if(data.RspCode != 9) {
 				mui.toast(data.RspTxt);
 			}
 		}

@@ -4,7 +4,7 @@ mui.init({
 	}
 });
 var freshContainer;
-var freshFlag=0; //0 啥也没做 1 刷新 2加载更多
+var freshFlag = 0; //0 啥也没做 1 刷新 2加载更多
 mui('.mui-scroll-wrapper').scroll({
 	bounce: false,
 	indicators: true //是否显示滚动条
@@ -15,29 +15,24 @@ var setFresh = function() {
 		down: {
 			callback: function() {
 				freshContainer = this;
-				freshFlag=1;//刷新
+				oldPageIndex = pageIndex;
+				freshFlag = 1; //刷新
 				//清除节点
 				document.getElementById("list-container").innerHTML = "";
 				flag = 1;
 				pageIndex = 1;
 				wd = events.showWaiting();
 				requestAnswerDetail(answerInfo.AnswerId, pageIndex, 10, getInfos);
-
-//				setTimeout(function() {
-//					//结束下拉刷新
-//					self.endPullDownToRefresh();
-//					mui(".mui-pull-loading")[0].innerHTML = "上拉显示更多";
-//				}, 1000);
 			}
 		},
 		up: {
 			callback: function() {
 				freshContainer = this;
-				freshFlag=2;//加载更多
+				freshFlag = 2; //加载更多
 				if(pageIndex < totalPageCount) {
-//					setTimeout(function() {
-//						self.endPullUpToRefresh();
-//					}, 1000);
+					//					setTimeout(function() {
+					//						self.endPullUpToRefresh();
+					//					}, 1000);
 					pageIndex++;
 					flag = 1;
 					wd = events.showWaiting();
@@ -53,6 +48,7 @@ var setFresh = function() {
 setFresh();
 var type = 2; //排列顺序类型1为顺序，2为倒序
 var pageIndex = 1; //当前页码
+var oldPageIndex = 1;
 var totalPageCount = 1; //总页数
 var answerInfo; //回答详情
 var answerData; //答案数据
@@ -86,7 +82,7 @@ mui.plusReady(function() {
 		answerData = {};
 		pageIndex = 1;
 		totalPageCount = 1;
-		document.getElementById('question-content').innerHTML = "";
+//		document.getElementById('question-content').innerHTML = "";
 		console.log("获取的回答详情：" + JSON.stringify(answerInfo));
 		console.log("获取的数据：" + JSON.stringify(e.detail.data));
 		//如果跟上次进入的是同一个回答 则不更改顺序
@@ -99,7 +95,7 @@ mui.plusReady(function() {
 		setTolerantChecked(type);
 		console.log('回答详情获取的答案信息:' + JSON.stringify(answerInfo));
 		var answerId = answerInfo.AnswerId;
-		document.getElementById('list-container').innerHTML = "";
+//		document.getElementById('list-container').innerHTML = "";
 		wd = events.showWaiting();
 		requestAnswerDetail(answerId, pageIndex, 10, getInfos);
 	});
@@ -135,20 +131,20 @@ mui.plusReady(function() {
  * @param {int} 0 不隐藏上拉加载更多     1隐藏上拉加载更多
  */
 function endFresh(type) {
-	console.log("************************************type:"+type);
+	console.log("************************************type:" + type);
 	if(type) {
 		mui(".mui-pull-loading")[0].style.display = "none";
 	} else {
 		mui(".mui-pull-loading")[0].style.display = "block";
 	}
 	if(freshContainer) {
-		if(freshFlag==1){
+		if(freshFlag == 1) {
 			freshContainer.endPullDownToRefresh();
 			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
-		}else if(freshFlag==2){
+		} else if(freshFlag == 2) {
 			freshContainer.endPullUpToRefresh();
 		}
-		freshFlag=0;	
+		freshFlag = 0;
 	}
 }
 /**
@@ -462,6 +458,11 @@ function requestAnswerDetail(answerId, pageIndex, pageSize, callback) {
 			}
 		} else {
 			endFresh(1);
+			if(pageIndex > 1) {
+				pageIndex -= 1;
+			} else {
+				pageIndex = oldPageIndex;
+			}
 			mui.toast(data.RspTxt);
 			events.closeWaiting();
 			if(data.RspCode == 1017) {
@@ -650,11 +651,12 @@ function setUserFocus(userId, item) {
  */
 function refreshUI(datasource) {
 	console.log('重组后的答案详情信息：' + JSON.stringify(datasource));
+	var ul = document.getElementById('list-container');
 	if(pageIndex == 1) {
+		ul.innerHTML = "";
 		setQuestion(datasource);
 		setAnswerManInfo(datasource);
 	}
-	var ul = document.getElementById('list-container');
 	if(datasource.Data.length > 0) {
 		createList(ul, datasource.Data);
 		setCommentContainer();
@@ -670,7 +672,7 @@ function refreshUI(datasource) {
  * @param {Object} showType 0显示列表 1显示没评论图片
  */
 var setCommentContainer = function(showType) {
-	showType=showType?showType:0;
+	showType = showType ? showType : 0;
 	endFresh(showType);
 	var ul = document.getElementById('list-container');
 	var noCom = document.querySelector(".answer-noComment");
