@@ -102,7 +102,7 @@ var setContentView = function() {
 	console.log('学生作业详情界面获取老师后的信息：' + JSON.stringify(homeworkInfo));
 	document.querySelector('.subject-icon').className = "subject-icon iconfont " + getHomeworkIcon(homeworkInfo.Subject);
 	document.querySelector('.brief-title').innerText = homeworkInfo.HomeworkTitle;
-	document.querySelector('.brief-content').innerText = homeworkInfo.Contents;
+	document.querySelector('.brief-content').innerHTML = homeworkInfo.Contents.replace(/ /g,"&nbsp;").replace(/\n/g,"<br/>");
 	document.querySelector('.publisher').innerText = events.shortForString(homeworkInfo.unick, 6);
 	document.querySelector('.publish-date').innerText = (homeworkInfo.Date?homeworkInfo.Date:homeworkInfo.MsgDate).split(' ')[0];
 	document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkInfo.File,homeworkInfo.HomeworkId);
