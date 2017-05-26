@@ -261,7 +261,10 @@ var dynamiclistitem = (function($, mod) {
 											if(data.RspCode == 0) {
 												mui.toast('已删除');
 
-												var deleteNode = document.getElementById(index);
+												//												var deleteNode = document.getElementById(index);
+												//												deleteNode.parentNode.removeChild(deleteNode);
+												var pageID = sliderId.replace('top_', '')
+												var deleteNode = document.getElementById(pageID + idFlag + index);
 												deleteNode.parentNode.removeChild(deleteNode);
 												if(document.getElementById("spaceDetail")) {
 													mui.fire(plus.webview.currentWebview().opener(), 'deleteDynamic', preModel.tempIndex)
@@ -777,8 +780,8 @@ var dynamiclistitem = (function($, mod) {
 						jQuery(item).css("pointerEvents", "all");
 						if(data.RspCode == 0) {
 							mui.toast('已删除');
-
-							var deleteNode = document.getElementById(index);
+							var pageID = sliderId.replace('top_', '')
+							var deleteNode = document.getElementById(pageID + idFlag + index);
 							deleteNode.parentNode.removeChild(deleteNode);
 							zonepArray.splice(index, 1)
 						} else {
@@ -856,7 +859,7 @@ var dynamiclistitem = (function($, mod) {
 
 	mod.addItem = function(ulElement, data) {
 		var li = document.createElement('li');
-		li.id = data.id;
+		li.id = data.id_name;
 		li.className = 'mui-table-view-cell';
 
 		mod.addInfo(ulElement, li, data); //增加动态的个人信息和内容
@@ -919,16 +922,16 @@ var dynamiclistitem = (function($, mod) {
 		var html7 = '<div id="question_content' + data.id_name + '" style = "color:#808080;font-size:14px" class="ellipsis-show question_content">';
 		//内容
 		var html8
-		if(data.EncType==5){
+		if(data.EncType == 5) {
 			html8 = replaceAllBL(data.MsgContentTxt);
-		}else{
+		} else {
 			html8 = replaceAllBL(data.MsgContent);
 		}
 		var html99 = '<div id="show' + data.id_name + '" class="showAll show" style="color:#B7B7B7;">展开全部</div>'
-var mp = data.EncAddr.split('.');
+		var mp = data.EncAddr.split('.');
 		if(document.getElementById("spaceDetail")) {
 			html99 = '';
-			if(data.EncType==5){
+			if(data.EncType == 5) {
 				html8 = data.MsgContent
 			}
 		}
@@ -969,19 +972,19 @@ var mp = data.EncAddr.split('.');
 		//		if(data.pageFlag!=0){
 		//			ImageNum=0;
 		//		}
-var mp = data.EncAddr.split('.');
+		var mp = data.EncAddr.split('.');
 		if(ImageNum == 1) { //一张图片时1
 			if(data.EncType == 2) {
 				var html1 = '<div id="video-container' + data.id_name + '" class="video-container" thb=' + ImageUrlList[0] + ' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url(' + ImageUrlList[0] + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
 				var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:60px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
 				html = html1 + html2;
-			}else if(mp[mp.length-1]=="mp4"){
-				if(!document.getElementById("spaceDetail")){
+			} else if(mp[mp.length - 1] == "mp4") {
+				if(!document.getElementById("spaceDetail")) {
 					var html1 = '<div id="video-container' + data.id_name + '" class="video-container" thb=' + ImageUrlList[0] + ' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url(' + ImageUrlList[0] + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
-				var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:60px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
-				html = html1 + html2;
+					var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:60px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
+					html = html1 + html2;
 				}
-				
+
 			} else {
 
 				var html1 = '<div>';
@@ -1011,21 +1014,21 @@ var mp = data.EncAddr.split('.');
 		liElement.appendChild(div);
 		mod.addInteraction(ulElement, liElement, data);
 	};
-	mod.getNaturalSize = function(src,callback) {
+	mod.getNaturalSize = function(src, callback) {
 		var img = new Image();
 		img.src = src;
 		img.onload = function() {
-            callback({
-			width: img.width,
-			height: img.height
-		});
-        }
-//		console.log('src='+img.src)
+			callback({
+				width: img.width,
+				height: img.height
+			});
+		}
+		//		console.log('src='+img.src)
 
-//		return {
-//			width: img.width,
-//			height: img.height
-//		};
+		//		return {
+		//			width: img.width,
+		//			height: img.height
+		//		};
 	}
 	mod.questionContent = function() {
 		var height_0;
@@ -1157,7 +1160,7 @@ var mp = data.EncAddr.split('.');
 			showAll = '';
 		}
 
-		htmlCommentList = htmlCommentList1 + htmlCommentList2 + showAll + '</div>';  
+		htmlCommentList = htmlCommentList1 + htmlCommentList2 + showAll + '</div>';
 
 		html = html + htmlPraiseList + htmlCommentList //+ showAll //+ htmlCommentBtn;
 
@@ -1178,20 +1181,20 @@ var mp = data.EncAddr.split('.');
 		var ImageNum = ImageUrlList.length; //图片总数量
 		var mp = data.EncAddr.split('.');
 		if(ImageNum == 1 && (data.EncType == 2)) {
-			var tempDiv = document.getElementById("video-container"+data.id_name);
-			var imgSize = mod.getNaturalSize(ImageUrlList[0],function(imgSize){
+			var tempDiv = document.getElementById("video-container" + data.id_name);
+			var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
 				tempDiv.style.width = imgSize.width / 4 + 'px';
-			tempDiv.style.height = imgSize.height / 4 + 'px';
-			var playvideo = document.getElementById("playvideo"+data.id_name);
-			playvideo.style.marginTop=imgSize.height / 8-25+'px'
+				tempDiv.style.height = imgSize.height / 4 + 'px';
+				var playvideo = document.getElementById("playvideo" + data.id_name);
+				playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
 			})
-//			console.log(imgSize.width + '-----' + imgSize.height);
-//		if(imgSize.width==0){
-//			return;
-//		}
-			
-//			console.log(tempDiv.outerHTML)
-			
+			//			console.log(imgSize.width + '-----' + imgSize.height);
+			//		if(imgSize.width==0){
+			//			return;
+			//		}
+
+			//			console.log(tempDiv.outerHTML)
+
 		}
 	};
 
