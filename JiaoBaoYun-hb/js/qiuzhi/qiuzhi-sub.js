@@ -209,7 +209,9 @@ function getExpertsArray(channelId) {
 				}
 			});
 		} else {
-			mui.toast(data.RspTxt);
+			if(data.RspCode!=404){
+				mui.toast(data.RspTxt);
+			}
 			endFresh();
 		}
 		//		wd.close();
@@ -274,10 +276,10 @@ function requestChannelList(channelInfo) {
 			getIds(data.RspData.Data);
 			//			setChannelList();
 		} else {
+			console.log("当前pageIndex:"+pageIndex);
+			pageIndex-=1;
 			wd.close();
-			if(data.RspCode != 404) {
-				mui.toast(data.RspTxt);
-			}
+			mui.toast(data.RspTxt);
 			endFresh();
 		}
 	});
