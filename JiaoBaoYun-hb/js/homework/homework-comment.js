@@ -13,6 +13,7 @@ mui.plusReady(function() {
 
 	mui.previewImage();
 	events.softIn("comment-area");
+	mui.fire(plus.webview.getWebviewById("workdetail-tea-sub.html"),"commentIsReady");
 	window.addEventListener('workInfo', function(e) {
 		mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100); //100毫秒滚动到顶
 		workInfo = e.detail.data;
