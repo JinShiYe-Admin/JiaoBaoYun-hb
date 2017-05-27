@@ -539,7 +539,12 @@
 					"image/utils/playvideo.png",
 					"image/utils/loading.gif",
 					"js/utils/h5fresh.js",
-					"image/mine/invite_none_0.png"
+					"image/mine/invite_none_0.png",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js",
+					"js/mui.pullToRefresh.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/utils/video.js"
 				],
 				"refer": [
 					"html/quan/class-group.html",
@@ -1094,7 +1099,10 @@
 					"js/utils/h5fresh.js",
 					"image/homework/submitted.png",
 					"image/homework/commented.png",
-					"image/utils/loading.gif"
+					"image/utils/loading.gif",
+					"js/mui.pullToRefresh.js",
+					"image/qiuzhi/qiuzhi_noanswer.png",
+					"js/mui.pullToRefresh.material.js"
 				],
 				"refer": [
 					"html/homework/homework-publish.html",
