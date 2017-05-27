@@ -2893,7 +2893,9 @@
 					"js/libs/jquery.lazyload.min.js",
 					"image/utils/video-loading.gif",
 					"image/utils/loading.gif",
-					"image/qiuzhi/qiuzhi_noanswer.png"
+					"image/qiuzhi/qiuzhi_noanswer.png",
+					"js/mui.pullToRefresh.js",
+					"js/mui.pullToRefresh.material.js"
 				],
 				"refer": [
 					"html/qiuzhi/qiuzhi-question.html",
@@ -2924,7 +2926,21 @@
 					"css/qiuzhi/qiuzhi-questionSub.css",
 					"css/utils/preview.css",
 					"js/utils/h5fresh.js",
-					"image/utils/loading.gif"
+					"image/utils/loading.gif",
+					"js/mui.pullToRefresh.js",
+					"js/publicQiuzhiProtocol.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.zoom.js",
+					"js/libs/RSA/BigInt.js",
+					"js/mui.previewimage.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
 					"html/qiuzhi/experts_main.html",
@@ -3745,7 +3761,8 @@
 					"js/utils/video.js",
 					"image/utils/playvideo.png",
 					"fonts/mui.ttf",
-					"image/utils/loading.gif"
+					"image/utils/loading.gif",
+					"image/mine/invite_none_0.png"
 				],
 				"refer": [
 					"html/utils/customizeCity.html",
