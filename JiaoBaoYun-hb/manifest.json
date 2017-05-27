@@ -4135,7 +4135,8 @@
 					"fonts/iconfont.ttf",
 					"css/show/show.css",
 					"image/dynamic/praise.png",
-					"js/utils/video.js"
+					"js/utils/video.js",
+					"image/utils/playvideo.png"
 				],
 				"refer": [
 					"html/show/add-comment.html",
