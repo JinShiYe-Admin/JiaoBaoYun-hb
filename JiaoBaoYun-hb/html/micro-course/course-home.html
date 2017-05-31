@@ -1,0 +1,63 @@
+<!--微课首页-->
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>微课首页</title>
+		<meta author="rockan007" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+		<style>
+			.mui-slider-indicator {
+				margin-left: -10px;
+				bottom: -3px;
+			}
+			
+			.mui-slider-indicator .mui-indicator {
+				margin: 1px 2px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">关注</h1>
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+			</div>
+			<a class="mui-pull-right mui-icon mui-icon-search"></a>
+		</header>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/webviewGroup.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function() {
+				var group = new webviewGroup("viewGroup", {
+					items: [{
+						id: "course-attended.html",
+						url: "course-attended.html"
+					}, {
+						id: "course-all.html",
+						url: "course-all.html"
+					}],
+					onChange: function(obj) {
+						document.querySelector(".mui-indicator.mui-active").classList.remove("mui-active");
+						document.querySelector("mui-slider-indicator:nth-child(" + (parseInt(obj.index) + 1) + ")").classList.add("mui-active");
+						var title = document.querySelector(".mui-title");
+						if(parseInt(obj.index)) {
+							title.innerText = "全部";
+						} else {
+							title.innerText = "关注";
+						}
+					}
+				})
+			})
+		</script>
+	</body>
+
+</html>

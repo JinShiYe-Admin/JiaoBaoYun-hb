@@ -85,7 +85,7 @@ var events = (function(mod) {
 				title: '正在加载...'
 			},
 			createNew: true,
-			styles: mod.getWebStyle()
+			styles: mod.getWebStyle() 
 		});
 	};
 	/**
