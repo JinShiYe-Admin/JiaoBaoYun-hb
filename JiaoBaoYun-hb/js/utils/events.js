@@ -58,7 +58,7 @@ var events = (function(mod) {
 				waiting: {
 					title: '正在加载...'
 				},
-				styles: mod.getWebStyle()
+				styles: mod.getWebStyle(tarPagePath)
 			})
 		}
 
@@ -85,7 +85,7 @@ var events = (function(mod) {
 				title: '正在加载...'
 			},
 			createNew: true,
-			styles: mod.getWebStyle() 
+			styles: mod.getWebStyle(targetHTML)
 		});
 	};
 	/**
@@ -99,7 +99,7 @@ var events = (function(mod) {
 		}
 		height = height ? height : 0;
 		bottom = bottom ? bottom : 0;
-		var styles = mod.getWebStyle();
+		var styles = mod.getWebStyle(subPage);
 		styles.top = (localStorage.getItem('StatusHeightNo') * 1 + 45 + height) + 'px';
 		styles.bottom = bottom + 'px';
 		mui.init({
@@ -187,7 +187,7 @@ var events = (function(mod) {
 		if(navBarStyle) {
 			styles = mod.getNavBarStyle(navBarStyle);
 		} else {
-			styles = mod.getWebStyle();
+			styles = mod.getWebStyle(tarPage);
 		}
 
 		console.log("预加载的页面：" + tarPage)
@@ -423,7 +423,7 @@ var events = (function(mod) {
 	 * @param {Object} loadedCallBack 子页面加载完成的回调
 	 */
 	mod.createSubAppendMain = function(mainWebviewObject, subPageUrl, data, loadedCallBack) {
-		var styles = mod.getWebStyle();
+		var styles = mod.getWebStyle(mainWebviewObject.id);
 		styles.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
 		var sub = plus.webview.create(subPageUrl, subPageUrl.split('/')[subPageUrl.split('/').length - 1], styles, {
 			data: data
@@ -557,12 +557,12 @@ var events = (function(mod) {
 			if(target && target.tagName == 'TEXTAREA') {
 				if(target.scrollHeight > target.clientHeight) {
 					e.stopPropagation();
-				}else{
+				} else {
 
 				}
 			}
 		}, {
-			passive:true
+			passive: true
 		});
 	}
 
@@ -642,14 +642,24 @@ var events = (function(mod) {
 
 	/**
 	 * 默认webview的样式
+	 * @param {Object} path  webView的id或者路径
 	 */
-	mod.getWebStyle = function() {
+	mod.getWebStyle = function(path) {
 		var styles = {
 			top: '0px',
 			bottom: '0px',
 			softinputMode: "adjustResize",
 			hardwareAccelerated: false
 		};
+		if(plus.os.name == "Android" && path) {
+			var ids = path.split('/');
+			var id = ids[ids.length - 1];
+			//安卓中video标签播放视频需要开启硬件加速
+			//求知问题详情页
+			if(id == "qiuzhi-question.html") {
+				styles.hardwareAccelerated = true;
+			}
+		}
 		return styles;
 	}
 	/**
@@ -805,7 +815,7 @@ var events = (function(mod) {
 		console.log("当前点击控件是否可点击：" + clickedItem.disabled);
 		var webviewSites = webviewUrl.split("/");
 		var webviewId = webviewSites[webviewSites.length - 1];
-		var targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(), {
+		var targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(webviewUrl), {
 			data: data
 		});
 		targetWebview.onloaded = function() {
