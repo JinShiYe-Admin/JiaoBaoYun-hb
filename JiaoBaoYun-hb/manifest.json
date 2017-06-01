@@ -869,7 +869,8 @@
 					"image/quan/Scan.png",
 					"js/qiuzhi/delContent_pop.js",
 					null,
-					"js/main/slide_navigation.js"
+					"js/main/slide_navigation.js",
+					"js/publicHomeworkProtocol.js"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -1559,7 +1560,21 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"js/utils/h5fresh.js",
 					"image/utils/loading.gif",
-					"image/utils/playvideo.png"
+					"image/utils/playvideo.png",
+					"js/mui.pullToRefresh.js",
+					"js/storageKeyName.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/publicHomeworkProtocol.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
 					"html/homework/workdetail-stu.html",
