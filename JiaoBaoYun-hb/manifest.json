@@ -4634,6 +4634,53 @@
 					"js/utils/webviewGroup.js",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
+					"css/utils/common.css",
+					"js/libs/jquery.js",
+					"html/micro-course/course-attended.html"
+				],
+				"refer": [
+					"html/micro-course/course-all.html",
+					"html/micro-course/course-search.html"
+				],
+				"priority": 0
+			},
+			"html/micro-course/course-attended.html": {
+				"resources": [
+					"js/mui.pullToRefresh.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"css/micro-course/course-list.css",
+					"js/micro-course/course-list.js",
+					"image/utils/loading.gif"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/micro-course/course-all.html": {
+				"resources": [
+					"js/mui.pullToRefresh.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/utils/events.js",
+					"css/mui.min.css",
+					"css/micro-course/course-list.css",
+					"js/micro-course/course-list.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/micro-course/course-search.html": {
+				"resources": [
+					"js/mui.pullToRefresh.js",
+					"css/mine/search.css",
+					"js/mui.min.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/micro-course/course-search.js",
+					"css/mui.min.css",
 					"css/utils/common.css"
 				],
 				"refer": [],
