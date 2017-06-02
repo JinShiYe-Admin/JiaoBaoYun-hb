@@ -3024,7 +3024,30 @@
 					"js/main/slide_navigation.js",
 					"js/utils/slide-selector.js",
 					"html/show/show-sub.html",
-					"js/storageKeyName.js"
+					"js/storageKeyName.js",
+					"js/utils/webviewGroup.js",
+					"js/mui.zoom.js",
+					"js/utils/video.js",
+					"css/show/show-home.css",
+					"js/libs/jquery.lazyload.min.js",
+					"css/icons-extra.css",
+					"css/utils/preview.css",
+					"html/show/show-all.html",
+					"html/show/show-attended.html",
+					"css/utils/pullToRefresh.css",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/myStorage/myStorage.js",
+					"css/iconfont/iconfont.css",
+					"js/utils/signHmacSHA1.js",
+					"js/utils/postData.js",
+					"js/mui.pullToRefresh.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/publicProtocol.js",
+					"js/libs/RSA/BigInt.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
 					"html/show/show-sub1.html",
@@ -4640,8 +4663,7 @@
 				],
 				"refer": [
 					"html/micro-course/course-all.html",
-					"html/micro-course/course-search.html",
-					"html/micro-course/course-introduction.html"
+					"html/micro-course/course-search.html"
 				],
 				"priority": 0
 			},
@@ -4687,14 +4709,13 @@
 				"refer": [],
 				"priority": 0
 			},
-			"html/micro-course/course-introduction.html": {
+			"html/show/show-all.html": {
 				"resources": [
-					"js/publicQiuzhiProtocol.js",
+					"js/show/show_list.js",
 					"js/storageKeyName.js",
 					"js/utils/events.js",
 					"js/libs/RSA/Barrett.js",
 					"js/libs/crypto-js/require.js",
-					"css/utils/common.css",
 					"js/libs/myStorage/myStorage.js",
 					"js/publicProtocol.js",
 					"js/libs/jquery.js",
@@ -4705,33 +4726,41 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"image/clip.png",
-					"js/publicMicroClass.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"css/utils/common.css",
+					"fonts/fangzheng.ttf",
+					"css/utils/pullToRefresh.css",
+					"css/show/show-list.css",
+					"js/mui.pullToRefresh.js",
+					"js/mui.pullToRefresh.material.js",
+					"css/utils/fresh.css"
 				],
-				"refer": [
-					"html/micro-course/history-records.html"
-				],
+				"refer": [],
 				"priority": 0
 			},
-			"html/micro-course/history-records.html": {
+			"html/show/show-attended.html": {
 				"resources": [
-					"js/mui.pullToRefresh.js",
-					"image/cloud/notes_bg2.jpg",
-					"js/mui.pullToRefresh.material.js",
+					"js/show/show_list.js",
+					"js/storageKeyName.js",
+					"js/utils/events.js",
 					"js/libs/RSA/Barrett.js",
 					"js/libs/crypto-js/require.js",
-					"css/utils/common.css",
-					"image/utils/loading.gif",
 					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
 					"js/libs/jquery.js",
+					"js/mui.min.js",
 					"js/libs/RSA/BigInt.js",
 					"css/mui.min.css",
-					"image/utils/playvideo.png",
-					"js/libs/RSA/RSA.js",
 					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"image/utils/loading.gif",
+					"js/mui.pullToRefresh.js",
+					"js/mui.pullToRefresh.material.js",
+					"css/utils/fresh.css",
+					"css/utils/common.css",
+					"fonts/fangzheng.ttf",
+					"css/show/show-list.css"
 				],
 				"refer": [],
 				"priority": 0
