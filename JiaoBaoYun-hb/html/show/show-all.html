@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/utils/fresh.css" rel="stylesheet" />
+		<link href="../../css/show/show-list.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+		<div id="refreshContainer" class="mui-content mui-fullscreen">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<ul id="list-container" class="mui-table-view">
+
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/mui.pullToRefresh.js"></script>
+		<script src="../../js/mui.pullToRefresh.material.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/show/show_list.js"></script>
+		<script type="text/javascript">
+			var freshContainer;
+			var oldPageIndex;
+			var freshFlag = 0;
+			var showCity = {
+				acode: 1,
+				aname: '关注',
+				aflag: 1 ,//0为根据省市编码获取数据，1为获取关注的人的列表
+				pageIndex:1
+			}
+			show_list.initFresh();
+			var totalPage=100;
+			mui.init();
+			mui.plusReady(function() {
+				show_list.getShowList(showCity,document.getElementById("list-container"),show_list.setShowList);
+			})
+		</script>
+	</body>
+
+</html>
