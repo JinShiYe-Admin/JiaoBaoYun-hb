@@ -170,7 +170,8 @@
 			"js/libs/RSA/BigInt.js",
 			"js/publicHomeworkProtocol.js",
 			"js/libs/RSA/RSA.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/utils/events.js"
 		],
 		"refer": [
 			"html/index/mine.html",
@@ -391,13 +392,15 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"html/show/show_home_1.html"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",
 			"html/sciedu/sciedu_home.html",
 			"html/show/show_home_1.html",
-			"html/qiuzhi/qiuzhi_home.html"
+			"html/qiuzhi/qiuzhi_home.html",
+			"html/micro-course/course-home.html"
 		]
 	},
 	"html/cloud/storage_main.html": {
@@ -415,7 +418,17 @@
 			"css/iconfont/iconfont.css",
 			"js/publicProtocol.js",
 			"js/mui.min.js",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
@@ -605,7 +618,8 @@
 			"fonts/mui.ttf",
 			"js/utils/events.js",
 			"css/iconfont/iconfont.css",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"js/storageKeyName.js"
 		],
 		"refer": [
 			"html/cloud/storage_transport.html",
@@ -1730,6 +1744,61 @@
 			"js/utils/CloudFileUtil.js",
 			"css/mui.min.css",
 			"js/qiniu/qiniu.js"
+		]
+	},
+	"html/micro-course/course-home.html": {
+		"resources": [
+			"js/utils/webviewGroup.js",
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"js/utils/events.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/jquery.js",
+			"html/micro-course/course-attended.html",
+			"html/micro-course/course-all.html"
+		],
+		"refer": [
+			"html/micro-course/course-search.html",
+			"html/micro-course/course-attended.html",
+			"html/micro-course/course-all.html"
+		]
+	},
+	"html/micro-course/course-search.html": {
+		"resources": [
+			"js/mui.pullToRefresh.js",
+			"css/mine/search.css",
+			"js/mui.min.js",
+			"js/mui.pullToRefresh.material.js",
+			"js/micro-course/course-search.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/micro-course/course-attended.html": {
+		"resources": [
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"css/micro-course/course-list.css",
+			"js/micro-course/course-list.js",
+			"js/mui.pullToRefresh.js",
+			"js/mui.pullToRefresh.material.js",
+			"js/utils/events.js",
+			"image/utils/loading.gif"
+		]
+	},
+	"html/micro-course/course-all.html": {
+		"resources": [
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"css/micro-course/course-list.css",
+			"js/micro-course/course-list.js",
+			"js/mui.pullToRefresh.js",
+			"js/mui.pullToRefresh.material.js",
+			"js/utils/events.js",
+			"image/utils/loading.gif"
 		]
 	}
 }

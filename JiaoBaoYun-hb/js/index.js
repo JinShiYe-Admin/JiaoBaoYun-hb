@@ -40,7 +40,8 @@ mui.plusReady(function() {
 	//	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
 	window.addEventListener('infoChanged', function() {
 		events.fireToPageNone("cloud_home.html", "infoChanged");
-		events.fireToPageNone("qiuzhi_home.html", "infoChanged");
+//		events.fireToPageNone("qiuzhi_home.html", "infoChanged");
+		events.fireToPageNone("course_home.html", "infoChanged");
 	});
 	//登录的监听
 	window.addEventListener("login", function() {
@@ -66,8 +67,10 @@ var addSubPages = function() {
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
-	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show_home_1.html', '../qiuzhi/qiuzhi_home.html'];
-	var titles = ['云盘', '科教', '展现', '求知'];
+//	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show_home_1.html', '../qiuzhi/qiuzhi_home.html'];
+//	var titles = ['云盘', '科教', '展现', '求知'];
+	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show_home_1.html', '../micro-course/course-home.html'];
+	var titles = ['云盘', '科教', '展现', '微课'];
 	//设置子页面距离顶部的位置
 	var subpage_style = events.getWebStyle();
 	subpage_style.top = (localStorage.getItem('StatusHeightNo') * 1) + 'px';
