@@ -23,10 +23,8 @@
 			<div style="border-color: green;height: auto;border-width:1px ;border-style:dashed;margin-right: 20px;margin-left: 30px;margin-top: -30px;">
 
 				<div style="padding:5px 10px;">
-					<p id="teaName" style="text-align: center;color: black;font-size: 14px;">宋艳明</p><span id="teaInfo" style="text-align: center;color: black;font-size: 14px;">
-						人foe计日工IE计日工我金额荣光金额无人机二个人家给人家个人际公积金
-						人foe计日工IE计日工我金额荣光金额无人机二个人家给人家个人际公积金
-						人foe计日工IE计日工我金额荣光金额无人机二个人家给人家个人际公积金
+					<p id="teaName" style="text-align: center;color: black;font-size: 14px;"></p><span id="teaInfo" style="text-align: center;color: black;font-size: 14px;">
+
 					</span>
 				</div>
 
@@ -35,7 +33,6 @@
 			<div>
 				<div style="font-size: 16px;padding-left: 10px;">课程介绍</div>
 				<p id="courseInfo" style="padding-left: 40px;color: black;font-size: 14px;padding-right: 10px;">
-					人foe计日工IE计日工我金额荣光金额无人机二个人家给人家个人际公积金 人foe计日工IE计日工我金额荣光金额无人机二个人家给人家个人际公积金 人foe计日工IE计日工我金额荣光金额无人机二个人家给人家个人际公积金
 				</p>
 			</div>
 			<p style="background-color:lightgray;height: 1px;margin-top: 10px;"></p>
@@ -52,35 +49,127 @@
 		<script src="../../js/mui.min.js"></script>
 		<!--公共方法js-->
 		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/publicMicroClass.js" type="text/javascript" charset="utf-8"></script>
 	</body>
-<script type="text/javascript">
-	var nodes = {
-		title:document.getElementById("title"),
-		teaHeadImg:document.getElementById("teaHeadImg"),
-		teaName:document.getElementById("teaName"),
-		teaInfo:document.getElementById("teaInfo"),
-		courseInfo:document.getElementById("courseInfo"),
-		history:document.getElementById("history"),
-		focusBtn:document.getElementById("focusBtn"),
-	}
-	mui.plusReady(function(){
-		getInfo()
-	})
-	var getInfo = function(){
-		var Info = {};
-		createHtmlContent(Info);
-	}
-	var createHtmlContent = function(Info){
-		nodes.title = Info.title;
-		nodes.teaHeadImg = Info.teaHeadImg;
-		nodes.teaName = Info.teaName;
-		nodes.teaInfo = Info.teaInfo;
-		nodes.courseInfo = Info.courseInfo;
-	}
-	events.addTap('history',function(){
-		
-	})
-</script>
+	<script type="text/javascript">
+		var nodes = {
+			title: document.getElementById("title"),
+			teaHeadImg: document.getElementById("teaHeadImg"),
+			teaName: document.getElementById("teaName"),
+			teaInfo: document.getElementById("teaInfo"),
+			courseInfo: document.getElementById("courseInfo"),
+			history: document.getElementById("history"),
+			focusBtn: document.getElementById("focusBtn"),
+			focusFlag: 0,
+		}
+		mui.plusReady(function() {
+			var courseId = '1'
+			getCourseInfo(courseId);
+			getCourseFocusByUser();
+		})
+		var getCourseInfo = function(courseId) {
+			//4.获取课程信息
+			//所需参数
+			var comData = {
+				courseId: courseId //课程ID
+			};
+			// 等待的对话框
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			//4.获取课程信息
+			postDataMCPro_getCourseInfoById(comData, wd, function(data) {
+				wd.close();
+				console.log('4.获取课程信息:' + JSON.stringify(data));
+				if(data.RspCode == 0) {
+					var courseInfo = data.RspData;
+					createHtmlContent(courseInfo);
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+
+		}
+		var getCourseFocusByUser = function() {
+			console.log(111111)
+			var utid = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+			console.log('utid=' + utid)
+			//5.获取是否已对某个课程关注
+			//所需参数
+			var comData = {
+				userId: utid, //用户ID,登录用户
+				courseId: '1' //课程ID
+			};
+			//返回值：非0为已关注
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataMCPro_getCourseFocusByUser(comData, wd, function(data) {
+				wd.close();
+				console.log('5.获取是否已对某个课程关注:' + JSON.stringify(data));
+				if(data.RspCode == 0) {
+					if(data.RspData.Result == 1) {
+						nodes.focusBtn.style.backgroundColor = 'lightgray'
+						nodes.focusBtn.innerHTML = '已关注'
+						nodes.focusFlag = 1;
+
+					} else {
+						nodes.focusBtn.style.backgroundColor = '#1db8F1'
+						nodes.focusBtn.innerHTML = '关注'
+						nodes.focusFlag = 0;
+					}
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		}
+
+		var createHtmlContent = function(courseInfo) {
+			nodes.title.innerHTML = courseInfo.CourseName;
+			//			nodes.teaHeadImg = courseInfo.teaHeadImg;
+			nodes.teaName.innerHTML = courseInfo.TeacherName;
+			nodes.teaInfo.innerHTML = courseInfo.TeacherNote;
+			nodes.courseInfo.innerHTML = courseInfo.CourseNote;
+		}
+		events.addTap('history', function() {
+			events.openNewWindowWithData('history-records.html', {})
+		})
+		events.addTap('focusBtn', function() {
+			setCourseFocus(nodes.focusFlag)
+
+		})
+		var setCourseFocus = function(focusFlag) {
+			var utid = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+			if(focusFlag == 0) {
+				focusFlag = 1
+			} else {
+				focusFlag = 0
+			}
+			//6.设置对某个课程关注
+			//所需参数
+			var comData = {
+				userId: utid, //用户ID,登录用户
+				courseId: '1', //课程ID
+				status: focusFlag //关注状态，0 不关注，1 关注
+			};
+			//返回值：1为正确
+			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+			postDataMCPro_setCourseFocus(comData, wd, function(data) {
+				wd.close();
+				console.log('6.设置对某个课程关注:' + JSON.stringify(data));
+				if(data.RspCode == 0) {
+					nodes.focusFlag = focusFlag;
+					if(nodes.focusFlag == 1) {
+						nodes.focusBtn.style.backgroundColor = 'lightgray'
+						nodes.focusBtn.innerHTML = '已关注'
+
+					} else {
+						nodes.focusBtn.style.backgroundColor = '#1db8F1'
+						nodes.focusBtn.innerHTML = '关注'
+					}
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		}
+	</script>
+
 </html>
