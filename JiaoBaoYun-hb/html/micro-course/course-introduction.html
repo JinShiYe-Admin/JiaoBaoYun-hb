@@ -55,32 +55,74 @@
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
 	</body>
-<script type="text/javascript">
-	var nodes = {
-		title:document.getElementById("title"),
-		teaHeadImg:document.getElementById("teaHeadImg"),
-		teaName:document.getElementById("teaName"),
-		teaInfo:document.getElementById("teaInfo"),
-		courseInfo:document.getElementById("courseInfo"),
-		history:document.getElementById("history"),
-		focusBtn:document.getElementById("focusBtn"),
-	}
-	mui.plusReady(function(){
-		getInfo()
-	})
-	var getInfo = function(){
-		var Info = {};
-		createHtmlContent(Info);
-	}
-	var createHtmlContent = function(Info){
-		nodes.title = Info.title;
-		nodes.teaHeadImg = Info.teaHeadImg;
-		nodes.teaName = Info.teaName;
-		nodes.teaInfo = Info.teaInfo;
-		nodes.courseInfo = Info.courseInfo;
-	}
-	events.addTap('history',function(){
-		
-	})
-</script>
+	<script type="text/javascript">
+		var nodes = {
+			title: document.getElementById("title"),
+			teaHeadImg: document.getElementById("teaHeadImg"),
+			teaName: document.getElementById("teaName"),
+			teaInfo: document.getElementById("teaInfo"),
+			courseInfo: document.getElementById("courseInfo"),
+			history: document.getElementById("history"),
+			focusBtn: document.getElementById("focusBtn"),
+		}
+		var courseID; //从上个界面传值的课程id
+		var courseModel; //课程model
+		mui.plusReady(function() {
+			//获取课程信息
+			getInfo();
+			//获取自己是否关注此课程
+			getFocus();
+		});
+		//获取自己是否关注此课程
+		var getFocus = function() {
+			//个人信息
+			var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+			//所需参数
+			var comData = {
+				userId: personal.utid, //用户ID,登录用户
+				courseId: courseID //课程ID
+			};
+			//5.获取是否已对某个课程关注
+			postDataMCPro_getCourseFocusByUser(comData, wd, function(data) {
+				wd.close();
+				console.log('5.获取是否已对某个课程关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) { //成功
+					
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		}
+		//获取课程信息
+		var getInfo = function() {
+			//个人信息
+			var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+			//所需参数
+			var comData = {
+				courseId: courseID //课程ID
+			};
+			//4.获取课程信息
+			postDataMCPro_getCourseInfoById(comData, wd, function(data) {
+				wd.close();
+				console.log('4.获取课程信息:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0) { //成功
+					courseModel = data.RspData;
+					createHtmlContent(courseModel);
+				} else {
+					mui.toast(data.RspTxt);
+				}
+			});
+		}
+		var createHtmlContent = function(Info) {
+			nodes.title = Info.CourseName;
+			nodes.teaHeadImg = Info.TeacherPic;
+			nodes.teaName = Info.TeacherName;
+			nodes.teaInfo = Info.TeacherNote;
+			nodes.courseInfo = Info.CourseNote;
+		}
+		events.addTap('history', function() {
+
+		})
+	</script>
+
 </html>

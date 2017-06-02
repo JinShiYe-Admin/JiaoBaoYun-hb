@@ -28,11 +28,15 @@
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
 		<script src="../../js/micro-course/course-list.js"></script>
+		<script src="../../js/publicMicroClass.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
 			course_list.initFresh();
 			var freshContainer;
 			var freshFlag;
+			var pageFlag = 0;//关注0，全部1
+			var courseArray = [];//显示的数组
+			var totalPage = 0;//数据总页数
 			var pageIndex=1;
 			mui.plusReady(function() {
 				course_list.getData(pageIndex,document.getElementById("list-container"),course_list.setData);
