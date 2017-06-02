@@ -19,12 +19,21 @@ var class_space = (function(mod) {
 				mod.totalPagNo = pagedata.RspData.TotalPage;
 				list = pagedata.RspData.Data;
 				if(pageIndex == 1) {
-					setReaded(postData.userId, postData.classId, mod.wd);
+					if(pagedata.RspData.TotalCnt) {
+						showNoData(0);
+						setFresh();
+						setReaded(postData.userId, postData.classId, mod.wd);
+					} else {
+						showNoData(1);
+					}
 				}
 				callback();
 			} else {
+				endFresh();
 				mod.wd.close();
-				if(data.RspTxt!=404){
+				errCallback();
+
+				if(pagedata.RspTxt != 404) {
 					mui.toast(pagedata.RspTxt);
 				}
 			}
@@ -37,6 +46,14 @@ var class_space = (function(mod) {
 	 */
 	mod.replaceUrl = function() {
 		createListView();
+	}
+
+	function errCallback() {
+		if(pageIndex > 1) {
+			pageIndex -= 1;
+		} else {
+			pageIndex = oldPageIndex;
+		}
 	}
 	/**
 	 * 获取Url信息
@@ -63,11 +80,9 @@ var class_space = (function(mod) {
 			for(var i in list) {
 				utids.push(list[i].PublisherId);
 			}
-			console.log('')
 			getPersonalImg(utids.toString());
-			//				
 		} else {
-			console.log('暂无数据');
+			mod.wd.close();
 		}
 	}
 	/**
@@ -226,6 +241,9 @@ var class_space = (function(mod) {
 	var setData = function() {
 		var container = document.getElementById('classSpace_list');
 		//		var fragment=document.createDocumentFragment();
+		if(pageIndex == 1) {
+			container.innerHTML = "";
+		}
 		for(var i in list) {
 			var li = document.createElement('li');
 			li.className = 'mui-table-view-cell';
@@ -238,9 +256,6 @@ var class_space = (function(mod) {
 				var more_span = document.createElement('span');
 				more_span.className = "more-span";
 				more_span.innerText = "展开全部";
-				//				more_span.addEventListener("tap", function() {
-				//
-				//				})
 				li.querySelector(".chat-body").insertBefore(more_span, li.querySelector(".class-imgs"));
 			}
 			if(li.querySelector(".video-container")) {
@@ -316,6 +331,7 @@ function videoImgOnload(event) {
 mui.init();
 var freshContainer;
 var freshFlag = 0; //0啥也不干  1刷新 2加载
+var oldPageIndex = 1;
 mui('.mui-scroll-wrapper').scroll({
 	bounce: false,
 	indicators: true //是否显示滚动条
@@ -327,11 +343,10 @@ var setFresh = function() {
 		down: {
 			callback: function() {
 				freshContainer = this;
+				oldPageIndex = pageIndex;
 				freshFlag = 1;
 				//清除节点
 				pageIndex = 1;
-				var container = document.getElementById('classSpace_list');
-				events.clearChild(container);
 				class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
 			}
 		},
@@ -352,7 +367,7 @@ var setFresh = function() {
 		}
 	});
 }
-setFresh();
+//setFresh();
 var pageIndex = 1;
 var pageSize = 10;
 var postData;
@@ -385,9 +400,7 @@ mui.plusReady(function() {
 	setListener(postData.userId);
 	//更改个人信息，更新界面
 	window.addEventListener('infoChanged', function() {
-		mui('#refreshContainer').pullRefresh().refresh(true);
 		pageIndex = 1;
-		//		setReaded(postData.userId, postData.classId);
 		var container = document.getElementById('classSpace_list');
 		container.innerHTML = "";
 		class_space.getList(postData, pageIndex, pageSize, class_space.replaceUrl);
@@ -434,6 +447,21 @@ mui.plusReady(function() {
 		})
 	})
 });
+/**
+ * 
+ * @param {Object} type
+ */
+function showNoData(type) {
+	if(type) {
+		document.querySelector(".vertical-scroll").style.display = "none";
+		document.querySelector(".noDataDisplay").style.display = "block";
+		//		mui(".mui-pull-loading")[0].style.display = "none";
+	} else {
+		document.querySelector(".vertical-scroll").style.display = "block";
+		document.querySelector(".noDataDisplay").style.display = "none";
+		//		mui(".mui-pull-loading")[0].style.display = "block";
+	}
+}
 /**
  * 结束刷新状态；
  * @param {int} 0 不隐藏上拉加载更多     1隐藏上拉加载更多
@@ -510,6 +538,7 @@ var addSingleDynamic = function() {
 		class_space.getList(postData, pageIndex * 10, 1, class_space.replaceUrl);
 	}
 }
+
 var setListener = function(userId) {
 	events.addTap('write', function() {
 		events.openNewWindowWithData('class-dynamic.html', postData)

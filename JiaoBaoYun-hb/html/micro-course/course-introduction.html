@@ -1,0 +1,86 @@
+<!--求知回答界面-->
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title">物理</h1>
+		</header>
+		<div class="mui-content">
+			<br />
+			<div style="font-size: 16px;padding-left: 10px;">授课老师</div>
+			<img id="teaHeadImg" style="padding-left: 10px;" src="../../image/clip.png" />
+			<div style="border-color: green;height: auto;border-width:1px ;border-style:dashed;margin-right: 20px;margin-left: 30px;margin-top: -30px;">
+
+				<div style="padding:5px 10px;">
+					<p id="teaName" style="text-align: center;color: black;font-size: 14px;">宋艳明</p><span id="teaInfo" style="text-align: center;color: black;font-size: 14px;">
+						人foe计日工IE计日工我金额荣光金额无人机二个人家给人家个人际公积金
+						人foe计日工IE计日工我金额荣光金额无人机二个人家给人家个人际公积金
+						人foe计日工IE计日工我金额荣光金额无人机二个人家给人家个人际公积金
+					</span>
+				</div>
+
+			</div>
+			<p style="background-color:lightgray;height: 1px;margin-top: 10px;"></p>
+			<div>
+				<div style="font-size: 16px;padding-left: 10px;">课程介绍</div>
+				<p id="courseInfo" style="padding-left: 40px;color: black;font-size: 14px;padding-right: 10px;">
+					人foe计日工IE计日工我金额荣光金额无人机二个人家给人家个人际公积金 人foe计日工IE计日工我金额荣光金额无人机二个人家给人家个人际公积金 人foe计日工IE计日工我金额荣光金额无人机二个人家给人家个人际公积金
+				</p>
+			</div>
+			<p style="background-color:lightgray;height: 1px;margin-top: 10px;"></p>
+			<p id="history" style="color: black;font-size: 16px;padding-left: 10px;padding-right: 10px;">查看历史<span class="mui-icon iconfont icon-fanhui2" style="color:#b7b7b7;float: right;padding-top: 2px;"></span></p>
+			<p style="background-color:lightgray;height: 1px;margin-top: 10px;"></p>
+			<div align="center">
+				<button id="focusBtn" class="mui-btn mui-btn-green btn-commit" style="background-color: #1db8F1;border-color:#1db8F1 ;border: 0;margin-left: 10px;margin-right: 10px;width: 90%;">关注</button>
+
+			</div>
+
+		</div>
+
+		<!--mui.js-->
+		<script src="../../js/mui.min.js"></script>
+		<!--公共方法js-->
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+<script type="text/javascript">
+	var nodes = {
+		title:document.getElementById("title"),
+		teaHeadImg:document.getElementById("teaHeadImg"),
+		teaName:document.getElementById("teaName"),
+		teaInfo:document.getElementById("teaInfo"),
+		courseInfo:document.getElementById("courseInfo"),
+		history:document.getElementById("history"),
+		focusBtn:document.getElementById("focusBtn"),
+	}
+	mui.plusReady(function(){
+		getInfo()
+	})
+	var getInfo = function(){
+		var Info = {};
+		createHtmlContent(Info);
+	}
+	var createHtmlContent = function(Info){
+		nodes.title = Info.title;
+		nodes.teaHeadImg = Info.teaHeadImg;
+		nodes.teaName = Info.teaName;
+		nodes.teaInfo = Info.teaInfo;
+		nodes.courseInfo = Info.courseInfo;
+	}
+	events.addTap('history',function(){
+		
+	})
+</script>
+</html>

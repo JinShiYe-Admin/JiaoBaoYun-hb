@@ -1,4 +1,5 @@
 var freshContainer;
+var freshFlag=0;//0默认 1刷新 2加载更多
 var setIcon = function() {
 	if(questionInfo && questionInfo.AskMan == myStorage.getItem(storageKeyName.PERSONALINFO).utid && (questionInfo.AnswerNum + questionInfo.AnswerOffNum) == 0) {
 		document.getElementById("manage-question").style.display = "inline-block";
@@ -13,13 +14,9 @@ var setFresh = function() {
 		down: {
 			callback: function() {
 				freshContainer = this;
+				freshFlag=1;
 				//清除节点
 				pulldownRefresh();
-				//				setTimeout(function() {
-				//					//结束下拉刷新
-				//					mui(".mui-pull-loading")[0].innerHTML = "上拉显示更多";
-				//					self.endPullDownToRefresh();
-				//				}, 1000);
 			}
 		},
 		up: {
@@ -28,17 +25,11 @@ var setFresh = function() {
 				answerFlag = 1;
 				//判断是否还有更多
 				if(answerIndex <= answerPageCount) {
-					//					setTimeout(function() {
-					//						self.endPullUpToRefresh();
-					//					}, 1000);
-					//5.获取某个问题的详情
+					freshFlag=2;
 					requestAskDetail();
 				} else {
 					freshContainer.endPullUpToRefresh();
 					mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
-					//					if(plus.webview.currentWebview().isVisible()) {
-					//						mui.toast("没有更多了！");
-					//					}
 				}
 
 			}
@@ -250,10 +241,16 @@ mui.plusReady(function() {
  */
 function endFresh() {
 	if(freshContainer) {
-		freshContainer.endPullDownToRefresh();
-		mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
-		freshContainer.endPullUpToRefresh();
+		if(freshFlag==1){
+			freshContainer.endPullDownToRefresh();
+			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+		}else if(freshFlag==2){
+			freshContainer.endPullUpToRefresh();
+		}else{
+			mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
+		}
 	}
+	freshFlag=0;
 }
 /**
  * 根据状况低端按钮显示
@@ -261,14 +258,17 @@ function endFresh() {
 var setCondition = function() {
 	var manageContainer = document.getElementById("manage-container");
 	if(askModel.AnswerId && askModel.IsAnswerOff) { //已回答且已隐藏
+		document.querySelector(".mui-content.mui-fullscreen").style.bottom="50px";
 		manageContainer.style.display = "block";
 		manageContainer.innerHTML = '<div class="tab_div" style="border: 0;">' +
 			'<font  id=""><p style="text-align:center;font-size:16px;color:#323232">回答已屏蔽<span id="cancel-shield" style="color:#13b7f6" class="mui-pull-right">撤销</span></p></font>' +
 			'</div>';
 	} else if(askModel.IsAnswered) { //已回答
+		document.querySelector(".mui-content.mui-fullscreen").style.bottom="0";
 		manageContainer.style.display = "none";
 		manageContainer.innerHTML = "";
 	} else {
+		document.querySelector(".mui-content.mui-fullscreen").style.bottom="50px";
 		manageContainer.style.display = "block";
 		manageContainer.innerHTML = '<div id="tab_div">' +
 			'<font id="tab_font"><span class="mui-icon iconfont icon-xie mui-pull-left"></span>请输入问题的答案</font>' +

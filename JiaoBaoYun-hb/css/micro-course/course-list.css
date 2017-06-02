@@ -1,0 +1,162 @@
+/*课程容器*/
+
+.course-container {
+	display: flex;
+	display: -webkit-flex;
+}
+
+
+/**
+ * 课程图片
+ */
+
+.course-img {
+	width: 120px;
+	height: 80px;
+}
+
+
+/**
+ * 课程详情
+ */
+
+.course-detail {
+	width: 20%;
+	flex-grow: 1;
+}
+
+
+/**
+ * 课程名称和按钮
+ */
+
+.courseName-button {
+	display: flex;
+	display: -webkit-flex;
+	padding-bottom: 15px;
+}
+
+
+/**
+ * 课程名称
+ */
+
+.coursre-name {
+	width: 50%;
+	flex-grow: 1;
+	font-size: 20px;
+	color: #323232;
+}
+
+
+/**
+ * 课程按钮
+ */
+
+.input-btn {
+	width: 70px;
+	height: 30px;
+}
+
+
+/**
+ * 已关注
+ */
+
+.btn-focused {
+	border: solid 1px darkgray;
+	color: darkgray;
+}
+
+
+/**
+ * 未关注
+ */
+
+.btn-unfocus {
+	border: solid 1px #00BFFF;
+	color: #00BFFF;
+}
+
+.mui-bar~.mui-content .mui-fullscreen {
+	top: 44px;
+	height: auto;
+}
+
+.mui-pull-top-tips {
+	position: absolute;
+	top: -20px;
+	left: 50%;
+	margin-left: -20px;
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+	z-index: 1;
+}
+
+.mui-bar~.mui-pull-top-tips {
+	top: 24px;
+}
+
+.mui-pull-top-wrapper {
+	width: 42px;
+	height: 42px;
+	display: block;
+	text-align: center;
+	background-color: #efeff4;
+	border: 1px solid #ddd;
+	border-radius: 25px;
+	background-clip: padding-box;
+	box-shadow: 0 4px 10px #bbb;
+	overflow: hidden;
+}
+
+.mui-pull-top-tips.mui-transitioning {
+	-webkit-transition-duration: 200ms;
+	transition-duration: 200ms;
+}
+
+.mui-pull-top-tips .mui-pull-loading {
+	/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+	margin: 0;
+}
+
+.mui-pull-top-wrapper .mui-icon,
+.mui-pull-top-wrapper .mui-spinner {
+	margin-top: 7px;
+}
+
+.mui-pull-top-wrapper .mui-icon.mui-reverse {
+	/*-webkit-transform: rotate(180deg) translateZ(0);*/
+}
+
+.mui-pull-bottom-tips {
+	text-align: center;
+	background-color: #efeff4;
+	font-size: 15px;
+	line-height: 40px;
+	color: #777;
+}
+
+.mui-pull-top-canvas {
+	overflow: hidden;
+	background-color: #fafafa;
+	border-radius: 40px;
+	box-shadow: 0 4px 10px #bbb;
+	width: 40px;
+	height: 40px;
+	margin: 0 auto;
+}
+
+.mui-pull-top-canvas canvas {
+	width: 40px;
+}
+
+.mui-scroll-wrapper {
+	z-index: 0;
+}
+.mui-fullscreen{
+	top: 0;
+}

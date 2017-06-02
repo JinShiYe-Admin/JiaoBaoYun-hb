@@ -11,8 +11,9 @@ var setFresh = function() {
 		down: {
 			callback: function() {
 				freshContainer = this;
+				oldPageIndex = pageIndex;
 				freshFlag = 1;
-				pgeIndex = 1;
+				pageIndex = 1;
 				requestData();
 			}
 		},
@@ -39,6 +40,7 @@ setFresh();
  */
 //页码，请求第几页数据
 var pageIndex = 1;
+var oldPageIndex = 1;
 //每页条数
 var pageCount = 10;
 //当前留言的总条数
@@ -189,12 +191,13 @@ var ifHaveReferContent = function(cellData, cell) {
 	}
 }
 var addEncImg = function(cell) {
+	console.log("获取的数据：" + JSON.stringify(cell));
 	if(cell.EncImgAddr && cell.EncImgAddr.length > 0) {
 		if(cell.EncType == 1) {
 			return '<img class="refer-img display-inlineBlock" src="' + cell.EncImgAddr.split("|")[0] + '"/>';
 		}
-		if(cell.encType == 2) {
-			return '<div class="refer-img display-inlineBlock" style="backgroud-image:url(' + cell.EncImgAddr + ');background-size:cover;"><img src="../../image/utils/payvideo.png" style="width:50%;margin:25%;"/></div>';
+		if(cell.EncType == 2) {
+			return '<div class="refer-img display-inlineBlock" style="background-image:url(' + cell.EncImgAddr + ');background-position:center;background-size:cover;"><img src="../../image/utils/playvideo.png" style="width:50%;margin:25%;"/></div>';
 		}
 	}
 	return '';
@@ -537,6 +540,11 @@ var requireAboutMe = function() {
 				getRoleInfos(data.RspData.Data)
 			}
 		} else {
+			if(pageIndex > 1) {
+				pageIndex -= 1;
+			} else {
+				pageIndex = oldPageIndex;
+			}
 			endFresh();
 			wd.close();
 			mui.toast(data.RspTxt);

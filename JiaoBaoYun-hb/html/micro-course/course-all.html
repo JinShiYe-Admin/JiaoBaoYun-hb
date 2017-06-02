@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>全部课程</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/micro-course/course-list.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+		<div id="refreshContainer" class="mui-content mui-fullscreen" style="z-index: 0;">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<ul id="list-container" class="mui-table-view">
+
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/libs/jquery.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/mui.pullToRefresh.js"></script>
+		<script src="../../js/mui.pullToRefresh.material.js"></script>
+		<script src="../../js/micro-course/course-list.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var freshContainer;
+			var freshFlag;
+			var pageIndex=1;
+			course_list.initFresh();
+			mui.plusReady(function() {
+				course_list.getData(pageIndex,document.getElementById("list-container"),course_list.setData);
+			});
+		</script>
+	</body>
+
+</html>

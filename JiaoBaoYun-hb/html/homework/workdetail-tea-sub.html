@@ -128,15 +128,7 @@
 			}
 
 			//从主页传值到这个界面的model
-			var homeworkModel = {
-				//				"Contents": "Test",
-				//				"HomeworkId": 28,
-				//				"HomeworkTitle": "2016年12月2日星期五数学作业",
-				//				"Remain": 1,
-				//				"Subject": "语文",
-				//				"Upload": 0,
-				//				'classId': 1 //人为赋值
-			};
+			var homeworkModel = {};
 			var personalUTID;
 			//作业详情model
 			var homeworkDetailModel;
@@ -144,8 +136,11 @@
 			var uploadArray = [];
 			//未完成学生列表
 			var remainArray = [];
-
+			var commentIsReady = false;
 			mui.plusReady(function() {
+				window.addEventListener("commentIsReady", function() {
+					commentIsReady = true;
+				})
 				mui('.mui-segmented-control').on('tap', 'a', function() {
 					if(this.id == 'item1') {
 						console.log('已完成');
@@ -193,6 +188,10 @@
 					//3.	获取作业对应学生列表
 					requestHomeworkStuList();
 				})
+				mui('.mui-table-view').on('tap', '.isCommented', function() {
+					events.showWaiting();
+					jumpWorkSubmit(this);
+				});
 				var showAll = document.getElementById("showAll");
 				showAll.addEventListener('tap', function() {
 					var str = this.innerText;
@@ -207,6 +206,16 @@
 				});
 
 			});
+			function jumpWorkSubmit(item){
+				if(commentIsReady){
+					events.closeWaiting();
+					events.fireToPageWithData('homework-comment.html', 'workInfo', item.workInfo);
+				}else{
+					setTimeout(function(){
+						jumpWorkSubmit(item);
+					},500);
+				}
+			}
 
 			function resetData() {
 				allAlertFlag = 0;
@@ -483,25 +492,6 @@
 					homeworkDetailNodes.alertAllBtn.disabled = 'disabled';
 				}
 			}
-			//			document.getElementById('slider').addEventListener('slide', function(e) {
-			//				if(e.detail.slideNumber === 0) {
-			//					console.log('已完成');
-			//					homeworkDetailNodes.alertBar.style.visibility = 'hidden';
-			//				} else if(e.detail.slideNumber === 1) {
-			//					console.log('未完成');
-			//					if(remainArray.length == 0) {
-			//						homeworkDetailNodes.alertBar.style.visibility = 'hidden';
-			//					} else {
-			//						homeworkDetailNodes.alertBar.style.visibility = 'visible';
-			//					}
-			//
-			//				}
-			//			});
-
-			mui('.mui-table-view').on('tap', '.isCommented', function() {
-				events.fireToPageNone('homework-comment.html', 'workInfo', this.workInfo);
-				plus.webview.getWebviewById("homework-comment.html").show();
-			});
 
 			function alertStu(alertBtn) {
 				console.log(alertBtn.id);

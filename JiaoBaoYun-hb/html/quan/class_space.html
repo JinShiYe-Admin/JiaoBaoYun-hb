@@ -30,10 +30,14 @@
 		<!--下拉刷新容器-->
 		<div id="refreshContainer" class="mui-content mui-fullscreen" style="z-index:0">
 			<div class="mui-scroll-wrapper">
-				<div class="mui-scroll">
+				<div class="mui-scroll vertical-scroll">
 					<!--数据列表-->
 					<ul id="classSpace_list" class="mui-table-view">
 					</ul>
+				</div>
+				<div class="noDataDisplay" style="background-color: white; width: 100%;min-height: 100%; text-align: center;display: none;" >
+					<img src="../../image/mine/invite_none_0.png" style="width: 50%; margin: 25% 0 15px;"/>
+					<p style="font-size: 1.2rem;">暂无班级动态~~</p>
 				</div>
 			</div>
 		</div>
@@ -61,7 +65,7 @@
 		<!--图片预览js-->
 		<script src="../../js/mui.zoom.js"></script>
 		<script src="../../js/mui.previewimage.js"></script>
-		<script src="../../js/utils/h5fresh.js"></script>
+		<!--<script src="../../js/utils/h5fresh.js"></script>-->
 		<script src="../../js/utils/video.js"></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>

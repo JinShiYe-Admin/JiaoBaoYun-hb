@@ -45,7 +45,7 @@
 	</body>
 
 	<script>
-		var isPersonal=0
+		var isPersonal = 0
 		var sliderId = 'top_';
 		idFlag = '';
 		var datasource = {}; //此界面的数据
@@ -196,6 +196,8 @@
 						}
 					});
 
+				} else {
+					mui.toast(data.RspTxt);
 				}
 			})
 		}
