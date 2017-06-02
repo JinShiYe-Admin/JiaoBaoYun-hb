@@ -651,7 +651,7 @@ var events = (function(mod) {
 			softinputMode: "adjustResize",
 			hardwareAccelerated: false
 		};
-		if(plus.os.name == "Android" && path) {
+		if(path) {
 			var ids = path.split('/');
 			var id = ids[ids.length - 1];
 			//安卓中video标签播放视频需要开启硬件加速
