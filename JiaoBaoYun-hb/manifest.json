@@ -2004,7 +2004,8 @@
 					"html/qiuzhi/expert-detail.html",
 					"html/qiuzhi/qiuzhi-questionSearch.html",
 					"html/register/login.html",
-					"html/cloud/order-member.html"
+					"html/cloud/order-member.html",
+					"html/micro-course/course-home.html"
 				],
 				"priority": 0
 			},
@@ -4624,6 +4625,16 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/micro-course/course-home.html": {
+				"resources": [
+					"js/utils/webviewGroup.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/utils/common.css"
 				],
 				"refer": [],
 				"priority": 0
