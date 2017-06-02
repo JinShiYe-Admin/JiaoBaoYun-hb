@@ -4677,7 +4677,18 @@
 					"css/mui.min.css",
 					"css/micro-course/course-list.css",
 					"js/micro-course/course-list.js",
-					"image/utils/loading.gif"
+					"image/utils/loading.gif",
+					"js/publicMicroClass.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -4691,7 +4702,18 @@
 					"js/utils/events.js",
 					"css/mui.min.css",
 					"css/micro-course/course-list.css",
-					"js/micro-course/course-list.js"
+					"js/micro-course/course-list.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/publicMicroClass.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0

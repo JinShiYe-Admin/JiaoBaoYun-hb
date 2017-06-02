@@ -107,6 +107,8 @@ var course_list = (function(mod) {
 		li.className = "mui-table-view-cell";
 		li.innerHTML = mod.getCellInner(cell);
 		fragment.appendChild(li);
+		li.info=cell;
+		li.querySelector(".input-btn").info=cell;
 	}
 	/**
 	 * 
@@ -209,6 +211,28 @@ var course_list = (function(mod) {
 			}
 		}
 		freshFlag = 0;
+	}
+	mod.setListener=function(){
+		document.getElementById("list-container").addEventListener("click",function(e){
+			var item=e.target;
+			console.log("item.className:"+item.className);
+			console.log("item.info:"+JSON.stringify(item.info));
+			switch(item.className){
+				case "input-btn btn-unfocus":
+				case "input-btn btn-focused":
+				
+				break;
+				case "":
+				case "":
+				case "":
+				default:
+				 
+				break;
+			}
+		},false)
+		mui(".mui-table-view").on("tap",".course-detail",function(){
+			console.log("点击事件");
+		})
 	}
 	return mod;
 })(course_list || {})

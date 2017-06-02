@@ -31,7 +31,7 @@
 		<script type="text/javascript">
 			mui.init();
 			var freshContainer;
-			var freshFlag;
+			var freshFlag=0;
 			var pageFlag = 1;//关注0，全部1
 			var totalPage = 0;//数据总页数
 			var pageIndex=1;
@@ -39,6 +39,7 @@
 			course_list.initFresh();
 			mui.plusReady(function() {
 				course_list.getData(pageIndex,document.getElementById("list-container"),course_list.setData);
+				course_list.setListener();
 			});
 		</script>
 	</body>
