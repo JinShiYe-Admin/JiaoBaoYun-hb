@@ -82,7 +82,8 @@
 					var index = this.id.replace('li', '');
 					console.log('index:' + index);
 					if(index == '0') {
-						mui.confirm(tempInfo.uid, '您已绑定手机号', ['取消', '更换'], function(e) {
+						var tempInfo1 = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+						mui.confirm(tempInfo1.uid, '您已绑定手机号', ['取消', '更换'], function(e) {
 							var index = e.index;
 							switch(index) {
 								case 0: //取消
@@ -159,9 +160,10 @@
 							case 0: //取消
 								break;
 							case 1: //退出登录
+								var tempInfo1 = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 								//判断是否设置了密码
-								console.log('tempinfo:' + JSON.toString(tempInfo));
-								if(Number(tempInfo.ispw) == 1) { //有密码
+								console.log('tempinfo1:' + JSON.toString(tempInfo1));
+								if(Number(tempInfo1.ispw) == 1) { //有密码
 									//发送注销协议
 									//25.用户注销
 									//需要参数
