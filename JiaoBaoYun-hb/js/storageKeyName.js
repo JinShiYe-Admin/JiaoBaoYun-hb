@@ -2,7 +2,7 @@
 
 var storageKeyName = (function(mod) {
 
-	var Key = 0; //0,开发;1,测试;2,外网
+	var Key = 1; //0,开发;1,测试;2,外网
 
 	if(Key == 0) {
 		//---开发---start---
@@ -11,6 +11,7 @@ var storageKeyName = (function(mod) {
 		mod.MAINJIAOXIAOURL = 'http://192.168.0.100:8081/JiaoBaoCloudService/'; //家校圈url
 		mod.MAINHOMEWORKURL = 'http://192.168.0.44:8513/'; //作业主url
 		mod.MAINQIUZHI = 'http://192.168.0.100:8081/JiaoBaoCloudService/'; //求知主url
+		mod.MAINMICROCLASS = 'http://192.168.0.100:8081/JiaoBaoCloudService/'; //求知主url
 		//---开发---end---
 
 		//---七牛空间和接口---开发---start---
@@ -28,6 +29,7 @@ var storageKeyName = (function(mod) {
 		mod.MAINJIAOXIAOURL = 'http://192.168.0.178:8080/JiaoBaoCloudService/'; //家校圈url
 		mod.MAINHOMEWORKURL = 'http://192.168.0.178:8088/'; //作业主url
 		mod.MAINQIUZHI = 'http://192.168.0.178:8080/JiaoBaoCloudService/'; //求知主url
+		mod.MAINMICROCLASS = 'http://192.168.0.100:8081/JiaoBaoCloudService/'; //求知主url
 		//---测试---end---
 
 		//---七牛空间和接口---测试---start---
@@ -45,6 +47,7 @@ var storageKeyName = (function(mod) {
 		mod.MAINJIAOXIAOURL = 'http://114.215.222.194:8080/JiaoBaoCloudService/'; //家校圈url
 		mod.MAINHOMEWORKURL = 'http://114.215.222.186:8001/'; //作业主url
 		mod.MAINQIUZHI = 'http://114.215.222.194:8080/JiaoBaoCloudService/'; //求知主url
+		mod.MAINMICROCLASS = 'http://192.168.0.100:8081/JiaoBaoCloudService/'; //求知主url
 		//---外网---end---
 
 		//---七牛空间和接口---测试---start---
