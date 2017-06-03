@@ -16,7 +16,7 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 id="title" class="mui-title">物理</h1>
 		</header>
-		<div class="mui-content">
+		<div id="divContent" class="mui-content mui-hidden">
 			<br />
 			<div style="font-size: 16px;padding-left: 10px;">授课老师</div>
 			<img id="teaHeadImg" style="padding-left: 10px;" src="../../image/clip.png" />
@@ -128,6 +128,7 @@
 			nodes.teaName.innerHTML = courseInfo.TeacherName;
 			nodes.teaInfo.innerHTML = courseInfo.TeacherNote;
 			nodes.courseInfo.innerHTML = courseInfo.CourseNote;
+			document.getElementById("divContent").className ='mui-content'
 		}
 		events.addTap('history', function() {
 			events.openNewWindowWithData('history-records.html', {})

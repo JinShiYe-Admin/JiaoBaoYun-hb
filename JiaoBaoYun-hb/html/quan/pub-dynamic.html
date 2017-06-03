@@ -249,21 +249,30 @@
 				}
 				console.log(tempText.length)
 				var pubScopes;
+				var msgTitle;
+				var askTitle = document.getElementById("askTitle");
 				if(pageFlag=='jxq'){
 					pubScopes = '[1]';
+					msgTitle = '';
 				}else{
 					pubScopes = '[2]';
+					msgTitle = askTitle.value;
 				}
 
 				var pubArea;
+				
 				var TAs = getTypeAddress();
 				if(tempInfo.uarea.acode == undefined) {
 					pubArea = '';
+					
 				} else {
+					
 					pubArea = tempInfo.uarea.acode
+					
 				}
 
 				var postData = {
+					msgTitle:msgTitle,
 					userId: userInfo.utid,
 					msgContent: tempText,
 					noteType: '2',
