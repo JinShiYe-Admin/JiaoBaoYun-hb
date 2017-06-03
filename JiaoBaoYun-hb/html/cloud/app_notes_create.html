@@ -218,7 +218,8 @@
 					userIds: '[]', //推送用户ID
 					pubScopes: '[1]', //1 家校圈 必选,2 展现 可选例如[1,2]
 					pubArea: '', //具体到市级代码
-					encLen: encLen //音视频时长
+					encLen: encLen, //音视频时长
+					msgTitle:''//记事标题
 				};
 				postDataPro_addUserSpace(comData, wd, function(data) {
 					console.log('38postDataPro_addUserSpace（用户空间）新增某用户空间信息 （云笔记）.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
