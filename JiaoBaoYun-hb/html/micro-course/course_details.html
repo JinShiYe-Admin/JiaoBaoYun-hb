@@ -221,7 +221,8 @@
 				color: #1DB8F1;
 				font-size: 14px;
 			}
-			.course-comment-reply-content{
+
+			.course-comment-reply-content {
 				font-size: 14px;
 				color: #808080;
 			}
@@ -232,7 +233,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 id="title" class="mui-title"></h1>
-			<a class="mui-icon mui-icon-person mui-pull-right"></a>
+			<a id="introduction" class="mui-icon mui-icon-person mui-pull-right"></a>
 		</header>
 		<nav class="mui-bar mui-bar-tab">
 			<a class="mui-tab-item">
@@ -261,29 +262,17 @@
 				<ul class="mui-table-view course-list">
 					<li class="mui-table-view-cell">
 						<div class="course-title">
-							文字一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
+							音频
 						</div>
+						<svg style="width: 330px;height: 50px;">
+							<path d="M8 45 C13 40 15 38 15 25 L15 21 Q15 1 36 1 L300 1 Q325 1 325 21 Q325 41 300 41 L30 41 Q15 41 12 43 L8 45" style="stroke:#1DB8F1; fill:none;" />
+						</svg>
 						<div class="course-info">上传时间:2017-6-1</div>
 					</li>
 					<li class="mui-table-view-cell">
 						<div class="course-title">
-							音频
+							文字一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
 						</div>
-						<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="300px" height="50px" viewBox="0 0 300 50" enable-background="new 0 0 300 50" xml:space="preserve">
-							<path fill="none" stroke="#1DB8F1" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M28.476,2.813
-	c0,0,240.274-0.5,250.649-0.156s20.13,8.112,19.836,21.395s-8.242,21.279-19.602,21.279s-23.074,0-23.074,0H16.764
-	c0,0-5.817-0.469-15.266,3.67c0,0,9.565-8.16,9.41-16.671L10.83,19.835C10.83,19.835,10.517,5.39,28.476,2.813z" />
-							<path fill="#B7B7B7" d="M50.004,37.298c-0.167,0-0.5,0-0.667-0.166c-0.334-0.335-0.334-0.835,0-1.168
-	c6.502-6.503,6.502-17.342,0-23.845c-0.334-0.333-0.334-0.833,0-1.167c0.333-0.333,0.833-0.333,1.167,0
-	c7.17,7.17,7.17,19.009,0,26.18C50.338,37.298,50.171,37.298,50.004,37.298z M43.668,32.796c-0.167,0-0.5-0.167-0.667-0.334
-	c-0.333-0.333-0.333-0.834,0-1.167c2.001-1.834,3.168-4.502,3.168-7.336c0-2.835-1.167-5.502-3.168-7.337
-	c-0.333-0.333-0.333-0.833,0-1.167s0.834-0.333,1.167,0c2.334,2.167,3.668,5.169,3.668,8.504c0,3.335-1.334,6.335-3.668,8.504
-	C44.001,32.629,43.835,32.796,43.668,32.796z M37.666,29.294c-0.167,0-0.5,0-0.667-0.167c-0.333-0.333-0.333-0.834,0-1.166
-	c1.167-1.168,1.667-2.502,1.667-4.002c0-1.334-0.667-2.668-1.667-3.668c-0.333-0.333-0.333-0.834,0-1.168
-	c0.333-0.333,0.833-0.333,1.167,0c1.334,1.334,2.168,3.001,2.168,4.836c0,2-0.667,3.834-2.168,5.168
-	C37.999,29.294,37.832,29.294,37.666,29.294z" />
-							<text transform="matrix(1 0 0 1 73.936 32.707)" fill="#B7B7B7" font-family="'MicrosoftYaHei'" font-size="20.9861">120”</text>
-						</svg>
 						<div class="course-info">上传时间:2017-6-1</div>
 					</li>
 					<li class="mui-table-view-cell course-list-li">
@@ -353,6 +342,7 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
 		<script type="text/javascript">
@@ -364,6 +354,7 @@
 
 			mui.init();
 			mui.plusReady(function() {
+				console.log(plus.screen.resolutionWidth)
 				document.getElementById("course-image-1").src = "../../image/cloud/notes_bg2.jpg";
 				document.getElementById("course-image-2").src = "../../image/ios_1242-2208.png";
 				document.getElementById("course-image-play").src = "../../image/utils/playvideo.png";
@@ -422,6 +413,20 @@
 					} else {
 						collapse_content_li.className = "mui-table-view-cell mui-collapse mui-active";
 					}
+				});
+
+				//课程介绍
+				document.getElementById('introduction').addEventListener('tap', function() {
+					var data = {
+						"TabId": 1,
+						"SecId": 1,
+						"SecName": "荷塘月色",
+						"CourseName": "语文",
+						"SecStatus": 1,
+						"IsFocus": 0,
+						"CoursePic": "aa"
+					}
+					events.openNewWindowWithData('course-introduction.html', data);
 				});
 			}
 
