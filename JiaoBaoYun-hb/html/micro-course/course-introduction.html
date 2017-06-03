@@ -64,9 +64,11 @@
 			focusBtn: document.getElementById("focusBtn"),
 			focusFlag: 0,
 		}
+		var courseModel;//传值过来的课程model
 		mui.plusReady(function() {
-			var courseId = '1'
-			getCourseInfo(courseId);
+			var curPage = plus.webview.currentWebview();
+			courseModel = curPage.data;
+			getCourseInfo(courseModel.TabId);
 			getCourseFocusByUser();
 		})
 		var getCourseInfo = function(courseId) {
@@ -91,14 +93,12 @@
 
 		}
 		var getCourseFocusByUser = function() {
-			console.log(111111)
 			var utid = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-			console.log('utid=' + utid)
 			//5.获取是否已对某个课程关注
 			//所需参数
 			var comData = {
 				userId: utid, //用户ID,登录用户
-				courseId: '1' //课程ID
+				courseId: courseModel.TabId //课程ID
 			};
 			//返回值：非0为已关注
 			var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
@@ -147,7 +147,7 @@
 			//所需参数
 			var comData = {
 				userId: utid, //用户ID,登录用户
-				courseId: '1', //课程ID
+				courseId: courseModel.TabId, //课程ID
 				status: focusFlag //关注状态，0 不关注，1 关注
 			};
 			//返回值：1为正确
