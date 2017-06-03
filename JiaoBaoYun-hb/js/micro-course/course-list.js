@@ -145,7 +145,8 @@ var course_list = (function(mod) {
 	 * 点击关注按钮
 	 * @param {Object} model
 	 */
-	mod.clickFocuseBtn = function(model) {
+	mod.clickFocuseBtn = function(item) {
+		var model=item.info;
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		var statusTemp = 0;
@@ -165,6 +166,14 @@ var course_list = (function(mod) {
 			wd.close();
 			console.log('6.设置对某个课程关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) { //成功
+				item.IsFocus=!item.IsFocus;
+				if(module.IsFocus){
+					item.className="input-btn btn-unfocus";
+					item.innerText="关注";
+				}else{
+					item.className="input-btn btn-focused";
+					item.innerText="已关注";
+				}
 				
 			} else {
 				mui.toast(data.RspTxt);
@@ -241,7 +250,7 @@ var course_list = (function(mod) {
 		mui(".mui-table-view").on("tap",".input-btn",function(e){
 			var item=e.target;
 			console.log("item.info:"+JSON.stringify(item.info));
-			mod.clickFocuseBtn(item.info);
+			mod.clickFocuseBtn(item);
 		});
 	}
 	mod.gotoCourseDetail = function(model){
