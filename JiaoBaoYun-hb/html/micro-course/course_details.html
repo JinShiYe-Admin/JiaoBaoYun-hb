@@ -264,9 +264,13 @@
 						<div class="course-title">
 							音频
 						</div>
-						<svg style="width: 330px;height: 50px;">
-							<path d="M8 45 C13 40 15 38 15 25 L15 21 Q15 1 36 1 L300 1 Q325 1 325 21 Q325 41 300 41 L30 41 Q15 41 12 43 L8 45" style="stroke:#1DB8F1; fill:none;" />
-						</svg>
+						<div id="SVG">
+							<svg style="width: 100%;height: 50px;">
+								<path d="M8 45 C13 40 15 38 15 25 L15 21 Q15 1 36 1 L300 1 Q325 1 325 21 Q325 41 300 41 L30 41 Q15 41 12 43 L8 45 Z" style="stroke:#1DB8F1; fill:none;" />
+								<path d="M30 18 A5 5 0 0 1 30 23 M35 14 A10 10 0 0 1 35 27 M40 10 A 15 15 0 0 1 40 31" style="stroke:#B7B7B7; fill:none;stroke-width: 2px;" />
+								<text x="60" y="26" fill="#B7B7B7" font-size="15">120''</text>
+							</svg>
+						</div>
 						<div class="course-info">上传时间:2017-6-1</div>
 					</li>
 					<li class="mui-table-view-cell">
@@ -343,6 +347,7 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/utils/playutil.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.material.js"></script>
 		<script type="text/javascript">
@@ -358,6 +363,10 @@
 				document.getElementById("course-image-1").src = "../../image/cloud/notes_bg2.jpg";
 				document.getElementById("course-image-2").src = "../../image/ios_1242-2208.png";
 				document.getElementById("course-image-play").src = "../../image/utils/playvideo.png";
+				//				document.getElementById("SVG").innerHTML = '<svg style="width: 100%;height: 50px;">\
+				//								<path d="' + getAudioPath(250) + '" style="stroke:#1DB8F1; fill:none;" />\
+				//								<path d="M20 25 L30 25" style="stroke:#E4E4E4; fill:none;" />\
+				//							</svg>';
 				initControl();
 				initListener();
 			});
@@ -464,6 +473,7 @@
 			function onImageError(img) {
 				img.style.visibility = "visible";
 			}
+
 			/**
 			 * 视频播放按钮加载失败
 			 * @param {Object} img
@@ -471,6 +481,7 @@
 			function onPlayError(img) {
 				img.parentNode.style.visibility = "visible";
 			}
+
 			/**
 			 * 视频播放按钮加载成功
 			 * @param {Object} img
@@ -483,6 +494,13 @@
 				img.parentNode.style.visibility = "visible";
 				img.style.marginLeft = parseInt((width - 55) / 2) + "px";
 				img.style.marginTop = parseInt((height - 55) / 2) + "px";
+			}
+
+			function getAudioPath(width) {
+				width = width || plus.screen.resolutionWidth;
+				width = parseInt(width * 2 / 3);
+				var pathD = "M8 45 C13 40 15 38 15 25 L15 21 Q15 1 36 1 L" + width + " 1 Q" + (width + 25) + " 1 " + (width + 25) + " 21 Q" + (width + 25) + " 41 " + width + " 41 L30 41 Q15 41 12 43 L8 45 Z"
+				return pathD;
 			}
 		</script>
 	</body>
