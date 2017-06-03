@@ -87,7 +87,7 @@
 				document.getElementById("input-content").placeholder = '这一刻的想法'
 				document.getElementById("contentDiv").className = 'mui-content';
 				console.log('jxq')
-				
+
 				//				document.getElementById("show").checked = false;
 			} else {
 				var askTitle = document.getElementById("askTitle");
@@ -233,11 +233,26 @@
 			events.addTap('publish', function() {
 
 				var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-				console.log(tempInfo.uarea.acode)
-
 				var textView = document.getElementById('input-content');
-				var tempText = textView.value;
+				var askTitle = document.getElementById("askTitle");
+				var pubScopes;
+				var msgTitle;
 
+				if(pageFlag == 'jxq') {
+					pubScopes = '[1]';
+					msgTitle = '';
+				} else {
+					pubScopes = '[2]';
+					if(!askTitle.value || askTitle.value == '') {
+						mui.toast('请输入标题');
+						return;
+					} else if(askTitle.value.length > 30) {
+						mui.toast('不能超过30字');
+						return;
+					}
+					msgTitle = askTitle.value;
+				}
+				var tempText = textView.value;
 				if(!tempText || tempText == '') {
 					mui.toast('请输入内容');
 					return;
@@ -247,32 +262,20 @@
 				} else {
 					//					tempText = replaceAllBL(tempText)
 				}
-				console.log(tempText.length)
-				var pubScopes;
-				var msgTitle;
-				var askTitle = document.getElementById("askTitle");
-				if(pageFlag=='jxq'){
-					pubScopes = '[1]';
-					msgTitle = '';
-				}else{
-					pubScopes = '[2]';
-					msgTitle = askTitle.value;
-				}
-
 				var pubArea;
-				
+
 				var TAs = getTypeAddress();
 				if(tempInfo.uarea.acode == undefined) {
 					pubArea = '';
-					
+
 				} else {
-					
+
 					pubArea = tempInfo.uarea.acode
-					
+
 				}
 
 				var postData = {
-					msgTitle:msgTitle,
+					msgTitle: msgTitle,
 					userId: userInfo.utid,
 					msgContent: tempText,
 					noteType: '2',
