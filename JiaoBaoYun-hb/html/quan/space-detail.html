@@ -23,11 +23,36 @@
 		<script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/utils/video.js"></script>
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
+		<style type="text/css">
+			#topPopover {
+				position: fixed;
+				top: 46px;
+				right: 6px;
+				width: 80px;
+			}
+			
+			#topPopover .mui-popover-arrow {
+				left: auto;
+				right: 6px;
+			}
+			
+			.mui-popover {
+				height: 30px;
+				width: 80;
+			}
+			
+			.mui-backdrop {
+				/*选择排序的遮罩*/
+				background-color: rgba(0, 0, 0, .05);
+			}
+		</style>
 
 	</head>
 	<header class="mui-bar mui-bar-nav">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 id="spaceDetail" class="mui-title">空间详情</h1>
+		<a id="delete" class="mui-icon iconfont icon-moreandroid mui-pull-right mui-plus-visible mui-hidden"></a>
+
 	</header>
 
 	<body>
@@ -40,6 +65,15 @@
 				</ul>
 			</div>
 
+		</div>
+		<div id="topPopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<ul class="mui-table-view" style="height: 30px;background-color: white;">
+				<li id="pubDynamic" class="mui-table-view-cell mui-media ">
+					<div style="padding-left: 25px;padding-top: 6px;">删除</div>
+				</li>
+
+			</ul>
 		</div>
 
 	</body>
@@ -66,6 +100,40 @@
 			preModel = plus.webview.currentWebview().data
 
 			publisherId = preModel.publisherId
+			if(publisherId == personalUTID) {
+				document.getElementById("delete").className = 'mui-icon iconfont icon-moreandroid mui-pull-right mui-plus-visible';
+
+			}
+			events.addTap('delete', function() {
+				mui('#topPopover').popover('toggle')
+
+			})
+			//点击popover里cell
+			mui('.mui-popover').on('tap', 'li', function(e) {
+				mui('#topPopover').popover('toggle')
+				var btnArray = ['取消', '确定'];
+				mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
+					if(e.index == 1) {
+						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+						var comData = {
+							userSpaceId: datasource.TabId //用户空间ID
+						};
+						postDataPro_delUserSpaceById(comData, wd, function(data) {
+							wd.close();
+							console.log(JSON.stringify(data))
+							if(data.RspCode == 0) {
+								mui.toast('已删除');
+								mui.back()
+							} else {
+								mui.toast(data.RspTxt);
+							}
+						})
+					}
+				})
+
+				return;
+
+			})
 			console.log('上个界面传过来的值' + JSON.stringify(preModel));
 			mui.previewImage();
 
@@ -197,6 +265,7 @@
 					});
 
 				} else {
+					document.getElementById("delete").className = 'mui-hidden';
 					mui.toast(data.RspTxt);
 				}
 			})
@@ -260,7 +329,7 @@
 				data.idFlag = 'zx';
 				sliderId = 'top_0'
 			}
-			data.IsFocused = 1;
+			//			data.IsFocused = 1;
 			data.id = 0;
 			data.id_name = data.cityCode + data.idFlag + data.id;
 			var tempModel = dynamiclistitem.addData(data);
