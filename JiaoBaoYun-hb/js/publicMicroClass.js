@@ -149,3 +149,19 @@ var postDataMCPro_setCommentLike = function(commonData, wd, callback) {
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINMICROCLASS + 'course/setCommentLike', enData, commonData, 2, wd, callback);
 }
+
+//13.根据课程列表获取所有关注的课程
+//所需参数
+//		var comData = {
+//			userId: '',//用户ID，登录用户
+//			courseIds: '',//课程ID，例如[1,2,3]
+//			pageIndex: '',//当前页数
+//			pageSize:''//每页记录数，传入0，获取总记录数
+//		};
+//返回值：1为正确
+var postDataMCPro_getAllFocusCoursesByIds = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINMICROCLASS + 'course/getAllFocusCoursesByIds', enData, commonData, 2, wd, callback);
+}

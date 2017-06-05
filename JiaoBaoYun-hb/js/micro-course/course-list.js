@@ -51,7 +51,46 @@ var course_list = (function(mod) {
 		} else { //关注0，全部1
 			//游客
 			if(!events.getUtid()) {
-
+				//游客关注的课程
+				var focuseTemp = window.myStorage.getItem(window.storageKeyName.FOCUSECOURSES);
+				if (focuseTemp == null||focuseTemp.length==0) {
+					mui.toast('暂时还没有关注的课程');
+					return;
+				}
+				//所需参数
+				var comData = {
+					userId: personal.utid, //用户ID，登录用户
+					courseIds: arrayToStr(focuseTemp), //课程ID，例如[1,2,3]
+					pageIndex: pageIndex, //当前页数
+					pageSize: '10' //每页记录数，传入0，获取总记录数
+				};
+				//13.根据课程列表获取所有关注的课程
+				postDataMCPro_getAllFocusCoursesByIds(comData, wd, function(data) {
+					wd.close();
+					console.log('13.根据课程列表获取所有关注的课程:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					if(data.RspCode == 0) {
+						//总页数
+						totalPage = data.RspData.TotalPage;
+						pageIndex++;
+						if(freshFlag == 1) { //刷新
+							//清除节点
+							document.getElementById('list-container').innerHTML = "";
+							courseArray = data.RspData.Data;
+							if(data.RspData.Data.length == 0) {
+								mui.toast('没有数据');
+							}
+						} else { //加载更多
+							//合并数组
+							courseArray = courseArray.concat(data.RspData.Data);
+						}
+						if(mui(".mui-table-view-cell").length < 10) {
+							mui(".mui-pull-loading")[0].innerHTML = "";
+						}
+						callback(pageIndex, data.RspData.Data, listContainer);
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				});
 				return;
 			}
 			//2.获取所有关注的课程
@@ -189,13 +228,13 @@ var course_list = (function(mod) {
 	mod.changeBtnStatus = function(item, type) {
 		if(item.info.IsFocus) {
 			item.className = "input-btn btn-unfocus";
-			item.innerText = "关注";
+			item.value = "关注";
 			if(type) {
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 1);
 			}
 		} else {
 			item.className = "input-btn btn-focused";
-			item.innerText = "已关注";
+			item.value = "已关注";
 			if(type) {
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 0);
 			}
