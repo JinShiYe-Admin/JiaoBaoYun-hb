@@ -49,6 +49,11 @@ var course_list = (function(mod) {
 				}
 			});
 		} else { //关注0，全部1
+			//游客
+			if(!events.getUtid()) {
+
+				return;
+			}
 			//2.获取所有关注的课程
 			postDataMCPro_getAllFocusCourses(comData, wd, function(data) {
 				wd.close();
@@ -107,11 +112,11 @@ var course_list = (function(mod) {
 		li.className = "mui-table-view-cell";
 		li.innerHTML = mod.getCellInner(cell);
 		fragment.appendChild(li);
-		li.info=cell;
-		li.querySelector(".course-img").info=cell;
-		li.querySelector(".coursre-name").info=cell;
-		li.querySelector(".course-info").info=cell;
-		li.querySelector(".input-btn").info=cell;
+		li.info = cell;
+		li.querySelector(".course-img").info = cell;
+		li.querySelector(".coursre-name").info = cell;
+		li.querySelector(".course-info").info = cell;
+		li.querySelector(".input-btn").info = cell;
 	}
 	/**
 	 * 
@@ -145,12 +150,17 @@ var course_list = (function(mod) {
 	 * 点击关注按钮
 	 * @param {Object} model
 	 */
-	mod.clickFocuseBtn = function(model) {
+	mod.clickFocuseBtn = function(item) {
+		var model = item.info;
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		var statusTemp = 0;
-		if (!model.IsFocus) {
+		if(!model.IsFocus) {
 			statusTemp = 1;
+		}
+		if(!events.getUtid()) {
+			mod.changeBtnStatus(item, 1);
+			return;
 		}
 		//所需参数
 		var comData = {
@@ -165,11 +175,33 @@ var course_list = (function(mod) {
 			wd.close();
 			console.log('6.设置对某个课程关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) { //成功
-				
+				mod.changeBtnStatus(item);
 			} else {
 				mui.toast(data.RspTxt);
 			}
 		});
+	}
+	/**
+	 * 改变按钮状态
+	 * @param {Object} item
+	 * @param {Object} type
+	 */
+	mod.changeBtnStatus = function(item, type) {
+		if(item.info.IsFocus) {
+			item.className = "input-btn btn-unfocus";
+			item.innerText = "关注";
+			if(type) {
+				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 1)
+			}
+		} else {
+			item.className = "input-btn btn-focused";
+			item.innerText = "已关注";
+			if(type) {
+				events.toggleStorageArray()(storageKeyName.FOCUSECOURSES, item.info.TabId, 0)
+			}
+		}
+		item.info.IsFocus = !item.info.IsFocus;
+
 	}
 	/**
 	 * 
@@ -221,30 +253,30 @@ var course_list = (function(mod) {
 		}
 		freshFlag = 0;
 	}
-	mod.setListener=function(){
+	mod.setListener = function() {
 		//点击头像
-		mui(".mui-table-view").on("tap",".course-img",function(e){
-			var item=e.target;
+		mui(".mui-table-view").on("tap", ".course-img", function(e) {
+			var item = e.target;
 			mod.gotoCourseDetail(item.info);
 		});
 		//点击课程名称
-		mui(".mui-table-view").on("tap",".coursre-name",function(e){
-			var item=e.target;
+		mui(".mui-table-view").on("tap", ".coursre-name", function(e) {
+			var item = e.target;
 			mod.gotoCourseDetail(item.info);
 		});
 		//点击节次名
-		mui(".mui-table-view").on("tap",".course-info",function(e){
-			var item=e.target;
+		mui(".mui-table-view").on("tap", ".course-info", function(e) {
+			var item = e.target;
 			mod.gotoCourseDetail(item.info);
 		});
 		//点击关注按钮
-		mui(".mui-table-view").on("tap",".input-btn",function(e){
-			var item=e.target;
-			console.log("item.info:"+JSON.stringify(item.info));
-			mod.clickFocuseBtn(item.info);
+		mui(".mui-table-view").on("tap", ".input-btn", function(e) {
+			var item = e.target;
+			console.log("item.info:" + JSON.stringify(item.info));
+			mod.clickFocuseBtn(item);
 		});
 	}
-	mod.gotoCourseDetail = function(model){
+	mod.gotoCourseDetail = function(model) {
 		events.openNewWindowWithData('../micro-course/course_details.html', model);
 	}
 	return mod;
