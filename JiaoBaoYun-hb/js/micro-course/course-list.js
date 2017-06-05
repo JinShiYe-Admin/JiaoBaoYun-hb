@@ -164,7 +164,8 @@ var course_list = (function(mod) {
 	mod.getCellInner = function(cell) {
 
 		return '<div class="course-container">' +
-			'<img class="course-img" src="' + cell.CoursePic + '"/>' +
+			'<div class=""img-container><img class="course-img" src="' + cell.CoursePic + '"/>' +
+			'<span class="red-circle"></span></div>'+
 			'<div class="course-detail">' +
 			'<div class="courseName-button">' +
 			'<p class="coursre-name">' + cell.CourseName + '</p>' +

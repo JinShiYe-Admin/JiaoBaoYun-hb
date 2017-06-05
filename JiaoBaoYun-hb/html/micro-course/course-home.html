@@ -45,19 +45,33 @@
 					this.disabled = true;
 					events.singleWebviewInPeriod(this, "course-search.html", "");
 				});
-				getAttendedClasses(function(hasAttended) {
-					setGroupItems(hasAttended);
-				});
-				window.addEventListener("toggleAttended", function(e) {
-					var hasAttended = e.detail;
-					setGroupItems(hasAttended);
-
-				})
+				setGroupItems();
 			});
 
-			function setGroupItems(hasAttended) {
+			function changeTitle(hasAttended) {
 				var title = document.querySelector(".mui-title");
+				if(hasAttended) {
+					title.innerHTML = "关注";
+					document.getElementById("header-indicator").style.display = "block";
+				} else {
+					title.innerHTML = "全部";
+					document.getElementById("header-indicator").style.display = "none";
+					plus.webview.getWebviewById("course-all.html").drag("none");
+				}
+			}
+
+			function setGroupItems() {
+
 				var items = [{
+					id: "course-attended.html",
+					url: "course-attended.html",
+					extras: {},
+					styles: {
+						top: "45px",
+						bottom: "0px",
+						render: "always"
+					}
+				},{
 					id: "course-all.html",
 					url: "course-all.html",
 					extras: {},
@@ -67,23 +81,6 @@
 						render: "always"
 					}
 				}];
-				if(hasAttended) {
-					items.splice(0, 0, {
-						id: "course-attended.html",
-						url: "course-attended.html",
-						extras: {},
-						styles: {
-							top: "45px",
-							bottom: "0px",
-							render: "always"
-						}
-					});
-					title.innerHTML = "关注";
-					document.getElementById("header-indicator").style.display = "block";
-				} else {
-					title.innerHTML = "全部";
-					document.getElementById("header-indicator").style.display = "none";
-				}
 				setWebViewGroup(items);
 			}
 

@@ -58,6 +58,9 @@ var updateHeadImg = function(string, flag) {
 
 //修改数组，改变格式
 var arrayToStr = function(array) {
+	if (array == null) {
+		return '[]'
+	}
 	var tempStr = '';
 	tempStr = array.join(',');
 	tempStr = '[' + tempStr + ']';

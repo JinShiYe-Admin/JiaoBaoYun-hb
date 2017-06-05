@@ -154,6 +154,9 @@ proto._checkDrags = function(webview) {
 		}
 	}
 };
+proto.addWebView=function(){
+	
+}
 proto.getCurrentWebview = function() {
 	return this.currentWebview;
 };
@@ -165,19 +168,28 @@ proto.getCurrentWebviewContext = function() {
 };
 proto.switchTab = function(id) {
 	id = id.replace('_0', ''); //首页需要替换为appid
+	//当前页面
 	var fromWebview = this.currentWebview;
+	//要显示的页面跟当前是同一页面
 	if(id === fromWebview.id) {
 		return;
 	}
+	//目标页面的参数
 	var toWebviewContext = this.webviewContexts[id];
+	//目标页面
 	var toWebview = toWebviewContext.webview;
+	
 	var fromToLeft = '100%';
+	
 	var toFromLeft = '-100%';
+	//目标页面在当前页面右侧
 	if(toWebviewContext.options.extras.__mui_index > fromWebview.__mui_index) {
 		fromToLeft = '-100%';
 		toFromLeft = '100%';
 	}
+	//不是新页面
 	var isNew = false;
+	//如果目标页面不存在
 	if(!toWebview) {
 		isNew = true;
 		toWebviewContext.createWebview('startAnimation');
@@ -209,7 +221,7 @@ proto.switchTab = function(id) {
 		function(e) {
 			//console.log("startAnimation callback...");
 			if(e.id === toWebview.id) {
-				isNew && plus.nativeUI.showWaiting();
+				isNew && plus.nativeUI.showWaiting("加载中...");
 				this.currentWebview = toWebview;
 				this.onChange({
 					index: toWebview.__mui_index
@@ -252,7 +264,7 @@ _proto.createWebview = function(from) {
 		options.styles.left = '100%';
 		if(from !== 'startAnimation') {
 			options.styles.left = '0';
-			plus.nativeUI.showWaiting();
+			plus.nativeUI.showWaiting("加载中...");
 		}
 		this.webview = plus.webview.create(this.url, this.id, options.styles, options.extras);
 		//append进去，避免返回时闪屏
