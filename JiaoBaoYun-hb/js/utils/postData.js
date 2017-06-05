@@ -10,7 +10,6 @@ function postData(url, data, callback, waitingDialog) {
 		return;
 	}
 	var tepTime = tempTime();
-	console.log('tepTime='+tepTime);
 	mui.ajax(url, {
 		data: JSON.stringify(data),
 		dataType: 'json',
@@ -63,7 +62,6 @@ function tempTime(){
 //waitingDialog,等待框
 //callback,返回值
 function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback) {
-	console.log("当前url"+url);
 	if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
 		console.log('没有网络');
 		waitingDialog.close();
@@ -83,9 +81,7 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 		// 等待的对话框
 		var urlArr = url.split('/');
 		console.log('postData.tempData:' + urlArr[urlArr.length - 1] + JSON.stringify(tempData));
-		console.log(plus.webview.currentWebview().id);
 		var tepTime = tempTime();
-		console.log('tepTime='+tepTime);
 		//发送协议
 		try {
 			mui.ajax(url, {

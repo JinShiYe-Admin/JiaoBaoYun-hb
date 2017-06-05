@@ -7,7 +7,15 @@ var show_list = (function(mod) {
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		var wd = events.showWaiting();
 		if(showCity.pageFlag == 0) { //关注
-
+			console.log('关注界面拉');
+			//81.（用户空间）获取用户所有关注的用户
+			if(personal.utid == 0) {
+				var showfocusperson = window.myStorage.getItem(window.storageKeyName.SHOWFOCUSEPERSEN);
+				//74.(用户空间）获取多用户空间所有用户动态列表
+				getAllUserSpacesByUser(showfocusperson,listContainer,callback);
+			} else {
+				getFocusByUser(listContainer,callback);
+			}
 		} else { //全部
 
 			/**
@@ -25,17 +33,7 @@ var show_list = (function(mod) {
 					//总页数
 					totalPage = data.RspData.TotalPage;
 					showCity.pageIndex++;
-					//如果图片为空，加入默认
-					for (var i in data.RspData.Data) {
-						var tempModel = data.RspData.Data[i];
-						if (tempModel.EncImgAddr.length == 0||tempModel.EncImgAddr == null) {
-							if (i == 0) {//第一张默认给大图片
-								tempModel.EncImgAddr = '';
-							} else{
-								tempModel.EncImgAddr = '';
-							}
-						}
-					}
+
 					mod.getUserInfo(data.RspData.Data, function(tempData) {
 						if(freshFlag == 1) { //刷新
 							//清除节点
@@ -66,6 +64,14 @@ var show_list = (function(mod) {
 		for(var item in tempRspData) {
 			//当前循环的model
 			var tempModel0 = tempRspData[item];
+			if(tempModel0.EncImgAddr.length == 0 || tempModel0.EncImgAddr == null) {
+				if(item == 0) { //第一张默认给大图片
+					tempModel0.EncImgAddr = '../../image/show/show-default-large.png';
+				} else {
+					tempModel0.EncImgAddr = '../../image/show/show-default-small.png';
+				}
+			}
+			tempModel0.PublishDate = modifyTimeFormat(tempModel0.PublishDate);
 			//将当前model中id塞到数组
 			tempArray.push(tempModel0.PublisherId);
 		}
@@ -99,6 +105,74 @@ var show_list = (function(mod) {
 			}
 			console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 			callback(tempRspData);
+		});
+	}
+	//81.（用户空间）获取用户所有关注的用户
+	function getFocusByUser(listContainer,callback) {
+		//个人信息
+		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+		//所需参数
+		var comData = {
+			userId: personal.utid //用户ID
+		};
+		var wd = events.showWaiting();
+		//81.（用户空间）获取用户所有关注的用户
+		postDataPro_getFocusByUser(comData, wd, function(data) {
+			console.log('81.（用户空间）获取用户所有关注的用户：' + JSON.stringify(data));
+			wd.close();
+			if(data.RspCode == 0) {
+				var tempID = [];
+				for (var i in data.RspData.Users) {
+					var tempModel = data.RspData.Users[i];
+					tempID.push(tempModel.UserId);
+				}
+				//74.(用户空间）获取多用户空间所有用户动态列表
+				getAllUserSpacesByUser(tempID,listContainer,callback);
+			} else {
+				mui.toast(data.RspTxt);
+			}
+		});
+	}
+	//74.(用户空间）获取多用户空间所有用户动态列表
+	function getAllUserSpacesByUser(paraModel,listContainer,callback) {
+		//个人信息
+		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
+		//所需参数
+		var comData = {
+			userId: personal.utid, //用户ID,登录用户
+			publisherIds: arrayToStr(paraModel), //发布者ID,例如[1,2,3]
+			pageIndex: showCity.pageIndex, //当前页数
+			pageSize: 6 //每页记录数
+		};
+		// 等待的对话框
+		var wd1 = events.showWaiting();
+		postDataPro_getAllUserSpacesByUser(comData, wd1, function(data) {
+			wd1.close();
+			console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			if(data.RspCode == 0) {
+				showCity.pageIndex++;
+				totalPage = data.RspData.totalPage;
+				mod.getUserInfo(data.RspData.Data, function(tempData) {
+					if(freshFlag == 1) { //刷新
+						//清除节点
+						document.getElementById('list-container').innerHTML = "";
+						showArray = tempData;
+						if(tempData.length == 0) {
+							mui.toast('没有数据');
+						}
+					} else { //加载更多
+						//合并数组
+						showArray = showArray.concat(tempData);
+					}
+					if(mui(".mui-table-view-cell").length < 6) {
+						mui(".mui-pull-loading")[0].innerHTML = "";
+					}
+					callback(showCity, listContainer, tempData);
+				});
+			} else {
+				mui.toast(data.RspTxt);
+			}
+
 		});
 	}
 	mod.setShowList = function(showCity, listContainer, showData) {
