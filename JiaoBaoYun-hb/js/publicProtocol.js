@@ -1306,6 +1306,7 @@ var postDataPro_getUserSpacesByUser = function(commonData, wd, callback) {
 //所需参数
 //		var comData = {
 //			userId: '',//用户ID
+//			msgTitle: '',//记事标题
 //			msgContent:'',//记事内容
 //			encType:'',//附件类型，1图片2音视频3仅文字
 //			encLen: '',//音视频时长

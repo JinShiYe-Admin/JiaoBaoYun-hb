@@ -200,6 +200,7 @@ var publicModel = (function($, mod) {
 		EncAddr:'',//附件地址，多个的情况例如：1.jpg|2.jpg
 		EncImgAddr:'',//附件缩略图
 		PubArea:'',//发布区域
+		MsgTitle:'',//记事标题
 		//个人信息,2,7,
 		StudentId:'',//学生ID
 		
