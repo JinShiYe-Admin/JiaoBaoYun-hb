@@ -12,9 +12,9 @@ var show_list = (function(mod) {
 			if(personal.utid == 0) {
 				var showfocusperson = window.myStorage.getItem(window.storageKeyName.SHOWFOCUSEPERSEN);
 				//74.(用户空间）获取多用户空间所有用户动态列表
-				getAllUserSpacesByUser(showfocusperson,listContainer,callback);
+				getAllUserSpacesByUser(showfocusperson, listContainer, callback);
 			} else {
-				getFocusByUser(listContainer,callback);
+				getFocusByUser(listContainer, callback);
 			}
 		} else { //全部
 
@@ -108,7 +108,7 @@ var show_list = (function(mod) {
 		});
 	}
 	//81.（用户空间）获取用户所有关注的用户
-	function getFocusByUser(listContainer,callback) {
+	function getFocusByUser(listContainer, callback) {
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		//所需参数
@@ -122,19 +122,19 @@ var show_list = (function(mod) {
 			wd.close();
 			if(data.RspCode == 0) {
 				var tempID = [];
-				for (var i in data.RspData.Users) {
+				for(var i in data.RspData.Users) {
 					var tempModel = data.RspData.Users[i];
 					tempID.push(tempModel.UserId);
 				}
 				//74.(用户空间）获取多用户空间所有用户动态列表
-				getAllUserSpacesByUser(tempID,listContainer,callback);
+				getAllUserSpacesByUser(tempID, listContainer, callback);
 			} else {
 				mui.toast(data.RspTxt);
 			}
 		});
 	}
 	//74.(用户空间）获取多用户空间所有用户动态列表
-	function getAllUserSpacesByUser(paraModel,listContainer,callback) {
+	function getAllUserSpacesByUser(paraModel, listContainer, callback) {
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		//所需参数
@@ -186,6 +186,7 @@ var show_list = (function(mod) {
 			subDiv.innerHTML = mod.getShowInner(showData[i]);
 			listDiv.appendChild(subDiv);
 			div.appendChild(listDiv);
+			subDiv.info = showData[i];
 		}
 		listContainer.appendChild(div);
 		console.log("listContainer.innerHTML:" + listContainer.innerHTML);
@@ -238,6 +239,12 @@ var show_list = (function(mod) {
 			}
 		}
 		freshFlag = 0;
+	}
+	mod.setListListener = function() {
+		mui("#list-container").on("tap", ".news-container", function(e) {
+			this.disabled = true;
+			events.singleWebviewInPeriod(this, "../quan/space-detail.html", this.info);
+		})
 	}
 	return mod;
 })(show_list || {})
