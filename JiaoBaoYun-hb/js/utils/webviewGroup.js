@@ -38,6 +38,7 @@ proto._initNativeView = function() {
 	this.nativeView.show();
 };
 proto._initWebviewContexts = function() {
+	//循环加载webview
 	for(var len = this.items.length, i = len - 1; i >= 0; i--) {
 		var webviewOptions = this.items[i];
 		var id = webviewOptions.id;
@@ -47,24 +48,31 @@ proto._initWebviewContexts = function() {
 		var extras = webviewOptions.extras;
 		extras.__mui_url = webviewOptions.url;
 		extras.__mui_index = i;
-
+		//左侧
 		extras.__mui_left = isFirst ? '' : this.items[i - 1].id;
+		//右侧
 		extras.__mui_right = isLast ? '' : this.items[i + 1].id;
 
 		var styles = webviewOptions.styles || {};
-
+		//如果大于要显示的页面
 		if(i > this.options.index) {
 			styles.left = '100%';
+		//如果小于要显示的页面
 		} else if(i < this.options.index) {
 			styles.left = '-100%';
+		//如果是要显示的页面
 		} else {
 			styles.left = '0';
 		}
+		//webviewContext 将id 之类的赋值给webviewContext
 		var webviewContext = new webviewGroupContext(id, webviewOptions, this);
 		this.webviewContexts[id] = webviewContext;
+		//要显示的默认页面
 		if(isCurrent) {
 			webviewContext.webview = plus.webview.getWebviewById(id);
+			//创建页面
 			webviewContext.createWebview();
+			//
 			webviewContext.webview.show("none");
 			this._initDrags(webviewContext.webview);
 			this.currentWebview = webviewContext.webview;
@@ -226,7 +234,7 @@ var webviewGroupContext = function(id, webviewOptions, groupContext) {
 };
 
 var _proto = webviewGroupContext.prototype;
-
+//创建webView;
 _proto.createWebview = function(from) {
 	var options = this.options;
 	options.styles = options.styles || {

@@ -48,11 +48,12 @@
 				getAttendedClasses(function(hasAttended) {
 					setGroupItems(hasAttended);
 				});
-				window.addEventListener("noAttended",function(){
-					setGroupItems(false);
+				window.addEventListener("toggleAttended", function(e) {
+					var hasAttended = e.detail;
+					setGroupItems(hasAttended);
 				})
 			});
-         
+
 			function setGroupItems(hasAttended) {
 				var title = document.querySelector(".mui-title");
 				var items = [{
@@ -76,18 +77,18 @@
 							render: "always"
 						}
 					});
-					title.innerHTML="关注";
-					document.getElementById("header-indicator").style.display="block";
-				}else{
-					title.innerHTML="全部";
-					document.getElementById("header-indicator").style.display="none";
+					title.innerHTML = "关注";
+					document.getElementById("header-indicator").style.display = "block";
+				} else {
+					title.innerHTML = "全部";
+					document.getElementById("header-indicator").style.display = "none";
 				}
 				setWebViewGroup(items);
 			}
 
 			function setWebViewGroup(items) {
 				var group = new webviewGroup("course-home.html", {
-					items:items,
+					items: items,
 					onChange: function(obj) {
 						console.log("位置：" + obj.index);
 						document.querySelector(".mui-indicator.mui-active").classList.remove("mui-active");
