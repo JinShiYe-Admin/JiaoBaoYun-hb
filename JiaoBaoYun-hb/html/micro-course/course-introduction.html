@@ -64,7 +64,7 @@
 			focusBtn: document.getElementById("focusBtn"),
 			focusFlag: 0,
 		}
-		var courseModel;//传值过来的课程model
+		var courseModel; //传值过来的课程model
 		mui.plusReady(function() {
 			var curPage = plus.webview.currentWebview();
 			courseModel = curPage.data;
@@ -93,6 +93,23 @@
 
 		}
 		var getCourseFocusByUser = function() {
+			if(!events.getUtid()) {
+				var focusecourse = window.myStorage.getItem(window.storageKeyName.FOCUSECOURSES);
+				if(focusecourse) {
+					for(var i in focusecourse) {
+						if(focusecourse[i] == courseModel.TabId) {
+							nodes.focusBtn.style.backgroundColor = 'lightgray'
+							nodes.focusBtn.innerHTML = '已关注'
+							nodes.focusFlag = 1;
+						} else {
+							nodes.focusBtn.style.backgroundColor = '#1db8F1'
+							nodes.focusBtn.innerHTML = '关注'
+							nodes.focusFlag = 0;
+						}
+					}
+				}
+				return;
+			}
 			var utid = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 			//5.获取是否已对某个课程关注
 			//所需参数
@@ -128,7 +145,7 @@
 			nodes.teaName.innerHTML = courseInfo.TeacherName;
 			nodes.teaInfo.innerHTML = courseInfo.TeacherNote;
 			nodes.courseInfo.innerHTML = courseInfo.CourseNote;
-			document.getElementById("divContent").className ='mui-content'
+			document.getElementById("divContent").className = 'mui-content'
 		}
 		events.addTap('history', function() {
 			events.openNewWindowWithData('history-records.html', {})
@@ -138,6 +155,20 @@
 
 		})
 		var setCourseFocus = function(focusFlag) {
+			if(!events.getUtid()) {
+				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, parseInt(courseModel.TabId), focusFlag);
+				if(focusFlag == 0) {
+					nodes.focusFlag = 1
+					nodes.focusBtn.style.backgroundColor = 'lightgray'
+					nodes.focusBtn.innerHTML = '已关注'
+
+				} else {
+					nodes.focusFlag = 0
+					nodes.focusBtn.style.backgroundColor = '#1db8F1'
+					nodes.focusBtn.innerHTML = '关注'
+				}
+				return;
+			}
 			var utid = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 			if(focusFlag == 0) {
 				focusFlag = 1
