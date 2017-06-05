@@ -51,6 +51,7 @@
 				window.addEventListener("toggleAttended", function(e) {
 					var hasAttended = e.detail;
 					setGroupItems(hasAttended);
+
 				})
 			});
 
@@ -105,11 +106,14 @@
 
 			function getAttendedClasses(callback) {
 				if(events.getUtid()) {
+					// 等待的对话框
+					var wd = events.showWaiting();
 					postDataMCPro_getAllFocusCourses({
 						userId: events.getUtid(), //用户ID,登录用户
 						pageIndex: 1, //当前页数
 						pageSize: 1 //每页记录数,传入0，获取总记录数
 					}, wd, function(data) {
+						wd.close();
 						if(data.RspCode == 0 && data.RspData.TotalCnt) {
 							callback(true);
 						} else {
