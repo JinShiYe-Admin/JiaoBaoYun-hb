@@ -20,10 +20,6 @@
 				word-wrap: break-word;
 			}
 
-			.mui-bar-tab~.mui-content {
-				padding-bottom: 57px
-			}
-
 			.mui-table-view:before,
 			.mui-table-view:after,
 			.section-top .mui-table-view-cell:after,
@@ -68,7 +64,8 @@
 
 			.section-top .mui-table-view-cell>a:not(.mui-btn).mui-active,
 			.section-top .mui-table-view-cell.mui-active,
-			.section-comment .mui-table-view-cell.mui-active {
+			.section-comment .mui-table-view-cell.mui-active,
+			.section-shield .mui-table-view-cell.mui-active {
 				background-color: white;
 			}
 
@@ -76,10 +73,12 @@
 				/*评论按钮*/
 				text-align: left;
 				padding: 6px 12px !important;
-				color: #CCCCCC;
-				margin: 10px 3% !important;
-				width: 94%;
+				color: #B7B7B7;
+				margin: 6px 1.5% !important;
+				width: 96%;
 				top: 0 !important;
+				height: 36px;
+				font-size: 14px;
 			}
 
 			.section-title {
@@ -111,7 +110,7 @@
 
 			.icon-zanzan1 {
 				font-size: 13px;
-				color: #B7B7B7;
+				color: #dbdbdb;
 			}
 
 			.section-more {
@@ -166,6 +165,14 @@
 				height: 55px;
 			}
 
+			.section-image-time {
+				/*视频的时间*/
+				position: absolute;
+				color: white;
+				top: 85%;
+				right: 5%;
+			}
+
 			.section-comment-info,
 			.section-comment-reply-info,
 			.section-comment-reply-content {
@@ -201,6 +208,7 @@
 				border-left: 3px solid #1DB8F1;
 				font-size: 15px;
 				color: #323232;
+				height: 40px;
 			}
 
 			.section-comment-personal-headimage {
@@ -278,6 +286,21 @@
 			.section-shield .section-shield-text {
 				font-size: 14px;
 				color: #999999;
+			}
+
+			.section-show .section-title {
+				/*当前显示的节次*/
+				color: #00A5E0;
+			}
+
+			.section-comment-zan {
+				/*点赞*/
+				color: #1db8f1;
+			}
+
+			.section-comment-notzan {
+				/*不点赞*/
+				color: #dbdbdb;
 			}
 		</style>
 	</head>
@@ -364,11 +387,19 @@
 		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
 		<script type="text/javascript" src="../../js/utils/playutil.js"></script>
 		<script type="text/javascript" src="../../js/publicMicroClass.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript">
 			var main; //当webView
-			var sectionData; //当前课程的数据
+			var sectionData = {
+				key: [],
+				value: {}
+			}; //当前课程的数据
+			var allUserInfo = {
+				key: [],
+				value: {}
+			}; //评论，回复者的账号信息
 			var sectionId; //当前显示的节次id
-			var pageIndex = 1; //当前页数
+			var pageIndex = 0; //当前页数
 			mui.init();
 			mui.plusReady(function() {
 				events.closeWaiting();
@@ -376,7 +407,7 @@
 				initData();
 				initControl();
 				initListener();
-				getAllSectionsAndComments(wd);
+				getAllSectionsAndComments(pageIndex + 1, wd);
 			});
 
 			/**
@@ -428,6 +459,20 @@
 				document.getElementById('introduction').addEventListener('tap', function() {
 					events.openNewWindowWithData('course-introduction.html', main.data);
 				});
+
+				//查看其它节次或者查看更多
+				mui('.section-list').on('tap', '.mui-table-view-cell', function() {
+					var ids = this.id.split("_");
+					if(ids[1] == "more") { //更多
+						getAllSectionsAndComments(pageIndex + 1);
+					} else if(ids[1] != sectionId) { //查看其它节次
+						var ele = document.getElementById("section_" + sectionId);
+						ele.className = ele.className.replace(" section-show", "");
+						showTopData(sectionData.value[ids[1]]);
+						this.className = this.className + " section-show";
+					}
+				});
+
 			}
 
 			/**
@@ -492,23 +537,57 @@
 			}
 
 			/**
+			 * 音视频显示的时间
+			 * @param {Object} time
+			 */
+			function getAudioTime(time) {
+				time = time || 0;
+				var strTime = "";
+				var hour = Math.floor(time / 3600);
+
+				if(hour > 0) {
+					if(hour < 10) {
+						strTime = "0" + hour + ':';
+					} else {
+						strTime = hour + ':';
+					}
+				}
+				var min = Math.floor((time - 3600 * hour) / 60);
+				if(min < 10) {
+					strTime = strTime + "0" + min + ':';
+				} else {
+					strTime = strTime + min + ':';
+				}
+				var sec = time - 3600 * hour - 60 * min;
+				if(sec < 10) {
+					strTime = strTime + "0" + sec;
+				} else {
+					strTime = strTime + sec;
+				}
+				return strTime;
+			}
+
+			/**
 			 * 获取课程节次和评论
+			 * @param {Object} index 当前页数
 			 * @param {Object} wd 等待框
 			 */
-			function getAllSectionsAndComments(wd) {
+			function getAllSectionsAndComments(index, wd) {
 				wd = wd || events.showWaiting();
 				var comData = {
 					userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //用户ID,登录用户
 					courseId: main.data.TabId, //课程ID
-					pageIndex: pageIndex, //当前页数
-					pageSize: 5 //每页记录数,传入0，获取总记录数
+					pageIndex: index, //当前页数
+					pageSize: 10 //每页记录数,传入0，获取总记录数
 				};
 				postDataMCPro_getAllSectionsByCourse(comData, wd, function(data) {
 					console.log('3 获取课程的节次 ' + JSON.stringify(data));
 					if(data.RspCode == 0) {
-						sectionData = data.RspData;
+						pageIndex = index;
 						if(data.RspData.Data.length != 0) {
-							showTopData(data.RspData.Data[0]);
+							if(index == 1) {
+								showTopData(data.RspData.Data[0], wd);
+							}
 							showSectionList(data.RspData.Data);
 						}
 						if(pageIndex >= data.RspData.totalPage) {
@@ -518,23 +597,26 @@
 							document.getElementById("section_more").style.display = "block";
 						}
 					} else {
+						wd.close();
 						mui.toast(data.RspTxt);
 					}
-					wd.close();
 				});
 			}
 
 			/**
 			 * 显示顶部节次的数据
 			 */
-			function showTopData(data) {
-				console.log("showTopData " + JSON.stringify(data));
+			function showTopData(data, wd) {
+				//console.log("showTopData " + JSON.stringify(data));
 				sectionId = data.SecId;
 				if(data.SecStatus == 1) { //被屏蔽
 					document.getElementById("section_top").style.display = "none";
 					document.getElementById("section_shield").style.display = 'flex';
 					document.getElementById("section_comment_title").style.display = "none";
 					document.getElementById("section_comment_list").style.display = "none";
+					if(wd) {
+						wd.close();
+					}
 				} else {
 					document.getElementById("section_shield").style.display = "none";
 					document.getElementById("section_top").style.display = "block";
@@ -544,7 +626,8 @@
 					document.getElementById("section_top_content").innerHTML = data.SecNote;
 					document.getElementById("section_top_zan").innerHTML = "(" + "0)";
 					document.getElementById("section_top_time").innerHTML = "上传时间 : " + data.UpTime.split(" ")[0];
-					showComments(data.Comments);
+					document.getElementById("section_comment_list").innerHTML = "";
+					showCommentsFirst(data.Comments, wd);
 				}
 			}
 
@@ -556,37 +639,44 @@
 				//console.log("showSectionList " + JSON.stringify(data));
 				var more = document.getElementById("section_more");
 				for(var i in data) {
-					console.log("showSectionList " + i + " " + JSON.stringify(data[i]));
+					sectionData.key[sectionData.key.length] = data[i].SecId;
+					sectionData.value[data[i].SecId] = data[i];
+					//console.log("showSectionList " + i + " " + JSON.stringify(data[i]));
 					var ele = document.createElement("li");
 					ele.id = "section_" + data[i].SecId;
 					var html = '';
 					if(data[i].EncType == 1) { //视频
 						ele.className = "mui-table-view-cell section-list-li";
-						html = "<div class=\"section-list-li-left\">\
-							<div class=\"section-title\">" + data[i].SecName + "</div>\
-							<div class=\"section-info\">上传时间 : " + data[i].UpTime.split(" ")[0] + "</div>\
+						html = '<div class="section-list-li-left">\
+							<div class="section-title">' + data[i].SecName + '</div>\
+							<div class="section-info">上传时间 : ' + data[i].UpTime.split(" ")[0] + '</div>\
 						</div>\
-						<div class=\"section-list-img-div\">\
-							<div class=\"section-image-play-div\">\
-								<img src=\"../../image/utils/playvideo.png\" class=\"section-image-play\" onload=\"onPlayLoad(this);\" onerror=\"onPlayError(this);\" />\
+						<div class="section-list-img-div">\
+							<div class="section-image-play-div">\
+								<img src="../../image/utils/playvideo.png" class="section-image-play" onload="onPlayLoad(this);" onerror="onPlayError(this);" />\
 							</div>\
-							<img src=\"../../image/ios_1242-2208.png\" class=\"section-list-img\" onload=\"onImageLoad(this);\" onerror=\"onImageError(this);\" />\
-						</div>";
+							<div class="section-image-time">' + getAudioTime(data[i].EncLen) + '</div>\
+							<img src="../../image/ios_1242-2208.png" class="section-list-img" onload="onImageLoad(this);" onerror="onImageError(this);" />\
+						</div>';
 					} else if(data[i].EncType == 2) { //音频
 						ele.className = "mui-table-view-cell";
-						html = "<div class=\"section-title\">" + data[i].SecName + "</div>\
+						html = '<div class="section-title">' + data[i].SecName + '</div>\
 						<div>\
-							<svg class=\"section-list-audio\">\
-								<path class=\"section-list-audio-border\" d=\"" + getAudioBorderPath() + "\" />\
-								<path class=\"section-list-audio-icon\" d=\"M30 18 A5 5 0 0 1 30 23 M35 14 A10 10 0 0 1 35 27 M40 10 A 15 15 0 0 1 40 31\" />\
-								<text class=\"section-list-audio-time\" x=\"60\" y=\"26\">" + data[i].EncLen + "''</text>\
+							<svg class="section-list-audio">\
+								<path class="section-list-audio-border" d="' + getAudioBorderPath() + '" />\
+								<path class="section-list-audio-icon" d="M30 18 A5 5 0 0 1 30 23 M35 14 A10 10 0 0 1 35 27 M40 10 A 15 15 0 0 1 40 31" />\
+								<text class="section-list-audio-time" x="60" y="26">' + getAudioTime(data[i].EncLen) + '</text>\
 							</svg>\
 						</div>\
-						<div class=\"section-info\">上传时间 : " + data[i].UpTime.split(" ")[0] + "</div>";
+						<div class="section-info">上传时间 : ' + data[i].UpTime.split(" ")[0] + '</div>';
 					} else if(data[i].EncType == 3) { //文章
 						ele.className = "mui-table-view-cell";
-						html = "<div class=\"section-title\">" + data[i].SecName + "</div>\
-						<div class=\"section-info\">上传时间 : " + data[i].UpTime.split(" ")[0] + "</div>";
+						html = '<div class="section-title">' + data[i].SecName + '</div>\
+						<div class="section-info">上传时间 : ' + data[i].UpTime.split(" ")[0] + '</div>';
+					}
+					if(sectionId == data[i].SecId) {
+						//当前显示的节次
+						ele.className = ele.className + ' section-show';
 					}
 					ele.innerHTML = html;
 					document.getElementById("section_list").insertBefore(ele, more);
@@ -594,11 +684,105 @@
 			}
 
 			/**
-			 * 显示评论
+			 * 显示评论1.获取用户昵称
 			 * @param {Object} data
 			 */
-			function showComments(data) {
-				console.log("showComments " + JSON.stringify(data));
+			function showCommentsFirst(comments, wd) {
+				wd = wd || events.showWaiting();
+				console.log("showCommentsFirst " + JSON.stringify(comments));
+				document.getElementById("section_comment_title").innerText = "评论(" + comments.length + ")";
+				var utids = [];
+				for(var i in comments) {
+					//评论节次用户
+					if(!allUserInfo.value[comments[i].UserId]) {
+						utids[utids.length] = comments[i].UserId;
+					}
+					//回复评论
+					for(var j in comments[i].Replys) {
+						if(!allUserInfo.value[comments[i].Replys[j].UserId]) {
+							utids[utids.length] = comments[i].Replys[j].UserId;
+						}
+					}
+				}
+				if(utids.length != 0) {
+					var utidStr = utids.join(',');
+					comData = {
+						vvl: utidStr, //用户id，查询的值,p传个人ID,g传ID串
+						vtp: 'g' //查询类型,p(个人)g(id串)
+					};
+					//21.通过用户ID获取用户资料
+					postDataPro_PostUinf(comData, wd, function(data) {
+						console.log('21 通过用户ID获取用户资料' + JSON.stringify(data));
+						if(data.RspCode == 0) {
+							for(var k in data.RspData) {
+								if(!allUserInfo.value[data.RspData[k].utid]) {
+									allUserInfo.key[allUserInfo.key.length] = data.RspData[k].utid;
+									allUserInfo.value[data.RspData[k].utid] = data.RspData[k];
+								}
+							}
+							showCommontsSecond(comments, wd);
+						} else {
+							mui.toast(data.RspTxt);
+							wd.close();
+						}
+					});
+				} else {
+					showCommontsSecond(comments, wd);
+				}
+			}
+
+			/**
+			 * 显示评论和回复
+			 * @param {Object} data
+			 * @param {Object} wd
+			 */
+			function showCommontsSecond(data, wd) {
+				console.log("allUserInfo " + JSON.stringify(allUserInfo));
+				for(var i in data) {
+					console.log("showCommontsSecond " + JSON.stringify(data));
+					var ele = document.createElement("li");
+					ele.className = "mui-table-view-cell";
+					ele.id = "commont_" + data[i].TabId;
+					//点赞数
+					var html_zan = '';
+					if(data[i].IsLiked) {
+						//点赞
+						html_zan = '<div class="mui-icon iconfont icon-zanzan1 section-comment-zan">(' + data[i].LikeNum + ')</div>'
+					} else {
+						html_zan = '<div class="mui-icon iconfont icon-zanzan1 section-comment-notzan">(' + data[i].LikeNum + ')</div>'
+					}
+					//评论节次
+					var html_0 = '<img src="' + updateHeadImg(allUserInfo.value[data[i].UserId].uimg, 2) + '" class="section-comment-personal-headimage" />\
+						' + html_zan + '\
+						<div class="mui-ellipsis section-comment-personal-name">' + allUserInfo.value[data[i].UserId].unick + '</div>\
+						<div class="section-comment-content">' + data[i].CommentContent + '</div>\
+						<div class="section-comment-info">回复' + data[i].Replys.length + '</div>\
+						<div class="mui-pull-right section-comment-info">' + data[i].CommentDate.split(" ")[0] + '</div>';
+					//回复评论
+					var html_1 = '';
+					for(var j in data[i].Replys) {
+						if(j == 0) {
+							html_1 = '<div class="section-comment-reply">';
+						} else if(j == 6) {
+							html_1 = html_1 + '<div class="section-comment-reply-all">查看全部>></div>';
+							break;
+						} else {
+							html_1 = html_1 + '<div>\
+								<div class="section-comment-reply-name">' + allUserInfo.value[data[i].UserId].unick + '</div>\
+								<div class="section-comment-reply-info">@</div>\
+								<div class="section-comment-reply-name">' + allUserInfo.value[data[i].ReplyId].unick + '</div>\
+								<div class="section-comment-reply-info">:</div>\
+								<div class="section-comment-reply-content">' + data[i].Replys[j].CommentContent + '</div>\
+							</div>';
+						}
+					}
+					ele.innerHTML = html_0 + html_1 + '</div>';
+					document.getElementById("section_comment_list").appendChild(ele);
+				}
+
+				if(wd) {
+					wd.close();
+				}
 			}
 		</script>
 	</body>
