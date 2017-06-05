@@ -3051,7 +3051,8 @@
 				],
 				"refer": [
 					"html/show/show-sub1.html",
-					"html/utils/customizeCity.html"
+					"html/utils/customizeCity.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},
@@ -4659,10 +4660,23 @@
 					"css/mui.min.css",
 					"css/utils/common.css",
 					"js/libs/jquery.js",
-					"html/micro-course/course-attended.html"
+					"html/micro-course/course-attended.html",
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/mui.min.js",
+					"js/publicMicroClass.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"html/micro-course/course-all.html"
 				],
 				"refer": [
-					"html/micro-course/course-all.html",
 					"html/micro-course/course-search.html"
 				],
 				"priority": 0
@@ -4713,9 +4727,13 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"css/utils/fresh.css",
+					"css/utils/common.css"
 				],
-				"refer": [],
+				"refer": [
+					"html/micro-course/course_details.html"
+				],
 				"priority": 0
 			},
 			"html/micro-course/course-search.html": {
@@ -4754,9 +4772,13 @@
 					"css/show/show-list.css",
 					"js/mui.pullToRefresh.js",
 					"js/mui.pullToRefresh.material.js",
-					"css/utils/fresh.css"
+					"css/utils/fresh.css",
+					"js/libs/crypto-js/crypto-js.js",
+					"image/utils/loading.gif"
 				],
-				"refer": [],
+				"refer": [
+					"html/quan/space-detail.html"
+				],
 				"priority": 0
 			},
 			"html/show/show-attended.html": {
@@ -4782,7 +4804,87 @@
 					"css/utils/fresh.css",
 					"css/utils/common.css",
 					"fonts/fangzheng.ttf",
-					"css/show/show-list.css"
+					"css/show/show-list.css",
+					"image/show/show-default-large.png",
+					"image/show/show-default-small.png",
+					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [
+					"html/quan/space-detail.html"
+				],
+				"priority": 0
+			},
+			"html/micro-course/course_details.html": {
+				"resources": [
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/utils/playutil.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/publicMicroClass.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
+				],
+				"refer": [
+					"html/micro-course/course-introduction.html"
+				],
+				"priority": 0
+			},
+			"html/micro-course/course-introduction.html": {
+				"resources": [
+					"js/publicQiuzhiProtocol.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
+				],
+				"refer": [
+					"html/micro-course/history-records.html"
+				],
+				"priority": 0
+			},
+			"html/micro-course/history-records.html": {
+				"resources": [
+					"js/mui.pullToRefresh.js",
+					"image/cloud/notes_bg2.jpg",
+					"js/publicQiuzhiProtocol.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"image/utils/playvideo.png",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"image/utils/loading.gif"
 				],
 				"refer": [],
 				"priority": 0
