@@ -125,7 +125,8 @@ var course_list = (function(mod) {
 	mod.getCellInner = function(cell) {
 
 		return '<div class="course-container">' +
-			'<img class="course-img" src="' + cell.CoursePic + '"/>' +
+			'<div class=""img-container><img class="course-img" src="' + cell.CoursePic + '"/>' +
+			'<span class="red-circle"></span></div>'+
 			'<div class="course-detail">' +
 			'<div class="courseName-button">' +
 			'<p class="coursre-name">' + cell.CourseName + '</p>' +
@@ -189,13 +190,13 @@ var course_list = (function(mod) {
 	mod.changeBtnStatus = function(item, type) {
 		if(item.info.IsFocus) {
 			item.className = "input-btn btn-unfocus";
-			item.innerText = "关注";
+			item.value = "关注";
 			if(type) {
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 1);
 			}
 		} else {
 			item.className = "input-btn btn-focused";
-			item.innerText = "已关注";
+			item.value = "已关注";
 			if(type) {
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 0);
 			}

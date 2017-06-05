@@ -126,8 +126,11 @@ var show_list = (function(mod) {
 					var tempModel = data.RspData.Users[i];
 					tempID.push(tempModel.UserId);
 				}
+				console.log('tempID=',tempID);
 				//74.(用户空间）获取多用户空间所有用户动态列表
-				getAllUserSpacesByUser(tempID, listContainer, callback);
+				if(tempID.length>0){
+					getAllUserSpacesByUser(tempID, listContainer, callback);
+				}
 			} else {
 				mui.toast(data.RspTxt);
 			}
@@ -194,7 +197,7 @@ var show_list = (function(mod) {
 	}
 	mod.getShowInner = function(data) {
 		return '<img class="news-img" src="' + data.EncImgAddr + '"/><div class="news-words"><p class="news-title single-line">' + data.MsgTitle + '</p>' +
-			'<div class="anthor-date"><p class="news-anthor">' + data.unick + '</p><p class="news-date">' + data.PublishDate + '</p></div></div>'
+			'<div class="anthor-date"><p class="news-anthor single-line">' + data.unick + '</p><p class="news-date">' + data.PublishDate + '</p></div></div>'
 	}
 	mod.initFresh = function() {
 		mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({

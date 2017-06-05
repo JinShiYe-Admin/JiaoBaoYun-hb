@@ -4659,10 +4659,22 @@
 					"css/mui.min.css",
 					"css/utils/common.css",
 					"js/libs/jquery.js",
-					"html/micro-course/course-attended.html"
+					"html/micro-course/course-attended.html",
+					"js/publicMicroClass.js",
+					"html/micro-course/course-all.html",
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [
-					"html/micro-course/course-all.html",
 					"html/micro-course/course-search.html"
 				],
 				"priority": 0
@@ -4688,7 +4700,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"css/utils/fresh.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -4713,9 +4726,14 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"css/utils/common.css",
+					"css/utils/fresh.css",
+					"image/utils/loading.gif"
 				],
-				"refer": [],
+				"refer": [
+					"html/micro-course/course_details.html"
+				],
 				"priority": 0
 			},
 			"html/micro-course/course-search.html": {
@@ -4754,9 +4772,15 @@
 					"css/show/show-list.css",
 					"js/mui.pullToRefresh.js",
 					"js/mui.pullToRefresh.material.js",
-					"css/utils/fresh.css"
+					"css/utils/fresh.css",
+					"image/show/show-default-large.png",
+					"image/show/show-default-small.png",
+					"js/libs/crypto-js/crypto-js.js",
+					"image/utils/loading.gif"
 				],
-				"refer": [],
+				"refer": [
+					"html/quan/space-detail.html"
+				],
 				"priority": 0
 			},
 			"html/show/show-attended.html": {
@@ -4782,7 +4806,31 @@
 					"css/utils/fresh.css",
 					"css/utils/common.css",
 					"fonts/fangzheng.ttf",
-					"css/show/show-list.css"
+					"css/show/show-list.css",
+					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/micro-course/course_details.html": {
+				"resources": [
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/utils/playutil.js",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/publicMicroClass.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
