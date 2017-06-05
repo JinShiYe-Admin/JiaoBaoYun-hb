@@ -26,7 +26,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">关注</h1>
-			<div class="mui-slider-indicator">
+			<div id="header-indicator" class="mui-slider-indicator">
 				<div class="mui-indicator mui-active"></div>
 				<div class="mui-indicator"></div>
 			</div>
@@ -36,6 +36,7 @@
 		<script src="../../js/libs/jquery.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/utils/webviewGroup.js"></script>
+		<script src="../../js/publicMicroClass.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
@@ -43,29 +44,52 @@
 				events.addTap("btn-search", function() {
 					this.disabled = true;
 					events.singleWebviewInPeriod(this, "course-search.html", "");
+				});
+				getAttendedClasses(function(hasAttended) {
+					setGroupItems(hasAttended);
+				});
+				window.addEventListener("noAttended",function(){
+					setGroupItems(false);
 				})
-				var group = new webviewGroup("course-home.html", {
-					items: [{
+			});
+         
+			function setGroupItems(hasAttended) {
+				var title = document.querySelector(".mui-title");
+				var items = [{
+					id: "course-all.html",
+					url: "course-all.html",
+					extras: {},
+					styles: {
+						top: "45px",
+						bottom: "0px",
+						render: "always"
+					}
+				}];
+				if(hasAttended) {
+					items.splice(0, 0, {
 						id: "course-attended.html",
 						url: "course-attended.html",
 						extras: {},
-						styles:{
+						styles: {
 							top: "45px",
 							bottom: "0px",
 							render: "always"
 						}
-					}, {
-						id: "course-all.html",
-						url: "course-all.html",
-						extras: {},
-						styles:{
-							top: "45px",
-							bottom: "0px",
-							render: "always"
-						}
-					}],
+					});
+					title.innerHTML="关注";
+					document.getElementById("header-indicator").style.display="block";
+				}else{
+					title.innerHTML="全部";
+					document.getElementById("header-indicator").style.display="none";
+				}
+				setWebViewGroup(items);
+			}
+
+			function setWebViewGroup(items) {
+				var group = new webviewGroup("course-home.html", {
+					items:items,
 					onChange: function(obj) {
-						console.log("位置："+obj.index);
+						console.log("位置：" + obj.index);
 						document.querySelector(".mui-indicator.mui-active").classList.remove("mui-active");
 						document.querySelector(".mui-indicator:nth-child(" + (parseInt(obj.index) + 1) + ")").classList.add("mui-active");
 						var title = document.querySelector(".mui-title");
@@ -76,7 +100,30 @@
 						}
 					}
 				})
-			})
+			}
+
+			function getAttendedClasses(callback) {
+				if(events.getUtid()) {
+					postDataMCPro_getAllFocusCourses({
+						userId: events.getUtid(), //用户ID,登录用户
+						pageIndex: 1, //当前页数
+						pageSize: 1 //每页记录数,传入0，获取总记录数
+					}, wd, function(data) {
+						if(data.RspCode == 0 && data.RspData.TotalCnt) {
+							callback(true);
+						} else {
+							callback(false);
+						}
+					})
+				} else {
+					if(myStorage.getItem(storageKeyName.FOCUSECOURSES) && myStorage.getItem(storageKeyName.FOCUSECOURSES).length > 0) {
+						callback(true);
+					} else {
+						callback(false);
+					}
+				}
+
+			}
 		</script>
 	</body>
 

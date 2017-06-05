@@ -191,13 +191,13 @@ var course_list = (function(mod) {
 			item.className = "input-btn btn-unfocus";
 			item.innerText = "关注";
 			if(type) {
-				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 1)
+				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 1);
 			}
 		} else {
 			item.className = "input-btn btn-focused";
 			item.innerText = "已关注";
 			if(type) {
-				events.toggleStorageArray()(storageKeyName.FOCUSECOURSES, item.info.TabId, 0)
+				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 0);
 			}
 		}
 		item.info.IsFocus = !item.info.IsFocus;
