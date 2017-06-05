@@ -146,7 +146,7 @@ var show_list = (function(mod) {
 		};
 		// 等待的对话框
 		var wd1 = events.showWaiting();
-		postDataPro_getAllUserSpacesByUser(comData, wd1, function(data) {
+		postDataPro_getUserSpacesForAreaByIds(comData, wd1, function(data) {
 			wd1.close();
 			console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {

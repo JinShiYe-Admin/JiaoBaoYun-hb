@@ -2133,3 +2133,19 @@ var postDataPro_getNotesStatisticForStudent = function(commonData, wd, callback)
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'note/getNotesStatisticForStudent', enData, commonData, 2, wd, callback);
 }
+
+//95.（用户空间）按ID获取区域用户空间列表
+//所需参数
+//		var comData = {
+//			userId:'',//用户ID
+//			publisherIds:'',//发布者ID,例如[1,2,3]
+//			pageIndex:'',//当前页数
+//			pageSize:''//每页记录数
+//		};
+//返回：
+var postDataPro_getUserSpacesForAreaByIds = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getUserSpacesForAreaByIds', enData, commonData, 2, wd, callback);
+}
