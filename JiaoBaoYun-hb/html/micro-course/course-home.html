@@ -48,11 +48,11 @@
 				getAttendedClasses(function(hasAttended) {
 					setGroupItems(hasAttended);
 				});
-				window.addEventListener("noAttended",function(){
+				window.addEventListener("noAttended", function() {
 					setGroupItems(false);
 				})
 			});
-         
+
 			function setGroupItems(hasAttended) {
 				var title = document.querySelector(".mui-title");
 				var items = [{
@@ -76,18 +76,18 @@
 							render: "always"
 						}
 					});
-					title.innerHTML="关注";
-					document.getElementById("header-indicator").style.display="block";
-				}else{
-					title.innerHTML="全部";
-					document.getElementById("header-indicator").style.display="none";
+					title.innerHTML = "关注";
+					document.getElementById("header-indicator").style.display = "block";
+				} else {
+					title.innerHTML = "全部";
+					document.getElementById("header-indicator").style.display = "none";
 				}
 				setWebViewGroup(items);
 			}
 
 			function setWebViewGroup(items) {
 				var group = new webviewGroup("course-home.html", {
-					items:items,
+					items: items,
 					onChange: function(obj) {
 						console.log("位置：" + obj.index);
 						document.querySelector(".mui-indicator.mui-active").classList.remove("mui-active");
@@ -104,6 +104,8 @@
 
 			function getAttendedClasses(callback) {
 				if(events.getUtid()) {
+					// 等待的对话框
+					var wd = events.showWaiting();
 					postDataMCPro_getAllFocusCourses({
 						userId: events.getUtid(), //用户ID,登录用户
 						pageIndex: 1, //当前页数
