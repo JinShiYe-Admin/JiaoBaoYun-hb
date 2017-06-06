@@ -29,7 +29,7 @@
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
-		<script src="../../js/micro-course/course-list.js"></script>
+		<script src="../../js/micro-course/course-list1.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/publicMicroClass.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
@@ -42,13 +42,13 @@
 			var totalPage = 0; //数据总页数
 			var pageIndex = 1;
 			mui.plusReady(function() {
-				course_list.getData(pageIndex, document.getElementById("list-container"), course_list.setData);
-				course_list.setListener();
+				course_list1.getData(pageIndex, document.getElementById("list-container"), course_list1.setData);
+				course_list1.setListener();
 				window.addEventListener("infoChanged", function() {
 					console.log("+++++++++通知刷新+++++++++")
 					pageIndex = 1;
 					freshFlag = 1;
-					course_list.getData(pageIndex, document.getElementById("list-container"), course_list.setData);
+					course_list1.getData(pageIndex, document.getElementById("list-container"), course_list1.setData);
 				})
 			})
 		</script>

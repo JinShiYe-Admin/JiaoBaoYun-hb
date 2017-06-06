@@ -87,7 +87,7 @@
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
-		<script src="../../js/show/show_list.js"></script>
+		<script src="../../js/show/show_list1.js"></script>
 		<script type="text/javascript">
 			var freshContainer;
 			var oldPageIndex;
@@ -104,12 +104,12 @@
 			show_list.initFresh();
 			mui.init();
 			mui.plusReady(function() {
-				show_list.getShowList(showCity, document.getElementById("list-container"), show_list.setShowList);
-				show_list.setListListener();
+				show_list1.getShowList(showCity, document.getElementById("list-container"), show_list1.setShowList);
+				show_list1.setListListener();
 				window.addEventListener("infoChanged", function() {
 					console.log("+++++++++通知刷新+++++++++")
 					showCity.pageIndex = 1;
-					show_list.getShowList(showCity, document.getElementById("list-container"), show_list.setShowList);
+					show_list1.getShowList(showCity, document.getElementById("list-container"), show_list1.setShowList);
 				})
 			})
 		</script>
