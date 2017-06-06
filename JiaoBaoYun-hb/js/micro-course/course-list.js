@@ -161,6 +161,9 @@ var course_list = (function(mod) {
 		li.querySelector(".coursre-name").info = cell;
 		li.querySelector(".course-info").info = cell;
 		li.querySelector(".input-btn").info = cell;
+		if(!cell.IsUpdate){
+			li.querySelector("red-circle").classList.add("display-none");
+		}
 	}
 	/**
 	 * 
@@ -169,7 +172,7 @@ var course_list = (function(mod) {
 	mod.getCellInner = function(cell) {
 
 		return '<div class="course-container">' +
-			'<div class=""img-container><img class="course-img" src="' + cell.CoursePic + '"/>' +
+			'<div class="img-container"><img class="course-img" src="' + cell.CoursePic + '"/>' +
 			'<span class="red-circle"></span></div>'+
 			'<div class="course-detail">' +
 			'<div class="courseName-button">' +
@@ -187,9 +190,9 @@ var course_list = (function(mod) {
 	 */
 	mod.getBtn = function(cell) {
 		if(cell.IsFocused) {
-			return '<input id="btn-focused" type="button" class="input-btn btn-focused" value="已关注"/>'
+			return '<button id="btn-focused" type="button" class="input-btn btn-focused">已关注</button>'
 		}
-		return '<input id="btn-focused" type="button" class="input-btn btn-unfocus" value="关注"/>'
+		return '<button id="btn-focused" type="button" class="input-btn btn-unfocus">关注</button>'
 	}
 	/**
 	 * 点击关注按钮
@@ -235,19 +238,18 @@ var course_list = (function(mod) {
 	mod.changeBtnStatus = function(item, type) {
 		if(item.info.IsFocus) {
 			item.className = "input-btn btn-unfocus";
-			item.value = "关注";
+			item.innerText = "关注";
 			if(type) {
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 1);
 			}
 		} else {
 			item.className = "input-btn btn-focused";
-			item.value = "已关注";
+			item.innerText = "已关注";
 			if(type) {
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 0);
 			}
 		}
 		item.info.IsFocus = !item.info.IsFocus;
-
 	}
 	/**
 	 * 
