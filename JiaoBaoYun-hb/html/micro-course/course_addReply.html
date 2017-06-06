@@ -42,13 +42,18 @@
 		</header>
 		<div class="mui-content mo-background-color">
 			<div class="input-content">
-				<textarea id='content' class="mui-input-clear" placeholder="回复，最多200字" style="height: 200px;"></textarea>
+				<textarea id='content' class="mui-input-clear" placeholder="回复，最多200字:" style="height: 200px;"></textarea>
 			</div>
 		</div>
 	</body>
 	<script>
 		mui.plusReady(function() {
 			var tempModel = plus.webview.currentWebview().data;//传值过来的课程model
+			if (tempModel.replyId > 0) {
+				document.getElementById("content").placeholder = '@'+tempModel.replyNick+'，最多200字:';
+			}else{
+				document.getElementById("content").placeholder = '回复，最多200字:';
+			}
 			var leaveContent = document.getElementById('content');
 			events.addTap('publish', function() {
 				var tempText = leaveContent.value;
@@ -60,16 +65,16 @@
 					return;
 				}
 				var comData = {
-					secId: '', //小节ID
-					upperId: '', //上级评论ID，第一个评论传0，其他的传最上层的ID
-					userId: '', //评论用户ID
-					commentContent: '', //评论内容，
-					replyId: '' //回复用户ID，新增评论的话传0，回复评论传用户ID
+					secId: tempModel.secId, //小节ID
+					upperId: tempModel.upperId, //上级评论ID，第一个评论传0，其他的传最上层的ID
+					userId: tempModel.userId, //评论用户ID
+					commentContent: leaveContent.value, //评论内容，
+					replyId: tempModel.replyId //回复用户ID，新增评论的话传0，回复评论传用户ID
 				};
 				// 等待的对话框
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				//7.新增某小节课程的评论
-				postDataPro_addUserSpaceMsgReply(comData, wd, function(data) {
+				postDataMCPro_addSecComment(comData, wd, function(data) {
 					wd.close();
 					console.log('7.新增某小节课程的评论:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
