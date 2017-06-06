@@ -436,7 +436,7 @@
 			 */
 			function initListener() {
 
-				//显示课程简介
+				//显示，隐藏课程简介
 				document.getElementById('collapse_content_show').addEventListener('tap', function() {
 					var collapse_content_li = document.getElementById("collapse_content_li");
 					var classNameList = collapse_content_li.className.split(" ");
@@ -486,18 +486,28 @@
 						jQuery(self).css("pointerEvents", "all");
 						return;
 					}
-
-					var id = this.id.split("_")[1];
+					var ids = this.id.split("_")
 					var type = e.target.getAttribute("data-type");
-					console.log("comment TabId " + id);
+					console.log("comment TabId " + ids[1] + ' index ' + ids[2] + ' type ' + type);
 					switch(type) {
 						case "zan":
-							console.log("zan");
-							break;
 						case "notzan":
-							console.log("notzan");
+							var comData = {
+								secId: sectionId, //小节ID
+								commentId: ids[1], //评论ID
+								userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //点赞用户ID
+								status: 0 //点赞状态，0 取消点赞，1 点赞
+							};
+							if(type == "zan") {
+								console.log("评论-取消点赞");
+							} else if(type == "notzan") {
+								console.log("评论-点赞");
+								comData.status = 1;
+							}
+							commontLikeOrNot(comData, e.target, ids[2]);
 							break;
-						case "comment_reply":
+						case "comment_reply"://评论回复
+						case "comment_reply_cell"://评论回复
 						case "view_cell": //评论评论
 							var userId; //被评论者的utid
 							if(type == "view_cell") {
@@ -505,11 +515,14 @@
 								userId = this.getAttribute('data-UserId');
 							} else if(type == "comment_reply") {
 								console.log("评论回复");
-								userId = e.target.getAttribute("data-type");
+								userId = e.target.getAttribute("data-UserId");
+							} else if(type = "comment_reply_cell") {
+								console.log("评论回复");
+								userId = e.target.parentNode.getAttribute("data-UserId");
 							}
 							var data = {
 								secId: sectionId,
-								upperId: id,
+								upperId: ids[1],
 								userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid,
 								userNick: myStorage.getItem(storageKeyName.PERSONALINFO).unick,
 								commentContent: '',
@@ -555,6 +568,11 @@
 					events.openNewWindowWithData('course_addReply.html', data);
 					self.disabled = false;
 					jQuery(self).css("pointerEvents", "all");
+				});
+
+				//新增评论
+				window.addEventListener('addCommont', function() {
+					console.log("addCommont " + JSON.stringify(e.detail));
 				});
 			}
 
@@ -672,6 +690,8 @@
 								showTopData(data.RspData.Data[0], wd);
 							}
 							showSectionList(data.RspData.Data);
+						} else {
+							wd.close();
 						}
 						if(pageIndex >= data.RspData.totalPage) {
 							console.log('没有下一页');
@@ -707,7 +727,7 @@
 					document.getElementById("section_comment_list").style.display = "block";
 					document.getElementById("section_top_title").innerHTML = data.SecName;
 					document.getElementById("section_top_content").innerHTML = data.SecNote;
-					document.getElementById("section_top_zan").innerHTML = "(" + "0)";
+					document.getElementById("section_top_zan").innerHTML = "(" + data.LikeNum + ")";
 					document.getElementById("section_top_time").innerHTML = "上传时间 : " + data.UpTime.split(" ")[0];
 					document.getElementById("section_comment_list").innerHTML = "";
 					showCommentsFirst(data.Comments, wd);
@@ -739,7 +759,7 @@
 								<img src="../../image/utils/playvideo.png" class="section-image-play" onload="onPlayLoad(this);" onerror="onPlayError(this);" />\
 							</div>\
 							<div class="section-image-time">' + getAudioTime(data[i].EncLen) + '</div>\
-							<img src="../../image/ios_1242-2208.png" class="section-list-img" onload="onImageLoad(this);" onerror="onImageError(this);" />\
+							<img src="' + data[i].EncImgAddr + '" class="section-list-img" onload="onImageLoad(this);" onerror="onImageError(this);" />\
 						</div>';
 					} else if(data[i].EncType == 2) { //音频
 						ele.className = "mui-table-view-cell";
@@ -820,14 +840,14 @@
 			 * @param {Object} wd
 			 */
 			function showCommontsSecond(data, wd) {
-				console.log("allUserInfo " + JSON.stringify(allUserInfo));
+				//console.log("allUserInfo " + JSON.stringify(allUserInfo));
 				for(var i in data) {
-					console.log("showCommontsSecond " + JSON.stringify(data));
+					//console.log("showCommontsSecond " + JSON.stringify(data[i]));
 					var ele = document.createElement("li");
 					ele.className = "mui-table-view-cell";
 					ele.setAttribute("data-UserId", data[i].UserId);
 					ele.setAttribute("data-type", "view_cell");
-					ele.id = "commont_" + data[i].TabId;
+					ele.id = "commont_" + data[i].TabId + '_' + i;
 					//点赞数
 					var html_zan = '';
 					if(data[i].IsLiked) {
@@ -839,7 +859,7 @@
 					//评论节次
 					var html_0 = '<img data-type="view_cell" src="' + updateHeadImg(allUserInfo.value[data[i].UserId].uimg, 2) + '" class="section-comment-personal-headimage" />\
 						' + html_zan + '\
-						<div class="mui-ellipsis section-comment-personal-name">' + allUserInfo.value[data[i].UserId].unick + '</div>\
+						<div class="mui-ellipsis section-comment-personal-name" data-type="view_cell">' + allUserInfo.value[data[i].UserId].unick + '</div>\
 						<div class="section-comment-content" data-type="view_cell">' + data[i].CommentContent + '</div>\
 						<div class="section-comment-info">回复' + data[i].Replys.length + '</div>\
 						<div class="mui-pull-right section-comment-info">' + data[i].CommentDate.split(" ")[0] + '</div>';
@@ -848,16 +868,17 @@
 					for(var j in data[i].Replys) {
 						if(j == 0) {
 							html_1 = '<div data-type="reply" id="commont_reply_' + data[i].Replys[j].TabId + '" class="section-comment-reply">';
-						} else if(j == 6) {
+						}
+						if(j == 6) {
 							html_1 = html_1 + '<div data-type="reply_all" class="section-comment-reply-all">查看全部>></div>';
 							break;
 						} else {
 							html_1 = html_1 + '<div data-type="comment_reply" data-UserId="' + data[i].Replys[j].UserId + '">\
-								<div class="section-comment-reply-name">' + allUserInfo.value[data[i].Replys[j].UserId].unick + '</div>\
-								<div class="section-comment-reply-info">@</div>\
-								<div class="section-comment-reply-name">' + allUserInfo.value[data[i].Replys[j].ReplyId].unick + '</div>\
-								<div class="section-comment-reply-info">:</div>\
-								<div class="section-comment-reply-content">' + data[i].Replys[j].CommentContent + '</div>\
+								<div class="section-comment-reply-name" data-type="comment_reply_cell">' + allUserInfo.value[data[i].Replys[j].UserId].unick + '</div><div\
+								class="section-comment-reply-info" data-type="comment_reply_cell">@</div><div \
+								class="section-comment-reply-name" data-type="comment_reply_cell">' + allUserInfo.value[data[i].Replys[j].ReplyId].unick + '</div>\
+								<div class="section-comment-reply-info" data-type="comment_reply_cell">:</div>\
+								<div class="section-comment-reply-content" data-type="comment_reply_cell">' + data[i].Replys[j].CommentContent + '</div>\
 							</div>';
 						}
 					}
@@ -868,6 +889,37 @@
 				if(wd) {
 					wd.close();
 				}
+			}
+
+			/**
+			 * 对评论点赞或者取消点赞
+			 * @param {Object} data
+			 * @param {Object} element
+			 */
+			function commontLikeOrNot(commonData, element, index) {
+				var wd = events.showWaiting();
+				postDataMCPro_setCommentLike(commonData, wd, function(data) {
+					console.log('9 设置某条评论的点赞' + JSON.stringify(data));
+					if(data.RspCode == 0 && data.RspData.Result == 1) {
+						if(commonData.status == 0) { //取消赞
+							element.className = "mui-icon iconfont icon-zanzan1 section-comment-notzan";
+							element.setAttribute('data-type', "notzan");
+							sectionData.value[sectionId].Comments[index].IsLiked = 0;
+							sectionData.value[sectionId].Comments[index].LikeNum = sectionData.value[sectionId].Comments[index].LikeNum - 1;
+						} else { //点赞
+							element.className = "mui-icon iconfont icon-zanzan1 section-comment-zan";
+							element.setAttribute('data-type', "zan");
+							sectionData.value[sectionId].Comments[index].IsLiked = 1;
+							sectionData.value[sectionId].Comments[index].LikeNum = sectionData.value[sectionId].Comments[index].LikeNum + 1;
+						}
+						element.innerText = "(" + sectionData.value[sectionId].Comments[index].LikeNum + ")";
+						mui.toast('操作成功');
+						wd.close();
+					} else {
+						mui.toast(data.RspTxt);
+						wd.close();
+					}
+				});
 			}
 		</script>
 	</body>
