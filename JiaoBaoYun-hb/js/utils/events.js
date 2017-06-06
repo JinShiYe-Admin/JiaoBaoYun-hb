@@ -659,8 +659,9 @@ var events = (function(mod) {
 			var ids = path.split('/');
 			var id = ids[ids.length - 1];
 			//安卓中video标签播放视频需要开启硬件加速
-			//求知问题详情页
-			if(id == "qiuzhi-question.html") {
+			//1.求知问题详情页
+			//2.微课节次详情页
+			if(id == "qiuzhi-question.html" ||id == "course_details.html") {
 				styles.hardwareAccelerated = true;
 			}
 		}
