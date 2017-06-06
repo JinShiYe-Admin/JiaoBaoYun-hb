@@ -301,6 +301,25 @@
 				/*不点赞*/
 				color: #dbdbdb;
 			}
+
+			.mui-scroll-wrapper {
+				z-index: 1;
+				bottom: 50px;
+				top: 45px;
+			}
+
+			.video-and-img {
+				/*视频区域*/
+				display: none;
+			}
+
+			.video-and-img video {
+				position: absolute;
+				top: 45px;
+				z-index: 2;
+				width: 100%;
+				background-color: black;
+			}
 		</style>
 	</head>
 
@@ -315,40 +334,47 @@
 				<button id="comment_section" type="button" class="mui-btn mui-btn-block mui-btn-outlined">请输入评论</button>
 			</a>
 		</nav>
-		<div id="content" class="mui-content mui-scroll-wrapper" style="z-index: 1;">
-			<div class="mui-scroll">
-				<ul id="section_shield" class="mui-table-view section-shield">
-					<li class="mui-table-view-cell">
-						<div class="mui-icon iconfont icon-jinggao-copy"></div>
-						<div class="section-shield-text">该内容已被作者屏蔽</div>
-					</li>
-				</ul>
-				<ul id="section_top" class="mui-table-view section-top">
-					<li class="mui-table-view-cell">
-						<div id="collapse_content_show" class="mui-navigate-right"></div>
-						<div id="section_top_title" class="section-title">
-						</div>
-					</li>
-					<li id="collapse_content_li" class="mui-table-view-cell mui-collapse">
-						<div id="section_top_content" class="mui-collapse-content">
-						</div>
-					</li>
-					<li class="mui-table-view-cell section-info">
-						<div id="section_top_zan" class="mui-icon iconfont icon-zanzan1">(0)</div>
-						<div id="section_top_time" class="mui-pull-right"></div>
-					</li>
-				</ul>
-				<ul id="section_list" class="mui-table-view section-list">
-					<li id="section_more" class="mui-table-view-cell section-more">
-						查看更多
-						<div class="mui-icon mui-icon-arrowdown"></div>
-					</li>
-				</ul>
-				<div id="section_comment_title" class="section-comment-title">
-					评论(0)
+		<div id="content" class="mui-content">
+			<div id="video_and_img" class="video-and-img">
+				<video id="video" controls="controls" preload="metadata">
+					您的浏览器不支持video标签
+				</video>
+			</div>
+			<div id="scroll_wrapper" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul id="section_shield" class="mui-table-view section-shield">
+						<li class="mui-table-view-cell">
+							<div class="mui-icon iconfont icon-jinggao-copy"></div>
+							<div class="section-shield-text">该内容已被作者屏蔽</div>
+						</li>
+					</ul>
+					<ul id="section_top" class="mui-table-view section-top">
+						<li class="mui-table-view-cell">
+							<div id="collapse_content_show" class="mui-navigate-right"></div>
+							<div id="section_top_title" class="section-title">
+							</div>
+						</li>
+						<li id="collapse_content_li" class="mui-table-view-cell mui-collapse">
+							<div id="section_top_content" class="mui-collapse-content">
+							</div>
+						</li>
+						<li class="mui-table-view-cell section-info">
+							<div id="section_top_zan" class="mui-icon iconfont icon-zanzan1">(0)</div>
+							<div id="section_top_time" class="mui-pull-right"></div>
+						</li>
+					</ul>
+					<ul id="section_list" class="mui-table-view section-list">
+						<li id="section_more" class="mui-table-view-cell section-more">
+							查看更多
+							<div class="mui-icon mui-icon-arrowdown"></div>
+						</li>
+					</ul>
+					<div id="section_comment_title" class="section-comment-title">
+						评论(0)
+					</div>
+					<ul id="section_comment_list" class="mui-table-view section-comment">
+					</ul>
 				</div>
-				<ul id="section_comment_list" class="mui-table-view section-comment">
-				</ul>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -400,6 +426,9 @@
 					indicators: true, //是否显示滚动条
 					deceleration: deceleration
 				});
+
+				//初始化视频播放区域
+				document.getElementById("video").style.height = plus.screen.resolutionWidth * 162 / 360 + "px";
 			}
 
 			/**
@@ -442,7 +471,7 @@
 						document.getElementById("collapse_content_li").className = "mui-table-view-cell mui-collapse";
 						showTopData(sectionData.value[ids[1]]);
 						this.className = this.className + " section-show";
-						mui("#content").scroll().scrollTo(0, 0, 0);
+						mui("#scroll_wrapper").scroll().scrollTo(0, 0, 0);
 					}
 				});
 
@@ -661,6 +690,20 @@
 				postDataMCPro_getAllSectionsByCourse(comData, wd, function(data) {
 					console.log('3 获取课程的节次 ' + JSON.stringify(data));
 					if(data.RspCode == 0) {
+						//---假数据---start
+						data.RspData.Data[0].SecStatus = 0;
+						data.RspData.Data[0].EncType = 2;
+						data.RspData.Data[0].EncImgAddr = "http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/1495419146278732.png";
+						data.RspData.Data[0].EncAddr = "http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/1494318853754284.mp3";
+						data.RspData.Data[0].EncLen = 10;
+						data.RspData.Data[0].LikeNum = 10;
+						data.RspData.Data[1].SecStatus = 0;
+						data.RspData.Data[1].EncType = 1;
+						data.RspData.Data[1].EncImgAddr = "http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/1495419146278732.png";
+						data.RspData.Data[1].EncAddr = "http://qn-cspb.jiaobaowang.net/jbypc/pc/2650720170531145446.mp4";
+						data.RspData.Data[1].EncLen = 10;
+						data.RspData.Data[1].LikeNum = 10;
+						//---假数据---end
 						pageIndex = index;
 						if(data.RspData.Data.length != 0) {
 							if(index == 1) {
@@ -697,6 +740,7 @@
 					document.getElementById("section_shield").style.display = 'flex';
 					document.getElementById("section_comment_title").style.display = "none";
 					document.getElementById("section_comment_list").style.display = "none";
+					showOrHiddenVideo(0);
 					if(wd) {
 						wd.close();
 					}
@@ -710,6 +754,9 @@
 					document.getElementById("section_top_zan").innerHTML = "(" + data.LikeNum + ")";
 					document.getElementById("section_top_time").innerHTML = "上传时间 : " + data.UpTime.split(" ")[0];
 					document.getElementById("section_comment_list").innerHTML = "";
+					//视频区域
+					showOrHiddenVideo(data.EncType, data.EncAddr);
+					//加载评论列表
 					showCommentsFirst(data.Comments, wd);
 				}
 			}
@@ -719,7 +766,7 @@
 			 * @param {Object} data
 			 */
 			function showSectionList(data) {
-				console.log("showSectionList " + JSON.stringify(data));
+				//console.log("showSectionList " + JSON.stringify(data));
 				var more = document.getElementById("section_more");
 				for(var i in data) {
 					sectionData.key[sectionData.key.length] = data[i].SecId;
@@ -767,7 +814,6 @@
 									<img src="' + data[i].EncImgAddr + '" class="section-list-img" onload="onImageLoad(this);" onerror="onImageError(this);" />\
 								</div>';
 						}
-
 					}
 					if(sectionId == data[i].SecId) {
 						//当前显示的节次
@@ -784,7 +830,7 @@
 			 */
 			function showCommentsFirst(comments, wd) {
 				wd = wd || events.showWaiting();
-				console.log("showCommentsFirst " + JSON.stringify(comments));
+				//console.log("showCommentsFirst " + JSON.stringify(comments));
 				document.getElementById("section_comment_title").innerText = "评论(" + comments.length + ")";
 				var utids = [];
 				for(var i in comments) {
@@ -834,7 +880,7 @@
 			function showCommontsSecond(data, wd) {
 				//console.log("allUserInfo " + JSON.stringify(allUserInfo));
 				for(var i in data) {
-					console.log("showCommontsSecond " + JSON.stringify(data[i]));
+					//console.log("showCommontsSecond " + JSON.stringify(data[i]));
 					var ele = document.createElement("li");
 					ele.className = "mui-table-view-cell";
 					ele.setAttribute("data-UserId", data[i].UserId);
@@ -933,6 +979,26 @@
 								<div class="section-comment-reply-content" data-type="comment_reply_cell">' + data.Replys[i].CommentContent + '</div>';
 						document.getElementById("commont_reply_" + data.TabId).appendChild(ele);
 					}
+				}
+			}
+
+			/**
+			 * 显示或隐藏视频区域
+			 * @param {int} type 1,显示视频区域
+			 */
+			function showOrHiddenVideo(type, fpath) {
+				//console.log("showOrHiddenVideo " + type);
+				var video = document.getElementById("video");
+				if(type == 1) {
+					document.getElementById("scroll_wrapper").style.top = 45 + plus.screen.resolutionWidth * 162 / 360 + "px";
+					document.getElementById("video_and_img").style.display = "inline";
+					video.src = fpath;
+					video.play();
+				} else {
+					document.getElementById("scroll_wrapper").style.top = "45px";
+					document.getElementById("video_and_img").style.display = "none";
+					video.src = "";
+					video.pause();
 				}
 			}
 		</script>
