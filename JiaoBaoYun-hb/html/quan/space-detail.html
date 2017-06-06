@@ -324,11 +324,25 @@
 				sliderId = 'top_'
 
 			} else {
+				console.log(6666666666)
 				idFlag = 'zx';
 				data.pageFlag = 1
 				data.cityCode = 0;
 				data.idFlag = 'zx';
 				sliderId = 'top_0'
+				if(personalUTID==0){
+					var userIDs = window.myStorage.getItem(window.storageKeyName.SHOWFOCUSEPERSEN);
+					console.log(JSON.stringify(userIDs))
+					data.IsFocused=0;
+					for(var item in userIDs){
+						console.log('item='+item+'-----'+'publisherId='+publisherId)
+						if(userIDs[item]==publisherId){
+							data.IsFocused=1;
+							break;
+						}
+					}
+					
+				}
 			}
 			//			data.IsFocused = 1;
 			data.id = 0;
