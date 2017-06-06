@@ -4705,7 +4705,8 @@
 					"css/utils/fresh.css",
 					"css/utils/common.css",
 					"fonts/fangzheng.ttf",
-					"js/publicProtocol.js"
+					"js/publicProtocol.js",
+					"js/micro-course/course-list1.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -4814,7 +4815,8 @@
 					"css/show/show-list.css",
 					"js/libs/crypto-js/crypto-js.js",
 					"image/show/show-default-large.png",
-					"image/show/show-default-small.png"
+					"image/show/show-default-small.png",
+					"js/show/show_list1.js"
 				],
 				"refer": [],
 				"priority": 0
