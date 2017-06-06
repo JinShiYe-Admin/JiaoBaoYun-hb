@@ -872,7 +872,7 @@ var dynamiclistitem = (function($, mod) {
 		//姓名
 		var html4 = '<p class="mui-ellipsis" style = "margin-top:10px;font-size:14px;color:#b7b7b7">' + '发布人：' +
 			'<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:20px;height:20px;border-radius: 50%;vertical-align: -5px;" src="' + data.personalImage + '"> ' +
-			data.personalName + '&nbsp;&nbsp;&nbsp;&nbsp; ' + data.PublishDate + '</p></div></div>';
+			events.shortForString(data.personalName,5) + '&nbsp;&nbsp;&nbsp;&nbsp; ' + data.PublishDate + '</p></div></div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext ">';
 		var html7 = '<div id="question_content' + data.id_name + '" style = "color:#808080;font-size:14px;margin-top:5px" class="ellipsis-show question_content">';
 		//内容

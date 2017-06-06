@@ -573,15 +573,10 @@
 
 					//查看其它节次或者查看更多
 					mui('.section-list').on('tap', '.mui-table-view-cell', function() {
-						var ids = this.id.split("_");
-						if(ids[1] == "more") { //更多
-							getAllSectionsAndComments(pageIndex + 1);
-						} else if(ids[1] != sectionId) { //查看其它节次
-							var ele = document.getElementById("section_" + sectionId);
-							ele.className = ele.className.replace(" section-show", "");
-							showTopData(sectionData.value[ids[1]]);
-							this.className = this.className + " section-show";
-						}
+//						var index = this.id.replace('section_','');
+//						var model = sectionData.value[index]
+//						events.openNewWindowWithData('../micro-course/course_details.html', model);
+						
 					});
 
 				}
