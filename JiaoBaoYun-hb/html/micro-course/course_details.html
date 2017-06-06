@@ -312,10 +312,10 @@
 		</header>
 		<nav class="mui-bar mui-bar-tab">
 			<a class="mui-tab-item">
-				<button type="button" class="mui-btn mui-btn-block mui-btn-outlined">请输入评论</button>
+				<button id="comment_section" type="button" class="mui-btn mui-btn-block mui-btn-outlined">请输入评论</button>
 			</a>
 		</nav>
-		<div class="mui-content mui-scroll-wrapper" style="z-index: 1;">
+		<div id="content" class="mui-content mui-scroll-wrapper" style="z-index: 1;">
 			<div class="mui-scroll">
 				<ul id="section_shield" class="mui-table-view section-shield">
 					<li class="mui-table-view-cell">
@@ -469,9 +469,93 @@
 						ele.className = ele.className.replace(" section-show", "");
 						showTopData(sectionData.value[ids[1]]);
 						this.className = this.className + " section-show";
+						mui("#content").scroll().scrollTo(0, 0, 0);
 					}
 				});
 
+				//点击评论区域
+				mui('.section-comment').on('tap', '.mui-table-view-cell', function(e) {
+					console.log('mui-table-view-cell id ' + this.id + " e " + e.target.getAttribute("data-type"));
+					var self = this;
+					if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
+						return;
+					}
+					if(sectionData.value[sectionId].SecStatus == 1) { //内容被屏蔽
+						mui.toast("该内容已被作者屏蔽");
+						self.disabled = false;
+						jQuery(self).css("pointerEvents", "all");
+						return;
+					}
+
+					var id = this.id.split("_")[1];
+					var type = e.target.getAttribute("data-type");
+					console.log("comment TabId " + id);
+					switch(type) {
+						case "zan":
+							console.log("zan");
+							break;
+						case "notzan":
+							console.log("notzan");
+							break;
+						case "comment_reply":
+						case "view_cell": //评论评论
+							var userId; //被评论者的utid
+							if(type == "view_cell") {
+								console.log("评论评论");
+								userId = this.getAttribute('data-UserId');
+							} else if(type == "comment_reply") {
+								console.log("评论回复");
+								userId = e.target.getAttribute("data-type");
+							}
+							var data = {
+								secId: sectionId,
+								upperId: id,
+								userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid,
+								userNick: myStorage.getItem(storageKeyName.PERSONALINFO).unick,
+								commentContent: '',
+								replyId: allUserInfo.value[userId].utid,
+								replyNick: allUserInfo.value[userId].unick
+							}
+							console.log("data " + JSON.stringify(data));
+							events.openNewWindowWithData('course_addReply.html', data);
+							break;
+						default:
+							break;
+					}
+					self.disabled = false;
+					jQuery(self).css("pointerEvents", "all");
+				});
+
+				//评论节次
+				document.getElementById('comment_section').addEventListener('tap', function() {
+					console.log("comment_section " + sectionId);
+					var self = this;
+					if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
+						return;
+					}
+					if(!sectionData.value[sectionId]) {
+						self.disabled = false;
+						jQuery(self).css("pointerEvents", "all");
+						return;
+					}
+					if(sectionData.value[sectionId].SecStatus == 1) { //内容被屏蔽
+						mui.toast("该内容已被作者屏蔽");
+						self.disabled = false;
+						jQuery(self).css("pointerEvents", "all");
+						return;
+					}
+					var data = {
+						secId: sectionId,
+						upperId: 0,
+						userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid,
+						userNick: myStorage.getItem(storageKeyName.PERSONALINFO).unick,
+						commentContent: '',
+						replyId: 0
+					}
+					events.openNewWindowWithData('course_addReply.html', data);
+					self.disabled = false;
+					jQuery(self).css("pointerEvents", "all");
+				});
 			}
 
 			/**
@@ -741,35 +825,37 @@
 					console.log("showCommontsSecond " + JSON.stringify(data));
 					var ele = document.createElement("li");
 					ele.className = "mui-table-view-cell";
+					ele.setAttribute("data-UserId", data[i].UserId);
+					ele.setAttribute("data-type", "view_cell");
 					ele.id = "commont_" + data[i].TabId;
 					//点赞数
 					var html_zan = '';
 					if(data[i].IsLiked) {
 						//点赞
-						html_zan = '<div class="mui-icon iconfont icon-zanzan1 section-comment-zan">(' + data[i].LikeNum + ')</div>'
+						html_zan = '<div data-type="zan" class="mui-icon iconfont icon-zanzan1 section-comment-zan">(' + data[i].LikeNum + ')</div>'
 					} else {
-						html_zan = '<div class="mui-icon iconfont icon-zanzan1 section-comment-notzan">(' + data[i].LikeNum + ')</div>'
+						html_zan = '<div data-type="notzan" class="mui-icon iconfont icon-zanzan1 section-comment-notzan">(' + data[i].LikeNum + ')</div>'
 					}
 					//评论节次
-					var html_0 = '<img src="' + updateHeadImg(allUserInfo.value[data[i].UserId].uimg, 2) + '" class="section-comment-personal-headimage" />\
+					var html_0 = '<img data-type="view_cell" src="' + updateHeadImg(allUserInfo.value[data[i].UserId].uimg, 2) + '" class="section-comment-personal-headimage" />\
 						' + html_zan + '\
 						<div class="mui-ellipsis section-comment-personal-name">' + allUserInfo.value[data[i].UserId].unick + '</div>\
-						<div class="section-comment-content">' + data[i].CommentContent + '</div>\
+						<div class="section-comment-content" data-type="view_cell">' + data[i].CommentContent + '</div>\
 						<div class="section-comment-info">回复' + data[i].Replys.length + '</div>\
 						<div class="mui-pull-right section-comment-info">' + data[i].CommentDate.split(" ")[0] + '</div>';
 					//回复评论
 					var html_1 = '';
 					for(var j in data[i].Replys) {
 						if(j == 0) {
-							html_1 = '<div class="section-comment-reply">';
+							html_1 = '<div data-type="reply" id="commont_reply_' + data[i].Replys[j].TabId + '" class="section-comment-reply">';
 						} else if(j == 6) {
-							html_1 = html_1 + '<div class="section-comment-reply-all">查看全部>></div>';
+							html_1 = html_1 + '<div data-type="reply_all" class="section-comment-reply-all">查看全部>></div>';
 							break;
 						} else {
-							html_1 = html_1 + '<div>\
-								<div class="section-comment-reply-name">' + allUserInfo.value[data[i].UserId].unick + '</div>\
+							html_1 = html_1 + '<div data-type="comment_reply" data-UserId="' + data[i].Replys[j].UserId + '">\
+								<div class="section-comment-reply-name">' + allUserInfo.value[data[i].Replys[j].UserId].unick + '</div>\
 								<div class="section-comment-reply-info">@</div>\
-								<div class="section-comment-reply-name">' + allUserInfo.value[data[i].ReplyId].unick + '</div>\
+								<div class="section-comment-reply-name">' + allUserInfo.value[data[i].Replys[j].ReplyId].unick + '</div>\
 								<div class="section-comment-reply-info">:</div>\
 								<div class="section-comment-reply-content">' + data[i].Replys[j].CommentContent + '</div>\
 							</div>';
