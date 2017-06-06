@@ -46,6 +46,7 @@ var course_list = (function(mod) {
 					callback(pageIndex, data.RspData.Data, listContainer);
 				} else {
 					mui.toast(data.RspTxt);
+					mod.endFresh();
 				}
 			});
 		} else { //关注0，全部1
@@ -91,12 +92,18 @@ var course_list = (function(mod) {
 						callback(pageIndex, data.RspData.Data, listContainer);
 					} else {
 						mui.toast(data.RspTxt);
+						mod.endFresh();
 					}
 				});
 				return;
 			}
+			var comData1 = {
+				userId: personal.utid, //用户ID,登录用户
+				pageIndex: pageIndex, //当前页数
+				pageSize: '10' //每页记录数,传入0，获取总记录数
+			};
 			//2.获取所有关注的课程
-			postDataMCPro_getAllFocusCourses(comData, wd, function(data) {
+			postDataMCPro_getAllFocusCourses(comData1, wd, function(data) {
 				wd.close();
 				console.log('2.获取所有关注的课程:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
@@ -120,6 +127,7 @@ var course_list = (function(mod) {
 					callback(pageIndex, data.RspData.Data, listContainer);
 				} else {
 					mui.toast(data.RspTxt);
+					mod.endFresh();
 				}
 			});
 		}
@@ -138,7 +146,7 @@ var course_list = (function(mod) {
 		var fragment = document.createDocumentFragment();
 		for(i in data) {
 			var cell = data[i];
-			if(!events.getUtid()) {//游客获取本地登录
+			if(!events.getUtid()) { //游客获取本地登录
 				if(parseInt(events.isExistInStorageArray(storageKeyName.FOCUSECOURSES, cell.TabId)[1]) >= 0) {
 					cell.IsFocus = 1;
 				}
@@ -230,6 +238,7 @@ var course_list = (function(mod) {
 				mod.changeBtnStatus(item);
 			} else {
 				mui.toast(data.RspTxt);
+				mod.endFresh();
 			}
 		});
 	}
