@@ -348,35 +348,6 @@
 					评论(0)
 				</div>
 				<ul id="section_comment_list" class="mui-table-view section-comment">
-					<!--<li class="mui-table-view-cell">
-						<img src="../../image/dynamic/u101.png" class="section-comment-personal-headimage" />
-						<div class="mui-icon iconfont icon-zanzan1">(20)</div>
-						<div class="mui-ellipsis section-comment-personal-name">一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</div>
-						<div class="section-comment-content">一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</div>
-						<div class="section-comment-info">回复100</div>
-						<div class="mui-pull-right section-comment-info">2017-6-2</div>
-						<div class="section-comment-reply">
-							<div>
-								<div class="section-comment-reply-name">1234</div>
-								<div class="section-comment-reply-info">@</div>
-								<div class="section-comment-reply-name">4321</div>
-								<div class="section-comment-reply-info">:</div>
-								<div class="section-comment-reply-content">
-									一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
-								</div>
-							</div>
-							<div>
-								<div class="section-comment-reply-name">1234</div>
-								<div class="section-comment-reply-info">@</div>
-								<div class="section-comment-reply-name">4321</div>
-								<div class="section-comment-reply-info">:</div>
-								<div class="section-comment-reply-content">
-									一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
-								</div>
-							</div>
-							<div class="section-comment-reply-all">查看全部>></div>
-						</div>
-					</li>-->
 				</ul>
 			</div>
 		</div>
@@ -401,7 +372,7 @@
 			var pageIndex = 0; //当前页数
 			mui.init();
 			mui.plusReady(function() {
-				events.closeWaiting();
+				//events.closeWaiting();
 				var wd = events.showWaiting();
 				initData();
 				initControl();
@@ -467,6 +438,8 @@
 					} else if(ids[1] != sectionId) { //查看其它节次
 						var ele = document.getElementById("section_" + sectionId);
 						ele.className = ele.className.replace(" section-show", "");
+						show = false;
+						document.getElementById("collapse_content_li").className = "mui-table-view-cell mui-collapse";
 						showTopData(sectionData.value[ids[1]]);
 						this.className = this.className + " section-show";
 						mui("#content").scroll().scrollTo(0, 0, 0);
@@ -488,7 +461,7 @@
 					}
 					var ids = this.id.split("_")
 					var type = e.target.getAttribute("data-type");
-					console.log("comment TabId " + ids[1] + ' index ' + ids[2] + ' type ' + type);
+					//console.log("comment TabId " + ids[1] + ' index ' + ids[2] + ' type ' + type);
 					switch(type) {
 						case "zan":
 						case "notzan":
@@ -506,8 +479,8 @@
 							}
 							commontLikeOrNot(comData, e.target, ids[2]);
 							break;
-						case "comment_reply"://评论回复
-						case "comment_reply_cell"://评论回复
+						case "comment_reply": //评论回复
+						case "comment_reply_cell": //评论回复
 						case "view_cell": //评论评论
 							var userId; //被评论者的utid
 							if(type == "view_cell") {
@@ -531,6 +504,10 @@
 							}
 							console.log("data " + JSON.stringify(data));
 							events.openNewWindowWithData('course_addReply.html', data);
+							break;
+						case "reply_all": //显示所有的评论
+							showAllCommonts(sectionData.value[sectionId].Comments[ids[2]]);
+							e.target.parentNode.removeChild(e.target);
 							break;
 						default:
 							break;
@@ -679,7 +656,7 @@
 					userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //用户ID,登录用户
 					courseId: main.data.TabId, //课程ID
 					pageIndex: index, //当前页数
-					pageSize: 10 //每页记录数,传入0，获取总记录数
+					pageSize: 5 //每页记录数,传入0，获取总记录数
 				};
 				postDataMCPro_getAllSectionsByCourse(comData, wd, function(data) {
 					console.log('3 获取课程的节次 ' + JSON.stringify(data));
@@ -690,6 +667,9 @@
 								showTopData(data.RspData.Data[0], wd);
 							}
 							showSectionList(data.RspData.Data);
+							if(index != 1) {
+								wd.close();
+							}
 						} else {
 							wd.close();
 						}
@@ -710,7 +690,7 @@
 			 * 显示顶部节次的数据
 			 */
 			function showTopData(data, wd) {
-				//console.log("showTopData " + JSON.stringify(data));
+				console.log("showTopData " + JSON.stringify(data));
 				sectionId = data.SecId;
 				if(data.SecStatus == 1) { //被屏蔽
 					document.getElementById("section_top").style.display = "none";
@@ -739,7 +719,7 @@
 			 * @param {Object} data
 			 */
 			function showSectionList(data) {
-				//console.log("showSectionList " + JSON.stringify(data));
+				console.log("showSectionList " + JSON.stringify(data));
 				var more = document.getElementById("section_more");
 				for(var i in data) {
 					sectionData.key[sectionData.key.length] = data[i].SecId;
@@ -773,9 +753,21 @@
 						</div>\
 						<div class="section-info">上传时间 : ' + data[i].UpTime.split(" ")[0] + '</div>';
 					} else if(data[i].EncType == 3) { //文章
-						ele.className = "mui-table-view-cell";
-						html = '<div class="section-title">' + data[i].SecName + '</div>\
-						<div class="section-info">上传时间 : ' + data[i].UpTime.split(" ")[0] + '</div>';
+						if(data[i].EncImgAddr == "") { //没有图片
+							ele.className = "mui-table-view-cell";
+							html = '<div class="section-title">' + data[i].SecName + '</div>\
+							<div class="section-info">上传时间 : ' + data[i].UpTime.split(" ")[0] + '</div>';
+						} else {
+							ele.className = "mui-table-view-cell section-list-li";
+							html = '<div class="section-list-li-left">\
+									<div class="section-title">' + data[i].SecName + '</div>\
+									<div class="section-info">上传时间 : ' + data[i].UpTime.split(" ")[0] + '</div>\
+								</div>\
+								<div class="section-list-img-div">\
+									<img src="' + data[i].EncImgAddr + '" class="section-list-img" onload="onImageLoad(this);" onerror="onImageError(this);" />\
+								</div>';
+						}
+
 					}
 					if(sectionId == data[i].SecId) {
 						//当前显示的节次
@@ -842,7 +834,7 @@
 			function showCommontsSecond(data, wd) {
 				//console.log("allUserInfo " + JSON.stringify(allUserInfo));
 				for(var i in data) {
-					//console.log("showCommontsSecond " + JSON.stringify(data[i]));
+					console.log("showCommontsSecond " + JSON.stringify(data[i]));
 					var ele = document.createElement("li");
 					ele.className = "mui-table-view-cell";
 					ele.setAttribute("data-UserId", data[i].UserId);
@@ -867,13 +859,13 @@
 					var html_1 = '';
 					for(var j in data[i].Replys) {
 						if(j == 0) {
-							html_1 = '<div data-type="reply" id="commont_reply_' + data[i].Replys[j].TabId + '" class="section-comment-reply">';
+							html_1 = '<div data-type="reply" id="commont_reply_' + data[i].TabId + '" class="section-comment-reply">';
 						}
-						if(j == 6) {
+						if(j == 5) {
 							html_1 = html_1 + '<div data-type="reply_all" class="section-comment-reply-all">查看全部>></div>';
 							break;
 						} else {
-							html_1 = html_1 + '<div data-type="comment_reply" data-UserId="' + data[i].Replys[j].UserId + '">\
+							html_1 = html_1 + '<div id="commont_reply_' + data[i].TabId + '_' + data[i].Replys[j].TabId + '" data-type="comment_reply" data-UserId="' + data[i].Replys[j].UserId + '">\
 								<div class="section-comment-reply-name" data-type="comment_reply_cell">' + allUserInfo.value[data[i].Replys[j].UserId].unick + '</div><div\
 								class="section-comment-reply-info" data-type="comment_reply_cell">@</div><div \
 								class="section-comment-reply-name" data-type="comment_reply_cell">' + allUserInfo.value[data[i].Replys[j].ReplyId].unick + '</div>\
@@ -920,6 +912,28 @@
 						wd.close();
 					}
 				});
+			}
+
+			/**
+			 * 显示全部的评论
+			 */
+			function showAllCommonts(data) {
+				console.log("showAllCommonts " + JSON.stringify(data));
+				var html
+				for(var i in data.Replys) {
+					if(i > 4) {
+						var ele = document.createElement('div');
+						ele.id = "commont_reply_" + data.TabId + "_" + data.Replys[i].TabId;
+						ele.setAttribute("data-type", "comment_reply");
+						ele.setAttribute("data-UserId", data.Replys[i].UserId);
+						ele.innerHTML = '<div class="section-comment-reply-name" data-type="comment_reply_cell">' + allUserInfo.value[data.Replys[i].UserId].unick + '</div><div\
+								class="section-comment-reply-info" data-type="comment_reply_cell">@</div><div \
+								class="section-comment-reply-name" data-type="comment_reply_cell">' + allUserInfo.value[data.Replys[i].ReplyId].unick + '</div>\
+								<div class="section-comment-reply-info" data-type="comment_reply_cell">:</div>\
+								<div class="section-comment-reply-content" data-type="comment_reply_cell">' + data.Replys[i].CommentContent + '</div>';
+						document.getElementById("commont_reply_" + data.TabId).appendChild(ele);
+					}
+				}
 			}
 		</script>
 	</body>
