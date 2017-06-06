@@ -64,7 +64,7 @@ var course_list = (function(mod) {
 					userId: personal.utid, //用户ID，登录用户
 					courseIds: arrayToStr(focuseTemp), //课程ID，例如[1,2,3]
 					pageIndex: pageIndex, //当前页数
-					pageSize: '10' //每页记录数，传入0，获取总记录数
+					pageSize: '0' //每页记录数，传入0，获取总记录数
 				};
 				//13.根据课程列表获取所有关注的课程
 				postDataMCPro_getAllFocusCoursesByIds(comData, wd, function(data) {
