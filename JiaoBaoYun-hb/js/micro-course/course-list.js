@@ -53,8 +53,10 @@ var course_list = (function(mod) {
 			if(!events.getUtid()) {
 				//游客关注的课程
 				var focuseTemp = window.myStorage.getItem(window.storageKeyName.FOCUSECOURSES);
-				if (focuseTemp == null||focuseTemp.length==0) {
-					mui.toast('暂时还没有关注的课程');
+				if(focuseTemp == null || focuseTemp.length == 0) {
+					if(plus.webview.currentWebview().isVisible()) {
+						mui.toast('暂时还没有关注的课程');
+					}
 					return;
 				}
 				//所需参数
@@ -62,7 +64,7 @@ var course_list = (function(mod) {
 					userId: personal.utid, //用户ID，登录用户
 					courseIds: arrayToStr(focuseTemp), //课程ID，例如[1,2,3]
 					pageIndex: pageIndex, //当前页数
-					pageSize: '10' //每页记录数，传入0，获取总记录数
+					pageSize: '0' //每页记录数，传入0，获取总记录数
 				};
 				//13.根据课程列表获取所有关注的课程
 				postDataMCPro_getAllFocusCoursesByIds(comData, wd, function(data) {
@@ -136,6 +138,11 @@ var course_list = (function(mod) {
 		var fragment = document.createDocumentFragment();
 		for(i in data) {
 			var cell = data[i];
+			if(!events.getUtid()) {//游客获取本地登录
+				if(parseInt(events.isExistInStorageArray(storageKeyName.FOCUSECOURSES, cell.TabId)[1]) >= 0) {
+					cell.IsFocus = 1;
+				}
+			}
 			mod.createCell(cell, fragment);
 		}
 		listContainer.appendChild(fragment);
@@ -147,6 +154,7 @@ var course_list = (function(mod) {
 	 * @param {Object} fragment
 	 */
 	mod.createCell = function(cell, fragment) {
+
 		var li = document.createElement("li");
 		li.className = "mui-table-view-cell";
 		li.innerHTML = mod.getCellInner(cell);
@@ -156,6 +164,10 @@ var course_list = (function(mod) {
 		li.querySelector(".coursre-name").info = cell;
 		li.querySelector(".course-info").info = cell;
 		li.querySelector(".input-btn").info = cell;
+		if(!cell.IsUpdate) {
+			li.querySelector(".red-circle").classList.add("display-none");
+		}
+
 	}
 	/**
 	 * 
@@ -164,14 +176,14 @@ var course_list = (function(mod) {
 	mod.getCellInner = function(cell) {
 
 		return '<div class="course-container">' +
-			'<div class=""img-container><img class="course-img" src="' + cell.CoursePic + '"/>' +
-			'<span class="red-circle"></span></div>'+
+			'<div class="img-container"><img class="course-img" src="' + cell.CoursePic + '"/>' +
+			'<span class="red-circle"></span></div>' +
 			'<div class="course-detail">' +
 			'<div class="courseName-button">' +
-			'<p class="coursre-name">' + cell.CourseName + '</p>' +
+			'<p class="coursre-name single-line">' + cell.CourseName + '</p>' +
 			mod.getBtn(cell) +
 			'</div>' +
-			'<p class="course-info">' + cell.SecName + '</p>' +
+			'<p class="course-info double-line">' + cell.SecName + '</p>' +
 			'</div>' +
 			'</div>';
 
@@ -181,10 +193,10 @@ var course_list = (function(mod) {
 	 * @param {Object} cell
 	 */
 	mod.getBtn = function(cell) {
-		if(cell.IsFocused) {
-			return '<input id="btn-focused" type="button" class="input-btn btn-focused" value="已关注"/>'
+		if(cell.IsFocus) {
+			return '<button id="btn-focused" type="button" class="input-btn btn-focused">已关注</button>'
 		}
-		return '<input id="btn-focused" type="button" class="input-btn btn-unfocus" value="关注"/>'
+		return '<button id="btn-focused" type="button" class="input-btn btn-unfocus">关注</button>'
 	}
 	/**
 	 * 点击关注按钮
@@ -229,19 +241,20 @@ var course_list = (function(mod) {
 	mod.changeBtnStatus = function(item, type) {
 		if(item.info.IsFocus) {
 			item.className = "input-btn btn-unfocus";
-			item.value = "关注";
+			item.innerText = "关注";
 			if(type) {
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 1);
+
 			}
 		} else {
 			item.className = "input-btn btn-focused";
-			item.value = "已关注";
+			item.innerText = "已关注";
 			if(type) {
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 0);
+				console.log("关注的课程：" + myStorage.getItem(storageKeyName.FOCUSECOURSES))
 			}
 		}
 		item.info.IsFocus = !item.info.IsFocus;
-
 	}
 	/**
 	 * 

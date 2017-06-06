@@ -429,7 +429,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
@@ -1914,7 +1915,10 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"css/utils/fresh.css"
+			"css/utils/fresh.css",
+			"css/utils/common.css",
+			"fonts/fangzheng.ttf",
+			"js/publicProtocol.js"
 		],
 		"refer": []
 	},
@@ -1941,7 +1945,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"css/utils/common.css",
-			"css/utils/fresh.css"
+			"css/utils/fresh.css",
+			"fonts/fangzheng.ttf"
 		],
 		"refer": [
 			"html/micro-course/course_details.html"
@@ -2054,6 +2059,31 @@
 			"js/libs/myStorage/myStorage.js",
 			"js/utils/playutil.js",
 			"js/libs/crypto-js/crypto-js.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/publicMicroClass.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		],
+		"refer": [
+			"html/micro-course/course-introduction.html"
+		]
+	},
+	"html/micro-course/course-introduction.html": {
+		"resources": [
+			"js/publicQiuzhiProtocol.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
 			"js/libs/jquery.js",
 			"js/mui.min.js",
 			"js/publicMicroClass.js",

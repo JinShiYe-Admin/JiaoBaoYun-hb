@@ -34,25 +34,25 @@ function postData(url, data, callback, waitingDialog) {
 				RspData: '',
 				RspTxt: '网络连接失败，请重新尝试一下'
 			}
-			
+
 			callback(data);
 			waitingDialog.close();
 		}
 	});
 }
 
-function tempTime(){
-	switch ( plus.os.name ) {
-        case "Android":
-        		return 30000;
-        break;
-        case "iOS":
-        		return 300000;
-        break;
-        default:
-        // 其它平台
-        break;
-    }
+function tempTime() {
+	switch(plus.os.name) {
+		case "Android":
+			return 30000;
+			break;
+		case "iOS":
+			return 300000;
+			break;
+		default:
+			// 其它平台
+			break;
+	}
 }
 
 //url,
@@ -83,60 +83,56 @@ function postDataEncry(url, encryData, commonData, flag, waitingDialog, callback
 		console.log('postData.tempData:' + urlArr[urlArr.length - 1] + JSON.stringify(tempData));
 		var tepTime = tempTime();
 		//发送协议
-		try {
-			mui.ajax(url, {
-				data: JSON.stringify(tempData),
-				dataType: 'json',
-				type: 'post',
-				contentType: "application/json",
-				timeout: tepTime,
-				//			success: callback,
-				success: function(data) {
-					console.log('data.RspCode:' + data.RspCode + ',data.RspTxt:' + data.RspTxt  + ',data.RspData:' + JSON.stringify(data.RspData)+','+url);
-					if(data.RspCode == 6) {
-						waitingDialog.close();
-						renewToken(1, url, {}, commonData, flag, waitingDialog, callback);
-					} else {
-						//如果是21号协议，21.通过用户ID或ID串获取用户资料，判断返回值中，人员有没有名称，没有的话，主动给添加一个‘新用户’，
-						if(urlArr[urlArr.length - 1] == 'PostUinf') {
-							//找到当前的数组
-							var tempArray = data.RspData;
-							for(var item in tempArray) {
-								var model = tempArray[item];
-								if(model.unick == '' || model.unick == undefined) {
-									model.unick = '新用户';
-								}
-							}
-						}else if(urlArr[urlArr.length - 1] == 'PostGusers') {
-							//找到当前的数组
-							var tempArray = data.RspData;
-							for(var item in tempArray) {
-								var model = tempArray[item];
-								if(model.ugnick == '' || model.ugnick == undefined) {
-									model.ugnick = '新用户';
-								}
+
+		mui.ajax(url, {
+			data: JSON.stringify(tempData),
+			dataType: 'json',
+			type: 'post',
+			contentType: "application/json",
+			timeout: tepTime,
+			//			success: callback,
+			success: function(data) {
+				console.log('data.RspCode:' + data.RspCode + ',data.RspTxt:' + data.RspTxt + ',data.RspData:' + JSON.stringify(data.RspData) + ',' + url);
+				if(data.RspCode == 6) {
+					waitingDialog.close();
+					renewToken(1, url, {}, commonData, flag, waitingDialog, callback);
+				} else {
+					//如果是21号协议，21.通过用户ID或ID串获取用户资料，判断返回值中，人员有没有名称，没有的话，主动给添加一个‘新用户’，
+					if(urlArr[urlArr.length - 1] == 'PostUinf') {
+						//找到当前的数组
+						var tempArray = data.RspData;
+						for(var item in tempArray) {
+							var model = tempArray[item];
+							if(model.unick == '' || model.unick == undefined) {
+								model.unick = '新用户';
 							}
 						}
-						callback(data);
+					} else if(urlArr[urlArr.length - 1] == 'PostGusers') {
+						//找到当前的数组
+						var tempArray = data.RspData;
+						for(var item in tempArray) {
+							var model = tempArray[item];
+							if(model.ugnick == '' || model.ugnick == undefined) {
+								model.ugnick = '新用户';
+							}
+						}
 					}
-				},
-				error: function(xhr, type, errorThrown) {
-					console.log('网络连接失败:' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
-					var data = {
-						RspCode: '404',
-						RspData: '',
-						RspTxt: '网络连接失败，请重新尝试一下'
-					}
-					
 					callback(data);
-					waitingDialog.close();
-					//mui.toast("网络连接失败，请重新尝试一下");
 				}
-			});
-		} catch(e) {
-			plus.nativeUI.closeWaiting();
-			alert('### ERROR ### 发送协议 name:' + e.name + " message:" + e.message);
-		}
+			},
+			error: function(xhr, type, errorThrown) {
+				console.log('网络连接失败:' + url + ':' + type + ',' + JSON.stringify(xhr) + ',' + errorThrown);
+				var data = {
+					RspCode: '404',
+					RspData: '',
+					RspTxt: '网络连接失败，请重新尝试一下'
+				}
+
+				callback(data);
+				waitingDialog.close();
+				//mui.toast("网络连接失败，请重新尝试一下");
+			}
+		});
 	});
 }
 
