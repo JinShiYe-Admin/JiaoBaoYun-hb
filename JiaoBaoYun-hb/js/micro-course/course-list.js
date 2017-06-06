@@ -156,6 +156,9 @@ var course_list = (function(mod) {
 		li.querySelector(".coursre-name").info = cell;
 		li.querySelector(".course-info").info = cell;
 		li.querySelector(".input-btn").info = cell;
+		if(!cell.IsUpdate){
+			li.querySelector("red-circle").classList.add("display-none");
+		}
 	}
 	/**
 	 * 
@@ -164,7 +167,7 @@ var course_list = (function(mod) {
 	mod.getCellInner = function(cell) {
 
 		return '<div class="course-container">' +
-			'<div class=""img-container><img class="course-img" src="' + cell.CoursePic + '"/>' +
+			'<div class="img-container"><img class="course-img" src="' + cell.CoursePic + '"/>' +
 			'<span class="red-circle"></span></div>'+
 			'<div class="course-detail">' +
 			'<div class="courseName-button">' +
