@@ -46,6 +46,7 @@ var course_list = (function(mod) {
 					callback(pageIndex, data.RspData.Data, listContainer);
 				} else {
 					mui.toast(data.RspTxt);
+					mod.endFresh();
 				}
 			});
 		} else { //关注0，全部1
@@ -54,7 +55,9 @@ var course_list = (function(mod) {
 				//游客关注的课程
 				var focuseTemp = window.myStorage.getItem(window.storageKeyName.FOCUSECOURSES);
 				if (focuseTemp == null||focuseTemp.length==0) {
-					mui.toast('暂时还没有关注的课程');
+					wd.close();
+					mod.endFresh();
+//					mui.toast('暂时还没有关注的课程');
 					return;
 				}
 				//所需参数
@@ -89,6 +92,7 @@ var course_list = (function(mod) {
 						callback(pageIndex, data.RspData.Data, listContainer);
 					} else {
 						mui.toast(data.RspTxt);
+						mod.endFresh();
 					}
 				});
 				return;
@@ -118,6 +122,7 @@ var course_list = (function(mod) {
 					callback(pageIndex, data.RspData.Data, listContainer);
 				} else {
 					mui.toast(data.RspTxt);
+					mod.endFresh();
 				}
 			});
 		}
@@ -218,6 +223,7 @@ var course_list = (function(mod) {
 				mod.changeBtnStatus(item);
 			} else {
 				mui.toast(data.RspTxt);
+				mod.endFresh();
 			}
 		});
 	}
