@@ -18,7 +18,7 @@
 				<div class="mui-scroll">
 					<!--数据列表-->
 					<div id="list-container">
-						<div class="cityNews-container mui-card">
+						<!--<div class="cityNews-container mui-card">
 							<div class="mui-table-view">
 								<li class="mui-table-view-cell news-container">
 									<img class="news-img" src="http://www.2cto.com/uploadfile/2012/0725/20120725082941503.jpg">
@@ -76,7 +76,7 @@
 									</div>
 								</li>
 							</div>
-						</div>
+						</div>-->
 
 					</div>
 				</div>
@@ -93,7 +93,7 @@
 			var oldPageIndex;
 			var freshFlag = 0;
 			var showCity = {
-				pageFlag : 0,//关注
+				pageFlag: 0, //关注
 				acode: 1,
 				aname: '关注',
 				aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
@@ -106,6 +106,11 @@
 			mui.plusReady(function() {
 				show_list.getShowList(showCity, document.getElementById("list-container"), show_list.setShowList);
 				show_list.setListListener();
+				window.addEventListener("infoChanged", function() {
+					console.log("+++++++++通知刷新+++++++++")
+					showCity.pageIndex = 1;
+					show_list.getShowList(showCity, document.getElementById("list-container"), show_list.setShowList);
+				})
 			})
 		</script>
 	</body>

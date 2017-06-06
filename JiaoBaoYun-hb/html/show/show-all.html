@@ -47,6 +47,11 @@
 			mui.plusReady(function() {
 				show_list.getShowList(showCity,document.getElementById("list-container"),show_list.setShowList);
 				show_list.setListListener();
+				window.addEventListener("infoChanged", function() {
+					console.log("+++++++++通知刷新+++++++++")
+					showCity.pageIndex=1;
+					show_list.getShowList(showCity,document.getElementById("list-container"),show_list.setShowList);
+				})
 			})
 		</script>
 	</body>

@@ -353,6 +353,10 @@ var events = (function(mod) {
 		mui.fire(plus.webview.getWebviewById("index.html"), 'infoChanged');
 		events.fireToPageNone('qiuzhi_home.html', 'infoChanged');
 		events.fireToPageNone('aboutme_sub.html', 'infoChanged');
+		events.fireToPageNone("course-all.html","infoChanged");
+		events.fireToPageNone("course-attended.html","infoChanged");
+		events.fireToPageNone("show-all.html","infoChanged");
+		events.fireToPageNone("show-attended.html","infoChanged");
 	}
 	mod.shortForString = function(str, len) {
 		if(!str) {

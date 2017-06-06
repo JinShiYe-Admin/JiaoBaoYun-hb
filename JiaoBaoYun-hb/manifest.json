@@ -3051,7 +3051,8 @@
 				],
 				"refer": [
 					"html/show/show-sub1.html",
-					"html/utils/customizeCity.html"
+					"html/utils/customizeCity.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},
@@ -4811,7 +4812,9 @@
 					"css/utils/common.css",
 					"fonts/fangzheng.ttf",
 					"css/show/show-list.css",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"image/show/show-default-large.png",
+					"image/show/show-default-small.png"
 				],
 				"refer": [],
 				"priority": 0
