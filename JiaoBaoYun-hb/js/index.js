@@ -69,7 +69,7 @@ var addSubPages = function() {
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
 //	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show_home_1.html', '../qiuzhi/qiuzhi_home.html'];
 //	var titles = ['云盘', '科教', '展现', '求知'];
-	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show_home.html', '../micro-course/course-home.html'];
+	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show_home.html', '../micro-course/course-home1.html'];
 	var titles = ['云盘', '科教', '展现', '微课'];
 	//设置子页面距离顶部的位置
 	var subpage_style = events.getWebStyle();

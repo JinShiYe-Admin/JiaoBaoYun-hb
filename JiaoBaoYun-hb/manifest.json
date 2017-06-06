@@ -2005,7 +2005,8 @@
 					"html/qiuzhi/qiuzhi-questionSearch.html",
 					"html/register/login.html",
 					"html/cloud/order-member.html",
-					"html/micro-course/course-home.html"
+					"html/micro-course/course-home.html",
+					"html/micro-course/course-home1.html"
 				],
 				"priority": 0
 			},
@@ -4708,7 +4709,9 @@
 					"js/publicProtocol.js",
 					"js/micro-course/course-list1.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/micro-course/course_details.html"
+				],
 				"priority": 0
 			},
 			"html/micro-course/course-all.html": {
@@ -4839,7 +4842,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/publicProtocol.js"
 				],
 				"refer": [
 					"html/micro-course/course-introduction.html"
@@ -4868,6 +4872,38 @@
 					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"html/micro-course/course-home1.html": {
+				"resources": [
+					"js/micro-course/course-list.js",
+					"css/utils/fresh.css",
+					"js/publicMicroClass.js",
+					"js/mui.pullToRefresh.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"image/utils/loading.gif",
+					"js/micro-course/course-listnew.js",
+					"css/micro-course/course-list.css",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/publicProtocol.js"
+				],
+				"refer": [
+					"html/micro-course/course_details.html"
+				],
 				"priority": 0
 			}
 		},

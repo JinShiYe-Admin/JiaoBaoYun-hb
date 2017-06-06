@@ -9,41 +9,57 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/fresh.css" />
-		<link rel="stylesheet" type="text/css" href="../../css/utils/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/micro-course/course-list.css" />
+		<style>
+			.mui-slider-indicator {
+				margin-left: -10px;
+				bottom: -3px;
+			}
+			
+			.mui-slider-indicator .mui-indicator {
+				margin: 1px 2px;
+			}
+			
+			.mui-segmented-control.mui-scroll-wrapper {
+				height: 0;
+			}
+			
+			.mui-segmented-control.mui-scroll-wrapper .mui-scroll {
+				height: 0;
+			}
+			
+			.mui-fullscreen .mui-segmented-control~.mui-slider-group {
+				top: 0;
+			}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title"></h1>
+			<h1 class="mui-title">关注</h1>
+			<div id="header-indicator" class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+			</div>
 		</header>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div class="mui-scroll">
 						<a class="mui-control-item " href="#course-attended">
-							关注
+
 						</a>
 						<a class="mui-control-item mui-active" href="#course-all">
-							全部
+
 						</a>
 					</div>
 				</div>
 				<div class="mui-slider-group">
-					<div id="course-attended" class="mui-slider-item mui-control-content mui-active">
-						<div id="scroll1" class="mui-scroll-wrapper">
-							<div class="mui-scroll">
-								<ul class="mui-table-view">
-									<li >关注</li>
-								</ul>
-							</div>
-						</div>
-					</div>
 					<div id="course-all" class="mui-slider-item mui-control-content">
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul class="mui-table-view">
-									<li>全部</li>
 								</ul>
 							</div>
 						</div>
@@ -52,58 +68,171 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
+		<script src="../../js/micro-course/course-listnew.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/publicMicroClass.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init();
-			(function($) {
-				//阻尼系数
-				var deceleration = mui.os.ios?0.003:0.0009;
-				$('.mui-scroll-wrapper').scroll({
+			document.getElementById("course-all").info = {
+				type: 1,
+				pageIndex: 1
+			};
+			//阻尼系数
+			var deceleration = mui.os.ios ? 0.003 : 0.0009;
+			mui.plusReady(function() {
+				mui.fire(plus.webview.getLaunchWebview(), "indexReady");
+				initFresh(document.getElementById("course-all"));
+				course_listnew.getData(1, 1, document.getElementById("course-all").querySelector(".mui-table-view"), course_listnew.setData)
+				getAttendedClasses(toggleAttendedPart);
+				course_listnew.setListener();
+				addSlider();
+			});
+			function addSlider(){
+				document.getElementById('slider').addEventListener('slide', function(e) {
+					console.log("slider状态："+JSON.stringify(e.detail))
+					if (e.detail.slideNumber === 0) {
+						setTitle(11);
+					} else if (e.detail.slideNumber === 1) {
+						setTitle(10);
+					}
+				});
+			}
+			/**
+			 * 
+			 * @param {Object} type 0 只有全部 10 显示全部 11 显示关注
+			 */
+			function setTitle(type) {
+				var title=document.querySelector(".mui-title");
+				var indicator=document.querySelector("#header-indicator");
+				switch(type) {
+					case 0://全部
+						title.innerText="全部";
+					    indicator.style.display="none";
+						break;
+					case 10://全部
+					    title.innerText="全部";
+					 	indicator.style.display="block";
+					 	indicator.firstElementChild.className="mui-indicator";
+					 	indicator.lastElementChild.className="mui-indicator mui-active";
+						break;
+					case 11://关注
+						title.innerText="关注";
+						indicator.style.display="block";
+						indicator.firstElementChild.className="mui-indicator mui-active";
+					 	indicator.lastElementChild.className="mui-indicator";
+						break;
+					default:
+						break;
+				}
+			}
+			/**
+			 * 
+			 * @param {Object} freshConatiner
+			 */
+			function initFresh(freshConatiner) {
+				mui('.mui-scroll-wrapper').scroll({
 					bounce: false,
 					indicators: true, //是否显示滚动条
-					deceleration:deceleration
+					deceleration: deceleration
 				});
-				$.ready(function() {
-					//循环初始化所有下拉刷新，上拉加载。
-					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
-						$(pullRefreshEl).pullToRefresh({
-							down: {
-								callback: function() {
-									var self = this;
-									setTimeout(function() {
-										var ul = self.element.querySelector('.mui-table-view');
-//										ul.insertBefore(createFragment(ul, index, 10, true), ul.firstChild);
-										self.endPullDownToRefresh();
-									}, 1000);
-								}
-							},
-							up: {
-								callback: function() {
-									var self = this;
-									setTimeout(function() {
-										var ul = self.element.querySelector('.mui-table-view');
-//										ul.appendChild(createFragment(ul, index, 5));
-										self.endPullUpToRefresh();
-									}, 1000);
-								}
-							}
-						});
-					});
-					var createFragment = function(ul, index, count, reverse) {
-						var length = ul.querySelectorAll('li').length;
-						var fragment = document.createDocumentFragment();
-						var li;
-						for (var i = 0; i < count; i++) {
-							li = document.createElement('li');
-							li.className = 'mui-table-view-cell';
-							li.innerHTML = '第' + (index + 1) + '个选项卡子项-' + (length + (reverse ? (count - i) : (i + 1)));
-							fragment.appendChild(li);
+				mui(freshConatiner.querySelector(".mui-slider-group .mui-scroll")).pullToRefresh({
+					down: {
+						callback: function() {
+							var self = this;
+							setTimeout(function() {
+								var ul = self.element.querySelector('.mui-table-view');
+								ul.innerHTML = "";
+								freshConatiner.info.pageIndex = 1;
+								console.log("获取的fresh:" + JSON.stringify(freshConatiner.info))
+								course_listnew.getData(freshConatiner.info.type, freshConatiner.info.pageIndex, ul, course_listnew.setData);
+								self.endPullDownToRefresh();
+							}, 1000);
 						}
-						return fragment;
-					};
+					},
+					up: {
+						callback: function() {
+							var self = this;
+							setTimeout(function() {
+								var ul = self.element.querySelector('.mui-table-view');
+								freshConatiner.info.pageInex++;
+								course_listnew.getData(freshConatiner.info.type, freshConatiner.info.pageIndex, ul, course_listnew.setData);
+								self.endPullUpToRefresh();
+							}, 1000);
+						}
+					}
 				});
-			})(mui);
+			}
+
+			function getAttendedClasses(callback) {
+				if(events.getUtid()) {
+					// 等待的对话框
+					var wd = events.showWaiting();
+					postDataMCPro_getAllFocusCourses({
+						userId: events.getUtid(), //用户ID,登录用户
+						pageIndex: 1, //当前页数
+						pageSize: 1 //每页记录数,传入0，获取总记录数
+					}, wd, function(data) {
+						wd.close();
+						if(data.RspCode == 0 && data.RspData.TotalCnt) {
+							callback(true);
+						} else {
+							callback(false);
+						}
+					})
+				} else {
+					if(myStorage.getItem(storageKeyName.FOCUSECOURSES) && myStorage.getItem(storageKeyName.FOCUSECOURSES).length > 0) {
+						callback(true);
+					} else {
+						callback(false);
+					}
+				}
+
+			}
+			/**
+			 * 
+			 * @param {Object} type 0 删除关注 1 加载关注
+			 */
+			function toggleAttendedPart(type) {
+				console.log("加载关注部分：" + type);
+				var sliderGroup = document.querySelector(".mui-slider-group");
+				if(type) {
+					if(!document.getElementById("course-attended")) {
+						sliderGroup.insertBefore(createAttendedFragment(), document.querySelector("#course-all"));
+						document.getElementById("course-attended").info = {
+							type: 0,
+							pageIndex: 1
+						};
+						course_listnew.getData(0, 1, document.getElementById("course-attended").querySelector(".mui-table-view"), course_listnew.setData)
+						initFresh(document.getElementById("course-attended"));
+						setTitle(11);
+					}
+				} else {
+					if(document.getElementById("course-attended")) {
+						sliderGroup.removeChild(document.getElementById("course-attended"));
+					}
+					setTitle(0);
+				}
+			}
+
+			function createAttendedFragment() {
+				var div = document.createElement("div");
+				div.id = "course-attended";
+				div.className = "mui-slider-item mui-control-content"
+				div.innerHTML = '<div id="scroll1" class="mui-scroll-wrapper">\
+							<div class="mui-scroll">\
+								<ul class="mui-table-view">\
+								</ul>\
+							</div>\
+						</div>';
+				div.info = {
+					type: 0,
+					pageInex: 1
+				}
+				return div;
+			}
 		</script>
 	</body>
 
