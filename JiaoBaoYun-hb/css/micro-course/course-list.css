@@ -18,12 +18,12 @@
 	width: 100px;
 	height: 60px;
 }
-.red-point{
-	position: fixed;
-	top: -2.5px;
-	left: 57.5px;
-	width: 5px;
-	height: 5px;
+.red-circle{
+	position: absolute;
+	top: -5px;
+	left: 95px;
+	width: 10px;
+	height: 10px;
 	border-radius: 50%;
 	background-color: red;
 }
@@ -47,7 +47,7 @@
 .courseName-button {
 	display: flex;
 	display: -webkit-flex;
-	padding-bottom: 15px;
+	/*padding-bottom: 15px;*/
 }
 
 
@@ -61,10 +61,14 @@
 	font-size: 16px;
 	color: #323232;
 }
+/**
+ * 课程信息
+ */
 .course-info{
-	padding-top: 10px;
+	margin-top: -5px;
 	font-size: 15px;
 	color: #808080;
+	padding-top: 10px;
 }
 
 /**
@@ -72,9 +76,10 @@
  */
 
 .input-btn {
-	width: 80px;
-	height: 30px;
-	font-size: 16px;
+	width: 50px;
+	height: 20px;
+	font-size: 12px;
+	padding: 0px;
 }
 
 

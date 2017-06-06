@@ -4701,7 +4701,10 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"css/utils/fresh.css"
+					"css/utils/fresh.css",
+					"css/utils/common.css",
+					"fonts/fangzheng.ttf",
+					"js/publicProtocol.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -4729,7 +4732,8 @@
 					"js/utils/RSAEncrypt.js",
 					"css/utils/common.css",
 					"css/utils/fresh.css",
-					"image/utils/loading.gif"
+					"image/utils/loading.gif",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/micro-course/course_details.html"
