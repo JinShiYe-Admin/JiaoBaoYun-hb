@@ -19,7 +19,7 @@
 		</header>
 		<div id="divContent" class="mui-content mui-hidden">
 			<div style="font-size: 16px;padding-left: 10px;padding-top: 15px;;font-weight: 700;">授课老师</div>
-			<img id="teaHeadImg" style="margin-top: 10px;margin-left: 20px;width: 40px;height: 40px;" src="../../image/utils/default_personalimage.png" />
+			<img id="teaHeadImg" style="margin-top: 10px;margin-left: 20px;width: 40px;height: 40px;" src="../../image/utils/default_personalimage.png" onerror="onImageError(this);" />
 			<div style="border-color: #1db8f1;height: auto;border-width:1px ;border-style:dashed;margin-right: 20px;margin-left: 40px;margin-top: -27px;">
 
 				<div style="padding:12px 10px;">
@@ -54,6 +54,9 @@
 		<script src="../../js/publicMicroClass.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 	<script type="text/javascript">
+		function onImageError(img) {
+			img.src = "../../image/utils/default_personalimage.png"
+		}
 		var nodes = {
 			title: document.getElementById("title"),
 			teaHeadImg: document.getElementById("teaHeadImg"),
@@ -141,7 +144,7 @@
 
 		var createHtmlContent = function(courseInfo) {
 			nodes.title.innerHTML = courseInfo.CourseName;
-			//			nodes.teaHeadImg = courseInfo.teaHeadImg;
+			nodes.teaHeadImg.src = updateHeadImg(courseInfo.TeacherPic, 2);
 			nodes.teaName.innerHTML = courseInfo.TeacherName;
 			nodes.teaInfo.innerHTML = courseInfo.TeacherNote;
 			nodes.courseInfo.innerHTML = courseInfo.CourseNote;
