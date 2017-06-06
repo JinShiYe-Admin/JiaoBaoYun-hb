@@ -1,3 +1,8 @@
+<!--
+	作者：444811716@qq.com
+	时间：2017-06-02
+	描述：课程详情列表
+-->
 <!doctype html>
 <html>
 
@@ -6,210 +11,10 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
-		<link href="../../css/utils/common.css" rel="stylesheet" />
-		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
-		<!--<link href="../../css/qiuzhi/qiuzhi-inviteAnswer.css" rel="stylesheet" />-->
+		<link rel="stylesheet" href="../../css/utils/common.css" />
+		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
+		<!--<link rel="stylesheet" href="../../css/utils/pullToRefresh.css" />-->
 		<style>
-			body,
-			.mui-content {
-				word-wrap: break-word;
-			}
-
-			.mui-table-view:before,
-			.mui-table-view:after,
-			.course-top .mui-table-view-cell:after,
-			.course-comment .mui-table-view-cell:after {
-				height: 0px;
-			}
-
-			.mui-table-view-cell.mui-collapse.mui-active {
-				margin-top: 0;
-			}
-
-			.course-top .mui-navigate-right {
-				width: 21px;
-				height: 21px;
-				position: absolute;
-				right: 10px;
-			}
-
-			.course-top .mui-navigate-right:after {
-				content: "\e581";
-				right: 5px;
-			}
-
-			.mui-collapse {
-				padding: 0px;
-			}
-
-			.mui-table-view-cell.mui-collapse .mui-collapse-content {
-				margin: 0px;
-				padding: 11px 15px;
-				padding-top: 0px;
-			}
-
-			.mui-collapse-content p {
-				font-size: 14px;
-			}
-
-			.course-top .mui-table-view-cell>a:not(.mui-btn).mui-active,
-			.course-top .mui-table-view-cell.mui-active,
-			.course-comment .mui-table-view-cell.mui-active {
-				background-color: white;
-			}
-
-			.mui-bar-tab button {
-				/*评论按钮*/
-				text-align: left;
-				padding: 6px 12px 7px !important;
-				color: #CCCCCC;
-				margin: 10px 3% !important;
-				width: 94%;
-				top: 0 !important;
-			}
-
-			.course-title {
-				font-size: 16px;
-				color: #323232;
-			}
-
-			.course-top .course-title {
-				margin-right: 15px;
-			}
-
-			.course-list .course-title {
-				margin-bottom: 11px;
-			}
-
-			.course-info,
-			.course-comment-info {
-				color: #B7B7B7;
-				font-size: 13px;
-			}
-
-			.course-top .course-info {
-				margin-top: -11px !important;
-			}
-
-			.course-info .mui-pull-right {
-				display: inline;
-			}
-
-			.icon-zanzan1 {
-				font-size: 13px;
-				color: #B7B7B7;
-			}
-
-			.course-more {
-				text-align: center;
-			}
-
-			.course-more {
-				color: #B7B7B7;
-			}
-
-			.course-more .mui-icon-arrowdown {
-				font-size: 13px;
-			}
-
-			.course-list {
-				margin-top: 8px;
-			}
-
-			.course-list-li {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
-
-			.course-list-li-left {
-				width: 60%;
-			}
-
-			.course-list-img-div {
-				float: right;
-				overflow: hidden;
-				width: 40%;
-				line-height: 0px;
-			}
-
-			.course-list-img {
-				/*课程列表图片的*/
-				visibility: hidden;
-				width: 100%;
-			}
-
-			.course-image-play-div {
-				position: absolute;
-				right: 15px;
-				background-color: rgba(0, 0, 0, 0.5);
-				visibility: hidden;
-			}
-
-			.course-image-play {
-				/*视频播放按钮*/
-				width: 55px;
-				height: 55px;
-			}
-
-			.course-comment-info,
-			.course-comment-reply-info {
-				display: inline;
-			}
-
-			.course-comment-title {
-				/*标题*/
-				background-color: #EEEEEE;
-				padding: 10px;
-				border-left: 3px solid #64A1EB;
-				font-weight: 900;
-			}
-
-			.course-comment-personal-headimage {
-				/*评论者头像*/
-				width: 30px;
-				height: 30px;
-				border-radius: 50%;
-				float: left;
-				margin-right: 10px;
-			}
-
-			.course-comment .icon-zanzan1 {
-				/*评论点赞按钮*/
-				float: right;
-				line-height: 30px;
-				margin-left: 30px;
-			}
-
-			.course-comment-personal-name {
-				/*评论者昵称*/
-				font-size: 15px;
-				line-height: 30px;
-			}
-
-			.course-comment-content {
-				/*评论的内容*/
-				margin: 11px 0;
-				color: #808080;
-			}
-
-			.course-comment-reply {
-				/*评论回复区域*/
-				font-size: 14px;
-				background-color: #E4E4E4;
-				padding: 5px;
-			}
-
-			.course-comment-reply-name {
-				/*回复者的名称*/
-				display: inline;
-				color: deepskyblue;
-			}
-
-			.course-comment-reply-all {
-				/*查看所有回复*/
-				color: deepskyblue;
-			}
 			.mui-scroll-wrapper {
 				padding-top: 44px;
 			}
@@ -290,13 +95,292 @@
 				width: 40px;
 			}
 			
-			.mui-table-view {
-				background: #F2F3F5;
+			body,
+			.mui-content {
+				word-wrap: break-word;
 			}
 			
-			.mui-table-view-cell {
-				background: white;
-				margin-bottom: 5px;
+			.mui-table-view:before,
+			.mui-table-view:after,
+			.section-top .mui-table-view-cell:after,
+			.section-comment .mui-table-view-cell:after {
+				height: 0px;
+			}
+			
+			.mui-table-view-cell.mui-collapse.mui-active {
+				margin-top: 0;
+			}
+			
+			.section-top {
+				display: none;
+			}
+			
+			.section-top .mui-navigate-right {
+				width: 21px;
+				height: 21px;
+				position: absolute;
+				right: 10px;
+			}
+			
+			.section-top .mui-navigate-right:after {
+				content: "\e581";
+				right: 5px;
+			}
+			
+			.mui-collapse {
+				padding: 0px;
+			}
+			
+			.mui-table-view-cell.mui-collapse .mui-collapse-content {
+				margin: 0px;
+				padding: 11px 15px;
+				padding-top: 0px;
+			}
+			
+			.mui-collapse-content {
+				font-size: 14px;
+				color: #808080;
+			}
+			
+			.section-top .mui-table-view-cell>a:not(.mui-btn).mui-active,
+			.section-top .mui-table-view-cell.mui-active,
+			.section-comment .mui-table-view-cell.mui-active,
+			.section-shield .mui-table-view-cell.mui-active {
+				background-color: white;
+			}
+			
+			.mui-bar-tab button {
+				/*评论按钮*/
+				text-align: left;
+				padding: 6px 12px !important;
+				color: #B7B7B7;
+				margin: 6px 1.5% !important;
+				width: 96%;
+				top: 0 !important;
+				height: 36px;
+				font-size: 14px;
+			}
+			
+			.section-title {
+				font-size: 16px;
+				color: #323232;
+			}
+			
+			.section-top .section-title {
+				margin-right: 15px;
+			}
+			
+			.section-list .section-title {
+				margin-bottom: 11px;
+			}
+			
+			.section-info,
+			.section-comment-info {
+				color: #B7B7B7;
+				font-size: 14px;
+			}
+			
+			.section-top .section-info {
+				margin-top: -11px !important;
+			}
+			
+			.section-info .mui-pull-right {
+				display: inline;
+			}
+			
+			.icon-zanzan1 {
+				font-size: 13px;
+				color: #dbdbdb;
+			}
+			
+			.section-more {
+				/*查看更多*/
+				display: none;
+				text-align: center;
+				color: #B7B7B7;
+				font-size: 14px;
+			}
+			
+			.section-more .mui-icon-arrowdown {
+				font-size: 14px;
+			}
+			
+			.section-list {
+				margin-top: 8px;
+			}
+			
+			.section-list-li {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.section-list-li-left {
+				width: 60%;
+			}
+			
+			.section-list-img-div {
+				float: right;
+				overflow: hidden;
+				width: 40%;
+				line-height: 0px;
+			}
+			
+			.section-list-img {
+				/*课程列表图片的*/
+				visibility: hidden;
+				width: 100%;
+			}
+			
+			.section-image-play-div {
+				position: absolute;
+				right: 15px;
+				background-color: rgba(0, 0, 0, 0.5);
+				visibility: hidden;
+			}
+			
+			.section-image-play {
+				/*视频播放按钮*/
+				width: 55px;
+				height: 55px;
+			}
+			
+			.section-image-time {
+				/*视频的时间*/
+				position: absolute;
+				color: white;
+				top: 85%;
+				right: 5%;
+			}
+			
+			.section-comment-info,
+			.section-comment-reply-info,
+			.section-comment-reply-content {
+				display: inline;
+			}
+			
+			.section-list-audio {
+				width: 100%;
+				height: 50px;
+			}
+			
+			.section-list-audio-border {
+				stroke: #1DB8F1;
+				fill: none;
+			}
+			
+			.section-list-audio-icon {
+				stroke: #B7B7B7;
+				fill: none;
+				stroke-width: 2px;
+			}
+			
+			.section-list-audio-time {
+				fill: #B7B7B7;
+				font-size: 15px;
+			}
+			
+			.section-comment-title {
+				/*评论栏标题*/
+				display: none;
+				background-color: #F2F2F2;
+				padding: 10px;
+				border-left: 3px solid #1DB8F1;
+				font-size: 15px;
+				color: #323232;
+				height: 40px;
+			}
+			
+			.section-comment-personal-headimage {
+				/*评论者头像*/
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				float: left;
+				margin-right: 10px;
+			}
+			
+			.section-comment .icon-zanzan1 {
+				/*评论点赞按钮*/
+				float: right;
+				line-height: 40px;
+				margin-left: 30px;
+			}
+			
+			.section-comment-personal-name {
+				/*评论者昵称*/
+				font-size: 15px;
+				color: #323232;
+				line-height: 40px;
+			}
+			
+			.section-comment-content {
+				/*评论的内容*/
+				margin: 11px 0;
+				color: #808080;
+				font-size: 14px;
+			}
+			
+			.section-comment-reply {
+				/*评论回复区域*/
+				font-size: 14px;
+				background-color: #F2F2F2;
+				padding: 5px;
+				margin-top: 11px;
+			}
+			
+			.section-comment-reply-name {
+				/*回复者的名称*/
+				display: inline;
+				color: #1DB8F1;
+				font-size: 14px;
+			}
+			
+			.section-comment-reply-all {
+				/*查看所有回复*/
+				color: #1DB8F1;
+				font-size: 14px;
+			}
+			
+			.section-comment-reply-content {
+				font-size: 14px;
+				color: #808080;
+			}
+			
+			.section-shield {
+				/*节次屏蔽*/
+				display: none;
+				background-color: white;
+				justify-content: center;
+				align-items: center;
+				height: 200px;
+				text-align: center;
+			}
+			
+			.section-shield .icon-jinggao-copy {
+				font-size: 120px;
+				color: #dbdbdb;
+				padding-top: 5px;
+			}
+			
+			.section-shield .section-shield-text {
+				font-size: 14px;
+				color: #999999;
+			}
+			
+			.section-show .section-title {
+				/*当前显示的节次*/
+				color: #00A5E0;
+			}
+			
+			.section-comment-zan {
+				/*点赞*/
+				color: #1db8f1;
+			}
+			
+			.section-comment-notzan {
+				/*不点赞*/
+				color: #dbdbdb;
 			}
 		</style>
 	</head>
@@ -304,204 +388,517 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">历史记录</h1>
+			<h1 id="title" class="mui-title"></h1>
 		</header>
+
 		<div id="refreshContainer" class="mui-content mui-fullscreen" style="z-index:0">
 			<div class="mui-scroll-wrapper">
 				<div class="mui-scroll">
-				<ul class="mui-table-view course-list">
-					<li class="mui-table-view-cell">
-						<div class="course-title">
-							文字一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
-						</div>
-						<div class="course-info">上传时间:2017-6-1</div>
-					</li>
-					<li class="mui-table-view-cell">
-						<div class="course-title">
-							音频
-						</div>
-						<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="300px" height="50px" viewBox="0 0 300 50" enable-background="new 0 0 300 50" xml:space="preserve">
-							<path fill="none" stroke="#1DB8F1" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M28.476,2.813
-	c0,0,240.274-0.5,250.649-0.156s20.13,8.112,19.836,21.395s-8.242,21.279-19.602,21.279s-23.074,0-23.074,0H16.764
-	c0,0-5.817-0.469-15.266,3.67c0,0,9.565-8.16,9.41-16.671L10.83,19.835C10.83,19.835,10.517,5.39,28.476,2.813z" />
-							<path fill="#B7B7B7" d="M50.004,37.298c-0.167,0-0.5,0-0.667-0.166c-0.334-0.335-0.334-0.835,0-1.168
-	c6.502-6.503,6.502-17.342,0-23.845c-0.334-0.333-0.334-0.833,0-1.167c0.333-0.333,0.833-0.333,1.167,0
-	c7.17,7.17,7.17,19.009,0,26.18C50.338,37.298,50.171,37.298,50.004,37.298z M43.668,32.796c-0.167,0-0.5-0.167-0.667-0.334
-	c-0.333-0.333-0.333-0.834,0-1.167c2.001-1.834,3.168-4.502,3.168-7.336c0-2.835-1.167-5.502-3.168-7.337
-	c-0.333-0.333-0.333-0.833,0-1.167s0.834-0.333,1.167,0c2.334,2.167,3.668,5.169,3.668,8.504c0,3.335-1.334,6.335-3.668,8.504
-	C44.001,32.629,43.835,32.796,43.668,32.796z M37.666,29.294c-0.167,0-0.5,0-0.667-0.167c-0.333-0.333-0.333-0.834,0-1.166
-	c1.167-1.168,1.667-2.502,1.667-4.002c0-1.334-0.667-2.668-1.667-3.668c-0.333-0.333-0.333-0.834,0-1.168
-	c0.333-0.333,0.833-0.333,1.167,0c1.334,1.334,2.168,3.001,2.168,4.836c0,2-0.667,3.834-2.168,5.168
-	C37.999,29.294,37.832,29.294,37.666,29.294z" />
-							<text transform="matrix(1 0 0 1 73.936 32.707)" fill="#B7B7B7" font-family="'MicrosoftYaHei'" font-size="20.9861">120”</text>
-						</svg>
-						<div class="course-info">上传时间:2017-6-1</div>
-					</li>
-					<li class="mui-table-view-cell course-list-li">
-						<div class="course-list-li-left">
-							<div class="course-title">
-								图片
+					<ul id="section_shield" class="mui-table-view section-shield">
+						<li class="mui-table-view-cell">
+							<div class="mui-icon iconfont icon-jinggao-copy"></div>
+							<div class="section-shield-text">该内容已被作者屏蔽</div>
+						</li>
+					</ul>
+					<ul id="section_top" class="mui-table-view section-top">
+						<li class="mui-table-view-cell">
+							<div id="collapse_content_show" class="mui-navigate-right"></div>
+							<div id="section_top_title" class="section-title">
 							</div>
-							<div class="course-info">上传时间:2017-6-1</div>
-						</div>
-						<div class="course-list-img-div">
-							<img id="course-image-1" class="course-list-img" onload="onImageLoad(this);" onerror="onImageError(this);" />
-						</div>
-					</li>
-					<li class="mui-table-view-cell course-list-li">
-						<div class="course-list-li-left">
-							<div class="course-title">
-								视频
+						</li>
+						<li id="collapse_content_li" class="mui-table-view-cell mui-collapse">
+							<div id="section_top_content" class="mui-collapse-content">
 							</div>
-							<div class="course-info">上传时间:2017-6-1</div>
-						</div>
-						<div class="course-list-img-div">
-							<div class="course-image-play-div">
-								<img id="course-image-play" class="course-image-play" onload="onPlayLoad(this);" onerror="onPlayError(this);" />
+						</li>
+						<li class="mui-table-view-cell section-info">
+							<div id="section_top_zan" class="mui-icon iconfont icon-zanzan1">(0)</div>
+							<div id="section_top_time" class="mui-pull-right"></div>
+						</li>
+					</ul>
+					<ul id="section_list" class="mui-table-view section-list">
+						<li id="section_more" class="mui-table-view-cell section-more">
+							查看更多
+							<div class="mui-icon mui-icon-arrowdown"></div>
+						</li>
+					</ul>
+					<div id="section_comment_title" class="section-comment-title">
+						评论(0)
+					</div>
+					<ul id="section_comment_list" class="mui-table-view section-comment">
+						<!--<li class="mui-table-view-cell">
+						<img src="../../image/dynamic/u101.png" class="section-comment-personal-headimage" />
+						<div class="mui-icon iconfont icon-zanzan1">(20)</div>
+						<div class="mui-ellipsis section-comment-personal-name">一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</div>
+						<div class="section-comment-content">一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</div>
+						<div class="section-comment-info">回复100</div>
+						<div class="mui-pull-right section-comment-info">2017-6-2</div>
+						<div class="section-comment-reply">
+							<div>
+								<div class="section-comment-reply-name">1234</div>
+								<div class="section-comment-reply-info">@</div>
+								<div class="section-comment-reply-name">4321</div>
+								<div class="section-comment-reply-info">:</div>
+								<div class="section-comment-reply-content">
+									一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
+								</div>
 							</div>
-							<img id="course-image-2" class="course-list-img" onload="onImageLoad(this);" onerror="onImageError(this);" />
+							<div>
+								<div class="section-comment-reply-name">1234</div>
+								<div class="section-comment-reply-info">@</div>
+								<div class="section-comment-reply-name">4321</div>
+								<div class="section-comment-reply-info">:</div>
+								<div class="section-comment-reply-content">
+									一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
+								</div>
+							</div>
+							<div class="section-comment-reply-all">查看全部>></div>
 						</div>
-					</li>
+					</li>-->
+					</ul>
 				</div>
 			</div>
-		</div>
-		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/mui.pullToRefresh.js"></script>
-		<script src="../../js/mui.pullToRefresh.material.js"></script>
-		<!--<script src="../../js/utils/h5fresh.js"></script>-->
-		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/storageKeyName.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
-	</body>
-
-</html>
-
-<script type="text/javascript">
-	var pullRefresh; //上拉加载控件
-			var page = {
-				pageIndex: 0,
-				totalPage: 0
-			}; //评论的页数
-
-			mui.init();
-			mui.plusReady(function() {
-				document.getElementById("course-image-1").src = "../../image/cloud/notes_bg2.jpg";
-				document.getElementById("course-image-2").src = "../../image/ios_1242-2208.png";
-				document.getElementById("course-image-play").src = "../../image/utils/playvideo.png";
-				initControl();
-				initListener();
-			});
-
-			/**
-			 * 初始化控件
-			 */
-			function initControl() {
-				//初始化下拉，上拉控件
-				var deceleration = mui.os.ios ? 0.003 : 0.0009;
-				mui('.mui-scroll-wrapper').scroll({
-					bounce: false,
-					indicators: true, //是否显示滚动条
-					deceleration: deceleration
-				});
-				pullRefresh = mui('.mui-scroll-wrapper .mui-scroll').pullToRefresh({
-					up: {
-						contentinit: '', //默认没有更多显示空白
-						contentnomore: '', //隐藏没有更多提示
-						callback: function() {
-							console.log('up ' + JSON.stringify(page));
-							if(page) {
-								//requestData(page.pageIndex + 1);
-							} else {
-								mui.toast('数据异常，请下拉刷新后重新尝试');
+			<script src="../../js/mui.min.js"></script>
+			<script type="text/javascript" src="../../js/utils/events.js"></script>
+			<script type="text/javascript" src="../../js/libs/myStorage/myStorage.js"></script>
+			<script type="text/javascript" src="../../js/storageKeyName.js"></script>
+			<script src="../../js/mui.pullToRefresh.js"></script>
+			<script src="../../js/mui.pullToRefresh.material.js"></script>
+			<script type="text/javascript" src="../../js/utils/playutil.js"></script>
+			<script type="text/javascript" src="../../js/publicMicroClass.js"></script>
+			<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+			<script type="text/javascript">
+				var main; //当webView
+				var sectionData = {
+					key: [],
+					value: {}
+				}; //当前课程的数据
+				var allUserInfo = {
+					key: [],
+					value: {}
+				}; //评论，回复者的账号信息
+				var sectionId; //当前显示的节次id
+				var pageIndex = 0; //当前页数
+				var totalPage = 0;
+				mui.init();
+				mui.plusReady(function() {
+					events.closeWaiting();
+					var wd = events.showWaiting();
+					initData();
+					initControl();
+					initListener();
+					getAllSectionsAndComments(pageIndex + 1, wd);
+					mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
+						down: {
+							callback: function() {
+								//清除节点
+								document.getElementById('section_list').innerHTML = "";
+								mui(".mui-pull-loading")[0].innerHTML = "";
+								var self = this;
+								console.log("下拉刷新");
+								var wd = events.showWaiting();
+								getAllSectionsAndComments(1, wd);
+								setTimeout(function() {
+									//结束下拉刷新
+									self.endPullDownToRefresh();
+								}, 1000);
 							}
-							setTimeout(function() {
-								endPullUp();
-							}, 1000);
+						},
+						up: {
+							callback: function() {
+								var self = this;
+								console.log("上拉加载更多");
+								if(pageIndex <= totalPage) {
+									getAllSectionsAndComments(pageIndex + 1, wd);
+									setTimeout(function() {
+										//结束下拉刷新
+										self.endPullUpToRefresh();
+									}, 1000);
+
+								} else { //结束下拉刷新
+									self.endPullUpToRefresh();
+									mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
+								}
+
+							}
 						}
-					}
+					});
 				});
-			}
 
-			/**
-			 * 初始化监听
-			 */
-			function initListener() {
+				/**
+				 * 初始化数据
+				 */
+				function initData() {
+					main = plus.webview.currentWebview();
+					console.log("main data " + JSON.stringify(main.data));
+					document.getElementById("title").innerText = main.data.CourseName;
+				}
 
-				//显示课程简介
-				document.getElementById('collapse_content_show').addEventListener('tap', function() {
-					var collapse_content_li = document.getElementById("collapse_content_li");
-					var classNameList = collapse_content_li.className.split(" ");
-					var show = false;
-					for(var i in classNameList) {
-						if(classNameList[i] == "mui-active") {
-							show = true;
-							break;
+				/**
+				 * 初始化控件
+				 */
+				function initControl() {
+					//初始化下拉，上拉控件
+					var deceleration = mui.os.ios ? 0.003 : 0.0009;
+					mui('.mui-scroll-wrapper').scroll({
+						bounce: false,
+						indicators: true, //是否显示滚动条
+						deceleration: deceleration
+					});
+				}
+
+				/**
+				 * 初始化监听
+				 */
+				function initListener() {
+
+					//显示课程简介
+					document.getElementById('collapse_content_show').addEventListener('tap', function() {
+						var collapse_content_li = document.getElementById("collapse_content_li");
+						var classNameList = collapse_content_li.className.split(" ");
+						var show = false;
+						for(var i in classNameList) {
+							if(classNameList[i] == "mui-active") {
+								show = true;
+								break;
+							}
+						}
+						if(show) {
+							collapse_content_li.className = "mui-table-view-cell mui-collapse";
+						} else {
+							collapse_content_li.className = "mui-table-view-cell mui-collapse mui-active";
+						}
+					});
+
+
+
+					//查看其它节次或者查看更多
+					mui('.section-list').on('tap', '.mui-table-view-cell', function() {
+						var ids = this.id.split("_");
+						if(ids[1] == "more") { //更多
+							getAllSectionsAndComments(pageIndex + 1);
+						} else if(ids[1] != sectionId) { //查看其它节次
+							var ele = document.getElementById("section_" + sectionId);
+							ele.className = ele.className.replace(" section-show", "");
+							showTopData(sectionData.value[ids[1]]);
+							this.className = this.className + " section-show";
+						}
+					});
+
+				}
+
+				/**
+				 * 课程列表中的图片加载成功
+				 * @param {Object} img
+				 */
+				function onImageLoad(img) {
+					img.parentNode.style.height = parseInt(img.parentNode.offsetWidth * (3 / 4)) + "px";
+					if(img.offsetWidth > img.offsetHeight) { //宽的图片
+						img.style.height = img.parentNode.offsetHeight + "px";
+						img.style.width = "initial";
+						img.style.marginLeft = parseInt(img.offsetWidth * 0.5 - img.parentNode.offsetWidth * 0.5) * (-1) + 'px';
+					} else { //高的图片
+						img.style.marginTop = parseInt(img.offsetHeight * 0.5 - img.parentNode.offsetHeight * 0.5) * (-1) + 'px';
+					}
+					img.style.visibility = "visible";
+				}
+
+				/**
+				 * 课程列表中的图片加载失败
+				 * @param {Object} img
+				 */
+				function onImageError(img) {
+					img.style.visibility = "visible";
+					img.src = "../../image/utils/load-img-error.png"
+				}
+
+				/**
+				 * 视频播放按钮加载失败
+				 * @param {Object} img
+				 */
+				function onPlayError(img) {
+					img.parentNode.style.visibility = "visible";
+				}
+
+				/**
+				 * 视频播放按钮加载成功
+				 * @param {Object} img
+				 */
+				function onPlayLoad(img) {
+					img.parentNode.parentNode.style.height = parseInt(img.parentNode.parentNode.offsetWidth * (3 / 4)) + "px";
+					var width = img.parentNode.parentNode.offsetWidth;
+					var height = parseInt(width * (3 / 4));
+					img.parentNode.style.width = width + "px";
+					img.parentNode.style.height = height + "px";
+					img.parentNode.style.visibility = "visible";
+					img.style.marginLeft = parseInt((width - 55) / 2) + "px";
+					img.style.marginTop = parseInt((height - 55) / 2) + "px";
+				}
+
+				/**
+				 * 音频的外框
+				 * @param {Object} width
+				 */
+				function getAudioBorderPath(width) {
+					if(!width) {
+						width = width || plus.screen.resolutionWidth;
+						width = parseInt(width * 3 / 5);
+					}
+					var pathD = "M8 45 C13 40 15 38 15 25 L15 21 Q15 1 36 1 L" + width + " 1 Q" + (width + 25) + " 1 " + (width + 25) + " 21 Q" + (width + 25) + " 41 " + width + " 41 L30 41 Q15 41 12 43 L8 45 Z"
+					return pathD;
+				}
+
+				/**
+				 * 音视频显示的时间
+				 * @param {Object} time
+				 */
+				function getAudioTime(time) {
+					time = time || 0;
+					var strTime = "";
+					var hour = Math.floor(time / 3600);
+
+					if(hour > 0) {
+						if(hour < 10) {
+							strTime = "0" + hour + ':';
+						} else {
+							strTime = hour + ':';
 						}
 					}
-					if(show) {
-						collapse_content_li.className = "mui-table-view-cell mui-collapse";
+					var min = Math.floor((time - 3600 * hour) / 60);
+					if(min < 10) {
+						strTime = strTime + "0" + min + ':';
 					} else {
-						collapse_content_li.className = "mui-table-view-cell mui-collapse mui-active";
+						strTime = strTime + min + ':';
 					}
-				});
-			}
-
-			/**
-			 * 结束上拉加载更多
-			 */
-			function endPullUp() {
-				if(page && page.pageIndex >= page.totalPage) {
-					console.log('没有下一页');
-					pullRefresh.endPullUpToRefresh(true);
-				} else {
-					pullRefresh.endPullUpToRefresh();
+					var sec = time - 3600 * hour - 60 * min;
+					if(sec < 10) {
+						strTime = strTime + "0" + sec;
+					} else {
+						strTime = strTime + sec;
+					}
+					return strTime;
 				}
-			}
-			/**
-			 * 课程列表中的图片加载成功
-			 * @param {Object} img
-			 */
-			function onImageLoad(img) {
-				img.parentNode.style.height = parseInt(img.offsetWidth * (3 / 4)) + "px";
-				if(img.offsetWidth > img.offsetHeight) { //宽的图片
-					img.style.height = img.parentNode.offsetHeight + "px";
-					img.style.width = "initial";
-					img.style.marginLeft = parseInt(img.offsetWidth * 0.5 - img.parentNode.offsetWidth * 0.5) * (-1) + 'px';
-				} else { //高的图片
-					img.style.marginTop = parseInt(img.offsetHeight * 0.5 - img.parentNode.offsetHeight * 0.5) * (-1) + 'px';
-				}
-				img.style.visibility = "visible";
-			}
 
-			/**
-			 * 课程列表中的图片加载失败
-			 * @param {Object} img
-			 */
-			function onImageError(img) {
-				img.style.visibility = "visible";
-			}
-			/**
-			 * 视频播放按钮加载失败
-			 * @param {Object} img
-			 */
-			function onPlayError(img) {
-				img.parentNode.style.visibility = "visible";
-			}
-			/**
-			 * 视频播放按钮加载成功
-			 * @param {Object} img
-			 */
-			function onPlayLoad(img) {
-				var width = img.parentNode.parentNode.offsetWidth;
-				var height = parseInt(width * (3 / 4));
-				img.parentNode.style.width = width + "px";
-				img.parentNode.style.height = height + "px";
-				img.parentNode.style.visibility = "visible";
-				img.style.marginLeft = parseInt((width - 55) / 2) + "px";
-				img.style.marginTop = parseInt((height - 55) / 2) + "px";
-			}
-</script>
-</body>
+				/**
+				 * 获取课程节次和评论
+				 * @param {Object} index 当前页数
+				 * @param {Object} wd 等待框
+				 */
+				function getAllSectionsAndComments(index, wd) {
+					wd = wd || events.showWaiting();
+					var comData = {
+						userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //用户ID,登录用户
+						courseId: main.data.TabId, //课程ID
+						pageIndex: index, //当前页数
+						pageSize: 10 //每页记录数,传入0，获取总记录数
+					};
+					postDataMCPro_getAllSectionsByCourse(comData, wd, function(data) {
+						console.log('3 获取课程的节次 ' + JSON.stringify(data));
+						if(data.RspCode == 0) {
+							pageIndex = index;
+							totalPage = data.RspData.totalPag;
+							if(data.RspData.Data.length != 0) {
+								if(index == 1) {
+									//								showTopData(data.RspData.Data[0], wd);
+								}
+								showSectionList(data.RspData.Data);
+								wd.close();
+							}
+							if(pageIndex >= data.RspData.totalPage) {
+								console.log('没有下一页');
+
+								//								document.getElementById("section_more").style.display = "none";
+							} else {
+								//								document.getElementById("section_more").style.display = "block";
+							}
+						} else {
+							wd.close();
+							mui.toast(data.RspTxt);
+						}
+					});
+				}
+
+				/**
+				 * 显示顶部节次的数据
+				 */
+				function showTopData(data, wd) {
+					//console.log("showTopData " + JSON.stringify(data));
+					sectionId = data.SecId;
+					if(data.SecStatus == 1) { //被屏蔽
+						document.getElementById("section_top").style.display = "none";
+						document.getElementById("section_shield").style.display = 'flex';
+						document.getElementById("section_comment_title").style.display = "none";
+						document.getElementById("section_comment_list").style.display = "none";
+						if(wd) {
+							wd.close();
+						}
+					} else {
+						document.getElementById("section_shield").style.display = "none";
+						document.getElementById("section_top").style.display = "block";
+						document.getElementById("section_comment_title").style.display = "block";
+						document.getElementById("section_comment_list").style.display = "block";
+						document.getElementById("section_top_title").innerHTML = data.SecName;
+						document.getElementById("section_top_content").innerHTML = data.SecNote;
+						document.getElementById("section_top_zan").innerHTML = "(" + "0)";
+						document.getElementById("section_top_time").innerHTML = "上传时间 : " + data.UpTime.split(" ")[0];
+						document.getElementById("section_comment_list").innerHTML = "";
+						showCommentsFirst(data.Comments, wd);
+					}
+				}
+
+				/**
+				 * 显示中间节次列表
+				 * @param {Object} data
+				 */
+				function showSectionList(data) {
+					//console.log("showSectionList " + JSON.stringify(data));
+					var more = document.getElementById("section_more");
+					for(var i in data) {
+						sectionData.key[sectionData.key.length] = data[i].SecId;
+						sectionData.value[data[i].SecId] = data[i];
+						//console.log("showSectionList " + i + " " + JSON.stringify(data[i]));
+						var ele = document.createElement("li");
+						ele.id = "section_" + data[i].SecId;
+						var html = '';
+						if(data[i].EncType == 1) { //视频
+							ele.className = "mui-table-view-cell section-list-li";
+							html = '<div class="section-list-li-left">\
+							<div class="section-title">' + data[i].SecName + '</div>\
+							<div class="section-info">上传时间 : ' + data[i].UpTime.split(" ")[0] + '</div>\
+						</div>\
+						<div class="section-list-img-div">\
+							<div class="section-image-play-div">\
+								<img src="../../image/utils/playvideo.png" class="section-image-play" onload="onPlayLoad(this);" onerror="onPlayError(this);" />\
+							</div>\
+							<div class="section-image-time">' + getAudioTime(data[i].EncLen) + '</div>\
+							<img src="../../image/ios_1242-2208.png" class="section-list-img" onload="onImageLoad(this);" onerror="onImageError(this);" />\
+						</div>';
+						} else if(data[i].EncType == 2) { //音频
+							ele.className = "mui-table-view-cell";
+							html = '<div class="section-title">' + data[i].SecName + '</div>\
+						<div>\
+							<svg class="section-list-audio">\
+								<path class="section-list-audio-border" d="' + getAudioBorderPath() + '" />\
+								<path class="section-list-audio-icon" d="M30 18 A5 5 0 0 1 30 23 M35 14 A10 10 0 0 1 35 27 M40 10 A 15 15 0 0 1 40 31" />\
+								<text class="section-list-audio-time" x="60" y="26">' + getAudioTime(data[i].EncLen) + '</text>\
+							</svg>\
+						</div>\
+						<div class="section-info">上传时间 : ' + data[i].UpTime.split(" ")[0] + '</div>';
+						} else if(data[i].EncType == 3) { //文章
+							ele.className = "mui-table-view-cell";
+							html = '<div class="section-title">' + data[i].SecName + '</div>\
+						<div class="section-info">上传时间 : ' + data[i].UpTime.split(" ")[0] + '</div>';
+						}
+						if(sectionId == data[i].SecId) {
+							//当前显示的节次
+							ele.className = ele.className + ' section-show';
+						}
+						ele.innerHTML = html;
+						document.getElementById("section_list").insertBefore(ele, more);
+					}
+				}
+
+				/**
+				 * 显示评论1.获取用户昵称
+				 * @param {Object} data
+				 */
+				function showCommentsFirst(comments, wd) {
+					wd = wd || events.showWaiting();
+					console.log("showCommentsFirst " + JSON.stringify(comments));
+					document.getElementById("section_comment_title").innerText = "评论(" + comments.length + ")";
+					var utids = [];
+					for(var i in comments) {
+						//评论节次用户
+						if(!allUserInfo.value[comments[i].UserId]) {
+							utids[utids.length] = comments[i].UserId;
+						}
+						//回复评论
+						for(var j in comments[i].Replys) {
+							if(!allUserInfo.value[comments[i].Replys[j].UserId]) {
+								utids[utids.length] = comments[i].Replys[j].UserId;
+							}
+						}
+					}
+					if(utids.length != 0) {
+						var utidStr = utids.join(',');
+						comData = {
+							vvl: utidStr, //用户id，查询的值,p传个人ID,g传ID串
+							vtp: 'g' //查询类型,p(个人)g(id串)
+						};
+						//21.通过用户ID获取用户资料
+						postDataPro_PostUinf(comData, wd, function(data) {
+							console.log('21 通过用户ID获取用户资料' + JSON.stringify(data));
+							if(data.RspCode == 0) {
+								for(var k in data.RspData) {
+									if(!allUserInfo.value[data.RspData[k].utid]) {
+										allUserInfo.key[allUserInfo.key.length] = data.RspData[k].utid;
+										allUserInfo.value[data.RspData[k].utid] = data.RspData[k];
+									}
+								}
+								showCommontsSecond(comments, wd);
+							} else {
+								mui.toast(data.RspTxt);
+								wd.close();
+							}
+						});
+					} else {
+						showCommontsSecond(comments, wd);
+					}
+				}
+
+				/**
+				 * 显示评论和回复
+				 * @param {Object} data
+				 * @param {Object} wd
+				 */
+				function showCommontsSecond(data, wd) {
+					console.log("allUserInfo " + JSON.stringify(allUserInfo));
+					for(var i in data) {
+						console.log("showCommontsSecond " + JSON.stringify(data));
+						var ele = document.createElement("li");
+						ele.className = "mui-table-view-cell";
+						ele.id = "commont_" + data[i].TabId;
+						//点赞数
+						var html_zan = '';
+						if(data[i].IsLiked) {
+							//点赞
+							html_zan = '<div class="mui-icon iconfont icon-zanzan1 section-comment-zan">(' + data[i].LikeNum + ')</div>'
+						} else {
+							html_zan = '<div class="mui-icon iconfont icon-zanzan1 section-comment-notzan">(' + data[i].LikeNum + ')</div>'
+						}
+						//评论节次
+						var html_0 = '<img src="' + updateHeadImg(allUserInfo.value[data[i].UserId].uimg, 2) + '" class="section-comment-personal-headimage" />\
+						' + html_zan + '\
+						<div class="mui-ellipsis section-comment-personal-name">' + allUserInfo.value[data[i].UserId].unick + '</div>\
+						<div class="section-comment-content">' + data[i].CommentContent + '</div>\
+						<div class="section-comment-info">回复' + data[i].Replys.length + '</div>\
+						<div class="mui-pull-right section-comment-info">' + data[i].CommentDate.split(" ")[0] + '</div>';
+						//回复评论
+						var html_1 = '';
+						for(var j in data[i].Replys) {
+							if(j == 0) {
+								html_1 = '<div class="section-comment-reply">';
+							} else if(j == 6) {
+								html_1 = html_1 + '<div class="section-comment-reply-all">查看全部>></div>';
+								break;
+							} else {
+								html_1 = html_1 + '<div>\
+								<div class="section-comment-reply-name">' + allUserInfo.value[data[i].UserId].unick + '</div>\
+								<div class="section-comment-reply-info">@</div>\
+								<div class="section-comment-reply-name">' + allUserInfo.value[data[i].ReplyId].unick + '</div>\
+								<div class="section-comment-reply-info">:</div>\
+								<div class="section-comment-reply-content">' + data[i].Replys[j].CommentContent + '</div>\
+							</div>';
+							}
+						}
+						ele.innerHTML = html_0 + html_1 + '</div>';
+						document.getElementById("section_comment_list").appendChild(ele);
+					}
+
+					if(wd) {
+						wd.close();
+					}
+				}
+			</script>
+	</body>
 
 </html>

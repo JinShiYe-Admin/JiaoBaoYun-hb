@@ -9,6 +9,7 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
+
 	</head>
 
 	<body>
@@ -147,7 +148,7 @@
 			document.getElementById("divContent").className = 'mui-content'
 		}
 		events.addTap('history', function() {
-			events.openNewWindowWithData('history-records.html', {})
+			events.openNewWindowWithData('history-records.html', courseModel)
 		})
 		events.addTap('focusBtn', function() {
 			setCourseFocus(nodes.focusFlag)

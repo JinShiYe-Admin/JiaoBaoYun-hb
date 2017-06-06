@@ -472,16 +472,21 @@ var dynamiclistitem = (function($, mod) {
 		//
 		//点击关注
 		mui('.mui-table-view').on('tap', '.btn-attention', function() {
-			//判断是否是游客身份登录
-			if(events.judgeLoginMode(this)) {
-				return;
-			}
-			var item = this;
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
-
+			var item = this;
 			var pageID = sliderId.replace('top_', '')
 			var tempId = this.id;
 			var index = this.id.replace('btn-focus' + pageID + idFlag, '');
+			console.log('personalUTID='+personalUTID+'-----'+'publisherId='+publisherId)
+			//判断是否是游客身份登录
+			if(personalUTID == 0) {
+				events.toggleStorageArray(storageKeyName.SHOWFOCUSEPERSEN, parseInt(publisherId), 0);
+				var btn = document.getElementById(tempId);
+				btn.innerHTML = '已关注'
+				btn.className = 'mui-btn mui-pull-right btn-attentioned'
+				return;
+			}
+
 			//80.（用户空间）设置某用户的关注
 			//所需参数
 			var comData = {
@@ -504,16 +509,21 @@ var dynamiclistitem = (function($, mod) {
 			})
 		}) //点击取消关注
 		mui('.mui-table-view').on('tap', '.btn-attentioned', function() {
-			//判断是否是游客身份登录
-			if(events.judgeLoginMode(this)) {
-				return;
-			}
+
 			var item = this;
 			var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户昵称
 
 			var pageID = sliderId.replace('top_', '')
 			var tempId = this.id;
 			var index = this.id.replace('btn-focus' + pageID + idFlag, '');
+			//判断是否是游客身份登录
+			if(personalUTID == 0) {
+				events.toggleStorageArray(storageKeyName.SHOWFOCUSEPERSEN, parseInt(publisherId), 1);
+				var btn = document.getElementById(tempId);
+				btn.innerHTML = '关注'
+				btn.className = 'mui-btn mui-pull-right btn-attention'
+				return;
+			}
 			//80.（用户空间）设置某用户的关注
 			//所需参数
 			var comData = {
@@ -847,22 +857,22 @@ var dynamiclistitem = (function($, mod) {
 	mod.adddetailInfo = function(ulElement, liElement, data) {
 
 		var closeempty = '';
-			if(data.IsFocused == 0) {
-					closeempty = '<button id="btn-focus' + data.id_name + '" type="button" class="mui-btn mui-pull-right btn-attention" style="margin-top:10px;">关注</button>'
-				
-			} else {
-					closeempty = '<button id="btn-focus' + data.id_name + '" type="button" class="mui-btn mui-pull-right btn-attentioned" style="margin-top:10px;">已关注</button>'
+		if(data.IsFocused == 0) {
+			closeempty = '<button id="btn-focus' + data.id_name + '" type="button" class="mui-btn mui-pull-right btn-attention" style="margin-top:10px;">关注</button>'
 
-			}
+		} else {
+			closeempty = '<button id="btn-focus' + data.id_name + '" type="button" class="mui-btn mui-pull-right btn-attentioned" style="margin-top:10px;">已关注</button>'
+
+		}
 		var html = '';
 
 		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div>';
-		var html2 = '<p class="mui-ellipsis" style = "color:#323232;font-size:17px;margin-top:2px;text-align:center">'+data.MsgTitle+'</p></div>'
+		var html2 = '<p class="mui-ellipsis" style = "color:#323232;font-size:17px;margin-top:2px;text-align:center">' + data.MsgTitle + '</p></div>'
 		var html3 = '<div class="mui-media-body">' + closeempty;
 		//姓名
-		var html4 = '<p class="mui-ellipsis" style = "margin-top:10px;font-size:14px;color:#b7b7b7">' +'发布人：'+
-		'<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:20px;height:20px;border-radius: 50%;vertical-align: -5px;" src="' + data.personalImage + '"> '
-		+ data.personalName+'&nbsp;&nbsp;&nbsp;&nbsp; '+data.PublishDate + '</p></div></div>';
+		var html4 = '<p class="mui-ellipsis" style = "margin-top:10px;font-size:14px;color:#b7b7b7">' + '发布人：' +
+			'<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:20px;height:20px;border-radius: 50%;vertical-align: -5px;" src="' + data.personalImage + '"> ' +
+			data.personalName + '&nbsp;&nbsp;&nbsp;&nbsp; ' + data.PublishDate + '</p></div></div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext ">';
 		var html7 = '<div id="question_content' + data.id_name + '" style = "color:#808080;font-size:14px;margin-top:5px" class="ellipsis-show question_content">';
 		//内容
