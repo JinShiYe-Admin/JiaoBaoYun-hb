@@ -185,9 +185,9 @@ var course_list = (function(mod) {
 	 */
 	mod.getBtn = function(cell) {
 		if(cell.IsFocused) {
-			return '<input id="btn-focused" type="button" class="input-btn btn-focused" value="已关注"/>'
+			return '<button id="btn-focused" type="button" class="input-btn btn-focused">已关注</button>'
 		}
-		return '<input id="btn-focused" type="button" class="input-btn btn-unfocus" value="关注"/>'
+		return '<button id="btn-focused" type="button" class="input-btn btn-unfocus">关注</button>'
 	}
 	/**
 	 * 点击关注按钮
@@ -232,19 +232,18 @@ var course_list = (function(mod) {
 	mod.changeBtnStatus = function(item, type) {
 		if(item.info.IsFocus) {
 			item.className = "input-btn btn-unfocus";
-			item.value = "关注";
+			item.innerText = "关注";
 			if(type) {
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 1);
 			}
 		} else {
 			item.className = "input-btn btn-focused";
-			item.value = "已关注";
+			item.innerText = "已关注";
 			if(type) {
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 0);
 			}
 		}
 		item.info.IsFocus = !item.info.IsFocus;
-
 	}
 	/**
 	 * 
