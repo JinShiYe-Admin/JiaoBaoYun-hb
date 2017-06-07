@@ -45,9 +45,9 @@
 		</header>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
-				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div class="mui-scroll">
-						<a class="mui-control-item mui-active" href="#show-all">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="background-color: transparent;">
+					<div class="mui-scroll" style="background-color: transparent;">
+						<a class="mui-control-item mui-active" href="#show-all" style="background-color: transparent;">
 
 						</a>
 					</div>
@@ -88,7 +88,7 @@
 				getFocusedPerson(toggleAttendedPart);
 				show_listnew.setListListener();
 				addSlider();
-				window.addEventListener("focus",function(){
+				window.addEventListener("focus", function() {
 					console.log("关注传过来的值！")
 					getFocusedPerson(toggleAttendedPart);
 				})
@@ -98,9 +98,18 @@
 				document.getElementById('slider').addEventListener('slide', function(e) {
 					console.log("slider状态：" + JSON.stringify(e.detail))
 					if(e.detail.slideNumber == 0) {
-						setTitle(11);
+						if(document.getElementById("show-attended")){
+							setTitle(11);
+						}else{
+							setTitle(0);
+						}
 					} else if(e.detail.slideNumber == 1) {
-						setTitle(10);
+						if(document.getElementById("show-attended")){
+							setTitle(10);
+						}else{
+							setTitle(0);
+						}
+						
 					}
 				});
 			}
@@ -266,12 +275,16 @@
 						}
 						show_listnew.getShowList(document.getElementById("show-attended").showCity, document.getElementById("show-attended").querySelector(".mui-table-view"), show_listnew.setShowList)
 						initFresh(document.getElementById("show-attended"));
+
 						setTitle(11);
 					}
 				} else {
 					if(document.getElementById("show-attended")) {
+
 						sliderGroup.removeChild(document.getElementById("show-attended"));
 					}
+					var slider = mui('#slider').slider();
+					slider.gotoItem(0);
 					setTitle(0);
 				}
 			}
