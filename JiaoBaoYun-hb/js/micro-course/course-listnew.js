@@ -320,22 +320,22 @@ var course_listnew = (function(mod) {
 	//	}
 	mod.setListener = function() {
 		//点击头像
-		mui(".mui-table-view").on("tap", ".course-img", function(e) {
+		mui(".mui-slider").on("tap", ".course-img", function(e) {
 			var item = e.target;
 			mod.gotoCourseDetail(item.info);
 		});
 		//点击课程名称
-		mui(".mui-table-view").on("tap", ".coursre-name", function(e) {
+		mui(".mui-slider").on("tap", ".coursre-name", function(e) {
 			var item = e.target;
 			mod.gotoCourseDetail(item.info);
 		});
 		//点击节次名
-		mui(".mui-table-view").on("tap", ".course-info", function(e) {
+		mui(".mui-slider").on("tap", ".course-info", function(e) {
 			var item = e.target;
 			mod.gotoCourseDetail(item.info);
 		});
 		//点击关注按钮
-		mui(".mui-table-view").on("tap", ".input-btn", function(e) {
+		mui(".mui-slider").on("tap", ".input-btn", function(e) {
 			var item = e.target;
 			console.log("item.info:" + JSON.stringify(item.info));
 			mod.clickFocuseBtn(item);
