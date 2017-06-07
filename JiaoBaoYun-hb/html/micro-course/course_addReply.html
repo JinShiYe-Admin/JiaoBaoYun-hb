@@ -78,6 +78,7 @@
 					wd.close();
 					console.log('7.新增某小节课程的评论:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
+						events.fireToPageNone('course_details.html','addCommont',comData);
 						mui.toast('成功')
 						leaveContent.value = '';
 						mui.back();
