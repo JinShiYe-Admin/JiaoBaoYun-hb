@@ -79,6 +79,7 @@
 					console.log('7.新增某小节课程的评论:' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						comData.TabId = data.RspData.Result;
+						comData.arrayIndex = tempModel.arrayIndex;
 						events.fireToPageNone('course_details.html','addCommont',comData);
 						mui.toast('成功')
 						leaveContent.value = '';

@@ -442,6 +442,7 @@
 			}; //评论，回复者的账号信息
 			var sectionId; //当前显示的节次id
 			var pageIndex = 0; //当前页数
+
 			mui.init();
 			mui.plusReady(function() {
 				events.closeWaiting();
@@ -569,6 +570,7 @@
 								commentContent: '',
 								replyId: allUserInfo.value[userId].utid,
 								replyNick: allUserInfo.value[userId].unick,
+								arrayIndex:ids[2]
 							}
 							//console.log("data " + JSON.stringify(data));
 							events.openNewWindowWithData('course_addReply.html', data);
@@ -648,7 +650,7 @@
 							UpperId: e.detail.data.upperId
 						});
 					}
-					showCommentsFirst(sectionData.value[e.detail.data.secId].Comments)
+					showCommentsFirst(sectionData.value[e.detail.data.secId].Comments);
 				});
 			}
 
