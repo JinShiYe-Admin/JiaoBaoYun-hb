@@ -139,7 +139,7 @@ var show_listnew = (function(mod) {
 			console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				showCity.pageIndex++;
-				totalPage = data.RspData.totalPage;
+				showCity.totalPage = data.RspData.totalPage;
 				mod.getUserInfo(data.RspData.Data, function(tempData) {
 					showArray = tempData;
 					callback(showCity, listContainer, tempData);
