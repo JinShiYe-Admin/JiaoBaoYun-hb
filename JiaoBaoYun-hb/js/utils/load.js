@@ -105,6 +105,8 @@ var load = (function(mod) {
 		}
 	}
 	mod.getVideoThumb = function(videoPath, callback) {
+//				video.setAttribute("preload","metadata");
+//		video.onloadedmetadata = function() 
 		var video = document.createElement("video");
 		video.src = videoPath;
 		video.onloadeddata = function() {

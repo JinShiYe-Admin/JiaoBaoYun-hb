@@ -484,6 +484,7 @@ var dynamiclistitem = (function($, mod) {
 				var btn = document.getElementById(tempId);
 				btn.innerHTML = '已关注'
 				btn.className = 'mui-btn mui-pull-right btn-attentioned'
+				events.fireToPageWithData('show_home1.html','focus',{flag:1})
 				return;
 			}
 
@@ -504,6 +505,7 @@ var dynamiclistitem = (function($, mod) {
 					var btn = document.getElementById(tempId);
 					btn.innerHTML = '已关注'
 					btn.className = 'mui-btn mui-pull-right btn-attentioned'
+					events.fireToPageWithData('show_home1.html','focus',{flag:1})
 				}
 
 			})
@@ -522,6 +524,7 @@ var dynamiclistitem = (function($, mod) {
 				var btn = document.getElementById(tempId);
 				btn.innerHTML = '关注'
 				btn.className = 'mui-btn mui-pull-right btn-attention'
+				events.fireToPageWithData('show-home1.html','focus',{flag:0})
 				return;
 			}
 			//80.（用户空间）设置某用户的关注
@@ -542,6 +545,7 @@ var dynamiclistitem = (function($, mod) {
 					var btn = document.getElementById(tempId);
 					btn.innerHTML = '关注'
 					btn.className = 'mui-btn mui-pull-right btn-attention'
+					events.fireToPageWithData('show-home1.html','focus',{flag:0})
 
 				}
 

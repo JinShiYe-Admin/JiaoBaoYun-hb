@@ -1,5 +1,6 @@
 var video = (function(mod) {
 	mod.recordVideo = function(data, successCB, errorCB) {
+		console.log(1111)
 		var options = mod.initOption(data);
 		if(plus.os.name == "Android") {
 			recordVideoInAndroid(options, successCB, errorCB);
@@ -8,6 +9,8 @@ var video = (function(mod) {
 				code: 999, // 错误编码
 				message: '暂不支持Android以外的系统！' // 错误描述信息
 			});
+
+//			recordVideoInIOS(options, successCB, errorCB);
 		}
 	}
 	mod.initOption = function(data) {
@@ -25,6 +28,21 @@ var video = (function(mod) {
 		return options;
 	}
 
+	function recordVideoInIOS(options, successCB, errorCB) {
+
+		var cmr = plus.camera.getCamera();
+		cmr.startVideoCapture(function(p) {
+			console.log('成功：' + plus.io.convertLocalFileSystemURL(p));
+			successCB(plus.io.convertLocalFileSystemURL(p))
+		}, function(e) {
+			errorCB();
+		}, {
+			filename: '_documents/' + (new Date()).getTime() + parseInt(Math.random() * 1000) + '.mp4',
+			index: 1
+		});
+
+	}
+
 	function recordVideoInAndroid(options, successCB, errorCB) {
 		var File = plus.android.importClass("java.io.File");
 		var Uri = plus.android.importClass("android.net.Uri");
@@ -34,7 +52,7 @@ var video = (function(mod) {
 		var file = new File(options.outPutPath);
 		var outPutUri = Uri.fromFile(file);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri); //录像输出位置
-//		intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0); //0 最低质量, 1高质量(不设置,10M;0,几百KB;1,50M)
+		//		intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0); //0 最低质量, 1高质量(不设置,10M;0,几百KB;1,50M)
 		intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, options.time); //控制录制时间单位秒
 
 		var main = plus.android.runtimeMainActivity();
@@ -64,7 +82,7 @@ var video = (function(mod) {
 			}
 		};
 	}
-	mod.playInAndroid = function(videoAddress,thumbPath,playCallback) {
+	mod.playInAndroid = function(videoAddress, thumbPath, playCallback) {
 		if(mui.os.android) {
 			var Intent = plus.android.importClass("android.content.Intent");
 			var Uri = plus.android.importClass("android.net.Uri");
@@ -72,11 +90,11 @@ var video = (function(mod) {
 			var intent = new Intent(Intent.ACTION_VIEW);
 			var uri = Uri.parse(videoAddress);
 			intent.setDataAndType(uri, "video/*");
-			main.startActivityForResult(intent,storageKeyName.CODEPLAYVIDEO);
-			main.onActivityResult=function(requestCode, resultCode, data){
-				if(requestCode==storageKeyName.CODEPLAYVIDEO){
-					console.log("播放录像的回调code:"+resultCode);
-					if(playCallback){
+			main.startActivityForResult(intent, storageKeyName.CODEPLAYVIDEO);
+			main.onActivityResult = function(requestCode, resultCode, data) {
+				if(requestCode == storageKeyName.CODEPLAYVIDEO) {
+					console.log("播放录像的回调code:" + resultCode);
+					if(playCallback) {
 						playCallback();
 					}
 				}
@@ -99,9 +117,9 @@ var video = (function(mod) {
 		player.poster = "";
 		player.removeAttribute("autoplay");
 	}
-	mod.playVideo = function(videoPath, thumbPath,playCallback) {
+	mod.playVideo = function(videoPath, thumbPath, playCallback) {
 		if(plus.os.name == "Android") {
-			mod.playInAndroid(videoPath, thumbPath,playCallback);
+			mod.playInAndroid(videoPath, thumbPath, playCallback);
 		} else {
 			//			mod.playInHTML(videoPath,thumbPath);
 			mui.toast("功能暂未开放！")
