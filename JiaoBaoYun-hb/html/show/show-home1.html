@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/fresh.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/utils/common.css" />
-		<link rel="stylesheet" href="../../css/micro-course/course-list.css" />
+		<link rel="stylesheet" href="../../css/show/show-list.css" />
 		<style>
 			.mui-slider-indicator {
 				margin-left: -10px;
@@ -47,13 +47,13 @@
 			<div id="slider" class="mui-slider mui-fullscreen">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div class="mui-scroll">
-						<a class="mui-control-item mui-active" href="#course-all">
+						<a class="mui-control-item mui-active" href="#show-all">
 
 						</a>
 					</div>
 				</div>
 				<div class="mui-slider-group">
-					<div id="course-all" class="mui-slider-item mui-control-content">
+					<div id="show-all" class="mui-slider-item mui-control-content">
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul class="mui-table-view">
@@ -67,13 +67,12 @@
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
-		<script src="../../js/micro-course/course-listnew.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/publicMicroClass.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init();
-			document.getElementById("course-all").info = {
+			document.getElementById("show-all").info = {
 				type: 1, //类型 1为全部 0为关注
 				pageIndex: 1, //页码
 				totalPage: 0 //总页码
@@ -88,9 +87,7 @@
 				course_listnew.setListener();
 				addSlider();
 			});
-			/**
-			 * 滑动监听
-			 */
+
 			function addSlider() {
 				document.getElementById('slider').addEventListener('slide', function(e) {
 					console.log("slider状态：" + JSON.stringify(e.detail))
@@ -102,7 +99,7 @@
 				});
 			}
 			/**
-			 * 显示标题
+			 * 
 			 * @param {Object} type 0 只有全部 10 显示全部 11 显示关注
 			 */
 			function setTitle(type) {
@@ -130,8 +127,8 @@
 				}
 			}
 			/**
-			 * 加载刷新方法
-			 * @param {Object} freshConatiner 需要加载刷新的DOM
+			 * 
+			 * @param {Object} freshConatiner
 			 */
 			function initFresh(freshConatiner) {
 				mui('.mui-scroll-wrapper').scroll({
@@ -166,10 +163,7 @@
 					}
 				});
 			}
-			/**
-			 * 获取关注的课程
-			 * @param {Object} callback
-			 */
+
 			function getAttendedClasses(callback) {
 				if(events.getUtid()) {
 					// 等待的对话框
@@ -196,39 +190,35 @@
 
 			}
 			/**
-			 * 加载或删除关注模块
+			 * 
 			 * @param {Object} type 0 删除关注 1 加载关注
 			 */
 			function toggleAttendedPart(type) {
 				console.log("加载关注部分：" + type);
 				var sliderGroup = document.querySelector(".mui-slider-group");
 				if(type) {
-					//加载关注模块
-					if(!document.getElementById("course-attended")) {
-						sliderGroup.insertBefore(createAttendedFragment(), document.querySelector("#course-all"));
-						document.getElementById("course-attended").info = {
+					if(!document.getElementById("show-attended")) {
+						sliderGroup.insertBefore(createAttendedFragment(), document.querySelector("#show-all"));
+						document.getElementById("show-attended").info = {
 							type: 0,//关注
 							pageIndex: 1,//页码
 							totalPage: 0 //总页码
 						};
-						course_listnew.getData(0, 1, document.getElementById("course-attended").querySelector(".mui-table-view"), course_listnew.setData)
-						initFresh(document.getElementById("course-attended"));
+						show_listnew.getData(0, 1, document.getElementById("show-attended").querySelector(".mui-table-view"), show_listnew.setData)
+						initFresh(document.getElementById("show-attended"));
 						setTitle(11);
 					}
 				} else {
-					if(document.getElementById("course-attended")) {
-						//删除关注模块
-						sliderGroup.removeChild(document.getElementById("course-attended"));
+					if(document.getElementById("show-attended")) {
+						sliderGroup.removeChild(document.getElementById("show-attended"));
 					}
 					setTitle(0);
 				}
 			}
-			/**
-			 * 创建关注模块
-			 */
+
 			function createAttendedFragment() {
 				var div = document.createElement("div");
-				div.id = "course-attended";
+				div.id = "show-attended";
 				div.className = "mui-slider-item mui-control-content"
 				div.innerHTML = '<div id="scroll1" class="mui-scroll-wrapper">\
 							<div class="mui-scroll">\
