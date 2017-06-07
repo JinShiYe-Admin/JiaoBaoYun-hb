@@ -227,8 +227,8 @@
 					},
 					up: {
 						callback: function() {
+							var self = this;
 							if(freshConatiner.showCity.pageIndex < freshConatiner.showCity.totalPage) {
-								var self = this;
 								var ul = self.element.querySelector('.show-list');
 								show_listnew.getShowList(freshConatiner.showCity, ul, show_listnew.setShowList);
 								setTimeout(function() {
