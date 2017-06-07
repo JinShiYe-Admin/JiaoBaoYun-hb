@@ -442,6 +442,7 @@
 			}; //评论，回复者的账号信息
 			var sectionId; //当前显示的节次id
 			var pageIndex = 0; //当前页数
+
 			mui.init();
 			mui.plusReady(function() {
 				events.closeWaiting();
@@ -568,7 +569,8 @@
 								userNick: myStorage.getItem(storageKeyName.PERSONALINFO).unick,
 								commentContent: '',
 								replyId: allUserInfo.value[userId].utid,
-								replyNick: allUserInfo.value[userId].unick
+								replyNick: allUserInfo.value[userId].unick,
+								arrayIndex:ids[2]
 							}
 							//console.log("data " + JSON.stringify(data));
 							events.openNewWindowWithData('course_addReply.html', data);
@@ -621,8 +623,34 @@
 				});
 
 				//新增评论
-				window.addEventListener('addCommont', function() {
-					console.log("addCommont " + JSON.stringify(e.detail));
+				window.addEventListener('addCommont', function(e) {
+					console.log("addCommont " + JSON.stringify(e.detail.data));
+					if(e.detail.data.replyId == 0) { //对节次评论
+						sectionData.value[e.detail.data.secId].Comments.unshift({
+							CommentDate: new Date(new Date().getTime()).toJSON().replace("T", " "),
+							TabId: e.detail.data.TabId,
+							Replys: [],
+							ReplyId: e.detail.data.replyId,
+							CommentContent: e.detail.data.commentContent,
+							UserId: e.detail.data.userId,
+							LikeNum: 0,
+							UpperId: e.detail.data.upperId,
+							IsLiked: 0
+						});
+					} else { //对评论进行评论
+						sectionData.value[e.detail.data.secId].Comments[e.detail.data.arrayIndex].Replys.unshift({
+							CommentDate: new Date(new Date().getTime()).toJSON().replace("T", " "),
+							TabId: e.detail.data.TabId,
+							status: 1,
+							secID: e.detail.data.secId,
+							ReplyId: e.detail.data.replyId,
+							CommentContent: e.detail.data.commentContent,
+							CommentType: 2,
+							UserId: e.detail.data.userId,
+							UpperId: e.detail.data.upperId
+						});
+					}
+					showCommentsFirst(sectionData.value[e.detail.data.secId].Comments);
 				});
 			}
 
@@ -796,7 +824,6 @@
 					document.getElementById("section_top_title").innerHTML = data.SecName;
 					document.getElementById("section_top_content").innerHTML = data.SecNote;
 					document.getElementById("section_top_time").innerHTML = "上传时间 : " + data.UpTime.split(" ")[0];
-					document.getElementById("section_comment_list").innerHTML = "";
 					var section_top_zan = document.getElementById("section_top_zan");
 					section_top_zan.innerHTML = "(" + data.LikeNum + ")";
 					if(data.IsLiked) { //节次点赞
@@ -881,6 +908,7 @@
 			function showCommentsFirst(comments, wd) {
 				wd = wd || events.showWaiting();
 				//console.log("showCommentsFirst " + JSON.stringify(comments));
+				document.getElementById("section_comment_list").innerHTML = "";
 				document.getElementById("section_comment_title").innerText = "评论(" + comments.length + ")";
 				var utids = [];
 				for(var i in comments) {
@@ -952,7 +980,7 @@
 						<div class="section-comment-info">回复' + data[i].Replys.length + '</div>\
 						<div class="mui-pull-right section-comment-info">' + data[i].CommentDate.split(" ")[0] + '</div>';
 					//回复评论
-					var html_1 = '';
+					var html_1 = "";
 					for(var j in data[i].Replys) {
 						if(j == 0) {
 							html_1 = '<div data-type="reply" id="commont_reply_' + data[i].TabId + '" class="section-comment-reply">';
@@ -970,7 +998,10 @@
 							</div>';
 						}
 					}
-					ele.innerHTML = html_0 + html_1 + '</div>';
+					if(html_1 != "") {
+						html_1 = html_1 + '</div>';
+					}
+					ele.innerHTML = html_0 + html_1;
 					document.getElementById("section_comment_list").appendChild(ele);
 				}
 
@@ -1015,7 +1046,6 @@
 			 */
 			function showAllCommonts(data) {
 				console.log("showAllCommonts " + JSON.stringify(data));
-				var html
 				for(var i in data.Replys) {
 					if(i > 4) {
 						var ele = document.createElement('div');
