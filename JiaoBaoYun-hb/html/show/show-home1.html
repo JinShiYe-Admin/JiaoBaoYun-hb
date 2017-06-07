@@ -151,6 +151,16 @@
 				window.addEventListener("focus", function() {
 					console.log("关注传过来的值！")
 					getFocusedPerson(toggleAttendedPart);
+				});
+				window.addEventListener("infoChanged", function() {
+					console.log("********展现监听infoChanged")
+					if(document.getElementById("show-attended")) {
+						document.getElementById("show-attended").querySelector(".show-list").innerHTML = "";
+					}
+					document.getElementById("show-all").querySelector(".show-list").innerHTML = "";
+					document.getElementById("show-all").showCity.pageIndex = 1;
+					show_listnew.getShowList(document.getElementById("show-all").showCity, document.getElementById("show-all").querySelector(".show-list"), show_listnew.setShowList)
+					getFocusedPerson(toggleAttendedPart);
 				})
 			});
 

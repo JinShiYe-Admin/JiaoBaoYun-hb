@@ -357,6 +357,8 @@ var events = (function(mod) {
 		events.fireToPageNone("course-attended.html","infoChanged");
 		events.fireToPageNone("show-all.html","infoChanged");
 		events.fireToPageNone("show-attended.html","infoChanged");
+		events.fireToPageNone("show-home1.html","infoChanged");
+		events.fireToPageNone("course-home1.html","infoChanged");
 	}
 	mod.shortForString = function(str, len) {
 		if(!str) {
