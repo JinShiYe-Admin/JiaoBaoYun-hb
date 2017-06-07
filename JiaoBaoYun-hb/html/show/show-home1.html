@@ -151,7 +151,7 @@
 								ul.innerHTML = "";
 								freshConatiner.showCity.pageIndex = 1;
 								console.log("获取的fresh:" + JSON.stringify(freshConatiner.info))
-								show_listnew.getShowList(freshConatiner.showCity, ul, show_listnew.setShowList());
+								show_listnew.getShowList(freshConatiner.showCity, ul, show_listnew.setShowList);
 								self.endPullDownToRefresh();
 							}, 1000);
 						}
