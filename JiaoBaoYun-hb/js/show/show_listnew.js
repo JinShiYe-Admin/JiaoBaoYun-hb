@@ -5,7 +5,7 @@ var show_listnew = (function(mod) {
 		}
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-//		var wd = events.showWaiting();
+		//		var wd = events.showWaiting();
 		if(showCity.pageFlag == 0) { //关注
 			console.log('关注界面拉');
 			//81.（用户空间）获取用户所有关注的用户
@@ -31,7 +31,7 @@ var show_listnew = (function(mod) {
 				console.log('78.（用户空间）获取区域用户空间列表：' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					//总页数
-					totalPage = data.RspData.TotalPage;
+					showCity.totalPage = data.RspData.TotalPage;
 					showCity.pageIndex++;
 					mod.getUserInfo(data.RspData.Data, function(tempData) {
 						callback(showCity, listContainer, tempData);
@@ -219,6 +219,15 @@ var show_listnew = (function(mod) {
 		mui(".mui-slider-group").on("tap", ".news-container", function(e) {
 			this.disabled = true;
 			events.singleWebviewInPeriod(this, "../quan/space-detail.html", this.info);
+		})
+		//发布的点击事件
+		document.getElementById("publish-show").addEventListener("tap", function() {
+			var item = this;
+			if(events.judgeLoginMode(item)) {
+				return
+			}
+			item.disabled = true;
+			events.singleWebviewInPeriod(item, "../quan/pub-dynamic.html", "zx");
 		})
 	}
 	return mod;

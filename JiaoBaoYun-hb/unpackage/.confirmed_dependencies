@@ -997,7 +997,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/mui.min.js"
 		],
 		"refer": [
 			"html/register/register_phoneNumber.html"
@@ -2167,7 +2168,8 @@
 			"fonts/fangzheng.ttf"
 		],
 		"refer": [
-			"html/quan/space-detail.html"
+			"html/quan/space-detail.html",
+			"html/register/login.html"
 		]
 	}
 }

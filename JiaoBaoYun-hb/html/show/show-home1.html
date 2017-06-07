@@ -42,6 +42,7 @@
 				<div class="mui-indicator mui-active"></div>
 				<div class="mui-indicator"></div>
 			</div>
+			<a id="publish-show" class="mui-pull-right">发布</a>
 		</header>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
@@ -56,8 +57,67 @@
 					<div id="show-all" class="mui-slider-item mui-control-content">
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
-								<ul class="mui-table-view">
-								</ul>
+								<div class="show-list">
+									<!--<div class="cityNews-container mui-card">
+										<div class="mui-table-view">
+											<li class="mui-table-view-cell news-container"><img class="news-img" src="http://qn-kfpb.jiaobaowang.net/jxq/PersonalSpace/thumb/1496731091586.png">
+												<div class="news-words">
+													<p class="news-title single-line">mmm</p>
+													<div class="anthor-date">
+														<p class="news-anthor single-line">遥不可及</p>
+														<p class="news-date">06-06 14:38</p>
+													</div>
+												</div>
+											</li>
+											<li class="mui-table-view-cell news-container"><img class="news-img" src="http://qn-kfpb.jiaobaowang.net/jxq/PersonalSpace/thumb/1496731036698.jpg">
+												<div class="news-words">
+													<p class="news-title single-line">ppppp</p>
+													<div class="anthor-date">
+														<p class="news-anthor single-line">遥不可及</p>
+														<p class="news-date">06-06 14:37</p>
+													</div>
+												</div>
+											</li>
+											<li class="mui-table-view-cell news-container"><img class="news-img" src="../../image/show/show-default-small.png">
+												<div class="news-words">
+													<p class="news-title single-line">kkkkk</p>
+													<div class="anthor-date">
+														<p class="news-anthor single-line">遥不可及</p>
+														<p class="news-date">06-06 14:36</p>
+													</div>
+												</div>
+											</li>
+											<li class="mui-table-view-cell news-container"><img class="news-img" src="../../image/show/show-default-small.png">
+												<div class="news-words">
+													<p class="news-title single-line">工呼吸一下</p>
+													<div class="anthor-date">
+														<p class="news-anthor single-line">森哈哈哈哈哈哈啦啦啦啦啦就好了考虑</p>
+														<p class="news-date">06-06 10:03</p>
+													</div>
+												</div>
+											</li>
+											<li class="mui-table-view-cell news-container"><img class="news-img" src="../../image/show/show-default-small.png">
+												<div class="news-words">
+													<p class="news-title single-line">123456789123456789123456789000</p>
+													<div class="anthor-date">
+														<p class="news-anthor single-line">遥不可及</p>
+														<p class="news-date">06-03 11:03</p>
+													</div>
+												</div>
+											</li>
+											<li class="mui-table-view-cell news-container"><img class="news-img" src="../../image/show/show-default-small.png">
+												<div class="news-words">
+													<p class="news-title single-line">aav</p>
+													<div class="anthor-date">
+														<p class="news-anthor single-line">遥不可及</p>
+														<p class="news-date">06-02 16:31</p>
+													</div>
+												</div>
+											</li>
+										</div>
+									</div>-->
+
+								</div>
 							</div>
 						</div>
 					</div>
@@ -84,7 +144,7 @@
 			var deceleration = mui.os.ios ? 0.003 : 0.0009;
 			mui.plusReady(function() {
 				initFresh(document.getElementById("show-all"));
-				show_listnew.getShowList(document.getElementById("show-all").showCity, document.getElementById("show-all").querySelector(".mui-table-view"), show_listnew.setShowList)
+				show_listnew.getShowList(document.getElementById("show-all").showCity, document.getElementById("show-all").querySelector(".show-list"), show_listnew.setShowList)
 				getFocusedPerson(toggleAttendedPart);
 				show_listnew.setListListener();
 				addSlider();
@@ -98,18 +158,18 @@
 				document.getElementById('slider').addEventListener('slide', function(e) {
 					console.log("slider状态：" + JSON.stringify(e.detail))
 					if(e.detail.slideNumber == 0) {
-						if(document.getElementById("show-attended")){
+						if(document.getElementById("show-attended")) {
 							setTitle(11);
-						}else{
+						} else {
 							setTitle(0);
 						}
 					} else if(e.detail.slideNumber == 1) {
-						if(document.getElementById("show-attended")){
+						if(document.getElementById("show-attended")) {
 							setTitle(10);
-						}else{
+						} else {
 							setTitle(0);
 						}
-						
+
 					}
 				});
 			}
@@ -155,26 +215,28 @@
 					down: {
 						callback: function() {
 							var self = this;
+							var ul = self.element.querySelector('.show-list');
+							ul.innerHTML = "";
+							freshConatiner.showCity.pageIndex = 1;
+							console.log("获取的fresh:" + JSON.stringify(freshConatiner.info))
+							show_listnew.getShowList(freshConatiner.showCity, ul, show_listnew.setShowList);
 							setTimeout(function() {
-								var ul = self.element.querySelector('.mui-table-view');
-								ul.innerHTML = "";
-								freshConatiner.showCity.pageIndex = 1;
-								console.log("获取的fresh:" + JSON.stringify(freshConatiner.info))
-								show_listnew.getShowList(freshConatiner.showCity, ul, show_listnew.setShowList);
 								self.endPullDownToRefresh();
-							}, 1000);
+							}, 1500);
 						}
 					},
 					up: {
 						callback: function() {
-							var self = this;
-							setTimeout(function() {
-								var ul = self.element.querySelector('.mui-table-view');
-								freshConatiner.showCity.pageInex++;
+							if(freshConatiner.showCity.pageIndex < freshConatiner.showCity.totalPage) {
+								var self = this;
+								var ul = self.element.querySelector('.show-list');
 								show_listnew.getShowList(freshConatiner.showCity, ul, show_listnew.setShowList);
+								setTimeout(function() {
+									self.endPullUpToRefresh();
+								}, 1500);
+							} else {
 								self.endPullUpToRefresh();
-								events.closeWaiting();
-							}, 1000);
+							}
 						}
 					}
 				});
@@ -273,7 +335,7 @@
 							pageIndex: 1,
 							totalPage: 0
 						}
-						show_listnew.getShowList(document.getElementById("show-attended").showCity, document.getElementById("show-attended").querySelector(".mui-table-view"), show_listnew.setShowList)
+						show_listnew.getShowList(document.getElementById("show-attended").showCity, document.getElementById("show-attended").querySelector(".show-list"), show_listnew.setShowList)
 						initFresh(document.getElementById("show-attended"));
 
 						setTitle(11);
@@ -295,8 +357,8 @@
 				div.className = "mui-slider-item mui-control-content"
 				div.innerHTML = '<div id="scroll1" class="mui-scroll-wrapper">\
 							<div class="mui-scroll">\
-								<ul class="mui-table-view">\
-								</ul>\
+								<div class="show-list">\
+								</div>\
 							</div>\
 						</div>';
 				return div;
