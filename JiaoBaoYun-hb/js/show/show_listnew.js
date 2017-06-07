@@ -5,7 +5,7 @@ var show_listnew = (function(mod) {
 		}
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-		var wd = events.showWaiting();
+//		var wd = events.showWaiting();
 		if(showCity.pageFlag == 0) { //关注
 			console.log('关注界面拉');
 			//81.（用户空间）获取用户所有关注的用户
@@ -17,6 +17,7 @@ var show_listnew = (function(mod) {
 				getFocusByUser(showCity, listContainer, callback);
 			}
 		} else { //全部
+			var wd = events.showWaiting();
 			/**
 			 * 78.（用户空间）获取区域用户空间列表
 			 */

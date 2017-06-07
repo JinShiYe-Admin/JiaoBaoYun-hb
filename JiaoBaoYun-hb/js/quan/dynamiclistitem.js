@@ -477,14 +477,16 @@ var dynamiclistitem = (function($, mod) {
 			var pageID = sliderId.replace('top_', '')
 			var tempId = this.id;
 			var index = this.id.replace('btn-focus' + pageID + idFlag, '');
-			console.log('personalUTID='+personalUTID+'-----'+'publisherId='+publisherId)
+			console.log('personalUTID=' + personalUTID + '-----' + 'publisherId=' + publisherId)
 			//判断是否是游客身份登录
 			if(personalUTID == 0) {
 				events.toggleStorageArray(storageKeyName.SHOWFOCUSEPERSEN, parseInt(publisherId), 0);
 				var btn = document.getElementById(tempId);
 				btn.innerHTML = '已关注'
 				btn.className = 'mui-btn mui-pull-right btn-attentioned'
-				events.fireToPageWithData('show_home1.html','focus',{flag:1})
+				events.fireToPageNone('show-home1.html', 'focus', {
+					flag: 1
+				})
 				return;
 			}
 
@@ -505,7 +507,9 @@ var dynamiclistitem = (function($, mod) {
 					var btn = document.getElementById(tempId);
 					btn.innerHTML = '已关注'
 					btn.className = 'mui-btn mui-pull-right btn-attentioned'
-					events.fireToPageWithData('show_home1.html','focus',{flag:1})
+					events.fireToPageNone('show-home1.html', 'focus', {
+						flag: 1
+					})
 				}
 
 			})
@@ -524,7 +528,9 @@ var dynamiclistitem = (function($, mod) {
 				var btn = document.getElementById(tempId);
 				btn.innerHTML = '关注'
 				btn.className = 'mui-btn mui-pull-right btn-attention'
-				events.fireToPageWithData('show-home1.html','focus',{flag:0})
+				events.fireToPageNone('show-home1.html', 'focus', {
+					flag: 0
+				})
 				return;
 			}
 			//80.（用户空间）设置某用户的关注
@@ -545,7 +551,9 @@ var dynamiclistitem = (function($, mod) {
 					var btn = document.getElementById(tempId);
 					btn.innerHTML = '关注'
 					btn.className = 'mui-btn mui-pull-right btn-attention'
-					events.fireToPageWithData('show-home1.html','focus',{flag:0})
+					events.fireToPageNone('show-home1.html', 'focus', {
+						flag: 0
+					})
 
 				}
 
@@ -876,7 +884,7 @@ var dynamiclistitem = (function($, mod) {
 		//姓名
 		var html4 = '<p class="mui-ellipsis" style = "margin-top:10px;font-size:14px;color:#b7b7b7">' + '发布人：' +
 			'<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:20px;height:20px;border-radius: 50%;vertical-align: -5px;" src="' + data.personalImage + '"> ' +
-			events.shortForString(data.personalName,5) + '&nbsp;&nbsp;&nbsp;&nbsp; ' + data.PublishDate + '</p></div></div>';
+			events.shortForString(data.personalName, 5) + '&nbsp;&nbsp;&nbsp;&nbsp; ' + data.PublishDate + '</p></div></div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext ">';
 		var html7 = '<div id="question_content' + data.id_name + '" style = "color:#808080;font-size:14px;margin-top:5px" class="ellipsis-show question_content">';
 		//内容
