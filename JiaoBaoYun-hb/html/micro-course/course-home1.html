@@ -193,7 +193,7 @@
 						pageSize: 1 //每页记录数,传入0，获取总记录数
 					}, wd, function(data) {
 						wd.close();
-						if(data.RspCode == 0 && data.RspData.TotalCnt) {
+						if(data.RspCode == 0 && data.RspData.totalCount) {
 							callback(true);
 						} else {
 							callback(false);

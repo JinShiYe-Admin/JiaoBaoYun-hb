@@ -107,8 +107,6 @@ var course_listnew = (function(mod) {
 					model.totalPage = data.RspData.totalPage;
 					model.pageIndex++;
 					if(model.freshFlag == 0) { //刷新
-						//清除节点
-						document.getElementById('list-container').innerHTML = "";
 						model.courseArray = data.RspData.Data;
 						if(data.RspData.Data.length == 0) {
 							mui.toast('没有数据');
@@ -232,6 +230,11 @@ var course_listnew = (function(mod) {
 			console.log('6.设置对某个课程关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) { //成功
 				mod.changeBtnStatus(item);
+				if (data.RspData.FocusCnt>0) {
+					toggleAttendedPart(1);//0 删除关注 1 加载关注
+				}else{
+					toggleAttendedPart(0);//0 删除关注 1 加载关注
+				}
 			} else {
 				mui.toast(data.RspTxt);
 				//				mod.endFresh();
@@ -255,18 +258,12 @@ var course_listnew = (function(mod) {
 					toggleAttendedPart(0);//0 删除关注 1 加载关注
 				}
 			}
-			//			toggleAttendedPart(0);
 		} else {
 			item.className = "input-btn btn-focused";
 			item.innerText = "已关注";
 			if(type) {
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 0);
-				console.log("关注的课程：" + myStorage.getItem(storageKeyName.FOCUSECOURSES))
-				//游客关注的课程
-				var focuseTemp = window.myStorage.getItem(window.storageKeyName.FOCUSECOURSES);
-				if (focuseTemp.length>0) {
-					toggleAttendedPart(1);//0 删除关注 1 加载关注
-				}
+				console.log("关注的课程：" + myStorage.getItem(storageKeyName.FOCUSECOURSES));
 			}
 			toggleAttendedPart(1);
 		}
