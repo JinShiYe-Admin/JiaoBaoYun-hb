@@ -165,3 +165,18 @@ var postDataMCPro_getAllFocusCoursesByIds = function(commonData, wd, callback) {
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINMICROCLASS + 'course/getAllFocusCoursesByIds', enData, commonData, 2, wd, callback);
 }
+
+//14.设置某小节的点赞
+//所需参数
+//		var comData = {
+//			secId: '',//节次ID
+//			userId: '',//点赞用户ID
+//			status:''//点赞状态,0 取消点赞,1 点赞
+//		};
+//返回值：1为正确
+var postDataMCPro_setSecLike = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINMICROCLASS + 'course/setSecLike', enData, commonData, 2, wd, callback);
+}
