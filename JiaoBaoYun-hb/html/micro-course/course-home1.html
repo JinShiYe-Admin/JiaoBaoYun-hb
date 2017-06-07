@@ -97,7 +97,11 @@
 				document.getElementById('slider').addEventListener('slide', function(e) {
 					console.log("slider状态：" + JSON.stringify(e.detail))
 					if(e.detail.slideNumber === 0) {
-						setTitle(11);
+						if(document.getElementById("course-attended")){
+							setTitle(11);
+						}else{
+							setTitle(0);
+						}
 					} else if(e.detail.slideNumber === 1) {
 						setTitle(10);
 					}
@@ -235,6 +239,8 @@
 						//删除关注模块
 						sliderGroup.removeChild(document.getElementById("course-attended"));
 					}
+					var slider = mui('#slider').slider();
+					slider.gotoItem(0);
 					setTitle(0);
 				}
 			}
