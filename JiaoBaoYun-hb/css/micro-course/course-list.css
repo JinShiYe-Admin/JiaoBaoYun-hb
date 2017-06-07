@@ -1,8 +1,11 @@
 /*课程容器*/
 
 .course-container {
-	display: flex;
+	display: -webkit-box;
 	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
 }
 
 .img-container{
@@ -45,9 +48,11 @@
  */
 
 .courseName-button {
-	display: flex;
+	display: -webkit-box;
 	display: -webkit-flex;
-	/*padding-bottom: 15px;*/
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
 }
 
 
