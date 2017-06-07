@@ -2006,7 +2006,8 @@
 					"html/register/login.html",
 					"html/cloud/order-member.html",
 					"html/micro-course/course-home.html",
-					"html/micro-course/course-home1.html"
+					"html/micro-course/course-home1.html",
+					"html/show/show-home1.html"
 				],
 				"priority": 0
 			},
@@ -4903,6 +4904,38 @@
 				],
 				"refer": [
 					"html/micro-course/course_details.html"
+				],
+				"priority": 0
+			},
+			"html/show/show-home1.html": {
+				"resources": [
+					"css/show/show-list.css",
+					"css/utils/fresh.css",
+					"js/show/show_listnew.js",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"js/libs/crypto-js/crypto-js.js",
+					"image/show/show-default-small.png",
+					"image/utils/loading.gif",
+					"js/mui.pullToRefresh.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"image/show/show-default-large.png"
+				],
+				"refer": [
+					"html/quan/space-detail.html"
 				],
 				"priority": 0
 			}
