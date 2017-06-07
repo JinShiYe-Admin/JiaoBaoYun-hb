@@ -25,7 +25,7 @@ var show_listnew = (function(mod) {
 				userId: personal.utid, //用户ID
 				area: '0', //区域
 				pageIndex: showCity.pageIndex, //当前页数
-				pageSize: 6 //每页记录数
+				pageSize: 12 //每页记录数
 			}, wd, function(data) {
 				events.closeWaiting();
 				console.log('78.（用户空间）获取区域用户空间列表：' + JSON.stringify(data));
@@ -34,7 +34,12 @@ var show_listnew = (function(mod) {
 					showCity.totalPage = data.RspData.TotalPage;
 					showCity.pageIndex++;
 					mod.getUserInfo(data.RspData.Data, function(tempData) {
-						callback(showCity, listContainer, tempData);
+						if(tempData.length > 6) {//分为6个一组
+							callback(showCity, listContainer, tempData.slice(0, 6));
+							callback(showCity, listContainer, tempData.slice(6, tempData.length));
+						} else {
+							callback(showCity, listContainer, tempData);
+						}
 					});
 				} else {
 					mui.toast(data.RspTxt);
@@ -130,7 +135,7 @@ var show_listnew = (function(mod) {
 			userId: personal.utid, //用户ID,登录用户
 			publisherIds: arrayToStr(paraModel), //发布者ID,例如[1,2,3]
 			pageIndex: showCity.pageIndex, //当前页数
-			pageSize: 6 //每页记录数
+			pageSize: 12 //每页记录数
 		};
 		// 等待的对话框
 		var wd1 = events.showWaiting();
@@ -142,7 +147,12 @@ var show_listnew = (function(mod) {
 				showCity.totalPage = data.RspData.TotalPage;
 				mod.getUserInfo(data.RspData.Data, function(tempData) {
 					showArray = tempData;
-					callback(showCity, listContainer, tempData);
+					if(tempData.length > 6) {//分为6个一组
+						callback(showCity, listContainer, tempData.slice(0, 6));
+						callback(showCity, listContainer, tempData.slice(6, tempData.length));
+					} else {
+						callback(showCity, listContainer, tempData);
+					}
 				});
 			} else {
 				mui.toast(data.RspTxt);
