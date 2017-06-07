@@ -528,7 +528,7 @@
 					if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
 						return;
 					}
-					if(sectionData.value[sectionId].SecStatus == 1) { //内容被屏蔽
+					if(sectionData.value[sectionId].SecStatus == 0) { //内容被屏蔽
 						mui.toast("该内容已被作者屏蔽");
 						self.disabled = false;
 						jQuery(self).css("pointerEvents", "all");
@@ -596,7 +596,7 @@
 						jQuery(self).css("pointerEvents", "all");
 						return;
 					}
-					if(sectionData.value[sectionId].SecStatus == 1) { //内容被屏蔽
+					if(sectionData.value[sectionId].SecStatus == 0) { //内容被屏蔽
 						mui.toast("该内容已被作者屏蔽");
 						self.disabled = false;
 						jQuery(self).css("pointerEvents", "all");
@@ -779,7 +779,7 @@
 			function showTopData(data, wd) {
 				console.log("showTopData " + JSON.stringify(data));
 				sectionId = data.SecId;
-				if(data.SecStatus == 1) { //被屏蔽
+				if(data.SecStatus == 0) { //被屏蔽
 					document.getElementById("section_top").style.display = "none";
 					document.getElementById("section_shield").style.display = 'flex';
 					document.getElementById("section_comment_title").style.display = "none";
@@ -819,7 +819,6 @@
 				//console.log("showSectionList " + JSON.stringify(data));
 				var more = document.getElementById("section_more");
 				for(var i in data) {
-					data[i].SecStatus = 0;
 					sectionData.key[sectionData.key.length] = data[i].SecId;
 					sectionData.value[data[i].SecId] = data[i];
 					//console.log("showSectionList " + i + " " + JSON.stringify(data[i]));
