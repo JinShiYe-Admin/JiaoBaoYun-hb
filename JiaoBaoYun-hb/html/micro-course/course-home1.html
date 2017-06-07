@@ -90,6 +90,7 @@
 				course_listnew.setListener();
 				addSlider();
 				window.addEventListener("infoChanged",function(){
+					console.log("*******微课界面出现两遍******")
 					if(document.getElementById("course-attended")){
 						document.getElementById("course-attended").querySelector(".mui-table-view").innerHTML="";
 					}
@@ -162,6 +163,7 @@
 								var ul = self.element.querySelector('.mui-table-view');
 								ul.innerHTML = "";
 								freshConatiner.info.freshFlag = 0;
+								freshConatiner.info.pageIndex=1;
 								console.log("获取的fresh:" + JSON.stringify(freshConatiner.info));
 								course_listnew.getData(freshConatiner.info.type, freshConatiner.info, ul, course_listnew.setData);
 								self.endPullDownToRefresh();
