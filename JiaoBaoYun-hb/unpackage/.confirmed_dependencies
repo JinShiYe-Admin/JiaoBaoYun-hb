@@ -1779,7 +1779,9 @@
 	"html/sciedu/sciedu_show_main.html": {
 		"resources": [
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/mui.min.js",
+			"js/utils/events.js"
 		],
 		"refer": []
 	},
