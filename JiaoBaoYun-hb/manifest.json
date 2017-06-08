@@ -4846,7 +4846,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"js/publicProtocol.js",
-					"image/utils/load-img-error.png"
+					"image/utils/load-img-error.png",
+					"image/utils/playvideo.png"
 				],
 				"refer": [
 					"html/micro-course/course-introduction.html",

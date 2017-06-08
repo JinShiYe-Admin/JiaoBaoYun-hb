@@ -320,12 +320,12 @@ var course_listnew = (function(mod) {
 	//	}
 	mod.setListener = function() {
 		//点击头像
-		mui(".mui-slider").on("tap", ".img-container", function(e) {
+		mui(".mui-slider").on("tap", ".course-img", function(e) {
 			var item = e.target;
 			mod.gotoCourseDetail(item);
 		});
 		//点击课程名称
-		mui(".mui-slider").on("tap", ".course-img", function(e) {
+		mui(".mui-slider").on("tap", ".course-name", function(e) {
 			var item = e.target;
 			mod.gotoCourseDetail(item);
 		});
@@ -342,8 +342,10 @@ var course_listnew = (function(mod) {
 		});
 	}
 	mod.gotoCourseDetail = function(item) {
+		item.disabled=true;
+		jQuery(item).css("pointerEvents","none");
 		mod.getRedCircle(item);
-		events.openNewWindowWithData('../micro-course/course_details.html', item.info);
+		events.singleWebviewInPeriod(item,'../micro-course/course_details.html',item.info);
 	}
 	mod.getRedCircle=function(item){
 		console.log("当前item的className:"+item.className);

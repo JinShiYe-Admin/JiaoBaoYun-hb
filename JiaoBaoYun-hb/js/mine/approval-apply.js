@@ -92,7 +92,7 @@ var getApplyRecord = function(records) {
 		if(data.RspCode == 0) {
 			records = records.concat(data.RspData);
 		} else {
-			mui.toast(data.RspTxt);
+//			mui.toast(data.RspTxt);
 		}
 		sortData(records);
 	})
@@ -131,6 +131,8 @@ var setData = function(records) {
 			li.innerHTML = getInnerHTML(item);
 			list.appendChild(li);
 		})
+	}else{
+		mui.toast("暂无数据！")
 	}
 	events.closeWaiting();
 }

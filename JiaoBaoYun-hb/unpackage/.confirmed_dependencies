@@ -1401,11 +1401,13 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/publicProtocol.js"
+			"js/publicProtocol.js",
+			"js/utils/events.js"
 		],
 		"refer": [
 			"html/quan/space-detail.html",
-			"html/show/add-comment.html"
+			"html/show/add-comment.html",
+			"html/quan/classSpace-persons.html"
 		]
 	},
 	"html/mine/QRCode.html": {
@@ -2143,7 +2145,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/publicProtocol.js",
-			"image/utils/load-img-error.png"
+			"image/utils/load-img-error.png",
+			"image/utils/playvideo.png"
 		],
 		"refer": [
 			"html/micro-course/course-introduction.html",
