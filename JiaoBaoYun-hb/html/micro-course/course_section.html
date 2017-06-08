@@ -457,20 +457,6 @@
 				main = plus.webview.currentWebview();
 				console.log("main data " + JSON.stringify(main.data));
 				document.getElementById("title").innerText = main.data.SecName;
-				//---假数据---start
-//				main.data.SecStatus = 1;
-//				main.data.EncType = 2;
-//				main.data.EncImgAddr = "http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/1495419146278732.png";
-//				main.data.EncAddr = "http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/1494318853754284.mp3";
-//				main.data.EncLen = 10;
-//				main.data.LikeNum = 10;
-//				main.data.SecStatus = 1;
-//				main.data.EncType = 1;
-//				main.data.EncImgAddr = "http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/1495419146278732.png";
-//				main.data.EncAddr = "http://qn-cspb.jiaobaowang.net/jbypc/pc/2650720170531145446.mp4";
-//				main.data.EncLen = 10;
-//				main.data.LikeNum = 10;
-				//---假数据---end
 				sectionId = main.data.SecId;
 				sectionData.key[sectionData.key.length] = main.data.SecId;
 				sectionData.value[main.data.SecId] = main.data;
@@ -874,10 +860,10 @@
 					document.getElementById("scroll_wrapper").style.top = 44 + parseInt(plus.screen.resolutionWidth * 162 / 360) + "px";
 					document.getElementById("video_area").style.display = "inline";
 					document.getElementById("audio_area").style.display = "none";
-					video.src = fpath;
-					video.play();
 					audio.src = "";
 					audio.pause();
+					video.src = fpath;
+					video.play();
 				} else if(type == 2) { //音频
 					document.getElementById("scroll_wrapper").style.top = "144px";
 					document.getElementById("video_area").style.display = "none";
@@ -890,10 +876,10 @@
 					document.getElementById("scroll_wrapper").style.top = "45px";
 					document.getElementById("video_area").style.display = "none";
 					document.getElementById("audio_area").style.display = "none";
-					video.src = "";
 					video.pause();
-					audio.src = "";
+					video.src = "";
 					audio.pause();
+					audio.src = "";
 				}
 			}
 

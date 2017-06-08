@@ -664,7 +664,8 @@ var events = (function(mod) {
 			//安卓中video标签播放视频需要开启硬件加速
 			//1.求知问题详情页
 			//2.微课节次详情页
-			if(id == "qiuzhi-question.html" ||id == "course_details.html") {
+			//3.微课节次单个详情页
+			if(id == "qiuzhi-question.html" ||id == "course_details.html"||id == "course_section.html") {
 				styles.hardwareAccelerated = true;
 			}
 		}

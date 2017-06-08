@@ -739,20 +739,6 @@
 						pageIndex = index;
 						if(data.RspData.Data.length != 0) {
 							if(index == 1) {
-								//---假数据---start
-//								data.RspData.Data[0].SecStatus = 1;
-//								data.RspData.Data[0].EncType = 2;
-//								data.RspData.Data[0].EncImgAddr = "http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/1495419146278732.png";
-//								data.RspData.Data[0].EncAddr = "http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/1494318853754284.mp3";
-//								data.RspData.Data[0].EncLen = 10;
-//								data.RspData.Data[0].LikeNum = 10;
-//								data.RspData.Data[1].SecStatus = 1;
-//								data.RspData.Data[1].EncType = 1;
-//								data.RspData.Data[1].EncImgAddr = "http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/1495419146278732.png";
-//								data.RspData.Data[1].EncAddr = "http://qn-cspb.jiaobaowang.net/jbypc/pc/2650720170531145446.mp4";
-//								data.RspData.Data[1].EncLen = 10;
-//								data.RspData.Data[1].LikeNum = 10;
-								//---假数据---end
 								showTopData(data.RspData.Data[0], wd);
 							}
 							showSectionList(data.RspData.Data);
@@ -822,7 +808,7 @@
 				for(var i in data) {
 					sectionData.key[sectionData.key.length] = data[i].SecId;
 					sectionData.value[data[i].SecId] = data[i];
-					//console.log("showSectionList " + i + " " + JSON.stringify(data[i]));
+					//console.log("showSectionList " + i + JSON.stringify(data[i]));
 					var ele = document.createElement("li");
 					ele.id = "section_" + data[i].SecId;
 					var html = '';
@@ -851,7 +837,7 @@
 						</div>\
 						<div class="section-info">上传时间 : ' + data[i].UpTime.split(" ")[0] + '</div>';
 					} else if(data[i].EncType == 3) { //文章
-						if(data[i].EncImgAddr == "") { //没有图片
+						if(!data[i].EncImgAddr) { //没有图片
 							ele.className = "mui-table-view-cell";
 							html = '<div class="section-title">' + data[i].SecName + '</div>\
 							<div class="section-info">上传时间 : ' + data[i].UpTime.split(" ")[0] + '</div>';
@@ -1052,10 +1038,10 @@
 					document.getElementById("scroll_wrapper").style.top = 44 + parseInt(plus.screen.resolutionWidth * 162 / 360) + "px";
 					document.getElementById("video_area").style.display = "inline";
 					document.getElementById("audio_area").style.display = "none";
-					video.src = fpath;
-					video.play();
 					audio.src = "";
 					audio.pause();
+					video.src = fpath;
+					video.play();
 				} else if(type == 2) { //音频
 					document.getElementById("scroll_wrapper").style.top = "144px";
 					document.getElementById("video_area").style.display = "none";
@@ -1068,10 +1054,10 @@
 					document.getElementById("scroll_wrapper").style.top = "45px";
 					document.getElementById("video_area").style.display = "none";
 					document.getElementById("audio_area").style.display = "none";
-					video.src = "";
 					video.pause();
-					audio.src = "";
+					video.src = "";
 					audio.pause();
+					audio.src = "";
 				}
 			}
 
