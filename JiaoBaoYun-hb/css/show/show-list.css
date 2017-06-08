@@ -59,6 +59,9 @@
 	display: -ms-flexbox;
 	display: flex;
 	flex-direction: row-reverse;
+	-webkit-flex-direction: row-reverse;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: reverse;
 }
 .news-container:not(:first-child) .news-img{
 	width: 50px !important;
@@ -102,4 +105,8 @@
 }
 .news-date{
 	
+}
+.mui-table-view-cell:after {
+	left: 14px;
+	right: 14px;
 }

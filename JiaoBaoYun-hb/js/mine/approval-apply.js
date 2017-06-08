@@ -262,7 +262,7 @@ var getInnerHTML = function(item) {
 				'<p class="single-line class-title">' + item.gname + '</p>' +
 				'<p class="single-line apply-message">' + events.shortForString(item.invname, 6) + '邀请你以' + getRole(item.mstype) + '身份加入群</p>' +
 				'</div>' +
-				'<a class = "mui-btn mui-btn-green btn-apply" ' +
+				'<a class = "mui-btn mui-btn-primary btn-apply" ' +
 				' gutid="' + item.gutid + '" mstype="' + item.mstype + '" gid="' + item.gid + '" >接受</a></a>'
 		} else {
 			inner = ' <a href="javascript:;">' +
@@ -273,7 +273,7 @@ var getInnerHTML = function(item) {
 				'<p class="single-line class-title">' + item.gname + '</p>' +
 				'<p class="single-line apply-message">' + events.shortForString(item.invname, 6) + hasRemark(item) + '</p>' +
 				'</div>' +
-				'<a href="" class = "mui-btn mui-btn-green btn-openPopover" ' +
+				'<a href="" class = "mui-btn mui-btn-primary btn-openPopover" ' +
 				' gutid="' + item.gutid + '" mstype="' + item.mstype + '" gid="' + item.gid + '" stuname="' + item.stuname + '">接受</a></a>'
 		}
 	} else {

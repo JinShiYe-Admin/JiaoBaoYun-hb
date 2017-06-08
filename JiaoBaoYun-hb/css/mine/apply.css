@@ -200,7 +200,8 @@ a>p {
 	font-size: 1.2rem !important;
 }
 
-.mui-btn-green {
+.mui-btn-green,
+.mui-btn-primary{
 	background-color: #1DB8F1;
 }
 
