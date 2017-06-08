@@ -8,11 +8,13 @@
 	display: flex;
 }
 
-.img-container{
+.img-container {
 	position: relative;
 	width: 100px;
 	height: 60px;
 }
+
+
 /**
  * 课程图片
  */
@@ -21,7 +23,8 @@
 	width: 100px;
 	height: 60px;
 }
-.red-circle{
+
+.red-circle {
 	position: absolute;
 	top: -5px;
 	left: 95px;
@@ -40,6 +43,10 @@
 	padding-left: 10px;
 	width: 20%;
 	flex-grow: 1;
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	-webkit-flex-grow: 1;
+	-ms-flex: 1;
 }
 
 
@@ -53,6 +60,10 @@
 	display: -moz-box;
 	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
 }
 
 
@@ -66,15 +77,19 @@
 	font-size: 16px;
 	color: #323232;
 }
+
+
 /**
  * 课程信息
  */
-.course-info{
+
+.course-info {
 	margin-top: -5px;
 	font-size: 15px;
 	color: #808080;
 	padding-top: 10px;
 }
+
 
 /**
  * 课程按钮
