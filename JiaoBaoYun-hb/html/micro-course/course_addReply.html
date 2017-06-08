@@ -49,6 +49,7 @@
 	<script>
 		mui.plusReady(function() {
 			var tempModel = plus.webview.currentWebview().data;//传值过来的课程model
+			console.log("addReply "+JSON.stringify(tempModel));
 			if (tempModel.replyId > 0) {
 				document.getElementById("content").placeholder = '@'+tempModel.replyNick+'，最多200字:';
 			}else{
@@ -80,7 +81,7 @@
 					if(data.RspCode == 0) {
 						comData.TabId = data.RspData.Result;
 						comData.arrayIndex = tempModel.arrayIndex;
-						events.fireToPageNone('course_details.html','addCommont',comData);
+						events.fireToPageNone(tempModel.webId,tempModel.winId,comData);
 						mui.toast('成功')
 						leaveContent.value = '';
 						mui.back();
