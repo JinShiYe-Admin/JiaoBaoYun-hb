@@ -231,7 +231,8 @@
 
 			//发布按钮
 			events.addTap('publish', function() {
-
+				var self = this;
+				self.disabled = true;
 				var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				var textView = document.getElementById('input-content');
 				var askTitle = document.getElementById("askTitle");
@@ -245,9 +246,11 @@
 					pubScopes = '[2]';
 					if(!askTitle.value || askTitle.value == '') {
 						mui.toast('请输入标题');
+						self.disabled = false;
 						return;
 					} else if(askTitle.value.length > 30) {
-						mui.toast('不能超过30字');
+						mui.toast('标题不能超过30字');
+						self.disabled = false;
 						return;
 					}
 					msgTitle = askTitle.value;
@@ -255,9 +258,11 @@
 				var tempText = textView.value;
 				if(!tempText || tempText == '') {
 					mui.toast('请输入内容');
+					self.disabled = false;
 					return;
 				} else if(tempText.length > 2000) {
-					mui.toast('不能超过2000字');
+					mui.toast('内容不能超过2000字');
+					self.disabled = false;
 					return;
 				} else {
 					//					tempText = replaceAllBL(tempText)
@@ -302,13 +307,17 @@
 					wd.close();
 					mui.toast('发布成功！');
 					console.log('推送个人空间成功' + JSON.stringify(data));
+					if(askTitle){
+						askTitle.value = '';
+					}
+					
 					textView.value = '';
 					if(pageFlag == 'jxq') {
 						events.fireToPageNone('zonep_sub.html', 'refreshZonep');
 					} else {
 						events.fireToPageNone('../show/show_home_1.html', 'infoChanged');
 					}
-
+					self.disabled = false;
 					mui.back();
 
 				})

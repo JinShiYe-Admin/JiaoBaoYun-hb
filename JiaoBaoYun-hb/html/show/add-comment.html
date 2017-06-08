@@ -71,15 +71,18 @@
 			}
 			console.log(tempIndex + '-----', zonepArray.length)
 			events.addTap('btn-reply', function() {
-
+				var self = this;
+				self.disabled = true;
 				var replyName = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick
 				var inputComment = document.getElementById("msg-content");
 				var name = inputComment.value; //评论内容
 				if(name == '') {
 					mui.toast('不允许为空');
+					self.disabled = false;
 					return;
 				} else if(name.length > 200) {
 					mui.toast('不能超过200字');
+					self.disabled = false;
 					return;
 				} else {
 					if(tempIndex.indexOf('-') >= 0) {
@@ -91,6 +94,7 @@
 						var tempModel = zonepArray[id].Comments[commentId];
 						if(!tempModel) {
 							mui.toast('不可以回复自己');
+							self.disabled = false;
 							return;
 						}
 						console.log(JSON.stringify(tempModel));
@@ -106,6 +110,7 @@
 						}
 						if(personalUTID == replyUserId) {
 							mui.toast('不可以回复自己');
+							self.disabled = false;
 							return;
 						}
 
@@ -153,8 +158,10 @@
 									flag: '评论回复',
 									Reply:Reply
 								})
+								self.disabled = false;
 								mui.back();
 							}else{
+								self.disabled = false;
 								mui.toast(data.RspTxt)
 							}
 
@@ -203,8 +210,10 @@
 									flag: '评论',
 									Comment:Comment
 								})
+								self.disabled = false;
 								mui.back();
 							}else{
+								self.disabled = false;
 								mui.toast(data.RspTxt)
 							}
 
