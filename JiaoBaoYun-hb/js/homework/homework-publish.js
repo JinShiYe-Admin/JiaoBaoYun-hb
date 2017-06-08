@@ -16,7 +16,7 @@ mui(".mui-scroll-wrapper").scroll({
 });
 mui.plusReady(function() {
 	mui.fire(plus.webview.currentWebview().opener(),"publishIsReady");
-//	mui.previewImage();
+	mui.previewImage();
 	events.blurBack();
 	//最大长度500
 	jQuery('#publish-content').prop("maxLength", 500);
@@ -45,7 +45,7 @@ mui.plusReady(function() {
 		events.fireToPageWithData('classes-select.html', 'postClasses', selectClassArray);
 	})
 	CloudFileUtil.setDelPicListener();
-//	events.areaInScroll();
+	events.areaInScroll();
 	/**
 	 * 监听选择班级后的返回数据
 	 */
