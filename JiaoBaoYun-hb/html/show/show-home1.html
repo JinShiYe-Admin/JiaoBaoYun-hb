@@ -155,9 +155,7 @@
 				});
 				window.addEventListener("infoChanged", function() {
 					console.log("********展现监听infoChanged")
-					if(document.getElementById("show-attended")) {
-						document.getElementById("show-attended").querySelector(".show-list").innerHTML = "";
-					}
+					toggleAttendedPart(0);
 					document.getElementById("show-all").querySelector(".show-list").innerHTML = "";
 					mui(document.getElementById("show-all").querySelector(".mui-scroll-wrapper")).scroll().scrollTo(0,0);
 					document.getElementById("show-all").showCity.pageIndex = 1;
@@ -348,9 +346,8 @@
 							pageIndex: 1,
 							totalPage: 0
 						}
-						show_listnew.getShowList(document.getElementById("show-attended").showCity, document.getElementById("show-attended").querySelector(".show-list"), show_listnew.setShowList)
 						initFresh(document.getElementById("show-attended"));
-
+						show_listnew.getShowList(document.getElementById("show-attended").showCity, document.getElementById("show-attended").querySelector(".show-list"), show_listnew.setShowList)
 						setTitle(11);
 					}
 				} else {
