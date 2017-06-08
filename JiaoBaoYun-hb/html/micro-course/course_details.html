@@ -93,6 +93,10 @@
 				margin-bottom: 11px;
 			}
 
+			.section-list .mui-table-view-cell {
+				padding: 8px 15px;
+			}
+
 			.section-info,
 			.section-comment-info {
 				color: #B7B7B7;
@@ -105,6 +109,10 @@
 
 			.section-info .mui-pull-right {
 				display: inline;
+			}
+
+			.icon-zanzan1:before {
+				content: "\e691";
 			}
 
 			.icon-zanzan1 {
@@ -375,7 +383,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 id="title" class="mui-title"></h1>
-			<a id="introduction" class="mui-icon mui-icon-person mui-pull-right"></a>
+			<a id="introduction" class="mui-icon iconfont icon-person mui-pull-right"></a>
 		</header>
 		<nav class="mui-bar mui-bar-tab">
 			<a class="mui-tab-item">
@@ -1031,7 +1039,7 @@
 			 * @param {int} type 1,显示视频区域;2,显示音频区域;
 			 */
 			function showOrHiddenVideoAudio(type, fpath, time, thumb) {
-				console.log("showOrHiddenVideoAudio " + type + " " + fpath + " " + time);
+				console.log("showOrHiddenVideoAudio " + type + " " + fpath + " " + time + " " + thumb);
 				var video = document.getElementById("video");
 				var audio = document.getElementById("audio");
 				if(type == 1) { //视频

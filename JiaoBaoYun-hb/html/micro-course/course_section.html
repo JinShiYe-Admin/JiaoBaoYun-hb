@@ -107,6 +107,10 @@
 				display: inline;
 			}
 
+			.icon-zanzan1:before {
+				content: "\e691";
+			}
+
 			.icon-zanzan1 {
 				font-size: 13px;
 				color: #dbdbdb;
@@ -852,7 +856,7 @@
 			 * 显示或隐藏视频区域
 			 * @param {int} type 1,显示视频区域;2,显示音频区域;
 			 */
-			function showOrHiddenVideoAudio(type, fpath, time,thumb) {
+			function showOrHiddenVideoAudio(type, fpath, time, thumb) {
 				console.log("showOrHiddenVideoAudio " + type + " " + fpath + " " + time);
 				var video = document.getElementById("video");
 				var audio = document.getElementById("audio");
