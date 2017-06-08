@@ -857,13 +857,17 @@
 			 * @param {int} type 1,显示视频区域;2,显示音频区域;
 			 */
 			function showOrHiddenVideoAudio(type, fpath, time, thumb) {
-				console.log("showOrHiddenVideoAudio " + type + " " + fpath + " " + time);
+				console.log("showOrHiddenVideoAudio " + type + " " + fpath + " " + time + " " + thumb);
 				var video = document.getElementById("video");
 				var audio = document.getElementById("audio");
 				if(type == 1) { //视频
 					document.getElementById("scroll_wrapper").style.top = 44 + parseInt(plus.screen.resolutionWidth * 162 / 360) + "px";
 					document.getElementById("video_area").style.display = "inline";
 					document.getElementById("audio_area").style.display = "none";
+					show = false;
+					document.getElementById("collapse_content_li").className = "mui-table-view-cell mui-collapse";
+					document.getElementById("collapse_content_show").style.display = 'block';
+					document.getElementById("section_top_title").style.marginRight = "15px";
 					audio.src = "";
 					audio.pause();
 					video.pause();
@@ -874,6 +878,10 @@
 					document.getElementById("scroll_wrapper").style.top = "144px";
 					document.getElementById("video_area").style.display = "none";
 					document.getElementById("audio_area").style.display = "flex";
+					show = false;
+					document.getElementById("collapse_content_li").className = "mui-table-view-cell mui-collapse";
+					document.getElementById("collapse_content_show").style.display = 'block';
+					document.getElementById("section_top_title").style.marginRight = "15px";
 					video.src = "";
 					video.poster = "";
 					video.pause();
@@ -884,6 +892,10 @@
 					document.getElementById("scroll_wrapper").style.top = "45px";
 					document.getElementById("video_area").style.display = "none";
 					document.getElementById("audio_area").style.display = "none";
+					document.getElementById("collapse_content_show").style.display = 'none';
+					show = true;
+					document.getElementById("collapse_content_li").className = "mui-table-view-cell mui-collapse mui-active";
+					document.getElementById("section_top_title").style.marginRight = "0px";
 					audio.pause();
 					audio.src = "";
 					video.pause();
