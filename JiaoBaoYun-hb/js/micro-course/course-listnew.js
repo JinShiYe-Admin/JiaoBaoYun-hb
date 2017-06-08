@@ -41,7 +41,7 @@ var course_listnew = (function(mod) {
 
 					callback(model.pageIndex, data.RspData.Data, listContainer);
 				} else {
-					mui.toast(data.RspTxt);
+//					mui.toast(data.RspTxt);
 					//					mod.endFresh();
 				}
 			});
@@ -85,7 +85,7 @@ var course_listnew = (function(mod) {
 						}
 						callback(model.pageIndex, data.RspData.Data, listContainer);
 					} else {
-						mui.toast(data.RspTxt);
+//						mui.toast(data.RspTxt);
 					}
 				});
 				return;
@@ -120,7 +120,7 @@ var course_listnew = (function(mod) {
 					}
 					callback(model.pageIndex, data.RspData.Data, listContainer);
 				} else {
-					mui.toast(data.RspTxt);
+//					mui.toast(data.RspTxt);
 					//					mod.endFresh();
 				}
 			});
@@ -320,19 +320,19 @@ var course_listnew = (function(mod) {
 	//	}
 	mod.setListener = function() {
 		//点击头像
-		mui(".mui-slider").on("tap", ".course-img", function(e) {
+		mui(".mui-slider").on("tap", ".img-container", function(e) {
 			var item = e.target;
-			mod.gotoCourseDetail(item.info);
+			mod.gotoCourseDetail(item);
 		});
 		//点击课程名称
-		mui(".mui-slider").on("tap", ".coursre-name", function(e) {
+		mui(".mui-slider").on("tap", ".course-img", function(e) {
 			var item = e.target;
-			mod.gotoCourseDetail(item.info);
+			mod.gotoCourseDetail(item);
 		});
 		//点击节次名
 		mui(".mui-slider").on("tap", ".course-info", function(e) {
 			var item = e.target;
-			mod.gotoCourseDetail(item.info);
+			mod.gotoCourseDetail(item);
 		});
 		//点击关注按钮
 		mui(".mui-slider").on("tap", ".input-btn", function(e) {
@@ -341,8 +341,18 @@ var course_listnew = (function(mod) {
 			mod.clickFocuseBtn(item);
 		});
 	}
-	mod.gotoCourseDetail = function(model) {
-		events.openNewWindowWithData('../micro-course/course_details.html', model);
+	mod.gotoCourseDetail = function(item) {
+		mod.getRedCircle(item);
+		events.openNewWindowWithData('../micro-course/course_details.html', item.info);
+	}
+	mod.getRedCircle=function(item){
+		console.log("当前item的className:"+item.className);
+		if(!item.querySelector(".red-circle")){
+			mod.getRedCircle(item.parentElement);
+		}else{
+			console.log("获取时的className:"+item.className);
+			item.querySelector(".red-circle").classList.add("display-none");
+		}
 	}
 	return mod;
 })(course_listnew || {})
