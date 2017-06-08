@@ -411,7 +411,7 @@
 						<text id="audio_svg_time" class="section-audio-time" x="60" y="26"></text>
 					</svg>
 				</div>
-				<audio id="audio" autoplay="autoplay"></audio>
+				<audio id="audio"></audio>
 			</div>
 			<div id="video_area" class="video-area">
 				<video id="video" controls="controls" preload="metadata" autoplay="autoplay">
@@ -526,9 +526,10 @@
 				document.getElementById("audio_svg_rect").setAttribute("width", plus.screen.resolutionWidth - 50);
 				var audio = document.getElementById("audio");
 
-				audio.oncanplay = function() { //可以播放
-					console.log("audio-oncanplay " + audioState);
+				audio.oncanplaythrough = function() { //可以播放
+					console.log("audio-oncanplaythrough " + audioState);
 					audioState = 0;
+					audio.play();
 				}
 
 				audio.onplaying = function() { //播放
@@ -773,7 +774,7 @@
 					} else if(audioState == 3) { //播放结束
 						document.getElementById("audio").play();
 					} else {
-						mui.toast("音频播放异常");
+						mui.toast("音频加载中");
 					}
 				});
 			}
@@ -799,7 +800,7 @@
 							if(index == 1) {
 //								data.RspData.Data[0] = {
 //									"EncImgAddr": "http://qn-cspb.jiaobaowang.net/jbypc/pc/thumb/9000620170608134134.jpg",
-//									"SecNote": "",
+//									"SecNote": "",·
 //									"Comments": [],
 //									"SecId": 17,
 //									"SecName": "1",
@@ -1143,6 +1144,7 @@
 					document.getElementById("section_top_title").style.marginRight = "15px";
 					document.getElementById("audio_svg_time").innerHTML = courseDetails.getAudioTime(time);
 					audio.src = fpath;
+					audio.load();
 				} else {
 					document.getElementById("scroll_wrapper").style.top = "45px";
 					document.getElementById("video_area").style.display = "none";
