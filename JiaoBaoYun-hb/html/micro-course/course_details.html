@@ -383,7 +383,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 id="title" class="mui-title"></h1>
-			<a id="introduction" class="mui-icon iconfont icon-person mui-pull-right"></a>
+			<a id="introduction" class="mui-icon iconfont icon-gerenziliao mui-pull-right"></a>
 		</header>
 		<nav class="mui-bar mui-bar-tab">
 			<a class="mui-tab-item">
@@ -476,7 +476,11 @@
 			var sectionId; //当前显示的节次id
 			var pageIndex = 0; //当前页数
 
-			mui.init();
+			mui.init({
+				gestureConfig: {
+					doubletap: true,
+				}
+			});
 			mui.plusReady(function() {
 				//events.closeWaiting();
 				var wd = events.showWaiting();
@@ -576,8 +580,6 @@
 					} else if(ids[1] != sectionId) { //查看其它节次
 						var ele = document.getElementById("section_" + sectionId);
 						ele.className = ele.className.replace(" section-show", "");
-						show = false;
-						document.getElementById("collapse_content_li").className = "mui-table-view-cell mui-collapse";
 						showTopData(sectionData.value[ids[1]]);
 						this.className = this.className + " section-show";
 						mui("#scroll_wrapper").scroll().scrollTo(0, 0, 0);
@@ -694,6 +696,11 @@
 					sectionLikeOrNot();
 					self.disabled = false;
 					jQuery(self).css("pointerEvents", "all");
+				});
+
+				//双击标题返回列表顶部
+				document.getElementById('title').addEventListener('doubletap', function() {
+					mui("#scroll_wrapper").scroll().scrollTo(0, 0, 0);
 				});
 
 				//新增评论
@@ -1046,6 +1053,10 @@
 					document.getElementById("scroll_wrapper").style.top = 44 + parseInt(plus.screen.resolutionWidth * 162 / 360) + "px";
 					document.getElementById("video_area").style.display = "inline";
 					document.getElementById("audio_area").style.display = "none";
+					show = false;
+					document.getElementById("collapse_content_li").className = "mui-table-view-cell mui-collapse";
+					document.getElementById("collapse_content_show").style.display = 'block';
+					document.getElementById("section_top_title").style.marginRight = "15px";
 					audio.src = "";
 					audio.pause();
 					video.pause();
@@ -1056,6 +1067,10 @@
 					document.getElementById("scroll_wrapper").style.top = "144px";
 					document.getElementById("video_area").style.display = "none";
 					document.getElementById("audio_area").style.display = "flex";
+					show = false;
+					document.getElementById("collapse_content_li").className = "mui-table-view-cell mui-collapse";
+					document.getElementById("collapse_content_show").style.display = 'block';
+					document.getElementById("section_top_title").style.marginRight = "15px";
 					video.src = "";
 					video.poster = "";
 					video.pause();
@@ -1066,6 +1081,10 @@
 					document.getElementById("scroll_wrapper").style.top = "45px";
 					document.getElementById("video_area").style.display = "none";
 					document.getElementById("audio_area").style.display = "none";
+					document.getElementById("collapse_content_show").style.display = 'none';
+					show = true;
+					document.getElementById("collapse_content_li").className = "mui-table-view-cell mui-collapse mui-active";
+					document.getElementById("section_top_title").style.marginRight = "0px";
 					audio.pause();
 					audio.src = "";
 					video.pause();
