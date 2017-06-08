@@ -1095,7 +1095,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"js/mui.min.js"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",
@@ -1207,7 +1208,8 @@
 			"html/quan/class-group.html",
 			"html/quan/classSpace-sub.html",
 			"html/quan/class-dynamic.html",
-			"html/quan/zone_main.html"
+			"html/quan/zone_main.html",
+			"html/quan/classSpace-persons.html"
 		]
 	},
 	"html/cloud/record_student_main.html": {
@@ -1593,7 +1595,20 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"image/utils/delete.png"
+			"image/utils/delete.png",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": []
 	},
@@ -1649,7 +1664,23 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"js/utils/h5fresh.js",
 			"image/utils/loading.gif",
-			"image/utils/playvideo.png"
+			"image/utils/playvideo.png",
+			"js/mui.pullToRefresh.js",
+			"js/storageKeyName.js",
+			"js/mui.pullToRefresh.material.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/publicHomeworkProtocol.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/quan/aboutme_sub.html",
@@ -1748,7 +1779,9 @@
 	"html/sciedu/sciedu_show_main.html": {
 		"resources": [
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/mui.min.js",
+			"js/utils/events.js"
 		],
 		"refer": []
 	},
@@ -1790,7 +1823,9 @@
 			"js/utils/video.js",
 			"image/utils/playvideo.png"
 		],
-		"refer": []
+		"refer": [
+			"html/show/add-comment.html"
+		]
 	},
 	"html/register/register_phoneNumber.html": {
 		"resources": [
@@ -1850,7 +1885,20 @@
 		"resources": [
 			"css/quan/custom-textarea.css",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": []
 	},
@@ -2094,10 +2142,12 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/publicProtocol.js"
+			"js/publicProtocol.js",
+			"image/utils/load-img-error.png"
 		],
 		"refer": [
-			"html/micro-course/course-introduction.html"
+			"html/micro-course/course-introduction.html",
+			"html/micro-course/course_addReply.html"
 		]
 	},
 	"html/micro-course/course-introduction.html": {
@@ -2179,11 +2229,40 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"image/show/show-default-large.png",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"js/libs/jquery.lazyload.min.js",
+			"image/utils/video-loading.gif",
+			"image/utils/playvideo.png"
 		],
 		"refer": [
 			"html/quan/space-detail.html",
-			"html/register/login.html"
+			"html/register/login.html",
+			"html/quan/pub-dynamic.html"
+		]
+	},
+	"html/micro-course/course_addReply.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/publicMicroClass.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/register/yanZhengMa.html": {
+		"resources": [
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }

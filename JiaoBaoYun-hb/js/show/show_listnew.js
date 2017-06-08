@@ -175,11 +175,41 @@ var show_listnew = (function(mod) {
 		}
 		listContainer.appendChild(div);
 		console.log("listContainer.innerHTML:" + listContainer.innerHTML);
+		jQuery(".img-container").lazyload();
 		//		mod.endFresh();
 	}
 	mod.getShowInner = function(data) {
-		return '<img class="news-img" src="' + data.EncImgAddr + '"/><div class="news-words"><p class="news-title single-line">' + data.MsgTitle + '</p>' +
+		return '<div class="img-container news-img" data-original="' + data.EncImgAddr.split("|")[0] + '" style="background-image:url(../../image/utils/video-loading.gif);text-align:center;background-position:center;background-size:cover;">' + mod.getVideoMenu(data) +
+			'</div>' +
+			'<div class="news-words"><p class="news-title single-line">' + data.MsgTitle + '</p>' +
 			'<div class="anthor-date"><p class="news-anthor single-line">' + data.unick + '</p><p class="news-date">' + data.PublishDate + '</p></div></div>'
+	}
+	mod.getVideoMenu = function(cell) {
+		var isVideo = false;
+		if(cell.EncType) {
+			switch(cell.EncType) {
+				case 2:
+					isVideo = true;
+					break;
+				case 5:
+					var addrs = cell.EncAddr.split(".");
+					switch(addrs[addrs.length - 1]) {
+						case "mp4":
+						case "MP4":
+							isVideo = true;
+							break;
+						default:
+							break;
+					}
+					break;
+				default:
+					break;
+			}
+		}
+		if(isVideo) {
+			return '<img class="play-video" src="../../image/utils/playvideo.png"/>'
+		}
+		return '';
 	}
 	mod.initFresh = function() {
 		mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({

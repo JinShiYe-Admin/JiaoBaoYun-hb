@@ -348,15 +348,16 @@ var events = (function(mod) {
 		return r;
 	}
 	mod.infoChanged = function() {
+		console.log("@@@@@@@@@@@@@@@@@@@@@调用的时候的界面："+plus.webview.currentWebview().id);
 		events.fireToPageNone('../../index/mine.html', 'infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		mui.fire(plus.webview.getWebviewById("index.html"), 'infoChanged');
 		events.fireToPageNone('qiuzhi_home.html', 'infoChanged');
 		events.fireToPageNone('aboutme_sub.html', 'infoChanged');
-		events.fireToPageNone("course-all.html","infoChanged");
-		events.fireToPageNone("course-attended.html","infoChanged");
-		events.fireToPageNone("show-all.html","infoChanged");
-		events.fireToPageNone("show-attended.html","infoChanged");
+//		events.fireToPageNone("course-all.html","infoChanged");
+//		events.fireToPageNone("course-attended.html","infoChanged");
+//		events.fireToPageNone("show-all.html","infoChanged");
+//		events.fireToPageNone("show-attended.html","infoChanged");
 		events.fireToPageNone("show-home1.html","infoChanged");
 		events.fireToPageNone("course-home1.html","infoChanged");
 	}

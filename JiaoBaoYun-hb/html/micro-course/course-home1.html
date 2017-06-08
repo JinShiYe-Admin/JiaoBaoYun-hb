@@ -90,9 +90,11 @@
 				course_listnew.setListener();
 				addSlider();
 				window.addEventListener("infoChanged",function(){
-					if(document.getElementById("course-attended")){
-						document.getElementById("course-attended").querySelector(".mui-table-view").innerHTML="";
-					}
+					console.log("*******微课界面出现两遍******")
+//					if(document.getElementById("course-attended")){
+//						document.getElementById("course-attended").querySelector(".mui-table-view").innerHTML="";
+//					}
+					toggleAttendedPart(0);
 					document.getElementById("course-all").querySelector(".mui-table-view").innerHTML="";
 					document.getElementById("course-all").info.pageIndex=1;
 					course_listnew.getData(1, document.getElementById("course-all").info, document.getElementById("course-all").querySelector(".mui-table-view"), course_listnew.setData);
@@ -162,6 +164,7 @@
 								var ul = self.element.querySelector('.mui-table-view');
 								ul.innerHTML = "";
 								freshConatiner.info.freshFlag = 0;
+								freshConatiner.info.pageIndex=1;
 								console.log("获取的fresh:" + JSON.stringify(freshConatiner.info));
 								course_listnew.getData(freshConatiner.info.type, freshConatiner.info, ul, course_listnew.setData);
 								self.endPullDownToRefresh();
@@ -171,15 +174,8 @@
 					up: {
 						callback: function() {
 							var self = this;
-//							setTimeout(function() {
-//								var ul = self.element.querySelector('.mui-table-view');
-//								freshConatiner.info.freshFlag = 1;
-//								course_listnew.getData(freshConatiner.info.type, freshConatiner.info, ul, course_listnew.setData);
-//								self.endPullUpToRefresh();
-//							}, 1000);
-
 							console.log('我在底部pageIndex:' + freshConatiner.info.pageIndex + ':总页数:' + freshConatiner.info.totalPage);
-							if(freshConatiner.info.pageIndex < freshConatiner.info.totalPage) {
+							if(freshConatiner.info.pageIndex <= freshConatiner.info.totalPage) {
 								freshConatiner.info.freshFlag = 1;
 								var ul = self.element.querySelector('.mui-table-view');
 								course_listnew.getData(freshConatiner.info.type, freshConatiner.info, ul, course_listnew.setData);
@@ -266,10 +262,6 @@
 								</ul>\
 							</div>\
 						</div>';
-				div.info = {
-					type: 0,
-					pageInex: 1
-				}
 				return div;
 			}
 		</script>

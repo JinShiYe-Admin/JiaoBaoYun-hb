@@ -205,9 +205,14 @@
 				stroke-width: 2px;
 			}
 
-			.section-list-audio-time {
+			.section-list-audio-time,
+			.section-audio-time {
 				fill: #B7B7B7;
 				font-size: 15px;
+			}
+
+			.section-audio-time {
+				fill: #474747;
 			}
 
 			.section-comment-title {
@@ -343,6 +348,25 @@
 				width: 100%;
 				top: 45px;
 				height: 100px;
+				/*display: flex;*/
+				justify-content: center;
+				align-items: center;
+			}
+
+			.section-list-audio-border-fill {
+				/*音频背景*/
+				fill: #1DB8F1;
+			}
+
+			.audio-area-svg {
+				margin-top: 28px;
+				margin-left: 15px;
+				margin-right: 15px;
+			}
+
+			.audio-area-svg-rect {
+				fill: white;
+				height: 50px;
 			}
 		</style>
 	</head>
@@ -360,26 +384,26 @@
 		</nav>
 		<div id="content" class="mui-content">
 			<div id="audio_area" class="audio-area">
-				<div id="audio_area_svg" style="margin-top: 28px;padding-left: 14px;">
-					<svg class="section-list-audio">
-						<path class="section-list-audio-border" d="M8 45 C13 40 15 38 15 25 L15 21 Q15 1 36 1 L300 1 Q325 1 325 21 Q325 41 300 41 L30 41 Q15 41 12 43 L8 45 Z" style="fill: #1DB8F1;" />
-						<rect width="320px" height="50px" x="8" y="0" style="fill: white;">
-							<animate attributeName="x" from="8" to="325" begin="0s" dur="20s" repeatCount="1" />
+				<!--<div id="audio_area_svg" class="audio-area-svg">
+					<svg id="audio_svg" class="section-list-audio">
+						<path id="audio_svg_border_fill" class="section-list-audio-border-fill" />
+						<rect id="audio_svg_rect" class="audio-area-svg-rect" x="10" y="0">
+							<animate id="audio_svg_rect_ani" attributeName="x" from="10" begin="indefinite" repeatCount="1" />
 						</rect>
-						<path class="section-list-audio-border" d="M8 45 C13 40 15 38 15 25 L15 21 Q15 1 36 1 L300 1 Q325 1 325 21 Q325 41 300 41 L30 41 Q15 41 12 43 L8 45 Z" />
+						<path id="audio_svg_border" class="section-list-audio-border" />
 						<path class="section-list-audio-icon" d="M30 18 A5 5 0 0 1 30 23">
-							<animate attributeName="stroke" from="white" to="#B7B7B7" begin="0s" dur="1s" repeatCount="20" />
+							<animate id="audio_svg_icon_first_ani" attributeName="stroke" from="white" to="#B7B7B7" begin="0s" dur="0s" repeatCount="10" />
 						</path>
 						<path class="section-list-audio-icon" d="M35 14 A10 10 0 0 1 35 27">
-							<animate attributeName="stroke" from="white" to="#B7B7B7" begin="0s" dur="1s" repeatCount="20" />
+							<animate id="audio_svg_icon_second_ani" attributeName="stroke" from="white" to="#B7B7B7" begin="0s" dur="0s" repeatCount="10" />
 						</path>
 						<path class="section-list-audio-icon" d="M40 10 A 15 15 0 0 1 40 31">
-							<animate attributeName="stroke" from="white" to="#B7B7B7" begin="0s" dur="1s" repeatCount="20" />
+							<animate id="audio_svg_icon_third_ani" attributeName="stroke" from="white" to="#B7B7B7" begin="0s" dur="0s" repeatCount="10" />
 						</path>
-						<text class="section-list-audio-time" x="60" y="26">00:10</text>
+						<text id="audio_svg_time" class="section-audio-time" x="60" y="26"></text>
 					</svg>
-				</div>
-				<!--<audio></audio>-->
+				</div>-->
+				<audio id="audio" style="background-color: white;width: 100%;" controls="controls"></audio>
 			</div>
 			<div id="video_area" class="video-area">
 				<video id="video" controls="controls" preload="metadata">
@@ -476,6 +500,34 @@
 
 				//初始化视频播放区域
 				document.getElementById("video").style.height = plus.screen.resolutionWidth * 162 / 360 + "px";
+
+				//初始化音频播放区域
+				//				var width = plus.screen.resolutionWidth - 60;
+				//				var d = getAudioBorderPath(width);
+				//				console.log("top audio " + d);
+				//				//外框和背景
+				//				document.getElementById("audio_svg_border_fill").setAttribute("d", d);
+				//				document.getElementById("audio_svg_border").setAttribute("d", d);
+				//				//进度控制区域
+				//				document.getElementById("audio_svg_rect").setAttribute("width", plus.screen.resolutionWidth - 50);
+				//				//进度控制区域 动画
+				//				var audio_svg_rect_ani = document.getElementById("audio_svg_rect_ani");
+				//				audio_svg_rect_ani.setAttribute("to", width + 20);
+				//				audio_svg_rect_ani.setAttribute("dur", "20s");
+				//				audio_svg_rect_ani.beginElement();
+				//
+				//				var audio_svg = document.getElementById("audio_svg");
+				//				setTimeout(function() {
+				//					audio_svg.pauseAnimations(); //暂停
+				//					setTimeout(function() {
+				//						audio_svg_rect_ani.setAttribute("dur", "0s");
+				//						audio_svg.unpauseAnimations(); //继续动画
+				//						setTimeout(function() {
+				//							audio_svg_rect_ani.setAttribute("dur", "10s");
+				//							audio_svg_rect_ani.beginElement();
+				//						}, 2000);
+				//					}, 2000);
+				//				}, 2000);
 			}
 
 			/**
@@ -503,6 +555,7 @@
 
 				//课程介绍
 				document.getElementById('introduction').addEventListener('tap', function() {
+					document.getElementById("audio").pause();
 					events.openNewWindowWithData('course-introduction.html', main.data);
 				});
 
@@ -570,8 +623,9 @@
 								commentContent: '',
 								replyId: allUserInfo.value[userId].utid,
 								replyNick: allUserInfo.value[userId].unick,
-								arrayIndex:ids[2]
+								arrayIndex: ids[2]
 							}
+							document.getElementById("audio").pause();
 							//console.log("data " + JSON.stringify(data));
 							events.openNewWindowWithData('course_addReply.html', data);
 							break;
@@ -612,6 +666,7 @@
 						commentContent: '',
 						replyId: 0
 					}
+					document.getElementById("audio").pause();
 					events.openNewWindowWithData('course_addReply.html', data);
 					self.disabled = false;
 					jQuery(self).css("pointerEvents", "all");
@@ -711,7 +766,7 @@
 					width = width || plus.screen.resolutionWidth;
 					width = parseInt(width * 3 / 5);
 				}
-				var pathD = "M8 45 C13 40 15 38 15 25 L15 21 Q15 1 36 1 L" + width + " 1 Q" + (width + 25) + " 1 " + (width + 25) + " 21 Q" + (width + 25) + " 41 " + width + " 41 L30 41 Q15 41 12 43 L8 45 Z"
+				var pathD = "M8 45 C13 40 15 38 15 25 L15 21 Q15 1 36 1 L" + width + " 1 Q" + (width + 20) + " 1 " + (width + 20) + " 21 Q" + (width + 20) + " 41 " + width + " 41 L30 41 Q15 41 12 43 L8 45 Z"
 				return pathD;
 			}
 
@@ -766,18 +821,18 @@
 						if(data.RspData.Data.length != 0) {
 							if(index == 1) {
 								//---假数据---start
-								//								data.RspData.Data[0].SecStatus = 0;
-								//								data.RspData.Data[0].EncType = 2;
-								//								data.RspData.Data[0].EncImgAddr = "http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/1495419146278732.png";
-								//								data.RspData.Data[0].EncAddr = "http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/1494318853754284.mp3";
-								//								data.RspData.Data[0].EncLen = 10;
-								//								data.RspData.Data[0].LikeNum = 10;
-								//								data.RspData.Data[1].SecStatus = 0;
-								//								data.RspData.Data[1].EncType = 1;
-								//								data.RspData.Data[1].EncImgAddr = "http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/1495419146278732.png";
-								//								data.RspData.Data[1].EncAddr = "http://qn-cspb.jiaobaowang.net/jbypc/pc/2650720170531145446.mp4";
-								//								data.RspData.Data[1].EncLen = 10;
-								//								data.RspData.Data[1].LikeNum = 10;
+								data.RspData.Data[0].SecStatus = 1;
+								data.RspData.Data[0].EncType = 2;
+								data.RspData.Data[0].EncImgAddr = "http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/1495419146278732.png";
+								data.RspData.Data[0].EncAddr = "http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/1494318853754284.mp3";
+								data.RspData.Data[0].EncLen = 10;
+								data.RspData.Data[0].LikeNum = 10;
+								data.RspData.Data[1].SecStatus = 1;
+								data.RspData.Data[1].EncType = 1;
+								data.RspData.Data[1].EncImgAddr = "http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/1495419146278732.png";
+								data.RspData.Data[1].EncAddr = "http://qn-cspb.jiaobaowang.net/jbypc/pc/2650720170531145446.mp4";
+								data.RspData.Data[1].EncLen = 10;
+								data.RspData.Data[1].LikeNum = 10;
 								//---假数据---end
 								showTopData(data.RspData.Data[0], wd);
 							}
@@ -1069,26 +1124,31 @@
 			function showOrHiddenVideoAudio(type, fpath, time) {
 				console.log("showOrHiddenVideoAudio " + type + " " + fpath + " " + time);
 				var video = document.getElementById("video");
+				var audio=document.getElementById("audio");
 				if(type == 1) { //视频
 					document.getElementById("scroll_wrapper").style.top = 44 + parseInt(plus.screen.resolutionWidth * 162 / 360) + "px";
 					document.getElementById("video_area").style.display = "inline";
 					document.getElementById("audio_area").style.display = "none";
 					video.src = fpath;
 					video.play();
+					audio.src="";
+					audio.pause();
 				} else if(type == 2) { //音频
 					document.getElementById("scroll_wrapper").style.top = "144px";
 					document.getElementById("video_area").style.display = "none";
-					document.getElementById("audio_area").style.display = "inline";
-					//document.getElementById("audio_area_svg").innerHTML = '';
-					console.log("getAudioBorderPath " + getAudioBorderPath(plus.screen.resolutionWidth - 60));
+					document.getElementById("audio_area").style.display = "flex";
 					video.src = "";
 					video.pause();
+					audio.src=fpath;
+					audio.play();
 				} else {
 					document.getElementById("scroll_wrapper").style.top = "45px";
 					document.getElementById("video_area").style.display = "none";
 					document.getElementById("audio_area").style.display = "none";
 					video.src = "";
 					video.pause();
+					audio.src="";
+					audio.pause();
 				}
 			}
 

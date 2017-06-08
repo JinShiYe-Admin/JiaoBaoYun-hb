@@ -68,9 +68,9 @@
 		</div>
 		<div id="topPopover" class="mui-popover">
 			<div class="mui-popover-arrow"></div>
-			<ul class="mui-table-view" style="height: 30px;background-color: white;">
+			<ul class="mui-table-view" style="height: 40px;background-color: white;">
 				<li id="pubDynamic" class="mui-table-view-cell mui-media ">
-					<div style="padding-left: 25px;padding-top: 6px;">删除</div>
+					<div style="padding-left: 22px;padding-top: 10px;font-size: 18px;">删除</div>
 				</li>
 
 			</ul>
@@ -100,35 +100,91 @@
 			preModel = plus.webview.currentWebview().data
 
 			publisherId = preModel.PublisherId
-			console.log('personalUTID='+personalUTID+'-----'+'publisherId='+JSON.stringify(preModel))
-			if(personalUTID==0||personalUTID!=publisherId){
+			console.log('personalUTID=' + personalUTID + '-----' + 'publisherId=' + JSON.stringify(preModel))
+			if(personalUTID == 0 || personalUTID != publisherId) {
 				document.getElementById("delete").className = 'mui-hidden';
 
 			}
+			if(preModel.focusFlag == 0) {
+				document.getElementById("delete").className = 'mui-hidden';
+			}
 			events.addTap('delete', function() {
-				mui('#topPopover').popover('toggle')
+				var btnArray = [{
+					title: '删除',
+				}];
+				plus.nativeUI.actionSheet({
+					cancel: "取消",
+					buttons: btnArray
+				}, function(e) {
+					var flag = e.index;
+					switch(flag) {
+						case 0:
+							break;
+						case 1:
+							{
+								var btnArray = ['取消', '确定'];
+								mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
+									if(e.index == 1) {
+										var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+										var comData = {
+											userSpaceId: datasource.TabId //用户空间ID
+										};
+										postDataPro_delUserSpaceById(comData, wd, function(data) {
+											wd.close();
+											console.log(JSON.stringify(data))
+											if(data.RspCode == 0) {
+												mui.toast('已删除');
+												mui.back()
+											} else {
+												mui.toast(data.RspTxt);
+											}
+										})
+									}
+								})
+							}
+							break;
+					}
+				})
+				return;
 
 			})
 			//点击popover里cell
 			mui('.mui-popover').on('tap', 'li', function(e) {
 				mui('#topPopover').popover('toggle')
-				var btnArray = ['取消', '确定'];
-				mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
-					if(e.index == 1) {
-						var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-						var comData = {
-							userSpaceId: datasource.TabId //用户空间ID
-						};
-						postDataPro_delUserSpaceById(comData, wd, function(data) {
-							wd.close();
-							console.log(JSON.stringify(data))
-							if(data.RspCode == 0) {
-								mui.toast('已删除');
-								mui.back()
-							} else {
-								mui.toast(data.RspTxt);
+				var btnArray = [{
+					title: '删除',
+				}];
+				plus.nativeUI.actionSheet({
+					cancel: "取消",
+					buttons: btnArray
+				}, function(e) {
+					var flag = e.index;
+					switch(flag) {
+						case 0:
+							break;
+						case 1:
+							{
+								var btnArray = ['取消', '确定'];
+								mui.confirm('确定删除此条动态？', '提醒', btnArray, function(e) {
+									if(e.index == 1) {
+										var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+										var comData = {
+											userSpaceId: datasource.TabId //用户空间ID
+										};
+										postDataPro_delUserSpaceById(comData, wd, function(data) {
+											wd.close();
+											console.log(JSON.stringify(data))
+											if(data.RspCode == 0) {
+												mui.toast('已删除');
+												mui.back()
+											} else {
+												mui.toast(data.RspTxt);
+											}
+										})
+									}
+								})
 							}
-						})
+							break;
 					}
 				})
 
@@ -330,18 +386,18 @@
 				data.cityCode = 0;
 				data.idFlag = 'zx';
 				sliderId = 'top_0'
-				if(personalUTID==0){
+				if(personalUTID == 0) {
 					var userIDs = window.myStorage.getItem(window.storageKeyName.SHOWFOCUSEPERSEN);
 					console.log(JSON.stringify(userIDs))
-					data.IsFocused=0;
-					for(var item in userIDs){
-						console.log('item='+item+'-----'+'publisherId='+publisherId)
-						if(userIDs[item]==publisherId){
-							data.IsFocused=1;
+					data.IsFocused = 0;
+					for(var item in userIDs) {
+						console.log('item=' + item + '-----' + 'publisherId=' + publisherId)
+						if(userIDs[item] == publisherId) {
+							data.IsFocused = 1;
 							break;
 						}
 					}
-					
+
 				}
 			}
 			//			data.IsFocused = 1;
