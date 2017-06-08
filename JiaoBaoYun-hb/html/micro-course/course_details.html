@@ -792,7 +792,7 @@
 						section_top_zan.className = "mui-icon iconfont icon-zanzan1 section-notzan";
 					}
 					//视频音频区域
-					showOrHiddenVideoAudio(data.EncType, data.EncAddr, data.EncLen);
+					showOrHiddenVideoAudio(data.EncType, data.EncAddr, data.EncLen, data.EncImgAddr);
 					//加载评论列表
 					showCommentsFirst(data.Comments, wd);
 				}
@@ -1030,7 +1030,7 @@
 			 * 显示或隐藏视频区域
 			 * @param {int} type 1,显示视频区域;2,显示音频区域;
 			 */
-			function showOrHiddenVideoAudio(type, fpath, time) {
+			function showOrHiddenVideoAudio(type, fpath, time, thumb) {
 				console.log("showOrHiddenVideoAudio " + type + " " + fpath + " " + time);
 				var video = document.getElementById("video");
 				var audio = document.getElementById("audio");
@@ -1040,24 +1040,29 @@
 					document.getElementById("audio_area").style.display = "none";
 					audio.src = "";
 					audio.pause();
+					video.pause();
 					video.src = fpath;
+					video.poster = thumb;
 					video.play();
 				} else if(type == 2) { //音频
 					document.getElementById("scroll_wrapper").style.top = "144px";
 					document.getElementById("video_area").style.display = "none";
 					document.getElementById("audio_area").style.display = "flex";
 					video.src = "";
+					video.poster = "";
 					video.pause();
+					audio.pause();
 					audio.src = fpath;
 					audio.play();
 				} else {
 					document.getElementById("scroll_wrapper").style.top = "45px";
 					document.getElementById("video_area").style.display = "none";
 					document.getElementById("audio_area").style.display = "none";
-					video.pause();
-					video.src = "";
 					audio.pause();
 					audio.src = "";
+					video.pause();
+					video.src = "";
+					video.poster = "";
 				}
 			}
 
