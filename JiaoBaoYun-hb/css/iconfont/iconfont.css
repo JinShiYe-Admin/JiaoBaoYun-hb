@@ -34,6 +34,8 @@
 
 .icon-kangfuzuoye:before { content: "\e654"; }
 
+.icon-person:before { content: "\e674"; }
+
 .icon-trash:before { content: "\e620"; }
 
 .icon-fenxiang:before { content: "\e600"; }
@@ -79,6 +81,8 @@
 .icon-zanzan:before { content: "\e60b"; }
 
 .icon-zanzan1:before { content: "\e602"; }
+
+.icon-gerenziliao:before { content: "\e67a"; }
 
 .icon-tianjia:before { content: "\e7f7"; }
 

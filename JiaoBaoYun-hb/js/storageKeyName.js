@@ -2,7 +2,7 @@
 
 var storageKeyName = (function(mod) {
 
-	var Key = 0; //0,开发;1,测试;2,外网
+	var Key = 1; //0,开发;1,测试;2,外网
 
 	if(Key == 0) {
 		//---开发---start---
@@ -74,12 +74,12 @@ var storageKeyName = (function(mod) {
 	mod.AUTOLOGIN = 'autoLogin'; //登录信息
 	mod.DOCUMENTSPATH = 'DOCUMENTSPATH'; //记录document的地址
 	mod.SEHISTORY = 'seHistory'; //科教历史记录
-	mod.SECITY='seCity';//科教订制的城市
-	mod.SHOWCITY='showCity';//展现订制的城市
-	mod.FOCUSEPERSEN="foucusPersen";//求知关注的人
-	mod.FOCUSEQUESTION="focusQuestion";//求知关注的问题
-	mod.SHOWFOCUSEPERSEN="showfoucusPersen";//展现关注的人
-	mod.FOCUSECOURSES="focusCourses";//关注的课程
+	mod.SECITY = 'seCity'; //科教订制的城市
+	mod.SHOWCITY = 'showCity'; //展现订制的城市
+	mod.FOCUSEPERSEN = "foucusPersen"; //求知关注的人
+	mod.FOCUSEQUESTION = "focusQuestion"; //求知关注的问题
+	mod.SHOWFOCUSEPERSEN = "showfoucusPersen"; //展现关注的人
+	mod.FOCUSECOURSES = "focusCourses"; //关注的课程
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url
 	mod.MAINHOMEWORKURLSTUDENT = mod.MAINHOMEWORKURL + 'StudentService.svc/'; //学生作业url
@@ -90,17 +90,17 @@ var storageKeyName = (function(mod) {
 	//---七牛---start---
 	//七牛上传空间key值
 	//资源平台
-	mod.QNPUBZYKEY="jsy8004";
+	mod.QNPUBZYKEY = "jsy8004";
 	//教宝云作业
-	mod.QNPUBJBYZYKEY="zy309309!";
+	mod.QNPUBJBYZYKEY = "zy309309!";
 	//教宝云盘
-	mod.QNPUBJBYPKEY="jbyp@2017";
+	mod.QNPUBJBYPKEY = "jbyp@2017";
 	//教宝云用户管理
-	mod.QUPUBJBMANKEY="jbman456";
+	mod.QUPUBJBMANKEY = "jbman456";
 	//家校圈
-	mod.QNPUBJXQKEY="jxq789!@";
+	mod.QNPUBJXQKEY = "jxq789!@";
 	//求知
-	mod.QNPUBQZKEY="qz123qwe";
+	mod.QNPUBQZKEY = "qz123qwe";
 
 	//七牛存储子空间（文件二级文件名）
 	mod.QNPUBSPACE = "pb"; //七牛公开空间
@@ -128,12 +128,12 @@ var storageKeyName = (function(mod) {
 	//---默认图片---start---
 	mod.DEFAULTPERSONALHEADIMAGE = '../../image/utils/default_personalimage.png'; //默认的个人头像
 	mod.DEFAULTSCIEDUIMAGELOAD = '/image/utils/default_load_2.gif'; //科教首页，懒加载显示加载中的图片
-	mod.DEFAULTIMAGELOAD = '/image/utils/default_load_2_1.gif'; // 
+	mod.DEFAULTIMAGELOAD = '/image/utils/default_load_2_1.gif';
 	//---默认图片---end---
 
 	//---Activity的code---start---
 	mod.CODERECORDVIDEO = 0; //录像
-	mod.CODEPLAYVIDEO=1;//播放视频
+	mod.CODEPLAYVIDEO = 1; //播放视频
 	//---Activity的code---end---
 
 	return mod;
