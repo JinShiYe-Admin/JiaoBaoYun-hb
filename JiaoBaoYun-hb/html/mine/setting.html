@@ -65,7 +65,6 @@
 		<!--共用协议-->
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/qiuzhi/delContent_pop.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/qiuzhi/delContent_pop.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
@@ -180,7 +179,7 @@
 											events.defaultLogin(function(data) {
 												if(data.value) {
 													//退出登录
-													events.logOff();
+//													events.logOff();
 //													events.infoChanged();
 													mui.fire(plus.webview.getWebviewById("index.html"), 'quit');
 													mui.back();
