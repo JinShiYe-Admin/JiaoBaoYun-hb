@@ -348,6 +348,7 @@ var events = (function(mod) {
 		return r;
 	}
 	mod.infoChanged = function() {
+		console.log("@@@@@@@@@@@@@@@@@@@@@调用的时候的界面："+plus.webview.currentWebview().id);
 		events.fireToPageNone('../../index/mine.html', 'infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		mui.fire(plus.webview.getWebviewById("index.html"), 'infoChanged');

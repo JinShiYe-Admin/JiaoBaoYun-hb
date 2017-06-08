@@ -239,7 +239,7 @@
 					up: {
 						callback: function() {
 							var self = this;
-							if(freshConatiner.showCity.pageIndex < freshConatiner.showCity.totalPage) {
+							if(freshConatiner.showCity.pageIndex <= freshConatiner.showCity.totalPage) {
 								var ul = self.element.querySelector('.show-list');
 								show_listnew.getShowList(freshConatiner.showCity, ul, show_listnew.setShowList);
 								setTimeout(function() {
@@ -247,6 +247,7 @@
 								}, 1500);
 							} else {
 								self.endPullUpToRefresh();
+								mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
 							}
 						}
 					}

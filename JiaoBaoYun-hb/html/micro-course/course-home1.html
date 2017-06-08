@@ -173,15 +173,8 @@
 					up: {
 						callback: function() {
 							var self = this;
-//							setTimeout(function() {
-//								var ul = self.element.querySelector('.mui-table-view');
-//								freshConatiner.info.freshFlag = 1;
-//								course_listnew.getData(freshConatiner.info.type, freshConatiner.info, ul, course_listnew.setData);
-//								self.endPullUpToRefresh();
-//							}, 1000);
-
 							console.log('我在底部pageIndex:' + freshConatiner.info.pageIndex + ':总页数:' + freshConatiner.info.totalPage);
-							if(freshConatiner.info.pageIndex < freshConatiner.info.totalPage) {
+							if(freshConatiner.info.pageIndex <= freshConatiner.info.totalPage) {
 								freshConatiner.info.freshFlag = 1;
 								var ul = self.element.querySelector('.mui-table-view');
 								course_listnew.getData(freshConatiner.info.type, freshConatiner.info, ul, course_listnew.setData);
@@ -268,10 +261,6 @@
 								</ul>\
 							</div>\
 						</div>';
-				div.info = {
-					type: 0,
-					pageInex: 1
-				}
 				return div;
 			}
 		</script>
