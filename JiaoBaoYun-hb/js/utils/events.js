@@ -673,7 +673,7 @@ var events = (function(mod) {
 			//1.求知问题详情页
 			//2.微课节次详情页
 			//3.微课节次单个详情页
-			if(id == "qiuzhi-question.html" || id == "course_details.html" || id == "course_section.html") {
+			if(id == "qiuzhi-question.html" || id == "course_details.html" || id == "course_section.html" || id == "space-detail.html") {
 				styles.hardwareAccelerated = true;
 			}
 		}
@@ -1149,17 +1149,17 @@ var events = (function(mod) {
 				case "course-home1.html": //微课首页
 				case plus.webview.currentWebview().id:
 					break;
-				case "course_details.html"://微课节次详情和列表
-				case "course-introduction.html"://节次介绍
-				case "history-records.html"://微课所有节次历史记录
-				case "course_section.html"://微课一个节次的详情
+				case "course_details.html": //微课节次详情和列表
+				case "course-introduction.html": //节次介绍
+				case "history-records.html": //微课所有节次历史记录
+				case "course_section.html": //微课一个节次的详情
 					if(!wvs[i].parent()) {
-						wvs[i].close();//删除页面
+						wvs[i].close(); //删除页面
 					}
 					break;
 				default:
 					if(!wvs[i].parent()) {
-						wvs[i].hide();//隐藏页面
+						wvs[i].hide(); //隐藏页面
 					}
 					break;
 			}
