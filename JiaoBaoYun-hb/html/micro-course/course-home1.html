@@ -100,6 +100,10 @@
 					course_listnew.getData(1, document.getElementById("course-all").info, document.getElementById("course-all").querySelector(".mui-table-view"), course_listnew.setData);
 					getAttendedClasses(toggleAttendedPart);
 				})
+				
+				window.addEventListener("focus",function(){
+					getAttendedClasses(toggleAttendedPart);
+				})
 			});
 			/**
 			 * 滑动监听
