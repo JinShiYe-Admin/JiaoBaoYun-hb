@@ -162,15 +162,15 @@ var show_listnew = (function(mod) {
 	}
 	mod.setShowList = function(showCity, listContainer, showData) {
 		var div = document.createElement("div");
-		div.className = "cityNews-container mui-card";
-		var listDiv = document.createElement("div");
-		listDiv.className = "mui-table-view";
+		div.className = "cityNews-container";
+//		var listDiv = document.createElement("div");
+//		listDiv.className = "mui-table-view";
 		for(var i in showData) {
-			var subDiv = document.createElement("li");
+			var subDiv = document.createElement("div");
 			subDiv.className = "mui-table-view-cell news-container";
 			subDiv.innerHTML = mod.getShowInner(showData[i]);
-			listDiv.appendChild(subDiv);
-			div.appendChild(listDiv);
+//			listDiv.appendChild(subDiv);
+			div.appendChild(subDiv);
 			subDiv.info = showData[i];
 		}
 		listContainer.appendChild(div);

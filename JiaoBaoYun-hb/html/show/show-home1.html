@@ -58,18 +58,9 @@
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<div class="show-list">
-									<!--<div class="cityNews-container mui-card">
-										<div class="mui-table-view">
-											<li class="mui-table-view-cell news-container"><img class="news-img" src="http://qn-kfpb.jiaobaowang.net/jxq/PersonalSpace/thumb/1496731091586.png">
-												<div class="news-words">
-													<p class="news-title single-line">mmm</p>
-													<div class="anthor-date">
-														<p class="news-anthor single-line">遥不可及</p>
-														<p class="news-date">06-06 14:38</p>
-													</div>
-												</div>
-											</li>
-											<li class="mui-table-view-cell news-container"><img class="news-img" src="http://qn-kfpb.jiaobaowang.net/jxq/PersonalSpace/thumb/1496731036698.jpg">
+									<div class="cityNews-container mui-card">
+										<!--<div class="mui-table-view">-->
+											<div class="mui-table-view-cell news-container"><img class="news-img" src="http://qn-kfpb.jiaobaowang.net/jxq/PersonalSpace/thumb/1496731036698.jpg">
 												<div class="news-words">
 													<p class="news-title single-line">ppppp</p>
 													<div class="anthor-date">
@@ -77,8 +68,8 @@
 														<p class="news-date">06-06 14:37</p>
 													</div>
 												</div>
-											</li>
-											<li class="mui-table-view-cell news-container"><img class="news-img" src="../../image/show/show-default-small.png">
+											</div>
+											<div class="mui-table-view-cell news-container"><img class="news-img" src="../../image/show/show-default-small.png">
 												<div class="news-words">
 													<p class="news-title single-line">kkkkk</p>
 													<div class="anthor-date">
@@ -86,7 +77,7 @@
 														<p class="news-date">06-06 14:36</p>
 													</div>
 												</div>
-											</li>
+											</div>
 											<li class="mui-table-view-cell news-container"><img class="news-img" src="../../image/show/show-default-small.png">
 												<div class="news-words">
 													<p class="news-title single-line">工呼吸一下</p>
@@ -114,8 +105,8 @@
 													</div>
 												</div>
 											</li>
-										</div>
-									</div>-->
+										<!--</div>-->
+									</div>
 
 								</div>
 							</div>
@@ -217,9 +208,7 @@
 			 */
 			function initFresh(freshConatiner) {
 				mui('.mui-scroll-wrapper').scroll({
-					bounce: false,
-					indicators: true, //是否显示滚动条
-					deceleration: deceleration
+					indicators: true //是否显示滚动条
 				});
 				mui(freshConatiner.querySelector(".mui-slider-group .mui-scroll")).pullToRefresh({
 					down: {

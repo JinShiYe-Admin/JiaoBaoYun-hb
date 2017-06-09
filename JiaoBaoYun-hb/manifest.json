@@ -2590,7 +2590,8 @@
 					"css/utils/preview.css",
 					"fonts/fangzheng.ttf",
 					"js/utils/CloudFileUtil.js",
-					"js/qiniu/qiniu.js"
+					"js/qiniu/qiniu.js",
+					"js/mui.previewimage.js"
 				],
 				"refer": [
 					"html/homework/homework-commented.html"
@@ -4847,7 +4848,8 @@
 					"js/utils/RSAEncrypt.js",
 					"js/publicProtocol.js",
 					"image/utils/load-img-error.png",
-					"image/utils/playvideo.png"
+					"image/utils/playvideo.png",
+					"js/micro-course/coursedetails.js"
 				],
 				"refer": [
 					"html/micro-course/course-introduction.html",
