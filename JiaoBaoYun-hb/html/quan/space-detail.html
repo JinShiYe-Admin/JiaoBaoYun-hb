@@ -24,6 +24,142 @@
 		<script src="../../js/utils/video.js"></script>
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 		<style type="text/css">
+			.commentCell.mui-table-view-cell{
+				background: white;
+				/*cell 背景设为白色*/
+				padding: 10px;
+				/*内边距为0*/
+				margin-bottom: 8px;
+			}
+			
+			.mui-table-view:before,
+			.mui-table-view:after,
+			.section-comment .mui-table-view-cell:after {
+				height: 0px;
+			}
+			
+			.section-comment .mui-table-view-cell.mui-active,
+			.section-shield .mui-table-view-cell.mui-active {
+				background-color: white;
+			}
+			
+			.mui-bar-tab button {
+				/*评论按钮*/
+				text-align: left;
+				padding: 6px 12px !important;
+				color: #B7B7B7;
+				margin: 6px 1.5% !important;
+				width: 96%;
+				top: 0 !important;
+				height: 36px;
+				font-size: 14px;
+			}
+			
+			.section-comment-info {
+				color: #B7B7B7;
+				font-size: 14px;
+			}
+			
+			.icon-zanzan1:before {
+				content: "\e691";
+			}
+			
+			.icon-zanzan1 {
+				font-size: 13px;
+				color: #dbdbdb;
+			}
+			
+			.section-comment-info,
+			.section-comment-reply-info,
+			.section-comment-reply-content {
+				display: inline;
+			}
+			
+			.section-comment-title {
+				/*评论栏标题*/
+				display: none;
+				margin-top: -10px;
+				background-color: #F2F2F2;
+				padding: 10px;
+				border-left: 3px solid #1DB8F1;
+				font-size: 15px;
+				color: #323232;
+				height: 40px;
+			}
+			
+			.section-comment-personal-headimage {
+				/*评论者头像*/
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				float: left;
+				margin-right: 10px;
+			}
+			
+			.section-comment .icon-zanzan1 {
+				/*评论点赞按钮*/
+				float: right;
+				line-height: 40px;
+				margin-left: 30px;
+			}
+			
+			.section-comment-personal-name {
+				/*评论者昵称*/
+				font-size: 15px;
+				color: #323232;
+				line-height: 40px;
+			}
+			
+			.section-comment-content {
+				/*评论的内容*/
+				margin: 11px 0;
+				color: #808080;
+				font-size: 14px;
+			}
+			
+			.section-comment-reply {
+				/*评论回复区域*/
+				font-size: 14px;
+				background-color: #F2F2F2;
+				padding: 5px;
+				margin-top: 11px;
+			}
+			
+			.section-comment-reply-name {
+				/*回复者的名称*/
+				display: inline;
+				color: #1DB8F1;
+				font-size: 14px;
+			}
+			
+			.section-comment-reply-all {
+				/*查看所有回复*/
+				color: #1DB8F1;
+				font-size: 14px;
+			}
+			
+			.section-comment-reply-content {
+				font-size: 14px;
+				color: #808080;
+			}
+			
+			.section-comment-zan,
+			.section-zan {
+				/*点赞*/
+				color: #1db8f1;
+			}
+			
+			.section-comment-notzan,
+			.section-notzan {
+				/*不点赞*/
+				color: #dbdbdb;
+			}
+			/*.mui-scroll-wrapper {
+				z-index: 1;
+				bottom: 50px;
+				top: 45px;
+			}*/
+			
 			#topPopover {
 				position: fixed;
 				top: 46px;
@@ -51,7 +187,7 @@
 	<header class="mui-bar mui-bar-nav">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 id="spaceDetail" class="mui-title">详情</h1>
-		<a id="delete" class="mui-icon iconfont icon-moreandroid mui-pull-right"></a>
+		<!--<a id="delete" class="mui-icon iconfont icon-moreandroid mui-pull-right" ></a>-->
 
 	</header>
 
@@ -62,6 +198,11 @@
 				<!--数据列表-->
 				<ul class="mui-table-view">
 
+				</ul>
+				<div id="section_comment_title" class="section-comment-title">
+					评论(0)
+				</div>
+				<ul id="section_comment_list" class="mui-table-view section-comment">
 				</ul>
 			</div>
 
@@ -101,12 +242,16 @@
 
 			publisherId = preModel.PublisherId
 			console.log('personalUTID=' + personalUTID + '-----' + 'publisherId=' + JSON.stringify(preModel))
-			if(personalUTID == 0 || personalUTID != publisherId) {
-				document.getElementById("delete").className = 'mui-hidden';
-
-			}
-			if(preModel.focusFlag == 0) {
-				document.getElementById("delete").className = 'mui-hidden';
+//			if(personalUTID == 0 || personalUTID != publisherId) {
+//				document.getElementById("delete").className = 'mui-hidden';
+//
+//			}
+			if(preModel.focusFlag == 1&&personalUTID == publisherId) {
+				var a = document.createElement("a");
+				a.className = 'mui-icon iconfont icon-moreandroid mui-pull-right'
+				a.id = 'delete'
+				var h1 = document.getElementsByTagName('h1')[0]
+				h1.parentElement.appendChild(a);
 			}
 			events.addTap('delete', function() {
 				var btnArray = [{

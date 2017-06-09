@@ -1,11 +1,4 @@
-.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
-	border-top: none;
-	border-bottom: none;
-}
 
-.mine-indicator.mine-active {
-	background-color: white;
-}
 
 .btn-attention {
 	/*border: none;
@@ -50,22 +43,8 @@
 body,
 .mui-content {
 	background: white;
+	word-wrap: break-word;
 }
-
-#sliderSegmentedControl,
-.mui-segmented-control.mui-scroll-wrapper .mui-scroll {
-	height: 0px;
-}
-
-.mui-fullscreen .mui-segmented-control~.mui-slider-group {
-	top: 0px;
-	background-color: white;
-}
-
-.mui-slider .mui-slider-group .mui-slider-item .mui-table-view-cell:after {
-	height: 1px;
-}
-
 .mui-scroll-wrapper,
 .mui-pull-bottom-wrapper {
 	/*底部加载更多区域*/
