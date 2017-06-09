@@ -2,6 +2,9 @@ var personalUTID; //个人utid
 var homeworkInfo; //作业信息
 mui.init({
 	beforeback: function() {
+		if(mui.getPreviewImage().isShown()){
+			return true;
+		}
 		document.querySelector('.startWork-container').style.display = 'none';
 		document.querySelector('.subject-icon').className = "subject-icon";
 		document.querySelector('.brief-title').innerText = "";

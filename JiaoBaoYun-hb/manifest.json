@@ -2590,7 +2590,8 @@
 					"css/utils/preview.css",
 					"fonts/fangzheng.ttf",
 					"js/utils/CloudFileUtil.js",
-					"js/qiniu/qiniu.js"
+					"js/qiniu/qiniu.js",
+					"js/mui.previewimage.js"
 				],
 				"refer": [
 					"html/homework/homework-commented.html"
