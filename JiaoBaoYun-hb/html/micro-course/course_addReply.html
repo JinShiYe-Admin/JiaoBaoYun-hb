@@ -58,7 +58,7 @@
 			var leaveContent = document.getElementById('content');
 			events.addTap('publish', function() {
 				var tempText = leaveContent.value;
-				if(!tempText || tempText == '') {
+				if(!tempText || tempText == ''||events.isNull(tempText)) {
 					mui.toast('请输入回复内容');
 					return;
 				} else if(tempText.length > 200) {

@@ -2187,7 +2187,8 @@
 			"js/utils/RSAEncrypt.js",
 			"js/publicProtocol.js",
 			"image/utils/load-img-error.png",
-			"image/utils/playvideo.png"
+			"image/utils/playvideo.png",
+			"js/micro-course/coursedetails.js"
 		],
 		"refer": [
 			"html/micro-course/course-introduction.html",
