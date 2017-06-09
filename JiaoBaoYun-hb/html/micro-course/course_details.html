@@ -17,6 +17,7 @@
 			body,
 			.mui-content {
 				word-wrap: break-word;
+				background-color: white;
 			}
 
 			.mui-table-view:before,
@@ -31,7 +32,14 @@
 			}
 
 			.section-top {
+				/*顶部节次*/
 				display: none;
+				padding-bottom: 8px;
+				background-color: #efeff4;
+			}
+
+			.section-top .mui-table-view-cell{
+				background-color: white;
 			}
 
 			.section-top .mui-navigate-right {
@@ -130,10 +138,6 @@
 
 			.section-more .mui-icon-arrowdown {
 				font-size: 14px;
-			}
-
-			.section-list {
-				margin-top: 8px;
 			}
 
 			.section-list-li {
@@ -1043,6 +1047,12 @@
 					}
 					ele.innerHTML = html_0 + html_1;
 					document.getElementById("section_comment_list").appendChild(ele);
+				}
+				if(data.length == 0) {
+					document.getElementById("section_comment_list").innerHTML = '<div style="text-align: center;color: #808080;">\
+						<img src="../../image/qiuzhi/qiuzhi_noanswer.png" style="width: 50%;"/>\
+						<div style="padding-bottom: 10px;">暂无评论~~~</div>\
+					</div>';
 				}
 
 				if(wd) {
