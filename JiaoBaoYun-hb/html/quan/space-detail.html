@@ -24,7 +24,7 @@
 		<script src="../../js/utils/video.js"></script>
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
 		<style type="text/css">
-			.commentCell.mui-table-view-cell{
+			.commentCell.mui-table-view-cell {
 				background: white;
 				/*cell 背景设为白色*/
 				padding: 10px;
@@ -242,17 +242,82 @@
 
 			publisherId = preModel.PublisherId
 			console.log('personalUTID=' + personalUTID + '-----' + 'publisherId=' + JSON.stringify(preModel))
-//			if(personalUTID == 0 || personalUTID != publisherId) {
-//				document.getElementById("delete").className = 'mui-hidden';
-//
-//			}
-			if(preModel.focusFlag == 1&&personalUTID == publisherId) {
+			//			if(personalUTID == 0 || personalUTID != publisherId) {
+			//				document.getElementById("delete").className = 'mui-hidden';
+			//
+			//			}
+			if(preModel.focusFlag == 1 && personalUTID == publisherId) {
 				var a = document.createElement("a");
 				a.className = 'mui-icon iconfont icon-moreandroid mui-pull-right'
 				a.id = 'delete'
 				var h1 = document.getElementsByTagName('h1')[0]
 				h1.parentElement.appendChild(a);
 			}
+			//点击评论区域
+			mui('.section-comment').on('tap', '.mui-table-view-cell', function(e) {
+				console.log('mui-table-view-cell id ' + this.id + " e " + e.target.getAttribute("data-type"));
+				var self = this;
+				if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
+					document.getElementById("audio").pause();
+					return;
+				}
+
+				var ids = this.id.split("_")
+				var type = e.target.getAttribute("data-type");
+				switch(type) {
+					case "view_cell":
+					{
+						console.log(333333)
+					}
+					break;
+					case "zan":
+					case "notzan":
+						var comData = {
+							secId: sectionId, //小节ID
+							commentId: ids[1], //评论ID
+							userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //点赞用户ID
+							status: 0 //点赞状态，0 取消点赞，1 点赞
+						};
+						if(type == "notzan") { //评论-点赞
+							comData.status = 1;
+						}
+						commontLikeOrNot(comData, e.target, ids[2]);
+						break;
+					case "comment_reply": //评论回复
+					case "comment_reply_cell": //评论回复
+					case "view_cell": //评论评论
+						var userId; //被评论者的utid
+						if(type == "view_cell") {
+							userId = this.getAttribute('data-UserId');
+						} else if(type == "comment_reply") {
+							userId = e.target.getAttribute("data-UserId");
+						} else if(type = "comment_reply_cell") {
+							userId = e.target.parentNode.getAttribute("data-UserId");
+						}
+
+						var comData = {
+							userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //用户ID
+							upperId: ids[1], //上级评论ID
+							replyUserId: userId, //回复ID
+							userSpaceId: datasource.TabId, //用户空间ID
+							commentContent: 'nihao' //回复内容
+						};
+						if(comData.userId == comData.replyUserId) {
+							mui.toast('不能回复自己')
+							return;
+						}
+						events.openNewWindowWithData('../show/add-comment.html', {
+							tempIndex: '-1',
+							comData: comData
+						})
+						break;
+
+					default:
+						break;
+				}
+				self.disabled = false;
+				jQuery(self).css("pointerEvents", "all");
+			});
 			events.addTap('delete', function() {
 				var btnArray = [{
 					title: '删除',
@@ -434,10 +499,12 @@
 									if(tempModel.utid == tempModel1.UserId) {
 										//添加参数
 										tempModel1.UserIdName = tempModel.unick;
+										tempModel1.UserIdImg = tempModel.uimg
 									}
 									if(tempModel.utid == tempModel1.ReplyId) {
 										//添加参数
 										tempModel1.ReplyIdName = tempModel.unick;
+										tempModel1.ReplyIdImg = tempModel.uimg
 									}
 									//
 									for(var item2 in tempModel1.Replys) {
