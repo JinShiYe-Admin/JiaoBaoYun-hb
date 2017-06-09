@@ -258,6 +258,7 @@ var show_listnew = (function(mod) {
 	mod.setListListener = function() {
 		mui(".mui-slider-group").on("tap", ".news-container", function(e) {
 			this.disabled = true;
+			this.info.focusFlag=1;
 			events.singleWebviewInPeriod(this, "../quan/space-detail.html", this.info);
 		})
 		//发布的点击事件
