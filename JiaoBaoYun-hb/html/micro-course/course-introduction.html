@@ -169,6 +169,7 @@
 					nodes.focusBtn.style.backgroundColor = '#1db8F1'
 					nodes.focusBtn.innerHTML = '关注'
 				}
+				events.fireToPageNone('course-home1.html', 'focus')
 				return;
 			}
 			var utid = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
@@ -199,6 +200,7 @@
 						nodes.focusBtn.style.backgroundColor = '#1db8F1'
 						nodes.focusBtn.innerHTML = '关注'
 					}
+					events.fireToPageNone('course-home1.html', 'focus')
 				} else {
 					mui.toast(data.RspTxt);
 				}

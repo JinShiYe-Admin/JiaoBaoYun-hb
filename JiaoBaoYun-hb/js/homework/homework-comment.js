@@ -2,6 +2,9 @@ var workInfo;
 var personalUTID;
 mui.init({
 	beforeback: function() {
+		if(mui.getPreviewImage().isShown()){
+			return true;
+		}
 		document.querySelector(".answer-info").innerText = "";
 		document.getElementById("answer-imgs").innerHTML = "";
 		document.getElementById('submit-time').innerText = "";
@@ -19,7 +22,7 @@ mui.plusReady(function() {
 
 	mui.previewImage();
 	events.softIn("comment-area");
-	mui.fire(plus.webview.getWebviewById("workdetail-tea-sub.html"),"commentIsReady");
+	mui.fire(plus.webview.getWebviewById("workdetail-tea-sub.html"), "commentIsReady");
 	window.addEventListener('workInfo', function(e) {
 		mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100); //100毫秒滚动到顶
 		workInfo = e.detail.data;
@@ -35,7 +38,7 @@ mui.plusReady(function() {
 	})
 	window.addEventListener("commentChanged", function(e) {
 		var commentValue = e.detail;
-		document.getElementById('commented-words').innerHTML = commentValue.replace(/ /g,"&nbsp;").replace(/\n/g,"<br/>");
+		document.getElementById('commented-words').innerHTML = commentValue.replace(/ /g, "&nbsp;").replace(/\n/g, "<br/>");
 		workInfo.Comment = commentValue;
 	})
 	//设置最大长度为1000
@@ -100,8 +103,10 @@ var setListener = function() {
 	})
 }
 var toggleEditContainer = function(isToShow, isFirst) {
-	document.getElementById('comment-area').value = workInfo.Comment;
-	document.querySelector(".commented-words").innerHTML = workInfo.Comment.replace(/ /g, "&nbsp;").replace(/\n/g, "<br/>");
+	if(workInfo.Comment) {
+		document.getElementById('comment-area').value = workInfo.Comment;
+		document.querySelector(".commented-words").innerHTML = workInfo.Comment.replace(/ /g, "&nbsp;").replace(/\n/g, "<br/>");
+	}
 	if(isToShow) {
 		document.querySelector('.comment-holder').style.display = "block";
 		document.querySelector(".commented-holder").style.display = "none";

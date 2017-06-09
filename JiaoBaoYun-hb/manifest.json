@@ -2590,7 +2590,8 @@
 					"css/utils/preview.css",
 					"fonts/fangzheng.ttf",
 					"js/utils/CloudFileUtil.js",
-					"js/qiniu/qiniu.js"
+					"js/qiniu/qiniu.js",
+					"js/mui.previewimage.js"
 				],
 				"refer": [
 					"html/homework/homework-commented.html"
@@ -4203,7 +4204,8 @@
 				"refer": [
 					"html/show/add-comment.html",
 					"html/register/login.html",
-					"html/quan/zone_main.html"
+					"html/quan/zone_main.html",
+					"html/micro-course/course_addReply.html"
 				],
 				"priority": 0
 			},
@@ -4438,7 +4440,9 @@
 				],
 				"refer": [
 					"html/register/login.html",
-					"html/quan/pub-leave.html"
+					"html/quan/pub-leave.html",
+					"html/quan/leave-reply.html",
+					"html/quan/zone_main.html"
 				],
 				"priority": 0
 			},
@@ -4967,7 +4971,30 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/quan/leave-reply.html": {
+				"resources": [
+					"js/storageKeyName.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/mui.min.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0

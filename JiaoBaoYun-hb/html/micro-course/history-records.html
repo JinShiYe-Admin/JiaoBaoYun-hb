@@ -208,7 +208,6 @@
 			.section-more .mui-icon-arrowdown {
 				font-size: 14px;
 			}
-
 			/*.section-list {
 				margin-top: 8px;
 			}*/
@@ -245,8 +244,8 @@
 
 			.section-image-play {
 				/*视频播放按钮*/
-				width: 55px;
-				height: 55px;
+				width: 40px;
+				height: 40px;
 			}
 
 			.section-image-time {
@@ -459,8 +458,7 @@
 							mui(".mui-pull-loading")[0].innerHTML = "";
 							var self = this;
 							console.log("下拉刷新");
-							var wd = events.showWaiting();
-							getAllSectionsAndComments(1, wd);
+							getAllSectionsAndComments(1);
 							setTimeout(function() {
 								//结束下拉刷新
 								self.endPullDownToRefresh();
@@ -472,7 +470,7 @@
 							var self = this;
 							console.log("上拉加载更多");
 							if(pageIndex <= totalPage) {
-								getAllSectionsAndComments(pageIndex + 1, wd);
+								getAllSectionsAndComments(pageIndex + 1);
 								setTimeout(function() {
 									//结束下拉刷新
 									self.endPullUpToRefresh();
@@ -516,10 +514,11 @@
 					if(data.RspCode == 0) {
 						wd.close();
 						pageIndex = index;
-						totalPage = data.RspData.totalPag;
+						totalPage = data.RspData.totalPage;
 						if(data.RspData.Data.length != 0) {
 							showSectionList(data.RspData.Data);
 						}
+
 						if(pageIndex >= data.RspData.totalPage) {
 							mui(".mui-pull-loading")[0].innerHTML = "";
 							console.log('没有下一页');

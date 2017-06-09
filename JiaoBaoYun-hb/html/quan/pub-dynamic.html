@@ -244,7 +244,7 @@
 					msgTitle = '';
 				} else {
 					pubScopes = '[2]';
-					if(!askTitle.value || askTitle.value == '') {
+					if(!askTitle.value || askTitle.value == ''||events.isNull(askTitle.value)) {
 						mui.toast('请输入标题');
 						self.disabled = false;
 						return;
@@ -256,7 +256,7 @@
 					msgTitle = askTitle.value;
 				}
 				var tempText = textView.value;
-				if(!tempText || tempText == '') {
+				if(!tempText || tempText == ''||events.isNull(tempText)) {
 					mui.toast('请输入内容');
 					self.disabled = false;
 					return;

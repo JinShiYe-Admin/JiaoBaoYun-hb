@@ -17,6 +17,7 @@
 			body,
 			.mui-content {
 				word-wrap: break-word;
+				background-color: white;
 			}
 
 			.mui-table-view:before,
@@ -31,6 +32,7 @@
 			}
 
 			.section-top {
+				/*顶部节次*/
 				display: none;
 			}
 
@@ -373,6 +375,16 @@
 				fill: white;
 				height: 50px;
 			}
+
+			.video-area video {
+				background-color: black;
+				background-position: 0% 50%;
+				background-repeat: no-repeat;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+			}
 		</style>
 	</head>
 
@@ -410,7 +422,7 @@
 				<audio id="audio"></audio>
 			</div>
 			<div id="video_area" class="video-area">
-				<video id="video" controls="controls" preload="metadata" autoplay="autoplay">
+				<video id="video" controls="controls" preload="none" poster="null" autoplay="autoplay">
 					您的浏览器不支持video标签
 				</video>
 			</div>
@@ -505,7 +517,12 @@
 				});
 
 				//初始化视频播放区域
-				document.getElementById("video").style.height = plus.screen.resolutionWidth * 162 / 360 + "px";
+				var video = document.getElementById("video");
+				video.style.height = plus.screen.resolutionWidth * 162 / 360 + "px";
+				video.onplaying = function() {
+					console.log("video-onplaying");
+					video.style.backgroundImage = "";
+				}
 
 				//初始化音频播放区域
 				svgWidth = plus.screen.resolutionWidth - 60;
@@ -901,7 +918,12 @@
 					ele.innerHTML = html_0 + html_1;
 					document.getElementById("section_comment_list").appendChild(ele);
 				}
-
+				if(data.length == 0) {
+					document.getElementById("section_comment_list").innerHTML = '<div style="text-align: center;color: #808080;margin: 50px 0px;">\
+						<img src="../../image/qiuzhi/qiuzhi_noanswer.png" style="width: 50%;"/>\
+						<div style="padding-bottom: 10px;">暂无评论~~~</div>\
+					</div>';
+				}
 				if(wd) {
 					wd.close();
 				}
@@ -982,7 +1004,7 @@
 				audioState = 4;
 				//重置视频区域
 				video.src = "";
-				video.poster = "";
+				video.style.backgroundImage = "";
 				if(type == 1) { //视频
 					document.getElementById("scroll_wrapper").style.top = 44 + parseInt(plus.screen.resolutionWidth * 162 / 360) + "px";
 					document.getElementById("video_area").style.display = "inline";
@@ -992,7 +1014,7 @@
 					document.getElementById("collapse_content_show").style.display = 'block';
 					document.getElementById("section_top_title").style.marginRight = "15px";
 					video.src = fpath;
-					video.poster = thumb;
+					video.style.backgroundImage = "url(" + thumb + ")";
 				} else if(type == 2) { //音频
 					document.getElementById("scroll_wrapper").style.top = "144px";
 					document.getElementById("video_area").style.display = "none";

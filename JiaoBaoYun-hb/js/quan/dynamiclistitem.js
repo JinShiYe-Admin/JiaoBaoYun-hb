@@ -1242,7 +1242,7 @@ var dynamiclistitem = (function($, mod) {
 					var html_0 = "";
 					//回复评论
 					var html_1 = "";
-						html_0 = '<img data-type="view_cell" src="' + updateHeadImg('', 2) + '" class="section-comment-personal-headimage" />\
+						html_0 = '<img data-type="view_cell" src="' + updateHeadImg(list[i].UserIdImg, 2) + '" class="section-comment-personal-headimage" />\
 						' + '\
 						<div class="mui-ellipsis section-comment-personal-name" data-type="view_cell">' + list[i].UserIdName + '</div>\
 						<div class="section-comment-content" data-type="view_cell">' + list[i].CommentContent + '</div>\
@@ -1253,18 +1253,15 @@ var dynamiclistitem = (function($, mod) {
 							if(j == 0) {
 								html_1 = '<div data-type="reply" id="commont_reply_' + list[i].TabId + '" class="section-comment-reply">';
 							}
-							if(j == 5) {
-								html_1 = html_1 + '<div data-type="reply_all" class="section-comment-reply-all">查看全部>></div>';
-								break;
-							} else {
+		
 								html_1 = html_1 + '<div id="commont_reply_' + list[i].TabId + '_' + list[i].Replys[j].TabId + '" data-type="comment_reply" data-UserId="' + list[i].Replys[j].UserId + '">\
-								<div class="section-comment-reply-name" data-type="comment_reply_cell">' + allUserInfo.value[list[i].Replys[j].UserId].unick + '</div><div\
+								<div class="section-comment-reply-name" data-type="comment_reply_cell">' + list[i].Replys[j].UserIdName + '</div><div\
 								class="section-comment-reply-info" data-type="comment_reply_cell">@</div><div \
-								class="section-comment-reply-name" data-type="comment_reply_cell">' + allUserInfo.value[list[i].Replys[j].ReplyId].unick + '</div>\
+								class="section-comment-reply-name" data-type="comment_reply_cell">' + list[i].Replys[j].ReplyIdName + '</div>\
 								<div class="section-comment-reply-info" data-type="comment_reply_cell">:</div>\
 								<div class="section-comment-reply-content" data-type="comment_reply_cell">' + list[i].Replys[j].CommentContent + '</div>\
 							</div>';
-							}
+							
 						}
 					
 					if(html_1 != "") {

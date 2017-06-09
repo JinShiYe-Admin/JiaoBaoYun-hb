@@ -12,7 +12,7 @@ var events = (function(mod) {
 		return text.replace(reTag, "");
 		//		return dds;
 	}
-	
+
 	//判断输入字符串是否为空或者全部都是空格
 	mod.isNull = function(str) {
 		if(str == "") return true;
@@ -673,7 +673,7 @@ var events = (function(mod) {
 			//1.求知问题详情页
 			//2.微课节次详情页
 			//3.微课节次单个详情页
-			if(id == "qiuzhi-question.html" || id == "course_details.html" || id == "course_section.html") {
+			if(id == "qiuzhi-question.html" || id == "course_details.html" || id == "course_section.html"||id=='space-detail.html'||id=='zonep_sub.html') {
 				styles.hardwareAccelerated = true;
 			}
 		}
@@ -1142,18 +1142,24 @@ var events = (function(mod) {
 			console.log("webview的id:" + wvs[i].id)
 			switch(wvs[i].id) {
 				case "index.html":
-				case "cloud_home.html":
-				case "sciedu_home.html":
-				case "show_home_1.html":
-				case "mine.html":
-				case "cloud_home.html":
-				case "qiuzhi_home.html":
-				case "qiuzhi-sub.html":
+				case "cloud_home.html": //云盘首页
+				case "sciedu_home.html": //科教首页
+				case "show-home1.html": //展现首页
+				case "mine.html": //我的，侧边栏
+				case "course-home1.html": //微课首页
 				case plus.webview.currentWebview().id:
+					break;
+				case "course_details.html": //微课节次详情和列表
+				case "course-introduction.html": //节次介绍
+				case "history-records.html": //微课所有节次历史记录
+				case "course_section.html": //微课一个节次的详情
+					if(!wvs[i].parent()) {
+						wvs[i].close(); //删除页面
+					}
 					break;
 				default:
 					if(!wvs[i].parent()) {
-						wvs[i].hide();
+						wvs[i].hide(); //隐藏页面
 					}
 					break;
 			}

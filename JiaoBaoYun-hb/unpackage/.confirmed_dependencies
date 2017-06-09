@@ -781,7 +781,8 @@
 			"js/utils/CloudFileUtil.js",
 			"js/qiniu/qiniu.js",
 			"fonts/iconfont.ttf",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"js/mui.previewimage.js"
 		],
 		"refer": [
 			"html/homework/homework-commented.html"
