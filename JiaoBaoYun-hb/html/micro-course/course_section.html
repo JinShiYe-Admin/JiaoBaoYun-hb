@@ -1,7 +1,7 @@
 <!--
 	作者：444811716@qq.com
 	时间：2017-06-02
-	描述：课程详情列表
+	描述：课程一个节次的详情
 -->
 <!doctype html>
 <html>
@@ -91,6 +91,10 @@
 
 			.section-list .section-title {
 				margin-bottom: 11px;
+			}
+
+			.section-list .mui-table-view-cell {
+				padding: 8px 15px;
 			}
 
 			.section-info,
@@ -352,9 +356,6 @@
 				width: 100%;
 				top: 45px;
 				height: 100px;
-				/*display: flex;*/
-				justify-content: center;
-				align-items: center;
 			}
 
 			.section-list-audio-border-fill {
@@ -387,10 +388,29 @@
 		</nav>
 		<div id="content" class="mui-content">
 			<div id="audio_area" class="audio-area">
-				<audio id="audio" style="background-color: white;width: 100%;" controls="controls"></audio>
+				<div id="audio_area_svg" class="audio-area-svg">
+					<svg id="audio_svg" class="section-list-audio">
+						<path id="audio_svg_border_fill" class="section-list-audio-border-fill" />
+						<rect id="audio_svg_rect" class="audio-area-svg-rect" x="10" y="0">
+							<animate id="audio_svg_rect_ani" attributeName="x" from="10" begin="indefinite" repeatCount="1" />
+						</rect>
+						<path id="audio_svg_border" class="section-list-audio-border" />
+						<path class="section-list-audio-icon" d="M30 18 A5 5 0 0 1 30 23">
+							<animate id="audio_svg_icon_first_ani" attributeName="stroke" from="white" to="#B7B7B7" begin="indefinite" />
+						</path>
+						<path class="section-list-audio-icon" d="M35 14 A10 10 0 0 1 35 27">
+							<animate id="audio_svg_icon_second_ani" attributeName="stroke" from="white" to="#B7B7B7" begin="indefinite" />
+						</path>
+						<path class="section-list-audio-icon" d="M40 10 A 15 15 0 0 1 40 31">
+							<animate id="audio_svg_icon_third_ani" attributeName="stroke" from="white" to="#B7B7B7" begin="indefinite" />
+						</path>
+						<text id="audio_svg_time" class="section-audio-time" x="60" y="26"></text>
+					</svg>
+				</div>
+				<audio id="audio"></audio>
 			</div>
 			<div id="video_area" class="video-area">
-				<video id="video" controls="controls" preload="metadata">
+				<video id="video" controls="controls" preload="metadata" autoplay="autoplay">
 					您的浏览器不支持video标签
 				</video>
 			</div>
@@ -444,8 +464,13 @@
 				value: {}
 			}; //评论，回复者的账号信息
 			var sectionId; //当前显示的节次id
-
-			mui.init();
+			var svgWidth; //SVG中的宽度
+			var audioState = 0; //0,未播放;1,播放中;2,暂停中;3,结束播放;4,未加载
+			mui.init({
+				gestureConfig: {
+					doubletap: true,
+				}
+			});
 			mui.plusReady(function() {
 				//events.closeWaiting();
 				var wd = events.showWaiting();
@@ -481,6 +506,62 @@
 
 				//初始化视频播放区域
 				document.getElementById("video").style.height = plus.screen.resolutionWidth * 162 / 360 + "px";
+
+				//初始化音频播放区域
+				svgWidth = plus.screen.resolutionWidth - 60;
+				var d = courseDetails.getAudioBorderPath(svgWidth);
+				console.log("top audio " + d);
+				//外框和背景
+				document.getElementById("audio_svg_border_fill").setAttribute("d", d);
+				document.getElementById("audio_svg_border").setAttribute("d", d);
+				//进度控制区域
+				document.getElementById("audio_svg_rect").setAttribute("width", plus.screen.resolutionWidth - 50);
+				var audio = document.getElementById("audio");
+
+				audio.oncanplaythrough = function() { //可以播放
+					console.log("audio-oncanplaythrough " + audioState);
+					if(audioState == 4) {
+						audioState = 0;
+						audio.play();
+					}
+				}
+
+				audio.onplaying = function() { //播放
+					console.log("audio-playing" + audio.duration);
+					if(audioState == 0 || audioState == 3) { //从头开始播放
+						var audio_svg_rect_ani = document.getElementById("audio_svg_rect_ani");
+						var audio_svg_icon_first_ani = document.getElementById("audio_svg_icon_first_ani");
+						var repeatCount = parseInt(audio.duration);
+						var ids = ["audio_svg_icon_first_ani", "audio_svg_icon_second_ani", "audio_svg_icon_third_ani"];
+
+						audio_svg_rect_ani.setAttribute("to", svgWidth + 20);
+						audio_svg_rect_ani.setAttribute("dur", audio.duration + "s");
+						for(var i in ids) {
+							var ele = document.getElementById(ids[i]);
+							ele.setAttribute("repeatCount", repeatCount);
+							ele.setAttribute("dur", "1s");
+							ele.beginElement();
+						}
+						audio_svg_rect_ani.beginElement();
+					} else { //继续播放
+						document.getElementById("audio_svg").unpauseAnimations();
+					}
+					audioState = 1;
+				}
+
+				audio.onpause = function() { //暂停或结束
+					console.log("audio-onpause");
+					console.log("paused " + audio.paused);
+					console.log("ended " + audio.ended);
+					if(audio.paused && !audio.ended) { //暂停
+						console.log("暂停");
+						audioState = 2;
+						document.getElementById("audio_svg").pauseAnimations();
+					} else if(audio.ended) {
+						console.log("结束");
+						audioState = 3;
+					}
+				}
 			}
 
 			/**
@@ -511,6 +592,7 @@
 					console.log('mui-table-view-cell id ' + this.id + " e " + e.target.getAttribute("data-type"));
 					var self = this;
 					if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
+						document.getElementById("audio").pause();
 						return;
 					}
 					if(sectionData.value[sectionId].SecStatus == 0) { //内容被屏蔽
@@ -578,6 +660,7 @@
 					console.log("comment_section " + sectionId);
 					var self = this;
 					if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
+						document.getElementById("audio").pause();
 						return;
 					}
 					if(!sectionData.value[sectionId]) {
@@ -611,11 +694,17 @@
 				mui('#section_top').on('tap', '.icon-zanzan1', function() {
 					var self = this;
 					if(events.judgeLoginMode(self)) { //判断是否是游客身份登录
+						document.getElementById("audio").pause();
 						return;
 					}
 					sectionLikeOrNot();
 					self.disabled = false;
 					jQuery(self).css("pointerEvents", "all");
+				});
+
+				//双击标题返回列表顶部
+				document.getElementById('title').addEventListener('doubletap', function() {
+					mui("#scroll_wrapper").scroll().scrollTo(0, 0, 0);
 				});
 
 				//新增评论
@@ -647,6 +736,24 @@
 						});
 					}
 					showCommentsFirst(sectionData.value[e.detail.data.secId].Comments);
+				});
+
+				//音频SVG
+				document.getElementById('audio_svg').addEventListener('tap', function() {
+					console.log("audio_svg " + audioState);
+					if(audioState == 0) { //未播放
+						document.getElementById("audio").play();
+					} else if(audioState == 1) { //播放中
+						audioState = 2;
+						document.getElementById("audio").pause();
+					} else if(audioState == 2) { //暂停播放
+						document.getElementById("audio").play();
+					} else if(audioState == 3) { //播放结束
+						document.getElementById("audio").play();
+					} else {
+						mui.toast("音频加载中");
+						document.getElementById("audio").load();
+					}
 				});
 			}
 
@@ -858,7 +965,24 @@
 			function showOrHiddenVideoAudio(type, fpath, time, thumb) {
 				console.log("showOrHiddenVideoAudio " + type + " " + fpath + " " + time + " " + thumb);
 				var video = document.getElementById("video");
+				//重置音频区域
 				var audio = document.getElementById("audio");
+				audio.pause(); //暂停播放
+				audio.src = ""; //取消视频
+				audio_svg_rect_ani.removeAttribute("to");
+				audio_svg_rect_ani.removeAttribute("dur");
+				var ids = ["audio_svg_icon_first_ani", "audio_svg_icon_second_ani", "audio_svg_icon_third_ani"];
+				for(var i in ids) {
+					var ele = document.getElementById(ids[i]);
+					ele.removeAttribute("repeatCount");
+					ele.removeAttribute("dur");
+
+				}
+				audio_svg.unpauseAnimations();
+				audioState = 4;
+				//重置视频区域
+				video.src = "";
+				video.poster = "";
 				if(type == 1) { //视频
 					document.getElementById("scroll_wrapper").style.top = 44 + parseInt(plus.screen.resolutionWidth * 162 / 360) + "px";
 					document.getElementById("video_area").style.display = "inline";
@@ -867,26 +991,19 @@
 					document.getElementById("collapse_content_li").className = "mui-table-view-cell mui-collapse";
 					document.getElementById("collapse_content_show").style.display = 'block';
 					document.getElementById("section_top_title").style.marginRight = "15px";
-					audio.src = "";
-					audio.pause();
-					video.pause();
 					video.src = fpath;
 					video.poster = thumb;
-					video.play();
 				} else if(type == 2) { //音频
 					document.getElementById("scroll_wrapper").style.top = "144px";
 					document.getElementById("video_area").style.display = "none";
-					document.getElementById("audio_area").style.display = "flex";
+					document.getElementById("audio_area").style.display = "inline";
 					show = false;
 					document.getElementById("collapse_content_li").className = "mui-table-view-cell mui-collapse";
 					document.getElementById("collapse_content_show").style.display = 'block';
 					document.getElementById("section_top_title").style.marginRight = "15px";
-					video.src = "";
-					video.poster = "";
-					video.pause();
-					audio.pause();
+					document.getElementById("audio_svg_time").innerHTML = courseDetails.getAudioTime(time);
 					audio.src = fpath;
-					audio.play();
+					audio.load();
 				} else {
 					document.getElementById("scroll_wrapper").style.top = "45px";
 					document.getElementById("video_area").style.display = "none";
@@ -895,11 +1012,6 @@
 					show = true;
 					document.getElementById("collapse_content_li").className = "mui-table-view-cell mui-collapse mui-active";
 					document.getElementById("section_top_title").style.marginRight = "0px";
-					audio.pause();
-					audio.src = "";
-					video.pause();
-					video.src = "";
-					video.poster = "";
 				}
 			}
 
