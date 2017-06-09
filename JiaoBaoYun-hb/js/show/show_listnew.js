@@ -1,4 +1,10 @@
 var show_listnew = (function(mod) {
+	/**
+	 * 获取展现的数据
+	 * @param {Object} showCity 地区
+	 * @param {Object} listContainer 列表
+	 * @param {Object} callback 回调
+	 */
 	mod.getShowList = function(showCity, listContainer, callback) {
 		if(showCity.pageIndex == 1) {
 			listContainer.innerHTML = "";
@@ -47,6 +53,11 @@ var show_listnew = (function(mod) {
 			})
 		}
 	}
+	/**
+	 * 获取个人信息
+	 * @param {Object} tempRspData 
+	 * @param {Object} callback 信息回调
+	 */
 	mod.getUserInfo = function(tempRspData, callback) {
 		//获取当前回调留言的个人信息，主要是头像、昵称
 		var tempArray = [];
@@ -97,7 +108,13 @@ var show_listnew = (function(mod) {
 			callback(tempRspData);
 		});
 	}
-	//81.（用户空间）获取用户所有关注的用户
+	
+	/**
+	 * //81.（用户空间）获取用户所有关注的用户
+	 * @param {Object} showCity 地区信息
+	 * @param {Object} listContainer 加载内容的控件
+	 * @param {Object} callback 回调
+	 */
 	function getFocusByUser(showCity, listContainer, callback) {
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
@@ -126,7 +143,14 @@ var show_listnew = (function(mod) {
 			}
 		});
 	}
-	//74.(用户空间）获取多用户空间所有用户动态列表
+	
+	/**
+	 * //74.(用户空间）获取多用户空间所有用户动态列表
+	 * @param {Object} showCity 地区信息
+	 * @param {Object} paraModel 关注人信息数组
+	 * @param {Object} listContainer 加载数据的控件
+	 * @param {Object} callback 请求的回调
+	 */
 	function getAllUserSpacesByUser(showCity, paraModel, listContainer, callback) {
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
@@ -160,6 +184,12 @@ var show_listnew = (function(mod) {
 
 		});
 	}
+	/**
+	 * 生成展现列表
+	 * @param {Object} showCity 展现地区信息
+	 * @param {Object} listContainer 加载内容的子控件
+	 * @param {Object} showData 加载的数据
+	 */
 	mod.setShowList = function(showCity, listContainer, showData) {
 		var div = document.createElement("div");
 		div.className = "mui-table-view cityNews-container";
@@ -178,20 +208,28 @@ var show_listnew = (function(mod) {
 		jQuery(".img-container").lazyload();
 		//		mod.endFresh();
 	}
+	/**
+	 * 根据展现单条数据 生成单条数据的cell
+	 * @param {Object} data
+	 */
 	mod.getShowInner = function(data) {
 		return '<div class="img-container news-img" data-original="' + data.EncImgAddr.split("|")[0] + '" style="background-image:url(../../image/utils/video-loading.gif);text-align:center;background-position:center;background-size:cover;">' + mod.getVideoMenu(data) +
 			'</div>' +
 			'<div class="news-words"><p class="news-title single-line">' + data.MsgTitle + '</p>' +
 			'<div class="anthor-date"><p class="news-anthor single-line">' + data.unick + '</p><p class="news-date">' + data.PublishDate + '</p></div></div>'
 	}
+	/**
+	 * 获取视频按钮控件
+	 * @param {Object} cell
+	 */
 	mod.getVideoMenu = function(cell) {
 		var isVideo = false;
 		if(cell.EncType) {
 			switch(cell.EncType) {
-				case 2:
+				case 2://视频
 					isVideo = true;
 					break;
-				case 5:
+				case 5://图文混合
 					var addrs = cell.EncAddr.split(".");
 					switch(addrs[addrs.length - 1]) {
 						case "mp4":
@@ -211,6 +249,9 @@ var show_listnew = (function(mod) {
 		}
 		return '';
 	}
+	/**
+	 * 暂不用
+	 */
 	mod.initFresh = function() {
 		mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
 			down: {
@@ -255,7 +296,11 @@ var show_listnew = (function(mod) {
 	//		}
 	//		freshFlag = 0;
 	//	}
+	/**
+	 * 加载监听
+	 */
 	mod.setListListener = function() {
+		//展现动态点击监听
 		mui(".mui-slider-group").on("tap", ".news-container", function(e) {
 			this.disabled = true;
 			this.info.focusFlag=1;

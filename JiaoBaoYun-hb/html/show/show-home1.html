@@ -45,6 +45,7 @@
 			<a id="publish-show" class="mui-pull-right">发布</a>
 		</header>
 		<div class="mui-content">
+			<!--slider控件-->
 			<div id="slider" class="mui-slider mui-fullscreen">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="background-color: transparent;">
 					<div class="mui-scroll" style="background-color: transparent;">
@@ -53,71 +54,11 @@
 						</a>
 					</div>
 				</div>
+				<!--加载的范围-->
 				<div class="mui-slider-group">
 					<div id="show-all" class="mui-slider-item mui-control-content">
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll show-list">
-								<!--<div class="show-list">-->
-									<!--<div class="cityNews-container mui-card">
-										<div class="mui-table-view">
-											<li class="mui-table-view-cell news-container"><img class="news-img" src="http://qn-kfpb.jiaobaowang.net/jxq/PersonalSpace/thumb/1496731091586.png">
-												<div class="news-words">
-													<p class="news-title single-line">mmm</p>
-													<div class="anthor-date">
-														<p class="news-anthor single-line">遥不可及</p>
-														<p class="news-date">06-06 14:38</p>
-													</div>
-												</div>
-											</li>
-											<li class="mui-table-view-cell news-container"><img class="news-img" src="http://qn-kfpb.jiaobaowang.net/jxq/PersonalSpace/thumb/1496731036698.jpg">
-												<div class="news-words">
-													<p class="news-title single-line">ppppp</p>
-													<div class="anthor-date">
-														<p class="news-anthor single-line">遥不可及</p>
-														<p class="news-date">06-06 14:37</p>
-													</div>
-												</div>
-											</li>
-											<li class="mui-table-view-cell news-container"><img class="news-img" src="../../image/show/show-default-small.png">
-												<div class="news-words">
-													<p class="news-title single-line">kkkkk</p>
-													<div class="anthor-date">
-														<p class="news-anthor single-line">遥不可及</p>
-														<p class="news-date">06-06 14:36</p>
-													</div>
-												</div>
-											</li>
-											<li class="mui-table-view-cell news-container"><img class="news-img" src="../../image/show/show-default-small.png">
-												<div class="news-words">
-													<p class="news-title single-line">工呼吸一下</p>
-													<div class="anthor-date">
-														<p class="news-anthor single-line">森哈哈哈哈哈哈啦啦啦啦啦就好了考虑</p>
-														<p class="news-date">06-06 10:03</p>
-													</div>
-												</div>
-											</li>
-											<li class="mui-table-view-cell news-container"><img class="news-img" src="../../image/show/show-default-small.png">
-												<div class="news-words">
-													<p class="news-title single-line">123456789123456789123456789000</p>
-													<div class="anthor-date">
-														<p class="news-anthor single-line">遥不可及</p>
-														<p class="news-date">06-03 11:03</p>
-													</div>
-												</div>
-											</li>
-											<li class="mui-table-view-cell news-container"><img class="news-img" src="../../image/show/show-default-small.png">
-												<div class="news-words">
-													<p class="news-title single-line">aav</p>
-													<div class="anthor-date">
-														<p class="news-anthor single-line">遥不可及</p>
-														<p class="news-date">06-02 16:31</p>
-													</div>
-												</div>
-											</li>
-										</div>
-									</div>-->
-
-								<!--</div>-->
 							</div>
 						</div>
 					</div>
@@ -126,10 +67,13 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
+		<!--刷新js-->
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
+		<!--jQuery懒加载js-->
 		<script src="../../js/libs/jquery.lazyload.min.js"></script>
+		<!--本页使用的js-->
 		<script src="../../js/show/show_listnew.js"></script>
 		<script>
 			mui.init();
@@ -143,16 +87,24 @@
 			}
 			//阻尼系数
 			var deceleration = mui.os.ios ? 0.003 : 0.0009;
+			//plusReay事件监听
 			mui.plusReady(function() {
+				//show-all加载刷新
 				initFresh(document.getElementById("show-all"));
+				//show-all获取数据
 				show_listnew.getShowList(document.getElementById("show-all").showCity, document.getElementById("show-all").querySelector(".show-list"), show_listnew.setShowList)
+				//获取是否有关注的人，加载或删除关注模块
 				getFocusedPerson(toggleAttendedPart);
+				//加载监听
 				show_listnew.setListListener();
+				//加载滑动监听
 				addSlider();
+				//加载关注的监听
 				window.addEventListener("focus", function() {
 					console.log("关注传过来的值！")
 					getFocusedPerson(toggleAttendedPart);
 				});
+				//加载用户登陆的监听
 				window.addEventListener("infoChanged", function() {
 					console.log("********展现监听infoChanged")
 					toggleAttendedPart(0);
@@ -163,7 +115,7 @@
 					getFocusedPerson(toggleAttendedPart);
 				})
 			});
-
+			//滑动监听方法
 			function addSlider() {
 				document.getElementById('slider').addEventListener('slide', function(e) {
 					console.log("slider状态：" + JSON.stringify(e.detail))
@@ -184,7 +136,7 @@
 				});
 			}
 			/**
-			 * 
+			 * 设置标题
 			 * @param {Object} type 0 只有全部 10 显示全部 11 显示关注
 			 */
 			function setTitle(type) {
@@ -212,17 +164,17 @@
 				}
 			}
 			/**
-			 * 
+			 * 加载刷新模块
 			 * @param {Object} freshConatiner
 			 */
 			function initFresh(freshConatiner) {
-				mui('.mui-scroll-wrapper').scroll({
-					bounce: false,
+				mui(freshConatiner.querySelector('.mui-scroll-wrapper')).scroll({
+					bounce: true,
 					indicators: true, //是否显示滚动条
 					deceleration: deceleration
 				});
 				mui(freshConatiner.querySelector(".mui-slider-group .mui-scroll")).pullToRefresh({
-					down: {
+					down: {//下拉刷新
 						callback: function() {
 							var self = this;
 							var ul = freshConatiner.querySelector('.show-list');
@@ -235,7 +187,7 @@
 							}, 1500);
 						}
 					},
-					up: {
+					up: {//上拉加载
 						callback: function() {
 							var self = this;
 							if(freshConatiner.showCity.pageIndex <= freshConatiner.showCity.totalPage) {
@@ -253,35 +205,9 @@
 				});
 			}
 			/**
-			 * 
-			 * @param {Object} callback
+			 * 获取关注的人
+			 * @param {Object} callback 回调方法
 			 */
-			function getAttendedClasses(callback) {
-				if(events.getUtid()) {
-					// 等待的对话框
-					var wd = events.showWaiting();
-					postDataMCPro_getAllFocusCourses({
-						userId: events.getUtid(), //用户ID,登录用户
-						pageIndex: 1, //当前页数
-						pageSize: 1 //每页记录数,传入0，获取总记录数
-					}, wd, function(data) {
-						wd.close();
-						if(data.RspCode == 0 && data.RspData.TotalCnt) {
-							callback(true);
-						} else {
-							callback(false);
-						}
-					})
-				} else {
-					if(myStorage.getItem(storageKeyName.SHOWFOCUSEPERSEN) && myStorage.getItem(storageKeyName.SHOWFOCUSEPERSEN).length > 0) {
-						callback(true);
-					} else {
-						callback(false);
-					}
-				}
-
-			}
-
 			function getFocusedPerson(callback) {
 				if(!events.getUtid()) {
 					var showFocusedPersen = myStorage.getItem(storageKeyName.SHOWFOCUSEPERSEN);
@@ -305,31 +231,8 @@
 					}
 				})
 			}
-			//74.(用户空间）获取多用户空间所有用户动态列表
-			function getUsersSpaces(paraModel, callback) {
-				//个人信息
-				var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
-				//所需参数
-				var comData = {
-					userId: personal.utid, //用户ID,登录用户
-					publisherIds: arrayToStr(paraModel), //发布者ID,例如[1,2,3]
-					pageIndex: showCity.pageIndex, //当前页数
-					pageSize: 6 //每页记录数
-				};
-				// 等待的对话框
-				var wd1 = events.showWaiting();
-				postDataPro_getUserSpacesForAreaByIds(comData, wd1, function(data) {
-					wd1.close();
-					console.log("展现获取的关注人的动态" + JOSN.stringify(data));
-					if(data.RspCode == 0 && data.RspData.Data.length > 0) {
-						callback(true);
-					} else {
-						callback(false);
-					}
-				});
-			}
 			/**
-			 * 
+			 * 加载或删除关注模块的具体方法
 			 * @param {Object} type 0 删除关注 1 加载关注
 			 */
 			function toggleAttendedPart(type) {
@@ -356,16 +259,19 @@
 						sliderGroup.removeChild(document.getElementById("show-attended"));
 					}
 					var slider = mui('#slider').slider();
+					//跳转到第一个模块
 					slider.gotoItem(0);
 					setTitle(0);
 				}
 			}
-
+			/**
+			 * 关注模块的框架
+			 */
 			function createAttendedFragment() {
 				var div = document.createElement("div");
 				div.id = "show-attended";
 				div.className = "mui-slider-item mui-control-content"
-				div.innerHTML = '<div id="scroll1" class="mui-scroll-wrapper">\
+				div.innerHTML = '<div  class="mui-scroll-wrapper">\
 							<div class="mui-scroll show-list">\
 							</div>\
 						</div>';
