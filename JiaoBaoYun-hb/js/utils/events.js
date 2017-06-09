@@ -12,6 +12,14 @@ var events = (function(mod) {
 		return text.replace(reTag, "");
 		//		return dds;
 	}
+	
+	//判断输入字符串是否为空或者全部都是空格
+	mod.isNull = function(str) {
+		if(str == "") return true;
+		var regu = "^[ ]+$";
+		var re = new RegExp(regu);
+		return re.test(str);
+	}
 
 	/**
 	 * 绑定监听
@@ -348,18 +356,18 @@ var events = (function(mod) {
 		return r;
 	}
 	mod.infoChanged = function() {
-		console.log("@@@@@@@@@@@@@@@@@@@@@调用的时候的界面："+plus.webview.currentWebview().id);
+		console.log("@@@@@@@@@@@@@@@@@@@@@调用的时候的界面：" + plus.webview.currentWebview().id);
 		events.fireToPageNone('../../index/mine.html', 'infoChanged');
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		mui.fire(plus.webview.getWebviewById("index.html"), 'infoChanged');
 		events.fireToPageNone('qiuzhi_home.html', 'infoChanged');
 		events.fireToPageNone('aboutme_sub.html', 'infoChanged');
-//		events.fireToPageNone("course-all.html","infoChanged");
-//		events.fireToPageNone("course-attended.html","infoChanged");
-//		events.fireToPageNone("show-all.html","infoChanged");
-//		events.fireToPageNone("show-attended.html","infoChanged");
-		events.fireToPageNone("show-home1.html","infoChanged");
-		events.fireToPageNone("course-home1.html","infoChanged");
+		//		events.fireToPageNone("course-all.html","infoChanged");
+		//		events.fireToPageNone("course-attended.html","infoChanged");
+		//		events.fireToPageNone("show-all.html","infoChanged");
+		//		events.fireToPageNone("show-attended.html","infoChanged");
+		events.fireToPageNone("show-home1.html", "infoChanged");
+		events.fireToPageNone("course-home1.html", "infoChanged");
 	}
 	mod.shortForString = function(str, len) {
 		if(!str) {
@@ -665,7 +673,7 @@ var events = (function(mod) {
 			//1.求知问题详情页
 			//2.微课节次详情页
 			//3.微课节次单个详情页
-			if(id == "qiuzhi-question.html" ||id == "course_details.html"||id == "course_section.html") {
+			if(id == "qiuzhi-question.html" || id == "course_details.html" || id == "course_section.html") {
 				styles.hardwareAccelerated = true;
 			}
 		}

@@ -28,7 +28,7 @@ var show_listnew = (function(mod) {
 				pageSize: 12 //每页记录数
 			}, wd, function(data) {
 				events.closeWaiting();
-				console.log('78.（用户空间）获取区域用户空间列表：' + JSON.stringify(data));
+				console.log('78.（用户空间）获取区域用户空间列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
 					//总页数
 					showCity.totalPage = data.RspData.TotalPage;
@@ -55,7 +55,7 @@ var show_listnew = (function(mod) {
 			//当前循环的model
 			var tempModel0 = tempRspData[item];
 			if(tempModel0.EncImgAddr.length == 0 || tempModel0.EncImgAddr == null) {
-				if(item == 0) { //第一张默认给大图片
+				if(item == 0||item == 6) { //第一张默认给大图片
 					tempModel0.EncImgAddr = '../../image/show/show-default-large.png';
 				} else {
 					tempModel0.EncImgAddr = '../../image/show/show-default-small.png';
