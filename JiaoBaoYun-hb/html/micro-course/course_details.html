@@ -1058,7 +1058,6 @@
 							sectionData.value[sectionId].Comments[index].LikeNum = sectionData.value[sectionId].Comments[index].LikeNum + 1;
 						}
 						element.innerText = "(" + sectionData.value[sectionId].Comments[index].LikeNum + ")";
-						mui.toast('操作成功');
 						wd.close();
 					} else {
 						mui.toast(data.RspTxt);
@@ -1171,7 +1170,6 @@
 							sectionData.value[sectionId].LikeNum = sectionData.value[sectionId].LikeNum + 1;
 						}
 						section_top_zan.innerHTML = "(" + sectionData.value[sectionId].LikeNum + ")";
-						mui.toast('操作成功');
 						wd.close();
 					} else {
 						mui.toast(data.RspTxt);

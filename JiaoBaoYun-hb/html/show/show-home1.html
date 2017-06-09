@@ -56,8 +56,8 @@
 				<div class="mui-slider-group">
 					<div id="show-all" class="mui-slider-item mui-control-content">
 						<div class="mui-scroll-wrapper">
-							<div class="mui-scroll">
-								<div class="show-list">
+							<div class="mui-scroll show-list">
+								<!--<div class="show-list">-->
 									<!--<div class="cityNews-container mui-card">
 										<div class="mui-table-view">
 											<li class="mui-table-view-cell news-container"><img class="news-img" src="http://qn-kfpb.jiaobaowang.net/jxq/PersonalSpace/thumb/1496731091586.png">
@@ -117,7 +117,7 @@
 										</div>
 									</div>-->
 
-								</div>
+								<!--</div>-->
 							</div>
 						</div>
 					</div>
@@ -225,7 +225,7 @@
 					down: {
 						callback: function() {
 							var self = this;
-							var ul = self.element.querySelector('.show-list');
+							var ul = freshConatiner.querySelector('.show-list');
 							ul.innerHTML = "";
 							freshConatiner.showCity.pageIndex = 1;
 							console.log("获取的fresh:" + JSON.stringify(freshConatiner.info))
@@ -239,7 +239,7 @@
 						callback: function() {
 							var self = this;
 							if(freshConatiner.showCity.pageIndex <= freshConatiner.showCity.totalPage) {
-								var ul = self.element.querySelector('.show-list');
+								var ul = freshConatiner.querySelector('.show-list');
 								show_listnew.getShowList(freshConatiner.showCity, ul, show_listnew.setShowList);
 								setTimeout(function() {
 									self.endPullUpToRefresh();
@@ -366,9 +366,7 @@
 				div.id = "show-attended";
 				div.className = "mui-slider-item mui-control-content"
 				div.innerHTML = '<div id="scroll1" class="mui-scroll-wrapper">\
-							<div class="mui-scroll">\
-								<div class="show-list">\
-								</div>\
+							<div class="mui-scroll show-list">\
 							</div>\
 						</div>';
 				return div;

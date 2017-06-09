@@ -1,35 +1,48 @@
-
-.mui-table-view-cell:first-child{
+.mui-table-view-cell:first-child {
 	padding: 14px 14px 8px;
 }
-.mui-table-view-cell:not(:first-child){
+
+.mui-table-view-cell:not(:first-child) {
 	padding: 8px 14px;
 }
-.news-container:first-child{
+
+.news-container:first-child {
 	position: relative;
 }
-.news-container:first-child .news-img{
+
+.news-container:first-child .news-img {
 	width: 100%;
 	height: 168px;
 }
-.news-container:first-child .news-img .play-video{
+
+.news-container:first-child .news-img .play-video {
 	width: 50px;
 	height: 50px;
 	margin-top: 49px;
 }
-.news-container:not(:first-child) .news-img .play-video{
+
+.news-container:not(:first-child) .news-img .play-video {
 	width: 20px;
 	height: 20px;
 	margin-top: 15px;
 }
-.news-container:first-child .news-words{
+
+.news-container:first-child .news-words {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -moz-box;
 	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-direction: normal;
+	-webkit-box-orient: vertical;
+	-moz-box-direction: normal;
+	-moz-box-orient: vertical;
+	-webkit-flex-direction: column;
 	flex-direction: column;
-	justify-content: space-between;
+	-webkit-box-pack: justify;
+	-font-box-pack: justify;
+	-ms-flex-pack: justify;
+	-webkit-justify-content: space-between;
 	padding: 10px;
 	background-color: #000000;
 	position: absolute;
@@ -39,20 +52,23 @@
 	right: 14px;
 	opacity: 0.8;
 }
+
 .news-container:first-child .news-words .news-anthor,
 .news-container:first-child .news-words .news-date,
-.news-container:first-child .news-words .news-title{
+.news-container:first-child .news-words .news-title {
 	color: #FFFFFF;
 }
+
 .news-container:first-child .news-words .news-anthor,
-.news-container:first-child .news-words .news-date{
+.news-container:first-child .news-words .news-date {
 	font-size: 14px;
 }
 
-.news-container:first-child .news-words .news-title{
+.news-container:first-child .news-words .news-title {
 	font-size: 15px;
 }
-.news-container:not(:first-child){
+
+.news-container:not(:first-child) {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -moz-box;
@@ -63,50 +79,83 @@
 	-webkit-box-orient: horizontal;
 	-webkit-box-direction: reverse;
 }
-.news-container:not(:first-child) .news-img{
+
+.news-container:not(:first-child) .news-img {
 	width: 50px !important;
 	height: 50px !important;
 }
-.news-container:not(:first-child) .news-words{
+
+.news-container:not(:first-child) .news-words {
 	width: 50%;
 	flex-grow: 1;
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	-webkit-flex-grow: 1;
+	-ms-flex: 1;
 	padding-right: 15px;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -moz-box;
 	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-direction: normal;
+	-webkit-box-orient: vertical;
+	-moz-box-direction: normal;
+	-moz-box-orient: vertical;
+	-webkit-flex-direction: column;
 	flex-direction: column;
+	-webkit-box-pack: justify;
+	-font-box-pack: justify;
+	-ms-flex-pack: justify;
+	-webkit-justify-content: space-between;
 	justify-content: space-between;
 }
-.news-container:not(:first-child) .news-words  .news-anthor{
+
+.news-container:not(:first-child) .news-words .news-anthor {
 	font-size: 14px;
 	color: #808080;
 }
-.news-container:not(:first-child) .news-words  .news-date{
+
+.news-container:not(:first-child) .news-words .news-date {
 	font-size: 14px;
 	color: #B7B7B7;
 }
-.news-container:not(:first-child) .news-words  .news-title{
+
+.news-container:not(:first-child) .news-words .news-title {
 	font-size: 15px;
 	color: #323232;
 }
 
-.anthor-date{
+.anthor-date {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -moz-box;
 	display: -ms-flexbox;
 	display: flex;
 }
-.news-anthor{
+
+.news-anthor {
 	width: 50%;
 	flex-grow: 1;
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	-webkit-flex-grow: 1;
+	-ms-flex: 1;
 }
-.news-date{
-	
-}
+
+.news-date {}
+
 .mui-table-view-cell:after {
 	left: 14px;
 	right: 14px;
+}
+
+.cityNews-container {
+	font-size: 14px;
+	position: relative;
+	overflow: hidden;
+	margin: 10px;
+	border-radius: 2px;
+	background-color: #fff;
+	background-clip: padding-box;
 }
