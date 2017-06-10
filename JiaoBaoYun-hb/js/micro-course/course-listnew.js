@@ -163,7 +163,7 @@ var course_listnew = (function(mod) {
 		fragment.appendChild(li);
 		li.info = cell;
 		li.querySelector(".course-img").info = cell;
-		li.querySelector(".coursre-name").info = cell;
+		li.querySelector(".course-name").info = cell;
 		li.querySelector(".course-info").info = cell;
 		li.querySelector(".input-btn").info = cell;
 		if(!cell.IsUpdate) {
@@ -182,7 +182,7 @@ var course_listnew = (function(mod) {
 			'<span class="red-circle"></span></div>' +
 			'<div class="course-detail">' +
 			'<div class="courseName-button">' +
-			'<p class="coursre-name single-line">' + cell.CourseName + '</p>' +
+			'<p class="course-name single-line">' + cell.CourseName + '</p>' +
 			mod.getBtn(cell) +
 			'</div>' +
 			'<p class="course-info double-line">' + cell.SecName + '</p>' +

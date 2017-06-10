@@ -17,6 +17,7 @@
 			body,
 			.mui-content {
 				word-wrap: break-word;
+				background-color: white;
 			}
 
 			.mui-table-view:before,
@@ -31,6 +32,7 @@
 			}
 
 			.section-top {
+				/*顶部节次*/
 				display: none;
 			}
 
@@ -420,7 +422,7 @@
 				<audio id="audio"></audio>
 			</div>
 			<div id="video_area" class="video-area">
-				<video id="video" controls="controls" preload="none" poster="null"  autoplay="autoplay">
+				<video id="video" controls="controls" preload="none" poster="null" autoplay="autoplay">
 					您的浏览器不支持video标签
 				</video>
 			</div>
@@ -916,7 +918,12 @@
 					ele.innerHTML = html_0 + html_1;
 					document.getElementById("section_comment_list").appendChild(ele);
 				}
-
+				if(data.length == 0) {
+					document.getElementById("section_comment_list").innerHTML = '<div style="text-align: center;color: #808080;margin: 50px 0px;">\
+						<img src="../../image/qiuzhi/qiuzhi_noanswer.png" style="width: 50%;"/>\
+						<div style="padding-bottom: 10px;">暂无评论~~~</div>\
+					</div>';
+				}
 				if(wd) {
 					wd.close();
 				}
