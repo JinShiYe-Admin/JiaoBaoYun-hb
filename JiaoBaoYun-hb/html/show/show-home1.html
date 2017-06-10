@@ -47,16 +47,9 @@
 		<div class="mui-content">
 			<!--slider控件-->
 			<div id="slider" class="mui-slider mui-fullscreen">
-				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="background-color: transparent;">
-					<div class="mui-scroll" style="background-color: transparent;">
-						<a class="mui-control-item mui-active" href="#show-all" style="background-color: transparent;">
-
-						</a>
-					</div>
-				</div>
 				<!--加载的范围-->
 				<div class="mui-slider-group">
-					<div id="show-all" class="mui-slider-item mui-control-content">
+					<div id="show-all" class="mui-slider-item">
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<div class="show-list">
@@ -273,9 +266,9 @@
 			function createAttendedFragment() {
 				var div = document.createElement("div");
 				div.id = "show-attended";
-				div.className = "mui-slider-item mui-control-content"
+				div.className = "mui-slider-item"
 				div.innerHTML = '<div  class="mui-scroll-wrapper">\
-							<div class="mui-scroll show-list">\
+							<div class="mui-scroll">\
 							  <div class="show-list">\
 							  </div>\
 							</div>\

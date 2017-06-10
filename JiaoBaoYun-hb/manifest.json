@@ -4852,7 +4852,8 @@
 					"js/publicProtocol.js",
 					"image/utils/load-img-error.png",
 					"image/utils/playvideo.png",
-					"js/micro-course/coursedetails.js"
+					"js/micro-course/coursedetails.js",
+					"image/qiuzhi/qiuzhi_noanswer.png"
 				],
 				"refer": [
 					"html/micro-course/course-introduction.html",

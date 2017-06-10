@@ -2250,7 +2250,8 @@
       "js/publicProtocol.js",
       "image/utils/load-img-error.png",
       "image/utils/playvideo.png",
-      "js/micro-course/coursedetails.js"
+      "js/micro-course/coursedetails.js",
+      "image/qiuzhi/qiuzhi_noanswer.png"
     ],
     "refer": [
       "html/micro-course/course-introduction.html",
@@ -2278,7 +2279,8 @@
       "js/libs/RSA/RSA.js",
       "js/utils/postData.js",
       "js/utils/RSAEncrypt.js"
-    ]
+    ],
+    "refer": []
   },
   "html/micro-course/course-home1.html": {
     "resources": [
@@ -2366,7 +2368,8 @@
       "js/libs/RSA/RSA.js",
       "js/utils/postData.js",
       "js/utils/RSAEncrypt.js"
-    ]
+    ],
+    "refer": []
   },
   "html/register/yanZhengMa.html": {
     "resources": [
@@ -2392,7 +2395,8 @@
       "js/libs/RSA/RSA.js",
       "js/utils/postData.js",
       "js/utils/RSAEncrypt.js"
-    ]
+    ],
+    "refer": []
   },
   "html/register/modify_password.html": {
     "resources": [
@@ -2414,6 +2418,7 @@
       "js/utils/postData.js",
       "js/utils/RSAEncrypt.js",
       "js/libs/crypto-js/crypto-js.js"
-    ]
+    ],
+    "refer": []
   }
 }
