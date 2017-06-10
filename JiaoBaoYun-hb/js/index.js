@@ -71,13 +71,13 @@ var addSubPages = function() {
 //	var titles = ['云盘', '科教', '展现', '求知'];
 	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show-home1.html', '../micro-course/course-home1.html'];
 	var titles = ['云盘', '科教', '展现', '微课'];
-	//设置子页面距离顶部的位置
-	var subpage_style = events.getWebStyle();
-	subpage_style.top = (localStorage.getItem('StatusHeightNo') * 1) + 'px';
-	subpage_style.bottom = '50px';
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
 	var self = plus.webview.currentWebview();
 	for(var i = 0; i < 4; i++) {
+		//设置子页面距离顶部的位置
+		var subpage_style = events.getWebStyle(subpages[i]);
+		subpage_style.top = (localStorage.getItem('StatusHeightNo') * 1) + 'px';
+		subpage_style.bottom = '50px';
 		console.log("子页面样式：" + JSON.stringify(subpage_style));
 		var temp = {};
 		var sub = plus.webview.create(subpages[i], subpages[i].split('/')[subpages[i].split('/').length - 1], subpage_style);

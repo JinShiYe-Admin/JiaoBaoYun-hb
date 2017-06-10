@@ -676,6 +676,9 @@ var events = (function(mod) {
 			if(id == "qiuzhi-question.html" || id == "course_details.html" || id == "course_section.html"||id=='space-detail.html'||id=='zonep_sub.html') {
 				styles.hardwareAccelerated = true;
 			}
+			if(id=="show-home1.html"){
+				styles.hardwareAccelerated="auto";
+			}
 		}
 		return styles;
 	}
