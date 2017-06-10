@@ -187,7 +187,8 @@
 			"html/cloud/app_keeprecord.html",
 			"html/quan/aboutme.html",
 			"html/mine/qun_manage_a.html",
-			"html/cloud/app_notes_main.html"
+			"html/cloud/app_notes_main.html",
+			"html/mine/qun_manage_info.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -1416,7 +1417,20 @@
 		"resources": [
 			"js/utils/jquery.qrcode.min.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": []
 	},
@@ -1426,7 +1440,20 @@
 			"css/mine/manager_member.css",
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"css/mine/manager_data.css"
+			"css/mine/manager_data.css",
+			"js/utils/cryption.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/jquery.js",
+			"js/utils/CloudFileUtil.js",
+			"js/libs/RSA/BigInt.js",
+			"js/qiniu/qiniu.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/quan/group-pInfo.html",
@@ -1814,7 +1841,25 @@
 			"js/utils/UploadHeadImage.js",
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/cryption.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/cloud/AndroidFileSystem.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/CloudFileUtil.js",
+			"js/utils/compress.js",
+			"js/qiniu/qiniu.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/mine/qun_manage_info_change_post.html"
@@ -1884,9 +1929,25 @@
 	"html/mine/qun_manage_invite_a.html": {
 		"resources": [
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
-		"refer": []
+		"refer": [
+			"html/mine/qun_manage_invite_info.html"
+		]
 	},
 	"html/check/area-choose.html": {
 		"resources": [
@@ -2193,7 +2254,8 @@
 		],
 		"refer": [
 			"html/micro-course/course-introduction.html",
-			"html/micro-course/course_addReply.html"
+			"html/micro-course/course_addReply.html",
+			"html/register/login.html"
 		]
 	},
 	"html/micro-course/course-introduction.html": {
@@ -2309,6 +2371,24 @@
 	"html/register/yanZhengMa.html": {
 		"resources": [
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/mine/qun_manage_invite_info.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	}
 }

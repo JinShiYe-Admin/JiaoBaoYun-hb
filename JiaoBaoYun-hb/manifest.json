@@ -4856,7 +4856,8 @@
 				],
 				"refer": [
 					"html/micro-course/course-introduction.html",
-					"html/micro-course/course_addReply.html"
+					"html/micro-course/course_addReply.html",
+					"html/register/login.html"
 				],
 				"priority": 0
 			},
