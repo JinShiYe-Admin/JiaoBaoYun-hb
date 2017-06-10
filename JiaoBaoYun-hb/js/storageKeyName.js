@@ -2,7 +2,7 @@
 
 var storageKeyName = (function(mod) {
 
-	var Key = 1; //0,开发;1,测试;2,外网
+	var Key = 2; //0,开发;1,测试;2,外网
 
 	if(Key == 0) {
 		//---开发---start---
