@@ -883,11 +883,11 @@ var dynamiclistitem = (function($, mod) {
 		
 		//头像
 		var html2 = '<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:30px;height:30px;border-radius: 50%;" src="' + data.personalImage + '"></div>';
-		var html3 = '<div class="mui-media-body dynamic-padding-left-10px">' + closeempty;
+		var html3 = '<div class="mui-media-body dynamic-padding-left-10px  mui-pull-left">';
 		//姓名
 		var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:14px;margin-top:-3px">' + data.personalName + '</p>';
 		//时间
-		var html5 = '<p style = "color:#b7b7b7;font-size:12px">' + data.PublishDate + '</p></div></div>';
+		var html5 = '<p class="" style = "color:#b7b7b7;font-size:12px">' + data.PublishDate + '</p></div>' + closeempty+'</div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext ">';
 		var html7 = '<div id="question_content' + data.id_name + '" style = "color:#808080;font-size:15px" class="ellipsis-show question_content">';
 		//内容
@@ -1396,6 +1396,7 @@ var dynamiclistitem = (function($, mod) {
 		div.innerHTML = html;
 		liElement.appendChild(div);
 		ulElement.appendChild(liElement);
+		console.log(ulElement.innerHTML)
 		var ImageUrlList = data.ImageList; //图片路径数组1
 		var EncAddrList = data.EncAddrList
 		var ImageNum = ImageUrlList.length; //图片总数量
@@ -1423,6 +1424,7 @@ var dynamiclistitem = (function($, mod) {
 		}
 
 	};
+	
 
 	return mod;
 
