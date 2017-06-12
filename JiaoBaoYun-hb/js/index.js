@@ -77,7 +77,7 @@ var addSubPages = function() {
 		//设置子页面距离顶部的位置
 		var subpage_style = events.getWebStyle(subpages[i]);
 		subpage_style.top = (localStorage.getItem('StatusHeightNo') * 1) + 'px';
-		subpage_style.bottom = '50px';
+		subpage_style.bottom = '51px';
 		console.log("子页面样式：" + JSON.stringify(subpage_style));
 		var temp = {};
 		var sub = plus.webview.create(subpages[i], subpages[i].split('/')[subpages[i].split('/').length - 1], subpage_style);
@@ -109,7 +109,7 @@ var setListener = function() {
 		if(targetTab == activeTab) {
 			return;
 		}
-		
+
 		//更改按钮
 		//		changRightIcons(targetTab);
 		var targetSplit = targetTab.split('/');
