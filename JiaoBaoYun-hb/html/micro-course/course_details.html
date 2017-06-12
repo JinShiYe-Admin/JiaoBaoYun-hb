@@ -32,17 +32,19 @@
 			}
 
 			.section-top {
-				/*顶部节次*/
+				/*顶部节次区域*/
 				display: none;
 				padding-bottom: 8px;
 				background-color: #efeff4;
 			}
 
-			.section-top .mui-table-view-cell{
+			.section-top .mui-table-view-cell {
 				background-color: white;
 			}
 
 			.section-top .mui-navigate-right {
+				/*顶部节次展开，收起描述按钮*/
+				font-size: 24px;
 				width: 21px;
 				height: 21px;
 				position: absolute;
@@ -50,29 +52,29 @@
 			}
 
 			.section-top .mui-navigate-right:after {
+				/*顶部节次展开，收起描述按钮*/
 				content: "\e581";
 				right: 5px;
 			}
 
 			.mui-collapse {
+				/*顶部节次描述区域*/
 				padding: 0px;
 			}
 
 			.mui-table-view-cell.mui-collapse .mui-collapse-content {
+				/*顶部节次描述的内容*/
 				margin: 0px;
 				padding: 11px 15px;
-				padding-top: 0px;
-			}
-
-			.mui-collapse-content {
-				font-size: 14px;
-				color: #808080;
+				padding-top: 0px;font-size: 14px;
+				color: #808080 !important;
 			}
 
 			.section-top .mui-table-view-cell>a:not(.mui-btn).mui-active,
 			.section-top .mui-table-view-cell.mui-active,
 			.section-comment .mui-table-view-cell.mui-active,
 			.section-shield .mui-table-view-cell.mui-active {
+				/*顶部节次，评论列表，节次被屏蔽的点击效果*/
 				background-color: white;
 			}
 
@@ -89,15 +91,19 @@
 			}
 
 			.section-title {
+				/*节次标题*/
 				font-size: 16px;
 				color: #323232;
 			}
 
 			.section-top .section-title {
+				/*顶部节次标题*/
 				margin-right: 15px;
+				font-weight: 700;
 			}
 
 			.section-list .section-title {
+				/*节次列表标题*/
 				margin-bottom: 11px;
 			}
 
@@ -107,6 +113,7 @@
 
 			.section-info,
 			.section-comment-info {
+				/*课程信息*/
 				color: #B7B7B7;
 				font-size: 14px;
 			}
@@ -120,6 +127,7 @@
 			}
 
 			.icon-zanzan1:before {
+				/*点赞按钮*/
 				content: "\e691";
 			}
 
