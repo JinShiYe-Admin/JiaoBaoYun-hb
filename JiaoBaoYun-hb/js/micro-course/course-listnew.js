@@ -244,19 +244,24 @@ var course_listnew = (function(mod) {
 	/**
 	 * 改变按钮状态
 	 * @param {Object} item
-	 * @param {Object} type
+	 * @param {Object} type 1为游客
 	 */
 	mod.changeBtnStatus = function(item, type) {
+		
 		if(item.info.IsFocus) {
 			item.className = "input-btn btn-unfocus";
 			item.innerText = "关注";
-			if(type) {
+			if(type) {//游客
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 1);
 				//游客关注的课程
 				var focuseTemp = window.myStorage.getItem(window.storageKeyName.FOCUSECOURSES);
 				if (focuseTemp.length==0||focuseTemp.length==null) {
 					toggleAttendedPart(0);//0 删除关注 1 加载关注
+				}else{
+					freshSingleView();
 				}
+			}else{
+				getAttendedClasses(toggleAttendedPart);
 			}
 		} else {
 			item.className = "input-btn btn-focused";

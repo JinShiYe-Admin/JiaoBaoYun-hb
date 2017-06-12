@@ -66,6 +66,7 @@
 		<script src="../../js/publicMicroClass.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init();
+			var curPageFlag = 1; //0为关注页面 1为全部页面；
 			document.getElementById("course-all").info = {
 				type: 1, //类型 1为全部 0为关注
 				pageIndex: 1, //页码
@@ -96,8 +97,26 @@
 
 				window.addEventListener("focus", function() {
 					getAttendedClasses(toggleAttendedPart);
+					freshView("course-all",1);
+					freshView("course-attended",0);
 				})
 			});
+			function freshSingleView(){
+				if(curPageFlag){
+					freshView("course-attended",0);
+				}else{
+					freshView("course-all",1);
+				}
+			}
+
+			function freshView(id,flag) {
+				if(document.getElementById(id)) {
+					var container = document.getElementById(id);
+					container.querySelector(".mui-table-view").innerHTML = "";
+					container.info.pageIndex = 1;
+					course_listnew.getData(flag, container.info, container.querySelector(".mui-table-view"), course_listnew.setData);
+				}
+			}
 			/**
 			 * 滑动监听
 			 */
@@ -126,18 +145,21 @@
 					case 0: //全部
 						title.innerText = "全部";
 						indicator.style.display = "none";
+						curPageFlag=1;
 						break;
 					case 10: //全部
 						title.innerText = "全部";
 						indicator.style.display = "block";
 						indicator.firstElementChild.className = "mui-indicator";
 						indicator.lastElementChild.className = "mui-indicator mui-active";
+						curPageFlag=1;
 						break;
 					case 11: //关注
 						title.innerText = "关注";
 						indicator.style.display = "block";
 						indicator.firstElementChild.className = "mui-indicator mui-active";
 						indicator.lastElementChild.className = "mui-indicator";
+						curPageFlag=0;
 						break;
 					default:
 						break;
@@ -235,15 +257,21 @@
 						course_listnew.getData(0, document.getElementById("course-attended").info, document.getElementById("course-attended").querySelector(".mui-table-view"), course_listnew.setData)
 						initFresh(document.getElementById("course-attended"));
 						setTitle(11);
+					}else{
+						freshSingleView();
 					}
 				} else {
+					if(curPageFlag==0){
+						freshSingleView();
+					}
 					if(document.getElementById("course-attended")) {
 						//删除关注模块
-						sliderGroup.removeChild(document.getElementById("course-attended"));
+						sliderGroup.removeChild(document.getElementById("course-attended"));		
 					}
 					var slider = mui('#slider').slider();
 					slider.gotoItem(0);
 					setTitle(0);
+					
 				}
 			}
 			/**
