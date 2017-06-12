@@ -45,15 +45,8 @@
 		</header>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
-				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div class="mui-scroll">
-						<a class="mui-control-item mui-active" href="#course-all">
-
-						</a>
-					</div>
-				</div>
 				<div class="mui-slider-group">
-					<div id="course-all" class="mui-slider-item mui-control-content">
+					<div id="course-all" class="mui-slider-item">
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul class="mui-table-view">
@@ -77,7 +70,7 @@
 				type: 1, //类型 1为全部 0为关注
 				pageIndex: 1, //页码
 				freshFlag: 0, //0刷新，1加载更多
-				courseArray: [],//课程
+				courseArray: [], //课程
 				totalPage: 0 //总页码
 			};
 			//阻尼系数
@@ -89,19 +82,19 @@
 				getAttendedClasses(toggleAttendedPart);
 				course_listnew.setListener();
 				addSlider();
-				window.addEventListener("infoChanged",function(){
+				window.addEventListener("infoChanged", function() {
 					console.log("*******微课界面出现两遍******")
-//					if(document.getElementById("course-attended")){
-//						document.getElementById("course-attended").querySelector(".mui-table-view").innerHTML="";
-//					}
+					//					if(document.getElementById("course-attended")){
+					//						document.getElementById("course-attended").querySelector(".mui-table-view").innerHTML="";
+					//					}
 					toggleAttendedPart(0);
-					document.getElementById("course-all").querySelector(".mui-table-view").innerHTML="";
-					document.getElementById("course-all").info.pageIndex=1;
+					document.getElementById("course-all").querySelector(".mui-table-view").innerHTML = "";
+					document.getElementById("course-all").info.pageIndex = 1;
 					course_listnew.getData(1, document.getElementById("course-all").info, document.getElementById("course-all").querySelector(".mui-table-view"), course_listnew.setData);
 					getAttendedClasses(toggleAttendedPart);
 				})
-				
-				window.addEventListener("focus",function(){
+
+				window.addEventListener("focus", function() {
 					getAttendedClasses(toggleAttendedPart);
 				})
 			});
@@ -112,9 +105,9 @@
 				document.getElementById('slider').addEventListener('slide', function(e) {
 					console.log("slider状态：" + JSON.stringify(e.detail))
 					if(e.detail.slideNumber === 0) {
-						if(document.getElementById("course-attended")){
+						if(document.getElementById("course-attended")) {
 							setTitle(11);
-						}else{
+						} else {
 							setTitle(0);
 						}
 					} else if(e.detail.slideNumber === 1) {
@@ -168,7 +161,7 @@
 								var ul = self.element.querySelector('.mui-table-view');
 								ul.innerHTML = "";
 								freshConatiner.info.freshFlag = 0;
-								freshConatiner.info.pageIndex=1;
+								freshConatiner.info.pageIndex = 1;
 								console.log("获取的fresh:" + JSON.stringify(freshConatiner.info));
 								course_listnew.getData(freshConatiner.info.type, freshConatiner.info, ul, course_listnew.setData);
 								self.endPullDownToRefresh();
@@ -236,7 +229,7 @@
 							type: 0, //关注
 							pageIndex: 1, //页码
 							freshFlag: 0, //0刷新，1加载更多
-							courseArray: [],//课程
+							courseArray: [], //课程
 							totalPage: 0 //总页码
 						};
 						course_listnew.getData(0, document.getElementById("course-attended").info, document.getElementById("course-attended").querySelector(".mui-table-view"), course_listnew.setData)
@@ -259,7 +252,7 @@
 			function createAttendedFragment() {
 				var div = document.createElement("div");
 				div.id = "course-attended";
-				div.className = "mui-slider-item mui-control-content"
+				div.className = "mui-slider-item"
 				div.innerHTML = '<div id="scroll1" class="mui-scroll-wrapper">\
 							<div class="mui-scroll">\
 								<ul class="mui-table-view">\
