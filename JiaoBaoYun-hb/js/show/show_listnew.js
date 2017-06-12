@@ -40,7 +40,7 @@ var show_listnew = (function(mod) {
 					showCity.totalPage = data.RspData.TotalPage;
 					showCity.pageIndex++;
 					mod.getUserInfo(data.RspData.Data, function(tempData) {
-						if(tempData.length > 6) {//分为6个一组
+						if(tempData.length > 6) { //分为6个一组
 							callback(showCity, listContainer, tempData.slice(0, 6));
 							callback(showCity, listContainer, tempData.slice(6, tempData.length));
 						} else {
@@ -66,7 +66,7 @@ var show_listnew = (function(mod) {
 			//当前循环的model
 			var tempModel0 = tempRspData[item];
 			if(tempModel0.EncImgAddr.length == 0 || tempModel0.EncImgAddr == null) {
-				if(item == 0||item == 6) { //第一张默认给大图片
+				if(item == 0 || item == 6) { //第一张默认给大图片
 					tempModel0.EncImgAddr = '../../image/show/show-default-large.png';
 				} else {
 					tempModel0.EncImgAddr = '../../image/show/show-default-small.png';
@@ -104,11 +104,11 @@ var show_listnew = (function(mod) {
 					}
 				}
 			}
-			console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+//			console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 			callback(tempRspData);
 		});
 	}
-	
+
 	/**
 	 * //81.（用户空间）获取用户所有关注的用户
 	 * @param {Object} showCity 地区信息
@@ -133,7 +133,7 @@ var show_listnew = (function(mod) {
 					var tempModel = data.RspData.Users[i];
 					tempID.push(tempModel.UserId);
 				}
-				console.log('tempID=', tempID);
+//				console.log('tempID=', tempID);
 				//74.(用户空间）获取多用户空间所有用户动态列表
 				if(tempID.length > 0) {
 					getAllUserSpacesByUser(showCity, tempID, listContainer, callback);
@@ -143,7 +143,7 @@ var show_listnew = (function(mod) {
 			}
 		});
 	}
-	
+
 	/**
 	 * //74.(用户空间）获取多用户空间所有用户动态列表
 	 * @param {Object} showCity 地区信息
@@ -165,13 +165,13 @@ var show_listnew = (function(mod) {
 		var wd1 = events.showWaiting();
 		postDataPro_getUserSpacesForAreaByIds(comData, wd1, function(data) {
 			wd1.close();
-			console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+//			console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
 				showCity.pageIndex++;
 				showCity.totalPage = data.RspData.TotalPage;
 				mod.getUserInfo(data.RspData.Data, function(tempData) {
 					showArray = tempData;
-					if(tempData.length > 6) {//分为6个一组
+					if(tempData.length > 6) { //分为6个一组
 						callback(showCity, listContainer, tempData.slice(0, 6));
 						callback(showCity, listContainer, tempData.slice(6, tempData.length));
 					} else {
@@ -193,18 +193,18 @@ var show_listnew = (function(mod) {
 	mod.setShowList = function(showCity, listContainer, showData) {
 		var div = document.createElement("div");
 		div.className = "mui-table-view cityNews-container";
-//		var listDiv = document.createElement("div");
-//		listDiv.className = "mui-table-view";
+		//		var listDiv = document.createElement("div");
+		//		listDiv.className = "mui-table-view";
 		for(var i in showData) {
 			var subDiv = document.createElement("li");
 			subDiv.className = "mui-table-view-cell news-container";
 			subDiv.innerHTML = mod.getShowInner(showData[i]);
-//			listDiv.appendChild(subDiv);
+			//			listDiv.appendChild(subDiv);
 			div.appendChild(subDiv);
 			subDiv.info = showData[i];
 		}
 		listContainer.appendChild(div);
-		console.log("listContainer.innerHTML:" + listContainer.innerHTML);
+//		console.log("listContainer.innerHTML:" + listContainer.innerHTML);
 		jQuery(".img-container").lazyload();
 		//		mod.endFresh();
 	}
@@ -213,10 +213,13 @@ var show_listnew = (function(mod) {
 	 * @param {Object} data
 	 */
 	mod.getShowInner = function(data) {
-		return '<div class="img-container news-img" data-original="' + data.EncImgAddr.split("|")[0] + '" style="background-image:url(../../image/utils/video-loading.gif);text-align:center;background-position:center;background-size:cover;">' + mod.getVideoMenu(data) +
+		return '<div class="img-container news-img" data-original="' + data.EncImgAddr.split("|")[0] +
+			'" style="background-image:url(../../image/utils/video-loading.gif);text-align:center;background-position:center;background-size:cover;">' +
+			mod.getVideoMenu(data) +
 			'</div>' +
 			'<div class="news-words"><p class="news-title single-line">' + data.MsgTitle + '</p>' +
-			'<div class="anthor-date"><p class="news-anthor single-line">' + data.unick + '</p><p class="news-date">' + data.PublishDate + '</p></div></div>'
+			'<div class="anthor-date"><p class="news-anthor single-line">' + data.unick + '</p><p class="news-date">' +
+			data.PublishDate + '</p></div></div>';
 	}
 	/**
 	 * 获取视频按钮控件
@@ -226,10 +229,10 @@ var show_listnew = (function(mod) {
 		var isVideo = false;
 		if(cell.EncType) {
 			switch(cell.EncType) {
-				case 2://视频
+				case 2: //视频
 					isVideo = true;
 					break;
-				case 5://图文混合
+				case 5: //图文混合
 					var addrs = cell.EncAddr.split(".");
 					switch(addrs[addrs.length - 1]) {
 						case "mp4":
@@ -303,7 +306,7 @@ var show_listnew = (function(mod) {
 		//展现动态点击监听
 		mui(".mui-slider-group").on("tap", ".news-container", function(e) {
 			this.disabled = true;
-			this.info.focusFlag=1;
+			this.info.focusFlag = 1;
 			events.singleWebviewInPeriod(this, "../quan/space-detail.html", this.info);
 		})
 		//发布的点击事件
