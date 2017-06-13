@@ -232,20 +232,20 @@ var MultiMedia = (function($, mod) {
 			return false;
 		}
 		if(self.data.VideoNum > 0) {
-//			var btnArray = [{
-//				title: "录制"
-//			}, {
-//				title: "从相册选取"
-//			}];
-//			plus.nativeUI.actionSheet({
-//				title: "视频",
-//				cancel: "取消",
-//				buttons: btnArray
-//			}, function(e) {
-//				switch(e.index) {
-//					case 0: //取消
-//						break;
-//					case 1: //录像
+			var btnArray = [{
+				title: "录制"
+			}, {
+				title: "从相册选取"
+			}];
+			plus.nativeUI.actionSheet({
+				title: "视频",
+				cancel: "取消",
+				buttons: btnArray
+			}, function(e) {
+				switch(e.index) {
+					case 0: //取消
+						break;
+					case 1: //录像
 						RecordVideo.recordVideo({}, function(fpath) {
 							if(self.data.VideoNum > 0) {
 								var wd = events.showWaiting('处理中...');
@@ -258,40 +258,74 @@ var MultiMedia = (function($, mod) {
 						}, function(err) {
 							mui.toast(err.message);
 						});
-//						break;
-//					case 2: //从相册选择
-//						plus.gallery.pick(function(filePath) {
-//							var wd = events.showWaiting('处理中...');
-//							console.log("success " + filePath);
-//							var mVideo = document.createElement("video");
-//							mVideo.ondurationchange = function() {
-//								console.log("ondurationchange  duration " + mVideo.duration);
-//								if(mVideo.duration < 11) {
-//									self.data.VideoNum--;
-//									self.addVideos(filePath, function() {
-//										wd.close();
-//									});
-//								} else {
-//									mui.toast("视频时长不得超出10秒");
-//									wd.close();
-//								}
-//							}
-//							mVideo.onerror = function() {
-//								mui.toast("视频加载失败")
-//								wd.close();
-//							}
-//							mVideo.src = filePath;
-//						}, function(error) {
-//							mod.galleryPickError(error, function(err){
-//								mui.toast(err.message);
-//							});
-//						}, {
-//							filter: "video",
-//						});
-//
-//						break;
-//				}
-//			});
+						break;
+					case 2: //从相册选择
+						plus.gallery.pick(function(filePath) {
+							var wd = events.showWaiting('处理中...');
+							console.log("success " + filePath);
+							//文件类型限定MP4
+							//							var names = filePath.split("/");
+							//							var fileName = names[names.length - 1];
+							//							var fileNames = fileName.split(".");
+							//							var type = fileNames[fileNames.length - 1];
+							//							console.log("type " + type);
+							//							if(type.toLowerCase() != "mp4") {
+							//								mui.toast("只允许上传MP4格式 ");
+							//								wd.close();
+							//								return false;
+							//							}
+							//获取APP的_documents文件夹对象
+							plus.io.resolveLocalFileSystemURL("_documents/", function(parentEntry) {
+								//获取选取的视频文件对象
+								plus.io.resolveLocalFileSystemURL(filePath, function(entry) {
+									var myDate = new Date();
+									var copyName = myDate.getTime() + parseInt(Math.random() * 1000) + '.mp4';
+									//拷贝视频到_documents文件夹
+									entry.copyTo(parentEntry, copyName, function(entrySuccesCB) {
+										console.log("拷贝成功 " + entrySuccesCB.fullPath);
+										var mVideo = document.createElement("video");
+										mVideo.ondurationchange = function() {
+											console.log("ondurationchange  duration " + mVideo.duration);
+											if(mVideo.duration < 11) {
+												self.data.VideoNum--;
+												self.addVideos(entrySuccesCB.fullPath, function() {
+													wd.close();
+												});
+											} else {
+												mui.toast("视频时长不得超出10秒");
+												wd.close();
+											}
+										}
+										mVideo.onerror = function() {
+											mui.toast("视频加载失败")
+											wd.close();
+										}
+										mVideo.src = entrySuccesCB.fullPath;
+									}, function(entryErrorCB) {
+										console.log("拷贝失败 " + JSON.stringify(entryErrorCB));
+										wd.close();
+										mui.toast("视频加载失败 " + entryErrorCB.message);
+									});
+								}, function(error) {
+									mod.galleryPickError(error, function(err) {
+										wd.close();
+										mui.toast("视频加载失败 " + err.message);
+									});
+								});
+							}, function(parentEntryErrorCB) {
+								wd.close();
+								mui.toast("视频加载失败 " + entryErrorCB.message);
+							});
+						}, function(error) {
+							mod.galleryPickError(error, function(err) {
+								mui.toast(err.message);
+							});
+						}, {
+							filter: "video",
+						});
+						break;
+				}
+			});
 		} else {
 			mui.toast('视频数量超出限制');
 		}
