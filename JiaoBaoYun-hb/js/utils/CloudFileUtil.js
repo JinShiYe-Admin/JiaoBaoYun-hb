@@ -852,9 +852,8 @@ var CloudFileUtil = (function($, mod) {
 	 * @param {Object} successCB 请求成功的回调
 	 * @param {Object} errorCB 请求失败的回调
 	 */
-	mod.persistentStatusSearch = function(persistentId, successCB, errorCB) {
-		var successCB = successCB || mui.noop();
-		var errorCB = errorCB || mui.noop();
+	mod.orderStatusSearch = function(persistentId, callBack) {
+		callBack = callBack || mui.noop();
 		if(persistentId) {
 			var url = 'http://api.qiniu.com/status/get/prefop?id=' + persistentId;
 			mui.ajax(url, {
@@ -865,19 +864,23 @@ var CloudFileUtil = (function($, mod) {
 					'Content-Type': 'application/json'
 				},
 				success: function(data) {
-					successCB(data);
+					callBack({
+						code: 1,
+						data: data
+					});
 				},
 				error: function(xhr, type, errorThrown) {
-					//异常处理
-					errorCB({
-						xhr: xhr,
-						type: type,
-						errorThrown: errorThrown
+					callBack({
+						code: 0,
+						message: type
 					});
 				}
 			});
 		} else {
-			errorCB('### ERROR ### persistentId参数错误');
+			callBack({
+				code: 0,
+				message: "Id参数错误"
+			});
 		}
 	}
 
@@ -911,7 +914,7 @@ var CloudFileUtil = (function($, mod) {
 			if(flag) { //获取的
 				div.innerHTML = '<div class="clip-container video-container"  style="width:' + div_width * 0.9 + 'px;height:' + div_width * 0.9 + 'px;margin:5%;overflow:hidden;display:inline-block;background-image:url(' +
 					img.thumb +
-					');background-size:cover;"><img src="../../image/utils/playvideo.png" style="width:30px;height:30px;margin:'+(div_width*0.9-30)/2+'px;" /></div>' +
+					');background-size:cover;"><img src="../../image/utils/playvideo.png" style="width:30px;height:30px;margin:' + (div_width * 0.9 - 30) / 2 + 'px;" /></div>' +
 					'<a class="mui-icon iconfont icon-guanbi"></a>';
 				//				div.innerHTML = '<img style="width:90%;height:90%;margin:5%;" src="../../image/utils/playvideo.png" style="backgroud-image:url(' + img.thumb + ');"/>' +
 				//					'<a class="mui-icon iconfont icon-guanbi"></a>';
@@ -919,7 +922,7 @@ var CloudFileUtil = (function($, mod) {
 				console.log("缩略图信息：" + thumb);
 				div.innerHTML = '<div class="clip-container video-container"  style="width:' + div_width * 0.9 + 'px;height:' + div_width * 0.9 + 'px;margin:5%;overflow:hidden;display:inline-block;background-image:url(' +
 					thumb +
-					');background-size:cover;"><img src="../../image/utils/playvideo.png" style="width:30px;height:30px;margin:'+(div_width*0.9-30)/2+'px;" /></div>' +
+					');background-size:cover;"><img src="../../image/utils/playvideo.png" style="width:30px;height:30px;margin:' + (div_width * 0.9 - 30) / 2 + 'px;" /></div>' +
 					'<a class="mui-icon iconfont icon-guanbi"></a>';
 			}
 		}
