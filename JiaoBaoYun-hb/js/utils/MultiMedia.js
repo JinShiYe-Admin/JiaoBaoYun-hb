@@ -232,17 +232,99 @@ var MultiMedia = (function($, mod) {
 			return false;
 		}
 		if(self.data.VideoNum > 0) {
-			RecordVideo.recordVideo({}, function(fpath) {
-				if(self.data.VideoNum > 0) {
-					self.data.VideoNum--;
-					var wd = events.showWaiting('处理中...');
-					console.log('录制视频成功 ' + fpath);
-					self.addVideos(fpath, function() {
-						wd.close();
-					});
+			var btnArray = [{
+				title: "录制"
+			}, {
+				title: "从相册选取"
+			}];
+			plus.nativeUI.actionSheet({
+				title: "视频",
+				cancel: "取消",
+				buttons: btnArray
+			}, function(e) {
+				switch(e.index) {
+					case 0: //取消
+						break;
+					case 1: //录像
+						RecordVideo.recordVideo({}, function(fpath) {
+							if(self.data.VideoNum > 0) {
+								var wd = events.showWaiting('处理中...');
+								self.data.VideoNum--;
+								console.log('录制视频成功 ' + fpath);
+								self.addVideos(fpath, function() {
+									wd.close();
+								});
+							}
+						}, function(err) {
+							mui.toast(err.message);
+						});
+						break;
+					case 2: //从相册选择
+						plus.gallery.pick(function(filePath) {
+							var wd = events.showWaiting('处理中...');
+							console.log("success " + filePath);
+							//文件类型限定MP4
+							//							var names = filePath.split("/");
+							//							var fileName = names[names.length - 1];
+							//							var fileNames = fileName.split(".");
+							//							var type = fileNames[fileNames.length - 1];
+							//							console.log("type " + type);
+							//							if(type.toLowerCase() != "mp4") {
+							//								mui.toast("只允许上传MP4格式 ");
+							//								wd.close();
+							//								return false;
+							//							}
+							//获取APP的_documents文件夹对象
+							plus.io.resolveLocalFileSystemURL("_documents/", function(parentEntry) {
+								//获取选取的视频文件对象
+								plus.io.resolveLocalFileSystemURL(filePath, function(entry) {
+									var myDate = new Date();
+									var copyName = myDate.getTime() + parseInt(Math.random() * 1000) + '.mp4';
+									//拷贝视频到_documents文件夹
+									entry.copyTo(parentEntry, copyName, function(entrySuccesCB) {
+										console.log("拷贝成功 " + entrySuccesCB.fullPath);
+										var mVideo = document.createElement("video");
+										mVideo.ondurationchange = function() {
+											console.log("ondurationchange  duration " + mVideo.duration);
+											if(mVideo.duration < 11) {
+												self.data.VideoNum--;
+												self.addVideos(entrySuccesCB.fullPath, function() {
+													wd.close();
+												});
+											} else {
+												mui.toast("视频时长不得超出10秒");
+												wd.close();
+											}
+										}
+										mVideo.onerror = function() {
+											mui.toast("视频加载失败")
+											wd.close();
+										}
+										mVideo.src = entrySuccesCB.fullPath;
+									}, function(entryErrorCB) {
+										console.log("拷贝失败 " + JSON.stringify(entryErrorCB));
+										wd.close();
+										mui.toast("视频加载失败 " + entryErrorCB.message);
+									});
+								}, function(error) {
+									mod.galleryPickError(error, function(err) {
+										wd.close();
+										mui.toast("视频加载失败 " + err.message);
+									});
+								});
+							}, function(parentEntryErrorCB) {
+								wd.close();
+								mui.toast("视频加载失败 " + entryErrorCB.message);
+							});
+						}, function(error) {
+							mod.galleryPickError(error, function(err) {
+								mui.toast(err.message);
+							});
+						}, {
+							filter: "video",
+						});
+						break;
 				}
-			}, function(err) {
-				mui.toast(err.message);
 			});
 		} else {
 			mui.toast('视频数量超出限制');
@@ -436,9 +518,7 @@ var MultiMedia = (function($, mod) {
 				});
 			}
 		}, function(error) {
-			var code = error.code; // 错误编码
-			var message = error.message; // 错误描述信息
-			mui.toast('从相册选取图片失败 ' + '错误编码 ' + code + '描述信息 ' + message);
+			mui.toast('从相册选取图片失败 ' + '错误编码 ' + error.code + '描述信息 ' + error.message);
 		});
 	}
 
@@ -665,34 +745,7 @@ var MultiMedia = (function($, mod) {
 		plus.gallery.pick(function(event) {
 			successCB(event);
 		}, function(error) {
-			var code = error.code; // 错误编码
-			var message = error.message; // 错误描述信息
-			if(plus.os.name == 'iOS') { //苹果
-				if(code != -2) {
-					console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
-					errorCB({
-						code: code, // 错误编码
-						message: 'ios ' + message // 错误描述信息
-					});
-				} else {
-					console.log('未选取图片 ' + JSON.stringify(error));
-				}
-			} else if(plus.os.name == 'Android') { //安卓
-				if(code != 12) {
-					console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
-					errorCB({
-						code: code, // 错误编码
-						message: 'android ' + message // 错误描述信息
-					});
-				} else {
-					console.log('未选取图片 ' + JSON.stringify(error));
-				}
-			} else { //其他
-				errorCB({
-					code: code, // 错误编码
-					message: plus.os.name + ' ' + message // 错误描述信息
-				});
-			}
+			mod.galleryPickError(error, errorCB);
 		}, {
 			filter: filter,
 			maximum: maximum,
@@ -712,34 +765,7 @@ var MultiMedia = (function($, mod) {
 			//console.log('从相册选取图片成功,图片的路径为：' + file);
 			successCB(file) //压缩图片
 		}, function(error) {
-			var code = error.code; // 错误编码
-			var message = error.message; // 错误描述信息
-			if(plus.os.name == 'iOS') { //苹果
-				if(code != -2) {
-					console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
-					errorCB({
-						code: code, // 错误编码
-						message: 'ios ' + message // 错误描述信息
-					});
-				} else {
-					console.log('未选取图片 ' + JSON.stringify(error));
-				}
-			} else if(plus.os.name == 'Android') { //安卓
-				if(code != 12) {
-					console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
-					errorCB({
-						code: code, // 错误编码
-						message: 'android ' + message // 错误描述信息
-					});
-				} else {
-					console.log('未选取图片 ' + JSON.stringify(error));
-				}
-			} else { //其他
-				errorCB({
-					code: code, // 错误编码
-					message: plus.os.name + ' ' + message // 错误描述信息
-				});
-			}
+			mod.galleryPickError(error, errorCB);
 		});
 	}
 
@@ -790,6 +816,40 @@ var MultiMedia = (function($, mod) {
 				}
 			}, {}
 		);
+	}
+
+	/**
+	 * 从相册中选取文件失败
+	 * @param {Object} error
+	 * @param {Object} callBack
+	 */
+	mod.galleryPickError = function(error, errorCB) {
+		if(plus.os.name == 'iOS') { //苹果
+			if(error.code != -2) {
+				console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
+				errorCB({
+					code: error.code, // 错误编码
+					message: error.message // 错误描述信息
+				});
+			} else {
+				console.log('未选取文件 ' + JSON.stringify(error));
+			}
+		} else if(plus.os.name == 'Android') { //安卓
+			if(error.code != 12) {
+				console.log('### ERROR ### 从相册选取图片失败 ' + JSON.stringify(error));
+				errorCB({
+					code: error.code, // 错误编码
+					message: error.message // 错误描述信息
+				});
+			} else {
+				console.log('未选取文件 ' + JSON.stringify(error));
+			}
+		} else { //其他
+			errorCB({
+				code: error.code, // 错误编码
+				message: plus.os.name + ' ' + error.message // 错误描述信息
+			});
+		}
 	}
 
 	return mod;
