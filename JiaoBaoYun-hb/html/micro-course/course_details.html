@@ -530,6 +530,15 @@
 					console.log("video-onplaying");
 					video.style.backgroundImage = "";
 				}
+				
+				video.onerror=function(){
+					console.log("video-onerror:"+video.error.code);
+					if (video.error.code == 4) {
+						mui.toast('不支持不放当前文件格式');
+					}else if(video.error.code == 3){
+						mui.toast('文件解码发生错误');
+					}
+				}
 				//初始化音频播放区域
 				svgWidth = plus.screen.resolutionWidth - 60;
 				var d = courseDetails.getAudioBorderPath(svgWidth);

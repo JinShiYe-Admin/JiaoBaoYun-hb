@@ -501,7 +501,7 @@ none; margin-top: -15px;">登录</button>
 									window.myStorage.setItem(window.storageKeyName.PERSONALINFO, data.RspData);
 									console.log('登录保存的个人信息：' + JSON.stringify(data.RspData));
 									//退出 界面更新
-									events.logOff();
+//									events.logOff();
 									events.infoChanged();
 									mui.fire(plus.webview.getWebviewById("index.html"), 'login');
 									events.hidePagesExIndex();

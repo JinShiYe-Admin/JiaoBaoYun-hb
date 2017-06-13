@@ -2,16 +2,16 @@
 
 var storageKeyName = (function(mod) {
 
-	var Key = 1; //0,开发;1,测试;2,外网
+	var Key = 0; //0,开发;1,测试;2,外网
 
 	if(Key == 0) {
 		//---开发---start---
-		mod.MAINEDU = 'http://192.168.0.44:8511/'; //科教图片url
-		mod.MAINURL = 'http://192.168.0.44:8511/api/CloudApi/'; //主url
-		mod.MAINJIAOXIAOURL = 'http://192.168.0.200:8081/JiaoBaoCloudService/'; //家校圈url
-		mod.MAINHOMEWORKURL = 'http://192.168.0.44:8513/'; //作业主url
-		mod.MAINQIUZHI = 'http://192.168.0.200:8081/JiaoBaoCloudService/'; //求知主url
-		mod.MAINMICROCLASS = 'http://192.168.0.200:8081/JiaoBaoCloudService/'; //微课主url
+		mod.MAINEDU = 'http://192.168.1.44:8511/'; //科教图片url
+		mod.MAINURL = 'http://192.168.1.44:8511/api/CloudApi/'; //主url
+		mod.MAINJIAOXIAOURL = 'http://192.168.1.200:8081/JiaoBaoCloudService/'; //家校圈url
+		mod.MAINHOMEWORKURL = 'http://192.168.1.44:8513/'; //作业主url
+		mod.MAINQIUZHI = 'http://192.168.1.200:8081/JiaoBaoCloudService/'; //求知主url
+		mod.MAINMICROCLASS = 'http://192.168.1.200:8081/JiaoBaoCloudService/'; //微课主url
 		//---开发---end---
 
 		//---七牛空间和接口---开发---start---
