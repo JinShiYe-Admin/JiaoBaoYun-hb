@@ -220,6 +220,9 @@
 							this.setAttribute('data-seHistory', true);
 							var personalUID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uid;
 							var History = window.myStorage.getItem(window.storageKeyName.seHistory + '_' + personalUID);
+							if(History==null){
+								History=[];
+							}
 							History[History.length] = tabid;
 							if(History.length > 100) {
 								History.splice(0, 1); //删掉第一个

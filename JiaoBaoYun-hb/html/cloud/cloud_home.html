@@ -20,43 +20,43 @@
 			.mui-content {
 				background-color: #f2f3f5;
 			}
-
+			
 			#topPopover {
 				position: fixed;
 				top: 46px;
 				right: 6px;
 				width: 150px;
 			}
-
+			
 			#topPopover .mui-popover-arrow {
 				left: auto;
 				right: 6px;
 			}
-
+			
 			.mui-popover {
 				height: 80px;
 				width: 150;
 			}
-
+			
 			.mui-backdrop {
 				/*选择排序的遮罩*/
 				background-color: rgba(0, 0, 0, .05);
 			}
-
+			
 			#refreshContainer .mui-table-view:before,
 			#refreshContainer .mui-table-view:after,
 			#refreshContainer .mui-table-view-cell:after {
 				height: 0px;
 			}
-
+			
 			#refreshContainer .mui-table-view {
 				background-color: white;
 			}
-
+			
 			.cloud-item {
 				background-color: white;
 			}
-
+			
 			.cloud-item-left {
 				width: 16%;
 				border-right: 1px solid #D9D9D9;
@@ -65,7 +65,7 @@
 				font-weight: bold;
 				font-size: 1.6rem;
 			}
-
+			
 			.cloud-item-right {
 				/*margin-left: 16%;*/
 				width: 84%;
@@ -83,27 +83,27 @@
 			/*每一项的第二行*/
 			/*background-color: blue;*/
 			/*}*/
-
+			
 			.mui-plus-pullrefresh .mui-scroll {
 				position: absolute;
 				/*width: 100%;*/
 			}
-
+			
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				color: black;
 				border: none;
 			}
-
+			
 			#refreshContainer .mui-table-view-cell {
 				display: inline-block;
 				width: auto;
 				padding: 1px 1px;
 			}
-
+			
 			.mui-slider-indicator .mui-table-view-cell.mui-active {
 				background: white;
 			}
-
+			
 			.cloud-red-point {
 				position: absolute;
 				background: red;
@@ -112,27 +112,27 @@
 				border-radius: 50%;
 				display: none;
 			}
-
+			
 			img {
 				border-radius: 50%;
 			}
-
+			
 			#cloudstorage_1 img {
 				border-radius: 0px;
 			}
-
+			
 			.icon-jiaxiabiao {
 				color: #0ABAF5;
 			}
-
+			
 			.icon-banxiabiao {
 				color: #FFBA00;
 			}
-
+			
 			.icon-re {
 				color: #FD681E;
 			}
-
+			
 			.icon-re,
 			.icon-banxiabiao,
 			.icon-jiaxiabiao {
@@ -140,14 +140,14 @@
 				border: none !important;
 				top: 0px;
 			}
-
+			
 			.mui-popup-input input {
 				/*popup 输入框*/
 				height: 34px;
 				border-color: #E4E4E4;
 				margin-top: 5px;
 			}
-
+			
 			.mui-bar-nav.mui-bar .mui-icon.img-icon {
 				padding-top: 7px;
 			}
@@ -385,11 +385,11 @@
 							//console.log("下拉刷新");
 							mui.fire(plus.webview.getWebviewById("index.html"), 'aboutmNoRead');
 							//文件存储数组
-//							fileArray = [];
-//							//获取所有的群
-//							datasource = [];
-//							//获取学生列表
-//							topStudentArr = [];
+							//							fileArray = [];
+							//							//获取所有的群
+							//							datasource = [];
+							//							//获取学生列表
+							//							topStudentArr = [];
 							changeData();
 							setTimeout(function() {
 								//结束下拉刷新
@@ -411,21 +411,21 @@
 				});
 				//点击popover里cell
 				mui('.mui-popover').on('tap', 'li', function(e) {
-					var targetUrl="";
-					var postdata="";
+					var targetUrl = "";
+					var postdata = "";
 					mui('#topPopover').popover('toggle')
 					if(this.id == 'pubDynamic') {
-						targetUrl="../quan/pub-dynamic.html";
-						postdata='jxq';
+						targetUrl = "../quan/pub-dynamic.html";
+						postdata = 'jxq';
 					} else if(this.id == 'aboutme') {
-						targetUrl="../quan/aboutme.html";
+						targetUrl = "../quan/aboutme.html";
 						var noRead = document.getElementById('aboutme_noRead');
 						noRead.innerHTML = 0;
 						noRead.style.visibility = 'hidden';
 					} else {
-						targetUrl='../mine/ReadQRCode.html';
+						targetUrl = '../mine/ReadQRCode.html';
 					}
-					events.singleWebviewInPeriod(this,targetUrl,postdata);
+					events.singleWebviewInPeriod(this, targetUrl, postdata);
 				})
 				//				window.addEventListener("homeworkReady", function() {
 				//					homeworkReady = true;
@@ -552,57 +552,65 @@
 				mui('#cloudstorage').on('tap', '#addFolder', function(e) {
 					e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
 					var btnArray = ['取消', '确定'];
-					plus.nativeUI.prompt(" ", function(e) {
-						if(e.index == 1) { //点击确定
-							var reg = new RegExp('^[^\\\\\\/:*?\\"<>|]+$'); //特殊字符过滤的正则表达式
-							if(e.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
-								mui.toast('文件夹名字不能为空');
-							} else if(!reg.test(e.value)) {
-								//特殊字符
-								mui.toast('名字中不能包含这些字符 \ / : * ? " < > | ');
-							} else if(e.value.length > 20) {
-								mui.toast('名字最多20个字');
-							} else {
-								//27.用户云盘文件上传或创建文件夹
-								//所需参数
-								var comData = {
-									pid: '0', //	父ID，该文件的上层ID
-									fname: e.value, //	文件名称，文件或文件夹名称,文件存扩展名之前的名称
-									ftype: '.file', //	文件类型，存文件的扩展名,如.file为文件夹
-									fpath: '', //	文件路径，文件路径,为文件用
-									fsize: '0' //	文件大小，文件用
-								};
-								// 等待的对话框
-								var wd = events.showWaiting();
-								postDataPro_PostDiFiA(comData, wd, function(data) {
-									wd.close();
-									console.log('27.postDataPro_PostDiFiA:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-									if(data.RspCode == 0) {
-										//26.用户云盘顶层文件及文件夹获取
-										postFirstFile();
-										mui.toast('创建成功');
-										document.activeElement.blur();
-										mui.closePopups();
-									} else if(data.RspCode == 8) {
-										mui.toast('操作失败！已存在相同的名字');
-									} else {
-										mui.toast(data.RspTxt);
-									}
-								});
-							}
-							return false;
-						} else {
-							//点击取消
-							document.activeElement.blur();
-						}
-					}, "新建文件夹", "请输入新文件夹的名称", btnArray);
-					//					mui.prompt('', '请输入新文件夹的名称', '新建文件夹', btnArray, function(e) {
-					//
-					//					}, 'div');
-//					var input = document.querySelector('.mui-popup-input input');
-//					input.type = 'text';
-//					input.maxLength = 20;
+					if(plus.os.name == 'iOS') {
+						plus.nativeUI.prompt(" ", function(e) {
+							addFolder(e);
+						}, "新建文件夹", "请输入新文件夹的名称", btnArray);
+					} else {
+						mui.prompt('', '请输入新文件夹的名称', '新建文件夹', btnArray, function(e) {
+							addFolder(e);
+						}, 'div');
+						var input = document.querySelector('.mui-popup-input input');
+						input.type = 'text';
+						input.maxLength = 20;
+					}
 				});
+
+				//新增文件夹方法
+				function addFolder(e) {
+					if(e.index == 1) { //点击确定
+						var reg = new RegExp('^[^\\\\\\/:*?\\"<>|]+$'); //特殊字符过滤的正则表达式
+						if(e.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
+							mui.toast('文件夹名字不能为空');
+						} else if(!reg.test(e.value)) {
+							//特殊字符
+							mui.toast('名字中不能包含这些字符 \ / : * ? " < > | ');
+						} else if(e.value.length > 20) {
+							mui.toast('名字最多20个字');
+						} else {
+							//27.用户云盘文件上传或创建文件夹
+							//所需参数
+							var comData = {
+								pid: '0', //	父ID，该文件的上层ID
+								fname: e.value, //	文件名称，文件或文件夹名称,文件存扩展名之前的名称
+								ftype: '.file', //	文件类型，存文件的扩展名,如.file为文件夹
+								fpath: '', //	文件路径，文件路径,为文件用
+								fsize: '0' //	文件大小，文件用
+							};
+							// 等待的对话框
+							var wd = events.showWaiting();
+							postDataPro_PostDiFiA(comData, wd, function(data) {
+								wd.close();
+								console.log('27.postDataPro_PostDiFiA:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								if(data.RspCode == 0) {
+									//26.用户云盘顶层文件及文件夹获取
+									postFirstFile();
+									mui.toast('创建成功');
+									document.activeElement.blur();
+									mui.closePopups();
+								} else if(data.RspCode == 8) {
+									mui.toast('操作失败！已存在相同的名字');
+								} else {
+									mui.toast(data.RspTxt);
+								}
+							});
+						}
+						return false;
+					} else {
+						//点击取消
+						document.activeElement.blur();
+					}
+				}
 
 				//---云盘end---
 
@@ -1504,51 +1512,62 @@
 				console.log('修改档案名称');
 				event.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
 				var btnArray = ['取消', '确定'];
-				mui.prompt('', '档案名称,最多10个字', '重命名', btnArray, function(e) {
-					if(e.index == 1) { //点击确定
-						//console.log(e.value);
-						if(e.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
-							mui.toast('档案名称不能为空');
-						} else if(dataInfo.DocName == e.value) {
-							//未做修改
-							document.activeElement.blur();
-							mui.closePopups();
-						} else if(e.value.length > 10) {
-							mui.toast('档案名称最多10个字');
-						} else {
-							var wd = events.showWaiting();
-							var comData = {
-								fileInfoId: dataInfo.DocId, //档案ID
-								fileInfoName: e.value, //档案新名称
-								fileInfoType: dataInfo.DocType, //档案类型
-							}
-							//86.（云档案）修改档案名称
-							postDataPro_setStudentFileInfoName(comData, wd, function(data) {
-								console.log('86 修改档案名称 setStudentFileInfoName ' + JSON.stringify(data));
-								if(data.RspCode == 0 && data.RspData.Result == 1) {
-									//成功的回调
-									mui.toast('档案重命名成功');
-									var id = dataInfo.DocType + '_' + dataInfo.DocId;
-									studentDoc[id].DocName = e.value;
-									document.getElementById('data_name_' + id).innerText = e.value + '档案';
-									document.activeElement.blur();
-									mui.closePopups();
-								} else {
-									mui.toast(data.RspTxt);
-								}
-								wd.close();
-							})
-						}
-						return false;
-					} else {
-						//点击取消
+				if(plus.os.name == 'iOS') {
+					plus.nativeUI.prompt(" ", function(e) {
+						rename(e);
+					}, "重命名", "档案名称,最多10个字", btnArray);
+				} else {
+					mui.prompt('', '档案名称,最多10个字', '重命名', btnArray, function(e) {
+						rename(e);
+					}, 'div');
+					var input = document.querySelector('.mui-popup-input input');
+					input.type = 'text';
+					input.maxLength = 10;
+					input.value = dataInfo.DocName || dataInfo.StudentName;
+				}
+			}
+
+			//重命名文件夹，弹出框的单机加载
+			function rename(e) {
+				if(e.index == 1) { //点击确定
+					//console.log(e.value);
+					if(e.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
+						mui.toast('档案名称不能为空');
+					} else if(dataInfo.DocName == e.value) {
+						//未做修改
 						document.activeElement.blur();
+						mui.closePopups();
+					} else if(e.value.length > 10) {
+						mui.toast('档案名称最多10个字');
+					} else {
+						var wd = events.showWaiting();
+						var comData = {
+							fileInfoId: dataInfo.DocId, //档案ID
+							fileInfoName: e.value, //档案新名称
+							fileInfoType: dataInfo.DocType, //档案类型
+						}
+						//86.（云档案）修改档案名称
+						postDataPro_setStudentFileInfoName(comData, wd, function(data) {
+							console.log('86 修改档案名称 setStudentFileInfoName ' + JSON.stringify(data));
+							if(data.RspCode == 0 && data.RspData.Result == 1) {
+								//成功的回调
+								mui.toast('档案重命名成功');
+								var id = dataInfo.DocType + '_' + dataInfo.DocId;
+								studentDoc[id].DocName = e.value;
+								document.getElementById('data_name_' + id).innerText = e.value + '档案';
+								document.activeElement.blur();
+								mui.closePopups();
+							} else {
+								mui.toast(data.RspTxt);
+							}
+							wd.close();
+						})
 					}
-				}, 'div');
-				var input = document.querySelector('.mui-popup-input input');
-				input.type = 'text';
-				input.maxLength = 10;
-				input.value = dataInfo.DocName || dataInfo.StudentName;
+					return false;
+				} else {
+					//点击取消
+					document.activeElement.blur();
+				}
 			}
 
 			/**

@@ -24,12 +24,12 @@ var storageKeyName = (function(mod) {
 		//	---七牛空间和接口---开发---end---
 	} else if(Key == 1) {
 		//---测试---start---
-		mod.MAINEDU = 'http://192.168.0.178:8511/'; //科教图片url
-		mod.MAINURL = 'http://192.168.0.178:8511/api/CloudApi/'; //主url
-		mod.MAINJIAOXIAOURL = 'http://192.168.0.178:8080/JiaoBaoCloudService/'; //家校圈url
-		mod.MAINHOMEWORKURL = 'http://192.168.0.178:8088/'; //作业主url
-		mod.MAINQIUZHI = 'http://192.168.0.178:8080/JiaoBaoCloudService/'; //求知主url
-		mod.MAINMICROCLASS = 'http://192.168.0.178:8080//JiaoBaoCloudService/'; //微课主url
+		mod.MAINEDU = 'http://192.168.1.178:8511/'; //科教图片url
+		mod.MAINURL = 'http://192.168.1.178:8511/api/CloudApi/'; //主url
+		mod.MAINJIAOXIAOURL = 'http://192.168.1.178:8080/JiaoBaoCloudService/'; //家校圈url
+		mod.MAINHOMEWORKURL = 'http://192.168.1.178:8088/'; //作业主url
+		mod.MAINQIUZHI = 'http://192.168.1.178:8080/JiaoBaoCloudService/'; //求知主url
+		mod.MAINMICROCLASS = 'http://192.168.1.178:8080//JiaoBaoCloudService/'; //微课主url
 		//---测试---end---
 
 		//---七牛空间和接口---测试---start---
