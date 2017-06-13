@@ -243,14 +243,18 @@ var course_listnew = (function(mod) {
 	}
 	/**
 	 * 改变按钮状态
-	 * @param {Object} item
+	 * @param {Object} item 控件
 	 * @param {Object} type 1为游客
 	 */
 	mod.changeBtnStatus = function(item, type) {
 
 		if(item.info.IsFocus) {
-			item.className = "input-btn btn-unfocus";
-			item.innerText = "关注";
+			if(curPageFlag == 0) {//当前页面是删除页面
+				removeFocusTableView(item);//取消关注后删除cell
+			} else {
+				item.className = "input-btn btn-unfocus";
+				item.innerText = "关注";
+			}
 			if(type) { //游客
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 1);
 				//游客关注的课程
@@ -273,6 +277,18 @@ var course_listnew = (function(mod) {
 			}
 		}
 		item.info.IsFocus = !item.info.IsFocus;
+	}
+	/**
+	 * 获取上级TableViewCell并删除
+	 * @param {Object} item
+	 */
+	function removeFocusTableView(item) {
+		if(item.classList.contains("mui-table-view-cell")) {
+			document.getElementById("course-attended").querySelector(".mui-table-view").removeChild(item);
+		} else {
+			removeFocusTableView(item.parentElement);
+		}
+
 	}
 	/**
 	 * 

@@ -78,9 +78,13 @@ var show_listnew = (function(mod) {
 		}
 		//给数组去重
 		tempArray = arrayDupRemoval(tempArray);
+		if(tempArray.length == 0) {
+			callback(tempRspData);
+			return;
+		}
 		//发送获取用户资料申请
 		var tempData = {
-			vvl: tempArray.join(), //用户id，查询的值,p传个人ID,g传ID串
+			vvl: tempArray.toString(), //用户id，查询的值,p传个人ID,g传ID串
 			vtp: 'g' //查询类型,p(个人)g(id串)
 		}
 		var wd = events.showWaiting();
@@ -104,7 +108,7 @@ var show_listnew = (function(mod) {
 					}
 				}
 			}
-//			console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
+			//			console.log('循环遍历后的值：' + JSON.stringify(tempRspData));
 			callback(tempRspData);
 		});
 	}
@@ -133,7 +137,7 @@ var show_listnew = (function(mod) {
 					var tempModel = data.RspData.Users[i];
 					tempID.push(tempModel.UserId);
 				}
-//				console.log('tempID=', tempID);
+				//				console.log('tempID=', tempID);
 				//74.(用户空间）获取多用户空间所有用户动态列表
 				if(tempID.length > 0) {
 					getAllUserSpacesByUser(showCity, tempID, listContainer, callback);
@@ -165,19 +169,22 @@ var show_listnew = (function(mod) {
 		var wd1 = events.showWaiting();
 		postDataPro_getUserSpacesForAreaByIds(comData, wd1, function(data) {
 			wd1.close();
-//			console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+			console.log("获取的问题数据：" + JSON.stringify(data));
+			//			console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
-				showCity.pageIndex++;
-				showCity.totalPage = data.RspData.TotalPage;
-				mod.getUserInfo(data.RspData.Data, function(tempData) {
-					showArray = tempData;
-					if(tempData.length > 6) { //分为6个一组
-						callback(showCity, listContainer, tempData.slice(0, 6));
-						callback(showCity, listContainer, tempData.slice(6, tempData.length));
-					} else {
-						callback(showCity, listContainer, tempData);
-					}
-				});
+				if(data.RspData.TotalCnt > 0) {
+					showCity.pageIndex++;
+					showCity.totalPage = data.RspData.TotalPage;
+					mod.getUserInfo(data.RspData.Data, function(tempData) {
+						showArray = tempData;
+						if(tempData.length > 6) { //分为6个一组
+							callback(showCity, listContainer, tempData.slice(0, 6));
+							callback(showCity, listContainer, tempData.slice(6, tempData.length));
+						} else {
+							callback(showCity, listContainer, tempData);
+						}
+					});
+				}
 			} else {
 				mui.toast(data.RspTxt);
 			}
@@ -204,7 +211,7 @@ var show_listnew = (function(mod) {
 			subDiv.info = showData[i];
 		}
 		listContainer.appendChild(div);
-//		console.log("listContainer.innerHTML:" + listContainer.innerHTML);
+		//		console.log("listContainer.innerHTML:" + listContainer.innerHTML);
 		jQuery(".img-container").lazyload();
 		//		mod.endFresh();
 	}
