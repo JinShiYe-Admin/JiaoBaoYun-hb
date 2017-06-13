@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/utils/preview.css" rel="stylesheet" />
 		<link href="../../css/quan/custom-textarea.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/homework/publish-answer.css" rel="stylesheet" />
@@ -56,6 +57,8 @@
 	<script src="../../js/utils/compress.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/utils/cryption.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/qiniu/qiniu.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
 
 	<script>
 	</script>
@@ -69,7 +72,7 @@
 
 			pageFlag = plus.webview.currentWebview().data
 			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
-
+mui.previewImage(); //浏览图片详情
 			getGroupList();
 			//			var groupInfo;
 			//			//界面监听传值
