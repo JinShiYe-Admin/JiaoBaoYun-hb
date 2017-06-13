@@ -20,18 +20,6 @@
 			.mui-slider-indicator .mui-indicator {
 				margin: 1px 2px;
 			}
-			
-			.mui-segmented-control.mui-scroll-wrapper {
-				height: 0;
-			}
-			
-			.mui-segmented-control.mui-scroll-wrapper .mui-scroll {
-				height: 0;
-			}
-			
-			.mui-fullscreen .mui-segmented-control~.mui-slider-group {
-				top: 0;
-			}
 		</style>
 	</head>
 
@@ -89,7 +77,7 @@
 					console.log("*******微课界面出现两遍******")
 					changeAll = 1;
 					getAttendedClasses(toggleAttendedPart);
-					
+
 				});
 
 				window.addEventListener("focus", function() {
@@ -254,6 +242,10 @@
 						course_listnew.getData(0, document.getElementById("course-attended").info, document.getElementById("course-attended").querySelector(".mui-table-view"), course_listnew.setData)
 						initFresh(document.getElementById("course-attended"));
 						setTitle(11);
+						if(changeAll) {
+							changeAll = 0;
+							freshView("course-all", 1);
+						}
 					} else {
 						if(changeAll) {
 							changeAll = 0;
