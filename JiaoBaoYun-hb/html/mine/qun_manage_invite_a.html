@@ -88,14 +88,14 @@
 				z-index: 1;
 				width: 100%;
 				background: white;
-				visibility: hidden;
+				display: none;
 			}
 
 			#user {
 				/*搜索结果区域*/
 				z-index: 2;
 				color: #808080;
-				visibility: hidden;
+				display: none;
 				margin-bottom: 1px;
 			}
 
@@ -139,6 +139,10 @@
 				float: left;
 			}
 
+			#data_sw {
+				display: none;
+			}
+
 			#data_sw img {
 				/*资料头像*/
 				border-radius: 50%;
@@ -165,12 +169,6 @@
 				padding: 10px 10px;
 			}
 
-			.mui-scroll-wrapper {
-				/*资料滚动区域*/
-				/*bottom: 61px;*/
-				visibility: hidden;
-			}
-
 			#commit {
 				/*底部按钮*/
 				width: 95%;
@@ -184,7 +182,7 @@
 				background-color: white;
 				border-top: 1px solid rgba(228, 228, 228, 0.4);
 				padding-top: 10px;
-				visibility: hidden;
+				display: none;
 			}
 
 			.mui-btn-blue {
@@ -211,7 +209,7 @@
 		</header>
 		<div class="mui-content">
 			<div id="nouser">
-				<img id="nouser_img" src="../../image/mine/invite_none_0.png" />
+				<img id="nouser_img" src="../../image/mine/invite_none_0.png" style="width: 40%;margin-top: 20%;" />
 				<div id="nouser_text"></div>
 			</div>
 			<ul id="user" class="mui-table-view">
@@ -258,40 +256,12 @@
 			var allData = []; //记录查询的资料
 			var clickId = ''; //记录被点击的元素id
 
-			window.onload = function() {
-				init(); //初始化界面
-				initScroll(); //初始化滚动
-			}
-
 			mui.init();
 			mui.plusReady(function() {
 				initData(); //初始化数据
 				initListener(); //初始化监听
 				events.blurBack();
 			});
-
-			/**
-			 * 初始化界面
-			 */
-			function init() {
-				//var inputArea = document.getElementById("inputArea"); //搜索区域
-				var nouser = document.getElementById("nouser");
-				var nouser_img = document.getElementById("nouser_img");
-				var user = document.getElementById("user");
-				var data_li = document.getElementById("data_li");
-				var data_sw = document.getElementById("data_sw");
-				var commit_div = document.getElementById("commit_div");
-				//var height = screenOption.height - inputArea.offsetHeight - inputArea.offsetTop - 10;
-				var height = screenOption.height;
-				nouser.style.height = (height - user.offsetHeight - data_li.offsetHeight - 1) + 'px';
-				nouser.style.marginTop = user.offsetHeight + data_li.offsetHeight + 'px';
-				nouser_img.style.height = height / 2 + 'px';
-				nouser_img.style.marginTop = height / 6 + 'px';
-				data_sw.style.top = (user.offsetHeight + user.offsetTop) + 'px';
-				data_sw.style.height = (screenOption.height - data_sw.offsetTop - 61) + 'px';
-				commit_div.style.marginTop = data_sw.offsetHeight + 'px';
-				//showNoUser(1, 1);
-			}
 
 			/**
 			 * 初始化滚动
@@ -414,9 +384,9 @@
 				var nouser_text = document.getElementById("nouser_text");
 				var user = document.getElementById("user");
 				if(key == 1) {
-					nouser.style.visibility = 'visible';
+					nouser.style.display = 'block';
 				} else {
-					nouser.style.visibility = 'hidden';
+					nouser.style.display = 'none';
 				}
 				if(type == 0) {
 					nouser.style.marginTop = '0px';
@@ -434,11 +404,11 @@
 			function showUser(key) {
 				var user = document.getElementById("user");
 				if(key == 1) {
-					user.style.visibility = 'visible';
+					user.style.display = 'block';
 					document.getElementById("user_img").src = updateHeadImg(userData.uimg, 2);
 					document.getElementById("unick").innerHTML = userData.unick;
 				} else {
-					user.style.visibility = 'hidden';
+					user.style.display = 'none';
 					document.getElementById("user_img").src = updateHeadImg('', 2);
 					document.getElementById("unick").innerHTML = '';
 				}
@@ -451,9 +421,14 @@
 			function showDataSW(key) {
 				var data_sw = document.getElementById("data_sw");
 				if(key == 1) {
-					data_sw.style.visibility = 'visible';
+					var user = document.getElementById("user");
+					var commit_div = document.getElementById("commit_div");
+					data_sw.style.display = 'block';
+					data_sw.style.top = (user.offsetHeight + user.offsetTop) + 'px';
+					data_sw.style.height = screenOption.height - data_sw.offsetTop - commit_div.offsetHeight - 11 + 'px';
+					initScroll();
 				} else {
-					data_sw.style.visibility = 'hidden';
+					data_sw.style.display = 'none';
 				}
 			}
 
@@ -464,9 +439,11 @@
 			function showCommit(key) {
 				var commit_div = document.getElementById("commit_div");
 				if(key == 1) {
-					commit_div.style.visibility = 'visible';
+					var user = document.getElementById("user");
+					commit_div.style.display = 'block';
+					commit_div.style.marginTop = screenOption.height - user.offsetHeight - 106 + 'px';
 				} else {
-					commit_div.style.visibility = 'hidden';
+					commit_div.style.display = 'none';
 				}
 			}
 

@@ -41,7 +41,7 @@ var course_listnew = (function(mod) {
 
 					callback(model.pageIndex, data.RspData.Data, listContainer);
 				} else {
-//					mui.toast(data.RspTxt);
+					//					mui.toast(data.RspTxt);
 					//					mod.endFresh();
 				}
 			});
@@ -85,7 +85,7 @@ var course_listnew = (function(mod) {
 						}
 						callback(model.pageIndex, data.RspData.Data, listContainer);
 					} else {
-//						mui.toast(data.RspTxt);
+						//						mui.toast(data.RspTxt);
 					}
 				});
 				return;
@@ -120,7 +120,7 @@ var course_listnew = (function(mod) {
 					}
 					callback(model.pageIndex, data.RspData.Data, listContainer);
 				} else {
-//					mui.toast(data.RspTxt);
+					//					mui.toast(data.RspTxt);
 					//					mod.endFresh();
 				}
 			});
@@ -230,10 +230,10 @@ var course_listnew = (function(mod) {
 			console.log('6.设置对某个课程关注:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) { //成功
 				mod.changeBtnStatus(item);
-				if (data.RspData.FocusCnt>0) {
-					toggleAttendedPart(1);//0 删除关注 1 加载关注
-				}else{
-					toggleAttendedPart(0);//0 删除关注 1 加载关注
+				if(data.RspData.FocusCnt > 0) {
+					toggleAttendedPart(1); //0 删除关注 1 加载关注
+				} else {
+					toggleAttendedPart(0); //0 删除关注 1 加载关注
 				}
 			} else {
 				mui.toast(data.RspTxt);
@@ -244,19 +244,24 @@ var course_listnew = (function(mod) {
 	/**
 	 * 改变按钮状态
 	 * @param {Object} item
-	 * @param {Object} type
+	 * @param {Object} type 1为游客
 	 */
 	mod.changeBtnStatus = function(item, type) {
+
 		if(item.info.IsFocus) {
 			item.className = "input-btn btn-unfocus";
 			item.innerText = "关注";
-			if(type) {
+			if(type) { //游客
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 1);
 				//游客关注的课程
 				var focuseTemp = window.myStorage.getItem(window.storageKeyName.FOCUSECOURSES);
-				if (focuseTemp.length==0||focuseTemp.length==null) {
-					toggleAttendedPart(0);//0 删除关注 1 加载关注
+				if(focuseTemp.length == 0 || focuseTemp.length == null) {
+					toggleAttendedPart(0); //0 删除关注 1 加载关注
+				} else {
+					freshSingleView();
 				}
+				//			}else{
+				//				getAttendedClasses(toggleAttendedPart);
 			}
 		} else {
 			item.className = "input-btn btn-focused";
@@ -264,8 +269,8 @@ var course_listnew = (function(mod) {
 			if(type) {
 				events.toggleStorageArray(storageKeyName.FOCUSECOURSES, item.info.TabId, 0);
 				console.log("关注的课程：" + myStorage.getItem(storageKeyName.FOCUSECOURSES));
+				toggleAttendedPart(1);
 			}
-			toggleAttendedPart(1);
 		}
 		item.info.IsFocus = !item.info.IsFocus;
 	}
@@ -342,17 +347,17 @@ var course_listnew = (function(mod) {
 		});
 	}
 	mod.gotoCourseDetail = function(item) {
-		item.disabled=true;
-		jQuery(item).css("pointerEvents","none");
+		item.disabled = true;
+		jQuery(item).css("pointerEvents", "none");
 		mod.getRedCircle(item);
-		events.singleWebviewInPeriod(item,'../micro-course/course_details.html',item.info);
+		events.singleWebviewInPeriod(item, '../micro-course/course_details.html', item.info);
 	}
-	mod.getRedCircle=function(item){
-		console.log("当前item的className:"+item.className);
-		if(!item.querySelector(".red-circle")){
+	mod.getRedCircle = function(item) {
+		console.log("当前item的className:" + item.className);
+		if(!item.querySelector(".red-circle")) {
 			mod.getRedCircle(item.parentElement);
-		}else{
-			console.log("获取时的className:"+item.className);
+		} else {
+			console.log("获取时的className:" + item.className);
 			item.querySelector(".red-circle").classList.add("display-none");
 		}
 	}
