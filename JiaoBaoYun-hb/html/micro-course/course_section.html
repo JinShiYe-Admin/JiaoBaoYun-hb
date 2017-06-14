@@ -22,9 +22,13 @@
 
 			.mui-table-view:before,
 			.mui-table-view:after,
-			.section-top .mui-table-view-cell:after,
-			.section-comment .mui-table-view-cell:after {
+			.section-top .mui-table-view-cell:after {
 				height: 0px;
+			}
+
+			.section-comment .mui-table-view-cell:after {
+				left: 10px;
+				right: 10px;
 			}
 
 			.mui-table-view-cell.mui-collapse.mui-active {
@@ -120,6 +124,10 @@
 			.icon-zanzan1 {
 				font-size: 13px;
 				color: #dbdbdb;
+			}
+
+			.section-top .icon-zanzan1 {
+				font-size: 16px;
 			}
 
 			.section-more {
@@ -422,7 +430,7 @@
 				<audio id="audio"></audio>
 			</div>
 			<div id="video_area" class="video-area">
-				<video id="video" controls="controls" preload="none" poster="null" autoplay="autoplay">
+				<video id="video" controls="controls" preload="none" poster="null">
 					您的浏览器不支持video标签
 				</video>
 			</div>
@@ -539,7 +547,7 @@
 					console.log("audio-oncanplaythrough " + audioState);
 					if(audioState == 4) {
 						audioState = 0;
-						audio.play();
+						//audio.play();
 					}
 				}
 
@@ -997,8 +1005,7 @@
 				for(var i in ids) {
 					var ele = document.getElementById(ids[i]);
 					ele.removeAttribute("repeatCount");
-					ele.removeAttribute("dur");
-
+					//ele.removeAttribute("dur");
 				}
 				audio_svg.unpauseAnimations();
 				audioState = 4;
@@ -1025,7 +1032,7 @@
 					document.getElementById("section_top_title").style.marginRight = "15px";
 					document.getElementById("audio_svg_time").innerHTML = courseDetails.getAudioTime(time);
 					audio.src = fpath;
-					audio.load();
+					//audio.load();
 				} else {
 					document.getElementById("scroll_wrapper").style.top = "45px";
 					document.getElementById("video_area").style.display = "none";
