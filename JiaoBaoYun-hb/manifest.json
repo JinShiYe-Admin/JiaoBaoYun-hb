@@ -4159,7 +4159,8 @@
 					"css/mui.min.css",
 					"js/libs/RSA/RSA.js",
 					"js/utils/RSAEncrypt.js",
-					"css/utils/preview.css"
+					"css/utils/preview.css",
+					"image/utils/videothumb.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -4887,7 +4888,9 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/micro-course/history-records.html"
+				],
 				"priority": 0
 			},
 			"html/micro-course/course-home1.html": {
@@ -5004,6 +5007,30 @@
 					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"html/micro-course/history-records.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"js/libs/crypto-js/crypto-js.js",
+					"image/utils/loading.gif"
+				],
+				"refer": [
+					"html/micro-course/course_section.html"
+				],
+				"priority": 0
+			},
+			"html/micro-course/course_section.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"js/libs/crypto-js/crypto-js.js"
+				],
+				"refer": [
+					"html/register/login.html",
+					"html/micro-course/course_addReply.html"
+				],
 				"priority": 0
 			}
 		},

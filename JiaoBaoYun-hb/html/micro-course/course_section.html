@@ -485,6 +485,8 @@
 				key: [],
 				value: {}
 			}; //评论，回复者的账号信息
+			var sectionComments = []; //当前节次的评论
+
 			var sectionId; //当前显示的节次id
 			var svgWidth; //SVG中的宽度
 			var audioState = 0; //0,未播放;1,播放中;2,暂停中;3,结束播放;4,未加载
@@ -494,7 +496,7 @@
 				}
 			});
 			mui.plusReady(function() {
-				//events.closeWaiting();
+				events.closeWaiting();
 				var wd = events.showWaiting();
 				initControl();
 				initListener();
@@ -508,10 +510,7 @@
 				main = plus.webview.currentWebview();
 				console.log("main data " + JSON.stringify(main.data));
 				document.getElementById("title").innerText = main.data.SecName;
-				sectionId = main.data.SecId;
-				sectionData.key[sectionData.key.length] = main.data.SecId;
-				sectionData.value[main.data.SecId] = main.data;
-				showTopData(main.data, wd)
+				getSectionDetails(wd);
 			}
 
 			/**
@@ -738,7 +737,7 @@
 				window.addEventListener('addCommont', function(e) {
 					console.log("addCommont " + JSON.stringify(e.detail.data));
 					if(e.detail.data.replyId == 0) { //对节次评论
-						sectionData.value[e.detail.data.secId].Comments.unshift({
+						sectionData.value[e.detail.data.secId].Data.unshift({
 							CommentDate: new Date(new Date().getTime()).toJSON().replace("T", " "),
 							TabId: e.detail.data.TabId,
 							Replys: [],
@@ -750,7 +749,7 @@
 							IsLiked: 0
 						});
 					} else { //对评论进行评论
-						sectionData.value[e.detail.data.secId].Comments[e.detail.data.arrayIndex].Replys.unshift({
+						sectionData.value[e.detail.data.secId].Data[e.detail.data.arrayIndex].Replys.unshift({
 							CommentDate: new Date(new Date().getTime()).toJSON().replace("T", " "),
 							TabId: e.detail.data.TabId,
 							status: 1,
@@ -762,13 +761,13 @@
 							UpperId: e.detail.data.upperId
 						});
 					}
-					showCommentsFirst(sectionData.value[e.detail.data.secId].Comments);
+					showCommentsFirst(sectionData.value[e.detail.data.secId].Data);
 				});
 
 				//音频SVG
 				document.getElementById('audio_svg').addEventListener('tap', function() {
 					console.log("audio_svg " + audioState);
-					var eleAudio=document.getElementById("audio");
+					var eleAudio = document.getElementById("audio");
 					if(audioState == 0) { //未播放
 						eleAudio.play();
 					} else if(audioState == 1) { //播放中
@@ -780,7 +779,7 @@
 						eleAudio.play();
 					} else {
 						mui.toast("音频加载中");
-						eleAudio.setAttribute("preload","auto");
+						eleAudio.setAttribute("preload", "auto");
 						eleAudio.load();
 					}
 				});
@@ -819,8 +818,32 @@
 					//视频音频区域
 					showOrHiddenVideoAudio(data.EncType, data.EncAddr, data.EncLen, data.EncImgAddr);
 					//加载评论列表
-					showCommentsFirst(data.Comments, wd);
+					showCommentsFirst(data.Data, wd);
 				}
+			}
+
+			//获取课程详情
+			function getSectionDetails(wd) {
+				wd = wd || events.showWaiting();
+				var comData = {
+					userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //用户ID，登录用户
+					courseId: main.data.courseId, //课程ID
+					secId: main.data.SecId, //节次ID
+					pageIndex: 1, //当前页数
+					pageSize: 0 //每页记录数，传入0，获取总记录数
+				};
+				postDataMCPro_getSectionById(comData, wd, function(data) {
+					console.log('16 获取课程详情 ' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						//更换课程列表中选中的课程
+						sectionData.key[sectionData.key.length] = main.data.SecId;
+						sectionData.value[main.data.SecId] = data.RspData;
+						showTopData(sectionData.value[main.data.SecId], wd);
+					} else {
+						wd.close();
+						mui.toast(data.RspTxt);
+					}
+				});
 			}
 
 			/**
@@ -954,15 +977,15 @@
 						if(commonData.status == 0) { //取消赞
 							element.className = "mui-icon iconfont icon-zanzan1 section-comment-notzan";
 							element.setAttribute('data-type', "notzan");
-							sectionData.value[sectionId].Comments[index].IsLiked = 0;
-							sectionData.value[sectionId].Comments[index].LikeNum = sectionData.value[sectionId].Comments[index].LikeNum - 1;
+							sectionData.value[sectionId].Data[index].IsLiked = 0;
+							sectionData.value[sectionId].Data[index].LikeNum = sectionData.value[sectionId].Data[index].LikeNum - 1;
 						} else { //点赞
 							element.className = "mui-icon iconfont icon-zanzan1 section-comment-zan";
 							element.setAttribute('data-type', "zan");
-							sectionData.value[sectionId].Comments[index].IsLiked = 1;
-							sectionData.value[sectionId].Comments[index].LikeNum = sectionData.value[sectionId].Comments[index].LikeNum + 1;
+							sectionData.value[sectionId].Data[index].IsLiked = 1;
+							sectionData.value[sectionId].Data[index].LikeNum = sectionData.value[sectionId].Data[index].LikeNum + 1;
 						}
-						element.innerText = "(" + sectionData.value[sectionId].Comments[index].LikeNum + ")";
+						element.innerText = "(" + sectionData.value[sectionId].Data[index].LikeNum + ")";
 						wd.close();
 					} else {
 						mui.toast(data.RspTxt);
@@ -1003,7 +1026,7 @@
 				var audio = document.getElementById("audio");
 				audio.pause(); //暂停播放
 				audio.src = ""; //取消视频
-				audio.setAttribute("preload","none");
+				audio.setAttribute("preload", "none");
 				audio_svg_rect_ani.removeAttribute("to");
 				audio_svg_rect_ani.removeAttribute("dur");
 				var ids = ["audio_svg_icon_first_ani", "audio_svg_icon_second_ani", "audio_svg_icon_third_ani"];
