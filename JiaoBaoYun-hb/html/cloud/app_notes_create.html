@@ -135,6 +135,7 @@
 				 * @param {Object} data
 				 */
 				multiMedia.videoPlayCallBack = function(data) {
+					console.log("videoPlayCallBack")
 					ShowVideoUtil.showVideo(document.getElementById("video"), 'videoPopover', data.path, data.localthumb);
 				}
 

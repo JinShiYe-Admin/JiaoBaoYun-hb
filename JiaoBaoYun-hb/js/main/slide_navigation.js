@@ -79,10 +79,6 @@ var slideNavigation = (function(mod) {
 			isInTransition = true;
 			main.parent().setStyle({
 				mask: 'none',
-				//					left: '0',
-				//					transition: {
-				//						duration: 200
-				//					}
 			});
 			menu.setStyle({
 				left: '-70%',

@@ -92,7 +92,7 @@
 				window.addEventListener("infoChanged", function() {
 					console.log("********展现监听infoChanged")
 					toggleAttendedPart(0);
-					document.getElementById("show-all").querySelector(".show-list").innerHTML = "";
+//					document.getElementById("show-all").querySelector(".show-list").innerHTML = "";
 					mui(document.getElementById("show-all").querySelector(".mui-scroll-wrapper")).scroll().scrollTo(0,0);
 					document.getElementById("show-all").showCity.pageIndex = 1;
 					show_listnew.getShowList(document.getElementById("show-all").showCity, document.getElementById("show-all").querySelector(".show-list"), show_listnew.setShowList)
@@ -162,7 +162,6 @@
 						callback: function() {
 							var self = this;
 							var ul = freshConatiner.querySelector('.show-list');
-							ul.innerHTML = "";
 							freshConatiner.showCity.pageIndex = 1;
 							console.log("获取的fresh:" + JSON.stringify(freshConatiner.info))
 							show_listnew.getShowList(freshConatiner.showCity, ul, show_listnew.setShowList);

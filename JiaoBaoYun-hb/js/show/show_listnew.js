@@ -6,16 +6,13 @@ var show_listnew = (function(mod) {
 	 * @param {Object} callback 回调
 	 */
 	mod.getShowList = function(showCity, listContainer, callback) {
-		if(showCity.pageIndex == 1) {
-			listContainer.innerHTML = "";
-		}
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		//		var wd = events.showWaiting();
 		if(showCity.pageFlag == 0) { //关注
 			console.log('关注界面拉');
 			//81.（用户空间）获取用户所有关注的用户
-			if(personal.utid == 0) {
+			if(personal.utid == 0) { //游客
 				var showfocusperson = window.myStorage.getItem(window.storageKeyName.SHOWFOCUSEPERSEN);
 				//74.(用户空间）获取多用户空间所有用户动态列表
 				getAllUserSpacesByUser(showCity, showfocusperson, listContainer, callback);
@@ -36,6 +33,9 @@ var show_listnew = (function(mod) {
 				events.closeWaiting();
 				console.log('78.（用户空间）获取区域用户空间列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
+					if(showCity.pageIndex == 1) {
+						listContainer.innerHTML = "";
+					}
 					//总页数
 					showCity.totalPage = data.RspData.TotalPage;
 					showCity.pageIndex++;
@@ -141,6 +141,8 @@ var show_listnew = (function(mod) {
 				//74.(用户空间）获取多用户空间所有用户动态列表
 				if(tempID.length > 0) {
 					getAllUserSpacesByUser(showCity, tempID, listContainer, callback);
+				} else {
+					listContainer.innerHTML = "";
 				}
 			} else {
 				mui.toast(data.RspTxt);
@@ -172,6 +174,9 @@ var show_listnew = (function(mod) {
 			console.log("获取的问题数据：" + JSON.stringify(data));
 			//			console.log('74.(用户空间）获取多用户空间所有用户动态列表:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 			if(data.RspCode == 0) {
+				if(showCity.pageIndex == 1) {
+					listContainer.innerHTML = "";
+				}
 				if(data.RspData.TotalCnt > 0) {
 					showCity.pageIndex++;
 					showCity.totalPage = data.RspData.TotalPage;
