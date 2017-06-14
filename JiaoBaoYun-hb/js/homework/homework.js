@@ -284,7 +284,9 @@ var setListener = function() {
 			}
 			//学生家长角色
 		} else {
-			if(studentHash.get(selectGId)) {
+			console.log("获取的作业："+JSON.stringify(studentHash.get(selectGId)));
+			if(studentHash.get(selectGId)&&studentHash.get(selectGId).length>0) {
+				
 				setHomeworkData(studentHash.get(selectGId));
 			} else {
 				this.classInfo.pageIndex = 1;

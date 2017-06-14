@@ -1478,7 +1478,8 @@
 		"refer": [
 			"html/quan/group-pInfo.html",
 			"html/mine/qun_manage_info.html",
-			"html/mine/qun_data_details.html"
+			"html/mine/qun_data_details.html",
+			"html/mine/qun_manage_invite_a.html"
 		]
 	},
 	"html/quan/pub-dynamic.html": {
