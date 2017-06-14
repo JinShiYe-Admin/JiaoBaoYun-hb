@@ -22,13 +22,16 @@ var course_listnew = (function(mod) {
 		var wd = events.showWaiting();
 		if(flag) { //关注0，全部1
 			if(model.freshFlag == 0) { //刷新
-				comData.pageIndex = '1';
+				comData.pageIndex = 1;
 			}
 			//1.获取所有课程
 			postDataMCPro_getAllCourses(comData, wd, function(data) {
 				wd.close();
 				console.log('1.获取所有课程:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
+					if(comData.pageIndex == 1) {
+						listContainer.innerHTML = "";
+					}
 					//总页数
 					model.totalPage = data.RspData.totalPage;
 					model.pageIndex++;
@@ -64,13 +67,16 @@ var course_listnew = (function(mod) {
 					pageSize: '0' //每页记录数，传入0，获取总记录数
 				};
 				if(model.freshFlag == 0) { //刷新
-					comData.pageIndex = '1';
+					comData.pageIndex = 1;
 				}
 				//13.根据课程列表获取所有关注的课程
 				postDataMCPro_getAllFocusCoursesByIds(comData, wd, function(data) {
 					wd.close();
 					console.log('13.根据课程列表获取所有关注的课程:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 					if(data.RspCode == 0) {
+						if(comData.pageIndex == 1) {
+							listContainer.innerHTML = "";
+						}
 						//总页数
 						model.totalPage = data.RspData.totalPage;
 						model.pageIndex++;
@@ -93,16 +99,19 @@ var course_listnew = (function(mod) {
 			var comData1 = {
 				userId: personal.utid, //用户ID,登录用户
 				pageIndex: model.pageIndex, //当前页数
-				pageSize: '10' //每页记录数,传入0，获取总记录数
+				pageSize: 10 //每页记录数,传入0，获取总记录数
 			};
 			if(model.freshFlag == 0) { //刷新
-				comData.pageIndex = '1';
+				comData1.pageIndex = 1;
 			}
 			//2.获取所有关注的课程
 			postDataMCPro_getAllFocusCourses(comData1, wd, function(data) {
 				wd.close();
 				console.log('2.获取所有关注的课程:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0) {
+					if(comData1.pageIndex == 1) {
+						listContainer.innerHTML = "";
+					}
 					//总页数
 					model.totalPage = data.RspData.totalPage;
 					model.pageIndex++;
@@ -249,8 +258,8 @@ var course_listnew = (function(mod) {
 	mod.changeBtnStatus = function(item, type) {
 
 		if(item.info.IsFocus) {
-			if(curPageFlag == 0) {//当前页面是删除页面
-				removeFocusTableView(item);//取消关注后删除cell
+			if(curPageFlag == 0) { //当前页面是删除页面
+				removeFocusTableView(item); //取消关注后删除cell
 			} else {
 				item.className = "input-btn btn-unfocus";
 				item.innerText = "关注";
