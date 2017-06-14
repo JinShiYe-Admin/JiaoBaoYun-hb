@@ -294,7 +294,7 @@ var MultiMedia = (function($, mod) {
 												self.addVideos(entrySuccesCB.fullPath, function() {
 													console.log("拷贝成功 003");
 													wd.close();
-												},mVideo);
+												}, mVideo);
 											} else {
 												mui.toast("视频时长不得超出10秒");
 												wd.close();
@@ -616,13 +616,15 @@ var MultiMedia = (function($, mod) {
 	 * @param {Object} path 视频路径
 	 */
 	proto.addVideos = function(path, callback, iosVideo) {
-		path = "file://" + plus.io.convertLocalFileSystemURL(path);
-		console.log("addVideos " + path);
 		var self = this;
 		//生成缩略图
 		if(plus.os.name == "iOS") {
+			path = "file://" + path;
+			console.log("addVideos " + path);
 			self.addVideosThumb(iosVideo, path, callback);
 		} else {
+			path = "file://" + plus.io.convertLocalFileSystemURL(path);
+			console.log("addVideos " + path);
 			var video = document.createElement("video");
 			video.oncanplaythrough = function() {
 				self.addVideosThumb(video, path, callback);
