@@ -445,7 +445,7 @@
 						<text id="audio_svg_time" class="section-audio-time" x="60" y="26"></text>
 					</svg>
 				</div>
-				<audio id="audio"></audio>
+				<audio id="audio" preload="none"></audio>
 			</div>
 			<div id="video_area" class="video-area">
 				<video id="video" controls="controls" preload="none" poster="null">
@@ -807,18 +807,20 @@
 				//音频SVG
 				document.getElementById('audio_svg').addEventListener('tap', function() {
 					console.log("audio_svg " + audioState);
+					var eleAudio=document.getElementById("audio");
 					if(audioState == 0) { //未播放
-						document.getElementById("audio").play();
+						eleAudio.play();
 					} else if(audioState == 1) { //播放中
 						audioState = 2;
-						document.getElementById("audio").pause();
+						eleAudio.pause();
 					} else if(audioState == 2) { //暂停播放
-						document.getElementById("audio").play();
+						eleAudio.play();
 					} else if(audioState == 3) { //播放结束
-						document.getElementById("audio").play();
+						eleAudio.play();
 					} else {
 						mui.toast("音频加载中");
-						document.getElementById("audio").load();
+						eleAudio.setAttribute("preload","auto");
+						eleAudio.load();
 					}
 				});
 			}
@@ -1145,6 +1147,7 @@
 				var audio = document.getElementById("audio");
 				audio.pause(); //暂停播放
 				audio.src = ""; //取消视频
+				audio.setAttribute("preload","none");
 				audio_svg_rect_ani.removeAttribute("to");
 				audio_svg_rect_ani.removeAttribute("dur");
 				var ids = ["audio_svg_icon_first_ani", "audio_svg_icon_second_ani", "audio_svg_icon_third_ani"];
