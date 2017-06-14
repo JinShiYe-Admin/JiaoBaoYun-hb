@@ -173,6 +173,33 @@
 				document.getElementById('title').addEventListener('doubletap', function() {
 					mui('#bot_sw_' + sliderId).scroll().scrollTo(0, 0, 100);
 				});
+
+				//网络变化
+				document.addEventListener("netchange", function() {
+					console.log("netchange " + plus.webview.currentWebview().id);
+					if(plus.networkinfo.getCurrentType() != plus.networkinfo.CONNECTION_NONE) {
+						//有网
+						if(cities.length == 0) {
+							var getData = false;
+							show = true;
+							if(plus.webview.getTopWebview().id == "index.html") {
+								var displayWebview = plus.webview.getDisplayWebview();
+								for(var i in displayWebview) {
+									if(displayWebview[i].id == "sciedu_home.html") {
+										getData = true;//科教界面现在在屏幕上
+										break;
+									}
+								}
+							}
+							if(getData) {
+								var wd = events.showWaiting();
+								initBody(wd);
+								changeIndexHeader();
+							}
+						}
+
+					}
+				});
 			}
 
 			/**
@@ -220,8 +247,8 @@
 							this.setAttribute('data-seHistory', true);
 							var personalUID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).uid;
 							var History = window.myStorage.getItem(window.storageKeyName.seHistory + '_' + personalUID);
-							if(History==null){
-								History=[];
+							if(History == null) {
+								History = [];
 							}
 							History[History.length] = tabid;
 							if(History.length > 100) {
