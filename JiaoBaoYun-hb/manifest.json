@@ -4853,7 +4853,11 @@
 					"image/utils/load-img-error.png",
 					"image/utils/playvideo.png",
 					"js/micro-course/coursedetails.js",
-					"image/qiuzhi/qiuzhi_noanswer.png"
+					"image/qiuzhi/qiuzhi_noanswer.png",
+					"fonts/mui.ttf",
+					"css/iconfont/iconfont.css",
+					"fonts/fangzheng.ttf",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"html/micro-course/course-introduction.html",
@@ -4911,7 +4915,8 @@
 					"js/micro-course/course-listnew.js",
 					"css/micro-course/course-list.css",
 					"js/libs/crypto-js/crypto-js.js",
-					"js/publicProtocol.js"
+					"js/publicProtocol.js",
+					"fonts/fangzheng.ttf"
 				],
 				"refer": [
 					"html/micro-course/course_details.html"

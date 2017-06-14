@@ -97,7 +97,6 @@
 			function freshView(id, flag) {
 				if(document.getElementById(id)) {
 					var container = document.getElementById(id);
-					container.querySelector(".mui-table-view").innerHTML = "";
 					container.info.pageIndex = 1;
 					course_listnew.getData(flag, container.info, container.querySelector(".mui-table-view"), course_listnew.setData);
 				}
@@ -166,7 +165,6 @@
 							var self = this;
 							setTimeout(function() {
 								var ul = self.element.querySelector('.mui-table-view');
-								ul.innerHTML = "";
 								freshConatiner.info.freshFlag = 0;
 								freshConatiner.info.pageIndex = 1;
 								console.log("获取的fresh:" + JSON.stringify(freshConatiner.info));

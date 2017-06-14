@@ -280,6 +280,8 @@
 
 .icon-iconhexinhuiyuan:before { content: "\e679"; }
 
+.icon-class:before { content: "\e72a"; }
+
 .icon-zhifubao:before { content: "\e677"; }
 
 .icon-jiaoyu1:before { content: "\e642"; }
@@ -307,4 +309,3 @@
 .icon-lishijilu1:before { content: "\e670"; }
 
 .icon-jinggao-copy:before { content: "\e65e4"; }
-
