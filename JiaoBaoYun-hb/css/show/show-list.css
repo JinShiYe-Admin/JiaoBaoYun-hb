@@ -50,7 +50,7 @@
 	bottom: 8px;
 	left: 14px;
 	right: 14px;
-	opacity: 0.8;
+	opacity: 0.7;
 }
 
 .news-container:first-child .news-words .news-anthor,
@@ -65,7 +65,7 @@
 }
 
 .news-container:first-child .news-words .news-title {
-	font-size: 15px;
+	font-size: 16px;
 }
 
 .news-container:not(:first-child) {
@@ -122,7 +122,7 @@
 }
 
 .news-container:not(:first-child) .news-words .news-title {
-	font-size: 15px;
+	font-size: 16px;
 	color: #323232;
 }
 
