@@ -32,23 +32,23 @@
 			</div>
 			<a id="publish-show" class="mui-pull-right">发布</a>
 		</header>
-		<div class="mui-content">
-			<!--slider控件-->
-			<div id="slider" class="mui-slider mui-fullscreen">
-				<!--加载的范围-->
-				<div class="mui-slider-group">
-					<div id="show-all" class="mui-slider-item">
-						<div class="mui-scroll-wrapper">
-							<div class="mui-scroll">
-								<div class="show-list">
-									
-								</div>
+		<!--	<div class="">-->
+		<!--slider控件-->
+		<div id="slider" class="mui-content mui-slider mui-fullscreen">
+			<!--加载的范围-->
+			<div class="mui-slider-group">
+				<div id="show-all" class="mui-slider-item">
+					<div class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<div class="show-list">
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<!--</div>-->
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<!--刷新js-->
@@ -92,8 +92,8 @@
 				window.addEventListener("infoChanged", function() {
 					console.log("********展现监听infoChanged")
 					toggleAttendedPart(0);
-//					document.getElementById("show-all").querySelector(".show-list").innerHTML = "";
-					mui(document.getElementById("show-all").querySelector(".mui-scroll-wrapper")).scroll().scrollTo(0,0);
+					//					document.getElementById("show-all").querySelector(".show-list").innerHTML = "";
+					mui(document.getElementById("show-all").querySelector(".mui-scroll-wrapper")).scroll().scrollTo(0, 0);
 					document.getElementById("show-all").showCity.pageIndex = 1;
 					show_listnew.getShowList(document.getElementById("show-all").showCity, document.getElementById("show-all").querySelector(".show-list"), show_listnew.setShowList)
 					getFocusedPerson(toggleAttendedPart);
@@ -158,7 +158,7 @@
 					deceleration: deceleration
 				});
 				mui(freshConatiner.querySelector(".mui-slider-group .mui-scroll")).pullToRefresh({
-					down: {//下拉刷新
+					down: { //下拉刷新
 						callback: function() {
 							var self = this;
 							var ul = freshConatiner.querySelector('.show-list');
@@ -170,7 +170,7 @@
 							}, 1500);
 						}
 					},
-					up: {//上拉加载
+					up: { //上拉加载
 						callback: function() {
 							var self = this;
 							if(freshConatiner.showCity.pageIndex <= freshConatiner.showCity.totalPage) {
