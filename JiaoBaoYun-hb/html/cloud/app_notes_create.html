@@ -105,7 +105,6 @@
 			var notes = document.getElementById("notes"); //输入框
 
 			mui.plusReady(function() {
-				events.closeWaiting();
 				init(); //初始化控件
 				initListener(); //初始化监听
 			});
@@ -136,6 +135,7 @@
 				 * @param {Object} data
 				 */
 				multiMedia.videoPlayCallBack = function(data) {
+					console.log("videoPlayCallBack")
 					ShowVideoUtil.showVideo(document.getElementById("video"), 'videoPopover', data.path, data.localthumb);
 				}
 
