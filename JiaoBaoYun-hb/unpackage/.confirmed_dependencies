@@ -1938,7 +1938,8 @@
 			"fonts/fangzheng.ttf"
 		],
 		"refer": [
-			"html/show/add-comment.html"
+			"html/show/add-comment.html",
+			"html/quan/zone_main.html"
 		]
 	},
 	"html/register/register_phoneNumber.html": {

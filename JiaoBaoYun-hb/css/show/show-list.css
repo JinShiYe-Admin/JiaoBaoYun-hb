@@ -61,7 +61,7 @@
 
 .news-container:first-child .news-words .news-anthor,
 .news-container:first-child .news-words .news-date {
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .news-container:first-child .news-words .news-title {
@@ -112,12 +112,12 @@
 }
 
 .news-container:not(:first-child) .news-words .news-anthor {
-	font-size: 14px;
-	color: #808080;
+	font-size: 12px;
+	color: #B7B7B7;
 }
 
 .news-container:not(:first-child) .news-words .news-date {
-	font-size: 14px;
+	font-size: 12px;
 	color: #B7B7B7;
 }
 
