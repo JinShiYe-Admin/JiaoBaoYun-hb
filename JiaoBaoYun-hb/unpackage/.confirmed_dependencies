@@ -1022,7 +1022,18 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"js/utils/UploadHeadImage.js",
-			"js/mine/account-info.js"
+			"js/mine/account-info.js",
+			"js/utils/load.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/jquery.js",
+			"js/utils/camera.js",
+			"js/utils/compress.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/utils/customizeCity.html",
