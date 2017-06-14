@@ -612,10 +612,12 @@ var MultiMedia = (function($, mod) {
 	 * @param {Object} path 视频路径
 	 */
 	proto.addVideos = function(path, callback) {
+		console.log("addVideos "+path);
 		var self = this;
 		//生成缩略图
 		var video = document.createElement("video");
 		if(plus.os.name == "iOS") {
+			path="file://"+path;
 			video.onloadedmetadata = function() {
 				self.addVideosThumb(video, path, callback);
 			}

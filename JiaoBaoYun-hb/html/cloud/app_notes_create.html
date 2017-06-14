@@ -105,6 +105,7 @@
 			var notes = document.getElementById("notes"); //输入框
 
 			mui.plusReady(function() {
+				events.closeWaiting();
 				init(); //初始化控件
 				initListener(); //初始化监听
 			});
