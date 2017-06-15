@@ -1851,9 +1851,15 @@
 			"css/utils/audiopopover.css",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/mui.zoom.js",
+			"css/utils/pullToRefresh.css",
+			"js/mui.previewimage.js",
+			"css/utils/preview.css"
 		],
-		"refer": []
+		"refer": [
+			"html/cloud/app_notes_create.html"
+		]
 	},
 	"html/mine/qun_manage_info.html": {
 		"resources": [
@@ -2310,7 +2316,9 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
 		],
-		"refer": []
+		"refer": [
+			"html/micro-course/history-records.html"
+		]
 	},
 	"html/micro-course/course-home1.html": {
 		"resources": [
@@ -2398,7 +2406,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
 	},
@@ -2451,5 +2460,39 @@
 			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
+	},
+	"html/micro-course/history-records.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/loading.gif"
+		],
+		"refer": [
+			"html/micro-course/course_section.html"
+		]
+	},
+	"html/micro-course/course_section.html": {
+		"refer": [
+			"html/register/login.html",
+			"html/micro-course/course_addReply.html"
+		],
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/cloud/app_notes_create.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/audiopopover.css",
+			"js/utils/MultiMedia.js",
+			"css/utils/MultiMedia.css",
+			"css/utils/common.css",
+			"css/utils/preview.css",
+			"js/utils/recordvideoutil.js",
+			"image/utils/videothumb.png"
+		]
 	}
 }

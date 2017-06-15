@@ -176,6 +176,7 @@
 
 			.section-list .section-title {
 				margin-bottom: 11px;
+				margin-right: 18px;
 			}
 
 			.section-info,
@@ -492,7 +493,15 @@
 			function initListener() {
 				//查看节次
 				mui('.section-list').on('tap', '.mui-table-view-cell', function() {
-					events.openNewWindowWithData('course_section.html', sectionData.value[this.id.replace('section_', '')]);
+					var data = sectionData.value[this.id.replace('section_', '')];
+					console.log(JSON.stringify(data));
+					if(data.SecStatus == 1) {
+						data.courseId = main.data.TabId; //课程id
+						events.openNewWindowWithData('course_section.html', data);
+					} else {
+						mui.toast("该内容已被作者屏蔽");
+					}
+
 				});
 			}
 
@@ -522,6 +531,10 @@
 						if(pageIndex >= data.RspData.totalPage) {
 							mui(".mui-pull-loading")[0].innerHTML = "";
 							console.log('没有下一页');
+						}
+
+						if(pageIndex == 1 && data.RspData.Data.length == 0) {
+							mui.toast('没有节次')
 						}
 					} else {
 						wd.close();

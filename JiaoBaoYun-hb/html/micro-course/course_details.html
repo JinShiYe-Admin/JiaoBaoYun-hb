@@ -22,9 +22,13 @@
 
 			.mui-table-view:before,
 			.mui-table-view:after,
-			.section-top .mui-table-view-cell:after,
-			.section-comment .mui-table-view-cell:after {
+			.section-top .mui-table-view-cell:after {
 				height: 0px;
+			}
+
+			.section-comment .mui-table-view-cell:after {
+				left: 10px;
+				right: 10px;
 			}
 
 			.mui-table-view-cell.mui-collapse.mui-active {
@@ -66,7 +70,8 @@
 				/*顶部节次描述的内容*/
 				margin: 0px;
 				padding: 11px 15px;
-				padding-top: 0px;font-size: 14px;
+				padding-top: 0px;
+				font-size: 14px;
 				color: #808080 !important;
 			}
 
@@ -76,6 +81,10 @@
 			.section-shield .mui-table-view-cell.mui-active {
 				/*顶部节次，评论列表，节次被屏蔽的点击效果*/
 				background-color: white;
+			}
+
+			.mui-bar-tab {
+				display: none;
 			}
 
 			.mui-bar-tab button {
@@ -105,6 +114,7 @@
 			.section-list .section-title {
 				/*节次列表标题*/
 				margin-bottom: 11px;
+				margin-right: 18px;
 			}
 
 			.section-list .mui-table-view-cell {
@@ -136,6 +146,10 @@
 				color: #dbdbdb;
 			}
 
+			.section-top .icon-zanzan1 {
+				font-size: 16px;
+			}
+
 			.section-more {
 				/*查看更多*/
 				display: none;
@@ -145,7 +159,7 @@
 			}
 
 			.section-more .mui-icon-arrowdown {
-				font-size: 14px;
+				font-size: 22px;
 			}
 
 			.section-list-li {
@@ -310,6 +324,13 @@
 				align-items: center;
 				height: 150px;
 				text-align: center;
+				background-color: white;
+				border-bottom: 8px solid #EFEFF4;
+			}
+
+			.section-shield .mui-table-view-cell {
+				width: 100%;
+				background-color: white;
 			}
 
 			.section-shield .icon-jinggao-copy {
@@ -395,6 +416,11 @@
 				-o-background-size: cover;
 				background-size: cover;
 			}
+
+			.icon-gerenziliao {
+				font-size: 18px !important;
+				margin-top: 1px;
+			}
 		</style>
 	</head>
 
@@ -404,7 +430,7 @@
 			<h1 id="title" class="mui-title"></h1>
 			<a id="introduction" class="mui-icon iconfont icon-gerenziliao mui-pull-right"></a>
 		</header>
-		<nav class="mui-bar mui-bar-tab">
+		<nav id="bar_tab" class="mui-bar mui-bar-tab">
 			<a class="mui-tab-item">
 				<button id="comment_section" type="button" class="mui-btn mui-btn-block mui-btn-outlined">请输入评论</button>
 			</a>
@@ -430,10 +456,10 @@
 						<text id="audio_svg_time" class="section-audio-time" x="60" y="26"></text>
 					</svg>
 				</div>
-				<audio id="audio"></audio>
+				<audio id="audio" preload="none"></audio>
 			</div>
 			<div id="video_area" class="video-area">
-				<video id="video" controls="controls" preload="none" poster="null" autoplay="autoplay">
+				<video id="video" controls="controls" preload="none" poster="null">
 					您的浏览器不支持video标签
 				</video>
 			</div>
@@ -492,6 +518,7 @@
 				key: [],
 				value: {}
 			}; //评论，回复者的账号信息
+			var sectionComments = []; //当前节次的评论
 			var sectionId; //当前显示的节次id
 			var pageIndex = 0; //当前页数
 			var svgWidth; //SVG中的宽度
@@ -502,7 +529,7 @@
 				}
 			});
 			mui.plusReady(function() {
-				//events.closeWaiting();
+				events.closeWaiting();
 				var wd = events.showWaiting();
 				initData();
 				initControl();
@@ -630,11 +657,7 @@
 					if(ids[1] == "more") { //更多
 						getAllSectionsAndComments(pageIndex + 1);
 					} else if(ids[1] != sectionId) { //查看其它节次
-						var ele = document.getElementById("section_" + sectionId);
-						ele.className = ele.className.replace(" section-show", "");
-						showTopData(sectionData.value[ids[1]]);
-						this.className = this.className + " section-show";
-						mui("#scroll_wrapper").scroll().scrollTo(0, 0, 0);
+						getSectionDetails(ids[1]);
 					}
 				});
 
@@ -652,7 +675,7 @@
 						jQuery(self).css("pointerEvents", "all");
 						return;
 					}
-					var ids = this.id.split("_")
+					var ids = this.id.split("_");
 					var type = e.target.getAttribute("data-type");
 					switch(type) {
 						case "zan":
@@ -762,7 +785,7 @@
 				window.addEventListener('addCommont', function(e) {
 					console.log("addCommont " + JSON.stringify(e.detail.data));
 					if(e.detail.data.replyId == 0) { //对节次评论
-						sectionData.value[e.detail.data.secId].Comments.unshift({
+						sectionComments.unshift({
 							CommentDate: new Date(new Date().getTime()).toJSON().replace("T", " "),
 							TabId: e.detail.data.TabId,
 							Replys: [],
@@ -774,7 +797,7 @@
 							IsLiked: 0
 						});
 					} else { //对评论进行评论
-						sectionData.value[e.detail.data.secId].Comments[e.detail.data.arrayIndex].Replys.unshift({
+						sectionComments[e.detail.data.arrayIndex].Replys.unshift({
 							CommentDate: new Date(new Date().getTime()).toJSON().replace("T", " "),
 							TabId: e.detail.data.TabId,
 							status: 1,
@@ -786,24 +809,26 @@
 							UpperId: e.detail.data.upperId
 						});
 					}
-					showCommentsFirst(sectionData.value[e.detail.data.secId].Comments);
+					showCommentsFirst(sectionComments);
 				});
 
 				//音频SVG
 				document.getElementById('audio_svg').addEventListener('tap', function() {
 					console.log("audio_svg " + audioState);
+					var eleAudio = document.getElementById("audio");
 					if(audioState == 0) { //未播放
-						document.getElementById("audio").play();
+						eleAudio.play();
 					} else if(audioState == 1) { //播放中
 						audioState = 2;
-						document.getElementById("audio").pause();
+						eleAudio.pause();
 					} else if(audioState == 2) { //暂停播放
-						document.getElementById("audio").play();
+						eleAudio.play();
 					} else if(audioState == 3) { //播放结束
-						document.getElementById("audio").play();
+						eleAudio.play();
 					} else {
 						mui.toast("音频加载中");
-						document.getElementById("audio").load();
+						eleAudio.setAttribute("preload", "auto");
+						eleAudio.load();
 					}
 				});
 			}
@@ -828,6 +853,9 @@
 						if(data.RspData.Data.length != 0) {
 							if(index == 1) {
 								showTopData(data.RspData.Data[0], wd);
+								if(data.RspData.Data[0].SecStatus == 1) { //没被屏蔽
+									getSectionDetails(sectionId, 1, wd);
+								}
 							}
 							showSectionList(data.RspData.Data);
 							if(index != 1) {
@@ -836,11 +864,53 @@
 						} else {
 							wd.close();
 						}
+						wd.close();
 						if(pageIndex >= data.RspData.totalPage) {
-							console.log('没有下一页');
+							console.log('节次列表没有下一页');
 							document.getElementById("section_more").style.display = "none";
 						} else {
 							document.getElementById("section_more").style.display = "block";
+						}
+					} else {
+						wd.close();
+						mui.toast(data.RspTxt);
+					}
+					if(sectionId == undefined) {
+						mui.toast("没有节次");
+						document.getElementById("bar_tab").style.display = "none";
+					} else {
+						document.getElementById("bar_tab").style.display = "block";
+
+					}
+				});
+			}
+
+			//获取课程详情
+			function getSectionDetails(secId, sectionPageIndex, wd) {
+				wd = wd || events.showWaiting();
+				var comData = {
+					userId: myStorage.getItem(storageKeyName.PERSONALINFO).utid, //用户ID，登录用户
+					courseId: main.data.TabId, //课程ID
+					secId: secId, //节次ID
+					pageIndex: sectionPageIndex || 1, //当前页数
+					pageSize: 0 //每页记录数，传入0，获取总记录数
+				};
+				postDataMCPro_getSectionById(comData, wd, function(data) {
+					console.log('16 获取课程详情 ' + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						//更换课程列表中选中的课程
+						var ele = document.getElementById("section_" + sectionId);
+						ele.className = ele.className.replace(" section-show", "");
+						var ele_show = document.getElementById("section_" + secId)
+						ele_show.className = ele_show.className + " section-show";
+						mui("#scroll_wrapper").scroll().scrollTo(0, 0, 0);
+						sectionComments = data.RspData.Data;
+						if(secId != sectionId) { //显示新的课程详细
+							showTopData(data.RspData, wd);
+						}
+						if(data.RspData.SecStatus == 1) { //没被屏蔽
+							//加载评论列表
+							showCommentsFirst(data.RspData.Data, wd);
 						}
 					} else {
 						wd.close();
@@ -881,8 +951,6 @@
 					}
 					//视频音频区域
 					showOrHiddenVideoAudio(data.EncType, data.EncAddr, data.EncLen, data.EncImgAddr);
-					//加载评论列表
-					showCommentsFirst(data.Comments, wd);
 				}
 			}
 
@@ -955,7 +1023,7 @@
 			 */
 			function showCommentsFirst(comments, wd) {
 				wd = wd || events.showWaiting();
-				//console.log("showCommentsFirst " + JSON.stringify(comments));
+				console.log("showCommentsFirst " + JSON.stringify(comments));
 				document.getElementById("section_comment_list").innerHTML = "";
 				document.getElementById("section_comment_title").innerText = "评论(" + comments.length + ")";
 				var utids = [];
@@ -1004,7 +1072,7 @@
 			 * @param {Object} wd
 			 */
 			function showCommontsSecond(data, wd) {
-				//console.log("allUserInfo " + JSON.stringify(allUserInfo));
+				console.log("showCommontsSecond " + JSON.stringify(data));
 				for(var i in data) {
 					//console.log("showCommontsSecond " + JSON.stringify(data[i]));
 					var ele = document.createElement("li");
@@ -1081,15 +1149,15 @@
 						if(commonData.status == 0) { //取消赞
 							element.className = "mui-icon iconfont icon-zanzan1 section-comment-notzan";
 							element.setAttribute('data-type', "notzan");
-							sectionData.value[sectionId].Comments[index].IsLiked = 0;
-							sectionData.value[sectionId].Comments[index].LikeNum = sectionData.value[sectionId].Comments[index].LikeNum - 1;
+							sectionComments[index].IsLiked = 0;
+							sectionComments[index].LikeNum = sectionComments[index].LikeNum - 1;
 						} else { //点赞
 							element.className = "mui-icon iconfont icon-zanzan1 section-comment-zan";
 							element.setAttribute('data-type', "zan");
-							sectionData.value[sectionId].Comments[index].IsLiked = 1;
-							sectionData.value[sectionId].Comments[index].LikeNum = sectionData.value[sectionId].Comments[index].LikeNum + 1;
+							sectionComments[index].IsLiked = 1;
+							sectionComments[index].LikeNum = sectionComments[index].LikeNum + 1;
 						}
-						element.innerText = "(" + sectionData.value[sectionId].Comments[index].LikeNum + ")";
+						element.innerText = "(" + sectionComments[index].LikeNum + ")";
 						wd.close();
 					} else {
 						mui.toast(data.RspTxt);
@@ -1130,14 +1198,14 @@
 				var audio = document.getElementById("audio");
 				audio.pause(); //暂停播放
 				audio.src = ""; //取消视频
+				audio.setAttribute("preload", "none");
 				audio_svg_rect_ani.removeAttribute("to");
 				audio_svg_rect_ani.removeAttribute("dur");
 				var ids = ["audio_svg_icon_first_ani", "audio_svg_icon_second_ani", "audio_svg_icon_third_ani"];
 				for(var i in ids) {
 					var ele = document.getElementById(ids[i]);
 					ele.removeAttribute("repeatCount");
-					ele.removeAttribute("dur");
-
+					//					ele.removeAttribute("dur");
 				}
 				audio_svg.unpauseAnimations();
 				audioState = 4;
@@ -1164,7 +1232,6 @@
 					document.getElementById("section_top_title").style.marginRight = "15px";
 					document.getElementById("audio_svg_time").innerHTML = courseDetails.getAudioTime(time);
 					audio.src = fpath;
-					audio.load();
 				} else {
 					document.getElementById("scroll_wrapper").style.top = "45px";
 					document.getElementById("video_area").style.display = "none";

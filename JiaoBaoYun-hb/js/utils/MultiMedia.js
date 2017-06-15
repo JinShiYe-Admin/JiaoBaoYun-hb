@@ -284,13 +284,17 @@ var MultiMedia = (function($, mod) {
 									entry.copyTo(parentEntry, copyName, function(entrySuccesCB) {
 										console.log("拷贝成功 " + entrySuccesCB.fullPath);
 										var mVideo = document.createElement("video");
+										console.log("拷贝成功 000");
 										mVideo.ondurationchange = function() {
+											console.log("拷贝成功 001");
 											console.log("ondurationchange  duration " + mVideo.duration);
 											if(mVideo.duration < 11) {
+												console.log("拷贝成功 002");
 												self.data.VideoNum--;
 												self.addVideos(entrySuccesCB.fullPath, function() {
+													console.log("拷贝成功 003");
 													wd.close();
-												});
+												}, mVideo);
 											} else {
 												mui.toast("视频时长不得超出10秒");
 												wd.close();
@@ -611,22 +615,23 @@ var MultiMedia = (function($, mod) {
 	 * 显示录制的视频
 	 * @param {Object} path 视频路径
 	 */
-	proto.addVideos = function(path, callback) {
-		path = "file://" + plus.io.convertLocalFileSystemURL(path);
-		console.log("addVideos " + path);
+	proto.addVideos = function(path, callback, iosVideo) {
 		var self = this;
 		//生成缩略图
-		var video = document.createElement("video");
 		if(plus.os.name == "iOS") {
-			video.onloadedmetadata = function() {
-				self.addVideosThumb(video, path, callback);
-			}
+			path = "file://" + path;
+			console.log("addVideos " + path);
+			self.addVideosThumb(iosVideo, path, callback);
 		} else {
+			path = "file://" + plus.io.convertLocalFileSystemURL(path);
+			console.log("addVideos " + path);
+			var video = document.createElement("video");
 			video.oncanplaythrough = function() {
 				self.addVideosThumb(video, path, callback);
 			}
+			video.src = path;
 		}
-		video.src = path;
+
 	}
 	/**
 	 * 生成缩略图

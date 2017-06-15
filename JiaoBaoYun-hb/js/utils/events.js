@@ -673,11 +673,11 @@ var events = (function(mod) {
 			//1.求知问题详情页
 			//2.微课节次详情页
 			//3.微课节次单个详情页
-			if(id == "qiuzhi-question.html" || id == "course_details.html" || id == "course_section.html"||id=='space-detail.html'||id=='zonep_sub.html') {
+			if(id == "qiuzhi-question.html" || id == "course_details.html" || id == "course_section.html" || id == 'space-detail.html' || id == 'zonep_sub.html') {
 				styles.hardwareAccelerated = true;
 			}
-			if(id=="show-home1.html"){
-				styles.hardwareAccelerated="auto";
+			if(id == "show-home1.html") {
+				styles.hardwareAccelerated = "auto";
 			}
 		}
 		return styles;

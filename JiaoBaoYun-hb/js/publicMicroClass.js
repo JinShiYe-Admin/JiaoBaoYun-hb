@@ -180,3 +180,33 @@ var postDataMCPro_setSecLike = function(commonData, wd, callback) {
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINMICROCLASS + 'course/setSecLike', enData, commonData, 2, wd, callback);
 }
+
+//16.获取课程的节次
+//所需参数
+//		var comData = {
+//			userId: '',//用户ID，登录用户
+//			courseId: '',//课程ID
+//			secId: '',//节次ID
+//			pageIndex: '',//当前页数
+//			pageSize:''//每页记录数，传入0，获取总记录数
+//		};
+//返回值：
+var postDataMCPro_getSectionById = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINMICROCLASS + 'course/getSectionById', enData, commonData, 2, wd, callback);
+}
+
+//17.获取是否已对某个小节屏蔽
+//所需参数
+//		var comData = {
+//			secId:''//小节ID
+//		};
+//返回值：非0为已屏蔽
+var postDataMCPro_getCourseOffByUser = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINMICROCLASS + 'course/getCourseOffByUser', enData, commonData, 2, wd, callback);
+}
