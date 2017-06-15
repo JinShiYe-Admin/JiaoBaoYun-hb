@@ -438,7 +438,8 @@
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
 			"html/cloud/storage_upload.html",
-			"html/cloud/storage_show_imge.html"
+			"html/cloud/storage_show_imge.html",
+			"html/cloud/storage_show_video.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi_home.html": {
@@ -2497,6 +2498,12 @@
 		]
 	},
 	"html/mine/qun_data_create.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/cloud/storage_show_video.html": {
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css"

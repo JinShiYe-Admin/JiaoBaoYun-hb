@@ -1703,7 +1703,8 @@
 				"refer": [
 					"html/cloud/storage_show_imge.html",
 					"html/cloud/storage_upload_choose.html",
-					"html/cloud/storage_upload.html"
+					"html/cloud/storage_upload.html",
+					"html/cloud/storage_show_video.html"
 				],
 				"priority": 0
 			},
@@ -5031,6 +5032,14 @@
 					"html/register/login.html",
 					"html/micro-course/course_addReply.html"
 				],
+				"priority": 0
+			},
+			"html/cloud/storage_show_video.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/utils/common.css"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},
