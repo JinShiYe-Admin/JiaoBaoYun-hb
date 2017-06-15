@@ -878,11 +878,11 @@ var dynamiclistitem = (function($, mod) {
 
 		}
 		var html = '';
-        var html0 = '<p style = "color:#323232;font-size:17px;margin-top:2px;margin-bottom:5px;text-align:center">' + data.MsgTitle + '</p>'
+        var html0 = '<p style = "color:#323232;font-size:17px;margin-top:2px;margin-bottom:5px;text-align:center;line-height:26px;letter-spacing:1px">' + data.MsgTitle + '</p>'
 		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body mui-pull-left">';
 		
 		//头像
-		var html2 = '<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:30px;height:30px;border-radius: 50%;" src="' + data.personalImage + '"></div>';
+		var html2 = '<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:36px;height:36px;border-radius: 50%;" src="' + data.personalImage + '"></div>';
 		var html3 = '<div class="mui-media-body dynamic-padding-left-10px  mui-pull-left">';
 		//姓名
 		var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:14px;margin-top:-3px">' + data.personalName + '</p>';
