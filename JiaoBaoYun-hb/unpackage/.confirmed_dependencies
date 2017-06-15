@@ -1478,7 +1478,8 @@
 		"refer": [
 			"html/quan/group-pInfo.html",
 			"html/mine/qun_manage_info.html",
-			"html/mine/qun_data_details.html"
+			"html/mine/qun_data_details.html",
+			"html/mine/qun_data_create.html"
 		]
 	},
 	"html/quan/pub-dynamic.html": {
@@ -2493,6 +2494,12 @@
 			"css/utils/preview.css",
 			"js/utils/recordvideoutil.js",
 			"image/utils/videothumb.png"
+		]
+	},
+	"html/mine/qun_data_create.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
 		]
 	}
 }
