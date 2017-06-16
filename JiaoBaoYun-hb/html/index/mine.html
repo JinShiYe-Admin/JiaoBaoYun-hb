@@ -103,13 +103,6 @@
 				//				events.jumpPage(document.getElementById('title'),'mine/account-info.html');
 				//点击title跳转到账号信息界面
 				events.addTap('title', function() {
-					if(plus.os.name == 'Android') {
-						setTimeout(function() {
-							closeMenu(); //关闭侧滑菜单
-						}, 250);
-					} else {
-						closeMenu(); //关闭侧滑菜单
-					}
 					//打开账户信息新页面
 					events.openNewWindow('/html/mine/account-info.html')
 				})
