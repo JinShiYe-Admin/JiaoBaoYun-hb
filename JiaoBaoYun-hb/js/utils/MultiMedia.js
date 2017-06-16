@@ -260,73 +260,83 @@ var MultiMedia = (function($, mod) {
 						});
 						break;
 					case 2: //从相册选择
-						plus.gallery.pick(function(filePath) {
-							var wd = events.showWaiting('处理中...');
-							console.log("success " + filePath);
-							//文件类型限定MP4
-							//							var names = filePath.split("/");
-							//							var fileName = names[names.length - 1];
-							//							var fileNames = fileName.split(".");
-							//							var type = fileNames[fileNames.length - 1];
-							//							console.log("type " + type);
-							//							if(type.toLowerCase() != "mp4") {
-							//								mui.toast("只允许上传MP4格式 ");
-							//								wd.close();
-							//								return false;
-							//							}
-							//获取APP的_documents文件夹对象
-							plus.io.resolveLocalFileSystemURL("_documents/", function(parentEntry) {
-								//获取选取的视频文件对象
-								plus.io.resolveLocalFileSystemURL(filePath, function(entry) {
-									var myDate = new Date();
-									var copyName = myDate.getTime() + parseInt(Math.random() * 1000) + '.mp4';
-									//拷贝视频到_documents文件夹
-									entry.copyTo(parentEntry, copyName, function(entrySuccesCB) {
-										console.log("拷贝成功 " + entrySuccesCB.fullPath);
-										var mVideo = document.createElement("video");
-										console.log("拷贝成功 000");
-										mVideo.ondurationchange = function() {
-											console.log("拷贝成功 001");
-											console.log("ondurationchange  duration " + mVideo.duration);
-											if(mVideo.duration < 11) {
-												console.log("拷贝成功 002");
-												self.data.VideoNum--;
-												self.addVideos(entrySuccesCB.fullPath, function() {
-													console.log("拷贝成功 003");
-													wd.close();
-												}, mVideo);
-											} else {
-												mui.toast("视频时长不得超出10秒");
-												wd.close();
-											}
-										}
-										mVideo.onerror = function() {
-											mui.toast("视频加载失败")
-											wd.close();
-										}
-										mVideo.src = entrySuccesCB.fullPath;
-									}, function(entryErrorCB) {
-										console.log("拷贝失败 " + JSON.stringify(entryErrorCB));
-										wd.close();
-										mui.toast("视频加载失败 " + entryErrorCB.message);
-									});
-								}, function(error) {
-									mod.galleryPickError(error, function(err) {
-										wd.close();
-										mui.toast("视频加载失败 " + err.message);
-									});
-								});
-							}, function(parentEntryErrorCB) {
-								wd.close();
-								mui.toast("视频加载失败 " + entryErrorCB.message);
-							});
-						}, function(error) {
-							mod.galleryPickError(error, function(err) {
-								mui.toast(err.message);
-							});
-						}, {
-							filter: "video",
+						Gallery.pickVideo(function(data) {
+							console.log("pickVideo " + JSON.stringify(data));
+							if(data.flag == 1) {
+								self.data.VideoNum--;
+								self.addVideos(data.path, function() {
+									console.log("拷贝成功 003");
+									data.wd.close();
+								}, data.video);
+							}
 						});
+						//						plus.gallery.pick(function(filePath) {
+						//							var wd = events.showWaiting('处理中...');
+						//							console.log("success " + filePath);
+						//							//文件类型限定MP4
+						//							//							var names = filePath.split("/");
+						//							//							var fileName = names[names.length - 1];
+						//							//							var fileNames = fileName.split(".");
+						//							//							var type = fileNames[fileNames.length - 1];
+						//							//							console.log("type " + type);
+						//							//							if(type.toLowerCase() != "mp4") {
+						//							//								mui.toast("只允许上传MP4格式 ");
+						//							//								wd.close();
+						//							//								return false;
+						//							//							}
+						//							//获取APP的_documents文件夹对象
+						//							plus.io.resolveLocalFileSystemURL("_documents/", function(parentEntry) {
+						//								//获取选取的视频文件对象
+						//								plus.io.resolveLocalFileSystemURL(filePath, function(entry) {
+						//									var myDate = new Date();
+						//									var copyName = myDate.getTime() + parseInt(Math.random() * 1000) + '.mp4';
+						//									//拷贝视频到_documents文件夹
+						//									entry.copyTo(parentEntry, copyName, function(entrySuccesCB) {
+						//										console.log("拷贝成功 " + entrySuccesCB.fullPath);
+						//										var mVideo = document.createElement("video");
+						//										console.log("拷贝成功 000");
+						//										mVideo.ondurationchange = function() {
+						//											console.log("拷贝成功 001");
+						//											console.log("ondurationchange  duration " + mVideo.duration);
+						//											if(mVideo.duration < 11) {
+						//												console.log("拷贝成功 002");
+						//												self.data.VideoNum--;
+						//												self.addVideos(entrySuccesCB.fullPath, function() {
+						//													console.log("拷贝成功 003");
+						//													wd.close();
+						//												}, mVideo);
+						//											} else {
+						//												mui.toast("视频时长不得超出10秒");
+						//												wd.close();
+						//											}
+						//										}
+						//										mVideo.onerror = function() {
+						//											mui.toast("视频加载失败")
+						//											wd.close();
+						//										}
+						//										mVideo.src = entrySuccesCB.fullPath;
+						//									}, function(entryErrorCB) {
+						//										console.log("拷贝失败 " + JSON.stringify(entryErrorCB));
+						//										wd.close();
+						//										mui.toast("视频加载失败 " + entryErrorCB.message);
+						//									});
+						//								}, function(error) {
+						//									mod.galleryPickError(error, function(err) {
+						//										wd.close();
+						//										mui.toast("视频加载失败 " + err.message);
+						//									});
+						//								});
+						//							}, function(parentEntryErrorCB) {
+						//								wd.close();
+						//								mui.toast("视频加载失败 " + entryErrorCB.message);
+						//							});
+						//						}, function(error) {
+						//							mod.galleryPickError(error, function(err) {
+						//								mui.toast(err.message);
+						//							});
+						//						}, {
+						//							filter: "video",
+						//						});
 						break;
 				}
 			});
@@ -619,11 +629,9 @@ var MultiMedia = (function($, mod) {
 		var self = this;
 		//生成缩略图
 		if(plus.os.name == "iOS") {
-			path = "file://" + path;
 			console.log("addVideos " + path);
 			self.addVideosThumb(iosVideo, path, callback);
 		} else {
-			path = "file://" + plus.io.convertLocalFileSystemURL(path);
 			console.log("addVideos " + path);
 			var video = document.createElement("video");
 			video.oncanplaythrough = function() {
@@ -631,7 +639,6 @@ var MultiMedia = (function($, mod) {
 			}
 			video.src = path;
 		}
-
 	}
 	/**
 	 * 生成缩略图
