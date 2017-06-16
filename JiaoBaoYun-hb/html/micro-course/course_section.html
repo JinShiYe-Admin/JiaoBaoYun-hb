@@ -124,12 +124,8 @@
 			}
 
 			.icon-zanzan1 {
-				font-size: 13px;
-				color: #dbdbdb;
-			}
-
-			.section-top .icon-zanzan1 {
 				font-size: 16px;
+				color: #dbdbdb;
 			}
 
 			.section-more {
@@ -1040,14 +1036,15 @@
 				//重置视频区域
 				video.src = "";
 				video.style.backgroundImage = "";
+				var collapse_content_show = document.getElementById("collapse_content_show");
 				if(type == 1) { //视频
 					document.getElementById("scroll_wrapper").style.top = 44 + parseInt(plus.screen.resolutionWidth * 162 / 360) + "px";
 					document.getElementById("video_area").style.display = "inline";
 					document.getElementById("audio_area").style.display = "none";
 					show = false;
 					document.getElementById("collapse_content_li").className = "mui-table-view-cell mui-collapse";
-					document.getElementById("collapse_content_show").style.display = 'block';
-					document.getElementById("section_top_title").style.marginRight = "15px";
+					collapse_content_show.style.display = 'block';
+					document.getElementById("section_top_title").style.marginRight = collapse_content_show.offsetWidth + 6 + "px";
 					video.src = fpath;
 					video.style.backgroundImage = "url(" + thumb + ")";
 				} else if(type == 2) { //音频
@@ -1056,8 +1053,8 @@
 					document.getElementById("audio_area").style.display = "inline";
 					show = false;
 					document.getElementById("collapse_content_li").className = "mui-table-view-cell mui-collapse";
-					document.getElementById("collapse_content_show").style.display = 'block';
-					document.getElementById("section_top_title").style.marginRight = "15px";
+					collapse_content_show.style.display = 'block';
+					document.getElementById("section_top_title").style.marginRight = collapse_content_show.offsetWidth + 6 + "px";
 					document.getElementById("audio_svg_time").innerHTML = courseDetails.getAudioTime(time);
 					audio.src = fpath;
 					//audio.load();
@@ -1065,7 +1062,7 @@
 					document.getElementById("scroll_wrapper").style.top = "45px";
 					document.getElementById("video_area").style.display = "none";
 					document.getElementById("audio_area").style.display = "none";
-					document.getElementById("collapse_content_show").style.display = 'none';
+					collapse_content_show.style.display = 'none';
 					show = true;
 					document.getElementById("collapse_content_li").className = "mui-table-view-cell mui-collapse mui-active";
 					document.getElementById("section_top_title").style.marginRight = "0px";
