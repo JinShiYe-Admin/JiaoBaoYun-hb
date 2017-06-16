@@ -33,7 +33,7 @@
 				var data = main.data; //接收A页面传入参数值
 				console.log('main-data:' + JSON.stringify(data));
 
-				var sub = events.createSubAppendMain(main, data.turl, {}, function() {
+				var sub = events.createSubAppendMain(main, "http://www.qlwb.com.cn/2017/0615/956336.shtml", {}, function() {
 					console.log('sub loaded');
 					document.getElementById("spinner").style.display = 'none';
 				});

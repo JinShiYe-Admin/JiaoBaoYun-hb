@@ -2,12 +2,25 @@
  * @author an
  */
 window.onerror = function(err) {
-	console.log("error" + JSON.stringify(err));
+	console.log("error" + err.code + " " + err.message);
 	events.closeWaiting();
 	mui.toast('当前界面加载出现错误，请更新最新版本！');
-	document.querySelector("header").innerHTML = '<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>';
-	document.querySelector(".mui-content").innerHTML = "当前界面加载出现错误，请更新最新版本！";
-	document.querySelector("nav").parentNode.removeChild(document.querySelector("nav"));
+	var webId = plus.webview.currentWebview().id;
+	if(webId == "firstPage.html" || webId == "index.html" || webId == "cloud_home.html" || webId == "sciedu_home.html" || webId == "show-home1.html" || webId == "course-home1") {
+		return false;
+	}
+	var header = document.querySelector("header");
+	var content = document.querySelector(".mui-content");
+	var nav = document.querySelector("nav");
+	if(header) {
+		header.innerHTML = '<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>';
+	}
+	if(content) {
+		content.innerHTML = "当前界面加载出现错误，请更新最新版本！";
+	}
+	if(nav) {
+		nav.parentNode.removeChild(nav);
+	}
 	//mui.back();
 }
 var events = (function(mod) {
