@@ -171,7 +171,9 @@
 			"js/publicHomeworkProtocol.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"js/main/off-canvas.js",
+			"js/mui.js"
 		],
 		"refer": [
 			"html/index/mine.html",
@@ -1034,7 +1036,16 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/utils/cryption.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/cloud/AndroidFileSystem.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/mui.min.js",
+			"js/utils/CloudFileUtil.js",
+			"js/qiniu/qiniu.js"
 		],
 		"refer": [
 			"html/utils/customizeCity.html",
