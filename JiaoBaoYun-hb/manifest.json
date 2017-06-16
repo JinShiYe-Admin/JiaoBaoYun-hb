@@ -5027,7 +5027,8 @@
 				"resources": [
 					"css/mui.min.css",
 					"css/utils/common.css",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"image/qiuzhi/qiuzhi_noanswer.png"
 				],
 				"refer": [
 					"html/register/login.html",

@@ -2493,7 +2493,8 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/qiuzhi/qiuzhi_noanswer.png"
 		]
 	},
 	"html/cloud/app_notes_create.html": {
