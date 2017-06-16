@@ -27,41 +27,22 @@
 			mui.init();
 			mui.plusReady(function() {
 				events.blurBack();
-
-				//---获取数据---start---
 				var main = plus.webview.currentWebview(); //获取当前窗体对象
 				var data = main.data; //接收A页面传入参数值
 				console.log('main-data:' + JSON.stringify(data));
-
-				var sub = events.createSubAppendMain(main, "http://www.qlwb.com.cn/2017/0615/956336.shtml", {}, function() {
+				var sub = events.createSubAppendMain(main, data.turl, {}, function() {
 					console.log('sub loaded');
 					document.getElementById("spinner").style.display = 'none';
 				});
-
 				sub.addEventListener("loading", function() { //Webview窗口页面开始加载事件
 					console.log('sub loading');
+					sub.evalJS('window.onerror = function(){console.log("news error");window.close();}');
 				});
-
 				sub.addEventListener("error", function() { //Webview窗口错误事件
 					console.log('sub error');
 					document.getElementById("spinner").style.display = 'none';
 					mui.toast('加载失败');
 				});
-
-				//				mui.openWindow({
-				//					url: data.turl,
-				//					id: data.turl,
-				//					styles: {
-				//						top: (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px', //设置距离顶部的距离
-				//						bottom: '0px'
-				//					},
-				//					waiting: {
-				//						title: '正在加载...'
-				//					},
-				//					show: {
-				//						aniShow: 'none'
-				//					}
-				//				});
 				//---获取数据---end---
 			});
 		</script>

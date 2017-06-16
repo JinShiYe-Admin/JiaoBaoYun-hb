@@ -874,7 +874,9 @@
 					"js/qiuzhi/delContent_pop.js",
 					null,
 					"js/main/slide_navigation.js",
-					"js/publicHomeworkProtocol.js"
+					"js/publicHomeworkProtocol.js",
+					"js/main/off-canvas.js",
+					"js/mui.js"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -1703,8 +1705,7 @@
 				"refer": [
 					"html/cloud/storage_show_imge.html",
 					"html/cloud/storage_upload_choose.html",
-					"html/cloud/storage_upload.html",
-					"html/cloud/storage_show_video.html"
+					"html/cloud/storage_upload.html"
 				],
 				"priority": 0
 			},
@@ -5026,20 +5027,13 @@
 				"resources": [
 					"css/mui.min.css",
 					"css/utils/common.css",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"image/qiuzhi/qiuzhi_noanswer.png"
 				],
 				"refer": [
 					"html/register/login.html",
 					"html/micro-course/course_addReply.html"
 				],
-				"priority": 0
-			},
-			"html/cloud/storage_show_video.html": {
-				"resources": [
-					"css/mui.min.css",
-					"css/utils/common.css"
-				],
-				"refer": [],
 				"priority": 0
 			}
 		},

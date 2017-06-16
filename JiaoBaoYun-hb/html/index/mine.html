@@ -16,14 +16,13 @@
 	</head>
 
 	<body>
-		<div class="mui-scroll-wrapper mui-content">
-			<div class="mui-scroll">
+		<div class="mui-content">
+			<!--<div class="mui-scroll">-->
 				<div id="title" class="title">
 					<img id="uimg" style="height: 60px;width: 60px;" src="../../image/utils/default_personalimage.png" class="head-portrait" /><br />
 					<h4 id="uname">暂无昵称</h4>
 					<p id="utext" style="word-wrap: break-word;">暂无签名</p>
 				</div>
-
 				<!--各项-->
 				<ul class="mui-table-view mui-table-view-chevron">
 					<li class="mui-table-view-cell" position='0'>
@@ -77,7 +76,7 @@
 						</a>
 					</li>
 				</ul>
-			</div>
+			<!--</div>-->
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
@@ -89,9 +88,6 @@
 					menubutton: false //android系统按钮不可用
 				}
 			});
-			mui('.mui-scroll-wrapper').scroll({
-				indicators: false, //显示滚动条
-			});
 			//获得侧滑主窗口webview对象
 			var main = null;
 			var info = null;
@@ -100,7 +96,7 @@
 				main = curPage.opener();
 				//当前页面加载显示的监听
 				curPage.addEventListener("show", function(e) {
-					mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100); //100毫秒滚动到顶
+					mui('.mui-content').scroll().scrollTo(0, 0, 100); //100毫秒滚动到顶
 				})
 				//展示个人信息
 				getInfo();
@@ -124,26 +120,7 @@
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 					console.log('click position:' + this.getAttribute('position'))
 					console.log("系统名称：" + plus.os.name);
-					switch(parseInt(this.getAttribute('position'))) {
-						case 0:
-						case 1:
-						case 2:
-						case 3:
-						case 4:
-						case 6:
-						case 7:
-						case 8:
-							if(plus.os.name == 'Android') {
-								setTimeout(function() {
-									closeMenu();
-								}, 1000);
-							} else {
-								closeMenu();
-							}
-							break;
-						default:
-							break;
-					}
+
 					var targetWebUrl = "";
 					var data = {};
 					switch(parseInt(this.getAttribute('position'))) {
@@ -170,7 +147,7 @@
 							//我的空间
 						case 4:
 							targetWebUrl = '/html/quan/zone_main.html';
-							data=personalUTID;
+							data = personalUTID;
 							break;
 							//积分
 						case 5:
