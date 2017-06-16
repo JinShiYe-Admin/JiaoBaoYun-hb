@@ -1,7 +1,15 @@
 /**
  * @author an
  */
-
+window.onerror = function(err) {
+	console.log("error" + JSON.stringify(err));
+	events.closeWaiting();
+	mui.toast('当前界面加载出现错误，请更新最新版本！');
+	document.querySelector("header").innerHTML = '<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>';
+	document.querySelector(".mui-content").innerHTML = "当前界面加载出现错误，请更新最新版本！";
+	document.querySelector("nav").parentNode.removeChild(document.querySelector("nav"));
+	//mui.back();
+}
 var events = (function(mod) {
 
 	//去掉所有html标签
