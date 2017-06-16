@@ -126,7 +126,7 @@ var off_canvas = (function($, mod) {
 			menu.setStyle({
 				left: '-70%',
 				transition: {
-					duration: 150
+					duration: 0
 				}
 			});
 
