@@ -103,11 +103,13 @@
 				//				events.jumpPage(document.getElementById('title'),'mine/account-info.html');
 				//点击title跳转到账号信息界面
 				events.addTap('title', function() {
-					if(plus.os.name == 'iOS') {
-						closeMenu(); //关闭侧滑菜单
-					}
 					//打开账户信息新页面
-					events.openNewWindow('/html/mine/account-info.html')
+					events.openNewWindow('/html/mine/account-info.html');
+					if(plus.os.name == 'iOS') {
+						setTimeout(closeMenu, 250);
+					} else {
+						setTimeout(closeMenu, 1000);
+					}
 				})
 				//侧滑菜单各项点击事件
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
@@ -178,7 +180,9 @@
 						case 7:
 						case 8:
 							if(plus.os.name == 'iOS') {
-								setTimeout(closeMenu,250);
+								setTimeout(closeMenu, 250);
+							} else {
+								setTimeout(closeMenu, 1000);
 							}
 							break;
 						default:
