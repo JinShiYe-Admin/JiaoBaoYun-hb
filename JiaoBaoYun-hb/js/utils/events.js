@@ -1308,6 +1308,35 @@ var events = (function(mod) {
 		}
 	}
 	/**
+	 * 
+	 * @param {Object} key
+	 * @param {Object} mapKey
+	 */
+	mod.isExistInStorageMap=function(key,mapKey){
+		var map=myStorage.getItem(key);
+		if(map){
+			if(typeof(map.get(mapKey))=="number" ){
+				return map.get(mapKey);
+			}
+			return false;
+		}else{
+			return false;
+		}
+	}
+	/**
+	 * 
+	 * @param {Object} key 保存简直
+	 * @param {Object} mapKey
+	 * @param {Object} mapValue
+	 */
+	mod.setValueInMap=function(key,mapKey,mapValue){
+		var map=myStorage.getItem(key);
+		if(!map){
+			map=new Map();
+		}
+		map.set(mapKey,mapValue);
+	}
+	/**
 	 * 存储或删除值
 	 * @param {Object} key 本地存储的key值
 	 * @param {Object} value 要存储或删除的值 为基本数据类型

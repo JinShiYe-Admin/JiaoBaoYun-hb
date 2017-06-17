@@ -150,6 +150,7 @@ var course_listnew = (function(mod) {
 		for(i in data) {
 			var cell = data[i];
 			if(!events.getUtid()) { //游客获取本地登录
+				mod.setCustomUpdate(cell);
 				if(parseInt(events.isExistInStorageArray(storageKeyName.FOCUSECOURSES, cell.TabId)[1]) >= 0) {
 					cell.IsFocus = 1;
 				}
@@ -158,6 +159,19 @@ var course_listnew = (function(mod) {
 		}
 		listContainer.appendChild(fragment);
 		//		mod.endFresh();
+	}
+	mod.setCustomUpdate = function(cell) {
+		var courseTime = events.isExistInStorageMap(storageKeyName.COURSELASTTIME, cell.TabId);
+		console.log("获取的更新时间：" + JSON.stringify(courseTime));
+		if(courseTime) {
+			if(courseTime < Date.parse(cell.UpdateTime).getTime()) {
+				cell.IsUpdate = 1;
+			} else {
+				cell.IsUpdate = 0;
+			}
+		} else {
+			cell.IsUpdate = 1;
+		}
 	}
 	/**
 	 * 
@@ -376,6 +390,9 @@ var course_listnew = (function(mod) {
 		jQuery(item).css("pointerEvents", "none");
 		mod.getRedCircle(item);
 		events.singleWebviewInPeriod(item, '../micro-course/course_details.html', item.info);
+		if(!events.getUtid()){
+			events.setValueInMap(storageKeyName.COURSELASTTIME, item.info.TabId, Date.now().getTime());
+		}
 	}
 	mod.getRedCircle = function(item) {
 		console.log("当前item的className:" + item.className);
