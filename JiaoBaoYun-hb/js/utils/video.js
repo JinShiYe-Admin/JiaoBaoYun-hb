@@ -5,12 +5,12 @@ var video = (function(mod) {
 		if(plus.os.name == "Android") {
 			recordVideoInAndroid(options, successCB, errorCB);
 		} else {
-			errorCB({
-				code: 999, // 错误编码
-				message: '暂不支持Android以外的系统！' // 错误描述信息
-			});
+			//			errorCB({
+			//				code: 999, // 错误编码
+			//				message: '暂不支持Android以外的系统！' // 错误描述信息
+			//			});
 
-//			recordVideoInIOS(options, successCB, errorCB);
+			recordVideoInIOS(options, successCB, errorCB);
 		}
 	}
 	mod.initOption = function(data) {
@@ -31,15 +31,54 @@ var video = (function(mod) {
 	function recordVideoInIOS(options, successCB, errorCB) {
 
 		var cmr = plus.camera.getCamera();
+		var res = cmr.supportedVideoResolutions[0];
+		var fmt = cmr.supportedVideoFormats[0];
 		cmr.startVideoCapture(function(p) {
-			console.log('成功：' + plus.io.convertLocalFileSystemURL(p));
-			successCB(plus.io.convertLocalFileSystemURL(p))
-		}, function(e) {
-			errorCB();
-		}, {
-			filename: '_documents/' + (new Date()).getTime() + parseInt(Math.random() * 1000) + '.mp4',
-			index: 1
-		});
+				var tempPath = plus.io.convertLocalFileSystemURL(p)
+				var mVideo = document.createElement("video");
+				plus.io.resolveLocalFileSystemURL(p, function(entry) {
+					entry.file(function(file) {
+						console.log('filesize=' + file.size)
+						if(file.size > 1048576 * 30) {
+							//						mui.toast('视频大小不得超过30M');
+							errorCB({
+								code: 999, // 错误编码
+								message: '视频大小不得超过30M' // 错误描述信息
+							});
+						} else {
+							mVideo.ondurationchange = function() {
+								console.log("ondurationchange  duration " + mVideo.duration);
+								if(mVideo.duration < 11) {
+									console.log('成功：' + tempPath);
+									successCB("file://" + tempPath)
+
+								} else {
+									errorCB({
+										code: 999, // 错误编码
+										message: '视频时长不得超出10秒' // 错误描述信息
+										//					mui.toast("视频时长不得超出10秒");
+									})
+								}
+								mVideo.onerror = function() {
+									mui.toast("视频加载失败")
+								}
+								mVideo.src = tempPath;
+
+							}
+						}
+
+					})
+				})
+
+			},
+			function(e) {
+				errorCB();
+			}, {
+				filename: '_documents/' + (new Date()).getTime() + parseInt(Math.random() * 1000) + '.mp4',
+				index: 1,
+				resolution: res,
+				format: fmt
+			});
 
 	}
 

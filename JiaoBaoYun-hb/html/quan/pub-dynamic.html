@@ -134,8 +134,9 @@
 				video.recordVideo({}, function(path) {
 					events.showWaiting();
 					console.log("保存在本地的路径：" + path);
+					path = path;
 					load.getManageOptions(2, path, function(mData, thumb) {
-						console.log("视频获取的各项参数：" + JSON.stringify(data));
+						console.log("视频获取的各项参数：" + JSON.stringify(mData));
 						mData.saveSpace = storageKeyName.PERSONALSPACE;
 						mData.spaceId = 6;
 						var data = CloudFileUtil.getSingleImgUploadOptions(path, mData.spaceId, mData.spaceType, mData.saveSpace, mData.options);
@@ -171,6 +172,7 @@
 					})
 				}, function(errData) {
 					console.log(errData.code);
+					plus.nativeUI.closeWaiting(); //关闭等待框
 					mui.toast(errData.message);
 					jQuery("#take_camero").css('pointerEvents', 'all');
 				})

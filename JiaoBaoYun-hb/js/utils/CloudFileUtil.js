@@ -921,7 +921,7 @@ var CloudFileUtil = (function($, mod) {
 			} else { //上传模式
 				console.log("缩略图信息：" + thumb);
 				div.innerHTML = '<div class="clip-container video-container"  style="width:' + div_width * 0.9 + 'px;height:' + div_width * 0.9 + 'px;margin:5%;overflow:hidden;display:inline-block;background-image:url(' +
-					thumb +
+					'../../image/utils/videothumb.png' +
 					');background-size:cover;"><img src="../../image/utils/playvideo.png" style="width:30px;height:30px;margin:' + (div_width * 0.9 - 30) / 2 + 'px;" /></div>' +
 					'<a class="mui-icon iconfont icon-guanbi"></a>';
 			}

@@ -60,9 +60,9 @@ var load = (function(mod) {
 	 * @param {Object} callback 回调函数
 	 * @param {Object} extras 额外数据
 	 */
-	mod.getManageOptions = function(type, filePath,callback,extras) {
+	mod.getManageOptions = function(type, filePath, callback, extras) {
 		var data = {};
-//		data.spaceId = spaceId;
+		//		data.spaceId = spaceId;
 		data.spaceType = 0; //公共空间
 		switch(type) {
 			case 1: //图片
@@ -83,17 +83,16 @@ var load = (function(mod) {
 				callback(data);
 				break;
 			case 2: //视频
-				mod.getVideoThumb(filePath, function(thumb,width,height) {
+				mod.getVideoThumb(filePath, function(thumb, width, height) {
 					data.options = {
 						type: 2,
 						thumbSize: {
 							width: width,
 							height: height
 						},
-						cropSize: {
-						}
+						cropSize: {}
 					}
-					callback(data,thumb);
+					callback(data, thumb);
 				})
 				break;
 			case 3: //文字
@@ -105,20 +104,37 @@ var load = (function(mod) {
 		}
 	}
 	mod.getVideoThumb = function(videoPath, callback) {
-//				video.setAttribute("preload","metadata");
-//		video.onloadedmetadata = function() 
-		var video = document.createElement("video");
-		video.src = videoPath;
-		video.onloadeddata = function() {
-			var canvas = document.createElement('canvas');
-			canvas.width = video.videoWidth / 2;
-			canvas.height = video.videoHeight / 2;
-			console.log('canvas ' + canvas.width + ' ' + canvas.height)
-			canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-			var thumb = canvas.toDataURL("image/png");
-			video = null;
-			console.log("video的宽度："+canvas.width+"video的高度："+canvas.height);
-			callback(thumb, canvas.width*2, canvas.height*2);
+		//				video.setAttribute("preload","metadata");
+		//		
+		if(plus.os.name == "iOS") {
+			var video = document.createElement("video");
+			video.src =videoPath;
+			video.onloadedmetadata = function() {
+				var canvas = document.createElement('canvas');
+				canvas.width = video.videoWidth / 2;
+				canvas.height = video.videoHeight / 2;
+				console.log('canvas ' + canvas.width + ' ' + canvas.height)
+				canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+				var thumb = canvas.toDataURL("image/png");
+				video = null;
+				console.log("video的宽度：" + canvas.width + "video的高度：" + canvas.height);
+				callback(thumb, '360px', '360px');
+			}
+		} else {
+			var video = document.createElement("video");
+			video.src = videoPath;
+			video.onloadeddata = function() {
+				var canvas = document.createElement('canvas');
+				canvas.width = video.videoWidth / 2;
+				canvas.height = video.videoHeight / 2;
+				console.log('canvas ' + canvas.width + ' ' + canvas.height)
+				canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+				var thumb = canvas.toDataURL("image/png");
+				video = null;
+				console.log("video的宽度：" + canvas.width + "video的高度：" + canvas.height);
+				callback(thumb, canvas.width * 2, canvas.height * 2);
+			}
+
 		}
 	}
 	/**

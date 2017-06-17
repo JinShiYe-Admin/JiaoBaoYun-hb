@@ -861,7 +861,7 @@ var dynamiclistitem = (function($, mod) {
 		li.className = 'mui-table-view-cell';
 		if(document.getElementById("spaceDetail") && data.pageFlag == 1) {
 			mod.adddetailInfo(ulElement, li, data); //展现动态详情
-//			mod.addInfo(ulElement, li, data); //增加动态的个人信息和内容
+			//			mod.addInfo(ulElement, li, data); //增加动态的个人信息和内容
 		} else {
 			mod.addInfo(ulElement, li, data); //增加动态的个人信息和内容
 		}
@@ -878,16 +878,16 @@ var dynamiclistitem = (function($, mod) {
 
 		}
 		var html = '';
-        var html0 = '<p style = "color:#323232;font-size:17px;margin-top:2px;margin-bottom:5px;text-align:center;line-height:26px;letter-spacing:1px">' + data.MsgTitle + '</p>'
+		var html0 = '<p style = "color:#323232;font-size:17px;margin-top:2px;margin-bottom:5px;text-align:center;line-height:26px;letter-spacing:1px">' + data.MsgTitle + '</p>'
 		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body mui-pull-left">';
-		
+
 		//头像
 		var html2 = '<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:36px;height:36px;border-radius: 50%;" src="' + data.personalImage + '"></div>';
 		var html3 = '<div class="mui-media-body dynamic-padding-left-10px  mui-pull-left">';
 		//姓名
 		var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:14px;margin-top:-3px">' + data.personalName + '</p>';
 		//时间
-		var html5 = '<p class="" style = "color:#b7b7b7;font-size:12px">' + data.PublishDate + '</p></div>' + closeempty+'</div>';
+		var html5 = '<p class="" style = "color:#b7b7b7;font-size:12px">' + data.PublishDate + '</p></div>' + closeempty + '</div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext ">';
 		var html7 = '<div id="question_content' + data.id_name + '" style = "color:#808080;font-size:15px" class="ellipsis-show question_content">';
 		//内容
@@ -906,7 +906,7 @@ var dynamiclistitem = (function($, mod) {
 			}
 		}
 		var html9 = '</div>' + html99 + '</div></div>';
-		html =html0+ html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8 + html9;
+		html = html0 + html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8 + html9;
 
 		var div = document.createElement('div');
 		div.className = 'mui-row mui-row-padding-8px';
@@ -914,7 +914,6 @@ var dynamiclistitem = (function($, mod) {
 		liElement.appendChild(div);
 
 		mod.addImage(ulElement, liElement, data); //增加动态的图片
-	
 
 	};
 
@@ -960,7 +959,7 @@ var dynamiclistitem = (function($, mod) {
 
 		var html = '';
 		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body mui-pull-left">';
-		
+
 		//头像
 		var html2 = '<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:40px;height:40px;border-radius: 50%;" src="' + data.personalImage + '"></div>';
 		var html3 = '<div class="mui-media-body dynamic-padding-left-10px">' + closeempty;
@@ -993,7 +992,7 @@ var dynamiclistitem = (function($, mod) {
 			}
 		}
 		var html9 = '</div>' + html99 + '</div></div>';
-		html =html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8 + html9;
+		html = html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8 + html9;
 
 		var div = document.createElement('div');
 		div.className = 'mui-row mui-row-padding-8px';
@@ -1078,9 +1077,9 @@ var dynamiclistitem = (function($, mod) {
 		div.style.marginTop = '-10px'
 		div.innerHTML = html;
 		liElement.appendChild(div);
-				if(document.getElementById("spaceDetail") && data.pageFlag == 1) {
-					mod.addInteraction(ulElement, liElement, data);
-//			mod.adddetailInteraction(ulElement, liElement, data);
+		if(document.getElementById("spaceDetail") && data.pageFlag == 1) {
+			mod.addInteraction(ulElement, liElement, data);
+			//			mod.adddetailInteraction(ulElement, liElement, data);
 		} else {
 			mod.addInteraction(ulElement, liElement, data);
 		}
@@ -1090,6 +1089,7 @@ var dynamiclistitem = (function($, mod) {
 		console.log('src======' + src)
 		img.src = src;
 		img.onload = function() {
+			console.log(img.width)
 			callback({
 				width: img.width,
 				height: img.height
@@ -1180,9 +1180,7 @@ var dynamiclistitem = (function($, mod) {
 			htmlPraiseList = htmlPraiseList + '</div></div>';
 		}
 
-
-
-		htmlCommentList =  '</div>';
+		htmlCommentList = '</div>';
 		html = html + htmlPraiseList + htmlCommentList //+ showAll //+ htmlCommentBtn;
 		var div = document.createElement('div');
 		div.className = 'mui-row mui-row-padding-8px';
@@ -1204,10 +1202,17 @@ var dynamiclistitem = (function($, mod) {
 		if(ImageNum == 1 && data.EncType == 2) {
 			var tempDiv = document.getElementById("video-container" + data.id_name);
 			var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
-				tempDiv.style.width = imgSize.width / 4 + 'px';
-				tempDiv.style.height = imgSize.height / 4 + 'px';
-				var playvideo = document.getElementById("playvideo" + data.id_name);
-				playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
+				if(imgSize.width < 500) {
+					tempDiv.style.width = imgSize.width * 3 / 8 + 'px';
+					tempDiv.style.height = imgSize.height * 3 / 8 + 'px';
+					var playvideo = document.getElementById("playvideo" + data.id_name);
+					playvideo.style.marginTop = imgSize.height * 3 / 16 - 25 + 'px'
+				} else {
+					tempDiv.style.width = imgSize.width / 4 + 'px';
+					tempDiv.style.height = imgSize.height / 4 + 'px';
+					var playvideo = document.getElementById("playvideo" + data.id_name);
+					playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
+				}
 			})
 
 		} else if((mp[mp.length - 1] == 'mp4') && (data.EncType == 5)) {
@@ -1224,53 +1229,53 @@ var dynamiclistitem = (function($, mod) {
 		mod.addShowComment(commentList);
 
 	}
-	mod.addShowComment= function(list){
+	mod.addShowComment = function(list) {
 		console.log(JSON.stringify(list));
 		var section_comment_title = document.getElementById("section_comment_title");
 		section_comment_title.style.display = 'block'
 		section_comment_title.innerText = "评论(" + list.length + ")";
 		var ul = document.getElementById("section_comment_list");
 		ul.innerHTML = ''
-				for(var i in list) {
-					var ele = document.createElement("li");
-					ele.className = "commentCell mui-table-view-cell ";
-					ele.setAttribute("data-UserId", list[i].UserId);
-					ele.setAttribute("data-type", "view_cell");
-					ele.id = "commont_" + list[i].TabId + '_' + i;
+		for(var i in list) {
+			var ele = document.createElement("li");
+			ele.className = "commentCell mui-table-view-cell ";
+			ele.setAttribute("data-UserId", list[i].UserId);
+			ele.setAttribute("data-type", "view_cell");
+			ele.id = "commont_" + list[i].TabId + '_' + i;
 
-					//评论节次
-					var html_0 = "";
-					//回复评论
-					var html_1 = "";
-						html_0 = '<img data-type="view_cell" src="' + updateHeadImg(list[i].UserIdImg, 2) + '" class="section-comment-personal-headimage" />\
+			//评论节次
+			var html_0 = "";
+			//回复评论
+			var html_1 = "";
+			html_0 = '<img data-type="view_cell" src="' + updateHeadImg(list[i].UserIdImg, 2) + '" class="section-comment-personal-headimage" />\
 						' + '\
 						<div class="mui-ellipsis section-comment-personal-name" data-type="view_cell">' + list[i].UserIdName + '</div>\
 						<div class="section-comment-content" data-type="view_cell">' + list[i].CommentContent + '</div>\
 						<div class="section-comment-info">回复' + list[i].Replys.length + '</div>\
 						<div class="mui-pull-right section-comment-info">' + list[i].CommentDate.split(" ")[0] + '</div>';
 
-						for(var j in list[i].Replys) {
-							if(j == 0) {
-								html_1 = '<div data-type="reply" id="commont_reply_' + list[i].TabId + '" class="section-comment-reply">';
-							}
-		
-								html_1 = html_1 + '<div id="commont_reply_' + list[i].TabId + '_' + list[i].Replys[j].TabId + '" data-type="comment_reply" data-UserId="' + list[i].Replys[j].UserId + '">\
+			for(var j in list[i].Replys) {
+				if(j == 0) {
+					html_1 = '<div data-type="reply" id="commont_reply_' + list[i].TabId + '" class="section-comment-reply">';
+				}
+
+				html_1 = html_1 + '<div id="commont_reply_' + list[i].TabId + '_' + list[i].Replys[j].TabId + '" data-type="comment_reply" data-UserId="' + list[i].Replys[j].UserId + '">\
 								<div class="section-comment-reply-name" data-type="comment_reply_cell">' + list[i].Replys[j].UserIdName + '</div><div\
 								class="section-comment-reply-info" data-type="comment_reply_cell">@</div><div \
 								class="section-comment-reply-name" data-type="comment_reply_cell">' + list[i].Replys[j].ReplyIdName + '</div>\
 								<div class="section-comment-reply-info" data-type="comment_reply_cell">:</div>\
 								<div class="section-comment-reply-content" data-type="comment_reply_cell">' + list[i].Replys[j].CommentContent + '</div>\
 							</div>';
-							
-						}
-					
-					if(html_1 != "") {
-						html_1 = html_1 + '</div>';
-					}
-					ele.innerHTML = html_0 + html_1;
-					document.getElementById("section_comment_list").appendChild(ele);
-				}
-			
+
+			}
+
+			if(html_1 != "") {
+				html_1 = html_1 + '</div>';
+			}
+			ele.innerHTML = html_0 + html_1;
+			document.getElementById("section_comment_list").appendChild(ele);
+		}
+
 	}
 
 	/**
@@ -1396,7 +1401,7 @@ var dynamiclistitem = (function($, mod) {
 		div.innerHTML = html;
 		liElement.appendChild(div);
 		ulElement.appendChild(liElement);
-		console.log(ulElement.innerHTML)
+		//		console.log(ulElement.innerHTML)
 		var ImageUrlList = data.ImageList; //图片路径数组1
 		var EncAddrList = data.EncAddrList
 		var ImageNum = ImageUrlList.length; //图片总数量
@@ -1405,10 +1410,18 @@ var dynamiclistitem = (function($, mod) {
 		if(ImageNum == 1 && data.EncType == 2) {
 			var tempDiv = document.getElementById("video-container" + data.id_name);
 			var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
-				tempDiv.style.width = imgSize.width / 4 + 'px';
-				tempDiv.style.height = imgSize.height / 4 + 'px';
-				var playvideo = document.getElementById("playvideo" + data.id_name);
-				playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
+				if(imgSize.width < 500) {
+					tempDiv.style.width = imgSize.width * 3 / 8 + 'px';
+					tempDiv.style.height = imgSize.height * 3 / 8 + 'px';
+					var playvideo = document.getElementById("playvideo" + data.id_name);
+					playvideo.style.marginTop = imgSize.height * 3 / 16 - 25 + 'px'
+				} else {
+					tempDiv.style.width = imgSize.width / 4 + 'px';
+					tempDiv.style.height = imgSize.height / 4 + 'px';
+					var playvideo = document.getElementById("playvideo" + data.id_name);
+					playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
+				}
+
 			})
 
 		} else if((mp[mp.length - 1] == 'mp4') && (data.EncType == 5)) {
@@ -1424,7 +1437,6 @@ var dynamiclistitem = (function($, mod) {
 		}
 
 	};
-	
 
 	return mod;
 
