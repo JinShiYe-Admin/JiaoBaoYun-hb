@@ -2,15 +2,16 @@
  * @author an
  */
 window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
-	console.log("---ERROR---");
-	console.log("错误信息:" + errorMessage);
+	console.log("---ERROR---start---");
+	console.log("错误信息-0:" + JSON.stringify(errorMessage.detail));
+	console.log("错误信息-1:" + errorMessage);
 	console.log("出错文件:" + scriptURI);
 	console.log("出错行号:" + lineNumber);
 	console.log("出错列号:" + columnNumber);
 	console.log("错误详情:" + errorObj);
-	console.log("---ERROR---");
 	events.closeWaiting();
 	var webId = plus.webview.currentWebview().id;
+	console.log("---ERROR--- " + webId + " ---end---");
 	if(webId == "firstPage.html" || webId == "index.html" || webId == "cloud_home.html" || webId == "sciedu_home.html" || webId == "show-home1.html" || webId == "course-home1") {
 		mui.toast('当前界面加载出现错误');
 		return false;
@@ -1304,7 +1305,7 @@ var events = (function(mod) {
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @param {Object} key
 	 * @param {Object} mapKey
 	 */
@@ -1320,7 +1321,7 @@ var events = (function(mod) {
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @param {Object} key 保存简直
 	 * @param {Object} mapKey
 	 * @param {Object} mapValue
