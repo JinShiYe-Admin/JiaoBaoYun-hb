@@ -1280,13 +1280,7 @@
 	"html/cloud/record_student_add.html": {
 		"resources": [
 			"js/utils/MultiMedia.js",
-			"css/utils/MultiMedia.css",
-			"css/mui.min.css",
-			"css/utils/common.css",
-			"css/utils/preview.css",
-			"image/utils/videothumb.png",
-			"js/libs/crypto-js/crypto-js.js",
-			"js/utils/gallerypick.js"
+			"css/utils/MultiMedia.css"
 		],
 		"refer": []
 	},
@@ -1688,9 +1682,7 @@
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
 		],
-		"refer": [
-			"html/cloud/keeprecord_callorrecord_main.html"
-		]
+		"refer": []
 	},
 	"html/mine/approval-apply.html": {
 		"resources": [
@@ -1816,7 +1808,9 @@
 		"resources": [
 			"image/mine/jiaobaoyun.png",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/mui.min.js",
+			"js/utils/events.js"
 		],
 		"refer": []
 	},
@@ -1877,7 +1871,22 @@
 			"css/utils/pullToRefresh.css",
 			"js/mui.previewimage.js",
 			"css/utils/preview.css",
-			"image/utils/loading.gif"
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/utils/playutil.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/mui.min.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/mui.pullToRefresh.js",
+			"js/mui.pullToRefresh.material.js",
+			"js/storageKeyName.js",
+			"js/libs/crypto-js/require.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/cloud/app_notes_create.html"
@@ -1925,7 +1934,20 @@
 	"html/mine/ReadQRCode.html": {
 		"resources": [
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": []
 	},
@@ -2008,13 +2030,28 @@
 			"css/check/area-choose.css",
 			"js/check/area-choose.js",
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": []
 	},
 	"html/check/news-detail.html": {
 		"resources": [
-			"js/check/news-detail.js"
+			"js/check/news-detail.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": []
 	},
@@ -2026,7 +2063,23 @@
 			"css/mui.min.css",
 			"css/utils/common.css",
 			"image/utils/loading.gif",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"js/mui.pullToRefresh.js",
+			"js/mui.pullToRefresh.material.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/jquery.lazyload.min.js",
+			"js/libs/crypto-js/require.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		],
 		"refer": [
 			"html/check/area-choose.html",
@@ -2515,9 +2568,7 @@
 			"css/utils/common.css",
 			"css/utils/preview.css",
 			"js/utils/recordvideoutil.js",
-			"image/utils/videothumb.png",
-			"js/utils/gallerypick.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"image/utils/videothumb.png"
 		]
 	},
 	"html/mine/qun_data_create.html": {
@@ -2530,15 +2581,6 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css"
-		]
-	},
-	"html/cloud/keeprecord_callorrecord_main.html": {
-		"resources": [
-			"css/utils/pullToRefresh.css",
-			"css/mui.min.css",
-			"css/utils/MultiMedia.css",
-			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }
