@@ -3,6 +3,8 @@
  */
 var appUpdate = (function(mod) {
 	mod.fileSize;
+	mod.updateFlag = 0; //1确认升级2取消升级
+	mod.installFlag = 0; //1确认安装 2取消安装
 	mod.updateApp = function() {
 		plus.webview.currentWebview().canJump = false;
 		//版本升级模块
@@ -73,30 +75,48 @@ var appUpdate = (function(mod) {
 		var appVersionMinMax = getMinMax(appVersions);
 		var newestVersionMinMax = getMinMax(newestVersions);
 		if(appVersionMinMax.max < newestVersionMinMax.max) { //整包更新
-			//询问是否更新
-			setDialog('教宝云有新版本，是否下载？',"您已取消下载", function() {
-				console.log("下载APK路径：" + version.baseverurl)
+			if(mod.updateFlag == 0) {
+				//询问是否更新
+				setDialog('教宝云有新版本，是否下载？', "您已取消下载", function() {
+					mod.updateFlag = 1;
+					console.log("下载APK路径：" + version.baseverurl)
+					if(plus.os.name = "Android") {
+						resolveFile(version.baseverurl, 1);
+					} else {
+						//					plus.webview.currentWebview().canJump = true;
+					}
+				}, function() {
+					mod.updateFlag = 2;
+				})
+			} else if(mod.updateFlag == 1) {
 				if(plus.os.name = "Android") {
 					resolveFile(version.baseverurl, 1);
 				} else {
-//					plus.webview.currentWebview().canJump = true;
+					//					plus.webview.currentWebview().canJump = true;
 				}
-			})
+			}
+
 		} else if(appVersionMinMax.max == newestVersionMinMax.max) {
 			if(appVersionMinMax.min < newestVersionMinMax.min) { //在线更新
 				if(plus.os.name = "Android") {
-//					plus.webview.currentWebview().canJump = true;
+					//					plus.webview.currentWebview().canJump = true;
 					resolveFile(version.addverurl, 0);
 				} else {
-					setDialog('教宝云有新版本，是否下载？',"您已取消下载",function() {
+					if(mod.updateFlag == 0) {
+						setDialog('教宝云有新版本，是否下载？', "您已取消下载", function() {
+							mod.updateFlag = 1;
+						}, function() {
+							mod.updateFlag = 2;
+						});
+					} else {
 
-					});
+					}
 				}
-			}else{
-//				plus.webview.currentWebview().canJump = true;
+			} else {
+				plus.webview.currentWebview().canJump = true;
 			}
 		} else {
-//			plus.webview.currentWebview().canJump = true;
+			plus.webview.currentWebview().canJump = true;
 		}
 	}
 	/**
@@ -104,14 +124,17 @@ var appUpdate = (function(mod) {
 	 * @param {Object} hint 提示语
 	 * @param {Object} callback 确认后的回调函数
 	 */
-	var setDialog = function(hint,cancelToast,callback) {
+	var setDialog = function(hint, cancelToast, callback, cancelCallback) {
 		var btnArray = ['是', '否'];
 		mui.confirm(hint, '教宝云', btnArray, function(e) {
-			console.log("当前点击的东东："+JSON.stringify(e));
+			console.log("当前点击的东东：" + JSON.stringify(e));
 			if(e.index == 0) {
 				callback();
 			} else {
 				mui.toast(cancelToast);
+				if(cancelCallback) {
+					cancelCallback();
+				}
 			}
 		});
 	}
@@ -151,9 +174,17 @@ var appUpdate = (function(mod) {
 				if(status == 200) { // 下载成功
 					var path = d.filename;
 					console.log(d.filename);
-					setDialog("新版app文件已下载，是否安装？","您已取消安装", function() {
+					if(mod.installFlag == 0) {
+						setDialog("新版app文件已下载，是否安装？", "您已取消安装", function() {
+							installApk(path);
+							mod.installFlag = 1;
+						}, function() {
+							mod.installFlag = 2;
+						})
+					} else if(mod.installFlag == 1) {
 						installApk(path);
-					})
+					}
+
 				} else { //下载失败
 					mui.toast("Download failed: " + status);
 				}
@@ -230,11 +261,18 @@ var appUpdate = (function(mod) {
 			console.log('存在文件！' + entry.isFile);
 			entry.getMetadata(function(metadata) {
 				if(myStorage.getItem("loadFileSize") == metadata.size) {
-					console.log("Remove succeeded:"+myStorage.getItem("loadFileSize"));
+					console.log("Remove succeeded:" + myStorage.getItem("loadFileSize"));
 					if(type) {
-						setDialog("新版app文件已下载，是否安装？","您已取消安装app", function() {
+						if(mod.installFlag == 0) {
+							setDialog("新版app文件已下载，是否安装？", "您已取消安装app", function() {
+								installApk(filePath);
+								mod.installFlag=1;
+							},function(){
+								mod.installFlag=2;
+							})
+						} else if(mod.installFlag == 1) {
 							installApk(filePath);
-						})
+						}
 					} else {
 						installWgt(filePath);
 					}

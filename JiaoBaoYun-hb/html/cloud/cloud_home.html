@@ -40,7 +40,7 @@
 			
 			.mui-backdrop {
 				/*选择排序的遮罩*/
-				background-color: rgba(0, 0, 0, .05);
+				background-color: rgba(0, 0, 0, 1.0);
 			}
 			
 			#refreshContainer .mui-table-view:before,
@@ -151,6 +151,10 @@
 			.mui-bar-nav.mui-bar .mui-icon.img-icon {
 				padding-top: 7px;
 			}
+			
+			.mui-backdrop {
+				bottom: -50px;
+			}
 		</style>
 	</head>
 
@@ -228,7 +232,8 @@
 				</li>
 			</ul>
 		</div>
-		<script src="../../js/main/slide_navigation.js"></script>
+		<!--<script src="../../js/main/slide_navigation.js"></script>-->
+
 		<script type="text/javascript" src="../../js/publicHomeworkProtocol.js"></script>
 		<script type="text/javascript">
 			//每一行的高度
@@ -321,7 +326,8 @@
 			}
 		</script>
 
-		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/main/off-canvas.js"></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
@@ -344,27 +350,13 @@
 			//存储档案文件夹
 			var studentDoc = {};
 
-			mui.init({
-				gestureConfig: {
-					longtap: true,
-				}
-			});
+			off_canvas.init();
 			mui.plusReady(function() {
 				//发送协议
 				changeData();
-
 				addcloudapps_0(); //应用
-				slideNavigation.add('../index/mine.html', 200);
-				//				setIcons();
+				off_canvas.add('../index/mine.html', 200);
 				document.querySelector(".img-icon>img").src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2);
-
-				document.querySelector(".img-icon").addEventListener("tap", function() {
-					if(slideNavigation.showMenu) {
-						slideNavigation.closeMenu();
-					} else {
-						slideNavigation.openMenu();
-					}
-				})
 				document.querySelector(".icon-iconhexinhuiyuan").addEventListener("tap", function() {
 					if(events.judgeLoginMode(this)) {
 						return;
@@ -385,11 +377,6 @@
 							//console.log("下拉刷新");
 							mui.fire(plus.webview.getWebviewById("index.html"), 'aboutmNoRead');
 							//文件存储数组
-							//							fileArray = [];
-							//							//获取所有的群
-							//							datasource = [];
-							//							//获取学生列表
-							//							topStudentArr = [];
 							changeData();
 							setTimeout(function() {
 								//结束下拉刷新

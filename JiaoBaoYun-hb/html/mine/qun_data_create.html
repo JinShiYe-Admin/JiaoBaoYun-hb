@@ -47,6 +47,19 @@
 				border-bottom: 1px solid #dedfe0;
 			}
 
+			#type .mui-table-view-cell div,
+			#type .mui-table-view-cell a {
+				display: inline;
+			}
+
+			#type .mui-table-view-cell a {
+				margin-left: 13%;
+			}
+
+			#type .mui-table-view-cell a.mui-active {
+				background-color: white;
+			}
+
 			#type_name {
 				height: 40px;
 				padding-left: 0px;
@@ -171,16 +184,14 @@
 		<div id="content" class="mui-content">
 			<ul id="type" class="mui-table-view">
 				<li class="mui-table-view-cell">
-					<div class="mui-input-row">
-						<label id="type_name_la">身份:</label>
-						<a href="#popover" id="type_name">
-							<div class="mui-input-row mui-checkbox mui-left" style="display: inline;">
-								<label id="type_name_font" style="padding-left: 40px;width: initial;padding-top: 3px;">学生</label>
-								<input id="type_cb" name="checkbox1" type="checkbox" checked style="top: -5px;left: 1px;">
-							</div>
-							<div id="arrowdown" class="mui-icon mui-icon-arrowdown"></div>
-						</a>
-					</div>
+					<div id="type_name_la">身份:</div>
+					<a href="#popover" id="type_name">
+						<div class="mui-input-row mui-checkbox mui-left" style="display: inline;">
+							<label id="type_name_font" style="padding-left: 40px;width: initial;padding-top: 3px;">学生</label>
+							<input id="type_cb" name="checkbox1" type="checkbox" checked style="top: -5px;left: 1px;">
+						</div>
+						<div id="arrowdown" class="mui-icon mui-icon-arrowdown"></div>
+					</a>
 				</li>
 			</ul>
 			<div id="stu_create" class="mui-scroll-wrapper" style="display:inline ;">

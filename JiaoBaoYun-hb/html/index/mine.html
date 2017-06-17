@@ -16,67 +16,66 @@
 	</head>
 
 	<body>
-		<div class="mui-scroll-wrapper mui-content">
+		<div class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<div id="title" class="title">
-					<img id="uimg" style="height: 60px;width: 60px;" src="../../image/utils/default_personalimage.png" class="head-portrait" /><br />
-					<h4 id="uname">暂无昵称</h4>
-					<p id="utext" style="word-wrap: break-word;">暂无签名</p>
-				</div>
-
-				<!--各项-->
-				<ul class="mui-table-view mui-table-view-chevron">
-					<li class="mui-table-view-cell" position='0'>
-						<a class="mui-navigate-right" open-type="common">
-							<p><img src="../../image/mine/group-manage.png" class="mine-icon"></img> 群管理</p>
-						</a>
-					</li>
-					<li class="mui-table-view-cell" position='1'>
-						<a class="mui-navigate-right" open-type="common">
-							<p><img src="../../image/mine/data.png" class="mine-icon"></span> 人员资料</p>
-						</a>
-					</li>
-					<li class="mui-table-view-cell" position='3'>
-						<a class="" open-type="common">
-							<p><img src="../../image/mine/new-message.png" style="margin-right: 5px;" class="mine-icon"></span>新消息</p>
-							<span id="news-amount" class="mui-badge mui-badge-red">0</span>
-						</a>
-					</li>
-					<!--<li class="mui-table-view-cell" position='2'>
+			<div id="title" class="title">
+				<img id="uimg" style="height: 60px;width: 60px;" src="../../image/utils/default_personalimage.png" class="head-portrait" /><br />
+				<h4 id="uname">暂无昵称</h4>
+				<p id="utext" style="word-wrap: break-word;">暂无签名</p>
+			</div>
+			<!--各项-->
+			<ul class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell" position='0'>
+					<a class="mui-navigate-right" open-type="common">
+						<p><img src="../../image/mine/group-manage.png" class="mine-icon"></img> 群管理</p>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" position='1'>
+					<a class="mui-navigate-right" open-type="common">
+						<p><img src="../../image/mine/data.png" class="mine-icon"></span> 人员资料</p>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" position='3'>
+					<a class="" open-type="common">
+						<p><img src="../../image/mine/new-message.png" style="margin-right: 5px;" class="mine-icon"></span>新消息</p>
+						<span id="news-amount" class="mui-badge mui-badge-red">0</span>
+					</a>
+				</li>
+				<!--<li class="mui-table-view-cell" position='2'>
 						<a class="mui-navigate-right" open-type="common">
 							<img src='../../image/mine/apply-group.png' class="mine-icon"></img> 申请加入群
 						</a>
 					</li>-->
-					<li class="mui-table-view-divider"></li>
+				<li class="mui-table-view-divider"></li>
 
-					<li class="mui-table-view-cell" position='4'>
-						<a class="mui-navigate-right">
-							<p><img src="../../image/mine/my-space.png" class="mine-icon"></img> 我的空间</p>
-						</a>
-					</li>
-					<li id="check-news" class="mui-table-view-cell" position='8' style="display: none;">
-						<a class="mui-navigate-right">
-							<p><img src="../../image/mine/news-check.png" class="mine-icon"></img> 新闻审核</p>
-						</a>
-					</li>
-					<li class="mui-table-view-cell" position='5'>
-						<a class="mui-navigate-right">
-							<p><img src="../../image/mine/my-points.png" class="mine-icon"></img> 积分</p>
-						</a>
-					</li>
+				<li class="mui-table-view-cell" position='4'>
+					<a class="mui-navigate-right">
+						<p><img src="../../image/mine/my-space.png" class="mine-icon"></img> 我的空间</p>
+					</a>
+				</li>
+				<li id="check-news" class="mui-table-view-cell" position='8' style="display: none;">
+					<a class="mui-navigate-right">
+						<p><img src="../../image/mine/news-check.png" class="mine-icon"></img> 新闻审核</p>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" position='5'>
+					<a class="mui-navigate-right">
+						<p><img src="../../image/mine/my-points.png" class="mine-icon"></img> 积分</p>
+					</a>
+				</li>
 
-					<li class="mui-table-view-divider"></li>
-					<li class="mui-table-view-cell" position='6'>
-						<a class="mui-navigate-right">
-							<p><img src="../../image/mine/setting.png" class="mine-icon"></img> 设置</p>
-						</a>
-					</li>
-					<li class="mui-table-view-cell" position='7'>
-						<a class="mui-navigate-right">
-							<p><img src="../../image/mine/about.png" class="mine-icon"></img> 关于</p>
-						</a>
-					</li>
-				</ul>
+				<li class="mui-table-view-divider"></li>
+				<li class="mui-table-view-cell" position='6'>
+					<a class="mui-navigate-right">
+						<p><img src="../../image/mine/setting.png" class="mine-icon"></img> 设置</p>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" position='7'>
+					<a class="mui-navigate-right">
+						<p><img src="../../image/mine/about.png" class="mine-icon"></img> 关于</p>
+					</a>
+				</li>
+			</ul>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -90,7 +89,7 @@
 				}
 			});
 			mui('.mui-scroll-wrapper').scroll({
-				indicators: false, //显示滚动条
+				 indicators: false //是否显示滚动条
 			});
 			//获得侧滑主窗口webview对象
 			var main = null;
@@ -107,15 +106,9 @@
 				//				events.jumpPage(document.getElementById('title'),'mine/account-info.html');
 				//点击title跳转到账号信息界面
 				events.addTap('title', function() {
-					if(plus.os.name == 'Android') {
-						setTimeout(function() {
-							closeMenu(); //关闭侧滑菜单
-						}, 250);
-					} else {
-						closeMenu(); //关闭侧滑菜单
-					}
 					//打开账户信息新页面
-					events.openNewWindow('/html/mine/account-info.html')
+					events.openNewWindow('/html/mine/account-info.html');
+					closeMenu();
 				})
 				//侧滑菜单各项点击事件
 				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
@@ -124,26 +117,7 @@
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid; //用户id
 					console.log('click position:' + this.getAttribute('position'))
 					console.log("系统名称：" + plus.os.name);
-					switch(parseInt(this.getAttribute('position'))) {
-						case 0:
-						case 1:
-						case 2:
-						case 3:
-						case 4:
-						case 6:
-						case 7:
-						case 8:
-							if(plus.os.name == 'Android') {
-								setTimeout(function() {
-									closeMenu();
-								}, 1000);
-							} else {
-								closeMenu();
-							}
-							break;
-						default:
-							break;
-					}
+
 					var targetWebUrl = "";
 					var data = {};
 					switch(parseInt(this.getAttribute('position'))) {
@@ -170,7 +144,7 @@
 							//我的空间
 						case 4:
 							targetWebUrl = '/html/quan/zone_main.html';
-							data=personalUTID;
+							data = personalUTID;
 							break;
 							//积分
 						case 5:
@@ -195,6 +169,21 @@
 					if(targetWebUrl) {
 						events.singleWebviewInPeriod(this, targetWebUrl, data);
 					}
+					switch(parseInt(this.getAttribute('position'))) {
+						case 0:
+						case 1:
+						case 2:
+						case 3:
+						case 4:
+						case 6:
+						case 7:
+						case 8:
+							closeMenu();
+							break;
+						default:
+							break;
+					}
+
 				});
 			})
 			//个人信息改变
@@ -261,7 +250,13 @@
 			}
 			//关闭
 			function closeMenu() {
-				mui.fire(main, "menu:close");
+				var longTime = 500;
+				if(plus.os.name == 'iOS'){
+					longTime = 250;
+				}
+				setTimeout(function(){
+					mui.fire(main, "menu:close");
+				},longTime)
 			}
 			//优化显示出来的侧滑菜单，只需监听该菜单的左滑事件，然后将其关闭即可；在菜单上右滑，不做任何操作；
 			window.addEventListener("swipeleft", closeMenu);

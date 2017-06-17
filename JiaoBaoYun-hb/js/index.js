@@ -70,7 +70,7 @@ var addSubPages = function() {
 //	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show_home_1.html', '../qiuzhi/qiuzhi_home.html'];
 //	var titles = ['云盘', '科教', '展现', '求知'];
 	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show-home1.html', '../micro-course/course-home1.html'];
-	var titles = ['云盘', '科教', '展现', '微课'];
+	var titles = ['云盘', '科教', '发现', '微学'];
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
 	var self = plus.webview.currentWebview();
 	for(var i = 0; i < 4; i++) {

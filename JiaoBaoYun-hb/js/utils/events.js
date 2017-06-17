@@ -1,7 +1,28 @@
 /**
  * @author an
  */
-
+window.onerror = function(err) {
+	console.log("error" + err.code + " " + err.message);
+	events.closeWaiting();
+	mui.toast('当前界面加载出现错误，请更新最新版本！');
+	var webId = plus.webview.currentWebview().id;
+	if(webId == "firstPage.html" || webId == "index.html" || webId == "cloud_home.html" || webId == "sciedu_home.html" || webId == "show-home1.html" || webId == "course-home1") {
+		return false;
+	}
+	var header = document.querySelector("header");
+	var content = document.querySelector(".mui-content");
+	var nav = document.querySelector("nav");
+	if(header) {
+		header.innerHTML = '<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>';
+	}
+	if(content) {
+		content.innerHTML = "当前界面加载出现错误，请更新最新版本！";
+	}
+	if(nav) {
+		nav.parentNode.removeChild(nav);
+	}
+	//mui.back();
+}
 var events = (function(mod) {
 
 	//去掉所有html标签
@@ -673,7 +694,7 @@ var events = (function(mod) {
 			//1.求知问题详情页
 			//2.微课节次详情页
 			//3.微课节次单个详情页
-			if(id == "qiuzhi-question.html" || id == "course_details.html" || id == "course_section.html" || id == 'space-detail.html' || id == 'zonep_sub.html') {
+			if(id == "qiuzhi-question.html" || id == "course_details.html" || id == "course_section.html" || id == 'space-detail.html' || id == 'zonep_sub.html' || id == "sciedu_show_main.html") {
 				styles.hardwareAccelerated = true;
 			}
 			if(id == "show-home1.html") {

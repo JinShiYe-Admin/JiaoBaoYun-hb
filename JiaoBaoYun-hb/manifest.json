@@ -874,7 +874,9 @@
 					"js/qiuzhi/delContent_pop.js",
 					null,
 					"js/main/slide_navigation.js",
-					"js/publicHomeworkProtocol.js"
+					"js/publicHomeworkProtocol.js",
+					"js/main/off-canvas.js",
+					"js/mui.js"
 				],
 				"refer": [
 					"html/homework/homework-tea.html",
@@ -2432,7 +2434,8 @@
 					"js/utils/showaudio.js",
 					"js/utils/showvideoutil.js",
 					"css/utils/audiopopover.css",
-					"js/utils/playutil.js"
+					"js/utils/playutil.js",
+					"image/utils/loading.gif"
 				],
 				"refer": [
 					"html/cloud/app_notes_create.html"
@@ -3409,7 +3412,8 @@
 					"js/utils/compress.js",
 					"js/utils/CloudFileUtil.js",
 					"js/qiniu/qiniu.js",
-					"js/mui.previewimage.js"
+					"js/mui.previewimage.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -4160,7 +4164,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/RSAEncrypt.js",
 					"css/utils/preview.css",
-					"image/utils/videothumb.png"
+					"image/utils/videothumb.png",
+					"js/utils/gallerypick.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -4635,7 +4640,13 @@
 			"html/cloud/record_student_add.html": {
 				"resources": [
 					"js/utils/MultiMedia.js",
-					"css/utils/MultiMedia.css"
+					"css/utils/MultiMedia.css",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"css/utils/preview.css",
+					"image/utils/videothumb.png",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/utils/gallerypick.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -5025,7 +5036,8 @@
 				"resources": [
 					"css/mui.min.css",
 					"css/utils/common.css",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"image/qiuzhi/qiuzhi_noanswer.png"
 				],
 				"refer": [
 					"html/register/login.html",

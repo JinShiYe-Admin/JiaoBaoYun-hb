@@ -171,7 +171,9 @@
 			"js/publicHomeworkProtocol.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
-			"js/utils/events.js"
+			"js/utils/events.js",
+			"js/main/off-canvas.js",
+			"js/mui.js"
 		],
 		"refer": [
 			"html/index/mine.html",
@@ -438,7 +440,8 @@
 		"refer": [
 			"html/cloud/storage_upload_choose.html",
 			"html/cloud/storage_upload.html",
-			"html/cloud/storage_show_imge.html"
+			"html/cloud/storage_show_imge.html",
+			"html/cloud/storage_show_video.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi_home.html": {
@@ -1033,7 +1036,16 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/utils/cryption.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/cloud/AndroidFileSystem.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/mui.min.js",
+			"js/utils/CloudFileUtil.js",
+			"js/qiniu/qiniu.js"
 		],
 		"refer": [
 			"html/utils/customizeCity.html",
@@ -1268,7 +1280,13 @@
 	"html/cloud/record_student_add.html": {
 		"resources": [
 			"js/utils/MultiMedia.js",
-			"css/utils/MultiMedia.css"
+			"css/utils/MultiMedia.css",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/utils/preview.css",
+			"image/utils/videothumb.png",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/gallerypick.js"
 		],
 		"refer": []
 	},
@@ -1478,7 +1496,8 @@
 		"refer": [
 			"html/quan/group-pInfo.html",
 			"html/mine/qun_manage_info.html",
-			"html/mine/qun_data_details.html"
+			"html/mine/qun_data_details.html",
+			"html/mine/qun_data_create.html"
 		]
 	},
 	"html/quan/pub-dynamic.html": {
@@ -1669,7 +1688,9 @@
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
 		],
-		"refer": []
+		"refer": [
+			"html/cloud/keeprecord_callorrecord_main.html"
+		]
 	},
 	"html/mine/approval-apply.html": {
 		"resources": [
@@ -1855,7 +1876,8 @@
 			"js/mui.zoom.js",
 			"css/utils/pullToRefresh.css",
 			"js/mui.previewimage.js",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/cloud/app_notes_create.html"
@@ -2480,7 +2502,8 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"image/qiuzhi/qiuzhi_noanswer.png"
 		]
 	},
 	"html/cloud/app_notes_create.html": {
@@ -2492,7 +2515,30 @@
 			"css/utils/common.css",
 			"css/utils/preview.css",
 			"js/utils/recordvideoutil.js",
-			"image/utils/videothumb.png"
+			"image/utils/videothumb.png",
+			"js/utils/gallerypick.js",
+			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/mine/qun_data_create.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/cloud/storage_show_video.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/utils/common.css"
+		]
+	},
+	"html/cloud/keeprecord_callorrecord_main.html": {
+		"resources": [
+			"css/utils/pullToRefresh.css",
+			"css/mui.min.css",
+			"css/utils/MultiMedia.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }

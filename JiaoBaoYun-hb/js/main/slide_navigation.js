@@ -18,7 +18,7 @@ var slideNavigation = (function(mod) {
 		//加载界面监听
 		addSystemEvents();
 		//图标加载监听事件
-//		iconAddEvent();
+		//		iconAddEvent();
 		//安卓系统返回按钮
 		getBack();
 	}
@@ -27,7 +27,7 @@ var slideNavigation = (function(mod) {
 	 */
 	var setCondition = function() {
 		//仅支持竖屏显示
-		plus.screen.lockOrientation("portrait-primary");
+//		plus.screen.lockOrientation("portrait-primary");
 		//点击主界面时，关闭侧滑
 		main = plus.webview.currentWebview();
 		main.parent().addEventListener('maskClick', mod.closeMenu);
@@ -86,12 +86,9 @@ var slideNavigation = (function(mod) {
 					duration: 150
 				}
 			})
-
 			//等动画结束后，隐藏菜单webview，节省资源；
-			//				setTimeout(function() {
 			isInTransition = false;
 			menu.hide();
-			//				}, 150);
 			mod.showMenu = false;
 		}
 	}
@@ -138,8 +135,8 @@ var slideNavigation = (function(mod) {
 	 * @param {Object} interval 延迟加载时间间隔
 	 */
 	var preloadSlideNag = function(tarpage, interval) {
-		var tarIds=tarpage.split("/");
-		var tarId=tarIds[tarIds.length-1];
+		var tarIds = tarpage.split("/");
+		var tarId = tarIds[tarIds.length - 1];
 		//延迟加载
 		setTimeout(function() {
 			menu = mui.preload({
