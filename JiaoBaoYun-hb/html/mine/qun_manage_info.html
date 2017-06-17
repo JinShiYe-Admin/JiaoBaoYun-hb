@@ -23,6 +23,8 @@
 		<script type="text/javascript" src="../../js/utils/UploadHeadImage.js"></script>
 		<script type="text/javascript" src="../../js/utils/compress.js"></script>
 		<script type="text/javascript" src="../../js/utils/MultiMedia.js"></script>
+		<script type="text/javascript" src="../../js/utils/gallerypick.js"></script>
+
 		<style>
 			body,
 			.mui-content {
@@ -171,7 +173,10 @@
 						type: type, //修改的类型
 						value: value, //修改的值
 						post: false, //是否post
-						listener: [{ webid: 'qun_manage_info.html', winid: 'valueChange' }] //监听
+						listener: [{
+							webid: 'qun_manage_info.html',
+							winid: 'valueChange'
+						}] //监听
 					});
 
 					setTimeout(function() {

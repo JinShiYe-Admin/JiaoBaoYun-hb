@@ -1280,7 +1280,13 @@
 	"html/cloud/record_student_add.html": {
 		"resources": [
 			"js/utils/MultiMedia.js",
-			"css/utils/MultiMedia.css"
+			"css/utils/MultiMedia.css",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/utils/preview.css",
+			"image/utils/videothumb.png",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/gallerypick.js"
 		],
 		"refer": []
 	},
@@ -1682,7 +1688,9 @@
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
 		],
-		"refer": []
+		"refer": [
+			"html/cloud/keeprecord_callorrecord_main.html"
+		]
 	},
 	"html/mine/approval-apply.html": {
 		"resources": [
@@ -1868,7 +1876,8 @@
 			"js/mui.zoom.js",
 			"css/utils/pullToRefresh.css",
 			"js/mui.previewimage.js",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/cloud/app_notes_create.html"
@@ -2506,7 +2515,9 @@
 			"css/utils/common.css",
 			"css/utils/preview.css",
 			"js/utils/recordvideoutil.js",
-			"image/utils/videothumb.png"
+			"image/utils/videothumb.png",
+			"js/utils/gallerypick.js",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/mine/qun_data_create.html": {
@@ -2519,6 +2530,15 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css"
+		]
+	},
+	"html/cloud/keeprecord_callorrecord_main.html": {
+		"resources": [
+			"css/utils/pullToRefresh.css",
+			"css/mui.min.css",
+			"css/utils/MultiMedia.css",
+			"css/utils/common.css",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }
