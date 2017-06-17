@@ -250,9 +250,13 @@
 			}
 			//关闭
 			function closeMenu() {
+				var longTime = 500;
+				if(plus.os.name == 'iOS'){
+					longTime = 250;
+				}
 				setTimeout(function(){
 					mui.fire(main, "menu:close");
-				},500)
+				},longTime)
 			}
 			//优化显示出来的侧滑菜单，只需监听该菜单的左滑事件，然后将其关闭即可；在菜单上右滑，不做任何操作；
 			window.addEventListener("swipeleft", closeMenu);

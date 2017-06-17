@@ -1,27 +1,23 @@
 /**
  * @author an
  */
-window.onerror = function(err) {
-	console.log("error" + err.code + " " + err.message);
+window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
+	console.log("---ERROR---");
+	console.log("错误信息:" + errorMessage);
+	console.log("出错文件:" + scriptURI);
+	console.log("出错行号:" + lineNumber);
+	console.log("出错列号:" + columnNumber);
+	console.log("错误详情:" + errorObj);
+	console.log("---ERROR---");
 	events.closeWaiting();
-	mui.toast('当前界面加载出现错误，请更新最新版本！');
 	var webId = plus.webview.currentWebview().id;
 	if(webId == "firstPage.html" || webId == "index.html" || webId == "cloud_home.html" || webId == "sciedu_home.html" || webId == "show-home1.html" || webId == "course-home1") {
+		mui.toast('当前界面加载出现错误');
 		return false;
 	}
-	var header = document.querySelector("header");
-	var content = document.querySelector(".mui-content");
-	var nav = document.querySelector("nav");
-	if(header) {
-		header.innerHTML = '<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>';
-	}
-	if(content) {
-		content.innerHTML = "当前界面加载出现错误，请更新最新版本！";
-	}
-	if(nav) {
-		nav.parentNode.removeChild(nav);
-	}
-	//mui.back();
+	mui.alert('当前界面加载出现错误', 'ERROR', function() {
+		mui.back();
+	});
 }
 var events = (function(mod) {
 
