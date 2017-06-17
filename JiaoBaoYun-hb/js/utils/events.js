@@ -1309,14 +1309,15 @@ var events = (function(mod) {
 	 * @param {Object} key
 	 * @param {Object} mapKey
 	 */
-	mod.isExistInStorageMap=function(key,mapKey){
-		var map=myStorage.getItem(key);
-		if(map){
-			if(typeof(map.get(mapKey))=="number" ){
-				return map.get(mapKey);
+	mod.isExistInStorageMap = function(key, mapKey) {
+		var map = myStorage.getItem(key);
+		console.log("获取的map" + JSON.stringify(map))
+		if(map) {
+			if(typeof(map[mapKey]) == "number") {
+				return map[mapKey];
 			}
 			return false;
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -1326,12 +1327,13 @@ var events = (function(mod) {
 	 * @param {Object} mapKey
 	 * @param {Object} mapValue
 	 */
-	mod.setValueInMap=function(key,mapKey,mapValue){
-		var map=myStorage.getItem(key);
-		if(!map){
-			map=new Map();
+	mod.setValueInMap = function(key, mapKey, mapValue) {
+		var map = myStorage.getItem(key);
+		if(!map) {
+			map = {};
 		}
-		map.set(mapKey,mapValue);
+		map[mapKey] = mapValue;
+		myStorage.setItem(key, map);
 	}
 	/**
 	 * 存储或删除值
