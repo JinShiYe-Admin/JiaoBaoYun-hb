@@ -1,9 +1,8 @@
 var video = (function(mod) {
 	mod.recordVideo = function(data, successCB, errorCB) {
-		console.log(1111)
 		var options = mod.initOption(data);
 		if(plus.os.name == "Android") {
-			recordVideoInAndroid(options, successCB, errorCB);
+						recordVideoInAndroid(options, successCB, errorCB);
 		} else {
 			//			errorCB({
 			//				code: 999, // 错误编码
@@ -29,7 +28,6 @@ var video = (function(mod) {
 	}
 
 	function recordVideoInIOS(options, successCB, errorCB) {
-
 		var cmr = plus.camera.getCamera();
 		var res = cmr.supportedVideoResolutions[0];
 		var fmt = cmr.supportedVideoFormats[0];
@@ -46,6 +44,7 @@ var video = (function(mod) {
 								message: '视频大小不得超过30M' // 错误描述信息
 							});
 						} else {
+							console.log(123)
 							mVideo.ondurationchange = function() {
 								console.log("ondurationchange  duration " + mVideo.duration);
 								if(mVideo.duration < 11) {
@@ -59,12 +58,12 @@ var video = (function(mod) {
 										//					mui.toast("视频时长不得超出10秒");
 									})
 								}
-								mVideo.onerror = function() {
-									mui.toast("视频加载失败")
-								}
-								mVideo.src = tempPath;
 
 							}
+							mVideo.onerror = function() {
+								mui.toast("视频加载失败")
+							}
+							mVideo.src = tempPath;
 						}
 
 					})
