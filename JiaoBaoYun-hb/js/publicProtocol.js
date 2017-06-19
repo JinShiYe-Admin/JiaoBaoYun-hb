@@ -431,6 +431,7 @@ var postDataPro_PostLoginOut = function(commonData, wd, callback) {
 //26.用户云盘顶层文件及文件夹获取
 //所需参数
 //		var comData = {
+//			vtp:'',//类型，0文件及文件夹混合,1文件夹,2文件
 //			vvl:''//	节点ID，顶层为0
 //		};
 var postDataPro_PostDiFi = function(commonData, wd, callback) {
@@ -773,6 +774,51 @@ var postDataPro_PostTnewsE = function(commonData, wd, callback) {
 var postDataPro_PostBindMobile = function(commonData, enData, wd, callback) {
 	//发送网络请求，data为网络返回值
 	postDataEncry(storageKeyName.MAINURL + 'PostBindMobile', enData, commonData, 0, wd, callback);
+}
+
+//51.管理员修改用户权限
+//所需参数
+//		var comData = {
+//			rid:'',//某用户ID，返回的用户信息表中的行ID
+//			vtp:'',//更改项，upower(更改用户权限串),usys(更改用户是否为系统管理员)
+//			vvl:''//项值，对应vtp的值
+//		};
+//返回值：
+var postDataPro_PostReUpower = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostReUpower', enData, commonData, 1, wd, callback);
+}
+
+//52.通过手机号或登录名查找相应的分页记录
+//所需参数
+//		var comData = {
+//			top:'',//每页行数
+//			vvl:'',//查询的手机号或账户名，模糊查询的手机号或账户名,查全部赋予空值
+//			vvl1:''//页码,获取第几页
+//		};
+//返回值：
+var postDataPro_PostUListP = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostUListP', enData, commonData, 1, wd, callback);
+}
+
+//53.用户移动云盘文件
+//所需参数
+//		var comData = {
+//			vvl:'',//文件ID
+//			vvl1:'',//文件名称
+//			vvl2:''//文件上级ID，文件上级ID
+//		};
+//返回值：
+var postDataPro_PostDiFiM = function(commonData, wd, callback) {
+	//需要加密的数据
+	var enData = {};
+	//发送网络请求，data为网络返回值
+	postDataEncry(storageKeyName.MAINURL + 'PostDiFiM', enData, commonData, 1, wd, callback);
 }
 
 //---------------------------------------家校圈-----------------------------------------------------------------------------------------------------------

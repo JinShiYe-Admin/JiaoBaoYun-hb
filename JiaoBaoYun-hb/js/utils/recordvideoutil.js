@@ -44,7 +44,7 @@ var RecordVideo = (function(mod) {
 		if(plus.os.name == 'Android') {
 			mod.recordVideoAndroid(options, successCB, errorCB);
 		} else if(plus.os.name == 'iOS') {
-			mod.recordVideoInIOS(options,successCB,errorCB);
+			mod.recordVideoInIOS(options, successCB, errorCB);
 			//mod.recordVideoiOS(options, successCB, errorCB);
 		} else {
 			errorCB({
@@ -99,7 +99,7 @@ var RecordVideo = (function(mod) {
 	 * @param {Object} successCB
 	 * @param {Object} errorCB
 	 */
-	mod.recordVideoInIOS=function(options, successCB, errorCB) {
+	mod.recordVideoInIOS = function(options, successCB, errorCB) {
 		var cmr = plus.camera.getCamera();
 		var res = cmr.supportedVideoResolutions[0];
 		var fmt = cmr.supportedVideoFormats[0];
@@ -143,7 +143,13 @@ var RecordVideo = (function(mod) {
 
 			},
 			function(e) {
-				errorCB();
+				console.log('### ERROR ### 录制视频异常 name:' + e.code + " message:" + e.message);
+				if(e.code != 2) {
+					errorCB({
+						code: 'ERROR', // 错误编码
+						message: '录制视频异常' // 错误描述信息
+					});
+				}
 			}, {
 				filename: '_documents/' + (new Date()).getTime() + parseInt(Math.random() * 1000) + '.mp4',
 				index: 1,
@@ -199,16 +205,6 @@ var RecordVideo = (function(mod) {
 				}
 			}
 		}
-	}
-
-	/**
-	 * 录制视频iOS
-	 * @param {Object} data json
-	 * @param {Object} successCB 成功的回调
-	 * @param {Object} errorCB 失败的回调
-	 */
-	mod.recordVideoiOS = function(data, successCB, errorCB) {
-
 	}
 
 	return mod;

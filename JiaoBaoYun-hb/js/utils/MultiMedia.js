@@ -563,7 +563,9 @@ var MultiMedia = (function($, mod) {
 		//生成缩略图
 		if(plus.os.name == "iOS") {
 			console.log("addVideos " + path);
-			self.addVideosThumb(iosVideo, path, callback);
+			var video = document.createElement("video");
+			self.addVideosThumb(video, path, callback);
+			video.src = path;
 		} else {
 			console.log("addVideos " + path);
 			var video = document.createElement("video");
