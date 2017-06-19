@@ -1,5 +1,6 @@
 var Gallery = (function(mod) {
 
+	mod.pickVideoTime = 10; //从本地选取的时长，默认10秒(未达到11S都算10S)
 	/**
 	 * 从相册选取视频
 	 * @param {Object} callBack 回调
@@ -50,11 +51,11 @@ var Gallery = (function(mod) {
 					//2.拷贝视频到_documents文件夹，并修改后缀为MP4
 					entry.copyTo(parentEntry, copyName, function(entrySuccesCB) {
 						console.log("拷贝成功");
-						//3.判断时长是否在10S之内
+						//3.判断时长是否在N秒之内
 						var mVideo = document.createElement("video");
 						mVideo.ondurationchange = function() {
 							console.log("视频时长 " + mVideo.duration);
-							if(mVideo.duration < 11) {
+							if(mVideo.duration < (mod.pickVideoTime + 1)) {
 								var path = entrySuccesCB.fullPath;
 								if(plus.os.name == "iOS") {
 									path = "file://" + path;
@@ -74,12 +75,12 @@ var Gallery = (function(mod) {
 								}, function(remErrorCB) {
 									console.log("删除文件失败" + JSON.stringify(remErrorCB));
 								});
-								console.log("视频时长不得超出10秒");
+								console.log("视频时长不得超出" + mod.pickVideoTime + "秒");
 								wd.close();
-								mui.toast("视频时长不得超出10秒");
+								mui.toast("视频时长不得超出" + mod.pickVideoTime + "秒");
 								callBack({
 									flag: 0, //失败
-									message: "视频时长不得超出10秒" //失败信息
+									message: "视频时长不得超出" + mod.pickVideoTime + "秒" //失败信息
 								});
 							}
 						}
