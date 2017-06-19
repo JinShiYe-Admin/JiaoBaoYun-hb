@@ -1372,7 +1372,9 @@
 			"js/libs/RSA/BigInt.js",
 			"js/qiniu/qiniu.js",
 			"js/libs/RSA/RSA.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/utils/gallerypick.js",
+			"image/utils/videothumb.png"
 		],
 		"refer": []
 	},

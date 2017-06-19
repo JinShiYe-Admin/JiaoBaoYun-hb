@@ -52,7 +52,20 @@ var publish;
 var publishIsReady = false;
 var stuWorkReady = false;
 //document.getElementById('tabs-class').style.display = "none";
-mui.init();
+mui.init({
+	pullRefresh: {
+		container: '#pullrefresh',
+		down: {
+			style: 'circle',
+			callback: pulldownRefresh
+		},
+		up: {
+			auto: true,
+			contentrefresh: '正在加载...',
+			callback: pullupRefresh
+		}
+	}
+});
 //mui的plusready监听
 mui.plusReady(function() {
 	publish = document.getElementById('iconPublish');
@@ -284,9 +297,9 @@ var setListener = function() {
 			}
 			//学生家长角色
 		} else {
-			console.log("获取的作业："+JSON.stringify(studentHash.get(selectGId)));
-			if(studentHash.get(selectGId)&&studentHash.get(selectGId).length>0) {
-				
+			console.log("获取的作业：" + JSON.stringify(studentHash.get(selectGId)));
+			if(studentHash.get(selectGId) && studentHash.get(selectGId).length > 0) {
+
 				setHomeworkData(studentHash.get(selectGId));
 			} else {
 				this.classInfo.pageIndex = 1;

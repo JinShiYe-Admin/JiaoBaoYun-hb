@@ -57,6 +57,7 @@
 	<script src="../../js/utils/camera.js"></script>
 	<script src="../../js/utils/video.js"></script>
 	<script src="../../js/utils/load.js"></script>
+	<script src="../../js/utils/gallerypick.js"></script>
 	<!--压缩js-->
 	<script type="text/javascript" src="../../js/utils/compress.js"></script>
 	<!--加密-->
@@ -151,52 +152,16 @@
 					jQuery(item).css('pointerEvents', 'all');
 					return;
 				}
-				video.recordVideo({}, function(path) {
-					events.showWaiting();
-					console.log("保存在本地的路径：" + path);
-					load.getManageOptions(2, path, function(mData, thumb) {
-						console.log("视频获取的各项参数：" + JSON.stringify(data));
-						mData.saveSpace = storageKeyName.CLASSSPACE;
-						mData.spaceId = 6;
-						var data = CloudFileUtil.getSingleImgUploadOptions(path, mData.spaceId, mData.spaceType, mData.saveSpace, mData.options);
-						CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-							console.log("获取的数据：" + JSON.stringify(datas));
-							if(datas.Status == 1) {
-								var tokenInfo = datas.Data;
-								//上传文件
-								CloudFileUtil.uploadFile(tokenInfo, path, function(uploadData, status) {
-									console.log("获取的上传数据：" + JSON.stringify(uploadData));
-									console.log("获取的token信息：" + JSON.stringify(tokenInfo));
-									var img = { //图片信息
-										url: tokenInfo.Domain + tokenInfo.Key,
-										thumb: tokenInfo.OtherKey[data.thumbKey],
-										clip: tokenInfo.OtherKey[data.thumbKey] + "?imageMogr2/gravity/Center/crop/!" + mData.options.thumbSize.width + "x" + mData.options.thumbSize.width * 0.45,
-										localPath: path,
-										type: 2
-									}
-									//										console.log("获取的图片信息：" + JSON.stringify(img));
-									//关闭等待框
-									plus.nativeUI.closeWaiting();
-									//放置图片
-									CloudFileUtil.setPic(img, 0, thumb);
-									jQuery("#take_camero").css('pointerEvents', 'all');
-								});
-							}
+				var btnArr = [{
+					title: "录制视频",
+					dia: 0
+				}, {
+					title: "本地视频",
+					dia: 1
+				}];
+				var funArr = [recordVideo, pickLocalVideo];
+				events.showActionSheet(btnArr,funArr);
 
-						}, function(xhr, type, errorThrown) {
-							console.log("错误类型：" + type + errorThrown);
-							plus.nativeUI.closeWaiting(); //关闭等待框
-							jQuery("#take_camero").css('pointerEvents', 'all');
-						});
-					})
-				}, function(errData) {
-					console.log(errData.code);
-					if(errData.code != 0) {
-						mui.toast(errData.message);
-					}
-					jQuery("#take_camero").css('pointerEvents', 'all');
-					console.log("item能点击了！")
-				})
 			});
 			//录音按钮
 			events.addTap('get_record', function() {
@@ -296,7 +261,75 @@
 					}
 				})
 			})
-		})
+		});
+		/**
+		 * 选择本地视频
+		 */
+		function pickLocalVideo() {
+			Gallery.pickVideo(function(e) {
+				if(e.flag === 1) {
+					uploadFile(e.path);
+				}
+			})
+		}
+		/**
+		 * 录像
+		 */
+		function recordVideo() {
+			video.recordVideo({}, function(path) {
+				events.showWaiting();
+				console.log("保存在本地的路径：" + path);
+				uploadFile(path);
+			}, function(errData) {
+				console.log(errData.code);
+				if(errData.code != 0) {
+					mui.toast(errData.message);
+				}
+				jQuery("#take_camero").css('pointerEvents', 'all');
+				console.log("item能点击了！")
+			})
+		}
+		/**
+		 * 上传文件
+		 * @param {Object} path
+		 */
+		function uploadFile(path) {
+			load.getManageOptions(2, path, function(mData, thumb) {
+				console.log("视频获取的各项参数：" + JSON.stringify(data));
+				mData.saveSpace = storageKeyName.CLASSSPACE;
+				mData.spaceId = 6;
+				var data = CloudFileUtil.getSingleImgUploadOptions(path, mData.spaceId, mData.spaceType, mData.saveSpace, mData.options);
+				CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+					console.log("获取的数据：" + JSON.stringify(datas));
+					if(datas.Status == 1) {
+						var tokenInfo = datas.Data;
+						//上传文件
+						CloudFileUtil.uploadFile(tokenInfo, path, function(uploadData, status) {
+							console.log("获取的上传数据：" + JSON.stringify(uploadData));
+							console.log("获取的token信息：" + JSON.stringify(tokenInfo));
+							var img = { //图片信息
+								url: tokenInfo.Domain + tokenInfo.Key,
+								thumb: tokenInfo.OtherKey[data.thumbKey],
+								clip: tokenInfo.OtherKey[data.thumbKey] + "?imageMogr2/gravity/Center/crop/!" + mData.options.thumbSize.width + "x" + mData.options.thumbSize.width * 0.45,
+								localPath: path,
+								type: 2
+							}
+							//										console.log("获取的图片信息：" + JSON.stringify(img));
+							//关闭等待框
+							plus.nativeUI.closeWaiting();
+							//放置图片
+							CloudFileUtil.setPic(img, 0, thumb);
+							jQuery("#take_camero").css('pointerEvents', 'all');
+						});
+					}
+
+				}, function(xhr, type, errorThrown) {
+					console.log("错误类型：" + type + errorThrown);
+					plus.nativeUI.closeWaiting(); //关闭等待框
+					jQuery("#take_camero").css('pointerEvents', 'all');
+				});
+			})
+		}
 		/**
 		 * 通过群id获取群人员信息
 		 * @param {Object} groupId

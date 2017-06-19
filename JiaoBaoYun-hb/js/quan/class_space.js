@@ -47,7 +47,9 @@ var class_space = (function(mod) {
 	mod.replaceUrl = function() {
 		createListView();
 	}
-
+	/**
+	 * 
+	 */
 	function errCallback() {
 		if(pageIndex > 1) {
 			pageIndex -= 1;

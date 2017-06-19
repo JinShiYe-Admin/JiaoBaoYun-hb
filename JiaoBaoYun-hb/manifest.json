@@ -713,7 +713,9 @@
 					"/storage/emulated/0/tencent/TIMfile_recv/%2PLKECVOE6LS%7BQ8W4%7D%7B$L3.png",
 					"image/utils/playvideo.png",
 					"js/utils/load.js",
-					"js/utils/video.js"
+					"js/utils/video.js",
+					"js/utils/gallerypick.js",
+					"image/utils/videothumb.png"
 				],
 				"refer": [],
 				"priority": 0
