@@ -17,14 +17,6 @@
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<link rel="stylesheet" href="../../css/cloud/file.css" />
 		<link rel="stylesheet" href="../../css/utils/preview.css" />
-		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
-		<script type="text/javascript" src="../../js/utils/cryption.js"></script>
-		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
-		<script type="text/javascript" src="../../js/utils/events.js"></script>
-		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
-		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
-
 		<style>
 			.iconfont {
 				line-height: 42px;
@@ -171,6 +163,13 @@
 			<div id="all">
 			</div>
 		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
+		<script type="text/javascript" src="../../js/utils/cryption.js"></script>
+		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
+		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<script type="text/javascript">
 			//云盘子页面
 			mui.init({
@@ -179,8 +178,6 @@
 				}
 			});
 			mui.plusReady(function() {
-				events.preload('storage_upload.html'); //预加载上传文件选择
-				events.preload('storage_upload_choose.html'); //预加载选择上传文件的方式
 				//---初始化---start---
 				var topFolderData = []; //记录顶层的所有的文件和文件夹
 				var showPid = ''; //当前展示的界面的父id
@@ -217,20 +214,16 @@
 
 				//点击上传按钮
 				document.getElementById('upload').addEventListener('tap', function() {
-					console.log('上传' + JSON.stringify(topFolderData[0]));
-					events.fireToPageWithData('storage_upload_choose.html', 'init', {
-						fid: '0', //文件id,顶层0
-						showTop: false, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
-						title: '我的教宝云盘', //标题名
-						top: topFolderData[0].fdata //顶层文件和文件夹的数据
-					});
+					console.log('上传文件');
+					var show = showPidList[showPidList.length - 1];
+					events.openNewWindowWithData("storage_upload_choose.html", show);
 				});
 
 				//点击传输列表
 				document.getElementById('transport').addEventListener('tap', function() {
 					var targetPage = plus.webview.getWebviewById('storage_transport.html');
 					mui.fire(targetPage, 'getUpAndDownEntry');
-					targetPage.show('slide-in-right', 250)
+					targetPage.show('slide-in-right', 250);
 				});
 
 				//增加文件夹的监听
