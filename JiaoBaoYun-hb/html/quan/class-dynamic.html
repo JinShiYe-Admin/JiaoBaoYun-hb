@@ -136,7 +136,7 @@
 			//获取录像按钮
 			events.addTap('take_camero', function() {
 				var item = this;
-				jQuery(item).css('pointerEvents', 'none');
+//				jQuery(item).css('pointerEvents', 'none');
 				console.log("item不能点击了！" + item.id);
 				if(CloudFileUtil.files.length > 0) {
 					switch(CloudFileUtil.files[0].type) {
@@ -149,7 +149,7 @@
 						default:
 							break;
 					}
-					jQuery(item).css('pointerEvents', 'all');
+//					jQuery(item).css('pointerEvents', 'all');
 					return;
 				}
 				var btnArr = [{
@@ -157,7 +157,7 @@
 					dia: 0
 				}, {
 					title: "本地视频",
-					dia: 1
+					dia: 0
 				}];
 				var funArr = [recordVideo, pickLocalVideo];
 				events.showActionSheet(btnArr,funArr);
