@@ -190,7 +190,8 @@
 			"html/quan/aboutme.html",
 			"html/mine/qun_manage_a.html",
 			"html/cloud/app_notes_main.html",
-			"html/mine/qun_manage_info.html"
+			"html/mine/qun_manage_info.html",
+			"html/cloud/storage_transport.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -491,7 +492,9 @@
 			"js/mui.min.js",
 			"fonts/iconfont.ttf"
 		],
-		"refer": []
+		"refer": [
+			"html/cloud/storage_upload.html"
+		]
 	},
 	"html/qiuzhi/qiuzhi-answerDetail.html": {
 		"resources": [
