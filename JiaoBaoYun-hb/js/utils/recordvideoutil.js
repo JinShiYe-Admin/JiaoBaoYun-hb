@@ -44,10 +44,7 @@ var RecordVideo = (function(mod) {
 		if(plus.os.name == 'Android') {
 			mod.recordVideoAndroid(options, successCB, errorCB);
 		} else if(plus.os.name == 'iOS') {
-			errorCB({
-				code: plus.os.name, // 错误编码
-				message: '功能暂未开放' // 错误描述信息
-			});
+			mod.recordVideoInIOS(options,successCB,errorCB);
 			//mod.recordVideoiOS(options, successCB, errorCB);
 		} else {
 			errorCB({
@@ -96,6 +93,65 @@ var RecordVideo = (function(mod) {
 			});
 		}
 	}
+	/**
+	 * 
+	 * @param {Object} options
+	 * @param {Object} successCB
+	 * @param {Object} errorCB
+	 */
+	mod.recordVideoInIOS=function(options, successCB, errorCB) {
+		var cmr = plus.camera.getCamera();
+		var res = cmr.supportedVideoResolutions[0];
+		var fmt = cmr.supportedVideoFormats[0];
+		cmr.startVideoCapture(function(p) {
+				var tempPath = plus.io.convertLocalFileSystemURL(p)
+				var mVideo = document.createElement("video");
+				plus.io.resolveLocalFileSystemURL(p, function(entry) {
+					entry.file(function(file) {
+						console.log('filesize=' + file.size)
+						if(file.size > 1048576 * 30) {
+							//						mui.toast('视频大小不得超过30M');
+							errorCB({
+								code: 999, // 错误编码
+								message: '视频大小不得超过30M' // 错误描述信息
+							});
+						} else {
+							console.log(123)
+							mVideo.ondurationchange = function() {
+								console.log("ondurationchange  duration " + mVideo.duration);
+								if(mVideo.duration < 11) {
+									console.log('成功：' + tempPath);
+									successCB("file://" + tempPath)
+
+								} else {
+									errorCB({
+										code: 999, // 错误编码
+										message: '视频时长不得超出10秒' // 错误描述信息
+										//					mui.toast("视频时长不得超出10秒");
+									})
+								}
+
+							}
+							mVideo.onerror = function() {
+								mui.toast("视频加载失败")
+							}
+							mVideo.src = tempPath;
+						}
+
+					})
+				})
+
+			},
+			function(e) {
+				errorCB();
+			}, {
+				filename: '_documents/' + (new Date()).getTime() + parseInt(Math.random() * 1000) + '.mp4',
+				index: 1,
+				resolution: res,
+				format: fmt
+			});
+
+	}
 
 	/**
 	 * 录制视频Android
@@ -112,7 +168,7 @@ var RecordVideo = (function(mod) {
 		var file = new File(options.outPutPath);
 		var outPutUri = Uri.fromFile(file);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri); //录像输出位置
-//		intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0); //0 最低质量, 1高质量(不设置,10M;0,几百KB;1,50M)
+		//		intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0); //0 最低质量, 1高质量(不设置,10M;0,几百KB;1,50M)
 		intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, options.time); //控制录制时间单位秒
 
 		var main = plus.android.runtimeMainActivity();

@@ -2335,7 +2335,8 @@
 					"js/utils/load.js",
 					"js/utils/recordvideoutil.js",
 					"js/utils/video.js",
-					"image/utils/playvideo.png"
+					"image/utils/playvideo.png",
+					"image/utils/videothumb.png"
 				],
 				"refer": [],
 				"priority": 0
