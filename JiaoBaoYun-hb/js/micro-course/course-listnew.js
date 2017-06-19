@@ -164,7 +164,7 @@ var course_listnew = (function(mod) {
 		var courseTime = events.isExistInStorageMap(storageKeyName.COURSELASTTIME, cell.TabId);
 		console.log("获取的更新时间：" + JSON.stringify(courseTime));
 		if(courseTime) {
-			if(courseTime < Date.parse(cell.UpdateTime).getTime()) {
+			if(courseTime < Date.parse(cell.UpdateTime)) {
 				cell.IsUpdate = 1;
 			} else {
 				cell.IsUpdate = 0;
@@ -391,7 +391,7 @@ var course_listnew = (function(mod) {
 		mod.getRedCircle(item);
 		events.singleWebviewInPeriod(item, '../micro-course/course_details.html', item.info);
 		if(!events.getUtid()){
-			events.setValueInMap(storageKeyName.COURSELASTTIME, item.info.TabId, Date.now().getTime());
+			events.setValueInMap(storageKeyName.COURSELASTTIME, item.info.TabId, Date.now());
 		}
 	}
 	mod.getRedCircle = function(item) {
