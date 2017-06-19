@@ -71,23 +71,8 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">选择上传的文件</h1>
+			<h1 class="mui-title">从本地上传文件</h1>
 		</header>
-		<nav class="mui-bar mui-bar-tab" style="background: #383E4E;">
-			<div style="margin: 5px;">
-				<div class="mui-pull-left" style="width: 45%;">
-					<div style="color: white;margin-left: 10%;">选择上传的位置</div>
-					<button id="choose" type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 15px;margin-left: 5%;background: #7F8594;border-color: #7F8594;height: 40px;">
-						<img class="mui-pull-left" src="../../image/cloud/A_folder.png"style="width: 20%;height: 20px;" />
-						<div id="yunpath" class="mui-ellipsis mui-pull-right"style="width: 80%;text-align: center;"></div>
-					</button>
-				</div>
-				<div class="mui-pull-right" style="width: 45%;">
-					<br />
-					<button id="upload" type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 15px;margin-left: -5%;background: #636770;border-color: #636770;height: 40px;">上传</button>
-				</div>
-			</div>
-		</nav>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider">
 				<div id="sliderSegmentedControl" style="background: #E8E9E9;" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
@@ -129,15 +114,26 @@
 		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript">
+			var main; //当前webview对象
+			var pid = ''; //文件的上层ID
+			var showFolderId = ''; //当前显示的文件夹id
+			var folderList = []; //目录数组，每打开一个目录，将该目录保存
+			var upFile = null; //记录上传的文件
 			mui.init();
 			mui.plusReady(function() {
+				console.log("从本地上传")
+				initData();
+				initListener()
+				initScroll();
+				init();
+			});
 
-				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				var subData = null; //记录从父页面获取的数据
-				var pid = ''; //文件的上层ID
-				var showFolderId = ''; //当前显示的文件夹id
-				var folderList = []; //目录数组，每打开一个目录，将该目录保存
-				var upFile = null; //记录上传的文件
+			function initData() {
+				main = plus.webview.currentWebview(); //获取当前窗体对象
+				console.log(main.id + " " + JSON.stringify(main.data));
+			}
+
+			function initScroll() {
 				mui(".mui-scroll-wrapper").scroll({
 					scrollY: true, //是否竖向滚动
 					scrollX: false, //是否横向滚动
@@ -145,7 +141,21 @@
 					deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
 					bounce: true, //是否启用回弹
 				});
+			}
 
+			//界面初始化
+			function init() {
+				document.getElementById("folderlist").innerHTML = '';
+				document.getElementById("all").innerHTML = '';
+				//createFolder();
+				if(mui.os.ios) { //iOS系统
+					initIOS();
+				} else if(mui.os.android) { //android系统
+					initANDROID();
+				}
+			}
+
+			function initListener() {
 				//返回按钮
 				mui.back = function() {
 					folderList.pop(); //清除最后一个历史记录
@@ -165,39 +175,6 @@
 						showFolderId = show;
 					}
 				}
-
-				//修改存储到云盘的路径
-				document.getElementById('choose').addEventListener('tap', function() {
-					var targetPage = plus.webview.getWebviewById('storage_main_choose.html');
-					mui.fire(targetPage, 'init', {
-						fid: subData.fid, //文件id,顶层0
-						showTop: subData.showTop, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
-						title: subData.title, //标题名
-						top: subData.top, //顶层文件和文件夹的数据
-						type: '1' //选择文件的方式0，从本地文件1
-					});
-					targetPage.show('slide-in-bottom', 250);
-				});
-
-				//上传选择的文件
-				document.getElementById('upload').addEventListener('tap', function() {
-					if(upFile != null) {
-						//console.log("upload:" + JSON.stringify(upFile));
-						//跳转到传输列表
-						//plus.nativeUI.showWaiting(storageKeyName.WAITING);
-						events.fireToPageWithData('storage_transport.html', 'addUpload', {
-							path: upFile.path, //路径
-							fname: upFile.fname, //文件名
-							metadata: upFile.metadata, //文件信息
-							pid: pid //云盘文件夹父ID
-						});
-						document.getElementById(upFile.fileid).style.background = 'white';
-						upFile = null;
-						changeUpBtnColorToDefault();
-					} else {
-						mui.toast('请选择上传的文件');
-					}
-				});
 
 				//点击顶部文件夹列表
 				mui('#folderlist').on('tap', '.mui-control-item', function() {
@@ -226,17 +203,10 @@
 								//console.log('top_!=null');
 								document.getElementById("top_" + item).parentNode.removeChild(document.getElementById("top_" + item));
 							}
-							//else {
-							//console.log('top_==null');
-							//}
-							//删除底部文件夹界面
 							if(document.getElementById("folder_" + item) != null) {
 								//console.log('folder_!=null');
 								document.getElementById("folder_" + item).parentNode.removeChild(document.getElementById("folder_" + item));
 							}
-							//else {
-							//console.log('folder_==null');
-							//}
 						}
 					});
 					folderList = tempList;
@@ -248,7 +218,6 @@
 						}
 					}
 					upFile = null;
-					changeUpBtnColorToDefault();
 				});
 
 				/**
@@ -286,9 +255,6 @@
 							}
 							upFile == null
 						}
-
-						changeUpBtnColorToDefault();
-						//
 						showFolderId = fid;
 						resolveLocalFileSystemURL(fid);
 					} else if(isFile == 'true') {
@@ -306,7 +272,6 @@
 								} else if(succesCB.size == 0) {
 									mui.toast('请选择大于0B的文件');
 								} else {
-
 									if(upFile == null) { //当前页面没选上传的文件
 										upFile = { //记录上传的文件
 											folderid: showFolderId, //所属文件夹id
@@ -317,13 +282,11 @@
 										}
 										console.log("upFile0:" + JSON.stringify(upFile));
 										document.getElementById(id).style.background = 'deepskyblue';
-										changeUpBtnColor();
 									} else {
 										console.log("upFile1:" + JSON.stringify(upFile));
 										if(upFile.fileid == id) { //点击相同的文件
 											upFile = null;
 											document.getElementById(id).style.background = 'white';
-											changeUpBtnColorToDefault();
 										} else {
 											if(document.getElementById(upFile.fileid) != null) {
 												//将上次选择的文件置为未选中状态
@@ -338,7 +301,6 @@
 											}
 											console.log("upFile2:" + JSON.stringify(upFile));
 											document.getElementById(id).style.background = 'deepskyblue';
-											changeUpBtnColor();
 										}
 									}
 								}
@@ -357,203 +319,110 @@
 							}
 						});
 					}
-
-					init();
 				});
+			}
 
-				/**
-				 * 将上传按钮颜色设置为默认颜色
-				 */
-				function changeUpBtnColorToDefault() {
-					document.getElementById('upload').style.background = '#636770';
-					document.getElementById('upload').style.border = '#636770';
-				}
+			function initElement(path) {
+				console.log('initElement:' + path);
+				addTop(path, '手机'); //顶部
+				addbot(path); //底部
+				folderList.push(path);
+				showFolderId = path;
+				document.getElementById("folder_" + path).style.display = 'inline';
+				resolveLocalFileSystemURL(path);
+			}
 
-				/**
-				 * 将上传按钮颜色设置为蓝色
-				 */
-				function changeUpBtnColor() {
-					document.getElementById('upload').style.background = '#4DA3F5';
-					document.getElementById('upload').style.border = '#4DA3F5';
-				}
-
-				//界面初始化
-				function init() {
-					document.getElementById("folderlist").innerHTML = '';
-					document.getElementById("all").innerHTML = '';
-					//createFolder();
-					if(mui.os.ios) { //iOS系统
-						initIOS();
-					} else if(mui.os.android) { //android系统
-						initANDROID();
-					}
-				}
-
-				/**
-				 * 在程序中创建utid的文件夹和对应的上传下载文件夹
-				 */
-				function createFolder() {
-					var url = plus.io.PUBLIC_DOCUMENTS;
-					//  PRIVATE_WWW: 应用运行资源目录常量
-					//  PRIVATE_DOC: 应用私有文档目录常量
-					//  PUBLIC_DOCUMENTS: 程序公用文档目录常量
-					//  PUBLIC_DOWNLOADS: 程序公用下载目录常量
-					//					var path = plus.io.convertLocalFileSystemURL(url);
-					//					var newurl = plus.io.convertAbsoluteFileSystem(url);
-					//					console.log("initIOS: " + path + '|' + newurl);
-					plus.io.requestFileSystem(url, function(succesCB) {
-						//请求成功的回调
-						//succesCB:FileSystem:请求到的文件系统对象
-						//属性：
-						//name: 文件系统的名称
-						//root: 文件系统中的目录对象，用于管理特定的本地目录
-						//						console.log("请求文件系统" + succesCB.name + "成功");
-						//console.log("文件系统的名称:" + succesCB.name);
-						//console.log("文件系统中的目录对象:" + succesCB.root.fullPath);
-						var LocalURL = succesCB.root.toLocalURL();
-						var URL = succesCB.root.toURL();
-						//console.log("root: " + LocalURL + '|' + URL);
-						//记录document的地址
-						window.myStorage.setItem(window.storageKeyName.DOCUMENTSPATH, LocalURL);
-						var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-						//创建utid文件夹
-						getDirectory(succesCB.root, personalUTID, function(succesCB2) {
-							//创建下载文件夹
-							getDirectory(succesCB2, 'download', function(succesCB3) {
-								//创建上传文件夹
-								getDirectory(succesCB2, 'upload', function(succesCB3) {
-									//									console.log("DOCUMENTSPATH: " + window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH));
-								});
+			//通过URL参数获取目录对象或文件对象
+			function resolveLocalFileSystemURL(URL) {
+				plus.io.resolveLocalFileSystemURL(URL, function(succesCB) {
+					//请求成功的回调
+					//succesCB:DirectoryEntry:请求到的目录或文件对象
+					//console.log("请求文件系统成功");
+					directoryReader(URL, succesCB); //读取对象
+				}, function(errorCB) {
+					//请求失败的的回调
+					mui.toast('请求文件系统失败 ' + errorCB.message);
+					console.log("请求文件系统失败: " + JSON.stringify(errorCB));
+				});
+			}
+			/**
+			 * 在程序中创建utid的文件夹和对应的上传下载文件夹
+			 */
+			function createFolder() {
+				var url = plus.io.PUBLIC_DOCUMENTS;
+				//  PRIVATE_WWW: 应用运行资源目录常量
+				//  PRIVATE_DOC: 应用私有文档目录常量
+				//  PUBLIC_DOCUMENTS: 程序公用文档目录常量
+				//  PUBLIC_DOWNLOADS: 程序公用下载目录常量
+				//					var path = plus.io.convertLocalFileSystemURL(url);
+				//					var newurl = plus.io.convertAbsoluteFileSystem(url);
+				//					console.log("initIOS: " + path + '|' + newurl);
+				plus.io.requestFileSystem(url, function(succesCB) {
+					//请求成功的回调
+					//succesCB:FileSystem:请求到的文件系统对象
+					//属性：
+					//name: 文件系统的名称
+					//root: 文件系统中的目录对象，用于管理特定的本地目录
+					//						console.log("请求文件系统" + succesCB.name + "成功");
+					//console.log("文件系统的名称:" + succesCB.name);
+					//console.log("文件系统中的目录对象:" + succesCB.root.fullPath);
+					var LocalURL = succesCB.root.toLocalURL();
+					var URL = succesCB.root.toURL();
+					//console.log("root: " + LocalURL + '|' + URL);
+					//记录document的地址
+					window.myStorage.setItem(window.storageKeyName.DOCUMENTSPATH, LocalURL);
+					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+					//创建utid文件夹
+					getDirectory(succesCB.root, personalUTID, function(succesCB2) {
+						//创建下载文件夹
+						getDirectory(succesCB2, 'download', function(succesCB3) {
+							//创建上传文件夹
+							getDirectory(succesCB2, 'upload', function(succesCB3) {
+								//									console.log("DOCUMENTSPATH: " + window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH));
 							});
 						});
-
-					}, function(errorCB) {
-						//请求失败的的回调
-						mui.toast("请求文件系统失败 " + errorCB.message);
-						console.log("请求文件系统失败: " + JSON.stringify(errorCB));
 					});
-				}
 
-				function initIOS() {
-					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-					initElement(window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH) + personalUTID);
-				}
+				}, function(errorCB) {
+					//请求失败的的回调
+					mui.toast("请求文件系统失败 " + errorCB.message);
+					console.log("请求文件系统失败: " + JSON.stringify(errorCB));
+				});
+			}
 
-				function initANDROID() {
-					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-					//initElement(window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH) + personalUTID);
-					console.log('initANDROID:' + window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH));
-					var fileList = window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH).split('/');
-					var str = ''
-					for(var i = 0; i < fileList.length; i++) {
-						if(fileList[i] == '') {
-							fileList[i] = '/';
-						}
-						if('Android' == fileList[i]) {
-							break;
-						}
-						str = str + fileList[i] + '/';
+			function initIOS() {
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				initElement(window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH) + personalUTID);
+			}
+
+			function initANDROID() {
+				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
+				//initElement(window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH) + personalUTID);
+				console.log('initANDROID:' + window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH));
+				var fileList = window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH).split('/');
+				var str = ''
+				for(var i = 0; i < fileList.length; i++) {
+					if(fileList[i] == '') {
+						fileList[i] = '/';
 					}
-					initElement(str);
+					if('Android' == fileList[i]) {
+						break;
+					}
+					str = str + fileList[i] + '/';
 				}
+				initElement(str);
+			}
 
-				function initElement(path) {
-					console.log('initElement:' + path);
-					addTop(path, '手机'); //顶部
-					addbot(path); //底部
-					folderList.push(path);
-					showFolderId = path;
-					document.getElementById("folder_" + path).style.display = 'inline';
-					resolveLocalFileSystemURL(path);
-				}
-
-				//通过URL参数获取目录对象或文件对象
-				function resolveLocalFileSystemURL(URL) {
-					plus.io.resolveLocalFileSystemURL(URL, function(succesCB) {
-						//请求成功的回调
-						//succesCB:DirectoryEntry:请求到的目录或文件对象
-						//console.log("请求文件系统成功");
-						directoryReader(URL, succesCB); //读取对象
-					}, function(errorCB) {
-						//请求失败的的回调
-						mui.toast('请求文件系统失败 ' + errorCB.message);
-						console.log("请求文件系统失败: " + JSON.stringify(errorCB));
-					});
-				}
-
-				/**
-				 * 创建或打开子目录
-				 * @param {Object} entry 文件系统中的目录对象
-				 * @param {Object} name 目录名字
-				 * @param {Object} succesCB 成功的回调
-				 * @param {Object} errorCB 失败的回调
-				 */
-				function getDirectory(entry, name, succesCallBack, errorCallBack) {
-					entry.getDirectory(name, {
-						create: true,
-						exclusive: false
-					}, function(succesCB) {
-						//						console.log("创建或打开子目录" + name + "成功");
-						//console.log("文件系统的名称:" + succesCB.name);
-						//console.log("文件系统中的目录对象:" + succesCB.fullPath);
-						succesCallBack(succesCB);
-					}, function(errorCB) {
-						mui.toast("创建或打开子目录 " + name + errorCB.message);
-						console.log("创建或打开子目录" + name + "失败: " + JSON.stringify(errorCB));
-						errorCallBack(errorCB);
-					});
-				}
-
-				/**
-				 * 读取目录下的文件及子目录
-				 * @param {Object} URL 目录路径
-				 * @param {Object} entry 文件系统对象
-				 */
-				function directoryReader(URL, entry) {
-					//创建一个目录读取对象，用户读取目下的文件及子目录。
-					//DirectoryReader entry.createReader();
-					//返回值：DirectoryReader : 目录读取对象
-					//DirectoryReader
-					//方法：
-					//readEntries: 获取当前目录中的所有文件和子目录
-					//directoryReader.readEntries( succesCB, errorCB );
-					var directoryReader = entry.createReader();
-					directoryReader.readEntries(function(succesCB) {
-							//succesCB:文件或目录对象的引用,可指向文件或目录对象（DirectoryEntry|FileEntry）
-							console.log("获取当前目录中的所有文件和子目录成功");
-							mui.each(succesCB, function(index, element) {
-								//console.log("directoryReader:" + JSON.stringify(element));
-								additem(URL, element)
-							});
-							if(succesCB.length == 0) {
-								mui.toast('没有文件');
-							}
-							//---滑动start---
-							mui(".mui-scroll-wrapper").scroll({
-								scrollY: true, //是否竖向滚动
-								scrollX: false, //是否横向滚动
-								indicators: true, //是否显示滚动条
-								deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
-								bounce: true, //是否启用回弹
-							});
-							//---滑动end---
-						},
-						function(errorCB) {
-							mui.toast("读取当前目录中的所有文件和子目录失败 " + errorCB.message);
-							console.log("获取当前目录中的所有文件和子目录失败: " + JSON.stringify(errorCB));
-						});
-				}
-
-				/**
-				 * 新增一个空的文件夹
-				 * @param {Object} pid 父id
-				 */
-				function addbot(path) {
-					console.log('addbot:' + path);
-					var top = 45 + 38 + localStorage.getItem('StatusHeightNo') * 1;
-					var div = document.createElement('div');
-					div.setAttribute('id', 'folder_' + path);
-					div.innerHTML = '<div class="mui-scroll-wrapper"style="top:' + top + 'px;margin-bottom: 91px;">\
+			/**
+			 * 新增一个空的文件夹
+			 * @param {Object} pid 父id
+			 */
+			function addbot(path) {
+				console.log('addbot:' + path);
+				var top = 45 + 38 + localStorage.getItem('StatusHeightNo') * 1;
+				var div = document.createElement('div');
+				div.setAttribute('id', 'folder_' + path);
+				div.innerHTML = '<div class="mui-scroll-wrapper"style="top:' + top + 'px;">\
 										<div class="mui-scroll">\
 											<ul id="ul_' + path + '" class="mui-table-view">\
 											<div id="ul_folder_' + path + '"></div>\
@@ -561,8 +430,109 @@
 											</ul>\
 										</div>\
 									</div>';
-					div.style.display = 'none';
-					document.getElementById("all").appendChild(div);
+				div.style.display = 'none';
+				document.getElementById("all").appendChild(div);
+				//---滑动start---
+				mui(".mui-scroll-wrapper").scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false, //是否横向滚动
+					indicators: true, //是否显示滚动条
+					deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+					bounce: true, //是否启用回弹
+				});
+				//---滑动end---
+			}
+
+			/**
+			 * 顶部增加一项文件夹
+			 * @param {Object} fid 文件id
+			 * @param {Object} fname 文件名
+			 */
+			function addTop(path, name) {
+				console.log('addTop:' + path + '|' + name);
+				var div = document.createElement('div');
+				div.setAttribute('id', 'top_' + path);
+				div.setAttribute('data-path', path);
+				div.setAttribute('data-name', name);
+				div.className = 'mui-control-item';
+				if(folderList.length == 0) {
+					div.className = 'mui-control-item mui-active';
+				}
+				div.innerText = name + ' >';
+				document.getElementById("folderlist").appendChild(div);
+			}
+
+			/**
+			 * 新增一个文件或文件夹
+			 * @param {Object} URL 父文件夹路径
+			 * @param {Object} data
+			 */
+			function additem(URL, data) {
+				//console.log('additem:URL：' + URL + '|data：' + data.fullPath);
+				if(mui.os.ios) { //ios系统
+					data.fullPath = 'file://' + data.fullPath
+				}
+				var li = document.createElement('li');
+				li.setAttribute('id', 'fid_' + data.fullPath); //元素id
+				li.setAttribute('data-fid', data.fullPath); //文件id
+				li.setAttribute('data-fname', data.name); //文件名
+				li.setAttribute('data-isFile', data.isFile); //类型
+				li.setAttribute('data-isDirectory', data.isDirectory); //类型
+				li.className = 'mui-table-view-cell mui-media';
+				//文件夹右侧箭头
+				var html1 = '';
+				//文件或文件图标
+				var html2 = '';
+				//文件名
+				var html3 = '';
+				//					if(data.name[0] == '.') { //隐藏的文件夹或文件
+				//						//console.log('隐藏的文件夹或文件');
+				//					} else
+				if(data.isDirectory) { //文件夹
+					html1 = '<span class="mui-navigate-right mui-media-object mui-pull-right"></span>';
+					html2 = '<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">';
+					html3 = '<div class="mui-media-body">\
+									<div id="fname_' + data.fullPath + '/' + '" class="mui-ellipsis">' + data.name + '</div>\
+								</div>';
+					li.innerHTML = html1 + html2 + html3;
+					document.getElementById("ul_folder_" + URL).appendChild(li);
+				} else if(data.isFile) {
+					html1 = '<span class="mui-media-object mui-pull-right"></span>';
+					var type = cloud.classify2(data.name);
+					//console.log(type);
+					html2 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
+					html3 = '<div class="mui-media-body">\
+								<div id="fname_' + data.fullPath + '/' + '" class="mui-ellipsis">' + data.name + '</div>\
+							</div>';
+					li.innerHTML = html1 + html2 + html3;
+					document.getElementById("ul_file_" + URL).appendChild(li);
+				}
+			}
+
+			/**
+			 * 读取目录下的文件及子目录
+			 * @param {Object} URL 目录路径
+			 * @param {Object} entry 文件系统对象
+			 */
+			function directoryReader(URL, entry) {
+				//创建一个目录读取对象，用户读取目下的文件及子目录。
+				//DirectoryReader entry.createReader();
+				//返回值：DirectoryReader : 目录读取对象
+				//DirectoryReader
+				//方法：
+				//readEntries: 获取当前目录中的所有文件和子目录
+				//directoryReader.readEntries( succesCB, errorCB );
+				var directoryReader = entry.createReader();
+				directoryReader.readEntries(function(succesCB) {
+					//succesCB:文件或目录对象的引用,可指向文件或目录对象（DirectoryEntry|FileEntry）
+					console.log("获取当前目录中的所有文件和子目录成功");
+					mui.each(succesCB, function(index, element) {
+						//console.log("directoryReader:" + JSON.stringify(element));
+						additem(URL, element)
+					});
+					if(succesCB.length == 0) {
+						mui.toast('没有文件');
+					}
 					//---滑动start---
 					mui(".mui-scroll-wrapper").scroll({
 						scrollY: true, //是否竖向滚动
@@ -572,74 +542,11 @@
 						bounce: true, //是否启用回弹
 					});
 					//---滑动end---
-				}
-
-				/**
-				 * 顶部增加一项文件夹
-				 * @param {Object} fid 文件id
-				 * @param {Object} fname 文件名
-				 */
-				function addTop(path, name) {
-					console.log('addTop:' + path + '|' + name);
-					var div = document.createElement('div');
-					div.setAttribute('id', 'top_' + path);
-					div.setAttribute('data-path', path);
-					div.setAttribute('data-name', name);
-					div.className = 'mui-control-item';
-					if(folderList.length == 0) {
-						div.className = 'mui-control-item mui-active';
-					}
-					div.innerText = name + ' >';
-					document.getElementById("folderlist").appendChild(div);
-				}
-
-				/**
-				 * 新增一个文件或文件夹
-				 * @param {Object} URL 父文件夹路径
-				 * @param {Object} data
-				 */
-				function additem(URL, data) {
-					//console.log('additem:URL：' + URL + '|data：' + data.fullPath);
-					if(mui.os.ios) { //ios系统
-						data.fullPath = 'file://' + data.fullPath
-					}
-					var li = document.createElement('li');
-					li.setAttribute('id', 'fid_' + data.fullPath); //元素id
-					li.setAttribute('data-fid', data.fullPath); //文件id
-					li.setAttribute('data-fname', data.name); //文件名
-					li.setAttribute('data-isFile', data.isFile); //类型
-					li.setAttribute('data-isDirectory', data.isDirectory); //类型
-					li.className = 'mui-table-view-cell mui-media';
-					//文件夹右侧箭头
-					var html1 = '';
-					//文件或文件图标
-					var html2 = '';
-					//文件名
-					var html3 = '';
-					//					if(data.name[0] == '.') { //隐藏的文件夹或文件
-					//						//console.log('隐藏的文件夹或文件');
-					//					} else
-					if(data.isDirectory) { //文件夹
-						html1 = '<span class="mui-navigate-right mui-media-object mui-pull-right"></span>';
-						html2 = '<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">';
-						html3 = '<div class="mui-media-body">\
-									<div id="fname_' + data.fullPath + '/' + '" class="mui-ellipsis">' + data.name + '</div>\
-								</div>';
-						li.innerHTML = html1 + html2 + html3;
-						document.getElementById("ul_folder_" + URL).appendChild(li);
-					} else if(data.isFile) {
-						html1 = '<span class="mui-media-object mui-pull-right"></span>';
-						var type = cloud.classify2(data.name);
-						//console.log(type);
-						html2 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
-						html3 = '<div class="mui-media-body">\
-								<div id="fname_' + data.fullPath + '/' + '" class="mui-ellipsis">' + data.name + '</div>\
-							</div>';
-						li.innerHTML = html1 + html2 + html3;
-						document.getElementById("ul_file_" + URL).appendChild(li);
-					}
-				}
-			});
+				}, function(errorCB) {
+					mui.toast("读取当前目录中的所有文件和子目录失败 " + errorCB.message);
+					console.log("获取当前目录中的所有文件和子目录失败: " + JSON.stringify(errorCB));
+				});
+			}
 		</script>
 	</body>
 
