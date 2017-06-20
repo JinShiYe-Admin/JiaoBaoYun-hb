@@ -161,7 +161,10 @@ var video = (function(mod) {
 		} else {
 			console.log('videoPath='+videoPath+','+thumbPath);
 			ShowVideoUtil.showVideo(document.getElementById("video"), 'videoPopover', videoPath, thumbPath);
-			playCallback();
+			if (playCallback) {
+				playCallback();
+			}
+			
 //			mod.playInHTML(videoPath,thumbPath);
 //			mui.toast("功能暂未开放！")
 		}
