@@ -30,33 +30,25 @@
 				font-size: 42px;
 			}
 
-			.mui-table-view:before,
-			.mui-table-view:after,
-			.mui-table-view-cell:after {
-				height: 0px;
-			}
-
 			.mui-table-view {
 				background: transparent;
 			}
 
 			.mui-table-view-cell {
-				margin-top: 10px;
+				background: white;
+				padding: 11px 0px 11px 15px;
+			}
+
+			.mui-scroll-wrapper .mui-table-view .mui-table-view-cell.mui-active {
 				background: white;
 			}
 
-			.icon-download,
-			.icon-trash {
-				/*background: red;*/
-				text-align: center;
-				/*min-width: 10px;*/
-				font-size: 20px;
-			}
-
 			#top {
+				position: absolute;
 				background-color: white;
 				text-align: center;
 				height: 45px;
+				width: 100%;
 			}
 
 			.mui-media-object {
@@ -146,21 +138,206 @@
 				border-color: #E4E4E4;
 				margin-top: 5px;
 			}
+
+			.mui-scroll-wrapper {
+				top: 90px;
+			}
+
+			.mui-scroll-wrapper .mui-table-view:last-child:before {
+				height: 0px;
+			}
+
+			.mui-scroll-wrapper .mui-table-view:first-child:after {
+				height: 0px;
+			}
+
+			.mui-scroll-wrapper .mui-table-view:first-child .mui-table-view-cell:after {
+				height: 1px;
+			}
+
+			.mui-navigate-right:after {
+				content: "\e581";
+			}
+
+			.mui-navigate-right {
+				margin-left: 0px !important;
+			}
+
+			.cloud-bar-showdown.mui-navigate-right:after {
+				color: #13b7f6;
+				font-weight: 900;
+			}
+
+			.mui-checkbox input[type=checkbox]:checked:before {
+				color: #13b7f6;
+			}
+
+			.mui-checkbox input[type=checkbox] {
+				right: 0px;
+			}
+
+			.cloud-check-hide .mui-navigate-right,
+			.cloud-check-show .mui-input-row.mui-checkbox {
+				/*显示选择框*/
+				display: block;
+			}
+
+			.cloud-check-show .mui-navigate-right,
+			.cloud-check-hide .mui-input-row.mui-checkbox {
+				/*隐藏选择框*/
+				display: none;
+			}
+
+			.mui-checkbox {
+				display: none;
+				margin-right: 15px;
+			}
+
+			.mui-checkbox label {
+				width: 0px;
+				padding: 11px 20px;
+			}
+
+			.mui-bar {
+				box-shadow: none;
+				background-color: #636770;
+			}
+
+			.mui-bar-tab {
+				height: auto;
+				text-align: center;
+				z-index: 999;
+			}
+
+			.mui-bar-tab .mui-tab-item {
+				text-overflow: initial;
+			}
+
+			.cloud-tab-item {
+				display: inline-block;
+				padding: 5px 0px;
+			}
+
+			.cloud-tab-item div {
+				display: inline !important;
+				color: white;
+			}
+
+			.mui-bar .mui-icon:active {
+				opacity: 1;
+			}
+
+			.mui-tab-item .mui-tab-label {
+				font-size: 14px !important;
+			}
+
+			.mui-tab-item .mui-icon {
+				top: 0px !important;
+				font-size: 18px;
+			}
+
+			.cloud-unclick div {
+				/*不允许选择*/
+				opacity: 0.5;
+			}
+
+			#cloud_bottom,
+			#cancel {
+				display: none;
+			}
+
+			#cancel {
+				left: 10px;
+			}
+
+			.cloud-bar-download .cloud-tab-item[value="1"],
+			.cloud-bar-download .cloud-tab-item[value="2"],
+			.cloud-bar-download .cloud-tab-item[value="3"] {
+				/*只显示下载*/
+				display: none;
+			}
+
+			.cloud-bar-folder .cloud-tab-item[value="0"],
+			.cloud-bar-folder .cloud-tab-item[value="2"] {
+				/*只显示删除，重命名*/
+				display: none;
+			}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<p id="title" class="mui-title common-color-white" style="text-align: left;"></p>
+			<div id="title" class="mui-title common-color-white" style="text-align: left;"></div>
+			<div id="cancel" class="title-text-pull-right">取消</div>
+			<div id="edit" class="title-text-pull-right">编辑</div>
 		</header>
+		<nav id="cloud_bottom" class="mui-bar mui-bar-tab">
+			<div class="mui-tab-item cloud-tab-item" value="0">
+				<div class="mui-icon iconfont iconfont-color icon-download"></div>
+				<div class="mui-tab-label">下载</div>
+			</div>
+			<div class="mui-tab-item cloud-tab-item" value="1">
+				<div class="mui-icon iconfont iconfont-color icon-trash"></div>
+				<div class="mui-tab-label">删除</div>
+			</div>
+			<div class="mui-tab-item cloud-tab-item" value="2">
+				<div class="mui-icon iconfont iconfont-color icon-trash"></div>
+				<div class="mui-tab-label">移动到</div>
+			</div>
+			<div class="mui-tab-item cloud-tab-item" value="3">
+				<div class="mui-icon iconfont iconfont-color icon-bianji"></div>
+				<div class="mui-tab-label">重命名</div>
+			</div>
+		</nav>
 		<div class="mui-content">
-			<div id="top" style="position: absolute;width: 100%;">
+			<div id="top">
 				<span id="upload" class="mui-icon iconfont iconfont-color icon-upload mui-pull-left" style="margin-left: 15px;line-height: 45px;"> 上传</span>
 				<span id="transport" class="mui-icon iconfont iconfont-color icon-chuanshu" style="line-height: 45px;"> 传输列表</span>
 				<span id="addfolder" class="mui-icon iconfont iconfont-color icon-newfolder mui-pull-right" style="margin-right: 15px;line-height: 45px;"> 文件夹</span>
 			</div>
 			<div id="all">
+				<!--<div class="mui-scroll-wrapper">
+					<div id="scroll_' + pid + '" class="mui-scroll">
+						<ul id="ul_folder_' + pid + '" class="mui-table-view cloud-check-hide">
+							<li class="mui-table-view-cell mui-media">
+								<span class="mui-navigate-right mui-media-object mui-pull-right"></span>
+								<div class="mui-input-row mui-checkbox mui-right mui-pull-right">
+									<label>&nbsp;</label>
+									<input name="checkbox" type="checkbox">
+								</div>
+								<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_0_wenjianjia_1.png">
+								<div class="mui-media-body">
+									<div id="fname_' + data.fid + '" class="mui-ellipsis-2">文件夹</div>
+								</div>
+							</li>
+						</ul>
+						<ul id="ul_file_' + pid + '" class="mui-table-view cloud-check-show">
+							<li class="mui-table-view-cell mui-media">
+								<span class="mui-navigate-right mui-media-object mui-pull-right"></span>
+								<div class="mui-input-row mui-checkbox mui-right mui-pull-right">
+									<label>&nbsp;</label>
+									<input name="checkbox" type="checkbox">
+								</div>
+								<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_0_wenjianjia_1.png">
+								<div class="mui-media-body">
+									<div id="fname_' + data.fid + '" class="mui-ellipsis-2">图片文件图片文件图片文件图片文件图片文件图片文件图片文件图片文件图片文件图片文件图片文件图片文件图片文件</div>
+								</div>
+							</li>
+							<li class="mui-table-view-cell mui-media">
+								<span class="mui-navigate-right mui-media-object mui-pull-right"></span>
+								<div class="mui-input-row mui-checkbox mui-right mui-pull-right">
+									<label>&nbsp;</label>
+									<input name="checkbox" type="checkbox">
+								</div>
+								<span class="mui-media-object mui-icon iconfont iconfont-size icon-word mui-pull-left"></span>
+								<div class="mui-media-body">
+									<div id="fname_' + data.fid + '" class="mui-ellipsis-2">图片文件</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>-->
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -179,11 +356,13 @@
 			var showPid = 0; //当前展示的界面的父id
 			var showPidList = []; //记录打开的文件夹父id历史
 			var back = true; //是否允许返回
-
+			var edit = false; //是否显示编辑页面
+			var mode; //当前选取的文件夹或文件的数据
+			var mask; //显示底部菜单时的遮罩
 			//云盘子页面
 			mui.init({
 				gestureConfig: {
-					longtap: true, //默认为false
+					doubletap: true, //默认为false
 				}
 			});
 
@@ -191,13 +370,13 @@
 				var wd = events.showWaiting();
 				initData();
 				initListener();
-				initScroll();
 				var comData = {
 					vtp: 0, //类型，0文件及文件夹混合,1文件夹,2文件
 					vvl: 0 //	节点ID，顶层为0
 				};
 				//请求数据
 				requestData(comData, "云盘—云存储", wd);
+				initScroll();
 			});
 
 			function initData() {
@@ -216,15 +395,81 @@
 			}
 
 			function initListener() {
+				//编辑按钮
+				document.getElementById('edit').addEventListener('tap', function() {
+					console.log("edit " + this.innerText);
+					if(this.innerText == "编辑") {
+						this.innerText = "全选";
+						//修改顶部
+						document.getElementById("ul_file_" + showPid).className = "mui-table-view cloud-check-show";
+						document.getElementById("back").style.display = "none";
+						document.getElementById("cancel").style.display = "inline";
+						var title = document.getElementById("title");
+						title.style.textAlign = "center";
+						title.innerText = "已选定0个";
+						document.getElementById("top").style.opacity = '0.3';
+						//显示底部
+						var cloud_bottom = document.getElementById("cloud_bottom");
+						cloud_bottom.style.display = "block";
+						cloud_bottom.className = "mui-bar mui-bar-tab cloud-bar-download";
+						//调整列表
+						document.getElementById("scroll_wrapper_" + showPid).style.bottom = cloud_bottom.offsetHeight + 'px';
+						edit = true;
+					} else if(this.innerText == "全选") {
+						var check = document.querySelectorAll("#ul_file_" + showPid + " input");
+						console.log(check.length);
+						for(var i in check) {
+							check[i].checked = true;
+						}
+						if(check.length != 0) {
+							this.innerText = "全不选";
+						}
+						document.getElementById("title").innerText = "已选定" + check.length + "个";
+					} else if(this.innerText == "全不选") {
+						var check = document.querySelectorAll("#ul_file_" + showPid + " input");
+						console.log(check.length);
+						for(var i in check) {
+							check[i].checked = false;
+						}
+						this.innerText = "全选";
+						document.getElementById("title").innerText = "已选定0个";
+					}
+				});
+
+				//取消编辑
+				document.getElementById('cancel').addEventListener('tap', function() {
+					//调整顶部
+					document.getElementById("ul_file_" + showPid).className = "mui-table-view cloud-check-hide";
+					document.getElementById("cancel").style.display = "none";
+					document.getElementById("back").style.display = "inline";
+					document.getElementById("edit").innerHTML = "编辑";
+					var title = document.getElementById("title");
+					title.style.textAlign = "left";
+					var show = showPidList[showPidList.length - 1];
+					title.innerText = show.pname;
+					document.getElementById("top").style.opacity = '1';
+					//隐藏底部
+					document.getElementById("cloud_bottom").style.display = "none";
+					//调整列表
+					document.getElementById("scroll_wrapper_" + showPid).style.bottom = "0px";
+					edit = false;
+				});
+
 				//点击上传按钮
 				document.getElementById('upload').addEventListener('tap', function() {
 					console.log('上传文件');
+					if(edit) {
+						return false;
+					}
 					var show = showPidList[showPidList.length - 1];
 					events.openNewWindowWithData("storage_upload_choose.html", show);
 				});
 
 				//点击传输列表
 				document.getElementById('transport').addEventListener('tap', function() {
+					if(edit) {
+						return false;
+					}
 					var targetPage = plus.webview.getWebviewById('storage_transport.html');
 					mui.fire(targetPage, 'getUpAndDownEntry');
 					targetPage.show('slide-in-right', 250);
@@ -232,6 +477,9 @@
 
 				//增加文件夹的监听
 				document.getElementById('addfolder').addEventListener('tap', function(e) {
+					if(edit) {
+						return false;
+					}
 					back = false; //是否允许返回
 					console.log('增加文件夹showPid:' + showPid);
 					e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
@@ -328,116 +576,113 @@
 				/**
 				 * 点击文件或文件夹
 				 */
-				mui('#all').on('tap', '.mui-table-view-cell', function() {
-					var id = this.getAttribute('id'); //元素id
-					var pid = this.getAttribute('data-pid'); //父ID
-					var fid = this.getAttribute('data-fid'); //文件id
-					var fname = this.getAttribute('data-fname'); //文件或文件夹名字
-					var ftype = this.getAttribute('data-ftype'); //文件类型
-					var fpath = this.getAttribute('data-fpath'); //文件路径
-					console.log('点击文件或文件夹' + id + '|' + fid + "|" + fname + '|' + ftype + '|' + fpath);
-					if(ftype == '.file') { //点击文件夹
-						document.getElementById("title").innerText = fname;
-						if(document.getElementById("pid_" + fid) != null) {
-							console.log('点击文件夹pid_' + fid + '!=null');
-							document.getElementById("pid_" + fid).parentNode.removeChild(document.getElementById("pid_" + fid));
+				mui('#all').on('tap', '.mui-table-view-cell', function(e) {
+					if(edit) {
+						return false;
+					}
+					var ids = this.id.split("_"); //元素id
+					console.log("点击文件或文件夹 " + JSON.stringify(ids));
+					mode = allData.value[showPid][ids[1]];
+					console.log("mode " + JSON.stringify(mode));
+					var target = e.target.getAttribute("data-type");
+					console.log("target " + target);
+					if(target == "showbar") {
+						//显示底部
+						var cloud_bottom = document.getElementById("cloud_bottom");
+						cloud_bottom.style.display = "block";
+						if(mode.ftype == '.file') {
+							cloud_bottom.className = "mui-bar mui-bar-tab cloud-bar-folder";
 						} else {
-							console.log('点击文件夹pid_' + fid + '==null');
+							cloud_bottom.className = "mui-bar mui-bar-tab";
 						}
-
+						document.getElementById("fright_" + ids[1]).className = "mui-navigate-right mui-media-object mui-pull-right cloud-bar-showdown";
+						document.getElementById("scroll_wrapper_" + showPid).style.bottom = cloud_bottom.offsetHeight + 'px';
+						mask = mui.createMask(function() {
+							var showdown = document.querySelector("#pid_" + showPid + " .cloud-bar-showdown").className = "mui-navigate-right mui-media-object mui-pull-right";
+							document.getElementById("cloud_bottom").style.display = "none";
+							document.getElementById("scroll_wrapper_" + showPid).style.bottom = "0px";
+						});
+						mask.show();
+						return false;
+					}
+					if(mode.ftype == '.file') { //点击文件夹
+						document.getElementById("title").innerText = mode.fname;
+						var pid_div = document.getElementById("pid_" + mode.fid);
+						if(pid_div != null) {
+							console.log('点击文件夹pid_' + mode.fid + '!=null');
+							pid_div.parentNode.removeChild(pid_div);
+						}
 						//所需参数
 						var comData = {
 							vtp: 0, //类型，0文件及文件夹混合,1文件夹,2文件
-							vvl: fid //	节点ID，顶层为0
+							vvl: mode.fid //	节点ID，顶层为0
 						};
 						//请求数据
-						requestData(comData, fname);
+						requestData(comData, mode.fname);
 					} else {
-						var type = cloud.classifyHtml5Media(fname + ftype);
+						var type = cloud.classifyHtml5Media(mode.fname + mode.ftype);
 						if(type == 'html5-imge') { //图片
 							//跳到展示图片界面
 							var targetPage = plus.webview.getWebviewById('storage_show_imge.html');
 							if(targetPage) {
 								events.fireToPageWithData('storage_show_imge.html', 'showFile', {
-									fpath: fpath //图片的七牛路径
+									fpath: mode.fpath //图片的七牛路径
 								});
 							} else {
 								events.openNewWindowWithData('storage_show_imge.html', {
-									fpath: fpath //图片的七牛路径
+									fpath: mode.fpath //图片的七牛路径
 								});
 							}
 						} else if(type == 'html5-video') {
 							events.openNewWindowWithData('storage_show_video.html', {
-								fpath: fpath //视频的七牛路径
+								fpath: mode.fpath //视频的七牛路径
 							});
 						}
 					}
 				});
 
-				/**
-				 * 长按文件或文件夹
-				 */
-				mui('#all').on('longtap', '.mui-table-view-cell', function(e) {
-					back = false; //是否允许返回
-					var id = this.getAttribute('id'); //元素id
-					var pid = this.getAttribute('data-pid'); //父ID
-					var fid = this.getAttribute('data-fid'); //文件id
-					var fname = this.getAttribute('data-fname'); //文件或文件夹名字
-					var ftype = this.getAttribute('data-ftype'); //文件类型
-					console.log('长按文件或文件夹' + id + '|' + fid + "|" + fname + '|' + ftype);
-					e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
-					var btnArray = ['取消', '确定'];
-					mui.prompt('', '请输入新的名字,最多20个字', '重命名', btnArray, function(e) {
-						if(e.index == 1) { //确定
-							var reg = new RegExp('^[^\\\\\\/:*?\\"<>|]+$'); //特殊字符过滤的正则表达式
-							var vvl1 = e.value;
-							if(vvl1.replace(/(^\s*)|(\s*$)/g, "") == "") {
-								mui.toast('名字不能为空');
-							} else if(!reg.test(e.value)) {
-								//特殊字符
-								mui.toast('名字中不能包含这些字符 \ / : * ? " < > | ');
-							} else if(fname == e.value) {
-								mui.toast('操作失败，不能与原名字相同');
-							} else if(vvl1.length > 20) {
-								mui.toast('名字最多20个字');
-							} else {
-								var wd = events.showWaiting();
-								//28.用户修改文件或文件夹名称
-								var comData = {
-									vvl: fid, //文件ID
-									vvl1: vvl1 //文件名称
-								};
-								postDataPro_PostDiFiE(comData, wd, function(data) {
-									console.log('28.postDataPro_PostDiFiE_用户修改文件或文件夹名称:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-									if(data.RspCode == 0) {
-										mui.toast('修改成功');
-										//界面处理
-										if(ftype == '.file') {
-											document.getElementById("fname_" + fid).innerText = vvl1;
-										} else {
-											document.getElementById("fname_" + fid).innerText = vvl1 + ftype;
-										}
-										document.getElementById(id).setAttribute('data-fname', vvl1);
-										back = true; //是否允许返回
-										document.activeElement.blur();
-										mui.closePopups();
-									} else if(data.RspCode == 8) {
-										mui.toast('操作失败！已存在相同的名字');
-									} else {
-										mui.toast(data.RspTxt);
-									}
-									wd.close();
-								});
+				//				//选择或取消选择文件
+				//				mui('#all').on('change', 'input', function() {
+				//					console.log("点击checkbox");
+				//				});
+
+				//点击底部菜单
+				mui('#cloud_bottom').on('tap', '.cloud-tab-item', function() {
+					console.log("点击底部菜单 ");
+					var value = this.getAttribute("value");
+					console.log("value " + value);
+					console.log("mode " + JSON.stringify(mode));
+					switch(value) {
+						case "0":
+							console.log("下载");
+							if(edit) {
+								return false;
 							}
-							return false;
-						} else { //取消
-							back = true; //是否允许返回
-							document.activeElement.blur();
-						}
-					}, 'div');
-					document.querySelector('.mui-popup-input input').value = fname;
-					document.querySelector('.mui-popup-input input').type = 'text';
-					document.querySelector('.mui-popup-input input').maxLength = 20;
+							mask.close();
+							events.fireToPageWithData('storage_transport.html', 'addDownload', [{
+								pid: mode.pid, //父ID
+								fid: mode.fid, //文件id
+								fname: mode.fname, //文件或文件夹名字
+								ftype: mode.ftype, //文件类型
+								fpath: mode.fpath //文件路径
+							}]);
+							break;
+						case "1":
+							console.log("删除");
+							mask.close();
+							deleteData();
+							break;
+						case "2":
+							console.log("移动到");
+							break;
+						case "3":
+							console.log("重命名");
+							mask.close();
+							changeName();
+							break;
+						default:
+							break;
+					}
 				});
 
 				/**
@@ -474,77 +719,6 @@
 						});
 					}
 				});
-
-				/**
-				 * 点击文件或文件夹的删除
-				 */
-				mui('#all').on('tap', '.icon-trash', function(e) {
-					//拦截点击事件的冒泡
-					if(e && e.stopPropagation) {
-						//因此它支持W3C的stopPropagation()方法
-						e.stopPropagation();
-					} else {
-						//否则，我们需要使用IE的方式来取消事件冒泡
-						window.event.cancelBubble = true;
-					}
-					var par = this.parentNode; //找到父元素
-					var id = par.getAttribute('id'); //元素id
-					var fid = par.getAttribute('data-fid'); //文件id
-					var fname = par.getAttribute('data-fname'); //文件或文件夹名字
-					var ftype = par.getAttribute('data-ftype'); //文件类型
-					var fpath = par.getAttribute('data-fpath'); //文件路径,为文件用
-					console.log('删除文件或文件夹' + id + '|' + fid + "|" + fname + '|' + ftype + '|' + fpath);
-					var btnArray = ['否', '是'];
-					mui.confirm('删除，确认？', '提示', btnArray, function(e) {
-						if(e.index == 1) { //删除
-							var wd = events.showWaiting();
-							//38.用户云盘文件及文件夹删除
-							var comData = {
-								vvl: fid //节点ID，
-							};
-							postDataPro_PostDiFiD(comData, wd, function(data) {
-								console.log('38.postDataPro_PostDiFiD_用户云盘文件及文件夹删除:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-								if(data.RspCode == 0) {
-									//界面处理
-									par.parentNode.removeChild(par);
-									mui.toast('删除成功');
-
-									var pathList = [];
-									mui.each(data.RspData, function(index, element) {
-										if(element.fpath != '') {
-											pathList.push(element.fpath);
-										}
-									});
-									if(pathList.length != 0) {
-										var batchDelete = {
-											appId: 4, //int 必填 项目id
-											urls: pathList //array 必填 需要获取下载token文件的路径
-										}
-										/**
-										 * 七牛批量删除
-										 */
-										CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, batchDelete, function(data) {
-												if(data.Status == 1) {
-													console.log('七牛删除成功:' + JSON.stringify(data));
-												} else {
-													console.log('七牛删除:' + JSON.stringify(data));
-												}
-											},
-											function(xhr, type, errorThrown) {
-												console.log('七牛删除失败:' + JSON.stringify(type));
-											}
-										);
-									}
-								} else {
-									mui.toast(data.RspTxt);
-								}
-								wd.close();
-							});
-						} else {
-
-						}
-					}, 'div');
-				});
 			}
 
 			/**
@@ -555,11 +729,11 @@
 				console.log('addbot ' + pid);
 				var div = document.createElement('div');
 				div.setAttribute('id', 'pid_' + pid);
-				div.innerHTML = '<div class="mui-scroll-wrapper"style="top:90px;">\
+				div.innerHTML = '<div id="scroll_wrapper_' + pid + '"  class="mui-scroll-wrapper">\
 									<div id="scroll_' + pid + '" class="mui-scroll">\
-										<ul id="ul_folder_' + pid + '" class="mui-table-view">\
+										<ul id="ul_folder_' + pid + '" class="mui-table-view cloud-check-hide">\
 										</ul>\
-										<ul id="ul_file_' + pid + '" class="mui-table-view">\
+										<ul id="ul_file_' + pid + '" class="mui-table-view cloud-check-hide">\
 										</ul>\
 									</div>\
 								</div>';
@@ -572,49 +746,45 @@
 			 * @param {Object} data
 			 */
 			function additem(data) {
-				console.log('additem:' + JSON.stringify(data))
+				//console.log('additem:' + JSON.stringify(data));
+				allData.value[data.pid][data.fid] = data;
 				var li = document.createElement('li');
 				li.setAttribute('id', 'fid_' + data.fid); //元素id
-				li.setAttribute('data-pid', data.pid); //父ID
-				li.setAttribute('data-fid', data.fid); //文件id
-				li.setAttribute('data-fname', data.fname); //文件名
-				li.setAttribute('data-ftype', data.ftype); //类型
-				li.setAttribute('data-fpath', data.fpath); //文件路径,为文件用
 				li.className = 'mui-table-view-cell mui-media';
-				//文件夹右侧箭头
-				var html1 = '';
-				//删除和下载按钮
-				var html2 = '<span class="mui-icon iconfont iconfont-color icon-trash mui-media-object mui-pull-right"></span>\
-							 <span class="mui-icon iconfont iconfont-color icon-download mui-media-object mui-pull-right"></span>';
-				//文件或文件图标
-				var html3 = '';
-				//文件名
-				var html4 = '';
+				var html = '';
 				if(data.ftype == '.file') { //文件夹
-					html1 = '<span class="mui-navigate-right mui-media-object mui-pull-right" style="width:10px;"></span>';
-					var html2 = '<span class="mui-icon iconfont iconfont-color icon-trash mui-media-object mui-pull-right"></span>';
-
-					html3 = '<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">';
-					html4 = '<div class="mui-media-body">\
+					html = '<span id="fright_' + data.fid + '" class="mui-navigate-right mui-media-object mui-pull-right" data-type="showbar"></span>\
+							<div class="mui-input-row mui-checkbox mui-right mui-pull-right">\
+								<label>&nbsp;</label>\
+								<input name="checkbox" type="checkbox">\
+							</div>\
+							<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_0_wenjianjia_1.png">\
+							<div class="mui-media-body">\
 								<div id="fname_' + data.fid + '" class="mui-ellipsis-2">' + data.fname + '</div>\
 							</div>';
 				} else {
-					html1 = '<span class="mui-media-object mui-pull-right" style="width:10px;"></span>';
 					var type = cloud.classify(data.ftype);
 					var pathList = data.fpath.split('/');
 					var pathList2 = pathList[pathList.length - 1].split('.');
 					var fileName = pathList2[0];
 					var path = window.storageKeyName.QNPB + 'yuncunc/' + window.storageKeyName.CLOUDSTORAGETHUMB + fileName + '.png'
+					var html_0 = '<span id="fright_' + data.fid + '" class="mui-navigate-right mui-media-object mui-pull-right" data-type="showbar"></span>\
+								<div class="mui-input-row mui-checkbox mui-right mui-pull-right">\
+									<label>&nbsp;</label>\
+									<input name="checkbox" type="checkbox">\
+								</div>';
+					var html_1 = '';
 					if(type != '') {
-						html3 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
-					} else { //七牛能生成缩略图的图片或视频
-						html3 = '<img class="mui-media-object cloud-bottom-imge mui-pull-left" src="' + path + '"/>';
+						html_1 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
+					} else {
+						html_1 = '<img class="mui-media-object mui-pull-left" src="' + path + '">';
 					}
-					html4 = '<div class="mui-media-body">\
-								<div id="fname_' + data.fid + '" class="mui-ellipsis-2">' + data.fname + data.ftype + '</div>\
-							</div>';
+					var html_2 = '<div class="mui-media-body">\
+									<div id="fname_' + data.fid + '" class="mui-ellipsis-2">' + data.fname + data.ftype + '</div>\
+								</div>';
+					html = html_0 + html_1 + html_2;
 				}
-				li.innerHTML = html1 + html2 + html3 + html4;
+				li.innerHTML = html;
 				if(data.ftype == '.file') { //文件夹
 					document.getElementById("ul_folder_" + data.pid).appendChild(li);
 				} else {
@@ -643,6 +813,8 @@
 							tempRspData = data.RspData;
 						}
 						var pid = comData.vvl;
+						allData.key[allData.key.length] = pid;
+						allData.value[pid] = {};
 						addbot(pid); //增加对应的文件夹
 						for(var i in tempRspData) {
 							additem(tempRspData[i]);
@@ -688,6 +860,123 @@
 						mui.toast(data.RspTxt);
 					}
 				});
+			}
+
+			/**
+			 * 修改名字
+			 */
+			function changeName() {
+				back = false; //是否允许返回
+				var btnArray = ['取消', '确定'];
+				mui.prompt('', '请输入新的名字,最多20个字', '重命名', btnArray, function(e) {
+					if(e.index == 1) { //确定
+						var reg = new RegExp('^[^\\\\\\/:*?\\"<>|]+$'); //特殊字符过滤的正则表达式
+						var vvl1 = e.value;
+						if(vvl1.replace(/(^\s*)|(\s*$)/g, "") == "") {
+							mui.toast('名字不能为空');
+						} else if(!reg.test(e.value)) {
+							//特殊字符
+							mui.toast('名字中不能包含这些字符 \ / : * ? " < > | ');
+						} else if(mode.fname == e.value) {
+							mui.toast('操作失败，不能与原名字相同');
+						} else if(vvl1.length > 20) {
+							mui.toast('名字最多20个字');
+						} else {
+							var wd = events.showWaiting();
+							//28.用户修改文件或文件夹名称
+							var comData = {
+								vvl: mode.fid, //文件ID
+								vvl1: vvl1 //文件名称
+							};
+							postDataPro_PostDiFiE(comData, wd, function(data) {
+								console.log('28.postDataPro_PostDiFiE_用户修改文件或文件夹名称:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+								if(data.RspCode == 0) {
+									mui.toast('修改成功');
+									//界面处理
+									if(mode.ftype == '.file') {
+										document.getElementById("fname_" + mode.fid).innerText = vvl1;
+									} else {
+										document.getElementById("fname_" + mode.fid).innerText = vvl1 + mode.ftype;
+									}
+									allData.value[mode.pid][mode.fid].fname = vvl1;
+									back = true; //是否允许返回
+									document.activeElement.blur();
+									mui.closePopups();
+								} else if(data.RspCode == 8) {
+									mui.toast('操作失败！已存在相同的名字');
+								} else {
+									mui.toast(data.RspTxt);
+								}
+								wd.close();
+							});
+						}
+						return false;
+					} else { //取消
+						back = true; //是否允许返回
+						document.activeElement.blur();
+					}
+				}, 'div');
+				document.querySelector('.mui-popup-input input').value = mode.fname;
+				document.querySelector('.mui-popup-input input').type = 'text';
+				document.querySelector('.mui-popup-input input').maxLength = 20;
+			}
+
+			/**
+			 * 删除文件或文件夹
+			 */
+			function deleteData() {
+				var btnArray = ['否', '是'];
+				mui.confirm('删除，确认？', '提示', btnArray, function(e) {
+					if(e.index == 1) { //删除
+						var wd = events.showWaiting();
+						//38.用户云盘文件及文件夹删除
+						var comData = {
+							vvl: mode.fid //节点ID，
+						};
+						postDataPro_PostDiFiD(comData, wd, function(data) {
+							console.log('38.postDataPro_PostDiFiD_用户云盘文件及文件夹删除:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							if(data.RspCode == 0) {
+								//界面处理
+								var ele = document.getElementById("fid_" + mode.fid)
+								ele.parentNode.removeChild(ele);
+								mui.toast('删除成功');
+								//数据处理
+								delete allData.value[showPid][mode.fid];
+								//删除七牛的文件
+								var pathList = [];
+								for(var i in data.RspData) {
+									console.log("delete " + i + " " + JSON.stringify(data.RspData[i]))
+									if(data.RspData[i].fpath != '') {
+										pathList.push(data.RspData[i].fpath);
+									}
+								}
+								if(pathList.length != 0) {
+									var batchDelete = {
+										appId: 4, //int 必填 项目id
+										urls: pathList //array 必填 需要获取下载token文件的路径
+									}
+									/**
+									 * 七牛批量删除
+									 */
+									CloudFileUtil.BatchDelete(window.storageKeyName.QNGETTOKENDELETE, batchDelete, function(data) {
+											if(data.Status == 1) {
+												console.log('七牛删除成功:' + JSON.stringify(data));
+											} else {
+												console.log('七牛删除:' + JSON.stringify(data));
+											}
+										},
+										function(xhr, type, errorThrown) {
+											console.log('七牛删除失败:' + JSON.stringify(type));
+										}
+									);
+								}
+							} else {
+								mui.toast(data.RspTxt);
+							}
+							wd.close();
+						});
+					}
+				}, 'div');
 			}
 		</script>
 	</body>
