@@ -1202,11 +1202,11 @@ var dynamiclistitem = (function($, mod) {
 		if(ImageNum == 1 && data.EncType == 2) {
 			var tempDiv = document.getElementById("video-container" + data.id_name);
 			var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
-				
+				console.log(9999999)
 				if(imgSize.height > imgSize.width) {
 					if(imgSize.width==1080&&imgSize.height==1920){
-						tempDiv.style.width =  + '180px';
-						tempDiv.style.height =  + '320px';
+						tempDiv.style.width = '180px';
+						tempDiv.style.height = '320px';
 						var playvideo = document.getElementById("playvideo" + data.id_name);
 						playvideo.style.marginTop = 160 - 25 + 'px'
 						return;
@@ -1224,11 +1224,13 @@ var dynamiclistitem = (function($, mod) {
 						playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
 					}
 				} else {
+					
 					if(imgSize.height==1080&&imgSize.width==1920){
+						
 						tempDiv.style.height =  '180px';
 						tempDiv.style.width =  '320px';
 						var playvideo = document.getElementById("playvideo" + data.id_name);
-						playvideo.style.marginTop = 160 - 25 + 'px'
+						playvideo.style.marginTop = 90 - 25 + 'px'
 						return;
 					}
 					if(imgSize.height < 500) {
@@ -1442,6 +1444,7 @@ var dynamiclistitem = (function($, mod) {
 		if(ImageNum == 1 && data.EncType == 2) {
 			var tempDiv = document.getElementById("video-container" + data.id_name);
 			var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
+				console.log(99999999)
 				if(imgSize.height > imgSize.width) {
 					if(imgSize.width==1080&&imgSize.height==1920){
 						tempDiv.style.width =  '180px';
@@ -1467,7 +1470,7 @@ var dynamiclistitem = (function($, mod) {
 						tempDiv.style.height =  '180px';
 						tempDiv.style.width =  '320px';
 						var playvideo = document.getElementById("playvideo" + data.id_name);
-						playvideo.style.marginTop = 160 - 25 + 'px'
+						playvideo.style.marginTop = 90 - 25 + 'px'
 						return;
 					}
 					if(imgSize.height < 500) {

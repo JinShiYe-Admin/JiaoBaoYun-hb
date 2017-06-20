@@ -1991,7 +1991,8 @@
 			"fonts/iconfont.ttf",
 			"image/utils/default_personalimage.png",
 			"fonts/mui.ttf",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"js/utils/showvideoutil.js"
 		],
 		"refer": [
 			"html/show/add-comment.html",
