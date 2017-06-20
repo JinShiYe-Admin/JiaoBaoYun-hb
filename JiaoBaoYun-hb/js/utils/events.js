@@ -491,10 +491,23 @@ var events = (function(mod) {
 			}
 		}, 200);
 	}
+	/**
+	 * 理论上讲这个是设置方法名的方法
+	 * @param {Object} filePath 图片路径
+	 */
 	mod.getFileNameByPath = function(filePath) {
 		var filePaths = filePath.split(".");
 		var fileName = filePaths[filePaths.length - 1];
 		return new Date().getTime() + parseInt(Math.random() * 1000) + '.' + fileName;
+	}
+	/**
+	 * 通过文件路径获取文件名
+	 * @param {Object} filePath 文件路径
+	 */
+	mod.getFileName=function(filePath){
+		var paths=filePath.split("/");
+		var path=paths[paths.length-1];
+		return path;
 	}
 
 	/**

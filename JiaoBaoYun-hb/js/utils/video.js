@@ -2,13 +2,8 @@ var video = (function(mod) {
 	mod.recordVideo = function(data, successCB, errorCB) {
 		var options = mod.initOption(data);
 		if(plus.os.name == "Android") {
-						recordVideoInAndroid(options, successCB, errorCB);
+			recordVideoInAndroid(options, successCB, errorCB);
 		} else {
-			//			errorCB({
-			//				code: 999, // 错误编码
-			//				message: '暂不支持Android以外的系统！' // 错误描述信息
-			//			});
-
 			recordVideoInIOS(options, successCB, errorCB);
 		}
 	}

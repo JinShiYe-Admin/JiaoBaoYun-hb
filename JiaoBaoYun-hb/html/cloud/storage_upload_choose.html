@@ -114,38 +114,50 @@
 		</nav>
 		<div class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<ul class="mui-table-view" id="filesList">
-					<li class="mui-table-view-cell" value="2">
-						从本地选择
-					</li>
+				<ul id="filesList" class="mui-table-view">
+					<file-item v-for="(fileItem,indexItem) of filesArr" v-bind:file="fileItem" v-bind:index="indexItem" v-on:delcell="delFile"></file-item>
 				</ul>
 			</div>
 		</div>
-		<div id="popover" class="mui-popover">
-			<div id="popover_bg" class="popover-background">
-			</div>
+		<div id="filter" v-if="isShow" v-bind:style="filterContainer">
+			<ul>
+				<filter-item v-for="item of options" v-bind:option="item" v-if="cellIsShow(item)" ></filter-item>
+			</ul>
 		</div>
 
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script src="../../js/utils/camera.js"></script>
-		<script src="../../js/utils/video.js"></script>
+		<script src="../../js/cloud/cloud.js"></script>
+		<script src="../../js/utils/gallerypick.js"></script>
 		<script src="../../js/utils/vue.js"></script>
+		
 		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
 		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
 		<script type="text/javascript" src="../../js/utils/compress.js"></script>
 		<script src="../../js/cloud/upload-filter.js"></script>
+		<script src="../../js/cloud/file-list.js"></script>
 		<script type="text/javascript">
 			var main; //当前webview对象
 			var chooseData = {
 				files: []
 			}; //当前页面的数据
-
-			mui.init();
+			mui(".mui-scroll-wrapper").scroll();
+			mui.init({
+				beforeback:function(){
+					if(filter.isShow){
+						filter.setIsShow(false);
+						return false;
+					}else{
+						return true;
+					}
+				}
+			});
 			mui.plusReady(function() {
+//				filter.isShow=true;
 				initData();
 				initListener();
-				initPopover();
+//				initPopover();
 			});
 
 			/**
@@ -166,11 +178,14 @@
 			 * 初始化监听
 			 */
 			function initListener() {
-
+				window.addEventListener("chose-files",function(e){
+					console.log("chose-files事件："+JSON.stringify(e.detail.data));
+					fileList.pushFilesArr(rechargeFileArr(e.detail.data));
+				});
 				//添加文件
 				document.getElementById('addfiles').addEventListener('tap', function() {
 					console.log("添加文件");
-					mui('#popover').popover('toggle');
+					filter.isShow=true;
 				});
 
 				//选择上传的路径
@@ -180,24 +195,6 @@
 					document.getElementById("yunpath").innerHTML = folder.title;
 					pid = folder.fid;
 				});
-
-				//相册，拍照，从本地选择
-				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function() {
-					var value = this.getAttribute('value');
-					switch(value) {
-						case '0': //相册
-							pick();
-							break;
-						case '1': //拍照
-							camera();
-							break;
-						case '2': //从本地选择
-							console.log("从本地选择");
-							events.openNewWindowWithData('storage_upload.html', {});
-							break;
-					}
-				});
-
 				//修改存储到云盘的路径
 				document.getElementById('choose').addEventListener('tap', function() {
 					var targetPage = plus.webview.getWebviewById('storage_main_choose.html');
@@ -229,56 +226,24 @@
 						mui.toast('请选择上传的文件');
 					}
 				});
-
-				/**
-				 * 删除从相册或拍照选择的文件
-				 */
-				mui('#file').on('tap', '.mui-icon-closeempty', function() {
-					var btnArray = ['否', '是'];
-					mui.confirm('确认,删除？', '提示', btnArray, function(e) {
-						if(e.index == 1) { //是
-							upFile = null
-							changeUpBtnColorToDefault();
-							document.getElementById("file").innerHTML = '';
-						} else {
-
-						}
-					});
-				})
 			}
-
+			function rechargeFileArr(fileArr){
+				var reArr=[];
+				for(var i in fileArr){
+					var fileInfo=cloud.getFileImgStyle(fileArr[i]);
+					fileInfo.fileName=events.getFileName(fileArr[i]);
+				   	reArr.push(fileInfo);
+				}
+				console.log("获取的数组："+JSON.stringify(reArr));
+				return reArr;
+			}
 			/*
 			 * 初始化选择文件方式弹框
 			 */
-			function initPopover() {
-				document.getElementById("popover").style.height = plus.screen.resolutionHeight - plus.navigator.getStatusbarHeight() - 45 + "px";
-				document.getElementById("popover").style.top = 45 + "px"
-			}
-
-			/**
-			 * 增加一项上传的文件
-			 * @param {Object} fName 文件名
-			 * @param {Object} fPath 文件路径
-			 */
-			function addUpFile(fName, fPath) {
-				var li = document.createElement('li');
-				li.className = 'mui-table-view-cell mui-media';
-				var html1 = '';
-				html1 = '<span class="mui-media-object mui-icon iconfont icon-imge mui-pull-left"></span>';
-				if(fPath != undefined) {
-					html1 = '<div class="mui-media-object mui-pull-left" style="overflow: hidden;">\
-									<img style="width: 100%;" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<42){this.style.height=\'42px\';this.style.width=\'initial\';}this.style.marginLeft=-parseInt((this.offsetWidth-42)/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-42)/2)+\'px\';}" src="' + fPath + '">\
-								</div>';
-					//html1 = '<div style="overflow: hidden;"><img class="mui-media-object mui-pull-left" src="' + fPath + '"></div>';
-				}
-				li.innerHTML = '<span id="closeempty" class="mui-media-object mui-pull-right mui-icon mui-icon-closeempty"></span>\
-									' + html1 + '\
-									<div class="mui-media-body">\
-										<div class="mui-ellipsis">' + fName + '</div>\
-									</div>'
-				document.getElementById("file").appendChild(li);
-			}
-
+//			function initPopover() {
+//				document.getElementById("popover").style.height = plus.screen.resolutionHeight - plus.navigator.getStatusbarHeight() - 45 + "px";
+//				document.getElementById("popover").style.top = 45 + "px"
+//			}
 			/**
 			 * 将上传按钮颜色设置为默认颜色
 			 */

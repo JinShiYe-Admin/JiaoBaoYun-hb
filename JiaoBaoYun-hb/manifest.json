@@ -2819,7 +2819,17 @@
 					"fonts/iconfont.ttf",
 					"css/utils/common.css",
 					"fonts/fangzheng.ttf",
-					"js/utils/compress.js"
+					"js/utils/compress.js",
+					"js/utils/vue.js",
+					"js/utils/video.js",
+					"js/utils/camera.js",
+					"js/cloud/upload-filter.js",
+					"image/cloud/up_image.png",
+					"image/cloud/up_video.png",
+					"image/cloud/up_local.png",
+					"js/utils/gallerypick.js",
+					"js/cloud/file-list.js",
+					"js/cloud/cloud.js"
 				],
 				"refer": [
 					"html/cloud/storage_upload.html"

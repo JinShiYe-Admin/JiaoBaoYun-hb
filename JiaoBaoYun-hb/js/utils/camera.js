@@ -82,7 +82,7 @@ var gallery = (function(mod) {
 	 */
 	mod.getMultiplePic = function(maxNo,callback) {
 		// 从相册中选择图片
-		console.log("从相册中选择多张图片:");
+		console.log("从相册中选择多张图片:"+maxNo);
 		plus.gallery.pick(function(e) {
 			console.log("选择图片的路径：" +JSON.stringify(e.files));
 			callback(e.files);
