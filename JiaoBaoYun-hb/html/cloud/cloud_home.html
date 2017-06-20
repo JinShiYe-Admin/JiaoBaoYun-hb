@@ -336,9 +336,6 @@
 		<script type="text/javascript" src="../../js/qiuzhi/delContent_pop.js"></script>
 
 		<script type="text/javascript">
-			//声明变量
-			//文件存储数组
-			var fileArray = [];
 			//获取所有的群
 			var datasource = [];
 			//获取学生列表
@@ -387,7 +384,6 @@
 				});
 
 				//				events.preload("../homework/homework-tea.html", 300);
-				events.preload('storage_main.html', 300); //预加载云存储
 				events.preload('storage_transport.html'); //预加载传输列表
 				events.addTap('add', function() {
 					mui('#topPopover').popover('toggle')
@@ -447,8 +443,6 @@
 
 				//退出登录后，清理云盘主页界面和数据
 				window.addEventListener('cleanCloudHome', function() {
-					//文件存储数组
-					fileArray = [];
 					//获取所有的群
 					datasource = [];
 					//获取学生列表
@@ -526,12 +520,7 @@
 				//云存储显示的文件
 				mui('#cloudstorage_1').on('tap', '.mui-table-view-cell', function() {
 					if(this.id != 'addFolder') {
-						events.fireToPageWithData('storage_main.html', 'init', {
-							fid: '0', //文件id,顶层0
-							showTop: true, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
-							title: '云盘—云存储', //标题名
-							top: fileArray //顶层文件和文件夹的数据
-						});
+						events.openNewWindow('storage_main.html');
 					}
 				});
 
@@ -830,43 +819,21 @@
 
 				//26.用户云盘顶层文件及文件夹获取
 				function postFirstFile() {
+					var wd = events.showWaiting();
 					//所需参数
 					var comData = {
+						vtp: '1', //类型，0文件及文件夹混合,1文件夹,2文件
 						vvl: '0' //	节点ID，顶层为0
 					};
-					// 等待的对话框
-					var wd = events.showWaiting();
 					postDataPro_PostDiFi(comData, wd, function(data) {
 						document.getElementById("cloudstorage_1").innerHTML = '';
 						console.log('26.postDataPro_PostDiFi_用户云盘顶层文件及文件夹获取_RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 						if(data.RspCode == 0) {
-							//给存储数组赋值
-							if(data.RspData) {
-								fileArray = data.RspData;
-							} else {
-								fileArray = [];
-							}
-							//循环将获取到的值塞入界面
-							var folder = 0;
-
-							for(var i = 0; i < data.RspData.length; i++) {
-								if(data.RspData[i].ftype == '.file') {
-									if(folder > 9) {
-										break;
-									}
-									folder++;
-									addStorageFolder(data.RspData[i]);
+							for(var i in data.RspData) {
+								if(i > 9) {
+									break;
 								}
-							}
-
-							for(var j = 0; j < data.RspData.length; j++) {
-								if(data.RspData[j].ftype != '.file') {
-									if(folder > 9) {
-										break;
-									}
-									folder++;
-									addStorageFolder(data.RspData[j]);
-								}
+								addStorageFolder(data.RspData[i]);
 							}
 						} else {
 							if(data.RspCode != 9) {
