@@ -179,6 +179,29 @@ var cloud = (function($, mod) {
 				break;
 		}
 	}
+	/**
+	 * 通过文件路径获取类型
+	 * @param {Object} fileName 文件路径
+	 * @return {Object} fileShowOption {type 0|1|2, path||icon} type 0 其他 1图片 2视频  
+	 */
+	mod.getFileImgStyle = function(fileName) {
+		var fileShowOption = {};
+		switch(mod.classify2(fileName)) {
+			case "icon-video":
+				fileShowOption.type = 2;
+				fileShowOption.path = fileName;
+				break;
+			case "icon-imge":
+				fileShowOption.type = 1;
+				fileShowOption.path = fileName;
+				break;
+			default:
+				fileShowOption.type = 0;
+				fileShowOption.icon = mod.classify2(fileName);
+				break;
+		}
+		return fileShowOption;
+	}
 
 	/**
 	 * 通过文件名后缀将文件分类,html5支持的格式

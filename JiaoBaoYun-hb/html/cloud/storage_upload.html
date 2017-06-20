@@ -72,6 +72,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">从本地选择</h1>
+			<a id="done" class="mui-icon mui-pull-right mui-plus-visible" style="padding-left: 30px;padding-top: 15px;font-size: 14px;">确定</a>
 		</header>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider">
@@ -156,6 +157,25 @@
 			}
 
 			function initListener() {
+				var done = document.getElementById('done');
+				done.addEventListener('tap', function() {
+					var list = document.getElementById('all');
+					var checkboxArray = [].slice.call(list.querySelectorAll('input[type="checkbox"]'));
+					var checkedValues = [];
+					checkboxArray.forEach(function(box) {
+						if (box.checked) {
+							var dataInfo = JSON.parse(box.parentNode.getAttribute('data-info'))
+							checkedValues.push(dataInfo);
+						}
+					});
+					if (checkedValues.length > 0) {
+						console.log('传到安琪界面的数据：'+JSON.stringify(checkedValues))
+						events.fireToPageWithData('storage_upload_choose.html','chose-files',checkedValues)
+						mui.back();
+					} else {
+						mui.alert('你还没选择文件');
+					}
+				}, false);
 				//返回按钮
 				mui.back = function() {
 					folderList.pop(); //清除最后一个历史记录
@@ -473,12 +493,13 @@
 					data.fullPath = 'file://' + data.fullPath
 				}
 				var li = document.createElement('li');
+				li.setAttribute('data-info', JSON.stringify(data)); //元素id
 				li.setAttribute('id', 'fid_' + data.fullPath); //元素id
 				li.setAttribute('data-fid', data.fullPath); //文件id
 				li.setAttribute('data-fname', data.name); //文件名
 				li.setAttribute('data-isFile', data.isFile); //类型
 				li.setAttribute('data-isDirectory', data.isDirectory); //类型
-				li.className = 'mui-table-view-cell mui-media';
+				
 				//文件夹右侧箭头
 				var html1 = '';
 				//文件或文件图标
@@ -489,6 +510,7 @@
 				//						//console.log('隐藏的文件夹或文件');
 				//					} else
 				if(data.isDirectory) { //文件夹
+					li.className = 'mui-table-view-cell mui-media';
 					html1 = '<span class="mui-navigate-right mui-media-object mui-pull-right"></span>';
 					html2 = '<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">';
 					html3 = '<div class="mui-media-body">\
@@ -497,7 +519,8 @@
 					li.innerHTML = html1 + html2 + html3;
 					document.getElementById("ul_folder_" + URL).appendChild(li);
 				} else if(data.isFile) {
-					html1 = '<span class="mui-media-object mui-pull-right"></span>';
+					li.className = 'mui-table-view-cell mui-media  mui-checkbox mui-right';
+					html1 = '<input style = "margin-top:10px" type="checkbox" /><span class="mui-media-object mui-pull-right"></span>';
 					var type = cloud.classify2(data.name);
 					//console.log(type);
 					html2 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
