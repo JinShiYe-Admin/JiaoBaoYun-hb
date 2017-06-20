@@ -228,6 +228,14 @@
 				});
 			}
 			function rechargeFileArr(fileArr){
+				var reFiles=[];
+				if(fileArr.local){
+					for(var j in fileArr.dataInfo){
+						reFiles.push(fileArr.dataInfo[j].fullPath);
+					}
+					fileArr=reFiles;
+				}
+				
 				var reArr=[];
 				for(var i in fileArr){
 					var fileInfo=cloud.getFileImgStyle(fileArr[i]);
