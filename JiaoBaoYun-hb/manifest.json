@@ -444,7 +444,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"fonts/fangzheng.ttf"
+					"fonts/fangzheng.ttf",
+					"js/utils/showvideoutil.js"
 				],
 				"refer": [
 					"html/quan/leave.html",
@@ -496,7 +497,8 @@
 					"image/dynamic/praise.png",
 					"css/show/show.css",
 					"js/utils/video.js",
-					"image/utils/playvideo.png"
+					"image/utils/playvideo.png",
+					"js/utils/showvideoutil.js"
 				],
 				"refer": [
 					"html/quan/space-detail.html",
@@ -4212,7 +4214,8 @@
 					"css/show/show.css",
 					"image/dynamic/praise.png",
 					"js/utils/video.js",
-					"image/utils/playvideo.png"
+					"image/utils/playvideo.png",
+					"js/utils/showvideoutil.js"
 				],
 				"refer": [
 					"html/show/add-comment.html",

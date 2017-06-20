@@ -1089,7 +1089,7 @@ var dynamiclistitem = (function($, mod) {
 		console.log('src======' + src)
 		img.src = src;
 		img.onload = function() {
-			console.log(img.width)
+			console.log('width:' + img.width + "----" + "height:" + img.height)
 			callback({
 				width: img.width,
 				height: img.height
@@ -1202,17 +1202,49 @@ var dynamiclistitem = (function($, mod) {
 		if(ImageNum == 1 && data.EncType == 2) {
 			var tempDiv = document.getElementById("video-container" + data.id_name);
 			var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
-				if(imgSize.width < 500) {
-					tempDiv.style.width = imgSize.width * 3 / 8 + 'px';
-					tempDiv.style.height = imgSize.height * 3 / 8 + 'px';
-					var playvideo = document.getElementById("playvideo" + data.id_name);
-					playvideo.style.marginTop = imgSize.height * 3 / 16 - 25 + 'px'
+				
+				if(imgSize.height > imgSize.width) {
+					if(imgSize.width==1080&&imgSize.height==1920){
+						tempDiv.style.width =  + '180px';
+						tempDiv.style.height =  + '320px';
+						var playvideo = document.getElementById("playvideo" + data.id_name);
+						playvideo.style.marginTop = 160 - 25 + 'px'
+						return;
+					}
+					if(imgSize.width < 500) {
+						tempDiv.style.width = imgSize.width * 3 / 8 + 'px';
+						tempDiv.style.height = imgSize.height * 3 / 8 + 'px';
+						console.log('tempDiv.style.width='+tempDiv.style.width)
+						var playvideo = document.getElementById("playvideo" + data.id_name);
+						playvideo.style.marginTop = imgSize.height * 3 / 16 - 25 + 'px'
+					} else {
+						tempDiv.style.width = imgSize.width / 4 + 'px';
+						tempDiv.style.height = imgSize.height / 4 + 'px';
+						var playvideo = document.getElementById("playvideo" + data.id_name);
+						playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
+					}
 				} else {
-					tempDiv.style.width = imgSize.width / 4 + 'px';
-					tempDiv.style.height = imgSize.height / 4 + 'px';
-					var playvideo = document.getElementById("playvideo" + data.id_name);
-					playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
+					if(imgSize.height==1080&&imgSize.width==1920){
+						tempDiv.style.height =  '180px';
+						tempDiv.style.width =  '320px';
+						var playvideo = document.getElementById("playvideo" + data.id_name);
+						playvideo.style.marginTop = 160 - 25 + 'px'
+						return;
+					}
+					if(imgSize.height < 500) {
+						tempDiv.style.width = imgSize.width * 3 / 8 + 'px';
+						tempDiv.style.height = imgSize.height * 3 / 8 + 'px';
+						console.log('tempDiv.style.width='+tempDiv.style.width)
+						var playvideo = document.getElementById("playvideo" + data.id_name);
+						playvideo.style.marginTop = imgSize.height * 3 / 16 - 25 + 'px'
+					} else {
+						tempDiv.style.width = imgSize.width / 4 + 'px';
+						tempDiv.style.height = imgSize.height / 4 + 'px';
+						var playvideo = document.getElementById("playvideo" + data.id_name);
+						playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
+					}
 				}
+
 			})
 
 		} else if((mp[mp.length - 1] == 'mp4') && (data.EncType == 5)) {
@@ -1410,16 +1442,46 @@ var dynamiclistitem = (function($, mod) {
 		if(ImageNum == 1 && data.EncType == 2) {
 			var tempDiv = document.getElementById("video-container" + data.id_name);
 			var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
-				if(imgSize.width < 500) {
-					tempDiv.style.width = imgSize.width * 3 / 8 + 'px';
-					tempDiv.style.height = imgSize.height * 3 / 8 + 'px';
-					var playvideo = document.getElementById("playvideo" + data.id_name);
-					playvideo.style.marginTop = imgSize.height * 3 / 16 - 25 + 'px'
+				if(imgSize.height > imgSize.width) {
+					if(imgSize.width==1080&&imgSize.height==1920){
+						tempDiv.style.width =  '180px';
+						tempDiv.style.height =  '320px';
+						var playvideo = document.getElementById("playvideo" + data.id_name);
+						playvideo.style.marginTop = 160 - 25 + 'px'
+						return;
+					}
+					if(imgSize.width < 500) {
+						tempDiv.style.width = imgSize.width * 3 / 8 + 'px';
+						tempDiv.style.height = imgSize.height * 3 / 8 + 'px';
+						console.log('tempDiv.style.width='+tempDiv.style.width)
+						var playvideo = document.getElementById("playvideo" + data.id_name);
+						playvideo.style.marginTop = imgSize.height * 3 / 16 - 25 + 'px'
+					} else {
+						tempDiv.style.width = imgSize.width / 4 + 'px';
+						tempDiv.style.height = imgSize.height / 4 + 'px';
+						var playvideo = document.getElementById("playvideo" + data.id_name);
+						playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
+					}
 				} else {
-					tempDiv.style.width = imgSize.width / 4 + 'px';
-					tempDiv.style.height = imgSize.height / 4 + 'px';
-					var playvideo = document.getElementById("playvideo" + data.id_name);
-					playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
+					if(imgSize.height==1080&&imgSize.width==1920){
+						tempDiv.style.height =  '180px';
+						tempDiv.style.width =  '320px';
+						var playvideo = document.getElementById("playvideo" + data.id_name);
+						playvideo.style.marginTop = 160 - 25 + 'px'
+						return;
+					}
+					if(imgSize.height < 500) {
+						tempDiv.style.width = imgSize.width * 3 / 8 + 'px';
+						tempDiv.style.height = imgSize.height * 3 / 8 + 'px';
+						console.log('tempDiv.style.width='+tempDiv.style.width)
+						var playvideo = document.getElementById("playvideo" + data.id_name);
+						playvideo.style.marginTop = imgSize.height * 3 / 16 - 25 + 'px'
+					} else {
+						tempDiv.style.width = imgSize.width / 4 + 'px';
+						tempDiv.style.height = imgSize.height / 4 + 'px';
+						var playvideo = document.getElementById("playvideo" + data.id_name);
+						playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
+					}
 				}
 
 			})
