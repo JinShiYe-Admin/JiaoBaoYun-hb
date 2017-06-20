@@ -159,8 +159,11 @@ var video = (function(mod) {
 		if(plus.os.name == "Android") {
 			mod.playInAndroid(videoPath, thumbPath, playCallback);
 		} else {
-			//			mod.playInHTML(videoPath,thumbPath);
-			mui.toast("功能暂未开放！")
+			console.log('videoPath='+videoPath+','+thumbPath);
+			ShowVideoUtil.showVideo(document.getElementById("video"), 'videoPopover', videoPath, thumbPath);
+			playCallback();
+//			mod.playInHTML(videoPath,thumbPath);
+//			mui.toast("功能暂未开放！")
 		}
 	}
 	mod.initVideo = function() {

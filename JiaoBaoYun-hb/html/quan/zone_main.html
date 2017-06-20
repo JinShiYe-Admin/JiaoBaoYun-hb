@@ -13,6 +13,7 @@
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/publicProtocol.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/utils/showvideoutil.js"></script>
 
 	</head>
 
@@ -26,6 +27,11 @@
 				<a id="pub-dynamic" style="visibility:hidden;" class="mui-icon iconfont icon-fabu mui-pull-right mui-plus-visible ">&nbsp;&nbsp;</a>
 			</div>
 		</header>
+		<div id="videoPopover" class="mui-popover">
+			<video id="video" style="position: absolute;z-index: 999;">
+				您的浏览器不支持 video 标签。
+			</video>
+		</div>
 
 		<div class="mui-content "></div>
 		<script type="text/javascript ">
@@ -52,6 +58,8 @@
 						NoReadCnt: NoReadCnt
 					}
 				)
+				//初始化视频播放器
+				ShowVideoUtil.initVideo(document.getElementById("video"));
 				self.append(sub);
 				//			events.initSubPage('zonep_sub.html', { data: data, NoReadCnt: NoReadCnt });
 				console.log('我的空间获取的数据' + JSON.stringify(data))
