@@ -23,6 +23,7 @@
 		<script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/utils/video.js"></script>
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
+		<script type="text/javascript" src="../../js/utils/showvideoutil.js"></script>
 		<style type="text/css">
 			.commentCell.mui-table-view-cell {
 				background: white;
@@ -160,7 +161,7 @@
 				top: 45px;
 			}*/
 			
-			#topPopover {
+			/*#topPopover {
 				position: fixed;
 				top: 46px;
 				right: 6px;
@@ -175,11 +176,35 @@
 			.mui-popover {
 				height: 30px;
 				width: 80;
-			}
+			}*/
 			
 			.mui-backdrop {
 				/*选择排序的遮罩*/
 				background-color: rgba(0, 0, 0, .05);
+			}
+			
+			.video-thumb {
+				/*视频缩略图*/
+				width: 50%;
+				visibility: hidden;
+			}
+
+			.video-play {
+				/*播放按钮*/
+				position: absolute;
+				visibility: hidden;
+			}
+				.mui-popover {
+				width: 100%;
+				height: 0px;
+				border-radius: initial;
+				background-color: transparent;
+				border: none;
+				box-shadow: none;
+			}
+
+			.mui-backdrop {
+				background-color: transparent;
 			}
 		</style>
 
@@ -207,7 +232,12 @@
 			</div>
 
 		</div>
-		<div id="topPopover" class="mui-popover">
+		<div id="videoPopover" class="mui-popover">
+			<video id="video" style="position: absolute;z-index: 999;">
+				您的浏览器不支持 video 标签。
+			</video>
+		</div>
+		<!--<div id="topPopover" class="mui-popover">
 			<div class="mui-popover-arrow"></div>
 			<ul class="mui-table-view" style="height: 40px;background-color: white;">
 				<li id="pubDynamic" class="mui-table-view-cell mui-media ">
@@ -215,7 +245,7 @@
 				</li>
 
 			</ul>
-		</div>
+		</div>-->
 
 	</body>
 
@@ -239,7 +269,8 @@
 		mui.plusReady(function() {
 			SCREEN_WIDTH = plus.screen.resolutionWidth;
 			preModel = plus.webview.currentWebview().data
-
+			//初始化视频播放器
+			ShowVideoUtil.initVideo(document.getElementById("video"));
 			publisherId = preModel.PublisherId
 			console.log('personalUTID=' + personalUTID + '-----' + 'publisherId=' + JSON.stringify(preModel))
 			//			if(personalUTID == 0 || personalUTID != publisherId) {

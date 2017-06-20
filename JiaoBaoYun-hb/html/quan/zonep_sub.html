@@ -23,6 +23,7 @@
 		<script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/utils/video.js"></script>
 		<script type="text/javascript" src="../../js/quan/dynamiclistitem.js"></script>
+		<script type="text/javascript" src="../../js/utils/showvideoutil.js"></script>
 
 	</head>
 
@@ -37,6 +38,11 @@
 				</ul>
 			</div>
 
+		</div>
+		<div id="videoPopover" class="mui-popover">
+			<video id="video" style="position: absolute;z-index: 999;">
+				您的浏览器不支持 video 标签。
+			</video>
 		</div>
 
 	</body>
@@ -214,7 +220,8 @@
 			gid = plus.webview.currentWebview().data.classId
 			mui.previewImage();
 			publisherId = plus.webview.currentWebview().data; //发布者id
-
+			//初始化视频播放器
+			ShowVideoUtil.initVideo(document.getElementById("video"));
 			tempPage = 1; //页码，请求第几页数据
 			totalCnt = 0; //当前留言的总条数
 			flag = 2; //判断是加载更多1，还是刷新2

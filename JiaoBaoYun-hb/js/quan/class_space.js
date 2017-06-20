@@ -379,6 +379,8 @@ mui.plusReady(function() {
 	mui.previewImage();
 	postData = plus.webview.currentWebview().data;
 	postData.userId = parseInt(postData.userId);
+	//初始化视频播放器
+	ShowVideoUtil.initVideo(document.getElementById("video"));
 	//班级名称
 	className = plus.webview.currentWebview().className;
 	document.getElementById('title').innerText = getHeadText(className);
