@@ -16,6 +16,8 @@
 }
 .icon-bianji:before { content: "\3486"; }
 
+.icon-shanchu:before { content: "\e622"; }
+
 .icon-close:before { content: "\e646"; }
 
 .icon-zone:before { content: "\e64c"; }

@@ -191,6 +191,7 @@ var cloud = (function($, mod) {
 			case "icon-video":
 				fileShowOption.type = 2;
 				fileShowOption.path = fileName;
+				fileShowOption.icon = "icon-video";
 				break;
 			case "icon-imge":
 				fileShowOption.type = 1;

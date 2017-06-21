@@ -1241,7 +1241,8 @@
 			"js/utils/video.js",
 			"js/libs/RSA/BigInt.js",
 			"js/libs/RSA/RSA.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/utils/showvideoutil.js"
 		],
 		"refer": [
 			"html/quan/class-group.html",
@@ -1904,7 +1905,9 @@
 			"js/libs/jquery.js",
 			"js/libs/RSA/BigInt.js",
 			"js/libs/RSA/RSA.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"image/qiuzhi/qiuzhi_noanswer.png",
+			"css/iconfont/iconfont.css"
 		],
 		"refer": [
 			"html/cloud/app_notes_create.html"
@@ -2587,7 +2590,32 @@
 			"css/utils/common.css",
 			"css/utils/preview.css",
 			"js/utils/recordvideoutil.js",
-			"image/utils/videothumb.png"
+			"image/utils/videothumb.png",
+			"js/utils/showaudio.js",
+			"js/utils/cryption.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/cloud/AndroidFileSystem.js",
+			"js/utils/playutil.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/mui.zoom.js",
+			"js/mui.min.js",
+			"js/utils/compress.js",
+			"js/mui.previewimage.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/storageKeyName.js",
+			"js/libs/crypto-js/require.js",
+			"js/utils/showvideoutil.js",
+			"js/utils/gallerypick.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"js/utils/CloudFileUtil.js",
+			"js/qiniu/qiniu.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	},
 	"html/mine/qun_data_create.html": {
