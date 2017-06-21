@@ -1455,7 +1455,9 @@
 			"js/utils/RSAEncrypt.js",
 			"js/publicProtocol.js",
 			"js/utils/events.js",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"js/utils/showvideoutil.js",
+			"js/utils/playutil.js"
 		],
 		"refer": [
 			"html/quan/space-detail.html",

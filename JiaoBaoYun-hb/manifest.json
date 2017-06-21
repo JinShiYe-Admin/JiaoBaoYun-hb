@@ -498,7 +498,8 @@
 					"css/show/show.css",
 					"js/utils/video.js",
 					"image/utils/playvideo.png",
-					"js/utils/showvideoutil.js"
+					"js/utils/showvideoutil.js",
+					"js/utils/playutil.js"
 				],
 				"refer": [
 					"html/quan/space-detail.html",
