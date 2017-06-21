@@ -119,9 +119,9 @@
 				</ul>
 			</div>
 		</div>
-		<div id="filter" v-if="isShow" v-bind:style="filterContainer">
-			<ul>
-				<filter-item v-for="item of options" v-bind:option="item" v-if="cellIsShow(item)" ></filter-item>
+		<div id="filter" v-if="isShow" v-bind:style="filterContainer" v-on:tap="setIsShow(false)">
+			<ul class="mui-col-sm-4 mui-col-xs-4" style="align-self: center;-webkit-padding-start: 0px;">
+				<filter-item  v-for="item of options" v-bind:option="item" v-if="cellIsShow(item)" ></filter-item>
 			</ul>
 		</div>
 
