@@ -299,6 +299,7 @@
 			var downloading = false; //是否正在上传
 			var upFolderEntry = null; //上传文件夹的目录对象
 			var downFolderEntry = null; //下载文件夹的目录对象
+			var upLoadNoWiFi = false; //没有WIFI是否依旧上传
 			//文件存放在私有空间或公有空间
 			var mainSpace = window.storageKeyName.QNPRISPACE;
 			//缩略图存放在私有空间或公有空间
@@ -428,7 +429,7 @@
 						eleId++;
 						addUploadItem(data.eleId, subData.files[i].fileName);
 					}
-					startUploading();
+					startUploadingNetType();
 				});
 
 				/**
@@ -656,37 +657,17 @@
 						mui.toast('删除成功');
 					});
 				});
-			}
 
-			/**
-			 * 判断网络类型后进行上传或下载
-			 * @param {Object} type 下载0，上传1
-			 * @param {Object} postData 数据
-			 */
-			function getCurrentTypeAndUpOrDown(type, postData) {
-				CloudFileUtil.getCurrentType(function(data) {
-					console.log('获取当前网络状态:' + JSON.stringify(data));
-					if(data.code == 3) { //无线WIFI网络
-						if(type == 1) { //上传
-							getQNUpToken(postData.getUpTokenUrl, postData.QNFileName, postData.fpath, postData.fname, postData.pid);
-						} else {
-							getQNDownToken(postData.fileUrl, postData.fname, postData.localname);
+				//网络变化
+				document.addEventListener("netchange", function() {
+					console.log("netchange " + plus.webview.currentWebview().id);
+					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_WIFI) {
+						if(!upLoadNoWiFi) {
+							upLoadNoWiFi = true;
+							startUploading();
 						}
 					} else {
-						if(data.code == 1) {
-							mui.toast(data.type);
-						} else {
-							var btnArray = ['否', '是'];
-							mui.confirm('当前不是无线WIFI网络，还继续吗？', '提示', btnArray, function(e) {
-								if(e.index == 1) { //是
-									if(type == 1) { //上传
-										getQNUpToken(postData.getUpTokenUrl, postData.QNFileName, postData.fpath, postData.fname, postData.pid);
-									} else {
-										getQNDownToken(postData.fileUrl, postData.fname, postData.localname);
-									}
-								}
-							}, 'div');
-						}
+						upLoadNoWiFi = false;
 					}
 				});
 			}
@@ -822,6 +803,33 @@
 			}
 
 			/**
+			 * 开始创建上传任务之前判断网络状态
+			 */
+			function startUploadingNetType() {
+				var netType = plus.networkinfo.getCurrentType();
+				console.log("startUploadingNetType " + netType + " " + upLoadNoWiFi);
+				if(netType == plus.networkinfo.CONNECTION_WIFI || upLoadNoWiFi) {
+					//WIFI||没有WIFI也上传
+					startUploading();
+				} else {
+					if(netType == plus.networkinfo.CONNECTION_NONE) {
+						//没有连接网络
+						mui.toast("没有连接网络，请连接网络后重新尝试");
+					} else {
+						mui.confirm('当前不是无线WIFI网络，还继续上传吗？', '提示', ['否', '是'], function(e) {
+							if(e.index == 1) { //是
+								upLoadNoWiFi = true;
+								startUploading();
+							} else {
+								upLoadNoWiFi = false;
+								uploadingId = -1; //正在上传
+							}
+						}, 'div');
+					}
+				}
+			}
+
+			/**
 			 * 开始创建上传任务
 			 */
 			function startUploading() {
@@ -832,7 +840,7 @@
 				uploadingId = -1; //正在上传
 				var data; //上传任务的参数
 				for(var i in uploadList.key) {
-					console.log("startUploading " + i + " " + uploadList.key[i] + " " + JSON.stringify(uploadList.value[i]));
+					console.log("startUploadingNetType " + i + " " + uploadList.key[i] + " " + JSON.stringify(uploadList.value[i]));
 					if(uploadList.value[i] && uploadList.value[i].state == -1) { //未开始的任务
 						uploadingId = i;
 						document.getElementById("up_btn_" + i).style.display = "none"; //隐藏取消上传任务按钮
@@ -907,7 +915,7 @@
 								addFile(comData, fPath, fname, uploadingId);
 								uploadList.value[uploadingId].state = 4;
 								uploadingId = null;
-								startUploading();
+								startUploadingNetType();
 							} else {
 								mui.toast('上传失败' + upload.responseText);
 								uploadFail();
@@ -976,7 +984,7 @@
 				document.getElementById("up_waiting_" + uploadingId).innerText = '上传失败';
 				uploadList.value[uploadingId].state = -2;
 				uploadingId = null;
-				startUploading();
+				startUploadingNetType();
 			}
 
 			/**
