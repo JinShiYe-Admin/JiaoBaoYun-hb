@@ -413,9 +413,6 @@
 						if(ftypeList.length != 1) {
 							ftype = '.' + ftypeList[ftypeList.length - 1];
 						}
-						if(ftype = ".file") {
-							ftype = "";
-						}
 						var QNFileName = myDate.getTime() + (Math.floor(Math.random() * 10000) + 1) + ftype;
 						var data = {
 							eleId: eleId, //元素的id
@@ -425,7 +422,6 @@
 							fPath: subData.files[i].path, //上传文件的本地路径
 							fname: subData.files[i].fileName, //上传文件的名字
 							pid: subData.pid, //父ID，该文件的上层ID
-							ftype: ftype //	文件类型，存文件的扩展名,如.file为文件夹
 						}
 						uploadList.key[uploadList.key.length] = data.eleId;
 						uploadList.value[data.eleId] = data;
@@ -465,14 +461,16 @@
 
 				//上传中列表的任务
 				mui('#upload').on('longtap', '.mui-table-view-cell', function() {
-					var id = this.getAttribute('id'); //元素id
-					var error = this.getAttribute('data-error'); //文件本地路径
-					console.log('uploaded:' + id + "|" + error);
-					if(error) {
+					var ids = this.getAttribute('id').split("_"); //元素id
+					console.log('upload ' + JSON.stringify(ids));
+					console.log("data " + JSON.stringify(uploadList.value[ids[1]]));
+					if(uploadList.value[ids[1]].state == -2) { //上传失败
 						var btnArray = ['否', '是'];
 						mui.confirm('确认删除任务？', '提示', btnArray, function(e) {
 							if(e.index == 1) { //是
-								document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+								delete uploadList.value[ids[1]];
+								var liUp = document.getElementById("up_" + ids[1]);
+								liUp.parentNode.removeChild(liUp);
 							}
 						}, 'div');
 					}
@@ -835,7 +833,7 @@
 				var data; //上传任务的参数
 				for(var i in uploadList.key) {
 					console.log("startUploading " + i + " " + uploadList.key[i] + " " + JSON.stringify(uploadList.value[i]));
-					if(uploadList.value[i].state == -1) { //未开始的任务
+					if(uploadList.value[i] && uploadList.value[i].state == -1) { //未开始的任务
 						uploadingId = i;
 						document.getElementById("up_btn_" + i).style.display = "none"; //隐藏取消上传任务按钮
 						break;
@@ -907,8 +905,11 @@
 									fsize: upload.totalSize //文件大小，文件用
 								};
 								addFile(comData, fPath, fname, uploadingId);
+								uploadList.value[uploadingId].state = 4;
+								uploadingId = null;
+								startUploading();
 							} else {
-								mui.toast('上传失败 ' + status + ' ' + upload.responseText);
+								mui.toast('上传失败' + upload.responseText);
 								uploadFail();
 							}
 						}, function(upload, status) {
@@ -943,6 +944,7 @@
 									break;
 								case 4: //上传任务已完成
 									console.log('上传任务已完成:|id:' + id + '|uploadState:' + upload.state);
+									delete taskArray.value[upload.__UUID__]; //删除上传任务
 									break;
 								case 5: //上传任务已暂停
 									console.log('上传任务已暂停:|id:' + id + '|uploadState:' + upload.state);
@@ -970,7 +972,7 @@
 			 * 上传任务失败
 			 * @param {Object} id
 			 */
-			function uploadFail(id) {
+			function uploadFail() {
 				document.getElementById("up_waiting_" + uploadingId).innerText = '上传失败';
 				uploadList.value[uploadingId].state = -2;
 				uploadingId = null;
@@ -1125,6 +1127,7 @@
 									</div>';
 				document.getElementById("downloaded").insertBefore(li, document.getElementById("downloaded").firstChild);
 			}
+
 			/**
 			 * 用户云盘文件上传或创建文件夹
 			 * @param {Object} comData 往服务器传的数据
@@ -1143,22 +1146,21 @@
 				//	fsize: '' //	文件大小，文件用
 				//};
 				// 等待的对话框
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
+				var wd = events.showWaiting();
 				postDataPro_PostDiFiA(comData, wd, function(data) {
 					wd.close();
-					console.log('90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+					console.log('27 用户云盘文件上传或创建文件夹 ' + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						mui.toast(comData.fname + comData.ftype + ' 上传成功');
-						document.getElementById("up_" + id).parentNode.removeChild(document.getElementById("up_" + id));
+						var ulUp = document.getElementById("up_" + id);
+						if(ulUp) {
+							ulUp.parentNode.removeChild(ulUp);
+						}
 						copyFileToUpload(filePath, fname);
 					} else {
 						document.getElementById("up_waiting_" + id).innerText = '上传失败';
-						document.getElementById("up_" + id).setAttribute('data-error', true);
-						if(data.RspCode == 8) {
-							mui.toast('上传失败 ' + fname + ' ' + data.RspTxt + '');
-						} else {
-							mui.toast(data.RspTxt);
-						}
+						uploadList.value[id].state = -2;
+						mui.toast('上传失败 ' + ' ' + data.RspTxt + ' ' + fname);
 						var batchDelete = {
 							appId: 4, //int 必填 项目id
 							urls: [comData.fpath] //array 必填 需要获取下载token文件的路径

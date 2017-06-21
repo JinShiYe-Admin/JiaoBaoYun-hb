@@ -489,8 +489,13 @@
 						return false;
 					}
 					var targetPage = plus.webview.getWebviewById('storage_transport.html');
-					mui.fire(targetPage, 'getUpAndDownEntry');
-					targetPage.show('slide-in-right', 250);
+					if(targetPage) {
+						mui.fire(targetPage, 'getUpAndDownEntry');
+						targetPage.show('slide-in-right', 250);
+					} else {
+						events.openNewWindow('storage_transport.html');
+					}
+
 				});
 
 				//增加文件夹的监听
