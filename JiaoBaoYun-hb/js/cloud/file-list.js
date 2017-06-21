@@ -1,7 +1,7 @@
 Vue.component("file-item", {
 	props: ['file','index'],
 	template: '<li class="mui-table-view-cell" v-bind:style="{display:\'flex\',display:\'-webkit-flex\',\'align-items\':\'center\',\'min-height\':\'60px\'}" >' +
-		'<span v-if="file.type==0||file.type==2" v-bind:class="[\'iconfont\',file.icon]" v-bind:style="{\'font-size\':\'42px\'}"></span>' +
+		'<span v-if="true" v-bind:class="[\'iconfont\',file.icon]" v-bind:style="{\'font-size\':\'42px\'}"></span>' +
 		'<img  v-else v-bind:src="file.path"  v-bind:style="{width:\'42px\',height:\'42px\'}"/>' +
 		'<p v-bind:style="{width:\'50%\',\'flex-grow\':\'1\',\'padding-left\':\'5px\',\'padding-right\':\'5px\',\'word-wrap\':\'break-word\',\'word-break\':\'break-all\'}">{{file.fileName}}</p>' +
 		'<span class="iconfont icon-shanchu" v-on:click="delcell(index)" v-bind:style="{color:\'#13b7f6\',\'font-size\':\'20px\',\'padding-left\':\'5px\'}"></span>' + '</li>',

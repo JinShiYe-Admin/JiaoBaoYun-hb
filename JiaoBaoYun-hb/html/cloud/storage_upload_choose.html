@@ -19,25 +19,25 @@
 			.mui-content {
 				background: white;
 			}
-
+			
 			nav {
 				background-color: #383E4E !important;
 			}
-
+			
 			.bar-tab-div {
 				margin: 5px;
 			}
-
+			
 			.bar-tab-div .mui-pull-left,
 			.bar-tab-div .mui-pull-right {
 				width: 45%;
 			}
-
+			
 			.bar-tab-div .mui-pull-left div:first-child {
 				color: white;
 				margin-left: 10%;
 			}
-
+			
 			.bar-tab-div .mui-pull-left button {
 				width: 100%;
 				margin-bottom: 15px;
@@ -46,17 +46,17 @@
 				border-color: #7F8594;
 				height: 40px;
 			}
-
+			
 			.bar-tab-div .mui-pull-left button img {
 				width: 20%;
 				height: 20px;
 			}
-
+			
 			.bar-tab-div .mui-pull-left button div {
 				width: 80%;
 				text-align: center;
 			}
-
+			
 			.bar-tab-div .mui-pull-right button {
 				width: 100%;
 				margin-bottom: 15px;
@@ -65,30 +65,31 @@
 				border-color: #636770;
 				height: 40px;
 			}
-
+			
 			.mui-backdrop {
 				background-color: rgba(0, 0, 0, 0.03);
 			}
-
+			
 			.mui-popover-arrow {
 				display: none;
 			}
-
+			
 			.mui-popover {
 				width: 100%;
 			}
-
+			
 			.mui-popover.mui-active {
 				left: 0px !important;
 				height: 200px;
 			}
-
+			
 			.popover-background {
 				width: 100% !important;
 				background-color: wheat;
 				height: 100%;
 			}
-			.mui-bar-tab~.mui-content{
+			
+			.mui-bar-tab~.mui-content {
 				padding-bottom: 81px;
 			}
 		</style>
@@ -124,7 +125,7 @@
 		</div>
 		<div id="filter" v-if="isShow" v-bind:style="filterContainer" v-on:tap="setIsShow(false)">
 			<ul class="mui-col-sm-4 mui-col-xs-4" style="align-self: center;-webkit-padding-start: 0px;">
-				<filter-item  v-for="item of options" v-bind:option="item" v-if="cellIsShow(item)" ></filter-item>
+				<filter-item v-for="item of options" v-bind:option="item" v-if="cellIsShow(item)"></filter-item>
 			</ul>
 		</div>
 
@@ -134,7 +135,7 @@
 		<script src="../../js/cloud/cloud.js"></script>
 		<script src="../../js/utils/gallerypick.js"></script>
 		<script src="../../js/utils/vue.js"></script>
-		
+
 		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
 		<script type="text/javascript" src="../../js/storageKeyName.js"></script>
 		<script type="text/javascript" src="../../js/utils/compress.js"></script>
@@ -147,20 +148,20 @@
 			}; //当前页面的数据
 			mui(".mui-scroll-wrapper").scroll();
 			mui.init({
-				beforeback:function(){
-					if(filter.isShow){
+				beforeback: function() {
+					if(filter.isShow) {
 						filter.setIsShow(false);
 						return false;
-					}else{
+					} else {
 						return true;
 					}
 				}
 			});
 			mui.plusReady(function() {
-//				filter.isShow=true;
+				//				filter.isShow=true;
 				initData();
 				initListener();
-//				initPopover();
+				//				initPopover();
 			});
 
 			/**
@@ -181,14 +182,15 @@
 			 * 初始化监听
 			 */
 			function initListener() {
-				window.addEventListener("chose-files",function(e){
-					console.log("chose-files事件："+JSON.stringify(e.detail.data));
+				window.addEventListener("chose-files", function(e) {
+					console.log("chose-files事件：" + JSON.stringify(e.detail.data));
 					fileList.pushFilesArr(rechargeFileArr(e.detail.data));
 				});
 				//添加文件
 				document.getElementById('addfiles').addEventListener('tap', function() {
 					console.log("添加文件");
-					filter.isShow=true;
+					filter.isShow = true;
+					filter.fileNo = fileList.filesArr.length;
 				});
 
 				//选择上传的路径
@@ -230,31 +232,32 @@
 					}
 				});
 			}
-			function rechargeFileArr(fileArr){
-				var reFiles=[];
-				if(fileArr.local){
-					for(var j in fileArr.dataInfo){
+
+			function rechargeFileArr(fileArr) {
+				var reFiles = [];
+				if(fileArr.local) {
+					for(var j in fileArr.dataInfo) {
 						reFiles.push(fileArr.dataInfo[j].fullPath);
 					}
-					fileArr=reFiles;
+					fileArr = reFiles;
 				}
-				
-				var reArr=[];
-				for(var i in fileArr){
-					var fileInfo=cloud.getFileImgStyle(fileArr[i]);
-					fileInfo.fileName=events.getFileName(fileArr[i]);
-				   	reArr.push(fileInfo);
+
+				var reArr = [];
+				for(var i in fileArr) {
+					var fileInfo = cloud.getFileImgStyle(fileArr[i]);
+					fileInfo.fileName = events.getFileName(fileArr[i]);
+					reArr.push(fileInfo);
 				}
-				console.log("获取的数组："+JSON.stringify(reArr));
+				console.log("获取的数组：" + JSON.stringify(reArr));
 				return reArr;
 			}
 			/*
 			 * 初始化选择文件方式弹框
 			 */
-//			function initPopover() {
-//				document.getElementById("popover").style.height = plus.screen.resolutionHeight - plus.navigator.getStatusbarHeight() - 45 + "px";
-//				document.getElementById("popover").style.top = 45 + "px"
-//			}
+			//			function initPopover() {
+			//				document.getElementById("popover").style.height = plus.screen.resolutionHeight - plus.navigator.getStatusbarHeight() - 45 + "px";
+			//				document.getElementById("popover").style.top = 45 + "px"
+			//			}
 			/**
 			 * 将上传按钮颜色设置为默认颜色
 			 */
