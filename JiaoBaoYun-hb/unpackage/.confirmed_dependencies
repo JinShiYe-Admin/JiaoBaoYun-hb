@@ -1698,7 +1698,9 @@
 			"css/utils/common.css",
 			"js/libs/crypto-js/crypto-js.js"
 		],
-		"refer": []
+		"refer": [
+			"html/cloud/keeprecord_callorrecord_main.html"
+		]
 	},
 	"html/mine/approval-apply.html": {
 		"resources": [
@@ -2598,6 +2600,22 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css"
+		]
+	},
+	"html/cloud/keeprecord_callorrecord_main.html": {
+		"resources": [
+			"js/mui.zoom.js",
+			"css/utils/pullToRefresh.css",
+			"js/utils/compress.js",
+			"css/mui.min.css",
+			"js/utils/showvideoutil.js",
+			"js/mui.previewimage.js",
+			"js/utils/MultiMedia.js",
+			"css/utils/MultiMedia.css",
+			"css/utils/common.css",
+			"js/utils/recordvideoutil.js",
+			"js/utils/gallerypick.js",
+			"js/libs/crypto-js/crypto-js.js"
 		]
 	}
 }
