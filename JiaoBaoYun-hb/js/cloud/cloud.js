@@ -99,7 +99,7 @@ var cloud = (function($, mod) {
 	 * @param {Object} filename 文件名
 	 */
 	mod.classify2 = function(filename) {
-		console.log("确定文件分类时传过来的数据："+JSON.stringify(filename))
+		//console.log("确定文件分类时传过来的数据："+JSON.stringify(filename))
 		//把一个字符串分割成字符串数组
 		var nameList = filename.split(".");
 		//获取文件后缀
@@ -183,7 +183,7 @@ var cloud = (function($, mod) {
 	/**
 	 * 通过文件路径获取类型
 	 * @param {Object} fileName 文件路径
-	 * @return {Object} fileShowOption {type 0|1|2, path||icon} type 0 其他 1图片 2视频  
+	 * @return {Object} fileShowOption {type 0|1|2, path||icon} type 0 其他 1图片 2视频
 	 */
 	mod.getFileImgStyle = function(fileName) {
 		var fileShowOption = {};

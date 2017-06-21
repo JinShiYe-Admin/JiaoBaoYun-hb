@@ -19,25 +19,25 @@
 			.mui-content {
 				background: white;
 			}
-			
+
 			nav {
 				background-color: #383E4E !important;
 			}
-			
+
 			.bar-tab-div {
 				margin: 5px;
 			}
-			
+
 			.bar-tab-div .mui-pull-left,
 			.bar-tab-div .mui-pull-right {
 				width: 45%;
 			}
-			
+
 			.bar-tab-div .mui-pull-left div:first-child {
 				color: white;
 				margin-left: 10%;
 			}
-			
+
 			.bar-tab-div .mui-pull-left button {
 				width: 100%;
 				margin-bottom: 15px;
@@ -46,17 +46,17 @@
 				border-color: #7F8594;
 				height: 40px;
 			}
-			
+
 			.bar-tab-div .mui-pull-left button img {
 				width: 20%;
 				height: 20px;
 			}
-			
+
 			.bar-tab-div .mui-pull-left button div {
 				width: 80%;
 				text-align: center;
 			}
-			
+
 			.bar-tab-div .mui-pull-right button {
 				width: 100%;
 				margin-bottom: 15px;
@@ -65,30 +65,30 @@
 				border-color: #636770;
 				height: 40px;
 			}
-			
+
 			.mui-backdrop {
 				background-color: rgba(0, 0, 0, 0.03);
 			}
-			
+
 			.mui-popover-arrow {
 				display: none;
 			}
-			
+
 			.mui-popover {
 				width: 100%;
 			}
-			
+
 			.mui-popover.mui-active {
 				left: 0px !important;
 				height: 200px;
 			}
-			
+
 			.popover-background {
 				width: 100% !important;
 				background-color: wheat;
 				height: 100%;
 			}
-			
+
 			.mui-bar-tab~.mui-content {
 				padding-bottom: 81px;
 			}
@@ -170,12 +170,6 @@
 			function initData() {
 				main = plus.webview.currentWebview(); //获取当前窗体对象
 				console.log(main.id + " " + JSON.stringify(main.data));
-				chooseData.pid = main.data.pid;
-				chooseData.pname = main.data.pname;
-				if(main.data.pid == 0) {
-					chooseData.pname = "我的教宝云盘";
-				}
-				document.getElementById("yunpath").innerHTML = chooseData.pname;
 			}
 
 			/**
@@ -191,6 +185,21 @@
 					console.log("添加文件");
 					filter.isShow = true;
 					filter.fileNo = fileList.filesArr.length;
+				});
+
+				/**
+				 * 从云存储界面传递数据
+				 */
+				window.addEventListener('getCloudData', function(e) {
+					fileList.filesArr = [];
+					var data = e.detal.data;
+					console.log("getCloudData " + JSON.stringify(data));
+					//				chooseData.pid = main.data.pid;
+					//				chooseData.pname = main.data.pname;
+					//				if(main.data.pid == 0) {
+					//					chooseData.pname = "我的教宝云盘";
+					//				}
+					//				document.getElementById("yunpath").innerHTML = chooseData.pname;
 				});
 
 				//选择上传的路径

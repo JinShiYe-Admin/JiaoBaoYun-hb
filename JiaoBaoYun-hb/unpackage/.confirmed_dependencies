@@ -437,7 +437,14 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"image/cloud/up_image.png",
+			"image/cloud/up_video.png",
+			"image/cloud/up_local.png",
+			"js/utils/camera.js",
+			"js/utils/gallerypick.js",
+			"js/utils/vue.js",
+			"js/cloud/upload-filter.js"
 		],
 		"refer": [
 			"html/cloud/storage_upload_choose.html",

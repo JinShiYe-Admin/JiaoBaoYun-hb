@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 Vue.component("filter-item", {
 	props: ['option'],
@@ -47,6 +47,11 @@ var filter = new Vue({
 			icon: "../../image/cloud/up_local.png",
 			title: "本地上传",
 			func: function() {
+				if(filter.fileNo >= 30) {
+					mui.toast("上传文件不得超过30个！");
+					filter.isShow = false;
+					return;
+				}
 				events.openNewWindowWithData("storage_upload.html",30-filter.fileNo);
 			},
 			type: 1 //1为安卓

@@ -1706,7 +1706,14 @@
 					"js/mui.lazyload.js",
 					"js/mui.lazyload.img.js",
 					"css/utils/preview.css",
-					"js/utils/cryption.js"
+					"js/utils/cryption.js",
+					"image/cloud/up_image.png",
+					"image/cloud/up_video.png",
+					"image/cloud/up_local.png",
+					"js/utils/camera.js",
+					"js/utils/gallerypick.js",
+					"js/utils/vue.js",
+					"js/cloud/upload-filter.js"
 				],
 				"refer": [
 					"html/cloud/storage_show_imge.html",

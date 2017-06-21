@@ -65,6 +65,10 @@
 				padding-right: 10px;
 				border: 0;
 			}
+
+			.mui-checkbox input[type=checkbox]:checked:before {
+				color: #13b7f6;
+			}
 		</style>
 	</head>
 
@@ -163,28 +167,32 @@
 					var checkboxArray = [].slice.call(list.querySelectorAll('input[type="checkbox"]'));
 					var checkedValues = [];
 					checkboxArray.forEach(function(box) {
-						if (box.checked) {
+						if(box.checked) {
 							var dataInfo = JSON.parse(box.parentNode.getAttribute('data-info'))
 							checkedValues.push(dataInfo);
 						}
 					});
-					if (checkedValues.length > 0) {
-						console.log('传到安琪界面的数据：'+JSON.stringify(checkedValues))
-						events.fireToPageWithData('storage_upload_choose.html','chose-files',{
-							dataInfo:checkedValues,
-							local:1
-						})
-						mui.back();
+					if(checkedValues.length > 0) {
+						if(checkedValues.length > main.data) {
+							mui.toast("只允许选择" + main.data + "个文件");
+							return false;
+						}
+						console.log('传到安琪界面的数据：' + JSON.stringify(checkedValues))
+						events.fireToPageWithData('storage_upload_choose.html', 'chose-files', {
+							dataInfo: checkedValues,
+							local: 1
+						});
 					} else {
-						mui.alert('你还没选择文件');
+						events.fireToPageWithData("storage_upload_choose.html", "", {});
 					}
+					plus.webview.close(main, events.getAniClose(3));
 				}, false);
 				//返回按钮
 				mui.back = function() {
 					folderList.pop(); //清除最后一个历史记录
 					if(folderList.length == 0) {
-						//mui.back();
-						plus.webview.hide(main, 'pop-out');
+						events.fireToPageWithData("storage_upload_choose.html", "", {});
+						plus.webview.close(main, events.getAniClose(3));
 					} else {
 						//隐藏当前界面
 						document.getElementById("folder_" + showFolderId).style.display = 'none';
@@ -285,7 +293,6 @@
 							//请求成功的回调
 							//console.log("请求文件系统成功");
 							entry.getMetadata(function(succesCB) {
-
 								console.log("获取目录或文件的属性成功");
 								//console.log("getMetadata:" + JSON.stringify(succesCB));
 								console.log("readFileSize：" + AndroidFileSystem.readSize(succesCB.size));
@@ -304,7 +311,6 @@
 											metadata: succesCB //文件信息
 										}
 										console.log("upFile0:" + JSON.stringify(upFile));
-										document.getElementById(id).style.background = 'deepskyblue';
 									} else {
 										console.log("upFile1:" + JSON.stringify(upFile));
 										if(upFile.fileid == id) { //点击相同的文件
@@ -323,7 +329,6 @@
 												metadata: succesCB //文件信息
 											}
 											console.log("upFile2:" + JSON.stringify(upFile));
-											document.getElementById(id).style.background = 'deepskyblue';
 										}
 									}
 								}
@@ -358,9 +363,6 @@
 			//通过URL参数获取目录对象或文件对象
 			function resolveLocalFileSystemURL(URL) {
 				plus.io.resolveLocalFileSystemURL(URL, function(succesCB) {
-					//请求成功的回调
-					//succesCB:DirectoryEntry:请求到的目录或文件对象
-					//console.log("请求文件系统成功");
 					directoryReader(URL, succesCB); //读取对象
 				}, function(errorCB) {
 					//请求失败的的回调
@@ -373,26 +375,9 @@
 			 */
 			function createFolder() {
 				var url = plus.io.PUBLIC_DOCUMENTS;
-				//  PRIVATE_WWW: 应用运行资源目录常量
-				//  PRIVATE_DOC: 应用私有文档目录常量
-				//  PUBLIC_DOCUMENTS: 程序公用文档目录常量
-				//  PUBLIC_DOWNLOADS: 程序公用下载目录常量
-				//					var path = plus.io.convertLocalFileSystemURL(url);
-				//					var newurl = plus.io.convertAbsoluteFileSystem(url);
-				//					console.log("initIOS: " + path + '|' + newurl);
 				plus.io.requestFileSystem(url, function(succesCB) {
-					//请求成功的回调
-					//succesCB:FileSystem:请求到的文件系统对象
-					//属性：
-					//name: 文件系统的名称
-					//root: 文件系统中的目录对象，用于管理特定的本地目录
-					//						console.log("请求文件系统" + succesCB.name + "成功");
-					//console.log("文件系统的名称:" + succesCB.name);
-					//console.log("文件系统中的目录对象:" + succesCB.root.fullPath);
 					var LocalURL = succesCB.root.toLocalURL();
 					var URL = succesCB.root.toURL();
-					//console.log("root: " + LocalURL + '|' + URL);
-					//记录document的地址
 					window.myStorage.setItem(window.storageKeyName.DOCUMENTSPATH, LocalURL);
 					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 					//创建utid文件夹
@@ -502,7 +487,7 @@
 				li.setAttribute('data-fname', data.name); //文件名
 				li.setAttribute('data-isFile', data.isFile); //类型
 				li.setAttribute('data-isDirectory', data.isDirectory); //类型
-				
+
 				//文件夹右侧箭头
 				var html1 = '';
 				//文件或文件图标

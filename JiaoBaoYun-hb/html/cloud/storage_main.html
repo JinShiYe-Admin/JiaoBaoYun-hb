@@ -344,12 +344,21 @@
 				</div>-->
 			</div>
 		</div>
+		<div id="filter" v-if="isShow" v-bind:style="filterContainer" v-on:tap="setIsShow(false)">
+			<ul class="mui-col-sm-4 mui-col-xs-4" style="align-self: center;-webkit-padding-start: 0px;">
+				<filter-item v-for="item of options" v-bind:option="item" v-if="cellIsShow(item)"></filter-item>
+			</ul>
+		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils/vue.js"></script>
+		<script src="../../js/cloud/upload-filter.js"></script>
 		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
 		<script type="text/javascript" src="../../js/utils/cryption.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
-		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
+		<script src="../../js/utils/camera.js"></script>
+		<script src="../../js/cloud/cloud.js"></script>
+		<script src="../../js/utils/gallerypick.js"></script>
 		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
 		<script type="text/javascript">
 			var main;
@@ -373,7 +382,7 @@
 
 			mui.plusReady(function() {
 				var wd = events.showWaiting();
-				//events.preload('storage_upload_choose.html'); //预加载上传列表
+				events.preload('storage_upload_choose.html'); //预加载上传列表
 				initData();
 				initListener();
 				var comData = {
@@ -462,8 +471,7 @@
 					if(edit) {
 						return false;
 					}
-					var show = showPidList[showPidList.length - 1];
-					events.openNewWindowWithData("storage_upload_choose.html", show);
+					filter.isShow = true;
 				});
 
 				//点击传输列表
