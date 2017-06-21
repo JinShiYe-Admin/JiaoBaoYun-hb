@@ -2000,7 +2000,8 @@
 					null,
 					"html/show/show_home_1.html",
 					"html/qiuzhi/qiuzhi_home.html",
-					"js/utils/app-update.js"
+					"js/utils/app-update.js",
+					"html/micro-course/course-home1.html"
 				],
 				"refer": [
 					"html/mine.html",
@@ -2015,7 +2016,6 @@
 					"html/register/login.html",
 					"html/cloud/order-member.html",
 					"html/micro-course/course-home.html",
-					"html/micro-course/course-home1.html",
 					"html/show/show-home1.html"
 				],
 				"priority": 0

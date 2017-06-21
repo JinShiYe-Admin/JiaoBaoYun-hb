@@ -397,7 +397,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"html/show/show_home_1.html"
+			"html/show/show_home_1.html",
+			"html/micro-course/course-home1.html"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",

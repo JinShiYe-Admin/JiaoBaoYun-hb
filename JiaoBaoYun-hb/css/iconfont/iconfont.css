@@ -14,6 +14,7 @@
   -webkit-font-smoothing: antialiased;
   /*-moz-osx-font-smoothing: grayscale;*/
 }
+
 .icon-bianji:before { content: "\3486"; }
 
 .icon-shanchu:before { content: "\e622"; }
@@ -115,6 +116,8 @@
 .icon-bianji1:before { content: "\e64f"; }
 
 .icon-write:before { content: "\e608"; }
+
+.icon-moveto:before { content: "\e728"; }
 
 .icon-qunziliao2:before { content: "\e615"; }
 
@@ -265,6 +268,8 @@
 .icon-qunguanli1:before { content: "\e633"; }
 
 .icon-shipinlei-xunhuanguiji:before { content: "\e634"; }
+
+.icon-zhongmingming:before { content: "\e67b"; }
 
 .icon-jiaxiabiao:before { content: "\e639"; }
 

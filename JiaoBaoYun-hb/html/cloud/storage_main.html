@@ -289,11 +289,11 @@
 				<div class="mui-tab-label">删除</div>
 			</div>
 			<div class="mui-tab-item cloud-tab-item" value="2">
-				<div class="mui-icon iconfont iconfont-color icon-trash"></div>
+				<div class="mui-icon iconfont iconfont-color icon-moveto"></div>
 				<div class="mui-tab-label">移动到</div>
 			</div>
 			<div class="mui-tab-item cloud-tab-item" value="3">
-				<div class="mui-icon iconfont iconfont-color icon-bianji"></div>
+				<div class="mui-icon iconfont iconfont-color icon-zhongmingming"></div>
 				<div class="mui-tab-label">重命名</div>
 			</div>
 		</nav>
@@ -574,7 +574,8 @@
 
 							setTimeout(function() { //动画结束后
 								//隐藏当前界面
-								document.getElementById("pid_" + showPid).style.display = 'none';
+								var showFolder = document.getElementById("pid_" + showPid);
+								showFolder.parentNode.removeChild(showFolder);
 								document.getElementById("title").innerText = show.pname;
 								showPid = show.pid;
 								back = true;
@@ -674,6 +675,13 @@
 							break;
 						case "2":
 							console.log("移动到");
+							//mask.close();
+							events.openNewWindowWithData("storage_main_choose.html", {
+								type: 0,
+								data: mode,
+								webid: main.id,
+								winid: "cloudMoveTo"
+							});
 							break;
 						case "3":
 							console.log("重命名");
@@ -682,6 +690,28 @@
 							break;
 						default:
 							break;
+					}
+				});
+
+				//移动文件
+				window.addEventListener('cloudMoveTo', function(e) {
+					var data = e.detail.data;
+					console.log("cloudMoveTo " + JSON.stringify(data));
+					mask.close();
+					var fileEle = document.getElementById("fid_" + data.data.fid); //原文件
+					if(fileEle) {
+						console.log("有原文件");
+						//界面移除原文件
+						fileEle.parentNode.removeChild(fileEle);
+						//删除原文件的数据
+						delete allData.value[data.data.pid][data.data.fid];
+					}
+					var ulFile = document.getElementById("ul_file_" + data.pid);
+					if(ulFile) {
+						console.log("有新文件夹");
+						//界面增加新文件和数据
+						data.data.pid = data.pid;
+						additem(data.data);
 					}
 				});
 			}
@@ -782,16 +812,7 @@
 						for(var i in tempRspData) {
 							additem(tempRspData[i]);
 						}
-
-						//---滑动start---
-						mui(".mui-scroll-wrapper").scroll({
-							scrollY: true, //是否竖向滚动
-							scrollX: false, //是否横向滚动
-							indicators: true, //是否显示滚动条
-							deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
-							bounce: true, //是否启用回弹
-						});
-						//---滑动end---
+						initScroll();
 						console.log('上一个界面的showPid:' + showPid);
 						//从屏幕左边移出当前界面
 						if(pid != 0) {
@@ -1068,10 +1089,10 @@
 					download = true;
 					document.getElementById("cloud_bottom_download").style.opacity = '1';
 				}
-				if(checkBox.length==checked.length){
-					document.getElementById("edit").innerText="全不选";
-				}else{
-					document.getElementById("edit").innerText="全选";
+				if(checkBox.length == checked.length) {
+					document.getElementById("edit").innerText = "全不选";
+				} else {
+					document.getElementById("edit").innerText = "全选";
 				}
 				document.getElementById("title").innerText = "已选定" + checked.length + "个";
 			}

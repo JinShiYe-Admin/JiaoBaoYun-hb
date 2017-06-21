@@ -10,14 +10,14 @@ window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, err
 	console.log("出错列号:" + columnNumber);
 	console.log("错误详情:" + errorObj);
 	events.closeWaiting();
-	var webId = plus.webview.currentWebview().id;
-	console.log("---ERROR--- " + webId + " ---end---");
-	if(webId == "firstPage.html" || webId == "index.html" || webId == "cloud_home.html" || webId == "sciedu_home.html" || webId == "show-home1.html" || webId == "course-home1.html") {
+	var webview = plus.webview.currentWebview();
+	console.log("---ERROR--- " + webview.id + " ---end---");
+	if(webview.id == "firstPage.html" || webview.id == "index.html" || webview.id == "cloud_home.html" || webview.id == "sciedu_home.html" || webview.id == "show-home1.html" || webview.id == "course-home1.html") {
 		mui.toast('当前界面加载出现错误');
 		return false;
 	}
 	mui.alert('当前界面加载出现错误', 'ERROR', function() {
-		mui.back();
+		plus.webview.close(webview, events.getAniClose());
 	});
 }
 var events = (function(mod) {

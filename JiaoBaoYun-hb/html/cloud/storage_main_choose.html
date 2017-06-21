@@ -8,7 +8,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>云盘</title>
+		<title>云盘文件夹</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -16,9 +16,6 @@
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/iconfont/iconfont.css" />
 		<link rel="stylesheet" href="../../css/cloud/file.css" />
-		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
-		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<style>
 			.iconfont {
 				line-height: 42px;
@@ -31,9 +28,6 @@
 			.iconfont-size {
 				font-size: 42px;
 			}
-			/*.mui-bar-nav~ .mui-content .mui-pull-top-pocket {
-				top: 90px !important;
-			}*/
 
 			body,
 			.mui-content {
@@ -55,13 +49,6 @@
 				background: white;
 			}
 
-			.icon-download,
-			.icon-trash {
-				/*background: red;*/
-				text-align: center;
-				/*min-width: 40px;*/
-			}
-
 			#top {
 				background-color: white;
 				text-align: center;
@@ -77,25 +64,65 @@
 				margin: 0px;
 				padding-right: 10px;
 			}
+
+			.mui-bar-tab {
+				background: #383E4E;
+				height: 50px;
+			}
+
+			.mui-bar-tab:first-child {
+				margin: 5px;
+				margin-top: 0px;
+			}
+
+			#cancel {
+				width: 45%;
+			}
+
+			#cancel .mui-btn.mui-btn-blue {
+				width: 100%;
+				margin-bottom: 15px;
+				margin-left: 5%;
+				background: #7F8594;
+				border-color: #7F8594;
+				height: 40px;
+			}
+
+			#choose {
+				width: 45%;
+			}
+
+			#choose .mui-btn.mui-btn-blue {
+				width: 100%;
+				margin-bottom: 15px;
+				margin-left: -5%;
+				background: #4DA3F5 !important;
+				border-color: #4DA3F5 !important;
+				height: 40px;
+			}
+
+			#sliderSegmentedControl {
+				background: #E8E9E9;
+			}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<p id="title" class="mui-title common-color-white">选择上传位置</p>
+			<p id="title" class="mui-title common-color-white"></p>
 		</header>
-		<nav class="mui-bar mui-bar-tab" style="background: #383E4E;height: 50px;">
-			<div style="margin: 5px;margin-top: 0px;">
-				<div id="cancel" class="mui-pull-left" style="width: 45%;">
-					<button type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 15px;margin-left: 5%;background: #7F8594;border-color: #7F8594;height: 40px;">
+		<nav class="mui-bar mui-bar-tab">
+			<div>
+				<div id="cancel" class="mui-pull-left">
+					<button type="button" class="mui-btn mui-btn-blue">
 						<div id="yunpath" class="mui-ellipsis">取消</div>
 					</button>
 				</div>
-				<div id="choose" class="mui-pull-right" style="width: 45%;">
-					<button type="button" class="mui-btn mui-btn-blue" style="width: 100%;margin-bottom: 15px;margin-left: -5%;background: #4DA3F5;border-color: #4DA3F5;height: 40px;">
+				<div id="choose" class="mui-pull-right">
+					<button type="button" class="mui-btn mui-btn-blue">
 						<div id="folder" class="mui-ellipsis">
-							选定：
+							选定：我的教宝云盘
 						</div>
 					</button>
 				</div>
@@ -103,7 +130,7 @@
 		</nav>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider" style="">
-				<div id="sliderSegmentedControl" style="background: #E8E9E9;" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div id="folderlist" class="mui-scroll">
 						<!--<div id="top_0" class="mui-control-item">
 							我的教宝云盘 >
@@ -147,38 +174,37 @@
 			</div>
 		</div>
 	</body>
-
+	<script src="../../js/mui.min.js"></script>
+	<script type="text/javascript" src="../../js/publicProtocol.js"></script>
+	<script type="text/javascript" src="../../js/utils/events.js"></script>
 	<script type="text/javascript">
+		var main; //获取当前窗体对象
+		var showPid = 0; //当前展示的界面的父id
+		var showPidList = []; //记录打开的文件夹父id历史
+		var showTop = true; //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
+		var showTopId = 0; //记录被选中的文件夹
+
 		mui.init();
-
 		mui.plusReady(function() {
-			console.log('选择云存储文件夹');
-			//---初始化---start---
-			//var allData = []; //记录所有的文件和文件夹
-			var showPid = ''; //当前展示的界面的父id
-			var showPidList = []; //记录打开的文件夹父id历史
-			var showTop = true; //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
-			var showTopId = ''; //记录被选中的文件夹
-			var main = plus.webview.currentWebview(); //获取当前窗体对象
-			var subData = null; //接收页面传入的参数值
-			//			var subData = {
-			//				fid: this.getAttribute("data-fid"), //fid，如果是0则显示顶层文件和文件夹
-			//			    showTop:showTop,//是否显示顶部三项
-			//				title: title, //标题名
-			//				top: fileArray //顶层文件和文件夹的数据
-			//			}
-			//---初始化---end---
+			var wd = events.showWaiting();
+			initData();
+			ininListener()
+			var comData = {
+				vtp: 1, //类型，0文件及文件夹混合,1文件夹,2文件
+				vvl: 0 //	节点ID，顶层为0
+			};
+			requestData(comData, "我的教宝云盘", wd)
+		});
 
-			//初始化
-			window.addEventListener('init', function(e) {
-				subData = e.detail; //接收页面传入的参数值
-				console.log('subData:' + JSON.stringify(subData));
-				showTop = subData.showTop;
-				document.getElementById("folder").innerText = '选定：' + subData.title;
-				init(subData);
-			});
+		function initData() {
+			main = plus.webview.currentWebview(); //获取当前窗体对象
+			console.log(main.id + ' ' + JSON.stringify(main.data));
+			if(main.data.type == 0) { //移动到
+				document.getElementById("title").innerText = "选择移动的位置";
+			}
+		}
 
-			//---滑动start---
+		function initScroll() {
 			mui(".mui-scroll-wrapper").scroll({
 				scrollY: true, //是否竖向滚动
 				scrollX: false, //是否横向滚动
@@ -186,27 +212,14 @@
 				deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
 				bounce: true, //是否启用回弹
 			});
-			//---滑动end---
+		}
 
+		function ininListener() {
 			//返回按钮监听
-			mui.back = function() { //				mui.each(showPidList, function(index, item) {
-				//					console.log('backshowPidList:' + JSON.stringify(item));
-				//				});
-				//				mui.each(allData, function(index, item) {
-				//					console.log('back:allData' + JSON.stringify(item));
-				//				});
+			mui.back = function() {
 				showPidList.pop(); //清除最后一个历史记录
-				//allData.pop(); //清除最后一个数据
-				//				console.log('------------------------');
-				//				mui.each(showPidList, function(index, item) {
-				//					console.log('backshowPidList:' + JSON.stringify(item));
-				//				});
-				//				mui.each(allData, function(index, item) {
-				//					console.log('back:allData' + JSON.stringify(item));
-				//				});
 				if(showPidList.length == 0) {
-					//mui.back();
-					plus.webview.hide(main, 'pop-out');
+					plus.webview.close(main, events.getAniClose());
 				} else {
 					//隐藏当前界面
 					document.getElementById("pid_" + showPid).style.display = 'none';
@@ -279,6 +292,7 @@
 
 					//所需参数
 					var comData = {
+						vtp: 1, //类型，0文件及文件夹混合,1文件夹,2文件
 						vvl: fid //	节点ID，顶层为0
 					};
 					//请求数据
@@ -290,229 +304,165 @@
 			//取消
 			document.getElementById('cancel').addEventListener('tap', function() {
 				console.log('取消');
-				plus.webview.hide(main, 'pop-out');
+				plus.webview.close(main, events.getAniClose());
 			});
 
 			//选定
 			document.getElementById('choose').addEventListener('tap', function() {
-
 				var fnameList = document.getElementById("folder").innerText.split('：');
 				var fname = fnameList[fnameList.length - 1];
-				console.log('选定' + JSON.stringify(fnameList) + '|' + fname);
-				if(subData.type == '0') { //选择文件的方式
-					events.fireToPageNone('storage_upload_choose.html', 'chooseFolder', {
-						fid: showPid, //文件id,顶层0
-						title: fname //标题名
-					});
-				} else if(subData.type == '1') { //从本地文件选择
-					events.fireToPageNone('storage_upload.html', 'chooseFolder', {
-						fid: showPid, //文件id,顶层0
-						title: fname //标题名
-					});
-				}
-				plus.webview.hide(main, 'pop-out');
-			});
-
-			/**
-			 * 初始化
-			 * @param {Object} data
-			 * var subData ={
-			 *		fid: this.getAttribute("data-fid"), //fid，如果是0则显示顶层文件和文件夹
-			 *		showTop:showTop,//是否显示顶部三项
-			 *		title: title, //标题名
-			 *		top: fileArray //顶层文件和文件夹的数据
-			 *	}
-			 */
-			function init(data) {
-				showPid = ''; //当前展示的界面的父id
-				showPidList = []; //记录打开的文件夹父id历史
-				showTopId = ''; //记录被选中的文件夹
-
-				document.getElementById("folderlist").innerHTML = ''; //清空界面
-				document.getElementById("all").innerHTML = ''; //清空界面
-				mui.each(data.top, function(index, item) {
-					console.log('data.top' + JSON.stringify(item));
-				});
-
-				//增加空的顶层文件夹
-				addbot('0');
-				//			var fData = {
-				//				pid: '0', //上层文件夹id
-				//				fdata: subData.top //本层文件夹数据
-				//			}
-				//			allData.push(fData);
-				//增加空的顶层文件夹历史
-				var pData = {
-					pid: '0', //上层文件夹id
-					pname: '我的教宝云盘' //上层文件夹名字
-				}
-				showPidList.push(pData);
-				addTop('0', '我的教宝云盘');
-				showTopId = 'top_0';
-				//添加顶层文件夹的数据
-				mui.each(data.top, function(index, item) {
-					additem(item);
-				});
-				if(data.fid == '0') {
-					showPid = '0'; //当前显示的文件id
-					document.getElementById("pid_0").style.display = 'inline';
-				} else {
-					showPid = subData.fid; //当前显示的文件id
-					//所需参数
+				console.log('选定 ' + JSON.stringify(fnameList) + " " + showPid + " " + showTopId + " " + JSON.stringify(main.data));
+				if(main.data.type == '0') { //移动到
+					if(showPid == main.data.data.pid) { //未移动
+						plus.webview.close(main, events.getAniClose());
+						return false;
+					}
+					var wd = events.showWaiting("移动中");
+					//53.用户移动云盘文件
 					var comData = {
-						vvl: data.fid //	节点ID，顶层为0
+						vvl: main.data.data.fid, //文件ID
+						vvl1: main.data.data.fname, //文件名称
+						vvl2: showPid //文件上级ID，文件上级ID
 					};
-					//请求数据
-					requestData(comData, data.title);
+					postDataPro_PostDiFiM(comData, wd, function(data) {
+						console.log("53 用户移动云盘文件 " + JSON.stringify(data));
+						if(data.RspCode == 0) {
+							mui.toast("移动成功");
+							events.fireToPageNone(main.data.webid, main.data.winid, {
+								pid: showPid,//移动后的pid
+								data: main.data.data//原文件的数据
+							});
+							plus.webview.close(main, events.getAniClose());
+						} else {
+							mui.toast("移动失败" + data.RspTxt);
+						}
+						wd.close();
+					});
 				}
-			}
+			});
+		}
 
-			/**
-			 * 新增一个空的文件夹
-			 * @param {Object} pid 父id
-			 */
-			function addbot(pid) {
-				console.log('addbot:' + JSON.stringify(pid));
-				var top = 45 + 38 + localStorage.getItem('StatusHeightNo') * 1;
-				var div = document.createElement('div');
-				div.setAttribute('id', 'pid_' + pid);
-				div.innerHTML = '<div class="mui-scroll-wrapper"style="top:' + top + 'px;margin-bottom: 55px;">\
+		/**
+		 * 新增一个空的文件夹
+		 * @param {Object} pid 父id
+		 */
+		function addbot(pid) {
+			console.log('addbot:' + JSON.stringify(pid));
+			var top = 45 + 38 + localStorage.getItem('StatusHeightNo') * 1;
+			var div = document.createElement('div');
+			div.setAttribute('id', 'pid_' + pid);
+			div.innerHTML = '<div class="mui-scroll-wrapper"style="top:' + top + 'px;margin-bottom: 55px;">\
 									<div class="mui-scroll">\
 										<ul id="ul_' + pid + '" class="mui-table-view">\
 										</ul>\
 									</div>\
 								</div>';
-				div.style.display = 'none';
-				document.getElementById("all").appendChild(div);
-				//---滑动start---
-				mui(".mui-scroll-wrapper").scroll({
-					scrollY: true, //是否竖向滚动
-					scrollX: false, //是否横向滚动
-					indicators: true, //是否显示滚动条
-					deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
-					bounce: true, //是否启用回弹
-				});
-				//---滑动end---
-			}
+			div.style.display = 'none';
+			document.getElementById("all").appendChild(div);
+		}
 
-			/**
-			 * 新增一个文件夹
-			 * @param {Object} data
-			 */
-			function additem(data) {
+		/**
+		 * 新增一个文件夹
+		 * @param {Object} data
+		 */
+		function additem(data) {
+			if(data.ftype == '.file') { //文件夹
+				//console.log('additem:' + JSON.stringify(data))
+				var li = document.createElement('li');
+				li.setAttribute('id', 'fid_' + data.fid); //元素id
+				li.setAttribute('data-fid', data.fid); //文件id
+				li.setAttribute('data-fname', data.fname); //文件名
+				li.setAttribute('data-ftype', data.ftype); //类型
+				li.className = 'mui-table-view-cell mui-media';
+				//文件夹右侧箭头
+				var html1 = '';
+				//文件夹图标
+				var html2 = '';
+				//文件名
+				var html3 = '';
 				if(data.ftype == '.file') { //文件夹
-					//console.log('additem:' + JSON.stringify(data))
-					var li = document.createElement('li');
-					li.setAttribute('id', 'fid_' + data.fid); //元素id
-					li.setAttribute('data-fid', data.fid); //文件id
-					li.setAttribute('data-fname', data.fname); //文件名
-					li.setAttribute('data-ftype', data.ftype); //类型
-					li.className = 'mui-table-view-cell mui-media';
-					//文件夹右侧箭头
-					var html1 = '';
-					//文件夹图标
-					var html2 = '';
-					//文件名
-					var html3 = '';
-					if(data.ftype == '.file') { //文件夹
-						html1 = '<span class="mui-navigate-right mui-media-object mui-pull-right"></span>';
-						html2 = '<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">';
-						html3 = '<div class="mui-media-body">\
+					html1 = '<span class="mui-navigate-right mui-media-object mui-pull-right"></span>';
+					html2 = '<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">';
+					html3 = '<div class="mui-media-body">\
 									<div id="fname_' + data.fid + '" class="mui-ellipsis-2">' + data.fname + '</div>\
 								</div>';
+				}
+				li.innerHTML = html1 + html2 + html3;
+				document.getElementById("ul_" + data.pid).appendChild(li);
+			}
+		}
+
+		/**
+		 * 顶部增加一项文件夹
+		 * @param {Object} fid 文件id
+		 * @param {Object} fname 文件名
+		 */
+		function addTop(fid, fname) {
+			var div = document.createElement('div');
+			div.setAttribute('id', 'top_' + fid);
+			div.setAttribute('data-fid', fid);
+			div.setAttribute('data-fname', fname);
+			div.className = 'mui-control-item';
+			if(fid == '0') {
+				div.className = 'mui-control-item mui-active';
+			}
+			div.innerText = fname + ' >';
+			document.getElementById("folderlist").appendChild(div);
+		}
+
+		/**
+		 * 请求数据
+		 * @param {Object} comData 节点ID，顶层为0
+		 * @param {Object} pname 上层文件夹名字
+		 */
+		function requestData(comData, pname, wd) {
+			wd = wd || events.showWaiting();
+			//26.用户云盘顶层文件及文件夹获取
+			postDataPro_PostDiFi(comData, wd, function(data) {
+
+				console.log('26.postDataPro_PostDiFi用户云盘顶层文件及文件夹获取:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				if(data.RspCode == 0 || data.RspCode == 9) {
+					if(data.RspCode == 9) {
+						mui.toast('没有文件夹');
 					}
-					li.innerHTML = html1 + html2 + html3;
-					document.getElementById("ul_" + data.pid).appendChild(li);
-				}
-			}
+					var tempRspData = [];
+					if(data.RspData != null && data.RspData != '') {
+						tempRspData = data.RspData;
+					}
+					var pid = comData.vvl;
+					if(document.getElementById("pid_" + pid) == null) {
+						console.log('获取数据pid_' + pid + '==null');
+						addbot(pid); //增加对应的文件夹
 
-			/**
-			 * 顶部增加一项文件夹
-			 * @param {Object} fid 文件id
-			 * @param {Object} fname 文件名
-			 */
-			function addTop(fid, fname) {
-				var div = document.createElement('div');
-				div.setAttribute('id', 'top_' + fid);
-				div.setAttribute('data-fid', fid);
-				div.setAttribute('data-fname', fname);
-				div.className = 'mui-control-item';
-				if(fid == '0') {
-					div.className = 'mui-control-item mui-active';
-				}
-				div.innerText = fname + ' >';
-				document.getElementById("folderlist").appendChild(div);
-			}
-
-			/**
-			 * 请求数据
-			 * @param {Object} comData 节点ID，顶层为0
-			 * @param {Object} pname 上层文件夹名字
-			 */
-			function requestData(comData, pname) {
-				//所需参数
-				//var comData = {
-				//	vvl: '1' //	节点ID，顶层为0
-				//};
-				// 等待的对话框
-				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
-				//26.用户云盘顶层文件及文件夹获取
-				postDataPro_PostDiFi(comData, wd, function(data) {
-					wd.close();
-					console.log('26.postDataPro_PostDiFi用户云盘顶层文件及文件夹获取:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
-					if(data.RspCode == 0 || data.RspCode == 9) {
-						if(data.RspCode == 9) {
-							mui.toast('文件夹为空');
-						}
-						var tempRspData = [];
-						if(data.RspData != null && data.RspData != '') {
-							tempRspData = data.RspData;
-						}
-						var pid = comData.vvl;
-						if(document.getElementById("pid_" + pid) == null) {
-							console.log('获取数据pid_' + pid + '==null');
-							addbot(pid); //增加对应的文件夹
-							//							var fData2 = {
-							//								pid: pid, //上层id
-							//								fdata: tempRspData //本层数据
-							//							}
-							//							allData.push(fData2);
-							mui.each(tempRspData, function(index, item) {
-								additem(item);
-							});
-						} else {
-							console.log('获取数据pid_' + pid + '!=null');
-						}
-						//---滑动start---
-						mui(".mui-scroll-wrapper").scroll({
-							scrollY: true, //是否竖向滚动
-							scrollX: false, //是否横向滚动
-							indicators: true, //是否显示滚动条
-							deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
-							bounce: true, //是否启用回弹
+						mui.each(tempRspData, function(index, item) {
+							additem(item);
 						});
-						//---滑动end---
-						console.log('上一个界面的showPid:' + showPid);
-						document.getElementById("pid_" + showPid).style.display = 'none';
-						document.getElementById("pid_" + pid).style.display = 'inline';
-						showPid = pid;
-						//增加文件夹历史
-						var pData2 = {
-							pid: pid, //上层文件夹id
-							pname: pname //上层文件夹名字
-						}
-						showPidList.push(pData2);
-						addTop(pid, pname);
-						document.getElementById(showTopId).className = 'mui-control-item';
-						showTopId = 'top_' + pid;
-						document.getElementById(showTopId).className = 'mui-control-item mui-active';
 					} else {
-						mui.toast(data.RspTxt);
+						console.log('获取数据pid_' + pid + '!=null');
 					}
-				});
-			}
-
-		});
+					initScroll();
+					console.log('上一个界面的showPid:' + showPid);
+					document.getElementById("pid_" + showPid).style.display = 'none';
+					document.getElementById("pid_" + pid).style.display = 'inline';
+					showPid = pid;
+					//增加文件夹历史
+					var pData2 = {
+						pid: pid, //上层文件夹id
+						pname: pname //上层文件夹名字
+					}
+					showPidList.push(pData2);
+					addTop(pid, pname);
+					if(comData.vvl != 0) {
+						document.getElementById(showTopId).className = 'mui-control-item';
+					}
+					showTopId = 'top_' + pid;
+					document.getElementById(showTopId).className = 'mui-control-item mui-active';
+				} else {
+					mui.toast(data.RspTxt);
+				}
+				wd.close();
+			});
+		}
 	</script>
 
 </html>
