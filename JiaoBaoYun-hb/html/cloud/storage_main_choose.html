@@ -201,6 +201,8 @@
 			console.log(main.id + ' ' + JSON.stringify(main.data));
 			if(main.data.type == 0) { //移动到
 				document.getElementById("title").innerText = "选择移动的位置";
+			} else if(main.data.type == 1) {
+				document.getElementById("title").innerText = "选择上传的位置";
 			}
 		}
 
@@ -329,8 +331,8 @@
 						if(data.RspCode == 0) {
 							mui.toast("移动成功");
 							events.fireToPageNone(main.data.webid, main.data.winid, {
-								pid: showPid,//移动后的pid
-								data: main.data.data//原文件的数据
+								pid: showPid, //移动后的pid
+								data: main.data.data //原文件的数据
 							});
 							plus.webview.close(main, events.getAniClose());
 						} else {
@@ -338,6 +340,12 @@
 						}
 						wd.close();
 					});
+				} else if(main.data.type == '1') { //修改选择的上传位置
+					events.fireToPageNone(main.data.webid, main.data.winid, {
+						pid: showPid, //移动后的pid
+						pname: fname //原文件的数据
+					});
+					plus.webview.close(main, events.getAniClose());
 				}
 			});
 		}
