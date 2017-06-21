@@ -47,7 +47,7 @@ var filter = new Vue({
 			icon: "../../image/cloud/up_local.png",
 			title: "本地上传",
 			func: function() {
-				events.openNewWindow("storage_upload.html");
+				events.openNewWindowWithData("storage_upload.html",30-filter.fileNo);
 			},
 			type: 1 //1为安卓
 		}],
