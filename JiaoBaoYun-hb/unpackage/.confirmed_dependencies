@@ -1417,7 +1417,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/utils/showvideoutil.js"
 		],
 		"refer": [
 			"html/quan/zonep_sub.html",
@@ -1549,7 +1550,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"image/utils/videothumb.png"
+			"image/utils/videothumb.png",
+			"js/utils/gallerypick.js"
 		],
 		"refer": []
 	},
