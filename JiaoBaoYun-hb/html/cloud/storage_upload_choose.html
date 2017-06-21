@@ -42,8 +42,8 @@
 				width: 100%;
 				margin-bottom: 15px;
 				margin-left: 5%;
-				background: #7F8594;
-				border-color: #7F8594;
+				background: #7F8594 !important;
+				border-color: #7F8594 !important;
 				height: 40px;
 			}
 
@@ -61,8 +61,8 @@
 				width: 100%;
 				margin-bottom: 15px;
 				margin-left: -5%;
-				background: #636770;
-				border-color: #636770;
+				background: #636770 !important;
+				border-color: #636770 !important;
 				height: 40px;
 			}
 
@@ -144,6 +144,8 @@
 		<script type="text/javascript">
 			var main; //当前webview对象
 			var chooseData = {
+				pid:0,
+				pname:"我的教宝云盘",
 				files: []
 			}; //当前页面的数据
 			mui(".mui-scroll-wrapper").scroll();
@@ -170,6 +172,7 @@
 			function initData() {
 				main = plus.webview.currentWebview(); //获取当前窗体对象
 				console.log(main.id + " " + JSON.stringify(main.data));
+				document.getElementById("yunpath").innerHTML = chooseData.pname;
 			}
 
 			/**
@@ -188,38 +191,33 @@
 				});
 
 				/**
-				 * 从云存储界面传递数据
+				 * 获取云存储界面传递的数据
 				 */
 				window.addEventListener('getCloudData', function(e) {
-					fileList.filesArr = [];
-					var data = e.detal.data;
+					var data = e.detail.data;
 					console.log("getCloudData " + JSON.stringify(data));
-					//				chooseData.pid = main.data.pid;
-					//				chooseData.pname = main.data.pname;
-					//				if(main.data.pid == 0) {
-					//					chooseData.pname = "我的教宝云盘";
-					//				}
-					//				document.getElementById("yunpath").innerHTML = chooseData.pname;
+					chooseData.pid = data.pid;
+					chooseData.pname = data.pname;
+					document.getElementById("yunpath").innerHTML = chooseData.pname;
+					fileList.filesArr = [];
 				});
 
 				//选择上传的路径
 				window.addEventListener('chooseFolder', function(e) {
-					var folder = e.detail.data; //接收页面传入的参数值
-					console.log('chooseFolder:' + JSON.stringify(folder));
-					document.getElementById("yunpath").innerHTML = folder.title;
-					pid = folder.fid;
+					var data = e.detail.data; //接收页面传入的参数值
+					console.log('chooseFolder ' + JSON.stringify(data));
+					chooseData.pid = data.pid;
+					chooseData.pname = data.pname;
+					document.getElementById("yunpath").innerHTML = chooseData.pname;
 				});
+
 				//修改存储到云盘的路径
 				document.getElementById('choose').addEventListener('tap', function() {
-					var targetPage = plus.webview.getWebviewById('storage_main_choose.html');
-					mui.fire(targetPage, 'init', {
-						fid: subData.fid, //文件id,顶层0
-						showTop: subData.showTop, //是否显示顶部的上传，传输列表，文件夹，如果是选择云盘上的文件夹则为false
-						title: subData.title, //标题名
-						top: subData.top, //顶层文件和文件夹的数据
-						type: '0' //选择文件的方式0，从本地文件1
+					events.openNewWindowWithData("storage_main_choose.html", {
+						type: 1,
+						webid: main.id,
+						winid: "chooseFolder"
 					});
-					targetPage.show('slide-in-bottom', 250);
 				});
 
 				//上传选择的文件

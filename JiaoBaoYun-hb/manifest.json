@@ -1718,7 +1718,8 @@
 				"refer": [
 					"html/cloud/storage_show_imge.html",
 					"html/cloud/storage_upload_choose.html",
-					"html/cloud/storage_upload.html"
+					"html/cloud/storage_upload.html",
+					"html/cloud/storage_main_choose.html"
 				],
 				"priority": 0
 			},
@@ -2490,7 +2491,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2842,7 +2844,8 @@
 					"js/cloud/cloud.js"
 				],
 				"refer": [
-					"html/cloud/storage_upload.html"
+					"html/cloud/storage_upload.html",
+					"html/cloud/storage_main_choose.html"
 				],
 				"priority": 0
 			},
