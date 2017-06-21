@@ -101,7 +101,7 @@ var RecordVideo = (function(mod) {
 	 */
 	mod.recordVideoInIOS = function(options, successCB, errorCB) {
 		var cmr = plus.camera.getCamera();
-		var res = cmr.supportedVideoResolutions[0];
+		var res = cmr.supportedVideoResolutions[1];
 		var fmt = cmr.supportedVideoFormats[0];
 		cmr.startVideoCapture(function(p) {
 				var tempPath = plus.io.convertLocalFileSystemURL(p)
