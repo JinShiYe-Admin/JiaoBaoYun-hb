@@ -428,9 +428,29 @@
 				});
 
 				//修改云存储信息
-				window.addEventListener('cloudDataChange', function() {
-					//设置页面信息
-					changeCloudData();
+				window.addEventListener('cloudDataChange', function(e) {
+					var data = e.detail.data;
+					console.log("cloudDataChange " + JSON.stringify(data));
+					switch(data.type) {
+						case "addFolder": //新增文件夹
+							addStorageFolder(data.data, 1);
+							break;
+						case "changeFolder": //修改文件夹的名称
+							var folderName = document.getElementById("fname_" + data.data.fid);
+							if(folderName) {
+								folderName.innerText = data.data.fname;
+							}
+							break;
+						case "deleteFolder": //删除文件夹
+							var folder = document.getElementById("fid_" + data.data.fid);
+							if(folder) {
+								folder.parentNode.removeChild(folder);
+							}
+							break;
+						default:
+							console.log("default " + data.type);
+							break;
+					}
 				});
 
 				//创建群的监听
@@ -874,8 +894,10 @@
 				 * 增加存储的文件夹或文件
 				 * @param {Object} data
 				 */
-				function addStorageFolder(data) {
+				function addStorageFolder(data, type) {
+					console.log("addStorageFolder " + type + " " + JSON.stringify(data));
 					var li = document.createElement("li");
+					li.setAttribute('id', "fid_" + data.fid);
 					li.setAttribute('data-fid', data.fid);
 					li.className = 'mui-table-view-cell';
 					var html1 = ''; //图标
@@ -902,7 +924,11 @@
 					li.innerHTML = html1 + html2;
 					li.style.width = maxWidth + 'px';
 					li.style.height = cloudFirstItemHeight + 'px';
-					document.getElementById("cloudstorage_1").appendChild(li);
+					if(type == 1) {
+						document.getElementById("cloudstorage_1").insertBefore(li, document.getElementById("addFolder"));
+					} else {
+						document.getElementById("cloudstorage_1").appendChild(li);
+					}
 
 					document.getElementById("fname_" + data.fid).innerText = fname;
 

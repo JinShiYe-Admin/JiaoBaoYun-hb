@@ -3432,7 +3432,10 @@
 					"js/utils/CloudFileUtil.js",
 					"js/qiniu/qiniu.js",
 					"js/mui.previewimage.js",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/utils/showvideoutil.js",
+					"js/utils/recordvideoutil.js",
+					"js/utils/gallerypick.js"
 				],
 				"refer": [],
 				"priority": 0

@@ -262,6 +262,10 @@
 				/*只显示删除，重命名*/
 				display: none;
 			}
+
+			.mui-backdrop {
+				background-color: rgba(255, 255, 255, 0.3);
+			}
 		</style>
 	</head>
 
@@ -304,7 +308,7 @@
 								<span class="mui-navigate-right mui-media-object mui-pull-right"></span>
 								<div class="mui-input-row mui-checkbox mui-right mui-pull-right">
 									<label>&nbsp;</label>
-									<input name="checkbox" type="checkbox">
+									<input name="checkbox" type="checkbox" />
 								</div>
 								<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_0_wenjianjia_1.png">
 								<div class="mui-media-body">
@@ -317,7 +321,7 @@
 								<span class="mui-navigate-right mui-media-object mui-pull-right"></span>
 								<div class="mui-input-row mui-checkbox mui-right mui-pull-right">
 									<label>&nbsp;</label>
-									<input name="checkbox" type="checkbox">
+									<input name="checkbox" type="checkbox" />
 								</div>
 								<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_0_wenjianjia_1.png">
 								<div class="mui-media-body">
@@ -328,7 +332,7 @@
 								<span class="mui-navigate-right mui-media-object mui-pull-right"></span>
 								<div class="mui-input-row mui-checkbox mui-right mui-pull-right">
 									<label>&nbsp;</label>
-									<input name="checkbox" type="checkbox">
+									<input name="checkbox" type="checkbox" />
 								</div>
 								<span class="mui-media-object mui-icon iconfont iconfont-size icon-word mui-pull-left"></span>
 								<div class="mui-media-body">
@@ -368,6 +372,7 @@
 
 			mui.plusReady(function() {
 				var wd = events.showWaiting();
+				//events.preload('storage_upload_choose.html'); //预加载上传列表
 				initData();
 				initListener();
 				var comData = {
@@ -438,21 +443,7 @@
 
 				//取消编辑
 				document.getElementById('cancel').addEventListener('tap', function() {
-					//调整顶部
-					document.getElementById("ul_file_" + showPid).className = "mui-table-view cloud-check-hide";
-					document.getElementById("cancel").style.display = "none";
-					document.getElementById("back").style.display = "inline";
-					document.getElementById("edit").innerHTML = "编辑";
-					var title = document.getElementById("title");
-					title.style.textAlign = "left";
-					var show = showPidList[showPidList.length - 1];
-					title.innerText = show.pname;
-					document.getElementById("top").style.opacity = '1';
-					//隐藏底部
-					document.getElementById("cloud_bottom").style.display = "none";
-					//调整列表
-					document.getElementById("scroll_wrapper_" + showPid).style.bottom = "0px";
-					edit = false;
+					cloudBottomHide();
 				});
 
 				//点击上传按钮
@@ -519,6 +510,12 @@
 											fsize: '0' //	文件大小，文件用
 										};
 										additem(newFolderData); //界面
+										if(showPid == 0) { //顶层文件夹
+											events.fireToPageNone("cloud_home.html", "cloudDataChange", {
+												type: "addFolder",
+												data: newFolderData
+											});
+										}
 										mui.toast('创建成功');
 										back = true; //是否允许返回
 										document.activeElement.blur();
@@ -545,7 +542,10 @@
 				mui.back = function() {
 					console.log("mui.back " + back + " " + showPidList.length);
 					if(back) {
-						showPidList.pop(); //清除最后一个历史记录
+						//清除最后一个历史记录的数据
+						showPidList.pop();
+						allData.key.pop();
+						delete allData.value[showPid];
 						if(showPidList.length == 0) {
 							plus.webview.close(main, events.getAniClose());
 						} else {
@@ -655,17 +655,7 @@
 					switch(value) {
 						case "0":
 							console.log("下载");
-							if(edit) {
-								return false;
-							}
-							mask.close();
-							events.fireToPageWithData('storage_transport.html', 'addDownload', [{
-								pid: mode.pid, //父ID
-								fid: mode.fid, //文件id
-								fname: mode.fname, //文件或文件夹名字
-								ftype: mode.ftype, //文件类型
-								fpath: mode.fpath //文件路径
-							}]);
+							downloadFiles();
 							break;
 						case "1":
 							console.log("删除");
@@ -756,7 +746,7 @@
 					html = '<span id="fright_' + data.fid + '" class="mui-navigate-right mui-media-object mui-pull-right" data-type="showbar"></span>\
 							<div class="mui-input-row mui-checkbox mui-right mui-pull-right">\
 								<label>&nbsp;</label>\
-								<input name="checkbox" type="checkbox">\
+								<input name="checkbox" type="checkbox" />\
 							</div>\
 							<img class="mui-media-object mui-pull-left" src="../../image/cloud/cloud_0_wenjianjia_1.png">\
 							<div class="mui-media-body">\
@@ -771,7 +761,7 @@
 					var html_0 = '<span id="fright_' + data.fid + '" class="mui-navigate-right mui-media-object mui-pull-right" data-type="showbar"></span>\
 								<div class="mui-input-row mui-checkbox mui-right mui-pull-right">\
 									<label>&nbsp;</label>\
-									<input name="checkbox" type="checkbox">\
+									<input name="checkbox" type="checkbox" value="' + data.fid + '" />\
 								</div>';
 					var html_1 = '';
 					if(type != '') {
@@ -891,14 +881,20 @@
 							postDataPro_PostDiFiE(comData, wd, function(data) {
 								console.log('28.postDataPro_PostDiFiE_用户修改文件或文件夹名称:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 								if(data.RspCode == 0) {
-									mui.toast('修改成功');
+									allData.value[mode.pid][mode.fid].fname = vvl1;
 									//界面处理
 									if(mode.ftype == '.file') {
 										document.getElementById("fname_" + mode.fid).innerText = vvl1;
+										if(mode.pid == 0) { //顶层文件夹
+											events.fireToPageNone("cloud_home.html", "cloudDataChange", {
+												type: "changeFolder",
+												data: allData.value[mode.pid][mode.fid]
+											});
+										}
 									} else {
 										document.getElementById("fname_" + mode.fid).innerText = vvl1 + mode.ftype;
 									}
-									allData.value[mode.pid][mode.fid].fname = vvl1;
+									mui.toast('修改成功');
 									back = true; //是否允许返回
 									document.activeElement.blur();
 									mui.closePopups();
@@ -942,6 +938,12 @@
 								mui.toast('删除成功');
 								//数据处理
 								delete allData.value[showPid][mode.fid];
+								if(mode.pid == 0) { //顶层文件夹
+									events.fireToPageNone("cloud_home.html", "cloudDataChange", {
+										type: "deleteFolder",
+										data: mode
+									});
+								}
 								//删除七牛的文件
 								var pathList = [];
 								for(var i in data.RspData) {
@@ -977,6 +979,102 @@
 						});
 					}
 				}, 'div');
+			}
+
+			/**
+			 * 下载文件
+			 */
+			function downloadFiles() {
+				var fileArray = []; //下载的文件列表
+				var showSave = true; //是否显示保存到相册的选项
+				if(edit) {
+					//批量下载
+					var checked = document.querySelectorAll('.mui-checkbox input[type=checkbox]:checked');
+					for(var i in checked) {
+						if(checked[i].value) {
+							console.log(checked[i].value);
+							fileArray[fileArray.length] = allData.value[showPid][checked[i].value];
+						}
+						checked[i].checked = false;
+					}
+					cloudBottomHide();
+				} else {
+					fileArray[fileArray.length] = mode;
+					mask.close();
+				}
+				if(fileArray.length == 0) {
+					return false;
+				}
+				//判断下载的文件是否全是图片和视频
+				for(var j in fileArray) {
+					var type = cloud.classify(fileArray[j].fname + fileArray[j].ftype);
+					if(type != "" && type != "icon-video") {
+						showSave = false;
+						break;
+					}
+				}
+
+				if(showSave) {
+					var btnArray = [{
+						title: "保存到相册"
+					}, {
+						title: "下载到云盘"
+					}];
+					plus.nativeUI.actionSheet({
+						title: "操作",
+						cancel: "取消",
+						buttons: btnArray
+					}, function(e) {
+						switch(e.index) {
+							case 0: //取消
+								break;
+							case 1: //保存到相册
+								events.fireToPageWithData('storage_transport.html', 'addDownload', {
+									save: true,
+									fileArray: fileArray
+								});
+								break;
+							case 2: //下载到云盘
+								events.fireToPageWithData('storage_transport.html', 'addDownload', {
+									save: false,
+									fileArray: fileArray
+								});
+								break;
+						}
+					});
+				} else {
+					events.fireToPageWithData('storage_transport.html', 'addDownload', {
+						save: false,
+						fileArray: fileArray
+					});
+				}
+			}
+
+			/**
+			 * 隐藏编辑状态的底部菜单
+			 */
+			function cloudBottomHide() {
+				//调整顶部
+				document.getElementById("ul_file_" + showPid).className = "mui-table-view cloud-check-hide";
+				document.getElementById("cancel").style.display = "none";
+				document.getElementById("back").style.display = "inline";
+				document.getElementById("edit").innerHTML = "编辑";
+				var title = document.getElementById("title");
+				title.style.textAlign = "left";
+				var show = showPidList[showPidList.length - 1];
+				title.innerText = show.pname;
+				document.getElementById("top").style.opacity = '1';
+				//隐藏底部
+				document.getElementById("cloud_bottom").style.display = "none";
+				//调整列表
+				document.getElementById("scroll_wrapper_" + showPid).style.bottom = "0px";
+				//取消选择
+				var checked = document.querySelectorAll('.mui-checkbox input[type=checkbox]:checked');
+				console.log("cloudBottomHide " + checked.length);
+				for(var i in checked) {
+					checked[i].checked = false;
+				}
+				edit = false;
 			}
 		</script>
 	</body>
