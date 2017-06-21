@@ -471,6 +471,15 @@
 					if(edit) {
 						return false;
 					}
+					var data = {
+						pid: showPid
+					}
+					if(showPid == 0) {
+						data.pname = "我的教宝云盘"
+					} else {
+						data.pname = document.getElementById("title").innerText;
+					}
+					events.fireToPageNone("storage_upload_choose.html", "getCloudData", data);
 					filter.isShow = true;
 				});
 

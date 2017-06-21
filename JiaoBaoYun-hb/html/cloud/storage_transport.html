@@ -18,9 +18,6 @@
 			#sliderSegmentedControl {
 				background-color: white;
 			}
-			/*.iconfont {
-				line-height: 42px;
-			}*/
 
 			.iconfont-size {
 				font-size: 42px;
@@ -317,6 +314,7 @@
 				mui.back = function() {
 					mui.closePopups();
 					plus.webview.hide(main, 'pop-out');
+					plus.webview.show("storage_main.html", 'pop-in');
 				}
 
 				//清除所有的任务和界面
