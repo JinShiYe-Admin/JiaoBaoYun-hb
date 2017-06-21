@@ -314,7 +314,7 @@
 				mui.back = function() {
 					mui.closePopups();
 					plus.webview.hide(main, 'pop-out');
-					plus.webview.show("storage_main.html", 'pop-in');
+					plus.webview.show("storage_main.html", 'slide-in-left');
 				}
 
 				//清除所有的任务和界面
@@ -361,17 +361,17 @@
 					console.log('传输列表新增一项下载任务:' + JSON.stringify(subData));
 					//获取上传和下载文件夹的目录对象
 					getUpAndDownEntry();
-					var myDate = new Date();
-					var dateName = myDate.getTime() + (Math.floor(Math.random() * 10)) + '.';
-					var url = subData.fpath + '?attname=' + dateName + subData.fname + subData.ftype;
-					console.log('addDownload ' + url);
-					//---数据准备---end---
-					var data = {
-						fileUrl: url, //文件下载地址
-						fname: subData.fname + subData.ftype, //云端的文件名
-						localname: dateName + subData.fname + subData.ftype //本地的文件名
-					}
-					getCurrentTypeAndUpOrDown(0, data); //下载
+//					var myDate = new Date();
+//					var dateName = myDate.getTime() + (Math.floor(Math.random() * 10)) + '.';
+//					var url = subData.fpath + '?attname=' + dateName + subData.fname + subData.ftype;
+//					console.log('addDownload ' + url);
+//					//---数据准备---end---
+//					var data = {
+//						fileUrl: url, //文件下载地址
+//						fname: subData.fname + subData.ftype, //云端的文件名
+//						localname: dateName + subData.fname + subData.ftype //本地的文件名
+//					}
+//					getCurrentTypeAndUpOrDown(0, data); //下载
 				});
 
 				//新增一项上传任务
@@ -382,26 +382,26 @@
 
 					console.log('传输列表新增一项上传任务:' + JSON.stringify(subData));
 
-					//获取上传和下载文件夹的目录对象
-					getUpAndDownEntry()
-
-					//---数据准备---end---
-					var ftype = '';
-					var ftypeList = subData.fname.split('.');
-					if(ftypeList.length != 1) {
-						ftype = '.' + ftypeList[ftypeList.length - 1];
-					}
-					var myDate = new Date();
-					var QNFileName = myDate.getTime() + (Math.floor(Math.random() * 10000) + 1) + ftype;
-					var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENFILE;
-					var data = {
-						getUpTokenUrl: getUpTokenUrl, //获取uptoken的url
-						QNFileName: QNFileName, //存放在七牛的文件名
-						fpath: subData.path, //上传文件的本地路径
-						fname: subData.fname, //上传文件的名字
-						pid: subData.pid //父ID，该文件的上层ID
-					}
-					getCurrentTypeAndUpOrDown(1, data); //上传
+//					//获取上传和下载文件夹的目录对象
+//					getUpAndDownEntry()
+//
+//					//---数据准备---end---
+//					var ftype = '';
+//					var ftypeList = subData.fname.split('.');
+//					if(ftypeList.length != 1) {
+//						ftype = '.' + ftypeList[ftypeList.length - 1];
+//					}
+//					var myDate = new Date();
+//					var QNFileName = myDate.getTime() + (Math.floor(Math.random() * 10000) + 1) + ftype;
+//					var getUpTokenUrl = window.storageKeyName.QNGETUPTOKENFILE;
+//					var data = {
+//						getUpTokenUrl: getUpTokenUrl, //获取uptoken的url
+//						QNFileName: QNFileName, //存放在七牛的文件名
+//						fpath: subData.path, //上传文件的本地路径
+//						fname: subData.fname, //上传文件的名字
+//						pid: subData.pid //父ID，该文件的上层ID
+//					}
+//					getCurrentTypeAndUpOrDown(1, data); //上传
 				});
 
 				/**

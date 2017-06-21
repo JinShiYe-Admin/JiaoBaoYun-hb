@@ -42,8 +42,8 @@
 				width: 100%;
 				margin-bottom: 15px;
 				margin-left: 5%;
-				background: #7F8594 !important;
-				border-color: #7F8594 !important;
+				background: #7F8594;
+				border-color: #7F8594;
 				height: 40px;
 			}
 
@@ -61,8 +61,8 @@
 				width: 100%;
 				margin-bottom: 15px;
 				margin-left: -5%;
-				background: #636770 !important;
-				border-color: #636770 !important;
+				background: #636770;
+				border-color: #636770;
 				height: 40px;
 			}
 
@@ -144,9 +144,8 @@
 		<script type="text/javascript">
 			var main; //当前webview对象
 			var chooseData = {
-				pid:0,
-				pname:"我的教宝云盘",
-				files: []
+				pid: 0,
+				pname: "我的教宝云盘",
 			}; //当前页面的数据
 			mui(".mui-scroll-wrapper").scroll();
 			mui.init({
@@ -179,6 +178,22 @@
 			 * 初始化监听
 			 */
 			function initListener() {
+
+				//文件数组变化的事件
+				fileList.$watch('filesArr', function(newVal, oldVal) {
+					console.log("newVal " + newVal.length);
+					console.log("oldVal " + oldVal.length);
+					if( newVal.length == 0) {
+						console.log("没有文件");
+						changeUpBtnColorToDefault()
+					}
+					if(oldVal.length == 0 && newVal.length > 0) {
+						console.log("有文件");
+						changeUpBtnColor()
+					}
+				});
+
+				//增加文件的事件
 				window.addEventListener("chose-files", function(e) {
 					console.log("chose-files事件：" + JSON.stringify(e.detail.data));
 					fileList.pushFilesArr(rechargeFileArr(e.detail.data));
@@ -222,20 +237,17 @@
 
 				//上传选择的文件
 				document.getElementById('upload').addEventListener('tap', function() {
-					if(chooseData.files.length != 0) {
-						//console.log("upload:" + JSON.stringify(upFile));
+					if(fileList.filesArr.length != 0) {
 						//跳转到传输列表
 						events.fireToPageWithData('storage_transport.html', 'addUpload', {
-							path: upFile.path, //路径
-							fname: upFile.fname, //文件名
-							metadata: upFile.metadata, //文件信息
-							pid: pid //云盘文件夹父ID
+							pid: chooseData.pid,
+							files: fileList.filesArr
 						});
-						upFile = null;
-						document.getElementById("file").innerHTML = '';
+						plus.webview.hide(main, 'slide-out-left');
+						fileList.filesArr = [];
 						changeUpBtnColorToDefault();
 					} else {
-						mui.toast('请选择上传的文件');
+						mui.toast('请添加上传的文件');
 					}
 				});
 			}
@@ -258,13 +270,7 @@
 				console.log("获取的数组：" + JSON.stringify(reArr));
 				return reArr;
 			}
-			/*
-			 * 初始化选择文件方式弹框
-			 */
-			//			function initPopover() {
-			//				document.getElementById("popover").style.height = plus.screen.resolutionHeight - plus.navigator.getStatusbarHeight() - 45 + "px";
-			//				document.getElementById("popover").style.top = 45 + "px"
-			//			}
+
 			/**
 			 * 将上传按钮颜色设置为默认颜色
 			 */
