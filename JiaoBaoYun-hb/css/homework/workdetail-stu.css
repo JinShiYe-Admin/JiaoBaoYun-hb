@@ -57,8 +57,13 @@ html,body,.mui-content{
 	color: white;
 	height: 4rem;
 }
-.brief-title,.brief-content{
+.brief-title{
 	color: #404040;
+	word-wrap: break-word;
+}
+.brief-content{
+	font-size: 15px;
+	color: #323232;
 	word-wrap: break-word;
 }
 .work-detail{

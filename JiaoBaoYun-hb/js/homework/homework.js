@@ -53,18 +53,18 @@ var publishIsReady = false;
 var stuWorkReady = false;
 //document.getElementById('tabs-class').style.display = "none";
 mui.init({
-	pullRefresh: {
-		container: '#pullrefresh',
-		down: {
-			style: 'circle',
-			callback: pulldownRefresh
-		},
-		up: {
-			auto: true,
-			contentrefresh: '正在加载...',
-			callback: pullupRefresh
-		}
-	}
+//	pullRefresh: {
+//		container: '#pullrefresh',
+//		down: {
+//			style: 'circle',
+//			callback: pulldownRefresh
+//		},
+//		up: {
+//			auto: true,
+//			contentrefresh: '正在加载...',
+//			callback: pullupRefresh
+//		}
+//	}
 });
 //mui的plusready监听
 mui.plusReady(function() {
@@ -561,13 +561,13 @@ var setPublishedData = function(publishedData) {
 		publishedData.forEach(function(DateHM, i) {
 			var divider = document.createElement('li');
 			divider.className = 'mui-table-view-divider';
-			divider.innerText = DateHM.Date.split(' ')[0];
+			divider.innerText = DateHM.Date.split(' ')[0].replace(/\//g,"-");
 			fragment.appendChild(divider);
 			//普通作业数据
 			if(DateHM.Homeworks && DateHM.Homeworks.length > 0) {
 				DateHM.Homeworks.forEach(function(homework, i) {
 					homework.classId = selectGId;
-					homework.Date = DateHM.Date;
+					homework.Date = DateHM.Date.replace(/\//g,'-');
 					var li = document.createElement('li');
 					li.homeworkInfo = homework;
 					li.className = 'mui-table-view-cell publishedHomework';
@@ -578,7 +578,7 @@ var setPublishedData = function(publishedData) {
 			//临时作业数据
 			if(DateHM.AnswerResultIds && DateHM.AnswerResultIds.ThumbUrls.length > 0) {
 				var li = document.createElement('li');
-				DateHM.AnswerResultIds.Date = DateHM.Date;
+				DateHM.AnswerResultIds.Date = DateHM.Date.replace(/\//g,"-");
 				li.homeworkInfo = DateHM.AnswerResultIds;
 				li.className = 'mui-table-view-cell publishedAnswer';
 				li.innerHTML = createAnswerResultInner(DateHM.AnswerResultIds);
@@ -750,12 +750,12 @@ var setHomeworkData = function(homeworkData) {
 		homeworkData.forEach(function(DateHM, i) {
 			var divider = document.createElement('li');
 			divider.className = 'mui-table-view-divider';
-			divider.innerText = DateHM.Date.split(' ')[0];
+			divider.innerText = DateHM.Date.split(' ')[0].replace(/\//g,"-");
 			fragment.appendChild(divider);
 			if(DateHM.Homeworks && DateHM.Homeworks.length > 0) {
 				DateHM.Homeworks.forEach(function(homework, i) {
 					var li = document.createElement('li');
-					homework.Date = DateHM.Date;
+					homework.Date = DateHM.Date.replace(/\//g,"-");
 					li.homeworkInfo = homework;
 					li.className = 'mui-table-view-cell stuHomework ' + getBackGround(homework);
 					li.innerHTML = createStuHomeworkInner(homework);
@@ -765,7 +765,7 @@ var setHomeworkData = function(homeworkData) {
 			if(DateHM.AnswerResults && DateHM.AnswerResults.length > 0) {
 				DateHM.AnswerResults.forEach(function(answerResult) {
 					if(answerResult.ThumbUrl != null) {
-						answerResult.Date = DateHM.Date;
+						answerResult.Date = DateHM.Date.replace(/\//g,"-");
 						answerResult.workType = 0;
 						var li = document.createElement('li');
 						li.homeworkInfo = answerResult;
