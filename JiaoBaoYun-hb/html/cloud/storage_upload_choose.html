@@ -197,6 +197,7 @@
 				window.addEventListener("chose-files", function(e) {
 					console.log("chose-files事件：" + JSON.stringify(e.detail.data));
 					fileList.pushFilesArr(rechargeFileArr(e.detail.data));
+					mui(".mui-scroll-wrapper").scroll().scrollTo(0,0,100);
 				});
 				//添加文件
 				document.getElementById('addfiles').addEventListener('tap', function() {

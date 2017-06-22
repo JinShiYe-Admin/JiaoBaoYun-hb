@@ -453,7 +453,8 @@
 			"html/cloud/storage_upload_choose.html",
 			"html/cloud/storage_upload.html",
 			"html/cloud/storage_show_imge.html",
-			"html/cloud/storage_show_video.html"
+			"html/cloud/storage_show_video.html",
+			"html/cloud/storage_main_choose.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi_home.html": {
@@ -1000,7 +1001,8 @@
 			"js/libs/myStorage/myStorage.js",
 			"css/iconfont/iconfont.css",
 			"js/publicProtocol.js",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": []
 	},
