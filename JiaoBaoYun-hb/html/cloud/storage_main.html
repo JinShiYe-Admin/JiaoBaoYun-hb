@@ -471,6 +471,15 @@
 					if(edit) {
 						return false;
 					}
+					var data = {
+						pid: showPid
+					}
+					if(showPid == 0) {
+						data.pname = "我的教宝云盘"
+					} else {
+						data.pname = document.getElementById("title").innerText;
+					}
+					events.fireToPageNone("storage_upload_choose.html", "getCloudData", data);
 					filter.isShow = true;
 				});
 
@@ -480,8 +489,13 @@
 						return false;
 					}
 					var targetPage = plus.webview.getWebviewById('storage_transport.html');
-					mui.fire(targetPage, 'getUpAndDownEntry');
-					targetPage.show('slide-in-right', 250);
+					if(targetPage) {
+						mui.fire(targetPage, 'getUpAndDownEntry');
+						targetPage.show('slide-in-right', 250);
+					} else {
+						events.openNewWindow('storage_transport.html');
+					}
+
 				});
 
 				//增加文件夹的监听

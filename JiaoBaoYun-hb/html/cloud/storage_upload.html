@@ -18,46 +18,46 @@
 			.mui-control-item {
 				background: #F5F5F5;
 			}
-
+			
 			.iconfont {
 				line-height: 42px;
 			}
-
+			
 			.iconfont-color {
 				color: #8f8f94;
 			}
-
+			
 			.iconfont-size {
 				font-size: 42px;
 			}
-
+			
 			.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-
+			
 			.mui-table-view {
 				background: transparent;
 			}
-
+			
 			.mui-table-view-cell {
 				margin-top: 10px;
 				background: white;
 			}
-
+			
 			.icon-download,
 			.icon-trash {
 				text-align: center;
 				min-width: 40px;
 			}
-
+			
 			#top {
 				background-color: white;
 				text-align: center;
 				height: 45px;
 			}
-
+			
 			.mui-segmented-control.mui-scroll-wrapper .mui-control-item {
 				display: inline-block;
 				width: auto;
@@ -65,7 +65,7 @@
 				padding-right: 10px;
 				border: 0;
 			}
-
+			
 			.mui-checkbox input[type=checkbox]:checked:before {
 				color: #13b7f6;
 			}
@@ -191,8 +191,7 @@
 				mui.back = function() {
 					folderList.pop(); //清除最后一个历史记录
 					if(folderList.length == 0) {
-						events.fireToPageWithData("storage_upload_choose.html", "", {});
-						plus.webview.close(main, events.getAniClose(3));
+						plus.webview.close(main, events.getAniClose());
 					} else {
 						//隐藏当前界面
 						document.getElementById("folder_" + showFolderId).style.display = 'none';
@@ -255,6 +254,8 @@
 				 * 点击文件或文件夹
 				 */
 				mui('#all').on('tap', '.mui-table-view-cell', function() {
+					var self = this;
+					console.log(1111111)
 					var id = this.getAttribute('id'); //元素id
 					var fid = this.getAttribute('data-fid'); //文件id
 					var fname = this.getAttribute('data-fname'); //文件或文件夹名字
@@ -289,6 +290,22 @@
 						showFolderId = fid;
 						resolveLocalFileSystemURL(fid);
 					} else if(isFile == 'true') {
+						var list = document.getElementById('all');
+						var checkboxArray = [].slice.call(list.querySelectorAll('input[type="checkbox"]'));
+						var checkedValues = [];
+						checkboxArray.forEach(function(box) {
+							if(box.checked) {
+								var dataInfo = JSON.parse(box.parentNode.getAttribute('data-info'))
+								checkedValues.push(dataInfo);
+							}
+						});
+						if(checkedValues.length == main.data) {
+							var box = self.querySelector('input[type="checkbox"]')
+							box.checked = false;
+							mui.toast("只允许选择" + main.data + "个文件");
+							return false;
+						}
+
 						plus.io.resolveLocalFileSystemURL(fid, function(entry) {
 							//请求成功的回调
 							//console.log("请求文件系统成功");
@@ -298,8 +315,12 @@
 								console.log("readFileSize：" + AndroidFileSystem.readSize(succesCB.size));
 								//限制50M
 								if(succesCB.size > (50 * 1024 * 1024)) {
+									var box = self.querySelector('input[type="checkbox"]')
+									box.checked = false;
 									mui.toast('上传文件不得大于50M');
 								} else if(succesCB.size == 0) {
+									var box = self.querySelector('input[type="checkbox"]')
+									box.checked = false;
 									mui.toast('请选择大于0B的文件');
 								} else {
 									if(upFile == null) { //当前页面没选上传的文件

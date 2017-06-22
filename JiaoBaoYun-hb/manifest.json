@@ -498,7 +498,8 @@
 					"css/show/show.css",
 					"js/utils/video.js",
 					"image/utils/playvideo.png",
-					"js/utils/showvideoutil.js"
+					"js/utils/showvideoutil.js",
+					"js/utils/playutil.js"
 				],
 				"refer": [
 					"html/quan/space-detail.html",
@@ -1722,7 +1723,10 @@
 				"refer": [
 					"html/cloud/storage_show_imge.html",
 					"html/cloud/storage_upload_choose.html",
-					"html/cloud/storage_upload.html"
+					"html/cloud/storage_upload.html",
+					"html/cloud/storage_main_choose.html",
+					"html/cloud/storage_transport.html",
+					"html/cloud/storage_show_video.html"
 				],
 				"priority": 0
 			},
@@ -2494,7 +2498,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"js/libs/crypto-js/crypto-js.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2846,7 +2851,8 @@
 					"js/cloud/cloud.js"
 				],
 				"refer": [
-					"html/cloud/storage_upload.html"
+					"html/cloud/storage_upload.html",
+					"html/cloud/storage_main_choose.html"
 				],
 				"priority": 0
 			},
@@ -5102,6 +5108,14 @@
 					"html/register/login.html",
 					"html/micro-course/course_addReply.html"
 				],
+				"priority": 0
+			},
+			"html/cloud/storage_show_video.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/utils/common.css"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},
