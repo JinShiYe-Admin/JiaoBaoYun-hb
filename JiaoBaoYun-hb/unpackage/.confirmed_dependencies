@@ -454,7 +454,8 @@
 			"html/cloud/storage_upload.html",
 			"html/cloud/storage_show_imge.html",
 			"html/cloud/storage_show_video.html",
-			"html/cloud/storage_main_choose.html"
+			"html/cloud/storage_main_choose.html",
+			"html/cloud/storage_transport.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi_home.html": {
