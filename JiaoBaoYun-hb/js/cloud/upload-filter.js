@@ -58,6 +58,7 @@ var filter = new Vue({
 		}],
 		isShow: false,
 		showType:0,//0为列表 1为图片
+		showPath:"",
 		filterContainer: {
 			position: "fixed",
 			top: "0px",
