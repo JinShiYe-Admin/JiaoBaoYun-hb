@@ -437,9 +437,9 @@
 								fname: subData.files[i].fileName, //上传文件的名字
 								pid: subData.pid, //父ID，该文件的上层ID
 							}
+							eleId++;
 							uploadList.key[uploadList.key.length] = data.eleId;
 							uploadList.value[data.eleId] = data;
-							eleId++;
 							addUploadItem(data.eleId, subData.files[i].fileName);
 						}
 						startUploadingNetType();
@@ -656,9 +656,9 @@
 				downloadingId = -1; //正在下载
 				if(!downData) {
 					for(var i in downloadList.key) {
-						console.log("downloadList " + i + " " + downloadList.key[i] + " " + JSON.stringify(downloadList.value[i]));
-						if(downloadList.value[i] && downloadList.value[i].state == -1) { //未开始的任务
-							downloadingId = i;
+						console.log("downloadList " + i + " " + downloadList.key[i] + " " + JSON.stringify(downloadList.value[downloadList.key[i]]));
+						if(downloadList.value[downloadList.key[i]] && downloadList.value[downloadList.key[i]].state == -1) { //未开始的任务
+							downloadingId = downloadList.key[i];
 							break;
 						}
 					}
@@ -846,6 +846,7 @@
 			 * 开始创建上传任务之前判断网络状态
 			 */
 			function startUploadingNetType() {
+				console.log("startUploadingNetType " + uploadingId);
 				if(uploadingId != null) {
 					//有正在上传的任务
 					return false;
@@ -853,10 +854,10 @@
 				uploadingId = -1; //正在上传
 				var data; //上传任务的参数
 				for(var i in uploadList.key) {
-					//console.log("uploadList " + i + " " + uploadList.key[i] + " " + JSON.stringify(uploadList.value[i]));
-					if(uploadList.value[i] && uploadList.value[i].state == -1) { //未开始的任务
-						uploadingId = i;
-						document.getElementById("up_btn_" + i).style.display = "none"; //隐藏取消上传任务按钮
+					console.log("uploadList " + i + " " + uploadList.key[i] + " " + JSON.stringify(uploadList.value[uploadList.key[i]]));
+					if(uploadList.value[uploadList.key[i]] && uploadList.value[uploadList.key[i]].state == -1) { //未开始的任务
+						uploadingId = uploadList.key[i];
+						document.getElementById("up_btn_" + uploadList.key[i]).style.display = "none"; //隐藏取消上传任务按钮
 						break;
 					}
 				}
@@ -893,6 +894,7 @@
 			 * 开始创建上传任务
 			 */
 			function startUploading(data) {
+				console.log("startUploading " + JSON.stringify(data));
 				getQNUpToken(data.getUpTokenUrl, data.QNFileName, data.fPath, data.fname, data.pid);
 			}
 
