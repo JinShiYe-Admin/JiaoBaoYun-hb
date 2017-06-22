@@ -38,8 +38,10 @@ var filter = new Vue({
 				}
 				Gallery.pickVideo(function(videoInfo) {
 					JSON.stringify("要传递的视频信息：" + JSON.stringify(videoInfo));
-					videoInfo.wd.close();
-					filter.fireData([videoInfo.path]);
+					if(videoInfo.flag == 1) {
+						videoInfo.wd.close();
+						filter.fireData([videoInfo.path]);
+					}
 				})
 			},
 			type: 2
@@ -52,13 +54,13 @@ var filter = new Vue({
 					filter.isShow = false;
 					return;
 				}
-				events.openNewWindowWithData("storage_upload.html",30-filter.fileNo);
+				events.openNewWindowWithData("storage_upload.html", 30 - filter.fileNo);
 			},
 			type: 1 //1为安卓
 		}],
 		isShow: false,
-		showType:0,//0为列表 1为图片
-		showPath:"",
+		showType: 0, //0为列表 1为图片
+		showPath: "",
 		filterContainer: {
 			position: "fixed",
 			top: "0px",
@@ -67,11 +69,11 @@ var filter = new Vue({
 			width: "100%",
 			zIndex: 999,
 			backgroundColor: "rgba(255,255,255,0.9)",
-			textAlign:"center",
-			display:"flex",
-			display:"-webkit-flex",
-			flexDirection:"column",
-			justifyContent:"center"
+			textAlign: "center",
+			display: "flex",
+			display: "-webkit-flex",
+			flexDirection: "column",
+			justifyContent: "center"
 		}
 	},
 	methods: {

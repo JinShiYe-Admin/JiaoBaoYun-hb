@@ -12,7 +12,7 @@ window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, err
 	events.closeWaiting();
 	var webview = plus.webview.currentWebview();
 	console.log("---ERROR--- " + webview.id + " ---end---");
-	if(webview.id == "firstPage.html" || webview.id == "index.html" || webview.id == "cloud_home.html" || webview.id == "sciedu_home.html" || webview.id == "show-home1.html" || webview.id == "course-home1.html") {
+	if(webview.id == "firstPage.html" || webview.id == "index.html" || webview.id == "cloud_home.html" || webview.id == "sciedu_home.html" || webview.id == "show-home1.html" || webview.id == "course-home1.html" || webview.id == "storage_transport.html") {
 		mui.toast('当前界面加载出现错误');
 		return false;
 	}
@@ -504,9 +504,9 @@ var events = (function(mod) {
 	 * 通过文件路径获取文件名
 	 * @param {Object} filePath 文件路径
 	 */
-	mod.getFileName=function(filePath){
-		var paths=filePath.split("/");
-		var path=paths[paths.length-1];
+	mod.getFileName = function(filePath) {
+		var paths = filePath.split("/");
+		var path = paths[paths.length - 1];
 		return path;
 	}
 
