@@ -547,7 +547,8 @@
 					"js/mui.pullToRefresh.js",
 					"js/mui.pullToRefresh.material.js",
 					"js/utils/video.js",
-					"js/utils/showvideoutil.js"
+					"js/utils/showvideoutil.js",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [
 					"html/quan/class-group.html",
@@ -1713,7 +1714,10 @@
 					"js/utils/camera.js",
 					"js/utils/gallerypick.js",
 					"js/utils/vue.js",
-					"js/cloud/upload-filter.js"
+					"js/cloud/upload-filter.js",
+					"fonts/fangzheng.ttf",
+					"fonts/iconfont.ttf",
+					"image/cloud/cloud_0_wenjianjia_1.png"
 				],
 				"refer": [
 					"html/cloud/storage_show_imge.html",

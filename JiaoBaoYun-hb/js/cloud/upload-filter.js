@@ -57,6 +57,7 @@ var filter = new Vue({
 			type: 1 //1为安卓
 		}],
 		isShow: false,
+		showType:0,//0为列表 1为图片
 		filterContainer: {
 			position: "fixed",
 			top: "0px",
