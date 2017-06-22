@@ -375,10 +375,12 @@
 					document.getElementById("download").innerHTML = '';
 					document.getElementById("downloaded").innerHTML = '';
 
-					uploadingId = false; //是否正在下载
-					downloadingId = false; //是否正在上传
+					uploadingId = null; //是否正在下载
+					downloadingId = null; //是否正在上传
 					upFolderEntry = null; //上传文件夹的目录对象
 					downFolderEntry = null; //下载文件夹的目录对象
+					upLoadNoWiFi = false;
+					downLoadNoWiFi = false;
 					plus.uploader.clear(); //清除上传任务
 					plus.downloader.clear(); //清除下载任务
 				});
