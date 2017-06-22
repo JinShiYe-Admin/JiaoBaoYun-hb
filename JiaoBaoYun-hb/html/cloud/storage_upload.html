@@ -18,46 +18,46 @@
 			.mui-control-item {
 				background: #F5F5F5;
 			}
-			
+
 			.iconfont {
 				line-height: 42px;
 			}
-			
+
 			.iconfont-color {
 				color: #8f8f94;
 			}
-			
+
 			.iconfont-size {
 				font-size: 42px;
 			}
-			
+
 			.mui-table-view:before,
 			.mui-table-view:after,
 			.mui-table-view-cell:after {
 				height: 0px;
 			}
-			
+
 			.mui-table-view {
 				background: transparent;
 			}
-			
+
 			.mui-table-view-cell {
 				margin-top: 10px;
 				background: white;
 			}
-			
+
 			.icon-download,
 			.icon-trash {
 				text-align: center;
 				min-width: 40px;
 			}
-			
+
 			#top {
 				background-color: white;
 				text-align: center;
 				height: 45px;
 			}
-			
+
 			.mui-segmented-control.mui-scroll-wrapper .mui-control-item {
 				display: inline-block;
 				width: auto;
@@ -65,7 +65,7 @@
 				padding-right: 10px;
 				border: 0;
 			}
-			
+
 			.mui-checkbox input[type=checkbox]:checked:before {
 				color: #13b7f6;
 			}
@@ -388,33 +388,6 @@
 				}, function(errorCB) {
 					//请求失败的的回调
 					mui.toast('请求文件系统失败 ' + errorCB.message);
-					console.log("请求文件系统失败: " + JSON.stringify(errorCB));
-				});
-			}
-			/**
-			 * 在程序中创建utid的文件夹和对应的上传下载文件夹
-			 */
-			function createFolder() {
-				var url = plus.io.PUBLIC_DOCUMENTS;
-				plus.io.requestFileSystem(url, function(succesCB) {
-					var LocalURL = succesCB.root.toLocalURL();
-					var URL = succesCB.root.toURL();
-					window.myStorage.setItem(window.storageKeyName.DOCUMENTSPATH, LocalURL);
-					var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
-					//创建utid文件夹
-					getDirectory(succesCB.root, personalUTID, function(succesCB2) {
-						//创建下载文件夹
-						getDirectory(succesCB2, 'download', function(succesCB3) {
-							//创建上传文件夹
-							getDirectory(succesCB2, 'upload', function(succesCB3) {
-								//									console.log("DOCUMENTSPATH: " + window.myStorage.getItem(window.storageKeyName.DOCUMENTSPATH));
-							});
-						});
-					});
-
-				}, function(errorCB) {
-					//请求失败的的回调
-					mui.toast("请求文件系统失败 " + errorCB.message);
 					console.log("请求文件系统失败: " + JSON.stringify(errorCB));
 				});
 			}
