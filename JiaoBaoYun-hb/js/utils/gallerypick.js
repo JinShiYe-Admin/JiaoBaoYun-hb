@@ -1,6 +1,7 @@
 var Gallery = (function(mod) {
 
 	mod.pickVideoTime = 10; //从本地选取的时长，默认10秒(未达到11S都算10S)
+	mod.changeType = 1; //是否强制改变文件类型
 	/**
 	 * 从相册选取视频
 	 * @param {Object} callBack 回调
@@ -29,6 +30,7 @@ var Gallery = (function(mod) {
 	 * @param {Object} callBack
 	 */
 	mod.videoInfo = function(wd, filePath, callBack) {
+
 		//获取选取的视频文件对象
 		plus.io.resolveLocalFileSystemURL(filePath, function(entry) {
 			//1.判断大小
@@ -36,7 +38,16 @@ var Gallery = (function(mod) {
 				//获取APP的_documents文件夹对象
 				plus.io.resolveLocalFileSystemURL("_documents/", function(parentEntry) {
 					var myDate = new Date();
-					var copyName = myDate.getTime() + parseInt(Math.random() * 1000) + '.mp4';
+					var copyName = myDate.getTime() + parseInt(Math.random() * 1000);
+					var rawNames = filePath.split("/");
+					var rawName = rawNames[rawNames.length - 1]; //原名字
+					if(mod.changeType == 0) {
+						var rawTypes = rawNames.split(".");
+						var rawType = rawTypes[rawTypes.length - 1]; //原类型
+						copyName = copyName + "." + rawType;
+					} else {
+						copyName = copyName + '.mp4';
+					}
 					//2.拷贝视频到_documents文件夹，并修改后缀为MP4
 					entry.copyTo(parentEntry, copyName, function(entrySuccesCB) {
 						console.log("拷贝成功");
@@ -62,13 +73,16 @@ var Gallery = (function(mod) {
 								} else {
 									path = "file://" + plus.io.convertLocalFileSystemURL(path);
 								}
-								callBack({
+								var callBackData = {
 									flag: 1, //成功
-									wd: wd, //等待框
+									wd: wd, //成功才返回的等待框
 									path: path, //视频文件路径
 									video: mVideo, //video元素
 									duration: mVideo.duration, //视频时长，单位秒
-								});
+									rawName: rawName //原名字
+								};
+								console.log("相册选取视频返回的数据 " + JSON.stringify(callBackData));
+								callBack(callBackData);
 							} else {
 								entrySuccesCB.remove(function(remSucCB) {
 									console.log("删除文件成功 " + remSucCB);

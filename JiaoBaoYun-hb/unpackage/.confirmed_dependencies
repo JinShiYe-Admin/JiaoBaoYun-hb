@@ -517,7 +517,8 @@
 			"js/cloud/cloud.js"
 		],
 		"refer": [
-			"html/cloud/storage_upload.html"
+			"html/cloud/storage_upload.html",
+			"html/cloud/storage_main_choose.html"
 		]
 	},
 	"html/qiuzhi/qiuzhi-answerDetail.html": {
