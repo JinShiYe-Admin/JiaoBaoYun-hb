@@ -12,7 +12,7 @@ window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, err
 	events.closeWaiting();
 	var webview = plus.webview.currentWebview();
 	console.log("---ERROR--- " + webview.id + " ---end---");
-	if(webview.id == "firstPage.html" || webview.id == "index.html" || webview.id == "cloud_home.html" || webview.id == "sciedu_home.html" || webview.id == "show-home1.html" || webview.id == "course-home1.html") {
+	if(webview.id == "firstPage.html" || webview.id == "index.html" || webview.id == "cloud_home.html" || webview.id == "sciedu_home.html" || webview.id == "show-home1.html" || webview.id == "course-home1.html" || webview.id == "storage_transport.html") {
 		mui.toast('当前界面加载出现错误');
 		return false;
 	}
@@ -504,9 +504,9 @@ var events = (function(mod) {
 	 * 通过文件路径获取文件名
 	 * @param {Object} filePath 文件路径
 	 */
-	mod.getFileName=function(filePath){
-		var paths=filePath.split("/");
-		var path=paths[paths.length-1];
+	mod.getFileName = function(filePath) {
+		var paths = filePath.split("/");
+		var path = paths[paths.length - 1];
 		return path;
 	}
 
@@ -704,7 +704,7 @@ var events = (function(mod) {
 			//1.求知问题详情页
 			//2.微课节次详情页
 			//3.微课节次单个详情页
-			if(id == "qiuzhi-question.html" || id == "course_details.html" || id == "course_section.html" || id == 'space-detail.html' || id == 'zonep_sub.html' || id == "sciedu_show_main.html") {
+			if(id == "qiuzhi-question.html" || id == "course_details.html" || id == "course_section.html" || id == 'space-detail.html' || id == 'zonep_sub.html' || id == "sciedu_show_main.html" || "storage_show_video.html") {
 				styles.hardwareAccelerated = true;
 			}
 			if(id == "show-home1.html") {

@@ -1939,7 +1939,11 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
 			"image/qiuzhi/qiuzhi_noanswer.png",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"image/utils/loading.gif",
+			"fonts/iconfont.ttf",
+			"fonts/mui.ttf",
+			"fonts/fangzheng.ttf"
 		],
 		"refer": [
 			"html/cloud/app_notes_create.html"
@@ -2649,6 +2653,9 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js"
+		],
+		"refer": [
+			"html/utils/record_audio.html"
 		]
 	},
 	"html/mine/qun_data_create.html": {
@@ -2683,7 +2690,14 @@
 			"css/utils/common.css",
 			"js/utils/recordvideoutil.js",
 			"js/utils/gallerypick.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/utils/preview.css",
+			"image/utils/loading.gif"
+		]
+	},
+	"html/utils/record_audio.html": {
+		"resources": [
+			"js/utils/recordaudioutil.js"
 		]
 	},
 	"html/show/show-home2.html": {
