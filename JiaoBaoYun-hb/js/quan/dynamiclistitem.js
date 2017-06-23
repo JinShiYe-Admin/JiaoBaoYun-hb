@@ -856,6 +856,7 @@ var dynamiclistitem = (function($, mod) {
 	}
 
 	mod.addItem = function(ulElement, data) {
+//		console.log(JSON.stringify(data));
 		var li = document.createElement('li');
 		li.id = data.id_name;
 		li.className = 'mui-table-view-cell';
@@ -1342,7 +1343,7 @@ var dynamiclistitem = (function($, mod) {
 		var html5 = '<a id="comment' + data.id_name + '" style = "color: #b7b7b7;" class="mui-icon iconfont icon-xiaoxizhongxin dynamic-icon-comment"></a>';
 		var html6 = '<font style="padding-right:7px"></font>';
 		var html7
-		if(data.pageFlag == 1) { //展现界面
+		if(data.focusFlag == 1) { //展现界面
 			html7 = '</div><div class="mui-media-body"><p></p></div></div>';
 		} else { //空间界面
 			html7 = '</div><div class="mui-media-body" style="margin-top:5px"><p>浏览' + viewCount + '次</p></div></div>';
