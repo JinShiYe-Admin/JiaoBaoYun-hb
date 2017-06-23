@@ -381,6 +381,7 @@
 			});
 
 			mui.plusReady(function() {
+				//events.closeWaiting();
 				var wd = events.showWaiting();
 				events.preload('storage_upload_choose.html'); //预加载上传列表
 				initData();
@@ -851,10 +852,12 @@
 						}, 400);
 
 						document.getElementById("pid_" + pid).style.display = 'inline';
-						//从屏幕右边移进新界面
-						mui('#scroll_' + pid + ' ul').each(function(index, element) {
-							element.className = 'mui-table-view move-in-right';
-						});
+						if(pid != 0) {
+							//从屏幕右边移进新界面
+							mui('#scroll_' + pid + ' ul').each(function(index, element) {
+								element.className = 'mui-table-view move-in-right';
+							});
+						}
 						showPid = pid;
 						//增加文件夹历史
 						var pData2 = {

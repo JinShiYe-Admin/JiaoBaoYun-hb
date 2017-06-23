@@ -1,3 +1,8 @@
+<!--
+	作者：444811716@qq.com
+	时间：2017-06-22
+	描述：发布点到记事
+-->
 <!DOCTYPE html>
 <html>
 
@@ -7,8 +12,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<meta name="author" content="莫尚霖,email:444811716@qq.com" />
-		<meta name="description" content="发布点到记事" />
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/utils/common.css" />
 		<link rel="stylesheet" href="../../css/utils/pullToRefresh.css" />
@@ -135,14 +138,24 @@
 				position: absolute;
 				visibility: hidden;
 			}
+
+			#commit {
+				font-size: 14px;
+				line-height: 44px;
+				position: absolute;
+				right: 10px;
+				padding: 0px;
+				font-weight: 500;
+				color: #B7B7B7;
+			}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 id="title" class="mui-title" style="color: white;"></h1>
-			<div id="commit" class="mui-pull-right" style="font-size: 17px;line-height: 44px;position: absolute;right: 10px;padding: 0px;font-weight: 500;color: gray;">完成</div>
+			<h1 id="title" class="mui-title"></h1>
+			<div id="commit" class="mui-pull-right">完成</div>
 		</header>
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="z-index: 1;">
@@ -189,7 +202,7 @@
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/MultiMedia.js"></script>
-		<script type="text/javascript" src="../../js/utils/gallerypick.js" ></script>
+		<script type="text/javascript" src="../../js/utils/gallerypick.js"></script>
 		<script type="text/javascript" src="../../js/mui.zoom.js"></script>
 		<script type="text/javascript" src="../../js/mui.previewimage.js"></script>
 		<script type="text/javascript" src="../../js/mui.pullToRefresh.js"></script>
@@ -481,7 +494,7 @@
 				var textarea_record = document.getElementById("textarea_record");
 				if(call_type == '' && textarea_record.value.replace(/(^\s*)|(\s*$)/g, "") == "" && multiMedia.data.PictureArray.length == 0 && multiMedia.data.VideoArray.length == 0) {
 					//不允许发布
-					document.getElementById("commit").style.color = "gray";
+					document.getElementById("commit").style.color = "#B7B7B7";
 					commit = false;
 				} else {
 					document.getElementById("commit").style.color = "white";

@@ -2460,7 +2460,8 @@
 					"js/utils/playutil.js",
 					"image/utils/loading.gif",
 					"image/qiuzhi/qiuzhi_noanswer.png",
-					"css/iconfont/iconfont.css"
+					"css/iconfont/iconfont.css",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"html/cloud/app_notes_create.html"
@@ -4209,7 +4210,9 @@
 					"image/utils/videothumb.png",
 					"js/utils/gallerypick.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/utils/record_audio.html"
+				],
 				"priority": 0
 			},
 			"html/quan/space-detail.html": {
@@ -5114,6 +5117,13 @@
 				"resources": [
 					"css/mui.min.css",
 					"css/utils/common.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/utils/record_audio.html": {
+				"resources": [
+					"js/utils/recordaudioutil.js"
 				],
 				"refer": [],
 				"priority": 0
