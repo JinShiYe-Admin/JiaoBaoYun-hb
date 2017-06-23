@@ -408,7 +408,8 @@
 			"html/micro-course/course-home.html",
 			"html/show/show_home.html",
 			"html/micro-course/course-home1.html",
-			"html/show/show-home1.html"
+			"html/show/show-home1.html",
+			"html/show/show-home2.html"
 		]
 	},
 	"html/cloud/storage_main.html": {
@@ -1469,7 +1470,8 @@
 			"css/iconfont/iconfont.css",
 			"fonts/iconfont.ttf",
 			"js/utils/showvideoutil.js",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"js/utils/playutil.js"
 		],
 		"refer": [
 			"html/quan/space-detail.html",
@@ -1967,7 +1969,8 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"js/utils/gallerypick.js"
 		],
 		"refer": [
 			"html/mine/qun_manage_info_change_post.html"
@@ -2657,7 +2660,14 @@
 	"html/cloud/storage_show_video.html": {
 		"resources": [
 			"css/mui.min.css",
-			"css/utils/common.css"
+			"css/utils/common.css",
+			"js/utils/cryption.js",
+			"js/mui.min.js",
+			"js/storageKeyName.js",
+			"js/utils/CloudFileUtil.js",
+			"js/utils/events.js",
+			"js/qiniu/qiniu.js",
+			"js/utils/playutil.js"
 		]
 	},
 	"html/cloud/keeprecord_callorrecord_main.html": {
@@ -2674,6 +2684,44 @@
 			"js/utils/recordvideoutil.js",
 			"js/utils/gallerypick.js",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/show/show-home2.html": {
+		"resources": [
+			"css/show/show-list.css",
+			"image/utils/video-loading.gif",
+			"js/libs/jquery.lazyload.min.js",
+			"js/show/show_listnew.js",
+			"image/utils/playvideo.png",
+			"js/show/showList.js",
+			"css/utils/fresh.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/utils/vue.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/mui.min.js",
+			"js/utils/signHmacSHA1.js",
+			"js/utils/postData.js",
+			"js/mui.pullToRefresh.js",
+			"js/mui.pullToRefresh.material.js",
+			"js/storageKeyName.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/libs/RSA/RSA.js",
+			"js/utils/RSAEncrypt.js",
+			"js/show/show-list.js",
+			"image/utils/loading.gif",
+			"fonts/fangzheng.ttf",
+			"image/show/show-default-small.png",
+			"image/show/show-default-large.png"
+		],
+		"refer": [
+			"html/register/login.html"
 		]
 	}
 }
