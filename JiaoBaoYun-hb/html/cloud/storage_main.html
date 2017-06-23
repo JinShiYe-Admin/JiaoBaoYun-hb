@@ -667,8 +667,11 @@
 									});
 								}
 							} else if(type == 'html5-video') {
+								var thumbPath = document.getElementById("fthumb_" + ids[1]).src;
 								events.openNewWindowWithData('storage_show_video.html', {
-									fpath: mode.fpath //视频的七牛路径
+									type: 0, //需要获取token
+									path: mode.fpath, //视频的七牛路径
+									thumbPath: thumbPath //缩略图
 								});
 							}
 						}
@@ -793,7 +796,7 @@
 					if(type != '') {
 						html_1 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
 					} else {
-						html_1 = '<img class="mui-media-object mui-pull-left" src="' + path + '">';
+						html_1 = '<img id="fthumb_' + data.fid + '" class="mui-media-object mui-pull-left" src="' + path + '">';
 					}
 					var html_2 = '<div class="mui-media-body">\
 									<div id="fname_' + data.fid + '" class="mui-ellipsis-2">' + data.fname + data.ftype + '</div>\

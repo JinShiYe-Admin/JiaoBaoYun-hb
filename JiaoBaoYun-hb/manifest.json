@@ -3456,7 +3456,8 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"js/utils/showvideoutil.js",
 					"js/utils/recordvideoutil.js",
-					"js/utils/gallerypick.js"
+					"js/utils/gallerypick.js",
+					"image/utils/loading.gif"
 				],
 				"refer": [],
 				"priority": 0

@@ -2681,7 +2681,8 @@
 			"js/utils/recordvideoutil.js",
 			"js/utils/gallerypick.js",
 			"js/libs/crypto-js/crypto-js.js",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"image/utils/loading.gif"
 		]
 	},
 	"html/utils/record_audio.html": {
