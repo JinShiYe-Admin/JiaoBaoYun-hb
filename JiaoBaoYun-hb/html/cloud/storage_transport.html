@@ -51,6 +51,10 @@
 			.mui-segmented-control.mui-segmented-control-inverted~.mui-slider-progress-bar {
 				background-color: #00a5e0;
 			}
+
+			#download .mui-btn-outlined {
+				visibility: hidden;
+			}
 		</style>
 	</head>
 
@@ -483,16 +487,20 @@
 					var ids = this.getAttribute('id').split("_"); //元素id
 					console.log('upload ' + JSON.stringify(ids));
 					console.log("data " + JSON.stringify(uploadList.value[ids[1]]));
-					if(uploadList.value[ids[1]].state == -2) { //上传失败
-						var btnArray = ['否', '是'];
-						mui.confirm('确认删除上传任务？', '提示', btnArray, function(e) {
-							if(e.index == 1) { //是
+					var btnArray = ['否', '是'];
+					mui.confirm('确认删除上传任务？', '提示', btnArray, function(e) {
+						if(e.index == 1) { //是
+							if(uploadList.value[ids[1]].state == -2 || uploadList.value[ids[1]].state == -1) {
+								//上传失败||未开始
 								delete uploadList.value[ids[1]];
 								var liUp = document.getElementById("up_" + ids[1]);
 								liUp.parentNode.removeChild(liUp);
+							} else {
+								mui.toast("删除失败上传任务已开始");
 							}
-						}, 'div');
-					}
+						}
+					}, 'div');
+
 				});
 
 				//已上传列表的按钮
@@ -587,33 +595,33 @@
 					console.log('download ' + JSON.stringify(ids));
 					console.log("data " + JSON.stringify(downloadList.value[ids[1]]));
 					console.log("downloadingId " + downloadingId);
-					if(downloadList.value[ids[1]].state == 4) {
-						mui.toast("上传任务已经完成");
-					} else {
-						var btnArray = ['否', '是'];
-						mui.confirm('确认删除下载任务？', '提示', btnArray, function(e) {
-							if(e.index == 1) { //是
-								if(downloadList.value[ids[1]].state == 4) {
-									mui.toast("上传任务已经完成");
-								} else {
-									var task = taskArray.value[downloadList.value[ids[1]].taskId];
-									if(task && task.taskOB) {
-										task.taskOB.abort();
-										taskArray.value[downloadList.value[ids[1]].taskId].taskId = null;
-										taskArray.value[downloadList.value[ids[1]].taskId].taskOB = null;
-									}
-									delete uploadList.value[ids[1]];
-									var liUp = document.getElementById("down_" + ids[1]);
-									liUp.parentNode.removeChild(liUp);
-									mui.toast("删除成功");
-									if(downloadingId == ids[1]) {
-										downloadingId = null;
-										startDownloadingNetType();
-									}
+					var btnArray = ['否', '是'];
+					mui.confirm('确认删除下载任务？', '提示', btnArray, function(e) {
+						if(e.index == 1) { //是
+							if(downloadList.value[ids[1]].state == 4) {
+								mui.toast("下载任务已经完成");
+							} else {
+								downloadList.value[ids[1]].state = -3;
+								var taskId = downloadList.value[ids[1]].taskId;
+								console.log("taskId " + taskId);
+								if(taskId) {
+									var task = taskArray.value[taskId];
+									console.log('task ' + JSON.stringify(task));
+									task.taskOB.abort();
+									taskArray.value[downloadList.value[ids[1]].taskId].taskId = null;
+									taskArray.value[downloadList.value[ids[1]].taskId].taskOB = null;
+								}
+								delete uploadList.value[ids[1]];
+								var liUp = document.getElementById("down_" + ids[1]);
+								liUp.parentNode.removeChild(liUp);
+								mui.toast("删除成功");
+								if(downloadingId == ids[1]) {
+									downloadingId = null;
+									startDownloadingNetType();
 								}
 							}
-						}, 'div');
-					}
+						}
+					}, 'div');
 				});
 
 				//删除一条已下载的记录和本地文件
@@ -744,11 +752,12 @@
 						//下载任务完成的监听
 						console.log('下载任务完成' + status + '|' + JSON.stringify(download));
 						if(status == 200) {
-							mui.toast('下载成功');
 							var id = taskArray.value[download.__UUID__].downId;
 							var ulDown = document.getElementById("down_" + id);
-							document.getElementById("down_btn_" + id).style.display = 'none';
-							ulDown.parentNode.removeChild(ulDown);
+							if(ulDown) {
+								document.getElementById("down_btn_" + id).style.display = 'none';
+								ulDown.parentNode.removeChild(ulDown);
+							}
 							plus.io.resolveLocalFileSystemURL(fpath, function(succesCB) {
 								addUpedOrDownedMetadataItem(0, succesCB);
 							}, function(errorCB) {
@@ -766,7 +775,7 @@
 							downloadingId = null;
 							startDownloadingNetType();
 						} else {
-							mui.toast('下载失败');
+							mui.toast('下载失败' + download.responseText);
 							downloadFail();
 						}
 					}, function(download, status) {
@@ -793,6 +802,7 @@
 								var waiting = document.getElementById("down_waiting_" + id);
 								if(waiting) {
 									waiting.innerText = '下载中';
+									document.getElementById("down_btn_" + id).style.visibility = 'visible';
 									document.getElementById("down_btn_" + id).innerText = '暂停';
 									mui("#down_bar_" + id).progressbar().setProgress(download.downloadedSize / download.totalSize * 100);
 									document.getElementById("down_size_" + id).innerText = downloadSize + '/' + totalSize;
@@ -823,6 +833,10 @@
 						downloadList.value[downloadingId].state = 1; //已经创建任务
 						downloadList.value[downloadingId].taskId = dtask.__UUID__;
 						dtask.start();
+						var waiting = document.getElementById("down_waiting_" + downloadingId);
+						if(waiting) {
+							waiting.innerText = '开始下载';
+						}
 					});
 				}, function(xhr, type, errorThrown) {
 					mui.toast('下载失败' + type);
@@ -928,7 +942,7 @@
 					console.log('七牛上传token:' + JSON.stringify(QNUptoken));
 					if(QNUptoken.Status == 0) { //获取uptoken失败
 						console.log('### ERROR ### 获取上传凭证失败' + QNUptoken.Message);
-						mui.toast('上传失败 ' + QNUptoken.Message);
+						mui.toast('上传失败' + QNUptoken.Message);
 						uploadFail();
 					} else {
 						CloudFileUtil.upload(fPath, QNUptoken.Data.Token, QNUptoken.Data.Key, function(upload, status) {
@@ -1014,7 +1028,7 @@
 						});
 					}
 				}, function(xhr, type, errorThrown) {
-					mui.toast('上传失败 ' + type);
+					mui.toast('上传失败' + type);
 					uploadFail();
 				});
 			}
@@ -1116,7 +1130,7 @@
 				li.setAttribute('data-id', id);
 				li.className = 'mui-table-view-cell mui-media';
 				li.innerHTML = '<div class="mui-media-object mui-pull-right">\
-											<button id="down_btn_' + id + '" type="button" class="mui-btn mui-btn-outlined">开始</button>\
+											<button id="down_btn_' + id + '" type="button" class="mui-btn mui-btn-outlined">等待</button>\
 										</div> <span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>\
 										<div class="mui-media-body">\
 											<div class="mui-ellipsis transport-info">\
@@ -1204,7 +1218,7 @@
 					wd.close();
 					console.log('27 用户云盘文件上传或创建文件夹 ' + JSON.stringify(data));
 					if(data.RspCode == 0) {
-						mui.toast(comData.fname + comData.ftype + ' 上传成功');
+						//						mui.toast(comData.fname + comData.ftype + ' 上传成功');
 						var ulUp = document.getElementById("up_" + id);
 						if(ulUp) {
 							ulUp.parentNode.removeChild(ulUp);

@@ -200,6 +200,7 @@ var cloud = (function($, mod) {
 				break;
 			default:
 				fileShowOption.type = 0;
+				fileShowOption.path = fileName;
 				fileShowOption.icon = mod.classify2(fileName);
 				break;
 		}

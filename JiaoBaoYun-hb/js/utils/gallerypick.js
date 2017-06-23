@@ -33,17 +33,6 @@ var Gallery = (function(mod) {
 		plus.io.resolveLocalFileSystemURL(filePath, function(entry) {
 			//1.判断大小
 			entry.getMetadata(function(metadata) {
-				console.log("视频文件大小 " + metadata.size);
-				if(metadata.size > (30 * 1024 * 1024)) {
-					console.log("视频大小不得大于30M");
-					wd.close();
-					mui.toast("视频大小不得大于30M");
-					callBack({
-						flag: 0,
-						message: "视频大小不得大于30M"
-					});
-					return false;
-				}
 				//获取APP的_documents文件夹对象
 				plus.io.resolveLocalFileSystemURL("_documents/", function(parentEntry) {
 					var myDate = new Date();
@@ -56,6 +45,17 @@ var Gallery = (function(mod) {
 						mVideo.ondurationchange = function() {
 							console.log("视频时长 " + mVideo.duration);
 							if(mVideo.duration < (mod.pickVideoTime + 1)) {
+								console.log("视频文件大小 " + metadata.size);
+								if(metadata.size > (30 * 1024 * 1024)) {
+									console.log("视频大小不得大于30M");
+									wd.close();
+									mui.toast("视频大小不得大于30M");
+									callBack({
+										flag: 0,
+										message: "视频大小不得大于30M"
+									});
+									return false;
+								}
 								var path = entrySuccesCB.fullPath;
 								if(plus.os.name == "iOS") {
 									path = "file://" + path;
@@ -99,6 +99,7 @@ var Gallery = (function(mod) {
 							});
 						}
 						mVideo.src = entrySuccesCB.fullPath;
+						console.log("mVideo.src " + mVideo.src);
 					}, function(entryErrorCB) {
 						console.log("拷贝视频失败 " + JSON.stringify(entryErrorCB));
 						wd.close();
