@@ -113,6 +113,7 @@
 			});
 
 			events.addTap('take_camero', function() {
+				document.activeElement.blur();
 				var item = this;
 //				jQuery(item).css('pointerEvents', 'none');
 				console.log("item不能点击了！" + item.id);
@@ -175,7 +176,7 @@
 		function uploadFile(path) {
 			load.getManageOptions(2, path, function(mData, thumb) {
 				console.log("视频获取的各项参数：" + JSON.stringify(data));
-				mData.saveSpace = storageKeyName.CLASSSPACE;
+				mData.saveSpace = storageKeyName.PERSONALSPACE;
 				mData.spaceId = 6;
 				var data = CloudFileUtil.getSingleImgUploadOptions(path, mData.spaceId, mData.spaceType, mData.saveSpace, mData.options);
 				CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
