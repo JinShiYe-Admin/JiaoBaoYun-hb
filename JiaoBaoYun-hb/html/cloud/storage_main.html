@@ -381,6 +381,7 @@
 			});
 
 			mui.plusReady(function() {
+				//events.closeWaiting();
 				var wd = events.showWaiting();
 				events.preload('storage_upload_choose.html'); //预加载上传列表
 				initData();
@@ -666,8 +667,11 @@
 									});
 								}
 							} else if(type == 'html5-video') {
+								var thumbPath = document.getElementById("fthumb_" + ids[1]).src;
 								events.openNewWindowWithData('storage_show_video.html', {
-									fpath: mode.fpath //视频的七牛路径
+									type: 0, //需要获取token
+									path: mode.fpath, //视频的七牛路径
+									thumbPath: thumbPath //缩略图
 								});
 							}
 						}
@@ -792,7 +796,7 @@
 					if(type != '') {
 						html_1 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
 					} else {
-						html_1 = '<img class="mui-media-object mui-pull-left" src="' + path + '">';
+						html_1 = '<img id="fthumb_' + data.fid + '" class="mui-media-object mui-pull-left" src="' + path + '">';
 					}
 					var html_2 = '<div class="mui-media-body">\
 									<div id="fname_' + data.fid + '" class="mui-ellipsis-2">' + data.fname + data.ftype + '</div>\
@@ -851,10 +855,12 @@
 						}, 400);
 
 						document.getElementById("pid_" + pid).style.display = 'inline';
-						//从屏幕右边移进新界面
-						mui('#scroll_' + pid + ' ul').each(function(index, element) {
-							element.className = 'mui-table-view move-in-right';
-						});
+						if(pid != 0) {
+							//从屏幕右边移进新界面
+							mui('#scroll_' + pid + ' ul').each(function(index, element) {
+								element.className = 'mui-table-view move-in-right';
+							});
+						}
 						showPid = pid;
 						//增加文件夹历史
 						var pData2 = {

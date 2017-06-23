@@ -19,31 +19,21 @@
 				box-shadow: none;
 			}
 
-			#play {
-				display: none;
-				width: 50px;
-				height: 50px;
-				background-color: white;
-				border-radius: 50%;
-				text-align: center;
-				position: absolute;
-			}
-
-			#thumb {
-				/*缩略图*/
-				width: 100%;
-				display: none;
-				visibility: hidden;
-			}
-
-			#play .mui-icon {
-				line-height: 50px;
-			}
-
 			#video {
-				display: none;
-				position: absolute;
 				width: 100%;
+				background-color: black;
+				background-position: 0% 50%;
+				background-repeat: no-repeat;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+			}
+
+			.mui-content {
+				display: flex;
+				justify-content: center;
+				align-items: center;
 			}
 		</style>
 	</head>
@@ -53,10 +43,8 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">视频播放</h1>
 		</header>
-		<div class="mui-content">
-			<div id="play"></div>
-			<img id="thumb" />
-			<video id="video" src="" width="100%" height="" controls="controls">
+		<div class="mui-content mui-fullscreen">
+			<video id="video" controls="controls" poster="null">
 				您的浏览器不支持 video 标签。
 			</video>
 		</div>
@@ -69,81 +57,27 @@
 		<script type="text/javascript" src="../../js/utils/playutil.js"></script>
 		<script type="text/javascript">
 			mui.init();
-
-			//缩略图
-			var thumb = document.getElementById("thumb");
-			//播放按钮
-			var play = document.getElementById("play");
 			//播放器
 			var video = document.getElementById("video");
-			//检测安卓是否支持video
-			var check = true;
+
+			video.style.height = parseInt(video.offsetWidth * 3 / 4) + "px";
 
 			var token = ''; //token
 			mui.plusReady(function() {
 				var waiting = events.showWaiting();
-				//检测安卓手机是否支持video
-				if(plus.os.name == 'Android') {
-					check = false;
-					//					check = playutil.checkVideo();
-					//					console.log('checkVideo ' + check);
-					//					//注意事项，Android上使用video标签播放视频时，务必打开硬件加速，否则只有声音没有画面。
-					//					//因为在Android5的部分rom上是默认关闭硬件加速的，此时需强制打开硬件加速。创建webview时style里有个hardwareAccelerated参数，设置为true。
-					//					if(!plus.webview.defaultHardwareAccelerated()) {
-					//						var webview = plus.webview.currentWebview(); //获取当前窗体对象
-					//						webview.style.hardwareAccelerated = true; //安卓必须开启硬件加速
-					//					}
-				}
-				var screenOption = {
-					height: plus.screen.resolutionHeight - plus.navigator.getStatusbarHeight(), //屏幕高度-状态栏高度
-					width: plus.screen.resolutionWidth //屏幕宽度
-				};
-				var main = plus.webview.currentWebview(); //获取当前窗体对象
-				console.log(main.id + ' ' + JSON.stringify(main.data));
-
+				var main = plus.webview.currentWebview();
+				console.log(main.id + " " + JSON.stringify(main.data));
 				//设置缩略图
-				var pathList = main.data.fpath.split('/');
-				var pathList2 = pathList[pathList.length - 1].split('.');
-				var fileName = pathList2[0];
-				var thumbPath = window.storageKeyName.QNPB + 'yuncunc/' + window.storageKeyName.CLOUDSTORAGETHUMB + fileName + '.png'
-				console.log('thumbPath ' + thumbPath);
-
-				play.style.left = (screenOption.width - 50) / 2 + 'px';
-				play.style.marginTop = (screenOption.height - 95) / 2 + 'px';
-
-				video.poster = thumbPath;
-				video.style.height = screenOption.width * 3 / 4 + 'px';
-				video.style.marginTop = (screenOption.height - 45 - (screenOption.width * 3 / 4)) / 2 + 'px';
-
-				//获得凭证
-				getAllToken(main.data.fpath, waiting);
-
-				if(plus.os.name == 'Android' && !check) {
-					thumb.src = thumbPath;
-					thumb.style.display = 'inline';
-					thumb.onload = function() {
-						thumb.style.marginTop = (screenOption.height * 1 - 45 - this.offsetHeight) / 2 + 'px';
-						thumb.style.visibility = 'visible';
-					}
-					thumb.onerror = function() {
-						thumb.style.marginTop = (screenOption.height * 1 - 45 - this.offsetHeight) / 2 + 'px';
-						thumb.style.visibility = 'visible';
-					}
+				video.style.backgroundImage = "url(" + main.data.thumbPath + ")";
+				video.onplaying = function() {
+					video.style.backgroundImage = "";
 				}
-
-				//点击播放视频
-				document.getElementById('play').addEventListener('tap', function() {
-					console.log('playVideo ' + thumb.offsetWidth + ' ' + thumb.offsetHeight);
-					if(token != '') {
-						if(plus.os.name == 'Android') {
-							playutil.playVideoAndroid(token); //播放视频
-						} else {
-							console.log('### ERROR ### ' + plus.os.name);
-						}
-					} else {
-						console.log('获取凭证失败');
-					}
-				});
+				if(main.data.type == 0) {
+					//获得凭证
+					getAllToken(main.data.path, waiting);
+				} else {
+					video.src = main.data.path;
+				}
 			});
 
 			/**
@@ -159,21 +93,9 @@
 					console.log('七牛下载token ' + JSON.stringify(data));
 					token = data.Data[0].Value;
 					console.log('token ' + token);
-
 					video.src = token;
-					if(plus.os.name == 'Android' && !check) {
-						play.style.display = 'inline';
-						play.innerHTML = '<span class="mui-icon mui-icon-arrowright"></span>'
-					} else {
-						video.style.display = 'inline';
-					}
-
 					wd.close();
 				}, function(xhr, type, errorThrown) {
-					if(plus.os.name == 'Android' && !check) {
-						play.style.display = 'inline';
-						play.innerHTML = '<span class="mui-icon mui-icon-closeempty"></span>'
-					}
 					wd.close();
 					mui.toast('获取文件失败 ' + type);
 				});

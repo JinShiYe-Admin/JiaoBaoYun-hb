@@ -36,6 +36,7 @@ var filter = new Vue({
 					filter.isShow = false;
 					return;
 				}
+				Gallery.pickVideoTime = 60;
 				Gallery.pickVideo(function(videoInfo) {
 					JSON.stringify("要传递的视频信息：" + JSON.stringify(videoInfo));
 					if(videoInfo.flag == 1) {

@@ -3,7 +3,7 @@
 	"id": "H56171390",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "教宝云",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "25.0.0.2017.0622_beta",/*应用版本名称*/
+		"name": "21.0.0.2017.0523_beta",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -1790,7 +1790,8 @@
 					"fonts/fangzheng.ttf",
 					"js/utils/cryption.js",
 					"js/utils/compress.js",
-					"js/utils/MultiMedia.js"
+					"js/utils/MultiMedia.js",
+					"js/utils/gallerypick.js"
 				],
 				"refer": [
 					"html/mine/qun_manage_info_change_post.html"
@@ -2031,7 +2032,8 @@
 					"html/register/login.html",
 					"html/cloud/order-member.html",
 					"html/micro-course/course-home.html",
-					"html/show/show-home1.html"
+					"html/show/show-home1.html",
+					"html/show/show-home2.html"
 				],
 				"priority": 0
 			},
@@ -5113,9 +5115,55 @@
 			"html/cloud/storage_show_video.html": {
 				"resources": [
 					"css/mui.min.css",
-					"css/utils/common.css"
+					"css/utils/common.css",
+					"js/utils/cryption.js",
+					"js/mui.min.js",
+					"js/storageKeyName.js",
+					"js/utils/CloudFileUtil.js",
+					"js/utils/events.js",
+					"js/qiniu/qiniu.js",
+					"js/utils/playutil.js"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"html/show/show-home2.html": {
+				"resources": [
+					"css/show/show-list.css",
+					"image/utils/video-loading.gif",
+					"js/libs/jquery.lazyload.min.js",
+					"js/show/show_listnew.js",
+					"image/utils/playvideo.png",
+					"js/show/showList.js",
+					"css/utils/fresh.css",
+					"js/libs/crypto-js/crypto-js.js",
+					"js/utils/vue.js",
+					"js/utils/events.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/mui.min.js",
+					"js/utils/signHmacSHA1.js",
+					"js/utils/postData.js",
+					"js/mui.pullToRefresh.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/storageKeyName.js",
+					"js/libs/crypto-js/require.js",
+					"css/utils/common.css",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"css/mui.min.css",
+					"js/libs/RSA/RSA.js",
+					"js/utils/RSAEncrypt.js",
+					"js/show/show-list.js",
+					"image/utils/loading.gif",
+					"fonts/fangzheng.ttf",
+					"image/show/show-default-small.png",
+					"image/show/show-default-large.png"
+				],
+				"refer": [
+					"html/register/login.html"
+				],
 				"priority": 0
 			}
 		},
