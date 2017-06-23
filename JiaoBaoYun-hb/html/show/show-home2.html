@@ -35,8 +35,8 @@
 		<!--	<div class="">-->
 		<!--slider控件-->
 		<div id="slider" class="mui-content mui-slider mui-fullscreen">
-			<div v-if="attendedList.length>0" class="mui-slider-group">
-				<div id="show-attened" class="mui-slider-item">
+			<div  class="mui-slider-group">
+				<div id="show-attended" class="mui-slider-item">
 					<div class="mui-scroll-wrapper">
 						<div class="mui-scroll">
 							<div class="show-list">
@@ -122,33 +122,55 @@
 				//show-all获取数据
 				show_listnew.getShowList(document.getElementById("show-all").showCity, document.getElementById("show-all").querySelector(".show-list"), show_listnew.setShowList)
 				//获取是否有关注的人，加载或删除关注模块
-//				getFocusedPerson(toggleAttendedPart);
+				getFocusedPerson();
 				//加载监听
 				show_listnew.setListListener();
-				showList.$watch("allList",function(newVal,oldVal){
+				showList.$watch("allList", function(newVal, oldVal) {
 					console.log("allList:我变了吗？？？");
-					console.log("allList:"+document.getElementById("show-all").innerHTML);
+					console.log("allList:" + document.getElementById("show-all").innerHTML);
 					showList.updateData();
 				})
-				showList.$watch("attededList",function(newVal,oldVal){
+				showList.$watch("attededList", function(newVal, oldVal) {
 					console.log("attendedList:我变了吗？？？");
 					showList.updateData();
+				})
+				showList.$watch("isAttended", function(newVal, oldVal) {
+					console.log("isAttended newVal:" + newVal + " oldVal:" + oldVal);
+					if(newVal) {
+						document.getElementById("header-indicator").style.display = "block";
+						showList.$nextTick(function() {
+							document.getElementById("show-attended").showCity = {
+								pageFlag: 0, //关注
+								acode: 1,
+								aname: '关注',
+								aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
+								pageIndex: 1,
+								totalPage: 0
+							}
+							initFresh(document.getElementById("show-attended"));
+							show_listnew.getShowList(document.getElementById("show-attended").showCity, document.getElementById("show-attended").querySelector(".show-list"), show_listnew.setShowList)
+							setTitle(11);
+						})
+
+					} else {
+						document.getElementById("header-indicator").style.display = "none";
+					}
 				})
 				//加载滑动监听
 				addSlider();
 				//加载关注的监听
 				window.addEventListener("focus", function() {
 					console.log("关注传过来的值！");
-					getFocusedPerson(toggleAttendedPart);
+					getFocusedPerson();
 				});
 				//加载用户登陆的监听
 				window.addEventListener("infoChanged", function() {
 					console.log("********展现监听infoChanged")
-					toggleAttendedPart(0);
+					//					toggleAttendedPart(0);
 					mui(document.getElementById("show-all").querySelector(".mui-scroll-wrapper")).scroll().scrollTo(0, 0);
 					document.getElementById("show-all").showCity.pageIndex = 1;
 					show_listnew.getShowList(document.getElementById("show-all").showCity, document.getElementById("show-all").querySelector(".show-list"), show_listnew.setShowList)
-					getFocusedPerson(toggleAttendedPart);
+					getFocusedPerson();
 				})
 			});
 			//滑动监听方法
@@ -243,15 +265,15 @@
 			 * 获取关注的人
 			 * @param {Object} callback 回调方法
 			 */
-			function getFocusedPerson(callback) {
+			function getFocusedPerson() {
 				if(!events.getUtid()) {
 					var showFocusedPersen = myStorage.getItem(storageKeyName.SHOWFOCUSEPERSEN);
 					if(showFocusedPersen && showFocusedPersen.length > 0) {
-						callback(true);
+						showList.isAttended = true;
 					} else {
-						callback(false);
+						showList.isAttended = false;
 					}
-					return;
+					return
 				}
 				var wd = events.showWaiting();
 				postDataPro_getFocusByUser({
@@ -260,9 +282,9 @@
 					wd.close();
 					console.log("获取关注的人列表" + JSON.stringify(data));
 					if(data.RspCode == 0 && data.RspData.Users.length > 0) {
-						callback(true);
+						showList.isAttended = true;
 					} else {
-						callback(false);
+						showList.isAttended = false;
 					}
 				})
 			}
@@ -270,35 +292,35 @@
 			 * 加载或删除关注模块的具体方法
 			 * @param {Object} type 0 删除关注 1 加载关注
 			 */
-//			function toggleAttendedPart(type) {
-//				console.log("加载关注部分：" + type);
-//				var sliderGroup = document.querySelector(".mui-slider-group");
-//				if(type) {
-//					if(!document.getElementById("show-attended")) {
-//						sliderGroup.insertBefore(createAttendedFragment(), document.querySelector("#show-all"));
-//						document.getElementById("show-attended").showCity = {
-//							pageFlag: 0, //关注
-//							acode: 1,
-//							aname: '关注',
-//							aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
-//							pageIndex: 1,
-//							totalPage: 0
-//						}
-//						initFresh(document.getElementById("show-attended"));
-//						show_listnew.getShowList(document.getElementById("show-attended").showCity, document.getElementById("show-attended").querySelector(".show-list"), show_listnew.setShowList)
-//						setTitle(11);
-//					}
-//				} else {
-//					if(document.getElementById("show-attended")) {
-//
-//						sliderGroup.removeChild(document.getElementById("show-attended"));
-//					}
-//					var slider = mui('#slider').slider();
-//					//跳转到第一个模块
-//					slider.gotoItem(0);
-//					setTitle(0);
-//				}
-//			}
+			//			function toggleAttendedPart(type) {
+			//				console.log("加载关注部分：" + type);
+			//				var sliderGroup = document.querySelector(".mui-slider-group");
+			//				if(type) {
+			//					if(!document.getElementById("show-attended")) {
+			//						sliderGroup.insertBefore(createAttendedFragment(), document.querySelector("#show-all"));
+			//						document.getElementById("show-attended").showCity = {
+			//							pageFlag: 0, //关注
+			//							acode: 1,
+			//							aname: '关注',
+			//							aflag: 1, //0为根据省市编码获取数据，1为获取关注的人的列表
+			//							pageIndex: 1,
+			//							totalPage: 0
+			//						}
+			//						initFresh(document.getElementById("show-attended"));
+			//						show_listnew.getShowList(document.getElementById("show-attended").showCity, document.getElementById("show-attended").querySelector(".show-list"), show_listnew.setShowList)
+			//						setTitle(11);
+			//					}
+			//				} else {
+			//					if(document.getElementById("show-attended")) {
+			//
+			//						sliderGroup.removeChild(document.getElementById("show-attended"));
+			//					}
+			//					var slider = mui('#slider').slider();
+			//					//跳转到第一个模块
+			//					slider.gotoItem(0);
+			//					setTitle(0);
+			//				}
+			//			}
 		</script>
 	</body>
 

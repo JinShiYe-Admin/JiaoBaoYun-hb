@@ -2736,7 +2736,8 @@
 			"image/show/show-default-large.png"
 		],
 		"refer": [
-			"html/register/login.html"
+			"html/register/login.html",
+			"html/quan/space-detail.html"
 		]
 	}
 }

@@ -17,7 +17,8 @@ var showList = new Vue({
 	el: "#slider",
 	data: {
 		attendedList: [],
-		allList: []
+		allList: [],
+		isAttended:false
 	},
 	methods: {
 		isVideo: function(item) {
