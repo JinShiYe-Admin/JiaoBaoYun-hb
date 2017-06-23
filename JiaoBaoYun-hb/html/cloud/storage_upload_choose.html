@@ -19,25 +19,25 @@
 			.mui-content {
 				background: white;
 			}
-
+			
 			nav {
 				background-color: #383E4E !important;
 			}
-
+			
 			.bar-tab-div {
 				margin: 5px;
 			}
-
+			
 			.bar-tab-div .mui-pull-left,
 			.bar-tab-div .mui-pull-right {
 				width: 45%;
 			}
-
+			
 			.bar-tab-div .mui-pull-left div:first-child {
 				color: white;
 				margin-left: 10%;
 			}
-
+			
 			.bar-tab-div .mui-pull-left button {
 				width: 100%;
 				margin-bottom: 15px;
@@ -46,17 +46,17 @@
 				border-color: #7F8594;
 				height: 40px;
 			}
-
+			
 			.bar-tab-div .mui-pull-left button img {
 				width: 20%;
 				height: 20px;
 			}
-
+			
 			.bar-tab-div .mui-pull-left button div {
 				width: 80%;
 				text-align: center;
 			}
-
+			
 			.bar-tab-div .mui-pull-right button {
 				width: 100%;
 				margin-bottom: 15px;
@@ -65,30 +65,30 @@
 				border-color: #636770;
 				height: 40px;
 			}
-
+			
 			.mui-backdrop {
 				background-color: rgba(0, 0, 0, 0.03);
 			}
-
+			
 			.mui-popover-arrow {
 				display: none;
 			}
-
+			
 			.mui-popover {
 				width: 100%;
 			}
-
+			
 			.mui-popover.mui-active {
 				left: 0px !important;
 				height: 200px;
 			}
-
+			
 			.popover-background {
 				width: 100% !important;
 				background-color: wheat;
 				height: 100%;
 			}
-
+			
 			.mui-bar-tab~.mui-content {
 				padding-bottom: 81px;
 			}
@@ -124,7 +124,7 @@
 			</div>
 		</div>
 		<div id="filter" v-if="isShow" v-bind:style="filterContainer" v-on:tap="setIsShow(false)">
-			<img v-if="showType==1" v-bind:src="showPath" style="max-width: 100%; max-height: 100%; width: 100%;height: auto;"/>
+			<img v-if="showType==1" v-bind:src="showPath" style="max-width: 100%; max-height: 100%; width: 100%;height: auto;" />
 			<ul v-else class="mui-col-sm-4 mui-col-xs-4" style="align-self: center;-webkit-padding-start: 0px;">
 				<filter-item v-for="item of options" v-bind:option="item" v-if="cellIsShow(item)"></filter-item>
 			</ul>
@@ -183,7 +183,7 @@
 				fileList.$watch('filesArr', function(newVal, oldVal) {
 					console.log("newVal " + newVal.length);
 					console.log("oldVal " + oldVal.length);
-					if( newVal.length == 0) {
+					if(newVal.length == 0) {
 						console.log("没有文件");
 						changeUpBtnColorToDefault()
 					}
@@ -197,14 +197,14 @@
 				window.addEventListener("chose-files", function(e) {
 					console.log("chose-files事件：" + JSON.stringify(e.detail.data));
 					fileList.pushFilesArr(rechargeFileArr(e.detail.data));
-					mui(".mui-scroll-wrapper").scroll().scrollTo(0,0,100);
+					mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0, 100);
 				});
 				//添加文件
 				document.getElementById('addfiles').addEventListener('tap', function() {
 					console.log("添加文件");
 					filter.isShow = true;
 					filter.fileNo = fileList.filesArr.length;
-					filter.showType=0;
+					filter.showType = 0;
 				});
 
 				/**
@@ -256,17 +256,28 @@
 
 			function rechargeFileArr(fileArr) {
 				var reFiles = [];
+				var isLocalVideo=false;
 				if(fileArr.local) {
 					for(var j in fileArr.dataInfo) {
 						reFiles.push(fileArr.dataInfo[j].fullPath);
 					}
 					fileArr = reFiles;
 				}
-
+				if(fileArr.localVideo) {
+					isLocalVideo=true;
+					fileArr = [fileArr.video];
+				}
 				var reArr = [];
 				for(var i in fileArr) {
-					var fileInfo = cloud.getFileImgStyle(fileArr[i]);
-					fileInfo.fileName = events.getFileName(fileArr[i]);
+					var fileInfo; 
+					if(isLocalVideo) {
+						fileInfo= cloud.getFileImgStyle(fileArr[i].path);
+						fileInfo.fileName =fileArr[i].fileName;
+					}else{
+						fileInfo = cloud.getFileImgStyle(fileArr[i])
+						fileInfo.fileName = events.getFileName(fileArr[i]);
+					}
+					
 					reArr.push(fileInfo);
 				}
 				console.log("获取的数组：" + JSON.stringify(reArr));

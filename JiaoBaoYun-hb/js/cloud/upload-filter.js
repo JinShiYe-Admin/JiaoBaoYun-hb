@@ -41,7 +41,7 @@ var filter = new Vue({
 					JSON.stringify("要传递的视频信息：" + JSON.stringify(videoInfo));
 					if(videoInfo.flag == 1) {
 						videoInfo.wd.close();
-						filter.fireData([videoInfo.path]);
+						filter.fireData({localVideo:1,video:{path:videoInfo.path,fileName:videoInfo.rawName}});
 					}
 				})
 			},
