@@ -597,27 +597,23 @@
 					var btnArray = ['否', '是'];
 					mui.confirm('确认删除下载任务？', '提示', btnArray, function(e) {
 						if(e.index == 1) { //是
-							if(downloadList.value[ids[1]].state == 4) {
-								mui.toast("下载任务已经完成");
-							} else {
-								downloadList.value[ids[1]].state = -3;
-								var taskId = downloadList.value[ids[1]].taskId;
-								console.log("taskId " + taskId);
-								if(taskId) {
-									var task = taskArray.value[taskId];
-									console.log('task ' + JSON.stringify(task));
-									task.taskOB.abort();
-									taskArray.value[downloadList.value[ids[1]].taskId].taskId = null;
-									taskArray.value[downloadList.value[ids[1]].taskId].taskOB = null;
-								}
-								delete uploadList.value[ids[1]];
-								var liUp = document.getElementById("down_" + ids[1]);
-								liUp.parentNode.removeChild(liUp);
-								mui.toast("删除成功");
-								if(downloadingId == ids[1]) {
-									downloadingId = null;
-									startDownloadingNetType();
-								}
+							downloadList.value[ids[1]].state = -3;
+							var taskId = downloadList.value[ids[1]].taskId;
+							console.log("taskId " + taskId);
+							if(taskId) {
+								var task = taskArray.value[taskId];
+								console.log('task ' + JSON.stringify(task));
+								task.taskOB.pause();
+								task.taskOB.abort();
+								taskArray.value[downloadList.value[ids[1]].taskId].taskId = null;
+								taskArray.value[downloadList.value[ids[1]].taskId].taskOB = null;
+							}
+							var liUp = document.getElementById("down_" + ids[1]);
+							liUp.parentNode.removeChild(liUp);
+							mui.toast("删除成功");
+							if(downloadingId == ids[1]) {
+								downloadingId = null;
+								startDownloadingNetType();
 							}
 						}
 					}, 'div');
@@ -752,7 +748,7 @@
 						console.log('下载任务完成' + status + '|' + JSON.stringify(download));
 						if(status == 200) {
 							var localFilePath = download.filename;
-							var id = taskArray.value[download.__UUID__].downId;
+							var id = taskArray.value[download.id].downId;
 							var ulDown = document.getElementById("down_" + id);
 							if(ulDown) {
 								document.getElementById("down_btn_" + id).style.display = 'none';
@@ -779,7 +775,7 @@
 							downloadFail();
 						}
 					}, function(download, status) {
-						var id = taskArray.value[download.__UUID__].downId;
+						var id = taskArray.value[download.id].downId;
 						switch(download.state) {
 							case 1: //下载任务开始请求
 								console.log('下载任务开始请求:|id:' + id + '|downloadState:' + download.state);
@@ -825,17 +821,20 @@
 						}
 					}, function(dtask) {
 						//下载任务创建成功的回调
-						taskArray.key[taskArray.key.length] = dtask.__UUID__;
-						taskArray.value[dtask.__UUID__] = {
+						console.log("dtask "+JSON.stringify(dtask));
+						taskArray.key[taskArray.key.length] = dtask.id;
+						taskArray.value[dtask.id] = {
 							downId: downloadingId, //下载任务id
 							taskOB: dtask //下载任务对象
 						};
-						downloadList.value[downloadingId].state = 1; //已经创建任务
-						downloadList.value[downloadingId].taskId = dtask.__UUID__;
-						dtask.start();
-						var waiting = document.getElementById("down_waiting_" + downloadingId);
-						if(waiting) {
-							waiting.innerText = '开始下载';
+						downloadList.value[downloadingId].taskId = dtask.id;
+						if(downloadList.value[downloadingId].state != -3) {
+							downloadList.value[downloadingId].state = 1; //已经创建任务
+							dtask.start();
+							var waiting = document.getElementById("down_waiting_" + downloadingId);
+							if(waiting) {
+								waiting.innerText = '开始下载';
+							}
 						}
 					});
 				}, function(xhr, type, errorThrown) {
@@ -1017,11 +1016,13 @@
 									break;
 							}
 						}, function(task) {
+							console.log("task "+JSON.stringify(task));
 							taskArray.key[taskArray.key.length] = task.__UUID__;
 							taskArray.value[task.__UUID__] = {
 								upId: uploadingId, //上传任务id
 								taskOB: task //上传任务对象
 							};
+							uploadList.value[uploadingId].state = 1;
 							task.start();
 						});
 					}
