@@ -60,17 +60,22 @@
 			//播放器
 			var video = document.getElementById("video");
 
-			video.style.height = parseInt(video.offsetWidth * 3 / 4) + "px";
-
 			var token = ''; //token
 			mui.plusReady(function() {
 				var waiting = events.showWaiting();
+				video.style.height = parseInt(video.offsetWidth * 3 / 4) + "px";
 				var main = plus.webview.currentWebview();
 				console.log(main.id + " " + JSON.stringify(main.data));
 				//设置缩略图
-				video.style.backgroundImage = "url(" + main.data.thumbPath + ")";
+				if(main.data.thumbPath) {
+					video.style.backgroundImage = "url(" + main.data.thumbPath + ")";
+				}
 				video.onplaying = function() {
 					video.style.backgroundImage = "";
+				}
+				video.onerror = function() {
+					console.log("video.onerror");
+					mui.toast("视频播放失败");
 				}
 				if(main.data.type == 0) {
 					//获得凭证

@@ -269,6 +269,15 @@
 			.mui-backdrop {
 				background-color: rgba(255, 255, 255, 0.3);
 			}
+
+			.file-thumb{
+				background-position: 0% 50%;
+				background-repeat: no-repeat;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+			}
 		</style>
 	</head>
 
@@ -667,7 +676,7 @@
 									});
 								}
 							} else if(type == 'html5-video') {
-								var thumbPath = document.getElementById("fthumb_" + ids[1]).src;
+								var thumbPath = document.getElementById("fthumb_" + ids[1]).getAttribute("value");
 								events.openNewWindowWithData('storage_show_video.html', {
 									type: 0, //需要获取token
 									path: mode.fpath, //视频的七牛路径
@@ -796,7 +805,7 @@
 					if(type != '') {
 						html_1 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
 					} else {
-						html_1 = '<img id="fthumb_' + data.fid + '" class="mui-media-object mui-pull-left" src="' + path + '">';
+						html_1 = '<div id="fthumb_' + data.fid + '" class="mui-media-object mui-pull-left file-thumb" value="' + path + '" style="background-image:url('+path+');"></div>';
 					}
 					var html_2 = '<div class="mui-media-body">\
 									<div id="fname_' + data.fid + '" class="mui-ellipsis-2">' + data.fname + data.ftype + '</div>\
