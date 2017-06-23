@@ -167,6 +167,7 @@
 							show_listnew.getShowList(freshConatiner.showCity, ul, show_listnew.setShowList);
 							setTimeout(function() {
 								self.endPullDownToRefresh();
+								freshConatiner.querySelector(".mui-pull-loading").innerHTML = "上拉加载更多";
 							}, 1500);
 						}
 					},

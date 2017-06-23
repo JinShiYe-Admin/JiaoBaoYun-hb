@@ -398,14 +398,13 @@
 					getUpAndDownEntry(function() {
 						var myDate = new Date();
 						for(var i in subData.fileArray) {
-							var dateName = myDate.getTime() + (Math.floor(Math.random() * 10)) + '.';
-							var url = subData.fileArray[i].fpath + '?attname=' + dateName + subData.fileArray[i].fname + subData.fileArray[i].ftype;
+							var url = subData.fileArray[i].fpath + '?attname=' + subData.fileArray[i].fname + subData.fileArray[i].ftype;
 							var data = {
 								eleId: eleId, //元素的id
 								state: -1, //状态-1,未开始；-2,上传失败;
 								fileUrl: url, //文件下载地址
 								fname: subData.fileArray[i].fname + subData.fileArray[i].ftype, //云端的文件名
-								localname: dateName + subData.fileArray[i].fname + subData.fileArray[i].ftype, //本地的文件名
+								localname: subData.fileArray[i].fname + subData.fileArray[i].ftype, //本地的文件名
 								save: subData.save //是否保存到本地相册
 							}
 							downloadList.key[downloadList.key.length] = data.eleId;
@@ -598,27 +597,23 @@
 					var btnArray = ['否', '是'];
 					mui.confirm('确认删除下载任务？', '提示', btnArray, function(e) {
 						if(e.index == 1) { //是
-							if(downloadList.value[ids[1]].state == 4) {
-								mui.toast("下载任务已经完成");
-							} else {
-								downloadList.value[ids[1]].state = -3;
-								var taskId = downloadList.value[ids[1]].taskId;
-								console.log("taskId " + taskId);
-								if(taskId) {
-									var task = taskArray.value[taskId];
-									console.log('task ' + JSON.stringify(task));
-									task.taskOB.abort();
-									taskArray.value[downloadList.value[ids[1]].taskId].taskId = null;
-									taskArray.value[downloadList.value[ids[1]].taskId].taskOB = null;
-								}
-								delete uploadList.value[ids[1]];
-								var liUp = document.getElementById("down_" + ids[1]);
-								liUp.parentNode.removeChild(liUp);
-								mui.toast("删除成功");
-								if(downloadingId == ids[1]) {
-									downloadingId = null;
-									startDownloadingNetType();
-								}
+							downloadList.value[ids[1]].state = -3;
+							var taskId = downloadList.value[ids[1]].taskId;
+							console.log("taskId " + taskId);
+							if(taskId) {
+								var task = taskArray.value[taskId];
+								console.log('task ' + JSON.stringify(task));
+								task.taskOB.pause();
+								task.taskOB.abort();
+								taskArray.value[downloadList.value[ids[1]].taskId].taskId = null;
+								taskArray.value[downloadList.value[ids[1]].taskId].taskOB = null;
+							}
+							var liUp = document.getElementById("down_" + ids[1]);
+							liUp.parentNode.removeChild(liUp);
+							mui.toast("删除成功");
+							if(downloadingId == ids[1]) {
+								downloadingId = null;
+								startDownloadingNetType();
 							}
 						}
 					}, 'div');
@@ -752,19 +747,20 @@
 						//下载任务完成的监听
 						console.log('下载任务完成' + status + '|' + JSON.stringify(download));
 						if(status == 200) {
-							var id = taskArray.value[download.__UUID__].downId;
+							var localFilePath = download.filename;
+							var id = taskArray.value[download.id].downId;
 							var ulDown = document.getElementById("down_" + id);
 							if(ulDown) {
 								document.getElementById("down_btn_" + id).style.display = 'none';
 								ulDown.parentNode.removeChild(ulDown);
 							}
-							plus.io.resolveLocalFileSystemURL(fpath, function(succesCB) {
+							plus.io.resolveLocalFileSystemURL(localFilePath, function(succesCB) {
 								addUpedOrDownedMetadataItem(0, succesCB);
 							}, function(errorCB) {
 								console.log("请求上传或者下载文件系统失败: " + JSON.stringify(errorCB));
 							});
 							if(downloadList.value[id].save) {
-								plus.gallery.save(fpath, function(succesCB) {
+								plus.gallery.save(localFilePath, function(succesCB) {
 									console.log("保存文件到系统相册中成功: " + JSON.stringify(succesCB));
 								}, function(errorCB) {
 									mui.toast("保存" + fname + "到系统相册中失败" + JSON.stringify(errorCB));
@@ -779,7 +775,7 @@
 							downloadFail();
 						}
 					}, function(download, status) {
-						var id = taskArray.value[download.__UUID__].downId;
+						var id = taskArray.value[download.id].downId;
 						switch(download.state) {
 							case 1: //下载任务开始请求
 								console.log('下载任务开始请求:|id:' + id + '|downloadState:' + download.state);
@@ -825,17 +821,20 @@
 						}
 					}, function(dtask) {
 						//下载任务创建成功的回调
-						taskArray.key[taskArray.key.length] = dtask.__UUID__;
-						taskArray.value[dtask.__UUID__] = {
+						console.log("dtask "+JSON.stringify(dtask));
+						taskArray.key[taskArray.key.length] = dtask.id;
+						taskArray.value[dtask.id] = {
 							downId: downloadingId, //下载任务id
 							taskOB: dtask //下载任务对象
 						};
-						downloadList.value[downloadingId].state = 1; //已经创建任务
-						downloadList.value[downloadingId].taskId = dtask.__UUID__;
-						dtask.start();
-						var waiting = document.getElementById("down_waiting_" + downloadingId);
-						if(waiting) {
-							waiting.innerText = '开始下载';
+						downloadList.value[downloadingId].taskId = dtask.id;
+						if(downloadList.value[downloadingId].state != -3) {
+							downloadList.value[downloadingId].state = 1; //已经创建任务
+							dtask.start();
+							var waiting = document.getElementById("down_waiting_" + downloadingId);
+							if(waiting) {
+								waiting.innerText = '开始下载';
+							}
 						}
 					});
 				}, function(xhr, type, errorThrown) {
@@ -970,10 +969,8 @@
 									fpath: domain, //文件路径，文件路径,为文件用
 									fsize: upload.totalSize //文件大小，文件用
 								};
-								addFile(comData, fPath, fname, uploadingId);
 								uploadList.value[uploadingId].state = 4;
-								uploadingId = null;
-								startUploadingNetType();
+								addFile(comData, fPath, fname, uploadingId);
 							} else {
 								mui.toast('上传失败' + upload.responseText);
 								uploadFail();
@@ -1019,11 +1016,13 @@
 									break;
 							}
 						}, function(task) {
+							console.log("task "+JSON.stringify(task));
 							taskArray.key[taskArray.key.length] = task.__UUID__;
 							taskArray.value[task.__UUID__] = {
 								upId: uploadingId, //上传任务id
 								taskOB: task //上传任务对象
 							};
+							uploadList.value[uploadingId].state = 1;
 							task.start();
 						});
 					}
@@ -1223,11 +1222,14 @@
 						if(ulUp) {
 							ulUp.parentNode.removeChild(ulUp);
 						}
-						copyFileToUpload(filePath, fname);
+						copyFileToUpload(filePath, fname, function() {
+							uploadingId = null;
+							startUploadingNetType();
+						});
 					} else {
 						document.getElementById("up_waiting_" + id).innerText = '上传失败';
 						uploadList.value[id].state = -2;
-						mui.toast('上传失败 ' + ' ' + data.RspTxt + ' ' + fname);
+						mui.toast('上传失败' + data.RspTxt + fname);
 						var batchDelete = {
 							appId: 4, //int 必填 项目id
 							urls: [comData.fpath] //array 必填 需要获取下载token文件的路径
@@ -1246,6 +1248,8 @@
 								console.log('七牛删除失败:' + JSON.stringify(type));
 							}
 						);
+						uploadingId = null;
+						startUploadingNetType();
 					}
 				});
 			}
@@ -1334,16 +1338,13 @@
 			 * @param {Object} element 文件系统对象
 			 */
 			function addUpedOrDownedMetadataItem(type, element) {
-				var fNameList = element.name.split('.');
-				var fname1 = fNameList[0] + '.';
-				var fname = element.name.replace(fname1, '');
 				//获取文件属性
 				element.getMetadata(function(succesCB2) {
-					//console.log("获取上传或下载记录文件属性成功:" + JSON.stringify(succesCB2));
+					//console.log("获取上传或下载记录 " + type + " " + JSON.stringify(succesCB2));
 					if(type == 1) { //增加一项已上传记录
-						addUploadedItem(element.toLocalURL(), fname, succesCB2.size, dateToStr(succesCB2.modificationTime));
+						addUploadedItem(element.toLocalURL(), element.name, succesCB2.size, dateToStr(succesCB2.modificationTime));
 					} else { //增加一项已下载记录
-						addDownloadedItem(element.toLocalURL(), fname, succesCB2.size, dateToStr(succesCB2.modificationTime));
+						addDownloadedItem(element.toLocalURL(), element.name, succesCB2.size, dateToStr(succesCB2.modificationTime));
 					}
 				}, function(errorCB2) {
 					console.log("获取上传或下载记录文件属性失败:" + JSON.stringify(errorCB2));
@@ -1390,34 +1391,104 @@
 			 * @param {Object} filePath 文件路径
 			 * @param {Object} fname 文件名
 			 */
-			function copyFileToUpload(filePath, fname) {
+			function copyFileToUpload(filePath, fname, callBack) {
 				console.log("copyFileToUpload:" + filePath + '|' + fname);
 				plus.io.resolveLocalFileSystemURL(filePath, function(succesCB) {
 					console.log("拷贝:请求被文件的文件系统成功: " + JSON.stringify(succesCB.name));
-					//拷贝
-					var myDate = new Date();
-					var dateName = myDate.getTime() + (Math.floor(Math.random() * 10)) + '.';
-					succesCB.copyTo(upFolderEntry, dateName + fname, function(succesCB2) {
-						console.log("拷贝:成功:" + JSON.stringify(succesCB2.name));
-						//获取文件属性
-						succesCB2.getMetadata(function(succesCB3) {
-							console.log("拷贝:获取文件属性成功:" + JSON.stringify(succesCB3));
-							//增加一项已上传记录
-							addUploadedItem(succesCB2.toLocalURL(), fname, succesCB3.size, dateToStr(succesCB3.modificationTime));
-						}, function(errorCB3) {
-							console.log("拷贝:获取文件属性失败:" + JSON.stringify(errorCB3));
-							//增加一项已上传记录
-							addUploadedItem(succesCB2.toLocalURL(), fname);
+					var upReader = upFolderEntry.createReader();
+					upReader.readEntries(function(allEntry) {
+						//设置本地文件名字
+						var num = 0;
+						fname = fname.toString();
+						var allFileName = {
+							key: [],
+							value: {}
+						}
+						console.log("allEntry " + allEntry.length);
+						for(var i in allEntry) {
+							//console.log("upReader " + i + " " + allEntry[i].isFile + " " + allEntry[i].fullPath);
+							if(allEntry[i].isFile) {
+								if(allEntry[i].name == fname) {
+									//有重名
+									num++;
+								} else {
+									allFileName.key[allFileName.key.length] = allEntry[i].name;
+									allFileName.value[allEntry[i].name] = allEntry[i].name;
+								}
+							}
+						}
+						var copyName = "";
+						checkUploadFileName(allFileName, fname, num, function(copyName) {
+							console.log("拷贝 copyName " + copyName);
+							succesCB.copyTo(upFolderEntry, copyName, function(succesCB2) {
+								console.log("拷贝成功 " + JSON.stringify(succesCB2.name));
+								//获取文件属性
+								succesCB2.getMetadata(function(succesCB3) {
+									console.log("获取拷贝后文件属性成功:" + JSON.stringify(succesCB3));
+									//增加一项已上传记录
+									addUploadedItem(succesCB2.toLocalURL(), copyName, succesCB3.size, dateToStr(succesCB3.modificationTime));
+								}, function(errorCB3) {
+									console.log("拷贝:获取文件属性失败:" + JSON.stringify(errorCB3));
+									//增加一项已上传记录
+									addUploadedItem(succesCB2.toLocalURL(), copyName);
+								});
+								callBack();
+							}, function(errorCB2) {
+								console.log("拷贝失败:" + JSON.stringify(errorCB2));
+								mui.toast('增加上传记录失败 ' + errorCB2.message);
+								callBack();
+							});
 						});
-					}, function(errorCB2) {
-						mui.toast('增加上传记录失败 ' + errorCB2.message);
-						console.log("拷贝:失败:" + JSON.stringify(errorCB2));
+					}, function(allEntryErrorCB) {
+						console.log("读取上传文件夹失败 " + JSON.stringify(allEntryErrorCB));
+						mui.toast('增加上传记录失败 ' + allEntryErrorCB.message);
+						callBack();
 					});
 				}, function(errorCB) {
 					//请求失败的的回调
 					mui.toast('增加上传记录失败 ' + errorCB.message);
 					console.log("请求被拷贝文件的文件系统失败: " + JSON.stringify(errorCB));
+					callBack();
 				});
+			}
+
+			/**
+			 * 检查上传文件记录是否有重名
+			 */
+			function checkUploadFileName(allFileName, fname, num, callBack) {
+				if(num == 0) {
+					callBack(fname);
+				} else {
+					console.log("checkUploadFileName " + allFileName.key.length + " " + fname + " " + num);
+					var check = true;
+					var checkName = fname;
+					var names = fname.split('.');
+					if(names.length == 1) {
+						checkName = fname + "(" + num + ")";
+					} else {
+						var name = '';
+						for(var j in names) {
+							if(j == 0) {
+								name = names[j];
+							} else {
+								if(j == names.length - 1) {
+									name = name + "(" + (num * 1 + 1) + ")." + names[j];
+								} else {
+									name = name + "." + names[j];
+								}
+							}
+						}
+						checkName = name;
+					}
+					console.log("checkName " + checkName);
+					var value = allFileName.value[checkName];
+					if(value == undefined) {
+						console.log("returnCheckName " + checkName);
+						callBack(checkName);
+					} else {
+						checkUploadFileName(allFileName, fname, num + 1, callBack);
+					}
+				}
 			}
 
 			/**

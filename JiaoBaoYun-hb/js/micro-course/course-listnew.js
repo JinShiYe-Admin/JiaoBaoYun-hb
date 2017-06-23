@@ -125,7 +125,7 @@ var course_listnew = (function(mod) {
 						model.courseArray = model.courseArray.concat(data.RspData.Data);
 					}
 					if(mui(".mui-table-view-cell").length < 10) {
-						mui(".mui-pull-loading")[0].innerHTML = "";
+//						mui(".mui-pull-loading")[0].innerHTML = "";
 					}
 					callback(model.pageIndex, data.RspData.Data, listContainer);
 				} else {
