@@ -404,7 +404,7 @@
 								state: -1, //状态-1,未开始；-2,上传失败;
 								fileUrl: url, //文件下载地址
 								fname: subData.fileArray[i].fname + subData.fileArray[i].ftype, //云端的文件名
-								localname: dateName + subData.fileArray[i].fname + subData.fileArray[i].ftype, //本地的文件名
+								localname: subData.fileArray[i].fname + subData.fileArray[i].ftype, //本地的文件名
 								save: subData.save //是否保存到本地相册
 							}
 							downloadList.key[downloadList.key.length] = data.eleId;
