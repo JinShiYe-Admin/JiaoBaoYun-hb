@@ -148,6 +148,15 @@
 				font-weight: 500;
 				color: #B7B7B7;
 			}
+
+			.video-time {
+				/*视频时间*/
+				position: absolute;
+				color: white;
+				right: 52%;
+				visibility: hidden;
+				bottom: 15px;
+			}
 		</style>
 	</head>
 
@@ -429,6 +438,7 @@
 										encType: '3', //附件类型,1图片2音视频3仅文字
 										encAddr: '', //附件地址
 										encImg: '', //附件缩略图地址
+										encLen: 0 //音视频时长
 									}, wd, function() {
 										if(multiMedia.data.PictureArray.length != 0 || multiMedia.data.VideoArray.length != 0) { //有文件
 											uploadFile(wd, strParent, strUser); //上传文件
@@ -437,6 +447,7 @@
 												encType: '3', //附件类型,1图片2音视频3仅文字
 												encAddr: '', //附件地址
 												encImg: '', //附件缩略图地址
+												encLen: 0 //音视频时长
 											}, wd, function() {
 												finishCommit(wd);
 											});
@@ -453,6 +464,7 @@
 											encType: '3', //附件类型,1图片2音视频3仅文字
 											encAddr: '', //附件地址
 											encImg: '', //附件缩略图地址
+											encLen: 0 //音视频时长
 										}, wd, function() {
 											finishCommit(wd);
 										});
@@ -524,6 +536,7 @@
 				var encType = data.encType; //附件类型,1图片2音视频3仅文字
 				var encAddr = data.encAddr; //附件地址
 				var encImg = data.encImg; //附件缩略图地址
+				var encLen = data.encLen; //音视频时长
 				if(noteType == 1) { //点到
 					checkType = call_type;
 					msgContent = document.getElementById("input_call").value;
@@ -548,7 +561,7 @@
 					parentIds: parentIds, //家长列表
 					className: mainData.gname, //班级名称
 					userIds: userIds, //推送用户ID
-					encLen: 0 //音视频时长
+					encLen: encLen //音视频时长
 				};
 				//console.log('新增记事发送的数据:' + JSON.stringify(comData));
 				// 等待的对话框
@@ -655,6 +668,7 @@
 				} else if(data.EncType == 2) { //视频
 					var play_width = 55;
 					var html_0 = '<div class="record-video">\
+								<div id="video_time_' + data.TabId + '" class="video-time">' + data.EncLen + '\'\'</div>\
 								<img id="video_play_' + data.TabId + '" style="width:' + play_width + 'px;height:' + play_width + 'px;" class="video-play" onload="videoThumbLoad(this);" src="../../image/utils/playvideo.png" />\
 								<img id="video_thumb_' + data.TabId + '" class="video-thumb" src="' + data.EncImgAddr + '" onload="videoThumbLoad(this);" onerror="videoThumbError(this);">\
 							</div>';
@@ -882,6 +896,7 @@
 									console.log('所有上传都成功');
 									var encAddr = []; //附件地址
 									var encImg = []; //附件缩略图地址
+									var encLen = 0; //音视频时长
 									var type;
 									if(multiMedia.data.PictureArray.length !== 0) { //图片
 										for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
@@ -895,6 +910,7 @@
 											encImg.push(multiMedia.data.VideoArray[j].thumb);
 										}
 										type = '2';
+										encLen = multiMedia.data.VideoArray[0].duration;
 									}
 									var encAddrStr = encAddr.join('|');
 									var encImgrStr = encImg.join('|');
@@ -903,6 +919,7 @@
 										encType: type, //附件类型,1图片2音视频3仅文字
 										encAddr: encAddrStr, //附件地址
 										encImg: encImgrStr, //附件缩略图地址
+										encLen: encLen //音视频时长
 									}, waiting, function() {
 										finishCommit(waiting);
 									}); //增加记事
@@ -982,7 +999,7 @@
 					img_a = document.getElementById("video_play_" + ids[2]);
 				}
 				if(img.getAttribute('data-load') && img_a.getAttribute('data-load')) {
-					ShowVideoUtil.videoThumbLoad(document.getElementById("video_thumb_" + ids[2]), document.getElementById("video_play_" + ids[2]));
+					ShowVideoUtil.videoThumbLoad(document.getElementById("video_thumb_" + ids[2]), document.getElementById("video_play_" + ids[2]), 0, document.getElementById("video_time_" + ids[2]));
 				}
 			}
 

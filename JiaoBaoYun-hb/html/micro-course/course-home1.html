@@ -163,13 +163,14 @@
 					down: {
 						callback: function() {
 							var self = this;
+							var ul = self.element.querySelector('.mui-table-view');
+							freshConatiner.info.freshFlag = 0;
+							freshConatiner.info.pageIndex = 1;
+							console.log("获取的fresh:" + JSON.stringify(freshConatiner.info));
+							course_listnew.getData(freshConatiner.info.type, freshConatiner.info, ul, course_listnew.setData);
 							setTimeout(function() {
-								var ul = self.element.querySelector('.mui-table-view');
-								freshConatiner.info.freshFlag = 0;
-								freshConatiner.info.pageIndex = 1;
-								console.log("获取的fresh:" + JSON.stringify(freshConatiner.info));
-								course_listnew.getData(freshConatiner.info.type, freshConatiner.info, ul, course_listnew.setData);
 								self.endPullDownToRefresh();
+								freshConatiner.querySelector(".mui-pull-loading").innerHTML = "上拉显示更多";
 							}, 1000);
 						}
 					},

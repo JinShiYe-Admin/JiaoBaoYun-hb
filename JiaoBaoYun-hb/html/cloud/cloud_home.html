@@ -1494,11 +1494,11 @@
 				var btnArray = ['取消', '确定'];
 				if(plus.os.name == 'iOS') {
 					plus.nativeUI.prompt(" ", function(e) {
-						rename(e);
+						rename(e, dataInfo);
 					}, "重命名", "档案名称,最多10个字", btnArray);
 				} else {
 					mui.prompt('', '档案名称,最多10个字', '重命名', btnArray, function(e) {
-						rename(e);
+						rename(e, dataInfo);
 					}, 'div');
 					var input = document.querySelector('.mui-popup-input input');
 					input.type = 'text';
@@ -1508,7 +1508,7 @@
 			}
 
 			//重命名文件夹，弹出框的单机加载
-			function rename(e) {
+			function rename(e, dataInfo) {
 				if(e.index == 1) { //点击确定
 					//console.log(e.value);
 					if(e.value.replace(/(^\s*)|(\s*$)/g, "") == "") {

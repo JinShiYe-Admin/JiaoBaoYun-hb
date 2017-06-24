@@ -252,6 +252,7 @@ var MultiMedia = (function($, mod) {
 								self.data.VideoNum--;
 								console.log('录制视频成功 ' + fpath);
 								self.addVideos(fpath, function() {
+									console.log("录像 callback");
 									wd.close();
 								});
 							}
@@ -265,9 +266,9 @@ var MultiMedia = (function($, mod) {
 							if(data.flag == 1) {
 								self.data.VideoNum--;
 								self.addVideos(data.path, function() {
-									console.log("拷贝成功 003");
+									console.log("从相册选择 callback");
 									data.wd.close();
-								}, data.video);
+								});
 							}
 						});
 						break;
@@ -558,69 +559,66 @@ var MultiMedia = (function($, mod) {
 	 * 显示录制的视频
 	 * @param {Object} path 视频路径
 	 */
-	proto.addVideos = function(path, callback, iosVideo) {
+	proto.addVideos = function(path, callback) {
 		var self = this;
 		//生成缩略图
-		if(plus.os.name == "iOS") {
-			console.log("addVideos " + path);
-			var video = document.createElement("video");
-			self.addVideosThumb(video, path, callback);
-			video.src = path;
-		} else {
-			console.log("addVideos " + path);
-			var video = document.createElement("video");
-			video.oncanplaythrough = function() {
-				self.addVideosThumb(video, path, callback);
-			}
-			video.src = path;
-		}
+		console.log("addVideos " + path);
+		self.addVideosThumb(path, callback);
 	}
 	/**
 	 * 生成缩略图
-	 * @param {Object} video 视频对象
 	 * @param {Object} path 视频路径
 	 */
-	proto.addVideosThumb = function(video, path, callback) {
+	proto.addVideosThumb = function(path, callback) {
 		var self = this;
-		var width = self.data.VideoWith;
-		var marginLeft = self.data.VideoMarginLeft;
-		var pathArray = path.split('/');
-		var canvas = document.createElement('canvas');
-		canvas.width = video.videoWidth;
-		canvas.height = video.videoHeight;
-		canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-		var thumb = canvas.toDataURL("image/png");
-		console.log("video " + video.videoWidth + " " + video.videoWidth);
-		console.log("canvas " + canvas.width + " " + canvas.height);
-		//增加视频
-		var videos = {
-			id: pathArray[pathArray.length - 1], //视频Id
-			path: path, //视频路径
-			localthumb: thumb, //视频本地的缩略图地址
-			domain: '', //视频地址
-			thumb: '', //视频缩略图地址
-			width: canvas.width, //视频缩略图宽
-			height: canvas.height, //视频缩略图高
-			duration: parseInt(video.duration) //视频时长
-		};
-		self.data.VideoArray.push(videos);
-		//显示视频
-		var element = document.createElement('div');
-		element.className = 'multimedia-picture-area';
-		//删除按钮
-		var html_0 = '<a id="MultiMedia_Video_Delete_' + videos.id + '" class="mui-icon iconfont icon-guanbi multimedia-picture-delete" style="margin-left: ' + parseInt(width + marginLeft / 2) + 'px;margin-top:' + parseInt(marginLeft / 2) + 'px;"></a>'
-		//显示视频缩略图的区域
-		var html_1 = '<div class="multimedia-picture" style="width: ' + width + 'px; height: ' + width + 'px; margin-left: ' + marginLeft + 'px; margin-top: ' + marginLeft + 'px;">'
-		//播放按钮
-		var html_2 = '<img id="MultiMedia_Video_Play_' + videos.id + '" class="multimedia-video-play" src="../../image/utils/playvideo.png" style="width: ' + 30 + 'px; height: ' + 30 + 'px;left: ' + parseInt((width - 30) / 2) + 'px;top: ' + parseInt((width - 30) / 2) + 'px; "/>';
-		//视频缩略图
-		var html_3 = '<img src="../../image/utils/videothumb.png" style="width:100%;visibility: hidden;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + width + 'px\';this.style.width=\'initial\';this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + width + ')/2)+\'px\';}this.style.visibility=\'visible\';" />';
-		var html_4 = '</div>'
-		element.innerHTML = html_0 + html_1 + html_2 + html_3 + html_4;
-		document.getElementById("MultiMedia_Video_Footer").appendChild(element);
-		self.changeFooterHeight(1, self.data.VideoArray.length);
-		self.videoChangeCallBack();
-		callback();
+		var video = document.createElement("video");
+		video.onloadedmetadata = function() {
+			var width = self.data.VideoWith;
+			var marginLeft = self.data.VideoMarginLeft;
+			var pathArray = path.split('/');
+			var canvas = document.createElement('canvas');
+			canvas.width = video.videoWidth;
+			canvas.height = video.videoHeight;
+			canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+			var thumb = canvas.toDataURL("image/png");
+			console.log("video " + video.videoWidth + " " + video.videoWidth);
+			console.log("canvas " + canvas.width + " " + canvas.height);
+			//增加视频
+			var videos = {
+				id: pathArray[pathArray.length - 1], //视频Id
+				path: path, //视频路径
+				localthumb: thumb, //视频本地的缩略图地址
+				domain: '', //视频地址
+				thumb: '', //视频缩略图地址
+				width: canvas.width, //视频缩略图宽
+				height: canvas.height, //视频缩略图高
+				duration: parseInt(video.duration) //视频时长
+			};
+			self.data.VideoArray.push(videos);
+			//显示视频
+			var element = document.createElement('div');
+			element.className = 'multimedia-picture-area';
+			//删除按钮
+			var html_0 = '<a id="MultiMedia_Video_Delete_' + videos.id + '" class="mui-icon iconfont icon-guanbi multimedia-picture-delete" style="margin-left: ' + parseInt(width + marginLeft / 2) + 'px;margin-top:' + parseInt(marginLeft / 2) + 'px;"></a>'
+			//显示视频缩略图的区域
+			var html_1 = '<div class="multimedia-picture" style="width: ' + width + 'px; height: ' + width + 'px; margin-left: ' + marginLeft + 'px; margin-top: ' + marginLeft + 'px;">'
+			//播放按钮
+			var html_2 = '<img id="MultiMedia_Video_Play_' + videos.id + '" class="multimedia-video-play" src="../../image/utils/playvideo.png" style="width: ' + 30 + 'px; height: ' + 30 + 'px;left: ' + parseInt((width - 30) / 2) + 'px;top: ' + parseInt((width - 30) / 2) + 'px; "/>';
+			//视频缩略图
+			var html_3 = '<img src="../../image/utils/videothumb.png" style="width:100%;visibility: hidden;" onload="if(this.offsetHeight<this.offsetWidth){this.style.height=\'' + width + 'px\';this.style.width=\'initial\';this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + width + ')/2)+\'px\';}this.style.visibility=\'visible\';" />';
+			var html_4 = '</div>'
+			element.innerHTML = html_0 + html_1 + html_2 + html_3 + html_4;
+			document.getElementById("MultiMedia_Video_Footer").appendChild(element);
+			self.changeFooterHeight(1, self.data.VideoArray.length);
+			self.videoChangeCallBack();
+			callback();
+		}
+
+		video.onerror = function() {
+			mui.toast("视频加载失败");
+			callback();
+		}
+		video.src = path;
 	}
 
 	/**

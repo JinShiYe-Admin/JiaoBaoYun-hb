@@ -94,7 +94,7 @@
 		<script type="text/javascript" src="../../js/utils/playutil.js"></script>
 		<script type="text/javascript" src="../../js/utils/showvideoutil.js"></script>
 		<script type="text/javascript" src="../../js/utils/showaudio.js"></script>
-		<script type="text/javascript" src="../../js/utils/gallerypick.js" ></script>
+		<script type="text/javascript" src="../../js/utils/gallerypick.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			var pathList = []; //记录需要删掉的图片和缩略图
@@ -221,7 +221,7 @@
 					pubScopes: '[1]', //1 家校圈 必选,2 展现 可选例如[1,2]
 					pubArea: '', //具体到市级代码
 					encLen: encLen, //音视频时长
-					msgTitle:''//记事标题
+					msgTitle: '' //记事标题
 				};
 				postDataPro_addUserSpace(comData, wd, function(data) {
 					console.log('38postDataPro_addUserSpace（用户空间）新增某用户空间信息 （云笔记）.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
@@ -453,7 +453,7 @@
 									console.log('所有上传都成功');
 									var encAddr = []; //附件地址
 									var encImg = []; //附件缩略图地址
-									var encLen = []; //时间长短
+									var encLen = 0; //音视频时长
 									var type;
 									if(multiMedia.data.PictureArray.length !== 0) { //图片
 										for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
@@ -476,11 +476,11 @@
 											encLen.push(multiMedia.data.AudioArray[j].time);
 										}
 										type = '4';
+										encLen = multiMedia.data.VideoArray[0].duration;
 									}
 									var encAddrStr = encAddr.join('|');
 									var encImgrStr = encImg.join('|');
-									var encImgrStr = encImg.join('|');
-									addNote(wd, type, encAddrStr, encImgrStr, encLen[0]);
+									addNote(wd, type, encAddrStr, encImgrStr, encLen);
 								} else {
 									taskCreate(wd);
 								}

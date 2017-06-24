@@ -1,6 +1,6 @@
 var freshContainer;
 var freshFlag=0;//0默认 1刷新 2加载更多
-var setIcon = function() {
+var setIcon = function(questionInfo) {
 	if(questionInfo && questionInfo.AskMan == myStorage.getItem(storageKeyName.PERSONALINFO).utid && (questionInfo.AnswerNum + questionInfo.AnswerOffNum) == 0) {
 		document.getElementById("manage-question").style.display = "inline-block";
 	} else {
@@ -71,7 +71,7 @@ mui.plusReady(function() {
 	}
 	questionInfo = mainData.channelInfo;
 	console.log("获取的questionInfo:" + JSON.stringify(questionInfo));
-	setIcon();
+	setIcon(questionInfo);
 	console.log('qiuzhi-question.html:获取的问题数据' + JSON.stringify(mainData));
 	//点击右上角邀请专家按钮
 	events.addTap('addExpert', function() {
@@ -596,7 +596,7 @@ function requestAskDetail() {
 	});
 }
 var noticeQuestionInfo = function(questionInfo) {
-	setIcon();
+	setIcon(questionInfo);
 	events.closeWaiting();
 	mui.back = _oldBack;
 }

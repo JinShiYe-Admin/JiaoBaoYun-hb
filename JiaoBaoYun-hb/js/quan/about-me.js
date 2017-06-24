@@ -258,11 +258,17 @@ var setListener = function() {
 			PublisherName: this.info.UserName,
 			TabId: this.info.SpaceId
 		}
-		console.log(JSON.stringify(info));
+//		console.log(JSON.stringify(this.info));
 		getUserSpaceById(info.TabId, function(data) {
 			if(data.RspCode == 0) {
+				var focusFlag = 0;
+				if(info.spaceType==1){
+					focusFlag = 0;
+				}else{
+					focusFlag = 1;
+				}
 				events.singleWebviewInPeriod(item, "../quan/space-detail.html", jQuery.extend(info, {
-					focusFlag: 0
+					focusFlag: focusFlag
 				}));
 			} else {
 				mui.toast(data.RspTxt);
