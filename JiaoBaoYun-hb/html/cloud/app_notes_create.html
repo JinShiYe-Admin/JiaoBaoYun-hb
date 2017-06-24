@@ -460,7 +460,6 @@
 											encAddr.push(multiMedia.data.PictureArray[j].domain);
 											encImg.push(multiMedia.data.PictureArray[j].thumb);
 										}
-										encLen.push(0);
 										type = '1';
 									} else if(multiMedia.data.VideoArray.length !== 0) { //视频
 										for(var j = 0; j < multiMedia.data.VideoArray.length; j++) {
@@ -473,7 +472,6 @@
 										for(var j = 0; j < multiMedia.data.AudioArray.length; j++) {
 											encAddr.push(multiMedia.data.AudioArray[j].domain);
 											encImg.push(multiMedia.data.AudioArray[j].thumb);
-											encLen.push(multiMedia.data.AudioArray[j].time);
 										}
 										type = '4';
 									}
