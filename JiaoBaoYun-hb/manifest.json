@@ -644,7 +644,8 @@
 					"js/utils/compress.js",
 					"js/utils/showvideoutil.js",
 					"image/utils/playvideo.png",
-					"js/utils/playutil.js"
+					"js/utils/playutil.js",
+					"image/utils/loading.gif"
 				],
 				"refer": [
 					"html/quan/studentpersonalimge.html"
@@ -1556,7 +1557,8 @@
 				],
 				"refer": [
 					"html/cloud/keeprecord_callorrecord_main.html",
-					"html/cloud/keeprecord_history_0.html"
+					"html/cloud/keeprecord_history_0.html",
+					"html/cloud/keeprecord_history_a.html"
 				],
 				"priority": 0
 			},
@@ -2800,7 +2802,8 @@
 					"js/utils/playutil.js",
 					"js/qiuzhi/delContent_pop.js",
 					"js/utils/CloudFileUtil.js",
-					"js/qiniu/qiniu.js"
+					"js/qiniu/qiniu.js",
+					"image/utils/loading.gif"
 				],
 				"refer": [
 					"html/cloud/record_student_add.html"
@@ -3457,7 +3460,9 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"js/utils/showvideoutil.js",
 					"js/utils/recordvideoutil.js",
-					"js/utils/gallerypick.js"
+					"js/utils/gallerypick.js",
+					"image/utils/loading.gif",
+					"image/utils/videothumb.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -5165,6 +5170,18 @@
 					"html/register/login.html",
 					"html/quan/space-detail.html"
 				],
+				"priority": 0
+			},
+			"html/cloud/keeprecord_history_a.html": {
+				"resources": [
+					"css/utils/pullToRefresh.css",
+					"css/mui.min.css",
+					"css/utils/common.css",
+					"css/utils/preview.css",
+					"js/libs/crypto-js/crypto-js.js",
+					"image/utils/loading.gif"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},

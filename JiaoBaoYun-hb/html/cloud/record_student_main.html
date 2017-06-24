@@ -207,6 +207,14 @@
 				position: absolute;
 				visibility: hidden;
 			}
+
+			.video-time {
+				/*视频时间*/
+				position: absolute;
+				color: white;
+				right: 52%;
+				visibility: hidden;
+			}
 		</style>
 	</head>
 
@@ -610,12 +618,12 @@
 			} else if(data.EncType == 2) { //视频
 				var play_width = 55;
 				var html_0 = '<div class="record-video">\
+								<div id="video_time_' + data.TabId + '" class="video-time">' + data.EncLen + '\'\'</div>\
 								<img id="video_play_' + data.TabId + '" style="width:' + play_width + 'px;height:' + play_width + 'px;" class="video-play" onload="videoThumbLoad(this);" src="../../image/utils/playvideo.png" />\
 								<img id="video_thumb_' + data.TabId + '" class="video-thumb" src="' + data.EncImgAddr + '" onload="videoThumbLoad(this);" onerror="videoThumbError(this);">\
 							</div>';
 				html_media = html_0;
 			}
-
 			var element = document.createElement('div');
 			element.className = 'mui-row';
 			element.id = 'row_' + data.TabId;
@@ -628,7 +636,7 @@
 										<div class="mui-table-view-cell">\
 											<div id="' + data.TabId + '_content" class="dynamic-ellipsis-show"></div>\
 											<div id="' + data.TabId + '_show" class="show-all">显示全部</div>' + html_media + '\
-											<div style="margin-top:' + nameMarginTop + 'px;" ><div class="dynamic-name">' + data.PublisherName + '</div></div>\
+											<div style="margin-top:' + nameMarginTop + 'px;" ><div id="' + data.TabId + '_name" class="dynamic-name">' + data.PublisherName + '</div></div>\
 										</div>\
 									</div>\
 									<div class="mui-input-row mui-checkbox" style="margin-right: ' + checkRight + 'px;">\
@@ -637,6 +645,10 @@
 									</div>';
 			document.getElementById(dateItem).appendChild(element);
 
+			if(data.EncType == 2) { //视频
+				var video_time = document.getElementById("video_time_" + data.TabId);
+				video_time.style.bottom = document.getElementById(data.TabId + "_name").offsetHeight + 18 + 'px';
+			}
 			var type = ''; //类型
 			if(data.NoteType == 1) { //点到
 				if(data.MsgContent != '') { //有内容
@@ -832,7 +844,7 @@
 				img_a = document.getElementById("video_play_" + ids[2]);
 			}
 			if(img.getAttribute('data-load') && img_a.getAttribute('data-load')) {
-				ShowVideoUtil.videoThumbLoad(document.getElementById("video_thumb_" + ids[2]), document.getElementById("video_play_" + ids[2]));
+				ShowVideoUtil.videoThumbLoad(document.getElementById("video_thumb_" + ids[2]), document.getElementById("video_play_" + ids[2]), 0, document.getElementById("video_time_" + ids[2]));
 			}
 		}
 

@@ -68,7 +68,7 @@
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/utils/MultiMedia.js"></script>
-		<script type="text/javascript" src="../../js/utils/gallerypick.js" ></script>
+		<script type="text/javascript" src="../../js/utils/gallerypick.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
 		<script type="text/javascript" src="../../js/cloud/AndroidFileSystem.js"></script>
 		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
@@ -125,10 +125,10 @@
 					MultiMediaId: 'MultiMedia', //存放多媒体对象控件的id
 					Key: personalUTID, //utid
 					Picture: true, //是否显示图片图标
-//					Audio: true, //是否显示音频图标
+					//					Audio: true, //是否显示音频图标
 					Video: true, //是否显示视频图标
 					TotalPicture: 9, //图片的个数
-//					TotalAudio: 1, //音频的个数
+					//					TotalAudio: 1, //音频的个数
 					TotalVideo: 1, //视频的个数
 				});
 
@@ -167,7 +167,7 @@
 						var wd = events.showWaiting();
 						document.getElementById("commit").disabled = true;
 						if(multiMedia.data.PictureArray.length == 0 && multiMedia.data.VideoArray.length == 0) { //没有传附件
-							addRecorcd(wd, '3', '', '');
+							addRecorcd(wd, '3', '', '', 0);
 						} else {
 							uploadFile(wd);
 						}
@@ -182,7 +182,7 @@
 			 * @param {Object} encAddr 附件地址
 			 * @param {Object} encImg 附件缩略图地址
 			 */
-			function addRecorcd(wd, encType, encAddr, encImg) {
+			function addRecorcd(wd, encType, encAddr, encImg, encLen) {
 				var personalUTID = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).utid;
 				var personalUNICK = '【' + window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick + '家长】';
 				var studentName = mainData.data.DocName || mainData.data.StudentName;
@@ -201,7 +201,7 @@
 					noteType: '2', //点到记事类型,1点到2记事
 					checkType: '0', //点到类型,1 正常2 旷课3 迟到4 早退5 其他
 					classId: mainData.data.ClassId, //班级ID
-					encLen: 0 //音视频时长
+					encLen: encLen //音视频时长
 				};
 				postDataPro_addStudentFile(comData, wd, function(data) {
 					console.log('70_addStudentFile_新增某学生档案.90909090success:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
@@ -298,7 +298,7 @@
 						console.log('### ERROR ### 获取上传凭证失败 ### ' + data.data.Message);
 						document.getElementById("commit").disabled = false;
 						wd.close();
-						mui.toast("上传失败 "+data.data.Message);
+						mui.toast("上传失败 " + data.data.Message);
 					}
 				}, function(xhr, type, errorThrown) {
 					console.log('### ERROR ### 请求上传凭证失败 ###  ' + type);
@@ -388,6 +388,7 @@
 									console.log('所有上传都成功');
 									var encAddr = []; //附件地址
 									var encImg = []; //附件缩略图地址
+									var encLen = 0; //音视频时长
 									var type;
 									if(multiMedia.data.PictureArray.length !== 0) { //图片
 										for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
@@ -401,10 +402,11 @@
 											encImg.push(multiMedia.data.VideoArray[j].thumb);
 										}
 										type = '2';
+										encLen = multiMedia.data.VideoArray[0].duration;
 									}
 									var encAddrStr = encAddr.join('|');
 									var encImgrStr = encImg.join('|');
-									addRecorcd(wd, type, encAddrStr, encImgrStr);
+									addRecorcd(wd, type, encAddrStr, encImgrStr, encLen);
 								} else {
 									taskCreate(wd);
 								}

@@ -1122,7 +1122,8 @@
 			"js/libs/RSA/BigInt.js",
 			"js/qiniu/qiniu.js",
 			"js/libs/RSA/RSA.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"image/utils/loading.gif"
 		],
 		"refer": []
 	},
@@ -1302,7 +1303,8 @@
 			"js/libs/RSA/BigInt.js",
 			"js/qiniu/qiniu.js",
 			"js/libs/RSA/RSA.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"image/utils/loading.gif"
 		],
 		"refer": [
 			"html/cloud/record_student_add.html"
@@ -1311,7 +1313,14 @@
 	"html/cloud/record_student_add.html": {
 		"resources": [
 			"js/utils/MultiMedia.js",
-			"css/utils/MultiMedia.css"
+			"css/utils/MultiMedia.css",
+			"js/utils/compress.js",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/utils/preview.css",
+			"js/utils/gallerypick.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/videothumb.png"
 		],
 		"refer": []
 	},
@@ -1727,7 +1736,8 @@
 			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
-			"html/cloud/keeprecord_callorrecord_main.html"
+			"html/cloud/keeprecord_callorrecord_main.html",
+			"html/cloud/keeprecord_history_a.html"
 		]
 	},
 	"html/mine/approval-apply.html": {
@@ -2693,7 +2703,8 @@
 			"js/utils/gallerypick.js",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/utils/preview.css",
-			"image/utils/loading.gif"
+			"image/utils/loading.gif",
+			"image/utils/videothumb.png"
 		]
 	},
 	"html/utils/record_audio.html": {
@@ -2738,6 +2749,16 @@
 		"refer": [
 			"html/register/login.html",
 			"html/quan/space-detail.html"
+		]
+	},
+	"html/cloud/keeprecord_history_a.html": {
+		"resources": [
+			"css/utils/pullToRefresh.css",
+			"css/mui.min.css",
+			"css/utils/common.css",
+			"css/utils/preview.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"image/utils/loading.gif"
 		]
 	}
 }

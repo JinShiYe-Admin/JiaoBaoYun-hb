@@ -19,8 +19,9 @@ var ShowVideoUtil = (function(mod) {
 	 * @param {Object} thumbImage 视频缩略图元素
 	 * @param {Object} playButtn 播放按钮元素
 	 * @param {Object} type 是否调整缩略图区域高度 1,调整
+	 * @param {Object} time 视频的时间
 	 */
-	mod.videoThumbLoad = function(thumbImage, playButtn, type) {
+	mod.videoThumbLoad = function(thumbImage, playButtn, type, time) {
 		if(!thumbImage) {
 			console.log('未传入视频缩略图元素');
 			return false;
@@ -37,6 +38,9 @@ var ShowVideoUtil = (function(mod) {
 			thumbImage.style.height = 'initial';
 			height = thumbImage.offsetHeight;
 			width = thumbImage.offsetWidth;
+			if(time) {
+				time.style.right = "6%";
+			}
 		}
 		//调整播放按钮居中显示
 		playButtn.style.marginLeft = (width * 1 - playButtn_width * 1) / 2 + 'px';
@@ -47,6 +51,9 @@ var ShowVideoUtil = (function(mod) {
 		}
 		thumbImage.style.visibility = 'visible';
 		playButtn.style.visibility = 'visible';
+		if(time) {
+			time.style.visibility = "visible";
+		}
 	}
 
 	/**
