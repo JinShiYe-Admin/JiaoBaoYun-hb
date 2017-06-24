@@ -529,7 +529,7 @@
 					var ids = this.getAttribute('id').split("_"); //元素id
 					console.log('download ' + JSON.stringify(ids));
 					console.log("data " + JSON.stringify(downloadList.value[ids[2]]));
-					console.log("downloadingId " + downloadingId);
+					console.log("downloadingId1 " + downloadingId);
 					switch(downloadList.value[ids[2]].state) {
 						case -1: //未开始
 							if(downloadingId == null) { //没有正在下载的任务
@@ -593,7 +593,7 @@
 					var ids = this.getAttribute('id').split("_"); //元素id
 					console.log('download ' + JSON.stringify(ids));
 					console.log("data " + JSON.stringify(downloadList.value[ids[1]]));
-					console.log("downloadingId " + downloadingId);
+					console.log("downloadingId3 " + downloadingId);
 					var btnArray = ['否', '是'];
 					mui.confirm('确认删除下载任务？', '提示', btnArray, function(e) {
 						if(e.index == 1) { //是
@@ -670,7 +670,7 @@
 				} else {
 					downloadingId = downData.eleId;
 				}
-				console.log("downloadingId " + downloadingId);
+				console.log("downloadingId2 " + downloadingId);
 
 				if(downloadingId != -1) {
 					var data = null;
@@ -787,7 +787,7 @@
 								console.log('下载任务请求已经接收:|id:' + id + '|downloadState:' + download.state);
 								break;
 							case 3: //下载任务接收数据
-								//console.log('下载任务接收数据:|id:' + id + '|downloadState:' + download.state);
+								console.log('下载任务接收数据:|id:' + id + '|downloadState:' + download.state);
 								//下载任务id
 								downloadList.value[id].state = 3;
 								//已下载数据的大小
@@ -797,6 +797,7 @@
 								//console.log('下载任务接收数据 id' + id + ' downloadState ' + download.state + " totalSize " + totalSize +" downloadSize " + downloadSize);
 								var waiting = document.getElementById("down_waiting_" + id);
 								if(waiting) {
+									console.log('xiazai lalllllllllll');
 									waiting.innerText = '下载中';
 									document.getElementById("down_btn_" + id).style.visibility = 'visible';
 									document.getElementById("down_btn_" + id).innerText = '暂停';
@@ -809,14 +810,15 @@
 								downloadList.value[id].state = 5;
 								var waiting = document.getElementById("down_waiting_" + id);
 								if(waiting) {
+									console.log('zanting lalllllllllll');
 									waiting.innerText = '暂停中';
 									document.getElementById("down_btn_" + id).innerText = '继续';
 								}
 								break;
 							default:
-								if(download.state != 3) {
+//								if(download.state != 3) {
 									console.log('下载任务 id ' + id + '|downloadState ' + download.state);
-								}
+//								}
 								break;
 						}
 					}, function(dtask) {
