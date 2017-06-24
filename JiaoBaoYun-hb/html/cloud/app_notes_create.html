@@ -466,9 +466,9 @@
 										for(var j = 0; j < multiMedia.data.VideoArray.length; j++) {
 											encAddr.push(multiMedia.data.VideoArray[j].domain);
 											encImg.push(multiMedia.data.VideoArray[j].thumb);
-											encLen.push(multiMedia.data.VideoArray[j].duration);
 										}
 										type = '2';
+										encLen = multiMedia.data.VideoArray[0].duration;
 									} else if(multiMedia.data.AudioArray.length !== 0) { //音频
 										for(var j = 0; j < multiMedia.data.AudioArray.length; j++) {
 											encAddr.push(multiMedia.data.AudioArray[j].domain);
@@ -476,7 +476,6 @@
 											encLen.push(multiMedia.data.AudioArray[j].time);
 										}
 										type = '4';
-										encLen = multiMedia.data.VideoArray[0].duration;
 									}
 									var encAddrStr = encAddr.join('|');
 									var encImgrStr = encImg.join('|');
