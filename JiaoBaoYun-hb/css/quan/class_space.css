@@ -22,6 +22,15 @@ h1:last-of-type {
 	color: white;
 }
 
+@font-face {
+	font-family: fangzheng;
+	src: url(../../fonts/fangzheng.ttf) format('truetype');
+}
+
+.mui-content {
+	font-family: fangzheng;
+}
+
 
 /**
  * 班级空间icon样式
