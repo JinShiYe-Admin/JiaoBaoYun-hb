@@ -135,6 +135,78 @@ var CloudFileUtil = (function($, mod) {
 	}
 
 	/**
+	 * 获取多个上传token
+	 * @param {Object} data
+	 * @param {Object} callBack
+	 */
+	mod.getUpLoadTokens = function(data, callBack) {
+		console.log("getUpLoadTokens " + JSON.stringify(data));
+		var appId = data.appId; //项目id
+		var desKey = getAppKey(appId); //项目名称
+		var configure = {}; //配置的数据
+		var params = []; //配置的参数信息
+
+		if(data.type == "2" || data.type == "3") { //视频||音频
+			configure.thumbKey = [];
+		}
+		for(var i in data.fileArray) {
+			var filePaths = data.fileArray[i].split("/");
+			var QNFileName = filePaths[filePaths.length - 1];
+			var param = {
+				Bucket: data.mainSpace,
+				Key: data.uploadSpace + QNFileName,
+				Pops: "",
+				NotifyUrl: ""
+			}
+			switch(data.type) {
+				case "0": //上传多个原文件
+					break;
+				case "2": //视频
+					var uploadOptions = {
+						type: 2
+					}
+					var opsData = getOptions(uploadOptions, data.uploadSpace, data.mainSpace, QNFileName);
+					param.Pops = opsData.ops;
+					configure.thumbKey.push(opsData.thumbKey);
+					break;
+				case "3": //音频
+					var uploadOptions = {
+						type: 3
+					}
+					var opsData = getOptions(uploadOptions, data.uploadSpace, data.mainSpace, QNFileName);
+					param.Pops = opsData.ops;
+					configure.thumbKey.push(opsData.thumbKey);
+					break;
+				default:
+					break;
+			}
+
+			console.log("参数数据 param " + JSON.stringify(param));
+			params.push(param);
+		}
+		configure.options = {
+			AppID: appId,
+			Param: encryptByDES(desKey, JSON.stringify(params))
+		}
+
+		console.log("参数数据：" + JSON.stringify(configure.options))
+		//获取token
+		mod.getQNUpTokenWithManage(window.storageKeyName.QNGETUPLOADTOKEN, configure.options, function(data) {
+			callBack({
+				code: data.Status, //1成功
+				configure: configure, //配置信息
+				data: data, //回调信息
+				message: data.Message //回调说明
+			})
+		}, function(xhr, type, errorThrown) {
+			callBack({
+				code: 0,
+				message: type
+			});
+		});
+	}
+
+	/**
 	 * 获取上传到七牛的uptoken（单/多个文件的uptoken）
 	 * 使用到的地方：1.个人头像2.资料头像3.群头像4.上传到云存储5.记事
 	 * @author 莫尚霖
@@ -465,8 +537,6 @@ var CloudFileUtil = (function($, mod) {
 				break;
 			case 2: //视频
 				var thumbSpace = saveSpace + 'thumb/';
-				var width = manageOptions.thumbSize.width || 400;
-				var height = manageOptions.thumbSize.height || 300;
 				var tempFileName = QNFileName.split('.');
 				var thumbName = tempFileName[0];
 				returnData.thumbKey = Qiniu.URLSafeBase64Encode(mainSpace + ":" + thumbSpace + thumbName + '.png');
