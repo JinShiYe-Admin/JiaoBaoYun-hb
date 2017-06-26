@@ -549,7 +549,8 @@
 					"js/mui.pullToRefresh.material.js",
 					"js/utils/video.js",
 					"js/utils/showvideoutil.js",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"js/utils/all-preview.js"
 				],
 				"refer": [
 					"html/quan/class-group.html",

@@ -1260,7 +1260,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js",
 			"js/utils/showvideoutil.js",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"js/utils/all-preview.js"
 		],
 		"refer": [
 			"html/quan/class-group.html",

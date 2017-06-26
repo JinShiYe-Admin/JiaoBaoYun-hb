@@ -30,7 +30,9 @@ h1:last-of-type {
 .mui-content {
 	font-family: fangzheng;
 }
-
+.display-inlineBlock {
+	display: inline-block;
+}
 
 /**
  * 班级空间icon样式
