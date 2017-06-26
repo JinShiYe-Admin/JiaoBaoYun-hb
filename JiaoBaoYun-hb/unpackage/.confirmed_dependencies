@@ -1955,7 +1955,8 @@
 			"image/utils/loading.gif",
 			"fonts/iconfont.ttf",
 			"fonts/mui.ttf",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"image/cloud/cloud_0_unknow_0.png"
 		],
 		"refer": [
 			"html/cloud/app_notes_create.html"

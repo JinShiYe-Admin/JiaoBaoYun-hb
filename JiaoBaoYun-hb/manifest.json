@@ -2465,7 +2465,8 @@
 					"js/utils/playutil.js",
 					"image/utils/loading.gif",
 					"image/qiuzhi/qiuzhi_noanswer.png",
-					"css/iconfont/iconfont.css"
+					"css/iconfont/iconfont.css",
+					"image/cloud/cloud_0_unknow_0.png"
 				],
 				"refer": [
 					"html/cloud/app_notes_create.html"

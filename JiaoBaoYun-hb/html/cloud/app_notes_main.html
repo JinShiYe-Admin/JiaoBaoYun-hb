@@ -89,9 +89,45 @@
 				word-break: break-all;
 			}
 
-			.note-image-one {
-
+			/*.note-image-one,
+			.note-image-two,
+			.note-image-three {
+				background-color: red;
+				background-position: 50% 50%;
+				background-repeat: no-repeat;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
 			}
+
+			.note-image-one {
+				width: 100%;
+				height: 143px;
+			}
+
+			.note-image-two {
+				width: 49%;
+				height: 105px;
+				display: inline-block;
+				float: left;
+			}
+
+			.note-image-three {
+				width: 32%;
+				height: 69px;
+				display: inline-block;
+				float: left;
+			}
+
+			.mui-table-view-cell .note-image-two:last-child {
+				margin-left: 2%;
+			}
+
+			.mui-table-view-cell .note-image-three:nth-last-of-type(1),
+			.mui-table-view-cell .note-image-three:nth-last-of-type(2) {
+				margin-left: 2%;
+			}*/
 
 			.record-imge {
 				width: 100%;
@@ -233,11 +269,50 @@
 								</div>
 								<div class="mui-col-sm-10 mui-col-xs-10">
 									<div class="mui-table-view-cell">
-										<div id="21827_content" class="dynamic-ellipsis-show" style="display: none;"></div>
-										<div id="21827_show" class="show-all">显示全部</div>
-										<div class="record-imge" style="background-color: wheat;">
-											<img class="note-image-one" id="img_21827_0" src="http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/0_0_9714984396021140.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Note/0_0_9714984396021140.png" data-preview-group="21827">
-										</div>
+										<div id="170_content" class="dynamic-ellipsis-show" style="display: none;"></div>
+										<div id="170_show" class="show-all">显示全部</div>
+										<div class="note-image-one" style="background-image: url(http://qn-kfpb.jiaobaowang.net/jxq/Note/0_0_9714984601976868.png);" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Note/0_0_9714984601976868.png" data-preview-group="170"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="dynamic-date-parent" id="2017-06-26">
+							<div class="dynamic-date-year-parent">
+								<div class="dynamic-date-year"></div>
+							</div>
+							<div class="mui-row">
+								<div class="mui-col-sm-2 mui-col-xs-2">
+									<div class="dynamic-date">
+										<div></div>
+									</div>
+								</div>
+								<div class="mui-col-sm-10 mui-col-xs-10">
+									<div class="mui-table-view-cell">
+										<div id="170_content" class="dynamic-ellipsis-show" style="display: none;"></div>
+										<div id="170_show" class="show-all">显示全部</div>
+										<div class="note-image-two" style="background-image: url(http://qn-kfpb.jiaobaowang.net/jxq/Note/0_0_9714984601976868.png);" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Note/0_0_9714984601976868.png" data-preview-group="170"></div>
+										<div class="note-image-two" style="background-image: url(http://qn-kfpb.jiaobaowang.net/jxq/Note/0_0_9714984601976868.png);" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Note/0_0_9714984601976868.png" data-preview-group="170"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="dynamic-date-parent" id="2017-06-26">
+							<div class="dynamic-date-year-parent">
+								<div class="dynamic-date-year"></div>
+							</div>
+							<div class="mui-row">
+								<div class="mui-col-sm-2 mui-col-xs-2">
+									<div class="dynamic-date">
+										<div></div>
+									</div>
+								</div>
+								<div class="mui-col-sm-10 mui-col-xs-10">
+									<div class="mui-table-view-cell">
+										<div id="170_content" class="dynamic-ellipsis-show" style="display: none;"></div>
+										<div id="170_show" class="show-all">显示全部</div>
+										<div class="note-image-three" style="background-image: url(http://qn-kfpb.jiaobaowang.net/jxq/Note/0_0_9714984601976868.png);" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Note/0_0_9714984601976868.png" data-preview-group="170"></div>
+										<div class="note-image-three" style="background-image: url(http://qn-kfpb.jiaobaowang.net/jxq/Note/0_0_9714984601976868.png);" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Note/0_0_9714984601976868.png" data-preview-group="170"></div>
+										<div class="note-image-three" style="background-image: url(http://qn-kfpb.jiaobaowang.net/jxq/Note/0_0_9714984601976868.png);" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Note/0_0_9714984601976868.png" data-preview-group="170"></div>
 									</div>
 								</div>
 							</div>
@@ -300,6 +375,7 @@
 		});
 
 		mui.plusReady(function() {
+			//console.log(parseInt(((plus.screen.resolutionWidth - 30) * 10 / 12 - 16) * 32 / 100 * 5 / 6));
 			var wd = events.showWaiting();
 			initData();
 			initControl();
