@@ -191,7 +191,8 @@
 			"html/mine/qun_manage_a.html",
 			"html/cloud/app_notes_main.html",
 			"html/mine/qun_manage_info.html",
-			"html/cloud/storage_transport.html"
+			"html/cloud/storage_transport.html",
+			"html/quan/class-space.html"
 		]
 	},
 	"html/sciedu/sciedu_home.html": {
@@ -1261,7 +1262,9 @@
 			"js/utils/RSAEncrypt.js",
 			"js/utils/showvideoutil.js",
 			"image/utils/default_personalimage.png",
-			"js/utils/all-preview.js"
+			"js/utils/all-preview.js",
+			"image/utils/default_load_2_1.gif",
+			"js/libs/jquery.lazyload.min.js"
 		],
 		"refer": [
 			"html/quan/class-group.html",
@@ -1955,7 +1958,8 @@
 			"image/utils/loading.gif",
 			"fonts/iconfont.ttf",
 			"fonts/mui.ttf",
-			"fonts/fangzheng.ttf"
+			"fonts/fangzheng.ttf",
+			"image/cloud/cloud_0_unknow_0.png"
 		],
 		"refer": [
 			"html/cloud/app_notes_create.html"
@@ -2760,6 +2764,31 @@
 			"css/utils/preview.css",
 			"js/libs/crypto-js/crypto-js.js",
 			"image/utils/loading.gif"
+		]
+	},
+	"html/quan/class-space.html": {
+		"resources": [
+			"js/utils/vue.js",
+			"css/utils/bubble.css",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/quan/class-space.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"css/quan/class-space.css",
+			"js/libs/crypto-js/crypto-js.js",
+			"/image/utils/default_personalimage.png"
 		]
 	}
 }

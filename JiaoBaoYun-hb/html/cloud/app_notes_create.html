@@ -254,44 +254,38 @@
 			 * 上传文件
 			 */
 			function uploadFile(wd) {
-				var getToken = {
-					type: '2', //str 必填 获取上传token的类型。0上传需要生成缩略图的文件；1上传文件；2上传需要生成缩略图的多个文件
-					appId: 6, //int 必填 项目id
-					fileArray: [], //array 选填  type为2时有效，多个文件的路径
-					mainSpace: window.storageKeyName.QNPUBSPACE, //str 必填 文件存放在私有空间或公有空间
-					uploadSpace: window.storageKeyName.NOTE, //str 必填  上传的空间
+				var getUpTokenData = {
+					type: '0', //获取上传token的方式
+					appId: 6, //项目id
+					fileArray: [], //文件数组
+					mainSpace: window.storageKeyName.QNPUBSPACE, //文件存放在私有空间或公有空间
+					uploadSpace: window.storageKeyName.NOTE, //上传的空间
 				}
-				var fileArray = [];
-				if(multiMedia.data.PictureArray.length !== 0) { //图片
+
+				if(multiMedia.data.PictureArray.length != 0) { //图片
 					for(var i = 0; i < multiMedia.data.PictureArray.length; i++) {
-						fileArray.push(multiMedia.data.PictureArray[i].path);
+						getUpTokenData.fileArray.push(multiMedia.data.PictureArray[i].path);
 					}
-				} else if(multiMedia.data.VideoArray.length !== 0) { //视频
-					getToken.type = '3';
+				} else if(multiMedia.data.VideoArray.length != 0) { //视频
+					getUpTokenData.type = '2';
 					for(var i = 0; i < multiMedia.data.VideoArray.length; i++) {
-						fileArray.push(multiMedia.data.VideoArray[i]);
+						getUpTokenData.fileArray.push(multiMedia.data.VideoArray[i].path);
 					}
 				} else if(multiMedia.data.AudioArray.length != 0) { //音频
-					getToken.type = '4';
+					getUpTokenData.type = '3';
 					for(var i = 0; i < multiMedia.data.AudioArray.length; i++) {
-						fileArray.push({
-							path: multiMedia.data.AudioArray[i].fpath
-						});
+						getUpTokenData.fileArray.push(multiMedia.data.AudioArray[i].fpath);
 					}
 				}
-				getToken.fileArray = fileArray;
-				uploadNum = fileArray.length; //记录上传的次数
-
-				CloudFileUtil.getQNUpToken(window.storageKeyName.QNGETUPTOKENFILE, getToken, function(data) {
-					console.log('获取上传凭证 ' + JSON.stringify(data));
-					if(data.data.Status == 1) { //成功
+				uploadNum = getUpTokenData.fileArray.length; //记录上传的次数
+				CloudFileUtil.getUpLoadTokens(getUpTokenData, function(data) {
+					console.log("getUpLoadTokens " + JSON.stringify(data));
+					if(data.code == 1) {
+						console.log('上传配置 ' + JSON.stringify(data.configure));
+						console.log('上传凭证 ' + JSON.stringify(data.data));
 						QNUptoken = data.data; //token数据
-						//persistentId = [];
-						var configure = data.configure; //获取token的配置信息
-						console.log('七牛上传凭证:' + JSON.stringify(QNUptoken));
-						console.log('七牛配置信息:' + JSON.stringify(configure));
 
-						if(multiMedia.data.PictureArray.length !== 0) { //图片
+						if(multiMedia.data.PictureArray.length != 0) { //图片
 							//记录图片和缩略图地址
 							for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
 								for(var i = 0; i < QNUptoken.Data.length; i++) {
@@ -301,11 +295,10 @@
 									var fileId = fileName.split("_")[0];
 									if(multiMedia.data.PictureArray[j].id == fileId) {
 										multiMedia.data.PictureArray[j].domain = QNUptoken.Data[i].Domain + QNUptoken.Data[i].Key;
-										multiMedia.data.PictureArray[j].thumb = QNUptoken.Data[i].OtherKey[configure.thumbKey[i]];
 									}
 								}
 							}
-						} else if(multiMedia.data.VideoArray.length !== 0) { //视频
+						} else if(multiMedia.data.VideoArray.length != 0) { //视频
 							//记录视频和缩略图地址
 							for(var j = 0; j < multiMedia.data.VideoArray.length; j++) {
 								var videoPath = multiMedia.data.VideoArray[j].path.split("/");
@@ -316,7 +309,7 @@
 									var fileName = filePath[filePath.length - 1];
 									if(videoName == fileName) {
 										multiMedia.data.VideoArray[j].domain = QNUptoken.Data[i].Domain + QNUptoken.Data[i].Key;
-										multiMedia.data.VideoArray[j].thumb = QNUptoken.Data[i].OtherKey[configure.thumbKey[i]];
+										multiMedia.data.VideoArray[j].thumb = QNUptoken.Data[i].OtherKey[data.configure.thumbKey[i]];
 									}
 								}
 							}
@@ -331,7 +324,7 @@
 									var fileName = filePath[filePath.length - 1];
 									if(audioName == fileName) {
 										multiMedia.data.AudioArray[j].domain = QNUptoken.Data[i].Domain + QNUptoken.Data[i].Key;
-										multiMedia.data.AudioArray[j].thumb = QNUptoken.Data[i].OtherKey[configure.thumbKey[i]];
+										multiMedia.data.AudioArray[j].thumb = QNUptoken.Data[i].OtherKey[data.configure.thumbKey[i]];
 									}
 								}
 							}
@@ -340,16 +333,11 @@
 						//开始执行上传任务
 						taskCreate(wd);
 					} else {
-						console.log('### ERROR ### 获取上传凭证失败 ### ' + data.data.Message);
+						console.log('### ERROR ### 获取上传凭证失败 ### ');
 						document.getElementById("finish").disabled = false;
 						wd.close();
-						mui.toast('上传失败 ' + data.data.Message);
+						mui.toast('上传失败 ' + data.message);
 					}
-				}, function(xhr, type, errorThrown) {
-					console.log('### ERROR ### 请求上传凭证失败 ###  ' + type);
-					document.getElementById("finish").disabled = false;
-					wd.close();
-					mui.toast('上传失败 ' + type);
 				});
 			}
 
@@ -435,7 +423,6 @@
 								//记录失败后需要删除的文件
 								if(multiMedia.data.PictureArray.length !== 0) { //图片
 									pathList.push(multiMedia.data.PictureArray[num].domain);
-									pathList.push(multiMedia.data.PictureArray[num].thumb);
 								} else if(multiMedia.data.VideoArray.length !== 0) { //视频
 									pathList.push(multiMedia.data.VideoArray[num].domain);
 									pathList.push(multiMedia.data.VideoArray[num].thumb);
@@ -444,11 +431,6 @@
 									pathList.push(multiMedia.data.AudioArray[num].thumb);
 								}
 
-								//								if(persistentId.length < 3) { //前三张
-								//									persistentId[persistentId.length] = {
-								//										id: QNUptoken.Data[i].persistentId
-								//									};
-								//								}
 								if(uploadNum == 0) {
 									console.log('所有上传都成功');
 									var encAddr = []; //附件地址
@@ -458,7 +440,6 @@
 									if(multiMedia.data.PictureArray.length !== 0) { //图片
 										for(var j = 0; j < multiMedia.data.PictureArray.length; j++) {
 											encAddr.push(multiMedia.data.PictureArray[j].domain);
-											encImg.push(multiMedia.data.PictureArray[j].thumb);
 										}
 										type = '1';
 									} else if(multiMedia.data.VideoArray.length !== 0) { //视频
@@ -474,6 +455,7 @@
 											encImg.push(multiMedia.data.AudioArray[j].thumb);
 										}
 										type = '4';
+										encLen = multiMedia.data.AudioArray[0].time;
 									}
 									var encAddrStr = encAddr.join('|');
 									var encImgrStr = encImg.join('|');
@@ -525,55 +507,6 @@
 					}
 				}
 			}
-
-			//			/**
-			//			 * 查询已生成缩略图
-			//			 * @param {Object} wd 等待框
-			//			 */
-			//			function waittingThumb(wd) {
-			//				console.log('waittingThumb');
-			//				for(var i = 0; i < persistentId.length; i++) {
-			//					if(persistentId[i].code == undefined) {
-			//						CloudFileUtil.persistentStatusSearch(persistentId[i].id, function(data) {
-			//							//wd.close();
-			//							console.log('waittingThumb success' + JSON.stringify(data));
-			//							if(data.items.length != 0) {
-			//								var item = data.items[0];
-			//								if(item.code == 0 || item.code == 3 || item.code == 4) {
-			//									//0 表示成功，1 表示等待处理，2 表示正在处理，3 表示处理失败，4 表示回调失败
-			//									persistentId[i].code = item.code;
-			//								} else if(item.code == 3) {
-			//									mui.toast('生成缩略图失败 ' + item.error);
-			//								}
-			//							}
-			//
-			//							var allCallback = true;
-			//							for(var j = 0; j < persistentId.length; j++) {
-			//								if(persistentId[j].code == undefined) {
-			//									allCallback = false;
-			//									setTimeout(function() {
-			//										waittingThumb(wd);
-			//									}, 100);
-			//									break;
-			//								}
-			//							}
-			//							//所有的图片都生成了缩略图
-			//							if(allCallback) {
-			//								mui.toast('发布成功');
-			//								pathList = [];
-			//								events.fireToPageNone('app_notes_main.html', 'refreshView');
-			//								wd.close();
-			//								mui.back();
-			//							}
-			//						}, function(data) {
-			//							wd.close();
-			//							console.log('waittingThumb error' + JSON.stringify(data));
-			//							mui.toast('请求查询缩略图是否生成异常');
-			//						});
-			//						break;
-			//					}
-			//				}
-			//			}
 		</script>
 	</body>
 
