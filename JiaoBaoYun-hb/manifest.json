@@ -418,7 +418,24 @@
 					"css/mui.min.css",
 					"fonts/iconfont.ttf",
 					"css/utils/common.css",
-					"js/utils/events.js"
+					"js/utils/events.js",
+					"js/utils/vue.js",
+					"css/utils/bubble.css",
+					"js/storageKeyName.js",
+					"js/libs/RSA/Barrett.js",
+					"js/libs/crypto-js/require.js",
+					"js/quan/class-space.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"css/quan/class-space.css",
+					"js/libs/crypto-js/crypto-js.js",
+					"/image/utils/default_personalimage.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -550,7 +567,9 @@
 					"js/utils/video.js",
 					"js/utils/showvideoutil.js",
 					"image/utils/default_personalimage.png",
-					"js/utils/all-preview.js"
+					"js/utils/all-preview.js",
+					"image/utils/default_load_2_1.gif",
+					"js/libs/jquery.lazyload.min.js"
 				],
 				"refer": [
 					"html/quan/class-group.html",
@@ -910,7 +929,8 @@
 					"html/mine/qun_manage_a.html",
 					"html/index/mine.html",
 					"html/cloud/order-member.html",
-					"html/cloud/storage_transport.html"
+					"html/cloud/storage_transport.html",
+					"html/quan/class-space.html"
 				],
 				"priority": 0
 			},

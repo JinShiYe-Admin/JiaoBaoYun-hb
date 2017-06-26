@@ -266,6 +266,7 @@ var class_space = (function(mod) {
 			classWords_container.info = list[i];
 		}
 		mod.wd.close();
+		jQuery(".img-container").lazyload();
 		endFresh();
 	}
 	var getLineNo = function(classWords_container) {
@@ -292,12 +293,12 @@ var class_space = (function(mod) {
 			console.log('要显示的图片地址：' + JSON.stringify(imgs));
 			if(cell.EncType == 1) {
 				for(var i in imgs) {
-					if(imgs.length <= 3 && imgs.length > 0) {
+					if(imgs.length > 0&&imgs.length<3) {
 						//					percent = 100 / (imgs.length);
-						imgInner += '<div class="display-inlineBlock"  style="background-image:url(' + imgs[i] + '); width:' + img_width*3/imgs.length + 'px; height:' + img_width*3*0.45 + 'px;margin-right:2px;background-position:center;background-repeat:no-repeat;background-size:cover;"' +
+						imgInner += '<div class="img-container display-inlineBlock" data-original='+imgs[i]+' style="background-image:url(../../image/utils/default_load_2_1.gif); width:' + img_width*3/imgs.length + 'px; height:' + img_width*3*0.45 + 'px;margin-right:2px;background-position:center;background-repeat:no-repeat;background-size:cover;"' +
 							' data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"></div>'
 					} else {
-						imgInner += '<img class="display-inlineBlock" src="' + imgs[i] + '" style="width:' + img_width + 'px; height:' + img_width + 'px;padding:0 2px;"' +
+						imgInner += '<img class="img-container display-inlineBlock" data-original='+imgs[i]+' src="../../image/utils/default_load_2_1.gif" style="width:' + img_width + 'px; height:' + img_width + 'px;padding:0 2px;"' +
 							' data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"/>'
 					}
 				}
@@ -374,15 +375,17 @@ var pageIndex = 1;
 var pageSize = 10;
 var postData;
 var wd;
+var classInfo;
 var className;
 mui.plusReady(function() {
 	mui.previewImage();
 	postData = plus.webview.currentWebview().data;
-	postData.userId = parseInt(postData.userId);
+	postData.userId = parseInt(myStorage.getItem(storageKeyName.PERSONALINFO).utid);
 	//初始化视频播放器
 	ShowVideoUtil.initVideo(document.getElementById("video"));
+	classInfo=plus.webview.currentWebview().data;
 	//班级名称
-	className = plus.webview.currentWebview().className;
+	className = classInfo.className;
 	document.getElementById('title').innerText = getHeadText(className);
 	events.preload('class-group.html');
 	events.preload('classSpace-persons.html', 200);
