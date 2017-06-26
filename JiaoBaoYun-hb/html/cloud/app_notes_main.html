@@ -89,6 +89,10 @@
 				word-break: break-all;
 			}
 
+			.note-image-one {
+
+			}
+
 			.record-imge {
 				width: 100%;
 			}
@@ -167,6 +171,33 @@
 			.mui-backdrop {
 				background-color: transparent;
 			}
+
+			.mui-icon-camera {
+				color: #A9A9A9;
+				margin-left: 3%;
+				position: absolute;
+				line-height: 37px;
+				margin-top: 2px;
+			}
+
+			#add div:nth-last-of-type(1) {
+				color: #A9A9A9;
+				position: absolute;
+				left: 16%;
+				display: inline;
+				line-height: 37px;
+				margin-top: 1.5px;
+				font-size: 15px;
+			}
+
+			#add div:nth-last-of-type(2) {
+				color: #007AFF;
+				line-height: 40px;
+				margin-left: 10%;
+				display: inline;
+				font-size: 20px;
+				margin-top: 4px;
+			}
 		</style>
 	</head>
 
@@ -180,22 +211,43 @@
 				<!--数据列表-->
 				<div id="top">
 					<div id="add">
-						<span class="mui-icon mui-icon-camera" style="color: #A9A9A9;margin-left: 3%;position: absolute;line-height: 37px;margin-top: 2px;"></span>
-						<div style="color: #007AFF;line-height: 40px;margin-left: 10%;display: inline;font-size: 20px;margin-top: 4px;">
+						<span class="mui-icon mui-icon-camera"></span>
+						<div>
 							丨
 						</div>
-						<div style="color: #A9A9A9;position: absolute;left: 16%;display: inline;line-height: 37px;margin-top: 1.5px;font-size: 15px;">
+						<div>
 							记录生活，留下美好...
 						</div>
 					</div>
 					<img id="add_notes" src="../../image/cloud/notes_bg2.jpg" style="width: 100%;" onload="document.getElementById('add').style.top=(this.offsetHeight-(this.offsetHeight/2))+'px';" />
 					<ul id="list" class="mui-table-view">
+						<!--<div class="dynamic-date-parent" id="2017-06-26">
+							<div class="dynamic-date-year-parent">
+								<div class="dynamic-date-year"></div>
+							</div>
+							<div class="mui-row">
+								<div class="mui-col-sm-2 mui-col-xs-2">
+									<div class="dynamic-date">
+										<div>今天</div>
+									</div>
+								</div>
+								<div class="mui-col-sm-10 mui-col-xs-10">
+									<div class="mui-table-view-cell">
+										<div id="21827_content" class="dynamic-ellipsis-show" style="display: none;"></div>
+										<div id="21827_show" class="show-all">显示全部</div>
+										<div class="record-imge" style="background-color: wheat;">
+											<img class="note-image-one" id="img_21827_0" src="http://qn-kfpb.jiaobaowang.net/jxq/Note/thumb/0_0_9714984396021140.png" data-preview-src="http://qn-kfpb.jiaobaowang.net/jxq/Note/0_0_9714984396021140.png" data-preview-group="21827">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>-->
 					</ul>
 				</div>
 			</div>
 		</div>
 		<div id="videoPopover" class="mui-popover">
-			<video id="video" style="position: absolute;z-index: 999;" controls="controls">
+			<video id="video" style="" controls="controls">
 				您的浏览器不支持 video 标签。
 			</video>
 		</div>
@@ -477,7 +529,6 @@
 
 			if(data.EncType == 1) { //附件类型,1图片2视频3仅文字4音频
 				var imageArray = data.EncAddr.split('|');
-				var thumbArray = data.EncImgAddr.split('|');
 
 				var html_0 = '<div class="record-imge">';
 				var html_1 = '';
@@ -496,7 +547,7 @@
 						html_2 = '<div data-id="' + data.TabId + '_' + i + '" class="record-picture-num" style="line-height: ' + (height + 1) + 'px;">+' + (imageArray.length - 3) + '</div>'
 					}
 					html_1 = html_1 + '<div class="record-picture" style="width: ' + width + 'px; height: ' + height + 'px; margin-right: ' + marginRight + 'px;' + html_3 + '">\
-									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + thumbArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;visibility: hidden;" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'));this.style.visibility=\'visible\';" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<' + height + '){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';}this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + height + ')/2)+\'px\';};this.style.visibility=\'visible\';">\
+									' + html_2 + '<img id="img_' + data.TabId + '_' + i + '" src="' + imageArray[i] + '" data-preview-src="' + imageArray[i] + '" data-preview-group="' + data.TabId + '" style="width:100%;visibility: hidden;" onerror="events.imageOnError(this,this.getAttribute(\'data-preview-src\'));this.style.visibility=\'visible\';" onload="if(this.offsetHeight<=this.offsetWidth){if(this.offsetHeight<' + height + '){this.style.height=\'' + height + 'px\';this.style.width=\'initial\';}this.style.marginLeft=-parseInt((this.offsetWidth-' + width + ')/2)+\'px\';}else{this.style.marginTop=-parseInt((this.offsetHeight-' + height + ')/2)+\'px\';};this.style.visibility=\'visible\';">\
 								</div>';
 				}
 				html_media = html_0 + html_1 + '</div>';
@@ -551,6 +602,8 @@
 					contentEl.setAttribute('data-offsetHeight', contentEl.offsetHeight);
 				}
 			}
+			//console.log("dateItem" + dateItem);
+			//console.log(document.getElementById("list").innerHTML);
 			markDate = dateItem;
 		}
 
