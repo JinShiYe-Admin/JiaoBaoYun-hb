@@ -274,6 +274,8 @@ var requestTeaInfo = function(teaId) {
 				if(homeworkModel.UploadTime) {
 					var dateArr = homeworkModel.UploadTime.split(' ');
 					homeworkModel.UploadTime = dateArr[0];
+					homeworkModel.UploadTime = homeworkModel.UploadTime.replace('/','-');
+					homeworkModel.UploadTime = homeworkModel.UploadTime.replace('/','-');
 					homeworkDetailNodes.publishDate.innerHTML = events.shortForString(data.RspData[0].unick, 12) + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime + '</span>'
 
 				} else {
@@ -281,6 +283,8 @@ var requestTeaInfo = function(teaId) {
 					homeworkModel.UploadTime = homeworkResult.SubmitTime;
 					var dateArr = homeworkModel.UploadTime.split(' ');
 					homeworkModel.UploadTime = dateArr[0];
+					homeworkModel.UploadTime = homeworkModel.UploadTime.replace('/','-');
+					homeworkModel.UploadTime = homeworkModel.UploadTime.replace('/','-');
 
 					homeworkDetailNodes.publishDate.innerHTML = events.shortForString(data.RspData[0].unick, 12)  + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.UploadTime + '</span>'
 				}
@@ -291,7 +295,8 @@ var requestTeaInfo = function(teaId) {
 			} else {
 				var dateArr = homeworkResult.HomeworkResult.UploadTime.split(' ');
 				homeworkResult.HomeworkResult.UploadTime = dateArr[0];
-				console.log('1111111===' + data.RspData[0].unick)
+				homeworkResult.HomeworkResult.UploadTime = homeworkResult.HomeworkResult.UploadTime.replace('/','-');
+				homeworkResult.HomeworkResult.UploadTime = homeworkResult.HomeworkResult.UploadTime.replace('/','-');
 
 				homeworkDetailNodes.publishDate.innerHTML = events.shortForString(data.RspData[0].unick, 12) + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkResult.HomeworkResult.UploadTime + '</span>'
 

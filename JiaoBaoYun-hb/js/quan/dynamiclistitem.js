@@ -886,11 +886,11 @@ var dynamiclistitem = (function($, mod) {
 		var html2 = '<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:36px;height:36px;border-radius: 50%;" src="' + data.personalImage + '"></div>';
 		var html3 = '<div class="mui-media-body dynamic-padding-left-10px  mui-pull-left">';
 		//姓名
-		var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:14px;margin-top:-3px">' + data.personalName + '</p>';
+		var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:14px;margin-top:-1px">' + data.personalName + '</p>';
 		//时间
 		var html5 = '<p class="" style = "color:#b7b7b7;font-size:12px">' + data.PublishDate + '</p></div>' + closeempty + '</div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext ">';
-		var html7 = '<div id="question_content' + data.id_name + '" style = "color:#808080;font-size:15px" class="ellipsis-show question_content">';
+		var html7 = '<div id="question_content' + data.id_name + '" style = "color:#808080;font-size:15px;line-height:28px" class="ellipsis-show question_content">';
 		//内容
 		var html8
 		if(data.EncType == 5) {

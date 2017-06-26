@@ -427,8 +427,9 @@
 
 					if(uploadArray[i].ugnick) {
 						li.className = 'mui-table-view-cell mui-media isCommented'
-						li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" style = "width:40px;height:40px;border-radius: 50%;" src="' + headImg + '" />' +
-							'<div class="mui-media-body">' + events.shortForString(uploadArray[i].ugnick, 12) +
+						li.style.height = '60px'
+						li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" style = "margin-top:0px;width:40px;height:40px;border-radius: 50%;" src="' + headImg + '" />' +
+							'<div class="mui-media-body" style = "margin-top:-5px;">' + events.shortForString(uploadArray[i].ugnick, 12) +
 							'<div class="mui-media-body mui-pull-right" ' +
 							'<p id="isCommented' + i + '" style="font-size: 13px;color:#808080">' + IsCommented + '<span class="mui-icon iconfont icon-fanhui2" style="color:#b7b7b7"></span></p></div>' +
 							'</div>'
@@ -436,8 +437,9 @@
 						homeworkDetailNodes.finishedList.appendChild(li);
 					} else {
 						li.className = 'mui-table-view-cell mui-media'
-						li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" style = "width:40px;height:40px;border-radius: 50%;" src="' + headImg + '" />' +
-							'<div class="mui-media-body">' + '<span style="color:red">该用户已退群</span>' +
+						li.style.height = '60px'
+						li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image" style = "margin-top:0px;width:40px;height:40px;border-radius: 50%;" src="' + headImg + '" />' +
+							'<div class="mui-media-body"  style = "margin-top:-5px;">' + '<span style="color:red">该用户已退群</span>' +
 							'<div class="mui-media-body mui-pull-right" ' +
 							'<p id="isCommented' + i + '" style="font-size: 13px;color:#808080"> </p></div>' +
 							'</div>'
@@ -468,9 +470,10 @@
 					}
 					var headImg = updateHeadImg(remainArray[i].uimg, 2)
 					var li = document.createElement('li');
+					li.style.height = '60px'
 					li.className = 'mui-table-view-cell mui-media'
 					if(remainArray[i].ugnick) {
-						li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image"  style = "width:40px;height:40px ;border-radius: 50%;" src="' + headImg + '" />' +
+						li.innerHTML = '<img  class="mui-media-object mui-pull-left dynamic-personal-image"  style = "margin-top:0px;width:40px;height:40px ;border-radius: 50%;" src="' + headImg + '" />' +
 							'<div class="mui-media-body">' +
 							'<div style = "padding-top:10px">' + events.shortForString(remainArray[i].ugnick, 12) + '<button id="alert' + i + '" class="' + btn_class + '" onclick="alertStu(this)"' + disabled + '>' +
 							alert +
