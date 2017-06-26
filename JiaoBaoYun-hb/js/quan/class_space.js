@@ -294,7 +294,7 @@ var class_space = (function(mod) {
 				for(var i in imgs) {
 					if(imgs.length <= 3 && imgs.length > 0) {
 						//					percent = 100 / (imgs.length);
-						imgInner += '<div class="display-inlineBlock"  style="background-image:url(' + imgs[i] + '); width:' + img_width*3/imgs.length + 'px; height:' + img_width*3*0.45 + 'px;padding:0 2px;background-position:center;background-repeat:no-repeat;background-size:cover;"' +
+						imgInner += '<div class="display-inlineBlock"  style="background-image:url(' + imgs[i] + '); width:' + img_width*3/imgs.length + 'px; height:' + img_width*3*0.45 + 'px;margin-right:2px;background-position:center;background-repeat:no-repeat;background-size:cover;"' +
 							' data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"></div>'
 					} else {
 						imgInner += '<img class="display-inlineBlock" src="' + imgs[i] + '" style="width:' + img_width + 'px; height:' + img_width + 'px;padding:0 2px;"' +
