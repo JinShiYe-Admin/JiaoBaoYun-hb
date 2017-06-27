@@ -61,7 +61,6 @@
 	<script src="../../js/utils/compress.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/utils/cryption.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/qiniu/qiniu.js" type="text/javascript" charset="utf-8"></script>
-	
 
 	<script>
 	</script>
@@ -269,6 +268,10 @@
 				}
 
 			});
+			document.getElementById("askTitle").addEventListener('input', function() {
+				this.value = this.value.replace(new RegExp(/(\n)/g), '')
+
+			})
 
 			//发布按钮
 			events.addTap('publish', function() {
@@ -276,7 +279,7 @@
 				self.disabled = true;
 				var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				var textView = document.getElementById('input-content');
-				console.log('textView：'+textView)
+				console.log('textView：' + textView)
 				var askTitle = document.getElementById("askTitle");
 				var pubScopes;
 				var msgTitle;
