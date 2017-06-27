@@ -7,6 +7,8 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/utils/common.css" rel="stylesheet" />
+		<link href="../../css/utils/preview.css" rel="stylesheet" />
+
 		<link href="../../css/quan/custom-textarea.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/homework/publish-answer.css" rel="stylesheet" />
@@ -45,6 +47,8 @@
 	</body>
 	<script src="../../js/mui.min.js"></script>
 	<script src="../../js/utils/events.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
 	<script src="../../js/utils/camera.js"></script>
 	<script src="../../js/utils/files.js"></script>
 	<script src="../../js/utils/ASFiles.js"></script>
@@ -57,6 +61,7 @@
 	<script src="../../js/utils/compress.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/utils/cryption.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/qiniu/qiniu.js" type="text/javascript" charset="utf-8"></script>
+	
 
 	<script>
 	</script>
@@ -67,7 +72,8 @@
 		var utids = [];
 		var pageFlag;;
 		mui.plusReady(function() {
-
+			events.blurBack();
+			mui.previewImage(); //浏览图片详情
 			pageFlag = plus.webview.currentWebview().data
 			var userInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO); //用户id
 
@@ -115,7 +121,7 @@
 			events.addTap('take_camero', function() {
 				document.activeElement.blur();
 				var item = this;
-//				jQuery(item).css('pointerEvents', 'none');
+				//				jQuery(item).css('pointerEvents', 'none');
 				console.log("item不能点击了！" + item.id);
 				if(CloudFileUtil.files.length > 0) {
 					switch(CloudFileUtil.files[0].type) {
@@ -128,7 +134,7 @@
 						default:
 							break;
 					}
-//					jQuery(item).css('pointerEvents', 'all');
+					//					jQuery(item).css('pointerEvents', 'all');
 					return;
 				}
 				var btnArr = [{
@@ -139,77 +145,77 @@
 					dia: 0
 				}];
 				var funArr = [recordVideo, pickLocalVideo];
-				events.showActionSheet(btnArr,funArr);
+				events.showActionSheet(btnArr, funArr);
 
 			});
-					/**
-		 * 选择本地视频
-		 */
-		function pickLocalVideo() {
-			Gallery.pickVideo(function(e) {
-				if(e.flag === 1) {
-					uploadFile(e.path);
-				}
-			})
-		}
-		/**
-		 * 录像
-		 */
-		function recordVideo() {
-			video.recordVideo({}, function(path) {
-				events.showWaiting();
-				console.log("保存在本地的路径：" + path);
-				uploadFile(path);
-			}, function(errData) {
-				console.log(errData.code);
-				if(errData.code != 0) {
-					mui.toast(errData.message);
-				}
-				jQuery("#take_camero").css('pointerEvents', 'all');
-				console.log("item能点击了！")
-			})
-		}
-		/**
-		 * 上传文件
-		 * @param {Object} path
-		 */
-		function uploadFile(path) {
-			load.getManageOptions(2, path, function(mData, thumb) {
-				console.log("视频获取的各项参数：" + JSON.stringify(data));
-				mData.saveSpace = storageKeyName.PERSONALSPACE;
-				mData.spaceId = 6;
-				var data = CloudFileUtil.getSingleImgUploadOptions(path, mData.spaceId, mData.spaceType, mData.saveSpace, mData.options);
-				CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
-					console.log("获取的数据：" + JSON.stringify(datas));
-					if(datas.Status == 1) {
-						var tokenInfo = datas.Data;
-						//上传文件
-						CloudFileUtil.uploadFile(tokenInfo, path, function(uploadData, status) {
-							console.log("获取的上传数据：" + JSON.stringify(uploadData));
-							console.log("获取的token信息：" + JSON.stringify(tokenInfo));
-							var img = { //图片信息
-								url: tokenInfo.Domain + tokenInfo.Key,
-								thumb: tokenInfo.OtherKey[data.thumbKey],
-								clip: tokenInfo.OtherKey[data.thumbKey] + "?imageMogr2/gravity/Center/crop/!" + mData.options.thumbSize.width + "x" + mData.options.thumbSize.width * 0.45,
-								localPath: path,
-								type: 2
-							}
-							//										console.log("获取的图片信息：" + JSON.stringify(img));
-							//关闭等待框
-							plus.nativeUI.closeWaiting();
-							//放置图片
-							CloudFileUtil.setPic(img, 0, thumb);
-							jQuery("#take_camero").css('pointerEvents', 'all');
-						});
+			/**
+			 * 选择本地视频
+			 */
+			function pickLocalVideo() {
+				Gallery.pickVideo(function(e) {
+					if(e.flag === 1) {
+						uploadFile(e.path);
 					}
-
-				}, function(xhr, type, errorThrown) {
-					console.log("错误类型：" + type + errorThrown);
-					plus.nativeUI.closeWaiting(); //关闭等待框
+				})
+			}
+			/**
+			 * 录像
+			 */
+			function recordVideo() {
+				video.recordVideo({}, function(path) {
+					events.showWaiting();
+					console.log("保存在本地的路径：" + path);
+					uploadFile(path);
+				}, function(errData) {
+					console.log(errData.code);
+					if(errData.code != 0) {
+						mui.toast(errData.message);
+					}
 					jQuery("#take_camero").css('pointerEvents', 'all');
-				});
-			})
-		}
+					console.log("item能点击了！")
+				})
+			}
+			/**
+			 * 上传文件
+			 * @param {Object} path
+			 */
+			function uploadFile(path) {
+				load.getManageOptions(2, path, function(mData, thumb) {
+					console.log("视频获取的各项参数：" + JSON.stringify(data));
+					mData.saveSpace = storageKeyName.PERSONALSPACE;
+					mData.spaceId = 6;
+					var data = CloudFileUtil.getSingleImgUploadOptions(path, mData.spaceId, mData.spaceType, mData.saveSpace, mData.options);
+					CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
+						console.log("获取的数据：" + JSON.stringify(datas));
+						if(datas.Status == 1) {
+							var tokenInfo = datas.Data;
+							//上传文件
+							CloudFileUtil.uploadFile(tokenInfo, path, function(uploadData, status) {
+								console.log("获取的上传数据：" + JSON.stringify(uploadData));
+								console.log("获取的token信息：" + JSON.stringify(tokenInfo));
+								var img = { //图片信息
+									url: tokenInfo.Domain + tokenInfo.Key,
+									thumb: tokenInfo.OtherKey[data.thumbKey],
+									clip: tokenInfo.OtherKey[data.thumbKey] + "?imageMogr2/gravity/Center/crop/!" + mData.options.thumbSize.width + "x" + mData.options.thumbSize.width * 0.45,
+									localPath: path,
+									type: 2
+								}
+								//										console.log("获取的图片信息：" + JSON.stringify(img));
+								//关闭等待框
+								plus.nativeUI.closeWaiting();
+								//放置图片
+								CloudFileUtil.setPic(img, 0, thumb);
+								jQuery("#take_camero").css('pointerEvents', 'all');
+							});
+						}
+
+					}, function(xhr, type, errorThrown) {
+						console.log("错误类型：" + type + errorThrown);
+						plus.nativeUI.closeWaiting(); //关闭等待框
+						jQuery("#take_camero").css('pointerEvents', 'all');
+					});
+				})
+			}
 			events.addTap('get_gallery', function() {
 				if(CloudFileUtil.files.length > 0 && CloudFileUtil.files[0].type != 1) {
 					mui.toast("只允许上传一种附件！");
@@ -270,6 +276,7 @@
 				self.disabled = true;
 				var tempInfo = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 				var textView = document.getElementById('input-content');
+				console.log('textView：'+textView)
 				var askTitle = document.getElementById("askTitle");
 				var pubScopes;
 				var msgTitle;
@@ -279,7 +286,7 @@
 					msgTitle = '';
 				} else {
 					pubScopes = '[2]';
-					if(!askTitle.value || askTitle.value == ''||events.isNull(askTitle.value)) {
+					if(!askTitle.value || askTitle.value == '' || events.isNull(askTitle.value)) {
 						mui.toast('请输入标题');
 						self.disabled = false;
 						return;
@@ -291,7 +298,7 @@
 					msgTitle = askTitle.value;
 				}
 				var tempText = textView.value;
-				if(!tempText || tempText == ''||events.isNull(tempText)) {
+				if(!tempText || tempText == '' || events.isNull(tempText)) {
 					mui.toast('请输入内容');
 					self.disabled = false;
 					return;
@@ -340,20 +347,24 @@
 				var wd = plus.nativeUI.showWaiting(storageKeyName.WAITING);
 				postDataPro_addUserSpace(postData, wd, function(data) {
 					wd.close();
-					mui.toast('发布成功！');
-					console.log('推送个人空间成功' + JSON.stringify(data));
-					if(askTitle){
-						askTitle.value = '';
-					}
-					
-					textView.value = '';
-					if(pageFlag == 'jxq') {
-						events.fireToPageNone('zonep_sub.html', 'refreshZonep');
+					if(data.RspCode == 0) {
+						mui.toast('发布成功！');
+						console.log('推送个人空间成功' + JSON.stringify(data));
+						if(askTitle) {
+							askTitle.value = '';
+						}
+
+						textView.value = '';
+						if(pageFlag == 'jxq') {
+							events.fireToPageNone('zonep_sub.html', 'refreshZonep');
+						} else {
+							events.fireToPageNone('../show/show-home1.html', 'infoChanged');
+						}
+
+						mui.back();
 					} else {
-						events.fireToPageNone('../show/show_home_1.html', 'infoChanged');
+						self.disabled = false;
 					}
-					mui.back();
-					self.disabled = false;
 
 				})
 			})

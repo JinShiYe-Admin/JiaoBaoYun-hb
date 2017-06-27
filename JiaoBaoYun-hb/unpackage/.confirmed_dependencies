@@ -1581,7 +1581,10 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"image/utils/videothumb.png",
-			"js/utils/gallerypick.js"
+			"js/utils/gallerypick.js",
+			"css/utils/preview.css",
+			"js/mui.zoom.js",
+			"js/mui.previewimage.js"
 		],
 		"refer": []
 	},
