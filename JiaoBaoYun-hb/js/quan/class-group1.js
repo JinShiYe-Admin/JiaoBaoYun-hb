@@ -1,9 +1,13 @@
 mui.init({
 	beforeback: function() {
-		document.getElementById("info-container").style.display = "none";
-		document.querySelector('.quit-container').style.display = 'none';
-		document.getElementById("show-all").style.display = "none";
-		mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0);
+		if(isPopoverShow) {
+			isPopoverShow = false;
+		} else {
+			document.getElementById("info-container").style.display = "none";
+			document.querySelector('.quit-container').style.display = 'none';
+			document.getElementById("show-all").style.display = "none";
+			mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0);
+		}
 		return true;
 	}
 });
@@ -13,6 +17,7 @@ var isMaster; //是否为群主
 var allGroupInfos; //群组内所有成员信息
 var groupNote; //群说明
 var groupModel; //群信息model
+var isPopoverShow = false;
 mui('.mui-scroll-wrapper').scroll({
 	indicators: true, //是否显示滚动条
 });
@@ -40,6 +45,7 @@ mui.plusReady(function() {
 	mui('#gride').on('tap', '.mui-table-view-cell', function() {
 		if(this.info.invitable) {
 			mui(".mui-popover").popover("show");
+			isPopoverShow = true;
 		} else {
 			events.fireToPageWithData('group-pInfo.html', 'postPInfo', jQuery.extend({}, this.info, {
 				isMaster: isMaster
@@ -101,11 +107,13 @@ var setButtonsListener = function() {
 			vtp: '1' //邀请人的类型（用户管理角色,0家长,1管理员,2老师,3学生）
 		});
 		mui('.mui-popover').popover("hide");
+		isPopoverShow = false;
 		resetRole();
 	});
 	//取消按钮加载监听
 	btn_cancel.addEventListener('tap', function() {
 		mui('.mui-popover').popover('hide');
+		isPopoverShow = false;
 		resetRole();
 	})
 	document.getElementById("group-info").addEventListener("tap", function() {
@@ -287,13 +295,13 @@ var getRemarkData = function(list, callback) {
 		vvl: utids.toString()
 	}, wd, function(data) {
 		wd.close();
-//		if(data.RspCode == 0) {
-			console.log('获取的备注信息：' + JSON.stringify(data));
-			var remark = document.getElementById('person-remark');
-			callback(data);
-//		}else{
-////			mui.toast(data.RspTxt);
-//		}
+		//		if(data.RspCode == 0) {
+		console.log('获取的备注信息：' + JSON.stringify(data));
+		var remark = document.getElementById('person-remark');
+		callback(data);
+		//		}else{
+		////			mui.toast(data.RspTxt);
+		//		}
 
 	})
 }

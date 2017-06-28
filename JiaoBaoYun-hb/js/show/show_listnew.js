@@ -216,7 +216,7 @@ var show_listnew = (function(mod) {
 			subDiv.info = showData[i];
 		}
 		listContainer.appendChild(div);
-		//		console.log("listContainer.innerHTML:" + listContainer.innerHTML);
+				console.log("listContainer.innerHTML:" + listContainer.innerHTML);
 		jQuery(".img-container").lazyload();
 		//		mod.endFresh();
 	}
