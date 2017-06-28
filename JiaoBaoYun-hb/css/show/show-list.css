@@ -56,7 +56,8 @@
 .news-container:first-child .news-words .news-anthor,
 .news-container:first-child .news-words .news-date,
 .news-container:first-child .news-words .news-title {
-	color: #FFFFFF;
+	color: rgba(255,255,255,1.0);
+	opacity: 1.0;
 }
 
 .news-container:first-child .news-words .news-anthor,

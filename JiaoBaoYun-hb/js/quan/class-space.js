@@ -2,24 +2,24 @@ Vue.component("class-item", {
 	props: ['item'],
 	template: '<li class="mui-table-view-cell" v-bind:style="itemContainer">' +
 		'<div v-bind:style="pubContainer" class="single-line">' + '<img v-bind:src="getHeadImg(item)" v-bind:style="headImg"/>' + '<p>{{getShowName(item)}}</p>' + '</div>' +
-		'<div class="chat_content_left" v-bind:style="chatLeft">' + '<p>{{item.MsgContent}}</p>' + '<div>{{getImgInner(item)}}</div>' + '<p></p>' + '</div>' +
+		'<div class="chat_content_left" v-bind:style="chatLeft" ref="chatLeft">' + '<p>{{item.MsgContent}}</p>' + '<div>{{getImgInner(item)}}</div>' + '<p></p>' + '</div>' +
 		'</li>',
 	data: function() {
 		return {
-			itemContainer:{
-				display:"flex"
+			itemContainer: {
+				display: "flex"
 			},
 			headImg: {
 				width: "4rem",
 				height: "4rem"
 			},
-			pubContainer:{
-				width:"4rem"
+			pubContainer: {
+				width: "4rem"
 			},
-			chatLeft:{
-				width:"50%",
-				"flex-grow":"1",
-				"margin-left":"2rem"
+			chatLeft: {
+				width: "50%",
+				"flex-grow": "1",
+				"margin-left": "2rem"
 			}
 		}
 	},
@@ -40,7 +40,42 @@ Vue.component("class-item", {
 			return "";
 		},
 		getImgInner: function(item) {
-
+			var width = this.getBubWidth();
+			var inner = "";
+			if(item.EncAddr) {
+				var imgs = item.EncImgAddr.split('|');
+				var trueImgs = item.EncAddr.split('|');
+				var imgWidth;
+				var imgHeight;
+				if(imgs.length < 3) {
+					imgWidth = width / imgs.length;
+					imgHeight = width * 0.45;
+				} else {
+					imgWidth = width / 3;
+					imgHeight = imgWidth;
+				}
+				switch(parseInt(item.EncType)) {
+					case 1:
+						for(var i in imgs) {
+							inner += '<div class="img-container display-inlineBlock" data-original=' + imgs[i] + ' style="background-image:url(../../image/utils/default_load_2_1.gif); width:' + imgeWith + 'px; height:' + imgHeight +
+								'px;margin-right:2px;background-position:center;background-repeat:no-repeat;background-size:cover;"' +
+								' data-preview-src="' + trueImgs[i] + '" data-preview-group="' + cell.PublishDate + index + '"></div>'
+						}
+						break;
+					case 2:
+						inner += '<div class="video-container"  style="width:' + imgWidth + 'px;height:' + imgHeight + 'px;margin-bottom:8px;background-image:url(' + imgs[0] + ');background-color:#101010; background-position:center;background-size:auto 120%;background-repeat:no-repeat;">' +
+							'<img src="../../image/utils/playvideo.png" style="width:36px;height:36px;margin:' + (imgHeight- 36) / 2 + 'px ' + (width - 36) / 2 + 'px;"/>' + '</div>'
+						break;
+					default:
+						break;
+				}
+			}
+			return inner;
+		},
+		getBubWidth: function() {
+			var width = this.$refs.chatLeft.clientWidth;
+			console.log("width" + width);
+			return width;
 		}
 	}
 });
@@ -106,15 +141,15 @@ var classList = new Vue({
 		},
 		//获取备注名称
 		getRemarkName: function(ids, listData, singlePersen, callback) {
-			var wd=events.showWaiting();
+			var wd = events.showWaiting();
 			postDataPro_PostUmk({
-				vvl:ids.toString()
-			},wd,function(data){
-				JSON.stringify("获取的备注信息："+JSON.stringify(data));
+				vvl: ids.toString()
+			}, wd, function(data) {
+				JSON.stringify("获取的备注信息：" + JSON.stringify(data));
 				wd.close();
-				if(data.RspCode==0){
-					for(var i in data.RspData){
-						Object.assign(singlePersen[data.RspData[i].butid],data.RspData[i]);
+				if(data.RspCode == 0) {
+					for(var i in data.RspData) {
+						Object.assign(singlePersen[data.RspData[i].butid], data.RspData[i]);
 					}
 				}
 				if(Object.keys(singlePersen).length < ids.length) {
@@ -148,7 +183,7 @@ var classList = new Vue({
 							singlePersen[classPersen[i].utid] = classPersen[i];
 						}
 					}
-					
+
 				}
 				classList.getRemarkName(ids, listData, singlePersen, callback)
 			})
@@ -170,7 +205,7 @@ var classList = new Vue({
 						}
 					}
 				}
-				
+
 				callback(listData, singlePersen);
 			})
 		},
