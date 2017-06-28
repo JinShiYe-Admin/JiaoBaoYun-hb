@@ -1447,7 +1447,7 @@ var dynamiclistitem = (function($, mod) {
 			var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
 				console.log(99999999)
 				if(imgSize.height > imgSize.width) {
-					if(imgSize.width==1080&&imgSize.height==1920){
+					if(imgSize.width>=1080&&imgSize.height>=1920){
 						tempDiv.style.width =  '180px';
 						tempDiv.style.height =  '320px';
 						var playvideo = document.getElementById("playvideo" + data.id_name);
@@ -1467,7 +1467,7 @@ var dynamiclistitem = (function($, mod) {
 						playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
 					}
 				} else {
-					if(imgSize.height==1080&&imgSize.width==1920){
+					if(imgSize.height>=1080&&imgSize.width>=1920){
 						tempDiv.style.height =  '180px';
 						tempDiv.style.width =  '320px';
 						var playvideo = document.getElementById("playvideo" + data.id_name);
