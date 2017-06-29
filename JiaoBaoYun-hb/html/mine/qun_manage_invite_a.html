@@ -203,7 +203,7 @@
 			<h1 class="mui-title">
 			<div id="inputArea" class="mui-input-row">
 				<label id="label_search">搜索</label>
-				<input id="input_search" type="text" onkeyup="value=value.replace(/[\W]/g,'')" class="mui-input-clear" maxlength="20" placeholder="请输入账号或手机号">
+				<input id="input_search" type="text" class="mui-input-clear" maxlength="20" placeholder="请输入账号或手机号">
 			</div>
 		</h1>
 		</header>
@@ -502,8 +502,9 @@
 					//else if(emailReg.test(input_search.value)) {
 					//	vtp = 'em';
 					//}
-					if(input_search.value.search(/[a-zA-Z]+/) != -1) {
-						vtp = 'nm';//有英文
+					var numReg=/^[0-9]*$/;
+					if(!numReg.test(input_search.value)) {
+						vtp = 'nm';//不是纯数字
 					}
 					//11.通过用户账号和手机号搜索用户
 					//需要参数
