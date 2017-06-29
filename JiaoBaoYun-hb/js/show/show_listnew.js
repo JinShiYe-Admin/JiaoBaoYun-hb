@@ -216,7 +216,7 @@ var show_listnew = (function(mod) {
 			subDiv.info = showData[i];
 		}
 		listContainer.appendChild(div);
-				console.log("listContainer.innerHTML:" + listContainer.innerHTML);
+		console.log("listContainer.innerHTML:" + listContainer.innerHTML);
 		jQuery(".img-container").lazyload();
 		//		mod.endFresh();
 	}
@@ -225,10 +225,7 @@ var show_listnew = (function(mod) {
 	 * @param {Object} data
 	 */
 	mod.getShowInner = function(data) {
-		return '<div class="img-container news-img" data-original="' + data.EncImgAddr.split("|")[0] +
-			'" style="background-image:url(../../image/utils/video-loading.gif);text-align:center;background-position:center;background-size:cover;">' +
-			mod.getVideoMenu(data) +
-			'</div>' +
+		return mod.getVideoMenu(data)+
 			'<div class="news-words"><p class="news-title single-line">' + data.MsgTitle + '</p>' +
 			'<div class="anthor-date"><p class="news-anthor single-line">' + data.unick + '</p><p class="news-date">' +
 			data.PublishDate + '</p></div></div>';
@@ -259,10 +256,16 @@ var show_listnew = (function(mod) {
 					break;
 			}
 		}
+
 		if(isVideo) {
-			return '<img class="play-video" src="../../image/utils/playvideo.png"/>'
+			return '<div class="img-container news-img" data-original="' + cell.EncImgAddr.split("|")[0] +
+				'" style="background-image:url(../../image/utils/video-loading.gif);text-align:center;background-position:center;background-size:cover;">' +
+				'<img class="play-video" src="../../image/utils/playvideo.png"/>' +
+				'</div>'
 		}
-		return '';
+		return '<div class="img-container news-img" data-original="' + cell.EncImgAddr.split("|")[0] +
+			'" style="background-image:url(../../image/utils/img-loading.gif);text-align:center;background-position:center;background-size:cover;">' +
+			'</div>';
 	}
 	/**
 	 * 暂不用

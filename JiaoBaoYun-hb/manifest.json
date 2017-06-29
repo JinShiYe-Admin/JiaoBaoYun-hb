@@ -5060,7 +5060,8 @@
 					"fonts/fangzheng.ttf",
 					"js/libs/jquery.lazyload.min.js",
 					"image/utils/video-loading.gif",
-					"image/utils/playvideo.png"
+					"image/utils/playvideo.png",
+					"image/utils/img-loading.gif"
 				],
 				"refer": [
 					"html/quan/space-detail.html",
