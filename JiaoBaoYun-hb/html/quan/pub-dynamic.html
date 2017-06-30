@@ -268,10 +268,13 @@
 				}
 
 			});
-			document.getElementById("askTitle").addEventListener('input', function() {
+			if(document.getElementById("askTitle")){
+				document.getElementById("askTitle").addEventListener('input', function() {
 				this.value = this.value.replace(new RegExp(/(\n)/g), '')
 
 			})
+			}
+
 
 			//发布按钮
 			events.addTap('publish', function() {
