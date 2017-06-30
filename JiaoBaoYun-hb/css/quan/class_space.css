@@ -251,6 +251,8 @@ div>.icon-xiangce:before,
 	font-size: 1.0rem;
 	padding-bottom: .2rem;
 	text-align: justify;
+	letter-spacing: 0.5px;
+	line-height: 25px;
 }
 
 .omit-line-8 {
