@@ -2381,7 +2381,10 @@
 					"js/utils/video.js",
 					"image/utils/playvideo.png",
 					"image/utils/videothumb.png",
-					"js/utils/gallerypick.js"
+					"js/utils/gallerypick.js",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js",
+					"css/utils/preview.css"
 				],
 				"refer": [],
 				"priority": 0
