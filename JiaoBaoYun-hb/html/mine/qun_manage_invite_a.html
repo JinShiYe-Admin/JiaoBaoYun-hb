@@ -493,13 +493,18 @@
 					mui.toast('搜索最多20字');
 				} else {
 					var wd = events.showWaiting();
-					var vtp = 'nm';
-					var phoneReg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/; //手机号
-					var emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/; //邮箱
-					if(phoneReg.test(input_search.value)) {
-						vtp = 'mb';
-					} else if(emailReg.test(input_search.value)) {
-						vtp = 'em';
+					var vtp = 'mb';
+					//var phoneReg = /^1[34578]\d{9}$/; //手机号
+					//var emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/; //邮箱
+					//if(!phoneReg.test(input_search.value)) {
+					//	vtp = 'nm';
+					//}
+					//else if(emailReg.test(input_search.value)) {
+					//	vtp = 'em';
+					//}
+					var numReg=/^[0-9]*$/;
+					if(!numReg.test(input_search.value)) {
+						vtp = 'nm';//不是纯数字
 					}
 					//11.通过用户账号和手机号搜索用户
 					//需要参数
