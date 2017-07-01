@@ -1377,6 +1377,12 @@ var events = (function(mod) {
 	mod.trim = function(string) {
 		return string.replace(/^\s+|\s+$/g, '');
 	}
+	mod.getVideoDuration = function(url) {
+		var request = new XMLHttpRequest();
+		request.open("GET", url + "?avinfo", false);
+		request.send();
+		return Math.ceil(JSON.parse(request.responseText).streams[0].duration);
+	}
 	return mod;
 
 })(events || {});
