@@ -110,6 +110,7 @@ var video = (function(mod) {
 			//第三个参数： 一个Intent对象， 带有返回的数据。 可以通过data.getXxxExtra()方法来获取指定数据类型的数据，
 			//停止录像
 			console.log('停止录像  ' + JSON.stringify(data));
+			console.log("停止录像："+JSON.stringify(data.getData()))
 			if(requestCode == window.storageKeyName.CODERECORDVIDEO) { //拍照的Activity的code
 				if(resultCode == -1) { //成功
 					console.log('录像成功 ' + options.outPutPath);

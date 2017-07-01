@@ -4615,7 +4615,8 @@
 					"fonts/mui.ttf"
 				],
 				"refer": [
-					"html/mine/apply-bycode.html"
+					"html/mine/apply-bycode.html",
+					"html/mine/apply-bycode1.html"
 				],
 				"priority": 0
 			},
@@ -5206,6 +5207,24 @@
 					"css/utils/preview.css",
 					"js/libs/crypto-js/crypto-js.js",
 					"image/utils/loading.gif"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/mine/apply-bycode1.html": {
+				"resources": [
+					"js/libs/jquery.js",
+					"js/storageKeyName.js",
+					"js/libs/RSA/BigInt.js",
+					"js/libs/RSA/Barrett.js",
+					"css/mui.min.css",
+					"js/libs/crypto-js/require.js",
+					"js/utils/signHmacSHA1.js",
+					"js/libs/RSA/RSA.js",
+					"js/utils/postData.js",
+					"js/utils/RSAEncrypt.js",
+					"css/utils/common.css",
+					"js/libs/myStorage/myStorage.js"
 				],
 				"refer": [],
 				"priority": 0

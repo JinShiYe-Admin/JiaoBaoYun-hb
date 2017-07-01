@@ -199,7 +199,8 @@
 									localPath: path,
 									type: 2
 								}
-								//										console.log("获取的图片信息：" + JSON.stringify(img));
+								img.duration = events.getVideoDuration(img.url);
+								//		console.log("获取的图片信息：" + JSON.stringify(img));
 								//关闭等待框
 								plus.nativeUI.closeWaiting();
 								//放置图片
@@ -215,6 +216,7 @@
 					});
 				})
 			}
+
 			events.addTap('get_gallery', function() {
 				if(CloudFileUtil.files.length > 0 && CloudFileUtil.files[0].type != 1) {
 					mui.toast("只允许上传一种附件！");
@@ -268,13 +270,12 @@
 				}
 
 			});
-			if(document.getElementById("askTitle")){
+			if(document.getElementById("askTitle")) {
 				document.getElementById("askTitle").addEventListener('input', function() {
-				this.value = this.value.replace(new RegExp(/(\n)/g), '')
+					this.value = this.value.replace(new RegExp(/(\n)/g), '')
 
-			})
+				})
 			}
-
 
 			//发布按钮
 			events.addTap('publish', function() {
@@ -335,7 +336,7 @@
 					encType: TAs.encType,
 					encAddr: TAs.encAddr,
 					encImg: TAs.encImg,
-					encLen: 0,
+					encLen: TAs.encLen,
 					encIntro: '',
 					pubScopes: pubScopes,
 					pubArea: pubArea
@@ -506,15 +507,21 @@
 			var encAddrs = [];
 			var encImgs = [];
 			var theFile;
+			TAs.encLen = 0;
 			if(CloudFileUtil.files.length > 0) { //如果存在附件
 				for(var i in CloudFileUtil.files) {
 					theFile = CloudFileUtil.files[i];
 					if(i == 0) {
 						TAs.encType = theFile.type;
+						//音频 视频
+						if(TAs.encType == 2 || TAs.encType == 4) {
+							TAs.encLen = theFile.duration ? theFile.duration : 0;
+						}
 					}
 					encAddrs.push(theFile.url);
 					encImgs.push(theFile.thumb);
 				}
+
 				console.log(JSON.stringify(encAddrs));
 				console.log(JSON.stringify(encImgs));
 				TAs.encAddr = encAddrs.join('|');
