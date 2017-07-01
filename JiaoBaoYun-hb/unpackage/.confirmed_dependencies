@@ -2041,7 +2041,9 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
 		],
-		"refer": []
+		"refer": [
+			"html/mine/apply-bycode1.html"
+		]
 	},
 	"html/quan/space-detail.html": {
 		"resources": [
@@ -2809,6 +2811,22 @@
 			"css/quan/class-space.css",
 			"js/libs/crypto-js/crypto-js.js",
 			"/image/utils/default_personalimage.png"
+		]
+	},
+	"html/mine/apply-bycode1.html": {
+		"resources": [
+			"js/libs/jquery.js",
+			"js/storageKeyName.js",
+			"js/libs/RSA/BigInt.js",
+			"js/libs/RSA/Barrett.js",
+			"css/mui.min.css",
+			"js/libs/crypto-js/require.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js"
 		]
 	}
 }

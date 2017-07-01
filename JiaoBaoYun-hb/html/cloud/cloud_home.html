@@ -355,13 +355,14 @@
 				off_canvas.add('../index/mine.html', 200);
 				document.querySelector(".img-icon>img").src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2);
 				document.querySelector(".icon-iconhexinhuiyuan").addEventListener("tap", function() {
+					var item=this;
 					if(events.judgeLoginMode(this)) {
 						return;
 					}
-					events.fireToPageWithData('cloud_home.html', 'topPopover', {
+					events.fireToPageNone('cloud_home.html', 'topPopover', {
 						flag: 1
 					})
-					events.singleWebviewInPeriod(this, "order-member.html");
+					events.singleWebviewInPeriod(item, "order-member.html");
 				})
 				window.addEventListener("infoChanged", function() {
 					document.querySelector(".img-icon>img").src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2)
@@ -394,6 +395,7 @@
 				});
 				//点击popover里cell
 				mui('.mui-popover').on('tap', 'li', function(e) {
+					var item=e.target;
 					var targetUrl = "";
 					var postdata = "";
 					mui('#topPopover').popover('toggle')
@@ -408,7 +410,7 @@
 					} else {
 						targetUrl = '../mine/ReadQRCode.html';
 					}
-					events.singleWebviewInPeriod(this, targetUrl, postdata);
+					events.singleWebviewInPeriod(item, targetUrl, postdata);
 				})
 				//				window.addEventListener("homeworkReady", function() {
 				//					homeworkReady = true;
