@@ -1346,7 +1346,7 @@ var dynamiclistitem = (function($, mod) {
 		if(data.focusFlag == 1) { //展现界面
 			html7 = '</div><div class="mui-media-body"><p></p></div></div>';
 		} else { //空间界面
-			html7 = '</div><div class="mui-media-body" style="margin-top:5px"><p>浏览' + viewCount + '次</p></div></div>';
+			html7 = '</div><div class="mui-media-body" style="margin-top:5px"><p  style="color:#999999">浏览' + viewCount + '次</p></div></div>';
 		}
 		var html8;
 
