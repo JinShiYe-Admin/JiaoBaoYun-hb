@@ -1,10 +1,6 @@
 
 
 .btn-attention {
-	/*border: none;
-	margin-top: 5px;
-	min-width: 7rem;
-	max-width: 25%;*/
 	text-align: center;
 	width: 50px;
 	height: 25px;
@@ -15,10 +11,6 @@
 }
 
 .btn-attentioned {
-	/*border: none;
-	margin-top: 5px;
-	min-width: 7rem;
-	max-width: 25%;*/
 	text-align: center;
 	width: 50px;
 	height: 25px;
@@ -26,7 +18,6 @@
 	padding: 0;
 	color: white;
 	background-color: #b7b7b7;
-	/*margin-top:10px;*/
 }
 
 .ellipsis-show {
