@@ -202,6 +202,7 @@
 					} else if(str == '收起') {
 						showAll.innerText = '显示全部';
 						document.getElementById("homeWorkContent").style.webkitLineClamp = '8';
+						mui('.mui-scroll-wrapper').scroll().scrollTo(0,0,100);
 					}
 				});
 
