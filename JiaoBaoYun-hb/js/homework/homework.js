@@ -185,8 +185,8 @@ function showNoData(type) {
  * 结束刷新状态；
  * @param {int} 0 不隐藏上拉加载更多     1隐藏上拉加载更多
  */
-function endFresh(type) {
-	console.log("************************************type:" + type);
+function endFresh() {
+	console.log("************************************type:" + freshFlag);
 	if(freshContainer) {
 		if(freshFlag == 1) {
 			freshContainer.endPullDownToRefresh();
@@ -646,7 +646,8 @@ var getAnswerImgs = function(thumbUrls) {
 var createStuHomeworkInner = function(homework) {
 	return '<a><div class="stuHomework-header"><span class=" iconfont subject-icon ' +
 		getHomeworkIcon(homework.Subject) + '"></span><div class="header-words stuHead-words"><h6 class="header-title single-line">' +
-		homework.HomeworkTitle + '</h6><p class="header-content single-line">' + homework.Contents + '</p><p class="publisher-container single-line">发布人 : ' + homework.unick + '</p></div></div></a>';
+		homework.HomeworkTitle + '</h6><p class="header-content single-line">' + homework.Contents + 
+		'</p><p class="publisher-container single-line">发布人 : ' + homework.unick + '</p></div><div class="img-container"></div></div></a>';
 }
 /**
  * 设置学生作业
@@ -760,6 +761,7 @@ var setHomeworkData = function(homeworkData) {
 					li.className = 'mui-table-view-cell stuHomework ' + getBackGround(homework);
 					li.innerHTML = createStuHomeworkInner(homework);
 					fragment.appendChild(li);
+					console.log("获取的元素："+li.innerHTML);
 				})
 			}
 			if(DateHM.AnswerResults && DateHM.AnswerResults.length > 0) {

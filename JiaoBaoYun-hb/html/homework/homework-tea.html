@@ -13,9 +13,89 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<!--alibaba字库-->
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
-		<link href="../../css/homework/subjects-icon.css" rel="stylesheet" />
+		<!--<link href="../../css/homework/subjects-icon.css" rel="stylesheet" />-->
 		<!--本页面应有样式-->
 		<link href="../../css/homework/homework.css" rel="stylesheet" />
+		<style>
+			.icon-yuwen {
+				color: #46B1CA;
+			}
+			
+			.icon-shuxue {
+				color: #D46B44;
+			}
+			
+			.icon-yingyu {
+				color: #66B03C;
+			}
+			
+			.icon-lishi {
+				color: #3A84F2;
+			}
+			
+			.icon-zhengzhi {
+				color: #32A697;
+			}
+			
+			.icon-dili {
+				color: #3290BD;
+			}
+			
+			.icon-shengwu {
+				color: #7D5AC8;
+			}
+			
+			.icon-huaxue {
+				color: #DF60A1;
+			}
+			
+			.icon-wuli {
+				color: #CB8939;
+			}
+			
+			.icon-qita {
+				color: #F54D55;
+			}
+			
+			.subject-icon {
+				display: inline-block;
+				float: left;
+				padding: 1rem;
+				margin-top: 1rem;
+				font-size: 5rem;
+				/*width: 20%;*/
+			}
+			
+			.isCommentedBG .img-container,
+			.noCommentedBG .img-container,
+			.isSubmitted .img-container,
+			.submitOnline .img-container {
+				margin-top: -.5rem;
+				margin-bottom: -.5rem;
+				height: 7.5rem;
+				width: 7.5rem;
+				float: right;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			
+			.isCommentedBG .img-container {
+				background-image: url(../../image/homework/commented.png);
+			}
+			
+			.noCommentedBG .img-container{
+				background-image: url(../../image/homework/no-comment.png);
+			}
+			
+			.isSubmitted .img-container {
+				background-image: url(../../image/homework/submitted.png);
+			}
+			
+			.submitOnline .img-container {
+				background-image: url(../../image/homework/need-submit.png);
+			}
+			
+		</style>
 	</head>
 
 	<body>
@@ -55,6 +135,17 @@
 			<div class="mui-scroll-wrapper mui-fullscreen">
 				<div class="mui-scroll vertical-scroll">
 					<ul id="list-container" class="mui-table-view">
+						<li class="mui-table-view-cell submitOnline">
+							<a>
+								<div class="stuHomework-header"><span class=" iconfont subject-icon icon-yuwen"></span>
+									<div class="header-words stuHead-words">
+										<h6 class="header-title single-line">语文作业</h6>
+										<p class="header-content single-line">凤飞 飞 好刚刚给 好刚刚给
+										</p><p class="publisher-container single-line">发布人 : 5551</p></div><div class="img-container"></div></div></a>
+									</div><img></div>
+							</a>
+
+						</li>
 					</ul>
 				</div>
 				<div class="noDataDisplay" style="background-color: white; width: 100%;min-height: 100%; text-align: center;display: none;">
