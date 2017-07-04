@@ -13,26 +13,21 @@
 			}
 			
 			/*修改input中placeholder的颜色*/
-			 ::-webkit-input-placeholder {
+			 input::-webkit-input-placeholder {
 				/* WebKit browsers */
 				color: #999999;
 			}
-			
-			 :-moz-placeholder {
-				/* Mozilla Firefox 4 to 18 */
-				color: #999999;
-				opacity: 1;
+			.mui-input-row label{
+				width: auto;
 			}
-			
-			 ::-moz-placeholder {
-				/* Mozilla Firefox 19+ */
-				color: #999999;
-				opacity: 1;
+			.mui-input-row label~input{
+				width: 75%;
 			}
-			
-			 :-ms-input-placeholder {
-				/* Internet Explorer 10+ */
-				color: #999999;
+			input[type=tel]{
+				height: 45px;
+			}
+			.mui-input-row label{
+				padding: 15px 15px;
 			}
 		</style>
 	</head>
@@ -49,9 +44,9 @@
 			<!--<form class="mui-input-group" style="border:0px 0px 0px 0px;">-->
 			<div class="mui-input-row" style="background-color: white;">
 				<label style="font-size: 15px;">手机号</label>
+				<div style="width: 1px;height: 35px;margin-top: 7px;display: inline-block;background-color: darkgray;"></div>
 				<input type="tel" id="phoneNumber" placeholder="请输入手机号" place>
 			</div>
-			<!--</form>-->
 			<div class="mui-content-padded">
 				<button id='register' class="mui-btn mui-btn-block mui-btn-primary" style="background: #13b7f6; border: none ; ">下一步</button>
 			</div>

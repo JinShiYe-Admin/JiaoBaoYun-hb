@@ -65,9 +65,7 @@
 				<div style="margin-top: -10px;">
 					<hr style="height:1px;border:none;border-top:10px solid #f2f3f5;" />
 				</div>
-				<!--<div><img src="../../image/homework/math.png"></img>数学作业</div>-->
 				<!--滑动组件-->
-				<!--<div id="slider" class="mui-slider mui-hidden">-->
 				<div id="sliderSegmentedControl" class=" mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
 					<!--已完成选项卡-->
 					<a id="item1" class="mui-control-item mui-active" href="#div-finished">
@@ -78,10 +76,6 @@
 						未完成(0)
 					</a>
 				</div>
-				<!--<div style="margin-top: 0px;">
-					<hr style="height:1px;border:none;border-top:1px solid #c8c7cc;" />
-				</div>-->
-				<!--<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="background-color: #00a5e0;margin-bottom: -2px;"></div>-->
 				<!--滑动内容-->
 				<div class="mui-slider-group">
 					<div id="div-finished" class="mui-slider-item mui-control-content mui-active">
@@ -164,6 +158,7 @@
 				requestHomeworkDetail();
 				//3.	获取作业对应学生列表
 				requestHomeworkStuList();
+				//已完成
 				window.addEventListener('workCommented', function(e) {
 					requestHomeworkStuList();
 				})
@@ -388,30 +383,15 @@
 			}
 
 			function refreshStuList() {
+				//未完成
 				var remainNum = remainArray.length
-				//				for(var i = 0; i < remainArray.length; i++) {
-				//					if(!remainArray[i].ugnick) {
-				//						remainNum--;
-				//						continue;
-				//					}
-				//				}
+				//已完成
 				var uploadNum = uploadArray.length
-				//				for(var i = 0; i < uploadArray.length; i++) {
-				//					if(!uploadArray[i].ugnick) {
-				//						uploadNum--;
-				//						continue;
-				//					}
-				//				}
 				homeworkDetailNodes.segItem1.innerHTML = '已完成(' + uploadNum + ')';
 				homeworkDetailNodes.segItem2.innerHTML = '未完成(' + remainNum + ')';
 				homeworkDetailNodes.finishedList.innerHTML = '';
 				homeworkDetailNodes.unfinishedList.innerHTML = '';
-				//for(var i = 0; i < uploadArray.length; i++) {
-				//					if(!uploadArray[i].ugnick) {
-				//						uploadArray[i].ugnick = '<p style="color:gray">用户已退群</p>'
-				////						continue;
-				//					}
-				//				}
+				//创建已完成列表
 				for(var i = 0; i < uploadArray.length; i++) {
 					var IsCommented;
 					if(uploadArray[i].IsCommented == true) {
@@ -449,6 +429,7 @@
 
 					}
 				}
+				//创建未完成列表
 				for(var i = 0; i < remainArray.length; i++) {
 
 					var disabled;

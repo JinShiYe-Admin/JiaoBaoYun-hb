@@ -2585,7 +2585,9 @@
 	},
 	"html/register/yanZhengMa.html": {
 		"resources": [
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/mui.min.css",
+			"css/utils/common.css"
 		],
 		"refer": [
 			"html/register/modify_password.html"
