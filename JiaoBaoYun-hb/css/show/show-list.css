@@ -39,20 +39,19 @@
 	-font-box-pack: justify;
 	-webkit-justify-content: space-between;
 	padding: 10px;
-	background-color: #000000;
+	background-color: rgba(0,0,0,0.7);
 	position: absolute;
 	height: 58px;
 	bottom: 8px;
 	left: 14px;
 	right: 14px;
-	opacity: 0.7;
 }
 
 .news-container:first-child .news-words .news-anthor,
 .news-container:first-child .news-words .news-date,
 .news-container:first-child .news-words .news-title {
 	color: rgba(255, 255, 255, 1.0);
-	opacity: 1.0;
+	color: #FFFFFF;
 }
 
 .news-container:first-child .news-words .news-anthor,
