@@ -65,7 +65,12 @@
 	<script>
 	</script>
 	<script type="text/javascript">
-		mui.init()
+		mui.init({
+			beforeback:function(){
+				document.activeElement.blur();
+				return true;
+			}
+		})
 	</script>
 	<script>
 		var utids = [];
