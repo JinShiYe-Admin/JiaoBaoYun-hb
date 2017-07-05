@@ -1080,7 +1080,7 @@ var dynamiclistitem = (function($, mod) {
 		liElement.appendChild(div);
 		if(document.getElementById("spaceDetail") && data.pageFlag == 1) {
 			mod.addInteraction(ulElement, liElement, data);
-			//			mod.adddetailInteraction(ulElement, liElement, data);
+//						mod.adddetailInteraction(ulElement, liElement, data);
 		} else {
 			mod.addInteraction(ulElement, liElement, data);
 		}

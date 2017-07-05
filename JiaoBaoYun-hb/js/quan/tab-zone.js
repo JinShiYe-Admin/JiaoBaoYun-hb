@@ -94,7 +94,7 @@ function addSomeEvent() {
 			wd.close();
 			mui.toast('发布成功！');
 			console.log('推送个人空间成功' + JSON.stringify(data));
-			events.fireToPageNone('zonep_sub.html', 'refreshZonep');
+			events.fireToPageNone('zone_main.html', 'refreshZonep');
 			var comData = {
 				userId: personalUTID, //用户ID
 				publisherId: personalUTID

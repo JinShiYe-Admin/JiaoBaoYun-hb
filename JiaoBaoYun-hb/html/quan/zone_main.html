@@ -87,7 +87,7 @@
 				}
 				events.addTap('leave', function() {
 					events.openNewWindowWithData('../quan/leaveNew.html', data);
-					events.fireToPageNone('zonep_sub.html', 'hidePreImage')
+					events.fireToPageNone('zone_main.html', 'hidePreImage')
 				})
 				events.addTap('pub-dynamic', function() {
 					//判断是否是游客身份登录
@@ -95,7 +95,7 @@
 						return;
 					}
 					events.singleWebviewInPeriod(this, '../quan/pub-dynamic.html', 'jxq')
-					events.fireToPageNone('zonep_sub.html', 'hidePreImage')
+					events.fireToPageNone('zone_main.html', 'hidePreImage')
 				})
 			})
 			var sliderId = 'top_';
