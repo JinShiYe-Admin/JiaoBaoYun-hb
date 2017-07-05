@@ -391,7 +391,6 @@ var quitSquad = function(roleInfo) {
 	groupRoles.forEach(function(groupRole, i) {
 		if(groupRole.gutid == roleInfo.gutid) {
 			groupRoles.splice(i, 1);
-			return false;
 		}
 	})
 	//				groupRoles.splice(groupRoles.indexOf(roleInfo), 1);
@@ -413,6 +412,7 @@ var quitGroup = function(roleInfo, callback) {
 		wd.close();
 		if(data.RspCode == '0000') {
 			mui.toast('退群成功');
+			
 			callback(roleInfo);
 		} else {
 			mui.toast(data.RspTxt);

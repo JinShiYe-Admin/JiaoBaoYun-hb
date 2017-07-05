@@ -166,7 +166,7 @@ var freshContent = function() {
 			isShowButton = false;
 			//			document.querySelector('.quit-container').style.display = 'none';
 			//			document.querySelector('.mui-content').style.marginBottom = "0";
-		} else if(groupRoles.length == 1 && groupRoles[0] == 0 && isMaster) {
+		} else if(groupRoles.length == 1 && groupRoles[0] == 2 && isMaster) {
 			isShowButton = false;
 			//			document.querySelector('.quit-container').style.display = 'none';
 			//			document.querySelector('.mui-content').style.marginBottom = "0";
@@ -224,7 +224,7 @@ var getGroupAllInfo = function() {
 var getRemarkInfos = function(data) {
 	getRemarkData(data, function(Remarkdata) {
 		var list = [];
-		if(Remarkdata.RspCode == '0000') {
+		if(Remarkdata.RspCode == 0) {
 			list = addRemarkData(data, Remarkdata.RspData);
 		} else {
 			list = addRemarkData(data)
@@ -358,8 +358,11 @@ var createGride = function(gride, array) {
 	if(isShowAll) {
 		showAll.style.display = "block";
 	}
+	console.log("是否显示按键："+isShowButton);
 	if(isShowButton) {
 		document.querySelector('.quit-container').style.display = 'block';
+	}else{
+		document.querySelector('.quit-container').style.display = 'none';
 	}
 	document.getElementById("info-container").style.display = "block";
 }
@@ -471,6 +474,7 @@ var getSquadRoleInfo = function(roleType) {
  * 退出群
  */
 var quitGroupAll = function() {
+	console.log("退群的身份信息："+JSON.stringify(groupRoles));
 	groupRoles.forEach(function(groupRole, i) {
 		if(groupRole.mstype == 1) {
 			allcount++;
@@ -489,6 +493,7 @@ var quitGroupAll = function() {
  */
 var allCallback = function(roleInfo) {
 	allcount++;
+	console.log("allcount:"+allcount+"groupRoles:"+JSON.stringify(groupRoles));
 	if(allcount > 0 && allcount == groupRoles.length) {
 		events.fireToPageNone('../cloud/cloud_home.html', 'infoChanged');
 		groupRoles = [];
@@ -531,7 +536,7 @@ var quitGroup = function(roleInfo, callback) {
 	}, wd, function(data) {
 		console.log('退群返回值：' + JSON.stringify(data));
 		wd.close();
-		if(data.RspCode == '0000') {
+		if(data.RspCode == 0) {
 			mui.toast('退群成功');
 			callback(roleInfo);
 		} else {
