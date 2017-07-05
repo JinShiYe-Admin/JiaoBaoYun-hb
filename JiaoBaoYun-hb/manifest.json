@@ -462,12 +462,27 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"fonts/fangzheng.ttf",
-					"js/utils/showvideoutil.js"
+					"js/utils/showvideoutil.js",
+					"css/icons-extra.css",
+					"js/utils/playutil.js",
+					"js/mui.lazyload.img.js",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js",
+					"js/quan/dynamiclistitem.js",
+					"image/dynamic/praise.png",
+					"js/mui.lazyload.js",
+					"css/utils/preview.css",
+					"js/libs/crypto-js/crypto-js.js",
+					"css/show/show.css",
+					"js/utils/native.js",
+					"js/utils/video.js"
 				],
 				"refer": [
 					"html/quan/leave.html",
 					"html/quan/pub-dynamic.html",
-					"html/quan/leaveNew.html"
+					"html/quan/leaveNew.html",
+					"html/quan/classSpace-persons.html",
+					"html/show/add-comment.html"
 				],
 				"priority": 0
 			},
