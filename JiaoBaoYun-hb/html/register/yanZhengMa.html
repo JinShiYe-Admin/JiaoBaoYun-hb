@@ -130,17 +130,6 @@
 					}
 				});
 
-//								mui.confirm(' ', '验证码短信可能略有延迟，确定返回并重新开始？', ['取消', '确认'], function(e) {
-//									var index = e.index;
-//									console.log('index:'+index);
-//									switch(index) {
-//										case 0: //取消
-//											break;
-//										case 1: //返回
-//											mui.back();
-//											break;
-//									}
-//								},'div');
 			}
 			//遇到登录问题
 			document.getElementById("get_code").addEventListener('tap', function(event) {
@@ -252,7 +241,9 @@
 								console.log('targetPage是否存在:' + Boolean(targetPage))
 								if(targetPage) {
 									targetPage.evalJS('document.getElementById("change_phoneNum").innerText =' + personalUTID.uid);
-									targetPage.show('slide-in-left', 250);
+									plus.webview.currentWebview().opener().close();
+									plus.webview.currentWebview().close('slide-out-right',250);
+//									targetPage.show('slide-in-left', 250);
 									mui.toast('重新绑定成功');
 								}
 							} else {
