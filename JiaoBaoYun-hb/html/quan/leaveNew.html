@@ -10,88 +10,8 @@
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/quan/about-me.css" />
 		<link rel="stylesheet" href="../../css/utils/bubble.css" />
-		<!--<link href="../../css/qiuzhi/qiuzhi-inviteAnswer.css" rel="stylesheet" />-->
-		<style>
-			.mui-scroll-wrapper {
-				padding-top: 44px;
-			}
-			
-			.mui-bar~.mui-content .mui-fullscreen {
-				top: 44px;
-				height: auto;
-			}
-			
-			.mui-pull-top-tips {
-				position: absolute;
-				top: -20px;
-				left: 50%;
-				margin-left: -25px;
-				width: 40px;
-				height: 40px;
-				border-radius: 100%;
-				z-index: 1;
-			}
-			
-			.mui-bar~.mui-pull-top-tips {
-				top: 24px;
-			}
-			
-			.mui-pull-top-wrapper {
-				width: 42px;
-				height: 42px;
-				display: block;
-				text-align: center;
-				background-color: #efeff4;
-				border: 1px solid #ddd;
-				border-radius: 25px;
-				background-clip: padding-box;
-				box-shadow: 0 4px 10px #bbb;
-				overflow: hidden;
-			}
-			
-			.mui-pull-top-tips.mui-transitioning {
-				-webkit-transition-duration: 200ms;
-				transition-duration: 200ms;
-			}
-			
-			.mui-pull-top-tips .mui-pull-loading {
-				/*-webkit-backface-visibility: hidden;
-				-webkit-transition-duration: 400ms;
-				transition-duration: 400ms;*/
-				margin: 0;
-			}
-			
-			.mui-pull-top-wrapper .mui-icon,
-			.mui-pull-top-wrapper .mui-spinner {
-				margin-top: 7px;
-			}
-			
-			.mui-pull-top-wrapper .mui-icon.mui-reverse {
-				/*-webkit-transform: rotate(180deg) translateZ(0);*/
-			}
-			
-			.mui-pull-bottom-tips {
-				text-align: center;
-				background-color: #efeff4;
-				font-size: 15px;
-				line-height: 40px;
-				color: #777;
-			}
-			
-			.mui-pull-top-canvas {
-				overflow: hidden;
-				background-color: #fafafa;
-				border-radius: 40px;
-				box-shadow: 0 4px 10px #bbb;
-				width: 40px;
-				height: 40px;
-				margin: 0 auto;
-			}
-			
-			.mui-pull-top-canvas canvas {
-				width: 40px;
-			}
-			
+		<link rel="stylesheet" href="../../css/utils/fresh.css" />
+		<style>			
 			.mui-table-view {
 				background: white;
 				/*背景色透明*/
@@ -334,7 +254,7 @@
 							'</div></div>' +
 							'<div style= "margin-top:-10px"  class = "chat_content_left">' +
 							datasource.MsgContent +
-							'<p style = "text-align: right;">' + datasource.MsgDate + '</p></div>'
+							'<p style = "text-align: right;">' + events.shortForDate(datasource.MsgDate)+ '</p></div>'
 					} else {
 						li.innerHTML = '<div style="padding:12px">' +
 							'<div class="mui-media-body mui-pull-right">' +
@@ -345,7 +265,7 @@
 							'</div></div>' +
 							'<div style= "margin-top:-10px"  class = "chat_content_right">' +
 							datasource.MsgContent +
-							'<p style = "text-align: right;">' + datasource.MsgDate + '</p></div>'
+							'<p style = "text-align: right;">' + events.shortForDate(datasource.MsgDate) + '</p></div>'
 					}
 
 					listContainer.insertBefore(li, listContainer.childNodes[0]);
@@ -362,7 +282,7 @@
 							'<div style= "margin-top:-10px"  class = "chat_content_left">' + '<span style = "color:rgb(43,176,238);font-size:14px;" class="mui-ellipsis">' +
 							'@' + events.shortForString(datasource.ReplyName, 12) + '</span> ' +
 							datasource.MsgContent +
-							'<p style = "text-align: right;">' + datasource.MsgDate + '</p></div>'
+							'<p style = "text-align: right;">' + events.shortForDate(datasource.MsgDate) + '</p></div>'
 					} else {
 						li.innerHTML = '<div style="padding:12px">' +
 							'<div class="mui-media-body mui-pull-right">' +
@@ -374,7 +294,7 @@
 							'<div style= "margin-top:-5px; "  class = "chat_content_right">' + '<div class="chat-body ">' +
 							'<div >' + '<span style = "font-size:14px;">' + '<span style = "color:rgb(43,176,238);">' +
 							'@' + events.shortForString(datasource.ReplyName, 12) + '</span>' + '<span>' + " " +
-							datasource.MsgContent + '</span> ' + '</span> </div></div>' + '<p>' + datasource.MsgDate + '</p></div>';
+							datasource.MsgContent + '</span> ' + '</span> </div></div>' + '<p>' + events.shortForDate(datasource.MsgDate) + '</p></div>';
 					}
 					listContainer.insertBefore(li, listContainer.childNodes[0]);
 				}

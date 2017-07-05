@@ -365,7 +365,7 @@
 				var unick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户id
 				homeworkDetailNodes.publishDate.innerHTML = events.shortForString(unick, 12) + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.Date + '</span>'
 
-				homeworkDetailNodes.content.innerText = homeworkDetailModel.Contents;
+				homeworkDetailNodes.content.innerHTML = homeworkDetailModel.Contents.replace(/ /g,'&nbsp;').replace(/\n/g,"<br/>");
 				document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkDetailModel.File);
 
 			}

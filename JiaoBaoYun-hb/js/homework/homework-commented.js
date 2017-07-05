@@ -421,10 +421,10 @@ function refreshUI() {
 	if(!HomeworkContents) {
 		HomeworkContents = '作业内容';
 	}
-	homeworkDetailNodes.content.innerText = HomeworkContents;
+	homeworkDetailNodes.content.innerHTML = HomeworkContents.replace(/ /g,'&nbsp;').replace(/\n/g,'<br/>');
 	//	document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkResult.HomeworkResult.Files);
 	console.log(homeworkResult.HomeworkResult.Result)
-	homeworkDetailNodes.stuResult.innerText = homeworkResult.HomeworkResult.Result;
+	homeworkDetailNodes.stuResult.innerHTML = homeworkResult.HomeworkResult.Result.replace(/ /g,'&nbsp;').replace(/\n/g,'<br/>');
 
 	document.getElementById('brief-imgs-stu').innerHTML = getImgsInner(homeworkResult.HomeworkResult.Files);
 	var Comment = homeworkResult.HomeworkResult.Comment;
