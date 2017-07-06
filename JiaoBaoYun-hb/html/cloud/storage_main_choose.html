@@ -319,11 +319,11 @@
 						plus.webview.close(main, events.getAniClose());
 						return false;
 					}
+					var vvlArray=[main.data.data.fid];
 					var wd = events.showWaiting("移动中");
-					//53.用户移动云盘文件
+					//53.用户移动云盘文件或文件夹
 					var comData = {
-						vvl: main.data.data.fid, //文件ID
-						vvl1: main.data.data.fname, //文件名称
+						vvl: vvlArray.join(","), //文件ID
 						vvl2: showPid //文件上级ID，文件上级ID
 					};
 					postDataPro_PostDiFiM(comData, wd, function(data) {
@@ -441,9 +441,12 @@
 					if(document.getElementById("pid_" + pid) == null) {
 						console.log('获取数据pid_' + pid + '==null');
 						addbot(pid); //增加对应的文件夹
-
 						mui.each(tempRspData, function(index, item) {
-							additem(item);
+							if(main.data.type==0&& main.data.data.ftype == ".file"&&main.data.data.fid==item.fid) {//移动文件夹时，不显示被移动的文件夹
+								console.log("隐藏被移动的文件");
+							} else {
+								additem(item);
+							}
 						});
 					} else {
 						console.log('获取数据pid_' + pid + '!=null');

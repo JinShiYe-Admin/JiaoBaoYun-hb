@@ -260,9 +260,8 @@
 				display: none;
 			}
 
-			.cloud-bar-folder .cloud-tab-item[value="0"],
-			.cloud-bar-folder .cloud-tab-item[value="2"] {
-				/*只显示删除，重命名*/
+			.cloud-bar-folder .cloud-tab-item[value="0"] {
+				/*文件夹只显示删除，移动，重命名*/
 				display: none;
 			}
 
@@ -632,7 +631,7 @@
 							document.getElementById("cloud_bottom_download").style.opacity = '1';
 							var cloud_bottom = document.getElementById("cloud_bottom");
 							cloud_bottom.style.display = "block";
-							if(mode.ftype == '.file') {
+							if(mode.ftype == '.file') { //文件夹
 								cloud_bottom.className = "mui-bar mui-bar-tab cloud-bar-folder";
 							} else {
 								cloud_bottom.className = "mui-bar mui-bar-tab";
@@ -733,16 +732,21 @@
 					var data = e.detail.data;
 					console.log("cloudMoveTo " + JSON.stringify(data));
 					mask.close();
-					var fileEle = document.getElementById("fid_" + data.data.fid); //原文件
-					if(fileEle) {
-						console.log("有原文件");
+					var rootEle = document.getElementById("fid_" + data.data.fid); //原来的文件或文件夹元素
+					var rootUl; //新的文件夹
+					if(data.data.ftype == ".file") { //文件夹
+						rootUl = document.getElementById("ul_folder_" + data.pid);
+					} else { //文件
+						rootUl = document.getElementById("ul_file_" + data.pid);
+					}
+					if(rootEle) {
+						console.log("有原文件或文件夹");
 						//界面移除原文件
-						fileEle.parentNode.removeChild(fileEle);
+						rootEle.parentNode.removeChild(rootEle);
 						//删除原文件的数据
 						delete allData.value[data.data.pid][data.data.fid];
 					}
-					var ulFile = document.getElementById("ul_file_" + data.pid);
-					if(ulFile) {
+					if(rootUl) {
 						console.log("有新文件夹");
 						//界面增加新文件和数据
 						data.data.pid = data.pid;
