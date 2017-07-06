@@ -270,7 +270,7 @@
 				background-color: rgba(255, 255, 255, 0.3);
 			}
 
-			.file-thumb{
+			.file-thumb {
 				background-position: 0% 50%;
 				background-repeat: no-repeat;
 				-webkit-background-size: cover;
@@ -805,7 +805,7 @@
 					if(type != '') {
 						html_1 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
 					} else {
-						html_1 = '<div id="fthumb_' + data.fid + '" class="mui-media-object mui-pull-left file-thumb" value="' + path + '" style="background-image:url('+path+');"></div>';
+						html_1 = '<div id="fthumb_' + data.fid + '" class="mui-media-object mui-pull-left file-thumb" value="' + path + '" style="background-image:url(' + path + ');"></div>';
 					}
 					var html_2 = '<div class="mui-media-body">\
 									<div id="fname_' + data.fid + '" class="mui-ellipsis-2">' + data.fname + data.ftype + '</div>\
@@ -980,6 +980,14 @@
 								for(var i in data.RspData) {
 									console.log("delete " + i + " " + JSON.stringify(data.RspData[i]))
 									if(data.RspData[i].fpath != '') {
+										var type = cloud.classify(data.ftype);
+										if(type == "") {//有缩略图
+											var pathList = data.fpath.split('/');
+											var pathList2 = pathList[pathList.length - 1].split('.');
+											var fileName = pathList2[0];
+											var path = window.storageKeyName.QNPB + 'yuncunc/' + window.storageKeyName.CLOUDSTORAGETHUMB + fileName + '.png'
+											pathList.push(path);
+										}
 										pathList.push(data.RspData[i].fpath);
 									}
 								}
