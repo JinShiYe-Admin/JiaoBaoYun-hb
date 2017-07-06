@@ -1978,7 +1978,7 @@ var postDataPro_setUserFocus = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/setUserFocus', enData, commonData, 2, wd, callback);
 }
 
-//81.（用户空间）获取用户所有关注的用户
+//80.（用户空间）获取用户所有关注的用户
 //所需参数
 var comData = {
 	userId: '' //用户ID
@@ -1991,7 +1991,7 @@ var postDataPro_getFocusByUser = function(commonData, wd, callback) {
 	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/getFocusByUser', enData, commonData, 2, wd, callback);
 }
 
-//82.（用户空间）获取用户针对某条空间详情
+//81.（用户空间）获取用户针对某条空间详情
 //所需参数
 //		var comData = {
 //			userId:'',//用户ID

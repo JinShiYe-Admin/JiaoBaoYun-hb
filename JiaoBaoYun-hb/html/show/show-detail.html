@@ -6,15 +6,200 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/utils/common.css" rel="stylesheet" />
 	</head>
 
 	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">详情</h1>
+		</header>
+		<div id="show-detail" class="mui-content">
+			<div v-if="showDetail.TabId">
+				<h4>{{showDetail.MsgTitle}}</h4>
+				<div class="">
+					<img v-bind:src="showDetail.PublisherImg"  style="width: 4rem; height: 4rem;"/>
+					<div>
+						<p>{{showDetail.PublisherName}}</p>
+						<p>{{showDetail.PublishDate}}</p>
+					</div>
+					<input type="button" value="关注" />
+				</div>
+				<div class="">{{showDetail.MsgContent}}</div>
+				<detail-img v-on:imgs="getImgs(showDetail)">
+					
+				</detail-img>
+			</div>
+			<comment-list v-on:comments="showDetail.Comments">
+				<comment-reply>
+				</comment-reply>
+			</comment-list>
+		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/vue.js"></script>
+		<script src="../../js/utils/events.js"></script>
+		<script src="../../js/publicProtocol.js"></script>
+		<script src="../../js/show/show-comment.js"></script>
 		<script type="text/javascript">
+			var pageIndex = 1;
+			var tableId = 0;
 			mui.init({
-			
+
 			})
+			mui.plusReady(function() {
+				mui.fire(plus.webview.currentWebview().opener(), 'detailReady', true);
+				window.addEventListener('showDetail', function(e) {
+					console.log("获取的数据:" + JSON.stringify(e.detail.data));
+					var showInfo = e.detail.data;
+					tableId = showInfo.TabId;
+					requestShowDetail()
+				})
+			})
+			/**
+			 * 获取展现详情
+			 */
+			function requestShowDetail() {
+				var wd = events.showWaiting();
+				postDataPro_getUserSpaceByUser({
+					userId: events.getUtid(), //用户ID
+					userSpaceId: tableId, //用户动态ID
+					pageIndex: pageIndex, //评论当前页数
+					pageSize: 10 //评论每页记录数
+				}, wd, function(data) {
+					wd.close();
+					console.log("获取的展现详情:" + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						getUserInfos(data.RspData.Data, rechargeData);
+					} else {
+						mui.toast(data.RspTxt);
+					}
+				})
+			}
+
+			function rechargeData(showDetail, personInfoes) {
+				for(var i in personInfoes) {
+					if(showDetail.PublisherId == personInfoes[i].utid) {
+						showDetail.PublisherName=getName(personInfoes[i]);
+						showDetail.PublisherImg=updateHeadImg(personInfoes[i].uimg,2);
+					}
+					if(showDetail.Comments.length > 0) {
+						var comments = showDetail.Comments;
+						for(var j in comments) {
+							if(comments[j].UserId) {
+								if(comments[j].UserId == personInfoes[i].utid) {
+									comments[j].UserName = getName(personInfoes[i]);
+									comments[j].UserImg=updateHeadImg(personInfoes[i].uimg,2)
+								}
+							}
+							if(comments[j].ReplyId) {
+								if(comments[j].ReplyId == personInfoes[i].utid) {
+									comments[j].ReplyName = getName(personInfoes[i]);
+									comments[j].ReplyImg=updateHeadImg(personInfoes[i].uimg,2)
+								}
+							}
+							if(comments[j].Replys.length > 0) {
+								var replies = comments[j].Replys;
+								for(var m in replies) {
+									if(replies[m].UserId) {
+										if(replies[m].UserId == personInfoes[i].utid) {
+											replies[m].UserName = getName(personInfoes[i]);
+										}
+									}
+									if(replies[m].ReplyId) {
+										if(replies[m].ReplyId == personInfoes[i].utid) {
+											replies[m].ReplyName = getName(personInfoes[i]);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				console.log("获取人员信息后的展现详情："+JSON.stringify(showDetail));
+				commentList.showDetail=showDetail;
+			}
+
+			function getName(info) {
+				return info.bunick ? inof.bunick : info.unick;
+			}
+
+			function getIds(data) {
+				console.log("要处理的数据：" + JSON.stringify(data))
+				var ids = [];
+				ids.push(data.PublisherId);
+				if(data.Comments.length > 0) {
+					var comments = data.Comments;
+					for(var i in comments) {
+						if(comments[i].UserId) {
+							ids.push(comments[i].UserId);
+						}
+						if(comments[i].ReplyId) {
+							ids.push(comments[i].ReplyId);
+						}
+						if(comments[i].Replys.length > 0) {
+							var replies = comments[i].Replys;
+							for(var j in replies) {
+								if(replies[j].UserId) {
+									ids.push(comments[i].UserId);
+								}
+								if(replies[j].ReplyId) {
+									ids.push(comments[i].ReplyId);
+								}
+							}
+						}
+					}
+				}
+				ids = events.arraySingleItem(ids);
+				console.log("获取的id数据：" + ids);
+				return ids;
+			}
+			/**
+			 * 21
+			 * 获取用户信息
+			 */
+			function getUserInfos(showDetail, callback) {
+				var ids = getIds(showDetail);
+				var wd = events.showWaiting();
+				postDataPro_PostUinf({
+					vvl: ids.toString(),
+					vtp: 'g'
+				}, wd, function(data) {
+					wd.close();
+					console.log("获取的数据：" + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						getRemark(showDetail, ids, data.RspData, callback);
+					}
+					//					getRemark(showDetail, ids, [], callback);
+				})
+			}
+			/**
+			 * 35
+			 * * 通过ids获取对用户的备注
+			 * @param {Object} ids
+			 */
+			function getRemark(showDetail, ids, dataInfos, callback) {
+				var wd = events.showWaiting();
+				postDataPro_PostUmk({
+					vvl: ids.toString()
+				}, wd, function(data) {
+					wd.close();
+					console.log("获取的用户备注：" + JSON.stringify(data));
+					if(data.RspCode == 0) {
+						if(data.RspData.length > 0) {
+							var remarkInfos = data.RspData;
+							for(var i in dataInfos) {
+								for(var j in remarkInfos) {
+									if(dataInfos[i].utid == remarkInfos[j].butid) {
+										jQuery.extend(dataInfos[i], remarkInfos[j]);
+									}
+								}
+
+							}
+						}
+					}
+					callback(showDetail, dataInfos);
+				})
+			}
 		</script>
 	</body>
 

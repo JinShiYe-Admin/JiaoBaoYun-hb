@@ -61,6 +61,7 @@
 		<script src="../../js/show/show_listnew.js"></script>
 		<script>
 			mui.init();
+			var detailReady=false;
 			document.getElementById("show-all").showCity = {
 				pageFlag: 1, //全部
 				acode: 1,
@@ -73,6 +74,10 @@
 			var deceleration = mui.os.ios ? 0.003 : 0.0009;
 			//plusReay事件监听
 			mui.plusReady(function() {
+				events.preload('show-detail.html',100);
+				window.addEventListener('detailReady',function(e){
+					detailReady=e.detail;
+				})
 				//show-all加载刷新
 				initFresh(document.getElementById("show-all"));
 				//show-all获取数据

@@ -320,9 +320,9 @@ var show_listnew = (function(mod) {
 	mod.setListListener = function() {
 		//展现动态点击监听
 		mui(".mui-slider-group").on("tap", ".news-container", function(e) {
-			this.disabled = true;
 			this.info.focusFlag = 1;
-			events.singleWebviewInPeriod(this, "../quan/space-detail.html", this.info);
+			jumpToShowDetail(this);
+//			events.singleWebviewInPeriod(this, "../quan/space-detail.html", this.info);
 		})
 		//发布的点击事件
 		document.getElementById("publish-show").addEventListener("tap", function() {
@@ -333,6 +333,16 @@ var show_listnew = (function(mod) {
 			item.disabled = true;
 			events.singleWebviewInPeriod(item, "../quan/pub-dynamic.html", "zx");
 		})
+	}
+	function jumpToShowDetail(item){
+		if(detailReady){
+			events.fireToPageWithData("show-detail.html","showDetail",item.info);
+		}else{
+			setTimeout(function(){
+				jumpToShowDetail(item);
+			},500)
+			
+		}
 	}
 	return mod;
 })(show_listnew || {})
