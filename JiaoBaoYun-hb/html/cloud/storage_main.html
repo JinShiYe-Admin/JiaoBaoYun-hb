@@ -757,30 +757,50 @@
 					if(mask) {
 						mask.close();
 					}
-					if(!data.move){//未移动
+					if(!data.move) { //未移动
 						return false;
 					}
+					var failFid = {}; //失败的文件或文件夹id串
+					var failArray = []; //失败的文件或文件夹id数组
+					if(data.fail != null) {
+						failArray = data.fail.split(",");
+						for(var i in failArray) {
+							failFid[failArray[i]] = failArray[i];
+						}
+					}
+					var failStr = "";
 					for(var i in data.data) {
-						var rootEle = document.getElementById("fid_" + data.data[i].fid); //原来的文件或文件夹元素
-						var rootUl; //新的文件夹
-						if(data.data[i].ftype == ".file") { //文件夹
-							rootUl = document.getElementById("ul_folder_" + data.pid);
-						} else { //文件
-							rootUl = document.getElementById("ul_file_" + data.pid);
+						if(failFid[data.data[i].fid] == data.data[i].fid) { //失败的文件或文件夹
+							if(data.data[i].ftype == ".file") { //文件夹
+								failStr = failStr + data.data[i].fname + "\n";
+							} else {
+								failStr = failStr + data.data[i].fname + data.data[i].ftype + "\n";
+							}
+						} else {
+							var rootEle = document.getElementById("fid_" + data.data[i].fid); //原来的文件或文件夹元素
+							var rootUl; //新的文件夹
+							if(data.data[i].ftype == ".file") { //文件夹
+								rootUl = document.getElementById("ul_folder_" + data.pid);
+							} else { //文件
+								rootUl = document.getElementById("ul_file_" + data.pid);
+							}
+							if(rootEle) {
+								console.log("有原文件或文件夹");
+								//界面移除原文件
+								rootEle.parentNode.removeChild(rootEle);
+								//删除原文件的数据
+								delete allData.value[data.data[i].pid][data.data[i].fid];
+							}
+							if(rootUl) {
+								console.log("有新文件夹");
+								//界面增加新文件和数据
+								data.data[i].pid = data.pid;
+								additem(data.data[i]);
+							}
 						}
-						if(rootEle) {
-							console.log("有原文件或文件夹");
-							//界面移除原文件
-							rootEle.parentNode.removeChild(rootEle);
-							//删除原文件的数据
-							delete allData.value[data.data[i].pid][data.data[i].fid];
-						}
-						if(rootUl) {
-							console.log("有新文件夹");
-							//界面增加新文件和数据
-							data.data[i].pid = data.pid;
-							additem(data.data[i]);
-						}
+					}
+					if(failStr != "") {
+						mui.alert(failStr, '移动失败', function() {});
 					}
 				});
 			}
@@ -1012,10 +1032,9 @@
 							vvl: vvlArray.join(",") //节点ID，
 						};
 						postDataPro_PostDiFiD(comData, wd, function(data) {
-							console.log('38.postDataPro_PostDiFiD_用户云盘文件及文件夹删除:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+							console.log('38.postDataPro_PostDiFiD_用户云盘文件及文件夹删除' + JSON.stringify(data));
 							if(data.RspCode == 0) {
 								mui.toast('删除成功');
-
 								for(var i in fileArray) {
 									//界面处理
 									var ele = document.getElementById("fid_" + fileArray[i].fid)
