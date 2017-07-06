@@ -209,7 +209,7 @@
 			.mui-bar-tab {
 				height: auto;
 				text-align: center;
-				z-index: 999;
+				z-index: 998;
 			}
 
 			.mui-bar-tab .mui-tab-item {
@@ -253,20 +253,19 @@
 				left: 10px;
 			}
 
-			.cloud-bar-download .cloud-tab-item[value="1"],
-			.cloud-bar-download .cloud-tab-item[value="2"],
 			.cloud-bar-download .cloud-tab-item[value="3"] {
-				/*只显示下载*/
+				/*批量操作文件，不显示重命名*/
 				display: none;
 			}
 
 			.cloud-bar-folder .cloud-tab-item[value="0"] {
-				/*文件夹只显示删除，移动，重命名*/
+				/*文件夹不显示下载*/
 				display: none;
 			}
 
 			.mui-backdrop {
 				background-color: rgba(255, 255, 255, 0.3);
+				z-index: 997;
 			}
 
 			.file-thumb {
@@ -292,15 +291,15 @@
 				<div class="mui-icon iconfont iconfont-color icon-download"></div>
 				<div class="mui-tab-label">下载</div>
 			</div>
-			<div class="mui-tab-item cloud-tab-item" value="1">
+			<div id="cloud_bottom_trash" class="mui-tab-item cloud-tab-item" value="1">
 				<div class="mui-icon iconfont iconfont-color icon-trash"></div>
 				<div class="mui-tab-label">删除</div>
 			</div>
-			<div class="mui-tab-item cloud-tab-item" value="2">
+			<div id="cloud_bottom_moveto" class="mui-tab-item cloud-tab-item" value="2">
 				<div class="mui-icon iconfont iconfont-color icon-moveto"></div>
 				<div class="mui-tab-label">移动到</div>
 			</div>
-			<div class="mui-tab-item cloud-tab-item" value="3">
+			<div id="cloud_bottom_changename" class="mui-tab-item cloud-tab-item" value="3">
 				<div class="mui-icon iconfont iconfont-color icon-zhongmingming"></div>
 				<div class="mui-tab-label">重命名</div>
 			</div>
@@ -439,7 +438,7 @@
 						//调整列表
 						document.getElementById("scroll_wrapper_" + showPid).style.bottom = cloud_bottom.offsetHeight + 'px';
 						download = false;
-						document.getElementById("cloud_bottom_download").style.opacity = '0.5';
+						changeCloudButtonOpacity(0.5);
 						edit = true;
 					} else if(this.innerText == "全选") {
 						var check = document.querySelectorAll("#ul_file_" + showPid + " input");
@@ -450,10 +449,10 @@
 						if(check.length != 0) {
 							this.innerText = "全不选";
 							download = true;
-							document.getElementById("cloud_bottom_download").style.opacity = '1';
+							changeCloudButtonOpacity(1);
 						} else {
 							download = false;
-							document.getElementById("cloud_bottom_download").style.opacity = '0.5';
+							changeCloudButtonOpacity(0.5);
 						}
 						document.getElementById("title").innerText = "已选定" + check.length + "个";
 					} else if(this.innerText == "全不选") {
@@ -465,7 +464,7 @@
 						this.innerText = "全选";
 						document.getElementById("title").innerText = "已选定0个";
 						download = false;
-						document.getElementById("cloud_bottom_download").style.opacity = '0.5';
+						changeCloudButtonOpacity(0.5);
 					}
 				});
 
@@ -628,7 +627,7 @@
 					if(!edit) {
 						if(target == "showbar") {
 							//显示底部
-							document.getElementById("cloud_bottom_download").style.opacity = '1';
+							changeCloudButtonOpacity(1);
 							var cloud_bottom = document.getElementById("cloud_bottom");
 							cloud_bottom.style.display = "block";
 							if(mode.ftype == '.file') { //文件夹
@@ -644,6 +643,7 @@
 								document.getElementById("scroll_wrapper_" + showPid).style.bottom = "0px";
 							});
 							mask.show();
+
 							return false;
 						}
 						if(mode.ftype == '.file') { //点击文件夹
@@ -704,7 +704,9 @@
 							break;
 						case "1":
 							console.log("删除");
-							mask.close();
+							if(!edit) {
+								mask.close();
+							}
 							deleteData();
 							break;
 						case "2":
@@ -960,31 +962,59 @@
 				mui.confirm('删除，确认？', '提示', btnArray, function(e) {
 					if(e.index == 1) { //删除
 						var wd = events.showWaiting();
+						var fileArray = [];
+						var vvlArray = [];
+						if(edit) { //编辑状态，批量删除
+							var checked = document.querySelectorAll('.mui-checkbox input[type=checkbox]:checked');
+							for(var i in checked) {
+								if(checked[i].value) {
+									console.log(checked[i].value);
+									fileArray[fileArray.length] = allData.value[showPid][checked[i].value];
+									vvlArray[vvlArray.length] = allData.value[showPid][checked[i].value].fid;
+								}
+							}
+						} else {
+							fileArray[fileArray.length] = mode;
+							vvlArray[vvlArray.length] = mode.fid;
+						}
+						console.log("fileArray " + JSON.stringify(fileArray));
+						console.log("vvlArray " + JSON.stringify(vvlArray));
 						//38.用户云盘文件及文件夹删除
 						var comData = {
-							vvl: mode.fid //节点ID，
+							vvl: vvlArray.join(",") //节点ID，
 						};
 						postDataPro_PostDiFiD(comData, wd, function(data) {
 							console.log('38.postDataPro_PostDiFiD_用户云盘文件及文件夹删除:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 							if(data.RspCode == 0) {
-								//界面处理
-								var ele = document.getElementById("fid_" + mode.fid)
-								ele.parentNode.removeChild(ele);
 								mui.toast('删除成功');
-								//数据处理
-								delete allData.value[showPid][mode.fid];
-								if(mode.pid == 0) { //顶层文件夹
+
+								for(var i in fileArray) {
+									//界面处理
+									var ele = document.getElementById("fid_" + fileArray[i].fid)
+									ele.parentNode.removeChild(ele);
+									//数据处理
+									delete allData.value[fileArray[i].pid][fileArray[i].fid];
+								}
+
+								if(mode.pid == 0 && mode.ftype == ".ftype") { //顶层文件夹
 									events.fireToPageNone("cloud_home.html", "cloudDataChange", {
 										type: "deleteFolder",
 										data: mode
 									});
 								}
+
+								var delArray = []; //文件夹，文件列表
+								if(fileArray.length == 1) { //只删除一个文件或文件夹
+									delArray = data.RspData;
+								} else { //批量删除文件
+									delArray = fileArray;
+								}
 								//删除七牛的文件
 								var pathList = [];
-								for(var i in data.RspData) {
-									console.log("delete " + i + " " + JSON.stringify(data.RspData[i]))
-									if(data.RspData[i].fpath != '') {
-										var ftypes = data.RspData[i].fpath.split('/');
+								for(var i in delArray) {
+									console.log("delete " + i + " " + JSON.stringify(delArray[i]))
+									if(delArray[i].fpath != "") {
+										var ftypes = delArray[i].fpath.split('/');
 										var type = cloud.classify(ftypes[ftypes.length - 1]);
 										if(type == "") { //有缩略图
 											var fileNames = ftypes[ftypes.length - 1].split('.');
@@ -992,7 +1022,7 @@
 											var path = window.storageKeyName.QNPB + 'yuncunc/' + window.storageKeyName.CLOUDSTORAGETHUMB + fileName + '.png'
 											pathList.push(path);
 										}
-										pathList.push(data.RspData[i].fpath);
+										pathList.push(delArray[i].fpath);
 									}
 								}
 								if(pathList.length != 0) {
@@ -1014,6 +1044,9 @@
 											console.log('七牛删除失败:' + JSON.stringify(type));
 										}
 									);
+								}
+								if(edit) {
+									cloudBottomHide();
 								}
 							} else {
 								mui.toast(data.RspTxt);
@@ -1133,10 +1166,10 @@
 				console.log(checkBox.length + " " + checked.length);
 				if(checked.length == 0) {
 					download = false;
-					document.getElementById("cloud_bottom_download").style.opacity = '0.5';
+					changeCloudButtonOpacity(0.5);
 				} else {
 					download = true;
-					document.getElementById("cloud_bottom_download").style.opacity = '1';
+					changeCloudButtonOpacity(1);
 				}
 				if(checkBox.length == checked.length) {
 					document.getElementById("edit").innerText = "全不选";
@@ -1144,6 +1177,13 @@
 					document.getElementById("edit").innerText = "全选";
 				}
 				document.getElementById("title").innerText = "已选定" + checked.length + "个";
+			}
+
+			function changeCloudButtonOpacity(num) {
+				document.getElementById("cloud_bottom_download").style.opacity = num;
+				document.getElementById("cloud_bottom_trash").style.opacity = num;
+				document.getElementById("cloud_bottom_moveto").style.opacity = num;
+				document.getElementById("cloud_bottom_changename").style.opacity = num;
 			}
 		</script>
 	</body>
