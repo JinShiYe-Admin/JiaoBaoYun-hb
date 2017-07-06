@@ -793,10 +793,6 @@
 							</div>';
 				} else {
 					var type = cloud.classify(data.ftype);
-					var pathList = data.fpath.split('/');
-					var pathList2 = pathList[pathList.length - 1].split('.');
-					var fileName = pathList2[0];
-					var path = window.storageKeyName.QNPB + 'yuncunc/' + window.storageKeyName.CLOUDSTORAGETHUMB + fileName + '.png'
 					var html_0 = '<span id="fright_' + data.fid + '" class="mui-navigate-right mui-media-object mui-pull-right" data-type="showbar"></span>\
 								<div class="mui-input-row mui-checkbox mui-right mui-pull-right" data-type="changecheckbox">\
 									<input name="checkbox" type="checkbox" value="' + data.fid + '" data-type="changecheckbox"/>\
@@ -805,6 +801,10 @@
 					if(type != '') {
 						html_1 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
 					} else {
+						var pathList = data.fpath.split('/');
+						var pathList2 = pathList[pathList.length - 1].split('.');
+						var fileName = pathList2[0];
+						var path = window.storageKeyName.QNPB + 'yuncunc/' + window.storageKeyName.CLOUDSTORAGETHUMB + fileName + '.png'
 						html_1 = '<div id="fthumb_' + data.fid + '" class="mui-media-object mui-pull-left file-thumb" value="' + path + '" style="background-image:url(' + path + ');"></div>';
 					}
 					var html_2 = '<div class="mui-media-body">\
@@ -980,11 +980,11 @@
 								for(var i in data.RspData) {
 									console.log("delete " + i + " " + JSON.stringify(data.RspData[i]))
 									if(data.RspData[i].fpath != '') {
-										var type = cloud.classify(data.ftype);
-										if(type == "") {//有缩略图
-											var pathList = data.fpath.split('/');
-											var pathList2 = pathList[pathList.length - 1].split('.');
-											var fileName = pathList2[0];
+										var ftypes = data.RspData[i].fpath.split('/');
+										var type = cloud.classify(ftypes[ftypes.length - 1]);
+										if(type == "") { //有缩略图
+											var fileNames = ftypes[ftypes.length - 1].split('.');
+											var fileName = fileNames[0];
 											var path = window.storageKeyName.QNPB + 'yuncunc/' + window.storageKeyName.CLOUDSTORAGETHUMB + fileName + '.png'
 											pathList.push(path);
 										}
