@@ -315,11 +315,14 @@
 				var fname = fnameList[fnameList.length - 1];
 				console.log('选定 ' + JSON.stringify(fnameList) + " " + showPid + " " + showTopId + " " + JSON.stringify(main.data));
 				if(main.data.type == '0') { //移动到
-					if(showPid == main.data.data.pid) { //未移动
+					if(showPid == main.data.data[0].pid) { //未移动
 						plus.webview.close(main, events.getAniClose());
 						return false;
 					}
-					var vvlArray=[main.data.data.fid];
+					var vvlArray = [];
+					for(var i in main.data.data) {
+						vvlArray[vvlArray.length] = main.data.data[i].fid
+					}
 					var wd = events.showWaiting("移动中");
 					//53.用户移动云盘文件或文件夹
 					var comData = {
@@ -335,6 +338,9 @@
 								data: main.data.data //原文件的数据
 							});
 							plus.webview.close(main, events.getAniClose());
+						} else if(data.RspCode == 8) {
+							mui.toast(data.RspTxt);
+
 						} else {
 							mui.toast("移动失败" + data.RspTxt);
 						}
@@ -442,7 +448,7 @@
 						console.log('获取数据pid_' + pid + '==null');
 						addbot(pid); //增加对应的文件夹
 						mui.each(tempRspData, function(index, item) {
-							if(main.data.type==0&& main.data.data.ftype == ".file"&&main.data.data.fid==item.fid) {//移动文件夹时，不显示被移动的文件夹
+							if(main.data.type == 0 && main.data.data[0].ftype == ".file" && main.data.data[0].fid == item.fid) { //移动文件夹时，不显示被移动的文件夹
 								console.log("隐藏被移动的文件");
 							} else {
 								additem(item);

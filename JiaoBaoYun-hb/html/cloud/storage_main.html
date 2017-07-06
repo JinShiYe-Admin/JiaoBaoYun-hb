@@ -377,7 +377,6 @@
 			var showPidList = []; //记录打开的文件夹父id历史
 			var back = true; //是否允许返回
 			var edit = false; //是否显示编辑页面
-			var download = false; //编辑状态下是否允许点击下载
 			var mode; //当前选取的文件夹或文件的数据
 			var mask; //显示底部菜单时的遮罩
 			//云盘子页面
@@ -437,7 +436,6 @@
 						cloud_bottom.className = "mui-bar mui-bar-tab cloud-bar-download";
 						//调整列表
 						document.getElementById("scroll_wrapper_" + showPid).style.bottom = cloud_bottom.offsetHeight + 'px';
-						download = false;
 						changeCloudButtonOpacity(0.5);
 						edit = true;
 					} else if(this.innerText == "全选") {
@@ -448,10 +446,8 @@
 						}
 						if(check.length != 0) {
 							this.innerText = "全不选";
-							download = true;
 							changeCloudButtonOpacity(1);
 						} else {
-							download = false;
 							changeCloudButtonOpacity(0.5);
 						}
 						document.getElementById("title").innerText = "已选定" + check.length + "个";
@@ -463,7 +459,6 @@
 						}
 						this.innerText = "全选";
 						document.getElementById("title").innerText = "已选定0个";
-						download = false;
 						changeCloudButtonOpacity(0.5);
 					}
 				});
@@ -581,6 +576,14 @@
 				//返回按钮监听
 				mui.back = function() {
 					console.log("mui.back " + back + " " + showPidList.length);
+					if(edit) {
+						cloudBottomHide();
+						return false;
+					}
+					if(mask) {
+						mask.close();
+						return false;
+					}
 					if(back) {
 						//清除最后一个历史记录的数据
 						showPidList.pop();
@@ -641,9 +644,9 @@
 								var showdown = document.querySelector("#pid_" + showPid + " .cloud-bar-showdown").className = "mui-navigate-right mui-media-object mui-pull-right";
 								document.getElementById("cloud_bottom").style.display = "none";
 								document.getElementById("scroll_wrapper_" + showPid).style.bottom = "0px";
+								mask = null;
 							});
 							mask.show();
-
 							return false;
 						}
 						if(mode.ftype == '.file') { //点击文件夹
@@ -693,10 +696,16 @@
 
 				//点击底部菜单
 				mui('#cloud_bottom').on('tap', '.cloud-tab-item', function() {
-					console.log("点击底部菜单 ");
 					var value = this.getAttribute("value");
 					console.log("value " + value);
 					console.log("mode " + JSON.stringify(mode));
+					var checked; //选择的文件数量
+					if(edit) {
+						checked = document.querySelectorAll('.mui-checkbox input[type=checkbox]:checked');
+						if(checked.length == 0) {
+							return false;
+						}
+					}
 					switch(value) {
 						case "0":
 							console.log("下载");
@@ -711,10 +720,21 @@
 							break;
 						case "2":
 							console.log("移动到");
-							//mask.close();
+							var fArray = [];
+							if(edit) {
+								for(var i in checked) {
+									if(checked[i].value) {
+										console.log(checked[i].value);
+										fArray[fArray.length] = allData.value[showPid][checked[i].value];
+									}
+								}
+							} else {
+								fArray[fArray.length] = mode;
+							}
+							console.log('fArray ' + JSON.stringify(fArray));
 							events.openNewWindowWithData("storage_main_choose.html", {
 								type: 0,
-								data: mode,
+								data: fArray,
 								webid: main.id,
 								winid: "cloudMoveTo"
 							});
@@ -733,26 +753,32 @@
 				window.addEventListener('cloudMoveTo', function(e) {
 					var data = e.detail.data;
 					console.log("cloudMoveTo " + JSON.stringify(data));
-					mask.close();
-					var rootEle = document.getElementById("fid_" + data.data.fid); //原来的文件或文件夹元素
-					var rootUl; //新的文件夹
-					if(data.data.ftype == ".file") { //文件夹
-						rootUl = document.getElementById("ul_folder_" + data.pid);
-					} else { //文件
-						rootUl = document.getElementById("ul_file_" + data.pid);
+					if(edit) {
+						cloudBottomHide();
+					} else {
+						mask.close();
 					}
-					if(rootEle) {
-						console.log("有原文件或文件夹");
-						//界面移除原文件
-						rootEle.parentNode.removeChild(rootEle);
-						//删除原文件的数据
-						delete allData.value[data.data.pid][data.data.fid];
-					}
-					if(rootUl) {
-						console.log("有新文件夹");
-						//界面增加新文件和数据
-						data.data.pid = data.pid;
-						additem(data.data);
+					for(var i in data.data) {
+						var rootEle = document.getElementById("fid_" + data.data[i].fid); //原来的文件或文件夹元素
+						var rootUl; //新的文件夹
+						if(data.data[i].ftype == ".file") { //文件夹
+							rootUl = document.getElementById("ul_folder_" + data.pid);
+						} else { //文件
+							rootUl = document.getElementById("ul_file_" + data.pid);
+						}
+						if(rootEle) {
+							console.log("有原文件或文件夹");
+							//界面移除原文件
+							rootEle.parentNode.removeChild(rootEle);
+							//删除原文件的数据
+							delete allData.value[data.data[i].pid][data.data[i].fid];
+						}
+						if(rootUl) {
+							console.log("有新文件夹");
+							//界面增加新文件和数据
+							data.data[i].pid = data.pid;
+							additem(data.data[i]);
+						}
 					}
 				});
 			}
@@ -1064,9 +1090,6 @@
 				var fileArray = []; //下载的文件列表
 				var showSave = true; //是否显示保存到相册的选项
 				if(edit) {
-					if(!download) { //不允许下载
-						return false;
-					}
 					//批量下载
 					var checked = document.querySelectorAll('.mui-checkbox input[type=checkbox]:checked');
 					for(var i in checked) {
@@ -1165,10 +1188,8 @@
 				var checked = document.querySelectorAll('.mui-checkbox input[type=checkbox]:checked');
 				console.log(checkBox.length + " " + checked.length);
 				if(checked.length == 0) {
-					download = false;
 					changeCloudButtonOpacity(0.5);
 				} else {
-					download = true;
 					changeCloudButtonOpacity(1);
 				}
 				if(checkBox.length == checked.length) {
