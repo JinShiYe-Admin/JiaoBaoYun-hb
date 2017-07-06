@@ -336,10 +336,11 @@
 					postDataPro_PostDiFiM(comData, wd, function(data) {
 						console.log("53 用户移动云盘文件 " + JSON.stringify(data));
 						if(data.RspCode == 0) {
-							mui.toast("移动成功");
+							mui.toast("移动完成");
 							events.fireToPageNone(main.data.webid, main.data.winid, {
 								pid: showPid, //移动后的pid
 								move: 1, //有移动
+								fail: data.RspData, //失败的文件id串
 								data: main.data.data //原文件的数据
 							});
 							plus.webview.close(main, events.getAniClose());
