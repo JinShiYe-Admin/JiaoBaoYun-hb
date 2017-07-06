@@ -316,14 +316,18 @@
 				console.log('选定 ' + JSON.stringify(fnameList) + " " + showPid + " " + showTopId + " " + JSON.stringify(main.data));
 				if(main.data.type == '0') { //移动到
 					if(showPid == main.data.data[0].pid) { //未移动
+						events.fireToPageNone(main.data.webid, main.data.winid, {
+							pid: showPid, //移动后的pid
+							move: 0 //未移动
+						});
 						plus.webview.close(main, events.getAniClose());
 						return false;
 					}
+					var wd = events.showWaiting("移动中");
 					var vvlArray = [];
 					for(var i in main.data.data) {
 						vvlArray[vvlArray.length] = main.data.data[i].fid
 					}
-					var wd = events.showWaiting("移动中");
 					//53.用户移动云盘文件或文件夹
 					var comData = {
 						vvl: vvlArray.join(","), //文件ID
@@ -335,12 +339,12 @@
 							mui.toast("移动成功");
 							events.fireToPageNone(main.data.webid, main.data.winid, {
 								pid: showPid, //移动后的pid
+								move: 1, //有移动
 								data: main.data.data //原文件的数据
 							});
 							plus.webview.close(main, events.getAniClose());
-						} else if(data.RspCode == 8) {
+						} else if(data.RspCode == 8) { //移动的文件有重名或者为空
 							mui.toast(data.RspTxt);
-
 						} else {
 							mui.toast("移动失败" + data.RspTxt);
 						}

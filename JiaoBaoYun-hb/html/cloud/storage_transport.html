@@ -797,11 +797,12 @@
 								//console.log('下载任务接收数据 id' + id + ' downloadState ' + download.state + " totalSize " + totalSize +" downloadSize " + downloadSize);
 								var waiting = document.getElementById("down_waiting_" + id);
 								if(waiting) {
-									console.log('xiazai lalllllllllll');
+									var progress = parseInt(download.downloadedSize / download.totalSize * 100);
+									console.log("下载中 " + progress);
 									waiting.innerText = '下载中';
 									document.getElementById("down_btn_" + id).style.visibility = 'visible';
 									document.getElementById("down_btn_" + id).innerText = '暂停';
-									mui("#down_bar_" + id).progressbar().setProgress(download.downloadedSize / download.totalSize * 100);
+									mui("#down_bar_" + id).progressbar().setProgress(progress);
 									document.getElementById("down_size_" + id).innerText = downloadSize + '/' + totalSize;
 								}
 								break;
@@ -816,14 +817,14 @@
 								}
 								break;
 							default:
-//								if(download.state != 3) {
-									console.log('下载任务 id ' + id + '|downloadState ' + download.state);
-//								}
+								//								if(download.state != 3) {
+								console.log('下载任务 id ' + id + '|downloadState ' + download.state);
+								//								}
 								break;
 						}
 					}, function(dtask) {
 						//下载任务创建成功的回调
-						console.log("dtask "+JSON.stringify(dtask));
+						console.log("dtask " + JSON.stringify(dtask));
 						taskArray.key[taskArray.key.length] = dtask.id;
 						taskArray.value[dtask.id] = {
 							downId: downloadingId, //下载任务id
@@ -1018,7 +1019,7 @@
 									break;
 							}
 						}, function(task) {
-							console.log("task "+JSON.stringify(task));
+							console.log("task " + JSON.stringify(task));
 							taskArray.key[taskArray.key.length] = task.__UUID__;
 							taskArray.value[task.__UUID__] = {
 								upId: uploadingId, //上传任务id

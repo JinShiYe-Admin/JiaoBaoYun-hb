@@ -705,6 +705,8 @@
 						if(checked.length == 0) {
 							return false;
 						}
+					} else {
+						mask.close();
 					}
 					switch(value) {
 						case "0":
@@ -713,9 +715,6 @@
 							break;
 						case "1":
 							console.log("删除");
-							if(!edit) {
-								mask.close();
-							}
 							deleteData();
 							break;
 						case "2":
@@ -741,7 +740,6 @@
 							break;
 						case "3":
 							console.log("重命名");
-							mask.close();
 							changeName();
 							break;
 						default:
@@ -755,8 +753,12 @@
 					console.log("cloudMoveTo " + JSON.stringify(data));
 					if(edit) {
 						cloudBottomHide();
-					} else {
+					}
+					if(mask) {
 						mask.close();
+					}
+					if(!data.move){//未移动
+						return false;
 					}
 					for(var i in data.data) {
 						var rootEle = document.getElementById("fid_" + data.data[i].fid); //原来的文件或文件夹元素
@@ -1102,7 +1104,6 @@
 					cloudBottomHide();
 				} else {
 					fileArray[fileArray.length] = mode;
-					mask.close();
 				}
 				if(fileArray.length == 0) {
 					return false;
