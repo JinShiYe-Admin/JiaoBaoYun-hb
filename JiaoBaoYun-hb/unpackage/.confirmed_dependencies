@@ -2966,7 +2966,9 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/libs/crypto-js/crypto-js.js"
+			"js/libs/crypto-js/crypto-js.js",
+			"css/show/show-detail.css",
+			"css/iconfont/iconfont.css"
 		]
 	}
 }

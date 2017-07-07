@@ -1,46 +1,11 @@
 Vue.component('detail-img', {
 	props: ['imgs'],
-	template: '<div v-if="imgs.length>0"><div v-for="img of imgs"></div></div>',
+	template: '<div v-if="imgs&&imgs.length>0"><div v-for="img of imgs"></div></div>',
 	methods: {
 
 	}
 })
-Vue.component('comment-reply', {
-	props: ['replies'],
-	template: '<div><div v-for="(reply,index) of replies" v-on:longTap="delete(index)"><p><span>reply.name<span></p></div></div>',
-	//	data: getData() {
-	//		return {
-	//
-	//		}
-	//	},
-	methods: {
-		deleteReply: function(index) {
-			events.showActionSheet([{
-				title: "删除",
-				dia: 1
-			}], [function() {
-				this.replies.splice(index, 1);
-			}])
-		}
-	}
-})
-Vue.component('comment-list', {
-	props: ['comments'],
-	template: '<div v-if="comments&&comments.length>0"><div v-for="(comment,index) of comments"><slot v-on:relies="comment.replies"></slot></div></div>',
-	methods: {
-		togglePraise: function() {
 
-		},
-		deleteComment: function(index) {
-			events.showActionSheet([{
-				title: "删除",
-				dia: 1
-			}], [function() {
-				this.comments.splice(index, 1);
-			}])
-		}
-	}
-})
 var commentList = new Vue({
 	el: '#show-detail',
 	data: {
@@ -69,6 +34,7 @@ var commentList = new Vue({
 				default:
 					break;
 			}
+			console.log("获取的图片地址："+JSON.stringify(imgs));
 			return imgs;
 		},
 		splitImgs: function(showDetail, type) {
