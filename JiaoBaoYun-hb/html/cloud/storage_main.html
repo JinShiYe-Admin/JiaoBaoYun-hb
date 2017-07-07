@@ -428,6 +428,7 @@
 					clean: function() {
 						mui('#failPop').popover('toggle');
 						vue_fail.failArray = [];
+						back = true;
 					}
 				}
 			});
@@ -628,11 +629,11 @@
 				//返回按钮监听
 				mui.back = function() {
 					console.log("mui.back " + back + " " + showPidList.length);
-					if(edit) {
+					if(edit) {//批量编辑
 						cloudBottomHide();
 						return false;
 					}
-					if(mask) {
+					if(mask) {//对文件或文件夹操作中
 						mask.close();
 						return false;
 					}
@@ -814,7 +815,7 @@
 					}
 					var failFid = {}; //失败的文件或文件夹id串
 					var failArray = []; //失败的文件或文件夹id数组
-					vue_fail.failArray = [];//清空列表
+					vue_fail.failArray = []; //清空列表
 					if(data.fail != null) {
 						failArray = data.fail.split(",");
 						for(var i in failArray) {
@@ -824,9 +825,9 @@
 					for(var i in data.data) {
 						if(failFid[data.data[i].fid] == data.data[i].fid) { //失败的文件或文件夹
 							if(data.data[i].ftype == ".file") { //文件夹
-								vue_fail.failArray[vue_fail.failArray.length] =data.data[i].fname;
+								vue_fail.failArray[vue_fail.failArray.length] = data.data[i].fname;
 							} else {
-								vue_fail.failArray[vue_fail.failArray.length] =data.data[i].fname + data.data[i].ftype;
+								vue_fail.failArray[vue_fail.failArray.length] = data.data[i].fname + data.data[i].ftype;
 							}
 						} else {
 							var rootEle = document.getElementById("fid_" + data.data[i].fid); //原来的文件或文件夹元素
@@ -852,7 +853,12 @@
 						}
 					}
 					if(vue_fail.failArray.length > 0) {
+						back = false;
 						mui('#failPop').popover('toggle');
+						document.querySelector('.mui-backdrop').addEventListener('tap', function() {
+							back = true;
+							vue_fail.failArray = []; //清空列表
+						});
 					}
 				});
 			}
