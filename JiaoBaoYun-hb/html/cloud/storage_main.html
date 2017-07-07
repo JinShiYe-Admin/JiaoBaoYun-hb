@@ -276,6 +276,26 @@
 				-o-background-size: cover;
 				background-size: cover;
 			}
+
+			#failPop .mui-popup {
+				display: block;
+				background-color: white;
+			}
+
+			#failPop .mui-popup .mui-scroll-wrapper {
+				top: 45px;
+				bottom: 38px;
+			}
+
+			#failPop .mui-popup .mui-popup-buttons {
+				margin-top: 129px;
+				border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+				/*box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);*/
+			}
+
+			#failPop .mui-popup .mui-table-view-cell {
+				padding: 11px 15px;
+			}
 		</style>
 	</head>
 
@@ -356,6 +376,25 @@
 				<filter-item v-for="item of options" v-bind:option="item" v-if="cellIsShow(item)"></filter-item>
 			</ul>
 		</div>
+
+		<div id="failPop" class="mui-popover">
+			<div class="mui-popup mui-popup-in">
+				<div class="mui-popup-inner">
+					<div class="mui-popup-title">失败列表</div>
+				</div>
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<li v-for="value in failArray" class="mui-table-view-cell">
+								{{value}}
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="mui-popup-buttons"><span v-on:tap="clean" class="mui-popup-button mui-popup-button-bold">确定</span></div>
+			</div>
+		</div>
+
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/vue.js"></script>
 		<script src="../../js/cloud/upload-filter.js"></script>
@@ -379,6 +418,19 @@
 			var edit = false; //是否显示编辑页面
 			var mode; //当前选取的文件夹或文件的数据
 			var mask; //显示底部菜单时的遮罩
+
+			var vue_fail = new Vue({
+				el: "#failPop",
+				data: {
+					failArray: []
+				},
+				methods: {
+					clean: function() {
+						mui('#failPop').popover('toggle');
+						vue_fail.failArray = [];
+					}
+				}
+			});
 			//云盘子页面
 			mui.init({
 				gestureConfig: {
@@ -762,19 +814,19 @@
 					}
 					var failFid = {}; //失败的文件或文件夹id串
 					var failArray = []; //失败的文件或文件夹id数组
+					vue_fail.failArray = [];//清空列表
 					if(data.fail != null) {
 						failArray = data.fail.split(",");
 						for(var i in failArray) {
 							failFid[failArray[i]] = failArray[i];
 						}
 					}
-					var failStr = "";
 					for(var i in data.data) {
 						if(failFid[data.data[i].fid] == data.data[i].fid) { //失败的文件或文件夹
 							if(data.data[i].ftype == ".file") { //文件夹
-								failStr = failStr + data.data[i].fname + "\n";
+								vue_fail.failArray[vue_fail.failArray.length] =data.data[i].fname;
 							} else {
-								failStr = failStr + data.data[i].fname + data.data[i].ftype + "\n";
+								vue_fail.failArray[vue_fail.failArray.length] =data.data[i].fname + data.data[i].ftype;
 							}
 						} else {
 							var rootEle = document.getElementById("fid_" + data.data[i].fid); //原来的文件或文件夹元素
@@ -799,8 +851,8 @@
 							}
 						}
 					}
-					if(failStr != "") {
-						mui.alert(failStr, '移动失败', function() {});
+					if(vue_fail.failArray.length > 0) {
+						mui('#failPop').popover('toggle');
 					}
 				});
 			}
