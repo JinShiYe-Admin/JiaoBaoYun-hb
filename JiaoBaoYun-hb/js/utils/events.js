@@ -863,7 +863,7 @@ var events = (function(mod) {
 		if(!data) {
 			data = "";
 		}
-		console.log("当前点击控件是否可点击：" + clickedItem.disabled);
+//		console.log("当前点击控件是否可点击：" + clickedItem.disabled);
 		var webviewSites = webviewUrl.split("/");
 		var webviewId = webviewSites[webviewSites.length - 1];
 		var targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(webviewUrl), {
@@ -875,14 +875,16 @@ var events = (function(mod) {
 		}
 	}
 	var setItemAble = function(item, targetWeb, waiting) {
-		console.log("当前点击控件是否可点击：" + item.disabled);
+		//		console.log("当前点击控件是否可点击：" + item.disabled);
 		console.log("targetWeb是否已显示：" + targetWeb.isVisible());
 		setTimeout(function() {
 			if(targetWeb.isVisible()) {
 				setTimeout(function() {
 					mod.closeWaiting(waiting);
-					item.disabled = false;
-					jQuery(item).css("pointerEvents", "all");
+					if(item) {
+						item.disabled = false;
+						jQuery(item).css("pointerEvents", "all");
+					}
 				}, 500)
 			} else {
 				setItemAble(item, targetWeb, waiting);
@@ -961,8 +963,10 @@ var events = (function(mod) {
 	}
 	//判断是否是游客身份登录，页面中有用户操作时调用
 	mod.judgeLoginMode = function(item) {
-		item.disabled = true;
-		jQuery(item).css("pointerEvents", "none");
+		if(item) {
+			item.disabled = true;
+			jQuery(item).css("pointerEvents", "none");
+		}
 		console.log('判断是否是游客身份登录');
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		if(personal.utid > 0) { //有账号，正常登录

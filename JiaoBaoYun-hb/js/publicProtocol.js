@@ -1602,14 +1602,14 @@ var postDataPro_addUserSpaceMsgReply = function(commonData, wd, callback) {
 //55.（用户空间）删除某条用户空间留言
 //所需参数
 //		var comData = {
-//			userSpaceMsgId: ''//用户空间留言ID
+//			userMsgId: ''//用户空间留言ID
 //		};
 //1为正确
-var postDataPro_delUserSpaceMsgById = function(commonData, wd, callback) {
+var postDataPro_delUserMsgById = function(commonData, wd, callback) {
 	//需要加密的数据
 	var enData = {};
 	//发送网络请求，data为网络返回值
-	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/delUserSpaceMsgById', enData, commonData, 2, wd, callback);
+	postDataEncry(storageKeyName.MAINJIAOXIAOURL + 'userSpace/delUserMsgById', enData, commonData, 2, wd, callback);
 }
 
 //56.（用户空间）获取与我相关

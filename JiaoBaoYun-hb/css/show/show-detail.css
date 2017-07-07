@@ -123,4 +123,9 @@ body{
 	padding: 5px;
 	color: darkgray;
 }
-
+.isLiked{
+	color: #12B7F5;
+}
+.isUnlike{
+	color:darkgray;
+}

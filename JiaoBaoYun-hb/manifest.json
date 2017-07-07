@@ -5295,7 +5295,9 @@
 					"css/show/show-detail.css",
 					"css/iconfont/iconfont.css"
 				],
-				"refer": [],
+				"refer": [
+					"html/register/login.html"
+				],
 				"priority": 0
 			}
 		},
