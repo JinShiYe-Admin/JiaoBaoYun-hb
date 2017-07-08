@@ -441,9 +441,6 @@
 
 				console.log('26.postDataPro_PostDiFi用户云盘顶层文件及文件夹获取:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
 				if(data.RspCode == 0 || data.RspCode == 9) {
-					if(data.RspCode == 9) {
-						mui.toast('没有文件夹');
-					}
 					var tempRspData = [];
 					if(data.RspData != null && data.RspData != '') {
 						tempRspData = data.RspData;

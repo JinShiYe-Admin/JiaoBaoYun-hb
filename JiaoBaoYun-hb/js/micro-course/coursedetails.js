@@ -5,7 +5,7 @@ var courseDetails = (function(mod) {
 	 * @param {Object} img 图片元素
 	 */
 	mod.onImageLoad = function(img) {
-		img.parentNode.style.height = parseInt(img.parentNode.offsetWidth * (3 / 4)) + "px";
+		img.parentNode.style.height = parseInt(img.parentNode.offsetWidth * (4 / 5)) + "px";
 		if(img.offsetWidth > img.offsetHeight) { //宽的图片
 			img.style.height = img.parentNode.offsetHeight + "px";
 			img.style.width = "initial";
@@ -71,7 +71,7 @@ var courseDetails = (function(mod) {
 	mod.onPlayLoad = function(img) {
 		img.parentNode.parentNode.style.height = parseInt(img.parentNode.parentNode.offsetWidth * (3 / 4)) + "px";
 		var width = img.parentNode.parentNode.offsetWidth;
-		var height = parseInt(width * (3 / 4));
+		var height = parseInt(width * (4 / 5));
 		img.parentNode.style.width = width + "px";
 		img.parentNode.style.height = height + "px";
 		img.parentNode.style.visibility = "visible";

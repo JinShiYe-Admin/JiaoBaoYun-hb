@@ -2028,7 +2028,8 @@
 			"fonts/iconfont.ttf",
 			"fonts/mui.ttf",
 			"fonts/fangzheng.ttf",
-			"image/cloud/cloud_0_unknow_0.png"
+			"image/cloud/cloud_0_unknow_0.png",
+			"image/utils/playvideo.png"
 		],
 		"refer": [
 			"html/cloud/app_notes_create.html"

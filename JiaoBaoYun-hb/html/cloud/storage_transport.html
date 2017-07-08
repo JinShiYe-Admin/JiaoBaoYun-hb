@@ -852,7 +852,7 @@
 			function downloadFail() {
 				var waiting = document.getElementById("down_waiting_" + downloadingId);
 				if(waiting) {
-					waiting.innerText = '上传失败';
+					waiting.innerText = '下载失败';
 					document.getElementById("down_btn_" + downloadingId).style.display = "none";
 				}
 				downloadList.value[downloadingId].state = -2;

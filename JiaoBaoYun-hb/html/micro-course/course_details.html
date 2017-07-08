@@ -175,14 +175,14 @@
 			}
 
 			.section-list-li-left {
-				width: 60%;
+				width: 65%;
 				float: left;
 			}
 
 			.section-list-img-div {
 				float: right;
 				overflow: hidden;
-				width: 40%;
+				width: 35%;
 				line-height: 0px;
 			}
 
@@ -209,7 +209,7 @@
 				/*视频的时间*/
 				position: absolute;
 				color: white;
-				top: 80%;
+				top: 85%;
 				right: 7%;
 			}
 
@@ -416,12 +416,12 @@
 
 			.video-area video {
 				background-color: black;
-				background-position: 0% 50%;
+				background-position: 50% 50%;
 				background-repeat: no-repeat;
-				-webkit-background-size: cover;
-				-moz-background-size: cover;
-				-o-background-size: cover;
-				background-size: cover;
+				-webkit-background-size: 100%;
+				-moz-background-size: 100%;
+				-o-background-size: 100%;
+				background-size: 100%;
 			}
 
 			.icon-gerenziliao {
@@ -567,7 +567,7 @@
 
 				//初始化视频播放区域
 				var video = document.getElementById("video");
-				video.style.height = plus.screen.resolutionWidth * 162 / 260 + "px";
+				video.style.height = plus.screen.resolutionWidth * 190 / 360 + "px";
 				video.onplaying = function() {
 					console.log("video-onplaying");
 					video.style.backgroundImage = "";
@@ -971,6 +971,7 @@
 					sectionData.key[sectionData.key.length] = data[i].SecId;
 					sectionData.value[data[i].SecId] = data[i];
 					//console.log("showSectionList " + i + JSON.stringify(data[i]));
+					//console.log("EncImgAddr "+data[i].EncImgAddr);
 					var ele = document.createElement("li");
 					ele.id = "section_" + data[i].SecId;
 					var html = '';
@@ -1220,7 +1221,7 @@
 				video.style.backgroundImage = "";
 				var collapse_content_show = document.getElementById("collapse_content_show");
 				if(type == 1) { //视频
-					document.getElementById("scroll_wrapper").style.top = 44 + parseInt(plus.screen.resolutionWidth * 162 / 260) + "px";
+					document.getElementById("scroll_wrapper").style.top = 44 + parseInt(plus.screen.resolutionWidth * 190 / 360) + "px";
 					document.getElementById("video_area").style.display = "inline";
 					document.getElementById("audio_area").style.display = "none";
 					show = false;
