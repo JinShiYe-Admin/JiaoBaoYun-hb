@@ -103,15 +103,15 @@ var commentList = new Vue({
 						mui.toast(data.RspTxt);
 					}
 				});
-			}else{//游客
-				events.toggleStorageArray(storageKeyName.SHOWFOCUSEPERSEN,this.showDetail.PublisherId,this.showDetail.IsFocused);
-				this.showDetail.IsFocused=!this.showDetail.IsFocused;
+			} else { //游客
+				events.toggleStorageArray(storageKeyName.SHOWFOCUSEPERSEN, this.showDetail.PublisherId, this.showDetail.IsFocused);
+				this.showDetail.IsFocused = !this.showDetail.IsFocused;
 				events.fireToPageWithData('show-home1.html', "focus");
 			}
 		},
 		//是否已点赞
 		toggleLike: function() {
-			if(!events.getUtid()){
+			if(!events.getUtid()) {
 				events.judgeLoginMode();
 				return;
 			}
@@ -129,6 +129,7 @@ var commentList = new Vue({
 						if(data.RspData.Result) {
 							showDetail.IsLike = 0;
 							mui.toast("您已取消点赞！");
+							this.showDetail.LikeUsers.splice(commentList.getIndexInLikeUsers(),1);
 						}
 					} else {
 						mui.toast(data.RspTxt);
@@ -142,11 +143,23 @@ var commentList = new Vue({
 						if(data.RspData.Result) {
 							showDetail.IsLike = 1;
 							mui.toast("点赞成功！")
+							this.showDetail.LikeUsers.push({
+								userId:events.getUtid(),
+								userName:myStorage.getItem(storageKeyName.PERSONALINFO).uname
+							})
 						}
 					} else {
 						mui.toast(data.RspTxt);
 					}
 				})
+			}
+		},
+		getIndexInLikeUsers: function() {
+			var likers = this.showDetails.LikeUsers;
+			for(var i in likers) {
+				if(likers[i].userId===events.getUtid()){
+					return parseInt(i);
+				}
 			}
 		},
 		//打开跳转页面
