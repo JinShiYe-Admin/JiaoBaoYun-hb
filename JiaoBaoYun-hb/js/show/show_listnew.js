@@ -321,14 +321,14 @@ var show_listnew = (function(mod) {
 		//展现动态点击监听
 		mui(".mui-slider-group").on("tap", ".news-container", function(e) {
 			this.info.focusFlag = 1;
-			jumpToShowDetail(this);
-//			events.singleWebviewInPeriod(this, "../quan/space-detail.html", this.info);
+//			jumpToShowDetail(this);
+			events.singleWebviewInPeriod(this, "../quan/space-detail.html", this.info);
 		})
 		//发布的点击事件
 		document.getElementById("publish-show").addEventListener("tap", function() {
 			var item = this;
 			if(events.judgeLoginMode(item)) {
-				return
+				return;
 			}
 			item.disabled = true;
 			events.singleWebviewInPeriod(item, "../quan/pub-dynamic.html", "zx");
