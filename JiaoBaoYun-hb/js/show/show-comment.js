@@ -1,8 +1,34 @@
 Vue.component('detail-img', {
 	props: ['imgs'],
-	template: '<div v-if="imgs&&imgs.length>0"><div v-for="img of imgs"></div></div>',
+	template: '<div v-if="imgs&&imgs.length>0">' +
+		'<div v-for="img of imgs" v-bind:style="[imgStyle,backImgSty,{\'background-image\':\'url(img.encImg)\'}]"><img v-if="img.type==2" src="url(../../image/utils/playvideo.png)"></div></div>',
+	data: function() {
+		return {
+			imgDivRe: this.getImgRe,
+			backImgSty: {
+				backgroundPosition: 'center',
+				backgroundRepeat: 'no-repeat',
+				backGroundSize: 'cover'
+			}
+		}
+	},
 	methods: {
-
+		getImgRe: function() {
+			var winWidth = document.querySelector('.mui-content').clientWidth;
+			var imgRe = {
+				width: 0,
+				height: 0
+			};
+			var imgWidth = 0;
+			if(this.imgs < 3) {
+				imgRe.width = winWidth / this.imgs.length;
+				imgRe.height = winWidth * 0.45;
+			} else {
+				imgRe.width = winWidth / 3;
+				imgRe.height = imgRe.width;
+			}
+			return imgRe;
+		}
 	}
 })
 
@@ -12,7 +38,8 @@ var commentList = new Vue({
 		showDetail: {
 			IsFocused: 0, //是否关注
 			IsLike: 0, //是否点赞
-			Comments: [] //评论列表
+			Comments: [], //评论列表
+			PublishDate: '1970-01-01 00:00:00'
 		}
 	},
 	created: function() {
@@ -20,18 +47,19 @@ var commentList = new Vue({
 	},
 	methods: {
 		getImgs: function(showDetail) {
+//			var showDetail=this.showDetail;
 			var imgs = [];
-			switch(showDetail.EncTypeStr) {
+			switch(showDetail.EncType) {
 				case 1: //图片
 				case 2: //视频
-					imgs = commentList.getImgs(showDetail, showDetail.EncTypeStr);
+					imgs = commentList.splitImgs(showDetail, showDetail.EncType);
 					break;
 				case 3: //文字
 					break;
 				case 4: //音频
 					break;
 				case 5: //图文混排
-					imgs = commentList.getImgs(showDetail, showDetail.EncTypeStr);
+					imgs = commentList.splitImgs(showDetail, showDetail.EncType);
 					break;
 				default:
 					break;
@@ -53,6 +81,7 @@ var commentList = new Vue({
 					type: type
 				});
 			}
+			console.log("获取图片地址："+JSON.stringify(imgs));
 			return imgs;
 		},
 		getFileType: function(addr) {
@@ -128,8 +157,8 @@ var commentList = new Vue({
 					if(data.RspCode == 0) {
 						if(data.RspData.Result) {
 							showDetail.IsLike = 0;
-							mui.toast("您已取消点赞！");
-							this.showDetail.LikeUsers.splice(commentList.getIndexInLikeUsers(),1);
+							//							mui.toast("您已取消点赞！");
+							showDetail.LikeUsers.splice(commentList.getIndexInLikeUsers(), 1);
 						}
 					} else {
 						mui.toast(data.RspTxt);
@@ -142,10 +171,11 @@ var commentList = new Vue({
 					if(data.RspCode == 0) {
 						if(data.RspData.Result) {
 							showDetail.IsLike = 1;
-							mui.toast("点赞成功！")
-							this.showDetail.LikeUsers.push({
-								userId:events.getUtid(),
-								userName:myStorage.getItem(storageKeyName.PERSONALINFO).uname
+							//							mui.toast("点赞成功！")
+							console.log("获取的个人信息：" + JSON.stringify(myStorage.getItem(storageKeyName.PERSONALINFO)));
+							showDetail.LikeUsers.push({
+								userId: events.getUtid(),
+								userName: myStorage.getItem(storageKeyName.PERSONALINFO).unick
 							})
 						}
 					} else {
@@ -155,20 +185,39 @@ var commentList = new Vue({
 			}
 		},
 		getIndexInLikeUsers: function() {
-			var likers = this.showDetails.LikeUsers;
+			var likers = this.showDetail.LikeUsers;
 			for(var i in likers) {
-				if(likers[i].userId===events.getUtid()){
+				if(likers[i].userId === events.getUtid()) {
 					return parseInt(i);
 				}
 			}
 		},
 		//打开跳转页面
 		openComment: function() {
-
+			events.openNewWindowWithData('detail-comment.html', "");
 		},
 		//打开个人主页
-		openPersonSpace: function() {
-			events.openNewWindowWithData()
+		openPersonSpace: function(usrId) {
+			mui.openWindow({
+				url: "../quan/zone_main.html",
+				id: "zone_main.html",
+				style: {
+					top: '0px',
+					height: '0px'
+				},
+				extras: {
+					data: usrId,
+					NoReadCnt: 0,
+					flag: 0
+				},
+				createNew:true
+			})
+		},
+		openLikers:function(){
+			events.fireToPageWithData("../quan/classSpace-persons.html","personsList",{
+				userSpaceId:this.showDetail.TabId,
+				type:3
+			})
 		},
 		showSheet: function(comment, index0, index1) {
 			events.showActionSheet([{

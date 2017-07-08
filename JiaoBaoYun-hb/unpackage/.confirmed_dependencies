@@ -2972,7 +2972,29 @@
 			"css/iconfont/iconfont.css"
 		],
 		"refer": [
-			"html/register/login.html"
+			"html/register/login.html",
+			"html/show/detail-comment.html",
+			"html/quan/zone_main.html",
+			"html/quan/classSpace-persons.html"
+		]
+	},
+	"html/show/detail-comment.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	}
 }
