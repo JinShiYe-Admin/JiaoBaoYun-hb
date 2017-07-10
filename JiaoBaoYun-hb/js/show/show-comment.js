@@ -1,37 +1,3 @@
-Vue.component('detail-img', {
-	props: ['imgs'],
-	template: '<div v-if="imgs&&imgs.length>0">' +
-		'<div v-for="img of imgs" v-bind:style="[imgStyle,backImgSty,{\'background-image\':\'url(img.encImg)\'}]"><img v-if="img.type==2" src="url(../../image/utils/playvideo.png)"></div></div>',
-	data: function() {
-		return {
-			imgDivRe: this.getImgRe,
-			backImgSty: {
-				backgroundPosition: 'center',
-				backgroundRepeat: 'no-repeat',
-				backGroundSize: 'cover'
-			}
-		}
-	},
-	methods: {
-		getImgRe: function() {
-			var winWidth = document.querySelector('.mui-content').clientWidth;
-			var imgRe = {
-				width: 0,
-				height: 0
-			};
-			var imgWidth = 0;
-			if(this.imgs < 3) {
-				imgRe.width = winWidth / this.imgs.length;
-				imgRe.height = winWidth * 0.45;
-			} else {
-				imgRe.width = winWidth / 3;
-				imgRe.height = imgRe.width;
-			}
-			return imgRe;
-		}
-	}
-})
-
 var commentList = new Vue({
 	el: '#show-detail',
 	data: {
@@ -40,14 +6,30 @@ var commentList = new Vue({
 			IsLike: 0, //是否点赞
 			Comments: [], //评论列表
 			PublishDate: '1970-01-01 00:00:00'
-		}
+		},
+		imgDivRe: {
+		},
+		winWidth: 0,
+		flexStyle:{
+			display:'flex',
+			display:'-webkit-flex',
+			justifyContent:'center',
+			alignItems:'center'
+		},
+		isVideo:false
 	},
 	created: function() {
 
 	},
+	watch: {
+		showDetail: function(val) {
+			this.imgDivRe=commentList.getImgRe(commentList.getImgs(val));
+			console.log("获取的图片宽高：" + JSON.stringify(this.imgDivRe));
+		}
+	},
 	methods: {
 		getImgs: function(showDetail) {
-//			var showDetail=this.showDetail;
+			//			var showDetail=this.showDetail;
 			var imgs = [];
 			switch(showDetail.EncType) {
 				case 1: //图片
@@ -73,7 +55,7 @@ var commentList = new Vue({
 			var encAddrs = showDetail.EncAddr.split('|');
 			for(var i in encImgs) {
 				if(i == 0) {
-					type = commentList.getFileType(encImgs[0]);
+					type = commentList.getFileType(encAddrs[0]);
 				}
 				imgs.push({
 					encImg: encImgs[i],
@@ -81,7 +63,7 @@ var commentList = new Vue({
 					type: type
 				});
 			}
-			console.log("获取图片地址："+JSON.stringify(imgs));
+			console.log("获取图片地址：" + JSON.stringify(imgs));
 			return imgs;
 		},
 		getFileType: function(addr) {
@@ -210,13 +192,13 @@ var commentList = new Vue({
 					NoReadCnt: 0,
 					flag: 0
 				},
-				createNew:true
+				createNew: true
 			})
 		},
-		openLikers:function(){
-			events.fireToPageWithData("../quan/classSpace-persons.html","personsList",{
-				userSpaceId:this.showDetail.TabId,
-				type:3
+		openLikers: function() {
+			events.fireToPageWithData("../quan/classSpace-persons.html", "personsList", {
+				userSpaceId: this.showDetail.TabId,
+				type: 3
 			})
 		},
 		showSheet: function(comment, index0, index1) {
@@ -248,6 +230,45 @@ var commentList = new Vue({
 					mui.toast(data.RspTxt);
 				}
 			})
+		},
+		getImgRe: function(imgs) {
+			if(imgs.length==0){
+				return {};
+			}
+			var winWidth = this.winWidth - 30;
+			console.log('获取元素的宽度：' + winWidth);
+			var imgRe = {
+				width: 0,
+				height: 0
+			};
+			if(imgs[0].type == 1) {
+				this.isVideo=false;
+				if(imgs.length < 3) {
+					imgRe.width = winWidth / imgs.length - 5 + 'px';
+					imgRe.height = winWidth * 0.45 + 'px';
+				} else {
+					imgRe.width = winWidth / 3 - 5 + 'px';
+					imgRe.height = imgRe.width;
+				}
+				return imgRe;
+			}
+			if(imgs[0].type == 2) {
+				this.isVideo=true;
+				var request=new XMLHttpRequest();
+				request.open('GET',imgs[0].encImg+'?imageInfo',false);
+				request.send();
+				var imgInfo=JSON.parse(request.responseText);
+				console.log("获取的图片信息："+JSON.stringify(imgInfo));
+				if(imgInfo.width>imgInfo.height){
+					imgRe.height=imgInfo.height/(imgInfo.width/winWidth)+'px';
+					imgRe.width=winWidth+'px';
+				}else{
+					imgRe.width=imgInfo.width/(imgInfo.height/winWidth)+'px';
+					imgRe.height=winWidth+'px';
+				}
+				console.log("最终图片尺寸"+JSON.stringify(imgRe));
+				return imgRe;
+			}
 		}
 	}
 })

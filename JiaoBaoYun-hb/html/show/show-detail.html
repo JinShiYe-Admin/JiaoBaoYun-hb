@@ -16,7 +16,7 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">详情</h1>
 		</header>
-		<div id="show-detail" v-if="showDetail.TabId" class="mui-content">
+		<div id="show-detail" v-if="showDetail.TabId" class="mui-content" ref="content">
 			<div>
 				<h4 class="detail-head single-line">{{showDetail.MsgTitle}}</h4>
 				<div class="publisher-container">
@@ -30,8 +30,10 @@
 					<button class="attention-btn btn-unfocus" v-bind:class="{'btn-focused':showDetail.IsFocused}" v-on:tap="toggleFocus">{{showDetail.IsFocused?'已关注':'关注'}}</button>
 				</div>
 				<div class="show-content">{{showDetail.MsgContent}}</div>
-				<div v-for="img of getImgs(showDetail)">
-					
+				<div style="width: 100%;">
+				<div v-for="img of getImgs(showDetail)" class="display-inlineBlock" v-bind:class="{flexStyle: isVideo}"  v-bind:style="[{'background-image':'url('+img.encImg+')'},imgDivRe,{flexStyle:isVideo}]" style="margin: 0 2.5px; background-repeat:no-repeat;background-position:center;background-size: cover;text-align: center;">
+					<img v-if="img.type===2" src="../../image/utils/playvideo.png" style="width:50px;height:50px;margin: auto 0;" align="middle">
+				</div>
 				</div>
 				<!--<detail-img v-on:imgs="getImgs(showDetail)">
 
@@ -96,6 +98,7 @@
 				}
 			})
 			mui.plusReady(function() {
+				commentList.winWidth=document.querySelector('header').clientWidth;
 				events.preload('../quan/classSpace-persons.html',50);
 				mui.fire(plus.webview.currentWebview().opener(), 'detailReady', true);
 				window.addEventListener('showDetail', function(e) {

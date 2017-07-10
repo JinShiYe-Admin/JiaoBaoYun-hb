@@ -132,3 +132,9 @@ body{
 .liker-name{
 	color: #12B7F5;
 }
+.flexStyle{
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
+	justify-content: center;
+}

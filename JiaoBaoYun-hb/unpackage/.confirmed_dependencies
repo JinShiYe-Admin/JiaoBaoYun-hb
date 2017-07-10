@@ -2969,7 +2969,8 @@
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js",
 			"css/show/show-detail.css",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"image/utils/playvideo.png"
 		],
 		"refer": [
 			"html/register/login.html",
