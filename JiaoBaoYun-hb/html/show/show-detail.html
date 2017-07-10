@@ -16,11 +16,11 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">详情</h1>
 		</header>
-		<div id="show-detail" v-if="showDetail.TabId" class="mui-content" ref="content">
+		<div id="show-detail" v-show="showDetail.TabId" class="mui-content">
 			<div>
 				<h4 class="detail-head single-line">{{showDetail.MsgTitle}}</h4>
 				<div class="publisher-container">
-					<img class="publisher-img" v-bind:src="showDetail.PublisherImg" v-on:tap="openPersonSpace(showDetail.PublisherId)"/>
+					<img class="publisher-img" v-bind:src="showDetail.PublisherImg" v-on:tap="openPersonSpace(showDetail.PublisherId)" />
 					<div class="publisher-info">
 						<div class="publisher-name single-line">{{showDetail.PublisherName}}</div>
 						<div class="publisher-date">
@@ -31,13 +31,11 @@
 				</div>
 				<div class="show-content">{{showDetail.MsgContent}}</div>
 				<div style="width: 100%;">
-				<div v-for="img of getImgs(showDetail)" class="display-inlineBlock" v-bind:class="{flexStyle: isVideo}"  v-bind:style="[{'background-image':'url('+img.encImg+')'},imgDivRe,{flexStyle:isVideo}]" style="margin: 0 2.5px; background-repeat:no-repeat;background-position:center;background-size: cover;text-align: center;">
-					<img v-if="img.type===2" src="../../image/utils/playvideo.png" style="width:50px;height:50px;margin: auto 0;" align="middle">
+					<div v-for="img of getImgs(showDetail)" class="display-inlineBlock" v-bind:class="{flexStyle: isVideo}" v-bind:style="[{'background-image':'url('+img.encImg+')'},imgDivRe]" style="position: relative; margin: 0 2.5px; background-repeat:no-repeat;background-position:center;background-size: cover;text-align: center;" v-on:tap="exFileTapListener(showDetail)">
+						<img v-if="img.type===2" src="../../image/utils/playvideo.png" style="width:50px;height:50px;margin: auto 0;" align="middle">
+						<p v-if="img.type === 2" style="position: absolute;bottom: 0;right: 5px;color: black;line-height: 0;">{{img.encLen}}"</p>
+					</div>
 				</div>
-				</div>
-				<!--<detail-img v-on:imgs="getImgs(showDetail)">
-
-				</detail-img>-->
 				<div class="mui-pull-right extra-container">
 					<span class="iconfont icon-support" v-bind:class="{isLiked:showDetail.IsLike,isUnlike:!showDetail.IsLike}" v-on:tap="toggleLike"></span>
 					<span class="iconfont icon-liaotian1" v-on:click="openComment"></span>
@@ -75,10 +73,10 @@
 							@<span class="reply-name">{{reply.ReplyName}}</span>
 						</template>
 						:{{reply.CommentContent}}</p>
+					</div>
+					</div>
 				</div>
 			</div>
-		</div>
-		</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
@@ -89,25 +87,58 @@
 			var pageIndex = 1;
 			var tableId = 0;
 			mui.init({
+				beforeback: function() {
+					commentList.resetData();
+					return true;
+				},
+				pullRefresh: {
+					container: '#show-detail',
+					down: {
+						style: 'circle',
+						offset: '50px',
+						callback: pulldownRefresh
+					},
+					up: {
+						auto: true,
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				},
 				gestureConfig: {
 					longtap: true
-				},
-				beforeback: function() {
-					//					commentList.resetData();
-					return true;
 				}
 			})
 			mui.plusReady(function() {
-				commentList.winWidth=document.querySelector('header').clientWidth;
-				events.preload('../quan/classSpace-persons.html',50);
+				commentList.winWidth = document.querySelector('header').clientWidth;
+				events.preload('../quan/classSpace-persons.html', 50);
 				mui.fire(plus.webview.currentWebview().opener(), 'detailReady', true);
 				window.addEventListener('showDetail', function(e) {
+					pageIndex = 1;
 					console.log("获取的数据:" + JSON.stringify(e.detail.data));
 					var showInfo = e.detail.data;
 					tableId = showInfo.TabId;
 					requestShowDetail();
 				})
 			})
+
+			function pulldownRefresh() {
+				pageIndex = 1;
+				requestShowDetail();
+				setTimeout(function() {
+					mui('#show-detail').pullRefresh().endPulldown();
+				}, 1000)
+			}
+
+			function pullupRefresh() {
+				if(pageIndex > commentList.showDetail.TotalPage) {
+					mui('#show-detail').pullRefresh().endPullup(true);
+				} else {
+					requestShowDetail();
+				}
+				setTimeout(function() {
+
+				}, 1500);
+			}
 			/**
 			 * 获取展现详情
 			 */
@@ -122,6 +153,7 @@
 					wd.close();
 					console.log("获取的展现详情:" + JSON.stringify(data));
 					if(data.RspCode == 0) {
+						pageIndex++;
 						getUserInfos(data.RspData.Data, rechargeData);
 					} else {
 						mui.toast(data.RspTxt);
@@ -177,7 +209,15 @@
 					}
 				}
 				console.log("获取人员信息后的展现详情：" + JSON.stringify(showDetail));
-				commentList.showDetail = showDetail;
+				console.log("pageIndex:" + pageIndex);
+				if((pageIndex - 1) === 1) {
+					commentList.showDetail = showDetail;
+				} else {
+					if(commentList.TabId) {
+						commentList.Comments = commentList.Comments.concat(showDetail.Comments);
+					}
+				}
+
 			}
 
 			function getName(info) {

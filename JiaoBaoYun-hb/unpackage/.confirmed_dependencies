@@ -2970,7 +2970,12 @@
 			"js/libs/crypto-js/crypto-js.js",
 			"css/show/show-detail.css",
 			"css/iconfont/iconfont.css",
-			"image/utils/playvideo.png"
+			"image/utils/playvideo.png",
+			"js/mui.zoom.js",
+			"js/utils/all-preview.js",
+			"js/utils/quo.js",
+			"js/utils/MPreview.mobile.min.js",
+			"js/mui.previewimage.js"
 		],
 		"refer": [
 			"html/register/login.html",

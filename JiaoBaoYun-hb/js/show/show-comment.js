@@ -5,29 +5,38 @@ var commentList = new Vue({
 			IsFocused: 0, //是否关注
 			IsLike: 0, //是否点赞
 			Comments: [], //评论列表
-			PublishDate: '1970-01-01 00:00:00'
+			PublishDate: '1970-01-01 00:00:00',
+			TotalPage:0
 		},
-		imgDivRe: {
-		},
+		imgDivRe: {},
 		winWidth: 0,
-		flexStyle:{
-			display:'flex',
-			display:'-webkit-flex',
-			justifyContent:'center',
-			alignItems:'center'
+		flexStyle: {
+			display: 'flex',
+			display: '-webkit-flex',
+			justifyContent: 'center',
+			alignItems: 'center'
 		},
-		isVideo:false
+		isVideo: false
 	},
 	created: function() {
 
 	},
 	watch: {
 		showDetail: function(val) {
-			this.imgDivRe=commentList.getImgRe(commentList.getImgs(val));
+			this.imgDivRe = commentList.getImgRe(commentList.getImgs(val));
 			console.log("获取的图片宽高：" + JSON.stringify(this.imgDivRe));
 		}
 	},
 	methods: {
+		resetData: function() {
+			this.showDetail = {
+				IsFocused: 0, //是否关注
+				IsLike: 0, //是否点赞
+				Comments: [], //评论列表
+				PublishDate: '1970-01-01 00:00:00',
+				TotalPage:0
+			}
+		},
 		getImgs: function(showDetail) {
 			//			var showDetail=this.showDetail;
 			var imgs = [];
@@ -60,7 +69,8 @@ var commentList = new Vue({
 				imgs.push({
 					encImg: encImgs[i],
 					encAddr: encAddrs[i],
-					type: type
+					type: type,
+					encLen: showDetail.EncLen
 				});
 			}
 			console.log("获取图片地址：" + JSON.stringify(imgs));
@@ -232,7 +242,7 @@ var commentList = new Vue({
 			})
 		},
 		getImgRe: function(imgs) {
-			if(imgs.length==0){
+			if(imgs.length == 0) {
 				return {};
 			}
 			var winWidth = this.winWidth - 30;
@@ -242,7 +252,7 @@ var commentList = new Vue({
 				height: 0
 			};
 			if(imgs[0].type == 1) {
-				this.isVideo=false;
+				this.isVideo = false;
 				if(imgs.length < 3) {
 					imgRe.width = winWidth / imgs.length - 5 + 'px';
 					imgRe.height = winWidth * 0.45 + 'px';
@@ -253,21 +263,29 @@ var commentList = new Vue({
 				return imgRe;
 			}
 			if(imgs[0].type == 2) {
-				this.isVideo=true;
-				var request=new XMLHttpRequest();
-				request.open('GET',imgs[0].encImg+'?imageInfo',false);
+				this.isVideo = true;
+				var request = new XMLHttpRequest();
+				request.open('GET', imgs[0].encImg + '?imageInfo', false);
 				request.send();
-				var imgInfo=JSON.parse(request.responseText);
-				console.log("获取的图片信息："+JSON.stringify(imgInfo));
-				if(imgInfo.width>imgInfo.height){
-					imgRe.height=imgInfo.height/(imgInfo.width/winWidth)+'px';
-					imgRe.width=winWidth+'px';
-				}else{
-					imgRe.width=imgInfo.width/(imgInfo.height/winWidth)+'px';
-					imgRe.height=winWidth+'px';
+				var imgInfo = JSON.parse(request.responseText);
+				console.log("获取的图片信息：" + JSON.stringify(imgInfo));
+				if(imgInfo.width > imgInfo.height) {
+					imgRe.height = imgInfo.height / (imgInfo.width / winWidth) + 'px';
+					imgRe.width = winWidth + 'px';
+				} else {
+					imgRe.width = imgInfo.width / (imgInfo.height / winWidth) + 'px';
+					imgRe.height = winWidth + 'px';
 				}
-				console.log("最终图片尺寸"+JSON.stringify(imgRe));
+				console.log("最终图片尺寸" + JSON.stringify(imgRe));
 				return imgRe;
+			}
+		}, 
+		exFileTapListener:function(showDetail,img,index){
+			var imgs=commentList.getImgs(showDetail);
+			if(imgs[0].type===1){
+				
+			}else{
+				
 			}
 		}
 	}
