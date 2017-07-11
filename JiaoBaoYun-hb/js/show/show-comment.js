@@ -190,7 +190,10 @@ var commentList = new Vue({
 		//type为类型 0为留言 1为回复
 		//如果是回复 index0是要回复的留言的index,index1为要回复的回复的index.
 		openComment: function(type, index0, index1) {
-			var commentId;
+			if(!events.getUtid()){//判断是否为游客，游客跳转登陆界面
+				events.judgeLoginMode();
+				return;
+			}
 			var data = {
 				type: type
 			};
