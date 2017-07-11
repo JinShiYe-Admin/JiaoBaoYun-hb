@@ -138,3 +138,6 @@ body{
 	align-items: center;
 	justify-content: center;
 }
+.video-background{
+	background: linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,0.4));
+}

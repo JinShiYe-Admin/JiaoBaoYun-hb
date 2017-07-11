@@ -31,9 +31,13 @@
 				</div>
 				<div class="show-content">{{showDetail.MsgContent}}</div>
 				<div style="width: 100%;">
-					<div v-for="img of getImgs(showDetail)" class="display-inlineBlock" v-bind:class="{flexStyle: isVideo}" v-bind:style="[{'background-image':'url('+img.encImg+')'},imgDivRe]" style="position: relative; margin: 0 2.5px; background-repeat:no-repeat;background-position:center;background-size: cover;text-align: center;" v-on:tap="exFileTapListener(showDetail)">
-						<img v-if="img.type===2" src="../../image/utils/playvideo.png" style="width:50px;height:50px;margin: auto 0;" align="middle">
-						<p v-if="img.type === 2" style="position: absolute;bottom: 0;right: 5px;color: black;line-height: 0;">{{img.encLen}}"</p>
+					<div v-for="img of getImgs(showDetail)" v-if="img.type===2" class="display-inlineBlock" v-bind:class="{flexStyle}" v-bind:style="[{background:'linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,0.4)),url('+img.encImg+')'},imgDivRe,{'background-size':'contain','background-repeat':'no-repeat'}]"
+						 style="position: relative; margin: 0 2.5px;" v-on:tap="exFileTapListener(showDetail)">
+						<img  src="../../image/utils/playvideo.png" style="width:50px;height:50px;margin: auto 0;">
+						<p v-if="img.encLen>0" style="position: absolute;bottom: 0;right: 5px;color: white;line-height: 0;">{{img.encLen}}"</p>
+					</div>
+					<div v-for="img of getImgs(showDetail)" v-if="img.type===1" class="display-inlineBlock"  v-bind:style="[{'background-image':'url('+img.encImg+')'},imgDivRe]" 
+						style="position: relative; margin: 0 2.5px; background-repeat:no-repeat;background-position:center;background-size: cover;text-align: center;" v-on:tap="exFileTapListener(showDetail)">
 					</div>
 				</div>
 				<div class="mui-pull-right extra-container">
@@ -73,14 +77,16 @@
 							@<span class="reply-name">{{reply.ReplyName}}</span>
 						</template>
 						:{{reply.CommentContent}}</p>
-					</div>
-					</div>
 				</div>
 			</div>
+		</div>
+		</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/utils/vue.js"></script>
+		<script src="../../js/mui.zoom.js"></script>
+		<script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/show/show-comment.js"></script>
 		<script type="text/javascript">
