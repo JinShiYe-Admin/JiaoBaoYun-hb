@@ -9,6 +9,7 @@
 		<link href="../../css/utils/common.css" rel="stylesheet" />
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<link href="../../css/show/show-detail.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/utils/preview.css" />
 	</head>
 
 	<body>
@@ -33,14 +34,12 @@
 				<div v-if="showDetail.EncType===5" class="show-content" v-html="showDetail.MsgContent"></div>
 				<div v-else class="show-content">{{showDetail.MsgContent}}</div>
 				<div v-if="showDetail.EncType!==5" style="width: 100%;">
-					<div v-for="(img,index) of getImgs(showDetail)" v-if="img.type===2" class="display-inlineBlock" v-bind:class="{flexStyle}" v-bind:style="[{background:'linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,0.4)),url('+img.encImg+')'},imgDivRe,{'background-size':'contain','background-repeat':'no-repeat'}]"
-						 style="position: relative; margin: 0 2.5px;" v-on:tap.stop="exFileTapListener(showDetail,img,index)">
-						<img  src="../../image/utils/playvideo.png" style="width:50px;height:50px;margin: auto 0;">
+					<div v-for="(img,index) of getImgs(showDetail)" v-if="img.type===2" class="display-inlineBlock" v-bind:class="{flexStyle}" v-bind:style="[{background:'linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,0.4)),url('+img.encImg+')'},imgDivRe,{'background-size':'contain','background-repeat':'no-repeat'}]" style="position: relative; margin: 0 2.5px;" v-on:tap.stop="exFileTapListener(showDetail,img,index)">
+						<img src="../../image/utils/playvideo.png" style="width:50px;height:50px;margin: auto 0;">
 						<p v-if="img.encLen>0" style="position: absolute;bottom: 0;right: 5px;color: white;line-height: 0;">{{img.encLen}}"</p>
 					</div>
-					<div v-for="(img,index) of getImgs(showDetail)" v-if="img.type===1" class="display-inlineBlock"  v-bind:style="[{'background-image':'url('+img.encImg+')'},imgDivRe]" 
-						style="position: relative; margin: 0 2.5px; background-repeat:no-repeat;background-position:center;background-size: cover;text-align: center;" v-on:tap="exFileTapListener(showDetail,img,index)">
-					</div>
+					<img v-for="(img,index) of getImgs(showDetail)" v-if="img.type===1" class="display-inlineBlock" v-bind:src="img.encImg" v-bind:style="[imgDivRe]" style="margin: 0 2.5px;" v-bind:data-preview-src="img.encAddr" v-bind:data-preview-group="showDetail.TabId"/>
+					
 				</div>
 				<div class="mui-pull-right extra-container">
 					<span class="iconfont icon-support" v-bind:class="{isLiked:showDetail.IsLike,isUnlike:!showDetail.IsLike}" v-on:tap="toggleLike"></span>
@@ -92,12 +91,16 @@
 		<script src="../../js/publicProtocol.js"></script>
 		<script src="../../js/utils/video.js"></script>
 		<script src="../../js/show/show-comment.js"></script>
+		<script src="../../js/mui.zoom.js"></script>
+		<script src="../../js/utils/all-preview.js"></script>
 		<script type="text/javascript">
 			var pageIndex = 1;
 			var tableId = 0;
 			mui.init({
 				beforeback: function() {
-					commentList.resetData();
+					if(!mui.getPreviewImage().isShown()) {
+						commentList.resetData();
+					}
 					return true;
 				},
 				pullRefresh: {
@@ -118,6 +121,7 @@
 				}
 			})
 			mui.plusReady(function() {
+				mui.previewImage();
 				commentList.winWidth = document.querySelector('header').clientWidth;
 				events.preload('../quan/classSpace-persons.html', 50);
 				mui.fire(plus.webview.currentWebview().opener(), 'detailReady', true);
@@ -128,15 +132,15 @@
 					tableId = showInfo.TabId;
 					requestShowDetail();
 				})
-				window.addEventListener("commented",function(){
-					pageIndex=1;
+				window.addEventListener("commented", function() {
+					pageIndex = 1;
 					requestShowDetail();
 				})
-				commentList.$watch('isSelfDynamic',function(newVal,oldVal){
-					if(newVal){
-						document.getElementById("del-dynamic").style.display="inline-block";
-					}else{
-						document.getElementById("del-dynamic").style.display="none";
+				commentList.$watch('isSelfDynamic', function(newVal, oldVal) {
+					if(newVal) {
+						document.getElementById("del-dynamic").style.display = "inline-block";
+					} else {
+						document.getElementById("del-dynamic").style.display = "none";
 					}
 				})
 				setListener();
@@ -144,30 +148,33 @@
 			/**
 			 * 加载监听
 			 */
-			function setListener(){
-				events.addTap("del-dynamic",function(){
-					var titles=[{title:"删除",dia:1}];
-					var funcs=[delDynamic];
-					events.showActionSheet(titles,funcs);
+			function setListener() {
+				events.addTap("del-dynamic", function() {
+					var titles = [{
+						title: "删除",
+						dia: 1
+					}];
+					var funcs = [delDynamic];
+					events.showActionSheet(titles, funcs);
 				})
 			}
 			/**
 			 * 删除动态
 			 */
-			function delDynamic(){
-				var wd=events.showWaiting();
+			function delDynamic() {
+				var wd = events.showWaiting();
 				postDataPro_delUserSpaceById({
-					userSpaceId:commentList.showDetail.TabId
-				},wd,function(data){
-					console.log("删除用户动态后返回的值："+JSON.stringify(data));
+					userSpaceId: commentList.showDetail.TabId
+				}, wd, function(data) {
+					console.log("删除用户动态后返回的值：" + JSON.stringify(data));
 					wd.close();
-					if(data.RspCode==0){
-						if(data.RspData.Result===1){
+					if(data.RspCode == 0) {
+						if(data.RspData.Result === 1) {
 							mui.toast("删除动态成功！");
 							mui.back();
 						}
-					}else{
-						mui.toast(data.RspTxt+",请重新删除!");
+					} else {
+						mui.toast(data.RspTxt + ",请重新删除!");
 					}
 				})
 			}
