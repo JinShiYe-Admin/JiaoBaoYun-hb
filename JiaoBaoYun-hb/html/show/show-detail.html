@@ -15,10 +15,11 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">详情</h1>
+			<a id="del-dynamic" class="mui-pull-right iconfont icon-moreandroid display-none"></a>
 		</header>
 		<div id="show-detail" v-show="showDetail.TabId" class="mui-content">
 			<div>
-				<h4 class="detail-head single-line">{{showDetail.MsgTitle}}</h4>
+				<h4 class="detail-head triple-line">{{showDetail.MsgTitle}}</h4>
 				<div class="publisher-container">
 					<img class="publisher-img" v-bind:src="showDetail.PublisherImg" v-on:tap="openPersonSpace(showDetail.PublisherId)" />
 					<div class="publisher-info">
@@ -27,7 +28,7 @@
 							{{getSimpleDate(showDetail.PublishDate)}}
 						</div>
 					</div>
-					<button class="attention-btn btn-unfocus" v-bind:class="{'btn-focused':showDetail.IsFocused}" v-on:tap="toggleFocus">{{showDetail.IsFocused?'已关注':'关注'}}</button>
+					<button v-if="!isSelfDynamic" class="attention-btn btn-unfocus" v-bind:class="{'btn-focused':showDetail.IsFocused}" v-on:tap="toggleFocus">{{showDetail.IsFocused?'已关注':'关注'}}</button>
 				</div>
 				<div class="show-content">{{showDetail.MsgContent}}</div>
 				<div style="width: 100%;">
@@ -129,7 +130,45 @@
 					pageIndex=1;
 					requestShowDetail();
 				})
+				commentList.$watch('isSelfDynamic',function(newVal,oldVal){
+					if(newVal){
+						document.getElementById("del-dynamic").style.display="inline-block";
+					}else{
+						document.getElementById("del-dynamic").style.display="none";
+					}
+				})
+				setListener();
 			})
+			/**
+			 * 加载监听
+			 */
+			function setListener(){
+				events.addTap("del-dynamic",function(){
+					var titles=[{title:"删除",dia:1}];
+					var funcs=[delDynamic];
+					events.showActionSheet(titles,funcs);
+				})
+			}
+			/**
+			 * 删除动态
+			 */
+			function delDynamic(){
+				var wd=events.showWaiting();
+				postDataPro_delUserSpaceById({
+					userSpaceId:commentList.showDetail.TabId
+				},wd,function(data){
+					console.log("删除用户动态后返回的值："+JSON.stringify(data));
+					wd.close();
+					if(data.RspCode==0){
+						if(data.RspData.Result===1){
+							mui.toast("删除动态成功！");
+							mui.back();
+						}
+					}else{
+						mui.toast(data.RspTxt+",请重新删除!");
+					}
+				})
+			}
 
 			function pulldownRefresh() {
 				pageIndex = 1;

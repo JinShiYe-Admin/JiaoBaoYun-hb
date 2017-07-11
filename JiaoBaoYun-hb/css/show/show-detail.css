@@ -43,10 +43,12 @@ body{
 	width: 70px;
 }
 .btn-unfocus{
+	border: none;
 	background-color: #12B7F5;
 	color: white;
 }
 .btn-focused{
+	border: none;
 	background-color: gray;
 	color: white;
 }

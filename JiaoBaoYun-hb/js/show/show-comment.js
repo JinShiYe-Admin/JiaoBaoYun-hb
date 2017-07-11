@@ -16,7 +16,7 @@ var commentList = new Vue({
 			justifyContent: 'center',
 			alignItems: 'center'
 		},
-		isVideo: false
+		isSelfDynamic:false
 	},
 	created: function() {
 
@@ -25,6 +25,8 @@ var commentList = new Vue({
 		showDetail: function(val) {
 			this.imgDivRe = commentList.getImgRe(commentList.getImgs(val));
 			console.log("获取的图片宽高：" + JSON.stringify(this.imgDivRe));
+			this.isSelfDynamic=(parseInt(val.PublisherId)===events.getUtid());
+			console.log("是不是本人发布的动态："+this.isSelfDynamic);
 		}
 	},
 	methods: {
@@ -188,6 +190,7 @@ var commentList = new Vue({
 		//type为类型 0为留言 1为回复
 		//如果是回复 index0是要回复的留言的index,index1为要回复的回复的index.
 		openComment: function(type, index0, index1) {
+			var commentId;
 			var data = {
 				type: type
 			};
@@ -201,10 +204,13 @@ var commentList = new Vue({
 					upperId: this.showDetail.Comments[index0].TabId,
 					userSpaceId: this.showDetail.TabId
 				};
-				if(typeof(index1) === 'number') { 
+				if(typeof(index1) === 'number') {
 					data.data.replyUserId = this.showDetail.Comments[index0].Replys[index1].UserId;
 				} else {
 					data.data.replyUserId = this.showDetail.Comments[index0].UserId;
+				}
+				if(parseInt(data.data.replyUserId)===events.getUtid()){//自己无法回复自己
+					return;
 				}
 
 			}
@@ -234,6 +240,15 @@ var commentList = new Vue({
 			})
 		},
 		showSheet: function(comment, index0, index1) {
+			var commentId;
+			if(typeof(index1) === "number") {
+				commentId = comment.Replys[index1].UserId;
+			} else {
+				commentId = comment.UserId;
+			}
+			if(parseInt(commentId) !== events.getUtid()) {
+				return;
+			}
 			events.showActionSheet([{
 				title: '删除',
 				dia: 1
@@ -245,8 +260,14 @@ var commentList = new Vue({
 		delComment: function(comment, index0, index1) {
 			var showDetails = this.showDetail;
 			var wd = events.showWaiting();
-			postDataPro_delUserMsgById({
-				userMsgId: comment.TabId
+			var tabId;
+			if(typeof(index1) === "number") {
+				tabId = comment.Replys[index1].TabId;
+			} else {
+				tabId = comment.TabId;
+			}
+			postDataPro_delUserSpaceCommentById({
+				userSpaceCommentId: tabId
 			}, wd, function(data) {
 				wd.close();
 				console.log("删除留言后的数据：" + JSON.stringify(data))
