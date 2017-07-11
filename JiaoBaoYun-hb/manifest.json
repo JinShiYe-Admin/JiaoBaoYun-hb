@@ -5300,7 +5300,8 @@
 					"js/utils/all-preview.js",
 					"js/utils/quo.js",
 					"js/utils/MPreview.mobile.min.js",
-					"js/mui.previewimage.js"
+					"js/mui.previewimage.js",
+					"js/utils/video.js"
 				],
 				"refer": [
 					"html/register/login.html",

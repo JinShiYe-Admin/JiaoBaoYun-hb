@@ -16,7 +16,7 @@ var commentList = new Vue({
 			justifyContent: 'center',
 			alignItems: 'center'
 		},
-		isSelfDynamic:false
+		isSelfDynamic: false
 	},
 	created: function() {
 
@@ -25,8 +25,8 @@ var commentList = new Vue({
 		showDetail: function(val) {
 			this.imgDivRe = commentList.getImgRe(commentList.getImgs(val));
 			console.log("获取的图片宽高：" + JSON.stringify(this.imgDivRe));
-			this.isSelfDynamic=(parseInt(val.PublisherId)===events.getUtid());
-			console.log("是不是本人发布的动态："+this.isSelfDynamic);
+			this.isSelfDynamic = (parseInt(val.PublisherId) === events.getUtid());
+			console.log("是不是本人发布的动态：" + this.isSelfDynamic);
 		}
 	},
 	methods: {
@@ -190,7 +190,7 @@ var commentList = new Vue({
 		//type为类型 0为留言 1为回复
 		//如果是回复 index0是要回复的留言的index,index1为要回复的回复的index.
 		openComment: function(type, index0, index1) {
-			if(!events.getUtid()){//判断是否为游客，游客跳转登陆界面
+			if(!events.getUtid()) { //判断是否为游客，游客跳转登陆界面
 				events.judgeLoginMode();
 				return;
 			}
@@ -212,7 +212,7 @@ var commentList = new Vue({
 				} else {
 					data.data.replyUserId = this.showDetail.Comments[index0].UserId;
 				}
-				if(parseInt(data.data.replyUserId)===events.getUtid()){//自己无法回复自己
+				if(parseInt(data.data.replyUserId) === events.getUtid()) { //自己无法回复自己
 					return;
 				}
 
@@ -287,6 +287,7 @@ var commentList = new Vue({
 				}
 			})
 		},
+		//获取图片尺寸
 		getImgRe: function(imgs) {
 			if(imgs.length == 0) {
 				return {};
@@ -326,11 +327,19 @@ var commentList = new Vue({
 				return imgRe;
 			}
 		},
+		//缩略图点击效果
 		exFileTapListener: function(showDetail, img, index) {
 			var imgs = commentList.getImgs(showDetail);
-			if(imgs[0].type === 1) {
+			if(imgs[0].type === 1) {//图片
 
-			} else {
+			} else if(imgs[0].type === 2) {//视频播放
+				if(mui.os.android) {//安卓
+					video.playVideo(img.encAddr, img.encImg, function() {
+
+					})
+				}else if(mui.os.ios){//苹果
+					
+				}
 
 			}
 		}
