@@ -194,18 +194,6 @@ var dynamiclistitem = (function($, mod) {
 
 											}
 										}
-										//										for(var i = 0; i < zonepArray.length; i++) {
-										//											if(zonepArray[index].PublisherId == zonepArray[i].PublisherId) {
-										//												if(isFocus == 0) {
-										//													zonepArray[i].IsFocused = 1;
-										//													datasource[sliderId] = zonepArray
-										//												} else {
-										//													zonepArray[i].IsFocused = 0;
-										//													datasource[sliderId] = zonepArray
-										//												}
-										//
-										//											}
-										//										}
 										console.log('status=' + status)
 										if(status == 0) {
 											mui.toast("取消关注成功")
@@ -260,9 +248,6 @@ var dynamiclistitem = (function($, mod) {
 											console.log(JSON.stringify(data))
 											if(data.RspCode == 0) {
 												mui.toast('已删除');
-
-												//												var deleteNode = document.getElementById(index);
-												//												deleteNode.parentNode.removeChild(deleteNode);
 												var pageID = sliderId.replace('top_', '')
 												var deleteNode = document.getElementById(pageID + idFlag + index);
 												deleteNode.parentNode.removeChild(deleteNode);
@@ -270,13 +255,12 @@ var dynamiclistitem = (function($, mod) {
 													mui.fire(plus.webview.currentWebview().opener(), 'deleteDynamic', preModel.tempIndex)
 													mui.back()
 												}
-												//												zonepArray.splice(index, 1)
 											} else {
 												mui.toast(data.RspTxt);
 											}
 										})
 									}
-								})
+								},'div');
 
 								return;
 							}
@@ -856,7 +840,7 @@ var dynamiclistitem = (function($, mod) {
 	}
 
 	mod.addItem = function(ulElement, data) {
-//		console.log(JSON.stringify(data));
+		//		console.log(JSON.stringify(data));
 		var li = document.createElement('li');
 		li.id = data.id_name;
 		li.className = 'mui-table-view-cell';
@@ -1080,7 +1064,7 @@ var dynamiclistitem = (function($, mod) {
 		liElement.appendChild(div);
 		if(document.getElementById("spaceDetail") && data.pageFlag == 1) {
 			mod.addInteraction(ulElement, liElement, data);
-//						mod.adddetailInteraction(ulElement, liElement, data);
+			//						mod.adddetailInteraction(ulElement, liElement, data);
 		} else {
 			mod.addInteraction(ulElement, liElement, data);
 		}
@@ -1205,7 +1189,7 @@ var dynamiclistitem = (function($, mod) {
 			var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
 				console.log(9999999)
 				if(imgSize.height > imgSize.width) {
-					if(imgSize.width==1080&&imgSize.height==1920){
+					if(imgSize.width == 1080 && imgSize.height == 1920) {
 						tempDiv.style.width = '180px';
 						tempDiv.style.height = '320px';
 						var playvideo = document.getElementById("playvideo" + data.id_name);
@@ -1215,7 +1199,7 @@ var dynamiclistitem = (function($, mod) {
 					if(imgSize.width < 500) {
 						tempDiv.style.width = imgSize.width * 3 / 8 + 'px';
 						tempDiv.style.height = imgSize.height * 3 / 8 + 'px';
-						console.log('tempDiv.style.width='+tempDiv.style.width)
+						console.log('tempDiv.style.width=' + tempDiv.style.width)
 						var playvideo = document.getElementById("playvideo" + data.id_name);
 						playvideo.style.marginTop = imgSize.height * 3 / 16 - 25 + 'px'
 					} else {
@@ -1225,11 +1209,11 @@ var dynamiclistitem = (function($, mod) {
 						playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
 					}
 				} else {
-					
-					if(imgSize.height==1080&&imgSize.width==1920){
-						
-						tempDiv.style.height =  '180px';
-						tempDiv.style.width =  '320px';
+
+					if(imgSize.height == 1080 && imgSize.width == 1920) {
+
+						tempDiv.style.height = '180px';
+						tempDiv.style.width = '320px';
 						var playvideo = document.getElementById("playvideo" + data.id_name);
 						playvideo.style.marginTop = 90 - 25 + 'px'
 						return;
@@ -1237,7 +1221,7 @@ var dynamiclistitem = (function($, mod) {
 					if(imgSize.height < 500) {
 						tempDiv.style.width = imgSize.width * 3 / 8 + 'px';
 						tempDiv.style.height = imgSize.height * 3 / 8 + 'px';
-						console.log('tempDiv.style.width='+tempDiv.style.width)
+						console.log('tempDiv.style.width=' + tempDiv.style.width)
 						var playvideo = document.getElementById("playvideo" + data.id_name);
 						playvideo.style.marginTop = imgSize.height * 3 / 16 - 25 + 'px'
 					} else {
@@ -1447,9 +1431,9 @@ var dynamiclistitem = (function($, mod) {
 			var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
 				console.log(99999999)
 				if(imgSize.height > imgSize.width) {
-					if(imgSize.width>=1080&&imgSize.height>=1920){
-						tempDiv.style.width =  '180px';
-						tempDiv.style.height =  '320px';
+					if(imgSize.width >= 1080 && imgSize.height >= 1920) {
+						tempDiv.style.width = '180px';
+						tempDiv.style.height = '320px';
 						var playvideo = document.getElementById("playvideo" + data.id_name);
 						playvideo.style.marginTop = 160 - 25 + 'px'
 						return;
@@ -1457,7 +1441,7 @@ var dynamiclistitem = (function($, mod) {
 					if(imgSize.width < 500) {
 						tempDiv.style.width = imgSize.width * 3 / 8 + 'px';
 						tempDiv.style.height = imgSize.height * 3 / 8 + 'px';
-						console.log('tempDiv.style.width='+tempDiv.style.width)
+						console.log('tempDiv.style.width=' + tempDiv.style.width)
 						var playvideo = document.getElementById("playvideo" + data.id_name);
 						playvideo.style.marginTop = imgSize.height * 3 / 16 - 25 + 'px'
 					} else {
@@ -1467,9 +1451,9 @@ var dynamiclistitem = (function($, mod) {
 						playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
 					}
 				} else {
-					if(imgSize.height>=1080&&imgSize.width>=1920){
-						tempDiv.style.height =  '180px';
-						tempDiv.style.width =  '320px';
+					if(imgSize.height >= 1080 && imgSize.width >= 1920) {
+						tempDiv.style.height = '180px';
+						tempDiv.style.width = '320px';
 						var playvideo = document.getElementById("playvideo" + data.id_name);
 						playvideo.style.marginTop = 90 - 25 + 'px'
 						return;
@@ -1477,7 +1461,7 @@ var dynamiclistitem = (function($, mod) {
 					if(imgSize.height < 500) {
 						tempDiv.style.width = imgSize.width * 3 / 8 + 'px';
 						tempDiv.style.height = imgSize.height * 3 / 8 + 'px';
-						console.log('tempDiv.style.width='+tempDiv.style.width)
+						console.log('tempDiv.style.width=' + tempDiv.style.width)
 						var playvideo = document.getElementById("playvideo" + data.id_name);
 						playvideo.style.marginTop = imgSize.height * 3 / 16 - 25 + 'px'
 					} else {

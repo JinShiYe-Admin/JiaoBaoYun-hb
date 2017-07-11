@@ -3,9 +3,9 @@
  */
 Vue.component("filter-item", {
 	props: ['option'],
-	template: '<li v-on:tap="option.func" v-bind:style="{textAlign:\'center\',\'list-style\':\'none\',margin:0}">' +
-		'<img v-bind:src="option.icon" v-bind:style="{width:\'80%\',height:\'auto\'}" />' +
-		'<p v-bind:style="{color:\'#323232\'}">{{option.title}}</p>' +
+	template: '<li v-on:tap="option.func" v-bind:style="{textAlign:\'center\',\'list-style\':\'none\',\'margin-top\':\'25px\'}">' +
+		'<img v-bind:src="option.icon" v-bind:style="{width:\'70%\',height:\'auto\'}" />' +
+		'<p v-bind:style="{color:\'#323232\',\'line-height\':\'12px\'}">{{option.title}}</p>' +
 		'</li>'
 });
 var filter = new Vue({
