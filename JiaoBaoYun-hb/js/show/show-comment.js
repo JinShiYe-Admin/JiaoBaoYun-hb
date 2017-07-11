@@ -6,7 +6,7 @@ var commentList = new Vue({
 			IsLike: 0, //是否点赞
 			Comments: [], //评论列表
 			PublishDate: '1970-01-01 00:00:00',
-			TotalPage:0
+			TotalPage: 0
 		},
 		imgDivRe: {},
 		winWidth: 0,
@@ -34,7 +34,7 @@ var commentList = new Vue({
 				IsLike: 0, //是否点赞
 				Comments: [], //评论列表
 				PublishDate: '1970-01-01 00:00:00',
-				TotalPage:0
+				TotalPage: 0
 			}
 		},
 		getImgs: function(showDetail) {
@@ -185,8 +185,30 @@ var commentList = new Vue({
 			}
 		},
 		//打开跳转页面
-		openComment: function() {
-			events.openNewWindowWithData('detail-comment.html', "");
+		//type为类型 0为留言 1为回复
+		//如果是回复 index0是要回复的留言的index,index1为要回复的回复的index.
+		openComment: function(type, index0, index1) {
+			var data = {
+				type: type
+			};
+			if(type === 0) { //留言
+				data.type = type;
+				data.data = {
+					userSpaceId: this.showDetail.TabId
+				}
+			} else if(type === 1) {
+				data.data = {
+					upperId: this.showDetail.Comments[index0].TabId,
+					userSpaceId: this.showDetail.TabId
+				};
+				if(typeof(index1) === 'number') { 
+					data.data.replyUserId = this.showDetail.Comments[index0].Replys[index1].UserId;
+				} else {
+					data.data.replyUserId = this.showDetail.Comments[index0].UserId;
+				}
+
+			}
+			events.openNewWindowWithData('detail-comment.html', data);
 		},
 		//打开个人主页
 		openPersonSpace: function(usrId) {
@@ -279,13 +301,13 @@ var commentList = new Vue({
 				console.log("最终图片尺寸" + JSON.stringify(imgRe));
 				return imgRe;
 			}
-		}, 
-		exFileTapListener:function(showDetail,img,index){
-			var imgs=commentList.getImgs(showDetail);
-			if(imgs[0].type===1){
-				
-			}else{
-				
+		},
+		exFileTapListener: function(showDetail, img, index) {
+			var imgs = commentList.getImgs(showDetail);
+			if(imgs[0].type === 1) {
+
+			} else {
+
 			}
 		}
 	}
