@@ -71,6 +71,7 @@
 						<p class="comment-date">{{getSimpleDate(comment.CommentDate)}}</p>
 					</div>
 					<div class="replies-container" v-if="comment.Replys.length>0">
+						<div class="reply-li mui-table-view-cell" v-for="(reply,index1) of comment.Replys" v-on:tap.stop="openComment(1,index0,index1)" v-on:longtap.stop="showSheet(comment,index0,index1)">
 							<p class="reply-content"><span class="reply-name">{{reply.UserName}}</span>
 						<template v-if="reply.ReplyName">
 							@<span class="reply-name">{{reply.ReplyName}}</span>
