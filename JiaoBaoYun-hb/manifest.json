@@ -475,7 +475,8 @@
 					"js/libs/crypto-js/crypto-js.js",
 					"css/show/show.css",
 					"js/utils/native.js",
-					"js/utils/video.js"
+					"js/utils/video.js",
+					"image/utils/playvideo.png"
 				],
 				"refer": [
 					"html/quan/leave.html",
@@ -5281,7 +5282,8 @@
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
 					"css/utils/common.css",
-					"js/libs/myStorage/myStorage.js"
+					"js/libs/myStorage/myStorage.js",
+					"js/publicProtocol.js"
 				],
 				"refer": [],
 				"priority": 0
