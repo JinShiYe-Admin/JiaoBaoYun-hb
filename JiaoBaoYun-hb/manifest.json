@@ -3517,7 +3517,20 @@
 					"js/utils/recordvideoutil.js",
 					"js/utils/gallerypick.js",
 					"image/utils/loading.gif",
-					"image/utils/videothumb.png"
+					"image/utils/videothumb.png",
+					"js/libs/RSA/Barrett.js",
+					"js/utils/playutil.js",
+					"js/libs/myStorage/myStorage.js",
+					"js/utils/signHmacSHA1.js",
+					"js/utils/postData.js",
+					"js/storageKeyName.js",
+					"js/libs/crypto-js/require.js",
+					"js/publicProtocol.js",
+					"js/libs/jquery.js",
+					"js/libs/RSA/BigInt.js",
+					"image/utils/playvideo.png",
+					"js/libs/RSA/RSA.js",
+					"js/utils/RSAEncrypt.js"
 				],
 				"refer": [],
 				"priority": 0
