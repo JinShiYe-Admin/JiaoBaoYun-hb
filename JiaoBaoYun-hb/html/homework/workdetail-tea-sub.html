@@ -22,6 +22,9 @@
 			#content:after {
 				height: 0px;
 			}
+			.mui-bar-tab~.mui-content{
+				padding-bottom: 60px;
+			}
 		</style>
 	</head>
 
@@ -197,19 +200,20 @@
 					} else if(str == '收起') {
 						showAll.innerText = '显示全部';
 						document.getElementById("homeWorkContent").style.webkitLineClamp = '8';
-						mui('.mui-scroll-wrapper').scroll().scrollTo(0,0,100);
+						mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100);
 					}
 				});
 
 			});
-			function jumpWorkSubmit(item){
-				if(commentIsReady){
+
+			function jumpWorkSubmit(item) {
+				if(commentIsReady) {
 					events.closeWaiting();
 					events.fireToPageWithData('homework-comment.html', 'workInfo', item.workInfo);
-				}else{
-					setTimeout(function(){
+				} else {
+					setTimeout(function() {
 						jumpWorkSubmit(item);
-					},500);
+					}, 500);
 				}
 			}
 
@@ -365,7 +369,7 @@
 				var unick = window.myStorage.getItem(window.storageKeyName.PERSONALINFO).unick; //用户id
 				homeworkDetailNodes.publishDate.innerHTML = events.shortForString(unick, 12) + '&nbsp&nbsp&nbsp&nbsp<span>' + homeworkModel.Date + '</span>'
 
-				homeworkDetailNodes.content.innerHTML = homeworkDetailModel.Contents.replace(/ /g,'&nbsp;').replace(/\n/g,"<br/>");
+				homeworkDetailNodes.content.innerHTML = homeworkDetailModel.Contents.replace(/ /g, '&nbsp;').replace(/\n/g, "<br/>");
 				document.getElementById('brief-imgs').innerHTML = getImgsInner(homeworkDetailModel.File);
 
 			}
@@ -488,10 +492,12 @@
 						if(alertButton.hasAttribute('disabled')) {
 							continue;
 						}
-						var userId = remainArray[i].utid + '|' + remainArray[i].utid;
-						userIdArr.push(userId);
+						if(remainArray[i].utid) {
+							var userId = remainArray[i].utid + '|' + remainArray[i].utid;
+							userIdArr.push(userId);
+						}
 					}
-					userIds = userIdArr.join(',')
+					userIds = userIdArr.toString();
 				} else {
 					var index = alertBtn.id.replace('alert', '');
 					userIds = remainArray[index].utid + '|' + remainArray[index].utid;

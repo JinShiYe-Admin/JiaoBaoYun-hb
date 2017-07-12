@@ -9,10 +9,10 @@ mui.plusReady(function() {
 	resetData(); //数据初始化
 	console.log('学生查看作业结果界面：' + JSON.stringify(homeworkModel));
 	if(homeworkModel.workType == 0) {
-		document.getElementById("modifyHomework").hidden = 'hidden'
-		//			document.getElementById("list").hidden = 'hidden';
+		document.getElementById("modifyHomework").style.display = 'none';
 		getAnswerResultStu();
 	} else {
+		document.getElementById("modifyHomework").style.display = 'inline-block';
 		document.getElementById("list").hidden = '';
 		requestHomeworkDetail();
 		requestGetHomeworkResultStu();
@@ -53,10 +53,11 @@ mui.plusReady(function() {
 		resetData(); //数据初始化
 		console.log('学生查看作业结果界面：' + JSON.stringify(homeworkModel));
 		if(homeworkModel.workType == 0) {
-			document.getElementById("modifyHomework").hidden = 'hidden'
+			document.getElementById("modifyHomework").style.display="none";
 			//			document.getElementById("list").hidden = 'hidden';
 			getAnswerResultStu();
 		} else {
+			document.getElementById("modifyHomework").style.display="inline-block";
 			document.getElementById("list").hidden = '';
 			requestHomeworkDetail();
 			requestGetHomeworkResultStu();
@@ -367,10 +368,10 @@ function refreshUITemp() {
 	var Comment = homeworkResult.Comment;
 	if(!Comment) {
 		Comment = '无评语';
-		document.getElementById("modifyHomework").hidden = ''
+		document.getElementById("modifyHomework").style.display='inline-block';
 
 	} else {
-		document.getElementById("modifyHomework").hidden = 'hidden'
+		document.getElementById("modifyHomework").style.display='none';
 	}
 	homeworkDetailNodes.commentContent.innerText = Comment;
 
@@ -430,10 +431,10 @@ function refreshUI() {
 	var Comment = homeworkResult.HomeworkResult.Comment;
 	if(!Comment) {
 		Comment = '无评语';
-		document.getElementById("modifyHomework").hidden = ''
+		document.getElementById("modifyHomework").style.display='inline-block'
 
 	} else {
-		document.getElementById("modifyHomework").hidden = 'hidden'
+		document.getElementById("modifyHomework").style.display='none';
 	}
 	homeworkDetailNodes.commentContent.innerText = Comment;
 

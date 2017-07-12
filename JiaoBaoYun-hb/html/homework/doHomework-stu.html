@@ -118,11 +118,11 @@
 				CloudFileUtil.setDelPicListener();
 				//发布图片
 				events.addTap('take_pic', function() {
-					var item=this;
-					jQuery(item).css("pointerEvents","none");
+					var item = this;
+					jQuery(item).css("pointerEvents", "none");
 					if(CloudFileUtil.files.length < 9) {
 						camera.getPic(camera.getCamera(), function(picPath) {
-							jQuery(item).css("pointerEvents","all");
+							jQuery(item).css("pointerEvents", "all");
 							plus.nativeUI.showWaiting(storageKeyName.UPLOADING, {
 								back: 'none'
 							});
@@ -132,28 +132,22 @@
 								var data = CloudFileUtil.getSingleUploadDataOptions(localPath, 6, 200, 0, saveSpace);
 								CloudFileUtil.getQNUpTokenWithManage(storageKeyName.QNGETUPLOADTOKEN, data.options, function(datas) {
 									console.log("获取的数据：" + JSON.stringify(datas));
-									if(datas.Status == 1) { //成功
-										var tokenInfos = datas.Data; //参数信息
-										var imgs = [];
-										//上传图片
-										CloudFileUtil.uploadFiles(compressedPaths, tokenInfos, function(uploadData, status, index) {
+									if(datas.Status == 1) {
+										var tokenInfo = datas.Data;
+
+										//上传文件
+										CloudFileUtil.uploadFile(tokenInfo, localPath, function(uploadData, status) {
 											console.log(JSON.stringify(uploadData));
-											imgs[index] = {
-												url: tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key,
-												thumb: (tokenInfos[0].Domain + JSON.parse(uploadData.responseText).key).replace(saveSpace, saveSpace + "thumb/"),
+											var img = { //图片信息
+												url: tokenInfo.Domain + tokenInfo.Key,
+												thumb: tokenInfo.OtherKey[data.thumbKey],
 												type: 1
 											}
-											picCount++;
-
-											if(picCount == compressedPaths.length) { //所有图片已上传
-												plus.nativeUI.closeWaiting(); //关闭等待框
-												for(var i in imgs) {
-													CloudFileUtil.setPic(imgs[i]); //放置图片
-												}
-
-											}
+											//关闭等待框
+											plus.nativeUI.closeWaiting();
+											//放置图片
+											CloudFileUtil.setPic(img);
 										});
-
 									}
 
 								}, function(xhr, type, errorThrown) {
@@ -161,11 +155,11 @@
 									plus.nativeUI.closeWaiting(); //关闭等待框
 								});
 							})
-						},function(err){
-							jQuery(item).css("pointerEvents","all");
+						}, function(err) {
+							jQuery(item).css("pointerEvents", "all");
 						})
 					} else {
-						jQuery(item).css("pointerEvents","all");
+						jQuery(item).css("pointerEvents", "all");
 						mui.toast('上传图片附件不得多于9张！');
 					}
 				});

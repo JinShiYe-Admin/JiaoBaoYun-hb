@@ -320,10 +320,9 @@ var commentList = new Vue({
 					imgRe.height = imgInfo.height / (imgInfo.width / winWidth) + 'px';
 					imgRe.width = winWidth + 'px';
 				} else {//宽<=高
-					imgRe.width='150px';
-					imgRe.height='264px';
-//					imgRe.width = imgInfo.width / (imgInfo.height / winWidth) + 'px';
-//					imgRe.height = winWidth + 'px';
+					winWidth=winWidth*0.78;
+					imgRe.width = imgInfo.width / (imgInfo.height / winWidth) + 'px';
+					imgRe.height = winWidth + 'px';
 				}
 				console.log("最终图片尺寸" + JSON.stringify(imgRe));
 				return imgRe;
