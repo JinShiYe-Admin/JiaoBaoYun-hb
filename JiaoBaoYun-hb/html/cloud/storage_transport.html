@@ -548,10 +548,10 @@
 								downloadList.value[ids[2]].state = 5;
 								document.getElementById("down_waiting_" + ids[2]).innerText = '暂停中';
 								document.getElementById("down_btn_" + ids[2]).innerText = '继续';
-								//开始下一个任务
-								downloadingId = null;
-								startDownloadingNetType();
 							}
+							//开始下一个任务
+							downloadingId = null;
+							startDownloadingNetType();
 							break;
 						case 5: //继续下载任务
 							if(downloadingId == null) { //没有正在下载的任务
@@ -661,7 +661,7 @@
 				downloadingId = -1; //正在下载
 				if(!downData) {
 					for(var i in downloadList.key) {
-						console.log("downloadList " + i + " " + downloadList.key[i] + " " + JSON.stringify(downloadList.value[downloadList.key[i]]));
+						//console.log("downloadList " + i + " " + downloadList.key[i] + " " + JSON.stringify(downloadList.value[downloadList.key[i]]));
 						if(downloadList.value[downloadList.key[i]] && downloadList.value[downloadList.key[i]].state == -1) { //未开始的任务
 							downloadingId = downloadList.key[i];
 							break;
@@ -771,7 +771,6 @@
 							downloadingId = null;
 							startDownloadingNetType();
 						} else {
-							mui.toast('下载失败' + download.responseText);
 							downloadFail();
 						}
 					}, function(download, status) {
@@ -787,9 +786,14 @@
 								console.log('下载任务请求已经接收:|id:' + id + '|downloadState:' + download.state);
 								break;
 							case 3: //下载任务接收数据
-								console.log('下载任务接收数据:|id:' + id + '|downloadState:' + download.state);
-								//下载任务id
+								//console.log('下载任务接收数据:|id:' + id + '|downloadState:' + download.state);
 								downloadList.value[id].state = 3;
+								if(downloadingId !== id) { //只允许一个下载任务进行
+									download.pause();
+									downloadList.value[id].state = 5;
+									document.getElementById("down_waiting_" + id).innerText = '暂停中';
+									document.getElementById("down_btn_" + id).innerText = '继续';
+								}
 								//已下载数据的大小
 								var downloadSize = AndroidFileSystem.readSize(download.downloadedSize);
 								//下载数据的总大小
@@ -841,7 +845,6 @@
 						}
 					});
 				}, function(xhr, type, errorThrown) {
-					mui.toast('下载失败' + type);
 					downloadFail();
 				});
 			}
@@ -872,7 +875,7 @@
 				uploadingId = -1; //正在上传
 				var data; //上传任务的参数
 				for(var i in uploadList.key) {
-					console.log("uploadList " + i + " " + uploadList.key[i] + " " + JSON.stringify(uploadList.value[uploadList.key[i]]));
+					//console.log("uploadList " + i + " " + uploadList.key[i] + " " + JSON.stringify(uploadList.value[uploadList.key[i]]));
 					if(uploadList.value[uploadList.key[i]] && uploadList.value[uploadList.key[i]].state == -1) { //未开始的任务
 						uploadingId = uploadList.key[i];
 						document.getElementById("up_btn_" + uploadList.key[i]).style.display = "none"; //隐藏取消上传任务按钮
@@ -980,6 +983,10 @@
 							}
 						}, function(upload, status) {
 							//上传任务id
+							var task = taskArray.value[upload.__UUID__];
+							if(!task) {
+								return false;
+							}
 							var id = taskArray.value[upload.__UUID__].upId;
 							switch(upload.state) {
 								case 0: //上传任务开始调度

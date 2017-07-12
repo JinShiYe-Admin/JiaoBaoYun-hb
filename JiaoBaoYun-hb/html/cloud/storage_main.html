@@ -629,11 +629,11 @@
 				//返回按钮监听
 				mui.back = function() {
 					console.log("mui.back " + back + " " + showPidList.length);
-					if(edit) {//批量编辑
+					if(edit) { //批量编辑
 						cloudBottomHide();
 						return false;
 					}
-					if(mask) {//对文件或文件夹操作中
+					if(mask) { //对文件或文件夹操作中
 						mask.close();
 						return false;
 					}
@@ -855,6 +855,7 @@
 					if(vue_fail.failArray.length > 0) {
 						back = false;
 						mui('#failPop').popover('toggle');
+						document.querySelector('.mui-backdrop').style.backgroundColor = "rgba(0,0,0,0.3)";
 						document.querySelector('.mui-backdrop').addEventListener('tap', function() {
 							back = true;
 							vue_fail.failArray = []; //清空列表
