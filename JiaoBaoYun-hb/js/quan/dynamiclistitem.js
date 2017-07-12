@@ -260,7 +260,7 @@ var dynamiclistitem = (function($, mod) {
 											}
 										})
 									}
-								},'div');
+								}, 'div');
 
 								return;
 							}
@@ -797,18 +797,19 @@ var dynamiclistitem = (function($, mod) {
 
 		if(tempModel.EncImgAddr != '') {
 			var EncImgAddrs = tempModel.EncImgAddr.split('|');
-			var EncAddr = tempModel.EncAddr.split('|');
+			var EncAddrs = tempModel.EncAddr.split('|');
 
 			//内容的图片
 			for(var i = 0; i < EncImgAddrs.length; i++) {
-				ImageList.push(EncImgAddrs[i])
-				EncAddrList.push(EncAddr[i]);
+				ImageList.push({
+					encAddr: EncAddrs[i],
+					encImg: EncImgAddrs[i],
+					type: mod.getFileType(data.EncType, EncAddrs[i])
+				})
 			}
 
 		}
 		tempModel.ImageList = ImageList
-		tempModel.EncAddrList = EncAddrList
-
 		//底部
 		var viewCount = tempModel.ReadCnt;
 		var praiseList = [];
@@ -837,6 +838,31 @@ var dynamiclistitem = (function($, mod) {
 		tempModel.id_name = data.id_name;
 		return tempModel;
 
+	}
+	/**
+	 * 获取文件类型
+	 * @param {Object} type
+	 * @param {Object} fileAddr
+	 */
+	mod.getFileType = function(type, fileAddr) {
+		switch(type) {
+			case 5:
+				var fileSuffix = fileAddr.split('.')[fileAddr.split('.').length - 1];
+				switch(fileSuffix) {
+					case 'mp4':
+					case 'MP4':
+						type = 2;
+						break;
+					default:
+						type = 1;
+						break;
+				}
+				break;
+			default:
+
+				break;
+		}
+		return type;
 	}
 
 	mod.addItem = function(ulElement, data) {
@@ -994,6 +1020,7 @@ var dynamiclistitem = (function($, mod) {
 	 * @param {Object} data
 	 */
 	mod.addImage = function(ulElement, liElement, data) {
+		console.log("要放置的data:" + JSON.stringify(data));
 		var citycode = data.cityCode
 
 		if(data.pageFlag == 1 && mui.os.android) {
@@ -1007,54 +1034,92 @@ var dynamiclistitem = (function($, mod) {
 
 		}
 		var ImageUrlList = data.ImageList; //图片路径数组
-		var EncAddrList = data.EncAddrList
 		var ImageNum = ImageUrlList.length; //图片总数量
 		var html = '';
-		//		if(data.pageFlag!=0){
-		//			ImageNum=0;
-		//		}
-		var mp = data.EncAddr.split('.');
-		if(ImageNum == 1) { //一张图片
-			if(data.EncType == 2) {
-				var html1 = '<div id="video-container' + data.id_name + '" class="video-container" thb=' + ImageUrlList[0] + ' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url(' + ImageUrlList[0] + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
-				var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:60px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
-				html = html1 + html2;
-
-			} else if(data.EncType == 5) {
-				if(mp[mp.length - 1] == "mp4" && (!document.getElementById("spaceDetail"))) {
-					var html1 = '<div id="video-container' + data.id_name + '" class="video-container" thb=' + ImageUrlList[0] + ' videourl=' + EncAddrList[0] + ' style="height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;background-image:url(' + ImageUrlList[0] + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
+		var imgRe = {};
+		if(ImageNum > 0) {
+			if(ImageUrlList[0].type == 2) {
+				var request = new XMLHttpRequest();
+				request.open("GET", ImageUrlList[0].encImg + '?imageInfo', false);
+				request.send();
+				var imgInfo = JSON.parse(request.responseText);
+				var winWidth = SCREEN_WIDTH;
+				console.log("获取的图片信息：" + JSON.stringify(imgInfo));
+				if(imgInfo.width > imgInfo.height) { //宽>高
+					imgRe.height = imgInfo.height / (imgInfo.width / winWidth) + 'px';
+					imgRe.width = winWidth + 'px';
+				} else { //宽<=高
+					winWidth = winWidth * 0.78;
+					imgRe.width = imgInfo.width / (imgInfo.height / winWidth) + 'px';
+					imgRe.height = winWidth + 'px';
+				}
+			}
+			console.log("要设置的图片宽高："+JSON.stringify(imgRe));
+	
+			if(ImageNum == 1) { //一张图片
+				if(ImageUrlList[0].type === 2) {
+					var html1 = '<div id="video-container' + data.id_name + '" class="video-container" thb=' + ImageUrlList[0].encImg + ' videourl=' + ImageUrlList[0].encAddr +
+						' style="height: ' + imgRe.width + 'px;width: ' + imgRe.height + 'px;background-image:url(' + ImageUrlList[0].encImg + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
 					var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:60px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
 					html = html1 + html2;
-				} else if(mp[mp.length - 1] != "mp4" && (!document.getElementById("spaceDetail"))) {
+				} else {
+
 					var html1 = '<div>';
-					var html2 = '<img class="dynamic-image"  style= "height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;" src="' + ImageUrlList[0] + '" data-preview-src="' + EncAddrList[0] + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/></div>';
+					var html2 = '<img class="dynamic-image"  style= "height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;" src="' + ImageUrlList[0].encImg + '" data-preview-src="' + ImageUrlList[0].encAddr + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/></div>';
 					html = html1 + html2;
 				}
+			} else if(ImageNum == 2) { //两张图片时
+				if(data.EncType == 1) {
+					$.each(ImageUrlList, function(index, element) {
+						var html1 = '<div class="mui-col-sm-6 mui-col-xs-6 dynamic-image-div" style="height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;width: ' + (SCREEN_WIDTH - 20) / 2 + 'px;">';
+						var html2 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;" src="' + ImageUrlList[index].encImg + '" data-preview-src="' + ImageUrlList[index].encAddr + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/>' + '</div>';
+						html = html + html1 + html2;
+					});
+				}
+			} else {
+				if(ImageNum >= 3) { //大于两张图片时
+					if(data.EncType == 1) {
+						$.each(ImageUrlList, function(index, element) {
+							var html1 = '<div class="mui-col-sm-4 mui-col-xs-4" style="height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
+							var html2 = '<img class="dynamic-image" style="height: ' + (SCREEN_WIDTH - 30) / 3 + 'px;width: ' + (SCREEN_WIDTH - 30) / 3 + 'px;"  src="' + element.encImg + '" data-preview-src="' + ImageUrlList[index].encAddr + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/></div>';
+							html = html + html1 + html2;
+						});
+					}
+				}
+			}
+		}
 
+		if(ImageNum == 1) { //一张图片
+			if(ImageUrlList[0].type === 2) {
+				var html1 = '<div id="video-container' + data.id_name + '" class="video-container" thb=' + ImageUrlList[0].encImg + ' videourl=' + ImageUrlList[0].encAddr +
+					' style="height: ' + imgRe.width + 'px;width: ' + imgRe.height + 'px;background-image:url(' + ImageUrlList[0] + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
+				var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:60px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
+				html = html1 + html2;
 			} else {
 
 				var html1 = '<div>';
-				var html2 = '<img class="dynamic-image"  style= "height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;" src="' + ImageUrlList[0] + '" data-preview-src="' + EncAddrList[0] + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/></div>';
+				var html2 = '<img class="dynamic-image"  style= "height: ' + SCREEN_WIDTH * 1 / 2 + 'px;width: ' + SCREEN_WIDTH * 1 / 2 + 'px;" src="' + ImageUrlList[0].encImg + '" data-preview-src="' + ImageUrlList[0].encAddr + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/></div>';
 				html = html1 + html2;
 			}
 		} else if(ImageNum == 2) { //两张图片时
 			if(data.EncType == 1) {
 				$.each(ImageUrlList, function(index, element) {
 					var html1 = '<div class="mui-col-sm-6 mui-col-xs-6 dynamic-image-div" style="height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;width: ' + (SCREEN_WIDTH - 20) / 2 + 'px;">';
-					var html2 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;" src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/>' + '</div>';
+					var html2 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;" src="' + element + '" data-preview-src="' + ImageUrlList[index].encAddr + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/>' + '</div>';
 					html = html + html1 + html2;
 				});
 			}
-		} else if(ImageNum >= 3) { //大于两张图片时
-			if(data.EncType == 1) {
-				$.each(ImageUrlList, function(index, element) {
-					var html1 = '<div class="mui-col-sm-4 mui-col-xs-4" style="height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
-					var html2 = '<img class="dynamic-image" style="height: ' + (SCREEN_WIDTH - 30) / 3 + 'px;width: ' + (SCREEN_WIDTH - 30) / 3 + 'px;"  src="' + element + '" data-preview-src="' + EncAddrList[index] + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/></div>';
-					html = html + html1 + html2;
-				});
+		} else {
+			if(ImageNum >= 3) { //大于两张图片时
+				if(data.EncType == 1) {
+					$.each(ImageUrlList, function(index, element) {
+						var html1 = '<div class="mui-col-sm-4 mui-col-xs-4" style="height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
+						var html2 = '<img class="dynamic-image" style="height: ' + (SCREEN_WIDTH - 30) / 3 + 'px;width: ' + (SCREEN_WIDTH - 30) / 3 + 'px;"  src="' + element + '" data-preview-src="' + ImageUrlList[index].encAddr + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/></div>';
+						html = html + html1 + html2;
+					});
+				}
 			}
 		}
-
 		var div = document.createElement('div');
 		div.className = 'mui-row ';
 		div.style.paddingLeft = '10px'
@@ -1064,7 +1129,6 @@ var dynamiclistitem = (function($, mod) {
 		liElement.appendChild(div);
 		if(document.getElementById("spaceDetail") && data.pageFlag == 1) {
 			mod.addInteraction(ulElement, liElement, data);
-			//						mod.adddetailInteraction(ulElement, liElement, data);
 		} else {
 			mod.addInteraction(ulElement, liElement, data);
 		}
@@ -1080,11 +1144,6 @@ var dynamiclistitem = (function($, mod) {
 				height: img.height
 			});
 		}
-
-		return {
-			width: img.width,
-			height: img.height
-		};
 	}
 	mod.questionContent = function() {
 		var height_0;
@@ -1182,11 +1241,10 @@ var dynamiclistitem = (function($, mod) {
 		var ImageUrlList = data.ImageList; //图片路径数组1
 		var EncAddrList = data.EncAddrList
 		var ImageNum = ImageUrlList.length; //图片总数量
-		var mp = data.EncAddr.split('.');
 
 		if(ImageNum == 1 && data.EncType == 2) {
 			var tempDiv = document.getElementById("video-container" + data.id_name);
-			var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
+			mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
 				console.log(9999999)
 				if(imgSize.height > imgSize.width) {
 					if(imgSize.width == 1080 && imgSize.height == 1920) {
@@ -1237,7 +1295,7 @@ var dynamiclistitem = (function($, mod) {
 		} else if((mp[mp.length - 1] == 'mp4') && (data.EncType == 5)) {
 			if(!document.getElementById("spaceDetail")) {
 				var tempDiv = document.getElementById("video-container" + data.id_name);
-				var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
+				mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
 					tempDiv.style.width = imgSize.width + 'px';
 					tempDiv.style.height = imgSize.height + 'px';
 					var playvideo = document.getElementById("playvideo" + data.id_name);
@@ -1420,72 +1478,6 @@ var dynamiclistitem = (function($, mod) {
 		div.innerHTML = html;
 		liElement.appendChild(div);
 		ulElement.appendChild(liElement);
-		//		console.log(ulElement.innerHTML)
-		var ImageUrlList = data.ImageList; //图片路径数组1
-		var EncAddrList = data.EncAddrList
-		var ImageNum = ImageUrlList.length; //图片总数量
-		var mp = data.EncAddr.split('.');
-
-		if(ImageNum == 1 && data.EncType == 2) {
-			var tempDiv = document.getElementById("video-container" + data.id_name);
-			var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
-				console.log(99999999)
-				if(imgSize.height > imgSize.width) {
-					if(imgSize.width >= 1080 && imgSize.height >= 1920) {
-						tempDiv.style.width = '180px';
-						tempDiv.style.height = '320px';
-						var playvideo = document.getElementById("playvideo" + data.id_name);
-						playvideo.style.marginTop = 160 - 25 + 'px'
-						return;
-					}
-					if(imgSize.width < 500) {
-						tempDiv.style.width = imgSize.width * 3 / 8 + 'px';
-						tempDiv.style.height = imgSize.height * 3 / 8 + 'px';
-						console.log('tempDiv.style.width=' + tempDiv.style.width)
-						var playvideo = document.getElementById("playvideo" + data.id_name);
-						playvideo.style.marginTop = imgSize.height * 3 / 16 - 25 + 'px'
-					} else {
-						tempDiv.style.width = imgSize.width / 4 + 'px';
-						tempDiv.style.height = imgSize.height / 4 + 'px';
-						var playvideo = document.getElementById("playvideo" + data.id_name);
-						playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
-					}
-				} else {
-					if(imgSize.height >= 1080 && imgSize.width >= 1920) {
-						tempDiv.style.height = '180px';
-						tempDiv.style.width = '320px';
-						var playvideo = document.getElementById("playvideo" + data.id_name);
-						playvideo.style.marginTop = 90 - 25 + 'px'
-						return;
-					}
-					if(imgSize.height < 500) {
-						tempDiv.style.width = imgSize.width * 3 / 8 + 'px';
-						tempDiv.style.height = imgSize.height * 3 / 8 + 'px';
-						console.log('tempDiv.style.width=' + tempDiv.style.width)
-						var playvideo = document.getElementById("playvideo" + data.id_name);
-						playvideo.style.marginTop = imgSize.height * 3 / 16 - 25 + 'px'
-					} else {
-						tempDiv.style.width = imgSize.width / 4 + 'px';
-						tempDiv.style.height = imgSize.height / 4 + 'px';
-						var playvideo = document.getElementById("playvideo" + data.id_name);
-						playvideo.style.marginTop = imgSize.height / 8 - 25 + 'px'
-					}
-				}
-
-			})
-
-		} else if((mp[mp.length - 1] == 'mp4') && (data.EncType == 5)) {
-			if(!document.getElementById("spaceDetail")) {
-				var tempDiv = document.getElementById("video-container" + data.id_name);
-				var imgSize = mod.getNaturalSize(ImageUrlList[0], function(imgSize) {
-					tempDiv.style.width = imgSize.width + 'px';
-					tempDiv.style.height = imgSize.height + 'px';
-					var playvideo = document.getElementById("playvideo" + data.id_name);
-					playvideo.style.marginTop = imgSize.height / 2 - 25 + 'px'
-				})
-			}
-		}
-
 	};
 
 	return mod;

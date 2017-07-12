@@ -1962,7 +1962,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/quan/pub-leave.html",
