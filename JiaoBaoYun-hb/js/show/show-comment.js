@@ -316,12 +316,14 @@ var commentList = new Vue({
 				request.send();
 				var imgInfo = JSON.parse(request.responseText);
 				console.log("获取的图片信息：" + JSON.stringify(imgInfo));
-				if(imgInfo.width > imgInfo.height) {
+				if(imgInfo.width > imgInfo.height) {//宽>高
 					imgRe.height = imgInfo.height / (imgInfo.width / winWidth) + 'px';
 					imgRe.width = winWidth + 'px';
-				} else {
-					imgRe.width = imgInfo.width / (imgInfo.height / winWidth) + 'px';
-					imgRe.height = winWidth + 'px';
+				} else {//宽<=高
+					imgRe.width='150px';
+					imgRe.height='264px';
+//					imgRe.width = imgInfo.width / (imgInfo.height / winWidth) + 'px';
+//					imgRe.height = winWidth + 'px';
 				}
 				console.log("最终图片尺寸" + JSON.stringify(imgRe));
 				return imgRe;

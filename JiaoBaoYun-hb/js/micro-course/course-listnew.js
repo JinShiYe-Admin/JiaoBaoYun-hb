@@ -27,22 +27,24 @@ var course_listnew = (function(mod) {
 			//1.获取所有课程
 			postDataMCPro_getAllCourses(comData, wd, function(data) {
 				wd.close();
-				console.log('1.获取所有课程:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+				console.log('1.获取所有课程:' + JSON.stringify(data));
 				if(data.RspCode == 0) {
 					if(comData.pageIndex == 1) {
 						listContainer.innerHTML = "";
 					}
 					//总页数
 					model.totalPage = data.RspData.totalPage;
-					model.pageIndex++;
-					if(model.freshFlag == 0) { //刷新
-						model.courseArray = data.RspData.Data;
-					} else { //加载更多
-						//合并数组
-						model.courseArray = model.courseArray.concat(data.RspData.Data);
-					}
+					if(model.pageIndex === comData.pageIndex) {
+						model.pageIndex++;
+						if(model.freshFlag == 0) { //刷新
+							model.courseArray = data.RspData.Data;
+						} else { //加载更多
+							//合并数组
+							model.courseArray = model.courseArray.concat(data.RspData.Data);
+						}
 
-					callback(model.pageIndex, data.RspData.Data, listContainer);
+						callback(model.pageIndex, data.RspData.Data, listContainer);
+					}
 				} else {
 					//					mui.toast(data.RspTxt);
 					//					mod.endFresh();
@@ -79,17 +81,20 @@ var course_listnew = (function(mod) {
 						}
 						//总页数
 						model.totalPage = data.RspData.totalPage;
-						model.pageIndex++;
-						if(model.freshFlag == 0) { //刷新
-							model.courseArray = data.RspData.Data;
-						} else { //加载更多
-							//合并数组
-							model.courseArray = model.courseArray.concat(data.RspData.Data);
+						if(comData.pageIndex === model.pageIndex) {
+							model.pageIndex++;
+							if(model.freshFlag == 0) { //刷新
+								model.courseArray = data.RspData.Data;
+							} else { //加载更多
+								//合并数组
+								model.courseArray = model.courseArray.concat(data.RspData.Data);
+							}
+							if(data.RspData.Data.length == 0) {
+								mui.toast('没有数据');
+							}
+							callback(model.pageIndex, data.RspData.Data, listContainer);
 						}
-						if(data.RspData.Data.length == 0) {
-							mui.toast('没有数据');
-						}
-						callback(model.pageIndex, data.RspData.Data, listContainer);
+
 					} else {
 						//						mui.toast(data.RspTxt);
 					}
@@ -125,7 +130,7 @@ var course_listnew = (function(mod) {
 						model.courseArray = model.courseArray.concat(data.RspData.Data);
 					}
 					if(mui(".mui-table-view-cell").length < 10) {
-//						mui(".mui-pull-loading")[0].innerHTML = "";
+						//						mui(".mui-pull-loading")[0].innerHTML = "";
 					}
 					callback(model.pageIndex, data.RspData.Data, listContainer);
 				} else {
@@ -390,7 +395,7 @@ var course_listnew = (function(mod) {
 		jQuery(item).css("pointerEvents", "none");
 		mod.getRedCircle(item);
 		events.singleWebviewInPeriod(item, '../micro-course/course_details.html', item.info);
-		if(!events.getUtid()){
+		if(!events.getUtid()) {
 			events.setValueInMap(storageKeyName.COURSELASTTIME, item.info.TabId, Date.now());
 		}
 	}

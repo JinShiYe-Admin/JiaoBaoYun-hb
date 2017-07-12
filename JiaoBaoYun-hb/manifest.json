@@ -482,7 +482,8 @@
 					"html/quan/pub-dynamic.html",
 					"html/quan/leaveNew.html",
 					"html/quan/classSpace-persons.html",
-					"html/show/add-comment.html"
+					"html/show/add-comment.html",
+					"html/quan/space-detail.html"
 				],
 				"priority": 0
 			},

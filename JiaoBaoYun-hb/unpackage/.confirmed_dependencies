@@ -1466,7 +1466,8 @@
 			"html/quan/leaveNew.html",
 			"html/quan/pub-dynamic.html",
 			"html/quan/classSpace-persons.html",
-			"html/show/add-comment.html"
+			"html/show/add-comment.html",
+			"html/quan/space-detail.html"
 		]
 	},
 	"html/quan/zonep_sub.html": {
