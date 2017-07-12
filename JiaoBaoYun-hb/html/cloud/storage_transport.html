@@ -661,7 +661,7 @@
 				downloadingId = -1; //正在下载
 				if(!downData) {
 					for(var i in downloadList.key) {
-						console.log("downloadList " + i + " " + downloadList.key[i] + " " + JSON.stringify(downloadList.value[downloadList.key[i]]));
+						//console.log("downloadList " + i + " " + downloadList.key[i] + " " + JSON.stringify(downloadList.value[downloadList.key[i]]));
 						if(downloadList.value[downloadList.key[i]] && downloadList.value[downloadList.key[i]].state == -1) { //未开始的任务
 							downloadingId = downloadList.key[i];
 							break;
@@ -771,7 +771,6 @@
 							downloadingId = null;
 							startDownloadingNetType();
 						} else {
-							mui.toast('下载失败' + download.responseText);
 							downloadFail();
 						}
 					}, function(download, status) {
@@ -841,7 +840,6 @@
 						}
 					});
 				}, function(xhr, type, errorThrown) {
-					mui.toast('下载失败' + type);
 					downloadFail();
 				});
 			}
@@ -872,7 +870,7 @@
 				uploadingId = -1; //正在上传
 				var data; //上传任务的参数
 				for(var i in uploadList.key) {
-					console.log("uploadList " + i + " " + uploadList.key[i] + " " + JSON.stringify(uploadList.value[uploadList.key[i]]));
+					//console.log("uploadList " + i + " " + uploadList.key[i] + " " + JSON.stringify(uploadList.value[uploadList.key[i]]));
 					if(uploadList.value[uploadList.key[i]] && uploadList.value[uploadList.key[i]].state == -1) { //未开始的任务
 						uploadingId = uploadList.key[i];
 						document.getElementById("up_btn_" + uploadList.key[i]).style.display = "none"; //隐藏取消上传任务按钮
@@ -980,6 +978,10 @@
 							}
 						}, function(upload, status) {
 							//上传任务id
+							var task = taskArray.value[upload.__UUID__];
+							if(!task) {
+								return false;
+							}
 							var id = taskArray.value[upload.__UUID__].upId;
 							switch(upload.state) {
 								case 0: //上传任务开始调度
