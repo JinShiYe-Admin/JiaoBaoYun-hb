@@ -939,9 +939,9 @@ var dynamiclistitem = (function($, mod) {
 				console.log("获取的图片信息：" + JSON.stringify(imgInfo));
 				if(imgInfo.width > imgInfo.height) { //宽>高
 					winWidth = winWidth * 0.75;
-					imgRe.height = 150 + 'px';
-					imgRe.width = 264 + 'px';
-					mt = 150/2-25
+					imgRe.height = 190 + 'px';
+					imgRe.width = 340 + 'px';
+					mt = 190/2-25;
 				} else { //宽<=高
 					winWidth = winWidth * 0.75;
 					imgRe.width = 150 + 'px';
@@ -955,9 +955,13 @@ var dynamiclistitem = (function($, mod) {
 			if(ImageNum == 1) { //一张图片
 				if(ImageUrlList[0].type === 2) {
 					var html1 = '<div id="video-container' + data.id_name + '" class="video-container" thb=' + ImageUrlList[0].encImg + ' videourl=' + ImageUrlList[0].encAddr +
-						' style="height: ' + imgRe.height + ';width: ' + imgRe.width + ' ;background-image:url(' + ImageUrlList[0].encImg + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
-					var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:' + mt + 'px;margin-left:0px" src="../../image/utils/playvideo.png"/></div>';
-					html = html1 + html2;
+						' style="position:relative;height: ' + imgRe.height + ';width: ' + imgRe.width + ' ;background-image:url(' + ImageUrlList[0].encImg + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
+					var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:' + mt + 'px;margin-left:0px" src="../../image/utils/playvideo.png"/>';
+					var html3='';
+					if(data.EncLen>0){
+						html3 = '<div style="position:absolute;bottom:0px;right:3px;color:white;width:20px;">'+data.EncLen+'"</div></div>'
+					}
+					html = html1 + html2+html3;
 				} else {
 
 					var html1 = '<div>';
@@ -976,9 +980,7 @@ var dynamiclistitem = (function($, mod) {
 					var html2 = '<img class="dynamic-image" style="height: ' + (SCREEN_WIDTH - 30) / 3 + 'px;width: ' + (SCREEN_WIDTH - 30) / 3 + 'px;"  src="' + element.encImg + '" data-preview-src="' + ImageUrlList[index].encAddr + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/></div>';
 					html = html + html1 + html2;
 				});
-
 			}
-
 		}
 
 		var div = document.createElement('div');
@@ -1130,7 +1132,7 @@ var dynamiclistitem = (function($, mod) {
 		div.innerHTML = html;
 		liElement.appendChild(div);
 		ulElement.appendChild(liElement);
-		console.log(ulElement.innerHTML);
+//		console.log(ulElement.innerHTML);
 	};
 
 	return mod;
