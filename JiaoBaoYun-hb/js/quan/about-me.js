@@ -58,10 +58,12 @@ var repliedItem; //回复的对象
 //页码请求到要显示的数据，array[model_userSpaceAboutMe]
 var aboutMeArray = [];
 var isShowing = false;
+var isDetailReady=true;
 var wd;
 //mui.init();
 mui.plusReady(function() {
 	setFresh();
+	events.preload("../show/show-detail.html",100);
 	//重写系统返回方法
 	var _back = mui.back;
 	mui.back = function() {
@@ -258,7 +260,7 @@ var setListener = function() {
 			PublisherName: this.info.UserName,
 			TabId: this.info.SpaceId
 		}
-//		console.log(JSON.stringify(this.info));
+		console.log("传递的数值："+JSON.stringify(this.info));
 		getUserSpaceById(info.TabId, function(data) {
 			if(data.RspCode == 0) {
 				var focusFlag = 0;
@@ -267,9 +269,9 @@ var setListener = function() {
 				}else{
 					focusFlag = 1;
 				}
-				events.singleWebviewInPeriod(item, "../quan/space-detail.html", jQuery.extend(info, {
-					focusFlag: focusFlag
-				}));
+				console.log("与我相关要传递的数据："+JSON.stringify(info));
+				events.readyToPage(isDetailReady,"../show/show-detail.html","showDetail",info);
+				item.disabled=false;
 			} else {
 				mui.toast(data.RspTxt);
 				item.disabled = false;
@@ -500,6 +502,9 @@ var setCommentMsgReadByUser = function() {
 var replenishData = function(data, infos) {
 	var hashInfos = rechargeArraysToHash(infos);
 	for(var i in data) {
+		if(!hashInfos[data[i].UserId]){
+			continue;
+		}
 		data[i].UserName = hashInfos[data[i].UserId].unick;
 		data[i].UserImg = hashInfos[data[i].UserId].uimg;
 		if(data[i].MsgType != 6) {

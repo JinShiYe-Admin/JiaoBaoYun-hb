@@ -1628,7 +1628,8 @@
 					"js/utils/signHmacSHA1.js",
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js"
+					"js/utils/RSAEncrypt.js",
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [
 					"html/homework/workdetail-stu.html",
@@ -2627,7 +2628,8 @@
 					"js/utils/events.js",
 					"js/utils/playutil.js",
 					"fonts/iconfont.ttf",
-					"js/libs/crypto-js/crypto-js.js"
+					"js/libs/crypto-js/crypto-js.js",
+					"js/utils/vue.js"
 				],
 				"refer": [],
 				"priority": 0

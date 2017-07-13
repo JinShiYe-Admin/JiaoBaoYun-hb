@@ -20,7 +20,7 @@
 		</header>
 		<div id="show-detail" v-show="showDetail.TabId" class="mui-content">
 			<div>
-				<h4 class="detail-head triple-line">{{showDetail.MsgTitle}}</h4>
+				<h4 class="detail-head triple-line" v-if="showDetail.MsgTitle">{{showDetail.MsgTitle}}</h4>
 				<div class="publisher-container">
 					<img class="publisher-img" v-bind:src="showDetail.PublisherImg" v-on:tap="openPersonSpace(showDetail.PublisherId)" />
 					<div class="publisher-info">
@@ -132,7 +132,8 @@
 				commentList.winWidth = document.querySelector('header').clientWidth;
 				ShowVideoUtil.initVideo(document.getElementById("video"));
 				events.preload('../quan/classSpace-persons.html', 50);
-				mui.fire(plus.webview.currentWebview().opener(), 'detailReady', true);
+				events.fireToPageNone("../quan/aboutme.html","detailReady");
+				events.fireToPageNone("show-home1.html","detailReady");
 				window.addEventListener('showDetail', function(e) {
 					pageIndex = 1;
 					console.log("获取的数据:" + JSON.stringify(e.detail.data));
