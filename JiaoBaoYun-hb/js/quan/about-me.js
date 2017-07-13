@@ -58,12 +58,12 @@ var repliedItem; //回复的对象
 //页码请求到要显示的数据，array[model_userSpaceAboutMe]
 var aboutMeArray = [];
 var isShowing = false;
-var isDetailReady=true;
+var isDetailReady = true;
 var wd;
 //mui.init();
 mui.plusReady(function() {
 	setFresh();
-	events.preload("../show/show-detail.html",100);
+	events.preload("../show/show-detail.html", 100);
 	//重写系统返回方法
 	var _back = mui.back;
 	mui.back = function() {
@@ -187,7 +187,7 @@ var zanNoReply = function(msgType) {
 }
 var ifHaveReferContent = function(cellData, cell) {
 	if(cellData.referContent) {
-		return '<div class="refer-content">' + addEncImg(cell) + '<div class="refer-words triple-line extra-words break-words">' + '<span>' + events.shortForString(cellData.UserOwnerNick, 6) + ':</span>' + cellData.referContent.replace(/<[^>]*>/g,"") + '</div></div>'
+		return '<div class="refer-content">' + addEncImg(cell) + '<div class="refer-words triple-line extra-words break-words">' + '<span>' + events.shortForString(cellData.UserOwnerNick, 6) + ':</span>' + cellData.referContent.replace(/<[^>]*>/g, "") + '</div></div>'
 	} else {
 		return '';
 	}
@@ -255,23 +255,28 @@ var setListener = function() {
 	mui(".mui-table-view").on("tap", ".refer-content", function() {
 		var item = this;
 		item.disabled = true;
+		console.log(JSON.stringify(this.info))
 		var info = {
 			PublisherId: this.info.UserId,
 			PublisherName: this.info.UserName,
-			TabId: this.info.SpaceId
+			TabId: this.info.SpaceId,
+			SpaceType:this.info.SpaceType
 		}
-		console.log("传递的数值："+JSON.stringify(this.info));
+		console.log("传递的数值：" + JSON.stringify(this.info));
 		getUserSpaceById(info.TabId, function(data) {
 			if(data.RspCode == 0) {
 				var focusFlag = 0;
-				if(info.spaceType==1){
+				if(info.SpaceType == 1) {
 					focusFlag = 0;
-				}else{
+					events.singleWebviewInPeriod(item, "../quan/space-detail.html", jQuery.extend(info, {
+						focusFlag: focusFlag
+					}));
+				} else {
+					console.log("与我相关要传递的数据：" + JSON.stringify(info));
+					events.readyToPage(isDetailReady, "../show/show-detail.html", "showDetail", info);
 					focusFlag = 1;
 				}
-				console.log("与我相关要传递的数据："+JSON.stringify(info));
-				events.readyToPage(isDetailReady,"../show/show-detail.html","showDetail",info);
-				item.disabled=false;
+				item.disabled = false;
 			} else {
 				mui.toast(data.RspTxt);
 				item.disabled = false;
@@ -502,7 +507,7 @@ var setCommentMsgReadByUser = function() {
 var replenishData = function(data, infos) {
 	var hashInfos = rechargeArraysToHash(infos);
 	for(var i in data) {
-		if(!hashInfos[data[i].UserId]){
+		if(!hashInfos[data[i].UserId]) {
 			continue;
 		}
 		data[i].UserName = hashInfos[data[i].UserId].unick;
