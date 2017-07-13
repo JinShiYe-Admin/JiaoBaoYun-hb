@@ -390,6 +390,7 @@ var getImgsInner = function(imgs) {
 	var imgInner = '';
 	var win_height = document.getElementById('brief-imgs').offsetWidth;
 	var img_width = win_height / 3;
+	var random=Math.random(1000);
 	if(imgs && imgs.length > 0) {
 		for(var i in imgs) {
 			if(!imgs[i].ThumbUrl) {
@@ -403,7 +404,7 @@ var getImgsInner = function(imgs) {
 			}
 
 			imgInner += '<img class="homework-img" style="width:' + img_width + 'px;height:' + img_width + 'px;" src="' + imgs[i].ThumbUrl +
-				'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + imgs[i].FileType + '"/>';
+				'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + imgs[i].FileType+random + '"/>';
 		}
 	}
 	console.log(imgInner)
