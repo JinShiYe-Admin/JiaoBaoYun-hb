@@ -303,7 +303,7 @@
 		<header class="mui-bar mui-bar-nav" style="background: #13b7f6;">
 			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<div id="title" class="mui-title common-color-white" style="text-align: left;"></div>
-			<div id="cancel" class="title-text-pull-right">取消</div>
+			<div id="cancel" class="title-text-pull-left">取消</div>
 			<div id="edit" class="title-text-pull-right">编辑</div>
 		</header>
 		<nav id="cloud_bottom" class="mui-bar mui-bar-tab">
@@ -748,8 +748,8 @@
 				});
 
 				//点击底部菜单
-				mui('#cloud_bottom').on('tap', '.cloud-tab-item', function() {
-					var value = this.getAttribute("value");
+				mui('#cloud_bottom .cloud-tab-item').on('tap', 'div', function() {
+					var value = this.parentNode.getAttribute("value");
 					console.log("value " + value);
 					console.log("mode " + JSON.stringify(mode));
 					var checked; //选择的文件数量
@@ -861,6 +861,11 @@
 							vue_fail.failArray = []; //清空列表
 						});
 					}
+				});
+
+				//双击标题返回列表顶部
+				document.getElementById('title').addEventListener('doubletap', function() {
+					mui('#pid_' + showPid + " .mui-scroll-wrapper").scroll().scrollTo(0, 0, 100);
 				});
 			}
 
