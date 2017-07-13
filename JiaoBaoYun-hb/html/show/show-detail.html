@@ -38,8 +38,8 @@
 						<img src="../../image/utils/playvideo.png" style="width:50px;height:50px;margin: auto 0;">
 						<p v-if="img.encLen>0" style="position: absolute;bottom: 0;right: 5px;color: white;line-height: 0;">{{img.encLen}}"</p>
 					</div>
-					<img v-for="(img,index) of getImgs(showDetail)" v-if="img.type===1" class="display-inlineBlock" v-bind:src="img.encImg" v-bind:style="[imgDivRe]" style="margin: 0 2.5px;" v-bind:data-preview-src="img.encAddr" v-bind:data-preview-group="showDetail.TabId"/>
-					
+					<img v-for="(img,index) of getImgs(showDetail)" v-if="img.type===1" class="display-inlineBlock" v-bind:src="img.encImg" v-bind:style="[imgDivRe]" style="margin: 0 2.5px;" v-bind:data-preview-src="img.encAddr" v-bind:data-preview-group="showDetail.TabId" />
+
 				</div>
 				<div class="mui-pull-right extra-container">
 					<span class="iconfont icon-support" v-bind:class="{isLiked:showDetail.IsLike,isUnlike:!showDetail.IsLike}" v-on:tap="toggleLike"></span>
@@ -48,6 +48,7 @@
 				<div v-if="showDetail.LikeUsers&&showDetail.LikeUsers.length>0" style="width: 100%;">
 					<hr style="width: 100%;" />
 					<p v-on:tap="openLikers">
+						<img src="../../image/dynamic/praise.png" style="width: 15px;height: 15px;vertical-align: middle;" />
 						<span class="liker-name" v-for="(liker,likerIndex) of showDetail.LikeUsers" v-if="likerIndex<20" v-on:tap.stop="openPersonSpace(liker.userId)">{{liker.userName}}
 							<span v-if="likerIndex<showDetail.LikeUsers.length-1&&likerIndex<19">,</span>
 						</span>
@@ -83,12 +84,18 @@
 		</div>
 		</div>
 		</div>
+		<div id="videoPopover" class="mui-popover">
+			<video id="video" style="position: absolute;z-index: 999;" controls="controls">
+				您的浏览器不支持 video 标签。
+			</video>
+		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
 		<script src="../../js/utils/vue.js"></script>
 		<script src="../../js/mui.zoom.js"></script>
 		<script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
+		<script type="text/javascript" src="../../js/utils/showvideoutil.js"></script>
 		<script src="../../js/utils/video.js"></script>
 		<script src="../../js/show/show-comment.js"></script>
 		<script src="../../js/mui.zoom.js"></script>
@@ -123,6 +130,7 @@
 			mui.plusReady(function() {
 				mui.previewImage();
 				commentList.winWidth = document.querySelector('header').clientWidth;
+				ShowVideoUtil.initVideo(document.getElementById("video"));
 				events.preload('../quan/classSpace-persons.html', 50);
 				mui.fire(plus.webview.currentWebview().opener(), 'detailReady', true);
 				window.addEventListener('showDetail', function(e) {

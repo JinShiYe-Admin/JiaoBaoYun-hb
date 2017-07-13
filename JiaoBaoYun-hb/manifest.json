@@ -5319,7 +5319,10 @@
 					"js/utils/MPreview.mobile.min.js",
 					"js/mui.previewimage.js",
 					"js/utils/video.js",
-					"css/utils/preview.css"
+					"css/utils/preview.css",
+					"image/dynamic/praise.png",
+					"image/utils/default_personalimage.png",
+					"js/utils/showvideoutil.js"
 				],
 				"refer": [
 					"html/register/login.html",

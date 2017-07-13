@@ -1076,7 +1076,8 @@
 			"js/mui.min.js",
 			"js/utils/CloudFileUtil.js",
 			"js/qiniu/qiniu.js",
-			"css/iconfont/iconfont.css"
+			"css/iconfont/iconfont.css",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/utils/customizeCity.html",
@@ -3015,7 +3016,10 @@
 			"js/utils/MPreview.mobile.min.js",
 			"js/mui.previewimage.js",
 			"js/utils/video.js",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"image/dynamic/praise.png",
+			"image/utils/default_personalimage.png",
+			"js/utils/showvideoutil.js"
 		],
 		"refer": [
 			"html/register/login.html",
