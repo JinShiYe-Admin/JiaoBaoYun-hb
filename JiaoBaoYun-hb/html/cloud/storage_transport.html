@@ -66,7 +66,6 @@
 
 			#cancel {
 				display: none;
-				left: 10px;
 			}
 
 			.mui-bar.mui-bar-tab {
@@ -74,10 +73,13 @@
 				background-color: #636770;
 			}
 
+			.mui-bar-tab .mui-tab-item {
+				color: white !important;
+				opacity: 0.5;
+			}
+
 			.mui-tab-item div {
 				display: inline !important;
-				color: white;
-				opacity: 0.5;
 			}
 
 			#nav {
@@ -92,15 +94,15 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
+			<div id="cancel" class="title-text-pull-left" @tap="tap">取消</div>
 			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 id="title" class="mui-title">传输列表</h1>
-			<div id="cancel" class="title-text-pull-right" @tap="tap">取消</div>
 			<div id="edit" class="title-text-pull-right" @tap="tap">{{content}}</div>
 		</header>
 		<nav id="nav" class="mui-bar mui-bar-tab">
-			<div id="delete_file" class="mui-tab-item">
-				<div class="mui-icon iconfont iconfont-color icon-trash"></div>
-				<div class="mui-tab-label">删除</div>
+			<div id="delete_file" class="mui-tab-item" :style="{opacity:opacity}">
+				<div class="mui-icon iconfont iconfont-color icon-trash" @tap="tap"></div>
+				<div class="mui-tab-label" @tap="tap">删除</div>
 			</div>
 		</nav>
 		<div class="mui-content">
@@ -292,15 +294,17 @@
 			var imageThumb = window.storageKeyName.QNPUBSPACE; //文件上传的空间
 			var uploadSpace = window.storageKeyName.CLOUDSTORAGE;
 			var delEdit = false; //是否批量删除
+			var slideNumber = 0; //silder中当前显示的列表，0下载列表；1上传列表
+			var delFileArray = []; //存储批量删除文件的信息
 
-			//已下载
+			//已下载，已上传
 			Vue.component("file-item", {
 				props: ['value', 'index', 'showcheck', 'type'],
 				template: '<li class="mui-table-view-cell mui-media" @longtap="delFile(type,index)">\
 								<div class="mui-media-object mui-pull-right">\
 									<div class="mui-input-row mui-checkbox" v-if="showcheck">\
 										<label>&nbsp;</label>\
-										<input name="Checkbox" type="checkbox">\
+										<input name="Checkbox" type="checkbox" @change="checkChange" :value="type+\'-\'+index">\
 									</div>\
 									<button type="button" class="mui-btn mui-btn-outlined" v-if="!showcheck" @tap="openFile(type,index)">打开</button>\
 								</div>\
@@ -344,17 +348,36 @@
 						if(delEdit) { //批量删除
 							return false;
 						}
+						vm_del.deling = true;
+						var btnArray = ['否', '是'];
+						var fpath;
 						if(type == "downloaded") { //已下载
-							removeFile(vm_downLoaded.fileArray[index].fpath, function(successCB) {
-								vm_downLoaded.fileArray.splice(index, 1);
-								mui.toast('删除成功');
-							});
+							fpath = vm_downLoaded.fileArray[index].fpath;
 						} else {
-							removeFile(vm_upLoaded.fileArray[index].fpath, function(successCB) {
-								vm_upLoaded.fileArray.splice(index, 1);
-								mui.toast('删除成功');
-							});
+							fpath = vm_upLoaded.fileArray[index].fpath;
 						}
+						mui.confirm('确认删除记录？', '提示', btnArray, function(e) {
+							if(e.index == 1) { //是
+								deleteLocalFile(fpath, function(data) {
+									if(data.code == 1) {
+										if(type == "downloaded") { //已下载
+											vm_downLoaded.fileArray.splice(index, 1);
+										} else {
+											vm_upLoaded.fileArray.splice(index, 1);
+										}
+									}
+									mui.toast(data.message);
+								});
+							}
+							vm_del.deling = false;
+						}, 'div');
+					},
+					/**
+					 * 修改checkBox
+					 */
+					checkChange: function() {
+						console.log("checkChange");
+						changeCheckBox();
 					}
 				}
 			});
@@ -389,6 +412,10 @@
 					tap: function() {
 						console.log("tap:" + vm_edit.content);
 						if(vm_edit.content == "编辑") { //进入批量删除状态
+							if(uploadingId != null || downloadingId != null) {
+								mui.toast("有正在执行的任务");
+								return false;
+							}
 							delEdit = true;
 							document.getElementById("back").style.display = "none";
 							document.getElementById("cancel").style.display = "block";
@@ -398,7 +425,33 @@
 							vm_downLoaded.showcheck = true;
 							vm_upLoaded.showcheck = true;
 							vm_edit.content = "全选";
+						} else {
+							var checked = true;
+							if(vm_edit.content == "全不选") {
+								checked = false;
+							}
+							var qsString = "";
+							if(slideNumber) { //下载列表
+								qsString = "#uploaded";
+							} else {
+								qsString = "#downloaded";
+							}
+							qsString = qsString + " .mui-checkbox input[type=checkbox]";
+							var checkBox = document.body.querySelectorAll(qsString);
+							console.log("checkBox:" + checkBox.length);
+							if(checkBox.length == 0) {
+								return false;
+							}
+							for(var i in checkBox) {
+								checkBox[i].checked = checked;
+							}
+							if(checked) {
+								vm_edit.content = "全不选";
+							} else {
+								vm_edit.content = "全选";
+							}
 						}
+						editChangeTitle();
 					}
 				}
 			});
@@ -420,13 +473,59 @@
 						vm_edit.content = "编辑";
 					}
 				}
-			})
+			});
+
+			//批量删除按钮
+			var vm_del = new Vue({
+				el: "#delete_file",
+				data: {
+					opacity: 0.5, //透明度
+					deling: false //正在删除
+				},
+				methods: {
+					tap: function() {
+						console.log("delete_file:" + vm_del.opacity);
+						if(vm_del.opacity === 1) {
+							vm_del.deling = true;
+							var btnArray = ['否', '是'];
+							mui.confirm('确认删除记录？', '提示', btnArray, function(e) {
+								if(e.index == 1) { //是
+									var deleteWaiting = events.showWaiting("处理中...");
+
+									vm_cancel.tap();
+									delFileArray = [];
+									mui('.mui-checkbox input[type=checkbox]:checked').each(function(index, element) {
+										console.log("checked:" + index + " " + element.value);
+										var ids = element.value.split("-");
+										var fileInfo;
+										if(ids[0] == "downloaded") { //已下载
+											fileInfo = vm_downLoaded.fileArray[ids[1]];
+										} else {
+											fileInfo = vm_upLoaded.fileArray[ids[1]];
+										}
+										delFileArray[delFileArray.length] = {
+											type: ids[0],
+											index: ids[1],
+											fpath: fileInfo.fpath
+										}
+									});
+									deleteFileArray(deleteWaiting);
+								}
+								vm_del.deling = false;
+							}, "div");
+
+						}
+					}
+				}
+			});
 
 			mui.init({
 				gestureConfig: {
 					longtap: true, //默认为false
+					doubletap: true //默认为false
 				}
 			});
+
 			mui.plusReady(function() {
 				initData();
 				initListener();
@@ -435,8 +534,6 @@
 
 			function initData() {
 				main = plus.webview.currentWebview(); //获取当前窗体对象
-				console.log(main.id);
-				document.querySelector("#slider").style.top = (localStorage.getItem('StatusHeightNo') * 1 + 45) + 'px';
 				//获取上传和下载文件夹的目录对象
 				getUpAndDownEntry(function() {
 					console.log("getUpAndDownEntry");
@@ -456,7 +553,11 @@
 			function initListener() {
 
 				mui.back = function() {
+					if(vm_del.deling) { //确认删除
+						return false;
+					}
 					if(delEdit) { //批量删除
+						vm_cancel.tap();
 						return false;
 					}
 					mui.closePopups();
@@ -572,7 +673,14 @@
 					getUpAndDownEntry(function() {
 						console.log("getUpAndDownEntry");
 					});
-				})
+				});
+
+				document.querySelector('.mui-slider').addEventListener('slide', function(event) {
+					slideNumber = event.detail.slideNumber;
+					if(delEdit) {
+						changeCheckBox();
+					}
+				});
 
 				//上传中列表的按钮
 				mui('#upload').on('tap', 'button', function() {
@@ -727,6 +835,15 @@
 					} else {
 						upLoadNoWiFi = false;
 						downLoadNoWiFi = false;
+					}
+				});
+
+				//双击标题返回列表顶部
+				document.getElementById('title').addEventListener('doubletap', function() {
+					if(slideNumber) {
+						mui("#item1mobile .mui-scroll-wrapper").scroll().scrollTo(0, 0, 100);
+					} else {
+						mui("#item1mobile .mui-scroll-wrapper").scroll().scrollTo(0, 0, 100);
 					}
 				});
 			}
@@ -1191,7 +1308,7 @@
 				var item = {
 					fpath: fpath,
 					fname: fname,
-					size: size,
+					size: fsize,
 					modificationTime: fmodificationTime,
 					type: type
 				}
@@ -1253,7 +1370,7 @@
 				var item = {
 					fpath: fpath,
 					fname: fname,
-					size: size,
+					size: fsize,
 					modificationTime: fmodificationTime,
 					type: type
 				}
@@ -1559,28 +1676,32 @@
 
 			/**
 			 * 删除一个本地文件
-			 * @param {Object} fPath 本地文件路径
-			 * @param {Object} succesCallBack 删除成功的回调
+			 * @param {Object} fPath
+			 * @param {Object} callback
 			 */
-			function removeFile(fPath, succesCallBack) {
-				var btnArray = ['否', '是'];
-				mui.confirm('确认删除记录？', '提示', btnArray, function(e) {
-					if(e.index == 1) { //是
-						plus.io.resolveLocalFileSystemURL(fPath, function(succesCB) {
-							console.log("获取删除本地文件的文件系统成功: " + succesCB.name);
-							succesCB.remove(function(succesCB2) {
-								console.log("删除本地文件成功: " + JSON.stringify(succesCB2));
-								succesCallBack(succesCB2);
-							}, function(errorCB2) {
-								mui.toast('删除本地文件失败 ' + errorCB2.message);
-								console.log("删除本地文件失败: " + JSON.stringify(succesCB2));
-							});
-						}, function(errorCB) {
-							mui.toast('删除本地文件失败 ' + errorCB.message);
-							console.log("获取删除本地文件的文件系统失败: " + JSON.stringify(errorCB));
+			function deleteLocalFile(fPath, callback) {
+				plus.io.resolveLocalFileSystemURL(fPath, function(succesCB) {
+					//console.log("获取删除本地文件的文件系统成功: " + succesCB.name);
+					succesCB.remove(function(succesCB2) {
+						//console.log("删除本地文件成功: " + JSON.stringify(succesCB2));
+						callback({
+							code: 1,
+							message: "删除成功"
 						});
-					}
-				}, 'div');
+					}, function(errorCB2) {
+						console.log("删除本地文件失败: " + JSON.stringify(succesCB2));
+						callback({
+							code: 0,
+							message: "删除失败" + errorCB2.message
+						});
+					});
+				}, function(errorCB) {
+					console.log("获取删除本地文件的文件系统失败: " + JSON.stringify(errorCB));
+					callback({
+						code: 0,
+						message: "删除失败" + errorCB.message
+					});
+				});
 			}
 
 			/**
@@ -1627,6 +1748,60 @@
 				}, function(errorCB) {
 					errorCallBack(errorCB);
 				});
+			}
+
+			/**
+			 * checkbox状态变化
+			 */
+			function changeCheckBox() {
+				var qsString = "";
+				var qsString_check = "";
+				if(slideNumber) { //下载列表
+					qsString = "#uploaded";
+				} else {
+					qsString = "#downloaded";
+				}
+				qsString = qsString + " .mui-checkbox input[type=checkbox]";
+				qsString_check = qsString + ":checked";
+				var checkBox = document.body.querySelectorAll(qsString);
+				var checked = document.body.querySelectorAll(qsString_check);
+				console.log("checkBox:" + checkBox.length);
+				console.log("checked:" + checked.length);
+				if(checkBox.length == 0) {
+					vm_edit.content = "全选";
+					return false;
+				}
+				if(checkBox.length == checked.length) {
+					vm_edit.content = "全不选";
+				} else {
+					vm_edit.content = "全选";
+				}
+				editChangeTitle();
+			}
+
+			/**
+			 * 修改标题中已选个数
+			 */
+			function editChangeTitle() {
+				var checked = document.body.querySelectorAll(".mui-checkbox input[type=checkbox]:checked");
+				console.log("editChangeTitle:" + checked.length);
+				document.getElementById("title").innerText = "已选定" + checked.length + "个";
+				if(checked.length != 0) {
+					vm_del.opacity = 1;
+				} else {
+					vm_del.opacity = 0.5;
+				}
+			}
+
+			/**
+			 * 批量删除文件
+			 * @param {Object} wd
+			 */
+			function deleteFileArray(wd) {
+				for(var i in delFileArray) {
+					console.log("delFileArray:" + i + " " + JSON.stringify(delFileArray[i]));
+				}
+				wd.close();
 			}
 		</script>
 	</body>
