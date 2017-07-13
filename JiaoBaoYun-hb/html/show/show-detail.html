@@ -34,7 +34,7 @@
 				<div v-if="showDetail.EncType === 5" class="show-content" v-html="showDetail.MsgContent"></div>
 				<div v-else class="show-content">{{showDetail.MsgContent}}</div>
 				<div v-if="showDetail.EncType!==5" style="width: 100%;">
-					<div v-for="(img,index) of getImgs(showDetail)" v-if="img.type === 2" class="display-inlineBlock" v-bind:class="[flexStyle]" v-bind:style="[{background:'linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,0.4)),url('+img.encImg+')'},imgDivRe,{'background-size':'contain','background-repeat':'no-repeat'}]" style="position: relative; margin: 0 2.5px;" v-on:tap.stop="exFileTapListener(showDetail,img,index)">
+					<div v-for="(img,index) of getImgs(showDetail)" v-if="img.type === 2" class="display-inlineBlock" v-bind:style="[flexStyle,{background:'linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,0.4)),url('+img.encImg+')'},imgDivRe,{'background-size':'contain','background-repeat':'no-repeat'}]" style="position: relative; margin: 0 2.5px;" v-on:tap.stop="exFileTapListener(showDetail,img,index)">
 						<img src="../../image/utils/playvideo.png" style="width:50px;height:50px;margin: auto 0;">
 						<p v-if="img.encLen>0" style="position: absolute;bottom: 0;right: 5px;color: white;line-height: 0;">{{img.encLen}}"</p>
 					</div>
@@ -45,8 +45,10 @@
 					<span class="iconfont icon-support" v-bind:class="{isLiked:showDetail.IsLike,isUnlike:!showDetail.IsLike}" v-on:tap="toggleLike"></span>
 					<span class="iconfont icon-liaotian1" v-on:click="openComment(0)"></span>
 				</div>
+				<hr style="width: 100%;height: 1px;color: #E4E4E4;border: none;" />
+				<div style="width: 100%;height: 1px; background-color: #E4E4E4;"></div>
 				<div v-if="showDetail.LikeUsers&&showDetail.LikeUsers.length>0" style="width: 100%;">
-					<hr style="width: 100%;" />
+					
 					<p v-on:tap="openLikers">
 						<img src="../../image/dynamic/praise.png" style="width: 15px;height: 15px;vertical-align: middle;" />
 						<span class="liker-name" v-for="(liker,likerIndex) of showDetail.LikeUsers" v-if="likerIndex<20" v-on:tap.stop="openPersonSpace(liker.userId)">{{liker.userName}}
@@ -57,21 +59,8 @@
 				</div>
 			</div>
 			<div class="comments-container" v-if="showDetail.Comments.length>0">
-				<div class="comments-banner">
-					<div class=" banner-left"></div>
-					<div class="comments-no">评论({{showDetail.TotalCnt}})</div>
-				</div>
 				<div class="comments-li mui-table-view-cell" v-for="(comment,index0) of showDetail.Comments" v-on:tap.stop="openComment(1,index0)" v-on:longtap.stop="showSheet(comment,index0)">
-					<div class="comment-person"><img class="comment-img" v-bind:src="comment.UserImg" v-on:tap.stop="openPersonSpace(comment.UserId)" />
-						<div class="comment-name">{{comment.UserName}}</div>
-					</div>
-					<p class="comment-content">{{comment.CommentContent}}</p>
-					<div class="comment-bottom">
-						<p class="comment-repliesNo">回复 
-							{{comment.Replys.length}}
-						</p>
-						<p class="comment-date">{{getSimpleDate(comment.CommentDate)}}</p>
-					</div>
+					<p class="reply-content"><span class="reply-name">{{comment.UserName}}</span>:{{comment.CommentContent}}</p>
 					<div class="replies-container" v-if="comment.Replys.length>0">
 						<div class="reply-li mui-table-view-cell" v-for="(reply,index1) of comment.Replys" v-on:tap.stop="openComment(1,index0,index1)" v-on:longtap.stop="showSheet(comment,index0,index1)">
 							<p class="reply-content"><span class="reply-name">{{reply.UserName}}</span>
