@@ -241,7 +241,7 @@
 				postData.classId = groupInfo.classId;
 				postData.msgContent = tempText;
 				postData.encType = TAs.encType;
-				postData.encLen = 0;
+				postData.encLen = TAs.duration;
 				postData.encAddr = TAs.encAddr;
 				postData.encImg = TAs.encImg;
 				postData.teacherId = parseInt(groupInfo.userId);
@@ -314,6 +314,7 @@
 								localPath: path,
 								type: 2
 							}
+							img.duration=events.getVideoDuration(img.url);
 							//										console.log("获取的图片信息：" + JSON.stringify(img));
 							//关闭等待框
 							plus.nativeUI.closeWaiting();
@@ -373,6 +374,7 @@
 					theFile = CloudFileUtil.files[i];
 					if(i == 0) {
 						TAs.encType = theFile.type;
+						TAs.duration=theFile.duration?theFile.duration:0;
 					}
 					encAddrs.push(theFile.url);
 					encImgs.push(theFile.thumb);

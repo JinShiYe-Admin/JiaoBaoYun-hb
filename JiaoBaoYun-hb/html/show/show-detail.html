@@ -18,7 +18,7 @@
 			<h1 class="mui-title">详情</h1>
 			<a id="del-dynamic" class="mui-pull-right iconfont icon-moreandroid display-none"></a>
 		</header>
-		<div id="show-detail" v-show="showDetail.TabId" class="mui-content">
+		<div id="show-detail" v-show="showDetail.TabId>0" class="mui-content">
 			<div>
 				<h4 class="detail-head triple-line" v-if="showDetail.MsgTitle">{{showDetail.MsgTitle}}</h4>
 				<div class="publisher-container">
@@ -31,10 +31,10 @@
 					</div>
 					<button v-if="!isSelfDynamic" class="attention-btn btn-unfocus" v-bind:class="{'btn-focused':showDetail.IsFocused}" v-on:tap="toggleFocus">{{showDetail.IsFocused?'已关注':'关注'}}</button>
 				</div>
-				<div v-if="showDetail.EncType===5" class="show-content" v-html="showDetail.MsgContent"></div>
+				<div v-if="showDetail.EncType === 5" class="show-content" v-html="showDetail.MsgContent"></div>
 				<div v-else class="show-content">{{showDetail.MsgContent}}</div>
 				<div v-if="showDetail.EncType!==5" style="width: 100%;">
-					<div v-for="(img,index) of getImgs(showDetail)" v-if="img.type===2" class="display-inlineBlock" v-bind:class="{flexStyle}" v-bind:style="[{background:'linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,0.4)),url('+img.encImg+')'},imgDivRe,{'background-size':'contain','background-repeat':'no-repeat'}]" style="position: relative; margin: 0 2.5px;" v-on:tap.stop="exFileTapListener(showDetail,img,index)">
+					<div v-for="(img,index) of getImgs(showDetail)" v-if="img.type === 2" class="display-inlineBlock" v-bind:class="[flexStyle]" v-bind:style="[{background:'linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,0.4)),url('+img.encImg+')'},imgDivRe,{'background-size':'contain','background-repeat':'no-repeat'}]" style="position: relative; margin: 0 2.5px;" v-on:tap.stop="exFileTapListener(showDetail,img,index)">
 						<img src="../../image/utils/playvideo.png" style="width:50px;height:50px;margin: auto 0;">
 						<p v-if="img.encLen>0" style="position: absolute;bottom: 0;right: 5px;color: white;line-height: 0;">{{img.encLen}}"</p>
 					</div>
@@ -75,14 +75,15 @@
 					<div class="replies-container" v-if="comment.Replys.length>0">
 						<div class="reply-li mui-table-view-cell" v-for="(reply,index1) of comment.Replys" v-on:tap.stop="openComment(1,index0,index1)" v-on:longtap.stop="showSheet(comment,index0,index1)">
 							<p class="reply-content"><span class="reply-name">{{reply.UserName}}</span>
-						<template v-if="reply.ReplyName">
-							@<span class="reply-name">{{reply.ReplyName}}</span>
-						</template>
-						:{{reply.CommentContent}}</p>
+								<template v-if="reply.ReplyName">
+									@<span class="reply-name">{{reply.ReplyName}}</span>
+								</template>
+								:{{reply.CommentContent}}
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-		</div>
 		</div>
 		<div id="videoPopover" class="mui-popover">
 			<video id="video" style="position: absolute;z-index: 999;" controls="controls">
@@ -91,7 +92,7 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils/events.js"></script>
-		<script src="../../js/utils/vue.js"></script>
+		<script src="../../js/utils/vue.min.js"></script>
 		<script src="../../js/mui.zoom.js"></script>
 		<script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/publicProtocol.js"></script>
@@ -132,8 +133,8 @@
 				commentList.winWidth = document.querySelector('header').clientWidth;
 				ShowVideoUtil.initVideo(document.getElementById("video"));
 				events.preload('../quan/classSpace-persons.html', 50);
-				events.fireToPageNone("../quan/aboutme.html","detailReady");
-				events.fireToPageNone("show-home1.html","detailReady");
+				events.fireToPageNone("../quan/aboutme.html", "detailReady");
+				events.fireToPageNone("show-home1.html", "detailReady");
 				window.addEventListener('showDetail', function(e) {
 					pageIndex = 1;
 					console.log("获取的数据:" + JSON.stringify(e.detail.data));
