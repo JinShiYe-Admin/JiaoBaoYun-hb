@@ -55,14 +55,54 @@
 			#download .mui-btn-outlined {
 				visibility: hidden;
 			}
+
+			.mui-checkbox input[type=checkbox]:checked:before {
+				color: #13b7f6;
+			}
+
+			.mui-checkbox input[type=checkbox] {
+				right: 0px;
+			}
+
+			#cancel {
+				display: none;
+				left: 10px;
+			}
+
+			.mui-bar.mui-bar-tab {
+				box-shadow: none;
+				background-color: #636770;
+			}
+
+			.mui-tab-item div {
+				display: inline !important;
+				color: white;
+				opacity: 0.5;
+			}
+
+			#nav {
+				display: none;
+			}
+
+			#sliderGroup {
+				bottom: 0px;
+			}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">传输列表</h1>
+			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title">传输列表</h1>
+			<div id="cancel" class="title-text-pull-right" @tap="tap">取消</div>
+			<div id="edit" class="title-text-pull-right" @tap="tap">{{content}}</div>
 		</header>
+		<nav id="nav" class="mui-bar mui-bar-tab">
+			<div id="delete_file" class="mui-tab-item">
+				<div class="mui-icon iconfont iconfont-color icon-trash"></div>
+				<div class="mui-tab-label">删除</div>
+			</div>
+		</nav>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
 				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
@@ -74,7 +114,7 @@
 					</a>
 				</div>
 				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="margin-top: -1px;"></div>
-				<div class="mui-slider-group">
+				<div id="sliderGroup" class="mui-slider-group">
 					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
 						<div id="scroll1" class="mui-scroll-wrapper">
 							<div class="mui-scroll">
@@ -137,37 +177,7 @@
 										<div style="height: 1px;width: 100%;background: #E4E4E4;"></div>
 									</div>
 									<div id="downloaded">
-										<!--<li class="mui-table-view-cell mui-media">
-											<div class="mui-media-object mui-pull-right">
-												<button type="button" class="mui-btn mui-btn-outlined">打开</button>
-											</div>
-											<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">
-											<div class="mui-media-body">
-												<div class="mui-ellipsis transport-info">
-													文件夹名字文件夹名字文件夹名字文件夹名字
-												</div>
-												<div class="transport-info">
-													<p class="mui-pull-left">
-														528KB&nbsp;&nbsp;2016-12-13 15:25:36
-													</p>
-												</div>
-											</div>
-										</li>
-										<li class="mui-table-view-cell mui-media">
-											<div class="mui-media-object mui-pull-right">
-												<button type="button" class="mui-btn mui-btn-outlined">打开</button>
-											</div> <span class="mui-media-object mui-icon iconfont iconfont-size icon-excel mui-pull-left"></span>
-											<div class="mui-media-body">
-												<div class="mui-ellipsis transport-info">
-													文件名字文件名字文件名字文件名字文件名字
-												</div>
-												<div class="transport-info">
-													<p class="mui-pull-left">
-														528KB&nbsp;&nbsp;2016-12-13 15:25:36
-													</p>
-												</div>
-											</div>
-										</li>-->
+										<file-item v-for="(value,index) in fileArray" :value="value" :key="index" :index="index" :showcheck="showcheck" :type="type"></file-item>
 									</div>
 								</ul>
 							</div>
@@ -235,37 +245,7 @@
 										<div style="height: 1px;width: 100%;background: #E4E4E4;"></div>
 									</div>
 									<div id="uploaded">
-										<!--<li class="mui-table-view-cell mui-media">
-											<div class="mui-media-object mui-pull-right">
-												<button type="button" class="mui-btn mui-btn-outlined">打开</button>
-											</div>
-											<img class="mui-media-object mui-pull-left" src="../../image/cloud/A_folder.png">
-											<div class="mui-media-body">
-												<div class="mui-ellipsis transport-info">
-													文件夹名字文件夹名字文件夹名字文件夹名字
-												</div>
-												<div class="transport-info">
-													<p class="mui-pull-left">
-														528KB&nbsp;&nbsp;2016-12-13 15:25:36
-													</p>
-												</div>
-											</div>
-										</li>
-										<li class="mui-table-view-cell mui-media">
-											<div class="mui-media-object mui-pull-right">
-												<button type="button" class="mui-btn mui-btn-outlined">打开</button>
-											</div> <span class="mui-media-object mui-icon iconfont iconfont-size icon-excel mui-pull-left"></span>
-											<div class="mui-media-body">
-												<div class="mui-ellipsis transport-info">
-													文件名字文件名字文件名字文件名字文件名字
-												</div>
-												<div class="transport-info">
-													<p class="mui-pull-left">
-														528KB&nbsp;&nbsp;2016-12-13 15:25:36
-													</p>
-												</div>
-											</div>
-										</li>-->
+										<file-item v-for="(value,index) in fileArray" :value="value" :key="index" :index="index" :showcheck="showcheck" :type="type"></file-item>
 									</div>
 								</ul>
 							</div>
@@ -278,6 +258,7 @@
 		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
 		<script type="text/javascript" src="../../js/utils/cryption.js"></script>
 		<script type="text/javascript" src="../../js/utils/events.js"></script>
+		<script type="text/javascript" src="../../js/utils/vue.js"></script>
 		<script type="text/javascript" src="../../js/publicProtocol.js"></script>
 		<script type="text/javascript" src="../../js/cloud/cloud.js"></script>
 		<script type="text/javascript" src="../../js/utils/CloudFileUtil.js"></script>
@@ -310,6 +291,136 @@
 			//缩略图存放在私有空间或公有空间
 			var imageThumb = window.storageKeyName.QNPUBSPACE; //文件上传的空间
 			var uploadSpace = window.storageKeyName.CLOUDSTORAGE;
+			var delEdit = false; //是否批量删除
+
+			//已下载
+			Vue.component("file-item", {
+				props: ['value', 'index', 'showcheck', 'type'],
+				template: '<li class="mui-table-view-cell mui-media" @longtap="delFile(type,index)">\
+								<div class="mui-media-object mui-pull-right">\
+									<div class="mui-input-row mui-checkbox" v-if="showcheck">\
+										<label>&nbsp;</label>\
+										<input name="Checkbox" type="checkbox">\
+									</div>\
+									<button type="button" class="mui-btn mui-btn-outlined" v-if="!showcheck" @tap="openFile(type,index)">打开</button>\
+								</div>\
+								<span class="mui-media-object mui-icon iconfont iconfont-size mui-pull-left" :class="[value.type]"></span>\
+								<div class="mui-media-body">\
+									<div class="mui-ellipsis transport-info">\
+										{{value.fname}}\
+									</div>\
+									<div class="transport-info">\
+										<p class="mui-pull-left">\
+											{{value.size}}&nbsp;&nbsp;{{value.modificationTime}}\
+										</p>\
+									</div>\
+								</div>\
+							</li>',
+				methods: {
+					/**
+					 * 打开文件
+					 * @param {Object} type 已下载或已上传
+					 * @param {Object} index 数据的位置
+					 */
+					openFile: function(type, index) {
+						console.log("openFile:" + type + " " + index);
+						var fpath = "";
+						if(type == "downloaded") { //已下载
+							fpath = vm_downLoaded.fileArray[index].fpath;
+						} else {
+							fpath = vm_upLoaded.fileArray[index].fpath;
+						}
+						playutil.openFile(fpath, function(text) {
+							mui.toast(text);
+						});
+					},
+					/**
+					 * 删除一个文件
+					 * @param {Object} type 已下载或已上传
+					 * @param {Object} index 数据的位置
+					 */
+					delFile: function(type, index) {
+						console.log("delFile:" + type + " " + index);
+						if(delEdit) { //批量删除
+							return false;
+						}
+						if(type == "downloaded") { //已下载
+							removeFile(vm_downLoaded.fileArray[index].fpath, function(successCB) {
+								vm_downLoaded.fileArray.splice(index, 1);
+								mui.toast('删除成功');
+							});
+						} else {
+							removeFile(vm_upLoaded.fileArray[index].fpath, function(successCB) {
+								vm_upLoaded.fileArray.splice(index, 1);
+								mui.toast('删除成功');
+							});
+						}
+					}
+				}
+			});
+
+			//已下载
+			var vm_downLoaded = new Vue({
+				el: "#downloaded",
+				data: {
+					showcheck: false,
+					type: "downloaded",
+					fileArray: []
+				}
+			});
+
+			//已上传
+			var vm_upLoaded = new Vue({
+				el: "#uploaded",
+				data: {
+					showcheck: false,
+					type: "uploaded",
+					fileArray: []
+				}
+			});
+
+			//编辑删除
+			var vm_edit = new Vue({
+				el: "#edit",
+				data: {
+					content: "编辑"
+				},
+				methods: {
+					tap: function() {
+						console.log("tap:" + vm_edit.content);
+						if(vm_edit.content == "编辑") { //进入批量删除状态
+							delEdit = true;
+							document.getElementById("back").style.display = "none";
+							document.getElementById("cancel").style.display = "block";
+							document.getElementById("sliderGroup").style.bottom = "50px";
+							document.getElementById("nav").style.display = "block";
+							document.getElementById("title").innerText = "已选定0个";
+							vm_downLoaded.showcheck = true;
+							vm_upLoaded.showcheck = true;
+							vm_edit.content = "全选";
+						}
+					}
+				}
+			});
+
+			//退出删除状态
+			var vm_cancel = new Vue({
+				el: "#cancel",
+				methods: {
+					tap: function() {
+						console.log("cancel");
+						delEdit = false;
+						document.getElementById("back").style.display = "block";
+						document.getElementById("cancel").style.display = "none";
+						document.getElementById("sliderGroup").style.bottom = "0px";
+						document.getElementById("nav").style.display = "none";
+						document.getElementById("title").innerText = "传输列表";
+						vm_downLoaded.showcheck = false;
+						vm_upLoaded.showcheck = false;
+						vm_edit.content = "编辑";
+					}
+				}
+			})
 
 			mui.init({
 				gestureConfig: {
@@ -343,7 +454,11 @@
 			}
 
 			function initListener() {
+
 				mui.back = function() {
+					if(delEdit) { //批量删除
+						return false;
+					}
 					mui.closePopups();
 					plus.webview.hide(main, 'pop-out');
 					plus.webview.show("storage_main.html", 'slide-in-left');
@@ -374,19 +489,18 @@
 						key: [],
 						value: {}
 					}; //记录所有的任务对象的id和元素的id
+					plus.uploader.clear(); //清除上传任务
+					plus.downloader.clear(); //清除下载任务
 					document.getElementById("upload").innerHTML = '';
-					document.getElementById("uploaded").innerHTML = '';
 					document.getElementById("download").innerHTML = '';
-					document.getElementById("downloaded").innerHTML = '';
-
+					vm_downLoaded.fileArray = [];
+					vm_upLoaded.fileArray = [];
 					uploadingId = null; //是否正在下载
 					downloadingId = null; //是否正在上传
 					upFolderEntry = null; //上传文件夹的目录对象
 					downFolderEntry = null; //下载文件夹的目录对象
 					upLoadNoWiFi = false;
 					downLoadNoWiFi = false;
-					plus.uploader.clear(); //清除上传任务
-					plus.downloader.clear(); //清除下载任务
 				});
 
 				//新增一项下载任务
@@ -462,6 +576,9 @@
 
 				//上传中列表的按钮
 				mui('#upload').on('tap', 'button', function() {
+					if(delEdit) { //批量删除
+						return false;
+					}
 					var ids = this.getAttribute('id').split("_"); //元素id
 					console.log('upload ' + JSON.stringify(ids));
 					console.log("data " + JSON.stringify(uploadList.value[ids[2]]));
@@ -483,6 +600,9 @@
 
 				//上传中列表的任务
 				mui('#upload').on('longtap', '.mui-table-view-cell', function() {
+					if(delEdit) { //批量删除
+						return false;
+					}
 					var ids = this.getAttribute('id').split("_"); //元素id
 					console.log('upload ' + JSON.stringify(ids));
 					console.log("data " + JSON.stringify(uploadList.value[ids[1]]));
@@ -502,30 +622,11 @@
 
 				});
 
-				//已上传列表的按钮
-				mui('#uploaded').on('tap', 'button', function() {
-					var parentNode = this.parentNode;
-					var parentNode2 = parentNode.parentNode;
-					var id = parentNode2.getAttribute('id');
-					var fpath = parentNode2.getAttribute('data-fpath');
-					playutil.openFile(fpath, function(text) {
-						mui.toast(text);
-					});
-				});
-
-				//删除一条已上传的记录和本地文件
-				mui('#uploaded').on('longtap', '.mui-table-view-cell', function() {
-					var id = this.getAttribute('id'); //元素id
-					var fpath = this.getAttribute('data-fpath'); //文件本地路径
-					console.log('uploaded:' + id + "|" + fpath);
-					removeFile(fpath, function(successCB) {
-						document.getElementById(id).parentNode.removeChild(document.getElementById(id));
-						mui.toast('删除成功');
-					});
-				});
-
 				//下载中列表的按钮
 				mui('#download').on('tap', 'button', function() {
+					if(delEdit) { //批量删除
+						return false;
+					}
 					var ids = this.getAttribute('id').split("_"); //元素id
 					console.log('download ' + JSON.stringify(ids));
 					console.log("data " + JSON.stringify(downloadList.value[ids[2]]));
@@ -577,19 +678,11 @@
 					}
 				});
 
-				//已下载列表的按钮
-				mui('#downloaded').on('tap', 'button', function() {
-					var parentNode = this.parentNode;
-					var parentNode2 = parentNode.parentNode;
-					var id = parentNode2.getAttribute('id');
-					var fpath = parentNode2.getAttribute('data-fpath');
-					playutil.openFile(fpath, function(text) {
-						mui.toast(text);
-					});
-				});
-
 				//删除下载的任务
 				mui('#download').on('longtap', '.mui-table-view-cell', function() {
+					if(delEdit) { //批量删除
+						return false;
+					}
 					var ids = this.getAttribute('id').split("_"); //元素id
 					console.log('download ' + JSON.stringify(ids));
 					console.log("data " + JSON.stringify(downloadList.value[ids[1]]));
@@ -617,17 +710,6 @@
 							}
 						}
 					}, 'div');
-				});
-
-				//删除一条已下载的记录和本地文件
-				mui('#downloaded').on('longtap', '.mui-table-view-cell', function() {
-					var id = this.getAttribute('id'); //元素id
-					var fpath = this.getAttribute('data-fpath'); //文件本地路径
-					console.log('downloaded:' + id + "|" + fpath);
-					removeFile(fpath, function(successCB) {
-						document.getElementById(id).parentNode.removeChild(document.getElementById(id));
-						mui.toast('删除成功');
-					});
 				});
 
 				//网络变化
@@ -1106,24 +1188,14 @@
 				if(modificationTime != undefined) {
 					fmodificationTime = modificationTime;
 				}
-				var li = document.createElement('li');
-				li.setAttribute('id', 'uped_' + fpath);
-				li.setAttribute('data-fpath', fpath);
-				li.className = 'mui-table-view-cell mui-media';
-				li.innerHTML = '<div class="mui-media-object mui-pull-right">\
-											<button id="uped_btn_' + fpath + '" type="button" class="mui-btn mui-btn-outlined">打开</button>\
-										</div> <span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>\
-										<div class="mui-media-body">\
-											<div class="mui-ellipsis transport-info">\
-												' + fname + '\
-											</div>\
-											<div class="transport-info">\
-												<p class="mui-pull-left">\
-													' + fsize + '&nbsp;&nbsp;' + fmodificationTime + '\
-												</p>\
-											</div>\
-										</div>';
-				document.getElementById("uploaded").insertBefore(li, document.getElementById("uploaded").firstChild);
+				var item = {
+					fpath: fpath,
+					fname: fname,
+					size: size,
+					modificationTime: fmodificationTime,
+					type: type
+				}
+				vm_upLoaded.fileArray.unshift(item);
 			}
 
 			/**
@@ -1178,30 +1250,14 @@
 				if(modificationTime != undefined) {
 					fmodificationTime = modificationTime;
 				}
-				var html1 = '';
-				//if(type == 'icon-imge') {
-				//	html1 = '<img class="mui-media-object mui-pull-left" src="' + fpath + '">'
-				//} else {
-				html1 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
-				//}
-				var li = document.createElement('li');
-				li.setAttribute('id', 'downed_' + fpath); //文件名
-				li.setAttribute('data-fpath', fpath); //文件路径
-				li.className = 'mui-table-view-cell mui-media';
-				li.innerHTML = '<div class="mui-media-object mui-pull-right">\
-										<button id="downed_btn_' + fpath + '" type="button" class="mui-btn mui-btn-outlined">打开</button>\
-									</div> ' + html1 + '\
-									<div class="mui-media-body">\
-										<div class="mui-ellipsis transport-info">\
-											' + fname + '\
-										</div>\
-										<div class="transport-info">\
-											<p class="mui-pull-left">\
-												' + fsize + '&nbsp;&nbsp;' + fmodificationTime + '\
-											</p>\
-										</div>\
-									</div>';
-				document.getElementById("downloaded").insertBefore(li, document.getElementById("downloaded").firstChild);
+				var item = {
+					fpath: fpath,
+					fname: fname,
+					size: size,
+					modificationTime: fmodificationTime,
+					type: type
+				}
+				vm_downLoaded.fileArray.unshift(item);
 			}
 
 			/**
