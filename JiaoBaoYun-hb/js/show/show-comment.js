@@ -316,11 +316,11 @@ var commentList = new Vue({
 				request.send();
 				var imgInfo = JSON.parse(request.responseText);
 				console.log("获取的图片信息：" + JSON.stringify(imgInfo));
-				if(imgInfo.width > imgInfo.height) {//宽>高
+				if(imgInfo.width > imgInfo.height) { //宽>高
 					imgRe.height = imgInfo.height / (imgInfo.width / winWidth) + 'px';
 					imgRe.width = winWidth + 'px';
-				} else {//宽<=高
-					winWidth=winWidth*0.78;
+				} else { //宽<=高
+					winWidth = winWidth * 0.78;
 					imgRe.width = imgInfo.width / (imgInfo.height / winWidth) + 'px';
 					imgRe.height = winWidth + 'px';
 				}
@@ -331,17 +331,12 @@ var commentList = new Vue({
 		//缩略图点击效果
 		exFileTapListener: function(showDetail, img, index) {
 			var imgs = commentList.getImgs(showDetail);
-			if(imgs[0].type === 1) {//图片
+			if(imgs[0].type === 1) { //图片
 
-			} else if(imgs[0].type === 2) {//视频播放
-				if(mui.os.android) {//安卓
-					video.playVideo(img.encAddr, img.encImg, function() {
-
-					})
-				}else if(mui.os.ios){//苹果
-					
-				}
-
+			} else if(imgs[0].type === 2) { //视频播放
+				video.playVideo(img.encAddr, img.encImg, function() {
+					console.log("视频播放回调！");
+				});
 			}
 		}
 	}
