@@ -1387,6 +1387,24 @@ var events = (function(mod) {
 		request.send();
 		return Math.ceil(JSON.parse(request.responseText).streams[0].duration);
 	}
+	/**
+	 * 判断子页面是否加载完成，然后传递数据并打开页面
+	 * @param {Object} isReady 是否完成加载
+	 * @param {Object} url 子页面路径
+	 * @param {Object} lisetener 传递的事件
+	 * @param {Object} data 传递的数据
+	 */
+	mod.readyToPage=function(isReady,url,lisetener,data){
+		console.log("是否已准备变形："+isReady);
+		if(isReady){
+			console.log("要传递的数据："+JSON.stringify(data));
+			mod.fireToPageWithData(url,lisetener,data);
+		}else{
+			setTimeout(function(){
+				mod.readyToPage(isReady,url,lisetener,data);
+			},500)
+		}
+	}
 	return mod;
 
 })(events || {});

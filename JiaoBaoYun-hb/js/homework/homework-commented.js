@@ -164,7 +164,7 @@ function getStuName() {
 	//13.通过群ID获取群的正常用户
 	postDataPro_PostGusers(tempData, wd, function(data) {
 		wd.close();
-		console.log('13.postDataPro_PostGusers:RspCode:' + data.RspCode + ',RspData:' + JSON.stringify(data.RspData) + ',RspTxt:' + data.RspTxt);
+		console.log("获取的群成员信息:"+JSON.stringify(data));
 		if(data.RspCode == 0) {
 			//循环当前的个人信息返回值数组
 			for(var i in data.RspData) {
@@ -390,20 +390,21 @@ var getImgsInner = function(imgs) {
 	var imgInner = '';
 	var win_height = document.getElementById('brief-imgs').offsetWidth;
 	var img_width = win_height / 3;
+	var random=Math.random(1000);
 	if(imgs && imgs.length > 0) {
 		for(var i in imgs) {
 			if(!imgs[i].ThumbUrl) {
-				imgs[i].ThumbUrl = imgs[i].thumb
+				imgs[i].ThumbUrl = imgs[i].thumb;
 			}
 			if(!imgs[i].Url) {
-				imgs[i].Url = imgs[i].url
+				imgs[i].Url = imgs[i].url;
 			}
 			if(!imgs[i].FileType) {
-				imgs[i].FileType = imgs[i].type
+				imgs[i].FileType = imgs[i].type;
 			}
 
 			imgInner += '<img class="homework-img" style="width:' + img_width + 'px;height:' + img_width + 'px;" src="' + imgs[i].ThumbUrl +
-				'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + imgs[i].FileType + '"/>';
+				' onerror="this.src=\''+imgs[i].Url+'\'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + imgs[i].FileType+random + '"/>';
 		}
 	}
 	console.log(imgInner)
