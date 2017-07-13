@@ -938,15 +938,15 @@ var dynamiclistitem = (function($, mod) {
 				var winWidth = SCREEN_WIDTH;
 				console.log("获取的图片信息：" + JSON.stringify(imgInfo));
 				if(imgInfo.width > imgInfo.height) { //宽>高
-					winWidth = winWidth * 0.8;
-					imgRe.height = imgInfo.height / (imgInfo.width / winWidth) + 'px';
-					imgRe.width = winWidth + 'px';
-					mt = imgInfo.height*winWidth / (imgInfo.width*2 )-25
+					winWidth = winWidth * 0.75;
+					imgRe.height = 150 + 'px';
+					imgRe.width = 264 + 'px';
+					mt = 150/2-25
 				} else { //宽<=高
-					winWidth = winWidth * 0.8;
-					imgRe.width = imgInfo.width / (imgInfo.height / winWidth) + 'px';
-					imgRe.height = winWidth + 'px';
-					mt =  winWidth/2-25
+					winWidth = winWidth * 0.75;
+					imgRe.width = 150 + 'px';
+					imgRe.height = 264 + 'px';
+					mt =  264/2-25
 				}
 
 			}
