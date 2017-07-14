@@ -1,5 +1,19 @@
 //课程详情列表的公共方法
 var courseDetails = (function(mod) {
+	mod.width = null;
+	mod.height = null;
+	mod.playMarginTop = null;
+	mod.playMarginLeft = null;
+	/**
+	 * 初始化
+	 */
+	mod.init = function() {
+		mod.width = parseInt((plus.screen.resolutionWidth - 30) * 0.35);
+		mod.height = parseInt(mod.width * (3 / 5));
+		mod.playMarginTop = parseInt((mod.height - 35) / 2);
+		mod.playMarginLeft = parseInt((mod.width - 35) / 2);
+	}
+
 	/**
 	 * 课程列表中的图片加载成功
 	 * @param {Object} img 图片元素

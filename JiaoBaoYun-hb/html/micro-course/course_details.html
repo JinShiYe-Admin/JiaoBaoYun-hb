@@ -115,7 +115,7 @@
 			.section-list .section-title {
 				/*节次列表标题*/
 				margin-bottom: 11px;
-				margin-right: 18px;
+				margin-right: 15px;
 			}
 
 			.section-list .mui-table-view-cell {
@@ -187,30 +187,31 @@
 			}
 
 			.section-list-img {
-				/*课程列表图片的*/
-				visibility: hidden;
+				/*课程列表图片*/
 				width: 100%;
 			}
 
-			.section-image-play-div {
-				position: absolute;
-				right: 15px;
+			.section-list-img-mask {
+				/*课程列表图片遮罩*/
 				background-color: rgba(0, 0, 0, 0.5);
-				visibility: hidden;
+				position: absolute;
 			}
 
 			.section-image-play {
 				/*视频播放按钮*/
-				width: 40px;
-				height: 40px;
+				position: absolute;
+				width: 35px;
+				height: 35px;
 			}
 
 			.section-image-time {
 				/*视频的时间*/
 				position: absolute;
+				font-size: 12px;
 				color: white;
-				top: 85%;
-				right: 7%;
+				right: 5px;
+				bottom: 0px;
+				line-height: 21px;
 			}
 
 			.section-comment-info,
@@ -494,6 +495,8 @@
 						</li>
 					</ul>
 					<ul id="section_list" class="mui-table-view section-list">
+						<li id="test_li" class="mui-table-view-cell section-list-li">
+						</li>
 						<li id="section_more" class="mui-table-view-cell section-more">
 							<div class="section-more-text">查看更多</div>
 							<div class="mui-icon mui-icon-arrowdown"></div>
@@ -536,12 +539,47 @@
 				}
 			});
 			mui.plusReady(function() {
-				events.closeWaiting();
-				var wd = events.showWaiting();
+				//events.closeWaiting();
+				//var wd = events.showWaiting();
 				initData();
+				courseDetails.init();
 				initControl();
 				initListener();
-				getAllSectionsAndComments(pageIndex + 1, wd);
+				//getAllSectionsAndComments(pageIndex + 1, wd);
+				document.getElementById("test_li").innerHTML = '\
+					<div class="section-list-li-left">\
+						<div class="section-title mui-ellipsis-2">一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</div>\
+						<div class="section-info">上传时间 : 2017-7-14 14:47:29</div>\
+					</div>\
+					<div class="section-list-img-div">\
+						<div class="section-list-img" style="height:'+courseDetails.height+'px;">\
+							<img class="section-list-img" onload="courseDetails.onImageLoad(this);" onerror="courseDetails.onImageError(this);"/>\
+						</div>\
+						<div class="section-list-img-mask" style="height:'+courseDetails.height+'px;width:'+courseDetails.width+'px;margin-top:'+(-courseDetails.height)+'px;">\
+							<img src="../../image/utils/playvideo.png" class="section-image-play" />\
+							<div class="section-image-time">00:00</div>\
+						</div>\
+					</div>';
+				var test_img = document.getElementById("test_img");
+				var test_play = document.getElementById("test_play");
+				test_play.style.marginTop = courseDetails.playMarginTop + "px";
+				test_play.style.marginLeft = courseDetails.playMarginLeft + "px";
+				test_img.onload = function() {
+					console.log("test_img.onload");
+					if(test_img.offsetHeight < test_img.offsetWidth) {
+						console.log(test_img.offsetWidth);
+						test_img.style.height = courseDetails.height + "px";
+						test_img.style.width = "initial";
+						test_img.style.marginLeft = -parseInt((test_img.offsetWidth - courseDetails.width) / 2) + "px";
+					} else {
+						test_img.style.marginTop = -parseInt((test_img.offsetHeight - courseDetails.height) / 2) + "px";
+					}
+				}
+				test_img.onerror = function() {
+					test_img.src = "../../image/utils/load-img-error.png"
+				}
+				test_img.src = "../../image/cloud/notes_bg2.jpg";
+
 			});
 
 			/**
