@@ -89,6 +89,16 @@
 			#sliderGroup {
 				bottom: 0px;
 			}
+
+			.delete-show #downloaded button,
+			.delete-show #uploaded button {
+				display: none;
+			}
+
+			.delete-hide #downloaded .mui-checkbox,
+			.delete-hide #uploaded .mui-checkbox {
+				display: none;
+			}
 		</style>
 	</head>
 
@@ -106,7 +116,7 @@
 			</div>
 		</nav>
 		<div class="mui-content">
-			<div id="slider" class="mui-slider mui-fullscreen">
+			<div id="slider" class="mui-slider mui-fullscreen delete-hide">
 				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<a class="mui-control-item mui-active" href="#item1mobile">
 						下载列表
@@ -136,7 +146,6 @@
 										<div style="height: 1px;width: 100%;background: #E4E4E4;"></div>
 									</div>
 									<div id="downloaded">
-										<file-item v-for="(value,index) in fileArray" :value="value" :key="index" :index="index" :showcheck="showcheck" :type="type"></file-item>
 									</div>
 								</ul>
 							</div>
@@ -162,7 +171,6 @@
 										<div style="height: 1px;width: 100%;background: #E4E4E4;"></div>
 									</div>
 									<div id="uploaded">
-										<file-item v-for="(value,index) in fileArray" :value="value" :key="index" :index="index" :showcheck="showcheck" :type="type"></file-item>
 									</div>
 								</ul>
 							</div>
@@ -208,114 +216,9 @@
 			//缩略图存放在私有空间或公有空间
 			var imageThumb = window.storageKeyName.QNPUBSPACE; //文件上传的空间
 			var uploadSpace = window.storageKeyName.CLOUDSTORAGE;
-			var delEdit = false; //是否批量删除
+			var delEdit = false; //是否批量删除状态
 			var slideNumber = 0; //silder中当前显示的列表，0下载列表；1上传列表
 			var delFileArray = []; //存储批量删除文件的信息
-
-			//已下载，已上传
-			Vue.component("file-item", {
-				props: ['value', 'index', 'showcheck', 'type'],
-				template: '<li class="mui-table-view-cell mui-media" @longtap="delFile(type,index)">\
-								<div class="mui-media-object mui-pull-right">\
-									<div class="mui-input-row mui-checkbox" v-if="showcheck">\
-										<label>&nbsp;</label>\
-										<input name="Checkbox" type="checkbox" @change="checkChange" :value="type+\'-\'+index">\
-									</div>\
-									<button type="button" class="mui-btn mui-btn-outlined" v-if="!showcheck" @tap="openFile(type,index)">打开</button>\
-								</div>\
-								<span class="mui-media-object mui-icon iconfont iconfont-size mui-pull-left" :class="[value.type]"></span>\
-								<div class="mui-media-body">\
-									<div class="mui-ellipsis transport-info">\
-										{{value.fname}}\
-									</div>\
-									<div class="transport-info">\
-										<p class="mui-pull-left">\
-											{{value.size}}&nbsp;&nbsp;{{value.modificationTime}}\
-										</p>\
-									</div>\
-								</div>\
-							</li>',
-				methods: {
-					/**
-					 * 打开文件
-					 * @param {Object} type 已下载或已上传
-					 * @param {Object} index 数据的位置
-					 */
-					openFile: function(type, index) {
-						console.log("openFile:" + type + " " + index);
-						var fpath = "";
-						if(type == "downloaded") { //已下载
-							fpath = vm_downLoaded.fileArray[index].fpath;
-						} else {
-							fpath = vm_upLoaded.fileArray[index].fpath;
-						}
-						playutil.openFile(fpath, function(text) {
-							mui.toast(text);
-						});
-					},
-					/**
-					 * 删除一个文件
-					 * @param {Object} type 已下载或已上传
-					 * @param {Object} index 数据的位置
-					 */
-					delFile: function(type, index) {
-						console.log("delFile:" + type + " " + index);
-						if(delEdit) { //批量删除
-							return false;
-						}
-						vm_del.deling = true;
-						var btnArray = ['否', '是'];
-						var fpath;
-						if(type == "downloaded") { //已下载
-							fpath = vm_downLoaded.fileArray[index].fpath;
-						} else {
-							fpath = vm_upLoaded.fileArray[index].fpath;
-						}
-						mui.confirm('确认删除记录？', '提示', btnArray, function(e) {
-							if(e.index == 1) { //是
-								deleteLocalFile(fpath, function(data) {
-									if(data.code == 1) {
-										if(type == "downloaded") { //已下载
-											vm_downLoaded.fileArray.splice(index, 1);
-										} else {
-											vm_upLoaded.fileArray.splice(index, 1);
-										}
-									}
-									mui.toast(data.message);
-								});
-							}
-							vm_del.deling = false;
-						}, 'div');
-					},
-					/**
-					 * 修改checkBox
-					 */
-					checkChange: function() {
-						console.log("checkChange");
-						changeCheckBox();
-					}
-				}
-			});
-
-			//已下载
-			var vm_downLoaded = new Vue({
-				el: "#downloaded",
-				data: {
-					showcheck: false,
-					type: "downloaded",
-					fileArray: []
-				}
-			});
-
-			//已上传
-			var vm_upLoaded = new Vue({
-				el: "#uploaded",
-				data: {
-					showcheck: false,
-					type: "uploaded",
-					fileArray: []
-				}
-			});
 
 			//编辑删除
 			var vm_edit = new Vue({
@@ -337,8 +240,6 @@
 							document.getElementById("sliderGroup").style.bottom = "50px";
 							document.getElementById("nav").style.display = "block";
 							document.getElementById("title").innerText = "已选定0个";
-							vm_downLoaded.showcheck = true;
-							vm_upLoaded.showcheck = true;
 							vm_edit.content = "全选";
 						} else {
 							var checked = true;
@@ -383,8 +284,6 @@
 						document.getElementById("sliderGroup").style.bottom = "0px";
 						document.getElementById("nav").style.display = "none";
 						document.getElementById("title").innerText = "传输列表";
-						vm_downLoaded.showcheck = false;
-						vm_upLoaded.showcheck = false;
 						vm_edit.content = "编辑";
 					}
 				}
@@ -414,9 +313,9 @@
 										var ids = element.value.split("-");
 										var fileInfo;
 										if(ids[0] == "downloaded") { //已下载
-											fileInfo = vm_downLoaded.fileArray[ids[1]];
+											//fileInfo =
 										} else {
-											fileInfo = vm_upLoaded.fileArray[ids[1]];
+											//fileInfo =
 										}
 										delFileArray[delFileArray.length] = {
 											type: ids[0],
@@ -433,7 +332,6 @@
 					}
 				}
 			});
-
 			mui.init({
 				gestureConfig: {
 					longtap: true, //默认为false
@@ -468,11 +366,10 @@
 			function initListener() {
 
 				mui.back = function() {
-					if(vm_del.deling) { //确认删除
+					if(vm_del.deling) { //正在删除
 						return false;
 					}
 					if(delEdit) { //批量删除
-						vm_cancel.tap();
 						return false;
 					}
 					mui.closePopups();
@@ -508,9 +405,9 @@
 					plus.uploader.clear(); //清除上传任务
 					plus.downloader.clear(); //清除下载任务
 					document.getElementById("upload").innerHTML = '';
+					document.getElementById("uploaded").innerHTML = '';
 					document.getElementById("download").innerHTML = '';
-					vm_downLoaded.fileArray = [];
-					vm_upLoaded.fileArray = [];
+					document.getElementById("downloaded").innerHTML = '';
 					uploadingId = null; //是否正在下载
 					downloadingId = null; //是否正在上传
 					upFolderEntry = null; //上传文件夹的目录对象
@@ -756,10 +653,52 @@
 				//双击标题返回列表顶部
 				document.getElementById('title').addEventListener('doubletap', function() {
 					if(slideNumber) {
-						mui("#item1mobile .mui-scroll-wrapper").scroll().scrollTo(0, 0, 100);
+						mui("#item2mobile .mui-scroll-wrapper").scroll().scrollTo(0, 0, 100);
 					} else {
 						mui("#item1mobile .mui-scroll-wrapper").scroll().scrollTo(0, 0, 100);
 					}
+				});
+
+				//打开本地文件
+				mui('#sliderGroup').on('tap', '.local-file-open', function() {
+					var value = this.getAttribute("value");
+					console.log("openFile:" + value);
+					playutil.openFile(value, function(text) {
+						mui.toast(text);
+					});
+				});
+
+				//删除本地文件
+				mui('#sliderGroup').on('longtap', '.local-file-delete', function() {
+					if(delEdit) { //批量删除
+						return false;
+					}
+					var value = this.getAttribute("id");
+					var values = value.split("_");
+					console.log("deleteFile:" + JSON.stringify(values));
+					var fpath = "";
+					if(values[0] == "upLoaded") {
+						fpath=value.replace("upLoaded_","");
+					} else {
+						fpath=value.replace("downLoaded_","");
+					}
+					vm_del.deling = true;
+					var btnArray = ['否', '是'];
+					mui.confirm('确认删除记录？', '提示', btnArray, function(e) {
+						if(e.index == 1) { //是
+							deleteLocalFile({
+								type: values[0],
+								fpath: fpath
+							}, function(data) {
+								if(data.code == 1) {
+									var ele = document.getElementById(data.file.type + "_" + data.file.fpath);
+									ele.parentNode.removeChild(ele);
+								}
+								mui.toast(data.message);
+							});
+						}
+						vm_del.deling = false;
+					}, 'div');
 				});
 			}
 
@@ -1220,14 +1159,27 @@
 				if(modificationTime != undefined) {
 					fmodificationTime = modificationTime;
 				}
-				var item = {
-					fpath: fpath,
-					fname: fname,
-					size: fsize,
-					modificationTime: fmodificationTime,
-					type: type
-				}
-				vm_upLoaded.fileArray.unshift(item);
+				var li = document.createElement('li');
+				li.id = 'upLoaded_' + fpath;
+				li.className = 'mui-table-view-cell mui-media local-file-delete';
+				li.innerHTML = '<div class="mui-media-object mui-pull-right">\
+											<div class="mui-input-row mui-checkbox" v-if="showcheck">\
+												<label>&nbsp;</label>\
+												<input name="Checkbox" type="checkbox" value="' + li.id + '">\
+											</div>\
+											<button value="' + fpath + '" type="button" class="mui-btn mui-btn-outlined local-file-open">打开</button>\
+										</div> <span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>\
+										<div class="mui-media-body">\
+											<div class="mui-ellipsis transport-info">\
+												' + fname + '\
+											</div>\
+											<div class="transport-info">\
+												<p class="mui-pull-left">\
+													' + fsize + '&nbsp;&nbsp;' + fmodificationTime + '\
+												</p>\
+											</div>\
+										</div>';
+				document.getElementById("uploaded").insertBefore(li, document.getElementById("uploaded").firstChild);
 			}
 
 			/**
@@ -1282,14 +1234,28 @@
 				if(modificationTime != undefined) {
 					fmodificationTime = modificationTime;
 				}
-				var item = {
-					fpath: fpath,
-					fname: fname,
-					size: fsize,
-					modificationTime: fmodificationTime,
-					type: type
-				}
-				vm_downLoaded.fileArray.unshift(item);
+				var html1 = '<span class="mui-media-object mui-icon iconfont iconfont-size ' + type + ' mui-pull-left"></span>';
+				var li = document.createElement('li');
+				li.id = 'downLoaded_' + fpath; //文件名
+				li.className = 'mui-table-view-cell mui-media local-file-delete';
+				li.innerHTML = '<div class="mui-media-object mui-pull-right">\
+										<div class="mui-input-row mui-checkbox" v-if="showcheck">\
+											<label>&nbsp;</label>\
+											<input name="Checkbox" type="checkbox" value="' + li.id + '">\
+										</div>\
+										<button value="' + fpath + '" type="button" class="mui-btn mui-btn-outlined local-file-open">打开</button>\
+									</div> ' + html1 + '\
+									<div class="mui-media-body">\
+										<div class="mui-ellipsis transport-info">\
+											' + fname + '\
+										</div>\
+										<div class="transport-info">\
+											<p class="mui-pull-left">\
+												' + fsize + '&nbsp;&nbsp;' + fmodificationTime + '\
+											</p>\
+										</div>\
+									</div>';
+				document.getElementById("downloaded").insertBefore(li, document.getElementById("downloaded").firstChild);
 			}
 
 			/**
@@ -1594,19 +1560,22 @@
 			 * @param {Object} fPath
 			 * @param {Object} callback
 			 */
-			function deleteLocalFile(fPath, callback) {
-				plus.io.resolveLocalFileSystemURL(fPath, function(succesCB) {
+			function deleteLocalFile(data, callback) {
+				console.log("deleteLocalFile:"+JSON.stringify(data))
+				plus.io.resolveLocalFileSystemURL(data.fpath, function(succesCB) {
 					//console.log("获取删除本地文件的文件系统成功: " + succesCB.name);
 					succesCB.remove(function(succesCB2) {
 						//console.log("删除本地文件成功: " + JSON.stringify(succesCB2));
 						callback({
 							code: 1,
+							file: data,
 							message: "删除成功"
 						});
 					}, function(errorCB2) {
 						console.log("删除本地文件失败: " + JSON.stringify(succesCB2));
 						callback({
 							code: 0,
+							file: data,
 							message: "删除失败" + errorCB2.message
 						});
 					});
@@ -1614,6 +1583,7 @@
 					console.log("获取删除本地文件的文件系统失败: " + JSON.stringify(errorCB));
 					callback({
 						code: 0,
+						file: data,
 						message: "删除失败" + errorCB.message
 					});
 				});
