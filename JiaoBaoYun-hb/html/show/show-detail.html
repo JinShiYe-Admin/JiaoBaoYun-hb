@@ -33,7 +33,7 @@
 				</div>
 				<div v-if="showDetail.EncType === 5" class="show-content" v-html="showDetail.MsgContent"></div>
 				<div v-else class="show-content">{{showDetail.MsgContent}}</div>
-				<div v-if="showDetail.EncType!==5" style="width: 100%;">
+				<div v-if="showDetail.EncType!==5" style="width: 100%;padding-top: 10px;">
 					<div v-for="(img,index) of getImgs(showDetail)" v-if="img.type === 2" class="display-inlineBlock" v-bind:style="[flexStyle,{background:'linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,0.4)),url('+img.encImg+')'},imgDivRe,{'background-size':'contain','background-repeat':'no-repeat'}]" style="position: relative; margin: 0 2.5px;" v-on:tap.stop="exFileTapListener(showDetail,img,index)">
 						<img src="../../image/utils/playvideo.png" style="width:50px;height:50px;margin: auto 0;">
 						<p v-if="img.encLen>0" style="position: absolute;bottom: 0;right: 5px;color: white;line-height: 0;">{{img.encLen}}"</p>
@@ -48,9 +48,9 @@
 				<!--<hr style="width: 100%;height: 1px;color: #E4E4E4;border: none;" />-->
 				<br />
 				<br  />
-				<div style="width: 100%;height: 1px; background-color: #E4E4E4;margin-bottom: 8px;"></div>
+				<div style="width: 100%;height: 1px; background-color: #E4E4E4;margin-bottom: 12px;"></div>
 				<div v-if="showDetail.LikeUsers&&showDetail.LikeUsers.length>0" style="width: 100%;">
-					<p v-on:tap="openLikers">
+					<p v-on:tap="openLikers" class="p-likers">
 						<img src="../../image/dynamic/praise.png" style="width: 15px;height: 15px;vertical-align: middle;" />
 						<span class="liker-name" v-for="(liker,likerIndex) of showDetail.LikeUsers" v-if="likerIndex<20" v-on:tap.stop="openPersonSpace(liker.userId)">{{liker.userName}}
 							<span v-if="likerIndex<showDetail.LikeUsers.length-1&&likerIndex<19">,</span>

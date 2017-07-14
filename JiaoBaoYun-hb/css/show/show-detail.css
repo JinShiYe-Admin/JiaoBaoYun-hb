@@ -6,7 +6,7 @@ body{
 	padding: 56px 15px 12px;
 }
 .detail-head{
-	line-height: 54px;
+	line-height: 30px;
 	width: 100%;
 	text-align: center;
 }
@@ -54,6 +54,9 @@ body{
 	border: none;
 	background-color: gray;
 	color: white;
+}
+.show-content{
+	padding-top: 8px;
 }
 .comments-container{
 }
@@ -119,7 +122,7 @@ body{
 	color: #B7B7B7;
 }
 .reply-name{
-	color: #1DB8F1;
+	color: #0D77C5;
 }
 .replies-container{
 
@@ -143,7 +146,7 @@ body{
 	color:darkgray;
 }
 .liker-name{
-	color: #1DB8F1;
+	color: #0D77C5;
 }
 .flexStyle{
 	display: flex;
@@ -162,8 +165,8 @@ body{
 }
 
 .mui-table-view-cell{
-	padding: 8px 0 0;
+	padding: 5px 0 0;
 }
-p{
+.p-likers{
 	margin-bottom: 0;
 }
