@@ -6,7 +6,7 @@ body{
 	padding: 56px 15px 12px;
 }
 .detail-head{
-	line-height: 24px;
+	line-height: 54px;
 	width: 100%;
 	text-align: center;
 }
@@ -56,10 +56,9 @@ body{
 	color: white;
 }
 .comments-container{
-	margin: 0 -15px;
 }
 .comments-li{
-	padding: 11px 15px 0;
+	padding: 11px 0 0;
 }
 .show-content{
 	color: #808080;
@@ -130,9 +129,12 @@ body{
 }
 .icon-support,
 .icon-liaotian1{
-	font-size: 20px;
-	padding: 5px;
-	color: darkgray;
+	font-size: 15px;
+	padding: 5px 20px;
+	color: #B7B7B7;
+}
+.icon-liaotian1{
+	padding-right: 5px ;
 }
 .isLiked{
 	color: #1DB8F1;
@@ -158,12 +160,10 @@ body{
 .mui-table-view-cell:after{
 	height: 0;
 }
-.mui-table-cell{
-	padding: 10px 5px 0;
-}
+
 .mui-table-view-cell{
-	padding: 11px 15px 0;
+	padding: 8px 0 0;
 }
-.replies-container{
-	margin: 0 -15px;
+p{
+	margin-bottom: 0;
 }

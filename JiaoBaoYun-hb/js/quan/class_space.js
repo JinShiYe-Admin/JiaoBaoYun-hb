@@ -313,7 +313,7 @@ var class_space = (function(mod) {
 	}
 	mod.getDurationInner=function(cell){
 		if(cell.EncLen){
-			return '<span>'+cell.EncLen+'"</span>'
+			return '<span style="position:absolute;right:5px;bottom:0;color:#FFFFFF;">'+cell.EncLen+'"</span>'
 		}
 		return '';
 	}

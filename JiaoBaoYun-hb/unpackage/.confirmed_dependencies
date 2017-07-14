@@ -250,7 +250,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/quan/zone_main.html"
@@ -1777,11 +1778,13 @@
 			"js/utils/signHmacSHA1.js",
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
-			"js/utils/RSAEncrypt.js"
+			"js/utils/RSAEncrypt.js",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/cloud/keeprecord_callorrecord_main.html",
-			"html/cloud/keeprecord_history_a.html"
+			"html/cloud/keeprecord_history_a.html",
+			"html/cloud/app_statistics.html"
 		]
 	},
 	"html/mine/approval-apply.html": {
@@ -2923,7 +2926,26 @@
 			"css/utils/common.css",
 			"css/utils/preview.css",
 			"js/libs/crypto-js/crypto-js.js",
-			"image/utils/loading.gif"
+			"image/utils/loading.gif",
+			"js/mui.pullToRefresh.js",
+			"js/storageKeyName.js",
+			"js/mui.pullToRefresh.material.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"js/utils/showvideoutil.js",
+			"js/libs/myStorage/myStorage.js",
+			"js/utils/playutil.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.zoom.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"js/mui.previewimage.js",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	},
 	"html/quan/class-space.html": {
@@ -3052,6 +3074,26 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js"
+		]
+	},
+	"html/cloud/app_statistics.html": {
+		"resources": [
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js"
 		]
 	}
 }

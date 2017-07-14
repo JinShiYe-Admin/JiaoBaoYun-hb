@@ -16,7 +16,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">详情</h1>
-			<a id="del-dynamic" class="mui-pull-right iconfont icon-moreandroid display-none"></a>
+			<a id="del-dynamic" class="mui-pull-right iconfont icon-moreandroid display-none" style="font-size: 20px;"></a>
 		</header>
 		<div id="show-detail" v-show="showDetail.TabId>0" class="mui-content">
 			<div>
@@ -45,16 +45,17 @@
 					<span class="iconfont icon-support" v-bind:class="{isLiked:showDetail.IsLike,isUnlike:!showDetail.IsLike}" v-on:tap="toggleLike"></span>
 					<span class="iconfont icon-liaotian1" v-on:click="openComment(0)"></span>
 				</div>
-				<hr style="width: 100%;height: 1px;color: #E4E4E4;border: none;" />
-				<div style="width: 100%;height: 1px; background-color: #E4E4E4;"></div>
+				<!--<hr style="width: 100%;height: 1px;color: #E4E4E4;border: none;" />-->
+				<br />
+				<br  />
+				<div style="width: 100%;height: 1px; background-color: #E4E4E4;margin-bottom: 8px;"></div>
 				<div v-if="showDetail.LikeUsers&&showDetail.LikeUsers.length>0" style="width: 100%;">
-					
 					<p v-on:tap="openLikers">
 						<img src="../../image/dynamic/praise.png" style="width: 15px;height: 15px;vertical-align: middle;" />
 						<span class="liker-name" v-for="(liker,likerIndex) of showDetail.LikeUsers" v-if="likerIndex<20" v-on:tap.stop="openPersonSpace(liker.userId)">{{liker.userName}}
 							<span v-if="likerIndex<showDetail.LikeUsers.length-1&&likerIndex<19">,</span>
 						</span>
-						<span v-if="showDetail.LikeUsers.length>20">等人觉得很赞</span
+						<span v-if="showDetail.LikeUsers.length>20">等人觉得很赞</span>
 					</p>
 				</div>
 			</div>
@@ -100,19 +101,19 @@
 					}
 					return true;
 				},
-				pullRefresh: {
-					container: '#show-detail',
-					down: {
-						style: 'circle',
-						offset: '50px',
-						callback: pulldownRefresh
-					},
-					up: {
-						auto: true,
-						contentrefresh: '正在加载...',
-						callback: pullupRefresh
-					}
-				},
+//				pullRefresh: {
+//					container: '#show-detail',
+//					down: {
+//						style: 'circle',
+//						offset: '50px',
+//						callback: pulldownRefresh
+//					},
+//					up: {
+//						auto: true,
+//						contentrefresh: '正在加载...',
+//						callback: pullupRefresh
+//					}
+//				},
 				gestureConfig: {
 					longtap: true
 				}
