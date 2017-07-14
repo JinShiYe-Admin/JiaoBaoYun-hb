@@ -618,7 +618,7 @@ var setListener = function(userId) {
 				} else {
 					mui.toast('取消点赞失败！')
 				}
-				mui('.mui-popover').popover('toggle');
+				mui('#popover').popover('toggle');
 			})
 		} else {
 			postDataPro_setClassSpaceLikeByUser({
@@ -635,7 +635,7 @@ var setListener = function(userId) {
 				} else {
 					mui.toast('点赞失败！')
 				}
-				mui('.mui-popover').popover('toggle');
+				mui('#popover').popover('toggle');
 			})
 		}
 
@@ -647,7 +647,7 @@ var setListener = function(userId) {
 			classSpaceId: parseInt(zanSpan.getAttribute('tabId')),
 			classId: postData.classId //id
 		})
-		mui('.mui-popover').popover('toggle');
+		mui('#popover').popover('toggle');
 	})
 	var firstTime = null;
 
