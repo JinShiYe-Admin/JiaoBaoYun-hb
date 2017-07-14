@@ -172,11 +172,11 @@ mui.plusReady(function() {
  */
 function showNoData(type) {
 	if(type) {
-		document.querySelector(".vertical-scroll").style.display = "none";
+		document.querySelector("#list-container").style.display = "none";
 		document.querySelector(".noDataDisplay").style.display = "block";
 		mui(".mui-pull-loading")[0].style.display = "none";
 	} else {
-		document.querySelector(".vertical-scroll").style.display = "block";
+		document.querySelector("#list-container").style.display = "block";
 		document.querySelector(".noDataDisplay").style.display = "none";
 		mui(".mui-pull-loading")[0].style.display = "block";
 	}
