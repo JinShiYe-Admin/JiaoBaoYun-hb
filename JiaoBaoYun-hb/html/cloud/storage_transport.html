@@ -99,6 +99,30 @@
 			.delete-hide #uploaded .mui-checkbox {
 				display: none;
 			}
+
+			#failPop .mui-popup {
+				display: block;
+				background-color: white;
+			}
+
+			#failPop .mui-popup .mui-scroll-wrapper {
+				top: 45px;
+				bottom: 38px;
+			}
+
+			#failPop .mui-popup .mui-popup-buttons {
+				margin-top: 129px;
+				border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+				/*box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);*/
+			}
+
+			#failPop .mui-popup .mui-table-view-cell {
+				padding: 11px 15px;
+			}
+
+			#failPop .mui-popup .mui-table-view {
+				background-color: white;
+			}
 		</style>
 	</head>
 
@@ -179,6 +203,23 @@
 				</div>
 			</div>
 		</div>
+		<div id="failPop" class="mui-popover">
+			<div class="mui-popup mui-popup-in">
+				<div class="mui-popup-inner">
+					<div class="mui-popup-title">失败列表</div>
+				</div>
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<li v-for="value in failArray" class="mui-table-view-cell mui-ellipsis">
+								{{value}}
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="mui-popup-buttons"><span v-on:tap="clean" class="mui-popup-button mui-popup-button-bold">确定</span></div>
+			</div>
+		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/qiniu/qiniu.js"></script>
 		<script type="text/javascript" src="../../js/utils/cryption.js"></script>
@@ -230,11 +271,8 @@
 					tap: function() {
 						console.log("tap:" + vm_edit.content);
 						if(vm_edit.content == "编辑") { //进入批量删除状态
-							if(uploadingId != null || downloadingId != null) {
-								mui.toast("有正在执行的任务");
-								return false;
-							}
 							delEdit = true;
+							document.getElementById("slider").className = "mui-slider mui-fullscreen delete-show";
 							document.getElementById("back").style.display = "none";
 							document.getElementById("cancel").style.display = "block";
 							document.getElementById("sliderGroup").style.bottom = "50px";
@@ -279,11 +317,15 @@
 					tap: function() {
 						console.log("cancel");
 						delEdit = false;
+						document.getElementById("slider").className = "mui-slider mui-fullscreen delete-hide";
 						document.getElementById("back").style.display = "block";
 						document.getElementById("cancel").style.display = "none";
 						document.getElementById("sliderGroup").style.bottom = "0px";
 						document.getElementById("nav").style.display = "none";
 						document.getElementById("title").innerText = "传输列表";
+						mui('.mui-checkbox input[type=checkbox]:checked').each(function(index, element) {
+							element.checked = false;
+						});
 						vm_edit.content = "编辑";
 					}
 				}
@@ -305,30 +347,56 @@
 							mui.confirm('确认删除记录？', '提示', btnArray, function(e) {
 								if(e.index == 1) { //是
 									var deleteWaiting = events.showWaiting("处理中...");
-
-									vm_cancel.tap();
 									delFileArray = [];
 									mui('.mui-checkbox input[type=checkbox]:checked').each(function(index, element) {
-										console.log("checked:" + index + " " + element.value);
-										var ids = element.value.split("-");
-										var fileInfo;
-										if(ids[0] == "downloaded") { //已下载
-											//fileInfo =
+										console.log("checked:" + index + " " + element.getAttribute("value"));
+										var value = element.getAttribute("value");
+										var values = element.value.split("_");
+										var fpath = "";
+										if(values[0] == "upLoaded") {
+											fpath = value.replace("upLoaded_", "");
 										} else {
-											//fileInfo =
+											fpath = value.replace("downLoaded_", "");
 										}
+										var names = fpath.split("/");
+										var fname = names[names.length - 1];
 										delFileArray[delFileArray.length] = {
-											type: ids[0],
-											index: ids[1],
-											fpath: fileInfo.fpath
+											type: values[0],
+											fpath: fpath,
+											fname: fname
 										}
 									});
+									vm_cancel.tap();
 									deleteFileArray(deleteWaiting);
 								}
 								vm_del.deling = false;
 							}, "div");
 
 						}
+					}
+				}
+			});
+
+			//失败列表
+			var vm_fail = new Vue({
+				el: "#failPop",
+				data: {
+					failArray: []
+				},
+				methods: {
+					clean: function() {
+						mui('#failPop').popover('toggle');
+						vm_fail.failArray = [];
+						vm_del.deling = false;
+					},
+					show: function() {
+						vm_del.deling = true;
+						mui('#failPop').popover('toggle');
+						document.querySelector('.mui-backdrop').style.backgroundColor = "rgba(0,0,0,0.3)";
+						document.querySelector('.mui-backdrop').addEventListener('tap', function() {
+							vm_del.deling = false;
+							vm_fail.failArray = []; //清空列表
+						});
 					}
 				}
 			});
@@ -678,9 +746,9 @@
 					console.log("deleteFile:" + JSON.stringify(values));
 					var fpath = "";
 					if(values[0] == "upLoaded") {
-						fpath=value.replace("upLoaded_","");
+						fpath = value.replace("upLoaded_", "");
 					} else {
-						fpath=value.replace("downLoaded_","");
+						fpath = value.replace("downLoaded_", "");
 					}
 					vm_del.deling = true;
 					var btnArray = ['否', '是'];
@@ -700,6 +768,13 @@
 						vm_del.deling = false;
 					}, 'div');
 				});
+
+				//checkBox变化
+				mui('#sliderGroup').on('change', 'input', function() {
+					console.log("checkChange");
+					changeCheckBox();
+				})
+
 			}
 
 			/**
@@ -1180,6 +1255,9 @@
 											</div>\
 										</div>';
 				document.getElementById("uploaded").insertBefore(li, document.getElementById("uploaded").firstChild);
+				if(delEdit) {
+					changeCheckBox();
+				}
 			}
 
 			/**
@@ -1256,6 +1334,9 @@
 										</div>\
 									</div>';
 				document.getElementById("downloaded").insertBefore(li, document.getElementById("downloaded").firstChild);
+				if(delEdit) {
+					changeCheckBox();
+				}
 			}
 
 			/**
@@ -1561,7 +1642,7 @@
 			 * @param {Object} callback
 			 */
 			function deleteLocalFile(data, callback) {
-				console.log("deleteLocalFile:"+JSON.stringify(data))
+				//console.log("deleteLocalFile:" + JSON.stringify(data))
 				plus.io.resolveLocalFileSystemURL(data.fpath, function(succesCB) {
 					//console.log("获取删除本地文件的文件系统成功: " + succesCB.name);
 					succesCB.remove(function(succesCB2) {
@@ -1685,8 +1766,30 @@
 			function deleteFileArray(wd) {
 				for(var i in delFileArray) {
 					console.log("delFileArray:" + i + " " + JSON.stringify(delFileArray[i]));
+					if(delFileArray[i].del == undefined) {
+						deleteLocalFile(delFileArray[i], function(data) {
+							console.log("deleteLocalFile:" + JSON.stringify(data));
+							delFileArray[i].del = data.code
+							if(data.code) { //成功
+								var ele = document.getElementById(data.file.type + "_" + data.file.fpath);
+								ele.parentNode.removeChild(ele);
+							} else {
+								vm_fail.failArray.push(data.file.fname);
+							}
+							if(i == (delFileArray.length - 1)) {
+								mui.toast("执行完成");
+								wd.close();
+								if(vm_fail.failArray.length != 0) {
+									vm_fail.show();
+								}
+							} else {
+								deleteFileArray(wd);
+							}
+						});
+						break;
+					}
 				}
-				wd.close();
+
 			}
 		</script>
 	</body>
