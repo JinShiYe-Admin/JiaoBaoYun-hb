@@ -5324,7 +5324,11 @@
 					"css/utils/preview.css",
 					"image/dynamic/praise.png",
 					"image/utils/default_personalimage.png",
-					"js/utils/showvideoutil.js"
+					"js/utils/showvideoutil.js",
+					"fonts/iconfont.ttf",
+					"fonts/mui.ttf",
+					"fonts/fangzheng.ttf",
+					"js/utils/vue.min.js"
 				],
 				"refer": [
 					"html/register/login.html",

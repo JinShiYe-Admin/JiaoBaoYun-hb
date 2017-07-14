@@ -578,3 +578,11 @@ div>.icon-xiangce:before,
 	position: absolute;
 	visibility: hidden;
 }
+.video-container{
+	position: relative;
+}
+.video-duration{
+	position: absolute;
+	right: 5px;
+	bottom: 0;
+}

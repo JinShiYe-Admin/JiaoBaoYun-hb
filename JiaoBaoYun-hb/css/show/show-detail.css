@@ -38,6 +38,9 @@ body{
 	font-size: 15px;
 	padding-bottom: 5px;
 }
+.publisher-date{
+	color: #B7B7B7;
+}
 .attention-btn{
 	height: 30px;
 	width: 65px;
@@ -56,10 +59,12 @@ body{
 	margin: 0 -15px;
 }
 .comments-li{
-	padding: 0 15px;
+	padding: 11px 15px 0;
 }
 .show-content{
-	color: #474747;
+	color: #808080;
+	font-size: 15px;
+	word-spacing: 28px;
 	word-break: break-word;
 	word-wrap: break-word;
 }
@@ -110,11 +115,15 @@ body{
 	color: #B7B7B7;
 	font-size: 12px;
 }
+.reply-content{
+	font-size: 14px;
+	color: #B7B7B7;
+}
 .reply-name{
-	color: #12B7F5;
+	color: #1DB8F1;
 }
 .replies-container{
-	background-color: #F2F2F2;
+
 }
 .extra-container{
 	margin: 10px 0;
@@ -126,13 +135,13 @@ body{
 	color: darkgray;
 }
 .isLiked{
-	color: #12B7F5;
+	color: #1DB8F1;
 }
 .isUnlike{
 	color:darkgray;
 }
 .liker-name{
-	color: #12B7F5;
+	color: #1DB8F1;
 }
 .flexStyle{
 	display: flex;
@@ -142,4 +151,19 @@ body{
 }
 .video-background{
 	background: linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,0.4));
+}
+.mui-table-view:after{
+	height: 0;
+}
+.mui-table-view-cell:after{
+	height: 0;
+}
+.mui-table-cell{
+	padding: 10px 5px 0;
+}
+.mui-table-view-cell{
+	padding: 11px 15px 0;
+}
+.replies-container{
+	margin: 0 -15px;
 }
