@@ -296,6 +296,10 @@
 			#failPop .mui-popup .mui-table-view-cell {
 				padding: 11px 15px;
 			}
+
+			#failPop .mui-popup .mui-table-view {
+				background-color: white;
+			}
 		</style>
 	</head>
 
@@ -385,7 +389,7 @@
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll">
 						<ul class="mui-table-view">
-							<li v-for="value in failArray" class="mui-table-view-cell">
+							<li v-for="value in failArray" class="mui-table-view-cell mui-ellipsis">
 								{{value}}
 							</li>
 						</ul>
