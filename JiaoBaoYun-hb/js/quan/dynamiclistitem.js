@@ -870,62 +870,7 @@ var dynamiclistitem = (function($, mod) {
 		var li = document.createElement('li');
 		li.id = data.id_name;
 		li.className = 'mui-table-view-cell';
-		if(document.getElementById("spaceDetail") && data.pageFlag == 1) {
-			mod.adddetailInfo(ulElement, li, data); //展现动态详情
-			//			mod.addInfo(ulElement, li, data); //增加动态的个人信息和内容
-		} else {
-			mod.addInfo(ulElement, li, data); //增加动态的个人信息和内容
-		}
-
-	};
-
-	mod.adddetailInfo = function(ulElement, liElement, data) {
-
-		var closeempty = '';
-		if(data.IsFocused == 0) {
-			closeempty = '<button id="btn-focus' + data.id_name + '" type="button" class="mui-btn mui-pull-right btn-attention" style="margin-top:0px;">关注</button>'
-
-		} else {
-			closeempty = '<button id="btn-focus' + data.id_name + '" type="button" class="mui-btn mui-pull-right btn-attentioned" style="margin-top:0px;">已关注</button>'
-
-		}
-		var html = '';
-		var html0 = '<p style = "color:#323232;font-size:17px;margin-top:2px;margin-bottom:15px;text-align:center;line-height:26px;letter-spacing:1px">' + data.MsgTitle + '</p>'
-		var html1 = '<div class="mui-col-sm-12 mui-col-xs-12" style="margin-bottom:5px;"><div class="mui-media-body mui-pull-left">';
-
-		//头像
-		var html2 = '<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:36px;height:36px;border-radius: 50%;" src="' + data.personalImage + '"></div>';
-		var html3 = '<div class="mui-media-body dynamic-padding-left-10px  mui-pull-left">';
-		//姓名
-		var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:14px;margin-top:-1px">' + data.personalName + '</p>';
-		//时间
-		var html5 = '<p class="" style = "color:#b7b7b7;font-size:12px">' + data.PublishDate + '</p></div>' + closeempty + '</div>';
-		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext ">';
-		var html7 = '<div id="question_content' + data.id_name + '" style = "color:#808080;font-size:15px;line-height:28px" class="ellipsis-show question_content">';
-		//内容
-		var html8
-		if(data.EncType == 5) {
-			html8 = replaceAllBL(data.MsgContentTxt)
-		} else {
-			html8 = replaceAllBL(data.MsgContent);
-		}
-		var html99 = '<div id="show' + data.id_name + '" class="showAll show" style="color:#B7B7B7;">展开全部</div>'
-		var mp = data.EncAddr.split('.');
-		if(document.getElementById("spaceDetail")) {
-			html99 = '';
-			if(data.EncType == 5) {
-				html8 = data.MsgContent
-			}
-		}
-		var html9 = '</div>' + html99 + '</div></div>';
-		html = html0 + html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8 + html9;
-
-		var div = document.createElement('div');
-		div.className = 'mui-row mui-row-padding-8px';
-		div.innerHTML = html;
-		liElement.appendChild(div);
-
-		mod.addImage(ulElement, liElement, data); //增加动态的图片
+		mod.addInfo(ulElement, li, data); //增加动态的个人信息和内容
 
 	};
 
@@ -937,35 +882,10 @@ var dynamiclistitem = (function($, mod) {
 	 */
 	mod.addInfo = function(ulElement, liElement, data) {
 		var closeempty = '';
-		if(data.pageFlag == 0) {
-			//			console.log('personalUTID=' + personalUTID + '----' + 'PublisherId=' + data.PublisherId)
-			if(personalUTID == data.PublisherId) {
-				closeempty = '<a data-is-focus=0  id ="btn-focus' + data.id_name + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:30px;height:30px;padding:5px"></a>';
-			} else {
-				closeempty = '';
-			}
+		if(personalUTID == data.PublisherId) {
+			closeempty = '<a data-is-focus=0  id ="btn-focus' + data.id_name + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:30px;height:30px;padding:5px"></a>';
 		} else {
-
-			if(data.IsFocused == 0) {
-
-				if(!document.getElementById("spaceDetail")) {
-					closeempty = '<a data-is-focus=0  id ="btn-focus' + data.id_name + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:30px;height:30px;padding:5px"></a>'; -
-
-				} else {
-					//					closeempty = '<button id="btn-focus' + data.id_name + '" type="button" class="mui-btn mui-pull-right btn-attention" style="width: 55px;">关注</button>'
-
-				}
-			} else {
-
-				if(!document.getElementById("spaceDetail")) {
-					closeempty = '<a data-is-focus=1  id ="btn-focus' + data.id_name + '" class="mui-icon iconfont icon-xiajiantou mui-pull-right" style="color:gray;width:30px;height:30px;padding:5px"></a>'; -
-
-				} else {
-					//					closeempty = '<button id="btn-focus' + data.id_name + '" type="button" class="mui-btn mui-pull-right btn-attentioned" style="width: 55px;">已关注</button>'
-
-				}
-
-			}
+			closeempty = '';
 		}
 
 		var html = '';
@@ -974,37 +894,16 @@ var dynamiclistitem = (function($, mod) {
 		//头像
 		var html2 = '<img id="headImg' + data.id_name + '" class=" dynamic-personal-image" style="width:40px;height:40px;border-radius: 50%;" src="' + data.personalImage + '"></div>';
 		var html3 = '<div class="mui-media-body dynamic-padding-left-10px">' + closeempty;
-		var html4
-		if(data.InShow == '1') {
-			//姓名
-			html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:16px;margin-top:2px">' + data.personalName + '</p>';
-			//			var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:16px;margin-top:2px">' + data.personalName + ' <span class="mui-icon iconfont icon-dongtai1" style="width:20px;height:20px;font-size:14px;color:rgb(26,155,255)"></span></p>';
-		} else {
-			//姓名
-			html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:16px;margin-top:2px">' + data.personalName + '</p>';
-		}
+		//姓名
+		var html4 = '<p class="mui-ellipsis" style = "color:#323232;font-size:16px;margin-top:2px">' + data.personalName + '</p>';
 
 		//时间
 		var html5 = '<p style = "color:#b7b7b7;font-size:14px">' + data.PublishDate + '</p></div></div>';
 		var html6 = '<div class="mui-col-sm-12 mui-col-xs-12"><div class="mui-media-body dynamic-contenttext ">';
 		var html7 = '<div id="question_content' + data.id_name + '" style = "color:#808080;font-size:14px" class="ellipsis-show question_content">';
 		//内容
-		var html8
-		if(data.EncType == 5) {
-			html8 = replaceAllBL(data.MsgContentTxt);
-		} else {
-			html8 = replaceAllBL(data.MsgContent);
-		}
-
+		var html8 = replaceAllBL(data.MsgContent);
 		var html99 = '<div id="show' + data.id_name + '" class="showAll show" style="color:#B7B7B7;">展开全部</div>'
-		var mp = data.EncAddr.split('.');
-		if(document.getElementById("spaceDetail")) {
-			html99 = '';
-			if(data.EncType == 5) {
-				html8 = data.MsgContent
-			}
-		}
-
 		var html9 = '</div>' + html99 + '</div></div>';
 		html = html1 + html2 + html3 + html4 + html5 + html6 + html7 + html8 + html9;
 
@@ -1025,18 +924,6 @@ var dynamiclistitem = (function($, mod) {
 	mod.addImage = function(ulElement, liElement, data) {
 		console.log("要放置的data:" + JSON.stringify(data));
 		var citycode = data.cityCode
-
-		if(data.pageFlag == 1 && mui.os.android) {
-			if(SCREEN_WIDTH < 50) {
-				SCREEN_WIDTH = plus.screen.resolutionWidth * 4
-			} else if(SCREEN_WIDTH > 50 && SCREEN_WIDTH < 450) {
-
-			} else {
-				SCREEN_WIDTH = SCREEN_WIDTH * 360 / 1440
-			}
-
-		}
-
 		var ImageUrlList = data.ImageList; //图片路径数组
 		var ImageNum = ImageUrlList.length; //图片总数量
 		var html = '';
@@ -1054,12 +941,12 @@ var dynamiclistitem = (function($, mod) {
 					winWidth = winWidth * 0.75;
 					imgRe.height = 190 + 'px';
 					imgRe.width = 340 + 'px';
-					mt = 190 / 2 - 25;
+					mt = 190/2-25;
 				} else { //宽<=高
 					winWidth = winWidth * 0.75;
 					imgRe.width = 150 + 'px';
 					imgRe.height = 264 + 'px';
-					mt = 264 / 2 - 25
+					mt =  264/2-25
 				}
 
 			}
@@ -1070,11 +957,11 @@ var dynamiclistitem = (function($, mod) {
 					var html1 = '<div id="video-container' + data.id_name + '" class="video-container" thb=' + ImageUrlList[0].encImg + ' videourl=' + ImageUrlList[0].encAddr +
 						' style="position:relative;height: ' + imgRe.height + ';width: ' + imgRe.width + ' ;background-image:url(' + ImageUrlList[0].encImg + ');background-repeat:no-repeat;background-position:center;background-size:cover;text-align:center;">';
 					var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:' + mt + 'px;margin-left:0px" src="../../image/utils/playvideo.png"/>';
-					var html3 = '';
-					if(data.EncLen > 0) {
-						html3 = '<div style="position:absolute;bottom:0px;right:3px;color:white;width:20px;">' + data.EncLen + '"</div></div>'
+					var html3='';
+					if(data.EncLen>0){
+						html3 = '<div style="position:absolute;bottom:0px;right:3px;color:white;width:20px;">'+data.EncLen+'"</div></div>'
 					}
-					html = html1 + html2 + html3;
+					html = html1 + html2+html3;
 				} else {
 
 					var html1 = '<div>';
@@ -1082,21 +969,17 @@ var dynamiclistitem = (function($, mod) {
 					html = html1 + html2;
 				}
 			} else if(ImageNum == 2) { //两张图片时
-				if(data.EncType == 1) {
-					$.each(ImageUrlList, function(index, element) {
-						var html1 = '<div class="mui-col-sm-6 mui-col-xs-6 dynamic-image-div" style="height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;width: ' + (SCREEN_WIDTH - 20) / 2 + 'px;">';
-						var html2 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;" src="' + ImageUrlList[index].encImg + '" data-preview-src="' + ImageUrlList[index].encAddr + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/>' + '</div>';
-						html = html + html1 + html2;
-					});
-				}
+				$.each(ImageUrlList, function(index, element) {
+					var html1 = '<div class="mui-col-sm-6 mui-col-xs-6 dynamic-image-div" style="height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;width: ' + (SCREEN_WIDTH - 20) / 2 + 'px;">';
+					var html2 = '<img class="dynamic-image" style= "height: ' + (SCREEN_WIDTH - 20) / 2 + 'px;" src="' + ImageUrlList[index].encImg + '" data-preview-src="' + ImageUrlList[index].encAddr + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/>' + '</div>';
+					html = html + html1 + html2;
+				});
 			} else if(ImageNum >= 3) { //大于两张图片时
-				if(data.EncType == 1) {
-					$.each(ImageUrlList, function(index, element) {
-						var html1 = '<div class="mui-col-sm-4 mui-col-xs-4" style="height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
-						var html2 = '<img class="dynamic-image" style="height: ' + (SCREEN_WIDTH - 30) / 3 + 'px;width: ' + (SCREEN_WIDTH - 30) / 3 + 'px;"  src="' + element.encImg + '" data-preview-src="' + ImageUrlList[index].encAddr + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/></div>';
-						html = html + html1 + html2;
-					});
-				}
+				$.each(ImageUrlList, function(index, element) {
+					var html1 = '<div class="mui-col-sm-4 mui-col-xs-4" style="height: ' + (SCREEN_WIDTH - 20) / 3 + 'px;width: ' + (SCREEN_WIDTH - 20) / 3 + 'px;">';
+					var html2 = '<img class="dynamic-image" style="height: ' + (SCREEN_WIDTH - 30) / 3 + 'px;width: ' + (SCREEN_WIDTH - 30) / 3 + 'px;"  src="' + element.encImg + '" data-preview-src="' + ImageUrlList[index].encAddr + '" data-preview-group="' + 'cellImageType' + data.id_name + '"/></div>';
+					html = html + html1 + html2;
+				});
 			}
 		}
 
@@ -1160,12 +1043,7 @@ var dynamiclistitem = (function($, mod) {
 
 		var html5 = '<a id="comment' + data.id_name + '" style = "color: #b7b7b7;" class="mui-icon iconfont icon-xiaoxizhongxin dynamic-icon-comment"></a>';
 		var html6 = '<font style="padding-right:7px"></font>';
-		var html7
-		if(data.focusFlag == 1) { //展现界面
-			html7 = '</div><div class="mui-media-body"><p></p></div></div>';
-		} else { //空间界面
-			html7 = '</div><div class="mui-media-body" style="margin-top:5px"><p  style="color:#999999">浏览' + viewCount + '次</p></div></div>';
-		}
+		var html7 = '</div><div class="mui-media-body" style="margin-top:5px"><p  style="color:#999999">浏览' + viewCount + '次</p></div></div>';
 		var html8;
 
 		if(praiseList.length > 0 || commentList.length > 0) { //有点赞或者评论时显示分割线
@@ -1254,7 +1132,7 @@ var dynamiclistitem = (function($, mod) {
 		div.innerHTML = html;
 		liElement.appendChild(div);
 		ulElement.appendChild(liElement);
-		//		console.log(ulElement.innerHTML);
+//		console.log(ulElement.innerHTML);
 	};
 
 	return mod;
