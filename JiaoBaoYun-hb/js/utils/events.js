@@ -1,25 +1,38 @@
-/**
- * @author an
- */
+//公共方法js
 window.onerror = function(errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
-	console.log("---ERROR---start---");
+	console.log("---ERROR---页面出现错误---start---");
 	console.log("错误信息-0:" + JSON.stringify(errorMessage.detail));
 	console.log("错误信息-1:" + errorMessage);
 	console.log("出错文件:" + scriptURI);
 	console.log("出错行号:" + lineNumber);
 	console.log("出错列号:" + columnNumber);
 	console.log("错误详情:" + errorObj);
+	var isMuiLazyError = false; //是否是mui懒加载的BUG
+	if(errorMessage.detail != undefined) {
+		//mui懒加载的BUG的判断逻辑
+		if(errorMessage.detail["element"] != undefined && errorMessage.detail["uri"] != undefined) {
+			if(errorMessage.detail["element"]["_mui_lazy_width"] != undefined || errorMessage.detail["element"]["_mui_lazy_height"] != undefined) {
+				isMuiLazyError = true;
+			}
+		}
+	}
 	events.closeWaiting();
 	var webview = plus.webview.currentWebview();
-	console.log("---ERROR--- " + webview.id + " ---end---");
-	if(webview.id == "firstPage.html" || webview.id == "index.html" || webview.id == "cloud_home.html" || webview.id == "sciedu_home.html" || webview.id == "show-home1.html" || webview.id == "course-home1.html" || webview.id == "storage_transport.html") {
-		mui.toast('当前界面加载出现错误');
-		return false;
+	console.log("---ERROR---页面id--- " + webview.id + " ---");
+	if(isMuiLazyError) { //mui懒加载的BUG
+		console.log("---ERROR---出错信息---mui懒加载的BUG---");
+	} else {
+		if(webview.id == "firstPage.html" || webview.id == "index.html" || webview.id == "cloud_home.html" || webview.id == "sciedu_home.html" || webview.id == "show-home1.html" || webview.id == "course-home1.html" || webview.id == "storage_transport.html") {
+			mui.toast('当前界面加载出现错误');
+		} else {
+			mui.alert('当前界面加载出现错误', 'ERROR', function() {
+				plus.webview.close(webview, events.getAniClose());
+			});
+		}
 	}
-	mui.alert('当前界面加载出现错误', 'ERROR', function() {
-		plus.webview.close(webview, events.getAniClose());
-	});
+	console.log("---ERROR---页面出现错误---end---");
 }
+
 var events = (function(mod) {
 
 	//去掉所有html标签
@@ -863,7 +876,7 @@ var events = (function(mod) {
 		if(!data) {
 			data = "";
 		}
-//		console.log("当前点击控件是否可点击：" + clickedItem.disabled);
+		//		console.log("当前点击控件是否可点击：" + clickedItem.disabled);
 		var webviewSites = webviewUrl.split("/");
 		var webviewId = webviewSites[webviewSites.length - 1];
 		var targetWebview = plus.webview.create(webviewUrl, webviewId, mod.getWebStyle(webviewUrl), {
@@ -1394,15 +1407,15 @@ var events = (function(mod) {
 	 * @param {Object} lisetener 传递的事件
 	 * @param {Object} data 传递的数据
 	 */
-	mod.readyToPage=function(isReady,url,lisetener,data){
-		console.log("是否已准备变形："+isReady);
-		if(isReady){
-			console.log("要传递的数据："+JSON.stringify(data));
-			mod.fireToPageWithData(url,lisetener,data);
-		}else{
-			setTimeout(function(){
-				mod.readyToPage(isReady,url,lisetener,data);
-			},500)
+	mod.readyToPage = function(isReady, url, lisetener, data) {
+		console.log("是否已准备变形：" + isReady);
+		if(isReady) {
+			console.log("要传递的数据：" + JSON.stringify(data));
+			mod.fireToPageWithData(url, lisetener, data);
+		} else {
+			setTimeout(function() {
+				mod.readyToPage(isReady, url, lisetener, data);
+			}, 500)
 		}
 	}
 	return mod;
