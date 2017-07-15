@@ -148,6 +148,7 @@ var cloud = (function($, mod) {
 			case 'asf':
 			case 'wmv':
 			case 'rmvb':
+			case 'mov':
 				return 'icon-video';
 				break;
 			case 'psd': //图片类型
@@ -307,6 +308,7 @@ var cloud = (function($, mod) {
 			case 'asf':
 			case 'wmv':
 			case 'rmvb':
+			case 'mov':
 				return 'cloud_0_video_0.png';
 				break;
 			case 'psd': //图片类型
@@ -396,6 +398,7 @@ var cloud = (function($, mod) {
 			case 'asf':
 			case 'wmv':
 			case 'rmvb':
+			case 'mov':
 				return 'cloud_0_video_0.png';
 				break;
 			case 'psd': //七牛能生成缩略图的图片类型

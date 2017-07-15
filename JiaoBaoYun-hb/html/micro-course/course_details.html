@@ -8,7 +8,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>课程详情</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/utils/common.css" />
@@ -188,6 +188,7 @@
 
 			.section-list-img {
 				/*课程列表图片*/
+				visibility: hidden;
 				width: 100%;
 			}
 
@@ -495,8 +496,7 @@
 						</li>
 					</ul>
 					<ul id="section_list" class="mui-table-view section-list">
-						<li id="test_li" class="mui-table-view-cell section-list-li">
-						</li>
+						<!--<li id="test_li" class="mui-table-view-cell section-list-li"></li>-->
 						<li id="section_more" class="mui-table-view-cell section-more">
 							<div class="section-more-text">查看更多</div>
 							<div class="mui-icon mui-icon-arrowdown"></div>
@@ -540,46 +540,12 @@
 			});
 			mui.plusReady(function() {
 				//events.closeWaiting();
-				//var wd = events.showWaiting();
+				var wd = events.showWaiting();
 				initData();
 				courseDetails.init();
 				initControl();
 				initListener();
-				//getAllSectionsAndComments(pageIndex + 1, wd);
-				document.getElementById("test_li").innerHTML = '\
-					<div class="section-list-li-left">\
-						<div class="section-title mui-ellipsis-2">一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</div>\
-						<div class="section-info">上传时间 : 2017-7-14 14:47:29</div>\
-					</div>\
-					<div class="section-list-img-div">\
-						<div class="section-list-img" style="height:'+courseDetails.height+'px;">\
-							<img class="section-list-img" onload="courseDetails.onImageLoad(this);" onerror="courseDetails.onImageError(this);"/>\
-						</div>\
-						<div class="section-list-img-mask" style="height:'+courseDetails.height+'px;width:'+courseDetails.width+'px;margin-top:'+(-courseDetails.height)+'px;">\
-							<img src="../../image/utils/playvideo.png" class="section-image-play" />\
-							<div class="section-image-time">00:00</div>\
-						</div>\
-					</div>';
-				var test_img = document.getElementById("test_img");
-				var test_play = document.getElementById("test_play");
-				test_play.style.marginTop = courseDetails.playMarginTop + "px";
-				test_play.style.marginLeft = courseDetails.playMarginLeft + "px";
-				test_img.onload = function() {
-					console.log("test_img.onload");
-					if(test_img.offsetHeight < test_img.offsetWidth) {
-						console.log(test_img.offsetWidth);
-						test_img.style.height = courseDetails.height + "px";
-						test_img.style.width = "initial";
-						test_img.style.marginLeft = -parseInt((test_img.offsetWidth - courseDetails.width) / 2) + "px";
-					} else {
-						test_img.style.marginTop = -parseInt((test_img.offsetHeight - courseDetails.height) / 2) + "px";
-					}
-				}
-				test_img.onerror = function() {
-					test_img.src = "../../image/utils/load-img-error.png"
-				}
-				test_img.src = "../../image/cloud/notes_bg2.jpg";
-
+				getAllSectionsAndComments(pageIndex + 1, wd);
 			});
 
 			/**
@@ -1016,19 +982,22 @@
 					if(data[i].EncType == 1) { //视频
 						ele.className = "mui-table-view-cell section-list-li";
 						html = '<div class="section-list-li-left">\
-							<div class="section-title">' + data[i].SecName + '</div>\
-							<div class="section-info">上传时间 : ' + data[i].UpTime.split(" ")[0] + '</div>\
-						</div>\
-						<div class="section-list-img-div">\
-							<div class="section-image-play-div">\
-								<img src="../../image/utils/playvideo.png" class="section-image-play" onload="courseDetails.onPlayLoad(this);" onerror="courseDetails.onPlayError(this);" />\
-							</div>\
-							<div class="section-image-time">' + courseDetails.getAudioTime(data[i].EncLen) + '</div>\
-							<img src="' + data[i].EncImgAddr + '" class="section-list-img" onload="courseDetails.onImageLoad(this);" onerror="courseDetails.onImageError(this);" />\
-						</div>';
+									<div class="section-title mui-ellipsis-2">' + data[i].SecName + '</div>\
+									<div class="section-info">上传时间 : ' + data[i].UpTime.split(" ")[0] + '</div>\
+								</div>\
+								<div class="section-list-img-div">\
+									<div class="section-list-img" style="height:' + courseDetails.height + 'px;">\
+										<img src="' + data[i].EncImgAddr + '" class="section-list-img" onload="courseDetails.onImageLoad(this);" onerror="courseDetails.onImageError(this);"/>\
+									</div>\
+									<div class="section-list-img-mask" style="height:' + courseDetails.height + 'px;width:' + courseDetails.width + 'px;margin-top:' + (-courseDetails.height) + 'px;">\
+										<img src="../../image/utils/playvideo.png" class="section-image-play" style="margin-top:' + courseDetails.playMarginTop + 'px;margin-left:' + courseDetails.playMarginLeft + 'px;"/>\
+										<div class="section-image-time">' + courseDetails.getAudioTime(data[i].EncLen) + '</div>\
+									</div>\
+								</div>';
+						console.log("html:" + html);
 					} else if(data[i].EncType == 2) { //音频
 						ele.className = "mui-table-view-cell";
-						html = '<div class="section-title">' + data[i].SecName + '</div>\
+						html = '<div class="section-title mui-ellipsis-2">' + data[i].SecName + '</div>\
 						<div>\
 							<svg class="section-list-audio">\
 								<path class="section-list-audio-border" d="' + courseDetails.getAudioBorderPath() + '" />\
@@ -1045,11 +1014,13 @@
 						} else {
 							ele.className = "mui-table-view-cell section-list-li";
 							html = '<div class="section-list-li-left">\
-									<div class="section-title">' + data[i].SecName + '</div>\
+									<div class="section-title mui-ellipsis-2">' + data[i].SecName + '</div>\
 									<div class="section-info">上传时间 : ' + data[i].UpTime.split(" ")[0] + '</div>\
 								</div>\
 								<div class="section-list-img-div">\
-									<img src="' + data[i].EncImgAddr + '" class="section-list-img" onload="courseDetails.onImageLoad(this);" onerror="courseDetails.onImageError(this);" />\
+									<div class="section-list-img" style="height:' + courseDetails.height + 'px;">\
+										<img src="' + data[i].EncImgAddr + '" class="section-list-img" onload="courseDetails.onImageLoad(this);" onerror="courseDetails.onImageError(this);"/>\
+									</div>\
 								</div>';
 						}
 					}
