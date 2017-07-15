@@ -404,7 +404,7 @@ var getImgsInner = function(imgs) {
 			}
 
 			imgInner += '<img class="homework-img" style="width:' + img_width + 'px;height:' + img_width + 'px;" src="' + imgs[i].ThumbUrl +
-				' onerror="this.src=\''+imgs[i].Url+'\'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + imgs[i].FileType+random + '"/>';
+				'" onerror="this.src=\''+imgs[i].Url+'\'" data-preview-src="' + imgs[i].Url + '" data-preview-group="' + imgs[i].FileType+random + '"/>';
 		}
 	}
 	console.log(imgInner)
