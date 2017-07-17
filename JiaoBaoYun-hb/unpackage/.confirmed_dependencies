@@ -400,7 +400,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"html/show/show_home_1.html",
-			"html/micro-course/course-home1.html"
+			"html/micro-course/course-home1.html",
+			"html/show/show-home1.html"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",
@@ -411,7 +412,8 @@
 			"html/show/show_home.html",
 			"html/micro-course/course-home1.html",
 			"html/show/show-home1.html",
-			"html/show/show-home2.html"
+			"html/show/show-home2.html",
+			"html/index/mine.html"
 		]
 	},
 	"html/cloud/storage_main.html": {
@@ -1609,7 +1611,8 @@
 			"js/utils/gallerypick.js",
 			"js/mui.zoom.js",
 			"js/mui.previewimage.js",
-			"css/utils/preview.css"
+			"css/utils/preview.css",
+			"css/iconfont/iconfont.css"
 		],
 		"refer": []
 	},

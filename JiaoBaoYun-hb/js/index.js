@@ -36,7 +36,7 @@ mui.plusReady(function() {
 	};
 	Statusbar.barHeight(); //获取一些硬件参数
 	addSubPages(); //加载子页面
-	setConditionbyRole(loginRoleType);
+//	setConditionbyRole(loginRoleType);
 	//	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
 	window.addEventListener('infoChanged', function() {
 		events.fireToPageNone("cloud_home.html", "infoChanged");
@@ -47,12 +47,12 @@ mui.plusReady(function() {
 	window.addEventListener("login", function() {
 		console.log("login");
 		loginRoleType = 1;
-		setConditionbyRole(loginRoleType);
+//		setConditionbyRole(loginRoleType);
 	})
 	//退出的监听
 	window.addEventListener("quit", function() {
 		loginRoleType = 0;
-		setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+//		setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
 	})
 	//关闭等待框
 	window.addEventListener('closeWaiting', function() {
@@ -69,11 +69,10 @@ var addSubPages = function() {
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
 //	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show_home_1.html', '../qiuzhi/qiuzhi_home.html'];
 //	var titles = ['云盘', '科教', '展现', '求知'];
-	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show-home1.html', '../micro-course/course-home1.html'];
-	var titles = ['云盘', '科教', '发现', '微学'];
+	var subpages = ['../show/show-home1.html', '../micro-course/course-home1.html','mine.html'];
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
 	var self = plus.webview.currentWebview();
-	for(var i = 0; i < 4; i++) {
+	for(var i = 0; i < 3; i++) {
 		//设置子页面距离顶部的位置
 		var subpage_style = events.getWebStyle(subpages[i]);
 		subpage_style.top = (localStorage.getItem('StatusHeightNo') * 1) + 'px';
@@ -105,7 +104,7 @@ var setListener = function() {
 		if(activeTab == '../cloud/cloud_home.html') {
 			events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {})
 		}
-		console.log("活动的页面：" + activeTab)
+		console.log("活动的页面：" + activeTab);
 		if(targetTab == activeTab) {
 			return;
 		}
