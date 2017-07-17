@@ -12,7 +12,7 @@ mui.plusReady(function() {
 		document.getElementById("modifyHomework").style.display = 'none';
 		getAnswerResultStu();
 	} else {
-		document.getElementById("modifyHomework").style.display = 'inline-block';
+//		document.getElementById("modifyHomework").style.display = 'inline-block';
 		document.getElementById("list").hidden = '';
 		requestHomeworkDetail();
 		requestGetHomeworkResultStu();
