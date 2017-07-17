@@ -30,6 +30,19 @@ var commentList = new Vue({
 		}
 	},
 	methods: {
+		getFocused: function(showDetail) {
+			var focused = 0;
+			if(!events.getUtid()) {
+				var index = events.isExistInStorageArray(storageKeyName.SHOWFOCUSEPERSEN, this.showDetail.PublisherId)[1];
+				if(index >= 0) {
+					focused = 1;
+					this.showDetail.IsFocused=1;
+				}
+			} else {
+				focused = showDetail.IsFocused;
+			}
+			return focused;
+		},
 		resetData: function() {
 			this.showDetail = {
 				IsFocused: 0, //是否关注
