@@ -5058,7 +5058,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"image/utils/default_personalimage.png"
+					"image/utils/default_personalimage.png",
+					"css/iconfont/iconfont.css"
 				],
 				"refer": [
 					"html/micro-course/history-records.html"
@@ -5206,7 +5207,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/micro-course/coursedetails.js"
+					"js/micro-course/coursedetails.js",
+					"css/iconfont/iconfont.css"
 				],
 				"refer": [
 					"html/micro-course/course_section.html"

@@ -28,14 +28,11 @@
 			.mui-slider-indicator .mui-indicator {
 				margin: 1px 2px;
 			}
-			header a.img-icon{
-				padding-top: 7px;
-			}
 			.img-icon{
+				margin: 0;
 				width: 44px;
 				height: 44px;
 				text-align: center;
-				padding-top:7px ;
 			}
 			.img-icon img{
 				border-radius: 50%;
@@ -47,7 +44,7 @@
 	<body>
 
 		<header class="mui-bar mui-bar-nav">
-			<a class="img-icon"><img src="../../image/utils/default_personalimage.png" style="margin-top: 7px; width: 30px;height: 30px;border-radius: 50%;" /></a>
+			<div class="img-icon display-inlineBlock"><img id="user-img" src="../../image/utils/default_personalimage.png" style="margin-top: 7px; width: 30px;height: 30px;border-radius: 50%;" /></div>
 			<h1 class="mui-title">关注</h1>
 			<div id="header-indicator" class="mui-slider-indicator">
 				<div class="mui-indicator mui-active"></div>
