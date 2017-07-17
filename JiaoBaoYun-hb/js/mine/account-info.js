@@ -77,6 +77,7 @@ mui.plusReady(function() {
 			events.fireToPageNone('mine.html', 'infoChanged');
 			mui.fire(plus.webview.currentWebview(), 'infoChanged');
 			events.fireToPageNone('class_space.html', 'infoChanged');
+			events.infoChanged();
 		}, 2000);
 	}, function(errorCB) {
 		console.log('上传并修改个人头像，失败的回调' + JSON.stringify(errorCB));

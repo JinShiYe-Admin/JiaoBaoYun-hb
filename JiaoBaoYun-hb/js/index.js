@@ -41,15 +41,12 @@ mui.plusReady(function() {
 	//	setConditionbyRole(loginRoleType);
 	//	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
 	window.addEventListener('infoChanged', function() {
-		events.fireToPageNone("cloud_home.html", "infoChanged");
-		//		events.fireToPageNone("qiuzhi_home.html", "infoChanged");
-		events.fireToPageNone("course_home.html", "infoChanged");
+		setInfo();
 	});
 	//登录的监听
 	window.addEventListener("login", function() {
 		console.log("login");
 		loginRoleType = 1;
-		//		setConditionbyRole(loginRoleType);
 	})
 	//退出的监听
 	window.addEventListener("quit", function() {
@@ -64,6 +61,10 @@ mui.plusReady(function() {
 	setListener();
 
 });
+
+function setInfo() {
+	document.querySelector('.img-icon>img').src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2);
+}
 //加载子页面
 var addSubPages = function() {
 	//设置默认打开首页显示的子页序号；
@@ -101,15 +102,23 @@ var setListener = function() {
 	var title = document.getElementById("title");
 	//	var aniShow = {};
 	window.addEventListener('showTitle', function(e) {
-		setTitle(e.detail);
+		console.log("获取的数据：" + JSON.stringify(e.detail));
+		console.log("当前活动页面：" + activeTab);
+		var data = e.detail;
+		if((data.flag == 0 && activeTab == '../show/show-home1.html') || (data.flag && activeTab == '../micro-course/course-home1.html')) {
+			setTitle(data.type);
+		}
 	})
 	//选项卡点击事件
 	mui('.mui-bar-tab').on('tap', 'a', function(e) {
 		var targetTab = this.getAttribute('href');
+
 		if(targetTab == '../micro-course/course-home1.html') {
 			document.getElementById("publish-show").style.display = 'none';
+			setTitle(myStorage.getItem(storageKeyName.COURSETYPE));
 		} else {
 			document.getElementById("publish-show").style.display = 'inline-block';
+			setTitle(myStorage.getItem(storageKeyName.SHOWTYPE));
 		}
 		console.log("活动的页面：" + activeTab);
 		if(targetTab == activeTab) {
@@ -149,6 +158,7 @@ var setListener = function() {
 function setTitle(type) {
 	var title = document.querySelector(".mui-title");
 	var indicator = document.querySelector("#header-indicator");
+	type = parseInt(type);
 	switch(type) {
 		case 0: //全部
 			title.innerText = "全部";

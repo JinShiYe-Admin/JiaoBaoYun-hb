@@ -27,9 +27,23 @@ var commentList = new Vue({
 			console.log("获取的图片宽高：" + JSON.stringify(this.imgDivRe));
 			this.isSelfDynamic = (parseInt(val.PublisherId) === events.getUtid());
 			console.log("是不是本人发布的动态：" + this.isSelfDynamic);
+			//			this.IsFocused=
 		}
 	},
 	methods: {
+		getFocused: function(showDetail) {
+			var focused = 0;
+			if(!events.getUtid()) {
+				var index = events.isExistInStorageArray(storageKeyName.SHOWFOCUSEPERSEN, this.showDetail.PublisherId)[1];
+				if(index >= 0) {
+					focused = 1;
+					this.showDetail.IsFocused=1;
+				}
+			} else {
+				focused = showDetail.IsFocused;
+			}
+			return focused;
+		},
 		resetData: function() {
 			this.showDetail = {
 				IsFocused: 0, //是否关注

@@ -1085,7 +1085,8 @@
 			"js/utils/CloudFileUtil.js",
 			"js/qiniu/qiniu.js",
 			"css/iconfont/iconfont.css",
-			"image/utils/default_personalimage.png"
+			"image/utils/default_personalimage.png",
+			"js/libs/crypto-js/crypto-js.js"
 		],
 		"refer": [
 			"html/utils/customizeCity.html",

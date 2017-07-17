@@ -297,23 +297,6 @@ var show_listnew = (function(mod) {
 			}
 		});
 	}
-	//	mod.endFresh = function() {
-	//		events.closeWaiting();
-	//		console.log("freshFlag:" + freshFlag);
-	//		if(freshContainer) {
-	//			console.log("freshContainer className" + freshContainer.className)
-	//			if(freshFlag == 1) {
-	//				console.log("走这吗？？？？？");
-	//				freshContainer.endPullDownToRefresh();
-	//				mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
-	//			} else if(freshFlag == 2) {
-	//				freshContainer.endPullUpToRefresh();
-	//			} else {
-	//				mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
-	//			}
-	//		}
-	//		freshFlag = 0;
-	//	}
 	/**
 	 * 加载监听
 	 */
@@ -324,15 +307,6 @@ var show_listnew = (function(mod) {
 			jumpToShowDetail(this);
 //			events.singleWebviewInPeriod(this, "../quan/space-detail.html", this.info);
 		})
-		//发布的点击事件
-//		document.getElementById("publish-show").addEventListener("tap", function() {
-//			var item = this;
-//			if(events.judgeLoginMode(item)) {
-//				return;
-//			}
-//			item.disabled = true;
-//			events.singleWebviewInPeriod(item, "../quan/pub-dynamic.html", "zx");
-//		})
 	}
 	function jumpToShowDetail(item){
 		if(detailReady){

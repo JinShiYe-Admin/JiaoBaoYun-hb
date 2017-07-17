@@ -81,6 +81,8 @@ var storageKeyName = (function(mod) {
 	mod.SHOWFOCUSEPERSEN = "showfoucusPersen"; //展现关注的人
 	mod.FOCUSECOURSES = "focusCourses"; //关注的课程
 	mod.COURSELASTTIME = "courseLastTime";
+	mod.SHOWTYPE="showType";
+	mod.COURSETYPE="courseType";
 
 	mod.MAINHOMEWORKURLTEACHER = mod.MAINHOMEWORKURL + 'TeacherService.svc/'; //老师作业url
 	mod.MAINHOMEWORKURLSTUDENT = mod.MAINHOMEWORKURL + 'StudentService.svc/'; //学生作业url

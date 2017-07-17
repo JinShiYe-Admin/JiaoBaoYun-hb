@@ -61,7 +61,7 @@
 		<script src="../../js/show/show_listnew.js"></script>
 		<script>
 			mui.init();
-			var detailReady=false;
+			var detailReady = false;
 			document.getElementById("show-all").showCity = {
 				pageFlag: 1, //全部
 				acode: 1,
@@ -74,9 +74,9 @@
 			var deceleration = mui.os.ios ? 0.003 : 0.0009;
 			//plusReay事件监听
 			mui.plusReady(function() {
-				events.preload('show-detail.html',100);
-				window.addEventListener('detailReady',function(e){
-					detailReady=e.detail;
+				events.preload('show-detail.html', 100);
+				window.addEventListener('detailReady', function(e) {
+					detailReady = e.detail;
 				})
 				//show-all加载刷新
 				initFresh(document.getElementById("show-all"));
@@ -104,7 +104,7 @@
 					getFocusedPerson(toggleAttendedPart);
 				})
 				window.addEventListener("updatesShow", function() {
-					var freshConatiner=document.getElementById("show-all");
+					var freshConatiner = document.getElementById("show-all");
 					var ul = freshConatiner.querySelector('.show-list');
 					freshConatiner.showCity.pageIndex = 1;
 					console.log("获取的fresh:" + JSON.stringify(freshConatiner.info))
@@ -136,7 +136,11 @@
 			 * @param {Object} type 0 只有全部 10 显示全部 11 显示关注
 			 */
 			function setTitle(type) {
-				mui.fire(plus.webview.currentWebview().parent(),"showTitle",type);
+				myStorage.setItem(storageKeyName.SHOWTYPE, type);
+				mui.fire(plus.webview.currentWebview().parent(), "showTitle", {
+					flag: 0,
+					type: type
+				});
 			}
 			/**
 			 * 加载刷新模块
