@@ -119,6 +119,7 @@ var setListener = function() {
 		} else {
 			document.getElementById("publish-show").style.display = 'inline-block';
 			setTitle(myStorage.getItem(storageKeyName.SHOWTYPE));
+			console.log("展现获取的类型信息："+myStorage.getItem(storageKeyName.SHOWTYPE));
 		}
 		console.log("活动的页面：" + activeTab);
 		if(targetTab == activeTab) {
@@ -156,6 +157,7 @@ var setListener = function() {
 }
 
 function setTitle(type) {
+	console.log("保存的type类型："+type)
 	var title = document.querySelector(".mui-title");
 	var indicator = document.querySelector("#header-indicator");
 	type = parseInt(type);

@@ -136,7 +136,8 @@
 			 * @param {Object} type 0 只有全部 10 显示全部 11 显示关注
 			 */
 			function setTitle(type) {
-				myStorage.setItem(storageKeyName.SHOWTYPE, type);
+				console.log("展现保存的展现标题类型："+type);
+				myStorage.setItem(storageKeyName.SHOWTYPE, type.toString());
 				mui.fire(plus.webview.currentWebview().parent(), "showTitle", {
 					flag: 0,
 					type: type
