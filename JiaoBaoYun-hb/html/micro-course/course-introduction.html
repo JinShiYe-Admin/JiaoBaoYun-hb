@@ -11,7 +11,9 @@
 		<link href="../../css/iconfont/iconfont.css" rel="stylesheet" />
 		<script type="text/javascript">
 			function onImageError(img) {
-				img.src = "../../image/utils/default_personalimage.png"
+				if(img.src) {
+					img.src = "../../image/utils/default_personalimage.png"
+				}
 			}
 		</script>
 	</head>
@@ -53,6 +55,7 @@
 		<script src="../../js/publicQiuzhiProtocol.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/publicMicroClass.js" type="text/javascript" charset="utf-8"></script>
 	</body>
+
 	<script type="text/javascript">
 		var nodes = {
 			title: document.getElementById("title"),
