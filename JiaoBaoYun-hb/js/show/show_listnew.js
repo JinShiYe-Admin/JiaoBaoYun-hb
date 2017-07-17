@@ -325,14 +325,14 @@ var show_listnew = (function(mod) {
 //			events.singleWebviewInPeriod(this, "../quan/space-detail.html", this.info);
 		})
 		//发布的点击事件
-		document.getElementById("publish-show").addEventListener("tap", function() {
-			var item = this;
-			if(events.judgeLoginMode(item)) {
-				return;
-			}
-			item.disabled = true;
-			events.singleWebviewInPeriod(item, "../quan/pub-dynamic.html", "zx");
-		})
+//		document.getElementById("publish-show").addEventListener("tap", function() {
+//			var item = this;
+//			if(events.judgeLoginMode(item)) {
+//				return;
+//			}
+//			item.disabled = true;
+//			events.singleWebviewInPeriod(item, "../quan/pub-dynamic.html", "zx");
+//		})
 	}
 	function jumpToShowDetail(item){
 		if(detailReady){

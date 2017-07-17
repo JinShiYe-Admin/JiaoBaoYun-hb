@@ -2060,7 +2060,8 @@
 					"html/qiuzhi/qiuzhi_home.html",
 					"js/utils/app-update.js",
 					"html/micro-course/course-home1.html",
-					"html/show/show-home1.html"
+					"html/show/show-home1.html",
+					"js/main/off-canvas.js"
 				],
 				"refer": [
 					"html/mine.html",

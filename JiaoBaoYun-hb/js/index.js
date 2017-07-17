@@ -35,24 +35,26 @@ mui.plusReady(function() {
 		return false;
 	};
 	Statusbar.barHeight(); //获取一些硬件参数
+	off_canvas.add('mine.html', 200);
+	document.querySelector(".img-icon>img").src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2);
 	addSubPages(); //加载子页面
-//	setConditionbyRole(loginRoleType);
+	//	setConditionbyRole(loginRoleType);
 	//	slideNavigation.add('mine.html', 200); //加载侧滑导航栏
 	window.addEventListener('infoChanged', function() {
 		events.fireToPageNone("cloud_home.html", "infoChanged");
-//		events.fireToPageNone("qiuzhi_home.html", "infoChanged");
+		//		events.fireToPageNone("qiuzhi_home.html", "infoChanged");
 		events.fireToPageNone("course_home.html", "infoChanged");
 	});
 	//登录的监听
 	window.addEventListener("login", function() {
 		console.log("login");
 		loginRoleType = 1;
-//		setConditionbyRole(loginRoleType);
+		//		setConditionbyRole(loginRoleType);
 	})
 	//退出的监听
 	window.addEventListener("quit", function() {
 		loginRoleType = 0;
-//		setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
+		//		setConditionbyRole(loginRoleType); //根据身份不同加载的界面处理
 	})
 	//关闭等待框
 	window.addEventListener('closeWaiting', function() {
@@ -67,15 +69,15 @@ var addSubPages = function() {
 	//设置默认打开首页显示的子页序号；
 	var Index = 0;
 	//把子页的路径写在数组里面（空间，求知，剪辑，云盘 ）四个个子页面
-//	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show_home_1.html', '../qiuzhi/qiuzhi_home.html'];
-//	var titles = ['云盘', '科教', '展现', '求知'];
-	var subpages = ['../show/show-home1.html', '../micro-course/course-home1.html','mine.html'];
+	//	var subpages = ['../cloud/cloud_home.html', '../sciedu/sciedu_home.html', '../show/show_home_1.html', '../qiuzhi/qiuzhi_home.html'];
+	//	var titles = ['云盘', '科教', '展现', '求知'];
+	var subpages = ['../show/show-home1.html', '../micro-course/course-home1.html'];
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
 	var self = plus.webview.currentWebview();
-	for(var i = 0; i < 3; i++) {
+	for(var i = 0; i < 2; i++) {
 		//设置子页面距离顶部的位置
 		var subpage_style = events.getWebStyle(subpages[i]);
-		subpage_style.top = (localStorage.getItem('StatusHeightNo') * 1) + 'px';
+		subpage_style.top = (localStorage.getItem('StatusHeightNo') * 1) + 44 + 'px';
 		subpage_style.bottom = '51px';
 		console.log("子页面样式：" + JSON.stringify(subpage_style));
 		var temp = {};
@@ -98,11 +100,16 @@ var addSubPages = function() {
 var setListener = function() {
 	var title = document.getElementById("title");
 	//	var aniShow = {};
+	window.addEventListener('showTitle', function(e) {
+		setTitle(e.detail);
+	})
 	//选项卡点击事件
 	mui('.mui-bar-tab').on('tap', 'a', function(e) {
 		var targetTab = this.getAttribute('href');
-		if(activeTab == '../cloud/cloud_home.html') {
-			events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {})
+		if(targetTab == '../micro-course/course-home1.html') {
+			document.getElementById("publish-show").style.display = 'none';
+		} else {
+			document.getElementById("publish-show").style.display = 'inline-block';
 		}
 		console.log("活动的页面：" + activeTab);
 		if(targetTab == activeTab) {
@@ -129,6 +136,39 @@ var setListener = function() {
 		//更改当前活跃的选项卡
 		activeTab = targetTab;
 	});
+	document.getElementById("publish-show").addEventListener("tap", function() {
+		var item = this;
+		if(events.judgeLoginMode(item)) {
+			return;
+		}
+		item.disabled = true;
+		events.singleWebviewInPeriod(item, "../quan/pub-dynamic.html", "zx");
+	})
+}
+
+function setTitle(type) {
+	var title = document.querySelector(".mui-title");
+	var indicator = document.querySelector("#header-indicator");
+	switch(type) {
+		case 0: //全部
+			title.innerText = "全部";
+			indicator.style.display = "none";
+			break;
+		case 10: //全部
+			title.innerText = "全部";
+			indicator.style.display = "block";
+			indicator.firstElementChild.className = "mui-indicator";
+			indicator.lastElementChild.className = "mui-indicator mui-active";
+			break;
+		case 11: //关注
+			title.innerText = "关注";
+			indicator.style.display = "block";
+			indicator.firstElementChild.className = "mui-indicator mui-active";
+			indicator.lastElementChild.className = "mui-indicator";
+			break;
+		default:
+			break;
+	}
 }
 //根据登录角色不同，更改界面显示
 var setConditionbyRole = function(role) {
@@ -140,15 +180,15 @@ var setConditionbyRole = function(role) {
 	plus.webview.hide(active_tab.split("/")[active_tab.split("/").length - 1]);
 	document.querySelector(".mui-tab-item.mui-active").className = "mui-tab-item";
 
-	if(role) { //正常用户
-		cloudIcon.style.display = "table-cell";
-		cloudIcon.className = "mui-tab-item mui-active";
-		activeTab = "../cloud/cloud_home.html";
-	} else { //游客
-		cloudIcon.style.display = "none";
-		sceIcon.className = "mui-tab-item mui-active";
-		activeTab = "../sciedu/sciedu_home.html";
-	}
+	//	if(role) { //正常用户
+	//		cloudIcon.style.display = "table-cell";
+	//		cloudIcon.className = "mui-tab-item mui-active";
+	//		activeTab = "../cloud/cloud_home.html";
+	//	} else { //游客
+	//		cloudIcon.style.display = "none";
+	//		sceIcon.className = "mui-tab-item mui-active";
+	//		activeTab = "../sciedu/sciedu_home.html";
+	//	}
 	//显示活动的界面
 	setActivePage();
 }
@@ -162,9 +202,9 @@ var setActivePage = function() {
 	var splitActiveTabs = activeTab.split("/");
 	var activeId = splitActiveTabs[splitActiveTabs.length - 1];
 	console.log("要显示的界面：" + activeTab);
-	if(mui.os.ios){
+	if(mui.os.ios) {
 		plus.webview.show(activeId);
-	}else{
+	} else {
 		plus.webview.show(activeId, "fade-in", 300);
 	}
 }

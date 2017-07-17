@@ -17,11 +17,11 @@ var off_canvas = (function($, mod) {
 	 */
 	mod.toggleMask = function(maskType) {
 		if(maskType) {
-			main.parent().setStyle({
+			main.setStyle({
 				mask: "rgba(0,0,0,0.4)"
 			});
 		} else {
-			main.parent().setStyle({
+			main.setStyle({
 				mask: "none"
 			});
 		}
@@ -49,7 +49,7 @@ var off_canvas = (function($, mod) {
 	 */
 	mod.initMenu = function(pagePath, interval) {
 		main = plus.webview.currentWebview();
-		main.parent().addEventListener('maskClick', mod.closeMenu);
+		main.addEventListener('maskClick', mod.closeMenu);
 		var ids = pagePath.split("/");
 		var id = ids[ids.length - 1];
 		if(!(interval && typeof interval == "number")) {
@@ -145,12 +145,12 @@ var off_canvas = (function($, mod) {
 	mod.setListener = function() {
 		//点击左上角侧滑图标，打开侧滑菜单；
 		document.querySelector('.img-icon').addEventListener('tap', function(e) {
+			if(events.judgeLoginMode()){
+				return;
+			}
 			if(mod.showMenu) {
 				mod.closeMenu();
 			} else {
-				events.fireToPageWithData('../cloud/cloud_home.html', 'topPopover', {
-					flag: 1
-				})
 				mod.openMenu();
 			}
 		});

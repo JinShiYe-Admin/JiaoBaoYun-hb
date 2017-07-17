@@ -24,13 +24,13 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<!--<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">关注</h1>
 			<div id="header-indicator" class="mui-slider-indicator">
 				<div class="mui-indicator mui-active"></div>
 				<div class="mui-indicator"></div>
 			</div>
-		</header>
+		</header>-->
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
 				<div class="mui-slider-group">
@@ -123,31 +123,7 @@
 			 * @param {Object} type 0 只有全部 10 显示全部 11 显示关注
 			 */
 			function setTitle(type) {
-				var title = document.querySelector(".mui-title");
-				var indicator = document.querySelector("#header-indicator");
-				switch(type) {
-					case 0: //全部
-						title.innerText = "全部";
-						indicator.style.display = "none";
-						curPageFlag = 1;
-						break;
-					case 10: //全部
-						title.innerText = "全部";
-						indicator.style.display = "block";
-						indicator.firstElementChild.className = "mui-indicator";
-						indicator.lastElementChild.className = "mui-indicator mui-active";
-						curPageFlag = 1;
-						break;
-					case 11: //关注
-						title.innerText = "关注";
-						indicator.style.display = "block";
-						indicator.firstElementChild.className = "mui-indicator mui-active";
-						indicator.lastElementChild.className = "mui-indicator";
-						curPageFlag = 0;
-						break;
-					default:
-						break;
-				}
+				mui.fire(plus.webview.currentWebview().parent(),"showTitle",type);
 			}
 			/**
 			 * 加载刷新方法

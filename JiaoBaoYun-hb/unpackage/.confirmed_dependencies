@@ -401,7 +401,9 @@
 			"js/utils/RSAEncrypt.js",
 			"html/show/show_home_1.html",
 			"html/micro-course/course-home1.html",
-			"html/show/show-home1.html"
+			"html/show/show-home1.html",
+			"image/utils/default_personalimage.png",
+			"js/main/off-canvas.js"
 		],
 		"refer": [
 			"html/cloud/cloud_home.html",
@@ -413,7 +415,9 @@
 			"html/micro-course/course-home1.html",
 			"html/show/show-home1.html",
 			"html/show/show-home2.html",
-			"html/index/mine.html"
+			"html/index/mine.html",
+			"html/quan/pub-dynamic.html",
+			"html/register/login.html"
 		]
 	},
 	"html/cloud/storage_main.html": {
