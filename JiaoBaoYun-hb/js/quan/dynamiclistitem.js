@@ -959,7 +959,7 @@ var dynamiclistitem = (function($, mod) {
 					var html2 = '<img id="playvideo' + data.id_name + '"    style= "height: ' + 55 + 'px;width: ' + 55 + 'px;margin-top:' + mt + 'px;margin-left:0px" src="../../image/utils/playvideo.png"/>';
 					var html3='';
 					if(data.EncLen>0){
-						html3 = '<div style="position:absolute;bottom:0px;right:3px;color:white;width:20px;">'+data.EncLen+'"</div></div>'
+						html3 = '<div style="position:absolute;bottom:0px;right:3px;color:white;width:30px;">'+data.EncLen+'"</div></div>'
 					}
 					html = html1 + html2+html3;
 				} else {
