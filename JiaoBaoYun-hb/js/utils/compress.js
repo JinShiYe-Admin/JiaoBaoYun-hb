@@ -191,47 +191,39 @@ var compress = (function(mod) {
 			options.overwrite = false; //覆盖生成新文件,仅在dst制定的路径文件存在时有效
 		}
 		console.log('compressImageTo_xx options ' + JSON.stringify(options));
-		try {
-			plus.zip.compressImage(options,
-				function(event) {
-					//图片压缩成功
-					//var target = event.target; // 压缩转换后的图片url路径，以"file://"开头
-					//var size = event.size; // 压缩转换后图片的大小，单位为字节（Byte）
-					//var width = event.width; // 压缩转换后图片的实际宽度，单位为px
-					//var height = event.height; // 压缩转换后图片的实际高度，单位为px
-					console.log('compressImageTo_xx 成功 target:' + event.target + ' size:' + event.size + ' width:' + event.width + ' height:' + event.height);
-					if(event.size <= sizeMax) {
-						successCallBack(event);
-					} else {
-						var data = {
-							path: event.target,
-							dst: event.target,
-							sizemax: sizeMax,
-						}
-
-						if(event.width > event.height) { //宽>=长
-							data.width = parseInt(event.width / 2) + "px";
-						} else { //宽<长
-							data.height = parseInt(event.height / 2) + "px";
-						}
-						mod.compressImageTo_xx(data, successCallBack, errorCallBack);
+		plus.zip.compressImage(options,
+			function(event) {
+				//图片压缩成功
+				//var target = event.target; // 压缩转换后的图片url路径，以"file://"开头
+				//var size = event.size; // 压缩转换后图片的大小，单位为字节（Byte）
+				//var width = event.width; // 压缩转换后图片的实际宽度，单位为px
+				//var height = event.height; // 压缩转换后图片的实际高度，单位为px
+				console.log('compressImageTo_xx 成功 target:' + event.target + ' size:' + event.size + ' width:' + event.width + ' height:' + event.height);
+				if(event.size <= sizeMax) {
+					successCallBack(event);
+				} else {
+					var data = {
+						path: event.target,
+						dst: event.target,
+						sizemax: sizeMax,
 					}
-				},
-				function(error) {
-					//图片压缩失败
-					//var code = error.code; // 错误编码
-					//var message = error.message; // 错误描述信息
-					console.log('### ERROR ### compressImageTo_xx 失败 ' + JSON.stringify(error));
-					errorCallBack(error);
+
+					if(event.width > event.height) { //宽>=长
+						data.width = parseInt(event.width / 2) + "px";
+					} else { //宽<长
+						data.height = parseInt(event.height / 2) + "px";
+					}
+					mod.compressImageTo_xx(data, successCallBack, errorCallBack);
 				}
-			);
-		} catch(e) {
-			alert('### ERROR ### 压缩至XX异常 name:' + e.name + " message:" + e.message);
-			errorCallBack({
-				code: 'ERROR', // 错误编码
-				message: '压缩至XX异常' + ' name:' + e.name + " message:" + e.message // 错误描述信息
-			});
-		}
+			},
+			function(error) {
+				//图片压缩失败
+				//var code = error.code; // 错误编码
+				//var message = error.message; // 错误描述信息
+				console.log('### ERROR ### compressImageTo_xx 失败 ' + JSON.stringify(error));
+				errorCallBack(error);
+			}
+		);
 	}
 
 	return mod;
