@@ -2575,7 +2575,8 @@
 		"refer": [
 			"html/micro-course/course-introduction.html",
 			"html/micro-course/course_addReply.html",
-			"html/register/login.html"
+			"html/register/login.html",
+			"html/micro-course/course-info.html"
 		]
 	},
 	"html/micro-course/course-introduction.html": {
@@ -3125,6 +3126,32 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
+		]
+	},
+	"html/micro-course/course-info.html": {
+		"resources": [
+			"js/utils/vue.js",
+			"js/storageKeyName.js",
+			"js/utils/events.js",
+			"js/libs/RSA/Barrett.js",
+			"js/libs/crypto-js/require.js",
+			"css/utils/common.css",
+			"js/libs/myStorage/myStorage.js",
+			"js/libs/crypto-js/crypto-js.js",
+			"js/publicProtocol.js",
+			"js/libs/jquery.js",
+			"js/mui.min.js",
+			"js/publicMicroClass.js",
+			"js/libs/RSA/BigInt.js",
+			"css/mui.min.css",
+			"js/utils/signHmacSHA1.js",
+			"js/libs/RSA/RSA.js",
+			"js/utils/postData.js",
+			"js/utils/RSAEncrypt.js",
+			"js/micro-course/course-info.js"
+		],
+		"refer": [
+			"html/micro-course/history-records.html"
 		]
 	}
 }

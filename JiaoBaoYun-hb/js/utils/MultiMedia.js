@@ -409,6 +409,7 @@ var MultiMedia = (function($, mod) {
 				self.addImages([event.target]);
 				wd.close();
 			}, function(error) {
+				mui.toast(error.message);
 				wd.close();
 			});
 		}, function() {
@@ -462,6 +463,7 @@ var MultiMedia = (function($, mod) {
 						wd.close();
 					}
 				}, function(error) {
+					mui.toast(error.message);
 					wd.close();
 				});
 			}
