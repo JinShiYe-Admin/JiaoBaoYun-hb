@@ -2059,9 +2059,7 @@
 					"html/show/show_home_1.html",
 					"html/qiuzhi/qiuzhi_home.html",
 					"js/utils/app-update.js",
-					"html/micro-course/course-home1.html",
-					"html/show/show-home1.html",
-					"js/main/off-canvas.js"
+					"html/micro-course/course-home1.html"
 				],
 				"refer": [
 					"html/mine.html",
@@ -2076,6 +2074,7 @@
 					"html/register/login.html",
 					"html/cloud/order-member.html",
 					"html/micro-course/course-home.html",
+					"html/show/show-home1.html",
 					"html/show/show-home2.html"
 				],
 				"priority": 0
@@ -5059,8 +5058,7 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"image/utils/default_personalimage.png",
-					"css/iconfont/iconfont.css"
+					"image/utils/default_personalimage.png"
 				],
 				"refer": [
 					"html/micro-course/history-records.html"
@@ -5208,8 +5206,7 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/micro-course/coursedetails.js",
-					"css/iconfont/iconfont.css"
+					"js/micro-course/coursedetails.js"
 				],
 				"refer": [
 					"html/micro-course/course_section.html"
@@ -5221,24 +5218,7 @@
 					"css/mui.min.css",
 					"css/utils/common.css",
 					"js/libs/crypto-js/crypto-js.js",
-					"image/qiuzhi/qiuzhi_noanswer.png",
-					"js/storageKeyName.js",
-					"js/utils/events.js",
-					"js/libs/RSA/Barrett.js",
-					"js/libs/crypto-js/require.js",
-					"js/libs/myStorage/myStorage.js",
-					"js/utils/playutil.js",
-					"css/iconfont/iconfont.css",
-					"js/publicProtocol.js",
-					"js/libs/jquery.js",
-					"js/mui.min.js",
-					"js/libs/RSA/BigInt.js",
-					"js/publicMicroClass.js",
-					"js/utils/signHmacSHA1.js",
-					"js/libs/RSA/RSA.js",
-					"js/utils/postData.js",
-					"js/utils/RSAEncrypt.js",
-					"js/micro-course/coursedetails.js"
+					"image/qiuzhi/qiuzhi_noanswer.png"
 				],
 				"refer": [
 					"html/register/login.html",
