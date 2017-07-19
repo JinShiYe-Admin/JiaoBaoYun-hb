@@ -155,6 +155,20 @@
 			.mui-backdrop {
 				bottom: -50px;
 			}
+			/*分情况来做,不是所有页面都需要字体随着屏幕大小改变而改变的.*/
+			
+			@media only screen and (min-width:320px) and (max-width:359px) {
+				.mui-popup {
+					top: 30%;
+				}
+			}
+			/*三星大屏幕机最低宽度:note2-note3,S2-S4*/
+			
+			@media only screen and (min-width:360px) {
+				.mui-popup {
+					top: 40%;
+				}
+			}
 		</style>
 	</head>
 
@@ -163,7 +177,7 @@
 			<a class="mui-icon img-icon"><img src="../../image/utils/default_personalimage.png" style="width: 30px;height: 30px;border-radius: 50%;" /></a>
 
 			<h1 class="mui-title">云盘</h1>
-			<a id="add" class="mui-icon iconfont icon-jiahao mui-pull-right mui-icon-plusempty" style="font-size: 15px;margin-top:5px ;margin-right:-5px"  href="#topPopover"></a>
+			<a id="add" class="mui-icon iconfont icon-jiahao mui-pull-right mui-icon-plusempty" style="font-size: 15px;margin-top:5px ;margin-right:-5px" href="#topPopover"></a>
 			<a class="mui-icon iconfont icon-iconhexinhuiyuan mui-pull-right" style="margin-right: 5px;display: none;"></a>
 		</header>
 		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" style="visibility:hidden ;z-index:0">
@@ -349,13 +363,17 @@
 
 			off_canvas.init();
 			mui.plusReady(function() {
+				var webHeight = localStorage.getItem('resolutionHeight') * 1 - (localStorage.getItem('getStatusbarHeight') * 1 + 50);
+				plus.webview.currentWebview().setStyle({
+					height: webHeight + 'px'
+				})
 				//发送协议
 				changeData();
 				addcloudapps_0(); //应用
 				off_canvas.add('../index/mine.html', 200);
 				document.querySelector(".img-icon>img").src = updateHeadImg(myStorage.getItem(storageKeyName.PERSONALINFO).uimg, 2);
 				document.querySelector(".icon-iconhexinhuiyuan").addEventListener("tap", function() {
-					var item=this;
+					var item = this;
 					if(events.judgeLoginMode(this)) {
 						return;
 					}
@@ -386,16 +404,16 @@
 
 				//				events.preload("../homework/homework-tea.html", 300);
 				events.preload('storage_transport.html'); //预加载传输列表
-//				events.addTap('add', function() {
-//					mui('#topPopover').popover('toggle')
-//				})
+				//				events.addTap('add', function() {
+				//					mui('#topPopover').popover('toggle')
+				//				})
 				//监听popover的显示和隐藏
 				window.addEventListener("topPopover", function(e) {
 					mui('#topPopover').popover('hide')
 				});
 				//点击popover里cell
 				mui('.mui-popover').on('tap', 'li', function(e) {
-					var item=e.target;
+					var item = e.target;
 					var targetUrl = "";
 					var postdata = "";
 					mui('#topPopover').popover('toggle')
