@@ -32,6 +32,9 @@ var commentList = new Vue({
 	},
 	methods: {
 		getFocused: function(showDetail) {
+			if(!showDetail.TabId){
+				return 0;
+			}
 			var focused = 0;
 			if(!events.getUtid()) {
 				var index = events.isExistInStorageArray(storageKeyName.SHOWFOCUSEPERSEN, this.showDetail.PublisherId)[1];
