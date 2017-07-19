@@ -2738,8 +2738,7 @@
 					"js/mui.previewimage.js",
 					"css/utils/preview.css",
 					"fonts/fangzheng.ttf",
-					"fonts/iconfont.ttf",
-					"js/utils/vue.min.js"
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"html/homework/pic-detail.html"
@@ -5030,8 +5029,7 @@
 					"fonts/mui.ttf",
 					"css/iconfont/iconfont.css",
 					"fonts/fangzheng.ttf",
-					"fonts/iconfont.ttf",
-					"image/utils/default_personalimage.png"
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"html/micro-course/course-introduction.html",
