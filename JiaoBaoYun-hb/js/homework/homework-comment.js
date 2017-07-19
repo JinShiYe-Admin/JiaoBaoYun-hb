@@ -187,21 +187,11 @@ var requireHomeworkInfo = function() {
  */
 var setHomeWorkInfo = function() {
 	console.log("要放置的作业数据：" + JSON.stringify(workInfo))
-	document.getElementById('submit-time').innerText = workInfo.UploadTime;
+	document.getElementById('submit-time').innerText = events.shortForDate(workInfo.UploadTime);
 	var homeworkInfo = document.getElementById('homework-info');
 	document.querySelector(".answer-info").innerHTML = workInfo.Result.replace(/ /g, "&nbsp;").replace(/\n/g, "<br/>");
 	document.getElementById("answer-imgs").innerHTML = "";
 	toggleEditContainer(!workInfo.IsCommented, 1)
-	//	if() {
-	//		document.getElementById('comment-area').value = workInfo.Comment;
-	//		document.querySelector('.comment-holder').style.display = "none";
-	//		document.querySelector(".commented-holder").style.display = "block";
-	//		document.querySelector(".commented-words").innerText = workInfo.Comment;
-	//	} else {
-	//		document.getElementById('comment-area').value = null;
-	//		document.querySelector('.comment-holder').style.display = "block";
-	//		document.querySelector(".commented-holder").style.display = "none";
-	//	}
 	if(workInfo.stuFiles && workInfo.stuFiles.length > 0) {
 		createAnswerImgs(homeworkInfo, workInfo.stuFiles, 3);
 	}
