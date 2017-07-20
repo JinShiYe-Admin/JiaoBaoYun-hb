@@ -27,9 +27,15 @@ body{
 	height:4rem;
 	flex-grow: 1;
 	padding: 0 10px;
+	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
+	-webkit-box-direction: normal;
+	-webkit-box-orient: vertical;
+	-webkit-flex-direction: column;
 	flex-direction: column;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
 	justify-content: space-between;
 }
 .publisher-img{
