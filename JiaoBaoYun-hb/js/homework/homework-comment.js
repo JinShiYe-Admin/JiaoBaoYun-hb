@@ -15,16 +15,14 @@ mui.init({
 		return true;
 	}
 });
-mui('.mui-scroll-wrapper').scroll({
-	indicators: true, //是否显示滚动条
-});
+
 mui.plusReady(function() {
 
 	mui.previewImage();
-	events.softIn("comment-area");
+//	events.softIn("comment-area");
 	mui.fire(plus.webview.getWebviewById("workdetail-tea-sub.html"), "commentIsReady");
 	window.addEventListener('workInfo', function(e) {
-		mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0, 100); //100毫秒滚动到顶
+//		mui('.mui-content').scrollTo(0, 0, 100); //100毫秒滚动到顶
 		workInfo = e.detail.data;
 		console.log('老师评价页面获取的作业信息：' + JSON.stringify(workInfo))
 		personalUTID = myStorage.getItem(storageKeyName.PERSONALINFO).utid;
@@ -114,23 +112,6 @@ var toggleEditContainer = function(isToShow, isFirst) {
 		document.querySelector('.comment-holder').style.display = "none";
 		document.querySelector(".commented-holder").style.display = "block";
 	}
-	if(isFirst) {
-		return;
-	}
-	var contentHeight = plus.screen.resolutionHeight - plus.navigator.getStatusbarHeight() - 44;
-	var offsetHeight = document.querySelector(".comment-holder").offsetTop ? document.querySelector(".comment-holder").offsetTop : document.querySelector(".commented-holder").offsetTop;
-	var containerHeight = document.querySelector(".comment-holder").offsetHeight ? document.querySelector(".comment-holder").offsetHeight : document.querySelector(".commented-holder").offsetHeight;
-	console.log("&&&&屏幕高度：" + contentHeight + "距离顶部的位置：" + offsetHeight);
-	console.log("****评论框的高度：" + containerHeight)
-	console.log("???:" + document.querySelector(".mui-scroll").scrollTop);
-	var scrollTop;
-
-	if(containerHeight + offsetHeight < contentHeight) {
-		scrollTop = 0;
-	} else {
-		scrollTop = containerHeight + offsetHeight - contentHeight;
-	}
-	mui(".mui-scroll-wrapper").scroll().scrollTo(0, -scrollTop);
 }
 /**
  * 获取普通作业老师评论
@@ -151,7 +132,6 @@ var requireHomeworkResult = function() {
 			workInfo.stuFiles = data.RspData.Files;
 			data.RspData.Files = null;
 			jQuery.extend(workInfo, data.RspData);
-			//			setHomeWorkInfo(jQuery.extend(workInfo, data.RspData))
 		} else {
 			mui.toast(data.RspTxt);
 		}

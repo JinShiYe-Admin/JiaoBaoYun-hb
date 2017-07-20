@@ -620,9 +620,7 @@ var events = (function(mod) {
 
 				}
 			}
-		}, {
-			passive: true
-		});
+		}, false);
 	}
 
 	/**
