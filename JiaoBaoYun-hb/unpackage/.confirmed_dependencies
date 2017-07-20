@@ -401,7 +401,10 @@
 			"js/utils/RSAEncrypt.js",
 			"html/show/show_home_1.html",
 			"html/micro-course/course-home1.html",
+<<<<<<< HEAD
 			"html/show/show-home1.html",
+=======
+>>>>>>> master
 			"image/utils/default_personalimage.png",
 			"js/main/off-canvas.js"
 		],
@@ -416,7 +419,10 @@
 			"html/show/show-home1.html",
 			"html/show/show-home2.html",
 			"html/index/mine.html",
+<<<<<<< HEAD
 			"html/quan/pub-dynamic.html",
+=======
+>>>>>>> master
 			"html/register/login.html"
 		]
 	},
@@ -1658,7 +1664,8 @@
 			"js/libs/crypto-js/require.js",
 			"fonts/iconfont.ttf",
 			"js/utils/signHmacSHA1.js",
-			"js/utils/postData.js"
+			"js/utils/postData.js",
+			"js/utils/vue.min.js"
 		],
 		"refer": []
 	},
@@ -2570,7 +2577,8 @@
 			"fonts/mui.ttf",
 			"css/iconfont/iconfont.css",
 			"fonts/fangzheng.ttf",
-			"fonts/iconfont.ttf"
+			"fonts/iconfont.ttf",
+			"image/utils/default_personalimage.png"
 		],
 		"refer": [
 			"html/micro-course/course-introduction.html",
@@ -2869,7 +2877,8 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/utils/common.css"
-		]
+		],
+		"refer": []
 	},
 	"html/cloud/storage_show_video.html": {
 		"resources": [
@@ -2882,7 +2891,8 @@
 			"js/utils/events.js",
 			"js/qiniu/qiniu.js",
 			"js/utils/playutil.js"
-		]
+		],
+		"refer": []
 	},
 	"html/cloud/keeprecord_callorrecord_main.html": {
 		"resources": [
@@ -2922,12 +2932,14 @@
 			"image/utils/playvideo.png",
 			"js/libs/RSA/RSA.js",
 			"js/utils/RSAEncrypt.js"
-		]
+		],
+		"refer": []
 	},
 	"html/utils/record_audio.html": {
 		"resources": [
 			"js/utils/recordaudioutil.js"
-		]
+		],
+		"refer": []
 	},
 	"html/show/show-home2.html": {
 		"resources": [
@@ -2995,7 +3007,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
-		]
+		],
+		"refer": []
 	},
 	"html/quan/class-space.html": {
 		"resources": [
@@ -3020,7 +3033,8 @@
 			"css/quan/class-space.css",
 			"js/libs/crypto-js/crypto-js.js",
 			"/image/utils/default_personalimage.png"
-		]
+		],
+		"refer": []
 	},
 	"html/mine/apply-bycode1.html": {
 		"resources": [
@@ -3037,7 +3051,8 @@
 			"css/utils/common.css",
 			"js/libs/myStorage/myStorage.js",
 			"js/publicProtocol.js"
-		]
+		],
+		"refer": []
 	},
 	"html/quan/leave-reply.html": {
 		"resources": [
@@ -3057,7 +3072,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
-		]
+		],
+		"refer": []
 	},
 	"html/show/show-detail.html": {
 		"resources": [
@@ -3123,7 +3139,8 @@
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js",
 			"js/libs/crypto-js/crypto-js.js"
-		]
+		],
+		"refer": []
 	},
 	"html/cloud/app_statistics.html": {
 		"resources": [
@@ -3143,7 +3160,8 @@
 			"js/libs/RSA/RSA.js",
 			"js/utils/postData.js",
 			"js/utils/RSAEncrypt.js"
-		]
+		],
+		"refer": []
 	},
 	"html/micro-course/course-info.html": {
 		"resources": [

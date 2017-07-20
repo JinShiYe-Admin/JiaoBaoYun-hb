@@ -9,11 +9,7 @@ var subjectsContainer = document.getElementById('subjects');
 //个人id
 var personalUTID;
 mui.init();
-mui(".mui-scroll-wrapper").scroll({
-	bounce:true,
-	indicators:true,
-	decelaration:0.0006
-});
+
 mui.plusReady(function() {
 	mui.fire(plus.webview.currentWebview().opener(),"publishIsReady");
 	mui.previewImage();
@@ -113,11 +109,6 @@ mui.plusReady(function() {
 			mui.toast('上传图片附件不得多于9张！');
 		}
 	});
-//	events.softIn("publish-content");
-//	window.onresize = function() {
-//		console.log("resize0000");
-//		mui(".mui-scroll-wrapper").scroll().refresh();
-//	}
 	//相机按钮
 	events.addTap('getImg', function() {
 		var item=this;

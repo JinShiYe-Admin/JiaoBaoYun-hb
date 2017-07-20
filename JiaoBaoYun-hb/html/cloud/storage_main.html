@@ -735,7 +735,11 @@
 									});
 								}
 							} else if(type == 'html5-video') {
-								var thumbPath = document.getElementById("fthumb_" + ids[1]).getAttribute("value");
+								var thumb = document.getElementById("fthumb_" + ids[1]);
+								var thumbPath;
+								if(thumb) {
+									thumbPath = thumb.getAttribute("value");
+								}
 								events.openNewWindowWithData('storage_show_video.html', {
 									type: 0, //需要获取token
 									path: mode.fpath, //视频的七牛路径
