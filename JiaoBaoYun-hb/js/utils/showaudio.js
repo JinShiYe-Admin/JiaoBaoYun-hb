@@ -214,20 +214,32 @@ var ShowAudioUtil = (function(mod) {
 	mod.AudioControlPlay = function() {
 		mod.AudioPlayer.play(function() {
 			console.log('播放完成');
-			mod.Mask.close();
+			if(mod.Mask) {
+				mod.Mask.close();
+			}
 		}, function(e) {
 			console.log('播放失败 ' + JSON.stringify(e));
-			mui.toast('播放失败 ' + e.message);
-			mod.Mask.close();
+			setTimeout(function() {
+				if(showControlTime != undefined) {
+					clearInterval(showControlTime);
+				}
+				mui.toast('播放失败 ' + e.message);
+				if(mod.Mask) {
+					mod.Mask.close();
+				}
+			}, 500);
 		});
 		var showControlTime = setInterval(function() {
-			var time = mod.AudioPlayer.getPosition();
-			//console.log('time ' + time);
-			if(time != 0) {
-				audio_time.innerText = '00:00';
-				audio_pause.style.display = 'inline-block';
-				mod.AudioSetInterval();
-				clearInterval(showControlTime);
+			//console.log("showControlTime");
+			if(mod.AudioPlayer) {
+				var time = mod.AudioPlayer.getPosition();
+				//console.log('time ' + time);
+				if(time != 0) {
+					audio_time.innerText = '00:00';
+					audio_pause.style.display = 'inline-block';
+					mod.AudioSetInterval();
+					clearInterval(showControlTime);
+				}
 			}
 		}, 100);
 
