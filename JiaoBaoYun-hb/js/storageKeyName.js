@@ -2,7 +2,7 @@
 
 var storageKeyName = (function(mod) {
 
-	var Key = 0; //0,开发;1,测试;2,移动版 3外网
+	var Key = 1; //0,开发;1,测试;2,移动版 3外网
 	switch(Key) {
 		case 0://开发
 			//---开发---start---

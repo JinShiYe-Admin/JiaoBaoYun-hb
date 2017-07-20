@@ -318,55 +318,6 @@ var course_listnew = (function(mod) {
 		}
 
 	}
-	/**
-	 * 
-	 */
-	//	mod.initFresh = function() {
-	//		//上拉下拉注册
-	//		mui(".mui-scroll-wrapper .mui-scroll").pullToRefresh({
-	//			down: {
-	//				callback: function() {
-	//					freshContainer = this;
-	//					oldPageIndex = pageIndex;
-	//					freshFlag = 1;
-	//					pageIndex = 1;
-	//					wd = events.showWaiting(); //2.获取符合条件的专家信息
-	//					mod.getData(pageIndex, document.getElementById("list-container"), mod.setData);
-	//				}
-	//			},
-	//			up: {
-	//				callback: function() {
-	//					freshContainer = this;
-	//					console.log('我在底部pageIndex:' + pageIndex + ':总页数:' + totalPage);
-	//					if(pageIndex < totalPage) {
-	//						freshFlag = 2;
-	//						wd = events.showWaiting();
-	//						//						pageIndex++;
-	//						mod.getData(pageIndex, document.getElementById("list-container"), mod.setData);
-	//					} else {
-	//						freshContainer.endPullUpToRefresh();
-	//						mui(".mui-pull-loading")[0].innerHTML = "没有更多了";
-	//					}
-	//				}
-	//			}
-	//		});
-	//	}
-	//	mod.endFresh = function() {
-	//		events.closeWaiting();
-	//		if(freshContainer) {
-	//			console.log("freshContainer className" + freshContainer.className)
-	//			if(freshFlag == 1) {
-	//				console.log("走这吗？？？？？");
-	//				freshContainer.endPullDownToRefresh();
-	//				mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
-	//			} else if(freshFlag == 2) {
-	//				freshContainer.endPullUpToRefresh();
-	//			} else {
-	//				mui(".mui-pull-loading")[0].innerText = "上拉加载更多";
-	//			}
-	//		}
-	//		freshFlag = 0;
-	//	}
 	mod.setListener = function() {
 		//点击头像
 		mui(".mui-slider").on("tap", ".course-img", function(e) {
@@ -394,7 +345,7 @@ var course_listnew = (function(mod) {
 		item.disabled = true;
 		jQuery(item).css("pointerEvents", "none");
 		mod.getRedCircle(item);
-		events.singleWebviewInPeriod(item, '../micro-course/course_details.html', item.info);
+		events.singleWebviewInPeriod(item, 'course_details.html', item.info);
 		if(!events.getUtid()) {
 			events.setValueInMap(storageKeyName.COURSELASTTIME, item.info.TabId, Date.now());
 		}
