@@ -157,18 +157,18 @@
 			}
 			/*分情况来做,不是所有页面都需要字体随着屏幕大小改变而改变的.*/
 			
-			/*@media only screen and (min-width:320px) and (max-width:359px) {
+			@media only screen and (min-width:320px) and (max-width:359px) {
 				.mui-popup {
 					top: 30%;
 				}
-			}*/
+			}
 			/*三星大屏幕机最低宽度:note2-note3,S2-S4*/
 			
-			/*@media only screen and (min-width:360px) {
+			@media only screen and (min-width:360px) {
 				.mui-popup {
 					top: 40%;
 				}
-			}*/
+			}
 		</style>
 	</head>
 
@@ -363,10 +363,10 @@
 
 			off_canvas.init();
 			mui.plusReady(function() {
-//				var webHeight = localStorage.getItem('resolutionHeight') * 1 - (localStorage.getItem('getStatusbarHeight') * 1 + 50);
-//				plus.webview.currentWebview().setStyle({
-//					height: webHeight + 'px'
-//				})
+				var webHeight = localStorage.getItem('resolutionHeight') * 1 - (localStorage.getItem('getStatusbarHeight') * 1 + 50);
+				plus.webview.currentWebview().setStyle({
+					height: webHeight + 'px'
+				})
 				//发送协议
 				changeData();
 				addcloudapps_0(); //应用
