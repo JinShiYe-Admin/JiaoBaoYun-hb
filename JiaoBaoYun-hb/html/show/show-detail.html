@@ -92,6 +92,7 @@
 		<script src="../../js/mui.zoom.js"></script>
 		<script src="../../js/utils/all-preview.js"></script>
 		<script type="text/javascript">
+			var wd;
 			var pageIndex = 1;
 			var tableId = 0;
 			mui.init({
@@ -201,19 +202,20 @@
 			 * 获取展现详情
 			 */
 			function requestShowDetail() {
-				var wd = events.showWaiting();
+				 wd = events.showWaiting();
 				postDataPro_getUserSpaceByUser({
 					userId: events.getUtid(), //用户ID
 					userSpaceId: tableId, //用户动态ID
 					pageIndex: pageIndex, //评论当前页数
 					pageSize: 10 //评论每页记录数
 				}, wd, function(data) {
-					wd.close();
+					
 					console.log("获取的展现详情:" + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						pageIndex++;
 						getUserInfos(data.RspData.Data, rechargeData);
 					} else {
+						wd.close();
 						mui.toast(data.RspTxt);
 					}
 				})
@@ -323,15 +325,16 @@
 			 */
 			function getUserInfos(showDetail, callback) {
 				var ids = getIds(showDetail);
-				var wd = events.showWaiting();
 				postDataPro_PostUinf({
 					vvl: ids.toString(),
 					vtp: 'g'
 				}, wd, function(data) {
-					wd.close();
+					
 					console.log("获取的数据：" + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						getRemark(showDetail, ids, data.RspData, callback);
+					}else{
+						wd.close();
 					}
 					//					getRemark(showDetail, ids, [], callback);
 				})
@@ -342,11 +345,11 @@
 			 * @param {Object} ids
 			 */
 			function getRemark(showDetail, ids, dataInfos, callback) {
-				var wd = events.showWaiting();
+				
 				postDataPro_PostUmk({
 					vvl: ids.toString()
 				}, wd, function(data) {
-					wd.close();
+			
 					console.log("获取的用户备注：" + JSON.stringify(data));
 					if(data.RspCode == 0) {
 						if(data.RspData.length > 0) {
@@ -360,6 +363,8 @@
 
 							}
 						}
+					}else{
+						wd.close();
 					}
 					callback(showDetail, dataInfos);
 				})

@@ -5444,7 +5444,8 @@
 					"js/libs/RSA/RSA.js",
 					"js/utils/postData.js",
 					"js/utils/RSAEncrypt.js",
-					"js/micro-course/course-info.js"
+					"js/micro-course/course-info.js",
+					"js/utils/vue.min.js"
 				],
 				"refer": [
 					"html/micro-course/history-records.html"

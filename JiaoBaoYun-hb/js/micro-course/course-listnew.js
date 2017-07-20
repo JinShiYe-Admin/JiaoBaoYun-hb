@@ -9,7 +9,6 @@ var course_listnew = (function(mod) {
 	 * @param {Function} callback 回调
 	 */
 	mod.getData = function(flag, model, listContainer, callback) {
-		//		console.log('pageFlag =' + pageFlag);
 		//个人信息
 		var personal = window.myStorage.getItem(window.storageKeyName.PERSONALINFO);
 		//所需参数
@@ -163,7 +162,6 @@ var course_listnew = (function(mod) {
 			mod.createCell(cell, fragment);
 		}
 		listContainer.appendChild(fragment);
-		//		mod.endFresh();
 	}
 	mod.setCustomUpdate = function(cell) {
 		var courseTime = events.isExistInStorageMap(storageKeyName.COURSELASTTIME, cell.TabId);
@@ -190,9 +188,7 @@ var course_listnew = (function(mod) {
 		li.innerHTML = mod.getCellInner(cell);
 		fragment.appendChild(li);
 		li.info = cell;
-		li.querySelector(".course-img").info = cell;
-		li.querySelector(".course-name").info = cell;
-		li.querySelector(".course-info").info = cell;
+		console.log("获取的界面cell的info"+JSON.stringify(li.info));
 		li.querySelector(".input-btn").info = cell;
 		if(!cell.IsUpdate) {
 			li.querySelector(".red-circle").classList.add("display-none");
@@ -216,7 +212,6 @@ var course_listnew = (function(mod) {
 			'<p class="course-info double-line">' + cell.SecName + '</p>' +
 			'</div>' +
 			'</div>';
-
 	}
 	/**
 	 * 获取按钮
@@ -292,8 +287,6 @@ var course_listnew = (function(mod) {
 				} else {
 					freshSingleView();
 				}
-				//			}else{
-				//				getAttendedClasses(toggleAttendedPart);
 			}
 		} else {
 			item.className = "input-btn btn-focused";
@@ -319,29 +312,23 @@ var course_listnew = (function(mod) {
 
 	}
 	mod.setListener = function() {
-		//点击头像
-		mui(".mui-slider").on("tap", ".course-img", function(e) {
-			var item = e.target;
-			mod.gotoCourseDetail(item);
-		});
-		//点击课程名称
-		mui(".mui-slider").on("tap", ".course-name", function(e) {
-			var item = e.target;
-			mod.gotoCourseDetail(item);
-		});
 		//点击节次名
-		mui(".mui-slider").on("tap", ".course-info", function(e) {
-			var item = e.target;
-			mod.gotoCourseDetail(item);
+		mui(".mui-slider").on("tap", ".mui-table-view-cell", function(e) {
+			console.log("点击课程的className"+this.className);
+		
+			console.log("获取的课程信息:"+JSON.stringify(this.info));
+			mod.gotoCourseDetail(this);
 		});
 		//点击关注按钮
 		mui(".mui-slider").on("tap", ".input-btn", function(e) {
 			var item = e.target;
+			e.stopPropagation();
 			console.log("item.info:" + JSON.stringify(item.info));
 			mod.clickFocuseBtn(item);
 		});
 	}
 	mod.gotoCourseDetail = function(item) {
+		console.log("获取的课程信息:"+JSON.stringify(item.info));
 		item.disabled = true;
 		jQuery(item).css("pointerEvents", "none");
 		mod.getRedCircle(item);
